@@ -240,7 +240,7 @@ static int trex_newnode(TRex *exp, TRexNodeType type)
 	if(type == OP_EXPR)
 		n.right = exp->_nsubexpr++;
 	if(exp->_nallocated < (exp->_nsize + 1)) {
-		int oldsize = exp->_nallocated;
+		//int oldsize = exp->_nallocated;
 		exp->_nallocated *= 2;
 		exp->_nodes = (TRexNode *)realloc(exp->_nodes, exp->_nallocated * sizeof(TRexNode));
 	}
@@ -4882,7 +4882,8 @@ public:
     /**
      *  Load a dependency file, generating one if necessary
      */
-    std::vector<DepRec> getDepFile(const String &fileName);
+    std::vector<DepRec> getDepFile(const String &fileName,
+              bool forceRefresh);
 
     /**
      *  Save a dependency file
@@ -5449,7 +5450,7 @@ std::vector<DepRec> DepTool::loadDepFile(const String &depFile)
     Element *root = parser.parseFile(depFile.c_str());
     if (!root)
         {
-        error("Could not open %s for reading", depFile.c_str());
+        //error("Could not open %s for reading", depFile.c_str());
         return result;
         }
 
@@ -5521,13 +5522,25 @@ std::vector<DepRec> DepTool::loadDepFile(const String &depFile)
 /**
  *   This loads the dependency cache.
  */
-std::vector<DepRec> DepTool::getDepFile(const String &depFile)
+std::vector<DepRec> DepTool::getDepFile(const String &depFile,
+                   bool forceRefresh)
 {
-    std::vector<DepRec> result = loadDepFile(depFile);
-    if (result.size() == 0)
+    std::vector<DepRec> result;
+    if (forceRefresh)
         {
         generateDependencies(depFile);
         result = loadDepFile(depFile);
+        }
+    else
+        {
+        //try once
+        result = loadDepFile(depFile);
+        if (result.size() == 0)
+            {
+            //fail? try again
+            generateDependencies(depFile);
+            result = loadDepFile(depFile);
+            }
         }
     return result;
 }
@@ -5553,7 +5566,6 @@ public:
     typedef enum
         {
         TASK_NONE,
-        TASK_AR,
         TASK_CC,
         TASK_COPY,
         TASK_DELETE,
@@ -5565,6 +5577,8 @@ public:
         TASK_MSGFMT,
         TASK_RANLIB,
         TASK_RC,
+        TASK_SHAREDLIB,
+        TASK_STATICLIB,
         TASK_STRIP,
         TASK_TSTAMP
         } TaskType;
@@ -5666,111 +5680,6 @@ protected:
 
 
 
-
-/**
- * Run the "ar" command to archive .o's into a .a
- */
-class TaskAr : public Task
-{
-public:
-
-    TaskAr(MakeBase &par) : Task(par)
-        {
-		type = TASK_AR; name = "ar";
-		command = "ar crv";
-		}
-
-    virtual ~TaskAr()
-        {}
-
-    virtual bool execute()
-        {
-        //trace("###########HERE %d", fileSet.size());
-        bool doit = false;
-        
-        String fullOut = parent.resolve(fileName);
-        //trace("ar fullout: %s", fullOut.c_str());
-        
-        if (!listFiles(parent, fileSet))
-            return false;
-        String fileSetDir = fileSet.getDirectory();
-
-        for (unsigned int i=0 ; i<fileSet.size() ; i++)
-            {
-            String fname;
-			if (fileSetDir.size()>0)
-			    {
-			    fname.append(fileSetDir);
-                fname.append("/");
-                }
-            fname.append(fileSet[i]);
-            String fullName = parent.resolve(fname);
-            //trace("ar : %s/%s", fullOut.c_str(), fullName.c_str());
-            if (isNewerThan(fullName, fullOut))
-                doit = true;
-            }
-        //trace("Needs it:%d", doit);
-        if (!doit)
-            {
-            return true;
-            }
-
-        String cmd = command;
-        cmd.append(" ");
-        cmd.append(fullOut);
-        for (unsigned int i=0 ; i<fileSet.size() ; i++)
-            {
-            String fname;
-			if (fileSetDir.size()>0)
-			    {
-			    fname.append(fileSetDir);
-                fname.append("/");
-                }
-            fname.append(fileSet[i]);
-            String fullName = parent.resolve(fname);
-
-            cmd.append(" ");
-            cmd.append(fullName);
-            }
-
-        String outString, errString;
-        if (!executeCommand(cmd.c_str(), "", outString, errString))
-            {
-            error("AR problem: %s", errString.c_str());
-            return false;
-            }
-
-        return true;
-        }
-
-    virtual bool parse(Element *elem)
-        {
-        if (!parent.getAttribute(elem, "file", fileName))
-            return false;
-            
-        std::vector<Element *> children = elem->getChildren();
-        for (unsigned int i=0 ; i<children.size() ; i++)
-            {
-            Element *child = children[i];
-            String tagName = child->getName();
-            if (tagName == "fileset")
-                {
-                if (!parseFileSet(child, parent, fileSet))
-                    return false;
-                }
-            }
-        return true;
-        }
-
-private:
-
-    String command;
-    String fileName;
-    FileSet fileSet;
-
-};
-
-
 /**
  * This task runs the C/C++ compiler.  The compiler is invoked
  * for all .c or .cpp files which are newer than their correcsponding
@@ -5801,10 +5710,19 @@ public:
         if (!listFiles(parent, fileSet))
             return false;
 
+        bool refreshCache = false;
+        String fullName = parent.resolve("build.dep");
+        if (isNewerThan(parent.getURI().getPath(), fullName))
+            {
+            trace("regenerating cache");
+            refreshCache = true;
+            }
+
         DepTool depTool;
         depTool.setSourceDirectory(source);
         depTool.setFileList(fileSet.getFiles());
-        std::vector<DepRec> deps = depTool.getDepFile("build.dep");
+        std::vector<DepRec> deps =
+             depTool.getDepFile("build.dep", refreshCache);
         
         String incs;
         incs.append("-I");
@@ -6430,8 +6348,11 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        if (!parent.getAttribute(elem, "command", command))
+        String s;
+        if (!parent.getAttribute(elem, "command", s))
             return false;
+        if (s.size()>0)
+            command = s;
         if (!parent.getAttribute(elem, "out", fileName))
             return false;
             
@@ -6505,6 +6426,7 @@ public:
             }
         for (unsigned int i=0 ; i<text.size() ; i++)
             fputc(text[i], f);
+        fputc('\n', f);
         fclose(f);
         return true;
         }
@@ -6804,6 +6726,241 @@ private:
 
 
 /**
+ *  Collect .o's into a .so or DLL
+ */
+class TaskSharedLib : public Task
+{
+public:
+
+    TaskSharedLib(MakeBase &par) : Task(par)
+        {
+		type = TASK_SHAREDLIB; name = "dll";
+		command = "ar crv";
+		}
+
+    virtual ~TaskSharedLib()
+        {}
+
+    virtual bool execute()
+        {
+        //trace("###########HERE %d", fileSet.size());
+        bool doit = false;
+        
+        String fullOut = parent.resolve(fileName);
+        //trace("ar fullout: %s", fullOut.c_str());
+        
+        if (!listFiles(parent, fileSet))
+            return false;
+        String fileSetDir = fileSet.getDirectory();
+
+        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+            {
+            String fname;
+			if (fileSetDir.size()>0)
+			    {
+			    fname.append(fileSetDir);
+                fname.append("/");
+                }
+            fname.append(fileSet[i]);
+            String fullName = parent.resolve(fname);
+            //trace("ar : %s/%s", fullOut.c_str(), fullName.c_str());
+            if (isNewerThan(fullName, fullOut))
+                doit = true;
+            }
+        //trace("Needs it:%d", doit);
+        if (!doit)
+            {
+            return true;
+            }
+
+        String cmd = "dllwrap";
+        cmd.append(" -o ");
+        cmd.append(fullOut);
+        if (defFileName.size()>0)
+            {
+            cmd.append(" --def ");
+            cmd.append(defFileName);
+            cmd.append(" ");
+            }
+        if (impFileName.size()>0)
+            {
+            cmd.append(" --implib ");
+            cmd.append(impFileName);
+            cmd.append(" ");
+            }
+        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+            {
+            String fname;
+			if (fileSetDir.size()>0)
+			    {
+			    fname.append(fileSetDir);
+                fname.append("/");
+                }
+            fname.append(fileSet[i]);
+            String fullName = parent.resolve(fname);
+
+            cmd.append(" ");
+            cmd.append(fullName);
+            }
+        cmd.append(" ");
+        cmd.append(libs);
+
+        String outString, errString;
+        if (!executeCommand(cmd.c_str(), "", outString, errString))
+            {
+            error("<sharedlib> problem: %s", errString.c_str());
+            return false;
+            }
+
+        return true;
+        }
+
+    virtual bool parse(Element *elem)
+        {
+        if (!parent.getAttribute(elem, "file", fileName))
+            return false;
+        if (!parent.getAttribute(elem, "import", impFileName))
+            return false;
+        if (!parent.getAttribute(elem, "def", defFileName))
+            return false;
+            
+        std::vector<Element *> children = elem->getChildren();
+        for (unsigned int i=0 ; i<children.size() ; i++)
+            {
+            Element *child = children[i];
+            String tagName = child->getName();
+            if (tagName == "fileset")
+                {
+                if (!parseFileSet(child, parent, fileSet))
+                    return false;
+                }
+            else if (tagName == "libs")
+                {
+                if (!parent.getValue(child, libs))
+                    return false;
+                libs = strip(libs);
+                }
+            }
+        return true;
+        }
+
+private:
+
+    String command;
+    String fileName;
+    String defFileName;
+    String impFileName;
+    FileSet fileSet;
+    String libs;
+
+};
+
+
+/**
+ * Run the "ar" command to archive .o's into a .a
+ */
+class TaskStaticLib : public Task
+{
+public:
+
+    TaskStaticLib(MakeBase &par) : Task(par)
+        {
+		type = TASK_STATICLIB; name = "staticlib";
+		command = "ar crv";
+		}
+
+    virtual ~TaskStaticLib()
+        {}
+
+    virtual bool execute()
+        {
+        //trace("###########HERE %d", fileSet.size());
+        bool doit = false;
+        
+        String fullOut = parent.resolve(fileName);
+        //trace("ar fullout: %s", fullOut.c_str());
+        
+        if (!listFiles(parent, fileSet))
+            return false;
+        String fileSetDir = fileSet.getDirectory();
+
+        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+            {
+            String fname;
+			if (fileSetDir.size()>0)
+			    {
+			    fname.append(fileSetDir);
+                fname.append("/");
+                }
+            fname.append(fileSet[i]);
+            String fullName = parent.resolve(fname);
+            //trace("ar : %s/%s", fullOut.c_str(), fullName.c_str());
+            if (isNewerThan(fullName, fullOut))
+                doit = true;
+            }
+        //trace("Needs it:%d", doit);
+        if (!doit)
+            {
+            return true;
+            }
+
+        String cmd = command;
+        cmd.append(" ");
+        cmd.append(fullOut);
+        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+            {
+            String fname;
+			if (fileSetDir.size()>0)
+			    {
+			    fname.append(fileSetDir);
+                fname.append("/");
+                }
+            fname.append(fileSet[i]);
+            String fullName = parent.resolve(fname);
+
+            cmd.append(" ");
+            cmd.append(fullName);
+            }
+
+        String outString, errString;
+        if (!executeCommand(cmd.c_str(), "", outString, errString))
+            {
+            error("<staticlib> problem: %s", errString.c_str());
+            return false;
+            }
+
+        return true;
+        }
+
+    virtual bool parse(Element *elem)
+        {
+        if (!parent.getAttribute(elem, "file", fileName))
+            return false;
+            
+        std::vector<Element *> children = elem->getChildren();
+        for (unsigned int i=0 ; i<children.size() ; i++)
+            {
+            Element *child = children[i];
+            String tagName = child->getName();
+            if (tagName == "fileset")
+                {
+                if (!parseFileSet(child, parent, fileSet))
+                    return false;
+                }
+            }
+        return true;
+        }
+
+private:
+
+    String command;
+    String fileName;
+    FileSet fileSet;
+
+};
+
+
+/**
  * Strip an executable
  */
 class TaskStrip : public Task
@@ -6882,9 +7039,7 @@ Task *Task::createTask(Element *elem)
     String tagName = elem->getName();
     //trace("task:%s", tagName.c_str());
     Task *task = NULL;
-    if (tagName == "ar")
-        task = new TaskAr(parent);
-    else if (tagName == "cc")
+    if (tagName == "cc")
         task = new TaskCC(parent);
     else if (tagName == "copy")
         task = new TaskCopy(parent);
@@ -6906,6 +7061,10 @@ Task *Task::createTask(Element *elem)
         task = new TaskRanlib(parent);
     else if (tagName == "rc")
         task = new TaskRC(parent);
+    else if (tagName == "sharedlib")
+        task = new TaskSharedLib(parent);
+    else if (tagName == "staticlib")
+        task = new TaskStaticLib(parent);
     else if (tagName == "strip")
         task = new TaskStrip(parent);
     else if (tagName == "tstamp")
@@ -7820,8 +7979,8 @@ bool Make::run(const String &target)
 {
     status("##################################");
     status("#   BuildTool");
-    status("#   version 0.3");
-    status("#   16 Nov 06");
+    status("#   version 0.4");
+    status("#   17 Nov 06");
     status("##################################");
     specifiedTarget = target;
     if (!run())

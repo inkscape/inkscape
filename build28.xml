@@ -23,21 +23,21 @@
     <cc cc="gcc" cxx="g++" destdir="${build}/obj">
 	    <fileset dir="${src}">
             <!-- THINGS TO EXCLUDE -->
-	        <exclude name="ast"/>
-	        <exclude name="bonobo"/>
+	        <exclude name="ast/.*"/>
+	        <exclude name="bonobo/.*"/>
 	        <exclude name="deptool.cpp"/>
 	        <exclude name="dialogs/filedialog-win32.cpp"/>
 	        <exclude name="display/testnr.cpp"/>
 	        <exclude name="display/bezier-utils-test.cpp"/>
 	        <exclude name="dom/jsdombind.cpp"/>
-	        <exclude name="dom/work"/>
+	        <exclude name="dom/work/.*"/>
 	        <exclude name="dom/odf/SvgOdg.cpp"/>
 	        <exclude name="extension/api.cpp"/>
-	        <exclude name="extension/dxf2svg"/>
+	        <exclude name="extension/dxf2svg/.*"/>
 	        <exclude name="extension/internal/gnome.cpp"/>
 	        <exclude name="extension/script/bindtest.cpp"/>
 	        <exclude name="extension/script/cpptest.cpp"/>
-	        <exclude name="extension/plugin"/>
+	        <exclude name="extension/plugin/.*"/>
 	        <exclude name="extract-uri-test.cpp"/>
 	        <exclude name="helper/units-test.cpp"/>
 	        <exclude name="inkview.cpp"/>
@@ -57,7 +57,7 @@
 	        <exclude name="round-test.cpp"/>
 	        <exclude name="sp-gradient-test.cpp"/>
 	        <exclude name="svg/ftos.cpp"/>
-	        <exclude name="utest"/>
+	        <exclude name="utest/.*"/>
 	        <exclude name="widgets/test-widgets.cpp"/>
 	        <exclude name="xml/quote-test.cpp"/>
 	        <exclude name="xml/repr-action-test.cpp"/>
@@ -65,7 +65,7 @@
             <!--JABBER-->
 	        <exclude name="pedro/pedrogui.cpp"/>
 	        <exclude name="pedro/pedrogui.h"/>
-	        <exclude name="pedro/work"/>
+	        <exclude name="pedro/work/.*"/>
             <!--WHITEBOARD-->
 	        <exclude name="ui/dialog/session-player.cpp"/>
 	        <exclude name="ui/dialog/whiteboard-connect.cpp"/>
@@ -127,12 +127,12 @@
   </target>
   
   <target name="lib" depends="compile">
-    <ar file="${build}/libinkscape.a">
+    <staticlib file="${build}/libinkscape.a">
 	   <fileset dir="${build}/obj">
 	       <exclude name="main,o"/>
 	       <exclude name="winmain,o"/>
 	   </fileset>
-	</ar>
+	</staticlib>
   </target>
 
   <target name="i18n" depends="compile">
