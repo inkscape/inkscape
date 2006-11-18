@@ -896,14 +896,18 @@ static void
 draw_temporary_box(SPDynaDrawContext *dc)
 {
     sp_curve_reset(dc->currentcurve);
-    sp_curve_moveto(dc->currentcurve, dc->point1[0]);
-    for (gint i = 1; i < dc->npoints; i++) {
+
+    sp_curve_moveto(dc->currentcurve, dc->point1[dc->npoints-1]);
+    for (gint i = dc->npoints-2; i >= 0; i--) {
         sp_curve_lineto(dc->currentcurve, dc->point1[i]);
     }
-    for (gint i = dc->npoints-1; i >= 0; i--) {
+    for (gint i = 0; i < dc->npoints; i++) {
         sp_curve_lineto(dc->currentcurve, dc->point2[i]);
     }
-    add_cap(dc->currentcurve, dc->point2[1], dc->point2[0], dc->point1[0], dc->point1[1], dc->cap_rounding);
+    if (dc->npoints >= 2) {
+        add_cap(dc->currentcurve, dc->point2[dc->npoints-2], dc->point2[dc->npoints-1], dc->point1[dc->npoints-1], dc->point1[dc->npoints-2], dc->cap_rounding);
+    }
+
     sp_curve_closepath(dc->currentcurve);
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), dc->currentcurve);
 }
