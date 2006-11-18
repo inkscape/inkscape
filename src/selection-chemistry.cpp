@@ -85,6 +85,10 @@ NR::Rect size_clipboard(NR::Point(0,0), NR::Point(0,0));
 
 static void sp_copy_stuff_used_by_item(GSList **defs_clip, SPItem *item, const GSList *items);
 
+/**
+ * Copies repr and its inherited css style elements, along with the accumulated transform 'full_t',
+ * then prepends the copy to 'clip'.
+ */
 void sp_selection_copy_one (Inkscape::XML::Node *repr, NR::Matrix full_t, GSList **clip)
 {
     Inkscape::XML::Node *copy = repr->duplicate();
@@ -94,8 +98,9 @@ void sp_selection_copy_one (Inkscape::XML::Node *repr, NR::Matrix full_t, GSList
     sp_repr_css_set(copy, css, "style");
     sp_repr_css_attr_unref(css);
 
-    // write the complete accummulated transform passed to us
-    // (we're dealing with unattached repr, so we write to its attr instead of using sp_item_set_transform)
+    // write the complete accumulated transform passed to us
+    // (we're dealing with unattached repr, so we write to its attr 
+    // instead of using sp_item_set_transform)
     gchar affinestr[80];
     if (sp_svg_transform_write(affinestr, 79, full_t)) {
         copy->setAttribute("transform", affinestr);
@@ -139,8 +144,10 @@ void sp_selection_copy_impl (const GSList *items, GSList **clip, GSList **defs_c
 }
 
 /**
-Add gradients/patterns/markers referenced by copied objects to defs
-*/
+ * Add gradients/patterns/markers referenced by copied objects to defs.
+ * Iterates through 'defs_clip', and for each item it adds the data
+ * repr into the global defs.
+ */
 void
 paste_defs (GSList **defs_clip, SPDocument *doc)
 {
@@ -888,6 +895,9 @@ void sp_copy_textpath_path (GSList **defs_clip, SPTextPath *tp, const GSList *it
     *defs_clip = g_slist_prepend (*defs_clip, repr);
 }
 
+/**
+ * Copies things like patterns, markers, gradients, etc.
+ */
 void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList *items)
 {
     SPStyle *style = SP_OBJECT_STYLE (item);
@@ -908,6 +918,7 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList 
             sp_copy_pattern (defs_clip, SP_PATTERN(server));
     }
 
+    // For shapes, copy all of the shape's markers into defs_clip
     if (SP_IS_SHAPE (item)) {
         SPShape *shape = SP_SHAPE (item);
         for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
