@@ -2610,7 +2610,8 @@ int URI::parse(int p0)
 
 bool URI::parse(const String &str)
 {
-
+    init();
+    
     parselen = str.size();
 
     String tmp;
@@ -6564,7 +6565,6 @@ public:
             error("<mkdir> requires 'dir=\"dirname\"' attribute");
             return false;
             }
-        trace("dirname:%s", dirName.c_str());
         return true;
         }
 
@@ -7139,12 +7139,24 @@ public:
     /**
      *
      */
-    bool run();
+    virtual String version()
+        { return "BuildTool v0.3, 2006 Bob Jamison"; }
+
+    /**
+     * Overload a <property>
+     */
+    virtual bool specifyProperty(const String &name,
+	                             const String &value);
 
     /**
      *
      */
-    bool run(const String &target);
+    virtual bool run();
+
+    /**
+     *
+     */
+    virtual bool run(const String &target);
 
 
 
@@ -7239,7 +7251,8 @@ private:
     std::map<String, Target> targets;
 
     std::vector<Task *> allTasks;
-
+    
+    std::map<String, String> specifiedProperties;
 
 };
 
@@ -7642,7 +7655,7 @@ bool Make::parseProperty(Element *elem)
  */
 bool Make::parseFile()
 {
-    status("######## PARSE");
+    status("######## PARSE : %s", uri.getPath().c_str());
 
     Parser parser;
     Element *root = parser.parseFile(uri.getNativePath());
@@ -7756,12 +7769,44 @@ bool Make::parseFile()
 
 
 /**
+ * Overload a <property>
+ */
+bool Make::specifyProperty(const String &name, const String &value)
+{
+    if (specifiedProperties.find(name) != specifiedProperties.end())
+        {
+        error("Property %s already specified", name.c_str());
+        return false;
+        }
+    specifiedProperties[name] = value;
+    return true;
+}
+
+
+
+/**
  *
  */
 bool Make::run()
 {
     if (!parseFile())
         return false;
+        
+    //Overload properties
+    std::map<String, String>::iterator iter;
+    for (iter = specifiedProperties.begin() ; 
+	         iter!=specifiedProperties.end() ; iter++)
+	    {
+	    String name = iter->first;
+	    String value = iter->second;
+		if (properties.find(name) == properties.end())
+		    {
+		    error("Overloading property:%s not found", name.c_str());
+		    return false;
+		    }
+		properties[name] = value;
+	    }
+
     if (!execute())
         return false;
     return true;
@@ -7798,6 +7843,8 @@ bool Make::run(const String &target)
 //# M A I N
 //########################################################################
 
+typedef buildtool::String String;
+
 /**
  *  Format an error message in printf() style
  */
@@ -7812,18 +7859,60 @@ static void error(char *fmt, ...)
 }
 
 
+static bool parseProperty(const String &s, String &name, String &val)
+{
+    int len = s.size();
+    int i;
+    for (i=0 ; i<len ; i++)
+        {
+        char ch = s[i];
+        if (ch == '=')
+            break;
+        name.push_back(ch);
+        }
+    if (i>=len || s[i]!='=')
+        {
+        error("property requires -Dname=value");
+        return false;
+        }
+    i++;
+    for ( ; i<len ; i++)
+        {
+        char ch = s[i];
+        val.push_back(ch);
+        }
+    return true;
+}
+
+
 /**
  * Compare a buffer with a key, for the length of the key
  */
-static bool sequ(const buildtool::String &buf, char *key)
+static bool sequ(const String &buf, char *key)
 {
-    for (int i=0 ; key[i] ; i++)
+    int len = buf.size();
+    for (int i=0 ; key[i] && i<len ; i++)
         {
         if (key[i] != buf[i])
             return false;
         }        
     return true;
 }
+
+static void usage(int argc, char **argv)
+{
+    printf("usage:\n");
+    printf("   %s [options] [target]\n", argv[0]);
+    printf("Options:\n");
+    printf("  -help, -h              print this message\n");
+    printf("  -version               print the version information and exit\n");
+    printf("  -file <file>           use given buildfile\n");
+    printf("  -f <file>                 ''\n");
+    printf("  -D<property>=<value>   use value for given property\n");
+}
+
+
+
 
 /**
  * Parse the command-line args, get our options,
@@ -7837,18 +7926,47 @@ static bool parseOptions(int argc, char **argv)
         return false;
         }
 
-    buildtool::String buildFile;
-    buildtool::String target;
+    buildtool::Make make;
+
+    String target;
 
     //char *progName = argv[0];
     for (int i=1 ; i<argc ; i++)
         {
-        buildtool::String arg = argv[i];
-        if (sequ(arg, "--"))
+        String arg = argv[i];
+        if (arg.size()>1 && arg[0]=='-')
             {
-            if (sequ(arg, "--file=") && arg.size()>7)
+            if (arg == "-h" || arg == "-help")
                 {
-                buildFile = arg.substr(7, arg.size()-7);
+                usage(argc,argv);
+                return true;
+                }
+            else if (arg == "-version")
+                {
+                printf("%s", make.version().c_str());
+                return true;
+                }
+            else if (arg == "-f" || arg == "-file")
+                {
+                if (i>=argc)
+                   {
+                   usage(argc, argv);
+                   return false;
+                   }
+                i++; //eat option
+                make.setURI(argv[i]);
+                }
+            else if (arg.size()>2 && sequ(arg, "-D"))
+                {
+                String s = arg.substr(2, s.size());
+                String name, value;
+                if (!parseProperty(s, name, value))
+                   {
+                   usage(argc, argv);
+                   return false;
+                   }
+                if (!make.specifyProperty(name, value))
+                    return false;
                 }
             else
                 {
@@ -7856,33 +7974,19 @@ static bool parseOptions(int argc, char **argv)
                 return false;
                 }
             }
-        else if (sequ(arg, "-"))
-            {
-            for (unsigned int p=1 ; p<arg.size() ; p++)
-                {
-                int ch = arg[p];
-                if (0)//put options here
-                    {
-                    }
-                else
-                    {
-                    error("Unknown option '%c'", ch);
-                    return false;
-                    }
-                }
-            }
         else
             {
+            if (target.size()>0)
+                {
+                error("only one initial target");
+                usage(argc, argv);
+                return false;
+                }
             target = arg;
             }
         }
 
     //We have the options.  Now execute them
-    buildtool::Make make;
-    if (buildFile.size() > 0)
-        {
-        make.setURI(buildFile);
-        }
     if (!make.run(target))
         return false;
 
