@@ -106,6 +106,7 @@ sp_file_new(const Glib::ustring &templ)
         sp_create_window(dtw, TRUE);
         dt = static_cast<SPDesktop*>(dtw->view);
         sp_namedview_window_from_document(dt);
+        sp_namedview_update_layers_from_document(dt);
     }
     return dt;
 }
@@ -201,9 +202,8 @@ sp_file_open(const Glib::ustring &uri,
         // everyone who cares now has a reference, get rid of ours
         sp_document_unref(doc);
         // resize the window to match the document properties
-        // (this may be redundant for new windows... if so, move to the "virgin"
-        //  section above)
         sp_namedview_window_from_document(desktop);
+        sp_namedview_update_layers_from_document(desktop);
 
         if (add_to_recent) {
             prefs_set_recent_file(SP_DOCUMENT_URI(doc), SP_DOCUMENT_NAME(doc));

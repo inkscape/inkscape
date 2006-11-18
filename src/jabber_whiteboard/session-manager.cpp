@@ -398,6 +398,7 @@ makeInkboardDesktop(SPDocument* doc)
         sp_create_window(dtw, TRUE);
         dt = static_cast<SPDesktop*>(dtw->view);
         sp_namedview_window_from_document(dt);
+        sp_namedview_update_layers_from_document(dt);
     }
 
     return dt;

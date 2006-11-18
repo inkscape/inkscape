@@ -213,6 +213,7 @@ sp_ui_new_view()
 
     sp_create_window(dtw, TRUE);
     sp_namedview_window_from_document(static_cast<SPDesktop*>(dtw->view));
+    sp_namedview_update_layers_from_document(static_cast<SPDesktop*>(dtw->view));
 }
 
 /* TODO: not yet working */

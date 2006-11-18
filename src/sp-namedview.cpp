@@ -685,9 +685,13 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
         g_list_free(desktop->zooms_past);
         desktop->zooms_past = NULL;
     }
+}
 
+void sp_namedview_update_layers_from_document (SPDesktop *desktop)
+{
     SPObject *layer = NULL;
     SPDocument *document = desktop->doc();
+    SPNamedView *nv = desktop->namedview;
     if ( nv->default_layer_id != 0 ) {
         layer = document->getObjectById(g_quark_to_string(nv->default_layer_id));
     }

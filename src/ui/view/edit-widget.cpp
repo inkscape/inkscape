@@ -1530,6 +1530,7 @@ EditWidget::initEdit (SPDocument *doc)
     _svg_canvas.init (_desktop);
     _desktop->init (_namedview, _svg_canvas.spobj());
     sp_namedview_window_from_document (_desktop);
+    sp_namedview_update_layers_from_document (_desktop);
     _dt2r = 1.0 / _namedview->doc_units->unittobase;
 
     /// \todo convert to sigc++ when SPObject hierarchy gets converted
