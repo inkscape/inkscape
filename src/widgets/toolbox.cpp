@@ -2245,10 +2245,10 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         /* Cap Rounding */
         // TRANSLATORS: "cap" means "end" (both start and finish) here
         eact = create_adjustment_action( "CapRoundingAction",
-                                         _("Round:"), _("Increase to round the ends of strokes"),
+                                         _("Caps:"), _("Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = round caps)"),
                                          "tools.calligraphic", "cap_rounding", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                         0.0, 1.0, 0.01, 0.1,
+                                         0.0, 5.0, 0.01, 0.1,
                                          sp_ddc_cap_rounding_value_changed2, 0.01, 2 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
