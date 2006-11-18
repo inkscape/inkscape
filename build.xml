@@ -14,6 +14,7 @@
   <target name="init">
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${build}"/>
+    <mkdir dir="${dist}"/>
     <makefile file="config.h">
         #ifndef _CONFIG_H_
         #define _CONFIG_H_
@@ -142,7 +143,7 @@
 	        <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
 	    </fileset>
         <flags>
-            -Wall -O3
+            -Wall -g -O3
 			-mms-bitfields
         </flags>
         <defines>

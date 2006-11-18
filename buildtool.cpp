@@ -3903,7 +3903,7 @@ bool MakeBase::createDirectory(const String &dirname)
     struct stat finfo;
     String nativeDir = getNativePath(dirname);
     char *cnative = (char *) nativeDir.c_str();
-    if (stat(dirname.c_str(), &finfo)==0)
+    if (stat(cnative, &finfo)==0)
         {
         if (!S_ISDIR(finfo.st_mode))
             {
@@ -3920,9 +3920,10 @@ bool MakeBase::createDirectory(const String &dirname)
     //## 2: pull off the last path segment, if any,
     //## to make the dir 'above' this one, if necessary
     unsigned int pos = dirname.find_last_of('/');
-    if (pos != dirname.npos)
+    if (pos>0 && pos != dirname.npos)
         {
         String subpath = dirname.substr(0, pos);
+        //A letter root (c:) ?
         if (!createDirectory(subpath))
             return false;
         }
@@ -3930,7 +3931,7 @@ bool MakeBase::createDirectory(const String &dirname)
     //## 3: now make
     if (mkdir(cnative)<0)
         {
-        error("cannot make directory %s", cnative);
+        error("cannot make directory '%s'", cnative);
         return false;
         }
         
@@ -6563,7 +6564,7 @@ public:
             error("<mkdir> requires 'dir=\"dirname\"' attribute");
             return false;
             }
-        //trace("dirname:%s", dirName.c_str());
+        trace("dirname:%s", dirName.c_str());
         return true;
         }
 
