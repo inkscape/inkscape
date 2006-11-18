@@ -211,11 +211,11 @@
     <link command="g++" out="${build}/inkscape.exe">
        <flags>
        </flags>
-	   <fileset>
-	       <include name="${build}/inkres.o"/>
-	       <include name="${build}/obj/main.o"/>
-	       <include name="${build}/obj/winmain.o"/>
-	       <include name="${build}/libinkscape.a"/>
+	   <fileset dir="${build}">
+	       <include name="inkres.o"/>
+	       <include name="obj/main.o"/>
+	       <include name="obj/winmain.o"/>
+	       <include name="libinkscape.a"/>
 	   </fileset>
 	   <libs>
 	       -L${gtk}/lib
@@ -288,7 +288,11 @@
     <copy file="${gtk}/bin/intl.dll" tofile="${dist}/libintl-2.dll"/>
 
     <!-- MSGFMT files -->
-    <copy todir="${dist}"> <fileset dir="${build}/po"/> </copy>
+    <copy todir="${dist}">
+	    <fileset dir="${build}/po">
+		  <exclude name=".*\.am"/>
+		</fileset>
+	</copy>
 
     <!-- GTK -->
     <copy todir="${dist}"> <fileset dir="${gtk}/etc"/> </copy>
@@ -297,7 +301,11 @@
     <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/glib-2.0"/> </copy>
     <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/locale"/> </copy>
     <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/pango"/> </copy>
-    <copy todir="${dist}"> <fileset dir="share"/> </copy>
+    <copy todir="${dist}">
+	    <fileset dir="share">
+		  <exclude name=".*\.am"/>
+		</fileset>
+	</copy>
     <copy todir="${dist}/share"> <fileset dir="${gtk}/share/themes"/> </copy>
     <mkdir dir="${dist}/data"/>
     <mkdir dir="${dist}/locale"/>
