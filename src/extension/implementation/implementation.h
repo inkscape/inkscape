@@ -76,6 +76,7 @@ public:
                            SPDocument *doc);
     virtual unsigned finish(Inkscape::Extension::Print *module);
     virtual bool     textToPath(Inkscape::Extension::Print *ext);
+    virtual bool     fontEmbedded(Inkscape::Extension::Print * ext);
 
     /* ----- Rendering methods ----- */
     virtual unsigned bind(Inkscape::Extension::Print *module,

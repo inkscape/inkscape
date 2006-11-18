@@ -21,20 +21,31 @@
 
 #include "libnr/nr-path.h"
 
+#include <libnrtype/font-instance.h>
+
 #include "svg/stringstream.h"
 
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
+typedef enum {FONT_TYPE1, FONT_TRUETYPE} FontType;
+
 class PrintPS : public Inkscape::Extension::Implementation::Implementation {
     float _width;
     float _height;
-    FILE *_stream;
+    FILE * _begin_stream;//stream to print prolog and document setup of EPS, if font embedding
+    FILE * _stream;//(main) stream to print the (E)PS output, or only the script part following prolog/document setup, if font embedding
+
     unsigned short _dpi;
     bool _bitmap;
     std::set<std::string> _latin1_encoded_fonts;
     bool _newlatin1font_proc_defined;
+
+    GTree * _fonts;//maps fonts used in the document, to (value=)"TRUE" only if the font was effectively embedded, "FALSE" if not.
+
+    //map strings of font types to enumeration of int values
+    std::map<std::string, FontType> _fontTypesMap;
 
     void print_bpath(SVGOStringStream &os, NArtBpath const *bp);
 
@@ -42,6 +53,10 @@ class PrintPS : public Inkscape::Extension::Implementation::Implementation {
     void print_stroke_style(SVGOStringStream &os, SPStyle const *style);
 
     char const *PSFontName(SPStyle const *style);
+    bool PrintPS::embed_t1(SVGOStringStream &os, font_instance* font);
+    bool PrintPS::embed_font(SVGOStringStream &os, font_instance* font);
+
+    void PrintPS::print_glyphlist(SVGOStringStream &os, font_instance* font, Glib::ustring unistring);
 
     unsigned int print_image(FILE *ofp, guchar *px, unsigned int width, unsigned int height, unsigned int rs,
                              NRMatrix const *transform);
@@ -87,6 +102,7 @@ public:
 
     bool textToPath(Inkscape::Extension::Print *ext);
     static void init(void);
+    bool fontEmbedded (Inkscape::Extension::Print * ext);
 };
 
 }  /* namespace Internal */

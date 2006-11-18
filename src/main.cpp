@@ -134,6 +134,7 @@ enum {
     SP_ARG_EXPORT_EPS,
     SP_ARG_EXPORT_PDF,
     SP_ARG_EXPORT_TEXT_TO_PATH,
+    SP_ARG_EXPORT_FONT,
     SP_ARG_EXPORT_BBOX_PAGE,
     SP_ARG_EXTENSIONDIR,
     SP_ARG_SLIDESHOW,
@@ -175,6 +176,7 @@ static gchar *sp_export_ps = NULL;
 static gchar *sp_export_eps = NULL;
 static gchar *sp_export_pdf = NULL;
 static gboolean sp_export_text_to_path = FALSE;
+static gboolean sp_export_font = FALSE;
 static gboolean sp_export_bbox_page = FALSE;
 static gboolean sp_query_x = FALSE;
 static gboolean sp_query_y = FALSE;
@@ -308,6 +310,11 @@ struct poptOption options[] = {
     {"export-text-to-path", 'T',
      POPT_ARG_NONE, &sp_export_text_to_path, SP_ARG_EXPORT_TEXT_TO_PATH,
      N_("Convert text object to paths on export (EPS)"),
+     NULL},
+
+    {"export-embed-fonts", 'F',
+     POPT_ARG_NONE, &sp_export_font, SP_ARG_EXPORT_FONT,
+     N_("Embed fonts on export (Type 1 only) (EPS)"),
      NULL},
 
     {"export-bbox-page", 'B',
@@ -994,6 +1001,7 @@ static void do_export_ps(SPDocument* doc, gchar const* uri, char const* mime)
     }
 
     bool old_text_to_path = false;
+    bool old_font_embedded = false;
     bool old_bbox_page = false;
 
     try {
@@ -1002,6 +1010,14 @@ static void do_export_ps(SPDocument* doc, gchar const* uri, char const* mime)
     }
     catch (...) {
         g_warning ("Could not set export-text-to-path option for this export.");
+    }
+
+    try {
+        old_font_embedded = (*i)->get_param_bool("fontEmbedded");
+        (*i)->set_param_bool("fontEmbedded", sp_export_font);
+    }
+    catch (...) {
+        g_warning ("Could not set export-font option for this export.");
     }
 
     try {
@@ -1016,6 +1032,7 @@ static void do_export_ps(SPDocument* doc, gchar const* uri, char const* mime)
 
     try {
         (*i)->set_param_bool("textToPath", old_text_to_path);
+        (*i)->set_param_bool("fontEmbedded", old_font_embedded);
         (*i)->set_param_bool("pageBoundingBox", old_bbox_page);
     }
     catch (...) {

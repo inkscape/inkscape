@@ -111,6 +111,13 @@ Print::textToPath (void)
 	return imp->textToPath(this);
 }
 
+//whether embed font in print output (EPS especially)
+bool
+Print::fontEmbedded (void)
+{
+	return imp->fontEmbedded(this);
+}
+
 } }  /* namespace Inkscape, Extension */
 
 /*

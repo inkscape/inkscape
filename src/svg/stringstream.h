@@ -3,6 +3,7 @@
 
 #include <glib/gtypes.h>
 #include <sstream>
+#include <string>
 
 namespace Inkscape {
 
@@ -44,6 +45,10 @@ public:
 
     std::string str() const {
         return ostr.str();
+    }
+    
+    void str (std::string &s) {
+        return ostr.str(s);
     }
 
     std::streamsize precision() const {

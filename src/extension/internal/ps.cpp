@@ -62,6 +62,15 @@
 
 #include "io/sys.h"
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include <freetype/internal/ftobjs.h>
+#include <pango/pangoft2.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+using namespace std;
+
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
@@ -71,12 +80,18 @@ PrintPS::PrintPS() :
     _dpi(72),
     _bitmap(false)
 {
+    //map font types
+    _fontTypesMap["type1"] = FONT_TYPE1;
+    _fontTypesMap["truetype"] = FONT_TRUETYPE;
+    //TODO: support other font types (cf. embed_font())
 }
 
 PrintPS::~PrintPS(void)
 {
     /* fixme: should really use pclose for popen'd streams */
     if (_stream) fclose(_stream);
+    if(_begin_stream) fclose(_begin_stream);
+    if(_fonts) g_tree_destroy(_fonts);
 
     /* restore default signal handling for SIGPIPE */
 #if !defined(_WIN32) && !defined(__WIN32__)
@@ -224,15 +239,19 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
 {
     gboolean epsexport = false;
 
+
     _latin1_encoded_fonts.clear();
     _newlatin1font_proc_defined = false;
 
     FILE *osf = NULL;
     FILE *osp = NULL;
+    FILE *osf_tmp = NULL;
 
     gsize bytesRead = 0;
     gsize bytesWritten = 0;
     GError *error = NULL;
+    //check whether fonts have to be embedded in the (EPS only) output
+    bool font_embedded = mod->fontEmbedded();
     gchar const *utf8_fn = mod->get_param_string("destination");
     gchar *local_fn = g_filename_from_utf8( utf8_fn,
                                             -1,  &bytesRead,  &bytesWritten, &error);
@@ -257,7 +276,7 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
                         fn, strerror(errno));
                 return 0;
             }
-            _stream = osp;
+            _stream = _begin_stream = osp;
         } else if (*fn == '>') {
             fn += 1;
             epsexport = g_str_has_suffix(fn,".eps");
@@ -269,7 +288,31 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
                         fn, strerror(errno));
                 return 0;
             }
-            _stream = osf;
+            _begin_stream = osf;
+             /* if font embedding is requested for EPS export...
+             * TODO:could be extended to PS export if texttopath=FALSE possible
+             */
+             if(font_embedded && epsexport)
+             {
+               /**
+               * Create temporary file where to print the main "script" part of the EPS document.
+               * Use an extra stream (_begin_stream) to print the prolog and document setup sections.
+               * Thus, once all the (main) script part printed, all the fonts used are known and can be embedded
+               * just after the prolog section, in a Begin(End)Setup section (document setup),
+               * one Begin(End)Resource (DSC comment) section for each font embedded.
+               * Then, append the final script part from the temporary file (_stream in this case).
+               * Reference: Adobe Technical note 5001, "PostScript Document Struturing Conventions Specifications"
+               * page 19
+               */
+               osf_tmp = tmpfile();
+               if(!osf_tmp)
+               {
+                 g_warning("Could not create a temporary file for font embedding. Font embedding canceled.");
+                 mod->set_param_bool("fontEmbedded", false);
+                 font_embedded = false;
+                 _stream = osf;
+               } else _stream = osf_tmp;
+             } else _stream = osf;
         } else {
             /* put cwd stuff in here */
             gchar *qn = ( *fn
@@ -286,7 +329,7 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
                 return 0;
             }
             g_free(qn);
-            _stream = osp;
+            _stream = _begin_stream = osp;
         }
     }
 
@@ -299,23 +342,24 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
 #endif
     }
 
-    int const res = fprintf(_stream, ( epsexport
+    int const res = fprintf(_begin_stream, ( epsexport
                                        ? "%%!PS-Adobe-3.0 EPSF-3.0\n"
                                        : "%%!PS-Adobe-3.0\n" ));
     /* flush this to test output stream as early as possible */
-    if (fflush(_stream)) {
+    if (fflush(_begin_stream)) {
         /*g_print("caught error in sp_module_print_plain_begin\n");*/
-        if (ferror(_stream)) {
+        if (ferror(_begin_stream)) {
             g_print("Error %d on output stream: %s\n", errno,
                     g_strerror(errno));
         }
         g_print("Printing failed\n");
         /* fixme: should use pclose() for pipes */
-        fclose(_stream);
-        _stream = NULL;
+        fclose(_begin_stream);
+        _begin_stream = NULL;
         fflush(stdout);
         return 0;
     }
+    //TODO: do this same test on _stream
 
     // width and height in pt
     _width = sp_document_width(doc) * PT_PER_PX;
@@ -407,6 +451,15 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
         }
 
         os << "%%EndComments\n";
+         /* If font embedding requested, begin document setup section where to include font resources */
+         if(font_embedded) os << "%%BeginSetup\n";/* Resume it later with Begin(End)Resource sections for font embedding. So, for now, we are done with the prolog/setup part. */
+         gint ret = fprintf(_begin_stream, "%s", os.str().c_str());
+         if(ret < 0) return ret;
+
+         /* Main Script part (after document setup) begins */
+         /* Empty os from all previous printing */
+         std::string clrstr = "";
+         os.str(clrstr);
         // This will become problematic if we print multi paged documents:
         os << "%%Page: 1 1\n";
 
@@ -425,6 +478,9 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
             os << PT_PER_PX << " " << -PT_PER_PX << " scale\n";
             // from now on we can output px, but they will be treated as pt
         }
+
+ 	/* As a new PS document is created, _fontlist has to be reinitialized (unref fonts from possible former PS docs) */
+        _fonts = g_tree_new_full((GCompareDataFunc)strcmp, NULL, (GDestroyNotify)g_free, (GDestroyNotify)g_free);
     }
 
     os << "0 0 0 setrgbcolor\n"
@@ -510,10 +566,26 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
     /* Flush stream to be sure. */
     (void) fflush(_stream);
 
+    char c;
+    /* If font embedding... */
+    if(mod->get_param_bool("fontEmbedded"))
+    {
+        /* Close the document setup section that had been started (because all the needed resources are supposed to be included now) */
+       /*res = */fprintf(_begin_stream, "%s", "%%EndSetup\n");
+       /* If font embedding requested, the following PS script part was printed to a different file from the prolog/setup, so script part (current _stream) needs to be copied to prolog/setup file to get the complete (E)PS document */
+       if(fseek(_stream, 0, SEEK_SET) == 0)
+       {
+           while((c = fgetc(_stream))!=EOF) fputc(c, _begin_stream);
+       }
+       fclose(_begin_stream);
+    }
+
     /* fixme: should really use pclose for popen'd streams */
     fclose(_stream);
     _stream = 0;
     _latin1_encoded_fonts.clear();
+
+    g_tree_destroy(_fonts);
 
     return res;
 }
@@ -800,6 +872,7 @@ PrintPS::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w, unsi
     return print_image(_stream, px, w, h, rs, transform);
 }
 
+/* PSFontName is now useless (cf. text() method code) */
 char const *
 PrintPS::PSFontName(SPStyle const *style)
 {
@@ -831,6 +904,319 @@ PrintPS::PSFontName(SPStyle const *style)
     return g_strdup(n);
 }
 
+//LSB = Least Significant Byte
+//converts 4-byte array to "LSB first" to "LSB last"
+/**
+* (Used by PrintPS::embed_t1 (from libgnomeprint/gnome-font-face.c),
+* to get the length of data segment (bytes 3-6 in IBM PC (PostScript) font file format.
+* Reference: Adobe technical note 5040, "Supporting Downloadable PostScript
+* Language Fonts", page 9)
+*/
+
+#define INT32_LSB_2_5(q) ((q)[2] + ((q)[3] << 8) + ((q)[4] << 16) + ((q)[5] << 24))
+
+/**
+* \brief For "Type 1" font only, print font data in output stream, to embed font data in PS output.
+* \param os Stream of output.
+* \param font Font whose data to embed.
+* \return FALSE if font embedding canceled (due to error or not supported font type), TRUE otherwise
+* TODO: enable font embedding for True Type
+*/
+//adapted more/less from libgnomeprint/gnome_font_face_ps_embed_t1()
+bool
+PrintPS::embed_t1 (SVGOStringStream &os, font_instance* font)
+{
+        //check font type
+        FT_Face font_face = pango_ft2_font_get_face(font->pFont);
+        const FT_String* font_type = FT_MODULE_CLASS(font_face->driver)->module_name;
+        g_return_val_if_fail (_fontTypesMap[font_type] == FONT_TYPE1, false);
+        //get font filename, stream to font file and size
+        FT_Stream font_stream = font_face->stream;
+        const char* font_filename = (char*) font_stream->pathname.pointer;
+        unsigned long font_stream_size = font_stream->size;
+        //first detect if font file is in IBM PC format
+        /**
+        * if first byte is 0x80, font file is pfb, do the same as a pfb to pfa converter
+        * Reference: Adobe technical note 5040, "Supporting Downloadable PostScript
+        * Language Fonts", page 9
+	* else: include all the ASCII data in the font pfa file
+        **/
+        char* buf = new char[7];
+        unsigned char* buffer = new unsigned char[7];//for the 6 header bytes (data segment length is unknown at this point) and final '\0'
+        std::string ascii_data;//for data segment "type 1" in IBM PC Format
+        //read the 6 header bytes
+        //for debug: g_warning("Reading from font file %s...", font_filename);
+        font_stream->close(font_stream);
+        ifstream font_file (font_filename, ios::in|ios::binary);
+        if (!font_file.is_open()) {
+                g_warning ("file %s: line %d: Cannot open font file %s", __FILE__, __LINE__, font_filename);
+                return false;
+        }
+        font_file.read(buf, 6);
+        buffer = (unsigned char*) buf;
+
+	//If font file is pfb, do the same as pfb to pfa converter
+        //check byte 1
+        if (buffer[0] == 0x80) {
+                const char hextab[17] = "0123456789abcdef";
+                unsigned long offset = 0;
+
+                while (offset < font_stream_size) {
+                        gint length, i;
+                        if (buffer[0] != 0x80) {
+                                g_warning ("file %s: line %d: Corrupt %s", __FILE__, __LINE__, font_filename);
+                                //TODO: print some default font data anyway like libgnomeprint/gnome_font_face_ps_embed_empty
+                                return false;
+                        }
+                        switch (buffer[1]) {
+                        case 1:
+                                //get data segment length from bytes 3-6
+                                //(Note: byte 1 is first byte in comments to match Adobe technical note 5040, but index 0 in code)
+                                length = INT32_LSB_2_5 (buffer);
+                                offset += 6;
+                                //resize the buffer to fit the data segment length
+                                delete [] buf;
+                                buf = new char[length + 1];
+                                buffer = new unsigned char[length + 1];
+                                //read and print all the data segment length
+                                font_file.read(buf, length);
+        			buffer = (unsigned char*) buf;
+                                /**
+                                * Assigning a part from the buffer of length "length" ensures
+                                * that no incorrect extra character will be printed and make the PS output invalid
+                                * That was the case with the code:
+                                * os << buffer;
+                                * (A substring method could have been used as well.)
+                                */
+                                ascii_data.assign(buf, 0, length);
+                                os << ascii_data;
+                                offset += length;
+                                //read next 6 header bytes
+                                font_file.read(buf, 6);
+                                break;
+                        case 2:
+                                length = INT32_LSB_2_5 (buffer);
+                                offset += 6;
+                                //resize the buffer to fit the data segment length
+                                delete [] buf;
+                                buf = new char[length + 1];
+                                buffer = new unsigned char[length + 1];
+                                //read and print all the data segment length
+                                font_file.read(buf, length);
+                                buffer = (unsigned char*) buf;
+                                for (i = 0; i < length; i++) {
+                                        os << hextab[buffer[i] >> 4];
+                                        os << hextab[buffer[i] & 15];
+                                        offset += 1;
+                                        if ((i & 31) == 31 || i == length - 1)
+                                                os << "\n";
+                                }
+                                //read next 6 header bytes
+                                font_file.read(buf, 6);
+                                break;
+                        case 3:
+                                /* Finished */
+                                os << "\n";
+                                offset = font_stream_size;
+                                break;
+                        default:
+                                os << "%%%ERROR: Font file corrupted at byte " << offset << "\n";
+                                //TODO: print some default font data anyway like libgnomeprint/gnome_font_face_ps_embed_empty
+                                return false;
+                        }
+                }
+        }
+	//else: font file is pfa, include all directly
+	else {
+                //font is not in IBM PC format, all the file content can be directly printed
+                //resize buffer
+                delete [] buf;
+                buf = new char[font_stream_size + 1];
+                delete [] buffer;
+                font_file.seekg (0, ios::beg);
+                font_file.read(buf, font_stream_size);
+		/**
+		 * Assigning a part from the buffer of length "length" ensures
+                 * that no incorrect extra character will be printed and make the PS output invalid
+                 * That was the case with the code:
+                 * os << buffer;
+                 * (A substring method could have been used as well.)
+                 */
+		ascii_data.assign(buf, 0, font_stream_size);
+		os << ascii_data;
+        }
+        font_file.close();
+        delete [] buf;
+        buf = NULL;
+        buffer = NULL;// Clear buffer to prevent using invalid memory reference.
+
+        char font_psname[256];
+        font->PSName(font_psname, sizeof(font_psname));
+        FT_Long font_num_glyphs = font_face->num_glyphs;
+        if (font_num_glyphs < 256) {
+                gint glyph;
+                /* 8-bit vector */
+                os << "(" << font_psname << ") cvn findfont dup length dict begin\n";
+                os << "{1 index /FID ne {def} {pop pop} ifelse} forall\n";
+                os << "/Encoding [\n";
+                for (glyph = 0; glyph < 256; glyph++) {
+                        guint g;
+                        gchar c[256];
+                        FT_Error status;
+                        g = (glyph < font_num_glyphs) ? glyph : 0;
+                        status = FT_Get_Glyph_Name (font_face, g, c, 256);
+
+			if (status != FT_Err_Ok) {
+                                g_warning ("file %s: line %d: Glyph %d has no name in %s", __FILE__, __LINE__, g, font_filename);
+                                g_snprintf (c, 256, ".notdef");
+                        }
+
+                        os << "/" << c << ( ((glyph & 0xf) == 0xf)?"\n":" " );
+                }
+                os << "] def currentdict end\n";
+                //TODO: manage several font instances for same ps name like in libgnomeprint/gnome_print_ps2_set_font_real()
+                //gf_pso_sprintf (pso, "(%s) cvn exch definefont pop\n", pso->encodedname);
+                os << "(" << font_psname << ") cvn exch definefont pop\n";
+        } else {
+                gint nfonts, i, j;
+                /* 16-bit vector */
+                nfonts = (font_num_glyphs + 255) >> 8;
+
+                os << "32 dict begin\n";
+                /* Common entries */
+                os << "/FontType 0 def\n";
+                os << "/FontMatrix [1 0 0 1 0 0] def\n";
+                os << "/FontName (" << font_psname << "-Glyph-Composite) cvn def\n";
+                os << "/LanguageLevel 2 def\n";
+
+                /* Type 0 entries */
+                os << "/FMapType 2 def\n";
+
+                /* Bitch 'o' bitches */
+                os << "/FDepVector [\n";
+
+                for (i = 0; i < nfonts; i++) {
+                        os << "(" << font_psname << ") cvn findfont dup length dict begin\n";
+                        os << "{1 index /FID ne {def} {pop pop} ifelse} forall\n";
+                        os << "/Encoding [\n";
+                        for (j = 0; j < 256; j++) {
+                                gint glyph;
+                                gchar c[256];
+                                FT_Error status;
+                                glyph = 256 * i + j;
+                                if (glyph >= font_num_glyphs)
+                                        glyph = 0;
+                                status = FT_Get_Glyph_Name (font_face, glyph, c, 256);
+                                if (status != FT_Err_Ok) {
+                                        g_warning ("file %s: line %d: Glyph %d has no name in %s", __FILE__, __LINE__, glyph, font_filename);
+                                        g_snprintf (c, 256, ".notdef");
+                                }
+                                os << "/" << c << ( ((j & 0xf) == 0xf)?"\n":" " );
+                        }
+                        os << "] def\n";
+                        os << "currentdict end (" << font_psname << "-Glyph-Page-";
+                        os << std::dec << i;
+                        os << ") cvn exch definefont\n";
+                }
+                os << "] def\n";
+                os << "/Encoding [\n";
+                for (i = 0; i < 256; i++) {
+                        gint fn;
+                        fn = (i < nfonts) ? i : 0;
+                        os << std::dec << fn;
+                        os << ( ((i & 0xf) == 0xf) ? "\n" : " " );
+                }
+                os << "] def\n";
+                os << "currentdict end\n";
+                //TODO: manage several font instances for same ps name like in libgnomeprint/gnome_print_ps2_set_font_real()
+                //gf_pso_sprintf (pso, "(%s) cvn exch definefont pop\n", pso->encodedname);
+                os << "(" << font_psname << ") cvn exch definefont pop\n";
+        }
+	//font embedding completed
+	return true;
+}
+
+
+
+/**
+* \brief Print font data in output stream, to embed font data in PS output.
+* \param os Stream of output.
+* \param font Font whose data to embed.
+* \return FALSE if font embedding canceled (due to error or not supported font type), TRUE otherwise
+*/
+//adapted from libgnomeprint/gnome_font_face_ps_embed()
+bool PrintPS::embed_font(SVGOStringStream &os, font_instance* font)
+{
+  //Hinted at by a comment in libgnomeprint/fcpattern_to_gp_font_entry()
+  //Determining the font type in the "Pango way"
+  FT_Face font_face = pango_ft2_font_get_face(font->pFont);
+  const FT_String* font_type = FT_MODULE_CLASS(font_face->driver)->module_name;
+
+  /**
+  * Possible values of "font_type" variable, not supported (font types):
+  * truetype, cff, t1cid, sfnt, bdf, pcf, pfr,  winfonts (FNT/FON).
+  */
+  //TODO: provide support for the font types above
+  switch(_fontTypesMap[font_type])
+  {
+    case FONT_TYPE1:
+      return embed_t1 (os, font);
+    //TODO: implement TT font embedding
+    /*case FONT_TRUETYPE:
+      embed_tt (os, font);
+      break;*/
+    default:
+      g_warning("Unknown (not supported) font type for embedding: %s", font_type);
+      //TODO: embed something like in libgnomeprint/gnome_font_face_ps_embed_empty();
+      return false;
+  }
+}
+
+
+/**
+* \brief Converts UTF-8 string to sequence of glyph numbers for PostScript string (cf. "show" commands.).
+* \param os Stream of output.
+* \param font Font used for unicode->glyph mapping.
+* \param unistring UTF-8 encoded string to convert.
+*/
+void PrintPS::print_glyphlist(SVGOStringStream &os, font_instance* font, Glib::ustring unistring)
+{
+  //iterate through unicode chars in unistring
+  Glib::ustring::iterator unistring_iter;
+  gunichar unichar;
+  gint glyph_index, glyph_page;
+  
+  FT_Face font_face = pango_ft2_font_get_face(font->pFont);
+  FT_Long font_num_glyphs = font_face->num_glyphs;
+  //whether font has more than one glyph pages (16-bit encoding)
+  bool two_bytes_encoded = (font_num_glyphs > 255);
+
+  for (unistring_iter = unistring.begin();   unistring_iter!=unistring.end();  unistring_iter++)
+  {
+    //get unicode char
+    unichar = *unistring_iter;
+    //get matching glyph index in current font for unicode char
+    //default glyph index is 0 for undefined font character (glyph unavailable)
+    //TODO: if glyph unavailable for current font, use a default font among the most Unicode-compliant - e.g. Bitstream Cyberbit - I guess
+    glyph_index = font->MapUnicodeChar(unichar);
+    //if more than one glyph pages for current font (16-bit encoding),
+    if(two_bytes_encoded)
+    {
+      //add glyph page before glyph index.
+      glyph_page = (glyph_index >> 8) & 0xff;
+      os << "\\";
+      //convert in octal code before printing
+      os << std::oct << glyph_page;
+    }
+    //(If one page - 8-bit encoding -, nothing to add.)
+    //TODO: explain the following line inspired from libgnomeprint/gnome_print_ps2_glyphlist()
+    glyph_index = glyph_index & 0xff;
+    //TODO: mark glyph as used for current font, if Inkscape has to embed minimal font data in PS
+    os << "\\";
+    //convert in octal code before printing
+    os << std::oct << glyph_index;
+  }
+}
 
 unsigned int
 PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
@@ -839,42 +1225,123 @@ PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
 
-    Inkscape::SVGOStringStream os;
+    //check whether fonts have to be embedded in the PS output
+    //if not, use the former way of Inkscape to print text
+    gboolean font_embedded = mod->fontEmbedded();
 
+    Inkscape::SVGOStringStream os;
+    //find font
+    /**
+    * A font_instance object is necessary for the next steps,
+    * that's why using PSFontName() method just to get the PS fontname
+    * is not enough and not appropriate
+    */
+    font_instance *tf = (font_factory::Default())->Face(style->text->font_family.value, font_style_to_pos(*style));
+    const gchar *fn = NULL;
+    char name_buf[256];
+
+    //check whether font was found
+    /**
+    * This check is not strictly reliable
+    * since Inkscape returns a default font if font not found.
+    * This is just to be consistent with the method PSFontName().
+    */
+    if (tf) {
+        //get font PS name
+        tf->PSName(name_buf, sizeof(name_buf));
+        fn = name_buf;
+    } else {
+    	// this system does not have this font, so cancel font embedding...
+        font_embedded = FALSE;
+        //this case seems to never happen since Inkscape uses a default font instead (like BitstreamVeraSans on Windows)
+        g_warning("Font %s not found.", fn);
+        //...and just use the name from SVG in the hope that PS interpreter will make sense of it
+        bool i = (style->font_style.value == SP_CSS_FONT_STYLE_ITALIC);
+        bool o = (style->font_style.value == SP_CSS_FONT_STYLE_OBLIQUE);
+        bool b = (style->font_weight.value == SP_CSS_FONT_WEIGHT_BOLD) ||
+            (style->font_weight.value >= SP_CSS_FONT_WEIGHT_500 && style->font_weight.value <= SP_CSS_FONT_WEIGHT_900);
+
+        fn = g_strdup_printf("%s%s%s%s",
+                            g_strdelimit(style->text->font_family.value, " ", '-'),
+                            (b || i || o) ? "-" : "",
+                            (b) ? "Bold" : "",
+                            (i) ? "Italic" : ((o) ? "Oblique" : "") );
+    }
+
+    /**
+    * If font embedding is requested, tempt to embed the font the first time it is used, once and for all.
+    * There is no selection of the glyph descriptions to embed, based on the characters used effectively in the document.
+    * (TODO?)
+    * Else, back to the former way of printing.
+    */
+    gchar* is_embedded;
+    //if not first time the font is used and if font embedding requested, check whether the font has been embedded (successfully the first time).
+    if(g_tree_lookup_extended(_fonts, fn, NULL, (gpointer*)&is_embedded)) font_embedded = font_embedded && (strcmp(is_embedded, "TRUE") == 0);
+    else
+    {
+      //first time the font is used
+      if(font_embedded)
+      {
+        //embed font in PS output
+        //adapted from libgnomeprint/gnome_print_ps2_close()
+        os << "%%BeginResource: font " << fn << "\n";
+        font_embedded = embed_font(os, tf);
+        os << "%%EndResource: font " << fn << "\n";
+        if(!font_embedded) g_warning("Font embedding canceled for font: %s", fn);
+        else fprintf(_begin_stream, "%s", os.str().c_str());
+        //empty os before resume printing to the script stream
+        std::string clrstr = "";
+        os.str(clrstr);
+
+      }
+      //add to the list
+      g_tree_insert(_fonts, g_strdup(fn), g_strdup((font_embedded)?"TRUE":"FALSE"));
+    }
+    
+    Glib::ustring s;
     // Escape chars
     Inkscape::SVGOStringStream escaped_text;
-    escaped_text << std::oct;
-    for (gchar const *p_text = text ; *p_text ; p_text = g_utf8_next_char(p_text)) {
-        gunichar const c = g_utf8_get_char(p_text);
-        if (c == '\\' || c == ')' || c == '(')
-            escaped_text << '\\' << static_cast<char>(c);
-        else if (c >= 0x80)
-            escaped_text << '\\' << c;
-        else
-            escaped_text << static_cast<char>(c);
+    //if font embedding, all characters will be converted to glyph indices (cf. PrintPS::print_glyphlist()),
+    //so no need to escape characters
+    //else back to the old way, i.e. escape chars: '\',')','(' and UTF-8 ones
+    if(font_embedded) s = text;
+    else {
+	escaped_text << std::oct;
+	for (gchar const *p_text = text ; *p_text ; p_text = g_utf8_next_char(p_text)) {
+		gunichar const c = g_utf8_get_char(p_text);
+		if (c == '\\' || c == ')' || c == '(')
+		escaped_text << '\\' << static_cast<char>(c);
+		else if (c >= 0x80)
+		escaped_text << '\\' << c;
+		else
+		escaped_text << static_cast<char>(c);
+	}
     }
 
     os << "gsave\n";
 
     // set font
-    char const *fn = PSFontName(style);
-    if (_latin1_encoded_fonts.find(fn) == _latin1_encoded_fonts.end()) {
-        if (!_newlatin1font_proc_defined) {
-            // input: newfontname, existingfontname
-            // output: new font object, also defined to newfontname
-            os << "/newlatin1font "         // name of the proc
-                  "{findfont dup length dict copy "     // load the font and create a copy of it
-                  "dup /Encoding ISOLatin1Encoding put "     // change the encoding in the copy
-                  "definefont} def\n";      // create the new font and leave it on the stack, define the proc
-            _newlatin1font_proc_defined = true;
-        }
-        os << "/" << fn << "-ISOLatin1 /" << fn << " newlatin1font\n";
-        _latin1_encoded_fonts.insert(fn);
-    } else
-        os << "/" << fn << "-ISOLatin1 findfont\n";
+    if(font_embedded) os << "/" << fn << " findfont\n";
+    else {
+	if (_latin1_encoded_fonts.find(fn) == _latin1_encoded_fonts.end()) {
+		if (!_newlatin1font_proc_defined) {
+		// input: newfontname, existingfontname
+		// output: new font object, also defined to newfontname
+		os << "/newlatin1font "         // name of the proc
+			"{findfont dup length dict copy "     // load the font and create a copy of it
+			"dup /Encoding ISOLatin1Encoding put "     // change the encoding in the copy
+			"definefont} def\n";      // create the new font and leave it on the stack, define the proc
+		_newlatin1font_proc_defined = true;
+		}
+		os << "/" << fn << "-ISOLatin1 /" << fn << " newlatin1font\n";
+		_latin1_encoded_fonts.insert(fn);
+	} else
+		os << "/" << fn << "-ISOLatin1 findfont\n";
+    }
     os << style->font_size.computed << " scalefont\n";
     os << "setfont\n";
-    g_free((void *) fn);
+   //The commented line beneath causes Inkscape to crash under Linux but not under Windows
+    //g_free((void*) fn);
 
     if ( style->fill.type == SP_PAINT_TYPE_COLOR
          || ( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
@@ -888,7 +1355,10 @@ PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
 
         os << "newpath\n";
         os << p[NR::X] << " " << p[NR::Y] << " moveto\n";
-        os << "(" << escaped_text.str() << ") show\n";
+        os << "(";
+        if(font_embedded) print_glyphlist(os, tf, s);
+        else os << escaped_text.str();
+        os << ") show\n";
     }
 
     if (style->stroke.type == SP_PAINT_TYPE_COLOR) {
@@ -899,8 +1369,13 @@ PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
         // paint stroke
         os << "newpath\n";
         os << p[NR::X] << " " << p[NR::Y] << " moveto\n";
-        os << "(" << escaped_text.str() << ") false charpath stroke\n";
+        os << "(";
+        if(font_embedded) print_glyphlist(os, tf, s);
+        else os << escaped_text.str();
+        os << ") false charpath stroke\n";
     }
+
+    if(tf) tf->Unref();
 
     os << "grestore\n";
 
@@ -1209,6 +1684,19 @@ PrintPS::textToPath(Inkscape::Extension::Print * ext)
     return ext->get_param_bool("textToPath");
 }
 
+/**
+* \brief Get "fontEmbedded" param
+* \retval TRUE Fonts have to be embedded in the output so that the user might not need to install fonts to have the interpreter read the document correctly
+* \retval FALSE No font embedding
+*
+* Only available for Adobe Type 1 fonts in EPS output till now
+*/
+bool
+PrintPS::fontEmbedded(Inkscape::Extension::Print * ext)
+{
+    return ext->get_param_bool("fontEmbedded");
+}
+
 #include "clear-n_.h"
 
 void
@@ -1224,6 +1712,7 @@ PrintPS::init(void)
         "<param name=\"destination\" type=\"string\">| lp</param>\n"
         "<param name=\"pageBoundingBox\" type=\"boolean\">TRUE</param>\n"
         "<param name=\"textToPath\" type=\"boolean\">TRUE</param>\n"
+        "<param name=\"fontEmbedded\" type=\"boolean\">FALSE</param>\n"
         "<print/>\n"
         "</inkscape-extension>", new PrintPS());
 }

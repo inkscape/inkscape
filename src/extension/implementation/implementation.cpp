@@ -170,6 +170,19 @@ Implementation::textToPath(Inkscape::Extension::Print *ext)
     return false;
 }
 
+/**
+   \brief Get "fontEmbedded" param, i.e. tell the printing engine whether fonts should be embedded
+   \retval TRUE Fonts have to be embedded in the output so that the user might not need to install fonts to have the interpreter read the document correctly
+   \retval FALSE Not embed fonts
+
+   Only available for Adobe Type 1 fonts in EPS output as of now
+*/
+
+bool
+Implementation::fontEmbedded(Inkscape::Extension::Print * ext)
+{
+    return false;
+}
 
 }  /* namespace Implementation */
 }  /* namespace Extension */

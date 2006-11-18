@@ -67,6 +67,7 @@ public:
                                NR::Point p,
                                SPStyle const *style);
     bool          textToPath  (void);
+    bool          fontEmbedded  (void);
 };
 
 } }  /* namespace Inkscape, Extension */

@@ -57,12 +57,17 @@ EpsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar 
     new_val                  = mod->get_param_bool("textToPath");
     ext->set_param_bool("textToPath", new_val);
 
+    bool old_fontEmbedded    = ext->get_param_bool("fontEmbedded");
+    new_val                  = mod->get_param_bool("fontEmbedded");
+    ext->set_param_bool("fontEmbedded", new_val);
+
     final_name = g_strdup_printf("> %s", uri);
     sp_print_document_to_file(doc, final_name);
     g_free(final_name);
 
     ext->set_param_bool("pageBoundingBox", old_pageBoundingBox);
     ext->set_param_bool("textToPath", old_textToPath);
+    ext->set_param_bool("fontEmbedded", old_fontEmbedded);
 
     return;
 }
@@ -84,7 +89,8 @@ EpsOutput::init (void)
             "<name>" N_("Encapsulated Postscript Output") "</name>\n"
             "<id>org.inkscape.output.eps</id>\n"
             "<param name=\"pageBoundingBox\" type=\"boolean\" gui-text=\"" N_("Make bounding box around full page") "\">FALSE</param>\n"
-            "<param name=\"textToPath\" type=\"boolean\" gui-text=\"" N_("Convert text to path") "\">TRUE</param>\n"
+            "<param name=\"textToPath\" type=\"boolean\" gui-text=\"" N_("Convert texts to paths") "\">TRUE</param>\n"
+            "<param name=\"fontEmbedded\" type=\"boolean\" gui-text=\"" N_("Embed fonts (Type 1 only)") "\">FALSE</param>\n"
             "<output>\n"
                 "<extension>.eps</extension>\n"
                 "<mimetype>image/x-e-postscript</mimetype>\n"
