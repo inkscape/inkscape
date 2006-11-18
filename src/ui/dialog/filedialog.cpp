@@ -913,7 +913,7 @@ FileOpenDialogImpl::FileOpenDialogImpl(const Glib::ustring &dir,
          sigc::mem_fun(*this, &FileOpenDialogImpl::updatePreviewCallback) );
 
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-    add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK);
+    set_default(*add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK));
 
 }
 
@@ -1333,7 +1333,7 @@ FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
     //    checkbox.set_sensitive(FALSE);
 
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-    add_button(Gtk::Stock::SAVE,   Gtk::RESPONSE_OK);
+    set_default(*add_button(Gtk::Stock::SAVE,   Gtk::RESPONSE_OK));
 
     show_all_children();
 }
@@ -1978,7 +1978,7 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
     //    checkbox.set_sensitive(FALSE);
 
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-    add_button(Gtk::Stock::SAVE,   Gtk::RESPONSE_OK);
+    set_default(*add_button(Gtk::Stock::SAVE,   Gtk::RESPONSE_OK));
 
     show_all_children();
 }
