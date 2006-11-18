@@ -1,6 +1,6 @@
 <inkscape-extension>
 	<_name>Grayscale</_name>
-	<id>com.kaioa.grayscale</id>
+	<id>org.inkscape.color.grayscale</id>
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>
 	<dependency type="executable" location="extensions">color_grayscale.py</dependency>
 	<dependency type="executable" location="extensions">simplestyle.py</dependency>

@@ -1,8 +1,8 @@
 <inkscape-extension>
-	<_name>Keep Red</_name>
-	<id>com.kaioa.keepred</id>
+	<_name>Less Hue</_name>
+	<id>org.inkscape.color.lesshue</id>
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>
-	<dependency type="executable" location="extensions">color_keepred.py</dependency>
+	<dependency type="executable" location="extensions">color_lesshue.py</dependency>
 	<dependency type="executable" location="extensions">simplestyle.py</dependency>
 	<effect>
 		<object-type>all</object-type>
@@ -11,6 +11,6 @@
 		</effects-menu>
 	</effect>
 	<script>
-		<command reldir="extensions" interpreter="python">color_keepred.py</command>
+		<command reldir="extensions" interpreter="python">color_lesshue.py</command>
 	</script>
 </inkscape-extension>

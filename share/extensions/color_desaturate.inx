@@ -1,6 +1,6 @@
 <inkscape-extension>
 	<_name>Desaturate</_name>
-	<id>com.kaioa.desaturate</id>
+	<id>org.inkscape.color.desaturate</id>
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>
 	<dependency type="executable" location="extensions">color_desaturate.py</dependency>
 	<dependency type="executable" location="extensions">simplestyle.py</dependency>

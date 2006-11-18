@@ -1,8 +1,8 @@
 <inkscape-extension>
-	<_name>Keep Blue</_name>
-	<id>com.kaioa.keepblue</id>
+	<_name>More Hue</_name>
+	<id>org.inkscape.color.morehue</id>
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>
-	<dependency type="executable" location="extensions">color_keepblue.py</dependency>
+	<dependency type="executable" location="extensions">color_morehue.py</dependency>
 	<dependency type="executable" location="extensions">simplestyle.py</dependency>
 	<effect>
 		<object-type>all</object-type>
@@ -11,6 +11,6 @@
 		</effects-menu>
 	</effect>
 	<script>
-		<command reldir="extensions" interpreter="python">color_keepblue.py</command>
+		<command reldir="extensions" interpreter="python">color_morehue.py</command>
 	</script>
 </inkscape-extension>

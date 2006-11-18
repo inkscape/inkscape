@@ -24,6 +24,7 @@ color_props_fill=('fill:','stop-color:','flood-color:','lighting-color:')
 color_props_stroke=('stroke:',)
 color_props = color_props_fill + color_props_stroke
 
+
 class ColorEffect(inkex.Effect):
   def __init__(self):
     inkex.Effect.__init__(self,use_minidom=True)
@@ -105,3 +106,62 @@ class ColorEffect(inkex.Effect):
  
   def colmod(self,r,g,b):
     pass
+
+  def rgb_to_hsl(self,r, g, b):
+    rgb_max = max (max (r, g), b)
+    rgb_min = min (min (r, g), b)
+    delta = rgb_max - rgb_min
+    hsl = [0.0, 0.0, 0.0]
+    hsl[2] = (rgb_max + rgb_min)/2.0
+    if delta == 0:
+        hsl[0] = 0.0
+        hsl[1] = 0.0
+    else:
+        if hsl[2] <= 0.5:
+            hsl[1] = delta / (rgb_max + rgb_min)
+        else:
+            hsl[1] = delta / (2 - rgb_max - rgb_min)
+        if r == rgb_max:
+            hsl[0] = (g - b) / delta
+        else:
+            if g == rgb_max:
+                hsl[0] = 2.0 + (b - r) / delta
+            else:
+                if b == rgb_max:
+                    hsl[0] = 4.0 + (r - g) / delta
+        hsl[0] = hsl[0] / 6.0
+        if hsl[0] < 0:
+            hsl[0] = hsl[0] + 1
+        if hsl[0] > 1:
+            hsl[0] = hsl[0] - 1
+    return hsl
+
+  def hue_2_rgb (self, v1, v2, h):
+    if h < 0:
+        h += 6.0
+    if h > 6:
+        h -= 6.0
+    if h < 1:
+        return v1 + (v2 - v1) * h
+    if h < 3:
+        return v2
+    if h < 4:
+        return v1 + (v2 - v1) * (4 - h)
+    return v1
+
+  def hsl_to_rgb (self,h, s, l):
+    rgb = [0, 0, 0]
+    if s == 0:
+        rgb[0] = l
+        rgb[1] = l
+        rgb[2] = l
+    else:
+        if l < 0.5:
+            v2 = l * (1 + s)
+        else:
+            v2 = l + s - l*s
+        v1 = 2*l - v2
+        rgb[0] = self.hue_2_rgb (v1, v2, h*6 + 2.0)
+        rgb[1] = self.hue_2_rgb (v1, v2, h*6)
+        rgb[2] = self.hue_2_rgb (v1, v2, h*6 - 2.0)
+    return rgb

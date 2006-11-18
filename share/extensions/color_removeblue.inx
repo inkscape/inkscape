@@ -1,6 +1,6 @@
 <inkscape-extension>
 	<_name>Remove Blue</_name>
-	<id>com.kaioa.removeblue</id>
+	<id>org.inkscape.color.removeblue</id>
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>
 	<dependency type="executable" location="extensions">color_removeblue.py</dependency>
 	<dependency type="executable" location="extensions">simplestyle.py</dependency>

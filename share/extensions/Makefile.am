@@ -70,14 +70,17 @@ extensions = \
 	color_grayscale.py\
 	color_brighter.py\
 	color_darker.py\
-	color_keepblue.py\
-	color_keepgreen.py\
-	color_keepred.py\
 	color_negative.py\
 	color_removeblue.py\
 	color_removegreen.py\
 	color_removered.py\
-	color_rgbbarrel.py
+	color_rgbbarrel.py\
+	color_moresaturation.py\
+	color_lesssaturation.py\
+	color_morelight.py\
+	color_lesslight.py\
+	color_morehue.py\
+	color_lesshue.py
 
 
 otherstuff = \
@@ -145,14 +148,17 @@ modules = \
 	color_desaturate.inx\
 	color_grayscale.inx\
 	color_negative.inx\
-	color_keepblue.inx\
-	color_keepgreen.inx\
-	color_keepred.inx\
 	color_removeblue.inx\
 	color_removegreen.inx\
 	color_removered.inx\
 	color_rgbbarrel.inx\
-	color_custom.inx 
+	color_custom.inx \
+	color_moresaturation.inx\
+	color_lesssaturation.inx\
+	color_morelight.inx\
+	color_lesslight.inx\
+	color_morehue.inx\
+	color_lesshue.inx
 
 
 extension_SCRIPTS = \

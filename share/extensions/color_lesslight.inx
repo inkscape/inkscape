@@ -1,8 +1,8 @@
 <inkscape-extension>
-	<_name>Darker</_name>
-	<id>org.inkscape.color.darker</id>
+	<_name>Less Light</_name>
+	<id>org.inkscape.color.lesslight</id>
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>
-	<dependency type="executable" location="extensions">color_darker.py</dependency>
+	<dependency type="executable" location="extensions">color_lesslight.py</dependency>
 	<dependency type="executable" location="extensions">simplestyle.py</dependency>
 	<effect>
 		<object-type>all</object-type>
@@ -11,6 +11,6 @@
 		</effects-menu>
 	</effect>
 	<script>
-		<command reldir="extensions" interpreter="python">color_darker.py</command>
+		<command reldir="extensions" interpreter="python">color_lesslight.py</command>
 	</script>
 </inkscape-extension>

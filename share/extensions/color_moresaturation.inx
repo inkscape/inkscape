@@ -1,8 +1,8 @@
 <inkscape-extension>
-	<_name>Keep Green</_name>
-	<id>com.kaioa.keepgreen</id>
+	<_name>More Saturation</_name>
+	<id>org.inkscape.color.moresaturation</id>
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>
-	<dependency type="executable" location="extensions">color_keepgreen.py</dependency>
+	<dependency type="executable" location="extensions">color_moresaturation.py</dependency>
 	<dependency type="executable" location="extensions">simplestyle.py</dependency>
 	<effect>
 		<object-type>all</object-type>
@@ -11,6 +11,6 @@
 		</effects-menu>
 	</effect>
 	<script>
-		<command reldir="extensions" interpreter="python">color_keepgreen.py</command>
+		<command reldir="extensions" interpreter="python">color_moresaturation.py</command>
 	</script>
 </inkscape-extension>
