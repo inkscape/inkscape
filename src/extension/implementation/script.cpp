@@ -789,6 +789,7 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
         copy_doc(doc->doc()->rroot, mydoc->rroot);
         doc->doc()->emitReconstructionFinish();
         mydoc->release();
+        sp_namedview_update_layers_from_document(desktop);
     }
 }
 
