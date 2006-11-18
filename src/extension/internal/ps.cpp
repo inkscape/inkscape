@@ -1274,9 +1274,9 @@ PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
     * (TODO?)
     * Else, back to the former way of printing.
     */
-    gchar* is_embedded;
+    gpointer  is_embedded;
     //if not first time the font is used and if font embedding requested, check whether the font has been embedded (successfully the first time).
-    if(g_tree_lookup_extended(_fonts, fn, NULL, (gpointer*)&is_embedded)) font_embedded = font_embedded && (strcmp(is_embedded, "TRUE") == 0);
+    if(g_tree_lookup_extended(_fonts, fn, NULL, &is_embedded)) font_embedded = font_embedded && (strcmp((char *)is_embedded, "TRUE") == 0);
     else
     {
       //first time the font is used

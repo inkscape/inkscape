@@ -53,10 +53,10 @@ class PrintPS : public Inkscape::Extension::Implementation::Implementation {
     void print_stroke_style(SVGOStringStream &os, SPStyle const *style);
 
     char const *PSFontName(SPStyle const *style);
-    bool PrintPS::embed_t1(SVGOStringStream &os, font_instance* font);
-    bool PrintPS::embed_font(SVGOStringStream &os, font_instance* font);
+    bool embed_t1(SVGOStringStream &os, font_instance* font);
+    bool embed_font(SVGOStringStream &os, font_instance* font);
 
-    void PrintPS::print_glyphlist(SVGOStringStream &os, font_instance* font, Glib::ustring unistring);
+    void print_glyphlist(SVGOStringStream &os, font_instance* font, Glib::ustring unistring);
 
     unsigned int print_image(FILE *ofp, guchar *px, unsigned int width, unsigned int height, unsigned int rs,
                              NRMatrix const *transform);
