@@ -3904,6 +3904,10 @@ bool MakeBase::createDirectory(const String &dirname)
     struct stat finfo;
     String nativeDir = getNativePath(dirname);
     char *cnative = (char *) nativeDir.c_str();
+#ifdef __WIN32__
+    if (strlen(cnative)==2 && cnative[1]==':')
+        return true;
+#endif
     if (stat(cnative, &finfo)==0)
         {
         if (!S_ISDIR(finfo.st_mode))
@@ -5926,7 +5930,8 @@ public:
                {
                if (fileName.size()>0)
                    {
-                   status("          : %s", fileName.c_str());
+                   status("          : %s to %s",
+                        fileName.c_str(), toFileName.c_str());
                    String fullSource = parent.resolve(fileName);
                    String fullDest = parent.resolve(toFileName);
                    //trace("copy %s to file %s", fullSource.c_str(),
@@ -5954,8 +5959,10 @@ public:
                        return false;
                    String fileSetDir = fileSet.getDirectory();
 
+                   status("          : %s to %s",
+                       fileSetDir.c_str(), toDirName.c_str());
+
                    int nrFiles = 0;
-                   status("          : %s", fileSetDir.c_str());
                    for (unsigned int i=0 ; i<fileSet.size() ; i++)
                        {
                        String fileName = fileSet[i];
@@ -6009,7 +6016,8 @@ public:
                    {
                    //For file->dir we want only the basename of
                    //the source appended to the dest dir
-                   status("          : %s", fileName.c_str());
+                   status("          : %s to %s", 
+                       fileName.c_str(), toDirName.c_str());
                    String baseName = fileName;
                    unsigned int pos = baseName.find_last_of('/');
                    if (pos!=baseName.npos && pos<baseName.size()-1)
@@ -7740,6 +7748,15 @@ bool Make::parsePropertyFile(const String &fileName,
 		    continue;
 
         //trace("key:'%s' val:'%s'", key.c_str(), val.c_str());
+        //See if we wanted to overload this property
+        std::map<String, String>::iterator iter =
+            specifiedProperties.find(key);
+        if (iter!=specifiedProperties.end())
+            {
+            val = iter->second;
+            status("overloading property '%s' = '%s'",
+                   key.c_str(), val.c_str());
+            }
 	    properties[key] = val;
         }
     fclose(f);
@@ -7768,15 +7785,25 @@ bool Make::parseProperty(Element *elem)
             if (val.size() > 0)
                 {
                 properties[attrVal] = val;
-                continue;
                 }
-            if (!getAttribute(elem, "location", val))
-                return false;
-            if (val.size() > 0)
+            else
                 {
-                //TODO:  process a path relative to build.xml
+                if (!getAttribute(elem, "location", val))
+                    return false;
+                if (val.size() > 0)
+                    {
+                    properties[attrVal] = val;
+                    }
+                }
+            //See if we wanted to overload this property
+            std::map<String, String>::iterator iter =
+                specifiedProperties.find(attrVal);
+            if (iter != specifiedProperties.end())
+                {
+                val = iter->second;
+                status("overloading property '%s' = '%s'",
+                    attrName.c_str(), val.c_str());
                 properties[attrVal] = val;
-                continue;
                 }
             }
         else if (attrName == "file")
@@ -7951,23 +7978,9 @@ bool Make::run()
     if (!parseFile())
         return false;
         
-    //Overload properties
-    std::map<String, String>::iterator iter;
-    for (iter = specifiedProperties.begin() ; 
-	         iter!=specifiedProperties.end() ; iter++)
-	    {
-	    String name = iter->first;
-	    String value = iter->second;
-		if (properties.find(name) == properties.end())
-		    {
-		    error("Overloading property:%s not found", name.c_str());
-		    return false;
-		    }
-		properties[name] = value;
-	    }
-
     if (!execute())
         return false;
+
     return true;
 }
 
