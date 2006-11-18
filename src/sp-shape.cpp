@@ -31,7 +31,6 @@
 #include "display/nr-arena-shape.h"
 #include "print.h"
 #include "document.h"
-#include "marker-status.h"
 #include "style.h"
 #include "sp-marker.h"
 #include "sp-path.h"
@@ -559,8 +558,6 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
 {
 	SPStyle *style = ((SPObject *) shape)->style;
 
-	marker_status("sp_shape_update_marker_view:  Updating views of markers");
-
         for (int i = SP_MARKER_LOC_START; i < SP_MARKER_LOC_QTY; i++) {
             if (shape->marker[i] == NULL) {
                 continue;
@@ -861,7 +858,6 @@ sp_shape_marker_release (SPObject *marker, SPShape *shape)
 
 	item = (SPItem *) shape;
 
-	marker_status("sp_shape_marker_release:  Releasing markers");
 	for (i = SP_MARKER_LOC_START; i < SP_MARKER_LOC_QTY; i++) {
 	  if (marker == shape->marker[i]) {
 	    SPItemView *v;

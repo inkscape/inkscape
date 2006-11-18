@@ -82,7 +82,7 @@
  *       - SPRoot [\ref sp-root.cpp, \ref sp-root.h]
  *       - SPSymbol [\ref sp-symbol.cpp, \ref sp-symbol.h]
  *     - SPImage [\ref sp-image.cpp, \ref sp-image.h]
- *     - SPShape [\ref sp-shape.cpp, \ref sp-shape.h, \ref marker-status.cpp]
+ *     - SPShape [\ref sp-shape.cpp, \ref sp-shape.h]
  *       - SPGenericEllipse [\ref sp-ellipse.cpp, \ref sp-ellipse.h]
  *         - SPArc
  *         - SPCircle

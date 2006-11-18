@@ -30,7 +30,6 @@
 #include "attributes.h"
 #include "document.h"
 #include "extract-uri.h"
-#include "marker-status.h"
 #include "uri-references.h"
 #include "sp-paint-server.h"
 #include "streq.h"
@@ -990,7 +989,6 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
         case SP_PROP_MARKER:
             /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */
             /* style->marker[SP_MARKER_LOC] = g_quark_from_string(val); */
-            marker_status("Setting SP_PROP_MARKER");
             if (!style->marker[SP_MARKER_LOC].set) {
                 g_free(style->marker[SP_MARKER_LOC].value);
                 style->marker[SP_MARKER_LOC].value = g_strdup(val);
@@ -1001,7 +999,6 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
 
         case SP_PROP_MARKER_START:
             /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */
-            marker_status("Setting SP_PROP_MARKER_START");
             if (!style->marker[SP_MARKER_LOC_START].set) {
                 g_free(style->marker[SP_MARKER_LOC_START].value);
                 style->marker[SP_MARKER_LOC_START].value = g_strdup(val);
@@ -1011,7 +1008,6 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             break;
         case SP_PROP_MARKER_MID:
             /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */
-            marker_status("Setting SP_PROP_MARKER_MID");
             if (!style->marker[SP_MARKER_LOC_MID].set) {
                 g_free(style->marker[SP_MARKER_LOC_MID].value);
                 style->marker[SP_MARKER_LOC_MID].value = g_strdup(val);
@@ -1021,7 +1017,6 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             break;
         case SP_PROP_MARKER_END:
             /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */
-            marker_status("Setting SP_PROP_MARKER_END");
             if (!style->marker[SP_MARKER_LOC_END].set) {
                 g_free(style->marker[SP_MARKER_LOC_END].value);
                 style->marker[SP_MARKER_LOC_END].value = g_strdup(val);
@@ -2238,7 +2233,6 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
     p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linecap", enum_stroke_linecap, &style->stroke_linecap, NULL, flags);
     p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linejoin", enum_stroke_linejoin, &style->stroke_linejoin, NULL, flags);
 
-    marker_status("sp_style_write_string:  Writing markers");
     if (style->marker[SP_MARKER_LOC].set) {
         p += g_snprintf(p, c + BMAX - p, "marker:%s;", style->marker[SP_MARKER_LOC].value);
     } else if (flags == SP_STYLE_FLAG_ALWAYS) {
@@ -2403,7 +2397,6 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
     p += sp_style_write_iscale24(p, c + BMAX - p, "stroke-opacity", &from->stroke_opacity, &to->stroke_opacity, SP_STYLE_FLAG_IFDIFF);
 
     /* markers */
-    marker_status("sp_style_write_difference:  Writing markers");
     if (from->marker[SP_MARKER_LOC].value != NULL) {
         p += g_snprintf(p, c + BMAX - p, "marker:%s;",       from->marker[SP_MARKER_LOC].value);
     }

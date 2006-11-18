@@ -92,6 +92,10 @@ nr_arena_shape_class_init(NRArenaShapeClass *klass)
     item_class->pick = nr_arena_shape_pick;
 }
 
+/**
+ * Initializes the arena shape, setting all parameters to null, 0, false,
+ * or other defaults
+ */
 static void
 nr_arena_shape_init(NRArenaShape *shape)
 {
@@ -138,6 +142,9 @@ nr_arena_shape_finalize(NRObject *object)
     ((NRObjectClass *) shape_parent_class)->finalize(object);
 }
 
+/**
+ * Retrieves the markers from the item
+ */
 static NRArenaItem *
 nr_arena_shape_children(NRArenaItem *item)
 {
@@ -146,6 +153,11 @@ nr_arena_shape_children(NRArenaItem *item)
     return shape->markers;
 }
 
+/**
+ * Attaches child to item, and if ref is not NULL, sets it and ref->next as
+ * the prev and next items.  If ref is NULL, then it sets the item's markers
+ * as the next items.
+ */
 static void
 nr_arena_shape_add_child(NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref)
 {
@@ -160,6 +172,10 @@ nr_arena_shape_add_child(NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref
     nr_arena_item_request_update(item, NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
+/**
+ * Removes child from the shape.  If there are no prev items in 
+ * the child, it sets items' markers to the next item in the child.
+ */
 static void
 nr_arena_shape_remove_child(NRArenaItem *item, NRArenaItem *child)
 {
@@ -174,6 +190,12 @@ nr_arena_shape_remove_child(NRArenaItem *item, NRArenaItem *child)
     nr_arena_item_request_update(item, NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
+/**
+ * Detaches child from item, and if there are no previous items in child, it 
+ * sets item's markers to the child.  It then attaches the child back onto the item.
+ * If ref is null, it sets the markers to be the next item, otherwise it uses
+ * the next/prev items in ref.
+ */
 static void
 nr_arena_shape_set_child_position(NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref)
 {
@@ -198,6 +220,9 @@ void nr_arena_shape_update_stroke(NRArenaShape *shape, NRGC* gc, NRRectL *area);
 void nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool force_shape = false);
 void nr_arena_shape_add_bboxes(NRArenaShape* shape,NRRect &bbox);
 
+/**
+ * Updates the arena shape 'item' and all of its children, including the markers.
+ */
 static guint
 nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset)
 {
@@ -687,6 +712,10 @@ nr_arena_shape_add_bboxes(NRArenaShape* shape, NRRect &bbox)
         }
     }
 }
+
+/**
+ * Renders the item.  Markers are just composed into the parent buffer.
+ */
 static unsigned int
 nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
 {
