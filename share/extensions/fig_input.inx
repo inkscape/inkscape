@@ -6,7 +6,7 @@
     <input>
         <extension>.fig</extension>
         <mimetype>image/x-xfig</mimetype>
-        <_filetypename>XFIG Graphic File (*.fig)</_filetypename>
+        <_filetypename>XFIG Graphics File (*.fig)</_filetypename>
         <_filetypetooltip>Open files saved with XFIG</_filetypetooltip>
         <output_extension>org.inkscape.output.fig</output_extension>
     </input>
