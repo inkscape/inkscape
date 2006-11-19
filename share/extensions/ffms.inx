@@ -9,7 +9,7 @@
 	<param name="nutwidth" type="float" min="0" max="100" _gui-text="Nut Width">2</param>
 	<param name="bridgewidth" type="float" min="0" max="100" _gui-text="Bridge Width">2.5</param>
 	<param name="scalafile" type="string" _gui-text="Path to Scala *.scl File">none</param>
-	<param name="tuning" type="string" _gui-text="Tuning (scale step for each string seperated by semicolons)">0;0;0;0;0;0</param>
+	<param name="tuning" type="string" _gui-text="Tuning (scale step for each string separated by semicolons)">0;0;0;0;0;0</param>
 	<param name="frets" type="int" min="1" max="1000" _gui-text="Number of Frets">24</param>
 	<param name="strings" type="int" min="1" max="60" _gui-text="Number of Strings">6</param>
 	<param name="fbedges" type="float" min="0" max="100" _gui-text="Fretboard Edges">0.0975</param>
