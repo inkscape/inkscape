@@ -2326,7 +2326,6 @@ Verb *Verb::_base_verbs[] = {
                    N_("Run scripts"), "scripts"),
     new DialogVerb(SP_VERB_DIALOG_TOGGLE, "DialogsToggle", N_("Show/Hide D_ialogs"),
                    N_("Show or hide all open dialogs"), "dialog_toggle"),
-    // TRANSLATORS: "Tile Clones" means: "Create tiled clones"
     new DialogVerb(SP_VERB_DIALOG_CLONETILER, "DialogClonetiler", N_("Create Tiled Clones..."),
                    N_("Create multiple clones of selected object, arranging them into a pattern or scattering"), "edit_create_tiled_clones"),
     new DialogVerb(SP_VERB_DIALOG_ITEM, "DialogObjectProperties", N_("_Object Properties..."),

@@ -894,7 +894,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
             sp_export_value_set(base, "xdpi", xdpi);
         }
 
-        /* These can't be seperate, and setting x sets y, so for
+        /* These can't be separate, and setting x sets y, so for
            now setting this is disabled.  Hopefully it won't be in
            the future */
         if (FALSE && ydpi != 0.0) {

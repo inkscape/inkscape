@@ -246,7 +246,7 @@ Dependency::check (void) const
 std::ostream &
 operator<< (std::ostream &out_file, const Dependency & in_dep)
 {
-    out_file << _("Dependency::") << '\n';
+    out_file << _("Dependency:") << '\n';
     out_file << _("  type: ") << _(in_dep._type_str[in_dep._type]) << '\n';
     out_file << _("  location: ") << _(in_dep._location_str[in_dep._location]) << '\n';
     out_file << _("  string: ") << in_dep._string << '\n';

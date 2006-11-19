@@ -969,7 +969,7 @@ sp_image_description(SPItem *item)
                 : xml_quote_strdup(image->href);
         } else {
             g_warning("Attempting to call strncmp() with a null pointer.");
-            href_desc = g_strdup(_("(null_pointer)")); // we call g_free() on href_desc
+            href_desc = g_strdup("(null_pointer)"); // we call g_free() on href_desc
         }
 
 	char *ret = ( image->pixbuf == NULL

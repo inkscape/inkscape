@@ -249,9 +249,9 @@ DocumentProperties::build_grid()
                   "gridoriginx", _rumg, _wr);
     _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"), 
                   "gridoriginy", _rumg, _wr);
-    _rsu_sx.init (_("Spacing _X:"), _("Distance of vertical grid lines"), 
+    _rsu_sx.init (_("Spacing _X:"), _("Distance between vertical grid lines"), 
                   "gridspacingx", _rumg, _wr);
-    _rsu_sy.init (_("Spacing _Y:"), _("Distance of horizontal grid lines"), 
+    _rsu_sy.init (_("Spacing _Y:"), _("Distance between horizontal grid lines"), 
                   "gridspacingy", _rumg, _wr);
     _rsu_ax.init (_("Angle X:"), _("Angle of x-axis of axonometric grid"), 
                   "gridanglex", _rumg, _wr);
