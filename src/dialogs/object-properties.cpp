@@ -190,7 +190,7 @@ sp_object_properties_dialog (void)
         gtk_object_set_data (GTK_OBJECT (dlg), "blur", b_vb);
 
         GtkWidget *blur_l_hb = gtk_hbox_new (FALSE, 4);
-        GtkWidget *blur_l = gtk_label_new_with_mnemonic (_("_Blur"));
+        GtkWidget *blur_l = gtk_label_new_with_mnemonic (_("_Blur, %"));
         gtk_misc_set_alignment (GTK_MISC (blur_l), 0.0, 1.0);
         gtk_box_pack_start (GTK_BOX (blur_l_hb), blur_l, FALSE, FALSE, 4);
         gtk_box_pack_start (GTK_BOX (b_vb), blur_l_hb, FALSE, FALSE, 0);
@@ -223,7 +223,7 @@ sp_object_properties_dialog (void)
         gtk_object_set_data (GTK_OBJECT (dlg), "master_opacity", o_vb);
 
         GtkWidget *l_hb = gtk_hbox_new (FALSE, 0);
-        GtkWidget *l = gtk_label_new_with_mnemonic (_("Master _opacity"));
+        GtkWidget *l = gtk_label_new_with_mnemonic (_("Master _opacity, %"));
         gtk_misc_set_alignment (GTK_MISC (l), 0.0, 1.0);
         gtk_box_pack_start (GTK_BOX (l_hb), l, FALSE, FALSE, 4);
         gtk_box_pack_start (GTK_BOX (o_vb), l_hb, FALSE, FALSE, 0);
