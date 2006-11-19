@@ -82,6 +82,7 @@ class TraceDialogImpl : public TraceDialog
 
     void potracePreviewCallback();
 
+    Gtk::HBox       mainHBox;
     Gtk::Notebook   notebook;
     Gtk::Tooltips   tips;
 
@@ -94,15 +95,64 @@ class TraceDialogImpl : public TraceDialog
     //########## Potrace pages
     Gtk::VBox             potraceModePageBox;
     Gtk::VBox             potraceParamsPageBox;
-    Gtk::VBox             potracePreviewPageBox;
 
     Gtk::RadioButtonGroup potraceGroup;
-    Gtk::CheckButton      potraceInvertButton;
-    Gtk::HBox             potraceInvertBox;
     Gtk::Button           *potraceOkButton;
     Gtk::Button           *potraceCancelButton;
 
+    //#### Modes
+
+    //## Single scan
+    //brightness
+    Gtk::Frame            potraceBrightnessFrame;
+    Gtk::VBox             potraceBrightnessVBox;
+    Gtk::HBox             potraceBrightnessBox;
+    Gtk::RadioButton      potraceBrightnessRadioButton;
+    Gtk::Label            potraceBrightnessSpinnerLabel;
+    Gtk::SpinButton       potraceBrightnessSpinner;
+    //edge detection
+    Gtk::Frame            potraceCannyFrame;
+    Gtk::HBox             potraceCannyBox;
+    Gtk::VBox             potraceCannyVBox;
+    Gtk::RadioButton      potraceCannyRadioButton;
+    //Gtk::HSeparator     potraceCannySeparator;
+    //Gtk::Label          potraceCannyLoSpinnerLabel;
+    //Gtk::SpinButton     potraceCannyLoSpinner;
+    Gtk::Label            potraceCannyHiSpinnerLabel;
+    Gtk::SpinButton       potraceCannyHiSpinner;
+    //quantization
+    Gtk::Frame            potraceQuantFrame;
+    Gtk::HBox             potraceQuantBox;
+    Gtk::VBox             potraceQuantVBox;
+    Gtk::RadioButton      potraceQuantRadioButton;
+    Gtk::Label            potraceQuantNrColorLabel;
+    Gtk::SpinButton       potraceQuantNrColorSpinner;
     //params
+    Gtk::CheckButton      potraceInvertButton;
+    Gtk::HBox             potraceInvertBox;
+
+    //## Multiple path scanning
+    Gtk::Frame            potraceMultiScanFrame;
+    Gtk::VBox             potraceMultiScanVBox;
+    //brightness
+    Gtk::HBox             potraceMultiScanHBox1;
+    Gtk::RadioButton      potraceMultiScanBrightnessRadioButton;
+    Gtk::SpinButton       potraceMultiScanNrColorSpinner;
+    //colors
+    Gtk::HBox             potraceMultiScanHBox2;
+    Gtk::RadioButton      potraceMultiScanColorRadioButton;
+    //grays
+    Gtk::HBox             potraceMultiScanHBox3;
+    Gtk::RadioButton      potraceMultiScanMonoRadioButton;
+    Gtk::Label            potraceMultiScanNrColorLabel;
+    //params
+    Gtk::HBox             potraceMultiScanHBox4;
+    Gtk::CheckButton      potraceMultiScanStackButton;
+    Gtk::CheckButton      potraceMultiScanSmoothButton;
+    Gtk::CheckButton      potraceMultiScanBackgroundButton;
+
+    //#### Parameters
+
     Gtk::Frame            potraceParamsFrame;
     Gtk::VBox             potraceParamsVBox;
     Gtk::HBox             potraceParamsSpecklesBox;
@@ -118,70 +168,16 @@ class TraceDialogImpl : public TraceDialog
     Gtk::Label            potraceParamsOptimToleranceLabel;
     Gtk::SpinButton       potraceParamsOptimToleranceSpinner;
 
-    //brightness
-    Gtk::Frame            potraceBrightnessFrame;
-    Gtk::VBox             potraceBrightnessVBox;
-    Gtk::HBox             potraceBrightnessBox;
-    Gtk::RadioButton      potraceBrightnessRadioButton;
-    Gtk::Label            potraceBrightnessSpinnerLabel;
-    Gtk::SpinButton       potraceBrightnessSpinner;
-
-
-    //edge detection
-    Gtk::Frame            potraceCannyFrame;
-    Gtk::HBox             potraceCannyBox;
-    Gtk::VBox             potraceCannyVBox;
-    Gtk::RadioButton      potraceCannyRadioButton;
-    //Gtk::HSeparator     potraceCannySeparator;
-    //Gtk::Label          potraceCannyLoSpinnerLabel;
-    //Gtk::SpinButton     potraceCannyLoSpinner;
-    Gtk::Label            potraceCannyHiSpinnerLabel;
-    Gtk::SpinButton       potraceCannyHiSpinner;
-
-    //quantization
-    Gtk::Frame            potraceQuantFrame;
-    Gtk::HBox             potraceQuantBox;
-    Gtk::VBox             potraceQuantVBox;
-    Gtk::RadioButton      potraceQuantRadioButton;
-    Gtk::Label            potraceQuantNrColorLabel;
-    Gtk::SpinButton       potraceQuantNrColorSpinner;
-
-    //multiple path scanning
-    Gtk::Frame            potraceMultiScanFrame;
-    Gtk::VBox             potraceMultiScanVBox;
-
-    Gtk::HBox             potraceMultiScanHBox1;
-    Gtk::RadioButton      potraceMultiScanBrightnessRadioButton;
-    Gtk::SpinButton       potraceMultiScanNrColorSpinner;
-
-    Gtk::HBox             potraceMultiScanHBox2;
-    Gtk::RadioButton      potraceMultiScanColorRadioButton;
-
-    Gtk::HBox             potraceMultiScanHBox3;
-    Gtk::RadioButton      potraceMultiScanMonoRadioButton;
-    Gtk::Label            potraceMultiScanNrColorLabel;
-
-    Gtk::HBox             potraceMultiScanHBox4;
-    Gtk::CheckButton      potraceMultiScanStackButton;
-    Gtk::CheckButton      potraceMultiScanSmoothButton;
-    Gtk::CheckButton      potraceMultiScanBackgroundButton;
-
-
-    //preview
-    Gtk::Frame            potracePreviewFrame;
-    Gtk::VBox             potracePreviewBox;
-    Gtk::Button           potracePreviewButton;
-    Gtk::Image            potracePreviewImage;
-
     //credits
     Gtk::Frame            potraceCreditsFrame;
     Gtk::VBox             potraceCreditsVBox;
     Gtk::Label            potraceCreditsLabel;
 
-    //########## Other items
-    Gtk::VBox             otherBox;
-
-
+    //########## Preview
+    Gtk::Frame            potracePreviewFrame;
+    Gtk::VBox             potracePreviewVBox;
+    Gtk::Button           potracePreviewButton;
+    Gtk::Image            potracePreviewImage;
 
 };
 
@@ -281,7 +277,9 @@ void TraceDialogImpl::potraceProcess(bool do_i_trace)
              {
              int width  = preview->get_width();
              int height = preview->get_height();
-             double scaleFactor = 200.0 / (double)height;
+             double scaleFX = 200.0 / (double)width;
+             double scaleFY = 200.0 / (double)height;
+	     double scaleFactor = scaleFX > scaleFY ? scaleFY : scaleFX;
              int newWidth  = (int) (((double)width)  * scaleFactor);
              int newHeight = (int) (((double)height) * scaleFactor);
              Glib::RefPtr<Gdk::Pixbuf> scaledPreview =
@@ -340,7 +338,6 @@ void TraceDialogImpl::potracePreviewCallback()
  */
 void TraceDialogImpl::responseCallback(int response_id)
 {
-
     if (response_id == GTK_RESPONSE_OK)
         {
 		// for now, we assume potrace, as it's the only one we have
@@ -371,7 +368,7 @@ TraceDialogImpl::TraceDialogImpl()
 
     Gtk::VBox *mainVBox = get_vbox();
 
-#define MARGIN 3
+#define MARGIN 2
 
     /*#### brightness ####*/
     potraceBrightnessRadioButton.set_label(_("Brightness cutoff"));
@@ -514,9 +511,9 @@ TraceDialogImpl::TraceDialogImpl()
 
     notebook.append_page(potraceModePageBox, _("Mode"));
 
+    //#### Parameters ####
 
-
-    /*#### params ####*/
+    //## Potrace Parameters
     potraceParamsSpecklesButton.set_label(_("Suppress speckles"));
     tips.set_tip(potraceParamsSpecklesButton,
 		 _("Ignore small spots (speckles) in the bitmap"));
@@ -567,55 +564,53 @@ TraceDialogImpl::TraceDialogImpl()
     potraceParamsVBox.pack_start(potraceParamsSpecklesBox, false, false, MARGIN);
     potraceParamsVBox.pack_start(potraceParamsCornersBox, false, false, MARGIN);
     potraceParamsVBox.pack_start(potraceParamsOptimBox, false, false, MARGIN);
-    potraceParamsFrame.set_label(_("Parameters"));
+    potraceParamsFrame.set_label(_("Options"));
     potraceParamsFrame.add(potraceParamsVBox);
     potraceParamsPageBox.pack_start(potraceParamsFrame, false, false, 0);
 
-    /*#### SIOX ####*/
-    //# for now, put at the top of the potrace box.  something better later
+    //## SIOX
+    //for now, put at the top of the potrace box.  something better later
     sioxButton.set_label(_("SIOX foreground selection"));
     sioxBox.pack_start(sioxButton, false, false, MARGIN);
-    tips.set_tip(sioxButton, 
+    tips.set_tip(sioxButton,
         _("Cover the area you want to select as the foreground"));
     sioxVBox.pack_start(sioxBox, false, false, MARGIN);
     sioxFrame.set_label(_("SIOX"));
     sioxFrame.add(sioxVBox);
     potraceParamsPageBox.pack_start(sioxFrame, false, false, 0);
 
-    notebook.append_page(potraceParamsPageBox, _("Parameters"));
+    //## Credits
+    potraceCreditsLabel.set_text(_("Thanks to Peter Selinger, http://potrace.sourceforge.net"));
+    potraceCreditsVBox.pack_start(potraceCreditsLabel, false, false, MARGIN);
+    potraceCreditsFrame.set_label(_("Credits"));
+    potraceCreditsFrame.set_shadow_type(Gtk::SHADOW_NONE);
+    potraceCreditsFrame.add(potraceCreditsVBox);
+    potraceParamsPageBox.pack_end(potraceCreditsFrame, false, false, 0);
 
+    notebook.append_page(potraceParamsPageBox, _("Options"));
+
+    mainHBox.pack_start(notebook, true, true, MARGIN);
 
     /*#### Preview ####*/
     potracePreviewButton.set_label(_("Update"));
     potracePreviewButton.signal_clicked().connect(
          sigc::mem_fun(*this, &TraceDialogImpl::potracePreviewCallback) );
-    potracePreviewBox.pack_end(potracePreviewButton, true, true, 0);
+    potracePreviewVBox.pack_end(potracePreviewButton, false, false, 0);
     tips.set_tip(potracePreviewButton, _("Preview the intermediate bitmap with the current settings, without actual tracing"));
 
     potracePreviewImage.set_size_request(200,200);
     //potracePreviewImage.set_alignment (Gtk::ALIGN_CENTER, Gtk::ALIGN_CENTER);
-    potracePreviewBox.pack_start(potracePreviewImage, true, true, 0);
+    potracePreviewVBox.pack_start(potracePreviewImage, true, true, 0);
     potracePreviewFrame.set_label(_("Preview")); // I guess it's correct to call the "intermediate bitmap" a preview of the trace
     //potracePreviewFrame.set_shadow_type(Gtk::SHADOW_NONE);
-    potracePreviewFrame.add(potracePreviewBox);
-    potracePreviewPageBox.pack_start(potracePreviewFrame, true, true, 0);
+    potracePreviewFrame.add(potracePreviewVBox);
 
-    /*#### Credits ####*/
-    potraceCreditsLabel.set_text(
-							 _("Thanks to Peter Selinger, http://potrace.sourceforge.net")
-                         );
-    potraceCreditsVBox.pack_start(potraceCreditsLabel, false, false, MARGIN);
-    potraceCreditsFrame.set_label(_("Credits"));
-    potraceCreditsFrame.set_shadow_type(Gtk::SHADOW_NONE);
-    potraceCreditsFrame.add(potraceCreditsVBox);
-    potracePreviewPageBox.pack_start(potraceCreditsFrame, false, false, 0);
+    mainHBox.pack_start(potracePreviewFrame, true, true, MARGIN);
 
-    notebook.append_page(potracePreviewPageBox, _("Preview"));
+    //attach contents to the main VBox
+    mainVBox->pack_start(mainHBox);
 
-
-
-    //##Put the notebook on the dialog
-    mainVBox->pack_start(notebook);
+    //#### Global Controls
 
     //## The OK button
     potraceCancelButton = add_button(Gtk::Stock::STOP, GTK_RESPONSE_CANCEL);
