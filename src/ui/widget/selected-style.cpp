@@ -97,8 +97,8 @@ SelectedStyle::SelectedStyle(bool layout)
       _stroke_flag_place (),
 
       _opacity_place (),
-      _opacity_adjustment (1.0, 0.0, 1.0, 0.01, 0.1),
-      _opacity_sb (0.02, 2),
+      _opacity_adjustment (100, 0.0, 100, 1.0, 10.0),
+      _opacity_sb (0.02, 0),
 
       _stroke (),
       _stroke_width (""),
@@ -797,7 +797,7 @@ bool
 SelectedStyle::on_opacity_click(GdkEventButton *event)
 {
     if (event->button == 2) { // middle click
-        const char* opacity = _opacity_sb.get_value() < 0.5? "0.5" : (_opacity_sb.get_value() == 1? "0" : "1");
+        const char* opacity = _opacity_sb.get_value() < 50? "0.5" : (_opacity_sb.get_value() == 100? "0" : "1");
         SPCSSAttr *css = sp_repr_css_attr_new ();
         sp_repr_css_set_property (css, "opacity", opacity);
         sp_desktop_set_style (_desktop, css);
@@ -962,22 +962,25 @@ SelectedStyle::update()
 
 // Now query opacity
     _tooltips.unset_tip(_opacity_place);
+    _tooltips.unset_tip(_opacity_sb);
 
     int result = sp_desktop_query_style (_desktop, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
 
     switch (result) {
     case QUERY_STYLE_NOTHING:
         _tooltips.set_tip(_opacity_place, _("Nothing selected"));
+        _tooltips.set_tip(_opacity_sb, _("Nothing selected"));
         _opacity_sb.set_sensitive(false);
         break;
     case QUERY_STYLE_SINGLE:
     case QUERY_STYLE_MULTIPLE_AVERAGED:
     case QUERY_STYLE_MULTIPLE_SAME:
-        _tooltips.set_tip(_opacity_place, _("Master opacity"));
+        _tooltips.set_tip(_opacity_place, _("Master opacity, %"));
+        _tooltips.set_tip(_opacity_sb, _("Master opacity, %"));
         if (_opacity_blocked) break;
         _opacity_blocked = true;
         _opacity_sb.set_sensitive(true);
-        _opacity_adjustment.set_value(SP_SCALE24_TO_FLOAT(query->opacity.value));
+        _opacity_adjustment.set_value(SP_SCALE24_TO_FLOAT(query->opacity.value) * 100);
         _opacity_blocked = false;
         break;
     }
@@ -1022,10 +1025,10 @@ SelectedStyle::update()
 }
 
 void SelectedStyle::opacity_0(void) {_opacity_sb.set_value(0);}
-void SelectedStyle::opacity_025(void) {_opacity_sb.set_value(0.25);}
-void SelectedStyle::opacity_05(void) {_opacity_sb.set_value(0.5);}
-void SelectedStyle::opacity_075(void) {_opacity_sb.set_value(0.75);}
-void SelectedStyle::opacity_1(void) {_opacity_sb.set_value(1.0);}
+void SelectedStyle::opacity_025(void) {_opacity_sb.set_value(25);}
+void SelectedStyle::opacity_05(void) {_opacity_sb.set_value(50);}
+void SelectedStyle::opacity_075(void) {_opacity_sb.set_value(75);}
+void SelectedStyle::opacity_1(void) {_opacity_sb.set_value(100);}
 
 void SelectedStyle::on_opacity_menu (Gtk::Menu *menu) {
 
@@ -1042,25 +1045,25 @@ void SelectedStyle::on_opacity_menu (Gtk::Menu *menu) {
     }
     {
         Gtk::MenuItem *item = new Gtk::MenuItem;
-        item->add(*(new Gtk::Label("0.25", 0, 0)));
+        item->add(*(new Gtk::Label("25%", 0, 0)));
         item->signal_activate().connect(sigc::mem_fun(*this, &SelectedStyle::opacity_025 ));
         menu->add(*item);
     }
     {
         Gtk::MenuItem *item = new Gtk::MenuItem;
-        item->add(*(new Gtk::Label("0.5", 0, 0)));
+        item->add(*(new Gtk::Label("50%", 0, 0)));
         item->signal_activate().connect(sigc::mem_fun(*this, &SelectedStyle::opacity_05 ));
         menu->add(*item);
     }
     {
         Gtk::MenuItem *item = new Gtk::MenuItem;
-        item->add(*(new Gtk::Label("0.75", 0, 0)));
+        item->add(*(new Gtk::Label("75%", 0, 0)));
         item->signal_activate().connect(sigc::mem_fun(*this, &SelectedStyle::opacity_075 ));
         menu->add(*item);
     }
     {
         Gtk::MenuItem *item = new Gtk::MenuItem;
-        item->add(*(new Gtk::Label(_("1.0 (opaque)"), 0, 0)));
+        item->add(*(new Gtk::Label(_("100% (opaque)"), 0, 0)));
         item->signal_activate().connect(sigc::mem_fun(*this, &SelectedStyle::opacity_1 ));
         menu->add(*item);
     }
@@ -1074,7 +1077,7 @@ void SelectedStyle::on_opacity_changed () {
     _opacity_blocked = true;
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream os;
-    os << CLAMP (_opacity_adjustment.get_value(), 0.0, 1.0);
+    os << CLAMP ((_opacity_adjustment.get_value() / 100), 0.0, 1.0);
     sp_repr_css_set_property (css, "opacity", os.str().c_str());
     // FIXME: workaround for GTK breakage: display interruptibility sometimes results in GTK
     // sending multiple value-changed events. As if when Inkscape interrupts redraw for main loop
