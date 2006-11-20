@@ -348,7 +348,6 @@ void Inkscape::SelTrans::ungrab()
 
     _message_context.clear();
 
-    bool updh = true;
     if (!_empty && _changed) {
         sp_selection_apply_affine(selection, _current, (_show == SHOW_OUTLINE)? true : false);
         _center *= _current;
@@ -367,6 +366,9 @@ void Inkscape::SelTrans::ungrab()
             }
         }
 
+        _items.clear();
+        _items_centers.clear();
+
         if (_current.is_translation()) {
             sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                              _("Move"));
@@ -381,15 +383,11 @@ void Inkscape::SelTrans::ungrab()
                              _("Skew"));
         }
 
-        updh = false;
-    }
-
-    if (updh) {
+    } else {
+        _items.clear();
+        _items_centers.clear();
         _updateHandles();
     }
-
-    _items.clear();
-    _items_centers.clear();
 }
 
 /* fixme: This is really bad, as we compare positions for each stamp (Lauris) */
