@@ -20,6 +20,7 @@
 #include <gtkmm.h>
 
 #include "trace/filterset.h"
+#include "trace/quantize.h"
 #include "trace/imagemap-gdk.h"
 
 #include <inkscape.h>
@@ -284,39 +285,21 @@ filterIndexed(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
 
     IndexedMap *newGm = NULL;
 
-    /*### Color quant multiscan ###*/
-    if (engine.getTraceType() == TRACE_QUANT_COLOR)
+    RgbMap *gm = gdkPixbufToRgbMap(pixbuf);
+    if (engine.getMultiScanSmooth())
         {
-        RgbMap *gm = gdkPixbufToRgbMap(pixbuf);
-        if (engine.getMultiScanSmooth())
-            {
-            RgbMap *gaussMap = rgbMapGaussian(gm);
-            newGm = rgbMapQuantize(gaussMap,  (int)log2(engine.getMultiScanNrColors())+2, engine.getMultiScanNrColors());
-            gaussMap->destroy(gaussMap);
-            }
-        else
-            {
-            newGm = rgbMapQuantize(gm,  (int)log2(engine.getMultiScanNrColors())+2, engine.getMultiScanNrColors());
-            }
-        gm->destroy(gm);
-        }
-
-    /*### Quant multiscan ###*/
-    else if (engine.getTraceType() == TRACE_QUANT_MONO)
+	RgbMap *gaussMap = rgbMapGaussian(gm);
+	newGm = rgbMapQuantize(gaussMap, engine.getMultiScanNrColors());
+	gaussMap->destroy(gaussMap);
+	}
+    else
         {
-        RgbMap *gm = gdkPixbufToRgbMap(pixbuf);
-        if (engine.getMultiScanSmooth())
-            {
-            RgbMap *gaussMap = rgbMapGaussian(gm);
-            newGm = rgbMapQuantize(gaussMap, (int)log2(engine.getMultiScanNrColors())+2, engine.getMultiScanNrColors());
-            gaussMap->destroy(gaussMap);
-            }
-        else
-            {
-           newGm = rgbMapQuantize(gm, (int)log2(engine.getMultiScanNrColors())+2, engine.getMultiScanNrColors());
-            }
-        gm->destroy(gm);
+	newGm = rgbMapQuantize(gm, engine.getMultiScanNrColors());
+	}
+    gm->destroy(gm);
 
+    if (engine.getTraceType() == TRACE_QUANT_MONO)
+        {
         //Turn to grays
         for (int i=0 ; i<newGm->nrColors ; i++)
             {
@@ -571,14 +554,9 @@ PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf)
                 {
                 int indx = (int) iMap->getPixel(iMap, col, row);
                 if (indx == colorIndex)
-                    {
                     gm->setPixel(gm, col, row, GRAYMAP_BLACK); //black
-                    }
-                else
-                    {
-                    if (!multiScanStack)
-                        gm->setPixel(gm, col, row, GRAYMAP_WHITE);//white
-                    }
+                else if (!multiScanStack)
+                    gm->setPixel(gm, col, row, GRAYMAP_WHITE); //white
                 }
             }
 

@@ -3,8 +3,9 @@
  *
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
+ *   Stéphane Gimenez <dev@gim.name>
  *
- * Copyright (C) 2004 Bob Jamison
+ * Copyright (C) 2004-2006 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -16,39 +17,24 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#ifndef TRUE
-#define TRUE  1
-#endif
-
-#ifndef FALSE
-#define FALSE 0
-#endif
-
-/*#########################################################################
-### C A N N Y    E D G E    D E T E C T I O N
-#########################################################################*/
-
-
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/**
+ *  Apply gaussian blur to an GrayMap
+ */
+GrayMap *grayMapGaussian(GrayMap *gmap);
+
+/**
+ *  Apply gaussian bluf to an RgbMap
+ */
+RgbMap *rgbMapGaussian(RgbMap *rgbmap);
 
 /**
  *
  */
-GrayMap *grayMapGaussian(GrayMap *me);
-
-/**
- *
- */
-RgbMap *rgbMapGaussian(RgbMap *me);
-
-/**
- *
- */
-GrayMap *grayMapCanny(GrayMap *gm, 
+GrayMap *grayMapCanny(GrayMap *gmap,
              double lowThreshold, double highThreshold);
 
 /**
@@ -56,12 +42,6 @@ GrayMap *grayMapCanny(GrayMap *gm,
  */
 GdkPixbuf *gdkCanny(GdkPixbuf *img,
             double lowThreshold, double highThreshold);
-
-/**
- * Quantize an RGB image to a reduced number of colors.  bitsPerSample
- * is usually 3 - 5 out of 8 to conserve cpu and memory
- */
-IndexedMap *rgbMapQuantize(RgbMap *rgbMap, int bitsPerSample, int nrColors);
 
 /**
  *

@@ -6,13 +6,16 @@ trace/clean:
 	rm -f trace/libtrace.a $(trace_libtrace_a_OBJECTS)
 
 trace_libtrace_a_SOURCES =	            \
+	trace/pool.h                        \
 	trace/trace.h                       \
 	trace/trace.cpp                     \
 	trace/imagemap-gdk.cpp	            \
 	trace/imagemap-gdk.h	            \
 	trace/imagemap.cpp	            \
 	trace/imagemap.h	            \
-	trace/filterset.h                   \
+	trace/quantize.h	            \
+	trace/quantize.cpp	            \
+	trace/filterset.h	            \
 	trace/filterset.cpp	            \
 	trace/siox.h			    \
 	trace/siox.cpp			    \
