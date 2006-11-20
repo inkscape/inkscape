@@ -834,10 +834,11 @@ void SelectedStyle::on_popup_preset(int i) {
     Inkscape::CSSOStringStream os;
     os << w;
     sp_repr_css_set_property (css, "stroke-width", os.str().c_str());
+    // FIXME: update dash patterns!
     sp_desktop_set_style (_desktop, css, true);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_SWATCHES,
-                      _("Change opacity"));
+                      _("Change stroke width"));
 }
 
 void
