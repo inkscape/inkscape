@@ -1038,10 +1038,6 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                 // now we know the length, do some final calculations and add the UnbrokenSpan to the list
                 new_span.font_size = text_source->styleComputeFontSize();
                 if (new_span.text_bytes) {
-                    int const original_bidi_level = para->pango_items[pango_item_index].item->analysis.level;
-                    para->pango_items[pango_item_index].item->analysis.level = 0;
-                    // pango_shape() will reorder glyphs in rtl sections which messes us up because
-                    // the svg spec requires us to draw glyphs in character order
                     new_span.glyph_string = pango_glyph_string_new();
                     /* Some assertions intended to help diagnose bug #1277746. */
                     g_assert( 0 < new_span.text_bytes );
@@ -1053,7 +1049,32 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                                 new_span.text_bytes,
                                 &para->pango_items[pango_item_index].item->analysis,
                                 new_span.glyph_string);
-                    para->pango_items[pango_item_index].item->analysis.level = original_bidi_level;
+
+                    if (para->pango_items[pango_item_index].item->analysis.level & 1) {
+                        // pango_shape() will reorder glyphs in rtl sections into visual order which messes
+                        // us up because the svg spec requires us to draw glyphs in logical order
+                        // let's reverse the glyphstring on a cluster-by-cluster basis
+                        const unsigned nglyphs = new_span.glyph_string->num_glyphs;
+                        std::vector<PangoGlyphInfo> infos(nglyphs);
+                        std::vector<gint> clusters(nglyphs);
+                        unsigned i, cluster_start = 0;
+
+                        for (i = 0 ; i < nglyphs ; ++i) {
+                            if (new_span.glyph_string->glyphs[i].attr.is_cluster_start) {
+                                if (i != cluster_start) {
+                                    std::copy(&new_span.glyph_string->glyphs[cluster_start], &new_span.glyph_string->glyphs[i], infos.end() - i);
+                                    std::copy(&new_span.glyph_string->log_clusters[cluster_start], &new_span.glyph_string->log_clusters[i], clusters.end() - i);
+                                }
+                                cluster_start = i;
+                            }
+                        }
+                        if (i != cluster_start) {
+                            std::copy(&new_span.glyph_string->glyphs[cluster_start], &new_span.glyph_string->glyphs[i], infos.end() - i);
+                            std::copy(&new_span.glyph_string->log_clusters[cluster_start], &new_span.glyph_string->log_clusters[i], clusters.end() - i);
+                        }
+                        std::copy(infos.begin(), infos.end(), new_span.glyph_string->glyphs);
+                        std::copy(clusters.begin(), clusters.end(), new_span.glyph_string->log_clusters);
+                    }
                     new_span.pango_item_index = pango_item_index;
                     _computeFontLineHeight(para->pango_items[pango_item_index].font, new_span.font_size, text_source->style, &new_span.line_height, &new_span.line_height_multiplier);
                     // TODO: metrics for vertical text
