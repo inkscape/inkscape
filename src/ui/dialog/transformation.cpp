@@ -134,6 +134,15 @@ Transformation::Transformation()
     _check_apply_separately.set_active(prefs_get_int_attribute_limited ("dialogs.transformation", "applyseparately", 0, 0, 1));
     _check_apply_separately.signal_toggled().connect(sigc::mem_fun(*this, &Transformation::onApplySeparatelyToggled));
 
+    // make sure all spinbuttons activate Apply on pressing Enter
+      ((Gtk::Entry *) (_scalar_move_horizontal.getWidget()))->set_activates_default(true);
+      ((Gtk::Entry *) (_scalar_move_vertical.getWidget()))->set_activates_default(true);
+      ((Gtk::Entry *) (_scalar_scale_horizontal.getWidget()))->set_activates_default(true);
+      ((Gtk::Entry *) (_scalar_scale_vertical.getWidget()))->set_activates_default(true);
+      ((Gtk::Entry *) (_scalar_rotate.getWidget()))->set_activates_default(true);
+      ((Gtk::Entry *) (_scalar_skew_horizontal.getWidget()))->set_activates_default(true);
+      ((Gtk::Entry *) (_scalar_skew_vertical.getWidget()))->set_activates_default(true);
+
     updateSelection(PAGE_MOVE, _getSelection());
 
     resetButton = add_button(Gtk::Stock::CLEAR, 0);
@@ -147,6 +156,7 @@ Transformation::Transformation()
     if (applyButton) {
         tooltips.set_tip((*applyButton), _("Apply transformation to selection"));
         applyButton->set_sensitive(false);
+        set_default (*applyButton); // activable by Enter in spinbuttons
     }
 
     // Connect to the global selection changed & modified signals
