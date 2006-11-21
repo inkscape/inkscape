@@ -4973,7 +4973,9 @@ private:
 
     int depFileSize;
     char *depFileBuf;
-    
+
+    static const int readBufSize = 8192;
+    char readBuf[8193];//byte larger
 
 };
 
@@ -5221,12 +5223,11 @@ bool DepTool::scanFile(const String &fname, FileRec *frec)
         return false;
         }
     String buf;
-    while (true)
+    while (!feof(f))
         {
-        int ch = fgetc(f);
-        if (ch < 0)
-            break;
-        buf.push_back((char)ch);
+        int len = fread(readBuf, 1, readBufSize, f);
+        readBuf[len] = '\0';
+        buf.append(readBuf);
         }
     fclose(f);
 
@@ -5709,6 +5710,12 @@ public:
     virtual ~TaskCC()
         {}
 
+    virtual bool needsCompiling(const DepRec &depRec,
+              const String &src, const String &dest)
+        {
+        return false;
+        }
+
     virtual bool execute()
         {
         if (!listFiles(parent, fileSet))
@@ -5718,7 +5725,7 @@ public:
         String fullName = parent.resolve("build.dep");
         if (isNewerThan(parent.getURI().getPath(), fullName))
             {
-            trace("regenerating cache");
+            status("          : regenerating C/C++ dependency cache");
             refreshCache = true;
             }
 
@@ -5791,18 +5798,55 @@ public:
 			    return false;
 			    
             //## Check whether it needs to be done
-			String destFullName = destPath;
-			destFullName.append("/");
-			destFullName.append(dep.name);
-			destFullName.append(".o");
-			String srcFullName = srcPath;
-			srcFullName.append("/");
-			srcFullName.append(dep.name);
-			srcFullName.append(".");
-			srcFullName.append(dep.suffix);
-            if (!isNewerThan(srcFullName, destFullName))
+			String destName;
+            if (destPath.size()>0)
                 {
-                //trace("%s skipped", srcFullName.c_str());
+                destName.append(destPath);
+	            destName.append("/");
+	            }
+			destName.append(dep.name);
+			destName.append(".o");
+			String destFullName = parent.resolve(destName);
+			String srcName;
+            if (srcPath.size()>0)
+                {
+                srcName.append(srcPath);
+                srcName.append("/");
+                }
+			srcName.append(dep.name);
+			srcName.append(".");
+			srcName.append(dep.suffix);
+			String srcFullName = parent.resolve(srcName);
+			bool compileMe = false;
+            if (isNewerThan(srcFullName, destFullName))
+                {
+                status("          : compile of %s required by %s",
+                        destFullName.c_str(), srcFullName.c_str());
+                compileMe = true;
+                }
+            else
+                {
+                for (unsigned int i=0 ; i<dep.files.size() ; i++)
+                    {
+                    String depName;
+                    if (srcPath.size()>0)
+                        {
+                        depName.append(srcPath);
+                        depName.append("/");
+                        }
+                    depName.append(dep.files[i]);
+                    String depFullName = parent.resolve(depName);
+                    if (isNewerThan(depFullName, destFullName))
+                        {
+                        status("          : compile of %s required by %s",
+                                destFullName.c_str(), depFullName.c_str());
+                        compileMe = true;
+                        break;
+                        }
+                    }
+                }
+            if (!compileMe)
+                {
                 continue;
                 }
 
@@ -7992,8 +8036,8 @@ bool Make::run(const String &target)
 {
     status("##################################");
     status("#   BuildTool");
-    status("#   version 0.4");
-    status("#   17 Nov 06");
+    status("#   version 0.5");
+    status("#   21 Nov 06");
     status("##################################");
     specifiedTarget = target;
     if (!run())
