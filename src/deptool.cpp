@@ -159,10 +159,14 @@ public:
     std::map<String, FileRec *> files;
 
 
+    bool checked;
+
 private:
 
     void init()
         {
+        type    = UNKNOWN;
+        checked = false;
         }
 
     void assign(const FileRec &other)
@@ -172,6 +176,7 @@ private:
         baseName = other.baseName;
         suffix   = other.suffix;
         files    = other.files;
+        checked  = other.checked;
         }
 
 };
@@ -353,6 +358,9 @@ private:
 
     char *fileBuf;
     int   fileSize;
+    
+    static const int readBufLen = 8192;
+    char readBuf[8193];
 
 
 };
@@ -792,12 +800,11 @@ bool DepTool::scanFile(const String &fname, FileRec *frec)
         return false;
         }
     String buf;
-    while (true)
+    while (!feof(f))
         {
-        int ch = fgetc(f);
-        if (ch < 0)
-            break;
-        buf.push_back((char)ch);
+        int len = fread(readBuf, 1, readBufLen, f);
+        readBuf[len] = '\0';
+        buf.append(readBuf);
         }
     fclose(f);
 
