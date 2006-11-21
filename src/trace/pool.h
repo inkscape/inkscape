@@ -99,11 +99,11 @@ class pool {
       //printf("pool allocating block: %d (size:%d)...", i, blocksize);//debug
       block[i] = (void *)malloc(blocksize * size);
       if (!block[i]) throw std::bad_alloc();
-      void *p = block[i];
+      char *p = (char *)block[i];
       for (int k = 0; k < blocksize - 1; k++)
 	{
-	  *(void**)p = (void *)((int)p + size);
-	  p = (void *)((int)p + size);
+	  *(void**)p = (void *)(p + size);
+	  p += size;
 	}
       *(void **)p = next;
       next = block[i];
