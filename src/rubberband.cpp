@@ -38,13 +38,14 @@ void Inkscape::Rubberband::start(SPDesktop *d, NR::Point const &p)
 
 void Inkscape::Rubberband::stop()
 {
+    _started = false;
+
     if (_canvas) {
-        gtk_object_destroy((GtkObject *) _canvas);
+        GtkObject *temp = _canvas;
         _canvas = NULL;
+        gtk_object_destroy(temp);
         sp_canvas_end_forced_full_redraws(_desktop->canvas);
     }
-    
-    _started = false;
 }
 
 void Inkscape::Rubberband::move(NR::Point const &p)
