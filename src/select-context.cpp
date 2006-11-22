@@ -513,8 +513,10 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         sp_canvas_end_forced_full_redraws(desktop->canvas);
                     }
                 } else {
-                    Inkscape::Rubberband::get()->move(p);
-                    gobble_motion_events(GDK_BUTTON1_MASK);
+                    if (Inkscape::Rubberband::get()->is_started()) {
+                        Inkscape::Rubberband::get()->move(p);
+                        gobble_motion_events(GDK_BUTTON1_MASK);
+                    }
                 }
             }
             break;
