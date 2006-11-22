@@ -450,6 +450,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             }
             break;
         case GDK_BUTTON_RELEASE:
+            xp = yp = 0;
             if (within_tolerance && (panning || zoom_rb)) {
                 dontgrab ++;
                 zoom_rb = 0;
@@ -457,26 +458,25 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 NR::Point const event_dt(desktop->w2d(event_w));
                 double const zoom_power = ( (event->button.state & GDK_SHIFT_MASK)
                                             ? -dontgrab : dontgrab );
+                gtk_timeout_add(250, (GtkFunction) grab_allow_again, NULL);
                 desktop->zoom_relative_keep_point(event_dt,
                                                   pow(zoom_inc, zoom_power));
-                gtk_timeout_add(250, (GtkFunction) grab_allow_again, NULL);
                 desktop->updateNow();
             }
             if (panning == event->button.button) {
                 panning = 0;
+                ret = TRUE;
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
                 desktop->updateNow();
-                ret = TRUE;
             } else if (zoom_rb == event->button.button) {
                 zoom_rb = 0;
                 NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
+                Inkscape::Rubberband::get()->stop();
                 if (b != NR::Nothing() && !within_tolerance) {
                     desktop->set_display_area(b.assume(), 10);
                 }
-                Inkscape::Rubberband::get()->stop();
             }
-            xp = yp = 0;
             break;
         case GDK_KEY_PRESS:
             switch (get_group0_keyval(&event->key)) {
