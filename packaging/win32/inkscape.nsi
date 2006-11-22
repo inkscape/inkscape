@@ -503,9 +503,9 @@ Section $(lng_Core) SecCore
   File /a "..\..\inkscape\COPYING"
   File /a "..\..\inkscape\COPYING.LIB"
   File /a "..\..\inkscape\NEWS"
-  File /a "..\..\inkscape\HACKING.txt"
+  File /nonfatal /a "..\..\inkscape\HACKING.txt"
   File /a "..\..\inkscape\README"
-  File /a "..\..\inkscape\README.txt"
+  File /nonfatal /a "..\..\inkscape\README.txt"
   File /a "..\..\inkscape\TRANSLATORS"
   File /nonfatal /a /r "..\..\inkscape\data"
   File /nonfatal /a /r "..\..\inkscape\doc"
@@ -518,6 +518,9 @@ Section $(lng_Core) SecCore
   SetOutPath $INSTDIR\share\extensions
   File /a "..\..\inkscape\share\extensions\pdf_output.inx.txt"
   File /a "..\..\inkscape\share\extensions\pdf_output_via_gs_on_win32.inx.txt"
+  SetOutPath $INSTDIR\share\icons
+  File /a "..\..\inkscape\share\icons\inkscape.file.png"
+  File /a "..\..\inkscape\share\icons\inkscape.file.svg"
   SetOutPath $INSTDIR\modules
   File /nonfatal /a /r "..\..\inkscape\modules\*.*"
   SetOutPath $INSTDIR\python
