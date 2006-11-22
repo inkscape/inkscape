@@ -328,6 +328,10 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
 
                     rb_escaped = drag_escaped = 0;
 
+                    if (sc->grabbed) {
+                        sp_canvas_item_ungrab(sc->grabbed, event->button.time);
+                        sc->grabbed = NULL;
+                    }
                     sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->drawing),
                                         GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON_PRESS_MASK |
                                         GDK_POINTER_MOTION_MASK,
@@ -430,6 +434,10 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 NR::Point const button_pt(event->button.x, event->button.y);
                 NR::Point const p(desktop->w2d(button_pt));
                 Inkscape::Rubberband::get()->start(desktop, p);
+                if (sc->grabbed) {
+                    sp_canvas_item_ungrab(sc->grabbed, event->button.time);
+                    sc->grabbed = NULL;
+                }
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK,
                                     NULL, event->button.time);
