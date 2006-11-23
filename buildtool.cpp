@@ -6558,9 +6558,10 @@ public:
 
     TaskMsgFmt(MakeBase &par) : Task(par)
          {
-		 type = TASK_MSGFMT;
-		 name = "msgfmt";
+		 type    = TASK_MSGFMT;
+		 name    = "msgfmt";
 		 command = "msgfmt";
+		 owndir  = false;
 		 }
 
     virtual ~TaskMsgFmt()
@@ -6591,6 +6592,15 @@ public:
 			if (toDirName.size()>0)
 			    {
 			    destPath.append(toDirName);
+                destPath.append("/");
+                }
+            if (owndir)
+                {
+                String subdir = fileName;
+                unsigned int pos = subdir.find_last_of('.');
+                if (pos != subdir.npos)
+                    subdir = subdir.substr(0, pos);
+                destPath.append(subdir);
                 destPath.append("/");
                 }
             destPath.append(fileName);
@@ -6634,6 +6644,11 @@ public:
         {
         if (!parent.getAttribute(elem, "todir", toDirName))
             return false;
+        String s;
+        if (!parent.getAttribute(elem, "owndir", s))
+            return false;
+        if (!getBool(s, owndir))
+            return false;
             
         std::vector<Element *> children = elem->getChildren();
         for (unsigned int i=0 ; i<children.size() ; i++)
@@ -6654,6 +6669,7 @@ private:
     String command;
     String toDirName;
     FileSet fileSet;
+    bool owndir;
 
 };
 

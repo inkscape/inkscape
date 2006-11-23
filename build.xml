@@ -1,6 +1,8 @@
-<project name="Sands" default="dist" basedir=".">
+<project name="Inkscape" default="dist" basedir=".">
     <description>
-        Build file for Sands office data tool
+        Build file for the Inkscape SVG editor.  This file
+        was written for GTK-2.10 on Win32, but it should work
+        well for other types of builds with only minor adjustments.
     </description>
 
   <!-- set global properties for this build -->
@@ -195,7 +197,7 @@
   </target>
 
   <target name="i18n" depends="compile">
-    <msgfmt todir="${build}/po">
+    <msgfmt todir="${build}/locale" owndir="true">
 	   <fileset dir="po">
 	   </fileset>
 	</msgfmt>
@@ -290,7 +292,7 @@
 
     <!-- MSGFMT files -->
     <copy todir="${dist}">
-	    <fileset dir="${build}/po">
+	    <fileset dir="${build}/locale">
 		  <exclude name=".*\.am"/>
 		</fileset>
 	</copy>
