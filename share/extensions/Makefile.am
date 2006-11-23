@@ -22,10 +22,6 @@ extensions = \
 	cubicsuperpath.py \
 	dots.py \
 	export_gimp_palette.py \
-	ffgeom.py \
-	ffproc.py \
-	ffscale.py \
-	fretfind.py \
 	funcplot.py \
 	handles.py \
 	inkex.py \
@@ -107,10 +103,6 @@ modules = \
 	pdf_output_via_gs_on_win32.inx.txt \
 	txt2svg.inx \
 	dots.inx \
-	ffmet.inx \
-	ffms.inx \
-	ffss.inx \
-	ffset.inx \
 	funcplot.inx \
 	handles.inx \
 	interp.inx \
