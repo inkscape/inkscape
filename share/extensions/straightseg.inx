@@ -1,5 +1,5 @@
 <inkscape-extension>
-    <_name>Segment Straightener</_name>
+    <_name>Straighten Segments</_name>
     <id>org.ekips.filter.straightseg</id>
 	<dependency type="executable" location="extensions">straightseg.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>

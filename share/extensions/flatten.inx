@@ -1,5 +1,5 @@
 <inkscape-extension>
-   <_name>Flatten Bezier</_name>
+   <_name>Flatten Beziers</_name>
    <id>org.ekips.filter.flatten</id>
        <dependency type="executable" location="extensions">flatten.py</dependency>
        <dependency type="executable" location="extensions">inkex.py</dependency>
