@@ -80,7 +80,10 @@ extensions = \
 	color_morelight.py\
 	color_lesslight.py\
 	color_morehue.py\
-	color_lesshue.py
+	color_lesshue.py\
+	pathalongpath.py\
+	rubberstretch.py\
+	pathmodifier.py
 
 
 otherstuff = \
@@ -158,7 +161,8 @@ modules = \
 	color_morelight.inx\
 	color_lesslight.inx\
 	color_morehue.inx\
-	color_lesshue.inx
+	color_lesshue.inx\
+	pathalongpath.inx
 
 
 extension_SCRIPTS = \
