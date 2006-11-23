@@ -26,8 +26,6 @@ extensions = \
 	handles.py \
 	inkex.py \
 	interp.py \
-	kochify.py \
-	kochify_load.py \
 	lindenmayer.py \
 	motion.py \
 	pturtle.py \
@@ -106,8 +104,6 @@ modules = \
 	funcplot.inx \
 	handles.inx \
 	interp.inx \
-	kochify.inx \
-	kochify_load.inx \
 	lindenmayer.inx \
 	motion.inx \
 	radiusrand.inx \
