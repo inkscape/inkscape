@@ -7862,7 +7862,7 @@ bool Make::parseProperty(Element *elem)
                 {
                 val = iter->second;
                 status("overloading property '%s' = '%s'",
-                    attrName.c_str(), val.c_str());
+                    attrVal.c_str(), val.c_str());
                 properties[attrVal] = val;
                 }
             }
