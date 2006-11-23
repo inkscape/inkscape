@@ -20,14 +20,15 @@ gradients, node editing, svg-to-png export, grouping, and more.
 if [ ! -x configure ]; then
     ./autogen.sh
 fi
-export APBUILD_STATIC="popt gc gccpp gtkmm-2.4 gdkmm-2.4 atkmm-1.6 pangomm-1.4 glibmm-2.4 sigc-2.0 Xrender lcms"
+export APBUILD_STATIC="popt gc gccpp gtkmm-2.4 gdkmm-2.4 atkmm-1.6 pangomm-1.4 glibmm-2.4 sigc-2.0 Xrender lcms cairo Xfixes Xext"
 export APBUILD_PROJECTNAME=inkscape
 
 PATH=/usr/local/src/inkscape/extra/static/bin:$PATH
 PKG_CONFIG_PATH=/usr/local/src/inkscape/extra/static/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 CPPFLAGS="-I/usr/local/src/inkscape/extra/static/include"
 LDFLAGS="-L/usr/local/src/inkscape/extra/static/lib"
-export PATH PKG_CONFIG_PATH CPPFLAGS LDFLAGS
+CXX="ccache apg++" 
+export PATH PKG_CONFIG_PATH CPPFLAGS LDFLAGS CXX
 prepareBuild --enable-binreloc --with-gnome-vfs=no --enable-lcms --enable-inkboard
 
 [BuildUnprepare]
