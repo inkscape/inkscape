@@ -35,7 +35,6 @@ extensions = \
 	simplepath.rb \
 	simplestyle.py \
 	straightseg.py \
-	wavy.py \
 	whirl.py \
 	addnodes.py \
 	summersnight.py \
@@ -111,7 +110,6 @@ modules = \
 	radiusrand.inx \
 	rtree.inx \
 	straightseg.inx \
-	wavy.inx \
 	whirl.inx \
 	addnodes.inx \
 	summersnight.inx \
