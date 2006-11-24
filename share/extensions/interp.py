@@ -16,9 +16,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, cubicsuperpath, simplestyle, copy, math, re, bezmisc
+import inkex, cubicsuperpath, simplestyle, copy, math, bezmisc
 
-uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
 def numsegs(csp):
     return sum([len(p)-1 for p in csp])
 def interpcoord(v1,v2,p):
@@ -56,30 +55,14 @@ def csplength(csp):
             lengths[-1].append(l)
             total += l            
     return lengths, total
-def styleunittouu(string):
-    unit = re.compile('(%s)$' % '|'.join(uuconv.keys()))
-    param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
-
-    p = param.match(string)
-    u = unit.search(string)    
-    if p:
-        retval = float(p.string[p.start():p.end()])
-    else:
-        retval = 0.0
-    if u:
-        try:
-            return retval * uuconv[u.string[u.start():u.end()]]
-        except KeyError:
-            pass
-    return retval
     
 def tweenstylefloat(property, start, end, time):
     sp = float(start[property])
     ep = float(end[property])
     return str(sp + (time * (ep - sp)))
 def tweenstyleunit(property, start, end, time):
-    sp = styleunittouu(start[property])
-    ep = styleunittouu(end[property])
+    sp = inkex.unittouu(start[property])
+    ep = inkex.unittouu(end[property])
     return str(sp + (time * (ep - sp)))
 def tweenstylecolor(property, start, end, time):
     sr,sg,sb = parsecolor(start[property])

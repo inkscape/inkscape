@@ -16,25 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, simplepath, cubicsuperpath, re
-
-uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
-def unittouu(string):
-    unit = re.compile('(%s)$' % '|'.join(uuconv.keys()))
-    param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
-
-    p = param.match(string)
-    u = unit.search(string)    
-    if p:
-        retval = float(p.string[p.start():p.end()])
-    else:
-        retval = 0.0
-    if u:
-        try:
-            return retval * uuconv[u.string[u.start():u.end()]]
-        except KeyError:
-            pass
-    return retval
+import inkex, simplepath, cubicsuperpath
 
 class MyEffect(inkex.Effect):
     def __init__(self):
@@ -63,7 +45,7 @@ class MyEffect(inkex.Effect):
         self.dxf_add("999\nDXF created by Inkscape\n0\nSECTION\n2\nENTITIES")
         
         scale = 25.4/90.0
-        h = unittouu(inkex.xml.xpath.Evaluate('/svg/@height',self.document)[0].value)
+        h = inkex.unittouu(inkex.xml.xpath.Evaluate('/svg/@height',self.document)[0].value)
 
         path = '//path'
         for node in inkex.xml.xpath.Evaluate(path,self.document):

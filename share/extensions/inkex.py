@@ -32,6 +32,26 @@ u'inkscape'    :u'http://www.inkscape.org/namespaces/inkscape',
 u'xlink'    :u'http://www.w3.org/1999/xlink'
 }
 
+#a dictionary of unit to user unit conversion factors
+uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
+def unittouu(string):
+    '''Returns returns userunits given a string representation of units in another system'''
+    unit = re.compile('(%s)$' % '|'.join(uuconv.keys()))
+    param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
+
+    p = param.match(string)
+    u = unit.search(string)    
+    if p:
+        retval = float(p.string[p.start():p.end()])
+    else:
+        retval = 0.0
+    if u:
+        try:
+            return retval * uuconv[u.string[u.start():u.end()]]
+        except KeyError:
+            pass
+    return retval
+
 try:
     import xml.dom.ext
     import xml.dom.minidom
