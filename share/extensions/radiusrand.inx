@@ -1,11 +1,12 @@
 <inkscape-extension>
-   <_name>Radius Randomize</_name>
+   <_name>Jitter nodes</_name>
    <id>org.ekips.filter.radiusrand</id>
        <dependency type="executable" location="extensions">radiusrand.py</dependency>
        <dependency type="executable" location="extensions">inkex.py</dependency>
-       <param name="radius" type="float" min="0.0" max="1000.0" _gui-text="Radius">100.0</param>
-       <param name="end" type="boolean" _gui-text="Randomize nodes">true</param>
-       <param name="ctrl" type="boolean" _gui-text="Randomize node handles">false</param>
+       <param name="title" type="description">This effect randomly shifts the nodes (and optionally node handles) of the selected path.</param>
+       <param name="radius" type="float" min="0.0" max="1000.0" _gui-text="Maximum displacement, px">100.0</param>
+       <param name="end" type="boolean" _gui-text="Shift nodes">true</param>
+       <param name="ctrl" type="boolean" _gui-text="Shift node handles">false</param>
        <param name="norm" type="boolean" _gui-text="Use normal distribution">true</param>
    <effect>
                <object-type>path</object-type>
