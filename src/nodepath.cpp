@@ -2864,6 +2864,33 @@ static gboolean node_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::No
         case GDK_LEAVE_NOTIFY:
             active_node = NULL;
             break;
+        case GDK_SCROLL:
+            if ((event->scroll.state & GDK_CONTROL_MASK) && !(event->scroll.state & GDK_SHIFT_MASK)) { // linearly
+                switch (event->scroll.direction) {
+                    case GDK_SCROLL_UP:
+                        nodepath_grow_selection_linearly (n->subpath->nodepath, n, +1);
+                        break;
+                    case GDK_SCROLL_DOWN:
+                        nodepath_grow_selection_linearly (n->subpath->nodepath, n, -1);
+                        break;
+                    default:
+                        break;
+                }
+                ret = TRUE;
+            } else if (!(event->scroll.state & GDK_SHIFT_MASK)) { // spatially
+                switch (event->scroll.direction) {
+                    case GDK_SCROLL_UP:
+                        nodepath_grow_selection_spatially (n->subpath->nodepath, n, +1);
+                        break;
+                    case GDK_SCROLL_DOWN:
+                        nodepath_grow_selection_spatially (n->subpath->nodepath, n, -1);
+                        break;
+                    default:
+                        break;
+                }
+                ret = TRUE;
+            }
+            break;
         case GDK_KEY_PRESS:
             switch (get_group0_keyval (&event->key)) {
                 case GDK_space:
@@ -2875,16 +2902,16 @@ static gboolean node_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::No
                     break;
                 case GDK_Page_Up:
                     if (event->key.state & GDK_CONTROL_MASK) {
-                        nodepath_grow_selection_spatially (n->subpath->nodepath, n, +1);
-                    } else {
                         nodepath_grow_selection_linearly (n->subpath->nodepath, n, +1);
+                    } else {
+                        nodepath_grow_selection_spatially (n->subpath->nodepath, n, +1);
                     }
                     break;
                 case GDK_Page_Down:
                     if (event->key.state & GDK_CONTROL_MASK) {
-                        nodepath_grow_selection_spatially (n->subpath->nodepath, n, -1);
-                    } else {
                         nodepath_grow_selection_linearly (n->subpath->nodepath, n, -1);
+                    } else {
+                        nodepath_grow_selection_spatially (n->subpath->nodepath, n, -1);
                     }
                     break;
                 default:
