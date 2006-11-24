@@ -25,8 +25,12 @@ from math import *
 from random import *
 
 def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, top, 
-    fx = "sin(x)", fpx = "cos(x)", fponum = True):
-
+    fx = "sin(x)", fpx = "cos(x)", fponum = True, times2pi = False):
+    
+    if times2pi == True:
+        xstart = 2 * pi * xstart
+        xend   = 2 * pi * xend   
+    
     # step is the distance between nodes on x
     step = (xend - xstart) / (samples-1)
     third = step / 3.0
@@ -83,6 +87,10 @@ class FuncPlot(inkex.Effect):
                         action="store", type="float", 
                         dest="xend", default=1.0,
                         help="End x-value")
+        self.OptionParser.add_option("--times2pi",
+                        action="store", type="inkbool", 
+                        dest="times2pi", default=True,
+                        help="Multiply x-range by 2*pi")    
         self.OptionParser.add_option("--ybottom",
                         action="store", type="float", 
                         dest="ybottom", default=-1.0,
@@ -144,7 +152,8 @@ class FuncPlot(inkex.Effect):
                                 w,h,x,y,
                                 self.options.fofx, 
                                 self.options.fpofx,
-                                self.options.fponum)))
+                                self.options.fponum,
+                                self.options.times2pi)))
                 newpath.setAttribute('title', self.options.fofx)
                 
                 #newpath.setAttribute('desc', '!func;' + self.options.fofx + ';' 

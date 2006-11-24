@@ -7,6 +7,7 @@
 	    <page name="sampling" _gui-text="Sampling">
 	        <param name="xstart" type="float" min="-1000.0" max="1000.0" _gui-text="Start x-value">0.0</param>
 	        <param name="xend" type="float" min="-1000.0" max="1000.0" _gui-text="End x-value">1.0</param>
+         	<param name="times2pi" type="boolean" _gui-text="Multiply x-range by 2*pi">false</param>
 	        <param name="ybottom" type="float" min="-1000.0" max="1000.0" _gui-text="y-value of rectangle's bottom">0.0</param>
 	        <param name="ytop" type="float" min="-1000.0" max="1000.0" _gui-text="y-value of rectangle's top">1.0</param>
 	        <param name="samples" type="int" min="2" max="1000" _gui-text="Samples">8</param>
