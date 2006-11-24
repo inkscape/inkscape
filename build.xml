@@ -241,7 +241,6 @@
            -lgc -mwindows -lws2_32 -lintl -lm
 	   </libs>
 	</link>
-	<!--<strip file="${build}/inkscape.exe"/>-->
   </target>
 
   <target name="dist" depends="link,i18n"

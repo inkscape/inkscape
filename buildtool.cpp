@@ -3326,6 +3326,9 @@ bool MakeBase::executeCommand(const String &command,
     status("============ cmd ============\n%s\n=============================",
 	            command.c_str());
 
+    outbuf.clear();
+    errbuf.clear();
+    
 #ifdef __WIN32__
 
     /*
@@ -6344,6 +6347,7 @@ public:
         {
 		type = TASK_LINK; name = "link";
 		command = "g++";
+		doStrip = false;
 		}
 
     virtual ~TaskLink()
@@ -6389,12 +6393,38 @@ public:
         //trace("LINK cmd:%s", cmd.c_str());
 
 
-        String outString, errString;
-        if (!executeCommand(cmd.c_str(), "", outString, errString))
+        String outbuf, errbuf;
+        if (!executeCommand(cmd.c_str(), "", outbuf, errbuf))
             {
-            error("LINK problem: %s", errString.c_str());
+            error("LINK problem: %s", errbuf.c_str());
             return false;
             }
+
+        if (symFileName.size()>0)
+            {
+            String symFullName = parent.resolve(symFileName);
+            cmd = "objcopy --only-keep-debug ";
+            cmd.append(getNativePath(fullTarget));
+            cmd.append(" ");
+            cmd.append(getNativePath(symFullName));
+            if (!executeCommand(cmd, "", outbuf, errbuf))
+                {
+                error("<strip> symbol file failed : %s", errbuf.c_str());
+                return false;
+                }
+            }
+            
+        if (doStrip)
+            {
+            cmd = "strip ";
+            cmd.append(getNativePath(fullTarget));
+            if (!executeCommand(cmd, "", outbuf, errbuf))
+               {
+               error("<strip> failed : %s", errbuf.c_str());
+               return false;
+               }
+            }
+
         return true;
         }
 
@@ -6406,6 +6436,12 @@ public:
         if (s.size()>0)
             command = s;
         if (!parent.getAttribute(elem, "out", fileName))
+            return false;
+        if (!parent.getAttribute(elem, "strip", s))
+            return false;
+        if (!getBool(s, doStrip))
+            return false;
+        if (!parent.getAttribute(elem, "symfile", symFileName))
             return false;
             
         std::vector<Element *> children = elem->getChildren();
@@ -6436,11 +6472,13 @@ public:
 
 private:
 
-    String command;
-    String fileName;
-    String flags;
-    String libs;
+    String  command;
+    String  fileName;
+    String  flags;
+    String  libs;
     FileSet fileSet;
+    bool    doStrip;
+    String  symFileName;
 
 };
 
@@ -7045,12 +7083,30 @@ public:
         {
         String fullName = parent.resolve(fileName);
         //trace("fullDir:%s", fullDir.c_str());
-        String cmd = "strip ";
-        cmd.append(fullName);
-
+        String cmd;
         String outbuf, errbuf;
+
+        if (symFileName.size()>0)
+            {
+            String symFullName = parent.resolve(symFileName);
+            cmd = "objcopy --only-keep-debug ";
+            cmd.append(getNativePath(fullName));
+            cmd.append(" ");
+            cmd.append(getNativePath(symFullName));
+            if (!executeCommand(cmd, "", outbuf, errbuf))
+                {
+                error("<strip> symbol file failed : %s", errbuf.c_str());
+                return false;
+                }
+            }
+            
+        cmd = "strip ";
+        cmd.append(getNativePath(fullName));
         if (!executeCommand(cmd, "", outbuf, errbuf))
+            {
+            error("<strip> failed : %s", errbuf.c_str());
             return false;
+            }
         return true;
         }
 
@@ -7058,9 +7114,11 @@ public:
         {
         if (!parent.getAttribute(elem, "file", fileName))
             return false;
+        if (!parent.getAttribute(elem, "symfile", symFileName))
+            return false;
         if (fileName.size() == 0)
             {
-            error("<strip> requires 'file=\"fileNname\"' attribute");
+            error("<strip> requires 'file=\"fileName\"' attribute");
             return false;
             }
         return true;
@@ -7069,6 +7127,7 @@ public:
 private:
 
     String fileName;
+    String symFileName;
 };
 
 
