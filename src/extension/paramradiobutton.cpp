@@ -1,5 +1,5 @@
 /** \file
- * extension parameter for enumerations. 
+ * extension parameter for radiobuttons. 
  *
  * It uses a Gtk:ComboBoxText widget in the extension UI.
  */
@@ -19,7 +19,8 @@
 
 
 #include <gtkmm/box.h>
-#include <gtkmm/comboboxtext.h>
+#include <gtkmm/radiobutton.h>
+#include <gtkmm/radiobuttongroup.h>
 #include <gtkmm/tooltips.h>
 #include <gtkmm/label.h>
 
@@ -32,7 +33,7 @@
 #include "document-private.h"
 #include "sp-object.h"
 
-#include "paramenum.h"
+#include "paramradiobutton.h"
 
 /** \brief  The root directory in the preferences database for extension
             related parameters. */
@@ -41,7 +42,7 @@
 namespace Inkscape {
 namespace Extension {
 
-ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
     Parameter(name, guitext, desc, scope, ext)
 {              
     choices = NULL;
@@ -82,7 +83,7 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
     return;
 }
 
-ParamComboBox::~ParamComboBox (void)
+ParamRadioButton::~ParamRadioButton (void)
 {                  
     //destroy choice strings
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
@@ -109,7 +110,7 @@ ParamComboBox::~ParamComboBox (void)
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamComboBox::set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node)
+ParamRadioButton::set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     if (in == NULL) return NULL; /* Can't have NULL string */
 
@@ -126,11 +127,11 @@ ParamComboBox::set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * no
 
 
 /**
-    \brief  A function to get the value of the parameter in string form
+    \brief  A function to get the current value of the parameter in a string form
     \return A string with the 'value' as command line argument
 */
 Glib::ustring *
-ParamComboBox::string (void)
+ParamRadioButton::string (void)
 {
     Glib::ustring * param_string = new Glib::ustring("");
 
@@ -141,35 +142,45 @@ ParamComboBox::string (void)
     return param_string;
 }
 
-/** \brief  A special category of Gtk::Entry to handle string parameteres */
-class ParamComboBoxEntry : public Gtk::ComboBoxText {
+/** \brief  A special radiobutton class to use in ParamRadioButton */
+class ParamRadioButtonWdg : public Gtk::RadioButton {
 private:
-    ParamComboBox * _pref;
+    ParamRadioButton * _pref;
     SPDocument * _doc;
     Inkscape::XML::Node * _node;
 public:
     /** \brief  Build a string preference for the given parameter
-        \param  pref  Where to get the string from, and where to put it
-                      when it changes.
+        \param  pref  Where to put the radiobutton's string when it is selected.
     */
-    ParamComboBoxEntry (ParamComboBox * pref, SPDocument * doc, Inkscape::XML::Node * node) :
-        Gtk::ComboBoxText(), _pref(pref), _doc(doc), _node(node) {
-        this->signal_changed().connect(sigc::mem_fun(this, &ParamComboBoxEntry::changed));
+    ParamRadioButtonWdg ( Gtk::RadioButtonGroup& group, const Glib::ustring& label, 
+                          ParamRadioButton * pref, SPDocument * doc, Inkscape::XML::Node * node ) :
+        Gtk::RadioButton(group, label), _pref(pref), _doc(doc), _node(node) {
+        add_changesignal();
+    };
+    ParamRadioButtonWdg ( const Glib::ustring& label, 
+                          ParamRadioButton * pref, SPDocument * doc, Inkscape::XML::Node * node ) :
+        Gtk::RadioButton(label), _pref(pref), _doc(doc), _node(node) {
+        add_changesignal();
+    };
+    void add_changesignal() {
+        this->signal_toggled().connect(sigc::mem_fun(this, &ParamRadioButtonWdg::changed));
     };
     void changed (void);
 };
 
-/** \brief  Respond to the text box changing
+/** \brief  Respond to the selected radiobutton changing
 
-    This function responds to the box changing by grabbing the value
+    This function responds to the radiobutton selection changing by grabbing the value
     from the text box and putting it in the parameter.
 */
 void
-ParamComboBoxEntry::changed (void)
+ParamRadioButtonWdg::changed (void)
 {
-    Glib::ustring data = this->get_active_text();
-    _pref->set(data.c_str(), _doc, _node);
-    return;
+    if (this->get_active()) {
+        Glib::ustring data = this->get_label();
+        g_message(data.c_str());
+        _pref->set(data.c_str(), _doc, _node);
+    }
 }
 
 
@@ -178,26 +189,39 @@ ParamComboBoxEntry::changed (void)
     \brief  Creates a combobox widget for an enumeration parameter
 */
 Gtk::Widget *
-ParamComboBox::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
+    Gtk::VBox * vbox = Gtk::manage(new Gtk::VBox(false, 0));
 
-    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP));
     label->show();
     hbox->pack_start(*label, false, false);
 
-    ParamComboBoxEntry * combo = Gtk::manage(new ParamComboBoxEntry(this, doc, node));
-    // add choice strings:         
+    // add choice strings as radiobuttons
+    // and select last selected option (_value)
+    bool first = true;
+    ParamRadioButtonWdg * radio;
+    Gtk::RadioButtonGroup group;
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
         Glib::ustring * text = reinterpret_cast<Glib::ustring *>(list->data);
-        combo->append_text(*text);
+        if (first) {
+            radio = Gtk::manage(new ParamRadioButtonWdg(*text, this, doc, node));
+            group = radio->get_group();
+            first = false;
+        } else {
+            radio = Gtk::manage(new ParamRadioButtonWdg(group, *text, this, doc, node));
+        } 
+        radio->show();
+        vbox->pack_start(*radio, true, true);
+        if (!strcmp(text->c_str(), _value)) {
+            radio->set_active();
+        } 
     }
-    combo->set_active_text(Glib::ustring(_value));
-
-    combo->show();
-    hbox->pack_start(*combo, true, true);
-
+    vbox->show();
+    hbox->pack_end(*vbox, false, false);
     hbox->show();
+    
 
     return dynamic_cast<Gtk::Widget *>(hbox);
 }

@@ -23,6 +23,8 @@ extension_libextension_a_SOURCES =	\
 	extension/paramnotebook.cpp \
 	extension/paramenum.h \
 	extension/paramenum.cpp \
+	extension/paramradiobutton.h \
+	extension/paramradiobutton.cpp \
 	extension/prefdialog.cpp \
 	extension/prefdialog.h \
 	extension/system.cpp	\

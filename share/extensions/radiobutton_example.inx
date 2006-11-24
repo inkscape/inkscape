@@ -1,0 +1,23 @@
+<inkscape-extension>
+    <_name>RadioButton example</_name>
+    <id>org.inkscape.effect.radiobuttontest</id>
+    <param name="radio1" type="optiongroup" _gui-text="Select option: ">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>test 3!</item>
+    </param>
+    <param name="radio2" type="optiongroup" _gui-text="Select second option: ">
+        <item>string1</item>
+        <item>string2</item>
+        <item>test3!</item>
+    </param>
+    <effect>
+		<object-type>all</object-type>
+                <effects-menu>
+                      <submenu _name="Developer Examples"/>
+	        </effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">eqtexsvg.py</command>
+    </script>
+</inkscape-extension>

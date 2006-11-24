@@ -33,6 +33,7 @@
 #include "parameter.h"
 #include "paramnotebook.h"
 #include "paramenum.h"
+#include "paramradiobutton.h"
 
 /** \brief  The root directory in the preferences database for extension
             related parameters. */
@@ -316,6 +317,8 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
         param = new ParamComboBox(name, guitext, desc, scope, in_ext, in_repr);
     } else if (!strcmp(type, "notebook")) {
         param = new ParamNotebook(name, guitext, desc, scope, in_ext, in_repr);
+    } else if (!strcmp(type, "optiongroup")) {
+        param = new ParamRadioButton(name, guitext, desc, scope, in_ext, in_repr);
     }
 
     /* Note: param could equal NULL */
