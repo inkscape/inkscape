@@ -77,7 +77,8 @@ extensions = \
 	color_lesshue.py\
 	pathalongpath.py\
 	rubberstretch.py\
-	pathmodifier.py
+	pathmodifier.py\
+	g2pngs.py
 
 
 otherstuff = \
@@ -150,7 +151,8 @@ modules = \
 	color_lesslight.inx\
 	color_morehue.inx\
 	color_lesshue.inx\
-	pathalongpath.inx
+	pathalongpath.inx\
+	g2pngs.inx
 
 
 extension_SCRIPTS = \

@@ -21,8 +21,8 @@ specify save format, scale, and if it is a layer or g export
 
 RELEASE NOTE
 - accepte l'export des calques
-- dossier par défaut = dossier utilisateur
-- crée le dossier spécifié s'il n'existe pas
+- dossier par defaut = dossier utilisateur
+- cree le dossier specifie s'il n'existe pas
 
 '''
 import inkex
