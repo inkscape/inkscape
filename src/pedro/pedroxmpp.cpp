@@ -1120,7 +1120,7 @@ bool XmppClient::processPresence(Element *root)
         //printf("fromGid:%s  fromNick:%s\n",
         //        fromGid.c_str(), fromNick.c_str());
         DOMString item_jid = root->getTagAttribute("item", "jid");
-        if (item_jid == jid) //Me
+        if (item_jid == jid || item_jid == to) //Me
             {
             if (presence)
                 {
@@ -2639,7 +2639,7 @@ bool XmppClient::groupChatCreate(const DOMString &groupJid)
         {
         if ((*iter)->getGroupJid() == groupJid)
             {
-            error("Group chat '%s' already exists", groupJid.c_str());
+            //error("Group chat '%s' already exists", groupJid.c_str());
             return false;
             }
         }
