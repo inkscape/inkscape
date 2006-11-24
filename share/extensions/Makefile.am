@@ -78,7 +78,8 @@ extensions = \
 	pathalongpath.py\
 	rubberstretch.py\
 	pathmodifier.py\
-	g2pngs.py
+	g2pngs.py\
+	ffgeom.py
 
 
 otherstuff = \
