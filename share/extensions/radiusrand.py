@@ -31,6 +31,7 @@ def randomize((x, y), r, norm):
 class RadiusRandomize(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
+        self.OptionParser.add_option("--title")
         self.OptionParser.add_option("-r", "--radius",
                         action="store", type="float", 
                         dest="radius", default=10.0,
