@@ -128,10 +128,10 @@ BlurEdge::init (void)
 {
     Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>" N_("Blur Edge") "</name>\n"
+            "<name>" N_("Inset/Outset Halo") "</name>\n"
             "<id>org.inkscape.effect.bluredge</id>\n"
-            "<param name=\"blur-width\" gui-text=\"" N_("Blur Width") "\" gui-description=\"" N_("Width in pixels of the blurred area") "\" scope=\"document\" type=\"float\" min=\"1.0\" max=\"50.0\">1.0</param>\n"
-            "<param name=\"num-steps\" gui-text=\"" N_("Number of Steps") "\" gui-description=\"" N_("Number of copies of the object to make to simulate the blur") "\" scope=\"document\" type=\"int\" min=\"5\" max=\"100\">11</param>\n"
+            "<param name=\"blur-width\" gui-text=\"" N_("Width") "\" gui-description=\"" N_("Width in px of the halo") "\" scope=\"document\" type=\"float\" min=\"1.0\" max=\"50.0\">1.0</param>\n"
+            "<param name=\"num-steps\" gui-text=\"" N_("Number of steps") "\" gui-description=\"" N_("Number of inset/outset copies of the object to make") "\" scope=\"document\" type=\"int\" min=\"5\" max=\"100\">11</param>\n"
             "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
