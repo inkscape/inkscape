@@ -6,7 +6,7 @@
 	<dependency type="executable" location="path">latex</dependency>
 	<dependency type="executable" location="path">dvips</dependency>
 	<dependency type="executable" location="path">pstoedit</dependency>
-	<param name="formule" type="string" _gui-text="LaTeX formula: ">\lim_{n \to \infty}\sum_{k=1}^n \frac{1}{k^2}= \frac{\pi^2}{6}</param>
+	<param name="formule" type="string" _gui-text="LaTeX formula: ">\[\frac{\pi^2}{6}=\lim_{n \to \infty}\sum_{k=1}^n \frac{1}{k^2}\]</param>
     <effect>
 		<object-type>all</object-type>
                 <effects-menu>
