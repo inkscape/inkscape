@@ -54,7 +54,7 @@ ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, c
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
-            if (!strcmp(chname, "item")) {
+            if (!strcmp(chname, "option")) {
                 Glib::ustring * newitem = NULL;
                 const char * contents = sp_repr_children(child_repr)->content();
                 if (contents != NULL)
@@ -178,7 +178,6 @@ ParamRadioButtonWdg::changed (void)
 {
     if (this->get_active()) {
         Glib::ustring data = this->get_label();
-        g_message(data.c_str());
         _pref->set(data.c_str(), _doc, _node);
     }
 }
