@@ -43,8 +43,8 @@ def create_equation_tex(filename, equation):
     tex.close()
 
 def svg_open(self,filename):
-    doc_width = float(self.document.documentElement.getAttribute('width'))
-    doc_height = float(self.document.documentElement.getAttribute('height'))
+    doc_width = inkex.unittouu(self.document.documentElement.getAttribute('width'))
+    doc_height = inkex.unittouu(self.document.documentElement.getAttribute('height'))
     doc_sizeH = min(doc_width,doc_height)
     doc_sizeW = max(doc_width,doc_height)
 
