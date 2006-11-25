@@ -8,13 +8,9 @@ Summary: Inkscape is an open source SVG editor with capabilities similar to Illu
 SoftwareVersion: @VERSION@
 Maintainer: The Inkscape team <inkscape-devel@lists.sourceforge.net>
 Packager: Aaron Spike <aaron@ekips.org>
-AutopackageTarget: 1.0
-
-[Description]
-Inkscape is an open source SVG editor with capabilities
-similar to Illustrator, CorelDraw, Visio, etc. Supported SVG features
-include basic shapes, paths, text, alpha blending, transforms,
-gradients, node editing, svg-to-png export, grouping, and more.
+AutopackageTarget: 1.2
+PackageFileName: inkscape-$SOFTWAREVERSION.x86.package
+PackageDesktop: share/applications/inkscape.desktop
 
 [BuildPrepare]
 if [ ! -x configure ]; then
@@ -50,12 +46,13 @@ require @zlib.org/zlib 1
 # require @xfree86.org/xft 2
 # require @freetype.org/freetype 6
 # require @freedesktop.org/fontconfig 1
+removeOwningPackage $PREFIX/bin/inkscape
 
 [Install]
 installExe bin/inkscape bin/inkview
 installMan 1 man/man1/*
 installIcon share/pixmaps/inkscape.png
-installDesktop "Graphics" share/applications/inkscape.desktop
+installMenuItem "Graphics" share/applications/inkscape.desktop
 
 copyFiles --nobackup share/locale $PREFIX/share
 copyFiles share/inkscape $PREFIX/share
