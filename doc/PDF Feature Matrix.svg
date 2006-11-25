@@ -14,7 +14,7 @@
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.44+devel"
-   sodipodi:docbase="/home/mental/trees/inkscape/doc"
+   sodipodi:docbase="/usr/local/src/inkscape/ap/doc"
    sodipodi:docname="PDF Feature Matrix.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0"
@@ -150,15 +150,15 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.3849319"
-     inkscape:cx="318.07399"
-     inkscape:cy="268.43479"
+     inkscape:zoom="2.7698638"
+     inkscape:cx="508.4849"
+     inkscape:cy="868.60333"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     inkscape:window-width="1024"
-     inkscape:window-height="695"
+     inkscape:window-width="1280"
+     inkscape:window-height="949"
      inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-y="25"
      width="765px"
      height="990px" />
   <metadata
@@ -492,5 +492,39 @@
            transform="matrix(1.860465,0,0,1.860465,-143.2108,-713.9307)"
            width="765"
            height="990" /></flowRegion><flowPara
-         id="flowPara5025">*inkscape's rendering is slightly incorrect due to issues with alpha premultiplication.  The important thing is that the upper left image should only be partly opaque, while the lower right image should be fully opaque.</flowPara></flowRoot>  </g>
+         id="flowPara5025">*inkscape's rendering is slightly incorrect due to issues with alpha premultiplication.  The important thing is that the upper left image should only be partly opaque, while the lower right image should be fully opaque.</flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;opacity:1;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans"
+       x="609.53845"
+       y="58.889664"
+       id="text2364"><tspan
+         sodipodi:role="line"
+         id="tspan2366"
+         x="609.53845"
+         y="58.889664">stroke-dasharray</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:10,5,2.5,5;stroke-dashoffset:0"
+       d="M 533.60024,72.987402 L 688.84253,72.987402"
+       id="path4316" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:10,5,2.5,5;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 533.60024,84.987402 L 688.84253,84.987402"
+       id="path4318" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:10,5,2.5,5;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 533.60024,96.987402 L 688.84253,96.987402"
+       id="path4320" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:5,20;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 533.60024,124.9874 L 688.84253,124.9874"
+       id="path4322" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:5,20;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 533.60024,136.9874 L 688.84253,136.9874"
+       id="path4324" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:5,20;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 533.60024,148.9874 L 688.84253,148.9874"
+       id="path4326" />
+  </g>
 </svg>
