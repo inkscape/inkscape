@@ -31,6 +31,11 @@
 #include "interface.h"
 #include "verbs.h"
 
+
+#define MIN_ONSCREEN_DISTANCE 50
+
+
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
@@ -96,18 +101,16 @@ Dialog::read_geometry()
 
 //    g_print ("read %d %d %d %d\n", x, y, w, h);
 
-        if (x<0) x=0;
-        if (y<0) y=0;
-
     // If there are stored height and width values for the dialog,
     // resize the window to match; otherwise we leave it at its default
     if (w != 0 && h != 0) {
         resize (w, h);
     }
-
+    
     // If there are stored values for where the dialog should be
     // located, then restore the dialog to that position.
-    if (x != -1000 && y != -1000) {
+    // also check if (x,y) is actually onscreen with the current screen dimensions
+    if ( (x >= 0) && (y >= 0) && (x < (gdk_screen_width()-MIN_ONSCREEN_DISTANCE)) && (y < (gdk_screen_height()-MIN_ONSCREEN_DISTANCE)) ) {
         move(x, y);
     } else {
         // ...otherwise just put it in the middle of the screen
