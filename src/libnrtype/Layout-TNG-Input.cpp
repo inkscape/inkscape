@@ -290,14 +290,18 @@ PangoFontDescription *Layout::InputStreamTextSource::styleGetFontDescription() c
 
     pango_font_description_set_family(descr,family.c_str());
     pango_font_description_set_weight(descr,(PangoWeight)_enum_converter(style->font_weight.computed,  enum_convert_spstyle_weight_to_pango_weight,   sizeof(enum_convert_spstyle_weight_to_pango_weight)/sizeof(enum_convert_spstyle_weight_to_pango_weight[0])));
-    pango_font_description_set_stretch(descr,(PangoStretch)_enum_converter(style->font_stretch.computed, enum_convert_spstyle_stretch_to_pango_stretch, sizeof(enum_convert_spstyle_stretch_to_pango_stretch)/sizeof(enum_convert_spstyle_stretch_to_pango_stretch[0])));
     pango_font_description_set_style(descr,(PangoStyle)_enum_converter(style->font_style.computed,   enum_convert_spstyle_style_to_pango_style,     sizeof(enum_convert_spstyle_style_to_pango_style)/sizeof(enum_convert_spstyle_style_to_pango_style[0])));
     pango_font_description_set_variant(descr,(PangoVariant)_enum_converter(style->font_variant.computed, enum_convert_spstyle_variant_to_pango_variant, sizeof(enum_convert_spstyle_variant_to_pango_variant)/sizeof(enum_convert_spstyle_variant_to_pango_variant[0])));
 #ifdef USE_PANGO_WIN32
     // damn Pango fudges the size, so we need to unfudge. See source of pango_win32_font_map_init()
     pango_font_description_set_size(descr, (int) ((font_factory::Default())->fontSize*PANGO_SCALE*72/GetDeviceCaps(pango_win32_get_dc(),LOGPIXELSY))); // mandatory huge size (hinting workaround)
+    // we don't set stretch on Win32, because pango-win32 has no concept of it
+    // (Windows doesn't really provide any useful field it could use).
+    // If we did set stretch, then any text with a font-stretch attribute would
+    // end up falling back to Arial.
 #else
     pango_font_description_set_size(descr, (int) ((font_factory::Default())->fontSize*PANGO_SCALE)); // mandatory huge size (hinting workaround)
+    pango_font_description_set_stretch(descr,(PangoStretch)_enum_converter(style->font_stretch.computed, enum_convert_spstyle_stretch_to_pango_stretch, sizeof(enum_convert_spstyle_stretch_to_pango_stretch)/sizeof(enum_convert_spstyle_stretch_to_pango_stretch[0])));
 #endif
     return descr;
 }
