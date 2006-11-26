@@ -330,9 +330,12 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/color_darker.inx
 [type: gettext/xml] share/extensions/color_desaturate.inx
 [type: gettext/xml] share/extensions/color_grayscale.inx
-[type: gettext/xml] share/extensions/color_keepblue.inx
-[type: gettext/xml] share/extensions/color_keepgreen.inx
-[type: gettext/xml] share/extensions/color_keepred.inx
+[type: gettext/xml] share/extensions/color_lesshue.inx
+[type: gettext/xml] share/extensions/color_lesslight.inx
+[type: gettext/xml] share/extensions/color_lesssaturation.inx 
+[type: gettext/xml] share/extensions/color_morehue.inx
+[type: gettext/xml] share/extensions/color_morelight.inx
+[type: gettext/xml] share/extensions/color_moresaturation.inx
 [type: gettext/xml] share/extensions/color_negative.inx
 [type: gettext/xml] share/extensions/color_removeblue.inx
 [type: gettext/xml] share/extensions/color_removegreen.inx
