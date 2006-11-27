@@ -7,8 +7,9 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Johan Engelen <goejendaagh@zonnet.nl>
  *
- * Copyright (C) 1999-2005 Authors
+ * Copyright (C) 1999-2006 Authors
  * Copyright (C) 2004 David Turner
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -62,6 +63,8 @@
 
 #include "message-stack.h"
 #include "message-context.h"
+
+#define MIN_ONSCREEN_DISTANCE 50
 
 struct EditableDest {
     GtkEditable *editable;
@@ -210,26 +213,26 @@ void sp_xml_tree_dialog()
 
         dlg = sp_window_new("", TRUE);
         if (x == -1000 || y == -1000) {
-            x = prefs_get_int_attribute(prefs_path, "x", 0);
-            y = prefs_get_int_attribute(prefs_path, "y", 0);
+            x = prefs_get_int_attribute(prefs_path, "x", -1000);
+            y = prefs_get_int_attribute(prefs_path, "y", -1000);
         }
         if (w ==0 || h == 0) {
             w = prefs_get_int_attribute(prefs_path, "w", 0);
             h = prefs_get_int_attribute(prefs_path, "h", 0);
         }
         
-        if (x<0) x=0;
-        if (y<0) y=0;
+//        if (x<0) x=0;
+//        if (y<0) y=0;
 
-        if (x != 0 || y != 0) {
+        if (w && h) {
+            gtk_window_resize((GtkWindow *) dlg, w, h);
+        }
+        if (x >= 0 && y >= 0 && (x < (gdk_screen_width()-MIN_ONSCREEN_DISTANCE)) && (y < (gdk_screen_height()-MIN_ONSCREEN_DISTANCE))) {
             gtk_window_move((GtkWindow *) dlg, x, y);
         } else {
             gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
         }
 
-        if (w && h) {
-            gtk_window_resize((GtkWindow *) dlg, w, h);
-        }
         sp_transientize(dlg);
         wd.win = dlg;
         wd.stop = 0;

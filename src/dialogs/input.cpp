@@ -5,8 +5,9 @@
  *
  * Authors:
  *   Nicklas Lindgren <nili@lysator.liu.se>
+ *   Johan Engelen <goejendaagh@zonnet.nl>
  *
- * Copyright (C) 2005 Authors
+ * Copyright (C) 2005-2006 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -27,6 +28,7 @@
 #include "dialog-events.h"
 #include "../prefs-utils.h"
 
+#define MIN_ONSCREEN_DISTANCE 50
 
 static GtkWidget *dlg = NULL;
 static win_data wd;
@@ -221,8 +223,8 @@ sp_input_dialog (void)
         dlg = gtk_input_dialog_new();
 
         if (x == -1000 || y == -1000) {
-            x = prefs_get_int_attribute (prefs_path, "x", 0);
-            y = prefs_get_int_attribute (prefs_path, "y", 0);
+            x = prefs_get_int_attribute (prefs_path, "x", -1000);
+            y = prefs_get_int_attribute (prefs_path, "y", -1000);
         }
 
         if (w ==0 || h == 0) {
@@ -230,18 +232,18 @@ sp_input_dialog (void)
             h = prefs_get_int_attribute (prefs_path, "h", 0);
         }
 
-        if (x<0) x=0;
-        if (y<0) y=0;
+//        if (x<0) x=0;
+//        if (y<0) y=0;
 
-        if (x != 0 || y != 0) {
+        if (w && h) {
+            gtk_window_resize ((GtkWindow *) dlg, w, h);
+        }
+        if (x >= 0 && y >= 0 && (x < (gdk_screen_width()-MIN_ONSCREEN_DISTANCE)) && (y < (gdk_screen_height()-MIN_ONSCREEN_DISTANCE))) {
             gtk_window_move ((GtkWindow *) dlg, x, y);
         } else {
             gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
         }
 
-        if (w && h) {
-            gtk_window_resize ((GtkWindow *) dlg, w, h);
-        }
 
         sp_transientize (dlg);
         wd.win = dlg;
