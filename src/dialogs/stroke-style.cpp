@@ -72,6 +72,9 @@ static void sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw);
 
 static void sp_stroke_style_widget_change_subselection ( Inkscape::Application *inkscape, SPDesktop *desktop, SPWidget *spw );
 
+/**
+ * Create the stroke style widget, and hook up all the signals.
+ */
 GtkWidget *
 sp_stroke_style_paint_widget_new(void)
 {
@@ -110,6 +113,9 @@ sp_stroke_style_paint_widget_new(void)
     return spw;
 }
 
+/**
+ * On construction, simply does an update of the stroke style paint object.
+ */
 static void
 sp_stroke_style_paint_construct(SPWidget *spw, SPPaintSelector *psel)
 {
@@ -122,6 +128,9 @@ sp_stroke_style_paint_construct(SPWidget *spw, SPPaintSelector *psel)
     } 
 }
 
+/**
+ * On signal modified, invokes an update of the stroke style paint object.
+ */
 static void
 sp_stroke_style_paint_selection_modified ( SPWidget *spw,
                                         Inkscape::Selection *selection,
@@ -135,6 +144,9 @@ sp_stroke_style_paint_selection_modified ( SPWidget *spw,
 }
 
 
+/**
+ * On signal selection changed, invokes an update of the stroke style paint object.
+ */
 static void
 sp_stroke_style_paint_selection_changed ( SPWidget *spw,
                                         Inkscape::Selection *selection,
@@ -143,6 +155,10 @@ sp_stroke_style_paint_selection_changed ( SPWidget *spw,
     sp_stroke_style_paint_update (spw);
 }
 
+
+/**
+ * On signal change subselection, invoke an update of the stroke style widget.
+ */
 static void
 sp_stroke_style_widget_change_subselection ( Inkscape::Application *inkscape, 
                                         SPDesktop *desktop,
@@ -151,6 +167,10 @@ sp_stroke_style_widget_change_subselection ( Inkscape::Application *inkscape,
     sp_stroke_style_paint_update (spw);
 }
 
+/**
+ * Gets the active stroke style property, then sets the appropriate color, alpha, gradient,
+ * pattern, etc. for the paint-selector.
+ */
 static void
 sp_stroke_style_paint_update (SPWidget *spw)
 {
@@ -229,6 +249,9 @@ sp_stroke_style_paint_update (SPWidget *spw)
     gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
 }
 
+/**
+ * When the mode is changed, invoke a regular changed handler.
+ */
 static void
 sp_stroke_style_paint_mode_changed( SPPaintSelector *psel,
                                     SPPaintSelectorMode mode,
@@ -249,6 +272,10 @@ static gchar *undo_label_1 = "stroke:flatcolor:1";
 static gchar *undo_label_2 = "stroke:flatcolor:2";
 static gchar *undo_label = undo_label_1;
 
+/**
+ * When a drag callback occurs on a paint selector object, if it is a RGB or CMYK 
+ * color mode, then set the stroke opacity to psel's flat color.
+ */
 static void
 sp_stroke_style_paint_dragged(SPPaintSelector *psel, SPWidget *spw)
 {
@@ -273,6 +300,10 @@ sp_stroke_style_paint_dragged(SPPaintSelector *psel, SPWidget *spw)
     }
 }
 
+/**
+ * When the stroke style's paint settings change, this handler updates the
+ * repr's stroke css style and applies the style to relevant drawing items.
+ */
 static void
 sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
 {
@@ -513,21 +544,25 @@ sp_stroke_radio_button(GtkWidget *tb, char const *icon,
 
 }
 
+/**
+ * Creates a copy of the marker named mname, determines its visible and renderable
+ * area in menu_id's bounding box, and then renders it.
+ */
 static GtkWidget *
 sp_marker_prev_new(unsigned size, gchar const *mname,
                    SPDocument *source, SPDocument *sandbox,
                    gchar *menu_id, NRArena const *arena, unsigned visionkey, NRArenaItem *root)
 {
-    // the object of the marker
+    // Retrieve the marker named 'mname' from the source SVG document
     SPObject const *marker = source->getObjectById(mname);
     if (marker == NULL)
         return NULL;
 
-    // the repr of the marker; make a copy with id="sample"
+    // Create a copy repr of the marker with id="sample"
     Inkscape::XML::Node *mrepr = SP_OBJECT_REPR (marker)->duplicate();
     mrepr->setAttribute("id", "sample");
 
-    // replace the old sample in the sandbox by the new one
+    // Replace the old sample in the sandbox by the new one
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (sandbox->getObjectById("defs"));
     SPObject *oldmarker = sandbox->getObjectById("sample");
     if (oldmarker)
@@ -714,6 +749,9 @@ sp_marker_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *sour
 }
 
 
+/**
+ * Returns a new document containing default start, mid, and end markers.
+ */
 SPDocument *
 ink_markers_preview_doc ()
 {
@@ -747,7 +785,9 @@ gchar const *buffer = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:sodipodi=
 }
 
 
-
+/**
+ * Creates a menu widget to display markers from markers.svg
+ */
 static GtkWidget *
 ink_marker_menu( GtkWidget *tbl, gchar *menu_id, SPDocument *sandbox)
 {
@@ -827,7 +867,11 @@ ink_marker_menu( GtkWidget *tbl, gchar *menu_id, SPDocument *sandbox)
 }
 
 
-/*user selected existing marker from list*/
+/**
+ * Handles when user selects one of the markers from the marker menu.
+ * Defines a uri string to refer to it, then applies it to all selected
+ * items in the current desktop.
+ */
 static void
 sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
 {
@@ -889,6 +933,10 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
                      _("Set markers"));
 }
 
+/**
+ * Sets the stroke width units for all selected items.
+ * Also handles absolute and dimensionless units.
+ */
 static gboolean stroke_width_set_unit(SPUnitSelector *,
                                                  SPUnit const *old,
                                                  SPUnit const *new_units,
@@ -1172,7 +1220,10 @@ sp_stroke_style_line_widget_new(void)
 }
 
 
-
+/**
+ * Callback for when the stroke style widget is called.  It causes
+ * the stroke line style to be updated.
+ */
 static void
 sp_stroke_style_line_construct(SPWidget *spw, gpointer data)
 {
@@ -1189,6 +1240,10 @@ sp_stroke_style_line_construct(SPWidget *spw, gpointer data)
     } 
 }
 
+/**
+ * Callback for when stroke style widget is modified.  
+ * Triggers update action.
+ */
 static void
 sp_stroke_style_line_selection_modified ( SPWidget *spw,
                                        Inkscape::Selection *selection,
@@ -1201,6 +1256,10 @@ sp_stroke_style_line_selection_modified ( SPWidget *spw,
 
 }
 
+/**
+ * Callback for when stroke style widget is changed.
+ * Triggers update action.
+ */
 static void
 sp_stroke_style_line_selection_changed ( SPWidget *spw,
                                        Inkscape::Selection *selection,
@@ -1210,6 +1269,9 @@ sp_stroke_style_line_selection_changed ( SPWidget *spw,
 }
 
 
+/**
+ * Sets selector widgets' dash style from an SPStyle object.
+ */
 static void
 sp_dash_selector_set_from_style (GtkWidget *dsel, SPStyle *style)
 {
@@ -1231,6 +1293,9 @@ sp_dash_selector_set_from_style (GtkWidget *dsel, SPStyle *style)
     }
 }
 
+/**
+ * Sets the join type for a line, and updates the stroke style widget's buttons
+ */
 static void
 sp_jointype_set (SPWidget *spw, unsigned const jointype)
 {
@@ -1251,6 +1316,9 @@ sp_jointype_set (SPWidget *spw, unsigned const jointype)
     sp_stroke_style_set_join_buttons (spw, tb);
 }
 
+/**
+ * Sets the cap type for a line, and updates the stroke style widget's buttons
+ */
 static void
 sp_captype_set (SPWidget *spw, unsigned const captype)
 {
@@ -1271,6 +1339,10 @@ sp_captype_set (SPWidget *spw, unsigned const captype)
     sp_stroke_style_set_cap_buttons (spw, tb);
 }
 
+/**
+ * Callback for when stroke style widget is updated, including markers, cap type,
+ * join type, etc.
+ */
 static void
 sp_stroke_style_line_update(SPWidget *spw, Inkscape::Selection *sel)
 {
@@ -1357,6 +1429,9 @@ sp_stroke_style_line_update(SPWidget *spw, Inkscape::Selection *sel)
                         GINT_TO_POINTER(FALSE));
 }
 
+/**
+ * Sets a line's dash properties in a CSS style object.
+ */
 static void
 sp_stroke_style_set_scaled_dash(SPCSSAttr *css,
                                 int ndash, double *dash, double offset,
@@ -1381,6 +1456,9 @@ sp_stroke_style_set_scaled_dash(SPCSSAttr *css,
     }
 }
 
+/**
+ * Sets line properties like width, dashes, markers, etc. on all currently selected items.
+ */
 static void
 sp_stroke_style_scale_line(SPWidget *spw)
 {
@@ -1465,7 +1543,10 @@ sp_stroke_style_scale_line(SPWidget *spw)
 }
 
 
-
+/**
+ * Callback for when the stroke style's width changes.  
+ * Causes all line styles to be applied to all selected items.
+ */
 static void
 sp_stroke_style_width_changed(GtkAdjustment *adj, SPWidget *spw)
 {
@@ -1476,6 +1557,10 @@ sp_stroke_style_width_changed(GtkAdjustment *adj, SPWidget *spw)
     sp_stroke_style_scale_line(spw);
 }
 
+/**
+ * Callback for when the stroke style's miterlimit changes.  
+ * Causes all line styles to be applied to all selected items.
+ */
 static void
 sp_stroke_style_miterlimit_changed(GtkAdjustment *adj, SPWidget *spw)
 {
@@ -1486,6 +1571,10 @@ sp_stroke_style_miterlimit_changed(GtkAdjustment *adj, SPWidget *spw)
     sp_stroke_style_scale_line(spw);
 }
 
+/**
+ * Callback for when the stroke style's dash changes.  
+ * Causes all line styles to be applied to all selected items.
+ */
 static void
 sp_stroke_style_line_dash_changed(SPDashSelector *dsel, SPWidget *spw)
 {
@@ -1551,6 +1640,9 @@ sp_stroke_style_any_toggled(GtkToggleButton *tb, SPWidget *spw)
 }
 
 
+/**
+ * Updates the join style toggle buttons
+ */
 static void
 sp_stroke_style_set_join_buttons(SPWidget *spw, GtkWidget *active)
 {
@@ -1573,6 +1665,9 @@ sp_stroke_style_set_join_buttons(SPWidget *spw, GtkWidget *active)
 
 
 
+/**
+ * Updates the cap style toggle buttons
+ */
 static void
 sp_stroke_style_set_cap_buttons(SPWidget *spw, GtkWidget *active)
 {
@@ -1589,6 +1684,9 @@ sp_stroke_style_set_cap_buttons(SPWidget *spw, GtkWidget *active)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tb), (active == tb));
 }
 
+/**
+ * Sets the current marker in the marker menu.
+ */
 static void
 ink_marker_menu_set_current(SPObject *marker, GtkOptionMenu *mnu)
 {
@@ -1629,6 +1727,10 @@ ink_marker_menu_set_current(SPObject *marker, GtkOptionMenu *mnu)
     gtk_object_set_data(GTK_OBJECT(mnu), "update", GINT_TO_POINTER(FALSE));
 }
 
+/**
+ * Updates the marker menus to highlight the appropriate marker and scroll to 
+ * that marker.
+ */
 static void
 sp_stroke_style_update_marker_menus( SPWidget *spw,
                                      GSList const *objects)
@@ -1686,7 +1788,8 @@ sp_stroke_style_update_marker_menus( SPWidget *spw,
 }
 
 
-/** Extract the actual name of the link
+/**
+ * Extract the actual name of the link
  * e.g. get mTriangle from url(#mTriangle).
  * \return Buffer containing the actual name, allocated from GLib;
  * the caller should free the buffer when they no longer need it.
