@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 """
 
-import inkex, os, tempfile, xml.dom.minidom
+import inkex, os, tempfile, sys, xml.dom.minidom
 
 def create_equation_tex(filename, equation):
     tex = open(filename, 'w')
@@ -39,7 +39,7 @@ def create_equation_tex(filename, equation):
 \\begin{document}
 """)
     tex.write(equation)
-    tex.write("\\end{document}\n")
+    tex.write("\n\\end{document}\n")
     tex.close()
 
 def svg_open(self,filename):
@@ -80,30 +80,41 @@ class EQTEXSVG(inkex.Effect):
                         help="LaTeX formula")
     def effect(self):
 
-        base_file = os.path.join(tempfile.gettempdir(), "inkscape-latex.tmp." + str(os.getpid()))
-        latex_file = base_file + ".tex"
-        create_equation_tex(latex_file, self.options.formula)
+        base_dir = tempfile.mkdtemp("", "inkscape-");
+        latex_file = os.path.join(base_dir, "eq.tex")
+        aux_file = os.path.join(base_dir, "eq.aux")
+        log_file = os.path.join(base_dir, "eq.log")
+        ps_file = os.path.join(base_dir, "eq.ps")
+        dvi_file = os.path.join(base_dir, "eq.dvi")
+        svg_file = os.path.join(base_dir, "eq.svg")
+        out_file = os.path.join(base_dir, "eq.out")
 
-        out_file = base_file + ".output"
-        os.system('cd '  + tempfile.gettempdir() + '; latex -halt-on-error ' + latex_file + ' > ' + out_file);
-        ps_file = base_file + ".ps"
-        dvi_file = base_file + ".dvi"
-        svg_file = base_file + ".svg"
+        def clean():
+            os.remove(latex_file)
+            os.remove(aux_file)
+            os.remove(log_file)
+            os.remove(ps_file)
+            os.remove(dvi_file)
+            os.remove(svg_file)
+            os.remove(out_file)
+            os.rmdir(base_dir)
+
+        create_equation_tex(latex_file, self.options.formula)
+        os.system('cd ' + base_dir + '; latex -halt-on-error ' + latex_file + ' > ' + out_file)
+	try:
+	    os.stat(dvi_file)
+	except OSError:
+	    print >>sys.stderr, "invalid LaTeX input:"
+            print >>sys.stderr, self.options.formula
+            print >>sys.stderr, "temporary files were left in:", base_dir
+            sys.exit(1)
+
         os.system('dvips -q -f -E -D 600 -y 5000 -o ' + ps_file + ' ' + dvi_file)
-        os.system('cd ' + tempfile.gettempdir() + '; pstoedit -f plot-svg -dt -ssp ' + ps_file + ' ' + svg_file + '&> ' + out_file)
+        os.system('cd ' + base_dir + '; pstoedit -f plot-svg -dt -ssp ' + ps_file + ' ' + svg_file + '&> ' + out_file)
 
         svg_open(self, svg_file)
 
-        # Clean up
-        aux_file = base_file + ".aux"
-        log_file = base_file + ".log"
-        os.remove(latex_file)
-        os.remove(aux_file)
-        os.remove(log_file)
-        os.remove(dvi_file)
-        os.remove(ps_file)
-        os.remove(svg_file)
-        os.remove(out_file)
+        clean()
 
 e = EQTEXSVG()
 e.affect()
