@@ -927,7 +927,7 @@ void Layout::Calculator::_computeFontLineHeight(font_instance *font, double font
             }
             break;
         }
-        if (style->object->parent == NULL) break;
+        if (style->object == NULL || style->object->parent == NULL) break;
         style = style->object->parent->style;
         if (style == NULL) break;
     }

@@ -140,7 +140,7 @@ float Layout::InputStreamTextSource::styleComputeFontSize() const
                 }
             }
         }
-        if (this_style->object->parent == NULL) break;
+        if (this_style->object == NULL || this_style->object->parent == NULL) break;
         this_style = this_style->object->parent->style;
         if (this_style == NULL) break;
     }
@@ -169,7 +169,7 @@ Layout::Direction Layout::InputStreamTextSource::styleGetBlockProgression() cons
             return (Layout::Direction)_enum_converter(this_style->block_progression.computed, enum_convert_spstyle_block_progression_to_direction, sizeof(enum_convert_spstyle_block_progression_to_direction)/sizeof(enum_convert_spstyle_block_progression_to_direction[0]));
         if (this_style->writing_mode.set)
             return (Layout::Direction)_enum_converter(this_style->writing_mode.computed, enum_convert_spstyle_writing_mode_to_direction, sizeof(enum_convert_spstyle_writing_mode_to_direction)/sizeof(enum_convert_spstyle_writing_mode_to_direction[0]));
-        if (this_style->object->parent == NULL) break;
+        if (this_style->object == NULL || this_style->object->parent == NULL) break;
         this_style = this_style->object->parent->style;
         if (this_style == NULL) break;
     }
@@ -213,7 +213,7 @@ Layout::Alignment Layout::InputStreamTextSource::styleGetAlignment(Layout::Direc
         }
         if (this_style->text_anchor.set)
             return text_anchor_to_alignment(this_style->text_anchor.computed, para_direction);
-        if (this_style->object->parent == NULL) break;
+        if (this_style->object == NULL || this_style->object->parent == NULL) break;
         this_style = this_style->object->parent->style;
         if (this_style == NULL) break;
     }
