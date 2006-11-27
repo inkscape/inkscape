@@ -211,7 +211,9 @@
 		--include-dir=${src}
 		</flags>
 	</rc>
-    <link command="g++" out="${build}/inkscape.exe">
+    <link command="g++" out="${build}/inkscape.exe"
+              strip="true" symfile="${build}/inkscape.dbg"
+              >
        <flags>
        </flags>
 	   <fileset dir="${build}">
@@ -247,6 +249,7 @@
         description="generate the distribution" >
     <!-- Create the distribution directory -->
     <copy file="${build}/inkscape.exe" todir="${dist}"/>
+    <copy file="${build}/inkscape.dbg" todir="${dist}"/>
     <copy file="AUTHORS" todir="${dist}"/>
     <copy file="COPYING" todir="${dist}"/>
     <copy file="COPYING.LIB" todir="${dist}"/>
