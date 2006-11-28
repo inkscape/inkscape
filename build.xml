@@ -6,7 +6,8 @@
     </description>
 
   <!-- set global properties for this build -->
-  <property name="version"     location="0.45"/>
+  <property name="version"     value="0.45"/>
+  <property name="arch"        value="i686-pc-mingw32"/>
   <property name="src"         location="src"/>
   <property name="gtk"         location="c:/gtk210"/>
   <property name="lib"         location="lib"/>
@@ -87,7 +88,7 @@
   <target name="compile" depends="init"
         description="compile the source " >
     <!-- Compile from source to build -->
-    <cc cc="i686-pc-mingw32-gcc" cxx="i686-pc-mingw32-g++"
+    <cc cc="${arch}-gcc" cxx="${arch}-g++"
              destdir="${build}/obj">
 	    <fileset dir="${src}">
             <!-- THINGS TO EXCLUDE -->
@@ -196,7 +197,7 @@
   </target>
   
   <target name="lib" depends="compile">
-    <staticlib command="i686-pc-mingw32-ar crsv"
+    <staticlib command="${arch}-ar crsv"
            file="${build}/libinkscape.a">
 	   <fileset dir="${build}/obj">
 	       <exclude name="main,o"/>
@@ -213,17 +214,17 @@
   </target>
 
   <target name="link" depends="lib">
-    <rc command="i686-pc-mingw32-windres" 
+    <rc command="${arch}-windres" 
 	    file="${src}/inkscape.rc"
 	    out="${build}/inkres.o">
 		<flags>
 		--include-dir=${src}
 		</flags>
 	</rc>
-    <link command="i686-pc-mingw32-g++" out="${build}/inkscape.exe"
+    <link command="${arch}-g++" out="${build}/inkscape.exe"
               strip="true" symfile="${build}/inkscape.dbg"
-              stripcommand="i686-pc-mingw32-strip"
-              objcopycommand="i686-pc-mingw32-objcopy"
+              stripcommand="${arch}-strip"
+              objcopycommand="${arch}-objcopy"
               >
        <flags>
        </flags>
