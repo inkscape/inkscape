@@ -24,12 +24,12 @@
 /**
  * To use this file, compile with:
  * <pre>
- * g++ -O3 buildtool.cpp -o build.exe
+ * g++ -O3 buildtool.cpp -o btool.exe
  * (or whatever your compiler might be) 
  * Then
- * build
+ * btool
  * or 
- * build {target}
+ * btool {target}
  */  
 
 
@@ -50,6 +50,10 @@
 #ifdef __WIN32__
 #include <windows.h>
 #endif
+
+
+#include <errno.h>
+
 
 
 
@@ -3505,15 +3509,15 @@ bool MakeBase::executeCommand(const String &command,
             }
         errnum = pclose(f);
         }
-	outbuf = s;
-	if (errnum < 0)
-	    {
-	    error("exec of command '%s' failed : %s",
+    outbuf = s;
+    if (errnum != 0)
+        {
+        error("exec of command '%s' failed : %s",
 		     command.c_str(), strerror(errno));
-	    return false;
-	    }
-	else
-	    return true;
+        return false;
+        }
+    else
+        return true;
 
 #endif
 } 
@@ -3583,6 +3587,12 @@ bool MakeBase::listFiles(const String &baseDir,
 
     std::vector<String> subdirs;
     DIR *dir = opendir(dirNative.c_str());
+    if (!dir)
+        {
+        error("Could not open directory %s : %s",
+              dirNative.c_str(), strerror(errno));
+        return false;
+        }
     while (true)
         {
         struct dirent *de = readdir(dir);
@@ -3937,9 +3947,14 @@ bool MakeBase::createDirectory(const String &dirname)
         }
         
     //## 3: now make
+#ifdef __WIN32__
     if (mkdir(cnative)<0)
+#else
+    if (mkdir(cnative, S_IRWXU | S_IRWXG | S_IRWXO)<0)
+#endif
         {
-        error("cannot make directory '%s'", cnative);
+        error("cannot make directory '%s' : %s",
+                 cnative, strerror(errno));
         return false;
         }
         
@@ -6348,6 +6363,8 @@ public:
 		type = TASK_LINK; name = "link";
 		command = "g++";
 		doStrip = false;
+                stripCommand = "strip";
+                objcopyCommand = "objcopy";
 		}
 
     virtual ~TaskLink()
@@ -6403,7 +6420,8 @@ public:
         if (symFileName.size()>0)
             {
             String symFullName = parent.resolve(symFileName);
-            cmd = "objcopy --only-keep-debug ";
+            cmd = objcopyCommand;
+            cmd.append(" --only-keep-debug ");
             cmd.append(getNativePath(fullTarget));
             cmd.append(" ");
             cmd.append(getNativePath(symFullName));
@@ -6416,7 +6434,8 @@ public:
             
         if (doStrip)
             {
-            cmd = "strip ";
+            cmd = stripCommand;
+            cmd.append(" ");
             cmd.append(getNativePath(fullTarget));
             if (!executeCommand(cmd, "", outbuf, errbuf))
                {
@@ -6435,6 +6454,14 @@ public:
             return false;
         if (s.size()>0)
             command = s;
+        if (!parent.getAttribute(elem, "objcopycommand", s))
+            return false;
+        if (s.size()>0)
+            objcopyCommand = s;
+        if (!parent.getAttribute(elem, "stripcommand", s))
+            return false;
+        if (s.size()>0)
+            stripCommand = s;
         if (!parent.getAttribute(elem, "out", fileName))
             return false;
         if (!parent.getAttribute(elem, "strip", s))
@@ -6479,6 +6506,8 @@ private:
     FileSet fileSet;
     bool    doStrip;
     String  symFileName;
+    String  stripCommand;
+    String  objcopyCommand;
 
 };
 
@@ -6680,9 +6709,13 @@ public:
 
     virtual bool parse(Element *elem)
         {
+        String s;
+        if (!parent.getAttribute(elem, "command", s))
+            return false;
+        if (s.size()>0)
+            command = s;
         if (!parent.getAttribute(elem, "todir", toDirName))
             return false;
-        String s;
         if (!parent.getAttribute(elem, "owndir", s))
             return false;
         if (!getBool(s, owndir))
@@ -6723,7 +6756,10 @@ class TaskRanlib : public Task
 public:
 
     TaskRanlib(MakeBase &par) : Task(par)
-        { type = TASK_RANLIB; name = "ranlib"; }
+        {
+        type = TASK_RANLIB; name = "ranlib";
+        command = "ranlib";
+        }
 
     virtual ~TaskRanlib()
         {}
@@ -6732,7 +6768,8 @@ public:
         {
         String fullName = parent.resolve(fileName);
         //trace("fullDir:%s", fullDir.c_str());
-        String cmd = "ranlib ";
+        String cmd = command;
+        cmd.append(" ");
         cmd.append(fullName);
         String outbuf, errbuf;
         if (!executeCommand(cmd, "", outbuf, errbuf))
@@ -6742,6 +6779,11 @@ public:
 
     virtual bool parse(Element *elem)
         {
+        String s;
+        if (!parent.getAttribute(elem, "command", s))
+            return false;
+        if (s.size()>0)
+           command = s;
         if (!parent.getAttribute(elem, "file", fileName))
             return false;
         if (fileName.size() == 0)
@@ -6755,6 +6797,7 @@ public:
 private:
 
     String fileName;
+    String command;
 };
 
 
@@ -6769,7 +6812,7 @@ public:
     TaskRC(MakeBase &par) : Task(par)
         {
 		type = TASK_RC; name = "rc";
-		command = "windres -o";
+		command = "windres";
 		}
 
     virtual ~TaskRC()
@@ -6782,7 +6825,7 @@ public:
         if (!isNewerThan(fullFile, fullOut))
             return true;
         String cmd = command;
-        cmd.append(" ");
+        cmd.append(" -o ");
         cmd.append(fullOut);
         cmd.append(" ");
         cmd.append(flags);
@@ -7040,6 +7083,11 @@ public:
 
     virtual bool parse(Element *elem)
         {
+        String s;
+        if (!parent.getAttribute(elem, "command", s))
+            return false;
+        if (s.size()>0)
+            command = s;
         if (!parent.getAttribute(elem, "file", fileName))
             return false;
             
@@ -7426,7 +7474,7 @@ public:
      *
      */
     virtual String version()
-        { return "BuildTool v0.3, 2006 Bob Jamison"; }
+        { return "BuildTool v0.6, 2006 Bob Jamison"; }
 
     /**
      * Overload a <property>
@@ -8109,17 +8157,15 @@ bool Make::run()
  */
 bool Make::run(const String &target)
 {
-    status("##################################");
-    status("#   BuildTool");
-    status("#   version 0.5");
-    status("#   21 Nov 06");
-    status("##################################");
+    status("####################################################");
+    status("#   %s", version().c_str());
+    status("####################################################");
     specifiedTarget = target;
     if (!run())
         return false;
-    status("##################################");
-    status("#   BuildTool Completed");
-    status("##################################");
+    status("####################################################");
+    status("#   BuildTool Completed ");
+    status("####################################################");
     return true;
 }
 

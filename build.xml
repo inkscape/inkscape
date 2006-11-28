@@ -17,6 +17,13 @@
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${build}"/>
     <mkdir dir="${dist}"/>
+    <copy file="${src}/helper/sp-marshal.h.mingw"
+          tofile="${src}/helper/sp-marshal.h"/>
+    <copy file="${src}/helper/sp-marshal.cpp.mingw"
+          tofile="${src}/helper/sp-marshal.cpp"/>
+    <makefile file="inkscape_version.h">
+    #define INKSCAPE_VERSION "${version}+devel"
+    </makefile>
     <makefile file="config.h">
         #ifndef _CONFIG_H_
         #define _CONFIG_H_
@@ -80,7 +87,8 @@
   <target name="compile" depends="init"
         description="compile the source " >
     <!-- Compile from source to build -->
-    <cc cc="gcc" cxx="g++" destdir="${build}/obj">
+    <cc cc="i686-pc-mingw32-gcc" cxx="i686-pc-mingw32-g++"
+             destdir="${build}/obj">
 	    <fileset dir="${src}">
             <!-- THINGS TO EXCLUDE -->
 	        <exclude name="ast/.*"/>
@@ -145,8 +153,8 @@
 	        <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
 	    </fileset>
         <flags>
-            -Wall -g -O3
-			-mms-bitfields
+            -Wall -O3
+            -mms-bitfields
         </flags>
         <defines>
             -DVERSION=\"${version}\"
@@ -188,7 +196,8 @@
   </target>
   
   <target name="lib" depends="compile">
-    <staticlib file="${build}/libinkscape.a">
+    <staticlib command="i686-pc-mingw32-ar crsv"
+           file="${build}/libinkscape.a">
 	   <fileset dir="${build}/obj">
 	       <exclude name="main,o"/>
 	       <exclude name="winmain,o"/>
@@ -204,15 +213,17 @@
   </target>
 
   <target name="link" depends="lib">
-    <rc command="windres -o" 
+    <rc command="i686-pc-mingw32-windres" 
 	    file="${src}/inkscape.rc"
 	    out="${build}/inkres.o">
 		<flags>
 		--include-dir=${src}
 		</flags>
 	</rc>
-    <link command="g++" out="${build}/inkscape.exe"
+    <link command="i686-pc-mingw32-g++" out="${build}/inkscape.exe"
               strip="true" symfile="${build}/inkscape.dbg"
+              stripcommand="i686-pc-mingw32-strip"
+              objcopycommand="i686-pc-mingw32-objcopy"
               >
        <flags>
        </flags>
@@ -305,7 +316,6 @@
     <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/gtk-2.0"/> </copy>
     <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/glib-2.0"/> </copy>
     <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/locale"/> </copy>
-    <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/pango"/> </copy>
     <copy todir="${dist}">
 	    <fileset dir="share">
 		  <exclude name=".*\.am"/>
