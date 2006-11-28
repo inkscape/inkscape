@@ -8208,7 +8208,7 @@ timeDiffString(struct timeval &x, struct timeval &y)
     int minutes = seconds/60;
     seconds += minutes*60;
     char buf[80];
-    snprintf(buf, 79, "%dM:%02d.%03dM", minutes, seconds, millis);
+    snprintf(buf, 79, "%dm %d.%03ds", minutes, seconds, millis);
     String ret = buf;
     return ret;
     
@@ -8228,7 +8228,7 @@ bool Make::run(const String &target)
     if (!run())
         return false;
     gettimeofday(&timeEnd, NULL);
-    String timeStr = timeDiffString(timeStart, timeEnd);
+    String timeStr = timeDiffString(timeEnd, timeStart);
     status("####################################################");
     status("#   BuildTool Completed : %s", timeStr.c_str());
     status("####################################################");
