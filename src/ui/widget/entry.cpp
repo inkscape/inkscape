@@ -20,14 +20,14 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-Entry::Entry(Glib::ustring const &label, Glib::ustring const &tooltip)
-    : _label(label, true), _entry(), _tooltips()
-{
-    pack_start(_label);
-    pack_start(_entry);
-    
-    _tooltips.set_tip(*this, tooltip);
+Entry::Entry(  Glib::ustring const &label, Glib::ustring const &tooltip,
+               Glib::ustring const &suffix,
+               Glib::ustring const &icon,
+               bool mnemonic)
+    : Labelled(label, tooltip, new Gtk::Entry(), suffix, icon, mnemonic)
+{    
 }
+    
 
 } // namespace Widget
 } // namespace UI

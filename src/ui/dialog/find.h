@@ -16,9 +16,40 @@
 #include <glibmm/i18n.h>
 
 #include "dialog.h"
-#include "ui/widget/notebook-page.h"
 #include "ui/widget/button.h"
-#include "ui/widget/entry.h"
+#include "ui/widget/entry.h" 
+
+#include "message-stack.h"
+#include "helper/window.h"
+#include "macros.h"
+#include "inkscape.h"
+#include "document.h"
+#include "desktop.h"
+#include "selection.h"
+#include "desktop-handles.h" 
+
+#include "dialog-events.h"
+#include "../prefs-utils.h"
+#include "../verbs.h"
+#include "../interface.h"
+#include "../sp-text.h"
+#include "../sp-flowtext.h"
+#include "../text-editing.h"
+#include "../sp-tspan.h"
+#include "../selection-chemistry.h"
+#include "../sp-defs.h"
+#include "../sp-rect.h"
+#include "../sp-ellipse.h"
+#include "../sp-star.h"
+#include "../sp-spiral.h"
+#include "../sp-path.h"
+#include "../sp-line.h"
+#include "../sp-polyline.h"
+#include "../sp-item-group.h"
+#include "../sp-use.h"
+#include "../sp-image.h"
+#include "../sp-offset.h"
+#include <xml/repr.h>
 
 using namespace Inkscape::UI::Widget;
 
@@ -58,7 +89,24 @@ protected:
     CheckButton    _check_clones;
     CheckButton    _check_images;
     CheckButton    _check_offsets;
+    
+    // Button-click handlers
+    void    onClear();
+    void    onFind();
 
+
+    // onFind helper functions
+    bool        item_id_match (SPItem *item, const gchar *id, bool exact);
+    bool        item_text_match (SPItem *item, const gchar *text, bool exact);
+    bool        item_style_match (SPItem *item, const gchar *text, bool exact);
+    bool        item_attr_match (SPItem *item, const gchar *name, bool exact);
+    GSList *    filter_fields (GSList *l, bool exact);
+    bool        item_type_match (SPItem *item);
+    GSList *    filter_types (GSList *l);
+    GSList *    filter_list (GSList *l, bool exact);
+    GSList *    all_items (SPObject *r, GSList *l, bool hidden, bool locked);
+    GSList *    all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool hidden, bool locked);
+    
     
 private:
     Find(Find const &d);

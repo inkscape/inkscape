@@ -17,6 +17,39 @@
 #include "find.h"
 #include "verbs.h"
 
+#include "message-stack.h"
+#include "helper/window.h"
+#include "macros.h"
+#include "inkscape.h"
+#include "document.h"
+#include "desktop.h"
+#include "selection.h"
+#include "desktop-handles.h"
+
+#include "dialog-events.h"
+#include "../prefs-utils.h"
+#include "../verbs.h"
+#include "../interface.h"
+#include "../sp-text.h"
+#include "../sp-flowtext.h"
+#include "../text-editing.h"
+#include "../sp-tspan.h"
+#include "../selection-chemistry.h"
+#include "../sp-defs.h"
+#include "../sp-rect.h"
+#include "../sp-ellipse.h"
+#include "../sp-star.h"
+#include "../sp-spiral.h"
+#include "../sp-path.h"
+#include "../sp-line.h"
+#include "../sp-polyline.h"
+#include "../sp-item-group.h"
+#include "../sp-use.h"
+#include "../sp-image.h"
+#include "../sp-offset.h"
+#include <xml/repr.h>
+
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
@@ -78,6 +111,12 @@ Find::Find()
     vbox->pack_start(_button_clear, true, true);
     vbox->pack_start(_button_find, true, true);
 
+    _button_clear.signal_clicked().connect(sigc::mem_fun(*this, &Find::onClear));
+    _button_find.signal_clicked().connect(sigc::mem_fun(*this, &Find::onFind));
+
+    set_default (_button_find); // activatable by Enter
+
+
 
     show_all_children();
 }
@@ -85,6 +124,324 @@ Find::Find()
 Find::~Find() 
 {
 }
+
+
+/*########################################################################
+# FIND helper functions
+########################################################################*/
+
+                   
+bool
+Find::item_id_match (SPItem *item, const gchar *id, bool exact)
+{
+    if (SP_OBJECT_REPR (item) == NULL)
+        return false;
+
+    if (SP_IS_STRING(item)) // SPStrings have "on demand" ids which are useless for searching
+        return false;
+
+    const gchar *item_id = (SP_OBJECT_REPR (item))->attribute("id");
+    if (item_id == NULL)
+        return false;
+
+    if (exact) {
+        return ((bool) !strcmp(item_id, id));
+    } else {
+//        g_print ("strstr: %s %s: %s\n", item_id, id, strstr(item_id, id) != NULL? "yes":"no");
+        return ((bool) (strstr(item_id, id) != NULL));
+    }
+}
+
+bool
+Find::item_text_match (SPItem *item, const gchar *text, bool exact)
+{
+    if (SP_OBJECT_REPR (item) == NULL)
+        return false;
+
+    if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+        const gchar *item_text = sp_te_get_string_multiline (item);
+        if (item_text == NULL)
+            return false;
+        bool ret;
+        if (exact) {
+            ret = ((bool) !strcasecmp(item_text, text));
+        } else {
+            //FIXME: strcasestr
+            ret = ((bool) (strstr(item_text, text) != NULL));
+        }
+        g_free ((void*) item_text);
+        return ret;
+    }
+    return false;
+}
+
+bool
+Find::item_style_match (SPItem *item, const gchar *text, bool exact)
+{
+    if (SP_OBJECT_REPR (item) == NULL)
+        return false;
+
+    const gchar *item_text = (SP_OBJECT_REPR (item))->attribute("style");
+    if (item_text == NULL)
+        return false;
+
+    if (exact) {
+        return ((bool) !strcmp(item_text, text));
+    } else {
+        return ((bool) (strstr(item_text, text) != NULL));
+    }
+}
+
+bool
+Find::item_attr_match (SPItem *item, const gchar *name, bool exact)
+{
+    if (SP_OBJECT_REPR (item) == NULL)
+        return false;
+
+    if (exact) {
+        const gchar *attr_value = (SP_OBJECT_REPR (item))->attribute(name);
+        return ((bool) (attr_value != NULL));
+    } else {
+        return SP_OBJECT_REPR (item)->matchAttributeName(name);
+    }
+}
+
+
+GSList *
+Find::filter_fields (GSList *l, bool exact)
+{
+    const gchar* text = _entry_text.getEntry()->get_text().c_str();
+    const gchar* id = _entry_id.getEntry()->get_text().c_str();
+    const gchar* style = _entry_style.getEntry()->get_text().c_str();
+    const gchar* attr = _entry_attribute.getEntry()->get_text().c_str();
+    
+    GSList *in = l;
+    GSList *out = NULL;
+    if (strlen (text) != 0) {
+        for (GSList *i = in; i != NULL; i = i->next) {
+            if (item_text_match (SP_ITEM(i->data), text, exact)) {
+                out = g_slist_prepend (out, i->data);
+            }
+        }
+    } else {
+        out = in;
+    }
+    
+    in = out;
+    out = NULL;
+    if (strlen (id) != 0) {
+        for (GSList *i = in; i != NULL; i = i->next) {
+            if (item_id_match (SP_ITEM(i->data), id, exact)) {
+                out = g_slist_prepend (out, i->data);
+            }
+        }
+    } else {
+        out = in;
+    }
+
+    in = out;
+    out = NULL;
+    if (strlen (style) != 0) {
+        for (GSList *i = in; i != NULL; i = i->next) {
+            if (item_style_match (SP_ITEM(i->data), style, exact)) {
+                out = g_slist_prepend (out, i->data);
+            }
+        }
+    } else {
+        out = in;
+    }
+
+    in = out;
+    out = NULL;
+    if (strlen (attr) != 0) {
+        for (GSList *i = in; i != NULL; i = i->next) {
+            if (item_attr_match (SP_ITEM(i->data), attr, exact)) {
+                out = g_slist_prepend (out, i->data);
+            }
+        }
+    } else {
+        out = in;
+    }
+
+    return out;
+}
+
+
+bool
+Find::item_type_match (SPItem *item)
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
+    if (SP_IS_RECT(item)) {
+        return (_check_all_shapes.get_active() || _check_rects.get_active());
+
+    } else if (SP_IS_GENERICELLIPSE(item) || SP_IS_ELLIPSE(item) || SP_IS_ARC(item) || SP_IS_CIRCLE(item)) {
+        return (_check_all_shapes.get_active() || _check_ellipses.get_active());
+
+    } else if (SP_IS_STAR(item) || SP_IS_POLYGON(item)) {
+        return (_check_all_shapes.get_active() || _check_stars.get_active());
+
+    } else if (SP_IS_SPIRAL(item)) {
+        return (_check_all_shapes.get_active() || _check_spirals.get_active());
+
+    } else if (SP_IS_PATH(item) || SP_IS_LINE(item) || SP_IS_POLYLINE(item)) {
+        return (_check_paths.get_active());
+
+    } else if (SP_IS_TEXT(item) || SP_IS_TSPAN(item) || SP_IS_STRING(item)) {
+        return (_check_texts.get_active());
+
+    } else if (SP_IS_GROUP(item) && !desktop->isLayer(item) ) { // never select layers!
+        return (_check_groups.get_active());
+
+    } else if (SP_IS_USE(item)) {
+        return (_check_clones.get_active());
+
+    } else if (SP_IS_IMAGE(item)) {
+        return (_check_images.get_active());
+
+    } else if (SP_IS_OFFSET(item)) {
+        return (_check_offsets.get_active());
+    }
+
+    return false;
+}
+
+GSList *
+Find::filter_types (GSList *l)
+{
+    if (_check_all.get_active()) return l;
+
+    GSList *n = NULL;
+    for (GSList *i = l; i != NULL; i = i->next) {
+        if (item_type_match (SP_ITEM(i->data))) {
+            n = g_slist_prepend (n, i->data);
+        }
+    }
+    return n;
+}
+
+
+GSList *
+Find::filter_list (GSList *l, bool exact)
+{
+    l = filter_fields (l, exact);
+    l = filter_types (l);
+    return l;
+}
+
+GSList *
+Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
+    if (SP_IS_DEFS(r))
+        return l; // we're not interested in items in defs
+
+    if (!strcmp (SP_OBJECT_REPR (r)->name(), "svg:metadata"))
+        return l; // we're not interested in metadata
+
+    for (SPObject *child = sp_object_first_child(r); child; child = SP_OBJECT_NEXT (child)) {
+        if (SP_IS_ITEM (child) && !SP_OBJECT_IS_CLONED (child) && !desktop->isLayer(SP_ITEM(child))) {
+                if ((hidden || !desktop->itemIsHidden(SP_ITEM(child))) && (locked || !SP_ITEM(child)->isLocked())) {
+                    l = g_slist_prepend (l, child);
+                }
+        }
+        l = all_items (child, l, hidden, locked);
+    }
+    return l;
+}
+
+GSList *
+Find::all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool hidden, bool locked)
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
+   for (GSList *i = (GSList *) s->itemList(); i != NULL; i = i->next) {
+        if (SP_IS_ITEM (i->data) && !SP_OBJECT_IS_CLONED (i->data) && !desktop->isLayer(SP_ITEM(i->data))) {
+            if (!ancestor || ancestor->isAncestorOf(SP_OBJECT (i->data))) {
+                if ((hidden || !desktop->itemIsHidden(SP_ITEM(i->data))) && (locked || !SP_ITEM(i->data)->isLocked())) {
+                    l = g_slist_prepend (l, i->data);
+                }
+            }
+        }
+        if (!ancestor || ancestor->isAncestorOf(SP_OBJECT (i->data))) {
+            l = all_items (SP_OBJECT (i->data), l, hidden, locked);
+        }
+    }
+    return l;
+}
+                   
+                   
+
+/*########################################################################
+# BUTTON CLICK HANDLERS    (callbacks)
+########################################################################*/
+
+void
+Find::onClear()
+{         
+    _entry_text.getEntry()->set_text(Glib::ustring(""));
+    _entry_id.getEntry()->set_text(Glib::ustring(""));
+    _entry_style.getEntry()->set_text(Glib::ustring(""));
+    _entry_attribute.getEntry()->set_text(Glib::ustring(""));
+
+    _check_all.set_active();
+}
+    
+    
+
+void
+Find::onFind()
+{   
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
+    bool hidden = _check_include_hidden.get_active();
+    bool locked = _check_include_locked.get_active();
+
+    GSList *l = NULL;
+    if (_check_search_selection.get_active()) {
+        if (_check_search_layer.get_active()) {
+            l = all_selection_items (desktop->selection, l, desktop->currentLayer(), hidden, locked);
+        } else {
+            l = all_selection_items (desktop->selection, l, NULL, hidden, locked);
+        }
+    } else {
+        if (_check_search_layer.get_active()) {
+            l = all_items (desktop->currentLayer(), l, hidden, locked);
+        } else {
+            l = all_items (SP_DOCUMENT_ROOT (sp_desktop_document (desktop)), l, hidden, locked);
+        }
+    }
+    guint all = g_slist_length (l);
+
+    bool exact = true;
+    GSList *n = NULL;
+    n = filter_list (l, exact);
+    if (n == NULL) {
+        exact = false;
+        n = filter_list (l, exact);
+    }
+
+    if (n != NULL) {
+        int count = g_slist_length (n);
+        desktop->messageStack()->flashF(Inkscape::NORMAL_MESSAGE,
+                                        // TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
+                                        ngettext("<b>%d</b> object found (out of <b>%d</b>), %s match.",
+                                                 "<b>%d</b> objects found (out of <b>%d</b>), %s match.",
+                                                 count),
+                                        count, all, exact? _("exact") : _("partial"));
+
+        Inkscape::Selection *selection = sp_desktop_selection (desktop);
+        selection->clear();
+        selection->setList(n);
+        scroll_to_show_item (desktop, SP_ITEM(n->data));
+    } else {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("No objects found"));
+    }
+}
+
+
+
 
 } // namespace Dialog
 } // namespace UI

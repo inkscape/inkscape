@@ -17,22 +17,24 @@
 #include <gtkmm/tooltips.h>
 #include <gtkmm/label.h>
 #include <gtkmm/box.h>
+#include "labelled.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-class Entry : public Gtk::HBox
+class Entry : public Labelled
 {
 public:
-    Entry(Glib::ustring const &label, Glib::ustring const &tooltip);
-        
-    // TO DO: add methods to access _entry    
-        
-protected:
-    Gtk::Tooltips _tooltips;
-    Gtk::Label    _label;
-    Gtk::Entry    _entry;
+    Entry( Glib::ustring const &label,
+           Glib::ustring const &tooltip,
+           Glib::ustring const &suffix = "",
+           Glib::ustring const &icon = "",
+           bool mnemonic = true);
+
+    // TO DO: add methods to access Gtk::Entry widget
+    
+    Gtk::Entry*  getEntry() {return (Gtk::Entry*)(_widget);};    
 };
 
 } // namespace Widget
