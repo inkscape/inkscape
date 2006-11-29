@@ -17,6 +17,8 @@
 
 #include "dialog.h"
 #include "ui/widget/notebook-page.h"
+#include "ui/widget/button.h"
+#include "ui/widget/entry.h"
 
 using namespace Inkscape::UI::Widget;
 
@@ -32,13 +34,38 @@ public:
     static Find *create() { return new Find(); }
 
 protected:
-    Gtk::Notebook  _notebook;
+    // Widgets:
+    Entry    _entry_text;
+    Entry    _entry_id;
+    Entry    _entry_style;
+    Entry    _entry_attribute;
 
-    NotebookPage   _page_find;
+    CheckButton    _check_search_selection;
+    CheckButton    _check_search_layer;
+    CheckButton    _check_include_hidden;
+    CheckButton    _check_include_locked;
+    
+    // Type checkbutton widgets... 
+    CheckButton    _check_all;
+    CheckButton    _check_all_shapes;
+    CheckButton    _check_rects;
+    CheckButton    _check_ellipses;
+    CheckButton    _check_stars;
+    CheckButton    _check_spirals;
+    CheckButton    _check_paths;
+    CheckButton    _check_texts;
+    CheckButton    _check_groups;
+    CheckButton    _check_clones;
+    CheckButton    _check_images;
+    CheckButton    _check_offsets;
 
+    
 private:
     Find(Find const &d);
     Find& operator=(Find const &d);
+    
+    Button    _button_clear;
+    Button    _button_find;
 };
 
 } // namespace Dialog
