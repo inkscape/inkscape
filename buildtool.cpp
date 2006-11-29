@@ -8223,11 +8223,11 @@ bool Make::run(const String &target)
     status("#   %s", version().c_str());
     status("####################################################");
     struct timeval timeStart, timeEnd;
-    gettimeofday(&timeStart, NULL);
+    ::gettimeofday(&timeStart, NULL);
     specifiedTarget = target;
     if (!run())
         return false;
-    gettimeofday(&timeEnd, NULL);
+    ::gettimeofday(&timeEnd, NULL);
     String timeStr = timeDiffString(timeEnd, timeStart);
     status("####################################################");
     status("#   BuildTool Completed : %s", timeStr.c_str());
