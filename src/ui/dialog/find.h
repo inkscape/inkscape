@@ -12,12 +12,12 @@
 #ifndef INKSCAPE_UI_DIALOG_FIND_H
 #define INKSCAPE_UI_DIALOG_FIND_H
 
-#include <gtkmm/notebook.h>
 #include <glibmm/i18n.h>
 
 #include "dialog.h"
 #include "ui/widget/button.h"
 #include "ui/widget/entry.h" 
+#include <gtkmm/separator.h>
 
 #include "message-stack.h"
 #include "helper/window.h"
@@ -88,11 +88,13 @@ protected:
     CheckButton    _check_groups;
     CheckButton    _check_clones;
     CheckButton    _check_images;
-    CheckButton    _check_offsets;
+    CheckButton    _check_offsets;  
     
     // Button-click handlers
     void    onClear();
-    void    onFind();
+    void    onFind();             
+    void    onToggleAlltypes();
+    void    onToggleShapes();    
 
 
     // onFind helper functions
@@ -106,7 +108,8 @@ protected:
     GSList *    filter_list (GSList *l, bool exact);
     GSList *    all_items (SPObject *r, GSList *l, bool hidden, bool locked);
     GSList *    all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool hidden, bool locked);
-    
+
+    void        squeeze_window();
     
 private:
     Find(Find const &d);

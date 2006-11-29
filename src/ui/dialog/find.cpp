@@ -14,6 +14,7 @@
 # include <config.h>
 #endif
 
+#include <gtkmm/widget.h>
 #include "find.h"
 #include "verbs.h"
 
@@ -111,14 +112,18 @@ Find::Find()
     vbox->pack_start(_button_clear, true, true);
     vbox->pack_start(_button_find, true, true);
 
+    // set signals to handle clicks
+    _check_all.signal_clicked().connect(sigc::mem_fun(*this, &Find::onToggleAlltypes));
+    _check_all_shapes.signal_clicked().connect(sigc::mem_fun(*this, &Find::onToggleShapes));
     _button_clear.signal_clicked().connect(sigc::mem_fun(*this, &Find::onClear));
     _button_find.signal_clicked().connect(sigc::mem_fun(*this, &Find::onFind));
 
+    _button_find.set_flags(Gtk::CAN_DEFAULT);
     set_default (_button_find); // activatable by Enter
-
-
+    _entry_text.getEntry()->grab_focus();
 
     show_all_children();
+    onClear();
 }
 
 Find::~Find() 
@@ -440,6 +445,75 @@ Find::onFind()
     }
 }
 
+void
+Find::onToggleAlltypes ()
+{
+    if (_check_all.get_active()) {
+        // explicit toggle to make sure its handler gets called, no matter what was the original state
+        _check_all_shapes.toggled();
+        _check_all_shapes.set_active();
+        _check_all_shapes.hide();
+        _check_paths.hide();
+        _check_texts.hide();
+        _check_groups.hide();
+        _check_clones.hide();
+        _check_images.hide();
+        _check_offsets.hide();
+    } else {
+        // explicit toggle to make sure its handler gets called, no matter what was the original state
+        _check_all_shapes.toggled();
+        _check_all_shapes.set_active();
+        _check_all_shapes.show();
+
+        _check_paths.set_active();
+        _check_paths.show();
+        _check_texts.set_active();
+        _check_texts.show();
+        _check_groups.set_active();
+        _check_groups.show();
+        _check_clones.set_active();
+        _check_clones.show();
+        _check_images.set_active();
+        _check_images.show();
+        _check_offsets.set_active();
+        _check_offsets.show();
+    }
+    squeeze_window();
+}
+
+void
+Find::onToggleShapes ()
+{
+    if (_check_all_shapes.get_active()) {
+        _check_rects.hide();
+        _check_ellipses.hide();
+        _check_stars.hide();
+        _check_spirals.hide();
+    } else {
+        _check_rects.set_active();
+        _check_rects.show();
+        _check_ellipses.set_active();
+        _check_ellipses.show();
+        _check_stars.set_active();
+        _check_stars.show();
+        _check_spirals.set_active();
+        _check_spirals.show();
+    }
+    squeeze_window();
+}
+
+
+/*########################################################################
+# UTILITY
+########################################################################*/
+
+
+
+void
+Find::squeeze_window()
+{
+    // TO DO: make window as small as possible
+}
 
 
 
