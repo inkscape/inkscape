@@ -16,6 +16,8 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/combo-text.h		\
 	ui/widget/entity-entry.cpp      \
 	ui/widget/entity-entry.h        \
+	ui/widget/entry.cpp      \
+	ui/widget/entry.h        \
 	ui/widget/handlebox.cpp		\
 	ui/widget/handlebox.h		\
 	ui/widget/icon-widget.cpp	\
