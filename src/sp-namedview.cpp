@@ -655,6 +655,8 @@ void SPNamedView::show(SPDesktop *desktop)
     sp_namedview_setup_grid(this);
 }
 
+#define MIN_ONSCREEN_DISTANCE 50
+
 /*
  * Restores window geometry from the document settings
  */
@@ -665,10 +667,18 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
 
     // restore window size and position
     if (save_geometry) {
-        if (nv->window_width != -1 && nv->window_height != -1)
-            desktop->setWindowSize(nv->window_width, nv->window_height);
-        if (nv->window_x != -1 && nv->window_y != -1)
-            desktop->setWindowPosition(NR::Point(nv->window_x, nv->window_y));
+        gint w = MIN(gdk_screen_width(), nv->window_width);
+        gint h = MIN(gdk_screen_height(), nv->window_height);
+        gint x = MIN(gdk_screen_width() - MIN_ONSCREEN_DISTANCE, nv->window_x);
+        gint y = MIN(gdk_screen_height() - MIN_ONSCREEN_DISTANCE, nv->window_y);
+        if (w>0 && h>0 && x>0 && y>0) {
+            x = MIN(gdk_screen_width() - w, x);
+            y = MIN(gdk_screen_height() - h, y);
+        }
+        if (w>0 && h>0)
+            desktop->setWindowSize(w, h);
+        if (x>0 && y>0)
+            desktop->setWindowPosition(NR::Point(x, y));
     }
 
     // restore zoom and view
