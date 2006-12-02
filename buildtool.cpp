@@ -8208,7 +8208,7 @@ timeDiffString(struct timeval &x, struct timeval &y)
     int millis  = (int)((microsX - microsY)/1000);
 
     int minutes = seconds/60;
-    seconds += minutes*60;
+    seconds -= minutes*60;
     char buf[80];
     snprintf(buf, 79, "%dm %d.%03ds", minutes, seconds, millis);
     String ret = buf;
