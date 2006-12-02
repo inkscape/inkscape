@@ -7945,8 +7945,9 @@ bool Make::parsePropertyFile(const String &fileName,
             return false;
             }
         val = s.substr(p);
-        if (key.size()==0 || val.size()==0)
+        if (key.size()==0)
             continue;
+        //allow property to be set, even if val=""
 
         //trace("key:'%s' val:'%s'", key.c_str(), val.c_str());
         //See if we wanted to overload this property
@@ -7991,10 +7992,8 @@ bool Make::parseProperty(Element *elem)
                 {
                 if (!getAttribute(elem, "location", val))
                     return false;
-                if (val.size() > 0)
-                    {
-                    properties[attrVal] = val;
-                    }
+                //let the property exist, even if not defined
+                properties[attrVal] = val;
                 }
             //See if we wanted to overload this property
             std::map<String, String>::iterator iter =
