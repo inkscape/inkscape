@@ -809,8 +809,16 @@ public:
     /**
      *
      */
+    virtual void setJid(const DOMString &val)
+        { jid = val; }
+
+    /**
+     *
+     */
     virtual DOMString getJid()
         { return jid; }
+
+
 
     /**
      *

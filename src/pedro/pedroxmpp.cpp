@@ -763,16 +763,6 @@ static int strIndex(const DOMString &str, char *key)
 }
 
 
-static int strRIndex(const DOMString &str, char *key)
-{
-    unsigned int p = str.find_last_of(key);
-    if (p == str.npos)
-        return -1;
-    return p;
-}
-
-
-
 DOMString XmppClient::toXml(const DOMString &str)
 {
     return Parser::encode(str);
@@ -984,15 +974,20 @@ static bool isGroupChat(Element *root)
 static bool parseJid(const DOMString &fullJid,
              DOMString &jid, DOMString &resource)
 {
-    int p = strRIndex(fullJid, "/");
-    if (p < 0)
+    DOMString str = fullJid;
+    jid.clear();
+    resource.clear();
+    unsigned int p = str.size();
+    unsigned int p2 = str.rfind('/', p);
+    if (p2 != str.npos)
         {
-        jid = fullJid;
-        resource = "";
-        return true;
+        resource = str.substr(p2+1, p-(p2+1));
+        str = str.substr(0, p);
+        p = p2;
         }
-    jid = fullJid.substr(0, p);
-    resource = fullJid.substr(p+1, fullJid.size()-(p+1));
+    jid = str.substr(0, p);
+    printf("fullJid:%s jid:%s rsrc:%s\n",
+        fullJid.c_str(), jid.c_str(), resource.c_str());
     return true;
 }
 
@@ -2295,6 +2290,7 @@ bool XmppClient::createSession()
     //elem->print();
     DOMString bindType = elem->getTagAttribute("iq", "type");
     //printf("##bindType:%s\n", bindType.c_str());
+    DOMString givenFullJid = elem->getTagValue("jid");
     delete elem;
 
     if (bindType != "result")
@@ -2302,6 +2298,17 @@ bool XmppClient::createSession()
         error("no binding with server failed");
         return false;
         }
+        
+    //The server sent us a JID.  We need to listen.
+    if (givenFullJid.size()>0)
+        {
+        DOMString givenJid, givenResource;
+        parseJid(givenFullJid, givenJid, givenResource);
+        status("given user: %s realm: %s, rsrc: %s",
+           givenJid.c_str(), givenResource.c_str());
+        setResource(givenResource);
+        }
+        
 
     fmt =
     "<iq type='set' id='sess%d'>"
@@ -2574,18 +2581,18 @@ bool XmppClient::message(const DOMString &user, const DOMString &subj,
     if (xmlSubj.size() > 0)
         {
         char *fmt =
-        "<message to='%s' type='chat'>"
+        "<message to='%s' from='%s' type='chat'>"
         "<subject>%s</subject><body>%s</body></message>\n";
-        if (!write(fmt, user.c_str(),
+        if (!write(fmt, user.c_str(), jid.c_str(),
                 xmlSubj.c_str(), xmlMsg.c_str()))
             return false;
         }
     else
         {
         char *fmt =
-        "<message to='%s'>"
+        "<message to='%s' from='%s'>"
         "<body>%s</body></message>\n";
-        if (!write(fmt, user.c_str(), xmlMsg.c_str()))
+        if (!write(fmt, user.c_str(), jid.c_str(), xmlMsg.c_str()))
             return false;
         }
     return true;
@@ -2866,18 +2873,18 @@ bool XmppClient::groupChatMessage(const DOMString &groupJid,
 
     DOMString xmlMsg = toXml(msg);
 
-    /*
     char *fmt =
     "<message from='%s' to='%s' type='groupchat'>"
     "<body>%s</body></message>\n";
     if (!write(fmt, jid.c_str(), groupJid.c_str(), xmlMsg.c_str()))
         return false;
-    */
+    /*
     char *fmt =
     "<message to='%s' type='groupchat'>"
     "<body>%s</body></message>\n";
     if (!write(fmt, groupJid.c_str(), xmlMsg.c_str()))
         return false;
+    */
     return true;
 }
 
