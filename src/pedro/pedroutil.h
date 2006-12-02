@@ -263,6 +263,11 @@ public:
     /**
      *
      */
+    virtual void append(unsigned char dataIn);
+
+    /**
+     *
+     */
     virtual void append(unsigned char *dataIn, unsigned long len);
 
     /**

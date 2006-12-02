@@ -582,6 +582,14 @@ void Md5::append(const DOMString &str)
 }
 
 /*
+ * Update context to reflect the concatenation of a single character
+ */
+void Md5::append(unsigned char ch)
+{
+    append(&ch, 1);
+}
+
+/*
  * Final wrapup - pad to 64-byte boundary with the bit pattern
  * 1 0* (64-bit count of bits processed, MSB-first)
  */

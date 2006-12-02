@@ -6,7 +6,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -25,6 +25,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include <map>
 
 #include <string>
 
@@ -1027,46 +1028,31 @@ public:
     /**
      *
      */
-    virtual int outputStreamOpen(const DOMString &jid,
+    virtual bool outputStreamOpen(const DOMString &jid,
                                  const DOMString &streamId);
 
     /**
      *
      */
-    virtual int outputStreamWrite(int streamId,
-                          const unsigned char *buf, unsigned long len);
+    virtual bool outputStreamWrite(const DOMString &streamId,
+               const std::vector<unsigned char> &buf);
 
     /**
      *
      */
-    virtual int outputStreamClose(int streamId);
+    virtual bool outputStreamClose(const DOMString &streamId);
 
     /**
      *
      */
-    virtual int inputStreamOpen(const DOMString &jid,
+    virtual bool inputStreamOpen(const DOMString &jid,
                                 const DOMString &streamId,
                                 const DOMString &iqId);
 
     /**
      *
      */
-    virtual int inputStreamAvailable(int streamId);
-
-    /**
-     *
-     */
-    virtual std::vector<unsigned char> inputStreamRead(int streamId);
-
-    /**
-     *
-     */
-    virtual bool inputStreamClosing(int streamId);
-
-    /**
-     *
-     */
-    virtual int inputStreamClose(int streamId);
+    virtual bool inputStreamClose(const DOMString &streamId);
 
 
     //#######################
@@ -1166,19 +1152,27 @@ private:
 
     std::vector<XmppGroupChat *>groupChats;
 
-    static const int outputStreamCount = 16;
-
-    XmppStream *outputStreams[outputStreamCount];
-
-    static const int inputStreamCount = 16;
-
-    XmppStream *inputStreams[inputStreamCount];
-
-    static const int fileSendCount = 16;
-
-    XmppStream *fileSends[fileSendCount];
-
+    //#### Roster
     std::vector<XmppUser>roster;
+
+
+    //#### Streams
+    
+    bool processInBandByteStreamMessage(Element *root);
+    
+    DOMString streamPacket;
+
+    std::map<DOMString, XmppStream *> outputStreams;
+
+    std::map<DOMString, XmppStream *> inputStreams;
+
+
+    //#### File send
+    
+    bool processFileMessage(Element *root);
+
+    std::map<DOMString, XmppStream *> fileSends;
+
 };
 
 
