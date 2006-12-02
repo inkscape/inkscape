@@ -64,7 +64,7 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#include <freetype/internal/ftobjs.h>
+#include <freetype/ftxf86.h>
 #include <pango/pangoft2.h>
 #include <string>
 #include <iostream>
@@ -928,7 +928,7 @@ PrintPS::embed_t1 (SVGOStringStream &os, font_instance* font)
 {
         //check font type
         FT_Face font_face = pango_ft2_font_get_face(font->pFont);
-        const FT_String* font_type = FT_MODULE_CLASS(font_face->driver)->module_name;
+        const FT_String* font_type = FT_Get_X11_Font_Format(font_face);
         g_return_val_if_fail (_fontTypesMap[font_type] == FONT_TYPE1, false);
         //get font filename, stream to font file and size
         FT_Stream font_stream = font_face->stream;
@@ -1150,7 +1150,7 @@ bool PrintPS::embed_font(SVGOStringStream &os, font_instance* font)
   //Hinted at by a comment in libgnomeprint/fcpattern_to_gp_font_entry()
   //Determining the font type in the "Pango way"
   FT_Face font_face = pango_ft2_font_get_face(font->pFont);
-  const FT_String* font_type = FT_MODULE_CLASS(font_face->driver)->module_name;
+  const FT_String* font_type = FT_Get_X11_Font_Format(font_face);
 
   /**
   * Possible values of "font_type" variable, not supported (font types):
