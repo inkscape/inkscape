@@ -11,10 +11,10 @@
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: inkscape 0.44\n"
+"Project-Id-Version: inkscape 0.44+svn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-11-05 18:27+0100\n"
+"PO-Revision-Date: 2006-12-02 18:27+0100\n"
 "Last-Translator: Luca Bruno <luca.br@uno.it>>\n"
 "Language-Team:  Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -7596,7 +7596,7 @@ msgstr "_Handle della chatroom:"
 #. Button setup and callback registration
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:102
 msgid "Connect to chatroom"
-msgstr "Connetti a chatromm"
+msgstr "Connetti a chatroom"
 
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:137
 msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
@@ -10696,7 +10696,7 @@ msgstr "Fa sì che i connettori evitino gli oggetti selezionati"
 
 #: ../src/widgets/toolbox.cpp:4066
 msgid "Do not allow overlapping shapes"
-msgstr ""
+msgstr "Non permettere la sovrapposizione delle forme"
 
 #.
 #. Local Variables:
@@ -10710,7 +10710,7 @@ msgstr ""
 #. vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
-msgstr "Agguingi nodi"
+msgstr "Aggiungi nodi"
 
 #: ../share/extensions/addnodes.inx.h:2
 msgid "Maximum segment length"
@@ -11218,7 +11218,7 @@ msgstr "Periodi (ogni 2*Pi)"
 
 #: ../share/extensions/wavy.inx.h:7
 msgid "Wave Plotter"
-msgstr ""
+msgstr "Generatore di onde"
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
