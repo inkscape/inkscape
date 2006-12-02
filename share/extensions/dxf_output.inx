@@ -3,7 +3,7 @@
     <id>org.inkscape.output.dxf</id>
     <dependency type="extension">org.inkscape.output.ps</dependency>
     <dependency type="executable" location="extensions">ps2dxf.sh</dependency>
-    <dependency type="executable" _description="pstoedit must be installed to run see http://www.pstoedit.net/pstoedit">pstoedit</dependency>
+    <dependency type="executable" _description="pstoedit must be installed to run; see http://www.pstoedit.net/pstoedit">pstoedit</dependency>
     <output>
         <extension>.dxf</extension>
         <mimetype>image/dxf</mimetype>
