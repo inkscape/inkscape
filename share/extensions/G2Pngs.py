@@ -1,6 +1,6 @@
 #!/usr/bin/env python 
 '''
-Copyright (C) 2006 Aaron Spike, aaron@ekips.org
+Copyright (C) 2006 cedric GEMY, cedric@le-radar.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,12 +17,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 TODO :
-specify save format, scale, and if it is a layer or g export
+specify save format, scale
+save selected
 
 RELEASE NOTE
-- accepte l'export des calques
-- dossier par defaut = dossier utilisateur
-- cree le dossier specifie s'il n'existe pas
+- can export layers only as separate pngs 
+- Default directory = $Home
+- create the dest dir if doesn't exists
 
 '''
 import inkex
