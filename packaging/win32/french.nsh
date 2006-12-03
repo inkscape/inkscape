@@ -9,6 +9,7 @@
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
 ; 24 october 2006 new languages en_US@piglatin, th
+; 3rd December 2006 new languages eu km
 
 !insertmacro MUI_LANGUAGE "French"
 
@@ -136,6 +137,7 @@ LangString lng_en_US@piglatin $(LANG_FRENCH) "en_US@piglatin Pig Latin"
 LangString lng_es $(LANG_FRENCH) "es  Espagnol"
 LangString lng_es_MX $(LANG_FRENCH) "es_MX  Espagnol Mexique"
 LangString lng_et $(LANG_FRENCH) "et  Estonien"
+LangString lng_eu $(LANG_FRENCH) "eu  Basque"
 LangString lng_fi $(LANG_FRENCH) "fi  Finish"
 LangString lng_fr $(LANG_FRENCH) "fr  French"
 LangString lng_ga $(LANG_FRENCH) "ga  Irlandais"
@@ -144,6 +146,7 @@ LangString lng_hr $(LANG_FRENCH) "hr  Croatian"
 LangString lng_hu $(LANG_FRENCH) "hu  Hongrois"
 LangString lng_it $(LANG_FRENCH) "it  Italien"
 LangString lng_ja $(LANG_FRENCH) "ja  Japonais"
+LangString lng_km $(LANG_FRENCH) "km  Khmer"
 LangString lng_ko $(LANG_FRENCH) "ko  Coréen"
 LangString lng_lt $(LANG_FRENCH) "lt  Lituanien"
 LangString lng_mk $(LANG_FRENCH) "mk  Macédonien"

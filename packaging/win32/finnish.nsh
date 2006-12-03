@@ -8,6 +8,7 @@
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
 ; 24 october 2006 new languages en_US@piglatin, th
+; 3rd December 2006 new languages eu km
 
 !insertmacro MUI_LANGUAGE "Finnish"
 
@@ -135,6 +136,7 @@ LangString lng_en_US@piglatin $(LANG_FINNISH) "en_US@piglatin kontin kieli (en)"
 LangString lng_es $(LANG_FINNISH) "es  espanja"
 LangString lng_es_MX $(LANG_FINNISH) "es_MX  Meksikon espanja"
 LangString lng_et $(LANG_FINNISH) "et  eesti"
+LangString lng_eu $(LANG_FINISH) "eu  Basque"
 LangString lng_fi $(LANG_FINNISH) "fi  suomi"
 LangString lng_fr $(LANG_FINNISH) "fr  ranska"
 LangString lng_ga $(LANG_FINNISH) "ga  iiri"
@@ -143,6 +145,7 @@ LangString lng_hr $(LANG_FINNISH) "hr  kroatia"
 LangString lng_hu $(LANG_FINNISH) "hu  unkari"
 LangString lng_it $(LANG_FINNISH) "it  italia"
 LangString lng_ja $(LANG_FINNISH) "ja  japani"
+LangString lng_km $(LANG_FINNISH) "km  Khmer"
 LangString lng_ko $(LANG_FINNISH) "ko  korea"
 LangString lng_lt $(LANG_FINNISH) "lt  liettua"
 LangString lng_mk $(LANG_FINNISH) "mk  makedonia"

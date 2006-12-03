@@ -9,6 +9,7 @@
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
 ; 24 october 2006 new languages en_US@piglatin, th
+; 3rd December 2006 new languages eu km
 
 !insertmacro MUI_LANGUAGE "Catalan"
 
@@ -179,6 +180,7 @@ LangString lng_en_US@piglatin $(LANG_CATALAN) "en_US@piglatin Pig Latin"
   LangString lng_es_MX $(LANG_CATALAN) "es_MX  Espanyol mexicà"
 ; LangString lng_et $(LANG_CATALAN) "es  Estonian"
   LangString lng_et $(LANG_CATALAN) "et  Estonià"
+  LangString lng_eu $(LANG_CATALAN) "eu  Basque"
   LangString lng_fi $(LANG_CATALAN) "fi  Finish"
 ; LangString lng_fr $(LANG_CATALAN) "fr  French"
   LangString lng_fr $(LANG_CATALAN) "fr  Francès"
@@ -193,6 +195,7 @@ LangString lng_en_US@piglatin $(LANG_CATALAN) "en_US@piglatin Pig Latin"
   LangString lng_it $(LANG_CATALAN) "it  Italià"
 ; LangString lng_ja $(LANG_CATALAN) "ja  Japanese"
   LangString lng_ja $(LANG_CATALAN) "ja  Japonès"
+  LangString lng_km $(LANG_CATALAN) "km  Khmer"
 ; LangString lng_ko $(LANG_CATALAN) "ko  Korean"
   LangString lng_ko $(LANG_CATALAN) "ko  Coreà"
 ; LangString lng_lt $(LANG_CATALAN) "lt  Lithuanian"

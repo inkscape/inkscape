@@ -521,6 +521,8 @@ Section $(lng_Core) SecCore
   SetOutPath $INSTDIR\share\icons
   File /a "..\..\inkscape\share\icons\inkscape.file.png"
   File /a "..\..\inkscape\share\icons\inkscape.file.svg"
+  SetOutPath $INSTDIR\share\screens
+  File /a "..\..\inkscape\share\screens\about.bg.svg"
   SetOutPath $INSTDIR\modules
   File /nonfatal /a /r "..\..\inkscape\modules\*.*"
   SetOutPath $INSTDIR\python
@@ -713,6 +715,10 @@ Section $(lng_et) SecEstonian
   !insertmacro Language et et
 SectionEnd
 
+Section $(lng_eu) SecBasque
+  !insertmacro Language eu eu
+SectionEnd
+
 Section $(lng_fr) SecFrench
   !insertmacro Language 'fr' 'fr'
 SectionEnd
@@ -747,6 +753,10 @@ SectionEnd
 
 Section $(lng_ja) SecJapanese
   !insertmacro Language 'ja' 'jp'
+SectionEnd
+
+Section $(lng_km) SecKhmer
+  !insertmacro Language km km
 SectionEnd
 
 Section $(lng_ko) SecKorean

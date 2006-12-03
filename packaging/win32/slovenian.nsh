@@ -8,6 +8,7 @@
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
 ; 24 october 2006 new languages en_US@piglatin, th
+; 3rd December 2006 new languages eu km
 
 ; !insertmacro MUI_LANGUAGE "Slovenšèina"
 !insertmacro MUI_LANGUAGE "Slovenian"
@@ -136,6 +137,7 @@ LangString lng_en_US@piglatin $(LANG_SLOVENIAN) "Pig Latin (en_US@piglatin)"
 LangString lng_es $(LANG_SLOVENIAN) "španski (es)"
 LangString lng_es_MX $(LANG_SLOVENIAN) "mehiško španski (es_MX)"
 LangString lng_et $(LANG_SLOVENIAN) "estonski (et)"
+LangString lng_eu $(LANG_SLOVENIAN) "eu  Basque"
 LangString lng_fi $(LANG_SLOVENIAN) "finski (fi)"
 LangString lng_fr $(LANG_SLOVENIAN) "francoski (fr)"
 LangString lng_ga $(LANG_SLOVENIAN) "irski (ga)"
@@ -144,6 +146,7 @@ LangString lng_hr $(LANG_SLOVENIAN) "hrvaški (hr)"
 LangString lng_hu $(LANG_SLOVENIAN) "madžarski (hu)"
 LangString lng_it $(LANG_SLOVENIAN) "italijanski (it)"
 LangString lng_ja $(LANG_SLOVENIAN) "japonski (ja)"
+LangString lng_km $(LANG_SLOVENIAN) "km  Khmer"
 LangString lng_ko $(LANG_SLOVENIAN) "korejski (ko)"
 LangString lng_lt $(LANG_SLOVENIAN) "litovski (lt)"
 LangString lng_mk $(LANG_SLOVENIAN) "makedonski (mk)"

@@ -8,6 +8,7 @@
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
 ; 24 october 2006 new languages en_US@piglatin, th
+; 3rd December 2006 new languages eu km
 
 !insertmacro MUI_LANGUAGE "Slovak"
 
@@ -135,6 +136,7 @@ LangString lng_en_US@piglatin $(LANG_SLOVAK) "en_US@piglatin Pig Latin"
 LangString lng_es $(LANG_SLOVAK) "es  Spanish"
 LangString lng_es_MX $(LANG_SLOVAK) "es_MX  Mexican Spanish"
 LangString lng_et $(LANG_SLOVAK) "et  Estonian"
+LangString lng_eu $(LANG_SLOVAK) "eu  Basque"
 LangString lng_fi $(LANG_SLOVAK) "fi  Finish"
 LangString lng_fr $(LANG_SLOVAK) "fr  French"
 LangString lng_ga $(LANG_SLOVAK) "ga  Irish"
@@ -143,6 +145,7 @@ LangString lng_hr $(LANG_SLOVAK) "hr  Croatian"
 LangString lng_hu $(LANG_SLOVAK) "hu  Hungarian"
 LangString lng_it $(LANG_SLOVAK) "it  Italian"
 LangString lng_ja $(LANG_SLOVAK) "ja  Japanese"
+LangString lng_km $(LANG_SLOVAK) "km  Khmer"
 LangString lng_ko $(LANG_SLOVAK) "ko  Korean"
 LangString lng_lt $(LANG_SLOVAK) "lt  Lithuanian"
 LangString lng_mk $(LANG_SLOVAK) "mk  Macedonian"

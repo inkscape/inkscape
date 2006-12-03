@@ -9,6 +9,7 @@
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
 ; 24 october 2006 new languages en_US@piglatin, th
+; 3rd December 2006 new languages eu km
 
 !insertmacro MUI_LANGUAGE "Czech"
 
@@ -136,6 +137,7 @@ LangString lng_en_US@piglatin $(LANG_CZECH) "en_US@piglatin Pig Latin"
 LangString lng_es $(LANG_CZECH) "es  Španìlština"
 LangString lng_es_MX $(LANG_CZECH) "es_MX  Mexická Španìlština"
 LangString lng_et $(LANG_CZECH) "et  Estonština"
+LangString lng_eu $(LANG_CZECH) "eu  Basque"
 LangString lng_fi $(LANG_CZECH) "fi  Finština"
 LangString lng_fr $(LANG_CZECH) "fr  Francouzština"
 LangString lng_ga $(LANG_CZECH) "ga  Irština"
@@ -144,6 +146,7 @@ LangString lng_hr $(LANG_CZECH) "hr  Chorvatština"
 LangString lng_hu $(LANG_CZECH) "hu  Maïarština"
 LangString lng_it $(LANG_CZECH) "it  Italština"
 LangString lng_ja $(LANG_CZECH) "ja  Japonština"
+LangString lng_km $(LANG_CZECH) "km  Khmer"
 LangString lng_ko $(LANG_CZECH) "ko  Korejština"
 LangString lng_lt $(LANG_CZECH) "lt  Litevština"
 LangString lng_mk $(LANG_CZECH) "mk  Makedonština"
