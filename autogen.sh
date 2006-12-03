@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/bash 
 
 # This script does all the magic calls to automake/autoconf and
 # friends that are needed to configure a cvs checkout.  As described in
