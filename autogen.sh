@@ -28,10 +28,10 @@ cd "$srcdir"
 
 check_version ()
 {
-MAJOR1=`echo $1 | cut -d"." -f1`;
-MINOR1=`echo $1 | cut -s -d"." -f2`;
-MAJOR2=`echo $2 | cut -d"." -f1`;
-MINOR2=`echo $2 | cut -d"." -f2;`
+MAJOR1=`echo "$1" | cut -d"." -f1`;
+MINOR1=`echo "$1" | cut -s -d"." -f2`;
+MAJOR2=`echo "$2" | cut -d"." -f1`;
+MINOR2=`echo "$2" | cut -d"." -f2;`
 test -z "$MINOR1" && MINOR1="0";
 
 if (("$MAJOR1" > "$MAJOR2"))||(((("$MAJOR1" == "$MAJOR2")) && (("$MINOR1" \>= "$MINOR2")))); then
