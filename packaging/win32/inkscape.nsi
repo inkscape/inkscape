@@ -1004,23 +1004,35 @@ Function .onInit
   !insertmacro Parameter "am" ${SecAmharic}
   !insertmacro Parameter "az" ${SecAzerbaijani}
   !insertmacro Parameter "be" ${SecByelorussian}
+  !insertmacro Parameter "bg" ${SecBulgarian}
   !insertmacro Parameter "ca" ${SecCatalan}
   !insertmacro Parameter "cs" ${SecCzech}
   !insertmacro Parameter "da" ${SecDanish}
   !insertmacro Parameter "de" ${SecGerman}
+  !insertmacro Parameter "dz" ${SecDzongkha}
   !insertmacro Parameter "el" ${SecGreek}
+  !insertmacro Parameter "en_CA" ${SecEnglishCanadian}
+  !insertmacro Parameter "en_GB" ${SecEnglishBritain}
+  !insertmacro Parameter "en_US@piglatin" ${SecEnglishPiglatin}
   !insertmacro Parameter "es" ${SecSpanish}
   !insertmacro Parameter "es_MX" ${SecSpanishMexico}
   !insertmacro Parameter "et" ${SecEstonian}
+  !insertmacro Parameter "eu" ${SecBasque}
+  !insertmacro Parameter "fi" ${SecFinish}
   !insertmacro Parameter "fr" ${SecFrench}
   !insertmacro Parameter "ga" ${SecIrish}
   !insertmacro Parameter "gl" ${SecGallegan}
+  !insertmacro Parameter "hr" ${SecCroatian}
   !insertmacro Parameter "hu" ${SecHungarian}
   !insertmacro Parameter "it" ${SecItalian}
   !insertmacro Parameter "ja" ${SecJapanese}
+  !insertmacro Parameter "km" ${SecKhmer}
   !insertmacro Parameter "ko" ${SecKorean}
+  !insertmacro Parameter "lt" ${SecLithuanian}
   !insertmacro Parameter "mk" ${SecMacedonian}
+  !insertmacro Parameter "mn" ${SecMongolian}
   !insertmacro Parameter "nb" ${SecNorwegianBokmal}
+  !insertmacro Parameter "ne" ${SecNepali}
   !insertmacro Parameter "nl" ${SecDutch}
   !insertmacro Parameter "nn" ${SecNorwegianNynorsk}
   !insertmacro Parameter "pa" ${SecPanjabi}
@@ -1028,13 +1040,17 @@ Function .onInit
   !insertmacro Parameter "pt" ${SecPortuguese}
   !insertmacro Parameter "pt_BR" ${SecPortugueseBrazil}
   !insertmacro Parameter "ru" ${SecRussian}
+  !insertmacro Parameter "rw" ${SecKinyarwanda}
   !insertmacro Parameter "sk" ${SecSlovak}
   !insertmacro Parameter "sl" ${SecSlovenian}
+  !insertmacro Parameter "sq" ${SecAlbanian}
   !insertmacro Parameter "sr" ${SecSerbian}
   !insertmacro Parameter "sr@Latn" ${SecSerbianLatin}
   !insertmacro Parameter "sv" ${SecSwedish}
+  !insertmacro Parameter "th" ${SecThai}
   !insertmacro Parameter "tr" ${SecTurkish}
   !insertmacro Parameter "uk" ${SecUkrainian}
+  !insertmacro Parameter "vi" ${SecVietnamese}
   !insertmacro Parameter "zh_CN" ${SecChineseSimplified}
   !insertmacro Parameter "zh_TW" ${SecChineseTaiwan}
   
