@@ -85,17 +85,6 @@ EXTRA_DIST = \
 	cxxtest/cxxtest/Win32Gui.h \
 	cxxtest/cxxtest/X11Gui.h \
 	cxxtest/cxxtest/YesNoRunner.h \
-	debian/changelog \
-	debian/compat	\
-	debian/control \
-	debian/copyright	\
-	debian/dirs	\
-	debian/docs	\
-	debian/inkscape.applications	\
-	debian/inkscape.menu	\
-	debian/inkscape.xpm	\
-	debian/mime	\
-	debian/rules	\
 	packaging/autopackage/default.apspec.in	\
 	packaging/osx-app.sh	\
 	packaging/macosx/dmg_background.png	\
@@ -150,11 +139,6 @@ EXTRA_DIST = \
         po/update_po_files.sh \
 	src/Makefile.mingw src/inkscape_version.h.mingw src/inkscape.rc	src/makedef.pl \
 	src/helper/sp-marshal.h.mingw src/helper/sp-marshal.cpp.mingw
-
-# Note: it isn't clear that debian/* belongs in the tar file:
-# tarfile users should be able to use the official Debian packages.
-# They were added to EXTRA_DIST in v1.5, in response to a message on
-# inkscape-devel from "Carlos Ingelmo <carlsalam@te...>" on 2003-11-12 01:35.
 
 # We want the built inkscape.1 to go in the distributed .tar.gz so
 # that .tar.gz users don't need a full perl distribution to get a man
