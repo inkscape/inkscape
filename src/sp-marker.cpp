@@ -22,7 +22,7 @@
 #include "display/nr-arena-group.h"
 #include "xml/repr.h"
 #include "attributes.h"
-#include "marker.h"
+#include "sp-marker.h"
 
 struct SPMarkerView {
 	SPMarkerView *next;
