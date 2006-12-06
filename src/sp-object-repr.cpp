@@ -13,7 +13,7 @@
 
 #include "sp-defs.h"
 #include "sp-symbol.h"
-#include "sp-marker.h"
+#include "marker.h"
 #include "sp-use.h"
 #include "sp-root.h"
 #include "sp-image.h"

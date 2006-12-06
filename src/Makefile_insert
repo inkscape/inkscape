@@ -207,7 +207,7 @@ libinkpre_a_SOURCES =	\
 	sp-linear-gradient-fns.h	\
 	sp-linear-gradient.h	\
 	sp-marker-loc.h	\
-	sp-marker.cpp sp-marker.h	\
+	marker.cpp marker.h	\
 	sp-mask.cpp sp-mask.h	\
 	sp-metadata.cpp sp-metadata.h	\
 	sp-metric.h	\

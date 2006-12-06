@@ -23,7 +23,7 @@
 #include "svg/svg.h"
 #include "sp-path.h"
 #include "sp-shape.h"
-#include "sp-marker.h"
+#include "marker.h"
 #include "enums.h"
 #include "sp-text.h"
 #include "sp-item-group.h"

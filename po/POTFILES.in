@@ -206,7 +206,7 @@ src/sp-item-transform.cpp
 src/sp-item-update-cns.cpp
 src/sp-item.cpp
 src/sp-line.cpp
-src/sp-marker.cpp
+src/marker.cpp
 src/sp-mask.cpp
 src/sp-metrics.cpp
 src/sp-namedview.cpp

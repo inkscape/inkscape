@@ -31,7 +31,7 @@
 #include "desktop-handles.h"
 #include "message-stack.h"
 #include "sp-item-transform.h"
-#include "sp-marker.h"
+#include "marker.h"
 #include "sp-use.h"
 #include "sp-textpath.h"
 #include "sp-tspan.h"

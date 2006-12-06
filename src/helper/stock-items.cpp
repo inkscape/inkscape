@@ -26,7 +26,7 @@
 #include "sp-gradient-fns.h"
 #include "document-private.h"
 #include "sp-pattern.h"
-#include "sp-marker.h"
+#include "marker.h"
 #include "desktop-handles.h"
 #include "inkscape.h"
 

@@ -32,7 +32,7 @@
 #include "print.h"
 #include "document.h"
 #include "style.h"
-#include "sp-marker.h"
+#include "marker.h"
 #include "sp-path.h"
 #include "prefs-utils.h"
 

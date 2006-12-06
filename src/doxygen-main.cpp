@@ -78,7 +78,7 @@
  *     - SPFlowtspan [\ref sp-flowdiv.cpp, \ref sp-flowdiv.h]
  *     - SPGroup [\ref sp-item-group.cpp, \ref sp-item-group.h]
  *       - SPAnchor [\ref sp-anchor.cpp, \ref sp-anchor.h]
- *       - SPMarker [\ref sp-marker.cpp, \ref sp-marker.h]
+ *       - SPMarker [\ref marker.cpp, \ref marker.h]
  *       - SPRoot [\ref sp-root.cpp, \ref sp-root.h]
  *       - SPSymbol [\ref sp-symbol.cpp, \ref sp-symbol.h]
  *     - SPImage [\ref sp-image.cpp, \ref sp-image.h]
@@ -182,7 +182,7 @@
  * - Inkscape::URIReference [\ref uri-references.cpp, \ref uri-references.h]
  *   - SPClipPathReference [\ref sp-clippath.h]
  *   - SPGradientReference [\ref sp-gradient-reference.h]
- *   - SPMarkerReference [\ref sp-marker.h]
+ *   - SPMarkerReference [\ref marker.h]
  *   - SPMaskReference [\ref sp-mask.h]
  *   - SPUseReference [\ref sp-use-reference.h]
  *     - SPUsePath
