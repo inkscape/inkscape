@@ -5,7 +5,7 @@
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
- *   Bryce Harrington <brycehar@bryceharrington.com>
+ *   Bryce Harrington <brycehar@bryceharrington.org>
  *   bulia byak <buliabyak@users.sf.net>
  *
  * Copyright (C) 2001-2005 authors
@@ -546,7 +546,8 @@ sp_stroke_radio_button(GtkWidget *tb, char const *icon,
 
 /**
  * Creates a copy of the marker named mname, determines its visible and renderable
- * area in menu_id's bounding box, and then renders it.
+ * area in menu_id's bounding box, and then renders it.  This allows us to fill in
+ * preview images of each marker in the marker menu.
  */
 static GtkWidget *
 sp_marker_prev_new(unsigned size, gchar const *mname,
@@ -657,62 +658,44 @@ sp_marker_prev_new(unsigned size, gchar const *mname,
 }
 
 
-#define MARKER_ITEM_MARGIN 0
-
-
 /**
- * sp_marker_list_from_doc()
- *
- * \brief Pick up all markers from source, except those that are in
- * current_doc (if non-NULL), and add items to the m menu
- *
+ *  Returns a list of markers in the defs of the given source document as a GSList object
+ *  Returns NULL if there are no markers in the document.
  */
-static void
-sp_marker_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *source, SPDocument *markers_doc, SPDocument *sandbox, gchar *menu_id)
+GSList *
+ink_marker_list_get (SPDocument *source)
 {
+    if (source == NULL)
+        return NULL;
 
-    // search through defs
-    GSList *ml = NULL;
-    SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS (source);
-    for ( SPObject *ochild = sp_object_first_child(SP_OBJECT(defs)) ; ochild != NULL ; ochild = SP_OBJECT_NEXT (ochild) ) {
-        if (SP_IS_MARKER(ochild)) {
-            ml = g_slist_prepend (ml, ochild);
+    GSList *ml   = NULL;
+    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS (source);
+    for ( SPObject *child = sp_object_first_child(SP_OBJECT(defs));
+          child != NULL;
+          child = SP_OBJECT_NEXT (child) )
+    {
+        if (SP_IS_MARKER(child)) {
+            ml = g_slist_prepend (ml, child);
         }
     }
+    return ml;
+}
 
+#define MARKER_ITEM_MARGIN 0
+
+/**
+ * Adds previews of markers in marker_list to the given menu widget
+ */
+static void
+sp_marker_menu_build (GtkWidget *m, GSList *marker_list, SPDocument *source, SPDocument *sandbox, gchar *menu_id)
+{
     // Do this here, outside of loop, to speed up preview generation:
-    /* Create new arena */
     NRArena const *arena = NRArena::create();
-    /* Create ArenaItem and set transform */
     unsigned const visionkey = sp_item_display_key_new(1);
     NRArenaItem *root =  sp_item_invoke_show( SP_ITEM(SP_DOCUMENT_ROOT (sandbox)), (NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY );
 
-    for (; ml != NULL; ml = ml->next) {
-
-        if (!SP_IS_MARKER(ml->data))
-            continue;
-
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) ml->data);
-
-        bool stock_dupe = false;
-
-        if (markers_doc && repr->attribute("inkscape:stockid")) {
-            // find out if markers_doc has a marker with the same stockid, and if so, skip this
-            for (SPObject *child = sp_object_first_child(SP_OBJECT(SP_DOCUMENT_DEFS(markers_doc))) ;
-                 child != NULL;
-                 child = SP_OBJECT_NEXT(child) )
-            {
-                if (SP_IS_MARKER(child) &&
-                    SP_OBJECT_REPR(child)->attribute("inkscape:stockid") &&
-                    !strcmp(repr->attribute("inkscape:stockid"), SP_OBJECT_REPR(child)->attribute("inkscape:stockid"))) {
-                    stock_dupe = true; 
-                }
-            }
-        }
-
-        if (stock_dupe) // stock item, dont add to list from current doc
-            continue;
-
+    for (; marker_list != NULL; marker_list = marker_list->next) {
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) marker_list->data);
         GtkWidget *i = gtk_menu_item_new();
         gtk_widget_show(i);
 
@@ -744,8 +727,52 @@ sp_marker_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *sour
 
         gtk_menu_append(GTK_MENU(m), i);
     }
+}
+
+/**
+ * sp_marker_list_from_doc()
+ *
+ * \brief Pick up all markers from source, except those that are in
+ * current_doc (if non-NULL), and add items to the m menu
+ *
+ */
+static void
+sp_marker_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *source, SPDocument *markers_doc, SPDocument *sandbox, gchar *menu_id)
+{
+    GSList *ml = ink_marker_list_get(source);
+    GSList *clean_ml = NULL;
+
+    // Do this here, outside of loop, to speed up preview generation:
+    /* Create new arena */
+    NRArena const *arena = NRArena::create();
+    /* Create ArenaItem and set transform */
+    unsigned const visionkey = sp_item_display_key_new(1);
+    NRArenaItem *root =  sp_item_invoke_show( SP_ITEM(SP_DOCUMENT_ROOT (sandbox)), (NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY );
+
+    for (; ml != NULL; ml = ml->next) {
+        if (!SP_IS_MARKER(ml->data))
+            continue;
+
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) ml->data);
+        bool stock_dupe = false;
+
+        GSList * markers_doc_ml = ink_marker_list_get(markers_doc);
+        for (; markers_doc_ml != NULL; markers_doc_ml = markers_doc_ml->next) {
+            const gchar* stockid = SP_OBJECT_REPR(markers_doc_ml->data)->attribute("inkscape:stockid");
+            if (stockid && !strcmp(repr->attribute("inkscape:stockid"), stockid))
+                stock_dupe = true;
+        }
+
+        if (stock_dupe) // stock item, dont add to list from current doc
+            continue;
+
+        // Add to the list of markers we really do wish to show
+        clean_ml = g_slist_prepend (clean_ml, ml->data);
+    }
+    sp_marker_menu_build (m, clean_ml, source, sandbox, menu_id);
 
     g_slist_free (ml);
+    g_slist_free (clean_ml);
 }
 
 

@@ -1,12 +1,14 @@
-#define __SP_MARKER_C__
+#define __MARKER_C__
 
 /*
  * SVG <marker> implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Bryce Harrington <bryce@bryceharrington.org>
  *
  * Copyright (C) 1999-2003 Lauris Kaplinski
+ *               2004-2006 Bryce Harrington
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
