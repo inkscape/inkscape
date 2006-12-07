@@ -1198,6 +1198,9 @@ SPObject::requestDisplayUpdate(unsigned int flags)
     }
 }
 
+/**
+ * Update views
+ */
 void
 SPObject::updateDisplay(SPCtx *ctx, unsigned int flags)
 {
@@ -1268,7 +1271,10 @@ SPObject::requestModified(unsigned int flags)
 }
 
 /** 
- * This is what actually delivers the modified signals
+ *  Emits the MODIFIED signal with the object's flags.
+ *  The object's mflags are the original set aside during the update pass for 
+ *  later delivery here.  Once emitModified() is called, those flags don't
+ *  need to be stored any longer.
  */
 void
 SPObject::emitModified(unsigned int flags)
