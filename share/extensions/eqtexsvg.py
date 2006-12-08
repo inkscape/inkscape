@@ -100,7 +100,8 @@ class EQTEXSVG(inkex.Effect):
             os.rmdir(base_dir)
 
         create_equation_tex(latex_file, self.options.formula)
-        os.system('cd ' + base_dir + '; latex -halt-on-error ' + latex_file + ' > ' + out_file)
+        #os.system('cd ' + base_dir)
+        os.system('latex -output-directory=' + base_dir + ' -halt-on-error ' + latex_file + ' > ' + out_file)
 	try:
 	    os.stat(dvi_file)
 	except OSError:
@@ -110,8 +111,8 @@ class EQTEXSVG(inkex.Effect):
             sys.exit(1)
 
         os.system('dvips -q -f -E -D 600 -y 5000 -o ' + ps_file + ' ' + dvi_file)
-        os.system('cd ' + base_dir + '; pstoedit -f plot-svg -dt -ssp ' + ps_file + ' ' + svg_file + '&> ' + out_file)
-
+        #os.system('cd ' + base_dir)
+        os.system('pstoedit -f plot-svg -dt -ssp ' + ps_file + ' ' + svg_file + '> ' + out_file)
         svg_open(self, svg_file)
 
         clean()
