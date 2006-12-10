@@ -287,18 +287,18 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
     g_assert(knot != NULL);
     g_assert(SP_IS_KNOT(knot));
 
-    g_object_ref(knot);
-    tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
+    /* Run client universal event handler, if present */
 
     gboolean consumed = FALSE;
-
-    /* Run client universal event handler, if present */
 
     g_signal_emit(knot, knot_signals[EVENT], 0, event, &consumed);
 
     if (consumed) {
         return TRUE;
     }
+
+    g_object_ref(knot);
+    tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
 
     switch (event->type) {
 	case GDK_2BUTTON_PRESS:
