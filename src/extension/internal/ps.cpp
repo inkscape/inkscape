@@ -430,10 +430,12 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
                << d.x0 << " "
                << (_height - d.y0) << " "
                << d.x1 << "\n";
-            os << "%%DocumentMedia: plain "
-               << (int) ceil(_height) << " "
-               << (int) ceil(_width) << " "
-               << "0 () ()\n";
+            if (!epsexport) {
+                os << "%%DocumentMedia: plain "
+                   << (int) ceil(_height) << " "
+                   << (int) ceil(_width) << " "
+                   << "0 () ()\n";
+            }
         } else {
             os << "%%Orientation: Portrait\n";
             os << "%%BoundingBox: " << (int) d.x0 << " "
