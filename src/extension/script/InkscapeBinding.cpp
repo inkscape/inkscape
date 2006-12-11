@@ -47,7 +47,7 @@ DocumentImpl::~DocumentImpl()
     
 void DocumentImpl::hello()
 {
-    printf("######## HELLO, WORLD! #######\n");
+    //printf("######## HELLO, WORLD! #######\n");
 }
 
 
