@@ -64,7 +64,7 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#include <freetype/ftxf86.h>
+#include FT_XFREE86_H
 #include <pango/pangoft2.h>
 #include <string>
 #include <iostream>
@@ -81,8 +81,8 @@ PrintPS::PrintPS() :
     _bitmap(false)
 {
     //map font types
-    _fontTypesMap["type1"] = FONT_TYPE1;
-    _fontTypesMap["truetype"] = FONT_TRUETYPE;
+    _fontTypesMap["Type 1"] = FONT_TYPE1;
+    _fontTypesMap["TrueType"] = FONT_TRUETYPE;
     //TODO: support other font types (cf. embed_font())
 }
 
@@ -1153,10 +1153,10 @@ bool PrintPS::embed_font(SVGOStringStream &os, font_instance* font)
   const FT_String* font_type = FT_Get_X11_Font_Format(font_face);
 
   /**
-  * Possible values of "font_type" variable, not supported (font types):
-  * truetype, cff, t1cid, sfnt, bdf, pcf, pfr,  winfonts (FNT/FON).
+  * Possible values of "font_type": Type 1, TrueType, etc.
+  * Embedding available only for Type 1 fonts so far.
   */
-  //TODO: provide support for the font types above
+  //TODO: provide support for other font types (TrueType is a priority)
   switch(_fontTypesMap[font_type])
   {
     case FONT_TYPE1:
