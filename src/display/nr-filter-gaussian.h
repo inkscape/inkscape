@@ -7,6 +7,7 @@
  * Authors:
  *   Niko Kiirala <niko@kiirala.com>
  *   bulia byak
+ *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *
  * Copyright (C) 2006 authors
  *
@@ -58,10 +59,9 @@ private:
     double _deviation_x;
     double _deviation_y;
 
-    int _kernel_size(Matrix const &trans);
+    int _kernel_size(double expansionX, double expansionY);
     void _make_kernel(double *kernel, double deviation, double expansion);
-    int _effect_area_scr_x(Matrix const &trans);
-    int _effect_area_scr_y(Matrix const &trans);
+    int _effect_area_scr(double deviation, double expansion);
     int _effect_subsample_step(int scr_len_x, int quality);
     int _effect_subsample_step_log2(int scr_len_x, int quality);
 

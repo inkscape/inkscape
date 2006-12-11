@@ -6,6 +6,7 @@
  * Authors:
  *   Niko Kiirala <niko@kiirala.com>
  *   bulia byak
+ *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *
  * Copyright (C) 2006 authors
  *
@@ -24,6 +25,8 @@ using std::isnormal;
 #include "libnr/nr-matrix.h"
 #include "prefs-utils.h"
 
+template<typename T> static inline T sqr(T const v) { return v*v; }
+
 namespace NR {
 
 FilterGaussian::FilterGaussian()
@@ -41,44 +44,36 @@ FilterGaussian::~FilterGaussian()
     // Nothing to do here
 }
 
-int FilterGaussian::_kernel_size(Matrix const &trans)
+int FilterGaussian::_kernel_size(double expansionX, double expansionY)
 {
-    int length_x = _effect_area_scr_x(trans);
-    int length_y = _effect_area_scr_y(trans);
-    return _max(length_x, length_y) * 2 + 1;
+    int length_x = _effect_area_scr(_deviation_x, expansionX);
+    int length_y = _effect_area_scr(_deviation_y, expansionY);
+    return _max(length_x, length_y) + 1;
 }
 
 void FilterGaussian::_make_kernel(double *kernel, double deviation, double expansion)
 {
-    double length = deviation * 3.0;
-    int scr_len = (int)std::floor(length * expansion);
-    if(scr_len < 1) scr_len = 1;
-    double d_sq = deviation * deviation * 2;
-    double step = length / scr_len;
+    int const scr_len = _effect_area_scr(deviation, expansion);
+    double const d_sq = sqr(deviation * expansion) * 2;
 
+    // Compute kernel and sum of coefficients
+    // Note that actually only half the kernel is computed, as it is symmetric
     double sum = 0;
-    for ( int i = 0; i < scr_len * 2 + 1 ; i++ ) {
-        double i_sq = (step * i - length) * (step * i - length);
-        sum += (std::exp(-i_sq / d_sq) / std::sqrt(M_PI * d_sq));
+    for ( int i = 0; i <= scr_len ; i++ ) {
+        kernel[i] = std::exp(-sqr(i) / d_sq);
+        sum += kernel[i];
     }
+    sum = 2*sum - kernel[0]; // the sum of the complete kernel is twice as large (minus the center element to avoid counting it twice)
 
-    for ( int i = 0; i < scr_len * 2 + 1 ; i++ ) {
-        double i_sq = (step * i - length) * (step * i - length);
-        kernel[i] = (std::exp(-i_sq / d_sq) / std::sqrt(M_PI * d_sq)) / sum;
+    // Normalize kernel
+    for ( int i = 0; i <= scr_len ; i++ ) {
+        kernel[i] /= sum;
     }
 }
 
-int FilterGaussian::_effect_area_scr_x(Matrix const &trans)
+int FilterGaussian::_effect_area_scr(double deviation, double expansion)
 {
-    int ret = (int)std::floor(_deviation_x * 3.0 * trans.expansionX());
-    if(ret < 1) ret = 1;
-    return ret;
-}
-
-int FilterGaussian::_effect_area_scr_y(Matrix const &trans)
-{
-    int ret = (int)std::floor(_deviation_y * 3.0 * trans.expansionY());
-    if(ret < 1) ret = 1;
+    int ret = (int)std::ceil(deviation * 3.0 * expansion);
     return ret;
 }
 
@@ -264,7 +259,7 @@ inline void _check_index(NRPixBlock const * const pb, int const location, int co
     }
 }
 
-int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
+int FilterGaussian::render(FilterSlot &slot, Matrix const &trans_)
 {
     /* in holds the input pixblock */
     NRPixBlock *in = slot.get(_input);
@@ -289,8 +284,10 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
     }
 
     /* Blur radius in screen units (pixels) */
-    int scr_len_x = _effect_area_scr_x(trans);
-    int scr_len_y = _effect_area_scr_y(trans);
+    double expansion_x = trans_.expansionX();
+    double expansion_y = trans_.expansionY();
+    int scr_len_x = _effect_area_scr(_deviation_x, expansion_x);
+    int scr_len_y = _effect_area_scr(_deviation_y, expansion_y);
 
     // subsampling step; it depends on the radius, but somewhat nonlinearly, to make high zooms
     // workable; is adjustable by quality in -2..2; 0 is the default; 2 is the best quality with no
@@ -300,8 +297,12 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
     int stepx_l2 = _effect_subsample_step_log2(scr_len_x, quality);
     int stepy = _effect_subsample_step(scr_len_y, quality);
     int stepy_l2 = _effect_subsample_step_log2(scr_len_y, quality);
-    int stepx2 = stepx >> 1;
-    int stepy2 = stepy >> 1;
+
+    // Take subsampling into account
+    expansion_x /= stepx;
+    expansion_y /= stepy;
+    scr_len_x = _effect_area_scr(_deviation_x, expansion_x);
+    scr_len_y = _effect_area_scr(_deviation_y, expansion_y);
 
     /* buffer for x-axis blur */
     NRPixBlock *bufx = new NRPixBlock;
@@ -321,15 +322,12 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
         return 0;
     }
 
-    //mid->visible_area = in->visible_area;
-    //out->visible_area = in->visible_area;
-
     /* Array for filter kernel, big enough to fit kernels for both X and Y
      * direction kernel, one at time */
-    double kernel[_kernel_size(trans)];
+    double kernel[_kernel_size(expansion_x, expansion_y)];
     
     /* 1. Blur in direction of X-axis, from in to bufx (they have different resolution)*/
-    _make_kernel(kernel, _deviation_x, trans.expansionX());
+    _make_kernel(kernel, _deviation_x, expansion_x);
 
     for ( int y = bufx->area.y0 ; y < bufx->area.y1; y++ ) {
 
@@ -360,17 +358,10 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
                 int different_count = 0;
 
                 // go over our point's neighborhood on x axis in the in buffer, with stepx increment
-                for ( int i = -scr_len_x ; i <= scr_len_x ; i += stepx ) {
+                for ( int i = -scr_len_x ; i <= scr_len_x ; i++ ) {
 
                     // the pixel we're looking at
-                    int x_in = (((x << stepx_l2) + i + stepx2) >> stepx_l2) << stepx_l2;
-
-                    // distance from it to the current x,y
-                    int dist = x_in - (x << stepx_l2);
-                    if (dist < -scr_len_x) 
-                        dist = -scr_len_x;
-                    if (dist > scr_len_x) 
-                        dist = scr_len_x;
+                    int x_in = (x+i)<<stepx_l2;
 
                     if (x_in >= in->area.x1) {
                         x_in = (in->area.x1 - in->area.x0 - 1);
@@ -388,8 +379,8 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
                     if(in_byte != last_in) different_count++;
                     last_in = in_byte;
 
-                    // sum pixels weighted by the kernel; multiply by stepx because we're skipping stepx pixels
-                    sum += stepx * in_byte * kernel[scr_len_x + dist];
+                    // sum pixels weighted by the kernel
+                    sum += in_byte * kernel[std::abs(i)];
                 }
 
                 // store the result in bufx
@@ -401,10 +392,10 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
                 // blurring flat color would not change it anyway
                 if (different_count <= 1) {
                     int pos = x + 1;
-                    while(((pos << stepx_l2) + scr_len_x) < in->area.x1 &&
-                          NR_PIXBLOCK_PX(in)[in_line + NR_PIXBLOCK_BPP(in) * ((pos << stepx_l2) + scr_len_x - in->area.x0) + byte] == last_in)
+                    while(((pos + scr_len_x) << stepx_l2) < in->area.x1 &&
+                          NR_PIXBLOCK_PX(in)[in_line + NR_PIXBLOCK_BPP(in) * (((pos + scr_len_x) << stepx_l2) - in->area.x0) + byte] == last_in)
                     {
-                        _check_index(in, in_line + NR_PIXBLOCK_BPP(in) * ((pos << stepx_l2) + scr_len_x - in->area.x0) + byte, __LINE__);
+                        _check_index(in, in_line + NR_PIXBLOCK_BPP(in) * (((pos + scr_len_x) << stepx_l2) - in->area.x0) + byte, __LINE__);
                         _check_index(bufx, bufx_line + NR_PIXBLOCK_BPP(bufx) * (pos - xd0) + byte, __LINE__);
                         NR_PIXBLOCK_PX(bufx)[bufx_line + NR_PIXBLOCK_BPP(bufx) * (pos - xd0) + byte] = last_in;
                         pos++;
@@ -417,7 +408,7 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
 
 
     /* 2. Blur in direction of Y-axis, from bufx to bufy (they have the same resolution) */
-    _make_kernel(kernel, _deviation_y, trans.expansionY());
+    _make_kernel(kernel, _deviation_y, expansion_y);
 
     for ( int x = bufy->area.x0 ; x < bufy->area.x1; x++ ) {
 
@@ -438,15 +429,9 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
                 int last_in = -1;
                 int different_count = 0;
 
-                for ( int i = -scr_len_y ; i <= scr_len_y ; i += stepy ) {
+                for ( int i = -scr_len_y ; i <= scr_len_y ; i ++ ) {
 
-                    int y_in = ((((y << stepy_l2) + i + stepy2) >> stepy_l2) - yd0);
-
-                    int dist = ((y_in + yd0) << stepy_l2) - (y << stepy_l2);
-                    if (dist < -scr_len_y) 
-                        dist = -scr_len_y;
-                    if (dist > scr_len_y) 
-                        dist = scr_len_y;
+                    int y_in = y + i - yd0;
 
                     if (y_in >= (yd1 - yd0)) y_in = (yd1 - yd0) - 1;
                     if (y_in < 0) y_in = 0;
@@ -455,7 +440,7 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
                     unsigned char in_byte = NR_PIXBLOCK_PX(bufx)[y_in * bufx->rs + NR_PIXBLOCK_BPP(bufx) * (x - xd0) + byte];
                     if(in_byte != last_in) different_count++;
                     last_in = in_byte;
-                    sum += stepy * in_byte * kernel[scr_len_y + dist];
+                    sum += in_byte * kernel[std::abs(i)];
                 }
 
                 _check_index(bufy, bufy_line + bufy_disp + byte, __LINE__);
@@ -463,10 +448,10 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
 
                 if (different_count <= 1) {
                     int pos = y + 1;
-                    while((pos + (scr_len_y >> stepy_l2) + 1) < yd1 &&
-                          NR_PIXBLOCK_PX(bufx)[(pos + (scr_len_y >> stepy_l2) + 1 - yd0) * bufx->rs + bufx_disp + byte] == last_in)
+                    while((pos + scr_len_y + 1) < yd1 &&
+                          NR_PIXBLOCK_PX(bufx)[(pos + scr_len_y + 1 - yd0) * bufx->rs + bufx_disp + byte] == last_in)
                     {
-                        _check_index(bufx, (pos + (scr_len_y >> stepy_l2) + 1 - yd0) * bufx->rs + bufx_disp + byte, __LINE__);
+                        _check_index(bufx, (pos + scr_len_y + 1 - yd0) * bufx->rs + bufx_disp + byte, __LINE__);
                         _check_index(bufy, (pos - yd0) * bufy->rs + bufy_disp + byte, __LINE__);
                         NR_PIXBLOCK_PX(bufy)[(pos - yd0) * bufy->rs + bufy_disp + byte] = last_in;
                         pos++;
@@ -549,8 +534,8 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
 
 int FilterGaussian::get_enlarge(Matrix const &trans)
 {
-    int area_x = _effect_area_scr_x(trans);
-    int area_y = _effect_area_scr_y(trans);
+    int area_x = _effect_area_scr(_deviation_x, trans.expansionX());
+    int area_y = _effect_area_scr(_deviation_y, trans.expansionY());
     return _max(area_x, area_y);
 }
 
