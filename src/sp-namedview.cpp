@@ -980,7 +980,7 @@ static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color)
     }
 
     gchar *u;
-    gdouble v = strtod(str, &u);
+    gdouble v = g_ascii_strtod(str, &u);
     if (!u) {
         return FALSE;
     }
