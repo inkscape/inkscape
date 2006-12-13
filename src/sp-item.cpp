@@ -7,8 +7,9 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
- * Copyright (C) 2001-2005 authors
+ * Copyright (C) 2001-2006 authors
  * Copyright (C) 2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -1180,7 +1181,7 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NRMatrix const 
  * the repr is updated with the new transform.
  */
 void
-sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix const &transform, NR::Matrix const *adv)
+sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix const &transform, NR::Matrix const *adv, bool compensate)
 {
     g_return_if_fail(item != NULL);
     g_return_if_fail(SP_IS_ITEM(item));
@@ -1193,31 +1194,35 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix cons
     } else {
         advertized_transform = sp_item_transform_repr (item).inverse() * transform;
     }
-
-     // recursively compensate for stroke scaling, depending on user preference
-    if (prefs_get_int_attribute("options.transform", "stroke", 1) == 0) {
-        double const expansion = 1. / NR::expansion(advertized_transform);
-        sp_item_adjust_stroke_width_recursive(item, expansion);
-    }
-
-    // recursively compensate rx/ry of a rect if requested
-    if (prefs_get_int_attribute("options.transform", "rectcorners", 1) == 0) {
-        sp_item_adjust_rects_recursive(item, advertized_transform);
-    }
-
-    // recursively compensate pattern fill if it's not to be transformed
-    if (prefs_get_int_attribute("options.transform", "pattern", 1) == 0) {
-        sp_item_adjust_paint_recursive (item, advertized_transform.inverse(), NR::identity(), true);
-    }
-    /// \todo FIXME: add the same else branch as for gradients below, to convert patterns to userSpaceOnUse as well
-    /// recursively compensate gradient fill if it's not to be transformed
-    if (prefs_get_int_attribute("options.transform", "gradient", 1) == 0) {
-        sp_item_adjust_paint_recursive (item, advertized_transform.inverse(), NR::identity(), false);
-    } else {
-        // this converts the gradient/pattern fill/stroke, if any, to userSpaceOnUse; we need to do
-        // it here _before_ the new transform is set, so as to use the pre-transform bbox
-        sp_item_adjust_paint_recursive (item, NR::identity(), NR::identity(), false);
-    }
+    
+    if (compensate) {
+        
+         // recursively compensate for stroke scaling, depending on user preference
+        if (prefs_get_int_attribute("options.transform", "stroke", 1) == 0) {
+            double const expansion = 1. / NR::expansion(advertized_transform);
+            sp_item_adjust_stroke_width_recursive(item, expansion);
+        }
+    
+        // recursively compensate rx/ry of a rect if requested
+        if (prefs_get_int_attribute("options.transform", "rectcorners", 1) == 0) {
+            sp_item_adjust_rects_recursive(item, advertized_transform);
+        }
+    
+        // recursively compensate pattern fill if it's not to be transformed
+        if (prefs_get_int_attribute("options.transform", "pattern", 1) == 0) {
+            sp_item_adjust_paint_recursive (item, advertized_transform.inverse(), NR::identity(), true);
+        }
+        /// \todo FIXME: add the same else branch as for gradients below, to convert patterns to userSpaceOnUse as well
+        /// recursively compensate gradient fill if it's not to be transformed
+        if (prefs_get_int_attribute("options.transform", "gradient", 1) == 0) {
+            sp_item_adjust_paint_recursive (item, advertized_transform.inverse(), NR::identity(), false);
+        } else {
+            // this converts the gradient/pattern fill/stroke, if any, to userSpaceOnUse; we need to do
+            // it here _before_ the new transform is set, so as to use the pre-transform bbox
+            sp_item_adjust_paint_recursive (item, NR::identity(), NR::identity(), false);
+        }          
+        
+    } // endif(compensate)
 
     gint preserve = prefs_get_int_attribute("options.preservetransform", "value", 0);
     NR::Matrix transform_attr (transform);

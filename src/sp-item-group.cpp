@@ -6,8 +6,9 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
- * Copyright (C) 1999-2005 authors
+ * Copyright (C) 1999-2006 authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -428,22 +429,8 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 		// fill in the children list if non-null
 		SPItem *item = (SPItem *) doc->getObjectByRepr(repr);
 
-		/* Optimize the transform matrix if requested. */
-		// No compensations are required because this is supposed to be a non-transformation visually.
-		// FIXME: this if is wholly lifted from sp_item_write_transform and should stay in sync
-		NR::Matrix transform_attr (item->transform);
-		if ( // run the object's set_transform (i.e. embed transform) only if:
-				((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform && // it does have a set_transform method
-				!preserve && // user did not chose to preserve all transforms
-				!item->clip_ref->getObject() && // the object does not have a clippath
-				!item->mask_ref->getObject() && // the object does not have a mask
-				!(!transform_attr.is_translation() && SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->filter.filter) 
-				// the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
-				) {
-			transform_attr = ((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform(item, item->transform);
-		}
-		sp_item_set_item_transform(item, transform_attr);
-
+		sp_item_write_transform(item, repr, item->transform, NULL, false);
+		
 		Inkscape::GC::release(repr);
 		if (children && SP_IS_ITEM (item))
 			*children = g_slist_prepend (*children, item);
