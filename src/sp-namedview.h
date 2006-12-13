@@ -48,6 +48,7 @@ struct SPNamedView : public SPObjectGroup {
     gint window_y;
 
     SnapManager snap_manager;
+    //GridManager grid_manager;
 
     SPUnit const *gridunit;
     /* Grid data is in points regardless of unit */
