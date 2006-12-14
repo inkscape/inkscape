@@ -9,6 +9,7 @@
 ; 11 august 2006 new languages dz bg
 ; 24 october 2006 new languages en_US@piglatin, th
 ; 3rd December 2006 new languages eu km
+; 14th December 2006 new lng_DeletePrefs, lng_DeletePrefsDesc, lng_WANT_UNINSTALL_BEFORE and lng_OK_CANCEL_DESC
 
 !insertmacro MUI_LANGUAGE "Italian"
 
@@ -23,6 +24,12 @@ LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_ITALIAN} "$(^Name) è rilasciato sott
 
 ; has been installed by different user
 LangString lng_DIFFERENT_USER ${LANG_ITALIAN} "Inkscape è stato installato dall'utente $0.  Potrebbe non essere possibile portare a termine l'installazione.   Accedere come $0 e riprovare."
+
+; want to uninstall before install
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_ITALIAN} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+
+; press OK to continue press Cancel to abort
+LangString lng_OK_CANCEL_DESC ${LANG_ITALIAN} "$\n$\nPress OK to continue or press CANCEL to abort."
 
 ; you have no admin rigths
 LangString lng_NO_ADMIN ${LANG_ITALIAN} "Non si posseggono i diritti di amministratore.  Potrebbe non essere possibile installare Inkscape per tutti gli utenti.  Non selezionare l'opzione 'Per Tutti Gli Utenti'"
@@ -92,6 +99,12 @@ LangString lng_ContextMenu ${LANG_ITALIAN} "Menu Contestuale"
 
 ; Context Menu description
 LangString lng_ContextMenuDesc ${LANG_ITALIAN} "Aggiunge ${PRODUCT_NAME} nel Menu Contestuale per i file SVG"
+
+; remove personal preferences
+LangString lng_DeletePrefs ${LANG_ITALIAN} "Delete personal preferences"
+
+; remove personal preferences description
+LangString lng_DeletePrefsDesc ${LANG_ITALIAN} "Delete personal preferences leftover from previous installations"
 
 
 ; Additional files section

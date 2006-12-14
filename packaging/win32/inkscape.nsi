@@ -422,7 +422,29 @@ FunctionEnd
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Delete prefs
+; code taken from the vlc project
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+!macro delprefs
+  StrCpy $0 0
+	DetailPrint "Delete personal preferences ..."
+	DetailPrint "try to find all users ..."
+	delprefs-Loop:
+ ; FIXME
+  ; this will loop through all the logged users and "virtual" windows users
+  ; (it looks like users are only present in HKEY_USERS when they are logged in)
+    ClearErrors
+    EnumRegKey $1 HKU "" $0
+    StrCmp $1 "" delprefs-End
+    IntOp $0 $0 + 1
+    ReadRegStr $2 HKU "$1\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" AppData
+    StrCmp $2 "" delprefs-Loop
+	DetailPrint "$2\Inkscape will be removed"
+    RMDir /r "$2\Inkscape"
+    Goto delprefs-Loop
+  delprefs-End:
+!macroend
 
 
 ;--------------------------------
@@ -628,6 +650,10 @@ Section $(lng_ContextMenu) SecContextMenu
 SectionEnd
 
 SectionGroupEnd
+
+Section /o $(lng_DeletePrefs) SecPrefs
+	!insertmacro delprefs
+SectionEnd
 
 SectionGroup $(lng_Addfiles) SecAddfiles
 
@@ -919,6 +945,7 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SecQuicklaunch} $(lng_QuicklaunchDesc)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecSVGWriter} $(lng_SVGWriterDesc)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecContextMenu} $(lng_ContextMenuDesc)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecPrefs} $(lng_DeletePrefsDesc)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecAddfiles} $(lng_AddfilesDesc)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecExamples} $(lng_ExamplesDesc)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecTutorials} $(lng_TutorialsDesc)
@@ -969,15 +996,17 @@ Function .onInit
 	Pop $1
 	StrCmp $1 "Admin" info_done
 
-	MessageBox MB_OK|MB_ICONEXCLAMATION "$(lng_NO_ADMIN)"
-
+	MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "$(lng_NO_ADMIN)$(lng_OK_CANCEL_DESC)" /SD IDOK IDOK info_done IDCANCEL +1
+		Quit
+		
 	Goto info_done
 
 	info_Win9x:
 		# This one means you don't need to care about admin or
 		# not admin because Windows 9x doesn't either
-		MessageBox MB_OK|MB_ICONEXCLAMATION $(lng_NOT_SUPPORTED)
-
+		MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "$(lng_NOT_SUPPORTED)$(lng_OK_CANCEL_DESC)" /SD IDOK IDOK info_done IDCANCEL +1
+			Quit
+			
 	info_done:
 
   ;check for previous installation
@@ -985,10 +1014,28 @@ Function .onInit
   StrCmp $0 "" +1 +2
   ReadRegStr $0 HKCU "${PRODUCT_DIR_REGKEY}" "User"
   ;check user if applicable
-  StrCmp $0 "" +3
-    StrCmp $0 $User +2
-	  MessageBox MB_OK|MB_ICONEXCLAMATION "$(lng_DIFFERENT_USER)"
-	
+  StrCmp $0 "" diff_user_install_done
+    StrCmp $0 $User diff_user_install_done
+	  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "$(lng_DIFFERENT_USER)$(lng_OK_CANCEL_DESC)" /SD IDOK IDOK diff_user_install_done IDCANCEL +1
+		Quit
+   diff_user_install_done:
+	  
+  ; call uninstall first
+  ; code taken from the vlc project
+    ReadRegStr $R0  HKLM ${PRODUCT_UNINST_KEY} "UninstallString"
+	ReadRegStr $R1  HKLM ${PRODUCT_UNINST_KEY} "DisplayName"
+	StrCmp $R0 "" +1 +3
+    ReadRegStr $R0  HKCU ${PRODUCT_UNINST_KEY} "UninstallString"
+	ReadRegStr $R1  HKCU ${PRODUCT_UNINST_KEY} "DisplayName"
+	StrCmp $R0 "" uninstall_before_done
+	 
+	  MessageBox MB_YESNO|MB_ICONEXCLAMATION $(lng_WANT_UNINSTALL_BEFORE) /SD IDNO IDYES +1 IDNO uninstall_before_done 
+	  ;Run the uninstaller
+	  ;uninst:
+	    ClearErrors
+	    ExecWait '$R0 _?=$INSTDIR' ;Do not copy the uninstaller to a temp file
+ 	  uninstall_before_done:
+	  
   ; proccess command line parameter
   !insertmacro Parameter "GTK" ${SecGTK}
   !insertmacro Parameter "SHORTCUTS" ${secShortcuts}
@@ -997,6 +1044,7 @@ Function .onInit
   !insertmacro Parameter "QUICKLAUNCH" ${SecQUICKlaunch}
   !insertmacro Parameter "SVGEDITOR" ${SecSVGWriter}
   !insertmacro Parameter "CONTEXTMENUE" ${SecContextMenu}
+  !insertmacro Parameter "PREFERENCES" ${SecPrefs}
   !insertmacro Parameter "ADDFILES" ${SecAddfiles}
   !insertmacro Parameter "EXAMPLES" ${SecExamples}
   !insertmacro Parameter "TUTORIALS" ${SecTutorials}
@@ -1070,6 +1118,7 @@ Function .onInit
       /QUICKLAUNCH=(OFF/ON): quick launch icon$\r$\n \
       /SVGEDITOR=(OFF/ON): default SVG editor$\r$\n \
       /CONTEXTMENUE=(OFF/ON): context menue integration$\r$\n \
+      /PREFERENCES=(OFF/ON): delete users preference files$\r$\n \
       /ADDFILES=(OFF/ON): additional files$\r$\n \
       /EXAMPLES=(OFF/ON): examples$\r$\n \
       /TUTORIALS=(OFF/ON): tutorials$\r$\n \
@@ -1121,7 +1170,9 @@ Function un.onInit
   ;check user if applicable
   StrCmp $0 "" +3
     StrCmp $0 $User +2
-	  MessageBox MB_OK|MB_ICONEXCLAMATION "$(lng_DIFFERENT_USER)"
+	  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "$(lng_DIFFERENT_USER)$(lng_OK_CANCEL_DESC)" /SD IDOK IDOK diff_user_uninstall_done IDCANCEL +1
+		Quit
+  diff_user_uninstall_done:
     
  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "inkscape.nsi.uninstall"
 
@@ -1139,7 +1190,8 @@ Section Uninstall
   Delete "$APPDATA\Inkscape\extension-errors.log"
   StrCmp $MultiUser "0" 0 endPurge  ; multiuser assigned in dialog
     DetailPrint "purge personal settings in $APPDATA\Inkscape"
-    RMDir /r "$APPDATA\Inkscape"
+    ;RMDir /r "$APPDATA\Inkscape"
+	!insertmacro delprefs
   endPurge:
 
   ; Remove file associations for svg editor

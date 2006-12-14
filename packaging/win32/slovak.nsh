@@ -9,6 +9,7 @@
 ; 11 august 2006 new languages dz bg
 ; 24 october 2006 new languages en_US@piglatin, th
 ; 3rd December 2006 new languages eu km
+; 14th December 2006 new lng_DeletePrefs, lng_DeletePrefsDesc, lng_WANT_UNINSTALL_BEFORE and lng_OK_CANCEL_DESC
 
 !insertmacro MUI_LANGUAGE "Slovak"
 
@@ -23,6 +24,12 @@ LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_SLOVAK} "$(^Name) je moûnÈ öÌriù za 
 
 ;has been installed by different user
 LangString lng_DIFFERENT_USER ${LANG_SLOVAK} "Inkscape nainötaloval pouûÌvateæ $0.$\r$\nInötal·cia nemusÌ spr·vne skonËiù, ak v nej budete pokraËovaù!$\r$\nProsÌm, prihl·ste sa ako $0 a spustite inötal·ciu znova."
+
+; want to uninstall before install
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_SLOVAK} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+
+; press OK to continue press Cancel to abort
+LangString lng_OK_CANCEL_DESC ${LANG_SLOVAK} "$\n$\nPress OK to continue or press CANCEL to abort."
 
 ;you have no admin rigths
 LangString lng_NO_ADMIN ${LANG_SLOVAK} "Nem·te administr·torskÈ pr·va.$\r$\nInötal·cia Inkscape pre vöetk˝ch pouûÌvateæov nemusÌ skonËiù ˙speöne.$\r$\nZruöte oznaËenie voæby 'Pre vöetk˝ch pouûÌvateæov'."
@@ -92,6 +99,12 @@ LangString lng_ContextMenu ${LANG_SLOVAK} "KontextovÈ menu"
 
 ; Context Menu description
 LangString lng_ContextMenuDesc ${LANG_SLOVAK} "Pridaù ${PRODUCT_NAME} do kontextovÈho menu pre SVG s˙bory"
+
+; remove personal preferences
+LangString lng_DeletePrefs ${LANG_SLOVAK} "Delete personal preferences"
+
+; remove personal preferences description
+LangString lng_DeletePrefsDesc ${LANG_SLOVAK} "Delete personal preferences leftover from previous installations"
 
 
 ; Additional files section
