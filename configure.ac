@@ -363,7 +363,7 @@ if test "x$with_perl" = "xyes"; then
     if test "$?" -gt "0"; then
         with_perl="no"
     else
-        checkPERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts 2>/dev/null`
+        checkPERL_LIBS=`perl -MExtUtils::Embed -e ldopts 2>/dev/null`
         if test "$?" -gt "0"; then
             with_perl="no"
         else
@@ -375,22 +375,22 @@ AC_MSG_RESULT([$with_perl])
 if test "x$with_perl" = "xyes"; then
     # Test that we actually have the perl libraries installed
     oldCFLAGS="$CFLAGS"
-    oldLDFLAGS="$LDFLAGS"
+    oldLIBS="$LIBS"
     CFLAGS="$CFLAGS $checkPERL_CFLAGS"
-    LDFLAGS="$LDFLAGS $checkPERL_LDFLAGS"
+    LIBS="$LIBS $checkPERL_LIBS"
     AC_CHECK_FUNC([perl_parse],[
 	PERL_CFLAGS="$checkPERL_CFLAGS"
-	PERL_LDFLAGS="$checkPERL_LDFLAGS"
+	PERL_LIBS="$checkPERL_LIBS"
         AC_DEFINE(WITH_PERL, 1, [use Perl for embedded scripting])
         ],[
 	with_perl="no"
 	])
     CFLAGS="$oldCFLAGS"
-    LDFLAGS="$oldLDFLAGS"
+    LIBS="$oldLIBS"
 fi
 AM_CONDITIONAL(WITH_PERL, test "x$with_perl" = "xyes")
 AC_SUBST(PERL_CFLAGS)
-AC_SUBST(PERL_LDFLAGS)
+AC_SUBST(PERL_LIBS)
 
 dnl ******************************
 dnl Python checking

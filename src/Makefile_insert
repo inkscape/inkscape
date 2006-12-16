@@ -343,7 +343,6 @@ all_libs =			\
 	$(win32ldflags)		\
 	$(PERL_LIBS)		\
 	$(PYTHON_LIBS)	\
-	$(LIBLOUDMOUTH_LIBS) \
 	$(INKBOARD_LIBS)
 
 desktop.$(OBJEXT): helper/sp-marshal.h
