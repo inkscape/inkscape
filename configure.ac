@@ -500,7 +500,6 @@ else
 	with_inkboard="no"
 fi
 
-AC_MSG_RESULT($with_inkboard)
 AM_CONDITIONAL(WITH_INKBOARD, test "x$with_inkboard" = "xyes")
 AC_SUBST(INKBOARD_LIBS)
 AC_SUBST(INKBOARD_CFLAGS)
