@@ -27,10 +27,10 @@ LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_CZECH} "$(^Name) je vydáván pod Gene
 LangString lng_DIFFERENT_USER ${LANG_CZECH} "Inkscape byl nainstalován uivatelem $0.$\r$\nInstalace nemusí bıt dokonèena správnì pokud v ní budete pokraèovat!$\r$\nProsím pøihlaste se jako $0 a spuste instalaci znovu."
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_CZECH} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_CZECH} "$R1 je ji nainstalován. $\nChcete pøed instalací odstranit pøedchozí verzi $(^Name) ?"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_CZECH} "$\n$\nPress OK to continue or press CANCEL to abort."
+LangString lng_OK_CANCEL_DESC ${LANG_CZECH} "$\n$\nStisknìte OK pro pokraèování, CANCEL pro pøerušení."
 
 ;you have no admin rigths
 LangString lng_NO_ADMIN ${LANG_CZECH} "Nemáte administrátorská oprávnìní.$\r$\nInstalace Inkscape pro všechny uivatele nemusí bıt úspìšnì dokonèena.$\r$\nZrušte oznaèení volby 'Pro všechny uivatele'."
@@ -102,10 +102,10 @@ LangString lng_ContextMenu ${LANG_CZECH} "Kontextová nabídka"
 LangString lng_ContextMenuDesc ${LANG_CZECH} "Pøidat ${PRODUCT_NAME} do kontextové nabídky pro SVG soubory"
 
 ; remove personal preferences
-LangString lng_DeletePrefs ${LANG_CZECH} "Delete personal preferences"
+LangString lng_DeletePrefs ${LANG_CZECH} "Smazat osobní nastavení"
 
 ; remove personal preferences description
-LangString lng_DeletePrefsDesc ${LANG_CZECH} "Delete personal preferences leftover from previous installations"
+LangString lng_DeletePrefsDesc ${LANG_CZECH} "Smazat osobní nastavení pøedchozí instalace"
 
 
 
