@@ -406,7 +406,7 @@ if test "x$with_python" = "xyes"; then
     if test "$?" -gt "0"; then
         with_python="no"
     else
-        checkPYTHON_LIBS=`python -c "import distutils.sysconfig ; print '%s/%s %s' % (distutils.sysconfig.get_config_var('LIBPL'),distutils.sysconfig.get_config_var('LIBRARY'),distutils.sysconfig.get_config_var('LIBS'))" 2>/dev/null`
+        checkPYTHON_LIBS=`python -c "import distutils.sysconfig ; print '%s/%s %s' % (distutils.sysconfig.get_config_var('LIBPL'),distutils.sysconfig.get_config_var('LDLIBRARY'),distutils.sysconfig.get_config_var('LIBS'))" 2>/dev/null`
         if test "$?" -gt "0"; then
             with_python="no"
         else
@@ -860,11 +860,13 @@ Configuration:
         LDFLAGS:                  ${LDFLAGS}
 
         Use Xft font database:    ${xft_ok}
-	Use gnome-vfs:            ${gnome_vfs}
+        Use gnome-vfs:            ${gnome_vfs}
         Use openoffice files:     ${ij}
         Use MMX optimizations:    ${use_mmx_asm}
         Use relocation support:   ${enable_binreloc}
-	Enable LittleCms:         ${enable_lcms}
-	Enable Inkboard:	  ${with_inkboard}
-	Enable SSL in Inkboard:   ${with_inkboard_ssl}
+        Internal Python:          ${with_python}
+        Internal Perl:            ${with_perl}
+        Enable LittleCms:         ${enable_lcms}
+        Enable Inkboard:          ${with_inkboard}
+        Enable SSL in Inkboard:   ${with_inkboard_ssl}
 "

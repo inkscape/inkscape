@@ -98,6 +98,7 @@ class ScriptDialogImpl : public ScriptDialog
 };
 
 static char *defaultPythonCodeStr =
+#if defined(WITH_PYTHON)
     "# This is a sample Python script.\n"
     "# To run it, select 'Execute Python' from the File menu above.\n"
     "desktop = inkscape.getDesktop()\n"
@@ -105,6 +106,21 @@ static char *defaultPythonCodeStr =
     "document = desktop.getDocument()\n"
     "document.hello()\n"
     "dialogmanager.showAbout()\n"
+#elif defined(WITH_PERL)
+    "# This is a sample Perl script.\n"
+    "# To run it, select 'Execute Perl' from the File menu above.\n"
+    "my $desktop = $inkscape->getDesktop();\n"
+    "my $dialogmanager = $inkscape->getDialogManager();\n"
+    "my $document = $desktop->getDocument();\n"
+    "$document->hello();\n"
+    "$dialogmanager->showAbout();\n"
+#else
+    "# This is where you could type a script.\n"
+    "# However, no scripting languages have been compiled\n"
+    "# into Inkscape, so this window has no functionality.\n"
+    "# When compiling Inkscape, run \"configure\" with\n"
+    "# \"--with-python\" and/or \"--with-perl\".\n"
+#endif
     "";
 
 
@@ -178,10 +194,14 @@ ScriptDialogImpl::ScriptDialogImpl()
     menuBar.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_File"), fileMenu) );
     fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Clear"),
            sigc::mem_fun(*this, &ScriptDialogImpl::clear) ) );
+#ifdef WITH_PYTHON
     fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Execute Python"),
            sigc::mem_fun(*this, &ScriptDialogImpl::executePython) ) );
+#endif
+#ifdef WITH_PERL
     fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Execute Perl"),
            sigc::mem_fun(*this, &ScriptDialogImpl::executePerl) ) );
+#endif
     mainVBox->pack_start(menuBar, Gtk::PACK_SHRINK);
 
     //### Set up the script field
