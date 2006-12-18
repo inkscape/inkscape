@@ -19,9 +19,9 @@ namespace Inkscape {
 namespace Text {
 
 //#define IFTRACE(_code) _code
-//#define TRACE(_args) g_print _args
 #define IFTRACE(_code)
-#define TRACE(_args)
+
+#define TRACE(_args) IFTRACE(g_print _args)
 
 // ******* enum conversion tables
 static Layout::EnumConversionItem const enum_convert_spstyle_direction_to_pango_direction[] = {
@@ -291,7 +291,7 @@ class Layout::Calculator
         do {
             PangoLogAttr const &char_attributes = _charAttributes(para, span->end);
 
-            if (char_attributes.is_mandatory_break) {
+            if (char_attributes.is_mandatory_break && span->end != span->start) {
                 *last_emergency_break_span = *last_break_span = *span;
                 TRACE(("span %d end of para; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
                 return false;
