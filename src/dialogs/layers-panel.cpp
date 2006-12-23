@@ -33,7 +33,6 @@
 #include "sp-item.h"
 #include "widgets/icon.h"
 #include <gtkmm/widget.h>
-#include <gtkmm/spinbutton.h>
 #include "prefs-utils.h"
 #include "xml/repr.h"
 #include "svg/css-ostringstream.h"
@@ -539,7 +538,7 @@ void LayersPanel::_checkTreeSelection()
             if ( inTree->repr ) {
                 SPCSSAttr *css = sp_repr_css_attr(inTree->repr, "style");
                 if ( css ) {
-                    _opacity.set_value( sp_repr_css_double_property( css, "opacity", 1.0 ) );
+                    _opacity.set_value( sp_repr_css_double_property( css, "opacity", 1.0 ) * 100 );
                 }
             }
         }
@@ -687,7 +686,7 @@ void LayersPanel::_opacityChanged()
         SPCSSAttr *css = sp_repr_css_attr_new();
 
         Inkscape::CSSOStringStream os;
-        os << CLAMP( adj->get_value(), 0.0, 1.0 );
+        os << CLAMP( adj->get_value() / 100, 0.0, 1.0 );
         sp_repr_css_set_property( css, "opacity", os.str().c_str() );
 
         sp_desktop_apply_css_recursive( layer, css, true );
@@ -761,17 +760,18 @@ LayersPanel::LayersPanel() :
     _scroller.set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
 
 
-    _opacityBox.pack_start( *manage( new Gtk::Label(_("Opacity:"))), Gtk::PACK_SHRINK );
+    _opacityBox.pack_start( *manage( new Gtk::Label(_("Opacity, %:"))), Gtk::PACK_SHRINK );
 
     _opacity.set_draw_value(false);
-    _opacity.set_value(1.0);
-    _opacity.set_range(0.0, 1.0);
-    _opacity.set_increments(0.01, 0.1);
+    _opacity.set_value(100.0);
+    _opacity.set_range(0.0, 100.0);
+    _opacity.set_increments(1, 10);
     _opacityBox.pack_start( _opacity, Gtk::PACK_EXPAND_WIDGET );
 
-    Gtk::SpinButton* spinBtn = manage( new Gtk::SpinButton(*_opacity.get_adjustment(), 0.0, 3) );
+    _spinBtn.configure(*_opacity.get_adjustment(), 0, 1);
 
-    _opacityBox.pack_end( *spinBtn, Gtk::PACK_SHRINK );
+    _spinBtn.set_width_chars(5);
+    _opacityBox.pack_end( _spinBtn, Gtk::PACK_SHRINK );
     _watching.push_back( &_opacityBox );
 
     _getContents()->pack_start( _scroller, Gtk::PACK_EXPAND_WIDGET );

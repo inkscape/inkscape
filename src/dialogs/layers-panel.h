@@ -19,6 +19,7 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
+#include <gtkmm/spinbutton.h>
 
 #include "ui/widget/panel.h"
 //#include "ui/previewholder.h"
@@ -119,6 +120,7 @@ private:
     Gtk::HBox _opacityBox;
     Gtk::HScale _opacity;
     Gtk::Menu _popupMenu;
+    Gtk::SpinButton _spinBtn;
 };
 
 
