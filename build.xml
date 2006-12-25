@@ -111,7 +111,7 @@
 	        <exclude name="extension/plugin/.*"/>
 	        <exclude name="extract-uri-test.cpp"/>
 	        <exclude name="helper/units-test.cpp"/>
-	        <exclude name="inkview.cpp"/>
+	        <!-- exclude name="inkview.cpp"/-->
 	        <exclude name="libnr/in-svg-plane-test.cpp"/>
 	        <exclude name="libnr/nr-compose-reference.cpp"/>
 	        <exclude name="libnr/nr-compose-test.cpp"/>
@@ -204,6 +204,7 @@
 	   <fileset dir="${build}/obj">
 	       <exclude name="main,o"/>
 	       <exclude name="winmain,o"/>
+	       <exclude name="inkview,o"/>
 	   </fileset>
 	</staticlib>
   </target>
@@ -258,12 +259,57 @@
 	   </libs>
 	</link>
   </target>
+  
+  <target name="linkinkview" depends="lib">
+    <rc command="${archutil}windres" 
+	    file="${src}/inkview.rc"
+	    out="${build}/inkviewres.o">
+		<flags>
+		--include-dir=${src}
+		</flags>
+	</rc>
+    <link command="${arch}g++" out="${build}/inkview.exe"
+              strip="true" symfile="${build}/inkview.dbg"
+              stripcommand="${archutil}strip"
+              objcopycommand="${archutil}objcopy"
+              >
+       <flags>
+       </flags>
+	   <fileset dir="${build}">
+	       < include name="inkviewres.o"/ >
+	       <include name="obj/inkview.o"/>
+	       <include name="libinkscape.a"/>
+	   </fileset>
+	   <libs>
+	       -L${gtk}/lib
+           -lgtkmm-2.4 -lgdkmm-2.4 -lglibmm-2.4
+           -latkmm-1.6 -lpangomm-1.4 -lsigc-2.0
+           -lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0
+           -lgdk_pixbuf-2.0
+           -lpangocairo-1.0 -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0
+           -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0 -lcairo
+           <!-- PERL -->
+		   -L${gtk}/perl/lib/CORE -lperl58
+           <!-- PYTHON -->
+           -L${gtk}/python/libs -lpython24
+           ${gtk}/bin/libxml2.dll
+           ${gtk}/lib/iconv.lib
+           -lfreetype.dll -lfontconfig.dll
+           -llcms.dll
+           -lssl -lcrypto
+           -lpng -lpopt ${gtk}/lib/zdll.lib
+           -lgc -mwindows -lws2_32 -lintl -lm
+	   </libs>
+	</link>
+  </target>
 
-  <target name="dist" depends="link,i18n"
+  <target name="dist" depends="link,i18n,linkinkview"
         description="generate the distribution" >
     <!-- Create the distribution directory -->
     <copy file="${build}/inkscape.exe" todir="${dist}"/>
     <copy file="${build}/inkscape.dbg" todir="${dist}"/>
+    <copy file="${build}/inkview.exe" todir="${dist}"/>
+    <copy file="${build}/inkview.dbg" todir="${dist}"/>
     <copy file="AUTHORS" todir="${dist}"/>
     <copy file="COPYING" todir="${dist}"/>
     <copy file="COPYING.LIB" todir="${dist}"/>

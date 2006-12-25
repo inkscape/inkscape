@@ -137,7 +137,7 @@ EXTRA_DIST = \
 	po/Makefile.mingw \
         po/inkscape.pot \
         po/update_po_files.sh \
-	src/Makefile.mingw src/inkscape_version.h.mingw src/inkscape.rc	src/makedef.pl \
+	src/Makefile.mingw src/inkscape_version.h.mingw src/inkscape.rc	src/inkview.rc	src/makedef.pl \
 	src/helper/sp-marshal.h.mingw src/helper/sp-marshal.cpp.mingw
 
 # We want the built inkscape.1 to go in the distributed .tar.gz so
