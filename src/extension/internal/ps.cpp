@@ -69,6 +69,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+
 using namespace std;
 
 namespace Inkscape {
@@ -1335,10 +1336,16 @@ PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
 			"definefont} def\n";      // create the new font and leave it on the stack, define the proc
 		_newlatin1font_proc_defined = true;
 		}
-		os << "/" << fn << "-ISOLatin1 /" << fn << " newlatin1font\n";
+		if(strchr(fn, ' ') == NULL)
+			os << "/" << fn << "-ISOLatin1 /" << fn << " newlatin1font\n";
+		else
+			os << "(/" << fn << "-ISOLatin1) (/" << fn << ") newlatin1font\n";
 		_latin1_encoded_fonts.insert(fn);
 	} else
-		os << "/" << fn << "-ISOLatin1 findfont\n";
+		if(strchr(fn, ' ') == NULL)
+			os << "/" << fn << "-ISOLatin1 findfont\n";
+		else
+			os << "(/" << fn << "-ISOLatin1) findfont\n";
     }
     os << style->font_size.computed << " scalefont\n";
     os << "setfont\n";
