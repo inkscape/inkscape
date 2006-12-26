@@ -447,10 +447,12 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
                << d.y0 << " "
                << d.x1 << " "
                << d.y1 << "\n";
-            os << "%%DocumentMedia: plain "
-               << (int) ceil(_width) << " "
-               << (int) ceil(_height) << " "
-               << "0 () ()\n";
+            if (!epsexport) {
+				os << "%%DocumentMedia: plain "
+				   << (int) ceil(_width) << " "
+                  << (int) ceil(_height) << " "
+                  << "0 () ()\n";
+			}
         }
 
         os << "%%EndComments\n";
