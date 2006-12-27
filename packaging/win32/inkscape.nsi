@@ -1134,7 +1134,7 @@ FunctionEnd
 
 Function un.CustomPageUninstall
   !insertmacro MUI_HEADER_TEXT "$(lng_UInstOpt)" "$(lng_UInstOpt1)"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "inkscape.nsi.uninstall" "Field 1" "Text" "$APPDATA\Inkscape\preferences.xml"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "inkscape.nsi.uninstall" "Field 1" "Text" "$APPDATA\Inkscape\"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "inkscape.nsi.uninstall" "Field 2" "Text" "$(lng_PurgePrefs)"
 
   !insertmacro MUI_INSTALLOPTIONS_DISPLAY "inkscape.nsi.uninstall"
@@ -1146,7 +1146,6 @@ FunctionEnd
 
 
 Function un.onInit
-
   ClearErrors
   StrCpy $User ""
 	UserInfo::GetName
@@ -1159,17 +1158,19 @@ Function un.onInit
  
   ; Test if this was a multiuser installation
   ReadRegStr $0 HKLM "${PRODUCT_DIR_REGKEY}" ""
-  StrCmp $0  "$INSTDIR\inkscape.exe" 0 +5  
+  StrCmp $0  "$INSTDIR\inkscape.exe" 0 hkcu_user_uninstall  
     ReadRegStr $MultiUser HKLM "${PRODUCT_DIR_REGKEY}" "MultiUser"
     ReadRegStr $askMultiUser HKLM "${PRODUCT_DIR_REGKEY}" "askMultiUser"
 	ReadRegStr $0 HKLM "${PRODUCT_DIR_REGKEY}" "User"
-	Goto +4
+	Goto check_user_uninstall
+  hkcu_user_uninstall:
   ReadRegStr $MultiUser HKCU "${PRODUCT_DIR_REGKEY}" "MultiUser"
   ReadRegStr $askMultiUser HKCU "${PRODUCT_DIR_REGKEY}" "askMultiUser"
   ReadRegStr $0 HKCU "${PRODUCT_DIR_REGKEY}" "User"
   ;check user if applicable
-  StrCmp $0 "" +3
-    StrCmp $0 $User +2
+  check_user_uninstall:
+  StrCmp $0 "" diff_user_uninstall_done
+	StrCmp $0 $User diff_user_uninstall_done
 	  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "$(lng_DIFFERENT_USER)$(lng_OK_CANCEL_DESC)" /SD IDOK IDOK diff_user_uninstall_done IDCANCEL +1
 		Quit
   diff_user_uninstall_done:
