@@ -62,7 +62,9 @@
 
 #define DPI_BASE PX_PER_IN
 
-#define EXPORT_COORD_PRECISION 3
+#define EXPORT_COORD_PRECISION 3    
+
+#define MIN_ONSCREEN_DISTANCE 50
 
 static void sp_export_area_toggled   ( GtkToggleButton *tb, GtkObject *base );
 static void sp_export_export_clicked ( GtkButton *button, GtkObject *base );
@@ -359,18 +361,14 @@ sp_export_dialog (void)
             h = prefs_get_int_attribute (prefs_path, "h", 0);
         }
 
-        if (x<0) x=0;
-        if (y<0) y=0;
+//        if (x<0) x=0;
+//        if (y<0) y=0;
 
-        if (x != 0 || y != 0) {
+        if (w && h) gtk_window_resize ((GtkWindow *) dlg, w, h);
+        if (x >= 0 && y >= 0 && (x < (gdk_screen_width()-MIN_ONSCREEN_DISTANCE)) && (y < (gdk_screen_height()-MIN_ONSCREEN_DISTANCE)))
             gtk_window_move ((GtkWindow *) dlg, x, y);
-        } else {
+        else
             gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
-        }
-
-        if (w && h)
-            gtk_window_resize ((GtkWindow *) dlg, w, h);
-
         sp_transientize (dlg);
         wd.win = dlg;
         wd.stop = 0;
