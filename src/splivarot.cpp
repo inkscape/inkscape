@@ -414,29 +414,43 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
         return;
     }
 
-    // remember important aspects of the source path, to be restored
-    Inkscape::XML::Node *repr_source;
+    // get the source path object
+    SPObject *source;
     if ( bop == bool_op_diff || bop == bool_op_symdiff || bop == bool_op_cut || bop == bool_op_slice ) {
         if (reverseOrderForOp) {
-             repr_source = SP_OBJECT_REPR(il->data);
+             source = SP_OBJECT(il->data);
         } else {
-             repr_source = SP_OBJECT_REPR(il->next->data);
+             source = SP_OBJECT(il->next->data);
         }
     } else {
         // find out the bottom object
         GSList *sorted = g_slist_copy((GSList *) selection->reprList());
 
         sorted = g_slist_sort(sorted, (GCompareFunc) sp_repr_compare_position);
-        repr_source = ((Inkscape::XML::Node *) sorted->data);
+
+        source = sp_desktop_document(desktop)->
+            getObjectByRepr((Inkscape::XML::Node *)sorted->data);
+
         g_slist_free(sorted);
     }
+
+    // adjust style properties that depend on a possible transform in the source object in order
+    // to get a correct style attribute for the new path
+    SPItem* item_source = SP_ITEM(source);
+    NR::Matrix i2d = sp_item_i2d_affine(item_source);
+    sp_item_adjust_stroke(item_source, i2d.expansion());
+    sp_item_adjust_pattern(item_source, i2d);
+    sp_item_adjust_gradient(item_source, i2d);
+
+    Inkscape::XML::Node *repr_source = SP_OBJECT_REPR(source);
+
+    // remember important aspects of the source path, to be restored
     gint pos = repr_source->position();
     Inkscape::XML::Node *parent = sp_repr_parent(repr_source);
     gchar const *id = repr_source->attribute("id");
     gchar const *style = repr_source->attribute("style");
     gchar const *mask = repr_source->attribute("mask");
     gchar const *clip_path = repr_source->attribute("clip-path");
-
 
     // remove source paths
     selection->clear();
