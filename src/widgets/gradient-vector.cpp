@@ -853,8 +853,8 @@ sp_gradient_vector_widget_new (SPGradient *gradient, SPStop *select_stop)
 
 
 	/* Signals */
-	gtk_signal_connect (GTK_OBJECT (Offset_adj), "value_changed",
-											GTK_SIGNAL_FUNC (offadjustmentChanged), vb);
+	gtk_signal_connect (GTK_OBJECT (Offset_adj), "value_changed", 
+			    GTK_SIGNAL_FUNC (offadjustmentChanged), vb);
 
 	// gtk_signal_connect (GTK_OBJECT (slider), "changed",  GTK_SIGNAL_FUNC (offsliderChanged), vb);
 	gtk_widget_show (hb);
@@ -1120,10 +1120,7 @@ static void sp_gradient_vector_color_dragged(SPColorSelector *csel, GtkObject *o
     csel->base->getColorAlpha(stop->specified_color, &stop->opacity);
     stop->currentColor = false;
 
-	blocked = FALSE;
-    SPColorPreview *cpv = (SPColorPreview *)g_object_get_data (G_OBJECT(gtk_menu_get_active (GTK_MENU(gtk_option_menu_get_menu (mnu)))), "preview");
-    sp_color_preview_set_rgba32(cpv, sp_stop_get_rgba32(stop));
-
+    blocked = FALSE;
 }
 
 static void
@@ -1172,4 +1169,18 @@ sp_gradient_vector_color_changed (SPColorSelector *csel, GtkObject *object)
 			  _("Change gradient stop color"));
 
 	blocked = FALSE;
+
+	SPColorPreview *cpv = (SPColorPreview *)g_object_get_data (G_OBJECT(gtk_menu_get_active (GTK_MENU(gtk_option_menu_get_menu (mnu)))), "preview");
+	sp_color_preview_set_rgba32(cpv, sp_stop_get_rgba32(stop));
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
