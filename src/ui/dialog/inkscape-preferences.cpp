@@ -572,7 +572,7 @@ void InkscapePreferences::initPageMisc()
                         _("After applying, remove the object used as the clipping path or mask from the drawing"));
     _misc_use_ext_input.init( _("Use a pressure sensitive tablet or other device (requires restart)"), "options.useextinput", "value", true);
     _page_misc.add_line(true, "",_misc_use_ext_input, "",
-                        _("Use the capablities of a tablet or other pressure sensitive device. Disable this only if you have problems with the tablet."));
+                        _("Use the capabilities of a tablet or other pressure sensitive device. Disable this only if you have problems with the tablet."));
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
