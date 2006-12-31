@@ -768,7 +768,12 @@ void SPNamedView::hide(SPDesktop const *desktop)
 
     GSList *l;
     for (l = gridviews; l != NULL; l = l->next) {
-        if (SP_CANVAS_ITEM(l->data)->canvas == sp_desktop_canvas(desktop)) {
+        if (! l->data) {
+            continue;
+        }
+        SPCanvasItem *item = static_cast<SPCanvasItem*>(l->data);
+
+        if (item->canvas == sp_desktop_canvas(desktop)) {
             sp_canvas_item_hide(SP_CANVAS_ITEM(l->data));
             gtk_object_unref(GTK_OBJECT(l->data));
             gridviews = g_slist_remove(gridviews, l->data);
