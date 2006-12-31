@@ -1440,6 +1440,9 @@ sp_stroke_style_line_update(SPWidget *spw, Inkscape::Selection *sel)
 
     g_free (query);
 
+    if (!sel || sel->isEmpty())
+        return;
+
     GSList const *objects = sel->itemList();
     SPObject * const object = SP_OBJECT(objects->data);
     SPStyle * const style = SP_OBJECT_STYLE(object);
