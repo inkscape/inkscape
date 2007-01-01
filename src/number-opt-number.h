@@ -94,13 +94,13 @@ public:
 
         if( values[0] != NULL )
         {
-            number = strtof(values[0], NULL);
+            sscanf(values[0], "%f", &number);
             _set = TRUE;
 
             if( values[1] != NULL )
             {
   //              optNumber = g_ascii_strtod(values[1], NULL);
-                optNumber = strtof(values[1], NULL);
+				sscanf(values[1], "%f", &optNumber);
                 optNumber_set = TRUE;
             }
             else
