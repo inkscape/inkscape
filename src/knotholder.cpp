@@ -28,8 +28,10 @@
 #include "sp-star.h"
 #include "spiral-context.h"
 #include "sp-spiral.h"
+#include "sp-offset.h"
 
 #include <libnr/nr-matrix-div.h>
+#include <glibmm/i18n.h>
 
 class SPDesktop;
 
@@ -240,10 +242,16 @@ static void knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
         object_verb = SP_VERB_CONTEXT_STAR;
     else if (SP_IS_SPIRAL(item))
         object_verb = SP_VERB_CONTEXT_SPIRAL;
+    else if (SP_IS_OFFSET(item)) {
+        if (SP_OFFSET(item)->sourceHref)
+            object_verb = SP_VERB_SELECTION_LINKED_OFFSET;
+        else
+            object_verb = SP_VERB_SELECTION_DYNAMIC_OFFSET;
+    }
 
     // for drag, this is done by ungrabbed_handler, but for click we must do it here
     sp_document_done(SP_OBJECT_DOCUMENT(knot_holder->item), object_verb, 
-                     /* TODO: annotate */ "knotholder.cpp:246");
+                     _("Change handle"));
 }
 
 static void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, gpointer data)
@@ -287,9 +295,15 @@ static void knot_ungrabbed_handler(SPKnot *knot, unsigned int state, SPKnotHolde
             object_verb = SP_VERB_CONTEXT_STAR;
         else if (SP_IS_SPIRAL(object))
             object_verb = SP_VERB_CONTEXT_SPIRAL;
-
-        sp_document_done(SP_OBJECT_DOCUMENT (object), object_verb, 
-                         /* TODO: annotate */ "knotholder.cpp:292");
+        else if (SP_IS_OFFSET(object)) {
+            if (SP_OFFSET(object)->sourceHref)
+                object_verb = SP_VERB_SELECTION_LINKED_OFFSET;
+            else
+                object_verb = SP_VERB_SELECTION_DYNAMIC_OFFSET;
+        }
+        
+        sp_document_done(SP_OBJECT_DOCUMENT (object), object_verb,
+                         _("Move handle"));
     }
 }
 
