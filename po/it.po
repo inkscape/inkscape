@@ -1138,7 +1138,7 @@ msgstr "Proiezioni"
 
 #: ../src/dialogs/find.cpp:691 ../src/ui/dialog/find.cpp:60
 msgid "_Text: "
-msgstr "_Testo: "
+msgstr "Te_sto: "
 
 #: ../src/dialogs/find.cpp:691 ../src/ui/dialog/find.cpp:60
 msgid "Find objects by their text content (exact or partial match)"
@@ -3596,7 +3596,7 @@ msgstr "_Testo"
 
 #: ../src/menus-skeleton.h:225
 msgid "Effe_cts"
-msgstr "Effe_tti"
+msgstr "_Effetti"
 
 #: ../src/menus-skeleton.h:232
 msgid "Whiteboa_rd"
@@ -3604,7 +3604,7 @@ msgstr "Whiteboa_rd"
 
 #: ../src/menus-skeleton.h:236
 msgid "_Help"
-msgstr "Ai_uto"
+msgstr "_Aiuto"
 
 #: ../src/menus-skeleton.h:239
 msgid "Tutorials"
@@ -3718,7 +3718,6 @@ msgstr ""
 "tracciato."
 
 #: ../src/nodepath.cpp:2205
-#, fuzzy
 msgid "Cannot find path between nodes."
 msgstr "Impossibile trovare un tracciato tra i nodi."
 
@@ -3742,9 +3741,6 @@ msgstr "Ritira maniglia"
 msgid "Move node handle"
 msgstr "Muovi maniglia del nodo"
 
-# -Luca
-# angoli a scatti????? Però è quullo che fa :-)
-# PS io toglierei i "con .."
 #: ../src/nodepath.cpp:3454
 #, c-format
 msgid ""
@@ -3753,7 +3749,7 @@ msgid ""
 "handles"
 msgstr ""
 "<b>Maniglia del nodo</b>: angolo %0.2f&#176;, lunghezza %s; <b>Ctrl</b> per "
-"angoli a scatti; <b>Alt</b> per bloccare la lunghezza; <b>Maiusc</b> per "
+"far scattare gli angoli; <b>Alt</b> per bloccare la lunghezza; <b>Maiusc</b> per "
 "ruotare entrambe le maniglie"
 
 #: ../src/nodepath.cpp:3632
@@ -4472,9 +4468,8 @@ msgid "Set clipping path"
 msgstr "Chiusura tracciato."
 
 #: ../src/selection-chemistry.cpp:2672
-#, fuzzy
 msgid "Set mask"
-msgstr "Stelle"
+msgstr "Imposta maschera"
 
 #: ../src/selection-chemistry.cpp:2685
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
@@ -4487,9 +4482,8 @@ msgid "Release clipping path"
 msgstr "Rimuove il fissaggio dalla selezione"
 
 #: ../src/selection-chemistry.cpp:2755
-#, fuzzy
 msgid "Release mask"
-msgstr "_Rilascia"
+msgstr "Rimuovi maschera"
 
 #: ../src/selection-chemistry.cpp:2799
 msgid "Fit page to selection"
