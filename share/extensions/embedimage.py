@@ -46,14 +46,21 @@ class MyEffect(inkex.Effect):
                 if (file[:4]=='\x89PNG'):
                     type='image/png'
                 elif (file[:2]=='\xff\xd8'):
-                    type='image/jpg'
+                    type='image/jpeg'
+                elif (file[:2]=='BM'):
+                    type='image/bmp'
+                elif (file[:6]=='GIF87a' or file[:6]=='GIF89a'):
+                    type='image/gif'
+                #ico files lack any magic... therefore we check the filename instead
+                elif(absref.value.endswith('.ico')):
+                    type='image/x-icon' #official IANA registered MIME is 'image/vnd.microsoft.icon' tho
                 else:
                     embed=False
                 if (embed):
                     xlink.value = 'data:%s;base64,%s' % (type, base64.encodestring(file))
                     node.removeAttributeNS(inkex.NSS[u'sodipodi'],'absref')
                 else:
-                    inkex.debug("%s is not of type image/png or image/jpg" % absref.value)
+                    inkex.debug("%s is not of type image/png, image/jpeg, image/bmp, image/gif or image/x-icon" % absref.value)
             else:
                 inkex.debug("Sorry we could not locate %s" % absref.value)
 e = MyEffect()
