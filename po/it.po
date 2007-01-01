@@ -4,7 +4,7 @@
 # Brisa Francesco <fbrisa@yahoo.it>, 2000.
 # Alessio Frusciante <algol@firenze.linux.it>, 2002, 2003.
 # Luca Ferretti <elle.uca@infinito.it>, 2005.
-# Luca Bruno <luca.br@uno.it>, 2005, 2006.
+# Luca Bruno <luca.br@uno.it>, 2005-2007.
 #
 #: ../src/widgets/toolbox.cpp:4035 ../src/widgets/toolbox.cpp:4056
 #: ../src/widgets/toolbox.cpp:4085 ../src/widgets/toolbox.cpp:4106
@@ -13,14 +13,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.44+svn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-30 18:39+0100\n"
+"POT-Creation-Date: 2007-01-01 12:44+0100\n"
 "PO-Revision-Date: 2006-12-30 22:53+0100\n"
 "Last-Translator: Luca Bruno <luca.br@uno.it>>\n"
-"Language-Team:  Italian <tp@lists.linux.it>\n"
+"Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
@@ -163,9 +163,8 @@ msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Selezionare <b>un oggetto</b> da cui rimuovere i cloni in serie"
 
 #: ../src/dialogs/clonetiler.cpp:926
-#, fuzzy
 msgid "Delete tiled clones"
-msgstr "Elimina i nodi selezionati"
+msgstr "Elimina cloni in serie"
 
 #: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1983
 msgid "Select an <b>object</b> to clone."
@@ -451,33 +450,28 @@ msgid "<b>Blur:</b>"
 msgstr "<b>Sfocatura:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2038
-#, fuzzy
 msgid "Blur tiles by this percentage for each row"
-msgstr "Riduce di questa percentuale per ogni riga l'opacità dei cloni"
+msgstr "Sfuoca i cloni di questa percentuale per ogni riga"
 
 #: ../src/dialogs/clonetiler.cpp:2045
-#, fuzzy
 msgid "Blur tiles by this percentage for each column"
-msgstr "Riduce di questa percentuale per ogni colonna l'opacità dei cloni"
+msgstr "Sfuoca i cloni di questa percentuale per ogni colonna"
 
 #: ../src/dialogs/clonetiler.cpp:2052
-#, fuzzy
 msgid "Randomize the tile blur by this percentage"
-msgstr "Rende casuale di questa percentuale l'opacità del clone"
+msgstr "Rende casuale di questa percentuale la sfocatura del clone"
 
 #: ../src/dialogs/clonetiler.cpp:2066
-#, fuzzy
 msgid "Alternate the sign of blur change for each row"
-msgstr "Alterna il segno del valore di cambiamento del valore per ogni riga"
+msgstr "Alterna il segno del valore di cambiamento di sfocatura per ogni riga"
 
 #: ../src/dialogs/clonetiler.cpp:2071
-#, fuzzy
 msgid "Alternate the sign of blur change for each column"
-msgstr "Alterna il segno del valore di cambiamento del valore per ogni riga"
+msgstr "Alterna il segno del valore di cambiamento di sfocatura per ogni colonna"
 
 #: ../src/dialogs/clonetiler.cpp:2080
 msgid "<b>Fade out:</b>"
-msgstr "<b>Sfocatura</b>"
+msgstr "<b>Opacità:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2087
 msgid "Decrease tile opacity by this percentage for each row"
@@ -1245,7 +1239,6 @@ msgid "Move to:"
 msgstr "Sposta a:"
 
 #: ../src/dialogs/guidelinedialog.cpp:77
-#, fuzzy
 msgid "Set guide properties"
 msgstr "Imposta proprietà delle guide"
 
@@ -1342,24 +1335,20 @@ msgid "Ref"
 msgstr "Riferimento"
 
 #: ../src/dialogs/item-properties.cpp:351
-#, fuzzy
 msgid "Lock object"
-msgstr "Nessun oggetto"
+msgstr "Blocca oggetto"
 
 #: ../src/dialogs/item-properties.cpp:351
-#, fuzzy
 msgid "Unlock object"
-msgstr "Ignora gli oggetti bloccati"
+msgstr "Sblocca oggetto"
 
 #: ../src/dialogs/item-properties.cpp:370
-#, fuzzy
 msgid "Hide object"
-msgstr "Nessun oggetto"
+msgstr "Nascondi oggetto"
 
 #: ../src/dialogs/item-properties.cpp:370
-#, fuzzy
 msgid "Unhide object"
-msgstr "Ignora gli oggetti nascosti"
+msgstr "Mostra oggetto"
 
 #: ../src/dialogs/item-properties.cpp:394
 msgid "Id invalid! "
@@ -1370,54 +1359,44 @@ msgid "Id exists! "
 msgstr "Id esistente!"
 
 #: ../src/dialogs/item-properties.cpp:403
-#, fuzzy
 msgid "Set object ID"
-msgstr "Cerca testi"
+msgstr "Imposta ID oggetto"
 
 #: ../src/dialogs/item-properties.cpp:418
-#, fuzzy
 msgid "Set object label"
-msgstr "St_ile contorno"
+msgstr "Imposta etichetta oggetto"
 
 #: ../src/dialogs/item-properties.cpp:427
-#, fuzzy
 msgid "Set object title"
-msgstr "St_ile contorno"
+msgstr "Imposta titolo oggetto"
 
 #: ../src/dialogs/item-properties.cpp:435
-#, fuzzy
 msgid "Set object description"
-msgstr "  descrizione: "
+msgstr "Imposta descrizione oggetto"
 
 #: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
-#, fuzzy
 msgid "Unhide layer"
-msgstr "Alza li_vello"
+msgstr "Mostra livello"
 
 #: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
-#, fuzzy
 msgid "Hide layer"
-msgstr "Alza li_vello"
+msgstr "Nascondi livello"
 
 #: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
-#, fuzzy
 msgid "Lock layer"
-msgstr "Abbassa _livello"
+msgstr "Blocca livello"
 
 #: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
-#, fuzzy
 msgid "Unlock layer"
-msgstr "Abbassa _livello"
+msgstr "Sblocca livello"
 
 #: ../src/dialogs/layers-panel.cpp:698
-#, fuzzy
 msgid "Change layer opacity"
-msgstr "Opacità ge_nerale"
+msgstr "Modifica opacità livello"
 
 #: ../src/dialogs/layers-panel.cpp:763
-#, fuzzy
 msgid "Opacity, %:"
-msgstr "Opacità:"
+msgstr "Opacità, %:"
 
 #: ../src/dialogs/layers-panel.cpp:789
 msgid "New"
@@ -1448,7 +1427,6 @@ msgid "Layer name:"
 msgstr "Nome del  livello:"
 
 #: ../src/dialogs/layer-properties.cpp:115
-#, fuzzy
 msgid "Add layer"
 msgstr "Aggiungi livello"
 
@@ -1477,9 +1455,8 @@ msgid "_Rename"
 msgstr "_Rinomina"
 
 #: ../src/dialogs/layer-properties.cpp:195
-#, fuzzy
 msgid "Rename layer"
-msgstr "Livello rinominato"
+msgstr "Rinomina livello"
 
 #. TRANSLATORS: This means "The layer has been renamed"
 #: ../src/dialogs/layer-properties.cpp:197
@@ -1776,24 +1753,21 @@ msgid "Set attribute"
 msgstr "Imposta attributo"
 
 #: ../src/dialogs/stroke-style.cpp:292 ../src/dialogs/stroke-style.cpp:351
-#, fuzzy
 msgid "Set stroke color"
-msgstr "Ultimo colore selezionato"
+msgstr "Imposta colore contorno"
 
 #: ../src/dialogs/stroke-style.cpp:342 ../src/ui/widget/selected-style.cpp:227
 #: ../src/ui/widget/selected-style.cpp:453
 msgid "Remove stroke"
-msgstr "Rimuovi "
+msgstr "Rimuovi contorno"
 
 #: ../src/dialogs/stroke-style.cpp:403
-#, fuzzy
 msgid "Set gradient on stroke"
-msgstr "Crea gradiente per i contorni"
+msgstr "Imposta gradiente per il contorno"
 
 #: ../src/dialogs/stroke-style.cpp:447
-#, fuzzy
 msgid "Set pattern on stroke"
-msgstr "Motivo del contorno"
+msgstr "Imposta motivo per il contorno"
 
 #: ../src/dialogs/stroke-style.cpp:461 ../src/ui/widget/selected-style.cpp:165
 #: ../src/ui/widget/selected-style.cpp:223
@@ -1818,9 +1792,8 @@ msgid "None"
 msgstr "Nessuno"
 
 #: ../src/dialogs/stroke-style.cpp:960
-#, fuzzy
 msgid "Set markers"
-msgstr "Stelle"
+msgstr "Imposta delimitatori"
 
 #: ../src/dialogs/stroke-style.cpp:1066
 msgid "Stroke width"
@@ -1903,34 +1876,31 @@ msgstr "Tratteggio:"
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
 #: ../src/dialogs/stroke-style.cpp:1201
 msgid "Start Markers:"
-msgstr "Delimitatore iniziale:"
+msgstr "Delimitatore inizio:"
 
 #: ../src/dialogs/stroke-style.cpp:1211
 msgid "Mid Markers:"
-msgstr "Delimitatore medio:"
+msgstr "Delimitatore metà:"
 
 #: ../src/dialogs/stroke-style.cpp:1222
 msgid "End Markers:"
-msgstr "Delimitatore finale:"
+msgstr "Delimitatore fine:"
 
 #: ../src/dialogs/stroke-style.cpp:1567 ../src/dialogs/stroke-style.cpp:1665
-#, fuzzy
 msgid "Set stroke style"
-msgstr "St_ile contorno"
+msgstr "Imposta stile contorno"
 
 #: ../src/dialogs/swatches.cpp:421
-#, fuzzy
 msgid "Change color definition"
-msgstr "Orientamento della pagina:"
+msgstr "Modifica definizione colore"
 
 #: ../src/dialogs/swatches.cpp:556
 msgid "Set stroke color from swatch"
 msgstr "Seleziona i colori da una tavolozza di campioni"
 
 #: ../src/dialogs/swatches.cpp:556
-#, fuzzy
 msgid "Set fill color from swatch"
-msgstr "Seleziona i colori da una tavolozza di campioni"
+msgstr "Imposta colore di riempimento dai campioni"
 
 #: ../src/dialogs/swatches.cpp:875
 #, c-format
@@ -2408,10 +2378,9 @@ msgstr "Larghezza"
 #: ../src/extension/internal/bluredge.cpp:133
 #, fuzzy
 msgid "Width in px of the halo"
-msgstr "Larghezzain pixel dell'area di blur"
+msgstr "Larghezza in pixel dell'area di blur"
 
 #: ../src/extension/internal/bluredge.cpp:134
-#, fuzzy
 msgid "Number of steps"
 msgstr "Numero di passi"
 
@@ -2424,7 +2393,7 @@ msgstr "Numero delle copie dell'oggetti da fare per simulare il blur"
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
 #: ../share/extensions/pathalongpath.inx.h:4
 msgid "Generate from Path"
-msgstr "Genera dal tracciato"
+msgstr "Genera da tracciato"
 
 #: ../src/extension/internal/eps-out.cpp:89
 msgid "Encapsulated Postscript Output"
@@ -2432,13 +2401,12 @@ msgstr "Encapsulated Postscript Output"
 
 #: ../src/extension/internal/eps-out.cpp:91
 msgid "Make bounding box around full page"
-msgstr "Crea il riquadr attorno alla pagina"
+msgstr "Crea il riquadro attorno alla pagina"
 
 #: ../src/extension/internal/eps-out.cpp:92
 #: ../src/extension/internal/ps-out.cpp:84
-#, fuzzy
 msgid "Convert texts to paths"
-msgstr "Converte testo in tracciato"
+msgstr "Converti testo in tracciato"
 
 #: ../src/extension/internal/eps-out.cpp:93
 #: ../src/extension/internal/ps-out.cpp:85
@@ -2493,7 +2461,7 @@ msgstr "Larghezza linea"
 
 #: ../src/extension/internal/grid.cpp:217
 msgid "Horizontal Spacing"
-msgstr "Spaziatura Orizzontale"
+msgstr "Spaziatura orizzontale"
 
 #: ../src/extension/internal/grid.cpp:218
 msgid "Vertical Spacing"
@@ -2961,11 +2929,13 @@ msgstr ""
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
 "separate"
+msgid_plural ""
 "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to "
 "separate"
-msgstr ""
+msgstr[0] ""
 "<b>Centro</b> e <b>fuoco</b> del gradiente radiale; trascinare con "
 "<b>Maiusc</b> per separare il fuoco"
+msgstr[1] ""
 "<b>Centro</b> e <b>fuoco</b> del gradiente radiale; trascinare con "
 "<b>Maiusc</b> per separare il fuoco"
 
@@ -3866,11 +3836,13 @@ msgstr "Selezionare un singolo oggetto per modificarne i nodi o le maniglie"
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
+msgid_plural ""
 "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
-msgstr ""
+msgstr[0] ""
 "Nessun oggetto selezionato. Click, Maiusc+click, o trascinare attorno agli "
 "oggetti per selezionare."
+msgstr[1] ""
 "Nessun oggetto selezionato. Click, Maiusc+click, o trascinare attorno agli "
 "oggetti per selezionare."
 
@@ -3889,8 +3861,10 @@ msgstr[1] "<b>%i</b> di <b>%i</b> nodi selezionati; %s. %s."
 #, fuzzy, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
+msgid_plural ""
 "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr "<b>%i</b> di <b>%i</b> nodo selezionato; %s. %s."
+msgstr[0] "<b>%i</b> di <b>%i</b> nodo selezionato; %s. %s."
+msgstr[1] "<b>%i</b> di <b>%i</b> nodi selezionati; %s. %s."
 
 #: ../src/nodepath.cpp:4281
 #, c-format
@@ -10306,8 +10280,8 @@ msgid ""
 "Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new "
 "pattern from selection."
 msgstr ""
-"Usare <b>Oggetto &gt; Motivo &gt; Da oggetto a motivo</b> per creare un nuovo motivo "
-"dalla selezione"
+"Usare <b>Oggetto &gt; Motivo &gt; Da oggetto a motivo</b> per creare un "
+"nuovo motivo dalla selezione"
 
 #: ../src/widgets/select-toolbar.cpp:227
 #, fuzzy
@@ -11277,7 +11251,7 @@ msgstr "Formula LaTeX: "
 
 #: ../share/extensions/export_gimp_palette.inx.h:1
 msgid "Export as GIMP Palette"
-msgstr ""
+msgstr "Esporta come tavolozza di GIMP"
 
 #: ../share/extensions/export_gimp_palette.inx.h:2
 msgid "Exports the colors of this document as GIMP Palette"
@@ -11320,23 +11294,21 @@ msgstr "Bezier appiattito"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Calculate first derivative numerically"
-msgstr "Calcola numericamente la prima derivata"
+msgstr "Calcola numericamente la derivata prima"
 
 #: ../share/extensions/funcplot.inx.h:2
-#, fuzzy
 msgid "Draw Axes"
-msgstr "Disegna maniglie"
+msgstr "Disegna assi"
 
 #: ../share/extensions/funcplot.inx.h:3
 msgid "End x-value"
-msgstr ""
+msgstr "Valore finale di x"
 
 #: ../share/extensions/funcplot.inx.h:4
 msgid "First derivative"
-msgstr "Prima derivata"
+msgstr "Derivata prima"
 
 #: ../share/extensions/funcplot.inx.h:5
-#, fuzzy
 msgid "Function"
 msgstr "Funzione"
 
@@ -11357,9 +11329,8 @@ msgid "Range and Sampling"
 msgstr ""
 
 #: ../share/extensions/funcplot.inx.h:11
-#, fuzzy
 msgid "Remove rectangle"
-msgstr "Crea rettangolo"
+msgstr "Rimuovi rettangolo"
 
 #: ../share/extensions/funcplot.inx.h:13
 #, fuzzy
@@ -11372,18 +11343,27 @@ msgid "Start x-value"
 msgstr "Valore attributo"
 
 #: ../share/extensions/funcplot.inx.h:15
-msgid "y-value of rectangle's bottom"
+msgid ""
+"The following functions are available: (the available functions are the "
+"standard python math functions) ceil(x); fabs(x); floor(x); fmod(x,y); frexp"
+"(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt"
+"(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan"
+"(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and "
+"e are also available."
 msgstr ""
 
 #: ../share/extensions/funcplot.inx.h:16
+msgid "y-value of rectangle's bottom"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:17
 #, fuzzy
 msgid "y-value of rectangle's top"
 msgstr "Altezza del rettangolo"
 
 #: ../share/extensions/g2pngs.inx.h:1
-#, fuzzy
 msgid "Directory"
-msgstr "diretta"
+msgstr "Cartella"
 
 #: ../share/extensions/g2pngs.inx.h:3
 #, fuzzy
@@ -11747,3 +11727,30 @@ msgstr "Windows Metafile (*.wmf)"
 msgid "Windows Metafile Input"
 msgstr "Input Windows Metafile"
 
+#, fuzzy
+#~ msgid ""
+#~ "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
+#~ "separateGradient point shared by <b>%d</b> gradients; drag with <b>Shift</"
+#~ "b> to separate"
+#~ msgstr ""
+#~ "<b>Centro</b> e <b>fuoco</b> del gradiente radiale; trascinare con "
+#~ "<b>Maiusc</b> per separare il fuoco<b>Centro</b> e <b>fuoco</b> del "
+#~ "gradiente radiale; trascinare con <b>Maiusc</b> per separare il fuoco"
+
+#, fuzzy
+#~ msgid ""
+#~ "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</"
+#~ "b>, or <b>drag around</b> nodes to select.<b>0</b> out of <b>%i</b> nodes "
+#~ "selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes "
+#~ "to select."
+#~ msgstr ""
+#~ "Nessun oggetto selezionato. Click, Maiusc+click, o trascinare attorno "
+#~ "agli oggetti per selezionare.Nessun oggetto selezionato. Click, Maiusc"
+#~ "+click, o trascinare attorno agli oggetti per selezionare."
+
+#, fuzzy
+#~ msgid ""
+#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %"
+#~ "s.<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> "
+#~ "subpaths. %s."
+#~ msgstr "<b>%i</b> di <b>%i</b> nodo selezionato; %s. %s."
