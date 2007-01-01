@@ -14,7 +14,7 @@
             <param name="isoscale" type="boolean" _gui-text="Isotropic scaling (uses smallest: width/xrange or height/yrange)">false</param>
 	    </page>
 	    <page name="desc" _gui-text="Help">
-        	<param name="pythonfunctions" type="description">The following functions are available:
+        	<_param name="pythonfunctions" type="description">The following functions are available:
 (the available functions are the standard python math functions)
 ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); 
 modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); 
@@ -22,7 +22,7 @@ acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y);
 cos(x); sin(x); tan(x); degrees(x); radians(x); 
 cosh(x); sinh(x); tanh(x).
 
-The constants pi and e are also available. </param>
+The constants pi and e are also available. </_param>
 	    </page>
 	</param>
 	<param name="fofx" type="string" _gui-text="Function">exp(-x*x)</param>
