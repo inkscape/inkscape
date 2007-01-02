@@ -6,10 +6,12 @@
  * Authors:
  *   Chris Lahey <clahey@ximian.com>
  *   Lauris Kaplinski <lauris@kaplinski.com>
- *   bulia byak <buliabyak@users.sf.net>
+ *   bulia byak <buliabyak@users.sf.net> 
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
  * Copyright (C) 1999-2001 Ximian, Inc.
  * Copyright (C) 2002 Lauris Kaplinski
+ * Copyright (C) -2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -392,7 +394,7 @@ GtkWidget *sp_font_selector_new()
 
 void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, double size)
 {
-    if (font && (fsel->font != font || size != fsel->fontsize))
+    if (font)
     {
             gchar family[256];
             font->Family (family, 256);
@@ -410,28 +412,30 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
             gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (fsel->family_treeview), path.gobj(), NULL, TRUE, 0.5, 0.5);
             fsel->block_emit = FALSE;
 
-            unsigned int i = path[0];
-
-            gchar descr[256];
-            font->Name(descr, 256);
-
             GList *list = 0;
             GtkTreeIter iter;
             GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW(fsel->family_treeview));
             gtk_tree_model_get_iter (model, &iter, path.gobj());
             gtk_tree_model_get (model, &iter, 1, &list, -1);
 
-            std::string descr_best (descr);
+            gchar descr[256];
+            font->Name(descr, 256);
+            std::string descr_best (family);
+            descr_best += " ";
             descr_best += ((char*)list->data);
 
             PangoFontDescription *descr_ = pango_font_description_from_string(descr);
             PangoFontDescription *best_ = pango_font_description_from_string(descr_best.c_str());
 
+            unsigned int i = 0;
             unsigned int best_i = 0;
-
-            for ( ; list ; list = list->next)
+            
+            // try to find best match with style description (i.e. bold, italic ?)                         
+            for (list = list->next ; list ; list = list->next)
             {
-                std::string descr_try (descr);
+                i++;
+                std::string descr_try (family);
+                descr_try += " ";
                 descr_try += ((char*)list->data);
                 PangoFontDescription *try_ = pango_font_description_from_string(descr_try.c_str());
                 if (pango_font_description_better_match (descr_, best_, try_))
@@ -441,9 +445,10 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
                     best_i = i;
                 }
                 pango_font_description_free(try_);
-                ++i;
             }
- 
+            pango_font_description_free(descr_);
+            pango_font_description_free(best_);
+
             GtkTreePath *path_c = gtk_tree_path_new ();
             gtk_tree_path_append_index (path_c, best_i);
             gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->style_treeview)), path_c);
