@@ -8,7 +8,7 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *
- * Copyright (C) 1999-2006 Authors
+ * Copyright (C) 1999-2007 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -530,7 +530,7 @@ sp_get_text_dialog_style ()
 					sp_repr_css_set_property (css, "font-variant", c);
 					
 					Inkscape::CSSOStringStream os;
-					os << sp_font_selector_get_size (SP_FONT_SELECTOR (fontsel));
+					os << sp_font_selector_get_size (SP_FONT_SELECTOR (fontsel)) << "px"; // must specify px, see inkscape bug 1221626 and 1610103
 					sp_repr_css_set_property (css, "font-size", os.str().c_str());
 					
 					font->Unref();
