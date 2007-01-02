@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-22 00:30+0100\n"
-"PO-Revision-Date: 2006-12-22 01:06+0100\n"
+"PO-Revision-Date: 2006-12-27 03:24+0100\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -158,18 +158,16 @@ msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr "<b>Ein Objekt</b> auswählen, dessen gekachelte Klone entklumpt werden."
 
 #: ../src/dialogs/clonetiler.cpp:873
-#, fuzzy
 msgid "Unclump tiled clones"
-msgstr "Ursprüngliche Farbe der gekachelten Klone"
+msgstr "Gekachelte Klone entklumpen"
 
 #: ../src/dialogs/clonetiler.cpp:903
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "<b>Ein Objekt</b> auswählen, dessen gekachelte Klone entfernt werden."
 
 #: ../src/dialogs/clonetiler.cpp:926
-#, fuzzy
 msgid "Delete tiled clones"
-msgstr "Die gewählten Knoten löschen"
+msgstr "Gekachelte Klone löschen"
 
 #: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1983
 msgid "Select an <b>object</b> to clone."
@@ -998,14 +996,12 @@ msgid "Select a filename for exporting"
 msgstr "Wählen Sie einen Namen für die zu exportierende Datei"
 
 #: ../src/dialogs/fill-style.cpp:291
-#, fuzzy
 msgid "Change fill rule"
-msgstr "Weichzeichner ändern"
+msgstr "Füllungsregel ändern"
 
 #: ../src/dialogs/fill-style.cpp:331 ../src/dialogs/fill-style.cpp:405
-#, fuzzy
 msgid "Set fill color"
-msgstr "Übernommene Farbe setzen"
+msgstr "Füllungsfarbe setzen"
 
 #: ../src/dialogs/fill-style.cpp:393 ../src/ui/widget/selected-style.cpp:227
 #: ../src/ui/widget/selected-style.cpp:444
@@ -1013,14 +1009,12 @@ msgid "Remove fill"
 msgstr "Füllung entfernen"
 
 #: ../src/dialogs/fill-style.cpp:474
-#, fuzzy
 msgid "Set gradient on fill"
-msgstr "Farbverlauf für die Füllung erzeugen"
+msgstr "Farbverlauf für die Füllung setzen"
 
 #: ../src/dialogs/fill-style.cpp:521
-#, fuzzy
 msgid "Set pattern on fill"
-msgstr "Füllmuster"
+msgstr "Muster für die Füllung setzen"
 
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/dialogs/fill-style.cpp:536 ../src/ui/widget/selected-style.cpp:165
@@ -1256,9 +1250,8 @@ msgid "Move to:"
 msgstr "Verschiebe nach:"
 
 #: ../src/dialogs/guidelinedialog.cpp:77
-#, fuzzy
 msgid "Set guide properties"
-msgstr "Druckeigenschaften"
+msgstr "Eigenschaften der Führungslinien setzen"
 
 #: ../src/dialogs/guidelinedialog.cpp:116
 msgid "Guideline"
@@ -1378,24 +1371,20 @@ msgid "Id exists! "
 msgstr "ID-Kennung existiert"
 
 #: ../src/dialogs/item-properties.cpp:403
-#, fuzzy
 msgid "Set object ID"
-msgstr "Textobjekte durchsuchen"
+msgstr "Objektkennung setzen"
 
 #: ../src/dialogs/item-properties.cpp:418
-#, fuzzy
 msgid "Set object label"
-msgstr "Textstil setzen"
+msgstr "Objektbezeichner setzen"
 
 #: ../src/dialogs/item-properties.cpp:427
-#, fuzzy
 msgid "Set object title"
-msgstr "Textstil setzen"
+msgstr "Objekttitel setzen"
 
 #: ../src/dialogs/item-properties.cpp:435
-#, fuzzy
 msgid "Set object description"
-msgstr "  Beschreibung: "
+msgstr "Objektbeschreibung setzen"
 
 #: ../src/dialogs/layers-panel.cpp:591 ../src/widgets/layer-selector.cpp:590
 #, fuzzy
@@ -1418,9 +1407,8 @@ msgid "Unlock layer"
 msgstr "Ebene absenken"
 
 #: ../src/dialogs/layers-panel.cpp:699
-#, fuzzy
 msgid "Change layer opacity"
-msgstr "Deckkraft ändern"
+msgstr "Deckkraft der Ebene ändern"
 
 #: ../src/dialogs/layers-panel.cpp:764
 msgid "Opacity:"
@@ -1804,14 +1792,12 @@ msgid "Remove stroke"
 msgstr "Konturlinie entfernen"
 
 #: ../src/dialogs/stroke-style.cpp:403
-#, fuzzy
 msgid "Set gradient on stroke"
-msgstr "Farbverlauf für die Kontur erzeugen"
+msgstr "Farbverlauf für die Kontur setzen"
 
 #: ../src/dialogs/stroke-style.cpp:447
-#, fuzzy
 msgid "Set pattern on stroke"
-msgstr "Konturlinie des Musters"
+msgstr "Muster für die Kontur setzen"
 
 #: ../src/dialogs/stroke-style.cpp:461 ../src/ui/widget/selected-style.cpp:165
 #: ../src/ui/widget/selected-style.cpp:223
@@ -1837,9 +1823,8 @@ msgid "None"
 msgstr "Deaktiviert"
 
 #: ../src/dialogs/stroke-style.cpp:960
-#, fuzzy
 msgid "Set markers"
-msgstr "Maskierung setzen"
+msgstr "Markierungen setzen"
 
 #: ../src/dialogs/stroke-style.cpp:1066
 msgid "Stroke width"
@@ -1932,9 +1917,8 @@ msgid "End Markers:"
 msgstr "Endmarkierungen:"
 
 #: ../src/dialogs/stroke-style.cpp:1567 ../src/dialogs/stroke-style.cpp:1665
-#, fuzzy
 msgid "Set stroke style"
-msgstr "_Muster der Konturlinie"
+msgstr "Stil der Konturlinie setzen"
 
 #: ../src/dialogs/swatches.cpp:421
 #, fuzzy
@@ -1955,7 +1939,7 @@ msgstr "Farben aus einer Farbfelder-Palette auswählen"
 #: ../src/dialogs/swatches.cpp:875
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
-msgstr "Palettenverzeichnis (%s) nicht auffindbar"
+msgstr "Palettenverzeichnis (%s) nicht auffindbar."
 
 #. TODO:  Insert widgets
 #: ../src/dialogs/text-edit.cpp:200 ../src/ui/dialog/text-properties.cpp:36
@@ -7560,7 +7544,7 @@ msgstr ""
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:606 ../src/ui/dialog/tracedialog.cpp:612
 msgid "Options"
-msgstr ""
+msgstr "Optionen"
 
 #. ### credits
 #: ../src/ui/dialog/tracedialog.cpp:620
@@ -10664,30 +10648,27 @@ msgstr "Die Bézier-Anfasser von ausgewählten Knoten anzeigen"
 
 #: ../src/widgets/toolbox.cpp:899
 msgid "Star: Change number of corners"
-msgstr ""
+msgstr "Stern: Anzahl der Ecken ändern"
 
 #: ../src/widgets/toolbox.cpp:944
 msgid "Star: Change spike ratio"
-msgstr ""
+msgstr "Stern: Verhältnis der Spitzen ändern"
 
 #: ../src/widgets/toolbox.cpp:998
-#, fuzzy
 msgid "Make polygon"
-msgstr "Fett"
+msgstr "Polygon erstellen"
 
 #: ../src/widgets/toolbox.cpp:998
-#, fuzzy
 msgid "Make star"
 msgstr "Stern erstellen"
 
 #: ../src/widgets/toolbox.cpp:1035
 msgid "Star: Change rounding"
-msgstr ""
+msgstr "Stern: Abrundung ändern"
 
 #: ../src/widgets/toolbox.cpp:1073
-#, fuzzy
 msgid "Star: Change randomization"
-msgstr "Transformation speichern:"
+msgstr "Stern: Zufälligkeit ändern"
 
 #: ../src/widgets/toolbox.cpp:1268
 msgid "Regular polygon (with one handle) instead of a star"
@@ -10911,11 +10892,11 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2578
 msgid "Arc: Change start/end"
-msgstr ""
+msgstr "Bogen: Beginn/Ende ändern"
 
 #: ../src/widgets/toolbox.cpp:2651
 msgid "Arc: Change open/closed"
-msgstr ""
+msgstr "Bogen: Offen/geschlossen ändern"
 
 #: ../src/widgets/toolbox.cpp:2786
 msgid "Start:"
@@ -10977,28 +10958,24 @@ msgstr ""
 "Auswahl an."
 
 #: ../src/widgets/toolbox.cpp:3384
-#, fuzzy
 msgid "Text: Change font family"
-msgstr "Dialog für Schrift und Text"
+msgstr "Text: Schriftfamilie ändern"
 
 #: ../src/widgets/toolbox.cpp:3467
 msgid "Text: Change alignment"
-msgstr ""
+msgstr "Text: Ausrichtung ändern"
 
 #: ../src/widgets/toolbox.cpp:3513
-#, fuzzy
 msgid "Text: Change font style"
-msgstr "Segmenttyp ändern"
+msgstr "Text: Schriftstil ändern"
 
 #: ../src/widgets/toolbox.cpp:3560
-#, fuzzy
 msgid "Text: Change orientation"
-msgstr "Ausrichtung der Zeichenfläche:"
+msgstr "Text: Richtung ändern"
 
 #: ../src/widgets/toolbox.cpp:3656
-#, fuzzy
 msgid "Text: Change font size"
-msgstr "Dialog für Schrift und Text"
+msgstr "Text: Schriftgröße ändern"
 
 #: ../src/widgets/toolbox.cpp:3839
 msgid ""
@@ -11053,9 +11030,8 @@ msgid "Letter rotation"
 msgstr "Buchstabendrehung"
 
 #: ../src/widgets/toolbox.cpp:4222
-#, fuzzy
 msgid "Change connector spacing"
-msgstr "Abstand der Objektverbinder einstellen"
+msgstr "Abstand der Objektverbinder ändern"
 
 #: ../src/widgets/toolbox.cpp:4331
 msgid "Spacing:"
@@ -11139,9 +11115,8 @@ msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
 msgstr "Räumt Adobe-Illustrator-SVGs vor dem öffnen auf"
 
 #: ../share/extensions/color_brighter.inx.h:1
-#, fuzzy
 msgid "Brighter"
-msgstr "Helligkeitswert"
+msgstr "Heller"
 
 #: ../share/extensions/color_custom.inx.h:1
 #, fuzzy
@@ -11151,7 +11126,7 @@ msgstr "Funktion"
 #: ../share/extensions/color_custom.inx.h:3
 #, fuzzy
 msgid "Custom..."
-msgstr "Benutzerdefiniert"
+msgstr "Benutzerdefiniert..."
 
 #: ../share/extensions/color_custom.inx.h:4
 #, fuzzy
@@ -11164,9 +11139,8 @@ msgid "Red Function"
 msgstr "Funktion"
 
 #: ../share/extensions/color_darker.inx.h:2
-#, fuzzy
 msgid "Darker"
-msgstr "Farbpipette"
+msgstr "Dunkler"
 
 #: ../share/extensions/color_desaturate.inx.h:2
 #, fuzzy
@@ -11175,7 +11149,7 @@ msgstr "Deaktiviert"
 
 #: ../share/extensions/color_grayscale.inx.h:2
 msgid "Grayscale"
-msgstr ""
+msgstr "Graustufen"
 
 #: ../share/extensions/color_lesshue.inx.h:2
 msgid "Less Hue"
@@ -11186,9 +11160,8 @@ msgid "Less Light"
 msgstr ""
 
 #: ../share/extensions/color_lesssaturation.inx .h:2
-#, fuzzy
 msgid "Less Saturation"
-msgstr "Sättigung"
+msgstr "Weniger Sättigung"
 
 #: ../share/extensions/color_morehue.inx.h:2
 #, fuzzy
@@ -11201,14 +11174,12 @@ msgid "More Light"
 msgstr "Quellenhöhe"
 
 #: ../share/extensions/color_moresaturation.inx.h:2
-#, fuzzy
 msgid "More Saturation"
-msgstr "Sättigung"
+msgstr "Mehr Sättigung"
 
 #: ../share/extensions/color_negative.inx.h:2
-#, fuzzy
 msgid "Negative"
-msgstr "Deaktiviert"
+msgstr "Negativ"
 
 #: ../share/extensions/color_removeblue.inx.h:2
 #, fuzzy
@@ -11314,7 +11285,6 @@ msgid "DXF file written by pstoedit"
 msgstr "DXF-Datei von pstoedit geschrieben"
 
 #: ../share/extensions/dxf_output.inx.h:4
-#, fuzzy
 msgid "pstoedit must be installed to run; see http://www.pstoedit.net/pstoedit"
 msgstr ""
 "pstoedit muss installiert sein, um diese Funktion nutzen zu können. Siehe "
@@ -11365,7 +11335,6 @@ msgid "Open files saved with XFIG"
 msgstr "Mit XFIG gespeicherte Dateien öffnen"
 
 #: ../share/extensions/fig_input.inx.h:2
-#, fuzzy
 msgid "XFIG Graphics File (*.fig)"
 msgstr "XFIG-Grafikdatei (*.fig)"
 
@@ -11379,9 +11348,8 @@ msgid "Flatness"
 msgstr "Flachheit"
 
 #: ../share/extensions/flatten.inx.h:2
-#, fuzzy
 msgid "Flatten Beziers"
-msgstr "Bézier flach machen"
+msgstr "Bézierkurven flach machen"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
