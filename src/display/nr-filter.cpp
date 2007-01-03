@@ -12,6 +12,7 @@
  */
 
 #include <glib.h>
+#include <cmath>
 
 #include "display/nr-filter.h"
 #include "display/nr-filter-primitive.h"
@@ -19,6 +20,7 @@
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-types.h"
 #include "display/pixblock-scaler.h"
+#include "display/pixblock-transform.h"
 
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
@@ -29,6 +31,26 @@
 #include "sp-filter-units.h"
 
 //#include "display/nr-arena-shape.h"
+
+__attribute__ ((const))
+inline static int _max4(const double a, const double b,
+                        const double c, const double d) {
+    double ret = a;
+    if (b > ret) ret = b;
+    if (c > ret) ret = c;
+    if (d > ret) ret = d;
+    return (int)round(ret);
+}
+
+__attribute__ ((const))
+inline static int _min4(const double a, const double b,
+                        const double c, const double d) {
+    double ret = a;
+    if (b < ret) ret = b;
+    if (c < ret) ret = c;
+    if (d < ret) ret = d;
+    return (int)round(ret);
+}
 
 namespace NR {
 
@@ -90,12 +112,61 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     }
 
     Matrix trans = *item->ctm;
+    Matrix paraller_trans = trans;
+    bool notparaller = false;
     FilterSlot slot(_slot_count, item);
     NRPixBlock *in = new NRPixBlock;
 
-    // First, if filter resolution is not set to automatic, we should
-    // scale the input image to correct resolution
-    if (_x_pixels >= 0) {
+    // If filter effects region is not paraller to viewport,
+    // we must first undo the rotation / shear.
+    // It will be redone after filtering.
+    // If there is only rotation and uniform scaling (zoom), let's skip this,
+    // as it will not make a difference with gaussian blur.
+    if ((fabs(trans[1]) > 1e-6 || fabs(trans[2]) > 1e-6) &&
+        !(fabs(trans[0] - trans[3]) < 1e-6 && fabs(trans[1] + trans[2]) < 1e-6)) {
+        notparaller = true;
+
+        // TODO: if filter resolution is specified, scaling should be set
+        // according to that
+        double scaling_factor = sqrt(trans.expansionX() * trans.expansionX() +
+                                     trans.expansionY() * trans.expansionY());
+        scale scaling(scaling_factor, scaling_factor);
+        scale scaling_inv(1.0 / scaling_factor, 1.0 / scaling_factor);
+        trans *= scaling_inv;
+        paraller_trans.set_identity();
+        paraller_trans *= scaling;
+
+        Matrix itrans = trans.inverse();
+        int x0 = pb->area.x0;
+        int y0 = pb->area.y0;
+        int x1 = pb->area.x1;
+        int y1 = pb->area.y1;
+        int min_x = _min4(itrans[0] * x0 + itrans[2] * y0 + itrans[4],
+                          itrans[0] * x0 + itrans[2] * y1 + itrans[4],
+                          itrans[0] * x1 + itrans[2] * y0 + itrans[4],
+                          itrans[0] * x1 + itrans[2] * y1 + itrans[4]);
+        int max_x = _max4(itrans[0] * x0 + itrans[2] * y0 + itrans[4],
+                          itrans[0] * x0 + itrans[2] * y1 + itrans[4],
+                          itrans[0] * x1 + itrans[2] * y0 + itrans[4],
+                          itrans[0] * x1 + itrans[2] * y1 + itrans[4]);
+        int min_y = _min4(itrans[1] * x0 + itrans[3] * y0 + itrans[5],
+                          itrans[1] * x0 + itrans[3] * y1 + itrans[5],
+                          itrans[1] * x1 + itrans[3] * y0 + itrans[5],
+                          itrans[1] * x1 + itrans[3] * y1 + itrans[5]);
+        int max_y = _max4(itrans[1] * x0 + itrans[3] * y0 + itrans[5],
+                          itrans[1] * x0 + itrans[3] * y1 + itrans[5],
+                          itrans[1] * x1 + itrans[3] * y0 + itrans[5],
+                          itrans[1] * x1 + itrans[3] * y1 + itrans[5]);
+        
+        nr_pixblock_setup_fast(in, pb->mode,
+                               min_x, min_y,
+                               max_x, max_y, true);
+        if (in->data.px == NULL) // memory allocation failed
+            return 0;
+        transform_nearest(in, pb, itrans);
+    } else if (_x_pixels >= 0) {
+        // If filter resolution is not set to automatic, we should
+        // scale the input image to correct resolution
         /* If filter resolution is zero, the object should not be rendered */
         if (_x_pixels == 0 || _y_pixels == 0) {
             int size = (pb->area.x1 - pb->area.x0)
@@ -125,7 +196,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
         scale_bicubic(in, pb);
         scale res_scaling(x_len / (double)(pb->area.x1 - pb->area.x0),
                           y_len / (double)(pb->area.y1 - pb->area.y0));
-        trans *= res_scaling;
+        paraller_trans *= res_scaling;
     } else {
         // If filter resolution is automatic, just make copy of input image
         nr_pixblock_setup_fast(in, pb->mode,
@@ -139,7 +210,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     in = NULL; // in is now handled by FilterSlot, we should not touch it
 
     // TODO: loop through ALL the primitives and render them one at a time
-    _primitive[0]->render(slot, trans);
+    _primitive[0]->render(slot, paraller_trans);
     NRPixBlock *out = slot.get(_output_slot);
 
     // Clear the pixblock, where the output will be put
@@ -149,9 +220,11 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
         * NR_PIXBLOCK_BPP(pb);
     memset(NR_PIXBLOCK_PX(pb), 0, size);
 
-    // If the filter resolution is automatic, just copy our final image
-    // to output pixblock, otherwise use bicubic scaling
-    if (_x_pixels < 0) {
+    if (notparaller) {
+        transform_nearest(pb, out, trans);
+    } else if (_x_pixels < 0) {
+        // If the filter resolution is automatic, just copy our final image
+        // to output pixblock, otherwise use bicubic scaling
         nr_blit_pixblock_pixblock(pb, out);
     } else {
         scale_bicubic(pb, out);
