@@ -588,12 +588,27 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 switch (nc->current_state) {
                     case SP_NODE_CONTEXT_NODE_DRAGGING:
                         {
+                            // We round off the extra precision in the motion coordinates provided
+                            // by some input devices (like tablets). As we'll store the coordinates
+                            // as integers in curvepoint_event we need to do this rounding before
+                            // comparing them with the last coordinates from curvepoint_event.
+                            // See bug #1593499 for details.
+
+                            gint x = (gint) Inkscape::round(event->motion.x);
+                            gint y = (gint) Inkscape::round(event->motion.y);
+
+                            // The coordinates hasn't changed since the last motion event, abort
+                            if (nc->curvepoint_event[NR::X] == x &&
+                                nc->curvepoint_event[NR::Y] == y)
+                                break;
+
                             NR::Point const delta_w(event->motion.x - nc->curvepoint_event[NR::X],
-                                                event->motion.y - nc->curvepoint_event[NR::Y]);
+                                                    event->motion.y - nc->curvepoint_event[NR::Y]);
                             NR::Point const delta_dt(desktop->w2d(delta_w));
+
                             sp_nodepath_curve_drag (nc->grab_node, nc->grab_t, delta_dt);
-                            nc->curvepoint_event[NR::X] = (gint) event->motion.x;
-                            nc->curvepoint_event[NR::Y] = (gint) event->motion.y;
+                            nc->curvepoint_event[NR::X] = x;
+                            nc->curvepoint_event[NR::Y] = y;
                             gobble_motion_events(GDK_BUTTON1_MASK);
                             break;
                         }
