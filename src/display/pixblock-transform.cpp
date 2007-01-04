@@ -31,9 +31,9 @@ struct RGBA {
  */
 inline void _check_index(NRPixBlock const * const pb, int const location, int const line)
 {
-    if(true) {
+    if(false) {
         int max_loc = pb->rs * (pb->area.y1 - pb->area.y0);
-        if (location < 0 || (location + 4) >= max_loc)
+        if (location < 0 || (location + 4) > max_loc)
             g_warning("Location %d out of bounds (0 ... %d) at line %d", location, max_loc, line);
     }
 }
