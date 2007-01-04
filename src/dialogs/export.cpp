@@ -8,8 +8,9 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
- * Copyright (C) 1999-2005 Authors
+ * Copyright (C) 1999-2007 Authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -1124,6 +1125,31 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
     return;
 } // end of sp_export_export_clicked()
 
+
+// FIXME: Some lib function should be available to do this ...
+static gchar *
+filename_add_extension (const gchar *filename, const gchar *extension)
+{
+  gchar *dot;
+
+  dot = strrchr (filename, '.');
+  if ( !dot )
+    return g_strconcat (filename, ".", extension, NULL);
+  {
+    if (dot[1] == '\0')
+      return g_strconcat (filename, extension, NULL);
+    else
+    {
+      if (g_strncasecmp (dot + 1, extension,-1) == 0)
+        return g_strdup (filename);
+      else
+      {
+        return g_strconcat (filename, ".", extension, NULL);
+      }
+    }
+  }
+}
+
 /// Called when Browse button is clicked
 static void
 sp_export_browse_clicked (GtkButton *button, gpointer userdata)
@@ -1157,11 +1183,16 @@ sp_export_browse_clicked (GtkButton *button, gpointer userdata)
         gchar *file;
 
         file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (fs));
-        gchar * utf8file = g_filename_to_utf8( file, -1, NULL, NULL, NULL );
+        // make sure that .png is the extension of the file:
+        gchar * file_ext = filename_add_extension(file, "png");
+
+        gchar * utf8file = g_filename_to_utf8( file_ext, -1, NULL, NULL, NULL );
         gtk_entry_set_text (GTK_ENTRY (fe), utf8file);
-        g_free(utf8file);
 
         g_object_set_data (G_OBJECT (dlg), "filename", fe);
+
+        g_free(file_ext);
+        g_free(utf8file);
         g_free(file);
     }
 
