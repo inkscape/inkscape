@@ -347,8 +347,9 @@ Script::load(Inkscape::Extension::Extension *module)
                     if (interpretstr != NULL) {
                         Glib::ustring interpString =
                             resolveInterpreterExecutable(interpretstr);
-                        interpString .append(" ");
+                        interpString .append(" \"");
                         interpString .append(command_text);
+                        interpString .append("\"");                        
                         command_text = interpString;
                     }
                 }
@@ -550,7 +551,6 @@ Script::open(Inkscape::Extension::Input *module,
                                   &bytesRead,  &bytesWritten, &error);
 
     int data_read = execute(command, local_filename, tempfilename_out);
-
 
     SPDocument *mydoc = NULL;
     if (data_read > 10) {
