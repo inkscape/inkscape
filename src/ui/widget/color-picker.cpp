@@ -16,6 +16,7 @@
 #include "inkscape.h"
 #include "desktop-handles.h"
 #include "document.h"
+#include "dialogs/dialog-events.h"
 
 #include "widgets/sp-color-notebook.h"
 
@@ -50,6 +51,9 @@ ColorPicker::~ColorPicker()
 void
 ColorPicker::setupDialog(const Glib::ustring &title)
 {
+    GtkWidget *dlg = GTK_WIDGET(_colorSelectorDialog.gobj());
+    sp_transientize(dlg);
+
     _colorSelectorDialog.hide();
     _colorSelectorDialog.set_title (title);
     _colorSelectorDialog.set_border_width (4);
