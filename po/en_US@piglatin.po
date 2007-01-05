@@ -1,27 +1,24 @@
 # English-based dialect pig latin for Inkscape. 
-# Copyright (C) 2006 Jon South
+# Copyright (C) 2006-2007 Jon South
 # Copyright (C) 2006 Jon Phillips
 # This file is distributed under the same license as the Inkscape package.
-# Jon South <striker@lunar-linux.org>, 2006.
+# Jon South <striker@lunar-linux.org>, 2006-2007.
 # Jon Phillips <jon@rejon.org>, 2006.
 # , fuzzy
 # 
 # 
-#: ../src/widgets/toolbox.cpp:4035 ../src/widgets/toolbox.cpp:4056
-#: ../src/widgets/toolbox.cpp:4085 ../src/widgets/toolbox.cpp:4106
-#: ../src/widgets/toolbox.cpp:4133
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-22 00:30+0100\n"
-"PO-Revision-Date: 2006-10-23 01:24+0200\n"
+"POT-Creation-Date: 2007-01-04 17:04-0600\n"
+"PO-Revision-Date: 2007-01-05 13:35-0600\n"
 "Last-Translator: Jon South <striker@lunar-linux.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
@@ -110,19 +107,16 @@ msgstr ""
 "otay awdray onway itway."
 
 #: ../src/desktop-events.cpp:110
-#, fuzzy
 msgid "Create guide"
-msgstr "Eatecray exttay"
+msgstr "Eatecray uidegay"
 
 #: ../src/desktop-events.cpp:184
-#, fuzzy
 msgid "Move guide"
-msgstr "Ovemay odesnay"
+msgstr "Ovemay uidegay"
 
 #: ../src/desktop-events.cpp:190 ../src/dialogs/guidelinedialog.cpp:90
-#, fuzzy
 msgid "Delete guide"
-msgstr "Eleteday odenay"
+msgstr "Eleteday uidegay"
 
 #: ../src/desktop-events.cpp:208
 #, c-format
@@ -160,9 +154,8 @@ msgstr ""
 "Electsay <b>oneway objectway</b> osewhay iledtay onesclay otay unclumpway."
 
 #: ../src/dialogs/clonetiler.cpp:873
-#, fuzzy
 msgid "Unclump tiled clones"
-msgstr "Initialway olorcay ofway iledtay onesclay"
+msgstr "Unclumpway iledtay onesclay"
 
 #: ../src/dialogs/clonetiler.cpp:903
 msgid "Select <b>one object</b> whose tiled clones to remove."
@@ -170,9 +163,8 @@ msgstr ""
 "Electsay <b>oneway objectway</b> osewhay iledtay onesclay otay emoveray."
 
 #: ../src/dialogs/clonetiler.cpp:926
-#, fuzzy
 msgid "Delete tiled clones"
-msgstr "Eleteday electedsay odesnay"
+msgstr "Eleteday iledtay onesclay"
 
 #: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1983
 msgid "Select an <b>object</b> to clone."
@@ -187,9 +179,8 @@ msgstr ""
 "andway <b>oneclay ethay oupgray</b>."
 
 #: ../src/dialogs/clonetiler.cpp:1335
-#, fuzzy
 msgid "Create tiled clones"
-msgstr "Eatecray Iledtay Onesclay..."
+msgstr "Eatecray iledtay onesclay"
 
 #: ../src/dialogs/clonetiler.cpp:1518
 msgid "<small>Per row:</small>"
@@ -442,42 +433,32 @@ msgid "Alternate the rotation direction for each column"
 msgstr "Alternateway ethay otationray irectionday orfay eachway olumncay"
 
 #: ../src/dialogs/clonetiler.cpp:2022
-#, fuzzy
 msgid "_Blur & opacity"
-msgstr "Astermay opacityway"
+msgstr "Ur_blay & opacityway"
 
 #: ../src/dialogs/clonetiler.cpp:2031
-#, fuzzy
 msgid "<b>Blur:</b>"
-msgstr "<b>L:</b>"
+msgstr "<b>Urblay:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2038
-#, fuzzy
 msgid "Blur tiles by this percentage for each row"
-msgstr ""
-"Ecreaseday iletay opacityway ybay isthay ercentagepay orfay eachway owray"
+msgstr "Urblay ilestay ybay isthay ercentagepay orfay eachway owray"
 
 #: ../src/dialogs/clonetiler.cpp:2045
-#, fuzzy
 msgid "Blur tiles by this percentage for each column"
-msgstr ""
-"Ecreaseday iletay opacityway ybay isthay ercentagepay orfay eachway olumncay"
+msgstr "Urblay ilestay ybay isthay ercentagepay orfay eachway olumncay"
 
 #: ../src/dialogs/clonetiler.cpp:2052
-#, fuzzy
 msgid "Randomize the tile blur by this percentage"
-msgstr "Andomizeray ethay iletay uehay ybay isthay ercentagepay"
+msgstr "Andomizeray ethay iletay urblay ybay isthay ercentagepay"
 
 #: ../src/dialogs/clonetiler.cpp:2066
-#, fuzzy
 msgid "Alternate the sign of blur change for each row"
-msgstr "Alternateway ethay ignsay ofway olorcay angeschay orfay eachway owray"
+msgstr "Alternateway ethay ignsay ofway urblay angechay orfay eachway owray"
 
 #: ../src/dialogs/clonetiler.cpp:2071
-#, fuzzy
 msgid "Alternate the sign of blur change for each column"
-msgstr ""
-"Alternateway ethay ignsay ofway olorcay angeschay orfay eachway olumncay"
+msgstr "Alternateway ethay ignsay ofway urlbay angechay orfay eachway olumncay"
 
 #: ../src/dialogs/clonetiler.cpp:2080
 msgid "<b>Fade out:</b>"
@@ -622,7 +603,7 @@ msgstr "1. Ickpay omfray ethay awingdray:"
 #: ../share/extensions/color_grayscale.inx.h:1
 #: ../share/extensions/color_lesshue.inx.h:1
 #: ../share/extensions/color_lesslight.inx.h:1
-#: ../share/extensions/color_lesssaturation.inx .h:1
+#: ../share/extensions/color_lesssaturation.inx.h:1
 #: ../share/extensions/color_morehue.inx.h:1
 #: ../share/extensions/color_morelight.inx.h:1
 #: ../share/extensions/color_moresaturation.inx.h:1
@@ -892,136 +873,134 @@ msgstr "Eleaseray oglay essagesmay"
 msgid "none"
 msgstr "onenay"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2292
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2292
 msgid "_Page"
 msgstr "Age_pay"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2296
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2296
 msgid "_Drawing"
 msgstr "Awing_dray"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2298
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2298
 msgid "_Selection"
 msgstr "Election_say"
 
-#: ../src/dialogs/export.cpp:136
+#: ../src/dialogs/export.cpp:139
 msgid "_Custom"
 msgstr "Ustom_cay"
 
-#: ../src/dialogs/export.cpp:260
+#: ../src/dialogs/export.cpp:263
 msgid "<big><b>Export area</b></big>"
 msgstr "<big><b>Exportway areaway</b></big>"
 
-#: ../src/dialogs/export.cpp:274
+#: ../src/dialogs/export.cpp:277
 msgid "Units:"
 msgstr "Unitsway:"
 
-#: ../src/dialogs/export.cpp:302
+#: ../src/dialogs/export.cpp:305
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:307
+#: ../src/dialogs/export.cpp:310
 msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:312 ../src/dialogs/object-attributes.cpp:55
+#: ../src/dialogs/export.cpp:315 ../src/dialogs/object-attributes.cpp:55
 #: ../src/dialogs/stroke-style.cpp:1052 ../src/widgets/toolbox.cpp:2206
 #: ../src/widgets/toolbox.cpp:2358
 msgid "Width:"
 msgstr "Idthway:"
 
-#: ../src/dialogs/export.cpp:318
+#: ../src/dialogs/export.cpp:321
 msgid "_y0:"
 msgstr "_y0:"
 
-#: ../src/dialogs/export.cpp:323
+#: ../src/dialogs/export.cpp:326
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:328 ../src/dialogs/export.cpp:446
+#: ../src/dialogs/export.cpp:331 ../src/dialogs/export.cpp:445
 #: ../src/dialogs/object-attributes.cpp:56
 msgid "Height:"
 msgstr "Eighthay:"
 
-#: ../src/dialogs/export.cpp:417
+#: ../src/dialogs/export.cpp:416
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Itmapbay izesay</b></big>"
 
-#: ../src/dialogs/export.cpp:430 ../src/ui/widget/page-sizer.cpp:301
+#: ../src/dialogs/export.cpp:429 ../src/ui/widget/page-sizer.cpp:301
 msgid "_Width:"
 msgstr "_Idthway:"
 
-#: ../src/dialogs/export.cpp:430 ../src/dialogs/export.cpp:446
+#: ../src/dialogs/export.cpp:429 ../src/dialogs/export.cpp:445
 msgid "pixels at"
 msgstr "ixelspay atway"
 
-#: ../src/dialogs/export.cpp:440
+#: ../src/dialogs/export.cpp:439
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:459 ../src/ui/dialog/inkscape-preferences.cpp:545
+#: ../src/dialogs/export.cpp:458 ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "dpi"
 msgstr "idpay"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:470
+#: ../src/dialogs/export.cpp:469
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>_Filename</b></big>"
 
-#: ../src/dialogs/export.cpp:541
+#: ../src/dialogs/export.cpp:540
 msgid "_Browse..."
 msgstr "Owse_bray..."
 
-#: ../src/dialogs/export.cpp:580
+#: ../src/dialogs/export.cpp:579
 msgid "_Export"
 msgstr "_Exportway"
 
-#: ../src/dialogs/export.cpp:584
+#: ../src/dialogs/export.cpp:583
 msgid "Export the bitmap file with these settings"
 msgstr "Exportway ethay itmapbay ilefay ithway esethay ettingssay"
 
-#: ../src/dialogs/export.cpp:967
+#: ../src/dialogs/export.cpp:966
 msgid "You have to enter a filename"
 msgstr "You avehay otay enterway a ilenamefay"
 
-#: ../src/dialogs/export.cpp:972
+#: ../src/dialogs/export.cpp:971
 msgid "The chosen area to be exported is invalid"
 msgstr "Ethay osenchay areaway otay ebay exportedway isway invalidway"
 
-#: ../src/dialogs/export.cpp:981
+#: ../src/dialogs/export.cpp:980
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr ""
 "Irectoryday %s oesday otnay existway orway isway otnay a irectoryday.\n"
 
-#: ../src/dialogs/export.cpp:997
+#: ../src/dialogs/export.cpp:996
 msgid "Export in progress"
 msgstr "Exportway inway ogresspray"
 
-#: ../src/dialogs/export.cpp:1003
+#: ../src/dialogs/export.cpp:1002
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Exportingway %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1030
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Ouldcay otnay exportway otay ilenamefay %s.\n"
 
-#: ../src/dialogs/export.cpp:1136
+#: ../src/dialogs/export.cpp:1160
 msgid "Select a filename for exporting"
 msgstr "Electsay a ilenamefay orfay exportingway"
 
 #: ../src/dialogs/fill-style.cpp:291
-#, fuzzy
 msgid "Change fill rule"
-msgstr "Akemay illfay opaqueway"
+msgstr "Angechay illfay uleray"
 
 #: ../src/dialogs/fill-style.cpp:331 ../src/dialogs/fill-style.cpp:405
-#, fuzzy
 msgid "Set fill color"
-msgstr "Astlay electedsay olorcay"
+msgstr "Etsay illfay olorcay"
 
 #: ../src/dialogs/fill-style.cpp:393 ../src/ui/widget/selected-style.cpp:227
 #: ../src/ui/widget/selected-style.cpp:444
@@ -1029,14 +1008,12 @@ msgid "Remove fill"
 msgstr "Emoveray illfay"
 
 #: ../src/dialogs/fill-style.cpp:474
-#, fuzzy
 msgid "Set gradient on fill"
-msgstr "Eatecray adientgray inway ethay illfay"
+msgstr "Etsay adientgray onway illfay"
 
 #: ../src/dialogs/fill-style.cpp:521
-#, fuzzy
 msgid "Set pattern on fill"
-msgstr "Atternpay illfay"
+msgstr "Etsay atternpay onway illfay"
 
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/dialogs/fill-style.cpp:536 ../src/ui/widget/selected-style.cpp:165
@@ -1275,9 +1252,8 @@ msgid "Move to:"
 msgstr "Ovemay otay:"
 
 #: ../src/dialogs/guidelinedialog.cpp:77
-#, fuzzy
 msgid "Set guide properties"
-msgstr "Intpray opertiespray"
+msgstr "Etsay uidegay opertiespray"
 
 #: ../src/dialogs/guidelinedialog.cpp:116
 msgid "Guideline"
@@ -1375,24 +1351,20 @@ msgid "Ref"
 msgstr "Efray"
 
 #: ../src/dialogs/item-properties.cpp:351
-#, fuzzy
 msgid "Lock object"
-msgstr "Onay objectsway"
+msgstr "Ocklay objectway"
 
 #: ../src/dialogs/item-properties.cpp:351
-#, fuzzy
 msgid "Unlock object"
-msgstr "Ignoreway ockedlay objectsway"
+msgstr "Unlockway objectway"
 
 #: ../src/dialogs/item-properties.cpp:370
-#, fuzzy
 msgid "Hide object"
-msgstr "Onay objectsway"
+msgstr "Idehay objectway"
 
 #: ../src/dialogs/item-properties.cpp:370
-#, fuzzy
 msgid "Unhide object"
-msgstr "Ignoreway iddenhay objectsway"
+msgstr "Unhideway objectway"
 
 #: ../src/dialogs/item-properties.cpp:394
 msgid "Id invalid! "
@@ -1403,53 +1375,44 @@ msgid "Id exists! "
 msgstr "Idway existsway! "
 
 #: ../src/dialogs/item-properties.cpp:403
-#, fuzzy
 msgid "Set object ID"
-msgstr "Earchsay exttay objectsway"
+msgstr "Etsay objectway ID"
 
 #: ../src/dialogs/item-properties.cpp:418
-#, fuzzy
 msgid "Set object label"
-msgstr "Etsay exttay ylestay"
+msgstr "Etsay objectway abellay"
 
 #: ../src/dialogs/item-properties.cpp:427
-#, fuzzy
 msgid "Set object title"
-msgstr "Etsay exttay ylestay"
+msgstr "Etsay objectway itletay"
 
 #: ../src/dialogs/item-properties.cpp:435
-#, fuzzy
 msgid "Set object description"
-msgstr "  escriptionday: "
+msgstr "Etsay objectway escriptionday"
 
-#: ../src/dialogs/layers-panel.cpp:591 ../src/widgets/layer-selector.cpp:590
-#, fuzzy
+#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
 msgid "Unhide layer"
-msgstr "Aiseray Ayerlay"
+msgstr "Unhide ayerlay"
 
-#: ../src/dialogs/layers-panel.cpp:591 ../src/widgets/layer-selector.cpp:590
-#, fuzzy
+#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
 msgid "Hide layer"
-msgstr "Aiseray Ayerlay"
+msgstr "Idehay ayerlay"
 
-#: ../src/dialogs/layers-panel.cpp:602 ../src/widgets/layer-selector.cpp:582
-#, fuzzy
+#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
 msgid "Lock layer"
-msgstr "Owerlay Ayerlay"
+msgstr "Ocklay ayerlay"
 
-#: ../src/dialogs/layers-panel.cpp:602 ../src/widgets/layer-selector.cpp:582
-#, fuzzy
+#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
 msgid "Unlock layer"
-msgstr "Owerlay Ayerlay"
+msgstr "Unlockway ayerlay"
 
-#: ../src/dialogs/layers-panel.cpp:699
-#, fuzzy
+#: ../src/dialogs/layers-panel.cpp:698
 msgid "Change layer opacity"
-msgstr "Astermay opacityway"
+msgstr "Angechay ayerlay opacityway"
 
-#: ../src/dialogs/layers-panel.cpp:764
-msgid "Opacity:"
-msgstr "Opacityway:"
+#: ../src/dialogs/layers-panel.cpp:763
+msgid "Opacity, %:"
+msgstr "Opacityway, %:"
 
 #: ../src/dialogs/layers-panel.cpp:789
 msgid "New"
@@ -1480,9 +1443,8 @@ msgid "Layer name:"
 msgstr "Ayerlay amenay:"
 
 #: ../src/dialogs/layer-properties.cpp:115
-#, fuzzy
 msgid "Add layer"
-msgstr "Addway Ayerlay"
+msgstr "Addway ayerlay"
 
 #: ../src/dialogs/layer-properties.cpp:153
 msgid "Above current"
@@ -1509,9 +1471,8 @@ msgid "_Rename"
 msgstr "Ename_ray"
 
 #: ../src/dialogs/layer-properties.cpp:195
-#, fuzzy
 msgid "Rename layer"
-msgstr "Enamedray ayerlay"
+msgstr "Enameray ayerlay"
 
 #. TRANSLATORS: This means "The layer has been renamed"
 #: ../src/dialogs/layer-properties.cpp:197
@@ -1598,25 +1559,22 @@ msgid "Stroke st_yle"
 msgstr "Okestray _ylestay"
 
 #: ../src/dialogs/object-properties.cpp:196
-#, fuzzy
 msgid "_Blur, %"
-msgstr "Ur_blay"
+msgstr "Ur_blay, %"
 
 #: ../src/dialogs/object-properties.cpp:229
-#, fuzzy
 msgid "Master _opacity, %"
-msgstr "Astermay _opacityway"
+msgstr "Astermay _opacityway, %"
 
 #: ../src/dialogs/object-properties.cpp:381
 #: ../src/ui/widget/selected-style.cpp:806
 #: ../src/ui/widget/selected-style.cpp:1094
-#, fuzzy
 msgid "Change opacity"
-msgstr "Astermay opacityway"
+msgstr "Angechay opacityway"
 
 #: ../src/dialogs/object-properties.cpp:438
 msgid "Change blur"
-msgstr ""
+msgstr "Angechay urblay"
 
 #: ../src/dialogs/rdf.cpp:178
 msgid "CC Attribution"
@@ -1824,9 +1782,8 @@ msgid "Set attribute"
 msgstr "Etsay attributeway"
 
 #: ../src/dialogs/stroke-style.cpp:292 ../src/dialogs/stroke-style.cpp:351
-#, fuzzy
 msgid "Set stroke color"
-msgstr "Astlay electedsay olorcay"
+msgstr "Etsay okestray olorcay"
 
 #: ../src/dialogs/stroke-style.cpp:342 ../src/ui/widget/selected-style.cpp:227
 #: ../src/ui/widget/selected-style.cpp:453
@@ -1834,14 +1791,12 @@ msgid "Remove stroke"
 msgstr "Emoveray okestray"
 
 #: ../src/dialogs/stroke-style.cpp:403
-#, fuzzy
 msgid "Set gradient on stroke"
-msgstr "Eatecray adientgray inway ethay okestray"
+msgstr "Etsay adientgray onway okestray"
 
 #: ../src/dialogs/stroke-style.cpp:447
-#, fuzzy
 msgid "Set pattern on stroke"
-msgstr "Atternpay okestray"
+msgstr "Etsay atternpay onway okestray"
 
 #: ../src/dialogs/stroke-style.cpp:461 ../src/ui/widget/selected-style.cpp:165
 #: ../src/ui/widget/selected-style.cpp:223
@@ -1866,9 +1821,8 @@ msgid "None"
 msgstr "Onenay"
 
 #: ../src/dialogs/stroke-style.cpp:960
-#, fuzzy
 msgid "Set markers"
-msgstr "Etsay askmay"
+msgstr "Etsay arkersmay"
 
 #: ../src/dialogs/stroke-style.cpp:1066
 msgid "Stroke width"
@@ -1962,25 +1916,21 @@ msgstr "Idmay Arkersmay:"
 msgid "End Markers:"
 msgstr "Endway Arkersmay:"
 
-#: ../src/dialogs/stroke-style.cpp:1567 ../src/dialogs/stroke-style.cpp:1665
-#, fuzzy
+#: ../src/dialogs/stroke-style.cpp:1570 ../src/dialogs/stroke-style.cpp:1668
 msgid "Set stroke style"
-msgstr "Okestray _ylestay"
+msgstr "Etsay okestray ylestay"
 
 #: ../src/dialogs/swatches.cpp:421
-#, fuzzy
 msgid "Change color definition"
-msgstr "Angechay onnectorcay acingspay istanceday"
+msgstr "Angechay olorcay efinitionday"
 
 #: ../src/dialogs/swatches.cpp:556
-#, fuzzy
 msgid "Set stroke color from swatch"
-msgstr "Electsay olorscay omfray a atchessway alettepay"
+msgstr "Etsay okestray olorcay omfray atchsway"
 
 #: ../src/dialogs/swatches.cpp:556
-#, fuzzy
 msgid "Set fill color from swatch"
-msgstr "Electsay olorscay omfray a atchessway alettepay"
+msgstr "Etsay illfay olorcay omfray atchsway"
 
 #: ../src/dialogs/swatches.cpp:875
 #, c-format
@@ -2040,7 +1990,7 @@ msgstr "Etsay exttay ylestay"
 
 #: ../src/dialogs/tiledialog.cpp:330
 msgid "Arrange in a grid"
-msgstr ""
+msgstr "Arrangeway inwa away idgray"
 
 #: ../src/dialogs/tiledialog.cpp:633
 msgid "Rows:"
@@ -2181,9 +2131,8 @@ msgid "Attribute value"
 msgstr "Attributeway aluevay"
 
 #: ../src/dialogs/xml-tree.cpp:891
-#, fuzzy
 msgid "Drag XML subtree"
-msgstr "Agdray urvecay"
+msgstr "Agdray XML ubtreesay"
 
 #: ../src/dialogs/xml-tree.cpp:1318
 msgid "New element node..."
@@ -2200,14 +2149,12 @@ msgid "Create"
 msgstr "Eatecray"
 
 #: ../src/dialogs/xml-tree.cpp:1379
-#, fuzzy
 msgid "Create new element node"
-msgstr "Ewnay elementway odenay"
+msgstr "Eatecray ewnay elementway odenay"
 
 #: ../src/dialogs/xml-tree.cpp:1394
-#, fuzzy
 msgid "Create new text node"
-msgstr "Ewnay exttay odenay"
+msgstr "Eatecray ewnay exttay odenay"
 
 #: ../src/dialogs/xml-tree.cpp:1465
 #, c-format
@@ -2218,9 +2165,8 @@ msgstr ""
 "alreadyway existsway!"
 
 #: ../src/dialogs/xml-tree.cpp:1480
-#, fuzzy
 msgid "Change attribute"
-msgstr "Etsay attributeway"
+msgstr "Angechay attributeway"
 
 #: ../src/document.cpp:366
 #, c-format
@@ -2248,9 +2194,8 @@ msgid "Closing path."
 msgstr "Osingclay athpay."
 
 #: ../src/draw-context.cpp:549
-#, fuzzy
 msgid "Draw path"
-msgstr "Eakbray athpay"
+msgstr "Awdray athpay"
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
@@ -2286,14 +2231,12 @@ msgstr ""
 "ethay olorcay underway ousemay otay ipboardclay"
 
 #: ../src/dropper-context.cpp:389
-#, fuzzy
 msgid "Set picked color"
-msgstr "Astlay electedsay olorcay"
+msgstr "Etsay ickedpay olorcay"
 
 #: ../src/dyna-draw-context.cpp:696
-#, fuzzy
 msgid "Create calligraphic stroke"
-msgstr "Awdray alligraphiccay ineslay"
+msgstr "Eatecray alligraphiccay okestray"
 
 #: ../src/event-log.cpp:34
 msgid "[Unchanged]"
@@ -2309,9 +2252,8 @@ msgid "_Redo"
 msgstr "Edo_ray"
 
 #: ../src/extension/dependency.cpp:249
-#, fuzzy
 msgid "Dependency:"
-msgstr "Ependencyday::"
+msgstr "Ependencyday:"
 
 #: ../src/extension/dependency.cpp:250
 msgid "  type: "
@@ -2458,34 +2400,28 @@ msgstr ""
 "inway atthay irectoryday illway otnay ebay oadedlay."
 
 #: ../src/extension/internal/bluredge.cpp:131
-#, fuzzy
 msgid "Inset/Outset Halo"
-msgstr "Insetway/Outsetway ybay:"
+msgstr "Insetway/Outsetway Alohay:"
 
 #: ../src/extension/internal/bluredge.cpp:133
-#, fuzzy
 msgid "Width"
-msgstr "Idthway:"
+msgstr "Idthway"
 
 #: ../src/extension/internal/bluredge.cpp:133
-#, fuzzy
 msgid "Width in px of the halo"
-msgstr "Idthway inway ixelspay ofway ethay urredblay areaway"
+msgstr "Idthway inway px ofway ethay alohay"
 
 #: ../src/extension/internal/bluredge.cpp:134
-#, fuzzy
 msgid "Number of steps"
-msgstr "Umbernay ofway Epsstay"
+msgstr "Umbernay ofway epsstay"
 
 #: ../src/extension/internal/bluredge.cpp:134
-#, fuzzy
 msgid "Number of inset/outset copies of the object to make"
-msgstr ""
-"Umbernay ofway opiescay ofway ethay objectway otay akemay otay imulatesay "
-"ethay urblay"
+msgstr "Umbernay ofway insetway/outsetway opiescay ofway ethay objectway otay akemay"
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
+#: ../share/extensions/pathalongpath.inx.h:4
 msgid "Generate from Path"
 msgstr "Enerategay omfray Athpay"
 
@@ -2499,14 +2435,13 @@ msgstr "Akemay oundingbay oxbay aroundway ullfay agepay"
 
 #: ../src/extension/internal/eps-out.cpp:92
 #: ../src/extension/internal/ps-out.cpp:84
-#, fuzzy
 msgid "Convert texts to paths"
-msgstr "Onvertcay exttay otay athpay"
+msgstr "Onvertcay extstay otay athspay"
 
 #: ../src/extension/internal/eps-out.cpp:93
 #: ../src/extension/internal/ps-out.cpp:85
 msgid "Embed fonts (Type 1 only)"
-msgstr ""
+msgstr "Embedway ontsfay (Ypetay 1 onlyway)"
 
 #: ../src/extension/internal/eps-out.cpp:97
 #: ../share/extensions/eps_input.inx.h:3
@@ -2571,7 +2506,9 @@ msgid "Vertical Offset"
 msgstr "Erticalvay Offsetway"
 
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/funcplot.inx.h:12 ../share/extensions/lindenmayer.inx
+#: .h:9 ../share/extensions/lorem_ipsum.inx.h:4
+#: ../share/extensions/rtree.inx.h:4
 msgid "Render"
 msgstr "Enderray"
 
@@ -2608,13 +2545,13 @@ msgid "OpenDocument drawing file"
 msgstr "OpenDocumentway awingdray ilefay"
 
 #: ../src/extension/internal/pdf-cairo.cpp:123
-#: ../src/extension/internal/ps.cpp:120
+#: ../src/extension/internal/ps.cpp:121
 msgid "Print Destination"
 msgstr "Intpray Estinationday"
 
 #. Print properties frame
 #: ../src/extension/internal/pdf-cairo.cpp:138
-#: ../src/extension/internal/ps.cpp:135
+#: ../src/extension/internal/ps.cpp:136
 msgid "Print properties"
 msgstr "Intpray opertiespray"
 
@@ -2632,12 +2569,12 @@ msgstr ""
 "aledscay, utbay atternspay illway ebay ostlay."
 
 #: ../src/extension/internal/pdf-cairo.cpp:152
-#: ../src/extension/internal/ps.cpp:149
+#: ../src/extension/internal/ps.cpp:150
 msgid "Print as bitmap"
 msgstr "Intpray asway itmapbay"
 
 #: ../src/extension/internal/pdf-cairo.cpp:154
-#: ../src/extension/internal/ps.cpp:151
+#: ../src/extension/internal/ps.cpp:152
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2649,23 +2586,23 @@ msgstr ""
 "enderedray exactlyway asway isplayedday."
 
 #: ../src/extension/internal/pdf-cairo.cpp:168
-#: ../src/extension/internal/ps.cpp:165
+#: ../src/extension/internal/ps.cpp:166
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Eferredpray esolutionray (otsday erpay inchway) ofway itmapbay"
 
 #: ../src/extension/internal/pdf-cairo.cpp:182
-#: ../src/extension/internal/ps.cpp:179
+#: ../src/extension/internal/ps.cpp:180
 msgid "Resolution:"
 msgstr "Esolutionray:"
 
 #. Print destination frame
 #: ../src/extension/internal/pdf-cairo.cpp:186
-#: ../src/extension/internal/ps.cpp:183
+#: ../src/extension/internal/ps.cpp:184
 msgid "Print destination"
 msgstr "Intpray estinationday"
 
 #: ../src/extension/internal/pdf-cairo.cpp:192
-#: ../src/extension/internal/ps.cpp:189
+#: ../src/extension/internal/ps.cpp:190
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2706,11 +2643,11 @@ msgstr "Ostscriptpay (*.ps)"
 msgid "Postscript File"
 msgstr "Ostscriptpay Ilefay"
 
-#: ../src/extension/internal/ps.cpp:142
+#: ../src/extension/internal/ps.cpp:143
 msgid "Print using PostScript operators"
 msgstr "Intpray usingway OstScriptpay operatorsway"
 
-#: ../src/extension/internal/ps.cpp:144
+#: ../src/extension/internal/ps.cpp:145
 msgid ""
 "Use PostScript vector operators. The resulting image is usually smaller in "
 "file size and can be arbitrarily scaled, but alpha transparency and patterns "
@@ -2720,7 +2657,7 @@ msgstr ""
 "usuallyway allersmay inway ilefay izesay andway ancay ebay arbitrarilyway "
 "aledscay, utbay alphaway ansparencytray andway atternspay illway ebay ostlay."
 
-#: ../src/extension/internal/ps.cpp:1710
+#: ../src/extension/internal/ps.cpp:1719
 msgid "Postscript Print"
 msgstr "Ostscriptpay Intpray"
 
@@ -2857,9 +2794,8 @@ msgid "Select file to open"
 msgstr "Electsay ilefay otay openway"
 
 #: ../src/file.cpp:466
-#, fuzzy
 msgid "Vacuum &lt;defs&gt;"
-msgstr "Ac_uumvay Efsday"
+msgstr "Acuumvay &lt;defs&gt;"
 
 #: ../src/file.cpp:471
 #, c-format
@@ -2917,9 +2853,8 @@ msgid "No changes need to be saved."
 msgstr "Onay angeschay eednay otay ebay avedsay."
 
 #: ../src/file.cpp:852
-#, fuzzy
 msgid "Import"
-msgstr "_Importway..."
+msgstr "Importway"
 
 #: ../src/file.cpp:883
 msgid "Select file to import"
@@ -2930,9 +2865,8 @@ msgid "Select file to export to"
 msgstr "Electsay ilefay otay exportway otay"
 
 #: ../src/gradient-context.cpp:176
-#, fuzzy
 msgid "Create default gradient"
-msgstr "Eatecray inearlay adientgray"
+msgstr "Eatecray efaultday adientgray"
 
 #: ../src/gradient-context.cpp:272
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -2943,19 +2877,15 @@ msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Iftshay</b>: awdray adientgray aroundway ethay artingstay ointpay"
 
 #: ../src/gradient-context.cpp:369
-#, fuzzy
 msgid "Invert gradient"
-msgstr "Inearlay adientgray"
+msgstr "Invertway adientgray"
 
 #: ../src/gradient-context.cpp:461
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
-msgstr[0] ""
-"<b>Adientgray</b> orfay %d objectway; ithway <b>Ctrl</b> otay apsnay angleway"
-msgstr[1] ""
-"<b>Adientgray</b> orfay %d objectsway; ithway <b>Ctrl</b> otay apsnay "
-"angleway"
+msgstr[0] "<b>Adientgray</b> orfay %d objectway; ithway <b>Ctrl</b> otay apsnay angleway"
+msgstr[1] "<b>Adientgray</b> orfay %d objectsway; ithway <b>Ctrl</b> otay apsnay angleway"
 
 #: ../src/gradient-context.cpp:465
 msgid "Select <b>objects</b> on which to create gradient."
@@ -2983,14 +2913,12 @@ msgid "Radial gradient <b>focus</b>"
 msgstr "Adialray adientgray <b>ocusfay</b>"
 
 #: ../src/gradient-drag.cpp:386
-#, fuzzy
 msgid "Merge gradient handles"
-msgstr "Ovemay odenay andlehay"
+msgstr "Ergemay adientgray andleshay"
 
 #: ../src/gradient-drag.cpp:518 ../src/gradient-drag.cpp:1071
-#, fuzzy
 msgid "Move gradient handle"
-msgstr "Ovemay odenay andlehay"
+msgstr "Ovemay adientgray andlehay"
 
 #: ../src/gradient-drag.cpp:657
 #, c-format
@@ -3015,7 +2943,7 @@ msgstr ""
 "<b>Iftshay</b> otay eparatesay ocusfay"
 
 #: ../src/gradient-drag.cpp:666
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
 "separate"
@@ -3023,11 +2951,11 @@ msgid_plural ""
 "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to "
 "separate"
 msgstr[0] ""
-"Adialray adientgray <b>entercay</b> andway <b>ocusfay</b>; agdray ithway "
-"<b>Iftshay</b> otay eparatesay ocusfay"
+"Adientgray ointpay aredshay ybay <b>%d</b> adientgray; agdray ithway <b>Iftshay</b> otay "
+"eparatesay"
 msgstr[1] ""
-"Adialray adientgray <b>entercay</b> andway <b>ocusfay</b>; agdray ithway "
-"<b>Iftshay</b> otay eparatesay ocusfay"
+"Adientgray ointpay aredshay ybay <b>%d</b> adientsgray; agdray ithway <b>Iftshay</b> otay "
+"eparatesay"
 
 #: ../src/helper/units.cpp:36
 msgid "Unit"
@@ -3327,9 +3255,8 @@ msgstr "Ogay otay arentpay"
 
 #: ../src/interface.cpp:1044 ../src/interface.cpp:1086
 #: ../src/ui/widget/selected-style.cpp:431
-#, fuzzy
 msgid "Drop color"
-msgstr "Opycay olorcay"
+msgstr "Opdray olorcay"
 
 #: ../src/interface.cpp:1101
 msgid "Could not parse SVG data"
@@ -3337,12 +3264,11 @@ msgstr "Ouldcay otnay arsepay SVG ataday"
 
 #: ../src/interface.cpp:1140
 msgid "Drop SVG"
-msgstr ""
+msgstr "Opdray SVG"
 
 #: ../src/interface.cpp:1200
-#, fuzzy
 msgid "Drop bitmap image"
-msgstr "Importway itmapbay asway <image>"
+msgstr "Opdray itmapbay imageway"
 
 #: ../src/interface.cpp:1266
 #, c-format
@@ -3396,6 +3322,14 @@ msgstr "Inkboard essionsay (%1 otay %2)"
 #: ../src/knot.cpp:425
 msgid "Node or handle drag canceled."
 msgstr "Odenay orway andlehay agdray anceledcay."
+
+#: ../src/knotholder.cpp:254
+msgid "Change handle"
+msgstr "Angechay andlehay"
+
+#: ../src/knotholder.cpp:306
+msgid "Move handle"
+msgstr "Ovemay andlehay"
 
 #: ../src/libnrtype/FontFactory.cpp:358
 msgid "Ignoring font without family that will crash Pango"
@@ -3561,7 +3495,7 @@ msgstr "Onvertcay exttay objectway otay athspay onway exportway (EPSWAY)"
 
 #: ../src/main.cpp:317
 msgid "Embed fonts on export (Type 1 only) (EPS)"
-msgstr ""
+msgstr "Embed ontsfay onway exportway (Ypetay 1 onlyway) (EPS)"
 
 #: ../src/main.cpp:322
 msgid "Export files with the bounding box set to the page size (EPS)"
@@ -3738,7 +3672,7 @@ msgstr ""
 "<b>Altway</b>: ocklay andlehay engthlay; <b>Ctrl+Altway</b>: ovemay alongway "
 "andleshay"
 
-#: ../src/node-context.cpp:647
+#: ../src/node-context.cpp:662
 msgid "Drag curve"
 msgstr "Agdray urvecay"
 
@@ -3928,8 +3862,7 @@ msgstr ""
 
 #: ../src/nodepath.cpp:4227
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
-msgstr ""
-"<b>Agdray</b> ethay odenay orway itsway andleshay; <b>arrowway</b> eyskay "
+msgstr "<b>Agdray</b> ethay odenay orway itsway andleshay; <b>arrowway</b> eyskay "
 "otay ovemay ethay odenay"
 
 #: ../src/nodepath.cpp:4250 ../src/nodepath.cpp:4262
@@ -3938,7 +3871,7 @@ msgstr ""
 "Electsay a inglesay objectway otay editway itsway odesnay orway andleshay."
 
 #: ../src/nodepath.cpp:4254
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
@@ -3946,11 +3879,11 @@ msgid_plural ""
 "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
 msgstr[0] ""
-"Onay objectsway electedsay. Ickclay, Iftshay+ickclay, orway agdray aroundway "
-"objectsway otay electsay."
+"<b>0</b> outway ofway <b>%i</b> odenay electedsay. <b>Ickclay</b>, <b>Iftshay+ickclay</b>. "
+"orway <b>agdray aroundway</b> odesnay otay electsay."
 msgstr[1] ""
-"Onay objectsway electedsay. Ickclay, Iftshay+ickclay, orway agdray aroundway "
-"objectsway otay electsay."
+"<b>0</b> outway ofway <b>%i</b> odesnay electedsay. <b>Ickclay</b>, <b>Iftshay+ickclay</b>. "
+"orway <b>agdray aroundway</b> odesnay otay electsay."
 
 #: ../src/nodepath.cpp:4260
 msgid "Drag the handles of the object to modify it."
@@ -3964,13 +3897,15 @@ msgstr[0] "<b>%i</b> ofway <b>%i</b> odenay electedsay; %s. %s."
 msgstr[1] "<b>%i</b> ofway <b>%i</b> odesnay electedsay; %s. %s."
 
 #: ../src/nodepath.cpp:4275
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgid_plural ""
 "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr[0] "<b>%i</b> ofway <b>%i</b> odenay electedsay; %s. %s."
-msgstr[1] "<b>%i</b> ofway <b>%i</b> odesnay electedsay; %s. %s."
+msgstr[0] ""
+"<b>%i</b> ofway <b>%i</b> odenay electedsay inway <b>%i</b> ofway <b>%i</b> ubpaths. %s."
+msgstr[1] ""
+"<b>%i</b> ofway <b>%i</b> odesnay electedsay inway <b>%i</b> ofway <b>%i</b> ubpaths. %s."
 
 #: ../src/nodepath.cpp:4281
 #, c-format
@@ -4117,9 +4052,8 @@ msgid "Select <b>path(s)</b> to break apart."
 msgstr "Electsay <b>athpay(s)</b> otay eakbray apartway."
 
 #: ../src/path-chemistry.cpp:233
-#, fuzzy
 msgid "Break apart"
-msgstr "Eakbray Apartway"
+msgstr "Eakbray apartway"
 
 #: ../src/path-chemistry.cpp:235
 msgid "<b>No path(s)</b> to break apart in the selection."
@@ -4130,9 +4064,8 @@ msgid "Select <b>object(s)</b> to convert to path."
 msgstr "Electsay <b>objectway(s)</b> otay onvertcay otay athpay."
 
 #: ../src/path-chemistry.cpp:300
-#, fuzzy
 msgid "Object to path"
-msgstr "Objectway otay Athpay"
+msgstr "Objectway otay athpay"
 
 #: ../src/path-chemistry.cpp:302
 msgid "<b>No objects</b> to convert to path in the selection."
@@ -4144,9 +4077,8 @@ msgid "Select <b>path(s)</b> to reverse."
 msgstr "Electsay <b>athpay(s)</b> otay everseray."
 
 #: ../src/path-chemistry.cpp:389
-#, fuzzy
 msgid "Reverse path"
-msgstr "Everse_ray"
+msgstr "Everseray athpay"
 
 #: ../src/path-chemistry.cpp:391
 msgid "<b>No paths</b> to reverse in the selection."
@@ -4923,9 +4855,8 @@ msgstr[0] "<b>Inkedlay owedflay exttay</b> (%d aracterchay)"
 msgstr[1] "<b>Inkedlay owedflay exttay</b> (%d aracterschay)"
 
 #: ../src/sp-flowtext.cpp:617
-#, fuzzy
 msgid "Convert flowed text to text"
-msgstr "Onvertcay exttay otay athpay"
+msgstr "Onvertcay owedflay exttay otay exttay"
 
 #: ../src/sp-guide.cpp:287
 msgid "vertical guideline"
@@ -5078,9 +5009,8 @@ msgstr ""
 "apsnay angleway"
 
 #: ../src/spiral-context.cpp:460
-#, fuzzy
 msgid "Create spiral"
-msgstr "Eatecray iralsspay"
+msgstr "Eatecray iralspay"
 
 #: ../src/splivarot.cpp:66
 msgid "Union"
@@ -5103,9 +5033,8 @@ msgid "Division"
 msgstr "Ivisionday"
 
 #: ../src/splivarot.cpp:94
-#, fuzzy
 msgid "Cut path"
-msgstr "Utcay Athpay"
+msgstr "Utcay athpay"
 
 #: ../src/splivarot.cpp:110
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
@@ -5136,75 +5065,68 @@ msgstr ""
 "Oneway ofway ethay objectsway isway <b>otnay a athpay</b>, annotcay "
 "erformpay ooleanbay operationway."
 
-#: ../src/splivarot.cpp:571
-#, fuzzy
+#: ../src/splivarot.cpp:585
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
-msgstr "Electsay <b>objectway(s)</b> otay onvertcay otay athpay."
+msgstr "Electsay <b>okedstray athpay orway athspay</b> otay onvertcay okestray otay athpay."
 
-#: ../src/splivarot.cpp:853
-#, fuzzy
+#: ../src/splivarot.cpp:867
 msgid "Convert stroke to path"
-msgstr "Onvertcay exttay otay athpay"
+msgstr "Onvertcay okestray otay athpay"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:856
-#, fuzzy
+#: ../src/splivarot.cpp:870
 msgid "<b>No stroked paths</b> in the selection."
-msgstr "<b>Onay okedstray athspay</b> otay outlineway inway ethay electionsay."
+msgstr "<b>Onay okedstray athspay</b> inway ethay electionsay."
 
-#: ../src/splivarot.cpp:940
+#: ../src/splivarot.cpp:954
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr ""
 "Electedsay objectway isway <b>otnay a athpay</b>, annotcay insetway/"
 "outsetway."
 
-#: ../src/splivarot.cpp:1060 ../src/splivarot.cpp:1128
-#, fuzzy
+#: ../src/splivarot.cpp:1074 ../src/splivarot.cpp:1142
 msgid "Create linked offset"
-msgstr "Eate_cray Inklay"
+msgstr "Eatecray Inkedlay offsetway"
 
-#: ../src/splivarot.cpp:1061 ../src/splivarot.cpp:1129
-#, fuzzy
+#: ../src/splivarot.cpp:1075 ../src/splivarot.cpp:1143
 msgid "Create dynamic offset"
-msgstr "Eatecray a ynamicday offsetway objectway"
+msgstr "Eatecray ynamicday offsetway"
 
-#: ../src/splivarot.cpp:1156
+#: ../src/splivarot.cpp:1170
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Electsay <b>athpay(s)</b> otay insetway/outsetway."
 
-#: ../src/splivarot.cpp:1373
-#, fuzzy
+#: ../src/splivarot.cpp:1387
 msgid "Outset path"
-msgstr "Offsetway athpay"
+msgstr "Outsetway athpay"
 
-#: ../src/splivarot.cpp:1373
-#, fuzzy
+#: ../src/splivarot.cpp:1387
 msgid "Inset path"
-msgstr "Offsetway athpay"
+msgstr "Insetway athpay"
 
-#: ../src/splivarot.cpp:1375
+#: ../src/splivarot.cpp:1389
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "<b>Onay athspay</b> otay insetway/outsetway inway ethay electionsay."
 
-#: ../src/splivarot.cpp:1559
+#: ../src/splivarot.cpp:1573
 #, c-format
 msgid "Simplifying %s - <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "Implifyingsay %s - <b>%d</b> ofway <b>%d</b> athspay implifiedsay..."
 
-#: ../src/splivarot.cpp:1571
+#: ../src/splivarot.cpp:1585
 #, c-format
 msgid "Done - <b>%d</b> paths simplified."
 msgstr "Onday - <b>%d</b> athspay implifiedsay."
 
-#: ../src/splivarot.cpp:1587
+#: ../src/splivarot.cpp:1601
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Electsay <b>athpay(s)</b> otay implifysay."
 
-#: ../src/splivarot.cpp:1601
+#: ../src/splivarot.cpp:1615
 msgid "Simplify"
 msgstr "Implifysay"
 
-#: ../src/splivarot.cpp:1603
+#: ../src/splivarot.cpp:1617
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>Onay athspay</b> otay implifysay inway ethay electionsay."
 
@@ -5228,9 +5150,8 @@ msgstr ""
 "apsnay angleway"
 
 #: ../src/star-context.cpp:472
-#, fuzzy
 msgid "Create star"
-msgstr "Eatecray itmapbay"
+msgstr "Eatecray arstay"
 
 #: ../src/text-chemistry.cpp:94
 msgid "Select <b>a text and a path</b> to put text on path."
@@ -5295,18 +5216,16 @@ msgstr ""
 "apesshay</b> otay owflay exttay intoway amefray."
 
 #: ../src/text-chemistry.cpp:312
-#, fuzzy
 msgid "Flow text into shape"
-msgstr "_Owflay intoway Amefray"
+msgstr "Owflay exttay intoway apeshay"
 
 #: ../src/text-chemistry.cpp:335
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Electsay <b>a owedflay exttay</b> otay unflowway itway."
 
 #: ../src/text-chemistry.cpp:398
-#, fuzzy
 msgid "Unflow flowed text"
-msgstr "Owedflay exttay"
+msgstr "Unflowway owedflay exttay"
 
 #: ../src/text-context.cpp:448
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -5334,14 +5253,13 @@ msgid "Insert Unicode character"
 msgstr "Insertway Unicodeway aracterchay"
 
 #: ../src/text-context.cpp:577
-#, fuzzy, c-format
+#, c-format
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
-msgstr "Ovemay <b>entercay</b> otay %s, %s"
+msgstr "Unicodeway (<b>Enterway</b> otay inishfay): %s: %s"
 
 #: ../src/text-context.cpp:579 ../src/text-context.cpp:844
-#, fuzzy
 msgid "Unicode (<b>Enter</b> to finish): "
-msgstr "Ovemay <b>entercay</b> otay %s, %s"
+msgstr "Unicodeway (<b>Enterway</b> otay inishfay): "
 
 #: ../src/text-context.cpp:656
 #, c-format
@@ -5583,9 +5501,8 @@ msgstr "Acetray: Artingstay acetray..."
 
 #. ## inform the document, so we can undo
 #: ../src/trace/trace.cpp:569
-#, fuzzy
 msgid "Trace bitmap"
-msgstr "Eatecray itmapbay"
+msgstr "Acetray itmapbay"
 
 #: ../src/trace/trace.cpp:573
 #, c-format
@@ -5608,9 +5525,8 @@ msgid "_Create Link"
 msgstr "Eate_cray Inklay"
 
 #: ../src/ui/context-menu.cpp:172
-#, fuzzy
 msgid "Create link"
-msgstr "Eate_cray Inklay"
+msgstr "Eatecray inklay"
 
 #. "Ungroup"
 #: ../src/ui/context-menu.cpp:190 ../src/verbs.cpp:2070
@@ -5715,29 +5631,24 @@ msgstr "Emoveray overlapsway"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:520
 #: ../src/widgets/toolbox.cpp:4241
-#, fuzzy
 msgid "Arrange connector network"
-msgstr "Icelynay arrangeway electedsay onnectorcay etworknay"
+msgstr "Arrangeway onnectorcay etworknay"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:550
-#, fuzzy
 msgid "Unclump"
-msgstr " _Unclumpway "
+msgstr "Unclumpway"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:614
-#, fuzzy
 msgid "Randomize positions"
-msgstr "Andomray Ositionpay"
+msgstr "Andomizeray ositionpay"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:711
-#, fuzzy
 msgid "Distribute text baselines"
-msgstr "Istributeday odesnay"
+msgstr "Istributeday exttay aselinesbay"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:731
-#, fuzzy
 msgid "Align text baselines"
-msgstr "Alignway eftlay idessay"
+msgstr "Alignway exttay aselinesbay"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:762
 msgid "Connector network layout"
@@ -6062,18 +5973,16 @@ msgid "Spacing _X:"
 msgstr "Acingspay _X:"
 
 #: ../src/ui/dialog/document-properties.cpp:252
-#, fuzzy
 msgid "Distance between vertical grid lines"
-msgstr "Istanceday ofway erticalvay idgray ineslay"
+msgstr "Istanceday etweenbay erticalvay idgray ineslay"
 
 #: ../src/ui/dialog/document-properties.cpp:254
 msgid "Spacing _Y:"
 msgstr "Acingspay _Y:"
 
 #: ../src/ui/dialog/document-properties.cpp:254
-#, fuzzy
 msgid "Distance between horizontal grid lines"
-msgstr "Istanceday ofway orizontalhay idgray ineslay"
+msgstr "Istanceday etweenbay orizontalhay idgray ineslay"
 
 #: ../src/ui/dialog/document-properties.cpp:256
 msgid "Angle X:"
@@ -6288,7 +6197,7 @@ msgstr "<b>Idgray Snapping</b>"
 msgid "<b>Guide Snapping</b>"
 msgstr "<b>Uidegay Snapping</b>"
 
-#: ../src/ui/dialog/export.cpp:34
+#: ../src/ui/dialog/export.cpp:34 ../share/extensions/g2pngs.inx.h:2
 msgid "Export"
 msgstr "Exportway"
 
@@ -6297,6 +6206,7 @@ msgid "Information"
 msgstr "Informationway"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
+#: ../share/extensions/funcplot.inx.h:7
 msgid "Help"
 msgstr "Elphay"
 
@@ -7056,55 +6966,55 @@ msgstr "Ansformstray"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:487
 msgid "Best quality (slowest)"
-msgstr ""
+msgstr "Estbay alityquay (owestslay)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:489
 msgid "Better quality (slower)"
-msgstr ""
+msgstr "Etterbay alityquay (owerslay)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:491
 msgid "Average quality"
-msgstr ""
+msgstr "Averageway alityquay"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:493
-#, fuzzy
 msgid "Lower quality (faster)"
-msgstr "Owerlay Ayerlay"
+msgstr "Owerlay alityquay (asterfay)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:495
 msgid "Lowest quality (fastest)"
-msgstr ""
+msgstr "Owestlay alityquay (astestfay)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:498
 msgid "Gaussian blur quality for display:"
-msgstr ""
+msgstr "Aussiangay urblay alityquay orfay isplayday:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:500
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
 msgstr ""
+"Estbay alityquay, utbay isplayday aymay ebay eryvay owslay atway ighhay oomszay (itmapbay exportway "
+"alwaysway usesway estbay alityquay)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:502
 msgid "Better quality, but slower display"
-msgstr ""
+msgstr "Etterbay alityquay, utbay owerslay isplayday"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:504
 msgid "Average quality, acceptable display speed"
-msgstr ""
+msgstr "Averageway alityquay, acceptableway isplayday eedspay"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:506
 msgid "Lower quality (some artifacts), but display is faster"
-msgstr ""
+msgstr "Owerlay alityquay (omesay artifactsway), utbay isplayday isway asterfay"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid "Lowest quality (considerable artifacts), but display is fastest"
-msgstr ""
+msgstr "Owestlay alityquay (onsiderablecay artifactsway), utbay isplayday isway astestfay"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:510
-#, fuzzy
 msgid "Filters"
-msgstr "Atnessflay"
+msgstr "Iltersfay"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:516
 msgid "Select in all layers"
@@ -7295,13 +7205,15 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "Use a pressure sensitive tablet or other device (requires restart)"
-msgstr ""
+msgstr "Useway away essurepray ensitivesay ablettay orway otherway eviceday (equiresray estartray)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:575
 msgid ""
-"Use the capablities of a tablet or other pressure sensitive device. Disable "
+"Use the capabilities of a tablet or other pressure sensitive device. Disable "
 "this only if you have problems with the tablet."
 msgstr ""
+"Useway ethay apabilitiescay ofway away ablettay orway otherway essurepray ensitivesay eviceday. Isableday "
+"isthay onlyway ifway ouyay avehay oblemspray ithway ethay ablettay."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:577
 msgid "Misc"
@@ -7437,9 +7349,8 @@ msgstr "Openway essionsay ilefay"
 #. # begin single scan
 #. brightness
 #: ../src/ui/dialog/tracedialog.cpp:395
-#, fuzzy
 msgid "Brightness cutoff"
-msgstr "Ightnessbray"
+msgstr "Ightnessbray utoffcay"
 
 #: ../src/ui/dialog/tracedialog.cpp:399
 msgid "Trace by a given brightness level"
@@ -7450,21 +7361,18 @@ msgid "Brightness cutoff for black/white"
 msgstr "Ightnessbray utoffcay orfay ackblay/itewhay"
 
 #: ../src/ui/dialog/tracedialog.cpp:414
-#, fuzzy
 msgid "Single scan: creates a path"
-msgstr "Awingdray a eehandfray athpay"
+msgstr "Inglesay anscay: eatescray away athpay"
 
 #. canny edge detection
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
 #: ../src/ui/dialog/tracedialog.cpp:419
-#, fuzzy
 msgid "Edge detection"
-msgstr "Edgeway Etectionday"
+msgstr "Edgeway etectionday"
 
 #: ../src/ui/dialog/tracedialog.cpp:423
-#, fuzzy
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr "Acetray ithway edgeway etectionday ybay J. Annycay's algorithmway"
+msgstr "Acetray ithway optimalway edgeway etectionday ybay J. Canny's algorithmway"
 
 #: ../src/ui/dialog/tracedialog.cpp:440
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
@@ -7477,9 +7385,8 @@ msgstr ""
 #. of colors in an image by selecting an optimized set of representative
 #. colors and then re-applying this reduced set to the original image.
 #: ../src/ui/dialog/tracedialog.cpp:452
-#, fuzzy
 msgid "Color quantization"
-msgstr "Olorcay Antizationquay"
+msgstr "Olorcay antizationquay"
 
 #: ../src/ui/dialog/tracedialog.cpp:456
 msgid "Trace along the boundaries of reduced colors"
@@ -7495,21 +7402,18 @@ msgstr "Olorscay:"
 
 #. swap black and white
 #: ../src/ui/dialog/tracedialog.cpp:472
-#, fuzzy
 msgid "Invert image"
-msgstr "Unsetway illfay"
+msgstr "Invertway imageway"
 
 #: ../src/ui/dialog/tracedialog.cpp:477
-#, fuzzy
 msgid "Invert black and white regions"
-msgstr "Invertway ackblay andway itewhay egionsray orfay inglesay acestray"
+msgstr "Invertway ackblay andway itewhay egionsray"
 
 #. # end single scan
 #. # begin multiple scan
 #: ../src/ui/dialog/tracedialog.cpp:486
-#, fuzzy
 msgid "Brightness steps"
-msgstr "Ightnessbray"
+msgstr "Ightnessbray epstay"
 
 #: ../src/ui/dialog/tracedialog.cpp:490
 msgid "Trace the given number of brightness levels"
@@ -7524,9 +7428,8 @@ msgid "The desired number of scans"
 msgstr "Ethay esiredday umbernay ofway ansscay"
 
 #: ../src/ui/dialog/tracedialog.cpp:504
-#, fuzzy
 msgid "Colors"
-msgstr "Olorscay:"
+msgstr "Olorscay"
 
 #: ../src/ui/dialog/tracedialog.cpp:508
 msgid "Trace the given number of reduced colors"
@@ -7534,12 +7437,11 @@ msgstr "Acetray ethay ivengay umbernay ofway educedray olorscay"
 
 #: ../src/ui/dialog/tracedialog.cpp:512
 msgid "Grays"
-msgstr ""
+msgstr "Aysgray"
 
 #: ../src/ui/dialog/tracedialog.cpp:516
-#, fuzzy
 msgid "Same as Colors, but the result is converted to grayscale"
-msgstr "Amesay asway Olorcay, utbay onvertcay esultray otay ayscalegray"
+msgstr "Amesay asway Olorcay, utbay ethay esultray isway onvertedcay otay ayscalegray"
 
 #. TRANSLATORS: "Smooth" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:521
@@ -7552,18 +7454,15 @@ msgstr "Applyway Aussiangay urblay otay ethay itmapbay eforebay acingtray"
 
 #. TRANSLATORS: "Stack" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:528
-#, fuzzy
 msgid "Stack scans"
-msgstr "Ackstay"
+msgstr "Ackstay anscay"
 
 #: ../src/ui/dialog/tracedialog.cpp:531
-#, fuzzy
 msgid ""
 "Stack scans on top of one another (no gaps) instead of or tiling (usually "
 "with gaps)"
 msgstr ""
-"Ackstay ansscay erticallyvay (onay apsgay) orway iletay orizontallyhay "
-"(usuallyway ithway apsgay)"
+"Ackstay ansscay onway optay ofway onway anotherway (onay apsgay) insteadway ofway orway ilingtay (usuallyway ithway apsgay)"
 
 #: ../src/ui/dialog/tracedialog.cpp:534
 msgid "Remove background"
@@ -7575,67 +7474,64 @@ msgstr "Emoveray ottombay (ackgroundbay) ayerlay enwhay oneday"
 
 #: ../src/ui/dialog/tracedialog.cpp:543
 msgid "Multiple scans: creates a group of paths"
-msgstr ""
+msgstr "Ultiplemay ansscay: eatescray away oupgray ofway athspay"
 
 #. # end multiple scan
 #. ## end mode page
 #: ../src/ui/dialog/tracedialog.cpp:552
-#, fuzzy
 msgid "Mode"
-msgstr "Ovemay"
+msgstr "Odemay"
 
 #. ## begin option page
 #. # potrace parameters
 #: ../src/ui/dialog/tracedialog.cpp:558
 msgid "Suppress speckles"
-msgstr ""
+msgstr "Uppresssay ecklesspay"
 
 #: ../src/ui/dialog/tracedialog.cpp:560
 msgid "Ignore small spots (speckles) in the bitmap"
-msgstr ""
+msgstr "Ignoreway allsmay otsspay (ecklesspay) inway ethay itmapbay"
 
 #: ../src/ui/dialog/tracedialog.cpp:568
 msgid "Speckles of up to this many pixels will be suppressed"
-msgstr ""
+msgstr "Ecklesspay ofway upway otay isthay anymay ixelspay illway ebay uppressedsay"
 
 #: ../src/ui/dialog/tracedialog.cpp:570
-#, fuzzy
 msgid "Size:"
-msgstr "Izesay"
+msgstr "Izesay:"
 
 #: ../src/ui/dialog/tracedialog.cpp:573
-#, fuzzy
 msgid "Smooth corners"
-msgstr "Oothsmay"
+msgstr "Oothsmay ornerscay"
 
 #: ../src/ui/dialog/tracedialog.cpp:575
 msgid "Smooth out sharp corners of the trace"
-msgstr ""
+msgstr "Oothsmay outway arpshay ornerscay ofway ethay acetray"
 
 #: ../src/ui/dialog/tracedialog.cpp:584
-#, fuzzy
 msgid "Increase this to smooth corners more"
-msgstr "Increaseway otay oundray etha endsway ofway okesstray"
+msgstr "Increaseway isthay otay oothsmay ornerscay oremay"
 
 #: ../src/ui/dialog/tracedialog.cpp:588
-#, fuzzy
 msgid "Optimize paths"
-msgstr "Optimizedway"
+msgstr "Optimizedway athspay"
 
 #: ../src/ui/dialog/tracedialog.cpp:591
 msgid "Try to optimize paths by joining adjacent Bezier curve segments"
-msgstr ""
+msgstr "Ytray otay optimizeway athspay ybay oiningjay adjacentway Bezier urvecay egmentssay"
 
 #: ../src/ui/dialog/tracedialog.cpp:599
 msgid ""
 "Increase this to reduce the number of nodes in the trace by more aggressive "
 "optimization"
 msgstr ""
+"Increaseway isthay otay educeray ethay umbernay ofway odesnay inway ethay acetray ybay oremay agressiveway "
+"optimizationway"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:606 ../src/ui/dialog/tracedialog.cpp:612
 msgid "Options"
-msgstr ""
+msgstr "Optionsway"
 
 #. ### credits
 #: ../src/ui/dialog/tracedialog.cpp:620
@@ -7659,16 +7555,14 @@ msgstr ""
 
 #. ## preview
 #: ../src/ui/dialog/tracedialog.cpp:644
-#, fuzzy
 msgid "Update"
-msgstr "Ateday"
+msgstr "Updateway"
 
 #: ../src/ui/dialog/tracedialog.cpp:650
-#, fuzzy
 msgid ""
 "Preview the intermediate bitmap with the current settings, without actual "
 "tracing"
-msgstr "Eviewpray ethay esultray ithoutway actualway acingtray"
+msgstr "Eviewpray ethay intermediateway itmapbay ithway ethay urrentcay ettingssay, ithoutway actualway acingtray"
 
 #: ../src/ui/dialog/tracedialog.cpp:654
 msgid "Preview"
@@ -7836,9 +7730,8 @@ msgid "Apply transformation to selection"
 msgstr "Applyway ansformationtray otay electionsay"
 
 #: ../src/ui/dialog/transformation.cpp:746
-#, fuzzy
 msgid "Edit transformation matrix"
-msgstr "Ansformationtray atrixmay elementway F"
+msgstr "Editway ansformationtray atrixmay"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
 msgid "_Use SSL"
@@ -8177,9 +8070,8 @@ msgid "Proprietary"
 msgstr "Oprietarypray"
 
 #: ../src/ui/widget/licensor.cpp:38
-#, fuzzy
 msgid "Other"
-msgstr "Etermay"
+msgstr "Otherway"
 
 #: ../src/ui/widget/selected-style.cpp:90
 #: ../src/ui/widget/style-swatch.cpp:104
@@ -8369,75 +8261,61 @@ msgid "Remove"
 msgstr "Emoveray"
 
 #: ../src/ui/widget/selected-style.cpp:501
-#, fuzzy
 msgid "Apply last set color to fill"
-msgstr "Atflay olorcay illfay"
+msgstr "Applyway astlay etsay olorcay otay illfay"
 
 #: ../src/ui/widget/selected-style.cpp:513
-#, fuzzy
 msgid "Apply last set color to stroke"
-msgstr "Atflay olorcay okestray"
+msgstr "Applyway astlay etsay color otay okestray"
 
 #: ../src/ui/widget/selected-style.cpp:524
-#, fuzzy
 msgid "Apply last selected color to fill"
-msgstr "Astlay electedsay olorcay"
+msgstr "Applyway astlay electedsay olorcay otay illfay"
 
 #: ../src/ui/widget/selected-style.cpp:535
-#, fuzzy
 msgid "Apply last selected color to stroke"
-msgstr "Astlay electedsay olorcay"
+msgstr "Applyway astlay electedsay olorcay otay okestray"
 
 #: ../src/ui/widget/selected-style.cpp:555
-#, fuzzy
 msgid "Invert fill"
-msgstr "Unsetway illfay"
+msgstr "Invertway illfay"
 
 #: ../src/ui/widget/selected-style.cpp:575
-#, fuzzy
 msgid "Invert stroke"
-msgstr "Unsetway okestray"
+msgstr "Invertway okestray"
 
 #: ../src/ui/widget/selected-style.cpp:587
-#, fuzzy
 msgid "White fill"
-msgstr "Itewhay"
+msgstr "Itewhay illfay"
 
 #: ../src/ui/widget/selected-style.cpp:599
-#, fuzzy
 msgid "White stroke"
-msgstr "Editway okestray..."
+msgstr "Itewhay okestray"
 
 #: ../src/ui/widget/selected-style.cpp:611
-#, fuzzy
 msgid "Black fill"
-msgstr "Ackblay"
+msgstr "Ackblay illfay"
 
 #: ../src/ui/widget/selected-style.cpp:623
-#, fuzzy
 msgid "Black stroke"
-msgstr "Atflay olorcay okestray"
+msgstr "Ackblay okestray"
 
 #: ../src/ui/widget/selected-style.cpp:666
-#, fuzzy
 msgid "Paste fill"
-msgstr "Atternpay illfay"
+msgstr "Astepay illfay"
 
 #: ../src/ui/widget/selected-style.cpp:684
-#, fuzzy
 msgid "Paste stroke"
-msgstr "Atternpay okestray"
+msgstr "Astepay okestray"
 
 #: ../src/ui/widget/selected-style.cpp:841
-#, fuzzy
 msgid "Change stroke width"
-msgstr "Alescay okestray idthway"
+msgstr "Angechay okestray idthway"
 
 #: ../src/ui/widget/selected-style.cpp:979
 #: ../src/ui/widget/selected-style.cpp:980
-#, fuzzy
 msgid "Master opacity, %"
-msgstr "Astermay opacityway"
+msgstr "Astermay opacityway, %"
 
 #: ../src/ui/widget/selected-style.cpp:1011
 #, c-format
@@ -8453,9 +8331,8 @@ msgid "0 (transparent)"
 msgstr "0 (ansparenttray)"
 
 #: ../src/ui/widget/selected-style.cpp:1067
-#, fuzzy
 msgid "100% (opaque)"
-msgstr "1.0 (opaqueway)"
+msgstr "100% (opaqueway)"
 
 #: ../src/ui/widget/page-sizer.cpp:195
 msgid "Name"
@@ -8511,9 +8388,8 @@ msgid "Height of paper"
 msgstr "Eighthay ofway aperpay"
 
 #: ../src/ui/widget/page-sizer.cpp:355
-#, fuzzy
 msgid "Set page size"
-msgstr "_Agepay izesay:"
+msgstr "Etsay agepay izesay"
 
 #: ../src/ui/widget/style-swatch.cpp:325
 #, c-format
@@ -8536,9 +8412,8 @@ msgid "Opacity: %.3g"
 msgstr "Opacityway: %.3g"
 
 #: ../src/verbs.cpp:1117
-#, fuzzy
 msgid "Move to next layer"
-msgstr "Ovedmay otay extnay ayerlay."
+msgstr "Ovedmay otay extnay ayerlay"
 
 #: ../src/verbs.cpp:1118
 msgid "Moved to next layer."
@@ -8549,9 +8424,8 @@ msgid "Cannot move past last layer."
 msgstr "Annotcay ovemay astpay astlay ayerlay."
 
 #: ../src/verbs.cpp:1129
-#, fuzzy
 msgid "Move to previous layer"
-msgstr "Ovedmay otay eviouspray ayerlay."
+msgstr "Ovedmay otay eviouspray ayerlay"
 
 #: ../src/verbs.cpp:1130
 msgid "Moved to previous layer."
@@ -8571,14 +8445,12 @@ msgid "Raised layer <b>%s</b>."
 msgstr "Aisedray ayerlay <b>%s</b>."
 
 #: ../src/verbs.cpp:1179
-#, fuzzy
 msgid "Layer to top"
-msgstr "Ayerlay otay Optay"
+msgstr "Ayerlay otay optay"
 
 #: ../src/verbs.cpp:1183
-#, fuzzy
 msgid "Raise layer"
-msgstr "Aiseray Ayerlay"
+msgstr "Aiseray ayerlay"
 
 #: ../src/verbs.cpp:1186 ../src/verbs.cpp:1190
 #, c-format
@@ -8586,14 +8458,12 @@ msgid "Lowered layer <b>%s</b>."
 msgstr "Oweredlay ayerlay <b>%s</b>."
 
 #: ../src/verbs.cpp:1187
-#, fuzzy
 msgid "Layer to bottom"
-msgstr "Ayerlay otay Ottombay"
+msgstr "Ayerlay otay ottombay"
 
 #: ../src/verbs.cpp:1191
-#, fuzzy
 msgid "Lower layer"
-msgstr "Owerlay Ayerlay"
+msgstr "Owerlay ayerlay"
 
 #: ../src/verbs.cpp:1200
 msgid "Cannot move layer any further."
@@ -9022,24 +8892,20 @@ msgstr ""
 "Invertway electionsay inway allway isiblevay andway unlockedway ayerslay"
 
 #: ../src/verbs.cpp:2052
-#, fuzzy
 msgid "Select Next"
-msgstr "Eleteday exttay"
+msgstr "Electsay Extnay"
 
 #: ../src/verbs.cpp:2053
-#, fuzzy
 msgid "Select next object or node"
-msgstr "Electsay allway objectsway orway allway odesnay"
+msgstr "Electsay extnay objectway orway odenay"
 
 #: ../src/verbs.cpp:2054
-#, fuzzy
 msgid "Select Previous"
-msgstr "Electionsay"
+msgstr "Electsay Eviouspray"
 
 #: ../src/verbs.cpp:2055
-#, fuzzy
 msgid "Select previous object or node"
-msgstr "Electsay allway objectsway orway allway odesnay"
+msgstr "Electsay eviouspray objectway orway odenay"
 
 #: ../src/verbs.cpp:2056
 msgid "D_eselect"
@@ -9819,13 +9685,12 @@ msgid "Switch to outline (wireframe) display mode"
 msgstr "Itchsway otay outlineway (ireframeway) isplayday odemay"
 
 #: ../src/verbs.cpp:2287
-#, fuzzy
 msgid "_Toggle"
-msgstr "A_ngleway"
+msgstr "Oggle_tay"
 
 #: ../src/verbs.cpp:2288
 msgid "Toggle between normal and outline display modes"
-msgstr ""
+msgstr "Oggletay etweenbay ormalnay andway outlineway isplayday odesmay"
 
 #: ../src/verbs.cpp:2290
 msgid "Ico_n Preview..."
@@ -10186,9 +10051,9 @@ msgid "Pattern offset"
 msgstr "Atternpay offsetway"
 
 #: ../src/widgets/desktop-widget.cpp:392
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %d (outline) - Inkscape"
-msgstr "%s: %d - Inkscape"
+msgstr "%s: %d (outlineway) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:394
 #, c-format
@@ -10196,9 +10061,9 @@ msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:398
-#, fuzzy, c-format
+#, c-format
 msgid "%s (outline) - Inkscape"
-msgstr "%s - Inkscape"
+msgstr "%s (outlineway) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:400
 #, c-format
@@ -10206,16 +10071,16 @@ msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
 
 #. Family frame
-#: ../src/widgets/font-selector.cpp:148
+#: ../src/widgets/font-selector.cpp:150
 msgid "Font family"
 msgstr "Ontfay amilyfay"
 
 #. Style frame
-#: ../src/widgets/font-selector.cpp:179
+#: ../src/widgets/font-selector.cpp:181
 msgid "Style"
 msgstr "Ylestay"
 
-#: ../src/widgets/font-selector.cpp:217
+#: ../src/widgets/font-selector.cpp:219
 msgid "Font size:"
 msgstr "Ontfay izesay:"
 
@@ -10223,7 +10088,7 @@ msgstr "Ontfay izesay:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:589 ../src/widgets/toolbox.cpp:3730
+#: ../src/widgets/font-selector.cpp:594 ../src/widgets/toolbox.cpp:3730
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -10259,9 +10124,8 @@ msgid "Repeat:"
 msgstr "Epeatray:"
 
 #: ../src/widgets/gradient-toolbar.cpp:146
-#, fuzzy
 msgid "Assign gradient to object"
-msgstr "Alignway andway istributeday objectsway"
+msgstr "Assignway adientgray otay objectway"
 
 #: ../src/widgets/gradient-toolbar.cpp:180
 msgid "<small>No gradients</small>"
@@ -10280,9 +10144,8 @@ msgid "<small>Multiple gradients</small>"
 msgstr "<small>Ultiplemay adientsgray</small>"
 
 #: ../src/widgets/gradient-toolbar.cpp:419
-#, fuzzy
 msgid "Duplicate gradient"
-msgstr "Uplicateday odenay"
+msgstr "Uplicateday adientgray"
 
 #: ../src/widgets/gradient-toolbar.cpp:483
 msgid ""
@@ -10349,19 +10212,16 @@ msgid "No stops in gradient"
 msgstr "Onay opsstay inway adientgray"
 
 #: ../src/widgets/gradient-vector.cpp:659
-#, fuzzy
 msgid "Change gradient stop offset"
-msgstr "Inearlay adientgray okestray"
+msgstr "Angechay adientgray opstay offsetway"
 
 #: ../src/widgets/gradient-vector.cpp:732
-#, fuzzy
 msgid "Add gradient stop"
-msgstr "Adialray adientgray okestray"
+msgstr "Addway adientgray opstay"
 
 #: ../src/widgets/gradient-vector.cpp:764
-#, fuzzy
 msgid "Delete gradient stop"
-msgstr "Eleteday opstay"
+msgstr "Eleteday adientgray opstay"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
 #: ../src/widgets/gradient-vector.cpp:800
@@ -10394,10 +10254,9 @@ msgstr "Opstay Olorcay"
 msgid "Gradient editor"
 msgstr "Adientgray editorway"
 
-#: ../src/widgets/gradient-vector.cpp:1172
-#, fuzzy
+#: ../src/widgets/gradient-vector.cpp:1169
 msgid "Change gradient stop color"
-msgstr "Inearlay adientgray okestray"
+msgstr "Angechay adientgray opstay olorcay"
 
 #: ../src/widgets/layer-selector.cpp:113
 msgid "Toggle current layer visibility"
@@ -10479,9 +10338,8 @@ msgstr ""
 "eatecray a ewnay atternpay omfray electionsay."
 
 #: ../src/widgets/select-toolbar.cpp:227
-#, fuzzy
 msgid "Transform by toolbar"
-msgstr "Ansformtray atternspay"
+msgstr "Ansformtray ybay oolbartay"
 
 #: ../src/widgets/select-toolbar.cpp:345
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
@@ -10737,7 +10595,7 @@ msgstr "Aluevay"
 
 #: ../src/widgets/sp-xmlview-content.cpp:165
 msgid "Type text in a text node"
-msgstr ""
+msgstr "Ypetay exttay inway away exttay odenay"
 
 #: ../src/widgets/toolbox.cpp:420
 msgid "Insert new nodes into selected segments"
@@ -10789,30 +10647,27 @@ msgstr "Owshay ethay Ezierbay andleshay ofway electedsay odesnay"
 
 #: ../src/widgets/toolbox.cpp:899
 msgid "Star: Change number of corners"
-msgstr ""
+msgstr "Arstay: Angechay umbernay ofway ornerscay"
 
 #: ../src/widgets/toolbox.cpp:944
 msgid "Star: Change spike ratio"
-msgstr ""
+msgstr "Arstay: Angechay ikespay atioray"
 
 #: ../src/widgets/toolbox.cpp:998
-#, fuzzy
 msgid "Make polygon"
-msgstr "Akemay oldbay"
+msgstr "Akemay olygonpay"
 
 #: ../src/widgets/toolbox.cpp:998
-#, fuzzy
 msgid "Make star"
-msgstr "Eatecray itmapbay"
+msgstr "Akemay arstay"
 
 #: ../src/widgets/toolbox.cpp:1035
 msgid "Star: Change rounding"
-msgstr ""
+msgstr "Arstay: Angechay oundingray"
 
 #: ../src/widgets/toolbox.cpp:1073
-#, fuzzy
 msgid "Star: Change randomization"
-msgstr "Orestay ansformationtray:"
+msgstr "Arstay: Angechay andomizationray"
 
 #: ../src/widgets/toolbox.cpp:1268
 msgid "Regular polygon (with one handle) instead of a star"
@@ -10867,9 +10722,8 @@ msgstr ""
 "> Oolstay otay angechay efaultsday)"
 
 #: ../src/widgets/toolbox.cpp:1413
-#, fuzzy
 msgid "Change rectangle"
-msgstr "Eatecray ectangleray"
+msgstr "Angechay ectangleray"
 
 #: ../src/widgets/toolbox.cpp:1612
 msgid "W:"
@@ -10908,9 +10762,8 @@ msgid "Make corners sharp"
 msgstr "Akemay ornerscay arpshay"
 
 #: ../src/widgets/toolbox.cpp:1730
-#, fuzzy
 msgid "Change spiral"
-msgstr "Eatecray iralsspay"
+msgstr "Angechay iralsspay"
 
 #: ../src/widgets/toolbox.cpp:1879
 msgid "Turns:"
@@ -10983,15 +10836,16 @@ msgstr ""
 "irectionday, 1 = ixedfay angleway)"
 
 #: ../src/widgets/toolbox.cpp:2248
-#, fuzzy
 msgid "Caps:"
-msgstr "Apcay:"
+msgstr "Apscay:"
 
 #: ../src/widgets/toolbox.cpp:2248
 msgid ""
 "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = "
 "round caps)"
 msgstr ""
+"Increaseway otay akemay apscay atway ethay endsway ofway okesstray otrudepray oremay (0 = onay apscay, 1 = "
+"oundray apscay)"
 
 #: ../src/widgets/toolbox.cpp:2258 ../src/widgets/toolbox.cpp:2415
 msgid "Tremor:"
@@ -11042,11 +10896,11 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2578
 msgid "Arc: Change start/end"
-msgstr ""
+msgstr "Arcway: Angechay artstay/endway"
 
 #: ../src/widgets/toolbox.cpp:2651
 msgid "Arc: Change open/closed"
-msgstr ""
+msgstr "Arcway: Angechay openway/osedclay"
 
 #: ../src/widgets/toolbox.cpp:2786
 msgid "Start:"
@@ -11114,25 +10968,23 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3384
 msgid "Text: Change font family"
-msgstr ""
+msgstr "Exttay: Angechay ontfay amilyfay"
 
 #: ../src/widgets/toolbox.cpp:3467
 msgid "Text: Change alignment"
-msgstr ""
+msgstr "Exttay: Angechay alignmentway"
 
 #: ../src/widgets/toolbox.cpp:3513
-#, fuzzy
 msgid "Text: Change font style"
-msgstr "Angechay egmentsay ypetay"
+msgstr "Exttay: Angechay ontfay ylestay"
 
 #: ../src/widgets/toolbox.cpp:3560
-#, fuzzy
 msgid "Text: Change orientation"
-msgstr "Agepay orientationway:"
+msgstr "Exttay: Agepay orientationway"
 
 #: ../src/widgets/toolbox.cpp:3656
 msgid "Text: Change font size"
-msgstr ""
+msgstr "Exttay: Angechay ontfay izesay"
 
 #: ../src/widgets/toolbox.cpp:3839
 msgid ""
@@ -11187,9 +11039,8 @@ msgid "Letter rotation"
 msgstr "Etterlay otationray"
 
 #: ../src/widgets/toolbox.cpp:4222
-#, fuzzy
 msgid "Change connector spacing"
-msgstr "Angechay onnectorcay acingspay istanceday"
+msgstr "Angechay onnectorcay acingspay"
 
 #: ../src/widgets/toolbox.cpp:4331
 msgid "Spacing:"
@@ -11237,6 +11088,7 @@ msgid "Maximum segment length"
 msgstr "Aximummay egmentsay engthlay"
 
 #: ../share/extensions/addnodes.inx.h:3 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/radiusrand.inx.h:3
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:4
@@ -11278,95 +11130,80 @@ msgstr ""
 "openingway"
 
 #: ../share/extensions/color_brighter.inx.h:1
-#, fuzzy
 msgid "Brighter"
-msgstr "Ightnessbray"
+msgstr "Ighterbray"
 
 #: ../share/extensions/color_custom.inx.h:1
-#, fuzzy
 msgid "Blue Function"
-msgstr "Unctionfay"
+msgstr "Ueblay unctionfay"
 
 #: ../share/extensions/color_custom.inx.h:3
-#, fuzzy
 msgid "Custom..."
-msgstr "Ustomcay"
+msgstr "Ustomcay..."
 
 #: ../share/extensions/color_custom.inx.h:4
-#, fuzzy
 msgid "Green Function"
-msgstr "Unctionfay"
+msgstr "Eengray unctionfay"
 
 #: ../share/extensions/color_custom.inx.h:5
-#, fuzzy
 msgid "Red Function"
-msgstr "Unctionfay"
+msgstr "Edray unctionfay"
 
 #: ../share/extensions/color_darker.inx.h:2
-#, fuzzy
 msgid "Darker"
-msgstr "Opperdray"
+msgstr "Arkerday"
 
 #: ../share/extensions/color_desaturate.inx.h:2
-#, fuzzy
 msgid "Desaturate"
-msgstr "Eactivatedday"
+msgstr "Esaturateday"
 
 #: ../share/extensions/color_grayscale.inx.h:2
 msgid "Grayscale"
-msgstr ""
+msgstr "Ayscalegray"
 
 #: ../share/extensions/color_lesshue.inx.h:2
 msgid "Less Hue"
-msgstr ""
+msgstr "Esslay Uehay"
 
 #: ../share/extensions/color_lesslight.inx.h:2
 msgid "Less Light"
-msgstr ""
+msgstr "Esslay Ightlay"
 
-#: ../share/extensions/color_lesssaturation.inx .h:2
-#, fuzzy
+#: ../share/extensions/color_lesssaturation.inx.h:2
 msgid "Less Saturation"
-msgstr "Aturationsay"
+msgstr "Esslay aturationsay"
 
 #: ../share/extensions/color_morehue.inx.h:2
-#, fuzzy
 msgid "More Hue"
-msgstr "Ovemay odesnay"
+msgstr "Oremay Uehay"
 
 #: ../share/extensions/color_morelight.inx.h:2
-#, fuzzy
 msgid "More Light"
-msgstr "Ourcesay eighthay"
+msgstr "Oremay Ightlay"
 
 #: ../share/extensions/color_moresaturation.inx.h:2
-#, fuzzy
 msgid "More Saturation"
-msgstr "Aturationsay"
+msgstr "Oremay Aturationsay"
 
 #: ../share/extensions/color_negative.inx.h:2
-#, fuzzy
 msgid "Negative"
-msgstr "Eactivatedday"
+msgstr "Egativenay"
 
 #: ../share/extensions/color_removeblue.inx.h:2
-#, fuzzy
 msgid "Remove Blue"
-msgstr "Emoveray illfay"
+msgstr "Emoveray Ueblay"
 
 #: ../share/extensions/color_removegreen.inx.h:2
-#, fuzzy
 msgid "Remove Green"
-msgstr "Emoveray okestray"
+msgstr "Emoveray Eengray"
 
 #: ../share/extensions/color_removered.inx.h:2
-#, fuzzy
 msgid "Remove Red"
-msgstr "Emoveray"
+msgstr "Emoveray Edray"
 
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
-msgstr ""
+msgstr "RGB Arrelbay"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -11454,11 +11291,8 @@ msgid "DXF file written by pstoedit"
 msgstr "DXF ilefay ittenwray ybay oeditpstay"
 
 #: ../share/extensions/dxf_output.inx.h:4
-#, fuzzy
 msgid "pstoedit must be installed to run; see http://www.pstoedit.net/pstoedit"
-msgstr ""
-"oeditpstay ustmay ebay installedway otay unray eesay http://www.pstoedit.net/"
-"pstoedit"
+msgstr "oeditpstay ustmay ebay installedway otay unray; eesay http://www.pstoedit.net/pstoedit"
 
 #: ../share/extensions/embedimage.inx.h:1
 msgid "Embed All Images"
@@ -11492,6 +11326,18 @@ msgstr "ATeXlay ormulafay"
 msgid "LaTeX formula: "
 msgstr "ATeXlay ormulafay: "
 
+#: ../share/extensions/export_gimp_palette.inx.h:1
+msgid "Export as GIMP Palette"
+msgstr "Exportway asway GIMP Palette"
+
+#: ../share/extensions/export_gimp_palette.inx.h:2
+msgid "Exports the colors of this document as GIMP Palette"
+msgstr "Exportsway ethay olorscay ofway isthay ocumentday asway GIMP Palette"
+
+#: ../share/extensions/export_gimp_palette.inx.h:3
+msgid "GIMP Palette (*.gpl)"
+msgstr "GIMP Palette (*.gpl)"
+
 #: ../share/extensions/extractimage.inx.h:1
 msgid "Extract One Image"
 msgstr "Extractway Oneway Imageway"
@@ -11505,9 +11351,8 @@ msgid "Open files saved with XFIG"
 msgstr "Openway ilesfay avedsay ithway IGXFAY"
 
 #: ../share/extensions/fig_input.inx.h:2
-#, fuzzy
 msgid "XFIG Graphics File (*.fig)"
-msgstr "IGXFAY Aphicgray Ilefay (*.igfay)"
+msgstr "XFIG Graphics File (*.fig)"
 
 #: ../share/extensions/fig_input.inx.h:3
 msgid "XFIG Input"
@@ -11518,9 +11363,92 @@ msgid "Flatness"
 msgstr "Atnessflay"
 
 #: ../share/extensions/flatten.inx.h:2
-#, fuzzy
 msgid "Flatten Beziers"
-msgstr "Attenflay Ezierbay"
+msgstr "Attenflay Eziersbay"
+
+#: ../share/extensions/funcplot.inx.h:1
+msgid "Calculate first derivative numerically"
+msgstr "Alculatecay irstfay erivativeday umericallynay"
+
+#: ../share/extensions/funcplot.inx.h:2
+msgid "Draw Axes"
+msgstr "Awdray Axesway"
+
+#: ../share/extensions/funcplot.inx.h:3
+msgid "End x-value"
+msgstr "Endway x-aluevay"
+
+#: ../share/extensions/funcplot.inx.h:4
+msgid "First derivative"
+msgstr "Irstfay erivativeday"
+
+#: ../share/extensions/funcplot.inx.h:5
+msgid "Function"
+msgstr "Unctionfay "
+
+#: ../share/extensions/funcplot.inx.h:6
+msgid "Function Plotter"
+msgstr "Unctionfay Otterplay"
+
+#: ../share/extensions/funcplot.inx.h:8
+msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
+msgstr "Isotropicway alingscay (usesway allestsmay: idthway/x-angeray orway eighthay/y-angeray)"
+
+#: ../share/extensions/funcplot.inx.h:9
+msgid "Multiply x-range by 2*pi"
+msgstr "Ultiplymay x-angeray ybay 2*pi"
+
+#: ../share/extensions/funcplot.inx.h:10
+msgid "Range and Sampling"
+msgstr "Angeray andway Amplingsay"
+
+#: ../share/extensions/funcplot.inx.h:11
+msgid "Remove rectangle"
+msgstr "Emoveray ectangleray"
+
+#: ../share/extensions/funcplot.inx.h:13
+msgid "Samples"
+msgstr "Amplesay"
+
+#: ../share/extensions/funcplot.inx.h:14
+msgid "Start x-value"
+msgstr "Artstay x-aluevay"
+
+#: ../share/extensions/funcplot.inx.h:15
+msgid ""
+"The following functions are available: (the available functions are the "
+"standard python math functions) ceil(x); fabs(x); floor(x); fmod(x,y); frexp"
+"(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt"
+"(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan"
+"(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and "
+"e are also available."
+msgstr ""
+"Ethay ollowinfay unctionsfay areway availableway: (ethay availableway unctionsfay areway ethay "
+"andardsay ythonpay athmay unctionsfay) ceil(x);·fabs(x);·floor(x);·fmod(x,y);·frexp"
+"(x);·ldexp(x,i);·modf(x);·exp(x);·log(x·[,·base]);·log10(x);·pow(x,y);·sqrt"
+"(x);·acos(x);·asin(x);·atan(x);·atan2(y,x);·hypot(x,y);·cos(x);·sin(x);·tan"
+"(x);·degrees(x);·radians(x);·cosh(x);·sinh(x);·tanh(x). Ethay onstantscay pi andway "
+"areway alsoway availableway."
+
+#: ../share/extensions/funcplot.inx.h:16
+msgid "y-value of rectangle's bottom"
+msgstr "y-aluevay ofway ectangleray's ottombay"
+
+#: ../share/extensions/funcplot.inx.h:17
+msgid "y-value of rectangle's top"
+msgstr "y-aluevay ofway ectangleray's optay"
+
+#: ../share/extensions/g2pngs.inx.h:1
+msgid "Directory"
+msgstr "Irectoryday"
+
+#: ../share/extensions/g2pngs.inx.h:3
+msgid "Groups to PNGs"
+msgstr "Oupsgray otay PNGs"
+
+#: ../share/extensions/g2pngs.inx.h:4
+msgid "Save layers only"
+msgstr "Avesay ayerslay onlyway"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
@@ -11533,6 +11461,30 @@ msgstr "IMPGAY XCF aintainingmay ayerslay (*.XCF)"
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
 msgstr "Awdray Andleshay"
+
+#: ../share/extensions/inkscape_help_commandline.inx.h:1
+msgid "Command Line Options"
+msgstr "Ommandcay Inelay Optionsway"
+
+#: ../share/extensions/inkscape_help_faq.inx.h:1
+msgid "FAQ"
+msgstr "FAQ"
+
+#: ../share/extensions/inkscape_help_manual.inx.h:1
+msgid "Inkscape Manual"
+msgstr "Inkscape Anualmay"
+
+#: ../share/extensions/inkscape_help_relnotes.inx.h:1
+msgid "New in This Version"
+msgstr "Ewnay inway Isthay Ersionvay"
+
+#: ../share/extensions/inkscape_help_reportabug.inx.h:1
+msgid "Report a Bug"
+msgstr "Eportray away Ugbay"
+
+#: ../share/extensions/inkscape_help_svgspec.inx.h:1
+msgid "SVG 1.1 Specification"
+msgstr "SVG 1.1 Ecificationspay"
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
@@ -11558,43 +11510,63 @@ msgstr "Interpolationway ethodmay"
 msgid "Interpolation steps"
 msgstr "Interpolationway epsstay"
 
-#: ../share/extensions/lindenmayer.inx.h:1
+#: ../share/extensions/lindenmayer.inx .h:1
 msgid "Axiom"
 msgstr "Axiomway"
 
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx .h:2
 msgid "L-system"
 msgstr "L-ystemsay"
 
-#: ../share/extensions/lindenmayer.inx.h:3
+#: ../share/extensions/lindenmayer.inx .h:3
 msgid "Left angle"
 msgstr "Eftlay angleway"
 
-#: ../share/extensions/lindenmayer.inx.h:4
+#: ../share/extensions/lindenmayer.inx .h:4
 msgid "Order"
 msgstr "Orderway"
 
-#: ../share/extensions/lindenmayer.inx.h:6
+#: ../share/extensions/lindenmayer.inx .h:6
 #, no-c-format
 msgid "Randomize angle (%)"
 msgstr "Andomizeray angleway (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:8
+#: ../share/extensions/lindenmayer.inx .h:8
 #, no-c-format
 msgid "Randomize step (%)"
 msgstr "Andomizeray epstay (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:10
+#: ../share/extensions/lindenmayer.inx .h:10
 msgid "Right angle"
 msgstr "Ightray angleway"
 
-#: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/lindenmayer.inx .h:11
 msgid "Rules"
 msgstr "Ulesray"
 
-#: ../share/extensions/lindenmayer.inx.h:12
+#: ../share/extensions/lindenmayer.inx .h:12
 msgid "Step length (px)"
 msgstr "Epstay engthlay (px)"
+
+#: ../share/extensions/lorem_ipsum.inx.h:1
+msgid "Lorem ipsum"
+msgstr "Ain itself"
+
+#: ../share/extensions/lorem_ipsum.inx.h:2
+msgid "Number of paragraphs"
+msgstr "Umbernay ofway aragraphspay"
+
+#: ../share/extensions/lorem_ipsum.inx.h:3
+msgid "Paragraph length fluctuation (sentences)"
+msgstr "Aragraphpay engthlay uctuationflay (entencessay)"
+
+#: ../share/extensions/lorem_ipsum.inx.h:5
+msgid "Sentences per paragraph"
+msgstr "Entencessay erpay aragraphpay"
+
+#: ../share/extensions/markers_strokepaint.inx.h:1
+msgid "Color Markers to Match Stroke"
+msgstr "Olorcay Arkersmay otay Atchmay Okestray"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
@@ -11612,6 +11584,50 @@ msgstr "Extrudeway"
 msgid "Magnitude"
 msgstr "Agnitudemay"
 
+#: ../share/extensions/outline2svg.inx.h:1
+msgid "ASCII Text with outline markup"
+msgstr "ASCII Exttay ithway outlineway arkupmay"
+
+#: ../share/extensions/outline2svg.inx.h:2
+msgid "Text Outline File (*.outline)"
+msgstr "Text Outline File (*.outline)"
+
+#: ../share/extensions/outline2svg.inx.h:3
+msgid "Text Outline Input"
+msgstr "Exttay Outlineway Inputway"
+
+#: ../share/extensions/pathalongpath.inx.h:1
+msgid "Copies of the pattern:"
+msgstr "Opiescay ofway ethay atternpay:"
+
+#: ../share/extensions/pathalongpath.inx.h:2
+msgid "Deformation type:"
+msgstr "Eformationday ypetay:"
+
+#: ../share/extensions/pathalongpath.inx.h:3
+msgid "Duplicate the pattern before deformation"
+msgstr "Uplicateday ethay atternpay eforebay eformationday"
+
+#: ../share/extensions/pathalongpath.inx.h:5
+msgid "Normal offset"
+msgstr "Ormalnay offsetway"
+
+#: ../share/extensions/pathalongpath.inx.h:6
+msgid "Pattern along Path"
+msgstr "Attern alongway Athpay"
+
+#: ../share/extensions/pathalongpath.inx.h:7
+msgid "Pattern is vertical"
+msgstr "Atternpay isway erticalvay"
+
+#: ../share/extensions/pathalongpath.inx.h:8
+msgid "Space between copies:"
+msgstr "Acespay etweenbay opiescay:"
+
+#: ../share/extensions/pathalongpath.inx.h:9
+msgid "Tangential offset"
+msgstr "Angentialtay offsetway"
+
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
 msgstr "Ostscriptpay"
@@ -11620,27 +11636,47 @@ msgstr "Ostscriptpay"
 msgid "Postscript Input"
 msgstr "Ostscriptpay Inputway"
 
+#: ../share/extensions/radiobutton_example.inx.h:1
+msgid "Developer Examples"
+msgstr "Eveloperday Examplesway"
+
+#: ../share/extensions/radiobutton_example.inx.h:2
+msgid "RadioButton example"
+msgstr "AdiorayUttonbay exampleway"
+
+#: ../share/extensions/radiobutton_example.inx.h:3
+msgid "Select option: "
+msgstr "Electsay optionway: "
+
+#: ../share/extensions/radiobutton_example.inx.h:4
+msgid "Select second option: "
+msgstr "Electsay econdsay optionway: "
+
 #: ../share/extensions/radiusrand.inx.h:1
-#, fuzzy
 msgid "Jitter nodes"
-msgstr "Otateray odesnay"
+msgstr "Itterjay odesnay"
 
 #: ../share/extensions/radiusrand.inx.h:2
-#, fuzzy
 msgid "Maximum displacement, px"
-msgstr "Aximummay egmentsay engthlay"
+msgstr "Aximummay isplacement, px"
 
 #: ../share/extensions/radiusrand.inx.h:4
-#, fuzzy
 msgid "Shift node handles"
-msgstr "Ovemay odenay andlehay"
+msgstr "Iftshay odenay andleshay"
 
 #: ../share/extensions/radiusrand.inx.h:5
-#, fuzzy
 msgid "Shift nodes"
-msgstr "Oinjay odesnay"
+msgstr "Iftshay odesnay"
 
 #: ../share/extensions/radiusrand.inx.h:6
+msgid ""
+"This effect randomly shifts the nodes (and optionally node handles) of the "
+"selected path."
+msgstr ""
+"Isthay effectway andomlyray iftsshay ethay odesnay (andway optionallyway odenay andleshay) ofway ethay "
+"electedsay athpay."
+
+#: ../share/extensions/radiusrand.inx.h:7
 msgid "Use normal distribution"
 msgstr "Useway ormalnay istributionday"
 
@@ -11682,7 +11718,7 @@ msgstr "Ehaviorbay"
 
 #: ../share/extensions/straightseg.inx.h:4
 msgid "Straighten Segments"
-msgstr ""
+msgstr "Aightenstray Egmentssay"
 
 #: ../share/extensions/summersnight.inx.h:1
 msgid "Envelope"
@@ -11755,220 +11791,3 @@ msgstr "Indowsway Etafilemay (*.wmfay)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Indowsway Etafilemay Inputway"
-
-#~ msgid "Blur Edge"
-#~ msgstr "Urblay Edgeway"
-
-#~ msgid "Blur Width"
-#~ msgstr "Urblay Idthway"
-
-#~ msgid "Text to Path"
-#~ msgstr "Exttay otay Athpay"
-
-#~ msgid "Use the new Gtkmm GUI interface"
-#~ msgstr "Useway ethay ewnay Gtkmm UIGAY interfaceway"
-
-#~ msgid "(null_pointer)"
-#~ msgstr "(ullnayointer_pay)"
-
-#, fuzzy
-#~ msgid "Create offset object"
-#~ msgstr "Eatecray a ynamicday offsetway objectway"
-
-#, fuzzy
-#~ msgid "Inset/outset path"
-#~ msgstr "Insetway/Outsetway ybay:"
-
-#~ msgid "Unicode: %s: %s"
-#~ msgstr "Unicodeway: %s: %s"
-
-#~ msgid "Unicode: "
-#~ msgstr "Unicodeway: "
-
-#~ msgid "gridtype"
-#~ msgstr "idtypegray"
-
-#~ msgid "Find"
-#~ msgstr "Indfay"
-
-#~ msgid "SIOX"
-#~ msgstr "IOXSAY"
-
-#~ msgid "Image Brightness"
-#~ msgstr "Imageway Ightnessbray"
-
-#~ msgid "Optimal Edge Detection (Canny)"
-#~ msgstr "Optimalway Edgeway Etectionday (Annycay)"
-
-#~ msgid "Quantization / Reduction"
-#~ msgstr "Antizationquay / Eductionray"
-
-#~ msgid "Monochrome"
-#~ msgstr "Onochromemay"
-
-#~ msgid "Multiple Scanning"
-#~ msgstr "Ultiplemay Anningscay"
-
-#~ msgid "Potrace"
-#~ msgstr "Potrace"
-
-#~ msgid "Bridge Width"
-#~ msgstr "Idgebray Idthway"
-
-#~ msgid "First String Length"
-#~ msgstr "Irstfay Ingstray Engthlay"
-
-#~ msgid "Fretboard Designer"
-#~ msgstr "Etboardfray Esignerday"
-
-#~ msgid "Fretboard Edges"
-#~ msgstr "Etboardfray Edgesway"
-
-#~ msgid "Last String Length"
-#~ msgstr "Astlay Ingstray Engthlay"
-
-#~ msgid "Multi Length Equal Temperament"
-#~ msgstr "Ultimay Engthlay Equalway Emperamenttay"
-
-#~ msgid "Number of Frets"
-#~ msgstr "Umbernay ofway Etsfray"
-
-#~ msgid "Number of Strings"
-#~ msgstr "Umbernay ofway Ingsstray"
-
-#~ msgid "Nut Width"
-#~ msgstr "Utnay Idthway"
-
-#~ msgid "Perpendicular Distance"
-#~ msgstr "Erpendicularpay Istanceday"
-
-#~ msgid "Scale Base (2 for Octave)"
-#~ msgstr "Alescay Asebay (2 orfay Octaveway)"
-
-#~ msgid "Tones in Scale"
-#~ msgstr "Onestay inway Alescay"
-
-#~ msgid "px per Unit"
-#~ msgstr "px erpay Unitway"
-
-#~ msgid "Multi Length Scala"
-#~ msgstr "Ultimay Engthlay Alascay"
-
-#~ msgid "Path to Scala *.scl File"
-#~ msgstr "Athpay otay Alascay *.scl Ilefay"
-
-#~ msgid "Tuning (scale step for each string seperated by semicolons)"
-#~ msgstr ""
-#~ "Uningtay (alescay epstay orfay eachway ingstray eperatedsay ybay "
-#~ "emicolonssay)"
-
-#~ msgid "Scale Length"
-#~ msgstr "Alescay Engthlay"
-
-#~ msgid "Single Length Equal Temperament"
-#~ msgstr "Inglesay Engthlay Equalway Emperamenttay"
-
-#~ msgid "Single Length Scala"
-#~ msgstr "Inglesay Engthlay Alascay"
-
-#~ msgid "Tuning (Scale step for each string seperated by semicolons)"
-#~ msgstr ""
-#~ "Uningtay (Alescay epstay orfay eachway ingstray eperatedsay ybay "
-#~ "emicolonssay)"
-
-#~ msgid "Fractal (Koch)"
-#~ msgstr "Actalfray (Ochkay)"
-
-#~ msgid "Fractal (Koch) - Load Pattern"
-#~ msgstr "Actalfray (Ochkay) - Oadlay Atternpay"
-
-#~ msgid "Radius"
-#~ msgstr "Adiusray"
-
-#~ msgid "Radius Randomize"
-#~ msgstr "Adiusray Andomizeray"
-
-#~ msgid "Randomize node handles"
-#~ msgstr "Andomizeray odenay andleshay"
-
-#~ msgid "Randomize nodes"
-#~ msgstr "Andomizeray odesnay"
-
-#~ msgid "Segment Straightener"
-#~ msgstr "Egmentsay Aightenerstray"
-
-#~ msgid "Calculate first derivative numerically"
-#~ msgstr "Alculatecay irstfay erivativeday umericallynay"
-
-#~ msgid "First derivative"
-#~ msgstr "Irstfay erivativeday"
-
-#~ msgid "Nodes per period"
-#~ msgstr "Odesnay erpay eriodpay"
-
-#~ msgid "Periods (2*Pi each)"
-#~ msgstr "Eriodspay (2*Ipay eachway)"
-
-#~ msgid "Wave Plotter"
-#~ msgstr "Aveway Otterplay"
-
-#~ msgid "_Opacity"
-#~ msgstr "_Opacityway"
-
-#~ msgid ""
-#~ "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
-#~ "separateGradient point shared by <b>%d</b> gradients; drag with <b>Shift</"
-#~ "b> to separate"
-#~ msgstr ""
-#~ "Adientgray ointpay aredshay ybay <b>%d</b> adientgray; agdray ithway "
-#~ "<b>Iftshay</b> otay eparatesayAdientgray ointpay aredshay ybay <b>%d</b> "
-#~ "adientsgray; agdray ithway <b>Iftshay</b> otay eparatesay"
-
-#~ msgid ""
-#~ "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</"
-#~ "b>, or <b>drag around</b> nodes to select.<b>0</b> out of <b>%i</b> nodes "
-#~ "selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes "
-#~ "to select."
-#~ msgstr ""
-#~ "<b>0</b> outway ofway <b>%i</b> odenay electedsay. <b>Ickclay</b>, "
-#~ "<b>Iftshay+ickclay</b>, orway <b>agdray aroundway</b> odesnay otay "
-#~ "electsay.<b>0</b> outway ofway <b>%i</b> odesnay electedsay. <b>Ickclay</"
-#~ "b>, <b>Iftshay+ickclay</b>, orway <b>agdray aroundway</b> odesnay otay "
-#~ "electsay."
-
-#~ msgid ""
-#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %"
-#~ "s.<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> "
-#~ "subpaths. %s."
-#~ msgstr ""
-#~ "<b>%i</b> ofway <b>%i</b> odenay electedsay inway <b>%i</b> ofway <b>%i</"
-#~ "b> ubpathssay. %s.<b>%i</b> ofway <b>%i</b> odesnay electedsay inway <b>%"
-#~ "i</b> ofway <b>%i</b> ubpathssay. %s."
-
-#~ msgid "Select <b>path(s)</b> to outline."
-#~ msgstr "Electsay <b>athpay(s)</b> otay outlineway."
-
-#~ msgid "How uneven or trembling is the pen stroke"
-#~ msgstr "Owhay unevenway orway emblingtray isway ethay enpay okestray"
-
-#~ msgid "How much inertia affects the movement of the pen"
-#~ msgstr ""
-#~ "Owhay uchmay inertiaway affectsway ethay ovementmay ofway ethay enpay"
-
-#~ msgid "Drag:"
-#~ msgstr "Agdray:"
-
-#~ msgid "How much resistance affects the movement of the pen"
-#~ msgstr ""
-#~ "Owhay uchmay esistanceray affectsway ethay ovementmay ofway ethay enpay"
-
-#~ msgid ""
-#~ "ID for new object is NULL even after generation and lookup attempts: the "
-#~ "new object will NOT be sent, nor will any of its child objects!"
-#~ msgstr ""
-#~ "IDWAY orfay ewnay objectway isway ULLNAY evenway afterway enerationgay "
-#~ "andway ookuplay attemptsway: ethay ewnay objectway illway OTNAY ebay "
-#~ "entsay, ornay illway anyway ofway itsway ildchay objectsway!"
-
-#~ msgid "Function Plotter"
-#~ msgstr "Unctionfay Otterplay"
