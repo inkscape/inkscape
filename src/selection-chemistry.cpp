@@ -1361,10 +1361,13 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
         sp_item_update_cns(*item, selection->desktop());
 #endif
 
-        // we're moving both a clone and its original
+        // we're moving both a clone and its original?
         bool transform_clone_with_original = (SP_IS_USE(item) && selection->includes( sp_use_get_original (SP_USE(item)) ));
+        // ...both a text-on-path and its path?
         bool transform_textpath_with_path = (SP_IS_TEXT_TEXTPATH(item) && selection->includes( sp_textpath_get_path_item (SP_TEXTPATH(sp_object_first_child(SP_OBJECT(item)))) ));
-        bool transform_flowtext_with_frame = (SP_IS_FLOWTEXT(item) && selection->includes( SP_FLOWTEXT(item)->get_frame (NULL))); // only the first frame so far
+        // ...both a flowtext and its frame?
+        bool transform_flowtext_with_frame = (SP_IS_FLOWTEXT(item) && selection->includes( SP_FLOWTEXT(item)->get_frame (NULL))); // (only the first frame is checked so far)
+        // ...both an offset and its source?
         bool transform_offset_with_source = (SP_IS_OFFSET(item) && SP_OFFSET (item)->sourceHref) && selection->includes( sp_offset_get_source (SP_OFFSET(item)) );
        
         // If we're moving a connector, we want to detach it
@@ -1416,8 +1419,9 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
             sp_object_read_attr (SP_OBJECT (item), "transform");
 
             // calculate the matrix we need to apply to the clone to cancel its induced transform from its original
-            NR::Matrix t = matrix_to_desktop (matrix_from_desktop (affine, item), item);
-            NR::Matrix t_inv = matrix_to_desktop (matrix_from_desktop (affine.inverse(), item), item);
+            NR::Matrix parent_transform = sp_item_i2root_affine(SP_ITEM(SP_OBJECT_PARENT (item)));
+            NR::Matrix t = parent_transform * matrix_to_desktop (matrix_from_desktop (affine, item), item) * parent_transform.inverse();
+            NR::Matrix t_inv =parent_transform * matrix_to_desktop (matrix_from_desktop (affine.inverse(), item), item) * parent_transform.inverse();
             NR::Matrix result = t_inv * item->transform * t;
 
             if ((prefs_parallel || prefs_unmoved) && affine.is_translation()) {
@@ -1432,15 +1436,15 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
                     sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &move);
 
                 } else if (prefs_unmoved) {
-                    if (SP_IS_USE(sp_use_get_original(SP_USE(item))))
-                        clone_move = NR::identity();
+                    //if (SP_IS_USE(sp_use_get_original(SP_USE(item))))
+                    //    clone_move = NR::identity();
                     NR::Matrix move = result * clone_move;
-                    sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &move);
+                    sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &t);
                 }
 
             } else {
                 // just apply the result
-                sp_item_write_transform(item, SP_OBJECT_REPR(item), result, &result);
+                sp_item_write_transform(item, SP_OBJECT_REPR(item), result, &t);
             }
 
         } else {
