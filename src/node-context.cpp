@@ -134,6 +134,7 @@ sp_node_context_dispose(GObject *object)
     }
 
     if (nc->nodepath) {
+        nc->grab_node = -1;
         sp_nodepath_destroy(nc->nodepath);
         nc->nodepath = NULL;
     }
@@ -164,6 +165,7 @@ sp_node_context_setup(SPEventContext *ec)
     Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
     SPItem *item = selection->singleItem();
 
+    nc->grab_node = -1;
     nc->nodepath = NULL;
     ec->shape_knot_holder = NULL;
 
@@ -223,6 +225,7 @@ sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
 
     if (nc->nodepath) {
         old_repr = nc->nodepath->repr;
+        nc->grab_node = -1;
         sp_nodepath_destroy(nc->nodepath);
         nc->nodepath = NULL;
     }
@@ -240,6 +243,7 @@ sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
     SPItem *item = selection->singleItem();
 
     SPDesktop *desktop = selection->desktop();
+    nc->grab_node = -1;
     nc->nodepath = NULL;
     ec->shape_knot_holder = NULL;
     if (item) {
@@ -281,6 +285,7 @@ sp_nodepath_update_from_item(SPNodeContext *nc, SPItem *item)
     g_assert(desktop);
 
     if (nc->nodepath) {
+        nc->grab_node = -1;
         sp_nodepath_destroy(nc->nodepath);
         nc->nodepath = NULL;
     }
@@ -395,7 +400,7 @@ sp_node_context_is_over_stroke (SPNodeContext *nc, SPItem *item, NR::Point event
         nc->curvepoint_event[NR::Y] = (gint) event_p [NR::Y];
         nc->hit = true;
         nc->grab_t = position.assume().t;
-        nc->grab_node = sp_nodepath_get_node_by_index(position.assume().piece);
+        nc->grab_node = position.assume().piece;
     }
 
     return close;
@@ -588,6 +593,9 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 switch (nc->current_state) {
                     case SP_NODE_CONTEXT_NODE_DRAGGING:
                         {
+                            if (nc->grab_node == -1) // don't know which segment to drag
+                                break;
+
                             // We round off the extra precision in the motion coordinates provided
                             // by some input devices (like tablets). As we'll store the coordinates
                             // as integers in curvepoint_event we need to do this rounding before

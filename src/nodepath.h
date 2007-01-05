@@ -263,7 +263,7 @@ void sp_nodepath_selected_align(Inkscape::NodePath::Path *nodepath, NR::Dim2 axi
 void sp_nodepath_selected_distribute(Inkscape::NodePath::Path *nodepath, NR::Dim2 axis);
 void sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p, bool toggle);
 void sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p);
-void sp_nodepath_curve_drag(Inkscape::NodePath::Node * e, double t, NR::Point delta);
+void sp_nodepath_curve_drag(int node, double t, NR::Point delta);
 Inkscape::NodePath::Node * sp_nodepath_get_node_by_index(int index);
 /* possibly private functions */
 

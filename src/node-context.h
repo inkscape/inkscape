@@ -51,7 +51,7 @@ struct SPNodeContext {
 	Inkscape::MessageContext *_node_message_context;
 
 	double grab_t;
-	Inkscape::NodePath::Node * grab_node;
+	int grab_node; // number of node grabbed by sp_node_context_is_over_stroke
 	bool hit;
 	NR::Point curvepoint_event; // int coords from event
 	NR::Point curvepoint_doc; // same, in doc coords

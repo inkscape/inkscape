@@ -1608,8 +1608,10 @@ sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
  * cf. app/vectors/gimpbezierstroke.c, gimp_bezier_stroke_point_move_relative()
  */
 void
-sp_nodepath_curve_drag(Inkscape::NodePath::Node * e, double t, NR::Point delta)
+sp_nodepath_curve_drag(int node, double t, NR::Point delta)
 {
+    Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(node);
+
     //fixme: e and e->p can be NULL, so check for those before proceeding
     g_return_if_fail(e != NULL);
     g_return_if_fail(&e->p != NULL);
