@@ -190,6 +190,18 @@ sp_flowtext_modified(SPObject *object, guint flags)
     if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
+    // FIXME: the below stanza is copied over from sp_text_modified, consider factoring it out
+    if (flags & ( SP_OBJECT_STYLE_MODIFIED_FLAG )) {
+        SPFlowtext *text = SP_FLOWTEXT(object);
+        NRRect paintbox;
+        sp_item_invoke_bbox(text, &paintbox, NR::identity(), TRUE);
+        for (SPItemView* v = text->display; v != NULL; v = v->next) {
+            text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
+            nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+            text->layout.show(NR_ARENA_GROUP(v->arenaitem), &paintbox);
+        }
+    }
+
     for (SPObject *o = sp_object_first_child(SP_OBJECT(ft)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
         if (SP_IS_FLOWREGION(o)) {
             region = o;
