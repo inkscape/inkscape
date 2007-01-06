@@ -41,7 +41,6 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-//#ifndef WIN32
 static gboolean
 sp_retransientize_again (gpointer dlgPtr)
 {
@@ -49,7 +48,6 @@ sp_retransientize_again (gpointer dlgPtr)
     dlg->retransientize_suppress = false;
     return FALSE; // so that it is only called once
 }
-//#endif
 
 static void
 sp_retransientize (Inkscape::Application *inkscape, SPDesktop *desktop, gpointer dlgPtr)
