@@ -4,9 +4,10 @@
  * \brief  Event handler for dialog windows
  *
  * Authors:
- *   bulia byak <bulia@dr.com>
+ *   bulia byak <bulia@dr.com>   
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
- * Copyright (C) 2003 authors
+ * Copyright (C) 2003-2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */

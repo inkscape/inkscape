@@ -17,7 +17,9 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
  *   John Bintz <jcoswell@coswellproductions.org>
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
+ * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 2006 John Bintz
  * Copyright (C) 1999-2005 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.

@@ -4,9 +4,10 @@
  *
  * Author:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
- *   buliabyak@gmail.com
+ *   buliabyak@gmail.com 
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
- * Copyright (C) 2004, 2005 Authors
+ * Copyright (C) 2004-2007 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
