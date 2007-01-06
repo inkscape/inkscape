@@ -40,7 +40,7 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-#ifndef WIN32
+//#ifndef WIN32
 static gboolean
 sp_retransientize_again (gpointer dlgPtr)
 {
@@ -48,7 +48,7 @@ sp_retransientize_again (gpointer dlgPtr)
     dlg->retransientize_suppress = false;
     return FALSE; // so that it is only called once
 }
-#endif
+//#endif
 
 static void
 sp_retransientize (Inkscape::Application *inkscape, SPDesktop *desktop, gpointer dlgPtr)
@@ -290,10 +290,18 @@ Dialog::onDesktopActivated (SPDesktop *desktop)
 {
     gint transient_policy = prefs_get_int_attribute_limited ( "options.transientpolicy", "value", 1, 0, 2);
 
-    if (!transient_policy)
+#ifdef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
+    if (prefs_get_int_attribute ( "options.dialogsontopwin32", "value", 0))
+        transient_policy = 2;
+    else    
+        return;
+#endif        
+
+    if (!transient_policy) 
         return;
 
-#ifndef WIN32
+
+
     GtkWindow *dialog_win = GTK_WINDOW(gobj());
 
     if (retransientize_suppress) {
@@ -327,7 +335,6 @@ Dialog::onDesktopActivated (SPDesktop *desktop)
 
     // we're done, allow next retransientizing not sooner than after 120 msec
     gtk_timeout_add (120, (GtkFunction) sp_retransientize_again, (gpointer) this);
-#endif
 }
 
 

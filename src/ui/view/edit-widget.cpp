@@ -1152,11 +1152,9 @@ EditWidget::setPosition (NR::Point p)
 void
 EditWidget::setTransient (void* p, int i)
 {
-#ifndef WIN32
     gtk_window_set_transient_for (static_cast<GtkWindow*>(p), this->gobj());
     if (i==2)
         this->Gtk::Window::present();
-#endif
 }
 
 NR::Point

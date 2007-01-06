@@ -408,21 +408,33 @@ void InkscapePreferences::initPageWindows()
     _win_ontop_normal.init ( _("Normal"), "options.transientpolicy", "value", 1, true, &_win_ontop_none);
     _win_ontop_agressive.init ( _("Aggressive"), "options.transientpolicy", "value", 2, false, &_win_ontop_none);
 
+// FIXME: Temporary Win32 special code to enable transient dialogs
+#ifdef WIN32 
+    _win_ontop_win32.init ( _("Dialogs stay on top (experimental!)"), "options.dialogsontopwin32", "value", false);
+#endif 
+
     _page_windows.add_line( false, "", _win_save_geom, "", 
                             _("Save the window size and position with each document (only for Inkscape SVG format)"));
+#ifndef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
     _page_windows.add_line( false, "", _win_hide_task, "", 
                             _("Whether dialog windows are to be hidden in the window manager taskbar"));
+#endif                           
     _page_windows.add_line( false, "", _win_zoom_resize, "", 
                             _("Zoom drawing when document window is resized, to keep the same area visible (this is the default which can be changed in any window using the button above the right scrollbar)"));
     _page_windows.add_line( false, "", _win_show_close, "", 
                             _("Whether dialog windows have a close button (requires restart)"));
     _page_windows.add_group_header( _("Dialogs on top:"));
+#ifndef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
     _page_windows.add_line( true, "", _win_ontop_none, "", 
                             _("Dialogs are treated as regular windows"));
     _page_windows.add_line( true, "", _win_ontop_normal, "", 
                             _("Dialogs stay on top of document windows"));
     _page_windows.add_line( true, "", _win_ontop_agressive, "", 
                             _("Same as Normal but may work better with some window managers"));
+#else
+    _page_windows.add_line( false, "", _win_ontop_win32, "", 
+                            _("Whether dialogs should stay on top of document windows. Read the ReleaseNotes on this issue! (Rightclick the taskbar button and press 'Restore' to bring back a minimized document window)"));
+#endif                            
 
     this->AddPage(_page_windows, _("Windows"), PREFS_PAGE_WINDOWS);
 }

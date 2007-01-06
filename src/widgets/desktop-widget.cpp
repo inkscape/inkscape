@@ -765,12 +765,12 @@ SPDesktopWidget::setWindowSize (gint w, gint h)
 /**
  * \note transientizing does not work on windows; when you minimize a document 
  * and then open it back, only its transient emerges and you cannot access 
- * the document window.
+ * the document window. The document window must be restored by rightclicking
+ * the taskbar button and pressing "Restore"
  */
 void
 SPDesktopWidget::setWindowTransient (void *p, int transient_policy)
 {
-#ifndef WIN32
     GtkWindow *w =GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(this)));
     if (w)
     {
@@ -788,7 +788,6 @@ SPDesktopWidget::setWindowTransient (void *p, int transient_policy)
             // without this, a transient window not always emerges on top
             gtk_window_present (w); 
     }
-#endif
 }
 
 void
