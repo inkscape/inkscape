@@ -47,10 +47,11 @@
 // absolute distance between gradient points for them to become a single dragger when the drag is created:
 #define MERGE_DIST 0.1
 
-// knot shapes corresponding to GrPoint enum
+// knot shapes corresponding to GrPointType enum
 SPKnotShapeType gr_knot_shapes [] = {
-        SP_KNOT_SHAPE_SQUARE, //POINT_LG_P1
-        SP_KNOT_SHAPE_SQUARE,
+        SP_KNOT_SHAPE_SQUARE, //POINT_LG_BEGIN
+        SP_KNOT_SHAPE_CIRCLE,  //POINT_LG_END
+        SP_KNOT_SHAPE_DIAMOND, //POINT_LG_MID
         SP_KNOT_SHAPE_DIAMOND,
         SP_KNOT_SHAPE_CIRCLE,
         SP_KNOT_SHAPE_CIRCLE,
@@ -58,8 +59,9 @@ SPKnotShapeType gr_knot_shapes [] = {
 };
 
 const gchar *gr_knot_descr [] = {
-    N_("Linear gradient <b>start</b>"), //POINT_LG_P1
+    N_("Linear gradient <b>start</b>"), //POINT_LG_BEGIN
     N_("Linear gradient <b>end</b>"),
+    N_("Linear gradient <b>mid</b>"),
     N_("Radial gradient <b>center</b>"),
     N_("Radial gradient <b>radius</b>"),
     N_("Radial gradient <b>radius</b>"),
@@ -121,7 +123,7 @@ gr_drag_style_query (SPStyle *style, int property, gpointer data)
                 ret = QUERY_STYLE_MULTIPLE_AVERAGED;
             }
 
-            guint32 c = sp_item_gradient_stop_query_style (draggable->item, draggable->point_num, draggable->fill_or_stroke);
+            guint32 c = sp_item_gradient_stop_query_style (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
             cf[0] += SP_RGBA32_R_F (c);
             cf[1] += SP_RGBA32_G_F (c);
             cf[2] += SP_RGBA32_B_F (c);
@@ -215,7 +217,7 @@ gr_drag_style_set (const SPCSSAttr *css, gpointer data)
            GrDraggable *draggable = (GrDraggable *) i->data;
 
            drag->local_change = true;
-           sp_item_gradient_stop_set_style (draggable->item, draggable->point_num, draggable->fill_or_stroke, stop);
+           sp_item_gradient_stop_set_style (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke, stop);
     }
 
     //sp_repr_css_print(stop);
@@ -267,7 +269,7 @@ GrDrag::GrDrag(SPDesktop *desktop) {
     this->updateLevels ();
 
     if (desktop->gr_item) {
-        this->setSelected (getDraggerFor (desktop->gr_item, desktop->gr_point_num, desktop->gr_fill_or_stroke));
+        this->setSelected (getDraggerFor (desktop->gr_item, desktop->gr_point_type, desktop->gr_point_i, desktop->gr_fill_or_stroke));
     }
 }
 
@@ -281,11 +283,13 @@ GrDrag::~GrDrag()
     if (this->selected) {
         GrDraggable *draggable = (GrDraggable *) this->selected->draggables->data;
         desktop->gr_item = draggable->item;
-        desktop->gr_point_num = draggable->point_num;
+        desktop->gr_point_type = draggable->point_type;
+        desktop->gr_point_i = draggable->point_i;
         desktop->gr_fill_or_stroke = draggable->fill_or_stroke;
     } else {
         desktop->gr_item = NULL;
-        desktop->gr_point_num = 0;
+        desktop->gr_point_type = 0;
+        desktop->gr_point_i = 0;
         desktop->gr_fill_or_stroke = true;
     }
 
@@ -303,10 +307,11 @@ GrDrag::~GrDrag()
     this->lines = NULL;
 }
 
-GrDraggable::GrDraggable (SPItem *item, guint point_num, bool fill_or_stroke)
+GrDraggable::GrDraggable (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke)
 {
     this->item = item;
-    this->point_num = point_num;
+    this->point_type = point_type;
+    this->point_i = point_i;
     this->fill_or_stroke = fill_or_stroke;
 
     g_object_ref (G_OBJECT (this->item));
@@ -367,7 +372,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                 for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
                     GrDraggable *draggable = (GrDraggable *) i->data;
                     // copy draggable to d_new:
-                    GrDraggable *da_new = new GrDraggable (draggable->item, draggable->point_num, draggable->fill_or_stroke);
+                    GrDraggable *da_new = new GrDraggable (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
                     d_new->addDraggable (da_new);
                 }
 
@@ -417,13 +422,14 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
 
             NR::Point *dr_snap = NULL;
 
-            if (draggable->point_num == POINT_LG_P1 || draggable->point_num == POINT_LG_P2) {
+            if (draggable->point_type == POINT_LG_BEGIN || draggable->point_type == POINT_LG_END) {
                 for (GList *di = dragger->parent->draggers; di != NULL; di = di->next) {
                     GrDragger *d_new = (GrDragger *) di->data;
                     if (d_new == dragger)
                         continue;
                     if (d_new->isA (draggable->item,
-                                    draggable->point_num == POINT_LG_P1? POINT_LG_P2 : POINT_LG_P1,
+                                    draggable->point_type == POINT_LG_BEGIN? POINT_LG_END : POINT_LG_BEGIN,
+                                    draggable->point_i,
                                     draggable->fill_or_stroke)) {
                         // found the other end of the linear gradient;
                         if (state & GDK_SHIFT_MASK) {
@@ -436,19 +442,20 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                         }
                     }
                 }
-            } else if (draggable->point_num == POINT_RG_R1 || draggable->point_num == POINT_RG_R2 || draggable->point_num == POINT_RG_FOCUS) {
+            } else if (draggable->point_type == POINT_RG_R1 || draggable->point_type == POINT_RG_R2 || draggable->point_type == POINT_RG_FOCUS) {
                 for (GList *di = dragger->parent->draggers; di != NULL; di = di->next) {
                     GrDragger *d_new = (GrDragger *) di->data;
                     if (d_new == dragger)
                         continue;
                     if (d_new->isA (draggable->item,
                                     POINT_RG_CENTER,
+                                    draggable->point_i,
                                     draggable->fill_or_stroke)) {
                         // found the center of the radial gradient;
                         dr_snap = &(d_new->point);
                     }
                 }
-            } else if (draggable->point_num == POINT_RG_CENTER) {
+            } else if (draggable->point_type == POINT_RG_CENTER) {
                 // radial center snaps to hor/vert relative to its original position
                 dr_snap = &(dragger->point_original);
             }
@@ -545,7 +552,7 @@ gr_knot_doubleclicked_handler (SPKnot *knot, guint state, gpointer data)
        return;
 
    GrDraggable *draggable = (GrDraggable *) dragger->draggables->data;
-   sp_item_gradient_edit_stop (draggable->item, draggable->point_num, draggable->fill_or_stroke);
+   sp_item_gradient_edit_stop (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
 }
 
 /**
@@ -563,20 +570,20 @@ GrDragger::fireDraggables (bool write_repr, bool scale_radial, bool merging_focu
         // change gradient, optionally writing to repr; prevent focus from moving if it's snapped
         // to the center, unless it's the first update upon merge when we must snap it to the point
         if (merging_focus ||
-            !(draggable->point_num == POINT_RG_FOCUS && this->isA(draggable->item, POINT_RG_CENTER, draggable->fill_or_stroke)))
-            sp_item_gradient_set_coords (draggable->item, draggable->point_num, this->point, draggable->fill_or_stroke, write_repr, scale_radial);
+            !(draggable->point_type == POINT_RG_FOCUS && this->isA(draggable->item, POINT_RG_CENTER, draggable->point_i, draggable->fill_or_stroke)))
+            sp_item_gradient_set_coords (draggable->item, draggable->point_type, draggable->point_i, this->point, draggable->fill_or_stroke, write_repr, scale_radial);
     }
 }
 
 /**
-Checks if the dragger has a draggable with this point_num
+Checks if the dragger has a draggable with this point_type
  */
 bool
-GrDragger::isA (guint point_num)
+GrDragger::isA (guint point_type)
 {
     for (GSList const* i = this->draggables; i != NULL; i = i->next) {
         GrDraggable *draggable = (GrDraggable *) i->data;
-        if (draggable->point_num == point_num) {
+        if (draggable->point_type == point_type) {
             return true;
         }
     }
@@ -584,14 +591,14 @@ GrDragger::isA (guint point_num)
 }
 
 /**
-Checks if the dragger has a draggable with this item, point_num, fill_or_stroke
+Checks if the dragger has a draggable with this item, point_type, fill_or_stroke
  */
 bool
-GrDragger::isA (SPItem *item, guint point_num, bool fill_or_stroke)
+GrDragger::isA (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke)
 {
     for (GSList const* i = this->draggables; i != NULL; i = i->next) {
         GrDraggable *draggable = (GrDraggable *) i->data;
-        if (draggable->point_num == point_num && draggable->item == item && draggable->fill_or_stroke == fill_or_stroke) {
+        if ( (draggable->point_type == point_type) && (draggable->point_i == point_i) && (draggable->item == item) && (draggable->fill_or_stroke == fill_or_stroke) ) {
             return true;
         }
     }
@@ -603,8 +610,8 @@ GrDraggable::mayMerge (GrDraggable *da2)
 {
     if ((this->item == da2->item) && (this->fill_or_stroke == da2->fill_or_stroke)) {
         // we must not merge the points of the same gradient!
-        if (!((this->point_num == POINT_RG_FOCUS && da2->point_num == POINT_RG_CENTER) ||
-              (this->point_num == POINT_RG_CENTER && da2->point_num == POINT_RG_FOCUS))) {
+        if (!((this->point_type == POINT_RG_FOCUS && da2->point_type == POINT_RG_CENTER) ||
+              (this->point_type == POINT_RG_CENTER && da2->point_type == POINT_RG_FOCUS))) {
             // except that we can snap center and focus together
             return false;
         }
@@ -655,7 +662,7 @@ GrDragger::updateTip ()
         GrDraggable *draggable = (GrDraggable *) this->draggables->data;
         char *item_desc = sp_item_description(draggable->item);
         this->knot->tip = g_strdup_printf (_("%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to preserve angle, with <b>Ctrl+Shift</b> to scale around center"),
-                                           _(gr_knot_descr[draggable->point_num]),
+                                           _(gr_knot_descr[draggable->point_type]),
                                            item_desc,
                                            draggable->fill_or_stroke == false ? _(" (stroke)") : "");
         g_free(item_desc);
@@ -679,7 +686,7 @@ GrDragger::updateKnotShape ()
     if (!draggables)
         return;
     GrDraggable *last = (GrDraggable *) g_slist_last(draggables)->data;
-    g_object_set (G_OBJECT (this->knot->item), "shape", gr_knot_shapes[last->point_num], NULL);
+    g_object_set (G_OBJECT (this->knot->item), "shape", gr_knot_shapes[last->point_type], NULL);
 }
 
 /**
@@ -698,19 +705,19 @@ GrDragger::addDraggable (GrDraggable *draggable)
 Moves this dragger to the point of the given draggable, acting upon all other draggables
  */
 void
-GrDragger::moveThisToDraggable (SPItem *item, guint point_num, bool fill_or_stroke, bool write_repr)
+GrDragger::moveThisToDraggable (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, bool write_repr)
 {
-    this->point = sp_item_gradient_get_coords (item, point_num, fill_or_stroke);
+    this->point = sp_item_gradient_get_coords (item, point_type, point_i, fill_or_stroke);
     this->point_original = this->point;
 
     sp_knot_moveto (this->knot, &(this->point));
 
     for (GSList const* i = this->draggables; i != NULL; i = i->next) {
         GrDraggable *da = (GrDraggable *) i->data;
-        if (da->item == item && da->point_num == point_num && da->fill_or_stroke == fill_or_stroke) {
+        if ( (da->item == item) && (da->point_type == point_type) && (da->point_i == point_i) && (da->fill_or_stroke == fill_or_stroke) ) {
             continue;
         }
-        sp_item_gradient_set_coords (da->item, da->point_num, this->point, da->fill_or_stroke, write_repr, false);
+        sp_item_gradient_set_coords (da->item, da->point_type, da->point_i, this->point, da->fill_or_stroke, write_repr, false);
     }
     // FIXME: here we should also call this->updateDependencies(write_repr); to propagate updating, but how to prevent loops?
 }
@@ -724,26 +731,52 @@ GrDragger::updateDependencies (bool write_repr)
 {
     for (GSList const* i = this->draggables; i != NULL; i = i->next) {
         GrDraggable *draggable = (GrDraggable *) i->data;
-        switch (draggable->point_num) {
-            case POINT_LG_P1:
-                // the other point is dependent only when dragging with ctrl+shift
-                this->moveOtherToDraggable (draggable->item, POINT_LG_P2, draggable->fill_or_stroke, write_repr);
+        switch (draggable->point_type) {
+            case POINT_LG_BEGIN:
+                {
+                    // the end point is dependent only when dragging with ctrl+shift
+                    this->moveOtherToDraggable (draggable->item, POINT_LG_END, 0, draggable->fill_or_stroke, write_repr);
+                    
+                    // update all midpoints.
+                    SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (draggable->item);
+                    guint num = SP_GRADIENT(server)->vector.stops.size();
+                    if (num > 2) {
+                        for ( guint i = 1; i < num - 1; i++ ) {
+                            this->moveOtherToDraggable (draggable->item, POINT_LG_MID, i, draggable->fill_or_stroke, write_repr);
+                        }
+                    }
+                }
                 break;
-            case POINT_LG_P2:
-                this->moveOtherToDraggable (draggable->item, POINT_LG_P1, draggable->fill_or_stroke, write_repr);
+            case POINT_LG_END:
+                {
+                    // the begin point is dependent only when dragging with ctrl+shift
+                    this->moveOtherToDraggable (draggable->item, POINT_LG_BEGIN, 0, draggable->fill_or_stroke, write_repr);
+    
+                    // update all midpoints.
+                    SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (draggable->item);
+                    guint num = SP_GRADIENT(server)->vector.stops.size();
+                    if (num > 2) {
+                        for ( guint i = 1; i < num - 1; i++ ) {
+                            this->moveOtherToDraggable (draggable->item, POINT_LG_MID, i, draggable->fill_or_stroke, write_repr);
+                        }
+                    } 
+                }
+                break;
+            case POINT_LG_MID:
+                // no other nodes depend on mid points.
                 break;
             case POINT_RG_R2:
-                this->moveOtherToDraggable (draggable->item, POINT_RG_R1, draggable->fill_or_stroke, write_repr);
-                this->moveOtherToDraggable (draggable->item, POINT_RG_FOCUS, draggable->fill_or_stroke, write_repr);
+                this->moveOtherToDraggable (draggable->item, POINT_RG_R1, 0, draggable->fill_or_stroke, write_repr);
+                this->moveOtherToDraggable (draggable->item, POINT_RG_FOCUS, 0, draggable->fill_or_stroke, write_repr);
                 break;
             case POINT_RG_R1:
-                this->moveOtherToDraggable (draggable->item, POINT_RG_R2, draggable->fill_or_stroke, write_repr);
-                this->moveOtherToDraggable (draggable->item, POINT_RG_FOCUS, draggable->fill_or_stroke, write_repr);
+                this->moveOtherToDraggable (draggable->item, POINT_RG_R2, 0, draggable->fill_or_stroke, write_repr);
+                this->moveOtherToDraggable (draggable->item, POINT_RG_FOCUS, 0, draggable->fill_or_stroke, write_repr);
                 break;
             case POINT_RG_CENTER:
-                this->moveOtherToDraggable (draggable->item, POINT_RG_R1, draggable->fill_or_stroke, write_repr);
-                this->moveOtherToDraggable (draggable->item, POINT_RG_R2, draggable->fill_or_stroke, write_repr);
-                this->moveOtherToDraggable (draggable->item, POINT_RG_FOCUS, draggable->fill_or_stroke, write_repr);
+                this->moveOtherToDraggable (draggable->item, POINT_RG_R1, 0, draggable->fill_or_stroke, write_repr);
+                this->moveOtherToDraggable (draggable->item, POINT_RG_R2, 0, draggable->fill_or_stroke, write_repr);
+                this->moveOtherToDraggable (draggable->item, POINT_RG_FOCUS, 0, draggable->fill_or_stroke, write_repr);
                 break;
             case POINT_RG_FOCUS:
                 // nothing can depend on that
@@ -809,13 +842,13 @@ GrDragger::~GrDragger ()
 Select the dragger which has the given draggable.
 */
 GrDragger *
-GrDrag::getDraggerFor (SPItem *item, guint point_num, bool fill_or_stroke)
+GrDrag::getDraggerFor (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke)
 {
     for (GList const* i = this->draggers; i != NULL; i = i->next) {
         GrDragger *dragger = (GrDragger *) i->data;
         for (GSList const* j = dragger->draggables; j != NULL; j = j->next) {
             GrDraggable *da2 = (GrDraggable *) j->data;
-            if (da2->item == item && da2->point_num == point_num && da2->fill_or_stroke == fill_or_stroke) {
+            if ( (da2->item == item) && (da2->point_type == point_type) && (da2->point_i == point_i) && (da2->fill_or_stroke == fill_or_stroke)) {
                 return (dragger);
             }
         }
@@ -825,11 +858,11 @@ GrDrag::getDraggerFor (SPItem *item, guint point_num, bool fill_or_stroke)
 
 
 void
-GrDragger::moveOtherToDraggable (SPItem *item, guint point_num, bool fill_or_stroke, bool write_repr)
+GrDragger::moveOtherToDraggable (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, bool write_repr)
 {
-    GrDragger *d = this->parent->getDraggerFor (item, point_num, fill_or_stroke);
+    GrDragger *d = this->parent->getDraggerFor (item, point_type, point_i, fill_or_stroke);
     if (d && d !=  this) {
-        d->moveThisToDraggable (item, point_num, fill_or_stroke, write_repr);
+        d->moveThisToDraggable (item, point_type, point_i, fill_or_stroke, write_repr);
     }
 }
 
@@ -875,7 +908,7 @@ new dragger and add it to draggers list
 void
 GrDrag::addDragger (GrDraggable *draggable)
 {
-    NR::Point p = sp_item_gradient_get_coords (draggable->item, draggable->point_num, draggable->fill_or_stroke);
+    NR::Point p = sp_item_gradient_get_coords (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
 
     for (GList *i = this->draggers; i != NULL; i = i->next) {
         GrDragger *dragger = (GrDragger *) i->data;
@@ -897,10 +930,10 @@ Add draggers for the radial gradient rg on item
 void
 GrDrag::addDraggersRadial (SPRadialGradient *rg, SPItem *item, bool fill_or_stroke)
 {
-    addDragger (new GrDraggable (item, POINT_RG_CENTER, fill_or_stroke));
-    addDragger (new GrDraggable (item, POINT_RG_FOCUS, fill_or_stroke));
-    addDragger (new GrDraggable (item, POINT_RG_R1, fill_or_stroke));
-    addDragger (new GrDraggable (item, POINT_RG_R2, fill_or_stroke));
+    addDragger (new GrDraggable (item, POINT_RG_CENTER, 0, fill_or_stroke));
+    addDragger (new GrDraggable (item, POINT_RG_FOCUS, 0, fill_or_stroke));
+    addDragger (new GrDraggable (item, POINT_RG_R1, 0, fill_or_stroke));
+    addDragger (new GrDraggable (item, POINT_RG_R2, 0, fill_or_stroke));
 }
 
 /**
@@ -909,17 +942,26 @@ Add draggers for the linear gradient lg on item
 void
 GrDrag::addDraggersLinear (SPLinearGradient *lg, SPItem *item, bool fill_or_stroke)
 {
-    addDragger (new GrDraggable (item, POINT_LG_P1, fill_or_stroke));
-    addDragger (new GrDraggable (item, POINT_LG_P2, fill_or_stroke));
+    addDragger (new GrDraggable (item, POINT_LG_BEGIN, 0, fill_or_stroke));
+    
+    // add midstops if any:
+    guint num = lg->vector.stops.size();
+    if (num > 2) {
+        for ( guint i = 1; i < num - 1; i++ ) {
+            addDragger (new GrDraggable (item, POINT_LG_MID, i, fill_or_stroke));
+        }
+    }
+
+    addDragger (new GrDraggable (item, POINT_LG_END, 0, fill_or_stroke));
 }
 
 /**
 Artificially grab the knot of the dragger with this draggable; used by the gradient context
 */
 void
-GrDrag::grabKnot (SPItem *item, guint point_num, bool fill_or_stroke, gint x, gint y, guint32 etime)
+GrDrag::grabKnot (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, gint x, gint y, guint32 etime)
 {
-    GrDragger *dragger = getDraggerFor (item, point_num, fill_or_stroke);
+    GrDragger *dragger = getDraggerFor (item, point_type, point_i, fill_or_stroke);
     if (dragger) {
         sp_knot_start_dragging (dragger->knot, dragger->point, x, y, etime);
     }
@@ -994,22 +1036,22 @@ GrDrag::updateLines ()
         if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
-                this->addLine (sp_item_gradient_get_coords (item, POINT_LG_P1, true), sp_item_gradient_get_coords (item, POINT_LG_P2, true), GR_LINE_COLOR_FILL);
+                this->addLine (sp_item_gradient_get_coords (item, POINT_LG_BEGIN, 0, true), sp_item_gradient_get_coords (item, POINT_LG_END, 0, true), GR_LINE_COLOR_FILL);
             } else if (SP_IS_RADIALGRADIENT (server)) {
-                NR::Point center = sp_item_gradient_get_coords (item, POINT_RG_CENTER, true);
-                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R1, true), GR_LINE_COLOR_FILL);
-                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R2, true), GR_LINE_COLOR_FILL);
+                NR::Point center = sp_item_gradient_get_coords (item, POINT_RG_CENTER, 0, true);
+                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R1, 0, true), GR_LINE_COLOR_FILL);
+                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R2, 0, true), GR_LINE_COLOR_FILL);
             }
         }
 
         if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
-                this->addLine (sp_item_gradient_get_coords (item, POINT_LG_P1, false), sp_item_gradient_get_coords (item, POINT_LG_P2, false), GR_LINE_COLOR_STROKE);
+                this->addLine (sp_item_gradient_get_coords (item, POINT_LG_BEGIN, 0, false), sp_item_gradient_get_coords (item, POINT_LG_END, 0, false), GR_LINE_COLOR_STROKE);
             } else if (SP_IS_RADIALGRADIENT (server)) {
-                NR::Point center = sp_item_gradient_get_coords (item, POINT_RG_CENTER, false);
-                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R1, false), GR_LINE_COLOR_STROKE);
-                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R2, false), GR_LINE_COLOR_STROKE);
+                NR::Point center = sp_item_gradient_get_coords (item, POINT_RG_CENTER, 0, false);
+                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R1, 0, false), GR_LINE_COLOR_STROKE);
+                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R2, 0, false), GR_LINE_COLOR_STROKE);
             }
         }
     }

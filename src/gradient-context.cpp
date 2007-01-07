@@ -433,11 +433,15 @@ static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint st
             sp_item_set_gradient(SP_ITEM(i->data), vector, (SPGradientType) type, fill_or_stroke);
 
             if (type == SP_GRADIENT_TYPE_LINEAR) {
-                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_LG_P1, rc.origin, fill_or_stroke, true, false);
-                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_LG_P2, pt, fill_or_stroke, true, false);
+                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_LG_BEGIN, 0, rc.origin, fill_or_stroke, true, false);
+/* FIXGRADIENT
+   Add sensible code to handle the midpoints, or maybe not necessary?
+   not necessary i think because this only creates default gradient?
+*/                
+                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_LG_END, 0, pt, fill_or_stroke, true, false);
             } else if (type == SP_GRADIENT_TYPE_RADIAL) {
-                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_RG_CENTER, rc.origin, fill_or_stroke, true, false);
-                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_RG_R1, pt, fill_or_stroke, true, false);
+                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_RG_CENTER, 0, rc.origin, fill_or_stroke, true, false);
+                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_RG_R1, 0, pt, fill_or_stroke, true, false);
             }
             SP_OBJECT (i->data)->requestModified(SP_OBJECT_MODIFIED_FLAG);
         }
@@ -449,7 +453,8 @@ static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint st
             // give the grab out-of-bounds values of xp/yp because we're already dragging
             // and therefore are already out of tolerance
             ec->_grdrag->grabKnot (SP_ITEM(selection->itemList()->data),
-                                   type == SP_GRADIENT_TYPE_LINEAR? POINT_LG_P2 : POINT_RG_R1,
+                                   type == SP_GRADIENT_TYPE_LINEAR? POINT_LG_END : POINT_RG_R1,
+                                   0, //point_i
                                    fill_or_stroke, 99999, 99999, etime);
         }
         // We did an undoable action, but sp_document_done will be called by the knot when released

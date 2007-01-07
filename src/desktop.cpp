@@ -128,7 +128,8 @@ SPDesktop::SPDesktop()
     is_fullscreen = false;
 
     gr_item = NULL;
-    gr_point_num = 0;
+    gr_point_type = 0;
+    gr_point_i = 0;
     gr_fill_or_stroke = true;
 
     _layer_hierarchy = NULL;

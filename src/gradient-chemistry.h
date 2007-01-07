@@ -54,18 +54,19 @@ SPStop* sp_first_stop(SPGradient *gradient);
 SPStop* sp_last_stop(SPGradient *gradient);
 SPStop* sp_prev_stop(SPStop *stop, SPGradient *gradient);
 SPStop* sp_next_stop(SPStop *stop);
+SPStop* sp_get_stop_i(SPGradient *gradient, guint i);
 
 void sp_gradient_transform_multiply (SPGradient *gradient, NR::Matrix postmul, bool set);
 
-void sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_desk, bool fill_or_stroke, bool write_repr, bool scale);
-NR::Point sp_item_gradient_get_coords (SPItem *item, guint point_num, bool fill_or_stroke);
+void sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::Point p_desk, bool fill_or_stroke, bool write_repr, bool scale);
+NR::Point sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
 SPGradient *sp_item_gradient_get_vector (SPItem *item, bool fill_or_stroke);
 SPGradientSpread sp_item_gradient_get_spread (SPItem *item, bool fill_or_stroke);
 
 struct SPCSSAttr;
-void sp_item_gradient_stop_set_style (SPItem *item, guint point_num, bool fill_or_stroke, SPCSSAttr *stop);
-guint32 sp_item_gradient_stop_query_style (SPItem *item, guint point_num, bool fill_or_stroke);
-void sp_item_gradient_edit_stop (SPItem *item, guint point_num, bool fill_or_stroke);
+void sp_item_gradient_stop_set_style (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, SPCSSAttr *stop);
+guint32 sp_item_gradient_stop_query_style (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
+void sp_item_gradient_edit_stop (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
 void sp_item_gradient_reverse_vector (SPItem *item, bool fill_or_stroke);
 
 #endif
