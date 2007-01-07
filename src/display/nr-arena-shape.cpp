@@ -326,11 +326,13 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         shape->stroke_painter = NULL;
     }
 
-    if (!shape->curve || !shape->style) return NR_ARENA_ITEM_STATE_ALL;
-    if (sp_curve_is_empty(shape->curve)) return NR_ARENA_ITEM_STATE_ALL;
-    if ( ( shape->_fill.paint.type() == NRArenaShape::Paint::NONE ) &&
-         ( shape->_stroke.paint.type() == NRArenaShape::Paint::NONE && !outline) )
+    if (!shape->curve || 
+        !shape->style ||
+        sp_curve_is_empty(shape->curve) ||
+        (( shape->_fill.paint.type() == NRArenaShape::Paint::NONE ) &&
+         ( shape->_stroke.paint.type() == NRArenaShape::Paint::NONE && !outline) ))
     {
+        item->bbox = shape->approx_bbox;
         return NR_ARENA_ITEM_STATE_ALL;
     }
 
