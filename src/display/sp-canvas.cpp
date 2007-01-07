@@ -1091,6 +1091,8 @@ sp_canvas_realize (GtkWidget *widget)
     if ( prefs_get_int_attribute ("options.useextinput", "value", 1) )
         gtk_widget_set_events(widget, attributes.event_mask);
 
+    widget->style = gtk_style_attach (widget->style, widget->window);
+
     GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
     canvas->pixmap_gc = gdk_gc_new (SP_CANVAS_WINDOW (canvas));
