@@ -494,6 +494,8 @@ if test "x$with_inkboard" = "xyes"; then
 		if test "x$with_inkboard_ssl" = "xyes"; then
 			dnl OpenSSL found; enable SSL support in Pedro
 			INKBOARD_CFLAGS="$INKBOARD_CFLAGS -DHAVE_SSL"
+			RELAYTOOL([ssl], INKBOARD_LIBS, INKBOARD_CFLAGS, [inkboard_weak=yes])
+			RELAYTOOL([crypto], INKBOARD_LIBS, INKBOARD_CFLAGS, [inkboard_weak=yes])
 			AC_DEFINE(WITH_INKBOARD_SSL,1,[Build in SSL support for Inkboard])
 		fi
 else

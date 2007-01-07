@@ -53,6 +53,8 @@
 #ifdef HAVE_SSL
 #include <openssl/ssl.h>
 #include <openssl/err.h>
+
+RELAYTOOL_SSL
 #endif
 
 
@@ -205,12 +207,15 @@ void TcpSocket::init()
         WSAStartup( wVersionRequested, &wsaData );
 #endif
 #ifdef HAVE_SSL
-        sslStream  = NULL;
-        sslContext = NULL;
+	if (libssl_is_present)
+	{
+            sslStream  = NULL;
+            sslContext = NULL;
 	    CRYPTO_set_locking_callback(cryptoLockCallback);
-        CRYPTO_set_id_callback(cryptoIdCallback);
-        SSL_library_init();
-        SSL_load_error_strings();
+            CRYPTO_set_id_callback(cryptoIdCallback);
+            SSL_library_init();
+            SSL_load_error_strings();
+	}
 #endif
         tcp_socket_inited = true;
         }
@@ -285,6 +290,8 @@ static void infoCallback(const SSL *ssl, int where, int ret)
 bool TcpSocket::startTls()
 {
 #ifdef HAVE_SSL
+    if (libssl_is_present)
+    {
     sslStream  = NULL;
     sslContext = NULL;
 
@@ -335,6 +342,7 @@ bool TcpSocket::startTls()
         }
 
     sslEnabled = true;
+    }
 #endif /*HAVE_SSL*/
     return true;
 }
@@ -397,6 +405,8 @@ bool TcpSocket::disconnect()
     bool ret  = true;
     connected = false;
 #ifdef HAVE_SSL
+    if (libssl_is_present)
+    {
     if (sslEnabled)
         {
         if (sslStream)
@@ -419,6 +429,7 @@ bool TcpSocket::disconnect()
         }
     sslStream  = NULL;
     sslContext = NULL;
+    }
 #endif /*HAVE_SSL*/
 
 #ifdef __WIN32__
@@ -460,7 +471,10 @@ long TcpSocket::available()
     if (count<=0 && sslEnabled)
         {
 #ifdef HAVE_SSL
-        return SSL_pending(sslStream);
+	if (libssl_is_present)
+	{
+            return SSL_pending(sslStream);
+	}
 #endif
         }
     return count;
@@ -480,6 +494,8 @@ bool TcpSocket::write(int ch)
     if (sslEnabled)
         {
 #ifdef HAVE_SSL
+	if (libssl_is_present)
+	{
         int r = SSL_write(sslStream, &c, 1);
         if (r<=0)
             {
@@ -490,6 +506,7 @@ bool TcpSocket::write(int ch)
                     return -1;
                 }
             }
+	}
 #endif
         }
     else
@@ -518,6 +535,8 @@ bool TcpSocket::write(const DOMString &strArg)
     if (sslEnabled)
         {
 #ifdef HAVE_SSL
+	if (libssl_is_present)
+	{
         int r = SSL_write(sslStream, (unsigned char *)str.c_str(), len);
         if (r<=0)
             {
@@ -528,6 +547,7 @@ bool TcpSocket::write(const DOMString &strArg)
                     return -1;
                 }
             }
+	}
 #endif
         }
     else
@@ -572,6 +592,8 @@ int TcpSocket::read()
     if (sslEnabled)
         {
 #ifdef HAVE_SSL
+	if (libssl_is_present)
+	{
         if (!sslStream)
             return -1;
         int r = SSL_read(sslStream, &ch, 1);
@@ -591,6 +613,7 @@ int TcpSocket::read()
                      ERR_error_string(ERR_get_error(), NULL));
                 return -1;
             }
+	}
 #endif
         }
     else

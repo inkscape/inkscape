@@ -93,6 +93,7 @@
             -DHAVE_CONFIG_H
             -DXP_WIN <!-- for JS -->
 			-D_INTL_REDIRECT_INLINE
+            -DRELAYTOOL_SSL='static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }' <!-- inkboard -->
             -DWITH_INKBOARD -DHAVE_SSL <!-- inkboard -->
         </defines>
         <includes>

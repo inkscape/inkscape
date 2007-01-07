@@ -48,6 +48,9 @@
 
 #endif /* UNIX */
 
+#ifdef HAVE_SSL
+RELAYTOOL_SSL
+#endif
 
 
 namespace Pedro
@@ -995,12 +998,15 @@ void TcpSocket::init()
         WSAStartup( wVersionRequested, &wsaData );
 #endif
 #ifdef HAVE_SSL
+	if (libssl_is_present)
+	{
         sslStream  = NULL;
         sslContext = NULL;
 	    CRYPTO_set_locking_callback(cryptoLockCallback);
         CRYPTO_set_id_callback(cryptoIdCallback);
         SSL_library_init();
         SSL_load_error_strings();
+	}
 #endif
         tcp_socket_inited = true;
         }
@@ -1027,7 +1033,12 @@ bool TcpSocket::isConnected()
 bool TcpSocket::getHaveSSL()
 {
 #ifdef HAVE_SSL
-    return true;
+    if (libssl_is_present)
+    {
+        return true;
+    } else {
+	return false;
+    }
 #else
     return false;
 #endif
@@ -1094,7 +1105,13 @@ bool TcpSocket::startTls()
 	    "SSL starttls() error:  client not compiled with SSL enabled\n");
     return false;
 #else /*HAVE_SSL*/
-
+    if (!libssl_is_present)
+    {
+    fprintf(stderr,
+	    "SSL starttls() error:  the correct version of libssl was not found \n");
+    return false;
+    } else {
+	    
     sslStream  = NULL;
     sslContext = NULL;
 
@@ -1157,6 +1174,7 @@ bool TcpSocket::startTls()
 
     sslEnabled = true;
     return true;
+    }
 #endif /* HAVE_SSL */
 }
 
@@ -1218,6 +1236,8 @@ bool TcpSocket::disconnect()
     bool ret  = true;
     connected = false;
 #ifdef HAVE_SSL
+    if (libssl_is_present)
+    {
     if (sslEnabled)
         {
         if (sslStream)
@@ -1240,6 +1260,7 @@ bool TcpSocket::disconnect()
         }
     sslStream  = NULL;
     sslContext = NULL;
+    }
 #endif /*HAVE_SSL*/
 
 #ifdef __WIN32__
@@ -1281,7 +1302,10 @@ long TcpSocket::available()
     if (count<=0 && sslEnabled)
         {
 #ifdef HAVE_SSL
-        return SSL_pending(sslStream);
+	if (libssl_is_present)
+	{
+            return SSL_pending(sslStream);
+	}
 #endif
         }
     return count;
@@ -1301,6 +1325,8 @@ bool TcpSocket::write(int ch)
     if (sslEnabled)
         {
 #ifdef HAVE_SSL
+	if (libssl_is_present)
+	{
         int r = SSL_write(sslStream, &c, 1);
         if (r<=0)
             {
@@ -1311,6 +1337,7 @@ bool TcpSocket::write(int ch)
                     return -1;
                 }
             }
+	}
 #endif
         }
     else
@@ -1337,6 +1364,8 @@ bool TcpSocket::write(char *str)
     if (sslEnabled)
         {
 #ifdef HAVE_SSL
+	if (libssl_is_present)
+	{
         int r = SSL_write(sslStream, (unsigned char *)str, len);
         if (r<=0)
             {
@@ -1347,6 +1376,7 @@ bool TcpSocket::write(char *str)
                     return -1;
                 }
             }
+	}
 #endif
         }
     else
@@ -1396,6 +1426,8 @@ int TcpSocket::read()
     if (sslEnabled)
         {
 #ifdef HAVE_SSL
+	if (libssl_is_present)
+	{
         if (!sslStream)
             return -1;
         int r = SSL_read(sslStream, &ch, 1);
@@ -1415,6 +1447,7 @@ int TcpSocket::read()
                      ERR_error_string(ERR_get_error(), NULL));
                 return -1;
             }
+	}
 #endif
         }
     else

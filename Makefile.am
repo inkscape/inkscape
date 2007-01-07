@@ -24,6 +24,7 @@ man_MANS = inkscape.1 \
 		inkview.1
 
 EXTRA_DIST = \
+	acinclude.m4 \
 	fix-roff-punct	\
 	intltool-extract.in	\
 	intltool-merge.in	\
