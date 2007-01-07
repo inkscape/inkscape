@@ -492,6 +492,14 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
     dragger->updateDependencies(false);
 }
 
+static void
+gr_knot_grabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
+{
+    GrDragger *dragger = (GrDragger *) data;
+
+    sp_canvas_force_full_redraw_after_interruptions(dragger->parent->desktop->canvas, 5);
+}
+
 /**
 Called when the mouse releases a dragger knot; changes gradient writing to repr, updates other draggers if needed
 */
@@ -499,6 +507,8 @@ static void
 gr_knot_ungrabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
 {
     GrDragger *dragger = (GrDragger *) data;
+
+    sp_canvas_end_forced_full_redraws(dragger->parent->desktop->canvas);
 
     dragger->point_original = dragger->point = knot->pos;
 
@@ -780,6 +790,7 @@ GrDragger::GrDragger (GrDrag *parent, NR::Point p, GrDraggable *draggable)
     this->handler_id = g_signal_connect (G_OBJECT (this->knot), "moved", G_CALLBACK (gr_knot_moved_handler), this);
     g_signal_connect (G_OBJECT (this->knot), "clicked", G_CALLBACK (gr_knot_clicked_handler), this);
     g_signal_connect (G_OBJECT (this->knot), "doubleclicked", G_CALLBACK (gr_knot_doubleclicked_handler), this);
+    g_signal_connect (G_OBJECT (this->knot), "grabbed", G_CALLBACK (gr_knot_grabbed_handler), this);
     g_signal_connect (G_OBJECT (this->knot), "ungrabbed", G_CALLBACK (gr_knot_ungrabbed_handler), this);
 
     // add the initial draggable
@@ -793,6 +804,13 @@ GrDragger::~GrDragger ()
     // unselect if it was selected
     if (this->parent->selected == this)
         this->parent->setSelected (NULL);
+
+    // disconnect signals
+    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (gr_knot_moved_handler), this);
+    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (gr_knot_clicked_handler), this);
+    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (gr_knot_doubleclicked_handler), this);
+    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (gr_knot_grabbed_handler), this);
+    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (gr_knot_ungrabbed_handler), this);
 
     /* unref should call destroy */
     g_object_unref (G_OBJECT (this->knot));
