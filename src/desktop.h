@@ -104,10 +104,8 @@ struct SPDesktop : public Inkscape::UI::View::View
     // storage for selected dragger used by GrDrag as it's 
     // created and deleted by tools
     SPItem *gr_item;
-    guint  gr_point_type;
-    guint  gr_point_i;
+    guint  gr_point_num;
     bool   gr_fill_or_stroke;   
-    
 
     Inkscape::ObjectHierarchy *_layer_hierarchy;
     gchar * _reconstruction_old_layer_id;

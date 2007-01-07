@@ -37,14 +37,13 @@ typedef enum {
 } SPGradientState;
 
 typedef enum {
-    POINT_LG_BEGIN,
-    POINT_LG_END,
-    POINT_LG_MID,
+    POINT_LG_P1,
+    POINT_LG_P2,
     POINT_RG_CENTER,
     POINT_RG_R1,
     POINT_RG_R2,
     POINT_RG_FOCUS
-} GrPointType;
+} GrPoint;
 
 /**
  * Gradient
