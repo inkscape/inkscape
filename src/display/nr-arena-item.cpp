@@ -262,7 +262,10 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
 
     /* Clipping */
     if (item->clip) {
-        unsigned int newstate = nr_arena_item_invoke_update (item->clip, area, &childgc, state, reset);
+        // FIXME: since here we only need bbox, consider passing 
+        // ((state & !(NR_ARENA_ITEM_STATE_RENDER)) | NR_ARENA_ITEM_STATE_BBOX)
+        // instead of state, so it does not have to create rendering structures in nr_arena_shape_update
+        unsigned int newstate = nr_arena_item_invoke_update (item->clip, area, &childgc, state, reset); 
         if (newstate & NR_ARENA_ITEM_STATE_INVALID) {
             item->state |= NR_ARENA_ITEM_STATE_INVALID;
             return item->state;
