@@ -103,11 +103,16 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
-
+    
     GSList *il = (GSList *) selection->itemList();
-
-    if (g_slist_length(il) < 2 && bop != bool_op_union) {
+    
+    // allow union on a single object for the purpose of removing self overlapse (svn log, revision 13334)
+    if ( (g_slist_length(il) < 2) && (bop != bool_op_union)) {
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Select <b>at least 2 paths</b> to perform a boolean operation."));
+        return;
+    }
+    else if ( g_slist_length(il) < 1 ) {
+        desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Select <b>at least 1 path</b> to perform a boolean union."));
         return;
     }
 
