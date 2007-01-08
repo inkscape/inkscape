@@ -2219,7 +2219,10 @@ sp_node_selected_delete_segment(void)
         //Copy everything after 'end' to a new subpath
        Inkscape::NodePath::SubPath *t = sp_nodepath_subpath_new(nodepath);
         for (curr=end ; curr ; curr=curr->n.other) {
-            sp_nodepath_node_new(t, NULL, (Inkscape::NodePath::NodeType)curr->type, (NRPathcode)curr->code,
+            NRPathcode code = (NRPathcode) curr->code;
+            if (curr == end)
+                code = NR_MOVETO;
+            sp_nodepath_node_new(t, NULL, (Inkscape::NodePath::NodeType)curr->type, code,
                                  &curr->p.pos, &curr->pos, &curr->n.pos);
         }
 
