@@ -22,11 +22,20 @@ import inkex, base64
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
+        self.OptionParser.add_option("--desc")
         self.OptionParser.add_option("--filepath",
                         action="store", type="string", 
                         dest="filepath", default=None,
                         help="")
     def effect(self):
+        mimesubext={
+            'png' :'.png',
+            'bmp' :'.bmp',
+            'jpeg':'.jpg',
+            'jpg' :'.jpg', #bogus mime
+            'icon':'.ico',
+            'gif' :'.gif'
+        }
         ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
         
         # exbed the first embedded image
@@ -39,6 +48,16 @@ class MyEffect(inkex.Effect):
                         if (xlink.value[:4]=='data'):
                             comma = xlink.value.find(',')
                             if comma>0:
+                                #get extension
+                                fileext=''
+                                semicolon = xlink.value.find(';')
+                                if semicolon>0:
+                                    for sub in mimesubext.keys():
+                                        if sub in xlink.value[5:semicolon]:
+                                            fileext=mimesubext[sub]
+                                            path=path+fileext;
+                                            break
+                                #save
                                 data = base64.decodestring(xlink.value[comma:])
                                 open(path,'wb').write(data)
                                 xlink.value = path
