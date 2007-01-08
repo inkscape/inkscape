@@ -55,6 +55,7 @@ tutorial_DATA = \
     tutorial-shapes.de.svg \
     tutorial-shapes.es.svg \
     tutorial-shapes.fr.svg \
+    tutorial-shapes.it.svg \
     tutorial-shapes.ja.svg \
     tutorial-shapes.pt_BR.svg \
     tutorial-shapes.ru.svg \
