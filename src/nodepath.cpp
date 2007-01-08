@@ -1727,8 +1727,11 @@ void sp_node_selected_join()
    Inkscape::NodePath::Node *b = (Inkscape::NodePath::Node *) nodepath->selected->next->data;
 
     g_assert(a != b);
-    g_assert(a->p.other || a->n.other);
-    g_assert(b->p.other || b->n.other);
+    if (!(a->p.other || a->n.other) || !(b->p.other || b->n.other)) { 
+        // someone tried to join an orphan node (i.e. a single-node subpath).
+        // this is not worth an error message, just fail silently.
+        return;
+    }
 
     if (((a->subpath->closed) || (b->subpath->closed)) || (a->p.other && a->n.other) || (b->p.other && b->n.other)) {
         nodepath->desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("To join, you must have <b>two endnodes</b> selected."));
@@ -1826,8 +1829,11 @@ void sp_node_selected_join_segment()
    Inkscape::NodePath::Node *b = (Inkscape::NodePath::Node *) nodepath->selected->next->data;
 
     g_assert(a != b);
-    g_assert(a->p.other || a->n.other);
-    g_assert(b->p.other || b->n.other);
+    if (!(a->p.other || a->n.other) || !(b->p.other || b->n.other)) { 
+        // someone tried to join an orphan node (i.e. a single-node subpath).
+        // this is not worth an error message, just fail silently.
+        return;
+    }
 
     if (((a->subpath->closed) || (b->subpath->closed)) || (a->p.other && a->n.other) || (b->p.other && b->n.other)) {
         nodepath->desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("To join, you must have <b>two endnodes</b> selected."));
