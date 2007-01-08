@@ -184,7 +184,7 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
         }
         case SP_ATTR_OFFSET: {
             stop->offset = sp_svg_read_percentage(value, 0.0);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
             break;
         }
         default: {
@@ -593,6 +593,10 @@ sp_gradient_modified(SPObject *object, guint flags)
         sp_gradient_invalidate_vector(gr);
     }
 
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+        sp_gradient_ensure_colors(gr);
+    }
+    
     if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
