@@ -16,7 +16,7 @@ PackageDesktop: share/applications/inkscape.desktop
 if [ ! -x configure ]; then
     ./autogen.sh
 fi
-export APBUILD_STATIC="popt gc gccpp gtkmm-2.4 gdkmm-2.4 atkmm-1.6 pangomm-1.4 glibmm-2.4 sigc-2.0 Xrender lcms cairo Xfixes Xext"
+export APBUILD_STATIC="popt gc gccpp gtkmm-2.4 gdkmm-2.4 atkmm-1.6 pangomm-1.4 glibmm-2.4 sigc-2.0 Xrender lcms Xfixes Xext"
 export APBUILD_PROJECTNAME=inkscape
 
 PATH=/usr/local/src/inkscape/extra/static/bin:$PATH
