@@ -466,7 +466,6 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
             if (snap_vector) {
                 snap_vectors = g_slist_prepend (snap_vectors, snap_vector);
             }
-			g_slist_free(snap_vectors);
         }
 
         // Move by the smallest of snap vectors:
@@ -480,6 +479,8 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
             p += move;
             sp_knot_moveto (knot, &p);
         }
+
+        g_slist_free(snap_vectors);
     }
 
     dragger->point = p;
