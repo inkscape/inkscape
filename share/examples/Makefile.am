@@ -20,6 +20,7 @@ example_DATA = \
 	car.svgz \
 	gallardo.svgz \
 	gradient-mesh-experimental.svgz \
-	rope-3D.svg
+	rope-3D.svg \
+	animated-clock.svg
 
 EXTRA_DIST = $(example_DATA)
