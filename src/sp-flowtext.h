@@ -20,10 +20,9 @@ struct SPFlowtext : public SPItem {
     /** Completely recalculates the layout. */
     void rebuildLayout();
 
-    /** Converts the current selection (which must be a flowroot) into
-    a \<text\> tree, keeping all the formatting and positioning, but losing
-    the automatic wrapping ability. */
-    static void convert_to_text();
+    /** Converts the flowroot in into a \<text\> tree, keeping all the formatting and positioning,
+    but losing the automatic wrapping ability. */
+    Inkscape::XML::Node *getAsText();
 
     SPItem *get_frame(SPItem *after);
 
@@ -56,3 +55,14 @@ GType sp_flowtext_get_type (void);
 SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, NR::Point p1, NR::Point p2);
 
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

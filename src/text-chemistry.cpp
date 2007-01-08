@@ -23,8 +23,10 @@
 #include "document.h"
 #include "message-stack.h"
 #include "selection.h"
+#include "style.h"
 #include "desktop-handles.h"
 #include "text-editing.h"
+#include "text-chemistry.h"
 #include "sp-flowtext.h"
 #include "sp-flowregion.h"
 #include "sp-flowdiv.h"
@@ -100,15 +102,30 @@ text_put_on_path()
         return;
     }
 
-    if (SP_IS_FLOWTEXT(text)) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("You cannot put flowtext on a path. Convert flowtext to text first."));
-        return;
-    }
-
     if (SP_IS_RECT(shape)) {
         // rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
         sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("You cannot put text on a rectangle in this version. Convert rectangle to path first."));
         return;
+    }
+
+    // if a flowed text is selected, convert it to a regular text object
+    if (SP_IS_FLOWTEXT(text)) {
+        Inkscape::XML::Node *repr = SP_FLOWTEXT(text)->getAsText();
+        Inkscape::XML::Node *parent = SP_OBJECT_REPR(text)->parent();
+        parent->appendChild(repr);
+
+        SPItem *new_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
+        sp_item_write_transform(new_item, repr, text->transform);
+        SP_OBJECT(new_item)->updateRepr();
+
+        Inkscape::GC::release(repr);
+        text->deleteObject(); // delete the orignal flowtext
+
+        sp_document_ensure_up_to_date(sp_desktop_document(desktop));
+
+        selection->clear();
+
+        text = new_item; // point to the new text
     }
 
     Inkscape::Text::Layout const *layout = te_get_layout(text);
@@ -255,7 +272,7 @@ text_flow_into_shape()
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
-    SPItem *text = text_in_selection(selection);
+    SPItem *text = text_or_flowtext_in_selection(selection);
     SPItem *shape = shape_in_selection(selection);
 
     if (!text || !shape || g_slist_length((GSList *) selection->itemList()) < 2) {
@@ -263,9 +280,11 @@ text_flow_into_shape()
         return;
     }
 
-    // remove transform from text, but recursively scale text's fontsize by the expansion
-    SP_TEXT(text)->_adjustFontsizeRecursive(text, NR::expansion(SP_ITEM(text)->transform));
-    SP_OBJECT_REPR(text)->setAttribute("transform", NULL);
+    if (SP_IS_TEXT(text)) {
+      // remove transform from text, but recursively scale text's fontsize by the expansion
+      SP_TEXT(text)->_adjustFontsizeRecursive(text, NR::expansion(SP_ITEM(text)->transform));
+      SP_OBJECT_REPR(text)->setAttribute("transform", NULL);
+    }
 
     Inkscape::XML::Node *root_repr = sp_repr_new("svg:flowRoot");
     root_repr->setAttribute("xml:space", "preserve"); // we preserve spaces in the text objects we create
@@ -295,16 +314,32 @@ text_flow_into_shape()
         }
     }
 
-    Inkscape::XML::Node *para_repr = sp_repr_new("svg:flowPara");
-    root_repr->appendChild(para_repr);
-    object = doc->getObjectByRepr(para_repr);
-    g_return_if_fail(SP_IS_FLOWPARA(object));
+    if (SP_IS_TEXT(text)) { // flow from text, as string
+        Inkscape::XML::Node *para_repr = sp_repr_new("svg:flowPara");
+        root_repr->appendChild(para_repr);
+        object = doc->getObjectByRepr(para_repr);
+        g_return_if_fail(SP_IS_FLOWPARA(object));
 
-    Inkscape::Text::Layout const *layout = te_get_layout(text);
-    Glib::ustring text_ustring = sp_te_get_string_multiline(text, layout->begin(), layout->end());
+        Inkscape::Text::Layout const *layout = te_get_layout(text);
+        Glib::ustring text_ustring = sp_te_get_string_multiline(text, layout->begin(), layout->end());
 
-    Inkscape::XML::Node *text_repr = sp_repr_new_text(text_ustring.c_str()); // FIXME: transfer all formatting! and convert newlines into flowParas!
-    para_repr->appendChild(text_repr);
+        Inkscape::XML::Node *text_repr = sp_repr_new_text(text_ustring.c_str()); // FIXME: transfer all formatting! and convert newlines into flowParas!
+        para_repr->appendChild(text_repr);
+
+        Inkscape::GC::release(para_repr);
+        Inkscape::GC::release(text_repr);
+
+    } else { // reflow an already flowed text, preserving paras
+        for (SPObject *o = SP_OBJECT(text)->children; o != NULL; o = o->next) {
+            if (SP_IS_FLOWPARA(o)) {
+                Inkscape::XML::Node *para_repr = SP_OBJECT_REPR(o)->duplicate();
+                root_repr->appendChild(para_repr);
+                object = doc->getObjectByRepr(para_repr);
+                g_return_if_fail(SP_IS_FLOWPARA(object));
+                Inkscape::GC::release(para_repr);
+            }
+        }
+    }
 
     SP_OBJECT(text)->deleteObject (true);
 
@@ -315,8 +350,6 @@ text_flow_into_shape()
 
     Inkscape::GC::release(root_repr);
     Inkscape::GC::release(region_repr);
-    Inkscape::GC::release(para_repr);
-    Inkscape::GC::release(text_repr);
 }
 
 void
@@ -398,6 +431,61 @@ text_unflow ()
                      _("Unflow flowed text"));
 }
 
+void
+flowtext_to_text()
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+
+    if (selection->isEmpty()) {
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, 
+                                                 _("Select <b>flowed text(s)</b> to convert."));
+        return;
+    }
+
+    bool did = false;
+
+    GSList *reprs = NULL;
+    GSList *items = g_slist_copy((GSList *) selection->itemList());
+    for (; items != NULL; items = items->next) {
+        
+        SPItem *item = (SPItem *) items->data;
+
+        if (!SP_IS_FLOWTEXT(item))
+            continue;
+
+        did = true;
+
+        Inkscape::XML::Node *repr = SP_FLOWTEXT(item)->getAsText();
+        Inkscape::XML::Node *parent = SP_OBJECT_REPR(item)->parent();
+        parent->appendChild(repr);
+
+        SPItem *new_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
+        sp_item_write_transform(new_item, repr, item->transform);
+        SP_OBJECT(new_item)->updateRepr();
+    
+        Inkscape::GC::release(repr);
+        item->deleteObject();
+
+        reprs = g_slist_prepend(reprs, repr);
+    }
+
+    g_slist_free(items);
+
+    if (did) {
+        sp_document_done(sp_desktop_document(desktop), 
+                         SP_VERB_OBJECT_FLOWTEXT_TO_TEXT,
+                         _("Convert flowed text to text"));
+        selection->setReprList(reprs);        
+    } else {
+        sp_desktop_message_stack(desktop)->
+            flash(Inkscape::ERROR_MESSAGE,
+                  _("<b>No flowed text(s)</b> to convert in the selection."));
+    }
+
+    g_slist_free(reprs);
+}
 
 
 /*

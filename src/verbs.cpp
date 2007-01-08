@@ -1276,7 +1276,7 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
             text_unflow();
             break;
         case SP_VERB_OBJECT_FLOWTEXT_TO_TEXT:
-            SPFlowtext::convert_to_text();
+            flowtext_to_text();
             break;
         case SP_VERB_OBJECT_FLIP_HORIZONTAL:
             if (tools_isactive(dt, TOOLS_NODES)) {

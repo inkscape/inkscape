@@ -25,6 +25,7 @@
 #include "sp-use.h"
 #include "sp-rect.h"
 #include "text-tag-attributes.h"
+#include "text-chemistry.h"
 
 
 #include "livarot/Shape.h"
@@ -511,40 +512,36 @@ void SPFlowtext::_clearFlow(NRArenaGroup *in_arena)
     }
 }
 
-void SPFlowtext::convert_to_text()
+Inkscape::XML::Node *
+SPFlowtext::getAsText()
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    SPItem *item = selection->singleItem();
-    if (!SP_IS_FLOWTEXT(item)) return;
+    if (!this->layout.outputExists()) return NULL;
 
-    SPFlowtext *group = SP_FLOWTEXT(item);
-
-    if (!group->layout.outputExists()) return;
+    SPItem *item = SP_ITEM(this);
 
     Inkscape::XML::Node *repr = sp_repr_new("svg:text");
     repr->setAttribute("xml:space", "preserve");
-    repr->setAttribute("style", SP_OBJECT_REPR(group)->attribute("style"));
-    NR::Point anchor_point = group->layout.characterAnchorPoint(group->layout.begin());
+    repr->setAttribute("style", SP_OBJECT_REPR(this)->attribute("style"));
+    NR::Point anchor_point = this->layout.characterAnchorPoint(this->layout.begin());
     sp_repr_set_svg_double(repr, "x", anchor_point[NR::X]);
     sp_repr_set_svg_double(repr, "y", anchor_point[NR::Y]);
 
-    for (Inkscape::Text::Layout::iterator it = group->layout.begin() ; it != group->layout.end() ; ) {
-
-	    Inkscape::XML::Node *line_tspan = sp_repr_new("svg:tspan");
+    for (Inkscape::Text::Layout::iterator it = this->layout.begin() ; it != this->layout.end() ; ) {
+        Inkscape::XML::Node *line_tspan = sp_repr_new("svg:tspan");
         line_tspan->setAttribute("sodipodi:role", "line");
 
         Inkscape::Text::Layout::iterator it_line_end = it;
         it_line_end.nextStartOfLine();
+
         while (it != it_line_end) {
 
-	        Inkscape::XML::Node *span_tspan = sp_repr_new("svg:tspan");
-            NR::Point anchor_point = group->layout.characterAnchorPoint(it);
+            Inkscape::XML::Node *span_tspan = sp_repr_new("svg:tspan");
+            NR::Point anchor_point = this->layout.characterAnchorPoint(it);
             // use kerning to simulate justification and whatnot
             Inkscape::Text::Layout::iterator it_span_end = it;
             it_span_end.nextStartOfSpan();
             Inkscape::Text::Layout::OptionalTextTagAttrs attrs;
-            group->layout.simulateLayoutUsingKerning(it, it_span_end, &attrs);
+            this->layout.simulateLayoutUsingKerning(it, it_span_end, &attrs);
             // set x,y attributes only when we need to
             bool set_x = false;
             bool set_y = false;
@@ -573,9 +570,9 @@ void SPFlowtext::convert_to_text()
             SPObject *source_obj = 0;
             void *rawptr = 0;
             Glib::ustring::iterator span_text_start_iter;
-            group->layout.getSourceOfCharacter(it, &rawptr, &span_text_start_iter);
+            this->layout.getSourceOfCharacter(it, &rawptr, &span_text_start_iter);
             source_obj = SP_OBJECT (rawptr);
-            gchar *style_text = sp_style_write_difference((SP_IS_STRING(source_obj) ? source_obj->parent : source_obj)->style, group->style);
+            gchar *style_text = sp_style_write_difference((SP_IS_STRING(source_obj) ? source_obj->parent : source_obj)->style, this->style);
             if (style_text && *style_text) {
                 span_tspan->setAttribute("style", style_text);
                 g_free(style_text);
@@ -586,12 +583,12 @@ void SPFlowtext::convert_to_text()
                 SPObject *span_end_obj = 0;
                 void *rawptr = 0;
                 Glib::ustring::iterator span_text_end_iter;
-                group->layout.getSourceOfCharacter(it_span_end, &rawptr, &span_text_end_iter);
+                this->layout.getSourceOfCharacter(it_span_end, &rawptr, &span_text_end_iter);
                 span_end_obj = SP_OBJECT(rawptr);
                 if (span_end_obj != source_obj) {
-                    if (it_span_end == group->layout.end()) {
+                    if (it_span_end == this->layout.end()) {
                         span_text_end_iter = span_text_start_iter;
-                        for (int i = group->layout.iteratorToCharIndex(it_span_end) - group->layout.iteratorToCharIndex(it) ; i ; --i)
+                        for (int i = this->layout.iteratorToCharIndex(it_span_end) - this->layout.iteratorToCharIndex(it) ; i ; --i)
                             ++span_text_end_iter;
                     } else
                         span_text_end_iter = string->end();    // spans will never straddle a source boundary
@@ -609,24 +606,13 @@ void SPFlowtext::convert_to_text()
             it = it_span_end;
 
             line_tspan->appendChild(span_tspan);
-	        Inkscape::GC::release(span_tspan);
+            Inkscape::GC::release(span_tspan);
         }
         repr->appendChild(line_tspan);
-	    Inkscape::GC::release(line_tspan);
+        Inkscape::GC::release(line_tspan);
     }
 
-    Inkscape::XML::Node *parent = SP_OBJECT_REPR(item)->parent();
-    parent->appendChild(repr);
-    SPItem *new_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
-    sp_item_write_transform(new_item, repr, item->transform);
-    SP_OBJECT(new_item)->updateRepr();
-
-    Inkscape::GC::release(repr);
-    selection->set(new_item);
-    item->deleteObject();
-
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
-                     _("Convert flowed text to text"));
+    return repr;
 }
 
 SPItem *SPFlowtext::get_frame(SPItem *after)
