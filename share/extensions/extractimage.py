@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
-import inkex, base64
+import inkex, base64, os
 
 class MyEffect(inkex.Effect):
     def __init__(self):
@@ -36,7 +36,7 @@ class MyEffect(inkex.Effect):
             'icon':'.ico',
             'gif' :'.gif'
         }
-        ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
+        #ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
         
         # exbed the first embedded image
         path = self.options.filepath
@@ -60,7 +60,7 @@ class MyEffect(inkex.Effect):
                                 #save
                                 data = base64.decodestring(xlink.value[comma:])
                                 open(path,'wb').write(data)
-                                xlink.value = path
+                                xlink.value = os.path.realpath(path) #absolute for making in-mem cycles work
                             else:
                                 inkex.debug('Difficulty finding the image data.')
                             break

@@ -45,8 +45,30 @@ class MyEffect(inkex.Effect):
         xlink = node.attributes.getNamedItemNS(inkex.NSS[u'xlink'],'href')
         if (xlink.value[:4]!='data'):
             absref=node.attributes.getNamedItemNS(inkex.NSS[u'sodipodi'],'absref')
-            if (os.path.isfile(absref.value)):
-                file = open(absref.value,"rb").read()
+            href=node.attributes.getNamedItemNS(inkex.NSS[u'xlink'],'href')
+            svg=self.document.getElementsByTagName('svg')[0]
+            docbase=svg.attributes.getNamedItemNS(inkex.NSS[u'sodipodi'],'docbase')
+
+            path=''
+            #path selection strategy:
+            # 1. absref
+            # 2. href if absolute
+            # 3. sodipodi:docbase + href
+            # 4. realpath-ified href
+            if (absref != None):
+                path=absref.value
+            elif (href != None):
+                if (os.path.isabs(href.value)):
+                    path=os.path.realpath(href.value)
+                elif (docbase != None):
+                    path=os.path.join(docbase.value,href.value)
+                else:
+                    path=os.path.realpath(href.value)
+            else:
+                inkex.debug('No xlink:href or sodipodi:absref attributes found! Unable to embed image.')
+            
+            if (os.path.isfile(path)):
+                file = open(path,"rb").read()
                 embed=True
                 if (file[:4]=='\x89PNG'):
                     type='image/png'
@@ -57,7 +79,7 @@ class MyEffect(inkex.Effect):
                 elif (file[:6]=='GIF87a' or file[:6]=='GIF89a'):
                     type='image/gif'
                 #ico files lack any magic... therefore we check the filename instead
-                elif(absref.value.endswith('.ico')):
+                elif(path.endswith('.ico')):
                     type='image/x-icon' #official IANA registered MIME is 'image/vnd.microsoft.icon' tho
                 else:
                     embed=False
@@ -65,8 +87,8 @@ class MyEffect(inkex.Effect):
                     xlink.value = 'data:%s;base64,%s' % (type, base64.encodestring(file))
                     node.removeAttributeNS(inkex.NSS[u'sodipodi'],'absref')
                 else:
-                    inkex.debug("%s is not of type image/png, image/jpeg, image/bmp, image/gif or image/x-icon" % absref.value)
+                    inkex.debug("%s is not of type image/png, image/jpeg, image/bmp, image/gif or image/x-icon" % path)
             else:
-                inkex.debug("Sorry we could not locate %s" % absref.value)
+                inkex.debug("Sorry we could not locate %s" % path)
 e = MyEffect()
 e.affect()
