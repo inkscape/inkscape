@@ -22,16 +22,21 @@ import inkex, os, base64
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
+        self.OptionParser.add_option("-s", "--selectedonly",
+            action="store", type="inkbool", 
+            dest="selectedonly", default=False,
+            help="embed only selected images")
 
     def effect(self):
         ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
-        
-        # if there is a selection only embed selected images
-        # otherwise embed all images
-        if (self.options.ids):
-            for id, node in self.selected.iteritems():
-                if node.tagName == 'image':
-                    self.embedImage(node)
+
+        # if slectedonly is enabled and there is a selection only embed selected
+        # images. otherwise embed all images
+        if (self.options.selectedonly):
+            if (self.options.ids):
+                for id, node in self.selected.iteritems():
+                    if node.tagName == 'image':
+                        self.embedImage(node)
         else:
             path = '//image'
             for node in inkex.xml.xpath.Evaluate(path,self.document, context=ctx):
