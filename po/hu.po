@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-22 00:30+0100\n"
-"PO-Revision-Date: 2007-01-04 22:24+0100\n"
+"PO-Revision-Date: 2007-01-09 23:55+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -430,39 +430,32 @@ msgid "Alternate the rotation direction for each column"
 msgstr "Az elforgatási irány módosítása oszloponként"
 
 #: ../src/dialogs/clonetiler.cpp:2022
-#, fuzzy
 msgid "_Blur & opacity"
-msgstr "Alap-átlátszatlanság"
+msgstr "Elmosás és átlátsz_atlanság"
 
 #: ../src/dialogs/clonetiler.cpp:2031
-#, fuzzy
 msgid "<b>Blur:</b>"
-msgstr "<b>F:</b>"
+msgstr "<b>Elmosás:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2038
-#, fuzzy
 msgid "Blur tiles by this percentage for each row"
-msgstr "A csempék átlátszatlanságának soronkénti csökkentésének százaléka"
+msgstr "A csempék elmosása soronként ennyi százalékkal"
 
 #: ../src/dialogs/clonetiler.cpp:2045
-#, fuzzy
 msgid "Blur tiles by this percentage for each column"
-msgstr "A csempék átlátszatlanságának oszloponkénti csökkentésének százaléka"
+msgstr "A csempék elmosása oszloponként ennyi százalékkal"
 
 #: ../src/dialogs/clonetiler.cpp:2052
-#, fuzzy
 msgid "Randomize the tile blur by this percentage"
-msgstr "A csempék árnyalatának véletlenszerűsítése ennyi százalékkal"
+msgstr "A csempék elmosásának véletlenszerűsítése ennyi százalékkal"
 
 #: ../src/dialogs/clonetiler.cpp:2066
-#, fuzzy
 msgid "Alternate the sign of blur change for each row"
-msgstr "A színváltozás előjelének módosítása soronként"
+msgstr "Az elmosásváltozás előjelének módosítása soronként"
 
 #: ../src/dialogs/clonetiler.cpp:2071
-#, fuzzy
 msgid "Alternate the sign of blur change for each column"
-msgstr "A színváltozás előjelének módosítása oszloponként"
+msgstr "Az elmosásváltozás előjelének módosítása oszloponként"
 
 #: ../src/dialogs/clonetiler.cpp:2080
 msgid "<b>Fade out:</b>"
@@ -990,14 +983,12 @@ msgid "Remove fill"
 msgstr "Kitöltés eltávolítása"
 
 #: ../src/dialogs/fill-style.cpp:474
-#, fuzzy
 msgid "Set gradient on fill"
-msgstr "Színátmenet létrehozása a kitöltésben"
+msgstr "Színátmenet beállítása a kitöltésre"
 
 #: ../src/dialogs/fill-style.cpp:521
-#, fuzzy
 msgid "Set pattern on fill"
-msgstr "Mintával való kitöltés"
+msgstr "Minta beállítása a kitöltésre"
 
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/dialogs/fill-style.cpp:536 ../src/ui/widget/selected-style.cpp:165
@@ -1231,9 +1222,8 @@ msgid "Move to:"
 msgstr "Áthelyezés ide:"
 
 #: ../src/dialogs/guidelinedialog.cpp:77
-#, fuzzy
 msgid "Set guide properties"
-msgstr "Nyomtatási tulajdonságok"
+msgstr "Segédvonal-tulajdonságok beállítása"
 
 #: ../src/dialogs/guidelinedialog.cpp:116
 msgid "Guideline"
@@ -1363,9 +1353,8 @@ msgid "Set object label"
 msgstr "Objektumcímke beállítása"
 
 #: ../src/dialogs/item-properties.cpp:427
-#, fuzzy
 msgid "Set object title"
-msgstr "Körvonalstíl_us"
+msgstr "Objektumcím beállítása"
 
 #: ../src/dialogs/item-properties.cpp:435
 msgid "Set object description"
@@ -1544,14 +1533,12 @@ msgid "Stroke st_yle"
 msgstr "Körvonalstíl_us"
 
 #: ../src/dialogs/object-properties.cpp:196
-#, fuzzy
 msgid "_Blur, %"
-msgstr "Kék"
+msgstr "_Elmosás, %"
 
 #: ../src/dialogs/object-properties.cpp:229
-#, fuzzy
 msgid "Master _opacity, %"
-msgstr "Ala_p-átlátszatlanság"
+msgstr "_Alap-átlátszatlanság, %"
 
 #: ../src/dialogs/object-properties.cpp:381
 #: ../src/ui/widget/selected-style.cpp:806
@@ -1561,7 +1548,7 @@ msgstr "Átlátszatlanság módosítása"
 
 #: ../src/dialogs/object-properties.cpp:438
 msgid "Change blur"
-msgstr ""
+msgstr "Elmosás módosítása"
 
 #: ../src/dialogs/rdf.cpp:178
 msgid "CC Attribution"
@@ -1767,14 +1754,12 @@ msgid "Remove stroke"
 msgstr "Körvonal eltávolítása"
 
 #: ../src/dialogs/stroke-style.cpp:403
-#, fuzzy
 msgid "Set gradient on stroke"
-msgstr "Színátmenet létrehozása a körvonalban"
+msgstr "Színátmenet beállítása a körvonalra"
 
 #: ../src/dialogs/stroke-style.cpp:447
-#, fuzzy
 msgid "Set pattern on stroke"
-msgstr "Mintával megrajzolt körvonal"
+msgstr "Minta beállítása a körvonalra"
 
 #: ../src/dialogs/stroke-style.cpp:461 ../src/ui/widget/selected-style.cpp:165
 #: ../src/ui/widget/selected-style.cpp:223
@@ -1799,9 +1784,8 @@ msgid "None"
 msgstr "Nincs"
 
 #: ../src/dialogs/stroke-style.cpp:960
-#, fuzzy
 msgid "Set markers"
-msgstr "Csillagok"
+msgstr "Jelölőelemek beállítása"
 
 #: ../src/dialogs/stroke-style.cpp:1066
 msgid "Stroke width"
@@ -1967,7 +1951,7 @@ msgstr "Szövegstílus beállítása"
 
 #: ../src/dialogs/tiledialog.cpp:330
 msgid "Arrange in a grid"
-msgstr ""
+msgstr "Rácsra való igazítás"
 
 #: ../src/dialogs/tiledialog.cpp:633
 msgid "Rows:"
@@ -2110,7 +2094,7 @@ msgstr "A tulajdonság értéke"
 
 #: ../src/dialogs/xml-tree.cpp:891
 msgid "Drag XML subtree"
-msgstr ""
+msgstr "XML-al-fa húzása"
 
 #: ../src/dialogs/xml-tree.cpp:1318
 msgid "New element node..."
@@ -2172,9 +2156,8 @@ msgstr "A lánc lezárása."
 
 # node-ok és szakaszok száma nem változik
 #: ../src/draw-context.cpp:549
-#, fuzzy
 msgid "Draw path"
-msgstr "_Szétbontás"
+msgstr "Lánc rajzolása"
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
@@ -2221,7 +2204,7 @@ msgstr "Művészi vonalak rajzolása"
 
 #: ../src/event-log.cpp:34
 msgid "[Unchanged]"
-msgstr ""
+msgstr "[Módosítatlan]"
 
 #. Edit
 #: ../src/event-log.cpp:261 ../src/event-log.cpp:264 ../src/verbs.cpp:2000
@@ -5939,18 +5922,16 @@ msgid "Spacing _X:"
 msgstr "_X-távolság:"
 
 #: ../src/ui/dialog/document-properties.cpp:252
-#, fuzzy
 msgid "Distance between vertical grid lines"
-msgstr "A függőleges rácsvonalak távolsága"
+msgstr "A függőleges rácsvonalak közti távolság"
 
 #: ../src/ui/dialog/document-properties.cpp:254
 msgid "Spacing _Y:"
 msgstr "_Y-távolság:"
 
 #: ../src/ui/dialog/document-properties.cpp:254
-#, fuzzy
 msgid "Distance between horizontal grid lines"
-msgstr "A vízszintes rácsvonalak távolsága"
+msgstr "A vízszintes rácsvonalak közti távolság"
 
 #: ../src/ui/dialog/document-properties.cpp:256
 #, fuzzy
@@ -6931,28 +6912,27 @@ msgstr "Transzformációk"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:487
 msgid "Best quality (slowest)"
-msgstr ""
+msgstr "Legjobb minőség (leglassabb)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:489
 msgid "Better quality (slower)"
-msgstr ""
+msgstr "Jobb minőség (lassabb)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:491
 msgid "Average quality"
-msgstr ""
+msgstr "Átlagos minőség"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:493
-#, fuzzy
 msgid "Lower quality (faster)"
-msgstr "Réteg há_trébb helyezése"
+msgstr "Alacsonyabb minőség (gyorsabb)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:495
 msgid "Lowest quality (fastest)"
-msgstr ""
+msgstr "Legalacsonyabb minőség (leggyorsabb)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:498
 msgid "Gaussian blur quality for display:"
-msgstr ""
+msgstr "A Gauss-elmosás megjelenítési minősége:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:500
 msgid ""
@@ -6977,9 +6957,8 @@ msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:510
-#, fuzzy
 msgid "Filters"
-msgstr "Laposság"
+msgstr "Szűrők"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:516
 msgid "Select in all layers"
@@ -8302,9 +8281,8 @@ msgstr "Körvonalszélesség átméretezése"
 
 #: ../src/ui/widget/selected-style.cpp:979
 #: ../src/ui/widget/selected-style.cpp:980
-#, fuzzy
 msgid "Master opacity, %"
-msgstr "Alap-átlátszatlanság"
+msgstr "Alap-átlátszatlanság, %"
 
 #: ../src/ui/widget/selected-style.cpp:1011
 #, c-format
@@ -8579,14 +8557,12 @@ msgid "Save document under a new name"
 msgstr "Dokumentum mentése új névvel"
 
 #: ../src/verbs.cpp:1976
-#, fuzzy
 msgid "Save a Cop_y..."
-msgstr "Mentés más_ként..."
+msgstr "Egy _példány mentése..."
 
 #: ../src/verbs.cpp:1977
-#, fuzzy
 msgid "Save a copy of the document under a new name"
-msgstr "Dokumentum mentése új névvel"
+msgstr "Egy példány mentése a dokumentumból új névvel"
 
 #: ../src/verbs.cpp:1978
 msgid "_Print..."
@@ -9673,18 +9649,16 @@ msgid "Switch to outline (wireframe) display mode"
 msgstr "Váltás \"vázlat\" üzemmódba (drótvázas megjelenítés)"
 
 #: ../src/verbs.cpp:2287
-#, fuzzy
 msgid "_Toggle"
-msgstr "_Szög"
+msgstr "Át_kapcsolás"
 
 #: ../src/verbs.cpp:2288
 msgid "Toggle between normal and outline display modes"
-msgstr ""
+msgstr "Átváltás a normál és a \"vázlat\" megjelenítési üzemmódok között"
 
 #: ../src/verbs.cpp:2290
-#, fuzzy
 msgid "Ico_n Preview..."
-msgstr "Ik_on-előnézet"
+msgstr "Ik_on-előnézet..."
 
 #: ../src/verbs.cpp:2291
 msgid "Open a window to preview objects at different icon resolutions"
@@ -9782,11 +9756,11 @@ msgstr "Objektumok igazítása és elrendezése"
 
 #: ../src/verbs.cpp:2317
 msgid "Undo _History..."
-msgstr ""
+msgstr "Visszavonási előzmén_yek..."
 
 #: ../src/verbs.cpp:2318
 msgid "Undo History"
-msgstr ""
+msgstr "Visszavonási előzmények"
 
 #: ../src/verbs.cpp:2319
 msgid "_Text and Font..."
@@ -9861,13 +9835,12 @@ msgstr ""
 "tulajdonságok módosítása"
 
 #: ../src/verbs.cpp:2337
-#, fuzzy
 msgid "_Instant Messaging..."
-msgstr "Üze_netek..."
+msgstr "A_zonnali üzenetküldés..."
 
 #: ../src/verbs.cpp:2337
 msgid "Jabber Instant Messaging Client"
-msgstr ""
+msgstr "Jabber azonnali üzenetküldési kliens"
 
 #: ../src/verbs.cpp:2339
 msgid "_Input Devices..."
