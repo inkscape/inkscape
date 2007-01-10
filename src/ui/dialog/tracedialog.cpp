@@ -528,7 +528,7 @@ TraceDialogImpl::TraceDialogImpl()
     modeMultiScanStackButton.set_label(_("Stack scans"));
     modeMultiScanStackButton.set_active(true);
     modeMultiScanHBox4.pack_start(modeMultiScanStackButton, false, false, MARGIN);
-    tips.set_tip(modeMultiScanStackButton, _("Stack scans on top of one another (no gaps) instead of or tiling (usually with gaps)"));
+    tips.set_tip(modeMultiScanStackButton, _("Stack scans on top of one another (no gaps) instead of tiling (usually with gaps)"));
 
 
     modeMultiScanBackgroundButton.set_label(_("Remove background"));
