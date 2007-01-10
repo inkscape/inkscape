@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-10 22:45+0100\n"
-"PO-Revision-Date: 2007-01-10 22:55+0100\n"
+"PO-Revision-Date: 2007-01-11 00:20+0100\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5618,6 +5618,17 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:265
 msgid "translator-credits"
 msgstr ""
+"Adib Taraben (theadib@yahoo.com)\n"
+"Benedikt Roth (Benedikt.Roth@gmx.net)\n"
+"Christian Meyer (chrisime@gnome.org)\n"
+"Christian Neumair (chris@gnome-de.org)\n"
+"Colin Marquardt (colin@marquardt-home.de)\n"
+"Jörg Müller (jfm@ram-brand.de)\n"
+"Kai Lahmann (kailahmann@01019freenet.de)\n"
+"Stefan Graubner (pflaumenmus92@gmx.net)\n"
+"Stefan von Halenbach (vonHalenbach@users.sourceforge.net)\n"
+"Uwe Schöler (uschoeler@yahoo.de)\n"
+"Wolfram Strempfer (wolfram@strempfer.de)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:219
 #: ../src/ui/dialog/align-and-distribute.cpp:759
@@ -6861,7 +6872,7 @@ msgid ""
 "Whether dialogs should stay on top of document windows. Read the "
 "ReleaseNotes on this issue! (Rightclick the taskbar button and press "
 "'Restore' to bring back a minimized document window)"
-msgstr ""
+msgstr "Ob Dialoge vor Dokumentenfenstern bleiben sollen. Lesen Sie die ReleaseNotes zu diesem Thema! (Klicken Sie den Taskbar-Knopf rechts und wählen Sie »Wiederherstellen«, um ein minimiertes Dokumentenfenster wiederzubekommen.)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Windows"
@@ -7234,7 +7245,6 @@ msgstr ""
 "Neustart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:588
-#, fuzzy
 msgid ""
 "Use the capabilities of a tablet or other pressure sensitive device. Disable "
 "this only if you have problems with the tablet."
@@ -11374,7 +11384,7 @@ msgstr "Achsen zeichnen"
 
 #: ../share/extensions/funcplot.inx.h:3
 msgid "End x-value"
-msgstr ""
+msgstr "Ende x-Achse"
 
 #: ../share/extensions/funcplot.inx.h:4
 msgid "First derivative"
@@ -11390,15 +11400,15 @@ msgstr "Funktionsplotter"
 
 #: ../share/extensions/funcplot.inx.h:8
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
-msgstr ""
+msgstr "Isotropische Skalierung (benutzt Kleinstes: Breite/x-Bereich oderr Höhe/y-Bereich)"
 
 #: ../share/extensions/funcplot.inx.h:9
 msgid "Multiply x-range by 2*pi"
-msgstr ""
+msgstr "x-Bereich mit 2×π multiplizieren"
 
 #: ../share/extensions/funcplot.inx.h:10
 msgid "Range and Sampling"
-msgstr ""
+msgstr "Bereich und Sampling"
 
 #: ../share/extensions/funcplot.inx.h:11
 msgid "Remove rectangle"
@@ -11409,9 +11419,8 @@ msgid "Samples"
 msgstr "Beispiele"
 
 #: ../share/extensions/funcplot.inx.h:14
-#, fuzzy
 msgid "Start x-value"
-msgstr "Attributwert"
+msgstr "Beginn X-Achse"
 
 #: ../share/extensions/funcplot.inx.h:15
 msgid ""
@@ -11421,16 +11430,15 @@ msgid ""
 "(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan"
 "(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and "
 "e are also available."
-msgstr ""
+msgstr "Die folgenden Funktionen sind verfügbar: (Python's Standard-Mathematik-Funktionen) ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Die Konstanten pi und e sind ebenfalls verfügbar."
 
 #: ../share/extensions/funcplot.inx.h:16
 msgid "y-value of rectangle's bottom"
-msgstr ""
+msgstr "y-Wert der unteren Kante des Rechtecks"
 
 #: ../share/extensions/funcplot.inx.h:17
-#, fuzzy
 msgid "y-value of rectangle's top"
-msgstr "Höhe des Rechtecks"
+msgstr "y-Wert der oberen Kante des Rechtecks"
 
 #: ../share/extensions/g2pngs.inx.h:1
 msgid "Directory"
@@ -11553,15 +11561,15 @@ msgstr "Anzahl der Abschnitte"
 
 #: ../share/extensions/lorem_ipsum.inx.h:3
 msgid "Paragraph length fluctuation (sentences)"
-msgstr ""
+msgstr "Unterschiede in der Länge der Absätze (Sätze)"
 
 #: ../share/extensions/lorem_ipsum.inx.h:5
 msgid "Sentences per paragraph"
-msgstr ""
+msgstr "Sätze pro Absatz"
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
-msgstr ""
+msgstr "Färbe Markierungen wie Striche"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
@@ -11581,56 +11589,47 @@ msgstr "Stärke"
 
 #: ../share/extensions/outline2svg.inx.h:1
 msgid "ASCII Text with outline markup"
-msgstr ""
+msgstr "ASCII-Text mit Umriss-Auszeichnung"
 
 #: ../share/extensions/outline2svg.inx.h:2
-#, fuzzy
 msgid "Text Outline File (*.outline)"
-msgstr "Textdatei (*.txt)"
+msgstr "Datei für Textumriss (*.outline)"
 
 #: ../share/extensions/outline2svg.inx.h:3
-#, fuzzy
 msgid "Text Outline Input"
-msgstr "Text einlesen"
+msgstr "Textumriss einlesen"
 
 #: ../share/extensions/pathalongpath.inx.h:1
-#, fuzzy
 msgid "Copies of the pattern:"
-msgstr "Randfarbe der Zeichenfläche"
+msgstr "Kopien des Musters:"
 
 #: ../share/extensions/pathalongpath.inx.h:2
-#, fuzzy
 msgid "Deformation type:"
-msgstr "Information"
+msgstr "Deformationstyp"
 
 #: ../share/extensions/pathalongpath.inx.h:3
 msgid "Duplicate the pattern before deformation"
-msgstr ""
+msgstr "Muster vor der Deformation duplizieren"
 
 #: ../share/extensions/pathalongpath.inx.h:5
-#, fuzzy
 msgid "Normal offset"
-msgstr "Horizontaler Versatz"
+msgstr "Normaler Versatz"
 
 #: ../share/extensions/pathalongpath.inx.h:6
-#, fuzzy
 msgid "Pattern along Path"
-msgstr "An _Pfad ausrichten"
+msgstr "Muster entlang Pfad"
 
 #: ../share/extensions/pathalongpath.inx.h:7
-#, fuzzy
 msgid "Pattern is vertical"
-msgstr "Versatz des Musters"
+msgstr "Muster ist vertikal"
 
 #: ../share/extensions/pathalongpath.inx.h:8
-#, fuzzy
 msgid "Space between copies:"
-msgstr "Abstand zwischen Zeilen"
+msgstr "Abstand zwischen Kopien:"
 
 #: ../share/extensions/pathalongpath.inx.h:9
-#, fuzzy
 msgid "Tangential offset"
-msgstr "Vertikaler Versatz"
+msgstr "Tangentialer Versatz"
 
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
@@ -11642,25 +11641,23 @@ msgstr "Postscript einlesen"
 
 #: ../share/extensions/radiobutton_example.inx.h:1
 msgid "Developer Examples"
-msgstr ""
+msgstr "Entwickler-Beispiele"
 
 #: ../share/extensions/radiobutton_example.inx.h:2
 msgid "RadioButton example"
-msgstr ""
+msgstr "RadioButton-Beispiel"
 
 #: ../share/extensions/radiobutton_example.inx.h:3
-#, fuzzy
 msgid "Select option: "
-msgstr "Auswahl"
+msgstr "Option auswählen: "
 
 #: ../share/extensions/radiobutton_example.inx.h:4
-#, fuzzy
 msgid "Select second option: "
-msgstr "Wählen Sie die zu öffnende Datei"
+msgstr "Zweite Option auswählen: "
 
 #: ../share/extensions/radiusrand.inx.h:1
 msgid "Jitter nodes"
-msgstr "Knoten durchschütteln"
+msgstr "Knoten zittrig verteilen"
 
 #: ../share/extensions/radiusrand.inx.h:2
 msgid "Maximum displacement, px"
@@ -11678,7 +11675,7 @@ msgstr "Knoten verschieben"
 msgid ""
 "This effect randomly shifts the nodes (and optionally node handles) of the "
 "selected path."
-msgstr ""
+msgstr "Dieser Effekt verschiebt Knoten (und optional die Knotenanfasser) des ausgewählten Pfades zufällig."
 
 #: ../share/extensions/radiusrand.inx.h:7
 msgid "Use normal distribution"
