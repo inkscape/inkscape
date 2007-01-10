@@ -52,6 +52,8 @@
 #include <gtk/gtktable.h>
 #include <gtk/gtkbutton.h>
 
+#include <gtkmm/main.h>
+
 #include "gc-core.h"
 #include "preferences.h"
 
@@ -122,9 +124,11 @@ sp_svgview_main_key_press (GtkWidget *widget, GdkEventKey *event, struct SPSlide
 {
     switch (event->keyval) {
     case GDK_Up:
+    case GDK_Home:
 	sp_svgview_goto_first(ss);
 	break;
     case GDK_Down:
+    case GDK_End:
 	sp_svgview_goto_last(ss);
 	break;
     case GDK_F11:
@@ -152,6 +156,7 @@ sp_svgview_main_key_press (GtkWidget *widget, GdkEventKey *event, struct SPSlide
     case GDK_KP_Page_Up:
     case GDK_Page_Up:
     case GDK_Left:
+    case GDK_BackSpace:
 	sp_svgview_show_prev (ss);
 	break;
     case GDK_Escape:
@@ -172,6 +177,8 @@ main (int argc, const char **argv)
     if (argc == 1) {
 	usage();
     }
+
+    Gtk::Main main_instance (&argc, const_cast<char ***>(&argv));
 
     struct SPSlideShow ss;
 
