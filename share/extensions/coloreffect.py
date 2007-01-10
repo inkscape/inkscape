@@ -20,6 +20,8 @@ import sys, copy, optparse, simplestyle, inkex
 
 import xml.xpath
 
+import random
+
 color_props_fill=('fill:','stop-color:','flood-color:','lighting-color:')
 color_props_stroke=('stroke:',)
 color_props = color_props_fill + color_props_stroke
@@ -56,18 +58,7 @@ class ColorEffect(inkex.Effect):
               styles[i]=color_props[c]+self.process_prop(styles[i][len(color_props[c]):])
         #inkex.debug('new style:'+';'.join(styles))
         node.setAttribute('style',';'.join(styles))
-  '''
-  def changeStyle(self,node):
-    if node.hasAttributes():
-      sa=node.getAttribute('style')
-      if sa!='':
-        debug(sa)
-        styles=simplestyle.parseStyle(sa)
-        for c in range(len(colortags)):
-          if colortags[c] in styles.keys():
-            styles[colortags[c]]=self.process_prop(styles[colortags[c]])
-        node.setAttribute('style',simplestyle.formatStyle(styles))
-  '''        
+
   def process_prop(self,col):
     #debug('got:'+col)
     if simplestyle.isColor(col):
@@ -76,33 +67,40 @@ class ColorEffect(inkex.Effect):
       #debug('made:'+col)
     if col.startswith('url(#'):
 	id = col[len('url(#'):col.find(')')]
+	newid = '%s-%d' % (id, int(random.random() * 1000))
 	#inkex.debug('ID:' + id )
 	path = '//*[@id="%s"]' % id
 	for node in xml.xpath.Evaluate(path,self.document):
-	  self.process_gradient(node)
+	  self.process_gradient(node, newid)
+	col = 'url(#%s)' % newid
     return col
 
-  def process_gradient(self, node):
-    if node.hasAttributes():				
-       this_id=node.getAttribute('id')
-       if this_id in self.visited:
-         # prevent multiple processing of the same gradient if it is used by more than one selected object
-         #inkex.debug("already had: " + this_id)
-         return
-       self.visited.append(this_id)
+  def process_gradient(self, node, newid):
+    #if node.hasAttributes():				
+       #this_id=node.getAttribute('id')
+       #if this_id in self.visited:
+         ## prevent multiple processing of the same gradient if it is used by more than one selected object
+         ##inkex.debug("already had: " + this_id)
+         #return
+       #self.visited.append(this_id)
        #inkex.debug("visited: " + str(self.visited))
-    self.changeStyle(node)
-    if node.hasChildNodes():
-      for child in node.childNodes:
-        self.process_gradient(child)
-    if node.hasAttributes():				
-      href=node.getAttribute('xlink:href')
+    newnode = node.cloneNode(True)
+    newnode.setAttribute('id', newid)
+    node.parentNode.appendChild(newnode)
+    self.changeStyle(newnode)
+    if newnode.hasChildNodes():
+      for child in newnode.childNodes:
+        self.changeStyle(child)
+    if newnode.hasAttributes():				
+      href=newnode.getAttribute('xlink:href')
       if href.startswith('#'):
         id = href[len('#'):len(href)]
         #inkex.debug('ID:' + id )
+	newhref = '%s-%d' % (id, int(random.random() * 1000))
+	newnode.setAttribute('xlink:href', '#%s' % newhref)
         path = '//*[@id="%s"]' % id
         for node in xml.xpath.Evaluate(path,self.document):
-          self.process_gradient(node)
+          self.process_gradient(node, newhref)
  
   def colmod(self,r,g,b):
     pass
