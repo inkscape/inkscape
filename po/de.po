@@ -5056,7 +5056,9 @@ msgstr ""
 
 #: ../src/splivarot.cpp:115
 msgid "Select <b>at least 1 path</b> to perform a boolean union."
-msgstr "Wählen Sie <b>mindestens 1 Pfad</b> aus, um eine boole'sche Vereinigung auszuführen."
+msgstr ""
+"Wählen Sie <b>mindestens 1 Pfad</b> aus, um eine boole'sche Vereinigung "
+"auszuführen."
 
 #: ../src/splivarot.cpp:121
 msgid ""
