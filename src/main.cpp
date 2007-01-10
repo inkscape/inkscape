@@ -48,8 +48,6 @@
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkbox.h>
 
-#include <gtk/gtkmain.h>
-
 #include "gc-core.h"
 
 #include "macros.h"
