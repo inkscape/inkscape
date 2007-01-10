@@ -756,11 +756,13 @@ sp_marker_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *sour
         Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) ml->data);
         bool stock_dupe = false;
 
-        GSList * markers_doc_ml = ink_marker_list_get(markers_doc);
-        for (; markers_doc_ml != NULL; markers_doc_ml = markers_doc_ml->next) {
-            const gchar* stockid = SP_OBJECT_REPR(markers_doc_ml->data)->attribute("inkscape:stockid");
-            if (stockid && !strcmp(repr->attribute("inkscape:stockid"), stockid))
-                stock_dupe = true;
+        if (repr->attribute("inkscape:stockid")) {
+            GSList * markers_doc_ml = ink_marker_list_get(markers_doc);
+            for (; markers_doc_ml != NULL; markers_doc_ml = markers_doc_ml->next) {
+                const gchar* stockid = SP_OBJECT_REPR(markers_doc_ml->data)->attribute("inkscape:stockid");
+                if (stockid && !strcmp(repr->attribute("inkscape:stockid"), stockid))
+                    stock_dupe = true;
+            }
         }
 
         if (stock_dupe) // stock item, dont add to list from current doc
