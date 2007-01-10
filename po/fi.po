@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-22 00:30+0100\n"
+"POT-Creation-Date: 2007-01-10 22:45+0100\n"
 "PO-Revision-Date: 2006-11-12 06:51+0200\n"
 "Last-Translator: Riku Leino <tsoots@gmail.com>\n"
 "Language-Team: Finnish\n"
@@ -158,7 +158,7 @@ msgstr "Valitse <b>kohde</b>, jonka laattakloonit poistetaan."
 msgid "Delete tiled clones"
 msgstr "Poista laattakloonit"
 
-#: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1983
+#: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1987
 msgid "Select an <b>object</b> to clone."
 msgstr "Valitse kloonattava <b>kohde</b>."
 
@@ -573,7 +573,7 @@ msgstr "1. Valitse piirroksesta:"
 #: ../share/extensions/color_grayscale.inx.h:1
 #: ../share/extensions/color_lesshue.inx.h:1
 #: ../share/extensions/color_lesslight.inx.h:1
-#: ../share/extensions/color_lesssaturation.inx .h:1
+#: ../share/extensions/color_lesssaturation.inx.h:1
 #: ../share/extensions/color_morehue.inx.h:1
 #: ../share/extensions/color_morelight.inx.h:1
 #: ../share/extensions/color_moresaturation.inx.h:1
@@ -837,123 +837,123 @@ msgstr "Vapauta lokiviestit"
 msgid "none"
 msgstr "ei mitään"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2292
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2292
 msgid "_Page"
 msgstr "_Sivu"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2296
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2296
 msgid "_Drawing"
 msgstr "_Piirros"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2298
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2298
 msgid "_Selection"
 msgstr "_Valinta"
 
-#: ../src/dialogs/export.cpp:136
+#: ../src/dialogs/export.cpp:139
 msgid "_Custom"
 msgstr "_Oma"
 
-#: ../src/dialogs/export.cpp:260
+#: ../src/dialogs/export.cpp:263
 msgid "<big><b>Export area</b></big>"
 msgstr "<big><b>Tallenna alue</b></big>"
 
-#: ../src/dialogs/export.cpp:274
+#: ../src/dialogs/export.cpp:277
 msgid "Units:"
 msgstr "Yksiköt:"
 
-#: ../src/dialogs/export.cpp:302
+#: ../src/dialogs/export.cpp:305
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:307
+#: ../src/dialogs/export.cpp:310
 msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:312 ../src/dialogs/object-attributes.cpp:55
-#: ../src/dialogs/stroke-style.cpp:1052 ../src/widgets/toolbox.cpp:2206
+#: ../src/dialogs/export.cpp:315 ../src/dialogs/object-attributes.cpp:55
+#: ../src/dialogs/stroke-style.cpp:1054 ../src/widgets/toolbox.cpp:2206
 #: ../src/widgets/toolbox.cpp:2358
 msgid "Width:"
 msgstr "Leveys:"
 
-#: ../src/dialogs/export.cpp:318
+#: ../src/dialogs/export.cpp:321
 msgid "_y0:"
 msgstr "_y0:"
 
-#: ../src/dialogs/export.cpp:323
+#: ../src/dialogs/export.cpp:326
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:328 ../src/dialogs/export.cpp:446
+#: ../src/dialogs/export.cpp:331 ../src/dialogs/export.cpp:445
 #: ../src/dialogs/object-attributes.cpp:56
 msgid "Height:"
 msgstr "Korkeus:"
 
-#: ../src/dialogs/export.cpp:417
+#: ../src/dialogs/export.cpp:416
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Bittikartan koko</b></big>"
 
-#: ../src/dialogs/export.cpp:430 ../src/ui/widget/page-sizer.cpp:301
+#: ../src/dialogs/export.cpp:429 ../src/ui/widget/page-sizer.cpp:301
 msgid "_Width:"
 msgstr "_Leveys:"
 
-#: ../src/dialogs/export.cpp:430 ../src/dialogs/export.cpp:446
+#: ../src/dialogs/export.cpp:429 ../src/dialogs/export.cpp:445
 msgid "pixels at"
 msgstr "pikseleitä"
 
-#: ../src/dialogs/export.cpp:440
+#: ../src/dialogs/export.cpp:439
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:459 ../src/ui/dialog/inkscape-preferences.cpp:545
+#: ../src/dialogs/export.cpp:458 ../src/ui/dialog/inkscape-preferences.cpp:558
 msgid "dpi"
 msgstr "dpi"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:470
+#: ../src/dialogs/export.cpp:469
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>_Tiedostonimi</b></big>"
 
-#: ../src/dialogs/export.cpp:541
+#: ../src/dialogs/export.cpp:540
 msgid "_Browse..."
 msgstr "_Selaa..."
 
-#: ../src/dialogs/export.cpp:580
+#: ../src/dialogs/export.cpp:579
 msgid "_Export"
 msgstr "Vi_e"
 
-#: ../src/dialogs/export.cpp:584
+#: ../src/dialogs/export.cpp:583
 msgid "Export the bitmap file with these settings"
 msgstr "Tallenna bittikarttatiedosto näillä asetuksilla"
 
-#: ../src/dialogs/export.cpp:967
+#: ../src/dialogs/export.cpp:966
 msgid "You have to enter a filename"
 msgstr "Sinun tulee antaa tiedostonimi"
 
-#: ../src/dialogs/export.cpp:972
+#: ../src/dialogs/export.cpp:971
 msgid "The chosen area to be exported is invalid"
 msgstr "Tallennettavaksi valittu alue on virheellinen"
 
-#: ../src/dialogs/export.cpp:981
+#: ../src/dialogs/export.cpp:980
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Hakemistoa %s ei ole olemassa tai se ei ole hakemisto.\n"
 
-#: ../src/dialogs/export.cpp:997
+#: ../src/dialogs/export.cpp:996
 msgid "Export in progress"
 msgstr "Tallennus käynnissä"
 
-#: ../src/dialogs/export.cpp:1003
+#: ../src/dialogs/export.cpp:1002
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Tallennetaan %s (%d &#215; %d)"
 
-#: ../src/dialogs/export.cpp:1030
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Ei voitu tallentaa tiedostonimellä %s.\n"
 
-#: ../src/dialogs/export.cpp:1136
+#: ../src/dialogs/export.cpp:1160
 msgid "Select a filename for exporting"
 msgstr "Valitse tiedostonimi tallennusta varten"
 
@@ -1089,7 +1089,7 @@ msgid "Search clones"
 msgstr "Etsi kloonit"
 
 #: ../src/dialogs/find.cpp:617 ../src/ui/dialog/find.cpp:78
-#: ../src/ui/dialog/inkscape-preferences.cpp:456
+#: ../src/ui/dialog/inkscape-preferences.cpp:469
 msgid "Clones"
 msgstr "Kloonit"
 
@@ -1098,7 +1098,7 @@ msgid "Search images"
 msgstr "Etsi kuvat"
 
 #: ../src/dialogs/find.cpp:622 ../src/ui/dialog/find.cpp:79
-#: ../share/extensions/embedimage.inx.h:2
+#: ../share/extensions/embedimage.inx.h:3
 #: ../share/extensions/extractimage.inx.h:2
 msgid "Images"
 msgstr "Kuvat"
@@ -1231,7 +1231,7 @@ msgstr "%d &#215; %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:888
-#: ../src/ui/dialog/filedialog.cpp:1855 ../src/widgets/desktop-widget.cpp:1137
+#: ../src/ui/dialog/filedialog.cpp:1855 ../src/widgets/desktop-widget.cpp:1138
 msgid "Selection"
 msgstr "Valinta"
 
@@ -1348,28 +1348,29 @@ msgstr "Aseta kohteen otsikko"
 msgid "Set object description"
 msgstr "Aseta kohteen kuvaus"
 
-#: ../src/dialogs/layers-panel.cpp:591 ../src/widgets/layer-selector.cpp:590
+#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
 msgid "Unhide layer"
 msgstr "Näytä taso"
 
-#: ../src/dialogs/layers-panel.cpp:591 ../src/widgets/layer-selector.cpp:590
+#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
 msgid "Hide layer"
 msgstr "Piilota taso"
 
-#: ../src/dialogs/layers-panel.cpp:602 ../src/widgets/layer-selector.cpp:582
+#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
 msgid "Lock layer"
 msgstr "Lukitse taso"
 
-#: ../src/dialogs/layers-panel.cpp:602 ../src/widgets/layer-selector.cpp:582
+#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
 msgid "Unlock layer"
 msgstr "Vapauta taso"
 
-#: ../src/dialogs/layers-panel.cpp:699
+#: ../src/dialogs/layers-panel.cpp:698
 msgid "Change layer opacity"
 msgstr "Muuta tason peittoa"
 
-#: ../src/dialogs/layers-panel.cpp:764
-msgid "Opacity:"
+#: ../src/dialogs/layers-panel.cpp:763
+#, fuzzy
+msgid "Opacity, %:"
 msgstr "Läpinäkyvyys:"
 
 #: ../src/dialogs/layers-panel.cpp:789
@@ -1757,54 +1758,54 @@ msgstr "Aseta viivalle kuviointi"
 msgid "Unset stroke"
 msgstr "Poista viiva"
 
-#: ../src/dialogs/stroke-style.cpp:832 ../src/widgets/gradient-vector.cpp:264
+#: ../src/dialogs/stroke-style.cpp:834 ../src/widgets/gradient-vector.cpp:264
 #: ../src/widgets/paint-selector.cpp:739
 msgid "No document selected"
 msgstr "Asiakirjaa ei ole valittuna"
 
-#: ../src/dialogs/stroke-style.cpp:849 ../src/interface.cpp:757
-#: ../src/ui/dialog/inkscape-preferences.cpp:190
-#: ../src/ui/dialog/inkscape-preferences.cpp:322
-#: ../src/ui/dialog/inkscape-preferences.cpp:407
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/dialogs/stroke-style.cpp:851 ../src/interface.cpp:757
+#: ../src/ui/dialog/inkscape-preferences.cpp:191
+#: ../src/ui/dialog/inkscape-preferences.cpp:323
+#: ../src/ui/dialog/inkscape-preferences.cpp:408
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 #: ../src/ui/widget/selected-style.cpp:137
 #: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1963
 msgid "None"
 msgstr "Ei mitään"
 
-#: ../src/dialogs/stroke-style.cpp:960
+#: ../src/dialogs/stroke-style.cpp:962
 msgid "Set markers"
 msgstr "Aseta merkit"
 
-#: ../src/dialogs/stroke-style.cpp:1066
+#: ../src/dialogs/stroke-style.cpp:1068
 msgid "Stroke width"
 msgstr "Viivan leveys"
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/dialogs/stroke-style.cpp:1089
+#: ../src/dialogs/stroke-style.cpp:1091
 msgid "Join:"
 msgstr "Liitos:"
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1101
+#: ../src/dialogs/stroke-style.cpp:1103
 msgid "Miter join"
 msgstr "Viisto liitos"
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1109
+#: ../src/dialogs/stroke-style.cpp:1111
 msgid "Round join"
 msgstr "Pyöreä liitos"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1117
+#: ../src/dialogs/stroke-style.cpp:1119
 msgid "Bevel join"
 msgstr "Tasainen liitos"
 
@@ -1815,58 +1816,58 @@ msgstr "Tasainen liitos"
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/dialogs/stroke-style.cpp:1128
+#: ../src/dialogs/stroke-style.cpp:1130
 msgid "Miter limit:"
 msgstr "Kulman pituus:"
 
-#: ../src/dialogs/stroke-style.cpp:1136
+#: ../src/dialogs/stroke-style.cpp:1138
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "Suurin mahdollinen kulman pituus (viivan leveyden yksikössä)"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/dialogs/stroke-style.cpp:1149
+#: ../src/dialogs/stroke-style.cpp:1151
 msgid "Cap:"
 msgstr "Pääty:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/dialogs/stroke-style.cpp:1160
+#: ../src/dialogs/stroke-style.cpp:1162
 msgid "Butt cap"
 msgstr "Litteä pääty"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/dialogs/stroke-style.cpp:1167
+#: ../src/dialogs/stroke-style.cpp:1169
 msgid "Round cap"
 msgstr "Pyöreä pääty"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/dialogs/stroke-style.cpp:1174
+#: ../src/dialogs/stroke-style.cpp:1176
 msgid "Square cap"
 msgstr "Neliö pääty"
 
 #. Dash
-#: ../src/dialogs/stroke-style.cpp:1180
+#: ../src/dialogs/stroke-style.cpp:1182
 msgid "Dashes:"
 msgstr "Kuvio:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/dialogs/stroke-style.cpp:1201
+#: ../src/dialogs/stroke-style.cpp:1203
 msgid "Start Markers:"
 msgstr "Alkupää:"
 
-#: ../src/dialogs/stroke-style.cpp:1211
+#: ../src/dialogs/stroke-style.cpp:1213
 msgid "Mid Markers:"
 msgstr "Keskiosa:"
 
-#: ../src/dialogs/stroke-style.cpp:1222
+#: ../src/dialogs/stroke-style.cpp:1224
 msgid "End Markers:"
 msgstr "Loppupää:"
 
-#: ../src/dialogs/stroke-style.cpp:1567 ../src/dialogs/stroke-style.cpp:1665
+#: ../src/dialogs/stroke-style.cpp:1572 ../src/dialogs/stroke-style.cpp:1670
 msgid "Set stroke style"
 msgstr "Aseta viivan tyyli"
 
@@ -1925,7 +1926,7 @@ msgstr "Riviväli:"
 
 #. Text
 #: ../src/dialogs/text-edit.cpp:363 ../src/selection-describer.cpp:63
-#: ../src/ui/dialog/inkscape-preferences.cpp:383
+#: ../src/ui/dialog/inkscape-preferences.cpp:384
 #: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2216
 msgid "Text"
 msgstr "Teksti"
@@ -2032,12 +2033,12 @@ msgid "New text node"
 msgstr "Uusi tekstisolmu"
 
 #: ../src/dialogs/xml-tree.cpp:347 ../src/dialogs/xml-tree.cpp:1412
-#: ../src/nodepath.cpp:1708
+#: ../src/nodepath.cpp:1710
 msgid "Duplicate node"
 msgstr "Monista solmu"
 
 #: ../src/dialogs/xml-tree.cpp:368 ../src/dialogs/xml-tree.cpp:1429
-#: ../src/nodepath.cpp:2945
+#: ../src/nodepath.cpp:2956
 msgid "Delete node"
 msgstr "Poista solmu"
 
@@ -2367,6 +2368,7 @@ msgstr "Sumennuksen saavuttamiseksi tehtävien kopioiden lukumäärä"
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
+#: ../share/extensions/pathalongpath.inx.h:4
 msgid "Generate from Path"
 msgstr "Luo polusta"
 
@@ -2452,7 +2454,9 @@ msgid "Vertical Offset"
 msgstr "Pystysuunnan siirtymä"
 
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/funcplot.inx.h:12 ../share/extensions/lindenmayer.inx
+#: .h:9 ../share/extensions/lorem_ipsum.inx.h:4
+#: ../share/extensions/rtree.inx.h:4
 msgid "Render"
 msgstr "Hahmonna"
 
@@ -2489,13 +2493,13 @@ msgid "OpenDocument drawing file"
 msgstr "OpenDocument Piirros -tiedosto"
 
 #: ../src/extension/internal/pdf-cairo.cpp:123
-#: ../src/extension/internal/ps.cpp:120
+#: ../src/extension/internal/ps.cpp:121
 msgid "Print Destination"
 msgstr "Tulosteen kohde"
 
 #. Print properties frame
 #: ../src/extension/internal/pdf-cairo.cpp:138
-#: ../src/extension/internal/ps.cpp:135
+#: ../src/extension/internal/ps.cpp:136
 msgid "Print properties"
 msgstr "Tulostuksen ominaisuudet"
 
@@ -2513,12 +2517,12 @@ msgstr ""
 "kuvioinnit menetetään."
 
 #: ../src/extension/internal/pdf-cairo.cpp:152
-#: ../src/extension/internal/ps.cpp:149
+#: ../src/extension/internal/ps.cpp:150
 msgid "Print as bitmap"
 msgstr "Tulosta bittikarttana"
 
 #: ../src/extension/internal/pdf-cairo.cpp:154
-#: ../src/extension/internal/ps.cpp:151
+#: ../src/extension/internal/ps.cpp:152
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2529,23 +2533,23 @@ msgstr ""
 "piirtyvät täsmälleen samanlaisena kuin ne ovat näytöllä."
 
 #: ../src/extension/internal/pdf-cairo.cpp:168
-#: ../src/extension/internal/ps.cpp:165
+#: ../src/extension/internal/ps.cpp:166
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Haluttu tarkkuus (dpi) bittikartalle"
 
 #: ../src/extension/internal/pdf-cairo.cpp:182
-#: ../src/extension/internal/ps.cpp:179
+#: ../src/extension/internal/ps.cpp:180
 msgid "Resolution:"
 msgstr "Tarkkuus:"
 
 #. Print destination frame
 #: ../src/extension/internal/pdf-cairo.cpp:186
-#: ../src/extension/internal/ps.cpp:183
+#: ../src/extension/internal/ps.cpp:184
 msgid "Print destination"
 msgstr "Tulosteen kohde"
 
 #: ../src/extension/internal/pdf-cairo.cpp:192
-#: ../src/extension/internal/ps.cpp:189
+#: ../src/extension/internal/ps.cpp:190
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2586,11 +2590,11 @@ msgstr "Postscript (*.ps)"
 msgid "Postscript File"
 msgstr "Postscript-tiedosto"
 
-#: ../src/extension/internal/ps.cpp:142
+#: ../src/extension/internal/ps.cpp:143
 msgid "Print using PostScript operators"
 msgstr "Tulosta käyttäen PostScript-operaattoreita"
 
-#: ../src/extension/internal/ps.cpp:144
+#: ../src/extension/internal/ps.cpp:145
 msgid ""
 "Use PostScript vector operators. The resulting image is usually smaller in "
 "file size and can be arbitrarily scaled, but alpha transparency and patterns "
@@ -2600,7 +2604,7 @@ msgstr ""
 "kuva on usein pienempi tiedostokooltaan ja sen kokoa voidaan muuttaa laadun "
 "heikkenemättä, mutta läpinäkyvyys ja kuvioinnit menetetään."
 
-#: ../src/extension/internal/ps.cpp:1710
+#: ../src/extension/internal/ps.cpp:1719
 msgid "Postscript Print"
 msgstr "Postscript-tulostus"
 
@@ -2859,11 +2863,11 @@ msgstr "Säteittäisen liukuvärin <b>kohdistus</b>"
 msgid "Merge gradient handles"
 msgstr "Yhdistä liukuvärin kahvat"
 
-#: ../src/gradient-drag.cpp:518 ../src/gradient-drag.cpp:1071
+#: ../src/gradient-drag.cpp:530 ../src/gradient-drag.cpp:1091
 msgid "Move gradient handle"
 msgstr "Siirrä liukuvärin kahvoja"
 
-#: ../src/gradient-drag.cpp:657
+#: ../src/gradient-drag.cpp:669
 #, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
@@ -2872,11 +2876,11 @@ msgstr ""
 "%s: %s%s. <b>Ctrl</b> painettuna askeleittain. <b>Ctrl+Alt</b> säilytä "
 "kulma. <b>Ctrl+Shift</b> koon muutos keskipisteen ympäri"
 
-#: ../src/gradient-drag.cpp:660
+#: ../src/gradient-drag.cpp:672
 msgid " (stroke)"
 msgstr "(reunaviiva)"
 
-#: ../src/gradient-drag.cpp:663
+#: ../src/gradient-drag.cpp:675
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
@@ -2884,7 +2888,7 @@ msgstr ""
 "Säteittäisen liukuvärin <b>keskipiste</b> ja <b>kohdistus</b>. Raahaa "
 "<b>Vaihto</b> painettuna erottaaksesi tarkennuksen"
 
-#: ../src/gradient-drag.cpp:666
+#: ../src/gradient-drag.cpp:678
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
@@ -2925,9 +2929,9 @@ msgstr "Pt"
 msgid "Pixel"
 msgstr "Pikseli"
 
-#: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:178
-#: ../src/ui/dialog/inkscape-preferences.cpp:181
-#: ../src/ui/dialog/inkscape-preferences.cpp:184
+#: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:179
+#: ../src/ui/dialog/inkscape-preferences.cpp:182
+#: ../src/ui/dialog/inkscape-preferences.cpp:185
 #: ../src/ui/widget/selected-style.cpp:255
 msgid "px"
 msgstr "px"
@@ -2945,7 +2949,7 @@ msgstr "Px"
 msgid "Percent"
 msgstr "Prosentti"
 
-#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:197
+#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:198
 msgid "%"
 msgstr "%"
 
@@ -3255,49 +3259,59 @@ msgstr "Piirtotauluistunto (%1&#8211;%2)"
 msgid "Node or handle drag canceled."
 msgstr "Solmun tai hallintapisteen raahaaminen peruttu."
 
+#: ../src/knotholder.cpp:254
+#, fuzzy
+msgid "Change handle"
+msgstr "Muuta nelikulmiota"
+
+#: ../src/knotholder.cpp:306
+#, fuzzy
+msgid "Move handle"
+msgstr "Siirrä hallintapistettä"
+
 #: ../src/libnrtype/FontFactory.cpp:358
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Fontti ilman perhettä jätetään huomioimatta, koska se kaataisi Pangon"
 
-#: ../src/main.cpp:200
+#: ../src/main.cpp:198
 msgid "Print the Inkscape version number"
 msgstr "Tulosta Inkscapen versionumero"
 
-#: ../src/main.cpp:205
+#: ../src/main.cpp:203
 msgid "Do not use X server (only process files from console)"
 msgstr "Älä käytä X-palvelinta (työskentele konsolissa)"
 
-#: ../src/main.cpp:210
+#: ../src/main.cpp:208
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "Yritä käyttää X-palvelinta (vaikka $DISPLAY on asettamatta)"
 
-#: ../src/main.cpp:215
+#: ../src/main.cpp:213
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "Avaa halutut asiakirjat (valinta ei ole pakollinen)"
 
-#: ../src/main.cpp:216 ../src/main.cpp:221 ../src/main.cpp:226
-#: ../src/main.cpp:293 ../src/main.cpp:298 ../src/main.cpp:303
-#: ../src/main.cpp:308
+#: ../src/main.cpp:214 ../src/main.cpp:219 ../src/main.cpp:224
+#: ../src/main.cpp:291 ../src/main.cpp:296 ../src/main.cpp:301
+#: ../src/main.cpp:306
 msgid "FILENAME"
 msgstr "TIEDOSTONIMI"
 
-#: ../src/main.cpp:220
+#: ../src/main.cpp:218
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr "Tulosta asiakirjat tiedostoon (käytä \"| ohjelma\" putkitukseen)"
 
-#: ../src/main.cpp:225
+#: ../src/main.cpp:223
 msgid "Export document to a PNG file"
 msgstr "Tallenna asiakirja PNG-tiedostoksi"
 
-#: ../src/main.cpp:230
+#: ../src/main.cpp:228
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
 msgstr "Bittikarttakuvan tarkkuus tallennettaessa SVG:stä (oletus 90 dpi)"
 
-#: ../src/main.cpp:231
+#: ../src/main.cpp:229
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:235
+#: ../src/main.cpp:233
 msgid ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
 "corner)"
@@ -3305,19 +3319,19 @@ msgstr ""
 "SVG:n tallennettava alue käyttäjän yksiköissä (oletus on piirtoalusta, (0,0) "
 "on vasen alakulma)"
 
-#: ../src/main.cpp:236
+#: ../src/main.cpp:234
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
-#: ../src/main.cpp:240
+#: ../src/main.cpp:238
 msgid "Exported area is the entire drawing (not canvas)"
 msgstr "Tallennettava alue on koko piirros (ei piirtoalue)"
 
-#: ../src/main.cpp:245
+#: ../src/main.cpp:243
 msgid "Exported area is the entire canvas"
 msgstr "Tallennettava alue on koko piirtoalue"
 
-#: ../src/main.cpp:250
+#: ../src/main.cpp:248
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
@@ -3325,94 +3339,94 @@ msgstr ""
 "Kiinnittä bittikarttakuvan alue ulospäin lähimpään kokonaislukuarvoon "
 "(käyttäjän yksiköissä)"
 
-#: ../src/main.cpp:255
+#: ../src/main.cpp:253
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr "Tallennettavan bittikarttakuvan leveys pikseleinä (ohittaa dpi-arvon)"
 
-#: ../src/main.cpp:256
+#: ../src/main.cpp:254
 msgid "WIDTH"
 msgstr "LEVEYS"
 
-#: ../src/main.cpp:260
+#: ../src/main.cpp:258
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr "Tallennettavan bittikarttakuvan korkeus pikseleinä (ohittaa dpi-arvon)"
 
-#: ../src/main.cpp:261
+#: ../src/main.cpp:259
 msgid "HEIGHT"
 msgstr "KORKEUS"
 
-#: ../src/main.cpp:265
+#: ../src/main.cpp:263
 msgid "The ID of the object to export"
 msgstr "Tallennettavan kohteen ID"
 
-#: ../src/main.cpp:266 ../src/main.cpp:352
+#: ../src/main.cpp:264 ../src/main.cpp:350
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:272
+#: ../src/main.cpp:270
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "Tallenna ainoastaan kohde export-id:llä. Piilota kaikki muut.(ainoastaan "
 "export-id)"
 
-#: ../src/main.cpp:277
+#: ../src/main.cpp:275
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
 "Käytä tallennettua tiedostonimeä ja DPI-vihjeitä tallennettaessa (ainoastaan "
 "export-id)"
 
-#: ../src/main.cpp:282
+#: ../src/main.cpp:280
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr "Bittikarttakuvan taustaväri (mikä tahansa SVG:n ymmärtämä väri)"
 
-#: ../src/main.cpp:283
+#: ../src/main.cpp:281
 msgid "COLOR"
 msgstr "VÄRI"
 
-#: ../src/main.cpp:287
+#: ../src/main.cpp:285
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr ""
 "Bittikarttakuvan taustan läpinäkyvyys. (joko välillä 0,0 ja 1,0 tai 1ja 255)"
 
-#: ../src/main.cpp:288
+#: ../src/main.cpp:286
 msgid "VALUE"
 msgstr "ARVO"
 
-#: ../src/main.cpp:292
+#: ../src/main.cpp:290
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 "Tallenna asiakirja tavalliseksi SVG-tiedostoksi (ilman sodipodi- ja inkscape-"
 "nimiavaruuksia)"
 
-#: ../src/main.cpp:297
+#: ../src/main.cpp:295
 msgid "Export document to a PS file"
 msgstr "Tallenna asiakirja PS-tiedostoksi"
 
-#: ../src/main.cpp:302
+#: ../src/main.cpp:300
 msgid "Export document to an EPS file"
 msgstr "Tallenna asiakirja EPS-tiedostoksi"
 
-#: ../src/main.cpp:307
+#: ../src/main.cpp:305
 msgid "Export document to a PDF file"
 msgstr "Tallenna asiakirja PDF-tiedostoksi"
 
-#: ../src/main.cpp:312
+#: ../src/main.cpp:310
 msgid "Convert text object to paths on export (EPS)"
 msgstr "Muunna tekstikohteet poluiksi tallennettaessa (EPS)"
 
-#: ../src/main.cpp:317
+#: ../src/main.cpp:315
 msgid "Embed fonts on export (Type 1 only) (EPS)"
 msgstr ""
 
-#: ../src/main.cpp:322
+#: ../src/main.cpp:320
 msgid "Export files with the bounding box set to the page size (EPS)"
 msgstr "Aseta tallennettavan tiedoston rajausalueen kooksi sivun koko (EPS)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:328
+#: ../src/main.cpp:326
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -3420,7 +3434,7 @@ msgstr ""
 "Hae piirroksen tai kohteen X-koordinaatti,.jos --query-id on määritelty"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:334
+#: ../src/main.cpp:332
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -3428,39 +3442,39 @@ msgstr ""
 "Hae piirroksen tai kohteen Y-koordinaatti, jos --query-id on määritelty"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:340
+#: ../src/main.cpp:338
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr "Hae piirroksen tai kohteen leveys, jos --query-id on määritelty"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:346
+#: ../src/main.cpp:344
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr "Hae piirroksen tai kohteen korkeus, jos --query-id on määritelty"
 
-#: ../src/main.cpp:351
+#: ../src/main.cpp:349
 msgid "The ID of the object whose dimensions are queried"
 msgstr "Mittakyselyn kohteen tunnus"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:357
+#: ../src/main.cpp:355
 msgid "Print out the extension directory and exit"
 msgstr "Tulosta laajennushakemisto ja poistu"
 
-#: ../src/main.cpp:362
+#: ../src/main.cpp:360
 msgid "Show given files one-by-one, switch to next on any key/mouse event"
 msgstr ""
 "Näytä valitut tiedostot yksitellen. Siirrä seuraavaan hiiren tai "
 "näppäimistön toiminnolla"
 
-#: ../src/main.cpp:367
+#: ../src/main.cpp:365
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "Poista käyttämättömät määritykset asiakirjan defs-osasta"
 
-#: ../src/main.cpp:559
+#: ../src/main.cpp:557
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -3550,7 +3564,7 @@ msgstr "_Ohje"
 msgid "Tutorials"
 msgstr "Ohjeita"
 
-#: ../src/node-context.cpp:361
+#: ../src/node-context.cpp:366
 msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
@@ -3559,20 +3573,20 @@ msgstr ""
 "liikuta vaaka- tai pystysuoraan; <b>Ctrl+Alt</b>: liikuta hallintapisteitä "
 "pitkin"
 
-#: ../src/node-context.cpp:362
+#: ../src/node-context.cpp:367
 msgid ""
 "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 "<b>Vaihto</b>: valitse ja poista solmun valinta, poista kiinnitys, kierrä "
 "molempia hallintapisteitä"
 
-#: ../src/node-context.cpp:363
+#: ../src/node-context.cpp:368
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 "<b>Alt</b>: lukitse hallintapisteen pituus. <b>Ctrl+Alt</b>: siirrä "
 "hallintapisteitä pitkin"
 
-#: ../src/node-context.cpp:647
+#: ../src/node-context.cpp:670
 msgid "Drag curve"
 msgstr "Raahaa kaari"
 
@@ -3588,7 +3602,7 @@ msgstr "Siirrä solmuja pystysuunnassa"
 msgid "Move nodes horizontally"
 msgstr "Siirrä solmuja vaakasuunnassa"
 
-#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252 ../src/nodepath.cpp:3031
+#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252 ../src/nodepath.cpp:3042
 msgid "Move nodes"
 msgstr "Siirrä solmuja"
 
@@ -3617,40 +3631,40 @@ msgstr "Lisää solmuja"
 msgid "Add node"
 msgstr "Lisää solmu"
 
-#: ../src/nodepath.cpp:1678
+#: ../src/nodepath.cpp:1680
 msgid "Break path"
 msgstr "Katkaise polku"
 
-#: ../src/nodepath.cpp:1720 ../src/nodepath.cpp:1732 ../src/nodepath.cpp:1819
-#: ../src/nodepath.cpp:1831
+#: ../src/nodepath.cpp:1722 ../src/nodepath.cpp:1737 ../src/nodepath.cpp:1824
+#: ../src/nodepath.cpp:1839
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Yhdistämistä varten tarvitaan kaksi valittua <b>päätesolmua</b>."
 
-#: ../src/nodepath.cpp:1753
+#: ../src/nodepath.cpp:1758
 msgid "Close subpath"
 msgstr "Sulje osapolku"
 
-#: ../src/nodepath.cpp:1805
+#: ../src/nodepath.cpp:1810
 msgid "Join nodes"
 msgstr "Yhdistä solmut"
 
-#: ../src/nodepath.cpp:1852
+#: ../src/nodepath.cpp:1860
 msgid "Close subpath by segment"
 msgstr "Sulje osapolku lohkolla"
 
-#: ../src/nodepath.cpp:1906
+#: ../src/nodepath.cpp:1914
 msgid "Join nodes by segment"
 msgstr "Liitä valitut solmut lohkolla"
 
-#: ../src/nodepath.cpp:2034 ../src/nodepath.cpp:2071 ../src/nodepath.cpp:2075
+#: ../src/nodepath.cpp:2042 ../src/nodepath.cpp:2079 ../src/nodepath.cpp:2083
 msgid "Delete nodes"
 msgstr "Poista solmut"
 
-#: ../src/nodepath.cpp:2036
+#: ../src/nodepath.cpp:2044
 msgid "Delete nodes preserving shape"
 msgstr "Poista solmut säilyttäen muoto"
 
-#: ../src/nodepath.cpp:2095 ../src/nodepath.cpp:2109
+#: ../src/nodepath.cpp:2103 ../src/nodepath.cpp:2117
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3658,31 +3672,31 @@ msgstr ""
 "Valitse polun <b>kaksi solmua, jotka eivät ole päissä</b> ja joiden välistä "
 "lohkot poistetaan."
 
-#: ../src/nodepath.cpp:2205
+#: ../src/nodepath.cpp:2213
 msgid "Cannot find path between nodes."
 msgstr "Solmujen välille ei löydy polkua."
 
-#: ../src/nodepath.cpp:2234
+#: ../src/nodepath.cpp:2245
 msgid "Delete segment"
 msgstr "Poista lohko"
 
-#: ../src/nodepath.cpp:2256
+#: ../src/nodepath.cpp:2267
 msgid "Change segment type"
 msgstr "Muuta lohkon tyyppiä"
 
-#: ../src/nodepath.cpp:2272 ../src/nodepath.cpp:2989
+#: ../src/nodepath.cpp:2283 ../src/nodepath.cpp:3000
 msgid "Change node type"
 msgstr "Muuta solmun tyyppiä"
 
-#: ../src/nodepath.cpp:3264
+#: ../src/nodepath.cpp:3275
 msgid "Retract handle"
 msgstr "Palauta hallintapiste"
 
-#: ../src/nodepath.cpp:3313
+#: ../src/nodepath.cpp:3324
 msgid "Move node handle"
 msgstr "Siirrä hallintapistettä"
 
-#: ../src/nodepath.cpp:3454
+#: ../src/nodepath.cpp:3465
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3693,19 +3707,19 @@ msgstr ""
 "askeleittain, <b>Alt</b> lukitsee pituuden ja <b>Vaihto</b> kiertää molempia "
 "hallintapisteitä"
 
-#: ../src/nodepath.cpp:3632
+#: ../src/nodepath.cpp:3643
 msgid "Rotate nodes"
 msgstr "Kierrä solmuja"
 
-#: ../src/nodepath.cpp:3757
+#: ../src/nodepath.cpp:3768
 msgid "Scale nodes"
 msgstr "Muuta solmujen kokoa"
 
-#: ../src/nodepath.cpp:3804
+#: ../src/nodepath.cpp:3815
 msgid "Flip nodes"
 msgstr "Käännä solmuja"
 
-#: ../src/nodepath.cpp:3969
+#: ../src/nodepath.cpp:3980
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3714,44 +3728,44 @@ msgstr ""
 "pystyakselille ja <b>Ctrl+Alt</b> kiinniittää hallintapisteiden suuntiin"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4193
+#: ../src/nodepath.cpp:4204
 msgid "end node"
 msgstr "päätesolmu"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4198
+#: ../src/nodepath.cpp:4209
 msgid "cusp"
 msgstr "terävä"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4201
+#: ../src/nodepath.cpp:4212
 msgid "smooth"
 msgstr "tasainen"
 
-#: ../src/nodepath.cpp:4203
+#: ../src/nodepath.cpp:4214
 msgid "symmetric"
 msgstr "symmetrinen"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4209
+#: ../src/nodepath.cpp:4220
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "päätesolmu, hallintapiste piilotettu (raahaa <b>Vaihtonäppäimen</b> kanssa "
 "avataksesi)"
 
-#: ../src/nodepath.cpp:4211
+#: ../src/nodepath.cpp:4222
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "yksi hallintapiste piilotettu (raahaa <b>vaihtonäppäimen</b> kanssa "
 "avataksesi)"
 
-#: ../src/nodepath.cpp:4214
+#: ../src/nodepath.cpp:4225
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "molemmat hallintapisteet pillotettu (raahaa <b>vaihtonäppäimen</b> kanssa "
 "avataksesi)"
 
-#: ../src/nodepath.cpp:4226
+#: ../src/nodepath.cpp:4237
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3761,17 +3775,17 @@ msgstr ""
 "muotoillaksesi, <b>Nuoli</b>näppäimillä voit siirtää solmuja. <b>&lt; ja &gt;"
 "</b> muuttavat kokoa ja <b>[ ja ]</b> kiertävät"
 
-#: ../src/nodepath.cpp:4227
+#: ../src/nodepath.cpp:4238
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Raahaa</b> solmua tai hallintapisteitä. <b>Nuolinäppäimet</b> siirtävät "
 "solmua"
 
-#: ../src/nodepath.cpp:4250 ../src/nodepath.cpp:4262
+#: ../src/nodepath.cpp:4261 ../src/nodepath.cpp:4273
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Valitse kohde muokataksesi sen solmuja tai hallintapisteitä."
 
-#: ../src/nodepath.cpp:4254
+#: ../src/nodepath.cpp:4265
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3786,18 +3800,18 @@ msgstr[1] ""
 "<b>0</b> (yht. <b>%i</b>) solmua valittuna. <b>Napsauta</b>, <b>Vaihto"
 "+napsauta</b> tai <b>raahaa</b> kohteitten ympäri valitaksesi"
 
-#: ../src/nodepath.cpp:4260
+#: ../src/nodepath.cpp:4271
 msgid "Drag the handles of the object to modify it."
 msgstr "Raahaa kohteen kahvoja muokataksesi sitä."
 
-#: ../src/nodepath.cpp:4268
+#: ../src/nodepath.cpp:4279
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> (yht. <b>%i</b>) solmu valittuna; %s. %s."
 msgstr[1] "<b>%i</b> (yht. <b>%i</b>) solmua valittuna; %s. %s."
 
-#: ../src/nodepath.cpp:4275
+#: ../src/nodepath.cpp:4286
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3810,7 +3824,7 @@ msgstr[1] ""
 "<b>%i</b> (yht. <b>%i</b>) solmua valittuna <b>%i</b> (yht. <b>%i</b>) "
 "osapolussa. %s"
 
-#: ../src/nodepath.cpp:4281
+#: ../src/nodepath.cpp:4292
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -4273,74 +4287,74 @@ msgstr "Laske edelliselle tasolle"
 msgid "No more layers below."
 msgstr "Alapuolella ei ole tasoja."
 
-#: ../src/selection-chemistry.cpp:1477
+#: ../src/selection-chemistry.cpp:1481
 msgid "Remove transform"
 msgstr "Poista muunnos"
 
-#: ../src/selection-chemistry.cpp:1586
+#: ../src/selection-chemistry.cpp:1590
 msgid "Rotate 90&#176; CW"
 msgstr "Kierrä 90&#176; myötäp."
 
-#: ../src/selection-chemistry.cpp:1614
+#: ../src/selection-chemistry.cpp:1618
 msgid "Rotate 90&#176; CCW"
 msgstr "Kierrä 90&#176; vastap."
 
-#: ../src/selection-chemistry.cpp:1632 ../src/seltrans.cpp:380
+#: ../src/selection-chemistry.cpp:1636 ../src/seltrans.cpp:380
 #: ../src/ui/dialog/transformation.cpp:666
 msgid "Rotate"
 msgstr "Kierrä"
 
-#: ../src/selection-chemistry.cpp:1661
+#: ../src/selection-chemistry.cpp:1665
 msgid "Rotate by pixels"
 msgstr "Kierto pikseleissä"
 
-#: ../src/selection-chemistry.cpp:1687 ../src/seltrans.cpp:377
+#: ../src/selection-chemistry.cpp:1691 ../src/seltrans.cpp:377
 #: ../src/ui/dialog/transformation.cpp:647
 msgid "Scale"
 msgstr "Muuta kokoa"
 
-#: ../src/selection-chemistry.cpp:1706
+#: ../src/selection-chemistry.cpp:1710
 msgid "Scale by whole factor"
 msgstr "Kierto"
 
-#: ../src/selection-chemistry.cpp:1722
+#: ../src/selection-chemistry.cpp:1726
 msgid "Move vertically"
 msgstr "Siirrä pystysuunnassa"
 
-#: ../src/selection-chemistry.cpp:1725
+#: ../src/selection-chemistry.cpp:1729
 msgid "Move horizontally"
 msgstr "Siirrä vaakasuunnassa"
 
-#: ../src/selection-chemistry.cpp:1728 ../src/selection-chemistry.cpp:1756
+#: ../src/selection-chemistry.cpp:1732 ../src/selection-chemistry.cpp:1760
 #: ../src/seltrans.cpp:374 ../src/ui/dialog/transformation.cpp:595
 msgid "Move"
 msgstr "Siirrä"
 
-#: ../src/selection-chemistry.cpp:1750
+#: ../src/selection-chemistry.cpp:1754
 msgid "Nudge vertically by pixels"
 msgstr "Siirrä pystysuunnassa pikseleittäin"
 
-#: ../src/selection-chemistry.cpp:1753
+#: ../src/selection-chemistry.cpp:1757
 msgid "Nudge horizontally by pixels"
 msgstr "Siirrä vaakasuunnassa pikseleittäin"
 
-#: ../src/selection-chemistry.cpp:2017 ../src/selection-describer.cpp:65
+#: ../src/selection-chemistry.cpp:2021 ../src/selection-describer.cpp:65
 msgid "Clone"
 msgstr "Klooni"
 
-#: ../src/selection-chemistry.cpp:2034
+#: ../src/selection-chemistry.cpp:2038
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Valitse <b>klooni</b>, jonka linkitys poistetaan."
 
-#: ../src/selection-chemistry.cpp:2065
+#: ../src/selection-chemistry.cpp:2069
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "Valinnassa <b>ei ole klooneja</b>, joiden linkityksen voisi poistaa."
 
-#: ../src/selection-chemistry.cpp:2069
+#: ../src/selection-chemistry.cpp:2073
 msgid "Unlink clone"
 msgstr "Pura kloonin linkitys"
 
-#: ../src/selection-chemistry.cpp:2083
+#: ../src/selection-chemistry.cpp:2087
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -4351,7 +4365,7 @@ msgstr ""
 "<b>polulla oleva teksti</b> siirtyäksesi polkuun. Valitse <b>rivittyvä "
 "teksti</b> siirtyäksesi sen kehykseen."
 
-#: ../src/selection-chemistry.cpp:2106
+#: ../src/selection-chemistry.cpp:2110
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -4359,7 +4373,7 @@ msgstr ""
 "Valittavaa kohdetta <b>ei löydy</b> (orpo klooni, viitekohde, teksti polulla "
 "tai rivittyvä teksti)"
 
-#: ../src/selection-chemistry.cpp:2112
+#: ../src/selection-chemistry.cpp:2116
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
@@ -4367,66 +4381,66 @@ msgstr ""
 "Kohde, jota yrität valita <b>on piilotettu</b> (se löytyy &lt;defs&gt;-"
 "elementistä)"
 
-#: ../src/selection-chemistry.cpp:2139
+#: ../src/selection-chemistry.cpp:2143
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Valitse kuvioinniksi muutettavat <b>kohteet</b>."
 
-#: ../src/selection-chemistry.cpp:2221
+#: ../src/selection-chemistry.cpp:2225
 msgid "Objects to pattern"
 msgstr "Kohteet kuvioinniksi"
 
-#: ../src/selection-chemistry.cpp:2237
+#: ../src/selection-chemistry.cpp:2241
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Valitse <b>kohde, jolla on kuviointi</b>, erottaaksesi kuvionnin kohteesta."
 
-#: ../src/selection-chemistry.cpp:2290
+#: ../src/selection-chemistry.cpp:2294
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "Valinta <b>ei sisällä kuviointeja</b>."
 
-#: ../src/selection-chemistry.cpp:2293
+#: ../src/selection-chemistry.cpp:2297
 msgid "Pattern to objects"
 msgstr "Kuviointi kohteiksi"
 
-#: ../src/selection-chemistry.cpp:2378
+#: ../src/selection-chemistry.cpp:2382
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Valitse <b>kohteet</b> bittikarttakopioon."
 
-#: ../src/selection-chemistry.cpp:2537
+#: ../src/selection-chemistry.cpp:2541
 msgid "Create bitmap"
 msgstr "Luo bittikartta"
 
-#: ../src/selection-chemistry.cpp:2569
+#: ../src/selection-chemistry.cpp:2573
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Valitse <b>kohteet</b> syväyspolkua tai maskia varten."
 
-#: ../src/selection-chemistry.cpp:2572
+#: ../src/selection-chemistry.cpp:2576
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 "Valitse maskina käytettävä kohde sekä <b>kohteet</b>, joihin maski tai "
 "syväys halutaan."
 
-#: ../src/selection-chemistry.cpp:2670
+#: ../src/selection-chemistry.cpp:2674
 msgid "Set clipping path"
 msgstr "Aseta syväyspolku"
 
-#: ../src/selection-chemistry.cpp:2672
+#: ../src/selection-chemistry.cpp:2676
 msgid "Set mask"
 msgstr "Aseta maski"
 
-#: ../src/selection-chemistry.cpp:2685
+#: ../src/selection-chemistry.cpp:2689
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Valitse <b>kohteet</b>, joiden maski tai syväys poistetaan."
 
-#: ../src/selection-chemistry.cpp:2753
+#: ../src/selection-chemistry.cpp:2757
 msgid "Release clipping path"
 msgstr "Poista syväyspolku"
 
-#: ../src/selection-chemistry.cpp:2755
+#: ../src/selection-chemistry.cpp:2759
 msgid "Release mask"
 msgstr "Poista maski"
 
-#: ../src/selection-chemistry.cpp:2799
+#: ../src/selection-chemistry.cpp:2803
 msgid "Fit page to selection"
 msgstr "Sovita sivu valintaan"
 
@@ -4440,7 +4454,7 @@ msgstr "Ympyrä"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:355 ../src/verbs.cpp:2204
+#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2204
 msgid "Ellipse"
 msgstr "Ellipsi"
 
@@ -4470,7 +4484,7 @@ msgstr "Viivaketju"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
-#: ../src/ui/dialog/inkscape-preferences.cpp:352 ../src/verbs.cpp:2202
+#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2202
 msgid "Rectangle"
 msgstr "Suorakulmio"
 
@@ -4480,13 +4494,13 @@ msgstr "Polun siirtymä"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
-#: ../src/ui/dialog/inkscape-preferences.cpp:361 ../src/verbs.cpp:2208
+#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2208
 msgid "Spiral"
 msgstr "Spiraali"
 
 #. star
 #: ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:358 ../src/verbs.cpp:2206
+#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2206
 msgid "Star"
 msgstr "Tähti"
 
@@ -4732,23 +4746,19 @@ msgstr "Tekstialue"
 msgid "Flow excluded region"
 msgstr "Tekstiltä suljettu alue"
 
-#: ../src/sp-flowtext.cpp:356
+#: ../src/sp-flowtext.cpp:369
 #, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
 msgstr[0] "<b>Rivittyvä teksti</b> (%d merkki)"
 msgstr[1] "<b>Rivittyvä teksti</b> (%d merkkiä)"
 
-#: ../src/sp-flowtext.cpp:358
+#: ../src/sp-flowtext.cpp:371
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
 msgstr[0] "<b>Linkitetty rivittyvä teksti</b> (%d merkki)"
 msgstr[1] "<b>Linkitetty rivittyvä teksti</b> (%d merkkiä)"
-
-#: ../src/sp-flowtext.cpp:617
-msgid "Convert flowed text to text"
-msgstr "Muunna rivitetty teksti tekstiksi"
 
 #: ../src/sp-guide.cpp:287
 msgid "vertical guideline"
@@ -4928,11 +4938,16 @@ msgstr "Jako"
 msgid "Cut path"
 msgstr "Katkaise polku"
 
-#: ../src/splivarot.cpp:110
+#: ../src/splivarot.cpp:111
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
 msgstr "Valitse <b>vähintään kaksi polkua</b> Boolen operaatioon."
 
-#: ../src/splivarot.cpp:116
+#: ../src/splivarot.cpp:115
+#, fuzzy
+msgid "Select <b>at least 1 path</b> to perform a boolean union."
+msgstr "Valitse <b>vähintään kaksi polkua</b> Boolen operaatioon."
+
+#: ../src/splivarot.cpp:121
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path "
 "cut."
@@ -4940,7 +4955,7 @@ msgstr ""
 "Valitse <b>täsmälleen kaksi polkua</b> tehdäksesi erotus, joko-tai-"
 "operaatio, jako tai polun katkaisu."
 
-#: ../src/splivarot.cpp:133 ../src/splivarot.cpp:148
+#: ../src/splivarot.cpp:138 ../src/splivarot.cpp:153
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
@@ -4948,73 +4963,73 @@ msgstr ""
 "Kohteitten <b>z-järjestys</b> on epäselvä. Erotus-, joko-tai-, jako tai "
 "polun leikkaus -toimintoa ei voida suorittaa."
 
-#: ../src/splivarot.cpp:178
+#: ../src/splivarot.cpp:183
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr ""
 "Yksi kohteista <b>ei ole polku</b>. Boolen operaatiota ei voida suorittaa."
 
-#: ../src/splivarot.cpp:571
+#: ../src/splivarot.cpp:590
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "Valitse <b>kohteet</b>, jotka haluat muuttaa poluiksi."
 
-#: ../src/splivarot.cpp:853
+#: ../src/splivarot.cpp:872
 msgid "Convert stroke to path"
 msgstr "Muunna reunaviiva poluksi"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:856
+#: ../src/splivarot.cpp:875
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "Valinnassa <b>ei ole reunaviivallisia polkuja</b>"
 
-#: ../src/splivarot.cpp:940
+#: ../src/splivarot.cpp:959
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "Valittu kohde <b>ei ole polku</b>. Sitä ei voi supistaa tai laajentaa."
 
-#: ../src/splivarot.cpp:1060 ../src/splivarot.cpp:1128
+#: ../src/splivarot.cpp:1079 ../src/splivarot.cpp:1147
 msgid "Create linked offset"
 msgstr "Luo linkitetty koko"
 
-#: ../src/splivarot.cpp:1061 ../src/splivarot.cpp:1129
+#: ../src/splivarot.cpp:1080 ../src/splivarot.cpp:1148
 msgid "Create dynamic offset"
 msgstr "Luo dynaaminen koko"
 
-#: ../src/splivarot.cpp:1156
+#: ../src/splivarot.cpp:1175
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Valitse supistettavat tai laajennettavat <b>polut</b>."
 
-#: ../src/splivarot.cpp:1373
+#: ../src/splivarot.cpp:1392
 msgid "Outset path"
 msgstr "Laajennuksen polku"
 
-#: ../src/splivarot.cpp:1373
+#: ../src/splivarot.cpp:1392
 msgid "Inset path"
 msgstr "Supistuksen polku"
 
-#: ../src/splivarot.cpp:1375
+#: ../src/splivarot.cpp:1394
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 "Valinnassa <b>ei ole</b> supistettavia tai laajennettavia <b>polkuja</b>."
 
-#: ../src/splivarot.cpp:1559
+#: ../src/splivarot.cpp:1578
 #, c-format
 msgid "Simplifying %s - <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "Pelkistetään %s - <b>%d</b>/<b>%d</b> polkua pelkistettiin..."
 
-#: ../src/splivarot.cpp:1571
+#: ../src/splivarot.cpp:1590
 #, c-format
 msgid "Done - <b>%d</b> paths simplified."
 msgstr "Valmis - <b>%d</b> polkua pelkistettiin."
 
-#: ../src/splivarot.cpp:1587
+#: ../src/splivarot.cpp:1606
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Valitse pelkistettävät <b>polut</b>."
 
-#: ../src/splivarot.cpp:1601
+#: ../src/splivarot.cpp:1620
 msgid "Simplify"
 msgstr "Pelkistä"
 
-#: ../src/splivarot.cpp:1603
+#: ../src/splivarot.cpp:1622
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "Valinnassa <b>ei ole polkuja</b>, joita voisi pelkistää."
 
@@ -5040,11 +5055,11 @@ msgstr ""
 msgid "Create star"
 msgstr "Luo tähti"
 
-#: ../src/text-chemistry.cpp:94
+#: ../src/text-chemistry.cpp:96
 msgid "Select <b>a text and a path</b> to put text on path."
 msgstr "Valitse <b>teksti ja polku</b> asettaaksesi tekstin polulle."
 
-#: ../src/text-chemistry.cpp:99
+#: ../src/text-chemistry.cpp:101
 msgid ""
 "This text object is <b>already put on a path</b>. Remove it from the path "
 "first. Use <b>Shift+D</b> to look up its path."
@@ -5052,14 +5067,8 @@ msgstr ""
 "Tämä teksti on jo <b>polulla</b>. Se täytyy ensin poistaa polultaan. "
 "<b>Vaihto+D</b> näyttää tekstin polun."
 
-#: ../src/text-chemistry.cpp:104
-msgid "You cannot put flowtext on a path. Convert flowtext to text first."
-msgstr ""
-"Automaattisesti rivittyvää tekstiä ei voi asettaa polulle. Muuta rivittyvä "
-"teksti ensin normaaliksi tekstiksi."
-
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
-#: ../src/text-chemistry.cpp:110
+#: ../src/text-chemistry.cpp:107
 msgid ""
 "You cannot put text on a rectangle in this version. Convert rectangle to "
 "path first."
@@ -5067,31 +5076,31 @@ msgstr ""
 "Suorakulmioon ei voi asettaa tekstiä tässä versiossa. Muuta suorakulmio "
 "poluksi ensin."
 
-#: ../src/text-chemistry.cpp:157 ../src/verbs.cpp:2074
+#: ../src/text-chemistry.cpp:174 ../src/verbs.cpp:2074
 msgid "Put text on path"
 msgstr "Aseta teksti polulle"
 
-#: ../src/text-chemistry.cpp:169
+#: ../src/text-chemistry.cpp:186
 msgid "Select <b>a text on path</b> to remove it from path."
 msgstr "Valitse <b>polulle kiinnitetty teksti</b> poistaaksesi sen polulta."
 
-#: ../src/text-chemistry.cpp:191
+#: ../src/text-chemistry.cpp:208
 msgid "<b>No texts-on-paths</b> in the selection."
 msgstr "Valinta ei sisällä <b>polulla olevaa tekstiä</b>."
 
-#: ../src/text-chemistry.cpp:195 ../src/verbs.cpp:2076
+#: ../src/text-chemistry.cpp:212 ../src/verbs.cpp:2076
 msgid "Remove text from path"
 msgstr "Poista teksti polulta"
 
-#: ../src/text-chemistry.cpp:220 ../src/text-chemistry.cpp:240
+#: ../src/text-chemistry.cpp:237 ../src/text-chemistry.cpp:257
 msgid "Select <b>text(s)</b> to remove kerns from."
 msgstr "Valitse <b>tekstit</b>, joista kirjainvälit poistetaan."
 
-#: ../src/text-chemistry.cpp:243 ../src/widgets/toolbox.cpp:4154
+#: ../src/text-chemistry.cpp:260 ../src/widgets/toolbox.cpp:4154
 msgid "Remove manual kerns"
 msgstr "Poista lisätyt välistykset"
 
-#: ../src/text-chemistry.cpp:262
+#: ../src/text-chemistry.cpp:279
 msgid ""
 "Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text "
 "into frame."
@@ -5099,17 +5108,31 @@ msgstr ""
 "Valitse <b>teksti</b> ja yksi tai useampi <b>polku tai kuvio</b> tuodaksesi "
 "tekstin kehykseen."
 
-#: ../src/text-chemistry.cpp:312
+#: ../src/text-chemistry.cpp:347
 msgid "Flow text into shape"
 msgstr "Vie teksti kuvioon"
 
-#: ../src/text-chemistry.cpp:335
+#: ../src/text-chemistry.cpp:368
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Valitse <b>rivittyvä teksti</b> poistaaksesi rivityksen."
 
-#: ../src/text-chemistry.cpp:398
+#: ../src/text-chemistry.cpp:431
 msgid "Unflow flowed text"
 msgstr "Pura rivitetty teksti"
+
+#: ../src/text-chemistry.cpp:443
+#, fuzzy
+msgid "Select <b>flowed text(s)</b> to convert."
+msgstr "Valitse <b>rivittyvä teksti</b> poistaaksesi rivityksen."
+
+#: ../src/text-chemistry.cpp:479
+msgid "Convert flowed text to text"
+msgstr "Muunna rivitetty teksti tekstiksi"
+
+#: ../src/text-chemistry.cpp:484
+#, fuzzy
+msgid "<b>No flowed text(s)</b> to convert in the selection."
+msgstr "Valinnassa <b>ei ole kohteita</b>, jotka voitaisiin muuntaa poluiksi."
 
 #: ../src/text-context.cpp:448
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -5476,6 +5499,13 @@ msgstr "_Lisenssi"
 msgid "about.svg"
 msgstr "about.svg"
 
+#. TRANSLATORS: Put here your name (and other national contributors')
+#. one per line in the form of:  name surname (email). Use \n for newline.
+#: ../src/ui/dialog/aboutbox.cpp:265
+#, fuzzy
+msgid "translator-credits"
+msgstr "_Kääntäjät"
+
 #: ../src/ui/dialog/align-and-distribute.cpp:219
 #: ../src/ui/dialog/align-and-distribute.cpp:759
 msgid "Align"
@@ -5686,12 +5716,12 @@ msgstr "Pienimpään"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:886
 #: ../src/ui/dialog/document-properties.cpp:100
-#: ../src/ui/dialog/filedialog.cpp:1851 ../src/widgets/desktop-widget.cpp:1129
+#: ../src/ui/dialog/filedialog.cpp:1851 ../src/widgets/desktop-widget.cpp:1130
 msgid "Page"
 msgstr "Sivu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:887
-#: ../src/widgets/desktop-widget.cpp:1133
+#: ../src/widgets/desktop-widget.cpp:1134
 msgid "Drawing"
 msgstr "Piirros"
 
@@ -6069,7 +6099,7 @@ msgstr "<b>Ruudukkoon tarttuminen</b>"
 msgid "<b>Guide Snapping</b>"
 msgstr "<b>Apuviivoihin tarttuminen</b>"
 
-#: ../src/ui/dialog/export.cpp:34
+#: ../src/ui/dialog/export.cpp:34 ../share/extensions/g2pngs.inx.h:2
 msgid "Export"
 msgstr "Vie"
 
@@ -6078,6 +6108,7 @@ msgid "Information"
 msgstr "Tietoja"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
+#: ../share/extensions/funcplot.inx.h:7
 msgid "Help"
 msgstr "Ohje"
 
@@ -6194,23 +6225,23 @@ msgstr "Reunan väri"
 msgid "Stroke Style"
 msgstr "Reunan tyyli"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:142
+#: ../src/ui/dialog/inkscape-preferences.cpp:143
 msgid "Mouse"
 msgstr "Hiiri"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:144
+#: ../src/ui/dialog/inkscape-preferences.cpp:145
 msgid "Grab sensitivity:"
 msgstr "Tartunnan herkkyys:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:144
-#: ../src/ui/dialog/inkscape-preferences.cpp:147
-#: ../src/ui/dialog/inkscape-preferences.cpp:155
-#: ../src/ui/dialog/inkscape-preferences.cpp:159
-#: ../src/ui/dialog/inkscape-preferences.cpp:169
+#: ../src/ui/dialog/inkscape-preferences.cpp:145
+#: ../src/ui/dialog/inkscape-preferences.cpp:148
+#: ../src/ui/dialog/inkscape-preferences.cpp:156
+#: ../src/ui/dialog/inkscape-preferences.cpp:160
+#: ../src/ui/dialog/inkscape-preferences.cpp:170
 msgid "pixels"
 msgstr "pikseliä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:145
+#: ../src/ui/dialog/inkscape-preferences.cpp:146
 msgid ""
 "How close on the screen you need to be to an object to be able to grab it "
 "with mouse (in screen pixels)"
@@ -6218,25 +6249,25 @@ msgstr ""
 "Miten lähellä kohdetta täytyy olla, jotta siihen voi tarttua hiirellä "
 "(pikseleinä)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:147
+#: ../src/ui/dialog/inkscape-preferences.cpp:148
 msgid "Click/drag threshold:"
 msgstr "Napsautus- ja raahausherkkyys:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:148
+#: ../src/ui/dialog/inkscape-preferences.cpp:149
 msgid ""
 "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
 msgstr ""
 "Suurin hiiren raahaus (pikseleinä), joka lasketaan vielä napsautukseksi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:153
+#: ../src/ui/dialog/inkscape-preferences.cpp:154
 msgid "Scrolling"
 msgstr "Vieritys"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:155
+#: ../src/ui/dialog/inkscape-preferences.cpp:156
 msgid "Mouse wheel scrolls by:"
 msgstr "Hiiren rulla siirtää:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:156
+#: ../src/ui/dialog/inkscape-preferences.cpp:157
 msgid ""
 "One mouse wheel notch scrolls by this distance in screen pixels "
 "(horizontally with Shift)"
@@ -6244,23 +6275,23 @@ msgstr ""
 "Yksi hiiren rullan napsautus siirtää valitun etäisyyden pikseleinä (Vaihto-"
 "näppäimen kanssa siirto tapahtuu vaakasuoraan)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:157
+#: ../src/ui/dialog/inkscape-preferences.cpp:158
 msgid "Ctrl+arrows"
 msgstr "Ctrl+nuolinäppäimet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:159
+#: ../src/ui/dialog/inkscape-preferences.cpp:160
 msgid "Scroll by:"
 msgstr "Siirtää:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:160
+#: ../src/ui/dialog/inkscape-preferences.cpp:161
 msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
 msgstr "Painamalla Ctrl+nuolinäppäin siirtää valitun etäisyyden pikseleinä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:162
+#: ../src/ui/dialog/inkscape-preferences.cpp:163
 msgid "Acceleration:"
 msgstr "Kiihdytys:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:163
+#: ../src/ui/dialog/inkscape-preferences.cpp:164
 msgid ""
 "Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no "
 "acceleration)"
@@ -6268,15 +6299,15 @@ msgstr ""
 "Ctrl+nuolinäppäimen pohjassa pitäminen kiihdyttää siirtoa asteittain (0 ei "
 "kiihdytä)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:164
+#: ../src/ui/dialog/inkscape-preferences.cpp:165
 msgid "Autoscrolling"
 msgstr "Automaattinen vieritys"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:166
+#: ../src/ui/dialog/inkscape-preferences.cpp:167
 msgid "Speed:"
 msgstr "Nopeus:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:167
+#: ../src/ui/dialog/inkscape-preferences.cpp:168
 msgid ""
 "How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn "
 "autoscroll off)"
@@ -6284,13 +6315,13 @@ msgstr ""
 "Miten nopeasti piirtoalusta siirtyy, kun raahaat kohteen sen reunan yli "
 "(automaattinen siirtymisen voi estää arvolla 0)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:169
+#: ../src/ui/dialog/inkscape-preferences.cpp:170
 #: ../src/ui/dialog/tracedialog.cpp:409 ../src/ui/dialog/tracedialog.cpp:442
 #: ../src/ui/dialog/tracedialog.cpp:585
 msgid "Threshold:"
 msgstr "Raja-arvo:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:170
+#: ../src/ui/dialog/inkscape-preferences.cpp:171
 msgid ""
 "How far (in screen pixels) you need to be from the canvas edge to trigger "
 "autoscroll; positive is outside the canvas, negative is within the canvas"
@@ -6299,15 +6330,15 @@ msgstr ""
 "automaattinen siirtyminen aktivoituu. Positiivinen arvo on piirtoalustan "
 "ulkopuolella, negatiivinen alustalla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:175
+#: ../src/ui/dialog/inkscape-preferences.cpp:176
 msgid "Steps"
 msgstr "Askeleet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:178
+#: ../src/ui/dialog/inkscape-preferences.cpp:179
 msgid "Arrow keys move by:"
 msgstr "Nuolinäppäimet siirtävät:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:179
+#: ../src/ui/dialog/inkscape-preferences.cpp:180
 msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance "
 "(in px units)"
@@ -6315,32 +6346,32 @@ msgstr ""
 "Nuolinäppäimen painaminen siirtää valittuja kohteita tai solmuja valitun "
 "määrän pikseleitä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:181
+#: ../src/ui/dialog/inkscape-preferences.cpp:182
 msgid "> and < scale by:"
 msgstr "> ja < muuttavat kokoa:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:182
+#: ../src/ui/dialog/inkscape-preferences.cpp:183
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr ""
 "> tai < suurentaa tai pienentää valinnan kokoa valitulla määrällä pikseleitä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:184
+#: ../src/ui/dialog/inkscape-preferences.cpp:185
 msgid "Inset/Outset by:"
 msgstr "Kutista tai laajenna:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:185
+#: ../src/ui/dialog/inkscape-preferences.cpp:186
 msgid ""
 "Inset and Outset commands displace the path by this distance (in px units)"
 msgstr ""
 "Kutistus- ja laajennustominnot siirtävät polkua valitulla etäisyydellä "
 "pikseleinä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:186
+#: ../src/ui/dialog/inkscape-preferences.cpp:187
 msgid "Compass-like display of angles"
 msgstr "Näytä kulmat kompassin tapaan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:188
+#: ../src/ui/dialog/inkscape-preferences.cpp:189
 msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
@@ -6350,15 +6381,15 @@ msgstr ""
 "on myötäpäivään; muutoin 0 on itä ja väli -180&#8211;180 ja positiivinen on "
 "vastapäivään"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:194
+#: ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "Rotation snaps every:"
 msgstr "Kierto tarttuu joka:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:194
+#: ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "degrees"
 msgstr "aste"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:195
+#: ../src/ui/dialog/inkscape-preferences.cpp:196
 msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
@@ -6366,11 +6397,11 @@ msgstr ""
 "Kierto Ctrl painettuna kiinnittyy valitun astemäärän välein. Myös [ tai ]-"
 "näppäimen painaminen kiertää valitun astemäärän"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:197
+#: ../src/ui/dialog/inkscape-preferences.cpp:198
 msgid "Zoom in/out by:"
 msgstr "Loitonna tai lähennä:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:198
+#: ../src/ui/dialog/inkscape-preferences.cpp:199
 msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
@@ -6378,28 +6409,28 @@ msgstr ""
 "Zoom-työkalun napsauttaminen, + ja - -näppäimet ja keskimmäinen näppäin "
 "muuttavat näkymän kokoa valitulla kertoimella"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:204
+#: ../src/ui/dialog/inkscape-preferences.cpp:205
 msgid "Show selection cue"
 msgstr "Näytä valintavihje"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:205
+#: ../src/ui/dialog/inkscape-preferences.cpp:206
 msgid ""
 "Whether selected objects display a selection cue (the same as in selector)"
 msgstr "Näytetäänkö valituista kohteista vihje (sama kuin valintatyökalussa)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:211
+#: ../src/ui/dialog/inkscape-preferences.cpp:212
 msgid "Enable gradient editing"
 msgstr "Salli liukuvärin muokkaus"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:212
+#: ../src/ui/dialog/inkscape-preferences.cpp:213
 msgid "Whether selected objects display gradient editing controls"
 msgstr "Näyttävätkö valitut kohteet liukuvärien muokkauksen kontrollit"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:225
+#: ../src/ui/dialog/inkscape-preferences.cpp:226
 msgid "<b>No objects selected</b> to take the style from."
 msgstr "Valittuna <b>ei ole kohteita</b>, joilta voisi ottaa tyylin."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:234
+#: ../src/ui/dialog/inkscape-preferences.cpp:235
 msgid ""
 "<b>More than one object selected.</b>  Cannot take style from multiple "
 "objects."
@@ -6407,23 +6438,23 @@ msgstr ""
 "<b>Useampi kuin yksi kohde</b> valittuna. Tyyliä ei voi ottaa useasta "
 "kohteesta."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:268
+#: ../src/ui/dialog/inkscape-preferences.cpp:269
 msgid "Create new objects with:"
 msgstr "Luo uudet kohteet:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:270
+#: ../src/ui/dialog/inkscape-preferences.cpp:271
 msgid "Last used style"
 msgstr "Viimeksi käytetty tyyli"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:272
+#: ../src/ui/dialog/inkscape-preferences.cpp:273
 msgid "Apply the style you last set on an object"
 msgstr "Käytä viimeksi käyttämääsi tyyliä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:277
+#: ../src/ui/dialog/inkscape-preferences.cpp:278
 msgid "This tool's own style:"
 msgstr "Työkalun oma tyyli:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:281
+#: ../src/ui/dialog/inkscape-preferences.cpp:282
 msgid ""
 "Each tool may store its own style to apply to the newly created objects. Use "
 "the button below to set it."
@@ -6431,127 +6462,127 @@ msgstr ""
 "Jokainen työkalu säilyttää oman tyylinsä, jota käytetään uusiin kohteiisiin. "
 "Käytä alapuolella olevaa painiketta asettaaksesi sen."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:286
+#: ../src/ui/dialog/inkscape-preferences.cpp:287
 msgid "Take from selection"
 msgstr "Ota valinnasta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:298
+#: ../src/ui/dialog/inkscape-preferences.cpp:299
 msgid "Remember the style of the (first) selected object as this tool's style"
 msgstr "Tallenna (ensimmäiseksi) valitun kohteen tyyli tämän työkalun tyyliksi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:303
+#: ../src/ui/dialog/inkscape-preferences.cpp:304
 msgid "Tools"
 msgstr "Työkalut"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:306
+#: ../src/ui/dialog/inkscape-preferences.cpp:307
 msgid "Width is in absolute units"
 msgstr "Leveys on absoluuttisina yksikköinä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:307
+#: ../src/ui/dialog/inkscape-preferences.cpp:308
 msgid "Keep selected"
 msgstr "Pidä valittu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:308
+#: ../src/ui/dialog/inkscape-preferences.cpp:309
 msgid "Don't attach connectors to text objects"
 msgstr "Älä kiinnitä liittimiä tekstikohteisiin"
 
 #. Selector
-#: ../src/ui/dialog/inkscape-preferences.cpp:311
+#: ../src/ui/dialog/inkscape-preferences.cpp:312
 msgid "Selector"
 msgstr "Valintatyökalu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:314
+#: ../src/ui/dialog/inkscape-preferences.cpp:315
 msgid "When transforming, show:"
 msgstr "Muunnettaessa, näytä:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:315
+#: ../src/ui/dialog/inkscape-preferences.cpp:316
 msgid "Objects"
 msgstr "Kohteet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:317
+#: ../src/ui/dialog/inkscape-preferences.cpp:318
 msgid "Show the actual objects when moving or transforming"
 msgstr "Näytä kohteet siirron ja muunnoksen aikana"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:318
+#: ../src/ui/dialog/inkscape-preferences.cpp:319
 msgid "Box outline"
 msgstr "Kehyksen ääriviivat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:320
+#: ../src/ui/dialog/inkscape-preferences.cpp:321
 msgid "Show only a box outline of the objects when moving or transforming"
 msgstr "Näytä kohteitten kehyksen ääriviivat siirron ja muunnoksen aikana"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:321
+#: ../src/ui/dialog/inkscape-preferences.cpp:322
 msgid "Per-object selection cue:"
 msgstr "Kohdekohtainen valintavihje:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:324
+#: ../src/ui/dialog/inkscape-preferences.cpp:325
 msgid "No per-object selection indication"
 msgstr "Ei kohdekohtaista valintahuomautusta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:325
+#: ../src/ui/dialog/inkscape-preferences.cpp:326
 msgid "Mark"
 msgstr "Merkki"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:327
+#: ../src/ui/dialog/inkscape-preferences.cpp:328
 msgid "Each selected object has a diamond mark in the top left corner"
 msgstr "Jokaisella kohteella on salmiakkikuvio vasemmassa yläkulmassa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:328
+#: ../src/ui/dialog/inkscape-preferences.cpp:329
 msgid "Box"
 msgstr "Alue"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:330
+#: ../src/ui/dialog/inkscape-preferences.cpp:331
 msgid "Each selected object displays its bounding box"
 msgstr "Jokaisella kohteella on näkyvä rajausalue"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:331
+#: ../src/ui/dialog/inkscape-preferences.cpp:332
 msgid "Default scale origin:"
 msgstr "Koon muutoksen keskipiste:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:332
+#: ../src/ui/dialog/inkscape-preferences.cpp:333
 msgid "Opposite bounding box edge"
 msgstr "Rajausalueen reuna"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:334
+#: ../src/ui/dialog/inkscape-preferences.cpp:335
 msgid "Default scale origin will be on the bounding box of the item"
 msgstr "Koon muutoksen keskipiste on kohteen rajausalue"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:335
+#: ../src/ui/dialog/inkscape-preferences.cpp:336
 msgid "Farthest opposite node"
 msgstr "Kauimmaisin vastakkainen solmu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:337
+#: ../src/ui/dialog/inkscape-preferences.cpp:338
 msgid "Default scale origin will be on the bounding box of the item's points"
 msgstr "Koon muutoksen keskipiste on kohteen pisteitten rajausalue"
 
 #. Node
-#: ../src/ui/dialog/inkscape-preferences.cpp:339
+#: ../src/ui/dialog/inkscape-preferences.cpp:340
 msgid "Node"
 msgstr "Solmu"
 
 #. Zoom
-#: ../src/ui/dialog/inkscape-preferences.cpp:343
-#: ../src/ui/view/edit-widget.cpp:1067 ../src/verbs.cpp:2220
-#: ../src/widgets/desktop-widget.cpp:282
+#: ../src/ui/dialog/inkscape-preferences.cpp:344
+#: ../src/ui/view/edit-widget.cpp:1069 ../src/verbs.cpp:2220
+#: ../src/widgets/desktop-widget.cpp:284
 msgid "Zoom"
 msgstr "Näkymän koko"
 
 #. Shapes
-#: ../src/ui/dialog/inkscape-preferences.cpp:347
+#: ../src/ui/dialog/inkscape-preferences.cpp:348
 msgid "Shapes"
 msgstr "Kuviot"
 
 #. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:364 ../src/verbs.cpp:2210
+#: ../src/ui/dialog/inkscape-preferences.cpp:365 ../src/verbs.cpp:2210
 msgid "Pencil"
 msgstr "Kynä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:367
+#: ../src/ui/dialog/inkscape-preferences.cpp:368
 #: ../src/ui/dialog/tracedialog.cpp:600
 msgid "Tolerance:"
 msgstr "Raja-arvo:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:368
+#: ../src/ui/dialog/inkscape-preferences.cpp:369
 msgid ""
 "This value affects the amount of smoothing applied to freehand lines; lower "
 "values produce more uneven paths with more nodes"
@@ -6560,16 +6591,16 @@ msgstr ""
 "arvoilla polut ovat epätasaisia ja sisältävät useita solmuja"
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:372 ../src/verbs.cpp:2212
+#: ../src/ui/dialog/inkscape-preferences.cpp:373 ../src/verbs.cpp:2212
 msgid "Pen"
 msgstr "Täytekynä"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:376 ../src/verbs.cpp:2214
+#: ../src/ui/dialog/inkscape-preferences.cpp:377 ../src/verbs.cpp:2214
 msgid "Calligraphy"
 msgstr "Kalligrafia"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:379
+#: ../src/ui/dialog/inkscape-preferences.cpp:380
 msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
@@ -6578,7 +6609,7 @@ msgstr ""
 "kynän leveys suhteutetaan näkymän kokoon siten, että se näyttää aina saman "
 "levyiseltä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:381
+#: ../src/ui/dialog/inkscape-preferences.cpp:382
 msgid ""
 "If on, each object created with this tool will remain selected after you "
 "finish drawing it"
@@ -6586,49 +6617,54 @@ msgstr ""
 "Tällä työkalulla luodut kohteet pysyvät valittuina niiden piirtämisen jälkeen"
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:388 ../src/verbs.cpp:2218
+#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2218
 msgid "Gradient"
 msgstr "Liukuväri"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:391 ../src/verbs.cpp:2224
+#: ../src/ui/dialog/inkscape-preferences.cpp:392 ../src/verbs.cpp:2224
 msgid "Connector"
 msgstr "Liitin"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:394
+#: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid "If on, connector attachment points will not be shown for text objects"
 msgstr "Tekstikohteille ei näytetä liitospisteitä"
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:396 ../src/verbs.cpp:2222
+#: ../src/ui/dialog/inkscape-preferences.cpp:397 ../src/verbs.cpp:2222
 msgid "Dropper"
 msgstr "Värivalitsin"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:403
+#: ../src/ui/dialog/inkscape-preferences.cpp:404
 msgid "Save window geometry"
 msgstr "Tallenna ikkunan sijainti- ja paikkatiedot"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:404
+#: ../src/ui/dialog/inkscape-preferences.cpp:405
 msgid "Dialogs are hidden in taskbar"
 msgstr "Valintaikkunat piilotetaan tehtäväpalkkiin"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:405
+#: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid "Zoom when window is resized"
 msgstr "Muuta näkymän kokoa, kun ikkunan kokoa muutetaan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:406
+#: ../src/ui/dialog/inkscape-preferences.cpp:407
 msgid "Show close button on dialogs"
 msgstr "Näytä sulje-painike valintaikkunoissa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:408
+#: ../src/ui/dialog/inkscape-preferences.cpp:409
 msgid "Normal"
 msgstr "Normaali"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:409
+#: ../src/ui/dialog/inkscape-preferences.cpp:410
 msgid "Aggressive"
 msgstr "Aggressiivinen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:412
+#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#, fuzzy
+msgid "Dialogs stay on top (experimental!)"
+msgstr "Valintaikkunat pysyvät asiakirjaikkunoiden päällä"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:418
 msgid ""
 "Save the window size and position with each document (only for Inkscape SVG "
 "format)"
@@ -6636,11 +6672,11 @@ msgstr ""
 "Tallenna ikkunan koko ja sijainti jokaisen asiakirjan mukana (ainoastaan "
 "Inkscapen SVG-tiedostomuodolle)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#: ../src/ui/dialog/inkscape-preferences.cpp:421
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr "Piilotetaanko valintaikkunat ikkunamanagerin tehtäväpalkkiin"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:416
+#: ../src/ui/dialog/inkscape-preferences.cpp:424
 msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
@@ -6650,65 +6686,72 @@ msgstr ""
 "alueen näkyvissä (tämä on oletustoiminta, jonka voi muuttaa kaikissa "
 "ikkunoissa oikean vierityspalkin yläpuolella olevasta painikkeesta)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:418
+#: ../src/ui/dialog/inkscape-preferences.cpp:426
 msgid "Whether dialog windows have a close button (requires restart)"
 msgstr "Onko valintaikkunoilla sulje-painike (vaatii uudelleenkäynnistyksen)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:419
+#: ../src/ui/dialog/inkscape-preferences.cpp:427
 msgid "Dialogs on top:"
 msgstr "Valintaikkunat päällimmäisinä:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:421
+#: ../src/ui/dialog/inkscape-preferences.cpp:430
 msgid "Dialogs are treated as regular windows"
 msgstr "Valintaikkunoita käsitellään kuin ne olisivat tavallisia ikkunoita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:423
+#: ../src/ui/dialog/inkscape-preferences.cpp:432
 msgid "Dialogs stay on top of document windows"
 msgstr "Valintaikkunat pysyvät asiakirjaikkunoiden päällä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:425
+#: ../src/ui/dialog/inkscape-preferences.cpp:434
 msgid "Same as Normal but may work better with some window managers"
 msgstr ""
 "Sama kuin normaali, mutta saattaa toimia paremmin joidenkin ikkunamanagerien "
 "kanssa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:427
+#: ../src/ui/dialog/inkscape-preferences.cpp:437
+msgid ""
+"Whether dialogs should stay on top of document windows. Read the "
+"ReleaseNotes on this issue! (Rightclick the taskbar button and press "
+"'Restore' to bring back a minimized document window)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Windows"
 msgstr "Ikkunat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:432
+#: ../src/ui/dialog/inkscape-preferences.cpp:445
 msgid "Move in parallel"
 msgstr "Siirrä samansuuntaisesti"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:434
+#: ../src/ui/dialog/inkscape-preferences.cpp:447
 msgid "Stay unmoved"
 msgstr "Pidä paikallaan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:436
+#: ../src/ui/dialog/inkscape-preferences.cpp:449
 msgid "Move according to transform"
 msgstr "Siirrä muunnoksen mukaan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:438
+#: ../src/ui/dialog/inkscape-preferences.cpp:451
 msgid "Are unlinked"
 msgstr "menettävät linkityksen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/ui/dialog/inkscape-preferences.cpp:453
 msgid "Are deleted"
 msgstr "poistetaan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:443
+#: ../src/ui/dialog/inkscape-preferences.cpp:456
 msgid "When the original moves, its clones and linked offsets:"
 msgstr "Kun alkuperäinen siirtyy, sen kloonit ja kokoon linkitetyt kohteet:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:445
+#: ../src/ui/dialog/inkscape-preferences.cpp:458
 msgid "Clones are translated by the same vector as their original."
 msgstr "Klooneja muokataan samalla vektorilla kuin alkuperäistä."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:447
+#: ../src/ui/dialog/inkscape-preferences.cpp:460
 msgid "Clones preserve their positions when their original is moved."
 msgstr "Kloonit säilyttävät paikkansa, kun alkuperäistä siirretään."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:449
+#: ../src/ui/dialog/inkscape-preferences.cpp:462
 msgid ""
 "Each clone moves according to the value of its transform= attribute. For "
 "example, a rotated clone will move in a different direction than its "
@@ -6717,108 +6760,108 @@ msgstr ""
 "Jokainen klooni siirtyy oman transform-attribuuttinsa mukaan. Esimerkiksi "
 "kierretty klooni liikkuu eri suuntaan kuin alkuperäinen."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:450
+#: ../src/ui/dialog/inkscape-preferences.cpp:463
 msgid "When the original is deleted, its clones:"
 msgstr "Kun alkuperäinen poistetaan, sen kloonit:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:452
+#: ../src/ui/dialog/inkscape-preferences.cpp:465
 msgid "Orphaned clones are converted to regular objects."
 msgstr "Orvoiksi jääneet kloonit muutetaan tavallisiksi kohteiksi."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:454
+#: ../src/ui/dialog/inkscape-preferences.cpp:467
 msgid "Orphaned clones are deleted along with their original."
 msgstr "Orvot kloonit poistetaan alkuperäisten kanssa."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:461
+#: ../src/ui/dialog/inkscape-preferences.cpp:474
 msgid "Scale stroke width"
 msgstr "Muuta viivan leveyttä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:462
+#: ../src/ui/dialog/inkscape-preferences.cpp:475
 msgid "Scale rounded corners in rectangles"
 msgstr "Muuta suorakulmion pyöristettyjen kulmien kokoa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:463
+#: ../src/ui/dialog/inkscape-preferences.cpp:476
 msgid "Transform gradients"
 msgstr "Muunna liukuvärejä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:464
+#: ../src/ui/dialog/inkscape-preferences.cpp:477
 msgid "Transform patterns"
 msgstr "Muunna kuviointeja"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:465
+#: ../src/ui/dialog/inkscape-preferences.cpp:478
 msgid "Optimized"
 msgstr "Optimoitu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:466
+#: ../src/ui/dialog/inkscape-preferences.cpp:479
 msgid "Preserved"
 msgstr "Säilytetty"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:469
+#: ../src/ui/dialog/inkscape-preferences.cpp:482
 #: ../src/widgets/select-toolbar.cpp:504
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr "Kohteen koon muuttuessa muuta reunaviivan kokoa samassa suhteessa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:471
+#: ../src/ui/dialog/inkscape-preferences.cpp:484
 #: ../src/widgets/select-toolbar.cpp:516
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr ""
 "Suorakulmion koon muuttuessa muuta pyöristettyjen kulmien sädettä samassa "
 "suhteessa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:473
+#: ../src/ui/dialog/inkscape-preferences.cpp:486
 #: ../src/widgets/select-toolbar.cpp:528
 msgid "Transform gradients (in fill or stroke) along with the objects"
 msgstr "Muunna liukuvärejä (täytössä tai reunaviivassa) kohteitten mukana"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:475
+#: ../src/ui/dialog/inkscape-preferences.cpp:488
 #: ../src/widgets/select-toolbar.cpp:540
 msgid "Transform patterns (in fill or stroke) along with the objects"
 msgstr "Muunna täytön tai viivan kuviointeja kohteitten mukana"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:476
+#: ../src/ui/dialog/inkscape-preferences.cpp:489
 msgid "Store transformation:"
 msgstr "Säilytä muunnokset:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:478
+#: ../src/ui/dialog/inkscape-preferences.cpp:491
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
 msgstr ""
 "Jos mahdollista, älä lisää transform-attribuuttia kohdetta muunnettaessa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:480
+#: ../src/ui/dialog/inkscape-preferences.cpp:493
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr "Säilytä muunnokset aina kohteitten transform-attribuuttina"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:482
+#: ../src/ui/dialog/inkscape-preferences.cpp:495
 msgid "Transforms"
 msgstr "Muunnokset"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:487
+#: ../src/ui/dialog/inkscape-preferences.cpp:500
 msgid "Best quality (slowest)"
 msgstr "Paras laatu (hitain)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:489
+#: ../src/ui/dialog/inkscape-preferences.cpp:502
 msgid "Better quality (slower)"
 msgstr "Hyvä laatu (hidas)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:491
+#: ../src/ui/dialog/inkscape-preferences.cpp:504
 msgid "Average quality"
 msgstr "Kohtalainen laatu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:493
+#: ../src/ui/dialog/inkscape-preferences.cpp:506
 msgid "Lower quality (faster)"
 msgstr "Huono laatu (nopea)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:495
+#: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid "Lowest quality (fastest)"
 msgstr "Huonoin laatu (nopein)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:498
+#: ../src/ui/dialog/inkscape-preferences.cpp:511
 msgid "Gaussian blur quality for display:"
 msgstr "Gauss-sumennuksen laatu näytöllä:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:500
+#: ../src/ui/dialog/inkscape-preferences.cpp:513
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
@@ -6826,65 +6869,65 @@ msgstr ""
 "Paras laatu, mutta näyttäminen saattaa olla erittäin hidasta "
 "(bittikarttavienti käyttää aina parasta laatua)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:502
+#: ../src/ui/dialog/inkscape-preferences.cpp:515
 msgid "Better quality, but slower display"
 msgstr "Parempi laatu, mutta hitaampi näyttää"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:504
+#: ../src/ui/dialog/inkscape-preferences.cpp:517
 msgid "Average quality, acceptable display speed"
 msgstr "Kohtalainen laatu, jonka näyttäminen sujuu hyväksyttävällä nopeudella"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:506
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 #, fuzzy
 msgid "Lower quality (some artifacts), but display is faster"
 msgstr "Huono laatu, jonka näyttäminen on nopeaa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:508
+#: ../src/ui/dialog/inkscape-preferences.cpp:521
 #, fuzzy
 msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr "Huonoin laatu, joka voidaan näyttö nopeiten"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:510
+#: ../src/ui/dialog/inkscape-preferences.cpp:523
 msgid "Filters"
 msgstr "Suotimet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:516
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Select in all layers"
 msgstr "Valitse kaikilla tasoilla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:517
+#: ../src/ui/dialog/inkscape-preferences.cpp:530
 msgid "Select only within current layer"
 msgstr "Valitse ainoastaan nykyisellä tasolla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:518
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "Select in current layer and sublayers"
 msgstr "Valitse nykyisellä ja sen alitasoilla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:519
+#: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "Ignore hidden objects"
 msgstr "Älä käsittele piilotettuja kohteita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:520
+#: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid "Ignore locked objects"
 msgstr "Älä käsittele lukittuja kohteita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:521
+#: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Deselect upon layer change"
 msgstr "Poista valinnat tason vaihtuessa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:523
+#: ../src/ui/dialog/inkscape-preferences.cpp:536
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "Ctrl+A, Sarkain, Vaihto+Sarkain:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:538
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr "Näppäimistön valintakomennot toimivat kohteisiin kaikilla tasoilla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:527
+#: ../src/ui/dialog/inkscape-preferences.cpp:540
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr "Näppäimistön valintakomennot toimivat ainoastaan nykyisellä tasolla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:542
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
@@ -6892,7 +6935,7 @@ msgstr ""
 "Näppäimistön valintakomennot toimivat nykyisellä tasolla ja kaikilla sen "
 "alitasoilla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden group or layer)"
@@ -6900,7 +6943,7 @@ msgstr ""
 "Poista valinta tästä, jos haluat valita piilotettuja kohteita (yksitellen, "
 "ryhmän tai tason mukana piilotettuja)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:533
+#: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked group or layer)"
@@ -6908,29 +6951,29 @@ msgstr ""
 "Poista valinta tästä, jos haluat valita lukittuja kohteita (yksitellen, "
 "ryhmän tai tason mukana lukittuja)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:536
+#: ../src/ui/dialog/inkscape-preferences.cpp:549
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
 msgstr "Poista valinta tästä, jos haluat säilyttää valinnan tason vaihtuessa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:538
+#: ../src/ui/dialog/inkscape-preferences.cpp:551
 msgid "Selecting"
 msgstr "Valinta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:545
+#: ../src/ui/dialog/inkscape-preferences.cpp:558
 msgid "Default export resolution:"
 msgstr "Oletustarkkuus bittikartoille:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:546
+#: ../src/ui/dialog/inkscape-preferences.cpp:559
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr "Oletustarkkuus bittikarttakuville (dpi) tallennusikkunassa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:547
+#: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "Import bitmap as <image>"
 msgstr "Tuo bittikartta <image>-tagina"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:549
+#: ../src/ui/dialog/inkscape-preferences.cpp:562
 msgid ""
 "When on, an imported bitmap creates an <image> element; otherwise it is a "
 "rectangle with bitmap fill"
@@ -6938,29 +6981,29 @@ msgstr ""
 "Kuva tuodaan <image>-elementtiin, muuten kuva sijoitetaan suorakulmion "
 "täytöksi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:550
+#: ../src/ui/dialog/inkscape-preferences.cpp:563
 msgid "Add label comments to printing output"
 msgstr "Lisää nimi kommenttina tulostukseen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:552
+#: ../src/ui/dialog/inkscape-preferences.cpp:565
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
 msgstr "Tulosteeseen lisätään nimi kommenttina merkitsemään kohde"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:554
+#: ../src/ui/dialog/inkscape-preferences.cpp:567
 msgid "Max recent documents:"
 msgstr "Viimeaikaisia asiakirjoja enintään:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:555
+#: ../src/ui/dialog/inkscape-preferences.cpp:568
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr "Enimmäismäärä viimeaikaisia asiakirjoja Tiedosto-valikon listassa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:557
+#: ../src/ui/dialog/inkscape-preferences.cpp:570
 msgid "Simplification threshold:"
 msgstr "Pelkistyksen herkkyys:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:558
+#: ../src/ui/dialog/inkscape-preferences.cpp:571
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
@@ -6970,63 +7013,63 @@ msgstr ""
 "useita kertoja peräkkäin vaikuttaa voimakkaammin. Suorittaminen tauon "
 "jälkeen palauttaa oletusherkkyyden."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "2x2"
 msgstr "2×2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "4x4"
 msgstr "4×4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "8x8"
 msgstr "8×8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "16x16"
 msgstr "16×16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:564
+#: ../src/ui/dialog/inkscape-preferences.cpp:577
 msgid "Oversample bitmaps:"
 msgstr "Ylinäytteistä bittikartat:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:566
+#: ../src/ui/dialog/inkscape-preferences.cpp:579
 msgid "Clipping and masking:"
 msgstr "Syväys ja maski:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:567
+#: ../src/ui/dialog/inkscape-preferences.cpp:580
 msgid "Use the topmost selected object as a clipping path or mask"
 msgstr "Käytä ylintä kohdetta syväyspolkuna tai maskina"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:569
+#: ../src/ui/dialog/inkscape-preferences.cpp:582
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "Poista valinta tästä käyttääksesi alinta valittua kohdetta syväyspolkuna tai "
 "maskina"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:570
+#: ../src/ui/dialog/inkscape-preferences.cpp:583
 msgid "Remove clipping path or mask after applying"
 msgstr "Poista syväyspolku tai maski käytön jälkeen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:572
+#: ../src/ui/dialog/inkscape-preferences.cpp:585
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
 "Poista syväyksessä tai maskin luomisessa käytetty kohde operaation jälkeen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:573
+#: ../src/ui/dialog/inkscape-preferences.cpp:586
 msgid "Use a pressure sensitive tablet or other device (requires restart)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:575
+#: ../src/ui/dialog/inkscape-preferences.cpp:588
 msgid ""
-"Use the capablities of a tablet or other pressure sensitive device. Disable "
+"Use the capabilities of a tablet or other pressure sensitive device. Disable "
 "this only if you have problems with the tablet."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:577
+#: ../src/ui/dialog/inkscape-preferences.cpp:590
 msgid "Misc"
 msgstr "Muut"
 
@@ -7757,63 +7800,63 @@ msgstr "Lähetetään piirtotaulukutsu käyttäjälle <b>%1</b>"
 #: ../src/ui/stock-items.cpp:192 ../src/ui/stock-items.cpp:195
 #: ../src/ui/stock-items.cpp:196 ../src/ui/stock-items.cpp:197
 #: ../src/ui/stock-items.cpp:198 ../src/ui/stock-items.cpp:199
-#: ../src/ui/view/edit-widget.cpp:340 ../src/ui/view/edit-widget.cpp:345
-#: ../src/ui/view/edit-widget.cpp:353 ../src/ui/view/edit-widget.cpp:358
-#: ../src/ui/view/edit-widget.cpp:363 ../src/ui/view/edit-widget.cpp:368
-#: ../src/ui/view/edit-widget.cpp:373 ../src/ui/view/edit-widget.cpp:378
-#: ../src/ui/view/edit-widget.cpp:391 ../src/ui/view/edit-widget.cpp:396
-#: ../src/ui/view/edit-widget.cpp:410 ../src/ui/view/edit-widget.cpp:414
-#: ../src/ui/view/edit-widget.cpp:418 ../src/ui/view/edit-widget.cpp:422
-#: ../src/ui/view/edit-widget.cpp:426 ../src/ui/view/edit-widget.cpp:430
-#: ../src/ui/view/edit-widget.cpp:444 ../src/ui/view/edit-widget.cpp:448
-#: ../src/ui/view/edit-widget.cpp:452 ../src/ui/view/edit-widget.cpp:483
-#: ../src/ui/view/edit-widget.cpp:492 ../src/ui/view/edit-widget.cpp:496
-#: ../src/ui/view/edit-widget.cpp:500 ../src/ui/view/edit-widget.cpp:504
-#: ../src/ui/view/edit-widget.cpp:508 ../src/ui/view/edit-widget.cpp:512
-#: ../src/ui/view/edit-widget.cpp:516 ../src/ui/view/edit-widget.cpp:520
-#: ../src/ui/view/edit-widget.cpp:524 ../src/ui/view/edit-widget.cpp:528
-#: ../src/ui/view/edit-widget.cpp:532 ../src/ui/view/edit-widget.cpp:629
-#: ../src/ui/view/edit-widget.cpp:638 ../src/ui/view/edit-widget.cpp:642
-#: ../src/ui/view/edit-widget.cpp:646 ../src/ui/view/edit-widget.cpp:650
-#: ../src/ui/view/edit-widget.cpp:654 ../src/ui/view/edit-widget.cpp:658
-#: ../src/ui/view/edit-widget.cpp:662 ../src/ui/view/edit-widget.cpp:666
-#: ../src/ui/view/edit-widget.cpp:670 ../src/ui/view/edit-widget.cpp:674
-#: ../src/ui/view/edit-widget.cpp:678 ../src/ui/view/edit-widget.cpp:682
-#: ../src/ui/view/edit-widget.cpp:686 ../src/ui/view/edit-widget.cpp:690
-#: ../src/ui/view/edit-widget.cpp:694 ../src/ui/view/edit-widget.cpp:698
-#: ../src/ui/view/edit-widget.cpp:703 ../src/ui/view/edit-widget.cpp:709
-#: ../src/ui/view/edit-widget.cpp:713 ../src/ui/view/edit-widget.cpp:763
-#: ../src/ui/view/edit-widget.cpp:768 ../src/ui/view/edit-widget.cpp:804
-#: ../src/ui/view/edit-widget.cpp:809 ../src/ui/view/edit-widget.cpp:814
-#: ../src/ui/view/edit-widget.cpp:818 ../src/ui/view/edit-widget.cpp:822
-#: ../src/ui/view/edit-widget.cpp:826 ../src/ui/view/edit-widget.cpp:830
-#: ../src/ui/view/edit-widget.cpp:834 ../src/ui/view/edit-widget.cpp:838
-#: ../src/ui/view/edit-widget.cpp:842 ../src/ui/view/edit-widget.cpp:846
-#: ../src/ui/view/edit-widget.cpp:850 ../src/ui/view/edit-widget.cpp:855
-#: ../src/ui/view/edit-widget.cpp:859 ../src/ui/view/edit-widget.cpp:863
-#: ../src/ui/view/edit-widget.cpp:867 ../src/ui/view/edit-widget.cpp:872
-#: ../src/ui/view/edit-widget.cpp:876 ../src/ui/view/edit-widget.cpp:880
-#: ../src/ui/view/edit-widget.cpp:884 ../src/ui/view/edit-widget.cpp:888
-#: ../src/ui/view/edit-widget.cpp:892 ../src/ui/view/edit-widget.cpp:896
-#: ../src/ui/view/edit-widget.cpp:900 ../src/ui/view/edit-widget.cpp:904
-#: ../src/ui/view/edit-widget.cpp:908 ../src/ui/view/edit-widget.cpp:912
+#: ../src/ui/view/edit-widget.cpp:342 ../src/ui/view/edit-widget.cpp:347
+#: ../src/ui/view/edit-widget.cpp:355 ../src/ui/view/edit-widget.cpp:360
+#: ../src/ui/view/edit-widget.cpp:365 ../src/ui/view/edit-widget.cpp:370
+#: ../src/ui/view/edit-widget.cpp:375 ../src/ui/view/edit-widget.cpp:380
+#: ../src/ui/view/edit-widget.cpp:393 ../src/ui/view/edit-widget.cpp:398
+#: ../src/ui/view/edit-widget.cpp:412 ../src/ui/view/edit-widget.cpp:416
+#: ../src/ui/view/edit-widget.cpp:420 ../src/ui/view/edit-widget.cpp:424
+#: ../src/ui/view/edit-widget.cpp:428 ../src/ui/view/edit-widget.cpp:432
+#: ../src/ui/view/edit-widget.cpp:446 ../src/ui/view/edit-widget.cpp:450
+#: ../src/ui/view/edit-widget.cpp:454 ../src/ui/view/edit-widget.cpp:485
+#: ../src/ui/view/edit-widget.cpp:494 ../src/ui/view/edit-widget.cpp:498
+#: ../src/ui/view/edit-widget.cpp:502 ../src/ui/view/edit-widget.cpp:506
+#: ../src/ui/view/edit-widget.cpp:510 ../src/ui/view/edit-widget.cpp:514
+#: ../src/ui/view/edit-widget.cpp:518 ../src/ui/view/edit-widget.cpp:522
+#: ../src/ui/view/edit-widget.cpp:526 ../src/ui/view/edit-widget.cpp:530
+#: ../src/ui/view/edit-widget.cpp:534 ../src/ui/view/edit-widget.cpp:631
+#: ../src/ui/view/edit-widget.cpp:640 ../src/ui/view/edit-widget.cpp:644
+#: ../src/ui/view/edit-widget.cpp:648 ../src/ui/view/edit-widget.cpp:652
+#: ../src/ui/view/edit-widget.cpp:656 ../src/ui/view/edit-widget.cpp:660
+#: ../src/ui/view/edit-widget.cpp:664 ../src/ui/view/edit-widget.cpp:668
+#: ../src/ui/view/edit-widget.cpp:672 ../src/ui/view/edit-widget.cpp:676
+#: ../src/ui/view/edit-widget.cpp:680 ../src/ui/view/edit-widget.cpp:684
+#: ../src/ui/view/edit-widget.cpp:688 ../src/ui/view/edit-widget.cpp:692
+#: ../src/ui/view/edit-widget.cpp:696 ../src/ui/view/edit-widget.cpp:700
+#: ../src/ui/view/edit-widget.cpp:705 ../src/ui/view/edit-widget.cpp:711
+#: ../src/ui/view/edit-widget.cpp:715 ../src/ui/view/edit-widget.cpp:765
+#: ../src/ui/view/edit-widget.cpp:770 ../src/ui/view/edit-widget.cpp:806
+#: ../src/ui/view/edit-widget.cpp:811 ../src/ui/view/edit-widget.cpp:816
+#: ../src/ui/view/edit-widget.cpp:820 ../src/ui/view/edit-widget.cpp:824
+#: ../src/ui/view/edit-widget.cpp:828 ../src/ui/view/edit-widget.cpp:832
+#: ../src/ui/view/edit-widget.cpp:836 ../src/ui/view/edit-widget.cpp:840
+#: ../src/ui/view/edit-widget.cpp:844 ../src/ui/view/edit-widget.cpp:848
+#: ../src/ui/view/edit-widget.cpp:852 ../src/ui/view/edit-widget.cpp:857
+#: ../src/ui/view/edit-widget.cpp:861 ../src/ui/view/edit-widget.cpp:865
+#: ../src/ui/view/edit-widget.cpp:869 ../src/ui/view/edit-widget.cpp:874
+#: ../src/ui/view/edit-widget.cpp:878 ../src/ui/view/edit-widget.cpp:882
+#: ../src/ui/view/edit-widget.cpp:886 ../src/ui/view/edit-widget.cpp:890
+#: ../src/ui/view/edit-widget.cpp:894 ../src/ui/view/edit-widget.cpp:898
+#: ../src/ui/view/edit-widget.cpp:902 ../src/ui/view/edit-widget.cpp:906
+#: ../src/ui/view/edit-widget.cpp:910 ../src/ui/view/edit-widget.cpp:914
 msgid "PLACEHOLDER, do not translate"
 msgstr "PLACEHOLDER, do not translate"
 
-#: ../src/ui/view/edit-widget.cpp:997
+#: ../src/ui/view/edit-widget.cpp:999
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
-#: ../src/ui/view/edit-widget.cpp:1056 ../src/widgets/desktop-widget.cpp:248
+#: ../src/ui/view/edit-widget.cpp:1058 ../src/widgets/desktop-widget.cpp:250
 msgid "Zoom drawing if window size changes"
 msgstr "Muuta näkymän kokoa, jos ikkunan koko muuttuu"
 
-#: ../src/ui/view/edit-widget.cpp:1077 ../src/widgets/desktop-widget.cpp:302
+#: ../src/ui/view/edit-widget.cpp:1079 ../src/widgets/desktop-widget.cpp:304
 msgid "Cursor coordinates"
 msgstr "Kursorin sijainti"
 
 #. display the initial welcome message in the statusbar
-#: ../src/ui/view/edit-widget.cpp:1094 ../src/widgets/desktop-widget.cpp:334
+#: ../src/ui/view/edit-widget.cpp:1096 ../src/widgets/desktop-widget.cpp:336
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -7821,7 +7864,7 @@ msgstr ""
 "<b>Tervetuloa Inkscapeen.</b> Luo kohteita kuviotyökaluilla tai piirrä niitä "
 "käsivaraisesti; Valintatyökalulla voit liikutella ja muuntaa kohteita."
 
-#: ../src/ui/view/edit-widget.cpp:1196 ../src/widgets/desktop-widget.cpp:560
+#: ../src/ui/view/edit-widget.cpp:1196 ../src/widgets/desktop-widget.cpp:562
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -7835,11 +7878,11 @@ msgstr ""
 "Jos suljet tallentamatta, muutokset menetetään."
 
 #: ../src/ui/view/edit-widget.cpp:1207 ../src/ui/view/edit-widget.cpp:1254
-#: ../src/widgets/desktop-widget.cpp:576 ../src/widgets/desktop-widget.cpp:640
+#: ../src/widgets/desktop-widget.cpp:578 ../src/widgets/desktop-widget.cpp:642
 msgid "Close _without saving"
 msgstr "_Sulje tallentamatta"
 
-#: ../src/ui/view/edit-widget.cpp:1242 ../src/widgets/desktop-widget.cpp:623
+#: ../src/ui/view/edit-widget.cpp:1242 ../src/widgets/desktop-widget.cpp:625
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -9819,37 +9862,37 @@ msgstr "Viivatyyli"
 msgid "Pattern offset"
 msgstr "Siirtymä"
 
-#: ../src/widgets/desktop-widget.cpp:392
+#: ../src/widgets/desktop-widget.cpp:394
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d (ääriviiva) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:394
+#: ../src/widgets/desktop-widget.cpp:396
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:398
+#: ../src/widgets/desktop-widget.cpp:400
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s (ääriviiva) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:400
+#: ../src/widgets/desktop-widget.cpp:402
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
 
 #. Family frame
-#: ../src/widgets/font-selector.cpp:148
+#: ../src/widgets/font-selector.cpp:150
 msgid "Font family"
 msgstr "Kirjainperhe"
 
 #. Style frame
-#: ../src/widgets/font-selector.cpp:179
+#: ../src/widgets/font-selector.cpp:181
 msgid "Style"
 msgstr "Tyyli"
 
-#: ../src/widgets/font-selector.cpp:217
+#: ../src/widgets/font-selector.cpp:219
 msgid "Font size:"
 msgstr "Koko:"
 
@@ -9857,7 +9900,7 @@ msgstr "Koko:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:589 ../src/widgets/toolbox.cpp:3730
+#: ../src/widgets/font-selector.cpp:594 ../src/widgets/toolbox.cpp:3730
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -10020,7 +10063,7 @@ msgstr "Rajan väri"
 msgid "Gradient editor"
 msgstr "Liukuväri-editori"
 
-#: ../src/widgets/gradient-vector.cpp:1172
+#: ../src/widgets/gradient-vector.cpp:1169
 msgid "Change gradient stop color"
 msgstr "Muuta värirajan väriä"
 
@@ -10822,6 +10865,7 @@ msgid "Maximum segment length"
 msgstr "Suurin lohkon pituus"
 
 #: ../share/extensions/addnodes.inx.h:3 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/radiusrand.inx.h:3
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:4
@@ -10907,7 +10951,7 @@ msgstr ""
 msgid "Less Light"
 msgstr ""
 
-#: ../share/extensions/color_lesssaturation.inx .h:2
+#: ../share/extensions/color_lesssaturation.inx.h:2
 #, fuzzy
 msgid "Less Saturation"
 msgstr "Saturaatio"
@@ -11043,6 +11087,11 @@ msgstr "pstoedit täytyy olla asennettuna http://www.pstoedit.net/pstoedit"
 msgid "Embed All Images"
 msgstr "Upota kaikki kuvat"
 
+#: ../share/extensions/embedimage.inx.h:2
+#, fuzzy
+msgid "Embed only selected images"
+msgstr "Upota kaikki kuvat"
+
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
 msgstr "EPS-tuonti"
@@ -11070,6 +11119,19 @@ msgstr "LaTeX-kaava"
 #: ../share/extensions/eqtexsvg.inx.h:2
 msgid "LaTeX formula: "
 msgstr "LaTeX-kaava: "
+
+#: ../share/extensions/export_gimp_palette.inx.h:1
+msgid "Export as GIMP Palette"
+msgstr ""
+
+#: ../share/extensions/export_gimp_palette.inx.h:2
+msgid "Exports the colors of this document as GIMP Palette"
+msgstr ""
+
+#: ../share/extensions/export_gimp_palette.inx.h:3
+#, fuzzy
+msgid "GIMP Palette (*.gpl)"
+msgstr "GIMP-liukuväri (*.ggr)"
 
 #: ../share/extensions/extractimage.inx.h:1
 msgid "Extract One Image"
@@ -11101,6 +11163,94 @@ msgstr "Tasaisuus"
 msgid "Flatten Beziers"
 msgstr "Tasoita bezier"
 
+#: ../share/extensions/funcplot.inx.h:1
+msgid "Calculate first derivative numerically"
+msgstr "Laske ensimmäinen derivaatta numeerisesti"
+
+#: ../share/extensions/funcplot.inx.h:2
+#, fuzzy
+msgid "Draw Axes"
+msgstr "Piirrä kahvat"
+
+#: ../share/extensions/funcplot.inx.h:3
+msgid "End x-value"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:4
+msgid "First derivative"
+msgstr "Ensimmäinen derivaatta"
+
+#: ../share/extensions/funcplot.inx.h:5
+#, fuzzy
+msgid "Function"
+msgstr "Funktio"
+
+#: ../share/extensions/funcplot.inx.h:6
+#, fuzzy
+msgid "Function Plotter"
+msgstr "Desktop Cutting Plotter"
+
+#: ../share/extensions/funcplot.inx.h:8
+msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:9
+msgid "Multiply x-range by 2*pi"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:10
+msgid "Range and Sampling"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:11
+#, fuzzy
+msgid "Remove rectangle"
+msgstr "Luo suorakulmio"
+
+#: ../share/extensions/funcplot.inx.h:13
+#, fuzzy
+msgid "Samples"
+msgstr "Kuviot"
+
+#: ../share/extensions/funcplot.inx.h:14
+#, fuzzy
+msgid "Start x-value"
+msgstr "Attribuutin arvo"
+
+#: ../share/extensions/funcplot.inx.h:15
+msgid ""
+"The following functions are available: (the available functions are the "
+"standard python math functions) ceil(x); fabs(x); floor(x); fmod(x,y); frexp"
+"(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt"
+"(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan"
+"(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and "
+"e are also available."
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:16
+msgid "y-value of rectangle's bottom"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:17
+#, fuzzy
+msgid "y-value of rectangle's top"
+msgstr "Suorakulmion korkeus"
+
+#: ../share/extensions/g2pngs.inx.h:1
+#, fuzzy
+msgid "Directory"
+msgstr "suora"
+
+#: ../share/extensions/g2pngs.inx.h:3
+#, fuzzy
+msgid "Groups to PNGs"
+msgstr "Ryhmät"
+
+#: ../share/extensions/g2pngs.inx.h:4
+#, fuzzy
+msgid "Save layers only"
+msgstr "Muuta tason peittoa"
+
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
 msgstr "GIMP XCF"
@@ -11112,6 +11262,32 @@ msgstr "GIMP XCF säilyttäen tasot (*.XCF)"
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
 msgstr "Piirrä kahvat"
+
+#: ../share/extensions/inkscape_help_commandline.inx.h:1
+#, fuzzy
+msgid "Command Line Options"
+msgstr "Satunnainen sijainti"
+
+#: ../share/extensions/inkscape_help_faq.inx.h:1
+msgid "FAQ"
+msgstr ""
+
+#: ../share/extensions/inkscape_help_manual.inx.h:1
+#, fuzzy
+msgid "Inkscape Manual"
+msgstr "Inkscape: _Jäljitys (en)"
+
+#: ../share/extensions/inkscape_help_relnotes.inx.h:1
+msgid "New in This Version"
+msgstr ""
+
+#: ../share/extensions/inkscape_help_reportabug.inx.h:1
+msgid "Report a Bug"
+msgstr ""
+
+#: ../share/extensions/inkscape_help_svgspec.inx.h:1
+msgid "SVG 1.1 Specification"
+msgstr ""
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
@@ -11137,43 +11313,64 @@ msgstr "Interpolointimenetelmä"
 msgid "Interpolation steps"
 msgstr "Interpolointiaskeleita"
 
-#: ../share/extensions/lindenmayer.inx.h:1
+#: ../share/extensions/lindenmayer.inx .h:1
 msgid "Axiom"
 msgstr "Aksiooma"
 
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx .h:2
 msgid "L-system"
 msgstr "L-system"
 
-#: ../share/extensions/lindenmayer.inx.h:3
+#: ../share/extensions/lindenmayer.inx .h:3
 msgid "Left angle"
 msgstr "Vasen kulma"
 
-#: ../share/extensions/lindenmayer.inx.h:4
+#: ../share/extensions/lindenmayer.inx .h:4
 msgid "Order"
 msgstr "Järjestys"
 
-#: ../share/extensions/lindenmayer.inx.h:6
+#: ../share/extensions/lindenmayer.inx .h:6
 #, no-c-format
 msgid "Randomize angle (%)"
 msgstr "Satunnainen kulma (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:8
+#: ../share/extensions/lindenmayer.inx .h:8
 #, no-c-format
 msgid "Randomize step (%)"
 msgstr "Satunnainen askel (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:10
+#: ../share/extensions/lindenmayer.inx .h:10
 msgid "Right angle"
 msgstr "Oikea kulma"
 
-#: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/lindenmayer.inx .h:11
 msgid "Rules"
 msgstr "Säännöt"
 
-#: ../share/extensions/lindenmayer.inx.h:12
+#: ../share/extensions/lindenmayer.inx .h:12
 msgid "Step length (px)"
 msgstr "Askeleen pituus (px)"
+
+#: ../share/extensions/lorem_ipsum.inx.h:1
+msgid "Lorem ipsum"
+msgstr ""
+
+#: ../share/extensions/lorem_ipsum.inx.h:2
+#, fuzzy
+msgid "Number of paragraphs"
+msgstr "Rivimäärä"
+
+#: ../share/extensions/lorem_ipsum.inx.h:3
+msgid "Paragraph length fluctuation (sentences)"
+msgstr ""
+
+#: ../share/extensions/lorem_ipsum.inx.h:5
+msgid "Sentences per paragraph"
+msgstr ""
+
+#: ../share/extensions/markers_strokepaint.inx.h:1
+msgid "Color Markers to Match Stroke"
+msgstr ""
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
@@ -11191,6 +11388,59 @@ msgstr "Pursota"
 msgid "Magnitude"
 msgstr "Suuruus"
 
+#: ../share/extensions/outline2svg.inx.h:1
+msgid "ASCII Text with outline markup"
+msgstr ""
+
+#: ../share/extensions/outline2svg.inx.h:2
+#, fuzzy
+msgid "Text Outline File (*.outline)"
+msgstr "Tekstitiedosto (*.txt)"
+
+#: ../share/extensions/outline2svg.inx.h:3
+#, fuzzy
+msgid "Text Outline Input"
+msgstr "Tekstin tuonti"
+
+#: ../share/extensions/pathalongpath.inx.h:1
+#, fuzzy
+msgid "Copies of the pattern:"
+msgstr "Sivun reunan väri"
+
+#: ../share/extensions/pathalongpath.inx.h:2
+#, fuzzy
+msgid "Deformation type:"
+msgstr "Tietoja"
+
+#: ../share/extensions/pathalongpath.inx.h:3
+msgid "Duplicate the pattern before deformation"
+msgstr ""
+
+#: ../share/extensions/pathalongpath.inx.h:5
+#, fuzzy
+msgid "Normal offset"
+msgstr "Vaakasuunnan siirtymä"
+
+#: ../share/extensions/pathalongpath.inx.h:6
+#, fuzzy
+msgid "Pattern along Path"
+msgstr "Aseta _polulle"
+
+#: ../share/extensions/pathalongpath.inx.h:7
+#, fuzzy
+msgid "Pattern is vertical"
+msgstr "Siirtymä"
+
+#: ../share/extensions/pathalongpath.inx.h:8
+#, fuzzy
+msgid "Space between copies:"
+msgstr "Riviväli"
+
+#: ../share/extensions/pathalongpath.inx.h:9
+#, fuzzy
+msgid "Tangential offset"
+msgstr "Pystysuunnan siirtymä"
+
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
 msgstr "Postscript"
@@ -11198,6 +11448,24 @@ msgstr "Postscript"
 #: ../share/extensions/ps_input.inx.h:3
 msgid "Postscript Input"
 msgstr "Postscript-tuonti"
+
+#: ../share/extensions/radiobutton_example.inx.h:1
+msgid "Developer Examples"
+msgstr ""
+
+#: ../share/extensions/radiobutton_example.inx.h:2
+msgid "RadioButton example"
+msgstr ""
+
+#: ../share/extensions/radiobutton_example.inx.h:3
+#, fuzzy
+msgid "Select option: "
+msgstr "Valinta"
+
+#: ../share/extensions/radiobutton_example.inx.h:4
+#, fuzzy
+msgid "Select second option: "
+msgstr "Valitse avattava tiedosto"
 
 #: ../share/extensions/radiusrand.inx.h:1
 #, fuzzy
@@ -11220,6 +11488,12 @@ msgid "Shift nodes"
 msgstr "Yhdistä solmut"
 
 #: ../share/extensions/radiusrand.inx.h:6
+msgid ""
+"This effect randomly shifts the nodes (and optionally node handles) of the "
+"selected path."
+msgstr ""
+
+#: ../share/extensions/radiusrand.inx.h:7
 msgid "Use normal distribution"
 msgstr "Käytä normaalia jakaantumaa"
 
@@ -11334,6 +11608,11 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Windows Metafile -tuonti"
+
+#~ msgid "You cannot put flowtext on a path. Convert flowtext to text first."
+#~ msgstr ""
+#~ "Automaattisesti rivittyvää tekstiä ei voi asettaa polulle. Muuta "
+#~ "rivittyvä teksti ensin normaaliksi tekstiksi."
 
 #~ msgid "Blur Edge"
 #~ msgstr "Sumenna reunoja"
@@ -11456,12 +11735,6 @@ msgstr "Windows Metafile -tuonti"
 
 #~ msgid "Segment Straightener"
 #~ msgstr "Lohkon suoristaja"
-
-#~ msgid "Calculate first derivative numerically"
-#~ msgstr "Laske ensimmäinen derivaatta numeerisesti"
-
-#~ msgid "First derivative"
-#~ msgstr "Ensimmäinen derivaatta"
 
 #~ msgid "Nodes per period"
 #~ msgstr "Solmuja jaksossa"

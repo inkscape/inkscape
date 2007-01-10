@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-22 00:30+0100\n"
+"POT-Creation-Date: 2007-01-10 22:45+0100\n"
 "PO-Revision-Date: 2006-11-05 18:36+0100\n"
 "Last-Translator: Rune Rønde Laursen <runerl@skjoldhoej.dk>\n"
 "Language-Team: Dansk <dansk@klid.dk>\n"
@@ -167,7 +167,7 @@ msgstr "Markér <b>et objekt</b> hvis fliselagte kloner skal fjernes."
 msgid "Delete tiled clones"
 msgstr "Slet valgte knuder"
 
-#: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1983
+#: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1987
 msgid "Select an <b>object</b> to clone."
 msgstr "Markér et <b>objekt</b> til kloning."
 
@@ -594,7 +594,7 @@ msgstr "1. Vælg fra tegningen:"
 #: ../share/extensions/color_grayscale.inx.h:1
 #: ../share/extensions/color_lesshue.inx.h:1
 #: ../share/extensions/color_lesslight.inx.h:1
-#: ../share/extensions/color_lesssaturation.inx .h:1
+#: ../share/extensions/color_lesssaturation.inx.h:1
 #: ../share/extensions/color_morehue.inx.h:1
 #: ../share/extensions/color_morelight.inx.h:1
 #: ../share/extensions/color_moresaturation.inx.h:1
@@ -854,123 +854,123 @@ msgstr "Tøm logbeskeder"
 msgid "none"
 msgstr "ingen"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2292
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2292
 msgid "_Page"
 msgstr "_Side"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2296
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2296
 msgid "_Drawing"
 msgstr "_Tegning"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2298
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2298
 msgid "_Selection"
 msgstr "_Markering"
 
-#: ../src/dialogs/export.cpp:136
+#: ../src/dialogs/export.cpp:139
 msgid "_Custom"
 msgstr "_Brugerdefineret"
 
-#: ../src/dialogs/export.cpp:260
+#: ../src/dialogs/export.cpp:263
 msgid "<big><b>Export area</b></big>"
 msgstr "<big><b> Eksportéringsområde</b></big>"
 
-#: ../src/dialogs/export.cpp:274
+#: ../src/dialogs/export.cpp:277
 msgid "Units:"
 msgstr "Enheder:"
 
-#: ../src/dialogs/export.cpp:302
+#: ../src/dialogs/export.cpp:305
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:307
+#: ../src/dialogs/export.cpp:310
 msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:312 ../src/dialogs/object-attributes.cpp:55
-#: ../src/dialogs/stroke-style.cpp:1052 ../src/widgets/toolbox.cpp:2206
+#: ../src/dialogs/export.cpp:315 ../src/dialogs/object-attributes.cpp:55
+#: ../src/dialogs/stroke-style.cpp:1054 ../src/widgets/toolbox.cpp:2206
 #: ../src/widgets/toolbox.cpp:2358
 msgid "Width:"
 msgstr "Bredde:"
 
-#: ../src/dialogs/export.cpp:318
+#: ../src/dialogs/export.cpp:321
 msgid "_y0:"
 msgstr "_y0:"
 
-#: ../src/dialogs/export.cpp:323
+#: ../src/dialogs/export.cpp:326
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:328 ../src/dialogs/export.cpp:446
+#: ../src/dialogs/export.cpp:331 ../src/dialogs/export.cpp:445
 #: ../src/dialogs/object-attributes.cpp:56
 msgid "Height:"
 msgstr "Højde:"
 
-#: ../src/dialogs/export.cpp:417
+#: ../src/dialogs/export.cpp:416
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Punktbilledstørrelse</b></big>"
 
-#: ../src/dialogs/export.cpp:430 ../src/ui/widget/page-sizer.cpp:301
+#: ../src/dialogs/export.cpp:429 ../src/ui/widget/page-sizer.cpp:301
 msgid "_Width:"
 msgstr "_Bredde:"
 
-#: ../src/dialogs/export.cpp:430 ../src/dialogs/export.cpp:446
+#: ../src/dialogs/export.cpp:429 ../src/dialogs/export.cpp:445
 msgid "pixels at"
 msgstr "billedpunkter ved"
 
-#: ../src/dialogs/export.cpp:440
+#: ../src/dialogs/export.cpp:439
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:459 ../src/ui/dialog/inkscape-preferences.cpp:545
+#: ../src/dialogs/export.cpp:458 ../src/ui/dialog/inkscape-preferences.cpp:558
 msgid "dpi"
 msgstr "dpi"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:470
+#: ../src/dialogs/export.cpp:469
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>_Filnavn</b></big>"
 
-#: ../src/dialogs/export.cpp:541
+#: ../src/dialogs/export.cpp:540
 msgid "_Browse..."
 msgstr "_Gennemsøg..."
 
-#: ../src/dialogs/export.cpp:580
+#: ../src/dialogs/export.cpp:579
 msgid "_Export"
 msgstr "_Eksportér"
 
-#: ../src/dialogs/export.cpp:584
+#: ../src/dialogs/export.cpp:583
 msgid "Export the bitmap file with these settings"
 msgstr "Eksportér punktbilledfilen med disse indstillinger"
 
-#: ../src/dialogs/export.cpp:967
+#: ../src/dialogs/export.cpp:966
 msgid "You have to enter a filename"
 msgstr "Du skal indtaste et filnavn"
 
-#: ../src/dialogs/export.cpp:972
+#: ../src/dialogs/export.cpp:971
 msgid "The chosen area to be exported is invalid"
 msgstr "Eksporteringsområdet er ugyldigt"
 
-#: ../src/dialogs/export.cpp:981
+#: ../src/dialogs/export.cpp:980
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Mappen %s eksisterer ikke eller er ikke en mappe.\n"
 
-#: ../src/dialogs/export.cpp:997
+#: ../src/dialogs/export.cpp:996
 msgid "Export in progress"
 msgstr "Eksporterer"
 
-#: ../src/dialogs/export.cpp:1003
+#: ../src/dialogs/export.cpp:1002
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Eksporterer %s (%d ×%d)"
 
-#: ../src/dialogs/export.cpp:1030
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Kunne ikke eksportere til filnavn %s.\n"
 
-#: ../src/dialogs/export.cpp:1136
+#: ../src/dialogs/export.cpp:1160
 msgid "Select a filename for exporting"
 msgstr "Vælg et filnavn til eksporteringen"
 
@@ -1110,7 +1110,7 @@ msgid "Search clones"
 msgstr "Søg efter kloner"
 
 #: ../src/dialogs/find.cpp:617 ../src/ui/dialog/find.cpp:78
-#: ../src/ui/dialog/inkscape-preferences.cpp:456
+#: ../src/ui/dialog/inkscape-preferences.cpp:469
 msgid "Clones"
 msgstr "Kloner"
 
@@ -1119,7 +1119,7 @@ msgid "Search images"
 msgstr "Søg efter billeder"
 
 #: ../src/dialogs/find.cpp:622 ../src/ui/dialog/find.cpp:79
-#: ../share/extensions/embedimage.inx.h:2
+#: ../share/extensions/embedimage.inx.h:3
 #: ../share/extensions/extractimage.inx.h:2
 msgid "Images"
 msgstr "Billeder"
@@ -1251,7 +1251,7 @@ msgstr "%d × %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:888
-#: ../src/ui/dialog/filedialog.cpp:1855 ../src/widgets/desktop-widget.cpp:1137
+#: ../src/ui/dialog/filedialog.cpp:1855 ../src/widgets/desktop-widget.cpp:1138
 msgid "Selection"
 msgstr "Markering"
 
@@ -1374,33 +1374,34 @@ msgstr "Stregst_il"
 msgid "Set object description"
 msgstr "  beskrivelse: "
 
-#: ../src/dialogs/layers-panel.cpp:591 ../src/widgets/layer-selector.cpp:590
+#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
 #, fuzzy
 msgid "Unhide layer"
 msgstr "Hæv lag"
 
-#: ../src/dialogs/layers-panel.cpp:591 ../src/widgets/layer-selector.cpp:590
+#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
 #, fuzzy
 msgid "Hide layer"
 msgstr "Hæv lag"
 
-#: ../src/dialogs/layers-panel.cpp:602 ../src/widgets/layer-selector.cpp:582
+#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
 #, fuzzy
 msgid "Lock layer"
 msgstr "Sænk lag"
 
-#: ../src/dialogs/layers-panel.cpp:602 ../src/widgets/layer-selector.cpp:582
+#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
 #, fuzzy
 msgid "Unlock layer"
 msgstr "Sænk lag"
 
-#: ../src/dialogs/layers-panel.cpp:699
+#: ../src/dialogs/layers-panel.cpp:698
 #, fuzzy
 msgid "Change layer opacity"
 msgstr "Primær uigennemsigtighed"
 
-#: ../src/dialogs/layers-panel.cpp:764
-msgid "Opacity:"
+#: ../src/dialogs/layers-panel.cpp:763
+#, fuzzy
+msgid "Opacity, %:"
 msgstr "Uigennemsigtighed:"
 
 #: ../src/dialogs/layers-panel.cpp:789
@@ -1790,55 +1791,55 @@ msgstr "Mønsterstreg"
 msgid "Unset stroke"
 msgstr "Uindfattet streg"
 
-#: ../src/dialogs/stroke-style.cpp:832 ../src/widgets/gradient-vector.cpp:264
+#: ../src/dialogs/stroke-style.cpp:834 ../src/widgets/gradient-vector.cpp:264
 #: ../src/widgets/paint-selector.cpp:739
 msgid "No document selected"
 msgstr "Intet dokument valgt"
 
-#: ../src/dialogs/stroke-style.cpp:849 ../src/interface.cpp:757
-#: ../src/ui/dialog/inkscape-preferences.cpp:190
-#: ../src/ui/dialog/inkscape-preferences.cpp:322
-#: ../src/ui/dialog/inkscape-preferences.cpp:407
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/dialogs/stroke-style.cpp:851 ../src/interface.cpp:757
+#: ../src/ui/dialog/inkscape-preferences.cpp:191
+#: ../src/ui/dialog/inkscape-preferences.cpp:323
+#: ../src/ui/dialog/inkscape-preferences.cpp:408
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 #: ../src/ui/widget/selected-style.cpp:137
 #: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1963
 msgid "None"
 msgstr "Ingen"
 
-#: ../src/dialogs/stroke-style.cpp:960
+#: ../src/dialogs/stroke-style.cpp:962
 #, fuzzy
 msgid "Set markers"
 msgstr "Vælg maske"
 
-#: ../src/dialogs/stroke-style.cpp:1066
+#: ../src/dialogs/stroke-style.cpp:1068
 msgid "Stroke width"
 msgstr "Bredde på streg"
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/dialogs/stroke-style.cpp:1089
+#: ../src/dialogs/stroke-style.cpp:1091
 msgid "Join:"
 msgstr "Samling:"
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1101
+#: ../src/dialogs/stroke-style.cpp:1103
 msgid "Miter join"
 msgstr "Hjørnesamling"
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1109
+#: ../src/dialogs/stroke-style.cpp:1111
 msgid "Round join"
 msgstr "Rund samling"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1117
+#: ../src/dialogs/stroke-style.cpp:1119
 msgid "Bevel join"
 msgstr "Kantet samling"
 
@@ -1849,58 +1850,58 @@ msgstr "Kantet samling"
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/dialogs/stroke-style.cpp:1128
+#: ../src/dialogs/stroke-style.cpp:1130
 msgid "Miter limit:"
 msgstr "Hjørneafgrænsning:"
 
-#: ../src/dialogs/stroke-style.cpp:1136
+#: ../src/dialogs/stroke-style.cpp:1138
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "Maksimal længde af hjørne (i stregbredde-enheder)"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/dialogs/stroke-style.cpp:1149
+#: ../src/dialogs/stroke-style.cpp:1151
 msgid "Cap:"
 msgstr "Ende:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/dialogs/stroke-style.cpp:1160
+#: ../src/dialogs/stroke-style.cpp:1162
 msgid "Butt cap"
 msgstr "Afkortet ende"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/dialogs/stroke-style.cpp:1167
+#: ../src/dialogs/stroke-style.cpp:1169
 msgid "Round cap"
 msgstr "Afrundet ende"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/dialogs/stroke-style.cpp:1174
+#: ../src/dialogs/stroke-style.cpp:1176
 msgid "Square cap"
 msgstr "Kantet ende"
 
 #. Dash
-#: ../src/dialogs/stroke-style.cpp:1180
+#: ../src/dialogs/stroke-style.cpp:1182
 msgid "Dashes:"
 msgstr "Stiplet linje:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/dialogs/stroke-style.cpp:1201
+#: ../src/dialogs/stroke-style.cpp:1203
 msgid "Start Markers:"
 msgstr "Startmarkører:"
 
-#: ../src/dialogs/stroke-style.cpp:1211
+#: ../src/dialogs/stroke-style.cpp:1213
 msgid "Mid Markers:"
 msgstr "Midtermarkører:"
 
-#: ../src/dialogs/stroke-style.cpp:1222
+#: ../src/dialogs/stroke-style.cpp:1224
 msgid "End Markers:"
 msgstr "Endemarkører:"
 
-#: ../src/dialogs/stroke-style.cpp:1567 ../src/dialogs/stroke-style.cpp:1665
+#: ../src/dialogs/stroke-style.cpp:1572 ../src/dialogs/stroke-style.cpp:1670
 #, fuzzy
 msgid "Set stroke style"
 msgstr "Stregst_il"
@@ -1963,7 +1964,7 @@ msgstr "Linjeafstand:"
 
 #. Text
 #: ../src/dialogs/text-edit.cpp:363 ../src/selection-describer.cpp:63
-#: ../src/ui/dialog/inkscape-preferences.cpp:383
+#: ../src/ui/dialog/inkscape-preferences.cpp:384
 #: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2216
 msgid "Text"
 msgstr "Tekst"
@@ -2071,12 +2072,12 @@ msgid "New text node"
 msgstr "Nyt tekstknudepunkt"
 
 #: ../src/dialogs/xml-tree.cpp:347 ../src/dialogs/xml-tree.cpp:1412
-#: ../src/nodepath.cpp:1708
+#: ../src/nodepath.cpp:1710
 msgid "Duplicate node"
 msgstr "Kopiér knudepunkt"
 
 #: ../src/dialogs/xml-tree.cpp:368 ../src/dialogs/xml-tree.cpp:1429
-#: ../src/nodepath.cpp:2945
+#: ../src/nodepath.cpp:2956
 msgid "Delete node"
 msgstr "Slet knudepunkt"
 
@@ -2415,6 +2416,7 @@ msgstr "Antal kopier af objektet der skal simulere udtværingen"
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
+#: ../share/extensions/pathalongpath.inx.h:4
 msgid "Generate from Path"
 msgstr "Opret fra sti"
 
@@ -2500,7 +2502,9 @@ msgid "Vertical Offset"
 msgstr "Lodret forskydning"
 
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/funcplot.inx.h:12 ../share/extensions/lindenmayer.inx
+#: .h:9 ../share/extensions/lorem_ipsum.inx.h:4
+#: ../share/extensions/rtree.inx.h:4
 msgid "Render"
 msgstr "Optegn"
 
@@ -2537,13 +2541,13 @@ msgid "OpenDocument drawing file"
 msgstr "OpenDocument drawing fil"
 
 #: ../src/extension/internal/pdf-cairo.cpp:123
-#: ../src/extension/internal/ps.cpp:120
+#: ../src/extension/internal/ps.cpp:121
 msgid "Print Destination"
 msgstr "Udskrivningsdestination"
 
 #. Print properties frame
 #: ../src/extension/internal/pdf-cairo.cpp:138
-#: ../src/extension/internal/ps.cpp:135
+#: ../src/extension/internal/ps.cpp:136
 msgid "Print properties"
 msgstr "Udskrivningsegenskaber"
 
@@ -2560,12 +2564,12 @@ msgstr ""
 "filstørrelse og kan skaleres vilkårligt, men mønstre går tabt."
 
 #: ../src/extension/internal/pdf-cairo.cpp:152
-#: ../src/extension/internal/ps.cpp:149
+#: ../src/extension/internal/ps.cpp:150
 msgid "Print as bitmap"
 msgstr "Udskriv som punktbillede"
 
 #: ../src/extension/internal/pdf-cairo.cpp:154
-#: ../src/extension/internal/ps.cpp:151
+#: ../src/extension/internal/ps.cpp:152
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2576,23 +2580,23 @@ msgstr ""
 "objekter udskrives præcis som vist."
 
 #: ../src/extension/internal/pdf-cairo.cpp:168
-#: ../src/extension/internal/ps.cpp:165
+#: ../src/extension/internal/ps.cpp:166
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Foretrukken opløsning af punktbillede (dpi)"
 
 #: ../src/extension/internal/pdf-cairo.cpp:182
-#: ../src/extension/internal/ps.cpp:179
+#: ../src/extension/internal/ps.cpp:180
 msgid "Resolution:"
 msgstr "Opløsning:"
 
 #. Print destination frame
 #: ../src/extension/internal/pdf-cairo.cpp:186
-#: ../src/extension/internal/ps.cpp:183
+#: ../src/extension/internal/ps.cpp:184
 msgid "Print destination"
 msgstr "Udskrivningsdestination"
 
 #: ../src/extension/internal/pdf-cairo.cpp:192
-#: ../src/extension/internal/ps.cpp:189
+#: ../src/extension/internal/ps.cpp:190
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2633,11 +2637,11 @@ msgstr "PostScript (*.ps)"
 msgid "Postscript File"
 msgstr "PostScript-fil"
 
-#: ../src/extension/internal/ps.cpp:142
+#: ../src/extension/internal/ps.cpp:143
 msgid "Print using PostScript operators"
 msgstr "Udskriv ved hjælp af PostScript operatorer"
 
-#: ../src/extension/internal/ps.cpp:144
+#: ../src/extension/internal/ps.cpp:145
 msgid ""
 "Use PostScript vector operators. The resulting image is usually smaller in "
 "file size and can be arbitrarily scaled, but alpha transparency and patterns "
@@ -2647,7 +2651,7 @@ msgstr ""
 "mindre filstørrelse og kan skaleres vilkårligt, men alfagennemsigtighed og "
 "mønstre går tabt."
 
-#: ../src/extension/internal/ps.cpp:1710
+#: ../src/extension/internal/ps.cpp:1719
 msgid "Postscript Print"
 msgstr "PostScript-udskrivning"
 
@@ -2913,12 +2917,12 @@ msgstr "<b>Fokus</b> af radial overgang"
 msgid "Merge gradient handles"
 msgstr "Flyt knudepunkts-håndtag"
 
-#: ../src/gradient-drag.cpp:518 ../src/gradient-drag.cpp:1071
+#: ../src/gradient-drag.cpp:530 ../src/gradient-drag.cpp:1091
 #, fuzzy
 msgid "Move gradient handle"
 msgstr "Flyt knudepunkts-håndtag"
 
-#: ../src/gradient-drag.cpp:657
+#: ../src/gradient-drag.cpp:669
 #, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
@@ -2928,11 +2932,11 @@ msgstr ""
 "<b>Ctrl+Alt</b> for at bevare vinkel, med <b>Ctrl+Shift</b> for at skalere "
 "omkring centrum"
 
-#: ../src/gradient-drag.cpp:660
+#: ../src/gradient-drag.cpp:672
 msgid " (stroke)"
 msgstr " (streg)"
 
-#: ../src/gradient-drag.cpp:663
+#: ../src/gradient-drag.cpp:675
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
@@ -2940,7 +2944,7 @@ msgstr ""
 "Radialovergang <b>centrum</b> og <b>fokus</b>; træk med <b>Shift</b> for at "
 "adskille fokus"
 
-#: ../src/gradient-drag.cpp:666
+#: ../src/gradient-drag.cpp:678
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
@@ -2983,9 +2987,9 @@ msgstr "Pt"
 msgid "Pixel"
 msgstr "Pixel"
 
-#: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:178
-#: ../src/ui/dialog/inkscape-preferences.cpp:181
-#: ../src/ui/dialog/inkscape-preferences.cpp:184
+#: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:179
+#: ../src/ui/dialog/inkscape-preferences.cpp:182
+#: ../src/ui/dialog/inkscape-preferences.cpp:185
 #: ../src/ui/widget/selected-style.cpp:255
 msgid "px"
 msgstr "px"
@@ -3003,7 +3007,7 @@ msgstr "Px"
 msgid "Percent"
 msgstr "Procent"
 
-#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:197
+#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:198
 msgid "%"
 msgstr "%"
 
@@ -3316,52 +3320,62 @@ msgstr "Inkboard session (%1 til %2)"
 msgid "Node or handle drag canceled."
 msgstr "Træk i knudepunkt eller håndtag, annulleret."
 
+#: ../src/knotholder.cpp:254
+#, fuzzy
+msgid "Change handle"
+msgstr "Opret firkant"
+
+#: ../src/knotholder.cpp:306
+#, fuzzy
+msgid "Move handle"
+msgstr "Flyt knudepunkts-håndtag"
+
 #: ../src/libnrtype/FontFactory.cpp:358
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Ignorér skrifttype uden familie. (der får Pango til at bryde sammen)"
 
-#: ../src/main.cpp:200
+#: ../src/main.cpp:198
 msgid "Print the Inkscape version number"
 msgstr "Udskriv Inkscapes versionsnummer"
 
-#: ../src/main.cpp:205
+#: ../src/main.cpp:203
 msgid "Do not use X server (only process files from console)"
 msgstr "Benyt ikke X-serveren (behandl kun filer fra konsollen)"
 
-#: ../src/main.cpp:210
+#: ../src/main.cpp:208
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "Forsøg at bruge X-serveren (selv når $DISPLAY ikke er sat)"
 
-#: ../src/main.cpp:215
+#: ../src/main.cpp:213
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "Åbn angivede dokument(er) (tilvalgstekststreng kan blive udeladt)"
 
-#: ../src/main.cpp:216 ../src/main.cpp:221 ../src/main.cpp:226
-#: ../src/main.cpp:293 ../src/main.cpp:298 ../src/main.cpp:303
-#: ../src/main.cpp:308
+#: ../src/main.cpp:214 ../src/main.cpp:219 ../src/main.cpp:224
+#: ../src/main.cpp:291 ../src/main.cpp:296 ../src/main.cpp:301
+#: ../src/main.cpp:306
 msgid "FILENAME"
 msgstr "FILNAVN"
 
-#: ../src/main.cpp:220
+#: ../src/main.cpp:218
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
 "Udskrivdokument(er) til angivet uddatafil (brug | for at kanalisere videre "
 "(pipe))"
 
-#: ../src/main.cpp:225
+#: ../src/main.cpp:223
 msgid "Export document to a PNG file"
 msgstr "Eksportér dokument til PNG-fil"
 
-#: ../src/main.cpp:230
+#: ../src/main.cpp:228
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
 msgstr ""
 "Opløsningen der bruges ved eksportering af punktbillede fra SVG (standard 90)"
 
-#: ../src/main.cpp:231
+#: ../src/main.cpp:229
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:235
+#: ../src/main.cpp:233
 msgid ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
 "corner)"
@@ -3369,19 +3383,19 @@ msgstr ""
 "Eksporteret område i SVG-enheder (standard er lærredet, 0,0 er nederste "
 "venstre hjørne)"
 
-#: ../src/main.cpp:236
+#: ../src/main.cpp:234
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
-#: ../src/main.cpp:240
+#: ../src/main.cpp:238
 msgid "Exported area is the entire drawing (not canvas)"
 msgstr "Eksporteret område er hele tegningen (ikke lærredet)"
 
-#: ../src/main.cpp:245
+#: ../src/main.cpp:243
 msgid "Exported area is the entire canvas"
 msgstr "Eksporteret område er hele lærredet"
 
-#: ../src/main.cpp:250
+#: ../src/main.cpp:248
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
@@ -3389,100 +3403,100 @@ msgstr ""
 "Trinvis justerning af billedets eksporteringsområde til nærmeste "
 "heltalsværdi (i SVG-enheder)"
 
-#: ../src/main.cpp:255
+#: ../src/main.cpp:253
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 "Bredde af det eksporterede billede i billedpunkter (overtrumfer "
 "eksporterings-dpi)"
 
-#: ../src/main.cpp:256
+#: ../src/main.cpp:254
 msgid "WIDTH"
 msgstr "BREDDE"
 
-#: ../src/main.cpp:260
+#: ../src/main.cpp:258
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 "Højden af det eksporterede billede i billedpunkter (overtrumfer "
 "eksporterings-dpi)"
 
-#: ../src/main.cpp:261
+#: ../src/main.cpp:259
 msgid "HEIGHT"
 msgstr "HØJDE"
 
-#: ../src/main.cpp:265
+#: ../src/main.cpp:263
 msgid "The ID of the object to export"
 msgstr "ID af objektet der eksporteres"
 
-#: ../src/main.cpp:266 ../src/main.cpp:352
+#: ../src/main.cpp:264 ../src/main.cpp:350
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:272
+#: ../src/main.cpp:270
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "Eksportér kun objektet med eksporterings-ID, skjul alle andre (kun med "
 "eksporterings-id)"
 
-#: ../src/main.cpp:277
+#: ../src/main.cpp:275
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
 "Brug gemt filnavn og DPI-vink når der eksporteres (kun med eksporterings-id)"
 
-#: ../src/main.cpp:282
+#: ../src/main.cpp:280
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr ""
 "Baggrundsfarve for det eksporterede punktbillede (et hvilken som helst SVG-"
 "understøttet farvenavn)"
 
-#: ../src/main.cpp:283
+#: ../src/main.cpp:281
 msgid "COLOR"
 msgstr "FARVE"
 
-#: ../src/main.cpp:287
+#: ../src/main.cpp:285
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr ""
 "Baggrundsuigennemsigtighed for det eksporterede punktbillede (enten 0.0 til "
 "1.0 eller 1 til 255)"
 
-#: ../src/main.cpp:288
+#: ../src/main.cpp:286
 msgid "VALUE"
 msgstr "VÆRDI"
 
-#: ../src/main.cpp:292
+#: ../src/main.cpp:290
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 "Eksportér dokument til almindelig SVG-fil (ingen Sodipodi- eller Inkscape-"
 "navnerum)"
 
-#: ../src/main.cpp:297
+#: ../src/main.cpp:295
 msgid "Export document to a PS file"
 msgstr "Eksportér dokument til PS-fil"
 
-#: ../src/main.cpp:302
+#: ../src/main.cpp:300
 msgid "Export document to an EPS file"
 msgstr "Eksportér dokument til EPS-fil"
 
-#: ../src/main.cpp:307
+#: ../src/main.cpp:305
 msgid "Export document to a PDF file"
 msgstr "Eksportér dokument til PDF-fil"
 
-#: ../src/main.cpp:312
+#: ../src/main.cpp:310
 msgid "Convert text object to paths on export (EPS)"
 msgstr "Konvertér tekstobjekt til sti ved eksport (EPS)"
 
-#: ../src/main.cpp:317
+#: ../src/main.cpp:315
 msgid "Embed fonts on export (Type 1 only) (EPS)"
 msgstr ""
 
-#: ../src/main.cpp:322
+#: ../src/main.cpp:320
 msgid "Export files with the bounding box set to the page size (EPS)"
 msgstr "Eksportér filer med afgrænsningsboks sat til sidestørrelsen (EPS)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:328
+#: ../src/main.cpp:326
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -3491,7 +3505,7 @@ msgstr ""
 "objektet, med forespørgsels-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:334
+#: ../src/main.cpp:332
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -3500,7 +3514,7 @@ msgstr ""
 "objektet, med forespørgsels-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:340
+#: ../src/main.cpp:338
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
@@ -3509,7 +3523,7 @@ msgstr ""
 "forespørgsels-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:346
+#: ../src/main.cpp:344
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
@@ -3517,25 +3531,25 @@ msgstr ""
 "Spørg efter tegningens højde eller, hvis angivet, højden af objektet, med "
 "forespørgsels-id"
 
-#: ../src/main.cpp:351
+#: ../src/main.cpp:349
 msgid "The ID of the object whose dimensions are queried"
 msgstr "ID for objektet, hvis størrelse forespørges"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:357
+#: ../src/main.cpp:355
 msgid "Print out the extension directory and exit"
 msgstr "Udskriv mappennavnet, og forlad"
 
-#: ../src/main.cpp:362
+#: ../src/main.cpp:360
 msgid "Show given files one-by-one, switch to next on any key/mouse event"
 msgstr ""
 "Vis givne filer en-efter-en, skift til næste ved enhver taste/muse-hændelse"
 
-#: ../src/main.cpp:367
+#: ../src/main.cpp:365
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "Fjern ubrugte definitioner fra definitionsdelen(e) af dokumentet"
 
-#: ../src/main.cpp:559
+#: ../src/main.cpp:557
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -3625,7 +3639,7 @@ msgstr "_Hjælp"
 msgid "Tutorials"
 msgstr "Gennemgange"
 
-#: ../src/node-context.cpp:361
+#: ../src/node-context.cpp:366
 msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
@@ -3633,18 +3647,18 @@ msgstr ""
 "<b>Ctrl</b>: slå knudepunktstype til/fra, trinvis justeringsvinkel, flyt "
 "vandret/lodret; <b>Ctrl+Alt</b>: flyt langs håndtag"
 
-#: ../src/node-context.cpp:362
+#: ../src/node-context.cpp:367
 msgid ""
 "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 "<b>Shift</b>: slå knudepunktsmarkering til/fra, slå trinvis justering fra, "
 "rotér begge håndtag"
 
-#: ../src/node-context.cpp:363
+#: ../src/node-context.cpp:368
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>: lås håndtagslængde; <b>Ctrl+Alt</b>: flyt langs håndtag"
 
-#: ../src/node-context.cpp:647
+#: ../src/node-context.cpp:670
 msgid "Drag curve"
 msgstr "Træk kurve"
 
@@ -3660,7 +3674,7 @@ msgstr "Flyt knudepunkter lodret"
 msgid "Move nodes horizontally"
 msgstr "Flyt knudepunkter vandret"
 
-#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252 ../src/nodepath.cpp:3031
+#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252 ../src/nodepath.cpp:3042
 msgid "Move nodes"
 msgstr "Flyt knudepunkter"
 
@@ -3689,40 +3703,40 @@ msgstr "Tilføj knudepunkter"
 msgid "Add node"
 msgstr "Tilføj knudepunkt"
 
-#: ../src/nodepath.cpp:1678
+#: ../src/nodepath.cpp:1680
 msgid "Break path"
 msgstr "Bryd sti op"
 
-#: ../src/nodepath.cpp:1720 ../src/nodepath.cpp:1732 ../src/nodepath.cpp:1819
-#: ../src/nodepath.cpp:1831
+#: ../src/nodepath.cpp:1722 ../src/nodepath.cpp:1737 ../src/nodepath.cpp:1824
+#: ../src/nodepath.cpp:1839
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "For at sammenføje, skal <b>to endekundepunkter</b> være markeret."
 
-#: ../src/nodepath.cpp:1753
+#: ../src/nodepath.cpp:1758
 msgid "Close subpath"
 msgstr "Luk understi"
 
-#: ../src/nodepath.cpp:1805
+#: ../src/nodepath.cpp:1810
 msgid "Join nodes"
 msgstr "Sammenføj knudepunkter"
 
-#: ../src/nodepath.cpp:1852
+#: ../src/nodepath.cpp:1860
 msgid "Close subpath by segment"
 msgstr "Luk understi ved linjestykke"
 
-#: ../src/nodepath.cpp:1906
+#: ../src/nodepath.cpp:1914
 msgid "Join nodes by segment"
 msgstr "Sammenføj med nyt linjestykke"
 
-#: ../src/nodepath.cpp:2034 ../src/nodepath.cpp:2071 ../src/nodepath.cpp:2075
+#: ../src/nodepath.cpp:2042 ../src/nodepath.cpp:2079 ../src/nodepath.cpp:2083
 msgid "Delete nodes"
 msgstr "Slet knudepunkter"
 
-#: ../src/nodepath.cpp:2036
+#: ../src/nodepath.cpp:2044
 msgid "Delete nodes preserving shape"
 msgstr "Slet knudepunkter uden at ændre form"
 
-#: ../src/nodepath.cpp:2095 ../src/nodepath.cpp:2109
+#: ../src/nodepath.cpp:2103 ../src/nodepath.cpp:2117
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3730,31 +3744,31 @@ msgstr ""
 "Vælg <b>to ikke-endeknudepunkter</b> mellem hvilke du vil slette "
 "linjestykker."
 
-#: ../src/nodepath.cpp:2205
+#: ../src/nodepath.cpp:2213
 msgid "Cannot find path between nodes."
 msgstr "Kan ikke finde sti mellem knudepunkter."
 
-#: ../src/nodepath.cpp:2234
+#: ../src/nodepath.cpp:2245
 msgid "Delete segment"
 msgstr "Slet linjestykke"
 
-#: ../src/nodepath.cpp:2256
+#: ../src/nodepath.cpp:2267
 msgid "Change segment type"
 msgstr "Ændr linjestykketype"
 
-#: ../src/nodepath.cpp:2272 ../src/nodepath.cpp:2989
+#: ../src/nodepath.cpp:2283 ../src/nodepath.cpp:3000
 msgid "Change node type"
 msgstr "Ændr knudepunkttype"
 
-#: ../src/nodepath.cpp:3264
+#: ../src/nodepath.cpp:3275
 msgid "Retract handle"
 msgstr "Træk håndtag tilbage"
 
-#: ../src/nodepath.cpp:3313
+#: ../src/nodepath.cpp:3324
 msgid "Move node handle"
 msgstr "Flyt knudepunkts-håndtag"
 
-#: ../src/nodepath.cpp:3454
+#: ../src/nodepath.cpp:3465
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3765,19 +3779,19 @@ msgstr ""
 "trinvis justering; med <b>Alt</b> for at låse til længde; med <b>Shift</b> "
 "for at rotere begge håndtag"
 
-#: ../src/nodepath.cpp:3632
+#: ../src/nodepath.cpp:3643
 msgid "Rotate nodes"
 msgstr "Rotér knudepunkter"
 
-#: ../src/nodepath.cpp:3757
+#: ../src/nodepath.cpp:3768
 msgid "Scale nodes"
 msgstr "Skalér knudepunkter"
 
-#: ../src/nodepath.cpp:3804
+#: ../src/nodepath.cpp:3815
 msgid "Flip nodes"
 msgstr "Vend knudepunkter"
 
-#: ../src/nodepath.cpp:3969
+#: ../src/nodepath.cpp:3980
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3787,39 +3801,39 @@ msgstr ""
 "håndtagenes retninger"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4193
+#: ../src/nodepath.cpp:4204
 msgid "end node"
 msgstr "endeknudepunkt"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4198
+#: ../src/nodepath.cpp:4209
 msgid "cusp"
 msgstr "spids"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4201
+#: ../src/nodepath.cpp:4212
 msgid "smooth"
 msgstr "blød"
 
-#: ../src/nodepath.cpp:4203
+#: ../src/nodepath.cpp:4214
 msgid "symmetric"
 msgstr "symmetrisk"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4209
+#: ../src/nodepath.cpp:4220
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "endeknudepunkt, håndtag tilbagetrukket (træk med <b>Shift</b> for at udvide)"
 
-#: ../src/nodepath.cpp:4211
+#: ../src/nodepath.cpp:4222
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "et håndtag trukket tilbage (træk med <b>Shift</b> for at udvide)"
 
-#: ../src/nodepath.cpp:4214
+#: ../src/nodepath.cpp:4225
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "begge håndtag trukket tilbage (træk med <b>Shift</b> for at udvide)"
 
-#: ../src/nodepath.cpp:4226
+#: ../src/nodepath.cpp:4237
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3829,18 +3843,18 @@ msgstr ""
 "knudpunkter at forme; <b>pile</b>taster for at flytte knudepunkter, <b>&lt; "
 "&gt;</b> for at skalere, <b>[ ]</b> for at rotere"
 
-#: ../src/nodepath.cpp:4227
+#: ../src/nodepath.cpp:4238
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Træk</b> i knudepunktet eller dets håndtag; <b>pile</b>taster for at "
 "flytte knudepunktet"
 
-#: ../src/nodepath.cpp:4250 ../src/nodepath.cpp:4262
+#: ../src/nodepath.cpp:4261 ../src/nodepath.cpp:4273
 msgid "Select a single object to edit its nodes or handles."
 msgstr ""
 "Vælg et enkelt objekt, for at redigere dets knudepunkter eller håndtag."
 
-#: ../src/nodepath.cpp:4254
+#: ../src/nodepath.cpp:4265
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3855,18 +3869,18 @@ msgstr[1] ""
 "<b>0</b> af <b>%i</b> knudepunkter markeret. <b>Klik</b>, <b>Shift+klik</b>, "
 "eller <b>træk omkring</b> knudepunkter for at markere."
 
-#: ../src/nodepath.cpp:4260
+#: ../src/nodepath.cpp:4271
 msgid "Drag the handles of the object to modify it."
 msgstr "Træk i objektets håndtag for at ændre det."
 
-#: ../src/nodepath.cpp:4268
+#: ../src/nodepath.cpp:4279
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> af <b>%i</b> knudepunkt markeret; %s. %s."
 msgstr[1] "<b>%i</b> af <b>%i</b> knudepunkter markeret; %s. %s."
 
-#: ../src/nodepath.cpp:4275
+#: ../src/nodepath.cpp:4286
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3879,7 +3893,7 @@ msgstr[1] ""
 "<b>%i</b> af <b>%i</b> knudepunkter markeret i <b>%i</b> af <b>%i</b> "
 "understier. %s."
 
-#: ../src/nodepath.cpp:4281
+#: ../src/nodepath.cpp:4292
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -4344,74 +4358,74 @@ msgstr "Sænk til forrige lag"
 msgid "No more layers below."
 msgstr "Ikke flere lag under."
 
-#: ../src/selection-chemistry.cpp:1477
+#: ../src/selection-chemistry.cpp:1481
 msgid "Remove transform"
 msgstr "Fjern transformation"
 
-#: ../src/selection-chemistry.cpp:1586
+#: ../src/selection-chemistry.cpp:1590
 msgid "Rotate 90&#176; CW"
 msgstr "Rotér 90° i urets retning"
 
-#: ../src/selection-chemistry.cpp:1614
+#: ../src/selection-chemistry.cpp:1618
 msgid "Rotate 90&#176; CCW"
 msgstr "Rotér 90° mod urets retning"
 
-#: ../src/selection-chemistry.cpp:1632 ../src/seltrans.cpp:380
+#: ../src/selection-chemistry.cpp:1636 ../src/seltrans.cpp:380
 #: ../src/ui/dialog/transformation.cpp:666
 msgid "Rotate"
 msgstr "Rotér"
 
-#: ../src/selection-chemistry.cpp:1661
+#: ../src/selection-chemistry.cpp:1665
 msgid "Rotate by pixels"
 msgstr "Rotér med billedpunkter"
 
-#: ../src/selection-chemistry.cpp:1687 ../src/seltrans.cpp:377
+#: ../src/selection-chemistry.cpp:1691 ../src/seltrans.cpp:377
 #: ../src/ui/dialog/transformation.cpp:647
 msgid "Scale"
 msgstr "Skalér"
 
-#: ../src/selection-chemistry.cpp:1706
+#: ../src/selection-chemistry.cpp:1710
 msgid "Scale by whole factor"
 msgstr "Skalér med hel faktor"
 
-#: ../src/selection-chemistry.cpp:1722
+#: ../src/selection-chemistry.cpp:1726
 msgid "Move vertically"
 msgstr "Flyt lodret"
 
-#: ../src/selection-chemistry.cpp:1725
+#: ../src/selection-chemistry.cpp:1729
 msgid "Move horizontally"
 msgstr "FLyt vandret"
 
-#: ../src/selection-chemistry.cpp:1728 ../src/selection-chemistry.cpp:1756
+#: ../src/selection-chemistry.cpp:1732 ../src/selection-chemistry.cpp:1760
 #: ../src/seltrans.cpp:374 ../src/ui/dialog/transformation.cpp:595
 msgid "Move"
 msgstr "Flyt"
 
-#: ../src/selection-chemistry.cpp:1750
+#: ../src/selection-chemistry.cpp:1754
 msgid "Nudge vertically by pixels"
 msgstr "Skub til billedpunkter lodret"
 
-#: ../src/selection-chemistry.cpp:1753
+#: ../src/selection-chemistry.cpp:1757
 msgid "Nudge horizontally by pixels"
 msgstr "Skub til billedpunkter vandret"
 
-#: ../src/selection-chemistry.cpp:2017 ../src/selection-describer.cpp:65
+#: ../src/selection-chemistry.cpp:2021 ../src/selection-describer.cpp:65
 msgid "Clone"
 msgstr "Klon"
 
-#: ../src/selection-chemistry.cpp:2034
+#: ../src/selection-chemistry.cpp:2038
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Markér en <b>klon</b> at aflinke."
 
-#: ../src/selection-chemistry.cpp:2065
+#: ../src/selection-chemistry.cpp:2069
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "<b>Ingen kloner at aflinkel</b> i markeringen."
 
-#: ../src/selection-chemistry.cpp:2069
+#: ../src/selection-chemistry.cpp:2073
 msgid "Unlink clone"
 msgstr "Aflink klon"
 
-#: ../src/selection-chemistry.cpp:2083
+#: ../src/selection-chemistry.cpp:2087
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -4421,7 +4435,7 @@ msgstr ""
 "for at gå til kilde. Markér <b>tekst på sti</b> for at gå til stien. Markér "
 "en <b>flydende tekst</b> for at gå til ramme."
 
-#: ../src/selection-chemistry.cpp:2106
+#: ../src/selection-chemistry.cpp:2110
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -4429,73 +4443,73 @@ msgstr ""
 "<b>Kan ikke finde</b> objektet at markere (klon uden forælder, forskydning, "
 "tekststi, flydende tekst?)"
 
-#: ../src/selection-chemistry.cpp:2112
+#: ../src/selection-chemistry.cpp:2116
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr ""
 "Objektet du forsøger at markere er <b>usynligt</b> (det er i &lt;defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2139
+#: ../src/selection-chemistry.cpp:2143
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Markér <b>objekt(er)</b> at konvertere til mønster."
 
-#: ../src/selection-chemistry.cpp:2221
+#: ../src/selection-chemistry.cpp:2225
 msgid "Objects to pattern"
 msgstr "Objekter til mønster"
 
-#: ../src/selection-chemistry.cpp:2237
+#: ../src/selection-chemistry.cpp:2241
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Markér et <b>objekt med mønsterudfyldning</b> at udtrække objekter fra."
 
-#: ../src/selection-chemistry.cpp:2290
+#: ../src/selection-chemistry.cpp:2294
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "<b>Ingen mønsterudfyldninger</b> i markeringen."
 
-#: ../src/selection-chemistry.cpp:2293
+#: ../src/selection-chemistry.cpp:2297
 msgid "Pattern to objects"
 msgstr "Mønstre til objekter"
 
-#: ../src/selection-chemistry.cpp:2378
+#: ../src/selection-chemistry.cpp:2382
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Markér <b>objekt(er)</b> at lave punktbilledkopi af."
 
-#: ../src/selection-chemistry.cpp:2537
+#: ../src/selection-chemistry.cpp:2541
 msgid "Create bitmap"
 msgstr "Opret punktbillede"
 
-#: ../src/selection-chemistry.cpp:2569
+#: ../src/selection-chemistry.cpp:2573
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Marker <b>objekter</b> at oprette beskæringssti eller maske fra."
 
-#: ../src/selection-chemistry.cpp:2572
+#: ../src/selection-chemistry.cpp:2576
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 "Markér maskeobjekt og <b>objekt(er)</b> at anvende beskæringssti eller maske "
 "til."
 
-#: ../src/selection-chemistry.cpp:2670
+#: ../src/selection-chemistry.cpp:2674
 msgid "Set clipping path"
 msgstr "Vælg beskæringssti"
 
-#: ../src/selection-chemistry.cpp:2672
+#: ../src/selection-chemistry.cpp:2676
 msgid "Set mask"
 msgstr "Vælg maske"
 
-#: ../src/selection-chemistry.cpp:2685
+#: ../src/selection-chemistry.cpp:2689
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Markér <b>objekt(er)</b> at fjerne beskæringssti eller maske fra."
 
-#: ../src/selection-chemistry.cpp:2753
+#: ../src/selection-chemistry.cpp:2757
 msgid "Release clipping path"
 msgstr "Frigør beskæringssti"
 
-#: ../src/selection-chemistry.cpp:2755
+#: ../src/selection-chemistry.cpp:2759
 msgid "Release mask"
 msgstr "Frigiv maske"
 
-#: ../src/selection-chemistry.cpp:2799
+#: ../src/selection-chemistry.cpp:2803
 msgid "Fit page to selection"
 msgstr "Tilpas side til markering"
 
@@ -4509,7 +4523,7 @@ msgstr "Cirkel"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:355 ../src/verbs.cpp:2204
+#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2204
 msgid "Ellipse"
 msgstr "Elipse"
 
@@ -4539,7 +4553,7 @@ msgstr "Polylinje"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
-#: ../src/ui/dialog/inkscape-preferences.cpp:352 ../src/verbs.cpp:2202
+#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2202
 msgid "Rectangle"
 msgstr "Firkant"
 
@@ -4549,13 +4563,13 @@ msgstr "Forskydningssti"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
-#: ../src/ui/dialog/inkscape-preferences.cpp:361 ../src/verbs.cpp:2208
+#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2208
 msgid "Spiral"
 msgstr "Spiral"
 
 #. star
 #: ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:358 ../src/verbs.cpp:2206
+#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2206
 msgid "Star"
 msgstr "Stjerne"
 
@@ -4798,24 +4812,19 @@ msgstr "Flyd område"
 msgid "Flow excluded region"
 msgstr "Flyd ekskluderet område"
 
-#: ../src/sp-flowtext.cpp:356
+#: ../src/sp-flowtext.cpp:369
 #, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
 msgstr[0] "<b>Flydende tekstområde</b> (%d tegn)"
 msgstr[1] "<b>Flydende tekstområde</b> (%d tegn)"
 
-#: ../src/sp-flowtext.cpp:358
+#: ../src/sp-flowtext.cpp:371
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
 msgstr[0] "<b>Linket flydende tekst</b> (%d tegn)"
 msgstr[1] "<b>Linket flydende tekst</b> (%d tegn)"
-
-#: ../src/sp-flowtext.cpp:617
-#, fuzzy
-msgid "Convert flowed text to text"
-msgstr "Konvertér tekst til sti"
 
 #: ../src/sp-guide.cpp:287
 msgid "vertical guideline"
@@ -4997,11 +5006,16 @@ msgstr "Opdeling"
 msgid "Cut path"
 msgstr "Skær sti"
 
-#: ../src/splivarot.cpp:110
+#: ../src/splivarot.cpp:111
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
 msgstr "Markér <b>mindst to stier</b> at udføre en boolsk operation på."
 
-#: ../src/splivarot.cpp:116
+#: ../src/splivarot.cpp:115
+#, fuzzy
+msgid "Select <b>at least 1 path</b> to perform a boolean union."
+msgstr "Markér <b>mindst to stier</b> at udføre en boolsk operation på."
+
+#: ../src/splivarot.cpp:121
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path "
 "cut."
@@ -5009,7 +5023,7 @@ msgstr ""
 "Markér <b>præcis to stier</b> at udføre differens, XOR, division eller sti-"
 "beskæring."
 
-#: ../src/splivarot.cpp:133 ../src/splivarot.cpp:148
+#: ../src/splivarot.cpp:138 ../src/splivarot.cpp:153
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
@@ -5017,79 +5031,79 @@ msgstr ""
 "Kunne ikke bestemme <b>z-rækkefølge</b> for objekter markeret til differens, "
 "XOR, division eller sti-beskæring."
 
-#: ../src/splivarot.cpp:178
+#: ../src/splivarot.cpp:183
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr ""
 "Et af objekterne er <b>ikke en sti</b>, kan ikke udføre boolsk operation."
 
-#: ../src/splivarot.cpp:571
+#: ../src/splivarot.cpp:590
 #, fuzzy
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "Markér <b>objekt(er)</b> at konvertere til sti."
 
-#: ../src/splivarot.cpp:853
+#: ../src/splivarot.cpp:872
 #, fuzzy
 msgid "Convert stroke to path"
 msgstr "Konvertér tekst til sti"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:856
+#: ../src/splivarot.cpp:875
 #, fuzzy
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "<b>Ingen stier med streg</b> at lave omrids af i denne markering."
 
-#: ../src/splivarot.cpp:940
+#: ../src/splivarot.cpp:959
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "Det markerede objekt er <b>ikke en sti</b>, kan ikke skubbe ind/ud."
 
-#: ../src/splivarot.cpp:1060 ../src/splivarot.cpp:1128
+#: ../src/splivarot.cpp:1079 ../src/splivarot.cpp:1147
 #, fuzzy
 msgid "Create linked offset"
 msgstr "_Opret link"
 
-#: ../src/splivarot.cpp:1061 ../src/splivarot.cpp:1129
+#: ../src/splivarot.cpp:1080 ../src/splivarot.cpp:1148
 #, fuzzy
 msgid "Create dynamic offset"
 msgstr "Opret et dynamisk forskudt objekt"
 
-#: ../src/splivarot.cpp:1156
+#: ../src/splivarot.cpp:1175
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Vælg <b>sti(er)</b> at skubbe ind/ud."
 
-#: ../src/splivarot.cpp:1373
+#: ../src/splivarot.cpp:1392
 #, fuzzy
 msgid "Outset path"
 msgstr "Forskydningssti"
 
-#: ../src/splivarot.cpp:1373
+#: ../src/splivarot.cpp:1392
 #, fuzzy
 msgid "Inset path"
 msgstr "Forskydningssti"
 
-#: ../src/splivarot.cpp:1375
+#: ../src/splivarot.cpp:1394
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "<b>Ingen stier</b> i markeringen at skubbe ind/ud."
 
-#: ../src/splivarot.cpp:1559
+#: ../src/splivarot.cpp:1578
 #, c-format
 msgid "Simplifying %s - <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "Simplificerer %s - <b>%d</b> af <b>%d</b> stier simplificeret..."
 
-#: ../src/splivarot.cpp:1571
+#: ../src/splivarot.cpp:1590
 #, c-format
 msgid "Done - <b>%d</b> paths simplified."
 msgstr "Udført - <b>%d</b> stier simplificeret."
 
-#: ../src/splivarot.cpp:1587
+#: ../src/splivarot.cpp:1606
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Markér <b>sti(er)</b> at simplificere."
 
-#: ../src/splivarot.cpp:1601
+#: ../src/splivarot.cpp:1620
 msgid "Simplify"
 msgstr "Simplificér"
 
-#: ../src/splivarot.cpp:1603
+#: ../src/splivarot.cpp:1622
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>Ingen stier</b> at simplificere i markeringen."
 
@@ -5116,11 +5130,11 @@ msgstr ""
 msgid "Create star"
 msgstr "Opret punktbillede"
 
-#: ../src/text-chemistry.cpp:94
+#: ../src/text-chemistry.cpp:96
 msgid "Select <b>a text and a path</b> to put text on path."
 msgstr "Markér <b>en tekst og en sti</b> for at placere tekst på sti."
 
-#: ../src/text-chemistry.cpp:99
+#: ../src/text-chemistry.cpp:101
 msgid ""
 "This text object is <b>already put on a path</b>. Remove it from the path "
 "first. Use <b>Shift+D</b> to look up its path."
@@ -5128,13 +5142,8 @@ msgstr ""
 "Dette tekstobjekt er <b>allerede på en sti</b>. Fjern det fra stien først. "
 "Benyt <b>Shift+D</b> for at slå dens sti op."
 
-#: ../src/text-chemistry.cpp:104
-msgid "You cannot put flowtext on a path. Convert flowtext to text first."
-msgstr ""
-"Du kan ikke placere flydende tekst på en sti. Konvertér til tekst først."
-
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
-#: ../src/text-chemistry.cpp:110
+#: ../src/text-chemistry.cpp:107
 msgid ""
 "You cannot put text on a rectangle in this version. Convert rectangle to "
 "path first."
@@ -5142,31 +5151,31 @@ msgstr ""
 "Du kan ikke placere tekst på en firkant i denne udgave. Konvertér firkant "
 "til sti først."
 
-#: ../src/text-chemistry.cpp:157 ../src/verbs.cpp:2074
+#: ../src/text-chemistry.cpp:174 ../src/verbs.cpp:2074
 msgid "Put text on path"
 msgstr "Sæt tekst på sti"
 
-#: ../src/text-chemistry.cpp:169
+#: ../src/text-chemistry.cpp:186
 msgid "Select <b>a text on path</b> to remove it from path."
 msgstr "Markér <b>en tekst på en sti</b> for at fjerne den fra dens sti."
 
-#: ../src/text-chemistry.cpp:191
+#: ../src/text-chemistry.cpp:208
 msgid "<b>No texts-on-paths</b> in the selection."
 msgstr "<b>Ingen tekst på stier</b> i denne markering."
 
-#: ../src/text-chemistry.cpp:195 ../src/verbs.cpp:2076
+#: ../src/text-chemistry.cpp:212 ../src/verbs.cpp:2076
 msgid "Remove text from path"
 msgstr "Fjern tekst fra sti"
 
-#: ../src/text-chemistry.cpp:220 ../src/text-chemistry.cpp:240
+#: ../src/text-chemistry.cpp:237 ../src/text-chemistry.cpp:257
 msgid "Select <b>text(s)</b> to remove kerns from."
 msgstr "Markér <b>tekst(er)</b> at fjerne knibning fra."
 
-#: ../src/text-chemistry.cpp:243 ../src/widgets/toolbox.cpp:4154
+#: ../src/text-chemistry.cpp:260 ../src/widgets/toolbox.cpp:4154
 msgid "Remove manual kerns"
 msgstr "Fjern manuelle knibninger"
 
-#: ../src/text-chemistry.cpp:262
+#: ../src/text-chemistry.cpp:279
 msgid ""
 "Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text "
 "into frame."
@@ -5174,19 +5183,34 @@ msgstr ""
 "Markér <b>en tekst</b> og en eller flere <b>stier eller figurer</b> for at "
 "lade tekst flyde til ramme."
 
-#: ../src/text-chemistry.cpp:312
+#: ../src/text-chemistry.cpp:347
 #, fuzzy
 msgid "Flow text into shape"
 msgstr "_Flyd ind i ramme"
 
-#: ../src/text-chemistry.cpp:335
+#: ../src/text-chemistry.cpp:368
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Markér <b>en flydende tekst</b> for at gøre den ikke-flydende."
 
-#: ../src/text-chemistry.cpp:398
+#: ../src/text-chemistry.cpp:431
 #, fuzzy
 msgid "Unflow flowed text"
 msgstr "Flydende tekst"
+
+#: ../src/text-chemistry.cpp:443
+#, fuzzy
+msgid "Select <b>flowed text(s)</b> to convert."
+msgstr "Markér <b>en flydende tekst</b> for at gøre den ikke-flydende."
+
+#: ../src/text-chemistry.cpp:479
+#, fuzzy
+msgid "Convert flowed text to text"
+msgstr "Konvertér tekst til sti"
+
+#: ../src/text-chemistry.cpp:484
+#, fuzzy
+msgid "<b>No flowed text(s)</b> to convert in the selection."
+msgstr "<b>Ingen objekter</b> at konvertere til sti i markeringen."
 
 #: ../src/text-context.cpp:448
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -5568,6 +5592,13 @@ msgstr "_Licens"
 msgid "about.svg"
 msgstr "about.svg"
 
+#. TRANSLATORS: Put here your name (and other national contributors')
+#. one per line in the form of:  name surname (email). Use \n for newline.
+#: ../src/ui/dialog/aboutbox.cpp:265
+#, fuzzy
+msgid "translator-credits"
+msgstr "_Oversættere"
+
 #: ../src/ui/dialog/align-and-distribute.cpp:219
 #: ../src/ui/dialog/align-and-distribute.cpp:759
 msgid "Align"
@@ -5785,12 +5816,12 @@ msgstr "Mindste element"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:886
 #: ../src/ui/dialog/document-properties.cpp:100
-#: ../src/ui/dialog/filedialog.cpp:1851 ../src/widgets/desktop-widget.cpp:1129
+#: ../src/ui/dialog/filedialog.cpp:1851 ../src/widgets/desktop-widget.cpp:1130
 msgid "Page"
 msgstr "Side"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:887
-#: ../src/widgets/desktop-widget.cpp:1133
+#: ../src/widgets/desktop-widget.cpp:1134
 msgid "Drawing"
 msgstr "Tegning"
 
@@ -6167,7 +6198,7 @@ msgstr "<b>Gitter-påhængning</b>"
 msgid "<b>Guide Snapping</b>"
 msgstr "<b>Hjælpelinje-påhængning</b>"
 
-#: ../src/ui/dialog/export.cpp:34
+#: ../src/ui/dialog/export.cpp:34 ../share/extensions/g2pngs.inx.h:2
 msgid "Export"
 msgstr "Eksportér"
 
@@ -6176,6 +6207,7 @@ msgid "Information"
 msgstr "Information"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
+#: ../share/extensions/funcplot.inx.h:7
 msgid "Help"
 msgstr "Hjælp"
 
@@ -6292,23 +6324,23 @@ msgstr "Stregmaling"
 msgid "Stroke Style"
 msgstr "Streg-stil"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:142
+#: ../src/ui/dialog/inkscape-preferences.cpp:143
 msgid "Mouse"
 msgstr "Mus"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:144
+#: ../src/ui/dialog/inkscape-preferences.cpp:145
 msgid "Grab sensitivity:"
 msgstr "Gribefølsomhed:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:144
-#: ../src/ui/dialog/inkscape-preferences.cpp:147
-#: ../src/ui/dialog/inkscape-preferences.cpp:155
-#: ../src/ui/dialog/inkscape-preferences.cpp:159
-#: ../src/ui/dialog/inkscape-preferences.cpp:169
+#: ../src/ui/dialog/inkscape-preferences.cpp:145
+#: ../src/ui/dialog/inkscape-preferences.cpp:148
+#: ../src/ui/dialog/inkscape-preferences.cpp:156
+#: ../src/ui/dialog/inkscape-preferences.cpp:160
+#: ../src/ui/dialog/inkscape-preferences.cpp:170
 msgid "pixels"
 msgstr "billedpunkter"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:145
+#: ../src/ui/dialog/inkscape-preferences.cpp:146
 msgid ""
 "How close on the screen you need to be to an object to be able to grab it "
 "with mouse (in screen pixels)"
@@ -6316,26 +6348,26 @@ msgstr ""
 "Hvor tæt på et objekt du skal være for at kunne gribe det med musen (i "
 "skærmbilledpunkter)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:147
+#: ../src/ui/dialog/inkscape-preferences.cpp:148
 msgid "Click/drag threshold:"
 msgstr "Klik/træk-tærskelværdi:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:148
+#: ../src/ui/dialog/inkscape-preferences.cpp:149
 msgid ""
 "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
 msgstr ""
 "Maksimum musetræk (i skærm-billedpunkter) der tolkes som et klik, ikke et "
 "træk"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:153
+#: ../src/ui/dialog/inkscape-preferences.cpp:154
 msgid "Scrolling"
 msgstr "Rulning"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:155
+#: ../src/ui/dialog/inkscape-preferences.cpp:156
 msgid "Mouse wheel scrolls by:"
 msgstr "Musehjul ruller med:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:156
+#: ../src/ui/dialog/inkscape-preferences.cpp:157
 msgid ""
 "One mouse wheel notch scrolls by this distance in screen pixels "
 "(horizontally with Shift)"
@@ -6343,24 +6375,24 @@ msgstr ""
 "Et rul med musehjulet, ruller med denne afstand i skærmbilledpunkter "
 "(vandret med Shift)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:157
+#: ../src/ui/dialog/inkscape-preferences.cpp:158
 msgid "Ctrl+arrows"
 msgstr "Ctrl+piletaster"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:159
+#: ../src/ui/dialog/inkscape-preferences.cpp:160
 msgid "Scroll by:"
 msgstr "Rul med:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:160
+#: ../src/ui/dialog/inkscape-preferences.cpp:161
 msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
 msgstr ""
 "Tryk på Ctrl+piletaster, ruller med denne afstand (i skærmbilledpunkter)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:162
+#: ../src/ui/dialog/inkscape-preferences.cpp:163
 msgid "Acceleration:"
 msgstr "Acceleration:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:163
+#: ../src/ui/dialog/inkscape-preferences.cpp:164
 msgid ""
 "Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no "
 "acceleration)"
@@ -6368,15 +6400,15 @@ msgstr ""
 "Tryk og hold Ctrl+piletast øger gradvist rullehastigheden (0 for ingen "
 "acceleration)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:164
+#: ../src/ui/dialog/inkscape-preferences.cpp:165
 msgid "Autoscrolling"
 msgstr "Autorul"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:166
+#: ../src/ui/dialog/inkscape-preferences.cpp:167
 msgid "Speed:"
 msgstr "Hastighed:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:167
+#: ../src/ui/dialog/inkscape-preferences.cpp:168
 msgid ""
 "How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn "
 "autoscroll off)"
@@ -6384,13 +6416,13 @@ msgstr ""
 "Hvor hurtigt lærredets autoruller, når du trækker udenfor lærredets kant (0 "
 "for at slå autorul fra)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:169
+#: ../src/ui/dialog/inkscape-preferences.cpp:170
 #: ../src/ui/dialog/tracedialog.cpp:409 ../src/ui/dialog/tracedialog.cpp:442
 #: ../src/ui/dialog/tracedialog.cpp:585
 msgid "Threshold:"
 msgstr "Tærskel:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:170
+#: ../src/ui/dialog/inkscape-preferences.cpp:171
 msgid ""
 "How far (in screen pixels) you need to be from the canvas edge to trigger "
 "autoscroll; positive is outside the canvas, negative is within the canvas"
@@ -6398,15 +6430,15 @@ msgstr ""
 "Hvor langt i (skærmbilledpunkter) du skal være fra lærredets kant, for at "
 "slå autorul til. Positiv er udenfor lærredet, negativ er indenfor lærredet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:175
+#: ../src/ui/dialog/inkscape-preferences.cpp:176
 msgid "Steps"
 msgstr "Trin"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:178
+#: ../src/ui/dialog/inkscape-preferences.cpp:179
 msgid "Arrow keys move by:"
 msgstr "Piletaster flytter med:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:179
+#: ../src/ui/dialog/inkscape-preferences.cpp:180
 msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance "
 "(in px units)"
@@ -6414,31 +6446,31 @@ msgstr ""
 "Tryk på en piletast flytter de markerede objekter eller knudepunkter med "
 "denne afstand (i billedpunkter)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:181
+#: ../src/ui/dialog/inkscape-preferences.cpp:182
 msgid "> and < scale by:"
 msgstr "> og < skalér med:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:182
+#: ../src/ui/dialog/inkscape-preferences.cpp:183
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr ""
 "Tryk på > eller < skalerer markeringen op eller ned med denne stigning (i "
 "billedpunkter)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:184
+#: ../src/ui/dialog/inkscape-preferences.cpp:185
 msgid "Inset/Outset by:"
 msgstr "Skub ind/ud med:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:185
+#: ../src/ui/dialog/inkscape-preferences.cpp:186
 msgid ""
 "Inset and Outset commands displace the path by this distance (in px units)"
 msgstr "Skub ind/ud-kommandoen, forskyder stien med afstanden (i px-enheder)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:186
+#: ../src/ui/dialog/inkscape-preferences.cpp:187
 msgid "Compass-like display of angles"
 msgstr "Kompaslignende visning af vinkler"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:188
+#: ../src/ui/dialog/inkscape-preferences.cpp:189
 msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
@@ -6447,15 +6479,15 @@ msgstr ""
 "Når slået til, vises vinkler med 0 i nord, 0 til 360-intervallet, positiv "
 "med uret, ellers med 0 i øst, -180 til 180 intervallet, positiv mod uret."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:194
+#: ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "Rotation snaps every:"
 msgstr "Trinvis rotation hver:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:194
+#: ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "degrees"
 msgstr "grader"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:195
+#: ../src/ui/dialog/inkscape-preferences.cpp:196
 msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
@@ -6463,11 +6495,11 @@ msgstr ""
 "Rotation med Ctrl trykket ned justerer tinvist med så mange grader; det "
 "samme gør tryk på [ eller ]"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:197
+#: ../src/ui/dialog/inkscape-preferences.cpp:198
 msgid "Zoom in/out by:"
 msgstr "Zoom ind/ud med:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:198
+#: ../src/ui/dialog/inkscape-preferences.cpp:199
 msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
@@ -6475,52 +6507,52 @@ msgstr ""
 "KKlik på zoom-værktøjet, +/--knapper og midterklik, zoomer ind med denne "
 "gangefaktor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:204
+#: ../src/ui/dialog/inkscape-preferences.cpp:205
 msgid "Show selection cue"
 msgstr "Vis markeringsvink"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:205
+#: ../src/ui/dialog/inkscape-preferences.cpp:206
 msgid ""
 "Whether selected objects display a selection cue (the same as in selector)"
 msgstr ""
 "Om de markerede objekter viser et markerningsvink (som i markeringsværktøjet)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:211
+#: ../src/ui/dialog/inkscape-preferences.cpp:212
 msgid "Enable gradient editing"
 msgstr "Aktivér redigering af overgange"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:212
+#: ../src/ui/dialog/inkscape-preferences.cpp:213
 msgid "Whether selected objects display gradient editing controls"
 msgstr "Om markerede objekter viser redigeringskontroller for overgange"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:225
+#: ../src/ui/dialog/inkscape-preferences.cpp:226
 msgid "<b>No objects selected</b> to take the style from."
 msgstr "<b>Ingen objekter markeret</b> at hente stilen fra."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:234
+#: ../src/ui/dialog/inkscape-preferences.cpp:235
 msgid ""
 "<b>More than one object selected.</b>  Cannot take style from multiple "
 "objects."
 msgstr ""
 "<b>Mere end et objekt markeret.</b> Kan ikke tage stil fra flere objekter."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:268
+#: ../src/ui/dialog/inkscape-preferences.cpp:269
 msgid "Create new objects with:"
 msgstr "Opret nye objekter med:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:270
+#: ../src/ui/dialog/inkscape-preferences.cpp:271
 msgid "Last used style"
 msgstr "Sidst brugte stil"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:272
+#: ../src/ui/dialog/inkscape-preferences.cpp:273
 msgid "Apply the style you last set on an object"
 msgstr "Anvend stilen du sidst brugte på et objekt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:277
+#: ../src/ui/dialog/inkscape-preferences.cpp:278
 msgid "This tool's own style:"
 msgstr "Dette værktøjs egen stil:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:281
+#: ../src/ui/dialog/inkscape-preferences.cpp:282
 msgid ""
 "Each tool may store its own style to apply to the newly created objects. Use "
 "the button below to set it."
@@ -6528,127 +6560,127 @@ msgstr ""
 "Hvert værktøj kan gemme sin egen stil at sætte på nye objekter. Brug knappen "
 "nedenfor til at aktivere."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:286
+#: ../src/ui/dialog/inkscape-preferences.cpp:287
 msgid "Take from selection"
 msgstr "Taget fra markering"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:298
+#: ../src/ui/dialog/inkscape-preferences.cpp:299
 msgid "Remember the style of the (first) selected object as this tool's style"
 msgstr "Gem det først markerede objekts stil som dette værktøjs stil"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:303
+#: ../src/ui/dialog/inkscape-preferences.cpp:304
 msgid "Tools"
 msgstr "Værktøjer"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:306
+#: ../src/ui/dialog/inkscape-preferences.cpp:307
 msgid "Width is in absolute units"
 msgstr "Bredde er i absolutte enheder"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:307
+#: ../src/ui/dialog/inkscape-preferences.cpp:308
 msgid "Keep selected"
 msgstr "Husk valgte"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:308
+#: ../src/ui/dialog/inkscape-preferences.cpp:309
 msgid "Don't attach connectors to text objects"
 msgstr "Forbind ikke forbindelser til tekstobjekter"
 
 #. Selector
-#: ../src/ui/dialog/inkscape-preferences.cpp:311
+#: ../src/ui/dialog/inkscape-preferences.cpp:312
 msgid "Selector"
 msgstr "Markeringsværktøj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:314
+#: ../src/ui/dialog/inkscape-preferences.cpp:315
 msgid "When transforming, show:"
 msgstr "Ved transformering, vis:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:315
+#: ../src/ui/dialog/inkscape-preferences.cpp:316
 msgid "Objects"
 msgstr "Objekter"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:317
+#: ../src/ui/dialog/inkscape-preferences.cpp:318
 msgid "Show the actual objects when moving or transforming"
 msgstr "Vis de faktiske objekter når der flyttes eller transformeres"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:318
+#: ../src/ui/dialog/inkscape-preferences.cpp:319
 msgid "Box outline"
 msgstr "Boksomrids"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:320
+#: ../src/ui/dialog/inkscape-preferences.cpp:321
 msgid "Show only a box outline of the objects when moving or transforming"
 msgstr "Vis kun boksomrids af objekter når der flyttes eller transformeres"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:321
+#: ../src/ui/dialog/inkscape-preferences.cpp:322
 msgid "Per-object selection cue:"
 msgstr "Pr.-objekt markeringsvink:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:324
+#: ../src/ui/dialog/inkscape-preferences.cpp:325
 msgid "No per-object selection indication"
 msgstr "Ingen pr.-objekt markeringsindikator"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:325
+#: ../src/ui/dialog/inkscape-preferences.cpp:326
 msgid "Mark"
 msgstr "Markér"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:327
+#: ../src/ui/dialog/inkscape-preferences.cpp:328
 msgid "Each selected object has a diamond mark in the top left corner"
 msgstr "Hvert markeret objekt har et diamant-ikon i øverste venstre hjørne"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:328
+#: ../src/ui/dialog/inkscape-preferences.cpp:329
 msgid "Box"
 msgstr "Boks"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:330
+#: ../src/ui/dialog/inkscape-preferences.cpp:331
 msgid "Each selected object displays its bounding box"
 msgstr "Hvert markeret objekt viser sit boksomrids"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:331
+#: ../src/ui/dialog/inkscape-preferences.cpp:332
 msgid "Default scale origin:"
 msgstr "Standard skalaudgangspunkt:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:332
+#: ../src/ui/dialog/inkscape-preferences.cpp:333
 msgid "Opposite bounding box edge"
 msgstr "Overfor afgrænsningsbokskant"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:334
+#: ../src/ui/dialog/inkscape-preferences.cpp:335
 msgid "Default scale origin will be on the bounding box of the item"
 msgstr "Standard skalaudgangspunkt er på objektets afgrænsningsboks."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:335
+#: ../src/ui/dialog/inkscape-preferences.cpp:336
 msgid "Farthest opposite node"
 msgstr "Fjerneste modsatte knudepunkt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:337
+#: ../src/ui/dialog/inkscape-preferences.cpp:338
 msgid "Default scale origin will be on the bounding box of the item's points"
 msgstr "Standard skala-udgangspunkt er på objektets punkters afgrænsningsboks."
 
 #. Node
-#: ../src/ui/dialog/inkscape-preferences.cpp:339
+#: ../src/ui/dialog/inkscape-preferences.cpp:340
 msgid "Node"
 msgstr "Knudepunkt"
 
 #. Zoom
-#: ../src/ui/dialog/inkscape-preferences.cpp:343
-#: ../src/ui/view/edit-widget.cpp:1067 ../src/verbs.cpp:2220
-#: ../src/widgets/desktop-widget.cpp:282
+#: ../src/ui/dialog/inkscape-preferences.cpp:344
+#: ../src/ui/view/edit-widget.cpp:1069 ../src/verbs.cpp:2220
+#: ../src/widgets/desktop-widget.cpp:284
 msgid "Zoom"
 msgstr "Zoom"
 
 #. Shapes
-#: ../src/ui/dialog/inkscape-preferences.cpp:347
+#: ../src/ui/dialog/inkscape-preferences.cpp:348
 msgid "Shapes"
 msgstr "Figurer"
 
 #. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:364 ../src/verbs.cpp:2210
+#: ../src/ui/dialog/inkscape-preferences.cpp:365 ../src/verbs.cpp:2210
 msgid "Pencil"
 msgstr "Blyant"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:367
+#: ../src/ui/dialog/inkscape-preferences.cpp:368
 #: ../src/ui/dialog/tracedialog.cpp:600
 msgid "Tolerance:"
 msgstr "Tolerance:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:368
+#: ../src/ui/dialog/inkscape-preferences.cpp:369
 msgid ""
 "This value affects the amount of smoothing applied to freehand lines; lower "
 "values produce more uneven paths with more nodes"
@@ -6657,16 +6689,16 @@ msgstr ""
 "mindre værdier giver mere ujævne stier med flere knudepunkter"
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:372 ../src/verbs.cpp:2212
+#: ../src/ui/dialog/inkscape-preferences.cpp:373 ../src/verbs.cpp:2212
 msgid "Pen"
 msgstr "Pen"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:376 ../src/verbs.cpp:2214
+#: ../src/ui/dialog/inkscape-preferences.cpp:377 ../src/verbs.cpp:2214
 msgid "Calligraphy"
 msgstr "Kalligrafi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:379
+#: ../src/ui/dialog/inkscape-preferences.cpp:380
 msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
@@ -6675,7 +6707,7 @@ msgstr ""
 "uafhængigt af zoom; eller er pennens bredde afhængig af zoom, sådan at den "
 "er ens ved en hvilken som helst zoom-faktor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:381
+#: ../src/ui/dialog/inkscape-preferences.cpp:382
 msgid ""
 "If on, each object created with this tool will remain selected after you "
 "finish drawing it"
@@ -6684,49 +6716,54 @@ msgstr ""
 "når du er færdig med at tegne det"
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:388 ../src/verbs.cpp:2218
+#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2218
 msgid "Gradient"
 msgstr "Overgang"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:391 ../src/verbs.cpp:2224
+#: ../src/ui/dialog/inkscape-preferences.cpp:392 ../src/verbs.cpp:2224
 msgid "Connector"
 msgstr "Forbinder"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:394
+#: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid "If on, connector attachment points will not be shown for text objects"
 msgstr "Hvis aktiveret, vises forbindelsespunkter ikke ved tekstobjekter"
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:396 ../src/verbs.cpp:2222
+#: ../src/ui/dialog/inkscape-preferences.cpp:397 ../src/verbs.cpp:2222
 msgid "Dropper"
 msgstr "Farvevælger"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:403
+#: ../src/ui/dialog/inkscape-preferences.cpp:404
 msgid "Save window geometry"
 msgstr "Gem vinduesstørrelse"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:404
+#: ../src/ui/dialog/inkscape-preferences.cpp:405
 msgid "Dialogs are hidden in taskbar"
 msgstr "Dialoger skjules i opgavelinjen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:405
+#: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid "Zoom when window is resized"
 msgstr "Zoom når vinduet ændrer størrelse"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:406
+#: ../src/ui/dialog/inkscape-preferences.cpp:407
 msgid "Show close button on dialogs"
 msgstr "Vis lukkeknap på dialoger"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:408
+#: ../src/ui/dialog/inkscape-preferences.cpp:409
 msgid "Normal"
 msgstr "Normal"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:409
+#: ../src/ui/dialog/inkscape-preferences.cpp:410
 msgid "Aggressive"
 msgstr "Aggressiv"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:412
+#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#, fuzzy
+msgid "Dialogs stay on top (experimental!)"
+msgstr "Dialoger holdes over dokumenvinduer"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:418
 msgid ""
 "Save the window size and position with each document (only for Inkscape SVG "
 "format)"
@@ -6734,11 +6771,11 @@ msgstr ""
 "Gem vinduestørrelse og placering med hvert dokument (kun med Inkscape SVG-"
 "formatet)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#: ../src/ui/dialog/inkscape-preferences.cpp:421
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr "Om dialoger skal skjules i desktoppens opgavelinje"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:416
+#: ../src/ui/dialog/inkscape-preferences.cpp:424
 msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
@@ -6748,64 +6785,71 @@ msgstr ""
 "samme område synligt (dette er standarden der kan ændre i ethvert vindue ved "
 "at bruge knappen over den højre rullebjælke)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:418
+#: ../src/ui/dialog/inkscape-preferences.cpp:426
 msgid "Whether dialog windows have a close button (requires restart)"
 msgstr "Om dialoger skal have en lukkeknap (kræver genstart)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:419
+#: ../src/ui/dialog/inkscape-preferences.cpp:427
 msgid "Dialogs on top:"
 msgstr "Dialoger øverst:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:421
+#: ../src/ui/dialog/inkscape-preferences.cpp:430
 msgid "Dialogs are treated as regular windows"
 msgstr "Dialoger behandles som almindelige vinduer"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:423
+#: ../src/ui/dialog/inkscape-preferences.cpp:432
 msgid "Dialogs stay on top of document windows"
 msgstr "Dialoger holdes over dokumenvinduer"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:425
+#: ../src/ui/dialog/inkscape-preferences.cpp:434
 msgid "Same as Normal but may work better with some window managers"
 msgstr ""
 "Samme som Normal, men fungerer måske bedre med nogle vindueshåndteringer"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:427
+#: ../src/ui/dialog/inkscape-preferences.cpp:437
+msgid ""
+"Whether dialogs should stay on top of document windows. Read the "
+"ReleaseNotes on this issue! (Rightclick the taskbar button and press "
+"'Restore' to bring back a minimized document window)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Windows"
 msgstr "Vinduer"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:432
+#: ../src/ui/dialog/inkscape-preferences.cpp:445
 msgid "Move in parallel"
 msgstr "Flyt parallelt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:434
+#: ../src/ui/dialog/inkscape-preferences.cpp:447
 msgid "Stay unmoved"
 msgstr "Forbliv urørt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:436
+#: ../src/ui/dialog/inkscape-preferences.cpp:449
 msgid "Move according to transform"
 msgstr "Flyt i henhold til transformation"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:438
+#: ../src/ui/dialog/inkscape-preferences.cpp:451
 msgid "Are unlinked"
 msgstr "Løst koblede"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/ui/dialog/inkscape-preferences.cpp:453
 msgid "Are deleted"
 msgstr "Slettede"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:443
+#: ../src/ui/dialog/inkscape-preferences.cpp:456
 msgid "When the original moves, its clones and linked offsets:"
 msgstr "Når originalen flyttes, forskydes kloner og link:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:445
+#: ../src/ui/dialog/inkscape-preferences.cpp:458
 msgid "Clones are translated by the same vector as their original."
 msgstr "Kloner oversættes af samme vektor som deres ophav."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:447
+#: ../src/ui/dialog/inkscape-preferences.cpp:460
 msgid "Clones preserve their positions when their original is moved."
 msgstr "Kloner bevarer deres positioner når deres ophav flyttes."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:449
+#: ../src/ui/dialog/inkscape-preferences.cpp:462
 msgid ""
 "Each clone moves according to the value of its transform= attribute. For "
 "example, a rotated clone will move in a different direction than its "
@@ -6814,67 +6858,67 @@ msgstr ""
 "Hver klon flyttes i henhold til værdien af attributten transform. For "
 "eksempel, flyttes en roteret klon i en anden retning en sit ophav."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:450
+#: ../src/ui/dialog/inkscape-preferences.cpp:463
 msgid "When the original is deleted, its clones:"
 msgstr "Når et ophav slettes:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:452
+#: ../src/ui/dialog/inkscape-preferences.cpp:465
 msgid "Orphaned clones are converted to regular objects."
 msgstr "Konverteres forældreløse kloner til almindelige objekter."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:454
+#: ../src/ui/dialog/inkscape-preferences.cpp:467
 msgid "Orphaned clones are deleted along with their original."
 msgstr "Slettes forældreløse kloner sammen med ophavet."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:461
+#: ../src/ui/dialog/inkscape-preferences.cpp:474
 msgid "Scale stroke width"
 msgstr "Skalér stregbredde"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:462
+#: ../src/ui/dialog/inkscape-preferences.cpp:475
 msgid "Scale rounded corners in rectangles"
 msgstr "Skalér afrundede hjørner i firkanter"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:463
+#: ../src/ui/dialog/inkscape-preferences.cpp:476
 msgid "Transform gradients"
 msgstr "Transformér overgange"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:464
+#: ../src/ui/dialog/inkscape-preferences.cpp:477
 msgid "Transform patterns"
 msgstr "Transformér mønstre"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:465
+#: ../src/ui/dialog/inkscape-preferences.cpp:478
 msgid "Optimized"
 msgstr "Optimeret"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:466
+#: ../src/ui/dialog/inkscape-preferences.cpp:479
 msgid "Preserved"
 msgstr "Bevaret"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:469
+#: ../src/ui/dialog/inkscape-preferences.cpp:482
 #: ../src/widgets/select-toolbar.cpp:504
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr "Når objekter skaleres, skalér også stregbredden med samme andel"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:471
+#: ../src/ui/dialog/inkscape-preferences.cpp:484
 #: ../src/widgets/select-toolbar.cpp:516
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr "Når firkanter skaleres, skalér også afrundede hjørners radier"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:473
+#: ../src/ui/dialog/inkscape-preferences.cpp:486
 #: ../src/widgets/select-toolbar.cpp:528
 msgid "Transform gradients (in fill or stroke) along with the objects"
 msgstr "Transformér overgange (i udfyldning eller streg) sammen med objekterne"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:475
+#: ../src/ui/dialog/inkscape-preferences.cpp:488
 #: ../src/widgets/select-toolbar.cpp:540
 msgid "Transform patterns (in fill or stroke) along with the objects"
 msgstr "Transformér mønstre (i udfyldning eller streg) sammen med objekterne"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:476
+#: ../src/ui/dialog/inkscape-preferences.cpp:489
 msgid "Store transformation:"
 msgstr "Gem transformation:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:478
+#: ../src/ui/dialog/inkscape-preferences.cpp:491
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
@@ -6882,104 +6926,104 @@ msgstr ""
 "Hvis muligt, anvend transformation på objekter, uden at tilføje en attribut: "
 "transform="
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:480
+#: ../src/ui/dialog/inkscape-preferences.cpp:493
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr "Gem altid en tranformation som attribut transform= på objekter"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:482
+#: ../src/ui/dialog/inkscape-preferences.cpp:495
 msgid "Transforms"
 msgstr "Transformationer"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:487
+#: ../src/ui/dialog/inkscape-preferences.cpp:500
 msgid "Best quality (slowest)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:489
+#: ../src/ui/dialog/inkscape-preferences.cpp:502
 msgid "Better quality (slower)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:491
+#: ../src/ui/dialog/inkscape-preferences.cpp:504
 msgid "Average quality"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:493
+#: ../src/ui/dialog/inkscape-preferences.cpp:506
 #, fuzzy
 msgid "Lower quality (faster)"
 msgstr "Sænk lag"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:495
+#: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid "Lowest quality (fastest)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:498
+#: ../src/ui/dialog/inkscape-preferences.cpp:511
 msgid "Gaussian blur quality for display:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:500
+#: ../src/ui/dialog/inkscape-preferences.cpp:513
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:502
+#: ../src/ui/dialog/inkscape-preferences.cpp:515
 msgid "Better quality, but slower display"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:504
+#: ../src/ui/dialog/inkscape-preferences.cpp:517
 msgid "Average quality, acceptable display speed"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:506
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 msgid "Lower quality (some artifacts), but display is faster"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:508
+#: ../src/ui/dialog/inkscape-preferences.cpp:521
 msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:510
+#: ../src/ui/dialog/inkscape-preferences.cpp:523
 #, fuzzy
 msgid "Filters"
 msgstr "Fladhed"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:516
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Select in all layers"
 msgstr "Markér i alle lag"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:517
+#: ../src/ui/dialog/inkscape-preferences.cpp:530
 msgid "Select only within current layer"
 msgstr "Markér kun i aktuelle lag"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:518
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "Select in current layer and sublayers"
 msgstr "Marker i aktuelle lag og underlag"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:519
+#: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "Ignore hidden objects"
 msgstr "Ignorér skjulte objekter"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:520
+#: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid "Ignore locked objects"
 msgstr "Ignorér låste objekter"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:521
+#: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Deselect upon layer change"
 msgstr "Afmarkér ved ændring af lag"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:523
+#: ../src/ui/dialog/inkscape-preferences.cpp:536
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "Ctrl+A, Faneblad, Shift+Faneblad:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:538
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr "Lad tastaturmarkeringskommandoer virke på objekter i alle lag"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:527
+#: ../src/ui/dialog/inkscape-preferences.cpp:540
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr ""
 "Lad tastaturmarkeringskommandoer virke på objekter i kun det aktuelle lag"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:542
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
@@ -6987,7 +7031,7 @@ msgstr ""
 "Lad tastaturmarkeringskommandoer virke på objekter i det aktuelle lag og "
 "alle underlag"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden group or layer)"
@@ -6995,7 +7039,7 @@ msgstr ""
 "Deaktivér denne for at kunne markere skjulte objekter (enten skjult selv, "
 "eller en del af en skjult gruppe eller et skjult lag)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:533
+#: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked group or layer)"
@@ -7003,7 +7047,7 @@ msgstr ""
 "Deaktivér denne for at kunne markere låste objekter (enten låst selv, eller "
 "en del af en låst gruppe eller et skjult lag)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:536
+#: ../src/ui/dialog/inkscape-preferences.cpp:549
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
@@ -7011,23 +7055,23 @@ msgstr ""
 "Fjern markering for at kunne bevare markeringen af objekter når det aktuelle "
 "lag skiftes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:538
+#: ../src/ui/dialog/inkscape-preferences.cpp:551
 msgid "Selecting"
 msgstr "Markering"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:545
+#: ../src/ui/dialog/inkscape-preferences.cpp:558
 msgid "Default export resolution:"
 msgstr "Standard eksporteringsopløsning:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:546
+#: ../src/ui/dialog/inkscape-preferences.cpp:559
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr "Standard punktbilledopløsning (dpi) i eksporteringsdialogen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:547
+#: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "Import bitmap as <image>"
 msgstr "Importér punktbillede som <image>"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:549
+#: ../src/ui/dialog/inkscape-preferences.cpp:562
 msgid ""
 "When on, an imported bitmap creates an <image> element; otherwise it is a "
 "rectangle with bitmap fill"
@@ -7035,11 +7079,11 @@ msgstr ""
 "Når aktiveret, opretter et importeret punktbillede et <image>-element; "
 "ellers er det en firkant med punktbilledudfyldning"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:550
+#: ../src/ui/dialog/inkscape-preferences.cpp:563
 msgid "Add label comments to printing output"
 msgstr "Tilføj etiketkommentarer til udskrivning-uddata"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:552
+#: ../src/ui/dialog/inkscape-preferences.cpp:565
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -7047,19 +7091,19 @@ msgstr ""
 "Når aktiveret, tilføjes en kommentar til den rå udskrift, der markerer det "
 "optegnede uddata for et objekt med sin etiket"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:554
+#: ../src/ui/dialog/inkscape-preferences.cpp:567
 msgid "Max recent documents:"
 msgstr "Maksimale nylige dokumenter:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:555
+#: ../src/ui/dialog/inkscape-preferences.cpp:568
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr "Den maksimale længde af Åbn-seneste-listen i fil-menuen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:557
+#: ../src/ui/dialog/inkscape-preferences.cpp:570
 msgid "Simplification threshold:"
 msgstr "Simplificeringsgrænse:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:558
+#: ../src/ui/dialog/inkscape-preferences.cpp:571
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
@@ -7069,46 +7113,46 @@ msgstr ""
 "kommando flere gange hurtigt efter hinanden er effekten mere aggressiv; "
 "bruges den efter en pause genskabes standardtærskelen."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:564
+#: ../src/ui/dialog/inkscape-preferences.cpp:577
 msgid "Oversample bitmaps:"
 msgstr "Flere tilfælde af bitmap:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:566
+#: ../src/ui/dialog/inkscape-preferences.cpp:579
 msgid "Clipping and masking:"
 msgstr "Beskæring og maskering:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:567
+#: ../src/ui/dialog/inkscape-preferences.cpp:580
 msgid "Use the topmost selected object as a clipping path or mask"
 msgstr "Benyt det øverste markerede objekt som beskæringssti eller maske"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:569
+#: ../src/ui/dialog/inkscape-preferences.cpp:582
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "Deaktivér for at bruge det nederste markerede objekt som beskæringssti eller "
 "maske"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:570
+#: ../src/ui/dialog/inkscape-preferences.cpp:583
 msgid "Remove clipping path or mask after applying"
 msgstr "Fjern beskæringssti eller maske efter anvendelse"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:572
+#: ../src/ui/dialog/inkscape-preferences.cpp:585
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
@@ -7116,17 +7160,17 @@ msgstr ""
 "Efter anvendelse, fjern objektet, der blev brugt som beskæringssti eller "
 "maske, fra tegningen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:573
+#: ../src/ui/dialog/inkscape-preferences.cpp:586
 msgid "Use a pressure sensitive tablet or other device (requires restart)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:575
+#: ../src/ui/dialog/inkscape-preferences.cpp:588
 msgid ""
-"Use the capablities of a tablet or other pressure sensitive device. Disable "
+"Use the capabilities of a tablet or other pressure sensitive device. Disable "
 "this only if you have problems with the tablet."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:577
+#: ../src/ui/dialog/inkscape-preferences.cpp:590
 msgid "Misc"
 msgstr "Diverse"
 
@@ -7857,63 +7901,63 @@ msgstr "Sender whiteboard-invitation til <b>%1</b>"
 #: ../src/ui/stock-items.cpp:192 ../src/ui/stock-items.cpp:195
 #: ../src/ui/stock-items.cpp:196 ../src/ui/stock-items.cpp:197
 #: ../src/ui/stock-items.cpp:198 ../src/ui/stock-items.cpp:199
-#: ../src/ui/view/edit-widget.cpp:340 ../src/ui/view/edit-widget.cpp:345
-#: ../src/ui/view/edit-widget.cpp:353 ../src/ui/view/edit-widget.cpp:358
-#: ../src/ui/view/edit-widget.cpp:363 ../src/ui/view/edit-widget.cpp:368
-#: ../src/ui/view/edit-widget.cpp:373 ../src/ui/view/edit-widget.cpp:378
-#: ../src/ui/view/edit-widget.cpp:391 ../src/ui/view/edit-widget.cpp:396
-#: ../src/ui/view/edit-widget.cpp:410 ../src/ui/view/edit-widget.cpp:414
-#: ../src/ui/view/edit-widget.cpp:418 ../src/ui/view/edit-widget.cpp:422
-#: ../src/ui/view/edit-widget.cpp:426 ../src/ui/view/edit-widget.cpp:430
-#: ../src/ui/view/edit-widget.cpp:444 ../src/ui/view/edit-widget.cpp:448
-#: ../src/ui/view/edit-widget.cpp:452 ../src/ui/view/edit-widget.cpp:483
-#: ../src/ui/view/edit-widget.cpp:492 ../src/ui/view/edit-widget.cpp:496
-#: ../src/ui/view/edit-widget.cpp:500 ../src/ui/view/edit-widget.cpp:504
-#: ../src/ui/view/edit-widget.cpp:508 ../src/ui/view/edit-widget.cpp:512
-#: ../src/ui/view/edit-widget.cpp:516 ../src/ui/view/edit-widget.cpp:520
-#: ../src/ui/view/edit-widget.cpp:524 ../src/ui/view/edit-widget.cpp:528
-#: ../src/ui/view/edit-widget.cpp:532 ../src/ui/view/edit-widget.cpp:629
-#: ../src/ui/view/edit-widget.cpp:638 ../src/ui/view/edit-widget.cpp:642
-#: ../src/ui/view/edit-widget.cpp:646 ../src/ui/view/edit-widget.cpp:650
-#: ../src/ui/view/edit-widget.cpp:654 ../src/ui/view/edit-widget.cpp:658
-#: ../src/ui/view/edit-widget.cpp:662 ../src/ui/view/edit-widget.cpp:666
-#: ../src/ui/view/edit-widget.cpp:670 ../src/ui/view/edit-widget.cpp:674
-#: ../src/ui/view/edit-widget.cpp:678 ../src/ui/view/edit-widget.cpp:682
-#: ../src/ui/view/edit-widget.cpp:686 ../src/ui/view/edit-widget.cpp:690
-#: ../src/ui/view/edit-widget.cpp:694 ../src/ui/view/edit-widget.cpp:698
-#: ../src/ui/view/edit-widget.cpp:703 ../src/ui/view/edit-widget.cpp:709
-#: ../src/ui/view/edit-widget.cpp:713 ../src/ui/view/edit-widget.cpp:763
-#: ../src/ui/view/edit-widget.cpp:768 ../src/ui/view/edit-widget.cpp:804
-#: ../src/ui/view/edit-widget.cpp:809 ../src/ui/view/edit-widget.cpp:814
-#: ../src/ui/view/edit-widget.cpp:818 ../src/ui/view/edit-widget.cpp:822
-#: ../src/ui/view/edit-widget.cpp:826 ../src/ui/view/edit-widget.cpp:830
-#: ../src/ui/view/edit-widget.cpp:834 ../src/ui/view/edit-widget.cpp:838
-#: ../src/ui/view/edit-widget.cpp:842 ../src/ui/view/edit-widget.cpp:846
-#: ../src/ui/view/edit-widget.cpp:850 ../src/ui/view/edit-widget.cpp:855
-#: ../src/ui/view/edit-widget.cpp:859 ../src/ui/view/edit-widget.cpp:863
-#: ../src/ui/view/edit-widget.cpp:867 ../src/ui/view/edit-widget.cpp:872
-#: ../src/ui/view/edit-widget.cpp:876 ../src/ui/view/edit-widget.cpp:880
-#: ../src/ui/view/edit-widget.cpp:884 ../src/ui/view/edit-widget.cpp:888
-#: ../src/ui/view/edit-widget.cpp:892 ../src/ui/view/edit-widget.cpp:896
-#: ../src/ui/view/edit-widget.cpp:900 ../src/ui/view/edit-widget.cpp:904
-#: ../src/ui/view/edit-widget.cpp:908 ../src/ui/view/edit-widget.cpp:912
+#: ../src/ui/view/edit-widget.cpp:342 ../src/ui/view/edit-widget.cpp:347
+#: ../src/ui/view/edit-widget.cpp:355 ../src/ui/view/edit-widget.cpp:360
+#: ../src/ui/view/edit-widget.cpp:365 ../src/ui/view/edit-widget.cpp:370
+#: ../src/ui/view/edit-widget.cpp:375 ../src/ui/view/edit-widget.cpp:380
+#: ../src/ui/view/edit-widget.cpp:393 ../src/ui/view/edit-widget.cpp:398
+#: ../src/ui/view/edit-widget.cpp:412 ../src/ui/view/edit-widget.cpp:416
+#: ../src/ui/view/edit-widget.cpp:420 ../src/ui/view/edit-widget.cpp:424
+#: ../src/ui/view/edit-widget.cpp:428 ../src/ui/view/edit-widget.cpp:432
+#: ../src/ui/view/edit-widget.cpp:446 ../src/ui/view/edit-widget.cpp:450
+#: ../src/ui/view/edit-widget.cpp:454 ../src/ui/view/edit-widget.cpp:485
+#: ../src/ui/view/edit-widget.cpp:494 ../src/ui/view/edit-widget.cpp:498
+#: ../src/ui/view/edit-widget.cpp:502 ../src/ui/view/edit-widget.cpp:506
+#: ../src/ui/view/edit-widget.cpp:510 ../src/ui/view/edit-widget.cpp:514
+#: ../src/ui/view/edit-widget.cpp:518 ../src/ui/view/edit-widget.cpp:522
+#: ../src/ui/view/edit-widget.cpp:526 ../src/ui/view/edit-widget.cpp:530
+#: ../src/ui/view/edit-widget.cpp:534 ../src/ui/view/edit-widget.cpp:631
+#: ../src/ui/view/edit-widget.cpp:640 ../src/ui/view/edit-widget.cpp:644
+#: ../src/ui/view/edit-widget.cpp:648 ../src/ui/view/edit-widget.cpp:652
+#: ../src/ui/view/edit-widget.cpp:656 ../src/ui/view/edit-widget.cpp:660
+#: ../src/ui/view/edit-widget.cpp:664 ../src/ui/view/edit-widget.cpp:668
+#: ../src/ui/view/edit-widget.cpp:672 ../src/ui/view/edit-widget.cpp:676
+#: ../src/ui/view/edit-widget.cpp:680 ../src/ui/view/edit-widget.cpp:684
+#: ../src/ui/view/edit-widget.cpp:688 ../src/ui/view/edit-widget.cpp:692
+#: ../src/ui/view/edit-widget.cpp:696 ../src/ui/view/edit-widget.cpp:700
+#: ../src/ui/view/edit-widget.cpp:705 ../src/ui/view/edit-widget.cpp:711
+#: ../src/ui/view/edit-widget.cpp:715 ../src/ui/view/edit-widget.cpp:765
+#: ../src/ui/view/edit-widget.cpp:770 ../src/ui/view/edit-widget.cpp:806
+#: ../src/ui/view/edit-widget.cpp:811 ../src/ui/view/edit-widget.cpp:816
+#: ../src/ui/view/edit-widget.cpp:820 ../src/ui/view/edit-widget.cpp:824
+#: ../src/ui/view/edit-widget.cpp:828 ../src/ui/view/edit-widget.cpp:832
+#: ../src/ui/view/edit-widget.cpp:836 ../src/ui/view/edit-widget.cpp:840
+#: ../src/ui/view/edit-widget.cpp:844 ../src/ui/view/edit-widget.cpp:848
+#: ../src/ui/view/edit-widget.cpp:852 ../src/ui/view/edit-widget.cpp:857
+#: ../src/ui/view/edit-widget.cpp:861 ../src/ui/view/edit-widget.cpp:865
+#: ../src/ui/view/edit-widget.cpp:869 ../src/ui/view/edit-widget.cpp:874
+#: ../src/ui/view/edit-widget.cpp:878 ../src/ui/view/edit-widget.cpp:882
+#: ../src/ui/view/edit-widget.cpp:886 ../src/ui/view/edit-widget.cpp:890
+#: ../src/ui/view/edit-widget.cpp:894 ../src/ui/view/edit-widget.cpp:898
+#: ../src/ui/view/edit-widget.cpp:902 ../src/ui/view/edit-widget.cpp:906
+#: ../src/ui/view/edit-widget.cpp:910 ../src/ui/view/edit-widget.cpp:914
 msgid "PLACEHOLDER, do not translate"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:997
+#: ../src/ui/view/edit-widget.cpp:999
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1056 ../src/widgets/desktop-widget.cpp:248
+#: ../src/ui/view/edit-widget.cpp:1058 ../src/widgets/desktop-widget.cpp:250
 msgid "Zoom drawing if window size changes"
 msgstr "Zoom ind på tegning, hvis vinduesstørrelsen ændres"
 
-#: ../src/ui/view/edit-widget.cpp:1077 ../src/widgets/desktop-widget.cpp:302
+#: ../src/ui/view/edit-widget.cpp:1079 ../src/widgets/desktop-widget.cpp:304
 msgid "Cursor coordinates"
 msgstr "Markørkoordinater"
 
 #. display the initial welcome message in the statusbar
-#: ../src/ui/view/edit-widget.cpp:1094 ../src/widgets/desktop-widget.cpp:334
+#: ../src/ui/view/edit-widget.cpp:1096 ../src/widgets/desktop-widget.cpp:336
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -7922,7 +7966,7 @@ msgstr ""
 "oprette objekter; brug markeringsværktøjet til at flytte eller transformere "
 "dem."
 
-#: ../src/ui/view/edit-widget.cpp:1196 ../src/widgets/desktop-widget.cpp:560
+#: ../src/ui/view/edit-widget.cpp:1196 ../src/widgets/desktop-widget.cpp:562
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -7936,11 +7980,11 @@ msgstr ""
 "Hvis du lukker uden at gemme, mister du dine ændringer."
 
 #: ../src/ui/view/edit-widget.cpp:1207 ../src/ui/view/edit-widget.cpp:1254
-#: ../src/widgets/desktop-widget.cpp:576 ../src/widgets/desktop-widget.cpp:640
+#: ../src/widgets/desktop-widget.cpp:578 ../src/widgets/desktop-widget.cpp:642
 msgid "Close _without saving"
 msgstr "Luk _uden at gemme"
 
-#: ../src/ui/view/edit-widget.cpp:1242 ../src/widgets/desktop-widget.cpp:623
+#: ../src/ui/view/edit-widget.cpp:1242 ../src/widgets/desktop-widget.cpp:625
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -9954,37 +9998,37 @@ msgstr "Stiplet mønster"
 msgid "Pattern offset"
 msgstr "Mønsterforskydning"
 
-#: ../src/widgets/desktop-widget.cpp:392
+#: ../src/widgets/desktop-widget.cpp:394
 #, fuzzy, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:394
+#: ../src/widgets/desktop-widget.cpp:396
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:398
+#: ../src/widgets/desktop-widget.cpp:400
 #, fuzzy, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:400
+#: ../src/widgets/desktop-widget.cpp:402
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
 
 #. Family frame
-#: ../src/widgets/font-selector.cpp:148
+#: ../src/widgets/font-selector.cpp:150
 msgid "Font family"
 msgstr "Skrifttype"
 
 #. Style frame
-#: ../src/widgets/font-selector.cpp:179
+#: ../src/widgets/font-selector.cpp:181
 msgid "Style"
 msgstr "Stil"
 
-#: ../src/widgets/font-selector.cpp:217
+#: ../src/widgets/font-selector.cpp:219
 msgid "Font size:"
 msgstr "Skrifttypestørrelse:"
 
@@ -9992,7 +10036,7 @@ msgstr "Skrifttypestørrelse:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:589 ../src/widgets/toolbox.cpp:3730
+#: ../src/widgets/font-selector.cpp:594 ../src/widgets/toolbox.cpp:3730
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -10162,7 +10206,7 @@ msgstr "Stopfarve"
 msgid "Gradient editor"
 msgstr "Overgangseditor"
 
-#: ../src/widgets/gradient-vector.cpp:1172
+#: ../src/widgets/gradient-vector.cpp:1169
 #, fuzzy
 msgid "Change gradient stop color"
 msgstr "Streg med lineær overgang"
@@ -10977,6 +11021,7 @@ msgid "Maximum segment length"
 msgstr "Maksimal linjestykkelængde"
 
 #: ../share/extensions/addnodes.inx.h:3 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/radiusrand.inx.h:3
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:4
@@ -11062,7 +11107,7 @@ msgstr ""
 msgid "Less Light"
 msgstr ""
 
-#: ../share/extensions/color_lesssaturation.inx .h:2
+#: ../share/extensions/color_lesssaturation.inx.h:2
 #, fuzzy
 msgid "Less Saturation"
 msgstr "Farvemætning"
@@ -11200,6 +11245,11 @@ msgstr ""
 msgid "Embed All Images"
 msgstr "Indlejr alle billeder"
 
+#: ../share/extensions/embedimage.inx.h:2
+#, fuzzy
+msgid "Embed only selected images"
+msgstr "Indlejr alle billeder"
+
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
 msgstr "EPS-inddata"
@@ -11227,6 +11277,19 @@ msgstr "LaTeX-formel"
 #: ../share/extensions/eqtexsvg.inx.h:2
 msgid "LaTeX formula: "
 msgstr "LaTeX-formel: "
+
+#: ../share/extensions/export_gimp_palette.inx.h:1
+msgid "Export as GIMP Palette"
+msgstr ""
+
+#: ../share/extensions/export_gimp_palette.inx.h:2
+msgid "Exports the colors of this document as GIMP Palette"
+msgstr ""
+
+#: ../share/extensions/export_gimp_palette.inx.h:3
+#, fuzzy
+msgid "GIMP Palette (*.gpl)"
+msgstr "GIMP Gradient (*.ggr)"
 
 #: ../share/extensions/extractimage.inx.h:1
 msgid "Extract One Image"
@@ -11258,6 +11321,93 @@ msgstr "Fladhed"
 msgid "Flatten Beziers"
 msgstr "Udjævn Bezier"
 
+#: ../share/extensions/funcplot.inx.h:1
+msgid "Calculate first derivative numerically"
+msgstr "Beregn første afledede numerisk"
+
+#: ../share/extensions/funcplot.inx.h:2
+#, fuzzy
+msgid "Draw Axes"
+msgstr "Tegn håndtag"
+
+#: ../share/extensions/funcplot.inx.h:3
+msgid "End x-value"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:4
+msgid "First derivative"
+msgstr "Første afledede"
+
+#: ../share/extensions/funcplot.inx.h:5
+#, fuzzy
+msgid "Function"
+msgstr "Funktion"
+
+#: ../share/extensions/funcplot.inx.h:6
+msgid "Function Plotter"
+msgstr "Funktionsplotter"
+
+#: ../share/extensions/funcplot.inx.h:8
+msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:9
+msgid "Multiply x-range by 2*pi"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:10
+msgid "Range and Sampling"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:11
+#, fuzzy
+msgid "Remove rectangle"
+msgstr "Opret firkant"
+
+#: ../share/extensions/funcplot.inx.h:13
+#, fuzzy
+msgid "Samples"
+msgstr "Figurer"
+
+#: ../share/extensions/funcplot.inx.h:14
+#, fuzzy
+msgid "Start x-value"
+msgstr "Attributværdi"
+
+#: ../share/extensions/funcplot.inx.h:15
+msgid ""
+"The following functions are available: (the available functions are the "
+"standard python math functions) ceil(x); fabs(x); floor(x); fmod(x,y); frexp"
+"(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt"
+"(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan"
+"(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and "
+"e are also available."
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:16
+msgid "y-value of rectangle's bottom"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:17
+#, fuzzy
+msgid "y-value of rectangle's top"
+msgstr "Højde på rektangel"
+
+#: ../share/extensions/g2pngs.inx.h:1
+#, fuzzy
+msgid "Directory"
+msgstr "direkte"
+
+#: ../share/extensions/g2pngs.inx.h:3
+#, fuzzy
+msgid "Groups to PNGs"
+msgstr "Grupper"
+
+#: ../share/extensions/g2pngs.inx.h:4
+#, fuzzy
+msgid "Save layers only"
+msgstr "Primær uigennemsigtighed"
+
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
 msgstr "GIMP XCF"
@@ -11269,6 +11419,32 @@ msgstr "GIMP XCF med bevaring af lag (*.XCF)"
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
 msgstr "Tegn håndtag"
+
+#: ../share/extensions/inkscape_help_commandline.inx.h:1
+#, fuzzy
+msgid "Command Line Options"
+msgstr "Tilfældig placering"
+
+#: ../share/extensions/inkscape_help_faq.inx.h:1
+msgid "FAQ"
+msgstr ""
+
+#: ../share/extensions/inkscape_help_manual.inx.h:1
+#, fuzzy
+msgid "Inkscape Manual"
+msgstr "Inkscape: S_poring"
+
+#: ../share/extensions/inkscape_help_relnotes.inx.h:1
+msgid "New in This Version"
+msgstr ""
+
+#: ../share/extensions/inkscape_help_reportabug.inx.h:1
+msgid "Report a Bug"
+msgstr ""
+
+#: ../share/extensions/inkscape_help_svgspec.inx.h:1
+msgid "SVG 1.1 Specification"
+msgstr ""
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
@@ -11294,43 +11470,64 @@ msgstr "Interpolationsmetode"
 msgid "Interpolation steps"
 msgstr "Interpolationstrin"
 
-#: ../share/extensions/lindenmayer.inx.h:1
+#: ../share/extensions/lindenmayer.inx .h:1
 msgid "Axiom"
 msgstr "Aksiom"
 
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx .h:2
 msgid "L-system"
 msgstr "L-system"
 
-#: ../share/extensions/lindenmayer.inx.h:3
+#: ../share/extensions/lindenmayer.inx .h:3
 msgid "Left angle"
 msgstr "Venstre vinkel"
 
-#: ../share/extensions/lindenmayer.inx.h:4
+#: ../share/extensions/lindenmayer.inx .h:4
 msgid "Order"
 msgstr "Rækkefølge"
 
-#: ../share/extensions/lindenmayer.inx.h:6
+#: ../share/extensions/lindenmayer.inx .h:6
 #, no-c-format
 msgid "Randomize angle (%)"
 msgstr "Tilfældiggør vinkel (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:8
+#: ../share/extensions/lindenmayer.inx .h:8
 #, no-c-format
 msgid "Randomize step (%)"
 msgstr "Tilfældiggør trin (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:10
+#: ../share/extensions/lindenmayer.inx .h:10
 msgid "Right angle"
 msgstr "Højre vinkel"
 
-#: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/lindenmayer.inx .h:11
 msgid "Rules"
 msgstr "Regler"
 
-#: ../share/extensions/lindenmayer.inx.h:12
+#: ../share/extensions/lindenmayer.inx .h:12
 msgid "Step length (px)"
 msgstr "Trinlængde (px)"
+
+#: ../share/extensions/lorem_ipsum.inx.h:1
+msgid "Lorem ipsum"
+msgstr ""
+
+#: ../share/extensions/lorem_ipsum.inx.h:2
+#, fuzzy
+msgid "Number of paragraphs"
+msgstr "Antal rækker"
+
+#: ../share/extensions/lorem_ipsum.inx.h:3
+msgid "Paragraph length fluctuation (sentences)"
+msgstr ""
+
+#: ../share/extensions/lorem_ipsum.inx.h:5
+msgid "Sentences per paragraph"
+msgstr ""
+
+#: ../share/extensions/markers_strokepaint.inx.h:1
+msgid "Color Markers to Match Stroke"
+msgstr ""
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
@@ -11348,6 +11545,59 @@ msgstr "Ekstruder"
 msgid "Magnitude"
 msgstr "Udstrækning"
 
+#: ../share/extensions/outline2svg.inx.h:1
+msgid "ASCII Text with outline markup"
+msgstr ""
+
+#: ../share/extensions/outline2svg.inx.h:2
+#, fuzzy
+msgid "Text Outline File (*.outline)"
+msgstr "Tekstfil (*.txt)"
+
+#: ../share/extensions/outline2svg.inx.h:3
+#, fuzzy
+msgid "Text Outline Input"
+msgstr "Tekst-inddata"
+
+#: ../share/extensions/pathalongpath.inx.h:1
+#, fuzzy
+msgid "Copies of the pattern:"
+msgstr "Farve på sidekant"
+
+#: ../share/extensions/pathalongpath.inx.h:2
+#, fuzzy
+msgid "Deformation type:"
+msgstr "Information"
+
+#: ../share/extensions/pathalongpath.inx.h:3
+msgid "Duplicate the pattern before deformation"
+msgstr ""
+
+#: ../share/extensions/pathalongpath.inx.h:5
+#, fuzzy
+msgid "Normal offset"
+msgstr "Vandret forskudt"
+
+#: ../share/extensions/pathalongpath.inx.h:6
+#, fuzzy
+msgid "Pattern along Path"
+msgstr "_Sæt på sti"
+
+#: ../share/extensions/pathalongpath.inx.h:7
+#, fuzzy
+msgid "Pattern is vertical"
+msgstr "Mønsterforskydning"
+
+#: ../share/extensions/pathalongpath.inx.h:8
+#, fuzzy
+msgid "Space between copies:"
+msgstr "Mellemrum mellem linjer"
+
+#: ../share/extensions/pathalongpath.inx.h:9
+#, fuzzy
+msgid "Tangential offset"
+msgstr "Lodret forskydning"
+
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
 msgstr "PostScript"
@@ -11355,6 +11605,24 @@ msgstr "PostScript"
 #: ../share/extensions/ps_input.inx.h:3
 msgid "Postscript Input"
 msgstr "PostScript-inddata"
+
+#: ../share/extensions/radiobutton_example.inx.h:1
+msgid "Developer Examples"
+msgstr ""
+
+#: ../share/extensions/radiobutton_example.inx.h:2
+msgid "RadioButton example"
+msgstr ""
+
+#: ../share/extensions/radiobutton_example.inx.h:3
+#, fuzzy
+msgid "Select option: "
+msgstr "Markering"
+
+#: ../share/extensions/radiobutton_example.inx.h:4
+#, fuzzy
+msgid "Select second option: "
+msgstr "Vælg fil der skal åbnes"
 
 #: ../share/extensions/radiusrand.inx.h:1
 #, fuzzy
@@ -11377,6 +11645,12 @@ msgid "Shift nodes"
 msgstr "Sammenføj knudepunkter"
 
 #: ../share/extensions/radiusrand.inx.h:6
+msgid ""
+"This effect randomly shifts the nodes (and optionally node handles) of the "
+"selected path."
+msgstr ""
+
+#: ../share/extensions/radiusrand.inx.h:7
 msgid "Use normal distribution"
 msgstr "Brug normal fordeling"
 
@@ -11490,6 +11764,10 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Windows Metafile-inddata"
+
+#~ msgid "You cannot put flowtext on a path. Convert flowtext to text first."
+#~ msgstr ""
+#~ "Du kan ikke placere flydende tekst på en sti. Konvertér til tekst først."
 
 #~ msgid "Blur Edge"
 #~ msgstr "Udtvær kant"
@@ -11625,12 +11903,6 @@ msgstr "Windows Metafile-inddata"
 #~ msgid "Segment Straightener"
 #~ msgstr "Linjestykke-udjævner"
 
-#~ msgid "Calculate first derivative numerically"
-#~ msgstr "Beregn første afledede numerisk"
-
-#~ msgid "First derivative"
-#~ msgstr "Første afledede"
-
 #~ msgid "Nodes per period"
 #~ msgstr "Knudepunkter pr. periode"
 
@@ -11654,6 +11926,3 @@ msgstr "Windows Metafile-inddata"
 
 #~ msgid "How much resistance affects the movement of the pen"
 #~ msgstr "Hvor stor modstand påvirker pennens bevægelser"
-
-#~ msgid "Function Plotter"
-#~ msgstr "Funktionsplotter"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-22 00:30+0100\n"
+"POT-Creation-Date: 2007-01-10 22:45+0100\n"
 "PO-Revision-Date: 2006-11-01 12:33+0100\n"
 "Last-Translator: Jurmey Rabgay <jur_gay@yahoo.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
@@ -164,7 +164,7 @@ msgstr "ཊཡིལཌི་ངོ་འདྲ་དེ་རྩ་བསྐྲ
 msgid "Delete tiled clones"
 msgstr "ཊཡིལཌི་ངོ་འདྲ་ཚུ་ བཏོན་གཏང་"
 
-#: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1983
+#: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1987
 msgid "Select an <b>object</b> to clone."
 msgstr "ངོ་འདྲ་བཟོ་ནིའི་དོན་ལུ་་<b>དངོས་པོ་ཅིག</b> སེལ་འཐུ་འབད།"
 
@@ -584,7 +584,7 @@ msgstr "༡. འབྲི་ནིའི་ནང་ལས་འཐུ:"
 #: ../share/extensions/color_grayscale.inx.h:1
 #: ../share/extensions/color_lesshue.inx.h:1
 #: ../share/extensions/color_lesslight.inx.h:1
-#: ../share/extensions/color_lesssaturation.inx .h:1
+#: ../share/extensions/color_lesssaturation.inx.h:1
 #: ../share/extensions/color_morehue.inx.h:1
 #: ../share/extensions/color_morelight.inx.h:1
 #: ../share/extensions/color_moresaturation.inx.h:1
@@ -847,123 +847,123 @@ msgstr "དྲེན་དེབ་འཕྲིན་དོན་ཚུ་འཛ
 msgid "none"
 msgstr "ཅི་མེད།"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2292
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2292
 msgid "_Page"
 msgstr "ཤོག་ལེབ། (_P)"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2296
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2296
 msgid "_Drawing"
 msgstr "པར་རིས། (_D)"
 
-#: ../src/dialogs/export.cpp:136 ../src/verbs.cpp:2298
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2298
 msgid "_Selection"
 msgstr "སེལ་འཐུ། (_S)"
 
-#: ../src/dialogs/export.cpp:136
+#: ../src/dialogs/export.cpp:139
 msgid "_Custom"
 msgstr "སྲོལ་སྒྲིག (_C)"
 
-#: ../src/dialogs/export.cpp:260
+#: ../src/dialogs/export.cpp:263
 msgid "<big><b>Export area</b></big>"
 msgstr "<big><b>ཕྱིར་འདྲེན་མངའ་ཁོངས།</b></big>"
 
-#: ../src/dialogs/export.cpp:274
+#: ../src/dialogs/export.cpp:277
 msgid "Units:"
 msgstr "ཆ་ཕྲན་ཚུ་:"
 
-#: ../src/dialogs/export.cpp:302
+#: ../src/dialogs/export.cpp:305
 msgid "_x0:"
 msgstr "_ཨེགསི་0:(_x)"
 
-#: ../src/dialogs/export.cpp:307
+#: ../src/dialogs/export.cpp:310
 msgid "x_1:"
 msgstr "ཨེགསི་ ༡:(_1)"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:312 ../src/dialogs/object-attributes.cpp:55
-#: ../src/dialogs/stroke-style.cpp:1052 ../src/widgets/toolbox.cpp:2206
+#: ../src/dialogs/export.cpp:315 ../src/dialogs/object-attributes.cpp:55
+#: ../src/dialogs/stroke-style.cpp:1054 ../src/widgets/toolbox.cpp:2206
 #: ../src/widgets/toolbox.cpp:2358
 msgid "Width:"
 msgstr "རྒྱ་ཚད:"
 
-#: ../src/dialogs/export.cpp:318
+#: ../src/dialogs/export.cpp:321
 msgid "_y0:"
 msgstr "_ཝའི་0: (_y)"
 
-#: ../src/dialogs/export.cpp:323
+#: ../src/dialogs/export.cpp:326
 msgid "y_1:"
 msgstr "ཝའི་༡:(_1)"
 
-#: ../src/dialogs/export.cpp:328 ../src/dialogs/export.cpp:446
+#: ../src/dialogs/export.cpp:331 ../src/dialogs/export.cpp:445
 #: ../src/dialogs/object-attributes.cpp:56
 msgid "Height:"
 msgstr "མཐོ་ཚད:"
 
-#: ../src/dialogs/export.cpp:417
+#: ../src/dialogs/export.cpp:416
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>བིཊི་མེབ་ཀྱི་ཚད།</b></big>"
 
-#: ../src/dialogs/export.cpp:430 ../src/ui/widget/page-sizer.cpp:301
+#: ../src/dialogs/export.cpp:429 ../src/ui/widget/page-sizer.cpp:301
 msgid "_Width:"
 msgstr "རྒྱ་ཚད:(_W)"
 
-#: ../src/dialogs/export.cpp:430 ../src/dialogs/export.cpp:446
+#: ../src/dialogs/export.cpp:429 ../src/dialogs/export.cpp:445
 msgid "pixels at"
 msgstr "ནང་པིག་སེལསི།"
 
-#: ../src/dialogs/export.cpp:440
+#: ../src/dialogs/export.cpp:439
 msgid "dp_i"
 msgstr "ཌི་པའི་ཨའི། (_i)"
 
-#: ../src/dialogs/export.cpp:459 ../src/ui/dialog/inkscape-preferences.cpp:545
+#: ../src/dialogs/export.cpp:458 ../src/ui/dialog/inkscape-preferences.cpp:558
 msgid "dpi"
 msgstr "ཌི་པི་ཨའི།"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:470
+#: ../src/dialogs/export.cpp:469
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>ཡིག་སྣོད་ཀྱི་མིང་།</b></big>(_F)"
 
-#: ../src/dialogs/export.cpp:541
+#: ../src/dialogs/export.cpp:540
 msgid "_Browse..."
 msgstr "བརྡ་འཚོལ...(_B)"
 
-#: ../src/dialogs/export.cpp:580
+#: ../src/dialogs/export.cpp:579
 msgid "_Export"
 msgstr "ཕྱིར་འདྲེན།(_E)"
 
-#: ../src/dialogs/export.cpp:584
+#: ../src/dialogs/export.cpp:583
 msgid "Export the bitmap file with these settings"
 msgstr "སྒྲིག་སྟངས་འདི་ཚུ་དང་གཅིག་ཁར་ བིཊི་མེཔ་ཡིག་སྣོད་དེ་ཕྱིར་འདྲེན་འབད།"
 
-#: ../src/dialogs/export.cpp:967
+#: ../src/dialogs/export.cpp:966
 msgid "You have to enter a filename"
 msgstr "ཁྱོད་ཀྱིས་ཡིག་སྣོད་མིང་ཅིག་ཐོ་བཀོད་འབད་དགོཔ་ཨིན།"
 
-#: ../src/dialogs/export.cpp:972
+#: ../src/dialogs/export.cpp:971
 msgid "The chosen area to be exported is invalid"
 msgstr "གདམ་ཁ་བརྐྱབས་ཡོད་པའི་མངའ་ཁོངས་ཕྱིར་འདྲེན་འབད་ནི་དེ་ནུས་མེད་ཨིན་པས།"
 
-#: ../src/dialogs/export.cpp:981
+#: ../src/dialogs/export.cpp:980
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "སྣོད་ཐོ་ %s དེ་མེདཔ་ཨིནམ་དང་ ཡང་ན་ དེ་སྣོད་ཐོ་མེན།\n"
 
-#: ../src/dialogs/export.cpp:997
+#: ../src/dialogs/export.cpp:996
 msgid "Export in progress"
 msgstr "ཡར་འཕེལ་ནང་ཕྱིར་འདྲེན་འབད།"
 
-#: ../src/dialogs/export.cpp:1003
+#: ../src/dialogs/export.cpp:1002
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr " %s ཕྱིར་འདྲེན་འབད་དོ།(%d x %d)"
 
-#: ../src/dialogs/export.cpp:1030
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "ཡིག་སྣོད་མིང་%sལུ་ཕྱིར་འདྲེན་འབད་མ་ཚུགས།\n"
 
-#: ../src/dialogs/export.cpp:1136
+#: ../src/dialogs/export.cpp:1160
 msgid "Select a filename for exporting"
 msgstr "ཕྱིར་འདྲེན་འབད་ནིའི་དོན་ལུ་ ཡིག་སྣོད་མིང་ཅིག་སེལ་འཐུ་འབད།"
 
@@ -1099,7 +1099,7 @@ msgid "Search clones"
 msgstr "ངོ་འདྲ་ཚུ་འཚོལ་ཞིབ་འབད།"
 
 #: ../src/dialogs/find.cpp:617 ../src/ui/dialog/find.cpp:78
-#: ../src/ui/dialog/inkscape-preferences.cpp:456
+#: ../src/ui/dialog/inkscape-preferences.cpp:469
 msgid "Clones"
 msgstr "ངོ་འདྲ་ཚུ།"
 
@@ -1108,7 +1108,7 @@ msgid "Search images"
 msgstr "གཟུགས་བརྙན་ཚུ་འཚོལ་ཞིབ་འབད།"
 
 #: ../src/dialogs/find.cpp:622 ../src/ui/dialog/find.cpp:79
-#: ../share/extensions/embedimage.inx.h:2
+#: ../share/extensions/embedimage.inx.h:3
 #: ../share/extensions/extractimage.inx.h:2
 msgid "Images"
 msgstr "གཟུགས་བརྙན་ཚུ།"
@@ -1235,7 +1235,7 @@ msgstr "%d x %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:888
-#: ../src/ui/dialog/filedialog.cpp:1855 ../src/widgets/desktop-widget.cpp:1137
+#: ../src/ui/dialog/filedialog.cpp:1855 ../src/widgets/desktop-widget.cpp:1138
 msgid "Selection"
 msgstr "སེལ་འཐུ།"
 
@@ -1351,28 +1351,29 @@ msgstr "དངོས་པོའི་མགོ་མིང་ གཞི་ས�
 msgid "Set object description"
 msgstr "དངོས་པོའི་འགྲེལ་བཤད་ གཞི་སྒྲིག་འབད་"
 
-#: ../src/dialogs/layers-panel.cpp:591 ../src/widgets/layer-selector.cpp:590
+#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
 msgid "Unhide layer"
 msgstr "བང་རིམ་ སྦ་བཤོལ་"
 
-#: ../src/dialogs/layers-panel.cpp:591 ../src/widgets/layer-selector.cpp:590
+#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
 msgid "Hide layer"
 msgstr "བང་རིམ་ སྦ་"
 
-#: ../src/dialogs/layers-panel.cpp:602 ../src/widgets/layer-selector.cpp:582
+#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
 msgid "Lock layer"
 msgstr "བང་རིམ་ བསྡམ་བཞག་"
 
-#: ../src/dialogs/layers-panel.cpp:602 ../src/widgets/layer-selector.cpp:582
+#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
 msgid "Unlock layer"
 msgstr "བང་རིམ་བསྡམ་བཤོལ་"
 
-#: ../src/dialogs/layers-panel.cpp:699
+#: ../src/dialogs/layers-panel.cpp:698
 msgid "Change layer opacity"
 msgstr "བང་རིམ་དྭངས་སྒྲིབ་ བསྒྱུར་བཅོས་འབད་"
 
-#: ../src/dialogs/layers-panel.cpp:764
-msgid "Opacity:"
+#: ../src/dialogs/layers-panel.cpp:763
+#, fuzzy
+msgid "Opacity, %:"
 msgstr "དྭངས་སྒྲིབ:"
 
 #: ../src/dialogs/layers-panel.cpp:789
@@ -1755,54 +1756,54 @@ msgstr "སི་ཊོཀ་གུ་ དཔེ་གཞི་གཞི་ས�
 msgid "Unset stroke"
 msgstr "སིཊོཀ་གཞི་སྒྲིག་འབད་ནི་ལས་བཤོལ།"
 
-#: ../src/dialogs/stroke-style.cpp:832 ../src/widgets/gradient-vector.cpp:264
+#: ../src/dialogs/stroke-style.cpp:834 ../src/widgets/gradient-vector.cpp:264
 #: ../src/widgets/paint-selector.cpp:739
 msgid "No document selected"
 msgstr "ཡིག་ཆ་སེལ་འཐུ་འབད་འབདཝ་མིན་འདུག"
 
-#: ../src/dialogs/stroke-style.cpp:849 ../src/interface.cpp:757
-#: ../src/ui/dialog/inkscape-preferences.cpp:190
-#: ../src/ui/dialog/inkscape-preferences.cpp:322
-#: ../src/ui/dialog/inkscape-preferences.cpp:407
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/dialogs/stroke-style.cpp:851 ../src/interface.cpp:757
+#: ../src/ui/dialog/inkscape-preferences.cpp:191
+#: ../src/ui/dialog/inkscape-preferences.cpp:323
+#: ../src/ui/dialog/inkscape-preferences.cpp:408
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 #: ../src/ui/widget/selected-style.cpp:137
 #: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1963
 msgid "None"
 msgstr "ཅི་མེད།"
 
-#: ../src/dialogs/stroke-style.cpp:960
+#: ../src/dialogs/stroke-style.cpp:962
 msgid "Set markers"
 msgstr "རྟགས་བཀོདཔ་ གཞི་སྒྲིག་འབད་"
 
-#: ../src/dialogs/stroke-style.cpp:1066
+#: ../src/dialogs/stroke-style.cpp:1068
 msgid "Stroke width"
 msgstr "རྒྱ་ཚད་སིཊོརོག་འབད།"
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/dialogs/stroke-style.cpp:1089
+#: ../src/dialogs/stroke-style.cpp:1091
 msgid "Join:"
 msgstr "མཐུད:"
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1101
+#: ../src/dialogs/stroke-style.cpp:1103
 msgid "Miter join"
 msgstr "རྣོ་ཅན་མཐུད་མཚམས།"
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1109
+#: ../src/dialogs/stroke-style.cpp:1111
 msgid "Round join"
 msgstr "མཐོད་མཚམས་སྒོར་སྒོརམ།"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1117
+#: ../src/dialogs/stroke-style.cpp:1119
 msgid "Bevel join"
 msgstr "མཐུད་མཚམས་སེར་ཁ།"
 
@@ -1813,58 +1814,58 @@ msgstr "མཐུད་མཚམས་སེར་ཁ།"
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/dialogs/stroke-style.cpp:1128
+#: ../src/dialogs/stroke-style.cpp:1130
 msgid "Miter limit:"
 msgstr "མཐུད་བྱེད་ཀྱི་ཚད:"
 
-#: ../src/dialogs/stroke-style.cpp:1136
+#: ../src/dialogs/stroke-style.cpp:1138
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "མཐུད་བྱེད་དེ་གི་རིང་ཚད་མང་མཐའ། (སིཊོརོག་རྒྱ་ཚད་ཀྱི་ཆ་ཕྲན་ནང་)"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/dialogs/stroke-style.cpp:1149
+#: ../src/dialogs/stroke-style.cpp:1151
 msgid "Cap:"
 msgstr "ཀེབ:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/dialogs/stroke-style.cpp:1160
+#: ../src/dialogs/stroke-style.cpp:1162
 msgid "Butt cap"
 msgstr "བཊི་ཀེབ།"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/dialogs/stroke-style.cpp:1167
+#: ../src/dialogs/stroke-style.cpp:1169
 msgid "Round cap"
 msgstr "ཀེབ་སྒོར་སྒོརམ།"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/dialogs/stroke-style.cpp:1174
+#: ../src/dialogs/stroke-style.cpp:1176
 msgid "Square cap"
 msgstr "ཀེབ་གྲུ་བཞི།"
 
 #. Dash
-#: ../src/dialogs/stroke-style.cpp:1180
+#: ../src/dialogs/stroke-style.cpp:1182
 msgid "Dashes:"
 msgstr "སྦྲེལ་རྟགས་ཚུ:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/dialogs/stroke-style.cpp:1201
+#: ../src/dialogs/stroke-style.cpp:1203
 msgid "Start Markers:"
 msgstr "འགོ་བཙུགས་རྟགས་བཀོདཔ:"
 
-#: ../src/dialogs/stroke-style.cpp:1211
+#: ../src/dialogs/stroke-style.cpp:1213
 msgid "Mid Markers:"
 msgstr "རྟགས་བཀོདཔ་བར་མ:"
 
-#: ../src/dialogs/stroke-style.cpp:1222
+#: ../src/dialogs/stroke-style.cpp:1224
 msgid "End Markers:"
 msgstr "རྟགས་བཀོདཔ་མཇུག:"
 
-#: ../src/dialogs/stroke-style.cpp:1567 ../src/dialogs/stroke-style.cpp:1665
+#: ../src/dialogs/stroke-style.cpp:1572 ../src/dialogs/stroke-style.cpp:1670
 msgid "Set stroke style"
 msgstr "སི་ཊོཀ་བཟོ་རྣམ་ གཞི་སྒྲིག་འབད་"
 
@@ -1923,7 +1924,7 @@ msgstr "གྲལ་ཐིག་བར་སྟོང་བཏོན་ནི།
 
 #. Text
 #: ../src/dialogs/text-edit.cpp:363 ../src/selection-describer.cpp:63
-#: ../src/ui/dialog/inkscape-preferences.cpp:383
+#: ../src/ui/dialog/inkscape-preferences.cpp:384
 #: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2216
 msgid "Text"
 msgstr "ཚིག་ཡིག"
@@ -2034,12 +2035,12 @@ msgid "New text node"
 msgstr "ཚིག་ཡིག་གསརཔ་གི་མཐུད་མཚམས།"
 
 #: ../src/dialogs/xml-tree.cpp:347 ../src/dialogs/xml-tree.cpp:1412
-#: ../src/nodepath.cpp:1708
+#: ../src/nodepath.cpp:1710
 msgid "Duplicate node"
 msgstr "ནོཌི་རྫུན་མ།"
 
 #: ../src/dialogs/xml-tree.cpp:368 ../src/dialogs/xml-tree.cpp:1429
-#: ../src/nodepath.cpp:2945
+#: ../src/nodepath.cpp:2956
 msgid "Delete node"
 msgstr "ནོཌི་བཏོན་གཏང་།"
 
@@ -2367,6 +2368,7 @@ msgstr "གྲིབ་དེ་ཤུགས་བསྐྱེད་འབད་
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
+#: ../share/extensions/pathalongpath.inx.h:4
 msgid "Generate from Path"
 msgstr "འགྲུལ་ལམ་ནང་ལས་བཟོ་བཏོན་འབད།"
 
@@ -2452,7 +2454,9 @@ msgid "Vertical Offset"
 msgstr "ཀེར་ཕྲང་པར་ལེན།"
 
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/funcplot.inx.h:12 ../share/extensions/lindenmayer.inx
+#: .h:9 ../share/extensions/lorem_ipsum.inx.h:4
+#: ../share/extensions/rtree.inx.h:4
 msgid "Render"
 msgstr "ལྷག་སྟོན་འབད་ནི།"
 
@@ -2489,13 +2493,13 @@ msgid "OpenDocument drawing file"
 msgstr "ཡིག་ཆ་འབྲི་མིའི་ཡིག་སྣོད་ཁ་ཕྱེ།"
 
 #: ../src/extension/internal/pdf-cairo.cpp:123
-#: ../src/extension/internal/ps.cpp:120
+#: ../src/extension/internal/ps.cpp:121
 msgid "Print Destination"
 msgstr "འགྲོ་ཡུལ་དཔར་བསྐྲུན་འབད།"
 
 #. Print properties frame
 #: ../src/extension/internal/pdf-cairo.cpp:138
-#: ../src/extension/internal/ps.cpp:135
+#: ../src/extension/internal/ps.cpp:136
 msgid "Print properties"
 msgstr "རྒྱུ་དངོས་ཚུ་དཔར་བསྐྲུན་འབད།"
 
@@ -2513,12 +2517,12 @@ msgstr ""
 "དང་ དཔེ་གཞི་དེ་ཚུ་བརླག་སྟོར་ཞུགས་འོང་།"
 
 #: ../src/extension/internal/pdf-cairo.cpp:152
-#: ../src/extension/internal/ps.cpp:149
+#: ../src/extension/internal/ps.cpp:150
 msgid "Print as bitmap"
 msgstr "བིཊི་མེཔ་བཟུམ་སྦེ་དཔར་བསྐྲུན་འབད།"
 
 #: ../src/extension/internal/pdf-cairo.cpp:154
-#: ../src/extension/internal/ps.cpp:151
+#: ../src/extension/internal/ps.cpp:152
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2529,23 +2533,23 @@ msgstr ""
 "བཏུབ་ དེ་འབདཝ་ད་ བཀྲམ་སྟོན་འབད་དེ་ཡོད་དོ་བཟུམ་སྦེ་ དངོས་པོ་ཆ་མཉམ་རང་ཏག་ཏག་སྦེ་ལྷག་སྟོན་འབད་འོང་།"
 
 #: ../src/extension/internal/pdf-cairo.cpp:168
-#: ../src/extension/internal/ps.cpp:165
+#: ../src/extension/internal/ps.cpp:166
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "བིཊི་མེཔ་གི་(ཨིནཅི་རེ་ལུ་ཚག་རེ་)དགའ་བའི་ཧུམ་ཆ།"
 
 #: ../src/extension/internal/pdf-cairo.cpp:182
-#: ../src/extension/internal/ps.cpp:179
+#: ../src/extension/internal/ps.cpp:180
 msgid "Resolution:"
 msgstr "ཧུམ་ཆ:"
 
 #. Print destination frame
 #: ../src/extension/internal/pdf-cairo.cpp:186
-#: ../src/extension/internal/ps.cpp:183
+#: ../src/extension/internal/ps.cpp:184
 msgid "Print destination"
 msgstr "འགྲོ་ཡུལ་དཔར་བསྐྲུན་འབད།"
 
 #: ../src/extension/internal/pdf-cairo.cpp:192
-#: ../src/extension/internal/ps.cpp:189
+#: ../src/extension/internal/ps.cpp:190
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2587,11 +2591,11 @@ msgstr "པོསིཊི་སིཀིརིཔཊི།(*.ps)"
 msgid "Postscript File"
 msgstr "པོསིཊི་སིཀིརིཔཊི། ཡིག་སྣོད།"
 
-#: ../src/extension/internal/ps.cpp:142
+#: ../src/extension/internal/ps.cpp:143
 msgid "Print using PostScript operators"
 msgstr "པོསིཊི་སིཀིརིཔཊི་ བཀོལ་སྤྱོདཔ་ཚུ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་དཔར་བསྐྲུན་འབད།"
 
-#: ../src/extension/internal/ps.cpp:144
+#: ../src/extension/internal/ps.cpp:145
 msgid ""
 "Use PostScript vector operators. The resulting image is usually smaller in "
 "file size and can be arbitrarily scaled, but alpha transparency and patterns "
@@ -2601,7 +2605,7 @@ msgstr ""
 "སྤྱིར་གཏང་གི་ཆུང་ཀུ་འོངམ་ཨིནམ་དང་ བར་སྒྲིག་གི་ཐོག་ལས་ཆ་ཚད་འཇལ་ཚུགས་ དེ་འབདཝ་ད་ ཨཱལ་ཕ་དྭངས་གསལ་"
 "ཅན་དང་ དཔེ་གཞི་དེ་ཚུ་བརླག་སྟོར་ཞུགས་འོང་།"
 
-#: ../src/extension/internal/ps.cpp:1710
+#: ../src/extension/internal/ps.cpp:1719
 msgid "Postscript Print"
 msgstr "པོསིཊི་སིཀིརིཔཊི་དཔར་བསྐྲུན།"
 
@@ -2861,11 +2865,11 @@ msgstr "སྟེགས་རིས་<b>ཆེད་དམིགས</b>ར་�
 msgid "Merge gradient handles"
 msgstr "སྟེགས་རིས་ལག་བཤེད་ཚུ་ མཉམ་བསྡོམ་འབད་"
 
-#: ../src/gradient-drag.cpp:518 ../src/gradient-drag.cpp:1071
+#: ../src/gradient-drag.cpp:530 ../src/gradient-drag.cpp:1091
 msgid "Move gradient handle"
 msgstr "སྟེགས་རིས་བཤེད་བཟུང་ སྤོ་བཤུད་འབད་"
 
-#: ../src/gradient-drag.cpp:657
+#: ../src/gradient-drag.cpp:669
 #, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
@@ -2875,11 +2879,11 @@ msgstr ""
 "དང་ གྲུ་ཟུར་ཉམས་སྲུང་འབད་ནིའི་དོན་ལུ་<b>ཚད་འཛིན་+གདམ་ལྡེ་</b>དང་གཅིག་ཁར་འདྲུད་དགོཔ་དང་ དབུས་ཀྱི་"
 "མཐའ་འཁོར་ཏེ་ཆ་ཚད་འཇལ་ནིའི་དོན་ལུ་<b>Ctrl+Shift</b>དང་གཅིག་ཁར་འདྲུད།"
 
-#: ../src/gradient-drag.cpp:660
+#: ../src/gradient-drag.cpp:672
 msgid " (stroke)"
 msgstr "(སིཊོ་རོག)"
 
-#: ../src/gradient-drag.cpp:663
+#: ../src/gradient-drag.cpp:675
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
@@ -2887,7 +2891,7 @@ msgstr ""
 "སྟེགས་རིས་<b>དབུས་</b> དང་<b>ཆེད་དམིགས་</b>; དེ་ཆེད་དམིགས་སོ་སོ་དབྱེ་ནིའི་དོན་ལུ་ <b>སོར་ལྡེ་</"
 "b>དང་གཅིག་ཁར་འདྲུད།"
 
-#: ../src/gradient-drag.cpp:666
+#: ../src/gradient-drag.cpp:678
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
@@ -2930,9 +2934,9 @@ msgstr "པི་ཊི།"
 msgid "Pixel"
 msgstr "པིག་སེལ།"
 
-#: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:178
-#: ../src/ui/dialog/inkscape-preferences.cpp:181
-#: ../src/ui/dialog/inkscape-preferences.cpp:184
+#: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:179
+#: ../src/ui/dialog/inkscape-preferences.cpp:182
+#: ../src/ui/dialog/inkscape-preferences.cpp:185
 #: ../src/ui/widget/selected-style.cpp:255
 msgid "px"
 msgstr "པི་ཨེགསི།"
@@ -2950,7 +2954,7 @@ msgstr "པི་ཨེགསི།"
 msgid "Percent"
 msgstr "བརྒྱ་ཆ།"
 
-#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:197
+#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:198
 msgid "%"
 msgstr "%"
 
@@ -3261,52 +3265,62 @@ msgstr "སྣག་རྩིས་པང་དེབ་ལཱ་ཡུན་(%�
 msgid "Node or handle drag canceled."
 msgstr "མཐུད་མཚམས་ ཡང་ན་ ཆ་མེད་གཏང་ཡོད་མི་འདྲུད་ནི་དེ་ལེགས་སྐྱོང་འཐབ།"
 
+#: ../src/knotholder.cpp:254
+#, fuzzy
+msgid "Change handle"
+msgstr "གྲུ་བཞི་ནར་མོ་ བསྒྱུར་བཅོས་འབད་"
+
+#: ../src/knotholder.cpp:306
+#, fuzzy
+msgid "Move handle"
+msgstr "ནོཌི་བཤེད་བཟུང་ སྤོ་བཤུད་འབད་"
+
 #: ../src/libnrtype/FontFactory.cpp:358
 msgid "Ignoring font without family that will crash Pango"
 msgstr "རིགས་ཚན་མེད་པར་ཡིག་གཟུགས་སྣང་མེད་སྦེ་བཞག་མི་དེ་གིས་ པང་གོ་བརྡབ་འཁྲུག་གཏང་འོང་།"
 
-#: ../src/main.cpp:200
+#: ../src/main.cpp:198
 msgid "Print the Inkscape version number"
 msgstr "ཨིངཀི་སི་ཀེབ་ལཱ་ཡུན་གྱི་ཨང་གྲངས་དེ་དཔར་བསྐྲུན་འབད།"
 
-#: ../src/main.cpp:205
+#: ../src/main.cpp:203
 msgid "Do not use X server (only process files from console)"
 msgstr "ཨེགསི་སར་བར་ལག་ལེན་མ་འཐབ། (མ་སྒྲོམ་ནང་ལས་ཡིག་སྣོད་ཚུ་རྐྱངམ་ཅིག་ལས་སྦྱོར་འབད།)"
 
-#: ../src/main.cpp:210
+#: ../src/main.cpp:208
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "ཨེག་སར་བར་ལག་ེན་འཐབ་ནི་ལུ་འབད་རྩོལ་བསྐྱེད། ($DISPLAYདེ་གཞི་སྒྲིག་མ་འབད་དེ་འབད་རུང་།) "
 
-#: ../src/main.cpp:215
+#: ../src/main.cpp:213
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "གསལ་བཀོད་འབད་ཡོད་པའི་ཡིག་ཆ་(s)ཁ་ཕྱེ། (ཡིག་རྒྱུན་གྱི་གདམ་ཁ་དེ་གྲངས་ལས་བཏོན་གཏངརུང་བཏུབ།)"
 
-#: ../src/main.cpp:216 ../src/main.cpp:221 ../src/main.cpp:226
-#: ../src/main.cpp:293 ../src/main.cpp:298 ../src/main.cpp:303
-#: ../src/main.cpp:308
+#: ../src/main.cpp:214 ../src/main.cpp:219 ../src/main.cpp:224
+#: ../src/main.cpp:291 ../src/main.cpp:296 ../src/main.cpp:301
+#: ../src/main.cpp:306
 msgid "FILENAME"
 msgstr "ཡིག་སྣོད་མིང་།"
 
-#: ../src/main.cpp:220
+#: ../src/main.cpp:218
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
 "ཡིག་ཆ་(s) དེ་གསལ་བཀོད་འབད་དེ་ཡོད་པའི་ཨའུཊི་པུཊི་ཡིག་སྣོད་ལུ་ དཔར་བསྐྲུན་འབད།(use '| program' "
 "for pipe)"
 
-#: ../src/main.cpp:225
+#: ../src/main.cpp:223
 msgid "Export document to a PNG file"
 msgstr "པི་ཨེན་ཇི་ཡིག་སྣོད་ཅིག་ནང་ལུ་ ཡིག་ཆ་ཕྱིར་འདྲེན་འབད།"
 
-#: ../src/main.cpp:230
+#: ../src/main.cpp:228
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
 msgstr ""
 "ཨེསི་ཝི་ཇི་དེ་བིཊི་མེབ་ནང་ལུ་ཕྱིར་འདྲེན་འབད་ནིའི་དོན་ལུ་ ལག་ལེན་འཐབ་ཡོད་པའི་ཧུམ་ཆ། (སྔོན་སྒྲིག་ ༩༠་)"
 
-#: ../src/main.cpp:231
+#: ../src/main.cpp:229
 msgid "DPI"
 msgstr "ཌི་པི་ཨའི།"
 
-#: ../src/main.cpp:235
+#: ../src/main.cpp:233
 msgid ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
 "corner)"
@@ -3314,19 +3328,19 @@ msgstr ""
 "ཨེསི་ཝི་ཇི་ ལག་ལེན་པའི་ཆ་ཕྲན་ནང་ལུ་ ཕྱིར་འདྲེན་འབད་ཡོད་པའི་མངའ་ཁོངས། (default is the "
 "canvas; 0,0 is lower-left corner)"
 
-#: ../src/main.cpp:236
+#: ../src/main.cpp:234
 msgid "x0:y0:x1:y1"
 msgstr "ཨེགསི་ 0:ཝའི་0:ཨེགསི་ 1:ཝའི་1"
 
-#: ../src/main.cpp:240
+#: ../src/main.cpp:238
 msgid "Exported area is the entire drawing (not canvas)"
 msgstr "ཕྱིར་འདྲེན་འབད་ཡོད་པའི་མངའ་ཁོངས་དེ་པར་རིས་ཧྲིལ་བུ་ཨིན། (འབྲི་གཞི་མེན།)"
 
-#: ../src/main.cpp:245
+#: ../src/main.cpp:243
 msgid "Exported area is the entire canvas"
 msgstr "ཕྱིར་འདྲེན་འབད་ཡོད་པའི་མངའ་ཁོངས་དེ་འབྲི་གཞི་ཧྲིལ་བུ་ཨིན། "
 
-#: ../src/main.cpp:250
+#: ../src/main.cpp:248
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
@@ -3334,96 +3348,96 @@ msgstr ""
 "བིཊི་མེབ་ཕྱིར་འདྲེན་མངའ་ཁོངས་དེ་ ཧྲིལ་ཨང་གི་གནས་གོང་ཐག་ཉེས་ཤོས་ལུ་པར་བཏབ། (ཨེསི་ཝི་ཇི་ ལག་ལེན་པའི་"
 "ཆ་ཕྲན་ནང་ལུ།)"
 
-#: ../src/main.cpp:255
+#: ../src/main.cpp:253
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr "པིག་སེལསི་ནང་ལུ་ཕྱིར་འདྲེན་འབད་ཡོད་པའི་ བིཊི་མེབ་ཀྱི་རྒྱ་ཚད། (overrides export-dpi)"
 
-#: ../src/main.cpp:256
+#: ../src/main.cpp:254
 msgid "WIDTH"
 msgstr "རྒྱ་ཚད།"
 
-#: ../src/main.cpp:260
+#: ../src/main.cpp:258
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr "པིག་སེལསི་ནང་གི་ཕྱིར་འདྲེན་འབད་ཡོད་པའི་ བིཊི་མེབ་གྱི་མཐོ་ཚད།"
 
-#: ../src/main.cpp:261
+#: ../src/main.cpp:259
 msgid "HEIGHT"
 msgstr "མཐོ་ཚད།"
 
-#: ../src/main.cpp:265
+#: ../src/main.cpp:263
 msgid "The ID of the object to export"
 msgstr "ཕྱིར་འདྲེན་འབད་ནི་གི་དངོས་པོའི་ཨའི་ཌི།"
 
-#: ../src/main.cpp:266 ../src/main.cpp:352
+#: ../src/main.cpp:264 ../src/main.cpp:350
 msgid "ID"
 msgstr "ཨའི་ཌི།"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:272
+#: ../src/main.cpp:270
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "དངོས་པོ་རྐྱངམ་ཅིག་ ཕྱིར་འདྲེན-ཨའི་ཌི་དང་གཅིག་ཁར་ཕྱིར་འདྲེན་འབད། གཞན་མི་ཆ་མཉམ་སྦ་བཞག (ཕྱིར་འདྲེན་-"
 "ཨའི་དི་དང་གཅིག་ཁར་རྐྱངམ་ཅིག)"
 
-#: ../src/main.cpp:277
+#: ../src/main.cpp:275
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
 "ཕྱིར་འདྲེན་འབད་བའི་སྐབས་ལུ་ གསོག་འཇོག་འབད་དེ་ཡོད་མི་ཡིག་སྣོད་མིང་དང་ ཌི་པི་ཨའི་བརྡ་མཚོན་ཚུ་ལག་ལེན་"
 "འཐབ། (ཕྱིར་འདྲེན་-ཨའི་དི་དང་གཅིག་ཁར་རྐྱངམ་ཅིག)"
 
-#: ../src/main.cpp:282
+#: ../src/main.cpp:280
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr ""
 "ཕྱིར་འདྲེན་འབད་ཡོད་པའི་བིཏི་མེབ་ཀྱི་རྒྱབ་གཞིའི་ཚོས་གཞི། (ཨེསི་ཝི་ཇི་གང་རུང་- རྒྱབ་སྐྱོར་ཡོད་པའི་ཚོས་གཞི་ཅན་"
 "གྱི་ཡིག་རྒྱུན།)"
 
-#: ../src/main.cpp:283
+#: ../src/main.cpp:281
 msgid "COLOR"
 msgstr "ཚོས་གཞི།"
 
-#: ../src/main.cpp:287
+#: ../src/main.cpp:285
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr ""
 "ཕྱིར་འདྲེན་འབད་ཡོད་པའི་བིཊི་མེབ་ཀྱི་རྒྱབ་གཞིའི་དྭངས་སྒྲིབ། (༠་༠ལས་༡་༠་ཚུན་དང་ ཡང་ན་ ༡་ལས་ ༢༥༥་ཚུན་"
 "ལུ།)"
 
-#: ../src/main.cpp:288
+#: ../src/main.cpp:286
 msgid "VALUE"
 msgstr "གནས་གོང་།"
 
-#: ../src/main.cpp:292
+#: ../src/main.cpp:290
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 "ཡིག་སྣོད་ཉག་རྐྱང་ལུ་ ཡིག་ཆ་ཕྱིར་འདྲེན་འབད། (སི་ཌི་པོ་ཌི་ ཡང་ན་ ཨིངཀི་སིཀེབ་ མིང་གི་བར་སྟོང་མེད།)"
 
-#: ../src/main.cpp:297
+#: ../src/main.cpp:295
 msgid "Export document to a PS file"
 msgstr "པི་ཨེསི་ ཡིག་སྣོད་ཅིག་ལུ་ཡིག་ཆ་ཕྱིར་འདྲེན་འབད།"
 
-#: ../src/main.cpp:302
+#: ../src/main.cpp:300
 msgid "Export document to an EPS file"
 msgstr "ཨི་པི་་ཨེསི་ཡིག་སྣོད་ཅིག་ལུ་ ཡིག་ཆ་ཕྱིར་འདྲེན་འབད།"
 
-#: ../src/main.cpp:307
+#: ../src/main.cpp:305
 msgid "Export document to a PDF file"
 msgstr "པི་ཌི་ཨེཕ་ཡིག་སྣོད་ཕྱིར་ལུ་ ཡིག་ཆ་ཕྱིར་འདྲེན་འབད་"
 
-#: ../src/main.cpp:312
+#: ../src/main.cpp:310
 msgid "Convert text object to paths on export (EPS)"
 msgstr "ཕྱིར་འདྲེན་གུར་ ཚིག་ཡིག་དངོས་པོ་དེ་འགྲུལ་ལམ་ཚུ་ལུ་གཞི་བསྒྱུར་འབད། (ཨི་པི་་ཨེསི།)"
 
-#: ../src/main.cpp:317
+#: ../src/main.cpp:315
 msgid "Embed fonts on export (Type 1 only) (EPS)"
 msgstr ""
 
-#: ../src/main.cpp:322
+#: ../src/main.cpp:320
 msgid "Export files with the bounding box set to the page size (EPS)"
 msgstr "ཡིག་སྣོད་ཚུ་བོན་ཌིང་སྒྲོམ་ཆ་ཚན་དང་གཅིག་ཁར་ ཤོག་ལེབ་ཀྱི་ཚད་དང་དྲན་འདྲ་ཕྱིར་འདྲེན་འབད།"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:328
+#: ../src/main.cpp:326
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -3432,7 +3446,7 @@ msgstr ""
 "དཔྱད་-ཨའི་ཌི་ དང་གཅིག་ཁར་འདྲི་དཔྱད་འབད། "
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:334
+#: ../src/main.cpp:332
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -3441,7 +3455,7 @@ msgstr ""
 "དཔྱད་-ཨའི་ཌི་ དང་གཅིག་ཁར་འདྲི་དཔྱད་འབད། "
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:340
+#: ../src/main.cpp:338
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
@@ -3450,7 +3464,7 @@ msgstr ""
 "ཨའི་ཌི་ དང་གཅིག་ཁར་འདྲི་དཔྱད་འབད། "
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:346
+#: ../src/main.cpp:344
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
@@ -3458,26 +3472,26 @@ msgstr ""
 "པར་རིས་ཀྱི་མཐོ་ཚད་དེ་དང་འདྲི་དཔྱད་འབད་ ཡང་ན་ གསལ་བཀོད་འབད་དེ་ཡོད་པ་ཅིན་དངོས་པོའི་ --འདྲི་དཔྱད་-"
 "ཨའི་ཌི་ དང་གཅིག་ཁར་འདྲི་དཔྱད་འབད། "
 
-#: ../src/main.cpp:351
+#: ../src/main.cpp:349
 msgid "The ID of the object whose dimensions are queried"
 msgstr "རྒྱ་ཁྱོན་འདྲི་དཔྱད་འབད་ཡོད་པའི་དངོས་པོ་དེ་གི་ཨའི་ཌི།"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:357
+#: ../src/main.cpp:355
 msgid "Print out the extension directory and exit"
 msgstr "རྒྱ་བསྐྱེད་ཀྱི་སྣོད་ཐོ་དེ་དཔར་བསྐྲུན་འབད་ཞིནམ་ལས་ཕྱིར་ཐོན་འབད།"
 
-#: ../src/main.cpp:362
+#: ../src/main.cpp:360
 msgid "Show given files one-by-one, switch to next on any key/mouse event"
 msgstr ""
 "གྲ་སྒྲིག་ཡོད་མི་ཡིག་སྣོད་ཚུ་རེ་རེ་བཞིན་དུ་སྟོནམ་ཞིནམ་ལས་ ཤུལ་མམ་གྱི་ལྡེ་མིག་གང་རུང་/ མའུསུ་བྱུང་ལས་ལུ་སོར་"
 "བསྒྱུར་འབད།"
 
-#: ../src/main.cpp:367
+#: ../src/main.cpp:365
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "ཡིག་ཆ་དེ་གི་ཌེཕསི་ དབྱེ་ཚན་(s)ནང་ལས་ལག་ལེན་མ་འཐབ་པར་ཡོད་མི་ངོས་ཚིག་ཚུ་རྩ་བསྐྲད་གཏང་།"
 
-#: ../src/main.cpp:559
+#: ../src/main.cpp:557
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -3567,7 +3581,7 @@ msgstr "གྲོགས་རམ། (_H)"
 msgid "Tutorials"
 msgstr "སློབ་སྟོན་པ་ཚུ།"
 
-#: ../src/node-context.cpp:361
+#: ../src/node-context.cpp:366
 msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
@@ -3575,20 +3589,20 @@ msgstr ""
 "<b>ཚད་འཛིན་</b>: ནོཌི་གི་དབྱེ་བ་སོར་སྟོན་འབད། བཤེད་བཟུང་གི་གྲུ་ཟུར་དཔར་བཏབ། ཐད་སྙོམས/ཀེར་ཕྲང་སྦེ་"
 "སྤ་བཤུད་འབད།<b>Ctrl+Alt</b>: བཤེད་བཟུང་ཚུ་བརྒྱུད་དེ་སྤོ་བཤུད་འབད།"
 
-#: ../src/node-context.cpp:362
+#: ../src/node-context.cpp:367
 msgid ""
 "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 "<b>སོར་ལྡེ་</b>: ནོཌི་སེལ་འཐུ་འབད་ནི་སོར་སྟོན་འབད། དཔར་བཏབ་ནི་ལྕོགས་མིན་ཅད་བཟོ། བཤེད་བཟུང་གཉིས་"
 "ཆ་རང་བསྒྱིར།"
 
-#: ../src/node-context.cpp:363
+#: ../src/node-context.cpp:368
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 "<b>གདམ་ལྡེ་</b>: བཤེད་བཟུང་གི་རིང་ཚད་བསྡམ་བཞག <b>ཚད་འཛིན་+གདམ་ལྡེ་</b>: བཤེད་བཟུང་ཚུ་བརྒྱུད་"
 "དེ་སྤོ་བཤུད་འབད།"
 
-#: ../src/node-context.cpp:647
+#: ../src/node-context.cpp:670
 msgid "Drag curve"
 msgstr "གུག་གུགཔ་ འདྲུད་"
 
@@ -3604,7 +3618,7 @@ msgstr "ནོཌིསི་ཚུ་ ཀེར་ཕྲང་སྦེ་ ས�
 msgid "Move nodes horizontally"
 msgstr "ནོཌིསི་ཚུ་ ཐདསྙོམས་སྦེ་ སྤོ་བཤུད་འབད་"
 
-#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252 ../src/nodepath.cpp:3031
+#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252 ../src/nodepath.cpp:3042
 msgid "Move nodes"
 msgstr "ནོཌི་ སྤོ་བཤུད་འབད་"
 
@@ -3633,40 +3647,40 @@ msgstr "ནོཌི་ ཁ་སྐོང་རྐྱབས་"
 msgid "Add node"
 msgstr "ནོཌིསི་ ཁ་སྐོང་རྐྱབས་"
 
-#: ../src/nodepath.cpp:1678
+#: ../src/nodepath.cpp:1680
 msgid "Break path"
 msgstr "འགྲུལ་ལམ་ བཏོག"
 
-#: ../src/nodepath.cpp:1720 ../src/nodepath.cpp:1732 ../src/nodepath.cpp:1819
-#: ../src/nodepath.cpp:1831
+#: ../src/nodepath.cpp:1722 ../src/nodepath.cpp:1737 ../src/nodepath.cpp:1824
+#: ../src/nodepath.cpp:1839
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "མཐུད་ནིའི་དོན་ལུ་ ཁྱོད་ལུ་<b>མཇུག་གི་མཐུད་མཚམས་གཉིས་</b>སེལ་འཐུ་འབད་དེ་དགོཔ་ཨིན།"
 
-#: ../src/nodepath.cpp:1753
+#: ../src/nodepath.cpp:1758
 msgid "Close subpath"
 msgstr "ཡན་ལག་འགྲུལ་ལམ་ ཁ་བསྡམ་"
 
-#: ../src/nodepath.cpp:1805
+#: ../src/nodepath.cpp:1810
 msgid "Join nodes"
 msgstr "ནོཌིསི་ མཐུད་"
 
-#: ../src/nodepath.cpp:1852
+#: ../src/nodepath.cpp:1860
 msgid "Close subpath by segment"
 msgstr "ཆ་བགོས་ཐོག་ལས་ ཡན་ལག་འགྲུལ་ལམ་ཁ་སྡམས་"
 
-#: ../src/nodepath.cpp:1906
+#: ../src/nodepath.cpp:1914
 msgid "Join nodes by segment"
 msgstr "ཆ་བགོས་ཀྱིས་ ནོཌིསི་མཐུད་"
 
-#: ../src/nodepath.cpp:2034 ../src/nodepath.cpp:2071 ../src/nodepath.cpp:2075
+#: ../src/nodepath.cpp:2042 ../src/nodepath.cpp:2079 ../src/nodepath.cpp:2083
 msgid "Delete nodes"
 msgstr "ནོཌིསི་ བཏོན་གཏང་"
 
-#: ../src/nodepath.cpp:2036
+#: ../src/nodepath.cpp:2044
 msgid "Delete nodes preserving shape"
 msgstr "དབྱིབས་ཉམས་སྲུང་འབད་དེ་ ནོཌིསི་བཏོན་གཏང་་"
 
-#: ../src/nodepath.cpp:2095 ../src/nodepath.cpp:2109
+#: ../src/nodepath.cpp:2103 ../src/nodepath.cpp:2117
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3674,31 +3688,31 @@ msgstr ""
 "<b>འགྲུལ་ལམ་གུར་ བར་ན་གི་ཆ་གོས་བཏོན་གཏང་ནིའི་དོན་ལུ་ མཇུག་གི་ས་ཚིག་གི་མཐུད་མཚམས་མེན་མི་གཉིས་</"
 "b> སེལ་འཐུ་འབད།"
 
-#: ../src/nodepath.cpp:2205
+#: ../src/nodepath.cpp:2213
 msgid "Cannot find path between nodes."
 msgstr "མཐུད་མཚམས་ཚུ་གི་བར་ན་ལུ་ འགྲུལ་ལམ་ཚའོལ་མི་འཐོབ།"
 
-#: ../src/nodepath.cpp:2234
+#: ../src/nodepath.cpp:2245
 msgid "Delete segment"
 msgstr "ཆ་བགོས་ བཏོན་གཏང་"
 
-#: ../src/nodepath.cpp:2256
+#: ../src/nodepath.cpp:2267
 msgid "Change segment type"
 msgstr "ཆ་བགོས་དབྱེ་བ་ བསྒྱུར་བཅོས་རྐྱབས་"
 
-#: ../src/nodepath.cpp:2272 ../src/nodepath.cpp:2989
+#: ../src/nodepath.cpp:2283 ../src/nodepath.cpp:3000
 msgid "Change node type"
 msgstr "ནོཌི་དབྱེ་བ་ བསྒྱུར་བཅོས་འབད་"
 
-#: ../src/nodepath.cpp:3264
+#: ../src/nodepath.cpp:3275
 msgid "Retract handle"
 msgstr "བཤེད་བཟུང་སླར་རྙེད་འབད་"
 
-#: ../src/nodepath.cpp:3313
+#: ../src/nodepath.cpp:3324
 msgid "Move node handle"
 msgstr "ནོཌི་བཤེད་བཟུང་ སྤོ་བཤུད་འབད་"
 
-#: ../src/nodepath.cpp:3454
+#: ../src/nodepath.cpp:3465
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3709,19 +3723,19 @@ msgstr ""
 "འཛིན་</b>དང་གཅིག་ཁར།  རིང་ཚད་བསྡམ་བཞག་ནིའི་དོན་ལུ་ <b>གདམ་ལྡེ་</b>དང་གཅིག་ཁར། བཤེད་བཟུང་"
 "གཉིས་ཆ་རང་བསྒྱིར་ནིའི་དོན་ལུ་ <b>སོར་ལྡེ་དང་གཅིག་ཁར་</b>"
 
-#: ../src/nodepath.cpp:3632
+#: ../src/nodepath.cpp:3643
 msgid "Rotate nodes"
 msgstr "ནོཌིསི་ བསྒྱིར་"
 
-#: ../src/nodepath.cpp:3757
+#: ../src/nodepath.cpp:3768
 msgid "Scale nodes"
 msgstr "ནོཌིསི་ ཚད་འཇལ་"
 
-#: ../src/nodepath.cpp:3804
+#: ../src/nodepath.cpp:3815
 msgid "Flip nodes"
 msgstr "ནོཌིསི་ མྱུར་ལྷོག་འབད་"
 
-#: ../src/nodepath.cpp:3969
+#: ../src/nodepath.cpp:3980
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3731,42 +3745,42 @@ msgstr ""
 "<b>ཚད་འཛིན་+གདམ་ལྡེ་</b>དང་གཅིག་ཁར་འདྲུད།"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4193
+#: ../src/nodepath.cpp:4204
 msgid "end node"
 msgstr "མཇུག་གི་མཐུད་མཚམས།"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4198
+#: ../src/nodepath.cpp:4209
 msgid "cusp"
 msgstr "རྣོ་ཅན།"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4201
+#: ../src/nodepath.cpp:4212
 msgid "smooth"
 msgstr "ཧུམ་ཁྱུག་ཁྱུ།"
 
-#: ../src/nodepath.cpp:4203
+#: ../src/nodepath.cpp:4214
 msgid "symmetric"
 msgstr "མཛེས་སྙོམས།"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4209
+#: ../src/nodepath.cpp:4220
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "མཇུག་གི་མཐུད་མཚམས། རི་ཊེག་འབད་ཡོད་མི་ལེགས་སྐྱོང་འཐབ། (རྒྱ་བསྐྱེད་འབད་ནིའི་དོན་ལུ་<b>སོར་ལྡེ་</b>དང་"
 "གཅིག་ཁར་འདྲུད།)"
 
-#: ../src/nodepath.cpp:4211
+#: ../src/nodepath.cpp:4222
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "བཤེད་བཟུང་གཅིག་རི་ཊེག་འབད་ནུག  (རྒྱ་བསྐྱེད་འབད་ནིའི་དོན་ལུ་ <b>སོར་ལྡེ་</b> དང་གཅིག་ཁར་འདྲུད།)"
 
-#: ../src/nodepath.cpp:4214
+#: ../src/nodepath.cpp:4225
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "བཤེད་བཟུང་གཉིས་ཆ་རང་རི་ཏེག་འབད་ནུག (རྒྱ་བསྐྱེད་འབད་ནིའི་དོན་ལུ་ <b>སོར་ལྡེ་</b>དང་གཅིག་ཁར་འདྲུད།)"
 
-#: ../src/nodepath.cpp:4226
+#: ../src/nodepath.cpp:4237
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3776,18 +3790,18 @@ msgstr ""
 "<b>ནོཌི་ཚུ་སྤོ་བཤུད་འབད་ནིའིདོན་ལུ་ </b> ལྡེ་མིག་ཚུ་ལུ་མདའ་རྟགས་བཀལ། <b>ཆ་ཚད་འཇལ་ནིའི་དོན་ལུ་</"
 "b> &lt; &gt;<b>[ ]</b> བསྒྱིར་ནིའི་དོན་ལུ།"
 
-#: ../src/nodepath.cpp:4227
+#: ../src/nodepath.cpp:4238
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b> ནོཌི་ ཡང་ན་ དེའི་བཤེད་བཟུང་དེ་</b> འདྲུད། <b>མདའ་རྟགས</b> ནོཌི་སྤོ་བཤུད་འབད་ནིའི་དོན་ལུ་ལྡེ་"
 "མིག་ཚུ།"
 
-#: ../src/nodepath.cpp:4250 ../src/nodepath.cpp:4262
+#: ../src/nodepath.cpp:4261 ../src/nodepath.cpp:4273
 msgid "Select a single object to edit its nodes or handles."
 msgstr ""
 "དངོས་པོ་རྐྱང་པའི་ ནོཌི་ ཡང་ན་ བཤེད་བཟུང་ཚུ་ཞུན་དག་འབད་ནིའི་དོན་ལུ་ དངོས་པོ་རྐྱང་པ་ཅིག་སེལ་འཐུ་འབད།"
 
-#: ../src/nodepath.cpp:4254
+#: ../src/nodepath.cpp:4265
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3802,18 +3816,18 @@ msgstr[1] ""
 "<b>0</b> out of <b>%i</b> ནོཌིསི་སེལ་འཐུ་འབད་དེ་ཡོདཔ། <b>ཨེད་གཏང་།</b>, <b>སོར་ལྡེ་+ཨེབ་"
 "གཏང་</b>, ཡང་ན་ <b>སེལ་འཐུ་འབད་ནིའི་དོན་ལུ་</b> ནོཌིསི་གི་མཐའ་སྐོར་སྟེ་འདྲུད།"
 
-#: ../src/nodepath.cpp:4260
+#: ../src/nodepath.cpp:4271
 msgid "Drag the handles of the object to modify it."
 msgstr "འདི་ལེགས་བཅོས་འབད་ནིའི་དོན་ལུ་ དངོས་པོ་ཚུ་གི་བཤེད་བཟུང་ཚུ་འདྲུད།"
 
-#: ../src/nodepath.cpp:4268
+#: ../src/nodepath.cpp:4279
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> of <b>%i</b> ནོཌི་ཚུ་སེལ་འཐུ་འབད་ཡོདཔ།%s. %s."
 msgstr[1] "<b>%i</b> of <b>%i</b> ནོཌི་ཚུ་སེལ་འཐུ་འབད་ཡོདཔ། %s. %s."
 
-#: ../src/nodepath.cpp:4275
+#: ../src/nodepath.cpp:4286
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3826,7 +3840,7 @@ msgstr[1] ""
 "<b>%i</b> གི་<b>%i</b>ནོཌི་ཚུ་<b>%i</b> of <b>%i</b> ནང་ལུ་སེལ་འཐུ་འབད་དེ་ཡོདཔ།ཡན་ལག་"
 "འགྲུལ་ལམ་%s."
 
-#: ../src/nodepath.cpp:4281
+#: ../src/nodepath.cpp:4292
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -4293,74 +4307,74 @@ msgstr "ཧེ་མམ་གྱི་བང་རིམ་ལུ་མར་ཕ
 msgid "No more layers below."
 msgstr "འོག་ལུ་བང་རིམ་དེ་ལས་ལྷག་སྟེ་མེད།"
 
-#: ../src/selection-chemistry.cpp:1477
+#: ../src/selection-chemistry.cpp:1481
 msgid "Remove transform"
 msgstr "བཟོ་བསྒྱུར་རྩ་བསྐྲད་གཏང་"
 
-#: ../src/selection-chemistry.cpp:1586
+#: ../src/selection-chemistry.cpp:1590
 msgid "Rotate 90&#176; CW"
 msgstr "༩༠ ལུ་བསྒྱིར་&#༡༧༦་ སི་ཌབ་ལུ་"
 
-#: ../src/selection-chemistry.cpp:1614
+#: ../src/selection-chemistry.cpp:1618
 msgid "Rotate 90&#176; CCW"
 msgstr "༩༠ ལུ་བསྒྱིར་&#༡༧༦་ སི་སི་ཌབ་ལུ་"
 
-#: ../src/selection-chemistry.cpp:1632 ../src/seltrans.cpp:380
+#: ../src/selection-chemistry.cpp:1636 ../src/seltrans.cpp:380
 #: ../src/ui/dialog/transformation.cpp:666
 msgid "Rotate"
 msgstr "བསྒྱིར་བ་"
 
-#: ../src/selection-chemistry.cpp:1661
+#: ../src/selection-chemistry.cpp:1665
 msgid "Rotate by pixels"
 msgstr "པིག་སེལསི་གིས་འབད་བསྒྱིར་"
 
-#: ../src/selection-chemistry.cpp:1687 ../src/seltrans.cpp:377
+#: ../src/selection-chemistry.cpp:1691 ../src/seltrans.cpp:377
 #: ../src/ui/dialog/transformation.cpp:647
 msgid "Scale"
 msgstr "ཚད་ཤིང་"
 
-#: ../src/selection-chemistry.cpp:1706
+#: ../src/selection-chemistry.cpp:1710
 msgid "Scale by whole factor"
 msgstr "ཆ་རྐྱེན་ཧྲིལ་བུམ་ ཚད་འཇལ་"
 
-#: ../src/selection-chemistry.cpp:1722
+#: ../src/selection-chemistry.cpp:1726
 msgid "Move vertically"
 msgstr "ཀེར་ཕྲང་སྦེ་ སྤོ་བཤུད་འབད་"
 
-#: ../src/selection-chemistry.cpp:1725
+#: ../src/selection-chemistry.cpp:1729
 msgid "Move horizontally"
 msgstr "ཐད་སྙོམས་སྦེ་ སྤོ་བཤུད་འབད་"
 
-#: ../src/selection-chemistry.cpp:1728 ../src/selection-chemistry.cpp:1756
+#: ../src/selection-chemistry.cpp:1732 ../src/selection-chemistry.cpp:1760
 #: ../src/seltrans.cpp:374 ../src/ui/dialog/transformation.cpp:595
 msgid "Move"
 msgstr "སྤོ་བཤུད་"
 
-#: ../src/selection-chemistry.cpp:1750
+#: ../src/selection-chemistry.cpp:1754
 msgid "Nudge vertically by pixels"
 msgstr "པིག་སེལསི་གིས་ ཀེར་ཕྲང་སྦེ་འཕུལ་"
 
-#: ../src/selection-chemistry.cpp:1753
+#: ../src/selection-chemistry.cpp:1757
 msgid "Nudge horizontally by pixels"
 msgstr "པིག་སེལསི་གིས་ ཐད་སྙོམས་སྦེ་འཕུལ་"
 
-#: ../src/selection-chemistry.cpp:2017 ../src/selection-describer.cpp:65
+#: ../src/selection-chemistry.cpp:2021 ../src/selection-describer.cpp:65
 msgid "Clone"
 msgstr "ངོ་འདྲ།"
 
-#: ../src/selection-chemistry.cpp:2034
+#: ../src/selection-chemistry.cpp:2038
 msgid "Select a <b>clone</b> to unlink."
 msgstr "འབྲེལ་མཐུད་མ་འབད་བར་བཞག་ནིའི་དོན་ལུ་ <b>ངོ་འདྲ་</b>ཅིག་སེལ་འཐུ་འབད།"
 
-#: ../src/selection-chemistry.cpp:2065
+#: ../src/selection-chemistry.cpp:2069
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "སེལ་འཐུ་དེ་ནང་ལུ་<b>འབྲེལ་མཐུད་མ་འབད་བར་བཞག་ནིའི་དོན་ལུ་ངོ་འདྲ་མིན་འདུག</b>"
 
-#: ../src/selection-chemistry.cpp:2069
+#: ../src/selection-chemistry.cpp:2073
 msgid "Unlink clone"
 msgstr "ངོ་འདྲ་འབྲེལ་མཐུད་བཤོལ་"
 
-#: ../src/selection-chemistry.cpp:2083
+#: ../src/selection-chemistry.cpp:2087
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -4371,7 +4385,7 @@ msgstr ""
 "གུའི་ཚིག་ཡིག་</b>ཅིག་སེལ་འཐུ་འབད། གཞི་ཁྲམ་ལུ་འགྱོ་ནིའི་དོན་ལུ་ <b>འབབ་རྒྱུན་ཚིག་ཡིག་</b>ཅིག་སེལ་འཐུ་"
 "འབད།"
 
-#: ../src/selection-chemistry.cpp:2106
+#: ../src/selection-chemistry.cpp:2110
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -4379,7 +4393,7 @@ msgstr ""
 "སེལ་འཐུ་འབད་ནིའི་དོན་ལུ་ དངོས་པོ་<b>འཛོལ་མི་འཐོབ།</b> (རང་རྐྱང་ངོ་འདྲ། དཔར་ལེན། ཚིག་ཡིག་འགྲུལ་"
 "ལམ། འབབ་རྒྱུན་ཚིག་ཡིག་ཚུ་ཨིན་ན? )"
 
-#: ../src/selection-chemistry.cpp:2112
+#: ../src/selection-chemistry.cpp:2116
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
@@ -4387,71 +4401,71 @@ msgstr ""
 "ཁྱོད་ཀྱིས་སེལ་འཐུ་འབད་ནི་ལུ་འབད་རྩོལ་བསྐྱེད་མི་དངོས་པོ་དེ་ <b>མཐོང་མི་ཚུགས།</b> (འ་ནི་དེ་ &lt;"
 "defs&gt;ནང་ལུ་ཡོད།)"
 
-#: ../src/selection-chemistry.cpp:2139
+#: ../src/selection-chemistry.cpp:2143
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "དཔེ་གཞི་ལུ་གཞི་བསྒྱུར་འབད་ནིའི་དོན་ལུ་ <b>དངོས་པོ་(s)</b>སེལ་འཐུ་འབད།"
 
-#: ../src/selection-chemistry.cpp:2221
+#: ../src/selection-chemistry.cpp:2225
 msgid "Objects to pattern"
 msgstr "དཔེ་གཞི་ལུ་དངོས་པོ་ཚུ་"
 
-#: ../src/selection-chemistry.cpp:2237
+#: ../src/selection-chemistry.cpp:2241
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "ནང་ལས་དངོས་པོ་ཚུ་ཕྱིར་འདོན་འབད་ནིའི་དོན་ལུ་ <b>དཔེ་གཞི་བཀང་ནི་དང་གཅིག་ཁར་</b>དངོས་པོ་ཅིག་སེལ་"
 "འཐུ་འབད།"
 
-#: ../src/selection-chemistry.cpp:2290
+#: ../src/selection-chemistry.cpp:2294
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "<b>སེལ་འཐའི་དེ་ནང་ལུ་</b>དཔེ་གཞི་ག་གིས་ཡང་མི་བཀང་པས།"
 
-#: ../src/selection-chemistry.cpp:2293
+#: ../src/selection-chemistry.cpp:2297
 msgid "Pattern to objects"
 msgstr "དངོས་པོ་ཚུ་ལུ་ དཔེ་གཞི་"
 
-#: ../src/selection-chemistry.cpp:2378
+#: ../src/selection-chemistry.cpp:2382
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "བིཊི་མེབ་འདྲ་དཔར་བཟོ་ནིའི་དོན་ལུ་ <b>དངོས་པོ་(s)</b>སེལ་འཐུ་འབད།"
 
-#: ../src/selection-chemistry.cpp:2537
+#: ../src/selection-chemistry.cpp:2541
 msgid "Create bitmap"
 msgstr "བིཊི་མེཔ་ གསར་བསྐྲུན་འབད་"
 
-#: ../src/selection-chemistry.cpp:2569
+#: ../src/selection-chemistry.cpp:2573
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 "ནང་ལས་འཛིན་པང་འགྲུལ་ལམ་ ཡང་ན་ གདོང་ཁེབས་གསར་བསྐརུན་འབད་ནིའི་དོན་ལུ་ <b>དངོས་པོ་(s)</b>སེལ་"
 "འཐུ་འབད།"
 
-#: ../src/selection-chemistry.cpp:2572
+#: ../src/selection-chemistry.cpp:2576
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 "ལུ་འཛིན་པང་འགྲུལ་ལམ་ ཡང་ན་ གདོང་ཁེབས་མཇུག་སྤྱོད་འབད་ནིའི་དོན་ལུ་ གདོང་ཁེབས་དངོས་པོ་དང་<b>དངོས་པོ་"
 "(s)</b>སེལ་འཐུ་འབད།"
 
-#: ../src/selection-chemistry.cpp:2670
+#: ../src/selection-chemistry.cpp:2674
 msgid "Set clipping path"
 msgstr "འགྲུལ་ལམ་བཏོག་བཏོགཔ་ གཞི་སྒྲིག་འབད་"
 
-#: ../src/selection-chemistry.cpp:2672
+#: ../src/selection-chemistry.cpp:2676
 msgid "Set mask"
 msgstr "གདོང་ཁེབས་ གཞི་སྒྲིག་འབད་"
 
-#: ../src/selection-chemistry.cpp:2685
+#: ../src/selection-chemistry.cpp:2689
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 "ནང་ལས་ འཛིན་པང་འགྲུལ་ལམ་ ཡང་ན་ གདོང་ཁེབས་ རྩ་བསྐྲད་གཏང་ནིའི་དོན་ལུ་<b>ཚིག་ཡིག་(ཚུ་)</b> སེལ་"
 "འཐུ་འབད།"
 
-#: ../src/selection-chemistry.cpp:2753
+#: ../src/selection-chemistry.cpp:2757
 msgid "Release clipping path"
 msgstr "འགྲུལ་ལམ་བཏོག་བཏོགཔ་ འཛིན་གྲོལ་འབད་"
 
-#: ../src/selection-chemistry.cpp:2755
+#: ../src/selection-chemistry.cpp:2759
 msgid "Release mask"
 msgstr "གདོང་ཁེབས་ འཛིན་གྲོལ་འབད་"
 
-#: ../src/selection-chemistry.cpp:2799
+#: ../src/selection-chemistry.cpp:2803
 msgid "Fit page to selection"
 msgstr "སེལ་འཐུ་འབད་ནི་གི་དོན་ལུ་ ཤོག་ལེབ་ཚུད་སྒྲིག་འབད་"
 
@@ -4465,7 +4479,7 @@ msgstr "སྒོར་ཐིག"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:355 ../src/verbs.cpp:2204
+#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2204
 msgid "Ellipse"
 msgstr "སྒོང་དབྱིབས།"
 
@@ -4495,7 +4509,7 @@ msgstr "པོ་ལ་ཡིན།"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
-#: ../src/ui/dialog/inkscape-preferences.cpp:352 ../src/verbs.cpp:2202
+#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2202
 msgid "Rectangle"
 msgstr "གྲུ་བཞི་ནར་མོ།"
 
@@ -4505,13 +4519,13 @@ msgstr "པར་ལེན་འགྲུལ་ལམ།"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
-#: ../src/ui/dialog/inkscape-preferences.cpp:361 ../src/verbs.cpp:2208
+#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2208
 msgid "Spiral"
 msgstr "སྒྲིལ།"
 
 #. star
 #: ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:358 ../src/verbs.cpp:2206
+#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2206
 msgid "Star"
 msgstr "སྐར་མ།"
 
@@ -4757,23 +4771,19 @@ msgstr "འབབ་རྒྱུན་ལུང་ཕྱོགས།"
 msgid "Flow excluded region"
 msgstr "འབབ་རྒྱུན་གྲངས་སུ་མ་བཙུགས་པར་ཡོད་མི་ལུང་ཕྱོགས།"
 
-#: ../src/sp-flowtext.cpp:356
+#: ../src/sp-flowtext.cpp:369
 #, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
 msgstr[0] "<b>འབབ་རྒྱུན་འབད་ཡོད་པའི་ཚིག་ཡིག</b>(%d ཡིག་འབྲུ་ཚུ།)"
 msgstr[1] "<b>འབབ་རྒྱུན་འབད་ཡོད་པའི་ཚིག་ཡིག</b>(%d ཡིག་འབྲུ་ཚུ།)"
 
-#: ../src/sp-flowtext.cpp:358
+#: ../src/sp-flowtext.cpp:371
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
 msgstr[0] "<b>འབྲེལ་མཐུད་ཅན་གྱི་འབབ་རྒྱུན་འབད་ཡོད་པའི་ཚིག་ཡིག་</b> (%d ཡིག་འབྲུ་ཚུ།)"
 msgstr[1] "<b>འབྲེལ་མཐུད་ཅན་གྱི་འབབ་རྒྱུན་འབད་ཡོད་པའི་ཚིག་ཡིག་</b> (%d ཡིག་འབྲུ་ཚུ།)"
-
-#: ../src/sp-flowtext.cpp:617
-msgid "Convert flowed text to text"
-msgstr "འབབ་རྒྱུན་འབད་ཡོད་པའི་ཚིག་ཡིག་འདི་ཚིག་ཡིག་ལུ་ གཞི་བསྒྱུར་འབད་"
 
 #: ../src/sp-guide.cpp:287
 msgid "vertical guideline"
@@ -4953,12 +4963,18 @@ msgstr "སྡེ་ཚན་"
 msgid "Cut path"
 msgstr "འགྲུལ་ལམ་བཏོག་"
 
-#: ../src/splivarot.cpp:110
+#: ../src/splivarot.cpp:111
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
 msgstr ""
 "བུ་ལིན་བཀོལ་སྤྱོད་ཅིག་ལཱ་འགན་འགྲུབ་ནིའི་དོན་ལུ་ <b>ཉུང་ཤོས་རང་འགྲུལ་ལམ་གཉིས་</b>སེལ་འཐུ་འབད།"
 
-#: ../src/splivarot.cpp:116
+#: ../src/splivarot.cpp:115
+#, fuzzy
+msgid "Select <b>at least 1 path</b> to perform a boolean union."
+msgstr ""
+"བུ་ལིན་བཀོལ་སྤྱོད་ཅིག་ལཱ་འགན་འགྲུབ་ནིའི་དོན་ལུ་ <b>ཉུང་ཤོས་རང་འགྲུལ་ལམ་གཉིས་</b>སེལ་འཐུ་འབད།"
+
+#: ../src/splivarot.cpp:121
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path "
 "cut."
@@ -4966,7 +4982,7 @@ msgstr ""
 "ཁྱད་པར་ ཨེགསི་ཨོ་ཨཱར་ སྡེ་ཚན་ ཡང་ན་ འགྲུལ་ལམ་བཏོག་ནི་ཚུ་ ལས་འགན་འགྲུབ་ནིའི་དོན་ལུ་ <b>འགྲུལ་ལམ་"
 "གཉིས་ཏག་ཏག་</b> སེལ་འཐུ་འབད།"
 
-#: ../src/splivarot.cpp:133 ../src/splivarot.cpp:148
+#: ../src/splivarot.cpp:138 ../src/splivarot.cpp:153
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
@@ -4974,72 +4990,72 @@ msgstr ""
 "ཁྱད་པར་ ཨེགསི་ཨོ་ཨཱར་ སྡེ་ཚན་ ཡང་ན་ འགྲུལ་ལམ་བཏོག་ནི་ ཚུ་གི་དོན་ལུ་ སེལ་འཐུ་འབད་ཡོད་པའི་དངོས་པོ་ཚུ་"
 "གི་<b>ཛེཊི་-གོ་རིམ་</b>དེ་ གཏན་འབེབས་བཟོ་མི་ཚུགས་ནི་མས།"
 
-#: ../src/splivarot.cpp:178
+#: ../src/splivarot.cpp:183
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "དངོས་པོ་ཚུ་གི་ནང་ལས་ཅིག་ <b>འགྲུལ་ལམ་མེན་པས་</b> བུ་ལིན་བཀོལ་སྤྱོད་ལཱ་འགན་འགྲུབ་མི་ཚུགས།"
 
-#: ../src/splivarot.cpp:571
+#: ../src/splivarot.cpp:590
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr ""
 "སི་ཊོཀ་འདི་འགྲུལ་ལམ་ལུ་གཞི་བསྒྱུར་འབད་ནི་གི་དོན་ལས་  <b>སི་ཊོཀཌི་འགྲུལ་ལམ་(ཚུ་)</b> སེལ་འཐུ་འབད་"
 
-#: ../src/splivarot.cpp:853
+#: ../src/splivarot.cpp:872
 msgid "Convert stroke to path"
 msgstr "སི་ཊོཀ་འདི་ འགྲུལ་ལམ་ལུ་གཞི་བསྒྱུར་འབད་"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:856
+#: ../src/splivarot.cpp:875
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "སེལ་འཐུ་ནང་ <b>སི་ཊོཀཌི་འགྲུལ་ལམ་ཚུ་མེད་</b>"
 
-#: ../src/splivarot.cpp:940
+#: ../src/splivarot.cpp:959
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "སེལ་འཐུ་འབད་ཡོད་མི་དངོས་པོ་དེ་  <b>འགྲུལ་ལམ་མེན་</b>ཕྱི་སྒྲིག་/ནང་སྒྲིག་འབད་ཚུགས།"
 
-#: ../src/splivarot.cpp:1060 ../src/splivarot.cpp:1128
+#: ../src/splivarot.cpp:1079 ../src/splivarot.cpp:1147
 msgid "Create linked offset"
 msgstr "འབྲེལ་མཐུད་འབད་ཡོད་པའི་པར་ལེན་ གསར་བསྐྲུན་འབད་"
 
-#: ../src/splivarot.cpp:1061 ../src/splivarot.cpp:1129
+#: ../src/splivarot.cpp:1080 ../src/splivarot.cpp:1148
 msgid "Create dynamic offset"
 msgstr "ནུས་ཅན་པར་ལེན་ གསར་བསྐྲུན་འབད་"
 
-#: ../src/splivarot.cpp:1156
+#: ../src/splivarot.cpp:1175
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "ཕྱི་སྒྲིག/ནང་སྒྲིག་འབད་ནིའི་དོན་ལུ་ <b>འགྲུལ་ལམ་(s)</b>སེལ་འཐུ་འབད།"
 
-#: ../src/splivarot.cpp:1373
+#: ../src/splivarot.cpp:1392
 msgid "Outset path"
 msgstr "ཕྱི་སྒྲིག་འགྲུལ་ལམ་"
 
-#: ../src/splivarot.cpp:1373
+#: ../src/splivarot.cpp:1392
 msgid "Inset path"
 msgstr "ནང་སྒྲིག་འགྲུལ་ལམ་"
 
-#: ../src/splivarot.cpp:1375
+#: ../src/splivarot.cpp:1394
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "སེལ་འཐུའི་ནང་ལུ་ ཕྱི་སྒྲིག/ནང་སྒྲིག་འབད་ནིའི་དོན་ལུ་<b>འགྲུལ་ལམ་ཚུ་མིན་འདུག</b>"
 
-#: ../src/splivarot.cpp:1559
+#: ../src/splivarot.cpp:1578
 #, c-format
 msgid "Simplifying %s - <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "འཇམ་སམ་བཟོ་ནི་ %s - <b>%d</b>འགྲུལ་འཁོར་གྱི་ <b>%d</b> འཇམ་སམ་བཟོ་ཡོདཔ་་་་་"
 
-#: ../src/splivarot.cpp:1571
+#: ../src/splivarot.cpp:1590
 #, c-format
 msgid "Done - <b>%d</b> paths simplified."
 msgstr "འབདཡོདཔ་ - <b>%d</b>འགྲུལ་ལམ་འཇམ་སམ་བཟོ་ཡོདཔ།"
 
-#: ../src/splivarot.cpp:1587
+#: ../src/splivarot.cpp:1606
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "འཇམ་སམ་བཟོ་ནིའི་དོན་ལུ་ <b>འགྲུལ་ལམ་(s)</b>སེལ་འཐུ་འབད།"
 
-#: ../src/splivarot.cpp:1601
+#: ../src/splivarot.cpp:1620
 msgid "Simplify"
 msgstr "འཇམ་སམ་བཟོ་བ་"
 
-#: ../src/splivarot.cpp:1603
+#: ../src/splivarot.cpp:1622
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "སེལ་འཐུའི་ནང་ལུ་འཇམ་སམ་བཟོ་ནི་གི་<b>འགྲུལ་ལམ་མིན་འདུག(s)</b>"
 
@@ -5066,12 +5082,12 @@ msgstr ""
 msgid "Create star"
 msgstr "སི་ཊར་ གསར་བསྐྲུན་འབད་"
 
-#: ../src/text-chemistry.cpp:94
+#: ../src/text-chemistry.cpp:96
 msgid "Select <b>a text and a path</b> to put text on path."
 msgstr ""
 "ཚིག་ཡིག་དེ་འགྲུལ་ལམ་གུར་བཙུགས་ནིའི་དོན་ལུ་ <b>ཚིག་ཡིག་ཅིག་དང་འགྲུལ་ལམ་ཅིག་</b>སེལ་འཐུ་འབད།"
 
-#: ../src/text-chemistry.cpp:99
+#: ../src/text-chemistry.cpp:101
 msgid ""
 "This text object is <b>already put on a path</b>. Remove it from the path "
 "first. Use <b>Shift+D</b> to look up its path."
@@ -5080,14 +5096,8 @@ msgstr ""
 "འགྲུལ་ལམ་གུ་ལས་རྩ་བསྐྲད་གཏང། འདི་གི་འགྲུལ་ལམ་བལྟ་ནིའི་དོན་ལུ་ <b>སོར་ལྡེ་+བཏོན་གཏང་ནི་</b>དེ་ལག་"
 "ལེན་འཐབ།"
 
-#: ../src/text-chemistry.cpp:104
-msgid "You cannot put flowtext on a path. Convert flowtext to text first."
-msgstr ""
-"ཁྱོད་ཀྱིས་འབབ་རྒྱུན་ཚིག་ཡིག་དེ་འགྲུལ་ལམ་གུར་བཙུགས་མི་ཚུགས། ཧེ་མ་རང་འབབ་རྒྱུན་ཚིག་ཡིག་དེ་ཚིག་ཡིག་ལུ་གཞི་"
-"བསྒྱུར་འབད།"
-
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
-#: ../src/text-chemistry.cpp:110
+#: ../src/text-chemistry.cpp:107
 msgid ""
 "You cannot put text on a rectangle in this version. Convert rectangle to "
 "path first."
@@ -5095,31 +5105,31 @@ msgstr ""
 "དོན་རིམ་འདི་ནང་ལུ་ གྲུ་བཞི་ནར་ཅིག་གུར་ ཚིག་ཡིག་བཙུགས་མི་ཚུགས། གྲུ་བཞི་ནར་མོ་ཚུ་ཧེ་མ་འགྲུལ་ལམ་གུར་གཞི་"
 "བསྒྱུར་འབད།"
 
-#: ../src/text-chemistry.cpp:157 ../src/verbs.cpp:2074
+#: ../src/text-chemistry.cpp:174 ../src/verbs.cpp:2074
 msgid "Put text on path"
 msgstr "ཚིག་ཡིག་དེ་འགྲུལ་ལམ་གུར་བཙུགས།"
 
-#: ../src/text-chemistry.cpp:169
+#: ../src/text-chemistry.cpp:186
 msgid "Select <b>a text on path</b> to remove it from path."
 msgstr "དེ་འགྲུལ་ལམ་ནང་ལས་རྩ་བསྐྲད་གཏང་ནིའི་དོན་ལུ་ <b>འགྲུལ་ལམ་གུར་ཚིག་ཡིག་ཅིག་</b>སེལ་འཐུ་འབད།"
 
-#: ../src/text-chemistry.cpp:191
+#: ../src/text-chemistry.cpp:208
 msgid "<b>No texts-on-paths</b> in the selection."
 msgstr "སེལ་འཐུའི་ནང་ལུ་<b>འགྲུལ་ལམ་-གུར་-ཚིག་ཡིག་མིན་འདུག</b>"
 
-#: ../src/text-chemistry.cpp:195 ../src/verbs.cpp:2076
+#: ../src/text-chemistry.cpp:212 ../src/verbs.cpp:2076
 msgid "Remove text from path"
 msgstr "འགྲུལ་ལམ་ནང་ལས་ཚིག་ཡིག་རྩ་བསྐྲད་གཏང་།"
 
-#: ../src/text-chemistry.cpp:220 ../src/text-chemistry.cpp:240
+#: ../src/text-chemistry.cpp:237 ../src/text-chemistry.cpp:257
 msgid "Select <b>text(s)</b> to remove kerns from."
 msgstr "ནང་ལས་ ཀ་རནསི་ རྩ་བསྐྲད་གཏང་ནིའི་དོན་ལུ་<b>ཚིག་ཡིག་(ཚུ་)</b> སེལ་འཐུ་འབད།"
 
-#: ../src/text-chemistry.cpp:243 ../src/widgets/toolbox.cpp:4154
+#: ../src/text-chemistry.cpp:260 ../src/widgets/toolbox.cpp:4154
 msgid "Remove manual kerns"
 msgstr "ལག་དེབ་ཀརནི་ཚུ་རྩ་བསྐྲད་གཏང་།"
 
-#: ../src/text-chemistry.cpp:262
+#: ../src/text-chemistry.cpp:279
 msgid ""
 "Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text "
 "into frame."
@@ -5127,17 +5137,31 @@ msgstr ""
 "ཚིག་ཡིག་དེ་གཞི་ཁྲམ་ནང་ལུ་འབབ་རྒྱུན་འབད་ནིའི་དོན་ལུ་<b>ཚིག་ཡིག་ཅིག་</b> དང་ གཅིག་ཡང་ན་ དེ་ལས་ལྷག་"
 "པའི་<b>འགྲུལ་ལམ་ཚུ་དང་ ཡང་ན་ དབྱིབས་ཚུ་</b> སེལ་འཐུ་འབད།"
 
-#: ../src/text-chemistry.cpp:312
+#: ../src/text-chemistry.cpp:347
 msgid "Flow text into shape"
 msgstr "ཚིག་ཡིག་འདི་ དབྱིབས་ནང་ལུ་འབབ་རྒྱུན་འབད་ནི་"
 
-#: ../src/text-chemistry.cpp:335
+#: ../src/text-chemistry.cpp:368
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr " འབབ་རྒྱུན་བཤོལ་ནིའི་དོན་ལུ་ <b>འབབ་རྒྱུན་ཅན་གྱི་ཚིག་ཡིག་ཅིག་</b> སེལ་འཐུ་འབད།"
 
-#: ../src/text-chemistry.cpp:398
+#: ../src/text-chemistry.cpp:431
 msgid "Unflow flowed text"
 msgstr "འབབ་རྒྱུན་འབད་ཡོད་པའི་ཚིག་ཡིག་འདི་ འབབ་རྒྱུན་འབད་བཤོལ་"
+
+#: ../src/text-chemistry.cpp:443
+#, fuzzy
+msgid "Select <b>flowed text(s)</b> to convert."
+msgstr " འབབ་རྒྱུན་བཤོལ་ནིའི་དོན་ལུ་ <b>འབབ་རྒྱུན་ཅན་གྱི་ཚིག་ཡིག་ཅིག་</b> སེལ་འཐུ་འབད།"
+
+#: ../src/text-chemistry.cpp:479
+msgid "Convert flowed text to text"
+msgstr "འབབ་རྒྱུན་འབད་ཡོད་པའི་ཚིག་ཡིག་འདི་ཚིག་ཡིག་ལུ་ གཞི་བསྒྱུར་འབད་"
+
+#: ../src/text-chemistry.cpp:484
+#, fuzzy
+msgid "<b>No flowed text(s)</b> to convert in the selection."
+msgstr "སེལ་འཐུའི་ནང་ལུ་ <b>དངོས་པོ་ཚུ་</b>འགྲུལ་ལམ་ལུ་གཞི་བསྒྱུར་འབད་ནི་མིན་འདུག"
 
 #: ../src/text-context.cpp:448
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -5504,6 +5528,13 @@ msgstr "ཆོག་ཐམ།(_L)"
 msgid "about.svg"
 msgstr "ཨེསི་ཉི་ཇི་གི་སྐོར་ལས།"
 
+#. TRANSLATORS: Put here your name (and other national contributors')
+#. one per line in the form of:  name surname (email). Use \n for newline.
+#: ../src/ui/dialog/aboutbox.cpp:265
+#, fuzzy
+msgid "translator-credits"
+msgstr "སྐད་བསྒྱུར་པ་ཚུ།(_T)"
+
 #: ../src/ui/dialog/align-and-distribute.cpp:219
 #: ../src/ui/dialog/align-and-distribute.cpp:759
 msgid "Align"
@@ -5718,12 +5749,12 @@ msgstr "རྣམ་གྲངས་ཆུང་ཤོས།"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:886
 #: ../src/ui/dialog/document-properties.cpp:100
-#: ../src/ui/dialog/filedialog.cpp:1851 ../src/widgets/desktop-widget.cpp:1129
+#: ../src/ui/dialog/filedialog.cpp:1851 ../src/widgets/desktop-widget.cpp:1130
 msgid "Page"
 msgstr "ཤོག་ལེབ།"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:887
-#: ../src/widgets/desktop-widget.cpp:1133
+#: ../src/widgets/desktop-widget.cpp:1134
 msgid "Drawing"
 msgstr "པར་རིས།"
 
@@ -6101,7 +6132,7 @@ msgstr "<b>གི་རི་ཌི་པར་བཏབ་ནི།</b>"
 msgid "<b>Guide Snapping</b>"
 msgstr "<b>ལམ་སྟོན་པ་པར་བཏབ་ནི།</b>"
 
-#: ../src/ui/dialog/export.cpp:34
+#: ../src/ui/dialog/export.cpp:34 ../share/extensions/g2pngs.inx.h:2
 msgid "Export"
 msgstr "ཕྱིར་འདྲེན།"
 
@@ -6110,6 +6141,7 @@ msgid "Information"
 msgstr "བརྡ་དོན།"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
+#: ../share/extensions/funcplot.inx.h:7
 msgid "Help"
 msgstr "གྲོགས་རམ། "
 
@@ -6226,23 +6258,23 @@ msgstr "ཚོན་གཏང་ནི་སི་ཊོག་འབད།"
 msgid "Stroke Style"
 msgstr "བཟོ་རྣམ་སི་ཊོག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:142
+#: ../src/ui/dialog/inkscape-preferences.cpp:143
 msgid "Mouse"
 msgstr "མཱའུསི།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:144
+#: ../src/ui/dialog/inkscape-preferences.cpp:145
 msgid "Grab sensitivity:"
 msgstr "འཛིན་ནིའི་དྲན་ཚོར།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:144
-#: ../src/ui/dialog/inkscape-preferences.cpp:147
-#: ../src/ui/dialog/inkscape-preferences.cpp:155
-#: ../src/ui/dialog/inkscape-preferences.cpp:159
-#: ../src/ui/dialog/inkscape-preferences.cpp:169
+#: ../src/ui/dialog/inkscape-preferences.cpp:145
+#: ../src/ui/dialog/inkscape-preferences.cpp:148
+#: ../src/ui/dialog/inkscape-preferences.cpp:156
+#: ../src/ui/dialog/inkscape-preferences.cpp:160
+#: ../src/ui/dialog/inkscape-preferences.cpp:170
 msgid "pixels"
 msgstr "པིག་སེལསི།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:145
+#: ../src/ui/dialog/inkscape-preferences.cpp:146
 msgid ""
 "How close on the screen you need to be to an object to be able to grab it "
 "with mouse (in screen pixels)"
@@ -6250,26 +6282,26 @@ msgstr ""
 "དངོས་པོ་དེ་མའུསུ་གིས་འཛིན་ནིའི་དོན་ལུ་ ཁྱོད་ཀྱིས་གསལ་གཞི་ལས་ག་དེ་ཅིག་གི་ས་ཁར་སྡོད་དགོཔ་ཨིན་ན། (གསལ་"
 "གཞིའི་པིག་སེལསི།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:147
+#: ../src/ui/dialog/inkscape-preferences.cpp:148
 msgid "Click/drag threshold:"
 msgstr "ཐེརེཤ་ཧཱོལ་ཨེབ་གཏང་/ འདྲུད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:148
+#: ../src/ui/dialog/inkscape-preferences.cpp:149
 msgid ""
 "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
 msgstr ""
 "(གསལ་གཞི་ནང་ལུ) མའུསུ་མཐོ་ཤོས་སྦེ་འདྲུད་མི་དེ་ ཨེབ་གཏང་སྦེ་མ་གཏོགས་ འདྲུད་སྦེ་ཆ་འཇོག་མི་འབད་དོ་ཡོདཔ་"
 "ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:153
+#: ../src/ui/dialog/inkscape-preferences.cpp:154
 msgid "Scrolling"
 msgstr "བཤུད་སྒྲིལ་འབད་དོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:155
+#: ../src/ui/dialog/inkscape-preferences.cpp:156
 msgid "Mouse wheel scrolls by:"
 msgstr "གིས་ མ་འུསུ་གི་འཁོར་ལོ་དེ་བཤུད་སྒྲིལ་འབདཝ་ཨིན:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:156
+#: ../src/ui/dialog/inkscape-preferences.cpp:157
 msgid ""
 "One mouse wheel notch scrolls by this distance in screen pixels "
 "(horizontally with Shift)"
@@ -6277,25 +6309,25 @@ msgstr ""
 "མའུསུ་གཅིག་གི་འཁོར་ལོ་ཉག་ལྟོང་དེ་ གསལ་གཞིའི་པིག་སེལསི་ནང་ལུ་གྱང་ཚད་འདི་གིས་བཤུད་སྒྲིལ་འབདཉ་ཨིན། (སོར་"
 "ལྡེ་དང་གཅིག་ཁར་ཐད་སྙོམ་སྦེ།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:157
+#: ../src/ui/dialog/inkscape-preferences.cpp:158
 msgid "Ctrl+arrows"
 msgstr "ཚད་འཛིན་+ མདའ་རྟགས་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:159
+#: ../src/ui/dialog/inkscape-preferences.cpp:160
 msgid "Scroll by:"
 msgstr "གིས་བཤུད་སྒྲིལ་འབད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:160
+#: ../src/ui/dialog/inkscape-preferences.cpp:161
 msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
 msgstr ""
 "ཚན་འཛིན་+མདའ་རྟགས་ཨེབ་གཏང་འབད་མི་དེ་གིས་ གྱང་ཚད་འདི་གིས་བཤུད་སྒྲིལ་འབདཝ་ཨིན།(གསལ་གཞིའི་པིག་"
 "སེལསི་ནང་ལུ།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:162
+#: ../src/ui/dialog/inkscape-preferences.cpp:163
 msgid "Acceleration:"
 msgstr "མགྱོགས་བསྐྱོད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:163
+#: ../src/ui/dialog/inkscape-preferences.cpp:164
 msgid ""
 "Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no "
 "acceleration)"
@@ -6303,15 +6335,15 @@ msgstr ""
 "ཚད་འཛིན་+མདའ་རྟགས་ཨེབ་མི་དང་འཆང་མི་དེ་གིས་ བཤུད་སྒྲིལ་འབད་ནིའི་མགྱོགས་ཚད་དེ་རིམ་པ་བཞིན་དུ་ཡར་"
 "འཕེལ་གཏང་འོང་། (0 དེ་མགྱོགས་བསྐྱོད་མེད་པའི་དོན་ལུ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:164
+#: ../src/ui/dialog/inkscape-preferences.cpp:165
 msgid "Autoscrolling"
 msgstr "རང་བཞིན་གྱི་བཤུད་སྒྲིལ་འབད་ནི།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:166
+#: ../src/ui/dialog/inkscape-preferences.cpp:167
 msgid "Speed:"
 msgstr "མགྱོགས་ཚད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:167
+#: ../src/ui/dialog/inkscape-preferences.cpp:168
 msgid ""
 "How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn "
 "autoscroll off)"
@@ -6319,13 +6351,13 @@ msgstr ""
 "འབྲི་གཞི་ཚུ་ཁྱོད་ཀྱིས་ འབྲི་གཞིའི་མཐའམ་ལས་ལྷག་སྟེ་འདྲུད་པའི་སྐབས་ལུ་ མགྱོགས་ཚད་ག་དེ་ཅིག་གི་ཐོག་ལས་རང་"
 "བཞིན་གྱིས་བཤུད་སྒྲིལ་འབདཝ་སྨོ།  (0 དེ་རང་བཞིན་གྱི་བཤུད་སྒྲིལ་ཊཱན་ཨོཕ་འབད་ནིའ་དོན་ལུ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:169
+#: ../src/ui/dialog/inkscape-preferences.cpp:170
 #: ../src/ui/dialog/tracedialog.cpp:409 ../src/ui/dialog/tracedialog.cpp:442
 #: ../src/ui/dialog/tracedialog.cpp:585
 msgid "Threshold:"
 msgstr "ཐེརེཤ་ཧཱོལ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:170
+#: ../src/ui/dialog/inkscape-preferences.cpp:171
 msgid ""
 "How far (in screen pixels) you need to be from the canvas edge to trigger "
 "autoscroll; positive is outside the canvas, negative is within the canvas"
@@ -6333,15 +6365,15 @@ msgstr ""
 "ཁྱོད་ཀྱིས་རང་བཞིན་བཤུད་སྒྲིལ་དེ་འབྱུང་བཅུག་ནིའི་དོན་ལུ་ (གསལ་གཞིའི་པིག་སེལསི་ནང་ལུ་)འབྲི་གཞིའི་མཐའ་མ་ལས་"
 "ག་དེ་ཅིག་གི་ས་ཁར་སྡོད་དགོཔ་སྨོ། ཡོད་ཆ་དེ་འབྲི་གཞིའི་ཕྱི་ཁར་དང་ མེད་ཆ་དེ་འབྲི་གཞིའི་ནང་འཁོད་ནང་ལུ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:175
+#: ../src/ui/dialog/inkscape-preferences.cpp:176
 msgid "Steps"
 msgstr "རིམ་པ་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:178
+#: ../src/ui/dialog/inkscape-preferences.cpp:179
 msgid "Arrow keys move by:"
 msgstr "གིས་མདའ་རྟགས་སྤོ་བཤུད་འབདཝ་ཨིན:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:179
+#: ../src/ui/dialog/inkscape-preferences.cpp:180
 msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance "
 "(in px units)"
@@ -6349,33 +6381,33 @@ msgstr ""
 "མདའ་རྟགས་ལྡེ་མིག་ཨེབ་མི་དེ་གིས་ སེལ་འཐུ་འབད་ཡོད་མི་དངོས་པོ་ཚུ་(s)དང་ ཡང་ན་ མཐུད་མཚམས་ཚུ་(s)"
 "འགྱང་ཚད་འདི་གིས་སྤོ་བཤུད་འབདཝ་ཨིན། (པི་ཨེགསི་ཆ་ཕྲན་ནང་ལུ།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:181
+#: ../src/ui/dialog/inkscape-preferences.cpp:182
 msgid "> and < scale by:"
 msgstr "> དང < གིས་ཆ་ཚད་འཇལ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:182
+#: ../src/ui/dialog/inkscape-preferences.cpp:183
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr ""
 "> ཡང་ན་ < ཨེབ་མི་དེ་གིས་ ཡར་སེང་འདི་གིས་ སེལ་འཐུ་ཡར་དང་མར་ཆཆ་ཚད་འཇལཝ་ཨིན། (པི་ཨེགསི་ཆ་ཕྲན་"
 "ནང་ལུ།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:184
+#: ../src/ui/dialog/inkscape-preferences.cpp:185
 msgid "Inset/Outset by:"
 msgstr "གིས་ནང་སྒྲིག/ཕྱི་སྒྲིག་འབད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:185
+#: ../src/ui/dialog/inkscape-preferences.cpp:186
 msgid ""
 "Inset and Outset commands displace the path by this distance (in px units)"
 msgstr ""
 "ནང་སྒྲིག་དང་ཕྱི་སྒྲིག་གི་བརྡ་བཀོད་ཚུ་གིས་ འགྱང་ཚད་འདི་གིས་འགྲུལ་ལམ་དེ་གནས་སྤང་འབད།(པི་ཨེགསི་ཆ་ཕྲན་ནང་"
 "ལུ།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:186
+#: ../src/ui/dialog/inkscape-preferences.cpp:187
 msgid "Compass-like display of angles"
 msgstr "ཕྱོགས་འཁོར- གྲུ་ཟུར་གྱི་བཀྲམ་སྟོན་བཟུམ་སྦེ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:188
+#: ../src/ui/dialog/inkscape-preferences.cpp:189
 msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
@@ -6385,15 +6417,15 @@ msgstr ""
 "མི་ དེ་མེན་པ་ཅིན་ ཤར་ཁ་ཐུག་ལུ་་༠་ དང་ -༡༨༠་ལས་༡༨༠་གི་ཁྱབ་ཚད་ དང་གཡོན་སྐོར་ལུ་ཡར་སེང་དང་"
 "གཅིག་ཁར་བཀྲམ་སྟོན་འབད་ཡོདཔ། "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:194
+#: ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "Rotation snaps every:"
 msgstr "བསྒྱིར་མི་དེ་གིས་ཆ་མཉམ་པར་བཏབ་ཨིན:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:194
+#: ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "degrees"
 msgstr "དབྱེ་རིམ་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:195
+#: ../src/ui/dialog/inkscape-preferences.cpp:196
 msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
@@ -6401,11 +6433,11 @@ msgstr ""
 "ཚད་འཛིན་ཨེབ་སྟེ་ཡོད་མི་དེ་དང་གཅིག་ཁར་བསྒྱིར་མི་དེ་གིས་ དབྱེ་རིམ་དེ་ཅིག་པར་བཏབ་ཨིན། འདི་མ་ཚད་ དངུལ་"
 "བསྡོམས་དེ་གིས་ཨེབ་ནི་དང་ [ ཡང་ན་] བསྒྱིར་བཅུག་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:197
+#: ../src/ui/dialog/inkscape-preferences.cpp:198
 msgid "Zoom in/out by:"
 msgstr "གིས་ཕྱིར་རྒྱས/ནང་ཟུམ་འབད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:198
+#: ../src/ui/dialog/inkscape-preferences.cpp:199
 msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
@@ -6413,54 +6445,54 @@ msgstr ""
 "ལག་ཆས་རྒྱས་ཟུམ་འབད་དེ་  +/- ལྡེ་མིག་ཚུ་ཨེབ་གཏང་འབད་ དེ་ལས་  སྒྱུར་བྱེད་འདི་གིས་ཕྱིར་རྒྱས་དང་ནང་ཟུམ་"
 "ལུ་བར་གྱི་ཨེབ་གཏང་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:204
+#: ../src/ui/dialog/inkscape-preferences.cpp:205
 msgid "Show selection cue"
 msgstr "སེལ་འཐུའི་ཚིག་བརྡ་སྟོན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:205
+#: ../src/ui/dialog/inkscape-preferences.cpp:206
 msgid ""
 "Whether selected objects display a selection cue (the same as in selector)"
 msgstr ""
 "སེལ་འཐུ་འབད་ཡོད་པའི་དངོས་པོ་ཚུ་གིས་ སེལ་འཐུའི་ཚིག་བརྡ་བཀྲམ་སྟོན་འབད་འབད་དོ་ཡོདཔ་ཨིན་ན། (སེལ་འཐུ་"
 "འབད་མི་ནང་གི་ཅོག་གཅིགཔ།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:211
+#: ../src/ui/dialog/inkscape-preferences.cpp:212
 msgid "Enable gradient editing"
 msgstr "སྟེགས་རིས་ཞུན་དག་འབད་ནི་ལྕོགས་ཅན་བཟོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:212
+#: ../src/ui/dialog/inkscape-preferences.cpp:213
 msgid "Whether selected objects display gradient editing controls"
 msgstr ""
 "སེེལ་འཐུ་འབད་ཡོད་མི་དངོས་པོ་ཚུ་གིས་ སྟེགས་རིས་ཞུན་དག་འབད་ནིའི་ཚད་འཛིན་བཀྲམ་སྟོན་འམད་དོ་ཡོདཔ་ཨིན་ན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:225
+#: ../src/ui/dialog/inkscape-preferences.cpp:226
 msgid "<b>No objects selected</b> to take the style from."
 msgstr "<b>ནང་ལས་བཟོ་རྣམ་འབག་ནིའི་དོན་ལུ་</b> དངོས་པོ་སེལ་འཐུ་འབད་འབདཝ་མིན་འདུག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:234
+#: ../src/ui/dialog/inkscape-preferences.cpp:235
 msgid ""
 "<b>More than one object selected.</b>  Cannot take style from multiple "
 "objects."
 msgstr ""
 "<b>དངོས་པོ་གཅིག་ལས་ལྷག་སྟེ་སེལ་འཐུ་འབད་དེ་འདུག</b> དངོས་པོ་སྣ་མང་ནང་ལས་བཟོ་རྣམ་འབད་མི་ཚུགས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:268
+#: ../src/ui/dialog/inkscape-preferences.cpp:269
 msgid "Create new objects with:"
 msgstr "དངོས་པོ་གསརཔ་ཚུ་གི་རྒྱ་ཚད་གསར་བསྐྲུན་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:270
+#: ../src/ui/dialog/inkscape-preferences.cpp:271
 msgid "Last used style"
 msgstr "མཇུག་ལུ་ལག་ལེན་འཐབ་ཡོད་པའི་བཟོ་རྣམ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:272
+#: ../src/ui/dialog/inkscape-preferences.cpp:273
 msgid "Apply the style you last set on an object"
 msgstr "ཁྱོད་ཀྱིས་དངོས་པོའི་གུར་མཐའ་མཇུག་ལུ་གཞི་སྒྲིག་འབད་མི་ བཟོ་རྣམ་དེ་འཇུག་སྤྱོད་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:277
+#: ../src/ui/dialog/inkscape-preferences.cpp:278
 msgid "This tool's own style:"
 msgstr "ལག་ཆས་འདི་གི་བཟོ་རྣམ་ངོ་མ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:281
+#: ../src/ui/dialog/inkscape-preferences.cpp:282
 msgid ""
 "Each tool may store its own style to apply to the newly created objects. Use "
 "the button below to set it."
@@ -6468,131 +6500,131 @@ msgstr ""
 "ལག་ཆས་རེ་རེ་གིས་ གསརཔ་གསར་བསྐྲུན་འབད་ཡོད་པའི་དངོས་པོ་ཚུ་ལུ་འཇུག་སྤྱོད་འབད་ནིའི་དོན་ལུ་ ཁོང་རའི་བཟོ་"
 "རྣམ་དེ་གསོག་འཇོག་འབད་འོང་། འདི་གཞི་སྒྲིག་འབད་ནིའི་དོན་ལུ་ འོག་གི་ཨེབ་རྟ་དེ་ལག་ལེན་འཐབ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:286
+#: ../src/ui/dialog/inkscape-preferences.cpp:287
 msgid "Take from selection"
 msgstr "སེལ་འཐུའི་ནང་ལས་འབག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:298
+#: ../src/ui/dialog/inkscape-preferences.cpp:299
 msgid "Remember the style of the (first) selected object as this tool's style"
 msgstr ""
 "སེལ་འཐུ་(དང་པ་)འབད་ཡོད་པའི་དངོས་པོ་ཚུ་གི་བཟོ་རྣམ་དེ་ ལག་ཆས་འདི་གི་བཟོ་རྣམ་བཟུམ་སྦེ་ཨིནམ་སེམས་ཁར་"
 "བཞག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:303
+#: ../src/ui/dialog/inkscape-preferences.cpp:304
 msgid "Tools"
 msgstr "ལག་ཆས་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:306
+#: ../src/ui/dialog/inkscape-preferences.cpp:307
 msgid "Width is in absolute units"
 msgstr "རྒྱ་ཚད་དེ་ཆ་ཕྲན་ཡང་དག་ནང་ལུ་ཡོདཔ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:307
+#: ../src/ui/dialog/inkscape-preferences.cpp:308
 msgid "Keep selected"
 msgstr "མཇུག་གི་དེ་སེལ་འཐུ་འབད་བཞག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:308
+#: ../src/ui/dialog/inkscape-preferences.cpp:309
 msgid "Don't attach connectors to text objects"
 msgstr "མཐུད་བྱེད་ཚུ་ ཚིག་ཡིག་དངོས་པོ་ཚུ་ལུ་ མཉམ་སྦྲགས་མའབད།"
 
 #. Selector
-#: ../src/ui/dialog/inkscape-preferences.cpp:311
+#: ../src/ui/dialog/inkscape-preferences.cpp:312
 msgid "Selector"
 msgstr "སེལ་འཐུ་འབད་མི།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:314
+#: ../src/ui/dialog/inkscape-preferences.cpp:315
 msgid "When transforming, show:"
 msgstr "བཟོ་བསྒྱུར་འབད་བའི་སྐབས་ལུ་ སྟོན:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:315
+#: ../src/ui/dialog/inkscape-preferences.cpp:316
 msgid "Objects"
 msgstr "དངོས་པོ་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:317
+#: ../src/ui/dialog/inkscape-preferences.cpp:318
 msgid "Show the actual objects when moving or transforming"
 msgstr "སྤོ་བཤུད་དང་ ཡང་ན་བཟོ་བསྒྱུར་འབད་བའི་སྐབས་ལུ་དངོས་པོ་ངོ་མ་ཚུ་སྟོན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:318
+#: ../src/ui/dialog/inkscape-preferences.cpp:319
 msgid "Box outline"
 msgstr "སྒྲོམ་མཐའ་ཐིག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:320
+#: ../src/ui/dialog/inkscape-preferences.cpp:321
 msgid "Show only a box outline of the objects when moving or transforming"
 msgstr "སྤོ་བཤུད་དང་ ཡང་ན་ བཟོ་བསྒྱུར་འབད་བའི་སྐབས་ལུ་ དངོས་པོ་ཚུ་གི་སྒྲོམ་གྱི་མཐའ་ཐིག་རྐྱངམ་ཅིག་སྟོན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:321
+#: ../src/ui/dialog/inkscape-preferences.cpp:322
 msgid "Per-object selection cue:"
 msgstr "དངོས་ཕོ་རེ་རེ་ལུ་ སེལ་འཐུའི་ཚིག་བརྡ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:324
+#: ../src/ui/dialog/inkscape-preferences.cpp:325
 msgid "No per-object selection indication"
 msgstr "དངོས་པོ་རེ་རེ་ལུ༦་སེལ་འཐུའི་བརྡ་སྟོན་ནི་མེད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:325
+#: ../src/ui/dialog/inkscape-preferences.cpp:326
 msgid "Mark"
 msgstr "རྟགས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:327
+#: ../src/ui/dialog/inkscape-preferences.cpp:328
 msgid "Each selected object has a diamond mark in the top left corner"
 msgstr ""
 "སེལ་འཐུ་འབད་ཡོད་པའི་དངོས་པོ་རེ་རེ་ལུ་ སྤྱི་ཏོག་གི་གཡོན་གྱི་སྒྱིད་ཁུག་ནང་ལུ་ཕ་ལམ་གྱི་རྟགས་རེ་ཡོདཔ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:328
+#: ../src/ui/dialog/inkscape-preferences.cpp:329
 msgid "Box"
 msgstr "སྒྲོམ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:330
+#: ../src/ui/dialog/inkscape-preferences.cpp:331
 msgid "Each selected object displays its bounding box"
 msgstr "སེལ་འཐུ་འབད་ཡོད་མི་དངོས་པོ་རེ་རེ་གིས་ ཁོང་རའི་བོན་ཌིང་སྒྲོམ་དེ་བཀྲམ་སྟོན་འབདཝ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:331
+#: ../src/ui/dialog/inkscape-preferences.cpp:332
 msgid "Default scale origin:"
 msgstr "ཚད་ཤིང་གི་འགོ་ཐོག་བྱུང་ས་སྔོན་སྒྲིག་འབད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:332
+#: ../src/ui/dialog/inkscape-preferences.cpp:333
 msgid "Opposite bounding box edge"
 msgstr "རྒྱབ་འགལ་བོན་སྒྲིང་སྒྲོམ་གྱི་མཐའམ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:334
+#: ../src/ui/dialog/inkscape-preferences.cpp:335
 msgid "Default scale origin will be on the bounding box of the item"
 msgstr "སྔོན་སྒྲིག་འབད་ནིའི་ཚད་ཤིང་འགོ་ཐོག་འབྱུང་ས་དེ་ རྣམ་གྲངས་དེ་གི་བོན་སྒྲིང་སྒྲོམ་གུར་འོང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:335
+#: ../src/ui/dialog/inkscape-preferences.cpp:336
 msgid "Farthest opposite node"
 msgstr "རྒྱབ་འགལ་མཐུད་མཚམས་འགྱང་ཐག་རིང་ཤོས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:337
+#: ../src/ui/dialog/inkscape-preferences.cpp:338
 msgid "Default scale origin will be on the bounding box of the item's points"
 msgstr ""
 "སྔོན་སྒྲིག་འབད་ནིའི་ཚད་ཤིང་གི་འགོ་ཐོག་འབྱུང་ས་དེ་ རྣམ་གྲངས་ཀྱི་ཡིག་ཚད་དེ་གི་བོན་སྒྲིང་སྒྲོམ་གུར་འོང་།"
 
 #. Node
-#: ../src/ui/dialog/inkscape-preferences.cpp:339
+#: ../src/ui/dialog/inkscape-preferences.cpp:340
 msgid "Node"
 msgstr "མཐུད་མཚམས།"
 
 #. Zoom
-#: ../src/ui/dialog/inkscape-preferences.cpp:343
-#: ../src/ui/view/edit-widget.cpp:1067 ../src/verbs.cpp:2220
-#: ../src/widgets/desktop-widget.cpp:282
+#: ../src/ui/dialog/inkscape-preferences.cpp:344
+#: ../src/ui/view/edit-widget.cpp:1069 ../src/verbs.cpp:2220
+#: ../src/widgets/desktop-widget.cpp:284
 msgid "Zoom"
 msgstr "རྒྱས་ཟུམ།"
 
 #. Shapes
-#: ../src/ui/dialog/inkscape-preferences.cpp:347
+#: ../src/ui/dialog/inkscape-preferences.cpp:348
 msgid "Shapes"
 msgstr "དབྱིབས་ཚུ།"
 
 #. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:364 ../src/verbs.cpp:2210
+#: ../src/ui/dialog/inkscape-preferences.cpp:365 ../src/verbs.cpp:2210
 msgid "Pencil"
 msgstr "ཞ་སྨྱུག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:367
+#: ../src/ui/dialog/inkscape-preferences.cpp:368
 #: ../src/ui/dialog/tracedialog.cpp:600
 msgid "Tolerance:"
 msgstr "བཟོད་པ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:368
+#: ../src/ui/dialog/inkscape-preferences.cpp:369
 msgid ""
 "This value affects the amount of smoothing applied to freehand lines; lower "
 "values produce more uneven paths with more nodes"
@@ -6602,16 +6634,16 @@ msgstr ""
 "ཁར་བཟོ་སྟོན་འབདཝ་ཨིན།"
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:372 ../src/verbs.cpp:2212
+#: ../src/ui/dialog/inkscape-preferences.cpp:373 ../src/verbs.cpp:2212
 msgid "Pen"
 msgstr "སྨྱུག་བྲིས།"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:376 ../src/verbs.cpp:2214
+#: ../src/ui/dialog/inkscape-preferences.cpp:377 ../src/verbs.cpp:2214
 msgid "Calligraphy"
 msgstr "འབྲི་ཚུགས་ལག་རྩལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:379
+#: ../src/ui/dialog/inkscape-preferences.cpp:380
 msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
@@ -6619,7 +6651,7 @@ msgstr ""
 "ཨཱོན་འབད་དེ་ཡོད་པ་ཅིན་ སྨྱུག་བྲིས་དེ་རྒྱས་ཟུམ་ལུ་མ་རྟེན་པར་ ཆ་ཕྲན་(པི་ཨེགསི་)ནང་ལུ་ཡོདཔ་ཨིན། དེ་མེན་པ་"
 "ཅིན་ སྨྱུག་བྲིས་དེ་གིས་རྒྱས་ཟུམ་ལུ་རྟེནམ་ཨིནམ་ལས་ རྒྱས་ཟུམ་ག་སྟེ་ལུ་འབད་རུང་ གཅིག་སྦེ་མཐོངམ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:381
+#: ../src/ui/dialog/inkscape-preferences.cpp:382
 msgid ""
 "If on, each object created with this tool will remain selected after you "
 "finish drawing it"
@@ -6628,49 +6660,54 @@ msgstr ""
 "ཤུལ་ལས་ སེལ་འཐུ་འབད་དེ་སྡོད་འོང་།"
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:388 ../src/verbs.cpp:2218
+#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2218
 msgid "Gradient"
 msgstr "སྟེགས་རིས།"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:391 ../src/verbs.cpp:2224
+#: ../src/ui/dialog/inkscape-preferences.cpp:392 ../src/verbs.cpp:2224
 msgid "Connector"
 msgstr "མཐུད་བྱེད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:394
+#: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid "If on, connector attachment points will not be shown for text objects"
 msgstr "ཨཱོན་འབད་བ་ཅིན་ མཐུད་བྱེད་མཉམ་སྦྲགས་ཀྱི་ས་ཚིགས་ཚུ་ ཚིག་ཡིག་དངོས་པོའི་དོན་ལུ་མི་སྟོན།"
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:396 ../src/verbs.cpp:2222
+#: ../src/ui/dialog/inkscape-preferences.cpp:397 ../src/verbs.cpp:2222
 msgid "Dropper"
 msgstr "ཌོ་པར།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:403
+#: ../src/ui/dialog/inkscape-preferences.cpp:404
 msgid "Save window geometry"
 msgstr "སྒོ་སྒྲིག་གི་ཐིག་རྩིས་སྲུང་བཞག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:404
+#: ../src/ui/dialog/inkscape-preferences.cpp:405
 msgid "Dialogs are hidden in taskbar"
 msgstr "ཌའི་ལོག་ཚུ་ལས་ཀའི་ཕྲ་རིང་ནང་སབ་བཞག་སྟེ་ཡོདཔ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:405
+#: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid "Zoom when window is resized"
 msgstr "སྒོ་སྒྲིག་ཚད་བསྐྱར་བཟོ་འབད་བའི་སྐབས་ལུ་རྒྱས་ཟུམ་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:406
+#: ../src/ui/dialog/inkscape-preferences.cpp:407
 msgid "Show close button on dialogs"
 msgstr "ཌའི་ལོགསི་གུར་ ཁ་བསྡམས་ནིའི་ཨེབ་རྟ་སྟོན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:408
+#: ../src/ui/dialog/inkscape-preferences.cpp:409
 msgid "Normal"
 msgstr "སྤྱིར་གཏང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:409
+#: ../src/ui/dialog/inkscape-preferences.cpp:410
 msgid "Aggressive"
 msgstr "བཙན་ཤུགས་ཅན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:412
+#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#, fuzzy
+msgid "Dialogs stay on top (experimental!)"
+msgstr "ཌའི་ལོག་ཚུ་གིས་ཡིག་ཆའི་སྒྲོ་སྒྲིག་གི་སྤྱི་ཏོག་གུར་སྡོདཔ་ཨིན།"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:418
 msgid ""
 "Save the window size and position with each document (only for Inkscape SVG "
 "format)"
@@ -6678,11 +6715,11 @@ msgstr ""
 "སྒོ་སྒྲིག་གི་ཚད་དང་གནས་ས་དེ་ཡིག་ཆ་རེ་རེ་དང་གཅག་ཁར་སྲུང་བཞག་འབད། (ཨིངཀི་སིཀེབ་ ཨེསག་ཝི་ཇི་རྩ་སྒྲིག་གི་"
 "དོན་ལུ་རྐྱངམ་ཅིག)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#: ../src/ui/dialog/inkscape-preferences.cpp:421
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr "ཌའི་ལོག་སྒོ་སྒྲིག་ཚུ་ སྒོ་སྒྲིག་རྒྱུན་སྐྱོང་པའི་ལས་ཀ་ཕྲ་རིང་ནང་ལུ་སྦ་བཞག་ནི་ཨིན་ན་སྨོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:416
+#: ../src/ui/dialog/inkscape-preferences.cpp:424
 msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
@@ -6692,66 +6729,73 @@ msgstr ""
 "འདི་ གཡས་ཀྱི་བཤུད་ཕྲའི་ལྟག་ལུ་ཡོད་མི་ཨེབ་རྟ་དེ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ སྒོ་སྒྲིག་ག་ཅི་ལུ་ཡང་བསྒྱུར་བཆོས་"
 "འབད་བཏུབ་པའི་སྔོན་སྒྲིག་་ཨིན། )"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:418
+#: ../src/ui/dialog/inkscape-preferences.cpp:426
 msgid "Whether dialog windows have a close button (requires restart)"
 msgstr ""
 "ཌའི་ལོག་སྒོ་སྒྲིག་ཚུ་ལུ་ བསྡམ་ནིའི་ཨེབ་རྟ་ཅིག་ཡོདཔ་ཨིན་ན། ( ལོག་འགོ་བཙུགས་ནི་དགོས་མཁོ་ཡོདཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:419
+#: ../src/ui/dialog/inkscape-preferences.cpp:427
 msgid "Dialogs on top:"
 msgstr "ཌའི་ལོག་ཚུ་སྤྱི་ཏོག་གུར:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:421
+#: ../src/ui/dialog/inkscape-preferences.cpp:430
 msgid "Dialogs are treated as regular windows"
 msgstr "ཌའི་ལོག་ཚུ་དུས་རྒྱུན་གྱི་སྒོ་སྒྲིག་བཟུམ་སྦེ་བརྩི་འཇོག་འབདཝ་ཨིན། "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:423
+#: ../src/ui/dialog/inkscape-preferences.cpp:432
 msgid "Dialogs stay on top of document windows"
 msgstr "ཌའི་ལོག་ཚུ་གིས་ཡིག་ཆའི་སྒྲོ་སྒྲིག་གི་སྤྱི་ཏོག་གུར་སྡོདཔ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:425
+#: ../src/ui/dialog/inkscape-preferences.cpp:434
 msgid "Same as Normal but may work better with some window managers"
 msgstr ""
 "སྤྱིར་བཏང་དང་ཅོག་གཅིགཔ་ཡོད་ དེ་འབདཝ་ད་ སྒོ་སྒྲིག་འཛིན་སྐྱོང་པ་ཚུ་དང་གཅིག་ཁར་ལཱ་གཡོག་ལེགས་ཤོམ་འབདཝ་"
 "འོང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:427
+#: ../src/ui/dialog/inkscape-preferences.cpp:437
+msgid ""
+"Whether dialogs should stay on top of document windows. Read the "
+"ReleaseNotes on this issue! (Rightclick the taskbar button and press "
+"'Restore' to bring back a minimized document window)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Windows"
 msgstr "སྒོ་སྒྲིག་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:432
+#: ../src/ui/dialog/inkscape-preferences.cpp:445
 msgid "Move in parallel"
 msgstr "མཉམ་སྤྱོད་འབད་སྤོ་བཤུད་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:434
+#: ../src/ui/dialog/inkscape-preferences.cpp:447
 msgid "Stay unmoved"
 msgstr "སྤོ་བཤུད་མ་འབད་བར་སྡོད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:436
+#: ../src/ui/dialog/inkscape-preferences.cpp:449
 msgid "Move according to transform"
 msgstr "བཟོ་བསྒྱུར་དང་འཁྲིལ་སྟེ་སྤོ་བཤུད་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:438
+#: ../src/ui/dialog/inkscape-preferences.cpp:451
 msgid "Are unlinked"
 msgstr "ཚུ་འབྲེལ་མཐུད་མ་འབད་བས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/ui/dialog/inkscape-preferences.cpp:453
 msgid "Are deleted"
 msgstr "ཚུ་བཏོན་གཏང་ནུག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:443
+#: ../src/ui/dialog/inkscape-preferences.cpp:456
 msgid "When the original moves, its clones and linked offsets:"
 msgstr "ངོ་མ་དེ་སྤོ་བཤུད་འབད་བའི་སྐབས་ལུ་ དེའི་ངོ་འདྲ་དང་མཐུད་ཡོད་མི་དེ་ཚུ་པར་ལེན་འབདཝ་ཨིན:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:445
+#: ../src/ui/dialog/inkscape-preferences.cpp:458
 msgid "Clones are translated by the same vector as their original."
 msgstr "ངོ་འདྲ་དེ་ཚུ་མཉམ་ཐིག་གཅིག་གིས་ཁོང་རའི་ངོ་མ་སྦེ་བཟོ་བསྒྱུར་འབད་ནུག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:447
+#: ../src/ui/dialog/inkscape-preferences.cpp:460
 msgid "Clones preserve their positions when their original is moved."
 msgstr "ངོ་འདྲ་ཚུ་གིས་ ཁོང་རའི་ངོ་མ་དེ་སྤོ་བཤུད་འབད་བའི་སྐབས་ལུ་ གནས་ས་ཚུ་ཉམས་སྲུང་འབདཝ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:449
+#: ../src/ui/dialog/inkscape-preferences.cpp:462
 msgid ""
 "Each clone moves according to the value of its transform= attribute. For "
 "example, a rotated clone will move in a different direction than its "
@@ -6760,69 +6804,69 @@ msgstr ""
 "ངོ་འདྲ་རེ་རེ་གིས་ དེའི་བཟོ་བསྒྱུར་གྱི་གནས་གོང་དང་འཁྲིལ་སྟེ་སྤོ་བཤུད་འབད་དོ་ཡོདཔ་ཨིན།= ཁྱད་ཆོས། དེ་འབད་བ་"
 "ཅིན་ ངོ་འདྲ་བསྒྱིར་ཡོད་མི་དེ་གིས་ ཁོ་རའི་ངོ་མ་ལས་ལྷག་སྟེ་ཁ་ཕྱོགས་སོ་སོ་ལུ་སྤོ་བཤུད་འབད་འོང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:450
+#: ../src/ui/dialog/inkscape-preferences.cpp:463
 msgid "When the original is deleted, its clones:"
 msgstr "ངོ་མ་དེ་བཏོན་གཏང་པའི་སྐབས་ལུ་ དེའི་ངོ་འདྲ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:452
+#: ../src/ui/dialog/inkscape-preferences.cpp:465
 msgid "Orphaned clones are converted to regular objects."
 msgstr "ངོ་འདྲ་རང་རྐྱང་ཚུ་སྤྱིར་གཏང་གི་དངོས་པོ་ལུ་གཞི་བསྒྱུར་འབད་ནུག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:454
+#: ../src/ui/dialog/inkscape-preferences.cpp:467
 msgid "Orphaned clones are deleted along with their original."
 msgstr "རང་རྐྱང་ངོ་འདྲ་ཚུ་ཁོང་རའི་ངོ་མ་དང་གཅིག་ཁར་བཏོན་གཏང་ནུག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:461
+#: ../src/ui/dialog/inkscape-preferences.cpp:474
 msgid "Scale stroke width"
 msgstr "སིཊོཪོག་རྒྱ་ཚད་དེ་ཆ་ཚད་འཇལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:462
+#: ../src/ui/dialog/inkscape-preferences.cpp:475
 msgid "Scale rounded corners in rectangles"
 msgstr "སྒོར་སྒོརམ་སྦེ་ཡོད་མི་སྒྱིད་ཁུག་ཚུ་གྲུ་བཞི་ནར་མོའི་ནང་ལུ་ཆ་ཚད་འཇལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:463
+#: ../src/ui/dialog/inkscape-preferences.cpp:476
 msgid "Transform gradients"
 msgstr "སྟེགས་རིས་ཚུ་བཟོ་བསྒཡིར་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:464
+#: ../src/ui/dialog/inkscape-preferences.cpp:477
 msgid "Transform patterns"
 msgstr "དཔེ་གཞི་ཚུ་བཟོ་བསྒྱུར་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:465
+#: ../src/ui/dialog/inkscape-preferences.cpp:478
 msgid "Optimized"
 msgstr "གང་དྲག་བཟོ་ཡོདཔ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:466
+#: ../src/ui/dialog/inkscape-preferences.cpp:479
 msgid "Preserved"
 msgstr "ཉམས་སྲུང་འབད་ཡོདཔ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:469
+#: ../src/ui/dialog/inkscape-preferences.cpp:482
 #: ../src/widgets/select-toolbar.cpp:504
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr ""
 "དངོས་པོ་ཚུ་ཆ་ཚད་འཇལ་བའི་སྐབས་ལུ་ སིཊོརོག་རྒྱ་ཚད་དེ་སྙོམ་ཚད་ཅོག་གཅིག་ཅིགཔ་ཡོད་མི་ཅིག་གི་ཆ་ཚད་འཇལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:471
+#: ../src/ui/dialog/inkscape-preferences.cpp:484
 #: ../src/widgets/select-toolbar.cpp:516
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr ""
 "གྲུ་བཞི་ནར་མོ་ཚུ་ཆ་ཚད་འཇལ་བའི་སྐབས་ལུ་ སྒོར་སྒོརམ་སྦེ་ཡོད་མི་སྒཡིད་ཁུག་ཚུ་གི་ར་ཌི་དེ་ཆ་ཚད་འཇལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:473
+#: ../src/ui/dialog/inkscape-preferences.cpp:486
 #: ../src/widgets/select-toolbar.cpp:528
 msgid "Transform gradients (in fill or stroke) along with the objects"
 msgstr "སྟེགས་རིས་ཚུ་དངོས་པོ་ཚུ་རྒྱུད་དེ་(བཀང་ནིའི་དང་ ཡང་ན སིཊོཪོག་ནང་ལུ)བཟོ་བསྒྱུར་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:475
+#: ../src/ui/dialog/inkscape-preferences.cpp:488
 #: ../src/widgets/select-toolbar.cpp:540
 msgid "Transform patterns (in fill or stroke) along with the objects"
 msgstr "དཔེ་གཞི་ཚུ་ དངོས་པེ་ཚུ་རྒྱུད་དེ་(བཀང་ནི་དང་ ཡང་ན་ སིཊོཪོག་ནང་ལུ་)བཟོ་བསྒྱུར་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:476
+#: ../src/ui/dialog/inkscape-preferences.cpp:489
 msgid "Store transformation:"
 msgstr "བཟོ་བསྒྱུར་གསོག་འཇོག་འབད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:478
+#: ../src/ui/dialog/inkscape-preferences.cpp:491
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
@@ -6830,39 +6874,39 @@ msgstr ""
 "འབད་ཚུགས་པ་ཅིན་ བཟོ་བསྒྱུར་= ཁྱད་ཆོས་དེ་ཁ་སྐོང་མ་བརྐྱབ་པའི་ཐོག་ལས་ དངོས་པོ་ཚུ་ལུ་བཟོ་བསྒྱུར་འཇུག་སྤྱོད་"
 "འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:480
+#: ../src/ui/dialog/inkscape-preferences.cpp:493
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr "ཨ་རྟག་རང་བཟོ་བསྒྱུར་དེ་དངོས་པོའི་གུར་་བཟོ་བསྒྱུར་=ཁྱད་ཆོས་སྦེ་སྲུང་བཞག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:482
+#: ../src/ui/dialog/inkscape-preferences.cpp:495
 msgid "Transforms"
 msgstr "བཟོ་བསྒྱུར།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:487
+#: ../src/ui/dialog/inkscape-preferences.cpp:500
 msgid "Best quality (slowest)"
 msgstr "སྤུས་ཚད་ལེགས་ཤོས་(ལྷོད་ཤོས་)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:489
+#: ../src/ui/dialog/inkscape-preferences.cpp:502
 msgid "Better quality (slower)"
 msgstr "སྤུས་ཚད་ལེགས་ཤོམ་(ལྷོད་པ་)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:491
+#: ../src/ui/dialog/inkscape-preferences.cpp:504
 msgid "Average quality"
 msgstr "སྤུས་ཚད་ཆ་སྙོམས་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:493
+#: ../src/ui/dialog/inkscape-preferences.cpp:506
 msgid "Lower quality (faster)"
 msgstr "སྤུས་ཚད་དམའ་མི་(མགྱོགས་དྲགས་)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:495
+#: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid "Lowest quality (fastest)"
 msgstr "སྤུས་ཚད་དམའ་ཤོས་(མགྱོགས་ཤོས་)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:498
+#: ../src/ui/dialog/inkscape-preferences.cpp:511
 msgid "Gaussian blur quality for display:"
 msgstr "བཀྲམ་སྟོན་འབད་ནི་ལུ་ གའུ་ཤཱན་བ་ལར་སྤུས་ཚད་:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:500
+#: ../src/ui/dialog/inkscape-preferences.cpp:513
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
@@ -6870,68 +6914,68 @@ msgstr ""
 "སྤུས་ཚད་ལེགས་ཤོམ་ཨིན་རུང་ རྒྱས་ཟུམ་མཐོ་བའི་སྐབས་ལུ་ བཀྲམ་སྟོན་འདི་གནམ་མེད་ས་མེད་ལྷོད་འོང་(བིཊི་མེཔ་ཕྱིར་"
 "འདྲེན་འདི་གིས་ ཨ་རྟག་ར་སྤུས་ཚད་ལེགས་ཤོམ་ལག་ལེན་འཐབ་ཨིན་)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:502
+#: ../src/ui/dialog/inkscape-preferences.cpp:515
 msgid "Better quality, but slower display"
 msgstr "སྤུས་ཚད་དྲག་རུང་ བཀྲམ་སྟོན་ལྷོད་པ་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:504
+#: ../src/ui/dialog/inkscape-preferences.cpp:517
 msgid "Average quality, acceptable display speed"
 msgstr "སྤུས་ཚད་ཆ་སྙོམས་འབད་རུང་ བཀྲམ་སྟོན་མགྱོགས་ཚད་དང་ལེན་འབད་བཏུབ་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:506
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 #, fuzzy
 msgid "Lower quality (some artifacts), but display is faster"
 msgstr "སྤུས་ཚད་དམའ་རུང་ (རྒྱལ་རབས་ཅན་གྱི་དངོས་པོ་ལ་ལོ་ཅིག་) བཀྲམ་སྟོན་འདི་མགྱོགས་དྲགས་འོངམ་ཨིན་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:508
+#: ../src/ui/dialog/inkscape-preferences.cpp:521
 #, fuzzy
 msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr ""
 "སྤུས་ཚད་དམའ་ཤོས་ཨིན་རུང་ (ཆ་འཇོག་འབད་བཏུབ་པའི་རྒྱལ་རབས་ཅན་གྱི་དངོས་པོ་)བཀྲམ་སྟོན་འདི་ མགྱོགས་ཤོས་"
 "ཨིན་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:510
+#: ../src/ui/dialog/inkscape-preferences.cpp:523
 msgid "Filters"
 msgstr "ཚགས་མ་ཚུ་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:516
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Select in all layers"
 msgstr "བང་རིམ་ཆ་མཉམ་ནང་ལུ་སེལ་འཐུ་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:517
+#: ../src/ui/dialog/inkscape-preferences.cpp:530
 msgid "Select only within current layer"
 msgstr "ད་ལྟོའི་བང་རིམ་གི་ནང་འཁོད་ནང་རྐྱངམ་ཅིག་སེལ་འཐུ་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:518
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "Select in current layer and sublayers"
 msgstr "ད་ལྟོའི་བང་རིམ་དང་ཡན་ལག་བང་རིམ་ཚུ་ནང་ལུ་ སེལ་འཐུ་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:519
+#: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "Ignore hidden objects"
 msgstr "སྦ་བཞག་ཡོད་མི་དངོས་པོ་ཚུ་སྣང་མེད་སབེ་བཞག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:520
+#: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid "Ignore locked objects"
 msgstr "ལྡེ་མིག་རྐྱབས་ཡོད་པའི་དངོས་པོ་ཚུ་སྣང་མེད་སྦེ་བཞག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:521
+#: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Deselect upon layer change"
 msgstr "བང་རིམ་བསྒྱུར་བཅོས་གུར་སེལ་འཐུ་འབད་ནི་ལས་བཤོལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:523
+#: ../src/ui/dialog/inkscape-preferences.cpp:536
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "ཚད་འཛིན+/་ཨེ་ མཆོང་ལྡེ་ , སོར་ལྡེ་+ མཆོང་ལྡེ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:538
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr "ལྡེ་སྒྲོམ་སེལ་འཐུའི་བརྡ་བཀོད་ཚུ་ བང་རིམ་ཆ་མཉམ་ནང་གི་དངོས་པོའི་གུར་ ལཱ་གཡོག་འབད་བཏུབ་སྦེ་བཟོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:527
+#: ../src/ui/dialog/inkscape-preferences.cpp:540
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr ""
 "ལྡེ་སྒྲོམ་སེལ་འཐུའི་བརྡ་བཀོད་ཚུ་ ད་ལྟོའི་བང་རིམ་ནང་གི་དངོས་པོའི་གུར་རྐྱངམ་ཅིག་ ལཱ་གཡོག་འབད་བཏུབ་སྦེ་བཟོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:542
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
@@ -6939,7 +6983,7 @@ msgstr ""
 "ལྡེ་སྒྲོམ་སེལ་འཐུའི་བརྡ་བཀོད་ཚུ་ ད་ལྟོའི་བང་རིམ་དང་ དེའི་ཡན་ལག་བང་རིམ་ཆ་མཉམ་ནང་གི་དངོསཔོའི་གུར་ ལཱ་"
 "གཡོག་འབད་བཏུབ་སྦེ་བཟོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden group or layer)"
@@ -6947,7 +6991,7 @@ msgstr ""
 "སྦ་བཞག་ཡོད་མི་དངོས་པོ་ཚུ་སེལ་འཐུ་འབད་ཚུགསཔ་བཟོ་ནིའི་དོན་ལུ་ འ་ནི་འདི་ཞིབ་དཔྱད་འབད་ནི་བཤོལ།(ཁོང་ར་"
 "ཚུ་གི་དང་ ཡང་ན་ སྦ་བཞག་ཡོད་མི་སྡེ་ཚན་དང་ ཡང་ན་བང་རིམ་ནང་ལུ་སྡོད་པའི་ཐོག་ལས་འབད་དགོཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:533
+#: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked group or layer)"
@@ -6956,7 +7000,7 @@ msgstr ""
 "(ཁོང་ར་ཚུ་གིས་དང་ ཡང་ན་ ལྡེ་མིག་བརྐྱབས་ཡོད་པའི་སྡེ་ཚན་ནང་ལུ་དང་ ཡང་ན་བང་རིམ་་ནང་ལུ་སྡོད་དེ་འབད་"
 "དགོཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:536
+#: ../src/ui/dialog/inkscape-preferences.cpp:549
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
@@ -6964,23 +7008,23 @@ msgstr ""
 "ད་ལྟོའི་བང་རིམ་བསྒྱུར་བཅོས་འགྱོཝ་ད་ལུ་ ད་ལྟོའི་དངོས་པོ་ཚུ་སེལ་འཐུ་འབད་དེ་བཞག་ཚུགས་ནིའི་དོན་ལུ་ འ་ནི་འདི་"
 "ཞིབ་དཔྱད་འབད་ནི་ལས་བཤོལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:538
+#: ../src/ui/dialog/inkscape-preferences.cpp:551
 msgid "Selecting"
 msgstr "སེལ་འཐུ་འབད་དོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:545
+#: ../src/ui/dialog/inkscape-preferences.cpp:558
 msgid "Default export resolution:"
 msgstr "ཕྱིར་འདྲེན་ཧུམ་ཆ་སྔོན་སྒརིག་འབད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:546
+#: ../src/ui/dialog/inkscape-preferences.cpp:559
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr "བིཊི་མེཔ་ཧུམ་ཆ་དེ་(ཨིནཅི་རེ་ལུ་ཚག་རེ་ནང་)ཕྱིར་འདྲེན་ཌའི་ལོག་ནང་ལུ་སྔོན་སྒརིག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:547
+#: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "Import bitmap as <image>"
 msgstr "བིཊི་མེཔ་དེ་<image>སྦེ་ནང་འདྲེན་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:549
+#: ../src/ui/dialog/inkscape-preferences.cpp:562
 msgid ""
 "When on, an imported bitmap creates an <image> element; otherwise it is a "
 "rectangle with bitmap fill"
@@ -6988,11 +7032,11 @@ msgstr ""
 "ཨོན་འབད་ཡོད་པའིསྐབས་ལུ་ ནང་འདྲེན་འབད་ཡོད་པའི་བིཊི་མེབ་དེ་གིས་<image>རྒྱུ་རྫས་དེ་གསར་བསྐྲུན་འབདཝ་"
 "ཨིན། དེ་མེན་པ་ཅིན་ "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:550
+#: ../src/ui/dialog/inkscape-preferences.cpp:563
 msgid "Add label comments to printing output"
 msgstr "དཔར་བསྐྲུན་འབད་ནིའི་ཨའུཊི་པུཊི་ལུ་ ཁ་ཡིག་བསམ་བཀོད་ཁ་སྐོང་རྐྱབས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:552
+#: ../src/ui/dialog/inkscape-preferences.cpp:565
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -7000,19 +7044,19 @@ msgstr ""
 "ཨོན་ཡོད་པའི་སྐབས་ལུ་ དངོས་པོའི་དོན་ལུ་དེའི་ཁ་ཡིག་དང་བཅས་ལྷག་སྟོན་འབད་ཡོད་པའི་ཨའུཊི་པུཊི་དེ་མིང་རྟགས་"
 "བཀལ་བའི་ཐོག་ལས་ རགས་པའི་དཔར་བསྐྲུན་ཨའུཔུཊི་ལུ་བསམ་བཀོད་དེ་ཁ་སྐོང་བརྐྱབ་འོང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:554
+#: ../src/ui/dialog/inkscape-preferences.cpp:567
 msgid "Max recent documents:"
 msgstr "འཕྲལ་གྱི་ཡིག་ཆ་མང་མཐའ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:555
+#: ../src/ui/dialog/inkscape-preferences.cpp:568
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr "ཡིག་སྣོད་དཀར་ཆག་ནང་ལུ་འཕྲལ་གྱི་ཐོ་ཡིག་་དེ་ཁ་ཕྱེ་ཟེར་མི་གི་རིང་ཚད་མང་དྲག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:557
+#: ../src/ui/dialog/inkscape-preferences.cpp:570
 msgid "Simplification threshold:"
 msgstr "འཇམ་སམ་བཟོ་ནའི་ ཐེརེཤ་ཧཱོལ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:558
+#: ../src/ui/dialog/inkscape-preferences.cpp:571
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
@@ -7022,47 +7066,47 @@ msgstr ""
 "ལུ་བརྡ་བཀོད་དེ་ཚར་ལེ་ཤ་ཅིག་ལས་བཀོལ་འབད་བ་ཅིན་ འདི་གིས་ཧེང་བཀལ་དྲག་ཤུལ་ཅན་གྱི་ཐོག་ལས་བྱ་བ་འབདཝ་"
 "ཨིན། ཐེམ་ནི་གི་ཤུལ་ལས་ལོག་སྟེ་ལས་བཀོལ་འབད་མི་འདི་གིས་ སྔོན་སྒྲིག་ཐེརེཤ་ཧཱོལ་དེ་སོར་ཆུད་འབདཝ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "2x2"
 msgstr "༢x༢"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "4x4"
 msgstr "༤x༤"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "8x8"
 msgstr "༨x༨"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "16x16"
 msgstr "༡༦x༡༦"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:564
+#: ../src/ui/dialog/inkscape-preferences.cpp:577
 msgid "Oversample bitmaps:"
 msgstr "དཔེ་ཚད་བིཊི་མེཔསི་གི་ལྟག་ལུ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:566
+#: ../src/ui/dialog/inkscape-preferences.cpp:579
 msgid "Clipping and masking:"
 msgstr "བཏོག་ནི་དང་ གདོང་ཁེབས་གཏང་ནི:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:567
+#: ../src/ui/dialog/inkscape-preferences.cpp:580
 msgid "Use the topmost selected object as a clipping path or mask"
 msgstr ""
 "སེལ་འཐུ་འབད་དེ་ཡོད་མི་སྤྱི་ཏོག་གི་དངོས་པོ་དེ་ འཛིན་མའི་འགྲུལ་ལམ་དང་ གདོང་ཁེབས་སྦེ་ལག་ལེན་འཐབ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:569
+#: ../src/ui/dialog/inkscape-preferences.cpp:582
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "སེལ་འཐུ་འབད་དེ་ཡོད་མི་མཇུག་གི་དངོས་པོ་དེ་ འཛིན་ནིའི་འགྲུལ་ལམ་ ཡང་ན་ གདོང་ཁེབས་སྦེ་ལག་ལེན་འཐབ་ནིའི་"
 "དོན་ལུ་ འ་ནི་འདི་ཞིབ་དཔྱད་འབད་ནི་ལས་བཤོལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:570
+#: ../src/ui/dialog/inkscape-preferences.cpp:583
 msgid "Remove clipping path or mask after applying"
 msgstr "མཇུག་སྤྱོད་འབད་འབའི་ཤུལ་ལས་ འཛིན་ནིའི་འགྲུལ་ལམ་དང ཡང་ན་ གདོང་ཁེབས་རྩ་བསྐྲད་གཏང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:572
+#: ../src/ui/dialog/inkscape-preferences.cpp:585
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
@@ -7070,17 +7114,17 @@ msgstr ""
 "མཇུག་སྤྱོད་འབད་བའི་ཤུལ་ལས་ པར་རིས་ནང་ལུ་ དངོས་པོ་དེ་འཛིན་ནིའི་འགྲུལ་ལམ་དང ་ཡང་ན་ གདོང་ཁེབས་སྦེ་"
 "ལག་ལེན་འཐབ་ཡོད་མི་དེ་ རྩ་བསྐྲད་གཏང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:573
+#: ../src/ui/dialog/inkscape-preferences.cpp:586
 msgid "Use a pressure sensitive tablet or other device (requires restart)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:575
+#: ../src/ui/dialog/inkscape-preferences.cpp:588
 msgid ""
-"Use the capablities of a tablet or other pressure sensitive device. Disable "
+"Use the capabilities of a tablet or other pressure sensitive device. Disable "
 "this only if you have problems with the tablet."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:577
+#: ../src/ui/dialog/inkscape-preferences.cpp:590
 msgid "Misc"
 msgstr "མིསིཀི།"
 
@@ -7813,63 +7857,63 @@ msgstr "<b>%1</b>ལུ་ཝ་ཡིཊི་བོཊི་གི་མགྲ
 #: ../src/ui/stock-items.cpp:192 ../src/ui/stock-items.cpp:195
 #: ../src/ui/stock-items.cpp:196 ../src/ui/stock-items.cpp:197
 #: ../src/ui/stock-items.cpp:198 ../src/ui/stock-items.cpp:199
-#: ../src/ui/view/edit-widget.cpp:340 ../src/ui/view/edit-widget.cpp:345
-#: ../src/ui/view/edit-widget.cpp:353 ../src/ui/view/edit-widget.cpp:358
-#: ../src/ui/view/edit-widget.cpp:363 ../src/ui/view/edit-widget.cpp:368
-#: ../src/ui/view/edit-widget.cpp:373 ../src/ui/view/edit-widget.cpp:378
-#: ../src/ui/view/edit-widget.cpp:391 ../src/ui/view/edit-widget.cpp:396
-#: ../src/ui/view/edit-widget.cpp:410 ../src/ui/view/edit-widget.cpp:414
-#: ../src/ui/view/edit-widget.cpp:418 ../src/ui/view/edit-widget.cpp:422
-#: ../src/ui/view/edit-widget.cpp:426 ../src/ui/view/edit-widget.cpp:430
-#: ../src/ui/view/edit-widget.cpp:444 ../src/ui/view/edit-widget.cpp:448
-#: ../src/ui/view/edit-widget.cpp:452 ../src/ui/view/edit-widget.cpp:483
-#: ../src/ui/view/edit-widget.cpp:492 ../src/ui/view/edit-widget.cpp:496
-#: ../src/ui/view/edit-widget.cpp:500 ../src/ui/view/edit-widget.cpp:504
-#: ../src/ui/view/edit-widget.cpp:508 ../src/ui/view/edit-widget.cpp:512
-#: ../src/ui/view/edit-widget.cpp:516 ../src/ui/view/edit-widget.cpp:520
-#: ../src/ui/view/edit-widget.cpp:524 ../src/ui/view/edit-widget.cpp:528
-#: ../src/ui/view/edit-widget.cpp:532 ../src/ui/view/edit-widget.cpp:629
-#: ../src/ui/view/edit-widget.cpp:638 ../src/ui/view/edit-widget.cpp:642
-#: ../src/ui/view/edit-widget.cpp:646 ../src/ui/view/edit-widget.cpp:650
-#: ../src/ui/view/edit-widget.cpp:654 ../src/ui/view/edit-widget.cpp:658
-#: ../src/ui/view/edit-widget.cpp:662 ../src/ui/view/edit-widget.cpp:666
-#: ../src/ui/view/edit-widget.cpp:670 ../src/ui/view/edit-widget.cpp:674
-#: ../src/ui/view/edit-widget.cpp:678 ../src/ui/view/edit-widget.cpp:682
-#: ../src/ui/view/edit-widget.cpp:686 ../src/ui/view/edit-widget.cpp:690
-#: ../src/ui/view/edit-widget.cpp:694 ../src/ui/view/edit-widget.cpp:698
-#: ../src/ui/view/edit-widget.cpp:703 ../src/ui/view/edit-widget.cpp:709
-#: ../src/ui/view/edit-widget.cpp:713 ../src/ui/view/edit-widget.cpp:763
-#: ../src/ui/view/edit-widget.cpp:768 ../src/ui/view/edit-widget.cpp:804
-#: ../src/ui/view/edit-widget.cpp:809 ../src/ui/view/edit-widget.cpp:814
-#: ../src/ui/view/edit-widget.cpp:818 ../src/ui/view/edit-widget.cpp:822
-#: ../src/ui/view/edit-widget.cpp:826 ../src/ui/view/edit-widget.cpp:830
-#: ../src/ui/view/edit-widget.cpp:834 ../src/ui/view/edit-widget.cpp:838
-#: ../src/ui/view/edit-widget.cpp:842 ../src/ui/view/edit-widget.cpp:846
-#: ../src/ui/view/edit-widget.cpp:850 ../src/ui/view/edit-widget.cpp:855
-#: ../src/ui/view/edit-widget.cpp:859 ../src/ui/view/edit-widget.cpp:863
-#: ../src/ui/view/edit-widget.cpp:867 ../src/ui/view/edit-widget.cpp:872
-#: ../src/ui/view/edit-widget.cpp:876 ../src/ui/view/edit-widget.cpp:880
-#: ../src/ui/view/edit-widget.cpp:884 ../src/ui/view/edit-widget.cpp:888
-#: ../src/ui/view/edit-widget.cpp:892 ../src/ui/view/edit-widget.cpp:896
-#: ../src/ui/view/edit-widget.cpp:900 ../src/ui/view/edit-widget.cpp:904
-#: ../src/ui/view/edit-widget.cpp:908 ../src/ui/view/edit-widget.cpp:912
+#: ../src/ui/view/edit-widget.cpp:342 ../src/ui/view/edit-widget.cpp:347
+#: ../src/ui/view/edit-widget.cpp:355 ../src/ui/view/edit-widget.cpp:360
+#: ../src/ui/view/edit-widget.cpp:365 ../src/ui/view/edit-widget.cpp:370
+#: ../src/ui/view/edit-widget.cpp:375 ../src/ui/view/edit-widget.cpp:380
+#: ../src/ui/view/edit-widget.cpp:393 ../src/ui/view/edit-widget.cpp:398
+#: ../src/ui/view/edit-widget.cpp:412 ../src/ui/view/edit-widget.cpp:416
+#: ../src/ui/view/edit-widget.cpp:420 ../src/ui/view/edit-widget.cpp:424
+#: ../src/ui/view/edit-widget.cpp:428 ../src/ui/view/edit-widget.cpp:432
+#: ../src/ui/view/edit-widget.cpp:446 ../src/ui/view/edit-widget.cpp:450
+#: ../src/ui/view/edit-widget.cpp:454 ../src/ui/view/edit-widget.cpp:485
+#: ../src/ui/view/edit-widget.cpp:494 ../src/ui/view/edit-widget.cpp:498
+#: ../src/ui/view/edit-widget.cpp:502 ../src/ui/view/edit-widget.cpp:506
+#: ../src/ui/view/edit-widget.cpp:510 ../src/ui/view/edit-widget.cpp:514
+#: ../src/ui/view/edit-widget.cpp:518 ../src/ui/view/edit-widget.cpp:522
+#: ../src/ui/view/edit-widget.cpp:526 ../src/ui/view/edit-widget.cpp:530
+#: ../src/ui/view/edit-widget.cpp:534 ../src/ui/view/edit-widget.cpp:631
+#: ../src/ui/view/edit-widget.cpp:640 ../src/ui/view/edit-widget.cpp:644
+#: ../src/ui/view/edit-widget.cpp:648 ../src/ui/view/edit-widget.cpp:652
+#: ../src/ui/view/edit-widget.cpp:656 ../src/ui/view/edit-widget.cpp:660
+#: ../src/ui/view/edit-widget.cpp:664 ../src/ui/view/edit-widget.cpp:668
+#: ../src/ui/view/edit-widget.cpp:672 ../src/ui/view/edit-widget.cpp:676
+#: ../src/ui/view/edit-widget.cpp:680 ../src/ui/view/edit-widget.cpp:684
+#: ../src/ui/view/edit-widget.cpp:688 ../src/ui/view/edit-widget.cpp:692
+#: ../src/ui/view/edit-widget.cpp:696 ../src/ui/view/edit-widget.cpp:700
+#: ../src/ui/view/edit-widget.cpp:705 ../src/ui/view/edit-widget.cpp:711
+#: ../src/ui/view/edit-widget.cpp:715 ../src/ui/view/edit-widget.cpp:765
+#: ../src/ui/view/edit-widget.cpp:770 ../src/ui/view/edit-widget.cpp:806
+#: ../src/ui/view/edit-widget.cpp:811 ../src/ui/view/edit-widget.cpp:816
+#: ../src/ui/view/edit-widget.cpp:820 ../src/ui/view/edit-widget.cpp:824
+#: ../src/ui/view/edit-widget.cpp:828 ../src/ui/view/edit-widget.cpp:832
+#: ../src/ui/view/edit-widget.cpp:836 ../src/ui/view/edit-widget.cpp:840
+#: ../src/ui/view/edit-widget.cpp:844 ../src/ui/view/edit-widget.cpp:848
+#: ../src/ui/view/edit-widget.cpp:852 ../src/ui/view/edit-widget.cpp:857
+#: ../src/ui/view/edit-widget.cpp:861 ../src/ui/view/edit-widget.cpp:865
+#: ../src/ui/view/edit-widget.cpp:869 ../src/ui/view/edit-widget.cpp:874
+#: ../src/ui/view/edit-widget.cpp:878 ../src/ui/view/edit-widget.cpp:882
+#: ../src/ui/view/edit-widget.cpp:886 ../src/ui/view/edit-widget.cpp:890
+#: ../src/ui/view/edit-widget.cpp:894 ../src/ui/view/edit-widget.cpp:898
+#: ../src/ui/view/edit-widget.cpp:902 ../src/ui/view/edit-widget.cpp:906
+#: ../src/ui/view/edit-widget.cpp:910 ../src/ui/view/edit-widget.cpp:914
 msgid "PLACEHOLDER, do not translate"
 msgstr "PLACEHOLDER, do not translate"
 
-#: ../src/ui/view/edit-widget.cpp:997
+#: ../src/ui/view/edit-widget.cpp:999
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
-#: ../src/ui/view/edit-widget.cpp:1056 ../src/widgets/desktop-widget.cpp:248
+#: ../src/ui/view/edit-widget.cpp:1058 ../src/widgets/desktop-widget.cpp:250
 msgid "Zoom drawing if window size changes"
 msgstr "སྒོ་སྒྲིག་གི་ཚད་དེ་བསྒྱུར་བཅོས་འགྱོ་བ་ཅིན་ པར་རིས་འབྲི་ནི་དེ་རྒྱས་ཟུམ་འབད།"
 
-#: ../src/ui/view/edit-widget.cpp:1077 ../src/widgets/desktop-widget.cpp:302
+#: ../src/ui/view/edit-widget.cpp:1079 ../src/widgets/desktop-widget.cpp:304
 msgid "Cursor coordinates"
 msgstr "འོད་རྟགས་སྙོམ།"
 
 #. display the initial welcome message in the statusbar
-#: ../src/ui/view/edit-widget.cpp:1094 ../src/widgets/desktop-widget.cpp:334
+#: ../src/ui/view/edit-widget.cpp:1096 ../src/widgets/desktop-widget.cpp:336
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -7878,7 +7922,7 @@ msgstr ""
 "ཧེནཌི་ལག་ཆས་ཚུ་ལག་ལེན་འཐབ། དེ་ཚུ་ སྤོ་བཤུད་འབད་ནིི་དང་ ཡང་ན་ བཟོ་བསྒྱུར་འབད་ནིའི་དོན་ལུ་ སེལ་འཐུ་"
 "འབད་མི་(མདའ་རྟགས་) ལག་ལེན་འཐབ།"
 
-#: ../src/ui/view/edit-widget.cpp:1196 ../src/widgets/desktop-widget.cpp:560
+#: ../src/ui/view/edit-widget.cpp:1196 ../src/widgets/desktop-widget.cpp:562
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -7892,11 +7936,11 @@ msgstr ""
 "ཁྱོད་ཀྱིས་སྲུང་བཞག་མ་འབདཝ་ལས་ཁ་བསྡམ་པ་ཅིན་ ཁྱོད་ཀྱི་བསྒྱུར་བཅོས་ཚུ་ བཏོན་བཀོག་འོང་།"
 
 #: ../src/ui/view/edit-widget.cpp:1207 ../src/ui/view/edit-widget.cpp:1254
-#: ../src/widgets/desktop-widget.cpp:576 ../src/widgets/desktop-widget.cpp:640
+#: ../src/widgets/desktop-widget.cpp:578 ../src/widgets/desktop-widget.cpp:642
 msgid "Close _without saving"
 msgstr "སྲུང་བཞག་མ་འབད་བར་ཁ་བསྡམས། (_w)"
 
-#: ../src/ui/view/edit-widget.cpp:1242 ../src/widgets/desktop-widget.cpp:623
+#: ../src/ui/view/edit-widget.cpp:1242 ../src/widgets/desktop-widget.cpp:625
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -9901,37 +9945,37 @@ msgstr "དཔེ་གཞི་སྦྲེལ་རྟགས་བཀོད།
 msgid "Pattern offset"
 msgstr "པདེ་གཞི་པར་ལེན།"
 
-#: ../src/widgets/desktop-widget.cpp:392
+#: ../src/widgets/desktop-widget.cpp:394
 #, fuzzy, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d - ཨིངཀིསི་ཀེབ།"
 
-#: ../src/widgets/desktop-widget.cpp:394
+#: ../src/widgets/desktop-widget.cpp:396
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - ཨིངཀིསི་ཀེབ།"
 
-#: ../src/widgets/desktop-widget.cpp:398
+#: ../src/widgets/desktop-widget.cpp:400
 #, fuzzy, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s -ཨིངཀིསི་ཀེབ།"
 
-#: ../src/widgets/desktop-widget.cpp:400
+#: ../src/widgets/desktop-widget.cpp:402
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s -ཨིངཀིསི་ཀེབ།"
 
 #. Family frame
-#: ../src/widgets/font-selector.cpp:148
+#: ../src/widgets/font-selector.cpp:150
 msgid "Font family"
 msgstr "ཡིག་གཟུགས་ཀྱི་རིགས་ཚན།"
 
 #. Style frame
-#: ../src/widgets/font-selector.cpp:179
+#: ../src/widgets/font-selector.cpp:181
 msgid "Style"
 msgstr "བཟོ་རྣམ།"
 
-#: ../src/widgets/font-selector.cpp:217
+#: ../src/widgets/font-selector.cpp:219
 msgid "Font size:"
 msgstr "ཡིག་གཟུགས་ཀྱི་ཚད:"
 
@@ -9939,7 +9983,7 @@ msgstr "ཡིག་གཟུགས་ཀྱི་ཚད:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:589 ../src/widgets/toolbox.cpp:3730
+#: ../src/widgets/font-selector.cpp:594 ../src/widgets/toolbox.cpp:3730
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -10104,7 +10148,7 @@ msgstr "ཚོས་གཞི་བཀག་བཞག"
 msgid "Gradient editor"
 msgstr "སྟེགས་རིས་ཞུན་དག་པ།"
 
-#: ../src/widgets/gradient-vector.cpp:1172
+#: ../src/widgets/gradient-vector.cpp:1169
 msgid "Change gradient stop color"
 msgstr "སྟེགས་རིས་བཀག་པའི་ཚོས་གཞི་ བསྒྱུར་བཅོས་འབད་"
 
@@ -10910,6 +10954,7 @@ msgid "Maximum segment length"
 msgstr "ཆ་བགོས་རིང་ཚད་ཀྱི་མང་མཐའ།"
 
 #: ../share/extensions/addnodes.inx.h:3 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/radiusrand.inx.h:3
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:4
@@ -10995,7 +11040,7 @@ msgstr ""
 msgid "Less Light"
 msgstr ""
 
-#: ../share/extensions/color_lesssaturation.inx .h:2
+#: ../share/extensions/color_lesssaturation.inx.h:2
 #, fuzzy
 msgid "Less Saturation"
 msgstr "མཐའ་ཚད།"
@@ -11133,6 +11178,11 @@ msgstr ""
 msgid "Embed All Images"
 msgstr "གཟུགས་བརྙན་ཚུ་ཆ་མཉམ་གནས་འདྲེན་འབད།"
 
+#: ../share/extensions/embedimage.inx.h:2
+#, fuzzy
+msgid "Embed only selected images"
+msgstr "གཟུགས་བརྙན་ཚུ་ཆ་མཉམ་གནས་འདྲེན་འབད།"
+
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
 msgstr "ཨི་པི་ཨེསི་ ཨིན་པུཊི།"
@@ -11160,6 +11210,19 @@ msgstr "LaTeX མན་ངག"
 #: ../share/extensions/eqtexsvg.inx.h:2
 msgid "LaTeX formula: "
 msgstr "LaTeX མན་ངག:"
+
+#: ../share/extensions/export_gimp_palette.inx.h:1
+msgid "Export as GIMP Palette"
+msgstr ""
+
+#: ../share/extensions/export_gimp_palette.inx.h:2
+msgid "Exports the colors of this document as GIMP Palette"
+msgstr ""
+
+#: ../share/extensions/export_gimp_palette.inx.h:3
+#, fuzzy
+msgid "GIMP Palette (*.gpl)"
+msgstr "ཇི་ཨའི་ཨེམ་པི་ སྟེགས་རིས།(*.ggr)"
 
 #: ../share/extensions/extractimage.inx.h:1
 msgid "Extract One Image"
@@ -11191,6 +11254,93 @@ msgstr "ལེབ་ཏེབ་ཀྱི་ཚད།"
 msgid "Flatten Beziers"
 msgstr "བི་ཛི་ཡར་ལེབ་ཏེམབཟོ།"
 
+#: ../share/extensions/funcplot.inx.h:1
+msgid "Calculate first derivative numerically"
+msgstr "འགྱུར་བ་དང་པམ་དེ་ ཨང་གྲངས་ཀྱི་ཐོག་ལས་རྩིས་སྟོན།"
+
+#: ../share/extensions/funcplot.inx.h:2
+#, fuzzy
+msgid "Draw Axes"
+msgstr "བཤེད་བཟུང་ཚུ་བྲིས།"
+
+#: ../share/extensions/funcplot.inx.h:3
+msgid "End x-value"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:4
+msgid "First derivative"
+msgstr "འགྱུར་བ་དང་པ།"
+
+#: ../share/extensions/funcplot.inx.h:5
+#, fuzzy
+msgid "Function"
+msgstr "ལས་འགན།"
+
+#: ../share/extensions/funcplot.inx.h:6
+msgid "Function Plotter"
+msgstr "ལས་འགན་ པོལོ་ཊར།"
+
+#: ../share/extensions/funcplot.inx.h:8
+msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:9
+msgid "Multiply x-range by 2*pi"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:10
+msgid "Range and Sampling"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:11
+#, fuzzy
+msgid "Remove rectangle"
+msgstr "གྲུ་བཞི་ནར་མོ་གསར་བསྐྲུན་འབད་"
+
+#: ../share/extensions/funcplot.inx.h:13
+#, fuzzy
+msgid "Samples"
+msgstr "དབྱིབས་ཚུ།"
+
+#: ../share/extensions/funcplot.inx.h:14
+#, fuzzy
+msgid "Start x-value"
+msgstr "ཁྱད་ཆོས་གནཧ་གོང་།"
+
+#: ../share/extensions/funcplot.inx.h:15
+msgid ""
+"The following functions are available: (the available functions are the "
+"standard python math functions) ceil(x); fabs(x); floor(x); fmod(x,y); frexp"
+"(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt"
+"(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan"
+"(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and "
+"e are also available."
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:16
+msgid "y-value of rectangle's bottom"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:17
+#, fuzzy
+msgid "y-value of rectangle's top"
+msgstr "གྲུ་བཞི་ནར་མོ་གི་མཐོ་ཚད།"
+
+#: ../share/extensions/g2pngs.inx.h:1
+#, fuzzy
+msgid "Directory"
+msgstr "ཐད་ཀར།"
+
+#: ../share/extensions/g2pngs.inx.h:3
+#, fuzzy
+msgid "Groups to PNGs"
+msgstr "སྡེ་ཚན་ཚུ།"
+
+#: ../share/extensions/g2pngs.inx.h:4
+#, fuzzy
+msgid "Save layers only"
+msgstr "བང་རིམ་དྭངས་སྒྲིབ་ བསྒྱུར་བཅོས་འབད་"
+
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
 msgstr "ཇི་ཨའི་ཨེམ་པི་ ཨེགསི་སི་ཨེཕ།"
@@ -11202,6 +11352,32 @@ msgstr "ཇི་ཨའི་ཨེམ་པི་ ཨེགསི་སི་�
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
 msgstr "བཤེད་བཟུང་ཚུ་བྲིས།"
+
+#: ../share/extensions/inkscape_help_commandline.inx.h:1
+#, fuzzy
+msgid "Command Line Options"
+msgstr "གནས་ས་ཚུ་གང་འབྱུང་་འབད་"
+
+#: ../share/extensions/inkscape_help_faq.inx.h:1
+msgid "FAQ"
+msgstr ""
+
+#: ../share/extensions/inkscape_help_manual.inx.h:1
+#, fuzzy
+msgid "Inkscape Manual"
+msgstr "ཨིངཀིསི་ཀེབ:བཤུལ་འཚོལ་འབད་ནི།(_r)"
+
+#: ../share/extensions/inkscape_help_relnotes.inx.h:1
+msgid "New in This Version"
+msgstr ""
+
+#: ../share/extensions/inkscape_help_reportabug.inx.h:1
+msgid "Report a Bug"
+msgstr ""
+
+#: ../share/extensions/inkscape_help_svgspec.inx.h:1
+msgid "SVG 1.1 Specification"
+msgstr ""
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
@@ -11227,43 +11403,64 @@ msgstr "བསྐྱར་བསྣོན་ཐབས་ལམ།"
 msgid "Interpolation steps"
 msgstr "བསྐྱར་བསྣོན་རིམ་པ། "
 
-#: ../share/extensions/lindenmayer.inx.h:1
+#: ../share/extensions/lindenmayer.inx .h:1
 msgid "Axiom"
 msgstr "ཨེག་སི་ཡམ།"
 
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx .h:2
 msgid "L-system"
 msgstr "ཨེལ་-རིམ་ལུགས།"
 
-#: ../share/extensions/lindenmayer.inx.h:3
+#: ../share/extensions/lindenmayer.inx .h:3
 msgid "Left angle"
 msgstr "གཡོན་གྱི་གྲུ་ཟུར།"
 
-#: ../share/extensions/lindenmayer.inx.h:4
+#: ../share/extensions/lindenmayer.inx .h:4
 msgid "Order"
 msgstr "གོ་རིམ།"
 
-#: ../share/extensions/lindenmayer.inx.h:6
+#: ../share/extensions/lindenmayer.inx .h:6
 #, no-c-format
 msgid "Randomize angle (%)"
 msgstr "གྲུ་ཟུར་གང་བྱུང་བཟོ།(%)"
 
-#: ../share/extensions/lindenmayer.inx.h:8
+#: ../share/extensions/lindenmayer.inx .h:8
 #, no-c-format
 msgid "Randomize step (%)"
 msgstr "རིམ་པ་གང་འབྱུང་བཟོ།(%)"
 
-#: ../share/extensions/lindenmayer.inx.h:10
+#: ../share/extensions/lindenmayer.inx .h:10
 msgid "Right angle"
 msgstr "གཡས་ཀྱི་གྲུ་ཟུར།"
 
-#: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/lindenmayer.inx .h:11
 msgid "Rules"
 msgstr "ལམ་ལུགས།"
 
-#: ../share/extensions/lindenmayer.inx.h:12
+#: ../share/extensions/lindenmayer.inx .h:12
 msgid "Step length (px)"
 msgstr "རིམ་པའི་རིང་ཚད།(པི་ཨེགསི།)"
+
+#: ../share/extensions/lorem_ipsum.inx.h:1
+msgid "Lorem ipsum"
+msgstr ""
+
+#: ../share/extensions/lorem_ipsum.inx.h:2
+#, fuzzy
+msgid "Number of paragraphs"
+msgstr "གྲལ་ཐིག་ཚུ་གི་གྱངས་ཁ།"
+
+#: ../share/extensions/lorem_ipsum.inx.h:3
+msgid "Paragraph length fluctuation (sentences)"
+msgstr ""
+
+#: ../share/extensions/lorem_ipsum.inx.h:5
+msgid "Sentences per paragraph"
+msgstr ""
+
+#: ../share/extensions/markers_strokepaint.inx.h:1
+msgid "Color Markers to Match Stroke"
+msgstr ""
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
@@ -11281,6 +11478,59 @@ msgstr "ཨེགསི་ཊུཌི།"
 msgid "Magnitude"
 msgstr "བོངས་ཚད།"
 
+#: ../share/extensions/outline2svg.inx.h:1
+msgid "ASCII Text with outline markup"
+msgstr ""
+
+#: ../share/extensions/outline2svg.inx.h:2
+#, fuzzy
+msgid "Text Outline File (*.outline)"
+msgstr "ཚིག་ཡིག་ ཡིག་སྣོད།(*.txt)"
+
+#: ../share/extensions/outline2svg.inx.h:3
+#, fuzzy
+msgid "Text Outline Input"
+msgstr "ཚིག་ཡིག་ཨིན་པུཊི།"
+
+#: ../share/extensions/pathalongpath.inx.h:1
+#, fuzzy
+msgid "Copies of the pattern:"
+msgstr "ཤོག་ལེབ་མཐའ་མཚམས་དེ་གི་ཚོས་གཞི།"
+
+#: ../share/extensions/pathalongpath.inx.h:2
+#, fuzzy
+msgid "Deformation type:"
+msgstr "བརྡ་དོན།"
+
+#: ../share/extensions/pathalongpath.inx.h:3
+msgid "Duplicate the pattern before deformation"
+msgstr ""
+
+#: ../share/extensions/pathalongpath.inx.h:5
+#, fuzzy
+msgid "Normal offset"
+msgstr "ཐད་སྙོམས་པར་ལེན།"
+
+#: ../share/extensions/pathalongpath.inx.h:6
+#, fuzzy
+msgid "Pattern along Path"
+msgstr "འགྲུལ་ལམ་གུར་བཙུགས།(_P)"
+
+#: ../share/extensions/pathalongpath.inx.h:7
+#, fuzzy
+msgid "Pattern is vertical"
+msgstr "པདེ་གཞི་པར་ལེན།"
+
+#: ../share/extensions/pathalongpath.inx.h:8
+#, fuzzy
+msgid "Space between copies:"
+msgstr "གྲལ་ཐིག་ཚུ་གི་བར་ན་བར་སྟོང་སྟོན་ནི།"
+
+#: ../share/extensions/pathalongpath.inx.h:9
+#, fuzzy
+msgid "Tangential offset"
+msgstr "ཀེར་ཕྲང་པར་ལེན།"
+
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
 msgstr "པོསིཊི་སིཀིརིཔཊི།"
@@ -11288,6 +11538,24 @@ msgstr "པོསིཊི་སིཀིརིཔཊི།"
 #: ../share/extensions/ps_input.inx.h:3
 msgid "Postscript Input"
 msgstr "པོསིཊི་སིཀིརིཔཊི་ཨིན་པུཊི།"
+
+#: ../share/extensions/radiobutton_example.inx.h:1
+msgid "Developer Examples"
+msgstr ""
+
+#: ../share/extensions/radiobutton_example.inx.h:2
+msgid "RadioButton example"
+msgstr ""
+
+#: ../share/extensions/radiobutton_example.inx.h:3
+#, fuzzy
+msgid "Select option: "
+msgstr "སེལ་འཐུ།"
+
+#: ../share/extensions/radiobutton_example.inx.h:4
+#, fuzzy
+msgid "Select second option: "
+msgstr "ཡིག་ཆ་དེ་ཁ་ཕྱེ་ནིའི་དོན་ལུ་སེལ་འཐུ་འབད།"
 
 #: ../share/extensions/radiusrand.inx.h:1
 #, fuzzy
@@ -11310,6 +11578,12 @@ msgid "Shift nodes"
 msgstr "ནོཌིསི་ མཐུད་"
 
 #: ../share/extensions/radiusrand.inx.h:6
+msgid ""
+"This effect randomly shifts the nodes (and optionally node handles) of the "
+"selected path."
+msgstr ""
+
+#: ../share/extensions/radiusrand.inx.h:7
 msgid "Use normal distribution"
 msgstr "སྤྱིར་གཏང་གི་བགོ་བཀྲམ་ལག་ལེན་འཐབ།"
 
@@ -11424,6 +11698,11 @@ msgstr "ཝིན་ཌོ མེ་ཊ་ཕ་ཡིལ། (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "ཝིན་ཌོ་མེ་ཊ་ཕ་ཡིལ་ཨིནཔུཊི།"
+
+#~ msgid "You cannot put flowtext on a path. Convert flowtext to text first."
+#~ msgstr ""
+#~ "ཁྱོད་ཀྱིས་འབབ་རྒྱུན་ཚིག་ཡིག་དེ་འགྲུལ་ལམ་གུར་བཙུགས་མི་ཚུགས། ཧེ་མ་རང་འབབ་རྒྱུན་ཚིག་ཡིག་དེ་ཚིག་ཡིག་ལུ་"
+#~ "གཞི་བསྒྱུར་འབད།"
 
 #~ msgid "Blur Edge"
 #~ msgstr "མཐའམ་གྲིབ་ཅན་བཟོ།"
@@ -11552,12 +11831,6 @@ msgstr "ཝིན་ཌོ་མེ་ཊ་ཕ་ཡིལ་ཨིནཔུཊ
 
 #~ msgid "Segment Straightener"
 #~ msgstr "ཆ་བགོས་ཕྲང་མི།"
-
-#~ msgid "Calculate first derivative numerically"
-#~ msgstr "འགྱུར་བ་དང་པམ་དེ་ ཨང་གྲངས་ཀྱི་ཐོག་ལས་རྩིས་སྟོན།"
-
-#~ msgid "First derivative"
-#~ msgstr "འགྱུར་བ་དང་པ།"
 
 #~ msgid "Nodes per period"
 #~ msgstr "དུས་ཡུན་རེ་ལུ་ནོཌི་རེ།"
@@ -11857,9 +12130,6 @@ msgstr "ཝིན་ཌོ་མེ་ཊ་ཕ་ཡིལ་ཨིནཔུཊ
 #~ msgstr ""
 #~ "ཨེབ་པའི་སྐབས་ལུ་ མཐོང་ཚུགས་པའི་ཚོས་གཞི་ཚུ་ ཨཱལ་ཕ་མེད་པར་འཐུ་དོ་ཡོདཔ་ཨིནམ་དང་ མ་ཨེབ་པའི་སྐབས་"
 #~ "ལུ་ དེའི་ཚོས་གཞི་ཚུ་ཨཱལ་ཕ་དང་བཅས་མཐུ་དོ་ཡོདཔ་་ཨིན།"
-
-#~ msgid "Function Plotter"
-#~ msgstr "ལས་འགན་ པོལོ་ཊར།"
 
 #~ msgid " relative by "
 #~ msgstr "གིས་འབྲེལ་བའི།"
