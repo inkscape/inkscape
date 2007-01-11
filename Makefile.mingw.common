@@ -119,19 +119,19 @@ RMDIRREC1 = & cd ..
 
 #######  Where is your GTK directory?
 ifndef GTK
-GTK=c:/gtk28
+GTK=c:/gtk210
 endif
 
 ####### Same thing, DOS style
 ifndef GTKDOS
-GTKDOS=c:\gtk28
+GTKDOS=c:\gtk210
 endif
 
 ####### Command to process .po files --> .mo
 MSGFMT = $(GTKDOS)$(S)bin$(S)msgfmt
 
 ####### change me!!
-DTG := 200600801
+DTG := 20070111
 
 endif
 ##########################################################################
@@ -152,7 +152,8 @@ CFLAGS = -Wall -g -O3 -mms-bitfields -DVERSION=$(VERSION) \
 
 ####### Inkboard abilities.
 ####### You must 'make -f Makefile.mingw clean' when turning this on or off
-CFLAGS += -DWITH_INKBOARD -DHAVE_SSL
+CFLAGS += -DWITH_INKBOARD -DHAVE_SSL -DRELAYTOOL_SSL="static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }"
+
 
 ####### IMPLICIT RULES
 .cpp.o:
@@ -169,12 +170,12 @@ CFLAGS += -DWITH_INKBOARD -DHAVE_SSL
 # INCLUDES AND LIBRARIES
 ##########################################################################
 
-GTKINC = -DGLIBMM_DLL \
--I$(GTK)/include/glibmm-2.4 -I$(GTK)/lib/glibmm-2.4/include \
+GTKINC = -I$(GTK)/include/glibmm-2.4 -I$(GTK)/lib/glibmm-2.4/include \
 -I$(GTK)/include/gtkmm-2.4  -I$(GTK)/lib/gtkmm-2.4/include \
 -I$(GTK)/include/gdkmm-2.4  -I$(GTK)/lib/gdkmm-2.4/include \
 -I$(GTK)/include/pangomm-1.4 \
 -I$(GTK)/include/atkmm-1.6 -I$(GTK)/include/cairo  \
+-I$(GTK)/include/cairomm-1.0  \
 -I$(GTK)/include/sigc++-2.0 -I$(GTK)/lib/sigc++-2.0/include \
 -I$(GTK)/include/gtk-2.0 -I$(GTK)/lib/gtk-2.0/include \
 -I$(GTK)/include/atk-1.0 -I$(GTK)/include/pango-1.0 \

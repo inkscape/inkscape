@@ -21,8 +21,8 @@ src$(S)deptool.exe: src$(S)deptool.cpp
 src$(S)make.dep: src$(S)deptool.exe
 	cd src && deptool.exe
 
-$(GTKDOS)$(S)bin$(S)intl.dll:
-	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll $(GTKDOS)$(S)bin$(S)intl.dll
+$(GTKDOS)$(S)bin$(S)libintl-2.dll:
+	$(CP) $(GTKDOS)$(S)bin$(S)intl.dll $(GTKDOS)$(S)bin$(S)libintl-2.dll
 
 ###################################
 # 
@@ -73,8 +73,8 @@ dist:	generated
 	$(MKDIR) inkscape
 	$(CP) src$(S)inkscape.exe inkscape
 	$(CP) src$(S)inkscape.dbg inkscape
-#	$(CP) src$(S)inkview.exe inkscape
-#	$(CP) src$(S)inkview.dbg inkscape
+	$(CP) src$(S)inkview.exe inkscape
+	$(CP) src$(S)inkview.dbg inkscape
 	$(CP) AUTHORS inkscape
 	$(CP) COPYING inkscape
 	$(CP) COPYING.LIB inkscape
@@ -99,6 +99,7 @@ dist:	generated
 	$(CP) $(GTKDOS)$(S)bin$(S)libgtk-win32-2.0-0.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)libgthread-2.0-0.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)libcairo-2.dll inkscape
+	$(CP) $(GTKDOS)$(S)bin$(S)libcairomm-1.0-1.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)libpangocairo-1.0-0.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)libpango-1.0-0.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)libpangoft2-1.0-0.dll inkscape
@@ -114,11 +115,11 @@ dist:	generated
 	$(CP) $(GTKDOS)$(S)bin$(S)msvcr71.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)zlib1.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)iconv.dll inkscape
-	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll inkscape
-	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll inkscape$(S)intl.dll
+	$(CP) $(GTKDOS)$(S)bin$(S)intl.dll inkscape
+	$(CP) $(GTKDOS)$(S)bin$(S)intl.dll inkscape$(S)libintl-2.dll
 	$(CP) $(GTKDOS)$(S)bin$(S)popt1.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)liblcms-1.dll inkscape
-	$(CP) $(GTKDOS)$(S)bin$(S)libloudmouth-1-0.dll inkscape
+#	$(CP) $(GTKDOS)$(S)bin$(S)libloudmouth-1-0.dll inkscape
 #
 #       PERL
 #
@@ -144,7 +145,7 @@ dist:	generated
 	$(CPDIR) $(GTKDOS)$(S)lib$(S)gtk-2.0 inkscape$(S)lib$(S)gtk-2.0
 	$(CPDIR) $(GTKDOS)$(S)lib$(S)glib-2.0 inkscape$(S)lib$(S)glib-2.0
 	$(CPDIR) $(GTKDOS)$(S)lib$(S)locale inkscape$(S)lib$(S)locale
-	$(CPDIR) $(GTKDOS)$(S)lib$(S)pango inkscape$(S)lib$(S)pango
+#	$(CPDIR) $(GTKDOS)$(S)lib$(S)pango inkscape$(S)lib$(S)pango
 #	$(MKDIR) inkscape$(S)fonts
 #	$(CP) $(GTKDOS)$(S)fonts$(S)*.ttf inkscape$(S)fonts
 	$(CPDIR) share inkscape$(S)share
