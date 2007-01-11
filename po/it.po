@@ -11,7 +11,7 @@
 #: ../src/widgets/toolbox.cpp:4133
 msgid ""
 msgstr ""
-"Project-Id-Version: inkscape 0.44+svn\n"
+"Project-Id-Version: inkscape 0.45~pre1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-10 22:45+0100\n"
 "PO-Revision-Date: 2006-12-30 22:53+0100\n"
@@ -154,9 +154,8 @@ msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr "Selezionare <b>un oggetto</b> di cui sparpagliare i cloni in serie."
 
 #: ../src/dialogs/clonetiler.cpp:873
-#, fuzzy
 msgid "Unclump tiled clones"
-msgstr "Colore iniziale dei cloni in serie"
+msgstr "Sparpaglia cloni in serie"
 
 #: ../src/dialogs/clonetiler.cpp:903
 msgid "Select <b>one object</b> whose tiled clones to remove."
@@ -2368,18 +2367,16 @@ msgstr ""
 "questa cartella non verranno caricati."
 
 #: ../src/extension/internal/bluredge.cpp:131
-#, fuzzy
 msgid "Inset/Outset Halo"
-msgstr "Intrudi/Estrudi halo"
+msgstr "Intrudi/Estrudi alone"
 
 #: ../src/extension/internal/bluredge.cpp:133
 msgid "Width"
 msgstr "Larghezza"
 
 #: ../src/extension/internal/bluredge.cpp:133
-#, fuzzy
 msgid "Width in px of the halo"
-msgstr "Larghezza in pixel dell'area di blur"
+msgstr "Larghezza in pixel dell'alone"
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of steps"
@@ -2706,19 +2703,16 @@ msgid "Windows 32-bit Print"
 msgstr "Stampa Windows 32-bit"
 
 #: ../src/extension/internal/wpg-input.cpp:343
-#, fuzzy
 msgid "WPG Input"
-msgstr "Input SVG"
+msgstr "Input WPG"
 
 #: ../src/extension/internal/wpg-input.cpp:348
-#, fuzzy
 msgid "WordPerfect Graphics (*.wpg)"
-msgstr "Scalable Vector Graphic (*.svg)"
+msgstr "WordPerfect Graphic (*.wpg)"
 
 #: ../src/extension/internal/wpg-input.cpp:349
-#, fuzzy
 msgid "Vector graphics format used by Corel WordPerfect"
-msgstr "Fomrato Scalable Vector Graphics come definito dal W3C"
+msgstr "Formato grafico vettoriale usato da Corel WordPerfect"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -2766,9 +2760,8 @@ msgid "Select file to open"
 msgstr "Selezionare il file da aprire"
 
 #: ../src/file.cpp:466
-#, fuzzy
 msgid "Vacuum &lt;defs&gt;"
-msgstr "Definizioni s_uperflue"
+msgstr "Definizioni superflue"
 
 #: ../src/file.cpp:471
 #, c-format
@@ -2815,9 +2808,8 @@ msgid "drawing-%d%s"
 msgstr "disegno-%d%s"
 
 #: ../src/file.cpp:607
-#, fuzzy
 msgid "Select file to save a copy to"
-msgstr "Selezionare il file da salvare"
+msgstr "Selezionare il file in cui salvare una copia"
 
 #: ../src/file.cpp:609 ../src/file.cpp:616
 msgid "Select file to save to"
@@ -2828,23 +2820,20 @@ msgid "No changes need to be saved."
 msgstr "Nessuna modifica da salvare."
 
 #: ../src/file.cpp:852
-#, fuzzy
 msgid "Import"
-msgstr "_Importa..."
+msgstr "Importa"
 
 #: ../src/file.cpp:883
 msgid "Select file to import"
 msgstr "Selezionare il file da importare"
 
 #: ../src/file.cpp:1000
-#, fuzzy
 msgid "Select file to export to"
-msgstr "Selezionare il file da importare"
+msgstr "Selezionare il file su cui esportare"
 
 #: ../src/gradient-context.cpp:176
-#, fuzzy
 msgid "Create default gradient"
-msgstr "Crea gradiente lineare"
+msgstr "Crea gradiente predefinito"
 
 #: ../src/gradient-context.cpp:272
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -2855,9 +2844,8 @@ msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Maiusc</b>: disegna il gradiente attorno al punto iniziale"
 
 #: ../src/gradient-context.cpp:369
-#, fuzzy
 msgid "Invert gradient"
-msgstr "Gradiente lineare"
+msgstr "Inverti gradiente"
 
 #: ../src/gradient-context.cpp:461
 #, c-format
@@ -2894,14 +2882,12 @@ msgid "Radial gradient <b>focus</b>"
 msgstr "<b>Fuoco</b> del gradiente radiale"
 
 #: ../src/gradient-drag.cpp:386
-#, fuzzy
 msgid "Merge gradient handles"
-msgstr "Casualità maniglie dei nodi"
+msgstr "Unisci maniglie del gradiente"
 
 #: ../src/gradient-drag.cpp:530 ../src/gradient-drag.cpp:1091
-#, fuzzy
 msgid "Move gradient handle"
-msgstr "Casualità maniglie dei nodi"
+msgstr "Muovi maniglia del gradiente"
 
 #: ../src/gradient-drag.cpp:669
 #, c-format
@@ -3237,9 +3223,8 @@ msgstr "Livello superiore"
 
 #: ../src/interface.cpp:1044 ../src/interface.cpp:1086
 #: ../src/ui/widget/selected-style.cpp:431
-#, fuzzy
 msgid "Drop color"
-msgstr "Copia colore"
+msgstr "Rilascia colore"
 
 #: ../src/interface.cpp:1101
 msgid "Could not parse SVG data"
@@ -3250,9 +3235,8 @@ msgid "Drop SVG"
 msgstr "Rilascia SVG"
 
 #: ../src/interface.cpp:1200
-#, fuzzy
 msgid "Drop bitmap image"
-msgstr "Importa bitmap come <image>"
+msgstr "Rilascia immagine bitmap"
 
 #: ../src/interface.cpp:1266
 #, c-format
@@ -3305,14 +3289,12 @@ msgid "Node or handle drag canceled."
 msgstr "Nodo o maniglia cancellato."
 
 #: ../src/knotholder.cpp:254
-#, fuzzy
 msgid "Change handle"
-msgstr "Modifica rettangolo"
+msgstr "Modifica maniglia"
 
 #: ../src/knotholder.cpp:306
-#, fuzzy
 msgid "Move handle"
-msgstr "Muovi maniglia del nodo"
+msgstr "Muovi maniglia"
 
 #: ../src/libnrtype/FontFactory.cpp:358
 msgid "Ignoring font without family that will crash Pango"
@@ -3460,9 +3442,8 @@ msgid "Export document to an EPS file"
 msgstr "Esporta il documento come file EPS"
 
 #: ../src/main.cpp:305
-#, fuzzy
 msgid "Export document to a PDF file"
-msgstr "Esporta il documento come file PS"
+msgstr "Esporta il documento come file PDF"
 
 #: ../src/main.cpp:310
 msgid "Convert text object to paths on export (EPS)"
@@ -4971,39 +4952,32 @@ msgstr ""
 "scattare l'angolo"
 
 #: ../src/spiral-context.cpp:460
-#, fuzzy
 msgid "Create spiral"
-msgstr "Crea spirali"
+msgstr "Crea spirale"
 
 #: ../src/splivarot.cpp:66
-#, fuzzy
 msgid "Union"
-msgstr "_Unione"
+msgstr "Unione"
 
 #: ../src/splivarot.cpp:72
-#, fuzzy
 msgid "Intersection"
-msgstr "_Intersezione"
+msgstr "Intersezione"
 
 #: ../src/splivarot.cpp:78
-#, fuzzy
 msgid "Difference"
-msgstr "_Differenza"
+msgstr "Differenza"
 
 #: ../src/splivarot.cpp:84
-#, fuzzy
 msgid "Exclusion"
-msgstr "E_sclusione"
+msgstr "Esclusione"
 
 #: ../src/splivarot.cpp:89
-#, fuzzy
 msgid "Division"
-msgstr "Di_visione"
+msgstr "Divisione"
 
 #: ../src/splivarot.cpp:94
-#, fuzzy
 msgid "Cut path"
-msgstr "Taglia _tracciato"
+msgstr "Taglia tracciato"
 
 #: ../src/splivarot.cpp:111
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
@@ -5045,15 +5019,13 @@ msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "Selezionare l'<b>oggetto</b> da convertire in tracciato."
 
 #: ../src/splivarot.cpp:872
-#, fuzzy
 msgid "Convert stroke to path"
-msgstr "Converte testo in tracciato"
+msgstr "Converti contorno in tracciato"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:875
-#, fuzzy
 msgid "<b>No stroked paths</b> in the selection."
-msgstr "<b>Nessun tracciato contornato</b> da convertire nella selezione."
+msgstr "<b>Nessun tracciato contornato</b> nella selezione."
 
 #: ../src/splivarot.cpp:959
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
@@ -5064,26 +5036,23 @@ msgstr ""
 #: ../src/splivarot.cpp:1079 ../src/splivarot.cpp:1147
 #, fuzzy
 msgid "Create linked offset"
-msgstr "_Crea collegamento"
+msgstr "Crea proiezione collegata"
 
 #: ../src/splivarot.cpp:1080 ../src/splivarot.cpp:1148
-#, fuzzy
 msgid "Create dynamic offset"
-msgstr "Crea una proiezione dinamica"
+msgstr "Crea proiezione dinamica"
 
 #: ../src/splivarot.cpp:1175
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Selezionare il <b>tracciato</b> da intrudere/estrudere."
 
 #: ../src/splivarot.cpp:1392
-#, fuzzy
 msgid "Outset path"
-msgstr "Tracciato estruso"
+msgstr "Estrudi tracciato"
 
 #: ../src/splivarot.cpp:1392
-#, fuzzy
 msgid "Inset path"
-msgstr "Tracciato estruso"
+msgstr "Intrudi tracciaton"
 
 #: ../src/splivarot.cpp:1394
 msgid "<b>No paths</b> to inset/outset in the selection."
@@ -5104,9 +5073,8 @@ msgid "Select <b>path(s)</b> to simplify."
 msgstr "Selezionare il <b>tracciato</b> da semplificare."
 
 #: ../src/splivarot.cpp:1620
-#, fuzzy
 msgid "Simplify"
-msgstr "Se_mplifica"
+msgstr "Semplifica"
 
 #: ../src/splivarot.cpp:1622
 msgid "<b>No paths</b> to simplify in the selection."
@@ -5132,9 +5100,8 @@ msgstr ""
 "l'angolo"
 
 #: ../src/star-context.cpp:472
-#, fuzzy
 msgid "Create star"
-msgstr "Crea spirali"
+msgstr "Crea stella"
 
 #: ../src/text-chemistry.cpp:96
 msgid "Select <b>a text and a path</b> to put text on path."
@@ -5192,28 +5159,24 @@ msgstr ""
 "fluire il testo nella struttura."
 
 #: ../src/text-chemistry.cpp:347
-#, fuzzy
 msgid "Flow text into shape"
-msgstr "_Fluisci in struttura"
+msgstr "Fluisci testo in struttura"
 
 #: ../src/text-chemistry.cpp:368
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Selezionare <b>un testo dinamico</b> da spezzare."
 
 #: ../src/text-chemistry.cpp:431
-#, fuzzy
 msgid "Unflow flowed text"
-msgstr "Il testo dinamico è stato creat"
+msgstr "Spezza testo dinamico"
 
 #: ../src/text-chemistry.cpp:443
-#, fuzzy
 msgid "Select <b>flowed text(s)</b> to convert."
-msgstr "Selezionare <b>un testo dinamico</b> da spezzare."
+msgstr "Selezionare <b>un testo dinamico</b> da convertire."
 
 #: ../src/text-chemistry.cpp:479
-#, fuzzy
 msgid "Convert flowed text to text"
-msgstr "Converte testo in tracciato"
+msgstr "Converti testo dinamica in testo"
 
 #: ../src/text-chemistry.cpp:484
 #, fuzzy
@@ -5234,9 +5197,8 @@ msgstr ""
 "selezionarne una parte."
 
 #: ../src/text-context.cpp:503
-#, fuzzy
 msgid "Create text"
-msgstr "Cancella nodo"
+msgstr "Crea testo"
 
 #: ../src/text-context.cpp:527
 msgid "Non-printable character"
@@ -5501,15 +5463,13 @@ msgid "Trace: Image has no bitmap data"
 msgstr "Vettorizza: L'immagine non contiene bitmap data"
 
 #: ../src/trace/trace.cpp:466
-#, fuzzy
 msgid "Trace: Starting trace..."
-msgstr "Ve_ttorizza bitmap..."
+msgstr "Vettorizza: inizio processo..."
 
 #. ## inform the document, so we can undo
 #: ../src/trace/trace.cpp:569
-#, fuzzy
 msgid "Trace bitmap"
-msgstr "Crea spirali"
+msgstr "Vettorizza bitmap"
 
 #: ../src/trace/trace.cpp:573
 #, c-format
@@ -5532,9 +5492,8 @@ msgid "_Create Link"
 msgstr "_Crea collegamento"
 
 #: ../src/ui/context-menu.cpp:172
-#, fuzzy
 msgid "Create link"
-msgstr "_Crea collegamento"
+msgstr "Crea collegamento"
 
 #. "Ungroup"
 #: ../src/ui/context-menu.cpp:190 ../src/verbs.cpp:2070
@@ -5604,9 +5563,9 @@ msgstr "about.svg"
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of:  name surname (email). Use \n for newline.
 #: ../src/ui/dialog/aboutbox.cpp:265
-#, fuzzy
 msgid "translator-credits"
-msgstr "_Traduttori"
+msgstr "Luca Bruno (luca.br@uno.it)\n"
+"Luca Ferretti (elle.uca@infinito.it)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:219
 #: ../src/ui/dialog/align-and-distribute.cpp:759
@@ -5649,12 +5608,10 @@ msgid "Arrange connector network"
 msgstr "Disponi ordinatamente i connettori di rete selezionati"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:550
-#, fuzzy
 msgid "Unclump"
-msgstr " Spa_rpaglia "
+msgstr " Sparpaglia "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:614
-#, fuzzy
 msgid "Randomize positions"
 msgstr "Posizione casuale"
 
@@ -5940,14 +5897,12 @@ msgid "Show or hide grid"
 msgstr "Mostra o nasconde la griglia"
 
 #: ../src/ui/dialog/document-properties.cpp:242
-#, fuzzy
 msgid "Grid type:"
-msgstr "  tipo: "
+msgstr "Tipo di griglia: "
 
 #: ../src/ui/dialog/document-properties.cpp:242
-#, fuzzy
 msgid "Normal (2D)"
-msgstr "Normale"
+msgstr "Normale (2D)"
 
 #: ../src/ui/dialog/document-properties.cpp:242
 msgid "Axonometric (3D)"
@@ -5988,18 +5943,16 @@ msgid "Spacing _X:"
 msgstr "Spaziatura _X:"
 
 #: ../src/ui/dialog/document-properties.cpp:252
-#, fuzzy
 msgid "Distance between vertical grid lines"
-msgstr "Distanza linee guida verticali"
+msgstr "Distanza tra  linee guida verticali"
 
 #: ../src/ui/dialog/document-properties.cpp:254
 msgid "Spacing _Y:"
 msgstr "Spaziatura _Y:"
 
 #: ../src/ui/dialog/document-properties.cpp:254
-#, fuzzy
 msgid "Distance between horizontal grid lines"
-msgstr "Distanza linee guida orizzontali"
+msgstr "Distanza tra linee guida orizzontali"
 
 #: ../src/ui/dialog/document-properties.cpp:256
 msgid "Angle X:"
@@ -8507,7 +8460,7 @@ msgstr "tutorial-basic.it.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1711
 msgid "tutorial-shapes.svg"
-msgstr "tutorial-shapes.svg"
+msgstr "tutorial-shapes.it.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1715
@@ -11427,18 +11380,16 @@ msgid "Draw Handles"
 msgstr "Disegna maniglie"
 
 #: ../share/extensions/inkscape_help_commandline.inx.h:1
-#, fuzzy
 msgid "Command Line Options"
-msgstr "Posizione casuale"
+msgstr "Opzioni da linea di comando"
 
 #: ../share/extensions/inkscape_help_faq.inx.h:1
 msgid "FAQ"
 msgstr "FAQ"
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
-#, fuzzy
 msgid "Inkscape Manual"
-msgstr "Inkscape: Vetto_rizzazione"
+msgstr "Manuale di Inkscape"
 
 #: ../share/extensions/inkscape_help_relnotes.inx.h:1
 msgid "New in This Version"
@@ -11519,9 +11470,8 @@ msgid "Lorem ipsum"
 msgstr "Lorem ipsum"
 
 #: ../share/extensions/lorem_ipsum.inx.h:2
-#, fuzzy
 msgid "Number of paragraphs"
-msgstr "Numero di righe"
+msgstr "Numero di paragrafi"
 
 #: ../share/extensions/lorem_ipsum.inx.h:3
 msgid "Paragraph length fluctuation (sentences)"
@@ -11571,9 +11521,8 @@ msgid "Copies of the pattern:"
 msgstr "Colore dei bordi della pagina"
 
 #: ../share/extensions/pathalongpath.inx.h:2
-#, fuzzy
 msgid "Deformation type:"
-msgstr "Informazioni"
+msgstr "Tipo di deformazione:"
 
 #: ../share/extensions/pathalongpath.inx.h:3
 msgid "Duplicate the pattern before deformation"
@@ -11621,9 +11570,8 @@ msgid "RadioButton example"
 msgstr ""
 
 #: ../share/extensions/radiobutton_example.inx.h:3
-#, fuzzy
 msgid "Select option: "
-msgstr "Selezione"
+msgstr "Opzioni di selezione:"
 
 #: ../share/extensions/radiobutton_example.inx.h:4
 #, fuzzy
