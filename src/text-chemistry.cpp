@@ -110,7 +110,17 @@ text_put_on_path()
 
     // if a flowed text is selected, convert it to a regular text object
     if (SP_IS_FLOWTEXT(text)) {
+
+        if (!SP_FLOWTEXT(text)->layout.outputExists()) {
+            sp_desktop_message_stack(desktop)->
+                flash(Inkscape::WARNING_MESSAGE, 
+                      _("The flowed text(s) must be <b>visible</b> in order to be put on a path."));
+        }
+
         Inkscape::XML::Node *repr = SP_FLOWTEXT(text)->getAsText();
+
+        if (!repr) return;
+
         Inkscape::XML::Node *parent = SP_OBJECT_REPR(text)->parent();
         parent->appendChild(repr);
 
@@ -455,9 +465,19 @@ flowtext_to_text()
         if (!SP_IS_FLOWTEXT(item))
             continue;
 
-        did = true;
+        if (!SP_FLOWTEXT(item)->layout.outputExists()) {
+            sp_desktop_message_stack(desktop)->
+                flash(Inkscape::WARNING_MESSAGE, 
+                      _("The flowed text(s) must be <b>visible</b> in order to be converted."));
+            return;
+        }
 
         Inkscape::XML::Node *repr = SP_FLOWTEXT(item)->getAsText();
+
+        if (!repr) break;
+
+        did = true;
+
         Inkscape::XML::Node *parent = SP_OBJECT_REPR(item)->parent();
         parent->appendChild(repr);
 
