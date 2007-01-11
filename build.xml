@@ -97,6 +97,7 @@
 	        <exclude name="ast/.*"/>
 	        <exclude name="bonobo/.*"/>
 	        <exclude name="deptool.cpp"/>
+	        <exclude name="test-all.cpp"/>
 	        <exclude name="dialogs/filedialog-win32.cpp"/>
 	        <exclude name="display/testnr.cpp"/>
 	        <exclude name="display/bezier-utils-test.cpp"/>
@@ -112,6 +113,9 @@
 	        <exclude name="extract-uri-test.cpp"/>
 	        <exclude name="helper/units-test.cpp"/>
 	        <!-- exclude name="inkview.cpp"/-->
+	        <exclude name="libnr/test-nr.cpp"/>
+	        <exclude name="libnr/test-nr-main.cpp"/>
+	        <exclude name="libnr/testnr.cpp"/>
 	        <exclude name="libnr/in-svg-plane-test.cpp"/>
 	        <exclude name="libnr/nr-compose-reference.cpp"/>
 	        <exclude name="libnr/nr-compose-test.cpp"/>
@@ -128,10 +132,14 @@
 	        <exclude name="round-test.cpp"/>
 	        <exclude name="sp-gradient-test.cpp"/>
 	        <exclude name="svg/ftos.cpp"/>
+	        <exclude name="svg/test-svg.cpp"/>
+	        <exclude name="svg/test-svg-main.cpp"/>
 	        <exclude name="utest/.*"/>
 	        <exclude name="widgets/test-widgets.cpp"/>
 	        <exclude name="xml/quote-test.cpp"/>
 	        <exclude name="xml/repr-action-test.cpp"/>
+	        <exclude name="xml/test-xml.cpp"/>
+	        <exclude name="xml/test-xml-main.cpp"/>
 	        <exclude name="io/streamtest.cpp"/>
             <!--JABBER-->
 	        <exclude name="pedro/pedrogui.cpp"/>
