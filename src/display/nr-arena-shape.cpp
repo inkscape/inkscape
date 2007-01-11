@@ -1172,8 +1172,7 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
         {
             SPFilterPrimitive *primitive = style->filter.filter->_primitives[i];
             //if primitive is gaussianblur
-//            if(SP_IS_GAUSSIANBLUR(primitive))
-            {
+            if(SP_IS_GAUSSIANBLUR(primitive)) {
                 NR::FilterGaussian * gaussian = (NR::FilterGaussian *) shape->filter->add_primitive(NR::NR_FILTER_GAUSSIANBLUR);
                 SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
                 float num = spblur->stdDeviation.getNumber();
