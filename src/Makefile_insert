@@ -67,7 +67,7 @@ libinkpre_a_SOURCES =	\
 	dyna-draw-context.cpp dyna-draw-context.h	\
 	enums.h	\
 	event-context.cpp event-context.h	\
-	event-log.cpp event-log.h       \
+	event-log.cpp event-log.h event.h      \
 	extract-uri.cpp extract-uri.h	\
 	file.cpp file.h	\
 	filter-chemistry.cpp filter-chemistry.h \
@@ -180,7 +180,7 @@ libinkpre_a_SOURCES =	\
 	sp-filter-reference.cpp	\
 	sp-filter-reference.h	\
 	sp-filter-units.h	\
-	sp-filter.cpp sp-filter.h	\
+	sp-filter.cpp sp-filter.h number-opt-number.h	\
 	sp-flowdiv.h sp-flowdiv.cpp \
 	sp-flowregion.h sp-flowregion.cpp \
 	sp-flowtext.h sp-flowtext.cpp \

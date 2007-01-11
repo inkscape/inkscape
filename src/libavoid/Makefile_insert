@@ -30,4 +30,5 @@ libavoid_libavoid_a_SOURCES =	\
 	libavoid/vertices.h	\
 	libavoid/visibility.cpp	\
 	libavoid/visibility.h	\
-	libavoid/libavoid.h
+	libavoid/libavoid.h	\
+	libavoid/region.h

@@ -23,6 +23,8 @@ jabber_whiteboard_SOURCES = \
 	jabber_whiteboard/message-tags.h \
 	jabber_whiteboard/message-utilities.cpp \
 	jabber_whiteboard/message-utilities.h \
+	jabber_whiteboard/node-utilities.h \
+	jabber_whiteboard/node-tracker.h \
 	jabber_whiteboard/inkboard-node.cpp \
 	jabber_whiteboard/inkboard-session.cpp \
 	jabber_whiteboard/inkboard-session.h \
@@ -33,6 +35,7 @@ jabber_whiteboard_SOURCES = \
 	jabber_whiteboard/session-file-selector.cpp \
 	jabber_whiteboard/session-file-selector.h \
 	jabber_whiteboard/session-manager.cpp \
+	jabber_whiteboard/message-verifier.h \
 	jabber_whiteboard/dialog/choose-desktop.cpp \
 	jabber_whiteboard/dialog/choose-desktop.h \
 	jabber_whiteboard/session-manager.h \
