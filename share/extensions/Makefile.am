@@ -78,7 +78,8 @@ extensions = \
 	rubberstretch.py\
 	pathmodifier.py\
 	g2pngs.py\
-	ffgeom.py
+	ffgeom.py\
+	perspective.py
 
 
 otherstuff = \
@@ -151,7 +152,8 @@ modules = \
 	color_morehue.inx\
 	color_lesshue.inx\
 	pathalongpath.inx\
-	g2pngs.inx
+	g2pngs.inx\
+	perspective.inx
 
 
 extension_SCRIPTS = \
