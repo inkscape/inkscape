@@ -6663,6 +6663,7 @@ public:
          name    = "msgfmt";
          command = "msgfmt";
          owndir  = false;
+         outName = "";
          }
 
     virtual ~TaskMsgFmt()
@@ -6704,8 +6705,17 @@ public:
                 destPath.append(subdir);
                 destPath.append("/");
                 }
-            destPath.append(fileName);
-            destPath[destPath.size()-2] = 'm';
+            //Pick the output file name
+            if (outName.size() > 0)
+                {
+                destPath.append(outName);
+                }
+            else
+                {
+                destPath.append(fileName);
+                destPath[destPath.size()-2] = 'm';
+                }
+
             String fullDest = parent.resolve(destPath);
 
             if (!isNewerThan(fullSource, fullDest))
@@ -6750,6 +6760,8 @@ public:
             command = s;
         if (!parent.getAttribute(elem, "todir", toDirName))
             return false;
+        if (!parent.getAttribute(elem, "out", outName))
+            return false;
         if (!parent.getAttribute(elem, "owndir", s))
             return false;
         if (!getBool(s, owndir))
@@ -6771,10 +6783,11 @@ public:
 
 private:
 
-    String command;
-    String toDirName;
+    String  command;
+    String  toDirName;
+    String  outName;
     FileSet fileSet;
-    bool owndir;
+    bool    owndir;
 
 };
 

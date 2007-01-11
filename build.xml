@@ -211,7 +211,8 @@
   </target>
 
   <target name="i18n" depends="compile">
-    <msgfmt todir="${build}/locale" owndir="true">
+    <msgfmt todir="${build}/locale" owndir="true"
+         out="LC_MESSAGES/inkscape.mo">
 	   <fileset dir="po">
 	   </fileset>
 	</msgfmt>
