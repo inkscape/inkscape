@@ -156,6 +156,10 @@ EXTRA_DIST =	\
 	extension/internal/gnome.h	\
 	extension/internal/win32.cpp	\
 	extension/internal/win32.h	\
+	extension/internal/emf-win32-inout.cpp	\
+	extension/internal/emf-win32-inout.h	\
+	extension/internal/emf-win32-print.cpp	\
+	extension/internal/emf-win32-print.h	\
 	helper/sp-marshal.list	\
 	utest/utest.h	\
 	utest/test-1ary-cases.h	\
