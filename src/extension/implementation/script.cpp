@@ -33,6 +33,7 @@
 #include "extension/output.h"
 #include "extension/db.h"
 #include "script.h"
+#include "dialogs/dialog-events.h"
 
 #include "util/glib-list-iterators.h"
 
@@ -696,7 +697,18 @@ Script::save(Inkscape::Extension::Output *module,
 void
 Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc)
 {
-    SPDocument * mydoc = NULL;
+    if (module->no_doc) { 
+        // this is a no-doc extension, e.g. a Help menu command; 
+        // just run the command without any files, ignoring errors
+        Glib::ustring local_command(command);
+        Glib::ustring paramString = *module->paramString();
+        local_command.append(paramString);
+
+        Glib::ustring empty;
+        execute(local_command, empty, empty);
+
+        return;
+    }
 
     gchar *tmpname;
     // FIXME: process the GError instead of passing NULL
@@ -769,6 +781,7 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
 
     int data_read = execute(local_command, tempfilename_in, tempfilename_out);
 
+    SPDocument * mydoc = NULL;
     if (data_read > 10)
         mydoc = Inkscape::Extension::open(
               Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG),
@@ -874,7 +887,6 @@ private:
 
 
 /**
-    \return   none
     \brief    This is the core of the extension file as it actually does
               the execution of the extension.
     \param    in_command  The command to be executed
@@ -923,9 +935,12 @@ Script::execute (const Glib::ustring &in_command,
     g_free(tmpname);
 
     Glib::ustring localCommand = in_command;
-    localCommand .append(" \"");
-    localCommand .append(filein);
-    localCommand .append("\"");
+
+    if (!(filein.empty())) {
+        localCommand .append(" \"");
+        localCommand .append(filein);
+        localCommand .append("\"");
+    }
 
     // std::cout << "Command to run: " << command << std::endl;
 
@@ -947,6 +962,15 @@ Script::execute (const Glib::ustring &in_command,
         return 0;
     }
 
+    if (fileout.empty()) { // no output file to create; just close everything and return 0
+        if (errorFile.size()>0) {
+            unlink(errorFile.c_str());
+        }
+        pipe.close();
+        return 0;
+    }
+
+    /* Copy pipe output to fileout (temporary file) */
     Inkscape::IO::dump_fopen_call(fileout.c_str(), "J");
     FILE *pfile = Inkscape::IO::fopen_utf8name(fileout.c_str(), "w");
 
@@ -960,7 +984,6 @@ Script::execute (const Glib::ustring &in_command,
         return 0;
     }
 
-    /* Copy pipe output to a temporary file */
     int amount_read = 0;
     char buf[BUFSIZE];
     int num_read;
@@ -1039,6 +1062,8 @@ Script::checkStderr (const Glib::ustring &filename,
 
     Gtk::MessageDialog warning(message, false, type, Gtk::BUTTONS_OK, true);
     warning.set_resizable(true);
+    GtkWidget *dlg = GTK_WIDGET(warning.gobj());
+    sp_transientize(dlg);
 
     Gtk::VBox * vbox = warning.get_vbox();
 

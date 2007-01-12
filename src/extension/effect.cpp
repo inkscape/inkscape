@@ -34,28 +34,32 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
 
     bool hidden = false;
 
-    if (repr != NULL) {
-        Inkscape::XML::Node * child_repr;
+    no_doc = false;
 
-        for (child_repr = sp_repr_children(repr); child_repr != NULL; child_repr = child_repr->next()) {
-            if (!strcmp(child_repr->name(), "effect")) {
-                for (child_repr = sp_repr_children(child_repr); child_repr != NULL; child_repr = child_repr->next()) {
-                    if (!strcmp(child_repr->name(), "effects-menu")) {
+    if (repr != NULL) {
+
+        for (Inkscape::XML::Node *child = sp_repr_children(repr); child != NULL; child = child->next()) {
+            if (!strcmp(child->name(), "effect")) {
+                if (child->attribute("needs-document") && !strcmp(child->attribute("needs-document"), "no")) {
+                  no_doc = true;
+                }
+                for (Inkscape::XML::Node *effect_child = sp_repr_children(child); effect_child != NULL; effect_child = effect_child->next()) {
+                    if (!strcmp(effect_child->name(), "effects-menu")) {
                         // printf("Found local effects menu in %s\n", this->get_name());
-                        local_effects_menu = sp_repr_children(child_repr);
-                        if (child_repr->attribute("hidden") && !strcmp(child_repr->attribute("hidden"), "yes")) {
+                        local_effects_menu = sp_repr_children(effect_child);
+                        if (effect_child->attribute("hidden") && !strcmp(effect_child->attribute("hidden"), "yes")) {
                             hidden = true;
                         }
                     }
-                    if (!strcmp(child_repr->name(), "menu-name") ||
-                            !strcmp(child_repr->name(), "_menu-name")) {
+                    if (!strcmp(effect_child->name(), "menu-name") ||
+                            !strcmp(effect_child->name(), "_menu-name")) {
                         // printf("Found local effects menu in %s\n", this->get_name());
-                        _verb.set_name(sp_repr_children(child_repr)->content());
+                        _verb.set_name(sp_repr_children(effect_child)->content());
                     }
-                    if (!strcmp(child_repr->name(), "menu-tip") ||
-                            !strcmp(child_repr->name(), "_menu-tip")) {
+                    if (!strcmp(effect_child->name(), "menu-tip") ||
+                            !strcmp(effect_child->name(), "_menu-tip")) {
                         // printf("Found local effects menu in %s\n", this->get_name());
-                        _verb.set_tip(sp_repr_children(child_repr)->content());
+                        _verb.set_tip(sp_repr_children(effect_child)->content());
                     }
                 } // children of "effect"
                 break; // there can only be one effect

@@ -94,6 +94,8 @@ public:
 
     Gtk::VBox *    get_info_widget(void);
 
+    bool no_doc; // if true, the effect does not process SVG document at all, so no need to save, read, and watch for errors
+
 private:
     static gchar *   remove_ (gchar * instr);
 };
