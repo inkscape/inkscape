@@ -463,7 +463,12 @@ RFE</a>).</p>
 <mouse><key><alt/><left-click/></key> <action>select under</action></mouse>
 <note>Alt+click selects the object at click point which is beneath (in z-order) the lowest selected object at click point.</note>
 <note>If the bottom object is reached, Alt+click again selects the top object. So, several Alt+clicks cycle through z-order stack at point.</note>
-<note>On Linux, Alt+click and Alt+drag may be reserved by the window manager. Reconfigure it so you can use them in Inkscape.</note>
+<note>On Linux, Alt+click and Alt+drag may be reserved by the window manager.  If you reconfigure your window manager </note>
+<note>to not map Alt+click, then it will be free for Inkscape to use.  </note>
+<note>If your keyboard has a Meta key, you may wish to set your "Modifier
+key" to use it instead of Alt.</note>
+<note>(Sometimes you can also use Ctrl+Alt+click (select under in
+groups) with the same effect as Alt+click.)</note>
 <mouse><key><shift/><alt/><left-click/></key> <action>toggle under</action></mouse>
 <mouse><key><ctrl/><alt/><left-click/></key> <action>select under, in groups</action></mouse>
 <mouse><key><shift/><ctrl/><alt/><left-click/></key> <action>toggle under, in groups</action></mouse>
@@ -790,7 +795,7 @@ RFE</a>).</p>
 <group>
 <title>Editing</title>
 <mouse><key><left-click/></key> <action>click an object to select</action></mouse>
-<mouse><key><alt/><left-click/></key> <action>select under</action></mouse>
+<mouse><key><alt/><left-click/></key> <key><ctrl/><alt/><left-click/></key> <action>select under</action></mouse>
 <mouse><key><shift/><left-click/></key> <action>toggle selection</action></mouse>
 <mouse><key><left-drag/></key> <action>drag a handle to resize or round corners</action></mouse>
 <note>Initially, the two rounding handles are in the top right corner; two resize handles are in top left and bottom right corners.</note>
@@ -815,7 +820,7 @@ RFE</a>).</p>
 <group>
 <title>Editing</title>
 <mouse><key><left-click/></key> <action>click an object to select</action></mouse>
-<mouse><key><alt/><left-click/></key> <action>select under</action></mouse>
+<mouse><key><alt/><left-click/></key> <key><ctrl/><alt/><left-click/></key> <action>select under</action></mouse>
 <mouse><key><shift/><left-click/></key> <action>toggle selection</action></mouse>
 <mouse><key><left-drag/></key> <action>drag a handle to resize, make arc or segment</action></mouse>
 <note>Initially, the two arc/segment handles are in the rightmost point; two resize handles are at the topmost and leftmost points.</note>
@@ -844,7 +849,7 @@ RFE</a>).</p>
 <mouse><key><shift/><left-drag/></key> <action>round the star</action></mouse>
 <mouse><key><shift/><left-click/></key> <action>remove rounding</action></mouse>
 <mouse><key><alt/><left-drag/></key> <action>randomize the star</action></mouse>
-<mouse><key><alt/><left-click/></key> <action>remove randomization</action></mouse>
+<mouse><key><alt/><left-click/></key> <key><ctrl/><alt/><left-click/></key> <action>remove randomization</action></mouse>
 <keys><key><misc f="Esc"/></key> <action>deselect</action></keys>
 </group>
 </section>
@@ -864,7 +869,7 @@ RFE</a>).</p>
 <mouse><key><left-drag/></key> <action>roll/unroll from inside (inner handle)</action></mouse>
 <note>Dragging the inner handle adjusts the "inner radius" parameter.</note>
 <mouse><key><alt/><left-drag/></key> <action>converge/diverge (inner handle)</action></mouse>
-<mouse><key><alt/><left-click/></key> <action>reset divergence (inner handle)</action></mouse>
+<mouse><key><alt/><left-click/></key> <key><ctrl/><alt/><left-click/></key> <action>reset divergence (inner handle)</action></mouse>
 <note>Vertical Alt+drag of the inner handle adjusts the "divergence" parameter, Alt+click resets it to 1.</note>
 <mouse><key><shift/><left-click/></key> <action>zero inner radius (inner handle)</action></mouse>
 <note>Shift+click on inner handle makes the spiral start from the center.</note>
@@ -1017,7 +1022,7 @@ RFE</a>).</p>
 <mouse><key><shift/><left-drag/></key> <action>average stroke color</action></mouse>
 <note>Click applies the color under cursor to the current selection. Dragging a radius calculates the average color of a circular area.</note>
 <note>If a gradient handle (in Gradient tool) is selected, it gets the color instead of the entire object.</note>
-<mouse><key><alt/><left-click/></key><key><alt/><left-drag/></key> <action>pick inverse color</action></mouse>
+<mouse><key><alt/><left-click/></key> <key><alt/><left-drag/></key> <key><ctrl/><alt/><left-click/></key> <key><ctrl/><alt/><left-drag/></key> <action>pick inverse color</action></mouse>
 <note>If Alt is pressed, picking color (with or without Shift, by click or by drag) picks the inverse of the color.</note>
 <keys><key><ctrl/>C</key> <action>copy color</action></keys>
 <note>This copies the color under cursor to the system clipboard, as text in RRGGBBAA format (8 hex digits).</note>
