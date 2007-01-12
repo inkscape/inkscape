@@ -23,15 +23,28 @@ It is generated automatically from doc/keys.xml by doc/keys-html.xsl.
 .key {font-weight: bold}
 .action {}
 .note {padding-left: 50px; font-size: 70%}
+.contents {padding: 1em; background-color: #eeeeee; font-size: small;}
+.contents strong {font-size: large;}
+body {margin: 1em; background-color: #ffffff;}
 h1 {margin-top: 0.5em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em; letter-spacing: -0.02em}
 h4 {font-weight: bold; font-style: italic; margin-top: 1em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em}
 </style>
 </head>
-<body bgcolor="#ffffff">
+<body>
 <xsl:apply-templates select="k:p"/>
-<table border ="0" cellspacing="0" cellpadding="4">
+
+<p class="contents"><strong>Contents:</strong><xsl:text>  </xsl:text>
+<xsl:for-each select="//k:section">
+<a href="#{./@title}"><xsl:value-of select="./@title"/></a>
+<xsl:if test="following::k:section"><xsl:text> | </xsl:text></xsl:if>
+</xsl:for-each>
+</p>
+
+<center>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
 <xsl:apply-templates select="k:column"/>
 </table>
+</center>
 
     <p>
       <a href="http://validator.w3.org/check/referer"><img border="0"
@@ -58,7 +71,7 @@ h4 {font-weight: bold; font-style: italic; margin-top: 1em; padding-left: 50px; 
 </xsl:template>
 
 <xsl:template match="k:section">
-<tr><td colspan="3"><h1><xsl:value-of select="@title"/></h1></td></tr>
+<tr><td colspan="3"><a name="{@title}"/><h1><xsl:value-of select="@title"/></h1></td></tr>
 <xsl:apply-templates/>
 </xsl:template>
 

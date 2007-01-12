@@ -6,15 +6,18 @@ It is generated automatically from doc/keys.xml by doc/keys-html.xsl.
 .key {font-weight: bold}
 .action {}
 .note {padding-left: 50px; font-size: 70%}
+.contents {padding: 1em; background-color: #eeeeee; font-size: small;}
+.contents strong {font-size: large;}
+body {margin: 1em; background-color: #ffffff;}
 h1 {margin-top: 0.5em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em; letter-spacing: -0.02em}
 h4 {font-weight: bold; font-style: italic; margin-top: 1em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em}
-</style></head><body bgcolor="#ffffff"><p>This document describes the default keyboard shortcuts of Inkscape, corresponding to the
+</style></head><body><p>This document describes the default keyboard shortcuts of Inkscape, corresponding to the
 share/keys/default.xml file in Inkscape distribution. Most (but not all) of these keys
 are configurable by the user; see the default.xml file for details on how to do that.</p><p>Unless noted otherwise, keypad keys (such as arrows, Home, End, +, -, digits) are
 supposed to work the same as corresponding regular keys. If you have a new shortcut
 idea, please contact the developers (by writing to the <a href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">devel mailing list</a>
 or by <a href="http://sourceforge.net/tracker/?group_id=93438&amp;atid=604309">submitting an
-RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="3"><h1>Tools</h1></td></tr>
+RFE</a>).</p><p class="contents"><strong>Contents:</strong>  <a href="#Tools">Tools</a> | <a href="#Dialogs">Dialogs</a> | <a href="#Controls bar">Controls bar</a> | <a href="#Canvas">Canvas</a> | <a href="#Palette">Palette</a> | <a href="#File">File</a> | <a href="#Window">Window</a> | <a href="#Layers">Layers</a> | <a href="#Object">Object</a> | <a href="#Path">Path</a> | <a href="#Selector">Selector</a> | <a href="#Node tool">Node tool</a> | <a href="#Rectangle tool">Rectangle tool</a> | <a href="#Ellipse tool">Ellipse tool</a> | <a href="#Star tool">Star tool</a> | <a href="#Spiral tool">Spiral tool</a> | <a href="#Zoom tool">Zoom tool</a> | <a href="#Pencil tool">Pencil tool</a> | <a href="#Pen (Bezier) tool">Pen (Bezier) tool</a> | <a href="#Calligraphy">Calligraphy</a> | <a href="#Gradient tool">Gradient tool</a> | <a href="#Dropper tool">Dropper tool</a> | <a href="#Text tool">Text tool</a></p><center><table border="0" cellspacing="0" cellpadding="4" width="100%"><tr><td colspan="3"><a name="Tools"></a><h1>Tools</h1></td></tr>
 
 
 <tr bgcolor="f5f5f5"><td align="right"><span class="key">F1</span>,
@@ -49,7 +52,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <span class="key">o</span></td><td><span class="action">Connector tool</span></td></tr>
 <tr bgcolor="f5f5f5"><td colspan="3"><span class="note">Double click on the tool buttons opens the Preferences dialog showing the page of the corresponding tool.</span></td></tr>
 
-<tr><td colspan="3"><h1>Dialogs</h1></td></tr>
+<tr><td colspan="3"><a name="Dialogs"></a><h1>Dialogs</h1></td></tr>
 
 <tr bgcolor="f0eae7"><td align="right"><span class="key">Shift+Ctrl+F</span></td><td><span class="action">Fill and Stroke</span></td></tr>
 <tr bgcolor="f0eae7"><td align="right"><span class="key">Shift+Ctrl+W</span></td><td><span class="action">Swatches</span></td></tr>
@@ -90,7 +93,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="f0eae7"><td align="right"><span class="key">Ctrl+PgUp</span>,
 <span class="key">Ctrl+PgDn</span></td><td><span class="action">in a multi-tab dialog, switch tabs</span></td></tr>
 
-<tr><td colspan="3"><h1>Controls bar</h1></td></tr>
+<tr><td colspan="3"><a name="Controls bar"></a><h1>Controls bar</h1></td></tr>
 
 
 <tr bgcolor="f8f3e9"><td colspan="3"><span class="note">The Controls bar at the top of the document window provides different buttons and controls for each tool.</span></td></tr>
@@ -114,7 +117,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <span class="key">PgDn</span></td><td><span class="action">change value by 5.0</span></td></tr>
 
  
-<tr><td colspan="3"><h1>Canvas</h1></td></tr>
+<tr><td colspan="3"><a name="Canvas"></a><h1>Canvas</h1></td></tr>
 
 
 <tr bgcolor="e5f1e7"><td colspan="3"><h4>Zoom</h4></td></tr>
@@ -179,7 +182,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="e5f1e7"><td colspan="3"><h4>Display mode</h4></td></tr>
 <tr bgcolor="e5f1e7"><td align="right"><span class="key">Ctrl+keypad 5</span></td><td><span class="action">toggle normal/outline mode</span></td></tr>
 
-<tr><td colspan="3"><h1>Palette</h1></td></tr>
+<tr><td colspan="3"><a name="Palette"></a><h1>Palette</h1></td></tr>
 
 <tr bgcolor="efcfdf"><td colspan="3"><span class="note">These keys work both in the floating palette dialog and in the palette frame at the bottom of the window.</span></td></tr>
 <tr bgcolor="efcfdf"><td align="right"><span class="key">click</span></td><td><span class="action">set fill color on selection</span></td></tr>
@@ -189,7 +192,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="efcfdf"><td colspan="3"><span class="note">To change fill/stroke of an object by dragging color on it, that object need not be selected.</span></td></tr>
 <tr bgcolor="efcfdf"><td colspan="3"><span class="note">You can also drag colors to the Fill (F) and Stroke (S) indicators in the statusbar to change the selection.</span></td></tr>
 
-<tr><td colspan="3"><h1>File</h1></td></tr>
+<tr><td colspan="3"><a name="File"></a><h1>File</h1></td></tr>
 
 
 <tr bgcolor="f3f2e2"><td align="right"><span class="key">Ctrl+N</span></td><td><span class="action">create new document</span></td></tr>
@@ -203,7 +206,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="f3f2e2"><td align="right"><span class="key">Ctrl+Q</span></td><td><span class="action">exit Inkscape</span></td></tr>
 
 
-<tr><td colspan="3"><h1>Window</h1></td></tr>
+<tr><td colspan="3"><a name="Window"></a><h1>Window</h1></td></tr>
 
 
 <tr bgcolor="e8fae1"><td align="right"><span class="key">Ctrl+R</span></td><td><span class="action">toggle rulers</span></td></tr>
@@ -227,7 +230,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="e8fae1"><td colspan="3"><span class="note">These cycle through the active document windows forward and backward.</span></td></tr>
 
 
-<tr><td colspan="3"><h1>Layers</h1></td></tr>
+<tr><td colspan="3"><a name="Layers"></a><h1>Layers</h1></td></tr>
 
 <tr bgcolor="f6f9d9"><td align="right"><span class="key">Shift+PgUp</span></td><td><span class="action">move to layer above</span></td></tr>
 <tr bgcolor="f6f9d9"><td align="right"><span class="key">Shift+PgDn</span></td><td><span class="action">move to layer below</span></td></tr>
@@ -239,7 +242,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="f6f9d9"><td align="right"><span class="key">Shift+Ctrl+End</span></td><td><span class="action">lower layer to bottom</span></td></tr>
 <tr bgcolor="f6f9d9"><td colspan="3"><span class="note">These commands move the current layer among its siblings (normally other layers).</span></td></tr>
 
-<tr><td colspan="3"><h1>Object</h1></td></tr>
+<tr><td colspan="3"><a name="Object"></a><h1>Object</h1></td></tr>
 
 
 <tr bgcolor="f4ecf5"><td colspan="3"><h4>Undo/redo</h4></td></tr>
@@ -318,7 +321,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="f4ecf5"><td align="right"><span class="key">PgDn</span></td><td><span class="action">lower selection one step</span></td></tr>
  
 
-<tr><td colspan="3"><h1>Path</h1></td></tr>
+<tr><td colspan="3"><a name="Path"></a><h1>Path</h1></td></tr>
 
 
 <tr bgcolor="f9f1d9"><td colspan="3"><h4>Convert to path</h4></td></tr>
@@ -380,7 +383,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Invoking Simplify again after a pause restores the default threshold (settable in the Inkscape Preferences dialog).</span></td></tr>
 
 
-<tr><td colspan="3"><h1>Selector</h1></td></tr>
+<tr><td colspan="3"><a name="Selector"></a><h1>Selector</h1></td></tr>
 
 
 <tr bgcolor="eee4dc"><td colspan="3"><h4>Keyboard select</h4></td></tr>
@@ -550,7 +553,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">Press Esc while mouse button is still down to cancel rubberband selection, move, or transformation of any kind.</span></td></tr>
 
 
-<tr><td colspan="3"><h1>Node tool</h1></td></tr>
+<tr><td colspan="3"><a name="Node tool"></a><h1>Node tool</h1></td></tr>
 
 
 <tr bgcolor="f9f1d9"><td colspan="3"><h4>Keyboard select</h4></td></tr>
@@ -768,7 +771,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Press Esc while mouse button is still down to cancel rubberband selection, node move, handle move, or handle move.</span></td></tr>
 
 
-<tr><td colspan="3"><h1>Rectangle tool</h1></td></tr>
+<tr><td colspan="3"><a name="Rectangle tool"></a><h1>Rectangle tool</h1></td></tr>
 
 <tr bgcolor="ebf1fd"><td colspan="3"><h4>Drawing</h4></td></tr>
 <tr bgcolor="ebf1fd"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">draw a rectangle</span></td></tr>
@@ -792,7 +795,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="ebf1fd"><td colspan="3"><span class="note">You can drag both handles for an elliptic rounded corner, or drag one with Ctrl to make sure the other one is synchronized.</span></td></tr>
 <tr bgcolor="ebf1fd"><td align="right"><span class="key">Esc</span></td><td><span class="action">deselect</span></td></tr>
 
-<tr><td colspan="3"><h1>Ellipse tool</h1></td></tr>
+<tr><td colspan="3"><a name="Ellipse tool"></a><h1>Ellipse tool</h1></td></tr>
 
 <tr bgcolor="ffece8"><td colspan="3"><h4>Drawing</h4></td></tr>
 <tr bgcolor="ffece8"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">draw an ellipse</span></td></tr>
@@ -815,7 +818,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="ffece8"><td colspan="3"><span class="note">The default angle step is 15 degrees.</span></td></tr>
 <tr bgcolor="ffece8"><td align="right"><span class="key">Esc</span></td><td><span class="action">deselect</span></td></tr>
 
-<tr><td colspan="3"><h1>Star tool</h1></td></tr>
+<tr><td colspan="3"><a name="Star tool"></a><h1>Star tool</h1></td></tr>
 
 <tr bgcolor="f8f7d5"><td colspan="3"><h4>Drawing</h4></td></tr>
 <tr bgcolor="f8f7d5"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">draw a star</span></td></tr>
@@ -836,7 +839,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <span class="key">Ctrl+Alt+click</span></td><td><span class="action">remove randomization</span></td></tr>
 <tr bgcolor="f8f7d5"><td align="right"><span class="key">Esc</span></td><td><span class="action">deselect</span></td></tr>
 
-<tr><td colspan="3"><h1>Spiral tool</h1></td></tr>
+<tr><td colspan="3"><a name="Spiral tool"></a><h1>Spiral tool</h1></td></tr>
 
 <tr bgcolor="f3f3f3"><td colspan="3"><h4>Drawing</h4></td></tr>
 <tr bgcolor="f3f3f3"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">draw a spiral</span></td></tr>
@@ -867,13 +870,13 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 <tr bgcolor="f3f3f3"><td align="right"><span class="key">Esc</span></td><td><span class="action">deselect</span></td></tr>
 
-<tr><td colspan="3"><h1>Zoom tool</h1></td></tr>
+<tr><td colspan="3"><a name="Zoom tool"></a><h1>Zoom tool</h1></td></tr>
 
 <tr bgcolor="e7e9f3"><td align="right"><span class="key">click</span></td><td><span class="action">zoom in</span></td></tr>
 <tr bgcolor="e7e9f3"><td align="right"><span class="key">Shift+click</span></td><td><span class="action">zoom out</span></td></tr>  
 <tr bgcolor="e7e9f3"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">zoom into the area</span></td></tr>
 
-<tr><td colspan="3"><h1>Pencil tool</h1></td></tr>
+<tr><td colspan="3"><a name="Pencil tool"></a><h1>Pencil tool</h1></td></tr>
 
 <tr bgcolor="e9efc5"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">draw a freehand line</span></td></tr>
 <tr bgcolor="e9efc5"><td align="right"><span class="key">Shift+mouse drag</span></td><td><span class="action">add to selected path</span></td></tr>
@@ -881,7 +884,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="e9efc5"><td align="right"><span class="key">Shift+mouse drag</span></td><td><span class="action">temporarily disable snapping</span></td></tr>
 <tr bgcolor="e9efc5"><td colspan="3"><span class="note">Shift also temporaily disables snapping to grid or guides when you are drawing with grid or guides on.</span></td></tr>
 
-<tr><td colspan="3"><h1>Pen (Bezier) tool</h1></td></tr>
+<tr><td colspan="3"><a name="Pen (Bezier) tool"></a><h1>Pen (Bezier) tool</h1></td></tr>
 
 
 <tr bgcolor="e7f5d7"><td colspan="3"><h4>Create nodes</h4></td></tr>
@@ -932,7 +935,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="e7f5d7"><td align="right"><span class="key">Backspace</span>,
 <span class="key">Del</span></td><td><span class="action">erase last segment of current line</span></td></tr>
 
-<tr><td colspan="3"><h1>Calligraphy</h1></td></tr>
+<tr><td colspan="3"><a name="Calligraphy"></a><h1>Calligraphy</h1></td></tr>
 
 <tr bgcolor="e9dfef"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">draw a calligraphic line</span></td></tr>
 <tr bgcolor="e9dfef"><td align="right"><span class="key">Left arrow</span>,
@@ -942,7 +945,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="e9dfef"><td colspan="3"><span class="note">Width and angle can be adjusted while drawing. </span></td></tr>
 <tr bgcolor="e9dfef"><td align="right"><span class="key">Esc</span></td><td><span class="action">deselect</span></td></tr>
 
-<tr><td colspan="3"><h1>Gradient tool</h1></td></tr>
+<tr><td colspan="3"><a name="Gradient tool"></a><h1>Gradient tool</h1></td></tr>
 
 <tr bgcolor="e9f3e7"><td colspan="3"><h4>Creating gradients</h4></td></tr>
 <tr bgcolor="e9f3e7"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">create gradient</span></td></tr>
@@ -979,7 +982,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="e9f3e7"><td align="right"><span class="key">Shift+click</span></td><td><span class="action">toggle selection</span></td></tr>
 
 
-<tr><td colspan="3"><h1>Dropper tool</h1></td></tr>
+<tr><td colspan="3"><a name="Dropper tool"></a><h1>Dropper tool</h1></td></tr>
 
 <tr bgcolor="feeffa"><td align="right"><span class="key">click</span></td><td><span class="action">pick fill color</span></td></tr>
 <tr bgcolor="feeffa"><td align="right"><span class="key">Shift+click</span></td><td><span class="action">pick stroke color</span></td></tr>
@@ -992,7 +995,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="feeffa"><td align="right"><span class="key">Ctrl+C</span></td><td><span class="action">copy color</span></td></tr>
 <tr bgcolor="feeffa"><td colspan="3"><span class="note">This copies the color under cursor to the system clipboard, as text in RRGGBBAA format (8 hex digits).</span></td></tr>
 
-<tr><td colspan="3"><h1>Text tool</h1></td></tr>
+<tr><td colspan="3"><a name="Text tool"></a><h1>Text tool</h1></td></tr>
 
 
 <tr bgcolor="eefdf3"><td colspan="3"><h4>Selecting/creating</h4></td></tr>
@@ -1122,4 +1125,4 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">The actual angle for pixel rotation depends on zoom level. Zoom in for finer movement.</span></td></tr>
 
 
-</table><p><a href="http://validator.w3.org/check/referer"><img border="0" src="http://www.w3.org/Icons/valid-html40" alt="Valid HTML 4.0!" height="31" width="88"></img></a></p></body></html>
+</table></center><p><a href="http://validator.w3.org/check/referer"><img border="0" src="http://www.w3.org/Icons/valid-html40" alt="Valid HTML 4.0!" height="31" width="88"></img></a></p></body></html>
