@@ -720,6 +720,7 @@ sp_grd_ed_add_stop (GtkWidget *widget,  GtkWidget *vb)
 	gdouble opacity = (gdouble) SP_RGBA32_A_F (cnew);
 	os << "stop-color:" << c << ";stop-opacity:" << opacity <<";";
 	SP_OBJECT_REPR (newstop)->setAttribute("style", os.str().c_str());
+    sp_repr_set_css_double( SP_OBJECT_REPR(newstop), "offset", (double)newstop->offset);
 
 	sp_gradient_vector_widget_load_gradient (vb, gradient);
 	Inkscape::GC::release(new_stop_repr);
