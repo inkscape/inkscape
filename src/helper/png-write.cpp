@@ -42,6 +42,17 @@
  * working PNG reader/writer, see pngtest.c, included in this distribution.
  */
 
+const unsigned int MAX_STRIPE_SIZE = 1024*1024;
+
+struct SPEBP {
+    int width, height, sheight;
+    guchar r, g, b, a;
+    NRArenaItem *root; // the root arena item to show; it is assumed that all unneeded items are hidden
+    guchar *px;
+    unsigned (*status)(float, void *);
+    void *data;
+};
+
 /* write a png file */
 
 typedef struct SPPNGBD {
@@ -77,6 +88,7 @@ sp_png_write_rgba_striped (const gchar *filename, int width, int height, double 
 			   int (* get_rows) (const guchar **rows, int row, int num_rows, void *data),
 			   void *data)
 {
+    struct SPEBP *ebp = (struct SPEBP *) data;
 	FILE *fp;
 	png_structp png_ptr;
 	png_infop info_ptr;
@@ -182,17 +194,17 @@ sp_png_write_rgba_striped (const gchar *filename, int width, int height, double 
 	 * use the first method if you aren't handling interlacing yourself.
 	 */
 
+	png_bytep* row_pointers = new png_bytep[ebp->sheight];
+
 	r = 0;
 	while (r < static_cast< png_uint_32 > (height) ) {
-		png_bytep row_pointers[64];
-		int h, n;
-
-		h = MIN (height - r, 64);
-		n = get_rows ((const unsigned char **) row_pointers, r, h, data);
+		int n = get_rows ((const unsigned char **) row_pointers, r, height-r, data);
 		if (!n) break;
 		png_write_rows (png_ptr, row_pointers, n);
 		r += n;
 	}
+
+    delete[] row_pointers;
 
 	/* You can write optional chunks like tEXt, zTXt, and tIME at the end
 	 * as well.
@@ -214,17 +226,6 @@ sp_png_write_rgba_striped (const gchar *filename, int width, int height, double 
 }
 
 
-
-struct SPEBP {
-    int width, height, sheight;
-    guchar r, g, b, a;
-    NRArenaItem *root; // the root arena item to show; it is assumed that all unneeded items are hidden
-    guchar *px;
-    unsigned (*status)(float, void *);
-    void *data;
-};
-
-
 /**
  *
  */
@@ -241,11 +242,14 @@ sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
     num_rows = MIN(num_rows, ebp->height - row);
 
     /* Set area of interest */
+    // bbox is now set to the entire image to prevent discontinuities
+    // in the image when blur is used (the borders may still be a bit
+    // off, but that's less noticeable).
     NRRectL bbox;
     bbox.x0 = 0;
-    bbox.y0 = row;
+    bbox.y0 = 0;//row;
     bbox.x1 = ebp->width;
-    bbox.y1 = row + num_rows;
+    bbox.y1 = ebp->height;//row + num_rows;
     /* Update to renderable state */
     NRGC gc(NULL);
     nr_matrix_set_identity(&gc.transform);
@@ -255,7 +259,7 @@ sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
 
     NRPixBlock pb;
     nr_pixblock_setup_extern(&pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
-                             bbox.x0, bbox.y0, bbox.x1, bbox.y1,
+                             bbox.x0, row/*bbox.y0*/, bbox.x1, row + num_rows/*bbox.y1*/,
                              ebp->px, 4 * ebp->width, FALSE, FALSE);
 
     for (int r = 0; r < num_rows; r++) {
@@ -390,14 +394,14 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     ebp.status = status;
     ebp.data   = data;
 
-    if ((width < 256) || ((width * height) < 32768)) {
+    if (4 * width * height < 65536) {
         ebp.px = nr_pixelstore_64K_new(FALSE, 0);
-        ebp.sheight = 65536 / (4 * width);
+        ebp.sheight = height;
         write_status = sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         nr_pixelstore_64K_free(ebp.px);
     } else {
-        ebp.px = g_new(guchar, 4 * 64 * width);
-        ebp.sheight = 64;
+        ebp.sheight = MAX(1,MIN(MAX_STRIPE_SIZE / (4 * width),height));
+        ebp.px = g_new(guchar, 4 * width * ebp.sheight);
         write_status = sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         g_free(ebp.px);
     }
