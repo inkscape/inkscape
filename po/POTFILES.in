@@ -372,6 +372,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/motion.inx
 [type: gettext/xml] share/extensions/outline2svg.inx
 [type: gettext/xml] share/extensions/pathalongpath.inx
+[type: gettext/xml] share/extensions/perspective.inx
 [type: gettext/xml] share/extensions/ps_input.inx
 [type: gettext/xml] share/extensions/radiobutton_example.inx
 [type: gettext/xml] share/extensions/radiusrand.inx
