@@ -37,7 +37,7 @@ echo '*' | import   # import everything
 require @gnu.org/libstdc++ 3
 require @xmlsoft.org/libxml2 2.6
 require @xmlsoft.org/libxslt 1.0
-require @gtk.org/gtk 2.4
+require @gtk.org/gtk 2.8
 # statically linked for now: require @rpm.org/popt 0.0
 # statically linked: require @libsigc.sourceforge.net/libsigc 3
 require @libpng.org/libpng 3
