@@ -5,6 +5,8 @@ otherstuffdir = $(datadir)/inkscape/extensions
 
 moduledir = $(datadir)/inkscape/extensions
 
+# If you remove an extension from here, either add it to EXTRA_DIST
+# below, or remove all mention of it from po/inkscape.pot as well.
 extensions = \
 	addnodes.py \
 	bezmisc.py \
@@ -55,7 +57,7 @@ extensions = \
 	outline2svg.pl	\
 	pathalongpath.py\
 	pathmodifier.py\
-	perspective.py
+	perspective.py \
 	ps2dxf.sh \
 	ps2epsi.sh \
 	ps2pdf.cmd \
@@ -139,7 +141,7 @@ modules = \
 	pathalongpath.inx\
 	pdf_output.inx.txt \
 	pdf_output_via_gs_on_win32.inx.txt \
-	perspective.inx
+	perspective.inx	\
 	ps_input.inx \
 	radiusrand.inx \
 	randompnt.inx \
