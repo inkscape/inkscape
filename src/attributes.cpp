@@ -233,13 +233,12 @@ static SPStyleProp const props[] = {
     //{SP_ATTR_DX, "dx"},
     //{SP_ATTR_DY, "dy"},
 	/*feSpecularLighting*/
-    //{SP_ATTR_SURFACESCALE, "surfaceScale"},
     {SP_ATTR_SPECULARCONSTANT, "specularConstant"},
     {SP_ATTR_SPECULAREXPONENT, "specularExponent"},
     /*feTile*/
     /*feTurbulence*/
     {SP_ATTR_BASEFREQUENCY, "baseFrequency"},
-	{SP_ATTR_NUMOCTAVES, "numOctaves"},
+    {SP_ATTR_NUMOCTAVES, "numOctaves"},
     {SP_ATTR_SEED, "seed"},
     {SP_ATTR_STITCHTILES, "stitchTiles"},
     //{SP_ATTR_TYPE, "type"},
