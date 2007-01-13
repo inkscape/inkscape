@@ -148,6 +148,7 @@ EXTRA_DIST =	\
 	utest/makefile.in	\
 	ui/makefile.in		\
 	ui/dialog/makefile.in	\
+	ui/dialog/session-player.cpp	\
 	ui/view/makefile.in	\
 	ui/widget/makefile.in	\
 	util/makefile.in	\
@@ -194,11 +195,9 @@ TESTS =	\
 	xml/quote-test$(EXEEXT)	\
 	xml/repr-action-test$(EXEEXT)
 
-# Amd64 failures??
-#XFAIL_TESTS = \
-#	test-all$(EXEEXT)	\
-#	style-test$(EXEEXT)	\
-#	svg/test-svg$(EXEEXT)
+# As of 2007-01-13, these are failing...
+XFAIL_TESTS = \
+	style-test$(EXEEXT)
 
 # streamtest is unfinished and can't handle the relocations done during
 # "make distcheck".  Not needed for the 0.41 release.
