@@ -20,7 +20,7 @@ operator<<(Inkscape::SVGOStringStream &os, float d)
 {
     /* Try as integer first. */
     {
-        long const n = long(d);
+        int const n = int(d);
         if (d == n) {
             os << n;
             return os;
@@ -41,7 +41,7 @@ operator<<(Inkscape::SVGOStringStream &os, double d)
 {
     /* Try as integer first. */
     {
-        long const n = long(d);
+        int const n = int(d);
         if (d == n) {
             os << n;
             return os;
