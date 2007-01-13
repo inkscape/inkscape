@@ -619,6 +619,7 @@ test_style()
     utest_start("style");
     UTEST_TEST("sp_style_new, sp_style_write_string") {
         SPStyle *style = sp_style_new();
+        g_assert(style);
         gchar *str0_all = sp_style_write_string(style, SP_STYLE_FLAG_ALWAYS);
         gchar *str0_set = sp_style_write_string(style, SP_STYLE_FLAG_IFSET);
         UTEST_ASSERT(*str0_set == '\0');

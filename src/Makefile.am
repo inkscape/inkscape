@@ -194,6 +194,12 @@ TESTS =	\
 	xml/quote-test$(EXEEXT)	\
 	xml/repr-action-test$(EXEEXT)
 
+# Amd64 failures??
+#XFAIL_TESTS = \
+#	test-all$(EXEEXT)	\
+#	style-test$(EXEEXT)	\
+#	svg/test-svg$(EXEEXT)
+
 # streamtest is unfinished and can't handle the relocations done during
 # "make distcheck".  Not needed for the 0.41 release.
 #	io/streamtest$(EXEEXT)

@@ -713,6 +713,7 @@ inkscape_get_repr (Inkscape::Application *inkscape, const gchar *key)
     }
 
     Inkscape::XML::Node *repr = sp_repr_document_root (Inkscape::Preferences::get());
+    if (!repr) return NULL;
     g_assert (!(strcmp (repr->name(), "inkscape")));
 
     gchar const *s = key;

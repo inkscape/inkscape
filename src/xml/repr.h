@@ -143,11 +143,13 @@ Inkscape::XML::Document *sp_repr_document_new(gchar const *rootname);
 
 /// Returns root node of document.
 inline Inkscape::XML::Node *sp_repr_document_root(Inkscape::XML::Document const *doc) {
+    if (!doc) return NULL;
     return const_cast<Inkscape::XML::Node *>(doc->root());
 }
 
 /// Returns the node's document.
 inline Inkscape::XML::Document *sp_repr_document(Inkscape::XML::Node const *repr) {
+    if (!repr) return NULL;
     return const_cast<Inkscape::XML::Document *>(repr->document());
 }
 
