@@ -104,6 +104,7 @@ noinst_LIBRARIES =	\
 check_LIBRARIES =	\
 	libnr/libtest-nr.a	\
 	svg/libtest-svg.a	\
+	svg/libtest-stubs.a	\
 	xml/libtest-xml.a
 
 DISTCLEANFILES =	\
