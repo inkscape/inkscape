@@ -156,7 +156,7 @@ attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int star
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
             else if (arr[i])
             {
-                Gtk::Label& label = reinterpret_cast<Gtk::Label&> (const_cast<Gtk::Widget&>(*arr[i]));
+                Gtk::Label& label = static_cast<Gtk::Label&> (const_cast<Gtk::Widget&>(*arr[i]));
                 label.set_alignment (0.0);
                 table.attach (label, 0, 3, r, r+1, 
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);

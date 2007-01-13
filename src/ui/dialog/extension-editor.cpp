@@ -191,7 +191,7 @@ ExtensionEditor::on_pagelist_selection_changed (void)
 void
 ExtensionEditor::dbfunc (Inkscape::Extension::Extension * in_plug, gpointer in_data)
 {
-    ExtensionEditor * ee = reinterpret_cast<ExtensionEditor *>(in_data);
+    ExtensionEditor * ee = static_cast<ExtensionEditor *>(in_data);
     ee->add_extension(in_plug);
     return;
 }

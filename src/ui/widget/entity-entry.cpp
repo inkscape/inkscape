@@ -49,9 +49,10 @@ EntityEntry::create (rdf_work_entity_t* ent, Gtk::Tooltips& tt, Registry& wr)
             obj = new EntityMultiLineEntry (ent, tt, wr);
             break;
         default:
-            g_warning ("Can't happen.");
+            g_warning ("An unknown RDF format was requested.");
     }
 
+    g_assert (obj);
     obj->_label.show();
     return obj;
 }
@@ -78,14 +79,14 @@ EntityLineEntry::EntityLineEntry (rdf_work_entity_t* ent, Gtk::Tooltips& tt, Reg
 
 EntityLineEntry::~EntityLineEntry()
 {
-    delete reinterpret_cast<Gtk::Entry*>(_packable);
+    delete static_cast<Gtk::Entry*>(_packable);
 }
 
 void 
 EntityLineEntry::update (SPDocument *doc)
 {
     const char *text = rdf_get_work_entity (doc, _entity);
-    reinterpret_cast<Gtk::Entry*>(_packable)->set_text (text ? text : "");
+    static_cast<Gtk::Entry*>(_packable)->set_text (text ? text : "");
 }
 
 void
@@ -95,8 +96,8 @@ EntityLineEntry::on_changed()
 
     _wr->setUpdating (true);
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
-    char const *text = reinterpret_cast<Gtk::Entry*>(_packable)->get_text().c_str();
-    if (rdf_set_work_entity (doc, _entity, text))
+    Glib::ustring text = static_cast<Gtk::Entry*>(_packable)->get_text();
+    if (rdf_set_work_entity (doc, _entity, text.c_str()))
         sp_document_done (doc, SP_VERB_NONE, 
                           /* TODO: annotate */ "entity-entry.cpp:101");
     _wr->setUpdating (false);
@@ -119,15 +120,15 @@ EntityMultiLineEntry::EntityMultiLineEntry (rdf_work_entity_t* ent, Gtk::Tooltip
 
 EntityMultiLineEntry::~EntityMultiLineEntry()
 {
-    delete reinterpret_cast<Gtk::ScrolledWindow*>(_packable);
+    delete static_cast<Gtk::ScrolledWindow*>(_packable);
 }
 
 void 
 EntityMultiLineEntry::update (SPDocument *doc)
 {
     const char *text = rdf_get_work_entity (doc, _entity);
-    Gtk::ScrolledWindow *s = reinterpret_cast<Gtk::ScrolledWindow*>(_packable);
-    Gtk::TextView *tv = reinterpret_cast<Gtk::TextView*>(s->get_child());
+    Gtk::ScrolledWindow *s = static_cast<Gtk::ScrolledWindow*>(_packable);
+    Gtk::TextView *tv = static_cast<Gtk::TextView*>(s->get_child());
     tv->get_buffer()->set_text (text ? text : "");
 }
 
@@ -138,10 +139,10 @@ EntityMultiLineEntry::on_changed()
 
     _wr->setUpdating (true);
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
-    Gtk::ScrolledWindow *s = reinterpret_cast<Gtk::ScrolledWindow*>(_packable);
-    Gtk::TextView *tv = reinterpret_cast<Gtk::TextView*>(s->get_child());
-    char const *text = tv->get_buffer()->get_text().c_str();
-    if (rdf_set_work_entity (doc, _entity, text))
+    Gtk::ScrolledWindow *s = static_cast<Gtk::ScrolledWindow*>(_packable);
+    Gtk::TextView *tv = static_cast<Gtk::TextView*>(s->get_child());
+    Glib::ustring text = tv->get_buffer()->get_text();
+    if (rdf_set_work_entity (doc, _entity, text.c_str()))
         sp_document_done (doc, SP_VERB_NONE, 
                           /* TODO: annotate */ "entity-entry.cpp:146");
     _wr->setUpdating (false);

@@ -67,7 +67,7 @@ LicenseItem::on_toggled()
     sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_NONE, 
                       /* TODO: annotate */ "licensor.cpp:65");
     _wr.setUpdating (false);
-    reinterpret_cast<Gtk::Entry*>(_eep->_packable)->set_text (_lic->uri);
+    static_cast<Gtk::Entry*>(_eep->_packable)->set_text (_lic->uri);
     _eep->on_changed();
 }
 
@@ -129,10 +129,10 @@ Licensor::update (SPDocument *doc)
         for (i=0; rdf_licenses[i].name; i++) 
             if (license == &rdf_licenses[i]) 
                 break;
-        reinterpret_cast<LicenseItem*>(children()[i+1].get_widget())->set_active();
+        static_cast<LicenseItem*>(children()[i+1].get_widget())->set_active();
     }
     else {
-        reinterpret_cast<LicenseItem*>(children()[0].get_widget())->set_active();
+        static_cast<LicenseItem*>(children()[0].get_widget())->set_active();
     }
     
     /* update the URI */
