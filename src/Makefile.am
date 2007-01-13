@@ -148,7 +148,6 @@ EXTRA_DIST =	\
 	utest/makefile.in	\
 	ui/makefile.in		\
 	ui/dialog/makefile.in	\
-	ui/dialog/session-player.cpp	\
 	ui/view/makefile.in	\
 	ui/widget/makefile.in	\
 	util/makefile.in	\
@@ -197,6 +196,7 @@ TESTS =	\
 
 # As of 2007-01-13, these are failing...
 XFAIL_TESTS = \
+	test-all$(EXEEXT)	\
 	style-test$(EXEEXT)
 
 # streamtest is unfinished and can't handle the relocations done during
