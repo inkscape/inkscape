@@ -510,8 +510,6 @@ dnl ******************************
 dnl   Unconditional dependencies
 dnl ******************************
 
-dnl *** NOTE: when we move to gtk 2.6 or later, we can remove the 
-dnl ********* the override for g_ascii_strtod below...
 dnl sigc++-2.0 >= 2.0.12: using "visit_each" not available in 2.0.10
 if test $cc_vers_major -gt 3; then
   min_sigc_version=2.0.12
@@ -752,9 +750,6 @@ else
 fi
 
 AM_CONDITIONAL(USE_MMX, test x$use_mmx_asm = xyes)
-
-dnl Override the default g_ascii_strtod
-AC_DEFINE(g_ascii_strtod, fixed_g_ascii_strtod, [Pre-1.107 gstrfuncs.c version of g_ascii_strtod is broken])
 
 dnl Figure out where the datadir actually is
 dnl http://autoconf-archive.cryp.to/ac_define_dir.html
