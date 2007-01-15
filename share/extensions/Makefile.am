@@ -40,6 +40,7 @@ extensions = \
 	ffgeom.py\
 	fig2svg.sh \
 	flatten.py \
+	fractalize.py \
 	funcplot.py \
 	g2pngs.py\
 	gimp_xcf.py \
@@ -121,6 +122,7 @@ modules = \
 	extractimage.inx \
 	fig_input.inx \
 	flatten.inx \
+	fractalize.inx \
 	funcplot.inx \
 	g2pngs.inx\
 	gimp_xcf.inx \
