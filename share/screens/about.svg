@@ -162,14 +162,6 @@
     </linearGradient>
     <filter
        inkscape:collect="always"
-       id="filter5745">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.91975024"
-         id="feGaussianBlur5747" />
-    </filter>
-    <filter
-       inkscape:collect="always"
        id="filter5985">
       <feGaussianBlur
          inkscape:collect="always"
@@ -642,11 +634,19 @@
     </clipPath>
     <filter
        inkscape:collect="always"
-       id="filter3448">
+       id="filter3321">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="1.0109564"
-         id="feGaussianBlur3450" />
+         stdDeviation="0.43326702"
+         id="feGaussianBlur3323" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4294">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.4897144"
+         id="feGaussianBlur4296" />
     </filter>
   </defs>
   <sodipodi:namedview
@@ -659,7 +659,7 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
+     inkscape:zoom="0.5"
      inkscape:cx="393.57322"
      inkscape:cy="308.47553"
      inkscape:document-units="px"
@@ -854,7 +854,7 @@
          transform="matrix(-1.089353,-0.472598,-0.3490168,0.7880384,631.58211,478.00679)" />
       <path
          sodipodi:type="arc"
-         style="fill:url(#linearGradient6009);fill-opacity:1;stroke:none;stroke-width:1.25;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter3448)"
+         style="fill:url(#linearGradient6009);fill-opacity:1;stroke:none;stroke-width:1.25;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter3321)"
          id="path7264"
          sodipodi:cx="193.56345"
          sodipodi:cy="56.485737"
@@ -889,7 +889,7 @@
          sodipodi:cy="56.485737"
          sodipodi:cx="193.56345"
          id="path7270"
-         style="fill:url(#radialGradient6011);fill-opacity:1;stroke:url(#linearGradient6013);stroke-width:0.81503248;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter5745)"
+         style="fill:url(#radialGradient6011);fill-opacity:1;stroke:url(#linearGradient6013);stroke-width:0.81503248;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter4294);opacity:0.88622754"
          sodipodi:type="arc"
          transform="matrix(0.8971031,-0.1604184,0.113022,0.6320502,207.22083,329.48718)" />
       <path
