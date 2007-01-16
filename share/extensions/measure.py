@@ -1,5 +1,10 @@
 #!/usr/bin/env python 
 '''
+This extension module can measure arbitrary path and object length
+It adds a text to the selected path containing the length in a
+given unit.
+
+Copyright (C) 2006 Georg Wiora
 Copyright (C) 2006 Nathan Hurst
 Copyright (C) 2005 Aaron Spike, aaron@ekips.org
 
@@ -16,8 +21,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+TODO:
+ * should use the standard attributes for text
+ * Implement option to keep text orientation upright 
+    1. Find text direction i.e. path tangent,
+    2. check direction >90 or <-90 Degrees
+    3. rotate by 180 degrees around text center
 '''
-import inkex, simplestyle, simplepath,sys,cubicsuperpath, bezmisc
+import inkex, simplestyle, simplepath,sys,cubicsuperpath, bezmisc, locale
+# Set current system locale
+locale.setlocale(locale.LC_ALL, '')
 
 def numsegs(csp):
     return sum([len(p)-1 for p in csp])
@@ -61,17 +75,46 @@ class Length(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-f", "--fontsize",
-                        action="store", type="string", 
-                        dest="fontsize", default="20",
-                        help="Size of node label numbers")    
+                        action="store", type="int", 
+                        dest="fontsize", default=20,
+                        help="Size of length lable text in px")
         self.OptionParser.add_option("-o", "--offset",
+                        action="store", type="float", 
+                        dest="offset", default=-6,
+                        help="The distance above the curve")
+        self.OptionParser.add_option("-u", "--unit",
                         action="store", type="string", 
-                        dest="offset", default="-4",
-                        help="The distance above the curve")    
+                        dest="unit", default="mm",
+                        help="The unit of the measurement")
+        self.OptionParser.add_option("-p", "--precision",
+                        action="store", type="int", 
+                        dest="precision", default=2,
+                        help="Number of significant digits after decimal point")
+        self.OptionParser.add_option("-s", "--scale",
+                        action="store", type="float", 
+                        dest="scale", default=1,
+                        help="The distance above the curve")
+        self.OptionParser.add_option("-r", "--orient",
+                        action="store", type="inkbool", 
+                        dest="orient", default=True,
+                        help="Keep orientation of text upright")
+        self.OptionParser.add_option("--tab",
+                        action="store", type="string", 
+                        dest="tab", default="sampling",
+                        help="The selected UI-tab when OK was pressed") 
+        self.OptionParser.add_option("--measurehelp",
+                        action="store", type="string", 
+                        dest="measurehelp", default="",
+                        help="dummy") 
+                        
     def effect(self):
+        # get number of digits
+        prec = int(self.options.precision)
+        # loop over all selected pathes
         for id, node in self.selected.iteritems():
             if node.tagName == 'path':
-                self.group = self.document.createElement('svg:g')
+                # self.group = self.document.createElement('svg:g')
+                self.group = self.document.createElement('svg:text')
                 node.parentNode.appendChild(self.group)
                 
                 try:
@@ -84,22 +127,45 @@ class Length(inkex.Effect):
                 p = cubicsuperpath.parsePath(node.attributes.getNamedItem('d').value)
                 num = 1
                 slengths, stotal = csplength(p)
-                self.addTextOnPath(self.group,0, 0,str(stotal), id, self.options.offset)
+                ''' Wio: Umrechnung in unit '''
+                if self.options.unit=="mm":
+                    factor=0.2822219  # px->mm
+                elif self.options.unit=="pt":
+                    factor=0.80       # px->pt
+                elif self.options.unit=="cm":
+                    factor=0.02822219 # px->cm
+                elif self.options.unit=="m":
+                    factor=0.0002822219 # px->m
+                elif self.options.unit=="km":
+                    factor=0.0000002822219 # px->km
+                elif self.options.unit=="in":
+                    factor=0.2822219/25.4 # px->in
+                else :
+                    ''' Default unit is px'''
+                    factor=1
+                    self.options.unit="px"
+                    
+                # Format the length as string
+                lenstr = locale.format("%(len)25."+str(prec)+"f",{'len':round(stotal*factor*self.options.scale,prec)}).strip()
+                self.addTextOnPath(self.group,0, 0,lenstr+' '+self.options.unit, id, self.options.offset)
 
 
     def addTextOnPath(self,node,x,y,text, id,dy=0):
-                new = self.document.createElement('svg:text')
-                tp = self.document.createElement('svg:textPath')
-                s = {'font-size': self.options.fontsize, 'fill-opacity': '1.0', 'stroke': 'none',
+                #new = self.document.createElement('svg:text')
+                new = self.document.createElement('svg:textPath')
+                s = {'text-align': 'center', 'vertical-align': 'bottom',
+                    'text-anchor': 'middle', 'font-size': str(self.options.fontsize),
+                    'fill-opacity': '1.0', 'stroke': 'none',
                     'font-weight': 'normal', 'font-style': 'normal', 'fill': '#000000'}
                 new.setAttribute('style', simplestyle.formatStyle(s))
-                new.setAttribute('x', str(x))
-                new.setAttribute('y', str(y))
-                tp.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href', '#'+id)
-                tp.setAttribute('startOffset', "50%")
-                #tp.setAttribute('dy', dy) # dubious merit
-                new.appendChild(tp)
-                tp.appendChild(self.document.createTextNode(str(text)))
+                node.setAttribute('x', str(x))
+                node.setAttribute('y', str(y))
+                #node.setAttribute('transform','rotate(180,'+str(-x)+','+str(-y)+')')
+                new.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href', '#'+id)
+                new.setAttribute('startOffset', "50%")
+                new.setAttribute('dy', str(dy)) # dubious merit
+                #new.appendChild(tp)
+                new.appendChild(self.document.createTextNode(str(text)))
                 node.appendChild(new)
 
 e = Length()
