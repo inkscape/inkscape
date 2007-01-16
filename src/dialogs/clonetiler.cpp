@@ -1307,7 +1307,7 @@ clonetiler_apply (GtkWidget *widget, void *)
                 // it's hard to figure out exact width/height of the tile without having an object
                 // that we can take bbox of; however here we only need a lower bound so that blur
                 // margins are not too small, and the perimeter should work
-                SPFilter *constructed = new_filter_gaussian_blur(sp_desktop_document(desktop), radius, t.expansion(), perimeter, perimeter);
+                SPFilter *constructed = new_filter_gaussian_blur(sp_desktop_document(desktop), radius, t.expansion(), t.expansionX(), t.expansionY(), perimeter, perimeter);
                 sp_style_set_property_url (clone_object, "filter", SP_OBJECT(constructed), false);
             }
 

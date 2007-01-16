@@ -27,7 +27,7 @@
  * Creates a filter with blur primitive of specified radius for an item with the given matrix expansion, width and height
  */
 SPFilter *
-new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion, double width, double height)
+new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion, double expansionX, double expansionY, double width, double height)
 {
     g_return_val_if_fail(document != NULL, NULL);
 
@@ -38,11 +38,14 @@ new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion
     repr = sp_repr_new("svg:filter");
     repr->setAttribute("inkscape:collect", "always");
 
-    if (width != 0 && height != 0 && (2 * radius > width * 0.1 || 2 * radius > height * 0.1)) {
+    double rx = radius * (expansion / expansionY);
+    double ry = radius * (expansion / expansionX);
+
+    if (width != 0 && height != 0 && (2 * rx > width * 0.1 || 2 * ry > height * 0.1)) {
         // If not within the default 10% margin (see
         // http://www.w3.org/TR/SVG11/filters.html#FilterEffectsRegion), specify margins
-        double xmargin = 2 * radius / width;
-        double ymargin = 2 * radius / height;
+        double xmargin = 2 * (rx) / width;
+        double ymargin = 2 * (ry) / height;
 
         // TODO: set it in UserSpaceOnUse instead?
         sp_repr_set_svg_double(repr, "x", -xmargin);
@@ -95,7 +98,7 @@ new_filter_gaussian_blur_from_item (SPDocument *document, SPItem *item, gdouble 
 
     NR::Matrix i2d = sp_item_i2d_affine (item);
 
-    return (new_filter_gaussian_blur (document, radius, i2d.expansion(), width, height));
+    return (new_filter_gaussian_blur (document, radius, i2d.expansion(), i2d.expansionX(), i2d.expansionY(), width, height));
 }
 
 void remove_filter (SPObject *item, bool recursive)
