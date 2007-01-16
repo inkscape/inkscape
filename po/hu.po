@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-14 17:49+0100\n"
-"PO-Revision-Date: 2007-01-14 23:11+0100\n"
+"PO-Revision-Date: 2007-01-16 23:23+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2360,27 +2360,24 @@ msgstr ""
 "betöltve."
 
 #: ../src/extension/internal/bluredge.cpp:131
-#, fuzzy
 msgid "Inset/Outset Halo"
-msgstr "Zsugorítás/nyújtás mértéke:"
+msgstr "Fénykorona zsugorítással/nyújtással"
 
 #: ../src/extension/internal/bluredge.cpp:133
 msgid "Width"
 msgstr "Szélesség"
 
 #: ../src/extension/internal/bluredge.cpp:133
-#, fuzzy
 msgid "Width in px of the halo"
-msgstr "Az elmosott terület szélessége képpontban"
+msgstr "A fénykorona szélessége képpontban"
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of steps"
 msgstr "Lépések száma"
 
 #: ../src/extension/internal/bluredge.cpp:134
-#, fuzzy
 msgid "Number of inset/outset copies of the object to make"
-msgstr "Az elmosás szimulálásához készítendő objektum-másolatok száma"
+msgstr "Az objektumról készítendő zsugorított illetve nyújtott másolatok száma"
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
@@ -3273,7 +3270,7 @@ msgstr "Meghívás elutasítása"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:370
 msgid "Inkboard session (%1 to %2)"
-msgstr ""
+msgstr "Inkboard-munkamenet (%1 - %2)"
 
 #: ../src/knot.cpp:425
 msgid "Node or handle drag canceled."
@@ -5872,13 +5869,15 @@ msgstr "Axonometrikus (3D)"
 
 #: ../src/ui/dialog/document-properties.cpp:243
 msgid "The normal grid with vertical and horizontal lines."
-msgstr ""
+msgstr "A normál rács függőleges és vízszintes vonalakkal."
 
 #: ../src/ui/dialog/document-properties.cpp:244
 msgid ""
 "A grid with vertical lines and two diagonal line groups, each representing "
 "the projection of a primary axis."
 msgstr ""
+"Rács függőleges vonalakkal és két olyan, átlós vonalcsoporttal, amelyek egy-egy "
+"elsődleges tengely vetületét ábrázolják."
 
 #: ../src/ui/dialog/document-properties.cpp:247
 msgid "Grid _units:"
@@ -5917,22 +5916,20 @@ msgid "Distance between horizontal grid lines"
 msgstr "A vízszintes rácsvonalak közti távolság"
 
 #: ../src/ui/dialog/document-properties.cpp:256
-#, fuzzy
 msgid "Angle X:"
-msgstr "Szög:"
+msgstr "X-szög:"
 
 #: ../src/ui/dialog/document-properties.cpp:256
 msgid "Angle of x-axis of axonometric grid"
-msgstr ""
+msgstr "Az axonometrikus rács X tengelyének szöge"
 
 #: ../src/ui/dialog/document-properties.cpp:258
-#, fuzzy
 msgid "Angle Z:"
-msgstr "Szög:"
+msgstr "Z-szög:"
 
 #: ../src/ui/dialog/document-properties.cpp:258
 msgid "Angle of z-axis of axonometric grid"
-msgstr ""
+msgstr "Az axonometrikus rács Z tengelyének szöge"
 
 #: ../src/ui/dialog/document-properties.cpp:260
 msgid "Grid line _color:"
@@ -6766,6 +6763,11 @@ msgid ""
 "ReleaseNotes on this issue! (Rightclick the taskbar button and press "
 "'Restore' to bring back a minimized document window)"
 msgstr ""
+"A párbeszédablakok a dokumentumablakok felett maradjanak-e. Ezzel "
+"kapcsolatban olvassa el a Kiadási Megjegyzéseket (Release Notes). "
+"(Egy minimalizált dokumentumablak visszahozásához kattintson a jobb "
+"oldali egérgombbal a feladatlistában levő gombra, majd válassza a "
+"\"Visszaállítás\" funkciót.)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Windows"
@@ -7394,12 +7396,11 @@ msgid "Stack scans"
 msgstr "Képeket egymásra"
 
 #: ../src/ui/dialog/tracedialog.cpp:531
-#, fuzzy
 msgid ""
 "Stack scans on top of one another (no gaps) instead of tiling (usually with "
 "gaps)"
 msgstr ""
-"A képek egymás tetejére való helyezése (nincsenek rések) vagy csempézése "
+"A képek egymás tetejére való helyezése (nincsenek rések) a csempézés helyett "
 "(általában vannak rések)"
 
 #: ../src/ui/dialog/tracedialog.cpp:534
@@ -7922,11 +7923,11 @@ msgstr "Rajztábla-meghívás küldése \"<b>%1</b>\" felhasználónak"
 #: ../src/ui/view/edit-widget.cpp:902 ../src/ui/view/edit-widget.cpp:906
 #: ../src/ui/view/edit-widget.cpp:910 ../src/ui/view/edit-widget.cpp:914
 msgid "PLACEHOLDER, do not translate"
-msgstr ""
+msgstr "PLACEHOLDER, do not translate"
 
 #: ../src/ui/view/edit-widget.cpp:999
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
-msgstr ""
+msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
 #: ../src/ui/view/edit-widget.cpp:1058 ../src/widgets/desktop-widget.cpp:250
 msgid "Zoom drawing if window size changes"
@@ -8328,9 +8329,8 @@ msgid "Height of paper"
 msgstr "A papír magassága"
 
 #: ../src/ui/widget/page-sizer.cpp:355
-#, fuzzy
 msgid "Set page size"
-msgstr "Lap_méret:"
+msgstr "Lapméret beállítása"
 
 #: ../src/ui/widget/style-swatch.cpp:325
 #, c-format
@@ -8353,9 +8353,8 @@ msgid "Opacity: %.3g"
 msgstr "Átlátszatlanság: %.3g"
 
 #: ../src/verbs.cpp:1117
-#, fuzzy
 msgid "Move to next layer"
-msgstr "A következő rétegre való ugrás megtörtént."
+msgstr "Ugrás a következő rétegre"
 
 #: ../src/verbs.cpp:1118
 msgid "Moved to next layer."
@@ -8366,9 +8365,8 @@ msgid "Cannot move past last layer."
 msgstr "Az utolsó rétegnél tovább nem lehet ugrani."
 
 #: ../src/verbs.cpp:1129
-#, fuzzy
 msgid "Move to previous layer"
-msgstr "Az előző rétegre való ugrás megtörtént."
+msgstr "Ugrás az előző rétegre"
 
 #: ../src/verbs.cpp:1130
 msgid "Moved to previous layer."
@@ -8822,24 +8820,20 @@ msgid "Invert selection in all visible and unlocked layers"
 msgstr "A kijelölés megfordítása az összes látható és zárolatlan rétegben"
 
 #: ../src/verbs.cpp:2052
-#, fuzzy
 msgid "Select Next"
-msgstr "Csomópont törlése"
+msgstr "Következő kijelölése"
 
 #: ../src/verbs.cpp:2053
-#, fuzzy
 msgid "Select next object or node"
-msgstr "Az összes objektum vagy az összes csomópont kijelölése"
+msgstr "A következő objektum vagy csomópont kijelölése"
 
 #: ../src/verbs.cpp:2054
-#, fuzzy
 msgid "Select Previous"
-msgstr "Kijelölés"
+msgstr "Előző kijelölése"
 
 #: ../src/verbs.cpp:2055
-#, fuzzy
 msgid "Select previous object or node"
-msgstr "Az összes objektum vagy az összes csomópont kijelölése"
+msgstr "Az előző objektum vagy csomópont kijelölése"
 
 #: ../src/verbs.cpp:2056
 msgid "D_eselect"
@@ -9948,35 +9942,29 @@ msgstr "A legutóbbi effektus megismétlése új beállításokkal"
 
 #. Fit Page
 #: ../src/verbs.cpp:2382
-#, fuzzy
 msgid "Fit Page to Selection"
-msgstr "Lap illesztése a ki_jelölésre"
+msgstr "Lap illesztése a kijelöléshez"
 
 #: ../src/verbs.cpp:2383
-#, fuzzy
 msgid "Fit the page to the current selection"
-msgstr "Rajzvászon illesztése az aktuális kijelöléshez"
+msgstr "A lap illesztése az aktuális kijelöléshez"
 
 #: ../src/verbs.cpp:2384
-#, fuzzy
 msgid "Fit Page to Drawing"
-msgstr "Rajzvászon illesztése a rajzhoz"
+msgstr "Lap illesztése a rajzhoz"
 
 #: ../src/verbs.cpp:2385
-#, fuzzy
 msgid "Fit the page to the drawing"
-msgstr "Rajzvászon illesztése a rajzhoz"
+msgstr "A lap illesztése a rajzhoz"
 
 #: ../src/verbs.cpp:2386
-#, fuzzy
 msgid "Fit Page to Selection or Drawing"
-msgstr "Rajzvászon illesztése a kijelöléshez vagy a rajzhoz"
+msgstr "Lap illesztése a kijelöléshez vagy a rajzhoz"
 
 #: ../src/verbs.cpp:2387
-#, fuzzy
 msgid "Fit the page to the current selection or the drawing if there is no selection"
 msgstr ""
-"Rajzvászon illesztése az aktuális kijelöléshez, ha pedig olyan nincs, akkor "
+"A lap illesztése az aktuális kijelöléshez, ha pedig olyan nincs, akkor "
 "a rajzhoz"
 
 #: ../src/widgets/dash-selector.cpp:103
@@ -10061,9 +10049,8 @@ msgid "Repeat:"
 msgstr "Ismétlődés:"
 
 #: ../src/widgets/gradient-toolbar.cpp:146
-#, fuzzy
 msgid "Assign gradient to object"
-msgstr "Objektumok igazítása és elrendezése"
+msgstr "Színátmenet hozzárendelése egy objektumhoz"
 
 #: ../src/widgets/gradient-toolbar.cpp:180
 msgid "<small>No gradients</small>"
@@ -10082,9 +10069,8 @@ msgid "<small>Multiple gradients</small>"
 msgstr "<small>Több színátmenet</small>"
 
 #: ../src/widgets/gradient-toolbar.cpp:419
-#, fuzzy
 msgid "Duplicate gradient"
-msgstr "Csomópont kettőzése"
+msgstr "Színátmenet kettőzése"
 
 #: ../src/widgets/gradient-toolbar.cpp:483
 msgid ""
@@ -10663,9 +10649,8 @@ msgstr ""
 "lehetséges)"
 
 #: ../src/widgets/toolbox.cpp:1413
-#, fuzzy
 msgid "Change rectangle"
-msgstr "Keresés téglalapokra"
+msgstr "Téglalap módosítása"
 
 #: ../src/widgets/toolbox.cpp:1612
 msgid "W:"
@@ -10765,16 +10750,14 @@ msgid "Fixation:"
 msgstr "Rögzítettség:"
 
 #: ../src/widgets/toolbox.cpp:2237 ../src/widgets/toolbox.cpp:2391
-#, fuzzy
 msgid ""
 "Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed "
 "angle)"
 msgstr ""
-"Mennyire rögzített a toll szöge (0: mindig merőleges a vonalhúzás irányára, "
-"1: rögzített)"
+"A szög viselkedése (0: a tollhegy mindig merőleges a vonalhúzás irányára, "
+"1: rögzített szög)"
 
 #: ../src/widgets/toolbox.cpp:2248
-#, fuzzy
 msgid "Caps:"
 msgstr "Vonalvég:"
 
@@ -10783,6 +10766,8 @@ msgid ""
 "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = "
 "round caps)"
 msgstr ""
+"Nagyobb érték esetén a vonalak végei jobban kiállnak (0: nincs kiálló rész, "
+"1: lekerekített vonalvégek)"
 
 #: ../src/widgets/toolbox.cpp:2258 ../src/widgets/toolbox.cpp:2415
 msgid "Tremor:"
@@ -10790,17 +10775,16 @@ msgstr "Remegés:"
 
 #: ../src/widgets/toolbox.cpp:2258 ../src/widgets/toolbox.cpp:2415
 msgid "Increase to make strokes rugged and trembling"
-msgstr ""
+msgstr "Nagyobb érték esetén a vonalak egyenetlenebbek és remegőbbek"
 
 # May contain a short, human readable description of the resource as plain, unmarked text.
 #: ../src/widgets/toolbox.cpp:2269 ../src/widgets/toolbox.cpp:2425
-#, fuzzy
 msgid "Wiggle:"
-msgstr "Leírás (title):"
+msgstr "Tekeredés:"
 
 #: ../src/widgets/toolbox.cpp:2269 ../src/widgets/toolbox.cpp:2425
 msgid "Increase to make the pen waver and wiggle"
-msgstr ""
+msgstr "Nagyobb érték esetén a toll hullámzóbban és tekergőbben mozog"
 
 #: ../src/widgets/toolbox.cpp:2279 ../src/widgets/toolbox.cpp:2436
 msgid "Mass:"
@@ -10808,18 +10792,17 @@ msgstr "Tömeg:"
 
 #: ../src/widgets/toolbox.cpp:2279 ../src/widgets/toolbox.cpp:2436
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
-msgstr ""
+msgstr "Nagyobb érték esetén a toll mozgása vontatott, mintha tehetetlenség lassítaná"
 
 # TODO: ellenőrizni
 #. TRANSLATORS: "cap" means "end" (both start and finish) here
 #: ../src/widgets/toolbox.cpp:2402
-#, fuzzy
 msgid "Round:"
 msgstr "Lekerekítettség:"
 
 #: ../src/widgets/toolbox.cpp:2402
 msgid "Increase to round the ends of strokes"
-msgstr ""
+msgstr "Nagyobb érték esetén a vonalvégek lekerekítettebbek"
 
 #: ../src/widgets/toolbox.cpp:2456
 msgid "Use the pressure of the input device to alter the width of the pen"
@@ -10831,11 +10814,11 @@ msgstr "A beviteli eszköz dőlésének használata a tollhegy szögének válto
 
 #: ../src/widgets/toolbox.cpp:2578
 msgid "Arc: Change start/end"
-msgstr ""
+msgstr "Ellipszisív: kezdet/vég módosítása"
 
 #: ../src/widgets/toolbox.cpp:2651
 msgid "Arc: Change open/closed"
-msgstr ""
+msgstr "Ellipszisív: nyitott/zárt állapot módosítása"
 
 #: ../src/widgets/toolbox.cpp:2786
 msgid "Start:"
@@ -10895,24 +10878,23 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3384
 msgid "Text: Change font family"
-msgstr ""
+msgstr "Szöveg: betűtípus-család módosítása"
 
 #: ../src/widgets/toolbox.cpp:3467
 msgid "Text: Change alignment"
-msgstr ""
+msgstr "Szöveg: igazítás módosítása"
 
 #: ../src/widgets/toolbox.cpp:3513
 msgid "Text: Change font style"
-msgstr ""
+msgstr "Szöveg: betűstílus módosítása"
 
 #: ../src/widgets/toolbox.cpp:3560
-#, fuzzy
 msgid "Text: Change orientation"
-msgstr "Laptájolás:"
+msgstr "Szöveg: tájolás módosítása"
 
 #: ../src/widgets/toolbox.cpp:3656
 msgid "Text: Change font size"
-msgstr ""
+msgstr "Szöveg: betűméret módosítása"
 
 #: ../src/widgets/toolbox.cpp:3839
 msgid ""
@@ -10967,9 +10949,8 @@ msgid "Letter rotation"
 msgstr "Betű-elforgatás"
 
 #: ../src/widgets/toolbox.cpp:4222
-#, fuzzy
 msgid "Change connector spacing"
-msgstr "Kapcsok létrehozása"
+msgstr "Kapcsok helykihagyásának módosítása"
 
 #: ../src/widgets/toolbox.cpp:4331
 msgid "Spacing:"
@@ -10988,9 +10969,8 @@ msgid "Ideal length for connectors when layout is applied"
 msgstr "Kapcsok ideális hossza az elrendezés alkalmazásakor"
 
 #: ../src/widgets/toolbox.cpp:4362
-#, fuzzy
 msgid "Make connectors with end-markers (arrows) point downwards"
-msgstr "A kapcsok kerüljék ki a kijelölt objektumokat"
+msgstr "A vég-jelölőkkel rendelkező kapcsok (nyilak) mutassanak lefelé"
 
 #: ../src/widgets/toolbox.cpp:4376
 msgid "Do not allow overlapping shapes"
@@ -11056,9 +11036,8 @@ msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
 msgstr "A felesleg eltávolítása az Adobe Illustrator-féle SVG-kből a megnyitás előtt"
 
 #: ../share/extensions/color_brighter.inx.h:1
-#, fuzzy
 msgid "Brighter"
-msgstr "Fényesség"
+msgstr "Fényesebb"
 
 #: ../share/extensions/color_custom.inx.h:1
 #, fuzzy
@@ -11080,9 +11059,8 @@ msgid "Red Function"
 msgstr "Függvény"
 
 #: ../share/extensions/color_darker.inx.h:2
-#, fuzzy
 msgid "Darker"
-msgstr "Színpipetta"
+msgstr "Sötétebb"
 
 #: ../share/extensions/color_desaturate.inx.h:2
 #, fuzzy
@@ -11230,7 +11208,6 @@ msgid "DXF file written by pstoedit"
 msgstr "A Pstoedit által készített DXF-fájl"
 
 #: ../share/extensions/dxf_output.inx.h:4
-#, fuzzy
 msgid "pstoedit must be installed to run; see http://www.pstoedit.net/pstoedit"
 msgstr ""
 "A Pstoedit programnak telepítve kell lennie a használathoz. Információ a "
@@ -11241,9 +11218,8 @@ msgid "Embed All Images"
 msgstr "Az összes kép beágyazása"
 
 #: ../share/extensions/embedimage.inx.h:2
-#, fuzzy
 msgid "Embed only selected images"
-msgstr "Az összes kép beágyazása"
+msgstr "Csak a kijelölt képek beágyazása"
 
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
@@ -11335,7 +11311,6 @@ msgid "First derivative"
 msgstr "Először kijelölt"
 
 #: ../share/extensions/funcplot.inx.h:5
-#, fuzzy
 msgid "Function"
 msgstr "Függvény"
 
@@ -11418,30 +11393,28 @@ msgid "Draw Handles"
 msgstr "Vezérlőelemek megrajzolása"
 
 #: ../share/extensions/inkscape_help_commandline.inx.h:1
-#, fuzzy
 msgid "Command Line Options"
-msgstr "Véletlenszerű pozíció"
+msgstr "Parancssori opciók"
 
 #: ../share/extensions/inkscape_help_faq.inx.h:1
 msgid "FAQ"
-msgstr ""
+msgstr "Gyakran feltett kérdések"
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
-#, fuzzy
 msgid "Inkscape Manual"
-msgstr "Inkscape: _Vektorizálás"
+msgstr "Inkscape-kézikönyv"
 
 #: ../share/extensions/inkscape_help_relnotes.inx.h:1
 msgid "New in This Version"
-msgstr ""
+msgstr "A verzió újdonságai"
 
 #: ../share/extensions/inkscape_help_reportabug.inx.h:1
 msgid "Report a Bug"
-msgstr ""
+msgstr "Hibabejelentés"
 
 #: ../share/extensions/inkscape_help_svgspec.inx.h:1
 msgid "SVG 1.1 Specification"
-msgstr ""
+msgstr "SVG 1.1-specifikáció"
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
