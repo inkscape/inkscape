@@ -543,8 +543,6 @@ Section $(lng_Core) SecCore
   SetOutPath $INSTDIR\share\icons
   File /a "..\..\inkscape\share\icons\inkscape.file.png"
   File /a "..\..\inkscape\share\icons\inkscape.file.svg"
-  SetOutPath $INSTDIR\share\screens
-  File /a "..\..\inkscape\share\screens\about.bg.svg"
   SetOutPath $INSTDIR\modules
   File /nonfatal /a /r "..\..\inkscape\modules\*.*"
   SetOutPath $INSTDIR\python
