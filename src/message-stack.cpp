@@ -70,6 +70,9 @@ MessageId MessageStack::flash(MessageType type, gchar const *message) {
     case WARNING_MESSAGE: // a bit less important than error
         return _push(type, 2000 + 40*strlen(message), message);
         break;
+    case IMMEDIATE_MESSAGE: // same length as normal, higher priority
+        return _push(type, 1000 + 20*strlen(message), message);
+        break;
     case NORMAL_MESSAGE: // something ephemeral
     default:
         return _push(type, 1000 + 20*strlen(message), message);

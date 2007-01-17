@@ -21,6 +21,7 @@ namespace Inkscape {
  */
 enum MessageType {
     NORMAL_MESSAGE,
+    IMMEDIATE_MESSAGE,
     WARNING_MESSAGE,
     ERROR_MESSAGE,
     INFORMATION_MESSAGE

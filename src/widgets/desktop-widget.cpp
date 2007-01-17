@@ -105,6 +105,13 @@ SPDesktopWidget::setMessage (Inkscape::MessageType type, const gchar *message)
 {
     GtkLabel *sb=GTK_LABEL(this->select_status);
     gtk_label_set_markup (sb, message ? message : "");
+
+    // make sure the important messages are displayed immediately!
+    if (type == Inkscape::IMMEDIATE_MESSAGE && GTK_WIDGET_DRAWABLE (GTK_WIDGET(sb))) {
+        gtk_widget_queue_draw(GTK_WIDGET(sb));
+        gdk_window_process_updates(GTK_WIDGET(sb)->window, TRUE);
+    }
+
     // FIXME: TODO: remove <b></b> before displaying as tooltip
     gtk_tooltips_set_tip (this->tt, this->select_status_eventbox, message ? message : "", NULL);
 }
