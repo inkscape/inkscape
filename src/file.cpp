@@ -43,6 +43,7 @@
 #include "style.h"
 #include "print.h"
 #include "file.h"
+#include "message.h"
 #include "message-stack.h"
 #include "ui/dialog/filedialog.h"
 #include "prefs-utils.h"
@@ -693,6 +694,9 @@ sp_file_save(gpointer object, gpointer data)
 {
     if (!SP_ACTIVE_DOCUMENT)
         return false;
+
+    SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Saving document..."));
+
     sp_namedview_document_from_window(SP_ACTIVE_DESKTOP);
     return sp_file_save_document(SP_ACTIVE_DOCUMENT);
 }
