@@ -24,16 +24,9 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <livarot/Shape.h>
 #include <livarot/Path.h>
 
-struct SPCtrlLine : public SPCanvasItem{
-    guint32 rgba;
-    NRPoint s, e;
-    Shape* shp;
-};
 
-struct SPCtrlLineClass : public SPCanvasItemClass{};
 
 static void sp_ctrlline_class_init (SPCtrlLineClass *klass);
 static void sp_ctrlline_init (SPCtrlLine *ctrlline);

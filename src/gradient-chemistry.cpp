@@ -19,6 +19,7 @@
 #include "desktop-style.h"
 
 #include "sp-gradient-reference.h"
+#include "sp-gradient-vector.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-stop.h"
@@ -498,11 +499,24 @@ sp_last_stop(SPGradient *gradient)
 		return stop;
   }
   return NULL;
+} 
+
+SPStop*
+sp_get_stop_i(SPGradient *gradient, guint stop_i)
+{            
+  SPStop *stop = sp_first_stop (gradient);
+  
+  for (guint i=0; i < stop_i; i++) {
+    if (!stop) return NULL;  
+    stop = sp_next_stop (stop);    
+  }  
+    
+  return stop;
 }
 
 
 void
-sp_item_gradient_edit_stop (SPItem *item, guint point_num, bool fill_or_stroke)
+sp_item_gradient_edit_stop (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke)
 {
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
 
@@ -510,8 +524,8 @@ sp_item_gradient_edit_stop (SPItem *item, guint point_num, bool fill_or_stroke)
         return;
 
     SPGradient *vector = sp_gradient_get_vector (gradient, false);
-    switch (point_num) {
-        case POINT_LG_P1:
+    switch (point_type) {
+        case POINT_LG_BEGIN:
         case POINT_RG_CENTER:
         case POINT_RG_FOCUS:
         {
@@ -520,11 +534,20 @@ sp_item_gradient_edit_stop (SPItem *item, guint point_num, bool fill_or_stroke)
         }
         break;
 
-        case POINT_LG_P2:
+        case POINT_LG_END:
         case POINT_RG_R1:
         case POINT_RG_R2:
         {
             GtkWidget *dialog = sp_gradient_vector_editor_new (vector, sp_last_stop (vector));
+            gtk_widget_show (dialog);
+        }
+        break;
+        
+        case POINT_LG_MID:
+        case POINT_RG_MID1:
+        case POINT_RG_MID2:
+        {
+            GtkWidget *dialog = sp_gradient_vector_editor_new (vector, sp_get_stop_i (vector, point_i));
             gtk_widget_show (dialog);
         }
         break;
@@ -534,7 +557,7 @@ sp_item_gradient_edit_stop (SPItem *item, guint point_num, bool fill_or_stroke)
 }
 
 guint32
-sp_item_gradient_stop_query_style (SPItem *item, guint point_num, bool fill_or_stroke)
+sp_item_gradient_stop_query_style (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke)
 {
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
 
@@ -546,8 +569,8 @@ sp_item_gradient_stop_query_style (SPItem *item, guint point_num, bool fill_or_s
     if (!vector) // orphan!
         return 0; // what else to do?
 
-    switch (point_num) {
-        case POINT_LG_P1:
+    switch (point_type) {
+        case POINT_LG_BEGIN:
         case POINT_RG_CENTER:
         case POINT_RG_FOCUS:
         {
@@ -558,7 +581,7 @@ sp_item_gradient_stop_query_style (SPItem *item, guint point_num, bool fill_or_s
         }
         break;
 
-        case POINT_LG_P2:
+        case POINT_LG_END:
         case POINT_RG_R1:
         case POINT_RG_R2:
         {
@@ -568,6 +591,18 @@ sp_item_gradient_stop_query_style (SPItem *item, guint point_num, bool fill_or_s
             }
         }
         break;
+        
+        case POINT_LG_MID:
+        case POINT_RG_MID1:
+        case POINT_RG_MID2:
+        {
+            SPStop *stopi = sp_get_stop_i (vector, point_i);
+            if (stopi) {
+                return sp_stop_get_rgba32(stopi);
+            }
+        }
+        break;
+
         default:
             break;
     }
@@ -575,7 +610,7 @@ sp_item_gradient_stop_query_style (SPItem *item, guint point_num, bool fill_or_s
 }
 
 void
-sp_item_gradient_stop_set_style (SPItem *item, guint point_num, bool fill_or_stroke, SPCSSAttr *stop)
+sp_item_gradient_stop_set_style (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, SPCSSAttr *stop)
 {
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
 
@@ -586,14 +621,16 @@ sp_item_gradient_stop_set_style (SPItem *item, guint point_num, bool fill_or_str
 
     if (!vector) // orphan!
         return;
-
-    vector = sp_gradient_fork_vector_if_necessary (vector);
+    
+    /*
+    vector = sp_gradient_fork_vector_if_necessary (vector);   // TESTJOHAN
     if ( gradient != vector && gradient->ref->getObject() != vector ) {
         sp_gradient_repr_set_link(SP_OBJECT_REPR(gradient), vector);
     }
+    */
 
-    switch (point_num) {
-        case POINT_LG_P1:
+    switch (point_type) {
+        case POINT_LG_BEGIN:
         case POINT_RG_CENTER:
         case POINT_RG_FOCUS:
         {
@@ -604,7 +641,7 @@ sp_item_gradient_stop_set_style (SPItem *item, guint point_num, bool fill_or_str
         }
         break;
 
-        case POINT_LG_P2:
+        case POINT_LG_END:
         case POINT_RG_R1:
         case POINT_RG_R2:
         {
@@ -614,6 +651,18 @@ sp_item_gradient_stop_set_style (SPItem *item, guint point_num, bool fill_or_str
             }
         }
         break;
+        
+        case POINT_LG_MID:
+        case POINT_RG_MID1:
+        case POINT_RG_MID2:
+        {
+            SPStop *stopi = sp_get_stop_i (vector, point_i);
+            if (stopi) {
+                sp_repr_css_change (SP_OBJECT_REPR (stopi), stop, "style");
+            }
+        }
+        break;
+           
         default:
             break;
     }
@@ -672,13 +721,27 @@ sp_item_gradient_reverse_vector (SPItem *item, bool fill_or_stroke)
 }
 
 
+// FIXME: make general global function
+static double
+get_offset_between_points (NR::Point p, NR::Point begin, NR::Point end)
+{
+    double length = NR::L2(end - begin);
+    NR::Point be = (end - begin) / length;
+    double r = NR::dot(p - begin, be);
+        
+    if (r < 0.0) return 0.0;
+    if (r > length) return 1.0;    
+    
+    return (r / length);
+}
+
 
 /**
-Set the position of point point_num of the gradient applied to item (either fill_or_stroke) to
+Set the position of point point_type of the gradient applied to item (either fill_or_stroke) to
 p_w (in desktop coordinates). Write_repr if you want the change to become permanent.
 */
 void
-sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_w, bool fill_or_stroke, bool write_repr, bool scale)
+sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::Point p_w, bool fill_or_stroke, bool write_repr, bool scale)
 {
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
 
@@ -696,8 +759,8 @@ sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_w, bool 
 
     if (SP_IS_LINEARGRADIENT(gradient)) {
         SPLinearGradient *lg = SP_LINEARGRADIENT(gradient);
-        switch (point_num) {
-            case POINT_LG_P1:
+        switch (point_type) {
+            case POINT_LG_BEGIN:
                 if (scale) {
                     lg->x2.computed += (lg->x1.computed - p[NR::X]);
                     lg->y2.computed += (lg->y1.computed - p[NR::Y]);
@@ -715,7 +778,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_w, bool 
                     SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG);
                 }
                 break;
-            case POINT_LG_P2:
+            case POINT_LG_END:
                 if (scale) {
                     lg->x1.computed += (lg->x2.computed - p[NR::X]);
                     lg->y1.computed += (lg->y2.computed - p[NR::Y]);
@@ -733,6 +796,21 @@ sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_w, bool 
                     SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG);
                 }
 			break;
+            case POINT_LG_MID:
+            {                              
+                // using X-coordinates only to determine the offset, assuming p has been snapped to the vector from begin to end.
+                double offset = get_offset_between_points (p, NR::Point(lg->x1.computed, lg->y1.computed), NR::Point(lg->x2.computed, lg->y2.computed));
+                lg->vector.stops.at(point_i).offset = offset;
+                SPGradient *vector = sp_gradient_get_vector (lg, false);
+                SPStop* stopi = sp_get_stop_i(vector, point_i);
+                stopi->offset = offset;
+                if (write_repr) {
+                    sp_repr_set_css_double(SP_OBJECT_REPR(stopi), "offset", stopi->offset);
+                } else {
+                    SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+                }
+            }
+            break;
 		default:
 			break;
 		}
@@ -741,14 +819,14 @@ sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_w, bool 
 		SPRadialGradient *rg = SP_RADIALGRADIENT(gradient);
 		NR::Point c (rg->cx.computed, rg->cy.computed);
 		NR::Point c_w = c * gradient->gradientTransform * i2d; // now in desktop coords
-           if ((point_num == POINT_RG_R1 || point_num == POINT_RG_R2) && NR::L2 (p_w - c_w) < 1e-3) {
+           if ((point_type == POINT_RG_R1 || point_type == POINT_RG_R2) && NR::L2 (p_w - c_w) < 1e-3) {
                // prevent setting a radius too close to the center
                return;
            }
 		NR::Matrix new_transform;
 		bool transform_set = false;
 
-		switch (point_num) {
+		switch (point_type) {
 		case POINT_RG_CENTER:
 			rg->fx.computed = p[NR::X] + (rg->fx.computed - rg->cx.computed);
 			rg->fy.computed = p[NR::Y] + (rg->fy.computed - rg->cy.computed);
@@ -811,8 +889,37 @@ sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_w, bool 
 
 				break;
 			}
-		}
-
+        case POINT_RG_MID1:
+			{
+                NR::Point start = NR::Point (rg->cx.computed, rg->cy.computed);
+                NR::Point end   = NR::Point (rg->cx.computed + rg->r.computed, rg->cy.computed);
+                double offset = get_offset_between_points (p, start, end);
+                rg->vector.stops.at(point_i).offset = offset;
+                SPGradient *vector = sp_gradient_get_vector (rg, false);
+                SPStop* stopi = sp_get_stop_i(vector, point_i);
+                stopi->offset = offset;
+                if (write_repr) {
+                    sp_repr_set_css_double(SP_OBJECT_REPR(stopi), "offset", stopi->offset);
+                } else {
+                    SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+                }
+				break;
+			}
+        case POINT_RG_MID2:
+                NR::Point start = NR::Point (rg->cx.computed, rg->cy.computed);
+                NR::Point end   = NR::Point (rg->cx.computed, rg->cy.computed - rg->r.computed);
+                double offset = get_offset_between_points (p, start, end);
+                rg->vector.stops.at(point_i).offset = offset;
+                SPGradient *vector = sp_gradient_get_vector (rg, false);
+                SPStop* stopi = sp_get_stop_i(vector, point_i);
+                stopi->offset = offset;
+                if (write_repr) {
+                    sp_repr_set_css_double(SP_OBJECT_REPR(stopi), "offset", stopi->offset);
+                } else {
+                    SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+                }
+				break;
+            }
 		if (transform_set) {
 				gradient->gradientTransform = new_transform;
 				gradient->gradientTransform_set = TRUE;
@@ -852,12 +959,12 @@ sp_item_gradient_get_spread (SPItem *item, bool fill_or_stroke)
 
 
 /**
-Returns the position of point point_num of the gradient applied to item (either fill_or_stroke),
+Returns the position of point point_type of the gradient applied to item (either fill_or_stroke),
 in desktop coordinates.
 */
 
 NR::Point
-sp_item_gradient_get_coords (SPItem *item, guint point_num, bool fill_or_stroke)
+sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke)
 {
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
 
@@ -868,17 +975,23 @@ sp_item_gradient_get_coords (SPItem *item, guint point_num, bool fill_or_stroke)
 
     if (SP_IS_LINEARGRADIENT(gradient)) {
         SPLinearGradient *lg = SP_LINEARGRADIENT(gradient);
-        switch (point_num) {
-            case POINT_LG_P1:
+        switch (point_type) {
+            case POINT_LG_BEGIN:
                 p = NR::Point (lg->x1.computed, lg->y1.computed);
                 break;
-            case POINT_LG_P2:
+            case POINT_LG_END:
                 p = NR::Point (lg->x2.computed, lg->y2.computed);
+                break;
+            case POINT_LG_MID:
+                {   
+                    gdouble offset = lg->vector.stops.at(point_i).offset;
+                    p = (1-offset) * NR::Point(lg->x1.computed, lg->y1.computed) + offset * NR::Point(lg->x2.computed, lg->y2.computed);
+                }
                 break;
         }
     } else     if (SP_IS_RADIALGRADIENT(gradient)) {
         SPRadialGradient *rg = SP_RADIALGRADIENT(gradient);
-        switch (point_num) {
+        switch (point_type) {
             case POINT_RG_CENTER:
                 p = NR::Point (rg->cx.computed, rg->cy.computed);
                 break;
@@ -890,6 +1003,18 @@ sp_item_gradient_get_coords (SPItem *item, guint point_num, bool fill_or_stroke)
                 break;
             case POINT_RG_R2:
                 p = NR::Point (rg->cx.computed, rg->cy.computed - rg->r.computed);
+                break;
+            case POINT_RG_MID1:
+                {
+                    gdouble offset = rg->vector.stops.at(point_i).offset;
+                    p = (1-offset) * NR::Point (rg->cx.computed, rg->cy.computed) + offset * NR::Point(rg->cx.computed + rg->r.computed, rg->cy.computed);
+                }        
+                break;
+            case POINT_RG_MID2:
+                {
+                    gdouble offset = rg->vector.stops.at(point_i).offset;
+                    p = (1-offset) * NR::Point (rg->cx.computed, rg->cy.computed) + offset * NR::Point(rg->cx.computed, rg->cy.computed - rg->r.computed);
+                }        
                 break;
         }
     }

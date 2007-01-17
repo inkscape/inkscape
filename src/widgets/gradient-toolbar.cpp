@@ -114,9 +114,12 @@ gr_apply_gradient (Inkscape::Selection *selection, GrDrag *drag, SPGradient *gr)
     SPGradientType new_type = (SPGradientType) prefs_get_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR);
     guint new_fill = prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1);
 
+
+    // GRADIENTFIXME: make this work for multiple selected draggers.
+    
     // First try selected dragger
     if (drag && drag->selected) {
-        GrDragger *dragger = drag->selected;
+        GrDragger *dragger = (GrDragger*) drag->selected->data;
         for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
             GrDraggable *draggable = (GrDraggable *) i->data;
             gr_apply_gradient_to_item (draggable->item, gr, new_type, new_fill, draggable->fill_or_stroke, !draggable->fill_or_stroke);
@@ -126,7 +129,7 @@ gr_apply_gradient (Inkscape::Selection *selection, GrDrag *drag, SPGradient *gr)
 
    // If no drag or no dragger selected, act on selection
    for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
-       gr_apply_gradient_to_item (SP_ITEM(i->data), gr, new_type, new_fill, true, true);
+       gr_apply_gradient_to_item (SP_ITEM(i->data), gr, new_type, new_fill, new_fill, !new_fill);
    }
 }
 
@@ -263,7 +266,8 @@ void
 gr_read_selection (Inkscape::Selection *selection, GrDrag *drag, SPGradient **gr_selected, bool *gr_multi, SPGradientSpread *spr_selected, bool *spr_multi) 
 {
     if (drag && drag->selected) {
-        GrDragger *dragger = drag->selected;
+        // GRADIENTFIXME: make this work for more than one selected dragger?
+        GrDragger *dragger = (GrDragger*) drag->selected->data;
         for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
             GrDraggable *draggable = (GrDraggable *) i->data;
             SPGradient *gradient = sp_item_gradient_get_vector (draggable->item, draggable->fill_or_stroke);

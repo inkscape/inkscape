@@ -29,7 +29,13 @@ class SPGradientContextClass;
 struct SPGradientContext : public SPEventContext {
 
     NR::Point origin;
+        
+    bool cursor_addnode;
+    
+    bool node_added;
 
+    NR::Point mousepoint_doc; // stores mousepoint when over_line in doc coords
+        
     Inkscape::MessageContext *_message_context;
 };
 

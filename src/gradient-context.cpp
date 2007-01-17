@@ -26,13 +26,25 @@
 #include "message-context.h"
 #include "message-stack.h"
 #include "pixmaps/cursor-gradient.xpm"
+#include "pixmaps/cursor-gradient-add.xpm"
+#include "pixmaps/cursor-gradient-delete.xpm"
 #include "gradient-context.h"
+#include "gradient-chemistry.h"
 #include <glibmm/i18n.h>
 #include "prefs-utils.h"
 #include "gradient-drag.h"
 #include "gradient-chemistry.h"
 #include "xml/repr.h"
 #include "sp-item.h"
+#include "display/sp-ctrlline.h"
+#include "sp-linear-gradient.h"
+#include "sp-radial-gradient.h"
+#include "sp-stop.h"
+#include "svg/css-ostringstream.h"
+#include "svg/svg-color.h"
+
+
+
 
 static void sp_gradient_context_class_init(SPGradientContextClass *klass);
 static void sp_gradient_context_init(SPGradientContext *gr_context);
@@ -83,12 +95,13 @@ static void sp_gradient_context_init(SPGradientContext *gr_context)
 {
     SPEventContext *event_context = SP_EVENT_CONTEXT(gr_context);
 
+    gr_context->cursor_addnode = false;
     event_context->cursor_shape = cursor_gradient_xpm;
     event_context->hot_x = 4;
     event_context->hot_y = 4;
     event_context->xp = 0;
     event_context->yp = 0;
-    event_context->tolerance = 0;
+    event_context->tolerance = 4;
     event_context->within_tolerance = false;
     event_context->item_to_select = NULL;
 }
@@ -142,7 +155,267 @@ sp_gradient_context_select_prev (SPEventContext *event_context)
     drag->select_prev();
 }
 
-static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
+// FIXME: make global function in libnr or somewhere.
+static NR::Point
+snap_vector_midpoint (NR::Point p, NR::Point begin, NR::Point end)
+{
+    double length = NR::L2(end - begin);
+    NR::Point be = (end - begin) / length;
+    double r = NR::dot(p - begin, be);
+        
+    if (r < 0.0) return begin;
+    if (r > length) return end;    
+    
+    return (begin + r * be);
+}
+
+static bool
+sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, NR::Point event_p)
+{
+    SPDesktop *desktop = SP_EVENT_CONTEXT (rc)->desktop;
+
+    //Translate mouse point into proper coord system
+    rc->mousepoint_doc = desktop->w2d(event_p);
+
+    SPCtrlLine* line = SP_CTRLLINE(item);
+   
+    NR::Point nearest = snap_vector_midpoint (rc->mousepoint_doc, line->s, line->e);
+    NR::Point delta = rc->mousepoint_doc - nearest;
+
+    double tolerance = (double) SP_EVENT_CONTEXT(rc)->tolerance;
+
+    bool close = (NR::L2 (delta) < tolerance);
+
+    return close;
+}
+
+// Fixme : must be able to put this in a general file.
+static guint32
+average_color (guint32 c1, guint32 c2, gdouble p = 0.5)
+{
+	guint32 r = (guint32) (SP_RGBA32_R_U (c1) * (1 - p) + SP_RGBA32_R_U (c2) * p);
+	guint32 g = (guint32) (SP_RGBA32_G_U (c1) * (1 - p) + SP_RGBA32_G_U (c2) * p);
+	guint32 b = (guint32) (SP_RGBA32_B_U (c1) * (1 - p) + SP_RGBA32_B_U (c2) * p);
+	guint32 a = (guint32) (SP_RGBA32_A_U (c1) * (1 - p) + SP_RGBA32_A_U (c2) * p);
+
+	return SP_RGBA32_U_COMPOSE (r, g, b, a);
+}
+
+static double
+get_offset_between_points (NR::Point p, NR::Point begin, NR::Point end)
+{
+    double length = NR::L2(end - begin);
+    NR::Point be = (end - begin) / length;
+    double r = NR::dot(p - begin, be);
+        
+    if (r < 0.0) return 0.0;
+    if (r > length) return 1.0;    
+    
+    return (r / length);
+}
+
+static void
+sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  NR::Point mouse_p, guint32 etime)
+{
+    // item is the selected item. mouse_p the location in doc coordinates of where to add the stop    
+    
+    SPEventContext *ec = SP_EVENT_CONTEXT(rc);
+    double tolerance = (double) ec->tolerance;
+
+    gfloat offset; // type of SPStop.offset = gfloat
+    SPGradient *gradient; 
+    bool fill_or_stroke = true; 
+    bool r1_knot = false;
+    
+    bool addknot = false;
+    do {
+        gradient = sp_item_gradient (item, fill_or_stroke);
+        if (SP_IS_LINEARGRADIENT(gradient)) {
+            NR::Point begin   = sp_item_gradient_get_coords(item, POINT_LG_BEGIN, 0, fill_or_stroke);
+            NR::Point end     = sp_item_gradient_get_coords(item, POINT_LG_END, 0, fill_or_stroke);
+                
+            NR::Point nearest = snap_vector_midpoint (mouse_p, begin, end);
+            NR::Point delta = mouse_p - nearest;
+            if ( NR::L2 (delta) < tolerance ) {
+                // add the knot 
+                offset = get_offset_between_points(nearest, begin, end); 
+                addknot = true;              
+                break; // break out of the while loop: add only one knot
+            }
+        } else if (SP_IS_RADIALGRADIENT(gradient)) {
+            NR::Point begin = sp_item_gradient_get_coords(item, POINT_RG_CENTER, 0, fill_or_stroke);
+            NR::Point end   = sp_item_gradient_get_coords(item, POINT_RG_R1, 0, fill_or_stroke);
+            NR::Point nearest = snap_vector_midpoint (mouse_p, begin, end);
+            NR::Point delta = mouse_p - nearest;
+            if ( NR::L2 (delta) < tolerance ) {
+                offset = get_offset_between_points(nearest, begin, end); 
+                addknot = true;
+                r1_knot = true;              
+                break; // break out of the while loop: add only one knot
+            }
+
+            end    = sp_item_gradient_get_coords(item, POINT_RG_R2, 0, fill_or_stroke);
+            nearest = snap_vector_midpoint (mouse_p, begin, end);
+            delta = mouse_p - nearest;
+            if ( NR::L2 (delta) < tolerance ) {
+                offset = get_offset_between_points(nearest, begin, end); 
+                addknot = true;
+                r1_knot = false;              
+                break; // break out of the while loop: add only one knot
+            }
+        }     
+        fill_or_stroke = !fill_or_stroke;
+    } while (!fill_or_stroke && !addknot) ;
+
+    if (addknot) {
+        SPGradient *vector = sp_gradient_get_vector (gradient, false);
+        SPStop* prev_stop = sp_first_stop(vector);
+        SPStop* next_stop = sp_next_stop(prev_stop);
+        while ( (next_stop) && (next_stop->offset < offset) ) {
+            prev_stop = next_stop;
+            next_stop = sp_next_stop(next_stop);
+        }
+        if (!next_stop) {
+            // logical error: the endstop should have offset 1 and should always be more than this offset here
+            return;
+        }
+                    
+        Inkscape::XML::Node *new_stop_repr = NULL;
+        new_stop_repr = SP_OBJECT_REPR(prev_stop)->duplicate();
+        SP_OBJECT_REPR(vector)->addChild(new_stop_repr, SP_OBJECT_REPR(prev_stop));
+    
+        SPStop *newstop = (SPStop *) SP_OBJECT_DOCUMENT(vector)->getObjectByRepr(new_stop_repr);
+        newstop->offset = offset;
+        sp_repr_set_css_double( SP_OBJECT_REPR(newstop), "offset", (double)offset);
+        guint32 const c1 = sp_stop_get_rgba32(prev_stop);
+        guint32 const c2 = sp_stop_get_rgba32(next_stop);
+        guint32 cnew = average_color (c1, c2, (offset - prev_stop->offset) / (next_stop->offset - prev_stop->offset));
+        Inkscape::CSSOStringStream os;
+        gchar c[64];
+        sp_svg_write_color (c, 64, cnew);
+        gdouble opacity = (gdouble) SP_RGBA32_A_F (cnew);
+        os << "stop-color:" << c << ";stop-opacity:" << opacity <<";";
+        SP_OBJECT_REPR (newstop)->setAttribute("style", os.str().c_str());
+
+    
+        Inkscape::GC::release(new_stop_repr);
+        sp_document_done (SP_OBJECT_DOCUMENT (vector), SP_VERB_CONTEXT_GRADIENT,
+                  _("Add gradient stop"));
+
+        ec->_grdrag->updateDraggers();
+   		sp_gradient_ensure_vector (gradient);
+
+        if (vector->has_stops) {
+            int i = 0;
+            for ( SPObject *ochild = sp_object_first_child (SP_OBJECT(vector)) ; ochild != NULL ; ochild = SP_OBJECT_NEXT(ochild) ) {
+                if (SP_IS_STOP (ochild)) {
+                    if ( SP_STOP(ochild) == newstop ) {
+                        break;
+                    } else {
+                        i++;
+                    }
+                }
+            }
+            GrDragger *dragger = NULL;
+            gradient = sp_item_gradient (item, fill_or_stroke);
+            GrPointType pointtype;
+            if (SP_IS_LINEARGRADIENT(gradient)) {
+                dragger = SP_EVENT_CONTEXT(rc)->_grdrag->getDraggerFor (item, POINT_LG_MID, i, fill_or_stroke);        	        			
+                pointtype = POINT_LG_MID;
+            } else if (SP_IS_RADIALGRADIENT(gradient)) {    		
+                dragger = SP_EVENT_CONTEXT(rc)->_grdrag->getDraggerFor (item, r1_knot ? POINT_RG_MID1 : POINT_RG_MID2, i, fill_or_stroke);        	        			
+                pointtype = r1_knot ? POINT_RG_MID1 : POINT_RG_MID2;
+            }
+                if (dragger && (etime == 0) ) {
+                    ec->_grdrag->setSelected (dragger);
+                } else {
+                    ec->_grdrag->grabKnot (item,
+                                       pointtype,
+                                       i,
+                                       fill_or_stroke, 99999, 99999, etime);
+                }
+                ec->_grdrag->local_change = true;
+            
+        }
+    }
+}
+
+static void
+sp_gradient_context_delete_stops (SPGradientContext *rc, SPItem *item, GrDrag *drag, bool just_one) {
+    GrDragger *draggertemp = (GrDragger*) drag->selected->data;
+    GrDraggable *draggabletemp = (GrDraggable*) draggertemp->draggables->data;             
+    SPGradient *gradient = sp_item_gradient (item, draggabletemp->fill_or_stroke);
+    SPGradient *vector   = sp_gradient_get_vector (gradient, false);
+
+    // 2 is the minimum, cannot delete more than that without deleting the whole vector
+    guint num_delete = just_one ? 1 : g_list_length(drag->selected);
+    if (vector->vector.stops.size() >= (2+num_delete) ) { 
+        GSList *stoplist = NULL;
+        while (drag->selected) {
+            GrDragger *dragger = (GrDragger*) drag->selected->data;
+            GrDraggable *draggable = (GrDraggable*) dragger->draggables->data;             
+            SPStop *selstop = NULL;
+            switch (draggable->point_type) {
+                case POINT_LG_END:
+                case POINT_RG_R1:
+                case POINT_RG_R2:
+                    selstop = sp_last_stop(vector);
+                    break;
+                default: 
+                    selstop = sp_get_stop_i(vector, draggable->point_i);
+                    break;
+            }
+            if ( !g_slist_find(stoplist, selstop) ) {
+                stoplist = g_slist_append(stoplist, selstop);
+            }
+            drag->selected = g_list_remove(drag->selected, dragger);
+            if ( just_one ) break; // iterate once if just_one is set.
+        }
+        while (stoplist) {
+            SPStop *stop = (SPStop*) stoplist->data;
+            SP_OBJECT_REPR(vector)->removeChild(SP_OBJECT_REPR(stop));
+            stoplist = g_slist_remove(stoplist, stop);
+        }
+        // if we delete first or last stop, move the next/previous to the edge
+        SPStop *first = sp_first_stop (vector);
+        if (first) {
+            if (first->offset != 0) {
+                first->offset = 0;
+                sp_repr_set_css_double (SP_OBJECT_REPR (first), "offset", 0);
+            }
+        } 
+        SPStop *last = sp_last_stop (vector);
+        if (last) {
+            if (last->offset != 1) {
+                last->offset = 1;
+                sp_repr_set_css_double (SP_OBJECT_REPR (last), "offset", 1);
+            }
+        } 
+        if ( just_one || (num_delete == 1) ) {
+            sp_document_done (SP_OBJECT_DOCUMENT (vector), SP_VERB_CONTEXT_GRADIENT, 
+                              _("Delete gradient stop"));
+        } else {
+            sp_document_done (SP_OBJECT_DOCUMENT (vector), SP_VERB_CONTEXT_GRADIENT, 
+                              _("Delete gradient stops"));
+        }
+    } else { // delete the gradient from the object. set fill to unset
+        SPCSSAttr *css = sp_repr_css_attr_new ();
+        if (draggabletemp->fill_or_stroke) {
+            sp_repr_css_unset_property (css, "fill");
+        } else {
+            sp_repr_css_unset_property (css, "stroke");
+        }
+        sp_repr_css_change (SP_OBJECT_REPR (item), css, "style");
+        sp_repr_css_attr_unref (css);
+        sp_document_done (SP_OBJECT_DOCUMENT (vector), SP_VERB_CONTEXT_GRADIENT, 
+                          _("Remove gradient"));
+    }
+}
+
+
+
+static gint 
+sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
     static bool dragging;
 
@@ -161,20 +434,31 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
     switch (event->type) {
     case GDK_2BUTTON_PRESS:
         if ( event->button.button == 1 ) {
-            for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
-                SPItem *item = SP_ITEM(i->data);
-                SPGradientType new_type = (SPGradientType) prefs_get_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR);
-                guint new_fill = prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1);
-
-                SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop,                                                                                   SP_OBJECT (item), new_fill);
-
-                SPGradient *priv = sp_item_set_gradient(item, vector, new_type, new_fill);
-                sp_gradient_reset_to_userspace(priv, item);
+            bool over_line = false;
+            SPCtrlLine *line = NULL;
+            if (drag->lines) {
+                for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
+                    line = (SPCtrlLine*) l->data;                        
+                    over_line |= sp_gradient_context_is_over_line (rc, (SPItem*) line, NR::Point(event->motion.x, event->motion.y));
+                }
             }
-
-            sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
-                              _("Create default gradient"));
-
+            if (over_line) {
+                sp_gradient_context_add_stop_near_point(rc, SP_ITEM(selection->itemList()->data), rc->mousepoint_doc, event->button.time);
+            } else {
+                for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
+                    SPItem *item = SP_ITEM(i->data);
+                    SPGradientType new_type = (SPGradientType) prefs_get_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR);
+                    guint new_fill = prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1);
+    
+                    SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop,                                                                                   SP_OBJECT (item), new_fill);
+    
+                    SPGradient *priv = sp_item_set_gradient(item, vector, new_type, new_fill);
+                    sp_gradient_reset_to_userspace(priv, item);
+                }
+    
+                sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
+                                  _("Create default gradient"));
+            }
             ret = TRUE;
         }
         break;
@@ -223,39 +507,71 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
             sp_gradient_drag(*rc, motion_dt, event->motion.state, event->motion.time);
 
             ret = TRUE;
+        } else {
+            bool over_line = false;
+            if (drag->lines) {
+                for (GSList *l = drag->lines; l != NULL; l = l->next) {
+                    over_line |= sp_gradient_context_is_over_line (rc, (SPItem*) l->data, NR::Point(event->motion.x, event->motion.y));
+                }
+            }
+
+            if (rc->cursor_addnode && !over_line) {
+                event_context->cursor_shape = cursor_gradient_xpm;
+                sp_event_context_update_cursor(event_context);
+                rc->cursor_addnode = false;
+            } else if (!rc->cursor_addnode && over_line) {
+                event_context->cursor_shape = cursor_gradient_add_xpm;
+                sp_event_context_update_cursor(event_context);
+                rc->cursor_addnode = true;
+            }
         }
         break;
     case GDK_BUTTON_RELEASE:
         event_context->xp = event_context->yp = 0;
         if ( event->button.button == 1 ) {
-            dragging = false;
-
-            // unless clicked with Ctrl (to enable Ctrl+doubleclick)
-            if (event->button.state & GDK_CONTROL_MASK) {
+            if ( (event->button.state & GDK_CONTROL_MASK) && (event->button.state & GDK_MOD1_MASK ) ) {
+                bool over_line = false;
+                SPCtrlLine *line = NULL;
+                if (drag->lines) {
+                    for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
+                        line = (SPCtrlLine*) l->data;                        
+                        over_line |= sp_gradient_context_is_over_line (rc, (SPItem*) line, NR::Point(event->motion.x, event->motion.y));
+                    }
+                }
+                if (over_line) {
+                    sp_gradient_context_add_stop_near_point(rc, SP_ITEM(selection->itemList()->data), rc->mousepoint_doc, 0);   
+                    ret = TRUE;
+                }
+            } else {    
+                dragging = false;
+    
+                // unless clicked with Ctrl (to enable Ctrl+doubleclick).  (don't what this is for (johan))
+                if (event->button.state & GDK_CONTROL_MASK) {
+                    ret = TRUE;
+                    break;
+                }
+    
+                if (!event_context->within_tolerance) {
+                    // we've been dragging, do nothing (grdrag handles that)
+                } else if (event_context->item_to_select) {
+                    // no dragging, select clicked item if any
+                    if (event->button.state & GDK_SHIFT_MASK) {
+                        selection->toggle(event_context->item_to_select);
+                    } else {
+                        selection->set(event_context->item_to_select);
+                    }
+                } else {
+                    // click in an empty space; do the same as Esc
+                    if (drag->selected) {
+                        drag->deselect_all();
+                    } else {
+                        selection->clear();
+                    }
+                }
+    
+                event_context->item_to_select = NULL;
                 ret = TRUE;
-                break;
             }
-
-            if (!event_context->within_tolerance) {
-                // we've been dragging, do nothing (grdrag handles that)
-            } else if (event_context->item_to_select) {
-                // no dragging, select clicked item if any
-                if (event->button.state & GDK_SHIFT_MASK) {
-                    selection->toggle(event_context->item_to_select);
-                } else {
-                    selection->set(event_context->item_to_select);
-                }
-            } else {
-                // click in an empty space; do the same as Esc
-                if (drag->selected) {
-                    drag->setSelected (NULL);
-                } else {
-                    selection->clear();
-                }
-            }
-
-            event_context->item_to_select = NULL;
-            ret = TRUE;
         }
         break;
     case GDK_KEY_PRESS:
@@ -284,7 +600,7 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
 
         case GDK_Escape:
             if (drag->selected) {
-                drag->setSelected (NULL);
+                drag->deselect_all();
             } else {
                 selection->clear();
             }
@@ -370,6 +686,22 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
                 ret = TRUE;
             }
             break;
+/*                
+        case GDK_Insert:
+        case GDK_KP_Insert:
+            // with any modifiers
+            sp_node_selected_add_node();
+            ret = TRUE;
+            break;
+*/            
+        case GDK_Delete:
+        case GDK_KP_Delete:
+        case GDK_BackSpace:
+            if ( drag->selected ) {
+                sp_gradient_context_delete_stops ( rc, SP_ITEM(selection->itemList()->data), drag, MOD__CTRL_ONLY ) ;
+                ret = TRUE;            
+            }
+            break;
         default:
             break;
         }
@@ -399,7 +731,7 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
             ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
         }
     }
-
+    
     return ret;
 }
 
@@ -433,11 +765,11 @@ static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint st
             sp_item_set_gradient(SP_ITEM(i->data), vector, (SPGradientType) type, fill_or_stroke);
 
             if (type == SP_GRADIENT_TYPE_LINEAR) {
-                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_LG_P1, rc.origin, fill_or_stroke, true, false);
-                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_LG_P2, pt, fill_or_stroke, true, false);
+                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_LG_BEGIN, 0, rc.origin, fill_or_stroke, true, false);
+                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_LG_END, 0, pt, fill_or_stroke, true, false);
             } else if (type == SP_GRADIENT_TYPE_RADIAL) {
-                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_RG_CENTER, rc.origin, fill_or_stroke, true, false);
-                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_RG_R1, pt, fill_or_stroke, true, false);
+                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_RG_CENTER, 0, rc.origin, fill_or_stroke, true, false);
+                sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_RG_R1, 0, pt, fill_or_stroke, true, false);
             }
             SP_OBJECT (i->data)->requestModified(SP_OBJECT_MODIFIED_FLAG);
         }
@@ -449,7 +781,8 @@ static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint st
             // give the grab out-of-bounds values of xp/yp because we're already dragging
             // and therefore are already out of tolerance
             ec->_grdrag->grabKnot (SP_ITEM(selection->itemList()->data),
-                                   type == SP_GRADIENT_TYPE_LINEAR? POINT_LG_P2 : POINT_RG_R1,
+                                   type == SP_GRADIENT_TYPE_LINEAR? POINT_LG_END : POINT_RG_R1,
+                                   0, //point_i
                                    fill_or_stroke, 99999, 99999, etime);
         }
         // We did an undoable action, but sp_document_done will be called by the knot when released

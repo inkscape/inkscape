@@ -13,6 +13,7 @@
  */
 
 #include "sp-canvas.h"
+#include <livarot/Shape.h>
 
 
 
@@ -20,8 +21,12 @@
 #define SP_CTRLLINE(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_CTRLLINE, SPCtrlLine))
 #define SP_IS_CTRLLINE(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_CTRLLINE))
 
-struct SPCtrlLine;
-struct SPCtrlLineClass;
+struct SPCtrlLine : public SPCanvasItem{
+    guint32 rgba;
+    NRPoint s, e;
+    Shape* shp;
+};
+struct SPCtrlLineClass : public SPCanvasItemClass{};
 
 GtkType sp_ctrlline_get_type (void);
 

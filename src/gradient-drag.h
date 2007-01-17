@@ -27,21 +27,22 @@ class Point;
 
 /**
 This class represents a single draggable point of a gradient. It remembers the item
-which has the gradient, whether it's fill or stroke, and the point number (from the
-GrPoint enum).
+which has the gradient, whether it's fill or stroke, the point type (from the
+GrPointType enum), and the point number (needed if more than 2 stops are present).
 */
 struct GrDraggable {
-	GrDraggable(SPItem *item, guint point_num, bool fill_or_stroke);
+	GrDraggable(SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
 	~GrDraggable();
 
 	SPItem *item;
-	guint point_num;
+	guint point_type;
+	guint point_i;  // the stop number of this point ( = 0 for all types except POINT_LG_MID)
 	bool fill_or_stroke;
 
 	bool mayMerge (GrDraggable *da2);
 
     inline int equals (GrDraggable *other) {
-		return ((item == other->item) && (point_num == other->point_num) && (fill_or_stroke == other->fill_or_stroke));
+		return ((item == other->item) && (point_type == other->point_type) && (point_i == other->point_i) && (fill_or_stroke == other->fill_or_stroke));
     }
 };
 
@@ -74,16 +75,20 @@ struct GrDragger {
 
 	void updateKnotShape();
 	void updateTip();
+	
+	void select();
+	void deselect();
 
-	void moveThisToDraggable (SPItem *item, guint point_num, bool fill_or_stroke, bool write_repr);
-	void moveOtherToDraggable (SPItem *item, guint point_num, bool fill_or_stroke, bool write_repr);
-	void updateDependencies (bool write_repr);
+	void moveThisToDraggable (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, bool write_repr);
+	void moveOtherToDraggable (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, bool write_repr);
+    void updateMidstopDependencies (GrDraggable *draggable, bool write_repr);
+    void updateDependencies (bool write_repr);
 
 	bool mayMerge (GrDragger *other);
 	bool mayMerge (GrDraggable *da2);
 
-	bool isA (guint point_num);
-	bool isA (SPItem *item, guint point_num, bool fill_or_stroke);
+	bool isA (guint point_type);
+	bool isA (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
 
 	void fireDraggables (bool write_repr, bool scale_radial = false, bool merging_focus = false);
 };
@@ -103,12 +108,16 @@ struct GrDrag {
 	void addDraggersRadial (SPRadialGradient *rg, SPItem *item, bool fill_or_stroke);
 	void addDraggersLinear (SPLinearGradient *lg, SPItem *item, bool fill_or_stroke);
 
-	GrDragger *selected;
-	void setSelected (GrDragger *dragger);
+	GList *selected; // list of GrDragger*
+    void setSelected (GrDragger *dragger, bool add_to_selection = false, bool override = true);
+    void setDeselected (GrDragger *dragger);
+    void deselect_all();
+    
+    bool keep_selection;    
+    
+	GrDragger *getDraggerFor (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
 
-	GrDragger *getDraggerFor (SPItem *item, guint point_num, bool fill_or_stroke);
-
-	void grabKnot (SPItem *item, guint point_num, bool fill_or_stroke, gint x, gint y, guint32 etime);
+	void grabKnot (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, gint x, gint y, guint32 etime);
 
 	bool local_change;
 
