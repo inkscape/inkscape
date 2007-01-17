@@ -1636,6 +1636,19 @@ sp_canvas_paint_rect_internal (SPCanvas *canvas, NRRectL *rect, NR::ICoord *x_ab
     // Time values to measure each buffer's paint time
     GTimeVal tstart, tfinish;
 
+    // paint from the corner nearest the mouse pointer
+
+    gint x, y;
+    gdk_window_get_pointer (GTK_WIDGET(canvas)->window, &x, &y, NULL);
+    NR::Point pw = sp_canvas_window_to_world (canvas, NR::Point(x,y));
+
+    bool reverse_x = (pw[NR::X] > ((draw_x2 + draw_x1) / 2));
+    bool reverse_y = (pw[NR::Y] > ((draw_y2 + draw_y1) / 2));
+
+    if ((bw > bh) && (sh > sw)) {
+      int t = sw; sw = sh; sh = t;
+    }
+
     // This is the main loop which corresponds to the visible left-to-right, top-to-bottom drawing
     // of screen blocks (buffers).
     for (int y0 = draw_y1; y0 < draw_y2; y0 += sh) {
@@ -1643,12 +1656,30 @@ sp_canvas_paint_rect_internal (SPCanvas *canvas, NRRectL *rect, NR::ICoord *x_ab
         for (int x0 = draw_x1; x0 < draw_x2; x0 += sw) {
             int x1 = MIN (x0 + sw, draw_x2);
 
+            int dx0 = x0;
+            int dx1 = x1;
+            int dy0 = y0;
+            int dy1 = y1;
+
+            if (reverse_x) { 
+              dx0 = (draw_x2 - (x0 + sw)) + draw_x1;
+              dx0 = MAX (dx0, draw_x1);
+              dx1 = (draw_x2 - x0) + draw_x1;
+              dx1 = MIN (dx1, draw_x2);
+            }
+            if (reverse_y) { 
+              dy0 = (draw_y2 - (y0 + sh)) + draw_y1;
+              dy0 = MAX (dy0, draw_y1);
+              dy1 = (draw_y2 - y0) + draw_y1;
+              dy1 = MIN (dy1, draw_y2);
+            }
+
             // OPTIMIZATION IDEA: if drawing is really slow (as measured by canvas->slowest
             // buffer), process some events even BEFORE we do any buffers?
 	    
             // Paint one buffer; measure how long it takes.
             g_get_current_time (&tstart);
-            sp_canvas_paint_single_buffer (canvas, x0, y0, x1, y1, draw_x1, draw_y1, draw_x2, draw_y2, sw);
+            sp_canvas_paint_single_buffer (canvas, dx0, dy0, dx1, dy1, draw_x1, draw_y1, draw_x2, draw_y2, sw);
             g_get_current_time (&tfinish);
 
             // Remember the slowest_buffer of this paint.
@@ -1657,15 +1688,21 @@ sp_canvas_paint_rect_internal (SPCanvas *canvas, NRRectL *rect, NR::ICoord *x_ab
                 slowest_buffer = this_buffer;
 
             // After each successful buffer, reduce the rect remaining to redraw by what is already redrawn
-            if (x1 >= draw_x2 && canvas->redraw_aborted.y0 < y1) 
-                canvas->redraw_aborted.y0 = y1;
-            if (y_aborted_limit != NULL && canvas->redraw_aborted.y0 > *y_aborted_limit)
-                canvas->redraw_aborted.y0 = *y_aborted_limit;
+            if (x1 >= draw_x2) {
+              if (reverse_y) {
+                if (canvas->redraw_aborted.y1 > dy0) { canvas->redraw_aborted.y1 = dy0; }
+              } else {
+                if (canvas->redraw_aborted.y0 < y1)  { canvas->redraw_aborted.y0 = y1; }
+              }
+            }
 
-            if (y1 >= draw_y2 && canvas->redraw_aborted.x0 < x1)
-                canvas->redraw_aborted.x0 = x1;
-            if (x_aborted_limit != NULL && canvas->redraw_aborted.x0 > *x_aborted_limit)
-                canvas->redraw_aborted.x0 = *x_aborted_limit;
+            if (y1 >= draw_y2) {
+              if (reverse_x) {
+                if (canvas->redraw_aborted.x1 > dx0) { canvas->redraw_aborted.x1 = dx0; }
+              } else {
+                if (canvas->redraw_aborted.x0 < x1)  { canvas->redraw_aborted.x0 = x1; }
+              }
+            }
 
             // INTERRUPTIBLE DISPLAY:
             // Process events that may have arrived while we were busy drawing;
