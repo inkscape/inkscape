@@ -38,8 +38,8 @@ new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion
     repr = sp_repr_new("svg:filter");
     repr->setAttribute("inkscape:collect", "always");
 
-    double rx = radius * (expansion / expansionY);
-    double ry = radius * (expansion / expansionX);
+    double rx = radius * (expansionY != 0? (expansion / expansionY) : 1);
+    double ry = radius * (expansionX != 0? (expansion / expansionX) : 1);
 
     if (width != 0 && height != 0 && (2 * rx > width * 0.1 || 2 * ry > height * 0.1)) {
         // If not within the default 10% margin (see
