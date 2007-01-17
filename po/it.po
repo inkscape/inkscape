@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.45~pre1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-10 22:45+0100\n"
+"POT-Creation-Date: 2007-01-14 18:11+0100\n"
 "PO-Revision-Date: 2007-01-16 21:45+0100\n"
 "Last-Translator: Luca Bruno <luca.br@uno.it>>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -1010,8 +1010,9 @@ msgstr "Disattiva riempimento"
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
 msgstr[0] ""
-"<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s.<b>%"
-"d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s."
+"<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s."
+msgstr[1] ""
+"<b>%d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s."
 
 #: ../src/dialogs/find.cpp:374 ../src/ui/dialog/find.cpp:437
 msgid "exact"
@@ -2325,7 +2326,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "Mostra la finestra all'avvio"
 
-#: ../src/extension/implementation/script.cpp:991
+#: ../src/extension/implementation/script.cpp:1014
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2335,7 +2336,7 @@ msgstr ""
 "dall'errore è disponibile più sotto. Inkscape continuerà a funzionare, ma "
 "l'azione richiesta è stata annullata."
 
-#: ../src/extension/implementation/script.cpp:1004
+#: ../src/extension/implementation/script.cpp:1027
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2847,7 +2848,9 @@ msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] ""
 "<b>Gradiente</b> per %d oggetto; con <b>Ctrl</b> per far scattare "
-"l'angolo<b>Gradiente</b> per %d oggetti; con <b>Ctrl</b> per far scattare "
+"l'angolo"
+msgstr[1] ""
+"<b>Gradiente</b> per %d oggetti; con <b>Ctrl</b> per far scattare "
 "l'angolo"
 
 #: ../src/gradient-context.cpp:465
@@ -5114,31 +5117,35 @@ msgstr ""
 "In questa versione non è possibile mettere il testo sun un rettangolo. "
 "Convertire prima il rettangolo in tracciato."
 
-#: ../src/text-chemistry.cpp:174 ../src/verbs.cpp:2074
+#: ../src/text-chemistry.cpp:117
+msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
+msgstr ""
+
+#: ../src/text-chemistry.cpp:184 ../src/verbs.cpp:2074
 msgid "Put text on path"
 msgstr "Mette il testo sul tracciato"
 
-#: ../src/text-chemistry.cpp:186
+#: ../src/text-chemistry.cpp:196
 msgid "Select <b>a text on path</b> to remove it from path."
 msgstr "Selezionare <b>un testo su tracciato</b> per rimuoverlo dal tracciato."
 
-#: ../src/text-chemistry.cpp:208
+#: ../src/text-chemistry.cpp:218
 msgid "<b>No texts-on-paths</b> in the selection."
 msgstr "<b>Nessun testo su tracciato</b> nella selezione."
 
-#: ../src/text-chemistry.cpp:212 ../src/verbs.cpp:2076
+#: ../src/text-chemistry.cpp:222 ../src/verbs.cpp:2076
 msgid "Remove text from path"
 msgstr "Rimuove il testo dal tracciato"
 
-#: ../src/text-chemistry.cpp:237 ../src/text-chemistry.cpp:257
+#: ../src/text-chemistry.cpp:247 ../src/text-chemistry.cpp:267
 msgid "Select <b>text(s)</b> to remove kerns from."
 msgstr "Selezionare <b>il testo</b> da cui rimuovere le trasformazioni."
 
-#: ../src/text-chemistry.cpp:260 ../src/widgets/toolbox.cpp:4154
+#: ../src/text-chemistry.cpp:270 ../src/widgets/toolbox.cpp:4154
 msgid "Remove manual kerns"
 msgstr "Rimuovi trasformazioni manuali"
 
-#: ../src/text-chemistry.cpp:279
+#: ../src/text-chemistry.cpp:289
 msgid ""
 "Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text "
 "into frame."
@@ -5146,27 +5153,31 @@ msgstr ""
 "Selezionare <b>un testo</b> ed uno o più <b> tracciati o forme</b> per "
 "fluire il testo nella struttura."
 
-#: ../src/text-chemistry.cpp:347
+#: ../src/text-chemistry.cpp:357
 msgid "Flow text into shape"
 msgstr "Fluisci testo in struttura"
 
-#: ../src/text-chemistry.cpp:368
+#: ../src/text-chemistry.cpp:378
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Selezionare <b>un testo dinamico</b> da spezzare."
 
-#: ../src/text-chemistry.cpp:431
+#: ../src/text-chemistry.cpp:441
 msgid "Unflow flowed text"
 msgstr "Spezza testo dinamico"
 
-#: ../src/text-chemistry.cpp:443
+#: ../src/text-chemistry.cpp:453
 msgid "Select <b>flowed text(s)</b> to convert."
 msgstr "Selezionare <b>un testo dinamico</b> da convertire."
 
-#: ../src/text-chemistry.cpp:479
+#: ../src/text-chemistry.cpp:471
+msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
+msgstr ""
+
+#: ../src/text-chemistry.cpp:499
 msgid "Convert flowed text to text"
 msgstr "Converti testo dinamica in testo"
 
-#: ../src/text-chemistry.cpp:484
+#: ../src/text-chemistry.cpp:504
 #, fuzzy
 msgid "<b>No flowed text(s)</b> to convert in the selection."
 msgstr "<b>Nessun oggetto</b> nella selezione da convertire in tracciato."
@@ -5545,7 +5556,8 @@ msgstr "about.svg"
 #. one per line in the form of:  name surname (email). Use \n for newline.
 #: ../src/ui/dialog/aboutbox.cpp:265
 msgid "translator-credits"
-msgstr "Luca Bruno (luca.br@uno.it)\n"
+msgstr ""
+"Luca Bruno (luca.br@uno.it)\n"
 "Luca Ferretti (elle.uca@infinito.it)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:219
@@ -7392,8 +7404,8 @@ msgstr "Scansione pila"
 #: ../src/ui/dialog/tracedialog.cpp:531
 #, fuzzy
 msgid ""
-"Stack scans on top of one another (no gaps) instead of or tiling (usually "
-"with gaps)"
+"Stack scans on top of one another (no gaps) instead of tiling (usually with "
+"gaps)"
 msgstr ""
 "Scansione della pila verticale (senza interruzioni) o orizzontale "
 "(solitamente con interruzioni)"
@@ -10114,46 +10126,46 @@ msgstr "Nessun passaggio nel gradiente"
 msgid "Change gradient stop offset"
 msgstr "Gradiente lineare di contorno"
 
-#: ../src/widgets/gradient-vector.cpp:732
+#: ../src/widgets/gradient-vector.cpp:733
 msgid "Add gradient stop"
 msgstr "Aggiungi passaggio del gradiente"
 
-#: ../src/widgets/gradient-vector.cpp:764
+#: ../src/widgets/gradient-vector.cpp:765
 msgid "Delete gradient stop"
 msgstr "Cancella passaggio del gradiente"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:800
+#: ../src/widgets/gradient-vector.cpp:801
 msgid "Add stop"
 msgstr "Aggiungi passaggio"
 
-#: ../src/widgets/gradient-vector.cpp:803
+#: ../src/widgets/gradient-vector.cpp:804
 msgid "Add another control stop to gradient"
 msgstr "Aggiunge un altro passaggio al gradiente"
 
-#: ../src/widgets/gradient-vector.cpp:805
+#: ../src/widgets/gradient-vector.cpp:806
 msgid "Delete stop"
 msgstr "Cancella passaggio"
 
-#: ../src/widgets/gradient-vector.cpp:808
+#: ../src/widgets/gradient-vector.cpp:809
 msgid "Delete current control stop from gradient"
 msgstr "Elimina il passaggio corrente dal gradiente"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:819
+#: ../src/widgets/gradient-vector.cpp:820
 msgid "Offset:"
 msgstr "Opacità:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:864
+#: ../src/widgets/gradient-vector.cpp:865
 msgid "Stop Color"
 msgstr "Colore del passaggio"
 
-#: ../src/widgets/gradient-vector.cpp:893
+#: ../src/widgets/gradient-vector.cpp:894
 msgid "Gradient editor"
 msgstr "Editor di gradiente"
 
-#: ../src/widgets/gradient-vector.cpp:1169
+#: ../src/widgets/gradient-vector.cpp:1170
 msgid "Change gradient stop color"
 msgstr "Gradiente lineare di contorno"
 
@@ -10955,6 +10967,7 @@ msgstr "Lunghezza massima del segmento"
 
 #: ../share/extensions/addnodes.inx.h:3 ../share/extensions/flatten.inx.h:3
 #: ../share/extensions/markers_strokepaint.inx.h:2
+#: ../share/extensions/perspective.inx.h:1
 #: ../share/extensions/radiusrand.inx.h:3
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:4
@@ -11496,6 +11509,11 @@ msgstr "Spaziatura tra le linee"
 msgid "Tangential offset"
 msgstr "Proiezione verticale"
 
+#: ../share/extensions/perspective.inx.h:2
+#, fuzzy
+msgid "Perspective"
+msgstr "Presenza"
+
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
 msgstr "Postscript"
@@ -11662,36 +11680,3 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Input Windows Metafile"
-
-#~ msgid "You cannot put flowtext on a path. Convert flowtext to text first."
-#~ msgstr ""
-#~ "Non è possibile mettere il testo dinamico su un tracciato. Convertire "
-#~ "prima il testo dinamico in testo."
-
-#, fuzzy
-#~ msgid ""
-#~ "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
-#~ "separateGradient point shared by <b>%d</b> gradients; drag with <b>Shift</"
-#~ "b> to separate"
-#~ msgstr ""
-#~ "<b>Centro</b> e <b>fuoco</b> del gradiente radiale; trascinare con "
-#~ "<b>Maiusc</b> per separare il fuoco<b>Centro</b> e <b>fuoco</b> del "
-#~ "gradiente radiale; trascinare con <b>Maiusc</b> per separare il fuoco"
-
-#, fuzzy
-#~ msgid ""
-#~ "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</"
-#~ "b>, or <b>drag around</b> nodes to select.<b>0</b> out of <b>%i</b> nodes "
-#~ "selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes "
-#~ "to select."
-#~ msgstr ""
-#~ "Nessun oggetto selezionato. Click, Maiusc+click, o trascinare attorno "
-#~ "agli oggetti per selezionare.Nessun oggetto selezionato. Click, Maiusc"
-#~ "+click, o trascinare attorno agli oggetti per selezionare."
-
-#, fuzzy
-#~ msgid ""
-#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %"
-#~ "s.<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> "
-#~ "subpaths. %s."
-#~ msgstr "<b>%i</b> di <b>%i</b> nodo selezionato; %s. %s."
