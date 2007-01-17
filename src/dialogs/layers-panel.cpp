@@ -538,7 +538,9 @@ void LayersPanel::_checkTreeSelection()
             if ( inTree->repr ) {
                 SPCSSAttr *css = sp_repr_css_attr(inTree->repr, "style");
                 if ( css ) {
+                    _opacityConnection.block();
                     _opacity.set_value( sp_repr_css_double_property( css, "opacity", 1.0 ) * 100 );
+                    _opacityConnection.unblock();
                 }
             }
         }
@@ -680,7 +682,6 @@ void LayersPanel::_opacityChanged()
 
     if ( _desktop && layer && !_opacityConnection.blocked() ) {
         _opacityConnection.block();
-
 
         Gtk::Adjustment* adj = _opacity.get_adjustment();
         SPCSSAttr *css = sp_repr_css_attr_new();
@@ -854,11 +855,7 @@ LayersPanel::LayersPanel() :
     }
 
     g_signal_connect( G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK( layers_panel_activated ), this );
-
-
     setDesktop( targetDesktop );
-
-
 
     show_all_children();
 
