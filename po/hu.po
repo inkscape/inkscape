@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-14 17:49+0100\n"
-"PO-Revision-Date: 2007-01-16 23:23+0100\n"
+"PO-Revision-Date: 2007-01-17 23:09+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -4356,8 +4356,9 @@ msgid "Move"
 msgstr "Áthelyezés"
 
 #: ../src/selection-chemistry.cpp:1754
+#, fuzzy
 msgid "Nudge vertically by pixels"
-msgstr ""
+msgstr "függőleges"
 
 #: ../src/selection-chemistry.cpp:1757
 msgid "Nudge horizontally by pixels"
@@ -7281,9 +7282,8 @@ msgstr "Munkamenet-fájl megnyitása"
 #. # begin single scan
 #. brightness
 #: ../src/ui/dialog/tracedialog.cpp:395
-#, fuzzy
 msgid "Brightness cutoff"
-msgstr "Fényesség"
+msgstr "Fényesség-levágás"
 
 #: ../src/ui/dialog/tracedialog.cpp:399
 msgid "Trace by a given brightness level"
@@ -7300,14 +7300,12 @@ msgstr "Egyetlen menet: egy lánc létrehozása"
 #. canny edge detection
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
 #: ../src/ui/dialog/tracedialog.cpp:419
-#, fuzzy
 msgid "Edge detection"
 msgstr "Élkeresés"
 
 #: ../src/ui/dialog/tracedialog.cpp:423
-#, fuzzy
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr "Vektorizálás J. Canny módszere alapján végzett élkereséssel"
+msgstr "Vektorizálás J. Canny módszere alapján végzett optimális élkereséssel"
 
 #: ../src/ui/dialog/tracedialog.cpp:440
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
@@ -7318,7 +7316,6 @@ msgstr "Fényesség-levágás a szomszédos képpontoknál (meghatározza az él
 #. of colors in an image by selecting an optimized set of representative
 #. colors and then re-applying this reduced set to the original image.
 #: ../src/ui/dialog/tracedialog.cpp:452
-#, fuzzy
 msgid "Color quantization"
 msgstr "Színek számának csökkentése"
 
@@ -7336,21 +7333,18 @@ msgstr "Színek:"
 
 #. swap black and white
 #: ../src/ui/dialog/tracedialog.cpp:472
-#, fuzzy
 msgid "Invert image"
-msgstr "Definiálatlan kitöltés"
+msgstr "A kép invertálása"
 
 #: ../src/ui/dialog/tracedialog.cpp:477
-#, fuzzy
 msgid "Invert black and white regions"
-msgstr "Fekete-fehér területek invertálása egyszeri vektorizáláshoz"
+msgstr "Fekete-fehér területek invertálása"
 
 #. # end single scan
 #. # begin multiple scan
 #: ../src/ui/dialog/tracedialog.cpp:486
-#, fuzzy
 msgid "Brightness steps"
-msgstr "Fényesség"
+msgstr "Fényességi lépések"
 
 #: ../src/ui/dialog/tracedialog.cpp:490
 msgid "Trace the given number of brightness levels"
@@ -7374,12 +7368,11 @@ msgstr "A megadott számú csökkentett szín vektorizálása"
 
 #: ../src/ui/dialog/tracedialog.cpp:512
 msgid "Grays"
-msgstr ""
+msgstr "Szürkék"
 
 #: ../src/ui/dialog/tracedialog.cpp:516
-#, fuzzy
 msgid "Same as Colors, but the result is converted to grayscale"
-msgstr "Megegyezik a Színnel, de az eredmény szürkeárnyalatossá lesz alakítva"
+msgstr "Megegyezik a Színekkel, de az eredmény szürkeárnyalatossá lesz alakítva"
 
 #. TRANSLATORS: "Smooth" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:521
@@ -7404,13 +7397,12 @@ msgstr ""
 "(általában vannak rések)"
 
 #: ../src/ui/dialog/tracedialog.cpp:534
-#, fuzzy
 msgid "Remove background"
-msgstr "_Háttér:"
+msgstr "Háttér eltávolítása"
 
 #: ../src/ui/dialog/tracedialog.cpp:539
 msgid "Remove bottom (background) layer when done"
-msgstr ""
+msgstr "Az alsó réteg (a háttér) törlése a folyamat végén"
 
 #: ../src/ui/dialog/tracedialog.cpp:543
 msgid "Multiple scans: creates a group of paths"
@@ -7426,48 +7418,49 @@ msgstr "Üzemmód"
 #. # potrace parameters
 #: ../src/ui/dialog/tracedialog.cpp:558
 msgid "Suppress speckles"
-msgstr ""
+msgstr "Foltok eltávolítása"
 
 #: ../src/ui/dialog/tracedialog.cpp:560
 msgid "Ignore small spots (speckles) in the bitmap"
-msgstr ""
+msgstr "A bitképen levő kisméretű foltok kihagyása"
 
 #: ../src/ui/dialog/tracedialog.cpp:568
 msgid "Speckles of up to this many pixels will be suppressed"
-msgstr ""
+msgstr "A legfeljebb ennyi képpontnyi méretű foltok el lesznek távolítva"
 
 #: ../src/ui/dialog/tracedialog.cpp:570
-#, fuzzy
 msgid "Size:"
-msgstr "Méret"
+msgstr "Méret:"
 
 #: ../src/ui/dialog/tracedialog.cpp:573
-#, fuzzy
 msgid "Smooth corners"
-msgstr "Simítás"
+msgstr "Sarkok simítása"
 
 #: ../src/ui/dialog/tracedialog.cpp:575
 msgid "Smooth out sharp corners of the trace"
-msgstr ""
+msgstr "A képen levő hegyes sarkok simítása"
 
 #: ../src/ui/dialog/tracedialog.cpp:584
 msgid "Increase this to smooth corners more"
-msgstr ""
+msgstr "Nagyobb érték esetén nagyobb mértékben lesznek simítva a sarkok"
 
 #: ../src/ui/dialog/tracedialog.cpp:588
-#, fuzzy
 msgid "Optimize paths"
-msgstr "Optimalizálva"
+msgstr "Láncok optimalizálása"
 
 #: ../src/ui/dialog/tracedialog.cpp:591
 msgid "Try to optimize paths by joining adjacent Bezier curve segments"
 msgstr ""
+"Láncok optimalizálásának megkísérlése a szomszédos Bézier-görbe-szakaszok "
+"összekapcsolásával"
 
 #: ../src/ui/dialog/tracedialog.cpp:599
 msgid ""
 "Increase this to reduce the number of nodes in the trace by more aggressive "
 "optimization"
 msgstr ""
+"Nagyobb érték esetén agresszívabb optimalizáció történik, így a kép "
+"kevesebb csomópontot fog tartalmazni"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:606 ../src/ui/dialog/tracedialog.cpp:612
@@ -7495,16 +7488,16 @@ msgstr "Adja meg azon területet, amelyet előtérként szeretne kijelölni"
 
 #. ## preview
 #: ../src/ui/dialog/tracedialog.cpp:644
-#, fuzzy
 msgid "Update"
-msgstr "Dátum"
+msgstr "Frissítés"
 
 #: ../src/ui/dialog/tracedialog.cpp:650
-#, fuzzy
 msgid ""
 "Preview the intermediate bitmap with the current settings, without actual "
 "tracing"
-msgstr "Az eredmény előnézetének megjelenítése a vektorizálás végrehajtása nélkül"
+msgstr ""
+"A jelenlegi beállításokkal elérhető eredmény (bitképes) előnézetének megjelenítése "
+"a vektorizálás végrehajtása nélkül"
 
 #: ../src/ui/dialog/tracedialog.cpp:654
 msgid "Preview"
@@ -11288,9 +11281,8 @@ msgid "Flatness"
 msgstr "Laposság"
 
 #: ../share/extensions/flatten.inx.h:2
-#, fuzzy
 msgid "Flatten Beziers"
-msgstr "Bézier lapítása"
+msgstr "Bézier-görbék lapítása"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Calculate first derivative numerically"
@@ -11315,9 +11307,8 @@ msgid "Function"
 msgstr "Függvény"
 
 #: ../share/extensions/funcplot.inx.h:6
-#, fuzzy
 msgid "Function Plotter"
-msgstr "Asztali vágóplotter"
+msgstr "Függvényábrázoló"
 
 #: ../share/extensions/funcplot.inx.h:8
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
@@ -11366,19 +11357,16 @@ msgid "y-value of rectangle's top"
 msgstr "A téglalap magassága"
 
 #: ../share/extensions/g2pngs.inx.h:1
-#, fuzzy
 msgid "Directory"
-msgstr "normál"
+msgstr "Könyvtár"
 
 #: ../share/extensions/g2pngs.inx.h:3
-#, fuzzy
 msgid "Groups to PNGs"
-msgstr "Csoportok"
+msgstr "Csoportokat PNG-kbe"
 
 #: ../share/extensions/g2pngs.inx.h:4
-#, fuzzy
 msgid "Save layers only"
-msgstr "Réteg-átlátszatlanság módosítása"
+msgstr "Csak rétegek mentése"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
@@ -11486,21 +11474,20 @@ msgid "Lorem ipsum"
 msgstr ""
 
 #: ../share/extensions/lorem_ipsum.inx.h:2
-#, fuzzy
 msgid "Number of paragraphs"
-msgstr "A sorok száma"
+msgstr "Bekezdések száma"
 
 #: ../share/extensions/lorem_ipsum.inx.h:3
 msgid "Paragraph length fluctuation (sentences)"
-msgstr ""
+msgstr "A bekezdéshossz ingadozása (mondat)"
 
 #: ../share/extensions/lorem_ipsum.inx.h:5
 msgid "Sentences per paragraph"
-msgstr ""
+msgstr "Bekezdésenkénti mondatok"
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
-msgstr ""
+msgstr "Jelölőelemek színezése a körvonalszínnel"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
@@ -11533,48 +11520,40 @@ msgid "Text Outline Input"
 msgstr "Szöveg-bemenet"
 
 #: ../share/extensions/pathalongpath.inx.h:1
-#, fuzzy
 msgid "Copies of the pattern:"
-msgstr "A lap keretének színe"
+msgstr "A minta másolatai:"
 
 #: ../share/extensions/pathalongpath.inx.h:2
-#, fuzzy
 msgid "Deformation type:"
-msgstr "Információ"
+msgstr "Az alakváltoztatás típusa:"
 
 #: ../share/extensions/pathalongpath.inx.h:3
 msgid "Duplicate the pattern before deformation"
-msgstr ""
+msgstr "A minta duplázása az alakváltoztatás előtt"
 
 #: ../share/extensions/pathalongpath.inx.h:5
-#, fuzzy
 msgid "Normal offset"
-msgstr "Vízszintes eltolás"
+msgstr "Normál eltolás"
 
 #: ../share/extensions/pathalongpath.inx.h:6
-#, fuzzy
 msgid "Pattern along Path"
-msgstr "Láncra való _illesztés"
+msgstr "Minta a lánc mentén"
 
 #: ../share/extensions/pathalongpath.inx.h:7
-#, fuzzy
 msgid "Pattern is vertical"
-msgstr "A minta eltolása"
+msgstr "A minta függőleges"
 
 #: ../share/extensions/pathalongpath.inx.h:8
-#, fuzzy
 msgid "Space between copies:"
-msgstr "Helykihagyás a sorok között"
+msgstr "Helykihagyás a másolatok között:"
 
 #: ../share/extensions/pathalongpath.inx.h:9
-#, fuzzy
 msgid "Tangential offset"
-msgstr "Függőleges eltolás"
+msgstr "Érintői eltolás"
 
 #: ../share/extensions/perspective.inx.h:2
-#, fuzzy
 msgid "Perspective"
-msgstr "Megjelenés"
+msgstr "Perspektíva"
 
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
@@ -11603,31 +11582,29 @@ msgid "Select second option: "
 msgstr "Válassza ki a megnyitandó fájlt"
 
 #: ../share/extensions/radiusrand.inx.h:1
-#, fuzzy
 msgid "Jitter nodes"
-msgstr "Csomópontot eggyel feljebb"
+msgstr "Csomópontok szétszórása"
 
 #: ../share/extensions/radiusrand.inx.h:2
-#, fuzzy
 msgid "Maximum displacement, px"
-msgstr "Maximális szakaszhossz"
+msgstr "Maximális elmozdítás képpontban"
 
 # TODO: ellenőrizni
 #: ../share/extensions/radiusrand.inx.h:4
-#, fuzzy
 msgid "Shift node handles"
-msgstr "Csomópont-vezérlőelemek véletlenszerűsítése"
+msgstr "Csomópont-vezérlőelemek elmozdítása"
 
 #: ../share/extensions/radiusrand.inx.h:5
-#, fuzzy
 msgid "Shift nodes"
-msgstr "szélső csomópont"
+msgstr "Csomópontok elmozdítása"
 
 #: ../share/extensions/radiusrand.inx.h:6
 msgid ""
 "This effect randomly shifts the nodes (and optionally node handles) of the "
 "selected path."
 msgstr ""
+"Ez az effektus véletlenszerűen elmozdítja a kijelölt lánc csomópontjait "
+"(valamint kérésre a csomópont-vezérlőelemeit is)."
 
 #: ../share/extensions/radiusrand.inx.h:7
 msgid "Use normal distribution"
