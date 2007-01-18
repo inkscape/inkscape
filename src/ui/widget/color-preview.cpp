@@ -15,7 +15,7 @@
 #include "color-preview.h"
 
 #define SPCP_DEFAULT_WIDTH 32
-#define SPCP_DEFAULT_HEIGHT 11
+#define SPCP_DEFAULT_HEIGHT 12
 
 namespace Inkscape {
     namespace UI {

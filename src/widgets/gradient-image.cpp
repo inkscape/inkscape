@@ -149,7 +149,7 @@ sp_gradient_image_size_request (GtkWidget *widget, GtkRequisition *requisition)
 	slider = SP_GRADIENT_IMAGE (widget);
 
 	requisition->width = 64;
-	requisition->height = 16;
+	requisition->height = 12;
 }
 
 static void
