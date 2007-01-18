@@ -32,6 +32,8 @@
 #include "document.h"
 #include "widgets/widget-sizes.h"
 #include "widgets/spinbutton-events.h"
+#include "widgets/gradient-image.h"
+#include "sp-gradient.h"
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
 #include "helper/units.h"
@@ -134,7 +136,7 @@ SelectedStyle::SelectedStyle(bool layout)
         _na[i].show_all();
         __na[i] = (_("Nothing selected"));
 
-        _none[i].set_markup (_("None"));
+        _none[i].set_markup (_("<i>None</i>"));
         sp_set_font_size_smaller (GTK_WIDGET(_none[i].gobj()));
         _none[i].show_all();
         __none[i] = (i == SS_FILL)? (_("No fill")) : (_("No stroke"));
@@ -144,22 +146,32 @@ SelectedStyle::SelectedStyle(bool layout)
         _pattern[i].show_all();
         __pattern[i] = (i == SS_FILL)? (_("Pattern fill")) : (_("Pattern stroke"));
 
-        _lgradient[i].set_markup (_("L Gradient"));
+        _lgradient[i].set_markup (_("<b>L</b>"));
         sp_set_font_size_smaller (GTK_WIDGET(_lgradient[i].gobj()));
         _lgradient[i].show_all();
         __lgradient[i] = (i == SS_FILL)? (_("Linear gradient fill")) : (_("Linear gradient stroke"));
 
-        _rgradient[i].set_markup (_("R Gradient"));
+        _gradient_preview_l[i] =  GTK_WIDGET(sp_gradient_image_new (NULL));
+        _gradient_box_l[i].pack_start(_lgradient[i]);
+        _gradient_box_l[i].pack_start(*(Glib::wrap(_gradient_preview_l[i])));
+        _gradient_box_l[i].show_all();
+
+        _rgradient[i].set_markup (_("<b>R</b>"));
         sp_set_font_size_smaller (GTK_WIDGET(_rgradient[i].gobj()));
         _rgradient[i].show_all();
         __rgradient[i] = (i == SS_FILL)? (_("Radial gradient fill")) : (_("Radial gradient stroke"));
+
+        _gradient_preview_r[i] = GTK_WIDGET(sp_gradient_image_new (NULL));
+        _gradient_box_r[i].pack_start(_rgradient[i]);
+        _gradient_box_r[i].pack_start(*(Glib::wrap(_gradient_preview_r[i])));
+        _gradient_box_r[i].show_all();
 
         _many[i].set_markup (_("Different"));
         sp_set_font_size_smaller (GTK_WIDGET(_many[i].gobj()));
         _many[i].show_all();
         __many[i] = (i == SS_FILL)? (_("Different fills")) : (_("Different strokes"));
 
-        _unset[i].set_markup (_("Unset"));
+        _unset[i].set_markup (_("<b>Unset</b>"));
         sp_set_font_size_smaller (GTK_WIDGET(_unset[i].gobj()));
         _unset[i].show_all();
         __unset[i] = (i == SS_FILL)? (_("Unset fill")) : (_("Unset stroke"));
@@ -364,6 +376,9 @@ SelectedStyle::~SelectedStyle()
 
     for (int i = SS_FILL; i <= SS_STROKE; i++) {
         delete _color_preview[i];
+        // FIXME: do we need this? the destroy methods are not exported 
+        //sp_gradient_image_destroy(GTK_OBJECT(_gradient_preview_l[i]));
+        //sp_gradient_image_destroy(GTK_OBJECT(_gradient_preview_r[i]));
     }
 
     delete (DropTracker*)_drop[SS_FILL];
@@ -918,11 +933,15 @@ SelectedStyle::update()
                     _paintserver_id[i] += ")";
 
                     if (SP_IS_LINEARGRADIENT (server)) {
-                        place->add(_lgradient[i]);
+                        SPGradient *vector = sp_gradient_get_vector(SP_GRADIENT(server), false);
+                        sp_gradient_image_set_gradient ((SPGradientImage *) _gradient_preview_l[i], vector);
+                        place->add(_gradient_box_l[i]);
                         _tooltips.set_tip(*place, __lgradient[i]);
                         _mode[i] = SS_LGRADIENT;
                     } else if (SP_IS_RADIALGRADIENT (server)) {
-                        place->add(_rgradient[i]);
+                        SPGradient *vector = sp_gradient_get_vector(SP_GRADIENT(server), false);
+                        sp_gradient_image_set_gradient ((SPGradientImage *) _gradient_preview_r[i], vector);
+                        place->add(_gradient_box_r[i]);
                         _tooltips.set_tip(*place, __rgradient[i]);
                         _mode[i] = SS_RGRADIENT;
                     } else if (SP_IS_PATTERN (server)) {

@@ -94,8 +94,14 @@ protected:
     Gtk::Label _lgradient[2];
     Glib::ustring __lgradient[2];
 
+    GtkWidget *_gradient_preview_l[2];
+    Gtk::HBox _gradient_box_l[2];
+
     Gtk::Label _rgradient[2];
     Glib::ustring __rgradient[2];
+
+    GtkWidget *_gradient_preview_r[2];
+    Gtk::HBox _gradient_box_r[2];
 
     Gtk::Label _many[2];
     Glib::ustring __many[2];
