@@ -1053,9 +1053,11 @@ SelectionVerb::perform(SPAction *action, void *data, void *pdata)
             break;
         case SP_VERB_SELECTION_DYNAMIC_OFFSET:
             sp_selected_path_create_offset_object_zero();
+            tools_switch_current(TOOLS_NODES);
             break;
         case SP_VERB_SELECTION_LINKED_OFFSET:
             sp_selected_path_create_updating_offset_object_zero();
+            tools_switch_current(TOOLS_NODES);
             break;
 
         case SP_VERB_SELECTION_OUTLINE:
