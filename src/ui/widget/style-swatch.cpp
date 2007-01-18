@@ -295,12 +295,12 @@ StyleSwatch::setStyle(SPStyle *query)
             }
 
         } else if (paint->set && paint->type == SP_PAINT_TYPE_NONE) {
-            _value[i].set_markup(_("None"));
+            _value[i].set_markup(_("<i>None</i>"));
             place->add(_value[i]);
             _tooltips.set_tip(*place, (i == SS_FILL)? (_("No fill")) : (_("No stroke")));
             if (i == SS_STROKE) has_stroke = false;
         } else if (!paint->set) {
-            _value[i].set_markup(_("Unset"));
+            _value[i].set_markup(_("<b>Unset</b>"));
             place->add(_value[i]);
             _tooltips.set_tip(*place, (i == SS_FILL)? (_("Unset fill")) : (_("Unset stroke")));
             if (i == SS_STROKE) has_stroke = false;
