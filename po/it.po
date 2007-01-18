@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.45~pre1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-14 18:11+0100\n"
-"PO-Revision-Date: 2007-01-16 21:45+0100\n"
+"PO-Revision-Date: 2007-01-18 14:14+0100\n"
 "Last-Translator: Luca Bruno <luca.br@uno.it>>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -1011,7 +1011,6 @@ msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
 msgstr[0] ""
 "<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s."
-msgstr[1] ""
 "<b>%d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s."
 
 #: ../src/dialogs/find.cpp:374 ../src/ui/dialog/find.cpp:437
@@ -2849,7 +2848,6 @@ msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] ""
 "<b>Gradiente</b> per %d oggetto; con <b>Ctrl</b> per far scattare "
 "l'angolo"
-msgstr[1] ""
 "<b>Gradiente</b> per %d oggetti; con <b>Ctrl</b> per far scattare "
 "l'angolo"
 
@@ -4976,10 +4974,9 @@ msgstr ""
 "Selezionare <b>almeno 2 tracciati</b> per effettuare un'operazione booleana."
 
 #: ../src/splivarot.cpp:115
-#, fuzzy
 msgid "Select <b>at least 1 path</b> to perform a boolean union."
 msgstr ""
-"Selezionare <b>almeno 2 tracciati</b> per effettuare un'operazione booleana."
+"Selezionare <b>almeno 1 tracciato</b> per effettuare un'unione booleana."
 
 #: ../src/splivarot.cpp:121
 msgid ""
@@ -5005,9 +5002,8 @@ msgstr ""
 "l'operazione booleana."
 
 #: ../src/splivarot.cpp:590
-#, fuzzy
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
-msgstr "Selezionare l'<b>oggetto</b> da convertire in tracciato."
+msgstr "Selezionare il <b>tracciato con contorno</b> di cui convertire il contorno in tracciato."
 
 #: ../src/splivarot.cpp:872
 msgid "Convert stroke to path"
@@ -5025,7 +5021,6 @@ msgstr ""
 "estrudere."
 
 #: ../src/splivarot.cpp:1079 ../src/splivarot.cpp:1147
-#, fuzzy
 msgid "Create linked offset"
 msgstr "Crea proiezione collegata"
 
@@ -5119,7 +5114,7 @@ msgstr ""
 
 #: ../src/text-chemistry.cpp:117
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
-msgstr ""
+msgstr "Il testo dinamico deve essere <b>visibile</b> per esser messo su un tracciato."
 
 #: ../src/text-chemistry.cpp:184 ../src/verbs.cpp:2074
 msgid "Put text on path"
@@ -5171,16 +5166,15 @@ msgstr "Selezionare <b>un testo dinamico</b> da convertire."
 
 #: ../src/text-chemistry.cpp:471
 msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
-msgstr ""
+msgstr "Il testo dinamico deve essere <b>visibile</b> per esser convertito."
 
 #: ../src/text-chemistry.cpp:499
 msgid "Convert flowed text to text"
 msgstr "Converti testo dinamica in testo"
 
 #: ../src/text-chemistry.cpp:504
-#, fuzzy
 msgid "<b>No flowed text(s)</b> to convert in the selection."
-msgstr "<b>Nessun oggetto</b> nella selezione da convertire in tracciato."
+msgstr "<b>Nessun testo dinamico</b> nella selezione da convertire."
 
 #: ../src/text-context.cpp:448
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -5208,14 +5202,13 @@ msgid "Insert Unicode character"
 msgstr "Inserisci carattere Unicode"
 
 #: ../src/text-context.cpp:577
-#, fuzzy, c-format
+#, c-format
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
-msgstr "Muove il <b>centro</b> in %s, %s"
+msgstr "Unicode (<b>Invio</b> per terminare): %s, %s"
 
 #: ../src/text-context.cpp:579 ../src/text-context.cpp:844
-#, fuzzy
 msgid "Unicode (<b>Enter</b> to finish): "
-msgstr "Muove il <b>centro</b> in %s, %s"
+msgstr "Unicode (<b>Invio</b> per terminare): "
 
 #: ../src/text-context.cpp:656
 #, c-format
@@ -5231,9 +5224,8 @@ msgid "Flowed text is created."
 msgstr "Il testo dinamico è stato creato."
 
 #: ../src/text-context.cpp:701
-#, fuzzy
 msgid "Create flowed text"
-msgstr "Il testo dinamico è stato creat"
+msgstr "Crea testo dinamico"
 
 #: ../src/text-context.cpp:703
 msgid ""
@@ -5248,14 +5240,12 @@ msgid "No-break space"
 msgstr "Spazio non interrompibile"
 
 #: ../src/text-context.cpp:831
-#, fuzzy
 msgid "Insert no-break space"
-msgstr "Spazio non interrompibile"
+msgstr "Inserisci spazio non interrompibile"
 
 #: ../src/text-context.cpp:868
-#, fuzzy
 msgid "Make bold"
-msgstr "Rendi intero"
+msgstr "Rendi grassetto"
 
 #: ../src/text-context.cpp:886
 msgid "Make italic"
@@ -5266,27 +5256,24 @@ msgid "New line"
 msgstr "A capo"
 
 #: ../src/text-context.cpp:928
-#, fuzzy
 msgid "Backspace"
-msgstr "Spazio non interrompibile"
+msgstr "Backspace"
 
 #: ../src/text-context.cpp:955
-#, fuzzy
 msgid "Kern to the left"
 msgstr "Kern a sinistra"
 
 #: ../src/text-context.cpp:975
-#, fuzzy
 msgid "Kern to the right"
-msgstr "Destinazione stampa"
+msgstr "Kern a destra"
 
 #: ../src/text-context.cpp:995
 msgid "Kern up"
-msgstr ""
+msgstr "Kern in alto"
 
 #: ../src/text-context.cpp:1016
 msgid "Kern down"
-msgstr ""
+msgstr "Kern in basso"
 
 #: ../src/text-context.cpp:1072
 msgid "Rotate counterclockwise"
@@ -7502,11 +7489,10 @@ msgid "Update"
 msgstr "Aggiorna"
 
 #: ../src/ui/dialog/tracedialog.cpp:650
-#, fuzzy
 msgid ""
 "Preview the intermediate bitmap with the current settings, without actual "
 "tracing"
-msgstr "Mostra l'anteprima del risultato senza vettorizzare"
+msgstr "Mostra l'anteprima del risultato con le attuali impostazioni, senza vettorizzare realmente"
 
 #: ../src/ui/dialog/tracedialog.cpp:654
 msgid "Preview"
@@ -10122,9 +10108,8 @@ msgid "No stops in gradient"
 msgstr "Nessun passaggio nel gradiente"
 
 #: ../src/widgets/gradient-vector.cpp:659
-#, fuzzy
 msgid "Change gradient stop offset"
-msgstr "Gradiente lineare di contorno"
+msgstr "Cambia offset del passaggio del gradiente"
 
 #: ../src/widgets/gradient-vector.cpp:733
 msgid "Add gradient stop"
@@ -11015,7 +11000,6 @@ msgid "Blue Function"
 msgstr "Funzione blu"
 
 #: ../share/extensions/color_custom.inx.h:3
-#, fuzzy
 msgid "Custom..."
 msgstr "Personalizzata..."
 
@@ -11279,7 +11263,7 @@ msgstr "Moltiplica range x di 2*pi"
 
 #: ../share/extensions/funcplot.inx.h:10
 msgid "Range and Sampling"
-msgstr ""
+msgstr "Range e Campioni"
 
 #: ../share/extensions/funcplot.inx.h:11
 msgid "Remove rectangle"
@@ -11301,7 +11285,12 @@ msgid ""
 "(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan"
 "(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and "
 "e are also available."
-msgstr ""
+msgstr "Le seguenti funzioni sono disponibili: (le funzioni disponibili sono quelle"
+"standard di python) ceil(x); fabs(x); floor(x); fmod(x,y); frexp"
+"(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt"
+"(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan"
+"(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x)."
+"Sono disponibili anche le costanti «pi» ed «e»."
 
 #: ../share/extensions/funcplot.inx.h:16
 msgid "y-value of rectangle's bottom"
@@ -11439,7 +11428,7 @@ msgstr "Frasi per paragrafo"
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
-msgstr ""
+msgstr "Uniforma colore delimitatori e contorno"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
@@ -11462,19 +11451,16 @@ msgid "ASCII Text with outline markup"
 msgstr "Testo ASCII con sintassi dello scheletro"
 
 #: ../share/extensions/outline2svg.inx.h:2
-#, fuzzy
 msgid "Text Outline File (*.outline)"
-msgstr "File di testo (*.txt)"
+msgstr "File dello scheletro (*.outline)"
 
 #: ../share/extensions/outline2svg.inx.h:3
-#, fuzzy
 msgid "Text Outline Input"
-msgstr "Input testo"
+msgstr "Input scheletro"
 
 #: ../share/extensions/pathalongpath.inx.h:1
-#, fuzzy
 msgid "Copies of the pattern:"
-msgstr "Colore dei bordi della pagina"
+msgstr "Copie del motivo:"
 
 #: ../share/extensions/pathalongpath.inx.h:2
 msgid "Deformation type:"
@@ -11485,34 +11471,28 @@ msgid "Duplicate the pattern before deformation"
 msgstr "Duplica il motivo prima della deformazione"
 
 #: ../share/extensions/pathalongpath.inx.h:5
-#, fuzzy
 msgid "Normal offset"
-msgstr "Proiezione orizzontale"
+msgstr "Proiezione normale"
 
 #: ../share/extensions/pathalongpath.inx.h:6
-#, fuzzy
 msgid "Pattern along Path"
-msgstr "Metti su tracciato"
+msgstr "Motivo lungo tracciato"
 
 #: ../share/extensions/pathalongpath.inx.h:7
-#, fuzzy
 msgid "Pattern is vertical"
-msgstr "Spessore del motivo"
+msgstr "Motivo verticale"
 
 #: ../share/extensions/pathalongpath.inx.h:8
-#, fuzzy
 msgid "Space between copies:"
-msgstr "Spaziatura tra le linee"
+msgstr "Spaziatura tra le copie:"
 
 #: ../share/extensions/pathalongpath.inx.h:9
-#, fuzzy
 msgid "Tangential offset"
-msgstr "Proiezione verticale"
+msgstr "Proiezione tangenziale"
 
 #: ../share/extensions/perspective.inx.h:2
-#, fuzzy
 msgid "Perspective"
-msgstr "Presenza"
+msgstr "Prospettiva"
 
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
@@ -11535,29 +11515,24 @@ msgid "Select option: "
 msgstr "Opzioni di selezione:"
 
 #: ../share/extensions/radiobutton_example.inx.h:4
-#, fuzzy
 msgid "Select second option: "
-msgstr "Selezionare il file da aprire"
+msgstr "Selezionare la seconda opzione"
 
 #: ../share/extensions/radiusrand.inx.h:1
-#, fuzzy
 msgid "Jitter nodes"
-msgstr "Alza nodo"
+msgstr "Sfalsa nodi"
 
 #: ../share/extensions/radiusrand.inx.h:2
-#, fuzzy
 msgid "Maximum displacement, px"
-msgstr "Lunghezza massima del segmento"
+msgstr "Spostamente massimo, px"
 
 #: ../share/extensions/radiusrand.inx.h:4
-#, fuzzy
 msgid "Shift node handles"
-msgstr "Casualità maniglie dei nodi"
+msgstr "Sposta maniglie dei nodi"
 
 #: ../share/extensions/radiusrand.inx.h:5
-#, fuzzy
 msgid "Shift nodes"
-msgstr "nodo finale"
+msgstr "Sposta nodi"
 
 #: ../share/extensions/radiusrand.inx.h:6
 msgid ""
@@ -11680,3 +11655,4 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Input Windows Metafile"
+
