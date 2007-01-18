@@ -941,7 +941,7 @@ sp_stb_proportion_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
     }
 
     if (modmade) sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR, 
-                                   _("Star: Change spike ratio"));
+                                   _("Star: Change spoke ratio"));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 

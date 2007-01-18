@@ -1805,15 +1805,15 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
             FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE),
-            sourceX0Spinner("X0",         _("Source left bound")),
-            sourceY0Spinner("Y0",         _("Source top bound")),
-            sourceX1Spinner("X1",         _("Source right bound")),
-            sourceY1Spinner("Y1",         _("Source bottom bound")),
+            sourceX0Spinner("X0",         _("Left edge of source")),
+            sourceY0Spinner("Y0",         _("Top edge of source")),
+            sourceX1Spinner("X1",         _("Right edge of source")),
+            sourceY1Spinner("Y1",         _("Bottom edge of source")),
             sourceWidthSpinner("Width",   _("Source width")),
             sourceHeightSpinner("Height", _("Source height")),
             destWidthSpinner("Width",     _("Destination width")),
             destHeightSpinner("Height",   _("Destination height")),
-            destDPISpinner("DPI",         _("Dots per inch resolution"))
+            destDPISpinner("DPI",         _("Resolution (dots per inch)"))
 {
     append_extension = (bool)prefs_get_int_attribute("dialogs.save_as", "append_extension", 1);
 

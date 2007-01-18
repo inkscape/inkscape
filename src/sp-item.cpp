@@ -863,12 +863,12 @@ sp_item_description(SPItem *item)
     if (((SPItemClass *) G_OBJECT_GET_CLASS(item))->description) {
         gchar *s = ((SPItemClass *) G_OBJECT_GET_CLASS(item))->description(item);
         if (s && item->clip_ref->getObject()) {
-            gchar *snew = g_strdup_printf ("%s; <i>clipped</i>", s);
+            gchar *snew = g_strdup_printf (_("%s; <i>clipped</i>"), s);
             g_free (s);
             s = snew;
         }
         if (s && item->mask_ref->getObject()) {
-            gchar *snew = g_strdup_printf ("%s; <i>masked</i>", s);
+            gchar *snew = g_strdup_printf (_("%s; <i>masked</i>"), s);
             g_free (s);
             s = snew;
         }

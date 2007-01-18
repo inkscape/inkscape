@@ -1751,10 +1751,10 @@ sp_selection_move_screen(gdouble dx, gdouble dy)
 
     if (dx == 0) {
         sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:vertical", SP_VERB_CONTEXT_SELECT, 
-                               _("Nudge vertically by pixels"));
+                               _("Move vertically by pixels"));
     } else if (dy == 0) {
         sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:horizontal", SP_VERB_CONTEXT_SELECT, 
-                               _("Nudge horizontally by pixels"));
+                               _("Move horizontally by pixels"));
     } else {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SELECT, 
                          _("Move"));

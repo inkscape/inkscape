@@ -271,9 +271,9 @@ StyleSwatch::setStyle(SPStyle *query)
             place->add(*_color_preview[i]);
             gchar *tip;
             if (i == SS_FILL) {
-                tip = g_strdup_printf ("Fill: %06x/%.3g", color >> 8, SP_RGBA32_A_F(color));
+                tip = g_strdup_printf (_("Fill: %06x/%.3g"), color >> 8, SP_RGBA32_A_F(color));
             } else {
-                tip = g_strdup_printf ("Stroke: %06x/%.3g", color >> 8, SP_RGBA32_A_F(color));
+                tip = g_strdup_printf (_("Stroke: %06x/%.3g"), color >> 8, SP_RGBA32_A_F(color));
             }
             _tooltips.set_tip(*place, tip);
             g_free (tip);
