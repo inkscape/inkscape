@@ -15,7 +15,7 @@
 
 	<param name="kind" type="enum" _gui-text="Deformation type:">
 	       <item>Snake</item>
-	       <item>Wave</item>
+	       <item>Ribbon</item>
 	</param>
 
 	<param name="space"     type="float"   _gui-text="Space between copies:" min="-10000.0" max="10000.0" >0.0</param>

@@ -186,7 +186,7 @@ class PathAlongPath(pathmodifier.Diffeo):
 
     def effect(self):
 	self.prepareSelectionList()
-	self.options.wave = (self.options.kind=="Wave")
+	self.options.wave = (self.options.kind=="Ribbon")
 	if self.options.copymode=="Single":
 	    self.options.repeat =False
 	    self.options.stretch=False
