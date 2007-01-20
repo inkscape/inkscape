@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-14 17:49+0100\n"
-"PO-Revision-Date: 2007-01-17 23:09+0100\n"
+"POT-Creation-Date: 2007-01-20 20:06+0100\n"
+"PO-Revision-Date: 2007-01-21 00:08+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1360,51 +1360,51 @@ msgstr "Objektumcím beállítása"
 msgid "Set object description"
 msgstr "Objektumleírás beállítása"
 
-#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
+#: ../src/dialogs/layers-panel.cpp:592 ../src/widgets/layer-selector.cpp:590
 msgid "Unhide layer"
 msgstr "Réteg rejtettségének megszüntetése"
 
-#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
+#: ../src/dialogs/layers-panel.cpp:592 ../src/widgets/layer-selector.cpp:590
 msgid "Hide layer"
 msgstr "Réteg elrejtése"
 
-#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
+#: ../src/dialogs/layers-panel.cpp:603 ../src/widgets/layer-selector.cpp:582
 msgid "Lock layer"
 msgstr "Réteg zárolása"
 
-#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
+#: ../src/dialogs/layers-panel.cpp:603 ../src/widgets/layer-selector.cpp:582
 msgid "Unlock layer"
 msgstr "Réteg feloldása"
 
-#: ../src/dialogs/layers-panel.cpp:698
+#: ../src/dialogs/layers-panel.cpp:699
 msgid "Change layer opacity"
 msgstr "Réteg-átlátszatlanság módosítása"
 
-#: ../src/dialogs/layers-panel.cpp:763
+#: ../src/dialogs/layers-panel.cpp:764
 msgid "Opacity, %:"
 msgstr "Átlátszatlanság, %:"
 
-#: ../src/dialogs/layers-panel.cpp:789
+#: ../src/dialogs/layers-panel.cpp:790
 msgid "New"
 msgstr "Új"
 
-#: ../src/dialogs/layers-panel.cpp:794
+#: ../src/dialogs/layers-panel.cpp:795
 msgid "Top"
 msgstr "Felülre"
 
-#: ../src/dialogs/layers-panel.cpp:800
+#: ../src/dialogs/layers-panel.cpp:801
 msgid "Up"
 msgstr "Feljebb"
 
-#: ../src/dialogs/layers-panel.cpp:806
+#: ../src/dialogs/layers-panel.cpp:807
 msgid "Dn"
 msgstr "Lejjebb"
 
-#: ../src/dialogs/layers-panel.cpp:812
+#: ../src/dialogs/layers-panel.cpp:813
 msgid "Bot"
 msgstr "Alulra"
 
-#: ../src/dialogs/layers-panel.cpp:822
+#: ../src/dialogs/layers-panel.cpp:823
 msgid "X"
 msgstr "X"
 
@@ -2344,13 +2344,13 @@ msgstr ""
 "Az Inkscape további adatokat kapott a végrehajtott programtól. A program nem "
 "adott hibaüzenetet, de elképzelhető, hogy az eredmény el fog térni a várttól."
 
-#: ../src/extension/init.cpp:187
+#: ../src/extension/init.cpp:175
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr ""
 "A külső modulok könyvtárának neve nincs megadva. A modulok nem lesznek "
 "betöltve."
 
-#: ../src/extension/init.cpp:201
+#: ../src/extension/init.cpp:189
 #, c-format
 msgid ""
 "Modules directory (%s) is unavailable.  External modules in that directory "
@@ -2504,81 +2504,6 @@ msgstr "OpenDocument-rajz (*.odg)"
 msgid "OpenDocument drawing file"
 msgstr "OpenDocument-rajzfájl"
 
-#: ../src/extension/internal/pdf-cairo.cpp:123
-#: ../src/extension/internal/ps.cpp:121
-msgid "Print Destination"
-msgstr "Nyomtatási cél"
-
-#. Print properties frame
-#: ../src/extension/internal/pdf-cairo.cpp:138
-#: ../src/extension/internal/ps.cpp:136
-msgid "Print properties"
-msgstr "Nyomtatási tulajdonságok"
-
-#: ../src/extension/internal/pdf-cairo.cpp:145
-msgid "Print using PDF operators"
-msgstr "Nyomtatás PDF-műveletekkel"
-
-#: ../src/extension/internal/pdf-cairo.cpp:147
-msgid ""
-"Use PDF vector operators. The resulting image is usually smaller in file "
-"size and can be arbitrarily scaled, but patterns will be lost."
-msgstr ""
-"PDF-vektorműveletek használata. Az így készített kép általában kisebb "
-"fájlméretű és tetszőlegesen méretezhető, viszont a minták elvesznek."
-
-#: ../src/extension/internal/pdf-cairo.cpp:152
-#: ../src/extension/internal/ps.cpp:150
-msgid "Print as bitmap"
-msgstr "Nyomtatás bitképként"
-
-#: ../src/extension/internal/pdf-cairo.cpp:154
-#: ../src/extension/internal/ps.cpp:152
-msgid ""
-"Print everything as bitmap. The resulting image is usually larger in file "
-"size and cannot be arbitrarily scaled without quality loss, but all objects "
-"will be rendered exactly as displayed."
-msgstr ""
-"Minden objektum bitképként való nyomtatása. Az így készített kép általában "
-"nagyobb fájlméretű, továbbá nem lehet tetszőlegesen nagyítani "
-"minőségveszteség nélkül, viszont az objektumok megjelenése megegyezik a "
-"képernyőn látottal."
-
-#: ../src/extension/internal/pdf-cairo.cpp:168
-#: ../src/extension/internal/ps.cpp:166
-msgid "Preferred resolution (dots per inch) of bitmap"
-msgstr "A kívánt bitkép-felbontás (pont/hüvelykben)"
-
-#: ../src/extension/internal/pdf-cairo.cpp:182
-#: ../src/extension/internal/ps.cpp:180
-msgid "Resolution:"
-msgstr "Felbontás:"
-
-#. Print destination frame
-#: ../src/extension/internal/pdf-cairo.cpp:186
-#: ../src/extension/internal/ps.cpp:184
-msgid "Print destination"
-msgstr "Nyomtatási cél"
-
-#: ../src/extension/internal/pdf-cairo.cpp:192
-#: ../src/extension/internal/ps.cpp:190
-msgid ""
-"Printer name (as given by lpstat -p);\n"
-"leave empty to use the system default printer.\n"
-"Use '> filename' to print to file.\n"
-"Use '| prog arg...' to pipe to a program."
-msgstr ""
-"Nyomtatónév (az \"lpstat -p\" paranccsal lekérdezhetők a\n"
-"lehetséges értékek). Üresen hagyás esetén a rendszer\n"
-"alapértelmezett nyomtatója lesz használva.\n"
-"Fájlba való nyomtatáshoz használja a \"> fájlnév\" konstrukciót,\n"
-"a kimenetnek egy program számára való átadásához pedig a\n"
-"következőt: \"| programnév argumentum ...\"."
-
-#: ../src/extension/internal/pdf-cairo.cpp:1021
-msgid "PDF Print"
-msgstr "PDF-nyomtatás"
-
 #: ../src/extension/internal/pov-out.cpp:457
 msgid "PovRay Output"
 msgstr "PovRay-kimenet"
@@ -2604,6 +2529,15 @@ msgstr "PostScript (*.ps)"
 msgid "Postscript File"
 msgstr "PostScript-fájl"
 
+#: ../src/extension/internal/ps.cpp:121
+msgid "Print Destination"
+msgstr "Nyomtatási cél"
+
+#. Print properties frame
+#: ../src/extension/internal/ps.cpp:136
+msgid "Print properties"
+msgstr "Nyomtatási tulajdonságok"
+
 #: ../src/extension/internal/ps.cpp:143
 msgid "Print using PostScript operators"
 msgstr "Nyomtatás PostScript-műveletekkel"
@@ -2617,6 +2551,48 @@ msgstr ""
 "A PostScript vektorműveleteinek használata. Az így készített kép általában "
 "kisebb fájlméretű és tetszőlegesen méretezhető, viszont az átlátszóság és a "
 "minták elvesznek."
+
+#: ../src/extension/internal/ps.cpp:150
+msgid "Print as bitmap"
+msgstr "Nyomtatás bitképként"
+
+#: ../src/extension/internal/ps.cpp:152
+msgid ""
+"Print everything as bitmap. The resulting image is usually larger in file "
+"size and cannot be arbitrarily scaled without quality loss, but all objects "
+"will be rendered exactly as displayed."
+msgstr ""
+"Minden objektum bitképként való nyomtatása. Az így készített kép általában "
+"nagyobb fájlméretű, továbbá nem lehet tetszőlegesen nagyítani "
+"minőségveszteség nélkül, viszont az objektumok megjelenése megegyezik a "
+"képernyőn látottal."
+
+#: ../src/extension/internal/ps.cpp:166
+msgid "Preferred resolution (dots per inch) of bitmap"
+msgstr "A kívánt bitkép-felbontás (pont/hüvelykben)"
+
+#: ../src/extension/internal/ps.cpp:180
+msgid "Resolution:"
+msgstr "Felbontás:"
+
+#. Print destination frame
+#: ../src/extension/internal/ps.cpp:184
+msgid "Print destination"
+msgstr "Nyomtatási cél"
+
+#: ../src/extension/internal/ps.cpp:190
+msgid ""
+"Printer name (as given by lpstat -p);\n"
+"leave empty to use the system default printer.\n"
+"Use '> filename' to print to file.\n"
+"Use '| prog arg...' to pipe to a program."
+msgstr ""
+"Nyomtatónév (az \"lpstat -p\" paranccsal lekérdezhetők a\n"
+"lehetséges értékek). Üresen hagyás esetén a rendszer\n"
+"alapértelmezett nyomtatója lesz használva.\n"
+"Fájlba való nyomtatáshoz használja a \"> fájlnév\" konstrukciót,\n"
+"a kimenetnek egy program számára való átadásához pedig a\n"
+"következőt: \"| programnév argumentum ...\"."
 
 #: ../src/extension/internal/ps.cpp:1719
 msgid "Postscript Print"
@@ -4356,13 +4332,12 @@ msgid "Move"
 msgstr "Áthelyezés"
 
 #: ../src/selection-chemistry.cpp:1754
-#, fuzzy
-msgid "Nudge vertically by pixels"
-msgstr "függőleges"
+msgid "Move vertically by pixels"
+msgstr "Függőleges elmozdítás képpontokkal"
 
 #: ../src/selection-chemistry.cpp:1757
-msgid "Nudge horizontally by pixels"
-msgstr ""
+msgid "Move horizontally by pixels"
+msgstr "Vízszintes elmozdítás képpontokkal"
 
 #: ../src/selection-chemistry.cpp:2021 ../src/selection-describer.cpp:65
 msgid "Clone"
@@ -4810,6 +4785,16 @@ msgstr[0] "<b>%d</b> objektumot tartalmazó <b>csoport</b>"
 msgid "Object"
 msgstr "Objektum"
 
+#: ../src/sp-item.cpp:866
+#, c-format
+msgid "%s; <i>clipped</i>"
+msgstr "%s; <i>vágott</i>"
+
+#: ../src/sp-item.cpp:871
+#, c-format
+msgid "%s; <i>masked</i>"
+msgstr "%s; <i>maszkolt</i>"
+
 #: ../src/sp-line.cpp:187
 msgid "<b>Line</b>"
 msgstr "<b>Vonal</b>"
@@ -5091,8 +5076,8 @@ msgstr ""
 #: ../src/text-chemistry.cpp:117
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
 msgstr ""
-"A tördelt szöveg(ek)nek <b>láthatónak</b> kell lenni ahhoz, hogy láncra lehessen "
-"illeszteni az(oka)t."
+"A tördelt szöveg(ek)nek <b>láthatónak</b> kell lenni ahhoz, hogy láncra "
+"lehessen illeszteni az(oka)t."
 
 #: ../src/text-chemistry.cpp:184 ../src/verbs.cpp:2074
 msgid "Put text on path"
@@ -5877,8 +5862,8 @@ msgid ""
 "A grid with vertical lines and two diagonal line groups, each representing "
 "the projection of a primary axis."
 msgstr ""
-"Rács függőleges vonalakkal és két olyan, átlós vonalcsoporttal, amelyek egy-egy "
-"elsődleges tengely vetületét ábrázolják."
+"Rács függőleges vonalakkal és két olyan, átlós vonalcsoporttal, amelyek egy-"
+"egy elsődleges tengely vetületét ábrázolják."
 
 #: ../src/ui/dialog/document-properties.cpp:247
 msgid "Grid _units:"
@@ -6133,7 +6118,7 @@ msgid "Information"
 msgstr "Információ"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
-#: ../share/extensions/funcplot.inx.h:7
+#: ../share/extensions/funcplot.inx.h:7 ../share/extensions/measure.inx.h:2
 msgid "Help"
 msgstr "Segítség"
 
@@ -6175,19 +6160,19 @@ msgid "Append filename extension automatically"
 msgstr "Fájlkiterjesztés automatikus hozzáfűzése"
 
 #: ../src/ui/dialog/filedialog.cpp:1808
-msgid "Source left bound"
+msgid "Left edge of source"
 msgstr "A forrás bal oldali széle"
 
 #: ../src/ui/dialog/filedialog.cpp:1809
-msgid "Source top bound"
+msgid "Top edge of source"
 msgstr "A forrás felső széle"
 
 #: ../src/ui/dialog/filedialog.cpp:1810
-msgid "Source right bound"
+msgid "Right edge of source"
 msgstr "A forrás jobb oldali széle"
 
 #: ../src/ui/dialog/filedialog.cpp:1811
-msgid "Source bottom bound"
+msgid "Bottom edge of source"
 msgstr "A forrás alsó széle"
 
 #: ../src/ui/dialog/filedialog.cpp:1812
@@ -6207,8 +6192,8 @@ msgid "Destination height"
 msgstr "A cél magassága"
 
 #: ../src/ui/dialog/filedialog.cpp:1816
-msgid "Dots per inch resolution"
-msgstr "Felbontás (pont/hüvelyk)"
+msgid "Resolution (dots per inch)"
+msgstr "Felbontás (pont/hüvelykben)"
 
 #. #########################################
 #. ## EXTRA WIDGET -- SOURCE SIDE
@@ -6765,10 +6750,10 @@ msgid ""
 "'Restore' to bring back a minimized document window)"
 msgstr ""
 "A párbeszédablakok a dokumentumablakok felett maradjanak-e. Ezzel "
-"kapcsolatban olvassa el a Kiadási Megjegyzéseket (Release Notes). "
-"(Egy minimalizált dokumentumablak visszahozásához kattintson a jobb "
-"oldali egérgombbal a feladatlistában levő gombra, majd válassza a "
-"\"Visszaállítás\" funkciót.)"
+"kapcsolatban olvassa el a Kiadási Megjegyzéseket (Release Notes). (Egy "
+"minimalizált dokumentumablak visszahozásához kattintson a jobb oldali "
+"egérgombbal a feladatlistában levő gombra, majd válassza a \"Visszaállítás\" "
+"funkciót.)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Windows"
@@ -7321,11 +7306,11 @@ msgstr "Színek számának csökkentése"
 
 #: ../src/ui/dialog/tracedialog.cpp:456
 msgid "Trace along the boundaries of reduced colors"
-msgstr "Vektorizálás a csökkentett színek határai mentén"
+msgstr "Vektorizálás csökkentett színek határai mentén"
 
 #: ../src/ui/dialog/tracedialog.cpp:464
 msgid "The number of reduced colors"
-msgstr "A csökkentett színek száma"
+msgstr "Csökkentett színek száma"
 
 #: ../src/ui/dialog/tracedialog.cpp:466
 msgid "Colors:"
@@ -7459,8 +7444,8 @@ msgid ""
 "Increase this to reduce the number of nodes in the trace by more aggressive "
 "optimization"
 msgstr ""
-"Nagyobb érték esetén agresszívabb optimalizáció történik, így a kép "
-"kevesebb csomópontot fog tartalmazni"
+"Nagyobb érték esetén agresszívabb optimalizáció történik, így a kép kevesebb "
+"csomópontot fog tartalmazni"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:606 ../src/ui/dialog/tracedialog.cpp:612
@@ -7496,8 +7481,8 @@ msgid ""
 "Preview the intermediate bitmap with the current settings, without actual "
 "tracing"
 msgstr ""
-"A jelenlegi beállításokkal elérhető eredmény (bitképes) előnézetének megjelenítése "
-"a vektorizálás végrehajtása nélkül"
+"A jelenlegi beállításokkal elérhető eredmény (bitképes) előnézetének "
+"megjelenítése a vektorizálás végrehajtása nélkül"
 
 #: ../src/ui/dialog/tracedialog.cpp:654
 msgid "Preview"
@@ -8324,6 +8309,16 @@ msgstr "A papír magassága"
 #: ../src/ui/widget/page-sizer.cpp:355
 msgid "Set page size"
 msgstr "Lapméret beállítása"
+
+#: ../src/ui/widget/style-swatch.cpp:274
+#, c-format
+msgid "Fill: %06x/%.3g"
+msgstr "Kitöltés: %06x/%.3g"
+
+#: ../src/ui/widget/style-swatch.cpp:276
+#, c-format
+msgid "Stroke: %06x/%.3g"
+msgstr "Körvonal: %06x/%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:325
 #, c-format
@@ -9957,8 +9952,8 @@ msgstr "Lap illesztése a kijelöléshez vagy a rajzhoz"
 #: ../src/verbs.cpp:2387
 msgid "Fit the page to the current selection or the drawing if there is no selection"
 msgstr ""
-"A lap illesztése az aktuális kijelöléshez, ha pedig olyan nincs, akkor "
-"a rajzhoz"
+"A lap illesztése az aktuális kijelöléshez, ha pedig olyan nincs, akkor a "
+"rajzhoz"
 
 #: ../src/widgets/dash-selector.cpp:103
 msgid "Dash pattern"
@@ -10565,7 +10560,7 @@ msgid "Star: Change number of corners"
 msgstr "Csillag: csúcsok számának módosítása"
 
 #: ../src/widgets/toolbox.cpp:944
-msgid "Star: Change spike ratio"
+msgid "Star: Change spoke ratio"
 msgstr "Csillag: ágarány módosítása"
 
 #: ../src/widgets/toolbox.cpp:998
@@ -10747,8 +10742,8 @@ msgid ""
 "Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed "
 "angle)"
 msgstr ""
-"A szög viselkedése (0: a tollhegy mindig merőleges a vonalhúzás irányára, "
-"1: rögzített szög)"
+"A szög viselkedése (0: a tollhegy mindig merőleges a vonalhúzás irányára, 1: "
+"rögzített szög)"
 
 #: ../src/widgets/toolbox.cpp:2248
 msgid "Caps:"
@@ -11033,84 +11028,72 @@ msgid "Brighter"
 msgstr "Fényesebb"
 
 #: ../share/extensions/color_custom.inx.h:1
-#, fuzzy
 msgid "Blue Function"
-msgstr "Függvény"
+msgstr "Kék-függvény"
 
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom..."
 msgstr "Egyéni..."
 
 #: ../share/extensions/color_custom.inx.h:4
-#, fuzzy
 msgid "Green Function"
-msgstr "Függvény"
+msgstr "Zöld-függvény"
 
 #: ../share/extensions/color_custom.inx.h:5
-#, fuzzy
 msgid "Red Function"
-msgstr "Függvény"
+msgstr "Vörös-függvény"
 
 #: ../share/extensions/color_darker.inx.h:2
 msgid "Darker"
 msgstr "Sötétebb"
 
 #: ../share/extensions/color_desaturate.inx.h:2
-#, fuzzy
 msgid "Desaturate"
-msgstr "Deaktiválva"
+msgstr "Telítetlenné tevés"
 
 #: ../share/extensions/color_grayscale.inx.h:2
 msgid "Grayscale"
-msgstr ""
+msgstr "Szürkeárnyalatok"
 
 #: ../share/extensions/color_lesshue.inx.h:2
 msgid "Less Hue"
-msgstr ""
+msgstr "Alacsonyabb árnyalatérték"
 
 #: ../share/extensions/color_lesslight.inx.h:2
 msgid "Less Light"
-msgstr ""
+msgstr "Kevesebb fény"
 
 #: ../share/extensions/color_lesssaturation.inx.h:2
-#, fuzzy
 msgid "Less Saturation"
-msgstr "Telítettség"
+msgstr "Kisebb telítettség"
 
 #: ../share/extensions/color_morehue.inx.h:2
-#, fuzzy
 msgid "More Hue"
-msgstr "Csomópontot eggyel lejjebb"
+msgstr "Magasabb árnyalatérték"
 
 #: ../share/extensions/color_morelight.inx.h:2
-#, fuzzy
 msgid "More Light"
-msgstr "Azonos magasság"
+msgstr "Több fény"
 
 #: ../share/extensions/color_moresaturation.inx.h:2
-#, fuzzy
 msgid "More Saturation"
-msgstr "Telítettség"
+msgstr "Nagyobb telítettség"
 
 #: ../share/extensions/color_negative.inx.h:2
-#, fuzzy
 msgid "Negative"
-msgstr "Deaktiválva"
+msgstr "Negatív"
 
 #: ../share/extensions/color_removeblue.inx.h:2
-#, fuzzy
 msgid "Remove Blue"
-msgstr "Kitöltés eltávolítása"
+msgstr "Kék eltávolítása"
 
 #: ../share/extensions/color_removegreen.inx.h:2
-#, fuzzy
 msgid "Remove Green"
-msgstr "Körvonal eltávolítása"
+msgstr "Zöld eltávolítása"
 
 #: ../share/extensions/color_removered.inx.h:2
-#, fuzzy
 msgid "Remove Red"
-msgstr "Eltávolítás"
+msgstr "Vörös eltávolítása"
 
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
@@ -11150,7 +11133,7 @@ msgstr ""
 msgid "Dot size"
 msgstr "Pontméret"
 
-#: ../share/extensions/dots.inx.h:2 ../share/extensions/measure.inx.h:1
+#: ../share/extensions/dots.inx.h:2
 msgid "Font size"
 msgstr "Betűtípus-méret"
 
@@ -11159,7 +11142,7 @@ msgid "Number Nodes"
 msgstr "Csomópontok megszámozása"
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
-#: ../share/extensions/measure.inx.h:3
+#: ../share/extensions/measure.inx.h:10
 msgid "Visualize Path"
 msgstr "Lánc megjelenítése"
 
@@ -11244,16 +11227,15 @@ msgstr "LaTeX-képlet: "
 
 #: ../share/extensions/export_gimp_palette.inx.h:1
 msgid "Export as GIMP Palette"
-msgstr ""
+msgstr "Exportálás GIMP-palettaként"
 
 #: ../share/extensions/export_gimp_palette.inx.h:2
 msgid "Exports the colors of this document as GIMP Palette"
-msgstr ""
+msgstr "Jelen dokumentum színeinek exportálása GIMP-palettaként"
 
 #: ../share/extensions/export_gimp_palette.inx.h:3
-#, fuzzy
 msgid "GIMP Palette (*.gpl)"
-msgstr "GIMP-színátmenet (*.ggr)"
+msgstr "GIMP-paletta (*.gpl)"
 
 #: ../share/extensions/extractimage.inx.h:1
 msgid "Extract One Image"
@@ -11268,7 +11250,6 @@ msgid "Open files saved with XFIG"
 msgstr "Az XFIG-gel mentett fájlok megnyitása"
 
 #: ../share/extensions/fig_input.inx.h:2
-#, fuzzy
 msgid "XFIG Graphics File (*.fig)"
 msgstr "XFIG-grafika (*.fig)"
 
@@ -11286,21 +11267,19 @@ msgstr "Bézier-görbék lapítása"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Calculate first derivative numerically"
-msgstr ""
+msgstr "Az első derivált numerikus kiszámítása"
 
 #: ../share/extensions/funcplot.inx.h:2
-#, fuzzy
 msgid "Draw Axes"
-msgstr "Vezérlőelemek megrajzolása"
+msgstr "Tengelyek megrajzolása"
 
 #: ../share/extensions/funcplot.inx.h:3
 msgid "End x-value"
-msgstr ""
+msgstr "X-végérték"
 
 #: ../share/extensions/funcplot.inx.h:4
-#, fuzzy
 msgid "First derivative"
-msgstr "Először kijelölt"
+msgstr "Első derivált"
 
 #: ../share/extensions/funcplot.inx.h:5
 msgid "Function"
@@ -11312,30 +11291,27 @@ msgstr "Függvényábrázoló"
 
 #: ../share/extensions/funcplot.inx.h:8
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
-msgstr ""
+msgstr "Izotropikus méretezés (a legkisebbet használja: szélesség/X-tartomány vagy magasság/Y-tartomány)"
 
 #: ../share/extensions/funcplot.inx.h:9
 msgid "Multiply x-range by 2*pi"
-msgstr ""
+msgstr "X-tartomány szorzása 2*pi-vel"
 
 #: ../share/extensions/funcplot.inx.h:10
 msgid "Range and Sampling"
-msgstr ""
+msgstr "Tartomány és minták"
 
 #: ../share/extensions/funcplot.inx.h:11
-#, fuzzy
 msgid "Remove rectangle"
-msgstr "Téglalap létrehozása"
+msgstr "Téglalap eltávolítása"
 
 #: ../share/extensions/funcplot.inx.h:13
-#, fuzzy
 msgid "Samples"
-msgstr "Alakzatok"
+msgstr "Minták"
 
 #: ../share/extensions/funcplot.inx.h:14
-#, fuzzy
 msgid "Start x-value"
-msgstr "A tulajdonság értéke"
+msgstr "X-kezdőérték"
 
 #: ../share/extensions/funcplot.inx.h:15
 msgid ""
@@ -11346,15 +11322,20 @@ msgid ""
 "(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and "
 "e are also available."
 msgstr ""
+"A következő függvények használhatók (a használható függvények a Python "
+"szabványos matematikai függvényei): ceil(x); fabs(x); floor(x); fmod(x,y); frexp"
+"(x); ldexp(x,i); modf(x); exp(x); log(x [, alap]); log10(x); pow(x,y); sqrt"
+"(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan"
+"(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Használható a \"pi\" "
+"és az \"e\" konstans is."
 
 #: ../share/extensions/funcplot.inx.h:16
 msgid "y-value of rectangle's bottom"
-msgstr ""
+msgstr "A téglalap aljának Y-értéke"
 
 #: ../share/extensions/funcplot.inx.h:17
-#, fuzzy
 msgid "y-value of rectangle's top"
-msgstr "A téglalap magassága"
+msgstr "A téglalap tetejének Y-értéke"
 
 #: ../share/extensions/g2pngs.inx.h:1
 msgid "Directory"
@@ -11471,7 +11452,7 @@ msgstr "Lépéshossz (px)"
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
-msgstr ""
+msgstr "Lorem ipsum"
 
 #: ../share/extensions/lorem_ipsum.inx.h:2
 msgid "Number of paragraphs"
@@ -11489,9 +11470,34 @@ msgstr "Bekezdésenkénti mondatok"
 msgid "Color Markers to Match Stroke"
 msgstr "Jelölőelemek színezése a körvonalszínnel"
 
-#: ../share/extensions/measure.inx.h:2
+#: ../share/extensions/measure.inx.h:1
+msgid "Font size [px]"
+msgstr "Betűtípus-méret (px)"
+
+#. <param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>
+#: ../share/extensions/measure.inx.h:4
+msgid "Length Unit: "
+msgstr "Hossz-egység: "
+
+#: ../share/extensions/measure.inx.h:5
+msgid "Measure"
+msgstr "Mérés"
+
+#: ../share/extensions/measure.inx.h:6
 msgid "Measure Path"
 msgstr "Lánc megmérése"
+
+#: ../share/extensions/measure.inx.h:7
+msgid "Offset [px]"
+msgstr "Eltolás (px)"
+
+#: ../share/extensions/measure.inx.h:8
+msgid "Precision"
+msgstr "Pontosság"
+
+#: ../share/extensions/measure.inx.h:9
+msgid "Scale Factor (Drawing:Real Length) = 1:"
+msgstr "Méretezési tényező (a valós hossz: 1):"
 
 #: ../share/extensions/motion.inx.h:1
 msgid "Angle"
@@ -11507,17 +11513,15 @@ msgstr "Nagyság"
 
 #: ../share/extensions/outline2svg.inx.h:1
 msgid "ASCII Text with outline markup"
-msgstr ""
+msgstr "ASCII-szöveg vázlat-jelöléssel"
 
 #: ../share/extensions/outline2svg.inx.h:2
-#, fuzzy
 msgid "Text Outline File (*.outline)"
-msgstr "Szövegfájl (*.txt)"
+msgstr "Szövegvázlat-fájl (*.outline)"
 
 #: ../share/extensions/outline2svg.inx.h:3
-#, fuzzy
 msgid "Text Outline Input"
-msgstr "Szöveg-bemenet"
+msgstr "Szövegvázlat-bemenet"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Copies of the pattern:"
@@ -11565,21 +11569,19 @@ msgstr "PostScript-bemenet"
 
 #: ../share/extensions/radiobutton_example.inx.h:1
 msgid "Developer Examples"
-msgstr ""
+msgstr "Fejlesztői példák"
 
 #: ../share/extensions/radiobutton_example.inx.h:2
 msgid "RadioButton example"
-msgstr ""
+msgstr "Rádiógomb-példa"
 
 #: ../share/extensions/radiobutton_example.inx.h:3
-#, fuzzy
 msgid "Select option: "
-msgstr "Kijelölés"
+msgstr "Válasszon egy értéket: "
 
 #: ../share/extensions/radiobutton_example.inx.h:4
-#, fuzzy
 msgid "Select second option: "
-msgstr "Válassza ki a megnyitandó fájlt"
+msgstr "Válasszon egy második értéket: "
 
 #: ../share/extensions/radiusrand.inx.h:1
 msgid "Jitter nodes"
