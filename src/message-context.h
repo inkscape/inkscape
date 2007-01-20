@@ -1,5 +1,5 @@
 /** \file
- * A convenience class for working with MessageStacks.
+ * Interface for locally managing a current status message
  */
 
 /*

@@ -1,5 +1,5 @@
 /*
- * MessageStack - context for posting status messages
+ * MessageStack - manages stack of active status messages
  *
  * Authors:
  *   MenTaLguY <mental@rydia.net>

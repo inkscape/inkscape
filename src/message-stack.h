@@ -1,5 +1,5 @@
 /** \file
- * Managing current status messages.
+ * Raw stack of active status messages
  */
 
 /*
