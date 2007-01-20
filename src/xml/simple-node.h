@@ -17,7 +17,6 @@
 
 #include "xml/node.h"
 #include "xml/attribute-record.h"
-#include "xml/transaction-logger.h"
 #include "xml/composite-node-observer.h"
 #include "util/list-container.h"
 
@@ -29,14 +28,10 @@ class SimpleNode
 : virtual public Node, public Inkscape::GC::Managed<>
 {
 public:
-    Session *session() {
-        return ( _logger ? &_logger->session() : NULL );
-    }
-
     gchar const *name() const;
     int code() const { return _name; }
     void setCodeUnsafe(int code) {
-        g_assert(_logger == NULL);
+        g_assert(_document == NULL);
         _name = code;
     }
 
@@ -119,7 +114,6 @@ public: // ideally these should be protected somehow...
     void _setParent(Node *parent) { _parent = parent; }
     void _setNext(Node *next) { _next = next; }
     void _bindDocument(Document &document);
-    void _bindLogger(TransactionLogger &logger);
 
     unsigned _childPosition(Node const &child) const;
     unsigned _cachedPosition() const { return _cached_position; }
@@ -133,7 +127,6 @@ private:
     Node *_parent;
     Node *_next;
     Document *_document;
-    TransactionLogger *_logger;
     mutable unsigned _cached_position;
 
     int _name;

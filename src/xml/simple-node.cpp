@@ -161,7 +161,7 @@ SimpleNode::SimpleNode(int code)
 : Node(), _name(code), _attributes(), _child_count(0),
   _cached_positions_valid(false)
 {
-    this->_logger = NULL;
+    this->_document = NULL;
     this->_document = NULL;
     this->_parent = this->_next = NULL;
     this->_first_child = this->_last_child = NULL;
@@ -174,7 +174,7 @@ SimpleNode::SimpleNode(SimpleNode const &node)
   _child_count(node._child_count),
   _cached_positions_valid(node._cached_positions_valid)
 {
-    _logger = NULL;
+    _document = NULL;
     _document = NULL;
     _parent = _next = NULL;
     _first_child = _last_child = NULL;
@@ -282,8 +282,8 @@ void SimpleNode::setContent(gchar const *content) {
     _content = new_content;
 
     if ( _content != old_content ) {
-        if (_logger) {
-            _logger->notifyContentChanged(*this, old_content, _content);
+        if (_document) {
+            _document->logger()->notifyContentChanged(*this, old_content, _content);
         }
 
         _observers.notifyContentChanged(*this, old_content, _content);
@@ -336,8 +336,8 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const is_in
     }
 
     if ( new_value != old_value && (!old_value || !new_value || strcmp(old_value, new_value))) {
-        if (_logger) {
-            _logger->notifyAttributeChanged(*this, key, old_value, new_value);
+        if (_document) {
+            _document->logger()->notifyAttributeChanged(*this, key, old_value, new_value);
         }
 
         _observers.notifyAttributeChanged(*this, key, old_value, new_value);
@@ -380,10 +380,7 @@ void SimpleNode::addChild(Node *child, Node *ref) {
 
     if (_document) {
         child->_bindDocument(*_document);
-    }
-    if (_logger) {
-        child->_bindLogger(*_logger);
-        _logger->notifyChildAdded(*this, *child, ref);
+        _document->logger()->notifyChildAdded(*this, *child, ref);
     }
 
     _observers.notifyChildAdded(*this, *child, ref);
@@ -397,18 +394,6 @@ void SimpleNode::_bindDocument(Document &document) {
 
         for ( Node *child = _first_child ; child != NULL ; child = child->next() ) {
             child->_bindDocument(document);
-        }
-    }
-}
-
-void SimpleNode::_bindLogger(TransactionLogger &logger) {
-    g_assert(!_logger || _logger == &logger);
-
-    if (!_logger) {
-        _logger = &logger;
-
-        for ( Node *child = _first_child ; child != NULL ; child = child->next() ) {
-            child->_bindLogger(logger);
         }
     }
 }
@@ -438,8 +423,8 @@ void SimpleNode::removeChild(Node *child) {
     child->_setParent(NULL);
     _child_count--;
 
-    if (_logger) {
-        _logger->notifyChildRemoved(*this, *child, ref);
+    if (_document) {
+        _document->logger()->notifyChildRemoved(*this, *child, ref);
     }
 
     _observers.notifyChildRemoved(*this, *child, ref);
@@ -485,8 +470,8 @@ void SimpleNode::changeOrder(Node *child, Node *ref) {
 
     _cached_positions_valid = false;
 
-    if (_logger) {
-        _logger->notifyChildOrderChanged(*this, *child, prev, ref);
+    if (_document) {
+        _document->logger()->notifyChildOrderChanged(*this, *child, prev, ref);
     }
 
     _observers.notifyChildOrderChanged(*this, *child, prev, ref);

@@ -16,22 +16,27 @@
 #define SEEN_INKSCAPE_XML_SP_REPR_DOC_H
 
 #include "xml/node.h"
-#include "xml/session.h"
 
 namespace Inkscape {
 namespace XML {
 
+class Event;
+class NodeObserver;
+
 struct Document : virtual public Node {
 public:
-    Node *createElementNode(char const *name) {
-        return session()->createElementNode(name);
-    }
-    Node *createTextNode(char const *content) {
-        return session()->createTextNode(content);
-    }
-    Node *createCommentNode(char const *content) {
-        return session()->createCommentNode(content);
-    }
+    virtual NodeObserver *logger()=0;
+
+    virtual bool inTransaction()=0;
+
+    virtual void beginTransaction()=0;
+    virtual void rollback()=0;
+    virtual void commit()=0;
+    virtual Inkscape::XML::Event *commitUndoable()=0;
+
+    virtual Node *createElementNode(char const *name)=0;
+    virtual Node *createTextNode(char const *content)=0;
+    virtual Node *createCommentNode(char const *content)=0;
 };
 
 }

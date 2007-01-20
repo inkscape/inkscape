@@ -32,13 +32,10 @@ xml_libspxml_a_SOURCES =	\
 	xml/repr-util.cpp	\
 	xml/repr.cpp	\
 	xml/repr.h	\
-	xml/session.h \
 	xml/simple-document.h \
 	xml/simple-document.cpp \
 	xml/simple-node.h \
 	xml/simple-node.cpp \
-	xml/simple-session.cpp \
-	xml/simple-session.h \
 	xml/node.h \
 	xml/croco-node-iface.cpp	\
 	xml/croco-node-iface.h	\
@@ -50,7 +47,6 @@ xml_libspxml_a_SOURCES =	\
 	xml/node-iterators.h	\
 	xml/sp-css-attr.h \
 	xml/text-node.h \
-	xml/transaction-logger.h \
 	xml/invalid-operation-exception.h
 
 xml/test-xml-main.cpp: xml/test-xml.cpp $(xml_test_xml_includes)

@@ -26,8 +26,6 @@ jabber_whiteboard_SOURCES = \
 	jabber_whiteboard/node-utilities.h \
 	jabber_whiteboard/node-tracker.h \
 	jabber_whiteboard/inkboard-node.cpp \
-	jabber_whiteboard/inkboard-session.cpp \
-	jabber_whiteboard/inkboard-session.h \
 	jabber_whiteboard/inkboard-document.cpp \
 	jabber_whiteboard/inkboard-document.h \
 	jabber_whiteboard/invitation-confirm-dialog.cpp \

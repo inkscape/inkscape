@@ -13,7 +13,10 @@
  */
 
 #include "xml/simple-document.h"
-#include "xml/simple-session.h"
+#include "xml/event-fns.h"
+#include "xml/element-node.h"
+#include "xml/text-node.h"
+#include "xml/comment-node.h"
 
 namespace Inkscape {
 
@@ -21,7 +24,90 @@ namespace XML {
 
 void SimpleDocument::_initBindings() {
     _bindDocument(*this);
-    _bindLogger(*(new Inkscape::XML::SimpleSession()));
+}
+
+void SimpleDocument::beginTransaction() {
+    g_assert(!_in_transaction);
+    _in_transaction = true;
+}
+
+void SimpleDocument::rollback() {
+    g_assert(_in_transaction);
+    _in_transaction = false;
+    Event *log = _log_builder.detach();
+    sp_repr_undo_log(log);
+    sp_repr_free_log(log);
+}
+
+void SimpleDocument::commit() {
+    g_assert(_in_transaction);
+    _in_transaction = false;
+    _log_builder.discard();
+}
+
+Inkscape::XML::Event *SimpleDocument::commitUndoable() {
+    g_assert(_in_transaction);
+    _in_transaction = false;
+    return _log_builder.detach();
+}
+
+Node *SimpleDocument::createElementNode(char const *name) {
+    return new ElementNode(g_quark_from_string(name));
+}
+
+Node *SimpleDocument::createTextNode(char const *content) {
+    return new TextNode(Util::share_string(content));
+}
+
+Node *SimpleDocument::createCommentNode(char const *content) {
+    return new CommentNode(Util::share_string(content));
+}
+
+void SimpleDocument::notifyChildAdded(Node &parent,
+                                      Node &child,
+                                      Node *prev)
+{
+    if (_in_transaction) {
+        _log_builder.addChild(parent, child, prev);
+    }
+}
+
+void SimpleDocument::notifyChildRemoved(Node &parent,
+                                        Node &child,
+                                        Node *prev)
+{
+    if (_in_transaction) {
+        _log_builder.removeChild(parent, child, prev);
+    }
+}
+
+void SimpleDocument::notifyChildOrderChanged(Node &parent,
+                                             Node &child,
+                                             Node *old_prev,
+                                             Node *new_prev)
+{
+    if (_in_transaction) {
+        _log_builder.setChildOrder(parent, child, old_prev, new_prev);
+    }
+}
+
+void SimpleDocument::notifyContentChanged(Node &node,
+                                          Util::ptr_shared<char> old_content,
+                                          Util::ptr_shared<char> new_content)
+{
+    if (_in_transaction) {
+        _log_builder.setContent(node, old_content, new_content);
+    }
+}
+
+void SimpleDocument::notifyAttributeChanged(Node &node,
+                                            GQuark name,
+                                            Util::ptr_shared<char> old_value,
+                                            Util::ptr_shared<char> new_value)
+{
+    if (_in_transaction) {
+        _log_builder.setAttribute(node, name, old_value, new_value);
+    }
 }
 
 }

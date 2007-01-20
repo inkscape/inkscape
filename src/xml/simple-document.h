@@ -17,20 +17,59 @@
 
 #include "xml/document.h"
 #include "xml/simple-node.h"
+#include "xml/node-observer.h"
+#include "xml/log-builder.h"
 
 namespace Inkscape {
 
 namespace XML {
 
-struct SimpleDocument : public SimpleNode, public Inkscape::XML::Document {
-    explicit SimpleDocument(int code) : SimpleNode(code) {
+class SimpleDocument : public SimpleNode,
+                       public Document,
+                       public NodeObserver
+{
+public:
+    explicit SimpleDocument(int code)
+    : SimpleNode(code), _in_transaction(false)
+    {
         _initBindings();
     }
 
-    Inkscape::XML::NodeType type() const { return Inkscape::XML::DOCUMENT_NODE; }
+    NodeType type() const { return Inkscape::XML::DOCUMENT_NODE; }
+
+    NodeObserver *logger() { return this; }
+
+    bool inTransaction() { return _in_transaction; }
+
+    void beginTransaction();
+    void rollback();
+    void commit();
+    Inkscape::XML::Event *commitUndoable();
+
+    Node *createElementNode(char const *name);
+    Node *createTextNode(char const *content);
+    Node *createCommentNode(char const *content);
+
+    void notifyChildAdded(Node &parent, Node &child, Node *prev);
+
+    void notifyChildRemoved(Node &parent, Node &child, Node *prev);
+
+    void notifyChildOrderChanged(Node &parent, Node &child,
+                                 Node *old_prev, Node *new_prev);
+
+    void notifyContentChanged(Node &node,
+                              Util::ptr_shared<char> old_content,
+                              Util::ptr_shared<char> new_content);
+
+    void notifyAttributeChanged(Node &node, GQuark name,
+                                Util::ptr_shared<char> old_value,
+                                Util::ptr_shared<char> new_value);
 
 protected:
-    SimpleDocument(SimpleDocument const &doc) : Inkscape::XML::Node(), SimpleNode(doc), Inkscape::XML::Document() {
+    SimpleDocument(SimpleDocument const &doc)
+    : Node(), SimpleNode(doc), Document(), NodeObserver(),
+      _in_transaction(false)
+    {
         _initBindings();
     }
 
@@ -38,6 +77,9 @@ protected:
 
 private:
     void _initBindings();
+
+    bool _in_transaction;
+    LogBuilder _log_builder;
 };
 
 }

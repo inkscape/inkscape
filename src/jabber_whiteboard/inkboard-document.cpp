@@ -16,19 +16,35 @@
 
 #include "util/ucompose.hpp"
 
-#include "xml/simple-session.h"
-#include "jabber_whiteboard/inkboard-session.h"
 #include "jabber_whiteboard/message-utilities.h"
 #include "jabber_whiteboard/defines.h"
 #include "jabber_whiteboard/session-manager.h"
 #include "jabber_whiteboard/node-tracker.h"
 
+#include <glibmm.h>
+#include <glib/gmessages.h>
+#include <glib/gquark.h>
+
+#include "jabber_whiteboard/inkboard-document.h"
+#include "jabber_whiteboard/defines.h"
+
+#include "xml/node.h"
+#include "xml/event.h"
+#include "xml/element-node.h"
+#include "xml/text-node.h"
+#include "xml/comment-node.h"
+
+#include "util/share.h"
+#include "util/ucompose.hpp"
+
 namespace Inkscape {
 
 namespace Whiteboard {
 
-InkboardDocument::InkboardDocument(int code, State::SessionType sessionType, Glib::ustring const& to) :
-	XML::SimpleNode(code), sessionType(sessionType), recipient(to)
+InkboardDocument::InkboardDocument(int code, State::SessionType sessionType,
+                                   Glib::ustring const& to)
+: XML::SimpleNode(code), sessionType(sessionType), recipient(to),
+  _in_transaction(false)
 {
     _initBindings();
 }
@@ -40,7 +56,6 @@ InkboardDocument::_initBindings()
     this->state = State::INITIAL;
     this->tracker = new KeyNodeTable();
     _bindDocument(*this);
-    _bindLogger(*(new InkboardSession(this)));
 }
 
 void
@@ -300,17 +315,162 @@ InkboardDocument::handleChange(Message::Wrapper &wrapper, Pedro::Element* data)
     }
 }
 
-} // namespace Whiteboard
-} // namespace Inkscape
+void
+InkboardDocument::beginTransaction()
+{
+    g_assert(!_in_transaction);
+    _in_transaction = true;
+}
+
+void
+InkboardDocument::rollback()
+{
+    g_assert(_in_transaction);
+    _in_transaction = false;
+}
+
+void 
+InkboardDocument::commit()
+{
+    g_assert(_in_transaction);
+    _in_transaction = false;
+}
+
+XML::Event*
+InkboardDocument::commitUndoable()
+{
+    g_assert(_in_transaction);
+    _in_transaction = false;
+    return NULL;
+}
+
+XML::Node*
+InkboardDocument::createElementNode(char const* name)
+{
+    return new XML::ElementNode(g_quark_from_string(name));
+}
+
+XML::Node*
+InkboardDocument::createTextNode(char const* content)
+{
+    return new XML::TextNode(Util::share_string(content));
+}
+
+XML::Node*
+InkboardDocument::createCommentNode(char const* content)
+{
+    return new XML::CommentNode(Util::share_string(content));
+}
 
 
-/*
-  Local Variables:
-  mode:c++
-  c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
-  indent-tabs-mode:nil
-  fill-column:99
-  End:
-*/
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+void InkboardDocument::notifyChildAdded(XML::Node &parent,
+                                        XML::Node &child,
+                                        XML::Node *prev)
+{
+    if (_in_transaction && state == State::IN_WHITEBOARD) {
+
+        XML::Node *node = (XML::Node *)&child;
+
+        if(tracker->get(node) == "")
+        {
+            addNodeToTracker(node);
+            Message::Message message = composeNewMessage(node);
+
+            send(getRecipient(),Message::NEW,message);
+        }
+    }
+}
+
+void InkboardDocument::notifyChildRemoved(XML::Node &parent,
+                                          XML::Node &child,
+                                          XML::Node *prev)
+{
+    if (_in_transaction && state == State::IN_WHITEBOARD) 
+    {
+        XML::Node *element = (XML::Node *)&child;
+
+        Message::Message message = String::ucompose(Vars::REMOVE_MESSAGE,
+            tracker->get(element));
+
+        send(getRecipient(),Message::REMOVE,message);
+   }
+}
+
+void InkboardDocument::notifyChildOrderChanged(XML::Node &parent,
+                                               XML::Node &child,
+                                               XML::Node *old_prev,
+                                               XML::Node *new_prev)
+{
+    if (_in_transaction && state == State::IN_WHITEBOARD) 
+    {
+        XML::Node *element = (XML::Node *)&child;
+        XML::Node *parentElement = (XML::Node *)&parent;
+
+        unsigned int index = parentElement->_childPosition(*element);
+
+        Message::Message message = String::ucompose(Vars::MOVE_MESSAGE,
+                tracker->get(element),index);
+
+        send(getRecipient(),Message::MOVE,message);
+    }
+}
+
+void InkboardDocument::notifyContentChanged(XML::Node &node,
+                                            Util::ptr_shared<char> old_content,
+                                            Util::ptr_shared<char> new_content)
+{
+    if (_in_transaction && state == State::IN_WHITEBOARD) 
+    {
+        XML::Node *element = (XML::Node *)&node;
+
+        Glib::ustring value(new_content.pointer());
+
+        Glib::ustring change = tracker->getLastHistory(element,"text");
+
+        if(change.size() > 0 && change == value)
+            return;
+
+        if(new_content.pointer())
+        {
+            unsigned int version = tracker->incrementVersion(element);
+
+            Message::Message message = String::ucompose(Vars::CONFIGURE_TEXT_MESSAGE,
+                tracker->get(element),version,new_content.pointer());
+
+            send(getRecipient(),Message::CONFIGURE,message);
+        }
+    }
+}
+
+void InkboardDocument::notifyAttributeChanged(XML::Node &node,
+                                              GQuark name,
+                                              Util::ptr_shared<char> old_value,
+                                              Util::ptr_shared<char> new_value)
+{
+    if (_in_transaction && state == State::IN_WHITEBOARD) 
+    {
+        XML::Node *element = (XML::Node *)&node;
+
+        Glib::ustring value(new_value.pointer());
+        Glib::ustring attribute(g_quark_to_string(name));
+
+        Glib::ustring change = tracker->getLastHistory(element,attribute);
+
+        if(change.size() > 0 && change == value)
+            return;
+
+        if(attribute.size() > 0 && value.size() > 0)
+        {
+            unsigned int version = tracker->incrementVersion(element);
+
+            Message::Message message = String::ucompose(Vars::CONFIGURE_MESSAGE,
+                tracker->get(element),version,attribute.c_str(),value.c_str());
+
+            send(getRecipient(),Message::CONFIGURE,message);
+        }
+    }
+}
+
+}
+
+}

@@ -23,7 +23,6 @@
 #include "jabber_whiteboard/pedrogui.h"
 #include "jabber_whiteboard/message-queue.h"
 #include "jabber_whiteboard/defines.h"
-#include "jabber_whiteboard/inkboard-session.h"
 
 #include "gc-alloc.h"
 

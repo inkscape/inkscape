@@ -26,8 +26,6 @@ using Inkscape::Util::reverse_list;
 
 int Inkscape::XML::Event::_next_serial=0;
 
-using Inkscape::XML::Session;
-
 void
 sp_repr_begin_transaction (Inkscape::XML::Document *doc)
 {
@@ -38,9 +36,7 @@ sp_repr_begin_transaction (Inkscape::XML::Document *doc)
 	EventTracker<SimpleEvent<Event::XML> > tracker("begin-transaction");
 
 	g_assert(doc != NULL);
-	Session *session=doc->session();
-	g_assert(session != NULL);
-	session->beginTransaction();
+	doc->beginTransaction();
 }
 
 void
@@ -53,9 +49,7 @@ sp_repr_rollback (Inkscape::XML::Document *doc)
 	EventTracker<SimpleEvent<Event::XML> > tracker("rollback");
 
 	g_assert(doc != NULL);
-	Session *session=doc->session();
-	g_assert(session != NULL);
-	session->rollback();
+	doc->rollback();
 }
 
 void
@@ -68,9 +62,7 @@ sp_repr_commit (Inkscape::XML::Document *doc)
 	EventTracker<SimpleEvent<Event::XML> > tracker("commit");
 
 	g_assert(doc != NULL);
-	Session *session=doc->session();
-	g_assert(session != NULL);
-	session->commit();
+	doc->commit();
 }
 
 Inkscape::XML::Event *
@@ -83,9 +75,7 @@ sp_repr_commit_undoable (Inkscape::XML::Document *doc)
 	EventTracker<SimpleEvent<Event::XML> > tracker("commit");
 
 	g_assert(doc != NULL);
-	Session *session=doc->session();
-	g_assert(session != NULL);
-	return session->commitUndoable();
+	return doc->commitUndoable();
 }
 
 namespace {
@@ -149,7 +139,7 @@ sp_repr_undo_log (Inkscape::XML::Event *log)
 	EventTracker<SimpleEvent<Event::XML> > tracker("undo-log");
 
 	if (log) {
-		g_assert(!log->repr->session()->inTransaction());
+		g_assert(!log->repr->document()->inTransaction());
 	}
 
 	Inkscape::XML::undo_log_to_observer(log, LogPerformer::instance());
@@ -206,12 +196,8 @@ sp_repr_replay_log (Inkscape::XML::Event *log)
 	EventTracker<SimpleEvent<Event::XML> > tracker("replay-log");
 
 	if (log) {
-		// Nodes created by the whiteboard deserializer tend to not 
-		// have an associated session.  This conditional hacks a way around that,
-		// but what's the best way to fix the whiteboard code so that new nodes
-		// will have an associated session? -- yipdw
-		if (log->repr->session()) {
-			g_assert(!log->repr->session()->inTransaction());
+		if (log->repr->document()) {
+			g_assert(!log->repr->document()->inTransaction());
 		}
 	}
 

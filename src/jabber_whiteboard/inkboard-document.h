@@ -17,6 +17,7 @@
 #include "document.h"
 #include "xml/document.h"
 #include "xml/simple-node.h"
+#include "xml/node-observer.h"
 #include "jabber_whiteboard/defines.h"
 #include "jabber_whiteboard/keynode.h"
 #include "jabber_whiteboard/session-manager.h"
@@ -25,7 +26,10 @@ namespace Inkscape {
 
 namespace Whiteboard {
 
-class InkboardDocument : public XML::SimpleNode, public XML::Document {
+class InkboardDocument : public XML::SimpleNode,
+                         public XML::Document,
+                         public XML::NodeObserver
+{
 public:
 	
     explicit InkboardDocument(int code, State::SessionType sessionType, Glib::ustring const& to);
@@ -61,6 +65,43 @@ public:
 
     void handleChange(Message::Wrapper &wrapper, Pedro::Element* data);
 
+    NodeObserver *logger() { return this; }
+
+    // 
+    // XML::Session methods
+    // 
+    bool inTransaction() 
+    {
+    	return _in_transaction;
+    }
+
+    void beginTransaction();
+    void rollback();
+    void commit();
+
+    XML::Event* commitUndoable();
+
+    XML::Node* createElementNode(char const* name);
+    XML::Node* createTextNode(char const* content);
+    XML::Node* createCommentNode(char const* content);
+
+    //
+    // XML::NodeObserver methods
+    //
+    void notifyChildAdded(Inkscape::XML::Node &parent, Inkscape::XML::Node &child, Inkscape::XML::Node *prev);
+
+    void notifyChildRemoved(Inkscape::XML::Node &parent, Inkscape::XML::Node &child, Inkscape::XML::Node *prev);
+
+    void notifyChildOrderChanged(Inkscape::XML::Node &parent, Inkscape::XML::Node &child,
+                                 Inkscape::XML::Node *old_prev, Inkscape::XML::Node *new_prev);
+
+    void notifyContentChanged(Inkscape::XML::Node &node,
+                              Util::ptr_shared<char> old_content,
+                              Util::ptr_shared<char> new_content);
+
+    void notifyAttributeChanged(Inkscape::XML::Node &node, GQuark name,
+                                Util::ptr_shared<char> old_value,
+                                Util::ptr_shared<char> new_value);
 
     /* Functions below are defined in inkboard-node.cpp */
     Glib::ustring addNodeToTracker(Inkscape::XML::Node* node);
@@ -75,7 +116,6 @@ public:
     void changeConfigureText(Glib::ustring target, unsigned int version,
             Glib::ustring text);
 
-
 protected:
 	/**
 	 * Copy constructor.
@@ -83,7 +123,9 @@ protected:
 	 * \param orig Instance to copy.
 	 */
 	InkboardDocument(InkboardDocument const& orig) :
-		XML::Node(), XML::SimpleNode(orig), XML::Document(), recipient(orig.recipient)
+		XML::Node(), XML::SimpleNode(orig),
+                XML::Document(), XML::NodeObserver(),
+                recipient(orig.recipient), _in_transaction(false)
 	{
 		_initBindings();
 	}
@@ -94,7 +136,6 @@ protected:
 	}
 
 private:
-
     void _initBindings();
 
     SessionManager      *sm;
@@ -103,6 +144,8 @@ private:
 
     Glib::ustring sessionId;
     Glib::ustring recipient;
+
+    bool _in_transaction;
 };
 
 }
