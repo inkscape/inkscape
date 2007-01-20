@@ -1,0 +1,34 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+my $wiki = "http://wiki.inkscape.org:8080/wiki/index.php";
+
+if (@ARGV < 1) {
+    print "Usage:  $0 <release-number>\n";
+}
+
+my $rel = shift @ARGV;
+
+$rel =~ s/\.//;
+
+my @page = `lynx -dump $wiki?title=ReleaseNotes$rel`;
+
+my $seen_overview = 0;
+foreach my $line (@page) {
+    last if $line =~ /^Previous releases/;
+    next if $line =~ /\[\[\d+\]edit\]/;
+
+    if ($line =~ /^Inkscape .*overview/) {
+        $seen_overview = 1;
+    }
+    next unless $seen_overview;
+
+    $line =~ s/\[\d+\](\w)/$1/g;
+
+    print $line;
+}
+
+print "\nFor information on prior releases, please see:\n";
+print "    $wiki/Inkscape\n";
