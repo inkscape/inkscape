@@ -277,7 +277,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
         // see if there's a template with id="base" in the preferences
         if (!r) {
             // if there's none, create an empty element
-            rnew = sp_repr_new("sodipodi:namedview");
+            rnew = rdoc->createElement("sodipodi:namedview");
             rnew->setAttribute("id", "base");
         } else {
             // otherwise, take from preferences
@@ -292,7 +292,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     /* Defs */
     if (!SP_ROOT(document->root)->defs) {
         Inkscape::XML::Node *r;
-        r = sp_repr_new("svg:defs");
+        r = rdoc->createElement("svg:defs");
         rroot->addChild(r, NULL);
         Inkscape::GC::release(r);
         g_assert(SP_ROOT(document->root)->defs);

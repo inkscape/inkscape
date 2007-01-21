@@ -431,6 +431,7 @@ void sp_selection_group()
         return;
 
     SPDocument *document = sp_desktop_document (desktop);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -458,7 +459,7 @@ void sp_selection_group()
     gint topmost = ((Inkscape::XML::Node *) g_slist_last(p)->data)->position();
     Inkscape::XML::Node *topmost_parent = ((Inkscape::XML::Node *) g_slist_last(p)->data)->parent();
 
-    Inkscape::XML::Node *group = sp_repr_new("svg:g");
+    Inkscape::XML::Node *group = xml_doc->createElement("svg:g");
 
     while (p) {
         Inkscape::XML::Node *current = (Inkscape::XML::Node *) p->data;
@@ -1982,6 +1983,8 @@ sp_selection_clone()
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+
     // check if something is selected
     if (selection->isEmpty()) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select an <b>object</b> to clone."));
@@ -2001,7 +2004,7 @@ sp_selection_clone()
         Inkscape::XML::Node *sel_repr = (Inkscape::XML::Node *) reprs->data;
         Inkscape::XML::Node *parent = sp_repr_parent(sel_repr);
 
-        Inkscape::XML::Node *clone = sp_repr_new("svg:use");
+        Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
         sp_repr_set_attr(clone, "x", "0");
         sp_repr_set_attr(clone, "y", "0");
         sp_repr_set_attr(clone, "xlink:href", g_strdup_printf("#%s", sel_repr->attribute("id")));
@@ -2135,6 +2138,7 @@ sp_selection_tile(bool apply)
         return;
 
     SPDocument *document = sp_desktop_document(desktop);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -2197,7 +2201,7 @@ sp_selection_tile(bool apply)
     prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
     if (apply) {
-        Inkscape::XML::Node *rect = sp_repr_new ("svg:rect");
+        Inkscape::XML::Node *rect = xml_doc->createElement("svg:rect");
         rect->setAttribute("style", g_strdup_printf("stroke:none;fill:url(#%s)", pat_id));
 
         NR::Point min = bounds.min() * parent_transform.inverse();
@@ -2374,6 +2378,7 @@ sp_selection_create_bitmap_copy ()
         return;
 
     SPDocument *document = sp_desktop_document(desktop);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -2505,7 +2510,7 @@ sp_selection_create_bitmap_copy ()
     GdkPixbuf *pb = gdk_pixbuf_new_from_file (filepath, NULL);
     if (pb) {
         // Create the repr for the image
-        Inkscape::XML::Node * repr = sp_repr_new ("svg:image");
+        Inkscape::XML::Node * repr = xml_doc->createElement("svg:image");
         repr->setAttribute("xlink:href", filename);
         repr->setAttribute("sodipodi:absref", filepath);
         if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid

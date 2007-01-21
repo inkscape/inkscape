@@ -881,7 +881,8 @@ sp_image_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	image = SP_IMAGE (object);
 
 	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-		repr = sp_repr_new ("svg:image");
+                Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		repr = xml_doc->createElement("svg:image");
 	}
 
 	repr->setAttribute("xlink:href", image->href);

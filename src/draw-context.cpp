@@ -518,6 +518,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
     SPDocument *doc = sp_desktop_document(desktop);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     if ( c && !sp_curve_empty(c) ) {
         /* We actually have something to write */
@@ -526,7 +527,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
         if (dc->white_item) {
             repr = SP_OBJECT_REPR(dc->white_item);
         } else {
-            repr = sp_repr_new("svg:path");
+            repr = xml_doc->createElement("svg:path");
             /* Set style */
             sp_desktop_apply_style_tool(desktop, repr, tool_name(dc), false);
         }

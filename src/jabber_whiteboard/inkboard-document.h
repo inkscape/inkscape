@@ -81,9 +81,9 @@ public:
 
     XML::Event* commitUndoable();
 
-    XML::Node* createElementNode(char const* name);
+    XML::Node* createElement(char const* name);
     XML::Node* createTextNode(char const* content);
-    XML::Node* createCommentNode(char const* content);
+    XML::Node* createComment(char const* content);
 
     //
     // XML::NodeObserver methods

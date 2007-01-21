@@ -358,11 +358,11 @@ makeInkboardDocument(int code, gchar const* rootname, State::SessionType type, G
     InkboardDocument* rdoc = new InkboardDocument(g_quark_from_static_string("xml"), type, to);
     rdoc->setAttribute("version", "1.0");
     rdoc->setAttribute("standalone", "no");
-    XML::Node *comment = sp_repr_new_comment(" Created with Inkscape (http://www.inkscape.org/) ");
+    XML::Node *comment = rdoc->createComment(" Created with Inkscape (http://www.inkscape.org/) ");
     rdoc->appendChild(comment);
     GC::release(comment);
 
-    XML::Node* root = sp_repr_new(rootname);
+    XML::Node* root = rdoc->createElement(rootname);
     rdoc->appendChild(root);
     GC::release(root);
 

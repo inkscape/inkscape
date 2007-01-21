@@ -577,7 +577,8 @@ sp_root_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     SPRoot *root = SP_ROOT(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:svg");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:svg");
     }
 
     if (flags & SP_OBJECT_WRITE_EXT) {

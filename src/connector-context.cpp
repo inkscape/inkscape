@@ -868,11 +868,12 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
     SPDocument *doc = sp_desktop_document(desktop);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     if ( c && !sp_curve_empty(c) ) {
         /* We actually have something to write */
 
-        Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+        Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         /* Set style */
         sp_desktop_apply_style_tool(desktop, repr, "tools.connector", false);
 

@@ -345,7 +345,7 @@ InkboardDocument::commitUndoable()
 }
 
 XML::Node*
-InkboardDocument::createElementNode(char const* name)
+InkboardDocument::createElement(char const* name)
 {
     return new XML::ElementNode(g_quark_from_string(name));
 }
@@ -357,7 +357,7 @@ InkboardDocument::createTextNode(char const* content)
 }
 
 XML::Node*
-InkboardDocument::createCommentNode(char const* content)
+InkboardDocument::createComment(char const* content)
 {
     return new XML::CommentNode(Util::share_string(content));
 }

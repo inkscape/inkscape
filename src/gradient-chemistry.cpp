@@ -93,12 +93,13 @@ sp_gradient_get_private_normalized(SPDocument *document, SPGradient *vector, SPG
 
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
     // create a new private gradient of the requested type
     Inkscape::XML::Node *repr;
     if (type == SP_GRADIENT_TYPE_LINEAR) {
-        repr = sp_repr_new("svg:linearGradient");
+        repr = xml_doc->createElement("svg:linearGradient");
     } else {
-        repr = sp_repr_new("svg:radialGradient");
+        repr = xml_doc->createElement("svg:radialGradient");
     }
 
     // privates are garbage-collectable
@@ -1135,8 +1136,9 @@ SPGradient *
 sp_document_default_gradient_vector(SPDocument *document, guint32 color)
 {
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
-    Inkscape::XML::Node *repr = sp_repr_new("svg:linearGradient");
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:linearGradient");
 
     repr->setAttribute("inkscape:collect", "always");
     // set here, but removed when it's edited in the gradient editor
@@ -1144,7 +1146,7 @@ sp_document_default_gradient_vector(SPDocument *document, guint32 color)
     // (1) here, search gradients by color and return what is found without duplication
     // (2) in fill & stroke, show only one copy of each gradient in list
 
-    Inkscape::XML::Node *stop = sp_repr_new("svg:stop");
+    Inkscape::XML::Node *stop = xml_doc->createElement("svg:stop");
 
     gchar b[64];
     sp_svg_write_color(b, 64, color);
@@ -1160,7 +1162,7 @@ sp_document_default_gradient_vector(SPDocument *document, guint32 color)
     repr->appendChild(stop);
     Inkscape::GC::release(stop);
 
-    stop = sp_repr_new("svg:stop");
+    stop = xml_doc->createElement("svg:stop");
 
     {
         gchar *t = g_strdup_printf("stop-color:%s;stop-opacity:0;", b);

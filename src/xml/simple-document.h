@@ -46,9 +46,9 @@ public:
     void commit();
     Inkscape::XML::Event *commitUndoable();
 
-    Node *createElementNode(char const *name);
+    Node *createElement(char const *name);
     Node *createTextNode(char const *content);
-    Node *createCommentNode(char const *content);
+    Node *createComment(char const *content);
 
     void notifyChildAdded(Node &parent, Node &child, Node *prev);
 

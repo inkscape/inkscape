@@ -291,7 +291,8 @@ static Inkscape::XML::Node *
 sp_flowtext_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     if ( flags & SP_OBJECT_WRITE_BUILD ) {
-        if ( repr == NULL ) repr = sp_repr_new("svg:flowRoot");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        if ( repr == NULL ) repr = xml_doc->createElement("svg:flowRoot");
         GSList *l = NULL;
         for (SPObject *child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
             Inkscape::XML::Node *c_repr = NULL;
@@ -519,7 +520,8 @@ SPFlowtext::getAsText()
 
     SPItem *item = SP_ITEM(this);
 
-    Inkscape::XML::Node *repr = sp_repr_new("svg:text");
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(this));
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:text");
     repr->setAttribute("xml:space", "preserve");
     repr->setAttribute("style", SP_OBJECT_REPR(this)->attribute("style"));
     NR::Point anchor_point = this->layout.characterAnchorPoint(this->layout.begin());
@@ -527,7 +529,7 @@ SPFlowtext::getAsText()
     sp_repr_set_svg_double(repr, "y", anchor_point[NR::Y]);
 
     for (Inkscape::Text::Layout::iterator it = this->layout.begin() ; it != this->layout.end() ; ) {
-        Inkscape::XML::Node *line_tspan = sp_repr_new("svg:tspan");
+        Inkscape::XML::Node *line_tspan = xml_doc->createElement("svg:tspan");
         line_tspan->setAttribute("sodipodi:role", "line");
 
         Inkscape::Text::Layout::iterator it_line_end = it;
@@ -535,7 +537,7 @@ SPFlowtext::getAsText()
 
         while (it != it_line_end) {
 
-            Inkscape::XML::Node *span_tspan = sp_repr_new("svg:tspan");
+            Inkscape::XML::Node *span_tspan = xml_doc->createElement("svg:tspan");
             NR::Point anchor_point = this->layout.characterAnchorPoint(it);
             // use kerning to simulate justification and whatnot
             Inkscape::Text::Layout::iterator it_span_end = it;
@@ -598,7 +600,7 @@ SPFlowtext::getAsText()
                     Glib::ustring new_string;
                     while (span_text_start_iter != span_text_end_iter)
                         new_string += *span_text_start_iter++;    // grr. no substr() with iterators
-                    Inkscape::XML::Node *new_text = sp_repr_new_text(new_string.c_str());
+                    Inkscape::XML::Node *new_text = xml_doc->createTextNode(new_string.c_str());
                     span_tspan->appendChild(new_text);
                     Inkscape::GC::release(new_text);
                 }
@@ -665,18 +667,19 @@ SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, NR::Point p0, N
 {
     SPDocument *doc = sp_desktop_document (desktop);
 
-    Inkscape::XML::Node *root_repr = sp_repr_new("svg:flowRoot");
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+    Inkscape::XML::Node *root_repr = xml_doc->createElement("svg:flowRoot");
     root_repr->setAttribute("xml:space", "preserve"); // we preserve spaces in the text objects we create
     SPItem *ft_item = SP_ITEM(desktop->currentLayer()->appendChildRepr(root_repr));
     SPObject *root_object = doc->getObjectByRepr(root_repr);
     g_assert(SP_IS_FLOWTEXT(root_object));
 
-    Inkscape::XML::Node *region_repr = sp_repr_new("svg:flowRegion");
+    Inkscape::XML::Node *region_repr = xml_doc->createElement("svg:flowRegion");
     root_repr->appendChild(region_repr);
     SPObject *region_object = doc->getObjectByRepr(region_repr);
     g_assert(SP_IS_FLOWREGION(region_object));
 
-    Inkscape::XML::Node *rect_repr = sp_repr_new("svg:rect"); // FIXME: use path!!! after rects are converted to use path
+    Inkscape::XML::Node *rect_repr = xml_doc->createElement("svg:rect"); // FIXME: use path!!! after rects are converted to use path
     region_repr->appendChild(rect_repr);
 
     SPObject *rect = doc->getObjectByRepr(rect_repr);
@@ -695,12 +698,12 @@ SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, NR::Point p0, N
     sp_rect_position_set(SP_RECT(rect), x0, y0, w, h);
     SP_OBJECT(rect)->updateRepr();
 
-    Inkscape::XML::Node *para_repr = sp_repr_new("svg:flowPara");
+    Inkscape::XML::Node *para_repr = xml_doc->createElement("svg:flowPara");
     root_repr->appendChild(para_repr);
     SPObject *para_object = doc->getObjectByRepr(para_repr);
     g_assert(SP_IS_FLOWPARA(para_object));
 
-    Inkscape::XML::Node *text = sp_repr_new_text("");
+    Inkscape::XML::Node *text = xml_doc->createTextNode("");
     para_repr->appendChild(text);
 
     Inkscape::GC::release(root_repr);

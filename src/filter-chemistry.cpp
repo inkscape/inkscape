@@ -33,9 +33,11 @@ new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion
 
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+
     // create a new filter
     Inkscape::XML::Node *repr;
-    repr = sp_repr_new("svg:filter");
+    repr = xml_doc->createElement("svg:filter");
     repr->setAttribute("inkscape:collect", "always");
 
     double rx = radius * (expansionY != 0? (expansion / expansionY) : 1);
@@ -56,7 +58,7 @@ new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion
 
     //create feGaussianBlur node
     Inkscape::XML::Node *b_repr;
-    b_repr = sp_repr_new("svg:feGaussianBlur");
+    b_repr = xml_doc->createElement("svg:feGaussianBlur");
     b_repr->setAttribute("inkscape:collect", "always");
     
     double stdDeviation = radius;

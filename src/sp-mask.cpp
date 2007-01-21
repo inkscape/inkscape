@@ -258,7 +258,8 @@ static Inkscape::XML::Node *
 sp_mask_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
 	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-		repr = sp_repr_new ("svg:mask");
+                Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		repr = xml_doc->createElement("svg:mask");
 	}
 
 	if (((SPObjectClass *) (parent_class))->write)
@@ -273,7 +274,8 @@ sp_mask_create (GSList *reprs, SPDocument *document, NR::Matrix const* applyTran
 {
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
-    Inkscape::XML::Node *repr = sp_repr_new ("svg:mask");
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:mask");
     repr->setAttribute("maskUnits", "userSpaceOnUse");
     
     defsrepr->appendChild(repr);

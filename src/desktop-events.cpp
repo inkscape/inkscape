@@ -98,7 +98,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                        : wx )
                      >= 0 )
                 {
-                    Inkscape::XML::Node *repr = sp_repr_new("sodipodi:guide");
+                    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+                    Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
                     repr->setAttribute("orientation", (horiz) ? "horizontal" : "vertical");
                     double const guide_pos_dt = event_dt[ horiz
                                                           ? NR::Y

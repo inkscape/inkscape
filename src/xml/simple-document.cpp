@@ -51,7 +51,7 @@ Inkscape::XML::Event *SimpleDocument::commitUndoable() {
     return _log_builder.detach();
 }
 
-Node *SimpleDocument::createElementNode(char const *name) {
+Node *SimpleDocument::createElement(char const *name) {
     return new ElementNode(g_quark_from_string(name));
 }
 
@@ -59,7 +59,7 @@ Node *SimpleDocument::createTextNode(char const *content) {
     return new TextNode(Util::share_string(content));
 }
 
-Node *SimpleDocument::createCommentNode(char const *content) {
+Node *SimpleDocument::createComment(char const *content) {
     return new CommentNode(Util::share_string(content));
 }
 

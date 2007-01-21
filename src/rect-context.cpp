@@ -439,7 +439,8 @@ static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
         }
 
         /* Create object */
-        Inkscape::XML::Node *repr = sp_repr_new("svg:rect");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(&rc));
+        Inkscape::XML::Node *repr = xml_doc->createElement("svg:rect");
 
         /* Set style */
         sp_desktop_apply_style_tool (desktop, repr, "tools.shapes.rect", false);

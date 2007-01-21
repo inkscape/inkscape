@@ -1105,7 +1105,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
             Inkscape::XML::Node *repr = sp_repr_document_root(rnewdoc);
             gchar const *style = repr->attribute("style");
 
-            Inkscape::XML::Node *newgroup = sp_repr_new("svg:g");
+            Inkscape::XML::Node *newgroup = rnewdoc->createElement("svg:g");
             newgroup->setAttribute("style", style);
 
             for (Inkscape::XML::Node *child = repr->firstChild(); child != NULL; child = child->next()) {
@@ -1157,8 +1157,9 @@ sp_ui_drag_data_received(GtkWidget *widget,
             b64out.setColumnWidth(0);
 
             SPDocument *doc = SP_ACTIVE_DOCUMENT;
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
-            Inkscape::XML::Node *newImage = sp_repr_new("svg:image");
+            Inkscape::XML::Node *newImage = xml_doc->createElement("svg:image");
 
             for ( int i = 0; i < data->length; i++ ) {
                 b64out.put( data->data[i] );

@@ -288,7 +288,8 @@ static Inkscape::XML::Node* Inkscape::colorprofile_write( SPObject *object, Inks
     ColorProfile *cprof = COLORPROFILE(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:color-profile");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:color-profile");
     }
 
     if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->href ) {

@@ -1268,7 +1268,7 @@ clonetiler_apply (GtkWidget *widget, void *)
             }
 
             // Create the clone
-            Inkscape::XML::Node *clone = sp_repr_new("svg:use");
+            Inkscape::XML::Node *clone = obj_repr->document()->createElement("svg:use");
             clone->setAttribute("x", "0");
             clone->setAttribute("y", "0");
             clone->setAttribute("inkscape:tiled-clone-of", id_href);

@@ -15,6 +15,7 @@
 
 #include "sp-flowdiv.h"
 #include "sp-string.h"
+#include "document.h"
 
 static void sp_flowdiv_class_init (SPFlowdivClass *klass);
 static void sp_flowdiv_init (SPFlowdiv *group);
@@ -197,7 +198,8 @@ sp_flowdiv_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 //	SPFlowdiv *group = SP_FLOWDIV (object);
 
 	if ( flags&SP_OBJECT_WRITE_BUILD ) {
-		if ( repr == NULL ) repr = sp_repr_new ("svg:flowDiv");
+		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		if ( repr == NULL ) repr = xml_doc->createElement("svg:flowDiv");
 		GSList *l = NULL;
 		for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 			Inkscape::XML::Node* c_repr=NULL;
@@ -206,7 +208,7 @@ sp_flowdiv_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 			} else if ( SP_IS_FLOWPARA(child) ) {
 				c_repr = child->updateRepr(NULL, flags);
 			} else if ( SP_IS_STRING(child) ) {
-				c_repr = sp_repr_new_text(SP_STRING(child)->string.c_str());
+				c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
 			}
 			if ( c_repr ) l = g_slist_prepend (l, c_repr);
 		}
@@ -368,7 +370,8 @@ static Inkscape::XML::Node *
 sp_flowtspan_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
 	if ( flags&SP_OBJECT_WRITE_BUILD ) {
-		if ( repr == NULL ) repr = sp_repr_new ("svg:flowSpan");
+		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		if ( repr == NULL ) repr = xml_doc->createElement("svg:flowSpan");
 		GSList *l = NULL;
 		for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 			Inkscape::XML::Node* c_repr=NULL;
@@ -377,7 +380,7 @@ sp_flowtspan_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 			} else if ( SP_IS_FLOWPARA (child) ) {
 					c_repr = child->updateRepr(NULL, flags);
 			} else if ( SP_IS_STRING(child) ) {
-				c_repr = sp_repr_new_text(SP_STRING(child)->string.c_str());
+				c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
 			}
 			if ( c_repr ) l = g_slist_prepend (l, c_repr);
 		}
@@ -541,7 +544,8 @@ sp_flowpara_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	//	SPFlowpara *group = SP_FLOWPARA (object);
 
 	if ( flags&SP_OBJECT_WRITE_BUILD ) {
-		if ( repr == NULL ) repr = sp_repr_new ("svg:flowPara");
+		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		if ( repr == NULL ) repr = xml_doc->createElement("svg:flowPara");
 		GSList *l = NULL;
 		for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 			Inkscape::XML::Node* c_repr=NULL;
@@ -550,7 +554,7 @@ sp_flowpara_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 			} else if ( SP_IS_FLOWPARA (child) ) {
 				c_repr = child->updateRepr(NULL, flags);
 			} else if ( SP_IS_STRING(child) ) {
-				c_repr = sp_repr_new_text(SP_STRING(child)->string.c_str());
+				c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
 			}
 			if ( c_repr ) l = g_slist_prepend (l, c_repr);
 		}
@@ -643,7 +647,8 @@ static Inkscape::XML::Node *
 sp_flowline_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
 	if ( flags&SP_OBJECT_WRITE_BUILD ) {
-		if ( repr == NULL ) repr = sp_repr_new ("svg:flowLine");
+		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		if ( repr == NULL ) repr = xml_doc->createElement("svg:flowLine");
 	} else {
 	}
 
@@ -719,7 +724,8 @@ static Inkscape::XML::Node *
 sp_flowregionbreak_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
 	if ( flags&SP_OBJECT_WRITE_BUILD ) {
-		if ( repr == NULL ) repr = sp_repr_new ("svg:flowLine");
+		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		if ( repr == NULL ) repr = xml_doc->createElement("svg:flowLine");
 	} else {
 	}
 

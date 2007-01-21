@@ -438,9 +438,10 @@ SPPattern *
 pattern_chain (SPPattern *pattern)
 {
 	SPDocument *document = SP_OBJECT_DOCUMENT (pattern);
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 	Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
-	Inkscape::XML::Node *repr = sp_repr_new ("svg:pattern");
+	Inkscape::XML::Node *repr = xml_doc->createElement("svg:pattern");
 	repr->setAttribute("inkscape:collect", "always");
 	gchar *parent_ref = g_strconcat ("#", SP_OBJECT_REPR(pattern)->attribute("id"), NULL);
 	repr->setAttribute("xlink:href",  parent_ref);
@@ -494,9 +495,10 @@ sp_pattern_transform_multiply (SPPattern *pattern, NR::Matrix postmul, bool set)
 const gchar *
 pattern_tile (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matrix transform, NR::Matrix move)
 {
+	Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 	Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
-	Inkscape::XML::Node *repr = sp_repr_new ("svg:pattern");
+	Inkscape::XML::Node *repr = xml_doc->createElement("svg:pattern");
 	repr->setAttribute("patternUnits", "userSpaceOnUse");
 	sp_repr_set_svg_double(repr, "width", bounds.extent(NR::X));
 	sp_repr_set_svg_double(repr, "height", bounds.extent(NR::Y));

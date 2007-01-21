@@ -31,6 +31,8 @@
 
 #include "sp-path.h"
 
+#include "document.h"
+
 #define noPATH_VERBOSE
 
 static void sp_path_class_init(SPPathClass *klass);
@@ -232,7 +234,8 @@ sp_path_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     SPShape *shape = (SPShape *) object;
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:path");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:path");
     }
 
     if ( shape->curve != NULL ) {

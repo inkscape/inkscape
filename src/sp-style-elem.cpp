@@ -122,7 +122,8 @@ static Inkscape::XML::Node *
 sp_style_elem_write(SPObject *const object, Inkscape::XML::Node *repr, guint const flags)
 {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:style");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:style");
     }
 
     g_return_val_if_fail(object, repr);

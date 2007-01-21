@@ -143,7 +143,7 @@ prefs_set_recent_file(gchar const *uri, gchar const *name)
                 if (child) {
                     recent->changeOrder(child, NULL);
                 } else {
-                    child = sp_repr_new("document");
+                    child = recent->document()->createElement("document");
                     child->setAttribute("uri", uri);
                     recent->addChild(child, NULL);
                 }

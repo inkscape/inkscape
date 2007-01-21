@@ -262,7 +262,8 @@ sp_offset_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     SPOffset *offset = SP_OFFSET (object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new ("svg:path");
+        Inkscape::XML::Document *xml_doc = SP_OBJECT_REPR(object)->document();
+        repr = xml_doc->createElement("svg:path");
     }
 
     if (flags & SP_OBJECT_WRITE_EXT) {

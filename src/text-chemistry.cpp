@@ -20,6 +20,7 @@
 #include "sp-rect.h"
 #include "sp-textpath.h"
 #include "inkscape.h"
+#include "desktop.h"
 #include "document.h"
 #include "message-stack.h"
 #include "selection.h"
@@ -92,6 +93,8 @@ text_put_on_path()
     SPItem *text = text_or_flowtext_in_selection(selection);
     SPItem *shape = shape_in_selection(selection);
 
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+
     if (!text || !shape || g_slist_length((GSList *) selection->itemList()) != 2) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text and a path</b> to put text on path."));
         return;
@@ -152,7 +155,7 @@ text_put_on_path()
     }
 
     // create textPath and put it into the text
-    Inkscape::XML::Node *textpath = sp_repr_new("svg:textPath");
+    Inkscape::XML::Node *textpath = xml_doc->createElement("svg:textPath");
     // reference the shape
     textpath->setAttribute("xlink:href", g_strdup_printf("#%s", SP_OBJECT_REPR(shape)->attribute("id")));
     if (text_alignment == Inkscape::Text::Layout::RIGHT)
@@ -279,6 +282,7 @@ text_flow_into_shape()
         return;
 
     SPDocument *doc = sp_desktop_document (desktop);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -296,14 +300,14 @@ text_flow_into_shape()
       SP_OBJECT_REPR(text)->setAttribute("transform", NULL);
     }
 
-    Inkscape::XML::Node *root_repr = sp_repr_new("svg:flowRoot");
+    Inkscape::XML::Node *root_repr = xml_doc->createElement("svg:flowRoot");
     root_repr->setAttribute("xml:space", "preserve"); // we preserve spaces in the text objects we create
     root_repr->setAttribute("style", SP_OBJECT_REPR(text)->attribute("style")); // fixme: transfer style attrs too
     SP_OBJECT_REPR(SP_OBJECT_PARENT(shape))->appendChild(root_repr);
     SPObject *root_object = doc->getObjectByRepr(root_repr);
     g_return_if_fail(SP_IS_FLOWTEXT(root_object));
 
-    Inkscape::XML::Node *region_repr = sp_repr_new("svg:flowRegion");
+    Inkscape::XML::Node *region_repr = xml_doc->createElement("svg:flowRegion");
     root_repr->appendChild(region_repr);
     SPObject *object = doc->getObjectByRepr(region_repr);
     g_return_if_fail(SP_IS_FLOWREGION(object));
@@ -314,7 +318,7 @@ text_flow_into_shape()
          items = items->next) {
         SPItem *item = SP_ITEM(items->data);
         if (SP_IS_SHAPE(item)){
-            Inkscape::XML::Node *clone = sp_repr_new("svg:use");
+            Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
             clone->setAttribute("x", "0");
             clone->setAttribute("y", "0");
             clone->setAttribute("xlink:href", g_strdup_printf("#%s", SP_OBJECT_REPR(item)->attribute("id")));
@@ -325,7 +329,7 @@ text_flow_into_shape()
     }
 
     if (SP_IS_TEXT(text)) { // flow from text, as string
-        Inkscape::XML::Node *para_repr = sp_repr_new("svg:flowPara");
+        Inkscape::XML::Node *para_repr = xml_doc->createElement("svg:flowPara");
         root_repr->appendChild(para_repr);
         object = doc->getObjectByRepr(para_repr);
         g_return_if_fail(SP_IS_FLOWPARA(object));
@@ -333,7 +337,7 @@ text_flow_into_shape()
         Inkscape::Text::Layout const *layout = te_get_layout(text);
         Glib::ustring text_ustring = sp_te_get_string_multiline(text, layout->begin(), layout->end());
 
-        Inkscape::XML::Node *text_repr = sp_repr_new_text(text_ustring.c_str()); // FIXME: transfer all formatting! and convert newlines into flowParas!
+        Inkscape::XML::Node *text_repr = xml_doc->createTextNode(text_ustring.c_str()); // FIXME: transfer all formatting! and convert newlines into flowParas!
         para_repr->appendChild(text_repr);
 
         Inkscape::GC::release(para_repr);
@@ -370,6 +374,7 @@ text_unflow ()
         return;
 
     SPDocument *doc = sp_desktop_document (desktop);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -393,7 +398,7 @@ text_unflow ()
         SPItem *flowtext = SP_ITEM(items->data);
 
         /* Create <text> */
-        Inkscape::XML::Node *rtext = sp_repr_new("svg:text");
+        Inkscape::XML::Node *rtext = xml_doc->createElement("svg:text");
         rtext->setAttribute("xml:space", "preserve"); // we preserve spaces in the text objects we create
 
         /* Set style */
@@ -408,12 +413,12 @@ text_unflow ()
         }
 
         /* Create <tspan> */
-        Inkscape::XML::Node *rtspan = sp_repr_new("svg:tspan");
+        Inkscape::XML::Node *rtspan = xml_doc->createElement("svg:tspan");
         rtspan->setAttribute("sodipodi:role", "line"); // otherwise, why bother creating the tspan?
         rtext->addChild(rtspan, NULL);
 
         gchar *text_string = sp_te_get_string_multiline(flowtext);
-        Inkscape::XML::Node *text_repr = sp_repr_new_text(text_string); // FIXME: transfer all formatting!!!
+        Inkscape::XML::Node *text_repr = xml_doc->createTextNode(text_string); // FIXME: transfer all formatting!!!
         free(text_string);
         rtspan->appendChild(text_repr);
 

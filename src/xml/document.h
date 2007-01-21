@@ -34,9 +34,9 @@ public:
     virtual void commit()=0;
     virtual Inkscape::XML::Event *commitUndoable()=0;
 
-    virtual Node *createElementNode(char const *name)=0;
+    virtual Node *createElement(char const *name)=0;
     virtual Node *createTextNode(char const *content)=0;
-    virtual Node *createCommentNode(char const *content)=0;
+    virtual Node *createComment(char const *content)=0;
 };
 
 }

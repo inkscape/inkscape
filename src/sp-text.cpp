@@ -303,13 +303,14 @@ sp_text_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
     SPText *text = SP_TEXT (object);
 
     if (flags & SP_OBJECT_WRITE_BUILD) {
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         if (!repr)
-            repr = sp_repr_new ("svg:text");
+            repr = xml_doc->createElement("svg:text");
         GSList *l = NULL;
         for (SPObject *child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
             Inkscape::XML::Node *crepr = NULL;
             if (SP_IS_STRING(child)) {
-                crepr = sp_repr_new_text(SP_STRING(child)->string.c_str());
+                crepr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
             } else {
                 crepr = child->updateRepr(NULL, flags);
             }

@@ -30,6 +30,7 @@
 #include "display/curve.h"
 #include <glibmm/i18n.h>
 
+#include "document.h"
 #include "sp-ellipse.h"
 
 #include "prefs-utils.h"
@@ -284,7 +285,8 @@ static Inkscape::XML::Node *sp_genericellipse_write(SPObject *object, Inkscape::
 
     if (flags & SP_OBJECT_WRITE_EXT) {
         if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-            repr = sp_repr_new("svg:path");
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+            repr = xml_doc->createElement("svg:path");
         }
 
         sp_repr_set_svg_double(repr, "sodipodi:cx", ellipse->cx.computed);
@@ -376,7 +378,8 @@ sp_ellipse_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     ellipse = SP_GENERICELLIPSE(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:ellipse");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:ellipse");
     }
 
     sp_repr_set_svg_double(repr, "cx", ellipse->cx.computed);
@@ -523,7 +526,8 @@ sp_circle_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     ellipse = SP_GENERICELLIPSE(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:circle");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:circle");
     }
 
     sp_repr_set_svg_double(repr, "cx", ellipse->cx.computed);
@@ -704,7 +708,8 @@ sp_arc_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     SPArc *arc = SP_ARC(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:path");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:path");
     }
 
     if (flags & SP_OBJECT_WRITE_EXT) {

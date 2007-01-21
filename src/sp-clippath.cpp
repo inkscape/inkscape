@@ -245,7 +245,8 @@ static Inkscape::XML::Node *
 sp_clippath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:clipPath");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:clipPath");
     }
 
     if (((SPObjectClass *) (parent_class))->write)
@@ -387,7 +388,8 @@ sp_clippath_create (GSList *reprs, SPDocument *document, NR::Matrix const* apply
 {
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
-    Inkscape::XML::Node *repr = sp_repr_new ("svg:clipPath");
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:clipPath");
     repr->setAttribute("clipPathUnits", "userSpaceOnUse");
     
     defsrepr->appendChild(repr);

@@ -1368,8 +1368,9 @@ void cmd_new_element_node(GtkObject *object, gpointer data)
     g_assert(selected_repr != NULL);
 
     if (name.text) {
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_document);
         Inkscape::XML::Node *new_repr;
-        new_repr = sp_repr_new(name.text);
+        new_repr = xml_doc->createElement(name.text);
         g_free(name.text);
         selected_repr->appendChild(new_repr);
         set_tree_select(new_repr);
@@ -1387,7 +1388,8 @@ void cmd_new_text_node(GtkObject *object, gpointer data)
 {
     g_assert(selected_repr != NULL);
 
-    Inkscape::XML::Node *text = sp_repr_new_text("");
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_document);
+    Inkscape::XML::Node *text = xml_doc->createTextNode("");
     selected_repr->appendChild(text);
 
     sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,

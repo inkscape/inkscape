@@ -147,7 +147,8 @@ Ruler::on_button_release_event(GdkEventButton *evb)
         _dragging = false;
 
         if ( (_horiz_f ? wy : wx ) >= 0 ) {
-            Inkscape::XML::Node *repr = sp_repr_new("sodipodi:guide");
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(_dt->doc());
+            Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
             repr->setAttribute("orientation", _horiz_f ? "horizontal" : "vertical");
             double const guide_pos_dt = event_dt[ _horiz_f ? NR::Y : NR::X ];
             sp_repr_set_svg_double(repr, "position", guide_pos_dt);

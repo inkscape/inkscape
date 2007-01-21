@@ -28,6 +28,7 @@
 #include "text-editing.h"
 #include "style.h"
 #include "inkscape.h"
+#include "desktop.h"
 #include "document.h"
 #include "message-stack.h"
 #include "selection.h"
@@ -118,7 +119,8 @@ sp_selected_path_combine(void)
 
     g_slist_free(items);
 
-    Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
     // restore id
     repr->setAttribute("id", id);
@@ -198,7 +200,7 @@ sp_selected_path_break_apart(void)
         for (GSList *l = list; l != NULL; l = l->next) {
             curve = (SPCurve *) l->data;
 
-            Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+            Inkscape::XML::Node *repr = parent->document()->createElement("svg:path");
             repr->setAttribute("style", style);
 
             gchar *str = sp_svg_write_path(SP_CURVE_BPATH(curve));
@@ -321,7 +323,8 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy)
     if (!curve)
         return NULL;
 
-    Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+    Inkscape::XML::Document *xml_doc = SP_OBJECT_REPR(item)->document();
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
     /* Transformation */
     repr->setAttribute("transform", SP_OBJECT_REPR(item)->attribute("transform"));
     /* Style */

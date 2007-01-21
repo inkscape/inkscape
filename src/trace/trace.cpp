@@ -517,12 +517,13 @@ void Tracer::traceThread()
 
     //#OK.  Now let's start making new nodes
 
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
     Inkscape::XML::Node *groupRepr = NULL;
 
     //# if more than 1, make a <g>roup of <path>s
     if (nrPaths > 1)
         {
-        groupRepr = sp_repr_new("svg:g");
+        groupRepr = xml_doc->createElement("svg:g");
         par->addChild(groupRepr, imgRepr);
         }
 
@@ -533,7 +534,7 @@ void Tracer::traceThread()
         TracingEngineResult result = results[i];
         totalNodeCount += result.getNodeCount();
 
-        Inkscape::XML::Node *pathRepr = sp_repr_new("svg:path");
+        Inkscape::XML::Node *pathRepr = xml_doc->createElement("svg:path");
         pathRepr->setAttribute("style", result.getStyle().c_str());
         pathRepr->setAttribute("d",     result.getPathData().c_str());
 

@@ -21,6 +21,7 @@
 #include "libnr/n-art-bpath.h"
 #include "svg/stringstream.h"
 #include "xml/repr.h"
+#include "document.h"
 
 static void sp_polygon_class_init(SPPolygonClass *pc);
 static void sp_polygon_init(SPPolygon *polygon);
@@ -120,7 +121,8 @@ static Inkscape::XML::Node *sp_polygon_write(SPObject *object, Inkscape::XML::No
     sp_shape_set_shape(shape);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:polygon");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:polygon");
     }
 
     /* We can safely write points here, because all subclasses require it too (Lauris) */

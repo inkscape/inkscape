@@ -25,6 +25,7 @@
 #include "xml/repr.h"
 #include "attributes.h"
 #include "marker.h"
+#include "document.h"
 
 struct SPMarkerView {
 	SPMarkerView *next;
@@ -489,7 +490,8 @@ sp_marker_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	marker = SP_MARKER (object);
 
 	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-		repr = sp_repr_new ("svg:marker");
+		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		repr = xml_doc->createElement("svg:marker");
 	}
 
 	if (marker->markerUnits_set) {

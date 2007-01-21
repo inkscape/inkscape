@@ -165,7 +165,7 @@ sp_input_save_to_preferences (void)
 
         repr = sp_repr_lookup_child(devices, "id", device->name);
         if (repr == NULL) {
-            repr = sp_repr_new("group");
+            repr = devices->document()->createElement("group");
             repr->setAttribute("id", device->name);
             devices->appendChild(repr);
             Inkscape::GC::release(repr);

@@ -74,7 +74,8 @@ public:
         SP_OBJECT(gr)->document = _doc;
 
         sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTTRANSFORM, "matrix(0, 1, -1, 0, 0, 0)");
-        Inkscape::XML::Node *repr = sp_repr_new("svg:radialGradient");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(_doc);
+        Inkscape::XML::Node *repr = xml_doc->createElement("svg:radialGradient");
         SP_OBJECT(gr)->updateRepr(repr, SP_OBJECT_WRITE_ALL);
         {
             gchar const *tr = repr->attribute("gradientTransform");

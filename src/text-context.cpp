@@ -473,7 +473,8 @@ sp_text_context_setup_text(SPTextContext *tc)
     SPEventContext *ec = SP_EVENT_CONTEXT(tc);
 
     /* Create <text> */
-    Inkscape::XML::Node *rtext = sp_repr_new("svg:text");
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DESKTOP(ec)->doc());
+    Inkscape::XML::Node *rtext = xml_doc->createElement("svg:text");
     rtext->setAttribute("xml:space", "preserve"); // we preserve spaces in the text objects we create
 
     /* Set style */
@@ -483,13 +484,13 @@ sp_text_context_setup_text(SPTextContext *tc)
     sp_repr_set_svg_double(rtext, "y", tc->pdoc[NR::Y]);
 
     /* Create <tspan> */
-    Inkscape::XML::Node *rtspan = sp_repr_new("svg:tspan");
+    Inkscape::XML::Node *rtspan = xml_doc->createElement("svg:tspan");
     rtspan->setAttribute("sodipodi:role", "line"); // otherwise, why bother creating the tspan?
     rtext->addChild(rtspan, NULL);
     Inkscape::GC::release(rtspan);
 
     /* Create TEXT */
-    Inkscape::XML::Node *rstring = sp_repr_new_text("");
+    Inkscape::XML::Node *rstring = xml_doc->createTextNode("");
     rtspan->addChild(rstring, NULL);
     Inkscape::GC::release(rstring);
     SPItem *text_item = SP_ITEM(ec->desktop->currentLayer()->appendChildRepr(rtext));

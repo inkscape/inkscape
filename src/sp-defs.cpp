@@ -18,6 +18,7 @@
 
 #include "sp-defs.h"
 #include "xml/repr.h"
+#include "document.h"
 
 static void sp_defs_class_init(SPDefsClass *dc);
 static void sp_defs_init(SPDefs *defs);
@@ -125,7 +126,8 @@ static Inkscape::XML::Node *sp_defs_write(SPObject *object, Inkscape::XML::Node 
     if (flags & SP_OBJECT_WRITE_BUILD) {
 
         if (!repr) {
-            repr = sp_repr_new("svg:defs");
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+            repr = xml_doc->createElement("svg:defs");
         }
 
         GSList *l = NULL;

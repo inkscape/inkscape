@@ -580,7 +580,7 @@ Inkscape::XML::Node *
 Parameter::new_child (Inkscape::XML::Node * parent)
 {
     Inkscape::XML::Node * retval;
-    retval = sp_repr_new("inkscape:extension-param");
+    retval = parent->document()->createElement("inkscape:extension-param");
     retval->setAttribute("name", _name);
 
     parent->appendChild(retval);
@@ -590,6 +590,7 @@ Parameter::new_child (Inkscape::XML::Node * parent)
 Inkscape::XML::Node *
 Parameter::document_param_node (SPDocument * doc)
 {
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
     Inkscape::XML::Node * defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(doc));
     Inkscape::XML::Node * params = NULL;
 
@@ -606,7 +607,7 @@ Parameter::document_param_node (SPDocument * doc)
     }
 
     if (params == NULL) {
-        params = sp_repr_new("inkscape:extension-param");
+        params = xml_doc->createElement("inkscape:extension-param");
         params->setAttribute("extension", extension->get_id());
         defs->appendChild(params);
     }

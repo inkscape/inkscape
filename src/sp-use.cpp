@@ -241,7 +241,8 @@ sp_use_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     SPUse *use = SP_USE(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:use");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:use");
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
@@ -652,6 +653,7 @@ sp_use_unlink(SPUse *use)
 
     Inkscape::XML::Node *parent = sp_repr_parent(repr);
     SPDocument *document = SP_OBJECT(use)->document;
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
     // Track the ultimate source of a chain of uses.
     SPItem *orig = sp_use_root(use);
@@ -661,7 +663,7 @@ sp_use_unlink(SPUse *use)
 
     Inkscape::XML::Node *copy = NULL;
     if (SP_IS_SYMBOL(orig)) { // make a group, copy children
-        copy = sp_repr_new("svg:g");
+        copy = xml_doc->createElement("svg:g");
         for (Inkscape::XML::Node *child = SP_OBJECT_REPR(orig)->firstChild() ; child != NULL; child = child->next()) {
                 Inkscape::XML::Node *newchild = child->duplicate();
                 copy->appendChild(newchild);

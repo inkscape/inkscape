@@ -396,7 +396,8 @@ sp_spiral_drag(SPSpiralContext *sc, NR::Point p, guint state)
         }
 
         /* Create object */
-        Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(sc));
+        Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         repr->setAttribute("sodipodi:type", "spiral");
 
         /* Set style */

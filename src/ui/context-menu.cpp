@@ -15,6 +15,8 @@
 
 #include "context-menu.h"
 #include "../xml/repr.h"
+#include "desktop.h"
+#include "document.h"
 
 static void sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop, GtkMenu *menu);
 
@@ -158,7 +160,8 @@ sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
     SPDesktop *desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
-    Inkscape::XML::Node *repr = sp_repr_new("svg:a");
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:a");
     SP_OBJECT_REPR(SP_OBJECT_PARENT(item))->addChild(repr, SP_OBJECT_REPR(item));
     SPObject *object = SP_OBJECT_DOCUMENT(item)->getObjectByRepr(repr);
     g_return_if_fail(SP_IS_ANCHOR(object));

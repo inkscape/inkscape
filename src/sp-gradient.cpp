@@ -204,7 +204,8 @@ sp_stop_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     SPStop *stop = SP_STOP(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:stop");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:stop");
     }
 
 
@@ -862,6 +863,7 @@ sp_gradient_repr_write_vector(SPGradient *gr)
     g_return_if_fail(gr != NULL);
     g_return_if_fail(SP_IS_GRADIENT(gr));
 
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(gr));
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(gr);
 
     /* We have to be careful, as vector may be our own, so construct repr list at first */
@@ -869,7 +871,7 @@ sp_gradient_repr_write_vector(SPGradient *gr)
 
     for (guint i = 0; i < gr->vector.stops.size(); i++) {
         Inkscape::CSSOStringStream os;
-        Inkscape::XML::Node *child = sp_repr_new("svg:stop");
+        Inkscape::XML::Node *child = xml_doc->createElement("svg:stop");
         sp_repr_set_css_double(child, "offset", gr->vector.stops[i].offset);
         /* strictly speaking, offset an SVG <number> rather than a CSS one, but exponents make no
          * sense for offset proportions. */
@@ -1391,7 +1393,8 @@ sp_lineargradient_write(SPObject *object, Inkscape::XML::Node *repr, guint flags
     SPLinearGradient *lg = SP_LINEARGRADIENT(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:linearGradient");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:linearGradient");
     }
 
     if ((flags & SP_OBJECT_WRITE_ALL) || lg->x1._set)
@@ -1692,7 +1695,8 @@ sp_radialgradient_write(SPObject *object, Inkscape::XML::Node *repr, guint flags
     SPRadialGradient *rg = SP_RADIALGRADIENT(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:radialGradient");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:radialGradient");
     }
 
     if ((flags & SP_OBJECT_WRITE_ALL) || rg->cx._set) sp_repr_set_svg_double(repr, "cx", rg->cx.computed);

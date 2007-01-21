@@ -16,9 +16,9 @@ int main(int argc, char *argv[]) {
 
 	utest_start("XML Transactions");
 
-	a = sp_repr_new("a");
-	b = sp_repr_new("b");
-	c = sp_repr_new("c");
+	a = document->createElement("a");
+	b = document->createElement("b");
+	c = document->createElement("c");
 
 	UTEST_TEST("rollback of node addition") {
 		sp_repr_begin_transaction(document);
