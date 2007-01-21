@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-20 20:06+0100\n"
-"PO-Revision-Date: 2007-01-21 00:08+0100\n"
+"POT-Creation-Date: 2007-01-21 13:27+0100\n"
+"PO-Revision-Date: 2007-01-21 15:16+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -11097,7 +11097,7 @@ msgstr "Vörös eltávolítása"
 
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
-msgstr ""
+msgstr "RGB-csatornák forgatása"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -11142,7 +11142,7 @@ msgid "Number Nodes"
 msgstr "Csomópontok megszámozása"
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
-#: ../share/extensions/measure.inx.h:10
+#: ../share/extensions/measure.inx.h:11
 msgid "Visualize Path"
 msgstr "Lánc megjelenítése"
 
@@ -11242,6 +11242,10 @@ msgid "Extract One Image"
 msgstr "Egy kép kinyerése"
 
 #: ../share/extensions/extractimage.inx.h:3
+msgid "Note: The file extension is appended automatically."
+msgstr "Megjegyzés: a fájlkiterjesztés hozzáfűzése automatikus."
+
+#: ../share/extensions/extractimage.inx.h:4
 msgid "Path to save image"
 msgstr "A kép elmentési helye"
 
@@ -11291,7 +11295,9 @@ msgstr "Függvényábrázoló"
 
 #: ../share/extensions/funcplot.inx.h:8
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
-msgstr "Izotropikus méretezés (a legkisebbet használja: szélesség/X-tartomány vagy magasság/Y-tartomány)"
+msgstr ""
+"Izotropikus méretezés (a legkisebbet használja: szélesség/X-tartomány vagy "
+"magasság/Y-tartomány)"
 
 #: ../share/extensions/funcplot.inx.h:9
 msgid "Multiply x-range by 2*pi"
@@ -11323,11 +11329,11 @@ msgid ""
 "e are also available."
 msgstr ""
 "A következő függvények használhatók (a használható függvények a Python "
-"szabványos matematikai függvényei): ceil(x); fabs(x); floor(x); fmod(x,y); frexp"
-"(x); ldexp(x,i); modf(x); exp(x); log(x [, alap]); log10(x); pow(x,y); sqrt"
-"(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan"
-"(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Használható a \"pi\" "
-"és az \"e\" konstans is."
+"szabványos matematikai függvényei): ceil(x); fabs(x); floor(x); fmod(x,y); "
+"frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, alap]); log10(x); pow(x,y); "
+"sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); "
+"tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Használható a \"pi"
+"\" és az \"e\" konstans is."
 
 #: ../share/extensions/funcplot.inx.h:16
 msgid "y-value of rectangle's bottom"
@@ -11499,6 +11505,23 @@ msgstr "Pontosság"
 msgid "Scale Factor (Drawing:Real Length) = 1:"
 msgstr "Méretezési tényező (a valós hossz: 1):"
 
+#: ../share/extensions/measure.inx.h:10
+msgid ""
+"This effect measures the length of the selected path and adds it as a text-"
+"on-path object with the selected unit. The number of significant digits can "
+"be controlled by the Precision field. The Offset field controls the distance "
+"from the text to the path. The Scale factor can be used to make measurements "
+"in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
+"real world, Scale must be set to 250."
+msgstr ""
+"Ez az effektus megméri a kijelölt lánc hosszát, majd a kapott hosszúságot "
+"szövegként ráilleszti a szóban forgó láncra. A lényeges számjegyek száma "
+"megadható a Pontosság mezőben. Az Eltolás mező határozza meg, hogy mekkora "
+"távolságban legyen a szöveg a lánctól. Egy átméretezett rajzon a "
+"\"Méretezési tényező\" használatával lehet mérést végezni. Ha például a "
+"rajzon mért 1 centiméteres távolság a valós világban 2,5 métert jelent, "
+"akkor ezen tényezőt 250-re kell állítani."
+
 #: ../share/extensions/motion.inx.h:1
 msgid "Angle"
 msgstr "Szög"
@@ -11548,12 +11571,47 @@ msgid "Pattern is vertical"
 msgstr "A minta függőleges"
 
 #: ../share/extensions/pathalongpath.inx.h:8
+msgid "Repeated"
+msgstr "Ismétlődő"
+
+#: ../share/extensions/pathalongpath.inx.h:9
+msgid "Repeated, stretched"
+msgstr "Ismétlődő, nyújtott"
+
+#: ../share/extensions/pathalongpath.inx.h:10
+msgid "Ribbon"
+msgstr "Szalag"
+
+#: ../share/extensions/pathalongpath.inx.h:11
+msgid "Single"
+msgstr "Egyszeres"
+
+#: ../share/extensions/pathalongpath.inx.h:12
+msgid "Single, stretched"
+msgstr "Egyszeres, nyújtott"
+
+#: ../share/extensions/pathalongpath.inx.h:13
+msgid "Snake"
+msgstr "Kígyó"
+
+#: ../share/extensions/pathalongpath.inx.h:14
 msgid "Space between copies:"
 msgstr "Helykihagyás a másolatok között:"
 
-#: ../share/extensions/pathalongpath.inx.h:9
+#: ../share/extensions/pathalongpath.inx.h:15
 msgid "Tangential offset"
 msgstr "Érintői eltolás"
+
+#: ../share/extensions/pathalongpath.inx.h:16
+msgid ""
+"This effect bends a pattern object along an arbitrary \"skeleton\" path. The "
+"pattern can be a path or a group of paths. First, select the pattern object; "
+"then add to selection the skeleton path; then call this effect."
+msgstr ""
+"Ez az effektus ráilleszt egy minta-objektumot egy tetszőleges láncra, "
+"egyfajta vázként tekintve a láncot. A minta lehet lánc vagy láncok csoportja. "
+"Először jelölje ki a minta-objektumot, majd vegye hozzá a kijelöléshez a "
+"vázként használandó láncot, ezt követően alkalmazza ezt az effektust."
 
 #: ../share/extensions/perspective.inx.h:2
 msgid "Perspective"
