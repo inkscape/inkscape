@@ -536,12 +536,16 @@ rdf_set_repr_text ( Inkscape::XML::Node * repr,
     Inkscape::XML::Node * temp=NULL;
     Inkscape::XML::Node * child=NULL;
     Inkscape::XML::Node * parent=repr;
+
+    Inkscape::XML::Document * xmldoc = parent->document();
+    g_return_val_if_fail (xmldoc != NULL, FALSE);
+
     switch (entity->datatype) {
         case RDF_CONTENT:
             temp = sp_repr_children(parent);
             if ( temp == NULL ) {
-                temp = sp_repr_new_text( text );
-                g_return_val_if_fail (temp != NULL, 0);
+                temp = xmldoc->createTextNode( text );
+                g_return_val_if_fail (temp != NULL, FALSE);
 
                 parent->appendChild(temp);
                 Inkscape::GC::release(temp);
@@ -550,14 +554,14 @@ rdf_set_repr_text ( Inkscape::XML::Node * repr,
             }
             else {
                 temp->setContent(text);
-				return TRUE;
+                return TRUE;
             }
 
         case RDF_AGENT:
             temp = sp_repr_lookup_name ( parent, "cc:Agent", 1 );
             if ( temp == NULL ) {
-                temp = sp_repr_new ( "cc:Agent" );
-                g_return_val_if_fail (temp != NULL, 0);
+                temp = xmldoc->createElement ( "cc:Agent" );
+                g_return_val_if_fail (temp != NULL, FALSE);
 
                 parent->appendChild(temp);
                 Inkscape::GC::release(temp);
@@ -566,8 +570,8 @@ rdf_set_repr_text ( Inkscape::XML::Node * repr,
 
             temp = sp_repr_lookup_name ( parent, "dc:title", 1 );
             if ( temp == NULL ) {
-                temp = sp_repr_new ( "dc:title" );
-                g_return_val_if_fail (temp != NULL, 0);
+                temp = xmldoc->createElement ( "dc:title" );
+                g_return_val_if_fail (temp != NULL, FALSE);
 
                 parent->appendChild(temp);
                 Inkscape::GC::release(temp);
@@ -576,8 +580,8 @@ rdf_set_repr_text ( Inkscape::XML::Node * repr,
 
             temp = sp_repr_children(parent);
             if ( temp == NULL ) {
-                temp = sp_repr_new_text( text );
-                g_return_val_if_fail (temp != NULL, 0);
+                temp = xmldoc->createTextNode( text );
+                g_return_val_if_fail (temp != NULL, FALSE);
 
                 parent->appendChild(temp);
                 Inkscape::GC::release(temp);
@@ -605,8 +609,8 @@ rdf_set_repr_text ( Inkscape::XML::Node * repr,
                     parent->removeChild(temp);
                 }
 
-                temp = sp_repr_new ( "rdf:Bag" );
-                g_return_val_if_fail (temp != NULL, 0);
+                temp = xmldoc->createElement ( "rdf:Bag" );
+                g_return_val_if_fail (temp != NULL, FALSE);
 
                 parent->appendChild(temp);
                 Inkscape::GC::release(temp);
@@ -622,13 +626,13 @@ rdf_set_repr_text ( Inkscape::XML::Node * repr,
             strlist = g_strsplit( text, ",", 0);
 
             for (i = 0; (str = strlist[i]); i++) {
-                temp = sp_repr_new ( "rdf:li" );
+                temp = xmldoc->createElement ( "rdf:li" );
                 g_return_val_if_fail (temp != NULL, 0);
 
                 parent->appendChild(temp);
                 Inkscape::GC::release(temp);
 
-                child = sp_repr_new_text( g_strstrip(str) );
+                child = xmldoc->createTextNode( g_strstrip(str) );
                 g_return_val_if_fail (child != NULL, 0);
 
                 temp->appendChild(child);
@@ -650,6 +654,9 @@ rdf_get_rdf_root_repr ( SPDocument * doc, bool build )
     g_return_val_if_fail (doc        != NULL, NULL);
     g_return_val_if_fail (doc->rroot != NULL, NULL);
 
+    Inkscape::XML::Document * xmldoc = sp_document_repr_doc(doc);
+    g_return_val_if_fail (xmldoc != NULL, NULL);
+
     Inkscape::XML::Node * rdf = sp_repr_lookup_name ( doc->rroot, XML_TAG_NAME_RDF );
 
     if (rdf == NULL) {
@@ -661,14 +668,17 @@ rdf_get_rdf_root_repr ( SPDocument * doc, bool build )
 
         Inkscape::XML::Node * parent = sp_repr_lookup_name ( svg, XML_TAG_NAME_METADATA );
         if ( parent == NULL ) {
-            parent = sp_repr_new( XML_TAG_NAME_METADATA );
+            parent = xmldoc->createElement( XML_TAG_NAME_METADATA );
             g_return_val_if_fail ( parent != NULL, NULL);
 
             svg->appendChild(parent);
             Inkscape::GC::release(parent);
         }
 
-        rdf = sp_repr_new( XML_TAG_NAME_RDF );
+        Inkscape::XML::Document * xmldoc = parent->document();
+        g_return_val_if_fail (xmldoc != NULL, FALSE);
+
+        rdf = xmldoc->createElement( XML_TAG_NAME_RDF );
         g_return_val_if_fail (rdf != NULL, NULL);
 
         parent->appendChild(rdf);
@@ -682,7 +692,7 @@ rdf_get_rdf_root_repr ( SPDocument * doc, bool build )
     Inkscape::XML::Node * want_metadata = sp_repr_parent ( rdf );
     g_return_val_if_fail (want_metadata != NULL, NULL);
     if (strcmp( want_metadata->name(), XML_TAG_NAME_METADATA )) {
-            Inkscape::XML::Node * metadata = sp_repr_new( XML_TAG_NAME_METADATA );
+            Inkscape::XML::Node * metadata = xmldoc->createElement( XML_TAG_NAME_METADATA );
             g_return_val_if_fail (metadata != NULL, NULL);
 
             /* attach the metadata node */
@@ -714,7 +724,10 @@ rdf_get_xml_repr( SPDocument * doc, gchar const * name, bool build )
         //printf("missing XML '%s'\n",name);
         if (!build) return NULL;
 
-        xml = sp_repr_new( name );
+        Inkscape::XML::Document * xmldoc = sp_document_repr_doc(doc);
+        g_return_val_if_fail (xmldoc != NULL, NULL);
+
+        xml = xmldoc->createElement( name );
         g_return_val_if_fail (xml != NULL, NULL);
 
         xml->setAttribute("rdf:about", "" );
@@ -741,7 +754,10 @@ rdf_get_work_repr( SPDocument * doc, gchar const * name, bool build )
         //printf("missing XML '%s'\n",name);
         if (!build) return NULL;
 
-        item = sp_repr_new( name );
+        Inkscape::XML::Document * xmldoc = sp_document_repr_doc(doc);
+        g_return_val_if_fail (xmldoc != NULL, NULL);
+
+        item = xmldoc->createElement( name );
         g_return_val_if_fail (item != NULL, NULL);
 
         work->appendChild(item);
@@ -927,23 +943,26 @@ rdf_get_license(SPDocument * document)
  *  
  */
 void
-rdf_set_license(SPDocument * document, struct rdf_license_t const * license)
+rdf_set_license(SPDocument * doc, struct rdf_license_t const * license)
 {
     // drop old license section
-    Inkscape::XML::Node * repr = rdf_get_xml_repr ( document, XML_TAG_NAME_LICENSE, FALSE );
+    Inkscape::XML::Node * repr = rdf_get_xml_repr ( doc, XML_TAG_NAME_LICENSE, FALSE );
     if (repr) sp_repr_unparent(repr);
 
     if (!license) return;
 
     // build new license section
-    repr = rdf_get_xml_repr ( document, XML_TAG_NAME_LICENSE, TRUE );
+    repr = rdf_get_xml_repr ( doc, XML_TAG_NAME_LICENSE, TRUE );
     g_assert ( repr );
 
     repr->setAttribute("rdf:about", license->uri );
 
+    Inkscape::XML::Document * xmldoc = sp_document_repr_doc(doc);
+    g_return_if_fail (xmldoc != NULL);
+
     for (struct rdf_double_t * detail = license->details;
          detail->name; detail++) {
-        Inkscape::XML::Node * child = sp_repr_new( detail->name );
+        Inkscape::XML::Node * child = xmldoc->createElement( detail->name );
         g_assert ( child != NULL );
 
         child->setAttribute("rdf:resource", detail->resource );
@@ -963,17 +982,19 @@ struct rdf_entity_default_t rdf_defaults[] = {
 };
 
 void
-rdf_set_defaults ( SPDocument * document )
+rdf_set_defaults ( SPDocument * doc )
 {
-    g_assert ( document != NULL );
+    g_assert ( doc != NULL );
 
     // Create metadata node if it doesn't already exist
-    if (!sp_item_group_get_child_by_name ((SPGroup *) document->root, NULL,
+    if (!sp_item_group_get_child_by_name ((SPGroup *) doc->root, NULL,
                                           XML_TAG_NAME_METADATA)) {
         // create repr
-        Inkscape::XML::Node * rnew = sp_repr_new (XML_TAG_NAME_METADATA);
+        Inkscape::XML::Document * xmldoc = sp_document_repr_doc(doc);
+        g_return_if_fail (xmldoc != NULL);
+        Inkscape::XML::Node * rnew = xmldoc->createElement (XML_TAG_NAME_METADATA);
         // insert into the document
-        document->rroot->addChild(rnew, NULL);
+        doc->rroot->addChild(rnew, NULL);
         // clean up
         Inkscape::GC::release(rnew);
     }
@@ -985,8 +1006,8 @@ rdf_set_defaults ( SPDocument * document )
         struct rdf_work_entity_t * entity = rdf_find_entity ( rdf_default->name );
         g_assert ( entity != NULL );
 
-        if ( rdf_get_work_entity ( document, entity ) == NULL ) {
-            rdf_set_work_entity ( document, entity, rdf_default->text );
+        if ( rdf_get_work_entity ( doc, entity ) == NULL ) {
+            rdf_set_work_entity ( doc, entity, rdf_default->text );
         }
     }
 }

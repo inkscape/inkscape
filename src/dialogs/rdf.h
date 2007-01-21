@@ -108,7 +108,7 @@ struct rdf_license_t * rdf_get_license(SPDocument * doc);
 void                   rdf_set_license(SPDocument * doc,
                                        struct rdf_license_t const * license);
 
-void rdf_set_defaults ( SPDocument * document );
+void rdf_set_defaults ( SPDocument * doc );
 
 #endif // _RDF_H_
 
