@@ -24,6 +24,7 @@
 #include "attributes.h"
 #include "sp-anchor.h"
 #include "ui/view/view.h"
+#include "document.h"
 
 static void sp_anchor_class_init(SPAnchorClass *ac);
 static void sp_anchor_init(SPAnchor *anchor);
@@ -147,7 +148,8 @@ static Inkscape::XML::Node *sp_anchor_write(SPObject *object, Inkscape::XML::Nod
     SPAnchor *anchor = SP_ANCHOR(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:a");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:a");
     }
 
     repr->setAttribute("xlink:href", anchor->href);

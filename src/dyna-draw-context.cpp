@@ -662,7 +662,8 @@ set_to_accumulated(SPDynaDrawContext *dc)
 
         if (!dc->repr) {
             /* Create object */
-            Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+            Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
             /* Set style */
             sp_desktop_apply_style_tool (desktop, repr, "tools.calligraphic", false);

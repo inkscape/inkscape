@@ -395,7 +395,8 @@ static void sp_arc_drag(SPArcContext *ac, NR::Point pt, guint state)
         }
 
         /* Create object */
-        Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         repr->setAttribute("sodipodi:type", "arc");
 
         /* Set style */

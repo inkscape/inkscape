@@ -21,6 +21,7 @@
 #include <glibmm/i18n.h>
 #include <libnr/nr-matrix-fns.h>
 #include <xml/repr.h>
+#include "document.h"
 
 static void sp_line_class_init (SPLineClass *klass);
 static void sp_line_init (SPLine *line);
@@ -163,7 +164,8 @@ sp_line_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	SPLine *line  = SP_LINE (object);
 
 	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-		repr = sp_repr_new ("svg:line");
+		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		repr = xml_doc->createElement("svg:line");
 	}
 
 	if (repr != SP_OBJECT_REPR (object)) {
