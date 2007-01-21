@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-21 13:27+0100\n"
-"PO-Revision-Date: 2007-01-21 15:16+0100\n"
+"PO-Revision-Date: 2007-01-21 15:46+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -11483,7 +11483,7 @@ msgstr "Betűtípus-méret (px)"
 #. <param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>
 #: ../share/extensions/measure.inx.h:4
 msgid "Length Unit: "
-msgstr "Hossz-egység: "
+msgstr "Hossz-egység "
 
 #: ../share/extensions/measure.inx.h:5
 msgid "Measure"
@@ -11503,7 +11503,7 @@ msgstr "Pontosság"
 
 #: ../share/extensions/measure.inx.h:9
 msgid "Scale Factor (Drawing:Real Length) = 1:"
-msgstr "Méretezési tényező (a valós hossz: 1):"
+msgstr "Méretezési tényező (a valós hossz: 1)"
 
 #: ../share/extensions/measure.inx.h:10
 msgid ""
