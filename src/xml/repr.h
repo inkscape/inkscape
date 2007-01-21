@@ -105,7 +105,7 @@
  *
  * \arg
  * Q: How do I create a new Inkscape::XML::Node? <br>
- * A: Use "sp_repr_new*".  Then attach it to a parent somewhere with
+ * A: Use the appropriate create* method on Inkscape::XML::Document,
  * parent->appendChild(child), and then use Inkscape::GC::release(child) to
  * let go of it (the parent will hold it in memory).
  *
@@ -131,9 +131,10 @@ char const *sp_xml_ns_uri_prefix(gchar const *uri, gchar const *suggested);
 char const *sp_xml_ns_prefix_uri(gchar const *prefix);
 
 
-Inkscape::XML::Node *sp_repr_new(gchar const *name);
-Inkscape::XML::Node *sp_repr_new_text(gchar const *content);
-Inkscape::XML::Node *sp_repr_new_comment(gchar const *comment);
+/* replaced by create* methods on Inkscape::XML::Document */
+Inkscape::XML::Node *sp_repr_new(gchar const *name) __attribute__ ((deprecated));
+Inkscape::XML::Node *sp_repr_new_text(gchar const *content) __attribute__ ((deprecated));
+Inkscape::XML::Node *sp_repr_new_comment(gchar const *comment) __attribute__ ((deprecated));
 
 /*inline Inkscape::XML::Node *sp_repr_duplicate(Inkscape::XML::Node const *repr) {
     return repr->duplicate();
