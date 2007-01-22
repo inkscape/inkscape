@@ -506,7 +506,8 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
         for (int i=0;i<nbRP;i++) {
             gchar *d = resPath[i]->svg_dump_path();
 
-            Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+            Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
             repr->setAttribute("style", style);
             if (mask)
                 repr->setAttribute("mask", mask);
@@ -551,7 +552,8 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
     } else {
         gchar *d = res->svg_dump_path();
 
-        Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         repr->setAttribute("style", style);
 
         if ( mask )
@@ -769,7 +771,8 @@ sp_selected_path_outline()
 
         if (res->descr_cmd.size() > 1) { // if there's 0 or 1 node left, drop this path altogether
 
-            Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+            Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
             // restore old style
             repr->setAttribute("style", style);
@@ -790,7 +793,8 @@ sp_selected_path_outline()
 
             if (SP_IS_SHAPE(item) && sp_shape_has_markers (SP_SHAPE(item))) {
 
-                Inkscape::XML::Node *g_repr = sp_repr_new("svg:g");
+                Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+                Inkscape::XML::Node *g_repr = xml_doc->createElement("svg:g");
 
                 // add the group to the parent
                 parent->appendChild(g_repr);
@@ -1091,7 +1095,8 @@ sp_selected_path_create_offset_object(int expand, bool updating)
 
         tstr[79] = '\0';
 
-        repr = sp_repr_new("svg:path");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        repr = xml_doc->createElement("svg:path");
         repr->setAttribute("sodipodi:type", "inkscape:offset");
         sp_repr_set_svg_double(repr, "inkscape:radius", ( expand > 0
                                                           ? o_width
@@ -1356,7 +1361,8 @@ sp_selected_path_do_offset(bool expand, double prefOffset)
 
             tstr[79] = '\0';
 
-            Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+            Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
             repr->setAttribute("style", style);
 
@@ -1483,7 +1489,8 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
         orig->Simplify(threshold * size);
     }
 
-    Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
     // restore style, mask and clip-path
     repr->setAttribute("style", style);

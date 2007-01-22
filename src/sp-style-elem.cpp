@@ -131,7 +131,7 @@ sp_style_elem_write(SPObject *const object, Inkscape::XML::Node *repr, guint con
     if (flags & SP_OBJECT_WRITE_BUILD) {
         g_warning("nyi: Forming <style> content for SP_OBJECT_WRITE_BUILD.");
         /* fixme: Consider having the CRStyleSheet be a member of SPStyleElem, and then
-           pretty-print to a string s, then repr->addChild(sp_repr_new_text(s), NULL). */
+           pretty-print to a string s, then repr->addChild(xml_doc->createTextNode(s), NULL). */
     }
     if (style_elem.is_css) {
         repr->setAttribute("type", "text/css");
