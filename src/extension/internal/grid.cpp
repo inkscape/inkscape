@@ -4,10 +4,8 @@
     A plug-in to add a grid creation effect into Inkscape.
 */
 /*
- * Authors:
- *   Ted Gould <ted@gould.cx>
- *
- * Copyright (C) 2004-2005 Authors
+ * Copyright (C) 2004-2005  Ted Gould <ted@gould.cx>
+ * Copyright (C) 2007  MenTaLguY <mental@rydia.net>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -44,6 +42,39 @@ Grid::load (Inkscape::Extension::Extension *module)
     return TRUE;
 }
 
+namespace {
+
+Glib::ustring build_op(char op, NR::Point p) {
+    gchar *floatstring;
+    // FIXME: locale formatting issues?
+    floatstring = g_strdup_printf("%c%f,%f ", op, p[NR::X], p[NR::Y]);
+    Glib::ustring result(floatstring);
+    g_free(floatstring);
+    return result;
+}
+
+Glib::ustring build_lines(int axis, NR::Rect bounding_area,
+                          float offset, float spacing)
+{
+    NR::Point point_offset(0.0, 0.0);
+    point_offset[axis] = offset;
+
+    Glib::ustring path_data("");
+    for (NR::Point start_point = bounding_area.min();
+            start_point[axis] + offset <= (bounding_area.max())[axis];
+            start_point[axis] += spacing) {
+        NR::Point end_point = start_point;
+        end_point[1-axis] = (bounding_area.max())[1-axis];
+
+        path_data += build_op('M', start_point + point_offset)
+                   + build_op('L', end_point + point_offset);
+    }
+
+    return path_data;
+}
+
+}
+
 /**
     \brief  This actually draws the grid.
     \param  module   The effect that was called (unused)
@@ -71,67 +102,20 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
         bounding_area = temprec;
     }
 
-
-    float xspacing = module->get_param_float("xspacing");
-    float yspacing = module->get_param_float("yspacing");
+    float spacings[2] = { module->get_param_float("xspacing"),
+                          module->get_param_float("yspacing") };
     float line_width = module->get_param_float("lineWidth");
-    float xoffset = module->get_param_float("xoffset");
-    float yoffset = module->get_param_float("yoffset");
+    float offsets[2] = { module->get_param_float("xoffset"),
+                         module->get_param_float("yoffset") };
 
-    // std::cout << "Spacing: " << spacing;
-    // std::cout << " Line Width: " << line_width;
-    // std::cout << " Offset: " << offset << std::endl;
-
-    Glib::ustring path_data;
-
-    for (NR::Point start_point = bounding_area.min();
-            start_point[NR::X] + xoffset <= (bounding_area.max())[NR::X];
-            start_point[NR::X] += xspacing) {
-        NR::Point end_point = start_point;
-        end_point[NR::Y] = (bounding_area.max())[NR::Y];
-        gchar floatstring[64];
-
-        path_data += "M ";
-        sprintf(floatstring, "%f", start_point[NR::X] + xoffset);
-        path_data += floatstring;
-        path_data += " ";
-        sprintf(floatstring, "%f", start_point[NR::Y]);
-        path_data += floatstring;
-        path_data += " L ";
-        sprintf(floatstring, "%f", end_point[NR::X] + xoffset);
-        path_data += floatstring;
-        path_data += " ";
-        sprintf(floatstring, "%f", end_point[NR::Y]);
-        path_data += floatstring;
-        path_data += " ";
+    Glib::ustring path_data("");
+    for ( int axis = 0 ; axis < 2 ; ++axis ) {
+        path_data += build_lines(axis, bounding_area,
+                                 offsets[axis], spacings[axis]);
     }
-
-    for (NR::Point start_point = bounding_area.min();
-            start_point[NR::Y] + yoffset <= (bounding_area.max())[NR::Y];
-            start_point[NR::Y] += yspacing) {
-        NR::Point end_point = start_point;
-        end_point[NR::X] = (bounding_area.max())[NR::X];
-        gchar floatstring[64];
-
-        path_data += "M ";
-        sprintf(floatstring, "%f", start_point[NR::X]);
-        path_data += floatstring;
-        path_data += " ";
-        sprintf(floatstring, "%f", start_point[NR::Y] + yoffset);
-        path_data += floatstring;
-        path_data += " L ";
-        sprintf(floatstring, "%f", end_point[NR::X]);
-        path_data += floatstring;
-        path_data += " ";
-        sprintf(floatstring, "%f", end_point[NR::Y] + yoffset);
-        path_data += floatstring;
-        path_data += " ";
-    }
-
-    // std::cout << "Path Data: " << path_data << std::endl;
 
     Inkscape::XML::Document * xml_doc = sp_document_repr_doc(document->doc());
-    Inkscape::XML::Node * current_layer = ((SPDesktop *)document)->currentLayer()->repr;
+    Inkscape::XML::Node * current_layer = static_cast<SPDesktop *>(document)->currentLayer()->repr;
     Inkscape::XML::Node * path = xml_doc->createElement("svg:path");
 
     path->setAttribute("d", path_data.c_str());
@@ -143,9 +127,6 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
     style += floatstring;
     style += "pt";
     path->setAttribute("style", style.c_str());
-
-    // Glib::ustring transform("scale(1.25 1.25)");
-    // path->setAttribute("transform", transform.c_str());
 
     current_layer->appendChild(path);
 
