@@ -22,6 +22,7 @@
 #include <libnr/nr-matrix-div.h>
 #include <libnr/nr-matrix-fns.h>
 
+#include "document.h"
 #include "attributes.h"
 #include "style.h"
 #include "sp-rect.h"
@@ -210,7 +211,8 @@ sp_rect_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     SPRect *rect = SP_RECT(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:rect");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("svg:rect");
     }
 
     sp_repr_set_svg_double(repr, "width", rect->width.computed);

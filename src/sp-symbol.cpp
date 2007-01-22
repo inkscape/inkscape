@@ -20,6 +20,7 @@
 #include "attributes.h"
 #include "print.h"
 #include "sp-symbol.h"
+#include "document.h"
 
 static void sp_symbol_class_init (SPSymbolClass *klass);
 static void sp_symbol_init (SPSymbol *symbol);
@@ -383,7 +384,8 @@ sp_symbol_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	symbol = SP_SYMBOL (object);
 
 	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-		repr = sp_repr_new ("svg:symbol");
+		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		repr = xml_doc->createElement("svg:symbol");
 	}
 
 	repr->setAttribute("viewBox", object->repr->attribute("viewBox"));

@@ -18,6 +18,7 @@
 #include "display/curve.h"
 #include <glibmm/i18n.h>
 #include "xml/repr.h"
+#include "document.h"
 
 static void sp_polyline_class_init (SPPolyLineClass *klass);
 static void sp_polyline_init (SPPolyLine *polyline);
@@ -157,7 +158,8 @@ sp_polyline_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	polyline = SP_POLYLINE (object);
 
 	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-		repr = sp_repr_new ("svg:polyline");
+		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		repr = xml_doc->createElement("svg:polyline");
 	}
 
 	if (repr != SP_OBJECT_REPR (object)) {

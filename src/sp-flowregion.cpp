@@ -14,6 +14,7 @@
 #include "sp-text.h"
 #include "sp-use.h"
 #include "style.h"
+#include "document.h"
 
 #include "sp-flowregion.h"
 
@@ -233,7 +234,10 @@ static Inkscape::XML::Node *
 sp_flowregion_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     if (flags & SP_OBJECT_WRITE_BUILD) {
-		if ( repr == NULL ) repr = sp_repr_new ("svg:flowRegion");
+	if ( repr == NULL ) {
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+            repr = xml_doc->createElement("svg:flowRegion");
+	}
 
         GSList *l = NULL;
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
@@ -447,7 +451,10 @@ static Inkscape::XML::Node *
 sp_flowregionexclude_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     if (flags & SP_OBJECT_WRITE_BUILD) {
-		if ( repr == NULL ) repr = sp_repr_new ("svg:flowRegionExclude");
+        if ( repr == NULL ) {
+	    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+            repr = xml_doc->createElement("svg:flowRegionExclude");
+	}
 
         GSList *l = NULL;
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {

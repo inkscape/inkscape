@@ -14,6 +14,7 @@
 
 #include "sp-object-group.h"
 #include "xml/repr.h"
+#include "document.h"
 
 static void sp_objectgroup_class_init (SPObjectGroupClass *klass);
 static void sp_objectgroup_init (SPObjectGroup *objectgroup);
@@ -107,7 +108,10 @@ sp_objectgroup_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 
 	if (flags & SP_OBJECT_WRITE_BUILD) {
 		GSList *l;
-		if (!repr) repr = sp_repr_new ("svg:g");
+		if (!repr) {
+			Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+		       	repr = xml_doc->createElement("svg:g");
+		}
 		l = NULL;
 		for ( child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 			crepr = child->updateRepr(NULL, flags);
