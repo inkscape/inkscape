@@ -464,6 +464,9 @@ verify_grad(SPGradient *gradient)
 		}
 	}
 
+        Inkscape::XML::Document *xml_doc;
+        xml_doc = SP_OBJECT_REPR(gradient)->document();
+
 	if (i < 1) {
 		gchar c[64];
 		sp_svg_write_color (c, 64, 0x00000000);
@@ -473,12 +476,12 @@ verify_grad(SPGradient *gradient)
 
 		Inkscape::XML::Node *child;
 
-		child = sp_repr_new ("svg:stop");
+		child = xml_doc->createElement("svg:stop");
 		sp_repr_set_css_double(child, "offset", 0.0);
 		child->setAttribute("style", os.str().c_str());
 		SP_OBJECT_REPR (gradient)->addChild(child, NULL);
 
-		child = sp_repr_new ("svg:stop");
+		child = xml_doc->createElement("svg:stop");
 		sp_repr_set_css_double(child, "offset", 1.0);
 		child->setAttribute("style", os.str().c_str());
 		SP_OBJECT_REPR (gradient)->addChild(child, NULL);
