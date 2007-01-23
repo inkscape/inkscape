@@ -21,6 +21,7 @@ tutorial_DATA = \
     tutorial-advanced.ru.svg \
     tutorial-advanced.sl.svg \
     tutorial-basic.svg \
+    tutorial-basic.bg.svg \
     tutorial-basic.ca.svg \
     tutorial-basic.cs.svg \
     tutorial-basic.de.svg \
