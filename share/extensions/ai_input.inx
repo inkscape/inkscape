@@ -1,13 +1,14 @@
 <inkscape-extension>
-    <_name>AI Input</_name>
+    <_name>AI 8.0 Input</_name>
     <id>org.inkscape.input.ai</id>
     <dependency type="executable" location="path">perl</dependency>
     <dependency type="executable" location="extensions">ill2svg.pl</dependency>
     <input>
         <extension>.ai</extension>
         <mimetype>image/x-adobe-illustrator</mimetype>
-        <_filetypename>Adobe Illustrator (*.ai)</_filetypename>
-        <_filetypetooltip>Open files saved with Adobe Illustrator</_filetypetooltip>
+        <_filetypename>Adobe Illustrator 8.0 (*.ai)</_filetypename>
+        <_filetypetooltip>Open files saved with Adobe Illustrator 8.0 or
+        older</_filetypetooltip>
         <output_extension>org.inkscape.output.ai</output_extension>
     </input>
     <script>
