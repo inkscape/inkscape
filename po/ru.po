@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-05 02:14+0300\n"
-"PO-Revision-Date: 2007-01-14 16:58+0300\n"
+"PO-Revision-Date: 2007-01-16 20:46+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2162,9 +2162,8 @@ msgstr ""
 "s</b>!"
 
 #: ../src/dialogs/xml-tree.cpp:1480
-#, fuzzy
 msgid "Change attribute"
-msgstr "Установить атрибут"
+msgstr "Смена атрибута"
 
 #: ../src/document.cpp:366
 #, c-format
@@ -2192,9 +2191,8 @@ msgid "Closing path."
 msgstr "Закрываем контур"
 
 #: ../src/draw-context.cpp:549
-#, fuzzy
 msgid "Draw path"
-msgstr "Разбитие контур"
+msgstr "Создание контура"
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
@@ -2229,14 +2227,12 @@ msgstr ""
 "берет инверсный цвет. <b>Ctrl+C</b> копирует в буфер цвет под курсором."
 
 #: ../src/dropper-context.cpp:389
-#, fuzzy
 msgid "Set picked color"
-msgstr "последним выбранным цветом"
+msgstr "Использование снятого пипеткой цвета"
 
 #: ../src/dyna-draw-context.cpp:696
-#, fuzzy
 msgid "Create calligraphic stroke"
-msgstr "Рисовать каллиграфическим пером"
+msgstr "Создание каллиграфического контура"
 
 #: ../src/event-log.cpp:34
 msgid "[Unchanged]"
@@ -2258,7 +2254,7 @@ msgstr "Зависит от:"
 
 #: ../src/extension/dependency.cpp:250
 msgid "  type: "
-msgstr " tип: "
+msgstr " тип: "
 
 #: ../src/extension/dependency.cpp:251
 msgid "  location: "
@@ -2396,29 +2392,24 @@ msgstr ""
 "загружены."
 
 #: ../src/extension/internal/bluredge.cpp:131
-#, fuzzy
 msgid "Inset/Outset Halo"
-msgstr "Втяжка или растяжка на:"
+msgstr "Втяжка/растяжка ореола"
 
 #: ../src/extension/internal/bluredge.cpp:133
-#, fuzzy
 msgid "Width"
-msgstr "Ширина:"
+msgstr "Ширина"
 
 #: ../src/extension/internal/bluredge.cpp:133
-#, fuzzy
 msgid "Width in px of the halo"
-msgstr "Ширина размываемой области в пикселах"
+msgstr "Ширина ореола в пикселах"
 
 #: ../src/extension/internal/bluredge.cpp:134
-#, fuzzy
 msgid "Number of steps"
-msgstr "Сколько шагов"
+msgstr "Количество шагов"
 
 #: ../src/extension/internal/bluredge.cpp:134
-#, fuzzy
 msgid "Number of inset/outset copies of the object to make"
-msgstr "Количество копий объекта для имитации размывания"
+msgstr "Количество копий втяжки/растяжки объекта"
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
@@ -2432,18 +2423,17 @@ msgstr "Экспорт в Encapsulated Postscript"
 
 #: ../src/extension/internal/eps-out.cpp:91
 msgid "Make bounding box around full page"
-msgstr "Создать рамку вокруг целой страницы"
+msgstr "Создать рамку вокруг страницы"
 
 #: ../src/extension/internal/eps-out.cpp:92
 #: ../src/extension/internal/ps-out.cpp:84
-#, fuzzy
 msgid "Convert texts to paths"
 msgstr "Преобразовать текст в контур"
 
 #: ../src/extension/internal/eps-out.cpp:93
 #: ../src/extension/internal/ps-out.cpp:85
 msgid "Embed fonts (Type 1 only)"
-msgstr ""
+msgstr "Встроить шрифты (только Type 1)"
 
 #: ../src/extension/internal/eps-out.cpp:97
 #: ../share/extensions/eps_input.inx.h:3
@@ -3644,7 +3634,7 @@ msgstr "<b>Alt</b>: зафиксировать длину уса; <b>Ctrl+Alt</b
 
 #: ../src/node-context.cpp:662
 msgid "Drag curve"
-msgstr "Перетащить кривую"
+msgstr "Перетаскивание кривой"
 
 #: ../src/nodepath.cpp:549 ../src/seltrans.cpp:457
 msgid "Stamp"
@@ -3660,7 +3650,7 @@ msgstr "Переместить узлы по горизонтали"
 
 #: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252 ../src/nodepath.cpp:3031
 msgid "Move nodes"
-msgstr "Переместить узлы"
+msgstr "Перемещение узлов"
 
 #: ../src/nodepath.cpp:1260
 msgid ""
@@ -3680,11 +3670,11 @@ msgstr "Расставить узлы"
 
 #: ../src/nodepath.cpp:1532
 msgid "Add nodes"
-msgstr "Добавить узлы"
+msgstr "Добавка узлов"
 
 #: ../src/nodepath.cpp:1534 ../src/nodepath.cpp:1598
 msgid "Add node"
-msgstr "Добавить узел"
+msgstr "Добавка узла"
 
 #: ../src/nodepath.cpp:1678
 msgid "Break path"
@@ -4809,9 +4799,8 @@ msgstr[1] "<b>Связанный завёрстанный текст</b> (%d с�
 msgstr[2] "<b>Связанный завёрстанный текст</b> (%d символов)"
 
 #: ../src/sp-flowtext.cpp:617
-#, fuzzy
 msgid "Convert flowed text to text"
-msgstr "Преобразовать текст в контур"
+msgstr "Завёрстанный текст в обычный"
 
 #: ../src/sp-guide.cpp:287
 msgid "vertical guideline"
@@ -5019,20 +5008,17 @@ msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation
 msgstr "Один из объектов <b>не является контуром</b>, логическая операция невозможна."
 
 #: ../src/splivarot.cpp:585
-#, fuzzy
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
-msgstr "Выделите <b>объекты</b> для преобразования в контур."
+msgstr "Выделите <b>объекты со штрихом</b> для преобразования в контур."
 
 #: ../src/splivarot.cpp:867
-#, fuzzy
 msgid "Convert stroke to path"
-msgstr "Преобразовать текст в контур"
+msgstr "Оконтуривание штриха"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:870
-#, fuzzy
 msgid "<b>No stroked paths</b> in the selection."
-msgstr "В выделении <b>нет контуров со штрихом</b> для оконтуривания."
+msgstr "В выделении <b>нет контуров со штрихом</b>."
 
 #: ../src/splivarot.cpp:954
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
@@ -5175,9 +5161,8 @@ msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Выделите <b>текст в рамке</b>, чтобы вынуть его из рамки."
 
 #: ../src/text-chemistry.cpp:398
-#, fuzzy
 msgid "Unflow flowed text"
-msgstr "Текст в рамке"
+msgstr "Извлечение текста из блока"
 
 #: ../src/text-context.cpp:448
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -5200,14 +5185,13 @@ msgid "Insert Unicode character"
 msgstr "Вставить юникодный символ"
 
 #: ../src/text-context.cpp:577
-#, fuzzy, c-format
+#, c-format
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
-msgstr "Переместить <b>центр</b> в %s, %s"
+msgstr "Юникод (нажмите <b>Ввод</b> для завершения): %s: %s"
 
 #: ../src/text-context.cpp:579 ../src/text-context.cpp:844
-#, fuzzy
 msgid "Unicode (<b>Enter</b> to finish): "
-msgstr "Переместить <b>центр</b> в %s, %s"
+msgstr "Юникод (нажмите <b>Ввод</b> для завершения): "
 
 #: ../src/text-context.cpp:656
 #, c-format
@@ -5239,9 +5223,8 @@ msgid "No-break space"
 msgstr "Неразрывный пробел"
 
 #: ../src/text-context.cpp:831
-#, fuzzy
 msgid "Insert no-break space"
-msgstr "Неразрывный пробел"
+msgstr "Вставка неразрывного пробела"
 
 #: ../src/text-context.cpp:868
 msgid "Make bold"
@@ -5276,12 +5259,10 @@ msgid "Kern down"
 msgstr "Кернинг вниз"
 
 #: ../src/text-context.cpp:1072
-#, fuzzy
 msgid "Rotate counterclockwise"
-msgstr "Поворот по часовой стрелке"
+msgstr "Поворот против часовой стрелки"
 
 #: ../src/text-context.cpp:1093
-#, fuzzy
 msgid "Rotate clockwise"
 msgstr "Поворот по часовой стрелке"
 
@@ -5576,9 +5557,8 @@ msgstr "Убрать перекрытия"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:520
 #: ../src/widgets/toolbox.cpp:4241
-#, fuzzy
 msgid "Arrange connector network"
-msgstr "Гармонично расставить связанные коннектором объекты"
+msgstr "Гармоничная расстановка связанных объектов"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:550
 #, fuzzy
@@ -5586,19 +5566,16 @@ msgid "Unclump"
 msgstr " _Сгладить "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:614
-#, fuzzy
 msgid "Randomize positions"
-msgstr "Случайное положение"
+msgstr "Случайное расположение объектов"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:711
-#, fuzzy
 msgid "Distribute text baselines"
-msgstr "Расставить узлы"
+msgstr "Расстановка линий шрифта текста"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:731
-#, fuzzy
 msgid "Align text baselines"
-msgstr "Выровнять по левым краям"
+msgstr "Выравнивание линий шрифта текста"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:762
 msgid "Connector network layout"
@@ -5862,28 +5839,28 @@ msgid "Show or hide grid"
 msgstr "Показать или скрыть сетку"
 
 #: ../src/ui/dialog/document-properties.cpp:242
-#, fuzzy
 msgid "Grid type:"
-msgstr " tип: "
+msgstr "Тип сетки:"
 
 #: ../src/ui/dialog/document-properties.cpp:242
-#, fuzzy
 msgid "Normal (2D)"
-msgstr "Как обычно"
+msgstr "Обычная (2D)"
 
 #: ../src/ui/dialog/document-properties.cpp:242
 msgid "Axonometric (3D)"
-msgstr ""
+msgstr "Аксонометрическая (3D)"
 
 #: ../src/ui/dialog/document-properties.cpp:243
 msgid "The normal grid with vertical and horizontal lines."
-msgstr ""
+msgstr "Обычная сетка с вертикальными и горизонтальными линиями"
 
 #: ../src/ui/dialog/document-properties.cpp:244
 msgid ""
 "A grid with vertical lines and two diagonal line groups, each representing "
 "the projection of a primary axis."
 msgstr ""
+"Сетка с вертикальными линиями и двумя группами диагональных линий, "
+"каждая из которых представляет собой проекцию основной оси координат."
 
 #: ../src/ui/dialog/document-properties.cpp:247
 msgid "Grid _units:"
@@ -5910,32 +5887,28 @@ msgid "Spacing _X:"
 msgstr "_Интервал по X:"
 
 #: ../src/ui/dialog/document-properties.cpp:252
-#, fuzzy
 msgid "Distance between vertical grid lines"
-msgstr "Расстояние между вертикальными направляющими"
+msgstr "Расстояние между вертикальными линиями сетки"
 
 #: ../src/ui/dialog/document-properties.cpp:254
 msgid "Spacing _Y:"
 msgstr "И_нтервал по Y:"
 
 #: ../src/ui/dialog/document-properties.cpp:254
-#, fuzzy
 msgid "Distance between horizontal grid lines"
-msgstr "Расстояние между горизонтальными направляющими"
+msgstr "Расстояние между горизонтальными линиями сетки"
 
 #: ../src/ui/dialog/document-properties.cpp:256
-#, fuzzy
 msgid "Angle X:"
-msgstr "Угол:"
+msgstr "Угол X:"
 
 #: ../src/ui/dialog/document-properties.cpp:256
 msgid "Angle of x-axis of axonometric grid"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:258
-#, fuzzy
 msgid "Angle Z:"
-msgstr "Угол:"
+msgstr "Угол Z:"
 
 #: ../src/ui/dialog/document-properties.cpp:258
 msgid "Angle of z-axis of axonometric grid"
@@ -7227,9 +7200,8 @@ msgstr "Открыть файл сессии"
 #. # begin single scan
 #. brightness
 #: ../src/ui/dialog/tracedialog.cpp:395
-#, fuzzy
 msgid "Brightness cutoff"
-msgstr "Яркость"
+msgstr "Сокращение яркости"
 
 #: ../src/ui/dialog/tracedialog.cpp:399
 msgid "Trace by a given brightness level"
@@ -7263,7 +7235,6 @@ msgstr "Порог яркости для смежных пикселов (опр
 #. of colors in an image by selecting an optimized set of representative
 #. colors and then re-applying this reduced set to the original image.
 #: ../src/ui/dialog/tracedialog.cpp:452
-#, fuzzy
 msgid "Color quantization"
 msgstr "Квантование цветов"
 
@@ -7281,23 +7252,18 @@ msgstr "Цветов:"
 
 #. swap black and white
 #: ../src/ui/dialog/tracedialog.cpp:472
-#, fuzzy
 msgid "Invert image"
-msgstr "Убрать заливку"
+msgstr "Инвертировать изображение"
 
 #: ../src/ui/dialog/tracedialog.cpp:477
-#, fuzzy
 msgid "Invert black and white regions"
-msgstr ""
-"Поменять местами черные и белые области\n"
-"для одиночного трассирования"
+msgstr "Поменять местами чёрные и белые области"
 
 #. # end single scan
 #. # begin multiple scan
 #: ../src/ui/dialog/tracedialog.cpp:486
-#, fuzzy
 msgid "Brightness steps"
-msgstr "Яркость"
+msgstr "Шаги яркости"
 
 #: ../src/ui/dialog/tracedialog.cpp:490
 msgid "Trace the given number of brightness levels"
@@ -7342,9 +7308,8 @@ msgstr "Применить Гауссово размывание растра п
 
 #. TRANSLATORS: "Stack" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:528
-#, fuzzy
 msgid "Stack scans"
-msgstr "Стопкой"
+msgstr "Сложить стопкой"
 
 #: ../src/ui/dialog/tracedialog.cpp:531
 msgid ""
@@ -7374,11 +7339,11 @@ msgstr "Режим"
 #. # potrace parameters
 #: ../src/ui/dialog/tracedialog.cpp:558
 msgid "Suppress speckles"
-msgstr ""
+msgstr "Убрать пятна"
 
 #: ../src/ui/dialog/tracedialog.cpp:560
 msgid "Ignore small spots (speckles) in the bitmap"
-msgstr ""
+msgstr "Проигнорировать мелкие точки (пятна) на изображении"
 
 #: ../src/ui/dialog/tracedialog.cpp:568
 msgid "Speckles of up to this many pixels will be suppressed"
@@ -7398,7 +7363,7 @@ msgstr "Сгладить острые углы при векторизации"
 
 #: ../src/ui/dialog/tracedialog.cpp:584
 msgid "Increase this to smooth corners more"
-msgstr ""
+msgstr "Чем больше значение, тем глаже углы"
 
 #: ../src/ui/dialog/tracedialog.cpp:588
 msgid "Optimize paths"
@@ -7406,13 +7371,13 @@ msgstr "Оптимизировать контуры"
 
 #: ../src/ui/dialog/tracedialog.cpp:591
 msgid "Try to optimize paths by joining adjacent Bezier curve segments"
-msgstr ""
+msgstr "Попытаться оптимизировать контуры соединением соседних сегментов кривых Безье"
 
 #: ../src/ui/dialog/tracedialog.cpp:599
 msgid ""
 "Increase this to reduce the number of nodes in the trace by more aggressive "
 "optimization"
-msgstr ""
+msgstr "Чем больше значение, тем меньше количество узлов"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:606 ../src/ui/dialog/tracedialog.cpp:612
@@ -7440,16 +7405,14 @@ msgstr "Обведите область изображения, которая �
 
 #. ## preview
 #: ../src/ui/dialog/tracedialog.cpp:644
-#, fuzzy
 msgid "Update"
-msgstr "Дата"
+msgstr "Обновить"
 
 #: ../src/ui/dialog/tracedialog.cpp:650
-#, fuzzy
 msgid ""
 "Preview the intermediate bitmap with the current settings, without actual "
 "tracing"
-msgstr "Просмотреть результат перед собственно векторизацией"
+msgstr "Просмотреть будущий результат перед собственно векторизацией"
 
 #: ../src/ui/dialog/tracedialog.cpp:654
 msgid "Preview"
@@ -8158,55 +8121,45 @@ msgid "Apply last selected color to stroke"
 msgstr "последним выбранным цветом"
 
 #: ../src/ui/widget/selected-style.cpp:555
-#, fuzzy
 msgid "Invert fill"
-msgstr "Убрать заливку"
+msgstr "Инвертация заливки"
 
 #: ../src/ui/widget/selected-style.cpp:575
-#, fuzzy
 msgid "Invert stroke"
-msgstr "Убрать штрих"
+msgstr "Инвертация штриха"
 
 #: ../src/ui/widget/selected-style.cpp:587
-#, fuzzy
 msgid "White fill"
-msgstr "Белый"
+msgstr "Заливка белым цветом"
 
 #: ../src/ui/widget/selected-style.cpp:599
-#, fuzzy
 msgid "White stroke"
-msgstr "Изменить штрих..."
+msgstr "Заливка штриха белым цветом"
 
 #: ../src/ui/widget/selected-style.cpp:611
-#, fuzzy
 msgid "Black fill"
-msgstr "Чёрный"
+msgstr "Заливка чёрным цветом"
 
 #: ../src/ui/widget/selected-style.cpp:623
-#, fuzzy
 msgid "Black stroke"
-msgstr "Плоский цвет штриха"
+msgstr "Заливка штриха чёрным цветом"
 
 #: ../src/ui/widget/selected-style.cpp:666
-#, fuzzy
 msgid "Paste fill"
-msgstr "Текстурная заливка"
+msgstr "Вставка заливки"
 
 #: ../src/ui/widget/selected-style.cpp:684
-#, fuzzy
 msgid "Paste stroke"
-msgstr "Текстурный штрих"
+msgstr "Вставка штриха"
 
 #: ../src/ui/widget/selected-style.cpp:841
-#, fuzzy
 msgid "Change stroke width"
-msgstr "Менять ширину штриха"
+msgstr "Смена толщины штриха"
 
 #: ../src/ui/widget/selected-style.cpp:979
 #: ../src/ui/widget/selected-style.cpp:980
-#, fuzzy
 msgid "Master opacity, %"
-msgstr "Общая непрозрачность"
+msgstr "Общая непрозрачность, %"
 
 #: ../src/ui/widget/selected-style.cpp:1011
 #, c-format
@@ -8222,9 +8175,8 @@ msgid "0 (transparent)"
 msgstr "0 (прозрачно)"
 
 #: ../src/ui/widget/selected-style.cpp:1067
-#, fuzzy
 msgid "100% (opaque)"
-msgstr "1.0 (непрозрачно)"
+msgstr "100% (непрозрачно)"
 
 #: ../src/ui/widget/page-sizer.cpp:195
 msgid "Name"
@@ -8280,9 +8232,8 @@ msgid "Height of paper"
 msgstr "Высота бумаги"
 
 #: ../src/ui/widget/page-sizer.cpp:355
-#, fuzzy
 msgid "Set page size"
-msgstr "Размер _холста:"
+msgstr "Смена формата страницы"
 
 #: ../src/ui/widget/style-swatch.cpp:325
 #, c-format
@@ -8305,22 +8256,20 @@ msgid "Opacity: %.3g"
 msgstr "Непрозрачность: %.3g"
 
 #: ../src/verbs.cpp:1117
-#, fuzzy
 msgid "Move to next layer"
-msgstr "Перемещен на следующий слой."
+msgstr "Перемещение на следующий слой."
 
 #: ../src/verbs.cpp:1118
 msgid "Moved to next layer."
-msgstr "Перемещен на следующий слой."
+msgstr "Перемещён на следующий слой."
 
 #: ../src/verbs.cpp:1120
 msgid "Cannot move past last layer."
 msgstr "Невозможно переместить за последний слой."
 
 #: ../src/verbs.cpp:1129
-#, fuzzy
 msgid "Move to previous layer"
-msgstr "Перемещен на предыдущий слой."
+msgstr "Перемещение на предыдущий слой"
 
 #: ../src/verbs.cpp:1130
 msgid "Moved to previous layer."
