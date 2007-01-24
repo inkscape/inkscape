@@ -397,6 +397,10 @@ text_unflow ()
 
         SPItem *flowtext = SP_ITEM(items->data);
 
+        if (sp_te_get_string_multiline(flowtext) == NULL) { // flowtext is empty
+            continue;
+        }
+
         /* Create <text> */
         Inkscape::XML::Node *rtext = xml_doc->createElement("svg:text");
         rtext->setAttribute("xml:space", "preserve"); // we preserve spaces in the text objects we create
