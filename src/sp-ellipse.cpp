@@ -680,8 +680,8 @@ sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr)
            .arcTo(rx, ry, 0, true, true, p2)
            .closePath();
     } else {
-        bool fa = (fabs(dt) > M_PI) ? 1 : 0;
-        bool fs = (dt > 0) ? 1 : 0;
+        bool fa = (fabs(dt) > M_PI);
+        bool fs = (dt > 0);
         str.arcTo(rx, ry, 0, fa, fs, p2);
         if (ge->closed) {
             NR::Point center = NR::Point(ge->cx.computed, ge->cy.computed);
