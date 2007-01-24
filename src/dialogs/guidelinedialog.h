@@ -30,7 +30,7 @@ public:
     GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *desktop);
     virtual ~GuidelinePropertiesDialog();
 
-    Glib::ustring     getName() const { return "LayerPropertiesDialog"; }
+    Glib::ustring     getName() const { return "GuidelinePropertiesDialog"; }
 
     static void showDialog(SPGuide *guide, SPDesktop *desktop);
 
