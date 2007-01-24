@@ -27,7 +27,7 @@
 #include <desktop-handles.h>
 #include "message-stack.h"
 #include <sp-path.h>
-#include <svg/stringstream.h>
+#include <svg/path-string.h>
 #include "curve.h"
 #include "bitmap.h"
 
@@ -125,7 +125,7 @@ hasPoint(std::vector<Point> &points, double x, double y)
  */
 static long
 writePaths(PotraceTracingEngine *engine, potrace_path_t *plist,
-            Inkscape::SVGOStringStream& data, std::vector<Point> &points)
+           Inkscape::SVG::PathString& data, std::vector<Point> &points)
 {
     long nodeCount = 0L;
 
@@ -155,7 +155,7 @@ writePaths(PotraceTracingEngine *engine, potrace_path_t *plist,
             p.x = x2; p.y = y2;
             points.push_back(p);
             }
-        data << "M " << x2 << " " << y2 << " ";
+        data.moveTo(x2, y2);
         nodeCount++;
 
         for (int i=0 ; i<curve->n ; i++)
@@ -172,21 +172,17 @@ writePaths(PotraceTracingEngine *engine, potrace_path_t *plist,
             switch (curve->tag[i])
                 {
                 case POTRACE_CORNER:
-                    data << "L " << x1 << " " << y1 << " " ;
-                    data << "L " << x2 << " " << y2 << " " ;
+                    data.lineTo(x1, y1).lineTo(x2, y2);
                 break;
                 case POTRACE_CURVETO:
-                    data << "C " << x0 << " " << y0 << " "
-                                 << x1 << " " << y1 << " "
-                                 << x2 << " " << y2 << " ";
-
+                    data.curveTo(x0, y0, x1, y1, x2, y2);
                 break;
                 default:
                 break;
                 }
             nodeCount++;
             }
-        data << "z";
+        data.closePath();
 
         for (path_t *child=node->childlist; child ; child=child->sibling)
             {
@@ -395,9 +391,7 @@ PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
         return "";
         }
 
-    Inkscape::SVGOStringStream data;
-
-    data << "";
+    Inkscape::SVG::PathString data;
 
     //## copy the path information into our d="" attribute string
     std::vector<Point> points;
@@ -409,12 +403,10 @@ PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
     if (!keepGoing)
         return "";
 
-    std::string d = data.str();
     if ( nodeCount)
         *nodeCount = thisNodeCount;
 
-    return d;
-
+    return data.ustring();
 }
 
 

@@ -33,7 +33,7 @@
 
 #include "libnr/n-art-bpath.h"
 #include "gnome-canvas-bpath-util.h"
-#include "stringstream.h"
+#include "svg/path-string.h"
 
 
 /* This module parses an SVG path element into an RsvgBpathDef.
@@ -656,42 +656,38 @@ gchar *sp_svg_write_path(NArtBpath const *bpath)
     
     g_return_val_if_fail (bpath != NULL, NULL);
 
+    Inkscape::SVG::PathString str;
+
     for (int i = 0; bpath[i].code != NR_END; i++){
-        if (i) {
-            os << " ";
-        }
         switch (bpath [i].code){
         case NR_LINETO:
-            os << "L " << bpath[i].x3 << "," << bpath[i].y3;
+            str.lineTo(bpath[i].x3, bpath[i].y3);
             break;
 
         case NR_CURVETO:
-            os << "C " << bpath[i].x1 << "," << bpath[i].y1
-               << " "  << bpath[i].x2 << "," << bpath[i].y2
-               << " "  << bpath[i].x3 << "," << bpath[i].y3;
+            str.curveTo(bpath[i].x1, bpath[i].y1,
+                        bpath[i].x2, bpath[i].y2,
+                        bpath[i].x3, bpath[i].y3);
             break;
 
         case NR_MOVETO_OPEN:
         case NR_MOVETO:
             if (closed) {
-                os << "z ";
+                str.closePath();
             }
             closed = ( bpath[i].code == NR_MOVETO );
-            os << "M " << bpath[i].x3 << "," << bpath[i].y3;
+            str.moveTo(bpath[i].x3, bpath[i].y3);
             break;
+
         default:
             g_assert_not_reached ();
         }
     }
     if (closed) {
-        os << " z ";
+        str.closePath();
     }
 
-//    std::string s = os.str();
-//    gchar *ret = g_strdup(s.c_str());
-//    delete (s);
-//    return ret;
-    return g_strdup (os.str().c_str());
+    return g_strdup(str.c_str());
 }
 
 /*

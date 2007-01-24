@@ -20,6 +20,8 @@
 #include "sp-object.h"
 #include "util/glib-list-iterators.h"
 
+#include "svg/path-string.h"
+
 #include "extension/effect.h"
 #include "extension/system.h"
 
@@ -44,30 +46,21 @@ Grid::load (Inkscape::Extension::Extension *module)
 
 namespace {
 
-Glib::ustring build_op(char op, NR::Point p) {
-    gchar *floatstring;
-    // FIXME: locale formatting issues?
-    floatstring = g_strdup_printf("%c%f,%f ", op, p[NR::X], p[NR::Y]);
-    Glib::ustring result(floatstring);
-    g_free(floatstring);
-    return result;
-}
-
 Glib::ustring build_lines(int axis, NR::Rect bounding_area,
                           float offset, float spacing)
 {
     NR::Point point_offset(0.0, 0.0);
     point_offset[axis] = offset;
 
-    Glib::ustring path_data("");
+    SVG::PathString path_data;
     for (NR::Point start_point = bounding_area.min();
             start_point[axis] + offset <= (bounding_area.max())[axis];
             start_point[axis] += spacing) {
         NR::Point end_point = start_point;
         end_point[1-axis] = (bounding_area.max())[1-axis];
 
-        path_data += build_op('M', start_point + point_offset)
-                   + build_op('L', end_point + point_offset);
+        path_data.moveTo(start_point + point_offset)
+                 .lineTo(end_point + point_offset);
     }
 
     return path_data;

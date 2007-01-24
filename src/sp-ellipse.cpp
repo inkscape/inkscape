@@ -23,7 +23,7 @@
 #include "libnr/nr-path.h"
 #include "libnr/nr-matrix-fns.h"
 #include "svg/svg.h"
-#include "svg/stringstream.h"
+#include "svg/path-string.h"
 #include "xml/repr.h"
 #include "attributes.h"
 #include "style.h"
@@ -662,42 +662,34 @@ sp_arc_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 static gboolean
 sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr)
 {
-    gint fa, fs;
-    gdouble  dt;
-    Inkscape::SVGOStringStream os;
-
     SPGenericEllipse *ge = SP_GENERICELLIPSE(arc);
+
+    Inkscape::SVG::PathString str;
 
     NR::Point p1 = sp_arc_get_xy(arc, ge->start);
     NR::Point p2 = sp_arc_get_xy(arc, ge->end);
+    double rx = ge->rx.computed;
+    double ry = ge->ry.computed;
 
-    dt = fmod(ge->end - ge->start, SP_2PI);
+    str.moveTo(p1);
+
+    double dt = fmod(ge->end - ge->start, SP_2PI);
     if (fabs(dt) < 1e-6) {
         NR::Point ph = sp_arc_get_xy(arc, (ge->start + ge->end) / 2.0);
-        os << "M " << p1[NR::X] << " " <<  p1[NR::Y]
-           << " A " << ge->rx.computed << " " << ge->ry.computed
-           << " 0 1 1 " << " " << ph[NR::X] << "," << ph[NR::Y]
-           << " A " << ge->rx.computed << " " << ge->ry.computed
-           << " 0 1 1 " << " " << p2[NR::X] << " " << p2[NR::Y] << " z";
+        str.arcTo(rx, ry, 0, true, true, ph)
+           .arcTo(rx, ry, 0, true, true, p2)
+           .closePath();
     } else {
-        fa = (fabs(dt) > M_PI) ? 1 : 0;
-        fs = (dt > 0) ? 1 : 0;
-#ifdef ARC_VERBOSE
-        g_print("start:%g end:%g fa=%d fs=%d\n", ge->start, ge->end, fa, fs);
-#endif
+        bool fa = (fabs(dt) > M_PI) ? 1 : 0;
+        bool fs = (dt > 0) ? 1 : 0;
+        str.arcTo(rx, ry, 0, fa, fs, p2);
         if (ge->closed) {
-            os << "M " << p1[NR::X] << "," << p1[NR::Y]
-               << " A " << ge->rx.computed << "," << ge->ry.computed
-               << " 0 " << fa << " " << fs << " " << p2[NR::X] << "," << p2[NR::Y]
-               << " L " << ge->cx.computed << "," << ge->cy.computed << " z";
-        } else {
-            os << "M " << p1[NR::X] << "," << p1[NR::Y]
-               << " A " << ge->rx.computed << "," << ge->ry.computed
-               << " 0 " << fa << " " << fs << " " << p2[NR::X] << "," << p2[NR::Y];
-
+            NR::Point center = NR::Point(ge->cx.computed, ge->cy.computed);
+            str.lineTo(center).closePath();
         }
     }
-    repr->setAttribute("d", os.str().c_str());
+
+    repr->setAttribute("d", str.c_str());
     return true;
 }
 
