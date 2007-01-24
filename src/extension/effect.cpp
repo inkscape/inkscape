@@ -72,7 +72,7 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
 
     if (_effects_list != NULL) {
         Inkscape::XML::Document *xml_doc;
-        xml_doc = _effects_list->parent()->document();
+        xml_doc = _effects_list->document();
         _menu_node = xml_doc->createElement("verb");
         _menu_node->setAttribute("verb-id", this->get_id(), false);
 
@@ -105,8 +105,10 @@ Effect::merge_menu (Inkscape::XML::Node * base,
         gchar const * menuname = patern->attribute("name");
         if (menuname == NULL) menuname = patern->attribute("_name");
         if (menuname == NULL) return;
-
-        tomerge = sp_repr_new("submenu");
+        
+        Inkscape::XML::Document *xml_doc;
+        xml_doc = base->document();
+        tomerge = xml_doc->createElement("submenu");
         tomerge->setAttribute("name", menuname, false);
 
         mergename = _(menuname);
