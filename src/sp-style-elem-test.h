@@ -77,7 +77,7 @@ public:
         SP_OBJECT(style_elem)->document = _doc;
 
         sp_object_set(SP_OBJECT(style_elem), SP_ATTR_TYPE, "text/css");
-        Inkscape::XML::Node *repr = sp_repr_new("svg:style");
+        Inkscape::XML::Node *repr = sp_document_repr_doc(_doc)->createElement("svg:style");
         SP_OBJECT(style_elem)->updateRepr(repr, SP_OBJECT_WRITE_ALL);
         {
             gchar const *typ = repr->attribute("type");
@@ -94,7 +94,7 @@ public:
     void testBuild()
     {
         SPStyleElem &style_elem = *SP_STYLE_ELEM(g_object_new(SP_TYPE_STYLE_ELEM, NULL));
-        Inkscape::XML::Node *const repr = sp_repr_new("svg:style");
+        Inkscape::XML::Node *const repr = sp_document_repr_doc(_doc)->createElement("svg:style");
         repr->setAttribute("type", "text/css");
         sp_object_invoke_build(&style_elem, _doc, repr, false);
         TS_ASSERT( style_elem.is_css );
@@ -116,9 +116,9 @@ public:
     void testReadContent()
     {
         SPStyleElem &style_elem = *SP_STYLE_ELEM(g_object_new(SP_TYPE_STYLE_ELEM, NULL));
-        Inkscape::XML::Node *const repr = sp_repr_new("svg:style");
+        Inkscape::XML::Node *const repr = sp_document_repr_doc(_doc)->createElement("svg:style");
         repr->setAttribute("type", "text/css");
-        Inkscape::XML::Node *const content_repr = sp_repr_new_text(".myclass { }");
+        Inkscape::XML::Node *const content_repr = sp_document_repr_doc(_doc)->createTextNode(".myclass { }");
         repr->addChild(content_repr, NULL);
         sp_object_invoke_build(&style_elem, _doc, repr, false);
         TS_ASSERT( style_elem.is_css );
