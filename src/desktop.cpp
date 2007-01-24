@@ -9,8 +9,9 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   John Bintz <jcoswell@coswellproductions.org>
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
- * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) 2006-2007 Johan Engelen
  * Copyright (C) 2006 John Bintz
  * Copyright (C) 2004 MenTaLguY
  * Copyright (C) 1999-2002 Lauris Kaplinski

@@ -6,7 +6,9 @@
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
+ * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 1999-2002 Lauris Kaplinski
  *
  * Released under GNU GPL

@@ -5,7 +5,9 @@
  *
  * Authors:
  *   bulia byak <buliabyak@users.sf.net>
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
+ * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 2005 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information

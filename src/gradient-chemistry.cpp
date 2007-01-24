@@ -6,7 +6,9 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
+ * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 2001-2005 authors
  * Copyright (C) 2001 Ximian, Inc.
  *
