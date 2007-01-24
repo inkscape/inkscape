@@ -3322,7 +3322,6 @@ static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data)
     }
 
     sp_nodepath_update_repr(n->subpath->nodepath, _("Move node handle"));
-    sp_canvas_end_forced_full_redraws(n->subpath->nodepath->desktop->canvas);
 }
 
 /**
@@ -4038,6 +4037,7 @@ static void sp_nodepath_node_destroy(Inkscape::NodePath::Node *node)
         g_signal_handlers_disconnect_by_func(G_OBJECT(node->p.knot), (gpointer) G_CALLBACK(node_handle_moved), node);
         g_signal_handlers_disconnect_by_func(G_OBJECT(node->p.knot), (gpointer) G_CALLBACK(node_handle_event), node);
         g_object_unref(G_OBJECT(node->p.knot));
+        node->p.knot = NULL;
     }
 
     if (node->n.knot) {
@@ -4048,6 +4048,7 @@ static void sp_nodepath_node_destroy(Inkscape::NodePath::Node *node)
         g_signal_handlers_disconnect_by_func(G_OBJECT(node->n.knot), (gpointer) G_CALLBACK(node_handle_moved), node);
         g_signal_handlers_disconnect_by_func(G_OBJECT(node->n.knot), (gpointer) G_CALLBACK(node_handle_event), node);
         g_object_unref(G_OBJECT(node->n.knot));
+        node->n.knot = NULL;
     }
 
     if (node->p.line)
