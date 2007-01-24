@@ -37,6 +37,7 @@
 #include "style.h"
 #include "libnr/nr-matrix-fns.h"
 #include "xml/repr.h"
+#include "document.h"
 
 
 /*#####################################################
@@ -226,9 +227,10 @@ static Inkscape::XML::Node *
 sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     SPTSpan *tspan = SP_TSPAN(object);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
 	
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:tspan");
+        repr = xml_doc->createElement("svg:tspan");
     }
 	
     tspan->attributes.writeTo(repr);
@@ -242,7 +244,7 @@ sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
             } else if ( SP_IS_TEXTPATH(child) ) {
                 //c_repr = child->updateRepr(NULL, flags); // shouldn't happen
             } else if ( SP_IS_STRING(child) ) {
-                c_repr = sp_repr_new_text(SP_STRING(child)->string.c_str());
+                c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
             }
             if ( c_repr ) l = g_slist_prepend(l, c_repr);
         }
@@ -390,7 +392,8 @@ sp_textpath_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
     }
 	
     if ( no_content ) {
-        Inkscape::XML::Node* rch = sp_repr_new_text("");
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+        Inkscape::XML::Node* rch = xml_doc->createTextNode("");
         repr->addChild(rch, NULL);
     }
 	
@@ -487,9 +490,10 @@ static Inkscape::XML::Node *
 sp_textpath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     SPTextPath *textpath = SP_TEXTPATH(object);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
 	
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = sp_repr_new("svg:textPath");
+        repr = xml_doc->createElement("svg:textPath");
     }
 	
     textpath->attributes.writeTo(repr);
@@ -516,7 +520,7 @@ sp_textpath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
             } else if ( SP_IS_TEXTPATH(child) ) {
                 //c_repr = child->updateRepr(NULL, flags); // shouldn't happen
             } else if ( SP_IS_STRING(child) ) {
-                c_repr = sp_repr_new_text(SP_STRING(child)->string.c_str());
+                c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
             }
             if ( c_repr ) l = g_slist_prepend(l, c_repr);
         }
