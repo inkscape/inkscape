@@ -71,7 +71,9 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
         find_effects_list(inkscape_get_menus(INKSCAPE));
 
     if (_effects_list != NULL) {
-        _menu_node = sp_repr_new("verb");
+        Inkscape::XML::Document *xml_doc;
+        xml_doc = _effects_list->parent()->document();
+        _menu_node = xml_doc->createElement("verb");
         _menu_node->setAttribute("verb-id", this->get_id(), false);
 
         if (!hidden)
