@@ -253,6 +253,7 @@ sp_object_properties_dialog (void)
 
         // these callbacks are only for the master opacity update; the tabs above take care of themselves
         g_signal_connect ( G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (sp_fillstroke_selection_changed), dlg );
+        g_signal_connect ( G_OBJECT (INKSCAPE), "change_subselection", G_CALLBACK (sp_fillstroke_selection_changed), dlg );
         g_signal_connect ( G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (sp_fillstroke_selection_modified), dlg );
         g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_fillstroke_selection_changed), dlg );
 
