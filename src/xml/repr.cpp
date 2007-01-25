@@ -30,32 +30,6 @@
 
 using Inkscape::Util::share_string;
 
-/// Returns new node.
-Inkscape::XML::Node *
-sp_repr_new(gchar const *name)
-{
-    g_return_val_if_fail(name != NULL, NULL);
-    g_return_val_if_fail(*name != '\0', NULL);
-
-    return new Inkscape::XML::ElementNode(g_quark_from_string(name));
-}
-
-/// Returns new textnode with content. See Inkscape::XML::TextNode.
-Inkscape::XML::Node *
-sp_repr_new_text(gchar const *content)
-{
-    g_return_val_if_fail(content != NULL, NULL);
-    return new Inkscape::XML::TextNode(share_string(content));
-}
-
-/// Returns new commentnode with comment. See Inkscape::XML::CommentNode.
-Inkscape::XML::Node *
-sp_repr_new_comment(gchar const *comment)
-{
-    g_return_val_if_fail(comment != NULL, NULL);
-    return new Inkscape::XML::CommentNode(share_string(comment));
-}
-
 /// Returns new document having as first child a node named rootname.
 Inkscape::XML::Document *
 sp_repr_document_new(char const *rootname)

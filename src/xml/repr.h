@@ -131,11 +131,6 @@ char const *sp_xml_ns_uri_prefix(gchar const *uri, gchar const *suggested);
 char const *sp_xml_ns_prefix_uri(gchar const *prefix);
 
 
-/* replaced by create* methods on Inkscape::XML::Document */
-Inkscape::XML::Node *sp_repr_new(gchar const *name) __attribute__ ((deprecated));
-Inkscape::XML::Node *sp_repr_new_text(gchar const *content) __attribute__ ((deprecated));
-Inkscape::XML::Node *sp_repr_new_comment(gchar const *comment) __attribute__ ((deprecated));
-
 /*inline Inkscape::XML::Node *sp_repr_duplicate(Inkscape::XML::Node const *repr) {
     return repr->duplicate();
 }*/
