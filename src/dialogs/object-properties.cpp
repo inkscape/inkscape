@@ -366,6 +366,8 @@ sp_fillstroke_opacity_changed (GtkAdjustment *a, SPWidget *base)
     gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (TRUE));
 
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
+    // UPDATE: crash fixed in GTK+ 2.10.7 (bug 374378), remove this as soon as it's reasonably common
+    // (though this only fixes the crash, not the multiple change events)
     sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(SP_ACTIVE_DESKTOP), 0);
 
     SPCSSAttr *css = sp_repr_css_attr_new ();
