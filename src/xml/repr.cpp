@@ -64,12 +64,12 @@ sp_repr_document_new(char const *rootname)
     if (!strcmp(rootname, "svg:svg")) {
         doc->setAttribute("version", "1.0");
         doc->setAttribute("standalone", "no");
-        Inkscape::XML::Node *comment = sp_repr_new_comment(" Created with Inkscape (http://www.inkscape.org/) ");
+        Inkscape::XML::Node *comment = doc->createComment(" Created with Inkscape (http://www.inkscape.org/) ");
         doc->appendChild(comment);
         Inkscape::GC::release(comment);
     }
 
-    Inkscape::XML::Node *root = sp_repr_new(rootname);
+    Inkscape::XML::Node *root = doc->createElement(rootname);
     doc->appendChild(root);
     Inkscape::GC::release(root);
 
