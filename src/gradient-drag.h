@@ -48,7 +48,7 @@ struct GrDraggable {
     }
 };
 
-struct GrDrag;
+class GrDrag;
 
 /**
 This class holds together a visible on-canvas knot and a list of draggables that need to
@@ -99,21 +99,17 @@ struct GrDragger {
 This is the root class of the gradient dragging machinery. It holds lists of GrDraggers
 and of lines (simple canvas items). It also remembers one of the draggers as selected.
 */
-struct GrDrag {
+class GrDrag {
+public: // FIXME: make more of this private!
+
 	GrDrag(SPDesktop *desktop);
 	~GrDrag();
 
-	void addLine (NR::Point p1, NR::Point p2, guint32 rgba);
-
-	void addDragger (GrDraggable *draggable);
-
-	void addDraggersRadial (SPRadialGradient *rg, SPItem *item, bool fill_or_stroke);
-	void addDraggersLinear (SPLinearGradient *lg, SPItem *item, bool fill_or_stroke);
-
+	// especially the selection must be private, fix gradient-context to remove direct access to it
 	GList *selected; // list of GrDragger*
     void setSelected (GrDragger *dragger, bool add_to_selection = false, bool override = true);
     void setDeselected (GrDragger *dragger);
-    void deselect_all();
+    void deselectAll();
     
     bool keep_selection;    
     
@@ -124,12 +120,6 @@ struct GrDrag {
 	bool local_change;
 
 	SPDesktop *desktop;
-	Inkscape::Selection *selection;
-	sigc::connection sel_changed_connection;
-	sigc::connection sel_modified_connection;
-
-	sigc::connection style_set_connection;
-	sigc::connection style_query_connection;
 
 	// lists of edges of selection bboxes, to snap draggers to
 	std::vector<double> hor_levels;
@@ -149,6 +139,23 @@ struct GrDrag {
 	void select_prev ();
 
 	void selected_reverse_vector ();
+
+private: 
+	void deselect_all();
+
+	void addLine (NR::Point p1, NR::Point p2, guint32 rgba);
+
+	void addDragger (GrDraggable *draggable);
+
+	void addDraggersRadial (SPRadialGradient *rg, SPItem *item, bool fill_or_stroke);
+	void addDraggersLinear (SPLinearGradient *lg, SPItem *item, bool fill_or_stroke);
+
+	Inkscape::Selection *selection;
+	sigc::connection sel_changed_connection;
+	sigc::connection sel_modified_connection;
+
+	sigc::connection style_set_connection;
+	sigc::connection style_query_connection;
 };
 
 #endif
