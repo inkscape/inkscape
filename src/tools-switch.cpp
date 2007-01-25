@@ -2,9 +2,10 @@
  * Utility functions for switching tools (= contexts)
  *
  * Authors:
- *   bulia byak <bulia@dr.com>
+ *   bulia byak <buliabyak@users.sf.net>
+ *   Josh Andler <scislac@users.sf.net>
  *
- * Copyright (C) 2003 authors
+ * Copyright (C) 2003-2007 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -42,6 +43,7 @@
 #include "zoom-context.h"
 #include "dropper-context.h"
 #include "connector-context.h"
+#include "sp-offset.h"
 #include "message-context.h"
 
 #include "tools-switch.h"
@@ -233,6 +235,8 @@ void tools_switch_by_item(SPDesktop *dt, SPItem *item)
         }
     } else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))  {
         tools_switch(dt, TOOLS_TEXT);
+    } else if (SP_IS_OFFSET(item))  {
+        tools_switch(dt, TOOLS_NODES);
     }
 }
 
