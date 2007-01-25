@@ -2288,8 +2288,8 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         /* Use Pressure button */
         {
             InkToggleAction* act = ink_toggle_action_new( "PressureAction",
-                                                          "Pressure",
-                                                          "Use the pressure of the input device to alter the width of the pen",
+                                                          _("Pressure"),
+                                                          _("Use the pressure of the input device to alter the width of the pen"),
                                                           "use_pressure",
                                                           Inkscape::ICON_SIZE_DECORATION );
             gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
@@ -2300,8 +2300,8 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         /* Use Tilt button */
         {
             InkToggleAction* act = ink_toggle_action_new( "TiltAction",
-                                                          "Tilt",
-                                                          "Use the tilt of the input device to alter the angle of the pen's nib",
+                                                          _("Tilt"),
+                                                          _("Use the tilt of the input device to alter the angle of the pen's nib"),
                                                           "use_tilt",
                                                           Inkscape::ICON_SIZE_DECORATION );
             gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
