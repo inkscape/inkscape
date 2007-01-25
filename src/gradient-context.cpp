@@ -103,7 +103,7 @@ static void sp_gradient_context_init(SPGradientContext *gr_context)
     event_context->hot_y = 4;
     event_context->xp = 0;
     event_context->yp = 0;
-    event_context->tolerance = 4;
+    event_context->tolerance = 6;
     event_context->within_tolerance = false;
     event_context->item_to_select = NULL;
 }
@@ -182,11 +182,11 @@ sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, NR::Point
     SPCtrlLine* line = SP_CTRLLINE(item);
    
     NR::Point nearest = snap_vector_midpoint (rc->mousepoint_doc, line->s, line->e);
-    NR::Point delta = rc->mousepoint_doc - nearest;
+    double dist_screen = NR::L2 (rc->mousepoint_doc - nearest) * desktop->current_zoom();
 
     double tolerance = (double) SP_EVENT_CONTEXT(rc)->tolerance;
 
-    bool close = (NR::L2 (delta) < tolerance);
+    bool close = (dist_screen < tolerance);
 
     return close;
 }
@@ -222,6 +222,8 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
     // item is the selected item. mouse_p the location in doc coordinates of where to add the stop    
     
     SPEventContext *ec = SP_EVENT_CONTEXT(rc);
+    SPDesktop *desktop = SP_EVENT_CONTEXT (rc)->desktop;
+
     double tolerance = (double) ec->tolerance;
 
     gfloat offset; // type of SPStop.offset = gfloat
@@ -237,8 +239,8 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
             NR::Point end     = sp_item_gradient_get_coords(item, POINT_LG_END, 0, fill_or_stroke);
                 
             NR::Point nearest = snap_vector_midpoint (mouse_p, begin, end);
-            NR::Point delta = mouse_p - nearest;
-            if ( NR::L2 (delta) < tolerance ) {
+            double dist_screen = NR::L2 (mouse_p - nearest) * desktop->current_zoom();
+            if ( dist_screen < tolerance ) {
                 // add the knot 
                 offset = get_offset_between_points(nearest, begin, end); 
                 addknot = true;              
@@ -248,8 +250,8 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
             NR::Point begin = sp_item_gradient_get_coords(item, POINT_RG_CENTER, 0, fill_or_stroke);
             NR::Point end   = sp_item_gradient_get_coords(item, POINT_RG_R1, 0, fill_or_stroke);
             NR::Point nearest = snap_vector_midpoint (mouse_p, begin, end);
-            NR::Point delta = mouse_p - nearest;
-            if ( NR::L2 (delta) < tolerance ) {
+            double dist_screen = NR::L2 (mouse_p - nearest) * desktop->current_zoom();
+            if ( dist_screen < tolerance ) {
                 offset = get_offset_between_points(nearest, begin, end); 
                 addknot = true;
                 r1_knot = true;              
@@ -258,8 +260,8 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
 
             end    = sp_item_gradient_get_coords(item, POINT_RG_R2, 0, fill_or_stroke);
             nearest = snap_vector_midpoint (mouse_p, begin, end);
-            delta = mouse_p - nearest;
-            if ( NR::L2 (delta) < tolerance ) {
+            dist_screen = NR::L2 (mouse_p - nearest) * desktop->current_zoom();
+            if ( dist_screen < tolerance ) {
                 offset = get_offset_between_points(nearest, begin, end); 
                 addknot = true;
                 r1_knot = false;              
@@ -565,7 +567,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 } else {
                     // click in an empty space; do the same as Esc
                     if (drag->selected) {
-                        drag->deselect_all();
+                        drag->deselectAll();
                     } else {
                         selection->clear();
                     }
@@ -602,7 +604,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_Escape:
             if (drag->selected) {
-                drag->deselect_all();
+                drag->deselectAll();
             } else {
                 selection->clear();
             }
