@@ -27,6 +27,9 @@
 #include "display/sp-ctrlline.h"
 
 #include "xml/repr.h"
+#include "svg/css-ostringstream.h"
+
+#include "svg/svg.h"
 
 #include "prefs-utils.h"
 #include "sp-item.h"
@@ -98,7 +101,7 @@ gr_drag_sel_modified (Inkscape::Selection *selection, guint flags, gpointer data
 }
 
 /**
-When a _query_style_signal is received, check that \a property requests fill/stroke (otherwise
+When a _query_style_signal is received, check that \a property requests fill/stroke/opacity (otherwise
 skip), and fill the \a style with the averaged color of all draggables of the selected dragger, if
 any.
 */
@@ -107,7 +110,7 @@ gr_drag_style_query (SPStyle *style, int property, gpointer data)
 {
     GrDrag *drag = (GrDrag *) data;
 
-    if (property != QUERY_STYLE_PROPERTY_FILL && property != QUERY_STYLE_PROPERTY_STROKE) {
+    if (property != QUERY_STYLE_PROPERTY_FILL && property != QUERY_STYLE_PROPERTY_STROKE && property != QUERY_STYLE_PROPERTY_MASTEROPACITY) {
         return QUERY_STYLE_NOTHING;
     }
 
@@ -153,10 +156,13 @@ gr_drag_style_query (SPStyle *style, int property, gpointer data)
             style->stroke.set = TRUE;
             style->stroke.type = SP_PAINT_TYPE_COLOR;
 
-            style->fill_opacity.value = SP_SCALE24_FROM_FLOAT (cf[3]);
+            style->fill_opacity.value = SP_SCALE24_FROM_FLOAT (1.0);
             style->fill_opacity.set = TRUE;
-            style->stroke_opacity.value = SP_SCALE24_FROM_FLOAT (cf[3]);
+            style->stroke_opacity.value = SP_SCALE24_FROM_FLOAT (1.0);
             style->stroke_opacity.set = TRUE;
+
+            style->opacity.value = SP_SCALE24_FROM_FLOAT (cf[3]);
+            style->opacity.set = TRUE;
         }
 
         return ret;
@@ -195,25 +201,24 @@ gr_drag_style_set (const SPCSSAttr *css, gpointer data)
     if (css->attribute("stop-color"))
         sp_repr_css_set_property (stop, "stop-color", css->attribute("stop-color"));
 
-    // any of opacity properties, in order of increasing priority:
-    if (css->attribute("flood-opacity"))
-        sp_repr_css_set_property (stop, "stop-opacity", css->attribute("flood-color"));
 
-    if (css->attribute("opacity")) // TODO: multiply
-        sp_repr_css_set_property (stop, "stop-opacity", css->attribute("color"));
-
-    if (css->attribute("stroke-opacity")) // TODO: multiply
-        sp_repr_css_set_property (stop, "stop-opacity", css->attribute("stroke-opacity"));
-
-    if (css->attribute("fill-opacity")) // TODO: multiply
-        sp_repr_css_set_property (stop, "stop-opacity", css->attribute("fill-opacity"));
-
-    if ((css->attribute("fill") && !strcmp(css->attribute("fill"), "none")) ||
-        (css->attribute("stroke") && !strcmp(css->attribute("stroke"), "none")))
-        sp_repr_css_set_property (stop, "stop-opacity", "0"); // if set to none, don't change color, set opacity to 0
-
-    if (css->attribute("stop-opacity"))
+    if (css->attribute("stop-opacity")) { // direct setting of stop-opacity has priority
         sp_repr_css_set_property (stop, "stop-opacity", css->attribute("stop-opacity"));
+    } else {  // multiply all opacity properties:
+        gdouble accumulated = 1.0;
+        accumulated *= sp_svg_read_percentage(css->attribute("flood-opacity"), 1.0);
+        accumulated *= sp_svg_read_percentage(css->attribute("opacity"), 1.0);
+        accumulated *= sp_svg_read_percentage(css->attribute("stroke-opacity"), 1.0);
+        accumulated *= sp_svg_read_percentage(css->attribute("fill-opacity"), 1.0);
+
+        Inkscape::CSSOStringStream os;
+        os << accumulated;
+        sp_repr_css_set_property (stop, "stop-opacity", os.str().c_str());
+
+        if ((css->attribute("fill") && !strcmp(css->attribute("fill"), "none")) ||
+            (css->attribute("stroke") && !strcmp(css->attribute("stroke"), "none")))
+            sp_repr_css_set_property (stop, "stop-opacity", "0"); // if set to none, don't change color, set opacity to 0
+    }
 
     if (!stop->attributeList()) { // nothing for us here, pass it on
         sp_repr_css_attr_unref(stop);
@@ -705,7 +710,7 @@ gr_knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
     	SPGradient *gradient = sp_item_gradient (draggable->item, draggable->fill_or_stroke);
         gradient = sp_gradient_get_vector (gradient, false);    
     	if (gradient->vector.stops.size() > 2) { // 2 is the minimum
-        	SPStop *stop;
+        	SPStop *stop = NULL;
         	switch (draggable->point_type) {  // if we delete first or last stop, move the next/previous to the edge
         	case POINT_LG_BEGIN:
         	case POINT_RG_CENTER:
@@ -1162,7 +1167,7 @@ GrDragger::deselect()
 
 
 /**
-\brief Deselect all stops/draggers
+\brief Deselect all stops/draggers (private)
 */
 void
 GrDrag::deselect_all()
@@ -1172,6 +1177,17 @@ GrDrag::deselect_all()
         selected = g_list_remove(selected, selected->data);
     }
 }
+
+/**
+\brief Deselect all stops/draggers (public; emits signal)
+*/
+void
+GrDrag::deselectAll()
+{
+    deselect_all();
+    this->desktop->emitToolSubselectionChanged(NULL);
+}
+
  
 /**
 \brief Select a dragger
