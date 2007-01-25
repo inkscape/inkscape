@@ -244,8 +244,6 @@ Inkscape::XML::Node *sp_repr_lookup_child(Inkscape::XML::Node *repr,
                                           gchar const *value);
 
 
-Inkscape::XML::Document *sp_repr_document_new_list(GSList *reprs);
-
 inline Inkscape::XML::Node *sp_repr_document_first_child(Inkscape::XML::Document const *doc) {
     return const_cast<Inkscape::XML::Node *>(doc->firstChild());
 }

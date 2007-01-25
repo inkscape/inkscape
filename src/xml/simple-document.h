@@ -29,8 +29,8 @@ class SimpleDocument : public SimpleNode,
                        public NodeObserver
 {
 public:
-    explicit SimpleDocument(int code)
-    : SimpleNode(code), _in_transaction(false)
+    explicit SimpleDocument()
+    : SimpleNode(g_quark_from_static_string("xml")), _in_transaction(false)
     {
         _initBindings();
     }

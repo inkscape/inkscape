@@ -20,6 +20,7 @@
 
 #include "xml/repr.h"
 #include "xml/attribute-record.h"
+#include "xml/simple-document.h"
 
 #include "io/sys.h"
 #include "io/uristream.h"
@@ -31,11 +32,12 @@ using Inkscape::IO::Writer;
 using Inkscape::Util::List;
 using Inkscape::Util::cons;
 using Inkscape::XML::Document;
+using Inkscape::XML::SimpleDocument;
 using Inkscape::XML::Node;
 using Inkscape::XML::AttributeRecord;
 
 static Document *sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns);
-static Node *sp_repr_svg_read_node (xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map);
+static Node *sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map);
 static gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar *default_ns, GHashTable *prefix_map);
 static void sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace, gchar const *default_ns, int inlineattrs, int indent);
 static void sp_repr_write_stream (Node *repr, Writer &out, gint indent_level, bool add_whitespace, Glib::QueryQuark elide_prefix, int inlineattrs, int indent);
@@ -374,13 +376,14 @@ sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
     GHashTable * prefix_map;
     prefix_map = g_hash_table_new (g_str_hash, g_str_equal);
 
-    GSList *reprs=NULL;
-    Node *root=NULL;
+    Document *rdoc = new Inkscape::XML::SimpleDocument();
 
+    Node *root=NULL;
     for ( node = doc->children ; node != NULL ; node = node->next ) {
         if (node->type == XML_ELEMENT_NODE) {
-            Node *repr=sp_repr_svg_read_node (node, default_ns, prefix_map);
-            reprs = g_slist_append(reprs, repr);
+            Node *repr=sp_repr_svg_read_node(rdoc, node, default_ns, prefix_map);
+            rdoc->appendChild(repr);
+            Inkscape::GC::release(repr);
 
             if (!root) {
                 root = repr;
@@ -389,12 +392,11 @@ sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
                 break;
             }
         } else if ( node->type == XML_COMMENT_NODE ) {
-            Node *comment=sp_repr_svg_read_node(node, default_ns, prefix_map);
-            reprs = g_slist_append(reprs, comment);
+            Node *comment=sp_repr_svg_read_node(rdoc, node, default_ns, prefix_map);
+            rdoc->appendChild(comment);
+            Inkscape::GC::release(comment);
         }
     }
-
-    Document *rdoc=NULL;
 
     if (root != NULL) {
         /* promote elements of SVG documents that don't use namespaces
@@ -404,15 +406,7 @@ sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
         {
             promote_to_svg_namespace(root);
         }
-
-        rdoc = sp_repr_document_new_list(reprs);
     }
-
-    for ( GSList *iter = reprs ; iter ; iter = iter->next ) {
-        Node *repr=(Node *)iter->data;
-        Inkscape::GC::release(repr);
-    }
-    g_slist_free(reprs);
 
     g_hash_table_destroy (prefix_map);
 
@@ -437,7 +431,7 @@ sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, co
 }
 
 static Node *
-sp_repr_svg_read_node (xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map)
+sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map)
 {
     Node *repr, *crepr;
     xmlAttrPtr prop;
@@ -459,17 +453,16 @@ sp_repr_svg_read_node (xmlNodePtr node, const gchar *default_ns, GHashTable *pre
             return NULL; // we do not preserve all-whitespace nodes unless we are asked to
         }
 
-        Node *rdoc = sp_repr_new_text((const gchar *)node->content);
-        return rdoc;
+        return xml_doc->createTextNode((const gchar *)node->content);
     }
 
     if (node->type == XML_COMMENT_NODE)
-        return sp_repr_new_comment((const gchar *)node->content);
+        return xml_doc->createComment((const gchar *)node->content);
 
     if (node->type == XML_ENTITY_DECL) return NULL;
 
     sp_repr_qualified_name (c, 256, node->ns, node->name, default_ns, prefix_map);
-    repr = sp_repr_new (c);
+    repr = xml_doc->createElement(c);
     /* TODO remember node->ns->prefix if node->ns != NULL */
 
     for (prop = node->properties; prop != NULL; prop = prop->next) {
@@ -485,7 +478,7 @@ sp_repr_svg_read_node (xmlNodePtr node, const gchar *default_ns, GHashTable *pre
 
     child = node->xmlChildrenNode;
     for (child = node->xmlChildrenNode; child != NULL; child = child->next) {
-        crepr = sp_repr_svg_read_node (child, default_ns, prefix_map);
+        crepr = sp_repr_svg_read_node (xml_doc, child, default_ns, prefix_map);
         if (crepr) {
             repr->appendChild(crepr);
             Inkscape::GC::release(crepr);

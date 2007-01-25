@@ -60,7 +60,7 @@ sp_repr_new_comment(gchar const *comment)
 Inkscape::XML::Document *
 sp_repr_document_new(char const *rootname)
 {
-    Inkscape::XML::Document *doc = new Inkscape::XML::SimpleDocument(g_quark_from_static_string("xml"));
+    Inkscape::XML::Document *doc = new Inkscape::XML::SimpleDocument();
     if (!strcmp(rootname, "svg:svg")) {
         doc->setAttribute("version", "1.0");
         doc->setAttribute("standalone", "no");
@@ -72,25 +72,6 @@ sp_repr_document_new(char const *rootname)
     Inkscape::XML::Node *root = doc->createElement(rootname);
     doc->appendChild(root);
     Inkscape::GC::release(root);
-
-    return doc;
-}
-
-/// Returns new document having reprs as first child.
-Inkscape::XML::Document *
-sp_repr_document_new_list(GSList *reprs)
-{
-    g_assert(reprs != NULL);
-
-    Inkscape::XML::Document *doc = sp_repr_document_new("void");
-    doc->removeChild(doc->firstChild());
-
-    for ( GSList *iter = reprs ; iter ; iter = iter->next ) {
-        Inkscape::XML::Node *repr = (Inkscape::XML::Node *) iter->data;
-        doc->appendChild(repr);
-    }
-
-    g_assert(sp_repr_document_root(doc) != NULL);
 
     return doc;
 }
