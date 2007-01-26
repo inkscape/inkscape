@@ -1011,6 +1011,7 @@ msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
 msgstr[0] ""
 "<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s."
+msgstr[1] ""
 "<b>%d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s."
 
 #: ../src/dialogs/find.cpp:374 ../src/ui/dialog/find.cpp:437
@@ -2848,6 +2849,7 @@ msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] ""
 "<b>Gradiente</b> per %d oggetto; con <b>Ctrl</b> per far scattare "
 "l'angolo"
+msgstr[1] ""
 "<b>Gradiente</b> per %d oggetti; con <b>Ctrl</b> per far scattare "
 "l'angolo"
 
