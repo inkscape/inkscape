@@ -36,6 +36,7 @@ options:
 
     -T, --export-text-to-path
     -B, --export-bbox-page 
+    -F, --export-embed-fonts
 
     -l, --export-plain-svg=FILENAME             
 
@@ -233,6 +234,10 @@ Convert text objects to paths on export, where applicable (currently works for P
 =item B<-B>, B<--export-bbox-page>
 
 Export files with the bounding box set to the page size, where applicable (currently works for PS and EPS export).
+
+=item B<-F>, B<--export-embed-fonts>
+
+Embed fonts used in the document into exported PS/EPS file. Note: only Type 1 fonts can be embedded, not TrueType.
 
 =item B<-I>, B<--query-id>
 
