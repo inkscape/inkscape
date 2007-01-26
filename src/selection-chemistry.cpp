@@ -2581,6 +2581,30 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select mask object and <b>object(s)</b> to apply clippath or mask to."));
         return;
     }
+
+    // FIXME: temporary patch to prevent crash! 
+    // Remove this when bboxes are fixed to not blow up on an item clipped/masked with its own clone
+    bool clone_with_original = false;
+    for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
+        SPItem *item = SP_ITEM(l->data);
+        bool is_use = SP_IS_USE(item);
+        SPItem *item_use = item;
+        SPItem *item_use_first = item;
+        while (is_use && item_use && !clone_with_original)
+        {
+            item_use = sp_use_get_original (SP_USE(item_use));
+            clone_with_original |= selection->includes(item_use);
+            if (item_use == item_use_first)
+                break;
+            is_use = SP_IS_USE(item_use);
+        }   
+        if (clone_with_original) 
+            break;
+    }
+    if (clone_with_original) {
+        return; // in this version, you cannot clip/mask an object with its own clone
+    }
+    // /END FIXME
     
     sp_document_ensure_up_to_date(document);
 
