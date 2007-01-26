@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-18 22:07+0000\n"
-"PO-Revision-Date: 2007-01-18 22:45+0300\n"
+"POT-Creation-Date: 2007-01-26 23:55+0100\n"
+"PO-Revision-Date: 2007-01-26 00:10+0300\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "MIME-Version: 1.0\n"
@@ -54,34 +54,34 @@ msgstr "Elipsės kūrimas"
 
 #: ../src/connector-context.cpp:517
 msgid "Creating new connector"
-msgstr "Kuriamas sąryšis"
+msgstr "Kuriama nauja jungtis"
 
 #: ../src/connector-context.cpp:711
 msgid "Reroute connector"
-msgstr "Jungiamosios linijos perkėlimas"
+msgstr "Jungties perkėlimas"
 
 #. Flush pending updates
 #: ../src/connector-context.cpp:918
 msgid "Create connector"
-msgstr "Jungiamosios linijos sukūrimas"
+msgstr "Jungties sukūrimas"
 
 #: ../src/connector-context.cpp:942
 msgid "Finishing connector"
-msgstr "Sukurtas sąryšis"
+msgstr "Jungtis sukurta"
 
 #: ../src/connector-context.cpp:1086
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
-"<b>Sąryšio taškas</b>: spustelkite ar tempkite, jei norite sukurti sąryšį"
+"<b>Jungimo taškas</b>: spustelkite ar tempkite, jei norite sukurti jungtį"
 
 #: ../src/connector-context.cpp:1157
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
-"<b>Sąryšio kraštas</b>: tempkite jei norite prijungti prie kito objekto"
+"<b>Jungties galas</b>: tempkite, jei norite prijungti prie kito objekto"
 
 #: ../src/connector-context.cpp:1268
 msgid "Select <b>at least one non-connector object</b>."
-msgstr "Pažymėkite <b>bent vieną objektą, kuris nėra sąryšis</b>."
+msgstr "Pažymėkite <b>bent vieną objektą, kuris nėra jungtis</b>."
 
 #: ../src/connector-context.cpp:1273 ../src/widgets/toolbox.cpp:4319
 msgid "Make connectors avoid selected objects"
@@ -896,7 +896,7 @@ msgstr "Aukštis:"
 
 #: ../src/dialogs/export.cpp:416
 msgid "<big><b>Bitmap size</b></big>"
-msgstr "<big><b>Vaizdo dydis</b></big>"
+msgstr "<big><b>Taškinio vaizdo dydis</b></big>"
 
 #: ../src/dialogs/export.cpp:429 ../src/ui/widget/page-sizer.cpp:301
 msgid "_Width:"
@@ -929,7 +929,7 @@ msgstr "_Eksportuoti"
 
 #: ../src/dialogs/export.cpp:583
 msgid "Export the bitmap file with these settings"
-msgstr "Eksportuoti pasirinktą sritį kaip paveikslėlį"
+msgstr "Eksportuoti pasirinktą sritį kaip taškinį vaizdą"
 
 #: ../src/dialogs/export.cpp:966
 msgid "You have to enter a filename"
@@ -1351,23 +1351,23 @@ msgstr "Objekto aprašymo nustatymas"
 
 #: ../src/dialogs/layers-panel.cpp:592 ../src/widgets/layer-selector.cpp:590
 msgid "Unhide layer"
-msgstr "Rodyti sluoksnį"
+msgstr "Sluoksnio rodymas"
 
 #: ../src/dialogs/layers-panel.cpp:592 ../src/widgets/layer-selector.cpp:590
 msgid "Hide layer"
-msgstr "Slėpti sluoksnį"
+msgstr "Sluoksnio slėpimas"
 
 #: ../src/dialogs/layers-panel.cpp:603 ../src/widgets/layer-selector.cpp:582
 msgid "Lock layer"
-msgstr "Užrakinti sluoksnį"
+msgstr "Sluoksnio užrakinimas"
 
 #: ../src/dialogs/layers-panel.cpp:603 ../src/widgets/layer-selector.cpp:582
 msgid "Unlock layer"
-msgstr "Atrakinti sluoksnį"
+msgstr "Sluoksnio atrakinimas"
 
 #: ../src/dialogs/layers-panel.cpp:699
 msgid "Change layer opacity"
-msgstr "Keisti sluoksnio nepermatomumą"
+msgstr "Sluoksnio nepermatomumo pakeitimas"
 
 #: ../src/dialogs/layers-panel.cpp:764
 msgid "Opacity, %:"
@@ -1423,7 +1423,7 @@ msgstr "Kur sukurti:"
 
 #: ../src/dialogs/layer-properties.cpp:182
 msgid "Rename Layer"
-msgstr "Keisti sluoksnio vardą"
+msgstr "Keisti sluoksnio pavadinimą"
 
 #: ../src/dialogs/layer-properties.cpp:185
 msgid "_Rename"
@@ -1431,12 +1431,12 @@ msgstr "_Pervadinti"
 
 #: ../src/dialogs/layer-properties.cpp:195
 msgid "Rename layer"
-msgstr "Pervadinti sluoksnį"
+msgstr "Sluoksnio pervadinimas"
 
 #. TRANSLATORS: This means "The layer has been renamed"
 #: ../src/dialogs/layer-properties.cpp:197
 msgid "Renamed layer"
-msgstr "Sluoksnio vardas pakeistas"
+msgstr "Sluoksnio pavadinimas pakeistas"
 
 #: ../src/dialogs/layer-properties.cpp:201
 msgid "Add Layer"
@@ -1448,7 +1448,7 @@ msgstr "_Kurti"
 
 #: ../src/dialogs/layer-properties.cpp:225
 msgid "New layer created."
-msgstr "Naujas sluoksnis sukurtas"
+msgstr "Naujas sluoksnis sukurtas."
 
 #: ../src/dialogs/object-attributes.cpp:34
 msgid "Href:"
@@ -1529,11 +1529,11 @@ msgstr "Objekto _nepermatomumas, %"
 #: ../src/ui/widget/selected-style.cpp:806
 #: ../src/ui/widget/selected-style.cpp:1094
 msgid "Change opacity"
-msgstr "Keisti nepermatomumą"
+msgstr "Nepermatomumo pakeitimas"
 
 #: ../src/dialogs/object-properties.cpp:438
 msgid "Change blur"
-msgstr "Išliejimo keitimas"
+msgstr "Išliejimo pakeitimas"
 
 #: ../src/dialogs/rdf.cpp:178
 msgid "CC Attribution"
@@ -1732,9 +1732,8 @@ msgid "Set attribute"
 msgstr "Įrašyti atributo reikšmę"
 
 #: ../src/dialogs/stroke-style.cpp:292 ../src/dialogs/stroke-style.cpp:351
-#, fuzzy
 msgid "Set stroke color"
-msgstr "Paskutinė pažymėta spalva"
+msgstr "Linijos spalvos nustatymas"
 
 #: ../src/dialogs/stroke-style.cpp:342 ../src/ui/widget/selected-style.cpp:227
 #: ../src/ui/widget/selected-style.cpp:453
@@ -1774,9 +1773,8 @@ msgid "None"
 msgstr "Nėra"
 
 #: ../src/dialogs/stroke-style.cpp:962
-#, fuzzy
 msgid "Set markers"
-msgstr "Žvaigždės"
+msgstr "Linijos žymių nustatymas"
 
 #: ../src/dialogs/stroke-style.cpp:1068
 msgid "Stroke width"
@@ -1870,7 +1868,7 @@ msgstr "Pabaigos žymės:"
 
 #: ../src/dialogs/stroke-style.cpp:1572 ../src/dialogs/stroke-style.cpp:1670
 msgid "Set stroke style"
-msgstr "Linijos stiliaus keitimas"
+msgstr "Linijos stiliaus pakeitimas"
 
 #: ../src/dialogs/swatches.cpp:421
 #, fuzzy
@@ -1878,19 +1876,17 @@ msgid "Change color definition"
 msgstr "Puslapi_o kryptis:"
 
 #: ../src/dialogs/swatches.cpp:556
-#, fuzzy
 msgid "Set stroke color from swatch"
-msgstr "Rinktis spalvas iš spalvų paletės"
+msgstr "Linijos spalvos parinkimas iš paletės"
 
 #: ../src/dialogs/swatches.cpp:556
-#, fuzzy
 msgid "Set fill color from swatch"
-msgstr "Rinktis spalvas iš spalvų paletės"
+msgstr "Užpildo spalvos parinkimas iš paletės"
 
 #: ../src/dialogs/swatches.cpp:875
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
-msgstr "Raštų katalogas (%s) nepasiekiamas."
+msgstr "Palečių katalogas (%s) nepasiekiamas."
 
 #. TODO:  Insert widgets
 #: ../src/dialogs/text-edit.cpp:200 ../src/ui/dialog/text-properties.cpp:36
@@ -1941,7 +1937,7 @@ msgstr "Padaryti standartiniu"
 
 #: ../src/dialogs/text-edit.cpp:636 ../src/text-context.cpp:1363
 msgid "Set text style"
-msgstr "Teksto stiliaus keitimas"
+msgstr "Teksto stiliaus pakeitimas"
 
 #: ../src/dialogs/tiledialog.cpp:330
 msgid "Arrange in a grid"
@@ -2184,9 +2180,9 @@ msgid ""
 "to copy the color under mouse to clipboard"
 msgstr ""
 "<b>Spustelėjimu</b> pakeisite užpildo spalvą, <b>Shift+spustelėjimu</b> – "
-"linijos spalvą; <b>tempkite</b> kad pažymėti spalvos parinkimo sritį; "
-"naudokite <b>Alt</b> parinkti atvirkščią spalvą; <b>Ctrl+C</b> kopijuoja "
-"spalvą į mainų sritį"
+"linijos spalvą; <b>tempkite</b>, jei norite išplėsti spalvos parinkimo "
+"sritį; naudokite <b>Alt</b> parinkti atvirkščią spalvą; <b>Ctrl+C</b> "
+"kopijuoja spalvą į mainų sritį"
 
 #: ../src/dropper-context.cpp:389
 #, fuzzy
@@ -2195,7 +2191,7 @@ msgstr "Paskutinė pažymėta spalva"
 
 #: ../src/dyna-draw-context.cpp:696
 msgid "Create calligraphic stroke"
-msgstr "Dailiraščio brūkšnio kūrimas"
+msgstr "Kaligrafinio potėpio kūrimas"
 
 #: ../src/event-log.cpp:34
 msgid "[Unchanged]"
@@ -2265,7 +2261,7 @@ msgstr "Įskiepio „"
 
 #: ../src/extension/extension.cpp:291
 msgid "\" failed to load because "
-msgstr "“ nepavyko įkelti dėl "
+msgstr "“ nepavyko įkelti: "
 
 #: ../src/extension/extension.cpp:578
 #, c-format
@@ -2306,11 +2302,17 @@ msgid ""
 "normally but those extensions will be unavailable.  For details to "
 "troubleshoot this problem, please refer to the error log located at: "
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">Vieno ar daugiau įskiepių nepavyko "
+"įkelti</span>\n"
+"\n"
+"Neįkelti įskiepiai buvo praleisti, todėl Inkscape ir toliau veiks įprastai, "
+"tik tie įskiepiai bus neprieinami. Jei norite gauti daugiau informacijos "
+"apie šią problemą, galite peržvegti klaidų žurnalą, kuris įrašomas čia: "
 
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:62
 msgid "Show dialog on startup"
-msgstr ""
+msgstr "Rodyti dialogą startuojant"
 
 #: ../src/extension/implementation/script.cpp:1014
 msgid ""
@@ -2542,7 +2544,7 @@ msgstr ""
 
 #: ../src/extension/internal/ps.cpp:150
 msgid "Print as bitmap"
-msgstr "Spausdinti kaip vaizdą"
+msgstr "Spausdinti kaip taškinį vaizdą"
 
 #: ../src/extension/internal/ps.cpp:152
 msgid ""
@@ -2550,13 +2552,13 @@ msgid ""
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
 "will be rendered exactly as displayed."
 msgstr ""
-"Spausdinti kaip grafinį vaizdą. Gautas paveikslėlis paprastai užima daugiau "
+"Spausdinti kaip taškinį vaizdą. Gautas paveikslėlis paprastai užima daugiau "
 "vietos bei negali būti kokybiškai didinamas, bet vaizdas bus lygiai toks, "
 "kaip vaizduojamas ekrane."
 
 #: ../src/extension/internal/ps.cpp:166
 msgid "Preferred resolution (dots per inch) of bitmap"
-msgstr "Norima vaizdo skiriamoji geba (taškų coliui)"
+msgstr "Norima taškinio vaizdo skiriamoji geba (taškų coliui)"
 
 #: ../src/extension/internal/ps.cpp:180
 msgid "Resolution:"
@@ -2771,7 +2773,7 @@ msgstr "Nėra pakeitimų"
 
 #: ../src/file.cpp:852
 msgid "Import"
-msgstr "Importuoti"
+msgstr "Importavimas"
 
 #: ../src/file.cpp:883
 msgid "Select file to import"
@@ -3297,7 +3299,7 @@ msgstr "Eksportuoti dokumentą PNG formatu"
 
 #: ../src/main.cpp:228
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
-msgstr "Eksportuojamo grafinio vaizdo raiška (nutylint 90)"
+msgstr "Eksportuojamo taškinio vaizdo raiška (nutylint 90)"
 
 #: ../src/main.cpp:229
 msgid "DPI"
@@ -3478,7 +3480,7 @@ msgstr "Atidaryti iš _istorijos"
 
 #: ../src/menus-skeleton.h:55
 msgid "_Edit"
-msgstr "_Keisti"
+msgstr "_Taisa"
 
 #: ../src/menus-skeleton.h:65 ../src/verbs.cpp:2012
 msgid "Paste Si_ze"
@@ -3490,7 +3492,7 @@ msgstr "Klo_nuotos kopijos"
 
 #: ../src/menus-skeleton.h:94
 msgid "_View"
-msgstr "_Vaizdas"
+msgstr "_Rodymas"
 
 #: ../src/menus-skeleton.h:95
 msgid "_Zoom"
@@ -3514,7 +3516,7 @@ msgstr "_Objektas"
 
 #: ../src/menus-skeleton.h:163
 msgid "Cli_p"
-msgstr "Apk_irpti"
+msgstr "_Apkirpti"
 
 #: ../src/menus-skeleton.h:167
 msgid "Mas_k"
@@ -3526,11 +3528,11 @@ msgstr "_Raštas"
 
 #: ../src/menus-skeleton.h:190
 msgid "_Path"
-msgstr "K_reivė"
+msgstr "_Kreivė"
 
 #: ../src/menus-skeleton.h:213
 msgid "_Text"
-msgstr "_Tekstas"
+msgstr "Tekst_as"
 
 #: ../src/menus-skeleton.h:225
 msgid "Effe_cts"
@@ -3622,7 +3624,7 @@ msgstr "Kreivės dalijimas"
 #: ../src/nodepath.cpp:1722 ../src/nodepath.cpp:1737 ../src/nodepath.cpp:1824
 #: ../src/nodepath.cpp:1839
 msgid "To join, you must have <b>two endnodes</b> selected."
-msgstr "Kad sujungti, reikia pažymėti du kraštinius taškus"
+msgstr "Kad sujungtumėte, reikia pažymėti du kraštinius taškus"
 
 #: ../src/nodepath.cpp:1758
 msgid "Close subpath"
@@ -3667,11 +3669,11 @@ msgstr "Šalinti pažymėjimą"
 
 #: ../src/nodepath.cpp:2267
 msgid "Change segment type"
-msgstr "Segmento tipo keitimas"
+msgstr "Segmento tipo pakeitimas"
 
 #: ../src/nodepath.cpp:2283 ../src/nodepath.cpp:3000
 msgid "Change node type"
-msgstr "Mazgo tipo keitimas"
+msgstr "Mazgo tipo pakeitimas"
 
 #: ../src/nodepath.cpp:3275
 #, fuzzy
@@ -3683,7 +3685,7 @@ msgstr "Stačiakampis"
 msgid "Move node handle"
 msgstr "Išmėtyti siūlių rankenėles"
 
-#: ../src/nodepath.cpp:3465
+#: ../src/nodepath.cpp:3464
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3693,19 +3695,19 @@ msgstr ""
 "<b>Mazgo liestinė</b>: kampas %0.2f&#176;, ilgis %s; <b>Ctrl</b> keičia "
 "kampą žingsniu; <b>Alt</b> fiksuoja ilgį; <b>Shift</b> pasuka abi liestines"
 
-#: ../src/nodepath.cpp:3643
+#: ../src/nodepath.cpp:3642
 msgid "Rotate nodes"
 msgstr "Mazgų sukimas"
 
-#: ../src/nodepath.cpp:3768
+#: ../src/nodepath.cpp:3767
 msgid "Scale nodes"
-msgstr "Atstumo tarp mazgų keitimas"
+msgstr "Atstumo tarp mazgų pakeitimas"
 
-#: ../src/nodepath.cpp:3815
+#: ../src/nodepath.cpp:3814
 msgid "Flip nodes"
 msgstr "Mazgų apvertimas"
 
-#: ../src/nodepath.cpp:3980
+#: ../src/nodepath.cpp:3979
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3714,44 +3716,44 @@ msgstr ""
 "horizontaliai ar vertikaliai; su <b>Ctrl+Alt</b> judama liestinių kryptimi"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4204
+#: ../src/nodepath.cpp:4205
 msgid "end node"
 msgstr "galinis mazgas"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4209
+#: ../src/nodepath.cpp:4210
 msgid "cusp"
 msgstr "smaila"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4212
+#: ../src/nodepath.cpp:4213
 msgid "smooth"
 msgstr "tolygi"
 
-#: ../src/nodepath.cpp:4214
+#: ../src/nodepath.cpp:4215
 msgid "symmetric"
 msgstr "simetriška"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4220
+#: ../src/nodepath.cpp:4221
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "kraštinis mazgas be liestinės (norėdami kurti liestinę, tempkite spausdami "
 "<b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4222
+#: ../src/nodepath.cpp:4223
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "viena liestinė pašalinta (norėdami kurti liestinę, tempkite spausdami "
 "<b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4225
+#: ../src/nodepath.cpp:4226
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "abi liestinės pašalintos (norėdami kurti liestinę, tempkite spausdami "
 "<b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4237
+#: ../src/nodepath.cpp:4238
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3761,16 +3763,16 @@ msgstr ""
 "režimas; <b>rodyklėmis</b> judinami mazgai, <b>&lt; &gt;</b> didina/mažina, "
 "<b>[ ]</b> pasuka"
 
-#: ../src/nodepath.cpp:4238
+#: ../src/nodepath.cpp:4239
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Tempkite</b> mazgą ar liestinių taškus; <b>rodyklėmis</b> stumdomi mazgai"
 
-#: ../src/nodepath.cpp:4261 ../src/nodepath.cpp:4273
+#: ../src/nodepath.cpp:4262 ../src/nodepath.cpp:4274
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Pasirinkite vieną objektą, kurio mazgus ar liestines norite keisti"
 
-#: ../src/nodepath.cpp:4265
+#: ../src/nodepath.cpp:4266
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3788,11 +3790,11 @@ msgstr[2] ""
 "Pažymėta <b>0</b> iš <b>%i</b> mazgų. <b>Spauskite</b>, spauskite su "
 "<b>Shift</b> ar <b>tempkite</b> žymėdami sritį, kad pažymėtumėte mazgus."
 
-#: ../src/nodepath.cpp:4271
+#: ../src/nodepath.cpp:4272
 msgid "Drag the handles of the object to modify it."
 msgstr "Tempkite objekto rankenėles, norėdami keisti objektą."
 
-#: ../src/nodepath.cpp:4279
+#: ../src/nodepath.cpp:4280
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
@@ -3800,7 +3802,7 @@ msgstr[0] "Pažymėta <b>%i</b> iš <b>%i</b> mazgo; %s. %s."
 msgstr[1] "Pažymėta <b>%i</b> iš <b>%i</b> mazgų; %s. %s."
 msgstr[2] "Pažymėta <b>%i</b> iš <b>%i</b> mazgų; %s. %s."
 
-#: ../src/nodepath.cpp:4286
+#: ../src/nodepath.cpp:4287
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3816,7 +3818,7 @@ msgstr[2] ""
 "Pažymėta <b>%i</b> iš <b>%i</b> mazgų <b>%i</b> iš <b>%i</b> kreivės dalių. %"
 "s."
 
-#: ../src/nodepath.cpp:4292
+#: ../src/nodepath.cpp:4293
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -3946,18 +3948,16 @@ msgstr ""
 "<b>sluoksniuose</b>."
 
 #: ../src/path-chemistry.cpp:139
-#, fuzzy
 msgid "Combine"
-msgstr "Kombinuota"
+msgstr "Apjungimas"
 
 #: ../src/path-chemistry.cpp:154
 msgid "Select <b>path(s)</b> to break apart."
 msgstr "Pažymėkite <b>kreivę</b> ar <b>kreives</b>, kurias norite skaidyti."
 
 #: ../src/path-chemistry.cpp:233
-#, fuzzy
 msgid "Break apart"
-msgstr "_Dalinti"
+msgstr "Padalijimas"
 
 #: ../src/path-chemistry.cpp:235
 msgid "<b>No path(s)</b> to break apart in the selection."
@@ -3968,9 +3968,8 @@ msgid "Select <b>object(s)</b> to convert to path."
 msgstr "Pažymėkite <b>objektus</b>, kuriuos norite paversti kreivėmis."
 
 #: ../src/path-chemistry.cpp:300
-#, fuzzy
 msgid "Object to path"
-msgstr "Kreivė iš _Objekto"
+msgstr "Kreivė iš objekto"
 
 #: ../src/path-chemistry.cpp:302
 msgid "<b>No objects</b> to convert to path in the selection."
@@ -4204,7 +4203,7 @@ msgstr "Pažymėkite <b>objektą</b>, kurį norite pakelti iki viršaus."
 
 #: ../src/selection-chemistry.cpp:718
 msgid "Raise to top"
-msgstr "Pakelti iki viršaus"
+msgstr "Pakėlimas iki viršaus"
 
 #: ../src/selection-chemistry.cpp:732
 msgid "Select <b>object(s)</b> to lower."
@@ -4269,9 +4268,8 @@ msgstr ""
 "Pažymėkite <b>objektus</b>, kuriuos norite nuleisti į žemiau esantį sluoksnį."
 
 #: ../src/selection-chemistry.cpp:1284
-#, fuzzy
 msgid "Raise to next layer"
-msgstr "Perkelta į sekantį sluoksnį."
+msgstr "Perkėlimas į aukštesnį sluoksnį"
 
 #: ../src/selection-chemistry.cpp:1290
 msgid "No more layers above."
@@ -4284,9 +4282,8 @@ msgstr ""
 "sluoksnį."
 
 #: ../src/selection-chemistry.cpp:1329
-#, fuzzy
 msgid "Lower to previous layer"
-msgstr "Perkelta į žemesnį sluoksnį."
+msgstr "Perkėlimas į žemesnį sluoksnį"
 
 #: ../src/selection-chemistry.cpp:1335
 msgid "No more layers below."
@@ -4371,9 +4368,9 @@ msgid ""
 "a <b>flowed text</b> to go to its frame."
 msgstr ""
 "Pažymėkite <b>kloną</b>, kurio originalą norite rasti. Pažymėkite "
-"<b>pririštą postūmį</b>, kad rasti jo originalą. Pažymėkite <b>tekstą ant "
-"kreivės</b>, kad rasti kreivę. Pažymėkite <b>dėstytą tekstą</b>, kad rasti "
-"jo rėmus."
+"<b>pririštą postūmį</b>, kad rastumėte jo originalą. Pažymėkite <b>tekstą "
+"ant kreivės</b>, kad rastumėte kreivę. Pažymėkite <b>dėstytą tekstą</b>, jei "
+"norite rasti jo rėmus."
 
 #: ../src/selection-chemistry.cpp:2110
 msgid ""
@@ -4396,9 +4393,8 @@ msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Pažymėkite <b>objektus</b>, kuriuos norite paversti raštu."
 
 #: ../src/selection-chemistry.cpp:2225
-#, fuzzy
 msgid "Objects to pattern"
-msgstr "Raštas iš Ob_jektų"
+msgstr "Objektai į raštą"
 
 #: ../src/selection-chemistry.cpp:2241
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
@@ -4409,22 +4405,20 @@ msgid "<b>No pattern fills</b> in the selection."
 msgstr "Pažymėjime <b>nėra rašto</b>."
 
 #: ../src/selection-chemistry.cpp:2297
-#, fuzzy
 msgid "Pattern to objects"
-msgstr "Objektai iš Rašto"
+msgstr "Raštas į objektus"
 
 #: ../src/selection-chemistry.cpp:2382
 msgid "Select <b>object(s)</b> to make a bitmap copy."
-msgstr "Pažymėkite <b>objektus</b>, iš kurių daryti grafinį vaizdą."
+msgstr "Pažymėkite <b>objektus</b>, iš kurių kurti taškinį vaizdą."
 
 #: ../src/selection-chemistry.cpp:2541
-#, fuzzy
 msgid "Create bitmap"
-msgstr "Spiralių kūrimo režimas"
+msgstr "Taškinio vaizdo sukūrimas"
 
 #: ../src/selection-chemistry.cpp:2573
 msgid "Select <b>object(s)</b> to create clippath or mask from."
-msgstr "Pažymėkite <b>objektus</b>, iš kurių daryti filtrą ar kirpimo kreivę."
+msgstr "Pažymėkite <b>objektus</b>, iš kurių kurti kaukę ar kirpimo kreivę."
 
 #: ../src/selection-chemistry.cpp:2576
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
@@ -4432,31 +4426,32 @@ msgstr ""
 "Pažymėkite filtro objektą ir <b>objektus</b>, kuriems taikyti filtrą ar "
 "kirpimą."
 
-#: ../src/selection-chemistry.cpp:2674
+#: ../src/selection-chemistry.cpp:2698
 #, fuzzy
 msgid "Set clipping path"
 msgstr "Uždaroma kreivė"
 
-#: ../src/selection-chemistry.cpp:2676
+#: ../src/selection-chemistry.cpp:2700
 #, fuzzy
 msgid "Set mask"
 msgstr "Žvaigždės"
 
-#: ../src/selection-chemistry.cpp:2689
+#: ../src/selection-chemistry.cpp:2713
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr "Pažymėkite <b>objektus</b>, kuriems nuimti filtrą."
+msgstr ""
+"Pažymėkite <b>objektus</b>, nuo kurių pašalinti kaukę ar kirpimo kreivę."
 
-#: ../src/selection-chemistry.cpp:2757
+#: ../src/selection-chemistry.cpp:2781
 #, fuzzy
 msgid "Release clipping path"
 msgstr "Nuimti nuo pažymėjimo kirpimo kreivę"
 
-#: ../src/selection-chemistry.cpp:2759
+#: ../src/selection-chemistry.cpp:2783
 #, fuzzy
 msgid "Release mask"
 msgstr "At_rišti"
 
-#: ../src/selection-chemistry.cpp:2803
+#: ../src/selection-chemistry.cpp:2827
 #, fuzzy
 msgid "Fit page to selection"
 msgstr "_Talpinti pagal pažymėjimą"
@@ -4523,9 +4518,7 @@ msgstr "Žvaigždė"
 
 #: ../src/selection-describer.cpp:101
 msgid "Click selection to toggle scale/rotation handles"
-msgstr ""
-"Spustelkite ant pažymėjimo, kad pereiti iš stumdumo režimą į sukimo ir "
-"atvirkščiai"
+msgstr "Spustelkite ant pažymėjimo, kad pereitumėte į tempimo/sukimo režimą"
 
 #. no items
 #: ../src/selection-describer.cpp:103
@@ -4582,15 +4575,15 @@ msgstr[2] " <b>%i</b> sluoksnių"
 
 #: ../src/selection-describer.cpp:161
 msgid "Use <b>Shift+D</b> to look up original"
-msgstr "Spauskite <b>Shift+D</b>, kad rasti originalą"
+msgstr "Spauskite <b>Shift+D</b>, kad rastumėte originalą"
 
 #: ../src/selection-describer.cpp:165
 msgid "Use <b>Shift+D</b> to look up path"
-msgstr "Spauskite <b>Shift+D</b>, kad rasti kreivę"
+msgstr "Spauskite <b>Shift+D</b>, kad rastumėte kreivę"
 
 #: ../src/selection-describer.cpp:169
 msgid "Use <b>Shift+D</b> to look up frame"
-msgstr "Spauskite <b>Shift+D</b>, kad rasti rėmą"
+msgstr "Spauskite <b>Shift+D</b>, kad rastumėte rėmą"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:184
@@ -5017,7 +5010,7 @@ msgstr "Pažymėkite <b>objektus</b>, kuriuos norite paversti kreivėmis."
 #: ../src/splivarot.cpp:872
 #, fuzzy
 msgid "Convert stroke to path"
-msgstr "Versti tekstą į kreivę"
+msgstr "Linija į kreivę"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:875
@@ -5115,7 +5108,7 @@ msgid ""
 "first. Use <b>Shift+D</b> to look up its path."
 msgstr ""
 "Tekstas <b>jau yra ant kreivės</b>. Pirma atriškite tekstą nuo kreivės. "
-"Spauskite <b>Shift+D</b>, kad rasti pririštą kreivę."
+"Spauskite <b>Shift+D</b>, kad rastumėte pririštą kreivę."
 
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
 #: ../src/text-chemistry.cpp:107
@@ -5173,25 +5166,25 @@ msgstr ""
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Pažymėkite <b>dėstytą tekstą</b>, kurį norite atrišti."
 
-#: ../src/text-chemistry.cpp:441
+#: ../src/text-chemistry.cpp:445
 #, fuzzy
 msgid "Unflow flowed text"
 msgstr "Dėstytas tekstas"
 
-#: ../src/text-chemistry.cpp:453
+#: ../src/text-chemistry.cpp:457
 #, fuzzy
 msgid "Select <b>flowed text(s)</b> to convert."
 msgstr "Pažymėkite <b>dėstytą tekstą</b>, kurį norite atrišti."
 
-#: ../src/text-chemistry.cpp:471
+#: ../src/text-chemistry.cpp:475
 msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
 msgstr ""
 
-#: ../src/text-chemistry.cpp:499
+#: ../src/text-chemistry.cpp:503
 msgid "Convert flowed text to text"
 msgstr "Dėstyto teksto pavertimas paprastu tekstu"
 
-#: ../src/text-chemistry.cpp:504
+#: ../src/text-chemistry.cpp:508
 #, fuzzy
 msgid "<b>No flowed text(s)</b> to convert in the selection."
 msgstr "Pažymėjime <b>nėra objektų</b>, kuriuos galima paversti kreivėmis."
@@ -5362,7 +5355,7 @@ msgid ""
 "resize. <b>Click</b> to select."
 msgstr ""
 "<b>Tempkite</b>, kad sukurtumėte stačiakampį. <b>Tempkite kampus</b>, jei "
-"norite keisti dydį ar apvalinti. <b>Spustelkite</b> kad pažymėti."
+"norite keisti dydį ar apvalinti. <b>Spustelkite</b> kad pažymėtumėte."
 
 #: ../src/tools-switch.cpp:145
 msgid ""
@@ -5409,8 +5402,8 @@ msgid ""
 "<b>Drag</b> to paint a calligraphic stroke. <b>Left</b>/<b>right</b> arrow "
 "keys adjust width, <b>up</b>/<b>down</b> adjust angle."
 msgstr ""
-"<b>Tempkite</b>, kad piešti dailiraščiu. Naudokite rodyklių klavišus "
-"plunksnos pločio ir kampo keitimui."
+"<b>Tempkite</b>, kad sukurtumėte kaligrafinį potėpį. Naudokite rodyklių "
+"klavišus plunksnos pločio ir kampo keitimui."
 
 #: ../src/tools-switch.cpp:187
 msgid ""
@@ -5430,7 +5423,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:205
 msgid "<b>Click and drag</b> between shapes to create a connector."
-msgstr "<b>Tempkite</b> nuo vienos figūros iki kitos norėdami sukurti ryšį."
+msgstr "<b>Tempkite</b> nuo vienos figūros iki kitos norėdami sukurti jungtį."
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:508
 #: ../src/trace/potrace/inkscape-potrace.cpp:582
@@ -5460,7 +5453,7 @@ msgstr "Tyrimas: nėra aktyvaus dokumento"
 
 #: ../src/trace/trace.cpp:331
 msgid "Invalid SIOX result"
-msgstr ""
+msgstr "Negalimas SIOX rezultatas"
 
 #: ../src/trace/trace.cpp:436
 msgid "Trace: No active document"
@@ -5468,7 +5461,7 @@ msgstr "Tyrimas: nėra aktyvaus dokumento"
 
 #: ../src/trace/trace.cpp:459
 msgid "Trace: Image has no bitmap data"
-msgstr "Tyrimas: grafinis vaizdas be taškinės informacijos"
+msgstr "Tyrimas: vaizdas neturi taškinės informacijos"
 
 #: ../src/trace/trace.cpp:466
 #, fuzzy
@@ -5478,7 +5471,7 @@ msgstr "_Tirti Vaizdą..."
 #. ## inform the document, so we can undo
 #: ../src/trace/trace.cpp:569
 msgid "Trace bitmap"
-msgstr "Vaizdo tyrimas"
+msgstr "Taškinio vaizdo tyrimas"
 
 #: ../src/trace/trace.cpp:573
 #, c-format
@@ -5614,18 +5607,16 @@ msgstr "Naikinti persidengimus"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:520
 #: ../src/widgets/toolbox.cpp:4241
-#, fuzzy
 msgid "Arrange connector network"
-msgstr "Išdėstyti saryšių tinklą"
+msgstr "Išdėstyti jungčių tinklą"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:550
 msgid "Unclump"
 msgstr "Išdėstymo sutvarkymas"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:614
-#, fuzzy
 msgid "Randomize positions"
-msgstr "Atsitiktinė Pozicija"
+msgstr "Atsitiktinis pozicijų pakeitimas"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:711
 #, fuzzy
@@ -5639,7 +5630,7 @@ msgstr "Lygiuoti kairį šoną"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:762
 msgid "Connector network layout"
-msgstr "saryšių tinklo išdėstymas"
+msgstr "Jungčių tinklo išdėstymas"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:763
 msgid "Nodes"
@@ -5758,7 +5749,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:863
 #: ../src/widgets/toolbox.cpp:4343
 msgid "Nicely arrange selected connector network"
-msgstr "Išdėstyti saryšių tinklą"
+msgstr "Tvarkingai išdėstyti pažymėtų jungčių tinklą"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:868
 msgid "Align selected nodes horizontally"
@@ -5840,7 +5831,7 @@ msgstr "Fono spalva"
 msgid ""
 "Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
-"Puslapio fono spalva ir permatomumas (naudojamas ir grafinių vaizdų "
+"Puslapio fono spalva ir permatomumas (naudojamas ir taškinių vaizdų "
 "eksportavime)"
 
 #: ../src/ui/dialog/document-properties.cpp:198
@@ -6328,7 +6319,7 @@ msgid ""
 "How close on the screen you need to be to an object to be able to grab it "
 "with mouse (in screen pixels)"
 msgstr ""
-"Kaip arti pelės (erano taškais) turi būti objektas, kad paspaudimu jis būtų "
+"Kaip arti pelės (ekrano taškais) turi būti objektas, kad paspaudimu jis būtų "
 "pažymimas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:148
@@ -6571,7 +6562,7 @@ msgstr "Išlaikyti pažymėjimą"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:309
 msgid "Don't attach connectors to text objects"
-msgstr "Nejungti sąryšių prie teksto objektų"
+msgstr "Nejungti jungčių prie teksto objektų"
 
 #. Selector
 #: ../src/ui/dialog/inkscape-preferences.cpp:312
@@ -6690,7 +6681,7 @@ msgstr "Pieštukas"
 #. Calligraphy
 #: ../src/ui/dialog/inkscape-preferences.cpp:377 ../src/verbs.cpp:2214
 msgid "Calligraphy"
-msgstr "Dailiraštis"
+msgstr "Kaligrafija"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:380
 msgid ""
@@ -6716,11 +6707,11 @@ msgstr "Perėjimas"
 #. Connector
 #: ../src/ui/dialog/inkscape-preferences.cpp:392 ../src/verbs.cpp:2224
 msgid "Connector"
-msgstr "Saryšiai"
+msgstr "Jungtis"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid "If on, connector attachment points will not be shown for text objects"
-msgstr "Jei įjungta, sąryčio sąlyčio taškai nebus rodomi teksto objektams"
+msgstr "Jei įjungta, jungties prijungimo taškai nebus rodomi teksto objektams"
 
 #. Dropper
 #: ../src/ui/dialog/inkscape-preferences.cpp:397 ../src/verbs.cpp:2222
@@ -6964,7 +6955,8 @@ msgid ""
 "always uses best quality)"
 msgstr ""
 "Geriausia kokybė, bet vaizdavimas gali būti labai lėtas, kuomet rodomas "
-"didelis vaizdas (vaizdo eksportavimui visada naudojama geriausia kokybė)"
+"didelis vaizdas (taškinio vaizdo eksportavimui visada naudojama geriausia "
+"kokybė)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:515
 msgid "Better quality, but slower display"
@@ -7071,15 +7063,15 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "Import bitmap as <image>"
-msgstr "Importuoti grafinį vaizdą kaip <image>"
+msgstr "Importuoti taškinį vaizdą kaip <image>"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:562
 msgid ""
 "When on, an imported bitmap creates an <image> element; otherwise it is a "
 "rectangle with bitmap fill"
 msgstr ""
-"Jei įjungta, importavimas sukuria import elementą; kitu atveju sukuriamas "
-"stačiakampis su grafiniu vaizdu kaip užpildu"
+"Jei įjungta, importavimas sukuria <image> elementą; kitu atveju sukuriamas "
+"stačiakampis su taškinio vaizdo užpildu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:563
 msgid "Add label comments to printing output"
@@ -7137,20 +7129,22 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:579
 msgid "Clipping and masking:"
-msgstr "Karpymas ir filtravimas:"
+msgstr "Karpymo ir kaukių taikymas:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:580
 msgid "Use the topmost selected object as a clipping path or mask"
-msgstr "Naudoti viršutinį objektą kaip kirpimo rėmą ar filtro objektą"
+msgstr "Naudoti viršutinį objektą kaip kirpimo kreivę ar kaukę"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:582
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
-msgstr "Išjungus bus naudojamas žemiausiai esantis objektas"
+msgstr ""
+"Išjungus žemiausiai esantis objektas bus naudojamas kaip kirpimo kreivė ar "
+"kaukė"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:583
 msgid "Remove clipping path or mask after applying"
-msgstr "Šalinti kirpimo kreivę ar filtro objektą"
+msgstr "Šalinti kirpimo kreivę ar kaukę po pritaikymo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:585
 msgid ""
@@ -7400,7 +7394,7 @@ msgstr "Tolygus"
 
 #: ../src/ui/dialog/tracedialog.cpp:525
 msgid "Apply Gaussian blur to the bitmap before tracing"
-msgstr "Taikyti Gauso išplovimą prieš tiriant"
+msgstr "Vaizdui taikyti Gauso išliejimą prieš tiriant"
 
 #. TRANSLATORS: "Stack" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:528
@@ -7441,7 +7435,7 @@ msgstr "Slopinti dėmeles"
 
 #: ../src/ui/dialog/tracedialog.cpp:560
 msgid "Ignore small spots (speckles) in the bitmap"
-msgstr "Ignoruoti vaizdo smulkius taškus (dėmeles)"
+msgstr "Ignoruoti smulkius vaizdo taškus (dėmeles)"
 
 #: ../src/ui/dialog/tracedialog.cpp:568
 msgid "Speckles of up to this many pixels will be suppressed"
@@ -7488,11 +7482,11 @@ msgstr "Parinktys"
 #. ### credits
 #: ../src/ui/dialog/tracedialog.cpp:620
 msgid "Thanks to Peter Selinger, http://potrace.sourceforge.net"
-msgstr "Padėka Peter Selinger, http://potrace.sourceforge.net"
+msgstr "Peter Selinger, http://potrace.sourceforge.net"
 
 #: ../src/ui/dialog/tracedialog.cpp:622
 msgid "Credits"
-msgstr "Dėkui"
+msgstr "Padėka kūrėjams"
 
 #. #### begin right panel
 #. ## SIOX
@@ -7676,9 +7670,8 @@ msgid "Apply transformation to selection"
 msgstr "Taikyti transformaciją"
 
 #: ../src/ui/dialog/transformation.cpp:746
-#, fuzzy
 msgid "Edit transformation matrix"
-msgstr "Transformavimo matricos elementas F"
+msgstr "Transformavimo matricos pakeitimas"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
 msgid "_Use SSL"
@@ -7969,6 +7962,11 @@ msgid ""
 "\n"
 "Do you want to save this file in another format?"
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">„%s“ buvo išsaugota formatu (%s), "
+"kuris gali būti netinkamas Jūsų dokumentui laikyti. Tai gali reikšti Jūsų "
+"dokumento duomenų praradimą!</span>\n"
+"\n"
+"Ar norite šią bylą saugoti kitu formatu?"
 
 #: ../src/ui/widget/panel.cpp:98
 msgid "tiny"
@@ -8009,20 +8007,20 @@ msgstr "Kita"
 #: ../src/ui/widget/selected-style.cpp:90
 #: ../src/ui/widget/style-swatch.cpp:104
 msgid "F:"
-msgstr "F:"
+msgstr "U:"
 
 #: ../src/ui/widget/selected-style.cpp:91
 #: ../src/ui/widget/style-swatch.cpp:105
 msgid "S:"
-msgstr "S:"
+msgstr "L:"
 
 #: ../src/ui/widget/selected-style.cpp:92
 msgid "O:"
-msgstr "O:"
+msgstr "N:"
 
 #: ../src/ui/widget/selected-style.cpp:132
 msgid "N/A"
-msgstr "N/A"
+msgstr "n. d."
 
 #: ../src/ui/widget/selected-style.cpp:135
 #: ../src/ui/widget/selected-style.cpp:972
@@ -8338,12 +8336,12 @@ msgstr "Puslapio dydis"
 #: ../src/ui/widget/style-swatch.cpp:274
 #, c-format
 msgid "Fill: %06x/%.3g"
-msgstr ""
+msgstr "Užpildas: %06x/%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:276
 #, c-format
 msgid "Stroke: %06x/%.3g"
-msgstr ""
+msgstr "Linija: %06x/%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:325
 #, c-format
@@ -8584,15 +8582,15 @@ msgstr "_Importuoti..."
 
 #: ../src/verbs.cpp:1988
 msgid "Import a bitmap or SVG image into this document"
-msgstr "Į dokumentą įdėti importuojamą grafinį vaizdą ar kitą SVG dokumentą"
+msgstr "Į dokumentą įdėti importuojamą taškinį vaizdą ar SVG dokumentą"
 
 #: ../src/verbs.cpp:1989
 msgid "_Export Bitmap..."
-msgstr "Eksportuoti _vaizdą.."
+msgstr "Eksportuoti taškinį _vaizdą.."
 
 #: ../src/verbs.cpp:1990
 msgid "Export this document or a selection as a bitmap image"
-msgstr "Eksportuoti dokumentą ar pažymėjimą kaip grafinį vaizdą"
+msgstr "Eksportuoti dokumentą ar pažymėjimą kaip taškinį vaizdą"
 
 #: ../src/verbs.cpp:1991
 msgid "N_ext Window"
@@ -8920,7 +8918,7 @@ msgstr "_Nuimti nuo kreivės"
 
 #: ../src/verbs.cpp:2077
 msgid "Remove Manual _Kerns"
-msgstr "Naikinti rankinius _tarpus"
+msgstr "Naikinti rankinius t_arpus"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
@@ -8938,7 +8936,7 @@ msgstr "Sukurti pažymėtų kreivių sąjungą"
 
 #: ../src/verbs.cpp:2084
 msgid "_Intersection"
-msgstr "S_ankirta"
+msgstr "Sa_nkirta"
 
 #: ../src/verbs.cpp:2085
 msgid "Create intersection of selected paths"
@@ -9050,7 +9048,7 @@ msgstr "Sukurti dinaminį (keičiamą) išpūtimą"
 
 #: ../src/verbs.cpp:2121
 msgid "_Linked Offset"
-msgstr "_Susietas išpūtimas"
+msgstr "Susietas išpūti_mas"
 
 #: ../src/verbs.cpp:2122
 msgid "Create a dynamic offset object linked to the original path"
@@ -9074,7 +9072,7 @@ msgstr "Supaprastinti pažymėtas kreives (šalinanti nereikalingus mazgus)"
 
 #: ../src/verbs.cpp:2128
 msgid "_Reverse"
-msgstr "_Apversti"
+msgstr "Apv_ersti"
 
 #: ../src/verbs.cpp:2129
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
@@ -9083,19 +9081,19 @@ msgstr "Keisti pažymėtų kreivių kryptį"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2131
 msgid "_Trace Bitmap..."
-msgstr "_Tirti vaizdą..."
+msgstr "_Tirti taškinį vaizdą..."
 
 #: ../src/verbs.cpp:2132
 msgid "Create one or more paths from a bitmap by tracing it"
-msgstr "Iš grafinio vaizdo išgauti kreives"
+msgstr "Taškinį vaizdą ištyrus sukurti vieną ar daugiau kreivių"
 
 #: ../src/verbs.cpp:2133
 msgid "_Make a Bitmap Copy"
-msgstr "_Kurti kopiją kaip vaizdą"
+msgstr "Kurti _taškinę kopiją"
 
 #: ../src/verbs.cpp:2134
 msgid "Export selection to a bitmap and insert it into document"
-msgstr "Eksportuoti pažymėjimą į grafinį vaizdą ir įtraukti į dokumentą"
+msgstr "Eksportuoti pažymėjimą kaip taškinį vaizdą ir įtraukti į dokumentą"
 
 #: ../src/verbs.cpp:2135
 msgid "_Combine"
@@ -9190,7 +9188,7 @@ msgstr "Nuleisti aktyvų sluoksnį į pačią apačią"
 
 #: ../src/verbs.cpp:2160
 msgid "_Raise Layer"
-msgstr "Pa_kelti sluoksnį"
+msgstr "Pak_elti sluoksnį"
 
 #: ../src/verbs.cpp:2161
 msgid "Raise the current layer"
@@ -9247,7 +9245,7 @@ msgstr "Paversti pažymėtą objektą kreive"
 
 #: ../src/verbs.cpp:2176
 msgid "_Flow into Frame"
-msgstr "_Dėstyti rėmuose"
+msgstr "Dėstyti _rėmuose"
 
 #: ../src/verbs.cpp:2177
 msgid ""
@@ -9259,7 +9257,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2178
 msgid "_Unflow"
-msgstr "Išimti iš _rėmų"
+msgstr "Iši_mti iš rėmų"
 
 #: ../src/verbs.cpp:2179
 msgid "Remove text from frame (creates a single-line text object)"
@@ -9355,7 +9353,7 @@ msgstr "Bezier kreivių ir tiesių atkarpų režimas"
 
 #: ../src/verbs.cpp:2215
 msgid "Draw calligraphic lines"
-msgstr "Dailiraščio kūrimo režimas"
+msgstr "Kaligrafinių potėpių kūrimo režimas"
 
 #: ../src/verbs.cpp:2217
 msgid "Create and edit text objects"
@@ -9375,7 +9373,7 @@ msgstr "Vidutinės spalvos išrinkimo režimas"
 
 #: ../src/verbs.cpp:2225
 msgid "Create connectors"
-msgstr "Sąryšiai"
+msgstr "Jungčių režimas"
 
 #. Tool prefs
 #: ../src/verbs.cpp:2228
@@ -9444,11 +9442,11 @@ msgstr "Atidaryti pieštuko įrankio nustatymus"
 
 #: ../src/verbs.cpp:2244
 msgid "Calligraphic Preferences"
-msgstr "Dailiraščio įrankio nustatymai"
+msgstr "Kaligrafijos įrankio nustatymai"
 
 #: ../src/verbs.cpp:2245
 msgid "Open Preferences for the Calligraphy tool"
-msgstr "Atidaryti dailiraščio įrankio nustatymus"
+msgstr "Atidaryti kaligrafijos įrankio nustatymus"
 
 #: ../src/verbs.cpp:2246
 msgid "Text Preferences"
@@ -9484,11 +9482,11 @@ msgstr "Atidaryti pipetės kūrimo įrankio nustatymus"
 
 #: ../src/verbs.cpp:2254
 msgid "Connector Preferences"
-msgstr "Sąryšių įrankio nustatymai"
+msgstr "Jungčių įrankio nustatymai"
 
 #: ../src/verbs.cpp:2255
 msgid "Open Preferences for the Connector tool"
-msgstr "Atidaryti sąryšių kūrimo ir redagavimo įrankio nustatymus"
+msgstr "Atidaryti jungčių kūrimo ir redagavimo įrankio nustatymus"
 
 #. Zoom/View
 #: ../src/verbs.cpp:2258
@@ -9583,7 +9581,7 @@ msgstr "Keisti mastelį į 2:1"
 
 #: ../src/verbs.cpp:2275
 msgid "_Fullscreen"
-msgstr "_Visas ekranas"
+msgstr "Visas _ekranas"
 
 #: ../src/verbs.cpp:2275
 msgid "Stretch this document window to full screen"
@@ -9677,7 +9675,7 @@ msgstr "Keisti specifinius dokumento nustatymus, kurie saugomi su dokumentu"
 
 #: ../src/verbs.cpp:2306
 msgid "Document _Metadata..."
-msgstr "Dokumento _metaduomenys..."
+msgstr "Dokumento m_etaduomenys..."
 
 #: ../src/verbs.cpp:2307
 msgid "Edit document metadata (to be saved with the document)"
@@ -9694,7 +9692,7 @@ msgstr "Keisti pažymėjimo išvaizdą – užpildo tipą ir spalvą, linijos i�
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2311
 msgid "S_watches..."
-msgstr "Spal_vų paletė..."
+msgstr "_Spalvų paletė..."
 
 #: ../src/verbs.cpp:2312
 msgid "Select colors from a swatches palette"
@@ -9710,7 +9708,7 @@ msgstr "Transformuoti pažymėtus objektus"
 
 #: ../src/verbs.cpp:2315
 msgid "_Align and Distribute..."
-msgstr "_Lygiuoti ir rikiuoti..."
+msgstr "L_ygiuoti ir rikiuoti..."
 
 #: ../src/verbs.cpp:2316
 msgid "Align and distribute objects"
@@ -9801,7 +9799,7 @@ msgstr "Jabber momentinių žinučių klientas"
 
 #: ../src/verbs.cpp:2339
 msgid "_Input Devices..."
-msgstr "Įvest_ies įtaisai..."
+msgstr "Įvesties į_taisai..."
 
 #: ../src/verbs.cpp:2340
 msgid "Configure extended input devices, such as a graphics tablet"
@@ -9817,7 +9815,7 @@ msgstr "Informacija apie Inkscape įskiepius"
 
 #: ../src/verbs.cpp:2343
 msgid "Layer_s..."
-msgstr "S_luoksniai..."
+msgstr "_Sluoksniai..."
 
 #: ../src/verbs.cpp:2344
 msgid "View Layers"
@@ -9834,7 +9832,7 @@ msgstr "Klaviatūros ir pelės šaukiniai"
 
 #: ../src/verbs.cpp:2349
 msgid "About E_xtensions"
-msgstr "Apie _įskiepius"
+msgstr "Apie įskie_pius"
 
 #: ../src/verbs.cpp:2350
 msgid "Information on Inkscape extensions"
@@ -9842,7 +9840,7 @@ msgstr "Informacija apie Inkscape įskiepius"
 
 #: ../src/verbs.cpp:2351
 msgid "About _Memory"
-msgstr "Apie at_mintį"
+msgstr "Apie a_tmintį"
 
 #: ../src/verbs.cpp:2352
 msgid "Memory usage information"
@@ -9893,16 +9891,16 @@ msgstr "Inkscape: vaizdo ty_rimas"
 
 #: ../src/verbs.cpp:2367
 msgid "Using bitmap tracing"
-msgstr "Patarimai apie grafinio vaizdo vertimą vektoriniu"
+msgstr "Patarimai apie taškinio vaizdo vertimą vektoriniu"
 
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2368
 msgid "Inkscape: _Calligraphy"
-msgstr "Inkscape: _dailiraštis"
+msgstr "Inkscape: kal_igrafija"
 
 #: ../src/verbs.cpp:2369
 msgid "Using the Calligraphy pen tool"
-msgstr "Informacija apie dailiraščio kūrimo įrankį"
+msgstr "Informacija apie kaligrafijos įrankį"
 
 #: ../src/verbs.cpp:2370
 msgid "_Elements of Design"
@@ -10085,7 +10083,7 @@ msgstr "Keisti perėjimo punktus"
 #: ../src/widgets/toolbox.cpp:1875 ../src/widgets/toolbox.cpp:2743
 #: ../src/widgets/toolbox.cpp:2782
 msgid "<b>New:</b>"
-msgstr "<b>Kuriant:</b>"
+msgstr "<b>Kurti:</b>"
 
 #: ../src/widgets/gradient-toolbar.cpp:566
 msgid "Create linear gradient"
@@ -10101,11 +10099,11 @@ msgstr "taikyti"
 
 #: ../src/widgets/gradient-toolbar.cpp:608
 msgid "Create gradient in the fill"
-msgstr "Kurti perėjimą užpildui"
+msgstr "Taikyti perėjimą užpildui"
 
 #: ../src/widgets/gradient-toolbar.cpp:622
 msgid "Create gradient in the stroke"
-msgstr "Kurti perėjimą linijai"
+msgstr "Taikyti perėjimą linijai"
 
 #. FIXME: implement averaging of all parameters for multiple selected stars
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
@@ -10172,7 +10170,7 @@ msgstr "Punkto spalva"
 
 #: ../src/widgets/gradient-vector.cpp:894
 msgid "Gradient editor"
-msgstr "Perėjimo Keitimas"
+msgstr "Perėjimo redaktorius"
 
 #: ../src/widgets/gradient-vector.cpp:1170
 msgid "Change gradient stop color"
@@ -10557,7 +10555,7 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:899
 msgid "Star: Change number of corners"
-msgstr "Žvaigždė: kampų skaičiaus keitimas"
+msgstr "Žvaigždė: kampų skaičiaus pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:944
 #, fuzzy
@@ -10575,11 +10573,11 @@ msgstr "Žvaigždės sukūrimas"
 
 #: ../src/widgets/toolbox.cpp:1035
 msgid "Star: Change rounding"
-msgstr "Žvaigždė: apvalinimo keitimas"
+msgstr "Žvaigždė: apvalinimo pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:1073
 msgid "Star: Change randomization"
-msgstr "Žvaigždė: atsitiktinumo keitimas"
+msgstr "Žvaigždė: atsitiktinumo pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:1268
 msgid "Regular polygon (with one handle) instead of a star"
@@ -10636,7 +10634,7 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1413
 msgid "Change rectangle"
-msgstr "Stačiakampio keitimas"
+msgstr "Stačiakampio pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:1612
 msgid "W:"
@@ -10676,7 +10674,7 @@ msgstr "Daryti aštrius kampus"
 
 #: ../src/widgets/toolbox.cpp:1730
 msgid "Change spiral"
-msgstr "Spiralės keitimas"
+msgstr "Spiralės pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:1879
 msgid "Turns:"
@@ -10704,7 +10702,7 @@ msgstr "Vidinio žiedo spindulys (reliatyvus spiralės dydžiui)"
 
 #: ../src/widgets/toolbox.cpp:2206 ../src/widgets/toolbox.cpp:2358
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
-msgstr "Dailiraščio plunksnos plotis (santykinai matomai vaizdo daliai)"
+msgstr "Kaligrafinės plunksnos plotis (susietas su matoma vaizdo dalimi)"
 
 #: ../src/widgets/toolbox.cpp:2216 ../src/widgets/toolbox.cpp:2368
 msgid "Thinning:"
@@ -10776,6 +10774,24 @@ msgstr "Masė:"
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
 msgstr ""
 
+#: ../src/widgets/toolbox.cpp:2291
+#, fuzzy
+msgid "Pressure"
+msgstr "Išlaikant"
+
+#: ../src/widgets/toolbox.cpp:2292 ../src/widgets/toolbox.cpp:2456
+msgid "Use the pressure of the input device to alter the width of the pen"
+msgstr "Naudoti įvesties įrenginio spaudimą pločio nustatymui"
+
+#: ../src/widgets/toolbox.cpp:2303
+#, fuzzy
+msgid "Tilt"
+msgstr "Pavadinimas"
+
+#: ../src/widgets/toolbox.cpp:2304 ../src/widgets/toolbox.cpp:2469
+msgid "Use the tilt of the input device to alter the angle of the pen's nib"
+msgstr "Naudoti įvesties įrenginio pakrypimą plunksnos kampo nustatymui"
+
 #. TRANSLATORS: "cap" means "end" (both start and finish) here
 #: ../src/widgets/toolbox.cpp:2402
 #, fuzzy
@@ -10786,17 +10802,9 @@ msgstr "Apvalinimas:"
 msgid "Increase to round the ends of strokes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2456
-msgid "Use the pressure of the input device to alter the width of the pen"
-msgstr "Naudoti įvesties įrenginio spaudimą pločio nustatymui"
-
-#: ../src/widgets/toolbox.cpp:2469
-msgid "Use the tilt of the input device to alter the angle of the pen's nib"
-msgstr "Naudoti įvesties įrenginio pakrypimą plunksnos kampo nustatymui"
-
 #: ../src/widgets/toolbox.cpp:2578
 msgid "Arc: Change start/end"
-msgstr "Arka: pradžios/pabaigos keitimas"
+msgstr "Arka: pradžios/pabaigos pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:2651
 msgid "Arc: Change open/closed"
@@ -10860,29 +10868,31 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3384
 msgid "Text: Change font family"
-msgstr "Tekstas: šrifto šeimos keitimas"
+msgstr "Tekstas: šrifto šeimos pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:3467
 msgid "Text: Change alignment"
-msgstr "Tekstas: lygiavimo keitimas"
+msgstr "Tekstas: lygiavimo pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:3513
 msgid "Text: Change font style"
-msgstr "Tekstas: šrifto stiliaus keitimas"
+msgstr "Tekstas: šrifto stiliaus pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:3560
 msgid "Text: Change orientation"
-msgstr "Tekstas: orientacijos keitimas"
+msgstr "Tekstas: orientacijos pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:3656
 msgid "Text: Change font size"
-msgstr "Tekstas: šrifto dydžio keitimas"
+msgstr "Tekstas: šrifto dydžio pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:3839
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
+"Šis šriftas nėra instaliuotas Jūsų sistemoje. Vietoje jo Inkscape naudos "
+"numatytąjį šriftą."
 
 #: ../src/widgets/toolbox.cpp:3877
 msgid "Align left"
@@ -10929,9 +10939,8 @@ msgid "Letter rotation"
 msgstr "Raidžių palenkimas"
 
 #: ../src/widgets/toolbox.cpp:4222
-#, fuzzy
 msgid "Change connector spacing"
-msgstr "Sąryšiai"
+msgstr "Atstumo iki objekto pakeitimas"
 
 #: ../src/widgets/toolbox.cpp:4331
 msgid "Spacing:"
@@ -10952,7 +10961,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:4362
 #, fuzzy
 msgid "Make connectors with end-markers (arrows) point downwards"
-msgstr "Jungti objektus vengiant kitų objektų kirtimo"
+msgstr "Kurti jungtis su galų žymėmis (rodyklėmis), kurios nukreiptos atgal"
 
 #: ../src/widgets/toolbox.cpp:4376
 msgid "Do not allow overlapping shapes"
@@ -10970,11 +10979,11 @@ msgstr ""
 #. vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
-msgstr "Pridėti mazgus"
+msgstr "Pridėti mazgų"
 
 #: ../share/extensions/addnodes.inx.h:2
 msgid "Maximum segment length"
-msgstr ""
+msgstr "Didžiausias segmento ilgis"
 
 #: ../share/extensions/addnodes.inx.h:3 ../share/extensions/flatten.inx.h:3
 #: ../share/extensions/markers_strokepaint.inx.h:2
@@ -10983,27 +10992,27 @@ msgstr ""
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:4
 msgid "Modify Path"
-msgstr ""
+msgstr "Kreivės modifikavimas"
 
 #: ../share/extensions/ai_input.inx.h:1
-msgid "AI Input"
-msgstr "AI įvestis"
+msgid "AI 8.0 Input"
+msgstr "AI 8.0 įvestis"
 
 #: ../share/extensions/ai_input.inx.h:2 ../share/extensions/ai_output.inx.h:2
-msgid "Adobe Illustrator (*.ai)"
-msgstr "Adobe Illustrator (*.ai)"
+msgid "Adobe Illustrator 8.0 (*.ai)"
+msgstr "Adobe Illustrator 8.0 (*.ai)"
 
 #: ../share/extensions/ai_input.inx.h:3
-msgid "Open files saved with Adobe Illustrator"
-msgstr "Atveria bylas, išsaugotas su Adobe Illustrator"
+msgid "Open files saved with Adobe Illustrator 8.0 or older"
+msgstr "Atveria bylas, išsaugotas su Adobe Illustrator 8.0 ar senesne versija"
 
 #: ../share/extensions/ai_output.inx.h:1
-msgid "AI Output"
-msgstr "AI išvestis"
+msgid "AI 8.0 Output"
+msgstr "AI 8.0 išvestis"
 
 #: ../share/extensions/ai_output.inx.h:3
-msgid "Write Adobe Illustrator"
-msgstr "Kurti Adobe Illustrator bylą"
+msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
+msgstr "Kuria Adobe Illustrator 8.0 bylą (paremtą Postscript)"
 
 #: ../share/extensions/aisvg.inx.h:1
 msgid "AI SVG Input"
@@ -11136,10 +11145,10 @@ msgstr "Šrifto dydis"
 
 #: ../share/extensions/dots.inx.h:3
 msgid "Number Nodes"
-msgstr "Mazgų liekis"
+msgstr "Mazgų numeravimas"
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
-#: ../share/extensions/measure.inx.h:10
+#: ../share/extensions/measure.inx.h:11
 msgid "Visualize Path"
 msgstr ""
 
@@ -11166,11 +11175,11 @@ msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid "Desktop Cutting Plotter"
-msgstr ""
+msgstr "Desktop Cutting Plotter"
 
 #: ../share/extensions/dxf_outlines.inx.h:2
 msgid "Desktop Cutting Plotter (*.DXF)"
-msgstr ""
+msgstr "Desktop Cutting Plotter (*.DXF)"
 
 #: ../share/extensions/dxf_output.inx.h:2
 msgid "DXF Output"
@@ -11191,9 +11200,8 @@ msgid "Embed All Images"
 msgstr "Įterpti visas grafines bylas"
 
 #: ../share/extensions/embedimage.inx.h:2
-#, fuzzy
 msgid "Embed only selected images"
-msgstr "Įterpti visus grafinius failus"
+msgstr "Įterpti tik pažymėtus vaizdus"
 
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
@@ -11240,6 +11248,11 @@ msgid "Extract One Image"
 msgstr ""
 
 #: ../share/extensions/extractimage.inx.h:3
+#, fuzzy
+msgid "Note: The file extension is appended automatically."
+msgstr "Automatiškai pridėti plėtinį"
+
+#: ../share/extensions/extractimage.inx.h:4
 msgid "Path to save image"
 msgstr ""
 
@@ -11291,6 +11304,8 @@ msgstr "Funkcijų braižiklis"
 #: ../share/extensions/funcplot.inx.h:8
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
 msgstr ""
+"Izotropinis talpinimas (naudoja mažiausią: plotį (x sritį) arba aukštį (y "
+"sritį))"
 
 #: ../share/extensions/funcplot.inx.h:9
 msgid "Multiply x-range by 2*pi"
@@ -11298,7 +11313,7 @@ msgstr "Padauginti x sritį iš 2*π"
 
 #: ../share/extensions/funcplot.inx.h:10
 msgid "Range and Sampling"
-msgstr ""
+msgstr "Sritis ir imtys"
 
 #: ../share/extensions/funcplot.inx.h:11
 msgid "Remove rectangle"
@@ -11321,10 +11336,15 @@ msgid ""
 "(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and "
 "e are also available."
 msgstr ""
+"Galimos šios funkcijos (beje, jos yra standartinės matematinės python kalbos "
+"funkcijos): ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf"
+"(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); "
+"atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians"
+"(x); cosh(x); sinh(x); tanh(x). Taip pat galite naudoti pi bei e konstantas."
 
 #: ../share/extensions/funcplot.inx.h:16
 msgid "y-value of rectangle's bottom"
-msgstr ""
+msgstr "y reikšmė stačiakampio apačioje"
 
 #: ../share/extensions/funcplot.inx.h:17
 #, fuzzy
@@ -11462,37 +11482,42 @@ msgid "Color Markers to Match Stroke"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:1
-#, fuzzy
 msgid "Font size [px]"
-msgstr "Šrifto dydis"
+msgstr "Šrifto dydis [px]"
 
 #. <param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>
 #: ../share/extensions/measure.inx.h:4
-#, fuzzy
 msgid "Length Unit: "
-msgstr "Ilgis:"
+msgstr "Ilgio vienetas:"
 
 #: ../share/extensions/measure.inx.h:5
-#, fuzzy
 msgid "Measure"
-msgstr "Matuoti kelią"
+msgstr "Matuotavimas"
 
 #: ../share/extensions/measure.inx.h:6
 msgid "Measure Path"
 msgstr "Matuoti kelią"
 
 #: ../share/extensions/measure.inx.h:7
-#, fuzzy
 msgid "Offset [px]"
-msgstr "Paslinkta kreivė"
+msgstr "Poslinkis [px]"
 
 #: ../share/extensions/measure.inx.h:8
-#, fuzzy
 msgid "Precision"
-msgstr "Aprašymas"
+msgstr "Tikslumas"
 
 #: ../share/extensions/measure.inx.h:9
 msgid "Scale Factor (Drawing:Real Length) = 1:"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:10
+msgid ""
+"This effect measures the length of the selected path and adds it as a text-"
+"on-path object with the selected unit. The number of significant digits can "
+"be controlled by the Precision field. The Offset field controls the distance "
+"from the text to the path. The Scale factor can be used to make measurements "
+"in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
+"real world, Scale must be set to 250."
 msgstr ""
 
 #: ../share/extensions/motion.inx.h:1
@@ -11513,7 +11538,7 @@ msgstr ""
 
 #: ../share/extensions/outline2svg.inx.h:2
 msgid "Text Outline File (*.outline)"
-msgstr ""
+msgstr "Text Outline byla (*.outline)"
 
 #: ../share/extensions/outline2svg.inx.h:3
 msgid "Text Outline Input"
@@ -11550,18 +11575,51 @@ msgstr "Punktyro pradžia"
 
 #: ../share/extensions/pathalongpath.inx.h:8
 #, fuzzy
+msgid "Repeated"
+msgstr "Pasikartojimas:"
+
+#: ../share/extensions/pathalongpath.inx.h:9
+msgid "Repeated, stretched"
+msgstr ""
+
+#: ../share/extensions/pathalongpath.inx.h:10
+msgid "Ribbon"
+msgstr ""
+
+#: ../share/extensions/pathalongpath.inx.h:11
+#, fuzzy
+msgid "Single"
+msgstr "Kampas"
+
+#: ../share/extensions/pathalongpath.inx.h:12
+msgid "Single, stretched"
+msgstr ""
+
+#: ../share/extensions/pathalongpath.inx.h:13
+#, fuzzy
+msgid "Snake"
+msgstr "Kreivinimas"
+
+#: ../share/extensions/pathalongpath.inx.h:14
+#, fuzzy
 msgid "Space between copies:"
 msgstr "Tarpai tarp eilučių"
 
-#: ../share/extensions/pathalongpath.inx.h:9
+#: ../share/extensions/pathalongpath.inx.h:15
 #, fuzzy
 msgid "Tangential offset"
 msgstr "Punktyro pradžia"
 
+#: ../share/extensions/pathalongpath.inx.h:16
+msgid ""
+"This effect bends a pattern object along an arbitrary \"skeleton\" path. The "
+"pattern can be a path or a group of paths. First, select the pattern object; "
+"then add to selection the skeleton path; then call this effect."
+msgstr ""
+
 #: ../share/extensions/perspective.inx.h:2
-#, fuzzy
 msgid "Perspective"
-msgstr "Atsiradimą"
+msgstr "Perspektyva"
 
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
@@ -11573,11 +11631,11 @@ msgstr "Postscript įvestis"
 
 #: ../share/extensions/radiobutton_example.inx.h:1
 msgid "Developer Examples"
-msgstr ""
+msgstr "Pavyzdžiai programuotojmas"
 
 #: ../share/extensions/radiobutton_example.inx.h:2
 msgid "RadioButton example"
-msgstr ""
+msgstr "RadioButton pavyzdys"
 
 #: ../share/extensions/radiobutton_example.inx.h:3
 #, fuzzy
@@ -11595,21 +11653,23 @@ msgstr "Judinti mazgus"
 
 #: ../share/extensions/radiusrand.inx.h:2
 msgid "Maximum displacement, px"
-msgstr ""
+msgstr "Didžiausias perkėlimo nuotolis, px"
 
 #: ../share/extensions/radiusrand.inx.h:4
 msgid "Shift node handles"
-msgstr "Išmėtyti mazgų rankenėles"
+msgstr "Išmėtyti mazgų valdiklius"
 
 #: ../share/extensions/radiusrand.inx.h:5
 msgid "Shift nodes"
-msgstr "galinis mazgas"
+msgstr "Išmėtyti mazgus"
 
 #: ../share/extensions/radiusrand.inx.h:6
 msgid ""
 "This effect randomly shifts the nodes (and optionally node handles) of the "
 "selected path."
 msgstr ""
+"Šis efektas atsitiktinai perkelia pasirinktos kreivės mazgus (galima "
+"pritaikyti ir mazgų valdikliams)."
 
 #: ../share/extensions/radiusrand.inx.h:7
 msgid "Use normal distribution"
@@ -11726,297 +11786,3 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Windows Metafile įvestis"
-
-#~ msgid "PDF Print"
-#~ msgstr "PDF spausdinimas"
-
-#, fuzzy
-#~ msgid "Dots per inch resolution"
-#~ msgstr "Standartinė eksporto raiška:"
-
-#~ msgid "You cannot put flowtext on a path. Convert flowtext to text first."
-#~ msgstr ""
-#~ "Dėstyto teksto negalima kelti ant kreivės. Pirma dėstytą tekstą "
-#~ "paverskite paprastu."
-
-#~ msgid "Blur Edge"
-#~ msgstr "Išlieti Kraštą"
-
-#~ msgid "Blur Width"
-#~ msgstr "Išlieti Plotį"
-
-#~ msgid "Text to Path"
-#~ msgstr "Tekstas į Kreivę"
-
-#~ msgid "Use the new Gtkmm GUI interface"
-#~ msgstr "Naudoti naują Gtkmm vartotojo sąsaja"
-
-#~ msgid "(null_pointer)"
-#~ msgstr "(null_reikšmė)"
-
-#, fuzzy
-#~ msgid "Create offset object"
-#~ msgstr "Sukurti dinaminį (keičiamą) išpūtimą"
-
-#, fuzzy
-#~ msgid "Inset/outset path"
-#~ msgstr "Įtraukti/Išpūsti:"
-
-#~ msgid "Unicode: %s: %s"
-#~ msgstr "Unicode: %s: %s"
-
-#~ msgid "Unicode: "
-#~ msgstr "Unicode: "
-
-#~ msgid "Find"
-#~ msgstr "Rasti"
-
-#~ msgid "Image Brightness"
-#~ msgstr "Vaizdo Ryškumas"
-
-#~ msgid "Optimal Edge Detection (Canny)"
-#~ msgstr "Canny Optimalaus Vaizdo Atpažinimas"
-
-#~ msgid "Quantization / Reduction"
-#~ msgstr "Kvantizacija / Mažinimas"
-
-#~ msgid "Monochrome"
-#~ msgstr "Juodai-baltas vaizdas"
-
-#~ msgid "Multiple Scanning"
-#~ msgstr "Skanavimas Žingsniais"
-
-#~ msgid "Potrace"
-#~ msgstr "Potrace tyrimas"
-
-#~ msgid "Number of Strings"
-#~ msgstr "Eilučių Skaičius"
-
-#~ msgid "Fractal (Koch)"
-#~ msgstr "Fraktalas (Koch)"
-
-#~ msgid "Fractal (Koch) - Load Pattern"
-#~ msgstr "Fraktalas (Koch) - įkrauti raštą"
-
-#~ msgid "Radius"
-#~ msgstr "Spindulys"
-
-#~ msgid "Radius Randomize"
-#~ msgstr "Spindulio AtsitiktinumasAtsitiktinumas:"
-
-#~ msgid "Randomize node handles"
-#~ msgstr "Išmėtyti siūlių rankenėles"
-
-#~ msgid "Randomize nodes"
-#~ msgstr "Išmėtyti siūles"
-
-#~ msgid "Periods (2*Pi each)"
-#~ msgstr "Periodai (po 2*Pi)"
-
-#~ msgid "_Opacity"
-#~ msgstr "P_ermatomumas"
-
-#~ msgid "Select <b>path(s)</b> to outline."
-#~ msgstr "Pažymėkite <b>kreivę</b>, kurios linijos kontūras verčiamas kreive."
-
-#~ msgid "How much inertia affects the movement of the pen"
-#~ msgstr "Kaip smarkiai plunksna yra veikiama inercijos"
-
-#~ msgid "Fit Canvas to Selection"
-#~ msgstr "Derinti pažymėjimo ribose"
-
-#~ msgid ""
-#~ "When pressed, picks visible color without alpha and when not pressed, "
-#~ "picks color including its alpha"
-#~ msgstr ""
-#~ "Jei paspausta, imama spalva be permatomumo, kai atleista - skaičiuojant "
-#~ "ir permatomumą"
-
-#~ msgid "Jabber connection lost."
-#~ msgstr "Jabber ryšys nutrūko."
-
-#~ msgid "<b>%s</b> has left the chatroom."
-#~ msgstr "<b>%s</b> išėjo iš pokalbių kambario."
-
-#~ msgid "<b>An invitation conflict has occurred.</b>"
-#~ msgstr "<b>Pakvietimo konfliktas.</b>"
-
-#~ msgid "Incoming whiteboard invitation from %1"
-#~ msgstr "Kolektyvinio darbo kvietimą siunčia %1"
-
-#~ msgid ""
-#~ "Would you like to accept %1's invitation in a new document window?\n"
-#~ "Accepting the invitation in your current window will discard unsaved "
-#~ "changes."
-#~ msgstr ""
-#~ "Ar sutinkate priimti naudotojo %1 kvietimą naujame dokumento lange?\n"
-#~ "Jei kvietimą priimsite egzistuojančiame lange, neišsaugoti pakeitimai "
-#~ "prasiras"
-
-#~ msgid "Accept invitation in new document window"
-#~ msgstr "Priimti kvietimą naujame lange"
-
-#~ msgid ""
-#~ "A new document window could not be opened for a whiteboard session with "
-#~ "<b>%1</b>"
-#~ msgstr ""
-#~ "Nepavyko atidaryti naujo lango kolektyviniam redagavimui (naudotojas <b>%"
-#~ "1</b>)"
-
-#~ msgid "<b>%s</b> has joined the chatroom."
-#~ msgstr "<b>%s</b> atėjo į pokalbių kambarį."
-
-#~ msgid "%u change in receive queue."
-#~ msgid_plural "%u changes in receive queue."
-#~ msgstr[0] "%u pokytis gautoje eilėje."
-#~ msgstr[1] "%u pokyčiai gautoje eilėje."
-#~ msgstr[2] "%u pokyčių gautoje eilėje."
-
-#~ msgid "%u change in send queue."
-#~ msgid_plural "%u changes in send queue."
-#~ msgstr[0] "%u pokytis išsiųstoje eilėje."
-#~ msgstr[1] "%u pokyčiai išsiųstoje eilėje."
-#~ msgstr[2] "%u pokyčių išsiųstoje eilėje."
-
-#~ msgid "No SSL certificate was found."
-#~ msgstr "Nerastas SSL sertifikatas"
-
-#~ msgid "The SSL certificate provided by the Jabber server is untrusted."
-#~ msgstr "Pateikiamas Jabber serverio SSL sertifikatas nėra tarp patikimų"
-
-#~ msgid "The SSL certificate provided by the Jabber server is expired."
-#~ msgstr "Pateikiamas negaliojantis Jabber serverio SSL sertifikatas"
-
-#~ msgid ""
-#~ "The SSL certificate provided by the Jabber server has not been activated."
-#~ msgstr "Pateikiamas neaktyvuotas Jabber serverio SSL sertifikatas"
-
-#~ msgid ""
-#~ "The SSL certificate provided by the Jabber server contains a hostname "
-#~ "that does not match the Jabber server's hostname."
-#~ msgstr ""
-#~ "Pateikiamame Jabber serverio SSL sertifikate įrašytas serverio adresas "
-#~ "neatitinka tikrojo adreso"
-
-#~ msgid ""
-#~ "The SSL certificate provided by the Jabber server contains an invalid "
-#~ "fingerprint."
-#~ msgstr ""
-#~ "Pateikiamas Jabber serverio SSL sertifikatas su klaidingomis žymėmis"
-
-#~ msgid "An unknown error occurred while setting up the SSL connection."
-#~ msgstr "Nenustatyta klaida bandant prisijungti per SSL"
-
-#~ msgid "Continue connecting and ignore further errors"
-#~ msgstr "Toliau mėginti jungtis, ignoruojant tolesnes klaidas"
-
-#~ msgid "Continue connecting, but warn me of further errors"
-#~ msgstr "Toliau mėginti jungtis, perspėjant apie tolesnes klaidas"
-
-#~ msgid "Cancel connection"
-#~ msgstr "Nutraukti ryšį"
-
-#~ msgid "Choose a different location"
-#~ msgstr "Pasirinkite kitą vietą"
-
-#~ msgid "Skip session recording"
-#~ msgstr "Praleisti sesijos įrašymą"
-
-#~ msgid "_Connect to Jabber server..."
-#~ msgstr "_Jungtis prie Jabber Serverio..."
-
-#~ msgid "Connect to a Jabber server"
-#~ msgstr "Jungtis prie Jabber serverio kolektyviniam redagavimui"
-
-#~ msgid "Share with _user..."
-#~ msgstr "Dalintis Piešini_u..."
-
-#~ msgid "Establish a whiteboard session with another Jabber user"
-#~ msgstr ""
-#~ "Prisijungti prie \"lentos\" sesijos bendram darbui su kiti Jabber "
-#~ "naudotoju"
-
-#~ msgid "Share with _chatroom..."
-#~ msgstr "Dalintis _Kambaryje..."
-
-#~ msgid ""
-#~ "Join a chatroom to start a new whiteboard session or join one in progress"
-#~ msgstr ""
-#~ "Prisijungti prie Jabber pokalbių kambario bendram darbui su kitais Jabber "
-#~ "naudotojais"
-
-#~ msgid "_Open session file..."
-#~ msgstr "A_tidaryti Sesijos Failą"
-
-#~ msgid "Open and browse through records of past whiteboard sessions"
-#~ msgstr "Atidaryti ankstesnių bendrų darbų sesijų failą"
-
-#~ msgid "Session file playback"
-#~ msgstr "Kartoti Sesijos veiksmus"
-
-#~ msgid "_Disconnect from session"
-#~ msgstr "Atsi_jungti nuo Sesijos"
-
-#~ msgid "Disconnect from _server"
-#~ msgstr "Atsijungti nuo _Serverio"
-
-#~ msgid "Subimage selection with the SIOX algorithm"
-#~ msgstr "Vaizdo dalies pažymėjimas SIOX algoritmui"
-
-#~ msgid "SIOX (W.I.P.)"
-#~ msgstr "SIOX (W.I.P.)"
-
-#~ msgid "Centered"
-#~ msgstr "Centruota"
-
-#, fuzzy
-#~ msgid "%s Preferences"
-#~ msgstr "Pieštuko Įrankio Nustatymai"
-
-#, fuzzy
-#~ msgid "Fractal (Lindenmayer)"
-#~ msgstr "Lindenmayer"
-
-#~ msgid "Enable script effects (requires restart) - EXPERIMENTAL"
-#~ msgstr "Įjungti skriptų efektus (reikia perstartavimo)"
-
-#~ msgid ""
-#~ "When on, the effects menu is enabled, allowing external effect scripts to "
-#~ "be called, requires restart before effective - EXPERIMENTAL"
-#~ msgstr ""
-#~ "Jei įjungta, rodomas efektų meniu, kuriame išvardinti pagalbiniai "
-#~ "išoriniai skriptai. Veikia tik uždarius ir iš naujo atidarius programą. "
-#~ "EKSPERIMENTINĖ versija"
-
-#~ msgid "Export area"
-#~ msgstr "Eksportavimo sritis"
-
-#~ msgid "Bitmap size"
-#~ msgstr "Paveikslėlio dydis"
-
-#~ msgid "_Filename"
-#~ msgstr "_Failo vardas"
-
-#~ msgid " <b>_Export</b> "
-#~ msgstr " <b>_Eksportuoti</b> "
-
-#~ msgid " relative by "
-#~ msgstr " paslinkti "
-
-#~ msgid " absolute to "
-#~ msgstr " perkelti į "
-
-#~ msgid "Finishing pen"
-#~ msgstr "Baigiamas piešimas pieštuku"
-
-#~ msgid ""
-#~ "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap "
-#~ "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate the "
-#~ "opposite handle in sync"
-#~ msgstr ""
-#~ "<b>Siūlės liestinė</b>: tempiant keičiama kreivės forma; su <b>Ctrl</b> "
-#~ "sukama fiksuotu žingsniu; su <b>Alt</b> fiksuojamas ilgis; su <b>Shift</"
-#~ "b> sukamos abi liestinės"
-
-#~ msgid "_Panels"
-#~ msgstr "_Panelė"

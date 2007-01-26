@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-21 13:27+0100\n"
-"PO-Revision-Date: 2007-01-21 15:46+0100\n"
+"POT-Creation-Date: 2007-01-26 23:55+0100\n"
+"PO-Revision-Date: 2007-01-27 00:07+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3707,7 +3707,7 @@ msgstr "Vezérlőelem behúzása"
 msgid "Move node handle"
 msgstr "Csomópont-vezérlőelem áthelyezése"
 
-#: ../src/nodepath.cpp:3465
+#: ../src/nodepath.cpp:3464
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3718,19 +3718,19 @@ msgstr ""
 "illesztés: <b>Ctrl</b>; hossz megőrzése: <b>Alt</b>; mindkét vezérlőelem "
 "forgatása: <b>Shift</b>."
 
-#: ../src/nodepath.cpp:3643
+#: ../src/nodepath.cpp:3642
 msgid "Rotate nodes"
 msgstr "Csomópontok elforgatása"
 
-#: ../src/nodepath.cpp:3768
+#: ../src/nodepath.cpp:3767
 msgid "Scale nodes"
 msgstr "Csomópontok átméretezése"
 
-#: ../src/nodepath.cpp:3815
+#: ../src/nodepath.cpp:3814
 msgid "Flip nodes"
 msgstr "Csomópontok tükrözése"
 
-#: ../src/nodepath.cpp:3980
+#: ../src/nodepath.cpp:3979
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3739,38 +3739,38 @@ msgstr ""
 "illesztés: <b>Ctrl</b>; illesztés a vezérlőelemek irányában: <b>Ctrl+Alt</b>."
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4204
+#: ../src/nodepath.cpp:4205
 msgid "end node"
 msgstr "szélső csomópont"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4209
+#: ../src/nodepath.cpp:4210
 msgid "cusp"
 msgstr "csúcs"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4212
+#: ../src/nodepath.cpp:4213
 msgid "smooth"
 msgstr "íves"
 
-#: ../src/nodepath.cpp:4214
+#: ../src/nodepath.cpp:4215
 msgid "symmetric"
 msgstr "szimmetrikus"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4220
+#: ../src/nodepath.cpp:4221
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "szélső csomópont, vezérlőelem behúzva (kiterjesztés: <b>Shift</b>+húzás)"
 
-#: ../src/nodepath.cpp:4222
+#: ../src/nodepath.cpp:4223
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "egy vezérlőelem behúzva (kiterjesztés: <b>Shift</b>+húzás)"
 
-#: ../src/nodepath.cpp:4225
+#: ../src/nodepath.cpp:4226
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "mindkét vezérlőelem behúzva (kiterjesztés: <b>Shift</b>+húzás)"
 
-#: ../src/nodepath.cpp:4237
+#: ../src/nodepath.cpp:4238
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3780,19 +3780,19 @@ msgstr ""
 "Alakítás: <b>Alt</b>+csomópontok húzásával. Csomópontok áthelyezése: "
 "<b>nyílbillentyűkkel</b>. Méretezés: <b>&lt; &gt;</b>. Forgatás: <b>[ ]</b>."
 
-#: ../src/nodepath.cpp:4238
+#: ../src/nodepath.cpp:4239
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "A csomópont illetve a csomópont-vezérlőelemek áthelyezése: <b>húzással</b>. "
 "A csomópont áthelyezése a <b>nyílbillentyűkkel</b> is lehetséges."
 
-#: ../src/nodepath.cpp:4261 ../src/nodepath.cpp:4273
+#: ../src/nodepath.cpp:4262 ../src/nodepath.cpp:4274
 msgid "Select a single object to edit its nodes or handles."
 msgstr ""
 "Jelölje ki az objektumot, amelynek csomópontjait illetve vezérlőelemeit "
 "módosítani kívánja."
 
-#: ../src/nodepath.cpp:4265
+#: ../src/nodepath.cpp:4266
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3805,17 +3805,17 @@ msgstr[0] ""
 "b>, <b>Shift+kattintással</b>, vagy egy terület <b>húzással való "
 "kijelölésével</b>."
 
-#: ../src/nodepath.cpp:4271
+#: ../src/nodepath.cpp:4272
 msgid "Drag the handles of the object to modify it."
 msgstr "Az objektum módosítása a vezérlőelemeinek a húzásával végezhető."
 
-#: ../src/nodepath.cpp:4279
+#: ../src/nodepath.cpp:4280
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 
-#: ../src/nodepath.cpp:4286
+#: ../src/nodepath.cpp:4287
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3823,7 +3823,7 @@ msgstr[0] ""
 "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>) <b>%i</b> alláncban "
 "(összesen: <b>%i</b>). %s."
 
-#: ../src/nodepath.cpp:4292
+#: ../src/nodepath.cpp:4293
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -4421,29 +4421,29 @@ msgstr ""
 "Jelölje ki a maszkobjektumot és azon <b>objektumo(ka)t</b>, amely(ek)re a "
 "vágólánc illetve a maszk alkalmazandó."
 
-#: ../src/selection-chemistry.cpp:2674
+#: ../src/selection-chemistry.cpp:2698
 msgid "Set clipping path"
 msgstr "Vágólánc beállítása"
 
-#: ../src/selection-chemistry.cpp:2676
+#: ../src/selection-chemistry.cpp:2700
 msgid "Set mask"
 msgstr "Maszk beállítása"
 
-#: ../src/selection-chemistry.cpp:2689
+#: ../src/selection-chemistry.cpp:2713
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 "Jelölje ki azon <b>objektumo(ka)t</b>, amely(ek)ről eltávolítandó a vágólánc "
 "illetve a maszk."
 
-#: ../src/selection-chemistry.cpp:2757
+#: ../src/selection-chemistry.cpp:2781
 msgid "Release clipping path"
 msgstr "Vágólánc eltávolítása"
 
-#: ../src/selection-chemistry.cpp:2759
+#: ../src/selection-chemistry.cpp:2783
 msgid "Release mask"
 msgstr "Maszk eltávolítása"
 
-#: ../src/selection-chemistry.cpp:2803
+#: ../src/selection-chemistry.cpp:2827
 msgid "Fit page to selection"
 msgstr "Lap illesztése a kijelölésre"
 
@@ -5121,25 +5121,25 @@ msgstr "Szöveg tördelése alakzatba"
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Szöveg tördelésének megszüntetéséhez jelölje ki a <b>tördelt szöveget</b>."
 
-#: ../src/text-chemistry.cpp:441
+#: ../src/text-chemistry.cpp:445
 msgid "Unflow flowed text"
 msgstr "Szöveg tördelésének megszüntetése"
 
-#: ../src/text-chemistry.cpp:453
+#: ../src/text-chemistry.cpp:457
 msgid "Select <b>flowed text(s)</b> to convert."
 msgstr "Jelölje ki az átalakítandó <b>tördelt szövege(ke)t</b>."
 
-#: ../src/text-chemistry.cpp:471
+#: ../src/text-chemistry.cpp:475
 msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
 msgstr ""
 "A tördelt szöveg(ek)nek <b>láthatónak</b> kell lenni ahhoz, hogy át lehessen "
 "alakítani az(oka)t."
 
-#: ../src/text-chemistry.cpp:499
+#: ../src/text-chemistry.cpp:503
 msgid "Convert flowed text to text"
 msgstr "Tördelt szöveg átalakítása normál szöveggé"
 
-#: ../src/text-chemistry.cpp:504
+#: ../src/text-chemistry.cpp:508
 msgid "<b>No flowed text(s)</b> to convert in the selection."
 msgstr "A kijelölésben <b>nincs átalakítható tördelt szöveg</b>."
 
@@ -10782,6 +10782,23 @@ msgstr "Tömeg:"
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
 msgstr "Nagyobb érték esetén a toll mozgása vontatott, mintha tehetetlenség lassítaná"
 
+#: ../src/widgets/toolbox.cpp:2291
+msgid "Pressure"
+msgstr "Nyomás"
+
+#: ../src/widgets/toolbox.cpp:2292 ../src/widgets/toolbox.cpp:2456
+msgid "Use the pressure of the input device to alter the width of the pen"
+msgstr "A beviteli eszköz nyomásának használata a tollszélesség változtatásához"
+
+# May contain a short, human readable description of the resource as plain, unmarked text.
+#: ../src/widgets/toolbox.cpp:2303
+msgid "Tilt"
+msgstr "Dőlés"
+
+#: ../src/widgets/toolbox.cpp:2304 ../src/widgets/toolbox.cpp:2469
+msgid "Use the tilt of the input device to alter the angle of the pen's nib"
+msgstr "A beviteli eszköz dőlésének használata a tollhegy szögének változtatásához"
+
 # TODO: ellenőrizni
 #. TRANSLATORS: "cap" means "end" (both start and finish) here
 #: ../src/widgets/toolbox.cpp:2402
@@ -10791,14 +10808,6 @@ msgstr "Lekerekítettség:"
 #: ../src/widgets/toolbox.cpp:2402
 msgid "Increase to round the ends of strokes"
 msgstr "Nagyobb érték esetén a vonalvégek lekerekítettebbek"
-
-#: ../src/widgets/toolbox.cpp:2456
-msgid "Use the pressure of the input device to alter the width of the pen"
-msgstr "A beviteli eszköz nyomásának használata a tollszélesség változtatásához"
-
-#: ../src/widgets/toolbox.cpp:2469
-msgid "Use the tilt of the input device to alter the angle of the pen's nib"
-msgstr "A beviteli eszköz dőlésének használata a tollhegy szögének változtatásához"
 
 #: ../src/widgets/toolbox.cpp:2578
 msgid "Arc: Change start/end"
@@ -10992,24 +11001,24 @@ msgid "Modify Path"
 msgstr "Lánc módosítása"
 
 #: ../share/extensions/ai_input.inx.h:1
-msgid "AI Input"
-msgstr "AI-bemenet"
+msgid "AI 8.0 Input"
+msgstr "AI 8.0-bemenet"
 
 #: ../share/extensions/ai_input.inx.h:2 ../share/extensions/ai_output.inx.h:2
-msgid "Adobe Illustrator (*.ai)"
-msgstr "Adobe Illustrator (*.ai)"
+msgid "Adobe Illustrator 8.0 (*.ai)"
+msgstr "Adobe Illustrator 8.0 (*.ai)"
 
 #: ../share/extensions/ai_input.inx.h:3
-msgid "Open files saved with Adobe Illustrator"
-msgstr "Az Adobe Illustrator programmal létrehozott fájlok megnyitása"
+msgid "Open files saved with Adobe Illustrator 8.0 or older"
+msgstr "Az Adobe Illustrator 8.0-s vagy korábbi verziójával létrehozott fájlok megnyitása"
 
 #: ../share/extensions/ai_output.inx.h:1
-msgid "AI Output"
-msgstr "AI-kimenet"
+msgid "AI 8.0 Output"
+msgstr "AI 8.0-kimenet"
 
 #: ../share/extensions/ai_output.inx.h:3
-msgid "Write Adobe Illustrator"
-msgstr "Mentés az Adobe Illustrator formátumában"
+msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
+msgstr "Mentés az Adobe Illustrator 8.0 formátumában (PostScript-alapú)"
 
 #: ../share/extensions/aisvg.inx.h:1
 msgid "AI SVG Input"
@@ -11609,9 +11618,10 @@ msgid ""
 "then add to selection the skeleton path; then call this effect."
 msgstr ""
 "Ez az effektus ráilleszt egy minta-objektumot egy tetszőleges láncra, "
-"egyfajta vázként tekintve a láncot. A minta lehet lánc vagy láncok csoportja. "
-"Először jelölje ki a minta-objektumot, majd vegye hozzá a kijelöléshez a "
-"vázként használandó láncot, ezt követően alkalmazza ezt az effektust."
+"egyfajta vázként tekintve a láncot. A minta lehet lánc vagy láncok "
+"csoportja. Először jelölje ki a minta-objektumot, majd vegye hozzá a "
+"kijelöléshez a vázként használandó láncot, ezt követően alkalmazza ezt az "
+"effektust."
 
 #: ../share/extensions/perspective.inx.h:2
 msgid "Perspective"
