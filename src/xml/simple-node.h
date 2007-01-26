@@ -31,7 +31,6 @@ public:
     gchar const *name() const;
     int code() const { return _name; }
     void setCodeUnsafe(int code) {
-        g_assert(_document == NULL);
         _name = code;
     }
 
