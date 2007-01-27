@@ -663,6 +663,7 @@ Extension::paramString (void)
         *param_string += *paramstr;
         delete paramstr;
     }
+    //g_message("paramstring=%s", param_string->c_str());
 
     return param_string;
 }

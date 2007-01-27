@@ -12,12 +12,12 @@
     <!--	<param name="orient" type="boolean" _gui-text="Keep text orientation upright">true</param>-->
       <!--<param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>-->
       <param name="unit" type="enum" _gui-text="Length Unit: ">
-        <item>px</item>
-        <item>pt</item>
-        <item>in</item>
-        <item>mm</item>
-        <item>cm</item>
-        <item>m</item>
+        <item value="px">px</item>
+        <item value="pt">pt</item>
+        <item value="in">in</item>
+        <item value="mm">mm</item>
+        <item value="cm">cm</item>
+        <item value="m">m</item>
 	<item>km</item>
       </param>
 		</page>

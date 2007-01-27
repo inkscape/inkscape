@@ -7,15 +7,15 @@
 	<param name="title" type="description">This effect bends a pattern object along an arbitrary "skeleton" path. The pattern can be a path or a group of paths. First, select the pattern object; then add to selection the skeleton path; then call this effect.</param>
 
 	<param name="copymode" type="enum" _gui-text="Copies of the pattern:">
-	       <item>Single</item>
-	       <item>Single, stretched</item>
-	       <item>Repeated</item>
-	       <item>Repeated, stretched</item>
+	       <item value="Single">Single</item>
+	       <item value="Single, stretched">Single, stretched</item>
+	       <item value="Repeated">Repeated</item>
+	       <item value="Repeated, stretched">Repeated, stretched</item>
 	</param>
 
 	<param name="kind" type="enum" _gui-text="Deformation type:">
-	       <item>Snake</item>
-	       <item>Ribbon</item>
+	       <item value="Snake">Snake</item>
+	       <item value="Ribbon">Ribbon</item>
 	</param>
 
 	<param name="space"     type="float"   _gui-text="Space between copies:" min="-10000.0" max="10000.0" >0.0</param>
