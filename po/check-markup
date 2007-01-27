@@ -66,6 +66,11 @@ sub check_str ($) {
 	}
     }
 
+    if ($str =~ m{&#[^0-9]+;}) {
+	po_error("Entity declaration error (must look like '&#123;')");
+	return 0;
+    }
+
     # Check for attributes etc. in non-<span> element.
     if ($str =~ m{<([bisu]|big|su[bp]|small|tt)\b(?! *)>}) {
 	po_error("Unexpected characters in <$1> tag");
