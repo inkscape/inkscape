@@ -34,6 +34,7 @@ class MyEffect(inkex.Effect):
 
         area = '--export-area-canvas'
         pngs = []
+	names = []
         path = "/svg/*[name()='g' or @style][@id]"
         for node in inkex.xml.xpath.Evaluate(path,self.document):
             id = node.attributes.getNamedItem('id').value
@@ -44,12 +45,14 @@ class MyEffect(inkex.Effect):
             f.read()
             f.close()
             pngs.append(filename)
+            names.append(id)
 
         filelist = '"%s"' % '" "'.join(pngs)
+	namelist = '"%s"' % '" "'.join(names)
         xcf = os.path.join(tmp_dir, "%s.xcf" % docname)
         script_fu = """
 (define
-  (png-to-layer img png_filename)
+  (png-to-layer img png_filename layer_name)
   (let*
     (
       (png (car (file-png-load RUN-NONINTERACTIVE png_filename png_filename)))
@@ -57,7 +60,7 @@ class MyEffect(inkex.Effect):
       (xcf_layer (car (gimp-layer-new-from-drawable png_layer img)))
     )
     (gimp-image-add-layer img xcf_layer -1)
-    (gimp-drawable-set-name xcf_layer png_filename)
+    (gimp-drawable-set-name xcf_layer layer_name)
   )
 )
 (let*
@@ -65,19 +68,20 @@ class MyEffect(inkex.Effect):
     (img (car (gimp-image-new 200 200 RGB)))
   )
   (gimp-image-undo-disable img)
-  (let* ((filelist '(%s)))
+  (let* ((filelist '(%s))(namelist '(%s)))
     (while filelist
-      (let* ((filename (car filelist)))
-        (png-to-layer img filename)
+      (let* ((filename (car filelist))(layername (car namelist)))
+        (png-to-layer img filename layername)
       )
       (set! filelist (cdr filelist))
+      (set! namelist (cdr namelist))
     )
   )
   (gimp-image-resize-to-layers img)
   (gimp-image-undo-enable img)
   (gimp-file-save RUN-NONINTERACTIVE img (car (gimp-image-get-active-layer img)) "%s" "%s"))
 (gimp-quit 0)
-        """ % (filelist, xcf, xcf)
+        """ % (filelist, namelist, xcf, xcf)
 
         junk = os.path.join(tmp_dir, 'junk_from_gimp.txt')
         f = os.popen('gimp -i -b - > %s' % junk,'w')
