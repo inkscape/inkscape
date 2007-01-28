@@ -27,16 +27,16 @@ LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_FRENCH} "$(^Name) est diffusé sous l
 LangString lng_DIFFERENT_USER ${LANG_FRENCH} "Inkscape a déjà été installé par l'utilisateur $0.$\r$\nSi vous continuez, l'installation pourrait devenir défectueuse!$\r$\nVeuillez, svp, vous connecter en tant que $0 et essayer de nouveau."
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_FRENCH} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_FRENCH} "$R1 a déjà été installé. $\nVoulez-vous supprimer la version précédente avant l'installation d' $(^Name) ?"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_FRENCH} "$\n$\nPress OK to continue or press CANCEL to abort."
+LangString lng_OK_CANCEL_DESC ${LANG_FRENCH} "$\n$\nCliquer sur OK pour continuer ou CANCEL pour annuler."
 
 ;you have no admin rigths
 LangString lng_NO_ADMIN ${LANG_FRENCH} "Vous n'avez pas les privilèges d'administrateur.$\r$\nL'installation d'Inkscape pour tous les utilisateurs pourrait devenir défectueuse.$\r$\nVeuillez décocher l'option 'pour tous les utilisateurs'."
 
 ;win9x is not supported
-LangString lng_NOT_SUPPORTED ${LANG_FRENCH} "Inkscape n'est pas éxécutable sur Windows 95/98/ME!$\r$\nVeuillez, svp, consulter les site web officiel pour plus d'informations."
+LangString lng_NOT_SUPPORTED ${LANG_FRENCH} "Inkscape n'est pas exécutable sur Windows 95/98/ME!$\r$\nVeuillez, svp, consulter les sites web officiels pour plus d'information."
 
 ; Full install type
 LangString lng_Full $(LANG_FRENCH) "Complète"
@@ -57,7 +57,7 @@ LangString lng_CoreDesc $(LANG_FRENCH) "Fichiers indispensables d'${PRODUCT_NAME
 LangString lng_GTKFiles $(LANG_FRENCH) "Environnement GTK+ (nécessaire)"
 
 ; GTK+ install section description
-LangString lng_GTKFilesDesc $(LANG_FRENCH) "Une boîte à outils multi-plateformes pour interfaces graphiques,utilisée par ${PRODUCT_NAME}"
+LangString lng_GTKFilesDesc $(LANG_FRENCH) "Une boîte à outils multi-plateformes pour interfaces graphiques, utilisée par ${PRODUCT_NAME}"
 
 ; shortcuts install section
 LangString lng_Shortcuts $(LANG_FRENCH) "Raccourcis"
@@ -66,7 +66,7 @@ LangString lng_Shortcuts $(LANG_FRENCH) "Raccourcis"
 LangString lng_ShortcutsDesc $(LANG_FRENCH) "Raccourcis pour démarrer ${PRODUCT_NAME}"
 
 ; All user install section
-LangString lng_Alluser $(LANG_FRENCH) "pour tous les utilisateurs"
+LangString lng_Alluser $(LANG_FRENCH) "Pour tous les utilisateurs"
 
 ; All user install section description
 LangString lng_AlluserDesc $(LANG_FRENCH) "Installer cette application pour tous les utilisateurs de cet ordinateurs"
@@ -102,10 +102,10 @@ LangString lng_ContextMenu ${LANG_FRENCH} "Menu contextuel"
 LangString lng_ContextMenuDesc ${LANG_FRENCH} "Ajouter ${PRODUCT_NAME} dans le menu contextuel des fichiers SVG"
 
 ; remove personal preferences
-LangString lng_DeletePrefs ${LANG_FRENCH} "Delete personal preferences"
+LangString lng_DeletePrefs ${LANG_FRENCH} "Effacer les préférences personnelles"
 
 ; remove personal preferences description
-LangString lng_DeletePrefsDesc ${LANG_FRENCH} "Delete personal preferences leftover from previous installations"
+LangString lng_DeletePrefsDesc ${LANG_FRENCH} "Effacer les préférences personnelles laissées par les précédentes installations"
 
 
 ; Additional files section
@@ -136,7 +136,7 @@ LangString lng_LanguagesDesc $(LANG_FRENCH) "Installer des traductions pour ${PR
 LangString lng_am $(LANG_FRENCH) "am  Amharique"
 LangString lng_az $(LANG_FRENCH) "az  Azerbaïdjanais"
 LangString lng_be $(LANG_FRENCH) "be  Biélorusse"
-LangString lng_bg $(LANG_FRENSH) "bg  Bulgarian"
+LangString lng_bg $(LANG_FRENSH) "bg  Bulgare"
 LangString lng_ca $(LANG_FRENCH) "ca  Catalan"
 LangString lng_cs $(LANG_FRENCH) "cs  Tchèque"
 LangString lng_da $(LANG_FRENCH) "da  Danois"
@@ -144,8 +144,8 @@ LangString lng_de $(LANG_FRENCH) "de  Allemand"
 LangString lng_dz $(LANG_FRENCH) "dz  Dzongkha"
 LangString lng_el $(LANG_FRENCH) "el  Grec"
 LangString lng_en $(LANG_FRENCH) "en  Anglais"
-LangString lng_en_CA $(LANG_FRENCH) "en_CA Canadian English"
-LangString lng_en_GB $(LANG_FRENCH) "en_GB British English"
+LangString lng_en_CA $(LANG_FRENCH) "en_CA Anglais Canada"
+LangString lng_en_GB $(LANG_FRENCH) "en_GB Anglais Grande Bretagne"
 LangString lng_en_US@piglatin $(LANG_FRENCH) "en_US@piglatin Pig Latin"
 LangString lng_es $(LANG_FRENCH) "es  Espagnol"
 LangString lng_es_MX $(LANG_FRENCH) "es_MX  Espagnol Mexique"
@@ -163,7 +163,7 @@ LangString lng_km $(LANG_FRENCH) "km  Khmer"
 LangString lng_ko $(LANG_FRENCH) "ko  Coréen"
 LangString lng_lt $(LANG_FRENCH) "lt  Lituanien"
 LangString lng_mk $(LANG_FRENCH) "mk  Macédonien"
-LangString lng_mn $(LANG_FRENCH) "mn  Mongolian"
+LangString lng_mn $(LANG_FRENCH) "mn  Mongol"
 LangString lng_ne $(LANG_FRENCH) "ne  Nepali"
 LangString lng_nb $(LANG_FRENCH) "nb  Norvégien Bokmal"
 LangString lng_nl $(LANG_FRENCH) "nl  Néerlandais"
@@ -198,3 +198,5 @@ LangString lng_UInstOpt1  ${LANG_FRENCH} "Choisissez parmi les options additionn
 
 ; Ask to purge the personal preferences
 LangString lng_PurgePrefs ${LANG_FRENCH} "Conserver les préférences personnelles"
+
+ 	  	 
