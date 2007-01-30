@@ -62,6 +62,7 @@ tutorial_DATA = \
     tutorial-shapes.ru.svg \
     tutorial-shapes.sl.svg \
     tutorial-tips.svg \
+    tutorial-tips.ca.svg \
     tutorial-tips.de.svg \
     tutorial-tips.es.svg \
     tutorial-tips.fr.svg \

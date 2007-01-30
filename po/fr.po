@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-22 00:30+0100\n"
-"PO-Revision-Date: 2007-01-26 15:45+0100\n"
+"PO-Revision-Date: 2007-01-29 15:34+0100\n"
 "Last-Translator: matiphas <matiphas@free.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -10227,12 +10227,12 @@ msgstr "Augmenter ce paramètre pour rendre la plume tremblante"
 #: ../src/widgets/toolbox.cpp:2269
 #: ../src/widgets/toolbox.cpp:2425
 msgid "Wiggle:"
-msgstr "Ondulation :"
+msgstr "Glissement :"
 
 #: ../src/widgets/toolbox.cpp:2269
 #: ../src/widgets/toolbox.cpp:2425
 msgid "Increase to make the pen waver and wiggle"
-msgstr "Augmenter ce paramètre pour rendre la plume ondulante"
+msgstr "Augmenter ce paramètre pour rendre la plume glissante et ondulante"
 
 #: ../src/widgets/toolbox.cpp:2279
 #: ../src/widgets/toolbox.cpp:2436

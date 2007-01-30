@@ -8443,7 +8443,7 @@ msgstr "tutorial-elements.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1731
 msgid "tutorial-tips.svg"
-msgstr "tutorial-tips.svg"
+msgstr "tutorial-tips.ca.svg"
 
 #: ../src/verbs.cpp:1963
 msgid "Does nothing"

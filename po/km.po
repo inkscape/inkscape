@@ -1,21 +1,17 @@
-# Khmer translation for Inkscape.
-# This file is distributed under the same license as the Inkscape package.
-# Copyright © 2006 Free Software Foundation, Inc.
+# translation of km.po to English
 # Poch Sokun  <sokun_poch@khmeros.info>, 2006.
 # Auk Piseth <piseth_dv@khmeros.info>, 2006.
-# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006.
-#
-#: ../src/widgets/toolbox.cpp:3694 ../src/widgets/toolbox.cpp:3715
-#: ../src/widgets/toolbox.cpp:3744 ../src/widgets/toolbox.cpp:3765
-#: ../src/widgets/toolbox.cpp:3792
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007.
+# This file is distributed under the same license as the Inkscape package.
+# Copyright © 2006, 2007 Free Software Foundation, Inc.
 msgid ""
 msgstr ""
-"Project-Id-Version: inkscape\n"
+"Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-10 18:22-0500\n"
-"PO-Revision-Date: 2006-11-05 18:29+0100\n"
+"PO-Revision-Date: 2007-01-25 14:33+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
-"Language-Team: Khmer <support@khmeros.info>\n"
+"Language-Team: English <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -43,7 +39,7 @@ msgstr "<b> ប្តូរ​</b> ៖ គូស​ជុំវិញ​ចំ�
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make circle or integer-"
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
-msgstr "<b>រង្វង់​រាង​​ពង​ក្រពើ​</b>: %s &#215; %s; ប្រើ​ <b>បញ្ជា​</b> ដើម្បី​គូស​សមាមាត្រ​រង្វង់​ឬ រង្វង់​រាង​ពងក្រពើ ដោយ​ចុច <b>ប្តូរ​</b> ដើម្បី​គូស​ជុំវិញ ចំណុច​ចាប់​ផ្តើម​ ។"
+msgstr "<b>រង្វង់​រាង​​ពង​ក្រពើ​</b>: %s &#215; %s; ប្រើ​ <b>បញ្ជា(Ctrl)​</b> ដើម្បី​គូស​សមាមាត្រ​រង្វង់​ឬ រង្វង់​រាង​ពងក្រពើ ដោយ​ចុច <b>ប្តូរ​</b> ដើម្បី​គូស​ជុំវិញ ចំណុច​ចាប់​ផ្តើម​ ។"
 
 #: ../src/arc-context.cpp:437
 msgid "Create ellipse"
@@ -626,7 +622,7 @@ msgstr "ដាក់​តម្លៃ​បញ្ច្រាស់"
 
 #: ../src/dialogs/clonetiler.cpp:2327
 msgid "3. Apply the value to the clones':"
-msgstr "3. អនុវត្ត​តម្លៃ​សម្រាប់​ក្លូន​ ៖"
+msgstr "3. អនុវត្ត​តម្លៃ​ទៅ​​ក្លូន​ ៖"
 
 #: ../src/dialogs/clonetiler.cpp:2337
 msgid "Presence"
@@ -715,7 +711,7 @@ msgstr "បង្កើត​​និង ជ្រើស​ក្រឡាក�
 #. So unclumping is the process of spreading a number of objects out more evenly.
 #: ../src/dialogs/clonetiler.cpp:2558
 msgid " _Unclump "
-msgstr "Unclump "
+msgstr " _Unclump "
 
 #: ../src/dialogs/clonetiler.cpp:2559
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
@@ -790,7 +786,7 @@ msgstr "ផ្ទាល់ខ្លួន​"
 
 #: ../src/dialogs/export.cpp:257
 msgid "<big><b>Export area</b></big>"
-msgstr "<big><b> នាំ​ផ្ទៃ​ចេញ ាំចេញ </b></big>"
+msgstr "<big><b>នាំ​ផ្ទៃ​ចេញ</b></big>"
 
 #: ../src/dialogs/export.cpp:271
 msgid "Units:"
@@ -825,7 +821,7 @@ msgstr "កម្ពស់​ ៖"
 
 #: ../src/dialogs/export.cpp:414
 msgid "<big><b>Bitmap size</b></big>"
-msgstr "<big><b>ទំហំ​រូបភាព </b></big>"
+msgstr "<big><b>ទំហំ​រូបភាព</b></big>"
 
 #: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
@@ -866,21 +862,21 @@ msgstr "អ្នកបានបញ្ចូល​ឈ្មោះ​​ឯកស
 
 #: ../src/dialogs/export.cpp:1020
 msgid "The chosen area to be exported is invalid"
-msgstr "ជ្រើសផ្ទៃ​់​ដែល​បាននាំចេញ​មិន​ត្រឹមត្រូវ​"
+msgstr "ជ្រើសផ្ទៃ​​ដែល​បាន​នាំចេញ​មិន​ត្រឹមត្រូវ​"
 
 #: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
-msgstr "ថត​ %s មិនទាន់មាន​ ឬ មិនមែន​ជាថត​នេះ​ឡើយ​​\n"
+msgstr "ថត​ %s មិនទាន់មាន​ ឬមិនមែន​ជាថត​នេះ​ឡើយ​​\n"
 
 #: ../src/dialogs/export.cpp:1045
 msgid "Export in progress"
-msgstr "នាំចេញ ក្នុង​វឌ្ឍនភាព"
+msgstr "នាំចេញ​ក្នុង​វឌ្ឍនភាព"
 
 #: ../src/dialogs/export.cpp:1051
 #, c-format
 msgid "Exporting %s (%d x %d)"
-msgstr "ការនាំចេញ  %s (%d x %d)"
+msgstr "ការនាំចេញ %s (%d x %d)"
 
 #: ../src/dialogs/export.cpp:1078
 #, c-format
@@ -889,7 +885,7 @@ msgstr "មិន​អាច​នាំចេញ​ជា​ឈ្មោះ​
 
 #: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
-msgstr "ជ្រើស​ឈ្មោះ​ឯកសារដែល​កំពុង​នាំចេញ​"
+msgstr "ជ្រើស​ឈ្មោះ​ឯកសារ​សម្រាប់​នាំចេញ​"
 
 #: ../src/dialogs/filedialog.cpp:359
 msgid "No preview"
@@ -897,7 +893,7 @@ msgstr "កុំ​មើល​ជាមុន​"
 
 #: ../src/dialogs/filedialog.cpp:460
 msgid "too large for preview"
-msgstr "វា​មានទំហំ​ធំសម្រាប់ការមើល​ជាមុន​"
+msgstr "វា​​ធំ​ពេក​ដើម្បី​មើល​​ជាមុន​"
 
 #: ../src/dialogs/filedialog.cpp:752 ../src/dialogs/filedialog.cpp:753
 msgid "All Images"
@@ -920,7 +916,7 @@ msgstr "ទាញ​ពី​ផ្នែក​បន្ថែម"
 #. ###### Do we want the .xxx extension automatically added?
 #: ../src/dialogs/filedialog.cpp:1255
 msgid "Append filename extension automatically"
-msgstr "បន្ថែម​កន្ទុយ​ឯកសារ​ដោយស្វ័យប្រវត្តិ​"
+msgstr "បន្ថែម​កន្ទុយ​ឯកសារ​ដោយ​ស្វ័យប្រវត្តិ​"
 
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
 #: ../src/dialogs/find.cpp:369
@@ -1792,7 +1788,7 @@ msgid ""
 "Attribute <b>%s</b> selected. Press <b>Ctrl+Enter</b> when done editing to "
 "commit changes."
 msgstr ""
-"គុណលក្ខណៈ​ <b>%s</b> ដែល​បាន​ជ្រើស​ ។ ចុច​ <b>បញ្ជា​+ចូល​</b> "
+"គុណលក្ខណៈ​ <b>%s</b> ដែល​បាន​ជ្រើស​ ។ ចុច​ <b>បញ្ជា​(Ctrl)​+បញ្ចូល​​​​(Enter)</b> "
 "ពេល​បាន​បញ្ចប់​ការកែសម្រួល​ដើម្បី​"
 "ធ្វើ​ការផ្លាស់ប្តូរ ។"
 
@@ -1930,8 +1926,8 @@ msgid ""
 "average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> "
 "to copy the color under mouse to clipboard"
 msgstr ""
-"<b>ចុច</b> ដើម្បី​កំណត់​ការ​បំពេញ <b>ប្ដូរ (Shift)+ ចុច</b> ដើម្បី​កំណត់​ខ្វាច់ <b>អូស</b> ដើម្បី "
-"ធ្វើ​ឲ្យ​មាន​ពណ៌​មធ្យម​ក្នុង​ផ្ទៃ ដោយ​ប្រើ <b>ជំនួស (Alt)</b> ដើម្បី​ជ្រើស​ពណ៌​បញ្ច្រាស <b>បញ្ជា (Ctrl) + C</b> "
+"<b>ចុច</b> ដើម្បី​កំណត់​ការ​បំពេញ <b>ប្ដូរ​(Shift)+ ចុច</b> ដើម្បី​កំណត់​ខ្វាច់ <b>អូស</b> ដើម្បី "
+"ធ្វើ​ឲ្យ​មាន​ពណ៌​មធ្យម​ក្នុង​ផ្ទៃ ដោយ​ប្រើ <b>ជំនួស​(Alt)</b> ដើម្បី​ជ្រើស​ពណ៌​បញ្ច្រាស <b>បញ្ជា​(Ctrl) + C</b> "
 "ដើម្បី​​ចម្លង​ពណ៌​ក្រោម​កណ្ដុរ​ទៅ​ក្ដារ​តម្បៀត​ខ្ទាស់"
 
 #: ../src/event-log.cpp:34
@@ -2500,7 +2496,7 @@ msgstr "ជ្រើស​ឯកសារ​ដើម្បី នាំចូ�
 
 #: ../src/gradient-context.cpp:260
 msgid "<b>Ctrl</b>: snap gradient angle"
-msgstr "<b>បញ្ជា​</b> ៖ ខ្ទាស់​ជម្រាល​មុំ​"
+msgstr "<b>បញ្ជា​(Ctrl)</b> ៖ ខ្ទាស់​ជម្រាល​មុំ​"
 
 #: ../src/gradient-context.cpp:261
 msgid "<b>Shift</b>: draw gradient around the starting point"
@@ -2510,7 +2506,7 @@ msgstr "<b>ប្តូរ​</b> ៖ គូស​ជម្រាល​ជុ�
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
-msgstr[0] "<b>ពណ៌​ជម្រាល</b> សម្រាប់​វត្ថុ %d; ដោយ <b>បញ្ជា (Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ"
+msgstr[0] "<b>ពណ៌​ជម្រាល</b> សម្រាប់​វត្ថុ %d; ដោយ <b>បញ្ជា​(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ"
 
 #: ../src/gradient-context.cpp:466
 msgid "Select <b>objects</b> on which to create gradient."
@@ -2543,8 +2539,8 @@ msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
 "preserve angle, with <b>Ctrl+Shift</b> to scale around center"
 msgstr ""
-"%s សម្រាប់ ៖  %s%s; អូស​ដោយ​ប្រើ​ <b>បញ្ជា​</b> ដើម្បី​ខ្ទាស់​មុំ​ជាមួយ​ <b>បញ្ជា​+ជំនួស​</b> "
-"សម្រាប់ការពារ​មុំ​ដោយ​ប្រើ​ <b>បញ្ជា​​+ប្តូរ​</b> "
+"%s សម្រាប់ ៖  %s%s; អូស​ដោយ​ប្រើ​ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ​ជាមួយ​ <b>បញ្ជា​(Ctrl)+ជំនួស(Alt)​</b> "
+"សម្រាប់ការពារ​មុំ​ដោយ​ប្រើ​ <b>បញ្ជា(Ctrl)​​+ប្តូរ(Shift)​</b> "
 "ដើម្បី​រាប់​ធ្វើ​មាត្រដ្ឋាន​ជុំ​វិញ​ចំណុច​កណ្តាល​"
 
 #: ../src/gradient-drag.cpp:660
@@ -2567,7 +2563,7 @@ msgid ""
 msgid_plural ""
 "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to "
 "separate"
-msgstr[0] "ចំណុច​ពណ៌​ជម្រាល​បាន​ចែក​រំលែក​ដោយ​ពណ៌​ជម្រាល <b>%d</b> អូស​ដោយ <b>ប្ដូរ (Shift)</b> ដើម្បី​បំបែក"
+msgstr[0] "ចំណុច​ពណ៌​ជម្រាល​បាន​ចែក​រំលែក​ដោយ​ពណ៌​ជម្រាល <b>%d</b> អូស​ដោយ <b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក"
 
 #: ../src/helper/units.cpp:36
 msgid "Unit"
@@ -3263,8 +3259,8 @@ msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
 msgstr ""
-"<b>បញ្ជា​</b> ៖ ប្រភេទ​ថ្នាំង​បិទ​បើក​ ខ្ទាស់​ចំណុច​ទាញ​របស់​មុំ​ ផ្លាស់ទី​ផ្តេក​ ឬ បញ្ឈរ​ដោយ​ប្រើ​ <b> "
-"បញ្ជា​+ជំនួស​</b>​៖ ទៅ​កាន់​ចំណុច​ទាញ​​ាយ​"
+"<b>បញ្ជា(Ctrl)​</b> ៖ ប្រភេទ​ថ្នាំង​បិទ​បើក​ ខ្ទាស់​ចំណុច​ទាញ​របស់​មុំ​ ផ្លាស់ទី​ផ្តេក​ ឬ បញ្ឈរ​ដោយ​ប្រើ​ <b> "
+"បញ្ជា(Ctrl)​+ជំនួស​(Alt)</b>​៖ ទៅ​កាន់​ចំណុច​ទាញ​​យក​"
 
 #: ../src/node-context.cpp:367
 msgid "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
@@ -3274,7 +3270,7 @@ msgstr ""
 
 #: ../src/node-context.cpp:368
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
-msgstr "<b>ជំនួស​</b> ៖ ចាក់​សោ​ប្រវែង​ចំណុច​ទាញ​​ដោយ​ប្រើ​ <b>បញ្ជា​+ជំនួស​</b> ៖ ទៅ​កាន់​ចំណុច​ទាញ​"
+msgstr "<b>ជំនួស​</b> ៖ ចាក់​សោ​ប្រវែង​ចំណុច​ទាញ​​ដោយ​ប្រើ​ <b>បញ្ជា​(Ctrl)+ជំនួស​(Alt)</b> ៖ ទៅ​កាន់​ចំណុច​ទាញ​"
 
 #. drag curve
 #: ../src/node-context.cpp:624
@@ -3303,8 +3299,8 @@ msgid ""
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
 msgstr ""
 "<b>ចំណុច​ទាញ​ថ្នាំ​រាយ​ថ្នាំង​</b> ៖ "
-"អូស​រូប​ជា​ខ្សែកោង​ដោយ​ប្រើ​<b>បញ្ជា​</b> ដើម្បី​ខ្ទា់​មុំប្រើ"
-" <b>ជំនួស​</b> ដើម្បី​ចាក់​សោ​ប្រវែង​ដោយ​ប្រើ​ <b>ប្តូរ​</b> ដើម្ចំណុច​ទាញ​ទាំងពី​ ។ណោះស្រាយ​ទាំងពីរ​ ។"
+"អូស​រូប​ជា​ខ្សែកោង​ដោយ​ប្រើ​<b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទា់​មុំប្រើ"
+" <b>ជំនួស(Alt)​</b> ដើម្បី​ចាក់​សោ​ប្រវែង​ដោយ​ប្រើ​ <b>ប្តូរ(Shift)​</b> ដើម្ចំណុច​ទាញ​ទាំងពី​ ។ណោះស្រាយ​ទាំងពីរ​ ។"
 
 #: ../src/nodepath.cpp:1430
 msgid "Align nodes"
@@ -3393,7 +3389,7 @@ msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both "
 "handles"
-msgstr "<b>ចំណុច​ទាញ​ថ្នាំង​​ថ្នាំង​</b> ៖ មុំ​ %0.2f&#176;, មានប្រវែង​ %s; ប្រើ​ <b>បញ្ជា</b> ដើម្បី​ខ្ទាស់​មុះ​ ប្រើ​ <b>ជំនួស​</b> ដើម្បី​ចាក់សោ​ប្រវែង​ ប្រើ <b>ប្តូរ​</b> ដើម្បី​ចំណុច​ទាញ​ទាំងពីរ​។ាំងពីរ​"
+msgstr "<b>ចំណុច​ទាញ​ថ្នាំង​​ថ្នាំង​</b> ៖ មុំ​ %0.2f&#176;, មានប្រវែង​ %s; ប្រើ​ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុះ​ ប្រើ​ <b>ជំនួស​</b> ដើម្បី​ចាក់សោ​ប្រវែង​ ប្រើ <b>ប្តូរ(Shift)​</b> ដើម្បី​ចំណុច​ទាញ​ទាំងពីរ​ ។"
 
 #: ../src/nodepath.cpp:3580
 msgid "Rotate nodes"
@@ -3411,7 +3407,7 @@ msgstr "ត្រឡប់​ថ្នាំង​"
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
-msgstr "<b>ថ្នាំង​</b> ៖ ទាញ​ដើម្បី​កែសម្រូល​ផ្លូវ​ ប្រើ​ <b>បញ្ជា​</b> ដើម្បី​ខ្ទាស់​ផ្តេក​ឬ បញ្ឈរ​ ប្រើ <b>បញ្ជា​+ជំនួស​</b> ដើម្បី​ខ្ទាស់​ទិស​ដៅ​របស់​ចំណុច​ទាញ​ ។"
+msgstr "<b>ថ្នាំង​</b> ៖ ទាញ​ដើម្បី​កែសម្រូល​ផ្លូវ​ ប្រើ​ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់​ផ្តេក​ឬ បញ្ឈរ​ ប្រើ <b>បញ្ជា(Ctrl)​+ជំនួស​(Alt)</b> ដើម្បី​ខ្ទាស់​ទិស​ដៅ​របស់​ចំណុច​ទាញ​ ។"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4120
@@ -3430,7 +3426,7 @@ msgstr "រលោង​"
 
 #: ../src/nodepath.cpp:4130
 msgid "symmetric"
-msgstr "symmetric"
+msgstr "មាន​សមប្បមាណ"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4136
@@ -3447,9 +3443,7 @@ msgstr ""
 
 #: ../src/nodepath.cpp:4141
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
-msgstr ""
-"ចំណុច​ទាញ​ទាំងពីរ​ត្រូវ​បាន​បព្រួញ​"
-"្រូវ​បានធ្វើ​ត្រឡប់​(អូសដោយ​ប្រើ​ <b>ប្តូរ​</b> ដើម្បីពង្រីក​)"
+msgstr "ចំណុច​ទាញ​ទាំងពីរ​ត្រូវ​បាន​បព្រួញ​​ត្រូវ​បាន​​​ត្រឡប់​(អូសដោយ​ប្រើ​ <b>ប្តូរ​</b> ដើម្បីពង្រីក​)"
 
 #: ../src/nodepath.cpp:4153
 msgid ""
@@ -3457,7 +3451,7 @@ msgid ""
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
 "rotate"
 msgstr ""
-"<b>អូស</b> ថ្នាំង ឬ​ចំណុច​ទាញ​ថ្នាំង <b>ជំនួស (Alt) + អូស</b> ដើម្បី​ឆ្លាក់ គ្រាប់​ចុច"
+"<b>អូស</b> ថ្នាំង ឬ​ចំណុច​ទាញ​ថ្នាំង <b>ជំនួស(Alt) + អូស</b> ដើម្បី​ឆ្លាក់ គ្រាប់​ចុច"
 "<b>ព្រួញ</b> ដើម្បី​ផ្លាស់ទី​ថ្នាំង <b>&lt; &gt;</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន <b>[ ]</b> ដើម្បី​បង្វិល"
 
 #: ../src/nodepath.cpp:4154
@@ -3479,7 +3473,7 @@ msgid_plural ""
 "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
 msgstr[0] ""
-"<b>0</b> អស់ <b>%i</b> ថ្នាំង​ដែល​បាន​ជ្រើស ។ <b>ចុច</b> <b>ប្ដូរ (Shift) + បញ្ជា (click)</b> "
+"<b>0</b> អស់ <b>%i</b> ថ្នាំង​ដែល​បាន​ជ្រើស ។ <b>ចុច</b> <b>ប្ដូរ(Shift)+ ចុច</b> "
 "ឬ <b>អូស​ជុំវិញ</b> ថ្នាំង​ដើម្បី​ជ្រើស ។"
 
 #: ../src/nodepath.cpp:4187
@@ -3497,42 +3491,40 @@ msgstr[0] "<b>%i</b> នៃ <b>%i</b> ថ្នាំងបានជ្រើស
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgstr[0] ""
-"<b>%i</b>  <b>%i</b> ថ្នាំង​ដែល​បានជ្រើស​ក្នុង​ <b>%i</b> "
-"នៃ​ <b>%i</b> ផ្លូវ​រង​ %s ។"
+"<b>%i</b>  <b>%i</b>ថ្នាំង​ដែល​បានជ្រើស​ក្នុង​<b>%i</b>"
+"នៃ<b>%i</b>ផ្លូវ​រង​ %s ។"
 
 #: ../src/nodepath.cpp:4208
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
-msgstr[0] "<b>%i</b> នៃ​ <b>%i</b> ថ្នាំង​ដែលបានជ្រើស​%s​។"
+msgstr[0] "<b>%i</b>នៃ<b>%i</b>ថ្នាំង​ដែលបានជ្រើស ​%s ​។"
 
 #: ../src/object-edit.cpp:488
 msgid ""
 "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the "
 "vertical radius the same"
-msgstr "លៃតម្រូវ​ <b>កាំផ្តេក​ធ្វើ​ឲ្យ​មាន​រាង​មូល​</b> ប្រើ <b>បញ្ជា​</b> ដើម្បី​បង្កើត​កាំ​បញ្ឈរ​ដែល​មាន​លក្ខណៈស្រដៀង​គ្នា​"
+msgstr "លៃតម្រូវ​<b>កាំផ្តេក​ធ្វើ​ឲ្យ​មាន​រាង​មូល​</b>ប្រើ<b>បញ្ជា(Ctrl)​</b>ដើម្បី​បង្កើត​កាំ​បញ្ឈរ​ដែល​មាន​លក្ខណៈស្រដៀង​គ្នា​"
 
 #: ../src/object-edit.cpp:494
 msgid ""
 "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the "
 "horizontal radius the same"
-msgstr "លៃ​តម្រូវ​កាំ <b>មូល​បញ្ឈរ</b> ដោយ​ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​ធ្វើ​កាំផ្ដេក​ឲ្យ​ដូចគ្នា"
+msgstr "លៃ​តម្រូវ​កាំ <b>មូល​បញ្ឈរ</b> ដោយ​ប្រើ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ធ្វើ​កាំផ្ដេក​ឲ្យ​ដូចគ្នា"
 
 #: ../src/object-edit.cpp:501 ../src/object-edit.cpp:508
 msgid ""
 "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to "
 "lock ratio or stretch in one dimension only"
-msgstr "លៃតម្រូវ​ <b>ទទឹង​និង កម្ពស់​​</b> ចតុកោណកែង​ ប្រើ​ <b>បញ្ជា​</b> សម្រាប់​ចាក់សោ​សមាមាត្រ​ ឬ បាន​តែ​បង្ហាញ​ជា​វិមាត្រ​"
+msgstr "លៃតម្រូវ​ <b>ទទឹង ​និង​កម្ពស់​​</b>ចតុកោណកែង​ ប្រើ​ <b>បញ្ជា(Ctrl)​</b> សម្រាប់​ចាក់សោ​សមាមាត្រ​ ឬ បាន​តែ​បង្ហាញ​ជា​វិមាត្រ​"
 
 #: ../src/object-edit.cpp:681
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
-msgstr ""
-"លៃតម្រូវ​"
-" <b>ទទឹងរាង​ពង​ក្រពើ​</b>, ប្រើ <b>បញ្ជា​</b> ដើម្បី​បង្កើត​ជា​រង្វង់​"
+msgstr "លៃតម្រូវ <b>ទទឹង</b> រាង​ពង​ក្រពើ ដោយ​ប្រើ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​បង្កើត​រង្វង់"
 
 #: ../src/object-edit.cpp:684
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
-msgstr "លៃតម្រូវ​ <b>កម្ពស់​រាង​ពងក្រពើ​</b>, ប្រើ <b>បញ្ជា​</b> ដើម្បី​បង្កើត​ជា​រង្វង់​"
+msgstr "លៃតម្រូវ​ <b>កម្ពស់​រាង​ពងក្រពើ​</b> ប្រើ <b>បញ្ជា​(Ctrl)​</b> ដើម្បី​បង្កើត​ជា​រង្វង់​"
 
 #: ../src/object-edit.cpp:687
 msgid ""
@@ -3541,41 +3533,41 @@ msgid ""
 "segment"
 msgstr ""
 "ទីតាំង​ <b>ចំណុច​ចាប់​ផ្តើម​</b> "
-"នៃធ្នូរ​ឬ ចម្រៀក​ ប្រើ​<b>បញ្ជា​</b> ដើម្បី​ខ្ទាស់​មុំ​ អូស​ <b>ខាងក្នុង</b> សម្រាប់​ធ្នូង​រាង​ពង​ក្រពើ​ ខាង​ក្រៅ​សម្រាប់​ចម្រៀក"
+"នៃធ្នូរ​ឬ ចម្រៀក​ ប្រើ​<b>បញ្ជា​(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ​ អូស​ <b>ខាងក្នុង</b> សម្រាប់​ធ្នូង​រាង​ពង​ក្រពើ​ ខាង​ក្រៅ​សម្រាប់​ចម្រៀក"
 
 #: ../src/object-edit.cpp:690
 msgid ""
 "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
-msgstr "ទីតាំង <b>ចំណុច​បញ្ចប់</b> របស់​ធ្នូ ឬ​ចម្រៀក ដោយ​ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ អូស <b>ខាង​ក្នុង</b> រាង​ពង​ក្រពើ​សម្រាប់​ធ្នូ <b>ខាង​ក្រៅ​សម្រាប់</b> សម្រាប់​ចម្រៀក"
+msgstr "ទីតាំង <b>ចំណុច​បញ្ចប់</b> របស់​ធ្នូ ឬ​ចម្រៀក ដោយ​ប្រើ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ អូស <b>ខាង​ក្នុង</b> រាង​ពង​ក្រពើ​សម្រាប់​ធ្នូ <b>ខាង​ក្រៅ​សម្រាប់</b> សម្រាប់​ចម្រៀក"
 
 #: ../src/object-edit.cpp:795
 msgid ""
 "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to "
 "round; with <b>Alt</b> to randomize"
-msgstr "លៃតម្រូវ <b>កាំ​ព័ត៌មាន​ជំនួយ</b> របស់​ផ្កាយ ឬ​ពហុកោណ ដោយ​ប្រើ <b>ប្ដូរ (Shift)</b> ដើម្បី​ធ្វើ​ឲ្យ​មូល ដោយ​ប្រើ <b>ជំនួស (Alt)</b> ដើម្បី​ធ្វើ​ដោយ​ចៃដន្យ"
+msgstr "លៃតម្រូវ <b>កាំ​ព័ត៌មាន​ជំនួយ</b> របស់​ផ្កាយ ឬ​ពហុកោណ ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​ធ្វើ​ឲ្យ​មូល ដោយ​ប្រើ <b>ជំនួស(Alt)</b> ដើម្បី​ធ្វើ​ដោយ​ចៃដន្យ"
 
 #: ../src/object-edit.cpp:798
 msgid ""
 "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star "
 "rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to "
 "randomize"
-msgstr "លៃតម្រូវ​ <b>មូលដ្ឋាន​កាំ​</b> នៃ​ផ្កាយ​ប្រើ <b>បញ្ជា​</b> ដើម្បី​រក្សា​កាំ​ (ដោយ​គ្មាន​ភាព វៀច​); ប្រើ​ <b>ប្តូរ​</b> នៅ​ចំកណ្តាល​ប្រើ​ <b>ជំនួស​</b> ដើម្បី​ឲ្យ​បាន​ចៃ​ដន្យ​"
+msgstr "លៃតម្រូវ​ <b>មូលដ្ឋាន​កាំ​</b> នៃ​ផ្កាយ​ប្រើ <b>បញ្ជា​(Ctrl)​</b> ដើម្បី​រក្សា​កាំ​ (ដោយ​គ្មាន​ភាព វៀច​); ប្រើ​ <b>ប្តូរ​(Shift)</b> នៅ​ចំកណ្តាល​ប្រើ​ <b>ជំនួស​(Alt)​</b> ដើម្បី​ឲ្យ​បាន​ចៃ​ដន្យ​"
 
 #: ../src/object-edit.cpp:962
 msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
 msgstr ""
-"រមូរ/មិន​រមូរ​គួច​ពី <b>ខាង​ក្នុង</b> ដោយ​ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ "
-"ដោយ <b>ជំនួស</b> ដើម្បី​ប្រសព្វគ្នា/មិន​ប្រសព្វគ្នា"
+"រមូរ/មិន​រមូរ​គួច​ពី <b>ខាង​ក្នុង</b> ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ "
+"ដោយ <b>ជំនួស(Alt)</b> ដើម្បី​ប្រសព្វគ្នា/មិន​ប្រសព្វគ្នា"
 
 #: ../src/object-edit.cpp:964
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate"
-msgstr "រមូរ/មិន​រមូរ​គួច​ពី <b>ខាងក្រៅ</b> ដោយ​ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​ប្រើ <b>ប្ដូរ (Shift)</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន/បង្វិល"
+msgstr "រមូរ/មិន​រមូរ​គួច​ពី <b>ខាងក្រៅ</b> ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន/បង្វិល"
 
 #: ../src/object-edit.cpp:1001
 msgid "Adjust the <b>offset distance</b>"
@@ -3592,7 +3584,7 @@ msgstr "<b>ធ្វើមាត្រដ្ឋាន​</b> បំពេញ​�
 
 #: ../src/object-edit.cpp:1035
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr "<b>បង្វិល​</b>បំពេញ លំនាំ​ប្រើ​<b>បញ្ជា​</b> ដើម្បី​ខ្ទាស់​មុំ​"
+msgstr "<b>បង្វិល​</b>បំពេញ លំនាំ​ប្រើ​<b>បញ្ជា(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ​"
 
 #: ../src/object-edit.cpp:1060
 msgid "Drag to resize the <b>flowed text frame</b>"
@@ -3679,8 +3671,8 @@ msgid ""
 "<b>Enter</b> to finish the path"
 msgstr ""
 "<b>%s</b> ៖ មុំ​ %3.2f&#176;, ចម្ងាយ %s; ជាមួយ​"
-" <b>បញ្ជា​</b>ដើម្បី​ខ្ទាស់​មុំ​"
-"<b>បញ្ចូល​</b> ដើម្បី​បញ្ចប់​ផ្លូវ​"
+" <b>បញ្ជា(Ctrl)​</b>ដើម្បី​ខ្ទាស់​មុំ​"
+"<b>បញ្ចូល​ (Enter)</b> ដើម្បី​បញ្ចប់​ផ្លូវ​"
 
 #: ../src/pen-context.cpp:1069
 #, c-format
@@ -3689,14 +3681,14 @@ msgid ""
 "angle"
 msgstr ""
 "<b>គ្រប់គ្រង​ខ្សែ​កោង​</b> ៖ "
-"មុំ %3.2f&#176;, ប្រវែង​%s; ប្រើ​<b>បញ្ជា​</b> ដើម្បី​ខ្ទាស់មុំ​"
+"មុំ %3.2f&#176;, ប្រវែង​%s; ប្រើ​<b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់មុំ​"
 
 #: ../src/pen-context.cpp:1099
 #, c-format
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, "
 "with <b>Shift</b> to move this handle only"
-msgstr "<b>%s</b> ៖ មុំ %3.2f&#176;, ប្រវែង %s; ដោយ​ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​ប្រើ <b>ប្ដូរ (Shift)</b> ដើម្បី​ផ្លាស់ទី​តែ​ចំណុចទាញ​នេះ​ប៉ុណ្ណោះ"
+msgstr "<b>%s</b> ៖ មុំ %3.2f&#176;, ប្រវែង %s; ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​ផ្លាស់ទី​តែ​ចំណុចទាញ​នេះ​ប៉ុណ្ណោះ"
 
 #: ../src/pen-context.cpp:1133
 msgid "Drawing finished"
@@ -3741,7 +3733,7 @@ msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
 msgstr ""
-"<b>បញ្ជា​</b> ៖ បង្កើត​ការេ​ឬ សមាមាត្រ​ចំនួន​គត់ "
+"<b>បញ្ជា​(Ctrl)</b> ៖ បង្កើត​ការេ​ឬ សមាមាត្រ​ចំនួន​គត់ "
 "ចាក់សោ​ជ្រុងមូល"
 
 #: ../src/rect-context.cpp:472
@@ -3750,7 +3742,7 @@ msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>ចតុកោណកែង</b>: %s &#215; %s;ប្រើ​ <b>បញ្ជា​</b> ដើម្បី​បង្កើត​ការេឬ សមាមាត្រ​ចតុកោណកែង​ចំនួនគត់ប្រើ <b>ប្តូរ​</b> "
+"<b>ចតុកោណកែង</b>: %s &#215; %s;ប្រើ​ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​បង្កើត​ការេឬ សមាមាត្រ​ចតុកោណកែង​ចំនួនគត់ប្រើ <b>ប្តូរ(Shift)​</b> "
 "ដើម្បីគូរ​ជុំវិញ​ចំណុច​ចាប់ផ្តើម​"
 
 #: ../src/rect-context.cpp:490
@@ -3767,7 +3759,7 @@ msgstr "ការជ្រើស​ត្រូវ​បានបោះបង់
 
 #: ../src/select-context.cpp:625
 msgid "<b>Ctrl</b>: select in groups, move hor/vert"
-msgstr "<b>បញ្ជា​</b> ៖ ជ្រើស​ក្នុង​ក្រុម​ ផ្លាស់ទី​ផ្តេក​ឬ បញ្ឈរ​"
+msgstr "<b>បញ្ជា​(Ctrl)</b> ៖ ជ្រើស​ក្នុង​ក្រុម​ ផ្លាស់ទី​ផ្តេក​ឬ បញ្ឈរ​"
 
 #: ../src/select-context.cpp:626
 msgid "<b>Shift</b>: toggle select, force rubberband, disable snapping"
@@ -4268,27 +4260,27 @@ msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
 msgstr ""
-"<b>គាប​ឬ ទាញ​ឲ្យ​វែង​</b> ការជ្រើស​ជាមួយ​ <b>បញ្ជា</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន​"
-"ដោយ​ប្រើ <b>ប្តូរ​</b> សម្រាប់​ធ្វើមាត្រដ្ឋានជុំវិញ​ការបង្វិល​ចំណុចកណ្តាល​"
+"<b>គាប​ឬ ទាញ​ឲ្យ​វែង​</b> ការជ្រើស​ជាមួយ​ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន​"
+"ដោយ​ប្រើ <b>ប្តូរ(Shift)​</b> សម្រាប់​ធ្វើមាត្រដ្ឋានជុំវិញ​ការបង្វិល​ចំណុចកណ្តាល​"
 
 #: ../src/seltrans.cpp:505
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
-msgstr "<b>មាត្រដ្ឋាន​</b> ការជ្រើស​ <b>បញ្ជា​</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន​ឲ្យ​ដូច​គ្នា​ប្រើ​ <b>ប្តូរ​</b> ដើម្បី​ធ្វើមាត្រដ្ឋានជុំវិញ​ការបង្វិល​កណ្តាល​"
+msgstr "<b>មាត្រដ្ឋាន​</b> ការជ្រើស​ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន​ឲ្យ​ដូច​គ្នា​ប្រើ​ <b>ប្តូរ(Shift)​</b> ដើម្បី​ធ្វើមាត្រដ្ឋានជុំវិញ​ការបង្វិល​កណ្តាល​"
 
 #: ../src/seltrans.cpp:509
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
-msgstr "<b>ឆៀង​</b> ការជ្រើស​ប្រើ​ <b>បញ្ជា​</b> ដើម្បី​ខ្ទាស់​មុំ​ប្រើ​ <b>ប្តូរ​</b> ដើម្បី​ឆៀង​ជុំវិញ​ទីតាំង​"
+msgstr "<b>ឆៀង​</b> ការជ្រើស​ប្រើ​ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ​ប្រើ​ <b>ប្តូរ(Shift)​</b> ដើម្បី​ឆៀង​ជុំវិញ​ទីតាំង​"
 
 #: ../src/seltrans.cpp:510
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
-"<b>បង្វិល​</b> ការជ្រើស​ប្រើ​ <b>បញ្ជា​</b> ដើម្បី​ខ្ទាស់​មុំ​ប្រើ​ <b>ប្តូរ</b> "
+"<b>បង្វិល​</b> ការជ្រើស​ប្រើ​ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ​ប្រើ​ <b>ប្តូរ(Shift)</b> "
 "ដើម្បី​បង្វិល​ជុំវិញ​ចំណុច​កំណ្តាល​"
 
 #: ../src/seltrans.cpp:641
@@ -4298,21 +4290,21 @@ msgstr "កំណត់​ចំណុច​កណ្តាល​ឡើង​វ
 #: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr "<b>មាត្រដ្ឋាន​</b>: %0.2f%% x %0.2f%%; ដោយ​ប្រើ <b>បញ្ជា​</b> ដើម្បី​ចាក់សោ​សមាមាត្រ​"
+msgstr "<b>មាត្រដ្ឋាន​</b>: %0.2f%% x %0.2f%%; ដោយ​ប្រើ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ចាក់សោ​សមាមាត្រ​"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1090
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>ឆៀង​</b>: %0.2f&#176;;ប្រើ <b>បញ្ជា</b> ដើម្បីខ្ទាស់​មុំ​"
+msgstr "<b>ឆៀង​</b>: %0.2f&#176;;ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បីខ្ទាស់​មុំ​"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1139
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>បង្វិល​</b>: %0.2f&#176;;ប្រើ​ <b>បញ្ជា​</b>ដើម្បី​ខ្ទាស់​មុំ​"
+msgstr "<b>បង្វិល​</b>: %0.2f&#176;;ប្រើ​ <b>បញ្ជា(Ctrl)​</b>ដើម្បី​ខ្ទាស់​មុំ​"
 
 #: ../src/seltrans.cpp:1183
 #, c-format
@@ -4325,7 +4317,7 @@ msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
 "with <b>Shift</b> to disable snapping"
 msgstr ""
-"<b>ផ្លាស់ទី​</b> តាម​%s, %s; ជាមួយ​ <b>បញ្ជា​</b>ដើម្បីកំណត់​វា​ផ្តេកឬ បញ្ឈរ​"
+"<b>ផ្លាស់ទី​</b> តាម​%s, %s; ជាមួយ​ <b>បញ្ជា​(Ctrl)</b>ដើម្បីកំណត់​វា​ផ្តេកឬ បញ្ឈរ​"
 "ដោយ​ប្រើ​ <b>ប្តូរ​</b> ដើម្បី​បិទ​ខ្ទាស់"
 
 #: ../src/slideshow.cpp:89
@@ -4517,7 +4509,7 @@ msgstr "<b>ក្លូន​កំព្រា</b>"
 
 #: ../src/spiral-context.cpp:337
 msgid "<b>Ctrl</b>: snap angle"
-msgstr "<b>បញ្ជា </b>  ៖ ខ្ទាស់​មុំ​"
+msgstr "<b>បញ្ជា(Ctrl)</b>  ៖ ខ្ទាស់​មុំ​"
 
 #: ../src/spiral-context.cpp:339
 msgid "<b>Alt</b>: lock spiral radius"
@@ -4526,7 +4518,7 @@ msgstr "<b>ជំនួស</b> ៖ ចាក់សោ​កាំ​គួច"
 #: ../src/spiral-context.cpp:443
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>គួច​</b> ៖ កាំ​ %s, មុំ​ %5g&#176;; ប្រើ <b>បញ្ជា​</b> ដើម្បី​ខ្ទាស់​មុំ​"
+msgstr "<b>គួច​</b> ៖ កាំ​ %s, មុំ​ %5g&#176;; ប្រើ <b>បញ្ជា(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ​"
 
 #: ../src/splivarot.cpp:66
 msgid "Union"
@@ -4612,17 +4604,17 @@ msgstr "<b>គ្មាន​ផ្លូវ</b> ងាយ​ស្រួល​�
 
 #: ../src/star-context.cpp:347
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
-msgstr "<b>បញ្ជា​</b> ៖ ខ្ទាស់​មុំ ដែល​រៀបតាម​កាំ​"
+msgstr "<b>បញ្ជា(Ctrl)​</b> ៖ ខ្ទាស់​មុំ ដែល​រៀបតាម​កាំ​"
 
 #: ../src/star-context.cpp:452
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>ពហុកោណ​</b> ៖ កាំ​ %s, មុំ%5g&#176;; ប្រើ​<b>បញ្ជា​</b> ដើម្បី​ខ្ទាស់​មុំ​"
+msgstr "<b>ពហុកោណ​</b> ៖ កាំ​ %s, មុំ%5g&#176;; ប្រើ​<b>បញ្ជា(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ​"
 
 #: ../src/star-context.cpp:453
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>ផ្កាយ​</b> ៖ កាំ​ %s, មុំ %5g&#176;; ប្រើ​ <b>បញ្ជា​</b>ដើម្បី​ខ្ទាស់​មុំ​"
+msgstr "<b>ផ្កាយ​</b> ៖ កាំ​ %s, មុំ %5g&#176;; ប្រើ​ <b>បញ្ជា​(Ctrl)</b>ដើម្បី​ខ្ទាស់​មុំ​"
 
 #: ../src/text-chemistry.cpp:94
 msgid "Select <b>a text and a path</b> to put text on path."
@@ -4735,7 +4727,7 @@ msgid ""
 "nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on an "
 "object to select."
 msgstr ""
-"ដើម្បី​កែសម្រួល​ផ្លូវ <b>ចុច</b> <b>ប្ដូរ (Shift)+ចុច</b> ឬ <b>អូស​ជុំវិញ</b> "
+"ដើម្បី​កែសម្រួល​ផ្លូវ <b>ចុច</b> <b>ប្ដូរ(Shift)+ចុច</b> ឬ <b>អូស​ជុំវិញ</b> "
 "ថ្នាំង​ដើម្បី​ជ្រើស​ពួក​វា បន្ទាប់​មក​ <b>អូស</b> ថ្នាំង​ និង​ចំណុច​ទាញ ។ <b>ចុច</b> នៅ​លើ​វត្ថុ​ដើម្បី​ជ្រើស ។"
 
 #: ../src/tools-switch.cpp:139
@@ -5507,7 +5499,7 @@ msgstr "ចុចឬ​ អូស​កម្រិត​ពន្លឺ​ ៖
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:146
 msgid "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
-msgstr "អូស​កណ្តុរ​អតិបរមា​ (ល​អេក្រងគិត​ជា​ភីចសែល​់​)ដែល​បានបញ្ជា​ឲ្យ​ចុច ឬ មិន​អូស​"
+msgstr "អូស​កណ្តុរ​អតិបរមា​ (ល​អេក្រងគិត​ជា​ភីចសែល​)ដែល​បានបញ្ជា​ឲ្យ​ចុច ឬ មិន​អូស​"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:151
 msgid "Scrolling"
@@ -5523,11 +5515,11 @@ msgid ""
 "(horizontally with Shift)"
 msgstr ""
 "ស្នាម​រមូរ​កង់​កណ្ដុរ​មួយ​តាម​ចម្ងាយ​នេះ​គិត​ជា​ភីក​សែល​អេក្រង់ "
-"(ផ្ដេ​កដោយ​ប្ដូរ (Shift))"
+"(ផ្ដេ​កដោយ​ប្ដូរ(Shift))"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:155
 msgid "Ctrl+arrows"
-msgstr "បញ្ជា​+ព្រួញ "
+msgstr "បញ្ជា​(Ctrl)+ព្រួញ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:157
 msgid "Scroll by:"
@@ -5535,7 +5527,7 @@ msgstr "រមូរ​តាម​ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:158
 msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
-msgstr "ចុច​បញ្ជា (Ctrl)+ គ្រាប់​ចុច​ព្រួញ​រមូរ​តាម​ចម្ងាយ​នេះ (គិត​ជា​ភីកសែល​អេក្រង់)"
+msgstr "ចុច​បញ្ជា(Ctrl)+ គ្រាប់​ចុច​ព្រួញ​រមូរ​តាម​ចម្ងាយ​នេះ (គិត​ជា​ភីកសែល​អេក្រង់)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:160
 msgid "Acceleration:"
@@ -5545,7 +5537,7 @@ msgstr "បង្កើន​ល្បឿន ៖"
 msgid ""
 "Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no "
 "acceleration)"
-msgstr "ចុច​ បញ្ជា​+ព្រួញ​ នឹងបង្កើន​ល្បឿន​តាម​លំដាប់នៃ​ការរមូលកង់​កណ្តុរ​ (០ មិន​បានបង្កើន​)"
+msgstr "ចុច​ បញ្ជា(Ctrl)​+ព្រួញ​ នឹងបង្កើន​ល្បឿន​តាម​លំដាប់នៃ​ការរមូលកង់​កណ្តុរ​ (០ មិន​បានបង្កើន​)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:162
 msgid "Autoscrolling"
@@ -5630,7 +5622,7 @@ msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
 msgstr ""
-"បង្វិល​ដោយ​ចុច​បញ្ជា (Ctrl) ខ្ទាស់​ដឺក្រេ; ចុច "
+"បង្វិល​ដោយ​ចុច​បញ្ជា(Ctrl) ខ្ទាស់​ដឺក្រេ; ចុច "
 "[ ឬ ] បង្វិល​ដោយ​ចំនួ​​ននេះ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:195
@@ -6073,7 +6065,7 @@ msgstr "ដោះជ្រើស​ដើម្បី​ផ្លាស់ប្
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid "Ctrl+A, Tab, Shift+Tab:"
-msgstr "បញ្ជា​+A, ថេប​, ប្តូរ​+ថេប​ ៖"
+msgstr "បញ្ជា(Ctrl)​+A, ថេប(Tab)​ ប្តូរ(Shift)​+ថេប(Tab) ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:494
 msgid "Make keyboard selection commands work on objects in all layers"
