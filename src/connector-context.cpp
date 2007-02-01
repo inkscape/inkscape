@@ -742,7 +742,26 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
             }
             break;
         case GDK_Escape:
-            if (cc->npoints != 0) {
+            if (cc->state == SP_CONNECTOR_CONTEXT_REROUTING) {
+                SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
+                SPDocument *doc = sp_desktop_document(desktop);
+                // Clear the temporary path:
+                sp_curve_reset(cc->red_curve);
+                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), NULL);
+
+                cc->clickeditem->setHidden(false);
+                sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, 
+                                 _("Reroute connector"));
+                cc_set_active_conn(cc, cc->clickeditem);
+                
+                cc->state = SP_CONNECTOR_CONTEXT_IDLE;
+ 
+                sp_document_undo(doc);
+                desktop->messageStack()->flash( Inkscape::NORMAL_MESSAGE,
+                        _("Connector endpoint drag canceled."));
+                ret = TRUE;
+            }
+            else if (cc->npoints != 0) {
                 // if drawing, cancel, otherwise pass it up for deselecting
                 cc->state = SP_CONNECTOR_CONTEXT_STOP;
                 spcc_reset_colors(cc);
