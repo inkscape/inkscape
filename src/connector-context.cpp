@@ -104,6 +104,8 @@ static void cc_clear_active_conn(SPConnectorContext *cc);
 static gchar *conn_pt_handle_test(SPConnectorContext *cc, NR::Point& w);
 static bool cc_item_is_shape(SPItem *item);
 static void cc_selection_changed(Inkscape::Selection *selection, gpointer data);
+static void cc_connector_rerouting_finish(SPConnectorContext *const cc,
+        NR::Point *const p);
 
 static void shape_event_attr_deleted(Inkscape::XML::Node *repr,
         Inkscape::XML::Node *child, Inkscape::XML::Node *ref, gpointer data);
@@ -561,7 +563,17 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                 break;
         }
     } else if (bevent.button == 3) {
-        if (cc->npoints != 0) {
+        if (cc->state == SP_CONNECTOR_CONTEXT_REROUTING) {
+            // A context menu is going to be triggered here, 
+            // so end the rerouting operation.
+            cc_connector_rerouting_finish(cc, &p);
+                
+            cc->state = SP_CONNECTOR_CONTEXT_IDLE;
+            
+            // Don't set ret to TRUE, so we drop through to the
+            // parent handler which will open the context menu.
+        }
+        else if (cc->npoints != 0) {
             spcc_connector_finish(cc);
             ret = TRUE;
         }
@@ -686,30 +698,8 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
             }
             case SP_CONNECTOR_CONTEXT_REROUTING:
             {
-                // Clear the temporary path:
-                sp_curve_reset(cc->red_curve);
-                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), NULL);
-
-                // Test whether we clicked on a connection point
-                gchar *shape_label = conn_pt_handle_test(cc, p);
-
-                if (shape_label) {
-                    if (cc->clickedhandle == cc->endpt_handle[0]) {
-                        sp_object_setAttribute(cc->clickeditem,
-                                "inkscape:connection-start",shape_label, false);
-                    }
-                    else {
-                        sp_object_setAttribute(cc->clickeditem,
-                                "inkscape:connection-end",shape_label, false);
-                    }
-                    g_free(shape_label);
-                }
-                cc->clickeditem->setHidden(false);
-                sp_conn_adjust_path(SP_PATH(cc->clickeditem));
-                cc->clickeditem->updateRepr();
-                sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, 
-                                 _("Reroute connector"));
-                cc_set_active_conn(cc, cc->clickeditem);
+                cc_connector_rerouting_finish(cc, &p);
+                
                 sp_document_ensure_up_to_date(doc);
                 cc->state = SP_CONNECTOR_CONTEXT_IDLE;
                 return TRUE;
@@ -743,20 +733,15 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
             break;
         case GDK_Escape:
             if (cc->state == SP_CONNECTOR_CONTEXT_REROUTING) {
+                
                 SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
                 SPDocument *doc = sp_desktop_document(desktop);
-                // Clear the temporary path:
-                sp_curve_reset(cc->red_curve);
-                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), NULL);
 
-                cc->clickeditem->setHidden(false);
-                sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, 
-                                 _("Reroute connector"));
-                cc_set_active_conn(cc, cc->clickeditem);
+                cc_connector_rerouting_finish(cc, NULL);
+                
+                sp_document_undo(doc);
                 
                 cc->state = SP_CONNECTOR_CONTEXT_IDLE;
- 
-                sp_document_undo(doc);
                 desktop->messageStack()->flash( Inkscape::NORMAL_MESSAGE,
                         _("Connector endpoint drag canceled."));
                 ret = TRUE;
@@ -772,6 +757,42 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
             break;
     }
     return ret;
+}
+
+
+static void
+cc_connector_rerouting_finish(SPConnectorContext *const cc, NR::Point *const p)
+{
+    SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
+    SPDocument *doc = sp_desktop_document(desktop);
+    
+    // Clear the temporary path:
+    sp_curve_reset(cc->red_curve);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), NULL);
+
+    if (p != NULL)
+    {
+        // Test whether we clicked on a connection point
+        gchar *shape_label = conn_pt_handle_test(cc, *p);
+
+        if (shape_label) {
+            if (cc->clickedhandle == cc->endpt_handle[0]) {
+                sp_object_setAttribute(cc->clickeditem,
+                        "inkscape:connection-start",shape_label, false);
+            }
+            else {
+                sp_object_setAttribute(cc->clickeditem,
+                        "inkscape:connection-end",shape_label, false);
+            }
+            g_free(shape_label);
+        }
+    }
+    cc->clickeditem->setHidden(false);
+    sp_conn_adjust_path(SP_PATH(cc->clickeditem));
+    cc->clickeditem->updateRepr();
+    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, 
+                     _("Reroute connector"));
+    cc_set_active_conn(cc, cc->clickeditem);
 }
 
 
