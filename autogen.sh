@@ -34,7 +34,7 @@ MAJOR2=`echo "$2" | cut -d"." -f1`;
 MINOR2=`echo "$2" | cut -d"." -f2;`
 test -z "$MINOR1" && MINOR1="0";
 
-if (("$MAJOR1" > "$MAJOR2"))||(((("$MAJOR1" == "$MAJOR2")) && (("$MINOR1" \>= "$MINOR2")))); then
+if [ "$MAJOR1" -gt "$MAJOR2" ] || [ "$MAJOR1" -eq "$MAJOR2" -a "$MINOR1" -ge "$MINOR2" ]; then
         echo "yes (version $1)"
     else
         echo "Too old (found version $1)!"
