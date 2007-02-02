@@ -5531,11 +5531,11 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:265
 msgid "translator-credits"
 msgstr ""
-" Valek Filippov <frob@df.ru>, 2000, 2003."
-"Vitaly Lipatov <lav@altlinux.ru>, 2002, 2004."
-"Alexey Remizov <alexey@remizov.pp.ru>, 2004."
-"bulia byak <buliabyak@users.sf.net>, 2004."
-"Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2004-2007."
+" Valek Filippov (frob@df.ru), 2000, 2003."
+"Vitaly Lipatov (lav@altlinux.ru), 2002, 2004."
+"Alexey Remizov (alexey@remizov.pp.ru), 2004."
+"bulia byak (buliabyak@users.sf.net), 2004."
+"Alexandre Prokoudine (alexandre.prokoudine@gmail.com), 2004-2007."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:219
 #: ../src/ui/dialog/align-and-distribute.cpp:759
@@ -11007,7 +11007,7 @@ msgstr "Удалить красный компонент"
 
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
-msgstr "«Бочка» RGB (RGB->BGR->GRB->...)"
+msgstr "«Бочка» RGB (RGB-&gt;BGR-&gt;GRB-&gt;...)"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
