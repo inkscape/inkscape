@@ -141,7 +141,13 @@ void graphlayout(GSList const *const items) {
 			} else {
 				iv=items[0];
 			}
-		
+	
+            if (iv == NULL) {
+                // The connector is not attached to anything at the 
+                // other end so we should just ignore it.
+                continue;
+            }
+
 			// What do we do if iv not in nodelookup?!?!
 			map<string,unsigned>::iterator v_pair=nodelookup.find(iv->id);
 			if(v_pair!=nodelookup.end()) {
