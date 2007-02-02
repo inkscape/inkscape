@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-14 18:11+0100\n"
-"PO-Revision-Date: 2007-02-01 12:01-0300\n"
-"Last-Translator: Valessio Brito <valessio@gmail.com>\n"
+"PO-Revision-Date: 2007-02-01 22:55-0300\n"
+"Last-Translator: Samy Marcelo Nascimento <samynascimento@gmail.com>\n"
 "Language-Team: Português Brasil <inkscape-brasil@listas.softwarelivre.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4232,11 +4232,11 @@ msgstr "Remover transformações"
 
 #: ../src/selection-chemistry.cpp:1590
 msgid "Rotate 90&#176; CW"
-msgstr "Girar 90&#176; (sentido horário)"
+msgstr "Girar 90° (sentido horário)"
 
 #: ../src/selection-chemistry.cpp:1618
 msgid "Rotate 90&#176; CCW"
-msgstr "Girar 90&#176; (sentido anti-horário)"
+msgstr "Girar 90° (sentido anti-horário)"
 
 #: ../src/selection-chemistry.cpp:1636 ../src/seltrans.cpp:380
 #: ../src/ui/dialog/transformation.cpp:666
@@ -7876,39 +7876,33 @@ msgstr "Padrão de traço"
 
 #: ../src/ui/widget/selected-style.cpp:147
 #: ../src/ui/widget/style-swatch.cpp:284
-#, fuzzy
 msgid "L Gradient"
-msgstr "Gradiente"
+msgstr "Gradiente L"
 
 #: ../src/ui/widget/selected-style.cpp:150
 #: ../src/ui/widget/style-swatch.cpp:286
-#, fuzzy
 msgid "Linear gradient fill"
-msgstr "Gradiente linear"
+msgstr "Preenchimento gradiente linear"
 
 #: ../src/ui/widget/selected-style.cpp:150
 #: ../src/ui/widget/style-swatch.cpp:286
-#, fuzzy
 msgid "Linear gradient stroke"
-msgstr "Gradiente linear"
+msgstr "Traço gradiente linear"
 
 #: ../src/ui/widget/selected-style.cpp:152
 #: ../src/ui/widget/style-swatch.cpp:288
-#, fuzzy
 msgid "R Gradient"
-msgstr "Gradiente"
+msgstr "Gradiente R"
 
 #: ../src/ui/widget/selected-style.cpp:155
 #: ../src/ui/widget/style-swatch.cpp:290
-#, fuzzy
 msgid "Radial gradient fill"
-msgstr "Gradiente radial"
+msgstr "Preenchimento gradiente radial"
 
 #: ../src/ui/widget/selected-style.cpp:155
 #: ../src/ui/widget/style-swatch.cpp:290
-#, fuzzy
 msgid "Radial gradient stroke"
-msgstr "Gradiente radial"
+msgstr "Traço gradiente radial"
 
 #: ../src/ui/widget/selected-style.cpp:157
 msgid "Different"
@@ -7928,20 +7922,17 @@ msgid "Unset"
 msgstr "Comprimir"
 
 #: ../src/ui/widget/selected-style.cpp:168
-#, fuzzy
 msgid "Flat color fill"
-msgstr "Cor lisa"
+msgstr "Preenchimento em cor lisa"
 
 #: ../src/ui/widget/selected-style.cpp:168
-#, fuzzy
 msgid "Flat color stroke"
-msgstr "Cor lisa"
+msgstr "Traço em cor lisa"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:171
-#, fuzzy
 msgid "<b>a</b>"
-msgstr "<b>L:</b>"
+msgstr "<b>a</b>"
 
 #: ../src/ui/widget/selected-style.cpp:174
 msgid "Fill is averaged over selected objects"
@@ -7953,9 +7944,8 @@ msgstr "Traço médio entre os objetos selecionados"
 
 #. TRANSLATOR COMMENT: M means "Multiple"
 #: ../src/ui/widget/selected-style.cpp:177
-#, fuzzy
 msgid "<b>m</b>"
-msgstr "<b>L:</b>"
+msgstr "<b>m</b>"
 
 #: ../src/ui/widget/selected-style.cpp:180
 msgid "Multiple selected objects have the same fill"
@@ -8357,13 +8347,10 @@ msgid "Vac_uum Defs"
 msgstr "Limpar pré-definições obsoletas"
 
 #: ../src/verbs.cpp:1981
-#, fuzzy
 msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
-msgstr ""
-"Limpar recursos pré-definidos <b>não</b> utilizados neste documento "
-"(gradientes, pincéis, etc)"
+msgstr "Limpar recursos pré-definidos não utilizados neste documento (gradientes, pincéis, etc)"
 
 #: ../src/verbs.cpp:1983
 msgid "Print _Direct"
@@ -8998,20 +8985,19 @@ msgstr "Apagar a camada atual"
 #. Object
 #: ../src/verbs.cpp:2168
 msgid "Rotate _90&#176; CW"
-msgstr "Girar +_90&#176; graus"
+msgstr "Girar +_90° graus"
 
 #: ../src/verbs.cpp:2169
 msgid "Rotate selection 90&#176; clockwise"
-msgstr "Girar a seleção 90&#176; graus no sentido hórario"
+msgstr "Girar a seleção 90° graus no sentido hórario"
 
 #: ../src/verbs.cpp:2170
-#, fuzzy
 msgid "Rotate 9_0&#176; CCW"
-msgstr "Girar -9_0 graus"
+msgstr "Girar 9_0° graus"
 
 #: ../src/verbs.cpp:2171
 msgid "Rotate selection 90&#176; counter-clockwise"
-msgstr "Girar a seleção 90&#176; graus no sentido anti-horário"
+msgstr "Girar a seleção 90° graus no sentido anti-horário"
 
 #: ../src/verbs.cpp:2172
 msgid "Remove _Transformations"
@@ -9053,11 +9039,8 @@ msgid "_Convert to Text"
 msgstr "Converter para Texto"
 
 #: ../src/verbs.cpp:2181
-#, fuzzy
 msgid "Convert flowed text to regular text object (preserves appearance)"
-msgstr ""
-"Converter o texto flutuante para um objeto de texto normal (preservar "
-"aparência)"
+msgstr "Converter o texto flutuante para um objeto de texto normal (preservar aparência)"
 
 #: ../src/verbs.cpp:2183
 msgid "Flip _Horizontal"
@@ -9448,9 +9431,8 @@ msgid "In_kscape Preferences..."
 msgstr "Configurações do In_kscape"
 
 #: ../src/verbs.cpp:2303
-#, fuzzy
 msgid "Edit global Inkscape preferences"
-msgstr "Configurações Globais do Inkscape"
+msgstr "Editar preferencias globais do Inkscape"
 
 #: ../src/verbs.cpp:2304
 msgid "_Document Properties..."
@@ -9578,9 +9560,8 @@ msgid "Edit the ID, locked and visible status, and other object properties"
 msgstr "Editar a ID, estados de visão e edição e outras propriedades do objeto"
 
 #: ../src/verbs.cpp:2337
-#, fuzzy
 msgid "_Instant Messaging..."
-msgstr "_Mensagens..."
+msgstr "_Mensagens Instantâneas..."
 
 #: ../src/verbs.cpp:2337
 msgid "Jabber Instant Messaging Client"
@@ -10296,12 +10277,10 @@ msgid "Delete selected nodes"
 msgstr "Apagar nós selecionados"
 
 #: ../src/widgets/toolbox.cpp:427
-#, fuzzy
 msgid "Join selected endnodes"
 msgstr "Juntar camimhos nos nós selecionados"
 
 #: ../src/widgets/toolbox.cpp:429
-#, fuzzy
 msgid "Join selected endnodes with a new segment"
 msgstr "Juntar caminhos nos nós selecionados com novo segmento"
 
@@ -10694,14 +10673,12 @@ msgid "Spacing between lines"
 msgstr "Espaçamento entre linhas"
 
 #: ../src/widgets/toolbox.cpp:4085
-#, fuzzy
 msgid "Horizontal kerning"
-msgstr "Espaçamento Horizontal"
+msgstr "Semear Horizontalmente"
 
 #: ../src/widgets/toolbox.cpp:4106
-#, fuzzy
 msgid "Vertical kerning"
-msgstr "Espaçamento Vertical"
+msgstr "Semear Verticalmente"
 
 #: ../src/widgets/toolbox.cpp:4133
 msgid "Letter rotation"
@@ -10952,14 +10929,12 @@ msgid "pstoedit must be installed to run; see http://www.pstoedit.net/pstoedit"
 msgstr "O pstoedit deve estar instalado; veja http://www.pstoedit.net/pstoedit"
 
 #: ../share/extensions/embedimage.inx.h:1
-#, fuzzy
 msgid "Embed All Images"
-msgstr "Todas as Imagens"
+msgstr "Juntar todas as Imagens"
 
 #: ../share/extensions/embedimage.inx.h:2
-#, fuzzy
 msgid "Embed only selected images"
-msgstr "Todas as Imagens"
+msgstr "Juntar somente a imagem selecionada"
 
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
@@ -11022,14 +10997,12 @@ msgid "XFIG Input"
 msgstr "Entrada XFIG"
 
 #: ../share/extensions/flatten.inx.h:1
-#, fuzzy
 msgid "Flatness"
-msgstr "Lados lisos:"
+msgstr "Nivelar"
 
 #: ../share/extensions/flatten.inx.h:2
-#, fuzzy
 msgid "Flatten Beziers"
-msgstr "Lados lisos:"
+msgstr "Nivelar Curvas"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Calculate first derivative numerically"
@@ -11268,9 +11241,8 @@ msgid "Duplicate the pattern before deformation"
 msgstr "Duplicar o padrão antes da deformação"
 
 #: ../share/extensions/pathalongpath.inx.h:5
-#, fuzzy
 msgid "Normal offset"
-msgstr "Desvio Horizontal"
+msgstr "Tipografia normal"
 
 #: ../share/extensions/pathalongpath.inx.h:6
 msgid "Pattern along Path"
