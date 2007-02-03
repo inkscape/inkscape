@@ -102,60 +102,62 @@ and of lines (simple canvas items). It also remembers one of the draggers as sel
 class GrDrag {
 public: // FIXME: make more of this private!
 
-	GrDrag(SPDesktop *desktop);
-	~GrDrag();
+    GrDrag(SPDesktop *desktop);
+    ~GrDrag();
 
-	// especially the selection must be private, fix gradient-context to remove direct access to it
-	GList *selected; // list of GrDragger*
+    // especially the selection must be private, fix gradient-context to remove direct access to it
+    GList *selected; // list of GrDragger*
     void setSelected (GrDragger *dragger, bool add_to_selection = false, bool override = true);
     void setDeselected (GrDragger *dragger);
     void deselectAll();
     
+    void deleteSelected (bool just_one = false);
+    
     bool keep_selection;    
     
-	GrDragger *getDraggerFor (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
+    GrDragger *getDraggerFor (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
 
-	void grabKnot (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, gint x, gint y, guint32 etime);
+    void grabKnot (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, gint x, gint y, guint32 etime);
 
-	bool local_change;
+    bool local_change;
 
-	SPDesktop *desktop;
+    SPDesktop *desktop;
 
-	// lists of edges of selection bboxes, to snap draggers to
-	std::vector<double> hor_levels;
-	std::vector<double> vert_levels;
+    // lists of edges of selection bboxes, to snap draggers to
+    std::vector<double> hor_levels;
+    std::vector<double> vert_levels;
 
-	GList *draggers;
-	GSList *lines;
+    GList *draggers;
+    GSList *lines;
 
-	void updateDraggers ();
-	void updateLines ();
-	void updateLevels ();
+    void updateDraggers ();
+    void updateLines ();
+    void updateLevels ();
 
-	void selected_move (double x, double y);
-	void selected_move_screen (double x, double y);
+    void selected_move (double x, double y);
+    void selected_move_screen (double x, double y);
 
-	void select_next ();
-	void select_prev ();
+    void select_next ();
+    void select_prev ();
 
-	void selected_reverse_vector ();
+    void selected_reverse_vector ();
 
 private: 
-	void deselect_all();
+    void deselect_all();
 
-	void addLine (NR::Point p1, NR::Point p2, guint32 rgba);
+    void addLine (NR::Point p1, NR::Point p2, guint32 rgba);
 
-	void addDragger (GrDraggable *draggable);
+    void addDragger (GrDraggable *draggable);
 
-	void addDraggersRadial (SPRadialGradient *rg, SPItem *item, bool fill_or_stroke);
-	void addDraggersLinear (SPLinearGradient *lg, SPItem *item, bool fill_or_stroke);
+    void addDraggersRadial (SPRadialGradient *rg, SPItem *item, bool fill_or_stroke);
+    void addDraggersLinear (SPLinearGradient *lg, SPItem *item, bool fill_or_stroke);
 
-	Inkscape::Selection *selection;
-	sigc::connection sel_changed_connection;
-	sigc::connection sel_modified_connection;
+    Inkscape::Selection *selection;
+    sigc::connection sel_changed_connection;
+    sigc::connection sel_modified_connection;
 
-	sigc::connection style_set_connection;
-	sigc::connection style_query_connection;
+    sigc::connection style_set_connection;
+    sigc::connection style_query_connection;
 };
 
 #endif

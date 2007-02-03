@@ -344,79 +344,6 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
     }
 }
 
-static void
-sp_gradient_context_delete_stops (SPGradientContext *rc, SPItem *item, GrDrag *drag, bool just_one) {
-    GrDragger *draggertemp = (GrDragger*) drag->selected->data;
-    GrDraggable *draggabletemp = (GrDraggable*) draggertemp->draggables->data;             
-    SPGradient *gradient = sp_item_gradient (item, draggabletemp->fill_or_stroke);
-    SPGradient *vector   = sp_gradient_get_vector (gradient, false);
-
-    // 2 is the minimum, cannot delete more than that without deleting the whole vector
-    guint num_delete = just_one ? 1 : g_list_length(drag->selected);
-    if (vector->vector.stops.size() >= (2+num_delete) ) { 
-        GSList *stoplist = NULL;
-        while (drag->selected) {
-            GrDragger *dragger = (GrDragger*) drag->selected->data;
-            GrDraggable *draggable = (GrDraggable*) dragger->draggables->data;             
-            SPStop *selstop = NULL;
-            switch (draggable->point_type) {
-                case POINT_LG_END:
-                case POINT_RG_R1:
-                case POINT_RG_R2:
-                    selstop = sp_last_stop(vector);
-                    break;
-                default: 
-                    selstop = sp_get_stop_i(vector, draggable->point_i);
-                    break;
-            }
-            if ( !g_slist_find(stoplist, selstop) ) {
-                stoplist = g_slist_append(stoplist, selstop);
-            }
-            drag->selected = g_list_remove(drag->selected, dragger);
-            if ( just_one ) break; // iterate once if just_one is set.
-        }
-        while (stoplist) {
-            SPStop *stop = (SPStop*) stoplist->data;
-            SP_OBJECT_REPR(vector)->removeChild(SP_OBJECT_REPR(stop));
-            stoplist = g_slist_remove(stoplist, stop);
-        }
-        // if we delete first or last stop, move the next/previous to the edge
-        SPStop *first = sp_first_stop (vector);
-        if (first) {
-            if (first->offset != 0) {
-                first->offset = 0;
-                sp_repr_set_css_double (SP_OBJECT_REPR (first), "offset", 0);
-            }
-        } 
-        SPStop *last = sp_last_stop (vector);
-        if (last) {
-            if (last->offset != 1) {
-                last->offset = 1;
-                sp_repr_set_css_double (SP_OBJECT_REPR (last), "offset", 1);
-            }
-        } 
-        if ( just_one || (num_delete == 1) ) {
-            sp_document_done (SP_OBJECT_DOCUMENT (vector), SP_VERB_CONTEXT_GRADIENT, 
-                              _("Delete gradient stop"));
-        } else {
-            sp_document_done (SP_OBJECT_DOCUMENT (vector), SP_VERB_CONTEXT_GRADIENT, 
-                              _("Delete gradient stops"));
-        }
-    } else { // delete the gradient from the object. set fill to unset
-        SPCSSAttr *css = sp_repr_css_attr_new ();
-        if (draggabletemp->fill_or_stroke) {
-            sp_repr_css_unset_property (css, "fill");
-        } else {
-            sp_repr_css_unset_property (css, "stroke");
-        }
-        sp_repr_css_change (SP_OBJECT_REPR (item), css, "style");
-        sp_repr_css_attr_unref (css);
-        sp_document_done (SP_OBJECT_DOCUMENT (vector), SP_VERB_CONTEXT_GRADIENT, 
-                          _("Remove gradient"));
-    }
-}
-
-
 
 static gint 
 sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
@@ -702,7 +629,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KP_Delete:
         case GDK_BackSpace:
             if ( drag->selected ) {
-                sp_gradient_context_delete_stops ( rc, SP_ITEM(selection->itemList()->data), drag, MOD__CTRL_ONLY ) ;
+                drag->deleteSelected(MOD__CTRL_ONLY);
                 ret = TRUE;            
             }
             break;

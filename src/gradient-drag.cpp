@@ -58,9 +58,9 @@ SPKnotShapeType gr_knot_shapes [] = {
         SP_KNOT_SHAPE_SQUARE, //POINT_LG_BEGIN
         SP_KNOT_SHAPE_CIRCLE,  //POINT_LG_END
         SP_KNOT_SHAPE_DIAMOND, //POINT_LG_MID
-        SP_KNOT_SHAPE_DIAMOND,
-        SP_KNOT_SHAPE_CIRCLE,
-        SP_KNOT_SHAPE_CIRCLE,
+        SP_KNOT_SHAPE_SQUARE,  // POINT_RG_CENTER
+        SP_KNOT_SHAPE_CIRCLE,  // POINT_RG_R1
+        SP_KNOT_SHAPE_CIRCLE,  // POINT_RG_R2
         SP_KNOT_SHAPE_CROSS, // POINT_RG_FOCUS
         SP_KNOT_SHAPE_DIAMOND, //POINT_RG_MID1
         SP_KNOT_SHAPE_DIAMOND //POINT_RG_MID2
@@ -229,11 +229,11 @@ gr_drag_style_set (const SPCSSAttr *css, gpointer data)
         GrDragger* dragger = (GrDragger*) sel->data;
         for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
                GrDraggable *draggable = (GrDraggable *) i->data;
-    
+
                drag->local_change = true;
                sp_item_gradient_stop_set_style (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke, stop);
         }
-    }        
+    }
 
     //sp_repr_css_print(stop);
     sp_repr_css_attr_unref(stop);
@@ -307,8 +307,8 @@ GrDrag::~GrDrag()
         desktop->gr_point_i = 0;
         desktop->gr_fill_or_stroke = true;
     }
-                          
-    deselect_all();                          
+
+    deselect_all();
     for (GList *l = this->draggers; l != NULL; l = l->next) {
         delete ((GrDragger *) l->data);
     }
@@ -359,13 +359,13 @@ snap_vector_midpoint (NR::Point p, NR::Point begin, NR::Point end, double snap)
     double length = NR::L2(end - begin);
     NR::Point be = (end - begin) / length;
     double r = NR::dot(p - begin, be);
-        
+
     if (r < 0.0) return begin;
-    if (r > length) return end;    
-    
-    double snapdist = length * snap;    
-    double r_snapped = (snap==0) ? r : floor(r/(snapdist + 0.5)) * snapdist;    
-        
+    if (r > length) return end;
+
+    double snapdist = length * snap;
+    double r_snapped = (snap==0) ? r : floor(r/(snapdist + 0.5)) * snapdist;
+
     return (begin + r_snapped * be);
 }
 
@@ -429,7 +429,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
         }
     }
 
-   
+
     if (!((state & GDK_SHIFT_MASK) || ((state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK)))) {
         // See if we need to snap to any of the levels
         for (guint i = 0; i < dragger->parent->hor_levels.size(); i++) {
@@ -522,7 +522,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
             p += move;
             sp_knot_moveto (knot, &p);
         }
-        
+
         g_slist_free(snap_vectors);
     }
 
@@ -535,11 +535,11 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
     }
 
     dragger->updateDependencies(false);
-    
+
     drag->keep_selection = (bool) g_list_find(drag->selected, dragger);
 }
-                       
-                       
+
+
 /**
 Called when a midpoint knot is dragged.
 */
@@ -550,7 +550,7 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
     GrDrag *drag = dragger->parent;
     // a midpoint dragger can (logically) only contain one GrDraggable
     GrDraggable *draggable = (GrDraggable *) dragger->draggables->data;
-    
+
     // FIXME: take from prefs
     double snap_fraction = 0.1;
 
@@ -562,13 +562,13 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
         server = SP_OBJECT_STYLE_FILL_SERVER (draggable->item);
     else
         server = SP_OBJECT_STYLE_STROKE_SERVER (draggable->item);
-    
-    
+
+
     // get begin and end points between which dragging is allowed:
     // the draglimits are between knot(lowest_i - 1) and knot(highest_i + 1)
     GSList *moving = NULL;
     moving = g_slist_append(moving, dragger);
-    
+
     guint lowest_i = draggable->point_i;
     guint highest_i = draggable->point_i;
     GrDragger *lowest_dragger = dragger;
@@ -579,7 +579,7 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
         while ( true )
         {
             d_add = drag->getDraggerFor(draggable->item, draggable->point_type, lowest_i - 1, draggable->fill_or_stroke);
-            if ( d_add && g_list_find(drag->selected, d_add) ) { 
+            if ( d_add && g_list_find(drag->selected, d_add) ) {
                 lowest_i = lowest_i - 1;
                 moving = g_slist_prepend(moving, d_add);
                 lowest_dragger = d_add;
@@ -587,11 +587,11 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
                 break;
             }
         }
-        
+
         while ( true )
         {
             d_add = drag->getDraggerFor(draggable->item, draggable->point_type, highest_i + 1, draggable->fill_or_stroke);
-            if ( d_add && g_list_find(drag->selected, d_add) ) { 
+            if ( d_add && g_list_find(drag->selected, d_add) ) {
                 highest_i = highest_i + 1;
                 moving = g_slist_append(moving, d_add);
                 highest_dragger = d_add;
@@ -600,7 +600,7 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
             }
         }
     }
-    
+
     if ( SP_IS_LINEARGRADIENT(server) ) {
         GrDragger *d_temp;
         if (lowest_i == 1) {
@@ -609,7 +609,7 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
             d_temp = drag->getDraggerFor (draggable->item, POINT_LG_MID, lowest_i - 1, draggable->fill_or_stroke);
         }
         if (d_temp) begin = d_temp->point;
-        
+
         d_temp = drag->getDraggerFor (draggable->item, POINT_LG_MID, highest_i + 1, draggable->fill_or_stroke);
         if (d_temp == NULL) {
             d_temp = drag->getDraggerFor (draggable->item, POINT_LG_END, 0, draggable->fill_or_stroke);
@@ -623,7 +623,7 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
             d_temp = drag->getDraggerFor (draggable->item, draggable->point_type, lowest_i - 1, draggable->fill_or_stroke);
         }
         if (d_temp) begin = d_temp->point;
-        
+
         d_temp = drag->getDraggerFor (draggable->item, draggable->point_type, highest_i + 1, draggable->fill_or_stroke);
         if (d_temp == NULL) {
             d_temp = drag->getDraggerFor (draggable->item, (draggable->point_type==POINT_RG_MID1) ? POINT_RG_R1 : POINT_RG_R2, 0, draggable->fill_or_stroke);
@@ -633,14 +633,14 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
 
     NR::Point low_lim  = dragger->point - (lowest_dragger->point - begin);
     NR::Point high_lim = dragger->point - (highest_dragger->point - end);
-        
+
     if (state & GDK_CONTROL_MASK) {
         p = snap_vector_midpoint (p, low_lim, high_lim, snap_fraction);
     } else {
         p = snap_vector_midpoint (p, low_lim, high_lim, 0);
     }
     NR::Point displacement = p - dragger->point;
-    
+
     for (GSList const* i = moving; i != NULL; i = i->next) {
         GrDragger *drg = (GrDragger*) i->data;
         SPKnot *drgknot = drg->knot;
@@ -649,7 +649,7 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
         drg->fireDraggables (false);
         drg->updateDependencies(false);
     }
-    
+
     drag->keep_selection = is_selected;
 }
 
@@ -690,13 +690,13 @@ gr_knot_ungrabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
     dragger->updateDependencies(true);
 
     // we did an undoable action
-    sp_document_done (sp_desktop_document (dragger->parent->desktop), SP_VERB_CONTEXT_GRADIENT, 
+    sp_document_done (sp_desktop_document (dragger->parent->desktop), SP_VERB_CONTEXT_GRADIENT,
                       _("Move gradient handle"));
 }
 
 /**
 Called when a dragger knot is clicked; selects the dragger or deletes it depending on the
-state of the keyboard keys 
+state of the keyboard keys
 */
 static void
 gr_knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
@@ -704,11 +704,11 @@ gr_knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
     GrDragger *dragger = (GrDragger *) data;
     GrDraggable *draggable = (GrDraggable *) dragger->draggables->data;
     if (!draggable) return;
-    
+
     if ( (state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK ) ) {
     // delete this knot from vector
     	SPGradient *gradient = sp_item_gradient (draggable->item, draggable->fill_or_stroke);
-        gradient = sp_gradient_get_vector (gradient, false);    
+        gradient = sp_gradient_get_vector (gradient, false);
     	if (gradient->vector.stops.size() > 2) { // 2 is the minimum
         	SPStop *stop = NULL;
         	switch (draggable->point_type) {  // if we delete first or last stop, move the next/previous to the edge
@@ -741,15 +741,15 @@ gr_knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
         	    stop = sp_get_stop_i(gradient, draggable->point_i);
         	    break;
         	}
-    
+
     		SP_OBJECT_REPR(gradient)->removeChild(SP_OBJECT_REPR(stop));
-    		sp_document_done (SP_OBJECT_DOCUMENT (gradient), SP_VERB_CONTEXT_GRADIENT, 
+    		sp_document_done (SP_OBJECT_DOCUMENT (gradient), SP_VERB_CONTEXT_GRADIENT,
     				  _("Delete gradient stop"));
     	}
     } else {
     // select the dragger
         dragger->point_original = dragger->point;
-        
+
         if ( state & GDK_SHIFT_MASK ) {
             dragger->parent->setSelected (dragger, true, false);
         } else {
@@ -837,11 +837,11 @@ GrDraggable::mayMerge (GrDraggable *da2)
         }
     }
     // disable merging of midpoints.
-    if ( (this->point_type == POINT_LG_MID) || (da2->point_type == POINT_LG_MID) 
+    if ( (this->point_type == POINT_LG_MID) || (da2->point_type == POINT_LG_MID)
          || (this->point_type == POINT_RG_MID1) || (da2->point_type == POINT_RG_MID1)
          || (this->point_type == POINT_RG_MID2) || (da2->point_type == POINT_RG_MID2) )
         return false;
-        
+
     return true;
 }
 
@@ -975,17 +975,17 @@ GrDragger::updateMidstopDependencies (GrDraggable *draggable, bool write_repr) {
         server = SP_OBJECT_STYLE_STROKE_SERVER (draggable->item);
     guint num = SP_GRADIENT(server)->vector.stops.size();
     if (num <= 2) return;
-    
+
     if ( SP_IS_LINEARGRADIENT(server) ) {
         for ( guint i = 1; i < num - 1; i++ ) {
             this->moveOtherToDraggable (draggable->item, POINT_LG_MID, i, draggable->fill_or_stroke, write_repr);
-        } 
+        }
     } else  if ( SP_IS_RADIALGRADIENT(server) ) {
         for ( guint i = 1; i < num - 1; i++ ) {
             this->moveOtherToDraggable (draggable->item, POINT_RG_MID1, i, draggable->fill_or_stroke, write_repr);
             this->moveOtherToDraggable (draggable->item, POINT_RG_MID2, i, draggable->fill_or_stroke, write_repr);
-        } 
-    } 
+        }
+    }
 }
 
 
@@ -1010,7 +1010,7 @@ GrDragger::updateDependencies (bool write_repr)
                 {
                     // the begin point is dependent only when dragging with ctrl+shift
                     this->moveOtherToDraggable (draggable->item, POINT_LG_BEGIN, 0, draggable->fill_or_stroke, write_repr);
-    
+
                     this->updateMidstopDependencies (draggable, write_repr);
                 }
                 break;
@@ -1073,8 +1073,8 @@ GrDragger::GrDragger (GrDrag *parent, NR::Point p, GrDraggable *draggable)
     // connect knot's signals
     if ( (draggable)  // it can be NULL if a node in unsnapped (eg. focus point unsnapped from center)
                        // luckily, midstops never snap to other nodes so are never unsnapped...
-         && ( (draggable->point_type == POINT_LG_MID) 
-              || (draggable->point_type == POINT_RG_MID1) 
+         && ( (draggable->point_type == POINT_LG_MID)
+              || (draggable->point_type == POINT_RG_MID1)
               || (draggable->point_type == POINT_RG_MID2) ) )
     {
         this->handler_id = g_signal_connect (G_OBJECT (this->knot), "moved", G_CALLBACK (gr_knot_moved_midpoint_handler), this);
@@ -1188,7 +1188,7 @@ GrDrag::deselectAll()
     this->desktop->emitToolSubselectionChanged(NULL);
 }
 
- 
+
 /**
 \brief Select a dragger
 \param dragger       The dragger to select
@@ -1199,7 +1199,7 @@ void
 GrDrag::setSelected (GrDragger *dragger, bool add_to_selection, bool override)
 {
     GrDragger *seldragger = NULL;
-    
+
     if (add_to_selection) {
         if (!dragger) return;
         if (override) {
@@ -1284,7 +1284,7 @@ GrDrag::addDragger (GrDraggable *draggable)
         }
     }
 
-    GrDragger *new_dragger = new GrDragger(this, p, draggable);   
+    GrDragger *new_dragger = new GrDragger(this, p, draggable);
     // fixme: draggers should be added AFTER the last one: this way tabbing through them will be from begin to end.
     this->draggers = g_list_append (this->draggers, new_dragger);
 }
@@ -1473,7 +1473,7 @@ GrDrag::selected_move (double x, double y)
 /*
     if (selected == NULL)
         return;
-    
+
     if ( (g_list_length(selected) == 1) )
     selected->point += NR::Point (x, y);
     selected->point_original = selected->point;
@@ -1486,7 +1486,7 @@ GrDrag::selected_move (double x, double y)
     // we did an undoable action
     sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
                       _("Move gradient handle"));
-*/                      
+*/
 }
 
 void
@@ -1524,6 +1524,226 @@ GrDrag::select_prev ()
             setSelected ((GrDragger *) g_list_last (draggers)->data);
     } else {
         setSelected ((GrDragger *) g_list_find(draggers, selected->data)->prev->data);
+    }
+}
+
+
+// FIXME: i.m.o. an ugly function that I just made to work, but... aargh! (Johan)
+void
+GrDrag::deleteSelected (bool just_one)
+{
+    if (!selected) return;
+
+    SPDocument *document = false;
+
+    struct StructStopInfo {
+        SPStop * spstop;
+        GrDraggable * draggable;
+        SPGradient * gradient;
+        SPGradient * vector;
+    };
+
+    GSList *midstoplist = NULL;  // list of stops that must be deleted (will be deleted first)
+    GSList *endstoplist = NULL;  // list of stops that must be deleted
+    while (selected) {
+        GrDragger *dragger = (GrDragger*) selected->data;
+        for (GSList * drgble = dragger->draggables; drgble != NULL; drgble = drgble->next) {
+            GrDraggable *draggable = (GrDraggable*) drgble->data;
+            SPGradient *gradient = sp_item_gradient (draggable->item, draggable->fill_or_stroke);
+            SPGradient *vector   = sp_gradient_get_vector (gradient, false);
+            switch (draggable->point_type) {
+                case POINT_LG_MID:
+                case POINT_RG_MID1:
+                case POINT_RG_MID2:
+                    {
+                        SPStop *stop = sp_get_stop_i(vector, draggable->point_i);
+                        // check if already present in list. (e.g. when both RG_MID1 and RG_MID2 were selected)
+                        bool present = false;
+                        for (GSList const * l = midstoplist; l != NULL; l = l->next) {
+                            if ( (SPStop*)l->data == stop ) {
+                                present = true;
+                                break; // no need to search further.
+                            }
+                        }
+                        if (!present)
+                            midstoplist = g_slist_append(midstoplist, stop);
+                    }
+                    break;
+                case POINT_LG_BEGIN:
+                case POINT_LG_END:
+                case POINT_RG_CENTER:
+                case POINT_RG_R1:
+                case POINT_RG_R2:
+                    {
+                        SPStop *stop = NULL;
+                        if ( (draggable->point_type == POINT_LG_BEGIN) || (draggable->point_type == POINT_RG_CENTER) ) {
+                            stop = sp_first_stop(vector);
+                        } else {
+                            stop = sp_last_stop(vector);
+                        }
+                        if (stop) {
+                            StructStopInfo *stopinfo = new StructStopInfo;
+                            stopinfo->spstop = stop;
+                            stopinfo->draggable = draggable;
+                            stopinfo->gradient = gradient;
+                            stopinfo->vector = vector;
+                            // check if already present in list. (e.g. when both R1 and R2 were selected)
+                            bool present = false;
+                            for (GSList const * l = endstoplist; l != NULL; l = l->next) {
+                                if ( ((StructStopInfo*)l->data)->spstop == stopinfo->spstop ) {
+                                    present = true;
+                                    break; // no need to search further.
+                                }
+                            }
+                            if (!present)
+                                endstoplist = g_slist_append(endstoplist, stopinfo);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        selected = g_list_remove(selected, dragger);
+        if ( just_one ) break; // iterate once if just_one is set.
+    }
+    while (midstoplist) {
+        SPStop *stop = (SPStop*) midstoplist->data;
+        document = SP_OBJECT_DOCUMENT (stop);
+        Inkscape::XML::Node * parent = SP_OBJECT_REPR(stop)->parent();
+        parent->removeChild(SP_OBJECT_REPR(stop));
+        midstoplist = g_slist_remove(midstoplist, stop);
+    }
+    while (endstoplist) {
+        StructStopInfo *stopinfo  = (StructStopInfo*) endstoplist->data;
+        document = SP_OBJECT_DOCUMENT (stopinfo->spstop);
+
+        // 2 is the minimum, cannot delete more than that without deleting the whole vector
+        // cannot use vector->vector.stops.size() because the vector might be invalidated by deletion of a midstop
+        // manually count the children, don't know if there already exists a function for this...
+        int len = 0;
+        for ( SPObject *child = sp_object_first_child(stopinfo->vector) ;
+              child != NULL ;
+              child = SP_OBJECT_NEXT(child) )
+        {
+            if ( SP_IS_STOP(child) )  len ++;
+        }
+        if (len > 2)
+        {
+            switch (stopinfo->draggable->point_type) {
+                case POINT_LG_BEGIN:
+                    {
+                        SP_OBJECT_REPR(stopinfo->vector)->removeChild(SP_OBJECT_REPR(stopinfo->spstop));
+
+                        SPLinearGradient *lg = SP_LINEARGRADIENT(stopinfo->gradient);
+                        NR::Point oldbegin = NR::Point (lg->x1.computed, lg->y1.computed);
+                        NR::Point end = NR::Point (lg->x2.computed, lg->y2.computed);
+                        SPStop *stop = sp_first_stop(stopinfo->vector);
+                        gdouble offset = stop->offset;
+                        NR::Point newbegin = oldbegin + offset * (end - oldbegin);
+                        lg->x1.computed = newbegin[NR::X];
+                        lg->y1.computed = newbegin[NR::Y];
+
+                        Inkscape::XML::Node *repr = SP_OBJECT_REPR(stopinfo->gradient);
+                        sp_repr_set_svg_double(repr, "x1", lg->x1.computed);
+                        sp_repr_set_svg_double(repr, "y1", lg->y1.computed);
+                        stop->offset = 0;
+                        sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", 0);
+
+                        // iterate through midstops to set new offset values such that they won't move on canvas.
+                        SPStop *laststop = sp_last_stop(stopinfo->vector);
+                        stop = sp_next_stop(stop);
+                        while ( stop != laststop ) {
+                            stop->offset = (stop->offset - offset)/(1 - offset);
+                            sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", stop->offset);
+                            stop = sp_next_stop(stop);
+                        }
+                    }
+                    break;
+                case POINT_LG_END:
+                    {
+                        SP_OBJECT_REPR(stopinfo->vector)->removeChild(SP_OBJECT_REPR(stopinfo->spstop));
+
+                        SPLinearGradient *lg = SP_LINEARGRADIENT(stopinfo->gradient);
+                        NR::Point begin = NR::Point (lg->x1.computed, lg->y1.computed);
+                        NR::Point oldend = NR::Point (lg->x2.computed, lg->y2.computed);
+                        SPStop *laststop = sp_last_stop(stopinfo->vector);
+                        gdouble offset = laststop->offset;
+                        NR::Point newend = begin + offset * (oldend - begin);
+                        lg->x2.computed = newend[NR::X];
+                        lg->y2.computed = newend[NR::Y];
+
+                        Inkscape::XML::Node *repr = SP_OBJECT_REPR(stopinfo->gradient);
+                        sp_repr_set_svg_double(repr, "x2", lg->x2.computed);
+                        sp_repr_set_svg_double(repr, "y2", lg->y2.computed);
+                        laststop->offset = 1;
+                        sp_repr_set_css_double (SP_OBJECT_REPR (laststop), "offset", 1);
+
+                        // iterate through midstops to set new offset values such that they won't move on canvas.
+                        SPStop *stop = sp_first_stop(stopinfo->vector);
+                        stop = sp_next_stop(stop);
+                        while ( stop != laststop ) {
+                            stop->offset = stop->offset / offset;
+                            sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", stop->offset);
+                            stop = sp_next_stop(stop);
+                        }
+                    }
+                    break;
+                case POINT_RG_CENTER:
+                    {
+                        SPStop *newfirst = sp_next_stop (stopinfo->spstop);
+                        if (newfirst) {
+                            newfirst->offset = 0;
+                            sp_repr_set_css_double (SP_OBJECT_REPR (newfirst), "offset", 0);
+                        }
+                        SP_OBJECT_REPR(stopinfo->vector)->removeChild(SP_OBJECT_REPR(stopinfo->spstop));
+                    }
+                    break;
+                case POINT_RG_R1:
+                case POINT_RG_R2:
+                        SP_OBJECT_REPR(stopinfo->vector)->removeChild(SP_OBJECT_REPR(stopinfo->spstop));
+
+                        SPRadialGradient *rg = SP_RADIALGRADIENT(stopinfo->gradient);
+                        double oldradius = rg->r.computed;
+                        SPStop *laststop = sp_last_stop(stopinfo->vector);
+                        gdouble offset = laststop->offset;
+                        double newradius = offset * oldradius;
+                        rg->r.computed = newradius;
+
+                        Inkscape::XML::Node *repr = SP_OBJECT_REPR(rg);
+                        sp_repr_set_svg_double(repr, "r", rg->r.computed);
+                        laststop->offset = 1;
+                        sp_repr_set_css_double (SP_OBJECT_REPR (laststop), "offset", 1);
+
+                        // iterate through midstops to set new offset values such that they won't move on canvas.
+                        SPStop *stop = sp_first_stop(stopinfo->vector);
+                        stop = sp_next_stop(stop);
+                        while ( stop != laststop ) {
+                            stop->offset = stop->offset / offset;
+                            sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", stop->offset);
+                            stop = sp_next_stop(stop);
+                        }
+                        break;
+            }
+        }
+        else
+        { // delete the gradient from the object. set fill to unset  FIXME: set to fill of unselected node?
+            SPCSSAttr *css = sp_repr_css_attr_new ();
+            if (stopinfo->draggable->fill_or_stroke) {
+                sp_repr_css_unset_property (css, "fill");
+            } else {
+                sp_repr_css_unset_property (css, "stroke");
+            }
+            sp_repr_css_change (SP_OBJECT_REPR (stopinfo->draggable->item), css, "style");
+            sp_repr_css_attr_unref (css);
+        }
+
+        endstoplist = g_slist_remove(endstoplist, stopinfo);
+        delete stopinfo;
+    }
+
+    if (document) {
+        sp_document_done ( document, SP_VERB_CONTEXT_GRADIENT, _("Delete gradient stop(s)") );
     }
 }
 
