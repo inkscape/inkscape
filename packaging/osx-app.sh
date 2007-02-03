@@ -164,7 +164,9 @@ END_PANGO
 
 # We use a modified fonts.conf file so only need the dtd
 mkdir -p $pkgetc/fonts
-cp /etc/fonts/fonts.dtd $pkgetc/fonts/
+cp $SW/etc/fonts/fonts.dtd $pkgetc/fonts/
+cp -r $SW/etc/fonts/conf.avail $pkgetc/fonts/
+cp -r $SW/etc/fonts/conf.d $pkgetc/fonts/
 
 mkdir -p $pkgetc/gtk-2.0
 sed -e "s,$SW,\${CWD},g" $SW/etc/gtk-2.0/gdk-pixbuf.loaders > $pkgetc/gtk-2.0/gdk-pixbuf.loaders
