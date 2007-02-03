@@ -54,7 +54,9 @@ dnl Verify our GCC version
 if test "x$GXX" = "xyes"; then
 	AC_MSG_CHECKING([GNU compiler version])
 
-	cc_version=["`$CXX $CXXFLAGS -v 2>&1 </dev/null |grep 'gcc version' |\
+	# Don't pass CXXFLAGS to the following CXX command as some 
+	# of them can't be specified along with '-v'.
+	cc_version=["`$CXX -v 2>&1 </dev/null |grep 'gcc version' |\
 		sed 's/.*gcc version \([-a-z0-9\.]*\).*/\1/'`"]
 
 	AC_MSG_RESULT([$cc_version])
