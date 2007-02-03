@@ -624,13 +624,11 @@ sp_item_gradient_stop_set_style (SPItem *item, guint point_type, guint point_i, 
 
     if (!vector) // orphan!
         return;
-    
-    /*
-    vector = sp_gradient_fork_vector_if_necessary (vector);   // TESTJOHAN
+
+    vector = sp_gradient_fork_vector_if_necessary (vector);
     if ( gradient != vector && gradient->ref->getObject() != vector ) {
         sp_gradient_repr_set_link(SP_OBJECT_REPR(gradient), vector);
     }
-    */
 
     switch (point_type) {
         case POINT_LG_BEGIN:
@@ -1224,6 +1222,18 @@ sp_gradient_vector_for_object(SPDocument *const doc, SPDesktop *const desktop,
     }
 
     return sp_document_default_gradient_vector(doc, rgba);
+}
+
+
+SPGradient *
+sp_gradient_get_forked_vector_if_necessary(SPGradient *gradient, bool force_vector)
+{
+    SPGradient *vector = sp_gradient_get_vector (gradient, force_vector);
+    vector = sp_gradient_fork_vector_if_necessary (vector);
+    if ( gradient != vector && gradient->ref->getObject() != vector ) {
+        sp_gradient_repr_set_link(SP_OBJECT_REPR(gradient), vector);
+    }
+    return vector;
 }
 
 /*

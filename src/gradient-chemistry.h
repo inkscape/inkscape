@@ -51,6 +51,8 @@ SPGradient *sp_gradient_convert_to_userspace (SPGradient *gr, SPItem *item, cons
 SPGradient *sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item);
 
 SPGradient *sp_gradient_fork_vector_if_necessary (SPGradient *gr);
+SPGradient *sp_gradient_get_forked_vector_if_necessary(SPGradient *gradient, bool force_vector);
+
 
 SPStop* sp_first_stop(SPGradient *gradient);
 SPStop* sp_last_stop(SPGradient *gradient);

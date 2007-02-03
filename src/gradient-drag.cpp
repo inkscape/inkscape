@@ -1550,7 +1550,8 @@ GrDrag::deleteSelected (bool just_one)
         for (GSList * drgble = dragger->draggables; drgble != NULL; drgble = drgble->next) {
             GrDraggable *draggable = (GrDraggable*) drgble->data;
             SPGradient *gradient = sp_item_gradient (draggable->item, draggable->fill_or_stroke);
-            SPGradient *vector   = sp_gradient_get_vector (gradient, false);
+            SPGradient *vector   = sp_gradient_get_forked_vector_if_necessary (gradient, false);
+
             switch (draggable->point_type) {
                 case POINT_LG_MID:
                 case POINT_RG_MID1:
