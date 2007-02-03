@@ -49,7 +49,11 @@ else
 fi
 
 
-SW=/sw
+SW="$HOME/ws-fat"
+
+pangover=1.5.0
+gtkver=2.10.0
+
 
 # Package always has the same name.  Version information is stored in
 # the Info.plist file which is filled in by the configure script.
@@ -153,9 +157,9 @@ cp $SW/etc/pango/pangox.aliases $pkgetc/pango/
 sed -e "s,$SW,\"\${CWD},g" -e 's,\.so ,.so" ,g' $SW/etc/pango/pango.modules > $pkgetc/pango/pango.modules
 cat > $pkgetc/pango/pangorc <<END_PANGO
 [Pango]
-ModuleFiles = "\${HOME}/.inkscape-etc/pango.modules"
+ModuleFiles=\${HOME}/.inkscape-etc/pango.modules
 [PangoX]
-AliasFiles = "\${HOME}/.inkscape-etc/pangox.aliases"
+AliasFiles=\${HOME}/.inkscape-etc/pangox.aliases
 END_PANGO
 
 # We use a modified fonts.conf file so only need the dtd
@@ -171,14 +175,16 @@ do
   cp -r $SW/etc/$item $pkgetc/
 done
 
-pkglib="$package/Contents/Resources/lib"
-mkdir -p $pkglib/pango/1.4.0/modules
-cp $SW/lib/pango/1.4.0/modules/*.so $pkglib/pango/1.4.0/modules/
 
-mkdir -p $pkglib/gtk-2.0/2.4.0/{engines,immodules,loaders}
-cp -r $SW/lib/gtk-2.0/2.4.0/engines/* $pkglib/gtk-2.0/2.4.0/engines/
-cp $SW/lib/gtk-2.0/2.4.0/immodules/*.so $pkglib/gtk-2.0/2.4.0/immodules/
-cp $SW/lib/gtk-2.0/2.4.0/loaders/*.so $pkglib/gtk-2.0/2.4.0/loaders/
+pkglib="$package/Contents/Resources/lib"
+mkdir -p $pkglib/pango/$pangover/modules
+cp $SW/lib/pango/$pangover/modules/*.so $pkglib/pango/$pangover/modules/
+
+
+mkdir -p $pkglib/gtk-2.0/$gtkver/{engines,immodules,loaders}
+cp -r $SW/lib/gtk-2.0/$gtkver/engines/* $pkglib/gtk-2.0/$gtkver/engines/
+cp $SW/lib/gtk-2.0/$gtkver/immodules/*.so $pkglib/gtk-2.0/$gtkver/immodules/
+cp $SW/lib/gtk-2.0/$gtkver/loaders/*.so $pkglib/gtk-2.0/$gtkver/loaders/
 
 mkdir -p $pkglib/gnome-vfs-2.0/modules
 cp $SW/lib/gnome-vfs-2.0/modules/*.so $pkglib/gnome-vfs-2.0/modules/
@@ -189,7 +195,7 @@ nfiles=0
 endl=true
 while $endl; do
   echo "Looking for dependencies. Round " $a
-  libs="`otool -L $pkglib/gtk-2.0/2.4.0/loaders/* $pkglib/gtk-2.0/2.4.0/immodules/* $pkglib/gtk-2.0/2.4.0/engines/*.so $pkglib/pango/1.4.0/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $SW | sort | uniq`"
+  libs="`otool -L $pkglib/gtk-2.0/$gtkver/loaders/* $pkglib/gtk-2.0/$gtkver/immodules/* $pkglib/gtk-2.0/$gtkver/engines/*.so $pkglib/pango/$pangover/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $SW | sort | uniq`"
   cp -f $libs $package/Contents/Resources/lib
   let "a+=1"  
   nnfiles=`ls $package/Contents/Resources/lib | wc -l`
