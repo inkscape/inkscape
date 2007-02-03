@@ -75,6 +75,7 @@ struct SPDynaDrawContext
     /* DynaDraw */
     NR::Point cur;
     NR::Point vel;
+    double vel_max;
     NR::Point acc;
     NR::Point ang;
     NR::Point last;

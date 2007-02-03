@@ -58,7 +58,10 @@
 #define SAMPLE_TIMEOUT 10
 #define TOLERANCE_LINE 1.0
 #define TOLERANCE_CALLIGRAPHIC 3.0
-#define DYNA_EPSILON 0.5e-2
+
+#define DYNA_EPSILON 0.5e-6
+#define DYNA_EPSILON_START 2e-2
+#define DYNA_VEL_START 4e-3
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
@@ -146,6 +149,7 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     ddc->cur = NR::Point(0,0);
     ddc->last = NR::Point(0,0);
     ddc->vel = NR::Point(0,0);
+    ddc->vel_max = 0;
     ddc->acc = NR::Point(0,0);
     ddc->ang = NR::Point(0,0);
     ddc->del = NR::Point(0,0);
@@ -304,6 +308,7 @@ sp_dyna_draw_reset(SPDynaDrawContext *dc, NR::Point p)
 {
     dc->last = dc->cur = sp_dyna_draw_get_npoint(dc, p);
     dc->vel = NR::Point(0,0);
+    dc->vel_max = 0;
     dc->acc = NR::Point(0,0);
     dc->ang = NR::Point(0,0);
     dc->del = NR::Point(0,0);
@@ -340,7 +345,7 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, NR::Point p)
 
     /* Calculate force and acceleration */
     NR::Point force = n - dc->cur;
-    if ( NR::L2(force) < DYNA_EPSILON ) {
+    if ( NR::L2(force) < DYNA_EPSILON || (dc->vel_max < DYNA_VEL_START && NR::L2(force) < DYNA_EPSILON_START)) {
         return FALSE;
     }
 
@@ -348,6 +353,9 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, NR::Point p)
 
     /* Calculate new velocity */
     dc->vel += dc->acc;
+
+    if (NR::L2(dc->vel) > dc->vel_max)
+        dc->vel_max = NR::L2(dc->vel);
 
     /* Calculate angle of drawing tool */
 
@@ -394,8 +402,17 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, NR::Point p)
     // find the flatness-weighted bisector angle, unflip if a2 was flipped
     // FIXME: when dc->vel is oscillating around the fixed angle, the new_ang flips back and forth. How to avoid this?
     double new_ang = a1 + (1 - dc->flatness) * (a2 - a1) - (flipped? M_PI : 0);
+
+    double angle_delta = NR::L2(NR::Point (cos (new_ang), sin (new_ang)) - dc->ang);
+
+    if ( angle_delta / NR::L2(dc->vel) > 4000 ) {
+        return FALSE;
+    }
+
     // convert to point
     dc->ang = NR::Point (cos (new_ang), sin (new_ang));
+
+//    g_print ("force %g  acc %g  vel_max %g  vel %g  a1 %g  a2 %g  new_ang %g\n", NR::L2(force), NR::L2(dc->acc), dc->vel_max, NR::L2(dc->vel), a1, a2, new_ang);
 
     /* Apply drag */
     dc->vel *= 1.0 - drag;
