@@ -60,8 +60,8 @@
 #define TOLERANCE_CALLIGRAPHIC 3.0
 
 #define DYNA_EPSILON 0.5e-6
-#define DYNA_EPSILON_START 2e-2
-#define DYNA_VEL_START 4e-3
+#define DYNA_EPSILON_START 0.5e-2
+#define DYNA_VEL_START 1e-5
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
