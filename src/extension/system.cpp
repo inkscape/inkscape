@@ -6,9 +6,10 @@
  *
  * Authors:
  *   Ted Gould <ted@gould.cx>
+ *   Johan Engelen <johan@shouraizou.nl>
  *
- * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 2002-2004 Authors
+ * Copyright (C) 2006-2007 Johan Engelen 
+ * Copyright (C) 2002-2004 Ted Gould
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -245,34 +246,60 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         throw Output::no_overwrite();
     }
 
-    if (official) {
-        bool saved = sp_document_get_undo_sensitive(doc);
-        sp_document_set_undo_sensitive (doc, false);
-        Inkscape::XML::Node *repr = sp_document_repr_root(doc);
-        repr->setAttribute("sodipodi:modified", NULL);
-        sp_document_set_undo_sensitive (doc, saved);
-    }
+    Inkscape::XML::Node *repr = sp_document_repr_root(doc);
 
-    omod->save(doc, fileName);
+    // remember attributes in case this is an unofficial save
+    gchar *saved_sodipodi_modified = NULL;
+    gchar *saved_output_extension = NULL;
+    gchar *saved_dataloss = NULL;
+    gchar *saved_uri = NULL;
+    if (!official) {
+        if (repr->attribute("sodipodi:modified")) {
+            saved_sodipodi_modified = g_strdup(repr->attribute("sodipodi:modified"));
+        }
+        if (repr->attribute("inkscape:output_extension")) {
+            saved_output_extension = g_strdup(repr->attribute("inkscape:output_extension"));
+        }
+        if (repr->attribute("inkscape:dataloss")) {
+            saved_dataloss = g_strdup(repr->attribute("inkscape:dataloss"));
+        }
+        if (doc->uri) {
+            saved_uri = g_strdup(doc->uri);    
+        }
+    }    
 
-    if (official) {
+    // update attributes:
+    bool saved = sp_document_get_undo_sensitive(doc);
+    sp_document_set_undo_sensitive (doc, false); 
+        repr->setAttribute("sodipodi:modified", NULL); 
         // save the filename for next use
         sp_document_set_uri(doc, fileName);
-
-        bool saved = sp_document_get_undo_sensitive(doc);
-        sp_document_set_undo_sensitive (doc, false);
-
         // also save the extension for next use
-        Inkscape::XML::Node *repr = sp_document_repr_root(doc);
         repr->setAttribute("inkscape:output_extension", omod->get_id());
         // set the "dataloss" attribute if the chosen extension is lossy
         repr->setAttribute("inkscape:dataloss", NULL);
         if ( omod->causes_dataloss() ) {
             repr->setAttribute("inkscape:dataloss", "true");
         }
+    sp_document_set_undo_sensitive (doc, saved);
 
+    omod->save(doc, fileName);
+    
+    // if it is an unofficial save, set the modified attributes back to what they were    
+    if ( !official) {
+        saved = sp_document_get_undo_sensitive(doc);
+        sp_document_set_undo_sensitive (doc, false);
+            repr->setAttribute("sodipodi:modified", saved_sodipodi_modified);
+            repr->setAttribute("inkscape:output_extension", saved_output_extension);
+            repr->setAttribute("inkscape:dataloss", saved_dataloss);
+            sp_document_set_uri(doc, saved_uri);
         sp_document_set_undo_sensitive (doc, saved);
     }
+    
+    if (saved_sodipodi_modified) g_free(saved_sodipodi_modified);
+    if (saved_output_extension)  g_free(saved_output_extension);
+    if (saved_dataloss)          g_free(saved_dataloss);
+    if (saved_uri)               g_free(saved_uri);    
     
     g_free(fileName);
     return;
