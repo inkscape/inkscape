@@ -128,7 +128,10 @@ sp_file_new_default()
             //  the default layer, etc. If you wish to localize this file, please create a
             //  localized share/templates/default.xx.svg file, where xx is your language code.
             char *default_template = g_build_filename(dirname, _("default.svg"), NULL);
-            if (Inkscape::IO::file_test(default_template, G_FILE_TEST_IS_REGULAR)) {
+            char *user_default_template = g_build_filename(profile_path("templates"), _("default.svg"), NULL);
+            if (Inkscape::IO::file_test(user_default_template, G_FILE_TEST_IS_REGULAR)) {
+                return sp_file_new(user_default_template);
+            } else if (Inkscape::IO::file_test(default_template, G_FILE_TEST_IS_REGULAR)) {
                 return sp_file_new(default_template);
             }
         }
