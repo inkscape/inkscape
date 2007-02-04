@@ -111,7 +111,7 @@ nr_arena_render_paintserver_fill (NRPixBlock *pb, NRRectL *area, SPPainter *pain
 	nr_pixblock_setup_fast (&cb_opa, NR_PIXBLOCK_MODE_R8G8B8A8N, area->x0, area->y0, area->x1, area->y1, TRUE);
 
         // if memory allocation failed, abort 
-        if (cb.data.px == NULL || cb_opa.data.px == NULL) {
+	if ((cb.size != NR_PIXBLOCK_SIZE_TINY && cb.data.px == NULL) || (cb_opa.size != NR_PIXBLOCK_SIZE_TINY && cb_opa.data.px == NULL)) {
             return;
         }
 

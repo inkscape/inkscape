@@ -377,7 +377,7 @@ nr_arena_item_invoke_render (NRArenaItem *item, NRRectL const *area,
                                 TRUE);
 
         //  if memory allocation failed, abort render
-        if (ipb.data.px == NULL) {
+        if (ipb.size != NR_PIXBLOCK_SIZE_TINY && ipb.data.px == NULL) {
             nr_pixblock_release (&ipb);
             return (item->state);
         }
@@ -836,7 +836,7 @@ nr_arena_item_get_background (NRArenaItem const *item, int depth)
                                 item->background_pb->area.y0,
                                 item->background_pb->area.x1,
                                 item->background_pb->area.y1, true);
-        if (pb->data.px == NULL) // allocation failed
+        if (pb->size != NR_PIXBLOCK_SIZE_TINY && pb->data.px == NULL) // allocation failed
             return NULL;
     } else if (item->parent) {
         pb = nr_arena_item_get_background (item->parent, depth + 1);

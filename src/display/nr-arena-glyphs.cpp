@@ -442,7 +442,7 @@ nr_arena_glyphs_group_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, u
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
 
         // if memory allocation failed, abort 
-        if (m.data.px == NULL) {
+        if (m.size != NR_PIXBLOCK_SIZE_TINY && m.data.px == NULL) {
             nr_pixblock_release (&m);
             return (item->state);
         }
@@ -489,7 +489,7 @@ nr_arena_glyphs_group_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, u
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
 
         // if memory allocation failed, abort 
-        if (m.data.px == NULL) {
+        if (m.size != NR_PIXBLOCK_SIZE_TINY && m.data.px == NULL) {
             nr_pixblock_release (&m);
             return (item->state);
         }
