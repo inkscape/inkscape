@@ -245,23 +245,33 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         throw Output::no_overwrite();
     }
 
+    if (official) {
+        bool saved = sp_document_get_undo_sensitive(doc);
+        sp_document_set_undo_sensitive (doc, false);
+        Inkscape::XML::Node *repr = sp_document_repr_root(doc);
+        repr->setAttribute("sodipodi:modified", NULL);
+        sp_document_set_undo_sensitive (doc, saved);
+    }
+
     omod->save(doc, fileName);
 
     if (official) {
         // save the filename for next use
         sp_document_set_uri(doc, fileName);
+
         bool saved = sp_document_get_undo_sensitive(doc);
         sp_document_set_undo_sensitive (doc, false);
-            // also save the extension for next use
-            Inkscape::XML::Node *repr = sp_document_repr_root(doc);
-            repr->setAttribute("inkscape:output_extension", omod->get_id());
-            // set the "dataloss" attribute if the chosen extension is lossy
-    	    repr->setAttribute("inkscape:dataloss", NULL);
-            if ( omod->causes_dataloss() ) {
-	            repr->setAttribute("inkscape:dataloss", "true");
-            }
-            repr->setAttribute("sodipodi:modified", NULL);
-    	sp_document_set_undo_sensitive (doc, saved);
+
+        // also save the extension for next use
+        Inkscape::XML::Node *repr = sp_document_repr_root(doc);
+        repr->setAttribute("inkscape:output_extension", omod->get_id());
+        // set the "dataloss" attribute if the chosen extension is lossy
+        repr->setAttribute("inkscape:dataloss", NULL);
+        if ( omod->causes_dataloss() ) {
+            repr->setAttribute("inkscape:dataloss", "true");
+        }
+
+        sp_document_set_undo_sensitive (doc, saved);
     }
     
     g_free(fileName);
