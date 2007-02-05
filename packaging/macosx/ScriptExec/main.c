@@ -217,8 +217,9 @@ static OSStatus FCCacheFailedHandler(EventHandlerCallRef theHandlerCall,
            "touch \"$HOME/.inkscape/.fccache-new\"");
     // Rerun now.
     OSErr err = ExecuteScript(scriptPath, &pid);
+    ExitToShell();
 
-    return err;
+    return noErr;
 }
 
 
