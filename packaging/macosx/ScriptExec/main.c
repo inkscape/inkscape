@@ -160,8 +160,45 @@ int main(int argc, char* argv[])
 #pragma mark -
 
 
+static void RequestUserAttention(void)
+{
+    NMRecPtr notificationRequest = (NMRecPtr) NewPtr(sizeof(NMRec));
+
+    memset(notificationRequest, 0, sizeof(*notificationRequest));
+    notificationRequest->qType = nmType;
+    notificationRequest->nmMark = 1;
+    notificationRequest->nmIcon = 0;
+    notificationRequest->nmSound = 0;
+    notificationRequest->nmStr = NULL;
+    notificationRequest->nmResp = NULL;
+
+    verify_noerr(NMInstall(notificationRequest));
+}
+
+
+static void ShowFirstStartWarningDialog(void)
+{
+    SInt16 itemHit;
+
+    AlertStdAlertParamRec params;
+    params.movable = true;
+    params.helpButton = false;
+    params.filterProc = NULL;
+    params.defaultText = (void *) kAlertDefaultOKText;
+    params.cancelText = NULL;
+    params.otherText = NULL;
+    params.defaultButton = kAlertStdAlertOKButton;
+    params.cancelButton = kAlertStdAlertCancelButton;
+    params.position = kWindowDefaultPosition;
+
+    StandardAlert(kAlertNoteAlert, "\pInkscape on Mac OS X",
+            "\pWhile Inkscape is open, its windows can be displayed or hidden by displaying or hiding the X11 application.\n\nThe first time this version of Inkscape is run it may take several minutes before the main window is displayed while font caches are built.",
+            &params, &itemHit);
+}
+
+
 //////////////////////////////////
-// Handler for when X11 fails to start
+// Handler for when fontconfig caches need to be generated
 //////////////////////////////////
 static OSStatus FCCacheFailedHandler(EventHandlerCallRef theHandlerCall, 
                                  EventRef theEvent, void *userData)
@@ -169,51 +206,19 @@ static OSStatus FCCacheFailedHandler(EventHandlerCallRef theHandlerCall,
 
     pthread_join(tid, NULL);
     if (odtid) pthread_join(odtid, NULL);
- 
-	SInt16 itemHit;
 
-	AlertStdAlertParamRec params;
-	params.movable = true;
-	params.helpButton = false;
-	params.filterProc = NULL;
-	params.defaultText = "\pRun fc-cache";
-	params.cancelText = "\pIgnore";
-	params.otherText = NULL;
-	params.defaultButton = kAlertStdAlertOKButton;
-	params.cancelButton = kAlertStdAlertCancelButton;
-	params.position = kWindowDefaultPosition;
+    // Bounce Inkscape Dock icon
+    RequestUserAttention();
+    // Need to show warning to the user, then carry on.
+    ShowFirstStartWarningDialog();
 
-	StandardAlert(kAlertStopAlert, "\pFont caches may need to be updated",
-			"\pA problem occurs on OS X 10.4 where X11 does not always generate the necessary fontconfig caches.  This can be corrected by running fc-cache as root.\n\nThis can take several minutes, with high processor usage.  Please do not close Inkscape.",
-			&params, &itemHit);
-    
-	if (itemHit == kAlertStdAlertOKButton)
-	{
-		OSStatus err = FixFCCache();
+    // Note that we've seen the warning.
+    system("test -d \"$HOME/.inkscape\" || mkdir \"$HOME/.inkscape\"; "
+           "touch \"$HOME/.inkscape/.fccache-new\"");
+    // Rerun now.
+    OSErr err = ExecuteScript(scriptPath, &pid);
 
-		if (err == errAuthorizationSuccess)
-		{
-			params.defaultText = (void *) kAlertDefaultOKText;
-			params.cancelText = NULL;
-
-			StandardAlert(kAlertNoteAlert, "\pFont caches have been updated",
-					"\pPlease re-run Inkscape.", &params, &itemHit);
-			system("test -d \"$HOME/.inkscape\" || mkdir \"$HOME/.inkscape\"; touch \"$HOME/.inkscape/.fccache\"");
-		}
-	}
-	else
-	{
-		params.defaultText = (void *) kAlertDefaultOKText;
-		params.cancelText = NULL;
-
-		StandardAlert(kAlertNoteAlert, "\pFont caches have not been updated",
-				"\pThey can be updated manually by running the following:\n   sudo /usr/X11R6/bin/fc-cache -f\nOnce you have dealt with this, please re-run Inkscape.", &params, &itemHit);
-		system("test -d \"$HOME/.inkscape\" || mkdir \"$HOME/.inkscape\"; touch \"$HOME/.inkscape/.fccache\"");
-	}
-    
-	ExitToShell();
-
-    return noErr;
+    return err;
 }
 
 
@@ -326,6 +331,7 @@ static OSStatus FixFCCache (void)
 	return err;
 }
 
+
 ///////////////////////////////////
 // Execution thread starts here
 ///////////////////////////////////
@@ -344,7 +350,7 @@ static void *Execute (void *arg)
     else if (err == (OSErr)12) {
         CreateEvent(NULL, kEventClassRedFatalAlert, kEventKindFCCacheFailed, 0,
                     kEventAttributeNone, &event);
-        PostEventToQueue(GetMainEventQueue(), event, kEventPriorityStandard);
+        PostEventToQueue(GetMainEventQueue(), event, kEventPriorityHigh);
     }
     else ExitToShell();
     return 0;
