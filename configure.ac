@@ -525,6 +525,11 @@ if test "x$cairo_pdf" = "xyes"; then
   AC_DEFINE(HAVE_CAIRO_PDF, 1, [Whether the Cairo PDF backend is available])
 fi
 
+PKG_CHECK_MODULES(GTK_UNIX_PRINT, gtk+-unix-print-2.0, gtk_unix_print=yes, gtk_unix_print=no)
+if test "x$gtk_unix_print" = "xyes"; then
+  AC_DEFINE(HAVE_GTK_UNIX_PRINT, 1, [Whether the GTK Unix printing backend is available])
+fi
+
 dnl Shouldn't we test for libpng and libz?
 INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz"
 

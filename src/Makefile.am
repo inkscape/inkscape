@@ -20,6 +20,7 @@ INCLUDES =	\
 	$(GNOME_VFS_CFLAGS)	\
 	$(INKBOARD_CFLAGS) \
 	$(XFT_CFLAGS)	\
+	$(GTK_UNIX_PRINT_CFLAGS)	\
 	-DPOTRACE=\"potrace\"	\
 	$(INKSCAPE_CFLAGS) \
 	-I$(top_srcdir)/cxxtest

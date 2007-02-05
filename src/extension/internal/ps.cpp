@@ -43,6 +43,8 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtktooltips.h>
 
+#include <gtk/gtkprintunixdialog.h>
+
 #include <glibmm/i18n.h>
 #include "display/nr-arena-item.h"
 #include "display/canvas-bpath.h"
@@ -102,6 +104,59 @@ PrintPS::~PrintPS(void)
     return;
 }
 
+static void
+unix_print_complete (GtkPrintJob *print_job,
+                     gpointer user_data,
+                     GError *error)
+{
+    fprintf(stderr,"job finished: %s\n",error ? error->message : "no error");
+}
+
+static void
+unix_print_dialog (const gchar * ps_file, const gchar * jobname)
+{
+    GtkWidget* dlg = gtk_print_unix_dialog_new(_("Print"), NULL);
+
+/*
+    gtk_print_unix_dialog_add_custom_tab (GtkPrintUnixDialog *dialog,
+                                          GtkWidget *child,
+                                          GtkWidget *tab_label);
+*/
+
+    int const response = gtk_dialog_run(GTK_DIALOG(dlg));
+
+    if (response == GTK_RESPONSE_OK) {
+        GtkPrinter* printer = gtk_print_unix_dialog_get_selected_printer(GTK_PRINT_UNIX_DIALOG(dlg));
+
+        fprintf(stderr,"Selected printer '%s'\n",gtk_printer_get_name (printer));
+
+        if (gtk_printer_accepts_ps (printer)) {
+            GtkPrintJob* job = gtk_print_job_new  (jobname, printer,
+              gtk_print_unix_dialog_get_settings(GTK_PRINT_UNIX_DIALOG(dlg)),
+              gtk_print_unix_dialog_get_page_setup(GTK_PRINT_UNIX_DIALOG(dlg)));
+
+
+            GError * error = NULL;
+            if ( gtk_print_job_set_source_file (job, ps_file, &error)) {
+                fprintf(stderr,"sending...\n");
+                gtk_print_job_send (job, unix_print_complete, NULL, NULL);
+            }
+            else {
+                fprintf(stderr,"Could not set print source: %s\n",error ? error->message : "unknown error");
+            }
+        }
+        else {
+            fprintf(stderr,"Printer can't support PS output\n");
+        }
+    }
+    else if (response == GTK_RESPONSE_APPLY) {
+        fprintf(stderr,"preview not available\n");
+    }
+
+    gtk_widget_destroy(dlg);
+}
+
+
 unsigned int
 PrintPS::setup(Inkscape::Extension::Print * mod)
 {
@@ -118,13 +173,21 @@ PrintPS::setup(Inkscape::Extension::Print * mod)
     g_object_ref((GObject *) tt);
     gtk_object_sink((GtkObject *) tt);
 
+#ifdef HAVE_GTK_UNIX_PRINT
+    GtkWidget *dlg = gtk_dialog_new_with_buttons(_("Print Configuration"),
+#else
     GtkWidget *dlg = gtk_dialog_new_with_buttons(_("Print Destination"),
+#endif
 //            SP_DT_WIDGET(SP_ACTIVE_DESKTOP)->window,
             NULL,
             (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_NO_SEPARATOR | GTK_DIALOG_DESTROY_WITH_PARENT),
             GTK_STOCK_CANCEL,
             GTK_RESPONSE_CANCEL,
+#ifdef HAVE_GTK_UNIX_PRINT
+            GTK_STOCK_GO_FORWARD,
+#else
             GTK_STOCK_PRINT,
+#endif
             GTK_RESPONSE_OK,
             NULL);
 
@@ -180,6 +243,7 @@ PrintPS::setup(Inkscape::Extension::Print * mod)
     GtkWidget *l = gtk_label_new(_("Resolution:"));
     gtk_box_pack_end(GTK_BOX(hb), l, FALSE, FALSE, 0);
 
+#ifndef HAVE_GTK_UNIX_PRINT
     /* Print destination frame */
     f = gtk_frame_new(_("Print destination"));
     gtk_box_pack_start(GTK_BOX(vbox), f, FALSE, FALSE, 4);
@@ -204,6 +268,7 @@ PrintPS::setup(Inkscape::Extension::Print * mod)
 
     // pressing enter in the destination field is the same as clicking Print:
     gtk_entry_set_activates_default(GTK_ENTRY(e), TRUE);
+#endif
 
     gtk_widget_show_all(vbox);
 
@@ -218,15 +283,26 @@ PrintPS::setup(Inkscape::Extension::Print * mod)
         _bitmap = gtk_toggle_button_get_active((GtkToggleButton *) rb);
         sstr = gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(combo)->entry));
         _dpi = (unsigned int) MAX((int)(atof(sstr)), 1);
+#ifndef HAVE_GTK_UNIX_PRINT
         /* Arrgh, have to do something */
         fn = gtk_entry_get_text(GTK_ENTRY(e));
         /* skip leading whitespace, bug #1068483 */
         while (fn && *fn==' ') { fn++; }
         /* g_print("Printing to %s\n", fn); */
 
+        mod->set_param_string("destination", (gchar *)fn);
+#else
+        /* unix print dialog prints to a tempfile */
+        char * filename = strdup("/tmp/inkscape-ps-XXXXXX");
+        int tmpfd = mkstemp(filename);
+        close(tmpfd);
+        Glib::ustring dest = ">";
+        dest+=filename;
+        free(filename);
+        mod->set_param_string("destination", dest.c_str());
+#endif
         mod->set_param_bool("bitmap", _bitmap);
         mod->set_param_string("resolution", (gchar *)sstr);
-        mod->set_param_string("destination", (gchar *)fn);
         ret = TRUE;
     }
 
@@ -283,6 +359,7 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
             epsexport = g_str_has_suffix(fn,".eps");
             while (isspace(*fn)) fn += 1;
             Inkscape::IO::dump_fopen_call(fn, "K");
+            _tmpfilename = fn;
             osf = Inkscape::IO::fopen_utf8name(fn, "w+");
             if (!osf) {
                 fprintf(stderr, "inkscape: fopen(%s): %s\n",
@@ -582,12 +659,23 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
        {
            while((c = fgetc(_stream))!=EOF) fputc(c, _begin_stream);
        }
-       fclose(_begin_stream);
+       fclose(_stream);
+       _stream = _begin_stream;
     }
+
+#ifdef HAVE_GTK_UNIX_PRINT
+    /* redirect output to new print dialog */
+    fseek(_stream, 0, SEEK_SET);
+    Glib::ustring output = _tmpfilename;
+    unix_print_dialog(output.c_str(),"job name");
+    unlink(output.c_str());
+    /* end redirected new print dialog */
+#endif
 
     /* fixme: should really use pclose for popen'd streams */
     fclose(_stream);
-    _stream = 0;
+    _stream = NULL;
+
     _latin1_encoded_fonts.clear();
 
     g_tree_destroy(_fonts);
