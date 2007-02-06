@@ -43,7 +43,9 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtktooltips.h>
 
+#ifdef HAVE_GTK_UNIX_PRINT
 #include <gtk/gtkprintunixdialog.h>
+#endif
 
 #include <glibmm/i18n.h>
 #include "display/nr-arena-item.h"
@@ -104,6 +106,7 @@ PrintPS::~PrintPS(void)
     return;
 }
 
+#ifdef HAVE_GTK_UNIX_PRINT
 static void
 unix_print_complete (GtkPrintJob *print_job,
                      gpointer user_data,
@@ -155,6 +158,7 @@ unix_print_dialog (const gchar * ps_file, const gchar * jobname)
 
     gtk_widget_destroy(dlg);
 }
+#endif // HAVE_GTK_UNIX_PRINT
 
 
 unsigned int
@@ -173,10 +177,11 @@ PrintPS::setup(Inkscape::Extension::Print * mod)
     g_object_ref((GObject *) tt);
     gtk_object_sink((GtkObject *) tt);
 
+    GtkWidget *dlg = gtk_dialog_new_with_buttons(
 #ifdef HAVE_GTK_UNIX_PRINT
-    GtkWidget *dlg = gtk_dialog_new_with_buttons(_("Print Configuration"),
+            _("Print Configuration"),
 #else
-    GtkWidget *dlg = gtk_dialog_new_with_buttons(_("Print Destination"),
+            _("Print Destination"),
 #endif
 //            SP_DT_WIDGET(SP_ACTIVE_DESKTOP)->window,
             NULL,
