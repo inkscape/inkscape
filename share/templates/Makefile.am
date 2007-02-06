@@ -19,6 +19,7 @@ templates_DATA = \
 	default.ca.svg \
 	default.cs.svg \
 	default.de.svg \
+	default.eo.svg \
 	default.es.svg \
 	default.fi.svg \
 	default.fr.svg \

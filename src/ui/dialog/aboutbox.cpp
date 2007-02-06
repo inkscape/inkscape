@@ -173,6 +173,7 @@ gchar const *authors_text() {
         "Daniel Borgmann\n"
         "Gustav Broberg\n"
         "Hans Breuer\n"
+        "Luca Bruno\n"
         "Nicu Buculei\n"
         "Bulia Byak\n"
         "Chema Celorio\n"
