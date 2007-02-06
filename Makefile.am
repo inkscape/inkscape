@@ -133,6 +133,7 @@ EXTRA_DIST = \
 	packaging/win32/italian.nsh	\
 	packaging/win32/polish.nsh	\
 	packaging/win32/german.nsh	\
+	packaging/win32/japanese.nsh	\
 	packaging/win32/slovak.nsh	\
 	packaging/win32/slovenian.nsh	\
 	packaging/win32/spanish.nsh	\
