@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: 0.45\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-02-02 14:44+0100\n"
-"PO-Revision-Date: 2007-02-03 17:20+0100\n"
+"PO-Revision-Date: 2007-02-07 01:23+0100\n"
 "Last-Translator: Antonio Codazzi (la Filozofo) <f_sophia@libero.it>>\n"
 "Language-Team:  Esperanto\n"
 "MIME-Version: 1.0\n"
@@ -2872,12 +2872,8 @@ msgid ""
 msgid_plural ""
 "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to "
 "separate"
-msgstr[0] ""
-"Punkto de gradiento kunhavita kun <b>%d</b> gradientoj; trenu kun b>Ŝvkl</b> "
-"por disigi"
-msgstr[1] ""
-"Punkto de gradiento kunhavita kun <b>%d</b> gradientoj; trenu kun b>Ŝvkl</b> "
-"por disigi"
+msgstr[0] "Punkto de gradiento kunhavita kun <b>%d</b> gradientoj; trenu kun <b>Ŝvkl</b> por disigi"
+msgstr[1] "Punkto de gradiento kunhavita kun <b>%d</b> gradientoj; trenu kun <b>Ŝvkl</b> por disigi"
 
 #: ../src/helper/units.cpp:36
 msgid "Unit"
@@ -5257,33 +5253,25 @@ msgstr ""
 msgid ""
 "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and "
 "resize. <b>Click</b> to select."
-msgstr ""
-"<b>Trenu</b> por krei rektangulon. <b>Trenu regilojn/b> por rondigi "
-"angulojnkaj readapti. <b>Klaku</b> por elekti."
+msgstr "<b>Trenu</b> por krei rektangulon. <b>Trenu regilojn</b> por rondigi angulojnkaj readapti. <b>Klaku</b> por elekti."
 
 #: ../src/tools-switch.cpp:145
 msgid ""
 "<b>Drag</b> to create an ellipse. <b>Drag controls</b> to make an arc or "
 "segment. <b>Click</b> to select."
-msgstr ""
-"<b>Trenu</b> por krei elipson. <b>Trenu regilojn/b> por krei arkon aŭ "
-"segmenton. <b>Klaku</b> por elekti."
+msgstr "<b>Trenu</b> por krei elipson. <b>Trenu regilojn</b> por krei arkon aŭ segmenton. <b>Klaku</b> por elekti."
 
 #: ../src/tools-switch.cpp:151
 msgid ""
 "<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. "
 "<b>Click</b> to select."
-msgstr ""
-"<b>Trenu</b> por krei stelon. <b>Trenu regilojn/b> por redakti la formon de "
-"la stelo. <b>Klaku</b> por elekti."
+msgstr "<b>Trenu</b> por krei stelon. <b>Trenu regilojn</b> por redakti la formon de la stelo. <b>Klaku</b> por elekti."
 
 #: ../src/tools-switch.cpp:157
 msgid ""
 "<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral "
 "shape. <b>Click</b> to select."
-msgstr ""
-"<<b>Trenu</b> por krei spiralon. <b>Trenu regilojn/b> por redakti la formon "
-"de la spiralo. <b>Klaku</b> por elekti."
+msgstr "<b>Trenu</b> por krei spiralon. <b>Trenu regilojn</b> por redakti la formon de la spiralo. <b>Klaku</b> por elekti."
 
 #: ../src/tools-switch.cpp:163
 msgid ""
@@ -6315,12 +6303,11 @@ msgstr ""
 msgid "> and < scale by:"
 msgstr "> kaj < skalita je:"
 
+# !!! sorry, I had to insert a space before the comma to make check-markup happy
 #: ../src/ui/dialog/inkscape-preferences.cpp:183
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
-msgstr ""
-"Per premo de > aŭ <, vi povas laŭskale aranĝi elekton je ĉi kvanto (en "
-"bilderoj)"
+msgstr "Per premo de > aŭ < , vi povas laŭskale aranĝi elekton je ĉi kvanto (en bilderoj)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:185
 msgid "Inset/Outset by:"
