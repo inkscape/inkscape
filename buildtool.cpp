@@ -4,7 +4,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006-2007 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -6500,7 +6500,7 @@ public:
             return false;
         if (!parent.getAttribute(elem, "strip", s))
             return false;
-        if (!getBool(s, doStrip))
+        if (s.size()>0 && !getBool(s, doStrip))
             return false;
         if (!parent.getAttribute(elem, "symfile", symFileName))
             return false;
@@ -6764,7 +6764,7 @@ public:
             return false;
         if (!parent.getAttribute(elem, "owndir", s))
             return false;
-        if (!getBool(s, owndir))
+        if (s.size()>0 && !getBool(s, owndir))
             return false;
             
         std::vector<Element *> children = elem->getChildren();
@@ -7521,7 +7521,7 @@ public:
      *
      */
     virtual String version()
-        { return "BuildTool v0.6, 2006 Bob Jamison"; }
+        { return "BuildTool v0.6.1, 2006 Bob Jamison"; }
 
     /**
      * Overload a <property>
