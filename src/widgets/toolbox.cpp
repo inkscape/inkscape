@@ -2877,11 +2877,13 @@ static void toggle_dropper_pick_alpha (GtkWidget *button, gpointer tbl) {
             gtk_widget_set_sensitive (GTK_WIDGET (set_checkbox), FALSE);
         }
     }
+    spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
-static void toggle_dropper_set_alpha (GtkWidget *button, gpointer data) {
+static void toggle_dropper_set_alpha (GtkWidget *button, gpointer tbl) {
     prefs_set_int_attribute ("tools.dropper", "setalpha", 
         gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ? 1 : 0);
+    spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
 
