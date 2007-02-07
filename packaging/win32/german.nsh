@@ -23,7 +23,7 @@ LangString lng_LICENSE_BUTTON   ${LANG_GERMAN} "Weiter >"
 LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_GERMAN} "$(^Name) wird unter der GNU General Public License (GPL) veröffentlicht. Die Lizenz dient hier nur der Information. $_CLICK"
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_GERMAN} "$R1 wurde bereits installiert. $\nSoll die verhergehende Version $(^Name) zuerst deinstalliert werden?"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_GERMAN} "$R1 wurde bereits installiert. $\nSoll die vorhergehende Version vor dem Installieren von $(^Name) zuerst deinstalliert werden?"
 
 ; press OK to continue press Cancel to abort
 LangString lng_OK_CANCEL_DESC ${LANG_GERMAN} "$\n$\nOK um fortzufahren oder Abbrechen zum sofortigen Beenden."
