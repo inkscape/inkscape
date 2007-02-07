@@ -42,7 +42,7 @@ EXTRA_DIST = \
 	Info.plist.in	\
 	Info.plist		\
 	inkscape.nsi		\
-	config.h.mingw Makefile.mingw Makefile.mingw.common mingwenv.bat	\
+	config.h.mingw Makefile.mingw Makefile.mingw.common mingwenv.bat buildtool.cpp build.xml	\
 	README README.ca.txt README.de.txt README.es.txt README.fr.txt README.it.txt	\
 	HACKING.txt HACKING.de.txt HACKING.fr.txt HACKING.it.txt	\
 	TRANSLATORS \
