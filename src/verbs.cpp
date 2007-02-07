@@ -2308,7 +2308,7 @@ Verb *Verb::_base_verbs[] = {
     new DialogVerb(SP_VERB_DIALOG_METADATA, "DialogMetadata", N_("Document _Metadata..."),
                    N_("Edit document metadata (to be saved with the document)"), "document_metadata" ),
     new DialogVerb(SP_VERB_DIALOG_FILL_STROKE, "DialogFillStroke", N_("_Fill and Stroke..."),
-                   N_("Edit objects' style, such as color or stroke width"), "fill_and_stroke"),
+                   N_("Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."), "fill_and_stroke"),
     // TRANSLATORS: "Swatches" means: color samples
     new DialogVerb(SP_VERB_DIALOG_SWATCHES, "DialogSwatches", N_("S_watches..."),
                    N_("Select colors from a swatches palette"), GTK_STOCK_SELECT_COLOR),
