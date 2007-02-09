@@ -22,12 +22,21 @@ namespace UI {
 namespace Dialog {
 
 class AboutBox : public Gtk::Dialog {
+
 public:
+
     static void show_about();
     static void hide_about();
 
 private:
+
     AboutBox();
+    
+    void initStrings();
+    
+    Glib::ustring authors_text;
+    Glib::ustring translators_text;
+    Glib::ustring license_text;
 
     virtual void on_response(int response_id);
 };
