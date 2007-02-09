@@ -35,34 +35,48 @@
 
 #include "inkscape_version.h"
 
+
+
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+
+
 static Gtk::Widget *build_splash_widget();
+
 
 
 static Gtk::ScrolledWindow 
   *make_scrolled_text(const Glib::ustring &contents);
 
 
+
 static AboutBox *window=NULL;
 
+
+
 void AboutBox::show_about() {
-    if (!window) {
+    if (!window)
         window = new AboutBox();
-    }
     window->show();
 }
 
+
+
 void AboutBox::hide_about() {
-    if (window) {
+    if (window)
         window->hide();
-    }
 }
 
+
+/**
+ * Constructor
+ */ 
 AboutBox::AboutBox() : Gtk::Dialog(_("About Inkscape")) {
 
+    // call this first
     initStrings();
 
     Gtk::Notebook *tabs=new Gtk::Notebook();
@@ -106,11 +120,17 @@ AboutBox::AboutBox() : Gtk::Dialog(_("About Inkscape")) {
     set_default_size(requisition.width, requisition.height);
 }
 
+
+
+
 void AboutBox::on_response(int response_id) {
     if ( response_id == Gtk::RESPONSE_CLOSE ) {
         AboutBox::hide_about();
     }
 }
+
+
+
 
 Gtk::Widget *build_splash_widget() {
     /* TRANSLATORS: This is the filename of the `About Inkscape' picture in
@@ -155,10 +175,15 @@ Gtk::Widget *build_splash_widget() {
     return frame;
 }
 
+
+
+
+/**
+ *  This attempts to emulate the AboutDialog child dialog settings as
+ *  closely as possible.  Mostly, that's margin widths and shadows.  Size
+ *  is probably set in some other way, but this looked close enough.
+ */
 static Gtk::ScrolledWindow *make_scrolled_text(const Glib::ustring &contents) {
-    // This attempts to emulate the AboutDialog child dialog settings as
-    // closely as possible.  Mostly, that's margin widths and shadows.  Size
-    // is probably set in some other way, but this looked close enough.
     Gtk::ScrolledWindow *scrolled=new Gtk::ScrolledWindow(); 
 
     scrolled->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
@@ -175,12 +200,22 @@ static Gtk::ScrolledWindow *make_scrolled_text(const Glib::ustring &contents) {
 }
 
 
+
+
+/**
+ * This method must be called before any of the texts are
+ * used for making widgets
+ */  
 void AboutBox::initStrings() {
 
     //##############################
     //# A U T H O R S
     //##############################
-
+    
+    /**
+     * This text is copied from the AUTHORS file.  It should be
+     * periodically updated.     
+     */ 
     authors_text =
         "Josh Andler\n"
         "John Bintz\n"
@@ -278,16 +313,30 @@ void AboutBox::initStrings() {
     //# T R A N S L A T O R S
     //##############################
 
-    /*  TRANSLATORS: Put here your name (and other national contributors') 
-        one per line in the form of:  name surname (email). Use \n for newline.  */
+
     translators_text = "";
     
+
+    /**
+     * See if the translators for the current language
+     * made an entry for "translator-credits".  If it exists,
+     * put it at the top of the window,  add some space between
+     * it and the list of all translators.
+     *      
+     * NOTE:  Do we need 2 more .po entries for titles:
+     *  "translators for this language"
+     *  "all translators"  ??     
+     */                          
     Glib::ustring thisTranslation = _("translator-credits");
     if (thisTranslation != "translator-credits") {
         translators_text.append(thisTranslation);
         translators_text.append("\n\n\n");
     }
 
+    /**
+     * This list is copied from the TRANSLATORS file.  It should
+     * be periodically updated.
+     */              
     gchar *allTranslators =
     "3ARRANO.com <3arrano@3arrano.com>, 2005.\n"
     "Adib Taraben <theadib@yahoo.com>, 2004.\n"
@@ -391,10 +440,14 @@ void AboutBox::initStrings() {
     translators_text.append(allTranslators);
 
 
+
     //##############################
     //# L I C E N S E
     //##############################
 
+    /**
+     * This text is copied from the COPYING file
+     */         
     license_text =
     "            GNU GENERAL PUBLIC LICENSE\n"
     "               Version 2, June 1991\n"
@@ -739,6 +792,8 @@ void AboutBox::initStrings() {
     ;
 
 }
+
+
 
 
 } // namespace Dialog
