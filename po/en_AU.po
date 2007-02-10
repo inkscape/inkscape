@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-02-10 15:28+0100\n"
-"PO-Revision-Date: 2007-02-10 16:02+0100\n"
+"PO-Revision-Date: 2007-02-10 16:10+0100\n"
 "Last-Translator: Chris Goerner <cgoerner@fastmail.com.au>\n"
 "Language-Team: English (Australia)\n"
 "MIME-Version: 1.0\n"
@@ -1012,7 +1012,7 @@ msgstr "Close file"
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
 msgstr[0] "<b>%d</b> object found (out of <b>%d</b>), %s match."
-msgstr[1] ""
+msgstr[1] "<b>%d</b> objects found (out of <b>%d</b>), %s match."
 
 #: ../src/dialogs/find.cpp:374 ../src/ui/dialog/find.cpp:437
 msgid "exact"
@@ -2823,7 +2823,7 @@ msgstr "Vac_uum Defs"
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Removed <b>%i</b> unused definition in &lt;defs&gt;."
-msgstr[1] ""
+msgstr[1] "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 
 #: ../src/file.cpp:477
 msgid "No unused definitions in &lt;defs&gt;."
@@ -3940,7 +3940,7 @@ msgstr "Drag the handles of the object to modify it."
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> of <b>%i</b> node selected; %s. %s."
-msgstr[1] ""
+msgstr[1] "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 
 #: ../src/nodepath.cpp:4287
 #, fuzzy, c-format
@@ -3956,7 +3956,7 @@ msgstr[1] ""
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
 msgstr[0] "<b>%i</b> of <b>%i</b> node selected. %s."
-msgstr[1] ""
+msgstr[1] "<b>%i</b> of <b>%i</b> nodes selected. %s."
 
 #: ../src/object-edit.cpp:488
 msgid ""
@@ -4743,7 +4743,7 @@ msgstr "Use <b>Shift+D</b> to look up frame"
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
 msgstr[0] "<b>%i</b> object selected"
-msgstr[1] ""
+msgstr[1] "<b>%i</b> objects selected"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:189
@@ -4952,7 +4952,7 @@ msgstr "<b>Image</b> %d &#215; %d: %s"
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "<b>Group</b> of <b>%d</b> object"
-msgstr[1] ""
+msgstr[1] "<b>Group</b> of <b>%d</b> objects"
 
 #: ../src/sp-item.cpp:849
 msgid "Object"
@@ -4997,7 +4997,7 @@ msgstr "<b>Dynamic offset</b>, %s by %f pt"
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
 msgstr[0] "<b>Path</b> (%i node)"
-msgstr[1] ""
+msgstr[1] "<b>Path</b> (%i nodes)"
 
 #: ../src/sp-polygon.cpp:235
 msgid "<b>Polygon</b>"
@@ -5023,14 +5023,14 @@ msgstr "<b>Spiral</b> with %3f turns"
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] "<b>Star</b> with %d vertex"
-msgstr[1] ""
+msgstr[1] "<b>Star</b> with %d vertices"
 
 #: ../src/sp-star.cpp:285
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
 msgstr[0] "<b>Polygon</b> with %d vertex"
-msgstr[1] ""
+msgstr[1] "<b>Polygon</b> with %d vertices"
 
 #: ../src/sp-switch.cpp:100
 #, fuzzy, c-format
