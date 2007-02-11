@@ -315,7 +315,10 @@ void AboutBox::initStrings() {
 
 
     translators_text = "";
-    
+   
+    // TRANSLATORS: Put here your name (and other national contributors')      
+    // one per line in the form of: name surname <email>. Use \n for newline.
+    Glib::ustring thisTranslation = _("translator-credits");
 
     /**
      * See if the translators for the current language
@@ -327,7 +330,6 @@ void AboutBox::initStrings() {
      *  "translators for this language"
      *  "all translators"  ??     
      */                          
-    Glib::ustring thisTranslation = _("translator-credits");
     if (thisTranslation != "translator-credits") {
         translators_text.append(thisTranslation);
         translators_text.append("\n\n\n");
