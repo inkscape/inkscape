@@ -737,8 +737,9 @@ sp_object_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {
     debug("id=%x, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
     SPObject *ochild = sp_object_get_child_by_repr(object, child);
-    g_return_if_fail(ochild != NULL);
-    sp_object_detach(object, ochild);
+    g_return_if_fail (ochild != NULL || !strcmp("comment", child->name())); // comments have no objects
+    if (ochild)
+        sp_object_detach(object, ochild);
 }
 
 /**

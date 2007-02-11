@@ -353,9 +353,9 @@ sp_root_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML:
         (* ((SPObjectClass *) (parent_class))->child_added)(object, child, ref);
 
     SPObject *co = object->document->getObjectByRepr(child);
-    g_assert(co != NULL);
+    g_assert (co != NULL || !strcmp("comment", child->name())); // comment repr node has no object
 
-    if (SP_IS_DEFS(co)) {
+    if (co && SP_IS_DEFS(co)) {
         SPObject *c;
         /* We search for first <defs> node - it is not beautiful, but works */
         for (c = sp_object_first_child(SP_OBJECT(group)) ; c != NULL; c = SP_OBJECT_NEXT(c) ) {
