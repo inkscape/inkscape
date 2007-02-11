@@ -437,17 +437,11 @@ void sp_selection_group()
 
     // Check if something is selected.
     if (selection->isEmpty()) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>two or more objects</b> to group."));
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>some objects</b> to group."));
         return;
     }
 
     GSList const *l = (GSList *) selection->reprList();
-
-    // Check if at least two objects are selected.
-    if (l->next == NULL) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>at least two objects</b> to group."));
-        return;
-    }
 
     GSList *p = g_slist_copy((GSList *) l);
 
