@@ -321,12 +321,6 @@ struct poptOption options[] = {
      N_("Export files with the bounding box set to the page size (EPS)"),
      NULL},
 
-    /* 
-    {"fit-page-to-drawing", 'S',
-     POPT_ARG_NONE, &sp_export_bbox_page, SP_ARG_FIT_PAGE_TO_DRAWING,
-     N_("Fits page to drawing and saves changes in place"),
-     NULL},
-    */
     {"query-x", 'X',
      POPT_ARG_NONE, &sp_query_x, SP_ARG_QUERY_X,
      // TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
