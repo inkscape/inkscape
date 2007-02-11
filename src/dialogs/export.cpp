@@ -1164,6 +1164,10 @@ sp_export_browse_clicked (GtkButton *button, gpointer userdata)
                                       GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
                                       NULL );
 
+#ifdef WITH_GNOME_VFS
+    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER (fs), false);
+#endif
+
     fe = (GtkWidget *)g_object_get_data (G_OBJECT (dlg), "filename");
 
     sp_transientize (fs);

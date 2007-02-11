@@ -135,6 +135,7 @@ enum {
     SP_ARG_EXPORT_FONT,
     SP_ARG_EXPORT_BBOX_PAGE,
     SP_ARG_EXTENSIONDIR,
+    SP_ARG_FIT_PAGE_TO_DRAWING,
     SP_ARG_SLIDESHOW,
     SP_ARG_QUERY_X,
     SP_ARG_QUERY_Y,
@@ -318,6 +319,11 @@ struct poptOption options[] = {
     {"export-bbox-page", 'B',
      POPT_ARG_NONE, &sp_export_bbox_page, SP_ARG_EXPORT_BBOX_PAGE,
      N_("Export files with the bounding box set to the page size (EPS)"),
+     NULL},
+
+    {"fit-page-to-drawing", 'S',
+     POPT_ARG_NONE, &sp_export_bbox_page, SP_ARG_FIT_PAGE_TO_DRAWING,
+     N_("Fits page to drawing and saves changes in place"),
      NULL},
 
     {"query-x", 'X',

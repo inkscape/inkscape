@@ -802,6 +802,10 @@ private:
 void FileOpenDialogImpl::updatePreviewCallback()
 {
     Glib::ustring fileName = get_preview_filename();
+#ifdef WITH_GNOME_VFS
+    if (fileName.length() < 1)
+        fileName = get_preview_uri();
+#endif
     if (fileName.length() < 1)
         return;
     svgPreview.set(fileName, dialogType);
@@ -879,6 +883,10 @@ FileOpenDialogImpl::FileOpenDialogImpl(const Glib::ustring &dir,
     /* One file at a time */
     /* And also Multiple Files */
     set_select_multiple(true);
+
+#ifdef WITH_GNOME_VFS
+    set_local_only(false);
+#endif
 
     /* Initalize to Autodetect */
     extension = NULL;
@@ -973,6 +981,10 @@ FileOpenDialogImpl::show()
             extension = extensionMap[gtk_file_filter_get_name(filter)];
             }
         myFilename = get_filename();
+#ifdef WITH_GNOME_VFS
+        if (myFilename.length() < 1)
+            myFilename = get_uri();
+#endif
         return TRUE;
         }
     else
@@ -1010,6 +1022,10 @@ FileOpenDialogImpl::getFilename (void)
 std::vector<Glib::ustring>FileOpenDialogImpl::getFilenames()
 {    
     std::vector<Glib::ustring> result = get_filenames();
+#ifdef WITH_GNOME_VFS
+    if (result.empty())
+        result = get_uris();
+#endif
     return result;
 }
 
@@ -1140,6 +1156,10 @@ private:
 void FileSaveDialogImpl::updatePreviewCallback()
 {
     Glib::ustring fileName = get_preview_filename();
+#ifdef WITH_GNOME_VFS
+    if (fileName.length() < 1)
+        fileName = get_preview_uri();
+#endif
     if (!fileName.c_str())
         return;
     bool retval = svgPreview.set(fileName, dialogType);
@@ -1254,6 +1274,10 @@ FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
 
     /* One file at a time */
     set_select_multiple(false);
+
+#ifdef WITH_GNOME_VFS
+    set_local_only(false);
+#endif
 
     /* Initalize to Autodetect */
     extension = NULL;
@@ -1387,6 +1411,10 @@ FileSaveDialogImpl::show()
             extension = type.extension;
             }
         myFilename = get_filename();
+#ifdef WITH_GNOME_VFS
+        if (myFilename.length() < 1)
+            myFilename = get_uri();
+#endif
 
         /*
 
@@ -1698,6 +1726,10 @@ private:
 void FileExportDialogImpl::updatePreviewCallback()
 {
     Glib::ustring fileName = get_preview_filename();
+#ifdef WITH_GNOME_VFS
+    if (fileName.length() < 1)
+        fileName = get_preview_uri();
+#endif
     if (!fileName.c_str())
         return;
     bool retval = svgPreview.set(fileName, dialogType);
@@ -1819,6 +1851,10 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
 
     /* One file at a time */
     set_select_multiple(false);
+
+#ifdef WITH_GNOME_VFS
+    set_local_only(false);
+#endif
 
     /* Initalize to Autodetect */
     extension = NULL;
@@ -2035,6 +2071,10 @@ FileExportDialogImpl::show()
             extension = type.extension;
             }
         myFilename = get_filename();
+#ifdef WITH_GNOME_VFS
+        if (myFilename.length() < 1)
+            myFilename = get_uri();
+#endif
 
         /*
 
