@@ -1140,7 +1140,7 @@ filename_add_extension (const gchar *filename, const gchar *extension)
       return g_strconcat (filename, extension, NULL);
     else
     {
-      if (g_strncasecmp (dot + 1, extension,-1) == 0)
+      if (g_strcasecmp (dot + 1, extension) == 0)
         return g_strdup (filename);
       else
       {
