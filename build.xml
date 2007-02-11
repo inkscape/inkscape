@@ -16,6 +16,10 @@
   <property name="build"       location="build"/>
   <property name="dist"        location="inkscape"/>
 
+
+
+
+
   <target name="init">
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${build}"/>
@@ -86,6 +90,10 @@
         #endif /* _CONFIG_H_ */
     </makefile>
   </target>
+
+
+
+
 
   <target name="compile" depends="init"
         description="compile the source " >
@@ -207,6 +215,10 @@
 	</cc>
   </target>
   
+
+
+
+
   <target name="lib" depends="compile">
     <staticlib command="${archutil}ar crsv"
            file="${build}/libinkscape.a">
@@ -218,6 +230,10 @@
 	</staticlib>
   </target>
 
+
+
+
+
   <target name="i18n" depends="compile">
     <msgfmt todir="${build}/locale" owndir="true"
          out="LC_MESSAGES/inkscape.mo">
@@ -225,6 +241,10 @@
 	   </fileset>
 	</msgfmt>
   </target>
+
+
+
+
 
   <target name="link" depends="lib">
     <rc command="${archutil}windres" 
@@ -270,6 +290,10 @@
 	</link>
   </target>
   
+
+
+
+
   <target name="linkinkview" depends="lib">
     <rc command="${archutil}windres" 
 	    file="${src}/inkview.rc"
@@ -313,13 +337,15 @@
 	</link>
   </target>
 
-  <target name="dist" depends="link,i18n,linkinkview"
+
+
+
+
+  <target name="dist" depends="link,i18n"
         description="generate the distribution" >
     <!-- Create the distribution directory -->
     <copy file="${build}/inkscape.exe" todir="${dist}"/>
     <copy file="${build}/inkscape.dbg" todir="${dist}"/>
-    <copy file="${build}/inkview.exe" todir="${dist}"/>
-    <copy file="${build}/inkview.dbg" todir="${dist}"/>
     <copy file="AUTHORS" todir="${dist}"/>
     <copy file="COPYING" todir="${dist}"/>
     <copy file="COPYING.LIB" todir="${dist}"/>
@@ -398,8 +424,19 @@
     <copy todir="${dist}/python"> <fileset dir="${gtk}/python/DLLs"/> </copy>
     <copy todir="${dist}/python"> <fileset dir="${gtk}/python/Scripts"/> </copy>
 
-
   </target>
+
+
+
+
+  <target name="dist-all" depends="dist,linkinkview"
+        description="generate the distribution, along with inkview" >
+    <copy file="${build}/inkview.exe" todir="${dist}"/>
+    <copy file="${build}/inkview.dbg" todir="${dist}"/>
+  </target>
+
+
+
 
   <target name="clean"
         description="clean up" >
