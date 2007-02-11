@@ -13,8 +13,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <algorithm>
 #include <cmath>
+#include <complex>
 #include <glib.h>
+#include <limits>
 
 using std::isnormal;
 
@@ -23,9 +26,58 @@ using std::isnormal;
 #include "display/nr-filter-types.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
+#include "util/fixed_point.h"
 #include "prefs-utils.h"
 
-template<typename T> static inline T sqr(T const v) { return v*v; }
+// IIR filtering method based on:
+// L.J. van Vliet, I.T. Young, and P.W. Verbeek, Recursive Gaussian Derivative Filters,
+// in: A.K. Jain, S. Venkatesh, B.C. Lovell (eds.),
+// ICPR'98, Proc. 14th Int. Conference on Pattern Recognition (Brisbane, Aug. 16-20),
+// IEEE Computer Society Press, Los Alamitos, 1998, 509-514.
+//
+// Using the backwards-pass initialization procedure from:
+// Boundary Conditions for Young - van Vliet Recursive Filtering
+// Bill Triggs, Michael Sdika
+// IEEE Transactions on Signal Processing, Volume 54, Number 5 - may 2006 
+
+// Number of IIR filter coefficients used. Currently only 3 is supported.
+// "Recursive Gaussian Derivative Filters" says this is enough though (and
+// some testing indeed shows that the quality doesn't improve much if larger
+// filters are used).
+const size_t N = 3;
+
+template<typename InIt, typename OutIt, typename Size>
+void copy_n(InIt beg_in, Size N, OutIt beg_out) {
+    std::copy(beg_in, beg_in+N, beg_out);
+}
+
+// Type used for IIR filter coefficients (can be 10.21 signed fixed point, see Anisotropic Gaussian Filtering Using Fixed Point Arithmetic, Christoph H. Lampert & Oliver Wirjadi, 2006)
+typedef double IIRValue; 
+
+// Type used for FIR filter coefficients (can be 16.16 unsigned fixed point, should have 8 or more bits in the fractional part, the integer part should be capable of storing approximately 20*255)
+typedef Inkscape::Util::FixedPoint<unsigned int,16> FIRValue;
+
+template<typename T> static inline T sqr(T const& v) { return v*v; }
+
+template<typename T> static inline T clip(T const& v, T const& a, T const& b) {
+    if ( v < a ) return a;
+    if ( v > b ) return b;
+    return v;
+}
+
+template<typename Tt, typename Ts>
+static inline Tt round_cast(Ts const& v) {
+	static Ts const rndoffset(.5);
+	return static_cast<Tt>(v+rndoffset);
+}
+
+template<typename Tt, typename Ts>
+static inline Tt clip_round_cast(Ts const& v) {
+	static Ts const rndoffset(.5);
+    if ( v < std::numeric_limits<Tt>::min() ) return std::numeric_limits<Tt>::min();
+    if ( v > std::numeric_limits<Tt>::max() ) return std::numeric_limits<Tt>::max();
+	return static_cast<Tt>(v+rndoffset);
+}
 
 namespace NR {
 
@@ -44,205 +96,80 @@ FilterGaussian::~FilterGaussian()
     // Nothing to do here
 }
 
-int FilterGaussian::_kernel_size(double expansionX, double expansionY)
+int _effect_area_scr(double deviation)
 {
-    int length_x = _effect_area_scr(_deviation_x, expansionX);
-    int length_y = _effect_area_scr(_deviation_y, expansionY);
-    return _max(length_x, length_y) + 1;
+    return (int)std::ceil(deviation * 3.0);
 }
 
-void FilterGaussian::_make_kernel(double *kernel, double deviation, double expansion)
+void _make_kernel(FIRValue *kernel, double deviation)
 {
-    int const scr_len = _effect_area_scr(deviation, expansion);
-    double const d_sq = sqr(deviation * expansion) * 2;
+    int const scr_len = _effect_area_scr(deviation);
+    double const d_sq = sqr(deviation) * 2;
+    double k[scr_len+1]; // This is only called for small kernel sizes (above approximately 10 coefficients the IIR filter is used)
 
     // Compute kernel and sum of coefficients
     // Note that actually only half the kernel is computed, as it is symmetric
-    double sum = 0;
+    FIRValue sum = 0;
     for ( int i = 0; i <= scr_len ; i++ ) {
-        kernel[i] = std::exp(-sqr(i) / d_sq);
-        sum += kernel[i];
+        k[i] = std::exp(-sqr(i) / d_sq);
+        sum += static_cast<FIRValue>(k[i]);
     }
-    sum = 2*sum - kernel[0]; // the sum of the complete kernel is twice as large (minus the center element to avoid counting it twice)
+    // the sum of the complete kernel is twice as large (minus the center element to avoid counting it twice)
+    sum = 2*sum - static_cast<FIRValue>(k[0]);
 
     // Normalize kernel
     for ( int i = 0; i <= scr_len ; i++ ) {
-        kernel[i] /= sum;
+        kernel[i] = k[i]/static_cast<double>(sum);
     }
 }
 
-int FilterGaussian::_effect_area_scr(double deviation, double expansion)
+// Return value (v) should satisfy:
+//  2^(2*v)*255<2^32
+//  255<2^(32-2*v)
+//  2^8<=2^(32-2*v)
+//  8<=32-2*v
+//  2*v<=24
+//  v<=12
+int _effect_subsample_step_log2(double deviation, int quality)
 {
-    int ret = (int)std::ceil(deviation * 3.0 * expansion);
-    return ret;
-}
-
-int FilterGaussian::_effect_subsample_step(int scr_len_x, int quality)
-{
+    // To make sure FIR will always be used (unless the kernel is VERY big):
+    //  deviation/step <= 3
+    //  deviation/3 <= step
+    //  log(deviation/3) <= log(step)
+    // So when x below is >= 1/3 FIR will almost always be used.
+    // This means IIR is almost only used with the modes BETTER or BEST.
+    int stepsize_l2;
     switch (quality) {
         case BLUR_QUALITY_WORST:
-            if (scr_len_x < 8) {
-                return 1;
-            } else if (scr_len_x < 32) {
-                return 4;
-            } else if (scr_len_x < 64) {
-                return 8;
-            } else if (scr_len_x < 128) {
-                return 32;
-            } else if (scr_len_x < 256) {
-                return 128;
-            } else if (scr_len_x < 512) {
-                return 512;
-            } else if (scr_len_x < 1024) {
-                return 4096; 
-            } else {
-                return 65536;
-            }
+            // 2 == log(x*8/3))
+            // 2^2 == x*2^3/3
+            // x == 3/2
+            stepsize_l2 = clip(static_cast<int>(log(deviation*(3./2.))/log(2.)), 0, 12);
             break;
         case BLUR_QUALITY_WORSE:
-            if (scr_len_x < 16) {
-                return 1;
-            } else if (scr_len_x < 64) {
-                return 4;
-            } else if (scr_len_x < 120) {
-                return 8;
-            } else if (scr_len_x < 200) {
-                return 32;
-            } else if (scr_len_x < 400) {
-                return 64;
-            } else if (scr_len_x < 800) {
-                return 256;
-            } else if (scr_len_x < 1200) {
-                return 1024; 
-            } else {
-                return 65536;
-            }
+            // 2 == log(x*16/3))
+            // 2^2 == x*2^4/3
+            // x == 3/2^2
+            stepsize_l2 = clip(static_cast<int>(log(deviation*(3./4.))/log(2.)), 0, 12);
             break;
         case BLUR_QUALITY_BETTER:
-            if (scr_len_x < 32) {
-                return 1;
-            } else if (scr_len_x < 160) {
-                return 4;
-            } else if (scr_len_x < 320) {
-                return 8;
-            } else if (scr_len_x < 640) {
-                return 32;
-            } else if (scr_len_x < 1280) {
-                return 64;
-            } else if (scr_len_x < 2560) {
-                return 256;
-            } else {
-                return 1024;
-            }
+            // 2 == log(x*32/3))
+            // 2 == x*2^5/3
+            // x == 3/2^4
+            stepsize_l2 = clip(static_cast<int>(log(deviation*(3./16.))/log(2.)), 0, 12);
             break;
         case BLUR_QUALITY_BEST:
-            return 1; // no subsampling at all
-            break;
-        case BLUR_QUALITY_NORMAL:
-        default: 
-            if (scr_len_x < 16) {
-                return 1;
-            } else if (scr_len_x < 80) {
-                return 4;
-            } else if (scr_len_x < 160) {
-                return 8;
-            } else if (scr_len_x < 320) {
-                return 32;
-            } else if (scr_len_x < 640) {
-                return 64;
-            } else if (scr_len_x < 1280) {
-                return 256;
-            } else if (scr_len_x < 2560) {
-                return 1024; 
-            } else {
-                return 65536;
-            }
-            break;
-    }
-}
-
-int FilterGaussian::_effect_subsample_step_log2(int scr_len_x, int quality)
-{
-    switch (quality) {
-        case BLUR_QUALITY_WORST:
-            if (scr_len_x < 8) {
-                return 0;
-            } else if (scr_len_x < 32) {
-                return 2;
-            } else if (scr_len_x < 64) {
-                return 3;
-            } else if (scr_len_x < 128) {
-                return 5;
-            } else if (scr_len_x < 256) {
-                return 7;
-            } else if (scr_len_x < 512) {
-                return 9;
-            } else if (scr_len_x < 1024) {
-                return 12; 
-            } else {
-                return 16;
-            }
-            break;
-        case BLUR_QUALITY_WORSE:
-            if (scr_len_x < 16) {
-                return 0;
-            } else if (scr_len_x < 64) {
-                return 2;
-            } else if (scr_len_x < 120) {
-                return 3;
-            } else if (scr_len_x < 200) {
-                return 5;
-            } else if (scr_len_x < 400) {
-                return 6;
-            } else if (scr_len_x < 800) {
-                return 8;
-            } else if (scr_len_x < 1200) {
-                return 10; 
-            } else {
-                return 16;
-            }
-            break;
-        case BLUR_QUALITY_BETTER:
-            if (scr_len_x < 32) {
-                return 0;
-            } else if (scr_len_x < 160) {
-                return 2;
-            } else if (scr_len_x < 320) {
-                return 3;
-            } else if (scr_len_x < 640) {
-                return 5;
-            } else if (scr_len_x < 1280) {
-                return 6;
-            } else if (scr_len_x < 2560) {
-                return 8;
-            } else {
-                return 10;
-            }
-            break;
-        case BLUR_QUALITY_BEST:
-            return 0; // no subsampling at all
+            stepsize_l2 = 0; // no subsampling at all
             break;
         case BLUR_QUALITY_NORMAL:
         default:
-            if (scr_len_x < 16) {
-                return 0;
-            } else if (scr_len_x < 80) {
-                return 2;
-            } else if (scr_len_x < 160) {
-                return 3;
-            } else if (scr_len_x < 320) {
-                return 5;
-            } else if (scr_len_x < 640) {
-                return 6;
-            } else if (scr_len_x < 1280) {
-                return 8;
-            } else if (scr_len_x < 2560) {
-                return 10; 
-            } else {
-                return 16;
-            }
+            // 2 == log(x*16/3))
+            // 2 == x*2^4/3
+            // x == 3/2^3
+            stepsize_l2 = clip(static_cast<int>(log(deviation*(3./8.))/log(2.)), 0, 12);
             break;
     }
+    return stepsize_l2;
 }
 
 /**
@@ -259,7 +186,291 @@ inline void _check_index(NRPixBlock const * const pb, int const location, int co
     }
 }
 
-int FilterGaussian::render(FilterSlot &slot, Matrix const &trans_)
+static void calcFilter(double const sigma, double b[N]) {
+    assert(N==3);
+    std::complex<double> const d1_org(1.40098,  1.00236);
+    double const d3_org = 1.85132;
+    double qbeg = 1; // Don't go lower than sigma==2 (we'd probably want a normal convolution in that case anyway)
+    double qend = 2*sigma;
+    double const sigmasqr = sqr(sigma);
+    double s;
+    do { // Binary search for right q (a linear interpolation scheme is suggested, but this should work fine as well)
+        double const q = (qbeg+qend)/2;
+        // Compute scaled filter coefficients
+        std::complex<double> const d1 = pow(d1_org, 1.0/q);
+        double const d3 = pow(d3_org, 1.0/q);
+        double const absd1sqr = std::norm(d1);
+        double const re2d1 = 2*d1.real();
+        double const bscale = 1.0/(absd1sqr*d3);
+        b[2] = -bscale;
+        b[1] =  bscale*(d3+re2d1);
+        b[0] = -bscale*(absd1sqr+d3*re2d1);
+        // Compute actual sigma^2
+        double const ssqr = 2*(2*(d1/sqr(d1-1.)).real()+d3/sqr(d3-1.));
+        if ( ssqr < sigmasqr ) {
+            qbeg = q;
+        } else {
+            qend = q;
+        }
+        s = sqrt(ssqr);
+    } while(qend-qbeg>(sigma/(1<<30)));
+}
+
+static void calcTriggsSdikaM(double const b[N], double M[N*N]) {
+    assert(N==3);
+    double a1=b[0], a2=b[1], a3=b[2];
+    double const Mscale = 1.0/((1+a1-a2+a3)*(1-a1-a2-a3)*(1+a2+(a1-a3)*a3));
+    M[0] = 1-a2-a1*a3-sqr(a3);
+    M[1] = (a1+a3)*(a2+a1*a3);
+    M[2] = a3*(a1+a2*a3);
+    M[3] = a1+a2*a3;
+    M[4] = (1-a2)*(a2+a1*a3);
+    M[5] = a3*(1-a2-a1*a3-sqr(a3));
+    M[6] = a1*(a1+a3)+a2*(1-a2);
+    M[7] = a1*(a2-sqr(a3))+a3*(1+a2*(a2-1)-sqr(a3));
+    M[8] = a3*(a1+a2*a3);
+    for(unsigned int i=0; i<9; i++) M[i] *= Mscale;
+}
+
+template<unsigned int SIZE>
+static void calcTriggsSdikaInitialization(double const M[N*N], IIRValue const uold[N][SIZE], IIRValue const uplus[SIZE], IIRValue const vplus[SIZE], IIRValue const alpha, IIRValue vold[N][SIZE]) {
+    for(unsigned int c=0; c<SIZE; c++) {
+        double uminp[N];
+        for(unsigned int i=0; i<N; i++) uminp[i] = uold[i][c] - uplus[c];
+        for(unsigned int i=0; i<N; i++) {
+            double voldf = 0;
+            for(unsigned int j=0; j<N; j++) {
+                voldf += uminp[j]*M[i*N+j];
+            }
+            // Properly takes care of the scaling coefficient alpha and vplus (which is already appropriately scaled)
+            // This was arrived at by starting from a version of the blur filter that ignored the scaling coefficient
+            // (and scaled the final output by alpha^2) and then gradually reintroducing the scaling coefficient.
+            vold[i][c] = voldf*alpha;
+            vold[i][c] += vplus[c];
+        }
+    }
+}
+
+// Filters over 1st dimension
+template<typename PT, unsigned int PC>
+void filter2D_IIR(PT *dest, int dstr1, int dstr2, PT const *src, int sstr1, int sstr2, int n1, int n2, IIRValue const b[N+1], double const M[N*N], IIRValue *const tmpdata) {
+    for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
+        // corresponding line in the source and output buffer
+        PT const * srcimg = src  + c2*sstr2;
+        PT       * dstimg = dest + c2*dstr2 + n1*dstr1;
+        // Border constants
+        IIRValue imin[PC];  copy_n(srcimg + (0)*sstr1, PC, imin);
+        IIRValue iplus[PC]; copy_n(srcimg + (n1-1)*sstr1, PC, iplus);
+        // Forward pass
+        IIRValue u[N+1][PC];
+        for(unsigned int i=0; i<N; i++) copy_n(imin, PC, u[i]);
+        for ( int c1 = 0 ; c1 < n1 ; c1++ ) {
+            for(unsigned int i=N; i>0; i--) copy_n(u[i-1], PC, u[i]);
+            copy_n(srcimg, PC, u[0]);
+            srcimg += sstr1;
+            for(unsigned int c=0; c<PC; c++) u[0][c] *= b[0];
+            for(unsigned int i=1; i<N+1; i++) {
+                for(unsigned int c=0; c<PC; c++) u[0][c] += u[i][c]*b[i];
+            }
+            copy_n(u[0], PC, tmpdata+c1*PC);
+        }
+        // Backward pass
+        IIRValue v[N+1][PC];
+        calcTriggsSdikaInitialization(M, u, iplus, iplus, b[0], v);
+        dstimg -= dstr1;
+        for(unsigned int c=0; c<PC; c++) dstimg[c] = clip_round_cast<PT>(v[0][c]);
+        int c1=n1-1;
+        while(c1-->0) {
+            for(unsigned int i=N; i>0; i--) copy_n(v[i-1], PC, v[i]);
+            copy_n(tmpdata+c1*PC, PC, v[0]);
+            for(unsigned int c=0; c<PC; c++) v[0][c] *= b[0];
+            for(unsigned int i=1; i<N+1; i++) {
+                for(unsigned int c=0; c<PC; c++) v[0][c] += v[i][c]*b[i];
+            }
+            dstimg -= dstr1;
+            for(unsigned int c=0; c<PC; c++) dstimg[c] = clip_round_cast<PT>(v[0][c]);
+        }
+    }
+}
+
+// Filters over 1st dimension
+// Assumes kernel is symmetric
+// scr_len should be size of kernel - 1
+template<typename PT, unsigned int PC>
+void filter2D_FIR(PT *dst, int dstr1, int dstr2, PT const *src, int sstr1, int sstr2, int n1, int n2, FIRValue const *const kernel, int scr_len) {
+    // Past pixels seen (to enable in-place operation)
+    PT history[scr_len+1][PC];
+
+    for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
+
+        // corresponding line in the source buffer
+        int const src_line = c2 * sstr2;
+
+        // current line in the output buffer
+        int const dst_line = c2 * dstr2;
+
+        int skipbuf[4] = {INT_MIN, INT_MIN, INT_MIN, INT_MIN};
+
+        // history initialization
+        PT imin[PC]; copy_n(src + src_line, PC, imin);
+        for(int i=0; i<scr_len; i++) copy_n(imin, PC, history[i]);
+
+        for ( int c1 = 0 ; c1 < n1 ; c1++ ) {
+
+            int const src_disp = src_line + c1 * sstr1;
+            int const dst_disp = dst_line + c1 * sstr1;
+
+            // update history
+            for(int i=scr_len; i>0; i--) copy_n(history[i-1], PC, history[i]);
+            copy_n(src + src_disp, PC, history[0]);
+
+            // for all bytes of the pixel
+            for ( unsigned int byte = 0 ; byte < PC ; byte++) {
+
+                if(skipbuf[byte] > c1) continue;
+
+                FIRValue sum = 0;
+                int last_in = -1;
+                int different_count = 0;
+
+                // go over our point's neighbours in the history
+                for ( int i = 0 ; i <= scr_len ; i++ ) {
+                    // value at the pixel
+                    PT in_byte = history[i][byte];
+
+                    // is it the same as last one we saw?
+                    if(in_byte != last_in) different_count++;
+                    last_in = in_byte;
+
+                    // sum pixels weighted by the kernel
+                    sum += in_byte * kernel[i];
+                }
+
+                // go over our point's neighborhood on x axis in the in buffer
+                int nb_src_disp = src_disp + byte;
+                for ( int i = 1 ; i <= scr_len ; i++ ) {
+                    // the pixel we're looking at
+                    int c1_in = c1 + i;
+                    if (c1_in >= n1) {
+                        c1_in = n1 - 1;
+                    } else {
+                        nb_src_disp += sstr1;
+                    }
+
+                    // value at the pixel
+                    PT in_byte = src[nb_src_disp];
+
+                    // is it the same as last one we saw?
+                    if(in_byte != last_in) different_count++;
+                    last_in = in_byte;
+
+                    // sum pixels weighted by the kernel
+                    sum += in_byte * kernel[i];
+                }
+
+                // store the result in bufx
+                dst[dst_disp + byte] = round_cast<PT>(sum);
+
+                // optimization: if there was no variation within this point's neighborhood, 
+                // skip ahead while we keep seeing the same last_in byte: 
+                // blurring flat color would not change it anyway
+                if (different_count <= 1) {
+                    int pos = c1 + 1;
+                    int nb_src_disp = src_disp + (1+scr_len)*sstr1 + byte; // src_line + (pos+scr_len) * sstr1 + byte
+                    int nb_dst_disp = dst_disp + (1)        *dstr1 + byte; // dst_line + (pos) * sstr1 + byte
+                    while(pos + scr_len < n1 && src[nb_src_disp] == last_in) {
+                        dst[nb_dst_disp] = last_in;
+                        pos++;
+                        nb_src_disp += sstr1;
+                        nb_dst_disp += sstr1;
+                    }
+                    skipbuf[byte] = pos;
+                }
+            }
+        }
+    }
+}
+
+template<typename PT, unsigned int PC>
+void downsample(PT *dst, int dstr1, int dstr2, int dn1, int dn2, PT const *src, int sstr1, int sstr2, int sn1, int sn2, int step1_l2, int step2_l2) {
+    unsigned int const divisor_l2 = step1_l2+step2_l2; // step1*step2=2^(step1_l2+step2_l2)
+    unsigned int const round_offset = (1<<divisor_l2)/2;
+    int const step1 = 1<<step1_l2;
+    int const step2 = 1<<step2_l2;
+    int const step1_2 = step1/2;
+    int const step2_2 = step2/2;
+    for(int dc2 = 0 ; dc2 < dn2 ; dc2++) {
+        int const sc2_begin = (dc2<<step2_l2)-step2_2;
+        int const sc2_end = sc2_begin+step2;
+        for(int dc1 = 0 ; dc1 < dn1 ; dc1++) {
+            int const sc1_begin = (dc1<<step1_l2)-step1_2;
+            int const sc1_end = sc1_begin+step1;
+            unsigned int sum[PC];
+            std::fill_n(sum, PC, 0);
+            for(int sc2 = sc2_begin ; sc2 < sc2_end ; sc2++) {
+                for(int sc1 = sc1_begin ; sc1 < sc1_end ; sc1++) {
+                    for(unsigned int ch = 0 ; ch < PC ; ch++) {
+                        sum[ch] += src[clip(sc2,0,sn2-1)*sstr2+clip(sc1,0,sn1-1)*sstr1+ch];
+                    }
+                }
+            }
+            for(unsigned int ch = 0 ; ch < PC ; ch++) {
+                dst[dc2*dstr2+dc1*dstr1+ch] = static_cast<PT>((sum[ch]+round_offset)>>divisor_l2);
+            }
+        }
+    }
+}
+
+template<typename PT, unsigned int PC>
+void upsample(PT *dst, int dstr1, int dstr2, unsigned int dn1, unsigned int dn2, PT const *src, int sstr1, int sstr2, unsigned int sn1, unsigned int sn2, unsigned int step1_l2, unsigned int step2_l2) {
+    assert(((sn1-1)<<step1_l2)>=dn1 && ((sn2-1)<<step2_l2)>=dn2); // The last pixel of the source image should fall outside the destination image
+    unsigned int const divisor_l2 = step1_l2+step2_l2; // step1*step2=2^(step1_l2+step2_l2)
+    unsigned int const round_offset = (1<<divisor_l2)/2;
+    unsigned int const step1 = 1<<step1_l2;
+    unsigned int const step2 = 1<<step2_l2;
+    for ( unsigned int sc2 = 0 ; sc2 < sn2-1 ; sc2++ ) {
+        unsigned int const dc2_begin = (sc2 << step2_l2);
+        unsigned int const dc2_end = std::min(dn2, dc2_begin+step2);
+        for ( unsigned int sc1 = 0 ; sc1 < sn1-1 ; sc1++ ) {
+            unsigned int const dc1_begin = (sc1 << step1_l2);
+            unsigned int const dc1_end = std::min(dn1, dc1_begin+step1);
+            for ( unsigned int byte = 0 ; byte < PC ; byte++) {
+
+                // get 4 values at the corners of the pixel from src
+                PT a00 = src[sstr2* sc2    + sstr1* sc1    + byte];
+                PT a10 = src[sstr2* sc2    + sstr1*(sc1+1) + byte];
+                PT a01 = src[sstr2*(sc2+1) + sstr1* sc1    + byte];
+                PT a11 = src[sstr2*(sc2+1) + sstr1*(sc1+1) + byte];
+
+                // initialize values for linear interpolation
+                unsigned int a0 = a00*step2/*+a01*0*/;
+                unsigned int a1 = a10*step2/*+a11*0*/;
+
+                // iterate over the rectangle to be interpolated
+                for ( unsigned int dc2 = dc2_begin ; dc2 < dc2_end ; dc2++ ) {
+
+                    // prepare linear interpolation for this row
+                    unsigned int a = a0*step1/*+a1*0*/+round_offset;
+
+                    for ( unsigned int dc1 = dc1_begin ; dc1 < dc1_end ; dc1++ ) {
+
+                        // simple linear interpolation
+                        dst[dstr2*dc2 + dstr1*dc1 + byte] = static_cast<PT>(a>>divisor_l2);
+
+                        // compute a = a0*(ix-1)+a1*(xi+1)+round_offset
+                        a = a - a0 + a1;
+                    }
+
+                    // compute a0 = a00*(iy-1)+a01*(yi+1) and similar for a1
+                    a0 = a0 - a00 + a01;
+                    a1 = a1 - a10 + a11;
+                }
+            }
+        }
+    }
+}
+
+int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
 {
     /* in holds the input pixblock */
     NRPixBlock *in = slot.get(_input);
@@ -283,260 +494,246 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans_)
         return 0;
     }
 
-    /* Blur radius in screen units (pixels) */
-    double expansion_x = trans_.expansionX();
-    double expansion_y = trans_.expansionY();
-    int scr_len_x = _effect_area_scr(_deviation_x, expansion_x);
-    int scr_len_y = _effect_area_scr(_deviation_y, expansion_y);
+    // Some common constants
+    int const width_org = in->area.x1-in->area.x0, height_org = in->area.y1-in->area.y0;
+    double const deviation_x_org = _deviation_x * trans.expansionX();
+    double const deviation_y_org = _deviation_y * trans.expansionY();
+    int const PC = NR_PIXBLOCK_BPP(in);
 
-    // subsampling step; it depends on the radius, but somewhat nonlinearly, to make high zooms
-    // workable; is adjustable by quality in -2..2; 0 is the default; 2 is the best quality with no
-    // subsampling
-    int quality = prefs_get_int_attribute ("options.blurquality", "value", 0);
-    int stepx = _effect_subsample_step(scr_len_x, quality);
-    int stepx_l2 = _effect_subsample_step_log2(scr_len_x, quality);
-    int stepy = _effect_subsample_step(scr_len_y, quality);
-    int stepy_l2 = _effect_subsample_step_log2(scr_len_y, quality);
+    // Subsampling constants
+    int const quality = prefs_get_int_attribute("options.blurquality", "value", 0);
+    int const x_step_l2 = _effect_subsample_step_log2(deviation_x_org, quality);
+    int const y_step_l2 = _effect_subsample_step_log2(deviation_y_org, quality);
+    int const x_step = 1<<x_step_l2;
+    int const y_step = 1<<y_step_l2;
+    bool const resampling = x_step > 1 || y_step > 1;
+    int const width = resampling ? static_cast<int>(ceil(static_cast<double>(width_org)/x_step))+1 : width_org;
+    int const height = resampling ? static_cast<int>(ceil(static_cast<double>(height_org)/y_step))+1 : height_org;
+    double const deviation_x = deviation_x_org / x_step;
+    double const deviation_y = deviation_y_org / y_step;
+    int const scr_len_x = _effect_area_scr(deviation_x);
+    int const scr_len_y = _effect_area_scr(deviation_y);
 
-    // Take subsampling into account
-    expansion_x /= stepx;
-    expansion_y /= stepy;
-    scr_len_x = _effect_area_scr(_deviation_x, expansion_x);
-    scr_len_y = _effect_area_scr(_deviation_y, expansion_y);
+    // Decide which filter to use for X and Y
+    // This threshold was determined by trial-and-error for one specific machine,
+    // so there's a good chance that it's not optimal.
+    // Whatever you do, don't go below 1 (and preferrably not even below 2), as
+    // the IIR filter gets unstable there.
+    bool const use_IIR_x = deviation_x > 3;
+    bool const use_IIR_y = deviation_y > 3;
 
-    /* buffer for x-axis blur */
-    NRPixBlock *bufx = new NRPixBlock;
-    /* buffer for y-axis blur */
-    NRPixBlock *bufy = new NRPixBlock;
-
-    // boundaries of the subsampled (smaller, unless step==1) buffers
-    int xd0 = (in->area.x0 >> stepx_l2);
-    int xd1 = (in->area.x1 >> stepx_l2) + 1;
-    int yd0 = (in->area.y0 >> stepy_l2);
-    int yd1 = (in->area.y1 >> stepy_l2) + 1;
-
-    // set up subsampled buffers
-    nr_pixblock_setup_fast(bufx, in->mode, xd0, yd0, xd1, yd1, true);
-    nr_pixblock_setup_fast(bufy, in->mode, xd0, yd0, xd1, yd1, true);
-    if ((bufx->size != NR_PIXBLOCK_SIZE_TINY && bufx->data.px == NULL) || (bufy->size != NR_PIXBLOCK_SIZE_TINY && bufy->data.px == NULL)) { // no memory
-        return 0;
-    }
-
-    /* Array for filter kernel, big enough to fit kernels for both X and Y
-     * direction kernel, one at time */
-    double kernel[_kernel_size(expansion_x, expansion_y)];
-    
-    /* 1. Blur in direction of X-axis, from in to bufx (they have different resolution)*/
-    _make_kernel(kernel, _deviation_x, expansion_x);
-
-    for ( int y = bufx->area.y0 ; y < bufx->area.y1; y++ ) {
-
-        // corresponding line in the source buffer
-        int in_line;
-        if ((y << stepy_l2) >= in->area.y1) {
-            in_line = (in->area.y1 - in->area.y0 - 1) * in->rs;
-        } else {
-            in_line = ((y << stepy_l2) - (in->area.y0))  * in->rs;
-            if (in_line < 0)
-                in_line = 0;
-        }
-
-        // current line in bufx
-        int bufx_line = (y - yd0) * bufx->rs;
-
-        int skipbuf[4] = {INT_MIN, INT_MIN, INT_MIN, INT_MIN};
-
-        for ( int x = bufx->area.x0 ; x < bufx->area.x1 ; x++ ) {
-
-            // for all bytes of the pixel
-            for ( int byte = 0 ; byte < NR_PIXBLOCK_BPP(in) ; byte++) {
-
-                if(skipbuf[byte] > x) continue;
-
-                double sum = 0;
-                int last_in = -1;
-                int different_count = 0;
-
-                // go over our point's neighborhood on x axis in the in buffer, with stepx increment
-                for ( int i = -scr_len_x ; i <= scr_len_x ; i++ ) {
-
-                    // the pixel we're looking at
-                    int x_in = (x+i)<<stepx_l2;
-
-                    if (x_in >= in->area.x1) {
-                        x_in = (in->area.x1 - in->area.x0 - 1);
-                    } else {
-                        x_in = (x_in - in->area.x0);
-                        if (x_in < 0)
-                            x_in = 0;
-                    }
-
-                    // value at the pixel
-                    _check_index(in, in_line + NR_PIXBLOCK_BPP(in) * x_in + byte, __LINE__);
-                    unsigned char in_byte = NR_PIXBLOCK_PX(in)[in_line + NR_PIXBLOCK_BPP(in) * x_in + byte];
-
-                    // is it the same as last one we saw?
-                    if(in_byte != last_in) different_count++;
-                    last_in = in_byte;
-
-                    // sum pixels weighted by the kernel
-                    sum += in_byte * kernel[std::abs(i)];
-                }
-
-                // store the result in bufx
-                _check_index(bufx, bufx_line + NR_PIXBLOCK_BPP(bufx) * (x - xd0) + byte, __LINE__);
-                NR_PIXBLOCK_PX(bufx)[bufx_line + NR_PIXBLOCK_BPP(bufx) * (x - xd0) + byte] = (unsigned char)sum;
-
-                // optimization: if there was no variation within this point's neighborhood, 
-                // skip ahead while we keep seeing the same last_in byte: 
-                // blurring flat color would not change it anyway
-                if (different_count <= 1) {
-                    int pos = x + 1;
-                    while(((pos + scr_len_x) << stepx_l2) < in->area.x1 &&
-                          NR_PIXBLOCK_PX(in)[in_line + NR_PIXBLOCK_BPP(in) * (((pos + scr_len_x) << stepx_l2) - in->area.x0) + byte] == last_in)
-                    {
-                        _check_index(in, in_line + NR_PIXBLOCK_BPP(in) * (((pos + scr_len_x) << stepx_l2) - in->area.x0) + byte, __LINE__);
-                        _check_index(bufx, bufx_line + NR_PIXBLOCK_BPP(bufx) * (pos - xd0) + byte, __LINE__);
-                        NR_PIXBLOCK_PX(bufx)[bufx_line + NR_PIXBLOCK_BPP(bufx) * (pos - xd0) + byte] = last_in;
-                        pos++;
-                    }
-                    skipbuf[byte] = pos;
-                }
-            }
-        }
-    }
-
-
-    /* 2. Blur in direction of Y-axis, from bufx to bufy (they have the same resolution) */
-    _make_kernel(kernel, _deviation_y, expansion_y);
-
-    for ( int x = bufy->area.x0 ; x < bufy->area.x1; x++ ) {
-
-        int bufy_disp = NR_PIXBLOCK_BPP(bufy) * (x - xd0);
-        int bufx_disp = NR_PIXBLOCK_BPP(bufx) * (x - xd0);
-
-        int skipbuf[4] = {INT_MIN, INT_MIN, INT_MIN, INT_MIN};
-
-        for ( int y = bufy->area.y0; y < bufy->area.y1; y++ ) {
-
-            int bufy_line = (y - yd0) * bufy->rs;
-
-            for ( int byte = 0 ; byte < NR_PIXBLOCK_BPP(bufx) ; byte++) {
-
-                if (skipbuf[byte] > y) continue;
-
-                double sum = 0;
-                int last_in = -1;
-                int different_count = 0;
-
-                for ( int i = -scr_len_y ; i <= scr_len_y ; i ++ ) {
-
-                    int y_in = y + i - yd0;
-
-                    if (y_in >= (yd1 - yd0)) y_in = (yd1 - yd0) - 1;
-                    if (y_in < 0) y_in = 0;
-
-                    _check_index(bufx, y_in * bufx->rs + NR_PIXBLOCK_BPP(bufx) * (x - xd0) + byte, __LINE__);
-                    unsigned char in_byte = NR_PIXBLOCK_PX(bufx)[y_in * bufx->rs + NR_PIXBLOCK_BPP(bufx) * (x - xd0) + byte];
-                    if(in_byte != last_in) different_count++;
-                    last_in = in_byte;
-                    sum += in_byte * kernel[std::abs(i)];
-                }
-
-                _check_index(bufy, bufy_line + bufy_disp + byte, __LINE__);
-                NR_PIXBLOCK_PX(bufy)[bufy_line + bufy_disp + byte] = (unsigned char)sum;
-
-                if (different_count <= 1) {
-                    int pos = y + 1;
-                    while((pos + scr_len_y + 1) < yd1 &&
-                          NR_PIXBLOCK_PX(bufx)[(pos + scr_len_y + 1 - yd0) * bufx->rs + bufx_disp + byte] == last_in)
-                    {
-                        _check_index(bufx, (pos + scr_len_y + 1 - yd0) * bufx->rs + bufx_disp + byte, __LINE__);
-                        _check_index(bufy, (pos - yd0) * bufy->rs + bufy_disp + byte, __LINE__);
-                        NR_PIXBLOCK_PX(bufy)[(pos - yd0) * bufy->rs + bufy_disp + byte] = last_in;
-                        pos++;
-                    }
-                    skipbuf[byte] = pos;
-                }
-
-            }
-        }
-    }
-
-    // we don't need bufx anymore
-    nr_pixblock_release(bufx);
-    delete bufx;
-
-    // interpolation will need to divide by stepx * stepy
-    int divisor = stepx_l2 + stepy_l2;
-
-    // new buffer for the final output, same resolution as the in buffer
+    // new buffer for the subsampled output
     NRPixBlock *out = new NRPixBlock;
-    nr_pixblock_setup_fast(out, in->mode, in->area.x0, in->area.y0,
-                           in->area.x1, in->area.y1, true);
+    nr_pixblock_setup_fast(out, in->mode, in->area.x0/x_step,       in->area.y0/y_step,
+                                          in->area.x0/x_step+width, in->area.y0/y_step+height, true);
     if (out->size != NR_PIXBLOCK_SIZE_TINY && out->data.px == NULL) {
         // alas, we've accomplished a lot, but ran out of memory - so abort
         return 0;
     }
-
-    for ( int y = yd0 ; y < yd1 - 1; y++ ) {
-        for ( int x = xd0 ; x < xd1 - 1; x++ ) {
-            for ( int byte = 0 ; byte < NR_PIXBLOCK_BPP(bufy) ; byte++) {
-
-                // get 4 values at the corners of the pixel from bufy
-                _check_index(bufy, ((y - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) + (x - xd0) + byte, __LINE__);
-                unsigned char a00 = NR_PIXBLOCK_PX(bufy)[((y - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x - xd0) + byte];
-                if (stepx == 1 && stepy == 1) { // if there was no subsampling, just use a00
-                    _check_index(out, ((y - yd0) * out->rs) + NR_PIXBLOCK_BPP(out) * (x - xd0) + byte, __LINE__);
-                    NR_PIXBLOCK_PX(out)[((y - yd0) * out->rs) + NR_PIXBLOCK_BPP(out) * (x - xd0) + byte] = a00;
-                    continue;
-                }
-                _check_index(bufy, ((y - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x + 1 - xd0) + byte, __LINE__);
-                unsigned char a10 = NR_PIXBLOCK_PX(bufy)[((y - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x + 1 - xd0) + byte];
-                _check_index(bufy, ((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x - xd0) + byte, __LINE__);
-                unsigned char a01 = NR_PIXBLOCK_PX(bufy)[((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x - xd0) + byte];
-                _check_index(bufy, ((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x + 1 - xd0) + byte, __LINE__);
-                unsigned char a11 = NR_PIXBLOCK_PX(bufy)[((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x + 1 - xd0) + byte];
-
-                // iterate over the rectangle to be interpolated
-                for ( int yi = 0 ; yi < stepy; yi++ ) {
-                    int iy = stepy - yi;
-                    int y_out = (y << stepy_l2) + yi;
-                    if ((y_out < out->area.y0) || (y_out >= out->area.y1))
-                        continue;
-                    int out_line  = (y_out - out->area.y0) * out->rs;
-
-                    for ( int xi = 0 ; xi < stepx; xi++ ) {
-                        int ix = stepx - xi;
-                        int x_out = (x << stepx_l2) + xi;
-                        if ((x_out < out->area.x0) || (x_out >= out->area.x1))
-                            continue;
-
-                        // simple linear interpolation
-                        int a = (a00*ix*iy + a10*xi*iy + a01*ix*yi + a11*xi*yi) >> divisor;
-
-                        _check_index(out, out_line + NR_PIXBLOCK_BPP(out) * (x_out - out->area.x0) + byte, __LINE__);
-                        NR_PIXBLOCK_PX(out)[out_line + NR_PIXBLOCK_BPP(out) * (x_out - out->area.x0) + byte] = (unsigned char) a;
-                    }
-                }
-            }
+    // Temporary storage for IIR filter
+    // NOTE: This can be eliminated, but it reduces the precision a bit
+    IIRValue * tmpdata = 0;
+    if ( use_IIR_x || use_IIR_y ) {
+        tmpdata = new IIRValue[std::max(width,height)*PC];
+        if (tmpdata == NULL) {
+            nr_pixblock_release(out);
+            delete out;
+            return 0;
         }
     }
+    NRPixBlock *ssin = in;
+    if ( resampling ) {
+        ssin = out;
+        // Downsample
+        switch(in->mode) {
+        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
+            downsample<unsigned char,1>(NR_PIXBLOCK_PX(out), 1, out->rs, width, height, NR_PIXBLOCK_PX(in), 1, in->rs, width_org, height_org, x_step_l2, y_step_l2);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
+            downsample<unsigned char,3>(NR_PIXBLOCK_PX(out), 3, out->rs, width, height, NR_PIXBLOCK_PX(in), 3, in->rs, width_org, height_org, x_step_l2, y_step_l2);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+            downsample<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, width, height, NR_PIXBLOCK_PX(in), 4, in->rs, width_org, height_org, x_step_l2, y_step_l2);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+            downsample<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, width, height, NR_PIXBLOCK_PX(in), 4, in->rs, width_org, height_org, x_step_l2, y_step_l2);
+            break;
+        default:
+            assert(false);
+        };
+    }
 
-    nr_pixblock_release(bufy);
-    delete bufy;
+    if (use_IIR_x) {
+        // Filter variables
+        IIRValue b[N+1];  // scaling coefficient + filter coefficients (can be 10.21 fixed point)
+        double bf[N];  // computed filter coefficients
+        double M[N*N]; // matrix used for initialization procedure (has to be double)
 
-    out->empty = FALSE;
-    slot.set(_output, out);
+        // Compute filter (x)
+        calcFilter(deviation_x, bf);
+        for(size_t i=0; i<N; i++) bf[i] = -bf[i];
+        b[0] = 1; // b[0] == alpha (scaling coefficient)
+        for(size_t i=0; i<N; i++) {
+            b[i+1] = bf[i];
+            b[0] -= b[i+1];
+        }
+
+        // Compute initialization matrix (x)
+        calcTriggsSdikaM(bf, M);
+
+        // Filter (x)
+        switch(in->mode) {
+        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
+            filter2D_IIR<unsigned char,1>(NR_PIXBLOCK_PX(out), 1, out->rs, NR_PIXBLOCK_PX(ssin), 1, ssin->rs, width, height, b, M, tmpdata);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
+            filter2D_IIR<unsigned char,3>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, b, M, tmpdata);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+            filter2D_IIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+            filter2D_IIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata);
+            break;
+        default:
+            assert(false);
+        };
+    } else { // !use_IIR_x
+        // Filter kernel for x direction
+        FIRValue kernel[scr_len_x];
+        _make_kernel(kernel, deviation_x);
+
+        // Filter (x)
+        switch(in->mode) {
+        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
+            filter2D_FIR<unsigned char,1>(NR_PIXBLOCK_PX(out), 1, out->rs, NR_PIXBLOCK_PX(ssin), 1, ssin->rs, width, height, kernel, scr_len_x);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
+            filter2D_FIR<unsigned char,3>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, kernel, scr_len_x);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, kernel, scr_len_x);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, kernel, scr_len_x);
+            break;
+        default:
+            assert(false);
+        };
+    }
+
+    if (use_IIR_y) {
+        // Filter variables
+        IIRValue b[N+1];  // scaling coefficient + filter coefficients (can be 10.21 fixed point)
+        double bf[N];  // computed filter coefficients
+        double M[N*N]; // matrix used for initialization procedure (has to be double)
+
+        // Compute filter (y)
+        calcFilter(deviation_y, bf);
+        for(size_t i=0; i<N; i++) bf[i] = -bf[i];
+        b[0] = 1; // b[0] == alpha (scaling coefficient)
+        for(size_t i=0; i<N; i++) {
+            b[i+1] = bf[i];
+            b[0] -= b[i+1];
+        }
+
+        // Compute initialization matrix (y)
+        calcTriggsSdikaM(bf, M);
+
+        // Filter (y)
+        switch(in->mode) {
+        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
+            filter2D_IIR<unsigned char,1>(NR_PIXBLOCK_PX(out), out->rs, 1, NR_PIXBLOCK_PX(out), out->rs, 1, height, width, b, M, tmpdata);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
+            filter2D_IIR<unsigned char,3>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, b, M, tmpdata);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+            filter2D_IIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+            filter2D_IIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata);
+            break;
+        default:
+            assert(false);
+        };
+    } else { // !use_IIR_y
+        // Filter kernel for y direction
+        FIRValue kernel[scr_len_y];
+        _make_kernel(kernel, deviation_y);
+
+        // Filter (y)
+        switch(in->mode) {
+        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
+            filter2D_FIR<unsigned char,1>(NR_PIXBLOCK_PX(out), out->rs, 1, NR_PIXBLOCK_PX(out), out->rs, 1, height, width, kernel, scr_len_y);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
+            filter2D_FIR<unsigned char,3>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, kernel, scr_len_y);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, kernel, scr_len_y);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, kernel, scr_len_y);
+            break;
+        default:
+            assert(false);
+        };
+    }
+
+    delete[] tmpdata; // deleting a nullptr has no effect, so this is save
+
+    if ( !resampling ) {
+        // No upsampling needed
+        out->empty = FALSE;
+        slot.set(_output, out);
+    } else {
+        // New buffer for the final output, same resolution as the in buffer
+        NRPixBlock *finalout = new NRPixBlock;
+        nr_pixblock_setup_fast(finalout, in->mode, in->area.x0, in->area.y0,
+                                                   in->area.x1, in->area.y1, true);
+        if (finalout->size != NR_PIXBLOCK_SIZE_TINY && finalout->data.px == NULL) {
+            // alas, we've accomplished a lot, but ran out of memory - so abort
+            nr_pixblock_release(out);
+            delete out;
+            return 0;
+        }
+
+        // Upsample
+        switch(in->mode) {
+        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
+            upsample<unsigned char,1>(NR_PIXBLOCK_PX(finalout), 1, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 1, out->rs, width, height, x_step_l2, y_step_l2);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
+            upsample<unsigned char,3>(NR_PIXBLOCK_PX(finalout), 3, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 3, out->rs, width, height, x_step_l2, y_step_l2);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+            upsample<unsigned char,4>(NR_PIXBLOCK_PX(finalout), 4, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 4, out->rs, width, height, x_step_l2, y_step_l2);
+            break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+            upsample<unsigned char,4>(NR_PIXBLOCK_PX(finalout), 4, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 4, out->rs, width, height, x_step_l2, y_step_l2);
+            break;
+        default:
+            assert(false);
+        };
+
+        // We don't need the out buffer anymore
+        nr_pixblock_release(out);
+        delete out;
+
+        // The final out buffer gets returned
+        finalout->empty = FALSE;
+        slot.set(_output, finalout);
+    }
 
     return 0;
 }
 
 int FilterGaussian::get_enlarge(Matrix const &trans)
 {
-    int area_x = _effect_area_scr(_deviation_x, trans.expansionX());
-    int area_y = _effect_area_scr(_deviation_y, trans.expansionY());
-    return _max(area_x, area_y);
+    int area_x = _effect_area_scr(_deviation_x * trans.expansionX());
+    int area_y = _effect_area_scr(_deviation_y * trans.expansionY());
+    return std::max(area_x, area_y);
 }
 
 void FilterGaussian::set_deviation(double deviation)

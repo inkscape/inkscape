@@ -58,21 +58,6 @@ public:
 private:
     double _deviation_x;
     double _deviation_y;
-
-    int _kernel_size(double expansionX, double expansionY);
-    void _make_kernel(double *kernel, double deviation, double expansion);
-    int _effect_area_scr(double deviation, double expansion);
-    int _effect_subsample_step(int scr_len_x, int quality);
-    int _effect_subsample_step_log2(int scr_len_x, int quality);
-
-    inline int _min(int const a, int const b)
-    {
-        return ((a < b) ? a : b);
-    }
-    inline int _max(int const a, int const b)
-    {
-        return ((a > b) ? a : b);
-    }
 };
 
 

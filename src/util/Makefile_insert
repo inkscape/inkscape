@@ -8,6 +8,7 @@ util_libinkutil_a_SOURCES = \
 	util/compose.hpp	\
 	util/ucompose.hpp	\
 	util/filter-list.h \
+	util/fixed_point.h \
 	util/format.h	\
 	util/forward-pointer-iterator.h \
 	util/glib-list-iterators.h \
