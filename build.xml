@@ -1,3 +1,38 @@
+<!--
+ * Inkscape build file.
+ *
+ * See buildtool.cpp for use.
+ *
+ * Authors:
+ *   Bob Jamison
+ *   Others 
+ *
+ * Copyright (C) 2006 Inkscape.org
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+
+
+
+
+
+<!--
+########################################################################
+## P R O J E C T   :   I N K S C A P E
+########################################################################
+-->
 <project name="Inkscape" default="dist" basedir=".">
     <description>
         Build file for the Inkscape SVG editor.  This file
@@ -6,7 +41,7 @@
     </description>
 
   <!-- set global properties for this build -->
-  <property name="version"     value="0.45"/>
+  <property name="version"     value="0.46dev"/>
   <property name="arch"        value="i686-pc-mingw32-"/>
   <!--<property name="archutil"    value="${arch}"/>-->
   <property name="archutil"    value=""/>
@@ -20,6 +55,11 @@
 
 
 
+  <!--
+  ########################################################################
+  ## T A R G E T    :    I N I T
+  ########################################################################
+  -->
   <target name="init">
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${build}"/>
@@ -95,6 +135,11 @@
 
 
 
+  <!--
+  ########################################################################
+  ## T A R G E T    :    C O M P I L E
+  ########################################################################
+  -->
   <target name="compile" depends="init"
         description="compile the source " >
     <!-- Compile from source to build -->
@@ -216,9 +261,11 @@
   </target>
   
 
-
-
-
+  <!--
+  ########################################################################
+  ## T A R G E T    :    L I B
+  ########################################################################
+  -->
   <target name="lib" depends="compile">
     <staticlib command="${archutil}ar crsv"
            file="${build}/libinkscape.a">
@@ -232,8 +279,11 @@
 
 
 
-
-
+  <!--
+  ########################################################################
+  ## T A R G E T    :    I 1 8 N
+  ########################################################################
+  -->
   <target name="i18n" depends="compile">
     <msgfmt todir="${build}/locale" owndir="true"
          out="LC_MESSAGES/inkscape.mo">
@@ -246,6 +296,11 @@
 
 
 
+  <!--
+  ########################################################################
+  ## T A R G E T    :    L I N K
+  ########################################################################
+  -->
   <target name="link" depends="lib">
     <rc command="${archutil}windres" 
 	    file="${src}/inkscape.rc"
@@ -294,6 +349,11 @@
 
 
 
+  <!--
+  ########################################################################
+  ## T A R G E T    :    L I N K I N K V I E W
+  ########################################################################
+  -->
   <target name="linkinkview" depends="lib">
     <rc command="${archutil}windres" 
 	    file="${src}/inkview.rc"
@@ -339,8 +399,11 @@
 
 
 
-
-
+  <!--
+  ########################################################################
+  ## T A R G E T    :    D I S T
+  ########################################################################
+  -->
   <target name="dist" depends="link,i18n"
         description="generate the distribution" >
     <!-- Create the distribution directory -->
@@ -429,6 +492,11 @@
 
 
 
+  <!--
+  ########################################################################
+  ## T A R G E T    :    D I S T - A L L
+  ########################################################################
+  -->
   <target name="dist-all" depends="dist,linkinkview"
         description="generate the distribution, along with inkview" >
     <copy file="${build}/inkview.exe" todir="${dist}"/>
@@ -438,11 +506,24 @@
 
 
 
+  <!--
+  ########################################################################
+  ## T A R G E T    :    C L E A N
+  ########################################################################
+  -->
   <target name="clean"
         description="clean up" >
     <!-- Delete the ${build} and ${dist} directory trees -->
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
   </target>
+
+
+
 </project>
+<!--
+########################################################################
+## E N D
+########################################################################
+-->
 
