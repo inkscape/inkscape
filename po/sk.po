@@ -2,13 +2,14 @@
 # Copyright (C) 2002-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Inkscape package.
 # Zdenko Podobný <zdpo@mailbox.sk>, 2003, 2004.
+# Ivan Masár <helix84@centrum.sk>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-26 19:05-0800\n"
-"PO-Revision-Date: 2007-02-05 20:41+0100\n"
+"PO-Revision-Date: 2007-02-08 14:47+0100\n"
 "Last-Translator: helix84 <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +29,7 @@ msgstr "Inkscape SVG vektorový ilustrátor"
 
 #: ../src/arc-context.cpp:331
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
-msgstr "<b>Ctrl</b>: vytvoriť kruh alebo elipsu, zlomený oblúk/segment uhla"
+msgstr "<b>Ctrl</b>: vytvoriť kruh alebo celočíselnú elipsu, prichytávať uhol oblúka/segmentu"
 
 #: ../src/arc-context.cpp:332
 #: ../src/rect-context.cpp:374
@@ -38,7 +39,7 @@ msgstr "<b>Shift</b>: kresliť okolo štartovacieho bodu"
 #: ../src/arc-context.cpp:420
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make circle or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"
-msgstr "<b>Elipsa</b>: %s &#215; %s; s <b>Ctrl</b> na vytvorenie kruhu alebo celočíselnú elipsu so <b>Shift</b> na kreslenie okolo štartovacieho bodu"
+msgstr "<b>Elipsa</b>: %s &#215; %s; s <b>Ctrl</b> vytvoreniť kruh alebo celočíselnú elipsu so <b>Shift</b> kresliť okolo štartovacieho bodu"
 
 #: ../src/arc-context.cpp:438
 msgid "Create ellipse"
@@ -130,27 +131,27 @@ msgstr "<small>Vybraný viac ako jeden object.</small>"
 #: ../src/dialogs/clonetiler.cpp:181
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
-msgstr "<small>Objekt má <b>%d</b> klonov.</small>"
+msgstr "<small>Objekt má <b>%d</b> dlaždicových klonov.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:186
 msgid "<small>Object has no tiled clones.</small>"
-msgstr "<small>Objekt nemá klony.</small>"
+msgstr "<small>Objekt nemá dlaždicové klony.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:851
 msgid "Select <b>one object</b> whose tiled clones to unclump."
-msgstr "Vyberte <b>jeden objekt</b>, ktorého klony sa majú rozptýliť."
+msgstr "Vyberte <b>jeden objekt</b>, ktorého dlaždicové klony sa majú rozptýliť."
 
 #: ../src/dialogs/clonetiler.cpp:873
 msgid "Unclump tiled clones"
-msgstr "Rozptýliť klony"
+msgstr "Rozptýliť dlaždicové klony"
 
 #: ../src/dialogs/clonetiler.cpp:903
 msgid "Select <b>one object</b> whose tiled clones to remove."
-msgstr "Vyberte <b>jeden objekt</b>, ktorého klony sa majú odstrániť."
+msgstr "Vyberte <b>jeden objekt</b>, ktorého dlaždicové klony sa majú odstrániť."
 
 #: ../src/dialogs/clonetiler.cpp:926
 msgid "Delete tiled clones"
-msgstr "Zmazať klony"
+msgstr "Zmazať dlaždicové klony"
 
 #: ../src/dialogs/clonetiler.cpp:972
 #: ../src/selection-chemistry.cpp:1987
@@ -163,7 +164,7 @@ msgstr "Ak chcete klonovať niekoľko objektov, <b>zoskupte</b> ich a <b>vyklonu
 
 #: ../src/dialogs/clonetiler.cpp:1335
 msgid "Create tiled clones"
-msgstr "Vytvoriť klony"
+msgstr "Vytvoriť dlaždicové klony"
 
 #: ../src/dialogs/clonetiler.cpp:1518
 msgid "<small>Per row:</small>"
@@ -423,15 +424,15 @@ msgstr "<b>Rozostrenie:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2038
 msgid "Blur tiles by this percentage for each row"
-msgstr "Rozostriť klony o túto hodnotu v percentách pre každý riadok"
+msgstr "Rozostriť dlaždice o túto hodnotu v percentách pre každý riadok"
 
 #: ../src/dialogs/clonetiler.cpp:2045
 msgid "Blur tiles by this percentage for each column"
-msgstr "Rozostriť klony o túto hodnotu v percentách pre každý stĺpec"
+msgstr "Rozostriť dlaždice o túto hodnotu v percentách pre každý stĺpec"
 
 #: ../src/dialogs/clonetiler.cpp:2052
 msgid "Randomize the tile blur by this percentage"
-msgstr "Znáhodniť rozmazanie o túto percentuálnu hodnotu"
+msgstr "Znáhodniť rozostrenie dlaždice o túto percentuálnu hodnotu"
 
 #: ../src/dialogs/clonetiler.cpp:2066
 msgid "Alternate the sign of blur change for each row"
@@ -447,15 +448,15 @@ msgstr "<b>Do stratena:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2087
 msgid "Decrease tile opacity by this percentage for each row"
-msgstr "Znížiť neprehľadnosť o túto percentuálnu hodnotu každý riadok"
+msgstr "Znížiť krytie dlaždíc o túto percentuálnu hodnotu každý riadok"
 
 #: ../src/dialogs/clonetiler.cpp:2094
 msgid "Decrease tile opacity by this percentage for each column"
-msgstr "Znížiť krytie o túto percentuálnu hodnotu každý stĺpec"
+msgstr "Znížiť krytie dlaždíc o túto percentuálnu hodnotu každý stĺpec"
 
 #: ../src/dialogs/clonetiler.cpp:2101
 msgid "Randomize the tile opacity by this percentage"
-msgstr "Znáhodniť krytie o túto percentuálnu hodnotu"
+msgstr "Znáhodniť krytie dlaždíc o túto percentuálnu hodnotu"
 
 #: ../src/dialogs/clonetiler.cpp:2115
 msgid "Alternate the sign of opacity change for each row"
@@ -475,7 +476,7 @@ msgstr "Východzia farba:"
 
 #: ../src/dialogs/clonetiler.cpp:2137
 msgid "Initial color of tiled clones"
-msgstr "Počiatočná farba klonov"
+msgstr "Počiatočná farba dlaždicových klonov"
 
 #: ../src/dialogs/clonetiler.cpp:2137
 msgid "Initial color for clones (works only if the original has unset fill or stroke)"
@@ -765,7 +766,7 @@ msgstr "O_dstrániť"
 
 #: ../src/dialogs/clonetiler.cpp:2651
 msgid "Remove existing tiled clones of the selected object (siblings only)"
-msgstr "Odstrániť existujúce klony vybraného objektu (iba súrodencov)"
+msgstr "Odstrániť existujúce dlaždicové klony vybraného objektu (iba súrodencov)"
 
 #: ../src/dialogs/clonetiler.cpp:2667
 msgid " R_eset "
@@ -921,7 +922,7 @@ msgstr "Zvolená oblasť pre export nie je platná"
 #: ../src/dialogs/export.cpp:980
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
-msgstr "Prečinok %s neexistuje alebo to nie je priečinok.\n"
+msgstr "Adresár %s neexistuje alebo to nie je adresár.\n"
 
 #: ../src/dialogs/export.cpp:996
 msgid "Export in progress"
@@ -2531,9 +2532,8 @@ msgid "Print using PostScript operators"
 msgstr "Tlačiť s pomocou Postcript operátorov"
 
 #: ../src/extension/internal/ps.cpp:145
-#, fuzzy
 msgid "Use PostScript vector operators. The resulting image is usually smaller in file size and can be arbitrarily scaled, but alpha transparency and patterns will be lost."
-msgstr "Používať vektorové operátory PostScript. Výsledný obrázok je zvyčajne menší a je možné ľubovolne meniť jeho veľkosť, avšak sa stratí alfa priehľadnosť, značky a vzory."
+msgstr "Používať vektorové operátory PostScript. Výsledný obrázok je zvyčajne menší a je možné ľubovoľne meniť jeho veľkosť, stratí však informáciu o priehľadnosti a vzory."
 
 #: ../src/extension/internal/ps.cpp:150
 msgid "Print as bitmap"
@@ -2557,15 +2557,16 @@ msgid "Print destination"
 msgstr "Cieľ tlače"
 
 #: ../src/extension/internal/ps.cpp:190
-#, fuzzy
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
 "Use '> filename' to print to file.\n"
 "Use '| prog arg...' to pipe to a program."
 msgstr ""
+"Názov tlačiarne (ako vrátil príkaz lpstat -p);\n"
+"nechajte prázdne ak chcete použiť predvolenú tlačiaren systému.\n"
 "Použite '> súbor', ak chcete tlačiť do súboru.\n"
-"Použite '| program argument', ak chcete presmerovať výstup do programu"
+"Použite '| program argument', ak chcete presmerovať výstup do programu."
 
 #: ../src/extension/internal/ps.cpp:1719
 msgid "Postscript Print"
@@ -2683,7 +2684,7 @@ msgstr "Nepodarilo sa načítať požadovaný súbor %s"
 
 #: ../src/file.cpp:240
 msgid "Document not saved yet.  Cannot revert."
-msgstr "Dokument ešte nie je uložený, preto nie je možná obnova."
+msgstr "Dokument ešte nie je uložený, preto nie je možný návrat k uloženej verzii."
 
 #: ../src/file.cpp:246
 #, c-format
@@ -2692,11 +2693,11 @@ msgstr "Všetky zmeny sa stratia! Ste si istý, že chcete znovu načítať doku
 
 #: ../src/file.cpp:266
 msgid "Document reverted."
-msgstr "Dokument bol obnovený."
+msgstr "Dokument bol obnovený z uloženej verzie."
 
 #: ../src/file.cpp:268
 msgid "Document not reverted."
-msgstr "Dokument nebol obnovený."
+msgstr "Dokument nebol obnovený z uloženej verzie."
 
 #: ../src/file.cpp:389
 msgid "Select file to open"
@@ -3013,7 +3014,7 @@ msgid ""
 "Cannot create directory %s.\n"
 "%s"
 msgstr ""
-"Nie je možné vytvoriť priečinok %s.\n"
+"Nie je možné vytvoriť adresár %s.\n"
 "%s"
 
 #: ../src/inkscape.cpp:616
@@ -3022,7 +3023,7 @@ msgid ""
 "%s is not a valid directory.\n"
 "%s"
 msgstr ""
-"%s nie je platný priečinok.\n"
+"%s nie je platný adresár.\n"
 "%s"
 
 #: ../src/inkscape.cpp:617
@@ -3190,11 +3191,11 @@ msgstr "Nastaviť názov súboru"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:308
 msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b>%1</b> vás pozval na sedenie so spoločnou tabuľou."
+msgstr "<b>%1</b> vás pozval na sedenie so zdieľanou tabuľou."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:310
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "Chcete prijať pozvanie na sedenie so spoločnou tabuľou od <b>%1</b>?"
+msgstr "Chcete prijať pozvanie na sedenie so zdieľanou tabuľou od <b>%1</b>?"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:314
 msgid "Accept invitation"
@@ -3447,7 +3448,7 @@ msgstr "_Zobrazovací režim"
 
 #: ../src/menus-skeleton.h:120
 msgid "Show/Hide"
-msgstr "Zobraziť/Skryť"
+msgstr "Zobraziť/skryť"
 
 #: ../src/menus-skeleton.h:137
 msgid "_Layer"
@@ -3722,16 +3723,16 @@ msgstr[2] "<b>%i</b> zo <b>%i</b> uzlov zvolených; %s."
 
 #: ../src/object-edit.cpp:488
 msgid "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the vertical radius the same"
-msgstr ""
+msgstr "Nastaviť polomer <b>vodorovného zaoblenia</b>; s <b>Ctrl</b> to isté pre zvislý polomer"
 
 #: ../src/object-edit.cpp:494
 msgid "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the horizontal radius the same"
-msgstr ""
+msgstr "Nastaviť polomer <b>zvislého zaoblenia</b>; s <b>Ctrl</b> to isté pre vodorovný polomer"
 
 #: ../src/object-edit.cpp:501
 #: ../src/object-edit.cpp:508
 msgid "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to lock ratio or stretch in one dimension only"
-msgstr ""
+msgstr "Nastaviť <b>šírku a výšku</b> obdĺžnika; s <b>Ctrl</b> zamknúť pomer alebo natiahnuť iba v jednom rozmere"
 
 #: ../src/object-edit.cpp:681
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
@@ -3743,27 +3744,27 @@ msgstr "Doladiť <b>výšku</b> elipsy, s <b>Ctrl</b> sa vytvorí kružnica"
 
 #: ../src/object-edit.cpp:687
 msgid "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr ""
+msgstr "Určiť polohu <b>počiatočného bodu</b> oblúku alebo segmentu; s <b>Ctrl</b> prichytávanie k uhlu; ťahanie <b>vnútri</b> elipsy urobí oblúk, <b>mimo</b> urobí segment"
 
 #: ../src/object-edit.cpp:690
 msgid "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr ""
+msgstr "Určiť polohu <b>koncového bodu</b> oblúku alebo segmentu; s <b>Ctrl</b> prichytávanie k uhlu; ťahanie <b>vnútri</b> elipsy urobí oblúk, <b>mimo</b> urobí segment"
 
 #: ../src/object-edit.cpp:795
 msgid "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to round; with <b>Alt</b> to randomize"
-msgstr ""
+msgstr "Nastaviť <b>polomer vrchola</b> hviezdy alebo mnohouholníka; s <b>Ctrl</b> zaoblenie; s <b>Alt</b> znáhodnenie"
 
 #: ../src/object-edit.cpp:798
 msgid "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to randomize"
-msgstr ""
+msgstr "Nastaviť <b>polomer základne</b> hviezdy; s <b>Ctrl</b> udržiavať lúče hviezdy radiálne (bez skosenia); so <b>Shift</b> zaoblenie; s <b>Alt</b> znáhodnenie"
 
 #: ../src/object-edit.cpp:962
 msgid "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to converge/diverge"
-msgstr ""
+msgstr "Zbaliť/rozbaliť špirálu <b>zvnútra</b>; s <b>Ctrl</b> prichytávanie k uhlu; s <b>Alt</b> konvergovať/divergovať"
 
 #: ../src/object-edit.cpp:964
 msgid "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to scale/rotate"
-msgstr ""
+msgstr "Zbaliť/rozbaliť špirálu <b>zvonka</b>; s <b>Ctrl</b> prichytávanie k uhlu; so <b>Shift</b> zmena mierky/otáčanie"
 
 #: ../src/object-edit.cpp:1001
 msgid "Adjust the <b>offset distance</b>"
@@ -3859,11 +3860,11 @@ msgstr "Pripojiť k zvolenej ceste"
 
 #: ../src/pen-context.cpp:555
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
-msgstr ""
+msgstr "<b>Kliknutím</b> alebo <b>kliknutím a ťahaním</b> zatvoriť a dokončiť cestu."
 
 #: ../src/pen-context.cpp:565
 msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr ""
+msgstr "<b>Kliknutím</b> alebo <b>kliknutím a ťahaním</b> pokračovať v ceste z tohto bodu."
 
 #: ../src/pen-context.cpp:1062
 #, c-format
@@ -3925,7 +3926,7 @@ msgstr "<b>Ctrl</b>: urobiť štvorec alebo celočíselný obdĺžnik, zamknutie
 #: ../src/rect-context.cpp:471
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"
-msgstr "<b>Obdĺžnik</b>: %s &#215; %s; s <b>Ctrl</b> na vytvorenie štvorca alebo celočíselného obdĺžnika; so <b>Shift</b> na kreslenie okolo štartovacieho bodu"
+msgstr "<b>Obdĺžnik</b>: %s &#215; %s; s <b>Ctrl</b> vytvoriť štvorec alebo celočíselný obdĺžnik; so <b>Shift</b> kreslenie okolo štartovacieho bodu"
 
 #: ../src/rect-context.cpp:491
 msgid "Create rectangle"
@@ -4189,9 +4190,8 @@ msgid "Unlink clone"
 msgstr "Odpojiť klon"
 
 #: ../src/selection-chemistry.cpp:2087
-#, fuzzy
 msgid "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> to go to its source. Select a <b>text on path</b> to go to the path. Select a <b>flowed text</b> to go to its frame."
-msgstr "Vyberte <b>klon</b> k originálu. Vyberte <b>linked offset</b> to go to its source. Select a <b>text on path</b> to go to the path. Select a <b>flowed text</b> to go to its frame.textový tok"
+msgstr "Vybraním <b>klonu</b> sa dostanete k jeho originálu. Vybraním <b>prepojeného posunu</b> sa dostanete k jeho zdroju. Vybraním <b>textu na ceste</b> sa dostanete k jeho ceste. Vybraním <b>textového toku</b> sa dostanete k jeho rámcu."
 
 #: ../src/selection-chemistry.cpp:2110
 msgid "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, flowed text?)"
@@ -4343,7 +4343,7 @@ msgstr "koreň"
 #: ../src/selection-describer.cpp:124
 #, c-format
 msgid "layer <b>%s</b>"
-msgstr "vrstva <b>%s</b>"
+msgstr "vrstve <b>%s</b>"
 
 #: ../src/selection-describer.cpp:126
 #, c-format
@@ -4358,7 +4358,7 @@ msgstr "<i>%s</i>"
 #: ../src/selection-describer.cpp:144
 #, c-format
 msgid " in %s"
-msgstr "v %s"
+msgstr " vo %s"
 
 #: ../src/selection-describer.cpp:146
 #, c-format
@@ -4454,15 +4454,15 @@ msgstr "Skosenie"
 
 #: ../src/seltrans.cpp:479
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
-msgstr ""
+msgstr "<b>Stred</b> otáčania a skosenia: ťahaním zmeníte jeho polohu; zmena mierky so Shift tiež používa tento stred"
 
 #: ../src/seltrans.cpp:506
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr ""
+msgstr "Výber <b>stlačenia alebo roztiahnutia</b>; s <b>Ctrl</b> rovnomerná zmena mierky; s <b>Shift</b> zmena mierky okolo stredu otáčania"
 
 #: ../src/seltrans.cpp:507
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr ""
+msgstr "Výber <b>zmeny mierky</b>; s <b>Ctrl</b> rovnomerná zmena mierky; s <b>Shift</b> zmena mierky okolo stredu otáčania"
 
 #: ../src/seltrans.cpp:511
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
@@ -4470,7 +4470,7 @@ msgstr "<b>Skosenie</b> výberu; s <b>Ctrl</b> prichytávanie k uhlu; s <b>Shift
 
 #: ../src/seltrans.cpp:512
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
-msgstr ""
+msgstr "Výber <b>otáčania</b>; s <b>Ctrl</b> prichytávanie k uhlu; s <b>Shift</b> otáčanie okolo opačného rohu"
 
 #: ../src/seltrans.cpp:641
 msgid "Reset center"
@@ -4480,21 +4480,21 @@ msgstr "Znovunastaviť stred"
 #: ../src/seltrans.cpp:1002
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr ""
+msgstr "<b>Zmena mierky</b>: %0.2f%% x %0.2f%%; s <b>Ctrl</b> zamknutie pomeru"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1092
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Skosenie</b>: %0.2f&#176;; s <b>Ctrl</b> prichytávanie k uhlu"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1141
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Otáčanie</b>: %0.2f&#176;; s <b>Ctrl</b> prichytávanie k uhlu"
 
 #: ../src/seltrans.cpp:1185
 #, c-format
@@ -4504,7 +4504,7 @@ msgstr "Presunúť <b>stred</b> do %s, %s"
 #: ../src/seltrans.cpp:1443
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
-msgstr ""
+msgstr "<b>Posun</b> o %s, %s; s <b>Ctrl</b> obmedzenie na iba vodorovné a zvislé; s <b>Shift</b> potlačenie prichytávania"
 
 #: ../src/slideshow.cpp:89
 msgid "Inkscape slideshow"
@@ -5796,7 +5796,7 @@ msgstr "Ovláda maximálnu vzdialenosť prichytávania od mriežky"
 
 #: ../src/ui/dialog/document-properties.cpp:332
 msgid "If set, objects snap to the nearest grid line when moved, regardless of distance"
-msgstr ""
+msgstr "Ak je voľba nastavená, objekty sa pri posune prichytávajú k najbližšej čiare mriežky bez ohľadu na vzdialenosť"
 
 #: ../src/ui/dialog/document-properties.cpp:334
 msgid "Snap bounding boxes to g_uides"
@@ -6080,7 +6080,7 @@ msgstr "Zobrazenie uhlov ako na kompase"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:189
 msgid "When on, angles are displayed with 0 at north, 0 to 360 range, positive clockwise; otherwise with 0 at east, -180 to 180 range, positive counterclockwise"
-msgstr ""
+msgstr "Ak je voľba zapnutá, uhly sa zobrazujú s 0 na severe, v rozsahu 0 až 360, kladný smer v smere otáčania hodinových ručičiek; inak s 0 na východe, v rozsahu -180 až 180, kladný smer proti smeru otáčania hodinových ručičiek"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "Rotation snaps every:"
@@ -6092,7 +6092,7 @@ msgstr "stup."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:196
 msgid "Rotating with Ctrl pressed snaps every that much degrees; also, pressing [ or ] rotates by this amount"
-msgstr ""
+msgstr "Otáčanie so stlačeným Ctrl prichytáva každých toľkoto stupňov; tiež, stlačenie [ alebo ] otáča o toľkoto"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:198
 msgid "Zoom in/out by:"
@@ -6286,11 +6286,11 @@ msgstr "Kaligrafická čiara"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:380
 msgid "If on, pen width is in absolute units (px) independent of zoom; otherwise pen width depends on zoom so that it looks the same at any zoom"
-msgstr ""
+msgstr "Ak je voľba zapnutá, hrúbka pera je v absolútnych jednotkách (px) nezávisle na mierke zobrazenia; inak hrúbka pera závisí na mierke zobrazenia tak, že je rovnaká pri každej mierke"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:382
 msgid "If on, each object created with this tool will remain selected after you finish drawing it"
-msgstr ""
+msgstr "Ak je voľba zapnutá, každý objekt vytvorený týmto nástrojom zostane vybraný potom, ako ho dokreslíte"
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:389
@@ -6306,7 +6306,7 @@ msgstr "Konektor"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid "If on, connector attachment points will not be shown for text objects"
-msgstr ""
+msgstr "Ak je voľba zapnutá, spojovacie body konektora sa nezobrazia pre textové objekty"
 
 #. Dropper
 #: ../src/ui/dialog/inkscape-preferences.cpp:397
@@ -6408,7 +6408,7 @@ msgstr "Keď sa posunie originál, jeho klony a prepojené posuny:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:458
 msgid "Clones are translated by the same vector as their original."
-msgstr "Klony sú preložené rovnakým vektorom ako ich originál."
+msgstr "Klony sú posunuté rovnakým vektorom ako ich originál."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:460
 msgid "Clones preserve their positions when their original is moved."
@@ -6837,7 +6837,7 @@ msgstr "Detekcia hrán"
 
 #: ../src/ui/dialog/tracedialog.cpp:423
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr "Vektorizovať optimálnou detekciou hrán algoritmon J. Cannyho"
+msgstr "Vektorizovať optimálnou detekciou hrán algoritmom J. Cannyho"
 
 #: ../src/ui/dialog/tracedialog.cpp:440
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
@@ -6950,7 +6950,7 @@ msgstr "Potlačiť škvrny"
 
 #: ../src/ui/dialog/tracedialog.cpp:560
 msgid "Ignore small spots (speckles) in the bitmap"
-msgstr "Ignotovať malé oblasti (škvrny) na bitmape"
+msgstr "Ignorovať malé oblasti (škvrny) na bitmape"
 
 #: ../src/ui/dialog/tracedialog.cpp:568
 msgid "Speckles of up to this many pixels will be suppressed"
@@ -6982,7 +6982,7 @@ msgstr "Pokúsiť sa optimalizovať cesty spojením priľahlých segmentov bezi�
 
 #: ../src/ui/dialog/tracedialog.cpp:599
 msgid "Increase this to reduce the number of nodes in the trace by more aggressive optimization"
-msgstr "Zväčšite hodnotu aby sa redukoval počet uzlov po vektorizácii agresívnejšou optimalizáciou"
+msgstr "Zväčšite hodnotu, aby sa redukoval počet uzlov po vektorizácii agresívnejšou optimalizáciou"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:606
@@ -7074,11 +7074,11 @@ msgstr "Uhol otáčania (kladný = proti smeru hodinových ručičiek)"
 
 #: ../src/ui/dialog/transformation.cpp:90
 msgid "Horizontal skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
-msgstr ""
+msgstr "Uhol vodorovného skosenia (kaldný = proti smeru otáčania hodinových ručičiek) alebo absolútne posunutie alebo percentuálne posunutie"
 
 #: ../src/ui/dialog/transformation.cpp:92
 msgid "Vertical skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
-msgstr ""
+msgstr "Uhol zvislého skosenia (kaldný = proti smeru otáčania hodinových ručičiek) alebo absolútne posunutie alebo percentuálne posunutie"
 
 #: ../src/ui/dialog/transformation.cpp:95
 msgid "Transformation matrix element A"
@@ -7106,7 +7106,7 @@ msgstr "Prvok F transformačnej matice"
 
 #: ../src/ui/dialog/transformation.cpp:102
 msgid "Add the specified relative displacement to the current position; otherwise, edit the current absolute position directly"
-msgstr ""
+msgstr "Pridať určený relatívny posun k súčasnej polohe; inak priamo upravovať súčasnú absolútnu polohu"
 
 #: ../src/ui/dialog/transformation.cpp:103
 msgid "Scale proportionally"
@@ -7122,7 +7122,7 @@ msgstr "Použiť na každý _objekt zvlášť"
 
 #: ../src/ui/dialog/transformation.cpp:104
 msgid "Apply the scale/rotate/skew to each selected object separately; otherwise, transform the selection as a whole"
-msgstr ""
+msgstr "Použiť zmenu mierky/otočenie/skosenie na každý vybraný objekt zvlášť; inak transformovať výber ako celok"
 
 #: ../src/ui/dialog/transformation.cpp:105
 msgid "Edit c_urrent matrix"
@@ -8310,7 +8310,7 @@ msgstr "Zmazať výber"
 
 #: ../src/verbs.cpp:2028
 msgid "Duplic_ate"
-msgstr "Duplikov_ať"
+msgstr "_Duplikovať"
 
 #: ../src/verbs.cpp:2029
 msgid "Duplicate selected objects"
@@ -8318,7 +8318,7 @@ msgstr "Duplikovať vybrané objekty"
 
 #: ../src/verbs.cpp:2030
 msgid "Create Clo_ne"
-msgstr "Vytvoriť Klo_n"
+msgstr "Vytvoriť klo_n"
 
 #: ../src/verbs.cpp:2031
 msgid "Create a clone (a copy linked to the original) of selected object"
@@ -8376,7 +8376,7 @@ msgstr "Vybrať všetky objekty alebo všetky uzly"
 
 #: ../src/verbs.cpp:2046
 msgid "Select All in All La_yers"
-msgstr "Vybrať všetky vo všetkých _vrstvách"
+msgstr "Vybrať všetky vo všetkých v_rstvách"
 
 #: ../src/verbs.cpp:2047
 msgid "Select all objects in all visible and unlocked layers"
@@ -8540,7 +8540,7 @@ msgstr "Rostrihnutie ťahu dolnej cesty na časti, odstráni výplň"
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:2099
 msgid "Outs_et"
-msgstr "Posun _von"
+msgstr "Posunúť _von"
 
 #: ../src/verbs.cpp:2100
 msgid "Outset selected paths"
@@ -8648,7 +8648,7 @@ msgstr "Exportovať výber do bitmapy alebo vložiť do dokumentu"
 
 #: ../src/verbs.cpp:2135
 msgid "_Combine"
-msgstr "_Kombinácia"
+msgstr "_Kombinovať"
 
 #: ../src/verbs.cpp:2136
 msgid "Combine several paths into one"
@@ -9077,7 +9077,7 @@ msgstr "Zobraziť alebo skryť mriežku"
 
 #: ../src/verbs.cpp:2263
 msgid "G_uides"
-msgstr "_Vodítka"
+msgstr "_Vodidlá"
 
 #: ../src/verbs.cpp:2263
 msgid "Show or hide guides (drag from a ruler to create a guide)"
@@ -9178,7 +9178,7 @@ msgstr "Náhľad iko_ny..."
 
 #: ../src/verbs.cpp:2291
 msgid "Open a window to preview objects at different icon resolutions"
-msgstr "Otvoriť okno pre náhľad objektov pri rizličných rozlíšeniach ikon"
+msgstr "Otvoriť okno pre náhľad objektov pri rozličných rozlíšeniach ikon"
 
 #: ../src/verbs.cpp:2293
 msgid "Zoom to fit page in window"
@@ -9203,7 +9203,7 @@ msgstr "Zmeniť veľkosť zobrazenia tak, aby sa výber zmestil do okna"
 #. Dialogs
 #: ../src/verbs.cpp:2302
 msgid "In_kscape Preferences..."
-msgstr "In_kscape nastavenia..."
+msgstr "Nastavenia In_kscape..."
 
 #: ../src/verbs.cpp:2303
 msgid "Edit global Inkscape preferences"
@@ -9211,7 +9211,7 @@ msgstr "Upravovať globálne nastavenia Inkscape"
 
 #: ../src/verbs.cpp:2304
 msgid "_Document Properties..."
-msgstr "Vlastnosti _dokumentu..."
+msgstr "_Vlastnosti dokumentu..."
 
 #: ../src/verbs.cpp:2305
 msgid "Edit properties of this document (to be saved with the document)"
@@ -9308,7 +9308,7 @@ msgstr "Spustiť skripty"
 
 #: ../src/verbs.cpp:2329
 msgid "Show/Hide D_ialogs"
-msgstr "Zobraziť/Skryť d_ialógy"
+msgstr "Zobraziť/skryť d_ialógy"
 
 #: ../src/verbs.cpp:2330
 msgid "Show or hide all open dialogs"
@@ -9316,7 +9316,7 @@ msgstr "Zobraziť alebo skryť všetky aktívne dialógy"
 
 #: ../src/verbs.cpp:2331
 msgid "Create Tiled Clones..."
-msgstr "Vytvoriť klony"
+msgstr "Vytvoriť dlaždicové klony..."
 
 #: ../src/verbs.cpp:2332
 msgid "Create multiple clones of selected object, arranging them into a pattern or scattering"
@@ -9340,7 +9340,7 @@ msgstr "Klient Jabber pre správy"
 
 #: ../src/verbs.cpp:2339
 msgid "_Input Devices..."
-msgstr "_Vstupné zariadenia..."
+msgstr "Vstupné _zariadenia..."
 
 #: ../src/verbs.cpp:2340
 msgid "Configure extended input devices, such as a graphics tablet"
@@ -9799,27 +9799,27 @@ msgstr "Teraz sa <b>nemení mierka šírky ťahu</b> pri zmene mierky objektov."
 
 #: ../src/widgets/select-toolbar.cpp:355
 msgid "Now <b>rounded rectangle corners</b> are <b>scaled</b> when rectangles are scaled."
-msgstr ""
+msgstr "Teraz sa <b>mierka zaoblených rohov obdĺžnika mení</b> pri zmene mierky obdĺžnika."
 
 #: ../src/widgets/select-toolbar.cpp:357
 msgid "Now <b>rounded rectangle corners</b> are <b>not scaled</b> when rectangles are scaled."
-msgstr ""
+msgstr "Teraz sa <b>mierka zaoblených rohov obdĺžnika nemení</b> pri zmene mierky obdĺžnika."
 
 #: ../src/widgets/select-toolbar.cpp:365
 msgid "Now <b>gradients</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Teraz sú aj <b>farebné prechody</b> <b>transformované</b> pri transformácii svojich objektov (posunutie, zmena mierky, otočenie a skosenie)."
 
 #: ../src/widgets/select-toolbar.cpp:367
 msgid "Now <b>gradients</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Teraz <b>farebné prechody</b> zostávajú <b>fixované</b> pri transformácii svojich objektov (posunutie, zmena mierky, otočenie a skosenie)."
 
 #: ../src/widgets/select-toolbar.cpp:375
 msgid "Now <b>patterns</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Teraz sú <b>vzorky</b> tiež <b>transformované</b> pri transformácii svojich objektov (posunutie, zmena mierky, otočenie a skosenie)."
 
 #: ../src/widgets/select-toolbar.cpp:377
 msgid "Now <b>patterns</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Teraz <b>vzorky</b> zostávajú <b>fixované</b> pri transformácii svojich objektov (posunutie, zmena mierky, otočenie a skosenie)."
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -10135,7 +10135,7 @@ msgstr "Štandardné"
 #: ../src/widgets/toolbox.cpp:2317
 #: ../src/widgets/toolbox.cpp:2484
 msgid "Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
-msgstr "Nastaviť parametre tvaru na štandardné hodnoty (použite Inkscape Nastavenia > Nástroje na zmenu štandardných hodnôt)"
+msgstr "Nastaviť parametre tvaru na štandardné hodnoty (použite Nastavenia Inkscape > Nástroje na zmenu štandardných hodnôt)"
 
 #: ../src/widgets/toolbox.cpp:1413
 msgid "Change rectangle"
@@ -10613,7 +10613,7 @@ msgstr "Aby sa dali importovať Dia súbort, musí byť nainštalovaný samotný
 
 #: ../share/extensions/dia.inx.h:5
 msgid "The dia2svg.sh script should be installed with your Inkscape distribution.  If you do not have it, there is likely to be something wrong with your Inkscape installation."
-msgstr ""
+msgstr "Skript dia2svg.sh by mal byť súčasťou vašej inštalácie Inkscape.  Ak ho nemáte, s vašou inštaláciou Inkscape pravdepodobne niečo nie je v poriadku."
 
 #: ../share/extensions/dots.inx.h:1
 msgid "Dot size"
@@ -11055,7 +11055,7 @@ msgstr "Tangenciálne posunutie"
 
 #: ../share/extensions/pathalongpath.inx.h:16
 msgid "This effect bends a pattern object along an arbitrary \"skeleton\" path. The pattern can be a path or a group of paths. First, select the pattern object; then add to selection the skeleton path; then call this effect."
-msgstr ""
+msgstr "Tento efekt ohýba vzorku po ľubovoľnej \"kostrovej\" ceste. Vzorka môže byť cesta alebo skupina ciest. Najprv vyberte objekt vzorky; potom pridajte do výberu kostrovú cestu; potom spustite tento efekt."
 
 #: ../share/extensions/perspective.inx.h:2
 msgid "Perspective"
@@ -11075,7 +11075,7 @@ msgstr "Príklady pre vývojárov"
 
 #: ../share/extensions/radiobutton_example.inx.h:2
 msgid "RadioButton example"
-msgstr "Práklad RadioButton"
+msgstr "Príklad RadioButton"
 
 #: ../share/extensions/radiobutton_example.inx.h:3
 msgid "Select option: "
