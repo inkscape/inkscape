@@ -60,8 +60,9 @@
   ## T A R G E T    :    I N I T
   ########################################################################
   -->
-  <target name="init">
-    <!-- Create the build directory structure used by compile -->
+  <target name="init"
+      description="Create the build directory structure used by compile">
+
     <mkdir dir="${build}"/>
     <mkdir dir="${dist}"/>
     <copy file="${src}/helper/sp-marshal.h.mingw"
@@ -141,7 +142,8 @@
   ########################################################################
   -->
   <target name="compile" depends="init"
-        description="compile the source " >
+        description="compile the source to .o" >
+
     <!-- Compile from source to build -->
     <cc cc="${arch}gcc" cxx="${arch}g++"
              destdir="${build}/obj">
@@ -266,7 +268,8 @@
   ## T A R G E T    :    L I B
   ########################################################################
   -->
-  <target name="lib" depends="compile">
+  <target name="lib" depends="compile"
+      description="create a static library">
     <staticlib command="${archutil}ar crsv"
            file="${build}/libinkscape.a">
 	   <fileset dir="${build}/obj">
@@ -284,7 +287,9 @@
   ## T A R G E T    :    I 1 8 N
   ########################################################################
   -->
-  <target name="i18n" depends="compile">
+  <target name="i18n" depends="compile"
+      description="compile gettext .po files to .mo">
+
     <msgfmt todir="${build}/locale" owndir="true"
          out="LC_MESSAGES/inkscape.mo">
 	   <fileset dir="po">
@@ -301,7 +306,9 @@
   ## T A R G E T    :    L I N K
   ########################################################################
   -->
-  <target name="link" depends="lib">
+  <target name="link" depends="lib"
+      description="link objects and library to create executable">
+
     <rc command="${archutil}windres" 
 	    file="${src}/inkscape.rc"
 	    out="${build}/inkres.o">
@@ -354,7 +361,9 @@
   ## T A R G E T    :    L I N K I N K V I E W
   ########################################################################
   -->
-  <target name="linkinkview" depends="lib">
+  <target name="linkinkview" depends="lib"
+        description="link objects and library to create Inkview executable">
+
     <rc command="${archutil}windres" 
 	    file="${src}/inkview.rc"
 	    out="${build}/inkviewres.o">
@@ -405,7 +414,8 @@
   ########################################################################
   -->
   <target name="dist" depends="link,i18n"
-        description="generate the distribution" >
+      description="generate the distribution directory with all needed files">
+
     <!-- Create the distribution directory -->
     <copy file="${build}/inkscape.exe" todir="${dist}"/>
     <copy file="${build}/inkscape.dbg" todir="${dist}"/>
@@ -499,6 +509,7 @@
   -->
   <target name="dist-all" depends="dist,linkinkview"
         description="generate the distribution, along with inkview" >
+
     <copy file="${build}/inkview.exe" todir="${dist}"/>
     <copy file="${build}/inkview.dbg" todir="${dist}"/>
   </target>
@@ -512,8 +523,8 @@
   ########################################################################
   -->
   <target name="clean"
-        description="clean up" >
-    <!-- Delete the ${build} and ${dist} directory trees -->
+        description="clean up.  deleting build and distro dirs" >
+
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
   </target>
