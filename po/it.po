@@ -5614,13 +5614,13 @@ msgid "about.svg"
 msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
-#. one per line in the form of: name surname <email>. Use \n for newline.
+#. one per line in the form of: name surname (email). Use \n for newline.
 #: ../src/ui/dialog/aboutbox.cpp:321
 msgid "translator-credits"
 msgstr ""
-"Luca Bruno <luca.br@uno.it>\n"
-"Luca Ferretti <elle.uca@infinito.it>\n"
-"Francesco Ricci <tardo2002@libero.it>"
+"Luca Bruno (luca.br@uno.it)\n"
+"Luca Ferretti (elle.uca@infinito.it)\n"
+"Francesco Ricci (tardo2002@libero.it)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:219
 #: ../src/ui/dialog/align-and-distribute.cpp:759
