@@ -340,12 +340,53 @@ sp_export_dialog_area_box (GtkWidget * dlg)
 } // end of sp_export_dialog_area_box
 
 
+gchar* create_filepath_from_id (const gchar *id, const gchar *file_entry_text) {
+
+    if (id == NULL) /* This should never happen */
+        id = "bitmap";
+
+    gchar * directory = NULL;
+
+    if (directory == NULL && file_entry_text != NULL && file_entry_text[0] != '\0') {
+        // std::cout << "Directory from dialog" << std::endl;
+        directory = g_dirname(file_entry_text);
+    }
+
+    if (directory == NULL) {
+        /* Grab document directory */
+        if (SP_DOCUMENT_URI(SP_ACTIVE_DOCUMENT)) {
+            // std::cout << "Directory from document" << std::endl;
+            directory = g_dirname(SP_DOCUMENT_URI(SP_ACTIVE_DOCUMENT));
+        }
+    }
+
+    if (directory == NULL) {
+        // std::cout << "Home Directory" << std::endl;
+        directory = homedir_path(NULL);
+    }
+
+    gchar * id_ext = g_strconcat(id, ".png", NULL);
+    gchar *filename = g_build_filename(directory, id_ext, NULL);
+    g_free(directory);
+    g_free(id_ext);
+    return filename;
+}
+
+static void
+batch_export_clicked (GtkWidget *widget, GtkObject *base)
+{
+    Gtk::Widget *vb_singleexport = (Gtk::Widget *)gtk_object_get_data(base, "vb_singleexport");
+    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(widget))) {
+        vb_singleexport->set_sensitive(false);
+    } else {
+        vb_singleexport->set_sensitive(true);
+    }
+}
+
 void
 sp_export_dialog (void)
 {
     if (!dlg) {
-        Gtk::VBox* vb;
-        Gtk::HBox* hb;
 
         gchar title[500];
         sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_FILE_EXPORT), title);
@@ -397,15 +438,20 @@ sp_export_dialog (void)
 
         GtkTooltips *tt = gtk_tooltips_new();
 
-        vb = new Gtk::VBox(false, 3);
+        Gtk::VBox *vb = new Gtk::VBox(false, 3);
         vb->set_border_width(3);
         gtk_container_add (GTK_CONTAINER (dlg), GTK_WIDGET(vb->gobj()));
+
+        Gtk::VBox *vb_singleexport = new Gtk::VBox(false, 0);
+        vb_singleexport->set_border_width(0);
+        vb->pack_start(*vb_singleexport);
+        gtk_object_set_data(GTK_OBJECT(dlg), "vb_singleexport", vb_singleexport);
 
         /* Export area frame */
         {
             Gtk::VBox *area_box = sp_export_dialog_area_box(dlg);
             area_box->set_border_width(3);
-            vb->pack_start(*area_box, false, false, 0);
+            vb_singleexport->pack_start(*area_box, false, false, 0);
         }
 
         /* Bitmap size frame */
@@ -457,7 +503,7 @@ sp_export_dialog (void)
                                        0.01, 100000.0, 0.1, 1.0, NULL, GTK_WIDGET(t->gobj()), 3, 1,
                                        NULL, _("dpi"), 2, 0, NULL, dlg );
 
-            vb->pack_start(*size_box);
+            vb_singleexport->pack_start(*size_box);
         }
 
         /* File entry */
@@ -525,7 +571,7 @@ sp_export_dialog (void)
             g_signal_connect ( G_OBJECT (fe->gobj()), "changed",
                                G_CALLBACK (sp_export_filename_modified), dlg);
 
-            hb = new Gtk::HBox(FALSE, 5);
+            Gtk::HBox *hb = new Gtk::HBox(FALSE, 5);
 
             {
                 // true = has mnemonic
@@ -561,7 +607,19 @@ sp_export_dialog (void)
             // mnemonic in frame label moves focus to filename:
             flabel->set_mnemonic_widget(*fe);
 
-            vb->pack_start(*file_box);
+            vb_singleexport->pack_start(*file_box);
+        }
+
+        {
+            Gtk::HBox* batch_box = new Gtk::HBox(FALSE, 5);
+            GtkWidget *be = gtk_check_button_new_with_label(_("Batch export all selected objects"));
+            gtk_widget_set_sensitive(GTK_WIDGET(be), TRUE);
+            gtk_object_set_data(GTK_OBJECT(dlg), "batch_checkbox", be);
+            batch_box->pack_start(*Glib::wrap(be), false, false);
+            gtk_tooltips_set_tip(tt, be, _("Export each selected object into its own PNG file, using export hints if any (caution, overwrites without asking!)"), NULL);
+            batch_box->show_all();
+            g_signal_connect(G_OBJECT(be), "toggled", GTK_SIGNAL_FUNC(batch_export_clicked), dlg);
+            vb->pack_start(*batch_box);
         }
 
         /* Buttons */
@@ -598,6 +656,20 @@ sp_export_dialog (void)
     return;
 } // end of sp_export_dialog()
 
+static void
+sp_export_update_batch_checkbutton (GtkObject *base)
+{
+    gint num = g_slist_length((GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
+    GtkWidget *be = (GtkWidget *)gtk_object_get_data(base, "batch_checkbox");
+    if (num >= 2) {
+        gtk_widget_set_sensitive (be, true);
+        gtk_button_set_label (GTK_BUTTON(be), g_strdup_printf (_("Batch export %d selected objects"), num));
+    } else {
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(be), FALSE);
+        gtk_widget_set_sensitive (be, FALSE);
+    }
+}
+
 static inline void
 sp_export_find_default_selection(GtkWidget * dlg)
 {
@@ -633,7 +705,7 @@ sp_export_find_default_selection(GtkWidget * dlg)
                                                        selection_names[key]);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-    return;
+    sp_export_update_batch_checkbutton (GTK_OBJECT(dlg));
 }
 
 
@@ -668,10 +740,10 @@ sp_export_selection_changed ( Inkscape::Application *inkscape,
         GtkToggleButton * button;
         button = (GtkToggleButton *)gtk_object_get_data(base, selection_names[current_key]);
         sp_export_area_toggled(button, base);
-    } // end of if()
+    } 
 
-    return;
-} // end of sp_export_selection_changed()
+    sp_export_update_batch_checkbutton (base);
+} 
 
 static void
 sp_export_selection_modified ( Inkscape::Application *inkscape, 
@@ -846,35 +918,8 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                                 break;
                             }
                         }
-                        if (id == NULL) /* This should never happen */
-                            id = "bitmap";
 
-                        gchar * directory = NULL;
-                        const gchar * file_entry_text;
-
-                        file_entry_text = gtk_entry_get_text(GTK_ENTRY(file_entry));
-                        if (directory == NULL && file_entry_text != NULL && file_entry_text[0] != '\0') {
-                            // std::cout << "Directory from dialog" << std::endl;
-                            directory = g_dirname(file_entry_text);
-                        }
-
-                        if (directory == NULL) {
-                            /* Grab document directory */
-                            if (SP_DOCUMENT_URI(SP_ACTIVE_DOCUMENT)) {
-                                // std::cout << "Directory from document" << std::endl;
-                                directory = g_dirname(SP_DOCUMENT_URI(SP_ACTIVE_DOCUMENT));
-                            }
-                        }
-
-                        if (directory == NULL) {
-                            // std::cout << "Home Directory" << std::endl;
-                            directory = homedir_path(NULL);
-                        }
-
-                        gchar * id_ext = g_strconcat(id, ".png", NULL);
-                        filename = g_build_filename(directory, id_ext, NULL);
-                        g_free(directory);
-                        g_free(id_ext);
+                        filename = create_filepath_from_id (id, gtk_entry_get_text(GTK_ENTRY(file_entry)));
                     }
                 }
                 break;
@@ -944,11 +989,107 @@ sp_export_progress_callback (float value, void *data)
 
 } // end of sp_export_progress_callback()
 
+GtkWidget *
+create_progress_dialog (GtkObject *base, gchar *progress_text) {
+    GtkWidget *dlg, *prg, *btn; /* progressbar-stuff */
+    
+    dlg = gtk_dialog_new ();
+    gtk_window_set_title (GTK_WINDOW (dlg), _("Export in progress"));
+    prg = gtk_progress_bar_new ();
+    sp_transientize (dlg);
+    gtk_window_set_resizable (GTK_WINDOW (dlg), FALSE);
+    g_object_set_data ((GObject *) base, "progress", prg);
+
+    gtk_progress_bar_set_text ((GtkProgressBar *) prg, progress_text);
+
+    gtk_progress_bar_set_orientation ( (GtkProgressBar *) prg, 
+                                       GTK_PROGRESS_LEFT_TO_RIGHT);
+    gtk_box_pack_start ((GtkBox *) ((GtkDialog *) dlg)->vbox, 
+                        prg, FALSE, FALSE, 4 );
+    btn = gtk_dialog_add_button ( GTK_DIALOG (dlg), 
+                                  GTK_STOCK_CANCEL, 
+                                  GTK_RESPONSE_CANCEL );
+                                  
+    g_signal_connect ( (GObject *) dlg, "delete_event", 
+                       (GCallback) sp_export_progress_delete, base);
+    g_signal_connect ( (GObject *) btn, "clicked", 
+                       (GCallback) sp_export_progress_cancel, base);
+    gtk_window_set_modal ((GtkWindow *) dlg, TRUE);
+    gtk_widget_show_all (dlg);
+
+    return dlg;
+}
+
 /// Called when export button is clicked
 static void
 sp_export_export_clicked (GtkButton *button, GtkObject *base)
 {
     if (!SP_ACTIVE_DESKTOP) return;
+
+    SPNamedView *nv = sp_desktop_namedview(SP_ACTIVE_DESKTOP);
+
+    GtkWidget *be = (GtkWidget *)gtk_object_get_data(base, "batch_checkbox");
+    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (be))) {
+        // Batch export of selected objects
+
+        gint num = g_slist_length((GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
+        gint n = 0;
+
+        if (num < 1) 
+            return;
+
+        gchar *progress_text = g_strdup_printf (_("Exporting %d files"), num);
+        GtkWidget *prog_dlg = create_progress_dialog (base, progress_text);
+        g_free (progress_text);
+
+        for (GSList *i = (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
+             i != NULL;
+             i = i->next) {
+            SPItem *item = (SPItem *) i->data;
+            // retrieve export filename hint
+            const gchar *fn = SP_OBJECT_REPR(item)->attribute("inkscape:export-filename");
+            if (!fn) {
+                fn = create_filepath_from_id (SP_OBJECT_ID(item), NULL);
+            }
+
+            // retrieve export dpi hints
+            const gchar *dpi_hint = SP_OBJECT_REPR(item)->attribute("inkscape:export-xdpi"); // only xdpi, ydpi is always the same now
+            gdouble dpi = 0.0;
+            if (dpi_hint) {
+                dpi = atof(dpi_hint);
+            }
+            if (dpi == 0.0) {
+                dpi = DPI_BASE;
+            }
+
+            NRRect area;
+            sp_item_invoke_bbox(item, &area, sp_item_i2r_affine((SPItem *) item), TRUE);
+
+            gint width = (gint) ((area.x1 - area.x0) * dpi / PX_PER_IN + 0.5);
+            gint height = (gint) ((area.y1 - area.y0) * dpi / PX_PER_IN + 0.5);
+
+            if (width > 1 && height > 1) {
+                /* Do export */
+                if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), fn, 
+                                         area.x0, area.y0, area.x1, area.y1, width, height, dpi, dpi, 
+                                         nv->pagecolor, 
+                                         NULL, NULL, TRUE)) {  // overwrite without asking 
+                    gchar * error;
+                    gchar * safeFile = Inkscape::IO::sanitizeString(fn);
+                    error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
+                    sp_ui_error_dialog(error);
+                    g_free(safeFile);
+                    g_free(error);
+                }
+            }
+            n++;
+            sp_export_progress_callback((float)n/num, base);
+        }
+
+        gtk_widget_destroy (prog_dlg);
+        g_object_set_data (G_OBJECT (base), "cancel", (gpointer) 0);
+
+    } else {
 
     GtkWidget *fe = (GtkWidget *)gtk_object_get_data(base, "filename");
     gchar const *filename = gtk_entry_get_text(GTK_ENTRY(fe));
@@ -987,37 +1128,11 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
     }
     g_free(dirname);
 
-    SPNamedView *nv = sp_desktop_namedview(SP_ACTIVE_DESKTOP);
-    GtkWidget *dlg, *prg, *btn; /* progressbar-stuff */
-    char *fn;
-    gchar *text;
-
-    dlg = gtk_dialog_new ();
-    gtk_window_set_title (GTK_WINDOW (dlg), _("Export in progress"));
-    prg = gtk_progress_bar_new ();
-    sp_transientize (dlg);
-    gtk_window_set_resizable (GTK_WINDOW (dlg), FALSE);
-    g_object_set_data ((GObject *) base, "progress", prg);
-    fn = g_path_get_basename (filename);
-    text = g_strdup_printf ( _("Exporting %s (%d x %d)"), 
-                             fn, width, height);
+    gchar *fn = g_path_get_basename (filename);
+    gchar *progress_text = g_strdup_printf (_("Exporting %s (%d x %d)"), fn, width, height);
     g_free (fn);
-    gtk_progress_bar_set_text ((GtkProgressBar *) prg, text);
-    g_free (text);
-    gtk_progress_bar_set_orientation ( (GtkProgressBar *) prg, 
-                                       GTK_PROGRESS_LEFT_TO_RIGHT);
-    gtk_box_pack_start ((GtkBox *) ((GtkDialog *) dlg)->vbox, 
-                        prg, FALSE, FALSE, 4 );
-    btn = gtk_dialog_add_button ( GTK_DIALOG (dlg), 
-                                  GTK_STOCK_CANCEL, 
-                                  GTK_RESPONSE_CANCEL );
-                                  
-    g_signal_connect ( (GObject *) dlg, "delete_event", 
-                       (GCallback) sp_export_progress_delete, base);
-    g_signal_connect ( (GObject *) btn, "clicked", 
-                       (GCallback) sp_export_progress_cancel, base);
-    gtk_window_set_modal ((GtkWindow *) dlg, TRUE);
-    gtk_widget_show_all (dlg);
+    GtkWidget *prog_dlg = create_progress_dialog (base, progress_text);
+    g_free (progress_text);
     
     /* Do export */
     if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), filename, 
@@ -1038,7 +1153,7 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
     original_name = g_strdup(filename);
     gtk_object_set_data (GTK_OBJECT (base), "filename-modified", (gpointer)FALSE);
 
-    gtk_widget_destroy (dlg);
+    gtk_widget_destroy (prog_dlg);
     g_object_set_data (G_OBJECT (base), "cancel", (gpointer) 0);
 
     /* Setup the values in the document */
@@ -1121,8 +1236,8 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
             break;
     }
 
+    }
 
-    return;
 } // end of sp_export_export_clicked()
 
 
