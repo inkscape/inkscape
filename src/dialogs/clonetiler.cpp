@@ -1045,8 +1045,8 @@ clonetiler_apply (GtkWidget *widget, void *)
     int ymax = prefs_get_int_attribute (prefs_path, "ymax", 2);
 
     int fillrect = prefs_get_int_attribute (prefs_path, "fillrect", 0);
-    double fillwidth = prefs_get_double_attribute_limited (prefs_path, "fillwidth", 50, 0, 6000);
-    double fillheight = prefs_get_double_attribute_limited (prefs_path, "fillheight", 50, 0, 6000);
+    double fillwidth = prefs_get_double_attribute_limited (prefs_path, "fillwidth", 50, 0, 1e6);
+    double fillheight = prefs_get_double_attribute_limited (prefs_path, "fillheight", 50, 0, 1e6);
 
     int dotrace = prefs_get_int_attribute (prefs_path, "dotrace", 0);
     int pick = prefs_get_int_attribute (prefs_path, "pick", 0);
@@ -2520,7 +2520,7 @@ clonetiler_dialog (void)
     
                 {
                     // Width spinbutton 
-                    GtkObject *a = gtk_adjustment_new (0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0);
+                    GtkObject *a = gtk_adjustment_new (0.0, -1e6, 1e6, 1.0, 10.0, 10.0);
                     sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a));
 
                     double value = prefs_get_double_attribute (prefs_path, "fillwidth", 50);
@@ -2544,7 +2544,7 @@ clonetiler_dialog (void)
 
                 {
                     // Height spinbutton
-                    GtkObject *a = gtk_adjustment_new (0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0);
+                    GtkObject *a = gtk_adjustment_new (0.0, -1e6, 1e6, 1.0, 10.0, 10.0);
                     sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a));
 
                     double value = prefs_get_double_attribute (prefs_path, "fillheight", 50);
