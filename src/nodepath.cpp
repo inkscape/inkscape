@@ -31,6 +31,7 @@
 #include "message-stack.h"
 #include "message-context.h"
 #include "node-context.h"
+#include "shape-editor.h"
 #include "selection-chemistry.h"
 #include "selection.h"
 #include "xml/repr.h"
@@ -184,7 +185,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item, bool
     np->path        = path;
     np->subpaths    = NULL;
     np->selected    = NULL;
-    np->nodeContext = NULL; //Let the context that makes this set it
+    np->shape_editor = NULL; //Let the shapeeditor that makes this set it
     np->livarot_path = NULL;
     np->local_change = 0;
     np->show_handles = show_handles;
@@ -217,7 +218,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item, bool
 }
 
 /**
- * Destroys nodepath's subpaths, then itself, also tell context about it.
+ * Destroys nodepath's subpaths, then itself, also tell parent ShapeEditor about it.
  */
 void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
 
@@ -228,9 +229,9 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
         sp_nodepath_subpath_destroy((Inkscape::NodePath::SubPath *) np->subpaths->data);
     }
 
-    //Inform the context that made me, if any, that I am gone.
-    if (np->nodeContext)
-        np->nodeContext->nodepath = NULL;
+    //Inform the ShapeEditor that made me, if any, that I am gone.
+    if (np->shape_editor)
+        np->shape_editor->nodepath_destroyed();
 
     g_assert(!np->selected);
 
@@ -662,7 +663,7 @@ static gchar *create_typestr(Inkscape::NodePath::Path *np)
 }
 
 /**
- * Returns current path in context.
+ * Returns current path in context. // later eliminate this function at all!
  */
 static Inkscape::NodePath::Path *sp_nodepath_current()
 {
@@ -676,7 +677,7 @@ static Inkscape::NodePath::Path *sp_nodepath_current()
         return NULL;
     }
 
-    return SP_NODE_CONTEXT(event_context)->nodepath;
+    return SP_NODE_CONTEXT(event_context)->shape_editor->get_nodepath();
 }
 
 
@@ -4233,7 +4234,7 @@ static gchar const *sp_node_type_description(Inkscape::NodePath::Node *node)
  * Handles content of statusbar as long as node tool is active.
  */
 void
-sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)
+sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)//!!!move to ShapeEditorsCollection
 {
     gchar const *when_selected = _("<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; <b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to rotate");
     gchar const *when_selected_one = _("<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node");

@@ -77,6 +77,7 @@
 #include "layer-fns.h"
 #include "node-context.h"
 #include "gradient-context.h"
+#include "shape-editor.h"
 
 
 /**
@@ -915,28 +916,28 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
             break;
         case SP_VERB_EDIT_SELECT_ALL:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                sp_nodepath_select_all_from_subpath(SP_NODE_CONTEXT(ec)->nodepath, false);
+                SP_NODE_CONTEXT(ec)->shape_editor->select_all_from_subpath(false);
             } else {
                 sp_edit_select_all();
             }
             break;
         case SP_VERB_EDIT_INVERT:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                sp_nodepath_select_all_from_subpath(SP_NODE_CONTEXT(ec)->nodepath, true);
+                SP_NODE_CONTEXT(ec)->shape_editor->select_all_from_subpath(true);
             } else {
                 sp_edit_invert();
             }
             break;
         case SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                sp_nodepath_select_all(SP_NODE_CONTEXT(ec)->nodepath, false);
+                SP_NODE_CONTEXT(ec)->shape_editor->select_all(false);
             } else {
                 sp_edit_select_all_in_all_layers();
             }
             break;
         case SP_VERB_EDIT_INVERT_IN_ALL_LAYERS:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                sp_nodepath_select_all(SP_NODE_CONTEXT(ec)->nodepath, true);
+                SP_NODE_CONTEXT(ec)->shape_editor->select_all(true);
             } else {
                 sp_edit_invert_in_all_layers();
             }
@@ -944,7 +945,7 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
 
         case SP_VERB_EDIT_SELECT_NEXT: 
             if (tools_isactive(dt, TOOLS_NODES)) {
-                sp_nodepath_select_next(SP_NODE_CONTEXT(ec)->nodepath);
+                SP_NODE_CONTEXT(ec)->shape_editor->select_next();
             } else if (tools_isactive(dt, TOOLS_GRADIENT)) {
                 sp_gradient_context_select_next (ec);
             } else {
@@ -953,7 +954,7 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
             break;
         case SP_VERB_EDIT_SELECT_PREV: 
             if (tools_isactive(dt, TOOLS_NODES)) {
-                sp_nodepath_select_prev(SP_NODE_CONTEXT(ec)->nodepath);
+                SP_NODE_CONTEXT(ec)->shape_editor->select_prev();
             } else if (tools_isactive(dt, TOOLS_GRADIENT)) {
                 sp_gradient_context_select_prev (ec);
             } else {
@@ -963,7 +964,7 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
 
         case SP_VERB_EDIT_DESELECT:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                sp_nodepath_deselect(SP_NODE_CONTEXT(ec)->nodepath);
+                SP_NODE_CONTEXT(ec)->shape_editor->deselect();
             } else {
                 sp_desktop_selection(dt)->clear();
             }
@@ -1282,7 +1283,7 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
             break;
         case SP_VERB_OBJECT_FLIP_HORIZONTAL:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                sp_nodepath_flip(SP_NODE_CONTEXT(ec)->nodepath, NR::X);
+                SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::X);
             } else {
                 sp_selection_scale_relative(sel, center, NR::scale(-1.0, 1.0));
             }
@@ -1291,7 +1292,7 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
             break;
         case SP_VERB_OBJECT_FLIP_VERTICAL:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                sp_nodepath_flip(SP_NODE_CONTEXT(ec)->nodepath, NR::Y);
+                SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::Y);
             } else {
                 sp_selection_scale_relative(sel, center, NR::scale(1.0, -1.0));
             }

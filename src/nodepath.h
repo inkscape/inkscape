@@ -73,8 +73,7 @@ operator NR::Point() const
 
 };
 
-/** defined in node-context.h */
-class SPNodeContext;
+class ShapeEditor;
 
 namespace Inkscape {
 namespace NodePath {
@@ -96,7 +95,6 @@ class NodeSide;
  */
 class Node;
 
-
 /**
  *  This is a collection of subpaths which contain nodes
  *
@@ -115,7 +113,7 @@ class Path {
 /**  The parent path of this nodepath */
 	SPPath * path;
 /**  The context which created this nodepath.  Important if this nodepath is deleted */
-	SPNodeContext * nodeContext;
+	ShapeEditor *shape_editor;
 /**  The subpaths which comprise this NodePath */
 	GList * subpaths;
 /**  A list of nodes which are currently selected */

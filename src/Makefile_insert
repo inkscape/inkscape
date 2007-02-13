@@ -128,6 +128,7 @@ libinkpre_a_SOURCES =	\
 	selection.cpp selection.h	\
 	seltrans-handles.cpp seltrans-handles.h	\
 	seltrans.cpp seltrans.h	\
+	shape-editor.cpp shape-editor.h \
 	shortcuts.cpp shortcuts.h	\
 	slideshow.cpp slideshow.h	\
 	snap.cpp snap.h	\

@@ -36,7 +36,7 @@ struct SPNodeContext {
 
 	guint drag : 1;
 
-	Inkscape::NodePath::Path *nodepath;
+	ShapeEditor* shape_editor;
 
 	gboolean leftalt;
 	gboolean rightalt;
@@ -50,16 +50,11 @@ struct SPNodeContext {
 
 	Inkscape::MessageContext *_node_message_context;
 
-	double grab_t;
-	int grab_node; // number of node grabbed by sp_node_context_is_over_stroke
-	bool hit;
-	NR::Point curvepoint_event; // int coords from event
-	NR::Point curvepoint_doc; // same, in doc coords
 	bool cursor_drag;
 
-	bool added_node;
+      bool added_node;
   
-  unsigned int current_state;
+      unsigned int current_state;
 };
 
 struct SPNodeContextClass {
