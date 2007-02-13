@@ -17,7 +17,6 @@
 namespace Inkscape {
 namespace NodePath {
 class Path;
-typedef enum NodeType;
 }
 }
 
@@ -80,7 +79,7 @@ public:
     void delete_nodes();
     void delete_nodes_preserving_shape();
 
-    void set_node_type(Inkscape::NodePath::NodeType type);
+    void set_node_type(int type);
 
     void break_at_nodes();
     void join_nodes();

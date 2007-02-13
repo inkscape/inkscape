@@ -352,8 +352,8 @@ void ShapeEditor::delete_nodes_preserving_shape () {
     }
 }
 
-void ShapeEditor::set_node_type(Inkscape::NodePath::NodeType type) {
-    sp_node_selected_set_type(type); // FIXME fix that function by removing nodepath_current lookup, and pass it this->nodepath instead (needs fixing verbs/buttons first)
+void ShapeEditor::set_node_type(int type) {
+    sp_node_selected_set_type((Inkscape::NodePath::NodeType) type); // FIXME fix that function by removing nodepath_current lookup, and pass it this->nodepath instead (needs fixing verbs/buttons first)
 }
 
 void ShapeEditor::break_at_nodes() {
