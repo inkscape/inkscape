@@ -317,7 +317,7 @@ void AboutBox::initStrings() {
     translators_text = "";
    
     // TRANSLATORS: Put here your name (and other national contributors')      
-    // one per line in the form of: name surname <email>. Use \n for newline.
+    // one per line in the form of: name surname (email). Use \n for newline.
     Glib::ustring thisTranslation = _("translator-credits");
 
     /**
