@@ -396,6 +396,12 @@ main(int argc, char **argv)
     bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 #endif
 #endif
+    // Allow the user to override the locale directory by setting 
+    // the environment variable INKSCAPE_LOCALEDIR.
+    char *inkscape_localedir = getenv("INKSCAPE_LOCALEDIR");
+    if (inkscape_localedir != NULL) {
+        bindtextdomain(GETTEXT_PACKAGE, inkscape_localedir);
+    }
 #endif
 
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
