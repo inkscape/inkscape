@@ -89,8 +89,8 @@ SelectedStyle::SelectedStyle(bool layout)
     : _desktop (NULL),
 
       _table(2, 6),
-      _fill_label (_("F:")),
-      _stroke_label (_("S:")),
+      _fill_label (_("Fill:")),
+      _stroke_label (_("Stroke:")),
       _opacity_label (_("O:")),
       _fill_place (),
       _stroke_place (),
@@ -319,8 +319,8 @@ SelectedStyle::SelectedStyle(bool layout)
     _opacity_sb.set_size_request (SELECTED_STYLE_SB_WIDTH, -1);
     _opacity_sb.set_sensitive (false);
 
-    _table.attach(_fill_label, 0,1, 0,1, Gtk::SHRINK, Gtk::SHRINK);
-    _table.attach(_stroke_label, 0,1, 1,2, Gtk::SHRINK, Gtk::SHRINK);
+    _table.attach(_fill_label, 0,1, 0,1, Gtk::FILL, Gtk::SHRINK);
+    _table.attach(_stroke_label, 0,1, 1,2, Gtk::FILL, Gtk::SHRINK);
 
     _table.attach(_fill_flag_place, 1,2, 0,1, Gtk::SHRINK, Gtk::SHRINK);
     _table.attach(_stroke_flag_place, 1,2, 1,2, Gtk::SHRINK, Gtk::SHRINK);
