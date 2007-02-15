@@ -1336,7 +1336,9 @@ sp_star_toolbox_new(SPDesktop *desktop)
         gtk_box_pack_start(GTK_BOX(tbl),hb, FALSE, FALSE, AUX_SPACING);
     }
 
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new stars"));
+    swatch->setDesktop (desktop);
+    swatch->setClickVerb (SP_VERB_CONTEXT_STAR_PREFS);
     swatch->setWatchedTool ("tools.shapes.star", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
@@ -1668,7 +1670,9 @@ sp_rect_toolbox_new(SPDesktop *desktop)
         gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
     }
 
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new rectangles"));
+    swatch->setDesktop (desktop);
+    swatch->setClickVerb (SP_VERB_CONTEXT_RECT_PREFS);
     swatch->setWatchedTool ("tools.shapes.rect", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
@@ -1917,7 +1921,9 @@ sp_spiral_toolbox_new(SPDesktop *desktop)
         gtk_box_pack_start(GTK_BOX(tbl),hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
     }
 
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new spirals"));
+    swatch->setDesktop (desktop);
+    swatch->setClickVerb (SP_VERB_CONTEXT_SPIRAL_PREFS);
     swatch->setWatchedTool ("tools.shapes.spiral", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
@@ -1945,7 +1951,9 @@ sp_pen_toolbox_new(SPDesktop *desktop)
     gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
     gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
 
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new paths created by Pen"));
+    swatch->setDesktop (desktop);
+    swatch->setClickVerb (SP_VERB_CONTEXT_PEN_PREFS);
     swatch->setWatchedTool ("tools.freehand.pen", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
@@ -1963,7 +1971,9 @@ sp_pencil_toolbox_new(SPDesktop *desktop)
     gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
     gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
 
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new paths created by Pencil"));
+    swatch->setDesktop (desktop);
+    swatch->setClickVerb (SP_VERB_CONTEXT_PENCIL_PREFS);
     swatch->setWatchedTool ("tools.freehand.pencil", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
@@ -2333,7 +2343,9 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
 
     gtk_table_attach( GTK_TABLE(holder), toolBar, 0, 1, 0, 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0 );
 
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new calligraphic strokes"));
+    swatch->setDesktop (desktop);
+    swatch->setClickVerb (SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS);
     swatch->setWatchedTool ("tools.calligraphic", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_table_attach( GTK_TABLE(holder), swatch_, 1, 2, 0, 1, (GtkAttachOptions)(GTK_SHRINK | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), AUX_BETWEEN_BUTTON_GROUPS, 0 );
@@ -2489,7 +2501,9 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
     }
 
 
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new calligraphic strokes"));
+    swatch->setDesktop (desktop);
+    swatch->setClickVerb (SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS);
     swatch->setWatchedTool ("tools.calligraphic", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
@@ -2846,7 +2860,9 @@ sp_arc_toolbox_new(SPDesktop *desktop)
         );
     g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
 
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new ellipses"));
+    swatch->setDesktop (desktop);
+    swatch->setClickVerb (SP_VERB_CONTEXT_ARC_PREFS);
     swatch->setWatchedTool ("tools.shapes.arc", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);

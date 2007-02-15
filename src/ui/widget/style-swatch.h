@@ -21,6 +21,7 @@
 #include <glibmm/i18n.h>
 
 #include <desktop.h>
+#include <verbs.h>
 
 #include "button.h"
 
@@ -41,7 +42,7 @@ namespace Widget {
 class StyleSwatch : public Gtk::HBox
 {
 public:
-    StyleSwatch (SPCSSAttr *attr);
+    StyleSwatch (SPCSSAttr *attr, gchar const *main_tip);
 
     ~StyleSwatch();
 
@@ -52,13 +53,23 @@ public:
     void setWatched (Inkscape::XML::Node *watched, Inkscape::XML::Node *secondary);
     void setWatchedTool (const char *path, bool synthesize);
 
+    void setClickVerb(sp_verb_t verb_t);
+    void setDesktop(SPDesktop *desktop);
+    bool on_click(GdkEventButton *event);
+
     char *_tool_path;
 
 protected:
+    SPDesktop *_desktop;
+
+    sp_verb_t _verb_t;
+
     SPCSSAttr *_css;
 
     Inkscape::XML::Node *_watched;
     Inkscape::XML::Node *_watched_tool;
+
+    Gtk::EventBox _swatch;
 
     Gtk::Table _table;
 

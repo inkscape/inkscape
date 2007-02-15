@@ -26,6 +26,7 @@
 #include "xml/node-event-vector.h"
 #include "widgets/widget-sizes.h"
 #include "helper/units.h"
+#include "helper/action.h"
 #include "inkscape.h"
 
 enum {
@@ -87,7 +88,7 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-StyleSwatch::StyleSwatch(SPCSSAttr *css)
+StyleSwatch::StyleSwatch(SPCSSAttr *css, gchar const *main_tip)
     : 
       _tool_path(NULL),
       _css (NULL),
@@ -101,8 +102,8 @@ StyleSwatch::StyleSwatch(SPCSSAttr *css)
 
       _tooltips ()
 {
-    _label[SS_FILL].set_markup(_("F:"));
-    _label[SS_STROKE].set_markup(_("S:"));
+    _label[SS_FILL].set_markup(_("Fill:"));
+    _label[SS_STROKE].set_markup(_("Stroke:"));
 
     for (int i = SS_FILL; i <= SS_STROKE; i++) {
         _label[i].set_alignment(0.0, 0.5);
@@ -121,8 +122,8 @@ StyleSwatch::StyleSwatch(SPCSSAttr *css)
     _stroke_width_place.add(_stroke_width);
     _stroke.pack_start(_stroke_width_place, Gtk::PACK_SHRINK);
 
-    _table.attach(_label[SS_FILL], 0,1, 0,1, Gtk::SHRINK, Gtk::SHRINK);
-    _table.attach(_label[SS_STROKE], 0,1, 1,2, Gtk::SHRINK, Gtk::SHRINK);
+    _table.attach(_label[SS_FILL], 0,1, 0,1, Gtk::FILL, Gtk::SHRINK);
+    _table.attach(_label[SS_STROKE], 0,1, 1,2, Gtk::FILL, Gtk::SHRINK);
 
     _table.attach(_place[SS_FILL], 1,2, 0,1);
     _table.attach(_stroke, 1,2, 1,2);
@@ -130,7 +131,8 @@ StyleSwatch::StyleSwatch(SPCSSAttr *css)
     _opacity_place.add(_opacity_value);
     _table.attach(_opacity_place, 2,3, 0,2, Gtk::SHRINK, Gtk::SHRINK);
 
-    pack_start(_table, true, true, 0);
+    _swatch.add(_table);
+    pack_start(_swatch, true, true, 0);
 
     set_size_request (STYLE_SWATCH_WIDTH, -1);
 
@@ -143,6 +145,30 @@ StyleSwatch::StyleSwatch(SPCSSAttr *css)
     }
 
     setStyle (css);
+
+    _swatch.signal_button_press_event().connect(sigc::mem_fun(*this, &StyleSwatch::on_click));
+
+    _tooltips.set_tip(_swatch, main_tip);
+}
+
+void StyleSwatch::setClickVerb(sp_verb_t verb_t) {
+    _verb_t = verb_t;
+}
+
+void StyleSwatch::setDesktop(SPDesktop *desktop) {
+    _desktop = desktop;
+}
+
+bool 
+StyleSwatch::on_click(GdkEventButton *event)
+{
+    if (this->_desktop && this->_verb_t != SP_VERB_NONE) {
+        Inkscape::Verb *verb = Inkscape::Verb::get(this->_verb_t);
+        SPAction *action = verb->get_action((Inkscape::UI::View::View *) this->_desktop);
+        sp_action_perform (action, NULL);
+        return true;
+    }
+    return false;
 }
 
 StyleSwatch::~StyleSwatch()

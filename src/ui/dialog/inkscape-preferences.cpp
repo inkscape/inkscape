@@ -288,7 +288,7 @@ void InkscapePreferences::AddNewObjectsStyle(DialogPage& p, const std::string& p
     StyleSwatch *swatch = 0;
     if (tool_repr) {
         SPCSSAttr *css = sp_repr_css_attr_inherited(tool_repr, "style");
-        swatch = new StyleSwatch(css);
+        swatch = new StyleSwatch(css, _("This tool's style of new objects"));
         hb->add(*swatch);
         sp_repr_css_attr_unref(css);
     }
