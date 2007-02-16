@@ -407,12 +407,12 @@ FunctionEnd
   SetOutPath $INSTDIR\lib\locale
   File /nonfatal /a /r "..\..\inkscape\lib\locale\${polng}"
   SetOutPath $INSTDIR\share\cliparts
-  File /nonfatal /a /r "..\..\inkscape\share\cliparts\*.${polng}.svg"  
+  File /nonfatal /a /r "..\..\inkscape\share\clipart\*.${polng}.svg"  
   ; the keyboard tables
   SetOutPath $INSTDIR\share\screens
   File /nonfatal /a /r "..\..\inkscape\share\screens\*.${polng}.svg"  
   SetOutPath $INSTDIR\share\templates
-  File /nonfatal /a /r "..\..\inkscape\share\templates\default.${polng}.svg"  
+  File /nonfatal /a /r "..\..\inkscape\share\templates\*.${polng}.svg"  
   SetOutPath $INSTDIR\doc
   File /nonfatal /a /r "..\..\inkscape\doc\keys.${polng}.xml"  
   File /nonfatal /a /r "..\..\inkscape\doc\keys.${polng}.html"  
