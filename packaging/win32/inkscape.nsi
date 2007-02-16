@@ -76,10 +76,11 @@ ShowUninstDetails hide
 !include "german.nsh" 
 !include "italian.nsh" 
 !include "japanese.nsh"
-!include "slovak.nsh" 
 !include "polish.nsh" 
-!include "spanish.nsh" 
+!include "russian.nsh" 
+!include "slovak.nsh" 
 !include "slovenian.nsh" 
+!include "spanish.nsh" 
 
 ReserveFile "inkscape.nsi.uninstall"
 
@@ -405,9 +406,11 @@ FunctionEnd
   File /nonfatal /a /r "..\..\inkscape\locale\${polng}"
   SetOutPath $INSTDIR\lib\locale
   File /nonfatal /a /r "..\..\inkscape\lib\locale\${polng}"
+  SetOutPath $INSTDIR\share\cliparts
+  File /nonfatal /a /r "..\..\inkscape\share\cliparts\*.${polng}.svg"  
   ; the keyboard tables
   SetOutPath $INSTDIR\share\screens
-  File /nonfatal /a /r "..\..\inkscape\share\screens\keys.${polng}.svg"  
+  File /nonfatal /a /r "..\..\inkscape\share\screens\*.${polng}.svg"  
   SetOutPath $INSTDIR\share\templates
   File /nonfatal /a /r "..\..\inkscape\share\templates\default.${polng}.svg"  
   SetOutPath $INSTDIR\doc
@@ -688,6 +691,10 @@ Section $(lng_bg) SecBulgarian
   !insertmacro Language bg bg
 SectionEnd
 
+Section $(lng_bn) SecBengali
+  !insertmacro Language bn bn
+SectionEnd
+
 Section $(lng_ca) SecCatalan
   !insertmacro Language ca ca
 SectionEnd
@@ -716,6 +723,10 @@ Section $(lng_en) SecEnglish
   SectionIn 1 2 3 RO
 SectionEnd
 
+Section $(lng_en_AU) SecEnglishAustralian
+  !insertmacro Language en_AU en_AU
+SectionEnd
+
 Section $(lng_en_CA) SecEnglishCanadian
   !insertmacro Language en_CA en_CA
 SectionEnd
@@ -726,6 +737,10 @@ SectionEnd
 
 Section $(lng_en_US@piglatin) SecEnglishPiglatin
   !insertmacro Language en_US@piglatin en_US@Piglatin
+SectionEnd
+
+Section $(lng_eo) SecEsperanto
+  !insertmacro Language eo eo
 SectionEnd
 
 Section $(lng_es) SecSpanish
@@ -768,6 +783,11 @@ SectionEnd
 
 Section $(lng_hu) SecHungarian
   !insertmacro Language hu hu
+  SectionIn 1 2 3
+SectionEnd
+
+Section $(lng_id) SecIndonesian
+  !insertmacro Language id id
   SectionIn 1 2 3
 SectionEnd
 
@@ -830,6 +850,10 @@ SectionEnd
 
 Section $(lng_pt_BR) SecPortugueseBrazil
   !insertmacro Language pt_BR pt_BR
+SectionEnd
+
+Section $(lng_ro) SecRomanian
+  !insertmacro Language ro ro
 SectionEnd
 
 Section $(lng_ru) SecRussian
@@ -1052,15 +1076,18 @@ Function .onInit
   !insertmacro Parameter "az" ${SecAzerbaijani}
   !insertmacro Parameter "be" ${SecByelorussian}
   !insertmacro Parameter "bg" ${SecBulgarian}
+  !insertmacro Parameter "bn" ${SecBengali}
   !insertmacro Parameter "ca" ${SecCatalan}
   !insertmacro Parameter "cs" ${SecCzech}
   !insertmacro Parameter "da" ${SecDanish}
   !insertmacro Parameter "de" ${SecGerman}
   !insertmacro Parameter "dz" ${SecDzongkha}
   !insertmacro Parameter "el" ${SecGreek}
+  !insertmacro Parameter "en_AU" ${SecEnglishAustralian}
   !insertmacro Parameter "en_CA" ${SecEnglishCanadian}
   !insertmacro Parameter "en_GB" ${SecEnglishBritain}
   !insertmacro Parameter "en_US@piglatin" ${SecEnglishPiglatin}
+  !insertmacro Parameter "eo" ${SecEsperanto}
   !insertmacro Parameter "es" ${SecSpanish}
   !insertmacro Parameter "es_MX" ${SecSpanishMexico}
   !insertmacro Parameter "et" ${SecEstonian}
@@ -1071,6 +1098,7 @@ Function .onInit
   !insertmacro Parameter "gl" ${SecGallegan}
   !insertmacro Parameter "hr" ${SecCroatian}
   !insertmacro Parameter "hu" ${SecHungarian}
+  !insertmacro Parameter "id" ${SecIndonesian}
   !insertmacro Parameter "it" ${SecItalian}
   !insertmacro Parameter "ja" ${SecJapanese}
   !insertmacro Parameter "km" ${SecKhmer}
@@ -1086,6 +1114,7 @@ Function .onInit
   !insertmacro Parameter "pl" ${SecPolish}
   !insertmacro Parameter "pt" ${SecPortuguese}
   !insertmacro Parameter "pt_BR" ${SecPortugueseBrazil}
+  !insertmacro Parameter "ro" ${SecRomanian}
   !insertmacro Parameter "ru" ${SecRussian}
   !insertmacro Parameter "rw" ${SecKinyarwanda}
   !insertmacro Parameter "sk" ${SecSlovak}

@@ -10,6 +10,7 @@
 ; 24 october 2006 new languages en_US@piglatin, th
 ; 3rd December 2006 new languages eu km
 ; 14th December 2006 new lng_DeletePrefs, lng_DeletePrefsDesc, lng_WANT_UNINSTALL_BEFORE and lng_OK_CANCEL_DESC
+; february 15 2007 new language bn, en_AU, eo, id, ro
 
 !insertmacro MUI_LANGUAGE "German"
 
@@ -94,7 +95,7 @@ LangString lng_QuicklaunchDesc $(LANG_GERMAN) "Erstellt eine Verknüpfung zu ${PR
 ; File type association for editing
 LangString lng_SVGWriter    ${LANG_GERMAN}  "Öffne SVG Dateien mit ${PRODUCT_NAME}"
 
-;LangString lng_UseAs ${LANG_ENGLISH} "Select ${PRODUCT_NAME} as default application for:"
+;LangString lng_UseAs ${LANG_GERMAN} "Select ${PRODUCT_NAME} as default application for:"
 LangString lng_SVGWriterDesc    ${LANG_GERMAN}  "Wählen Sie ${PRODUCT_NAME} als Standardanwendung für SVG Dateien"
 
 ; Context Menu
@@ -139,6 +140,7 @@ LangString lng_am $(LANG_GERMAN) "am  Amharisch"
 LangString lng_az $(LANG_GERMAN) "az  Aserbaidschanisch"
 LangString lng_be $(LANG_GERMAN) "be  Weißrussisch"
 LangString lng_bg $(LANG_GERMAN) "bg  Bulgarisch"
+LangString lng_bn $(LANG_GERMAN) "bn  Bengalisch"
 LangString lng_ca $(LANG_GERMAN) "ca  Katalanisch"
 LangString lng_cs $(LANG_GERMAN) "cs  Tschechisch"
 LangString lng_da $(LANG_GERMAN) "da  Dänisch"
@@ -146,9 +148,11 @@ LangString lng_de $(LANG_GERMAN) "de  Deutsch"
 LangString lng_dz $(LANG_GERMAN) "dz  Dzongkha"
 LangString lng_el $(LANG_GERMAN) "el  Griechisch"
 LangString lng_en $(LANG_GERMAN) "en  Englisch"
+LangString lng_en_AU $(LANG_GERMAN) "en_AU Australisch Englisch"
 LangString lng_en_CA $(LANG_GERMAN) "en_CA  Kanadisch Englisch"
 LangString lng_en_GB $(LANG_GERMAN) "en_GB  Britisch Englisch"
 LangString lng_en_US@piglatin $(LANG_GERMAN) "en_US@piglatin Pig Latin"
+LangString lng_eo $(LANG_GERMAN) "eo  Esperanto"
 LangString lng_es $(LANG_GERMAN) "es  Spanisch"
 LangString lng_es_MX $(LANG_GERMAN) "es_MX  Spanisch-Mexio"
 LangString lng_et $(LANG_GERMAN) "et  Estonisch"
@@ -159,6 +163,7 @@ LangString lng_ga $(LANG_GERMAN) "ga  Irisch"
 LangString lng_gl $(LANG_GERMAN) "gl  Galizisch"
 LangString lng_hr $(LANG_GERMAN) "hr  Kroatisch"
 LangString lng_hu $(LANG_GERMAN) "hu  Ungarisch"
+LangString lng_id $(LANG_GERMAN) "id  Indonesian"
 LangString lng_it $(LANG_GERMAN) "it  Italienisch"
 LangString lng_ja $(LANG_GERMAN) "ja  Japanisch"
 LangString lng_km $(LANG_GERMAN) "km  Khmer"
@@ -174,6 +179,7 @@ LangString lng_pa $(LANG_GERMAN) "pa  Panjabi"
 LangString lng_pl $(LANG_GERMAN) "po  Polnisch"
 LangString lng_pt $(LANG_GERMAN) "pt  Portugiesisch"
 LangString lng_pt_BR $(LANG_GERMAN) "pt_BR  Portugiesisch Brazilien"
+LangString lng_ro $(LANG_GERMAN) "ro  Rumänisch"
 LangString lng_ru $(LANG_GERMAN) "ru  Russisch"
 LangString lng_rw $(LANG_GERMAN) "rw  Kinyarwanda"
 LangString lng_sk $(LANG_GERMAN) "sk  Slowakisch"
@@ -191,13 +197,13 @@ LangString lng_zh_TW $(LANG_GERMAN) "zh_TW  Chinesisch (traditionell)"
 
 
 ; uninstallation options
-;LangString lng_UInstOpt   ${LANG_ENGLISH} "Uninstallation Options"
+;LangString lng_UInstOpt   ${LANG_GERMAN} "Uninstallation Options"
 LangString lng_UInstOpt   ${LANG_GERMAN} "Deinstallations Optionen"
 
 ; uninstallation options subtitle
-;LangString lng_UInstOpt1  ${LANG_ENGLISH} "Please make your choices for additional options"
+;LangString lng_UInstOpt1  ${LANG_GERMAN} "Please make your choices for additional options"
 LangString lng_UInstOpt1  ${LANG_GERMAN} "Bitte wählen Sie die optionalen Deinstalltionsparameter"
 
 ; Ask to purge the personal preferences
-;LangString lng_PurgePrefs ${LANG_ENGLISH} "Keep Inkscape preferences"
+;LangString lng_PurgePrefs ${LANG_GERMAN} "Keep Inkscape preferences"
 LangString lng_PurgePrefs ${LANG_GERMAN}  "behalte persönliche Inkscape-Vorgaben"
