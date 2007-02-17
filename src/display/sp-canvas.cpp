@@ -1524,7 +1524,7 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
         buf.buf = nr_pixelstore_1M_new (FALSE, 0);
     }
 
-    buf.buf_rowstride = sw * 3;
+    buf.buf_rowstride = sw * 3; // CAIRO FIXME: for cairo output, the buffer must be RGB unpacked, i.e. sw * 4
     buf.rect.x0 = x0;
     buf.rect.y0 = y0;
     buf.rect.x1 = x1;
@@ -1551,6 +1551,23 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
                             x0 - canvas->x0, y0 - canvas->y0,
                             x1 - x0, y1 - y0);
     } else {
+/*
+ CAIRO FIXME: after SPCanvasBuf is made 32bpp throughout, this rgb_draw below can be replaced with:
+    cairo_surface_t* cst = cairo_image_surface_create_for_data (
+        buf.buf,
+        CAIRO_FORMAT_RGB24,  // unpacked, i.e. 32 bits! one byte is unused
+        x1 - x0, y1 - y0,
+        buf.buf_rowstride
+        );
+        cairo_t *ct = gdk_cairo_create(SP_CANVAS_WINDOW (canvas));
+        cairo_set_source_surface (ct, cst, x0 - canvas->x0, y0 - canvas->y0);
+        cairo_paint (ct);
+
+    cairo_destroy (ct);
+    cairo_surface_finish (cst);
+    cairo_surface_destroy (cst);
+*/
+
         gdk_draw_rgb_image_dithalign (SP_CANVAS_WINDOW (canvas),
                                       canvas->pixmap_gc,
                                       x0 - canvas->x0, y0 - canvas->y0,
@@ -1588,7 +1605,8 @@ sp_canvas_paint_rect_internal (SPCanvas *canvas, NRRectL *rect, NR::ICoord *x_ab
     int bh = draw_y2 - draw_y1;
     if ((bw < 1) || (bh < 1))
         return 0;
-    int sw, sh;
+
+    int sw, sh;  // CAIRO FIXME: the sw/sh calculations below all assume 24bpp, need fixing for 32bpp
     if (canvas->rendermode != RENDERMODE_OUTLINE) { // use 256K as a compromise to not slow down gradients
         /* 256K is the cached buffer and we need 3 channels */
         if (bw * bh <  87381) { // 256K/3

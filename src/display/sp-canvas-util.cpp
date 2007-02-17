@@ -73,7 +73,7 @@ sp_canvas_clear_buffer (SPCanvasBuf *buf)
 	} else {
 		int y;
 		for (y = buf->rect.y0; y < buf->rect.y1; y++) {
-			memset (buf->buf + (y - buf->rect.y0) * buf->buf_rowstride, r, 3 * (buf->rect.x1 - buf->rect.x0));
+			memset (buf->buf + (y - buf->rect.y0) * buf->buf_rowstride, r, 3 * (buf->rect.x1 - buf->rect.x0)); //  CAIRO FIXME: for cairo output we need 32bpp, so it will be 4 * ...
 		}
 	}
 }

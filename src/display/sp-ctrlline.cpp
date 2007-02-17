@@ -27,7 +27,7 @@
 # include "config.h"
 #endif
 #include <livarot/Path.h>
-
+#include <color.h>
 
 
 static void sp_ctrlline_class_init (SPCtrlLineClass *klass);
@@ -108,6 +108,33 @@ sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf)
     area.y0=buf->rect.y0;
     area.y1=buf->rect.y1;
 
+/*
+// CAIRO FIXME: after SPCanvasBuf is switched to unpacked 32bit rgb, rendering can be done via cairo:
+    cairo_surface_t* cst = cairo_image_surface_create_for_data (
+        buf->buf,
+        CAIRO_FORMAT_RGB24,
+        buf->rect.x1 - buf->rect.x0,
+        buf->rect.y1 - buf->rect.y0,
+        buf->buf_rowstride
+        );
+    cairo_t *ct = cairo_create (cst);
+
+    guint32 rgba = ctrlline->rgba;
+    cairo_set_source_rgba(ct, SP_RGBA32_R_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_B_F(rgba), SP_RGBA32_A_F(rgba));
+
+    cairo_set_line_width(ct, 0.5);
+    cairo_new_path(ct);
+
+    cairo_move_to (ct, ctrlline->s.x - buf->rect.x0, ctrlline->s.y - buf->rect.y0);
+    cairo_line_to (ct, ctrlline->e.x - buf->rect.x0, ctrlline->e.y - buf->rect.y0);
+
+    cairo_stroke(ct);
+    cairo_destroy (ct);
+    cairo_surface_finish (cst);
+    cairo_surface_destroy (cst);
+*/
+
+// CAIRO FIXME: instead of this:
     if (ctrlline->shp) {
         sp_canvas_prepare_buffer (buf);
         nr_pixblock_render_ctrl_rgba (ctrlline->shp,ctrlline->rgba,area,(char*)buf->buf, buf->buf_rowstride);
@@ -117,8 +144,6 @@ sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf)
 static void
 sp_ctrlline_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
 {
-    NRRect dbox;
-
     SPCtrlLine *cl = SP_CTRLLINE (item);
 
     sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
@@ -128,6 +153,24 @@ sp_ctrlline_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int f
 
     sp_canvas_item_reset_bounds (item);
 
+/*
+// CAIRO FIXME: all that is needed for update with cairo:
+    NR::Point s = NR::Point(cl->s.x, cl->s.y) * affine;
+    NR::Point e = NR::Point(cl->e.x, cl->e.y) * affine;
+
+    cl->s.x = s[NR::X];
+    cl->s.y = s[NR::Y];
+    cl->e.x = e[NR::X];
+    cl->e.y = e[NR::Y];
+
+    item->x1 = (int)(MIN(s[NR::X], e[NR::X]) - 1);
+    item->y1 = (int)(MIN(s[NR::Y], e[NR::Y]) - 1);
+    item->x2 = (int)(MAX(s[NR::X], e[NR::X]) + 1);
+    item->y2 = (int)(MAX(s[NR::Y], e[NR::Y]) + 1);
+*/
+
+// CAIRO FIXME: instead of:
+    NRRect dbox;
     dbox.x0=dbox.x1=dbox.y0=dbox.y1=0;
     if (cl->shp) {
         delete cl->shp;

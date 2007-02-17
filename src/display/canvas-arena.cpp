@@ -240,6 +240,7 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
 
 /* fixme: RGB transformed bitmap blit is not implemented (Lauris) */
 /* And even if it would be, unless it uses MMX there is little reason to go RGB */
+// CAIRO FIXME: undefine this so that arena renders directly into SPCanvasBuf, without blitting and squishing (32bpp -> 24bpp packed) from a pixblock
 #define STRICT_RGBA
 
 	for (y = buf->rect.y0; y < buf->rect.y1; y += sh) {
@@ -261,6 +262,7 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
 			pb.empty = FALSE;
 #endif
 
+// CAIRO FIXME: switch this to R8G8B8A8P and 4 * ...
 			nr_pixblock_setup_extern (&cb, NR_PIXBLOCK_MODE_R8G8B8, area.x0, area.y0, area.x1, area.y1,
 						  buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + 3 * (x - buf->rect.x0),
 						  buf->buf_rowstride,
