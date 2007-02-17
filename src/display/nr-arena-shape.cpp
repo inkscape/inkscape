@@ -29,10 +29,11 @@
 #include <livarot/float-line.h>
 #include <livarot/int-line.h>
 #include <style.h>
-/* prefs-utils used for deciding, whether to run filtering test or not */
 #include "prefs-utils.h"
 #include "sp-filter.h"
 #include "sp-gaussian-blur.h"
+
+#include <cairo.h>
 
 //int  showRuns=0;
 void nr_pixblock_render_shape_mask_or(NRPixBlock &m,Shape* theS);
@@ -517,6 +518,10 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
+    if (outline) {
+        return; // cairo does not need the livarot path, hehe
+    }
+
     if (outline ||
         ((shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) &&
          ( fabs(shape->_stroke.width * scale) > 0.01 ))) { // sinon c'est 0=oon veut pas de bord
@@ -726,6 +731,102 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
     if (!shape->curve) return item->state;
     if (!shape->style) return item->state;
 
+    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
+
+    if (outline) { // fixme: if no problems reported, remove old outline stuff
+        NRPixBlock m;
+        int width = area->x1 - area->x0;
+        int height = area->y1 - area->y0;
+
+        //known bug: buffer for cairo must have stride divisible by 4, even though this is a one-byte-per-pixel mode
+        int rem = width % 4;
+        int x1 = area->x1;
+        if (rem != 0) {
+            width += (4 - rem);
+            x1 = area->x0 + width;
+        }
+
+        nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, x1, area->y1, TRUE);
+        m.visible_area = pb->visible_area; 
+        m.empty = FALSE;
+
+        cairo_surface_t* cst = cairo_image_surface_create_for_data
+            (NR_PIXBLOCK_PX(&m),
+             CAIRO_FORMAT_A8,
+             width,
+             height,
+             m.rs);
+        cairo_t *ct = cairo_create (cst);
+        cairo_set_source_rgba(ct, 0, 0, 0, 1.0);
+        cairo_set_line_width(ct, 0.5);
+        cairo_set_miter_limit(ct, 0.0);
+        cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
+        cairo_new_path(ct);
+
+        NR::Matrix trans(shape->ctm);
+        NR::Point lastX(0,0);
+        bool  closed = false;
+        NArtBpath *bpath = SP_CURVE_BPATH(shape->curve);
+        for (int i = 0; bpath[i].code != NR_END; i++) {
+            switch (bpath[i].code) {
+                case NR_MOVETO_OPEN:
+                case NR_MOVETO:
+                    if (closed) cairo_close_path(ct);
+                    closed = (bpath[i].code == NR_MOVETO);
+                    lastX[NR::X] = bpath[i].x3;
+                    lastX[NR::Y] = bpath[i].y3;
+                    lastX*=trans;
+                    lastX -= NR::Point(area->x0, area->y0);
+                    cairo_move_to(ct, lastX[NR::X], lastX[NR::Y]);
+                    break;
+
+                case NR_LINETO:
+                    lastX[NR::X] = bpath[i].x3;
+                    lastX[NR::Y] = bpath[i].y3;
+                    lastX*=trans;
+                    lastX -= NR::Point(area->x0, area->y0);
+                    cairo_line_to(ct, lastX[NR::X], lastX[NR::Y]);
+                    break;
+
+                case NR_CURVETO: {
+                    NR::Point  tm1, tm2, tm3;
+                    tm1[0]=bpath[i].x1;
+                    tm1[1]=bpath[i].y1;
+                    tm2[0]=bpath[i].x2;
+                    tm2[1]=bpath[i].y2;
+                    tm3[0]=bpath[i].x3;
+                    tm3[1]=bpath[i].y3;
+                    tm1*=trans;
+                    tm2*=trans;
+                    tm3*=trans;
+                    tm1 -= NR::Point(area->x0, area->y0);
+                    tm2 -= NR::Point(area->x0, area->y0);
+                    tm3 -= NR::Point(area->x0, area->y0);
+                    cairo_curve_to (ct, tm1[NR::X], tm1[NR::Y], tm2[NR::X], tm2[NR::Y], tm3[NR::X], tm3[NR::Y]);
+                    break;
+                }
+
+                default:
+                    break;
+            }
+        }
+
+        cairo_stroke(ct);
+
+        cairo_destroy (ct);
+        cairo_surface_finish (cst);
+
+        guint32 rgba = NR_ARENA_ITEM(shape)->arena->outlinecolor;
+        nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
+        pb->empty = FALSE;
+
+        cairo_surface_destroy (cst);
+
+        nr_pixblock_release(&m);
+
+        return item->state;
+    }
+
     if ( shape->delayed_shp ) {
         if ( nr_rect_l_test_intersect(area, &item->bbox) ) {
             NRGC   tempGC(NULL);
@@ -745,8 +846,6 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
             return item->state;
         }
     }
-
-    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
     SPStyle const *style = shape->style;
     if ( shape->fill_shp && !outline) {
