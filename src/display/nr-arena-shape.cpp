@@ -519,7 +519,9 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
     if (outline) {
-        return; // cairo does not need the livarot path, hehe
+        // cairo does not need the livarot path for rendering... but unfortunately it's still used for picking
+        // FIXME: switch picking to using cairo_in_stroke? 
+        //return; 
     }
 
     if (outline ||
@@ -734,32 +736,27 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
     if (outline) { // fixme: if no problems reported, remove old outline stuff
-        NRPixBlock m;
+
+        if (!nr_rect_l_test_intersect (&pb->area, area)) 
+            return item->state;
+
+        NRRectL clip;
+        nr_rect_l_intersect (&clip, &pb->area, area);
+        unsigned char *dpx = NR_PIXBLOCK_PX (pb) + (clip.y0 - pb->area.y0) * pb->rs + NR_PIXBLOCK_BPP (pb) * (clip.x0 - pb->area.x0);
         int width = area->x1 - area->x0;
         int height = area->y1 - area->y0;
-
-        //known bug: buffer for cairo must have stride divisible by 4, even though this is a one-byte-per-pixel mode
-        int rem = width % 4;
-        int x1 = area->x1;
-        if (rem != 0) {
-            width += (4 - rem);
-            x1 = area->x0 + width;
-        }
-
-        nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, x1, area->y1, TRUE);
-        m.visible_area = pb->visible_area; 
-        m.empty = FALSE;
-
         cairo_surface_t* cst = cairo_image_surface_create_for_data
-            (NR_PIXBLOCK_PX(&m),
-             CAIRO_FORMAT_A8,
+            (dpx,
+             (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8P? CAIRO_FORMAT_ARGB32 : (pb->mode == NR_PIXBLOCK_MODE_R8G8B8? CAIRO_FORMAT_RGB24 : CAIRO_FORMAT_A8)),
              width,
              height,
-             m.rs);
+             pb->rs);
         cairo_t *ct = cairo_create (cst);
-        cairo_set_source_rgba(ct, 0, 0, 0, 1.0);
+
+        guint32 rgba = NR_ARENA_ITEM(shape)->arena->outlinecolor;
+        cairo_set_source_rgba(ct, SP_RGBA32_R_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_B_F(rgba), SP_RGBA32_A_F(rgba));
+
         cairo_set_line_width(ct, 0.5);
-        cairo_set_miter_limit(ct, 0.0);
         cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
         cairo_new_path(ct);
 
@@ -816,13 +813,9 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
         cairo_destroy (ct);
         cairo_surface_finish (cst);
 
-        guint32 rgba = NR_ARENA_ITEM(shape)->arena->outlinecolor;
-        nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
         pb->empty = FALSE;
 
         cairo_surface_destroy (cst);
-
-        nr_pixblock_release(&m);
 
         return item->state;
     }
