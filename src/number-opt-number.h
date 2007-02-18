@@ -13,15 +13,18 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <glib.h>
 #include <glib/gprintf.h>
 //todo: use glib instead of stdlib
 #include <stdlib.h>
 #include "svg/stringstream.h"
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+
+gdouble fixed_g_ascii_strtod (const gchar *nptr, gchar **endptr);
 
 class NumberOptNumber {
 
