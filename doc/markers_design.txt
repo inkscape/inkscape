@@ -12,7 +12,9 @@ History
 =======
 The marker code was originally developed by Lauris for Sodipodi, but due
 to various issues, the code was not hooked to the interface.  Thus
-there was no way for users to actually put markers on lines.
+there was no way for users to actually put markers on lines.  He seems
+to have also started some very preliminary work for doing dimensioning,
+although the code is not far enough along to reveal the design intent.
 
 Early in Inkscape, I dug through the code and reactivated the markers
 function, and then hammered on a few of the main issues to get markers
@@ -37,24 +39,37 @@ Implementation Files
 ====================
 The following files contain code of relevance to markers:
 
-marker.h:  tbd
+marker.h: Defines the SPMarker and SPMarkerReference classes.  SPMarker
+ holds information about the marker's reference points, dimensions,
+ orientation, and viewbox.  It also contains an extra transform matrix,
+ a list of views that will need updating if the marker's definition
+ changes, and a set of options relating to units and aspect ratios.  The
+ SPMarkerReference provides an URI reference for SPMarkers.
 
 marker.cpp: Implements the sp_marker class, providing functionality for
  managing the relationship of markers to lines or other objects they've
  been applied to.  Updates reprs and properties as the marker's
  definition changes.  Handles updates/changes to marker views as well.
 
-sp-shape.cpp:  tbd
+sp-shape.cpp:  "Shapes" are drawing objects which, among other things,
+are able to have start, mid, and end markers applied to them.  This file
+implements the handling of start, mid, and end markers, including
+managing references, setting or unsetting, updating, transforming,
+and updating them.
 
-selection-chemistry.cpp:  tbd
+selection-chemistry.cpp:  One of the routines in this file implements a
+function for copying defs, including markers.
 
-sp-marker-loc.h:  tbd
+sp-marker-loc.h:  Just contains a set of enum definitions for marker
+locations (start/mid/end).
 
-display/nr-arena-shape.cpp:  tbd
+display/nr-arena-shape.cpp:  Arena Shapes handle adding, updating, and
+etc. the children (like markers) of shapes.  This also takes care of
+rendering a shape's markers by composing them into the parent's buffer.
 
-stock-items.cpp:  tbd
-
-dialogs/stroke-style.h:  tbd
+helper/stock-items.cpp:  This file implements the code for loading
+default marker definitions from Inkscape's markers directory and making
+them available in the current document's defs section.
 
 dialogs/stroke-style.cpp:  Implements the stroke style dialog, which
 includes the widgets for displaying stock markers that can be applied to
@@ -75,6 +90,18 @@ object, and each reference is a 'SPMarkerView' object.  Each SPMarker
 has a listing of all its SPMarkerViews, which it can use for update
 purposes when it changes.
 
+SPShapes are objects which can take markers in one of three places:
+start, middle, or end.  The SPShape class also has the routines for
+doing the logistics of setting markers, coordinating references, and so
+forth.
+
+Rendering of the markers is coordinated by SPArenaShape, which handles
+compositing of the rendered marker image into the parent shape's area,
+and takes care of clipping boundaries and such.
+
+We provide a set of stock markers that are loaded from the markers.svg
+file and hooked into each loaded document's data structure.  This is
+handled in the stock-items code.
 
 
 Stroke Dialog
