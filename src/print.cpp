@@ -21,6 +21,12 @@
 #include "extension/system.h"
 #include "print.h"
 
+#ifdef HAVE_GTK_UNIX_PRINT
+#include <gtk/gtk.h>
+#include <glibmm/i18n.h>
+#include <gtk/gtkprintunixdialog.h>
+#endif
+
 #if 0
 # include <extension/internal/ps.h>
 
@@ -130,11 +136,79 @@ sp_print_preview_document(SPDocument *doc)
     return;
 }
 
+#ifdef HAVE_GTK_UNIX_PRINT
+static void
+unix_print_complete (GtkPrintJob *print_job,
+                     gpointer user_data,
+                     GError *error)
+{
+    fprintf(stderr,"print job finished: %s\n",error ? error->message : "no error");
+}
+
+static void
+unix_print_dialog (const gchar * ps_file, const gchar * jobname)
+{
+    Glib::ustring title = _("Print");
+    title += " ";
+    title += jobname;
+    GtkWidget* dlg = gtk_print_unix_dialog_new(title.c_str(), NULL);
+
+    // force output system to only handle our pre-generated PS output
+    gtk_print_unix_dialog_set_manual_capabilities (GTK_PRINT_UNIX_DIALOG(dlg),
+                                                   GTK_PRINT_CAPABILITY_GENERATE_PS);
+
+/*
+ * It would be nice to merge the PrintPS::setup routine with a custom
+ * configuration dialog:
+   
+    gtk_print_unix_dialog_add_custom_tab (GtkPrintUnixDialog *dialog,
+                                          GtkWidget *child,
+                                          GtkWidget *tab_label);
+*/
+
+    int const response = gtk_dialog_run(GTK_DIALOG(dlg));
+
+    if (response == GTK_RESPONSE_OK) {
+        GtkPrinter* printer = gtk_print_unix_dialog_get_selected_printer(GTK_PRINT_UNIX_DIALOG(dlg));
+
+        if (gtk_printer_accepts_ps (printer)) {
+            GtkPrintJob* job = gtk_print_job_new  (jobname, printer,
+              gtk_print_unix_dialog_get_settings(GTK_PRINT_UNIX_DIALOG(dlg)),
+              gtk_print_unix_dialog_get_page_setup(GTK_PRINT_UNIX_DIALOG(dlg)));
+
+
+            GError * error = NULL;
+            if ( gtk_print_job_set_source_file (job, ps_file, &error)) {
+                gtk_print_job_send (job, unix_print_complete, NULL, NULL);
+            }
+            else {
+                g_warning(_("Could not set print source: %s"),error ? error->message : _("unknown error"));
+            }
+            if (error) g_error_free(error);
+        }
+        else {
+            g_warning(_("Printer '%s' does not support PS output"), gtk_printer_get_name (printer));
+        }
+    }
+    else if (response == GTK_RESPONSE_APPLY) {
+        // since we didn't include the Preview capability,
+        // this should never happen.
+        g_warning(_("Print Preview not available"));
+    }
+
+    gtk_widget_destroy(dlg);
+}
+#endif // HAVE_GTK_UNIX_PRINT
+
+
 void
 sp_print_document(SPDocument *doc, unsigned int direct)
 {
     Inkscape::Extension::Print *mod;
     unsigned int ret;
+#ifdef HAVE_GTK_UNIX_PRINT
+    Glib::ustring tmpfile = "";
+#endif
 
     sp_document_ensure_up_to_date(doc);
 
@@ -142,6 +216,27 @@ sp_print_document(SPDocument *doc, unsigned int direct)
         mod = Inkscape::Extension::get_print(SP_MODULE_KEY_PRINT_PS);
     } else {
         mod = Inkscape::Extension::get_print(SP_MODULE_KEY_PRINT_DEFAULT);
+
+#ifdef HAVE_GTK_UNIX_PRINT
+        // unix print dialog reads from the exported tempfile
+        gchar  *filename = NULL;
+        GError *error    = NULL;
+        gint tmpfd = g_file_open_tmp("inkscape-ps-XXXXXX",
+                                     &filename,
+                                     &error);
+        if (tmpfd<0) {
+            g_warning(_("Failed to create tempfile for printing: %s"),
+                      error ? error->message : _("unknown error"));
+            if (error) g_error_free(error);
+            return;
+        }
+        tmpfile = filename;
+        g_free(filename);
+        close(tmpfd);
+
+        Glib::ustring destination = ">" + tmpfile;
+        mod->set_param_string("destination", destination.c_str());
+#endif
     }
 
     ret = mod->setup();
@@ -167,6 +262,13 @@ sp_print_document(SPDocument *doc, unsigned int direct)
         mod->root = NULL;
         nr_object_unref((NRObject *) mod->arena);
         mod->arena = NULL;
+
+#ifdef HAVE_GTK_UNIX_PRINT
+        // redirect output to new print dialog
+        unix_print_dialog(tmpfile.c_str(),doc->name ? doc->name : _("SVG Document"));
+        unlink(tmpfile.c_str());
+        // end redirected new print dialog
+#endif
     }
 
     return;

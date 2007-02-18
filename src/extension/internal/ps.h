@@ -36,7 +36,6 @@ class PrintPS : public Inkscape::Extension::Implementation::Implementation {
     float _height;
     FILE * _begin_stream;//stream to print prolog and document setup of EPS, if font embedding
     FILE * _stream;//(main) stream to print the (E)PS output, or only the script part following prolog/document setup, if font embedding
-    Glib::ustring _tmpfilename;
 
     unsigned short _dpi;
     bool _bitmap;
