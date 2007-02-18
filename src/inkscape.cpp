@@ -139,7 +139,11 @@ struct Inkscape::ApplicationClass {
 static GObjectClass * parent_class;
 static guint inkscape_signals[LAST_SIGNAL] = {0};
 
-static void (* segv_handler) (int) = NULL;
+static void (* segv_handler) (int) = SIG_DFL;
+static void (* abrt_handler) (int) = SIG_DFL;
+static void (* fpe_handler)  (int) = SIG_DFL;
+static void (* ill_handler)  (int) = SIG_DFL;
+static void (* bus_handler)  (int) = SIG_DFL;
 
 #ifdef WIN32
 #define INKSCAPE_PROFILE_DIR "Inkscape"
@@ -359,7 +363,7 @@ inkscape_deactivate_desktop_private (Inkscape::Application *inkscape, SPDesktop 
 
 
 static void
-inkscape_segv_handler (int signum)
+inkscape_crash_handler (int signum)
 {
     using Inkscape::Debug::SimpleEvent;
     using Inkscape::Debug::EventTracker;
@@ -367,10 +371,19 @@ inkscape_segv_handler (int signum)
 
     static gint recursion = FALSE;
 
-    /* let any SIGABRTs seen from within this handler dump core */
-    signal(SIGABRT, SIG_DFL);
-
-    /* Kill loops */
+    /* 
+     * reset all signal handlers: any further crashes should just be allowed
+     * to crash normally.
+     * */
+    signal (SIGSEGV, segv_handler );
+    signal (SIGABRT, abrt_handler );
+    signal (SIGFPE,  fpe_handler  );
+    signal (SIGILL,  ill_handler  );
+#ifndef WIN32
+    signal (SIGBUS,  bus_handler  );
+#endif
+    
+    /* Stop bizarre loops */
     if (recursion) {
         abort ();
     }
@@ -534,7 +547,7 @@ inkscape_segv_handler (int signum)
     tracker.clear();
     Logger::shutdown();
 
-    (* segv_handler) (signum);
+    /* on exit, allow restored signal handler to take over and crash us */
 }
 
 
@@ -545,13 +558,13 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     inkscape = (Inkscape::Application *)g_object_new (SP_TYPE_INKSCAPE, NULL);
     /* fixme: load application defaults */
 
-    segv_handler = signal (SIGSEGV, inkscape_segv_handler);
-    signal (SIGFPE,  inkscape_segv_handler);
-    signal (SIGILL,  inkscape_segv_handler);
+    segv_handler = signal (SIGSEGV, inkscape_crash_handler);
+    abrt_handler = signal (SIGABRT, inkscape_crash_handler);
+    fpe_handler  = signal (SIGFPE,  inkscape_crash_handler);
+    ill_handler  = signal (SIGILL,  inkscape_crash_handler);
 #ifndef WIN32
-    signal (SIGBUS,  inkscape_segv_handler);
+    bus_handler  = signal (SIGBUS,  inkscape_crash_handler);
 #endif
-    signal (SIGABRT, inkscape_segv_handler);
 
     inkscape->use_gui = use_gui;
     inkscape->argv0 = g_strdup(argv0);
