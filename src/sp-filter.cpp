@@ -319,8 +319,9 @@ sp_filter_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if (filter->filterRes.getNumber()>=0) {
-    char filterRes[32];
-        repr->setAttribute("filterRes", filter->filterRes.getValueString(filterRes));
+        gchar *tmp = filter->filterRes.getValueString();
+        repr->setAttribute("filterRes", tmp);
+        g_free(tmp);
     } else {
         repr->setAttribute("filterRes", NULL);
     }

@@ -17,6 +17,7 @@
 #include <glib/gprintf.h>
 //todo: use glib instead of stdlib
 #include <stdlib.h>
+#include "svg/stringstream.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -69,20 +70,22 @@ public:
         number = num;
     }
 
-    gchar *getValueString(gchar *str)
+    gchar *getValueString()
     {
+        Inkscape::SVGOStringStream os;
+
         if( _set )
         {
 
             if( optNumber_set )
             {
-                g_sprintf(str, "%lf %lf", number, optNumber);
+                os << number << " " << optNumber;
             }
             else {
-                g_sprintf(str, "%lf", number);
+                os << number;
             }
         }
-        return str;
+        return g_strdup(os.str().c_str());
     }
 
     void set(gchar const *str)
@@ -94,13 +97,12 @@ public:
 
         if( values[0] != NULL )
         {
-            sscanf(values[0], "%f", &number);
+            number = g_ascii_strtod(values[0], NULL);
             _set = TRUE;
 
             if( values[1] != NULL )
             {
-  //              optNumber = g_ascii_strtod(values[1], NULL);
-				sscanf(values[1], "%f", &optNumber);
+                optNumber = g_ascii_strtod(values[1], NULL);
                 optNumber_set = TRUE;
             }
             else
