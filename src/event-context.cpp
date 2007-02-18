@@ -293,21 +293,6 @@ static gdouble accelerate_scroll(GdkEvent *event, gdouble acceleration)
     return scroll_multiply;
 }
 
-// This is a hack that is necessary because when middle-clicking too fast,
-// button_press events come for all clicks but there's button_release only
-// for the first one. So after a release, we must prohibit the next grab for
-// some time, or the grab will be stuck.  Perhaps this is caused by some
-// wrong handling of events among contexts and not by a GDK bug;
-// if someone can fix this properly this would be great.
-static gint dontgrab = 0;
-static bool
-grab_allow_again()
-{
-    dontgrab--;
-    if (dontgrab < 0) dontgrab = 0;
-    return FALSE; // so that it is only called once
-}
-
 /**
  * Main event dispatch, gets called from Gdk.
  */
@@ -352,16 +337,6 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
 
             switch (event->button.button) {
                 case 2:
-
-                    if (dontgrab)
-                        // double-click, still not permitted to grab;
-                        // increase the counter to guard against triple click
-                    {
-                        dontgrab ++;
-                        gtk_timeout_add(250, (GtkFunction) grab_allow_again, NULL);
-                        break;
-                    }
-
                     button_w = NR::Point(event->button.x,
                                          event->button.y);
                     if (event->button.state == GDK_SHIFT_MASK) {
@@ -398,7 +373,6 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                         || (panning == 3 && !(event->motion.state & GDK_BUTTON3_MASK))) {
                     /* Gdk seems to lose button release for us sometimes :-( */
                     panning = 0;
-                    dontgrab = 0;
                     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                             event->button.time);
                     ret = TRUE;
@@ -452,15 +426,11 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
         case GDK_BUTTON_RELEASE:
             xp = yp = 0;
             if (within_tolerance && (panning || zoom_rb)) {
-                dontgrab ++;
                 zoom_rb = 0;
                 NR::Point const event_w(event->button.x, event->button.y);
                 NR::Point const event_dt(desktop->w2d(event_w));
-                double const zoom_power = ( (event->button.state & GDK_SHIFT_MASK)
-                                            ? -dontgrab : dontgrab );
-                gtk_timeout_add(250, (GtkFunction) grab_allow_again, NULL);
                 desktop->zoom_relative_keep_point(event_dt,
-                                                  pow(zoom_inc, zoom_power));
+                          (event->button.state & GDK_SHIFT_MASK) ? 1/zoom_inc : zoom_inc);
                 desktop->updateNow();
             }
             if (panning == event->button.button) {
