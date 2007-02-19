@@ -35,6 +35,11 @@
 #include <libnr/nr-convex-hull.h>
 #include "prefs-utils.h"
 
+// Tiles are a way to minimize the number of redraws, eliminating too small redraws. 
+// The canvas stores a 2D array of ints, each representing a TILE_SIZExTILE_SIZE pixels tile.
+// If any part of it is dirtied, the entire tile is dirtied (its int is nonzero) and repainted.
+#define TILE_SIZE 32
+
 enum {
 	RENDERMODE_NORMAL,
 	RENDERMODE_NOAA,
@@ -1585,6 +1590,8 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
     }
 }
 
+static int is_scrolling = 0;
+
 /* Paint the given rect, while updating canvas->redraw_aborted and running iterations after each
  * buffer; make sure canvas->redraw_aborted never goes past aborted_limit (used for 2-rect
  * optimized repaint)
@@ -1692,8 +1699,23 @@ sp_canvas_paint_rect_internal (SPCanvas *canvas, NRRectL *rect, NR::ICoord *x_ab
               dy1 = MIN (dy1, draw_y2);
             }
 
+            // SMOOTH SCROLLING: if we are scrolling, process pending events even before doing any rendering. 
+            // This allows for scrolling smoothly without hiccups. Any accumulated redraws will be made 
+            // when scrolling stops. The scrolling flag is set by sp_canvas_scroll_to for each scroll and zeroed
+            // here for each redraw, to ensure it never gets stuck. 
+
             // OPTIMIZATION IDEA: if drawing is really slow (as measured by canvas->slowest
-            // buffer), process some events even BEFORE we do any buffers?
+            // buffer), do the same - process some events even before we paint any buffers
+
+            if (is_scrolling) {
+                is_scrolling = 0;
+                while (Gtk::Main::events_pending()) { // process any events
+                    Gtk::Main::iteration(false);
+                }
+                if (this_count != canvas->redraw_count) { // if there was redraw,
+                    return 1; // interrupt this one
+                }
+            }
 	    
             // Paint one buffer; measure how long it takes.
             g_get_current_time (&tstart);
@@ -2015,43 +2037,40 @@ paint (SPCanvas *canvas)
     int const canvas_x1 = canvas->x0 + widget->allocation.width;
     int const canvas_y1 = canvas->y0 + widget->allocation.height;
 
-    NRRectL topaint;
-    topaint.x0 = topaint.y0 = topaint.x1 = topaint.y1 = 0;
+    bool dirty = false;
 
-    for (int j=canvas->tTop&(~3);j<canvas->tBottom;j+=4) {
-        for (int i=canvas->tLeft&(~3);i<canvas->tRight;i+=4) {
-            int  mode=0;
-      
-            int pl=i+1,pr=i,pt=j+4,pb=j;
-            for (int l=MAX(j,canvas->tTop);l<MIN(j+4,canvas->tBottom);l++) {
-                for (int k=MAX(i,canvas->tLeft);k<MIN(i+4,canvas->tRight);k++) {
-                    if ( canvas->tiles[(k-canvas->tLeft)+(l-canvas->tTop)*canvas->tileH] ) {
-                        mode|=1<<((k-i)+(l-j)*4);
-                        if ( k < pl ) pl=k;
-                        if ( k+1 > pr ) pr=k+1;
-                        if ( l < pt ) pt=l;
-                        if ( l+1 > pb ) pb=l+1;
-                    }
-                    canvas->tiles[(k-canvas->tLeft)+(l-canvas->tTop)*canvas->tileH]=0;
-                }
-            }
-      
-            if ( mode ) {
-                NRRectL tile;
-                tile.x0 = MAX (pl*32, canvas->x0);
-                tile.y0 = MAX (pt*32, canvas->y0);
-                tile.x1 = MIN (pr*32, canvas_x1);
-                tile.y1 = MIN (pb*32, canvas_y1);
-                if ((tile.x0 < tile.x1) && (tile.y0 < tile.y1)) {
-                    nr_rect_l_union (&topaint, &topaint, &tile);
-                }
+    int pl = canvas->tRight, pr = canvas->tLeft, pt = canvas->tBottom, pb = canvas->tTop; // start with "inverted" tile rect
 
+    for (int j=canvas->tTop; j<canvas->tBottom; j++) { 
+        for (int i=canvas->tLeft; i<canvas->tRight; i++) { 
+
+            int tile_index = (i - canvas->tLeft) + (j - canvas->tTop)*canvas->tileH;
+
+            if ( canvas->tiles[tile_index] ) { // if this tile is dirtied (nonzero)
+                dirty = true;
+                // make (pl..pr)x(pt..pb) the minimal rect covering all dirtied tiles
+                if ( i < pl ) pl = i;
+                if ( i+1 > pr ) pr = i+1;
+                if ( j < pt ) pt = j;
+                if ( j+1 > pb ) pb = j+1;
             }
+
+            canvas->tiles[tile_index] = 0; // undirty this tile
         }
     }
 
     canvas->need_redraw = FALSE;
-    sp_canvas_paint_rect (canvas, topaint.x0, topaint.y0, topaint.x1, topaint.y1);
+      
+    if ( dirty ) {
+        NRRectL topaint;
+        topaint.x0 = MAX (pl*TILE_SIZE, canvas->x0);
+        topaint.y0 = MAX (pt*TILE_SIZE, canvas->y0);
+        topaint.x1 = MIN (pr*TILE_SIZE, canvas_x1);
+        topaint.y1 = MIN (pb*TILE_SIZE, canvas_y1);
+        if ((topaint.x0 < topaint.x1) && (topaint.y0 < topaint.y1)) {
+            sp_canvas_paint_rect (canvas, topaint.x0, topaint.y0, topaint.x1, topaint.y1);
+        }
+    }
 
     return TRUE;
 }
@@ -2150,27 +2169,14 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear)
     canvas->x0 = ix;
     canvas->y0 = iy;
 
-    sp_canvas_resize_tiles(canvas,canvas->x0,canvas->y0,canvas->x0+canvas->widget.allocation.width,canvas->y0+canvas->widget.allocation.height);
+    sp_canvas_resize_tiles (canvas, canvas->x0, canvas->y0, canvas->x0+canvas->widget.allocation.width, canvas->y0+canvas->widget.allocation.height);
 
     if (!clear) {
         // scrolling without zoom; redraw only the newly exposed areas
         if ((dx != 0) || (dy != 0)) {
-            int width, height;
-            width = canvas->widget.allocation.width;
-            height = canvas->widget.allocation.height;
+            is_scrolling = 1;
             if (GTK_WIDGET_REALIZED (canvas)) {
                 gdk_window_scroll (SP_CANVAS_WINDOW (canvas), -dx, -dy);
-                gdk_window_process_updates (SP_CANVAS_WINDOW (canvas), TRUE);
-            }
-            if (dx < 0) {
-                sp_canvas_request_redraw (canvas, ix + 0, iy + 0, ix - dx, iy + height);
-            } else if (dx > 0) {
-                sp_canvas_request_redraw (canvas, ix + width - dx, iy + 0, ix + width, iy + height);
-            }
-            if (dy < 0) {
-                sp_canvas_request_redraw (canvas, ix + 0, iy + 0, ix + width, iy - dy);
-            } else if (dy > 0) {
-                sp_canvas_request_redraw (canvas, ix + 0, iy + height - dy, ix + width, iy + height);
             }
         }
     } else {
@@ -2313,16 +2319,16 @@ NR::Rect SPCanvas::getViewbox() const
 
 inline int sp_canvas_tile_floor(int x)
 {
-    return (x&(~31))/32;
+    return (x & (~(TILE_SIZE - 1))) / TILE_SIZE;
 }
 
 inline int sp_canvas_tile_ceil(int x)
 {
-    return ((x+31)&(~31))/32;
+    return ((x + (TILE_SIZE - 1)) & (~(TILE_SIZE - 1))) / TILE_SIZE;
 }
 
 /**
- * Helper that changes tile size for canvas redraw.
+ * Helper that allocates a new tile array for the canvas, copying overlapping tiles from the old array
  */
 void sp_canvas_resize_tiles(SPCanvas* canvas,int nl,int nt,int nr,int nb)
 {
@@ -2338,15 +2344,15 @@ void sp_canvas_resize_tiles(SPCanvas* canvas,int nl,int nt,int nr,int nb)
     int tr=sp_canvas_tile_ceil(nr);
     int tb=sp_canvas_tile_ceil(nb);
 
-    int nh=tr-tl,nv=tb-tt;
-    uint8_t* ntiles=(uint8_t*)g_malloc(nh*nv*sizeof(uint8_t));
-    for (int i=tl;i<tr;i++) {
-        for (int j=tt;j<tb;j++) {
-            int ind=(i-tl)+(j-tt)*nh;
+    int nh = tr-tl, nv = tb-tt;
+    uint8_t* ntiles = (uint8_t*)g_malloc(nh*nv*sizeof(uint8_t));
+    for (int i=tl; i<tr; i++) {
+        for (int j=tt; j<tb; j++) {
+            int ind = (i-tl) + (j-tt)*nh;
             if ( i >= canvas->tLeft && i < canvas->tRight && j >= canvas->tTop && j < canvas->tBottom ) {
-                ntiles[ind]=canvas->tiles[(i-canvas->tLeft)+(j-canvas->tTop)*canvas->tileH];
+                ntiles[ind]=canvas->tiles[(i-canvas->tLeft)+(j-canvas->tTop)*canvas->tileH]; // copy from the old tile
             } else {
-                ntiles[ind]=0;
+                ntiles[ind]=0; // newly exposed areas get 0
             }
         }
     }
@@ -2361,7 +2367,7 @@ void sp_canvas_resize_tiles(SPCanvas* canvas,int nl,int nt,int nr,int nb)
 }
 
 /**
- * Helper that marks specific canvas rectangle for redraw.
+ * Helper that marks specific canvas rectangle for redraw by dirtying its tiles
  */
 void sp_canvas_dirty_rect(SPCanvas* canvas,int nl,int nt,int nr,int nb)
 {
@@ -2380,9 +2386,9 @@ void sp_canvas_dirty_rect(SPCanvas* canvas,int nl,int nt,int nr,int nb)
 
     canvas->need_redraw = TRUE;
 
-    for (int i=tl;i<tr;i++) {
-        for (int j=tt;j<tb;j++) {
-            canvas->tiles[(i-canvas->tLeft)+(j-canvas->tTop)*canvas->tileH]=1;
+    for (int i=tl; i<tr; i++) {
+        for (int j=tt; j<tb; j++) {
+            canvas->tiles[(i-canvas->tLeft)+(j-canvas->tTop)*canvas->tileH] = 1;
         }
     }
 }
