@@ -170,9 +170,6 @@ Dialog::Dialog(const char *prefs_path, int verb_num, const char *apply_label)
         set_title(title);
     }
 
-    sp_transientize(dlg);
-    retransientize_suppress = false;
-
     gtk_signal_connect( GTK_OBJECT (dlg), "event", GTK_SIGNAL_FUNC(sp_dialog_event_handler), dlg );
 
     _hiddenF12 = false;
@@ -195,6 +192,8 @@ Dialog::Dialog(const char *prefs_path, int verb_num, const char *apply_label)
 
     read_geometry();
     present();
+    sp_transientize(dlg);
+    retransientize_suppress = false;
 }
 
 Dialog::Dialog(BaseObjectType *gobj)
