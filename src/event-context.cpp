@@ -276,15 +276,23 @@ sp_toggle_selector(SPDesktop *dt)
  * Calculates and keeps track of scroll acceleration.
  * Subroutine of sp_event_context_private_root_handler().
  */
-static gdouble accelerate_scroll(GdkEvent *event, gdouble acceleration)
+static gdouble accelerate_scroll(GdkEvent *event, gdouble acceleration, SPCanvas *canvas)
 {
     guint32 time_diff = ((GdkEventKey *) event)->time - scroll_event_time;
+    glong slowest_buffer = canvas->slowest_buffer / 1000; // the buffer time is in usec, but event time is in msec
+
+    // reduce time interval by the time it took to paint slowest buffer, 
+    // so that acceleration does not hiccup on complex slow-rendering drawings
+    if (slowest_buffer <= time_diff)
+        time_diff -= slowest_buffer;
+    else
+        time_diff = 0;
 
     /* key pressed within 500ms ? (1/2 second) */
     if (time_diff > 500 || event->key.keyval != scroll_keyval) {
-        scroll_multiply = 1;
+        scroll_multiply = 1; // abort acceleration
     } else {
-        scroll_multiply += acceleration;
+        scroll_multiply += acceleration; // continue acceleration
     }
 
     scroll_event_time = ((GdkEventKey *) event)->time;
@@ -480,7 +488,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 case GDK_KP_Left:
                 case GDK_KP_4:
                     if (MOD__CTRL_ONLY) {
-                        int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration));
+                        int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration, sp_desktop_canvas(desktop)));
                         gobble_key_events(get_group0_keyval(&event->key),
                                 GDK_CONTROL_MASK);
                         event_context->desktop->scroll_world(i, 0);
@@ -491,7 +499,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 case GDK_KP_Up:
                 case GDK_KP_8:
                     if (MOD__CTRL_ONLY) {
-                        int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration));
+                        int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration, sp_desktop_canvas(desktop)));
                         gobble_key_events(get_group0_keyval(&event->key),
                                 GDK_CONTROL_MASK);
                         event_context->desktop->scroll_world(0, i);
@@ -502,7 +510,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 case GDK_KP_Right:
                 case GDK_KP_6:
                     if (MOD__CTRL_ONLY) {
-                        int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration));
+                        int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration, sp_desktop_canvas(desktop)));
                         gobble_key_events(get_group0_keyval(&event->key),
                                 GDK_CONTROL_MASK);
                         event_context->desktop->scroll_world(-i, 0);
@@ -513,7 +521,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 case GDK_KP_Down:
                 case GDK_KP_2:
                     if (MOD__CTRL_ONLY) {
-                        int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration));
+                        int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration, sp_desktop_canvas(desktop)));
                         gobble_key_events(get_group0_keyval(&event->key),
                                 GDK_CONTROL_MASK);
                         event_context->desktop->scroll_world(0, -i);
