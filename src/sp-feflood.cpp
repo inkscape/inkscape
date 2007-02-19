@@ -108,6 +108,7 @@ static void
 sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeFlood *feFlood = SP_FEFLOOD(object);
+    (void)feFlood;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

@@ -108,6 +108,7 @@ static void
 sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeSpecularLighting *feSpecularLighting = SP_FESPECULARLIGHTING(object);
+    (void)feSpecularLighting;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

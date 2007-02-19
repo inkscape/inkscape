@@ -108,6 +108,7 @@ static void
 sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeConvolveMatrix *feConvolveMatrix = SP_FECONVOLVEMATRIX(object);
+    (void)feConvolveMatrix;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

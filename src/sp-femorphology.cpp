@@ -108,6 +108,7 @@ static void
 sp_feMorphology_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeMorphology *feMorphology = SP_FEMORPHOLOGY(object);
+    (void)feMorphology;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

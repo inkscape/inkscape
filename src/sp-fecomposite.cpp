@@ -108,6 +108,7 @@ static void
 sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeComposite *feComposite = SP_FECOMPOSITE(object);
+    (void)feComposite;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

@@ -108,6 +108,7 @@ static void
 sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeBlend *feBlend = SP_FEBLEND(object);
+    (void)feBlend;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

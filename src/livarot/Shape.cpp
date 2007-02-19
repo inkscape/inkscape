@@ -51,7 +51,7 @@ Shape::~Shape (void)
 
 void Shape::Affiche(void)
 {
-  printf("sh=%p nbPt=%i nbAr=%i\n",this, _pts.size(), _aretes.size()); // localizing ok
+  printf("sh=%p nbPt=%i nbAr=%i\n", this, static_cast<int>(_pts.size()), static_cast<int>(_aretes.size())); // localizing ok
   for (unsigned int i=0; i<_pts.size(); i++) {
     printf("pt %i : x=(%f %f) dI=%i dO=%i\n",i, _pts[i].x[0], _pts[i].x[1], _pts[i].dI, _pts[i].dO); // localizing ok
   }

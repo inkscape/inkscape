@@ -108,6 +108,7 @@ static void
 sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeColorMatrix *feColorMatrix = SP_FECOLORMATRIX(object);
+    (void)feColorMatrix;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

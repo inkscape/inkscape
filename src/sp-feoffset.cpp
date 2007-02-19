@@ -108,6 +108,7 @@ static void
 sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeOffset *feOffset = SP_FEOFFSET(object);
+    (void)feOffset;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

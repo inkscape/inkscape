@@ -109,6 +109,7 @@ static void
 sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeImage *feImage = SP_FEIMAGE(object);
+    (void)feImage;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

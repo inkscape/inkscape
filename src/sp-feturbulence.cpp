@@ -108,6 +108,7 @@ static void
 sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeTurbulence *feTurbulence = SP_FETURBULENCE(object);
+    (void)feTurbulence;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

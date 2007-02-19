@@ -108,6 +108,7 @@ static void
 sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeComponentTransfer *feComponentTransfer = SP_FECOMPONENTTRANSFER(object);
+    (void)feComponentTransfer;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

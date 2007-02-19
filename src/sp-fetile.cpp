@@ -108,6 +108,7 @@ static void
 sp_feTile_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeTile *feTile = SP_FETILE(object);
+    (void)feTile;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

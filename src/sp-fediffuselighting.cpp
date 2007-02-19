@@ -108,6 +108,7 @@ static void
 sp_feDiffuseLighting_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeDiffuseLighting *feDiffuseLighting = SP_FEDIFFUSELIGHTING(object);
+    (void)feDiffuseLighting;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

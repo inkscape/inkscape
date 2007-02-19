@@ -408,8 +408,8 @@ CairoRenderContext::popLayer(void)
     SPMask *mask = _state->mask;
     if (clip_path || mask) {
 
-        CairoRenderContext *clip_ctx;
-        cairo_surface_t *clip_mask;
+        CairoRenderContext *clip_ctx = 0;
+        cairo_surface_t *clip_mask = 0;
 
         if (clip_path) {
             if (_render_mode == RENDER_MODE_CLIP)
@@ -1313,7 +1313,11 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, NRMatrix const *font_matrix
     cairo_restore(_cr);
 
     cairo_font_face_destroy(font_face);
-#endif    
+#else
+    (void)size;
+    (void)fc_pattern;
+#endif
+
     return true;
 }
 

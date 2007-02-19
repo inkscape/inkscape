@@ -108,6 +108,7 @@ static void
 sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeDisplacementMap *feDisplacementMap = SP_FEDISPLACEMENTMAP(object);
+    (void)feDisplacementMap;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

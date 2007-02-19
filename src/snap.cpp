@@ -27,7 +27,12 @@
  *  \param v `Owning' SPNamedView.
  */
 
-SnapManager::SnapManager(SPNamedView const *v) : _named_view(v), grid(v, 0), axonomgrid(v, 0), guide(v, 0), object(v, 0)
+SnapManager::SnapManager(SPNamedView const *v) :
+    grid(v, 0),
+    axonomgrid(v, 0),
+    guide(v, 0),
+    object(v, 0),
+    _named_view(v)
 {
 
 }

@@ -108,6 +108,7 @@ static void
 sp_feMerge_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeMerge *feMerge = SP_FEMERGE(object);
+    (void)feMerge;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

@@ -219,7 +219,7 @@ ParamComboBox::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 
     ParamComboBoxEntry * combo = Gtk::manage(new ParamComboBoxEntry(this, doc, node));
     // add choice strings:
-    Glib::ustring * settext;
+    Glib::ustring * settext = 0;
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
         enumentry * entr = reinterpret_cast<enumentry *>(list->data);
         Glib::ustring * text = entr->guitext;

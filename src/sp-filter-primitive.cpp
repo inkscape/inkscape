@@ -110,6 +110,7 @@ static void
 sp_filter_primitive_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFilterPrimitive *filter_primitive = SP_FILTER_PRIMITIVE(object);
+    (void)filter_primitive;
 
     /* See if any parents need this value. */
     if (((SPObjectClass *) filter_primitive_parent_class)->set) {
