@@ -25,7 +25,7 @@ Entry::Entry(  Glib::ustring const &label, Glib::ustring const &tooltip,
                Glib::ustring const &icon,
                bool mnemonic)
     : Labelled(label, tooltip, new Gtk::Entry(), suffix, icon, mnemonic)
-{    
+{    
 }
     
 
