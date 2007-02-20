@@ -138,7 +138,7 @@ sp_repr_undo_log (Inkscape::XML::Event *log)
 
 	EventTracker<SimpleEvent<Event::XML> > tracker("undo-log");
 
-	if (log) {
+	if (log && log->repr) {
 		g_assert(!log->repr->document()->inTransaction());
 	}
 
