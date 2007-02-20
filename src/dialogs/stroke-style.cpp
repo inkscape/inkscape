@@ -79,6 +79,7 @@ static GtkWidget * marker_start_menu = NULL;
 static GtkWidget * marker_mid_menu = NULL;
 static GtkWidget * marker_end_menu = NULL;
 
+static Inkscape::UI::Cache::SvgPreview svg_preview_cache;
 
 /**
  * Create the stroke style widget, and hook up all the signals.
@@ -602,7 +603,15 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
 
     /* Update to renderable state */
     double sf = 0.8;
-    GdkPixbuf* pixbuf = render_pixbuf(root, sf, dbox, psize);
+    GdkPixbuf* pixbuf = NULL;
+
+    Glib::ustring key = svg_preview_cache.cache_key(mname, psize);
+    pixbuf = svg_preview_cache.get_preview_from_cache(key);
+
+    if (pixbuf == NULL) {
+        pixbuf = render_pixbuf(root, sf, dbox, psize);
+        svg_preview_cache.set_preview_in_cache(key, pixbuf);
+    }
 
     // Create widget
     GtkWidget *pb = gtk_image_new_from_pixbuf(pixbuf);
@@ -700,7 +709,9 @@ sp_marker_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *sour
     NRArena const *arena = NRArena::create();
     /* Create ArenaItem and set transform */
     unsigned const visionkey = sp_item_display_key_new(1);
+/*
     NRArenaItem *root =  sp_item_invoke_show( SP_ITEM(SP_DOCUMENT_ROOT (sandbox)), (NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY );
+*/
 
     for (; ml != NULL; ml = ml->next) {
         if (!SP_IS_MARKER(ml->data))
@@ -771,6 +782,57 @@ gchar const *buffer = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:sodipodi=
     return sp_document_new_from_mem (buffer, strlen(buffer), FALSE);
 }
 
+static void
+ink_marker_menu_create_menu(GtkWidget *m, gchar *menu_id, SPDocument *doc, SPDocument *sandbox)
+{
+    static SPDocument *markers_doc = NULL;
+
+    // add "None"
+    GtkWidget *i = gtk_menu_item_new();
+    gtk_widget_show(i);
+
+//    g_object_set_data(G_OBJECT(i), "marker", (void *) "none");
+
+    GtkWidget *hb = gtk_hbox_new(FALSE,  MARKER_ITEM_MARGIN);
+    gtk_widget_show(hb);
+
+    GtkWidget *l = gtk_label_new( _("None") );
+    gtk_widget_show(l);
+    gtk_misc_set_alignment(GTK_MISC(l), 0.0, 0.5);
+
+    gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, 0);
+
+    gtk_widget_show(hb);
+    gtk_container_add(GTK_CONTAINER(i), hb);
+    gtk_menu_append(GTK_MENU(m), i);
+
+    // find and load  markers.svg
+    if (markers_doc == NULL) {
+        g_warning("Reloading markers_doc");
+        char *markers_source = g_build_filename(INKSCAPE_MARKERSDIR, "markers.svg", NULL);
+        if (Inkscape::IO::file_test(markers_source, G_FILE_TEST_IS_REGULAR)) {
+            markers_doc = sp_document_new(markers_source, FALSE);
+        }
+        g_free(markers_source);
+    }
+
+    // suck in from current doc
+    sp_marker_list_from_doc ( m, NULL, doc, markers_doc, sandbox, menu_id );
+    
+    // add separator
+    {
+        GtkWidget *i = gtk_separator_menu_item_new();
+        gtk_widget_show(i);
+        gtk_menu_append(GTK_MENU(m), i);
+    }
+
+    // suck in from markers.svg
+    if (markers_doc) {
+        sp_document_ensure_up_to_date(doc);
+        sp_marker_list_from_doc ( m, doc, markers_doc, NULL, sandbox, menu_id );
+    }
+}
+
 
 /**
  * Creates a menu widget to display markers from markers.svg
@@ -795,51 +857,7 @@ ink_marker_menu( GtkWidget *tbl, gchar *menu_id, SPDocument *sandbox)
         gtk_widget_set_sensitive(mnu, FALSE);
 
     } else {
-
-        // add "None"
-        {
-            GtkWidget *i = gtk_menu_item_new();
-            gtk_widget_show(i);
-
-            g_object_set_data(G_OBJECT(i), "marker", (void *) "none");
-
-            GtkWidget *hb = gtk_hbox_new(FALSE,  MARKER_ITEM_MARGIN);
-            gtk_widget_show(hb);
-
-            GtkWidget *l = gtk_label_new( _("None") );
-            gtk_widget_show(l);
-            gtk_misc_set_alignment(GTK_MISC(l), 0.0, 0.5);
-
-            gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, 0);
-
-            gtk_widget_show(hb);
-            gtk_container_add(GTK_CONTAINER(i), hb);
-            gtk_menu_append(GTK_MENU(m), i);
-        }
-
-        // find and load  markers.svg
-        static SPDocument *markers_doc = NULL;
-        char *markers_source = g_build_filename(INKSCAPE_MARKERSDIR, "markers.svg", NULL);
-        if (Inkscape::IO::file_test(markers_source, G_FILE_TEST_IS_REGULAR)) {
-            markers_doc = sp_document_new(markers_source, FALSE);
-        }
-        g_free(markers_source);
-
-        // suck in from current doc
-        sp_marker_list_from_doc ( m, NULL, doc, markers_doc, sandbox, menu_id );
-
-        // add separator
-        {
-            GtkWidget *i = gtk_separator_menu_item_new();
-            gtk_widget_show(i);
-            gtk_menu_append(GTK_MENU(m), i);
-        }
-
-        // suck in from markers.svg
-        if (markers_doc) {
-            sp_document_ensure_up_to_date(doc);
-            sp_marker_list_from_doc ( m, doc, markers_doc, NULL, sandbox, menu_id );
-        }
+        ink_marker_menu_create_menu(m, menu_id, doc, sandbox);
 
         gtk_widget_set_sensitive(mnu, TRUE);
     }
@@ -918,6 +936,29 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
 
     sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE, 
                      _("Set markers"));
+
+    // Lastly, also update the marker dropdown menus, so the document's markers
+    // show up at the top of the menu
+    SPDocument *sandbox = ink_markers_preview_doc ();
+    GtkWidget *m;
+
+    m = gtk_menu_new();
+    gtk_widget_show(m);
+    ink_marker_menu_create_menu(m, "marker-start", document, sandbox);
+    gtk_option_menu_remove_menu(GTK_OPTION_MENU(marker_start_menu));
+    gtk_option_menu_set_menu(GTK_OPTION_MENU(marker_start_menu), m);
+
+    m = gtk_menu_new();
+    gtk_widget_show(m);
+    ink_marker_menu_create_menu(m, "marker-mid", document, sandbox);
+    gtk_option_menu_remove_menu(GTK_OPTION_MENU(marker_mid_menu));
+    gtk_option_menu_set_menu(GTK_OPTION_MENU(marker_mid_menu), m);
+
+    m = gtk_menu_new();
+    gtk_widget_show(m);
+    ink_marker_menu_create_menu(m, "marker-end", document, sandbox);
+    gtk_option_menu_remove_menu(GTK_OPTION_MENU(marker_end_menu));
+    gtk_option_menu_set_menu(GTK_OPTION_MENU(marker_end_menu), m);
 }
 
 /**
