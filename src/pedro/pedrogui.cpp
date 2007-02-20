@@ -2482,6 +2482,9 @@ void PedroGui::disconnectCallback()
 
 void PedroGui::quitCallback()
 {
+    client.disconnect();
+    //hide();
+    //Severe overkill!  :-)
     Gtk::Main::quit();
 }
 
