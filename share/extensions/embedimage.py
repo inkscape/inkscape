@@ -51,21 +51,22 @@ class MyEffect(inkex.Effect):
 
             path=''
             #path selection strategy:
-            # 1. absref
-            # 2. href if absolute
-            # 3. sodipodi:docbase + href
-            # 4. realpath-ified href
-            if (absref != None):
-                path=absref.value
-            elif (href != None):
+            # 1. href if absolute
+            # 2. sodipodi:docbase + href
+            # 3. realpath-ified href
+            # 4. absref, only if the above does not point to a file
+            if (href != None):
                 if (os.path.isabs(href.value)):
                     path=os.path.realpath(href.value)
                 elif (docbase != None):
                     path=os.path.join(docbase.value,href.value)
                 else:
                     path=os.path.realpath(href.value)
-            else:
-                inkex.debug('No xlink:href or sodipodi:absref attributes found! Unable to embed image.')
+            if (not os.path.isfile(path)):
+                if (absref != None):
+                    path=absref.value
+            if (not os.path.isfile(path)):
+                inkex.debug('No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image.')
             
             if (os.path.isfile(path)):
                 file = open(path,"rb").read()
