@@ -74,6 +74,12 @@ static void sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw);
 
 static void sp_stroke_style_widget_change_subselection ( Inkscape::Application *inkscape, SPDesktop *desktop, SPWidget *spw );
 
+/** Marker selection option menus */
+static GtkWidget * marker_start_menu = NULL;
+static GtkWidget * marker_mid_menu = NULL;
+static GtkWidget * marker_end_menu = NULL;
+
+
 /**
  * Create the stroke style widget, and hook up all the signals.
  */
@@ -1153,35 +1159,33 @@ sp_stroke_style_line_widget_new(void)
     // TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
     // (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
     spw_label(t, _("Start Markers:"), 0, i);
-    GtkWidget *mnu  = ink_marker_menu( spw ,"marker-start", sandbox);
-    gtk_signal_connect( GTK_OBJECT(mnu), "changed", GTK_SIGNAL_FUNC(sp_marker_select), spw );
-    gtk_widget_show(mnu);
-    gtk_table_attach( GTK_TABLE(t), mnu, 1, 4, i, i+1,
+    marker_start_menu  = ink_marker_menu( spw ,"marker-start", sandbox);
+    gtk_signal_connect( GTK_OBJECT(marker_start_menu), "changed", GTK_SIGNAL_FUNC(sp_marker_select), spw );
+    gtk_widget_show(marker_start_menu);
+    gtk_table_attach( GTK_TABLE(t), marker_start_menu, 1, 4, i, i+1,
                       (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
                       (GtkAttachOptions)0, 0, 0 );
-    gtk_object_set_data(GTK_OBJECT(spw), "start_mark_menu", mnu);
+    gtk_object_set_data(GTK_OBJECT(spw), "start_mark_menu", marker_start_menu);
 
     i++;
     spw_label(t, _("Mid Markers:"), 0, i);
-    mnu = NULL;
-    mnu  = ink_marker_menu( spw ,"marker-mid", sandbox);
-    gtk_signal_connect( GTK_OBJECT(mnu), "changed", GTK_SIGNAL_FUNC(sp_marker_select), spw );
-    gtk_widget_show(mnu);
-    gtk_table_attach( GTK_TABLE(t), mnu, 1, 4, i, i+1,
+    marker_mid_menu = ink_marker_menu( spw ,"marker-mid", sandbox);
+    gtk_signal_connect( GTK_OBJECT(marker_mid_menu), "changed", GTK_SIGNAL_FUNC(sp_marker_select), spw );
+    gtk_widget_show(marker_mid_menu);
+    gtk_table_attach( GTK_TABLE(t), marker_mid_menu, 1, 4, i, i+1,
                       (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
                       (GtkAttachOptions)0, 0, 0 );
-    gtk_object_set_data(GTK_OBJECT(spw), "mid_mark_menu", mnu);
+    gtk_object_set_data(GTK_OBJECT(spw), "mid_mark_menu", marker_mid_menu);
 
     i++;
     spw_label(t, _("End Markers:"), 0, i);
-    mnu = NULL;
-    mnu  = ink_marker_menu( spw ,"marker-end", sandbox);
-    gtk_signal_connect( GTK_OBJECT(mnu), "changed", GTK_SIGNAL_FUNC(sp_marker_select), spw );
-    gtk_widget_show(mnu);
-    gtk_table_attach( GTK_TABLE(t), mnu, 1, 4, i, i+1,
+    marker_end_menu = ink_marker_menu( spw ,"marker-end", sandbox);
+    gtk_signal_connect( GTK_OBJECT(marker_end_menu), "changed", GTK_SIGNAL_FUNC(sp_marker_select), spw );
+    gtk_widget_show(marker_end_menu);
+    gtk_table_attach( GTK_TABLE(t), marker_end_menu, 1, 4, i, i+1,
                       (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
                       (GtkAttachOptions)0, 0, 0 );
-    gtk_object_set_data(GTK_OBJECT(spw), "end_mark_menu", mnu);
+    gtk_object_set_data(GTK_OBJECT(spw), "end_mark_menu", marker_end_menu);
 
     i++;
 

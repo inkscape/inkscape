@@ -97,4 +97,51 @@ GdkPixbuf* render_pixbuf(NRArenaItem* root, double scale_factor, const NR::Rect&
     return pixbuf;
 }
 
+namespace Inkscape {
+namespace UI {
+namespace Cache {
 
+SvgPreview::SvgPreview()
+{
+}
+
+SvgPreview::~SvgPreview()
+{
+}
+
+Glib::ustring SvgPreview::cache_key(gchar const *name, unsigned psize) const {
+    Glib::ustring key = name;
+    key += ":";
+    key += psize;
+    return key;
+}
+
+GdkPixbuf* SvgPreview::get_preview_from_cache(const Glib::ustring& key) {
+    std::map<Glib::ustring, GdkPixbuf *>::iterator found = _pixmap_cache.find(key);
+    if ( found != _pixmap_cache.end() ) {
+        return found->second;
+    }
+    return NULL;
+}
+
+void SvgPreview::set_preview_in_cache(const Glib::ustring& key, GdkPixbuf* px) {
+    _pixmap_cache[key] = px;
+}
+
+GdkPixbuf* SvgPreview::get_preview(const gchar* id, NRArenaItem *root, 
+                                   double scale_factor, unsigned int psize) {
+    // First try looking up the cached preview in the cache map
+    Glib::ustring key = cache_key(id, psize);
+    GdkPixbuf* px = get_preview_from_cache(key);
+    
+    if (px == NULL) {
+        /*
+            px = render_pixbuf(root, scale_factor, dbox, psize);
+            set_preview_in_cache(key, px);
+        */
+    }
+}
+
+};
+};
+};
