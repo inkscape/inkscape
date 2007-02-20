@@ -27,7 +27,8 @@
 # include "config.h"
 #endif
 
-#if defined(g_ascii_strtod)
+//#if defined(g_ascii_strtod)
+#if 0
 /*
  * until 2004-04-22, g_ascii_strtod could not handle having a locale-based
  * decimal separator immediately following the number ("5,4" would

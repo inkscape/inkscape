@@ -50,7 +50,4 @@
 
 #define HAVE_GTK_WINDOW_FULLSCREEN    1
 
-#define g_ascii_strtod fixed_g_ascii_strtod
-
-
 #endif /* _CONFIG_H_ */
