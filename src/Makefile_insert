@@ -301,6 +301,7 @@ inkscape_private_libs =	\
 	application/libinkapp.a	\
 	ui/dialog/libuidialog.a	\
 	dialogs/libspdialogs.a	\
+	ui/cache/libuicache.a	\
 	jabber_whiteboard/libjabber_whiteboard.a \
 	pedro/libpedro.a	\
 	trace/libtrace.a	\

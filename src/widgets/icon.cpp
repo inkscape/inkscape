@@ -833,8 +833,8 @@ static guchar *load_svg_pixels(gchar const *name,
 // returns true if icon needed preloading, false if nothing was done
 static bool prerender_icon(gchar const *name, unsigned lsize, unsigned psize)
 {
-    Glib::ustring key=icon_cache_key(name, lsize, psize);
-    guchar *px=get_cached_pixels(key);
+    Glib::ustring key = icon_cache_key(name, lsize, psize);
+    guchar *px = get_cached_pixels(key);
     if (px) {
         return false;
     } else {
@@ -849,10 +849,10 @@ static bool prerender_icon(gchar const *name, unsigned lsize, unsigned psize)
 static guchar *
 sp_icon_image_load_svg(gchar const *name, unsigned lsize, unsigned psize)
 {
-    Glib::ustring key=icon_cache_key(name, lsize, psize);
+    Glib::ustring key = icon_cache_key(name, lsize, psize);
 
     // did we already load this icon at this scale/size?
-    guchar *px=get_cached_pixels(key);
+    guchar *px = get_cached_pixels(key);
     if (!px) {
         px = load_svg_pixels(name, lsize, psize);
         if (px) {

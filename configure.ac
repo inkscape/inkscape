@@ -814,6 +814,7 @@ src/removeoverlap/makefile
 src/svg/makefile
 src/trace/makefile
 src/traits/makefile
+src/ui/cache/makefile
 src/ui/dialog/makefile
 src/ui/makefile
 src/ui/view/makefile

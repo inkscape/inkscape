@@ -588,7 +588,6 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
 
     // Find object's bbox in document
     NR::Matrix const i2doc(sp_item_i2doc_affine(SP_ITEM(object)));
-
     NR::Rect const dbox = SP_ITEM(object)->invokeBbox(i2doc);
 
     if (dbox.isEmpty()) {
@@ -600,7 +599,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
     GdkPixbuf* pixbuf = render_pixbuf(root, sf, dbox, psize);
 
     // Create widget
-    GtkWidget *pb = gtk_image_new_from_pixbuf(get_pixbuf(pixbuf));
+    GtkWidget *pb = gtk_image_new_from_pixbuf(pixbuf);
 
     return pb;
 }

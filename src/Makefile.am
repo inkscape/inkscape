@@ -57,6 +57,7 @@ include xml/Makefile_insert
 include traits/Makefile_insert
 include algorithms/Makefile_insert
 include ui/Makefile_insert
+include ui/cache/Makefile_insert
 include ui/dialog/Makefile_insert
 include ui/view/Makefile_insert
 include ui/widget/Makefile_insert
@@ -82,6 +83,7 @@ noinst_LIBRARIES =	\
 	io/libio.a	\
 	libcroco/libcroco.a	\
 	ui/libui.a	\
+	ui/cache/libuicache.a	\
 	ui/dialog/libuidialog.a	\
 	ui/view/libuiview.a 	\
 	ui/widget/libuiwidget.a	\
@@ -148,6 +150,7 @@ EXTRA_DIST =	\
 	traits/makefile.in	\
 	utest/makefile.in	\
 	ui/makefile.in		\
+	ui/cache/makefile.in	\
 	ui/dialog/makefile.in	\
 	ui/view/makefile.in	\
 	ui/widget/makefile.in	\
