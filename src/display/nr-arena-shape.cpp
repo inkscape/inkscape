@@ -722,6 +722,82 @@ nr_arena_shape_add_bboxes(NRArenaShape* shape, NRRect &bbox)
     }
 }
 
+/** Feeds path-creating calls to the cairo context translating them from the SPCurve, with the given transform and shift */
+static void
+feed_curve_to_cairo (cairo_t *ct, SPCurve *curve, NR::Matrix trans, NR::Point shift)
+{
+    NR::Point lastX(0,0);
+    bool  closed = false;
+    NArtBpath *bpath = SP_CURVE_BPATH(curve);
+    for (int i = 0; bpath[i].code != NR_END; i++) {
+        switch (bpath[i].code) {
+            case NR_MOVETO_OPEN:
+            case NR_MOVETO:
+                if (closed) cairo_close_path(ct);
+                closed = (bpath[i].code == NR_MOVETO);
+                lastX[NR::X] = bpath[i].x3;
+                lastX[NR::Y] = bpath[i].y3;
+                lastX *= trans;
+                lastX -= shift;
+                cairo_move_to(ct, lastX[NR::X], lastX[NR::Y]);
+                break;
+
+            case NR_LINETO:
+                lastX[NR::X] = bpath[i].x3;
+                lastX[NR::Y] = bpath[i].y3;
+                lastX *= trans;
+                lastX -= shift;
+                cairo_line_to(ct, lastX[NR::X], lastX[NR::Y]);
+                break;
+
+            case NR_CURVETO: {
+                NR::Point  tm1, tm2, tm3;
+                tm1[0]=bpath[i].x1;
+                tm1[1]=bpath[i].y1;
+                tm2[0]=bpath[i].x2;
+                tm2[1]=bpath[i].y2;
+                tm3[0]=bpath[i].x3;
+                tm3[1]=bpath[i].y3;
+                tm1 *= trans;
+                tm2 *= trans;
+                tm3 *= trans;
+                tm1 -= shift;
+                tm2 -= shift;
+                tm3 -= shift;
+                cairo_curve_to (ct, tm1[NR::X], tm1[NR::Y], tm2[NR::X], tm2[NR::Y], tm3[NR::X], tm3[NR::Y]);
+                break;
+            }
+
+            default:
+                break;
+        }
+    }
+}
+
+/** Creates a cairo context to render to the given pixblock on the given area */
+cairo_t *
+nr_create_cairo_context (NRRectL *area, NRPixBlock *pb)
+{
+    if (!nr_rect_l_test_intersect (&pb->area, area)) 
+        return NULL;
+
+    NRRectL clip;
+    nr_rect_l_intersect (&clip, &pb->area, area);
+    unsigned char *dpx = NR_PIXBLOCK_PX (pb) + (clip.y0 - pb->area.y0) * pb->rs + NR_PIXBLOCK_BPP (pb) * (clip.x0 - pb->area.x0);
+    int width = area->x1 - area->x0;
+    int height = area->y1 - area->y0;
+    cairo_surface_t* cst = cairo_image_surface_create_for_data
+        (dpx,
+         (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8P? CAIRO_FORMAT_ARGB32 : (pb->mode == NR_PIXBLOCK_MODE_R8G8B8? CAIRO_FORMAT_RGB24 : CAIRO_FORMAT_A8)),
+         width,
+         height,
+         pb->rs);
+    cairo_t *ct = cairo_create (cst);
+
+    return ct;
+}
+
+
 /**
  * Renders the item.  Markers are just composed into the parent buffer.
  */
@@ -735,23 +811,14 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
-    if (outline) { // fixme: if no problems reported, remove old outline stuff
+    // cairo outline rendering:
+    // fixme: if no problems reported, remove old outline stuff
+    if (outline) { 
 
-        if (!nr_rect_l_test_intersect (&pb->area, area)) 
+        cairo_t *ct = nr_create_cairo_context (area, pb);
+
+        if (!ct) 
             return item->state;
-
-        NRRectL clip;
-        nr_rect_l_intersect (&clip, &pb->area, area);
-        unsigned char *dpx = NR_PIXBLOCK_PX (pb) + (clip.y0 - pb->area.y0) * pb->rs + NR_PIXBLOCK_BPP (pb) * (clip.x0 - pb->area.x0);
-        int width = area->x1 - area->x0;
-        int height = area->y1 - area->y0;
-        cairo_surface_t* cst = cairo_image_surface_create_for_data
-            (dpx,
-             (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8P? CAIRO_FORMAT_ARGB32 : (pb->mode == NR_PIXBLOCK_MODE_R8G8B8? CAIRO_FORMAT_RGB24 : CAIRO_FORMAT_A8)),
-             width,
-             height,
-             pb->rs);
-        cairo_t *ct = cairo_create (cst);
 
         guint32 rgba = NR_ARENA_ITEM(shape)->arena->outlinecolor;
         cairo_set_source_rgba(ct, SP_RGBA32_R_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_B_F(rgba), SP_RGBA32_A_F(rgba));
@@ -760,62 +827,16 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
         cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
         cairo_new_path(ct);
 
-        NR::Matrix trans(shape->ctm);
-        NR::Point lastX(0,0);
-        bool  closed = false;
-        NArtBpath *bpath = SP_CURVE_BPATH(shape->curve);
-        for (int i = 0; bpath[i].code != NR_END; i++) {
-            switch (bpath[i].code) {
-                case NR_MOVETO_OPEN:
-                case NR_MOVETO:
-                    if (closed) cairo_close_path(ct);
-                    closed = (bpath[i].code == NR_MOVETO);
-                    lastX[NR::X] = bpath[i].x3;
-                    lastX[NR::Y] = bpath[i].y3;
-                    lastX*=trans;
-                    lastX -= NR::Point(area->x0, area->y0);
-                    cairo_move_to(ct, lastX[NR::X], lastX[NR::Y]);
-                    break;
-
-                case NR_LINETO:
-                    lastX[NR::X] = bpath[i].x3;
-                    lastX[NR::Y] = bpath[i].y3;
-                    lastX*=trans;
-                    lastX -= NR::Point(area->x0, area->y0);
-                    cairo_line_to(ct, lastX[NR::X], lastX[NR::Y]);
-                    break;
-
-                case NR_CURVETO: {
-                    NR::Point  tm1, tm2, tm3;
-                    tm1[0]=bpath[i].x1;
-                    tm1[1]=bpath[i].y1;
-                    tm2[0]=bpath[i].x2;
-                    tm2[1]=bpath[i].y2;
-                    tm3[0]=bpath[i].x3;
-                    tm3[1]=bpath[i].y3;
-                    tm1*=trans;
-                    tm2*=trans;
-                    tm3*=trans;
-                    tm1 -= NR::Point(area->x0, area->y0);
-                    tm2 -= NR::Point(area->x0, area->y0);
-                    tm3 -= NR::Point(area->x0, area->y0);
-                    cairo_curve_to (ct, tm1[NR::X], tm1[NR::Y], tm2[NR::X], tm2[NR::Y], tm3[NR::X], tm3[NR::Y]);
-                    break;
-                }
-
-                default:
-                    break;
-            }
-        }
+        feed_curve_to_cairo (ct, shape->curve, NR::Matrix(shape->ctm), NR::Point(area->x0, area->y0));
 
         cairo_stroke(ct);
 
+        cairo_surface_t *cst = cairo_get_target(ct);
         cairo_destroy (ct);
         cairo_surface_finish (cst);
+        cairo_surface_destroy (cst);
 
         pb->empty = FALSE;
-
-        cairo_surface_destroy (cst);
 
         return item->state;
     }
@@ -932,6 +953,33 @@ nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
     if (!shape->curve) return item->state;
+
+/*
+// cairo clipping: this basically works except for the stride-must-be-divisible-by-4 cairo bug;
+// reenable this when the bug is fixed and remove the rest of this function
+        cairo_t *ct = nr_create_cairo_context (area, pb);
+
+        if (!ct) 
+            return item->state;
+
+        cairo_set_source_rgba(ct, 0, 0, 0, 1);
+
+        cairo_new_path(ct);
+
+        feed_curve_to_cairo (ct, shape->curve, NR::Matrix(shape->ctm), NR::Point(area->x0, area->y0));
+
+        cairo_fill(ct);
+
+        cairo_surface_t *cst = cairo_get_target(ct);
+        cairo_destroy (ct);
+        cairo_surface_finish (cst);
+        cairo_surface_destroy (cst);
+
+        pb->empty = FALSE;
+
+        return item->state;
+*/
+
 
     if ( shape->delayed_shp || shape->fill_shp == NULL) { // we need a fill shape no matter what
         if ( nr_rect_l_test_intersect(area, &item->bbox) ) {
