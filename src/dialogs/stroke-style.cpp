@@ -619,7 +619,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
     double sf = 0.8;
     GdkPixbuf* pixbuf = NULL;
 
-    Glib::ustring key = svg_preview_cache.cache_key(mname, psize);
+    Glib::ustring key = svg_preview_cache.cache_key(source->uri, mname, psize);
     pixbuf = svg_preview_cache.get_preview_from_cache(key);
 
     if (pixbuf == NULL) {
@@ -687,6 +687,7 @@ sp_marker_menu_build (GtkWidget *m, GSList *marker_list, SPDocument *source, SPD
         gtk_widget_show(hb);
 
         // generate preview
+
         GtkWidget *prv = sp_marker_prev_new (22, markid, source, sandbox, menu_id, arena, visionkey, root);
         gtk_widget_show(prv);
         gtk_box_pack_start(GTK_BOX(hb), prv, FALSE, FALSE, 6);

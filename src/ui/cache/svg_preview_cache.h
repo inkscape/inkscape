@@ -25,10 +25,10 @@ class SvgPreview {
     SvgPreview();
     ~SvgPreview();
 
-    Glib::ustring cache_key(gchar const *name, unsigned psize) const;
+    Glib::ustring cache_key(gchar const *uri, gchar const *name, unsigned psize) const;
     GdkPixbuf*    get_preview_from_cache(const Glib::ustring& key);
     void          set_preview_in_cache(const Glib::ustring& key, GdkPixbuf* px);
-    GdkPixbuf*    get_preview(const gchar* id, NRArenaItem *root, double scale_factor, unsigned int psize);
+    GdkPixbuf*    get_preview(const gchar* uri, const gchar* id, NRArenaItem *root, double scale_factor, unsigned int psize);
 };
 
 }; // namespace Cache
