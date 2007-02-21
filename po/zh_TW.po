@@ -4,15 +4,15 @@
 # tad <tad@mail.tnc.edu.tw>, 2004.
 # Wei-Lun Chao <william.chao@ossii.com.tw>, 2006.
 #
-#: ../src/widgets/toolbox.cpp:4035 ../src/widgets/toolbox.cpp:4056
-#: ../src/widgets/toolbox.cpp:4085 ../src/widgets/toolbox.cpp:4106
-#: ../src/widgets/toolbox.cpp:4133
+#: ../src/widgets/toolbox.cpp:4037 ../src/widgets/toolbox.cpp:4058
+#: ../src/widgets/toolbox.cpp:4087 ../src/widgets/toolbox.cpp:4108
+#: ../src/widgets/toolbox.cpp:4135
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-10 22:45+0100\n"
-"PO-Revision-Date: 2006-11-05 18:06+0100\n"
+"POT-Creation-Date: 2007-02-10 15:28+0100\n"
+"PO-Revision-Date: 2007-02-21 03:30+0100\n"
 "Last-Translator: Wei-Lun Chao <william.chao@ossii.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgstr "<b>Ctrl</b>: 製作正圓形或等比例伸縮的橢圓形，抓取弧�
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: 在起始點周圍繪製"
 
-#: ../src/arc-context.cpp:420
+#: ../src/arc-context.cpp:421
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make circle or integer-"
@@ -46,47 +46,52 @@ msgstr ""
 "<b>橢圓形</b>: %s &#215; %s; 按住 <b>Ctrl</b> 可以繪製正圓形或等比例的橢圓"
 "形；按住 <b>Shift</b> 可在起始點周圍繪製"
 
-#: ../src/arc-context.cpp:438
+#: ../src/arc-context.cpp:439
 #, fuzzy
 msgid "Create ellipse"
 msgstr "建立仿製品(_N)"
 
-#: ../src/connector-context.cpp:517
+#: ../src/connector-context.cpp:519
 msgid "Creating new connector"
 msgstr "建立新連接器"
 
-#: ../src/connector-context.cpp:711
+#: ../src/connector-context.cpp:746
+#, fuzzy
+msgid "Connector endpoint drag canceled."
+msgstr "已拖曳取消節點或控柄。"
+
+#: ../src/connector-context.cpp:794
 #, fuzzy
 msgid "Reroute connector"
 msgstr "建立連線程式"
 
 #. Flush pending updates
-#: ../src/connector-context.cpp:918
+#: ../src/connector-context.cpp:959
 #, fuzzy
 msgid "Create connector"
 msgstr "建立連線程式"
 
-#: ../src/connector-context.cpp:942
+#: ../src/connector-context.cpp:983
 msgid "Finishing connector"
 msgstr "完成連接器"
 
-#: ../src/connector-context.cpp:1086
+#: ../src/connector-context.cpp:1127
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr "<b>連接點</b>: 點擊或拖曳它以建立新的連接器"
 
-#: ../src/connector-context.cpp:1157
+#: ../src/connector-context.cpp:1198
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr "<b>連接器終點</b>: 拖曳它以連接或重定路線至新的形狀"
 
-#: ../src/connector-context.cpp:1268
+#: ../src/connector-context.cpp:1309
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "選擇<b>至少一個非連接器物件</b>。"
 
-#: ../src/connector-context.cpp:1273 ../src/widgets/toolbox.cpp:4319
+#: ../src/connector-context.cpp:1314 ../src/widgets/toolbox.cpp:4321
 msgid "Make connectors avoid selected objects"
 msgstr "使連接器避免所選物件"
 
-#: ../src/connector-context.cpp:1274 ../src/widgets/toolbox.cpp:4323
+#: ../src/connector-context.cpp:1315 ../src/widgets/toolbox.cpp:4325
 msgid "Make connectors ignore selected objects"
 msgstr "使連接器忽略所選物件"
 
@@ -98,31 +103,31 @@ msgstr "<b>目前圖層已隱藏</b>。解除它的隱藏才可以於其上繪�
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr "<b>目前圖層已鎖定</b>。解除它的鎖定才可以於其上繪圖。"
 
-#: ../src/desktop-events.cpp:110
+#: ../src/desktop-events.cpp:111
 #, fuzzy
 msgid "Create guide"
 msgstr "建立仿製品(_N)"
 
-#: ../src/desktop-events.cpp:184
+#: ../src/desktop-events.cpp:185
 #, fuzzy
 msgid "Move guide"
 msgstr "降低節點"
 
-#: ../src/desktop-events.cpp:190 ../src/dialogs/guidelinedialog.cpp:90
+#: ../src/desktop-events.cpp:191 ../src/dialogs/guidelinedialog.cpp:90
 #, fuzzy
 msgid "Delete guide"
 msgstr "刪除節點"
 
-#: ../src/desktop-events.cpp:208
+#: ../src/desktop-events.cpp:209
 #, c-format
 msgid "%s at %s"
 msgstr "%s 在 %s"
 
-#: ../src/desktop.cpp:698
+#: ../src/desktop.cpp:700
 msgid "No previous zoom."
 msgstr "無上次縮放"
 
-#: ../src/desktop.cpp:723
+#: ../src/desktop.cpp:725
 msgid "No next zoom."
 msgstr "無下次縮放"
 
@@ -161,7 +166,7 @@ msgstr "選擇<b>一個物件</b>以移除其並排的複本。"
 msgid "Delete tiled clones"
 msgstr "刪除所選節點"
 
-#: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1987
+#: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1990
 msgid "Select an <b>object</b> to clone."
 msgstr "選擇某個<b>物件</b>以產生複本。"
 
@@ -829,19 +834,19 @@ msgid "Release log messages"
 msgstr "釋放日誌訊息"
 
 #: ../src/dialogs/eek-color-def.cpp:56
-#: ../src/widgets/gradient-selector.cpp:161
+#: ../src/widgets/gradient-selector.cpp:162
 msgid "none"
 msgstr "無"
 
-#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2292
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2294
 msgid "_Page"
 msgstr "檢視整頁(_P)"
 
-#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2296
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2298
 msgid "_Drawing"
 msgstr "檢視繪圖部份(_D)"
 
-#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2298
+#: ../src/dialogs/export.cpp:139 ../src/verbs.cpp:2300
 msgid "_Selection"
 msgstr "檢視選取區(_S)"
 
@@ -963,8 +968,8 @@ msgstr "使填色混濁"
 msgid "Set fill color"
 msgstr "最近選擇的色彩"
 
-#: ../src/dialogs/fill-style.cpp:393 ../src/ui/widget/selected-style.cpp:227
-#: ../src/ui/widget/selected-style.cpp:444
+#: ../src/dialogs/fill-style.cpp:393 ../src/ui/widget/selected-style.cpp:239
+#: ../src/ui/widget/selected-style.cpp:459
 msgid "Remove fill"
 msgstr "移除填色"
 
@@ -979,9 +984,9 @@ msgid "Set pattern on fill"
 msgstr "圖樣填充"
 
 #. TRANSLATORS COMMENT: unset is a verb here
-#: ../src/dialogs/fill-style.cpp:536 ../src/ui/widget/selected-style.cpp:165
-#: ../src/ui/widget/selected-style.cpp:223
-#: ../src/ui/widget/selected-style.cpp:462
+#: ../src/dialogs/fill-style.cpp:536 ../src/ui/widget/selected-style.cpp:177
+#: ../src/ui/widget/selected-style.cpp:235
+#: ../src/ui/widget/selected-style.cpp:477
 #: ../src/ui/widget/style-swatch.cpp:305
 msgid "Unset fill"
 msgstr "回復填色"
@@ -1225,7 +1230,7 @@ msgstr "%d×%d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:888
-#: ../src/ui/dialog/filedialog.cpp:1855 ../src/widgets/desktop-widget.cpp:1138
+#: ../src/ui/dialog/filedialog.cpp:1855 ../src/widgets/desktop-widget.cpp:1145
 msgid "Selection"
 msgstr "選取區"
 
@@ -1251,8 +1256,8 @@ msgid ""
 msgstr "屬性 id= (只有字母﹑數字以及字元 .-_: 被允許)"
 
 #. Button for setting the object's id, label, title and description.
-#: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2188
-#: ../src/verbs.cpp:2192
+#: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2190
+#: ../src/verbs.cpp:2194
 msgid "_Set"
 msgstr "設定(_S)"
 
@@ -1348,57 +1353,57 @@ msgstr "邊框樣式(_Y)"
 msgid "Set object description"
 msgstr "描述:"
 
-#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
+#: ../src/dialogs/layers-panel.cpp:592 ../src/widgets/layer-selector.cpp:590
 #, fuzzy
 msgid "Unhide layer"
 msgstr "提升圖層(_R)"
 
-#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:590
+#: ../src/dialogs/layers-panel.cpp:592 ../src/widgets/layer-selector.cpp:590
 #, fuzzy
 msgid "Hide layer"
 msgstr "提升圖層(_R)"
 
-#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
+#: ../src/dialogs/layers-panel.cpp:603 ../src/widgets/layer-selector.cpp:582
 #, fuzzy
 msgid "Lock layer"
 msgstr "降低圖層(_L)"
 
-#: ../src/dialogs/layers-panel.cpp:601 ../src/widgets/layer-selector.cpp:582
+#: ../src/dialogs/layers-panel.cpp:603 ../src/widgets/layer-selector.cpp:582
 #, fuzzy
 msgid "Unlock layer"
 msgstr "降低圖層(_L)"
 
-#: ../src/dialogs/layers-panel.cpp:698
+#: ../src/dialogs/layers-panel.cpp:699
 #, fuzzy
 msgid "Change layer opacity"
 msgstr "主要濁度"
 
-#: ../src/dialogs/layers-panel.cpp:763
+#: ../src/dialogs/layers-panel.cpp:764
 #, fuzzy
 msgid "Opacity, %:"
 msgstr "濁度:"
 
-#: ../src/dialogs/layers-panel.cpp:789
+#: ../src/dialogs/layers-panel.cpp:790
 msgid "New"
 msgstr "新增"
 
-#: ../src/dialogs/layers-panel.cpp:794
+#: ../src/dialogs/layers-panel.cpp:795
 msgid "Top"
 msgstr "頂層"
 
-#: ../src/dialogs/layers-panel.cpp:800
+#: ../src/dialogs/layers-panel.cpp:801
 msgid "Up"
 msgstr "上一層"
 
-#: ../src/dialogs/layers-panel.cpp:806
+#: ../src/dialogs/layers-panel.cpp:807
 msgid "Dn"
 msgstr "下一層"
 
-#: ../src/dialogs/layers-panel.cpp:812
+#: ../src/dialogs/layers-panel.cpp:813
 msgid "Bot"
 msgstr "底層"
 
-#: ../src/dialogs/layers-panel.cpp:822
+#: ../src/dialogs/layers-panel.cpp:823
 msgid "X"
 msgstr "X"
 
@@ -1534,14 +1539,14 @@ msgstr "藍"
 msgid "Master _opacity, %"
 msgstr "主要濁度(_P)"
 
-#: ../src/dialogs/object-properties.cpp:381
-#: ../src/ui/widget/selected-style.cpp:806
-#: ../src/ui/widget/selected-style.cpp:1094
+#: ../src/dialogs/object-properties.cpp:384
+#: ../src/ui/widget/selected-style.cpp:821
+#: ../src/ui/widget/selected-style.cpp:1113
 #, fuzzy
 msgid "Change opacity"
 msgstr "主要濁度"
 
-#: ../src/dialogs/object-properties.cpp:438
+#: ../src/dialogs/object-properties.cpp:441
 msgid "Change blur"
 msgstr ""
 
@@ -1738,8 +1743,8 @@ msgstr "設定屬性"
 msgid "Set stroke color"
 msgstr "最近選擇的色彩"
 
-#: ../src/dialogs/stroke-style.cpp:342 ../src/ui/widget/selected-style.cpp:227
-#: ../src/ui/widget/selected-style.cpp:453
+#: ../src/dialogs/stroke-style.cpp:342 ../src/ui/widget/selected-style.cpp:239
+#: ../src/ui/widget/selected-style.cpp:468
 msgid "Remove stroke"
 msgstr "移除描邊"
 
@@ -1753,9 +1758,9 @@ msgstr "在邊框中建立漸層"
 msgid "Set pattern on stroke"
 msgstr "描邊圖案"
 
-#: ../src/dialogs/stroke-style.cpp:461 ../src/ui/widget/selected-style.cpp:165
-#: ../src/ui/widget/selected-style.cpp:223
-#: ../src/ui/widget/selected-style.cpp:471
+#: ../src/dialogs/stroke-style.cpp:461 ../src/ui/widget/selected-style.cpp:177
+#: ../src/ui/widget/selected-style.cpp:235
+#: ../src/ui/widget/selected-style.cpp:486
 #: ../src/ui/widget/style-swatch.cpp:305
 msgid "Unset stroke"
 msgstr "回復描邊"
@@ -1769,9 +1774,7 @@ msgstr "未選取文件"
 #: ../src/ui/dialog/inkscape-preferences.cpp:191
 #: ../src/ui/dialog/inkscape-preferences.cpp:323
 #: ../src/ui/dialog/inkscape-preferences.cpp:408
-#: ../src/ui/dialog/inkscape-preferences.cpp:573
-#: ../src/ui/widget/selected-style.cpp:137
-#: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1963
+#: ../src/ui/dialog/inkscape-preferences.cpp:573 ../src/verbs.cpp:1965
 msgid "None"
 msgstr "無"
 
@@ -1917,13 +1920,13 @@ msgstr "對齊中心"
 msgid "Align lines right"
 msgstr "對齊右邊"
 
-#: ../src/dialogs/text-edit.cpp:288 ../src/widgets/toolbox.cpp:3959
-#: ../src/widgets/toolbox.cpp:4005
+#: ../src/dialogs/text-edit.cpp:288 ../src/widgets/toolbox.cpp:3961
+#: ../src/widgets/toolbox.cpp:4007
 msgid "Horizontal text"
 msgstr "水平文字"
 
-#: ../src/dialogs/text-edit.cpp:302 ../src/widgets/toolbox.cpp:3970
-#: ../src/widgets/toolbox.cpp:4016
+#: ../src/dialogs/text-edit.cpp:302 ../src/widgets/toolbox.cpp:3972
+#: ../src/widgets/toolbox.cpp:4018
 msgid "Vertical text"
 msgstr "垂直文字"
 
@@ -1934,7 +1937,7 @@ msgstr "列距:"
 #. Text
 #: ../src/dialogs/text-edit.cpp:363 ../src/selection-describer.cpp:63
 #: ../src/ui/dialog/inkscape-preferences.cpp:384
-#: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2216
+#: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2218
 msgid "Text"
 msgstr "文字"
 
@@ -1942,7 +1945,7 @@ msgstr "文字"
 msgid "Set as default"
 msgstr "設為預設"
 
-#: ../src/dialogs/text-edit.cpp:636 ../src/text-context.cpp:1363
+#: ../src/dialogs/text-edit.cpp:636 ../src/text-context.cpp:1364
 #, fuzzy
 msgid "Set text style"
 msgstr "邊框樣式(_Y)"
@@ -2038,33 +2041,33 @@ msgstr "新的元件節點"
 msgid "New text node"
 msgstr "新文字節點"
 
-#: ../src/dialogs/xml-tree.cpp:347 ../src/dialogs/xml-tree.cpp:1412
+#: ../src/dialogs/xml-tree.cpp:347 ../src/dialogs/xml-tree.cpp:1414
 #: ../src/nodepath.cpp:1710
 msgid "Duplicate node"
 msgstr "再製節點"
 
-#: ../src/dialogs/xml-tree.cpp:368 ../src/dialogs/xml-tree.cpp:1429
+#: ../src/dialogs/xml-tree.cpp:368 ../src/dialogs/xml-tree.cpp:1431
 #: ../src/nodepath.cpp:2956
 msgid "Delete node"
 msgstr "刪除節點"
 
-#: ../src/dialogs/xml-tree.cpp:384 ../src/dialogs/xml-tree.cpp:1578
+#: ../src/dialogs/xml-tree.cpp:384 ../src/dialogs/xml-tree.cpp:1580
 msgid "Unindent node"
 msgstr "無內縮節點"
 
-#: ../src/dialogs/xml-tree.cpp:399 ../src/dialogs/xml-tree.cpp:1557
+#: ../src/dialogs/xml-tree.cpp:399 ../src/dialogs/xml-tree.cpp:1559
 msgid "Indent node"
 msgstr "內縮節點"
 
-#: ../src/dialogs/xml-tree.cpp:411 ../src/dialogs/xml-tree.cpp:1510
+#: ../src/dialogs/xml-tree.cpp:411 ../src/dialogs/xml-tree.cpp:1512
 msgid "Raise node"
 msgstr "提升節點"
 
-#: ../src/dialogs/xml-tree.cpp:423 ../src/dialogs/xml-tree.cpp:1527
+#: ../src/dialogs/xml-tree.cpp:423 ../src/dialogs/xml-tree.cpp:1529
 msgid "Lower node"
 msgstr "降低節點"
 
-#: ../src/dialogs/xml-tree.cpp:468 ../src/dialogs/xml-tree.cpp:1447
+#: ../src/dialogs/xml-tree.cpp:468 ../src/dialogs/xml-tree.cpp:1449
 msgid "Delete attribute"
 msgstr "刪除屬性"
 
@@ -2101,23 +2104,23 @@ msgstr "取消"
 msgid "Create"
 msgstr "建立"
 
-#: ../src/dialogs/xml-tree.cpp:1379
+#: ../src/dialogs/xml-tree.cpp:1380
 #, fuzzy
 msgid "Create new element node"
 msgstr "新的元件節點"
 
-#: ../src/dialogs/xml-tree.cpp:1394
+#: ../src/dialogs/xml-tree.cpp:1396
 #, fuzzy
 msgid "Create new text node"
 msgstr "新文字節點"
 
-#: ../src/dialogs/xml-tree.cpp:1465
+#: ../src/dialogs/xml-tree.cpp:1467
 #, c-format
 msgid ""
 "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
 msgstr "無法設定 <b>%s</b>: 另一個具有 <b>%s</b> 值的元件已經存在！"
 
-#: ../src/dialogs/xml-tree.cpp:1480
+#: ../src/dialogs/xml-tree.cpp:1482
 #, fuzzy
 msgid "Change attribute"
 msgstr "設定屬性"
@@ -2147,7 +2150,7 @@ msgstr "路徑已關閉。"
 msgid "Closing path."
 msgstr "關閉路徑中。"
 
-#: ../src/draw-context.cpp:549
+#: ../src/draw-context.cpp:550
 #, fuzzy
 msgid "Draw path"
 msgstr "拆開(_A)"
@@ -2174,7 +2177,7 @@ msgstr "在游標之下"
 msgid "<b>Release mouse</b> to set color."
 msgstr "<b>放開滑鼠鍵</b>以設定顏色。"
 
-#: ../src/dropper-context.cpp:356 ../src/tools-switch.cpp:199
+#: ../src/dropper-context.cpp:356 ../src/tools-switch.cpp:201
 msgid ""
 "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to "
 "average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> "
@@ -2189,7 +2192,7 @@ msgstr ""
 msgid "Set picked color"
 msgstr "最近選擇的色彩"
 
-#: ../src/dyna-draw-context.cpp:696
+#: ../src/dyna-draw-context.cpp:714
 #, fuzzy
 msgid "Create calligraphic stroke"
 msgstr "繪製美工線條"
@@ -2199,11 +2202,11 @@ msgid "[Unchanged]"
 msgstr ""
 
 #. Edit
-#: ../src/event-log.cpp:261 ../src/event-log.cpp:264 ../src/verbs.cpp:2000
+#: ../src/event-log.cpp:261 ../src/event-log.cpp:264 ../src/verbs.cpp:2002
 msgid "_Undo"
 msgstr "復原(_U)"
 
-#: ../src/event-log.cpp:271 ../src/event-log.cpp:275 ../src/verbs.cpp:2002
+#: ../src/event-log.cpp:271 ../src/event-log.cpp:275 ../src/verbs.cpp:2004
 msgid "_Redo"
 msgstr "重做(_R)"
 
@@ -2272,27 +2275,27 @@ msgstr "」無法載入，因為"
 msgid "Could not create extension error log file '%s'"
 msgstr "無法建立延伸功能的錯誤日誌檔案「%s」"
 
-#: ../src/extension/extension.cpp:684
+#: ../src/extension/extension.cpp:685
 msgid "Name:"
 msgstr "名稱："
 
-#: ../src/extension/extension.cpp:685
+#: ../src/extension/extension.cpp:686
 msgid "ID:"
 msgstr "ID："
 
-#: ../src/extension/extension.cpp:686
+#: ../src/extension/extension.cpp:687
 msgid "State:"
 msgstr "狀態："
 
-#: ../src/extension/extension.cpp:686
+#: ../src/extension/extension.cpp:687
 msgid "Loaded"
 msgstr "已載入"
 
-#: ../src/extension/extension.cpp:686
+#: ../src/extension/extension.cpp:687
 msgid "Unloaded"
 msgstr "已卸載"
 
-#: ../src/extension/extension.cpp:686
+#: ../src/extension/extension.cpp:687
 msgid "Deactivated"
 msgstr "未活化"
 
@@ -2316,7 +2319,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "啟動時顯示對話框"
 
-#: ../src/extension/implementation/script.cpp:991
+#: ../src/extension/implementation/script.cpp:1014
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2325,7 +2328,7 @@ msgstr ""
 "Inkscape 已經從它呼叫的命令稿中接收到一個錯誤。該錯誤回傳的文字已包含於下。"
 "Inkscape 將會繼續運行，但是您所要求的動作已經取消。"
 
-#: ../src/extension/implementation/script.cpp:1004
+#: ../src/extension/implementation/script.cpp:1027
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2345,32 +2348,32 @@ msgid ""
 "will not be loaded."
 msgstr "模組目錄 (%s) 無法使用。將不會載入該目錄中的外部模組。"
 
-#: ../src/extension/internal/bluredge.cpp:131
+#: ../src/extension/internal/bluredge.cpp:132
 #, fuzzy
 msgid "Inset/Outset Halo"
 msgstr "內插/外貼:"
 
-#: ../src/extension/internal/bluredge.cpp:133
+#: ../src/extension/internal/bluredge.cpp:134
 #, fuzzy
 msgid "Width"
 msgstr "寬度:"
 
-#: ../src/extension/internal/bluredge.cpp:133
+#: ../src/extension/internal/bluredge.cpp:134
 #, fuzzy
 msgid "Width in px of the halo"
 msgstr "模糊區域的像素寬度"
 
-#: ../src/extension/internal/bluredge.cpp:134
+#: ../src/extension/internal/bluredge.cpp:135
 #, fuzzy
 msgid "Number of steps"
 msgstr "步數"
 
-#: ../src/extension/internal/bluredge.cpp:134
+#: ../src/extension/internal/bluredge.cpp:135
 #, fuzzy
 msgid "Number of inset/outset copies of the object to make"
 msgstr "模擬模糊的物件複本數"
 
-#: ../src/extension/internal/bluredge.cpp:138
+#: ../src/extension/internal/bluredge.cpp:139
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
 #: ../share/extensions/pathalongpath.inx.h:4
 msgid "Generate from Path"
@@ -2404,7 +2407,7 @@ msgstr "Encapsulated Postscript(*.eps)"
 msgid "Encapsulated Postscript File"
 msgstr "Encapsulated Postscript 檔案"
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:139
+#: ../src/extension/internal/gdkpixbuf-input.cpp:140
 #, c-format
 msgid "%s GDK pixbuf Input"
 msgstr "%s GDK pixbuf 輸入"
@@ -2433,38 +2436,38 @@ msgstr "Inkscape: 列印預視"
 msgid "GNOME Print"
 msgstr "GNOME 列印"
 
-#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:118
+#: ../src/extension/internal/grid.cpp:189 ../src/ui/widget/panel.cpp:118
 msgid "Grid"
 msgstr "格線"
 
-#: ../src/extension/internal/grid.cpp:216
+#: ../src/extension/internal/grid.cpp:191
 msgid "Line Width"
 msgstr "線條寬度"
 
-#: ../src/extension/internal/grid.cpp:217
+#: ../src/extension/internal/grid.cpp:192
 msgid "Horizontal Spacing"
 msgstr "水平間隔"
 
-#: ../src/extension/internal/grid.cpp:218
+#: ../src/extension/internal/grid.cpp:193
 msgid "Vertical Spacing"
 msgstr "垂直間隔"
 
-#: ../src/extension/internal/grid.cpp:219
+#: ../src/extension/internal/grid.cpp:194
 msgid "Horizontal Offset"
 msgstr "水平偏移"
 
-#: ../src/extension/internal/grid.cpp:220
+#: ../src/extension/internal/grid.cpp:195
 msgid "Vertical Offset"
 msgstr "垂直偏移"
 
-#: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
+#: ../src/extension/internal/grid.cpp:199 ../share/extensions/eqtexsvg.inx.h:3
 #: ../share/extensions/funcplot.inx.h:12 ../share/extensions/lindenmayer.inx
 #: .h:9 ../share/extensions/lorem_ipsum.inx.h:4
 #: ../share/extensions/rtree.inx.h:4
 msgid "Render"
 msgstr "潤算"
 
-#: ../src/extension/internal/grid.cpp:226
+#: ../src/extension/internal/grid.cpp:201
 msgid "Draw a path which is a grid"
 msgstr "繪製網格路徑"
 
@@ -2497,13 +2500,13 @@ msgid "OpenDocument drawing file"
 msgstr "開放文件繪圖檔案"
 
 #: ../src/extension/internal/pdf-cairo.cpp:123
-#: ../src/extension/internal/ps.cpp:121
+#: ../src/extension/internal/ps.cpp:184
 msgid "Print Destination"
 msgstr "列印指定範圍"
 
 #. Print properties frame
 #: ../src/extension/internal/pdf-cairo.cpp:138
-#: ../src/extension/internal/ps.cpp:136
+#: ../src/extension/internal/ps.cpp:204
 msgid "Print properties"
 msgstr "列印屬性"
 
@@ -2520,12 +2523,12 @@ msgstr ""
 "去。"
 
 #: ../src/extension/internal/pdf-cairo.cpp:152
-#: ../src/extension/internal/ps.cpp:150
+#: ../src/extension/internal/ps.cpp:218
 msgid "Print as bitmap"
 msgstr "列印成點陣圖"
 
 #: ../src/extension/internal/pdf-cairo.cpp:154
-#: ../src/extension/internal/ps.cpp:152
+#: ../src/extension/internal/ps.cpp:220
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2535,23 +2538,23 @@ msgstr ""
 "伸縮，但是所有的物件潤算將會與顯示相同。"
 
 #: ../src/extension/internal/pdf-cairo.cpp:168
-#: ../src/extension/internal/ps.cpp:166
+#: ../src/extension/internal/ps.cpp:234
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "偏好的點陣圖解析度(每英吋幾點)"
 
 #: ../src/extension/internal/pdf-cairo.cpp:182
-#: ../src/extension/internal/ps.cpp:180
+#: ../src/extension/internal/ps.cpp:248
 msgid "Resolution:"
 msgstr "解析度:"
 
 #. Print destination frame
 #: ../src/extension/internal/pdf-cairo.cpp:186
-#: ../src/extension/internal/ps.cpp:184
+#: ../src/extension/internal/ps.cpp:253
 msgid "Print destination"
 msgstr "列印指定範圍"
 
 #: ../src/extension/internal/pdf-cairo.cpp:192
-#: ../src/extension/internal/ps.cpp:190
+#: ../src/extension/internal/ps.cpp:259
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2592,11 +2595,21 @@ msgstr "Postscript (*.ps)"
 msgid "Postscript File"
 msgstr "Postscript 檔案"
 
-#: ../src/extension/internal/ps.cpp:143
+#: ../src/extension/internal/ps.cpp:121
+#, fuzzy
+msgid "Print"
+msgstr "點"
+
+#: ../src/extension/internal/ps.cpp:182
+#, fuzzy
+msgid "Print Configuration"
+msgstr "列印指定範圍"
+
+#: ../src/extension/internal/ps.cpp:211
 msgid "Print using PostScript operators"
 msgstr "使用 PostScript 列印"
 
-#: ../src/extension/internal/ps.cpp:145
+#: ../src/extension/internal/ps.cpp:213
 msgid ""
 "Use PostScript vector operators. The resulting image is usually smaller in "
 "file size and can be arbitrarily scaled, but alpha transparency and patterns "
@@ -2605,7 +2618,7 @@ msgstr ""
 "使用 PostScript 向量運算器。產生的圖片檔尺寸常常比較小，而且可以任意伸縮，但"
 "是會喪失 alpha 透明度與圖樣。"
 
-#: ../src/extension/internal/ps.cpp:1719
+#: ../src/extension/internal/ps.cpp:1812
 msgid "Postscript Print"
 msgstr "Postscript 列印"
 
@@ -2702,7 +2715,7 @@ msgstr "由 W3C 定義之可伸縮向量圖形格式"
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:101
+#: ../src/extension/system.cpp:102
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "自動偵測格式失敗。此檔案將以 SVG 格式來開啟。"
 
@@ -2710,52 +2723,52 @@ msgstr "自動偵測格式失敗。此檔案將以 SVG 格式來開啟。"
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:129
+#: ../src/file.cpp:130
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:215 ../src/file.cpp:855
+#: ../src/file.cpp:216 ../src/file.cpp:860
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "無法載入所要求的檔案 %s"
 
-#: ../src/file.cpp:240
+#: ../src/file.cpp:241
 msgid "Document not saved yet.  Cannot revert."
 msgstr "文件尚未儲存，無法復原。"
 
-#: ../src/file.cpp:246
+#: ../src/file.cpp:247
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr "變動將會遺失！是否確定要重新載入文件 %s？"
 
-#: ../src/file.cpp:266
+#: ../src/file.cpp:267
 msgid "Document reverted."
 msgstr "文件已復原。"
 
-#: ../src/file.cpp:268
+#: ../src/file.cpp:269
 msgid "Document not reverted."
 msgstr "文件尚未復原。"
 
-#: ../src/file.cpp:389
+#: ../src/file.cpp:390
 msgid "Select file to open"
 msgstr "選擇欲開啟之檔案"
 
-#: ../src/file.cpp:466
+#: ../src/file.cpp:467
 #, fuzzy
 msgid "Vacuum &lt;defs&gt;"
 msgstr "清空 Defs(_U)"
 
-#: ../src/file.cpp:471
+#: ../src/file.cpp:472
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "已從 &lt;defs&gt; 移除 <b>%i</b> 項未使用的定義。"
 
-#: ../src/file.cpp:476
+#: ../src/file.cpp:477
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "在 &lt;defs&gt; 沒有未使用的定義。"
 
-#: ../src/file.cpp:505
+#: ../src/file.cpp:506
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -2763,116 +2776,151 @@ msgid ""
 msgstr ""
 "沒有找到 Inkscape 擴充功能以儲存文件(%s)。這可能是某個未知的副檔名所導致。"
 
-#: ../src/file.cpp:506 ../src/file.cpp:514
+#: ../src/file.cpp:507 ../src/file.cpp:515
 msgid "Document not saved."
 msgstr "文件尚未儲存。"
 
-#: ../src/file.cpp:513
+#: ../src/file.cpp:514
 #, c-format
 msgid "File %s could not be saved."
 msgstr "無法儲存檔案 %s。"
 
-#: ../src/file.cpp:523
+#: ../src/file.cpp:524
 msgid "Document saved."
 msgstr "文件已儲存"
 
-#: ../src/file.cpp:582 ../src/file.cpp:978
+#: ../src/file.cpp:583 ../src/file.cpp:983
 #, c-format
 msgid "drawing%s"
 msgstr "繪製%s"
 
-#: ../src/file.cpp:588
+#: ../src/file.cpp:589
 #, c-format
 msgid "drawing-%d%s"
 msgstr "繪製-%d%s"
 
-#: ../src/file.cpp:607
+#: ../src/file.cpp:608
 #, fuzzy
 msgid "Select file to save a copy to"
 msgstr "選擇檔案以儲存到"
 
-#: ../src/file.cpp:609 ../src/file.cpp:616
+#: ../src/file.cpp:610 ../src/file.cpp:617
 msgid "Select file to save to"
 msgstr "選擇檔案以儲存到"
 
-#: ../src/file.cpp:680
+#: ../src/file.cpp:681
 msgid "No changes need to be saved."
 msgstr "沒有任何改變需要儲存"
 
-#: ../src/file.cpp:852
+#: ../src/file.cpp:698
+#, fuzzy
+msgid "Saving document..."
+msgstr "儲存文件"
+
+#: ../src/file.cpp:857
 #, fuzzy
 msgid "Import"
 msgstr "匯入(_I)..."
 
-#: ../src/file.cpp:883
+#: ../src/file.cpp:888
 msgid "Select file to import"
 msgstr "選擇欲匯入之檔案"
 
-#: ../src/file.cpp:1000
+#: ../src/file.cpp:1005
 #, fuzzy
 msgid "Select file to export to"
 msgstr "選擇欲匯入之檔案"
 
-#: ../src/gradient-context.cpp:176
+#: ../src/gradient-context.cpp:307 ../src/widgets/gradient-vector.cpp:736
+#, fuzzy
+msgid "Add gradient stop"
+msgstr "放射漸變繪製"
+
+#: ../src/gradient-context.cpp:391
 #, fuzzy
 msgid "Create default gradient"
 msgstr "建立線性漸層"
 
-#: ../src/gradient-context.cpp:272
+#: ../src/gradient-context.cpp:519
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr "<b>Ctrl</b>: 抓取漸層角度"
 
-#: ../src/gradient-context.cpp:273
+#: ../src/gradient-context.cpp:520
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Shift</b>: 在起始點周圍繪製漸層"
 
-#: ../src/gradient-context.cpp:369
+#: ../src/gradient-context.cpp:616
 #, fuzzy
 msgid "Invert gradient"
 msgstr "線性漸層"
 
-#: ../src/gradient-context.cpp:461
+#: ../src/gradient-context.cpp:725
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] "%d個物件<b>漸變</b>；按住 <b>Ctrl</b> 擷取角"
 
-#: ../src/gradient-context.cpp:465
+#: ../src/gradient-context.cpp:729
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "選擇<b>物件</b>以建立漸層。"
 
-#: ../src/gradient-drag.cpp:61
+#: ../src/gradient-drag.cpp:70
 msgid "Linear gradient <b>start</b>"
 msgstr "線性漸層<b>開始</b>"
 
-#. POINT_LG_P1
-#: ../src/gradient-drag.cpp:62
+#. POINT_LG_BEGIN
+#: ../src/gradient-drag.cpp:71
 msgid "Linear gradient <b>end</b>"
 msgstr "線性漸層<b>結束</b>"
 
-#: ../src/gradient-drag.cpp:63
+#. POINT_RG_FOCUS
+#: ../src/gradient-drag.cpp:72 ../src/gradient-drag.cpp:77
+#: ../src/gradient-drag.cpp:78
+#, fuzzy
+msgid "Linear gradient <b>midstop</b>"
+msgstr "線性漸層<b>開始</b>"
+
+#: ../src/gradient-drag.cpp:73
 msgid "Radial gradient <b>center</b>"
 msgstr "放射狀漸層<b>中心</b>"
 
-#: ../src/gradient-drag.cpp:64 ../src/gradient-drag.cpp:65
+#: ../src/gradient-drag.cpp:74 ../src/gradient-drag.cpp:75
 msgid "Radial gradient <b>radius</b>"
 msgstr "放射狀漸層<b>半徑</b>"
 
-#: ../src/gradient-drag.cpp:66
+#: ../src/gradient-drag.cpp:76
 msgid "Radial gradient <b>focus</b>"
 msgstr "放射狀漸層<b>焦點</b>"
 
-#: ../src/gradient-drag.cpp:386
+#: ../src/gradient-drag.cpp:426
 #, fuzzy
 msgid "Merge gradient handles"
 msgstr "隨機節點控柄"
 
-#: ../src/gradient-drag.cpp:530 ../src/gradient-drag.cpp:1091
+#: ../src/gradient-drag.cpp:694
 #, fuzzy
 msgid "Move gradient handle"
 msgstr "隨機節點控柄"
 
-#: ../src/gradient-drag.cpp:669
+#: ../src/gradient-drag.cpp:747 ../src/widgets/gradient-vector.cpp:768
+#, fuzzy
+msgid "Delete gradient stop"
+msgstr "刪除停止點"
+
+#: ../src/gradient-drag.cpp:894
+#, fuzzy, c-format
+msgid ""
+"%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
+"+Alt</b> to delete stop"
+msgstr ""
+"%s 用於: %s%s; 以 <b>Ctrl</b> 拖曳來抓取角度，以 <b>Ctrl+Alt</b> 來保留角度，"
+"以 <b>Ctrl+Shift</b> 在中心周圍伸縮"
+
+#: ../src/gradient-drag.cpp:898 ../src/gradient-drag.cpp:905
+msgid " (stroke)"
+msgstr " (邊框)"
+
+#: ../src/gradient-drag.cpp:902
 #, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
@@ -2881,17 +2929,13 @@ msgstr ""
 "%s 用於: %s%s; 以 <b>Ctrl</b> 拖曳來抓取角度，以 <b>Ctrl+Alt</b> 來保留角度，"
 "以 <b>Ctrl+Shift</b> 在中心周圍伸縮"
 
-#: ../src/gradient-drag.cpp:672
-msgid " (stroke)"
-msgstr " (邊框)"
-
-#: ../src/gradient-drag.cpp:675
+#: ../src/gradient-drag.cpp:910
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
 msgstr "放射狀漸層<b>中心</b>與<b>焦點</b>；按 <b>Shift</b> 拖曳來分離焦點"
 
-#: ../src/gradient-drag.cpp:678
+#: ../src/gradient-drag.cpp:913
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
@@ -2900,6 +2944,11 @@ msgid_plural ""
 "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to "
 "separate"
 msgstr[0] "漸變點由<b>%d</b>個漸變共享；按住 <b>Shift</b> 拖動分隔"
+
+#: ../src/gradient-drag.cpp:1747
+#, fuzzy
+msgid "Delete gradient stop(s)"
+msgstr "刪除停止點"
 
 #: ../src/helper/units.cpp:36
 msgid "Unit"
@@ -2913,7 +2962,7 @@ msgstr "單位"
 msgid "Point"
 msgstr "點"
 
-#: ../src/helper/units.cpp:37 ../src/ui/widget/selected-style.cpp:259
+#: ../src/helper/units.cpp:37 ../src/ui/widget/selected-style.cpp:271
 msgid "pt"
 msgstr "pt"
 
@@ -2932,7 +2981,7 @@ msgstr "像素"
 #: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:179
 #: ../src/ui/dialog/inkscape-preferences.cpp:182
 #: ../src/ui/dialog/inkscape-preferences.cpp:185
-#: ../src/ui/widget/selected-style.cpp:255
+#: ../src/ui/widget/selected-style.cpp:267
 msgid "px"
 msgstr "px"
 
@@ -2961,7 +3010,7 @@ msgstr "百分比"
 msgid "Millimeter"
 msgstr "公釐"
 
-#: ../src/helper/units.cpp:41 ../src/ui/widget/selected-style.cpp:263
+#: ../src/helper/units.cpp:41 ../src/ui/widget/selected-style.cpp:275
 msgid "mm"
 msgstr "mm"
 
@@ -3191,7 +3240,7 @@ msgid "Go to parent"
 msgstr "前往上層"
 
 #: ../src/interface.cpp:1044 ../src/interface.cpp:1086
-#: ../src/ui/widget/selected-style.cpp:431
+#: ../src/ui/widget/selected-style.cpp:446
 #, fuzzy
 msgid "Drop color"
 msgstr "複製色彩"
@@ -3204,17 +3253,17 @@ msgstr "無法剖析 SVG 資料"
 msgid "Drop SVG"
 msgstr ""
 
-#: ../src/interface.cpp:1200
+#: ../src/interface.cpp:1201
 #, fuzzy
 msgid "Drop bitmap image"
 msgstr "匯入點陣圖為 <image>"
 
-#: ../src/interface.cpp:1266
+#: ../src/interface.cpp:1267
 #, c-format
 msgid "Overwrite %s"
 msgstr "覆寫 %s"
 
-#: ../src/interface.cpp:1287
+#: ../src/interface.cpp:1288
 #, c-format
 msgid ""
 "The file %s already exists.  Do you want to overwrite that file with the "
@@ -3481,7 +3530,7 @@ msgstr "最近開啟(_R)"
 msgid "_Edit"
 msgstr "編輯(_E)"
 
-#: ../src/menus-skeleton.h:65 ../src/verbs.cpp:2012
+#: ../src/menus-skeleton.h:65 ../src/verbs.cpp:2014
 msgid "Paste Si_ze"
 msgstr "貼上尺寸(_Z)"
 
@@ -3690,32 +3739,30 @@ msgstr "矩形"
 msgid "Move node handle"
 msgstr "隨機節點控柄"
 
-#: ../src/nodepath.cpp:3465
+#: ../src/nodepath.cpp:3464
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both "
 "handles"
-msgstr ""
-"<b>節點控柄</b>: 角度 %0.2f&#176﹑長度 %s；以 <b>Ctrl</b> 來抓取角度；以 "
-"<b>Alt</b> 來鎖定長度；以 <b>Shift</b> 來旋轉兩個控柄"
+msgstr "<b>節點控柄</b>: 角度 %0.2f&#176;長度 %s；以 <b>Ctrl</b> 來抓取角度；以 <b>Alt</b> 來鎖定長度；以 <b>Shift</b> 來旋轉兩個控柄"
 
-#: ../src/nodepath.cpp:3643
+#: ../src/nodepath.cpp:3642
 #, fuzzy
 msgid "Rotate nodes"
 msgstr "提升節點"
 
-#: ../src/nodepath.cpp:3768
+#: ../src/nodepath.cpp:3767
 #, fuzzy
 msgid "Scale nodes"
 msgstr "提升節點"
 
-#: ../src/nodepath.cpp:3815
+#: ../src/nodepath.cpp:3814
 #, fuzzy
 msgid "Flip nodes"
 msgstr "線條"
 
-#: ../src/nodepath.cpp:3980
+#: ../src/nodepath.cpp:3979
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3724,38 +3771,38 @@ msgstr ""
 "+Alt</b> 來抓取控柄的方向"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4204
+#: ../src/nodepath.cpp:4205
 msgid "end node"
 msgstr "末端節點"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4209
+#: ../src/nodepath.cpp:4210
 msgid "cusp"
 msgstr "尖銳"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4212
+#: ../src/nodepath.cpp:4213
 msgid "smooth"
 msgstr "平滑"
 
-#: ../src/nodepath.cpp:4214
+#: ../src/nodepath.cpp:4215
 msgid "symmetric"
 msgstr "對稱"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4220
+#: ../src/nodepath.cpp:4221
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "終端節點，控柄已縮回(以 <b>Shift</b> 拖曳來延伸)"
 
-#: ../src/nodepath.cpp:4222
+#: ../src/nodepath.cpp:4223
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "一個控柄已縮回(以 <b>Shift</b> 拖曳來延伸)"
 
-#: ../src/nodepath.cpp:4225
+#: ../src/nodepath.cpp:4226
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "兩個控柄已縮回(以 <b>Shift</b> 拖曳來延伸)"
 
-#: ../src/nodepath.cpp:4237
+#: ../src/nodepath.cpp:4238
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3764,15 +3811,15 @@ msgstr ""
 "<b>拖動</b>節點或節點控柄；<b>Alt+拖動</b>節點造型； <b>方向</b>鍵移動節點；"
 "<b>&lt; &gt;</b> 縮放，<b>[ ]</b> 旋轉"
 
-#: ../src/nodepath.cpp:4238
+#: ../src/nodepath.cpp:4239
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr "<b>拖曳</b>該節點或它的控柄；<b>方向鍵</b>用以移動節點"
 
-#: ../src/nodepath.cpp:4261 ../src/nodepath.cpp:4273
+#: ../src/nodepath.cpp:4262 ../src/nodepath.cpp:4274
 msgid "Select a single object to edit its nodes or handles."
 msgstr "選擇單一物件以編輯它的節點或控柄。"
 
-#: ../src/nodepath.cpp:4265
+#: ../src/nodepath.cpp:4266
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3784,17 +3831,17 @@ msgstr[0] ""
 "從 <b>%i</b> 個節點中選取了 <b>0</b> 個。<b>點擊</b>﹑<b>Shift+點擊</b> 或在"
 "節點<b>四周拖曳</b>來選取。"
 
-#: ../src/nodepath.cpp:4271
+#: ../src/nodepath.cpp:4272
 msgid "Drag the handles of the object to modify it."
 msgstr "拖曳物件的控柄來變更它。"
 
-#: ../src/nodepath.cpp:4279
+#: ../src/nodepath.cpp:4280
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "從 <b>%2$i</b> 個節點中選取了 <b>%1$i</b> 個；%3$s。%4$s。"
 
-#: ../src/nodepath.cpp:4286
+#: ../src/nodepath.cpp:4287
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3803,7 +3850,7 @@ msgid_plural ""
 msgstr[0] ""
 "<b>%i</b> / <b>%i</b> 節點已選擇在 <b>%i</b> / <b>%i</b> 子路徑中 %s。"
 
-#: ../src/nodepath.cpp:4292
+#: ../src/nodepath.cpp:4293
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -3908,60 +3955,60 @@ msgstr "<b>旋轉</b>填充圖樣；藉由 <b>Ctrl</b> 來抓取角度"
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "拖曳以改變<b>流動文字訊框</b>的大小"
 
-#: ../src/path-chemistry.cpp:56
+#: ../src/path-chemistry.cpp:57
 msgid "Select <b>at least two objects</b> to combine."
 msgstr "選擇<b>至少兩個物件</b>以進行結合。"
 
-#: ../src/path-chemistry.cpp:63
+#: ../src/path-chemistry.cpp:64
 msgid "At least one of the objects is <b>not a path</b>, cannot combine."
 msgstr "至少一個物件<b>不是路徑</b>，無法結合。"
 
-#: ../src/path-chemistry.cpp:71
+#: ../src/path-chemistry.cpp:72
 msgid ""
 "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
 msgstr "您無法從<b>不同的群組</b>或<b>圖層</b>結合物件。"
 
-#: ../src/path-chemistry.cpp:139
+#: ../src/path-chemistry.cpp:141
 #, fuzzy
 msgid "Combine"
 msgstr "結合"
 
-#: ../src/path-chemistry.cpp:154
+#: ../src/path-chemistry.cpp:156
 msgid "Select <b>path(s)</b> to break apart."
 msgstr "選取<b>路徑</b>以分解。"
 
-#: ../src/path-chemistry.cpp:233
+#: ../src/path-chemistry.cpp:235
 #, fuzzy
 msgid "Break apart"
 msgstr "拆開(_A)"
 
-#: ../src/path-chemistry.cpp:235
+#: ../src/path-chemistry.cpp:237
 msgid "<b>No path(s)</b> to break apart in the selection."
 msgstr "選取區中<b>沒有路徑</b>可以分解。"
 
-#: ../src/path-chemistry.cpp:256
+#: ../src/path-chemistry.cpp:258
 msgid "Select <b>object(s)</b> to convert to path."
 msgstr "選擇<b>物件</b>以轉換成路徑。"
 
-#: ../src/path-chemistry.cpp:300
+#: ../src/path-chemistry.cpp:302
 #, fuzzy
 msgid "Object to path"
 msgstr "物件轉成路徑(_O)"
 
-#: ../src/path-chemistry.cpp:302
+#: ../src/path-chemistry.cpp:304
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr "選取區中<b>沒有物件</b>可以轉成路徑。"
 
-#: ../src/path-chemistry.cpp:364
+#: ../src/path-chemistry.cpp:367
 msgid "Select <b>path(s)</b> to reverse."
 msgstr "選取<b>路徑</b>以反轉。"
 
-#: ../src/path-chemistry.cpp:389
+#: ../src/path-chemistry.cpp:392
 #, fuzzy
 msgid "Reverse path"
 msgstr "反轉(_R)"
 
-#: ../src/path-chemistry.cpp:391
+#: ../src/path-chemistry.cpp:394
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "選取區中<b>沒有路徑</b>可以反轉。"
 
@@ -3995,16 +4042,14 @@ msgstr "<b>點選</b>或<b>拖曳</b>以自此點起繼續路徑。"
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, "
 "<b>Enter</b> to finish the path"
-msgstr ""
-"<b>%s</b>: 角度 %3.2f&#176；距離 %s；以 <b>Ctrl</b> 來抓取角度，<b>Enter</b> "
-"來結束路徑"
+msgstr "<b>%s</b>: 角度 %3.2f&#176;距離 %s；以 <b>Ctrl</b> 來抓取角度，<b>Enter</b> 來結束路徑"
 
 #: ../src/pen-context.cpp:1087
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
-msgstr "<b>曲線控柄</b>: 角度 %3.2f&#176；長度 %s; 以 <b>Ctrl</b> 來抓取角度"
+msgstr "<b>曲線控柄</b>: 角度 %3.2f&#176;長度 %s; 以 <b>Ctrl</b> 來抓取角度"
 
 #: ../src/pen-context.cpp:1117
 #, c-format
@@ -4059,7 +4104,7 @@ msgid ""
 "circular"
 msgstr "<b>Ctrl</b>: 製作正方形或整數比例伸縮的矩形，鎖定圓角"
 
-#: ../src/rect-context.cpp:471
+#: ../src/rect-context.cpp:472
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
@@ -4068,7 +4113,7 @@ msgstr ""
 "<b>矩形</b>: %s &#215; %s; 以 <b>Ctrl</b> 製作正方形或整數比例伸縮的矩形；以 "
 "<b>Shift</b> 在起點四周繪製"
 
-#: ../src/rect-context.cpp:491
+#: ../src/rect-context.cpp:492
 #, fuzzy
 msgid "Create rectangle"
 msgstr "搜尋矩形"
@@ -4106,7 +4151,7 @@ msgstr "刪除節點"
 msgid "<b>Nothing</b> was deleted."
 msgstr "<b>沒有</b>物件被選取。"
 
-#: ../src/selection-chemistry.cpp:252 ../src/text-context.cpp:940
+#: ../src/selection-chemistry.cpp:252 ../src/text-context.cpp:941
 #, fuzzy
 msgid "Delete"
 msgstr "刪除(_D)"
@@ -4115,8 +4160,8 @@ msgstr "刪除(_D)"
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "選擇<b>物件</b>以再製。"
 
-#: ../src/selection-chemistry.cpp:291 ../src/widgets/gradient-selector.cpp:133
-#: ../src/widgets/gradient-toolbar.cpp:482
+#: ../src/selection-chemistry.cpp:291 ../src/widgets/gradient-selector.cpp:134
+#: ../src/widgets/gradient-toolbar.cpp:488
 msgid "Duplicate"
 msgstr "再製"
 
@@ -4125,220 +4170,222 @@ msgstr "再製"
 msgid "Delete all"
 msgstr "刪除(_D)"
 
-#: ../src/selection-chemistry.cpp:439
+#: ../src/selection-chemistry.cpp:440
 msgid "Select <b>two or more objects</b> to group."
 msgstr "選擇<b>一或多個物件</b>以結合。"
 
-#: ../src/selection-chemistry.cpp:447
+#: ../src/selection-chemistry.cpp:448
 msgid "Select <b>at least two objects</b> to group."
 msgstr "選擇<b>至少兩個物件</b>以結合。"
 
-#: ../src/selection-chemistry.cpp:518 ../src/selection-describer.cpp:49
+#: ../src/selection-chemistry.cpp:519 ../src/selection-describer.cpp:49
 msgid "Group"
 msgstr "群組"
 
-#: ../src/selection-chemistry.cpp:533
+#: ../src/selection-chemistry.cpp:534
 msgid "Select a <b>group</b> to ungroup."
 msgstr "選擇一個<b>群組</b>以拆解。"
 
-#: ../src/selection-chemistry.cpp:574
+#: ../src/selection-chemistry.cpp:575
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "選取區中<b>沒有群組</b>可以拆解。"
 
-#: ../src/selection-chemistry.cpp:580 ../src/sp-item-group.cpp:442
+#: ../src/selection-chemistry.cpp:581 ../src/sp-item-group.cpp:445
 #, fuzzy
 msgid "Ungroup"
 msgstr "解除群組(_U)"
 
-#: ../src/selection-chemistry.cpp:644
+#: ../src/selection-chemistry.cpp:645
 msgid "Select <b>object(s)</b> to raise."
 msgstr "選擇<b>物件</b>以提升。"
 
-#: ../src/selection-chemistry.cpp:650 ../src/selection-chemistry.cpp:703
-#: ../src/selection-chemistry.cpp:738 ../src/selection-chemistry.cpp:797
+#: ../src/selection-chemistry.cpp:651 ../src/selection-chemistry.cpp:704
+#: ../src/selection-chemistry.cpp:739 ../src/selection-chemistry.cpp:798
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr "您無法從<b>不同的群組</b>或<b>圖層</b>中提升/降下物件。"
 
-#: ../src/selection-chemistry.cpp:682
+#: ../src/selection-chemistry.cpp:683
 #, fuzzy
 msgid "Raise"
 msgstr "提升(_R)"
 
-#: ../src/selection-chemistry.cpp:695
+#: ../src/selection-chemistry.cpp:696
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "選擇<b>物件</b>以提升至頂層。"
 
-#: ../src/selection-chemistry.cpp:718
+#: ../src/selection-chemistry.cpp:719
 #, fuzzy
 msgid "Raise to top"
 msgstr "提升至頂層(_T)"
 
-#: ../src/selection-chemistry.cpp:732
+#: ../src/selection-chemistry.cpp:733
 msgid "Select <b>object(s)</b> to lower."
 msgstr "選擇<b>物件</b>以降下。"
 
-#: ../src/selection-chemistry.cpp:775
+#: ../src/selection-chemistry.cpp:776
 #, fuzzy
 msgid "Lower"
 msgstr "降低(_L)"
 
-#: ../src/selection-chemistry.cpp:789
+#: ../src/selection-chemistry.cpp:790
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "選擇<b>物件</b>以降下至底層。"
 
-#: ../src/selection-chemistry.cpp:824
+#: ../src/selection-chemistry.cpp:825
 #, fuzzy
 msgid "Lower to bottom"
 msgstr "降低到底層(_B)"
 
-#: ../src/selection-chemistry.cpp:831
+#: ../src/selection-chemistry.cpp:832
 msgid "Nothing to undo."
 msgstr "無可進行回復。"
 
-#: ../src/selection-chemistry.cpp:838
+#: ../src/selection-chemistry.cpp:839
 msgid "Nothing to redo."
 msgstr "無可進行重做。"
 
-#: ../src/selection-chemistry.cpp:1019
+#: ../src/selection-chemistry.cpp:1020
 msgid "Nothing was copied."
 msgstr "無物被複製。"
 
-#: ../src/selection-chemistry.cpp:1119 ../src/selection-chemistry.cpp:1156
-#: ../src/selection-chemistry.cpp:1183 ../src/selection-chemistry.cpp:1219
+#: ../src/selection-chemistry.cpp:1120 ../src/selection-chemistry.cpp:1157
+#: ../src/selection-chemistry.cpp:1184 ../src/selection-chemistry.cpp:1220
 msgid "Nothing on the clipboard."
 msgstr "剪貼簿中無內容。"
 
-#: ../src/selection-chemistry.cpp:1144
+#: ../src/selection-chemistry.cpp:1145
 #, fuzzy
 msgid "Paste"
 msgstr "貼上(_P)"
 
-#: ../src/selection-chemistry.cpp:1162
+#: ../src/selection-chemistry.cpp:1163
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "選擇<b>物件</b>以貼上樣式。"
 
-#: ../src/selection-chemistry.cpp:1171
+#: ../src/selection-chemistry.cpp:1172
 #, fuzzy
 msgid "Paste style"
 msgstr "貼上樣式(_S)"
 
-#: ../src/selection-chemistry.cpp:1189 ../src/selection-chemistry.cpp:1225
+#: ../src/selection-chemistry.cpp:1190 ../src/selection-chemistry.cpp:1226
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "選擇<b>物件</b>以貼上尺寸。"
 
-#: ../src/selection-chemistry.cpp:1207
+#: ../src/selection-chemistry.cpp:1208
 #, fuzzy
 msgid "Paste size"
 msgstr "貼上尺寸(_Z)"
 
-#: ../src/selection-chemistry.cpp:1248
+#: ../src/selection-chemistry.cpp:1249
 #, fuzzy
 msgid "Paste size separately"
 msgstr "分別貼上尺寸"
 
-#: ../src/selection-chemistry.cpp:1259
+#: ../src/selection-chemistry.cpp:1260
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "選擇<b>物件</b>以移動至上層圖層。"
 
-#: ../src/selection-chemistry.cpp:1284
+#: ../src/selection-chemistry.cpp:1285
 #, fuzzy
 msgid "Raise to next layer"
 msgstr "移到下一個圖層。"
 
-#: ../src/selection-chemistry.cpp:1290
+#: ../src/selection-chemistry.cpp:1291
 msgid "No more layers above."
 msgstr "無上層圖層。"
 
-#: ../src/selection-chemistry.cpp:1304
+#: ../src/selection-chemistry.cpp:1305
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "選擇<b>物件</b>以移動至下層圖層。"
 
-#: ../src/selection-chemistry.cpp:1329
+#: ../src/selection-chemistry.cpp:1330
 #, fuzzy
 msgid "Lower to previous layer"
 msgstr "移到上一個圖層。"
 
-#: ../src/selection-chemistry.cpp:1335
+#: ../src/selection-chemistry.cpp:1336
 msgid "No more layers below."
 msgstr "無下層圖層。"
 
-#: ../src/selection-chemistry.cpp:1481
+#: ../src/selection-chemistry.cpp:1482
 #, fuzzy
 msgid "Remove transform"
 msgstr "移除變形(_T)"
 
-#: ../src/selection-chemistry.cpp:1590
+#: ../src/selection-chemistry.cpp:1591
 #, fuzzy
 msgid "Rotate 90&#176; CW"
 msgstr "順時針旋轉 _90&#176;"
 
-#: ../src/selection-chemistry.cpp:1618
+#: ../src/selection-chemistry.cpp:1619
 #, fuzzy
 msgid "Rotate 90&#176; CCW"
 msgstr "逆時針旋轉 9_0&#176;"
 
-#: ../src/selection-chemistry.cpp:1636 ../src/seltrans.cpp:380
+#: ../src/selection-chemistry.cpp:1637 ../src/seltrans.cpp:380
 #: ../src/ui/dialog/transformation.cpp:666
 #, fuzzy
 msgid "Rotate"
 msgstr "旋轉(_R)"
 
-#: ../src/selection-chemistry.cpp:1665
+#: ../src/selection-chemistry.cpp:1666
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1691 ../src/seltrans.cpp:377
+#: ../src/selection-chemistry.cpp:1692 ../src/seltrans.cpp:377
 #: ../src/ui/dialog/transformation.cpp:647
 #, fuzzy
 msgid "Scale"
 msgstr "縮放(_S)"
 
-#: ../src/selection-chemistry.cpp:1710
+#: ../src/selection-chemistry.cpp:1711
 msgid "Scale by whole factor"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1726
+#: ../src/selection-chemistry.cpp:1727
 msgid "Move vertically"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1729
+#: ../src/selection-chemistry.cpp:1730
 #, fuzzy
 msgid "Move horizontally"
 msgstr "水平(_H)"
 
-#: ../src/selection-chemistry.cpp:1732 ../src/selection-chemistry.cpp:1760
+#: ../src/selection-chemistry.cpp:1733 ../src/selection-chemistry.cpp:1761
 #: ../src/seltrans.cpp:374 ../src/ui/dialog/transformation.cpp:595
 #, fuzzy
 msgid "Move"
 msgstr "移動(_M)"
 
-#: ../src/selection-chemistry.cpp:1754
-msgid "Nudge vertically by pixels"
-msgstr ""
+#: ../src/selection-chemistry.cpp:1755
+#, fuzzy
+msgid "Move vertically by pixels"
+msgstr "垂直對齊所選節點"
 
-#: ../src/selection-chemistry.cpp:1757
-msgid "Nudge horizontally by pixels"
-msgstr ""
+#: ../src/selection-chemistry.cpp:1758
+#, fuzzy
+msgid "Move horizontally by pixels"
+msgstr "水平(_H)"
 
-#: ../src/selection-chemistry.cpp:2021 ../src/selection-describer.cpp:65
+#: ../src/selection-chemistry.cpp:2024 ../src/selection-describer.cpp:65
 msgid "Clone"
 msgstr "仿製品"
 
-#: ../src/selection-chemistry.cpp:2038
+#: ../src/selection-chemistry.cpp:2041
 msgid "Select a <b>clone</b> to unlink."
 msgstr "選擇<b>複本</b>以解除連結。"
 
-#: ../src/selection-chemistry.cpp:2069
+#: ../src/selection-chemistry.cpp:2072
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "選取區中<b>無複本以解除連結</b>。"
 
-#: ../src/selection-chemistry.cpp:2073
+#: ../src/selection-chemistry.cpp:2076
 #, fuzzy
 msgid "Unlink clone"
 msgstr "取消複本連結(_K)"
 
-#: ../src/selection-chemistry.cpp:2087
+#: ../src/selection-chemistry.cpp:2090
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -4348,83 +4395,83 @@ msgstr ""
 "擇一段<b>路徑上的文字</b>以前往該路徑。選擇一段<b>流動的文字</b>以前往它的訊"
 "框。"
 
-#: ../src/selection-chemistry.cpp:2110
+#: ../src/selection-chemistry.cpp:2113
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr ""
 "<b>無法找到</b>該物件以選擇 (無人照管的複本﹑偏移﹑文字路徑﹑流動文字？)"
 
-#: ../src/selection-chemistry.cpp:2116
+#: ../src/selection-chemistry.cpp:2119
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr "您正嘗試選擇的物件是<b>不可見的</b> (它位於 &lt;defs&gt; 之中)"
 
-#: ../src/selection-chemistry.cpp:2143
+#: ../src/selection-chemistry.cpp:2147
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "選擇<b>物件</b>以轉換成圖樣。"
 
-#: ../src/selection-chemistry.cpp:2225
+#: ../src/selection-chemistry.cpp:2229
 #, fuzzy
 msgid "Objects to pattern"
 msgstr "物件轉化成圖案(_N)"
 
-#: ../src/selection-chemistry.cpp:2241
+#: ../src/selection-chemistry.cpp:2245
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "選擇一個<b>有圖樣填充的物件</b>以從中抽離物件。"
 
-#: ../src/selection-chemistry.cpp:2294
+#: ../src/selection-chemistry.cpp:2298
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "選取區中<b>無圖樣填充</b>。"
 
-#: ../src/selection-chemistry.cpp:2297
+#: ../src/selection-chemistry.cpp:2301
 #, fuzzy
 msgid "Pattern to objects"
 msgstr "圖案轉化成物件(_O)"
 
-#: ../src/selection-chemistry.cpp:2382
+#: ../src/selection-chemistry.cpp:2387
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "選擇<b>物件</b>以製作像素圖複本。"
 
-#: ../src/selection-chemistry.cpp:2541
+#: ../src/selection-chemistry.cpp:2546
 #, fuzzy
 msgid "Create bitmap"
 msgstr "建立螺旋形"
 
-#: ../src/selection-chemistry.cpp:2573
+#: ../src/selection-chemistry.cpp:2578
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "選擇<b>物件</b>以建立剪裁路徑或是遮罩。"
 
-#: ../src/selection-chemistry.cpp:2576
+#: ../src/selection-chemistry.cpp:2581
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "選擇遮罩物件和<b>物件</b>以套用剪裁路徑或是遮罩。"
 
-#: ../src/selection-chemistry.cpp:2674
+#: ../src/selection-chemistry.cpp:2703
 #, fuzzy
 msgid "Set clipping path"
 msgstr "關閉路徑中。"
 
-#: ../src/selection-chemistry.cpp:2676
+#: ../src/selection-chemistry.cpp:2705
 #, fuzzy
 msgid "Set mask"
 msgstr "星形"
 
-#: ../src/selection-chemistry.cpp:2689
+#: ../src/selection-chemistry.cpp:2718
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "選擇<b>物件</b>以去除剪裁路徑或是遮罩。"
 
-#: ../src/selection-chemistry.cpp:2757
+#: ../src/selection-chemistry.cpp:2786
 #, fuzzy
 msgid "Release clipping path"
 msgstr "從選取區中移除剪裁路徑"
 
-#: ../src/selection-chemistry.cpp:2759
+#: ../src/selection-chemistry.cpp:2788
 #, fuzzy
 msgid "Release mask"
 msgstr "釋放(_R)"
 
-#: ../src/selection-chemistry.cpp:2803
+#: ../src/selection-chemistry.cpp:2832
 #, fuzzy
 msgid "Fit page to selection"
 msgstr "頁面適應選取區(_F)"
@@ -4439,7 +4486,7 @@ msgstr "圓"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2204
+#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2206
 msgid "Ellipse"
 msgstr "橢圓"
 
@@ -4469,7 +4516,7 @@ msgstr "折線"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
-#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2202
+#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2204
 msgid "Rectangle"
 msgstr "矩形"
 
@@ -4479,13 +4526,13 @@ msgstr "偏移路徑"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
-#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2208
+#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2210
 msgid "Spiral"
 msgstr "螺旋"
 
 #. star
 #: ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2206
+#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2208
 msgid "Star"
 msgstr "星形"
 
@@ -4683,33 +4730,33 @@ msgstr ""
 msgid "Inkscape slideshow"
 msgstr "Inkscape 投影秀"
 
-#: ../src/sp-anchor.cpp:177
+#: ../src/sp-anchor.cpp:179
 #, c-format
 msgid "<b>Link</b> to %s"
 msgstr "<b>連結</b> 到 %s"
 
-#: ../src/sp-anchor.cpp:181
+#: ../src/sp-anchor.cpp:183
 msgid "<b>Link</b> without URI"
 msgstr "<b>連結</b>不具 URI"
 
-#: ../src/sp-ellipse.cpp:430 ../src/sp-ellipse.cpp:817
+#: ../src/sp-ellipse.cpp:433 ../src/sp-ellipse.cpp:814
 msgid "<b>Ellipse</b>"
 msgstr "<b>橢圓形</b>"
 
-#: ../src/sp-ellipse.cpp:571
+#: ../src/sp-ellipse.cpp:575
 msgid "<b>Circle</b>"
 msgstr "<b>圓形</b>"
 
-#: ../src/sp-ellipse.cpp:812
+#: ../src/sp-ellipse.cpp:809
 msgid "<b>Segment</b>"
 msgstr "<b>扇形</b>"
 
-#: ../src/sp-ellipse.cpp:814
+#: ../src/sp-ellipse.cpp:811
 msgid "<b>Arc</b>"
 msgstr "<b>弧</b>"
 
 #. TRANSLATORS: "Flow region" is an area where text is allowed to flow
-#: ../src/sp-flowregion.cpp:266
+#: ../src/sp-flowregion.cpp:270
 msgid "Flow region"
 msgstr "流動區域"
 
@@ -4717,17 +4764,17 @@ msgstr "流動區域"
 #. * flow excluded region.  flowRegionExclude in SVG 1.2: see
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegion-elem and
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegionExclude-elem.
-#: ../src/sp-flowregion.cpp:483
+#: ../src/sp-flowregion.cpp:490
 msgid "Flow excluded region"
 msgstr "流動排除區域"
 
-#: ../src/sp-flowtext.cpp:369
+#: ../src/sp-flowtext.cpp:370
 #, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
 msgstr[0] "<b>浮動文字</b> (%d 個字元)"
 
-#: ../src/sp-flowtext.cpp:371
+#: ../src/sp-flowtext.cpp:372
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
@@ -4741,21 +4788,21 @@ msgstr "垂直參考線"
 msgid "horizontal guideline"
 msgstr "水平參考線"
 
-#: ../src/sp-image.cpp:968
+#: ../src/sp-image.cpp:969
 msgid "embedded"
 msgstr "內嵌"
 
-#: ../src/sp-image.cpp:976
+#: ../src/sp-image.cpp:977
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "<b>參照品質不良的圖片</b>: %s"
 
-#: ../src/sp-image.cpp:977
+#: ../src/sp-image.cpp:978
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>圖片</b> %d &#215; %d: %s"
 
-#: ../src/sp-item-group.cpp:687
+#: ../src/sp-item-group.cpp:690
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
@@ -4765,62 +4812,72 @@ msgstr[0] "<b>%d</b> 項物件的<b>群組</b>"
 msgid "Object"
 msgstr "物件"
 
-#: ../src/sp-line.cpp:187
+#: ../src/sp-item.cpp:866
+#, c-format
+msgid "%s; <i>clipped</i>"
+msgstr ""
+
+#: ../src/sp-item.cpp:871
+#, fuzzy, c-format
+msgid "%s; <i>masked</i>"
+msgstr "<i>%s</i>"
+
+#: ../src/sp-line.cpp:189
 msgid "<b>Line</b>"
 msgstr "<b>線條</b>"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:430
+#: ../src/sp-offset.cpp:431
 #, c-format
 msgid "<b>Linked offset</b>, %s by %f pt"
 msgstr "<b>連結偏移</b>，%s 於 %f 點"
 
-#: ../src/sp-offset.cpp:431 ../src/sp-offset.cpp:435
+#: ../src/sp-offset.cpp:432 ../src/sp-offset.cpp:436
 msgid "outset"
 msgstr "外貼"
 
-#: ../src/sp-offset.cpp:431 ../src/sp-offset.cpp:435
+#: ../src/sp-offset.cpp:432 ../src/sp-offset.cpp:436
 msgid "inset"
 msgstr "內插"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:434
+#: ../src/sp-offset.cpp:435
 #, c-format
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>動態偏移</b>，%s 於 %f 點"
 
-#: ../src/sp-path.cpp:121
+#: ../src/sp-path.cpp:123
 #, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
 msgstr[0] "<b>路徑</b> (%i 節點)"
 
-#: ../src/sp-polygon.cpp:233
+#: ../src/sp-polygon.cpp:235
 msgid "<b>Polygon</b>"
 msgstr "<b>多邊形</b>"
 
-#: ../src/sp-polyline.cpp:176
+#: ../src/sp-polyline.cpp:178
 msgid "<b>Polyline</b>"
 msgstr "<b>多折線</b>"
 
-#: ../src/sp-rect.cpp:234
+#: ../src/sp-rect.cpp:236
 msgid "<b>Rectangle</b>"
 msgstr "<b>矩形</b>"
 
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
-#: ../src/sp-spiral.cpp:302
+#: ../src/sp-spiral.cpp:304
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
 msgstr "%3f 個彎的<b>螺旋形</b>"
 
-#: ../src/sp-star.cpp:279
+#: ../src/sp-star.cpp:281
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] "<b>星形</b>具備 %d 個頂點"
 
-#: ../src/sp-star.cpp:283
+#: ../src/sp-star.cpp:285
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
@@ -4833,32 +4890,32 @@ msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
 msgstr[0] "在<b>%d</b>物件中的<b>條件群組</b>"
 
 #. TRANSLATORS: For description of font with no name.
-#: ../src/sp-text.cpp:413
+#: ../src/sp-text.cpp:414
 msgid "&lt;no name found&gt;"
 msgstr "&lt;名稱不明&gt;"
 
-#: ../src/sp-text.cpp:419
+#: ../src/sp-text.cpp:420
 #, c-format
 msgid "<b>Text on path</b> (%s, %s)"
 msgstr "<b>繞徑文字</b> (%s, %s)"
 
-#: ../src/sp-text.cpp:420
+#: ../src/sp-text.cpp:421
 #, c-format
 msgid "<b>Text</b> (%s, %s)"
 msgstr "<b>文字</b> (%s, %s)"
 
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
-#: ../src/sp-use.cpp:313
+#: ../src/sp-use.cpp:314
 msgid "..."
 msgstr "..."
 
-#: ../src/sp-use.cpp:321
+#: ../src/sp-use.cpp:322
 #, c-format
 msgid "<b>Clone</b> of: %s"
 msgstr "%s 的<b>複本</b>"
 
-#: ../src/sp-use.cpp:325
+#: ../src/sp-use.cpp:326
 msgid "<b>Orphaned clone</b>"
 msgstr "<b>無原件之複本</b>"
 
@@ -4870,13 +4927,13 @@ msgstr "<b>Ctrl</b>: 抓取角度"
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr "<b>Alt</b>: 鎖定放射半徑"
 
-#: ../src/spiral-context.cpp:439
+#: ../src/spiral-context.cpp:440
 #, c-format
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>旋轉</b>: 半徑 %s，角度 %5g&#176;；以 <b>Ctrl</b> 來抓取角度"
 
-#: ../src/spiral-context.cpp:460
+#: ../src/spiral-context.cpp:461
 #, fuzzy
 msgid "Create spiral"
 msgstr "建立螺旋形"
@@ -4938,74 +4995,74 @@ msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "其中一個物件<b>不是路徑</b>，無法進行布林運算。"
 
-#: ../src/splivarot.cpp:590
+#: ../src/splivarot.cpp:592
 #, fuzzy
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "選擇<b>物件</b>以轉換成路徑。"
 
-#: ../src/splivarot.cpp:872
+#: ../src/splivarot.cpp:876
 #, fuzzy
 msgid "Convert stroke to path"
 msgstr "把文字轉化成路徑"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:875
+#: ../src/splivarot.cpp:879
 #, fuzzy
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "選取區中<b>沒有虛線路徑</b>可以轉成輪廓。"
 
-#: ../src/splivarot.cpp:959
+#: ../src/splivarot.cpp:963
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "所選取的物件<b>不是路徑</b>，無法內插/外貼。"
 
-#: ../src/splivarot.cpp:1079 ../src/splivarot.cpp:1147
+#: ../src/splivarot.cpp:1083 ../src/splivarot.cpp:1152
 #, fuzzy
 msgid "Create linked offset"
 msgstr "建立連結(_C)"
 
-#: ../src/splivarot.cpp:1080 ../src/splivarot.cpp:1148
+#: ../src/splivarot.cpp:1084 ../src/splivarot.cpp:1153
 #, fuzzy
 msgid "Create dynamic offset"
 msgstr "建立一個動態偏移物件"
 
-#: ../src/splivarot.cpp:1175
+#: ../src/splivarot.cpp:1180
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "選擇<b>路徑</b>以進行內插/外貼。"
 
-#: ../src/splivarot.cpp:1392
+#: ../src/splivarot.cpp:1398
 #, fuzzy
 msgid "Outset path"
 msgstr "偏移路徑"
 
-#: ../src/splivarot.cpp:1392
+#: ../src/splivarot.cpp:1398
 #, fuzzy
 msgid "Inset path"
 msgstr "偏移路徑"
 
-#: ../src/splivarot.cpp:1394
+#: ../src/splivarot.cpp:1400
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "選取區中<b>沒有路徑</b>可以進行內插/外貼。"
 
-#: ../src/splivarot.cpp:1578
+#: ../src/splivarot.cpp:1585
 #, c-format
 msgid "Simplifying %s - <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr ""
 
-#: ../src/splivarot.cpp:1590
+#: ../src/splivarot.cpp:1597
 #, c-format
 msgid "Done - <b>%d</b> paths simplified."
 msgstr ""
 
-#: ../src/splivarot.cpp:1606
+#: ../src/splivarot.cpp:1613
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "選擇<b>路徑</b>以化簡。"
 
-#: ../src/splivarot.cpp:1620
+#: ../src/splivarot.cpp:1627
 #, fuzzy
 msgid "Simplify"
 msgstr "精簡(_M)"
 
-#: ../src/splivarot.cpp:1622
+#: ../src/splivarot.cpp:1629
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "選取區中<b>沒有路徑</b>可以化簡。"
 
@@ -5013,27 +5070,27 @@ msgstr "選取區中<b>沒有路徑</b>可以化簡。"
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr "<b>Ctrl</b>: 抓取角度；保持幅線放射狀"
 
-#: ../src/star-context.cpp:448
+#: ../src/star-context.cpp:449
 #, c-format
 msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>多邊形</b>: 半徑 %s，角度 %5g&#176;；以 <b>Ctrl</b> 來抓取角度"
 
-#: ../src/star-context.cpp:449
+#: ../src/star-context.cpp:450
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>星形</b>: 半徑 %s，角度 %5g&#176;；以 <b>Ctrl</b> 來抓取角度"
 
-#: ../src/star-context.cpp:472
+#: ../src/star-context.cpp:473
 #, fuzzy
 msgid "Create star"
 msgstr "建立螺旋形"
 
-#: ../src/text-chemistry.cpp:96
+#: ../src/text-chemistry.cpp:99
 msgid "Select <b>a text and a path</b> to put text on path."
 msgstr "選擇<b>文字與路徑</b>以將文字置於路徑之上。"
 
-#: ../src/text-chemistry.cpp:101
+#: ../src/text-chemistry.cpp:104
 msgid ""
 "This text object is <b>already put on a path</b>. Remove it from the path "
 "first. Use <b>Shift+D</b> to look up its path."
@@ -5042,67 +5099,75 @@ msgstr ""
 "徑。"
 
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
-#: ../src/text-chemistry.cpp:107
+#: ../src/text-chemistry.cpp:110
 msgid ""
 "You cannot put text on a rectangle in this version. Convert rectangle to "
 "path first."
 msgstr "您無法在這個版本中將文字放在矩形之上。請先將矩形轉換成路徑。"
 
-#: ../src/text-chemistry.cpp:174 ../src/verbs.cpp:2074
+#: ../src/text-chemistry.cpp:120
+msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
+msgstr ""
+
+#: ../src/text-chemistry.cpp:187 ../src/verbs.cpp:2076
 msgid "Put text on path"
 msgstr "放置文字於路徑上"
 
-#: ../src/text-chemistry.cpp:186
+#: ../src/text-chemistry.cpp:199
 msgid "Select <b>a text on path</b> to remove it from path."
 msgstr "選擇<b>文字與路徑</b>以將文字從路徑之上移除。"
 
-#: ../src/text-chemistry.cpp:208
+#: ../src/text-chemistry.cpp:221
 msgid "<b>No texts-on-paths</b> in the selection."
 msgstr "選取區中<b>沒有路徑上的文字</b>。"
 
-#: ../src/text-chemistry.cpp:212 ../src/verbs.cpp:2076
+#: ../src/text-chemistry.cpp:225 ../src/verbs.cpp:2078
 msgid "Remove text from path"
 msgstr "從路徑移除文字"
 
-#: ../src/text-chemistry.cpp:237 ../src/text-chemistry.cpp:257
+#: ../src/text-chemistry.cpp:250 ../src/text-chemistry.cpp:270
 msgid "Select <b>text(s)</b> to remove kerns from."
 msgstr "選取<b>文字</b>以從其中移除突出部份。"
 
-#: ../src/text-chemistry.cpp:260 ../src/widgets/toolbox.cpp:4154
+#: ../src/text-chemistry.cpp:273 ../src/widgets/toolbox.cpp:4156
 msgid "Remove manual kerns"
 msgstr "移除手動字距"
 
-#: ../src/text-chemistry.cpp:279
+#: ../src/text-chemistry.cpp:293
 msgid ""
 "Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text "
 "into frame."
 msgstr "選取<b>一段文字</b>與一或多條<b>路徑或形狀</b>來讓文字在圖框中流動。"
 
-#: ../src/text-chemistry.cpp:347
+#: ../src/text-chemistry.cpp:361
 #, fuzzy
 msgid "Flow text into shape"
 msgstr "流動轉為訊框(_F)"
 
-#: ../src/text-chemistry.cpp:368
+#: ../src/text-chemistry.cpp:383
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "選擇<b>流動文字</b>以停止其流動。"
 
-#: ../src/text-chemistry.cpp:431
+#: ../src/text-chemistry.cpp:450
 #, fuzzy
 msgid "Unflow flowed text"
 msgstr "浮動文字"
 
-#: ../src/text-chemistry.cpp:443
+#: ../src/text-chemistry.cpp:462
 #, fuzzy
 msgid "Select <b>flowed text(s)</b> to convert."
 msgstr "選擇<b>流動文字</b>以停止其流動。"
 
-#: ../src/text-chemistry.cpp:479
+#: ../src/text-chemistry.cpp:480
+msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
+msgstr ""
+
+#: ../src/text-chemistry.cpp:508
 #, fuzzy
 msgid "Convert flowed text to text"
 msgstr "把文字轉化成路徑"
 
-#: ../src/text-chemistry.cpp:484
+#: ../src/text-chemistry.cpp:513
 #, fuzzy
 msgid "<b>No flowed text(s)</b> to convert in the selection."
 msgstr "選取區中<b>沒有物件</b>可以轉成路徑。"
@@ -5116,148 +5181,148 @@ msgid ""
 "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr "<b>點擊</b>以編輯流動文字，<b>拖曳</b>以選擇部份文字。"
 
-#: ../src/text-context.cpp:503
+#: ../src/text-context.cpp:504
 #, fuzzy
 msgid "Create text"
 msgstr "刪除節點"
 
-#: ../src/text-context.cpp:527
+#: ../src/text-context.cpp:528
 msgid "Non-printable character"
 msgstr "不可列印字元"
 
-#: ../src/text-context.cpp:542
+#: ../src/text-context.cpp:543
 msgid "Insert Unicode character"
 msgstr ""
 
-#: ../src/text-context.cpp:577
+#: ../src/text-context.cpp:578
 #, fuzzy, c-format
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
 msgstr "移動<b>中心點</b>到 %s, %s"
 
-#: ../src/text-context.cpp:579 ../src/text-context.cpp:844
+#: ../src/text-context.cpp:580 ../src/text-context.cpp:845
 #, fuzzy
 msgid "Unicode (<b>Enter</b> to finish): "
 msgstr "移動<b>中心點</b>到 %s, %s"
 
-#: ../src/text-context.cpp:656
+#: ../src/text-context.cpp:657
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>流動的文字訊框</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:688 ../src/text-context.cpp:1464
+#: ../src/text-context.cpp:689 ../src/text-context.cpp:1465
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "輸入文字；按 <b>Enter</b> 以啟始新列。"
 
-#: ../src/text-context.cpp:699
+#: ../src/text-context.cpp:700
 msgid "Flowed text is created."
 msgstr "已建立流動文字。"
 
-#: ../src/text-context.cpp:701
+#: ../src/text-context.cpp:702
 #, fuzzy
 msgid "Create flowed text"
 msgstr "浮動文字"
 
-#: ../src/text-context.cpp:703
+#: ../src/text-context.cpp:704
 msgid ""
 "The frame is <b>too small</b> for the current font size. Flowed text not "
 "created."
 msgstr "訊框對於目前字型大小來說<b>太小</b>。並未建立流動文字。"
 
-#: ../src/text-context.cpp:829
+#: ../src/text-context.cpp:830
 msgid "No-break space"
 msgstr "不斷列空白"
 
-#: ../src/text-context.cpp:831
+#: ../src/text-context.cpp:832
 #, fuzzy
 msgid "Insert no-break space"
 msgstr "不斷列空白"
 
-#: ../src/text-context.cpp:868
+#: ../src/text-context.cpp:869
 #, fuzzy
 msgid "Make bold"
 msgstr "完整圖形"
 
-#: ../src/text-context.cpp:886
+#: ../src/text-context.cpp:887
 msgid "Make italic"
 msgstr ""
 
-#: ../src/text-context.cpp:918
+#: ../src/text-context.cpp:919
 #, fuzzy
 msgid "New line"
 msgstr "線條"
 
-#: ../src/text-context.cpp:928
+#: ../src/text-context.cpp:929
 #, fuzzy
 msgid "Backspace"
 msgstr "不斷列空白"
 
-#: ../src/text-context.cpp:955
+#: ../src/text-context.cpp:956
 msgid "Kern to the left"
 msgstr ""
 
-#: ../src/text-context.cpp:975
+#: ../src/text-context.cpp:976
 #, fuzzy
 msgid "Kern to the right"
 msgstr "列印指定範圍"
 
-#: ../src/text-context.cpp:995
+#: ../src/text-context.cpp:996
 msgid "Kern up"
 msgstr ""
 
-#: ../src/text-context.cpp:1016
+#: ../src/text-context.cpp:1017
 msgid "Kern down"
 msgstr ""
 
-#: ../src/text-context.cpp:1072
+#: ../src/text-context.cpp:1073
 #, fuzzy
 msgid "Rotate counterclockwise"
 msgstr "順時針旋轉"
 
-#: ../src/text-context.cpp:1093
+#: ../src/text-context.cpp:1094
 #, fuzzy
 msgid "Rotate clockwise"
 msgstr "順時針旋轉"
 
-#: ../src/text-context.cpp:1110
+#: ../src/text-context.cpp:1111
 #, fuzzy
 msgid "Contract line spacing"
 msgstr "列距:"
 
-#: ../src/text-context.cpp:1118
+#: ../src/text-context.cpp:1119
 msgid "Contract letter spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1137
+#: ../src/text-context.cpp:1138
 #, fuzzy
 msgid "Expand line spacing"
 msgstr "列距:"
 
-#: ../src/text-context.cpp:1145
+#: ../src/text-context.cpp:1146
 #, fuzzy
 msgid "Expand letter spacing"
 msgstr "設定間距:"
 
-#: ../src/text-context.cpp:1249
+#: ../src/text-context.cpp:1250
 #, fuzzy
 msgid "Paste text"
 msgstr "貼上樣式(_S)"
 
-#: ../src/text-context.cpp:1462
+#: ../src/text-context.cpp:1463
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "輸入流動文字；按 <b>Enter</b> 以開始新的段落。"
 
-#: ../src/text-context.cpp:1472 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1473 ../src/tools-switch.cpp:183
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
 msgstr "<b>點選</b>以選取或建立文字，<b>拖曳</b>以建立流動文字；然後開始輸入。"
 
-#: ../src/text-context.cpp:1570
+#: ../src/text-context.cpp:1571
 #, fuzzy
 msgid "Type text"
 msgstr "型態(_Y):"
 
-#: ../src/tools-switch.cpp:133
+#: ../src/tools-switch.cpp:135
 msgid ""
 "To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> "
 "nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on an "
@@ -5266,14 +5331,14 @@ msgstr ""
 "要編輯路徑，請<b>click</b>﹑<b>Shift+click</b> 或在節點周圍<b>拖曳</b>以選擇"
 "它們，然後<b>拖曳</b>節點與控柄。請<b>點選</b>一個物件以選擇。"
 
-#: ../src/tools-switch.cpp:139
+#: ../src/tools-switch.cpp:141
 msgid ""
 "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and "
 "resize. <b>Click</b> to select."
 msgstr ""
 "<b>拖曳</b>以建立矩形。<b>拖曳控柄</b>可調整圓角及大小。<b>點一下</b>以選擇。"
 
-#: ../src/tools-switch.cpp:145
+#: ../src/tools-switch.cpp:147
 msgid ""
 "<b>Drag</b> to create an ellipse. <b>Drag controls</b> to make an arc or "
 "segment. <b>Click</b> to select."
@@ -5281,14 +5346,14 @@ msgstr ""
 "<b>拖曳</b>以建立橢圓形。<b>拖曳控柄</b>可製作弧形或扇形。<b>點一下</b>以選"
 "擇。"
 
-#: ../src/tools-switch.cpp:151
+#: ../src/tools-switch.cpp:153
 msgid ""
 "<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. "
 "<b>Click</b> to select."
 msgstr ""
 "<b>拖曳</b>以建立星形。<b>拖曳控柄</b>以編輯星形的形狀。<b>點一下</b>以選擇。"
 
-#: ../src/tools-switch.cpp:157
+#: ../src/tools-switch.cpp:159
 msgid ""
 "<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral "
 "shape. <b>Click</b> to select."
@@ -5296,13 +5361,13 @@ msgstr ""
 "<b>拖曳</b>以建立螺旋形。<b>拖曳控柄</b>可編輯螺旋的形狀。<b>點一下</b>以選"
 "擇。"
 
-#: ../src/tools-switch.cpp:163
+#: ../src/tools-switch.cpp:165
 msgid ""
 "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to "
 "append to selected path."
 msgstr "<b>拖曳</b>以建立徒手線條。按<b>Shift</b>以開始繪製並附加至所選路徑。"
 
-#: ../src/tools-switch.cpp:169
+#: ../src/tools-switch.cpp:171
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to "
 "append to selected path."
@@ -5310,7 +5375,7 @@ msgstr ""
 "<b>點一下</b>或者<b>點選並拖曳</b>以啟始一條路徑；以 <b>Shift</b> 來附加於所"
 "選取的路徑。"
 
-#: ../src/tools-switch.cpp:175
+#: ../src/tools-switch.cpp:177
 msgid ""
 "<b>Drag</b> to paint a calligraphic stroke. <b>Left</b>/<b>right</b> arrow "
 "keys adjust width, <b>up</b>/<b>down</b> adjust angle."
@@ -5318,7 +5383,7 @@ msgstr ""
 "<b>拖曳</b>以畫出美工邊框。<b>左</b>/<b>右</b>方向鍵調整寬度，<b>上</b>/<b>下"
 "</b>調整角度。"
 
-#: ../src/tools-switch.cpp:187
+#: ../src/tools-switch.cpp:189
 msgid ""
 "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, "
 "<b>drag handles</b> to adjust gradients."
@@ -5326,7 +5391,7 @@ msgstr ""
 "<b>拖曳</b>或<b>雙擊滑鼠</b>以於所選物件上建立漸層，<b>拖曳控柄</b>以調整漸"
 "層。"
 
-#: ../src/tools-switch.cpp:193
+#: ../src/tools-switch.cpp:195
 msgid ""
 "<b>Click</b> or <b>drag around an area</b> to zoom in, <b>Shift+click</b> to "
 "zoom out."
@@ -5334,12 +5399,12 @@ msgstr ""
 "<b>點選</b>或<b>在區域周圍拖曳</b>以進行放大，按住 <b>Shift</b> 然後再點選可"
 "以縮小。"
 
-#: ../src/tools-switch.cpp:205
+#: ../src/tools-switch.cpp:207
 msgid "<b>Click and drag</b> between shapes to create a connector."
 msgstr "在形狀之間<b>點擊與拖曳</b>以建立連接器。"
 
-#: ../src/trace/potrace/inkscape-potrace.cpp:508
-#: ../src/trace/potrace/inkscape-potrace.cpp:582
+#: ../src/trace/potrace/inkscape-potrace.cpp:500
+#: ../src/trace/potrace/inkscape-potrace.cpp:574
 #, c-format
 msgid "Trace: %d.  %ld nodes"
 msgstr "勾描: %d。 %ld 節點"
@@ -5380,63 +5445,63 @@ msgid "Trace: Starting trace..."
 msgstr "提取點陣圖輪廓(_T)…"
 
 #. ## inform the document, so we can undo
-#: ../src/trace/trace.cpp:569
+#: ../src/trace/trace.cpp:570
 #, fuzzy
 msgid "Trace bitmap"
 msgstr "建立螺旋形"
 
-#: ../src/trace/trace.cpp:573
+#: ../src/trace/trace.cpp:574
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "勾描: 已完成。%ld 個節點已建立"
 
 #. Item dialog
-#: ../src/ui/context-menu.cpp:96
+#: ../src/ui/context-menu.cpp:98
 msgid "Object _Properties"
 msgstr "物件屬性(_P)..."
 
 #. Select item
-#: ../src/ui/context-menu.cpp:106
+#: ../src/ui/context-menu.cpp:108
 msgid "_Select This"
 msgstr "選擇這個(_S)"
 
 #. Create link
-#: ../src/ui/context-menu.cpp:116
+#: ../src/ui/context-menu.cpp:118
 msgid "_Create Link"
 msgstr "建立連結(_C)"
 
-#: ../src/ui/context-menu.cpp:172
+#: ../src/ui/context-menu.cpp:175
 #, fuzzy
 msgid "Create link"
 msgstr "建立連結(_C)"
 
 #. "Ungroup"
-#: ../src/ui/context-menu.cpp:190 ../src/verbs.cpp:2070
+#: ../src/ui/context-menu.cpp:193 ../src/verbs.cpp:2072
 msgid "_Ungroup"
 msgstr "解除群組(_U)"
 
 #. Link dialog
-#: ../src/ui/context-menu.cpp:230
+#: ../src/ui/context-menu.cpp:233
 msgid "Link _Properties"
 msgstr "連結屬性(_P)"
 
 #. Select item
-#: ../src/ui/context-menu.cpp:240
+#: ../src/ui/context-menu.cpp:243
 msgid "_Follow Link"
 msgstr "跟隨連結(_F)"
 
 #. Reset transformations
-#: ../src/ui/context-menu.cpp:245
+#: ../src/ui/context-menu.cpp:248
 msgid "_Remove Link"
 msgstr "移除連結(_R)"
 
 #. Link dialog
-#: ../src/ui/context-menu.cpp:294
+#: ../src/ui/context-menu.cpp:297
 msgid "Image _Properties"
 msgstr "圖片屬性(_P)"
 
 #. Item dialog
-#: ../src/ui/context-menu.cpp:335
+#: ../src/ui/context-menu.cpp:338
 msgid "_Fill and Stroke"
 msgstr "填充與邊框(_F)"
 
@@ -5477,7 +5542,7 @@ msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of:  name surname (email). Use \n for newline.
-#: ../src/ui/dialog/aboutbox.cpp:265
+#: ../src/ui/dialog/aboutbox.cpp:266
 #, fuzzy
 msgid "translator-credits"
 msgstr "譯者(_T)"
@@ -5517,7 +5582,7 @@ msgid "Remove overlaps"
 msgstr "去除重疊"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:520
-#: ../src/widgets/toolbox.cpp:4241
+#: ../src/widgets/toolbox.cpp:4243
 #, fuzzy
 msgid "Arrange connector network"
 msgstr "最佳化排列選擇的連線器網路"
@@ -5657,7 +5722,7 @@ msgid ""
 msgstr "移動物件盡可能小，以便邊界不重疊"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:863
-#: ../src/widgets/toolbox.cpp:4343
+#: ../src/widgets/toolbox.cpp:4345
 msgid "Nicely arrange selected connector network"
 msgstr "最佳化排列選擇的連線器網路"
 
@@ -5696,12 +5761,12 @@ msgstr "以最小者為準"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:886
 #: ../src/ui/dialog/document-properties.cpp:100
-#: ../src/ui/dialog/filedialog.cpp:1851 ../src/widgets/desktop-widget.cpp:1130
+#: ../src/ui/dialog/filedialog.cpp:1851 ../src/widgets/desktop-widget.cpp:1137
 msgid "Page"
 msgstr "頁"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:887
-#: ../src/widgets/desktop-widget.cpp:1134
+#: ../src/widgets/desktop-widget.cpp:1141
 msgid "Drawing"
 msgstr "繪圖"
 
@@ -6081,7 +6146,7 @@ msgid "Information"
 msgstr "資訊"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
-#: ../share/extensions/funcplot.inx.h:7
+#: ../share/extensions/funcplot.inx.h:7 ../share/extensions/measure.inx.h:2
 msgid "Help"
 msgstr "輔助"
 
@@ -6123,19 +6188,19 @@ msgid "Append filename extension automatically"
 msgstr "自動加上副檔名"
 
 #: ../src/ui/dialog/filedialog.cpp:1808
-msgid "Source left bound"
+msgid "Left edge of source"
 msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1809
-msgid "Source top bound"
+msgid "Top edge of source"
 msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1810
-msgid "Source right bound"
+msgid "Right edge of source"
 msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1811
-msgid "Source bottom bound"
+msgid "Bottom edge of source"
 msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1812
@@ -6160,8 +6225,8 @@ msgstr "列印指定範圍"
 
 #: ../src/ui/dialog/filedialog.cpp:1816
 #, fuzzy
-msgid "Dots per inch resolution"
-msgstr "預設匯出解析度:"
+msgid "Resolution (dots per inch)"
+msgstr "偏好的點陣圖解析度(每英吋幾點)"
 
 #. #########################################
 #. ## EXTRA WIDGET -- SOURCE SIDE
@@ -6520,8 +6585,8 @@ msgstr "節點"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:344
-#: ../src/ui/view/edit-widget.cpp:1069 ../src/verbs.cpp:2220
-#: ../src/widgets/desktop-widget.cpp:284
+#: ../src/ui/view/edit-widget.cpp:1069 ../src/verbs.cpp:2222
+#: ../src/widgets/desktop-widget.cpp:291
 msgid "Zoom"
 msgstr "縮放"
 
@@ -6531,7 +6596,7 @@ msgid "Shapes"
 msgstr "形狀"
 
 #. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:365 ../src/verbs.cpp:2210
+#: ../src/ui/dialog/inkscape-preferences.cpp:365 ../src/verbs.cpp:2212
 msgid "Pencil"
 msgstr "鉛筆"
 
@@ -6548,12 +6613,12 @@ msgstr ""
 "此值會影響套用至徒手畫線的平滑程度；較低的值造成具有較多節點的不均勻路徑"
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:373 ../src/verbs.cpp:2212
+#: ../src/ui/dialog/inkscape-preferences.cpp:373 ../src/verbs.cpp:2214
 msgid "Pen"
 msgstr "筆"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:377 ../src/verbs.cpp:2214
+#: ../src/ui/dialog/inkscape-preferences.cpp:377 ../src/verbs.cpp:2216
 msgid "Calligraphy"
 msgstr "書法"
 
@@ -6572,12 +6637,12 @@ msgid ""
 msgstr "如果開啟，使用此工具建立的每個物件完成繪製之後保持選擇狀態"
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2218
+#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2220
 msgid "Gradient"
 msgstr "漸層"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:392 ../src/verbs.cpp:2224
+#: ../src/ui/dialog/inkscape-preferences.cpp:392 ../src/verbs.cpp:2226
 msgid "Connector"
 msgstr "連接器"
 
@@ -6586,7 +6651,7 @@ msgid "If on, connector attachment points will not be shown for text objects"
 msgstr "如果開啟，對於文字物件連線器的附著點將不顯示"
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:397 ../src/verbs.cpp:2222
+#: ../src/ui/dialog/inkscape-preferences.cpp:397 ../src/verbs.cpp:2224
 msgid "Dropper"
 msgstr "滴管"
 
@@ -7260,8 +7325,8 @@ msgstr "堆疊"
 #: ../src/ui/dialog/tracedialog.cpp:531
 #, fuzzy
 msgid ""
-"Stack scans on top of one another (no gaps) instead of or tiling (usually "
-"with gaps)"
+"Stack scans on top of one another (no gaps) instead of tiling (usually with "
+"gaps)"
 msgstr "堆疊垂直掃瞄 (無間隙) 或是水平並排 (常常具有間隙)"
 
 #: ../src/ui/dialog/tracedialog.cpp:534
@@ -7771,16 +7836,16 @@ msgstr "PLACEHOLDER, do not translate"
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
-#: ../src/ui/view/edit-widget.cpp:1058 ../src/widgets/desktop-widget.cpp:250
+#: ../src/ui/view/edit-widget.cpp:1058 ../src/widgets/desktop-widget.cpp:257
 msgid "Zoom drawing if window size changes"
 msgstr "隨視窗大小縮放圖案"
 
-#: ../src/ui/view/edit-widget.cpp:1079 ../src/widgets/desktop-widget.cpp:304
+#: ../src/ui/view/edit-widget.cpp:1079 ../src/widgets/desktop-widget.cpp:311
 msgid "Cursor coordinates"
 msgstr "游標座標"
 
 #. display the initial welcome message in the statusbar
-#: ../src/ui/view/edit-widget.cpp:1096 ../src/widgets/desktop-widget.cpp:336
+#: ../src/ui/view/edit-widget.cpp:1096 ../src/widgets/desktop-widget.cpp:343
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -7788,7 +7853,7 @@ msgstr ""
 "<b>歡迎使用 Inkscape!</b> 使用形狀或繪圖工具來建立物件；利用選取工具來移動或"
 "變化物件。"
 
-#: ../src/ui/view/edit-widget.cpp:1196 ../src/widgets/desktop-widget.cpp:562
+#: ../src/ui/view/edit-widget.cpp:1196 ../src/widgets/desktop-widget.cpp:569
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -7802,11 +7867,11 @@ msgstr ""
 "假如您沒有存檔就關閉，那剛剛做的都會沒有作用。"
 
 #: ../src/ui/view/edit-widget.cpp:1207 ../src/ui/view/edit-widget.cpp:1254
-#: ../src/widgets/desktop-widget.cpp:578 ../src/widgets/desktop-widget.cpp:642
+#: ../src/widgets/desktop-widget.cpp:585 ../src/widgets/desktop-widget.cpp:649
 msgid "Close _without saving"
 msgstr "關閉但不儲存(_W)"
 
-#: ../src/ui/view/edit-widget.cpp:1242 ../src/widgets/desktop-widget.cpp:625
+#: ../src/ui/view/edit-widget.cpp:1242 ../src/widgets/desktop-widget.cpp:632
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -7856,278 +7921,285 @@ msgstr "所有權"
 msgid "Other"
 msgstr "公尺"
 
-#: ../src/ui/widget/selected-style.cpp:90
+#: ../src/ui/widget/selected-style.cpp:92
 #: ../src/ui/widget/style-swatch.cpp:104
 msgid "F:"
 msgstr "F:"
 
-#: ../src/ui/widget/selected-style.cpp:91
+#: ../src/ui/widget/selected-style.cpp:93
 #: ../src/ui/widget/style-swatch.cpp:105
 msgid "S:"
 msgstr "S:"
 
-#: ../src/ui/widget/selected-style.cpp:92
+#: ../src/ui/widget/selected-style.cpp:94
 msgid "O:"
 msgstr "O:"
 
-#: ../src/ui/widget/selected-style.cpp:132
+#: ../src/ui/widget/selected-style.cpp:134
 msgid "N/A"
 msgstr "不明"
 
-#: ../src/ui/widget/selected-style.cpp:135
-#: ../src/ui/widget/selected-style.cpp:972
-#: ../src/ui/widget/selected-style.cpp:973
+#: ../src/ui/widget/selected-style.cpp:137
+#: ../src/ui/widget/selected-style.cpp:991
+#: ../src/ui/widget/selected-style.cpp:992
 msgid "Nothing selected"
 msgstr "沒有選擇"
 
-#: ../src/ui/widget/selected-style.cpp:140
+#: ../src/ui/widget/selected-style.cpp:139
+#: ../src/ui/widget/style-swatch.cpp:298
+#, fuzzy
+msgid "<i>None</i>"
+msgstr "<i>%s</i>"
+
+#: ../src/ui/widget/selected-style.cpp:142
 #: ../src/ui/widget/style-swatch.cpp:300
 msgid "No fill"
 msgstr "沒有填色"
 
-#: ../src/ui/widget/selected-style.cpp:140
+#: ../src/ui/widget/selected-style.cpp:142
 #: ../src/ui/widget/style-swatch.cpp:300
 msgid "No stroke"
 msgstr "沒有描邊"
 
-#: ../src/ui/widget/selected-style.cpp:142
+#: ../src/ui/widget/selected-style.cpp:144
 #: ../src/ui/widget/style-swatch.cpp:292 ../src/widgets/paint-selector.cpp:176
 msgid "Pattern"
 msgstr "圖樣"
 
-#: ../src/ui/widget/selected-style.cpp:145
+#: ../src/ui/widget/selected-style.cpp:147
 #: ../src/ui/widget/style-swatch.cpp:294 ../src/widgets/paint-selector.cpp:872
 msgid "Pattern fill"
 msgstr "圖樣填充"
 
-#: ../src/ui/widget/selected-style.cpp:145
+#: ../src/ui/widget/selected-style.cpp:147
 #: ../src/ui/widget/style-swatch.cpp:294
 msgid "Pattern stroke"
 msgstr "描邊圖案"
 
-#: ../src/ui/widget/selected-style.cpp:147
-#: ../src/ui/widget/style-swatch.cpp:284
-msgid "L Gradient"
-msgstr "L 漸變"
+#: ../src/ui/widget/selected-style.cpp:149
+#, fuzzy
+msgid "<b>L</b>"
+msgstr "<b>亮度:</b>"
 
-#: ../src/ui/widget/selected-style.cpp:150
+#: ../src/ui/widget/selected-style.cpp:152
 #: ../src/ui/widget/style-swatch.cpp:286
 msgid "Linear gradient fill"
 msgstr "線性漸變填色"
 
-#: ../src/ui/widget/selected-style.cpp:150
+#: ../src/ui/widget/selected-style.cpp:152
 #: ../src/ui/widget/style-swatch.cpp:286
 msgid "Linear gradient stroke"
 msgstr "線性漸變描邊"
 
-#: ../src/ui/widget/selected-style.cpp:152
-#: ../src/ui/widget/style-swatch.cpp:288
-msgid "R Gradient"
-msgstr "R 漸變"
+#: ../src/ui/widget/selected-style.cpp:159
+#, fuzzy
+msgid "<b>R</b>"
+msgstr "<b>均值</b>"
 
-#: ../src/ui/widget/selected-style.cpp:155
+#: ../src/ui/widget/selected-style.cpp:162
 #: ../src/ui/widget/style-swatch.cpp:290
 msgid "Radial gradient fill"
 msgstr "放射漸變填色"
 
-#: ../src/ui/widget/selected-style.cpp:155
+#: ../src/ui/widget/selected-style.cpp:162
 #: ../src/ui/widget/style-swatch.cpp:290
 msgid "Radial gradient stroke"
 msgstr "放射漸變繪製"
 
-#: ../src/ui/widget/selected-style.cpp:157
+#: ../src/ui/widget/selected-style.cpp:169
 msgid "Different"
 msgstr "相差"
 
-#: ../src/ui/widget/selected-style.cpp:160
+#: ../src/ui/widget/selected-style.cpp:172
 msgid "Different fills"
 msgstr "相差填色"
 
-#: ../src/ui/widget/selected-style.cpp:160
+#: ../src/ui/widget/selected-style.cpp:172
 msgid "Different strokes"
 msgstr "相差描邊"
 
-#: ../src/ui/widget/selected-style.cpp:162
+#: ../src/ui/widget/selected-style.cpp:174
 #: ../src/ui/widget/style-swatch.cpp:303
-msgid "Unset"
-msgstr "未設定"
+#, fuzzy
+msgid "<b>Unset</b>"
+msgstr "<b>線條</b>"
 
-#: ../src/ui/widget/selected-style.cpp:168
+#: ../src/ui/widget/selected-style.cpp:180
 msgid "Flat color fill"
 msgstr "平面色彩填色"
 
-#: ../src/ui/widget/selected-style.cpp:168
+#: ../src/ui/widget/selected-style.cpp:180
 msgid "Flat color stroke"
 msgstr "平面色彩描邊"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
-#: ../src/ui/widget/selected-style.cpp:171
+#: ../src/ui/widget/selected-style.cpp:183
 msgid "<b>a</b>"
 msgstr "<b>均值</b>"
 
-#: ../src/ui/widget/selected-style.cpp:174
+#: ../src/ui/widget/selected-style.cpp:186
 msgid "Fill is averaged over selected objects"
 msgstr "平均填色已選物件"
 
-#: ../src/ui/widget/selected-style.cpp:174
+#: ../src/ui/widget/selected-style.cpp:186
 msgid "Stroke is averaged over selected objects"
 msgstr "平均描邊已選物件"
 
 #. TRANSLATOR COMMENT: M means "Multiple"
-#: ../src/ui/widget/selected-style.cpp:177
+#: ../src/ui/widget/selected-style.cpp:189
 msgid "<b>m</b>"
 msgstr "<b>多選</b>"
 
-#: ../src/ui/widget/selected-style.cpp:180
+#: ../src/ui/widget/selected-style.cpp:192
 msgid "Multiple selected objects have the same fill"
 msgstr "多選物件填色相同"
 
-#: ../src/ui/widget/selected-style.cpp:180
+#: ../src/ui/widget/selected-style.cpp:192
 msgid "Multiple selected objects have the same stroke"
 msgstr "多選物件描邊相同"
 
-#: ../src/ui/widget/selected-style.cpp:182
+#: ../src/ui/widget/selected-style.cpp:194
 msgid "Edit fill..."
 msgstr "編輯填色…"
 
-#: ../src/ui/widget/selected-style.cpp:182
+#: ../src/ui/widget/selected-style.cpp:194
 msgid "Edit stroke..."
 msgstr "編輯描邊…"
 
-#: ../src/ui/widget/selected-style.cpp:186
+#: ../src/ui/widget/selected-style.cpp:198
 msgid "Last set color"
 msgstr "最近設定色彩"
 
-#: ../src/ui/widget/selected-style.cpp:190
+#: ../src/ui/widget/selected-style.cpp:202
 msgid "Last selected color"
 msgstr "最近選擇的色彩"
 
-#: ../src/ui/widget/selected-style.cpp:194
+#: ../src/ui/widget/selected-style.cpp:206
 msgid "Invert"
 msgstr "反轉"
 
-#: ../src/ui/widget/selected-style.cpp:198
+#: ../src/ui/widget/selected-style.cpp:210
 msgid "White"
 msgstr "白色"
 
-#: ../src/ui/widget/selected-style.cpp:202
+#: ../src/ui/widget/selected-style.cpp:214
 #: ../src/widgets/sp-color-scales.cpp:458
 #: ../src/widgets/sp-color-scales.cpp:459
 msgid "Black"
 msgstr "黑"
 
-#: ../src/ui/widget/selected-style.cpp:206
+#: ../src/ui/widget/selected-style.cpp:218
 msgid "Copy color"
 msgstr "複製色彩"
 
-#: ../src/ui/widget/selected-style.cpp:210
+#: ../src/ui/widget/selected-style.cpp:222
 msgid "Paste color"
 msgstr "貼上色彩"
 
-#: ../src/ui/widget/selected-style.cpp:214
-#: ../src/ui/widget/selected-style.cpp:738
+#: ../src/ui/widget/selected-style.cpp:226
+#: ../src/ui/widget/selected-style.cpp:753
 msgid "Swap fill and stroke"
 msgstr "交換填色和描邊"
 
-#: ../src/ui/widget/selected-style.cpp:218
-#: ../src/ui/widget/selected-style.cpp:480
-#: ../src/ui/widget/selected-style.cpp:489
+#: ../src/ui/widget/selected-style.cpp:230
+#: ../src/ui/widget/selected-style.cpp:495
+#: ../src/ui/widget/selected-style.cpp:504
 msgid "Make fill opaque"
 msgstr "使填色混濁"
 
-#: ../src/ui/widget/selected-style.cpp:218
+#: ../src/ui/widget/selected-style.cpp:230
 msgid "Make stroke opaque"
 msgstr "使描邊混濁"
 
-#: ../src/ui/widget/selected-style.cpp:280
+#: ../src/ui/widget/selected-style.cpp:292
 msgid "Remove"
 msgstr "移除"
 
-#: ../src/ui/widget/selected-style.cpp:501
+#: ../src/ui/widget/selected-style.cpp:516
 #, fuzzy
 msgid "Apply last set color to fill"
 msgstr "平面色彩填色"
 
-#: ../src/ui/widget/selected-style.cpp:513
+#: ../src/ui/widget/selected-style.cpp:528
 #, fuzzy
 msgid "Apply last set color to stroke"
 msgstr "平面色彩描邊"
 
-#: ../src/ui/widget/selected-style.cpp:524
+#: ../src/ui/widget/selected-style.cpp:539
 #, fuzzy
 msgid "Apply last selected color to fill"
 msgstr "最近選擇的色彩"
 
-#: ../src/ui/widget/selected-style.cpp:535
+#: ../src/ui/widget/selected-style.cpp:550
 #, fuzzy
 msgid "Apply last selected color to stroke"
 msgstr "最近選擇的色彩"
 
-#: ../src/ui/widget/selected-style.cpp:555
+#: ../src/ui/widget/selected-style.cpp:570
 #, fuzzy
 msgid "Invert fill"
 msgstr "回復填色"
 
-#: ../src/ui/widget/selected-style.cpp:575
+#: ../src/ui/widget/selected-style.cpp:590
 #, fuzzy
 msgid "Invert stroke"
 msgstr "回復描邊"
 
-#: ../src/ui/widget/selected-style.cpp:587
+#: ../src/ui/widget/selected-style.cpp:602
 #, fuzzy
 msgid "White fill"
 msgstr "白色"
 
-#: ../src/ui/widget/selected-style.cpp:599
+#: ../src/ui/widget/selected-style.cpp:614
 #, fuzzy
 msgid "White stroke"
 msgstr "編輯描邊…"
 
-#: ../src/ui/widget/selected-style.cpp:611
+#: ../src/ui/widget/selected-style.cpp:626
 #, fuzzy
 msgid "Black fill"
 msgstr "黑"
 
-#: ../src/ui/widget/selected-style.cpp:623
+#: ../src/ui/widget/selected-style.cpp:638
 #, fuzzy
 msgid "Black stroke"
 msgstr "平面色彩描邊"
 
-#: ../src/ui/widget/selected-style.cpp:666
+#: ../src/ui/widget/selected-style.cpp:681
 #, fuzzy
 msgid "Paste fill"
 msgstr "圖樣填充"
 
-#: ../src/ui/widget/selected-style.cpp:684
+#: ../src/ui/widget/selected-style.cpp:699
 #, fuzzy
 msgid "Paste stroke"
 msgstr "描邊圖案"
 
-#: ../src/ui/widget/selected-style.cpp:841
+#: ../src/ui/widget/selected-style.cpp:856
 #, fuzzy
 msgid "Change stroke width"
 msgstr "伸縮邊框寬度"
 
-#: ../src/ui/widget/selected-style.cpp:979
-#: ../src/ui/widget/selected-style.cpp:980
+#: ../src/ui/widget/selected-style.cpp:998
+#: ../src/ui/widget/selected-style.cpp:999
 #, fuzzy
 msgid "Master opacity, %"
 msgstr "主要濁度"
 
-#: ../src/ui/widget/selected-style.cpp:1011
+#: ../src/ui/widget/selected-style.cpp:1030
 #, c-format
 msgid "Stroke width: %.5g%s%s"
 msgstr "描邊寬度： %.5g%s%s"
 
-#: ../src/ui/widget/selected-style.cpp:1015
+#: ../src/ui/widget/selected-style.cpp:1034
 msgid " (averaged)"
 msgstr " (平均)"
 
-#: ../src/ui/widget/selected-style.cpp:1043
+#: ../src/ui/widget/selected-style.cpp:1062
 msgid "0 (transparent)"
 msgstr "0 (透明)"
 
-#: ../src/ui/widget/selected-style.cpp:1067
+#: ../src/ui/widget/selected-style.cpp:1086
 #, fuzzy
 msgid "100% (opaque)"
 msgstr "1.0 (混濁)"
@@ -8189,6 +8261,24 @@ msgstr "紙張高度"
 msgid "Set page size"
 msgstr "頁面尺寸(_A)："
 
+#: ../src/ui/widget/style-swatch.cpp:274
+#, c-format
+msgid "Fill: %06x/%.3g"
+msgstr ""
+
+#: ../src/ui/widget/style-swatch.cpp:276
+#, c-format
+msgid "Stroke: %06x/%.3g"
+msgstr ""
+
+#: ../src/ui/widget/style-swatch.cpp:284
+msgid "L Gradient"
+msgstr "L 漸變"
+
+#: ../src/ui/widget/style-swatch.cpp:288
+msgid "R Gradient"
+msgstr "R 漸變"
+
 #: ../src/ui/widget/style-swatch.cpp:325
 #, c-format
 msgid "Stroke width: %.5g%s"
@@ -8209,86 +8299,86 @@ msgstr "O:.%d"
 msgid "Opacity: %.3g"
 msgstr "濁度： %.3g"
 
-#: ../src/verbs.cpp:1117
+#: ../src/verbs.cpp:1119
 #, fuzzy
 msgid "Move to next layer"
 msgstr "移到下一個圖層。"
 
-#: ../src/verbs.cpp:1118
+#: ../src/verbs.cpp:1120
 msgid "Moved to next layer."
 msgstr "移到下一個圖層。"
 
-#: ../src/verbs.cpp:1120
+#: ../src/verbs.cpp:1122
 msgid "Cannot move past last layer."
 msgstr "無法移至最下層圖層之後。"
 
-#: ../src/verbs.cpp:1129
+#: ../src/verbs.cpp:1131
 #, fuzzy
 msgid "Move to previous layer"
 msgstr "移到上一個圖層。"
 
-#: ../src/verbs.cpp:1130
+#: ../src/verbs.cpp:1132
 msgid "Moved to previous layer."
 msgstr "移到上一個圖層。"
 
-#: ../src/verbs.cpp:1132
+#: ../src/verbs.cpp:1134
 msgid "Cannot move past first layer."
 msgstr "無法移至最上層圖層之前。"
 
-#: ../src/verbs.cpp:1149 ../src/verbs.cpp:1233
+#: ../src/verbs.cpp:1151 ../src/verbs.cpp:1235
 msgid "No current layer."
 msgstr "無現行圖層。"
 
-#: ../src/verbs.cpp:1178 ../src/verbs.cpp:1182
+#: ../src/verbs.cpp:1180 ../src/verbs.cpp:1184
 #, c-format
 msgid "Raised layer <b>%s</b>."
 msgstr "上移的圖層 <b>%s</b>。"
 
-#: ../src/verbs.cpp:1179
+#: ../src/verbs.cpp:1181
 #, fuzzy
 msgid "Layer to top"
 msgstr "圖層移到頂端(_T)"
 
-#: ../src/verbs.cpp:1183
+#: ../src/verbs.cpp:1185
 #, fuzzy
 msgid "Raise layer"
 msgstr "提升圖層(_R)"
 
-#: ../src/verbs.cpp:1186 ../src/verbs.cpp:1190
+#: ../src/verbs.cpp:1188 ../src/verbs.cpp:1192
 #, c-format
 msgid "Lowered layer <b>%s</b>."
 msgstr "下降的圖層 <b>%s</b>。"
 
-#: ../src/verbs.cpp:1187
+#: ../src/verbs.cpp:1189
 #, fuzzy
 msgid "Layer to bottom"
 msgstr "圖層移到底部(_B)"
 
-#: ../src/verbs.cpp:1191
+#: ../src/verbs.cpp:1193
 #, fuzzy
 msgid "Lower layer"
 msgstr "降低圖層(_L)"
 
-#: ../src/verbs.cpp:1200
+#: ../src/verbs.cpp:1202
 msgid "Cannot move layer any further."
 msgstr "無法進一步移動圖層。"
 
-#: ../src/verbs.cpp:1228
+#: ../src/verbs.cpp:1230
 #, fuzzy
 msgid "Delete layer"
 msgstr "已刪除圖層。"
 
 #. TRANSLATORS: this means "The layer has been deleted."
-#: ../src/verbs.cpp:1231
+#: ../src/verbs.cpp:1233
 msgid "Deleted layer."
 msgstr "已刪除圖層。"
 
-#: ../src/verbs.cpp:1288
+#: ../src/verbs.cpp:1290
 #, fuzzy
 msgid "Flip horizontally"
 msgstr "水平翻轉(_H)"
 
-#: ../src/verbs.cpp:1297
+#: ../src/verbs.cpp:1299
 #, fuzzy
 msgid "Flip vertically"
 msgstr "垂直翻轉(_V)"
@@ -8296,1387 +8386,1388 @@ msgstr "垂直翻轉(_V)"
 #. TRANSLATORS: If you have translated the keys.svg file to your language, then
 #. translate this string as "keys.LANG.svg" (where LANG is your language code);
 #. otherwise leave as "keys.svg".
-#: ../src/verbs.cpp:1671
+#: ../src/verbs.cpp:1673
 msgid "keys.svg"
 msgstr "keys.svg"
 
 #. TRANSLATORS: If you have translated the tutorial-basic.svg file to your language,
 #. then translate this string as "tutorial-basic.LANG.svg" (where LANG is your language
 #. code); otherwise leave as "tutorial-basic.svg".
-#: ../src/verbs.cpp:1707
+#: ../src/verbs.cpp:1709
 msgid "tutorial-basic.svg"
 msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1711
+#: ../src/verbs.cpp:1713
 msgid "tutorial-shapes.svg"
 msgstr "tutorial-shapes.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1715
+#: ../src/verbs.cpp:1717
 msgid "tutorial-advanced.svg"
 msgstr "tutorial-advanced.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1719
+#: ../src/verbs.cpp:1721
 msgid "tutorial-tracing.svg"
 msgstr "tutorial-tracing.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1723
+#: ../src/verbs.cpp:1725
 msgid "tutorial-calligraphy.svg"
 msgstr "tutorial-calligraphy.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1727
+#: ../src/verbs.cpp:1729
 msgid "tutorial-elements.svg"
 msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1731
+#: ../src/verbs.cpp:1733
 msgid "tutorial-tips.svg"
 msgstr "tutorial-tips.svg"
 
-#: ../src/verbs.cpp:1963
+#: ../src/verbs.cpp:1965
 msgid "Does nothing"
 msgstr "無動作"
 
 #. File
-#: ../src/verbs.cpp:1966
+#: ../src/verbs.cpp:1968
 msgid "Default"
 msgstr "預設"
 
-#: ../src/verbs.cpp:1966
+#: ../src/verbs.cpp:1968
 msgid "Create new document from the default template"
 msgstr "使用預設範本建立新的文件"
 
-#: ../src/verbs.cpp:1968
+#: ../src/verbs.cpp:1970
 msgid "_Open..."
 msgstr "開啟(_O)..."
 
-#: ../src/verbs.cpp:1969
+#: ../src/verbs.cpp:1971
 msgid "Open an existing document"
 msgstr "開啟已存在文件"
 
-#: ../src/verbs.cpp:1970
+#: ../src/verbs.cpp:1972
 msgid "Re_vert"
 msgstr "復原(_V)"
 
-#: ../src/verbs.cpp:1971
+#: ../src/verbs.cpp:1973
 msgid "Revert to the last saved version of document (changes will be lost)"
 msgstr "復原至上一次儲存狀態(目前的改變將會遺失)"
 
-#: ../src/verbs.cpp:1972
+#: ../src/verbs.cpp:1974
 msgid "_Save"
 msgstr "儲存(_S)"
 
-#: ../src/verbs.cpp:1972
+#: ../src/verbs.cpp:1974
 msgid "Save document"
 msgstr "儲存文件"
 
-#: ../src/verbs.cpp:1974
+#: ../src/verbs.cpp:1976
 msgid "Save _As..."
 msgstr "另存新檔(_A)..."
 
-#: ../src/verbs.cpp:1975
+#: ../src/verbs.cpp:1977
 msgid "Save document under a new name"
 msgstr "使用新名稱儲存文件"
 
-#: ../src/verbs.cpp:1976
+#: ../src/verbs.cpp:1978
 #, fuzzy
 msgid "Save a Cop_y..."
 msgstr "另存新檔(_A)..."
 
-#: ../src/verbs.cpp:1977
+#: ../src/verbs.cpp:1979
 #, fuzzy
 msgid "Save a copy of the document under a new name"
 msgstr "使用新名稱儲存文件"
 
-#: ../src/verbs.cpp:1978
+#: ../src/verbs.cpp:1980
 msgid "_Print..."
 msgstr "列印(_P)..."
 
-#: ../src/verbs.cpp:1978
+#: ../src/verbs.cpp:1980
 msgid "Print document"
 msgstr "列印文件"
 
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
-#: ../src/verbs.cpp:1981
+#: ../src/verbs.cpp:1983
 msgid "Vac_uum Defs"
 msgstr "清空 Defs(_U)"
 
-#: ../src/verbs.cpp:1981
+#: ../src/verbs.cpp:1983
 msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
 msgstr "從文件的&lt;defs&gt;中移除未使用的定義(比如漸變或剪裁路徑)"
 
-#: ../src/verbs.cpp:1983
+#: ../src/verbs.cpp:1985
 msgid "Print _Direct"
 msgstr "直接列印(_D)"
 
-#: ../src/verbs.cpp:1984
+#: ../src/verbs.cpp:1986
 msgid "Print directly without prompting to a file or pipe"
 msgstr "直接列印而不提示要求檔名或管線"
 
-#: ../src/verbs.cpp:1985
+#: ../src/verbs.cpp:1987
 msgid "Print Previe_w"
 msgstr "列印預覽(_W)"
 
-#: ../src/verbs.cpp:1986
+#: ../src/verbs.cpp:1988
 msgid "Preview document printout"
 msgstr "預覽文件的輸出"
 
-#: ../src/verbs.cpp:1987
+#: ../src/verbs.cpp:1989
 msgid "_Import..."
 msgstr "匯入(_I)..."
 
-#: ../src/verbs.cpp:1988
+#: ../src/verbs.cpp:1990
 msgid "Import a bitmap or SVG image into this document"
 msgstr "將點陣圖或是 SVG 圖像匯入此文件"
 
-#: ../src/verbs.cpp:1989
+#: ../src/verbs.cpp:1991
 msgid "_Export Bitmap..."
 msgstr "匯出點陣圖(_E)..."
 
-#: ../src/verbs.cpp:1990
+#: ../src/verbs.cpp:1992
 msgid "Export this document or a selection as a bitmap image"
 msgstr "把文件或選取區以點陣圖圖像匯出"
 
-#: ../src/verbs.cpp:1991
+#: ../src/verbs.cpp:1993
 msgid "N_ext Window"
 msgstr "下一個視窗(_E)"
 
-#: ../src/verbs.cpp:1992
+#: ../src/verbs.cpp:1994
 msgid "Switch to the next document window"
 msgstr "切換到下一個文件視窗"
 
-#: ../src/verbs.cpp:1993
+#: ../src/verbs.cpp:1995
 msgid "P_revious Window"
 msgstr "上一個視窗(_R)"
 
-#: ../src/verbs.cpp:1994
+#: ../src/verbs.cpp:1996
 msgid "Switch to the previous document window"
 msgstr "切換到上一個文件視窗"
 
-#: ../src/verbs.cpp:1995
+#: ../src/verbs.cpp:1997
 msgid "_Close"
 msgstr "關閉(_C)"
 
-#: ../src/verbs.cpp:1996
+#: ../src/verbs.cpp:1998
 msgid "Close this document window"
 msgstr "關閉此文件"
 
-#: ../src/verbs.cpp:1997
+#: ../src/verbs.cpp:1999
 msgid "_Quit"
 msgstr "離開(_Q)"
 
-#: ../src/verbs.cpp:1997
+#: ../src/verbs.cpp:1999
 msgid "Quit Inkscape"
 msgstr "離開 Inkscape"
 
-#: ../src/verbs.cpp:2000
+#: ../src/verbs.cpp:2002
 msgid "Undo last action"
 msgstr "復原最後一個動作"
 
-#: ../src/verbs.cpp:2003
+#: ../src/verbs.cpp:2005
 msgid "Do again the last undone action"
 msgstr "重複最後未完成作業"
 
-#: ../src/verbs.cpp:2004
+#: ../src/verbs.cpp:2006
 msgid "Cu_t"
 msgstr "剪下(_T)"
 
-#: ../src/verbs.cpp:2005
+#: ../src/verbs.cpp:2007
 msgid "Cut selection to clipboard"
 msgstr "剪下選取區到剪貼簿"
 
-#: ../src/verbs.cpp:2006
+#: ../src/verbs.cpp:2008
 msgid "_Copy"
 msgstr "複製(_C)"
 
-#: ../src/verbs.cpp:2007
+#: ../src/verbs.cpp:2009
 msgid "Copy selection to clipboard"
 msgstr "複製選取區到剪貼簿"
 
-#: ../src/verbs.cpp:2008
+#: ../src/verbs.cpp:2010
 msgid "_Paste"
 msgstr "貼上(_P)"
 
-#: ../src/verbs.cpp:2009
+#: ../src/verbs.cpp:2011
 msgid "Paste objects from clipboard to mouse point, or paste text"
 msgstr "從剪貼簿貼上物件到滑鼠點，或是貼上文字"
 
-#: ../src/verbs.cpp:2010
+#: ../src/verbs.cpp:2012
 msgid "Paste _Style"
 msgstr "貼上樣式(_S)"
 
-#: ../src/verbs.cpp:2011
+#: ../src/verbs.cpp:2013
 msgid "Apply the style of the copied object to selection"
 msgstr "套用已複製物件的風格到選取區"
 
-#: ../src/verbs.cpp:2013
+#: ../src/verbs.cpp:2015
 msgid "Scale selection to match the size of the copied object"
 msgstr "縮放選取區以匹配已複製物件的尺寸"
 
-#: ../src/verbs.cpp:2014
+#: ../src/verbs.cpp:2016
 msgid "Paste _Width"
 msgstr "貼上寬度(_W)"
 
-#: ../src/verbs.cpp:2015
+#: ../src/verbs.cpp:2017
 msgid "Scale selection horizontally to match the width of the copied object"
 msgstr "水平縮放選取區以匹配已複製物件的寬度"
 
-#: ../src/verbs.cpp:2016
+#: ../src/verbs.cpp:2018
 msgid "Paste _Height"
 msgstr "貼上高度(_H)"
 
-#: ../src/verbs.cpp:2017
+#: ../src/verbs.cpp:2019
 msgid "Scale selection vertically to match the height of the copied object"
 msgstr "垂直縮放選取區以匹配已複製物件的高度"
 
-#: ../src/verbs.cpp:2018
+#: ../src/verbs.cpp:2020
 msgid "Paste Size Separately"
 msgstr "分別貼上尺寸"
 
-#: ../src/verbs.cpp:2019
+#: ../src/verbs.cpp:2021
 msgid "Scale each selected object to match the size of the copied object"
 msgstr "縮放每個已選物件以匹配已複製物件的尺寸"
 
-#: ../src/verbs.cpp:2020
+#: ../src/verbs.cpp:2022
 msgid "Paste Width Separately"
 msgstr "分別貼上寬度"
 
-#: ../src/verbs.cpp:2021
+#: ../src/verbs.cpp:2023
 msgid ""
 "Scale each selected object horizontally to match the width of the copied "
 "object"
 msgstr "水平地縮放每個已選物件以匹配已複製物件的寬度"
 
-#: ../src/verbs.cpp:2022
+#: ../src/verbs.cpp:2024
 msgid "Paste Height Separately"
 msgstr "分別貼上高度"
 
-#: ../src/verbs.cpp:2023
+#: ../src/verbs.cpp:2025
 msgid ""
 "Scale each selected object vertically to match the height of the copied "
 "object"
 msgstr "垂直地縮放每個已選物件以匹配已複製物件的高度"
 
-#: ../src/verbs.cpp:2024
+#: ../src/verbs.cpp:2026
 msgid "Paste _In Place"
 msgstr "貼在原處(_I)"
 
-#: ../src/verbs.cpp:2025
+#: ../src/verbs.cpp:2027
 msgid "Paste objects from clipboard to the original location"
 msgstr "從剪貼簿貼上物件到原來的位置"
 
-#: ../src/verbs.cpp:2026
+#: ../src/verbs.cpp:2028
 msgid "_Delete"
 msgstr "刪除(_D)"
 
-#: ../src/verbs.cpp:2027
+#: ../src/verbs.cpp:2029
 msgid "Delete selection"
 msgstr "刪除選取"
 
-#: ../src/verbs.cpp:2028
+#: ../src/verbs.cpp:2030
 msgid "Duplic_ate"
 msgstr "再製(_A)"
 
-#: ../src/verbs.cpp:2029
+#: ../src/verbs.cpp:2031
 msgid "Duplicate selected objects"
 msgstr "再製所選物件"
 
-#: ../src/verbs.cpp:2030
+#: ../src/verbs.cpp:2032
 msgid "Create Clo_ne"
 msgstr "建立仿製品(_N)"
 
-#: ../src/verbs.cpp:2031
+#: ../src/verbs.cpp:2033
 msgid "Create a clone (a copy linked to the original) of selected object"
 msgstr "建立所選物件的一個仿製品(與原始物件連線的副本)"
 
-#: ../src/verbs.cpp:2032
+#: ../src/verbs.cpp:2034
 msgid "Unlin_k Clone"
 msgstr "取消複本連結(_K)"
 
-#: ../src/verbs.cpp:2033
+#: ../src/verbs.cpp:2035
 msgid ""
 "Cut the selected clone's link to its original, turning it into a standalone "
 "object"
 msgstr "中斷已選仿製品與原始物件的連線，轉化成單獨的物件"
 
-#: ../src/verbs.cpp:2034
+#: ../src/verbs.cpp:2036
 msgid "Select _Original"
 msgstr "選擇原件(_O)"
 
-#: ../src/verbs.cpp:2035
+#: ../src/verbs.cpp:2037
 msgid "Select the object to which the selected clone is linked"
 msgstr "選擇與已選仿製品連線的物件"
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
-#: ../src/verbs.cpp:2037
+#: ../src/verbs.cpp:2039
 msgid "Objects to Patter_n"
 msgstr "物件轉化成圖案(_N)"
 
-#: ../src/verbs.cpp:2038
+#: ../src/verbs.cpp:2040
 msgid "Convert selection to a rectangle with tiled pattern fill"
 msgstr "轉換選取區為矩形圖樣填充"
 
 #. TRANSLATORS: Extract objects from a tiled pattern fill
-#: ../src/verbs.cpp:2040
+#: ../src/verbs.cpp:2042
 msgid "Pattern to _Objects"
 msgstr "圖案轉化成物件(_O)"
 
-#: ../src/verbs.cpp:2041
+#: ../src/verbs.cpp:2043
 msgid "Extract objects from a tiled pattern fill"
 msgstr "從圖樣填充中解開物件"
 
-#: ../src/verbs.cpp:2042
+#: ../src/verbs.cpp:2044
 msgid "Clea_r All"
 msgstr "全部清除(_R)"
 
-#: ../src/verbs.cpp:2043
+#: ../src/verbs.cpp:2045
 msgid "Delete all objects from document"
 msgstr "從文件中刪除所有物件"
 
-#: ../src/verbs.cpp:2044
+#: ../src/verbs.cpp:2046
 msgid "Select Al_l"
 msgstr "全選(_L)"
 
-#: ../src/verbs.cpp:2045
+#: ../src/verbs.cpp:2047
 msgid "Select all objects or all nodes"
 msgstr "選擇所有物件或所有複本"
 
-#: ../src/verbs.cpp:2046
+#: ../src/verbs.cpp:2048
 msgid "Select All in All La_yers"
 msgstr "在所有圖層中全選(_Y)"
 
-#: ../src/verbs.cpp:2047
+#: ../src/verbs.cpp:2049
 msgid "Select all objects in all visible and unlocked layers"
 msgstr "在所有可見與未上鎖的圖層中全選"
 
-#: ../src/verbs.cpp:2048
+#: ../src/verbs.cpp:2050
 msgid "In_vert Selection"
 msgstr "反向選取(_V)"
 
-#: ../src/verbs.cpp:2049
+#: ../src/verbs.cpp:2051
 msgid "Invert selection (unselect what is selected and select everything else)"
 msgstr "反向選擇 (取消已選並且全選其餘的)"
 
-#: ../src/verbs.cpp:2050
+#: ../src/verbs.cpp:2052
 msgid "Invert in All Layers"
 msgstr "在所有圖層中反向選取"
 
-#: ../src/verbs.cpp:2051
+#: ../src/verbs.cpp:2053
 msgid "Invert selection in all visible and unlocked layers"
 msgstr "在所有可見與未上鎖的圖層中反向選擇"
 
-#: ../src/verbs.cpp:2052
+#: ../src/verbs.cpp:2054
 #, fuzzy
 msgid "Select Next"
 msgstr "刪除節點"
 
-#: ../src/verbs.cpp:2053
+#: ../src/verbs.cpp:2055
 #, fuzzy
 msgid "Select next object or node"
 msgstr "選擇所有物件或所有複本"
 
-#: ../src/verbs.cpp:2054
+#: ../src/verbs.cpp:2056
 #, fuzzy
 msgid "Select Previous"
 msgstr "選取區"
 
-#: ../src/verbs.cpp:2055
+#: ../src/verbs.cpp:2057
 #, fuzzy
 msgid "Select previous object or node"
 msgstr "選擇所有物件或所有複本"
 
-#: ../src/verbs.cpp:2056
+#: ../src/verbs.cpp:2058
 msgid "D_eselect"
 msgstr "取消選取(_E)"
 
-#: ../src/verbs.cpp:2057
+#: ../src/verbs.cpp:2059
 msgid "Deselect any selected objects or nodes"
 msgstr "刪除任何所選之物件或節點"
 
 #. Selection
-#: ../src/verbs.cpp:2060
+#: ../src/verbs.cpp:2062
 msgid "Raise to _Top"
 msgstr "提升至頂層(_T)"
 
-#: ../src/verbs.cpp:2061
+#: ../src/verbs.cpp:2063
 msgid "Raise selection to top"
 msgstr "提升所選至頂層"
 
-#: ../src/verbs.cpp:2062
+#: ../src/verbs.cpp:2064
 msgid "Lower to _Bottom"
 msgstr "降低到底層(_B)"
 
-#: ../src/verbs.cpp:2063
+#: ../src/verbs.cpp:2065
 msgid "Lower selection to bottom"
 msgstr "降低所選到底層"
 
-#: ../src/verbs.cpp:2064
+#: ../src/verbs.cpp:2066
 msgid "_Raise"
 msgstr "提升(_R)"
 
-#: ../src/verbs.cpp:2065
+#: ../src/verbs.cpp:2067
 msgid "Raise selection one step"
 msgstr "提升所選至上一層"
 
-#: ../src/verbs.cpp:2066
+#: ../src/verbs.cpp:2068
 msgid "_Lower"
 msgstr "降低(_L)"
 
-#: ../src/verbs.cpp:2067
+#: ../src/verbs.cpp:2069
 msgid "Lower selection one step"
 msgstr "降低所選至下一層"
 
-#: ../src/verbs.cpp:2068
+#: ../src/verbs.cpp:2070
 msgid "_Group"
 msgstr "形成群組(_G)"
 
-#: ../src/verbs.cpp:2069
+#: ../src/verbs.cpp:2071
 msgid "Group selected objects"
 msgstr "結合選擇的物件"
 
-#: ../src/verbs.cpp:2071
+#: ../src/verbs.cpp:2073
 msgid "Ungroup selected groups"
 msgstr "解開選擇的群組"
 
-#: ../src/verbs.cpp:2073
+#: ../src/verbs.cpp:2075
 msgid "_Put on Path"
 msgstr "置於路徑(_P)"
 
-#: ../src/verbs.cpp:2075
+#: ../src/verbs.cpp:2077
 msgid "_Remove from Path"
 msgstr "從路徑移除(_R)"
 
-#: ../src/verbs.cpp:2077
+#: ../src/verbs.cpp:2079
 msgid "Remove Manual _Kerns"
 msgstr "手動移除突出物(_K)"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
-#: ../src/verbs.cpp:2080
+#: ../src/verbs.cpp:2082
 msgid "Remove all manual kerns and glyph rotations from a text object"
 msgstr "從文字物件上移除所有手動突出物與字形"
 
-#: ../src/verbs.cpp:2082
+#: ../src/verbs.cpp:2084
 msgid "_Union"
 msgstr "合併(_U)"
 
-#: ../src/verbs.cpp:2083
+#: ../src/verbs.cpp:2085
 msgid "Create union of selected paths"
 msgstr "建立所選路徑的並集"
 
-#: ../src/verbs.cpp:2084
+#: ../src/verbs.cpp:2086
 msgid "_Intersection"
 msgstr "交集(_I)"
 
-#: ../src/verbs.cpp:2085
+#: ../src/verbs.cpp:2087
 msgid "Create intersection of selected paths"
 msgstr "建立所選路徑的交集"
 
-#: ../src/verbs.cpp:2086
+#: ../src/verbs.cpp:2088
 msgid "_Difference"
 msgstr "割去(_D)"
 
-#: ../src/verbs.cpp:2087
+#: ../src/verbs.cpp:2089
 msgid "Create difference of selected paths (bottom minus top)"
 msgstr "建立所選路徑的差集(底部減去頂部)"
 
-#: ../src/verbs.cpp:2088
+#: ../src/verbs.cpp:2090
 msgid "E_xclusion"
 msgstr "排除(_X)"
 
-#: ../src/verbs.cpp:2089
+#: ../src/verbs.cpp:2091
 msgid ""
 "Create exclusive OR of selected paths (those parts that belong to only one "
 "path)"
 msgstr "建立絕對的或作業 (這些只屬於一個路徑)"
 
-#: ../src/verbs.cpp:2090
+#: ../src/verbs.cpp:2092
 msgid "Di_vision"
 msgstr "分開(_V)"
 
-#: ../src/verbs.cpp:2091
+#: ../src/verbs.cpp:2093
 msgid "Cut the bottom path into pieces"
 msgstr "把底部路徑分割成片"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2094
+#: ../src/verbs.cpp:2096
 msgid "Cut _Path"
 msgstr "剪下(_P)"
 
-#: ../src/verbs.cpp:2095
+#: ../src/verbs.cpp:2097
 msgid "Cut the bottom path's stroke into pieces, removing fill"
 msgstr "把底部路徑的描邊分割成片，去除填色"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2099
+#: ../src/verbs.cpp:2101
 msgid "Outs_et"
 msgstr "外貼(_E)"
 
-#: ../src/verbs.cpp:2100
+#: ../src/verbs.cpp:2102
 msgid "Outset selected paths"
 msgstr "外貼於選取的路徑"
 
-#: ../src/verbs.cpp:2102
+#: ../src/verbs.cpp:2104
 msgid "O_utset Path by 1 px"
 msgstr "外貼路徑為 1px (_U)"
 
-#: ../src/verbs.cpp:2103
+#: ../src/verbs.cpp:2105
 msgid "Outset selected paths by 1 px"
 msgstr "選取的路徑外貼 1px"
 
-#: ../src/verbs.cpp:2105
+#: ../src/verbs.cpp:2107
 msgid "O_utset Path by 10 px"
 msgstr "路徑外貼 10px (_U)"
 
-#: ../src/verbs.cpp:2106
+#: ../src/verbs.cpp:2108
 msgid "Outset selected paths by 10 px"
 msgstr "選取的路徑外貼 10px"
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2110
+#: ../src/verbs.cpp:2112
 msgid "I_nset"
 msgstr "內插(_N)"
 
-#: ../src/verbs.cpp:2111
+#: ../src/verbs.cpp:2113
 msgid "Inset selected paths"
 msgstr "內插於選取的路徑"
 
-#: ../src/verbs.cpp:2113
+#: ../src/verbs.cpp:2115
 msgid "I_nset Path by 1 px"
 msgstr "內插路徑為 1 px(_N)"
 
-#: ../src/verbs.cpp:2114
+#: ../src/verbs.cpp:2116
 msgid "Inset selected paths by 1 px"
 msgstr "選取的路徑內插 1px "
 
-#: ../src/verbs.cpp:2116
+#: ../src/verbs.cpp:2118
 msgid "I_nset Path by 10 px"
 msgstr "內插路徑為 10 px(_N)"
 
-#: ../src/verbs.cpp:2117
+#: ../src/verbs.cpp:2119
 msgid "Inset selected paths by 10 px"
 msgstr "選取的路徑內插 10px"
 
-#: ../src/verbs.cpp:2119
+#: ../src/verbs.cpp:2121
 msgid "D_ynamic Offset"
 msgstr "動態偏移(_Y)"
 
-#: ../src/verbs.cpp:2119
+#: ../src/verbs.cpp:2121
 msgid "Create a dynamic offset object"
 msgstr "建立一個動態偏移物件"
 
-#: ../src/verbs.cpp:2121
+#: ../src/verbs.cpp:2123
 msgid "_Linked Offset"
 msgstr "連結偏移(_L)"
 
-#: ../src/verbs.cpp:2122
+#: ../src/verbs.cpp:2124
 msgid "Create a dynamic offset object linked to the original path"
 msgstr "建立連結到原始路徑的動態偏移物件"
 
-#: ../src/verbs.cpp:2124
+#: ../src/verbs.cpp:2126
 msgid "_Stroke to Path"
 msgstr "邊框轉成路徑(_S)"
 
-#: ../src/verbs.cpp:2125
+#: ../src/verbs.cpp:2127
 msgid "Convert selected object's stroke to paths"
 msgstr "把已選物件的描邊轉化成路徑"
 
-#: ../src/verbs.cpp:2126
+#: ../src/verbs.cpp:2128
 msgid "Si_mplify"
 msgstr "精簡(_M)"
 
-#: ../src/verbs.cpp:2127
+#: ../src/verbs.cpp:2129
 msgid "Simplify selected paths (remove extra nodes)"
 msgstr "簡化已選路徑(移除額外的節點)"
 
-#: ../src/verbs.cpp:2128
+#: ../src/verbs.cpp:2130
 msgid "_Reverse"
 msgstr "反轉(_R)"
 
-#: ../src/verbs.cpp:2129
+#: ../src/verbs.cpp:2131
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
 msgstr "已選路徑反向(對翻轉標記有用)"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2131
+#: ../src/verbs.cpp:2133
 msgid "_Trace Bitmap..."
 msgstr "提取點陣圖輪廓(_T)…"
 
-#: ../src/verbs.cpp:2132
+#: ../src/verbs.cpp:2134
 msgid "Create one or more paths from a bitmap by tracing it"
 msgstr "透過提取點陣圖輪廓建立一個或多個路徑"
 
-#: ../src/verbs.cpp:2133
+#: ../src/verbs.cpp:2135
 msgid "_Make a Bitmap Copy"
 msgstr "製作點陣圖副本(_M)"
 
-#: ../src/verbs.cpp:2134
+#: ../src/verbs.cpp:2136
 msgid "Export selection to a bitmap and insert it into document"
 msgstr "匯出所選為點陣圖並將它插入文件"
 
-#: ../src/verbs.cpp:2135
+#: ../src/verbs.cpp:2137
 msgid "_Combine"
 msgstr "結合(_C)"
 
-#: ../src/verbs.cpp:2136
+#: ../src/verbs.cpp:2138
 msgid "Combine several paths into one"
 msgstr "結合數個路徑成一個"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2139
+#: ../src/verbs.cpp:2141
 msgid "Break _Apart"
 msgstr "拆開(_A)"
 
-#: ../src/verbs.cpp:2140
+#: ../src/verbs.cpp:2142
 msgid "Break selected paths into subpaths"
 msgstr "中斷選擇的路徑成為子路徑"
 
-#: ../src/verbs.cpp:2141
+#: ../src/verbs.cpp:2143
 msgid "Gri_d Arrange..."
 msgstr "格線排列(_D)..."
 
-#: ../src/verbs.cpp:2142
+#: ../src/verbs.cpp:2144
 msgid "Arrange selected objects in a grid pattern"
 msgstr "把已選物件排列到一個網格圖案"
 
 #. Layer
-#: ../src/verbs.cpp:2144
+#: ../src/verbs.cpp:2146
 msgid "_Add Layer..."
 msgstr "增加圖層(_A)..."
 
-#: ../src/verbs.cpp:2145
+#: ../src/verbs.cpp:2147
 msgid "Create a new layer"
 msgstr "建立新圖層"
 
-#: ../src/verbs.cpp:2146
+#: ../src/verbs.cpp:2148
 msgid "Re_name Layer..."
 msgstr "重新命名圖層(_N)..."
 
-#: ../src/verbs.cpp:2147
+#: ../src/verbs.cpp:2149
 msgid "Rename the current layer"
 msgstr "重新命名目前圖層"
 
-#: ../src/verbs.cpp:2148
+#: ../src/verbs.cpp:2150
 msgid "Switch to Layer Abov_e"
 msgstr "切換到上方圖層(_E)"
 
-#: ../src/verbs.cpp:2149
+#: ../src/verbs.cpp:2151
 msgid "Switch to the layer above the current"
 msgstr "切換至所在上方的圖層"
 
-#: ../src/verbs.cpp:2150
+#: ../src/verbs.cpp:2152
 msgid "Switch to Layer Belo_w"
 msgstr "切換到下方圖層(_W)"
 
-#: ../src/verbs.cpp:2151
+#: ../src/verbs.cpp:2153
 msgid "Switch to the layer below the current"
 msgstr "切換至所在下方的圖層"
 
-#: ../src/verbs.cpp:2152
+#: ../src/verbs.cpp:2154
 msgid "Move Selection to Layer Abo_ve"
 msgstr "移動所選到上方圖層(_V)"
 
-#: ../src/verbs.cpp:2153
+#: ../src/verbs.cpp:2155
 msgid "Move selection to the layer above the current"
 msgstr "移動所選到目前上方的圖層"
 
-#: ../src/verbs.cpp:2154
+#: ../src/verbs.cpp:2156
 msgid "Move Selection to Layer Bel_ow"
 msgstr "移動所選到下方圖層(_O)"
 
-#: ../src/verbs.cpp:2155
+#: ../src/verbs.cpp:2157
 msgid "Move selection to the layer below the current"
 msgstr "移動所選到目前下方的圖層"
 
-#: ../src/verbs.cpp:2156
+#: ../src/verbs.cpp:2158
 msgid "Layer to _Top"
 msgstr "圖層移到頂端(_T)"
 
-#: ../src/verbs.cpp:2157
+#: ../src/verbs.cpp:2159
 msgid "Raise the current layer to the top"
 msgstr "提升目前圖層到頂端"
 
-#: ../src/verbs.cpp:2158
+#: ../src/verbs.cpp:2160
 msgid "Layer to _Bottom"
 msgstr "圖層移到底部(_B)"
 
-#: ../src/verbs.cpp:2159
+#: ../src/verbs.cpp:2161
 msgid "Lower the current layer to the bottom"
 msgstr "降低目前圖層到底部"
 
-#: ../src/verbs.cpp:2160
+#: ../src/verbs.cpp:2162
 msgid "_Raise Layer"
 msgstr "提升圖層(_R)"
 
-#: ../src/verbs.cpp:2161
+#: ../src/verbs.cpp:2163
 msgid "Raise the current layer"
 msgstr "提升目前圖層"
 
-#: ../src/verbs.cpp:2162
+#: ../src/verbs.cpp:2164
 msgid "_Lower Layer"
 msgstr "降低圖層(_L)"
 
-#: ../src/verbs.cpp:2163
+#: ../src/verbs.cpp:2165
 msgid "Lower the current layer"
 msgstr "降低目前圖層"
 
-#: ../src/verbs.cpp:2164
+#: ../src/verbs.cpp:2166
 msgid "_Delete Current Layer"
 msgstr "刪除目前圖層(_D)"
 
-#: ../src/verbs.cpp:2165
+#: ../src/verbs.cpp:2167
 msgid "Delete the current layer"
 msgstr "刪除目前圖層"
 
 #. Object
-#: ../src/verbs.cpp:2168
+#: ../src/verbs.cpp:2170
 msgid "Rotate _90&#176; CW"
 msgstr "順時針旋轉 _90&#176;"
 
-#: ../src/verbs.cpp:2169
+#: ../src/verbs.cpp:2171
 msgid "Rotate selection 90&#176; clockwise"
 msgstr "順時針旋轉選取區 90°"
 
-#: ../src/verbs.cpp:2170
+#: ../src/verbs.cpp:2172
 msgid "Rotate 9_0&#176; CCW"
 msgstr "逆時針旋轉 9_0&#176;"
 
-#: ../src/verbs.cpp:2171
+#: ../src/verbs.cpp:2173
 msgid "Rotate selection 90&#176; counter-clockwise"
 msgstr "逆時針旋轉選取區 90°"
 
-#: ../src/verbs.cpp:2172
+#: ../src/verbs.cpp:2174
 msgid "Remove _Transformations"
 msgstr "移除變形(_T)"
 
-#: ../src/verbs.cpp:2173
+#: ../src/verbs.cpp:2175
 msgid "Remove transformations from object"
 msgstr "移除物件上的變形效果"
 
-#: ../src/verbs.cpp:2174
+#: ../src/verbs.cpp:2176
 msgid "_Object to Path"
 msgstr "物件轉成路徑(_O)"
 
-#: ../src/verbs.cpp:2175
+#: ../src/verbs.cpp:2177
 msgid "Convert selected object to path"
 msgstr "把已選物件轉化成路徑"
 
-#: ../src/verbs.cpp:2176
+#: ../src/verbs.cpp:2178
 msgid "_Flow into Frame"
 msgstr "流動轉為訊框(_F)"
 
-#: ../src/verbs.cpp:2177
+#: ../src/verbs.cpp:2179
 msgid ""
 "Put text into a frame (path or shape), creating a flowed text linked to the "
 "frame object"
 msgstr "把文字放到框架(路徑或形狀)裡，建立與框架物件連線的浮動文字"
 
-#: ../src/verbs.cpp:2178
+#: ../src/verbs.cpp:2180
 msgid "_Unflow"
 msgstr "不流動文字(_U)"
 
-#: ../src/verbs.cpp:2179
+#: ../src/verbs.cpp:2181
 msgid "Remove text from frame (creates a single-line text object)"
 msgstr "從訊框中移除文字 (建立單列文字物件)"
 
-#: ../src/verbs.cpp:2180
+#: ../src/verbs.cpp:2182
 msgid "_Convert to Text"
 msgstr "轉換成文字(_C)"
 
-#: ../src/verbs.cpp:2181
+#: ../src/verbs.cpp:2183
 msgid "Convert flowed text to regular text object (preserves appearance)"
 msgstr "把浮動文字轉化成一般文字物件(保持外觀)"
 
-#: ../src/verbs.cpp:2183
+#: ../src/verbs.cpp:2185
 msgid "Flip _Horizontal"
 msgstr "水平翻轉(_H)"
 
-#: ../src/verbs.cpp:2183
+#: ../src/verbs.cpp:2185
 msgid "Flip selected objects horizontally"
 msgstr "水平地翻轉已選物件"
 
-#: ../src/verbs.cpp:2186
+#: ../src/verbs.cpp:2188
 msgid "Flip _Vertical"
 msgstr "垂直翻轉(_V)"
 
-#: ../src/verbs.cpp:2186
+#: ../src/verbs.cpp:2188
 msgid "Flip selected objects vertically"
 msgstr "垂直地翻轉已選物件"
 
-#: ../src/verbs.cpp:2189
+#: ../src/verbs.cpp:2191
 msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr "套用遮罩到選取區(使用最頂層物件做為遮罩)"
 
-#: ../src/verbs.cpp:2190 ../src/verbs.cpp:2194
+#: ../src/verbs.cpp:2192 ../src/verbs.cpp:2196
 msgid "_Release"
 msgstr "釋放(_R)"
 
-#: ../src/verbs.cpp:2191
+#: ../src/verbs.cpp:2193
 msgid "Remove mask from selection"
 msgstr "從選取區中移除遮罩"
 
-#: ../src/verbs.cpp:2193
+#: ../src/verbs.cpp:2195
 msgid ""
 "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr "套用剪裁路徑到選取區(使用最頂層物件做為剪裁路徑)"
 
-#: ../src/verbs.cpp:2195
+#: ../src/verbs.cpp:2197
 msgid "Remove clipping path from selection"
 msgstr "從選取區中移除剪裁路徑"
 
 #. Tools
-#: ../src/verbs.cpp:2198
+#: ../src/verbs.cpp:2200
 msgid "Select"
 msgstr "選擇"
 
-#: ../src/verbs.cpp:2199
+#: ../src/verbs.cpp:2201
 msgid "Select and transform objects"
 msgstr "選擇及轉變物件"
 
-#: ../src/verbs.cpp:2200
+#: ../src/verbs.cpp:2202
 msgid "Node Edit"
 msgstr "編輯節點"
 
-#: ../src/verbs.cpp:2201
+#: ../src/verbs.cpp:2203
 msgid "Edit path nodes or control handles"
 msgstr "編輯路徑節點或控柄"
 
-#: ../src/verbs.cpp:2203
+#: ../src/verbs.cpp:2205
 msgid "Create rectangles and squares"
 msgstr "建立矩形與正方形"
 
-#: ../src/verbs.cpp:2205
+#: ../src/verbs.cpp:2207
 msgid "Create circles, ellipses, and arcs"
 msgstr "建立圓形﹑橢圓形與弧形"
 
-#: ../src/verbs.cpp:2207
+#: ../src/verbs.cpp:2209
 msgid "Create stars and polygons"
 msgstr "建立星形與多邊形"
 
-#: ../src/verbs.cpp:2209
+#: ../src/verbs.cpp:2211
 msgid "Create spirals"
 msgstr "建立螺旋形"
 
-#: ../src/verbs.cpp:2211
+#: ../src/verbs.cpp:2213
 msgid "Draw freehand lines"
 msgstr "繪製徒手畫線條"
 
-#: ../src/verbs.cpp:2213
+#: ../src/verbs.cpp:2215
 msgid "Draw Bezier curves and straight lines"
 msgstr "繪製貝茲曲線及直線"
 
-#: ../src/verbs.cpp:2215
+#: ../src/verbs.cpp:2217
 msgid "Draw calligraphic lines"
 msgstr "繪製美工線條"
 
-#: ../src/verbs.cpp:2217
+#: ../src/verbs.cpp:2219
 msgid "Create and edit text objects"
 msgstr "建立並編輯文字物件"
 
-#: ../src/verbs.cpp:2219
+#: ../src/verbs.cpp:2221
 msgid "Create and edit gradients"
 msgstr "建立並編輯漸層"
 
-#: ../src/verbs.cpp:2221
+#: ../src/verbs.cpp:2223
 msgid "Zoom in or out"
 msgstr "放大或縮小"
 
-#: ../src/verbs.cpp:2223
+#: ../src/verbs.cpp:2225
 msgid "Pick averaged colors from image"
 msgstr "從影像點取平均顏色"
 
-#: ../src/verbs.cpp:2225
+#: ../src/verbs.cpp:2227
 msgid "Create connectors"
 msgstr "建立連線程式"
 
 #. Tool prefs
-#: ../src/verbs.cpp:2228
+#: ../src/verbs.cpp:2230
 msgid "Selector Preferences"
 msgstr "選取器設定"
 
-#: ../src/verbs.cpp:2229
+#: ../src/verbs.cpp:2231
 msgid "Open Preferences for the Selector tool"
 msgstr "開啟選取工具的偏好設定"
 
-#: ../src/verbs.cpp:2230
+#: ../src/verbs.cpp:2232
 msgid "Node Tool Preferences"
 msgstr "節點工具設定"
 
-#: ../src/verbs.cpp:2231
+#: ../src/verbs.cpp:2233
 msgid "Open Preferences for the Node tool"
 msgstr "開啟節點工具的偏好設定"
 
-#: ../src/verbs.cpp:2232
+#: ../src/verbs.cpp:2234
 msgid "Rectangle Preferences"
 msgstr "矩形設定"
 
-#: ../src/verbs.cpp:2233
+#: ../src/verbs.cpp:2235
 msgid "Open Preferences for the Rectangle tool"
 msgstr "開啟矩形工具的偏好設定"
 
-#: ../src/verbs.cpp:2234
+#: ../src/verbs.cpp:2236
 msgid "Ellipse Preferences"
 msgstr "橢圓形設定"
 
-#: ../src/verbs.cpp:2235
+#: ../src/verbs.cpp:2237
 msgid "Open Preferences for the Ellipse tool"
 msgstr "開啟橢圓形工具的偏好設定"
 
-#: ../src/verbs.cpp:2236
+#: ../src/verbs.cpp:2238
 msgid "Star Preferences"
 msgstr "星形設定"
 
-#: ../src/verbs.cpp:2237
+#: ../src/verbs.cpp:2239
 msgid "Open Preferences for the Star tool"
 msgstr "開啟星形工具的偏好設定"
 
-#: ../src/verbs.cpp:2238
+#: ../src/verbs.cpp:2240
 msgid "Spiral Preferences"
 msgstr "螺旋形設定"
 
-#: ../src/verbs.cpp:2239
+#: ../src/verbs.cpp:2241
 msgid "Open Preferences for the Spiral tool"
 msgstr "開啟螺旋形工具的偏好設定"
 
-#: ../src/verbs.cpp:2240
+#: ../src/verbs.cpp:2242
 msgid "Pencil Preferences"
 msgstr "鉛筆設定"
 
-#: ../src/verbs.cpp:2241
+#: ../src/verbs.cpp:2243
 msgid "Open Preferences for the Pencil tool"
 msgstr "開啟鉛筆工具的偏好設定"
 
-#: ../src/verbs.cpp:2242
+#: ../src/verbs.cpp:2244
 msgid "Pen Preferences"
 msgstr "畫筆設定"
 
-#: ../src/verbs.cpp:2243
+#: ../src/verbs.cpp:2245
 msgid "Open Preferences for the Pen tool"
 msgstr "開啟畫筆工具的偏好設定"
 
-#: ../src/verbs.cpp:2244
+#: ../src/verbs.cpp:2246
 msgid "Calligraphic Preferences"
 msgstr "美工設定"
 
-#: ../src/verbs.cpp:2245
+#: ../src/verbs.cpp:2247
 msgid "Open Preferences for the Calligraphy tool"
 msgstr "開啟美工工具的偏好設定"
 
-#: ../src/verbs.cpp:2246
+#: ../src/verbs.cpp:2248
 msgid "Text Preferences"
 msgstr "文字設定"
 
-#: ../src/verbs.cpp:2247
+#: ../src/verbs.cpp:2249
 msgid "Open Preferences for the Text tool"
 msgstr "開啟文字工具的偏好設定"
 
-#: ../src/verbs.cpp:2248
+#: ../src/verbs.cpp:2250
 msgid "Gradient Preferences"
 msgstr "漸層設定"
 
-#: ../src/verbs.cpp:2249
+#: ../src/verbs.cpp:2251
 msgid "Open Preferences for the Gradient tool"
 msgstr "開啟漸層工具的偏好設定"
 
-#: ../src/verbs.cpp:2250
+#: ../src/verbs.cpp:2252
 msgid "Zoom Preferences"
 msgstr "縮放設定"
 
-#: ../src/verbs.cpp:2251
+#: ../src/verbs.cpp:2253
 msgid "Open Preferences for the Zoom tool"
 msgstr "開啟縮放工具的偏好設定"
 
-#: ../src/verbs.cpp:2252
+#: ../src/verbs.cpp:2254
 msgid "Dropper Preferences"
 msgstr "取色設定"
 
-#: ../src/verbs.cpp:2253
+#: ../src/verbs.cpp:2255
 msgid "Open Preferences for the Dropper tool"
 msgstr "開啟取色工具的偏好設定"
 
-#: ../src/verbs.cpp:2254
+#: ../src/verbs.cpp:2256
 msgid "Connector Preferences"
 msgstr "連線設定"
 
-#: ../src/verbs.cpp:2255
+#: ../src/verbs.cpp:2257
 msgid "Open Preferences for the Connector tool"
 msgstr "開啟連線工具的偏好設定"
 
 #. Zoom/View
-#: ../src/verbs.cpp:2258
+#: ../src/verbs.cpp:2260
 msgid "Zoom In"
 msgstr "放大"
 
-#: ../src/verbs.cpp:2258
+#: ../src/verbs.cpp:2260
 msgid "Zoom in"
 msgstr "放大"
 
-#: ../src/verbs.cpp:2259
+#: ../src/verbs.cpp:2261
 msgid "Zoom Out"
 msgstr "縮小"
 
-#: ../src/verbs.cpp:2259
+#: ../src/verbs.cpp:2261
 msgid "Zoom out"
 msgstr "縮小"
 
-#: ../src/verbs.cpp:2260
+#: ../src/verbs.cpp:2262
 msgid "_Rulers"
 msgstr "尺標(_R)"
 
-#: ../src/verbs.cpp:2260
+#: ../src/verbs.cpp:2262
 msgid "Show or hide the canvas rulers"
 msgstr "顯示或隱藏畫布尺標"
 
-#: ../src/verbs.cpp:2261
+#: ../src/verbs.cpp:2263
 msgid "Scroll_bars"
 msgstr "捲軸(_B)"
 
-#: ../src/verbs.cpp:2261
+#: ../src/verbs.cpp:2263
 msgid "Show or hide the canvas scrollbars"
 msgstr "顯示或隱藏畫布捲軸"
 
-#: ../src/verbs.cpp:2262
+#: ../src/verbs.cpp:2264
 msgid "_Grid"
 msgstr "格線(_G)"
 
-#: ../src/verbs.cpp:2262
+#: ../src/verbs.cpp:2264
 msgid "Show or hide the grid"
 msgstr "顯示或隱藏網格"
 
-#: ../src/verbs.cpp:2263
+#: ../src/verbs.cpp:2265
 msgid "G_uides"
 msgstr "參考(_U)"
 
-#: ../src/verbs.cpp:2263
+#: ../src/verbs.cpp:2265
 msgid "Show or hide guides (drag from a ruler to create a guide)"
 msgstr "顯示或隱藏參考線(從尺子拖動建立尺規)"
 
-#: ../src/verbs.cpp:2264
+#: ../src/verbs.cpp:2266
 msgid "Nex_t Zoom"
 msgstr "下一個縮放(_T)"
 
-#: ../src/verbs.cpp:2264
+#: ../src/verbs.cpp:2266
 msgid "Next zoom (from the history of zooms)"
 msgstr "下一個縮放(從縮放紀錄中)"
 
-#: ../src/verbs.cpp:2266
+#: ../src/verbs.cpp:2268
 msgid "Pre_vious Zoom"
 msgstr "上一個縮放(_V)"
 
-#: ../src/verbs.cpp:2266
+#: ../src/verbs.cpp:2268
 msgid "Previous zoom (from the history of zooms)"
 msgstr "上一個縮放(從縮放紀錄中)"
 
-#: ../src/verbs.cpp:2268
+#: ../src/verbs.cpp:2270
 msgid "Zoom 1:_1"
 msgstr "1:_1 縮放"
 
-#: ../src/verbs.cpp:2268
+#: ../src/verbs.cpp:2270
 msgid "Zoom to 1:1"
 msgstr "縮放到 1:1"
 
-#: ../src/verbs.cpp:2270
+#: ../src/verbs.cpp:2272
 msgid "Zoom 1:_2"
 msgstr "1:_2 縮放"
 
-#: ../src/verbs.cpp:2270
+#: ../src/verbs.cpp:2272
 msgid "Zoom to 1:2"
 msgstr "縮放到 1:2"
 
-#: ../src/verbs.cpp:2272
+#: ../src/verbs.cpp:2274
 msgid "_Zoom 2:1"
 msgstr "2:1 縮放(_Z)"
 
-#: ../src/verbs.cpp:2272
+#: ../src/verbs.cpp:2274
 msgid "Zoom to 2:1"
 msgstr "縮放到 2:1"
 
-#: ../src/verbs.cpp:2275
+#: ../src/verbs.cpp:2277
 msgid "_Fullscreen"
 msgstr "全螢幕(_F)"
 
-#: ../src/verbs.cpp:2275
+#: ../src/verbs.cpp:2277
 msgid "Stretch this document window to full screen"
 msgstr "將文件展開為全螢幕"
 
-#: ../src/verbs.cpp:2278
+#: ../src/verbs.cpp:2280
 msgid "Duplic_ate Window"
 msgstr "再製視窗(_A)"
 
-#: ../src/verbs.cpp:2278
+#: ../src/verbs.cpp:2280
 msgid "Open a new window with the same document"
 msgstr "開啟同一文件於新視窗"
 
-#: ../src/verbs.cpp:2280
+#: ../src/verbs.cpp:2282
 msgid "_New View Preview"
 msgstr "新檢視預覽(_N)"
 
-#: ../src/verbs.cpp:2281
+#: ../src/verbs.cpp:2283
 msgid "New View Preview"
 msgstr "新檢視預覽"
 
 #. "view_new_preview"
-#: ../src/verbs.cpp:2283
+#: ../src/verbs.cpp:2285
 msgid "_Normal"
 msgstr "正常(_N)"
 
-#: ../src/verbs.cpp:2284
+#: ../src/verbs.cpp:2286
 msgid "Switch to normal display mode"
 msgstr "切換到正常顯示模式"
 
-#: ../src/verbs.cpp:2285
+#: ../src/verbs.cpp:2287
 msgid "_Outline"
 msgstr "輪廓(_O)"
 
-#: ../src/verbs.cpp:2286
+#: ../src/verbs.cpp:2288
 msgid "Switch to outline (wireframe) display mode"
 msgstr "切換到輪廓(線框)顯示模式"
 
-#: ../src/verbs.cpp:2287
+#: ../src/verbs.cpp:2289
 #, fuzzy
 msgid "_Toggle"
 msgstr "角度(_N)"
 
-#: ../src/verbs.cpp:2288
+#: ../src/verbs.cpp:2290
 msgid "Toggle between normal and outline display modes"
 msgstr ""
 
-#: ../src/verbs.cpp:2290
+#: ../src/verbs.cpp:2292
 #, fuzzy
 msgid "Ico_n Preview..."
 msgstr "圖示預覽(_N)"
 
-#: ../src/verbs.cpp:2291
+#: ../src/verbs.cpp:2293
 msgid "Open a window to preview objects at different icon resolutions"
 msgstr "以不同的圖示解析度開啟視窗預覽物件"
 
-#: ../src/verbs.cpp:2293
+#: ../src/verbs.cpp:2295
 msgid "Zoom to fit page in window"
 msgstr "縮放整頁到整個視窗"
 
-#: ../src/verbs.cpp:2294
+#: ../src/verbs.cpp:2296
 msgid "Page _Width"
 msgstr "最適頁寬(_W)"
 
-#: ../src/verbs.cpp:2295
+#: ../src/verbs.cpp:2297
 msgid "Zoom to fit page width in window"
 msgstr "縮放頁寬到整個視窗"
 
-#: ../src/verbs.cpp:2297
+#: ../src/verbs.cpp:2299
 msgid "Zoom to fit drawing in window"
 msgstr "縮放繪圖部份到整個視窗"
 
-#: ../src/verbs.cpp:2299
+#: ../src/verbs.cpp:2301
 msgid "Zoom to fit selection in window"
 msgstr "縮放選擇區到整個視窗"
 
 #. Dialogs
-#: ../src/verbs.cpp:2302
+#: ../src/verbs.cpp:2304
 msgid "In_kscape Preferences..."
 msgstr "In_kscape 設定..."
 
-#: ../src/verbs.cpp:2303
+#: ../src/verbs.cpp:2305
 msgid "Edit global Inkscape preferences"
 msgstr "編輯全域 Inkscape 參數"
 
-#: ../src/verbs.cpp:2304
+#: ../src/verbs.cpp:2306
 msgid "_Document Properties..."
 msgstr "文件屬性(_D)…"
 
-#: ../src/verbs.cpp:2305
+#: ../src/verbs.cpp:2307
 msgid "Edit properties of this document (to be saved with the document)"
 msgstr "編輯文件的屬性(同文件一起儲存)"
 
-#: ../src/verbs.cpp:2306
+#: ../src/verbs.cpp:2308
 msgid "Document _Metadata..."
 msgstr "文件後設資料(_M)…"
 
-#: ../src/verbs.cpp:2307
+#: ../src/verbs.cpp:2309
 msgid "Edit document metadata (to be saved with the document)"
 msgstr "編輯文件後設資料(同文件一起儲存)"
 
-#: ../src/verbs.cpp:2308
+#: ../src/verbs.cpp:2310
 msgid "_Fill and Stroke..."
 msgstr "填充與邊框(_F)..."
 
-#: ../src/verbs.cpp:2309
-msgid "Edit objects' style, such as color or stroke width"
-msgstr "編輯物件的風格，例如色彩或描邊寬度"
+#: ../src/verbs.cpp:2311
+msgid ""
+"Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
+msgstr ""
 
 #. TRANSLATORS: "Swatches" means: color samples
-#: ../src/verbs.cpp:2311
+#: ../src/verbs.cpp:2313
 msgid "S_watches..."
 msgstr "顏色樣本(_W)..."
 
-#: ../src/verbs.cpp:2312
+#: ../src/verbs.cpp:2314
 msgid "Select colors from a swatches palette"
 msgstr "從樣本調色盤中選擇色彩"
 
-#: ../src/verbs.cpp:2313
+#: ../src/verbs.cpp:2315
 msgid "Transfor_m..."
 msgstr "變形(_M)..."
 
-#: ../src/verbs.cpp:2314
+#: ../src/verbs.cpp:2316
 msgid "Precisely control objects' transformations"
 msgstr "精確控制物件的變換"
 
-#: ../src/verbs.cpp:2315
+#: ../src/verbs.cpp:2317
 msgid "_Align and Distribute..."
 msgstr "對齊與分佈(_A)..."
 
-#: ../src/verbs.cpp:2316
+#: ../src/verbs.cpp:2318
 msgid "Align and distribute objects"
 msgstr "對齊散開物件"
 
-#: ../src/verbs.cpp:2317
+#: ../src/verbs.cpp:2319
 msgid "Undo _History..."
 msgstr ""
 
-#: ../src/verbs.cpp:2318
+#: ../src/verbs.cpp:2320
 msgid "Undo History"
 msgstr ""
 
-#: ../src/verbs.cpp:2319
+#: ../src/verbs.cpp:2321
 msgid "_Text and Font..."
 msgstr "文字與字型(_T)..."
 
-#: ../src/verbs.cpp:2320
+#: ../src/verbs.cpp:2322
 msgid "View and select font family, font size and other text properties"
 msgstr "顯示選擇字型名稱，字型大小和其他字型屬性"
 
-#: ../src/verbs.cpp:2321
+#: ../src/verbs.cpp:2323
 msgid "_XML Editor..."
 msgstr "_XML 編輯器..."
 
-#: ../src/verbs.cpp:2322
+#: ../src/verbs.cpp:2324
 msgid "View and edit the XML tree of the document"
 msgstr "顯示並編輯文件的 XML 樹"
 
-#: ../src/verbs.cpp:2323
+#: ../src/verbs.cpp:2325
 msgid "_Find..."
 msgstr "尋找(_F)..."
 
-#: ../src/verbs.cpp:2324
+#: ../src/verbs.cpp:2326
 msgid "Find objects in document"
 msgstr "搜尋頁面中物件"
 
-#: ../src/verbs.cpp:2325
+#: ../src/verbs.cpp:2327
 msgid "_Messages..."
 msgstr "訊息(_M)..."
 
-#: ../src/verbs.cpp:2326
+#: ../src/verbs.cpp:2328
 msgid "View debug messages"
 msgstr "檢視偵錯訊息"
 
-#: ../src/verbs.cpp:2327
+#: ../src/verbs.cpp:2329
 msgid "S_cripts..."
 msgstr "命令稿(_C)..."
 
-#: ../src/verbs.cpp:2328
+#: ../src/verbs.cpp:2330
 msgid "Run scripts"
 msgstr "執行命令稿"
 
-#: ../src/verbs.cpp:2329
+#: ../src/verbs.cpp:2331
 msgid "Show/Hide D_ialogs"
 msgstr "顯示/隱藏對話框(_I)"
 
-#: ../src/verbs.cpp:2330
+#: ../src/verbs.cpp:2332
 msgid "Show or hide all open dialogs"
 msgstr "顯示或隱藏所有開啟的對話方塊"
 
-#: ../src/verbs.cpp:2331
+#: ../src/verbs.cpp:2333
 msgid "Create Tiled Clones..."
 msgstr "建立平舖仿製品…"
 
-#: ../src/verbs.cpp:2332
+#: ../src/verbs.cpp:2334
 msgid ""
 "Create multiple clones of selected object, arranging them into a pattern or "
 "scattering"
 msgstr "建立選擇物件的多個仿製品，按照圖案或是分散的排列"
 
-#: ../src/verbs.cpp:2333
+#: ../src/verbs.cpp:2335
 msgid "_Object Properties..."
 msgstr "物件屬性(_O)..."
 
-#: ../src/verbs.cpp:2334
+#: ../src/verbs.cpp:2336
 msgid "Edit the ID, locked and visible status, and other object properties"
 msgstr "編輯物件的 ID，鎖定和可見狀態，以及其他屬性"
 
-#: ../src/verbs.cpp:2337
+#: ../src/verbs.cpp:2339
 #, fuzzy
 msgid "_Instant Messaging..."
 msgstr "訊息(_M)..."
 
-#: ../src/verbs.cpp:2337
+#: ../src/verbs.cpp:2339
 msgid "Jabber Instant Messaging Client"
 msgstr ""
 
-#: ../src/verbs.cpp:2339
+#: ../src/verbs.cpp:2341
 msgid "_Input Devices..."
 msgstr "輸入裝置(_I)..."
 
-#: ../src/verbs.cpp:2340
+#: ../src/verbs.cpp:2342
 msgid "Configure extended input devices, such as a graphics tablet"
 msgstr "配置擴充輸入裝置，例如繪圖板"
 
-#: ../src/verbs.cpp:2341
+#: ../src/verbs.cpp:2343
 msgid "_Extensions..."
 msgstr "擴充(_E)…"
 
-#: ../src/verbs.cpp:2342
+#: ../src/verbs.cpp:2344
 msgid "Query information about extensions"
 msgstr "查詢擴充的資訊"
 
-#: ../src/verbs.cpp:2343
+#: ../src/verbs.cpp:2345
 msgid "Layer_s..."
 msgstr "圖層(_S)…"
 
-#: ../src/verbs.cpp:2344
+#: ../src/verbs.cpp:2346
 msgid "View Layers"
 msgstr "顯示圖層"
 
 #. Help
-#: ../src/verbs.cpp:2347
+#: ../src/verbs.cpp:2349
 msgid "_Keys and Mouse"
 msgstr "鍵盤與滑鼠(_K)"
 
-#: ../src/verbs.cpp:2348
+#: ../src/verbs.cpp:2350
 msgid "Keys and mouse shortcuts reference"
 msgstr "鍵盤滑鼠快捷鍵參考"
 
-#: ../src/verbs.cpp:2349
+#: ../src/verbs.cpp:2351
 msgid "About E_xtensions"
 msgstr "關於擴充(_X)"
 
-#: ../src/verbs.cpp:2350
+#: ../src/verbs.cpp:2352
 msgid "Information on Inkscape extensions"
 msgstr "Inkscape 擴充資訊"
 
-#: ../src/verbs.cpp:2351
+#: ../src/verbs.cpp:2353
 msgid "About _Memory"
 msgstr "關於記憶體(_M)"
 
-#: ../src/verbs.cpp:2352
+#: ../src/verbs.cpp:2354
 msgid "Memory usage information"
 msgstr "記憶體使用資訊"
 
-#: ../src/verbs.cpp:2353
+#: ../src/verbs.cpp:2355
 msgid "_About Inkscape"
 msgstr "關於 Inkscape(_A)"
 
-#: ../src/verbs.cpp:2354
+#: ../src/verbs.cpp:2356
 msgid "Inkscape version, authors, license"
 msgstr "Inscape 版本，作者，許可"
 
@@ -9684,112 +9775,112 @@ msgstr "Inscape 版本，作者，許可"
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 #. Tutorials
-#: ../src/verbs.cpp:2359
+#: ../src/verbs.cpp:2361
 msgid "Inkscape: _Basic"
 msgstr "Inkscape: 基礎(_B)"
 
-#: ../src/verbs.cpp:2360
+#: ../src/verbs.cpp:2362
 msgid "Getting started with Inkscape"
 msgstr "開始使用 Inkscape"
 
 #. "tutorial_basic"
-#: ../src/verbs.cpp:2361
+#: ../src/verbs.cpp:2363
 msgid "Inkscape: _Shapes"
 msgstr "Inkscape: 中級(_S)"
 
-#: ../src/verbs.cpp:2362
+#: ../src/verbs.cpp:2364
 msgid "Using shape tools to create and edit shapes"
 msgstr "正在使用形狀工具來建立並編輯形狀"
 
-#: ../src/verbs.cpp:2363
+#: ../src/verbs.cpp:2365
 msgid "Inkscape: _Advanced"
 msgstr "Inkscape: 進階(_A)"
 
-#: ../src/verbs.cpp:2364
+#: ../src/verbs.cpp:2366
 msgid "Advanced Inkscape topics"
 msgstr "Inkscape 進階主題"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2366
+#: ../src/verbs.cpp:2368
 msgid "Inkscape: T_racing"
 msgstr "Inkscape: 勾描(_R)"
 
-#: ../src/verbs.cpp:2367
+#: ../src/verbs.cpp:2369
 msgid "Using bitmap tracing"
 msgstr "使用點陣圖勾描"
 
 #. "tutorial_tracing"
-#: ../src/verbs.cpp:2368
+#: ../src/verbs.cpp:2370
 msgid "Inkscape: _Calligraphy"
 msgstr "Inkscape: 美工(_C)"
 
-#: ../src/verbs.cpp:2369
+#: ../src/verbs.cpp:2371
 msgid "Using the Calligraphy pen tool"
 msgstr "使用美工筆工具"
 
-#: ../src/verbs.cpp:2370
+#: ../src/verbs.cpp:2372
 msgid "_Elements of Design"
 msgstr "設計的元件(_E)"
 
-#: ../src/verbs.cpp:2371
+#: ../src/verbs.cpp:2373
 msgid "Principles of design in the tutorial form"
 msgstr "教學表單中的設計原則"
 
 #. "tutorial_design"
-#: ../src/verbs.cpp:2372
+#: ../src/verbs.cpp:2374
 msgid "_Tips and Tricks"
 msgstr "秘訣(_T)"
 
-#: ../src/verbs.cpp:2373
+#: ../src/verbs.cpp:2375
 msgid "Miscellaneous tips and tricks"
 msgstr "各種技巧與秘訣"
 
 #. "tutorial_tips"
 #. Effect
-#: ../src/verbs.cpp:2376
+#: ../src/verbs.cpp:2378
 msgid "Previous Effect"
 msgstr "上一個效果"
 
-#: ../src/verbs.cpp:2377
+#: ../src/verbs.cpp:2379
 msgid "Repeat the last effect with the same settings"
 msgstr "以同樣的設定重覆上次的效果"
 
-#: ../src/verbs.cpp:2378
+#: ../src/verbs.cpp:2380
 msgid "Previous Effect Settings..."
 msgstr "上一個效果設定..."
 
-#: ../src/verbs.cpp:2379
+#: ../src/verbs.cpp:2381
 msgid "Repeat the last effect with new settings"
 msgstr "以新的設定重覆上次的效果"
 
 #. Fit Page
-#: ../src/verbs.cpp:2382
+#: ../src/verbs.cpp:2384
 #, fuzzy
 msgid "Fit Page to Selection"
 msgstr "頁面適應選取區(_F)"
 
-#: ../src/verbs.cpp:2383
+#: ../src/verbs.cpp:2385
 #, fuzzy
 msgid "Fit the page to the current selection"
 msgstr "調適畫布到目前選取區"
 
-#: ../src/verbs.cpp:2384
+#: ../src/verbs.cpp:2386
 #, fuzzy
 msgid "Fit Page to Drawing"
 msgstr "調適畫布到繪圖"
 
-#: ../src/verbs.cpp:2385
+#: ../src/verbs.cpp:2387
 #, fuzzy
 msgid "Fit the page to the drawing"
 msgstr "調適畫布到選取區"
 
-#: ../src/verbs.cpp:2386
+#: ../src/verbs.cpp:2388
 #, fuzzy
 msgid "Fit Page to Selection or Drawing"
 msgstr "調適畫布到選取區或繪圖"
 
-#: ../src/verbs.cpp:2387
+#: ../src/verbs.cpp:2389
 #, fuzzy
 msgid ""
 "Fit the page to the current selection or the drawing if there is no selection"
@@ -9803,22 +9894,22 @@ msgstr "線段圖樣"
 msgid "Pattern offset"
 msgstr "圖樣偏移"
 
-#: ../src/widgets/desktop-widget.cpp:394
+#: ../src/widgets/desktop-widget.cpp:401
 #, fuzzy, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:396
+#: ../src/widgets/desktop-widget.cpp:403
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:400
+#: ../src/widgets/desktop-widget.cpp:407
 #, fuzzy, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:402
+#: ../src/widgets/desktop-widget.cpp:409
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -9841,17 +9932,17 @@ msgstr "字型大小:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:594 ../src/widgets/toolbox.cpp:3730
+#: ../src/widgets/font-selector.cpp:594 ../src/widgets/toolbox.cpp:3732
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
-#: ../src/widgets/gradient-selector.cpp:138
-#: ../src/widgets/gradient-toolbar.cpp:493
+#: ../src/widgets/gradient-selector.cpp:139
+#: ../src/widgets/gradient-toolbar.cpp:499
 msgid "Edit..."
 msgstr "編輯..."
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
-#: ../src/widgets/gradient-selector.cpp:155
+#: ../src/widgets/gradient-selector.cpp:156
 msgid ""
 "Whether to fill with flat color beyond the ends of the gradient vector "
 "(spreadMethod=\"pad\"), or repeat the gradient in the same direction "
@@ -9862,55 +9953,55 @@ msgstr ""
 "重覆漸層(spreadMethod=\"repeat\")，或是以另外的相反方向重覆漸層(spreadMethod="
 "\"reflect\")"
 
-#: ../src/widgets/gradient-selector.cpp:165
+#: ../src/widgets/gradient-selector.cpp:166
 msgid "reflected"
 msgstr "反射"
 
-#: ../src/widgets/gradient-selector.cpp:169
+#: ../src/widgets/gradient-selector.cpp:170
 msgid "direct"
 msgstr "直接"
 
-#: ../src/widgets/gradient-selector.cpp:177
+#: ../src/widgets/gradient-selector.cpp:178
 msgid "Repeat:"
 msgstr "重複:"
 
-#: ../src/widgets/gradient-toolbar.cpp:146
+#: ../src/widgets/gradient-toolbar.cpp:151
 #, fuzzy
 msgid "Assign gradient to object"
 msgstr "對齊散開物件"
 
-#: ../src/widgets/gradient-toolbar.cpp:180
+#: ../src/widgets/gradient-toolbar.cpp:185
 msgid "<small>No gradients</small>"
 msgstr "<small>無漸層</small>"
 
-#: ../src/widgets/gradient-toolbar.cpp:189
+#: ../src/widgets/gradient-toolbar.cpp:194
 msgid "<small>Nothing selected</small>"
 msgstr "<small>未選取任何物件</small>"
 
-#: ../src/widgets/gradient-toolbar.cpp:200
+#: ../src/widgets/gradient-toolbar.cpp:205
 msgid "<small>No gradients in selection</small>"
 msgstr "<small>選取區中沒有漸層</small>"
 
-#: ../src/widgets/gradient-toolbar.cpp:210
+#: ../src/widgets/gradient-toolbar.cpp:215
 msgid "<small>Multiple gradients</small>"
 msgstr "<small>多重漸層</small>"
 
-#: ../src/widgets/gradient-toolbar.cpp:419
+#: ../src/widgets/gradient-toolbar.cpp:425
 #, fuzzy
 msgid "Duplicate gradient"
 msgstr "再製節點"
 
-#: ../src/widgets/gradient-toolbar.cpp:483
+#: ../src/widgets/gradient-toolbar.cpp:489
 msgid ""
 "If the gradient is used by more than one object, create a copy of it for the "
 "selected object(s)"
 msgstr "如果漸層被多於一個物件所使用，就建立一個所選物件的複製品"
 
-#: ../src/widgets/gradient-toolbar.cpp:494
+#: ../src/widgets/gradient-toolbar.cpp:500
 msgid "Edit the stops of the gradient"
 msgstr "編輯漸層的停止點"
 
-#: ../src/widgets/gradient-toolbar.cpp:553 ../src/widgets/toolbox.cpp:1165
+#: ../src/widgets/gradient-toolbar.cpp:559 ../src/widgets/toolbox.cpp:1165
 #: ../src/widgets/toolbox.cpp:1254 ../src/widgets/toolbox.cpp:1553
 #: ../src/widgets/toolbox.cpp:1602 ../src/widgets/toolbox.cpp:1840
 #: ../src/widgets/toolbox.cpp:1875 ../src/widgets/toolbox.cpp:2743
@@ -9918,23 +10009,23 @@ msgstr "編輯漸層的停止點"
 msgid "<b>New:</b>"
 msgstr "<b>新增:</b>"
 
-#: ../src/widgets/gradient-toolbar.cpp:566
+#: ../src/widgets/gradient-toolbar.cpp:572
 msgid "Create linear gradient"
 msgstr "建立線性漸層"
 
-#: ../src/widgets/gradient-toolbar.cpp:580
+#: ../src/widgets/gradient-toolbar.cpp:586
 msgid "Create radial (elliptic or circular) gradient"
 msgstr "建立放射狀(橢圓或圓形)漸層"
 
-#: ../src/widgets/gradient-toolbar.cpp:595
+#: ../src/widgets/gradient-toolbar.cpp:601
 msgid "on"
 msgstr "開"
 
-#: ../src/widgets/gradient-toolbar.cpp:608
+#: ../src/widgets/gradient-toolbar.cpp:614
 msgid "Create gradient in the fill"
 msgstr "在填充中建立漸層"
 
-#: ../src/widgets/gradient-toolbar.cpp:622
+#: ../src/widgets/gradient-toolbar.cpp:628
 msgid "Create gradient in the stroke"
 msgstr "在邊框中建立漸層"
 
@@ -9942,7 +10033,7 @@ msgstr "在邊框中建立漸層"
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/gradient-toolbar.cpp:636 ../src/widgets/toolbox.cpp:1167
+#: ../src/widgets/gradient-toolbar.cpp:642 ../src/widgets/toolbox.cpp:1167
 #: ../src/widgets/toolbox.cpp:1186 ../src/widgets/toolbox.cpp:1561
 #: ../src/widgets/toolbox.cpp:1586 ../src/widgets/toolbox.cpp:1842
 #: ../src/widgets/toolbox.cpp:1861 ../src/widgets/toolbox.cpp:2746
@@ -9958,57 +10049,47 @@ msgstr "文件中無漸層"
 msgid "No gradient selected"
 msgstr "未選擇漸層"
 
-#: ../src/widgets/gradient-vector.cpp:535
+#: ../src/widgets/gradient-vector.cpp:538
 msgid "No stops in gradient"
 msgstr "漸層中無停止點"
 
-#: ../src/widgets/gradient-vector.cpp:659
+#: ../src/widgets/gradient-vector.cpp:662
 #, fuzzy
 msgid "Change gradient stop offset"
 msgstr "線性漸變描邊"
 
-#: ../src/widgets/gradient-vector.cpp:732
-#, fuzzy
-msgid "Add gradient stop"
-msgstr "放射漸變繪製"
-
-#: ../src/widgets/gradient-vector.cpp:764
-#, fuzzy
-msgid "Delete gradient stop"
-msgstr "刪除停止點"
-
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:800
+#: ../src/widgets/gradient-vector.cpp:804
 msgid "Add stop"
 msgstr "新增停止點"
 
-#: ../src/widgets/gradient-vector.cpp:803
+#: ../src/widgets/gradient-vector.cpp:807
 msgid "Add another control stop to gradient"
 msgstr "新增漸層中的控制停止點"
 
-#: ../src/widgets/gradient-vector.cpp:805
+#: ../src/widgets/gradient-vector.cpp:809
 msgid "Delete stop"
 msgstr "刪除停止點"
 
-#: ../src/widgets/gradient-vector.cpp:808
+#: ../src/widgets/gradient-vector.cpp:812
 msgid "Delete current control stop from gradient"
 msgstr "從漸層刪除現有控制停止點"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:819
+#: ../src/widgets/gradient-vector.cpp:823
 msgid "Offset:"
 msgstr "偏移:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:864
+#: ../src/widgets/gradient-vector.cpp:868
 msgid "Stop Color"
 msgstr "停止顏色"
 
-#: ../src/widgets/gradient-vector.cpp:893
+#: ../src/widgets/gradient-vector.cpp:897
 msgid "Gradient editor"
 msgstr "漸層編輯器"
 
-#: ../src/widgets/gradient-vector.cpp:1169
+#: ../src/widgets/gradient-vector.cpp:1173
 #, fuzzy
 msgid "Change gradient stop color"
 msgstr "線性漸變描邊"
@@ -10379,8 +10460,9 @@ msgid "Star: Change number of corners"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:944
-msgid "Star: Change spike ratio"
-msgstr ""
+#, fuzzy
+msgid "Star: Change spoke ratio"
+msgstr "儲存變形:"
 
 #: ../src/widgets/toolbox.cpp:998
 #, fuzzy
@@ -10594,6 +10676,24 @@ msgstr "質量:"
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
 msgstr ""
 
+#: ../src/widgets/toolbox.cpp:2291
+#, fuzzy
+msgid "Pressure"
+msgstr "保存"
+
+#: ../src/widgets/toolbox.cpp:2292 ../src/widgets/toolbox.cpp:2456
+msgid "Use the pressure of the input device to alter the width of the pen"
+msgstr "利用輸入裝置的壓力來變更筆的寬度"
+
+#: ../src/widgets/toolbox.cpp:2303
+#, fuzzy
+msgid "Tilt"
+msgstr "標題"
+
+#: ../src/widgets/toolbox.cpp:2304 ../src/widgets/toolbox.cpp:2469
+msgid "Use the tilt of the input device to alter the angle of the pen's nib"
+msgstr "利用輸入裝置的傾斜來變更筆尖的角度"
+
 #. TRANSLATORS: "cap" means "end" (both start and finish) here
 #: ../src/widgets/toolbox.cpp:2402
 #, fuzzy
@@ -10603,14 +10703,6 @@ msgstr "圓角化:"
 #: ../src/widgets/toolbox.cpp:2402
 msgid "Increase to round the ends of strokes"
 msgstr ""
-
-#: ../src/widgets/toolbox.cpp:2456
-msgid "Use the pressure of the input device to alter the width of the pen"
-msgstr "利用輸入裝置的壓力來變更筆的寬度"
-
-#: ../src/widgets/toolbox.cpp:2469
-msgid "Use the tilt of the input device to alter the angle of the pen's nib"
-msgstr "利用輸入裝置的傾斜來變更筆尖的角度"
 
 #: ../src/widgets/toolbox.cpp:2578
 msgid "Arc: Change start/end"
@@ -10653,125 +10745,125 @@ msgstr "完整圖形"
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr "將該形狀形成完整的橢圓，而非弧形或扇形"
 
-#: ../src/widgets/toolbox.cpp:3068
+#: ../src/widgets/toolbox.cpp:3070
 msgid "Pick alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3069
+#: ../src/widgets/toolbox.cpp:3071
 msgid ""
 "Pick both the color and the alpha (transparency) under cursor; otherwise, "
 "pick only the visible color premultiplied by alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3084
+#: ../src/widgets/toolbox.cpp:3086
 #, fuzzy
 msgid "Set alpha"
 msgstr "設定延遲"
 
-#: ../src/widgets/toolbox.cpp:3085
+#: ../src/widgets/toolbox.cpp:3087
 msgid ""
 "If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3384
+#: ../src/widgets/toolbox.cpp:3386
 msgid "Text: Change font family"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3467
+#: ../src/widgets/toolbox.cpp:3469
 msgid "Text: Change alignment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3513
+#: ../src/widgets/toolbox.cpp:3515
 msgid "Text: Change font style"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3560
+#: ../src/widgets/toolbox.cpp:3562
 #, fuzzy
 msgid "Text: Change orientation"
 msgstr "頁面方向："
 
-#: ../src/widgets/toolbox.cpp:3656
+#: ../src/widgets/toolbox.cpp:3658
 msgid "Text: Change font size"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3839
+#: ../src/widgets/toolbox.cpp:3841
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr "目前您的系統還沒有安裝此字型。Inkscape 使用預設的字型代替。"
 
-#: ../src/widgets/toolbox.cpp:3877
+#: ../src/widgets/toolbox.cpp:3879
 msgid "Align left"
 msgstr "靠左對齊"
 
-#: ../src/widgets/toolbox.cpp:3888
+#: ../src/widgets/toolbox.cpp:3890
 msgid "Center"
 msgstr "置中對齊 "
 
-#: ../src/widgets/toolbox.cpp:3899
+#: ../src/widgets/toolbox.cpp:3901
 msgid "Align right"
 msgstr "靠右對齊"
 
-#: ../src/widgets/toolbox.cpp:3910
+#: ../src/widgets/toolbox.cpp:3912
 msgid "Justify"
 msgstr "左靠右對齊"
 
-#: ../src/widgets/toolbox.cpp:3926
+#: ../src/widgets/toolbox.cpp:3928
 msgid "Bold"
 msgstr "粗體"
 
-#: ../src/widgets/toolbox.cpp:3937
+#: ../src/widgets/toolbox.cpp:3939
 msgid "Italic"
 msgstr "斜體"
 
-#: ../src/widgets/toolbox.cpp:4035
+#: ../src/widgets/toolbox.cpp:4037
 msgid "Spacing between letters"
 msgstr "字母之間的空隙"
 
-#: ../src/widgets/toolbox.cpp:4056
+#: ../src/widgets/toolbox.cpp:4058
 msgid "Spacing between lines"
 msgstr "列間距"
 
-#: ../src/widgets/toolbox.cpp:4085
+#: ../src/widgets/toolbox.cpp:4087
 msgid "Horizontal kerning"
 msgstr "水平字距"
 
-#: ../src/widgets/toolbox.cpp:4106
+#: ../src/widgets/toolbox.cpp:4108
 msgid "Vertical kerning"
 msgstr "垂直字距"
 
-#: ../src/widgets/toolbox.cpp:4133
+#: ../src/widgets/toolbox.cpp:4135
 msgid "Letter rotation"
 msgstr "字母旋轉"
 
-#: ../src/widgets/toolbox.cpp:4222
+#: ../src/widgets/toolbox.cpp:4224
 #, fuzzy
 msgid "Change connector spacing"
 msgstr "建立連線程式"
 
-#: ../src/widgets/toolbox.cpp:4331
+#: ../src/widgets/toolbox.cpp:4333
 msgid "Spacing:"
 msgstr "空隙："
 
-#: ../src/widgets/toolbox.cpp:4332
+#: ../src/widgets/toolbox.cpp:4334
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "自動路由連線器周圍的空隙"
 
-#: ../src/widgets/toolbox.cpp:4346
+#: ../src/widgets/toolbox.cpp:4348
 #, fuzzy
 msgid "Length:"
 msgstr "縮放長度"
 
-#: ../src/widgets/toolbox.cpp:4347
+#: ../src/widgets/toolbox.cpp:4349
 msgid "Ideal length for connectors when layout is applied"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4362
+#: ../src/widgets/toolbox.cpp:4364
 #, fuzzy
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "使連接器避免所選物件"
 
-#: ../src/widgets/toolbox.cpp:4376
+#: ../src/widgets/toolbox.cpp:4378
 msgid "Do not allow overlapping shapes"
 msgstr ""
 
@@ -10795,6 +10887,7 @@ msgstr "最大線段長度"
 
 #: ../share/extensions/addnodes.inx.h:3 ../share/extensions/flatten.inx.h:3
 #: ../share/extensions/markers_strokepaint.inx.h:2
+#: ../share/extensions/perspective.inx.h:1
 #: ../share/extensions/radiusrand.inx.h:3
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:4
@@ -10802,23 +10895,28 @@ msgid "Modify Path"
 msgstr "修改路徑"
 
 #: ../share/extensions/ai_input.inx.h:1
-msgid "AI Input"
+#, fuzzy
+msgid "AI 8.0 Input"
 msgstr "AI 輸出"
 
 #: ../share/extensions/ai_input.inx.h:2 ../share/extensions/ai_output.inx.h:2
-msgid "Adobe Illustrator (*.ai)"
+#, fuzzy
+msgid "Adobe Illustrator 8.0 (*.ai)"
 msgstr "Adobe 插圖(*.ai)"
 
 #: ../share/extensions/ai_input.inx.h:3
-msgid "Open files saved with Adobe Illustrator"
+#, fuzzy
+msgid "Open files saved with Adobe Illustrator 8.0 or older"
 msgstr "開啟使用 Adobe 插圖儲存的檔案"
 
 #: ../share/extensions/ai_output.inx.h:1
-msgid "AI Output"
+#, fuzzy
+msgid "AI 8.0 Output"
 msgstr "AI 輸出"
 
 #: ../share/extensions/ai_output.inx.h:3
-msgid "Write Adobe Illustrator"
+#, fuzzy
+msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
 msgstr "儲存 Adobe 插圖"
 
 #: ../share/extensions/aisvg.inx.h:1
@@ -10957,7 +11055,7 @@ msgstr ""
 msgid "Dot size"
 msgstr "點大小"
 
-#: ../share/extensions/dots.inx.h:2 ../share/extensions/measure.inx.h:1
+#: ../share/extensions/dots.inx.h:2
 msgid "Font size"
 msgstr "字型大小"
 
@@ -10966,7 +11064,7 @@ msgid "Number Nodes"
 msgstr "節點數"
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
-#: ../share/extensions/measure.inx.h:3
+#: ../share/extensions/measure.inx.h:10
 msgid "Visualize Path"
 msgstr "可視化路徑"
 
@@ -11300,9 +11398,39 @@ msgstr ""
 msgid "Color Markers to Match Stroke"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:2
+#: ../share/extensions/measure.inx.h:1
+#, fuzzy
+msgid "Font size [px]"
+msgstr "字型大小"
+
+#. <param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>
+#: ../share/extensions/measure.inx.h:4
+#, fuzzy
+msgid "Length Unit: "
+msgstr "縮放長度"
+
+#: ../share/extensions/measure.inx.h:5
+#, fuzzy
+msgid "Measure"
+msgstr "測量路徑"
+
+#: ../share/extensions/measure.inx.h:6
 msgid "Measure Path"
 msgstr "測量路徑"
+
+#: ../share/extensions/measure.inx.h:7
+#, fuzzy
+msgid "Offset [px]"
+msgstr "偏移路徑"
+
+#: ../share/extensions/measure.inx.h:8
+#, fuzzy
+msgid "Precision"
+msgstr "描述"
+
+#: ../share/extensions/measure.inx.h:9
+msgid "Scale Factor (Drawing:Real Length) = 1:"
+msgstr ""
 
 #: ../share/extensions/motion.inx.h:1
 msgid "Angle"
@@ -11368,6 +11496,11 @@ msgstr "列間距"
 #, fuzzy
 msgid "Tangential offset"
 msgstr "垂直偏移"
+
+#: ../share/extensions/perspective.inx.h:2
+#, fuzzy
+msgid "Perspective"
+msgstr "表現"
 
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
@@ -11534,6 +11667,16 @@ msgstr "Windows 後設檔案 (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Windows 後設檔案輸入"
+
+#, fuzzy
+#~ msgid "Dots per inch resolution"
+#~ msgstr "預設匯出解析度:"
+
+#~ msgid "Unset"
+#~ msgstr "未設定"
+
+#~ msgid "Edit objects' style, such as color or stroke width"
+#~ msgstr "編輯物件的風格，例如色彩或描邊寬度"
 
 #~ msgid "You cannot put flowtext on a path. Convert flowtext to text first."
 #~ msgstr "不能再路徑上放置浮動文字。首先把浮動文字轉化成文字。"

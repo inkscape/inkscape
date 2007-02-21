@@ -66,8 +66,18 @@ sub check_str ($) {
 	}
     }
 
-    if ($str =~ m{&#[^0-9]+;}) {
-	po_error("Entity declaration error (must look like '&#123;')");
+    if (($str =~ m{&#[^0-9]+;}) or ($str =~ m{&#x[^0-9a-fA-F]+;})) {
+	po_error("Entity declaration error (must look like '&#123;' or '&#x40;' and be in ASCII)");
+	return 0;
+    }
+
+    if (($str =~ m{&#[^0-9]+}) or ($str =~ m{&#x[^0-9a-fA-F]+})) {
+	po_error("Entity declaration error 2 (must look like '&#123;' or '&#x40;' and be in ASCII)");
+	return 0;
+    }
+
+    if (($str =~ m{&#(?![0-9]{2,4};)}) or ($str =~ m{&#x(?![0-9a-fA-F]{2,4};)})) {
+	po_error("Entity declaration error 3 (must look like '&#123;' or '&#x40;' and be in ASCII)");
 	return 0;
     }
 
