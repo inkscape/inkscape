@@ -39,6 +39,7 @@ typedef enum {
 } SPGradientState;
 
 typedef enum {
+    POINT_G_INVALID,
     POINT_LG_BEGIN,
     POINT_LG_END,
     POINT_LG_MID,

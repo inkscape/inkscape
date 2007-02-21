@@ -139,7 +139,7 @@ static void sp_gradient_context_setup(SPEventContext *ec)
     rc->_message_context = new Inkscape::MessageContext(sp_desktop_message_stack(ec->desktop));
 }
 
-void 
+void
 sp_gradient_context_select_next (SPEventContext *event_context)
 {
     GrDrag *drag = event_context->_grdrag;
@@ -148,7 +148,7 @@ sp_gradient_context_select_next (SPEventContext *event_context)
     drag->select_next();
 }
 
-void 
+void
 sp_gradient_context_select_prev (SPEventContext *event_context)
 {
     GrDrag *drag = event_context->_grdrag;
@@ -164,10 +164,10 @@ snap_vector_midpoint (NR::Point p, NR::Point begin, NR::Point end)
     double length = NR::L2(end - begin);
     NR::Point be = (end - begin) / length;
     double r = NR::dot(p - begin, be);
-        
+
     if (r < 0.0) return begin;
-    if (r > length) return end;    
-    
+    if (r > length) return end;
+
     return (begin + r * be);
 }
 
@@ -180,7 +180,7 @@ sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, NR::Point
     rc->mousepoint_doc = desktop->w2d(event_p);
 
     SPCtrlLine* line = SP_CTRLLINE(item);
-   
+
     NR::Point nearest = snap_vector_midpoint (rc->mousepoint_doc, line->s, line->e);
     double dist_screen = NR::L2 (rc->mousepoint_doc - nearest) * desktop->current_zoom();
 
@@ -209,41 +209,41 @@ get_offset_between_points (NR::Point p, NR::Point begin, NR::Point end)
     double length = NR::L2(end - begin);
     NR::Point be = (end - begin) / length;
     double r = NR::dot(p - begin, be);
-        
+
     if (r < 0.0) return 0.0;
-    if (r > length) return 1.0;    
-    
+    if (r > length) return 1.0;
+
     return (r / length);
 }
 
 static void
 sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  NR::Point mouse_p, guint32 etime)
 {
-    // item is the selected item. mouse_p the location in doc coordinates of where to add the stop    
-    
+    // item is the selected item. mouse_p the location in doc coordinates of where to add the stop
+
     SPEventContext *ec = SP_EVENT_CONTEXT(rc);
     SPDesktop *desktop = SP_EVENT_CONTEXT (rc)->desktop;
 
     double tolerance = (double) ec->tolerance;
 
     gfloat offset; // type of SPStop.offset = gfloat
-    SPGradient *gradient; 
-    bool fill_or_stroke = true; 
+    SPGradient *gradient;
+    bool fill_or_stroke = true;
     bool r1_knot = false;
-    
+
     bool addknot = false;
     do {
         gradient = sp_item_gradient (item, fill_or_stroke);
         if (SP_IS_LINEARGRADIENT(gradient)) {
             NR::Point begin   = sp_item_gradient_get_coords(item, POINT_LG_BEGIN, 0, fill_or_stroke);
             NR::Point end     = sp_item_gradient_get_coords(item, POINT_LG_END, 0, fill_or_stroke);
-                
+
             NR::Point nearest = snap_vector_midpoint (mouse_p, begin, end);
             double dist_screen = NR::L2 (mouse_p - nearest) * desktop->current_zoom();
             if ( dist_screen < tolerance ) {
-                // add the knot 
-                offset = get_offset_between_points(nearest, begin, end); 
-                addknot = true;              
+                // add the knot
+                offset = get_offset_between_points(nearest, begin, end);
+                addknot = true;
                 break; // break out of the while loop: add only one knot
             }
         } else if (SP_IS_RADIALGRADIENT(gradient)) {
@@ -252,9 +252,9 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
             NR::Point nearest = snap_vector_midpoint (mouse_p, begin, end);
             double dist_screen = NR::L2 (mouse_p - nearest) * desktop->current_zoom();
             if ( dist_screen < tolerance ) {
-                offset = get_offset_between_points(nearest, begin, end); 
+                offset = get_offset_between_points(nearest, begin, end);
                 addknot = true;
-                r1_knot = true;              
+                r1_knot = true;
                 break; // break out of the while loop: add only one knot
             }
 
@@ -262,12 +262,12 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
             nearest = snap_vector_midpoint (mouse_p, begin, end);
             dist_screen = NR::L2 (mouse_p - nearest) * desktop->current_zoom();
             if ( dist_screen < tolerance ) {
-                offset = get_offset_between_points(nearest, begin, end); 
+                offset = get_offset_between_points(nearest, begin, end);
                 addknot = true;
-                r1_knot = false;              
+                r1_knot = false;
                 break; // break out of the while loop: add only one knot
             }
-        }     
+        }
         fill_or_stroke = !fill_or_stroke;
     } while (!fill_or_stroke && !addknot) ;
 
@@ -283,11 +283,11 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
             // logical error: the endstop should have offset 1 and should always be more than this offset here
             return;
         }
-                    
+
         Inkscape::XML::Node *new_stop_repr = NULL;
         new_stop_repr = SP_OBJECT_REPR(prev_stop)->duplicate();
         SP_OBJECT_REPR(vector)->addChild(new_stop_repr, SP_OBJECT_REPR(prev_stop));
-    
+
         SPStop *newstop = (SPStop *) SP_OBJECT_DOCUMENT(vector)->getObjectByRepr(new_stop_repr);
         newstop->offset = offset;
         sp_repr_set_css_double( SP_OBJECT_REPR(newstop), "offset", (double)offset);
@@ -301,13 +301,13 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
         os << "stop-color:" << c << ";stop-opacity:" << opacity <<";";
         SP_OBJECT_REPR (newstop)->setAttribute("style", os.str().c_str());
 
-    
+
         Inkscape::GC::release(new_stop_repr);
         sp_document_done (SP_OBJECT_DOCUMENT (vector), SP_VERB_CONTEXT_GRADIENT,
                   _("Add gradient stop"));
 
         ec->_grdrag->updateDraggers();
-   		sp_gradient_ensure_vector (gradient);
+        sp_gradient_ensure_vector (gradient);
 
         if (vector->has_stops) {
             int i = 0;
@@ -320,32 +320,31 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
                     }
                 }
             }
-            GrDragger *dragger = NULL;
+
             gradient = sp_item_gradient (item, fill_or_stroke);
-            GrPointType pointtype;
+            GrPointType pointtype = POINT_G_INVALID;
             if (SP_IS_LINEARGRADIENT(gradient)) {
-                dragger = SP_EVENT_CONTEXT(rc)->_grdrag->getDraggerFor (item, POINT_LG_MID, i, fill_or_stroke);        	        			
                 pointtype = POINT_LG_MID;
-            } else if (SP_IS_RADIALGRADIENT(gradient)) {    		
-                dragger = SP_EVENT_CONTEXT(rc)->_grdrag->getDraggerFor (item, r1_knot ? POINT_RG_MID1 : POINT_RG_MID2, i, fill_or_stroke);        	        			
+            } else if (SP_IS_RADIALGRADIENT(gradient)) {
                 pointtype = r1_knot ? POINT_RG_MID1 : POINT_RG_MID2;
             }
-                if (dragger && (etime == 0) ) {
-                    ec->_grdrag->setSelected (dragger);
-                } else {
-                    ec->_grdrag->grabKnot (item,
-                                       pointtype,
-                                       i,
-                                       fill_or_stroke, 99999, 99999, etime);
-                }
-                ec->_grdrag->local_change = true;
-            
+            GrDragger *dragger = SP_EVENT_CONTEXT(rc)->_grdrag->getDraggerFor (item, pointtype, i, fill_or_stroke);
+            if (dragger && (etime == 0) ) {
+                ec->_grdrag->setSelected (dragger);
+            } else {
+                ec->_grdrag->grabKnot (item,
+                                   pointtype,
+                                   i,
+                                   fill_or_stroke, 99999, 99999, etime);
+            }
+            ec->_grdrag->local_change = true;
+
         }
     }
 }
 
 
-static gint 
+static gint
 sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
     static bool dragging;
@@ -369,7 +368,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             SPCtrlLine *line = NULL;
             if (drag->lines) {
                 for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
-                    line = (SPCtrlLine*) l->data;                        
+                    line = (SPCtrlLine*) l->data;
                     over_line |= sp_gradient_context_is_over_line (rc, (SPItem*) line, NR::Point(event->motion.x, event->motion.y));
                 }
             }
@@ -380,13 +379,13 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     SPItem *item = SP_ITEM(i->data);
                     SPGradientType new_type = (SPGradientType) prefs_get_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR);
                     guint new_fill = prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1);
-    
+
                     SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop,                                                                                   SP_OBJECT (item), new_fill);
-    
+
                     SPGradient *priv = sp_item_set_gradient(item, vector, new_type, new_fill);
                     sp_gradient_reset_to_userspace(priv, item);
                 }
-    
+
                 sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
                                   _("Create default gradient"));
             }
@@ -465,23 +464,23 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 SPCtrlLine *line = NULL;
                 if (drag->lines) {
                     for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
-                        line = (SPCtrlLine*) l->data;                        
+                        line = (SPCtrlLine*) l->data;
                         over_line |= sp_gradient_context_is_over_line (rc, (SPItem*) line, NR::Point(event->motion.x, event->motion.y));
                     }
                 }
                 if (over_line) {
-                    sp_gradient_context_add_stop_near_point(rc, SP_ITEM(selection->itemList()->data), rc->mousepoint_doc, 0);   
+                    sp_gradient_context_add_stop_near_point(rc, SP_ITEM(selection->itemList()->data), rc->mousepoint_doc, 0);
                     ret = TRUE;
                 }
-            } else {    
+            } else {
                 dragging = false;
-    
+
                 // unless clicked with Ctrl (to enable Ctrl+doubleclick).  (don't what this is for (johan))
                 if (event->button.state & GDK_CONTROL_MASK) {
                     ret = TRUE;
                     break;
                 }
-    
+
                 if (!event_context->within_tolerance) {
                     // we've been dragging, do nothing (grdrag handles that)
                 } else if (event_context->item_to_select) {
@@ -499,7 +498,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         selection->clear();
                     }
                 }
-    
+
                 event_context->item_to_select = NULL;
                 ret = TRUE;
             }
@@ -617,20 +616,20 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 ret = TRUE;
             }
             break;
-/*                
+/*
         case GDK_Insert:
         case GDK_KP_Insert:
             // with any modifiers
             sp_node_selected_add_node();
             ret = TRUE;
             break;
-*/            
+*/
         case GDK_Delete:
         case GDK_KP_Delete:
         case GDK_BackSpace:
             if ( drag->selected ) {
                 drag->deleteSelected(MOD__CTRL_ONLY);
-                ret = TRUE;            
+                ret = TRUE;
             }
             break;
         default:
@@ -662,7 +661,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
         }
     }
-    
+
     return ret;
 }
 
