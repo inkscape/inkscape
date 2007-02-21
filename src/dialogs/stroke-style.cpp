@@ -73,11 +73,17 @@ static void sp_stroke_style_paint_dragged(SPPaintSelector *psel, SPWidget *spw);
 static void sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw);
 
 static void sp_stroke_style_widget_change_subselection ( Inkscape::Application *inkscape, SPDesktop *desktop, SPWidget *spw );
+static void sp_stroke_style_widget_transientize_callback(Inkscape::Application *inkscape, 
+                                                         SPDesktop *desktop,
+                                                         SPWidget *spw );
 
 /** Marker selection option menus */
 static GtkWidget * marker_start_menu = NULL;
 static GtkWidget * marker_mid_menu = NULL;
 static GtkWidget * marker_end_menu = NULL;
+
+static SPObject *ink_extract_marker_name(gchar const *n);
+static void      ink_markers_menu_update();
 
 static Inkscape::UI::Cache::SvgPreview svg_preview_cache;
 
@@ -107,6 +113,8 @@ sp_stroke_style_paint_widget_new(void)
                        psel);
 
     g_signal_connect (INKSCAPE, "change_subselection", G_CALLBACK (sp_stroke_style_widget_change_subselection), spw);
+
+    g_signal_connect (G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK (sp_stroke_style_widget_transientize_callback), spw );
 
     gtk_signal_connect(GTK_OBJECT(psel), "mode_changed",
                        GTK_SIGNAL_FUNC(sp_stroke_style_paint_mode_changed),
@@ -174,6 +182,14 @@ sp_stroke_style_widget_change_subselection ( Inkscape::Application *inkscape,
                                         SPWidget *spw )
 {
     sp_stroke_style_paint_update (spw);
+}
+
+static void
+sp_stroke_style_widget_transientize_callback(Inkscape::Application *inkscape, 
+                                        SPDesktop *desktop,
+                                        SPWidget *spw )
+{
+    ink_markers_menu_update();
 }
 
 /**
@@ -514,8 +530,6 @@ static void sp_stroke_style_line_dash_changed(SPDashSelector *dsel,
 
 static void sp_stroke_style_update_marker_menus(SPWidget *spw, GSList const *objects);
 
-static SPObject *ink_extract_marker_name(gchar const *n);
-
 
 /**
  * Helper function for creating radio buttons.  This should probably be re-thought out
@@ -717,26 +731,6 @@ sp_marker_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *sour
         if (!SP_IS_MARKER(ml->data))
             continue;
 
-/*
-  Bug 980157 wants to have stock markers show up at the top of the dropdown menu
-  Thus we can skip all of this code, which simply looks for duplicate stock markers
-
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) ml->data);
-        bool stock_dupe = false;
-
-        if (repr->attribute("inkscape:stockid")) {
-            GSList * markers_doc_ml = ink_marker_list_get(markers_doc);
-            for (; markers_doc_ml != NULL; markers_doc_ml = markers_doc_ml->next) {
-                const gchar* stockid = SP_OBJECT_REPR(markers_doc_ml->data)->attribute("inkscape:stockid");
-                if (stockid && !strcmp(repr->attribute("inkscape:stockid"), stockid))
-                    stock_dupe = true;
-            }
-        }
-
-        if (stock_dupe) // stock item, dont add to list from current doc
-            continue;
-*/
-
         // Add to the list of markers we really do wish to show
         clean_ml = g_slist_prepend (clean_ml, ml->data);
     }
@@ -808,7 +802,6 @@ ink_marker_menu_create_menu(GtkWidget *m, gchar *menu_id, SPDocument *doc, SPDoc
 
     // find and load  markers.svg
     if (markers_doc == NULL) {
-        g_warning("Reloading markers_doc");
         char *markers_source = g_build_filename(INKSCAPE_MARKERSDIR, "markers.svg", NULL);
         if (Inkscape::IO::file_test(markers_source, G_FILE_TEST_IS_REGULAR)) {
             markers_doc = sp_document_new(markers_source, FALSE);
@@ -939,8 +932,15 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
 
     // Lastly, also update the marker dropdown menus, so the document's markers
     // show up at the top of the menu
+    ink_markers_menu_update();
+};
+
+static void
+ink_markers_menu_update() {
+    SPDesktop  *desktop = inkscape_active_desktop();
+    SPDocument *document = sp_desktop_document(desktop);
     SPDocument *sandbox = ink_markers_preview_doc ();
-    GtkWidget *m;
+    GtkWidget  *m;
 
     m = gtk_menu_new();
     gtk_widget_show(m);
