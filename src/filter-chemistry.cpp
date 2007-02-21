@@ -43,11 +43,13 @@ new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion
     double rx = radius * (expansionY != 0? (expansion / expansionY) : 1);
     double ry = radius * (expansionX != 0? (expansion / expansionX) : 1);
 
-    if (width != 0 && height != 0 && (2 * rx > width * 0.1 || 2 * ry > height * 0.1)) {
+    if (width != 0 && height != 0 && (2.4 * rx > width * 0.1 || 2.4 * ry > height * 0.1)) {
         // If not within the default 10% margin (see
         // http://www.w3.org/TR/SVG11/filters.html#FilterEffectsRegion), specify margins
-        double xmargin = 2 * (rx) / width;
-        double ymargin = 2 * (ry) / height;
+        // The 2.4 is an empirical coefficient: at that distance the cutoff is practically invisible 
+        // (the opacity at 2.4*radius is about 3e-3)
+        double xmargin = 2.4 * (rx) / width;
+        double ymargin = 2.4 * (ry) / height;
 
         // TODO: set it in UserSpaceOnUse instead?
         sp_repr_set_svg_double(repr, "x", -xmargin);
