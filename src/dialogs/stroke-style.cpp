@@ -1740,10 +1740,8 @@ ink_marker_menu_set_current(SPObject *marker, GtkOptionMenu *mnu)
         for (; kids != NULL; kids = kids->next) {
             gchar *mark = (gchar *) g_object_get_data(G_OBJECT(kids->data), "marker");
             if ( mark && strcmp(mark, markname) == 0 ) {
-                if ( mark_is_stock && !strcmp((gchar *) g_object_get_data(G_OBJECT(kids->data), "stockid"), "true"))
-                    markpos = i;
-                if ( !mark_is_stock && !strcmp((gchar *) g_object_get_data(G_OBJECT(kids->data), "stockid"), "false"))
-                    markpos = i;
+                markpos = i;
+                break;
             }
             i++;
         }
