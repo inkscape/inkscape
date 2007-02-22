@@ -524,6 +524,9 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
         //return; 
     }
 
+    // after switching normal stroke rendering to cairo too, optimize this: lower tolerance, disregard dashes 
+    // (since it will only be used for picking, not for rendering)
+
     if (outline ||
         ((shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) &&
          ( fabs(shape->_stroke.width * scale) > 0.01 ))) { // sinon c'est 0=oon veut pas de bord
@@ -786,15 +789,135 @@ nr_create_cairo_context (NRRectL *area, NRPixBlock *pb)
     unsigned char *dpx = NR_PIXBLOCK_PX (pb) + (clip.y0 - pb->area.y0) * pb->rs + NR_PIXBLOCK_BPP (pb) * (clip.x0 - pb->area.x0);
     int width = area->x1 - area->x0;
     int height = area->y1 - area->y0;
+    // even though cairo cannot draw in nonpremul mode, select ARGB32 for R8G8B8A8N as the closest; later eliminate R8G8B8A8N everywhere
     cairo_surface_t* cst = cairo_image_surface_create_for_data
         (dpx,
-         (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8P? CAIRO_FORMAT_ARGB32 : (pb->mode == NR_PIXBLOCK_MODE_R8G8B8? CAIRO_FORMAT_RGB24 : CAIRO_FORMAT_A8)),
+         ((pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8P || pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8N) ? CAIRO_FORMAT_ARGB32 : (pb->mode == NR_PIXBLOCK_MODE_R8G8B8? CAIRO_FORMAT_RGB24 : CAIRO_FORMAT_A8)),
          width,
          height,
          pb->rs);
     cairo_t *ct = cairo_create (cst);
 
     return ct;
+}
+
+// cairo outline rendering:
+static unsigned int
+cairo_arena_shape_render_outline(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
+{
+    NRArenaShape *shape = NR_ARENA_SHAPE(item);
+
+    cairo_t *ct = nr_create_cairo_context (area, pb);
+
+    if (!ct) 
+        return item->state;
+
+    guint32 rgba = NR_ARENA_ITEM(shape)->arena->outlinecolor;
+    cairo_set_source_rgba(ct, SP_RGBA32_R_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_B_F(rgba), SP_RGBA32_A_F(rgba));
+
+    cairo_set_line_width(ct, 0.5);
+    cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
+    cairo_new_path(ct);
+
+    feed_curve_to_cairo (ct, shape->curve, NR::Matrix(shape->ctm), NR::Point(area->x0, area->y0));
+
+    cairo_stroke(ct);
+
+    cairo_surface_t *cst = cairo_get_target(ct);
+    cairo_destroy (ct);
+    cairo_surface_finish (cst);
+    cairo_surface_destroy (cst);
+
+    pb->empty = FALSE;
+
+    return item->state;
+}
+
+// cairo stroke rendering (flat color only so far!):
+// works on canvas, but wrongs the colors in nonpremul buffers: icons and png export
+// (need to switch them to premul before this can be enabled)
+void
+cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
+{
+    NRArenaShape *shape = NR_ARENA_SHAPE(item);
+    SPStyle const *style = shape->style;
+
+    float const scale = NR_MATRIX_DF_EXPANSION(shape->ctm);
+
+    if (fabs(shape->_stroke.width * scale) < 0.01)
+        return;
+
+    cairo_t *ct = nr_create_cairo_context (area, pb);
+
+    if (!ct) 
+        return;
+
+    guint32 rgba;
+    if ( item->render_opacity ) {
+        rgba = sp_color_get_rgba32_falpha(&shape->_stroke.paint.color(),
+                                          shape->_stroke.opacity *
+                                          SP_SCALE24_TO_FLOAT(style->opacity.value));
+    } else {
+        rgba = sp_color_get_rgba32_falpha(&shape->_stroke.paint.color(),
+                                          shape->_stroke.opacity);
+    }
+
+    // for some reason cairo needs bgra, not rgba
+    cairo_set_source_rgba(ct, SP_RGBA32_B_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_R_F(rgba), SP_RGBA32_A_F(rgba));
+
+    float style_width = MAX(0.125, shape->_stroke.width * scale);
+    cairo_set_line_width(ct, style_width);
+
+    switch (shape->_stroke.cap) {
+        case NRArenaShape::BUTT_CAP:
+            cairo_set_line_cap(ct, CAIRO_LINE_CAP_BUTT);
+            break;
+        case NRArenaShape::ROUND_CAP:
+            cairo_set_line_cap(ct, CAIRO_LINE_CAP_ROUND);
+            break;
+        case NRArenaShape::SQUARE_CAP:
+            cairo_set_line_cap(ct, CAIRO_LINE_CAP_SQUARE);
+            break;
+    }
+    switch (shape->_stroke.join) {
+        case NRArenaShape::MITRE_JOIN:
+            cairo_set_line_join(ct, CAIRO_LINE_JOIN_MITER);
+            break;
+        case NRArenaShape::ROUND_JOIN:
+            cairo_set_line_join(ct, CAIRO_LINE_JOIN_ROUND);
+            break;
+        case NRArenaShape::BEVEL_JOIN:
+            cairo_set_line_join(ct, CAIRO_LINE_JOIN_BEVEL);
+            break;
+    }
+
+    cairo_set_miter_limit (ct, style->stroke_miterlimit.value);
+
+    if (style->stroke_dash.n_dash) {
+        NRVpathDash dash;
+        dash.offset = style->stroke_dash.offset * scale;
+        dash.n_dash = style->stroke_dash.n_dash;
+        dash.dash = g_new(double, dash.n_dash);
+        for (int i = 0; i < dash.n_dash; i++) {
+            dash.dash[i] = style->stroke_dash.dash[i] * scale;
+        }
+        cairo_set_dash (ct, dash.dash, dash.n_dash, dash.offset);
+        g_free(dash.dash);
+    }
+
+    cairo_set_tolerance(ct, 0.1);
+    cairo_new_path(ct);
+
+    feed_curve_to_cairo (ct, shape->curve, NR::Matrix(shape->ctm), NR::Point(area->x0, area->y0));
+
+    cairo_stroke(ct);
+
+    cairo_surface_t *cst = cairo_get_target(ct);
+    cairo_destroy (ct);
+    cairo_surface_finish (cst);
+    cairo_surface_destroy (cst);
+
+    pb->empty = FALSE;
 }
 
 
@@ -811,34 +934,8 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
-    // cairo outline rendering:
-    // fixme: if no problems reported, remove old outline stuff
     if (outline) { 
-
-        cairo_t *ct = nr_create_cairo_context (area, pb);
-
-        if (!ct) 
-            return item->state;
-
-        guint32 rgba = NR_ARENA_ITEM(shape)->arena->outlinecolor;
-        cairo_set_source_rgba(ct, SP_RGBA32_R_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_B_F(rgba), SP_RGBA32_A_F(rgba));
-
-        cairo_set_line_width(ct, 0.5);
-        cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
-        cairo_new_path(ct);
-
-        feed_curve_to_cairo (ct, shape->curve, NR::Matrix(shape->ctm), NR::Point(area->x0, area->y0));
-
-        cairo_stroke(ct);
-
-        cairo_surface_t *cst = cairo_get_target(ct);
-        cairo_destroy (ct);
-        cairo_surface_finish (cst);
-        cairo_surface_destroy (cst);
-
-        pb->empty = FALSE;
-
-        return item->state;
+        return cairo_arena_shape_render_outline (item, area, pb);
     }
 
     if ( shape->delayed_shp ) {
@@ -862,7 +959,7 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
     }
 
     SPStyle const *style = shape->style;
-    if ( shape->fill_shp && !outline) {
+    if (shape->fill_shp) {
         NRPixBlock m;
         guint32 rgba;
 
@@ -900,9 +997,12 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
         nr_pixblock_release(&m);
     }
 
-    if ( shape->stroke_shp ) {
-        NRPixBlock m;
+    if (shape->stroke_shp && shape->_stroke.paint.type() == NRArenaShape::Paint::COLOR) {
+
+        // cairo_arena_shape_render_stroke(item, area, pb);
+
         guint32 rgba;
+        NRPixBlock m;
 
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
 
@@ -916,10 +1016,7 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
         nr_pixblock_render_shape_mask_or(m, shape->stroke_shp);
         m.empty = FALSE;
 
-        if (shape->_stroke.paint.type() == NRArenaShape::Paint::COLOR || outline) {
-            if (outline) {
-                rgba = NR_ARENA_ITEM(shape)->arena->outlinecolor;
-            } else if ( item->render_opacity ) {
+            if ( item->render_opacity ) {
                 rgba = sp_color_get_rgba32_falpha(&shape->_stroke.paint.color(),
                                                   shape->_stroke.opacity *
                                                   SP_SCALE24_TO_FLOAT(style->opacity.value));
@@ -929,10 +1026,27 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
             }
             nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
             pb->empty = FALSE;
-        } else if (shape->_stroke.paint.type() == NRArenaShape::Paint::SERVER) {
-            if (shape->stroke_painter) {
-                nr_arena_render_paintserver_fill(pb, area, shape->stroke_painter, shape->_stroke.opacity, &m);
-            }
+
+        nr_pixblock_release(&m);
+
+    } else if (shape->stroke_shp && shape->_stroke.paint.type() == NRArenaShape::Paint::SERVER) {
+
+        NRPixBlock m;
+
+        nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
+
+        // if memory allocation failed, abort render
+        if (m.size != NR_PIXBLOCK_SIZE_TINY && m.data.px == NULL) {
+            nr_pixblock_release (&m);
+            return (item->state);
+        }
+
+        m.visible_area = pb->visible_area; 
+        nr_pixblock_render_shape_mask_or(m, shape->stroke_shp);
+        m.empty = FALSE;
+
+        if (shape->stroke_painter) {
+            nr_arena_render_paintserver_fill(pb, area, shape->stroke_painter, shape->_stroke.opacity, &m);
         }
 
         nr_pixblock_release(&m);
@@ -948,15 +1062,15 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
     return item->state;
 }
 
+
+// cairo clipping: this basically works except for the stride-must-be-divisible-by-4 cairo bug;
+// reenable this when the bug is fixed and remove the rest of this function
 static guint
-nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
+cairo_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
     if (!shape->curve) return item->state;
 
-/*
-// cairo clipping: this basically works except for the stride-must-be-divisible-by-4 cairo bug;
-// reenable this when the bug is fixed and remove the rest of this function
         cairo_t *ct = nr_create_cairo_context (area, pb);
 
         if (!ct) 
@@ -978,8 +1092,16 @@ nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
         pb->empty = FALSE;
 
         return item->state;
-*/
+}
 
+
+static guint
+nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
+{
+    //return cairo_arena_shape_clip(item, area, pb);
+
+    NRArenaShape *shape = NR_ARENA_SHAPE(item);
+    if (!shape->curve) return item->state;
 
     if ( shape->delayed_shp || shape->fill_shp == NULL) { // we need a fill shape no matter what
         if ( nr_rect_l_test_intersect(area, &item->bbox) ) {
