@@ -83,7 +83,7 @@ static GtkWidget * marker_mid_menu = NULL;
 static GtkWidget * marker_end_menu = NULL;
 
 static SPObject *ink_extract_marker_name(gchar const *n);
-static void      ink_markers_menu_update();
+static void      ink_markers_menu_update(SPWidget* spw);
 
 static Inkscape::UI::Cache::SvgPreview svg_preview_cache;
 
@@ -189,7 +189,7 @@ sp_stroke_style_widget_transientize_callback(Inkscape::Application *inkscape,
                                         SPDesktop *desktop,
                                         SPWidget *spw )
 {
-    ink_markers_menu_update();
+    ink_markers_menu_update(spw);
 }
 
 /**
@@ -719,15 +719,6 @@ sp_marker_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *sour
     GSList *ml = ink_marker_list_get(source);
     GSList *clean_ml = NULL;
 
-    // Do this here, outside of loop, to speed up preview generation:
-    /* Create new arena */
-    NRArena const *arena = NRArena::create();
-    /* Create ArenaItem and set transform */
-    unsigned const visionkey = sp_item_display_key_new(1);
-/*
-    NRArenaItem *root =  sp_item_invoke_show( SP_ITEM(SP_DOCUMENT_ROOT (sandbox)), (NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY );
-*/
-
     for (; ml != NULL; ml = ml->next) {
         if (!SP_IS_MARKER(ml->data))
             continue;
@@ -786,7 +777,7 @@ ink_marker_menu_create_menu(GtkWidget *m, gchar *menu_id, SPDocument *doc, SPDoc
     GtkWidget *i = gtk_menu_item_new();
     gtk_widget_show(i);
 
-//    g_object_set_data(G_OBJECT(i), "marker", (void *) "none");
+    g_object_set_data(G_OBJECT(i), "marker", (void *) "none");
 
     GtkWidget *hb = gtk_hbox_new(FALSE,  MARKER_ITEM_MARGIN);
     gtk_widget_show(hb);
@@ -825,6 +816,7 @@ ink_marker_menu_create_menu(GtkWidget *m, gchar *menu_id, SPDocument *doc, SPDoc
         sp_document_ensure_up_to_date(doc);
         sp_marker_list_from_doc ( m, doc, markers_doc, NULL, sandbox, menu_id );
     }
+
 }
 
 
@@ -912,9 +904,13 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
     gchar *menu_id = (gchar *) g_object_get_data(G_OBJECT(mnu), "menu_id");
     sp_repr_css_set_property(css, menu_id, marker);
 
-     Inkscape::Selection *selection = sp_desktop_selection(desktop);
-     GSList const *items = selection->itemList();
-     for (; items != NULL; items = items->next) {
+    // Also update the marker dropdown menus, so the document's markers
+    // show up at the top of the menu
+    ink_markers_menu_update(SP_WIDGET(spw));
+
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    GSList const *items = selection->itemList();
+    for (; items != NULL; items = items->next) {
          SPItem *item = (SPItem *) items->data;
          if (!SP_IS_SHAPE(item) || SP_IS_RECT(item)) // can't set marker to rect, until it's converted to using <path>
              continue;
@@ -931,35 +927,66 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
     sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE, 
                      _("Set markers"));
 
-    // Lastly, also update the marker dropdown menus, so the document's markers
-    // show up at the top of the menu
-    ink_markers_menu_update();
 };
 
+static int
+ink_marker_menu_get_pos(GtkMenu* mnu, gchar* markname) {
+    
+    if (markname == NULL)
+        markname = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(mnu)), "marker");
+
+    if (markname == NULL)
+        return 0;
+
+    GList *kids = GTK_MENU_SHELL(mnu)->children;
+    int i = 0;
+    for (; kids != NULL; kids = kids->next) {
+        gchar *mark = (gchar *) g_object_get_data(G_OBJECT(kids->data), "marker");
+        if ( mark && strcmp(mark, markname) == 0 ) {
+            break;
+        }
+        i++;
+    }
+    return i;
+}
+
 static void
-ink_markers_menu_update() {
+ink_markers_menu_update(SPWidget* spw) {
     SPDesktop  *desktop = inkscape_active_desktop();
     SPDocument *document = sp_desktop_document(desktop);
     SPDocument *sandbox = ink_markers_preview_doc ();
     GtkWidget  *m;
+    int        pos;
 
+    gtk_signal_handler_block_by_func( GTK_OBJECT(marker_start_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
+    pos = ink_marker_menu_get_pos(GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(marker_start_menu))), NULL);
     m = gtk_menu_new();
     gtk_widget_show(m);
     ink_marker_menu_create_menu(m, "marker-start", document, sandbox);
     gtk_option_menu_remove_menu(GTK_OPTION_MENU(marker_start_menu));
     gtk_option_menu_set_menu(GTK_OPTION_MENU(marker_start_menu), m);
+    gtk_option_menu_set_history(GTK_OPTION_MENU(marker_start_menu), pos);
+    gtk_signal_handler_unblock_by_func( GTK_OBJECT(marker_start_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
 
+    gtk_signal_handler_block_by_func( GTK_OBJECT(marker_mid_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
+    pos = ink_marker_menu_get_pos(GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(marker_mid_menu))), NULL);
     m = gtk_menu_new();
     gtk_widget_show(m);
     ink_marker_menu_create_menu(m, "marker-mid", document, sandbox);
     gtk_option_menu_remove_menu(GTK_OPTION_MENU(marker_mid_menu));
     gtk_option_menu_set_menu(GTK_OPTION_MENU(marker_mid_menu), m);
+    gtk_option_menu_set_history(GTK_OPTION_MENU(marker_mid_menu), pos);
+    gtk_signal_handler_unblock_by_func( GTK_OBJECT(marker_mid_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
 
+    gtk_signal_handler_block_by_func( GTK_OBJECT(marker_end_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
+    pos = ink_marker_menu_get_pos(GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(marker_end_menu))), NULL);
     m = gtk_menu_new();
     gtk_widget_show(m);
     ink_marker_menu_create_menu(m, "marker-end", document, sandbox);
     gtk_option_menu_remove_menu(GTK_OPTION_MENU(marker_end_menu));
     gtk_option_menu_set_menu(GTK_OPTION_MENU(marker_end_menu), m);
+    gtk_option_menu_set_history(GTK_OPTION_MENU(marker_end_menu), pos);
+    gtk_signal_handler_unblock_by_func( GTK_OBJECT(marker_end_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
 }
 
 /**
@@ -1734,17 +1761,7 @@ ink_marker_menu_set_current(SPObject *marker, GtkOptionMenu *mnu)
         else
             markname = g_strdup(SP_OBJECT_REPR(marker)->attribute("id"));
 
-        int markpos = 0;
-        GList *kids = GTK_MENU_SHELL(m)->children;
-        int i = 0;
-        for (; kids != NULL; kids = kids->next) {
-            gchar *mark = (gchar *) g_object_get_data(G_OBJECT(kids->data), "marker");
-            if ( mark && strcmp(mark, markname) == 0 ) {
-                markpos = i;
-                break;
-            }
-            i++;
-        }
+        int markpos = ink_marker_menu_get_pos(m, markname);
         gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), markpos);
 
         g_free (markname);
