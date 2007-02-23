@@ -529,12 +529,17 @@ static void sp_icon_paint(SPIcon *icon, GdkRectangle const *area)
         int const x1 = std::min(area->x + area->width,  widget.allocation.x + padx + static_cast<int>(icon->psize) );
         int const y1 = std::min(area->y + area->height, widget.allocation.y + pady + static_cast<int>(icon->psize) );
 
-        gdk_draw_pixbuf(GDK_DRAWABLE(widget.window), NULL, image,
-                        x0 - widget.allocation.x - padx,
-                        y0 - widget.allocation.y - pady,
-                        x0, y0,
-                        x1 - x0, y1 - y0,
-                        GDK_RGB_DITHER_NORMAL, x0, y0);
+        int width = x1 - x0;
+        int height = y1 - y0;
+        // Limit drawing to when we actually have something. Avoids some crashes.
+        if ( (width > 0) && (height > 0) ) {
+            gdk_draw_pixbuf(GDK_DRAWABLE(widget.window), NULL, image,
+                            x0 - widget.allocation.x - padx,
+                            y0 - widget.allocation.y - pady,
+                            x0, y0,
+                            width, height,
+                            GDK_RGB_DITHER_NORMAL, x0, y0);
+        }
     }
 }
 
