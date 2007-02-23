@@ -184,14 +184,6 @@ sp_stroke_style_widget_change_subselection ( Inkscape::Application *inkscape,
     sp_stroke_style_paint_update (spw);
 }
 
-static void
-sp_stroke_style_widget_transientize_callback(Inkscape::Application *inkscape, 
-                                        SPDesktop *desktop,
-                                        SPWidget *spw )
-{
-    ink_markers_menu_update(spw);
-}
-
 /**
  * Gets the active stroke style property, then sets the appropriate color, alpha, gradient,
  * pattern, etc. for the paint-selector.
@@ -567,6 +559,16 @@ sp_stroke_radio_button(GtkWidget *tb, char const *icon,
 
 }
 
+static void
+sp_stroke_style_widget_transientize_callback(Inkscape::Application *inkscape, 
+                                        SPDesktop *desktop,
+                                        SPWidget *spw )
+{
+// TODO:  Either of these will cause crashes sometimes
+//    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? sp_desktop_selection(desktop) : NULL);
+//    ink_markers_menu_update(spw);
+}
+
 /**
  * Creates a copy of the marker named mname, determines its visible and renderable
  * area in menu_id's bounding box, and then renders it.  This allows us to fill in
@@ -906,6 +908,7 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
 
     // Also update the marker dropdown menus, so the document's markers
     // show up at the top of the menu
+//    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? sp_desktop_selection(desktop) : NULL);
     ink_markers_menu_update(SP_WIDGET(spw));
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -1863,7 +1866,6 @@ ink_extract_marker_name(gchar const *n)
 
     gchar* b = g_strdup(p);
     b[c] = '\0';
-
 
     SPDesktop *desktop = inkscape_active_desktop();
     SPDocument *doc = sp_desktop_document(desktop);
