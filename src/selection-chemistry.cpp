@@ -1334,22 +1334,31 @@ void sp_selection_to_prev_layer ()
 }
 
 bool
+selection_contains_original (SPItem *item, Inkscape::Selection *selection)
+{
+    bool contains_original = false;
+    bool is_use = SP_IS_USE(item);
+    SPItem *item_use = item;
+    SPItem *item_use_first = item;
+    while (is_use && item_use && !contains_original)
+    {
+        item_use = sp_use_get_original (SP_USE(item_use));
+        contains_original |= selection->includes(item_use);
+        if (item_use == item_use_first)
+            break;
+        is_use = SP_IS_USE(item_use);
+    }   
+    return contains_original;
+}
+
+
+bool
 selection_contains_both_clone_and_original (Inkscape::Selection *selection)
 {
     bool clone_with_original = false;
     for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = SP_ITEM(l->data);
-        bool is_use = SP_IS_USE(item);
-        SPItem *item_use = item;
-        SPItem *item_use_first = item;
-        while (is_use && item_use && !clone_with_original)
-        {
-            item_use = sp_use_get_original (SP_USE(item_use));
-            clone_with_original |= selection->includes(item_use);
-            if (item_use == item_use_first)
-                break;
-            is_use = SP_IS_USE(item_use);
-        }   
+        clone_with_original |= selection_contains_original(item, selection);
         if (clone_with_original) 
             break;
     }
