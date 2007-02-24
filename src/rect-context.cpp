@@ -327,8 +327,13 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
 
             NR::Point const motion_w(event->motion.x,
                                      event->motion.y);
-            NR::Point const motion_dt(desktop->w2d(motion_w));
+            NR::Point motion_dt(desktop->w2d(motion_w));
+            
+            SnapManager const &m = desktop->namedview->snap_manager;
+            motion_dt = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, motion_dt, NULL).getPoint();   
+            
             sp_rect_drag(*rc, motion_dt, event->motion.state);
+            
             ret = TRUE;
         }
         break;
