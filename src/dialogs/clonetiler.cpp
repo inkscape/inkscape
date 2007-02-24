@@ -788,6 +788,10 @@ clonetiler_trace_pick (NR::Rect box)
     guchar *px = g_new(guchar, 4 * width * height);
     memset(px, 0x00, 4 * width * height);
 
+    if (px == NULL) {
+        return 0; // buffer is too big or too small, cannot pick, so return 0
+    }
+
     /* Render */
     NRPixBlock pb;
     nr_pixblock_setup_extern( &pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
