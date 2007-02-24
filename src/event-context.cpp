@@ -283,7 +283,7 @@ static gdouble accelerate_scroll(GdkEvent *event, gdouble acceleration, SPCanvas
 
     // reduce time interval by the time it took to paint slowest buffer, 
     // so that acceleration does not hiccup on complex slow-rendering drawings
-    if (slowest_buffer <= time_diff)
+    if ((guint32) slowest_buffer <= time_diff)
         time_diff -= slowest_buffer;
     else
         time_diff = 0;
@@ -403,8 +403,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     gobble_motion_events(panning == 2 ?
                             GDK_BUTTON2_MASK : GDK_BUTTON3_MASK);
 
-                    NR::Point const motion_w(event->motion.x,
-                                             event->motion.y);
+                    NR::Point const motion_w(event->motion.x, event->motion.y);
                     NR::Point const moved_w( motion_w - button_w );
                     event_context->desktop->scroll_world(moved_w);
                     ret = TRUE;
@@ -446,6 +445,15 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 ret = TRUE;
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
+
+                // in slow complex drawings, some of the motion events are lost;
+                // to make up for this, we scroll it once again to the button-up event coordinates
+                // (i.e. canvas will always get scrolled all the way to the mouse release point, 
+                // even if few intermediate steps were visible)
+                NR::Point const motion_w(event->button.x, event->button.y);
+                NR::Point const moved_w( motion_w - button_w );
+                event_context->desktop->scroll_world(moved_w);
+
                 desktop->updateNow();
             } else if (zoom_rb == event->button.button) {
                 zoom_rb = 0;
