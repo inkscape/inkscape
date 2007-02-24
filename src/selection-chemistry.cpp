@@ -1389,8 +1389,8 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
         sp_item_update_cns(*item, selection->desktop());
 #endif
 
-        // we're moving both a clone and its original?
-        bool transform_clone_with_original = (SP_IS_USE(item) && selection->includes( sp_use_get_original (SP_USE(item)) ));
+        // we're moving both a clone and its original or any ancestor in clone chain?
+        bool transform_clone_with_original = selection_contains_original(item, selection);
         // ...both a text-on-path and its path?
         bool transform_textpath_with_path = (SP_IS_TEXT_TEXTPATH(item) && selection->includes( sp_textpath_get_path_item (SP_TEXTPATH(sp_object_first_child(SP_OBJECT(item)))) ));
         // ...both a flowtext and its frame?
