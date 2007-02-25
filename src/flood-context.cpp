@@ -379,16 +379,18 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     guchar *trace_px = g_new(guchar, 4 * width * height);
     memset(trace_px, 0x00, 4 * width * height);
-// 
-//     /* Render */
+    
     NRPixBlock B;
     nr_pixblock_setup_extern( &B, NR_PIXBLOCK_MODE_R8G8B8A8N,
                               final_bbox.x0, final_bbox.y0, final_bbox.x1, final_bbox.y1,
                               px, 4 * width, FALSE, FALSE );
     
     nr_arena_item_invoke_render( root, &final_bbox, &B, NR_ARENA_ITEM_RENDER_NO_CACHE );
+    
     nr_pixblock_release(&B);
-// 
+    nr_arena_item_unref(root);
+    nr_object_unref((NRObject *) arena);
+    
     double zoom_scale = desktop->current_zoom();
 
     NR::Point pw = NR::Point(event->button.x / zoom_scale, sp_document_height(document) + (event->button.y / zoom_scale)) * affine;
@@ -399,7 +401,10 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     std::queue<NR::Point> fill_queue;
     fill_queue.push(pw);
     
-    while (!fill_queue.empty()) {
+    bool aborted = false;
+    int y_limit = height - 1;
+    
+    while (!fill_queue.empty() && !aborted) {
       NR::Point cp = fill_queue.front();
       fill_queue.pop();
       unsigned char *s = get_pixel(px, (int)cp[NR::X], (int)cp[NR::Y], width);
@@ -411,8 +416,16 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         int x = (int)cp[NR::X];
         int y = (int)cp[NR::Y];
         
-        if (y > 0) { try_add_to_queue(&fill_queue, px, x, y - 1, width); }
-        if (y < (height - 1)) { try_add_to_queue(&fill_queue, px, x, y + 1, width); }
+        if (y > 0) { 
+          try_add_to_queue(&fill_queue, px, x, y - 1, width);
+        } else {
+          aborted = true; break;
+        }
+        if (y < y_limit) { 
+          try_add_to_queue(&fill_queue, px, x, y + 1, width);
+        } else {
+          aborted = true; break;
+        }
         
         unsigned char *t, *trace_t;
         bool ok = false;
@@ -427,9 +440,11 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
               trace_t = get_pixel(trace_px, left, y, width);
               trace_t[0] = 255; trace_t[3] = 255;
               if (y > 0) { try_add_to_queue(&fill_queue, px, left, y - 1, width); }
-              if (y < (height - 1)) { try_add_to_queue(&fill_queue, px, left, y + 1, width); }
+              if (y < y_limit) { try_add_to_queue(&fill_queue, px, left, y + 1, width); }
               left--; ok = true;
             }
+          } else {
+            aborted = true; break;
           }
         } while (ok);
       
@@ -443,15 +458,22 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
               trace_t = get_pixel(trace_px, right, y, width);
               trace_t[0] = 255; trace_t[3] = 255; 
               if (y > 0) { try_add_to_queue(&fill_queue, px, right, y - 1, width); }
-              if (y < (height - 1)) { try_add_to_queue(&fill_queue, px, right, y + 1, width); }
+              if (y < y_limit) { try_add_to_queue(&fill_queue, px, right, y + 1, width); }
               right++; ok = true;
             }
+          } else {
+            aborted = true; break;
           }
         } while (ok);
       }
     }
     
     g_free(px);
+    
+    if (aborted) {
+      g_free(trace_px);
+      return;
+    }
     
     GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(trace_px,
                                       GDK_COLORSPACE_RGB,
@@ -464,10 +486,6 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
     do_trace(pixbuf, desktop, inverted_affine);
 
-    /* Free Arena and ArenaItem */
-    nr_arena_item_unref(root);
-    nr_object_unref((NRObject *) arena);
-    
     sp_document_done(document, SP_VERB_CONTEXT_FLOOD, _("Flood fill"));
 }
 
