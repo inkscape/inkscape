@@ -1723,6 +1723,17 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
         bpath=SP_CURVE_BPATH(curve);
     }
 
+    Path *dest = bpath_to_Path(bpath);
+
+    if ( doTransformation ) {
+        if ( bpath ) g_free(bpath);
+    } else {
+        sp_curve_unref(curve);
+    }
+    return dest;
+}
+
+Path *bpath_to_Path(NArtBpath const *bpath) {
     Path *dest = new Path;
     dest->SetBackData(false);
     {
@@ -1775,12 +1786,6 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
         }
         if (closed)
             dest->Close();
-    }
-
-    if ( doTransformation ) {
-        if ( bpath ) g_free(bpath);
-    } else {
-        sp_curve_unref(curve);
     }
     return dest;
 }

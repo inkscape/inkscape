@@ -44,6 +44,7 @@ void sp_selected_path_simplify ();
 Path *Path_for_item(SPItem *item, bool doTransformation, bool transformFull = true);
 NR::Maybe<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p);
 NR::Point get_point_on_Path(Path *path, int piece, double t);
+Path *bpath_to_Path(NArtBpath const *bpath);
 
 #endif
 
