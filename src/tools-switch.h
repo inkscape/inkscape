@@ -29,7 +29,8 @@ enum {
   TOOLS_GRADIENT,
   TOOLS_ZOOM,
   TOOLS_DROPPER,
-  TOOLS_CONNECTOR
+  TOOLS_CONNECTOR,
+  TOOLS_FLOOD 
 };
 
 int tools_isactive(SPDesktop *dt, unsigned num);

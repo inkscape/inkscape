@@ -43,6 +43,7 @@
 #include "zoom-context.h"
 #include "dropper-context.h"
 #include "connector-context.h"
+#include "flood-context.h"
 #include "sp-offset.h"
 #include "message-context.h"
 
@@ -64,6 +65,7 @@ static char const *const tool_names[] = {
     "tools.zoom",
     "tools.dropper",
     "tools.connector",
+    "tools.flood",
     NULL
 };
 
@@ -83,6 +85,7 @@ static char const *const tool_ids[] = {
     "zoom",
     "dropper",
     "connector",
+    "flood",
     NULL
 };
 
@@ -205,6 +208,12 @@ tools_switch(SPDesktop *dt, int num)
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
             dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click and drag</b> between shapes to create a connector."));
+            break;
+        case TOOLS_FLOOD:
+            dt->set_event_context(SP_TYPE_FLOOD_CONTEXT, tool_names[num]);
+            dt->activate_guides(false);
+            inkscape_eventcontext_set(sp_desktop_event_context(dt));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> to paint an unfilled area."));
             break;
     }
 }

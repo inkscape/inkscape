@@ -397,6 +397,9 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_dropper, _("Dropper"), iter_tools, PREFS_PAGE_TOOLS_DROPPER);
     this->AddSelcueCheckbox(_page_dropper, "tools.dropper", true);
     this->AddGradientCheckbox(_page_dropper, "tools.dropper", true);
+    //Flood
+    this->AddPage(_page_flood, _("Flood Fill"), iter_tools, PREFS_PAGE_TOOLS_FLOOD);
+    this->AddNewObjectsStyle(_page_flood, "tools.flood");
 }
 
 void InkscapePreferences::initPageWindows()

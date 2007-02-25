@@ -71,6 +71,7 @@ libinkpre_a_SOURCES =	\
 	extract-uri.cpp extract-uri.h	\
 	file.cpp file.h	\
 	filter-chemistry.cpp filter-chemistry.h \
+	flood-context.cpp flood-context.h	\
 	fontsize-expansion.cpp fontsize-expansion.h	\
 	forward.h	\
 	geom.cpp geom.h	\
