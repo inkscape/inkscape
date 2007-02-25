@@ -743,7 +743,7 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
                 
                 cc->state = SP_CONNECTOR_CONTEXT_IDLE;
                 desktop->messageStack()->flash( Inkscape::NORMAL_MESSAGE,
-                        _("Connector endpoint drag canceled."));
+                        _("Connector endpoint drag cancelled."));
                 ret = TRUE;
             }
             else if (cc->npoints != 0) {
