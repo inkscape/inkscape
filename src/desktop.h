@@ -214,12 +214,12 @@ struct SPDesktop : public Inkscape::UI::View::View
     void next_zoom();
 
     bool scroll_to_point (NR::Point const *s_dt, gdouble autoscrollspeed = 0);
-    void scroll_world (double dx, double dy);
-    void scroll_world (NR::Point const scroll)
+    void scroll_world (double dx, double dy, bool is_scrolling = false);
+    void scroll_world (NR::Point const scroll, bool is_scrolling = false)
     {
         using NR::X;
-	using NR::Y;
-	scroll_world(scroll[X], scroll[Y]);
+        using NR::Y;
+        scroll_world(scroll[X], scroll[Y], is_scrolling);
     }
 
     void getWindowGeometry (gint &x, gint &y, gint &w, gint &h);

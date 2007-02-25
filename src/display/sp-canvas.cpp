@@ -988,6 +988,9 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->forced_redraw_limit = -1;
 
     canvas->slowest_buffer = 0;
+
+    canvas->is_scrolling = false;
+
 }
 
 /**
@@ -1590,8 +1593,6 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
     }
 }
 
-static int is_scrolling = 0;
-
 /* Paint the given rect, while updating canvas->redraw_aborted and running iterations after each
  * buffer; make sure canvas->redraw_aborted never goes past aborted_limit (used for 2-rect
  * optimized repaint)
@@ -1707,11 +1708,11 @@ sp_canvas_paint_rect_internal (SPCanvas *canvas, NRRectL *rect, NR::ICoord *x_ab
             // OPTIMIZATION IDEA: if drawing is really slow (as measured by canvas->slowest
             // buffer), do the same - process some events even before we paint any buffers
 
-            if (is_scrolling) {
-                is_scrolling = 0;
+            if (canvas->is_scrolling) {
                 while (Gtk::Main::events_pending()) { // process any events
                     Gtk::Main::iteration(false);
                 }
+                canvas->is_scrolling = false;
                 if (this_count != canvas->redraw_count) { // if there was redraw,
                     return 1; // interrupt this one
                 }
@@ -2154,7 +2155,7 @@ sp_canvas_root (SPCanvas *canvas)
  * Scrolls canvas to specific position.
  */
 void
-sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear)
+sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear, bool is_scrolling)
 {
     g_return_if_fail (canvas != NULL);
     g_return_if_fail (SP_IS_CANVAS (canvas));
@@ -2174,7 +2175,7 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear)
     if (!clear) {
         // scrolling without zoom; redraw only the newly exposed areas
         if ((dx != 0) || (dy != 0)) {
-            is_scrolling = 1;
+            canvas->is_scrolling = is_scrolling;
             if (GTK_WIDGET_REALIZED (canvas)) {
                 gdk_window_scroll (SP_CANVAS_WINDOW (canvas), -dx, -dy);
             }

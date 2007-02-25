@@ -897,13 +897,13 @@ SPDesktop::zoom_drawing()
  * Scroll canvas by specific coordinate amount.
  */
 void
-SPDesktop::scroll_world (double dx, double dy)
+SPDesktop::scroll_world (double dx, double dy, bool is_scrolling)
 {
     g_assert(_widget);
 
     NR::Rect const viewbox = canvas->getViewbox();
 
-    sp_canvas_scroll_to(canvas, viewbox.min()[NR::X] - dx, viewbox.min()[NR::Y] - dy, FALSE);
+    sp_canvas_scroll_to(canvas, viewbox.min()[NR::X] - dx, viewbox.min()[NR::Y] - dy, FALSE, is_scrolling);
 
     _widget->updateRulers();
     _widget->updateScrollbars(expansion(_d2w));

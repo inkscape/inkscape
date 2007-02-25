@@ -178,6 +178,8 @@ struct SPCanvas {
     bool gen_all_enter_events;
     
     int rendermode;
+
+    bool is_scrolling;
     
     NR::Rect getViewbox() const;
 };
@@ -186,7 +188,7 @@ GtkWidget *sp_canvas_new_aa();
 
 SPCanvasGroup *sp_canvas_root(SPCanvas *canvas);
 
-void sp_canvas_scroll_to(SPCanvas *canvas, double cx, double cy, unsigned int clear);
+void sp_canvas_scroll_to(SPCanvas *canvas, double cx, double cy, unsigned int clear, bool is_scrolling = false);
 void sp_canvas_update_now(SPCanvas *canvas);
 
 void sp_canvas_request_redraw(SPCanvas *canvas, int x1, int y1, int x2, int y2);

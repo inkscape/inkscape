@@ -405,7 +405,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
 
                     NR::Point const motion_w(event->motion.x, event->motion.y);
                     NR::Point const moved_w( motion_w - button_w );
-                    event_context->desktop->scroll_world(moved_w);
+                    event_context->desktop->scroll_world(moved_w, true); // we're still scrolling, do not redraw
                     ret = TRUE;
                 }
             } else if (zoom_rb) {
