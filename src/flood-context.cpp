@@ -513,10 +513,6 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        if ( event->button.button == 1 ) {
-            sp_flood_do_flood_fill(event_context, event);
-            ret = TRUE;
-        }
         break;
         // motion and release are always on root (why?)
     default:
