@@ -370,7 +370,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
     /* Create ArenaItems and set transform */
     NRArenaItem *root = sp_item_invoke_show(SP_ITEM(sp_document_root(document)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
-    nr_arena_item_set_transform(root, affine);
+    nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
 
     NRGC gc(NULL);
     nr_matrix_set_identity(&gc.transform);
@@ -383,21 +383,20 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
     nr_arena_item_invoke_update(root, &final_bbox, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
 
-//     /* Set up pixblocks */
     guchar *px = g_new(guchar, 4 * width * height);
     memset(px, 0x00, 4 * width * height);
 
-    guchar *trace_px = g_new(guchar, 4 * width * height);
-    memset(trace_px, 0x00, 4 * width * height);
-    
     NRPixBlock B;
     nr_pixblock_setup_extern( &B, NR_PIXBLOCK_MODE_R8G8B8A8N,
                               final_bbox.x0, final_bbox.y0, final_bbox.x1, final_bbox.y1,
                               px, 4 * width, FALSE, FALSE );
     
     nr_arena_item_invoke_render( root, &final_bbox, &B, NR_ARENA_ITEM_RENDER_NO_CACHE );
-    
     nr_pixblock_release(&B);
+    
+    // Hide items
+    sp_item_invoke_hide(SP_ITEM(sp_document_root(document)), dkey);
+    
     nr_arena_item_unref(root);
     nr_object_unref((NRObject *) arena);
     
@@ -408,6 +407,9 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     pw[NR::X] = (int)MIN(width - 1, MAX(0, pw[NR::X]));
     pw[NR::Y] = (int)MIN(height - 1, MAX(0, pw[NR::Y]));
 
+    guchar *trace_px = g_new(guchar, 4 * width * height);
+    memset(trace_px, 0x00, 4 * width * height);
+    
     std::queue<NR::Point> fill_queue;
     fill_queue.push(pw);
     
@@ -501,7 +503,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     do_trace(pixbuf, desktop, inverted_affine);
 
     g_free(trace_px);
-
+    
     sp_document_done(document, SP_VERB_CONTEXT_FLOOD, _("Flood fill"));
 }
 
