@@ -622,6 +622,17 @@ sp_export_dialog (void)
             vb->pack_start(*batch_box);
         }
 
+        {
+            Gtk::HBox* hide_box = new Gtk::HBox(FALSE, 5);
+            GtkWidget *he = gtk_check_button_new_with_label(_("Hide all except selected"));
+            gtk_widget_set_sensitive(GTK_WIDGET(he), TRUE);
+            gtk_object_set_data(GTK_OBJECT(dlg), "hide_checkbox", he);
+            hide_box->pack_start(*Glib::wrap(he), false, false);
+            gtk_tooltips_set_tip(tt, he, _("In the exported image, hide all objects except those that are selected"), NULL);
+            hide_box->show_all();
+            vb->pack_start(*hide_box);
+        }
+
         /* Buttons */
         Gtk::HButtonBox* bb = new Gtk::HButtonBox(Gtk::BUTTONBOX_END);
         bb->set_border_width(3);
@@ -657,16 +668,22 @@ sp_export_dialog (void)
 } // end of sp_export_dialog()
 
 static void
-sp_export_update_batch_checkbutton (GtkObject *base)
+sp_export_update_checkbuttons (GtkObject *base)
 {
     gint num = g_slist_length((GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
     GtkWidget *be = (GtkWidget *)gtk_object_get_data(base, "batch_checkbox");
+    GtkWidget *he = (GtkWidget *)gtk_object_get_data(base, "hide_checkbox");
     if (num >= 2) {
         gtk_widget_set_sensitive (be, true);
         gtk_button_set_label (GTK_BUTTON(be), g_strdup_printf (_("Batch export %d selected objects"), num));
     } else {
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(be), FALSE);
         gtk_widget_set_sensitive (be, FALSE);
+    }
+    if (num > 0) {
+        gtk_widget_set_sensitive (he, true);
+    } else {
+        gtk_widget_set_sensitive (he, false);
     }
 }
 
@@ -705,7 +722,7 @@ sp_export_find_default_selection(GtkWidget * dlg)
                                                        selection_names[key]);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-    sp_export_update_batch_checkbutton (GTK_OBJECT(dlg));
+    sp_export_update_checkbuttons (GTK_OBJECT(dlg));
 }
 
 
@@ -742,7 +759,7 @@ sp_export_selection_changed ( Inkscape::Application *inkscape,
         sp_export_area_toggled(button, base);
     } 
 
-    sp_export_update_batch_checkbutton (base);
+    sp_export_update_checkbuttons (base);
 } 
 
 static void
@@ -1029,6 +1046,8 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
     SPNamedView *nv = sp_desktop_namedview(SP_ACTIVE_DESKTOP);
 
     GtkWidget *be = (GtkWidget *)gtk_object_get_data(base, "batch_checkbox");
+    GtkWidget *he = (GtkWidget *)gtk_object_get_data(base, "hide_checkbox");
+    bool hide = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (he));
     if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (be))) {
         // Batch export of selected objects
 
@@ -1073,7 +1092,9 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
                 if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), fn, 
                                          area.x0, area.y0, area.x1, area.y1, width, height, dpi, dpi, 
                                          nv->pagecolor, 
-                                         NULL, NULL, TRUE)) {  // overwrite without asking 
+                                         NULL, NULL, TRUE,  // overwrite without asking 
+                                         hide ? (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList() : NULL
+                        )) {
                     gchar * error;
                     gchar * safeFile = Inkscape::IO::sanitizeString(fn);
                     error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
@@ -1138,7 +1159,9 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
     if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), filename, 
                              x0, y0, x1, y1, width, height, xdpi, ydpi, 
                              nv->pagecolor, 
-                             sp_export_progress_callback, base)) {
+                             sp_export_progress_callback, base, FALSE,
+                             hide ? (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList() : NULL
+            )) {
         gchar * error;
         gchar * safeFile = Inkscape::IO::sanitizeString(filename);
         error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
