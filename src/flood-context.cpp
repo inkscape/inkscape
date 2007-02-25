@@ -496,6 +496,8 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                                       (GdkPixbufDestroyNotify)g_free,
                                       NULL);
 
+    g_free(trace_px);
+
     NR::Matrix inverted_affine = NR::Matrix(affine).inverse();
     
     do_trace(pixbuf, desktop, inverted_affine);
