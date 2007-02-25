@@ -1,5 +1,5 @@
 /* libwpg
- * Copyright (C) 2006 Ariya Hidayat (ariya@kde.org)
+ * Copyright (C) 2006 Fridrich Strba (fridrich.strba@bluewin.ch)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,28 +23,41 @@
  * Corel Corporation or Corel Corporation Limited."
  */
 
-#ifndef __WPGCOLOR_H__
-#define __WPGCOLOR_H__
+#include "WPGColor.h"
 
-namespace libwpg
+libwpg::WPGColor::WPGColor():
+	red(0),
+	green(0),
+	blue(0),
+	alpha(0)
+{}
+
+libwpg::WPGColor::WPGColor(int r, int g, int b):
+	red(r),
+	green(g),
+	blue(b),
+	alpha(0)
+{}
+
+libwpg::WPGColor::WPGColor(int r, int g, int b, int a):
+	red(r),
+	green(g),
+	blue(b),
+	alpha(a)
+{}
+
+libwpg::WPGColor::WPGColor(const WPGColor& color):
+	red(color.red),
+	green(color.green),
+	blue(color.blue),
+	alpha(color.alpha)
+{}
+
+libwpg::WPGColor& libwpg::WPGColor::operator=(const libwpg::WPGColor& color)
 {
-
-class WPGColor
-{
-public:
-	int red, green, blue, alpha;
-	
-	WPGColor();
-	
-	WPGColor(int r, int g, int b);
-	
-	WPGColor(int r, int g, int b, int a);
-
-	WPGColor(const WPGColor& color);
-	
-	WPGColor& operator=(const WPGColor& color);
-};
-
-} // namespace libwpg
-
-#endif // __WPGCOLOR_H__
+	red = color.red;
+	green = color.green;
+	blue = color.blue;
+	alpha = color.alpha;
+	return *this;
+}

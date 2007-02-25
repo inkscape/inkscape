@@ -37,53 +37,70 @@ public:
 };
 
 }
-	
-using namespace libwpg;
 
+libwpg::WPGPoint::WPGPoint():
+	x(0.0),
+	y(0.0)
+{}
 
-WPGPointArray::WPGPointArray()
+libwpg::WPGPoint::WPGPoint(double xx, double yy):
+	x(xx),
+	y(yy)
+{}
+
+libwpg::WPGPoint::WPGPoint(const WPGPoint& point):
+	x(point.x),
+	y(point.y)
+{}
+
+libwpg::WPGPoint& libwpg::WPGPoint::operator=(const libwpg::WPGPoint& point)
 {
-	d = new WPGPointArrayPrivate;
+	x = point.x;
+	y = point.y;
+	return *this;
 }
+	
+libwpg::WPGPointArray::WPGPointArray(): d(new libwpg::WPGPointArrayPrivate())
+{}
 
-WPGPointArray::~WPGPointArray()
+libwpg::WPGPointArray::~WPGPointArray()
 {
 	delete d;
 }
 
-WPGPointArray::WPGPointArray(const WPGPointArray& pa)
+libwpg::WPGPointArray::WPGPointArray(const libwpg::WPGPointArray& pa):
+	d(new libwpg::WPGPointArrayPrivate())
 {
-	d = new WPGPointArrayPrivate;
 	d->points = pa.d->points;
 }
 
-WPGPointArray& WPGPointArray::operator=(const WPGPointArray& pa)
+libwpg::WPGPointArray& libwpg::WPGPointArray::operator=(const libwpg::WPGPointArray& pa)
 {
 	d->points = pa.d->points;
 	return *this;
 }
 
-unsigned WPGPointArray::count() const
+unsigned libwpg::WPGPointArray::count() const
 {
 	return d->points.size();
 }
 
-WPGPoint& WPGPointArray::at(unsigned i)
+libwpg::WPGPoint& libwpg::WPGPointArray::at(unsigned i)
 {
 	return d->points[i];
 }
 
-const WPGPoint& WPGPointArray::at(unsigned i) const
+const libwpg::WPGPoint& libwpg::WPGPointArray::at(unsigned i) const
 {
 	return d->points[i];
 }
 
-const WPGPoint& WPGPointArray::operator[](unsigned i) const
+const libwpg::WPGPoint& libwpg::WPGPointArray::operator[](unsigned i) const
 {
 	return d->points[i];
 }
 
-void WPGPointArray::add(const WPGPoint& p)
+void libwpg::WPGPointArray::add(const libwpg::WPGPoint& p)
 {
 	d->points.push_back(p);
 }

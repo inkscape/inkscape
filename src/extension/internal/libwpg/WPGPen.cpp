@@ -36,41 +36,90 @@ public:
 };
 }
 	
-using namespace libwpg;
-
-WPGDashArray::WPGDashArray()
+libwpg::WPGDashArray::WPGDashArray() : d(new libwpg::WPGDashArrayPrivate())
 {
-	d = new WPGDashArrayPrivate;
 }
 
-WPGDashArray::~WPGDashArray()
+libwpg::WPGDashArray::~WPGDashArray()
 {
 	delete d;
 }
 
-WPGDashArray::WPGDashArray(const WPGDashArray& dash)
+libwpg::WPGDashArray::WPGDashArray(const libwpg::WPGDashArray& dash):
+	d(new libwpg::WPGDashArrayPrivate())
 {
-	d = new WPGDashArrayPrivate;
 	d->dashes = dash.d->dashes;
 }
 
-WPGDashArray& WPGDashArray::operator=(const WPGDashArray& dash)
+libwpg::WPGDashArray& libwpg::WPGDashArray::operator=(const libwpg::WPGDashArray& dash)
 {
 	d->dashes = dash.d->dashes;
 	return *this;
 }
 
-unsigned WPGDashArray::count() const
+unsigned libwpg::WPGDashArray::count() const
 {
 	return d->dashes.size();
 }
 
-double WPGDashArray::at(unsigned i) const
+double libwpg::WPGDashArray::at(unsigned i) const
 {
 	return d->dashes[i];
 }
 
-void WPGDashArray::add(double p)
+void libwpg::WPGDashArray::add(double p)
 {
 	d->dashes.push_back(p);
 }
+
+libwpg::WPGPen::WPGPen(): 
+	foreColor(0,0,0), 
+	backColor(0xFF,0xFF,0xFF), 
+	width(0), 
+	height(0), 
+	solid(true) ,
+	dashArray(WPGDashArray())
+{
+}
+
+libwpg::WPGPen::WPGPen(const WPGColor& fore): 
+	foreColor(fore), 
+	backColor(0xFF,0xFF,0xFF), 
+	width(0), 
+	height(0), 
+	solid(true),
+	dashArray(WPGDashArray()) 
+{
+}
+
+libwpg::WPGPen::WPGPen(const WPGColor& fore, const WPGColor& back): 
+	foreColor(fore),  
+	backColor(back), 
+	width(0), 
+	height(0), 
+	solid(true) ,
+	dashArray(WPGDashArray())
+{
+}
+
+libwpg::WPGPen::WPGPen(const WPGPen& pen):
+	foreColor(pen.foreColor),
+	backColor(pen.backColor),
+	width(pen.width),
+	height(pen.height),
+	solid(pen.solid),
+	dashArray(pen.dashArray)
+{
+}
+
+libwpg::WPGPen& libwpg::WPGPen::operator=(const libwpg::WPGPen& pen)
+{ 
+	foreColor = pen.foreColor; 
+	backColor = pen.backColor;
+	width = pen.width;
+	height = pen.height;
+	solid = pen.solid;
+	dashArray = pen.dashArray;
+	return *this;
+}
+

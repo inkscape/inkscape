@@ -37,15 +37,13 @@ public:
 	double x;
 	double y;
 
-	WPGPoint(): x(0.0), y(0.0) {}
+	WPGPoint();
 
-	WPGPoint(double xx, double yy): x(xx), y(yy) {}
+	WPGPoint(double xx, double yy);
 
-	WPGPoint(const WPGPoint& point)
-	{ x = point.x; y = point.y; }
+	WPGPoint(const WPGPoint& point);
 
-	WPGPoint& operator=(const WPGPoint& point)
-	{ x = point.x; y = point.y; return *this; }
+	WPGPoint& operator=(const WPGPoint& point);
 };
 
 class WPGPointArrayPrivate;

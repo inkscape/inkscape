@@ -194,9 +194,7 @@ class StreamIO
     void updateCache();
 };
 
-}; // namespace libwpg
-
-using namespace libwpg;
+} // namespace libwpg
 
 static inline unsigned long readU16( const unsigned char* ptr )
 {
@@ -213,7 +211,7 @@ static const unsigned char wpgole_magic[] =
 
 // =========== Header ==========
 
-Header::Header()
+libwpg::Header::Header()
 {
   b_shift = 9;
   s_shift = 6;
@@ -228,10 +226,10 @@ Header::Header()
   for( unsigned i = 0; i < 8; i++ )
     id[i] = wpgole_magic[i];  
   for( unsigned j=0; j<109; j++ )
-    bb_blocks[j] = AllocTable::Avail;
+    bb_blocks[j] = libwpg::AllocTable::Avail;
 }
 
-bool Header::valid()
+bool libwpg::Header::valid()
 {
   if( threshold != 4096 ) return false;
   if( num_bat == 0 ) return false;
@@ -244,7 +242,7 @@ bool Header::valid()
   return true;
 }
 
-void Header::load( const unsigned char* buffer )
+void libwpg::Header::load( const unsigned char* buffer )
 {
   b_shift      = readU16( buffer + 0x1e );
   s_shift      = readU16( buffer + 0x20 );
@@ -264,24 +262,24 @@ void Header::load( const unsigned char* buffer )
  
 // =========== AllocTable ==========
 
-const unsigned AllocTable::Avail = 0xffffffff;
-const unsigned AllocTable::Eof = 0xfffffffe;
-const unsigned AllocTable::Bat = 0xfffffffd;
-const unsigned AllocTable::MetaBat = 0xfffffffc;
+const unsigned libwpg::AllocTable::Avail = 0xffffffff;
+const unsigned libwpg::AllocTable::Eof = 0xfffffffe;
+const unsigned libwpg::AllocTable::Bat = 0xfffffffd;
+const unsigned libwpg::AllocTable::MetaBat = 0xfffffffc;
 
-AllocTable::AllocTable()
+libwpg::AllocTable::AllocTable()
 {
   blockSize = 4096;
   // initial size
   resize( 128 );
 }
 
-unsigned long AllocTable::count()
+unsigned long libwpg::AllocTable::count()
 {
   return data.size();
 }
 
-void AllocTable::resize( unsigned long newsize )
+void libwpg::AllocTable::resize( unsigned long newsize )
 {
   unsigned oldsize = data.size();
   data.resize( newsize );
@@ -291,27 +289,27 @@ void AllocTable::resize( unsigned long newsize )
 }
 
 // make sure there're still free blocks
-void AllocTable::preserve( unsigned long n )
+void libwpg::AllocTable::preserve( unsigned long n )
 {
   std::vector<unsigned long> pre;
   for( unsigned i=0; i < n; i++ )
     pre.push_back( unused() );
 }
 
-unsigned long AllocTable::operator[]( unsigned long index )
+unsigned long libwpg::AllocTable::operator[]( unsigned long index )
 {
   unsigned long result;
   result = data[index];
   return result;
 }
 
-void AllocTable::set( unsigned long index, unsigned long value )
+void libwpg::AllocTable::set( unsigned long index, unsigned long value )
 {
   if( index >= count() ) resize( index + 1);
   data[ index ] = value;
 }
 
-void AllocTable::setChain( std::vector<unsigned long> chain )
+void libwpg::AllocTable::setChain( std::vector<unsigned long> chain )
 {
   if( chain.size() )
   {
@@ -322,7 +320,7 @@ void AllocTable::setChain( std::vector<unsigned long> chain )
 }
 
 // follow 
-std::vector<unsigned long> AllocTable::follow( unsigned long start )
+std::vector<unsigned long> libwpg::AllocTable::follow( unsigned long start )
 {
   std::vector<unsigned long> chain;
 
@@ -343,7 +341,7 @@ std::vector<unsigned long> AllocTable::follow( unsigned long start )
   return chain;
 }
 
-unsigned AllocTable::unused()
+unsigned libwpg::AllocTable::unused()
 {
   // find first available block
   for( unsigned i = 0; i < data.size(); i++ )
@@ -356,7 +354,7 @@ unsigned AllocTable::unused()
   return block;      
 }
 
-void AllocTable::load( const unsigned char* buffer, unsigned len )
+void libwpg::AllocTable::load( const unsigned char* buffer, unsigned len )
 {
   resize( len / 4 );
   for( unsigned i = 0; i < count(); i++ )
@@ -365,14 +363,14 @@ void AllocTable::load( const unsigned char* buffer, unsigned len )
 
 // =========== DirTree ==========
 
-const unsigned DirTree::End = 0xffffffff;
+const unsigned libwpg::DirTree::End = 0xffffffff;
 
-DirTree::DirTree()
+libwpg::DirTree::DirTree()
 {
   clear();
 }
 
-void DirTree::clear()
+void libwpg::DirTree::clear()
 {
   // leave only root entry
   entries.resize( 1 );
@@ -386,18 +384,18 @@ void DirTree::clear()
   entries[0].child = End;
 }
 
-unsigned DirTree::entryCount()
+unsigned libwpg::DirTree::entryCount()
 {
   return entries.size();
 }
 
-DirEntry* DirTree::entry( unsigned index )
+libwpg::DirEntry* libwpg::DirTree::entry( unsigned index )
 {
-  if( index >= entryCount() ) return (DirEntry*) 0;
+  if( index >= entryCount() ) return (libwpg::DirEntry*) 0;
   return &entries[ index ];
 }
 
-int DirTree::parent( unsigned index )
+int libwpg::DirTree::parent( unsigned index )
 {
   // brute-force, basically we iterate for each entries, find its children
   // and check if one of the children is 'index'
@@ -412,7 +410,7 @@ int DirTree::parent( unsigned index )
   return -1;
 }
 
-std::string DirTree::fullName( unsigned index )
+std::string libwpg::DirTree::fullName( unsigned index )
 {
   // don't use root name ("Root Entry"), just give "/"
   if( index == 0 ) return "/";
@@ -437,10 +435,10 @@ std::string DirTree::fullName( unsigned index )
 }
 
 // given a fullname (e.g "/ObjectPool/_1020961869"), find the entry
-DirEntry* DirTree::entry( const std::string& name )
+libwpg::DirEntry* libwpg::DirTree::entry( const std::string& name )
 {
 
-   if( !name.length() ) return (DirEntry*)0;
+   if( !name.length() ) return (libwpg::DirEntry*)0;
  
    // quick check for "/" (that's root)
    if( name == "/" ) return entry( 0 );
@@ -471,7 +469,7 @@ DirEntry* DirTree::entry( const std::string& name )
      unsigned child = 0;
      for( unsigned i = 0; i < chi.size(); i++ )
      {
-       DirEntry* ce = entry( chi[i] );
+       libwpg::DirEntry* ce = entry( chi[i] );
        if( ce ) 
        if( ce->valid && ( ce->name.length()>1 ) )
        if( ce->name == *it )
@@ -480,17 +478,17 @@ DirEntry* DirTree::entry( const std::string& name )
      
      // traverse to the child
      if( child > 0 ) index = child;
-     else return (DirEntry*)0;
+     else return (libwpg::DirEntry*)0;
    }
 
    return entry( index );
 }
 
 // helper function: recursively find siblings of index
-void dirtree_find_siblings( DirTree* dirtree, std::vector<unsigned>& result, 
+void dirtree_find_siblings( libwpg::DirTree* dirtree, std::vector<unsigned>& result, 
   unsigned index )
 {
-  DirEntry* e = dirtree->entry( index );
+  libwpg::DirEntry* e = dirtree->entry( index );
   if( !e ) return;
   if( !e->valid ) return;
 
@@ -520,7 +518,7 @@ void dirtree_find_siblings( DirTree* dirtree, std::vector<unsigned>& result,
   }
 }
 
-std::vector<unsigned> DirTree::children( unsigned index )
+std::vector<unsigned> libwpg::DirTree::children( unsigned index )
 {
   std::vector<unsigned> result;
   
@@ -531,7 +529,7 @@ std::vector<unsigned> DirTree::children( unsigned index )
   return result;
 }
 
-void DirTree::load( unsigned char* buffer, unsigned size )
+void libwpg::DirTree::load( unsigned char* buffer, unsigned size )
 {
   entries.clear();
   
@@ -559,7 +557,7 @@ void DirTree::load( unsigned char* buffer, unsigned size )
     // 2 = file (aka stream), 1 = directory (aka storage), 5 = root
     unsigned type = buffer[ 0x42 + p];
     
-    DirEntry e;
+    libwpg::DirEntry e;
     e.valid = true;
     e.name = name;
     e.start = readU32( buffer + 0x74+p );
@@ -579,41 +577,41 @@ void DirTree::load( unsigned char* buffer, unsigned size )
 
 // =========== StorageIO ==========
 
-StorageIO::StorageIO( Storage* st, const std::stringstream &memorystream ) :
+libwpg::StorageIO::StorageIO( libwpg::Storage* st, const std::stringstream &memorystream ) :
 	buf( memorystream.str(), std::ios::binary | std::ios::in )
 {
   storage = st;
-  result = Storage::Ok;
+  result = libwpg::Storage::Ok;
   
-  header = new Header();
-  dirtree = new DirTree();
-  bbat = new AllocTable();
-  sbat = new AllocTable();
+  header = new libwpg::Header();
+  dirtree = new libwpg::DirTree();
+  bbat = new libwpg::AllocTable();
+  sbat = new libwpg::AllocTable();
   
   bufsize = 0;
   bbat->blockSize = 1 << header->b_shift;
   sbat->blockSize = 1 << header->s_shift;
 }
 
-StorageIO::~StorageIO()
+libwpg::StorageIO::~StorageIO()
 {
   delete sbat;
   delete bbat;
   delete dirtree;
   delete header;
 
-  std::list<Stream*>::iterator it;
+  std::list<libwpg::Stream*>::iterator it;
   for( it = streams.begin(); it != streams.end(); ++it )
     delete *it;
 }
 
-bool StorageIO::isOle()
+bool libwpg::StorageIO::isOle()
 {
   load();
-  return (result == Storage::Ok);
+  return (result == libwpg::Storage::Ok);
 }
 
-void StorageIO::load()
+void libwpg::StorageIO::load()
 {
   unsigned char* buffer = 0;
   unsigned long buflen = 0;
@@ -631,13 +629,13 @@ void StorageIO::load()
   delete[] buffer;
 
   // check OLE magic id
-  result = Storage::NotOLE;
+  result = libwpg::Storage::NotOLE;
   for( unsigned i=0; i<8; i++ )
     if( header->id[i] != wpgole_magic[i] )
       return;
  
   // sanity checks
-  result = Storage::BadOLE;
+  result = libwpg::Storage::BadOLE;
   if( !header->valid() ) return;
   if( header->threshold != 4096 ) return;
 
@@ -704,28 +702,28 @@ void StorageIO::load()
   sb_blocks = bbat->follow( sb_start ); // small files
   
   // so far so good
-  result = Storage::Ok;
+  result = libwpg::Storage::Ok;
 }
 
-StreamIO* StorageIO::streamIO( const std::string& name )
+libwpg::StreamIO* libwpg::StorageIO::streamIO( const std::string& name )
 {
   load();
 
   // sanity check
-  if( !name.length() ) return (StreamIO*)0;
+  if( !name.length() ) return (libwpg::StreamIO*)0;
 
   // search in the entries
-  DirEntry* entry = dirtree->entry( name );
-  if( !entry ) return (StreamIO*)0;
-  if( entry->dir ) return (StreamIO*)0;
+  libwpg::DirEntry* entry = dirtree->entry( name );
+  if( !entry ) return (libwpg::StreamIO*)0;
+  if( entry->dir ) return (libwpg::StreamIO*)0;
 
-  StreamIO* result = new StreamIO( this, entry );
+  libwpg::StreamIO* result = new libwpg::StreamIO( this, entry );
   result->fullName = name;
   
   return result;
 }
 
-unsigned long StorageIO::loadBigBlocks( std::vector<unsigned long> blocks,
+unsigned long libwpg::StorageIO::loadBigBlocks( std::vector<unsigned long> blocks,
   unsigned char* data, unsigned long maxlen )
 {
   // sentinel
@@ -749,7 +747,7 @@ unsigned long StorageIO::loadBigBlocks( std::vector<unsigned long> blocks,
   return bytes;
 }
 
-unsigned long StorageIO::loadBigBlock( unsigned long block,
+unsigned long libwpg::StorageIO::loadBigBlock( unsigned long block,
   unsigned char* data, unsigned long maxlen )
 {
   // sentinel
@@ -764,7 +762,7 @@ unsigned long StorageIO::loadBigBlock( unsigned long block,
 }
 
 // return number of bytes which has been read
-unsigned long StorageIO::loadSmallBlocks( std::vector<unsigned long> blocks,
+unsigned long libwpg::StorageIO::loadSmallBlocks( std::vector<unsigned long> blocks,
   unsigned char* data, unsigned long maxlen )
 {
   // sentinel
@@ -801,7 +799,7 @@ unsigned long StorageIO::loadSmallBlocks( std::vector<unsigned long> blocks,
   return bytes;
 }
 
-unsigned long StorageIO::loadSmallBlock( unsigned long block,
+unsigned long libwpg::StorageIO::loadSmallBlock( unsigned long block,
   unsigned char* data, unsigned long maxlen )
 {
   // sentinel
@@ -817,7 +815,7 @@ unsigned long StorageIO::loadSmallBlock( unsigned long block,
 
 // =========== StreamIO ==========
 
-StreamIO::StreamIO( StorageIO* s, DirEntry* e)
+libwpg::StreamIO::StreamIO( libwpg::StorageIO* s, libwpg::DirEntry* e)
 {
   io = s;
   entry = e;
@@ -839,17 +837,17 @@ StreamIO::StreamIO( StorageIO* s, DirEntry* e)
 }
 
 // FIXME tell parent we're gone
-StreamIO::~StreamIO()
+libwpg::StreamIO::~StreamIO()
 {
   delete[] cache_data;  
 }
 
-unsigned long StreamIO::tell()
+unsigned long libwpg::StreamIO::tell()
 {
   return m_pos;
 }
 
-int StreamIO::getch()
+int libwpg::StreamIO::getch()
 {
   // past end-of-file ?
   if( m_pos > entry->size ) return -1;
@@ -868,7 +866,7 @@ int StreamIO::getch()
   return data;
 }
 
-unsigned long StreamIO::read( unsigned long pos, unsigned char* data, unsigned long maxlen )
+unsigned long libwpg::StreamIO::read( unsigned long pos, unsigned char* data, unsigned long maxlen )
 {
   // sanity checks
   if( !data ) return 0;
@@ -926,14 +924,14 @@ unsigned long StreamIO::read( unsigned long pos, unsigned char* data, unsigned l
   return totalbytes;
 }
 
-unsigned long StreamIO::read( unsigned char* data, unsigned long maxlen )
+unsigned long libwpg::StreamIO::read( unsigned char* data, unsigned long maxlen )
 {
   unsigned long bytes = read( tell(), data, maxlen );
   m_pos += bytes;
   return bytes;
 }
 
-void StreamIO::updateCache()
+void libwpg::StreamIO::updateCache()
 {
   // sanity check
   if( !cache_data ) return;
@@ -947,45 +945,45 @@ void StreamIO::updateCache()
 
 // =========== Storage ==========
 
-Storage::Storage( const std::stringstream &memorystream )
+libwpg::Storage::Storage( const std::stringstream &memorystream )
 {
   io = new StorageIO( this, memorystream );
 }
 
-Storage::~Storage()
+libwpg::Storage::~Storage()
 {
   delete io;
 }
 
-int Storage::result()
+int libwpg::Storage::result()
 {
   return io->result;
 }
 
-bool Storage::isOle()
+bool libwpg::Storage::isOle()
 {
   return io->isOle();
 }
 
 // =========== Stream ==========
 
-Stream::Stream( Storage* storage, const std::string& name )
+libwpg::Stream::Stream( libwpg::Storage* storage, const std::string& name )
 {
   io = storage->io->streamIO( name );
 }
 
 // FIXME tell parent we're gone
-Stream::~Stream()
+libwpg::Stream::~Stream()
 {
   delete io;
 }
 
-unsigned long Stream::size()
+unsigned long libwpg::Stream::size()
 {
   return io ? io->entry->size : 0;
 }
 
-unsigned long Stream::read( unsigned char* data, unsigned long maxlen )
+unsigned long libwpg::Stream::read( unsigned char* data, unsigned long maxlen )
 {
   return io ? io->read( data, maxlen ) : 0;
 }

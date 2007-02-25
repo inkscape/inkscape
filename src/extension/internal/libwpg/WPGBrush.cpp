@@ -1,5 +1,5 @@
 /* libwpg
- * Copyright (C) 2006 Ariya Hidayat (ariya@kde.org)
+ * Copyright (C) 2006 Fridrich Strba (fridrich.strba@bluewin.ch)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,28 +23,41 @@
  * Corel Corporation or Corel Corporation Limited."
  */
 
-#ifndef __WPGCOLOR_H__
-#define __WPGCOLOR_H__
+#include "WPGBrush.h"
 
-namespace libwpg
+libwpg::WPGBrush::WPGBrush(): 
+	style(Solid), 
+	foreColor(0,0,0), 
+	backColor(0xFF,0xFF,0xFF),
+	gradient() 
+{}
+
+libwpg::WPGBrush::WPGBrush(const WPGColor& fore): 
+	style(Solid), 
+	foreColor(fore),  
+	backColor(0xFF,0xFF,0xFF),
+	gradient() 
+{}
+
+libwpg::WPGBrush::WPGBrush(const WPGColor& fore, const WPGColor& back): 
+	style(Solid), 
+	foreColor(fore),  
+	backColor(back),
+	gradient()
+{}
+
+libwpg::WPGBrush::WPGBrush(const WPGBrush& brush):
+	style(brush.style),
+	foreColor(brush.foreColor),
+	backColor(brush.backColor),
+	gradient(brush.gradient)
+{}
+
+libwpg::WPGBrush& libwpg::WPGBrush::operator=(const libwpg::WPGBrush& brush)
 {
-
-class WPGColor
-{
-public:
-	int red, green, blue, alpha;
-	
-	WPGColor();
-	
-	WPGColor(int r, int g, int b);
-	
-	WPGColor(int r, int g, int b, int a);
-
-	WPGColor(const WPGColor& color);
-	
-	WPGColor& operator=(const WPGColor& color);
-};
-
-} // namespace libwpg
-
-#endif // __WPGCOLOR_H__
+	style = brush.style;
+	foreColor = brush.foreColor; 
+	backColor = brush.backColor; 
+	gradient = brush.gradient;
+	return *this; 
+}

@@ -26,6 +26,8 @@
 #ifndef __WPGRAPHICS_H__
 #define __WPGRAPHICS_H__
 
+#include "WPGString.h"
+
 namespace libwpg
 {
 
@@ -39,6 +41,8 @@ public:
 	static bool isSupported(WPGInputStream* input);
 	
 	static bool parse(WPGInputStream* input, WPGPaintInterface* painter);
+
+	static bool generateSVG(WPGInputStream* input, WPGString& output);
 };
 
 } // namespace libwpg

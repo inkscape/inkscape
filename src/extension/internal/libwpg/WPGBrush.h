@@ -50,40 +50,15 @@ public:
 	
 	WPGGradient gradient;
 
-	WPGBrush(): 
-		style(NoBrush), 
-		foreColor(0,0,0), 
-		backColor(0,0,0) 
-			{};
+	WPGBrush();
 
-	WPGBrush(const WPGColor& fore): 
-		style(Solid), 
-		foreColor(fore),  
-		backColor(0,0,0) 
-			{};
+	explicit WPGBrush(const WPGColor& fore);
 
-	WPGBrush(const WPGColor& fore, const WPGColor& back): 
-		style(Solid), 
-		foreColor(fore),  
-		backColor(back) 
-			{};
+	WPGBrush(const WPGColor& fore, const WPGColor& back);
 
-	WPGBrush(const WPGBrush& brush)
-	{
-		style = brush.style;
-		foreColor = brush.foreColor; 
-		backColor = brush.backColor; 
-		gradient = brush.gradient;
-	}
+	WPGBrush(const WPGBrush& brush);
 
-	WPGBrush& operator=(const WPGBrush& brush)
-	{
-		style = brush.style;
-		foreColor = brush.foreColor; 
-		backColor = brush.backColor; 
-		gradient = brush.gradient;
-		return *this; 
-	}
+	WPGBrush& operator=(const WPGBrush& brush);
 };
 
 } // namespace libwpg

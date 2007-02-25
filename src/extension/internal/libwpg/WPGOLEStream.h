@@ -53,7 +53,7 @@ public:
   /**
    * Constructs a storage with data.
    **/
-  Storage( const std::stringstream &memorystream );
+  explicit Storage( const std::stringstream &memorystream );
 
   /**
    * Destroys the storage.

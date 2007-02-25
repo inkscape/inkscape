@@ -36,17 +36,17 @@ class WPGFileStreamPrivate;
 class WPGFileStream: public WPGInputStream
 {
 public:
-	WPGFileStream(const char* filename);
+	explicit WPGFileStream(const char* filename);
 	~WPGFileStream();
 	
-	virtual unsigned char getc();
-	virtual long read(long n, char* buffer);
-	virtual long tell();
-	virtual void seek(long offset);
-	virtual bool atEnd();
+	unsigned char getc();
+	long read(long n, char* buffer);
+	long tell();
+	void seek(long offset);
+	bool atEnd();
 
-	virtual bool isOle();
-	virtual WPGInputStream *getWPGOleStream();
+	bool isOle();
+	WPGInputStream *getWPGOleStream();
 
 private:
 	WPGFileStreamPrivate* d;
@@ -62,14 +62,14 @@ public:
 	WPGMemoryStream(const char *data, const unsigned int dataSize);
 	~WPGMemoryStream();
 
-	virtual unsigned char getc();
-	virtual long read(long n, char* buffer);
-	virtual long tell();
-	virtual void seek(long offset);
-	virtual bool atEnd();
+	unsigned char getc();
+	long read(long n, char* buffer);
+	long tell();
+	void seek(long offset);
+	bool atEnd();
 
-	virtual bool isOle();
-	virtual WPGInputStream *getWPGOleStream();
+	bool isOle();
+	WPGInputStream *getWPGOleStream();
 
 private:
 	WPGMemoryStreamPrivate* d;
@@ -77,6 +77,6 @@ private:
 	WPGMemoryStream& operator=(const WPGMemoryStream&); // assignment is not allowed
 };
 
-} // namespace wpg
+} // namespace libwpg
 
 #endif // __WPGSTREAMIMPLEMENTATION_H__

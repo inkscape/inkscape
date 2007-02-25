@@ -1,5 +1,5 @@
 /* libwpg
- * Copyright (C) 2006 Ariya Hidayat (ariya@kde.org)
+ * Copyright (C) 2006 Fridrich Strba (fridrich.strba@bluewin.ch)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,28 +23,59 @@
  * Corel Corporation or Corel Corporation Limited."
  */
 
-#ifndef __WPGCOLOR_H__
-#define __WPGCOLOR_H__
+#include "WPGString.h"
+#include <string>
 
 namespace libwpg
 {
-
-class WPGColor
+class WPGStringPrivate
 {
 public:
-	int red, green, blue, alpha;
-	
-	WPGColor();
-	
-	WPGColor(int r, int g, int b);
-	
-	WPGColor(int r, int g, int b, int a);
-
-	WPGColor(const WPGColor& color);
-	
-	WPGColor& operator=(const WPGColor& color);
+	std::string str;
 };
 
 } // namespace libwpg
 
-#endif // __WPGCOLOR_H__
+libwpg::WPGString::WPGString() :
+	d(new WPGStringPrivate())
+{
+}
+
+
+libwpg::WPGString::WPGString(const char * str):
+	d(new WPGStringPrivate())
+{
+	d->str = str;
+}
+
+libwpg::WPGString::~WPGString()
+{
+	delete d;
+}
+
+const bool libwpg::WPGString::empty() const
+{
+	return d->str.empty();
+}
+
+const char * libwpg::WPGString::cstr() const
+{
+	return d->str.c_str();
+}
+
+const long libwpg::WPGString::length() const
+{
+	return d->str.length();
+}
+
+libwpg::WPGString& libwpg::WPGString::operator=(const libwpg::WPGString& str)
+{
+	d->str = str.d->str;
+	return *this;
+}
+
+libwpg::WPGString& libwpg::WPGString::operator=(const char * str)
+{
+	d->str = str;
+	return *this;
+}

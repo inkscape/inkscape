@@ -13,7 +13,9 @@ extension_internal_libwpg_libwpg_a_SOURCES =	\
         extension/internal/libwpg/WPG1Parser.h \
         extension/internal/libwpg/WPG2Parser.cpp \
         extension/internal/libwpg/WPG2Parser.h \
+        extension/internal/libwpg/WPGBrush.cpp \
         extension/internal/libwpg/WPGBrush.h \
+        extension/internal/libwpg/WPGColor.cpp \
         extension/internal/libwpg/WPGColor.h \
         extension/internal/libwpg/WPGGradient.cpp \
         extension/internal/libwpg/WPGGradient.h \
@@ -30,9 +32,14 @@ extension_internal_libwpg_libwpg_a_SOURCES =	\
         extension/internal/libwpg/WPGPoint.h \
         extension/internal/libwpg/WPGraphics.cpp \
         extension/internal/libwpg/WPGraphics.h \
+        extension/internal/libwpg/WPGRect.cpp \
         extension/internal/libwpg/WPGRect.h \
         extension/internal/libwpg/WPGStream.h \
         extension/internal/libwpg/WPGStreamImplementation.cpp \
         extension/internal/libwpg/WPGStreamImplementation.h \
+        extension/internal/libwpg/WPGString.cpp \
+        extension/internal/libwpg/WPGString.h \
+        extension/internal/libwpg/WPGSVGGenerator.cpp \
+        extension/internal/libwpg/WPGSVGGenerator.h \
         extension/internal/libwpg/WPGXParser.cpp \
         extension/internal/libwpg/WPGXParser.h

@@ -39,19 +39,16 @@ public:
 	double x2;
 	double y2;
 
-	WPGRect(): x1(0.0), y1(0.0), x2(0.0), y2(0.0) {}
+	WPGRect();
 
-	WPGRect(double xx1, double yy1, double xx2, double yy2): 
-	x1(xx1), y1(yy1), x2(xx2), y2(yy2) {}
+	WPGRect(double xx1, double yy1, double xx2, double yy2);
 
-	WPGRect(const WPGRect& rect)
-	{ x1 = rect.x1; y1 = rect.y1; x2 = rect.x2; y2 = rect.y2; }
+	WPGRect(const WPGRect& rect);
 
-	WPGRect& operator=(const WPGRect& rect)
-	{ x1 = rect.x1; y1 = rect.y1; x2 = rect.x2; y2 = rect.y2; return *this; }
+	WPGRect& operator=(const WPGRect& rect);
 
-	double width() const { return x2-x1; }
-	double height() const { return y2-y1; }
+	const double width() const;
+	const double height() const;
 };
 
 } // namespace libwpg

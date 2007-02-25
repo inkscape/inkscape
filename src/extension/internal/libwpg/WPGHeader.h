@@ -29,14 +29,12 @@
 
 #include "WPGStream.h"
 
-using namespace libwpg;
-
 class WPGHeader 
 {
 public:
 	WPGHeader();
 	
-	bool load(WPGInputStream *input);
+	bool load(libwpg::WPGInputStream *input);
 	
 	bool isSupported() const;
 	

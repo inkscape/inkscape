@@ -45,71 +45,69 @@ public:
 class WPGGradientPrivate
 {
 public:
-    double angle;
+	double angle;
 	std::vector<WPGGradientStop> gradientStops;
 };
 
 } // namespace libwpg
 
-using namespace libwpg;
-
-WPGGradient::WPGGradient()
+libwpg::WPGGradient::WPGGradient()
 {
 	d = new WPGGradientPrivate;
 	d->angle = 0.0;
 }
 
-WPGGradient::~WPGGradient()
+libwpg::WPGGradient::~WPGGradient()
 {
 	delete d;
 }
 
-WPGGradient::WPGGradient(const WPGGradient& g)
+libwpg::WPGGradient::WPGGradient(const libwpg::WPGGradient& g)
 {
-	d = new WPGGradientPrivate;
+	d = new libwpg::WPGGradientPrivate;
 	d->angle = g.d->angle;
 	d->gradientStops = g.d->gradientStops;
 }
 	
-WPGGradient& WPGGradient::operator=(const WPGGradient& g)
+libwpg::WPGGradient& libwpg::WPGGradient::operator=(const libwpg::WPGGradient& g)
 {
 	d->angle = g.d->angle;
 	d->gradientStops = g.d->gradientStops;
 	return *this;
 }
 
-double WPGGradient::angle() const
+double libwpg::WPGGradient::angle() const
 {
 	return d->angle;
 }
 
-void WPGGradient::setAngle(double a)
+void libwpg::WPGGradient::setAngle(double a)
 {
 	d->angle = a;
 }
 	
-unsigned WPGGradient::count() const
+unsigned libwpg::WPGGradient::count() const
 {
 	return d->gradientStops.size();
 }
 
-double WPGGradient::stopOffset(unsigned index) const
+double libwpg::WPGGradient::stopOffset(unsigned index) const
 {
 	return d->gradientStops[index].offset;
 }
 
-WPGColor WPGGradient::stopColor(unsigned index) const
+libwpg::WPGColor libwpg::WPGGradient::stopColor(unsigned index) const
 {
 	return d->gradientStops[index].color;
 }
 
-void WPGGradient::clear()
+void libwpg::WPGGradient::clear()
 {
 	d->gradientStops.clear();
 }
 
-void WPGGradient::addStop(double offset, const WPGColor& color)
+void libwpg::WPGGradient::addStop(double offset, const libwpg::WPGColor& color)
 {
-	WPGGradientStop stop(offset, color);
+	libwpg::WPGGradientStop stop(offset, color);
 	d->gradientStops.push_back(stop);
 }

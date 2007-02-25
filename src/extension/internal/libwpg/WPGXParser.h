@@ -34,13 +34,11 @@
 
 #include <map>
 
-using namespace libwpg;
-
 class WPGXParser
 {
 public:
-	WPGXParser(WPGInputStream *input, WPGPaintInterface* painter);
-	virtual ~WPGXParser() {}
+	WPGXParser(libwpg::WPGInputStream *input, libwpg::WPGPaintInterface* painter);
+	virtual ~WPGXParser() {};
 	virtual bool parse() = 0;
 	
 	unsigned char readU8();
@@ -52,9 +50,9 @@ public:
 	unsigned int readVariableLengthInteger();
 	
 protected:
-	WPGInputStream* m_input;
-	WPGPaintInterface* m_painter;
-	std::map<int,WPGColor> m_colorPalette;
+	libwpg::WPGInputStream* m_input;
+	libwpg::WPGPaintInterface* m_painter;
+	std::map<int,libwpg::WPGColor> m_colorPalette;
 };
 
 #endif // __WPGXPARSER_H__

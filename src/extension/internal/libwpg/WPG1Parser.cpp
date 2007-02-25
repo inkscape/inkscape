@@ -135,7 +135,7 @@ static const unsigned char defaultWPG1PaletteBlue[] = {
 };
 
 
-WPG1Parser::WPG1Parser(WPGInputStream *input, WPGPaintInterface* painter):
+WPG1Parser::WPG1Parser(libwpg::WPGInputStream *input, libwpg::WPGPaintInterface* painter):
 	WPGXParser(input, painter),
 	m_success(true), m_exit(false),
 	m_width(0), m_height(0)
@@ -175,24 +175,26 @@ bool WPG1Parser::parse()
 	m_exit = false;
 	
 	// default style
-	m_pen.foreColor = WPGColor(0,0,0);
-	m_pen.backColor = WPGColor(0,0,0);
+	m_pen.foreColor = libwpg::WPGColor(0,0,0);
+	m_pen.backColor = libwpg::WPGColor(0,0,0);
 	m_pen.width = 0.001;
 	m_pen.height = 0.001;
 	m_pen.solid = true;
-	m_pen.dashArray = WPGDashArray();
-	m_brush.foreColor = WPGColor(0,0,0);
-	m_brush.backColor = WPGColor(0,0,0);
+	m_pen.dashArray = libwpg::WPGDashArray();
+	m_brush.foreColor = libwpg::WPGColor(0,0,0);
+	m_brush.backColor = libwpg::WPGColor(0,0,0);
 	resetPalette();
 
 	while(!m_input->atEnd())
 	{
+#ifdef DEBUG
 		long recordPos = m_input->tell();
+#endif
 		int recordType = readU8();
 		int length = readVariableLengthInteger();
 		long nextPos = m_input->tell() + length;
 #if !defined(DEBUG)
-		(void)recordPos;
+		//(void)recordPos;
 #endif // !defined(DEBUG)
 
 		// search function to handler this record
@@ -237,10 +239,11 @@ bool WPG1Parser::parse()
 
 void WPG1Parser::handleStartWPG()
 {
-	unsigned char version = readU8();
-	unsigned char bitFlags = readU8();
-	(void)version;
-	(void)bitFlags;
+	// unsigned char version = readU8();
+	// unsigned char bitFlags = readU8();
+	m_input->seek(m_input->tell() + 2);
+	//(void)version;
+	//(void)bitFlags;
 	m_width = readU16();
 	m_height = readU16();
 
@@ -265,9 +268,9 @@ void WPG1Parser::handleColormap()
 	unsigned numEntries = readU16();
 
 	WPG_DEBUG_MSG(("Colormap\n"));
-	for(int i = 0; i < static_cast<int>(numEntries); i++)
+	for(unsigned int i = 0; i < numEntries; i++)
 	{
-		WPGColor color;
+		libwpg::WPGColor color;
 		color.red = readU8();
 		color.green = readU8();
 		color.blue = readU8();
@@ -282,9 +285,9 @@ void WPG1Parser::handleFillAttributes()
 	unsigned char color = readU8();
 
 	if(style == 0)
-		m_brush.style = WPGBrush::NoBrush;
+		m_brush.style = libwpg::WPGBrush::NoBrush;
 	if(style == 1)
-		m_brush.style = WPGBrush::Solid;
+		m_brush.style = libwpg::WPGBrush::Solid;
 
 	m_brush.foreColor = m_colorPalette[color];
 
@@ -316,9 +319,9 @@ void WPG1Parser::handleLine()
 	int ex = readS16();
 	int ey = readS16();
 
-	WPGPointArray points;
-	points.add(WPGPoint((double)sx/1200.0, (double)(m_height-sy)/1200.0));
-	points.add(WPGPoint((double)ex/1200.0, (double)(m_height-ey)/1200.0));
+	libwpg::WPGPointArray points;
+	points.add(libwpg::WPGPoint((double)sx/1200.0, (double)(m_height-sy)/1200.0));
+	points.add(libwpg::WPGPoint((double)ex/1200.0, (double)(m_height-ey)/1200.0));
 
 	m_painter->setBrush(m_brush);
 	m_painter->setPen(m_pen);
@@ -333,15 +336,15 @@ void WPG1Parser::handlePolyline()
 {
 	unsigned int count = readU16();
 
-	WPGPointArray points;
+	libwpg::WPGPointArray points;
 	for(unsigned int i = 0; i < count; i++ )
 	{
 		long x = readS16();
 		long y = readS16();
-		points.add(WPGPoint((double)x/1200.0, (double)(m_height-y)/1200.0));
+		points.add(libwpg::WPGPoint((double)x/1200.0, (double)(m_height-y)/1200.0));
 	}
 
-	m_painter->setBrush(WPGBrush()); // not filled
+	m_painter->setBrush(libwpg::WPGBrush()); // not filled
 	m_painter->setPen(m_pen);
 	m_painter->drawPolygon(points);
 
@@ -355,7 +358,7 @@ void WPG1Parser::handleRectangle()
 	int w = readS16();
 	int h = readS16();
 
-	WPGRect rect;
+	libwpg::WPGRect rect;
 	rect.x1 = (double)x/1200.0;
 	rect.y1 = (double)(m_height-y)/1200.0;
 	rect.x2 = rect.x1 + (double)w/1200.0;
@@ -375,12 +378,12 @@ void WPG1Parser::handlePolygon()
 {
 	unsigned int count = readU16();
 
-	WPGPointArray points;
+	libwpg::WPGPointArray points;
 	for(unsigned int i = 0; i < count; i++ )
 	{
 		long x = readS16();
 		long y = readS16();
-		points.add(WPGPoint((double)x/1200.0, (double)(m_height-y)/1200.0));
+		points.add(libwpg::WPGPoint((double)x/1200.0, (double)(m_height-y)/1200.0));
 	}
 
 	m_painter->setBrush(m_brush);
@@ -397,7 +400,7 @@ void WPG1Parser::handleEllipse()
 	int rx = readS16();
 	int ry = readS16();
 
-	WPGPoint center;
+	libwpg::WPGPoint center;
 	center.x = (double)cx/1200.0;
 	center.y = (double)(m_height-cy)/1200.0;
 
@@ -419,7 +422,7 @@ void WPG1Parser::resetPalette()
 	m_colorPalette.clear();
 	for (int i=0; i<256; i++)
 	{
-		WPGColor color;
+		libwpg::WPGColor color;
 		color.red = defaultWPG1PaletteRed[i];
 		color.green = defaultWPG1PaletteGreen[i];
 		color.blue = defaultWPG1PaletteBlue[i];

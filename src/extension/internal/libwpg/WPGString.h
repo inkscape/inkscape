@@ -1,5 +1,5 @@
 /* libwpg
- * Copyright (C) 2006 Ariya Hidayat (ariya@kde.org)
+ * Copyright (C) 2006 Fridrich Strba (fridrich.strba@bluewin.ch)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,28 +23,32 @@
  * Corel Corporation or Corel Corporation Limited."
  */
 
-#ifndef __WPGCOLOR_H__
-#define __WPGCOLOR_H__
+#ifndef __WPGSTRING_H__
+#define __WPGSTRING_H__
 
 namespace libwpg
 {
-
-class WPGColor
+class WPGStringPrivate;
+class WPGString
 {
 public:
-	int red, green, blue, alpha;
+	WPGString();
+	WPGString(const char * str);
 	
-	WPGColor();
-	
-	WPGColor(int r, int g, int b);
-	
-	WPGColor(int r, int g, int b, int a);
+	~WPGString();
 
-	WPGColor(const WPGColor& color);
-	
-	WPGColor& operator=(const WPGColor& color);
+	const bool empty() const;
+
+	const char * cstr() const;
+
+	const long length() const;
+
+	WPGString& operator=(const WPGString& str);
+	WPGString& operator=(const char * str);
+private:
+	WPGStringPrivate * d;
 };
 
 } // namespace libwpg
 
-#endif // __WPGCOLOR_H__
+#endif // __WPGSTRING_H__

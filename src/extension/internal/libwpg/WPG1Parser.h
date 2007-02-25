@@ -35,7 +35,7 @@
 class WPG1Parser : public WPGXParser
 {
 public:
-	WPG1Parser(WPGInputStream *input, WPGPaintInterface* painter);
+	WPG1Parser(libwpg::WPGInputStream *input, libwpg::WPGPaintInterface* painter);
 	bool parse();
 
 private:
@@ -59,8 +59,8 @@ private:
 	bool m_exit;
 	int m_width;
 	int m_height;
-	WPGPen m_pen;
-	WPGBrush m_brush;
+	libwpg::WPGPen m_pen;
+	libwpg::WPGBrush m_brush;
 };
 
 #endif // __WPG1PARSER_H__

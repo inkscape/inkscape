@@ -30,10 +30,16 @@
 #include "WPG1Parser.h"
 #include "WPG2Parser.h"
 #include "libwpg_utils.h"
+#include "WPGSVGGenerator.h"
+#include <sstream>
 
-using namespace libwpg;
-
-bool WPGraphics::isSupported(WPGInputStream* input)
+/**
+Analyzes the content of an input stream to see if it can be parsed
+\param input The input stream
+\return A value that indicates whether the content from the input
+stream is a WordPerfect Graphics that libwpg is able to parse
+*/
+bool libwpg::WPGraphics::isSupported(libwpg::WPGInputStream* input)
 {
 	WPGHeader header;
 	if(!header.load(input))
@@ -42,7 +48,15 @@ bool WPGraphics::isSupported(WPGInputStream* input)
 	return header.isSupported();
 }
 
-bool WPGraphics::parse(WPGInputStream* input, WPGPaintInterface* painter)
+/**
+Parses the input stream content. It will make callbacks to the functions provided by a
+WPGPaintInterface class implementation when needed. This is often commonly called the
+'main parsing routine'.
+\param input The input stream
+\param painter A WPGPainterInterface implementation
+\return A value that indicates whether the parsing was successful
+*/
+bool libwpg::WPGraphics::parse(libwpg::WPGInputStream* input, libwpg::WPGPaintInterface* painter)
 {
 	WPGXParser *parser = 0;
 	
@@ -59,25 +73,45 @@ bool WPGraphics::parse(WPGInputStream* input, WPGPaintInterface* painter)
 	
 	// seek to the start of document
 	input->seek(header.startOfDocument());
-	
+
+	bool retval;
 	switch (header.majorVersion()) {
 		case 0x01: // WPG1
 			WPG_DEBUG_MSG(("Parsing WPG1\n"));
 			parser = new WPG1Parser(input, painter);
-			parser->parse();
+			retval = parser->parse();
 			break;
 		case 0x02: // WPG2
 			WPG_DEBUG_MSG(("Parsing WPG2\n"));
 			parser = new WPG2Parser(input, painter);
-			parser->parse();
+			retval = parser->parse();
 			break;
 		default: // other :-)
 			WPG_DEBUG_MSG(("Unknown format\n"));
-			break;
+			return false;
 	}
 	
-	delete parser;
+	if (parser)
+		delete parser;
 	
-	return false;
+	return retval;
 }
- 
+
+/**
+Parses the input stream content and generates a valid Scalable Vector Graphics
+Provided as a convenience function for applications that support SVG internally.
+\param input The input stream
+\param output The output string whose content is the resulting SVG
+\return A value that indicates whether the SVG generation was successful.
+*/
+bool libwpg::WPGraphics::generateSVG(libwpg::WPGInputStream* input, libwpg::WPGString& output)
+{
+	std::ostringstream tmpOutputStream;
+	libwpg::WPGSVGGenerator generator(tmpOutputStream);
+	bool result;
+	if (result = libwpg::WPGraphics::parse(input, &generator))
+		output = WPGString(tmpOutputStream.str().c_str());
+	else
+		output = WPGString("");
+	return result;
+}

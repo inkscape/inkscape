@@ -39,73 +39,74 @@ public:
 
 } // namespace libwpg
 
-using namespace libwpg;
+libwpg::WPGPathElement::WPGPathElement():
+	type(NullElement),
+	point(WPGPoint()),
+	extra1(WPGPoint()),
+	extra2(WPGPoint())
+{}
 
-WPGPath::WPGPath()
-{
-	d = new WPGPathPrivate;
-	closed = true;
-}
+libwpg::WPGPath::WPGPath(): closed(true), d(new libwpg::WPGPathPrivate())
+{}
 	
-WPGPath::~WPGPath()
+libwpg::WPGPath::~WPGPath()
 {
 	delete d;
 }
 	
-WPGPath::WPGPath(const WPGPath& path)
+libwpg::WPGPath::WPGPath(const libwpg::WPGPath& path): closed(path.closed), d(new libwpg::WPGPathPrivate())
 {
-	d = new WPGPathPrivate;
 	d->elements = path.d->elements;
 }
 	
-WPGPath& WPGPath::operator=(const WPGPath& path)
+libwpg::WPGPath& libwpg::WPGPath::operator=(const libwpg::WPGPath& path)
 {
 	d->elements = path.d->elements;
 	return *this;
 }
 	
-unsigned WPGPath::count() const
+unsigned libwpg::WPGPath::count() const
 {
 	return d->elements.size();
 }
 	
-WPGPathElement WPGPath::element(unsigned index) const
+libwpg::WPGPathElement libwpg::WPGPath::element(unsigned index) const
 {
 	return d->elements[index];
 }
 	
-void WPGPath::moveTo(const WPGPoint& point)
+void libwpg::WPGPath::moveTo(const libwpg::WPGPoint& point)
 {
-	WPGPathElement element;
-	element.type = WPGPathElement::MoveToElement;
+	libwpg::WPGPathElement element;
+	element.type = libwpg::WPGPathElement::MoveToElement;
 	element.point = point;
 	addElement(element);
 }
 	
-void WPGPath::lineTo(const WPGPoint& point)
+void libwpg::WPGPath::lineTo(const libwpg::WPGPoint& point)
 {
-	WPGPathElement element;
-	element.type = WPGPathElement::LineToElement;
+	libwpg::WPGPathElement element;
+	element.type = libwpg::WPGPathElement::LineToElement;
 	element.point = point;
 	addElement(element);
 }
 	
-void WPGPath::curveTo(const WPGPoint& c1, const WPGPoint& c2, const WPGPoint& endPoint)
+void libwpg::WPGPath::curveTo(const libwpg::WPGPoint& c1, const libwpg::WPGPoint& c2, const libwpg::WPGPoint& endPoint)
 {
-	WPGPathElement element;
-	element.type = WPGPathElement::CurveToElement;
+	libwpg::WPGPathElement element;
+	element.type = libwpg::WPGPathElement::CurveToElement;
 	element.point = endPoint;
 	element.extra1 = c1;
 	element.extra2 = c2;
 	addElement(element);
 }
 	
-void WPGPath::addElement(const WPGPathElement& element)
+void libwpg::WPGPath::addElement(const libwpg::WPGPathElement& element)
 {
 	d->elements.push_back(element);
 }
 
-void WPGPath::append(const WPGPath& path)
+void libwpg::WPGPath::append(const libwpg::WPGPath& path)
 {
 	for(unsigned i = 0; i < path.count(); i++)
 		addElement(path.element(i));

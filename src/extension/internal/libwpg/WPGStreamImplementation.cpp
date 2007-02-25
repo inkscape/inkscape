@@ -25,7 +25,7 @@
 
 #include "WPGStreamImplementation.h"
 #include "WPGOLEStream.h"
-#include "libwpg_utils.h"
+#include "libwpg.h"
 
 #include <fstream>
 #include <sstream>
@@ -54,37 +54,36 @@ public:
 
 } // namespace libwpg
 
-using namespace libwpg;
-
-WPGFileStreamPrivate::WPGFileStreamPrivate() :
+libwpg::WPGFileStreamPrivate::WPGFileStreamPrivate() :
+	file(),
 	buffer(std::ios::binary | std::ios::in | std::ios::out)
 {
 }
 
-WPGMemoryStreamPrivate::WPGMemoryStreamPrivate(const std::string str) :
+libwpg::WPGMemoryStreamPrivate::WPGMemoryStreamPrivate(const std::string str) :
 	buffer(str, std::ios::binary | std::ios::in)
 {
 }
 
 
-WPGFileStream::WPGFileStream(const char* filename)
+libwpg::WPGFileStream::WPGFileStream(const char* filename)
 {
-	d = new WPGFileStreamPrivate;
+	d = new libwpg::WPGFileStreamPrivate;
 	
 	d->file.open( filename, std::ios::binary | std::ios::in );
 }
 
-WPGFileStream::~WPGFileStream()
+libwpg::WPGFileStream::~WPGFileStream()
 {
 	delete d;
 }
 
-unsigned char WPGFileStream::getc()
+unsigned char libwpg::WPGFileStream::getc()
 {
 	return d->file.get();
 }
 
-long WPGFileStream::read(long nbytes, char* buffer)
+long libwpg::WPGFileStream::read(long nbytes, char* buffer)
 {
 	long nread = 0;
 	
@@ -98,23 +97,23 @@ long WPGFileStream::read(long nbytes, char* buffer)
 	return nread;
 }
 
-long WPGFileStream::tell()
+long libwpg::WPGFileStream::tell()
 {
 	return d->file.good() ? (long)d->file.tellg() : -1L;
 }
 
-void WPGFileStream::seek(long offset)
+void libwpg::WPGFileStream::seek(long offset)
 {
 	if(d->file.good())
 		d->file.seekg(offset);
 }
 
-bool WPGFileStream::atEnd()
+bool libwpg::WPGFileStream::atEnd()
 {
 	return d->file.eof();
 }
 
-bool WPGFileStream::isOle()
+bool libwpg::WPGFileStream::isOle()
 {
 	if (d->buffer.str().empty())
 		d->buffer << d->file.rdbuf();
@@ -124,17 +123,17 @@ bool WPGFileStream::isOle()
 	return false;
 }
 
-WPGInputStream* WPGFileStream::getWPGOleStream()
+libwpg::WPGInputStream* libwpg::WPGFileStream::getWPGOleStream()
 {
 	if (d->buffer.str().empty())
 		d->buffer << d->file.rdbuf();
-	Storage *tmpStorage = new Storage( d->buffer );
-	Stream tmpStream( tmpStorage, "PerfectOffice_MAIN" );
+	libwpg::Storage *tmpStorage = new libwpg::Storage( d->buffer );
+	libwpg::Stream tmpStream( tmpStorage, "PerfectOffice_MAIN" );
 	if (!tmpStorage || (tmpStorage->result() != Storage::Ok)  || !tmpStream.size())
 	{
 		if (tmpStorage)
 			delete tmpStorage;
-		return (WPGInputStream*)0;
+		return (libwpg::WPGInputStream*)0;
 	}
 	
 	unsigned char *tmpBuffer = new unsigned char[tmpStream.size()];
@@ -148,30 +147,30 @@ WPGInputStream* WPGFileStream::getWPGOleStream()
 	{
 		if (tmpStorage)
 			delete tmpStorage;
-		return (WPGInputStream*)0;
+		return (libwpg::WPGInputStream*)0;
 	}
 
 	delete tmpStorage;
-	return new WPGMemoryStream((const char *)tmpBuffer, tmpLength);
+	return new libwpg::WPGMemoryStream((const char *)tmpBuffer, tmpLength);
 }
 
 
-WPGMemoryStream::WPGMemoryStream(const char *data, const unsigned int dataSize)
+libwpg::WPGMemoryStream::WPGMemoryStream(const char *data, const unsigned int dataSize)
 {
-	d = new WPGMemoryStreamPrivate(std::string(data, dataSize));
+	d = new libwpg::WPGMemoryStreamPrivate(std::string(data, dataSize));
 }
 
-WPGMemoryStream::~WPGMemoryStream()
+libwpg::WPGMemoryStream::~WPGMemoryStream()
 {
 	delete d;
 }
 
-unsigned char WPGMemoryStream::getc()
+unsigned char libwpg::WPGMemoryStream::getc()
 {
 	return d->buffer.get();
 }
 
-long WPGMemoryStream::read(long nbytes, char* buffer)
+long libwpg::WPGMemoryStream::read(long nbytes, char* buffer)
 {
 	long nread = 0;
 	
@@ -185,39 +184,39 @@ long WPGMemoryStream::read(long nbytes, char* buffer)
 	return nread;
 }
 
-long WPGMemoryStream::tell()
+long libwpg::WPGMemoryStream::tell()
 {
 	return d->buffer.good() ? (long)d->buffer.tellg() : -1L;
 }
 
-void WPGMemoryStream::seek(long offset)
+void libwpg::WPGMemoryStream::seek(long offset)
 {
 	if(d->buffer.good())
 		d->buffer.seekg(offset);
 }
 
-bool WPGMemoryStream::atEnd()
+bool libwpg::WPGMemoryStream::atEnd()
 {
 	return d->buffer.eof();
 }
 
-bool WPGMemoryStream::isOle()
+bool libwpg::WPGMemoryStream::isOle()
 {
-	Storage tmpStorage( d->buffer );
+	libwpg::Storage tmpStorage( d->buffer );
 	if (tmpStorage.isOle())
 		return true;
 	return false;
 }
 
-WPGInputStream* WPGMemoryStream::getWPGOleStream()
+libwpg::WPGInputStream* libwpg::WPGMemoryStream::getWPGOleStream()
 {
-	Storage *tmpStorage = new Storage( d->buffer );
-	Stream tmpStream( tmpStorage, "PerfectOffice_MAIN" );
-	if (!tmpStorage || (tmpStorage->result() != Storage::Ok)  || !tmpStream.size())
+	libwpg::Storage *tmpStorage = new libwpg::Storage( d->buffer );
+	libwpg::Stream tmpStream( tmpStorage, "PerfectOffice_MAIN" );
+	if (!tmpStorage || (tmpStorage->result() != libwpg::Storage::Ok)  || !tmpStream.size())
 	{
 		if (tmpStorage)
 			delete tmpStorage;
-		return (WPGInputStream*)0;
+		return (libwpg::WPGInputStream*)0;
 	}
 	
 	unsigned char *tmpBuffer = new unsigned char[tmpStream.size()];
@@ -231,9 +230,9 @@ WPGInputStream* WPGMemoryStream::getWPGOleStream()
 	{
 		if (tmpStorage)
 			delete tmpStorage;
-		return (WPGInputStream*)0;
+		return (libwpg::WPGInputStream*)0;
 	}
 
 	delete tmpStorage;
-	return new WPGMemoryStream((const char *)tmpBuffer, tmpLength);
+	return new libwpg::WPGMemoryStream((const char *)tmpBuffer, tmpLength);
 }

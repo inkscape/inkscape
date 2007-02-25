@@ -58,50 +58,12 @@ public:
 	bool solid;
 	WPGDashArray dashArray;
 
-	WPGPen(): 
-		foreColor(0,0,0), 
-		backColor(0,0,0), 
-		width(0), 
-		height(0), 
-		solid(true) 
-		{};
+	WPGPen(); 
+	WPGPen(const WPGColor& fore);
+	WPGPen(const WPGColor& fore, const WPGColor& back);
+	WPGPen(const WPGPen& pen);
 
-	WPGPen(const WPGColor& fore): 
-		foreColor(fore), 
-		backColor(0,0,0), 
-		width(0), 
-		height(0), 
-		solid(true) 
-		{};
-
-	WPGPen(const WPGColor& fore, const WPGColor& back): 
-		foreColor(fore),  
-		backColor(back), 
-		width(0), 
-		height(0), 
-		solid(true) 
-		{};
-
-	WPGPen(const WPGPen& pen)
-	{ 
-		foreColor = pen.foreColor; 
-		backColor = pen.backColor;
-		width = pen.width;
-		height = pen.height;
-		solid = pen.solid;
-		dashArray = pen.dashArray;
-	}
-
-	WPGPen& operator=(const WPGPen& pen)
-	{ 
-		foreColor = pen.foreColor; 
-		backColor = pen.backColor;
-		width = pen.width;
-		height = pen.height;
-		solid = pen.solid;
-		dashArray = pen.dashArray;
-		return *this;
-	}
+	WPGPen& operator=(const WPGPen& pen);
 	
 	static WPGPen NoPen;
 };

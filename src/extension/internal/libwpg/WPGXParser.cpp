@@ -27,9 +27,7 @@
 
 #include "WPGXParser.h"
 
-using namespace libwpg;
-
-WPGXParser::WPGXParser(WPGInputStream *input, WPGPaintInterface* painter):
+WPGXParser::WPGXParser(libwpg::WPGInputStream *input, libwpg::WPGPaintInterface* painter):
   m_input(input), m_painter(painter)
 {
 }

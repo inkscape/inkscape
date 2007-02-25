@@ -46,7 +46,7 @@
 #include "document.h"
 
 #include "libwpg/libwpg.h"
-#include "libwpg/WPGStreamImplementation.h"
+#include "libwpg/WPGSVGGenerator.h"
 
 using namespace libwpg;
 
@@ -54,257 +54,6 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
-class InkscapePainter : public libwpg::WPGPaintInterface {
-public:
-	InkscapePainter();
-
-	void startDocument(double imageWidth, double imageHeight);
-	void endDocument();
-	void startLayer(unsigned int id);
-	void endLayer(unsigned int id);
-
-	void setPen(const WPGPen& pen);
-	void setBrush(const WPGBrush& brush);
-	void setFillRule(FillRule rule);
-
-	void drawRectangle(const WPGRect& rect, double rx, double ry);
-	void drawEllipse(const WPGPoint& center, double rx, double ry);
-	void drawPolygon(const WPGPointArray& vertices);
-	void drawPath(const WPGPath& path);
-
-private:
-	WPGPen m_pen;
-	WPGBrush m_brush;
-	FillRule m_fillRule;
-	int m_gradientIndex;
-	void writeStyle();
-        void printf (char * fmt, ...) {
-            va_list args;
-            va_start(args, fmt);
-            gchar * buf = g_strdup_vprintf(fmt, args);
-            va_end(args);
-            if (buf) {
-                document += buf;
-                g_free(buf);
-            }
-        }
-
-public:
-        Glib::ustring document;
-};
-
-InkscapePainter::InkscapePainter(): m_fillRule(AlternatingFill), m_gradientIndex(1)
-{
-}
-
-void InkscapePainter::startDocument(double width, double height) 
-{
-        document = "";
-	printf("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
-	printf("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"");
-	printf(" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n");
-
-//	printf("<!-- Created with wpg2svg/libwpg %s -->\n", LIBWPG_VERSION_STRING);
-
-	printf("<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" ");
-	printf("xmlns:xlink=\"http://www.w3.org/1999/xlink\" ");	
-	printf("width=\"%g\" height=\"%f\" >\n", 72*width, 72*height);
-	
-	m_gradientIndex = 1;
-}
-
-void InkscapePainter::endDocument()
-{
-	printf("</svg>\n");
-}
-
-void InkscapePainter::setPen(const WPGPen& pen)
-{
-	m_pen = pen;
-}
-
-void InkscapePainter::setBrush(const WPGBrush& brush)
-{
-	m_brush = brush;
-	
-	if(m_brush.style == WPGBrush::Gradient)
-	{
-		double angle = m_brush.gradient.angle();
-
-		printf("<defs>\n");
-		printf("  <linearGradient id=\"grad%d\" >\n", m_gradientIndex++);
-		for(unsigned c = 0; c < m_brush.gradient.count(); c++)
-		{
-			// round to nearest percentage
-			int ofs = (int)(100.0*m_brush.gradient.stopOffset(c)+0.5);
-
-			WPGColor color = m_brush.gradient.stopColor(c);
-			printf("    <stop offset=\"%d%%\" stop-color=\"#%02x%02x%02x\" />\n",
-				ofs, color.red, color.green, color.blue);
-		}
-		printf("  </linearGradient>\n");
-		
-		// not a simple horizontal gradient
-		if(angle != -90.0)
-		{
-			printf("  <linearGradient xlink:href=\"#grad%d\"", m_gradientIndex-1);
-			printf(" id=\"grad%d\" ", m_gradientIndex++);
-			printf("x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\" "); 
-			printf("gradientTransform=\"rotate(%f)\" ", angle);
-			printf("gradientUnits=\"objectBoundingBox\" >\n");
-			printf("  </linearGradient>\n");
-		}
-		
-		printf("</defs>\n");
-	}
-}
-
-void InkscapePainter::setFillRule(FillRule rule)
-{
-	m_fillRule = rule;
-}
-
-void InkscapePainter::startLayer(unsigned int id)
-{
-	printf("<g id=\"Layer%d\" >\n", id);
-}
-
-void InkscapePainter::endLayer(unsigned int)
-{
-	printf("</g>\n");
-}
-
-void InkscapePainter::drawRectangle(const WPGRect& rect, double rx, double ry)
-{
-	printf("<rect ");
-	printf("x=\"%f\" y=\"%f\" ", 72*rect.x1, 72*rect.y1);
-	printf("width=\"%f\" height=\"%f\" ", 72*rect.width(), 72*rect.height());
-	if((rx !=0) || (ry !=0))
-		printf("rx=\"%f\" ry=\"%f\" ", 72*rx, 72*ry);
-	writeStyle();
-	printf("/>\n");
-}
-
-void InkscapePainter::drawEllipse(const WPGPoint& center, double rx, double ry)
-{
-	printf("<ellipse ");
-	printf("cx=\"%f\" cy=\"%f\" ", 72*center.x, 72*center.y);
-	printf("rx=\"%f\" ry=\"%f\" ", 72*rx, 72*ry);
-	writeStyle();
-	printf("/>\n");
-}
-
-void InkscapePainter::drawPolygon(const WPGPointArray& vertices)
-{
-	if(vertices.count() < 2)
-		return;
-
-	if(vertices.count() == 2)
-	{
-		const WPGPoint& p1 = vertices[0];
-		const WPGPoint& p2 = vertices[1];
-		printf("<line ");
-		printf("x1=\"%f\"  y1=\"%f\" ", 72*p1.x, 72*p1.y);
-		printf("x2=\"%f\"  y2=\"%f\"\n", 72*p2.x, 72*p2.y);
-		writeStyle();
-		printf("/>\n");
-	}
-	else
-	{
-		printf("<polyline ");
-		printf("points=\"");
-		for(unsigned i = 0; i < vertices.count(); i++)
-		{
-			printf("%f %f", 72*vertices[i].x, 72*vertices[i].y);
-			if(i < vertices.count()-1) printf(", ");
-		}
-		printf("\"\n");
-		writeStyle();
-		printf("/>\n");
-	}
-}
-
-void InkscapePainter::drawPath(const WPGPath& path)
-{
-	printf("<path d=\"");
-	for(unsigned i = 0; i < path.count(); i++)
-	{
-		WPGPathElement element = path.element(i);
-		WPGPoint point = element.point;
-		switch(element.type)
-		{
-			case WPGPathElement::MoveToElement:
-				printf("\n M%f,%f ", 72*point.x, 72*point.y );
-				break;
-				
-			case WPGPathElement::LineToElement:
-				printf("\n L%f,%f ", 72*point.x, 72*point.y );
-				break;
-			
-			case WPGPathElement::CurveToElement:
-				printf("C");
-				printf("%f,%f ", 72*element.extra1.x, 72*element.extra1.y );
-				printf("%f,%f ", 72*element.extra2.x, 72*element.extra2.y );
-				printf("%f,%f", 72*point.x, 72*point.y );
-				break;
-			
-			default:
-				break;
-		}
-	}
-	
-	if(path.closed)
-		printf("Z");
-
-	printf("\" \n");
-	writeStyle();
-	printf("/>\n");
-}
-
-// create "style" attribute based on current pen and brush
-void InkscapePainter::writeStyle()
-{
-	printf("style=\"");
-
-	const WPGColor& color = m_pen.foreColor;
-	printf("stroke-width: %f; ", 72*m_pen.width);
-	if(m_pen.width > 0.0)
-	{
-		printf("stroke: rgb(%d,%d,%d); ", color.red, color.green, color.blue);
-		if(color.alpha != 0)
-			// alpha = 0 means opacity = 1.0, alpha = 256 means opacity = 0
-			printf("stroke-opacity: %f; ", 1.0-(color.alpha/256.0));
-	}
-
-	if(!m_pen.solid)
-	{
-		printf("stroke-dasharray: ");
-		for(unsigned i = 0; i < m_pen.dashArray.count(); i++)
-		{
-			printf("%f", 72*m_pen.dashArray.at(i)*m_pen.width);
-			if(i < m_pen.dashArray.count()-1) 
-				printf(", ");
-		}
-		printf("; ");
-	}
-	
-	if(m_brush.style == WPGBrush::NoBrush)
-		printf("fill: none; ");
-
-	if(m_fillRule == InkscapePainter::WindingFill)
-		printf("fill-rule: nonzero; ");
-	else if(m_fillRule == InkscapePainter::AlternatingFill)
-		printf("fill-rule: evenodd; ");
-
-	if(m_brush.style == WPGBrush::Gradient)
-		printf("fill: url(#grad%d); ", m_gradientIndex-1);
-
-	if(m_brush.style == WPGBrush::Solid)
-		printf("fill: rgb(%d,%d,%d); ", m_brush.foreColor.red, 
-			m_brush.foreColor.green, m_brush.foreColor.blue);
-
-	printf("\""); // style
-}
 
 SPDocument *
 WpgInput::open(Inkscape::Extension::Input * mod, const gchar * uri) {
@@ -321,15 +70,21 @@ WpgInput::open(Inkscape::Extension::Input * mod, const gchar * uri) {
         //! \todo Dialog here
         // fprintf(stderr, "ERROR: Unsupported file format (unsupported version) or file is encrypted!\n");
         // printf("I'm giving up not supported\n");
+        delete input;
         return NULL;
     }
 
-    InkscapePainter painter;
-    WPGraphics::parse(input, &painter);
+    libwpg::WPGString output;
+    if (!libwpg::WPGraphics::generateSVG(input, output)) {
+        delete input;
+        return NULL;
+    }
 
     //printf("I've got a doc: \n%s", painter.document.c_str());
 
-    return sp_document_new_from_mem(painter.document.c_str(), strlen(painter.document.c_str()), TRUE);
+    SPDocument * doc = sp_document_new_from_mem(output.cstr(), strlen(output.cstr()), TRUE);
+    delete input;
+    return doc;
 }
 
 #include "clear-n_.h"

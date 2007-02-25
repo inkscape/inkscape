@@ -201,7 +201,7 @@ public:
 			{}
 };
 
-WPG2Parser::WPG2Parser(WPGInputStream *input, WPGPaintInterface* painter):
+WPG2Parser::WPG2Parser(libwpg::WPGInputStream *input, libwpg::WPGPaintInterface* painter):
 	WPGXParser(input, painter),
 	m_success(true), m_exit(false),
 	m_xres(1200), m_yres(1200),
@@ -301,27 +301,31 @@ bool WPG2Parser::parse()
 	m_compoundClosed = false;
 	
 	// default style
-	m_pen.foreColor = WPGColor(0,0,0);
-	m_pen.backColor = WPGColor(0,0,0);
+	m_pen.foreColor = libwpg::WPGColor(0,0,0);
+	m_pen.backColor = libwpg::WPGColor(0,0,0);
 	m_pen.width = 0.001;
 	m_pen.height = 0.001;
 	m_pen.solid = true;
-	m_pen.dashArray = WPGDashArray();
-	m_brush.foreColor = WPGColor(0,0,0);
-	m_brush.backColor = WPGColor(0,0,0);
+	m_pen.dashArray = libwpg::WPGDashArray();
+	m_brush.foreColor = libwpg::WPGColor(0,0,0);
+	m_brush.backColor = libwpg::WPGColor(0,0,0);
 	resetPalette();
 
 	while(!m_input->atEnd())
 	{
+#ifdef DEBUG
 		long recordPos = m_input->tell();
 		int recordClass = readU8();
+#else
+		readU8();
+#endif
 		int recordType = readU8();
 		int extension = readVariableLengthInteger();
 		int length = readVariableLengthInteger();
 		long nextPos = m_input->tell() + length;
 #if !defined(DEBUG)
-		(void)recordPos;
-		(void)recordClass;
+		//(void)recordPos;
+		//(void)recordClass;
 #endif // !defined(DEBUG)
 		
 		// inside a subgroup, one less sub record
@@ -399,7 +403,7 @@ bool WPG2Parser::parse()
 	return m_success;
 }
 
-#if defined(DEBUG)
+#ifdef DEBUG
 static const char* describePrecision(unsigned char precision)
 {
 	const char* result = "Unknown";
@@ -432,7 +436,7 @@ static const char* describeGradient(unsigned char gradientType)
 	}
 	return result;
 }
-#endif // defined(DEBUG)
+#endif
 
 #define TO_DOUBLE(x) ( (m_doublePrecision) ? ((double)(x)/65536.0) : (double)(x) )
 #define TRANSFORM_XY(x,y) { m_matrix.transform((x),(y)); (x)-= m_xofs; (y)-= m_yofs; (y)=m_height-(y); }
@@ -462,17 +466,14 @@ void WPG2Parser::handleStartWPG()
 	}
 	m_doublePrecision = (precision == 1);
 	
+#ifdef DEBUG
 	long viewportX1 = (m_doublePrecision) ? readS32() : readS16();
 	long viewportY1 = (m_doublePrecision) ? readS32() : readS16();
 	long viewportX2 = (m_doublePrecision) ? readS32() : readS16();
 	long viewportY2 = (m_doublePrecision) ? readS32() : readS16();
-#if !defined(DEBUG)
-	(void)viewportX1;
-	(void)viewportY1;
-	(void)viewportX2;
-	(void)viewportY2;
-#endif // !defined(DEBUG)
-	
+#else
+	m_input->seek(m_input->tell() + ((m_doublePrecision) ? 16 : 8));
+#endif	
 	long imageX1 = (m_doublePrecision) ? readS32() : readS16();
 	long imageY1 = (m_doublePrecision) ? readS32() : readS16();
 	long imageX2 = (m_doublePrecision) ? readS32() : readS16();
@@ -528,11 +529,11 @@ void WPG2Parser::handleStartWPG()
 	
 	// create default pen styles
 	int styleNo = 0;
-	for(int i = 0; i < static_cast<int>(sizeof(WPG2_defaultPenDashes)/sizeof(WPG2_defaultPenDashes[0]));)
+	for(int i = 0; (long)i < (long)(sizeof(WPG2_defaultPenDashes)/sizeof(WPG2_defaultPenDashes[0]));)
 	{
 		int segments = 2 * WPG2_defaultPenDashes[i++];
 		if(segments == 0) break;
-		WPGDashArray dashArray;
+		libwpg::WPGDashArray dashArray;
 		for(int j = 0; j < segments; j++, i++)
 			dashArray.add(WPG2_defaultPenDashes[i]*3.6/218.0);
 		m_penStyles[styleNo] = dashArray;
@@ -579,12 +580,12 @@ void WPG2Parser::flushCompoundPolygon()
 {
 	WPGGroupContext& context = m_groupStack.top();
 	
-	m_painter->setBrush( context.compoundFilled ? m_brush : WPGBrush() );
-	m_painter->setPen( context.compoundFramed ? m_pen : WPGPen() );
+	m_painter->setBrush( context.compoundFilled ? m_brush : libwpg::WPGBrush() );
+	m_painter->setPen( context.compoundFramed ? m_pen : libwpg::WPGPen() );
 	if(context.compoundWindingRule)
-		m_painter->setFillRule(WPGPaintInterface::WindingFill);
+		m_painter->setFillRule(libwpg::WPGPaintInterface::WindingFill);
 	else
-		m_painter->setFillRule(WPGPaintInterface::AlternatingFill);
+		m_painter->setFillRule(libwpg::WPGPaintInterface::AlternatingFill);
 	context.compoundPath.closed = context.compoundClosed;
 	m_painter->drawPath(context.compoundPath);
 }
@@ -594,7 +595,7 @@ void WPG2Parser::handlePenStyleDefinition()
 	unsigned int style = readU16();
 	unsigned int segments = readU16();
 
-	WPGDashArray dashArray;
+	libwpg::WPGDashArray dashArray;
 	for(unsigned i = 0; i < segments; i++)
 	{
 		unsigned int p = (m_doublePrecision) ? readU32() : readU16();
@@ -621,7 +622,7 @@ void WPG2Parser::handleColorPalette()
 
 	for(unsigned i = 0; i < numEntries; i++)
 	{
-		WPGColor color;
+		libwpg::WPGColor color;
 		color.red = readU8();
 		color.green = readU8();
 		color.blue = readU8();
@@ -636,9 +637,9 @@ void WPG2Parser::handleDPColorPalette()
 	unsigned startIndex = readU16();
 	unsigned numEntries = readU16();
 
-	for(int i = 0; i < static_cast<int>(numEntries); i++)
+	for(unsigned int i = 0; i < numEntries; i++)
 	{
-		WPGColor color;
+		libwpg::WPGColor color;
 		color.red = readU16() >> 8 ;
 		color.green = readU16() >> 8 ;
 		color.blue = readU16() >> 8 ;
@@ -650,56 +651,66 @@ void WPG2Parser::handleDPColorPalette()
 
 void WPG2Parser::handlePenForeColor()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	unsigned char red = readU8();
 	unsigned char green = readU8();
 	unsigned char blue = readU8();
 	unsigned char alpha = readU8();
 
-	m_pen.foreColor = WPGColor(red, green, blue, alpha);
+	m_pen.foreColor = libwpg::WPGColor(red, green, blue, alpha);
 
 	WPG_DEBUG_MSG(("   Foreground color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
 void WPG2Parser::handleDPPenForeColor()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	// we just ignore the least significant 8 bits
 	unsigned int red = (m_doublePrecision)   ? readU16()>>8 : readU8();
 	unsigned int green = (m_doublePrecision) ? readU16()>>8 : readU8();
 	unsigned int blue = (m_doublePrecision)  ? readU16()>>8 : readU8();
 	unsigned int alpha = (m_doublePrecision) ? readU16()>>8 : readU8();
 
-	m_pen.foreColor = WPGColor(red, green, blue, alpha);
+	m_pen.foreColor = libwpg::WPGColor(red, green, blue, alpha);
 
 	WPG_DEBUG_MSG(("   Foreground color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
 void WPG2Parser::handlePenBackColor()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	unsigned char red = readU8();
 	unsigned char green = readU8();
 	unsigned char blue = readU8();
 	unsigned char alpha = readU8();
 
-	m_pen.backColor = WPGColor(red, green, blue, alpha);
+	m_pen.backColor = libwpg::WPGColor(red, green, blue, alpha);
 
 	WPG_DEBUG_MSG(("   Background color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
 void WPG2Parser::handleDPPenBackColor()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	// we just ignore the least significant 8 bits
 	unsigned int red = (m_doublePrecision)   ? readU16()>>8 : readU8();
 	unsigned int green = (m_doublePrecision) ? readU16()>>8 : readU8();
 	unsigned int blue = (m_doublePrecision)  ? readU16()>>8 : readU8();
 	unsigned int alpha = (m_doublePrecision) ? readU16()>>8 : readU8();
 
-	m_pen.backColor = WPGColor(red, green, blue, alpha);
+	m_pen.backColor = libwpg::WPGColor(red, green, blue, alpha);
 
 	WPG_DEBUG_MSG(("   Background color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
 void WPG2Parser::handlePenStyle()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	unsigned int style = readU16();
 
 	m_pen.dashArray = m_penStyles[style];
@@ -711,6 +722,8 @@ void WPG2Parser::handlePenStyle()
 
 void WPG2Parser::handlePenSize()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	unsigned int width = readU16();
 	unsigned int height = readU16();
 
@@ -723,6 +736,8 @@ void WPG2Parser::handlePenSize()
 
 void WPG2Parser::handleDPPenSize()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	unsigned long width = readU32();
 	unsigned long height = readU32();
 
@@ -735,16 +750,22 @@ void WPG2Parser::handleDPPenSize()
 
 void WPG2Parser::handleBrushGradient()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	unsigned angleFraction = readU16();
 	unsigned angleInteger = readU16();
 	unsigned xref = readU16();
 	unsigned yref = readU16();
+#ifdef DEBUG
 	unsigned flag = readU16();
-	bool granular = (flag & (1<<6)) == 1;
-	bool anchor = (flag & (1<<7)) == 1;
+	bool granular = ((flag & (1<<6))>>6) == 1;
+	bool anchor = ((flag & (1<<7))>>7) == 1;
+#else
+	readU16();
+#endif
 #if !defined(DEBUG)
-	(void)granular;
-	(void)anchor;
+	//(void)granular;
+	//(void)anchor;
 #endif // !defined(DEBUG)
 	
 	// TODO: get gradient extent
@@ -761,17 +782,19 @@ void WPG2Parser::handleBrushGradient()
 
 void WPG2Parser::handleDPBrushGradient()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	unsigned angleFraction = readU16();
 	unsigned angleInteger = readU16();
 	unsigned xref = readU16();
 	unsigned yref = readU16();
+#ifdef DEBUG
 	unsigned flag = readU16();
 	bool granular = (flag & (1<<6)) == 1;
 	bool anchor = (flag & (1<<7)) == 1;
-#if !defined(DEBUG)
-	(void)granular;
-	(void)anchor;
-#endif // !defined(DEBUG)
+#else
+	readU16();
+#endif
 	
 	// TODO: get gradient extent (in double precision)
 	
@@ -787,6 +810,8 @@ void WPG2Parser::handleDPBrushGradient()
 
 void WPG2Parser::handleBrushForeColor()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	unsigned char gradientType = readU8();
 	WPG_DEBUG_MSG(("   Gradient type : %d (%s)\n", gradientType, describeGradient(gradientType)));
 
@@ -798,14 +823,14 @@ void WPG2Parser::handleBrushForeColor()
 		unsigned char alpha = readU8();
 		WPG_DEBUG_MSG(("   Foreground color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 
-		m_brush.foreColor = WPGColor(red, green, blue, alpha);
-		if(m_brush.style != WPGBrush::Gradient)
-			m_brush.style = WPGBrush::Solid;
+		m_brush.foreColor = libwpg::WPGColor(red, green, blue, alpha);
+		if(m_brush.style != libwpg::WPGBrush::Gradient)
+			m_brush.style = libwpg::WPGBrush::Solid;
 	}
 	else
 	{
 		unsigned count = readU16();
-		std::vector<WPGColor> colors;
+		std::vector<libwpg::WPGColor> colors;
 		std::vector<double> positions;
 		WPG_DEBUG_MSG(("  Gradient colors : %d\n", count));
 
@@ -815,7 +840,7 @@ void WPG2Parser::handleBrushForeColor()
 			unsigned char green = readU8();
 			unsigned char blue = readU8();
 			unsigned char alpha = readU8();
-			WPGColor color(red, green, blue, alpha);
+			libwpg::WPGColor color(red, green, blue, alpha);
 			colors.push_back(color);
 			WPG_DEBUG_MSG(("   Color #%d (RGBA): %d %d %d %d\n", i+1, red, green, blue, alpha));
 		}
@@ -835,21 +860,23 @@ void WPG2Parser::handleBrushForeColor()
 			double yref = (double)m_gradientRef.y/65536.0;
 			double angle = m_gradientAngle*M_PI/180.0;
 			double tanangle = tan(angle);
-			double ref = (tanangle<1e2) ? (yref+xref*tanangle)/(1+tanangle) : xref;
-			WPGGradient gradient;
+			double ref = (tanangle < 1e2 && tanangle > -1e2) ? (yref+xref*tanangle)/(1+tanangle) : xref;
+			libwpg::WPGGradient gradient;
 			gradient.setAngle(-m_gradientAngle); // upside down
 			gradient.addStop(0, colors[1]);
 			gradient.addStop(ref, colors[0]);
-			if((m_gradientRef.x != 65535) && (m_gradientRef.y != 65536))
+			if((m_gradientRef.x != 65535) && (m_gradientRef.y != 65535))
 				gradient.addStop(1, colors[1]);
 			m_brush.gradient = gradient;
-			m_brush.style = WPGBrush::Gradient;
+			m_brush.style = libwpg::WPGBrush::Gradient;
 		}
 	}
 }
 
 void WPG2Parser::handleDPBrushForeColor()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	unsigned char gradientType = readU8();
 	WPG_DEBUG_MSG(("   Gradient type : %d (%s)\n", gradientType, describeGradient(gradientType)));
 
@@ -861,14 +888,14 @@ void WPG2Parser::handleDPBrushForeColor()
 		unsigned char alpha = (m_doublePrecision)   ? readU16()>>8 : readU8();
 		WPG_DEBUG_MSG(("   Foreground color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 
-		m_brush.foreColor = WPGColor(red, green, blue, alpha);
-		if(m_brush.style != WPGBrush::NoBrush)
-			m_brush.style = WPGBrush::Solid;
+		m_brush.foreColor = libwpg::WPGColor(red, green, blue, alpha);
+		if(m_brush.style != libwpg::WPGBrush::NoBrush)
+			m_brush.style = libwpg::WPGBrush::Solid;
 	}
 	else
 	{
 		unsigned count = readU16();
-		std::vector<WPGColor> colors;
+		std::vector<libwpg::WPGColor> colors;
 		std::vector<double> positions;
 		WPG_DEBUG_MSG(("  Gradient colors : %d\n", count));
 
@@ -878,7 +905,7 @@ void WPG2Parser::handleDPBrushForeColor()
 			unsigned char green = (m_doublePrecision)   ? readU16()>>8 : readU8();
 			unsigned char blue = (m_doublePrecision)   ? readU16()>>8 : readU8();
 			unsigned char alpha = (m_doublePrecision)   ? readU16()>>8 : readU8();
-			WPGColor color(red, green, blue, alpha);
+			libwpg::WPGColor color(red, green, blue, alpha);
 			colors.push_back(color);
 			WPG_DEBUG_MSG(("   Color #%d (RGBA): %d %d %d %d\n", i+1, red, green, blue, alpha));
 		}
@@ -899,53 +926,58 @@ void WPG2Parser::handleDPBrushForeColor()
 			double angle = m_gradientAngle*M_PI/180.0;
 			double tanangle = tan(angle);
 			double ref = (tanangle<1e2) ? (yref+xref*tanangle)/(1+tanangle) : xref;
-			WPGGradient gradient;
+			libwpg::WPGGradient gradient;
 			gradient.setAngle(-m_gradientAngle); // upside down
 			gradient.addStop(0, colors[1]);
 			gradient.addStop(ref, colors[0]);
 			if((m_gradientRef.x != 65535) && (m_gradientRef.y != 65536))
 				gradient.addStop(1, colors[1]);
 			m_brush.gradient = gradient;
-			m_brush.style = WPGBrush::Gradient;
+			m_brush.style = libwpg::WPGBrush::Gradient;
 		}
 	}
 }
 
 void WPG2Parser::handleBrushBackColor()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	unsigned char red = readU8();
 	unsigned char green = readU8();
 	unsigned char blue = readU8();
 	unsigned char alpha = readU8();
 
-	m_brush.backColor = WPGColor(red, green, blue, alpha);
-	if(m_brush.style == WPGBrush::NoBrush)
-		m_brush.style = WPGBrush::Solid;
+	m_brush.backColor = libwpg::WPGColor(red, green, blue, alpha);
+	if(m_brush.style == libwpg::WPGBrush::NoBrush)
+		m_brush.style = libwpg::WPGBrush::Solid;
 
 	WPG_DEBUG_MSG(("   Backround color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
 void WPG2Parser::handleDPBrushBackColor()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
 	// we just ignore the least significant 8 bits
 	unsigned int red = (m_doublePrecision)   ? readU16()>>8 : readU8();
 	unsigned int green = (m_doublePrecision) ? readU16()>>8 : readU8();
 	unsigned int blue = (m_doublePrecision)  ? readU16()>>8 : readU8();
 	unsigned int alpha = (m_doublePrecision) ? readU16()>>8 : readU8();
 
-	m_brush.backColor = WPGColor(red, green, blue, alpha);
-	if(m_brush.style == WPGBrush::NoBrush)
-		m_brush.style = WPGBrush::Solid;
+	m_brush.backColor = libwpg::WPGColor(red, green, blue, alpha);
+	if(m_brush.style == libwpg::WPGBrush::NoBrush)
+		m_brush.style = libwpg::WPGBrush::Solid;
 
 	WPG_DEBUG_MSG(("   Background color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
 void WPG2Parser::handleBrushPattern()
 {
+	if (!m_groupStack.empty() && m_groupStack.top().isCompoundPolygon())
+		return;
+#ifdef DEBUG	
 	unsigned int pattern = readU16();
-#if !defined(DEBUG)
-	(void)pattern;
-#endif // !defined(DEBUG)
+#endif
 
 	// TODO
 
@@ -1048,13 +1080,13 @@ void WPG2Parser::handlePolyline()
 
 	unsigned long count = readU16();
 
-	WPGPointArray points;
+	libwpg::WPGPointArray points;
 	for(unsigned long i = 0; i < count; i++ )
 	{
 		long x = (m_doublePrecision) ? readS32() : readS16();
 		long y = (m_doublePrecision) ? readS32() : readS16();
 		TRANSFORM_XY(x,y);
-		WPGPoint p(TO_DOUBLE(x)/m_xres, TO_DOUBLE(y)/m_yres);
+		libwpg::WPGPoint p(TO_DOUBLE(x)/m_xres, TO_DOUBLE(y)/m_yres);
 		points.add(p);
 	}
 
@@ -1064,7 +1096,7 @@ void WPG2Parser::handlePolyline()
 		{
 			// inside a compound ? convert it into path because for compound 
 			// we will only use paths
-			WPGPath& path = m_groupStack.top().compoundPath;
+			libwpg::WPGPath& path = m_groupStack.top().compoundPath;
 			path.moveTo(points[0]);
 			for(unsigned long ii = 1; ii < count; ii++)
 				path.lineTo(points[ii]);
@@ -1073,12 +1105,12 @@ void WPG2Parser::handlePolyline()
 	else
 	{
 		// otherwise draw directly
-		m_painter->setBrush( objCh.filled ? m_brush : WPGBrush() );
-		m_painter->setPen( objCh.framed ? m_pen : WPGPen() );
+		m_painter->setBrush( objCh.filled ? m_brush : libwpg::WPGBrush() );
+		m_painter->setPen( objCh.framed ? m_pen : libwpg::WPGPen() );
 		if(objCh.windingRule)
-			m_painter->setFillRule(WPGPaintInterface::WindingFill);
+			m_painter->setFillRule(libwpg::WPGPaintInterface::WindingFill);
 		else
-			m_painter->setFillRule(WPGPaintInterface::AlternatingFill);
+			m_painter->setFillRule(libwpg::WPGPaintInterface::AlternatingFill);
 		m_painter->drawPolygon(points);
 	}
 
@@ -1102,24 +1134,24 @@ void WPG2Parser::handlePolycurve()
 
 	unsigned int count = readU16();
 
-	WPGPointArray vertices;
-	WPGPointArray controlPoints;
-	for(int i = 0; i < static_cast<int>(count); i++ )
+	libwpg::WPGPointArray vertices;
+	libwpg::WPGPointArray controlPoints;
+	for(unsigned int i = 0; i < count; i++ )
 	{
 		long ix = (m_doublePrecision) ? readS32() : readS16();
 		long iy = (m_doublePrecision) ? readS32() : readS16();
 		TRANSFORM_XY(ix,iy);
-		WPGPoint initialPoint( TO_DOUBLE(ix)/m_xres, TO_DOUBLE(iy)/m_yres );
+		libwpg::WPGPoint initialPoint( TO_DOUBLE(ix)/m_xres, TO_DOUBLE(iy)/m_yres );
 
 		long ax = (m_doublePrecision) ? readS32() : readS16();
 		long ay = (m_doublePrecision) ? readS32() : readS16();
 		TRANSFORM_XY(ax,ay);
-		WPGPoint anchorPoint( TO_DOUBLE(ax)/m_xres, TO_DOUBLE(ay)/m_yres );
+		libwpg::WPGPoint anchorPoint( TO_DOUBLE(ax)/m_xres, TO_DOUBLE(ay)/m_yres );
 
 		long tx = (m_doublePrecision) ? readS32() : readS16();
 		long ty = (m_doublePrecision) ? readS32() : readS16();
 		TRANSFORM_XY(tx,ty);
-		WPGPoint terminalPoint( TO_DOUBLE(tx)/m_xres, TO_DOUBLE(ty)/m_yres );
+		libwpg::WPGPoint terminalPoint( TO_DOUBLE(tx)/m_xres, TO_DOUBLE(ty)/m_yres );
 
 		vertices.add(anchorPoint);
 		if(i > 0)
@@ -1127,7 +1159,7 @@ void WPG2Parser::handlePolycurve()
 		controlPoints.add(terminalPoint);
 	}
 
-	WPGPath path;
+	libwpg::WPGPath path;
 	path.closed = objCh.closed;
 	path.moveTo(vertices[0]);
 	for(unsigned j = 1; j < vertices.count(); j++)
@@ -1139,12 +1171,12 @@ void WPG2Parser::handlePolycurve()
 	else
 	{
 		// otherwise draw directly
-		m_painter->setBrush( objCh.filled ? m_brush : WPGBrush() );
-		m_painter->setPen( objCh.framed ? m_pen : WPGPen() );
+		m_painter->setBrush( objCh.filled ? m_brush : libwpg::WPGBrush() );
+		m_painter->setPen( objCh.framed ? m_pen : libwpg::WPGPen() );
 		if(objCh.windingRule)
-			m_painter->setFillRule(WPGPaintInterface::WindingFill);
+			m_painter->setFillRule(libwpg::WPGPaintInterface::WindingFill);
 		else
-			m_painter->setFillRule(WPGPaintInterface::AlternatingFill);
+			m_painter->setFillRule(libwpg::WPGPaintInterface::AlternatingFill);
 		m_painter->drawPath(path);
 	}
 }
@@ -1171,7 +1203,7 @@ void WPG2Parser::handleRectangle()
 	long rx = (m_doublePrecision) ? readS32() : readS16();
 	long ry = (m_doublePrecision) ? readS32() : readS16();
 
-	WPGRect rect;
+	libwpg::WPGRect rect;
 	rect.x1 = TO_DOUBLE(xs1) / m_xres;
 	rect.x2 = TO_DOUBLE(xs2) / m_xres;
 	rect.y1 = TO_DOUBLE(ys1) / m_yres;
@@ -1179,8 +1211,8 @@ void WPG2Parser::handleRectangle()
 	double roundx = TO_DOUBLE(rx)/m_xres;
 	double roundy = TO_DOUBLE(ry)/m_yres;
 
-	m_painter->setBrush( objCh.filled ? m_brush : WPGBrush() );
-	m_painter->setPen( objCh.framed ? m_pen : WPGPen() );
+	m_painter->setBrush( objCh.filled ? m_brush : libwpg::WPGBrush() );
+	m_painter->setPen( objCh.framed ? m_pen : libwpg::WPGPen() );
 	m_painter->drawRectangle(rect, roundx, roundy);
 	
 	WPG_DEBUG_MSG(("      X1 : %d\n", x1));
@@ -1199,6 +1231,7 @@ void WPG2Parser::handleArc()
 	
 	long cx = (m_doublePrecision) ? readS32() : readS16();
 	long cy = (m_doublePrecision) ? readS32() : readS16();
+	TRANSFORM_XY(cx,cy);
 
 	long radx = (m_doublePrecision) ? readS32() : readS16();
 	long rady = (m_doublePrecision) ? readS32() : readS16();
@@ -1213,14 +1246,14 @@ void WPG2Parser::handleArc()
 
 	if((ix==ex) && (iy==ey))
 	{
-		WPGPoint center;
+		libwpg::WPGPoint center;
 		center.x = TO_DOUBLE(cx) / m_xres;
 		center.y = TO_DOUBLE(cy) / m_xres;
 		double rx = TO_DOUBLE(radx) / m_xres;
 		double ry = TO_DOUBLE(rady) / m_xres;
 		
-		m_painter->setBrush( objCh.filled ? m_brush : WPGBrush() );
-		m_painter->setPen( objCh.framed ? m_pen : WPGPen() );
+		m_painter->setBrush( objCh.filled ? m_brush : libwpg::WPGBrush() );
+		m_painter->setPen( objCh.framed ? m_pen : libwpg::WPGPen() );
 		m_painter->drawEllipse(center, rx, ry);
 	}
 
@@ -1240,7 +1273,7 @@ void WPG2Parser::resetPalette()
 	m_colorPalette.clear();
 	for (int i=0; i<256; i++)
 	{
-		WPGColor color;
+		libwpg::WPGColor color;
 		color.red = defaultWPG2PaletteRed[i];
 		color.green = defaultWPG2PaletteGreen[i];
 		color.blue = defaultWPG2PaletteBlue[i];

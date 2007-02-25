@@ -1,5 +1,5 @@
 /* libwpg
- * Copyright (C) 2006 Ariya Hidayat (ariya@kde.org)
+ * Copyright (C) 2006 Fridrich Strba (fridrich.strba@bluewin.ch)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,28 +23,44 @@
  * Corel Corporation or Corel Corporation Limited."
  */
 
-#ifndef __WPGCOLOR_H__
-#define __WPGCOLOR_H__
+#include "WPGRect.h"
 
-namespace libwpg
+libwpg::WPGRect::WPGRect():
+	x1(0.0),
+	y1(0.0),
+	x2(0.0),
+	y2(0.0)
+{}
+
+libwpg::WPGRect::WPGRect(double xx1, double yy1, double xx2, double yy2): 
+	x1(xx1),
+	y1(yy1),
+	x2(xx2),
+	y2(yy2)
+{}
+
+libwpg::WPGRect::WPGRect(const WPGRect& rect):
+	x1(rect.x1),
+	y1(rect.y1),
+	x2(rect.x2),
+	y2(rect.y2)
+{}
+
+libwpg::WPGRect&  libwpg::WPGRect::operator=(const WPGRect& rect)
 {
+	x1 = rect.x1;
+	y1 = rect.y1;
+	x2 = rect.x2;
+	y2 = rect.y2;
+	return *this;
+}
 
-class WPGColor
+const double libwpg::WPGRect::width() const
 {
-public:
-	int red, green, blue, alpha;
-	
-	WPGColor();
-	
-	WPGColor(int r, int g, int b);
-	
-	WPGColor(int r, int g, int b, int a);
+	return x2-x1;
+}
 
-	WPGColor(const WPGColor& color);
-	
-	WPGColor& operator=(const WPGColor& color);
-};
-
-} // namespace libwpg
-
-#endif // __WPGCOLOR_H__
+const double libwpg::WPGRect::height() const
+{
+	return y2-y1;
+}

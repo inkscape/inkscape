@@ -57,17 +57,17 @@ public:
 		y = ry;
 	}
 
-	WPGPoint transform(const WPGPoint& p) const
+	libwpg::WPGPoint transform(const libwpg::WPGPoint& p) const
 	{
-		WPGPoint point;
+		libwpg::WPGPoint point;
 		point.x = element[0][0]*p.x + element[1][0]*p.y + element[2][0]; 
 		point.y = element[0][1]*p.x + element[1][1]*p.y + element[2][1]; 
 		return point;
 	}
 
-	WPGRect transform(const WPGRect& r) const
+	libwpg::WPGRect transform(const libwpg::WPGRect& r) const
 	{
-		WPGRect rect;
+		libwpg::WPGRect rect;
 		rect.x1 = element[0][0]*r.x1 + element[1][0]*r.y1 + element[2][0]; 
 		rect.y1 = element[0][1]*r.x1 + element[1][1]*r.y1 + element[2][1]; 
 		rect.x2 = element[0][0]*r.x2 + element[1][0]*r.y2 + element[2][0]; 
@@ -111,7 +111,7 @@ class WPGGroupContext
 public:
 	unsigned subIndex;
 	int parentType;
-	WPGPath compoundPath;
+	libwpg::WPGPath compoundPath;
 	WPG2TransformMatrix compoundMatrix;
 	bool compoundWindingRule;
 	bool compoundFilled;
@@ -128,7 +128,7 @@ public:
 class WPG2Parser : public WPGXParser
 {
 public:
-	WPG2Parser(WPGInputStream *input, WPGPaintInterface* painter);
+	WPG2Parser(libwpg::WPGInputStream *input, libwpg::WPGPaintInterface* painter);
 	bool parse();
 	
 private:
@@ -174,14 +174,14 @@ private:
 	long m_width;
 	long m_height;
 	bool m_doublePrecision;  
-	WPGPen m_pen;
-	WPGBrush m_brush;
-	std::map<unsigned int,WPGDashArray> m_penStyles;
+	libwpg::WPGPen m_pen;
+	libwpg::WPGBrush m_brush;
+	std::map<unsigned int,libwpg::WPGDashArray> m_penStyles;
 	bool m_layerOpened;
 	unsigned int m_layerId;
 	WPG2TransformMatrix m_matrix;
 	double m_gradientAngle;
-	WPGPoint m_gradientRef;
+	libwpg::WPGPoint m_gradientRef;
 	std::stack<WPGGroupContext> m_groupStack;
 	WPG2TransformMatrix m_compoundMatrix;
 	bool m_compoundWindingRule;

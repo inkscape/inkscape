@@ -42,8 +42,6 @@ static inline unsigned long readU32( const void* p )
 }
 }
 
-using namespace libwpg;
-
 WPGHeader::WPGHeader()
 {
 		// create a sensible default header
@@ -65,7 +63,7 @@ WPGHeader::WPGHeader()
 		m_encryptVersion = 0;
 }
 
-bool WPGHeader::load(WPGInputStream *input)
+bool WPGHeader::load(libwpg::WPGInputStream *input)
 {
 	input->seek(0);
 	

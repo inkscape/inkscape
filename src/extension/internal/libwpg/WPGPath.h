@@ -47,7 +47,7 @@ public:
 	WPGPoint extra1;
 	WPGPoint extra2;
 	
-	WPGPathElement(): type(NullElement) {}
+	WPGPathElement();
 };
 
 class WPGPathPrivate;
