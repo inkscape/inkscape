@@ -753,17 +753,6 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
     }
 
     if (doc != NULL) {
-        // the import extension has passed us a document, now we need to embed it into our document
-        if ( 0 ) {
-//            const gchar *docbase = (sp_repr_document_root( sp_repr_document( repr ))->attribute("sodipodi:docbase" );
-            g_message(" settings  uri  [%s]", doc->uri );
-            g_message("           base [%s]", doc->base );
-            g_message("           name [%s]", doc->name );
-            Inkscape::IO::fixupHrefs( doc, doc->base, TRUE );
-            g_message("        mid-fixup");
-            Inkscape::IO::fixupHrefs( doc, in_doc->base, TRUE );
-        }
-
         // move imported defs to our document's defs
         SPObject *in_defs = SP_DOCUMENT_DEFS(in_doc);
         SPObject *defs = SP_DOCUMENT_DEFS(doc);
