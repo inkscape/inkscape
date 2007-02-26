@@ -32,6 +32,7 @@
 #include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
+#include "message-stack.h"
 #include "message-context.h"
 #include "pixmaps/cursor-rect.xpm"
 #include "flood-context.h"
@@ -358,7 +359,10 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     SPItem *document_root = SP_ITEM(SP_DOCUMENT_ROOT(document));
     NR::Rect bbox = document_root->invokeBbox(NR::identity());
 
-    if (bbox.isEmpty()) { return; }
+    if (bbox.isEmpty()) { 
+      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
+      return;
+    }
 
     int width = (int)ceil(bbox.extent(NR::X));
     int height = (int)ceil(bbox.extent(NR::Y));
@@ -488,6 +492,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
     if (aborted) {
       g_free(trace_px);
+      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
       return;
     }
     
