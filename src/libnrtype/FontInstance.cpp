@@ -432,6 +432,11 @@ void font_instance::LoadGlyph(int glyph_id)
 		bool   doAdd=false;
 
 #ifdef USE_PANGO_WIN32
+
+#ifndef GGO_UNHINTED         // For compatibility with old SDKs.
+#define GGO_UNHINTED 0x0100
+#endif
+
         MAT2 identity = {{0,1},{0,0},{0,0},{0,1}};
         OUTLINETEXTMETRIC otm;
         GetOutlineTextMetrics(daddy->hScreenDC, sizeof(otm), &otm);
