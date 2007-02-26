@@ -528,6 +528,8 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
 
 static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
+    SPDesktop *desktop = event_context->desktop;
+
     gint ret = FALSE;
     switch (event->type) {
     case GDK_BUTTON_PRESS:
@@ -535,6 +537,22 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
             sp_flood_do_flood_fill(event_context, event);
 
             ret = TRUE;
+        }
+        break;
+    case GDK_KEY_PRESS:
+        switch (get_group0_keyval (&event->key)) {
+        case GDK_Up:
+        case GDK_Down:
+        case GDK_KP_Up:
+        case GDK_KP_Down:
+            // prevent the zoom field from activation
+            if (!MOD__CTRL_ONLY)
+                ret = TRUE;
+            break;
+        case GDK_Escape:
+            sp_desktop_selection(desktop)->clear();
+        default:
+            break;
         }
         break;
     default:
