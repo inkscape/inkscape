@@ -143,12 +143,6 @@ inline Inkscape::XML::Node *sp_repr_document_root(Inkscape::XML::Document const 
     return const_cast<Inkscape::XML::Node *>(doc->root());
 }
 
-/// Returns the node's document.
-inline Inkscape::XML::Document *sp_repr_document(Inkscape::XML::Node const *repr) {
-    if (!repr) return NULL;
-    return const_cast<Inkscape::XML::Document *>(repr->document());
-}
-
 /* Contents */
 /// Sets the node's \a key attribute to \a value.
 inline unsigned sp_repr_set_attr(Inkscape::XML::Node *repr, gchar const *key, gchar const *value,

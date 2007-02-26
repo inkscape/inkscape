@@ -214,7 +214,7 @@ Svg::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
 
     Inkscape::IO::fixupHrefs( doc, save_path, spns );
 
-    gboolean const s = sp_repr_save_file (sp_repr_document (repr), uri, SP_SVG_NS_URI);
+    gboolean const s = sp_repr_save_file (repr->document(), uri, SP_SVG_NS_URI);
     if (s == FALSE) {
         throw Inkscape::Extension::Output::save_failed();
     }
