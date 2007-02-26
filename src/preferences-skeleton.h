@@ -72,7 +72,7 @@ static char const preferences_skeleton[] =
 "    <eventcontext id=\"dropper\" selcue=\"1\" gradientdrag=\"1\" pick=\"1\" setalpha=\"1\"/>\n"
 "    <eventcontext id=\"select\" selcue=\"1\" gradientdrag=\"0\"/>\n"
 "    <eventcontext id=\"connector\" style=\"fill:none;fill-rule:evenodd;stroke:black;stroke-opacity:1;stroke-linejoin:miter;stroke-width:1px;stroke-linecap:butt;\" selcue=\"1\"/>\n"
-"    <eventcontext id=\"flood\" style=\"fill:#808080;\" usecurrent=\"1\"/>\n"
+"    <eventcontext id=\"paintbucket\" style=\"fill:#808080;\" usecurrent=\"1\"/>\n"
 "  </group>\n"
 "  <group id=\"palette\">\n"
 "    <group id=\"dashes\">\n"

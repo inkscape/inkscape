@@ -48,11 +48,11 @@ enum {
     PREFS_PAGE_TOOLS_PENCIL,
     PREFS_PAGE_TOOLS_PEN,
     PREFS_PAGE_TOOLS_CALLIGRAPHY,
+    PREFS_PAGE_TOOLS_PAINTBUCKET,
     PREFS_PAGE_TOOLS_TEXT,
     PREFS_PAGE_TOOLS_GRADIENT,
     PREFS_PAGE_TOOLS_CONNECTOR,
     PREFS_PAGE_TOOLS_DROPPER,
-    PREFS_PAGE_TOOLS_FLOOD,
     PREFS_PAGE_WINDOWS,
     PREFS_PAGE_CLONES,
     PREFS_PAGE_FILTERS,
@@ -99,7 +99,7 @@ protected:
                _page_clones, _page_transforms, _page_filters, _page_select, _page_misc;
     DialogPage _page_selector, _page_node, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper;
-    DialogPage _page_rectangle, _page_ellipse, _page_star, _page_spiral, _page_flood;
+    DialogPage _page_rectangle, _page_ellipse, _page_star, _page_spiral, _page_paintbucket;
 
     PrefSpinButton _mouse_sens, _mouse_thres;
 

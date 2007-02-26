@@ -1335,7 +1335,7 @@ ContextVerb::perform(SPAction *action, void *data, void *pdata)
     /** \todo !!! hopefully this can go away soon and actions can look after
      * themselves
      */
-    for (vidx = SP_VERB_CONTEXT_SELECT; vidx <= SP_VERB_CONTEXT_FLOOD_PREFS; vidx++)
+    for (vidx = SP_VERB_CONTEXT_SELECT; vidx <= SP_VERB_CONTEXT_PAINTBUCKET_PREFS; vidx++)
     {
         SPAction *tool_action= get((sp_verb_t)vidx)->get_action(dt);
         if (tool_action) {
@@ -1386,8 +1386,8 @@ ContextVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_CONTEXT_CONNECTOR:
             tools_switch_current (TOOLS_CONNECTOR);
             break;
-        case SP_VERB_CONTEXT_FLOOD:
-            tools_switch_current(TOOLS_FLOOD);
+        case SP_VERB_CONTEXT_PAINTBUCKET:
+            tools_switch_current(TOOLS_PAINTBUCKET);
             break;
 
         case SP_VERB_CONTEXT_SELECT_PREFS:
@@ -1446,8 +1446,8 @@ ContextVerb::perform(SPAction *action, void *data, void *pdata)
             prefs_set_int_attribute ("dialogs.preferences", "page", PREFS_PAGE_TOOLS_CONNECTOR);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
-        case SP_VERB_CONTEXT_FLOOD_PREFS:
-            prefs_set_int_attribute ("dialogs.preferences", "page", PREFS_PAGE_TOOLS_FLOOD);
+        case SP_VERB_CONTEXT_PAINTBUCKET_PREFS:
+            prefs_set_int_attribute ("dialogs.preferences", "page", PREFS_PAGE_TOOLS_PAINTBUCKET);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
 
@@ -2230,11 +2230,11 @@ Verb *Verb::_base_verbs[] = {
     new ContextVerb(SP_VERB_CONTEXT_ZOOM, "ToolZoom", N_("Zoom"),
                     N_("Zoom in or out"), "draw_zoom"),
     new ContextVerb(SP_VERB_CONTEXT_DROPPER, "ToolDropper", N_("Dropper"),
-                    N_("Pick averaged colors from image"), "draw_dropper"),
+                    N_("Pick colors from image"), "draw_dropper"),
     new ContextVerb(SP_VERB_CONTEXT_CONNECTOR, "ToolConnector", N_("Connector"),
                     N_("Create connectors"), "draw_connector"),
-    new ContextVerb(SP_VERB_CONTEXT_FLOOD, "ToolFlood", N_("Flood Fill"),
-                    N_("Fill open areas"), "draw_flood"),
+    new ContextVerb(SP_VERB_CONTEXT_PAINTBUCKET, "ToolPaintBucket", N_("Paint Bucket"),
+                    N_("Fill bounded areas"), "draw_paintbucket"),
 
     /* Tool prefs */
     new ContextVerb(SP_VERB_CONTEXT_SELECT_PREFS, "SelectPrefs", N_("Selector Preferences"),
@@ -2265,8 +2265,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Open Preferences for the Dropper tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_CONNECTOR_PREFS, "ConnectorPrefs", N_("Connector Preferences"),
                     N_("Open Preferences for the Connector tool"), NULL),
-    new ContextVerb(SP_VERB_CONTEXT_FLOOD_PREFS, "FloodPrefs", N_("Flood Fill Preferences"),
-                    N_("Open Preferences for the Flood Fill tool"), NULL),
+    new ContextVerb(SP_VERB_CONTEXT_PAINTBUCKET_PREFS, "PaintBucketPrefs", N_("Paint Bucket Preferences"),
+                    N_("Open Preferences for the Paint Bucket tool"), NULL),
 
     /* Zoom/View */
     new ZoomVerb(SP_VERB_ZOOM_IN, "ZoomIn", N_("Zoom In"), N_("Zoom in"), "zoom_in"),

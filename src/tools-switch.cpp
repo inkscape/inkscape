@@ -65,7 +65,7 @@ static char const *const tool_names[] = {
     "tools.zoom",
     "tools.dropper",
     "tools.connector",
-    "tools.flood",
+    "tools.paintbucket",
     NULL
 };
 
@@ -85,7 +85,7 @@ static char const *const tool_ids[] = {
     "zoom",
     "dropper",
     "connector",
-    "flood",
+    "paintbucket",
     NULL
 };
 
@@ -209,11 +209,11 @@ tools_switch(SPDesktop *dt, int num)
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
             dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click and drag</b> between shapes to create a connector."));
             break;
-        case TOOLS_FLOOD:
+        case TOOLS_PAINTBUCKET:
             dt->set_event_context(SP_TYPE_FLOOD_CONTEXT, tool_names[num]);
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
-            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> to paint an unfilled area."));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> to paint a bounded area."));
             break;
     }
 }

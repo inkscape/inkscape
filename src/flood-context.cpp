@@ -298,7 +298,7 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
 
         Inkscape::XML::Node *pathRepr = xml_doc->createElement("svg:path");
         /* Set style */
-        sp_desktop_apply_style_tool (desktop, pathRepr, "tools.flood", false);
+        sp_desktop_apply_style_tool (desktop, pathRepr, "tools.paintbucket", false);
 
         NArtBpath *bpath = sp_svg_read_path(result.getPathData().c_str());
         Path *path = bpath_to_Path(bpath);
@@ -504,7 +504,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     g_free(trace_px);
     
-    sp_document_done(document, SP_VERB_CONTEXT_FLOOD, _("Flood fill"));
+    sp_document_done(document, SP_VERB_CONTEXT_PAINTBUCKET, _("Fill bounded area"));
 }
 
 static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
@@ -583,8 +583,8 @@ static void sp_flood_finish(SPFloodContext *rc)
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 
         sp_desktop_selection(desktop)->set(rc->item);
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_RECT,
-                         _("Create floodangle"));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET,
+                         _("Fill bounded area"));
 
         rc->item = NULL;
     }

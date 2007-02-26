@@ -30,7 +30,7 @@ enum {
   TOOLS_ZOOM,
   TOOLS_DROPPER,
   TOOLS_CONNECTOR,
-  TOOLS_FLOOD 
+  TOOLS_PAINTBUCKET 
 };
 
 int tools_isactive(SPDesktop *dt, unsigned num);

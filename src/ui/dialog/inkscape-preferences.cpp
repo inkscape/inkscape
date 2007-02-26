@@ -380,6 +380,9 @@ void InkscapePreferences::initPageTools()
                             _("If on, pen width is in absolute units (px) independent of zoom; otherwise pen width depends on zoom so that it looks the same at any zoom"));
     _page_calligraphy.add_line( false, "", _calligrapy_keep_selected, "", 
                             _("If on, each object created with this tool will remain selected after you finish drawing it"));
+    //Paint Bucket
+    this->AddPage(_page_paintbucket, _("Paint Bucket"), iter_tools, PREFS_PAGE_TOOLS_PAINTBUCKET);
+    this->AddNewObjectsStyle(_page_paintbucket, "tools.paintbucket");
     //Text
     this->AddPage(_page_text, _("Text"), iter_tools, PREFS_PAGE_TOOLS_TEXT);
     this->AddSelcueCheckbox(_page_text, "tools.text", true);
@@ -397,9 +400,6 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_dropper, _("Dropper"), iter_tools, PREFS_PAGE_TOOLS_DROPPER);
     this->AddSelcueCheckbox(_page_dropper, "tools.dropper", true);
     this->AddGradientCheckbox(_page_dropper, "tools.dropper", true);
-    //Flood
-    this->AddPage(_page_flood, _("Flood Fill"), iter_tools, PREFS_PAGE_TOOLS_FLOOD);
-    this->AddNewObjectsStyle(_page_flood, "tools.flood");
 }
 
 void InkscapePreferences::initPageWindows()

@@ -140,6 +140,12 @@ override) the bindings in the main default.xml.
 
   <bind action="CalligraphicPrefs" />
 
+  <bind key="F7" modifiers="Shift" action="ToolPaintBucket" display="true"/>
+  <bind key="u" action="ToolPaintBucket" />
+  <bind key="U" action="ToolPaintBucket" />
+
+  <bind action="PaintBucketPrefs" />
+
   <bind key="F8" action="ToolText" display="true"/>
   <bind key="t" action="ToolText" />
   <bind key="T" action="ToolText" />

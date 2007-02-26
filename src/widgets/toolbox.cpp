@@ -101,7 +101,7 @@ static GtkWidget *sp_calligraphy_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_dropper_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_empty_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_connector_toolbox_new(SPDesktop *desktop);
-static GtkWidget *sp_flood_toolbox_new(SPDesktop *desktop);
+static GtkWidget *sp_paintbucket_toolbox_new(SPDesktop *desktop);
 
 namespace { GtkWidget *sp_text_toolbox_new (SPDesktop *desktop); }
 
@@ -122,7 +122,7 @@ static struct {
     { "SPPencilContext",   "pencil_tool",    SP_VERB_CONTEXT_PENCIL, SP_VERB_CONTEXT_PENCIL_PREFS },
     { "SPPenContext",      "pen_tool",       SP_VERB_CONTEXT_PEN, SP_VERB_CONTEXT_PEN_PREFS },
     { "SPDynaDrawContext", "dyna_draw_tool", SP_VERB_CONTEXT_CALLIGRAPHIC, SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS },
-    { "SPFloodContext",    "flood_tool",     SP_VERB_CONTEXT_FLOOD, SP_VERB_CONTEXT_FLOOD_PREFS },
+    { "SPFloodContext",    "paintbucket_tool",     SP_VERB_CONTEXT_PAINTBUCKET, SP_VERB_CONTEXT_PAINTBUCKET_PREFS },
     { "SPTextContext",     "text_tool",      SP_VERB_CONTEXT_TEXT, SP_VERB_CONTEXT_TEXT_PREFS },
     { "SPConnectorContext","connector_tool", SP_VERB_CONTEXT_CONNECTOR, SP_VERB_CONTEXT_CONNECTOR_PREFS },
     { "SPGradientContext", "gradient_tool",  SP_VERB_CONTEXT_GRADIENT, SP_VERB_CONTEXT_GRADIENT_PREFS },
@@ -149,7 +149,7 @@ static struct {
     { "SPDropperContext", "dropper_toolbox", sp_dropper_toolbox_new },
     { "SPGradientContext", "gradient_toolbox", sp_gradient_toolbox_new },
     { "SPConnectorContext", "connector_toolbox", sp_connector_toolbox_new },
-    { "SPFloodContext",  "flood_toolbox",  sp_flood_toolbox_new },
+    { "SPFloodContext",  "paintbucket_toolbox",  sp_paintbucket_toolbox_new },
     { NULL, NULL, NULL }
 };
 
@@ -4433,21 +4433,21 @@ sp_connector_toolbox_new(SPDesktop *desktop)
 } // end of sp_connector_toolbox_new()
 
 static GtkWidget *
-sp_flood_toolbox_new(SPDesktop *desktop)
+sp_paintbucket_toolbox_new(SPDesktop *desktop)
 {
     GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
     
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new rectangles"));
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of Paint Bucket fill objects"));
     swatch->setDesktop (desktop);
-    swatch->setClickVerb (SP_VERB_CONTEXT_RECT_PREFS);
-    swatch->setWatchedTool ("tools.shapes.rect", true);
+    swatch->setClickVerb (SP_VERB_CONTEXT_PAINTBUCKET_PREFS);
+    swatch->setWatchedTool ("tools.paintbucket", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
 
     gtk_widget_show_all(tbl);
     sp_set_font_size_smaller (tbl);
     return tbl;
-} // end of sp_flood_toolbox_new()
+} 
 
 /*
   Local Variables:
