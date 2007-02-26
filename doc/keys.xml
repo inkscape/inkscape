@@ -26,6 +26,7 @@ RFE</a>).</p>
 <keys><key><keyf f="F6"/></key><key>p</key>	 <action>Freehand (Pencil) tool</action></keys>
 <keys><key><shift/><keyf f="F6"/></key><key>b</key>	 <action>Bezier (Pen) tool</action></keys>
 <keys><key><ctrl/><keyf f="F6"/></key><key>c</key>	 <action>Calligraphic tool</action></keys>
+<keys><key><shift/><keyf f="F7"/></key><key>u</key>	 <action>Paint Bucket tool</action></keys>
 <keys><key><ctrl/><keyf f="F1"/></key><key>g</key>	 <action>Gradient tool</action></keys>
 <keys><key><keyf f="F7"/></key><key>d</key>	 <action>Dropper tool</action></keys>
 <keys><key><keyf f="F8"/></key><key>t</key>	 <action>Text tool</action></keys>
