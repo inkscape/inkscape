@@ -365,7 +365,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     }
     
     double zoom_scale = desktop->current_zoom();
-    double padding = 1.4;
+    double padding = 1.6;
 
     NR::Rect screen = desktop->get_display_area();
 
