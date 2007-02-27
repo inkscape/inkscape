@@ -4432,10 +4432,28 @@ sp_connector_toolbox_new(SPDesktop *desktop)
 
 } // end of sp_connector_toolbox_new()
 
+static void paintbucket_tolerance_changed(GtkAdjustment *adj, GtkWidget *tbl)
+{
+    prefs_set_int_attribute("tools.paintbucket", "tolerance", (gint)adj->value);
+    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
 static GtkWidget *
 sp_paintbucket_toolbox_new(SPDesktop *desktop)
 {
     GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
+    
+    // Spacing spinbox
+    {
+        GtkWidget *tolerance = sp_tb_spinbutton(_("Tolerance:"),
+                _("The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"),
+                "tools.paintbucket", "tolerance", 8, NULL, tbl, TRUE,
+                "inkscape:paintbucket-tolerance", 0, 255, 1.0, 10.0,
+                paintbucket_tolerance_changed, 1, 0);
+
+        gtk_box_pack_start(GTK_BOX(tbl), tolerance, FALSE, FALSE,
+                AUX_SPACING);
+    }
     
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of Paint Bucket fill objects"));
     swatch->setDesktop (desktop);

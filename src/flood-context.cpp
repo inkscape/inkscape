@@ -260,18 +260,18 @@ inline unsigned char * get_pixel(guchar *px, int x, int y, int width) {
   return px + (x + y * width) * 4;
 }
 
-static bool compare_pixels(unsigned char *a, unsigned char *b, int fuzziness) {
+static bool compare_pixels(unsigned char *a, unsigned char *b, int tolerance) {
   for (int i = 0; i < 4; i++) {
-    if (a[i] != b[i]) { 
+    if (abs(a[i] - b[i]) > tolerance) { 
       return false;
     }
   }
   return true;
 }
 
-static void try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, unsigned char *orig, int x, int y, int width) {
+static void try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, unsigned char *orig, int x, int y, int width, int tolerance) {
   unsigned char *t = get_pixel(px, x, y, width);
-  if (compare_pixels(t, orig, 0)) {
+  if (compare_pixels(t, orig, tolerance)) {
     fill_queue->push(NR::Point(x, y));
   }
 }
@@ -413,7 +413,6 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     nr_arena_item_unref(root);
     nr_object_unref((NRObject *) arena);
     
-
     NR::Point pw = NR::Point(event->button.x / zoom_scale, sp_document_height(document) + (event->button.y / zoom_scale)) * affine;
     
     pw[NR::X] = (int)MIN(width - 1, MAX(0, pw[NR::X]));
@@ -432,25 +431,27 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     unsigned char *orig_px = get_pixel(px, (int)pw[NR::X], (int)pw[NR::Y], width);
     for (int i = 0; i < 4; i++) { orig_color[i] = orig_px[i]; }
 
+    int tolerance = prefs_get_int_attribute_limited("tools.paintbucket", "tolerance", 1, 0, 255);
+
     while (!fill_queue.empty() && !aborted) {
       NR::Point cp = fill_queue.front();
       fill_queue.pop();
       unsigned char *s = get_pixel(px, (int)cp[NR::X], (int)cp[NR::Y], width);
       
       // same color at this point
-      if (compare_pixels(s, orig_color, 0)) {
+      if (compare_pixels(s, orig_color, tolerance)) {
         int left = (int)cp[NR::X];
         int right = (int)cp[NR::X] + 1;
         int x = (int)cp[NR::X];
         int y = (int)cp[NR::Y];
         
         if (y > 0) { 
-          try_add_to_queue(&fill_queue, px, orig_color, x, y - 1, width);
+          try_add_to_queue(&fill_queue, px, orig_color, x, y - 1, width, tolerance);
         } else {
           aborted = true; break;
         }
         if (y < y_limit) { 
-          try_add_to_queue(&fill_queue, px, orig_color, x, y + 1, width);
+          try_add_to_queue(&fill_queue, px, orig_color, x, y + 1, width, tolerance);
         } else {
           aborted = true; break;
         }
@@ -463,12 +464,12 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
           // go left
           if (left >= 0) {
             t = get_pixel(px, left, y, width);
-            if (compare_pixels(t, orig_color, 0)) {
+            if (compare_pixels(t, orig_color, tolerance)) {
               for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
               trace_t = get_pixel(trace_px, left, y, width);
               trace_t[3] = 255;
-              if (y > 0) { try_add_to_queue(&fill_queue, px, orig_color, left, y - 1, width); }
-              if (y < y_limit) { try_add_to_queue(&fill_queue, px, orig_color, left, y + 1, width); }
+              if (y > 0) { try_add_to_queue(&fill_queue, px, orig_color, left, y - 1, width, tolerance); }
+              if (y < y_limit) { try_add_to_queue(&fill_queue, px, orig_color, left, y + 1, width, tolerance); }
               left--; ok = true;
             }
           } else {
@@ -478,15 +479,15 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
       
         do {
           ok = false;
-          // go left
+          // go right
           if (right < width) {
             t = get_pixel(px, right, y, width);
-            if (compare_pixels(t, orig_color, 0)) {
+            if (compare_pixels(t, orig_color, tolerance)) {
               for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
               trace_t = get_pixel(trace_px, right, y, width);
               trace_t[3] = 255; 
-              if (y > 0) { try_add_to_queue(&fill_queue, px, orig_color, right, y - 1, width); }
-              if (y < y_limit) { try_add_to_queue(&fill_queue, px, orig_color, right, y + 1, width); }
+              if (y > 0) { try_add_to_queue(&fill_queue, px, orig_color, right, y - 1, width, tolerance); }
+              if (y < y_limit) { try_add_to_queue(&fill_queue, px, orig_color, right, y + 1, width, tolerance); }
               right++; ok = true;
             }
           } else {
