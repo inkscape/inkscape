@@ -1560,7 +1560,13 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
                             x1 - x0, y1 - y0);
     } else {
 /*
- CAIRO FIXME: after SPCanvasBuf is made 32bpp throughout, this rgb_draw below can be replaced with:
+// CAIRO FIXME: after SPCanvasBuf is made 32bpp throughout, this rgb_draw below can be replaced with the below.
+// Why this must not be done currently:
+// - all canvas items (handles, nodes etc) paint themselves assuming 24bpp
+// - cairo assumes bgra, but we have rgba, so r and b get swapped (until we paint all with cairo too)  
+// - it does not seem to be any faster; in fact since with 32bpp, buf contains less pixels, 
+// we need more bufs to paint a given area and as a result it's even a bit slower
+
     cairo_surface_t* cst = cairo_image_surface_create_for_data (
         buf.buf,
         CAIRO_FORMAT_RGB24,  // unpacked, i.e. 32 bits! one byte is unused
@@ -1570,7 +1576,6 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
         cairo_t *ct = gdk_cairo_create(SP_CANVAS_WINDOW (canvas));
         cairo_set_source_surface (ct, cst, x0 - canvas->x0, y0 - canvas->y0);
         cairo_paint (ct);
-
     cairo_destroy (ct);
     cairo_surface_finish (cst);
     cairo_surface_destroy (cst);

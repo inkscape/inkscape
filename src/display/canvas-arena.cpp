@@ -200,6 +200,16 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
 	bh = buf->rect.y1 - buf->rect.y0;
 	if ((bw < 1) || (bh < 1)) return;
 
+	// FIXME: currently this function is a huge waste. It receives a buffer but creates a new one and loops 
+	// within the large one, doing arena painting in several blocks. This just makes no sense because the 
+	// buf that we are given is already only a strip of the screen, created by one iteration of a loop in
+	// sp_canvas_paint_rect_internal. With the current numbers, this function's buffer is always 1/4 
+	// smaller than the one we get, because they both are the same number of bytes but
+	// buf uses 3 bytes per pixel (24bpp, packed) while the pixblock created here uses 4 bytes (32bpp).
+	// Eventually I want to switch buf to using 4 bytes (see comment in canvas.cpp) and then remove 
+	// from here the sw/sh calculation, the loop, and creating the intermediate buffer, allowing arena 
+	// just render into buf in one go.  
+
 	if (arena->arena->rendermode != RENDERMODE_OUTLINE) { // use 256K as a compromise to not slow down gradients
 		/* 256K is the cached buffer and we need 4 channels */
 		if (bw * bh < 65536) { // 256K/4
