@@ -496,15 +496,6 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
       }
     }
     
-    GdkPixbuf* pixbuft = gdk_pixbuf_new_from_data(px,
-                                      GDK_COLORSPACE_RGB,
-                                      TRUE,
-                                      8, width, height, width * 4,
-                                      (GdkPixbufDestroyNotify)g_free,
-                                      NULL);
-                                      
-    gdk_pixbuf_save(pixbuft, "sample.png", "png", NULL, NULL);
-    
     g_free(px);
     
     if (aborted) {
