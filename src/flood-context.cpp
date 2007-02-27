@@ -363,13 +363,22 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
       desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
       return;
     }
-
-    int width = (int)ceil(bbox.extent(NR::X));
-    int height = (int)ceil(bbox.extent(NR::Y));
-
-    NR::Point origin(bbox.min()[NR::X], bbox.min()[NR::Y]);
     
-    NR::scale scale(width / (bbox.extent(NR::X)), height / (bbox.extent(NR::Y)));
+    double zoom_scale = desktop->current_zoom();
+    double padding = 1.2;
+
+    NR::Rect screen = desktop->get_display_area();
+
+    int width = (int)ceil(screen.extent(NR::X) * zoom_scale * padding);
+    int height = (int)ceil(screen.extent(NR::Y) * zoom_scale * padding);
+
+    NR::Point origin(screen.min()[NR::X],
+                     sp_document_height(document) - screen.extent(NR::Y) - screen.min()[NR::Y]);
+                     
+    origin[NR::X] = origin[NR::X] + (screen.extent(NR::X) * ((1 - padding) / 2));
+    origin[NR::Y] = origin[NR::Y] + (screen.extent(NR::Y) * ((1 - padding) / 2));
+    
+    NR::scale scale(zoom_scale, zoom_scale);
     NR::Matrix affine = scale * NR::translate(-origin * scale);
     
     /* Create ArenaItems and set transform */
@@ -404,7 +413,6 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     nr_arena_item_unref(root);
     nr_object_unref((NRObject *) arena);
     
-    double zoom_scale = desktop->current_zoom();
 
     NR::Point pw = NR::Point(event->button.x / zoom_scale, sp_document_height(document) + (event->button.y / zoom_scale)) * affine;
     
@@ -487,6 +495,15 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         } while (ok);
       }
     }
+    
+    GdkPixbuf* pixbuft = gdk_pixbuf_new_from_data(px,
+                                      GDK_COLORSPACE_RGB,
+                                      TRUE,
+                                      8, width, height, width * 4,
+                                      (GdkPixbufDestroyNotify)g_free,
+                                      NULL);
+                                      
+    gdk_pixbuf_save(pixbuft, "sample.png", "png", NULL, NULL);
     
     g_free(px);
     
