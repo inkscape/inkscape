@@ -34,7 +34,7 @@
 #include "desktop-style.h"
 #include "message-stack.h"
 #include "message-context.h"
-#include "pixmaps/cursor-rect.xpm"
+#include "pixmaps/cursor-paintbucket.xpm"
 #include "flood-context.h"
 #include "sp-metrics.h"
 #include <glibmm/i18n.h>
@@ -130,9 +130,9 @@ static void sp_flood_context_init(SPFloodContext *flood_context)
 {
     SPEventContext *event_context = SP_EVENT_CONTEXT(flood_context);
 
-    event_context->cursor_shape = cursor_rect_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
+    event_context->cursor_shape = cursor_paintbucket_xpm;
+    event_context->hot_x = 11;
+    event_context->hot_y = 30;
     event_context->xp = 0;
     event_context->yp = 0;
     event_context->tolerance = 0;
