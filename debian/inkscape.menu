@@ -1,5 +1,0 @@
-?package(inkscape): needs="X11" section="Apps/Graphics"\
-  hints="Vector"\
-  title="Inkscape" command="/usr/bin/inkscape"\
-  icon="/usr/share/pixmaps/inkscape.xpm"\
-  longtitle="Vector based drawing program"
