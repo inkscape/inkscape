@@ -248,9 +248,15 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
 		}
 	}
 
-/* fixme: RGB transformed bitmap blit is not implemented (Lauris) */
-/* And even if it would be, unless it uses MMX there is little reason to go RGB */
-// CAIRO FIXME: undefine this so that arena renders directly into SPCanvasBuf, without blitting and squishing (32bpp -> 24bpp packed) from a pixblock
+/*
+This define chooses between two modes: When on, arena renders into a temporary 
+32bpp buffer, and the result is then squished into the SPCanvasBuf. When off, arena 
+renders directly to SPCanvasBuf. However currently this gives no speed advantage, 
+perhaps because the lack of squishing is offset by the need for arena items to render 
+to the inconvenient (and probably slower) 24bpp buffer. When SPCanvasBuf is 
+switched to 32bpp and cairo drawing, however, this define should be removed to 
+streamline rendering. 
+*/
 #define STRICT_RGBA
 
 	for (y = buf->rect.y0; y < buf->rect.y1; y += sh) {
@@ -282,6 +288,7 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
             pb.visible_area = buf->visible_rect; 
 			if (pb.data.px != NULL) {
   			    nr_arena_item_invoke_render (arena->root, &area, &pb, 0);
+				// this does the 32->24 squishing, using an assembler routine:
 			    nr_blit_pixblock_pixblock (&cb, &pb);
 			}
 			nr_pixblock_release (&pb);
