@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 	Inkscape::GC::init();
 
 	document = sp_repr_document_new("test");
-	root = sp_repr_document_root(document);
+	root = document->root();
 
 	utest_start("XML Transactions");
 

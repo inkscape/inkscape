@@ -393,7 +393,7 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
 
     g_return_val_if_fail(doc != NULL, NULL);
 
-    Inkscape::XML::Node *repr = sp_repr_document_root(doc);
+    Inkscape::XML::Node *repr = doc->root();
 
     /* sp_repr_print(repr); */
 

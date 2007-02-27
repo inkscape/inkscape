@@ -1102,7 +1102,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 return;
             }
 
-            Inkscape::XML::Node *repr = sp_repr_document_root(rnewdoc);
+            Inkscape::XML::Node *repr = rnewdoc->root();
             gchar const *style = repr->attribute("style");
 
             Inkscape::XML::Node *newgroup = rnewdoc->createElement("svg:g");

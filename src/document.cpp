@@ -220,7 +220,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     Inkscape::XML::Node *rroot;
     Inkscape::Version sodipodi_version;
 
-    rroot = sp_repr_document_root(rdoc);
+    rroot = rdoc->root();
 
     document = new SPDocument();
 
@@ -341,7 +341,7 @@ sp_document_new(gchar const *uri, unsigned int keepalive, bool make_new)
         rdoc = sp_repr_read_file(uri, SP_SVG_NS_URI);
         /* If file cannot be loaded, return NULL without warning */
         if (rdoc == NULL) return NULL;
-        rroot = sp_repr_document_root(rdoc);
+        rroot = rdoc->root();
         /* If xml file is not svg, return NULL without warning */
         /* fixme: destroy document */
         if (strcmp(rroot->name(), "svg:svg") != 0) return NULL;
@@ -390,7 +390,7 @@ sp_document_new_from_mem(gchar const *buffer, gint length, unsigned int keepaliv
     /* If it cannot be loaded, return NULL without warning */
     if (rdoc == NULL) return NULL;
 
-    rroot = sp_repr_document_root(rdoc);
+    rroot = rdoc->root();
     /* If xml file is not svg, return NULL without warning */
     /* fixme: destroy document */
     if (strcmp(rroot->name(), "svg:svg") != 0) return NULL;

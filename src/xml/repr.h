@@ -130,18 +130,7 @@
 char const *sp_xml_ns_uri_prefix(gchar const *uri, gchar const *suggested);
 char const *sp_xml_ns_prefix_uri(gchar const *prefix);
 
-
-/*inline Inkscape::XML::Node *sp_repr_duplicate(Inkscape::XML::Node const *repr) {
-    return repr->duplicate();
-}*/
-
 Inkscape::XML::Document *sp_repr_document_new(gchar const *rootname);
-
-/// Returns root node of document.
-inline Inkscape::XML::Node *sp_repr_document_root(Inkscape::XML::Document const *doc) {
-    if (!doc) return NULL;
-    return const_cast<Inkscape::XML::Node *>(doc->root());
-}
 
 /* Contents */
 /// Sets the node's \a key attribute to \a value.

@@ -1053,7 +1053,7 @@ sp_image_repr_read_image (Inkscape::XML::Node * repr)
 			if (pixbuf != NULL) return pixbuf;
 		} else if (!g_path_is_absolute (filename)) {
 			/* try to load from relative pos */
-			docbase = sp_repr_document_root (repr->document())->attribute("sodipodi:docbase");
+			docbase = repr->document()->root()->attribute("sodipodi:docbase");
 			if (!docbase) docbase = ".";
 			fullname = g_build_filename(docbase, filename, NULL);
 			pixbuf = Inkscape::IO::pixbuf_new_from_file( fullname, NULL );
