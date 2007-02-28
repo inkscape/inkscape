@@ -4434,7 +4434,6 @@ sp_connector_toolbox_new(SPDesktop *desktop)
 
 static void paintbucket_tolerance_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
-    prefs_set_int_attribute("tools.paintbucket", "tolerance", (gint)adj->value);
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
@@ -4447,8 +4446,8 @@ sp_paintbucket_toolbox_new(SPDesktop *desktop)
     {
         GtkWidget *tolerance = sp_tb_spinbutton(_("Tolerance:"),
                 _("The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"),
-                "tools.paintbucket", "tolerance", 8, NULL, tbl, TRUE,
-                "inkscape:paintbucket-tolerance", 0, 255, 1.0, 10.0,
+                "tools.paintbucket", "tolerance", 5, NULL, tbl, TRUE,
+                "inkscape:paintbucket-tolerance", 0, 100, 1.0, 10.0,
                 paintbucket_tolerance_changed, 1, 0);
 
         gtk_box_pack_start(GTK_BOX(tbl), tolerance, FALSE, FALSE,

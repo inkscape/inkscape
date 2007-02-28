@@ -431,7 +431,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     unsigned char *orig_px = get_pixel(px, (int)pw[NR::X], (int)pw[NR::Y], width);
     for (int i = 0; i < 4; i++) { orig_color[i] = orig_px[i]; }
 
-    int tolerance = prefs_get_int_attribute_limited("tools.paintbucket", "tolerance", 1, 0, 255);
+    int tolerance = (255 * prefs_get_int_attribute_limited("tools.paintbucket", "tolerance", 1, 0, 100)) / 100;
 
     while (!fill_queue.empty() && !aborted) {
       NR::Point cp = fill_queue.front();
