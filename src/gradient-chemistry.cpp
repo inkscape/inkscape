@@ -280,12 +280,9 @@ sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item)
 
         gr->gradientTransform = squeeze;
         {
-            gchar c[256];
-            if (sp_svg_transform_write(c, 256, gr->gradientTransform)) {
-                SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", c);
-            } else {
-                SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", NULL);
-            }
+            gchar *c=sp_svg_transform_write(gr->gradientTransform);
+            SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", c);
+            g_free(c);
         }
     } else {
         sp_repr_set_svg_double(repr, "x1", (center - NR::Point(width/2, 0))[NR::X]);
@@ -350,12 +347,9 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
         // apply skew to the gradient
         gr->gradientTransform = skew;
         {
-            gchar c[256];
-            if (sp_svg_transform_write(c, 256, gr->gradientTransform)) {
-                SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", c);
-            } else {
-                SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", NULL);
-            }
+            gchar *c=sp_svg_transform_write(gr->gradientTransform);
+            SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", c);
+            g_free(c);
         }
 
         // Matrix to convert points to userspace coords; postmultiply by inverse of skew so
@@ -423,12 +417,9 @@ sp_gradient_transform_multiply(SPGradient *gradient, NR::Matrix postmul, bool se
     }
     gradient->gradientTransform_set = TRUE;
 
-    gchar c[256];
-    if (sp_svg_transform_write(c, 256, gradient->gradientTransform)) {
-        SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", c);
-    } else {
-        SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", NULL);
-    }
+    gchar *c=sp_svg_transform_write(gradient->gradientTransform);
+    SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", c);
+    g_free(c);
 }
 
 SPGradient *
@@ -925,12 +916,9 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 				gradient->gradientTransform = new_transform;
 				gradient->gradientTransform_set = TRUE;
 				if (write_repr) {
-					gchar s[256];
-					if (sp_svg_transform_write(s, 256, gradient->gradientTransform)) {
-						SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", s);
-					} else {
-						SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", NULL);
-					}
+					gchar *s=sp_svg_transform_write(gradient->gradientTransform);
+				        SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", s);
+                                        g_free(s);
 				} else {
 					SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG);
 				}

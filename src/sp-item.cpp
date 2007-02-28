@@ -634,12 +634,9 @@ sp_item_write(SPObject *const object, Inkscape::XML::Node *repr, guint flags)
 {
     SPItem *item = SP_ITEM(object);
 
-    gchar c[256];
-    if (sp_svg_transform_write(c, 256, item->transform)) {
-        repr->setAttribute("transform", c);
-    } else {
-        repr->setAttribute("transform", NULL);
-    }
+    gchar *c = sp_svg_transform_write(item->transform);
+    repr->setAttribute("transform", c);
+    g_free(c);
 
     SPObject const *const parent = SP_OBJECT_PARENT(object);
     /** \todo Can someone please document why this is conditional on having

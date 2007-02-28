@@ -347,12 +347,9 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
                     sp_svg_transform_read(t_str, &item_t);
                 item_t *= local.inverse();
                 // (we're dealing with unattached repr, so we write to its attr instead of using sp_item_set_transform)
-                gchar affinestr[80];
-                if (sp_svg_transform_write(affinestr, 79, item_t)) {
-                    pathRepr->setAttribute("transform", affinestr);
-                } else {
-                    pathRepr->setAttribute("transform", NULL);
-                }
+                gchar *affinestr=sp_svg_transform_write(item_t);
+                pathRepr->setAttribute("transform", affinestr);
+                g_free(affinestr);
             }
 
             Inkscape::Selection *selection = sp_desktop_selection(desktop);

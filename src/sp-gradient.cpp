@@ -661,12 +661,9 @@ sp_gradient_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if ((flags & SP_OBJECT_WRITE_ALL) || gr->gradientTransform_set) {
-        gchar c[256];
-        if (sp_svg_transform_write(c, 256, gr->gradientTransform)) {
-            repr->setAttribute("gradientTransform", c);
-        } else {
-            repr->setAttribute("gradientTransform", NULL);
-        }
+        gchar *c=sp_svg_transform_write(gr->gradientTransform);
+        repr->setAttribute("gradientTransform", c);
+        g_free(c);
     }
 
     if ((flags & SP_OBJECT_WRITE_ALL) || gr->spread_set) {

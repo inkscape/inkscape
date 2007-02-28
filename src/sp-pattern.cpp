@@ -484,12 +484,9 @@ sp_pattern_transform_multiply (SPPattern *pattern, NR::Matrix postmul, bool set)
 	}
 	pattern->patternTransform_set = TRUE;
 
-	gchar c[256];
-	if (sp_svg_transform_write(c, 256, pattern->patternTransform)) {
-		SP_OBJECT_REPR(pattern)->setAttribute("patternTransform", c);
-	} else {
-		SP_OBJECT_REPR(pattern)->setAttribute("patternTransform", NULL);
-	}
+	gchar *c=sp_svg_transform_write(pattern->patternTransform);
+	SP_OBJECT_REPR(pattern)->setAttribute("patternTransform", c);
+	g_free(c);
 }
 
 const gchar *
@@ -503,13 +500,9 @@ pattern_tile (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matrix t
 	sp_repr_set_svg_double(repr, "width", bounds.extent(NR::X));
 	sp_repr_set_svg_double(repr, "height", bounds.extent(NR::Y));
 
-	gchar t[256];
-	if (sp_svg_transform_write(t, 256, transform)) {
-		repr->setAttribute("patternTransform", t);
-	} else {
-		repr->setAttribute("patternTransform", NULL);
-	}
-
+	gchar *t=sp_svg_transform_write(transform);
+	repr->setAttribute("patternTransform", t);
+	g_free(t);
 
 	defsrepr->appendChild(repr);
 	const gchar *pat_id = repr->attribute("id");

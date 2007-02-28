@@ -1286,12 +1286,9 @@ clonetiler_apply (GtkWidget *widget, void *)
                 center_set = true;
             }
 
-            gchar affinestr[80];
-            if (sp_svg_transform_write(affinestr, 79, t)) {
-                clone->setAttribute("transform", affinestr);
-            } else {
-                clone->setAttribute("transform", NULL);
-            }
+            gchar *affinestr=sp_svg_transform_write(t);
+            clone->setAttribute("transform", affinestr);
+            g_free(affinestr);
 
             if (opacity < 1.0) {
                 sp_repr_set_css_double(clone, "opacity", opacity);

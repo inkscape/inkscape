@@ -101,12 +101,9 @@ void sp_selection_copy_one (Inkscape::XML::Node *repr, NR::Matrix full_t, GSList
     // write the complete accumulated transform passed to us
     // (we're dealing with unattached repr, so we write to its attr 
     // instead of using sp_item_set_transform)
-    gchar affinestr[80];
-    if (sp_svg_transform_write(affinestr, 79, full_t)) {
-        copy->setAttribute("transform", affinestr);
-    } else {
-        copy->setAttribute("transform", NULL);
-    }
+    gchar *affinestr=sp_svg_transform_write(full_t);
+    copy->setAttribute("transform", affinestr);
+    g_free(affinestr);
 
     *clip = g_slist_prepend(*clip, copy);
 }
@@ -185,12 +182,9 @@ GSList *sp_selection_paste_impl (SPDocument *document, SPObject *parent, GSList 
                 sp_svg_transform_read(t_str, &item_t);
             item_t *= local.inverse();
             // (we're dealing with unattached repr, so we write to its attr instead of using sp_item_set_transform)
-            gchar affinestr[80];
-            if (sp_svg_transform_write(affinestr, 79, item_t)) {
-                copy->setAttribute("transform", affinestr);
-            } else {
-                copy->setAttribute("transform", NULL);
-            }
+            gchar *affinestr=sp_svg_transform_write(item_t);
+            copy->setAttribute("transform", affinestr);
+            g_free(affinestr);
         }
 
         parent->appendChildRepr(copy);
@@ -2549,10 +2543,9 @@ sp_selection_create_bitmap_copy ()
         }
 
         // Write transform
-        gchar c[256];
-        if (sp_svg_transform_write(c, 256, t)) {
-            repr->setAttribute("transform", c);
-        }
+        gchar *c=sp_svg_transform_write(t);
+        repr->setAttribute("transform", c);
+        g_free(t);
 
         // add the new repr to the parent
         parent->appendChild(repr);

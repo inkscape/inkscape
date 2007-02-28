@@ -387,12 +387,9 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 			// This is just a way to temporarily remember the transform in repr. When repr is
 			// reattached outside of the group, the transform will be written more properly
 			// (i.e. optimized into the object if the corresponding preference is set)
-			gchar affinestr[80];
-			if (sp_svg_transform_write(affinestr, 79, ctrans)) {
-				nrepr->setAttribute("transform", affinestr);
-			} else {
-				nrepr->setAttribute("transform", NULL);
-			}
+			gchar *affinestr=sp_svg_transform_write(ctrans);
+			nrepr->setAttribute("transform", affinestr);
+                        g_free(affinestr);
 
 			items = g_slist_prepend (items, nrepr);
 

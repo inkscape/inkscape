@@ -157,21 +157,20 @@ sp_svg_transform_read(gchar const *str, NR::Matrix *transform)
 
 #define EQ(a,b) (fabs ((a) - (b)) < 1e-9)
 
-unsigned
-sp_svg_transform_write(gchar str[], unsigned const size, NR::Matrix const &transform)
+gchar *
+sp_svg_transform_write(NR::Matrix const &transform)
 {
 	NRMatrix const t(transform);
-	return sp_svg_transform_write(str, size, &t);
+	return sp_svg_transform_write(&t);
 }
 
-unsigned
-sp_svg_transform_write(gchar str[], unsigned const size, NRMatrix const *transform)
+gchar *
+sp_svg_transform_write(NRMatrix const *transform)
 {
 	double e;
 
 	if (!transform) {
-		*str = 0;
-		return 0;
+		return NULL;
 	}
 
 	e = 0.000001 * NR_MATRIX_DF_EXPANSION (transform);
@@ -183,8 +182,7 @@ sp_svg_transform_write(gchar str[], unsigned const size, NRMatrix const *transfo
 		if (NR_DF_TEST_CLOSE (transform->c[4], 0.0, e) && NR_DF_TEST_CLOSE (transform->c[5], 0.0, e)) {
 			if (NR_DF_TEST_CLOSE (transform->c[0], 1.0, e) && NR_DF_TEST_CLOSE (transform->c[3], 1.0, e)) {
 				/* We are more or less identity */
-				*str = 0;
-				return 0;
+				return NULL;
 			} else {
 				/* We are more or less scale */
 				gchar c[256];
@@ -195,11 +193,9 @@ sp_svg_transform_write(gchar str[], unsigned const size, NRMatrix const *transfo
 				c[p++] = ',';
 				p += sp_svg_number_write_de (c + p, transform->c[3], prec, min_exp, FALSE);
 				c[p++] = ')';
+				c[p] = '\000';
 				g_assert( p <= sizeof(c) );
-				p = MIN (p, size - 1 );
-				memcpy (str, c, p);
-				str[p] = 0;
-				return p;
+				return g_strdup(c);
 			}
 		} else {
 			if (NR_DF_TEST_CLOSE (transform->c[0], 1.0, e) && NR_DF_TEST_CLOSE (transform->c[3], 1.0, e)) {
@@ -212,11 +208,9 @@ sp_svg_transform_write(gchar str[], unsigned const size, NRMatrix const *transfo
 				c[p++] = ',';
 				p += sp_svg_number_write_de (c + p, transform->c[5], prec, min_exp, FALSE);
 				c[p++] = ')';
+				c[p] = '\000';
 				g_assert( p <= sizeof(c) );
-				p = MIN(p, size - 1);
-				memcpy (str, c, p);
-				str[p] = 0;
-				return p;
+				return g_strdup(c);
 			} else {
 				gchar c[256];
 				unsigned p = 0;
@@ -234,11 +228,9 @@ sp_svg_transform_write(gchar str[], unsigned const size, NRMatrix const *transfo
 				c[p++] = ',';
 				p += sp_svg_number_write_de (c + p, transform->c[5], prec, min_exp, FALSE);
 				c[p++] = ')';
+				c[p] = '\000';
 				g_assert( p <= sizeof(c) );
-				p = MIN(p, size - 1);
-				memcpy (str, c, p);
-				str[p] = 0;
-				return p;
+				return g_strdup(c);
 			}
 		}
 	} else {
@@ -258,11 +250,9 @@ sp_svg_transform_write(gchar str[], unsigned const size, NRMatrix const *transfo
 		c[p++] = ',';
 		p += sp_svg_number_write_de (c + p, transform->c[5], prec, min_exp, FALSE);
 		c[p++] = ')';
+		c[p] = '\000';
 		g_assert( p <= sizeof(c) );
-		p = MIN(p, size - 1);
-		memcpy (str, c, p);
-		str[p] = 0;
-		return p;
+		return g_strdup(c);
 	}
 }
 

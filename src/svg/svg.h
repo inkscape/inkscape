@@ -57,8 +57,8 @@ std::string sp_svg_length_write_with_units(SVGLength const &length);
 
 bool sp_svg_transform_read(gchar const *str, NR::Matrix *transform);
 
-unsigned sp_svg_transform_write(gchar str[], unsigned size, NR::Matrix const &transform);
-unsigned sp_svg_transform_write(gchar str[], unsigned size, NRMatrix const *transform);
+gchar *sp_svg_transform_write(NR::Matrix const &transform);
+gchar *sp_svg_transform_write(NRMatrix const *transform);
 
 double sp_svg_read_percentage (const char * str, double def);
 
