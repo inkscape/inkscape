@@ -332,28 +332,29 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
         pathRepr->setAttribute("d", str);
         g_free(str);
 
-        // premultiply the item transform by the accumulated parent transform in the paste layer
-        NR::Matrix local = sp_item_i2doc_affine(SP_GROUP(desktop->currentLayer()));
-        if (!local.test_identity()) {
-            gchar const *t_str = pathRepr->attribute("transform");
-            NR::Matrix item_t (NR::identity());
-            if (t_str)
-                sp_svg_transform_read(t_str, &item_t);
-            item_t *= local.inverse();
-            // (we're dealing with unattached repr, so we write to its attr instead of using sp_item_set_transform)
-            gchar affinestr[80];
-            if (sp_svg_transform_write(affinestr, 79, item_t)) {
-                pathRepr->setAttribute("transform", affinestr);
-            } else {
-                pathRepr->setAttribute("transform", NULL);
-            }
-        }
-
         layer_repr->addChild(pathRepr, NULL);
 
         SPObject *reprobj = document->getObjectByRepr(pathRepr);
         if (reprobj) {
             sp_item_write_transform(SP_ITEM(reprobj), pathRepr, transform, NULL);
+            
+            // premultiply the item transform by the accumulated parent transform in the paste layer
+            NR::Matrix local = sp_item_i2doc_affine(SP_GROUP(desktop->currentLayer()));
+            if (!local.test_identity()) {
+                gchar const *t_str = pathRepr->attribute("transform");
+                NR::Matrix item_t (NR::identity());
+                if (t_str)
+                    sp_svg_transform_read(t_str, &item_t);
+                item_t *= local.inverse();
+                // (we're dealing with unattached repr, so we write to its attr instead of using sp_item_set_transform)
+                gchar affinestr[80];
+                if (sp_svg_transform_write(affinestr, 79, item_t)) {
+                    pathRepr->setAttribute("transform", affinestr);
+                } else {
+                    pathRepr->setAttribute("transform", NULL);
+                }
+            }
+
             Inkscape::Selection *selection = sp_desktop_selection(desktop);
             selection->set(reprobj);
             pathRepr->setPosition(-1);
