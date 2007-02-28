@@ -4434,6 +4434,7 @@ sp_connector_toolbox_new(SPDesktop *desktop)
 
 static void paintbucket_tolerance_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
+    prefs_set_int_attribute("tools.paintbucket", "tolerance", (gint)adj->value);
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
