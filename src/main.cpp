@@ -674,7 +674,7 @@ sp_main_gui(int argc, char const **argv)
         }
     }
 
-    Glib::signal_idle().connect(sigc::ptr_fun(&CmdLineAction::idle));
+    Glib::signal_idle().connect(sigc::ptr_fun(&Inkscape::CmdLineAction::idle));
     main_instance.run();
 
 #ifdef WIN32
@@ -756,8 +756,6 @@ sp_main_console(int argc, char const **argv)
             } else if (sp_query_x || sp_query_y) {
                 do_query_dimension (doc, false, sp_query_x? NR::X : NR::Y, sp_query_id);
             }
-
-            //CmdLineAction::doList(doc);
         }
 
         fl = g_slist_remove(fl, fl->data);
@@ -1409,7 +1407,7 @@ sp_process_args(poptContext ctx)
                 gchar const *arg = poptGetOptArg(ctx);
                 if (arg != NULL) {
                     // printf("Adding in: %s\n", arg);
-                    new CmdLineAction(a, arg);
+                    new Inkscape::CmdLineAction(a, arg);
                 }
                 break;
             }
