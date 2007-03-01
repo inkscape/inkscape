@@ -269,11 +269,15 @@ static bool compare_pixels(unsigned char *a, unsigned char *b, int tolerance) {
   return true;
 }
 
-static void try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, unsigned char *orig, int x, int y, int width, int tolerance) {
+static bool try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, unsigned char *orig, int x, int y, int width, int tolerance, bool fill_switch) {
   unsigned char *t = get_pixel(px, x, y, width);
   if (compare_pixels(t, orig, tolerance)) {
-    fill_queue->push(NR::Point(x, y));
+    if (fill_switch) {
+      fill_queue->push(NR::Point(x, y));
+      return false;
+    }
   }
+  return true;
 }
 
 static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
@@ -460,19 +464,27 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         int x = (int)cp[NR::X];
         int y = (int)cp[NR::Y];
         
+        bool top_fill = true;
+        bool bottom_fill = true;
+        
         if (y > 0) { 
-          try_add_to_queue(&fill_queue, px, orig_color, x, y - 1, width, tolerance);
+          top_fill = try_add_to_queue(&fill_queue, px, orig_color, x, y - 1, width, tolerance, top_fill);
         } else {
           aborted = true; break;
         }
         if (y < y_limit) { 
-          try_add_to_queue(&fill_queue, px, orig_color, x, y + 1, width, tolerance);
+          bottom_fill = try_add_to_queue(&fill_queue, px, orig_color, x, y + 1, width, tolerance, bottom_fill);
         } else {
           aborted = true; break;
         }
         
+        bool default_top_fill = top_fill;
+        bool default_bottom_fill = bottom_fill;
+        
         unsigned char *t, *trace_t;
         bool ok = false;
+        
+        trace_t = get_pixel(trace_px, left, y, width);
         
         do {
           ok = false;
@@ -481,10 +493,9 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
             t = get_pixel(px, left, y, width);
             if (compare_pixels(t, orig_color, tolerance)) {
               for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
-              trace_t = get_pixel(trace_px, left, y, width);
-              trace_t[3] = 255;
-              if (y > 0) { try_add_to_queue(&fill_queue, px, orig_color, left, y - 1, width, tolerance); }
-              if (y < y_limit) { try_add_to_queue(&fill_queue, px, orig_color, left, y + 1, width, tolerance); }
+              trace_t[3] = 255; trace_t -= 4;
+              if (y > 0) { top_fill = try_add_to_queue(&fill_queue, px, orig_color, left, y - 1, width, tolerance, top_fill); }
+              if (y < y_limit) { bottom_fill = try_add_to_queue(&fill_queue, px, orig_color, left, y + 1, width, tolerance, bottom_fill); }
               left--; ok = true;
             }
           } else {
@@ -492,6 +503,10 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
           }
         } while (ok);
       
+        top_fill = default_top_fill;
+        bottom_fill = default_bottom_fill;
+        trace_t = get_pixel(trace_px, right, y, width);
+        
         do {
           ok = false;
           // go right
@@ -499,10 +514,9 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
             t = get_pixel(px, right, y, width);
             if (compare_pixels(t, orig_color, tolerance)) {
               for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
-              trace_t = get_pixel(trace_px, right, y, width);
-              trace_t[3] = 255; 
-              if (y > 0) { try_add_to_queue(&fill_queue, px, orig_color, right, y - 1, width, tolerance); }
-              if (y < y_limit) { try_add_to_queue(&fill_queue, px, orig_color, right, y + 1, width, tolerance); }
+              trace_t[3] = 255; trace_t += 4;
+              if (y > 0) { top_fill = try_add_to_queue(&fill_queue, px, orig_color, right, y - 1, width, tolerance, top_fill); }
+              if (y < y_limit) { bottom_fill = try_add_to_queue(&fill_queue, px, orig_color, right, y + 1, width, tolerance, bottom_fill); }
               right++; ok = true;
             }
           } else {
