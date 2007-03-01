@@ -387,6 +387,10 @@ struct poptOption options[] = {
     POPT_AUTOHELP POPT_TABLEEND
 };
 
+#include <ui/view/view.h>
+#include <desktop.h>
+#include <helper/action.h>
+
 class CmdLineAction {
     gint _type;
     gchar * _arg;
@@ -410,16 +414,46 @@ public:
         }
     }
 
-    void doIt (SPDocument * doc) {
+    void doIt (Inkscape::UI::View::View * view) {
         printf("Doing: %s\n", _arg);
+        switch (_type) {
+            case SP_ARG_VERB: {
+                Inkscape::Verb * verb = Inkscape::Verb::getbyid(_arg);
+                if (verb == NULL) {
+                    printf(_("Unable to find verb ID '%s' specified on the command line.\n"), _arg);
+                }
+                SPAction * action = verb->get_action(view);
+                sp_action_perform(action, NULL);
+                break;
+            }
+            case SP_ARG_SELECT: {
+
+                break;
+            }
+        }
     }
 
-    static void doList (SPDocument * doc) {
+    static void doList (Inkscape::UI::View::View * view) {
         for (std::list<CmdLineAction *>::iterator i = _list.begin();
                 i != _list.end(); i++) {
             CmdLineAction * entry = *i;
-            entry->doIt(doc);
+            entry->doIt(view);
         }
+    }
+
+    static bool idle (void) {
+        std::list<SPDesktop *> desktops;
+        inkscape_get_all_desktops(desktops);
+
+        // We're going to assume one desktop per document, because no one
+        // should have had time to make more at this point.
+        for (std::list<SPDesktop *>::iterator i = desktops.begin();
+                i != desktops.end(); i++) {
+            SPDesktop * desktop = *i;
+            //Inkscape::UI::View::View * view = dynamic_cast<Inkscape::UI::View::View *>(desktop);
+            doList(desktop);
+        }
+        return false;
     }
 };
 std::list <CmdLineAction *> CmdLineAction::_list;
@@ -710,6 +744,7 @@ sp_main_gui(int argc, char const **argv)
         }
     }
 
+    Glib::signal_idle().connect(sigc::ptr_fun(&CmdLineAction::idle));
     main_instance.run();
 
 #ifdef WIN32
@@ -792,7 +827,7 @@ sp_main_console(int argc, char const **argv)
                 do_query_dimension (doc, false, sp_query_x? NR::X : NR::Y, sp_query_id);
             }
 
-            CmdLineAction::doList(doc);
+            //CmdLineAction::doList(doc);
         }
 
         fl = g_slist_remove(fl, fl->data);
