@@ -145,6 +145,8 @@ enum {
     SP_ARG_VERSION,
     SP_ARG_VACUUM_DEFS,
     SP_ARG_VERB_LIST,
+    SP_ARG_VERB,
+    SP_ARG_SELECT,
     SP_ARG_LAST
 };
 
@@ -372,8 +374,56 @@ struct poptOption options[] = {
      N_("List the IDs of all the verbs in Inkscape"),
      NULL},
 
+    {"verb", 0,
+     POPT_ARG_STRING, NULL, SP_ARG_VERB,
+     N_("Verb to call when Inkscape opens."),
+     N_("VERB-ID")},
+
+    {"select", 0,
+     POPT_ARG_STRING, NULL, SP_ARG_SELECT,
+     N_("Object ID to select when Inkscape opens."),
+     N_("OBJECT-ID")},
+
     POPT_AUTOHELP POPT_TABLEEND
 };
+
+class CmdLineAction {
+    gint _type;
+    gchar * _arg;
+
+    static std::list <CmdLineAction *> _list;
+
+public:
+    CmdLineAction (gint type, gchar const * arg) : _type(type), _arg(NULL) {
+        if (arg != NULL) {
+            _arg = g_strdup(arg);
+        }
+
+        _list.insert(_list.end(), this);
+
+        return;
+    }
+
+    ~CmdLineAction () {
+        if (_arg != NULL) {
+            g_free(_arg);
+        }
+    }
+
+    void doIt (SPDocument * doc) {
+        printf("Doing: %s\n", _arg);
+    }
+
+    static void doList (SPDocument * doc) {
+        for (std::list<CmdLineAction *>::iterator i = _list.begin();
+                i != _list.end(); i++) {
+            CmdLineAction * entry = *i;
+            entry->doIt(doc);
+        }
+    }
+};
+std::list <CmdLineAction *> CmdLineAction::_list;
+
 
 static bool needToRecodeParams = true;
 gchar* blankParam = "";
@@ -741,7 +791,10 @@ sp_main_console(int argc, char const **argv)
             } else if (sp_query_x || sp_query_y) {
                 do_query_dimension (doc, false, sp_query_x? NR::X : NR::Y, sp_query_id);
             }
+
+            CmdLineAction::doList(doc);
         }
+
         fl = g_slist_remove(fl, fl->data);
     }
 
@@ -1384,6 +1437,15 @@ sp_process_args(poptContext ctx)
                 Inkscape::Extension::init();
                 Inkscape::Verb::list();
                 exit(0);
+                break;
+            }
+            case SP_ARG_VERB:
+            case SP_ARG_SELECT: {
+                gchar const *arg = poptGetOptArg(ctx);
+                if (arg != NULL) {
+                    // printf("Adding in: %s\n", arg);
+                    new CmdLineAction(a, arg);
+                }
                 break;
             }
             default: {
