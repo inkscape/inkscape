@@ -319,6 +319,8 @@ public:
     /** \brief Accessor to get the internal variable. */
     gchar const * get_name (void) { return _name; }
     /** \brief Accessor to get the internal variable. */
+    gchar const * get_tip (void) { return _tip; }
+    /** \brief Accessor to get the internal variable. */
     gchar const * get_image (void) { return _image; }
 
     /** \brief Set the name after initialization. */
