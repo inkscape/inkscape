@@ -2404,6 +2404,12 @@ Verb *Verb::_base_verbs[] = {
 };
 
 
+void
+Verb::list (void) {
+    printf("Listing Verbs\n");
+
+};
+
 }  /* namespace Inkscape */
 
 /*

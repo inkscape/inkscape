@@ -401,8 +401,10 @@ protected:
         For testing, a subclass that returns this value can be created to verify that the
         length matches the enum values, etc.
     */
-    static int _getBaseListSize() {return G_N_ELEMENTS(_base_verbs);}
+    static int _getBaseListSize(void) {return G_N_ELEMENTS(_base_verbs);}
 
+public:
+    static void list (void);
 }; /* Verb class */
 
 

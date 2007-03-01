@@ -144,6 +144,7 @@ enum {
     SP_ARG_QUERY_ID,
     SP_ARG_VERSION,
     SP_ARG_VACUUM_DEFS,
+    SP_ARG_VERB_LIST,
     SP_ARG_LAST
 };
 
@@ -364,6 +365,11 @@ struct poptOption options[] = {
     {"vacuum-defs", 0,
      POPT_ARG_NONE, &sp_vacuum_defs, SP_ARG_VACUUM_DEFS,
      N_("Remove unused definitions from the defs section(s) of the document"),
+     NULL},
+
+    {"verb-list", 0,
+     POPT_ARG_NONE, NULL, SP_ARG_VERB_LIST,
+     N_("List the IDs of all the verbs in Inkscape"),
      NULL},
 
     POPT_AUTOHELP POPT_TABLEEND
@@ -1367,6 +1373,11 @@ sp_process_args(poptContext ctx)
             }
             case SP_ARG_EXTENSIONDIR: {
                 printf("%s\n", INKSCAPE_EXTENSIONDIR);
+                exit(0);
+                break;
+            }
+            case SP_ARG_VERB_LIST: {
+                Inkscape::Verb::list();
                 exit(0);
                 break;
             }
