@@ -784,7 +784,7 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 	}
 	nr_arena_item_invoke_update (pp->root, NULL, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_ALL);
 	if ( pp->use_cached_tile ) {
-		nr_arena_item_invoke_render (pp->root, &pp->cached_bbox, &pp->cached_tile, 0);
+		nr_arena_item_invoke_render (NULL, pp->root, &pp->cached_bbox, &pp->cached_tile, 0);
 	} else {
 		// nothing to do now
 	}
@@ -971,7 +971,7 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
 				// fixme: (Lauris)
 				nr_pixblock_setup_extern (&ppb, pb->mode, area.x0, area.y0, area.x1, area.y1, NR_PIXBLOCK_PX (pb), pb->rs, FALSE, FALSE);
 				
-				nr_arena_item_invoke_render (pp->root, &area, &ppb, 0);
+				nr_arena_item_invoke_render (NULL, pp->root, &area, &ppb, 0);
 				
 				nr_pixblock_release (&ppb);
 			}

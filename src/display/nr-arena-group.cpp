@@ -30,7 +30,7 @@ static void nr_arena_group_remove_child (NRArenaItem *item, NRArenaItem *child);
 static void nr_arena_group_set_child_position (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref);
 
 static unsigned int nr_arena_group_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int state, unsigned int reset);
-static unsigned int nr_arena_group_render (NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
+static unsigned int nr_arena_group_render (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
 static unsigned int nr_arena_group_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
 static NRArenaItem *nr_arena_group_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
 
@@ -235,7 +235,7 @@ void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
 }
 
 static unsigned int
-nr_arena_group_render (NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
+nr_arena_group_render (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
 {
 	NRArenaGroup *group = NR_ARENA_GROUP (item);
 
@@ -243,7 +243,7 @@ nr_arena_group_render (NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigne
 
 	/* Just compose children into parent buffer */
 	for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
-		ret = nr_arena_item_invoke_render (child, area, pb, flags);
+		ret = nr_arena_item_invoke_render (ct, child, area, pb, flags);
 		if (ret & NR_ARENA_ITEM_STATE_INVALID) break;
 	}
 

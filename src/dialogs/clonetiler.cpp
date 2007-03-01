@@ -798,7 +798,7 @@ clonetiler_trace_pick (NR::Rect box)
     nr_pixblock_setup_extern( &pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
                               ibox.x0, ibox.y0, ibox.x1, ibox.y1,
                               px, 4 * width, FALSE, FALSE );
-    nr_arena_item_invoke_render( trace_root, &ibox, &pb,
+    nr_arena_item_invoke_render(NULL, trace_root, &ibox, &pb,
                                  NR_ARENA_ITEM_RENDER_NO_CACHE );
 
     double R = 0, G = 0, B = 0, A = 0;

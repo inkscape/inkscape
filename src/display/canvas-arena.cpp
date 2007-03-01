@@ -287,14 +287,14 @@ streamline rendering.
 #ifdef STRICT_RGBA
             pb.visible_area = buf->visible_rect; 
 			if (pb.data.px != NULL) {
-  			    nr_arena_item_invoke_render (arena->root, &area, &pb, 0);
+				nr_arena_item_invoke_render (NULL, arena->root, &area, &pb, 0);
 				// this does the 32->24 squishing, using an assembler routine:
 			    nr_blit_pixblock_pixblock (&cb, &pb);
 			}
 			nr_pixblock_release (&pb);
 #else
-            cb.visible_area = buf->visible_rect; 
-			nr_arena_item_invoke_render (arena->root, &area, &cb, 0);
+			cb.visible_area = buf->visible_rect; 
+			nr_arena_item_invoke_render (NULL, arena->root, &area, &cb, 0);
 #endif
 
 			nr_pixblock_release (&cb);
@@ -458,6 +458,6 @@ sp_canvas_arena_render_pixblock (SPCanvasArena *ca, NRPixBlock *pb)
 	area.x1 = pb->area.x1;
 	area.y1 = pb->area.y1;
 
-	nr_arena_item_invoke_render (ca->root, &area, pb, 0);
+	nr_arena_item_invoke_render (NULL, ca->root, &area, pb, 0);
 }
 

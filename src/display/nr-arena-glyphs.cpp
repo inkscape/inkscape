@@ -313,7 +313,7 @@ static void nr_arena_glyphs_group_init(NRArenaGlyphsGroup *group);
 static void nr_arena_glyphs_group_finalize(NRObject *object);
 
 static guint nr_arena_glyphs_group_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset);
-static unsigned int nr_arena_glyphs_group_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
+static unsigned int nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
 static unsigned int nr_arena_glyphs_group_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
 static NRArenaItem *nr_arena_glyphs_group_pick(NRArenaItem *item, NR::Point p, gdouble delta, unsigned int sticky);
 
@@ -430,7 +430,7 @@ nr_arena_glyphs_group_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint s
 
 
 static unsigned int
-nr_arena_glyphs_group_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
+nr_arena_glyphs_group_render(cairo_t *ctt, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
 {
     NRArenaItem *child;
 

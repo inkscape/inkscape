@@ -83,7 +83,7 @@ GdkPixbuf* render_pixbuf(NRArenaItem* root, double scale_factor, const NR::Rect&
                               px + 4 * psize * (ua.y0 - area.y0) +
                               4 * (ua.x0 - area.x0),
                               4 * psize, FALSE, FALSE );
-    nr_arena_item_invoke_render( root, &ua, &B,
+    nr_arena_item_invoke_render(NULL, root, &ua, &B,
                                  NR_ARENA_ITEM_RENDER_NO_CACHE );
     nr_pixblock_release(&B);
 

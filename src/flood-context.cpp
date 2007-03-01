@@ -425,7 +425,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                               final_bbox.x0, final_bbox.y0, final_bbox.x1, final_bbox.y1,
                               px, 4 * width, FALSE, FALSE );
     
-    nr_arena_item_invoke_render( root, &final_bbox, &B, NR_ARENA_ITEM_RENDER_NO_CACHE );
+    nr_arena_item_invoke_render(NULL, root, &final_bbox, &B, NR_ARENA_ITEM_RENDER_NO_CACHE );
     nr_pixblock_release(&B);
     
     // Hide items

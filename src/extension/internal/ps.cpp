@@ -556,7 +556,7 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
                                      bbox.x0, bbox.y0, bbox.x1, bbox.y1,
                                      (guchar*)px, 4 * width, FALSE, FALSE);
             memset(px, 0xff, 4 * width * 64);
-            nr_arena_item_invoke_render(mod->root, &bbox, &pb, 0);
+            nr_arena_item_invoke_render(NULL, mod->root, &bbox, &pb, 0);
             /* Blitter goes here */
             NRMatrix imgt;
             imgt.c[0] = (bbox.x1 - bbox.x0) / dots_per_pt;

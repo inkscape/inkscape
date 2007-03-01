@@ -292,7 +292,7 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
  */
 
 unsigned int
-nr_arena_item_invoke_render (NRArenaItem *item, NRRectL const *area,
+nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area,
                              NRPixBlock *pb, unsigned int flags)
 {
    bool outline = (item->arena->rendermode == RENDERMODE_OUTLINE);
@@ -389,7 +389,7 @@ nr_arena_item_invoke_render (NRArenaItem *item, NRRectL const *area,
             item->background_pb = &ipb;
         }
         ipb.visible_area = pb->visible_area;
-        unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (item, &carea, &ipb, flags);
+        unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, &ipb, flags);
         if (state & NR_ARENA_ITEM_STATE_INVALID) {
             /* Clean up and return error */
             nr_pixblock_release (&ipb);
@@ -439,7 +439,7 @@ nr_arena_item_invoke_render (NRArenaItem *item, NRRectL const *area,
                     if (tpb.data.px != NULL) { // if memory allocation was successful
 
                         tpb.visible_area = pb->visible_area;
-                        unsigned int state = NR_ARENA_ITEM_VIRTUAL (item->mask, render) (item->mask, &carea, &tpb, flags);
+                        unsigned int state = NR_ARENA_ITEM_VIRTUAL (item->mask, render) (ct, item->mask, &carea, &tpb, flags);
                         if (state & NR_ARENA_ITEM_STATE_INVALID) {
                             /* Clean up and return error */
                             nr_pixblock_release (&tpb);
@@ -516,7 +516,7 @@ nr_arena_item_invoke_render (NRArenaItem *item, NRRectL const *area,
             // Render clipped or masked object in outline mode:
 
             // First, render the object itself 
-            unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (item, &carea, dpb, flags);
+            unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, dpb, flags);
             if (state & NR_ARENA_ITEM_STATE_INVALID) {
                 /* Clean up and return error */
                 if (dpb != pb)
@@ -529,12 +529,12 @@ nr_arena_item_invoke_render (NRArenaItem *item, NRRectL const *area,
             // render clippath as an object, using a different color
             if (item->clip) {
                 item->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "clips", 0x00ff00ff); // green clips
-                NR_ARENA_ITEM_VIRTUAL (item->clip, render) (item->clip, &carea, dpb, flags);
+                NR_ARENA_ITEM_VIRTUAL (item->clip, render) (ct, item->clip, &carea, dpb, flags);
             } 
             // render mask as an object, using a different color
             if (item->mask) {
                 item->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "masks", 0x0000ffff); // blue masks
-                NR_ARENA_ITEM_VIRTUAL (item->mask, render) (item->mask, &carea, dpb, flags);
+                NR_ARENA_ITEM_VIRTUAL (item->mask, render) (ct, item->mask, &carea, dpb, flags);
             }
             item->arena->outlinecolor = saved_rgba; // restore outline color
 
@@ -549,7 +549,7 @@ nr_arena_item_invoke_render (NRArenaItem *item, NRRectL const *area,
         dpb->empty = FALSE;
     } else {
         /* Just render */
-        unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (item, &carea, dpb, flags);
+        unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, dpb, flags);
         if (state & NR_ARENA_ITEM_STATE_INVALID) {
             /* Clean up and return error */
             if (dpb != pb)

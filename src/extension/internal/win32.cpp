@@ -344,7 +344,7 @@ PrintWin32::finish (Inkscape::Extension::Print *mod)
 
 		memset (px, 0xff, 4 * num_rows * width);
 		/* Render */
-		nr_arena_item_invoke_render (mod->root, &bbox, &pb, 0);
+		nr_arena_item_invoke_render (NULL, mod->root, &bbox, &pb, 0);
 
 		/* Swap red and blue channels; we use RGBA, whereas
 		 * the Win32 GDI uses BGRx.

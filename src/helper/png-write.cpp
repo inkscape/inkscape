@@ -273,7 +273,7 @@ sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
     }
 
     /* Render */
-    nr_arena_item_invoke_render(ebp->root, &bbox, &pb, 0);
+    nr_arena_item_invoke_render(NULL, ebp->root, &bbox, &pb, 0);
 
     for (int r = 0; r < num_rows; r++) {
         rows[r] = NR_PIXBLOCK_PX(&pb) + r * pb.rs;

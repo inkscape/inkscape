@@ -49,7 +49,7 @@ static void nr_arena_shape_remove_child(NRArenaItem *item, NRArenaItem *child);
 static void nr_arena_shape_set_child_position(NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref);
 
 static guint nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset);
-static unsigned int nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
+static unsigned int nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
 static guint nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
 static NRArenaItem *nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
 
@@ -850,7 +850,7 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
  * Renders the item.  Markers are just composed into the parent buffer.
  */
 static unsigned int
-nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
+nr_arena_shape_render(cairo_t *ctt, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
 
@@ -980,7 +980,7 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
     /* Just compose children into parent buffer */
     for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
         unsigned int ret;
-        ret = nr_arena_item_invoke_render(child, area, pb, flags);
+        ret = nr_arena_item_invoke_render(ctt, child, area, pb, flags);
         if (ret & NR_ARENA_ITEM_STATE_INVALID) return ret;
     }
 

@@ -59,6 +59,7 @@
 #include "gc-soft-ptr.h"
 #include "nr-arena-forward.h"
 #include "display/nr-filter.h"
+#include <cairo.h>
 
 struct NRGC {
 	NRGC(NRGC const *p) : parent(p) {}
@@ -122,7 +123,7 @@ struct NRArenaItemClass : public NRObjectClass {
 	void (* set_child_position) (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref);
 
 	unsigned int (* update) (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int state, unsigned int reset);
-	unsigned int (* render) (NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
+	unsigned int (* render) (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
 	unsigned int (* clip) (NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
 	NRArenaItem * (* pick) (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
 };
@@ -151,7 +152,7 @@ void nr_arena_item_set_child_position (NRArenaItem *item, NRArenaItem *child, NR
 
 unsigned int nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int state, unsigned int reset);
 
-unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area, NRPixBlock *pb, unsigned int flags);
+unsigned int nr_arena_item_invoke_render(cairo_t *ct, NRArenaItem *item, NRRectL const *area, NRPixBlock *pb, unsigned int flags);
 
 unsigned int nr_arena_item_invoke_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
 NRArenaItem *nr_arena_item_invoke_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
