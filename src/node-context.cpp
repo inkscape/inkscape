@@ -275,7 +275,6 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                             bool over_stroke = nc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), true);
                             //only dragging curves
                             if (over_stroke) {
-                                nc->shape_editor->select_segment_near_point(false);
                                 ret = TRUE;
                             } else {
                                 break;
