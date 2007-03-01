@@ -75,7 +75,9 @@ display_libspdisplay_a_SOURCES = \
 	display/pixblock-scaler.cpp     \
 	display/pixblock-scaler.h       \
 	display/pixblock-transform.cpp  \
-	display/pixblock-transform.h
+	display/pixblock-transform.h    \
+	display/inkscape-cairo.cpp      \
+	display/inkscape-cairo.h
 
 display_bezier_utils_test_SOURCES = display/bezier-utils-test.cpp
 display_bezier_utils_test_LDADD = libnr/libnr.a -lglib-2.0

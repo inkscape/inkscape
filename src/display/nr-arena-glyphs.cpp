@@ -18,9 +18,14 @@
 #endif
 #include <libnr/nr-blit.h>
 #include <libnr/nr-path.h>
+#include <libnr/n-art-bpath.h>
+#include <libnr/nr-matrix-ops.h>
+#include <libnr/nr-matrix-fns.h>
 #include "../style.h"
 #include "nr-arena.h"
 #include "nr-arena-glyphs.h"
+#include <cairo.h>
+#include "inkscape-cairo.h"
 
 #ifdef test_glyph_liv
 #include "../display/canvas-bpath.h"
@@ -423,7 +428,6 @@ nr_arena_glyphs_group_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint s
     return NR_ARENA_ITEM_STATE_ALL;
 }
 
-/* This sucks - as soon, as we have inheritable renderprops, do something with that opacity */
 
 static unsigned int
 nr_arena_glyphs_group_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
@@ -435,6 +439,40 @@ nr_arena_glyphs_group_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, u
     SPStyle const *style = ggroup->style;
 
     guint ret = item->state;
+
+    if (item->arena->rendermode == RENDERMODE_OUTLINE) {
+
+        cairo_t *ct = nr_create_cairo_context (area, pb);
+
+        if (!ct) 
+            return item->state;
+
+        guint32 rgba = item->arena->outlinecolor;
+        cairo_set_source_rgba(ct, SP_RGBA32_R_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_B_F(rgba), SP_RGBA32_A_F(rgba));
+        cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
+
+        for (child = group->children; child != NULL; child = child->next) {
+            NRArenaGlyphs *g = NR_ARENA_GLYPHS(child);
+
+            NArtBpath *bpath = (NArtBpath *) g->font->ArtBPath(g->glyph);
+
+            cairo_new_path(ct);
+            NR::Matrix g_t(g->g_transform);
+            feed_curve_to_cairo (ct, bpath, g_t * group->ctm, NR::Point(area->x0, area->y0));
+            cairo_fill(ct);
+        }
+
+        cairo_surface_t *cst = cairo_get_target(ct);
+        cairo_destroy (ct);
+        cairo_surface_finish (cst);
+        cairo_surface_destroy (cst);
+
+        pb->empty = FALSE;
+        return ret;
+    }
+
+
+
 
     /* Fill */
     if (style->fill.type != SP_PAINT_TYPE_NONE || item->arena->rendermode == RENDERMODE_OUTLINE) {
