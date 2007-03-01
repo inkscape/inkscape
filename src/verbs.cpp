@@ -2415,7 +2415,7 @@ Verb::list (void) {
             continue;
         }
 
-        printf("\"%s\", \"%s\"\n", verb->get_id(), verb->get_name());
+        printf("%s: %s\n", verb->get_id(), verb->get_tip()? verb->get_tip() : verb->get_name());
     }
 
     return;
