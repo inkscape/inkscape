@@ -13,11 +13,26 @@
 # ./build-gtk build inkscape
 #
 
+# XXX: Check for xargs with -i
+#
+# In lib/pkgconfig/freetpe2.pc
+#
+# -  Libs: -L${libdir} -lfreetype -lz
+# +  Libs: -L${libdir} -lfreetype -lz -Wl,-framework,CoreServices,-framework,ApplicationServices 
+#
+# bin/freetype-config
+#
+# -  libs="-lfreetype -lz"
+# +  libs="-lfreetype -lz -Wl,-framework,CoreServices,-framework,ApplicationServices"
+#
+# In lib/pkgconfig/fontconfig.pc
+#	Add -lexpat
+#	
 
-version=1.2-inkscape
+version=1.3-inkscape
 
 export PREFIX=${PREFIX-/opt/gtk}
-export PATH=$PREFIX/bin:$PATH
+export PATH=$PREFIX/bin:/usr/bin:$PATH
 #export PATH=$PREFIX/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:
 export LIBTOOLIZE=$PREFIX/bin/libtoolize
 
@@ -30,18 +45,97 @@ export CPPFLAGS=-I$PREFIX/include
 
 export XDG_DATA_DIRS=$PREFIX/share
 
+COMMON_OPTIONS="--prefix=$PREFIX --disable-static --enable-shared \
+--disable-gtk-doc --disable-scrollkeeper"
+
+#export MAKEFLAGS=-j2
+
+if [ "x$UNIVERSAL_BUILD" = "xYes" ]; then
+    COMMON_OPTIONS="$COMMON_OPTIONS --disable-dependency-tracking"
+
+    export SDK="/Developer/SDKs/MacOSX10.4u.sdk"
+    export MACOSX_DEPLOYMENT_TARGET=10.4
+    #export MACOSX_DEPLOYMENT_TARGET_i386=10.4
+    #export MACOSX_DEPLOYMENT_TARGET_ppc=10.3
+    export CFLAGS="-isysroot ${SDK} -arch ppc -arch i386"
+    export CXXFLAGS="-isysroot ${SDK} -arch ppc -arch i386"
+
+    CONFIGURE_pkg_config="--with-pc-path=$PREFIX/lib/pkgconfig:/usr/X11R6/lib/pkgconfig --enable-indirect-deps --disable-dependency-tracking"
+
+    CONFIGURE_libpng="--disable-dependency-tracking"
+    PRECONFIGURE_libpng="eval CPPFLAGS='$CPPFLAGS -DPNG_NO_ASSEMBLER_CODE'"
+    
+    CONFIGURE_tiff="--disable-dependency-tracking"
+
+    POSTCONFIGURE_jpeg_6b="patch_libtool_dylib"
+    
+    CONFIGURE_gc="--disable-dependency-tracking"
+    POSTCONFIGURE_gc="patch_libtool_dylib"
+    PRECONFIGURE_gc="eval CFLAGS='$CFLAGS -DUSE_GENERIC_PUSH_REGS'"
+    
+    POSTCONFIGURE_freetype="eval cd builds/unix/ && pwd && patch_libtool_dylib && cd ../.."
+
+    CONFIGURE_fontconfig="--disable-dependency-tracking --disable-docs"
+    POSTCONFIGURE_fontconfig="eval cd fc-arch && make all && cd .. && perl -pi~ -e 's|#define FC_ARCHITECTURE \"x86\"|#ifdef __ppc__\n#define FC_ARCHITECTURE \"ppc\"\n#else\n#define FC_ARCHITECTURE \"x86\"\n#endif|g' fc-arch/fcarch.h"
+
+    CONFIGURE_cairo="--disable-dependency-tracking --enable-shared --disable-quartz --disable-atsui --enable-glitz"
+    POSTCONFIGURE_cairo="patch_libtool_dylib"
+    
+    CONFIGURE_glitz="--disable-dependency-tracking"
+
+    CONFIGURE_lcms="--disable-dependency-tracking"
+    
+    CONFIGURE_glib="$COMMON_OPTIONS"
+    POSTCONFIGURE_glib="eval make glibconfig.h config.h && cp ~/ws-fat/{glib,}config.h ."
+    #POSTCONFIGURE_glib="eval make glibconfig.h && perl -pi~ -e 's|#define G_BYTE_ORDER G_LITTLE_ENDIAN|#include <machine/endian.h>\n#define G_BYTE_ORDER __DARWIN_BYTE_ORDER|g' glibconfig.h"
+    
+    CONFIGURE_pango="$COMMON_OPTIONS"
+    POSTCONFIGURE_pango="eval perl -pi~ -e 's|SUBDIRS = pango modules examples docs tools tests|SUBDIRS = pango modules docs tools tests|g' Makefile && perl -pi~ -e 's|harfbuzz_dump_LDADD = |harfbuzz_dump_LDADD = -Xlinker -framework -Xlinker CoreServices -Xlinker -framework -Xlinker ApplicationServices|g' pango/opentype/Makefile"
+    
+    CONFIGURE_gtk="$COMMON_OPTIONS"
+
+    CONFIGURE_atk="$COMMON_OPTIONS"
+    
+    CONFIGURE_libxml2="$COMMON_OPTIONS"
+    
+    CONFIGURE_libsigc="$COMMON_OPTIONS"
+    POSTCONFIGURE_libsigc="patch_libtool_dylib"
+    
+    CONFIGURE_glibmm="$COMMON_OPTIONS"
+    
+    CONFIGURE_cairomm="$COMMON_OPTIONS"
+    
+    CONFIGURE_gtkmm="$COMMON_OPTIONS --disable-examples --disable-demos"
+    POSTCONFIGURE_gtkmm="patch_libtool_dylib"
+    
+    CONFIGURE_libxslt="$COMMON_OPTIONS"
+    
+    CONFIGURE_popt="$COMMON_OPTIONS"
+    POSTCONFIGURE_popt="patch_libtool_dylib"
+fi
+
+if [ "x$PANTHER_BUILD" = "xYes" ]; then
+    # XXX: Check the machine is PPC
+    #      or rework to have things like pkg-config built natively.
+
+    # Overwrite some build settings.
+    export SDK="/Developer/SDKs/MacOSX10.3.9.sdk"
+    export MACOSX_DEPLOYMENT_TARGET=10.3
+    export CFLAGS="-isysroot ${SDK} -arch ppc"
+    export CXXFLAGS="-isysroot ${SDK} -arch ppc"
+fi
+
+
 # Support install-check from jhbuild to speed up compilation
 if [ -x $PREFIX/bin/install-check ]; then
     export INSTALL=$PREFIX/bin/install-check
 fi
 
-COMMON_OPTIONS="--prefix=$PREFIX --disable-static --enable-shared \
---disable-gtk-doc --disable-scrollkeeper"
 
 SOURCE=${SOURCE-$HOME/Source/gtk}
-GNOMECVSROOT=${GNOMECVSROOT-:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome}
 CAIROCVSROOT=${CAIROCVSROOT-:pserver:anoncvs@cvs.freedesktop.org:/cvs/cairo}
-INKSCAPEREPURL="https://svn.sourceforge.net/svnroot/inkscape/inkscape/trunk"
+INKSCAPESVNURL="https://svn.sourceforge.net/svnroot/inkscape"
+GNOMESVNURL=${GNOMESVNURL-https://svn.gnome.org/svn}
 
 if [ x$1 = xrun ]; then
     cmd="$2"
@@ -80,8 +174,8 @@ function print_usage
     echo "installing in /opt/gtk. Make sure your user has write access to the"
     echo "latter directory. You can override those directories by setting the"
     echo "SOURCE and PREFIX environment variables. Anoncvs is used by default"
-    echo "for access to GNOME CVS, if you wish to override, set the environment"
-    echo "variable GNOMECVSROOT to your own account."
+    echo "for access to GNOME SVN, if you wish to override, set the environment"
+    echo "variable GNOMESVNURL to your own account."
     echo
     echo "While in the shell that this script provides, the environment variable"
     echo "INSIDE_GTK_BUILD is set, which makes it possible to put something like"
@@ -137,6 +231,11 @@ function tarball_get_and_build
     INSTCMD="make install"
     PREFIXARG="--prefix=$PREFIX"
     COMMONOPTS="$COMMON_OPTIONS"
+   
+    SHORTNAME=`echo $DIRNAME | sed -e s,-*[0-9\.]*$,,`
+    if !(echo "$MODULES" | grep -w $SHORTNAME) >/dev/null; then
+	return 0
+    fi
     
     echo
     echo "Building $DIRNAME"
@@ -159,19 +258,43 @@ function tarball_get_and_build
     	COMMONOPTS="--shared"
     fi
     
+    # Modify specific configure options
+    UNDERSCORENAME=`echo $SHORTNAME | sed -e s,-,_, | tr -d '+'`
+    CONFIGURE_EXTRA=`eval echo '\$'{CONFIGURE_$UNDERSCORENAME}`
+    if [ "x$CONFIGURE_EXTRA" != "x" ]; then
+        COMMONOPTS="$COMMONOPTS $CONFIGURE_EXTRA"
+    fi
+    PRECONFIGURE=`eval echo '\$'{PRECONFIGURE_$UNDERSCORENAME}`
+    if [ "x$PRECONFIGURE" == "x" ]; then
+        PRECONFIGURE="true"
+    fi
+    POSTCONFIGURE=`eval echo '\$'{POSTCONFIGURE_$UNDERSCORENAME}`
+    if [ "x$POSTCONFIGURE" == "x" ]; then
+        POSTCONFIGURE="true"
+    fi
+    
     cd $SOURCE || return 1
     download $1 || return 1
     should_build $DIRNAME || return 0
     tar ${COMP}xf $BASENAME && \
 	cd $DIRNAME && \
+	$PRECONFIGURE && \
 	echo "./configure $PREFIXARG $COMMONOPTS $2" && \
-	./configure $PREFIXARG $COMMONOPTS $2 && make && $INSTCMD && touch BUILT
+	./configure $PREFIXARG $COMMONOPTS $2 && \
+	$POSTCONFIGURE && \
+	make && $INSTCMD && touch BUILT
 }
+
 
 function cpan_get_and_build
 {
     BASENAME=`basename $1`
     DIRNAME=`echo $BASENAME | sed -e s,.tar.*,,`
+    
+    SHORTNAME=`echo $DIRNAME | sed -e s,-*[0-9\.]*$,,`
+    if !(echo "$MODULES" | grep -w $SHORTNAME) >/dev/null; then
+	return 0
+    fi
     
     echo
     echo "Building $DIRNAME"
@@ -255,7 +378,7 @@ function svn_get_and_build
 	cd $2
 	svn up || return
     else
-	svn co $1 $2 || return
+	svn co $1/$2/trunk $2 || return
 	cd $2
     fi
     
@@ -296,34 +419,39 @@ function do_exit
 # Make sure to restore the title when done.
 trap do_exit EXIT SIGINT SIGTERM
 
-if (echo "$*" | grep bootstrap) >/dev/null; then
-    if [ "x`cg-version 2>/dev/null`" == "x" ]; then
-	echo "You need the cogito to get cairo from git. It's available e.g. in Darwin ports."
-	exit 1
+
+# configure doesn't pass CFLAGS through to generated libtool 
+function patch_libtool_dylib()
+{
+    # Only do this for universal builds.
+    if [ "x$UNIVERSAL_BUILD" != "xYes" ]; then
+        return 0
     fi
-    if [ "x`which svn 2>/dev/null`" == "x" ]; then
-	echo "You need the svn client to get inkscape."
-	exit 1
+
+    cp libtool libtool.old
+    perl -pi -e "s@-dynamiclib@$CFLAGS \$&@" libtool
+    if test "x$1" = "xwithbundle"; then
+        perl -pi -e "s@-bundle@$CFLAGS \$&@" libtool
     fi
-    
-    mkdir -p $SOURCE 2>/dev/null || (echo "Error: Couldn't create source checkout dir $SOURCE"; exit 1)
-    mkdir -p $PREFIX/bin 2>/dev/null || (echo "Error: Couldn't create bin dir $PREFIX/bin"; exit 1)
-    
-    echo "Building bootstrap packages."
-    
+}
+
+
+function process_modules()
+{
+    # Bootstrap packages.
     PACKAGES=" \
-	http://pkgconfig.freedesktop.org/releases/pkg-config-0.20.tar.gz \
+	http://pkgconfig.freedesktop.org/releases/pkg-config-0.21.tar.gz \
 	http://ftp.gnu.org/gnu/libtool/libtool-1.5.22.tar.gz \
-	http://ftp.gnu.org/gnu/autoconf/autoconf-2.59.tar.bz2 \
+	http://ftp.gnu.org/gnu/autoconf/autoconf-2.61.tar.bz2 \
 	http://ftp.gnu.org/pub/gnu/automake/automake-1.7.9.tar.bz2 \
 	http://ftp.gnu.org/gnu/automake/automake-1.9.6.tar.bz2 \
-	http://heanet.dl.sourceforge.net/sourceforge/libpng/libpng-1.2.12.tar.bz2 \
+	http://heanet.dl.sourceforge.net/sourceforge/libpng/libpng-1.2.15.tar.bz2 \
 	ftp://ftp.remotesensing.org/pub/libtiff/tiff-3.8.2.tar.gz \
 	http://people.imendio.com/richard/gtk-osx/files/jpeg-6b.tar.gz \
-	http://ftp.gnu.org/gnu/gettext/gettext-0.14.5.tar.gz \
+	http://ftp.gnu.org/gnu/gettext/gettext-0.16.tar.gz \
 	http://heanet.dl.sourceforge.net/sourceforge/expat/expat-2.0.0.tar.gz \
-	http://heanet.dl.sourceforge.net/sourceforge/freetype/freetype-2.1.10.tar.bz2 \
-	http://fontconfig.org/release/fontconfig-2.3.2.tar.gz \
+	http://heanet.dl.sourceforge.net/sourceforge/freetype/freetype-2.3.0.tar.bz2 \
+	http://fontconfig.org/release/fontconfig-2.4.2.tar.gz \
 	http://people.imendio.com/richard/gtk-osx/files/docbook-files-1.tar.gz \
 	http://www.cs.mu.oz.au/~mjwybrow/gtk-osx/gnome-doc-utils-fake-1.tar.gz \
 	"
@@ -333,7 +461,7 @@ if (echo "$*" | grep bootstrap) >/dev/null; then
     for PACKAGE in $PACKAGES; do
 	tarball_get_and_build $PACKAGE || exit 1
     done
-    
+
     PACKAGE=http://ftp.gnome.org/pub/GNOME/sources/gtk-doc/1.6/gtk-doc-1.6.tar.bz2
     tarball_get_and_build $PACKAGE "--with-xml-catalog=$PREFIX/etc/xml/catalog" || exit 1
     
@@ -349,8 +477,97 @@ if (echo "$*" | grep bootstrap) >/dev/null; then
     for PACKAGE in $PACKAGES; do
 	tarball_get_and_build $PACKAGE || exit 1
     done
+
+
+    # Other packages:
+    if [ "$UNIVERSAL_BUILD" == "Yes" ];
+    then
+    	tarball_get_and_build http://cairographics.org/snapshots/glitz-0.5.6.tar.gz || exit 1
+    	tarball_get_and_build http://cairographics.org/releases/cairo-1.2.6.tar.gz || exit 1
+        tarball_get_and_build http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/gc6.8.tar.gz || exit 1
+        tarball_get_and_build http://www.littlecms.com/lcms-1.16.tar.gz || exit 1
+        tarball_get_and_build ftp://ftp.gtk.org/pub/glib/2.12/glib-2.12.9.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/pango/1.14/pango-1.14.5.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/atk/1.12/atk-1.12.4.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/gtk+/2.10/gtk+-2.10.9.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libxml2/2.6/libxml2-2.6.26.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libsigc++/2.0/libsigc++-2.0.17.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/glibmm/2.12/glibmm-2.12.4.tar.bz2 || exit 1
+        tarball_get_and_build http://cairographics.org/releases/cairomm-1.2.4.tar.gz || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/gtkmm/2.10/gtkmm-2.10.6.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libxslt/1.1/libxslt-1.1.17.tar.bz2 || exit 1
+	tarball_get_and_build ftp://ftp.rpm.org/pub/rpm/dist/rpm-4.1.x/popt-1.7.tar.gz || exit 1
+
+        svn_get_and_build $INKSCAPESVNURL inkscape || exit 1
+
+	exit 0
+    else
+	    git_get_and_build git://git.cairographics.org/git cairo "--enable-pdf --enable-atsui --enable-quartz --disable-xlib" || exit 1
+
+	    tarball_get_and_build http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/gc6.7.tar.gz || exit 1
+	    tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libsigc++/2.0/libsigc++-2.0.17.tar.gz || exit 1
+	    tarball_get_and_build http://ftp.stack.nl/pub/users/dimitri/doxygen-1.5.1.src.tar.gz || exit 1
+	    tarball_get_and_build ftp://ftp.rpm.org/pub/rpm/dist/rpm-4.1.x/popt-1.7.tar.gz || exit 1
+    fi
+
+    svn_get_and_build $GNOMESVNURL libxml2 || exit 1
+    svn_get_and_build $GNOMESVNURL libxslt || exit 1
+    svn_get_and_build $GNOMESVNURL gnome-common || exit 1
+    svn_get_and_build $GNOMESVNURL glib || exit 1
+    svn_get_and_build $GNOMESVNURL atk || exit 1
+    svn_get_and_build $GNOMESVNURL pango "--without-x" || exit 1
+    svn_get_and_build $GNOMESVNURL gtk+ "--with-gdktarget=quartz" || exit 1
+    svn_get_and_build $GNOMESVNURL gtk-engines || exit 1
+    svn_get_and_build $GNOMESVNURL loudmouth "--with-ssl=openssl" || exit 1
+    svn_get_and_build $GNOMESVNURL libglade || exit 1
+    # gossip needs xml2po from gnome-doc-utils.
+    svn_get_and_build $GNOMESVNURL gossip "--with-backend=cocoa" || exit 1
+    svn_get_and_build $CAIROCVSROOT pycairo || exit 1
+    svn_get_and_build $GNOMESVNURL pygobject "--disable-docs" || exit 1
+    svn_get_and_build $GNOMESVNURL pygtk "--disable-docs" || exit 1
+
+    svn_get_and_build $GNOMESVNURL glibmm "--disable-docs --disable-fulldocs" || exit 1
+    cvs_get_and_build $CAIROCVSROOT cairomm || exit 1
+    svn_get_and_build $GNOMESVNURL gtkmm "--disable-docs --disable-examples --disable-demos" || exit 1
+
+    svn_get_and_build $INKSCAPESVNURL inkscape || exit 1
+
+
+    #svn_get_and_build $GNOMESVNURL gimp || exit 1
+    # For gimp:
+    # libart_lgpl, needs automake 1.4 and doesn't run libtoolize
+    # gtkhtml2 (optional)
+    # libpoppler (optional)
+    # ./autogen.sh --prefix=/opt/gimp --disable-gtk-doc 
+}
+
+if (echo "$*" | grep bootstrap) >/dev/null; then
+    if [ "x`cg-version 2>/dev/null`" == "x" ]; then
+	echo "You need the cogito to get cairo from git. It's available e.g. in Darwin ports."
+	exit 1
+    fi
+    if [ "x`which svn 2>/dev/null`" == "x" ]; then
+	echo "You need the svn client to get inkscape."
+	exit 1
+    fi
     
-    # Setup glibtool* links since some stuff expects them to be named like that on OSX
+    mkdir -p $SOURCE 2>/dev/null || \
+        (echo "Error: Couldn't create source checkout dir $SOURCE"; exit 1)
+    mkdir -p $PREFIX/bin 2>/dev/null || \
+        (echo "Error: Couldn't create bin dir $PREFIX/bin"; exit 1)
+    
+    echo "Building bootstrap packages."
+ 
+    MODULES="pkg-config libtool autoconf automake libpng till jpeg-6b gettext \
+             expat fontconfig docbook-files \
+	     "
+	     # freetype
+	     # XML-Parser intltool hicolor-icon-theme gnome-icon-theme"
+	     # gnome-doc-utils-fake gtk-doc \
+    process_modules
+    
+    # Setup glibtool* links since some stuff expects them to be named like 
+    # that on OSX
     if [ -z $PREFIX/bin/glibtoolize ]; then
 	ln -s $PREFIX/bin/libtoolize $PREFIX/bin/glibtoolize
 	ln -s $PREFIX/bin/libtool $PREFIX/bin/glibtool
@@ -386,41 +603,8 @@ elif [ "x$1" = xinkscape ]; then
     MODULES="$INKSCAPE_MODULES"
 fi
 
-git_get_and_build git://git.cairographics.org/git cairo "--enable-pdf --enable-atsui --enable-quartz --disable-xlib" || exit 1
-
-tarball_get_and_build http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/gc6.7.tar.gz || exit 1
-tarball_get_and_build http://www.littlecms.com/lcms-1.15.tar.gz || exit 1
-tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libsigc++/2.0/libsigc++-2.0.17.tar.gz || exit 1
-tarball_get_and_build http://ftp.stack.nl/pub/users/dimitri/doxygen-1.5.1.src.tar.gz || exit 1
-tarball_get_and_build ftp://ftp.rpm.org/pub/rpm/dist/rpm-4.1.x/popt-1.7.tar.gz || exit 1
-
-cvs_get_and_build $GNOMECVSROOT libxml2 || exit 1
-cvs_get_and_build $GNOMECVSROOT libxslt || exit 1
-cvs_get_and_build $GNOMECVSROOT gnome-common || exit 1
-cvs_get_and_build $GNOMECVSROOT glib || exit 1
-cvs_get_and_build $GNOMECVSROOT atk || exit 1
-cvs_get_and_build $GNOMECVSROOT pango "--without-x" || exit 1
-cvs_get_and_build $GNOMECVSROOT gtk+ "--with-gdktarget=quartz" || exit 1
-cvs_get_and_build $GNOMECVSROOT gtk-engines || exit 1
-cvs_get_and_build $GNOMECVSROOT loudmouth "--with-ssl=openssl" || exit 1
-cvs_get_and_build $GNOMECVSROOT libglade || exit 1
-# gossip needs xml2po from gnome-doc-utils.
-cvs_get_and_build $GNOMECVSROOT gossip "--with-backend=cocoa" || exit 1
-cvs_get_and_build $CAIROCVSROOT pycairo || exit 1
-cvs_get_and_build $GNOMECVSROOT pygobject "--disable-docs" || exit 1
-cvs_get_and_build $GNOMECVSROOT pygtk "--disable-docs" || exit 1
-
-cvs_get_and_build $GNOMECVSROOT glibmm "--disable-docs --disable-fulldocs" || exit 1
-cvs_get_and_build $CAIROCVSROOT cairomm || exit 1
-cvs_get_and_build $GNOMECVSROOT gtkmm "--disable-docs --disable-examples --disable-demos" || exit 1
-
-svn_get_and_build $INKSCAPEREPURL inkscape || exit 1
-
-#cvs_get_and_build $GNOMECVSROOT gimp || exit 1
-# For gimp:
-# libart_lgpl, needs automake 1.4 and doesn't run libtoolize
-# gtkhtml2 (optional)
-# libpoppler (optional)
-# ./autogen.sh --prefix=/opt/gimp --disable-gtk-doc 
-
+process_modules
 echo "Done."
+
+
+
