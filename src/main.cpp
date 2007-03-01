@@ -389,7 +389,9 @@ struct poptOption options[] = {
 
 #include <ui/view/view.h>
 #include <desktop.h>
+#include <desktop-handles.h>
 #include <helper/action.h>
+#include <selection.h>
 
 class CmdLineAction {
     gint _type;
@@ -415,19 +417,31 @@ public:
     }
 
     void doIt (Inkscape::UI::View::View * view) {
-        printf("Doing: %s\n", _arg);
+        //printf("Doing: %s\n", _arg);
         switch (_type) {
             case SP_ARG_VERB: {
                 Inkscape::Verb * verb = Inkscape::Verb::getbyid(_arg);
                 if (verb == NULL) {
                     printf(_("Unable to find verb ID '%s' specified on the command line.\n"), _arg);
+                    break;
                 }
                 SPAction * action = verb->get_action(view);
                 sp_action_perform(action, NULL);
                 break;
             }
             case SP_ARG_SELECT: {
+                SPDesktop * desktop = dynamic_cast<SPDesktop *>(view);
+                if (desktop == NULL) { break; }
 
+                SPDocument * doc = view->doc();
+                SPObject * obj = doc->getObjectById(_arg);
+                if (obj == NULL) {
+                    printf("Unable to find node ID: '%s'\n", _arg);
+                    break;
+                }
+
+                Inkscape::Selection * selection = sp_desktop_selection(desktop);
+                selection->add(obj, false);
                 break;
             }
         }
