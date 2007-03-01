@@ -1377,6 +1377,11 @@ sp_process_args(poptContext ctx)
                 break;
             }
             case SP_ARG_VERB_LIST: {
+                // This really shouldn't go here, we should init the app.
+                // But, since we're just exiting in this path, there is
+                // no harm, and this is really a better place to put
+                // everything else.
+                Inkscape::Extension::init();
                 Inkscape::Verb::list();
                 exit(0);
                 break;
