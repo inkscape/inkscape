@@ -28,6 +28,7 @@ templates_DATA = \
 	default.lt.svg \
         default.pl.svg \
 	default.pt_BR.svg \
+	default.sk.svg \
 	default_mm.svg \
 	default_pt.svg \
 	desktop_1024x768.svg \

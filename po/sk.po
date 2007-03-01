@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-26 19:05-0800\n"
-"PO-Revision-Date: 2007-02-08 14:47+0100\n"
+"PO-Revision-Date: 2007-02-14 18:25+0100\n"
 "Last-Translator: helix84 <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -326,7 +326,7 @@ msgstr "Či sú odstupy stĺpcov rovnomerné (1), konvergujú (<1) alebo divergu
 #: ../src/dialogs/clonetiler.cpp:2109
 #: ../src/dialogs/clonetiler.cpp:2240
 msgid "<small>Alternate:</small>"
-msgstr "<small>Striedanie:</small>"
+msgstr "<small>Striedať:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1860
 msgid "Alternate the sign of shifts for each row"
@@ -980,19 +980,19 @@ msgstr "Zrušiť výplň"
 #, c-format
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
-msgstr[0] "%d objekt nájdených (z %d), %s zhodných."
-msgstr[1] "%d objektov nájdených (z %d), %s zhodných."
-msgstr[2] "%d objektov nájdených (z %d), %s zhodných."
+msgstr[0] "%d objekt nájdených (z %d), %s zhoda."
+msgstr[1] "%d objektov nájdených (z %d), %s zhoda."
+msgstr[2] "%d objektov nájdených (z %d), %s zhoda."
 
 #: ../src/dialogs/find.cpp:374
 #: ../src/ui/dialog/find.cpp:437
 msgid "exact"
-msgstr "presne"
+msgstr "presná"
 
 #: ../src/dialogs/find.cpp:374
 #: ../src/ui/dialog/find.cpp:437
 msgid "partial"
-msgstr "čiastočne"
+msgstr "čiastočná"
 
 #: ../src/dialogs/find.cpp:381
 #: ../src/ui/dialog/find.cpp:444
@@ -1068,7 +1068,7 @@ msgstr "Špirály"
 #: ../src/dialogs/find.cpp:602
 #: ../src/ui/dialog/find.cpp:75
 msgid "Search paths, lines, polylines"
-msgstr "Hľadať cesty, čiary, viacnásobné čiary"
+msgstr "Hľadať cesty, čiary, lomené čiary"
 
 #: ../src/dialogs/find.cpp:602
 #: ../src/ui/dialog/find.cpp:75
@@ -1469,7 +1469,7 @@ msgstr "Premenovať vrstvu"
 #. TRANSLATORS: This means "The layer has been renamed"
 #: ../src/dialogs/layer-properties.cpp:197
 msgid "Renamed layer"
-msgstr "Premenovať vrstvu"
+msgstr "Vrstva premenovaná"
 
 #: ../src/dialogs/layer-properties.cpp:201
 msgid "Add Layer"
@@ -1499,13 +1499,13 @@ msgstr "Typ:"
 #. Identifies the type of the related resource with an absolute URI
 #: ../src/dialogs/object-attributes.cpp:39
 msgid "Role:"
-msgstr "Rola:"
+msgstr "xlink:role:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
 #: ../src/dialogs/object-attributes.cpp:42
 msgid "Arcrole:"
-msgstr "Arcrole:"
+msgstr "xlink:arcrole:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
 #: ../src/dialogs/object-attributes.cpp:44
@@ -1519,7 +1519,7 @@ msgstr "Zobraziť:"
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
 #: ../src/dialogs/object-attributes.cpp:47
 msgid "Actuate:"
-msgstr "Riadenie:"
+msgstr "Spustiť:"
 
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "URL:"
@@ -1748,7 +1748,7 @@ msgstr "XML fragment časti 'License' v RDF."
 #: ../src/dialogs/sp-attribute-widget.cpp:787
 #: ../src/dialogs/xml-tree.cpp:533
 msgid "Set attribute"
-msgstr "Nastaví atribút"
+msgstr "Nastaviť atribút"
 
 #: ../src/dialogs/stroke-style.cpp:292
 #: ../src/dialogs/stroke-style.cpp:351
@@ -1808,7 +1808,7 @@ msgstr "Šírka ťahu"
 #. corners of paths. It can be "miter", "round" or "bevel".
 #: ../src/dialogs/stroke-style.cpp:1091
 msgid "Join:"
-msgstr "Spojnica:"
+msgstr "Spoj:"
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
@@ -1829,7 +1829,7 @@ msgstr "Oblý spoj"
 #. "Join" option (in the Fill and Stroke dialog).
 #: ../src/dialogs/stroke-style.cpp:1119
 msgid "Bevel join"
-msgstr "Šikmý spoj"
+msgstr "Zrazený spoj"
 
 #. Miterlimit
 #. TRANSLATORS: Miter limit: only for "miter join", this limits the length
@@ -1840,11 +1840,11 @@ msgstr "Šikmý spoj"
 #. when they become too long.
 #: ../src/dialogs/stroke-style.cpp:1130
 msgid "Miter limit:"
-msgstr "Limit rohu:"
+msgstr "Limit ostrosti rohu:"
 
 #: ../src/dialogs/stroke-style.cpp:1138
 msgid "Maximum length of the miter (in units of stroke width)"
-msgstr "Maximálna dĺžka rohu (v jednotkách šírky ťahu)"
+msgstr "Maximálna dĺžka ostrosti rohu (v jednotkách šírky ťahu)"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
@@ -1856,7 +1856,7 @@ msgstr "Zakončenie:"
 #. of the line; the ends of the line are square
 #: ../src/dialogs/stroke-style.cpp:1162
 msgid "Butt cap"
-msgstr "Tupé zakončenie"
+msgstr "Rovné zakončenie"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
@@ -1879,15 +1879,15 @@ msgstr "Čiarky:"
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
 #: ../src/dialogs/stroke-style.cpp:1203
 msgid "Start Markers:"
-msgstr "Začiatočná značka:"
+msgstr "Začiatočné značky:"
 
 #: ../src/dialogs/stroke-style.cpp:1213
 msgid "Mid Markers:"
-msgstr "Stredná značka:"
+msgstr "Stredné značky:"
 
 #: ../src/dialogs/stroke-style.cpp:1224
 msgid "End Markers:"
-msgstr "Koncová značka:"
+msgstr "Koncové značky:"
 
 #: ../src/dialogs/stroke-style.cpp:1572
 #: ../src/dialogs/stroke-style.cpp:1670
@@ -2674,7 +2674,7 @@ msgstr "Autodetekcia formátu zlyhala. Súbor bude otvorený ako SVG."
 #. localized share/templates/default.xx.svg file, where xx is your language code.
 #: ../src/file.cpp:129
 msgid "default.svg"
-msgstr "default.svg"
+msgstr "default.sk.svg"
 
 #: ../src/file.cpp:215
 #: ../src/file.cpp:855
@@ -4617,7 +4617,7 @@ msgstr "<b>Úsečka</b>"
 #: ../src/sp-offset.cpp:430
 #, c-format
 msgid "<b>Linked offset</b>, %s by %f pt"
-msgstr "<b>Prpojený posun</b>, %s o %f bodov"
+msgstr "<b>Prepojený posun</b>, %s o %f bodov"
 
 #: ../src/sp-offset.cpp:431
 #: ../src/sp-offset.cpp:435
@@ -6849,7 +6849,7 @@ msgstr "Rozdiel jasu susedných pixelov (určuje hrúbku hrany)"
 #. colors and then re-applying this reduced set to the original image.
 #: ../src/ui/dialog/tracedialog.cpp:452
 msgid "Color quantization"
-msgstr "Kvantizácia farby"
+msgstr "Kvantizácia farieb"
 
 #: ../src/ui/dialog/tracedialog.cpp:456
 msgid "Trace along the boundaries of reduced colors"
@@ -7074,11 +7074,11 @@ msgstr "Uhol otáčania (kladný = proti smeru hodinových ručičiek)"
 
 #: ../src/ui/dialog/transformation.cpp:90
 msgid "Horizontal skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
-msgstr "Uhol vodorovného skosenia (kaldný = proti smeru otáčania hodinových ručičiek) alebo absolútne posunutie alebo percentuálne posunutie"
+msgstr "Uhol vodorovného skosenia (kladný = proti smeru otáčania hodinových ručičiek) alebo absolútne posunutie alebo percentuálne posunutie"
 
 #: ../src/ui/dialog/transformation.cpp:92
 msgid "Vertical skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
-msgstr "Uhol zvislého skosenia (kaldný = proti smeru otáčania hodinových ručičiek) alebo absolútne posunutie alebo percentuálne posunutie"
+msgstr "Uhol zvislého skosenia (kladný = proti smeru otáčania hodinových ručičiek) alebo absolútne posunutie alebo percentuálne posunutie"
 
 #: ../src/ui/dialog/transformation.cpp:95
 msgid "Transformation matrix element A"
@@ -8020,7 +8020,7 @@ msgstr "Odstrániť vrstvu"
 #. TRANSLATORS: this means "The layer has been deleted."
 #: ../src/verbs.cpp:1231
 msgid "Deleted layer."
-msgstr "Odstrániť vrstvu."
+msgstr "Vrstva odstránená."
 
 #: ../src/verbs.cpp:1288
 msgid "Flip horizontally"
@@ -8138,7 +8138,7 @@ msgstr "Vytlačiť dokument"
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
 #: ../src/verbs.cpp:1981
 msgid "Vac_uum Defs"
-msgstr "_Vymazať Defs"
+msgstr "_Vyčistiť definície"
 
 #: ../src/verbs.cpp:1981
 msgid "Remove unused definitions (such as gradients or clipping paths) from the &lt;defs&gt; of the document"
@@ -8483,7 +8483,7 @@ msgstr "Odstrániť manuálny \"kerning\""
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2080
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr "Odstrániť manuálny kerning a rotácie symbolov z textového objeku"
+msgstr "Odstrániť manuálny kerning a rotácie symbolov z textového objektu"
 
 #: ../src/verbs.cpp:2082
 msgid "_Union"
@@ -9758,7 +9758,7 @@ msgstr "Zrušiť nastavenie farby (zruší definíciu aby mohla byť zdedená)"
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:190
 msgid "Any path self-intersections or subpaths create holes in the fill (fill-rule: evenodd)"
-msgstr "Akékoľvek cesta pretínajúca sama seba vytvára diery vo výplni (fill-rule: evenodd)"
+msgstr "Akákoľvek cesta pretínajúca sama seba vytvára diery vo výplni (fill-rule: evenodd)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:201
@@ -10105,7 +10105,7 @@ msgstr "Koeficient lúčov:"
 #. Base radius is the same for the closest handle.
 #: ../src/widgets/toolbox.cpp:1293
 msgid "Base radius to tip radius ratio"
-msgstr "Základný polomer k vrcholu koeficientu polomeru"
+msgstr "Koeficient polomeru základne k polomeru vrcholu"
 
 #: ../src/widgets/toolbox.cpp:1308
 msgid "Rounded:"
