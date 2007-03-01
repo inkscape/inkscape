@@ -17,6 +17,9 @@
 #include <libvpsc/constraint.h>
 #include "gradient_projection.h"
 #include <iostream>
+#include "isnan.h"
+#include "isinf.h"
+
 
 using namespace std;
 using namespace vpsc;
@@ -47,7 +50,7 @@ unsigned GradientProjection::solve(double * b) {
     solver = setupVPSC();
     //cerr << "in gradient projection: n=" << n << endl;
     for (i=0;i<n;i++) {
-        assert(!isnan(place[i]));
+        assert(!isNaN(place[i]));
         assert(!isinf(place[i]));
         vars[i]->desiredPosition=place[i];
     }
@@ -95,7 +98,7 @@ unsigned GradientProjection::solve(double * b) {
         // move to new unconstrained position
 		for (i=0; i<n; i++) {
 			place[i]-=alpha*g[i];
-            assert(!isnan(place[i]));
+            assert(!isNaN(place[i]));
             assert(!isinf(place[i]));
             vars[i]->desiredPosition=place[i];
 		}

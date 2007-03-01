@@ -70,6 +70,10 @@
 #include <iostream>
 #include <fstream>
 
+#ifdef SOLARIS_2_8
+#include <unistd.h>
+#endif
+
 using namespace std;
 
 namespace Inkscape {

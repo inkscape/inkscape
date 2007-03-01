@@ -32,6 +32,8 @@
 # define isNaN(_a) (_isnan(_a)) 	/* Win32 definition */
 #elif defined(isnan) || defined(__FreeBSD__) || defined(__osf__)
 # define isNaN(_a) (isnan(_a))		/* GNU definition */
+#elif defined (SOLARIS_2_8) && __GNUC__ == 3 && __GNUC_MINOR__ == 2
+# define isNaN(_a) (isnan(_a))		/* GNU definition */
 #else
 # define isNaN(_a) (std::isnan(_a))
 #endif
@@ -49,6 +51,9 @@
 # define isFinite(_a) (isfinite(_a))
 #elif defined(__osf__)
 # define isFinite(_a) (finite(_a) && !isNaN(_a))
+#elif defined (SOLARIS_2_8) && __GNUC__ == 3 && __GNUC_MINOR__ == 2
+#include  <ieeefp.h>
+#define isFinite(_a) (finite(_a) && !isNaN(_a))
 #else
 # define isFinite(_a) (std::isfinite(_a))
 #endif

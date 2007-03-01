@@ -29,6 +29,8 @@
 #include "libnr/nr-scale.h"
 #include "svg/svg-length.h"
 #include "sp-filter-units.h"
+#include "round.h"
+using Inkscape::round;
 
 //#include "display/nr-arena-shape.h"
 

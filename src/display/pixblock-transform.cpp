@@ -13,6 +13,8 @@
 
 #include <glib.h>
 #include <cmath>
+#include "round.h"
+using Inkscape::round;
 using std::floor;
 
 #include "libnr/nr-pixblock.h"

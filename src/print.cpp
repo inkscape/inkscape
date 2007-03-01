@@ -27,6 +27,10 @@
 #include <gtk/gtkprintunixdialog.h>
 #endif
 
+#ifdef SOLARIS_2_8
+#include <unistd.h>
+#endif
+
 #if 0
 # include <extension/internal/ps.h>
 

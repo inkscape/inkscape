@@ -1,3 +1,33 @@
+2007-03-01  Markus Schwarzenberg <Markus.Schwarzenberg@ipms.fraunhofer.de>
+
+  Solaris 8 / gcc-3.2.3 fixes (selectively effecting only this special
+
+  * src/display/nr-filter-gaussian.cpp:
+    
+    * include compatibility header "isnormal.h"
+    * template calcTriggsSdikaInitialization<PC> needs to be
+      specified explicitely for gcc 3.2.3
+  
+  * src/display/pixblock-transform.cpp, src/display/nr-filter.cpp, 
+    src/display/nr-filter.cpp
+    
+    * include compatibility header "round.h"
+    * using Inkscape::round
+    
+  * src/extension/internal/ps.cpp, src/print.cpp
+   
+    include <unistd.h> on SOLARIS_2_8 for open, unlink
+    
+  * src/libcola/gradient_projection.cpp
+  
+    include and use compatibility headers "isnan.h" "isinf.h"
+    
+  * removed obsolete src/libvpsc/isnan.h
+  
+  * added src/isinf.h
+  
+  * configure.ac: Added Detection of solaris2.8 --> CXXFLAGS += -DSOLARIS_2_8
+
 2006-08-05  John Bintz  <jcoswell@coswellproductions.org>
 
   * node-context.cpp, nodepath.cpp:

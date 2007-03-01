@@ -207,6 +207,20 @@ esac
 AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
 
+AC_MSG_CHECKING([for Solaris 2.8 platform])
+case "$host" in
+  *-solaris2.8)
+    platform_solaris_2_8=yes
+    CFLAGS="$CFLAGS -DSOLARIS_2_8"
+    CXXFLAGS="$CXXFLAGS -DSOLARIS_2_8"
+    ;;
+  *)
+    platform_solaris_2_8=no
+    ;;
+esac
+AC_MSG_RESULT([$platform_solaris_2_8])
+AM_CONDITIONAL(PLATFORM_SOLARIS_2_8, test "$platform_solaris_2_8" = "yes")
+
 dnl ******************************
 dnl Xft checking
 dnl ******************************

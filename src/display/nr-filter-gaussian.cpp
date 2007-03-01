@@ -19,7 +19,7 @@
 #include <glib.h>
 #include <limits>
 
-using std::isnormal;
+#include "isnormal.h"
 
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-gaussian.h"
@@ -276,7 +276,7 @@ void filter2D_IIR(PT *dest, int dstr1, int dstr2, PT const *src, int sstr1, int 
         }
         // Backward pass
         IIRValue v[N+1][PC];
-        calcTriggsSdikaInitialization(M, u, iplus, iplus, b[0], v);
+        calcTriggsSdikaInitialization<PC>(M, u, iplus, iplus, b[0], v);
         dstimg -= dstr1;
         for(unsigned int c=0; c<PC; c++) dstimg[c] = clip_round_cast<PT>(v[0][c]);
         int c1=n1-1;

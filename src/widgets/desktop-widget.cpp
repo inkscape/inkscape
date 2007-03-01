@@ -52,6 +52,8 @@
 #include "sp-item.h"
 #include "dialogs/swatches.h"
 #include "conn-avoid-ref.h"
+#include "round.h"
+using Inkscape::round;
 
 #ifdef WITH_INKBOARD
 #endif
