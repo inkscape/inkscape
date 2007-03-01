@@ -52,8 +52,11 @@
 #include "sp-item.h"
 #include "dialogs/swatches.h"
 #include "conn-avoid-ref.h"
+
+#if defined (SOLARIS_2_8)
 #include "round.h"
 using Inkscape::round;
+#endif 
 
 #ifdef WITH_INKBOARD
 #endif

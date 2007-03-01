@@ -29,8 +29,10 @@
 #include "libnr/nr-scale.h"
 #include "svg/svg-length.h"
 #include "sp-filter-units.h"
+#if defined (SOLARIS_2_8)
 #include "round.h"
 using Inkscape::round;
+#endif 
 
 //#include "display/nr-arena-shape.h"
 
