@@ -67,8 +67,9 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
         } // children of "inkscape-extension"
     } // if we have an XML file
 
-    if (_effects_list == NULL)
+    if (_effects_list == NULL && INKSCAPE != NULL) {
         find_effects_list(inkscape_get_menus(INKSCAPE));
+    }
 
     if (_effects_list != NULL) {
         Inkscape::XML::Document *xml_doc;
