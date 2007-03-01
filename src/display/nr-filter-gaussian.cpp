@@ -72,11 +72,10 @@ static inline Tt round_cast(Ts const& v) {
 }
 
 template<typename Tt, typename Ts>
-static inline Tt clip_round_cast(Ts const& v) {
-	static Ts const rndoffset(.5);
-    if ( v < std::numeric_limits<Tt>::min() ) return std::numeric_limits<Tt>::min();
-    if ( v > std::numeric_limits<Tt>::max() ) return std::numeric_limits<Tt>::max();
-	return static_cast<Tt>(v+rndoffset);
+static inline Tt clip_round_cast(Ts const& v, Tt const minval=std::numeric_limits<Tt>::min(), Tt const maxval=std::numeric_limits<Tt>::max()) {
+    if ( v < minval ) return minval;
+    if ( v > maxval ) return maxval;
+	return round_cast<Tt>(v);
 }
 
 namespace NR {
@@ -109,18 +108,23 @@ void _make_kernel(FIRValue *kernel, double deviation)
 
     // Compute kernel and sum of coefficients
     // Note that actually only half the kernel is computed, as it is symmetric
-    FIRValue sum = 0;
-    for ( int i = 0; i <= scr_len ; i++ ) {
+    double sum = 0;
+    for ( int i = scr_len; i >= 0 ; i-- ) {
         k[i] = std::exp(-sqr(i) / d_sq);
-        sum += static_cast<FIRValue>(k[i]);
+        if ( i > 0 ) sum += k[i];
     }
-    // the sum of the complete kernel is twice as large (minus the center element to avoid counting it twice)
-    sum = 2*sum - static_cast<FIRValue>(k[0]);
+    // the sum of the complete kernel is twice as large (plus the center element which we skipped above to prevent counting it twice)
+    sum = 2*sum + k[0];
 
-    // Normalize kernel
-    for ( int i = 0; i <= scr_len ; i++ ) {
-        kernel[i] = k[i]/static_cast<double>(sum);
+    // Normalize kernel (making sure the sum is exactly 1)
+    double ksum = 0;
+    FIRValue kernelsum = 0;
+    for ( int i = scr_len; i >= 1 ; i-- ) {
+        ksum += k[i]/sum;
+        kernel[i] = ksum-static_cast<double>(kernelsum);
+        kernelsum += kernel[i];
     }
+    kernel[0] = FIRValue(1)-2*kernelsum;
 }
 
 // Return value (v) should satisfy:
@@ -252,7 +256,7 @@ static void calcTriggsSdikaInitialization(double const M[N*N], IIRValue const uo
 }
 
 // Filters over 1st dimension
-template<typename PT, unsigned int PC>
+template<typename PT, unsigned int PC, bool PREMULTIPLIED_ALPHA>
 void filter2D_IIR(PT *dest, int dstr1, int dstr2, PT const *src, int sstr1, int sstr2, int n1, int n2, IIRValue const b[N+1], double const M[N*N], IIRValue *const tmpdata) {
     for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
         // corresponding line in the source and output buffer
@@ -278,7 +282,12 @@ void filter2D_IIR(PT *dest, int dstr1, int dstr2, PT const *src, int sstr1, int 
         IIRValue v[N+1][PC];
         calcTriggsSdikaInitialization<PC>(M, u, iplus, iplus, b[0], v);
         dstimg -= dstr1;
-        for(unsigned int c=0; c<PC; c++) dstimg[c] = clip_round_cast<PT>(v[0][c]);
+        if ( PREMULTIPLIED_ALPHA ) {
+            dstimg[PC-1] = clip_round_cast<PT>(v[0][PC-1]);
+            for(unsigned int c=0; c<PC-1; c++) dstimg[c] = clip_round_cast<PT>(v[0][c], std::numeric_limits<PT>::min(), dstimg[PC-1]);
+        } else {
+            for(unsigned int c=0; c<PC; c++) dstimg[c] = clip_round_cast<PT>(v[0][c]);
+        }
         int c1=n1-1;
         while(c1-->0) {
             for(unsigned int i=N; i>0; i--) copy_n(v[i-1], PC, v[i]);
@@ -288,7 +297,12 @@ void filter2D_IIR(PT *dest, int dstr1, int dstr2, PT const *src, int sstr1, int 
                 for(unsigned int c=0; c<PC; c++) v[0][c] += v[i][c]*b[i];
             }
             dstimg -= dstr1;
-            for(unsigned int c=0; c<PC; c++) dstimg[c] = clip_round_cast<PT>(v[0][c]);
+            if ( PREMULTIPLIED_ALPHA ) {
+                dstimg[PC-1] = clip_round_cast<PT>(v[0][PC-1]);
+                for(unsigned int c=0; c<PC-1; c++) dstimg[c] = clip_round_cast<PT>(v[0][c], std::numeric_limits<PT>::min(), dstimg[PC-1]);
+            } else {
+                for(unsigned int c=0; c<PC; c++) dstimg[c] = clip_round_cast<PT>(v[0][c]);
+            }
         }
     }
 }
@@ -584,16 +598,16 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
         // Filter (x)
         switch(in->mode) {
         case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            filter2D_IIR<unsigned char,1>(NR_PIXBLOCK_PX(out), 1, out->rs, NR_PIXBLOCK_PX(ssin), 1, ssin->rs, width, height, b, M, tmpdata);
+            filter2D_IIR<unsigned char,1,false>(NR_PIXBLOCK_PX(out), 1, out->rs, NR_PIXBLOCK_PX(ssin), 1, ssin->rs, width, height, b, M, tmpdata);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            filter2D_IIR<unsigned char,3>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, b, M, tmpdata);
+            filter2D_IIR<unsigned char,3,false>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, b, M, tmpdata);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            filter2D_IIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata);
+            filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
-            filter2D_IIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata);
+            filter2D_IIR<unsigned char,4,true >(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata);
             break;
         default:
             assert(false);
@@ -643,16 +657,16 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
         // Filter (y)
         switch(in->mode) {
         case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            filter2D_IIR<unsigned char,1>(NR_PIXBLOCK_PX(out), out->rs, 1, NR_PIXBLOCK_PX(out), out->rs, 1, height, width, b, M, tmpdata);
+            filter2D_IIR<unsigned char,1,false>(NR_PIXBLOCK_PX(out), out->rs, 1, NR_PIXBLOCK_PX(out), out->rs, 1, height, width, b, M, tmpdata);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            filter2D_IIR<unsigned char,3>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, b, M, tmpdata);
+            filter2D_IIR<unsigned char,3,false>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, b, M, tmpdata);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            filter2D_IIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata);
+            filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
-            filter2D_IIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata);
+            filter2D_IIR<unsigned char,4,true >(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata);
             break;
         default:
             assert(false);
