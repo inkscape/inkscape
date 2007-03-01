@@ -91,6 +91,7 @@ libinkpre_a_SOURCES =	\
 	layer-fns.cpp layer-fns.h	\
 	layer-manager.cpp layer-manager.h	\
 	macros.h	\
+	main-cmdlineact.cpp main-cmdlineact.h \
 	marker-status.cpp marker-status.h	\
 	media.cpp media.h	\
 	message-context.cpp message-context.h \

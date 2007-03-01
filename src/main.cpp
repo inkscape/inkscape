@@ -108,6 +108,8 @@ using Inkscape::Extension::Internal::PrintWin32;
 
 #include "application/application.h"
 
+#include "main-cmdlineact.h"
+
 enum {
     SP_ARG_NONE,
     SP_ARG_NOGUI,
