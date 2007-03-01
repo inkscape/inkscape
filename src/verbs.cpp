@@ -2406,8 +2406,19 @@ Verb *Verb::_base_verbs[] = {
 
 void
 Verb::list (void) {
-    printf("Listing Verbs\n");
+    // Go through the dynamic verb table
+    for (VerbTable::iterator iter = _verbs.begin(); iter != _verbs.end(); iter++) {
+        Verb * verb = iter->second;
+        if (verb->get_code() == SP_VERB_INVALID ||
+                verb->get_code() == SP_VERB_NONE ||
+                verb->get_code() == SP_VERB_LAST) {
+            continue;
+        }
 
+        printf("\"%s\", \"%s\"\n", verb->get_id(), verb->get_name());
+    }
+
+    return;
 };
 
 }  /* namespace Inkscape */
