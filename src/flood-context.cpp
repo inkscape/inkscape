@@ -48,7 +48,6 @@
 #include "display/nr-arena.h"
 #include "display/nr-arena-image.h"
 #include "display/canvas-arena.h"
-#include "helper/png-write.h"
 #include "libnr/nr-pixops.h"
 #include "libnr/nr-matrix-rotate-ops.h"
 #include "libnr/nr-matrix-translate-ops.h"
@@ -83,15 +82,6 @@ static void sp_flood_finish(SPFloodContext *rc);
 
 static SPEventContextClass *parent_class;
 
-
-struct SPEBP {
-    int width, height, sheight;
-    guchar r, g, b, a;
-    NRArenaItem *root; // the root arena item to show; it is assumed that all unneeded items are hidden
-    guchar *px;
-    unsigned (*status)(float, void *);
-    void *data;
-};
 
 GtkType sp_flood_context_get_type()
 {
@@ -231,29 +221,6 @@ static void sp_flood_context_setup(SPEventContext *ec)
     );
 
     rc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
-}
-
-/**
-Hide all items which are not listed in list, recursively, skipping groups and defs
-*/
-static void
-hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
-{
-    if (SP_IS_ITEM(o)
-        && !SP_IS_DEFS(o)
-        && !SP_IS_ROOT(o)
-        && !SP_IS_GROUP(o)
-        && !g_slist_find(list, o))
-    {
-        sp_item_invoke_hide(SP_ITEM(o), dkey);
-    }
-
-     // recurse
-    if (!g_slist_find(list, o)) {
-        for (SPObject *child = sp_object_first_child(o) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            hide_other_items_recursively(child, list, dkey);
-        }
-    }
 }
 
 inline unsigned char * get_pixel(guchar *px, int x, int y, int width) {
