@@ -56,6 +56,8 @@ class Effect : public Extension {
 
             /** \brief  The effect that this verb represents. */
             Effect * _effect;
+            /** \brief  Whether or not to show preferences on display */
+            bool _showPrefs;
         protected:
             virtual SPAction * make_action (Inkscape::UI::View::View * view);
         public:
@@ -64,15 +66,23 @@ class Effect : public Extension {
                        gchar const * name,
                        gchar const * tip,
                        gchar const * image,
-                       Effect *      effect) :
-                    Verb(id, _(name), _(tip), image), _effect(effect) {
+                       Effect *      effect,
+                       bool          showPrefs) :
+                    Verb(id, _(name), _(tip), image), _effect(effect), _showPrefs(showPrefs) {
                 /* No clue why, but this is required */
                 this->set_default_sensitive(true);
             }
     };
 
+    /** \brief  ID used for the verb without preferences */
+    Glib::ustring _id_noprefs;
+    /** \brief  Name used for the verb without preferences */
+    Glib::ustring _name_noprefs;
+
     /** \brief  The verb representing this effect. */
     EffectVerb _verb;
+    /** \brief  The verb representing this effect.  Without preferences. */
+    EffectVerb _verb_nopref;
     /** \brief  Menu node created for this effect */
     Inkscape::XML::Node * _menu_node;
 public:

@@ -24,7 +24,12 @@ Effect * Effect::_last_effect = NULL;
 Inkscape::XML::Node * Effect::_effects_list = NULL;
 
 Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp)
-    : Extension(in_repr, in_imp), _verb(get_id(), get_name(), NULL, NULL, this), _menu_node(NULL)
+    : Extension(in_repr, in_imp),
+      _id_noprefs(Glib::ustring(get_id()) + ".noprefs"),
+      _name_noprefs(Glib::ustring(get_name()) + _(" (No preferences)")),
+      _verb(get_id(), get_name(), NULL, NULL, this, true),
+      _verb_nopref(_id_noprefs.c_str(), _name_noprefs.c_str(), NULL, NULL, this, false),
+      _menu_node(NULL)
 {
     Inkscape::XML::Node * local_effects_menu = NULL;
 
@@ -293,7 +298,7 @@ Effect::get_info_widget(void)
 SPAction *
 Effect::EffectVerb::make_action (Inkscape::UI::View::View * view)
 {
-    return make_action_helper(view, &vector, static_cast<void *>(_effect));
+    return make_action_helper(view, &vector, static_cast<void *>(this));
 }
 
 /** \brief  Decode the verb code and take appropriate action */
@@ -302,13 +307,18 @@ Effect::EffectVerb::perform (SPAction *action, void * data, void *pdata)
 {
     Inkscape::UI::View::View * current_view = sp_action_get_view(action);
 //  SPDocument * current_document = current_view->doc;
-    Effect * effect = reinterpret_cast<Effect *>(data);
+    Effect::EffectVerb * ev = reinterpret_cast<Effect::EffectVerb *>(data);
+    Effect * effect = ev->_effect;
 
     if (effect == NULL) return;
     if (current_view == NULL) return;
 
     // std::cout << "Executing: " << effect->get_name() << std::endl;
-    if (effect->prefs(current_view))
+    bool execute = true;
+
+    if (ev->_showPrefs)
+        execute = effect->prefs(current_view);
+    if (execute)
         effect->effect(current_view);
 
     return;
