@@ -21,6 +21,7 @@
 #include <display/nr-arena.h>
 #include <display/nr-arena-group.h>
 #include <display/canvas-arena.h>
+#include <display/inkscape-cairo.h>
 
 enum {
 	ARENA_EVENT,
@@ -274,8 +275,6 @@ streamline rendering.
 
 #ifdef STRICT_RGBA
 			nr_pixblock_setup_fast (&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, area.x0, area.y0, area.x1, area.y1, TRUE);
-			/* fixme: */
-			pb.empty = FALSE;
 #endif
 
 // CAIRO FIXME: switch this to R8G8B8A8P and 4 * ...
@@ -285,12 +284,26 @@ streamline rendering.
 						  FALSE, FALSE);
 
 #ifdef STRICT_RGBA
-            pb.visible_area = buf->visible_rect; 
+			pb.visible_area = buf->visible_rect;
+
 			if (pb.data.px != NULL) {
-				nr_arena_item_invoke_render (NULL, arena->root, &area, &pb, 0);
-				// this does the 32->24 squishing, using an assembler routine:
-			    nr_blit_pixblock_pixblock (&cb, &pb);
+            cairo_t *ct = nr_create_cairo_context (&area, &pb);
+
+				nr_arena_item_invoke_render (ct, arena->root, &area, &pb, 0);
+
+				if (pb.empty == FALSE) {
+
+
+				   // this does the 32->24 squishing, using an assembler routine:
+			      nr_blit_pixblock_pixblock (&cb, &pb);
+				}
+
+            cairo_surface_t *cst = cairo_get_target(ct);
+            cairo_destroy (ct);
+            cairo_surface_finish (cst);
+            cairo_surface_destroy (cst);
 			}
+
 			nr_pixblock_release (&pb);
 #else
 			cb.visible_area = buf->visible_rect; 
