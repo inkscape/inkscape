@@ -11,6 +11,23 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+/*
+TODO:
+FIXME:
+  After Inkscape makes a formal requirement for a GTK version above 2.11.4, please
+  replace all the instances of ink_ext_XXXXXX in this file that represent
+  svg files with ink_ext_XXXXXX.svg . Doing so will prevent errors in extensions
+  that call inkscape to manipulate the file.
+  
+  "** (inkscape:5848): WARNING **: Format autodetect failed. The file is being opened as SVG."
+  
+  references:
+  http://www.gtk.org/api/2.6/glib/glib-File-Utilities.html#g-mkstemp
+  http://ftp.gnome.org/pub/gnome/sources/glib/2.11/glib-2.11.4.changes
+  http://developer.gnome.org/doc/API/2.0/glib/glib-File-Utilities.html#g-mkstemp
+  
+  --Aaron Spike
+*/
 #define __INKSCAPE_EXTENSION_IMPLEMENTATION_SCRIPT_C__
 
 #ifdef HAVE_CONFIG_H
