@@ -30,9 +30,14 @@
  * btool
  * or 
  * btool {target}
+ * 
+ * Note: recent win32api builds from MinGW have gettimeofday()
+ * defined, so you might need to build with 
+ * g++ -O3 -DHAVE_GETTIMEOFDAY buildtool.cpp -o btool.exe
+ *     
  */  
 
-
+#define BUILDTOOL_VERSION  "BuildTool v0.6.2, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -58,8 +63,9 @@
 //########################################################################
 //# Definition of gettimeofday() for those who don't have it
 //########################################################################
-#ifdef __WIN32__
+#ifndef HAVE_GETTIMEOFDAY
 #include <sys/timeb.h>
+
 struct timezone {
       int tz_minuteswest; /* minutes west of Greenwich */
       int tz_dsttime;     /* type of dst correction */
@@ -82,6 +88,7 @@ static int gettimeofday (struct timeval *tv, struct timezone *tz)
         }
     return 0;
 }
+
 #endif
 
 
@@ -3478,7 +3485,11 @@ bool MakeBase::executeCommand(const String &command,
             for (unsigned int i=0 ; i<bytesRead ; i++)
                 errbuf.push_back(readBuf[i]);
             }
+        }
+    while (true)
+        {
         //trace("## stdout");
+        DWORD avail;
         if (!PeekNamedPipe(stdoutRead, NULL, 0, NULL, &avail, NULL))
             break;
         if (avail > 0)
@@ -7521,7 +7532,7 @@ public:
      *
      */
     virtual String version()
-        { return "BuildTool v0.6.1, 2006 Bob Jamison"; }
+        { return BUILDTOOL_VERSION; }
 
     /**
      * Overload a <property>
