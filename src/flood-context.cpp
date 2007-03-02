@@ -421,6 +421,8 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     int tolerance = (255 * prefs_get_int_attribute_limited("tools.paintbucket", "tolerance", 1, 0, 100)) / 100;
 
+    bool reached_screen_boundary = false;
+
     while (!fill_queue.empty() && !aborted) {
       NR::Point cp = fill_queue.front();
       fill_queue.pop();
@@ -439,12 +441,20 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         if (y > 0) { 
           top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, x, y - 1, width, tolerance, top_fill);
         } else {
-          aborted = true; break;
+          if (bbox.min()[NR::Y] > screen.min()[NR::Y]) {
+            aborted = true; break;
+          } else {
+            reached_screen_boundary = true;
+          }
         }
         if (y < y_limit) { 
           bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, x, y + 1, width, tolerance, bottom_fill);
         } else {
-          aborted = true; break;
+          if (bbox.max()[NR::Y] < screen.max()[NR::Y]) {
+            aborted = true; break;
+          } else {
+            reached_screen_boundary = true;
+          }
         }
         
         bool default_top_fill = top_fill;
@@ -467,7 +477,11 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
               left--; ok = true;
             }
           } else {
-            aborted = true; break;
+            if (bbox.min()[NR::X] > screen.min()[NR::X]) {
+              aborted = true; break;
+            } else {
+              reached_screen_boundary = true;
+            }
           }
         } while (ok);
       
@@ -488,7 +502,11 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
               right++; ok = true;
             }
           } else {
-            aborted = true; break;
+            if (bbox.max()[NR::X] < screen.max()[NR::X]) {
+              aborted = true; break;
+            } else {
+              reached_screen_boundary = true;
+            }
           }
         } while (ok);
       }
@@ -500,6 +518,10 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
       g_free(trace_px);
       desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
       return;
+    }
+    
+    if (reached_screen_boundary) {
+      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again.")); 
     }
     
     GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(trace_px,
