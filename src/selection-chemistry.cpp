@@ -2545,7 +2545,7 @@ sp_selection_create_bitmap_copy ()
         // Write transform
         gchar *c=sp_svg_transform_write(t);
         repr->setAttribute("transform", c);
-        g_free(t);
+        g_free(c);
 
         // add the new repr to the parent
         parent->appendChild(repr);
