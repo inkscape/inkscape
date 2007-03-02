@@ -1407,7 +1407,7 @@ sp_process_args(poptContext ctx)
                 gchar const *arg = poptGetOptArg(ctx);
                 if (arg != NULL) {
                     // printf("Adding in: %s\n", arg);
-                    new Inkscape::CmdLineAction(a, arg);
+                    new Inkscape::CmdLineAction((a == SP_ARG_VERB), arg);
                 }
                 break;
             }
