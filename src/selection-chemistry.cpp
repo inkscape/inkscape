@@ -2504,11 +2504,14 @@ sp_selection_create_bitmap_copy ()
     // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
     NR::Matrix eek = sp_item_i2d_affine (SP_ITEM(parent_object));
     NR::Matrix t;
+
+    double shift_x = bbox.x0;
+    double shift_y = bbox.y1; 
     if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
-        t = NR::scale (1, -1) * NR::translate ((unsigned) (bbox.x0 + 0.5), (unsigned) (bbox.y1 + 0.5)) * eek.inverse();
-    } else {
-        t = NR::scale (1, -1) * NR::translate (bbox.x0, bbox.y1) * eek.inverse();
+        shift_x = round (shift_x);
+        shift_y = -round (-shift_y); // this gets correct rounding despite coordinate inversion, remove the negations when the inversion is gone
     }
+    t = NR::scale(1, -1) * NR::translate (shift_x, shift_y) * eek.inverse();
 
     // Do the export
     sp_export_png_file(document, filepath,
