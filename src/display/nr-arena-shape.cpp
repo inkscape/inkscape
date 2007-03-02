@@ -736,7 +736,9 @@ cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, NR::Point shift
         return item->state;
 
     guint32 rgba = NR_ARENA_ITEM(shape)->arena->outlinecolor;
-    cairo_set_source_rgba(ct, SP_RGBA32_R_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_B_F(rgba), SP_RGBA32_A_F(rgba));
+    // FIXME: we use RGBA buffers but cairo writes BGRA (on i386), so we must cheat 
+    // by setting color channels in the "wrong" order
+    cairo_set_source_rgba(ct, SP_RGBA32_B_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_R_F(rgba), SP_RGBA32_A_F(rgba));
 
     cairo_set_line_width(ct, 0.5);
     cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
@@ -778,7 +780,8 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
                                           shape->_stroke.opacity);
     }
 
-    // for some reason cairo needs bgra, not rgba
+    // FIXME: we use RGBA buffers but cairo writes BGRA (on i386), so we must cheat 
+    // by setting color channels in the "wrong" order
     cairo_set_source_rgba(ct, SP_RGBA32_B_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_R_F(rgba), SP_RGBA32_A_F(rgba));
 
     float style_width = MAX(0.125, shape->_stroke.width * scale);
