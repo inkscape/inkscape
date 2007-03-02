@@ -430,7 +430,7 @@ nr_arena_glyphs_group_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint s
 
 
 static unsigned int
-nr_arena_glyphs_group_render(cairo_t *ctt, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
+nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
 {
     NRArenaItem *child;
 
@@ -441,8 +441,6 @@ nr_arena_glyphs_group_render(cairo_t *ctt, NRArenaItem *item, NRRectL *area, NRP
     guint ret = item->state;
 
     if (item->arena->rendermode == RENDERMODE_OUTLINE) {
-
-        cairo_t *ct = nr_create_cairo_context (area, pb);
 
         if (!ct) 
             return item->state;
@@ -458,19 +456,13 @@ nr_arena_glyphs_group_render(cairo_t *ctt, NRArenaItem *item, NRRectL *area, NRP
 
             cairo_new_path(ct);
             NR::Matrix g_t(g->g_transform);
-            feed_curve_to_cairo (ct, bpath, g_t * group->ctm, NR::Point(area->x0, area->y0));
+            feed_curve_to_cairo (ct, bpath, g_t * group->ctm, NR::Point(pb->area.x0, pb->area.y0));
             cairo_fill(ct);
+            pb->empty = FALSE;
         }
 
-        cairo_surface_t *cst = cairo_get_target(ct);
-        cairo_destroy (ct);
-        cairo_surface_finish (cst);
-        cairo_surface_destroy (cst);
-
-        pb->empty = FALSE;
         return ret;
     }
-
 
 
 

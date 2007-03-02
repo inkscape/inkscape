@@ -728,11 +728,9 @@ nr_arena_shape_add_bboxes(NRArenaShape* shape, NRRect &bbox)
 
 // cairo outline rendering:
 static unsigned int
-cairo_arena_shape_render_outline(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
+cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, NR::Point shift)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
-
-    cairo_t *ct = nr_create_cairo_context (area, pb);
 
     if (!ct) 
         return item->state;
@@ -744,16 +742,9 @@ cairo_arena_shape_render_outline(NRArenaItem *item, NRRectL *area, NRPixBlock *p
     cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
     cairo_new_path(ct);
 
-    feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), NR::Point(area->x0, area->y0));
+    feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), shift);
 
     cairo_stroke(ct);
-
-    cairo_surface_t *cst = cairo_get_target(ct);
-    cairo_destroy (ct);
-    cairo_surface_finish (cst);
-    cairo_surface_destroy (cst);
-
-    pb->empty = FALSE;
 
     return item->state;
 }
@@ -850,7 +841,7 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
  * Renders the item.  Markers are just composed into the parent buffer.
  */
 static unsigned int
-nr_arena_shape_render(cairo_t *ctt, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
+nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
 
@@ -860,7 +851,8 @@ nr_arena_shape_render(cairo_t *ctt, NRArenaItem *item, NRRectL *area, NRPixBlock
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
     if (outline) { 
-        return cairo_arena_shape_render_outline (item, area, pb);
+        pb->empty = FALSE;
+        return cairo_arena_shape_render_outline (ct, item, NR::Point(pb->area.x0, pb->area.y0));
     }
 
     if ( shape->delayed_shp ) {
@@ -980,7 +972,7 @@ nr_arena_shape_render(cairo_t *ctt, NRArenaItem *item, NRRectL *area, NRPixBlock
     /* Just compose children into parent buffer */
     for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
         unsigned int ret;
-        ret = nr_arena_item_invoke_render(ctt, child, area, pb, flags);
+        ret = nr_arena_item_invoke_render(ct, child, area, pb, flags);
         if (ret & NR_ARENA_ITEM_STATE_INVALID) return ret;
     }
 
