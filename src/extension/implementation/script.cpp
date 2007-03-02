@@ -675,7 +675,7 @@ Script::save(Inkscape::Extension::Output *module,
     This function is a little bit trickier than the previous two.  It
     needs two temporary files to get it's work done.  Both of these
     files have random names created for them using the g_file_open_temp function
-    with the sp_ext_ prefix in the temporary directory.  Like the other
+    with the ink_ext_ prefix in the temporary directory.  Like the other
     functions, the temporary files are deleted at the end.
 
     To save/load the two temporary documents (both are SVG) the internal
