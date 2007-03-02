@@ -293,6 +293,28 @@ streamline rendering.
 
 				if (pb.empty == FALSE) {
 
+					if (arena->arena->rendermode == RENDERMODE_OUTLINE) {
+						// currently we only use cairo in outline mode
+
+						// ENDIANNESS FIX
+						// Inkscape and GTK use fixed byte order in their buffers: r, g, b, a.
+						// Cairo reads/writes buffer values as in32s and therefore depends on the hardware byte order 
+						// (little-endian vs big-endian). 
+						// Until we move ALL of inkscape rendering and screen display to cairo, 
+						// we must reverse the order for big-endian architectures (e.g. PowerPC).
+						if (G_BYTE_ORDER == G_BIG_ENDIAN) {
+							unsigned char *start = NR_PIXBLOCK_PX(&pb);
+							unsigned char *end = start + pb.rs * (pb.area.y1 - pb.area.y0);
+							for (unsigned char *i = start; i < end; i += 4) {
+								unsigned char tmp0 = i[0];
+								unsigned char tmp1 = i[1];
+								i[0] = i[3];
+								i[1] = i[2];
+								i[2] = tmp1;
+								i[3] = tmp0;
+							}
+						}
+					}
 
 				   // this does the 32->24 squishing, using an assembler routine:
 			      nr_blit_pixblock_pixblock (&cb, &pb);
