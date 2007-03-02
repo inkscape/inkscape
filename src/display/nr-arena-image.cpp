@@ -226,40 +226,38 @@ nr_arena_image_render (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock
 
 	} else { // outline; draw a rect instead
 
-		Path*  thePath = new Path;
-		thePath->SetBackData (false);
-		thePath->Reset ();
+		if (!ct) 
+			return item->state;
 
-		thePath->MoveTo (image->c00);
-		// the box
-		thePath->LineTo (image->c10);
-		thePath->LineTo (image->c11);
-		thePath->LineTo (image->c01);
-		thePath->LineTo (image->c00);
-		// the diagonals
-		thePath->LineTo (image->c11);
-		thePath->MoveTo (image->c10);
-		thePath->LineTo (image->c01);
-
-		// livarot black magic - exactly this sequnce of conversions to get stable rendering of the shape
-		thePath->Convert(1.0);
-		Shape* theShape = new Shape;
-		thePath->Stroke(theShape, true, 0.25, join_pointy, butt_straight, 5);
-		Shape* theShape1 = new Shape;
-		theShape1->ConvertToShape(theShape, fill_nonZero);
-
-		NRPixBlock m;
-		nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
-		m.visible_area = pb->visible_area; 
-		nr_pixblock_render_shape_mask_or(m, theShape1);
-		m.empty = FALSE;
 		guint32 rgba = prefs_get_int_attribute("options.wireframecolors", "images", 0xff0000ff);
-		nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
+      // FIXME: we use RGBA buffers but cairo writes BGRA (on i386), so we must cheat 
+      // by setting color channels in the "wrong" order
+      cairo_set_source_rgba(ct, SP_RGBA32_B_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_R_F(rgba), SP_RGBA32_A_F(rgba));
+
+      cairo_set_line_width(ct, 0.5);
+      cairo_new_path(ct);
+
+		NR::Point shift(pb->area.x0, pb->area.y0);
+		NR::Point c00 = image->c00 - shift;
+		NR::Point c01 = image->c01 - shift;
+		NR::Point c11 = image->c11 - shift;
+		NR::Point c10 = image->c10 - shift;
+
+		cairo_move_to (ct, c00[NR::X], c00[NR::Y]);
+
+		// the box
+		cairo_line_to (ct, c10[NR::X], c10[NR::Y]);
+		cairo_line_to (ct, c11[NR::X], c11[NR::Y]);
+		cairo_line_to (ct, c01[NR::X], c01[NR::Y]);
+		cairo_line_to (ct, c00[NR::X], c00[NR::Y]);
+		// the diagonals
+		cairo_line_to (ct, c11[NR::X], c11[NR::Y]);
+		cairo_move_to (ct, c10[NR::X], c10[NR::Y]);
+		cairo_line_to (ct, c01[NR::X], c01[NR::Y]);
+
+      cairo_stroke(ct);
+
 		pb->empty = FALSE;
-		nr_pixblock_release(&m);
-		delete theShape;
-		delete theShape1;
-		delete thePath;
 	}
 
 	return item->state;
