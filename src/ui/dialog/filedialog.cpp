@@ -1065,6 +1065,7 @@ public:
     bool show();
 
     Inkscape::Extension::Extension *getSelectionType();
+    virtual void setSelectionType( Inkscape::Extension::Extension * key );
 
     Glib::ustring getFilename();
 
@@ -1113,8 +1114,6 @@ private:
     std::vector<FileType> fileTypes;
 
     //# Child widgets
-    Gtk::CheckButton fileTypeCheckbox;
-
 
     /**
      * Callback for user input into fileNameEntry
@@ -1126,8 +1125,6 @@ private:
      */
     void createFileTypeMenu();
 
-
-    bool append_extension;
 
     /**
      * The extension to use to write this file
@@ -1215,9 +1212,39 @@ void FileSaveDialogImpl::fileTypeChangedCallback()
         return;
     FileType type = fileTypes[sel];
     //g_message("selected: %s\n", type.name.c_str());
+
+    extension = type.extension;
     Gtk::FileFilter filter;
     filter.add_pattern(type.pattern);
     set_filter(filter);
+
+    // Pick up any changes the user has typed in.
+    Glib::ustring tmp = get_filename();
+#ifdef WITH_GNOME_VFS
+    if ( tmp.empty() ) {
+        tmp = get_uri();
+    }
+#endif
+    if ( !tmp.empty() ) {
+        myFilename = tmp;
+    }
+
+    Inkscape::Extension::Output* newOut = extension ? dynamic_cast<Inkscape::Extension::Output*>(extension) : 0;
+    if ( newOut ) {
+        size_t pos = myFilename.rfind('.');
+        if ( pos != Glib::ustring::npos ) {
+            Glib::ustring trail = myFilename.substr( pos );
+            try {
+                Glib::ustring trailUtf8 = Glib::filename_to_utf8( trail );
+                if ( trailUtf8.casefold() != Glib::ustring( newOut->get_extension() ).casefold() ) {
+                    myFilename = myFilename.erase( pos ) + newOut->get_extension();
+                    change_path(myFilename);
+                }
+            } catch ( Glib::ConvertError& e ) {
+                // ignore
+            }
+        }
+    }
 }
 
 
@@ -1269,9 +1296,6 @@ FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
             const Glib::ustring &default_key) :
             FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE)
 {
-    append_extension = (bool)prefs_get_int_attribute("dialogs.save_as",
-                                                  "append_extension", 1);
-
     /* One file at a time */
     set_select_multiple(false);
 
@@ -1301,11 +1325,6 @@ FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
     //###### Add the file types menu
     //createFilterMenu();
 
-    //###### Do we want the .xxx extension automatically added?
-    fileTypeCheckbox.set_label(Glib::ustring(_("Append filename extension automatically")));
-    fileTypeCheckbox.set_active(append_extension);
-
-    fileTypeBox.pack_start(fileTypeCheckbox);
     createFileTypeMenu();
     fileTypeComboBox.set_size_request(200,40);
     fileTypeComboBox.signal_changed().connect(
@@ -1404,27 +1423,12 @@ FileSaveDialogImpl::show()
 
     if (b == Gtk::RESPONSE_OK)
         {
-        int sel = fileTypeComboBox.get_active_row_number ();
-        if (sel>=0 && sel< (int)fileTypes.size())
-            {
-            FileType &type = fileTypes[sel];
-            extension = type.extension;
-            }
         myFilename = get_filename();
 #ifdef WITH_GNOME_VFS
         if (myFilename.length() < 1)
             myFilename = get_uri();
 #endif
 
-        /*
-
-        // FIXME: Why do we have more code
-
-        append_extension = checkbox.get_active();
-        prefs_set_int_attribute("dialogs.save_as", "append_extension", append_extension);
-        prefs_set_string_attribute("dialogs.save_as", "default",
-                  ( extension != NULL ? extension->get_id() : "" ));
-        */
         return TRUE;
         }
     else
@@ -1441,6 +1445,48 @@ Inkscape::Extension::Extension *
 FileSaveDialogImpl::getSelectionType()
 {
     return extension;
+}
+
+void FileSaveDialogImpl::setSelectionType( Inkscape::Extension::Extension * key )
+{
+    extension = key;
+
+    // If no pointer to extension is passed in, look up based on filename extension.
+    if ( !extension ) {
+        // Not quite UTF-8 here.
+        gchar *filenameLower = g_ascii_strdown(myFilename.c_str(), -1);
+        for ( int i = 0; !extension && (i < (int)fileTypes.size()); i++ ) {
+            Inkscape::Extension::Output *ext = dynamic_cast<Inkscape::Extension::Output*>(fileTypes[i].extension);
+            if ( ext && ext->get_extension() ) {
+                gchar *extensionLower = g_ascii_strdown( ext->get_extension(), -1 );
+                if ( g_str_has_suffix(filenameLower, extensionLower) ) {
+                    extension = fileTypes[i].extension;
+                }
+                g_free(extensionLower);
+            }
+        }
+        g_free(filenameLower);
+    }
+
+    // Ensure the proper entry in the combo box is selected.
+    if ( extension ) {
+        gchar const * extensionID = extension->get_id();
+        if ( extensionID ) {
+            for ( int i = 0; i < (int)fileTypes.size(); i++ ) {
+                Inkscape::Extension::Extension *ext = fileTypes[i].extension;
+                if ( ext ) {
+                    gchar const * id = ext->get_id();
+                    if ( id && ( strcmp(extensionID, id) == 0) ) {
+                        int oldSel = fileTypeComboBox.get_active_row_number();
+                        if ( i != oldSel ) {
+                            fileTypeComboBox.set_active(i);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
 
 
@@ -1472,10 +1518,21 @@ FileSaveDialogImpl::change_path(const Glib::ustring& path)
         set_current_folder(myFilename);
     } else {
         //fprintf(stderr,"set_filename(%s)\n",myFilename.c_str());
-        set_filename(myFilename);
+        if ( Glib::file_test( myFilename, Glib::FILE_TEST_EXISTS ) ) {
+            set_filename(myFilename);
+        } else {
+            std::string dirName = Glib::path_get_dirname( myFilename  );
+            set_current_folder(dirName);
+        }
         Glib::ustring basename = Glib::path_get_basename(myFilename);
         //fprintf(stderr,"set_current_name(%s)\n",basename.c_str());
-        set_current_name(basename);
+        try {
+            set_current_name( Glib::filename_to_utf8(basename) );
+        } catch ( Glib::ConvertError& e ) {
+            g_warning( "Error converting save filename to UTF-8." );
+            // try a fallback.
+            set_current_name( basename );
+        }
     }
 }
 

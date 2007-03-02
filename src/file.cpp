@@ -499,7 +499,7 @@ file_save(SPDocument *doc, const Glib::ustring &uri,
 
     try {
         Inkscape::Extension::save(key, doc, uri.c_str(),
-                 saveas && prefs_get_int_attribute("dialogs.save_as", "append_extension", 1),
+                 false,
                  saveas, official); 
     } catch (Inkscape::Extension::Output::no_extension_found &e) {
         gchar *safeUri = Inkscape::IO::sanitizeString(uri.c_str());
@@ -529,8 +529,6 @@ file_save(SPDocument *doc, const Glib::ustring &uri,
 
 
 
-static Inkscape::UI::Dialog::FileSaveDialog *saveDialogInstance = NULL;
-
 /**
  *  Display a SaveAs dialog.  Save the document if OK pressed.
  *
@@ -542,7 +540,7 @@ sp_file_save_dialog(SPDocument *doc, bool is_copy)
 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
 
-    Inkscape::Extension::Output *extension;
+    Inkscape::Extension::Output *extension = 0;
 
     //# Get the default extension name
     Glib::ustring default_extension;
@@ -609,27 +607,28 @@ sp_file_save_dialog(SPDocument *doc, bool is_copy)
     } else {
         dialog_title = (char const *) _("Select file to save to");
     }
-    if (!saveDialogInstance)
-        saveDialogInstance =
-             Inkscape::UI::Dialog::FileSaveDialog::create(
-                 save_loc,
-                 Inkscape::UI::Dialog::SVG_TYPES,
-                 (char const *) _("Select file to save to"),
-                 default_extension
+    Inkscape::UI::Dialog::FileSaveDialog *saveDialog =
+        Inkscape::UI::Dialog::FileSaveDialog::create(
+            save_loc,
+            Inkscape::UI::Dialog::SVG_TYPES,
+            (char const *) _("Select file to save to"),
+            default_extension
             );
-    else
-        saveDialogInstance->change_path(save_loc);
-    saveDialogInstance->change_title(dialog_title);
-    
-    bool success = saveDialogInstance->show();
-    if (!success)
+
+    saveDialog->change_title(dialog_title);
+    saveDialog->setSelectionType(extension);
+
+    bool success = saveDialog->show();
+    if (!success) {
+        delete saveDialog;
         return success;
+    }
 
-    Glib::ustring fileName = saveDialogInstance->getFilename();
+    Glib::ustring fileName = saveDialog->getFilename();
+    Inkscape::Extension::Extension *selectionType = saveDialog->getSelectionType();
 
-    Inkscape::Extension::Extension *selectionType =
-        saveDialogInstance->getSelectionType();
-
+    delete saveDialog;
+    saveDialog = 0;
 
     if (fileName.size() > 0) {
         Glib::ustring newFileName = Glib::filename_to_utf8(fileName);

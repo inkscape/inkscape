@@ -165,6 +165,8 @@ public:
      */
     virtual Inkscape::Extension::Extension * getSelectionType() = 0;
 
+    virtual void setSelectionType( Inkscape::Extension::Extension * key ) = 0;
+
     virtual Glib::ustring getFilename () =0;
 
     /**
