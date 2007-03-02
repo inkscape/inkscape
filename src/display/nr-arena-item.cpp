@@ -259,6 +259,8 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
     if (item->filter) {
         item->filter->bbox_enlarge (item->bbox);
     }
+    // fixme: to fix the display glitches, in outline mode bbox must be a combination of 
+    // full item bbox and its clip and mask (after we have the API to get these)
 
     /* Clipping */
     if (item->clip) {
@@ -321,6 +323,34 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
         nr_rect_l_intersect (&carea, &carea, &item->bbox);
     }
 
+    if (outline) {
+    // No caching in outline mode for now; investigate if it really gives any advantage with cairo.
+    // Also no attempts to clip anything; just render everything: item, clip, mask   
+            // First, render the object itself 
+            unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, pb, flags);
+            if (state & NR_ARENA_ITEM_STATE_INVALID) {
+                /* Clean up and return error */
+                item->state |= NR_ARENA_ITEM_STATE_INVALID;
+                return item->state;
+            }
+
+            // render clip and mask, if any
+            guint32 saved_rgba = item->arena->outlinecolor; // save current outline color
+            // render clippath as an object, using a different color
+            if (item->clip) {
+                item->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "clips", 0x00ff00ff); // green clips
+                NR_ARENA_ITEM_VIRTUAL (item->clip, render) (ct, item->clip, &carea, pb, flags);
+            } 
+            // render mask as an object, using a different color
+            if (item->mask) {
+                item->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "masks", 0x0000ffff); // blue masks
+                NR_ARENA_ITEM_VIRTUAL (item->mask, render) (ct, item->mask, &carea, pb, flags);
+            }
+            item->arena->outlinecolor = saved_rgba; // restore outline color
+
+            return item->state | NR_ARENA_ITEM_STATE_RENDER;
+    }
+
     NRPixBlock cpb;
     if (item->px) {
         /* Has cache pixblock, render this and return */
@@ -366,8 +396,8 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
 
     /* Determine, whether we need temporary buffer */
     if (item->clip || item->mask
-        || ((item->opacity != 255) && !item->render_opacity && !outline)
-        || (item->filter && !outline) || item->background_new
+        || ((item->opacity != 255) && !item->render_opacity)
+        || (item->filter) || item->background_new
         || (item->parent && item->parent->background_pb)) {
 
         /* Setup and render item buffer */
@@ -401,11 +431,11 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
         ipb.empty = FALSE;
 
         /* Run filtering, if a filter is set for this object */
-        if (item->filter && !outline) {
+        if (item->filter) {
             item->filter->render (item, &ipb);
         }
 
-        if ((item->clip || item->mask) && !outline) {
+        if (item->clip || item->mask) {
             /* Setup mask pixblock */
             NRPixBlock mpb;
             nr_pixblock_setup_fast (&mpb, NR_PIXBLOCK_MODE_A8, carea.x0,
@@ -492,7 +522,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
                 }
                 /* Multiply with opacity if needed */
                 if ((item->opacity != 255) && !item->render_opacity
-                    && !outline) {
+                    ) {
                     int x, y;
                     unsigned int a;
                     a = item->opacity;
@@ -511,32 +541,6 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
             nr_pixblock_release (&mpb);
             /* This pointer wouldn't be valid outside this block, so clear it */
             item->background_pb = NULL;
-
-        } else if ((item->clip || item->mask) && outline) {
-            // Render clipped or masked object in outline mode:
-
-            // First, render the object itself 
-            unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, dpb, flags);
-            if (state & NR_ARENA_ITEM_STATE_INVALID) {
-                /* Clean up and return error */
-                if (dpb != pb)
-                    nr_pixblock_release (dpb);
-                item->state |= NR_ARENA_ITEM_STATE_INVALID;
-                return item->state;
-            }
-
-            guint32 saved_rgba = item->arena->outlinecolor; // save current outline color
-            // render clippath as an object, using a different color
-            if (item->clip) {
-                item->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "clips", 0x00ff00ff); // green clips
-                NR_ARENA_ITEM_VIRTUAL (item->clip, render) (ct, item->clip, &carea, dpb, flags);
-            } 
-            // render mask as an object, using a different color
-            if (item->mask) {
-                item->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "masks", 0x0000ffff); // blue masks
-                NR_ARENA_ITEM_VIRTUAL (item->mask, render) (ct, item->mask, &carea, dpb, flags);
-            }
-            item->arena->outlinecolor = saved_rgba; // restore outline color
 
         } else {
             if (item->render_opacity) { // opacity was already rendered in, just copy to dpb here
