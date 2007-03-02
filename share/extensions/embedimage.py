@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 import inkex, os, base64
 
-class MyEffect(inkex.Effect):
+class Embedder(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-s", "--selectedonly",
@@ -28,19 +28,28 @@ class MyEffect(inkex.Effect):
             help="embed only selected images")
 
     def effect(self):
-        ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
-
         # if slectedonly is enabled and there is a selection only embed selected
         # images. otherwise embed all images
         if (self.options.selectedonly):
-            if (self.options.ids):
-                for id, node in self.selected.iteritems():
-                    if node.tagName == 'image':
-                        self.embedImage(node)
+            self.embedSelected(self.document, self.selected)
         else:
-            path = '//image'
-            for node in inkex.xml.xpath.Evaluate(path,self.document, context=ctx):
-                self.embedImage(node)
+            self.embedAll(self.document)
+
+    def embedSelected(self, document, selected):
+        self.document=document
+        self.selected=selected
+        if (self.options.ids):
+            for id, node in selected.iteritems():
+                if node.tagName == 'image':
+                    self.embedImage(node)
+
+    def embedAll(self, document):
+        self.document=document #not that nice... oh well
+        ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
+        path = '//image'
+        for node in inkex.xml.xpath.Evaluate(path, self.document, context=ctx):
+            self.embedImage(node)
+
     def embedImage(self, node):
         xlink = node.attributes.getNamedItemNS(inkex.NSS[u'xlink'],'href')
         if (xlink.value[:4]!='data'):
@@ -91,5 +100,7 @@ class MyEffect(inkex.Effect):
                     inkex.debug("%s is not of type image/png, image/jpeg, image/bmp, image/gif or image/x-icon" % path)
             else:
                 inkex.debug("Sorry we could not locate %s" % path)
-e = MyEffect()
-e.affect()
+
+if __name__ == '__main__':
+    e = Embedder()
+    e.affect()
