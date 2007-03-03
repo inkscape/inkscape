@@ -853,10 +853,13 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
-    if (outline) { 
+    if (outline) { // cairo outline rendering
+
         pb->empty = FALSE;
-        return cairo_arena_shape_render_outline (ct, item, NR::Point(pb->area.x0, pb->area.y0));
-    }
+        unsigned int ret = cairo_arena_shape_render_outline (ct, item, NR::Point(pb->area.x0, pb->area.y0));
+        if (ret & NR_ARENA_ITEM_STATE_INVALID) return ret;
+
+    } else {
 
     if ( shape->delayed_shp ) {
         if ( nr_rect_l_test_intersect(area, &item->bbox) ) {
@@ -972,10 +975,11 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
         nr_pixblock_release(&m);
     }
 
-    /* Just compose children into parent buffer */
+    } // non-cairo non-outline branch
+
+    /* Render markers into parent buffer */
     for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
-        unsigned int ret;
-        ret = nr_arena_item_invoke_render(ct, child, area, pb, flags);
+        unsigned int ret = nr_arena_item_invoke_render(ct, child, area, pb, flags);
         if (ret & NR_ARENA_ITEM_STATE_INVALID) return ret;
     }
 
