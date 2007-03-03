@@ -139,7 +139,9 @@
   -->
   <target name="touchabout"
       description="update the modification time of aboutdialog.cpp">
-    <touch file="${src}/ui/dialog/aboutdialog.cpp"/>
+    <!-- not good <touch file="${src}/ui/dialog/aboutdialog.cpp"/> -->
+    <!-- better -->
+    <delete file="${build}/obj/ui/dialog/aboutdialog.o"/>
   </target>
 
 
