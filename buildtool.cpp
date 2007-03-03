@@ -37,7 +37,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.6.4, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.6.5, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -960,18 +960,18 @@ friend class Parser;
 public:
     Element()
         {
-        parent = NULL;
+        init();
         }
 
     Element(const String &nameArg)
         {
-        parent = NULL;
+        init();
         name   = nameArg;
         }
 
     Element(const String &nameArg, const String &valueArg)
         {
-        parent = NULL;
+        init();
         name   = nameArg;
         value  = valueArg;
         }
@@ -1039,8 +1039,17 @@ public:
      * @param elem the element to output
      */
     void print();
+    
+    int getLine()
+        { return line; }
 
 protected:
+
+    void init()
+        {
+        parent = NULL;
+        line   = 0;
+        }
 
     void assign(const Element &other)
         {
@@ -1050,6 +1059,7 @@ protected:
         namespaces = other.namespaces;
         name       = other.name;
         value      = other.value;
+        line       = other.line;
         }
 
     void findElementsRecursive(std::vector<Element *>&res, const String &name);
@@ -1065,7 +1075,8 @@ protected:
 
     String name;
     String value;
-
+    
+    int line;
 };
 
 
@@ -1133,15 +1144,17 @@ private:
         currentPosition = 0;
         }
 
-    void getLineAndColumn(long pos, long *lineNr, long *colNr);
+    int countLines(int begin, int end);
+
+    void getLineAndColumn(int pos, int *lineNr, int *colNr);
 
     void error(char *fmt, ...);
 
-    int peek(long pos);
+    int peek(int pos);
 
-    int match(long pos, const char *text);
+    int match(int pos, const char *text);
 
-    int skipwhite(long p);
+    int skipwhite(int p);
 
     int getWord(int p0, String &buf);
 
@@ -1157,12 +1170,10 @@ private:
 
     bool       keepGoing;
     Element    *currentNode;
-    long       parselen;
+    int        parselen;
     XMLCh      *parsebuf;
-    String  cdatabuf;
-    long       currentPosition;
-    int        colNr;
-
+    String     cdatabuf;
+    int        currentPosition;
 };
 
 
@@ -1178,6 +1189,7 @@ Element *Element::clone()
     elem->parent     = parent;
     elem->attributes = attributes;
     elem->namespaces = namespaces;
+    elem->line       = line;
 
     std::vector<Element *>::iterator iter;
     for (iter = children.begin(); iter != children.end() ; iter++)
@@ -1356,10 +1368,24 @@ String Parser::trim(const String &s)
     return res;
 }
 
-void Parser::getLineAndColumn(long pos, long *lineNr, long *colNr)
+
+int Parser::countLines(int begin, int end)
 {
-    long line = 1;
-    long col  = 1;
+    int count = 0;
+    for (int i=begin ; i<end ; i++)
+        {
+        XMLCh ch = parsebuf[i];
+        if (ch == '\n' || ch == '\r')
+            count++;
+        }
+    return count;
+}
+
+
+void Parser::getLineAndColumn(int pos, int *lineNr, int *colNr)
+{
+    int line = 1;
+    int col  = 1;
     for (long i=0 ; i<pos ; i++)
         {
         XMLCh ch = parsebuf[i];
@@ -1379,11 +1405,11 @@ void Parser::getLineAndColumn(long pos, long *lineNr, long *colNr)
 
 void Parser::error(char *fmt, ...)
 {
-    long lineNr;
-    long colNr;
+    int lineNr;
+    int colNr;
     getLineAndColumn(currentPosition, &lineNr, &colNr);
     va_list args;
-    fprintf(stderr, "xml error at line %ld, column %ld:", lineNr, colNr);
+    fprintf(stderr, "xml error at line %d, column %d:", lineNr, colNr);
     va_start(args,fmt);
     vfprintf(stderr,fmt,args);
     va_end(args) ;
@@ -1392,7 +1418,7 @@ void Parser::error(char *fmt, ...)
 
 
 
-int Parser::peek(long pos)
+int Parser::peek(int pos)
 {
     if (pos >= parselen)
         return -1;
@@ -1428,7 +1454,7 @@ String Parser::encode(const String &str)
 }
 
 
-int Parser::match(long p0, const char *text)
+int Parser::match(int p0, const char *text)
 {
     int p = p0;
     while (*text)
@@ -1442,7 +1468,7 @@ int Parser::match(long p0, const char *text)
 
 
 
-int Parser::skipwhite(long p)
+int Parser::skipwhite(int p)
 {
 
     while (p<parselen)
@@ -1599,7 +1625,9 @@ int Parser::parseDoctype(int p0)
     return p;
 }
 
-int Parser::parseElement(int p0, Element *par,int depth)
+
+
+int Parser::parseElement(int p0, Element *par,int lineNr)
 {
 
     int p = p0;
@@ -1613,6 +1641,9 @@ int Parser::parseElement(int p0, Element *par,int depth)
     if (ch!='<')
         return p0;
 
+    int line, col;
+    //getLineAndColumn(p, &line, &col);
+
     p++;
 
     String openTagName;
@@ -1623,6 +1654,7 @@ int Parser::parseElement(int p0, Element *par,int depth)
 
     //Add element to tree
     Element *n = new Element(openTagName);
+    n->line = lineNr + countLines(p0, p);
     n->parent = par;
     par->addChild(n);
 
@@ -1717,7 +1749,7 @@ int Parser::parseElement(int p0, Element *par,int depth)
         //# CHILD ELEMENT
         if (ch == '<')
             {
-            p2 = parseElement(p, n, depth+1);
+            p2 = parseElement(p, n, lineNr + countLines(p0, p));
             if (p2 == p)
                 {
                 /*
@@ -1809,7 +1841,7 @@ Element *Parser::parse(XMLCh *buf,int pos,int len)
     Element *rootNode = new Element("root");
     pos = parseVersion(pos);
     pos = parseDoctype(pos);
-    pos = parseElement(pos, rootNode, 0);
+    pos = parseElement(pos, rootNode, 1);
     return rootNode;
 }
 
@@ -2839,8 +2871,9 @@ private:
 class MakeBase
 {
 public:
+
     MakeBase()
-        {}
+        { line = 0; }
     virtual ~MakeBase()
         {}
 
@@ -2870,6 +2903,18 @@ public:
      * Get an element value, performing substitutions if necessary
      */
     bool getValue(Element *elem, String &result);
+    
+    /**
+     * Set the current line number in the file
+     */         
+    void setLine(int val)
+        { line = val; }
+        
+    /**
+     * Get the current line number in the file
+     */         
+    int getLine()
+        { return line; }
 
 protected:
 
@@ -3042,6 +3087,7 @@ private:
      */         
     bool getSubstitutions(const String &s, String &result);
 
+    int line;
 
 
 };
@@ -3056,7 +3102,7 @@ void MakeBase::error(char *fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
-    fprintf(stderr, "Make error: ");
+    fprintf(stderr, "Make error line %d: ", line);
     vfprintf(stderr, fmt, args);
     fprintf(stderr, "\n");
     va_end(args) ;
@@ -5727,7 +5773,7 @@ public:
     /**
      *
      */
-    Task *createTask(Element *elem);
+    Task *createTask(Element *elem, int lineNr);
 
 
 protected:
@@ -5943,7 +5989,10 @@ public:
             //## Execute the command
 
             String outString, errString;
+            trace("BEFORE");
             bool ret = executeCommand(cmd.c_str(), "", outString, errString);
+            trace("AFTER");
+
             if (f)
                 {
                 fprintf(f, "########################### File : %s\n",
@@ -6366,7 +6415,12 @@ public:
             delType = DEL_DIR;
         if (fileName.size()>0 && dirName.size()>0)
             {
-            error("<delete> can only have one attribute of file= or dir=");
+            error("<delete> can have one attribute of file= or dir=");
+            return false;
+            }
+        if (fileName.size()==0 && dirName.size()==0)
+            {
+            error("<delete> must have one attribute of file= or dir=");
             return false;
             }
         String ret;
@@ -7377,7 +7431,7 @@ public:
 /**
  *
  */
-Task *Task::createTask(Element *elem)
+Task *Task::createTask(Element *elem, int lineNr)
 {
     String tagName = elem->getName();
     //trace("task:%s", tagName.c_str());
@@ -7419,6 +7473,8 @@ Task *Task::createTask(Element *elem)
         error("Unknown task '%s'", tagName.c_str());
         return NULL;
         }
+
+    task->setLine(lineNr);
 
     if (!task->parse(elem))
         {
@@ -7715,11 +7771,6 @@ private:
      *
      */
     bool parseProperty(Element *elem);
-
-    /**
-     *
-     */
-    bool parseTask(Task &task, Element *elem);
 
     /**
      *
@@ -8179,6 +8230,8 @@ bool Make::parseFile()
 {
     status("######## PARSE : %s", uri.getPath().c_str());
 
+    setLine(0);
+
     Parser parser;
     Element *root = parser.parseFile(uri.getNativePath());
     if (!root)
@@ -8187,6 +8240,8 @@ bool Make::parseFile()
               uri.getNativePath().c_str());
         return false;
         }
+    
+    setLine(root->getLine());
 
     if (root->getChildren().size()==0 ||
         root->getChildren()[0]->getName()!="project")
@@ -8213,6 +8268,7 @@ bool Make::parseFile()
     for (unsigned int i=0 ; i<children.size() ; i++)
         {
         Element *elem = children[i];
+        setLine(elem->getLine());
         String tagName = elem->getName();
 
         //########## DESCRIPTION
@@ -8247,7 +8303,7 @@ bool Make::parseFile()
                 {
                 Element *telem = telems[i];
                 Task breeder(*this);
-                Task *task = breeder.createTask(telem);
+                Task *task = breeder.createTask(telem, telem->getLine());
                 if (!task)
                     return false;
                 allTasks.push_back(task);
@@ -8268,6 +8324,12 @@ bool Make::parseFile()
                 }
             //more work than targets[tname]=target, but avoids default allocator
             targets.insert(std::make_pair<String, Target>(tname, target));
+            }
+        //######### none of the above
+        else
+            {
+            error("unknown toplevel tag: <%s>", tagName.c_str());
+            return false;
             }
 
         }
