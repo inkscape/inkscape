@@ -1243,6 +1243,9 @@ void FileSaveDialogImpl::fileTypeChangedCallback()
             } catch ( Glib::ConvertError& e ) {
                 // ignore
             }
+        } else {
+            myFilename = myFilename + newOut->get_extension();
+            change_path(myFilename);
         }
     }
 }
