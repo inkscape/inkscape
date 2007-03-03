@@ -1071,8 +1071,8 @@ public:
     Glib::ustring getFilename();
 
     void change_title(const Glib::ustring& title);
-    void change_path(const Glib::ustring& dir);
-
+    void change_path(const Glib::ustring& path);
+    void updateNameAndExtension();
 
 private:
 
@@ -1115,6 +1115,7 @@ private:
     std::vector<FileType> fileTypes;
 
     //# Child widgets
+    Gtk::CheckButton fileTypeCheckbox;
 
     /**
      * Callback for user input into fileNameEntry
@@ -1224,44 +1225,7 @@ void FileSaveDialogImpl::fileTypeChangedCallback()
     filter.add_pattern(type.pattern);
     set_filter(filter);
 
-    // Pick up any changes the user has typed in.
-    Glib::ustring tmp = get_filename();
-#ifdef WITH_GNOME_VFS
-    if ( tmp.empty() ) {
-        tmp = get_uri();
-    }
-#endif
-    if ( !tmp.empty() ) {
-        myFilename = tmp;
-    }
-
-    Inkscape::Extension::Output* newOut = extension ? dynamic_cast<Inkscape::Extension::Output*>(extension) : 0;
-    bool appendExtension = true;
-    if ( newOut ) {
-        try {
-            Glib::ustring utf8Name = Glib::filename_to_utf8( myFilename );
-            size_t pos = utf8Name.rfind('.');
-            if ( pos != Glib::ustring::npos ) {
-                Glib::ustring trail = utf8Name.substr( pos );
-                Glib::ustring foldedTrail = trail.casefold();
-                if ( (trail == ".") 
-                    | (foldedTrail != Glib::ustring( newOut->get_extension() ).casefold()
-                     && ( knownExtensions.find(foldedTrail) != knownExtensions.end() ) ) ) {
-                    utf8Name = utf8Name.erase( pos );
-                } else {
-                    appendExtension = false;
-                }
-            }
-
-            if (appendExtension) {
-                utf8Name = utf8Name + newOut->get_extension();
-                myFilename = Glib::filename_from_utf8( utf8Name );
-                change_path(myFilename);
-            }
-        } catch ( Glib::ConvertError& e ) {
-            // ignore
-        }
-    }
+    updateNameAndExtension();
 }
 
 
@@ -1344,6 +1308,12 @@ FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
     //###### Add the file types menu
     //createFilterMenu();
 
+    //###### Do we want the .xxx extension automatically added?
+    fileTypeCheckbox.set_label(Glib::ustring(_("Append filename extension automatically")));
+    fileTypeCheckbox.set_active( (bool)prefs_get_int_attribute("dialogs.save_as",
+                                                               "append_extension", 1) );
+
+    fileTypeBox.pack_start(fileTypeCheckbox);
     createFileTypeMenu();
     fileTypeComboBox.set_size_request(200,40);
     fileTypeComboBox.signal_changed().connect(
@@ -1442,11 +1412,14 @@ FileSaveDialogImpl::show()
 
     if (b == Gtk::RESPONSE_OK)
         {
-        myFilename = get_filename();
-#ifdef WITH_GNOME_VFS
-        if (myFilename.length() < 1)
-            myFilename = get_uri();
-#endif
+        updateNameAndExtension();
+
+        // Store changes of the "Append filename automatically" checkbox back to preferences.
+        prefs_set_int_attribute("dialogs.save_as", "append_extension", fileTypeCheckbox.get_active());
+
+        // Store the last used save-as filetype to preferences.
+        prefs_set_string_attribute("dialogs.save_as", "default",
+                                   ( extension != NULL ? extension->get_id() : "" ));
 
         return TRUE;
         }
@@ -1557,8 +1530,47 @@ FileSaveDialogImpl::change_path(const Glib::ustring& path)
     }
 }
 
+void FileSaveDialogImpl::updateNameAndExtension()
+{
+    // Pick up any changes the user has typed in.
+    Glib::ustring tmp = get_filename();
+#ifdef WITH_GNOME_VFS
+    if ( tmp.empty() ) {
+        tmp = get_uri();
+    }
+#endif
+    if ( !tmp.empty() ) {
+        myFilename = tmp;
+    }
 
+    Inkscape::Extension::Output* newOut = extension ? dynamic_cast<Inkscape::Extension::Output*>(extension) : 0;
+    if ( fileTypeCheckbox.get_active() && newOut ) {
+        try {
+            bool appendExtension = true;
+            Glib::ustring utf8Name = Glib::filename_to_utf8( myFilename );
+            size_t pos = utf8Name.rfind('.');
+            if ( pos != Glib::ustring::npos ) {
+                Glib::ustring trail = utf8Name.substr( pos );
+                Glib::ustring foldedTrail = trail.casefold();
+                if ( (trail == ".") 
+                     | (foldedTrail != Glib::ustring( newOut->get_extension() ).casefold()
+                        && ( knownExtensions.find(foldedTrail) != knownExtensions.end() ) ) ) {
+                    utf8Name = utf8Name.erase( pos );
+                } else {
+                    appendExtension = false;
+                }
+            }
 
+            if (appendExtension) {
+                utf8Name = utf8Name + newOut->get_extension();
+                myFilename = Glib::filename_from_utf8( utf8Name );
+                change_path(myFilename);
+            }
+        } catch ( Glib::ConvertError& e ) {
+            // ignore
+        }
+    }
+}
 
 
 
