@@ -173,11 +173,12 @@ sp_flowtext_update(SPObject *object, SPCtx *ctx, unsigned flags)
 
     group->rebuildLayout();
 
-    // pass the bbox of the flowtext object as paintbox (used for paintserver fills)
     NRRect paintbox;
     sp_item_invoke_bbox(group, &paintbox, NR::identity(), TRUE);
     for (SPItemView *v = group->display; v != NULL; v = v->next) {
         group->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
+        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+        // pass the bbox of the flowtext object as paintbox (used for paintserver fills)
         group->layout.show(NR_ARENA_GROUP(v->arenaitem), &paintbox);
     }
 }
@@ -378,6 +379,8 @@ sp_flowtext_show(SPItem *item, NRArena *arena, unsigned/* key*/, unsigned /*flag
     SPFlowtext *group = (SPFlowtext *) item;
     NRArenaGroup *flowed = NRArenaGroup::create(arena);
     nr_arena_group_set_transparent(flowed, FALSE);
+
+    nr_arena_group_set_style(flowed, group->style);
 
     // pass the bbox of the flowtext object as paintbox (used for paintserver fills)
     NRRect paintbox;
