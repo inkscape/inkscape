@@ -402,11 +402,41 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
             pc->grab = NULL;
         }
 
-        pc->grab = NULL;
         ret = TRUE;
     }
     return ret;
 }
+
+static void
+pencil_cancel (SPPencilContext *const pc) 
+{
+    if (pc->grab) {
+        /* Release grab now */
+        sp_canvas_item_ungrab(pc->grab, 0);
+        pc->grab = NULL;
+    }
+
+    pc->is_drawing = false;
+
+    pc->state = SP_PENCIL_CONTEXT_IDLE;
+
+    sp_curve_reset(pc->red_curve);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), NULL);
+    while (pc->green_bpaths) {
+        gtk_object_destroy(GTK_OBJECT(pc->green_bpaths->data));
+        pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
+    }
+    sp_curve_reset(pc->green_curve);
+    if (pc->green_anchor) {
+        pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
+    }
+
+    pc->_message_context->clear();
+    pc->_message_context->flash(Inkscape::NORMAL_MESSAGE, _("Drawing cancelled"));
+
+    sp_canvas_end_forced_full_redraws(pc->desktop->canvas);
+}
+
 
 static gint
 pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint const state)
@@ -420,6 +450,25 @@ pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint con
             // Prevent the zoom field from activation.
             if (!mod_ctrl_only(state)) {
                 ret = TRUE;
+            }
+            break;
+        case GDK_Escape:
+            if (pc->npoints != 0) {
+                // if drawing, cancel, otherwise pass it up for deselecting
+                if (pc->is_drawing) {
+                    pencil_cancel (pc);
+                    ret = TRUE;
+                }
+            }
+            break;
+        case GDK_z:
+        case GDK_Z:
+            if (mod_ctrl_only(state) && pc->npoints != 0) {
+                // if drawing, cancel, otherwise pass it up for undo
+                if (pc->is_drawing) {
+                    pencil_cancel (pc);
+                    ret = TRUE;
+                }
             }
             break;
         default:
