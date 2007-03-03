@@ -263,6 +263,27 @@ nr_arena_image_render (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock
 	return item->state;
 }
 
+/** Calculates the closest distance from p to the segment a1-a2*/
+double 
+distance_to_segment (NR::Point p, NR::Point a1, NR::Point a2)
+{
+	// calculate sides of the triangle and their squares
+	double d1 = NR::L2(p - a1); 
+	double d1_2 = d1 * d1;
+	double d2 = NR::L2(p - a2);
+	double d2_2 = d2 * d2;
+	double a = NR::L2(a1 - a2); 
+	double a_2 = a * a;
+
+	// if one of the angles at the base is > 90, return the corresponding side
+	if (d1_2 + a_2 <= d2_2) return d1;
+	if (d2_2 + a_2 <= d1_2) return d2;
+
+	// otherwise calculate the height to the base
+	double peri = (a + d1 + d2)/2;
+	return (2*sqrt(peri * (peri - a) * (peri - d1) * (peri - d2))/a);
+}
+
 static NRArenaItem *
 nr_arena_image_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky)
 {
@@ -270,20 +291,39 @@ nr_arena_image_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int 
 
 	if (!image->px) return NULL;
 
-	unsigned char * const pixels = image->px;
-	const int width = image->pxw;
-	const int height = image->pxh;
-	const int rowstride = image->pxrs;
-	NR::Point tp = p * image->grid2px;
-	const int ix = (int)(tp[NR::X]);
-	const int iy = (int)(tp[NR::Y]);
+	bool outline = (item->arena->rendermode == RENDERMODE_OUTLINE);
 
-	if ((ix < 0) || (iy < 0) || (ix >= width) || (iy >= height))
+	if (outline) {
+
+		// frame
+		if (distance_to_segment (p, image->c00, image->c10) < delta) return item;
+		if (distance_to_segment (p, image->c10, image->c11) < delta) return item;
+		if (distance_to_segment (p, image->c11, image->c01) < delta) return item;
+		if (distance_to_segment (p, image->c01, image->c00) < delta) return item;
+
+		// diagonals
+		if (distance_to_segment (p, image->c00, image->c11) < delta) return item;
+		if (distance_to_segment (p, image->c10, image->c01) < delta) return item;
+
 		return NULL;
 
-	unsigned char *pix_ptr = pixels + iy * rowstride + ix * 4;
-	// is the alpha not transparent?
-	return (pix_ptr[3] > 0) ? item : NULL;
+	} else {
+
+		unsigned char * const pixels = image->px;
+		const int width = image->pxw;
+		const int height = image->pxh;
+		const int rowstride = image->pxrs;
+		NR::Point tp = p * image->grid2px;
+		const int ix = (int)(tp[NR::X]);
+		const int iy = (int)(tp[NR::Y]);
+
+		if ((ix < 0) || (iy < 0) || (ix >= width) || (iy >= height))
+			return NULL;
+
+		unsigned char *pix_ptr = pixels + iy * rowstride + ix * 4;
+		// is the alpha not transparent?
+		return (pix_ptr[3] > 0) ? item : NULL;
+	}
 }
 
 /* Utility */
