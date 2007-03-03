@@ -379,7 +379,7 @@ void nr_arena_image_set_style (NRArenaImage *image, SPStyle *style)
         {
             SPFilterPrimitive *primitive = style->filter.filter->_primitives[i];
             //if primitive is gaussianblur
-//            if(SP_IS_GAUSSIANBLUR(primitive))
+            if(SP_IS_GAUSSIANBLUR(primitive))
             {
                 NR::FilterGaussian * gaussian = (NR::FilterGaussian *) image->filter->add_primitive(NR::NR_FILTER_GAUSSIANBLUR);
                 SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
