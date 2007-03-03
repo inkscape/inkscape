@@ -434,15 +434,19 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             xp = yp = 0;
             if (within_tolerance && (panning || zoom_rb)) {
                 zoom_rb = 0;
+                if (panning) {
+                    panning = 0;
+                    sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
+                                      event->button.time);
+                }
                 NR::Point const event_w(event->button.x, event->button.y);
                 NR::Point const event_dt(desktop->w2d(event_w));
                 desktop->zoom_relative_keep_point(event_dt,
                           (event->button.state & GDK_SHIFT_MASK) ? 1/zoom_inc : zoom_inc);
                 desktop->updateNow();
-            }
-            if (panning == event->button.button) {
-                panning = 0;
                 ret = TRUE;
+            } else if (panning == event->button.button) {
+                panning = 0;
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
 
@@ -453,8 +457,8 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 NR::Point const motion_w(event->button.x, event->button.y);
                 NR::Point const moved_w( motion_w - button_w );
                 event_context->desktop->scroll_world(moved_w);
-
                 desktop->updateNow();
+                ret = TRUE;
             } else if (zoom_rb == event->button.button) {
                 zoom_rb = 0;
                 NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
@@ -462,6 +466,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 if (b != NR::Nothing() && !within_tolerance) {
                     desktop->set_display_area(b.assume(), 10);
                 }
+                ret = TRUE;
             }
             break;
         case GDK_KEY_PRESS:
