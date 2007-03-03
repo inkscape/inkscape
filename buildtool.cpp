@@ -5989,9 +5989,7 @@ public:
             //## Execute the command
 
             String outString, errString;
-            trace("BEFORE");
             bool ret = executeCommand(cmd.c_str(), "", outString, errString);
-            trace("AFTER");
 
             if (f)
                 {
