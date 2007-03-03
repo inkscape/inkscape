@@ -23,6 +23,13 @@ AM_CONFIG_HEADER(config.h)
 
 AC_PROG_INTLTOOL(0.22)
 
+AC_LANG(C++)
+AC_ISC_POSIX
+AC_PROG_CXX
+AM_PROG_CC_STDC
+AM_PROG_AS
+AC_HEADER_STDC
+
 dnl These next few lines are needed only while libcroco is in our source tree.
 AC_PROG_CC
 AM_PROG_CC_C_O
@@ -37,13 +44,6 @@ if test "$GCC" = "yes"; then
 ], , CFLAGS="$ink_svd_CFLAGS",)
   CFLAGS="-Wall -W $CFLAGS"
 fi
-
-AC_LANG(C++)
-AC_ISC_POSIX
-AC_PROG_CXX
-AM_PROG_CC_STDC
-AM_PROG_AS
-AC_HEADER_STDC
 
 dnl Honor aclocal flags
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
