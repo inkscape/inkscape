@@ -487,6 +487,27 @@ sp_ddc_update_toolbox (SPDesktop *desktop, const gchar *id, double value)
     desktop->setToolboxAdjustmentValue (id, value);
 }
 
+static void
+calligraphic_cancel(SPDynaDrawContext *dc)
+{
+    SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
+    dc->dragging = FALSE;
+    dc->is_drawing = false;
+    sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
+            /* Remove all temporary line segments */
+            while (dc->segments) {
+                gtk_object_destroy(GTK_OBJECT(dc->segments->data));
+                dc->segments = g_slist_remove(dc->segments, dc->segments->data);
+            }
+            /* reset accumulated curve */
+            sp_curve_reset(dc->accumulated);
+            clear_current(dc);
+            if (dc->repr) {
+                dc->repr = NULL;
+            }
+}
+
+
 gint
 sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                                   GdkEvent *event)
@@ -635,9 +656,20 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             }
             break;
         case GDK_Escape:
-            sp_desktop_selection(desktop)->clear();
+            if (dc->is_drawing) {
+                // if drawing, cancel, otherwise pass it up for deselecting
+                calligraphic_cancel (dc);
+                ret = TRUE;
+            }
             break;
-
+        case GDK_z:
+        case GDK_Z:
+            if (MOD__CTRL_ONLY && dc->is_drawing) {
+                // if drawing, cancel, otherwise pass it up for undo
+                calligraphic_cancel (dc);
+                ret = TRUE;
+            }
+            break;
         default:
             break;
         }

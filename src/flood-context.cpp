@@ -643,8 +643,6 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
             if (!MOD__CTRL_ONLY)
                 ret = TRUE;
             break;
-        case GDK_Escape:
-            sp_desktop_selection(desktop)->clear();
         default:
             break;
         }

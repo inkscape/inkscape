@@ -299,7 +299,7 @@ override) the bindings in the main default.xml.
   <bind key="Tab" modifiers="Shift" action="EditSelectPrev" display="true"/>
   <bind key="ISO_Left_Tab" modifiers="Shift" action="EditSelectPrev" />
 
-  <bind action="EditDeselect" /> <!-- FIXME: currently deselecting is bypassing the verb, so it's not bound to Esc as it should be -->
+  <bind key="Escape" action="EditDeselect" /> 
 
 <!-- Objects/selection -->
 

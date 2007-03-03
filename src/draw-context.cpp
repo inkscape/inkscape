@@ -217,10 +217,6 @@ sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
     switch (event->type) {
         case GDK_KEY_PRESS:
             switch (get_group0_keyval (&event->key)) {
-                case GDK_Escape:
-                    sp_desktop_selection(desktop)->clear();
-                    ret = TRUE;
-                    break;
                 case GDK_Up:
                 case GDK_Down:
                 case GDK_KP_Up:
