@@ -37,7 +37,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.6.2, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.6.3, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -45,6 +45,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <sys/time.h>
+#include <utime.h>
 #include <dirent.h>
 
 #include <string>
@@ -1875,13 +1876,15 @@ Element *Parser::parseFile(const String &fileName)
     return n;
 }
 
-
-
 //########################################################################
 //########################################################################
 //##  E N D    X M L
 //########################################################################
 //########################################################################
+
+
+
+
 
 
 //########################################################################
@@ -2329,6 +2332,7 @@ URI URI::resolve(const URI &other) const
 }
 
 
+
 /**
  *  This follows the Java URI algorithm:
  *   1. All "." segments are removed.
@@ -2444,6 +2448,7 @@ void URI::trace(const char *fmt, ...)
     va_end(args);
     fprintf(stdout, "\n");
 }
+
 
 
 
@@ -3470,40 +3475,33 @@ bool MakeBase::executeCommand(const String &command,
         {
         //trace("## stderr");
         DWORD avail;
-        if (!PeekNamedPipe(stderrRead, NULL, 0, NULL, &avail, NULL))
-            break;
+        PeekNamedPipe(stderrRead, NULL, 0, NULL, &avail, NULL);
         if (avail > 0)
             {
             DWORD bytesRead = 0;
             char readBuf[1025];
             if (avail>1024) avail = 1024;
-            if (!ReadFile(stderrRead, readBuf, avail, &bytesRead, NULL)
-                || bytesRead == 0)
+            ReadFile(stderrRead, readBuf, avail, &bytesRead, NULL);
+            if (bytesRead > 0)
                 {
-                break;
+                for (unsigned int i=0 ; i<bytesRead ; i++)
+                    errbuf.push_back(readBuf[i]);
                 }
-            for (unsigned int i=0 ; i<bytesRead ; i++)
-                errbuf.push_back(readBuf[i]);
             }
-        }
-    while (true)
-        {
+
         //trace("## stdout");
-        DWORD avail;
-        if (!PeekNamedPipe(stdoutRead, NULL, 0, NULL, &avail, NULL))
-            break;
+        PeekNamedPipe(stdoutRead, NULL, 0, NULL, &avail, NULL);
         if (avail > 0)
             {
             DWORD bytesRead = 0;
             char readBuf[1025];
             if (avail>1024) avail = 1024;
-            if (!ReadFile(stdoutRead, readBuf, avail, &bytesRead, NULL)
-                || bytesRead==0)
+            ReadFile(stdoutRead, readBuf, avail, &bytesRead, NULL);
+            if (bytesRead > 0)
                 {
-                break;
+                for (unsigned int i=0 ; i<bytesRead ; i++)
+                    outbuf.push_back(readBuf[i]);
                 }
-            for (unsigned int i=0 ; i<bytesRead ; i++)
-                outbuf.push_back(readBuf[i]);
             }
         DWORD exitCode;
         GetExitCodeProcess(piProcessInfo.hProcess, &exitCode);
@@ -5648,6 +5646,7 @@ public:
         TASK_SHAREDLIB,
         TASK_STATICLIB,
         TASK_STRIP,
+        TASK_TOUCH,
         TASK_TSTAMP
         } TaskType;
         
@@ -7063,6 +7062,7 @@ private:
 };
 
 
+
 /**
  * Run the "ar" command to archive .o's into a .a
  */
@@ -7139,6 +7139,7 @@ public:
         return true;
         }
 
+
     virtual bool parse(Element *elem)
         {
         String s;
@@ -7170,6 +7171,8 @@ private:
     FileSet fileSet;
 
 };
+
+
 
 
 /**
@@ -7240,6 +7243,62 @@ private:
 /**
  *
  */
+class TaskTouch : public Task
+{
+public:
+
+    TaskTouch(MakeBase &par) : Task(par)
+        { type = TASK_TOUCH; name = "touch"; }
+
+    virtual ~TaskTouch()
+        {}
+
+    virtual bool execute()
+        {
+        String fullName = parent.resolve(fileName);
+        String nativeFile = getNativePath(fullName);
+        if (!isRegularFile(fullName) && !isDirectory(fullName))
+            {            
+            // S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH
+            int ret = creat(nativeFile.c_str(), 0666);
+            if (ret != 0) 
+                {
+                error("<touch> could not create '%s' : %s",
+                    nativeFile.c_str(), strerror(ret));
+                return false;
+                }
+            return true;
+            }
+        int ret = utime(nativeFile.c_str(), (struct utimbuf *)0);
+        if (ret != 0)
+            {
+            error("<touch> could not update the modification time for '%s' : %s",
+                nativeFile.c_str(), strerror(ret));
+            return false;
+            }
+        return true;
+        }
+
+    virtual bool parse(Element *elem)
+        {
+        //trace("touch parse");
+        if (!parent.getAttribute(elem, "file", fileName))
+            return false;
+        if (fileName.size() == 0)
+            {
+            error("<touch> requires 'file=\"fileName\"' attribute");
+            return false;
+            }
+        return true;
+        }
+
+    String fileName;
+};
+
+
+/**
+ *
+ */
 class TaskTstamp : public Task
 {
 public:
@@ -7300,6 +7359,8 @@ Task *Task::createTask(Element *elem)
         task = new TaskStaticLib(parent);
     else if (tagName == "strip")
         task = new TaskStrip(parent);
+    else if (tagName == "touch")
+        task = new TaskTouch(parent);
     else if (tagName == "tstamp")
         task = new TaskTstamp(parent);
     else

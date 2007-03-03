@@ -132,6 +132,15 @@
 
 
 
+  <!--
+  ########################################################################
+  ## T A R G E T    :    T O U C H A B O U T
+  ########################################################################
+  -->
+  <target name="touchabout"
+      description="update the modification time of aboutdialog.cpp">
+    <touch file="${src}/ui/dialog/aboutdialog.cpp"/>
+  </target>
 
 
   <!--
