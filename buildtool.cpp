@@ -37,7 +37,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.6.3, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.6.4, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -3398,6 +3398,9 @@ bool MakeBase::executeCommand(const String &command,
        }
     strcpy(paramBuf, (char *)command.c_str());
 
+    //# Go to http://msdn2.microsoft.com/en-us/library/ms682499.aspx
+    //# to see how Win32 pipes work
+
     //# Create pipes
     SECURITY_ATTRIBUTES saAttr; 
     saAttr.nLength = sizeof(SECURITY_ATTRIBUTES); 
@@ -3448,6 +3451,8 @@ bool MakeBase::executeCommand(const String &command,
         ret = false;
         }
 
+    delete[] paramBuf;
+
     DWORD bytesWritten;
     if (inbuf.size()>0 &&
         !WriteFile(stdinWrite, inbuf.c_str(), inbuf.size(), 
@@ -3471,16 +3476,20 @@ bool MakeBase::executeCommand(const String &command,
         error("executeCommand: could not close read pipe");
         return false;
         }
+
+    bool lastLoop = false;
     while (true)
         {
-        //trace("## stderr");
         DWORD avail;
+        DWORD bytesRead;
+        char readBuf[4096];
+
+        //trace("## stderr");
         PeekNamedPipe(stderrRead, NULL, 0, NULL, &avail, NULL);
         if (avail > 0)
             {
-            DWORD bytesRead = 0;
-            char readBuf[1025];
-            if (avail>1024) avail = 1024;
+            bytesRead = 0;
+            if (avail>4096) avail = 4096;
             ReadFile(stderrRead, readBuf, avail, &bytesRead, NULL);
             if (bytesRead > 0)
                 {
@@ -3493,9 +3502,8 @@ bool MakeBase::executeCommand(const String &command,
         PeekNamedPipe(stdoutRead, NULL, 0, NULL, &avail, NULL);
         if (avail > 0)
             {
-            DWORD bytesRead = 0;
-            char readBuf[1025];
-            if (avail>1024) avail = 1024;
+            bytesRead = 0;
+            if (avail>4096) avail = 4096;
             ReadFile(stdoutRead, readBuf, avail, &bytesRead, NULL);
             if (bytesRead > 0)
                 {
@@ -3503,11 +3511,17 @@ bool MakeBase::executeCommand(const String &command,
                     outbuf.push_back(readBuf[i]);
                 }
             }
+            
+        //Was this the final check after program done?
+        if (lastLoop)
+            break;
+
         DWORD exitCode;
         GetExitCodeProcess(piProcessInfo.hProcess, &exitCode);
         if (exitCode != STILL_ACTIVE)
-            break;
-        Sleep(100);
+            lastLoop = true;
+
+        Sleep(50);
         }    
     //trace("outbuf:%s", outbuf.c_str());
     if (!CloseHandle(stdoutRead))
@@ -3529,10 +3543,8 @@ bool MakeBase::executeCommand(const String &command,
         ret = false;
         }
     
-    // Clean up
     CloseHandle(piProcessInfo.hProcess);
     CloseHandle(piProcessInfo.hThread);
-
 
     return ret;
 
@@ -5782,6 +5794,9 @@ public:
         {
         if (!listFiles(parent, fileSet))
             return false;
+            
+        FILE *f = NULL;
+        f = fopen("compile.lst", "w");
 
         bool refreshCache = false;
         String fullName = parent.resolve("build.dep");
@@ -5928,11 +5943,47 @@ public:
             //## Execute the command
 
             String outString, errString;
-            if (!executeCommand(cmd.c_str(), "", outString, errString))
+            bool ret = executeCommand(cmd.c_str(), "", outString, errString);
+            if (f)
+                {
+                fprintf(f, "########################### File : %s\n",
+                             srcFullName.c_str());
+                fprintf(f, "#### COMMAND ###\n");
+                int col = 0;
+                for (int i = 0 ; i < cmd.size() ; i++)
+                    {
+                    char ch = cmd[i];
+                    if (isspace(ch)  && col > 63)
+                        {
+                        fputc('\n', f);
+                        col = 0;
+                        }
+                    else
+                        {
+                        fputc(ch, f);
+                        col++;
+                        }
+                    if (col > 76)
+                        {
+                        fputc('\n', f);
+                        col = 0;
+                        }
+                    }
+                fprintf(f, "\n");
+                fprintf(f, "#### STDOUT ###\n%s\n", outString.c_str());
+                fprintf(f, "#### STDERR ###\n%s\n\n", errString.c_str());
+                }
+            if (!ret)
                 {
                 error("problem compiling: %s", errString.c_str());
                 return false;
                 }
+                
+            }
+
+        if (f)
+            {
+            fclose(f);
             }
         
         return true;
