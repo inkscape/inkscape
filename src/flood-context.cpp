@@ -349,13 +349,13 @@ struct bitmap_coords_info {
   NR::Rect screen;
 };
 
-enum {
-  SP_FLOOD_TRACE_OK,
-  SP_FLOOD_TRACE_ABORTED,
-  SP_FLOOD_TRACE_BOUNDARY
+enum ScanlineCheckResult {
+  SCANLINE_CHECK_OK,
+  SCANLINE_CHECK_ABORTED,
+  SCANLINE_CHECK_BOUNDARY
 };
 
-static int perform_bitmap_scanline_check(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
+static ScanlineCheckResult perform_bitmap_scanline_check(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
     bool aborted = false;
     bool reached_screen_boundary = false;
     bool ok;
@@ -399,9 +399,9 @@ static int perform_bitmap_scanline_check(std::queue<NR::Point> *fill_queue, guch
         }
     } while (ok);
     
-    if (aborted) { return SP_FLOOD_TRACE_ABORTED; }
-    if (reached_screen_boundary) { return SP_FLOOD_TRACE_BOUNDARY; }
-    return SP_FLOOD_TRACE_OK;
+    if (aborted) { return SCANLINE_CHECK_ABORTED; }
+    if (reached_screen_boundary) { return SCANLINE_CHECK_BOUNDARY; }
+    return SCANLINE_CHECK_OK;
 }
 
 static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event) {
@@ -539,14 +539,16 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         bci.top_fill = top_fill;
         bci.bottom_fill = bottom_fill;
         
-        int result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
+        ScanlineCheckResult result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
         
         switch (result) {
-            case SP_FLOOD_TRACE_ABORTED:
+            case SCANLINE_CHECK_ABORTED:
                 aborted = true;
                 break;
-            case SP_FLOOD_TRACE_BOUNDARY:
+            case SCANLINE_CHECK_BOUNDARY:
                 reached_screen_boundary = true;
+                break;
+            default:
                 break;
         }
         
@@ -559,11 +561,13 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
         
         switch (result) {
-            case SP_FLOOD_TRACE_ABORTED:
+            case SCANLINE_CHECK_ABORTED:
                 aborted = true;
                 break;
-            case SP_FLOOD_TRACE_BOUNDARY:
+            case SCANLINE_CHECK_BOUNDARY:
                 reached_screen_boundary = true;
+                break;
+            default:
                 break;
         }
       }
