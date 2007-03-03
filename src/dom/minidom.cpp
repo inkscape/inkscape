@@ -136,11 +136,24 @@ static EntityEntry entities[] =
 
 
 
-void Parser::getLineAndColumn(long pos, long *lineNr, long *colNr)
+int Parser::countLines(int begin, int end)
 {
-    long line = 1;
-    long col  = 1;
-    for (long i=0 ; i<pos ; i++)
+    int count = 0;
+    for (int i=begin ; i<end ; i++)
+        {
+        XMLCh ch = parsebuf[i];
+        if (ch == '\n' || ch == '\r')
+            count++;
+        }
+    return count;
+}
+
+
+void Parser::getLineAndColumn(int pos, int *lineNr, int *colNr)
+{
+    int line = 1;
+    int col  = 1;
+    for (int i=0 ; i<pos ; i++)
         {
         XMLCh ch = parsebuf[i];
         if (ch == '\n' || ch == '\r')
@@ -159,8 +172,8 @@ void Parser::getLineAndColumn(long pos, long *lineNr, long *colNr)
 
 void Parser::error(char *fmt, ...)
 {
-    long lineNr;
-    long colNr;
+    int lineNr;
+    int colNr;
     getLineAndColumn(currentPosition, &lineNr, &colNr);
     va_list args;
     fprintf(stderr, "xml error at line %ld, column %ld:", lineNr, colNr);
@@ -172,7 +185,7 @@ void Parser::error(char *fmt, ...)
 
 
 
-int Parser::peek(long pos)
+int Parser::peek(int pos)
 {
     if (pos >= parselen)
         return -1;
@@ -184,7 +197,7 @@ int Parser::peek(long pos)
 
 
 
-int Parser::match(long p0, const char *text)
+int Parser::match(int p0, const char *text)
 {
     int p = p0;
     while (*text)
@@ -198,7 +211,7 @@ int Parser::match(long p0, const char *text)
 
 
 
-int Parser::skipwhite(long p)
+int Parser::skipwhite(int p)
 {
 
     while (p<parselen)
@@ -350,7 +363,7 @@ int Parser::parseDoctype(int p0)
     return p;
 }
 
-int Parser::parseElement(int p0, Element *par,int depth)
+int Parser::parseElement(int p0, Element *par,int lineNr)
 {
 
     int p = p0;
@@ -375,6 +388,7 @@ int Parser::parseElement(int p0, Element *par,int depth)
     //Add element to tree
     Element *n = new Element(openTagName);
     n->parent = par;
+    n->line = lineNr + countLines(p0, p);
     par->addChild(n);
 
     // Get attributes
@@ -468,7 +482,7 @@ int Parser::parseElement(int p0, Element *par,int depth)
         //# CHILD ELEMENT
         if (ch == '<')
             {
-            p2 = parseElement(p, n, depth+1);
+            p2 = parseElement(p, n, lineNr + countLines(p0, p));
             if (p2 == p)
                 {
                 /*
@@ -560,7 +574,7 @@ Element *Parser::parse(XMLCh *buf,int pos,int len)
     Element *rootNode = new Element("root");
     pos = parseVersion(pos);
     pos = parseDoctype(pos);
-    pos = parseElement(pos, rootNode, 0);
+    pos = parseElement(pos, rootNode, 1);
     return rootNode;
 }
 

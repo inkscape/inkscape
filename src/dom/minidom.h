@@ -82,6 +82,7 @@ class Element
 friend class Parser;
 
 public:
+
     Element()
         {
         parent = NULL;
@@ -127,6 +128,9 @@ public:
 
     std::vector<Element *> getChildren()
         { return children; }
+        
+    int getLine()
+        { return line; }
 
     std::vector<Element *> findElements(const DOMString &name);
 
@@ -170,6 +174,8 @@ protected:
 
     DOMString name;
     DOMString value;
+    
+    int line;
 
 };
 
@@ -180,6 +186,7 @@ protected:
 class Parser
 {
 public:
+
     Parser()
         { init(); }
 
@@ -226,15 +233,17 @@ private:
         currentPosition = 0;
         }
 
-    void getLineAndColumn(long pos, long *lineNr, long *colNr);
+    int countLines(int begin, int end);
+
+    void getLineAndColumn(int pos, int *lineNr, int *colNr);
 
     void error(char *fmt, ...);
 
-    int peek(long pos);
+    int peek(int pos);
 
-    int match(long pos, const char *text);
+    int match(int pos, const char *text);
 
-    int skipwhite(long p);
+    int skipwhite(int p);
 
     int getWord(int p0, DOMString &buf);
 
@@ -250,10 +259,10 @@ private:
 
     bool         keepGoing;
     Element      *currentNode;
-    long         parselen;
+    int          parselen;
     XMLCh        *parsebuf;
     DOMString    cdatabuf;
-    long         currentPosition;
+    int          currentPosition;
     int          colNr;
 
 
