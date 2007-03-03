@@ -336,6 +336,74 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
     }
 }
 
+struct bitmap_coords_info {
+  bool is_left;
+  int x;
+  int y;
+  int y_limit;
+  int width;
+  int tolerance;
+  bool top_fill;
+  bool bottom_fill;
+  NR::Rect bbox;
+  NR::Rect screen;
+};
+
+enum {
+  SP_FLOOD_TRACE_OK,
+  SP_FLOOD_TRACE_ABORTED,
+  SP_FLOOD_TRACE_BOUNDARY
+};
+
+static int perform_bitmap_scanline_check(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
+    bool aborted = false;
+    bool reached_screen_boundary = false;
+    bool ok;
+  
+    bool keep_tracing;
+    unsigned char *t, *trace_t;
+  
+    do {
+        ok = false;
+        if (bci.is_left) {
+            keep_tracing = (bci.x >= 0);
+        } else {
+            keep_tracing = (bci.x < bci.width);
+        }
+        
+        if (keep_tracing) {
+            t = get_pixel(px, bci.x, bci.y, bci.width);
+            if (compare_pixels(t, orig_color, bci.tolerance)) {
+                for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
+                trace_t = get_pixel(trace_px, bci.x, bci.y, bci.width);
+                trace_t[3] = 255; 
+                if (bci.y > 0) { 
+                    bci.top_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.x, bci.y - 1, bci.width, bci.tolerance, bci.top_fill);
+                }
+                if (bci.y < bci.y_limit) { 
+                    bci.bottom_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.x, bci.y + 1, bci.width, bci.tolerance, bci.bottom_fill);
+                }
+                if (bci.is_left) {
+                    bci.x--;
+                } else {
+                    bci.x++;
+                }
+                ok = true;
+            }
+        } else {
+            if (bci.bbox.min()[NR::X] > bci.screen.min()[NR::X]) {
+                aborted = true; break;
+            } else {
+                reached_screen_boundary = true;
+            }
+        }
+    } while (ok);
+    
+    if (aborted) { return SP_FLOOD_TRACE_ABORTED; }
+    if (reached_screen_boundary) { return SP_FLOOD_TRACE_BOUNDARY; }
+    return SP_FLOOD_TRACE_OK;
+}
+
 static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event) {
     SPDesktop *desktop = event_context->desktop;
     SPDocument *document = sp_desktop_document(desktop);
@@ -425,6 +493,14 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     bool reached_screen_boundary = false;
 
+    bitmap_coords_info bci;
+    
+    bci.y_limit = y_limit;
+    bci.width = width;
+    bci.tolerance = tolerance;
+    bci.bbox = bbox;
+    bci.screen = screen;
+
     while (!fill_queue.empty() && !aborted) {
       NR::Point cp = fill_queue.front();
       fill_queue.pop();
@@ -432,8 +508,6 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
       
       // same color at this point
       if (compare_pixels(s, orig_color, tolerance)) {
-        int left = (int)cp[NR::X];
-        int right = (int)cp[NR::X] + 1;
         int x = (int)cp[NR::X];
         int y = (int)cp[NR::Y];
         
@@ -459,58 +533,39 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
           }
         }
         
-        bool default_top_fill = top_fill;
-        bool default_bottom_fill = bottom_fill;
+        bci.is_left = true;
+        bci.x = x;
+        bci.y = y;
+        bci.top_fill = top_fill;
+        bci.bottom_fill = bottom_fill;
         
-        unsigned char *t, *trace_t;
-        bool ok = false;
+        int result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
         
-        do {
-          ok = false;
-          // go left
-          if (left >= 0) {
-            t = get_pixel(px, left, y, width);
-            if (compare_pixels(t, orig_color, tolerance)) {
-              for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
-              trace_t = get_pixel(trace_px, left, y, width);
-              trace_t[3] = 255; 
-              if (y > 0) { top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, left, y - 1, width, tolerance, top_fill); }
-              if (y < y_limit) { bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, left, y + 1, width, tolerance, bottom_fill); }
-              left--; ok = true;
-            }
-          } else {
-            if (bbox.min()[NR::X] > screen.min()[NR::X]) {
-              aborted = true; break;
-            } else {
-              reached_screen_boundary = true;
-            }
-          }
-        } while (ok);
-      
-        top_fill = default_top_fill;
-        bottom_fill = default_bottom_fill;
+        switch (result) {
+            case SP_FLOOD_TRACE_ABORTED:
+                aborted = true;
+                break;
+            case SP_FLOOD_TRACE_BOUNDARY:
+                reached_screen_boundary = true;
+                break;
+        }
         
-        do {
-          ok = false;
-          // go right
-          if (right < width) {
-            t = get_pixel(px, right, y, width);
-            if (compare_pixels(t, orig_color, tolerance)) {
-              for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
-              trace_t = get_pixel(trace_px, right, y, width);
-              trace_t[3] = 255;
-              if (y > 0) { top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, right, y - 1, width, tolerance, top_fill); }
-              if (y < y_limit) { bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, right, y + 1, width, tolerance, bottom_fill); }
-              right++; ok = true;
-            }
-          } else {
-            if (bbox.max()[NR::X] < screen.max()[NR::X]) {
-              aborted = true; break;
-            } else {
-              reached_screen_boundary = true;
-            }
-          }
-        } while (ok);
+        bci.is_left = false;
+        bci.x = x + 1;
+        bci.y = y;
+        bci.top_fill = top_fill;
+        bci.bottom_fill = bottom_fill;
+        
+        result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
+        
+        switch (result) {
+            case SP_FLOOD_TRACE_ABORTED:
+                aborted = true;
+                break;
+            case SP_FLOOD_TRACE_BOUNDARY:
+                reached_screen_boundary = true;
+                break;
+        }
       }
     }
     
