@@ -28,6 +28,7 @@
 
 #include <unistd.h>
 #include <sys/stat.h>
+#include <set>
 #include <glibmm/i18n.h>
 #include <gtkmm/box.h>
 #include <gtkmm/colorbutton.h>
@@ -1140,6 +1141,11 @@ private:
      * Filename that was given
      */
     Glib::ustring myFilename;
+
+    /**
+     * List of known file extensions.
+     */
+    std::set<Glib::ustring> knownExtensions;
 };
 
 
@@ -1230,22 +1236,30 @@ void FileSaveDialogImpl::fileTypeChangedCallback()
     }
 
     Inkscape::Extension::Output* newOut = extension ? dynamic_cast<Inkscape::Extension::Output*>(extension) : 0;
+    bool appendExtension = true;
     if ( newOut ) {
-        size_t pos = myFilename.rfind('.');
-        if ( pos != Glib::ustring::npos ) {
-            Glib::ustring trail = myFilename.substr( pos );
-            try {
-                Glib::ustring trailUtf8 = Glib::filename_to_utf8( trail );
-                if ( trailUtf8.casefold() != Glib::ustring( newOut->get_extension() ).casefold() ) {
-                    myFilename = myFilename.erase( pos ) + newOut->get_extension();
-                    change_path(myFilename);
+        try {
+            Glib::ustring utf8Name = Glib::filename_to_utf8( myFilename );
+            size_t pos = utf8Name.rfind('.');
+            if ( pos != Glib::ustring::npos ) {
+                Glib::ustring trail = utf8Name.substr( pos );
+                Glib::ustring foldedTrail = trail.casefold();
+                if ( (trail == ".") 
+                    | (foldedTrail != Glib::ustring( newOut->get_extension() ).casefold()
+                     && ( knownExtensions.find(foldedTrail) != knownExtensions.end() ) ) ) {
+                    utf8Name = utf8Name.erase( pos );
+                } else {
+                    appendExtension = false;
                 }
-            } catch ( Glib::ConvertError& e ) {
-                // ignore
             }
-        } else {
-            myFilename = myFilename + newOut->get_extension();
-            change_path(myFilename);
+
+            if (appendExtension) {
+                utf8Name = utf8Name + newOut->get_extension();
+                myFilename = Glib::filename_from_utf8( utf8Name );
+                change_path(myFilename);
+            }
+        } catch ( Glib::ConvertError& e ) {
+            // ignore
         }
     }
 }
@@ -1256,6 +1270,7 @@ void FileSaveDialogImpl::createFileTypeMenu()
 {
     Inkscape::Extension::DB::OutputList extension_list;
     Inkscape::Extension::db.get_output_list(extension_list);
+    knownExtensions.clear();
 
     for (Inkscape::Extension::DB::OutputList::iterator current_item = extension_list.begin();
          current_item != extension_list.end(); current_item++)
@@ -1269,6 +1284,7 @@ void FileSaveDialogImpl::createFileTypeMenu()
         type.name     = (_(omod->get_filetypename()));
         type.pattern  = "*";
         Glib::ustring extension = omod->get_extension();
+        knownExtensions.insert( extension.casefold() );
         fileDialogExtensionToPattern (type.pattern, extension);
         type.extension= omod;
         fileTypeComboBox.append_text(type.name);
