@@ -1522,7 +1522,9 @@ FileSaveDialogImpl::change_path(const Glib::ustring& path)
             set_filename(myFilename);
         } else {
             std::string dirName = Glib::path_get_dirname( myFilename  );
-            set_current_folder(dirName);
+            if ( dirName != get_current_folder() ) {
+                set_current_folder(dirName);
+            }
         }
         Glib::ustring basename = Glib::path_get_basename(myFilename);
         //fprintf(stderr,"set_current_name(%s)\n",basename.c_str());
