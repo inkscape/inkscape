@@ -266,6 +266,8 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
 
     long totalNodeCount = 0L;
 
+    double offset = prefs_get_double_attribute_limited("tools.paintbucket", "offset", 1.5, 0.0, 2.0);
+
     for (unsigned int i=0 ; i<results.size() ; i++) {
         Inkscape::Trace::TracingEngineResult result = results[i];
         totalNodeCount += result.getNodeCount();
@@ -287,7 +289,7 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
         Shape *expanded_path_shape = new Shape();
         
         expanded_path_shape->ConvertToShape(path_shape, fill_nonZero);
-        path_shape->MakeOffset(expanded_path_shape, 1.5, join_round, 4);
+        path_shape->MakeOffset(expanded_path_shape, offset, join_round, 4);
         expanded_path_shape->ConvertToShape(path_shape, fill_positive);
 
         Path *expanded_path = new Path();

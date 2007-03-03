@@ -4438,6 +4438,12 @@ static void paintbucket_tolerance_changed(GtkAdjustment *adj, GtkWidget *tbl)
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
+static void paintbucket_offset_changed(GtkAdjustment *adj, GtkWidget *tbl)
+{
+    prefs_set_double_attribute("tools.paintbucket", "offset", (gint)adj->value);
+    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
 static GtkWidget *
 sp_paintbucket_toolbox_new(SPDesktop *desktop)
 {
@@ -4452,6 +4458,21 @@ sp_paintbucket_toolbox_new(SPDesktop *desktop)
                 paintbucket_tolerance_changed, 1, 0);
 
         gtk_box_pack_start(GTK_BOX(tbl), tolerance, FALSE, FALSE,
+                AUX_SPACING);
+    }
+    
+    //  interval
+    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+
+    // Offset spinbox
+    {
+        GtkWidget *offset = sp_tb_spinbutton(_("Offset:"),
+                _("The amount to grow the path after it has been traced"),
+                "tools.paintbucket", "offset", 5, NULL, tbl, TRUE,
+                "inkscape:paintbucket-offset", 0.0, 2.0, 0.1, 0.5,
+                paintbucket_offset_changed, 1, 2);
+
+        gtk_box_pack_start(GTK_BOX(tbl), offset, FALSE, FALSE,
                 AUX_SPACING);
     }
     
