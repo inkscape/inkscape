@@ -634,9 +634,12 @@ sp_item_write(SPObject *const object, Inkscape::XML::Node *repr, guint flags)
 {
     SPItem *item = SP_ITEM(object);
 
-    gchar *c = sp_svg_transform_write(item->transform);
-    repr->setAttribute("transform", c);
-    g_free(c);
+    gchar c[256];
+    if (sp_svg_transform_write(c, 256, item->transform)) {
+        repr->setAttribute("transform", c);
+    } else {
+        repr->setAttribute("transform", NULL);
+    }
 
     SPObject const *const parent = SP_OBJECT_PARENT(object);
     /** \todo Can someone please document why this is conditional on having
@@ -713,6 +716,19 @@ NR::Rect SPItem::invokeBbox(NR::Matrix const &transform) const
     NRRect r;
     sp_item_invoke_bbox_full(this, &r, transform, 0, TRUE);
     return NR::Rect(r);
+}
+
+NR::Maybe<NR::Rect> SPItem::getBBox(NR::Matrix const &transform,
+                                    SPItem::BBoxType type,
+                                    unsigned int dkey) const
+{
+    NRRect r;
+    sp_item_invoke_bbox_full(this, &r, transform, 0, TRUE);
+    if (nr_rect_d_test_empty(&r)) {
+        return NR::Nothing();
+    } else {
+        return NR::Rect(r);
+    }
 }
 
 void
