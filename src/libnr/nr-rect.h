@@ -181,10 +181,10 @@ public:
     }
 
     /** Returns the set of points shared by both rectangles. */
-    static Maybe<Rect> intersection(Rect const &a, Rect const &b);
+    static Maybe<Rect> intersection(Maybe<Rect> const &a, Maybe<Rect> const &b);
 
     /** Returns the smallest rectangle that encloses both rectangles. */
-    static Rect union_bounds(Rect const &a, Rect const &b);
+    static Maybe<Rect> union_bounds(Maybe<Rect> const &a, Maybe<Rect> const &b);
 
     /** Scales the rect by s, with origin at 0, 0 */
     inline Rect operator*(double const s) const {

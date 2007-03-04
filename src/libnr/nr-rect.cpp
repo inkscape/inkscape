@@ -260,27 +260,40 @@ void Rect::expandTo(Point p) {
 }
 
 /** Returns the set of points shared by both rectangles. */
-Maybe<Rect> Rect::intersection(const Rect &a, const Rect &b) {
-	Rect r;
-	for ( int i=0 ; i < 2 ; i++ ) {
-		r._min[i] = MAX(a._min[i], b._min[i]);
-		r._max[i] = MIN(a._max[i], b._max[i]);
-
-		if ( r._min[i] > r._max[i] ) {
-			return Nothing();
-		}
+Maybe<Rect> Rect::intersection(Maybe<Rect> const &a, Maybe<Rect> const &b) {
+    if ( a == Nothing() || b == Nothing() ) {
+        return Nothing();
+    } else {
+        Rect const &ra=a.assume();
+        Rect const &rb=b.assume();
+        Rect r;
+        for ( int i=0 ; i < 2 ; i++ ) {
+            r._min[i] = MAX(ra._min[i], rb._min[i]);
+            r._max[i] = MIN(ra._max[i], rb._max[i]);
+            if ( r._min[i] > r._max[i] ) {
+	        return Nothing();
+            }
 	}
 	return r;
+    }
 }
 
 /** returns the smallest rectangle containing both rectangles */
-Rect Rect::union_bounds(const Rect &a, const Rect &b) {
-	Rect r;
+Maybe<Rect> Rect::union_bounds(Maybe<Rect> const &a, Maybe<Rect> const &b) {
+    if ( a == Nothing() ) {
+        return b;
+    } else if ( b == Nothing() ) {
+        return a;
+    } else {
+        Rect const &ra=a.assume();
+        Rect const &rb=b.assume();
+        Rect r;
 	for ( int i=0; i < 2 ; i++ ) {
-		r._min[i] = MIN(a._min[i], b._min[i]);
-		r._max[i] = MAX(a._max[i], b._max[i]);
+            r._min[i] = MIN(ra._min[i], rb._min[i]);
+            r._max[i] = MAX(ra._max[i], rb._max[i]);
 	}
 	return r;
+    }
 }
 
 }  // namespace NR
