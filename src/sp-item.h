@@ -91,8 +91,11 @@ struct SPItemCtx {
 /** Abstract base class for all visible shapes. */
 struct SPItem : public SPObject {
     enum BBoxType {
-        APPROXIMATE_BBOX,
+        // legacy behavior: includes crude stroke, markers; excludes long miters, blur margin; is known to be wrong for caps
+        APPROXIMATE_BBOX, 
+        // includes only the bare path bbox, no stroke, no nothing
         GEOMETRIC_BBOX,
+        // includes everything: correctly done stroke (with proper miters and caps), markers, filter margins (e.g. blur)
         RENDERING_BBOX
     };
 
