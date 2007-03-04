@@ -128,7 +128,7 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
 
         /* Look for the nearest position on this SPItem to our snap point */
         NR::Maybe<Path::cut_position> const o = get_nearest_position_on_Path(livarot_path, p_it);
-        if (o != NR::Nothing() && o.assume().t >= 0 && o.assume().t <= 1) {
+        if (o && o->t >= 0 && o->t <= 1) {
 
             /* Convert the nearest point back to desktop coordinates */
             NR::Point const o_it = get_point_on_Path(livarot_path, o.assume().piece, o.assume().t);

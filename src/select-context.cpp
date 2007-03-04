@@ -229,7 +229,7 @@ sp_select_context_abort(SPEventContext *event_context)
         }
     } else {
         NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
-        if (b != NR::Nothing()) {
+        if (b) {
             Inkscape::Rubberband::get()->stop();
             rb_escaped = 1;
             SP_EVENT_CONTEXT(sc)->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selection canceled."));
@@ -567,12 +567,12 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     sc->item = NULL;
                 } else {
                     NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
-                    if (b != NR::Nothing() && !within_tolerance) {
+                    if (b && !within_tolerance) {
                         // this was a rubberband drag
                         Inkscape::Rubberband::get()->stop();
                         seltrans->resetState();
                         // find out affected items:
-                        GSList *items = sp_document_items_in_box(sp_desktop_document(desktop), desktop->dkey, b.assume());
+                        GSList *items = sp_document_items_in_box(sp_desktop_document(desktop), desktop->dkey, *b);
                         if (event->button.state & GDK_SHIFT_MASK) {
                             // with shift, add to selection
                             selection->addList (items);

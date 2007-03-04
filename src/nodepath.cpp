@@ -1549,7 +1549,11 @@ sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Po
     }
 
     sp_nodepath_ensure_livarot_path(nodepath);
-    Path::cut_position position = get_nearest_position_on_Path(nodepath->livarot_path, p);
+    NR::Maybe<Path::cut_position> maybe_position = get_nearest_position_on_Path(nodepath->livarot_path, p);
+    if (!maybe_position) {
+        return;
+    }
+    Path::cut_position position = *maybe_position;
 
     //find segment to segment
     Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(position.piece);
@@ -1581,7 +1585,11 @@ sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
     }
 
     sp_nodepath_ensure_livarot_path(nodepath);
-    Path::cut_position position = get_nearest_position_on_Path(nodepath->livarot_path, p);
+    NR::Maybe<Path::cut_position> maybe_position = get_nearest_position_on_Path(nodepath->livarot_path, p);
+    if (!maybe_position) {
+        return;
+    }
+    Path::cut_position position = *maybe_position;
 
     //find segment to split
     Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(position.piece);

@@ -29,27 +29,7 @@ public:
     IsNot() : domain_error(std::string("Is not ") + typeid(T).name()) {}
 };
 
-/** A type with only one value, which (in principle) is only equal to itself.
- *
- *  Types that may (at runtime) pretend to be Nothing need only provide an
- *  operator bool operator==(Type, Nothing); the rest of the operator
- *  definitions will be taken care of automatically.
- *
- *  Such types should also provide a casting operator to Nothing, obviously.
- */
-struct Nothing {
-    bool operator==(Nothing n) { return true; }
-    bool operator!=(Nothing n) { return false; }
-    template <typename T>
-    bool operator==(T t) { return t == *this; }
-    template <typename T>
-    bool operator!=(T t) { return t != *this; }
-};
-
-template <typename T>
-bool operator==(T t, Nothing n) { return false; }
-template <typename T>
-bool operator!=(T t, Nothing n) { return !( t == n ); }
+struct Nothing {};
 
 template <typename T>
 struct MaybeTraits;
@@ -59,6 +39,7 @@ class Maybe {
 public:
     typedef MaybeTraits<T> traits;
     typedef typename traits::storage storage;
+    typedef typename traits::pointer pointer;
     typedef typename traits::reference reference;
 
     Maybe(Nothing n) : _is_nothing(true), _t() {}
@@ -73,6 +54,9 @@ public:
     template <typename T2>
     Maybe(T2 t) : _is_nothing(false), _t(traits::to_storage(t)) {}
 
+    bool isNothing() const { return _is_nothing; }
+    operator bool() const { return !_is_nothing; }
+
     reference assume() const throw(IsNot<T>) {
         if (_is_nothing) {
             throw IsNot<T>();
@@ -80,25 +64,11 @@ public:
             return traits::from_storage(_t);
         }
     }
-
-    operator reference() const throw(IsNot<T>) {
-        if (_is_nothing) {
-            throw IsNot<T>();
-        } else {
-            return traits::from_storage(_t);
-        }
+    reference operator*() const throw(IsNot<T>) {
+        return assume();
     }
-    operator Nothing() const throw(IsNot<Nothing>) {
-        if (!_is_nothing) {
-            throw IsNot<Nothing>();
-        } else {
-            return Nothing();
-        }
-    }
-
-    bool operator==(Nothing n) { return _is_nothing; }
-    bool operator==(reference r) {
-        return traits::from_storage(_t) == r;
+    pointer operator->() const throw(IsNot<T>) {
+        return &assume();
     }
 
 private:
@@ -111,6 +81,7 @@ private:
 template <typename T>
 struct MaybeTraits {
     typedef T const storage;
+    typedef T const *pointer;
     typedef T const &reference;
     static reference to_storage(reference t) { return t; }
     static reference from_storage(reference t) { return t; }
@@ -119,6 +90,7 @@ struct MaybeTraits {
 template <typename T>
 struct MaybeTraits<T&> {
     typedef T *storage;
+    typedef T *pointer;
     typedef T &reference;
     static storage to_storage(reference t) { return &t; }
     static reference from_storage(storage t) { return *t; }

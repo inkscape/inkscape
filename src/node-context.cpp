@@ -419,8 +419,8 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 if (nc->shape_editor->hits_curve() && !event_context->within_tolerance) { //drag curve
                     nc->shape_editor->finish_drag();
-                } else if (b != NR::Nothing() && !event_context->within_tolerance) { // drag to select
-                    nc->shape_editor->select_rect(b.assume(), event->button.state & GDK_SHIFT_MASK);
+                } else if (b && !event_context->within_tolerance) { // drag to select
+                    nc->shape_editor->select_rect(*b, event->button.state & GDK_SHIFT_MASK);
                 } else {
                     if (!(nc->rb_escaped)) { // unless something was cancelled
                         if (nc->shape_editor->has_selection())
@@ -584,7 +584,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_Escape:
                 {
                     NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
-                    if (b != NR::Nothing()) {
+                    if (b) {
                         Inkscape::Rubberband::get()->stop();
                         nc->current_state = SP_NODE_CONTEXT_INACTIVE;
                         nc->rb_escaped = true;

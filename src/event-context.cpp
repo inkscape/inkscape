@@ -463,8 +463,8 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 zoom_rb = 0;
                 NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
                 Inkscape::Rubberband::get()->stop();
-                if (b != NR::Nothing() && !within_tolerance) {
-                    desktop->set_display_area(b.assume(), 10);
+                if (b && !within_tolerance) {
+                    desktop->set_display_area(*b, 10);
                 }
                 ret = TRUE;
             }
