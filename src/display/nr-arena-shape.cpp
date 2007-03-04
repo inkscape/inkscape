@@ -520,9 +520,8 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
     if (outline) {
-        // cairo does not need the livarot path for rendering... but unfortunately it's still used for picking
-        // FIXME: switch picking to using cairo_in_stroke? 
-        //return; 
+        // cairo does not need the livarot path for rendering
+        return; 
     }
 
     // after switching normal stroke rendering to cairo too, optimize this: lower tolerance, disregard dashes 
@@ -1074,76 +1073,45 @@ static NRArenaItem *
 nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /*sticky*/)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
-
     if (!shape->curve) return NULL;
     if (!shape->style) return NULL;
-    if ( shape->delayed_shp ) {
-        NRRectL  area, updateArea;
-        area.x0=(int)floor(p[NR::X]);
-        area.x1=(int)ceil(p[NR::X]);
-        area.y0=(int)floor(p[NR::Y]);
-        area.y1=(int)ceil(p[NR::Y]);
-        int idelta = (int)ceil(delta) + 1;
-        // njh: inset rect
-        area.x0-=idelta;
-        area.x1+=idelta;
-        area.y0-=idelta;
-        area.y1+=idelta;
-        if ( nr_rect_l_test_intersect(&area, &item->bbox) ) {
-            NRGC   tempGC(NULL);
-            tempGC.transform=shape->ctm;
-            updateArea = item->bbox;
-            if (shape->cached_stroke)
-                nr_rect_l_intersect (&updateArea, &updateArea, &shape->cached_sarea);
-
-            shape->delayed_shp = false;
-            nr_arena_shape_update_stroke(shape, &tempGC, &updateArea);
-            nr_arena_shape_update_fill(shape, &tempGC, &updateArea);
-            /*      NRRect bbox;
-                    bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
-                    nr_arena_shape_add_bboxes(shape,bbox);
-                    item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
-                    item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
-                    item->bbox.x1 = (gint32)(bbox.x1 + 1.0F);
-                    item->bbox.y1 = (gint32)(bbox.y1 + 1.0F);
-                    shape->approx_bbox=item->bbox;*/
-        }
-    }
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
-    if (item->state & NR_ARENA_ITEM_STATE_RENDER) {
-        if (shape->fill_shp && (shape->_fill.paint.type() != NRArenaShape::Paint::NONE)) {
-            if (shape->fill_shp->PtWinding(p) > 0 ) return item;
-        }
-        if (shape->stroke_shp && (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline)) {
-            if (shape->stroke_shp->PtWinding(p) > 0 ) return item;
-        }
-        if (delta > 1e-3) {
-            if (shape->fill_shp && (shape->_fill.paint.type() != NRArenaShape::Paint::NONE)) {
-                if (distanceLessThanOrEqual(shape->fill_shp, p, delta)) return item;
-            }
-            if (shape->stroke_shp && (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline)) {
-                if (distanceLessThanOrEqual(shape->stroke_shp, p, delta)) return item;
-            }
-        }
+    float const scale = NR_MATRIX_DF_EXPANSION(&shape->ctm);
+    double width;
+    if (outline) {
+        width = 0.5;
     } else {
-        NRBPath bp;
-        bp.path = SP_CURVE_BPATH(shape->curve);
-        double dist = NR_HUGE;
-        int wind = 0;
-        nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, &wind, &dist, NR_EPSILON);
-        if (shape->_fill.paint.type() != NRArenaShape::Paint::NONE) {
-            if (!shape->style->fill_rule.computed) {
-                if (wind != 0) return item;
-            } else {
-                if (wind & 0x1) return item;
-            }
+        width = MAX(0.125, shape->_stroke.width * scale) / 2;
+    }
+
+    NRBPath bp;
+    bp.path = SP_CURVE_BPATH(shape->curve);
+    double dist = NR_HUGE;
+    int wind = 0;
+    nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, &wind, &dist, NR_EPSILON);
+
+    // pick fill
+    if (shape->_fill.paint.type() != NRArenaShape::Paint::NONE && !outline) {
+        if (!shape->style->fill_rule.computed) {
+            if (wind != 0) return item;
+        } else {
+            if (wind & 0x1) return item;
         }
-        if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
-            /* fixme: We do not take stroke width into account here (Lauris) */
-            if (dist < delta) return item;
-        }
+    }
+
+    // pick stroke
+    if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
+        // this ignores dashing (as if the stroke is solid) and always works as if caps are round
+        if ((dist - width) < delta) return item;
+    }
+
+    // if not picked on the shape itself, try its markers
+    for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
+        NRArenaItem *ret = nr_arena_item_invoke_pick(child, p, delta, 0);
+        if (ret)
+            return ret;
     }
 
     return NULL;
