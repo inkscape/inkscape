@@ -90,6 +90,12 @@ struct SPItemCtx {
 
 /** Abstract base class for all visible shapes. */
 struct SPItem : public SPObject {
+    enum BBoxType {
+        APPROXIMATE_BBOX,
+        GEOMETRIC_BBOX,
+        RENDERING_BBOX
+    };
+
     unsigned int sensitive : 1;
     unsigned int stop_paint: 1;
     double transform_center_x;
@@ -143,6 +149,7 @@ struct SPItem : public SPObject {
     void lowerToBottom();
 
     NR::Rect invokeBbox(NR::Matrix const &transform) const;
+    NR::Maybe<NR::Rect> getBBox(BBoxType type, NR::Matrix const &transform, unsigned int dkey=0) const;
 
     sigc::connection _clip_ref_connection;
     sigc::connection _mask_ref_connection;
