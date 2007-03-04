@@ -261,15 +261,13 @@ void Rect::expandTo(Point p) {
 
 /** Returns the set of points shared by both rectangles. */
 Maybe<Rect> Rect::intersection(Maybe<Rect> const &a, Maybe<Rect> const &b) {
-    if ( a == Nothing() || b == Nothing() ) {
+    if ( !a || !b ) {
         return Nothing();
     } else {
-        Rect const &ra=a.assume();
-        Rect const &rb=b.assume();
         Rect r;
         for ( int i=0 ; i < 2 ; i++ ) {
-            r._min[i] = MAX(ra._min[i], rb._min[i]);
-            r._max[i] = MIN(ra._max[i], rb._max[i]);
+            r._min[i] = MAX(a->_min[i], b->_min[i]);
+            r._max[i] = MIN(a->_max[i], b->_max[i]);
             if ( r._min[i] > r._max[i] ) {
 	        return Nothing();
             }
