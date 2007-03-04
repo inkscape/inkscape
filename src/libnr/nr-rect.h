@@ -185,6 +185,7 @@ public:
 
     /** Returns the smallest rectangle that encloses both rectangles. */
     static Maybe<Rect> union_bounds(Maybe<Rect> const &a, Maybe<Rect> const &b);
+    static Rect union_bounds(Rect const &a, Rect const &b);
 
     /** Scales the rect by s, with origin at 0, 0 */
     inline Rect operator*(double const s) const {

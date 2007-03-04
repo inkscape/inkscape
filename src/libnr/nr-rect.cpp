@@ -278,22 +278,24 @@ Maybe<Rect> Rect::intersection(Maybe<Rect> const &a, Maybe<Rect> const &b) {
     }
 }
 
-/** returns the smallest rectangle containing both rectangles */
 Maybe<Rect> Rect::union_bounds(Maybe<Rect> const &a, Maybe<Rect> const &b) {
-    if ( a == Nothing() ) {
+    if (a) {
         return b;
-    } else if ( b == Nothing() ) {
+    } else if (b) {
         return a;
     } else {
-        Rect const &ra=a.assume();
-        Rect const &rb=b.assume();
-        Rect r;
-	for ( int i=0; i < 2 ; i++ ) {
-            r._min[i] = MIN(ra._min[i], rb._min[i]);
-            r._max[i] = MAX(ra._max[i], rb._max[i]);
-	}
-	return r;
+        return union_bounds(*a, *b);
     }
+}
+
+/** returns the smallest rectangle containing both rectangles */
+Rect Rect::union_bounds(Rect const &a, Rect const &b) {
+    Rect r;
+    for ( int i=0 ; i < 2 ; i++ ) {
+        r._min[i] = MIN(a._min[i], b._min[i]);
+        r._max[i] = MAX(a._max[i], b._max[i]);
+    }
+    return r;
 }
 
 }  // namespace NR
