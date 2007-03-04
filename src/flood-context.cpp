@@ -622,8 +622,6 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
 
 static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
-    SPDesktop *desktop = event_context->desktop;
-
     gint ret = FALSE;
     switch (event->type) {
     case GDK_BUTTON_PRESS:

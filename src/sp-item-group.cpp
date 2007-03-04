@@ -417,7 +417,6 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 	}
 
 	/* Step 4 - add items */
-	gint const preserve = prefs_get_int_attribute("options.preservetransform", "value", 0);
 	while (items) {
 		Inkscape::XML::Node *repr = (Inkscape::XML::Node *) items->data;
 		// add item
