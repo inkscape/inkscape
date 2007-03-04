@@ -164,8 +164,13 @@ SPConnEndPair::getEndpoints(NR::Point endPts[]) const {
 
     for (unsigned h = 0; h < 2; ++h) {
         if ( h2attItem[h] ) {
-            NR::Rect const bbox = h2attItem[h]->getBounds(sp_item_i2doc_affine(h2attItem[h]));
-            endPts[h] = bbox.midpoint();
+            NR::Maybe<NR::Rect> bbox = h2attItem[h]->getBounds(sp_item_i2doc_affine(h2attItem[h]));
+            if (bbox) {
+                endPts[h] = bbox->midpoint();
+            } else {
+                // FIXME
+                endPts[h] = NR::Point(0, 0);
+            }
         }
         else
         {

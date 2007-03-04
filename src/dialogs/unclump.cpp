@@ -34,10 +34,15 @@ unclump_center (SPItem *item)
         return i->second;
     }
 
-    NR::Rect const r = item->getBounds(sp_item_i2d_affine(item));
-    NR::Point const c = r.midpoint();
-    c_cache[SP_OBJECT_ID(item)] = c;
-    return c; 
+    NR::Maybe<NR::Rect> r = item->getBounds(sp_item_i2d_affine(item));
+    if (r) {
+    	NR::Point const c = r->midpoint();
+    	c_cache[SP_OBJECT_ID(item)] = c;
+        return c; 
+    } else {
+	// FIXME
+        return NR::Point(0, 0);
+    }
 }
 
 NR::Point
@@ -48,9 +53,13 @@ unclump_wh (SPItem *item)
     if ( i != wh_cache.end() ) {
         wh = i->second;
     } else {
-        NR::Rect const r = item->getBounds(sp_item_i2d_affine(item));
-        wh = r.dimensions();
-        wh_cache[SP_OBJECT_ID(item)] = wh;
+        NR::Maybe<NR::Rect> r = item->getBounds(sp_item_i2d_affine(item));
+	if (r) {
+            wh = r->dimensions();
+            wh_cache[SP_OBJECT_ID(item)] = wh;
+        } else {
+	    wh = NR::Point(0, 0);
+        }
     }
 
     return wh;

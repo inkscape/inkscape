@@ -191,13 +191,15 @@ static Avoid::Polygn avoid_item_poly(SPItem const *item)
     //       by the sp_*_update functions, e.g., text.
     sp_document_ensure_up_to_date(item->document);
     
-    NR::Rect rHull = item->getBounds(sp_item_i2doc_affine(item));
-
+    NR::Maybe<NR::Rect> rHull = item->getBounds(sp_item_i2doc_affine(item));
+    if (!rHull) {
+        return Avoid::newPoly(0);
+    }
 
     double spacing = desktop->namedview->connector_spacing;
 
     // Add a little buffer around the edge of each object.
-    NR::Rect rExpandedHull = NR::expand(rHull, -spacing); 
+    NR::Rect rExpandedHull = NR::expand(*rHull, -spacing); 
     poly = Avoid::newPoly(4);
 
     for (unsigned n = 0; n < 4; ++n) {

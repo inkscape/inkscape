@@ -474,11 +474,7 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
     // premultiply by the inverse of parent's repr
     SPItem *parent_item = SP_ITEM(sp_desktop_document(desktop)->getObjectByRepr(parent));
     NR::Matrix local = sp_item_i2doc_affine(parent_item);
-    gchar affinestr[80];
-    gchar *transform = NULL;
-    if (!local.test_identity() && sp_svg_transform_write(affinestr, 79, local.inverse())) {
-        transform = affinestr;
-    }
+    gchar *transform = sp_svg_transform_write(local);
 
     // now that we have the result, add it on the canvas
     if ( bop == bool_op_cut || bop == bool_op_slice ) {
@@ -574,6 +570,8 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
         selection->add(repr);
         Inkscape::GC::release(repr);
     }
+
+    g_free(transform);
 
     sp_document_done(sp_desktop_document(desktop), verb, description);
 
@@ -1574,8 +1572,12 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
           continue;
 
       if (simplifyIndividualPaths) {
-          NR::Rect itemBbox = item->getBounds(sp_item_i2d_affine(item));        
-          simplifySize      = L2(itemBbox.dimensions());
+          NR::Maybe<NR::Rect> itemBbox = item->getBounds(sp_item_i2d_affine(item));        
+          if (itemBbox) {
+              simplifySize      = L2(itemBbox->dimensions());
+          } else {
+              simplifySize      = 0;
+          }
       }
 
 
@@ -1723,6 +1725,17 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
         bpath=SP_CURVE_BPATH(curve);
     }
 
+    Path *dest = bpath_to_Path(bpath);
+
+    if ( doTransformation ) {
+        if ( bpath ) g_free(bpath);
+    } else {
+        sp_curve_unref(curve);
+    }
+    return dest;
+}
+
+Path *bpath_to_Path(NArtBpath const *bpath) {
     Path *dest = new Path;
     dest->SetBackData(false);
     {
@@ -1775,12 +1788,6 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
         }
         if (closed)
             dest->Close();
-    }
-
-    if ( doTransformation ) {
-        if ( bpath ) g_free(bpath);
-    } else {
-        sp_curve_unref(curve);
     }
     return dest;
 }

@@ -317,21 +317,18 @@ NRRect *Selection::bounds(NRRect *bbox) const
 NR::Rect Selection::bounds() const
 {
     GSList const *items = const_cast<Selection *>(this)->itemList();
-    if (!items) {
+
+    NR::Maybe<NR::Rect> bbox = NR::Nothing();
+    for ( GSList const *i = items ; i != NULL ; i = i->next ) {
+        bbox = NR::Rect::union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data)));
+    }
+
+    // TODO: return NR::Maybe<NR::Rect>
+    if (bbox) {
+        return *bbox;
+    } else {
         return NR::Rect(NR::Point(0, 0), NR::Point(0, 0));
     }
-
-    GSList const *i = items;
-    NR::Rect bbox = sp_item_bbox_desktop(SP_ITEM(i->data));
-
-    GSList const *i_start = i;
-    while (i != NULL) {
-        if (i != i_start)
-            bbox = NR::Rect::union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data)));
-        i = i->next;
-    }
-
-    return bbox;
 }
 
 NRRect *Selection::boundsInDocument(NRRect *bbox) const {

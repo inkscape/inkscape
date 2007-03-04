@@ -277,12 +277,12 @@ SPItem::setExplicitlyHidden(bool const val) {
  */
 void
 SPItem::setCenter(NR::Point object_centre) {
-    NR::Rect bbox = getBounds(sp_item_i2d_affine(this));
-    if (!bbox.isEmpty()) {
-        transform_center_x = object_centre[NR::X] - bbox.midpoint()[NR::X];
+    NR::Maybe<NR::Rect> bbox = getBounds(sp_item_i2d_affine(this));
+    if (bbox) {
+        transform_center_x = object_centre[NR::X] - bbox->midpoint()[NR::X];
         if (fabs(transform_center_x) < 1e-5) // rounding error
             transform_center_x = 0;
-        transform_center_y = object_centre[NR::Y] - bbox.midpoint()[NR::Y];
+        transform_center_y = object_centre[NR::Y] - bbox->midpoint()[NR::Y];
         if (fabs(transform_center_y) < 1e-5) // rounding error
             transform_center_y = 0;
     }
@@ -299,9 +299,9 @@ bool SPItem::isCenterSet() {
 }
 
 NR::Point SPItem::getCenter() {
-    NR::Rect bbox = getBounds(sp_item_i2d_affine(this));
-    if (!bbox.isEmpty()) {
-        return bbox.midpoint() + NR::Point (this->transform_center_x, this->transform_center_y);
+    NR::Maybe<NR::Rect> bbox = getBounds(sp_item_i2d_affine(this));
+    if (bbox) {
+        return bbox->midpoint() + NR::Point (this->transform_center_x, this->transform_center_y);
     } else {
         return NR::Point (0, 0); // something's wrong!
     }
@@ -634,12 +634,9 @@ sp_item_write(SPObject *const object, Inkscape::XML::Node *repr, guint flags)
 {
     SPItem *item = SP_ITEM(object);
 
-    gchar c[256];
-    if (sp_svg_transform_write(c, 256, item->transform)) {
-        repr->setAttribute("transform", c);
-    } else {
-        repr->setAttribute("transform", NULL);
-    }
+    gchar *c = sp_svg_transform_write(item->transform);
+    repr->setAttribute("transform", c);
+    g_free(c);
 
     SPObject const *const parent = SP_OBJECT_PARENT(object);
     /** \todo Can someone please document why this is conditional on having
@@ -812,12 +809,14 @@ NR::Rect sp_item_bbox_desktop(SPItem *item)
 
 static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
 {
-    NR::Rect const bbox = item->getBounds(sp_item_i2d_affine(item));
+    NR::Maybe<NR::Rect> bbox = item->getBounds(sp_item_i2d_affine(item));
     /* Just a pair of opposite corners of the bounding box suffices given that we don't yet
        support angled guide lines. */
 
-    *p = bbox.min();
-    *p = bbox.max();
+    if (bbox) {
+        *p = bbox->min();
+        *p = bbox->max();
+    }
 }
 
 void sp_item_snappoints(SPItem const *item, SnapPointsIter p)

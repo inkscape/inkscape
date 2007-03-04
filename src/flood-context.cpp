@@ -32,8 +32,9 @@
 #include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
+#include "message-stack.h"
 #include "message-context.h"
-#include "pixmaps/cursor-rect.xpm"
+#include "pixmaps/cursor-paintbucket.xpm"
 #include "flood-context.h"
 #include "sp-metrics.h"
 #include <glibmm/i18n.h>
@@ -47,7 +48,6 @@
 #include "display/nr-arena.h"
 #include "display/nr-arena-image.h"
 #include "display/canvas-arena.h"
-#include "helper/png-write.h"
 #include "libnr/nr-pixops.h"
 #include "libnr/nr-matrix-rotate-ops.h"
 #include "libnr/nr-matrix-translate-ops.h"
@@ -82,15 +82,6 @@ static void sp_flood_finish(SPFloodContext *rc);
 
 static SPEventContextClass *parent_class;
 
-
-struct SPEBP {
-    int width, height, sheight;
-    guchar r, g, b, a;
-    NRArenaItem *root; // the root arena item to show; it is assumed that all unneeded items are hidden
-    guchar *px;
-    unsigned (*status)(float, void *);
-    void *data;
-};
 
 GtkType sp_flood_context_get_type()
 {
@@ -129,9 +120,9 @@ static void sp_flood_context_init(SPFloodContext *flood_context)
 {
     SPEventContext *event_context = SP_EVENT_CONTEXT(flood_context);
 
-    event_context->cursor_shape = cursor_rect_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
+    event_context->cursor_shape = cursor_paintbucket_xpm;
+    event_context->hot_x = 11;
+    event_context->hot_y = 30;
     event_context->xp = 0;
     event_context->yp = 0;
     event_context->tolerance = 0;
@@ -232,47 +223,30 @@ static void sp_flood_context_setup(SPEventContext *ec)
     rc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 }
 
-/**
-Hide all items which are not listed in list, recursively, skipping groups and defs
-*/
-static void
-hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
-{
-    if (SP_IS_ITEM(o)
-        && !SP_IS_DEFS(o)
-        && !SP_IS_ROOT(o)
-        && !SP_IS_GROUP(o)
-        && !g_slist_find(list, o))
-    {
-        sp_item_invoke_hide(SP_ITEM(o), dkey);
-    }
-
-     // recurse
-    if (!g_slist_find(list, o)) {
-        for (SPObject *child = sp_object_first_child(o) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            hide_other_items_recursively(child, list, dkey);
-        }
-    }
-}
-
 inline unsigned char * get_pixel(guchar *px, int x, int y, int width) {
   return px + (x + y * width) * 4;
 }
 
-static bool compare_pixels(unsigned char *a, unsigned char *b, int fuzziness) {
+static bool compare_pixels(unsigned char *a, unsigned char *b, int tolerance) {
+  int diff = 0;
   for (int i = 0; i < 4; i++) {
-    if (a[i] != b[i]) { 
-      return false;
-    }
+    diff += (int)abs(a[i] - b[i]);
   }
-  return true;
+  return ((diff / 4) <= tolerance);
 }
 
-static void try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, unsigned char *orig, int x, int y, int width) {
+static bool try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig, int x, int y, int width, int tolerance, bool fill_switch) {
   unsigned char *t = get_pixel(px, x, y, width);
-  if (compare_pixels(t, orig, 0)) {
-    fill_queue->push(NR::Point(x, y));
+  if (compare_pixels(t, orig, tolerance)) {
+    unsigned char *trace_t = get_pixel(trace_px, x, y, width);
+    if (trace_t[3] != 255) {
+      if (fill_switch) {
+        fill_queue->push(NR::Point(x, y));
+      }
+    }
+    return false;
   }
+  return true;
 }
 
 static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
@@ -292,13 +266,15 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
 
     long totalNodeCount = 0L;
 
+    double offset = prefs_get_double_attribute_limited("tools.paintbucket", "offset", 1.5, 0.0, 2.0);
+
     for (unsigned int i=0 ; i<results.size() ; i++) {
         Inkscape::Trace::TracingEngineResult result = results[i];
         totalNodeCount += result.getNodeCount();
 
         Inkscape::XML::Node *pathRepr = xml_doc->createElement("svg:path");
         /* Set style */
-        sp_desktop_apply_style_tool (desktop, pathRepr, "tools.flood", false);
+        sp_desktop_apply_style_tool (desktop, pathRepr, "tools.paintbucket", false);
 
         NArtBpath *bpath = sp_svg_read_path(result.getPathData().c_str());
         Path *path = bpath_to_Path(bpath);
@@ -313,7 +289,7 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
         Shape *expanded_path_shape = new Shape();
         
         expanded_path_shape->ConvertToShape(path_shape, fill_nonZero);
-        path_shape->MakeOffset(expanded_path_shape, 1.5, join_round, 4);
+        path_shape->MakeOffset(expanded_path_shape, offset, join_round, 4);
         expanded_path_shape->ConvertToShape(path_shape, fill_positive);
 
         Path *expanded_path = new Path();
@@ -330,12 +306,27 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
         delete expanded_path;
         pathRepr->setAttribute("d", str);
         g_free(str);
-        
+
         layer_repr->addChild(pathRepr, NULL);
 
         SPObject *reprobj = document->getObjectByRepr(pathRepr);
         if (reprobj) {
             sp_item_write_transform(SP_ITEM(reprobj), pathRepr, transform, NULL);
+            
+            // premultiply the item transform by the accumulated parent transform in the paste layer
+            NR::Matrix local = sp_item_i2doc_affine(SP_GROUP(desktop->currentLayer()));
+            if (!local.test_identity()) {
+                gchar const *t_str = pathRepr->attribute("transform");
+                NR::Matrix item_t (NR::identity());
+                if (t_str)
+                    sp_svg_transform_read(t_str, &item_t);
+                item_t *= local.inverse();
+                // (we're dealing with unattached repr, so we write to its attr instead of using sp_item_set_transform)
+                gchar *affinestr=sp_svg_transform_write(item_t);
+                pathRepr->setAttribute("transform", affinestr);
+                g_free(affinestr);
+            }
+
             Inkscape::Selection *selection = sp_desktop_selection(desktop);
             selection->set(reprobj);
             pathRepr->setPosition(-1);
@@ -343,6 +334,74 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
         
         Inkscape::GC::release(pathRepr);
     }
+}
+
+struct bitmap_coords_info {
+  bool is_left;
+  int x;
+  int y;
+  int y_limit;
+  int width;
+  int tolerance;
+  bool top_fill;
+  bool bottom_fill;
+  NR::Rect bbox;
+  NR::Rect screen;
+};
+
+enum ScanlineCheckResult {
+  SCANLINE_CHECK_OK,
+  SCANLINE_CHECK_ABORTED,
+  SCANLINE_CHECK_BOUNDARY
+};
+
+static ScanlineCheckResult perform_bitmap_scanline_check(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
+    bool aborted = false;
+    bool reached_screen_boundary = false;
+    bool ok;
+  
+    bool keep_tracing;
+    unsigned char *t, *trace_t;
+  
+    do {
+        ok = false;
+        if (bci.is_left) {
+            keep_tracing = (bci.x >= 0);
+        } else {
+            keep_tracing = (bci.x < bci.width);
+        }
+        
+        if (keep_tracing) {
+            t = get_pixel(px, bci.x, bci.y, bci.width);
+            if (compare_pixels(t, orig_color, bci.tolerance)) {
+                for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
+                trace_t = get_pixel(trace_px, bci.x, bci.y, bci.width);
+                trace_t[3] = 255; 
+                if (bci.y > 0) { 
+                    bci.top_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.x, bci.y - 1, bci.width, bci.tolerance, bci.top_fill);
+                }
+                if (bci.y < bci.y_limit) { 
+                    bci.bottom_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.x, bci.y + 1, bci.width, bci.tolerance, bci.bottom_fill);
+                }
+                if (bci.is_left) {
+                    bci.x--;
+                } else {
+                    bci.x++;
+                }
+                ok = true;
+            }
+        } else {
+            if (bci.bbox.min()[NR::X] > bci.screen.min()[NR::X]) {
+                aborted = true; break;
+            } else {
+                reached_screen_boundary = true;
+            }
+        }
+    } while (ok);
+    
+    if (aborted) { return SCANLINE_CHECK_ABORTED; }
+    if (reached_screen_boundary) { return SCANLINE_CHECK_BOUNDARY; }
+    return SCANLINE_CHECK_OK;
 }
 
 static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event) {
@@ -356,21 +415,33 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     sp_document_ensure_up_to_date (document);
     
     SPItem *document_root = SP_ITEM(SP_DOCUMENT_ROOT(document));
-    NR::Rect bbox = document_root->getBounds(NR::identity());
+    NR::Maybe<NR::Rect> bbox = document_root->getBounds(NR::identity());
 
-    if (bbox.isEmpty()) { return; }
-
-    int width = (int)ceil(bbox.extent(NR::X));
-    int height = (int)ceil(bbox.extent(NR::Y));
-
-    NR::Point origin(bbox.min()[NR::X], bbox.min()[NR::Y]);
+    if (!bbox) {
+      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
+      return;
+    }
     
-    NR::scale scale(width / (bbox.extent(NR::X)), height / (bbox.extent(NR::Y)));
+    double zoom_scale = desktop->current_zoom();
+    double padding = 1.6;
+
+    NR::Rect screen = desktop->get_display_area();
+
+    int width = (int)ceil(screen.extent(NR::X) * zoom_scale * padding);
+    int height = (int)ceil(screen.extent(NR::Y) * zoom_scale * padding);
+
+    NR::Point origin(screen.min()[NR::X],
+                     sp_document_height(document) - screen.extent(NR::Y) - screen.min()[NR::Y]);
+                     
+    origin[NR::X] = origin[NR::X] + (screen.extent(NR::X) * ((1 - padding) / 2));
+    origin[NR::Y] = origin[NR::Y] + (screen.extent(NR::Y) * ((1 - padding) / 2));
+    
+    NR::scale scale(zoom_scale, zoom_scale);
     NR::Matrix affine = scale * NR::translate(-origin * scale);
     
     /* Create ArenaItems and set transform */
     NRArenaItem *root = sp_item_invoke_show(SP_ITEM(sp_document_root(document)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
-    nr_arena_item_set_transform(root, affine);
+    nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
 
     NRGC gc(NULL);
     nr_matrix_set_identity(&gc.transform);
@@ -383,31 +454,31 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
     nr_arena_item_invoke_update(root, &final_bbox, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
 
-//     /* Set up pixblocks */
     guchar *px = g_new(guchar, 4 * width * height);
     memset(px, 0x00, 4 * width * height);
 
-    guchar *trace_px = g_new(guchar, 4 * width * height);
-    memset(trace_px, 0x00, 4 * width * height);
-    
     NRPixBlock B;
     nr_pixblock_setup_extern( &B, NR_PIXBLOCK_MODE_R8G8B8A8N,
                               final_bbox.x0, final_bbox.y0, final_bbox.x1, final_bbox.y1,
                               px, 4 * width, FALSE, FALSE );
     
-    nr_arena_item_invoke_render( root, &final_bbox, &B, NR_ARENA_ITEM_RENDER_NO_CACHE );
-    
+    nr_arena_item_invoke_render(NULL, root, &final_bbox, &B, NR_ARENA_ITEM_RENDER_NO_CACHE );
     nr_pixblock_release(&B);
+    
+    // Hide items
+    sp_item_invoke_hide(SP_ITEM(sp_document_root(document)), dkey);
+    
     nr_arena_item_unref(root);
     nr_object_unref((NRObject *) arena);
     
-    double zoom_scale = desktop->current_zoom();
-
     NR::Point pw = NR::Point(event->button.x / zoom_scale, sp_document_height(document) + (event->button.y / zoom_scale)) * affine;
     
     pw[NR::X] = (int)MIN(width - 1, MAX(0, pw[NR::X]));
     pw[NR::Y] = (int)MIN(height - 1, MAX(0, pw[NR::Y]));
 
+    guchar *trace_px = g_new(guchar, 4 * width * height);
+    memset(trace_px, 0x00, 4 * width * height);
+    
     std::queue<NR::Point> fill_queue;
     fill_queue.push(pw);
     
@@ -418,67 +489,87 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     unsigned char *orig_px = get_pixel(px, (int)pw[NR::X], (int)pw[NR::Y], width);
     for (int i = 0; i < 4; i++) { orig_color[i] = orig_px[i]; }
 
+    int tolerance = (255 * prefs_get_int_attribute_limited("tools.paintbucket", "tolerance", 1, 0, 100)) / 100;
+
+    bool reached_screen_boundary = false;
+
+    bitmap_coords_info bci;
+    
+    bci.y_limit = y_limit;
+    bci.width = width;
+    bci.tolerance = tolerance;
+    bci.bbox = *bbox;
+    bci.screen = screen;
+
     while (!fill_queue.empty() && !aborted) {
       NR::Point cp = fill_queue.front();
       fill_queue.pop();
       unsigned char *s = get_pixel(px, (int)cp[NR::X], (int)cp[NR::Y], width);
       
       // same color at this point
-      if (compare_pixels(s, orig_color, 0)) {
-        int left = (int)cp[NR::X];
-        int right = (int)cp[NR::X] + 1;
+      if (compare_pixels(s, orig_color, tolerance)) {
         int x = (int)cp[NR::X];
         int y = (int)cp[NR::Y];
         
+        bool top_fill = true;
+        bool bottom_fill = true;
+        
         if (y > 0) { 
-          try_add_to_queue(&fill_queue, px, orig_color, x, y - 1, width);
+          top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, x, y - 1, width, tolerance, top_fill);
         } else {
-          aborted = true; break;
+          if (bbox->min()[NR::Y] > screen.min()[NR::Y]) {
+            aborted = true; break;
+          } else {
+            reached_screen_boundary = true;
+          }
         }
         if (y < y_limit) { 
-          try_add_to_queue(&fill_queue, px, orig_color, x, y + 1, width);
+          bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, x, y + 1, width, tolerance, bottom_fill);
         } else {
-          aborted = true; break;
+          if (bbox->max()[NR::Y] < screen.max()[NR::Y]) {
+            aborted = true; break;
+          } else {
+            reached_screen_boundary = true;
+          }
         }
         
-        unsigned char *t, *trace_t;
-        bool ok = false;
+        bci.is_left = true;
+        bci.x = x;
+        bci.y = y;
+        bci.top_fill = top_fill;
+        bci.bottom_fill = bottom_fill;
         
-        do {
-          ok = false;
-          // go left
-          if (left >= 0) {
-            t = get_pixel(px, left, y, width);
-            if (compare_pixels(t, orig_color, 0)) {
-              for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
-              trace_t = get_pixel(trace_px, left, y, width);
-              trace_t[3] = 255;
-              if (y > 0) { try_add_to_queue(&fill_queue, px, orig_color, left, y - 1, width); }
-              if (y < y_limit) { try_add_to_queue(&fill_queue, px, orig_color, left, y + 1, width); }
-              left--; ok = true;
-            }
-          } else {
-            aborted = true; break;
-          }
-        } while (ok);
-      
-        do {
-          ok = false;
-          // go left
-          if (right < width) {
-            t = get_pixel(px, right, y, width);
-            if (compare_pixels(t, orig_color, 0)) {
-              for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
-              trace_t = get_pixel(trace_px, right, y, width);
-              trace_t[3] = 255; 
-              if (y > 0) { try_add_to_queue(&fill_queue, px, orig_color, right, y - 1, width); }
-              if (y < y_limit) { try_add_to_queue(&fill_queue, px, orig_color, right, y + 1, width); }
-              right++; ok = true;
-            }
-          } else {
-            aborted = true; break;
-          }
-        } while (ok);
+        ScanlineCheckResult result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
+        
+        switch (result) {
+            case SCANLINE_CHECK_ABORTED:
+                aborted = true;
+                break;
+            case SCANLINE_CHECK_BOUNDARY:
+                reached_screen_boundary = true;
+                break;
+            default:
+                break;
+        }
+        
+        bci.is_left = false;
+        bci.x = x + 1;
+        bci.y = y;
+        bci.top_fill = top_fill;
+        bci.bottom_fill = bottom_fill;
+        
+        result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
+        
+        switch (result) {
+            case SCANLINE_CHECK_ABORTED:
+                aborted = true;
+                break;
+            case SCANLINE_CHECK_BOUNDARY:
+                reached_screen_boundary = true;
+                break;
+            default:
+                break;
+        }
       }
     }
     
@@ -486,7 +577,12 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
     if (aborted) {
       g_free(trace_px);
+      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
       return;
+    }
+    
+    if (reached_screen_boundary) {
+      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again.")); 
     }
     
     GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(trace_px,
@@ -496,13 +592,13 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                                       (GdkPixbufDestroyNotify)g_free,
                                       NULL);
 
-    g_free(trace_px);
-
     NR::Matrix inverted_affine = NR::Matrix(affine).inverse();
     
     do_trace(pixbuf, desktop, inverted_affine);
 
-    sp_document_done(document, SP_VERB_CONTEXT_FLOOD, _("Flood fill"));
+    g_free(trace_px);
+    
+    sp_document_done(document, SP_VERB_CONTEXT_PAINTBUCKET, _("Fill bounded area"));
 }
 
 static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
@@ -511,10 +607,6 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        if ( event->button.button == 1 ) {
-            sp_flood_do_flood_fill(event_context, event);
-            ret = TRUE;
-        }
         break;
         // motion and release are always on root (why?)
     default:
@@ -530,6 +622,8 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
 
 static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
+    SPDesktop *desktop = event_context->desktop;
+
     gint ret = FALSE;
     switch (event->type) {
     case GDK_BUTTON_PRESS:
@@ -537,6 +631,20 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
             sp_flood_do_flood_fill(event_context, event);
 
             ret = TRUE;
+        }
+        break;
+    case GDK_KEY_PRESS:
+        switch (get_group0_keyval (&event->key)) {
+        case GDK_Up:
+        case GDK_Down:
+        case GDK_KP_Up:
+        case GDK_KP_Down:
+            // prevent the zoom field from activation
+            if (!MOD__CTRL_ONLY)
+                ret = TRUE;
+            break;
+        default:
+            break;
         }
         break;
     default:
@@ -567,8 +675,8 @@ static void sp_flood_finish(SPFloodContext *rc)
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 
         sp_desktop_selection(desktop)->set(rc->item);
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_RECT,
-                         _("Create floodangle"));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET,
+                         _("Fill bounded area"));
 
         rc->item = NULL;
     }

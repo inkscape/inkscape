@@ -591,17 +591,15 @@ sp_item_list_common_parent_group(const GSList *items)
 
 /** Finds out the minimum common bbox of the selected items
  */
-NR::Rect
+static NR::Maybe<NR::Rect>
 enclose_items(const GSList *items)
 {
     g_assert(items != NULL);
 
-    NR::Rect r = sp_item_bbox_desktop((SPItem *) items->data);
-
-    for (GSList *i = items->next; i; i = i->next) {
+    NR::Maybe<NR::Rect> r = NR::Nothing();
+    for (GSList const *i = items; i; i = i->next) {
         r = NR::Rect::union_bounds(r, sp_item_bbox_desktop((SPItem *) i->data));
     }
-
     return r;
 }
 
@@ -647,24 +645,28 @@ sp_selection_raise()
     rev = g_slist_sort(rev, (GCompareFunc) sp_item_repr_compare_position);
 
     // find out the common bbox of the selected items
-    NR::Rect selected = enclose_items(items);
+    NR::Maybe<NR::Rect> selected = enclose_items(items);
 
     // for all objects in the selection (starting from top)
-    while (rev) {
-        SPObject *child = SP_OBJECT(rev->data);
-        // for each selected object, find the next sibling
-        for (SPObject *newref = child->next; newref; newref = newref->next) {
-            // if the sibling is an item AND overlaps our selection,
-            if (SP_IS_ITEM(newref) && selected.intersects(sp_item_bbox_desktop(SP_ITEM(newref)))) {
-                // AND if it's not one of our selected objects,
-                if (!g_slist_find((GSList *) items, newref)) {
-                    // move the selected object after that sibling
-                    grepr->changeOrder(SP_OBJECT_REPR(child), SP_OBJECT_REPR(newref));
+    if (selected) {
+        while (rev) {
+            SPObject *child = SP_OBJECT(rev->data);
+            // for each selected object, find the next sibling
+            for (SPObject *newref = child->next; newref; newref = newref->next) {
+                // if the sibling is an item AND overlaps our selection,
+                if (SP_IS_ITEM(newref) && selected->intersects(sp_item_bbox_desktop(SP_ITEM(newref)))) {
+                    // AND if it's not one of our selected objects,
+                    if (!g_slist_find((GSList *) items, newref)) {
+                        // move the selected object after that sibling
+                        grepr->changeOrder(SP_OBJECT_REPR(child), SP_OBJECT_REPR(newref));
+                    }
+                    break;
                 }
-                break;
             }
+            rev = g_slist_remove(rev, child);
         }
-        rev = g_slist_remove(rev, child);
+    } else {
+        g_slist_free(rev);
     }
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_RAISE,
@@ -731,7 +733,7 @@ sp_selection_lower()
     Inkscape::XML::Node *grepr = SP_OBJECT_REPR(group);
 
     // find out the common bbox of the selected items
-    NR::Rect selected = enclose_items(items);
+    NR::Maybe<NR::Rect> selected = enclose_items(items);
 
     /* construct direct-ordered list of selected children */
     GSList *rev = g_slist_copy((GSList *) items);
@@ -739,30 +741,33 @@ sp_selection_lower()
     rev = g_slist_reverse(rev);
 
     // for all objects in the selection (starting from top)
-    while (rev) {
-        SPObject *child = SP_OBJECT(rev->data);
-        // for each selected object, find the prev sibling
-        for (SPObject *newref = prev_sibling(child); newref; newref = prev_sibling(newref)) {
-            // if the sibling is an item AND overlaps our selection,
-            if (SP_IS_ITEM(newref) && selected.intersects(sp_item_bbox_desktop(SP_ITEM(newref)))) {
-                // AND if it's not one of our selected objects,
-                if (!g_slist_find((GSList *) items, newref)) {
-                    // move the selected object before that sibling
-                    SPObject *put_after = prev_sibling(newref);
-                    if (put_after)
-                        grepr->changeOrder(SP_OBJECT_REPR(child), SP_OBJECT_REPR(put_after));
-                    else
-                        SP_OBJECT_REPR(child)->setPosition(0);
+    if (selected) {
+        while (rev) {
+            SPObject *child = SP_OBJECT(rev->data);
+            // for each selected object, find the prev sibling
+            for (SPObject *newref = prev_sibling(child); newref; newref = prev_sibling(newref)) {
+                // if the sibling is an item AND overlaps our selection,
+                if (SP_IS_ITEM(newref) && selected->intersects(sp_item_bbox_desktop(SP_ITEM(newref)))) {
+                    // AND if it's not one of our selected objects,
+                    if (!g_slist_find((GSList *) items, newref)) {
+                        // move the selected object before that sibling
+                        SPObject *put_after = prev_sibling(newref);
+                        if (put_after)
+                            grepr->changeOrder(SP_OBJECT_REPR(child), SP_OBJECT_REPR(put_after));
+                        else
+                            SP_OBJECT_REPR(child)->setPosition(0);
+                    }
+                    break;
                 }
-                break;
             }
+            rev = g_slist_remove(rev, child);
         }
-        rev = g_slist_remove(rev, child);
+    } else {
+        g_slist_free(rev);
     }
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_LOWER, 
                      _("Lower"));
-
 }
 
 void sp_selection_lower_to_bottom()

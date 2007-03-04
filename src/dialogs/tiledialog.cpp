@@ -49,18 +49,23 @@ sp_compare_x_position(SPItem *first, SPItem *second)
     using NR::X;
     using NR::Y;
 
-    NR::Rect const a = first->getBounds(sp_item_i2doc_affine(first));
-    double const a_height = a.dimensions()[Y];
+    NR::Maybe<NR::Rect> a = first->getBounds(sp_item_i2doc_affine(first));
+    NR::Maybe<NR::Rect> b = second->getBounds(sp_item_i2doc_affine(second));
 
-    NR::Rect const b = second->getBounds(sp_item_i2doc_affine(second));
-    double const b_height = b.dimensions()[Y];
+    if ( !a || !b ) {
+        // FIXME?
+        return 0;
+    }
+
+    double const a_height = a->dimensions()[Y];
+    double const b_height = b->dimensions()[Y];
     
     bool a_in_b_vert = false;
-    if ((a.min()[Y] < b.min()[Y] + 0.1) && (a.min()[Y] > b.min()[Y] - b_height)) {
+    if ((a->min()[Y] < b->min()[Y] + 0.1) && (a->min()[Y] > b->min()[Y] - b_height)) {
         a_in_b_vert = true;
-    } else if ((b.min()[Y] < a.min()[Y] + 0.1) && (b.min()[Y] > a.min()[Y] - a_height)) {
+    } else if ((b->min()[Y] < a->min()[Y] + 0.1) && (b->min()[Y] > a->min()[Y] - a_height)) {
         a_in_b_vert = true;
-    } else if (b.min()[Y] == a.min()[Y]) {
+    } else if (b->min()[Y] == a->min()[Y]) {
         a_in_b_vert = true;
     } else {
         a_in_b_vert = false;
@@ -69,10 +74,10 @@ sp_compare_x_position(SPItem *first, SPItem *second)
     if (!a_in_b_vert) {
         return -1;
     }
-    if (a_in_b_vert && a.min()[X] > b.min()[X]) {
+    if (a_in_b_vert && a->min()[X] > b->min()[X]) {
         return 1;
     }
-    if (a_in_b_vert && a.min()[X] < b.min()[X]) {
+    if (a_in_b_vert && a->min()[X] < b->min()[X]) {
         return -1;
     }
     return 0;
@@ -84,13 +89,18 @@ sp_compare_x_position(SPItem *first, SPItem *second)
 int
 sp_compare_y_position(SPItem *first, SPItem *second)
 {
-    NR::Rect const a = first->getBounds(sp_item_i2doc_affine(first));
-    NR::Rect const b = second->getBounds(sp_item_i2doc_affine(second));
+    NR::Maybe<NR::Rect> a = first->getBounds(sp_item_i2doc_affine(first));
+    NR::Maybe<NR::Rect> b = second->getBounds(sp_item_i2doc_affine(second));
 
-    if (a.min()[NR::Y] > b.min()[NR::Y]) {
+    if ( !a || !b ) {
+        // FIXME?
+        return 0;
+    }
+
+    if (a->min()[NR::Y] > b->min()[NR::Y]) {
         return 1;
     }
-    if (a.min()[NR::Y] < b.min()[NR::Y]) {
+    if (a->min()[NR::Y] < b->min()[NR::Y]) {
         return -1;
     }
     
@@ -159,17 +169,22 @@ void TileDialog::Grid_Arrange ()
     cnt=0;
     for (; items != NULL; items = items->next) {
         SPItem *item = SP_ITEM(items->data);
-        NR::Rect const b = item->getBounds(sp_item_i2doc_affine(item));
-        width = b.dimensions()[NR::X];
-        height = b.dimensions()[NR::Y];
-        cx = b.midpoint()[NR::X];
-        cy = b.midpoint()[NR::Y];
-
-        if (b.min()[NR::X] < grid_left) {
-            grid_left = b.min()[NR::X];
+        NR::Maybe<NR::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
+        if (!b) {
+            continue;
         }
-        if (b.min()[NR::Y] < grid_top) {
-            grid_top = b.min()[NR::Y];
+
+        width = b->dimensions()[NR::X];
+        height = b->dimensions()[NR::Y];
+
+        cx = b->midpoint()[NR::X];
+        cy = b->midpoint()[NR::Y];
+
+        if (b->min()[NR::X] < grid_left) {
+            grid_left = b->min()[NR::X];
+        }
+        if (b->min()[NR::Y] < grid_top) {
+            grid_top = b->min()[NR::Y];
         }
         if (width > col_width) {
             col_width = width;
@@ -196,15 +211,18 @@ void TileDialog::Grid_Arrange ()
         const GSList *sizes = sorted;
         for (; sizes != NULL; sizes = sizes->next) {
             SPItem *item = SP_ITEM(sizes->data);
-            NR::Rect const b = item->getBounds(sp_item_i2doc_affine(item));
-            width = b.dimensions()[NR::X];
-            height = b.dimensions()[NR::Y];
-            if (width > col_widths[(cnt % NoOfCols)]) {
-                col_widths[(cnt % NoOfCols)] = width;
+            NR::Maybe<NR::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
+            if (b) {
+                width = b->dimensions()[NR::X];
+                height = b->dimensions()[NR::Y];
+                if (width > col_widths[(cnt % NoOfCols)]) {
+                    col_widths[(cnt % NoOfCols)] = width;
+                }
+                if (height > row_heights[(cnt / NoOfCols)]) {
+                    row_heights[(cnt / NoOfCols)] = height;
+                }
             }
-            if (height > row_heights[(cnt / NoOfCols)]) {
-                row_heights[(cnt / NoOfCols)] = height;
-            }
+
             cnt++;
         }
 
@@ -300,20 +318,25 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
              for (; current_row != NULL; current_row = current_row->next) {
                  SPItem *item=SP_ITEM(current_row->data);
                  Inkscape::XML::Node *repr = SP_OBJECT_REPR(item);
-                 NR::Rect const b = item->getBounds(sp_item_i2doc_affine(item));
-                 width = b.dimensions()[NR::X];
-                 height = b.dimensions()[NR::Y];
+                 NR::Maybe<NR::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
+                 NR::Point min;
+                 if (b) {
+                     width = b->dimensions()[NR::X];
+                     height = b->dimensions()[NR::Y];
+                     min = b->min();
+                 } else {
+                     width = height = 0;
+                     min = NR::Point(0, 0);
+                 }
+
                  row = cnt / NoOfCols;
                  col = cnt % NoOfCols;
-
-                // original before I started fecking about with it.
-                // new_x = grid_left + (((col_width - width)/2)*HorizAlign) + (( col_width + paddingx ) * (cnt % NoOfCols));
-                // new_y = grid_top + (((row_height - height)/2)*VertAlign) +(( row_height + paddingy ) * (cnt / NoOfCols));
 
                  new_x = grid_left + (((col_widths[col] - width)/2)*HorizAlign) + col_xs[col];
                  new_y = grid_top + (((row_heights[row] - height)/2)*VertAlign) + row_ys[row];
 
-                 NR::Point move = NR::Point(new_x - b.min()[NR::X], b.min()[NR::Y] - new_y); // why are the two args the opposite ways round???
+                 // signs are inverted between x and y due to y inversion
+                 NR::Point move = NR::Point(new_x - min[NR::X], min[NR::Y] - new_y);
                  NR::Matrix const &affine = NR::Matrix(NR::translate(move));
                  sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * affine);
                  sp_item_write_transform(item, repr, item->transform,  NULL);
