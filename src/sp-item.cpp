@@ -713,7 +713,7 @@ NR::Maybe<NR::Rect> SPItem::getBounds(NR::Matrix const &transform,
                                       unsigned int dkey) const
 {
     NRRect r;
-    sp_item_invoke_bbox_full(this, &r, transform, 0, TRUE);
+    sp_item_invoke_bbox_full(this, &r, transform, type, TRUE);
     if (nr_rect_d_test_empty(&r)) {
         return NR::Nothing();
     } else {
