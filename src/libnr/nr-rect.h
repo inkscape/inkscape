@@ -184,7 +184,30 @@ public:
     static Maybe<Rect> intersection(Maybe<Rect> const &a, Maybe<Rect> const &b);
 
     /** Returns the smallest rectangle that encloses both rectangles. */
-    static Maybe<Rect> union_bounds(Maybe<Rect> const &a, Maybe<Rect> const &b);
+    static Maybe<Rect> union_bounds(Maybe<Rect> const &a, Maybe<Rect> const &b)
+    {
+        if (!a) {
+            return b;
+        } else if (!b) {
+            return a;
+        } else {
+            return union_bounds(*a, *b);
+        }
+    }
+    static Rect union_bounds(Maybe<Rect> const &a, Rect const &b) {
+        if (a) {
+            return union_bounds(*a, b);
+        } else {
+            return b;
+        }
+    }
+    static Rect union_bounds(Rect const &a, Maybe<Rect> const &b) {
+        if (b) {
+            return union_bounds(a, *b);
+        } else {
+            return a;
+        }
+    }
     static Rect union_bounds(Rect const &a, Rect const &b);
 
     /** Scales the rect by s, with origin at 0, 0 */
