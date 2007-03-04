@@ -786,11 +786,6 @@ clonetiler_trace_pick (NR::Rect box)
 
     /* Set up pixblock */
     guchar *px = g_new(guchar, 4 * width * height);
-
-    if (px == NULL) {
-        return 0; // buffer is too big or too small, cannot pick, so return 0
-    }
-
     memset(px, 0x00, 4 * width * height);
 
     /* Render */
@@ -798,7 +793,7 @@ clonetiler_trace_pick (NR::Rect box)
     nr_pixblock_setup_extern( &pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
                               ibox.x0, ibox.y0, ibox.x1, ibox.y1,
                               px, 4 * width, FALSE, FALSE );
-    nr_arena_item_invoke_render(NULL, trace_root, &ibox, &pb,
+    nr_arena_item_invoke_render( trace_root, &ibox, &pb,
                                  NR_ARENA_ITEM_RENDER_NO_CACHE );
 
     double R = 0, G = 0, B = 0, A = 0;
@@ -1085,7 +1080,7 @@ clonetiler_apply (GtkWidget *widget, void *)
         w = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-w", 0);
         h = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-h", 0);
     } else {
-        NR::Rect const r = SP_ITEM(obj)->invokeBbox(sp_item_i2doc_affine(SP_ITEM(obj)));
+        NR::Rect const r = SP_ITEM(obj)->getBounds(sp_item_i2doc_affine(SP_ITEM(obj)));
         c = r.midpoint();
         w = r.dimensions()[NR::X];
         h = r.dimensions()[NR::Y];
@@ -1286,9 +1281,12 @@ clonetiler_apply (GtkWidget *widget, void *)
                 center_set = true;
             }
 
-            gchar *affinestr=sp_svg_transform_write(t);
-            clone->setAttribute("transform", affinestr);
-            g_free(affinestr);
+            gchar affinestr[80];
+            if (sp_svg_transform_write(affinestr, 79, t)) {
+                clone->setAttribute("transform", affinestr);
+            } else {
+                clone->setAttribute("transform", NULL);
+            }
 
             if (opacity < 1.0) {
                 sp_repr_set_css_double(clone, "opacity", opacity);

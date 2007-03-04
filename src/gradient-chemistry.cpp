@@ -258,7 +258,7 @@ sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item)
 
     // calculate the bbox of the item
     sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
-    NR::Rect const bbox = item->invokeBbox(NR::identity()); // we need "true" bbox without item_i2d_affine
+    NR::Rect const bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
 
     NR::Coord const width = bbox.dimensions()[NR::X];
     NR::Coord const height = bbox.dimensions()[NR::Y];
@@ -280,9 +280,12 @@ sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item)
 
         gr->gradientTransform = squeeze;
         {
-            gchar *c=sp_svg_transform_write(gr->gradientTransform);
-            SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", c);
-            g_free(c);
+            gchar c[256];
+            if (sp_svg_transform_write(c, 256, gr->gradientTransform)) {
+                SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", c);
+            } else {
+                SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", NULL);
+            }
         }
     } else {
         sp_repr_set_svg_double(repr, "x1", (center - NR::Point(width/2, 0))[NR::X]);
@@ -316,7 +319,7 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
 
         // calculate the bbox of the item
         sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
-        NR::Rect const bbox = item->invokeBbox(NR::identity()); // we need "true" bbox without item_i2d_affine
+        NR::Rect const bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
         NR::Matrix bbox2user(bbox.dimensions()[NR::X], 0,
                              0, bbox.dimensions()[NR::Y],
                              bbox.min()[NR::X], bbox.min()[NR::Y]);
@@ -347,9 +350,12 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
         // apply skew to the gradient
         gr->gradientTransform = skew;
         {
-            gchar *c=sp_svg_transform_write(gr->gradientTransform);
-            SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", c);
-            g_free(c);
+            gchar c[256];
+            if (sp_svg_transform_write(c, 256, gr->gradientTransform)) {
+                SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", c);
+            } else {
+                SP_OBJECT_REPR(gr)->setAttribute("gradientTransform", NULL);
+            }
         }
 
         // Matrix to convert points to userspace coords; postmultiply by inverse of skew so
@@ -417,9 +423,12 @@ sp_gradient_transform_multiply(SPGradient *gradient, NR::Matrix postmul, bool se
     }
     gradient->gradientTransform_set = TRUE;
 
-    gchar *c=sp_svg_transform_write(gradient->gradientTransform);
-    SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", c);
-    g_free(c);
+    gchar c[256];
+    if (sp_svg_transform_write(c, 256, gradient->gradientTransform)) {
+        SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", c);
+    } else {
+        SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", NULL);
+    }
 }
 
 SPGradient *
@@ -916,9 +925,12 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 				gradient->gradientTransform = new_transform;
 				gradient->gradientTransform_set = TRUE;
 				if (write_repr) {
-					gchar *s=sp_svg_transform_write(gradient->gradientTransform);
-				        SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", s);
-                                        g_free(s);
+					gchar s[256];
+					if (sp_svg_transform_write(s, 256, gradient->gradientTransform)) {
+						SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", s);
+					} else {
+						SP_OBJECT_REPR(gradient)->setAttribute("gradientTransform", NULL);
+					}
 				} else {
 					SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG);
 				}
@@ -1010,7 +1022,7 @@ sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool
 
     if (SP_GRADIENT(gradient)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
-        NR::Rect const bbox = item->invokeBbox(NR::identity()); // we need "true" bbox without item_i2d_affine
+        NR::Rect const bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
         p *= NR::Matrix(bbox.dimensions()[NR::X], 0,
                         0, bbox.dimensions()[NR::Y],
                         bbox.min()[NR::X], bbox.min()[NR::Y]);

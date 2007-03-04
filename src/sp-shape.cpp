@@ -238,7 +238,7 @@ sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 	if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG)) {
 		/* This is suboptimal, because changing parent style schedules recalculation */
 		/* But on the other hand - how can we know that parent does not tie style and transform */
-                NR::Rect const paintbox = SP_ITEM(object)->invokeBbox(NR::identity());
+                NR::Rect const paintbox = SP_ITEM(object)->getBounds(NR::identity());
 		for (SPItemView *v = SP_ITEM (shape)->display; v != NULL; v = v->next) {
                     NRArenaShape * const s = NR_ARENA_SHAPE(v->arenaitem);
                     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -753,7 +753,7 @@ sp_shape_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flag
         NRArenaShape * const s = NR_ARENA_SHAPE(arenaitem);
 	nr_arena_shape_set_style(s, object->style);
 	nr_arena_shape_set_path(s, shape->curve, false);
-        NR::Rect const paintbox = item->invokeBbox(NR::identity());
+        NR::Rect const paintbox = item->getBounds(NR::identity());
         s->setPaintBox(paintbox);
 
         if (sp_shape_has_markers (shape)) {

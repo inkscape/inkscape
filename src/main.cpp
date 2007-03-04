@@ -108,8 +108,6 @@ using Inkscape::Extension::Internal::PrintWin32;
 
 #include "application/application.h"
 
-#include "main-cmdlineact.h"
-
 enum {
     SP_ARG_NONE,
     SP_ARG_NOGUI,
@@ -146,9 +144,6 @@ enum {
     SP_ARG_QUERY_ID,
     SP_ARG_VERSION,
     SP_ARG_VACUUM_DEFS,
-    SP_ARG_VERB_LIST,
-    SP_ARG_VERB,
-    SP_ARG_SELECT,
     SP_ARG_LAST
 };
 
@@ -370,21 +365,6 @@ struct poptOption options[] = {
      POPT_ARG_NONE, &sp_vacuum_defs, SP_ARG_VACUUM_DEFS,
      N_("Remove unused definitions from the defs section(s) of the document"),
      NULL},
-
-    {"verb-list", 0,
-     POPT_ARG_NONE, NULL, SP_ARG_VERB_LIST,
-     N_("List the IDs of all the verbs in Inkscape"),
-     NULL},
-
-    {"verb", 0,
-     POPT_ARG_STRING, NULL, SP_ARG_VERB,
-     N_("Verb to call when Inkscape opens."),
-     N_("VERB-ID")},
-
-    {"select", 0,
-     POPT_ARG_STRING, NULL, SP_ARG_SELECT,
-     N_("Object ID to select when Inkscape opens."),
-     N_("OBJECT-ID")},
 
     POPT_AUTOHELP POPT_TABLEEND
 };
@@ -674,7 +654,6 @@ sp_main_gui(int argc, char const **argv)
         }
     }
 
-    Glib::signal_idle().connect(sigc::ptr_fun(&Inkscape::CmdLineAction::idle));
     main_instance.run();
 
 #ifdef WIN32
@@ -757,7 +736,6 @@ sp_main_console(int argc, char const **argv)
                 do_query_dimension (doc, false, sp_query_x? NR::X : NR::Y, sp_query_id);
             }
         }
-
         fl = g_slist_remove(fl, fl->data);
     }
 
@@ -789,7 +767,7 @@ do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gch
     if (o) {
         sp_document_ensure_up_to_date (doc);
         SPItem *item = ((SPItem *) o);
-        NR::Rect area = item->invokeBbox(sp_item_i2doc_affine(item)); // "true" SVG bbox for scripting
+        NR::Rect area = item->getBounds(sp_item_i2doc_affine(item)); // "true" SVG bbox for scripting
 
         Inkscape::SVGOStringStream os;
         if (extent) {
@@ -1390,25 +1368,6 @@ sp_process_args(poptContext ctx)
             case SP_ARG_EXTENSIONDIR: {
                 printf("%s\n", INKSCAPE_EXTENSIONDIR);
                 exit(0);
-                break;
-            }
-            case SP_ARG_VERB_LIST: {
-                // This really shouldn't go here, we should init the app.
-                // But, since we're just exiting in this path, there is
-                // no harm, and this is really a better place to put
-                // everything else.
-                Inkscape::Extension::init();
-                Inkscape::Verb::list();
-                exit(0);
-                break;
-            }
-            case SP_ARG_VERB:
-            case SP_ARG_SELECT: {
-                gchar const *arg = poptGetOptArg(ctx);
-                if (arg != NULL) {
-                    // printf("Adding in: %s\n", arg);
-                    new Inkscape::CmdLineAction((a == SP_ARG_VERB), arg);
-                }
                 break;
             }
             default: {

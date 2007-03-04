@@ -277,7 +277,7 @@ SPItem::setExplicitlyHidden(bool const val) {
  */
 void
 SPItem::setCenter(NR::Point object_centre) {
-    NR::Rect bbox = invokeBbox(sp_item_i2d_affine(this));
+    NR::Rect bbox = getBounds(sp_item_i2d_affine(this));
     if (!bbox.isEmpty()) {
         transform_center_x = object_centre[NR::X] - bbox.midpoint()[NR::X];
         if (fabs(transform_center_x) < 1e-5) // rounding error
@@ -299,7 +299,7 @@ bool SPItem::isCenterSet() {
 }
 
 NR::Point SPItem::getCenter() {
-    NR::Rect bbox = invokeBbox(sp_item_i2d_affine(this));
+    NR::Rect bbox = getBounds(sp_item_i2d_affine(this));
     if (!bbox.isEmpty()) {
         return bbox.midpoint() + NR::Point (this->transform_center_x, this->transform_center_y);
     } else {
@@ -711,16 +711,9 @@ sp_item_write(SPObject *const object, Inkscape::XML::Node *repr, guint flags)
     return repr;
 }
 
-NR::Rect SPItem::invokeBbox(NR::Matrix const &transform) const
-{
-    NRRect r;
-    sp_item_invoke_bbox_full(this, &r, transform, 0, TRUE);
-    return NR::Rect(r);
-}
-
-NR::Maybe<NR::Rect> SPItem::getBBox(NR::Matrix const &transform,
-                                    SPItem::BBoxType type,
-                                    unsigned int dkey) const
+NR::Maybe<NR::Rect> SPItem::getBounds(NR::Matrix const &transform,
+                                      SPItem::BBoxType type,
+                                      unsigned int dkey) const
 {
     NRRect r;
     sp_item_invoke_bbox_full(this, &r, transform, 0, TRUE);
@@ -819,7 +812,7 @@ NR::Rect sp_item_bbox_desktop(SPItem *item)
 
 static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
 {
-    NR::Rect const bbox = item->invokeBbox(sp_item_i2d_affine(item));
+    NR::Rect const bbox = item->getBounds(sp_item_i2d_affine(item));
     /* Just a pair of opposite corners of the bounding box suffices given that we don't yet
        support angled guide lines. */
 

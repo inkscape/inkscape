@@ -148,8 +148,7 @@ struct SPItem : public SPObject {
     void raiseToTop();
     void lowerToBottom();
 
-    NR::Rect invokeBbox(NR::Matrix const &transform) const;
-    NR::Maybe<NR::Rect> getBBox(NR::Matrix const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
+    NR::Maybe<NR::Rect> getBounds(NR::Matrix const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
 
     sigc::connection _clip_ref_connection;
     sigc::connection _mask_ref_connection;

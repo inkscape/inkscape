@@ -186,12 +186,12 @@ static Avoid::Polygn avoid_item_poly(SPItem const *item)
     //       some convex hull code, though not NR::ConvexHull as this
     //       only keeps the bounding box of the convex hull currently.
 
-    // TODO: SPItem::invokeBbox gives the wrong result for some objects
+    // TODO: SPItem::getBounds gives the wrong result for some objects
     //       that have internal representations that are updated later
     //       by the sp_*_update functions, e.g., text.
     sp_document_ensure_up_to_date(item->document);
     
-    NR::Rect rHull = item->invokeBbox(sp_item_i2doc_affine(item));
+    NR::Rect rHull = item->getBounds(sp_item_i2doc_affine(item));
 
 
     double spacing = desktop->namedview->connector_spacing;

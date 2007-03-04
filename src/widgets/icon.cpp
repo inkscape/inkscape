@@ -529,17 +529,12 @@ static void sp_icon_paint(SPIcon *icon, GdkRectangle const *area)
         int const x1 = std::min(area->x + area->width,  widget.allocation.x + padx + static_cast<int>(icon->psize) );
         int const y1 = std::min(area->y + area->height, widget.allocation.y + pady + static_cast<int>(icon->psize) );
 
-        int width = x1 - x0;
-        int height = y1 - y0;
-        // Limit drawing to when we actually have something. Avoids some crashes.
-        if ( (width > 0) && (height > 0) ) {
-            gdk_draw_pixbuf(GDK_DRAWABLE(widget.window), NULL, image,
-                            x0 - widget.allocation.x - padx,
-                            y0 - widget.allocation.y - pady,
-                            x0, y0,
-                            width, height,
-                            GDK_RGB_DITHER_NORMAL, x0, y0);
-        }
+        gdk_draw_pixbuf(GDK_DRAWABLE(widget.window), NULL, image,
+                        x0 - widget.allocation.x - padx,
+                        y0 - widget.allocation.y - pady,
+                        x0, y0,
+                        x1 - x0, y1 - y0,
+                        GDK_RGB_DITHER_NORMAL, x0, y0);
     }
 }
 
@@ -614,7 +609,7 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
         if (object && SP_IS_ITEM(object)) {
             /* Find bbox in document */
             NR::Matrix const i2doc(sp_item_i2doc_affine(SP_ITEM(object)));
-            NR::Rect dbox = SP_ITEM(object)->invokeBbox(i2doc);
+            NR::Rect dbox = SP_ITEM(object)->getBounds(i2doc);
 
             if ( SP_OBJECT_PARENT(object) == NULL )
             {
@@ -718,7 +713,7 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                                           px + 4 * psize * (ua.y0 - area.y0) +
                                           4 * (ua.x0 - area.x0),
                                           4 * psize, FALSE, FALSE );
-                nr_arena_item_invoke_render(NULL, root, &ua, &B,
+                nr_arena_item_invoke_render( root, &ua, &B,
                                              NR_ARENA_ITEM_RENDER_NO_CACHE );
                 nr_pixblock_release(&B);
 

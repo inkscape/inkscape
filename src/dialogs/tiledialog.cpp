@@ -49,10 +49,10 @@ sp_compare_x_position(SPItem *first, SPItem *second)
     using NR::X;
     using NR::Y;
 
-    NR::Rect const a = first->invokeBbox(sp_item_i2doc_affine(first));
+    NR::Rect const a = first->getBounds(sp_item_i2doc_affine(first));
     double const a_height = a.dimensions()[Y];
 
-    NR::Rect const b = second->invokeBbox(sp_item_i2doc_affine(second));
+    NR::Rect const b = second->getBounds(sp_item_i2doc_affine(second));
     double const b_height = b.dimensions()[Y];
     
     bool a_in_b_vert = false;
@@ -84,8 +84,8 @@ sp_compare_x_position(SPItem *first, SPItem *second)
 int
 sp_compare_y_position(SPItem *first, SPItem *second)
 {
-    NR::Rect const a = first->invokeBbox(sp_item_i2doc_affine(first));
-    NR::Rect const b = second->invokeBbox(sp_item_i2doc_affine(second));
+    NR::Rect const a = first->getBounds(sp_item_i2doc_affine(first));
+    NR::Rect const b = second->getBounds(sp_item_i2doc_affine(second));
 
     if (a.min()[NR::Y] > b.min()[NR::Y]) {
         return 1;
@@ -159,7 +159,7 @@ void TileDialog::Grid_Arrange ()
     cnt=0;
     for (; items != NULL; items = items->next) {
         SPItem *item = SP_ITEM(items->data);
-        NR::Rect const b = item->invokeBbox(sp_item_i2doc_affine(item));
+        NR::Rect const b = item->getBounds(sp_item_i2doc_affine(item));
         width = b.dimensions()[NR::X];
         height = b.dimensions()[NR::Y];
         cx = b.midpoint()[NR::X];
@@ -196,7 +196,7 @@ void TileDialog::Grid_Arrange ()
         const GSList *sizes = sorted;
         for (; sizes != NULL; sizes = sizes->next) {
             SPItem *item = SP_ITEM(sizes->data);
-            NR::Rect const b = item->invokeBbox(sp_item_i2doc_affine(item));
+            NR::Rect const b = item->getBounds(sp_item_i2doc_affine(item));
             width = b.dimensions()[NR::X];
             height = b.dimensions()[NR::Y];
             if (width > col_widths[(cnt % NoOfCols)]) {
@@ -300,7 +300,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
              for (; current_row != NULL; current_row = current_row->next) {
                  SPItem *item=SP_ITEM(current_row->data);
                  Inkscape::XML::Node *repr = SP_OBJECT_REPR(item);
-                 NR::Rect const b = item->invokeBbox(sp_item_i2doc_affine(item));
+                 NR::Rect const b = item->getBounds(sp_item_i2doc_affine(item));
                  width = b.dimensions()[NR::X];
                  height = b.dimensions()[NR::Y];
                  row = cnt / NoOfCols;
