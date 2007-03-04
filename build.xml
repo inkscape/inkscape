@@ -537,6 +537,7 @@
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
     <delete file="build.dep"/>
+    <delete file="config.h"/>
 
   </target>
 
