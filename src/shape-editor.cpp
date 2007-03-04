@@ -229,7 +229,11 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
     sp_nodepath_ensure_livarot_path(this->nodepath);
 
     NR::Maybe<Path::cut_position> position = get_nearest_position_on_Path(this->nodepath->livarot_path, this->curvepoint_doc);
-    NR::Point nearest = get_point_on_Path(this->nodepath->livarot_path, position.assume().piece, position.assume().t);
+    if (!position) {
+        return false;
+    }
+
+    NR::Point nearest = get_point_on_Path(this->nodepath->livarot_path, position->piece, position->t);
     NR::Point delta = nearest - this->curvepoint_doc;
 
     delta = desktop->d2w(delta);
@@ -248,8 +252,8 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
         this->curvepoint_event[NR::X] = (gint) event_p [NR::X];
         this->curvepoint_event[NR::Y] = (gint) event_p [NR::Y];
         this->hit = true;
-        this->grab_t = position.assume().t;
-        this->grab_node = position.assume().piece;
+        this->grab_t = position->t;
+        this->grab_node = position->piece;
     }
 
     return close;

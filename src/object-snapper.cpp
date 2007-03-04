@@ -131,7 +131,7 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
         if (o && o->t >= 0 && o->t <= 1) {
 
             /* Convert the nearest point back to desktop coordinates */
-            NR::Point const o_it = get_point_on_Path(livarot_path, o.assume().piece, o.assume().t);
+            NR::Point const o_it = get_point_on_Path(livarot_path, o->piece, o->t);
             NR::Point const o_dt = desktop->doc2dt(o_it * i2doc);
 
             NR::Coord const dist = NR::L2(o_dt - p);

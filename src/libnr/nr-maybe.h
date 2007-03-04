@@ -2,12 +2,9 @@
 #define __NR_MAYBE_H__
 
 /*
- * Functionalesque "Maybe" class
+ * Nullable values for C++
  *
- * Copyright 2004  MenTaLguY
- *
- * Authors:
- *   MenTaLguY <mental@rydia.net>
+ * Copyright 2004, 2006  MenTaLguY <mental@rydia.net>
  *
  * This code is licensed under the GNU GPL; see COPYING for more information.
  */
@@ -17,83 +14,137 @@
 #endif
 
 #include <stdexcept>
-#include <typeinfo>
 #include <string>
 
 namespace NR {
 
-/** An exception class for run-time type errors */
-template <typename T>
-class IsNot : public std::domain_error {
+class IsNothing : public std::domain_error {
 public:
-    IsNot() : domain_error(std::string("Is not ") + typeid(T).name()) {}
+    IsNothing() : domain_error(std::string("Is nothing")) {}
 };
 
 struct Nothing {};
 
 template <typename T>
-struct MaybeTraits;
-
-template <typename T>
 class Maybe {
 public:
-    typedef MaybeTraits<T> traits;
-    typedef typename traits::storage storage;
-    typedef typename traits::pointer pointer;
-    typedef typename traits::reference reference;
+    Maybe(Nothing) : _is_nothing(true), _t() {}
+    Maybe(T const &t) : _is_nothing(false), _t(t) {}
+    Maybe(Maybe const &m) : _is_nothing(m._is_nothing), _t(m._t) {}
 
-    Maybe(Nothing n) : _is_nothing(true), _t() {}
+    template <typename T2> Maybe(Maybe<T2> const &m)
+    : _is_nothing(m._is_nothing), _t(m._t) {}
 
-    Maybe(const Maybe<T> &m) : _is_nothing(m._is_nothing), _t(m._t) {}
+    template <typename T2> Maybe(T2 const &t)
+    : _is_nothing(false), _t(t) {};
 
-    template <typename T2>
-    Maybe(const Maybe<T2> &m)
-    : _is_nothing(m._is_nothing),
-      _t(traits::to_storage(MaybeTraits<T2>::from_storage(m._t))) {}
-
-    template <typename T2>
-    Maybe(T2 t) : _is_nothing(false), _t(traits::to_storage(t)) {}
-
-    bool isNothing() const { return _is_nothing; }
     operator bool() const { return !_is_nothing; }
 
-    reference assume() const throw(IsNot<T>) {
+    T const &operator*() const throw(IsNothing) {
         if (_is_nothing) {
-            throw IsNot<T>();
+            throw IsNothing();
         } else {
-            return traits::from_storage(_t);
+            return _t;
         }
     }
-    reference operator*() const throw(IsNot<T>) {
-        return assume();
+    T &operator*() throw(IsNothing) {
+        if (_is_nothing) {
+            throw IsNothing();
+        } else {
+            return _t;
+        }
     }
-    pointer operator->() const throw(IsNot<T>) {
-        return &assume();
+
+    T const *operator->() const throw(IsNothing) {
+        if (_is_nothing) {
+            throw IsNothing();
+        } else {
+            return &_t;
+        }
+    }
+    T *operator->() throw(IsNothing) {
+        if (_is_nothing) {
+            throw IsNothing();
+        } else {
+            return &_t;
+        }
     }
 
 private:
     bool _is_nothing;
-    storage _t;
-};
-
-/* traits classes used by Maybe */
-
-template <typename T>
-struct MaybeTraits {
-    typedef T const storage;
-    typedef T const *pointer;
-    typedef T const &reference;
-    static reference to_storage(reference t) { return t; }
-    static reference from_storage(reference t) { return t; }
+    T _t;
 };
 
 template <typename T>
-struct MaybeTraits<T&> {
-    typedef T *storage;
-    typedef T *pointer;
-    typedef T &reference;
-    static storage to_storage(reference t) { return &t; }
-    static reference from_storage(storage t) { return *t; }
+class Maybe<T const> {
+public:
+    Maybe(Nothing) : _is_nothing(true), _t() {}
+    Maybe(T const &t) : _is_nothing(false), _t(t) {}
+    Maybe(Maybe const &m) : _is_nothing(m._is_nothing), _t(m._t) {}
+
+    template <typename T2> Maybe(Maybe<T2> const &m)
+    : _is_nothing(m._is_nothing), _t(m._t) {}
+
+    template <typename T2> Maybe(T2 const &t)
+    : _is_nothing(false), _t(t) {};
+
+    operator bool() const { return !_is_nothing; }
+
+    T const &operator*() const throw(IsNothing) {
+        if (_is_nothing) {
+            throw IsNothing();
+        } else {
+            return _t;
+        }
+    }
+
+    T const *operator->() const throw(IsNothing) {
+        if (_is_nothing) {
+            throw IsNothing();
+        } else {
+            return &_t;
+        }
+    }
+
+private:
+    bool _is_nothing;
+    T const _t;
+};
+
+template <typename T>
+class Maybe<T &> {
+public:
+    Maybe(Nothing) : _is_nothing(true), _t() {}
+    Maybe(T &t) : _is_nothing(false), _t(t) {}
+    Maybe(Maybe const &m) : _is_nothing(m._is_nothing), _t(m._t) {}
+
+    template <typename T2> Maybe(Maybe<T2> const &m)
+    : _is_nothing(m._is_nothing), _t(m._t) {}
+
+    template <typename T2> Maybe(T2 &t)
+    : _is_nothing(false), _t(t) {};
+
+    operator bool() const { return !_is_nothing; }
+
+    T &operator*() const throw(IsNothing) {
+        if (_is_nothing) {
+            throw IsNothing();
+        } else {
+            return _t;
+        }
+    }
+
+    T *operator->() const throw(IsNothing) {
+        if (_is_nothing) {
+            throw IsNothing();
+        } else {
+            return &_t;
+        }
+    }
+
+private:
+    bool _is_nothing;
+    T &_t;
 };
 
 } /* namespace NR */
