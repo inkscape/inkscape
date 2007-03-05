@@ -114,25 +114,25 @@ num_parseFloat(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rva
 static JSBool
 num_parseInt(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
 {
-    JSString *str;
     jsint radix;
+    JSString *str;
     jsdouble d;
     const jschar *bp, *ep;
-
-    str = js_ValueToString(cx, argv[0]);
-    if (!str)
-        return JS_FALSE;
 
     if (argc > 1) {
         if (!js_ValueToECMAInt32(cx, argv[1], &radix))
             return JS_FALSE;
-    } else
+    } else {
         radix = 0;
-
+    }
     if (radix != 0 && (radix < 2 || radix > 36)) {
         *rval = DOUBLE_TO_JSVAL(cx->runtime->jsNaN);
         return JS_TRUE;
     }
+
+    str = js_ValueToString(cx, argv[0]);
+    if (!str)
+        return JS_FALSE;
     /* XXXbe js_strtointeger shouldn't require NUL termination */
     bp = js_UndependString(cx, str);
     if (!bp)
@@ -161,7 +161,7 @@ static JSFunctionSpec number_functions[] = {
     {0,0,0,0,0}
 };
 
-static JSClass number_class = {
+JSClass js_NumberClass = {
     "Number",
     JSCLASS_HAS_PRIVATE,
     JS_PropertyStub,  JS_PropertyStub,  JS_PropertyStub,  JS_PropertyStub,
@@ -201,7 +201,7 @@ num_toSource(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
     char buf[64];
     JSString *str;
 
-    if (!JS_InstanceOf(cx, obj, &number_class, argv))
+    if (!JS_InstanceOf(cx, obj, &js_NumberClass, argv))
         return JS_FALSE;
     v = OBJ_GET_SLOT(cx, obj, JSSLOT_PRIVATE);
     JS_ASSERT(JSVAL_IS_NUMBER(v));
@@ -211,7 +211,7 @@ num_toSource(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
         JS_ReportOutOfMemory(cx);
         return JS_FALSE;
     }
-    JS_snprintf(buf, sizeof buf, "(new %s(%s))", number_class.name, numStr);
+    JS_snprintf(buf, sizeof buf, "(new %s(%s))", js_NumberClass.name, numStr);
     str = JS_NewStringCopyZ(cx, buf);
     if (!str)
         return JS_FALSE;
@@ -256,7 +256,7 @@ num_toString(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
     jsint base;
     JSString *str;
 
-    if (!JS_InstanceOf(cx, obj, &number_class, argv))
+    if (!JS_InstanceOf(cx, obj, &js_NumberClass, argv))
         return JS_FALSE;
     v = OBJ_GET_SLOT(cx, obj, JSSLOT_PRIVATE);
     JS_ASSERT(JSVAL_IS_NUMBER(v));
@@ -385,7 +385,7 @@ num_toLocaleString(JSContext *cx, JSObject *obj, uintN argc,
 static JSBool
 num_valueOf(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
 {
-    if (!JS_InstanceOf(cx, obj, &number_class, argv))
+    if (!JS_InstanceOf(cx, obj, &js_NumberClass, argv))
         return JS_FALSE;
     *rval = OBJ_GET_SLOT(cx, obj, JSSLOT_PRIVATE);
     return JS_TRUE;
@@ -404,7 +404,7 @@ num_to(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval, JSDTo
     JSString *str;
     char buf[DTOSTR_VARIABLE_BUFFER_SIZE(MAX_PRECISION+1)], *numStr; /* Use MAX_PRECISION+1 because precisionOffset can be 1 */
 
-    if (!JS_InstanceOf(cx, obj, &number_class, argv))
+    if (!JS_InstanceOf(cx, obj, &js_NumberClass, argv))
         return JS_FALSE;
     v = OBJ_GET_SLOT(cx, obj, JSSLOT_PRIVATE);
     JS_ASSERT(JSVAL_IS_NUMBER(v));
@@ -505,6 +505,7 @@ static jsdouble NaN;
 
 
 #if (defined XP_WIN || defined XP_OS2) &&                                     \
+    !defined WINCE &&                                                         \
     !defined __MWERKS__ &&                                                    \
     (defined _M_IX86 ||                                                       \
      (defined __GNUC__ && !defined __MINGW32__))
@@ -537,27 +538,23 @@ js_InitRuntimeNumberState(JSContext *cx)
     u.s.hi = JSDOUBLE_HI32_EXPMASK | JSDOUBLE_HI32_MANTMASK;
     u.s.lo = 0xffffffff;
     number_constants[NC_NaN].dval = NaN = u.d;
-    rt->jsNaN = js_NewDouble(cx, NaN);
-    if (!rt->jsNaN || !js_LockGCThing(cx, rt->jsNaN))
+    rt->jsNaN = js_NewDouble(cx, NaN, GCF_LOCK);
+    if (!rt->jsNaN)
         return JS_FALSE;
 
     u.s.hi = JSDOUBLE_HI32_EXPMASK;
     u.s.lo = 0x00000000;
     number_constants[NC_POSITIVE_INFINITY].dval = u.d;
-    rt->jsPositiveInfinity = js_NewDouble(cx, u.d);
-    if (!rt->jsPositiveInfinity ||
-        !js_LockGCThing(cx, rt->jsPositiveInfinity)) {
+    rt->jsPositiveInfinity = js_NewDouble(cx, u.d, GCF_LOCK);
+    if (!rt->jsPositiveInfinity)
         return JS_FALSE;
-    }
 
     u.s.hi = JSDOUBLE_HI32_SIGNBIT | JSDOUBLE_HI32_EXPMASK;
     u.s.lo = 0x00000000;
     number_constants[NC_NEGATIVE_INFINITY].dval = u.d;
-    rt->jsNegativeInfinity = js_NewDouble(cx, u.d);
-    if (!rt->jsNegativeInfinity ||
-        !js_LockGCThing(cx, rt->jsNegativeInfinity)) {
+    rt->jsNegativeInfinity = js_NewDouble(cx, u.d, GCF_LOCK);
+    if (!rt->jsNegativeInfinity)
         return JS_FALSE;
-    }
 
     u.s.hi = 0;
     u.s.lo = 1;
@@ -605,7 +602,7 @@ js_InitNumberClass(JSContext *cx, JSObject *obj)
     if (!JS_DefineFunctions(cx, obj, number_functions))
         return NULL;
 
-    proto = JS_InitClass(cx, obj, NULL, &number_class, Number, 1,
+    proto = JS_InitClass(cx, obj, NULL, &js_NumberClass, Number, 1,
                          NULL, number_methods, NULL, NULL);
     if (!proto || !(ctor = JS_GetConstructor(cx, proto)))
         return NULL;
@@ -630,11 +627,11 @@ js_InitNumberClass(JSContext *cx, JSObject *obj)
 }
 
 jsdouble *
-js_NewDouble(JSContext *cx, jsdouble d)
+js_NewDouble(JSContext *cx, jsdouble d, uintN gcflag)
 {
     jsdouble *dp;
 
-    dp = (jsdouble *) js_AllocGCThing(cx, GCX_DOUBLE);
+    dp = (jsdouble *) js_NewGCThing(cx, gcflag | GCX_DOUBLE, sizeof(jsdouble));
     if (!dp)
         return NULL;
     *dp = d;
@@ -652,7 +649,7 @@ js_NewDoubleValue(JSContext *cx, jsdouble d, jsval *rval)
 {
     jsdouble *dp;
 
-    dp = js_NewDouble(cx, d);
+    dp = js_NewDouble(cx, d, 0);
     if (!dp)
         return JS_FALSE;
     *rval = DOUBLE_TO_JSVAL(dp);
@@ -679,7 +676,7 @@ js_NumberToObject(JSContext *cx, jsdouble d)
     JSObject *obj;
     jsval v;
 
-    obj = js_NewObject(cx, &number_class, NULL, NULL);
+    obj = js_NewObject(cx, &js_NumberClass, NULL, NULL);
     if (!obj)
         return NULL;
     if (!js_NewNumberValue(cx, d, &v)) {

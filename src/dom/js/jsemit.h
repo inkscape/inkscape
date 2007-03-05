@@ -112,6 +112,7 @@ struct JSTreeContext {              /* tree context for semantic checks */
 #define TCF_FUN_USES_NONLOCALS 0x40 /* function refers to non-local names */
 #define TCF_FUN_HEAVYWEIGHT    0x80 /* function needs Call object per call */
 #define TCF_FUN_FLAGS          0xE0 /* flags to propagate from FunctionBody */
+#define TCF_HAS_DEFXMLNS      0x100 /* default xml namespace = ...; parsed */
 
 #define TREE_CONTEXT_INIT(tc)                                                 \
     ((tc)->flags = (tc)->numGlobalVars = 0,                                   \
@@ -172,19 +173,26 @@ struct JSJumpTarget {
 #define JT_TO_BPDELTA(jt)       ((ptrdiff_t)((jsword)(jt) >> JT_UNTAG_SHIFT))
 
 #define SD_SET_TARGET(sd,jt)    ((sd)->target = JT_SET_TAG(jt))
+#define SD_GET_TARGET(sd)       (JS_ASSERT(JT_HAS_TAG((sd)->target)),         \
+                                 JT_CLR_TAG((sd)->target))
 #define SD_SET_BPDELTA(sd,bp)   ((sd)->target = BPDELTA_TO_JT(bp))
 #define SD_GET_BPDELTA(sd)      (JS_ASSERT(!JT_HAS_TAG((sd)->target)),        \
                                  JT_TO_BPDELTA((sd)->target))
-#define SD_TARGET_OFFSET(sd)    (JS_ASSERT(JT_HAS_TAG((sd)->target)),         \
-                                 JT_CLR_TAG((sd)->target)->offset)
+
+/* Avoid asserting twice by expanding SD_GET_TARGET in the "then" clause. */
+#define SD_SPAN(sd,pivot)       (SD_GET_TARGET(sd)                            \
+                                 ? JT_CLR_TAG((sd)->target)->offset - (pivot) \
+                                 : 0)
 
 struct JSCodeGenerator {
     JSTreeContext   treeContext;    /* base state: statement info stack, etc. */
+
     JSArenaPool     *codePool;      /* pointer to thread code arena pool */
     JSArenaPool     *notePool;      /* pointer to thread srcnote arena pool */
     void            *codeMark;      /* low watermark in cg->codePool */
     void            *noteMark;      /* low watermark in cg->notePool */
     void            *tempMark;      /* low watermark in cx->tempPool */
+
     struct {
         jsbytecode  *base;          /* base of JS bytecode vector */
         jsbytecode  *limit;         /* one byte beyond end of bytecode */
@@ -195,20 +203,27 @@ struct JSCodeGenerator {
         ptrdiff_t   lastNoteOffset; /* code offset for last source note */
         uintN       currentLine;    /* line number for tree-based srcnote gen */
     } prolog, main, *current;
+
     const char      *filename;      /* null or weak link to source filename */
     uintN           firstLine;      /* first line, for js_NewScriptFromCG */
     JSPrincipals    *principals;    /* principals for constant folding eval */
     JSAtomList      atomList;       /* literals indexed for mapping */
+
     intN            stackDepth;     /* current stack depth in script frame */
     uintN           maxStackDepth;  /* maximum stack depth so far */
+
     JSTryNote       *tryBase;       /* first exception handling note */
     JSTryNote       *tryNext;       /* next available note */
     size_t          tryNoteSpace;   /* # of bytes allocated at tryBase */
+
     JSSpanDep       *spanDeps;      /* span dependent instruction records */
     JSJumpTarget    *jumpTargets;   /* AVL tree of jump target offsets */
     JSJumpTarget    *jtFreeList;    /* JT_LEFT-linked list of free structs */
     uintN           numSpanDeps;    /* number of span dependencies */
     uintN           numJumpTargets; /* number of jump targets */
+    ptrdiff_t       spanDepTodo;    /* offset from main.base of potentially
+                                       unoptimized spandeps */
+
     uintN           emitLevel;      /* js_EmitTree recursion level */
     JSAtomList      constList;      /* compile time constants */
     JSCodeGenerator *parent;        /* Enclosing function or global context */
@@ -391,13 +406,16 @@ typedef enum JSSrcNoteType {
                                    also used on JSOP_ENDINIT if extra comma
                                    at end of array literal: [1,2,,] */
     SRC_VAR         = 6,        /* JSOP_NAME/SETNAME/FORNAME in a var decl */
-    SRC_PCDELTA     = 7,        /* offset from comma-operator to next POP,
-                                   or from CONDSWITCH to first CASE opcode */
+    SRC_PCDELTA     = 7,        /* distance from comma-operator to next POP,
+                                   or from CONDSWITCH to first CASE opcode --
+                                   or SRC_PCBASE variant for obj.function::foo
+                                   gets and sets */
     SRC_ASSIGNOP    = 8,        /* += or another assign-op follows */
     SRC_COND        = 9,        /* JSOP_IFEQ is from conditional ?: operator */
     SRC_RESERVED0   = 10,       /* reserved for future use */
     SRC_HIDDEN      = 11,       /* opcode shouldn't be decompiled */
-    SRC_PCBASE      = 12,       /* offset of first obj.prop.subprop bytecode */
+    SRC_PCBASE      = 12,       /* distance back from annotated get- or setprop
+                                   op to first obj.prop.subprop bytecode */
     SRC_LABEL       = 13,       /* JSOP_NOP for label: with atomid immediate */
     SRC_LABELBRACE  = 14,       /* JSOP_NOP for label: {...} begin brace */
     SRC_ENDBRACE    = 15,       /* JSOP_NOP for label: {...} end brace */

@@ -50,8 +50,8 @@ JS_BEGIN_EXTERN_C
 /*
  * Exception handling runtime information.
  *
- * All fields except length are code offsets, relative to the beginning of
- * the script.  If script->trynotes is not null, it points to a vector of
+ * All fields except length are code offsets relative to the main entry point
+ * of the script.  If script->trynotes is not null, it points to a vector of
  * these structs terminated by one with catchStart == 0.
  */
 struct JSTryNote {
@@ -102,17 +102,44 @@ extern JS_FRIEND_DATA(JSClass) js_ScriptClass;
 extern JSObject *
 js_InitScriptClass(JSContext *cx, JSObject *obj);
 
+/*
+ * On first new context in rt, initialize script runtime state, specifically
+ * the script filename table and its lock.
+ */
 extern JSBool
-js_InitRuntimeScriptState(JSContext *cx);
+js_InitRuntimeScriptState(JSRuntime *rt);
 
+/*
+ * On last context destroy for rt, if script filenames are all GC'd, free the
+ * script filename table and its lock.
+ */
 extern void
-js_FinishRuntimeScriptState(JSContext *cx);
+js_FinishRuntimeScriptState(JSRuntime *rt);
+
+/*
+ * On JS_DestroyRuntime(rt), forcibly free script filename prefixes and any
+ * script filename table entries that have not been GC'd, the latter using
+ * js_FinishRuntimeScriptState.
+ *
+ * This allows script filename prefixes to outlive any context in rt.
+ */
+extern void
+js_FreeRuntimeScriptState(JSRuntime *rt);
 
 extern const char *
 js_SaveScriptFilename(JSContext *cx, const char *filename);
 
+extern const char *
+js_SaveScriptFilenameRT(JSRuntime *rt, const char *filename, uint32 flags);
+
+extern uint32
+js_GetScriptFilenameFlags(const char *filename);
+
 extern void
 js_MarkScriptFilename(const char *filename);
+
+extern void
+js_MarkScriptFilenames(JSRuntime *rt, uintN gcflags);
 
 extern void
 js_SweepScriptFilenames(JSRuntime *rt);
@@ -143,6 +170,9 @@ js_NewScriptFromCG(JSContext *cx, JSCodeGenerator *cg, JSFunction *fun);
 extern JS_FRIEND_API(void)
 js_CallNewScriptHook(JSContext *cx, JSScript *script, JSFunction *fun);
 
+extern JS_FRIEND_API(void)
+js_CallDestroyScriptHook(JSContext *cx, JSScript *script);
+
 extern void
 js_DestroyScript(JSContext *cx, JSScript *script);
 
@@ -159,7 +189,7 @@ js_PCToLineNumber(JSContext *cx, JSScript *script, jsbytecode *pc);
 extern jsbytecode *
 js_LineNumberToPC(JSScript *script, uintN lineno);
 
-extern uintN
+extern JS_FRIEND_API(uintN)
 js_GetScriptLineExtent(JSScript *script);
 
 /*

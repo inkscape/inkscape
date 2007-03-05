@@ -58,11 +58,13 @@ JS_BEGIN_EXTERN_C
 #define ATOM_PINNED     0x01            /* atom is pinned against GC */
 #define ATOM_INTERNED   0x02            /* pinned variant for JS_Intern* API */
 #define ATOM_MARK       0x04            /* atom is reachable via GC */
+#define ATOM_HIDDEN     0x08            /* atom is in special hidden subspace */
 #define ATOM_NOCOPY     0x40            /* don't copy atom string bytes */
 #define ATOM_TMPSTR     0x80            /* internal, to avoid extra string */
 
 struct JSAtom {
-    JSHashEntry         entry;          /* key is jsval, value keyword info */
+    JSHashEntry         entry;          /* key is jsval, value keyword info or
+                                           unhidden atom if ATOM_HIDDEN */
     uint32              flags;          /* pinned, interned, and mark flags */
     jsatomid            number;         /* atom serial number and hash code */
 };
@@ -95,14 +97,14 @@ struct JSAtomListElement {
 };
 
 #define ALE_ATOM(ale)   ((JSAtom *) (ale)->entry.key)
-#define ALE_INDEX(ale)  ((jsatomid) (ale)->entry.value)
+#define ALE_INDEX(ale)  ((jsatomid) JS_PTR_TO_UINT32((ale)->entry.value))
 #define ALE_JSOP(ale)   ((JSOp) (ale)->entry.value)
 #define ALE_VALUE(ale)  ((jsval) (ale)->entry.value)
 #define ALE_NEXT(ale)   ((JSAtomListElement *) (ale)->entry.next)
 
 #define ALE_SET_ATOM(ale,atom)  ((ale)->entry.key = (const void *)(atom))
-#define ALE_SET_INDEX(ale,index)((ale)->entry.value = (void *)(index))
-#define ALE_SET_JSOP(ale,op)    ((ale)->entry.value = (void *)(op))
+#define ALE_SET_INDEX(ale,index)((ale)->entry.value = JS_UINT32_TO_PTR(index))
+#define ALE_SET_JSOP(ale,op)    ((ale)->entry.value = JS_UINT32_TO_PTR(op))
 #define ALE_SET_VALUE(ale,val)  ((ale)->entry.value = (JSHashEntry *)(val))
 #define ALE_SET_NEXT(ale,link)  ((ale)->entry.next = (JSHashEntry *)(link))
 
@@ -153,6 +155,9 @@ struct JSAtomState {
     jsatomid            number;         /* one beyond greatest atom number */
     jsatomid            liveAtoms;      /* number of live atoms after last GC */
 
+    /* The rt->emptyString atom, see jsstr.c's js_InitRuntimeStringState. */
+    JSAtom              *emptyAtom;
+
     /* Type names and value literals. */
     JSAtom              *typeAtoms[JSTYPE_LIMIT];
     JSAtom              *booleanAtoms[2];
@@ -167,11 +172,15 @@ struct JSAtomState {
     JSAtom              *ErrorAtom;
     JSAtom              *FunctionAtom;
     JSAtom              *MathAtom;
+    JSAtom              *NamespaceAtom;
     JSAtom              *NumberAtom;
     JSAtom              *ObjectAtom;
+    JSAtom              *QNameAtom;
     JSAtom              *RegExpAtom;
     JSAtom              *ScriptAtom;
     JSAtom              *StringAtom;
+    JSAtom              *XMLAtom;
+    JSAtom              *FileAtom;
     JSAtom              *anonymousAtom;
     JSAtom              *argumentsAtom;
     JSAtom              *arityAtom;
@@ -180,6 +189,8 @@ struct JSAtomState {
     JSAtom              *classPrototypeAtom;
     JSAtom              *constructorAtom;
     JSAtom              *countAtom;
+    JSAtom              *eachAtom;
+    JSAtom              *etagoAtom;
     JSAtom              *evalAtom;
     JSAtom              *getAtom;
     JSAtom              *getterAtom;
@@ -187,18 +198,29 @@ struct JSAtomState {
     JSAtom              *inputAtom;
     JSAtom              *lengthAtom;
     JSAtom              *nameAtom;
+    JSAtom              *namespaceAtom;
     JSAtom              *noSuchMethodAtom;
     JSAtom              *parentAtom;
     JSAtom              *protoAtom;
+    JSAtom              *ptagcAtom;
+    JSAtom              *qualifierAtom;
     JSAtom              *setAtom;
     JSAtom              *setterAtom;
+    JSAtom              *spaceAtom;
+    JSAtom              *stagoAtom;
+    JSAtom              *starAtom;
+    JSAtom              *starQualifierAtom;
+    JSAtom              *tagcAtom;
     JSAtom              *toLocaleStringAtom;
     JSAtom              *toSourceAtom;
     JSAtom              *toStringAtom;
     JSAtom              *valueOfAtom;
+    JSAtom              *xmlAtom;
 
     /* Less frequently used atoms, pinned lazily by JS_ResolveStandardClass. */
     struct {
+        JSAtom          *AnyNameAtom;
+        JSAtom          *AttributeNameAtom;
         JSAtom          *EvalErrorAtom;
         JSAtom          *InfinityAtom;
         JSAtom          *InternalErrorAtom;
@@ -208,6 +230,7 @@ struct JSAtomState {
         JSAtom          *SyntaxErrorAtom;
         JSAtom          *TypeErrorAtom;
         JSAtom          *URIErrorAtom;
+        JSAtom          *XMLListAtom;
         JSAtom          *decodeURIAtom;
         JSAtom          *decodeURIComponentAtom;
         JSAtom          *defineGetterAtom;
@@ -215,10 +238,12 @@ struct JSAtomState {
         JSAtom          *encodeURIAtom;
         JSAtom          *encodeURIComponentAtom;
         JSAtom          *escapeAtom;
+        JSAtom          *functionNamespaceURIAtom;
         JSAtom          *hasOwnPropertyAtom;
         JSAtom          *isFiniteAtom;
         JSAtom          *isNaNAtom;
         JSAtom          *isPrototypeOfAtom;
+        JSAtom          *isXMLNameAtom;
         JSAtom          *lookupGetterAtom;
         JSAtom          *lookupSetterAtom;
         JSAtom          *parseFloatAtom;
@@ -254,11 +279,15 @@ extern const char   js_Call_str[];
 extern const char   js_Date_str[];
 extern const char   js_Function_str[];
 extern const char   js_Math_str[];
+extern const char   js_Namespace_str[];
 extern const char   js_Number_str[];
 extern const char   js_Object_str[];
+extern const char   js_QName_str[];
 extern const char   js_RegExp_str[];
 extern const char   js_Script_str[];
 extern const char   js_String_str[];
+extern const char   js_XML_str[];
+extern const char   js_File_str[];
 extern const char   js_anonymous_str[];
 extern const char   js_arguments_str[];
 extern const char   js_arity_str[];
@@ -267,6 +296,8 @@ extern const char   js_caller_str[];
 extern const char   js_class_prototype_str[];
 extern const char   js_constructor_str[];
 extern const char   js_count_str[];
+extern const char   js_etago_str[];
+extern const char   js_each_str[];
 extern const char   js_eval_str[];
 extern const char   js_getter_str[];
 extern const char   js_get_str[];
@@ -274,15 +305,26 @@ extern const char   js_index_str[];
 extern const char   js_input_str[];
 extern const char   js_length_str[];
 extern const char   js_name_str[];
+extern const char   js_namespace_str[];
 extern const char   js_noSuchMethod_str[];
+extern const char   js_object_str[];
 extern const char   js_parent_str[];
+extern const char   js_private_str[];
 extern const char   js_proto_str[];
+extern const char   js_ptagc_str[];
+extern const char   js_qualifier_str[];
 extern const char   js_setter_str[];
 extern const char   js_set_str[];
+extern const char   js_space_str[];
+extern const char   js_stago_str[];
+extern const char   js_star_str[];
+extern const char   js_starQualifier_str[];
+extern const char   js_tagc_str[];
 extern const char   js_toSource_str[];
 extern const char   js_toString_str[];
 extern const char   js_toLocaleString_str[];
 extern const char   js_valueOf_str[];
+extern const char   js_xml_str[];
 
 #ifdef NARCISSUS
 extern const char   js_call_str[];

@@ -98,7 +98,7 @@ InitMinimalScope(JSScope *scope)
 }
 
 static JSBool
-CreateScopeTable(JSScope *scope)
+CreateScopeTable(JSContext *cx, JSScope *scope, JSBool report)
 {
     int sizeLog2;
     JSScopeProperty *sprop, **spp;
@@ -120,8 +120,14 @@ CreateScopeTable(JSScope *scope)
 
     scope->table = (JSScopeProperty **)
         calloc(JS_BIT(sizeLog2), sizeof(JSScopeProperty *));
-    if (!scope->table)
+    if (!scope->table) {
+        if (report)
+            JS_ReportOutOfMemory(cx);
         return JS_FALSE;
+    }
+
+    /* Racy update after calloc, to help keep the GC self-scheduled well. */
+    cx->runtime->gcMallocBytes += JS_BIT(sizeLog2) * sizeof(JSScopeProperty *);
 
     scope->hashShift = JS_DHASH_BITS - sizeLog2;
     for (sprop = scope->lastProp; sprop; sprop = sprop->parent) {
@@ -144,6 +150,7 @@ js_NewScope(JSContext *cx, jsrefcount nrefs, JSObjectOps *ops, JSClass *clasp,
     js_InitObjectMap(&scope->map, nrefs, ops, clasp);
     scope->object = obj;
     scope->flags = 0;
+    scope->dswIndex = 0;
     InitMinimalScope(scope);
 
 #ifdef JS_THREADSAFE
@@ -347,6 +354,9 @@ ChangeScope(JSContext *cx, JSScope *scope, int change)
     oldtable = scope->table;
     scope->table = table;
 
+    /* Treat the above calloc as a JS_malloc, to match CreateScopeTable. */
+    cx->runtime->gcMallocBytes += nbytes;
+
     /* Copy only live entries, leaving removed and free ones behind. */
     for (oldspp = oldtable; oldsize != 0; oldspp++) {
         sprop = SPROP_FETCH(oldspp);
@@ -528,7 +538,7 @@ DestroyPropTreeKidsChunk(JSRuntime *rt, PropTreeKidsChunk *chunk)
 /* NB: Called with the runtime lock held. */
 static JSBool
 InsertPropertyTreeChild(JSRuntime *rt, JSScopeProperty *parent,
-                        JSScopeProperty *child)
+                        JSScopeProperty *child, PropTreeKidsChunk *sweptChunk)
 {
     JSPropertyTreeEntry *entry;
     JSScopeProperty **childp, *kids, *sprop;
@@ -594,9 +604,13 @@ InsertPropertyTreeChild(JSRuntime *rt, JSScopeProperty *parent,
                     chunkp = &chunk->next;
                 } while ((chunk = *chunkp) != NULL);
 
-                chunk = NewPropTreeKidsChunk(rt);
-                if (!chunk)
-                    return JS_FALSE;
+                if (sweptChunk) {
+                    chunk = sweptChunk;
+                } else {
+                    chunk = NewPropTreeKidsChunk(rt);
+                    if (!chunk)
+                        return JS_FALSE;
+                }
                 *chunkp = chunk;
                 childp = &chunk->kids[0];
             } else {
@@ -776,7 +790,7 @@ GetPropertyTreeChild(JSContext *cx, JSScopeProperty *parent,
     if (!parent) {
         entry->child = sprop;
     } else {
-        if (!InsertPropertyTreeChild(rt, parent, sprop))
+        if (!InsertPropertyTreeChild(rt, parent, sprop, NULL))
             goto out_of_memory;
     }
 
@@ -967,10 +981,8 @@ js_AddScopeProperty(JSContext *cx, JSScope *scope, jsid id,
                  * delete code is simple-minded that way!
                  */
                 if (!scope->table) {
-                    if (!CreateScopeTable(scope)) {
-                        JS_ReportOutOfMemory(cx);
+                    if (!CreateScopeTable(cx, scope, JS_TRUE))
                         return NULL;
-                    }
                     spp = js_SearchScope(scope, id, JS_TRUE);
                     sprop = overwriting = SPROP_FETCH(spp);
                 }
@@ -1166,7 +1178,7 @@ js_AddScopeProperty(JSContext *cx, JSScope *scope, jsid id,
          * entry count just reached the threshold.
          */
         if (!scope->table && scope->entryCount >= SCOPE_HASH_THRESHOLD)
-            (void) CreateScopeTable(scope);
+            (void) CreateScopeTable(cx, scope, JS_FALSE);
     }
 
     METER(adds);
@@ -1308,10 +1320,8 @@ js_RemoveScopeProperty(JSContext *cx, JSScope *scope, jsid id)
 
     /* Convert from a list to a hash so we can handle "middle deletes". */
     if (!scope->table && sprop != scope->lastProp) {
-        if (!CreateScopeTable(scope)) {
-            JS_ReportOutOfMemory(cx);
+        if (!CreateScopeTable(cx, scope, JS_TRUE))
             return JS_FALSE;
-        }
         spp = js_SearchScope(scope, id, JS_FALSE);
         stored = *spp;
         sprop = SPROP_CLEAR_COLLISION(stored);
@@ -1445,10 +1455,12 @@ DumpSubtree(JSScopeProperty *sprop, int level, FILE *fp)
 
     fprintf(fp, "%*sid %s g/s %p/%p slot %lu attrs %x flags %x shortid %d\n",
             level, "",
-            JSVAL_IS_INT(sprop->id)
-            ? (JS_snprintf(buf, sizeof buf, "%ld", JSVAL_TO_INT(sprop->id)),
+            JSID_IS_ATOM(sprop->id)
+            ? JS_GetStringBytes(ATOM_TO_STRING(JSID_TO_ATOM(sprop->id)))
+            : JSID_IS_OBJECT(sprop->id)
+            ? js_ValueToPrintableString(cx, OBJECT_JSID_TO_JSVAL(sprop->id))
+            : (JS_snprintf(buf, sizeof buf, "%ld", JSVAL_TO_INT(sprop->id)),
                buf)
-            : JS_GetStringBytes(ATOM_TO_STRING((JSAtom *) sprop->id)),
             (void *) sprop->getter, (void *) sprop->setter,
             (unsigned long) sprop->slot, sprop->attrs, sprop->flags,
             sprop->shortid);
@@ -1546,27 +1558,78 @@ js_SweepScopeProperties(JSRuntime *rt)
             /* Ok, sprop is garbage to collect: unlink it from its parent. */
             RemovePropertyTreeChild(rt, sprop);
 
-            /* Take care to reparent all sprop's kids to their grandparent. */
+            /*
+             * Take care to reparent all sprop's kids to their grandparent.
+             * InsertPropertyTreeChild can potentially fail for two reasons:
+             *
+             * 1. If parent is null, insertion into the root property hash
+             *    table may fail. We are forced to leave the kid out of the
+             *    table (as can already happen with duplicates) but ensure
+             *    that the kid's parent pointer is set to null.
+             *
+             * 2. If parent is non-null, allocation of a new KidsChunk can
+             *    fail. To prevent this from happening, we allow sprops's own
+             *    chunks to be reused by the grandparent, which removes the
+             *    need for InsertPropertyTreeChild to malloc a new KidsChunk.
+             *
+             * We also require the grandparent to have either no kids or else
+             * chunky kids. A single non-chunky kid would force a new chunk to
+             * be malloced in some cases (if sprop had a single non-chunky
+             * kid, or a multiple of MAX_KIDS_PER_CHUNK kids). Note that
+             * RemovePropertyTreeChild never converts a single entry chunky
+             * kid back to a non-chunky kid, so we are assured of correct
+             * behaviour.
+             */
             kids = sprop->kids;
             if (kids) {
                 sprop->kids = NULL;
                 parent = sprop->parent;
+                /* Validate that grandparent has no kids or chunky kids. */
+                JS_ASSERT(!parent || !parent->kids ||
+                          KIDS_IS_CHUNKY(parent->kids));
                 if (KIDS_IS_CHUNKY(kids)) {
                     chunk = KIDS_TO_CHUNK(kids);
                     do {
+                        nextChunk = chunk->next;
+                        chunk->next = NULL;
                         for (i = 0; i < MAX_KIDS_PER_CHUNK; i++) {
                             kid = chunk->kids[i];
                             if (!kid)
                                 break;
                             JS_ASSERT(kid->parent == sprop);
-                            InsertPropertyTreeChild(rt, parent, kid);
+
+                            /*
+                             * Clear a space in the kids array for possible
+                             * re-use by InsertPropertyTreeChild.
+                             */
+                            chunk->kids[i] = NULL;
+                            if (!InsertPropertyTreeChild(rt, parent, kid,
+                                                         chunk)) {
+                                /*
+                                 * This can happen only if we failed to add an
+                                 * entry to the root property hash table.
+                                 */
+                                JS_ASSERT(!parent);
+                                kid->parent = NULL;
+                            }
                         }
-                        nextChunk = chunk->next;
-                        DestroyPropTreeKidsChunk(rt, chunk);
+                        if (!chunk->kids[0]) {
+                            /* The chunk wasn't reused so we can free it */
+                            DestroyPropTreeKidsChunk(rt, chunk);
+                        }
                     } while ((chunk = nextChunk) != NULL);
                 } else {
                     kid = kids;
-                    InsertPropertyTreeChild(rt, parent, kid);
+                    if (!InsertPropertyTreeChild(rt, parent, kid, NULL)) {
+                        /*
+                         * The removal of sprop should have left a free space
+                         * for kid to be inserted into parent, unless the root
+                         * hash table was shrunk. In this case we allow for
+                         * failure only when parent is null.
+                         */
+                        JS_ASSERT(!parent);
+                        kid->parent = NULL;
+                    }
                 }
             }
 

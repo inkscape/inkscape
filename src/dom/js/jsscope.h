@@ -99,7 +99,7 @@
  * that order; and to finish the fork, we'd add a node labeled Z with the path
  * X->Z, if it doesn't exist.  This could lead to lots of extra nodes, and to
  * O(n^2) growth when deleting lots of properties.
- * 
+ *
  * Rather, for O(1) growth all around, we should share the path X->Y->Z among
  * scopes having those three properties added in that order, and among scopes
  * having only X->Z where Y was deleted.  All such scopes have a lastProp that
@@ -201,8 +201,9 @@
 struct JSScope {
     JSObjectMap     map;                /* base class state */
     JSObject        *object;            /* object that owns this scope */
-    uint16          flags;              /* flags, see below */
-    int16           hashShift;          /* multiplicative hash shift */
+    uint8           flags;              /* flags, see below */
+    int8            hashShift;          /* multiplicative hash shift */
+    uint16          dswIndex;           /* Deutsch-Schorr-Waite scaled index */
     uint32          entryCount;         /* number of entries in table */
     uint32          removedCount;       /* removed entry sentinels in table */
     JSScopeProperty **table;            /* table of ptrs to shared tree nodes */
@@ -290,6 +291,8 @@ struct JSScopeProperty {
 #define SPROP_IS_DUPLICATE              0x02
 #define SPROP_IS_ALIAS                  0x04
 #define SPROP_HAS_SHORTID               0x08
+#define SPROP_IS_HIDDEN                 0x10    /* a normally-hidden property,
+                                                   e.g., function arg or var */
 
 /*
  * If SPROP_HAS_SHORTID is set in sprop->flags, we use sprop->shortid rather
@@ -345,10 +348,12 @@ js_NewScope(JSContext *cx, jsrefcount nrefs, JSObjectOps *ops, JSClass *clasp,
 extern void
 js_DestroyScope(JSContext *cx, JSScope *scope);
 
-#define ID_TO_VALUE(id) (((id) & JSVAL_INT) ? id : ATOM_KEY((JSAtom *)(id)))
-#define HASH_ID(id)     (((id) & JSVAL_INT)                                   \
-                         ? (jsatomid) JSVAL_TO_INT(id)                        \
-                         : ((JSAtom *)id)->number)
+#define ID_TO_VALUE(id) (JSID_IS_ATOM(id) ? ATOM_JSID_TO_JSVAL(id) :          \
+                         JSID_IS_OBJECT(id) ? OBJECT_JSID_TO_JSVAL(id) :      \
+                         (jsval)(id))
+#define HASH_ID(id)     (JSID_IS_ATOM(id) ? JSID_TO_ATOM(id)->number :        \
+                         JSID_IS_OBJECT(id) ? (jsatomid) JSID_CLRTAG(id) :    \
+                         (jsatomid) JSID_TO_INT(id))
 
 extern JS_FRIEND_API(JSScopeProperty **)
 js_SearchScope(JSScope *scope, jsid id, JSBool adding);

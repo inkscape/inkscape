@@ -72,6 +72,7 @@ struct JSStackFrame {
     JSObject        *sharpArray;    /* scope for #n= initializer vars */
     uint32          flags;          /* frame flags -- see below */
     JSStackFrame    *dormantNext;   /* next dormant frame chain */
+    JSObject        *xmlNamespace;  /* null or default xml namespace in E4X */
 };
 
 typedef struct JSInlineFrame {
@@ -93,7 +94,8 @@ typedef struct JSInlineFrame {
 #define JSFRAME_SPECIAL       0x30  /* special evaluation frame flags */
 #define JSFRAME_COMPILING     0x40  /* frame is being used by compiler */
 #define JSFRAME_COMPILE_N_GO  0x80  /* compiler-and-go mode, can optimize name
-                                       references based on scope chain */ 
+                                       references based on scope chain */
+#define JSFRAME_SCRIPT_OBJECT 0x100 /* compiling source for a Script object */
 
 #define JSFRAME_OVERRIDE_SHIFT 24   /* override bit-set params; see jsfun.c */
 #define JSFRAME_OVERRIDE_BITS  8
@@ -255,8 +257,23 @@ extern void         js_DumpCallTable(JSContext *cx);
 #endif
 
 /*
+ * Compute the 'this' parameter and store it in frame as frame.thisp.
+ * Activation objects ("Call" objects not created with "new Call()", i.e.,
+ * "Call" objects that have private data) may not be referred to by 'this',
+ * as dictated by ECMA.
+ *
+ * N.B.: fp->argv must be set, fp->argv[-1] the nominal 'this' paramter as
+ * a jsval, and fp->argv[-2] must be the callee object reference, usually a
+ * function object.  Also, fp->flags must contain JSFRAME_CONSTRUCTING if we
+ * are preparing for a constructor call.
+ */
+extern JSBool
+js_ComputeThis(JSContext *cx, JSObject *thisp, JSStackFrame *fp);
+
+/*
  * NB: js_Invoke requires that cx is currently running JS (i.e., that cx->fp
- * is non-null).
+ * is non-null), and that the callee, |this| parameter, and actual arguments
+ * are already pushed on the stack under cx->fp->sp.
  */
 extern JS_FRIEND_API(JSBool)
 js_Invoke(JSContext *cx, uintN argc, uintN flags);
@@ -295,7 +312,10 @@ js_CheckRedeclaration(JSContext *cx, JSObject *obj, jsid id, uintN attrs,
                       JSObject **objp, JSProperty **propp);
 
 extern JSBool
-js_Interpret(JSContext *cx, jsval *result);
+js_StrictlyEqual(jsval lval, jsval rval);
+
+extern JSBool
+js_Interpret(JSContext *cx, jsbytecode *pc, jsval *result);
 
 JS_END_EXTERN_C
 

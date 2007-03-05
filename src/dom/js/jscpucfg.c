@@ -49,37 +49,35 @@
 #define INT64 PRInt64
 #else
 
-#ifdef __MWERKS__
-#define XP_MAC 1
-#endif
-
 /************************************************************************/
 
 /* Generate cpucfg.h */
-#ifdef XP_MAC
-#include <Types.h>
-#define INT64	UnsignedWide
-#else
+
 #if defined(XP_WIN) || defined(XP_OS2)
 #ifdef WIN32
 #if defined(__GNUC__)
 #define INT64   long long
 #else
-#define INT64	_int64
+#define INT64   _int64
 #endif /* __GNUC__ */
 #else
-#define INT64	long
+#define INT64   long
 #endif
 #else
 #if defined(HPUX) || defined(__QNX__) || defined(_SCO_DS) || defined(UNIXWARE)
-#define INT64	long
+#define INT64   long
 #else
-#define INT64	long long
-#endif
+#define INT64   long long
 #endif
 #endif
 
 #endif /* CROSS_COMPILE */
+
+#ifdef __GNUC__
+#define NS_NEVER_INLINE __attribute__((noinline))
+#else
+#define NS_NEVER_INLINE
+#endif
 
 typedef void *prword;
 
@@ -102,7 +100,7 @@ struct align_int64 {
 struct align_fakelonglong {
     char c;
     struct {
-	long hi, lo;
+        long hi, lo;
     } a;
 };
 struct align_float {
@@ -132,17 +130,17 @@ static int Log2(unsigned int n)
     int log2 = 0;
 
     if (n & (n-1))
-	log2++;
+        log2++;
     if (n >> 16)
-	log2 += 16, n >>= 16;
+        log2 += 16, n >>= 16;
     if (n >> 8)
-	log2 += 8, n >>= 8;
+        log2 += 8, n >>= 8;
     if (n >> 4)
-	log2 += 4, n >>= 4;
+        log2 += 4, n >>= 4;
     if (n >> 2)
-	log2 += 2, n >>= 2;
+        log2 += 2, n >>= 2;
     if (n >> 1)
-	log2++;
+        log2++;
     return log2;
 }
 
@@ -156,7 +154,7 @@ static void BitsPerByte(void)
     bpb = 8;
 }
 
-static int StackGrowthDirection(int *dummy1addr)
+static int NS_NEVER_INLINE StackGrowthDirection(int *dummy1addr)
 {
     int dummy2;
 
@@ -190,26 +188,26 @@ int main(int argc, char **argv)
 #error "Endianess not defined."
 #endif
 
-    sizeof_char		= PR_BYTES_PER_BYTE;
-    sizeof_short	= PR_BYTES_PER_SHORT;
-    sizeof_int		= PR_BYTES_PER_INT;
-    sizeof_int64	= PR_BYTES_PER_INT64;
-    sizeof_long		= PR_BYTES_PER_LONG;
-    sizeof_float	= PR_BYTES_PER_FLOAT;
-    sizeof_double	= PR_BYTES_PER_DOUBLE;
-    sizeof_word		= PR_BYTES_PER_WORD;
-    sizeof_dword	= PR_BYTES_PER_DWORD;
+    sizeof_char         = PR_BYTES_PER_BYTE;
+    sizeof_short        = PR_BYTES_PER_SHORT;
+    sizeof_int          = PR_BYTES_PER_INT;
+    sizeof_int64        = PR_BYTES_PER_INT64;
+    sizeof_long         = PR_BYTES_PER_LONG;
+    sizeof_float        = PR_BYTES_PER_FLOAT;
+    sizeof_double       = PR_BYTES_PER_DOUBLE;
+    sizeof_word         = PR_BYTES_PER_WORD;
+    sizeof_dword        = PR_BYTES_PER_DWORD;
 
     bits_per_int64_log2 = PR_BITS_PER_INT64_LOG2;
 
-    align_of_short	= PR_ALIGN_OF_SHORT;
-    align_of_int	= PR_ALIGN_OF_INT;
-    align_of_long	= PR_ALIGN_OF_LONG;
-    align_of_int64	= PR_ALIGN_OF_INT64;
-    align_of_float	= PR_ALIGN_OF_FLOAT;
-    align_of_double	= PR_ALIGN_OF_DOUBLE;
-    align_of_pointer	= PR_ALIGN_OF_POINTER;
-    align_of_word	= PR_ALIGN_OF_WORD;
+    align_of_short      = PR_ALIGN_OF_SHORT;
+    align_of_int        = PR_ALIGN_OF_INT;
+    align_of_long       = PR_ALIGN_OF_LONG;
+    align_of_int64      = PR_ALIGN_OF_INT64;
+    align_of_float      = PR_ALIGN_OF_FLOAT;
+    align_of_double     = PR_ALIGN_OF_DOUBLE;
+    align_of_pointer    = PR_ALIGN_OF_POINTER;
+    align_of_word       = PR_ALIGN_OF_WORD;
 
 #else /* !CROSS_COMPILE */
 
@@ -222,10 +220,10 @@ int main(int argc, char **argv)
         int big_endian = 0, little_endian = 0, ntests = 0;
 
         if (sizeof(short) == 2) {
-            /* force |volatile| here to get rid of any compiler optimisations 
-             * (var in register etc.) which may be appiled to |auto| vars - 
+            /* force |volatile| here to get rid of any compiler optimisations
+             * (var in register etc.) which may be appiled to |auto| vars -
              * even those in |union|s...
-             * (|static| is used to get the same functionality for compilers 
+             * (|static| is used to get the same functionality for compilers
              * which do not honor |volatile|...).
              */
             volatile static union {
@@ -287,37 +285,37 @@ int main(int argc, char **argv)
             printf("#undef  IS_BIG_ENDIAN\n\n");
         } else {
             fprintf(stderr, "%s: unknown byte order"
-                    "(big_endian=%d, little_endian=%d, ntests=%d)!\n", 
+                    "(big_endian=%d, little_endian=%d, ntests=%d)!\n",
                     argv[0], big_endian, little_endian, ntests);
             return EXIT_FAILURE;
         }
     }
 
-    sizeof_char		= sizeof(char);
-    sizeof_short	= sizeof(short);
-    sizeof_int		= sizeof(int);
-    sizeof_int64	= 8;
-    sizeof_long		= sizeof(long);
-    sizeof_float	= sizeof(float);
-    sizeof_double	= sizeof(double);
-    sizeof_word		= sizeof(prword);
-    sizeof_dword	= 8;
+    sizeof_char         = sizeof(char);
+    sizeof_short        = sizeof(short);
+    sizeof_int          = sizeof(int);
+    sizeof_int64        = 8;
+    sizeof_long         = sizeof(long);
+    sizeof_float        = sizeof(float);
+    sizeof_double       = sizeof(double);
+    sizeof_word         = sizeof(prword);
+    sizeof_dword        = 8;
 
     bits_per_int64_log2 = 6;
 
-    align_of_short	= ALIGN_OF(short);
-    align_of_int	= ALIGN_OF(int);
-    align_of_long	= ALIGN_OF(long);
+    align_of_short      = ALIGN_OF(short);
+    align_of_int        = ALIGN_OF(int);
+    align_of_long       = ALIGN_OF(long);
     if (sizeof(INT64) < 8) {
-	/* this machine doesn't actually support int64's */
-        align_of_int64	= ALIGN_OF(fakelonglong);
+        /* this machine doesn't actually support int64's */
+        align_of_int64  = ALIGN_OF(fakelonglong);
     } else {
-        align_of_int64	= ALIGN_OF(int64);
+        align_of_int64  = ALIGN_OF(int64);
     }
-    align_of_float	= ALIGN_OF(float);
-    align_of_double	= ALIGN_OF(double);
-    align_of_pointer	= ALIGN_OF(pointer);
-    align_of_word	= ALIGN_OF(prword);
+    align_of_float      = ALIGN_OF(float);
+    align_of_double     = ALIGN_OF(double);
+    align_of_pointer    = ALIGN_OF(pointer);
+    align_of_word       = ALIGN_OF(prword);
 
 #endif /* CROSS_COMPILE */
 

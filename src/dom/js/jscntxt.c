@@ -63,6 +63,27 @@
 #include "jsscript.h"
 #include "jsstr.h"
 
+void
+js_OnVersionChange(JSContext *cx)
+{
+#if !JS_BUG_FALLIBLE_EQOPS
+    if (JS_VERSION_IS_1_2(cx)) {
+        cx->jsop_eq = JSOP_NEW_EQ;
+        cx->jsop_ne = JSOP_NEW_NE;
+    } else {
+        cx->jsop_eq = JSOP_EQ;
+        cx->jsop_ne = JSOP_NE;
+    }
+#endif /* !JS_BUG_FALLIBLE_EQOPS */
+}
+
+void
+js_SetVersion(JSContext *cx, JSVersion version)
+{
+    cx->version = version;
+    js_OnVersionChange(cx);
+}
+
 JSContext *
 js_NewContext(JSRuntime *rt, size_t stackChunkSize)
 {
@@ -131,15 +152,22 @@ js_NewContext(JSRuntime *rt, size_t stackChunkSize)
      * as well as "first".
      */
     if (first) {
+        /*
+         * Both atomState and the scriptFilenameTable may be left over from a
+         * previous episode of non-zero contexts alive in rt, so don't re-init
+         * either table if it's not necessary.  Just repopulate atomState with
+         * well-known internal atoms, and with the reserved identifiers added
+         * by the scanner.
+         */
         ok = (rt->atomState.liveAtoms == 0)
              ? js_InitAtomState(cx, &rt->atomState)
              : js_InitPinnedAtoms(cx, &rt->atomState);
         if (ok)
             ok = js_InitScanner(cx);
+        if (ok && !rt->scriptFilenameTable)
+            ok = js_InitRuntimeScriptState(rt);
         if (ok)
             ok = js_InitRuntimeNumberState(cx);
-        if (ok)
-            ok = js_InitRuntimeScriptState(cx);
         if (ok)
             ok = js_InitRuntimeStringState(cx);
         if (!ok) {
@@ -242,8 +270,9 @@ js_DestroyContext(JSContext *cx, JSGCMode gcmode)
         if (rt->atomState.liveAtoms == 0)
             js_FreeAtomState(cx, &rt->atomState);
 
-        /* Now after the last GC can we free the script filename table. */
-        js_FinishRuntimeScriptState(cx);
+        /* Also free the script filename table if it exists and is empty. */
+        if (rt->scriptFilenameTable && rt->scriptFilenameTable->nentries == 0)
+            js_FinishRuntimeScriptState(rt);
 
         /* Take the runtime down, now that it has no contexts or atoms. */
         JS_LOCK_GC(rt);
@@ -334,7 +363,7 @@ resolving_HashKey(JSDHashTable *table, const void *ptr)
 {
     const JSResolvingKey *key = (const JSResolvingKey *)ptr;
 
-    return ((JSDHashNumber)key->obj >> JSVAL_TAGBITS) ^ key->id;
+    return ((JSDHashNumber)JS_PTR_TO_UINT32(key->obj) >> JSVAL_TAGBITS) ^ key->id;
 }
 
 JS_PUBLIC_API(JSBool)
@@ -454,7 +483,7 @@ js_EnterLocalRootScope(JSContext *cx)
     mark = js_PushLocalRoot(cx, lrs, INT_TO_JSVAL(lrs->scopeMark));
     if (mark < 0)
         return JS_FALSE;
-    lrs->scopeMark = (uint16) mark;
+    lrs->scopeMark = (uint32) mark;
     return JS_TRUE;
 }
 
@@ -490,9 +519,9 @@ js_LeaveLocalRootScope(JSContext *cx)
     /* Pop the scope, restoring lrs->scopeMark. */
     lrc = lrs->topChunk;
     m = mark & JSLRS_CHUNK_MASK;
-    lrs->scopeMark = JSVAL_TO_INT(lrc->roots[m]);
+    lrs->scopeMark = (uint32) JSVAL_TO_INT(lrc->roots[m]);
     lrc->roots[m] = JSVAL_NULL;
-    lrs->rootCount = (uint16) mark;
+    lrs->rootCount = (uint32) mark;
 
     /*
      * Free the stack eagerly, risking malloc churn.  The alternative would
@@ -584,7 +613,7 @@ js_PushLocalRoot(JSContext *cx, JSLocalRootStack *lrs, jsval v)
          * At start of first chunk, or not at start of a non-first top chunk.
          * Check for lrs->rootCount overflow.
          */
-        if ((uint16)(n + 1) == 0) {
+        if ((uint32)(n + 1) == 0) {
             JS_ReportErrorNumber(cx, js_GetErrorMessage, NULL,
                                  JSMSG_TOO_MANY_LOCAL_ROOTS);
             return -1;
@@ -604,7 +633,7 @@ js_PushLocalRoot(JSContext *cx, JSLocalRootStack *lrs, jsval v)
     }
     lrs->rootCount = n + 1;
     lrc->roots[m] = v;
-    return (int) m;
+    return (int) n;
 }
 
 void
@@ -619,19 +648,26 @@ js_MarkLocalRoots(JSContext *cx, JSLocalRootStack *lrs)
 
     mark = lrs->scopeMark;
     lrc = lrs->topChunk;
-    while (--n > mark) {
+    do {
+        while (--n > mark) {
 #ifdef GC_MARK_DEBUG
-        char name[22];
-        JS_snprintf(name, sizeof name, "<local root %u>", n);
+            char name[22];
+            JS_snprintf(name, sizeof name, "<local root %u>", n);
 #else
-        const char *name = NULL;
+            const char *name = NULL;
 #endif
+            m = n & JSLRS_CHUNK_MASK;
+            JS_ASSERT(JSVAL_IS_GCTHING(lrc->roots[m]));
+            JS_MarkGCThing(cx, JSVAL_TO_GCTHING(lrc->roots[m]), name, NULL);
+            if (m == 0)
+                lrc = lrc->down;
+        }
         m = n & JSLRS_CHUNK_MASK;
-        JS_ASSERT(JSVAL_IS_GCTHING(lrc->roots[m]));
-        JS_MarkGCThing(cx, JSVAL_TO_GCTHING(lrc->roots[m]), name, NULL);
+        mark = JSVAL_TO_INT(lrc->roots[m]);
         if (m == 0)
             lrc = lrc->down;
-    }
+    } while (n != 0);
+    JS_ASSERT(!lrc);
 }
 
 static void
@@ -807,8 +843,9 @@ js_ExpandErrorArguments(JSContext *cx, JSErrorCallback callback,
                 for (i = 0; i < argCount; i++) {
                     if (charArgs) {
                         char *charArg = va_arg(ap, char *);
+                        size_t charArgLength = strlen(charArg);
                         reportp->messageArgs[i]
-                            = js_InflateString(cx, charArg, strlen(charArg));
+                            = js_InflateString(cx, charArg, &charArgLength);
                         if (!reportp->messageArgs[i])
                             goto error;
                     }
@@ -826,12 +863,16 @@ js_ExpandErrorArguments(JSContext *cx, JSErrorCallback callback,
              */
             if (argCount > 0) {
                 if (efs->format) {
-                    const char *fmt;
+                    jschar *buffer, *fmt, *out;
                     const jschar *arg;
-                    jschar *out;
                     int expandedArgs = 0;
-                    size_t expandedLength
-                        = strlen(efs->format)
+                    size_t expandedLength;
+                    size_t len = strlen (efs->format);
+                    buffer = fmt = js_InflateString (cx, efs->format, &len);
+                    if (!buffer)
+                        goto error;
+                    expandedLength
+                        = len
                             - (3 * argCount) /* exclude the {n} */
                             + totalArgsLength;
                     /*
@@ -840,14 +881,15 @@ js_ExpandErrorArguments(JSContext *cx, JSErrorCallback callback,
                      */
                     reportp->ucmessage = out = (jschar *)
                         JS_malloc(cx, (expandedLength + 1) * sizeof(jschar));
-                    if (!out)
+                    if (!out) {
+                        JS_free (cx, buffer);
                         goto error;
-                    fmt = efs->format;
+                    }
                     while (*fmt) {
                         if (*fmt == '{') {
                             if (isdigit(fmt[1])) {
                                 int d = JS7_UNDEC(fmt[1]);
-                                JS_ASSERT(expandedArgs < argCount);
+                                JS_ASSERT(d < argCount);
                                 arg = reportp->messageArgs[d];
                                 js_strncpy(out, arg, argLengths[d]);
                                 out += argLengths[d];
@@ -856,13 +898,11 @@ js_ExpandErrorArguments(JSContext *cx, JSErrorCallback callback,
                                 continue;
                             }
                         }
-                        /*
-                         * is this kosher?
-                         */
-                        *out++ = (unsigned char)(*fmt++);
+                         *out++ = *fmt++;
                     }
                     JS_ASSERT(expandedArgs == argCount);
                     *out = 0;
+                    JS_free (cx, buffer);
                     *messagep =
                         js_DeflateString(cx, reportp->ucmessage,
                                          (size_t)(out - reportp->ucmessage));
@@ -875,11 +915,13 @@ js_ExpandErrorArguments(JSContext *cx, JSErrorCallback callback,
                  * entire message.
                  */
                 if (efs->format) {
+                    size_t len;
                     *messagep = JS_strdup(cx, efs->format);
                     if (!*messagep)
                         goto error;
+                    len = strlen(*messagep);
                     reportp->ucmessage
-                        = js_InflateString(cx, *messagep, strlen(*messagep));
+                        = js_InflateString(cx, *messagep, &len);
                     if (!reportp->ucmessage)
                         goto error;
                 }

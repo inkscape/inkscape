@@ -47,6 +47,9 @@
 
 JS_BEGIN_EXTERN_C
 
+extern JSBool
+js_IdIsIndex(jsval id, jsuint *indexp);
+
 extern JSClass js_ArrayClass;
 
 extern JSObject *
@@ -69,8 +72,9 @@ js_HasLengthProperty(JSContext *cx, JSObject *obj, jsuint *lengthp);
  */
 typedef int (*JSComparator)(const void *a, const void *b, void *arg);
 
-extern JSBool
-js_HeapSort(void *vec, size_t nel, size_t elsize, JSComparator cmp, void *arg);
+extern void
+js_HeapSort(void *vec, size_t nel, void *pivot, size_t elsize,
+            JSComparator cmp, void *arg);
 
 JS_END_EXTERN_C
 

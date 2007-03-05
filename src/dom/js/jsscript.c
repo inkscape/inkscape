@@ -1,4 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+ * vim: set ts=8 sw=4 et tw=80:
  *
  * ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -62,6 +63,9 @@
 #endif
 
 #if JS_HAS_SCRIPT_OBJECT
+
+static const char js_script_exec[] = "Script.prototype.exec";
+static const char js_script_compile[] = "Script.prototype.compile";
 
 #if JS_HAS_TOSOURCE
 static JSBool
@@ -157,8 +161,8 @@ script_compile(JSContext *cx, JSObject *obj, uintN argc, jsval *argv,
                jsval *rval)
 {
     JSScript *oldscript, *script;
-    JSString *str;
     JSStackFrame *fp, *caller;
+    JSString *str;
     JSObject *scopeobj;
     const char *file;
     uintN line;
@@ -172,10 +176,23 @@ script_compile(JSContext *cx, JSObject *obj, uintN argc, jsval *argv,
     if (argc == 0)
         goto out;
 
+    /* XXX thread safety was completely neglected in this function... */
+    oldscript = (JSScript *) JS_GetPrivate(cx, obj);
+    if (oldscript) {
+        for (fp = cx->fp; fp; fp = fp->down) {
+            if (fp->script == oldscript) {
+                JS_ReportErrorNumber(cx, js_GetErrorMessage, NULL,
+                                     JSMSG_SELF_MODIFYING_SCRIPT);
+                return JS_FALSE;
+            }
+        }
+    }
+
     /* Otherwise, the first arg is the script source to compile. */
     str = js_ValueToString(cx, argv[0]);
     if (!str)
         return JS_FALSE;
+    argv[0] = STRING_TO_JSVAL(str);
 
     /* Compile using the caller's scope chain, which js_Invoke passes to fp. */
     fp = cx->fp;
@@ -201,6 +218,11 @@ script_compile(JSContext *cx, JSObject *obj, uintN argc, jsval *argv,
         principals = NULL;
     }
 
+    /* Ensure we compile this script with the right (inner) principals. */
+    scopeobj = js_CheckScopeChainValidity(cx, scopeobj, js_script_compile);
+    if (!scopeobj)
+        return JS_FALSE;
+
     /*
      * Compile the new script using the caller's scope chain, a la eval().
      * Unlike jsobj.c:obj_eval, however, we do not set JSFRAME_EVAL in fp's
@@ -209,6 +231,7 @@ script_compile(JSContext *cx, JSObject *obj, uintN argc, jsval *argv,
      * tested in jsemit.c and jsscan.c to optimize based on identity of run-
      * and compile-time scope.
      */
+    fp->flags |= JSFRAME_SCRIPT_OBJECT;
     script = JS_CompileUCScriptForPrincipals(cx, scopeobj, principals,
                                              JSSTRING_CHARS(str),
                                              JSSTRING_LENGTH(str),
@@ -217,7 +240,6 @@ script_compile(JSContext *cx, JSObject *obj, uintN argc, jsval *argv,
         return JS_FALSE;
 
     /* Swap script for obj's old script, if any. */
-    oldscript = (JSScript *) JS_GetPrivate(cx, obj);
     if (!JS_SetPrivate(cx, obj, script)) {
         js_DestroyScript(cx, script);
         return JS_FALSE;
@@ -238,6 +260,7 @@ script_exec(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
     JSScript *script;
     JSObject *scopeobj, *parent;
     JSStackFrame *fp, *caller;
+    JSPrincipals *principals;
 
     if (!JS_InstanceOf(cx, obj, &js_ScriptClass, argv))
         return JS_FALSE;
@@ -296,6 +319,15 @@ script_exec(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
             scopeobj = cx->globalObject;
         }
     }
+
+    scopeobj = js_CheckScopeChainValidity(cx, scopeobj, js_script_exec);
+    if (!scopeobj)
+        return JS_FALSE;
+
+    /* Belt-and-braces: check that this script object has access to scopeobj. */
+    principals = script->principals;
+    if (!js_CheckPrincipalsAccess(cx, scopeobj, principals, js_script_exec))
+        return JS_FALSE;
 
     return js_Execute(cx, scopeobj, script, caller, JSFRAME_EVAL, rval);
 }
@@ -704,6 +736,7 @@ script_thaw(JSContext *cx, JSObject *obj, uintN argc, jsval *argv,
     str = js_ValueToString(cx, argv[0]);
     if (!str)
         return JS_FALSE;
+    argv[0] = STRING_TO_JSVAL(str);
 
     /* create new XDR */
     xdr = JS_XDRNewMem(cx, JSXDR_DECODE);
@@ -839,6 +872,12 @@ Script(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
         obj = js_NewObject(cx, &js_ScriptClass, NULL, NULL);
         if (!obj)
             return JS_FALSE;
+
+        /*
+         * script_compile does not use rval to root its temporaries
+         * so we can use it to root obj.
+         */
+        *rval = OBJECT_TO_JSVAL(obj);
     }
     return script_compile(cx, obj, argc, argv, rval);
 }
@@ -899,7 +938,8 @@ typedef struct ScriptFilenameEntry {
     JSHashEntry         *next;          /* hash chain linkage */
     JSHashNumber        keyHash;        /* key hash function result */
     const void          *key;           /* ptr to filename, below */
-    JSPackedBool        mark;           /* mark flag, for GC */
+    uint32              flags;          /* user-defined filename prefix flags */
+    JSPackedBool        mark;           /* GC mark flag */
     char                filename[3];    /* two or more bytes, NUL-terminated */
 } ScriptFilenameEntry;
 
@@ -919,45 +959,42 @@ js_free_sftbl_entry(void *priv, JSHashEntry *he, uintN flag)
     free(he);
 }
 
-static JSHashAllocOps table_alloc_ops = {
+static JSHashAllocOps sftbl_alloc_ops = {
     js_alloc_table_space,   js_free_table_space,
     js_alloc_sftbl_entry,   js_free_sftbl_entry
 };
 
 JSBool
-js_InitRuntimeScriptState(JSContext *cx)
+js_InitRuntimeScriptState(JSRuntime *rt)
 {
-    JSRuntime *rt = cx->runtime;
-
 #ifdef JS_THREADSAFE
-    /* Must come through here once in primordial thread to init safely! */
-    if (!rt->scriptFilenameTableLock) {
-        rt->scriptFilenameTableLock = JS_NEW_LOCK();
-        if (!rt->scriptFilenameTableLock)
-            return JS_FALSE;
-    }
+    JS_ASSERT(!rt->scriptFilenameTableLock);
+    rt->scriptFilenameTableLock = JS_NEW_LOCK();
+    if (!rt->scriptFilenameTableLock)
+        return JS_FALSE;
 #endif
+    JS_ASSERT(!rt->scriptFilenameTable);
+    rt->scriptFilenameTable =
+        JS_NewHashTable(16, JS_HashString, js_compare_strings, NULL,
+                        &sftbl_alloc_ops, NULL);
     if (!rt->scriptFilenameTable) {
-        JS_ACQUIRE_LOCK(rt->scriptFilenameTableLock);
-        if (!rt->scriptFilenameTable) {
-            rt->scriptFilenameTable =
-                JS_NewHashTable(16, JS_HashString, js_compare_strings, NULL,
-                                &table_alloc_ops, NULL);
-        }
-        JS_RELEASE_LOCK(rt->scriptFilenameTableLock);
-        if (!rt->scriptFilenameTable) {
-            js_FinishRuntimeScriptState(cx);    /* free lock if threadsafe */
-            return JS_FALSE;
-        }
+        js_FinishRuntimeScriptState(rt);    /* free lock if threadsafe */
+        return JS_FALSE;
     }
+    JS_INIT_CLIST(&rt->scriptFilenamePrefixes);
     return JS_TRUE;
 }
 
-void
-js_FinishRuntimeScriptState(JSContext *cx)
-{
-    JSRuntime *rt = cx->runtime;
+typedef struct ScriptFilenamePrefix {
+    JSCList     links;      /* circular list linkage for easy deletion */
+    const char  *name;      /* pointer to pinned ScriptFilenameEntry string */
+    size_t      length;     /* prefix string length, precomputed */
+    uint32      flags;      /* user-defined flags to inherit from this prefix */
+} ScriptFilenamePrefix;
 
+void
+js_FinishRuntimeScriptState(JSRuntime *rt)
+{
     if (rt->scriptFilenameTable) {
         JS_HashTableDestroy(rt->scriptFilenameTable);
         rt->scriptFilenameTable = NULL;
@@ -970,20 +1007,34 @@ js_FinishRuntimeScriptState(JSContext *cx)
 #endif
 }
 
+void
+js_FreeRuntimeScriptState(JSRuntime *rt)
+{
+    ScriptFilenamePrefix *sfp;
+
+    while (!JS_CLIST_IS_EMPTY(&rt->scriptFilenamePrefixes)) {
+        sfp = (ScriptFilenamePrefix *) rt->scriptFilenamePrefixes.next;
+        JS_REMOVE_LINK(&sfp->links);
+        free(sfp);
+    }
+    js_FinishRuntimeScriptState(rt);
+}
+
 #ifdef DEBUG_brendan
 size_t sftbl_savings = 0;
 #endif
 
-const char *
-js_SaveScriptFilename(JSContext *cx, const char *filename)
+static ScriptFilenameEntry *
+SaveScriptFilename(JSRuntime *rt, const char *filename, uint32 flags)
 {
-    JSRuntime *rt = cx->runtime;
     JSHashTable *table;
     JSHashNumber hash;
     JSHashEntry **hep;
     ScriptFilenameEntry *sfe;
+    size_t length;
+    JSCList *head, *link;
+    ScriptFilenamePrefix *sfp;
 
-    JS_ACQUIRE_LOCK(rt->scriptFilenameTableLock);
     table = rt->scriptFilenameTable;
     hash = JS_HashString(filename);
     hep = JS_HashTableRawLookup(table, hash, filename);
@@ -992,20 +1043,134 @@ js_SaveScriptFilename(JSContext *cx, const char *filename)
     if (sfe)
         sftbl_savings += strlen(sfe->filename);
 #endif
+
     if (!sfe) {
         sfe = (ScriptFilenameEntry *)
               JS_HashTableRawAdd(table, hep, hash, filename, NULL);
-        if (sfe) {
-            sfe->key = strcpy(sfe->filename, filename);
-            JS_ASSERT(!sfe->mark);
-        }
+        if (!sfe)
+            return NULL;
+        sfe->key = strcpy(sfe->filename, filename);
+        sfe->flags = 0;
+        sfe->mark = JS_FALSE;
     }
-    JS_RELEASE_LOCK(rt->scriptFilenameTableLock);
+
+    /* If saving a prefix, add it to the set in rt->scriptFilenamePrefixes. */
+    if (flags != 0) {
+        /* Search in case filename was saved already; we must be idempotent. */
+        sfp = NULL;
+        length = strlen(filename);
+        for (head = link = &rt->scriptFilenamePrefixes;
+             link->next != head;
+             link = link->next) {
+            /* Lag link behind sfp to insert in non-increasing length order. */
+            sfp = (ScriptFilenamePrefix *) link->next;
+            if (!strcmp(sfp->name, filename))
+                break;
+            if (sfp->length <= length) {
+                sfp = NULL;
+                break;
+            }
+            sfp = NULL;
+        }
+
+        if (!sfp) {
+            /* No such prefix: add one now. */
+            sfp = (ScriptFilenamePrefix *) malloc(sizeof(ScriptFilenamePrefix));
+            if (!sfp)
+                return NULL;
+            JS_INSERT_AFTER(&sfp->links, link);
+            sfp->name = sfe->filename;
+            sfp->length = length;
+            sfp->flags = 0;
+        }
+
+        /*
+         * Accumulate flags in both sfe and sfp: sfe for later access from the
+         * JS_GetScriptedCallerFilenameFlags debug-API, and sfp so that longer
+         * filename entries can inherit by prefix.
+         */
+        sfe->flags |= flags;
+        sfp->flags |= flags;
+    }
+
+    return sfe;
+}
+
+const char *
+js_SaveScriptFilename(JSContext *cx, const char *filename)
+{
+    JSRuntime *rt;
+    ScriptFilenameEntry *sfe;
+    JSCList *head, *link;
+    ScriptFilenamePrefix *sfp;
+
+    rt = cx->runtime;
+    JS_ACQUIRE_LOCK(rt->scriptFilenameTableLock);
+    sfe = SaveScriptFilename(rt, filename, 0);
     if (!sfe) {
+        JS_RELEASE_LOCK(rt->scriptFilenameTableLock);
         JS_ReportOutOfMemory(cx);
         return NULL;
     }
+
+    /*
+     * Try to inherit flags by prefix.  We assume there won't be more than a
+     * few (dozen! ;-) prefixes, so linear search is tolerable.
+     * XXXbe every time I've assumed that in the JS engine, I've been wrong!
+     */
+    for (head = &rt->scriptFilenamePrefixes, link = head->next;
+         link != head;
+         link = link->next) {
+        sfp = (ScriptFilenamePrefix *) link;
+        if (!strncmp(sfp->name, filename, sfp->length)) {
+            sfe->flags |= sfp->flags;
+            break;
+        }
+    }
+    JS_RELEASE_LOCK(rt->scriptFilenameTableLock);
     return sfe->filename;
+}
+
+const char *
+js_SaveScriptFilenameRT(JSRuntime *rt, const char *filename, uint32 flags)
+{
+    ScriptFilenameEntry *sfe;
+
+    /* This may be called very early, via the jsdbgapi.h entry point. */
+    if (!rt->scriptFilenameTable && !js_InitRuntimeScriptState(rt))
+        return NULL;
+
+    JS_ACQUIRE_LOCK(rt->scriptFilenameTableLock);
+    sfe = SaveScriptFilename(rt, filename, flags);
+    JS_RELEASE_LOCK(rt->scriptFilenameTableLock);
+    if (!sfe)
+        return NULL;
+
+    return sfe->filename;
+}
+
+/*
+ * Back up from a saved filename by its offset within its hash table entry.
+ */
+#define FILENAME_TO_SFE(fn) \
+    ((ScriptFilenameEntry *) ((fn) - offsetof(ScriptFilenameEntry, filename)))
+
+/*
+ * The sfe->key member, redundant given sfe->filename but required by the old
+ * jshash.c code, here gives us a useful sanity check.  This assertion will
+ * very likely botch if someone tries to mark a string that wasn't allocated
+ * as an sfe->filename.
+ */
+#define ASSERT_VALID_SFE(sfe)   JS_ASSERT((sfe)->key == (sfe)->filename)
+
+uint32
+js_GetScriptFilenameFlags(const char *filename)
+{
+    ScriptFilenameEntry *sfe;
+
+    sfe = FILENAME_TO_SFE(filename);
+    ASSERT_VALID_SFE(sfe);
+    return sfe->flags;
 }
 
 void
@@ -1013,17 +1178,37 @@ js_MarkScriptFilename(const char *filename)
 {
     ScriptFilenameEntry *sfe;
 
-    /*
-     * Back up from filename by its offset within its hash table entry.
-     * The sfe->key member, redundant given sfe->filename but required by
-     * the old jshash.c code, here gives us a useful sanity check.  This
-     * assertion will very likely botch if someone tries to mark a string
-     * that wasn't allocated as an sfe->filename.
-     */
-    sfe = (ScriptFilenameEntry *)
-          (filename - offsetof(ScriptFilenameEntry, filename));
-    JS_ASSERT(sfe->key == sfe->filename);
+    sfe = FILENAME_TO_SFE(filename);
+    ASSERT_VALID_SFE(sfe);
     sfe->mark = JS_TRUE;
+}
+
+JS_STATIC_DLL_CALLBACK(intN)
+js_script_filename_marker(JSHashEntry *he, intN i, void *arg)
+{
+    ScriptFilenameEntry *sfe = (ScriptFilenameEntry *) he;
+
+    sfe->mark = JS_TRUE;
+    return HT_ENUMERATE_NEXT;
+}
+
+void
+js_MarkScriptFilenames(JSRuntime *rt, uintN gcflags)
+{
+    JSCList *head, *link;
+    ScriptFilenamePrefix *sfp;
+
+    if (gcflags & GC_KEEP_ATOMS) {
+        JS_HashTableEnumerateEntries(rt->scriptFilenameTable,
+                                     js_script_filename_marker,
+                                     rt);
+    }
+    for (head = &rt->scriptFilenamePrefixes, link = head->next;
+         link != head;
+         link = link->next) {
+        sfp = (ScriptFilenamePrefix *) link;
+        js_MarkScriptFilename(sfp->name);
+    }
 }
 
 JS_STATIC_DLL_CALLBACK(intN)
@@ -1043,7 +1228,7 @@ js_SweepScriptFilenames(JSRuntime *rt)
     JS_HashTableEnumerateEntries(rt->scriptFilenameTable,
                                  js_script_filename_sweeper,
                                  rt);
-#ifdef DEBUG_brendan
+#ifdef DEBUG_notme
     printf("script filename table savings so far: %u\n", sftbl_savings);
 #endif
 }
@@ -1142,8 +1327,8 @@ js_CallNewScriptHook(JSContext *cx, JSScript *script, JSFunction *fun)
     }
 }
 
-void
-js_DestroyScript(JSContext *cx, JSScript *script)
+JS_FRIEND_API(void)
+js_CallDestroyScriptHook(JSContext *cx, JSScript *script)
 {
     JSRuntime *rt;
     JSDestroyScriptHook hook;
@@ -1152,6 +1337,12 @@ js_DestroyScript(JSContext *cx, JSScript *script)
     hook = rt->destroyScriptHook;
     if (hook)
         hook(cx, script, rt->destroyScriptHookData);
+}
+
+void
+js_DestroyScript(JSContext *cx, JSScript *script)
+{
+    js_CallDestroyScriptHook(cx, script);
 
     JS_ClearScriptTraps(cx, script);
     js_FreeAtomMap(cx, &script->atomMap);
@@ -1240,19 +1431,31 @@ js_PCToLineNumber(JSContext *cx, JSScript *script, jsbytecode *pc)
     return lineno;
 }
 
+/* The line number limit is the same as the jssrcnote offset limit. */
+#define SN_LINE_LIMIT   (SN_3BYTE_OFFSET_FLAG << 16)
+
 jsbytecode *
 js_LineNumberToPC(JSScript *script, uintN target)
 {
-    ptrdiff_t offset;
-    uintN lineno;
+    ptrdiff_t offset, best;
+    uintN lineno, bestdiff, diff;
     jssrcnote *sn;
     JSSrcNoteType type;
 
     offset = 0;
+    best = -1;
     lineno = script->lineno;
+    bestdiff = SN_LINE_LIMIT;
     for (sn = SCRIPT_NOTES(script); !SN_IS_TERMINATOR(sn); sn = SN_NEXT(sn)) {
-        if (lineno >= target)
-            break;
+        if (lineno == target)
+            goto out;
+        if (lineno > target) {
+            diff = lineno - target;
+            if (diff < bestdiff) {
+                bestdiff = diff;
+                best = offset;
+            }
+        }
         offset += SN_DELTA(sn);
         type = (JSSrcNoteType) SN_TYPE(sn);
         if (type == SRC_SETLINE) {
@@ -1261,10 +1464,13 @@ js_LineNumberToPC(JSScript *script, uintN target)
             lineno++;
         }
     }
+    if (best >= 0)
+        offset = best;
+out:
     return script->code + offset;
 }
 
-uintN
+JS_FRIEND_API(uintN)
 js_GetScriptLineExtent(JSScript *script)
 {
     uintN lineno;

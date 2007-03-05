@@ -65,9 +65,9 @@ struct JSRegExpStatics {
 
 /*
  * This struct holds a bitmap representation of a class from a regexp.
- * There's a list of these referenced by the classList field in the JSRegExp 
+ * There's a list of these referenced by the classList field in the JSRegExp
  * struct below. The initial state has startIndex set to the offset in the
- * original regexp source of the beginning of the class contents. The first 
+ * original regexp source of the beginning of the class contents. The first
  * use of the class converts the source representation into a bitmap.
  *
  */
@@ -78,8 +78,8 @@ typedef struct RECharSet {
     union {
         uint8       *bits;
         struct {
-            uint16  startIndex;
-            uint16  length;
+            size_t  startIndex;
+            size_t  length;
         } src;
     } u;
 } RECharSet;
@@ -102,8 +102,8 @@ struct JSRegExp {
     uint16       flags;         /* flags, see jsapi.h's JSREG_* defines */
     uint16       cloneIndex;    /* index in fp->vars or funobj->slots of
                                    cloned regexp object */
-    uint16       parenCount;    /* number of parenthesized submatches */
-    uint16       classCount;    /* count [...] bitmaps */
+    size_t       parenCount;    /* number of parenthesized submatches */
+    size_t       classCount;    /* count [...] bitmaps */
     RECharSet    *classList;    /* list of [...] bitmaps */
     JSString     *source;       /* locked source string, sans // */
     jsbytecode   program[1];    /* regular expression bytecode */
@@ -117,6 +117,9 @@ extern JSRegExp *
 js_NewRegExpOpt(JSContext *cx, JSTokenStream *ts,
                 JSString *str, JSString *opt, JSBool flat);
 
+#define HOLD_REGEXP(cx, re) JS_ATOMIC_INCREMENT(&(re)->nrefs)
+#define DROP_REGEXP(cx, re) js_DestroyRegExp(cx, re)
+
 extern void
 js_DestroyRegExp(JSContext *cx, JSRegExp *re);
 
@@ -127,7 +130,7 @@ js_DestroyRegExp(JSContext *cx, JSRegExp *re);
  */
 extern JSBool
 js_ExecuteRegExp(JSContext *cx, JSRegExp *re, JSString *str, size_t *indexp,
-		 JSBool test, jsval *rval);
+                 JSBool test, jsval *rval);
 
 /*
  * These two add and remove GC roots, respectively, so their calls must be

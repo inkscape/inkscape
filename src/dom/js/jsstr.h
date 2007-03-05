@@ -210,44 +210,44 @@ typedef enum JSCharType {
 #define JS_CTYPE(c)     (JS_CCODE(c) & 0x1F)
 
 #define JS_ISALPHA(c)   ((((1 << JSCT_UPPERCASE_LETTER) |                     \
-			   (1 << JSCT_LOWERCASE_LETTER) |                     \
-			   (1 << JSCT_TITLECASE_LETTER) |                     \
-			   (1 << JSCT_MODIFIER_LETTER) |                      \
-			   (1 << JSCT_OTHER_LETTER))                          \
-			  >> JS_CTYPE(c)) & 1)
+                           (1 << JSCT_LOWERCASE_LETTER) |                     \
+                           (1 << JSCT_TITLECASE_LETTER) |                     \
+                           (1 << JSCT_MODIFIER_LETTER) |                      \
+                           (1 << JSCT_OTHER_LETTER))                          \
+                          >> JS_CTYPE(c)) & 1)
 
 #define JS_ISALNUM(c)   ((((1 << JSCT_UPPERCASE_LETTER) |                     \
-			   (1 << JSCT_LOWERCASE_LETTER) |                     \
-			   (1 << JSCT_TITLECASE_LETTER) |                     \
-			   (1 << JSCT_MODIFIER_LETTER) |                      \
-			   (1 << JSCT_OTHER_LETTER) |                         \
-			   (1 << JSCT_DECIMAL_DIGIT_NUMBER))                  \
-			  >> JS_CTYPE(c)) & 1)
+                           (1 << JSCT_LOWERCASE_LETTER) |                     \
+                           (1 << JSCT_TITLECASE_LETTER) |                     \
+                           (1 << JSCT_MODIFIER_LETTER) |                      \
+                           (1 << JSCT_OTHER_LETTER) |                         \
+                           (1 << JSCT_DECIMAL_DIGIT_NUMBER))                  \
+                          >> JS_CTYPE(c)) & 1)
 
 /* A unicode letter, suitable for use in an identifier. */
-#define JS_ISUC_LETTER(c)   ((((1 << JSCT_UPPERCASE_LETTER) |                 \
-			   (1 << JSCT_LOWERCASE_LETTER) |                     \
-			   (1 << JSCT_TITLECASE_LETTER) |                     \
-			   (1 << JSCT_MODIFIER_LETTER) |                      \
-			   (1 << JSCT_OTHER_LETTER) |                         \
-			   (1 << JSCT_LETTER_NUMBER))                         \
-			  >> JS_CTYPE(c)) & 1)
+#define JS_ISLETTER(c)   ((((1 << JSCT_UPPERCASE_LETTER) |                    \
+                            (1 << JSCT_LOWERCASE_LETTER) |                    \
+                            (1 << JSCT_TITLECASE_LETTER) |                    \
+                            (1 << JSCT_MODIFIER_LETTER) |                     \
+                            (1 << JSCT_OTHER_LETTER) |                        \
+                            (1 << JSCT_LETTER_NUMBER))                        \
+                           >> JS_CTYPE(c)) & 1)
 
 /*
  * 'IdentifierPart' from ECMA grammar, is Unicode letter or combining mark or
  * digit or connector punctuation.
  */
-#define JS_ISID_PART(c) ((((1 << JSCT_UPPERCASE_LETTER) |                     \
-			   (1 << JSCT_LOWERCASE_LETTER) |                     \
-			   (1 << JSCT_TITLECASE_LETTER) |                     \
-			   (1 << JSCT_MODIFIER_LETTER) |                      \
-			   (1 << JSCT_OTHER_LETTER) |                         \
-			   (1 << JSCT_LETTER_NUMBER) |                        \
-			   (1 << JSCT_NON_SPACING_MARK) |                     \
-			   (1 << JSCT_COMBINING_SPACING_MARK) |               \
-			   (1 << JSCT_DECIMAL_DIGIT_NUMBER) |                 \
-			   (1 << JSCT_CONNECTOR_PUNCTUATION))                 \
-			  >> JS_CTYPE(c)) & 1)
+#define JS_ISIDPART(c)  ((((1 << JSCT_UPPERCASE_LETTER) |                     \
+                           (1 << JSCT_LOWERCASE_LETTER) |                     \
+                           (1 << JSCT_TITLECASE_LETTER) |                     \
+                           (1 << JSCT_MODIFIER_LETTER) |                      \
+                           (1 << JSCT_OTHER_LETTER) |                         \
+                           (1 << JSCT_LETTER_NUMBER) |                        \
+                           (1 << JSCT_NON_SPACING_MARK) |                     \
+                           (1 << JSCT_COMBINING_SPACING_MARK) |               \
+                           (1 << JSCT_DECIMAL_DIGIT_NUMBER) |                 \
+                           (1 << JSCT_CONNECTOR_PUNCTUATION))                 \
+                          >> JS_CTYPE(c)) & 1)
 
 /* Unicode control-format characters, ignored in input */
 #define JS_ISFORMAT(c) (((1 << JSCT_FORMAT) >> JS_CTYPE(c)) & 1)
@@ -259,12 +259,20 @@ typedef enum JSCharType {
  */
 #define JS_ISWORD(c)    ((c) < 128 && (isalnum(c) || (c) == '_'))
 
-/* XXXbe unify on A/X/Y tbls, avoid ctype.h? */
-#define JS_ISIDENT_START(c) (JS_ISUC_LETTER(c) || (c) == '_' || (c) == '$')
-#define JS_ISIDENT(c)       (JS_ISID_PART(c) || (c) == '_' || (c) == '$')
+#define JS_ISIDSTART(c) (JS_ISLETTER(c) || (c) == '_' || (c) == '$')
+#define JS_ISIDENT(c)   (JS_ISIDPART(c) || (c) == '_' || (c) == '$')
+
+#define JS_ISXMLSPACE(c)        ((c) == ' ' || (c) == '\t' || (c) == '\r' ||  \
+                                 (c) == '\n')
+#define JS_ISXMLNSSTART(c)      ((JS_CCODE(c) & 0x00000100) || (c) == '_')
+#define JS_ISXMLNS(c)           ((JS_CCODE(c) & 0x00000080) || (c) == '.' ||  \
+                                 (c) == '-' || (c) == '_')
+#define JS_ISXMLNAMESTART(c)    (JS_ISXMLNSSTART(c) || (c) == ':')
+#define JS_ISXMLNAME(c)         (JS_ISXMLNS(c) || (c) == ':')
 
 #define JS_ISDIGIT(c)   (JS_CTYPE(c) == JSCT_DECIMAL_DIGIT_NUMBER)
 
+/* XXXbe unify on A/X/Y tbls, avoid ctype.h? */
 /* XXXbe fs, etc. ? */
 #define JS_ISSPACE(c)   ((JS_CCODE(c) & 0x00070000) == 0x00040000)
 #define JS_ISPRINT(c)   ((c) < 128 && isprint(c))
@@ -278,8 +286,6 @@ typedef enum JSCharType {
 #define JS_TOLOWER(c)   ((jschar) ((JS_CCODE(c) & 0x00200000)                 \
                                    ? (c) + ((int32)JS_CCODE(c) >> 22)         \
                                    : (c)))
-
-#define JS_TOCTRL(c)    ((c) ^ 64)      /* XXX unsafe! requires uppercase c */
 
 /* Shorthands for ASCII (7-bit) decimal and hex conversion. */
 #define JS7_ISDEC(c)    ((c) < 128 && isdigit(c))
@@ -306,6 +312,8 @@ extern void
 js_FinishRuntimeStringState(JSContext *cx);
 
 /* Initialize the String class, returning its prototype object. */
+extern JSClass js_StringClass;
+
 extern JSObject *
 js_InitStringClass(JSContext *cx, JSObject *obj);
 
@@ -345,6 +353,12 @@ extern JSObject *
 js_StringToObject(JSContext *cx, JSString *str);
 
 /*
+ * Convert a value to a printable C string.
+ */
+extern JS_FRIEND_API(const char *)
+js_ValueToPrintableString(JSContext *cx, jsval v);
+
+/*
  * Convert a value to a string, returning null after reporting an error,
  * otherwise returning a new string reference.
  */
@@ -358,7 +372,7 @@ js_ValueToString(JSContext *cx, jsval v);
 extern JSString *
 js_ValueToSource(JSContext *cx, jsval v);
 
-#ifdef HT_ENUMERATE_NEXT	/* XXX don't require jshash.h */
+#ifdef HT_ENUMERATE_NEXT        /* XXX don't require jshash.h */
 /*
  * Compute a hash function from str.
  */
@@ -410,20 +424,33 @@ js_SkipWhiteSpace(const jschar *s);
 /*
  * Inflate bytes to JS chars and vice versa.  Report out of memory via cx
  * and return null on error, otherwise return the jschar or byte vector that
- * was JS_malloc'ed.
+ * was JS_malloc'ed. length is updated with the length of the new string in jschars.
  */
 extern jschar *
-js_InflateString(JSContext *cx, const char *bytes, size_t length);
+js_InflateString(JSContext *cx, const char *bytes, size_t *length);
 
 extern char *
 js_DeflateString(JSContext *cx, const jschar *chars, size_t length);
 
 /*
  * Inflate bytes to JS chars into a buffer.
- * 'chars' must be large enough for 'length'+1 jschars.
+ * 'chars' must be large enough for 'length' jschars.
+ * The buffer is NOT null-terminated.
+ * cx may be NULL, which means no errors are thrown.
+ * The destination length needs to be initialized with the buffer size, takes the number of chars moved.
  */
-extern void
-js_InflateStringToBuffer(jschar *chars, const char *bytes, size_t length);
+extern JSBool
+js_InflateStringToBuffer(JSContext* cx, const char *bytes, size_t length, jschar *chars, size_t* charsLength);
+
+/*
+ * Deflate JS chars to bytes into a buffer.
+ * 'bytes' must be large enough for 'length chars.
+ * The buffer is NOT null-terminated.
+ * cx may be NULL, which means no errors are thrown.
+ * The destination length needs to be initialized with the buffer size, takes the number of bytes moved.
+ */
+extern JSBool
+js_DeflateStringToBuffer(JSContext* cx, const jschar *chars, size_t charsLength, char *bytes, size_t* length);
 
 /*
  * Associate bytes with str in the deflated string cache, returning true on
@@ -442,6 +469,13 @@ js_GetStringBytes(JSString *str);
 JSBool
 js_str_escape(JSContext *cx, JSObject *obj, uintN argc, jsval *argv,
               jsval *rval);
+
+/*
+ * Convert one UCS-4 char and write it into a UTF-8 buffer, which must be at
+ * least 6 bytes long.  Return the number of UTF-8 bytes of data written.
+ */
+extern int
+js_OneUcs4ToUtf8Char(uint8 *utf8Buffer, uint32 ucs4Char);
 
 JS_END_EXTERN_C
 

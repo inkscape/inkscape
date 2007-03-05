@@ -48,7 +48,7 @@
 JS_BEGIN_EXTERN_C
 
 struct JSFunction {
-    jsrefcount	 nrefs;		/* number of referencing objects */
+    jsrefcount   nrefs;         /* number of referencing objects */
     JSObject     *object;       /* back-pointer to GC'ed object header */
     union {
         JSNative native;        /* native method pointer or null */
@@ -78,7 +78,7 @@ extern JS_FRIEND_DATA(JSClass) js_FunctionClass;
  * NB: jsapi.h and jsobj.h must be included before any call to this macro.
  */
 #define JSVAL_IS_FUNCTION(cx, v)                                              \
-    (JSVAL_IS_OBJECT(v) && JSVAL_TO_OBJECT(v) &&                              \
+    (!JSVAL_IS_PRIMITIVE(v) &&                                                \
      OBJ_GET_CLASS(cx, JSVAL_TO_OBJECT(v)) == &js_FunctionClass)
 
 extern JSBool
@@ -99,7 +99,7 @@ js_InitCallClass(JSContext *cx, JSObject *obj);
 
 extern JSFunction *
 js_NewFunction(JSContext *cx, JSObject *funobj, JSNative native, uintN nargs,
-	       uintN flags, JSObject *parent, JSAtom *atom);
+               uintN flags, JSObject *parent, JSAtom *atom);
 
 extern JSObject *
 js_CloneFunctionObject(JSContext *cx, JSObject *funobj, JSObject *parent);
@@ -109,7 +109,7 @@ js_LinkFunctionObject(JSContext *cx, JSFunction *fun, JSObject *object);
 
 extern JSFunction *
 js_DefineFunction(JSContext *cx, JSObject *obj, JSAtom *atom, JSNative native,
-		  uintN nargs, uintN flags);
+                  uintN nargs, uintN flags);
 
 /*
  * Flags for js_ValueToFunction and js_ReportIsNotFunction.  We depend on the
@@ -121,6 +121,12 @@ js_DefineFunction(JSContext *cx, JSObject *obj, JSAtom *atom, JSNative native,
 
 extern JSFunction *
 js_ValueToFunction(JSContext *cx, jsval *vp, uintN flags);
+
+extern JSObject *
+js_ValueToFunctionObject(JSContext *cx, jsval *vp, uintN flags);
+
+extern JSObject *
+js_ValueToCallableObject(JSContext *cx, jsval *vp, uintN flags);
 
 extern void
 js_ReportIsNotFunction(JSContext *cx, jsval *vp, uintN flags);

@@ -50,6 +50,7 @@
 #include "jsapi.h"
 #include "jsatom.h"
 #include "jscntxt.h"
+#include "jsconfig.h"
 #include "jsgc.h"
 #include "jslock.h"
 #include "jsnum.h"
@@ -59,19 +60,12 @@
 JS_FRIEND_API(const char *)
 js_AtomToPrintableString(JSContext *cx, JSAtom *atom)
 {
-    JSString *str;
-    const char *bytes;
-
-    str = js_QuoteString(cx, ATOM_TO_STRING(atom), 0);
-    if (!str)
-        return NULL;
-    bytes = js_GetStringBytes(str);
-    if (!bytes)
-        JS_ReportOutOfMemory(cx);
-    return bytes;
+    return js_ValueToPrintableString(cx, ATOM_KEY(atom));
 }
 
+#if JS_HAS_ERROR_EXCEPTIONS
 extern const char js_Error_str[];       /* trivial, from jsexn.h */
+#endif
 
 /*
  * Keep this in sync with jspubtd.h -- an assertion below will insist that
@@ -79,11 +73,13 @@ extern const char js_Error_str[];       /* trivial, from jsexn.h */
  */
 const char *js_type_str[] = {
     "undefined",
-    "object",
+    js_object_str,
     "function",
     "string",
     "number",
     "boolean",
+    "null",
+    "xml",
 };
 
 const char *js_boolean_str[] = {
@@ -98,11 +94,15 @@ const char js_Call_str[]            = "Call";
 const char js_Date_str[]            = "Date";
 const char js_Function_str[]        = "Function";
 const char js_Math_str[]            = "Math";
+const char js_Namespace_str[]       = "Namespace";
 const char js_Number_str[]          = "Number";
 const char js_Object_str[]          = "Object";
+const char js_QName_str[]           = "QName";
 const char js_RegExp_str[]          = "RegExp";
 const char js_Script_str[]          = "Script";
 const char js_String_str[]          = "String";
+const char js_XML_str[]             = "XML";
+const char js_File_str[]            = "File";
 const char js_anonymous_str[]       = "anonymous";
 const char js_arguments_str[]       = "arguments";
 const char js_arity_str[]           = "arity";
@@ -111,6 +111,7 @@ const char js_caller_str[]          = "caller";
 const char js_class_prototype_str[] = "prototype";
 const char js_constructor_str[]     = "constructor";
 const char js_count_str[]           = "__count__";
+const char js_each_str[]            = "each";
 const char js_eval_str[]            = "eval";
 const char js_getter_str[]          = "getter";
 const char js_get_str[]             = "get";
@@ -119,7 +120,9 @@ const char js_input_str[]           = "input";
 const char js_length_str[]          = "length";
 const char js_name_str[]            = "name";
 const char js_noSuchMethod_str[]    = "__noSuchMethod__";
+const char js_object_str[]          = "object";
 const char js_parent_str[]          = "__parent__";
+const char js_private_str[]         = "private";
 const char js_proto_str[]           = "__proto__";
 const char js_setter_str[]          = "setter";
 const char js_set_str[]             = "set";
@@ -127,6 +130,19 @@ const char js_toSource_str[]        = "toSource";
 const char js_toString_str[]        = "toString";
 const char js_toLocaleString_str[]  = "toLocaleString";
 const char js_valueOf_str[]         = "valueOf";
+
+#if JS_HAS_XML_SUPPORT
+const char js_etago_str[]           = "</";
+const char js_namespace_str[]       = "namespace";
+const char js_ptagc_str[]           = "/>";
+const char js_qualifier_str[]       = "::";
+const char js_space_str[]           = " ";
+const char js_stago_str[]           = "<";
+const char js_star_str[]            = "*";
+const char js_starQualifier_str[]   = "*::";
+const char js_tagc_str[]            = ">";
+const char js_xml_str[]             = "xml";
+#endif
 
 #ifdef NARCISSUS
 const char js_call_str[]             = "__call__";
@@ -136,9 +152,9 @@ const char js_ExecutionContext_str[] = "ExecutionContext";
 const char js_current_str[]          = "current";
 #endif
 
-#define HASH_OBJECT(o)  ((JSHashNumber)(o) >> JSVAL_TAGBITS)
+#define HASH_OBJECT(o)  (JS_PTR_TO_UINT32(o) >> JSVAL_TAGBITS)
 #define HASH_INT(i)     ((JSHashNumber)(i))
-#define HASH_DOUBLE(dp) ((JSHashNumber)(JSDOUBLE_HI32(*dp) ^ JSDOUBLE_LO32(*dp)))
+#define HASH_DOUBLE(dp) ((JSDOUBLE_HI32(*dp) ^ JSDOUBLE_LO32(*dp)))
 #define HASH_BOOLEAN(b) ((JSHashNumber)(b))
 
 JS_STATIC_DLL_CALLBACK(JSHashNumber)
@@ -291,14 +307,20 @@ js_InitPinnedAtoms(JSContext *cx, JSAtomState *state)
     FROB(BooleanAtom,             js_Boolean_str);
     FROB(CallAtom,                js_Call_str);
     FROB(DateAtom,                js_Date_str);
+#if JS_HAS_ERROR_EXCEPTIONS
     FROB(ErrorAtom,               js_Error_str);
+#endif
     FROB(FunctionAtom,            js_Function_str);
     FROB(MathAtom,                js_Math_str);
+    FROB(NamespaceAtom,           js_Namespace_str);
     FROB(NumberAtom,              js_Number_str);
     FROB(ObjectAtom,              js_Object_str);
+    FROB(QNameAtom,               js_QName_str);
     FROB(RegExpAtom,              js_RegExp_str);
     FROB(ScriptAtom,              js_Script_str);
     FROB(StringAtom,              js_String_str);
+    FROB(XMLAtom,                 js_XML_str);
+    FROB(FileAtom,                js_File_str);
     FROB(anonymousAtom,           js_anonymous_str);
     FROB(argumentsAtom,           js_arguments_str);
     FROB(arityAtom,               js_arity_str);
@@ -307,6 +329,7 @@ js_InitPinnedAtoms(JSContext *cx, JSAtomState *state)
     FROB(classPrototypeAtom,      js_class_prototype_str);
     FROB(constructorAtom,         js_constructor_str);
     FROB(countAtom,               js_count_str);
+    FROB(eachAtom,                js_each_str);
     FROB(evalAtom,                js_eval_str);
     FROB(getAtom,                 js_get_str);
     FROB(getterAtom,              js_getter_str);
@@ -323,6 +346,19 @@ js_InitPinnedAtoms(JSContext *cx, JSAtomState *state)
     FROB(toStringAtom,            js_toString_str);
     FROB(toLocaleStringAtom,      js_toLocaleString_str);
     FROB(valueOfAtom,             js_valueOf_str);
+
+#if JS_HAS_XML_SUPPORT
+    FROB(etagoAtom,               js_etago_str);
+    FROB(namespaceAtom,           js_namespace_str);
+    FROB(ptagcAtom,               js_ptagc_str);
+    FROB(qualifierAtom,           js_qualifier_str);
+    FROB(spaceAtom,               js_space_str);
+    FROB(stagoAtom,               js_stago_str);
+    FROB(starAtom,                js_star_str);
+    FROB(starQualifierAtom,       js_starQualifier_str);
+    FROB(tagcAtom,                js_tagc_str);
+    FROB(xmlAtom,                 js_xml_str);
+#endif
 
 #ifdef NARCISSUS
     FROB(callAtom,                js_call_str);
@@ -445,7 +481,7 @@ js_atom_sweeper(JSHashEntry *he, intN i, void *arg)
         return HT_ENUMERATE_NEXT;
     }
     JS_ASSERT((atom->flags & (ATOM_PINNED | ATOM_INTERNED)) == 0);
-    atom->entry.key = NULL;
+    atom->entry.key = atom->entry.value = NULL;
     atom->flags = 0;
     return HT_ENUMERATE_REMOVE;
 }
@@ -595,6 +631,12 @@ out:
     return atom;
 }
 
+/*
+ * To put an atom into the hidden subspace. XOR its keyHash with this value,
+ * which is (sqrt(2)-1) in 32-bit fixed point.
+ */
+#define HIDDEN_ATOM_SUBSPACE_KEYHASH    0x6A09E667
+
 JSAtom *
 js_AtomizeString(JSContext *cx, JSString *str, uintN flags)
 {
@@ -606,6 +648,8 @@ js_AtomizeString(JSContext *cx, JSString *str, uintN flags)
     JSAtom *atom;
 
     keyHash = js_HashString(str);
+    if (flags & ATOM_HIDDEN)
+        keyHash ^= HIDDEN_ATOM_SUBSPACE_KEYHASH;
     key = STRING_TO_JSVAL(str);
     state = &cx->runtime->atomState;
     JS_LOCK(&state->lock, cx);
@@ -651,7 +695,7 @@ js_AtomizeString(JSContext *cx, JSString *str, uintN flags)
     }
 
     atom = (JSAtom *)he;
-    atom->flags |= flags & (ATOM_PINNED | ATOM_INTERNED);
+    atom->flags |= flags & (ATOM_PINNED | ATOM_INTERNED | ATOM_HIDDEN);
     cx->lastAtom = atom;
 out:
     JS_UNLOCK(&state->lock,cx);
@@ -675,12 +719,15 @@ js_Atomize(JSContext *cx, const char *bytes, size_t length, uintN flags)
      */
 #define ATOMIZE_BUF_MAX 32
     jschar inflated[ATOMIZE_BUF_MAX];
+    size_t inflatedLength = ATOMIZE_BUF_MAX - 1;
 
     if (length < ATOMIZE_BUF_MAX) {
-        js_InflateStringToBuffer(inflated, bytes, length);
+        js_InflateStringToBuffer(cx, bytes, length, inflated, &inflatedLength);
+        inflated[inflatedLength] = 0;
         chars = inflated;
     } else {
-        chars = js_InflateString(cx, bytes, length);
+        inflatedLength = length;
+        chars = js_InflateString(cx, bytes, &inflatedLength);
         if (!chars)
             return NULL;
         flags |= ATOM_NOCOPY;
@@ -689,7 +736,7 @@ js_Atomize(JSContext *cx, const char *bytes, size_t length, uintN flags)
     str = ALIGN(buf, JSString);
 
     str->chars = chars;
-    str->length = length;
+    str->length = inflatedLength;
     atom = js_AtomizeString(cx, str, ATOM_TMPSTR | flags);
     if (chars != inflated && (!atom || ATOM_TO_STRING(atom)->chars != chars))
         JS_free(cx, chars);
@@ -805,11 +852,17 @@ js_IndexAtom(JSContext *cx, JSAtom *atom, JSAtomList *al)
             if (!al->table) {
                 /* No hash table yet, so hep had better be null! */
                 JS_ASSERT(!hep);
-                al->table = JS_NewHashTable(8, js_hash_atom_ptr,
+                al->table = JS_NewHashTable(al->count + 1, js_hash_atom_ptr,
                                             JS_CompareValues, JS_CompareValues,
                                             &temp_alloc_ops, cx);
                 if (!al->table)
                     return NULL;
+
+                /*
+                 * Set ht->nentries explicitly, because we are moving entries
+                 * from al to ht, not calling JS_HashTable(Raw|)Add.
+                 */
+                al->table->nentries = al->count;
 
                 /* Insert each ale on al->list into the new hash table. */
                 for (ale2 = al->list; ale2; ale2 = next) {

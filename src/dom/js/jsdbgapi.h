@@ -53,14 +53,14 @@ js_PatchOpcode(JSContext *cx, JSScript *script, jsbytecode *pc, JSOp op);
 
 extern JS_PUBLIC_API(JSBool)
 JS_SetTrap(JSContext *cx, JSScript *script, jsbytecode *pc,
-	   JSTrapHandler handler, void *closure);
+           JSTrapHandler handler, void *closure);
 
 extern JS_PUBLIC_API(JSOp)
 JS_GetTrapOpcode(JSContext *cx, JSScript *script, jsbytecode *pc);
 
 extern JS_PUBLIC_API(void)
 JS_ClearTrap(JSContext *cx, JSScript *script, jsbytecode *pc,
-	     JSTrapHandler *handlerp, void **closurep);
+             JSTrapHandler *handlerp, void **closurep);
 
 extern JS_PUBLIC_API(void)
 JS_ClearScriptTraps(JSContext *cx, JSScript *script);
@@ -81,11 +81,11 @@ JS_ClearInterrupt(JSRuntime *rt, JSTrapHandler *handlerp, void **closurep);
 
 extern JS_PUBLIC_API(JSBool)
 JS_SetWatchPoint(JSContext *cx, JSObject *obj, jsval id,
-		 JSWatchPointHandler handler, void *closure);
+                 JSWatchPointHandler handler, void *closure);
 
 extern JS_PUBLIC_API(JSBool)
 JS_ClearWatchPoint(JSContext *cx, JSObject *obj, jsval id,
-		   JSWatchPointHandler *handlerp, void **closurep);
+                   JSWatchPointHandler *handlerp, void **closurep);
 
 extern JS_PUBLIC_API(JSBool)
 JS_ClearWatchPointsForObject(JSContext *cx, JSObject *obj);
@@ -99,7 +99,7 @@ JS_ClearAllWatchPoints(JSContext *cx);
  * header file "jsconfig.h" has been included.
  */
 extern void
-js_MarkWatchPoints(JSRuntime *rt);
+js_MarkWatchPoints(JSContext *cx);
 
 extern JSScopeProperty *
 js_FindWatchPoint(JSRuntime *rt, JSScope *scope, jsid id);
@@ -130,6 +130,9 @@ JS_LineNumberToPC(JSContext *cx, JSScript *script, uintN lineno);
 
 extern JS_PUBLIC_API(JSScript *)
 JS_GetFunctionScript(JSContext *cx, JSFunction *fun);
+
+extern JS_PUBLIC_API(JSNative)
+JS_GetFunctionNative(JSContext *cx, JSFunction *fun);
 
 extern JS_PUBLIC_API(JSPrincipals *)
 JS_GetScriptPrincipals(JSContext *cx, JSScript *script);
@@ -164,10 +167,11 @@ extern JS_PUBLIC_API(JSPrincipals *)
 JS_StackFramePrincipals(JSContext *cx, JSStackFrame *fp);
 
 /*
- * Like JS_StackFramePrincipals(cx, caller), but if cx->findObjectPrincipals
- * is non-null, return the object principals for fp's callee function object
- * (fp->argv[-2]), which is eval, Function, or a similar eval-like method.
- * The caller parameter should be the result of JS_GetScriptedCaller(cx, fp).
+ * This API is like JS_StackFramePrincipals(cx, caller), except that if
+ * cx->runtime->findObjectPrincipals is non-null, it returns the weaker of
+ * the caller's principals and the object principals of fp's callee function
+ * object (fp->argv[-2]), which is eval, Function, or a similar eval-like
+ * method.  The caller parameter should be JS_GetScriptedCaller(cx, fp).
  *
  * All eval-like methods must use JS_EvalFramePrincipals to acquire a weak
  * reference to the correct principals for the eval call to be secure, given
@@ -221,6 +225,12 @@ JS_GetFrameReturnValue(JSContext *cx, JSStackFrame *fp);
 extern JS_PUBLIC_API(void)
 JS_SetFrameReturnValue(JSContext *cx, JSStackFrame *fp, jsval rval);
 
+/**
+ * Return fp's callee function object (fp->argv[-2]) if it has one.
+ */
+extern JS_PUBLIC_API(JSObject *)
+JS_GetFrameCalleeObject(JSContext *cx, JSStackFrame *fp);
+
 /************************************************************************/
 
 extern JS_PUBLIC_API(const char *)
@@ -250,7 +260,7 @@ JS_SetNewScriptHook(JSRuntime *rt, JSNewScriptHook hook, void *callerdata);
 
 extern JS_PUBLIC_API(void)
 JS_SetDestroyScriptHook(JSRuntime *rt, JSDestroyScriptHook hook,
-			void *callerdata);
+                        void *callerdata);
 
 /************************************************************************/
 
@@ -262,9 +272,9 @@ JS_EvaluateUCInStackFrame(JSContext *cx, JSStackFrame *fp,
 
 extern JS_PUBLIC_API(JSBool)
 JS_EvaluateInStackFrame(JSContext *cx, JSStackFrame *fp,
-			const char *bytes, uintN length,
-			const char *filename, uintN lineno,
-			jsval *rval);
+                        const char *bytes, uintN length,
+                        const char *filename, uintN lineno,
+                        jsval *rval);
 
 /************************************************************************/
 
@@ -298,7 +308,7 @@ JS_PropertyIterator(JSObject *obj, JSScopeProperty **iteratorp);
 
 extern JS_PUBLIC_API(JSBool)
 JS_GetPropertyDesc(JSContext *cx, JSObject *obj, JSScopeProperty *sprop,
-		   JSPropertyDesc *pd);
+                   JSPropertyDesc *pd);
 
 extern JS_PUBLIC_API(JSBool)
 JS_GetPropertyDescArray(JSContext *cx, JSObject *obj, JSPropertyDescArray *pda);
@@ -339,6 +349,57 @@ JS_GetFunctionTotalSize(JSContext *cx, JSFunction *fun);
 
 extern JS_PUBLIC_API(size_t)
 JS_GetScriptTotalSize(JSContext *cx, JSScript *script);
+
+/*
+ * Get the top-most running script on cx starting from fp, or from the top of
+ * cx's frame stack if fp is null, and return its script filename flags.  If
+ * the script has a null filename member, return JSFILENAME_NULL.
+ */
+extern JS_PUBLIC_API(uint32)
+JS_GetTopScriptFilenameFlags(JSContext *cx, JSStackFrame *fp);
+
+/*
+ * Get the script filename flags for the script.  If the script
+ * doesn't have a filename, return JSFILENAME_NULL.
+ */
+extern JS_PUBLIC_API(uint32)
+JS_GetScriptFilenameFlags(JSScript *script);
+
+/*
+ * Associate flags with a script filename prefix in rt, so that any subsequent
+ * script compilation will inherit those flags if the script's filename is the
+ * same as prefix, or if prefix is a substring of the script's filename.
+ *
+ * The API defines only one flag bit, JSFILENAME_SYSTEM, leaving the remaining
+ * 31 bits up to the API client to define.  The union of all 32 bits must not
+ * be a legal combination, however, in order to preserve JSFILENAME_NULL as a
+ * unique value.  API clients may depend on JSFILENAME_SYSTEM being a set bit
+ * in JSFILENAME_NULL -- a script with a null filename member is presumed to
+ * be a "system" script.
+ */
+extern JS_PUBLIC_API(JSBool)
+JS_FlagScriptFilenamePrefix(JSRuntime *rt, const char *prefix, uint32 flags);
+
+#define JSFILENAME_NULL         0xffffffff      /* null script filename */
+#define JSFILENAME_SYSTEM       0x00000001      /* "system" script, see below */
+
+/*
+ * Return true if obj is a "system" object, that is, one flagged by a prior
+ * call to JS_FlagSystemObject(cx, obj).  What "system" means is up to the API
+ * client, but it can be used to coordinate access control policies based on
+ * script filenames and their prefixes, using JS_FlagScriptFilenamePrefix and
+ * JS_GetTopScriptFilenameFlags.
+ */
+extern JS_PUBLIC_API(JSBool)
+JS_IsSystemObject(JSContext *cx, JSObject *obj);
+
+/*
+ * Flag obj as a "system" object.  The API client can flag system objects to
+ * optimize access control checks.  The engine stores but does not interpret
+ * the per-object flag set by this call.
+ */
+extern JS_PUBLIC_API(void)
+JS_FlagSystemObject(JSContext *cx, JSObject *obj);
 
 JS_END_EXTERN_C
 

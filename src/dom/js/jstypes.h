@@ -107,21 +107,18 @@
 #define JS_STATIC_DLL_CALLBACK(__x) __x JS_DLL_CALLBACK
 #endif /* _WINDLL */
 
-#elif defined(XP_MAC)
-#define JS_EXTERN_API(__type) extern __declspec(export) __type
-#define JS_EXPORT_API(__type) __declspec(export) __type
-#define JS_EXTERN_DATA(__type) extern __declspec(export) __type
-#define JS_EXPORT_DATA(__type) __declspec(export) __type
-
-#define JS_DLL_CALLBACK
-#define JS_STATIC_DLL_CALLBACK(__x) static __x
-
 #else /* Unix */
 
-#define JS_EXTERN_API(__type) extern __type
-#define JS_EXPORT_API(__type) __type
-#define JS_EXTERN_DATA(__type) extern __type
-#define JS_EXPORT_DATA(__type) __type
+#ifdef HAVE_VISIBILITY_PRAGMA
+#define JS_EXTERNAL_VIS __attribute__((visibility ("default")))
+#else
+#define JS_EXTERNAL_VIS
+#endif
+
+#define JS_EXTERN_API(__type) extern JS_EXTERNAL_VIS __type
+#define JS_EXPORT_API(__type) JS_EXTERNAL_VIS __type
+#define JS_EXTERN_DATA(__type) extern JS_EXTERNAL_VIS __type
+#define JS_EXPORT_DATA(__type) JS_EXTERNAL_VIS __type
 
 #define JS_DLL_CALLBACK
 #define JS_STATIC_DLL_CALLBACK(__x) static __x
@@ -141,7 +138,7 @@
 #if defined(_WIN32) && !defined(__MWERKS__) && !defined(__GNUC__)
 #    define JS_IMPORT_DATA(__x)      __declspec(dllimport) __x
 #else
-#    define JS_IMPORT_DATA(__x)     __x
+#    define JS_IMPORT_DATA(__x)     JS_EXPORT_DATA (__x)
 #endif
 
 /*
@@ -203,6 +200,19 @@
 #define JS_BITMASK(n)   (JS_BIT(n) - 1)
 
 /***********************************************************************
+** MACROS:      JS_PTR_TO_INT32
+**              JS_PTR_TO_UINT32
+**              JS_INT32_TO_PTR
+**              JS_UINT32_TO_PTR
+** DESCRIPTION:
+** Integer to pointer and pointer to integer conversion macros.
+***********************************************************************/
+#define JS_PTR_TO_INT32(x)  ((jsint)((char *)(x) - (char *)0))
+#define JS_PTR_TO_UINT32(x) ((jsuint)((char *)(x) - (char *)0))
+#define JS_INT32_TO_PTR(x)  ((void *)((char *)0 + (jsint)(x)))
+#define JS_UINT32_TO_PTR(x) ((void *)((char *)0 + (jsuint)(x)))
+
+/***********************************************************************
 ** MACROS:      JS_HOWMANY
 **              JS_ROUNDUP
 **              JS_MIN
@@ -215,13 +225,13 @@
 #define JS_MIN(x,y)     ((x)<(y)?(x):(y))
 #define JS_MAX(x,y)     ((x)>(y)?(x):(y))
 
-#if (defined(XP_MAC) || defined(XP_WIN)) && !defined(CROSS_COMPILE)
+#if (defined(XP_WIN) && !defined(CROSS_COMPILE)) || defined (WINCE)
 #    include "jscpucfg.h"        /* Use standard Mac or Windows configuration */
 #elif defined(XP_UNIX) || defined(XP_BEOS) || defined(XP_OS2) || defined(CROSS_COMPILE)
 #    include "jsautocfg.h"       /* Use auto-detected configuration */
 #    include "jsosdep.h"         /* ...and platform-specific flags */
 #else
-#    error "Must define one of XP_BEOS, XP_MAC, XP_OS2, XP_WIN or XP_UNIX"
+#    error "Must define one of XP_BEOS, XP_OS2, XP_WIN or XP_UNIX"
 #endif
 
 JS_BEGIN_EXTERN_C
@@ -382,7 +392,30 @@ typedef unsigned long JSUword;
 
 #include "jsotypes.h"
 
+/***********************************************************************
+** MACROS:      JS_LIKELY
+**              JS_UNLIKELY
+** DESCRIPTION:
+**      These macros allow you to give a hint to the compiler about branch
+**      probability so that it can better optimize.  Use them like this:
+**
+**      if (JS_LIKELY(v == 1)) {
+**          ... expected code path ...
+**      }
+**
+**      if (JS_UNLIKELY(v == 0)) {
+**          ... non-expected code path ...
+**      }
+**
+***********************************************************************/
+#if defined(__GNUC__) && (__GNUC__ > 2)
+#define JS_LIKELY(x)    (__builtin_expect((x), 1))
+#define JS_UNLIKELY(x)  (__builtin_expect((x), 0))
+#else
+#define JS_LIKELY(x)    (x)
+#define JS_UNLIKELY(x)  (x)
+#endif
+
 JS_END_EXTERN_C
 
 #endif /* jstypes_h___ */
-

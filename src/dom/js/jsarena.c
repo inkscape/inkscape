@@ -78,11 +78,11 @@ JS_InitArenaPool(JSArenaPool *pool, const char *name, size_t size, size_t align)
     }
 #endif
     if (align == 0)
-	align = JS_ARENA_DEFAULT_ALIGN;
+        align = JS_ARENA_DEFAULT_ALIGN;
     pool->mask = JS_BITMASK(JS_CeilingLog2(align));
     pool->first.next = NULL;
     pool->first.base = pool->first.avail = pool->first.limit =
-	JS_ARENA_ALIGN(pool, &pool->first + 1);
+        JS_ARENA_ALIGN(pool, &pool->first + 1);
     pool->current = &pool->first;
     pool->arenasize = size;
 #ifdef JS_ARENAMETER
@@ -159,27 +159,38 @@ JS_ArenaAllocate(JSArenaPool *pool, size_t nb)
     jsuword extra, hdrsz, gross, sz;
     void *p;
 
-    /* Search pool from current forward till we find or make enough space. */
+    /*
+     * Search pool from current forward till we find or make enough space.
+     *
+     * NB: subtract nb from a->limit in the loop condition, instead of adding
+     * nb to a->avail, to avoid overflowing a 32-bit address space (possible
+     * when running a 32-bit program on a 64-bit system where the kernel maps
+     * the heap up against the top of the 32-bit address space).
+     *
+     * Thanks to Juergen Kreileder <jk@blackdown.de>, who brought this up in
+     * https://bugzilla.mozilla.org/show_bug.cgi?id=279273.
+     */
     JS_ASSERT((nb & pool->mask) == 0);
-    for (a = pool->current; a->avail + nb > a->limit; pool->current = a) {
+    for (a = pool->current; nb > a->limit || a->avail > a->limit - nb;
+         pool->current = a) {
         ap = &a->next;
         if (!*ap) {
             /* Not enough space in pool -- try to reclaim a free arena. */
             extra = (nb > pool->arenasize) ? HEADER_SIZE(pool) : 0;
             hdrsz = sizeof *a + extra + pool->mask;
             gross = hdrsz + JS_MAX(nb, pool->arenasize);
+            if (gross < nb)
+                return NULL;
+
             bp = &arena_freelist;
             JS_ACQUIRE_LOCK(arena_freelist_lock);
             while ((b = *bp) != NULL) {
                 /*
-                 * Insist on exact arenasize match if nb is not greater than
-                 * arenasize.  Otherwise take any arena big enough, but not by
-                 * more than gross + arenasize.
+                 * Insist on exact arenasize match to avoid leaving alloc'able
+                 * space after an oversized allocation as it grows.
                  */
                 sz = JS_UPTRDIFF(b->limit, b);
-                if (extra
-                    ? sz >= gross && sz <= gross + pool->arenasize
-                    : sz == gross) {
+                if (sz == gross) {
                     *bp = b->next;
                     JS_RELEASE_LOCK(arena_freelist_lock);
                     b->next = NULL;
@@ -193,7 +204,7 @@ JS_ArenaAllocate(JSArenaPool *pool, size_t nb)
             JS_RELEASE_LOCK(arena_freelist_lock);
             b = (JSArena *) malloc(gross);
             if (!b)
-                return 0;
+                return NULL;
             b->next = NULL;
             b->limit = (jsuword)b + gross;
             JS_COUNT_ARENA(pool,++);
@@ -247,6 +258,7 @@ JS_ArenaRealloc(JSArenaPool *pool, void *p, size_t size, size_t incr)
     extra = HEADER_SIZE(pool);                  /* oversized header holds ap */
     hdrsz = sizeof *a + extra + pool->mask;     /* header and alignment slop */
     gross = hdrsz + aoff;
+    JS_ASSERT(gross > aoff);
     a = (JSArena *) realloc(a, gross);
     if (!a)
         return NULL;
@@ -312,34 +324,34 @@ FreeArenaList(JSArenaPool *pool, JSArena *head, JSBool reallyFree)
     ap = &head->next;
     a = *ap;
     if (!a)
-	return;
+        return;
 
 #ifdef DEBUG
     do {
-	JS_ASSERT(a->base <= a->avail && a->avail <= a->limit);
-	a->avail = a->base;
-	JS_CLEAR_UNUSED(a);
+        JS_ASSERT(a->base <= a->avail && a->avail <= a->limit);
+        a->avail = a->base;
+        JS_CLEAR_UNUSED(a);
     } while ((a = a->next) != NULL);
     a = *ap;
 #endif
 
     if (reallyFree) {
-	do {
-	    *ap = a->next;
-	    JS_CLEAR_ARENA(a);
-	    JS_COUNT_ARENA(pool,--);
-	    free(a);
-	} while ((a = *ap) != NULL);
+        do {
+            *ap = a->next;
+            JS_CLEAR_ARENA(a);
+            JS_COUNT_ARENA(pool,--);
+            free(a);
+        } while ((a = *ap) != NULL);
     } else {
-	/* Insert the whole arena chain at the front of the freelist. */
-	do {
-	    ap = &(*ap)->next;
-	} while (*ap);
+        /* Insert the whole arena chain at the front of the freelist. */
+        do {
+            ap = &(*ap)->next;
+        } while (*ap);
         JS_ACQUIRE_LOCK(arena_freelist_lock);
-	*ap = arena_freelist;
-	arena_freelist = a;
+        *ap = arena_freelist;
+        arena_freelist = a;
         JS_RELEASE_LOCK(arena_freelist_lock);
-	head->next = NULL;
+        head->next = NULL;
     }
 
     pool->current = head;
@@ -351,14 +363,14 @@ JS_ArenaRelease(JSArenaPool *pool, char *mark)
     JSArena *a;
 
     for (a = &pool->first; a; a = a->next) {
-	JS_ASSERT(a->base <= a->avail && a->avail <= a->limit);
+        JS_ASSERT(a->base <= a->avail && a->avail <= a->limit);
 
-	if (JS_UPTRDIFF(mark, a->base) <= JS_UPTRDIFF(a->avail, a->base)) {
-	    a->avail = JS_ARENA_ALIGN(pool, mark);
+        if (JS_UPTRDIFF(mark, a->base) <= JS_UPTRDIFF(a->avail, a->base)) {
+            a->avail = JS_ARENA_ALIGN(pool, mark);
             JS_ASSERT(a->avail <= a->limit);
-	    FreeArenaList(pool, a, JS_TRUE);
-	    return;
-	}
+            FreeArenaList(pool, a, JS_TRUE);
+            return;
+        }
     }
 }
 
@@ -439,17 +451,17 @@ JS_FinishArenaPool(JSArenaPool *pool)
     FreeArenaList(pool, &pool->first, JS_TRUE);
 #ifdef JS_ARENAMETER
     {
-	JSArenaStats *stats, **statsp;
+        JSArenaStats *stats, **statsp;
 
-	if (pool->stats.name)
-	    free(pool->stats.name);
-	for (statsp = &arena_stats_list; (stats = *statsp) != 0;
-	     statsp = &stats->next) {
-	    if (stats == &pool->stats) {
-		*statsp = stats->next;
-		return;
-	    }
-	}
+        if (pool->stats.name)
+            free(pool->stats.name);
+        for (statsp = &arena_stats_list; (stats = *statsp) != 0;
+             statsp = &stats->next) {
+            if (stats == &pool->stats) {
+                *statsp = stats->next;
+                return;
+            }
+        }
     }
 #endif
 }
@@ -543,9 +555,9 @@ JS_DumpArenaStats(FILE *fp)
             else
                 variance /= nallocs * (nallocs - 1);
             sigma = sqrt(variance);
-	} else {
-	    mean = variance = sigma = 0;
-	}
+        } else {
+            mean = variance = sigma = 0;
+        }
 
         fprintf(fp, "\n%s allocation statistics:\n", stats->name);
         fprintf(fp, "              number of arenas: %u\n", stats->narenas);

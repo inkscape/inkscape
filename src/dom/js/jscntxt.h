@@ -54,6 +54,7 @@
 #include "jsprvtd.h"
 #include "jspubtd.h"
 #include "jsregexp.h"
+#include "jsutil.h"
 
 JS_BEGIN_EXTERN_C
 
@@ -71,25 +72,51 @@ typedef struct JSPropertyTreeEntry {
     JSScopeProperty     *child;
 } JSPropertyTreeEntry;
 
+/*
+ * Forward declaration for opaque JSRuntime.nativeIteratorStates.
+ */
+typedef struct JSNativeIteratorState JSNativeIteratorState;
+
 struct JSRuntime {
     /* Runtime state, synchronized by the stateChange/gcLock condvar/lock. */
     JSRuntimeState      state;
 
     /* Garbage collector state, used by jsgc.c. */
-    JSArenaPool         gcArenaPool;
+    JSArenaPool         gcArenaPool[GC_NUM_FREELISTS];
+    JSGCThing           *gcFreeList[GC_NUM_FREELISTS];
     JSDHashTable        gcRootsHash;
     JSDHashTable        *gcLocksHash;
-    JSGCThing           *gcFreeList;
     jsrefcount          gcKeepAtoms;
     uint32              gcBytes;
     uint32              gcLastBytes;
     uint32              gcMaxBytes;
+    uint32              gcMaxMallocBytes;
     uint32              gcLevel;
     uint32              gcNumber;
     JSPackedBool        gcPoke;
     JSPackedBool        gcRunning;
     JSGCCallback        gcCallback;
     uint32              gcMallocBytes;
+
+    /*
+     * API compatibility requires keeping GCX_PRIVATE bytes separate from the
+     * original GC types' byte tally.  Otherwise embeddings that configure a
+     * good limit for pre-GCX_PRIVATE versions of the engine will see memory
+     * over-pressure too often, possibly leading to failed last-ditch GCs.
+     *
+     * The new XML GC-thing types do add to gcBytes, and they're larger than
+     * the original GC-thing type size (8 bytes on most architectures).  So a
+     * user who enables E4X may want to increase the maxbytes value passed to
+     * JS_NewRuntime.  TODO: Note this in the API docs.
+     */
+    uint32              gcPrivateBytes;
+
+#if JS_HAS_XML_SUPPORT
+    /* Lists of JSXML private data structures to be finalized. */
+    JSXMLNamespace      *gcDoomedNamespaces;
+    JSXMLQName          *gcDoomedQNames;
+    JSXML               *gcDoomedXML;
+#endif
 #ifdef JS_GCMETER
     JSGCStats           gcStats;
 #endif
@@ -204,6 +231,9 @@ struct JSRuntime {
     /* Security principals serialization support. */
     JSPrincipalsTranscoder principalsTranscoder;
 
+    /* Optional hook to find principals for an object in this runtime. */
+    JSObjectPrincipalsFinder findObjectPrincipals;
+
     /* Shared scope property tree, and allocator for its nodes. */
     JSDHashTable        propertyTreeHash;
     JSScopeProperty     *propertyFreeList;
@@ -211,6 +241,7 @@ struct JSRuntime {
 
     /* Script filename table. */
     struct JSHashTable  *scriptFilenameTable;
+    JSCList             scriptFilenamePrefixes;
 #ifdef JS_THREADSAFE
     PRLock              *scriptFilenameTableLock;
 #endif
@@ -219,6 +250,22 @@ struct JSRuntime {
     const char          *thousandsSeparator;
     const char          *decimalSeparator;
     const char          *numGrouping;
+
+    /*
+     * Weak references to lazily-created, well-known XML singletons.
+     *
+     * NB: Singleton objects must be carefully disconnected from the rest of
+     * the object graph usually associated with a JSContext's global object,
+     * including the set of standard class objects.  See jsxml.c for details.
+     */
+    JSObject            *anynameObject;
+    JSObject            *functionNamespaceObject;
+
+    /*
+     * A helper list for the GC, so it can mark native iterator states. See
+     * js_MarkNativeIteratorStates for details.
+     */
+    JSNativeIteratorState *nativeIteratorStates;
 
 #ifdef DEBUG
     /* Function invocation metering. */
@@ -310,7 +357,7 @@ typedef struct JSResolvingEntry {
 
 typedef struct JSLocalRootChunk JSLocalRootChunk;
 
-#define JSLRS_CHUNK_SHIFT       6
+#define JSLRS_CHUNK_SHIFT       8
 #define JSLRS_CHUNK_SIZE        JS_BIT(JSLRS_CHUNK_SHIFT)
 #define JSLRS_CHUNK_MASK        JS_BITMASK(JSLRS_CHUNK_SHIFT)
 
@@ -320,13 +367,106 @@ struct JSLocalRootChunk {
 };
 
 typedef struct JSLocalRootStack {
-    uint16              scopeMark;
-    uint16              rootCount;
+    uint32              scopeMark;
+    uint32              rootCount;
     JSLocalRootChunk    *topChunk;
     JSLocalRootChunk    firstChunk;
 } JSLocalRootStack;
 
-#define JSLRS_NULL_MARK ((uint16) -1)
+#define JSLRS_NULL_MARK ((uint32) -1)
+
+typedef struct JSTempValueRooter JSTempValueRooter;
+typedef void
+(* JS_DLL_CALLBACK JSTempValueMarker)(JSContext *cx, JSTempValueRooter *tvr);
+
+typedef union JSTempValueUnion {
+    jsval               value;
+    JSObject            *object;
+    JSTempValueMarker   marker;
+    jsval               *array;
+} JSTempValueUnion;
+
+/*
+ * Context-linked stack of temporary GC roots.
+ *
+ * If count is -1, then u.value contains the single value to root.
+ * If count is -2, then u.marker holds a mark hook that is executed to mark
+ * the values.
+ * If count >= 0, then u.array points to a stack-allocated vector of jsvals.
+ *
+ * To root a single GC-thing pointer, which need not be tagged and stored as a
+ * jsval, use JS_PUSH_SINGLE_TEMP_ROOT.  The (jsval)(val) cast works because a
+ * GC-thing is aligned on a 0 mod 8 boundary, and object has the 0 jsval tag.
+ * So any GC-thing may be tagged as if it were an object and untagged, if it's
+ * then used only as an opaque pointer until discriminated by other means than
+ * tag bits (this is how the GC mark function uses its |thing| parameter -- it
+ * consults GC-thing flags stored separately from the thing to decide the type
+ * of thing).
+ *
+ * Alternatively, if a single pointer to rooted JSObject * is required, use
+ * JS_PUSH_TEMP_ROOT_OBJECT(cx, NULL, &tvr). Then &tvr.u.object gives the
+ * necessary pointer, which puns tvr.u.value safely because object tag bits
+ * are all zeroes.
+ *
+ * If you need to protect a result value that flows out of a C function across
+ * several layers of other functions, use the js_LeaveLocalRootScopeWithResult
+ * internal API (see further below) instead.
+ */
+struct JSTempValueRooter {
+    JSTempValueRooter   *down;
+    ptrdiff_t           count;
+    JSTempValueUnion    u;
+};
+
+#define JS_PUSH_TEMP_ROOT_COMMON(cx,tvr)                                      \
+    JS_BEGIN_MACRO                                                            \
+        JS_ASSERT((cx)->tempValueRooters != (tvr));                           \
+        (tvr)->down = (cx)->tempValueRooters;                                 \
+        (cx)->tempValueRooters = (tvr);                                       \
+    JS_END_MACRO
+
+#define JS_PUSH_SINGLE_TEMP_ROOT(cx,val,tvr)                                  \
+    JS_BEGIN_MACRO                                                            \
+        JS_PUSH_TEMP_ROOT_COMMON(cx, tvr);                                    \
+        (tvr)->count = -1;                                                    \
+        (tvr)->u.value = (val);                                               \
+    JS_END_MACRO
+
+#define JS_PUSH_TEMP_ROOT(cx,cnt,arr,tvr)                                     \
+    JS_BEGIN_MACRO                                                            \
+        JS_PUSH_TEMP_ROOT_COMMON(cx, tvr);                                    \
+        JS_ASSERT((ptrdiff_t)(cnt) >= 0);                                     \
+        (tvr)->count = (ptrdiff_t)(cnt);                                      \
+        (tvr)->u.array = (arr);                                               \
+    JS_END_MACRO
+
+#define JS_PUSH_TEMP_ROOT_MARKER(cx,marker_,tvr)                              \
+    JS_BEGIN_MACRO                                                            \
+        JS_PUSH_TEMP_ROOT_COMMON(cx, tvr);                                    \
+        (tvr)->count = -2;                                                    \
+        (tvr)->u.marker = (marker_);                                          \
+    JS_END_MACRO
+
+#define JS_PUSH_TEMP_ROOT_OBJECT(cx,obj,tvr)                                  \
+    JS_BEGIN_MACRO                                                            \
+        JS_PUSH_TEMP_ROOT_COMMON(cx, tvr);                                    \
+        (tvr)->count = -1;                                                    \
+        (tvr)->u.object = (obj);                                              \
+    JS_END_MACRO
+
+#define JS_POP_TEMP_ROOT(cx,tvr)                                              \
+    JS_BEGIN_MACRO                                                            \
+        JS_ASSERT((cx)->tempValueRooters == (tvr));                           \
+        (cx)->tempValueRooters = (tvr)->down;                                 \
+    JS_END_MACRO
+
+#define JS_TEMP_ROOT_EVAL(cx,cnt,val,expr)                                    \
+    JS_BEGIN_MACRO                                                            \
+        JSTempValueRooter tvr;                                                \
+        JS_PUSH_TEMP_ROOT(cx, cnt, val, &tvr);                                \
+        (expr);                                                               \
+        JS_POP_TEMP_ROOT(cx, &tvr);                                           \
+    JS_END_MACRO
 
 struct JSContext {
     JSCList             links;
@@ -338,7 +478,7 @@ struct JSContext {
     jsuword             stackLimit;
 
     /* Runtime version control identifier and equality operators. */
-    JSVersion           version;
+    uint16              version;
     jsbytecode          jsop_eq;
     jsbytecode          jsop_ne;
 
@@ -360,6 +500,9 @@ struct JSContext {
 
     /* Atom root for the last-looked-up atom on this context. */
     JSAtom              *lastAtom;
+
+    /* Root for the result of the most recent js_InternalInvoke call. */
+    jsval               lastInternalResult;
 
     /* Regular expression class statics (XXX not shared globally). */
     JSRegExpStatics     regExpStatics;
@@ -404,10 +547,20 @@ struct JSContext {
     JSPackedBool        rval2set;
 #endif
 
+#if JS_HAS_XML_SUPPORT
+    /*
+     * Bit-set formed from binary exponentials of the XML_* tiny-ids defined
+     * for boolean settings in jsxml.c, plus an XSF_CACHE_VALID bit.  Together
+     * these act as a cache of the boolean XML.ignore* and XML.prettyPrinting
+     * property values associated with this context's global object.
+     */
+    uint8               xmlSettingFlags;
+#endif
+
     /*
      * True if creating an exception object, to prevent runaway recursion.
-     * NB: creatingException packs with rval2set, #if JS_HAS_LVALUE_RETURN,
-     * and with throwing, below.
+     * NB: creatingException packs with rval2set, #if JS_HAS_LVALUE_RETURN;
+     * with xmlSettingFlags, #if JS_HAS_XML_SUPPORT; and with throwing below.
      */
     JSPackedBool        creatingException;
 
@@ -435,22 +588,108 @@ struct JSContext {
     /* PDL of stack headers describing stack slots not rooted by argv, etc. */
     JSStackHeader       *stackHeaders;
 
-    /* Optional hook to find principals for an object being accessed on cx. */
-    JSObjectPrincipalsFinder findObjectPrincipals;
-
-    /* Optional stack of scoped local GC roots. */
+    /* Optional stack of heap-allocated scoped local GC roots. */
     JSLocalRootStack    *localRootStack;
+
+    /* Stack of thread-stack-allocated temporary GC roots. */
+    JSTempValueRooter   *tempValueRooters;
 };
 
-/*
- * Slightly more readable macros, also to hide bitset implementation detail.
- * XXX beware non-boolean truth values, which belie the bitset hiding claim!
- */
-#define JS_HAS_STRICT_OPTION(cx)        ((cx)->options & JSOPTION_STRICT)
-#define JS_HAS_WERROR_OPTION(cx)        ((cx)->options & JSOPTION_WERROR)
-#define JS_HAS_COMPILE_N_GO_OPTION(cx)  ((cx)->options & JSOPTION_COMPILE_N_GO)
-#define JS_HAS_ATLINE_OPTION(cx)        ((cx)->options & JSOPTION_ATLINE)
+#ifdef __cplusplus
+/* FIXME(bug 332648): Move this into a public header. */
+class JSAutoTempValueRooter
+{
+  public:
+    JSAutoTempValueRooter(JSContext *cx, size_t len, jsval *vec)
+        : mContext(cx) {
+        JS_PUSH_TEMP_ROOT(mContext, len, vec, &mTvr);
+    }
+    JSAutoTempValueRooter(JSContext *cx, jsval v)
+        : mContext(cx) {
+        JS_PUSH_SINGLE_TEMP_ROOT(mContext, v, &mTvr);
+    }
 
+    ~JSAutoTempValueRooter() {
+        JS_POP_TEMP_ROOT(mContext, &mTvr);
+    }
+
+  private:
+    static void *operator new(size_t) { return 0; }
+    static void operator delete(void *, size_t) { }
+
+    JSContext *mContext;
+    JSTempValueRooter mTvr;
+};
+#endif
+
+/*
+ * Slightly more readable macros for testing per-context option settings (also
+ * to hide bitset implementation detail).
+ *
+ * JSOPTION_XML must be handled specially in order to propagate from compile-
+ * to run-time (from cx->options to script->version/cx->version).  To do that,
+ * we copy JSOPTION_XML from cx->options into cx->version as JSVERSION_HAS_XML
+ * whenever options are set, and preserve this XML flag across version number
+ * changes done via the JS_SetVersion API.
+ *
+ * But when executing a script or scripted function, the interpreter changes
+ * cx->version, including the XML flag, to script->version.  Thus JSOPTION_XML
+ * is a compile-time option that causes a run-time version change during each
+ * activation of the compiled script.  That version change has the effect of
+ * changing JS_HAS_XML_OPTION, so that any compiling done via eval enables XML
+ * support.  If an XML-enabled script or function calls a non-XML function,
+ * the flag bit will be cleared during the callee's activation.
+ *
+ * Note that JS_SetVersion API calls never pass JSVERSION_HAS_XML or'd into
+ * that API's version parameter.
+ *
+ * Note also that script->version must contain this XML option flag in order
+ * for XDR'ed scripts to serialize and deserialize with that option preserved
+ * for detection at run-time.  We can't copy other compile-time options into
+ * script->version because that would break backward compatibility (certain
+ * other options, e.g. JSOPTION_VAROBJFIX, are analogous to JSOPTION_XML).
+ */
+#define JS_HAS_OPTION(cx,option)        (((cx)->options & (option)) != 0)
+#define JS_HAS_STRICT_OPTION(cx)        JS_HAS_OPTION(cx, JSOPTION_STRICT)
+#define JS_HAS_WERROR_OPTION(cx)        JS_HAS_OPTION(cx, JSOPTION_WERROR)
+#define JS_HAS_COMPILE_N_GO_OPTION(cx)  JS_HAS_OPTION(cx, JSOPTION_COMPILE_N_GO)
+#define JS_HAS_ATLINE_OPTION(cx)        JS_HAS_OPTION(cx, JSOPTION_ATLINE)
+
+#define JSVERSION_MASK                  0x0FFF  /* see JSVersion in jspubtd.h */
+#define JSVERSION_HAS_XML               0x1000  /* flag induced by XML option */
+
+#define JSVERSION_NUMBER(cx)            ((cx)->version & JSVERSION_MASK)
+#define JS_HAS_XML_OPTION(cx)           ((cx)->version & JSVERSION_HAS_XML || \
+                                         JSVERSION_NUMBER(cx) >= JSVERSION_1_6)
+
+#define JS_HAS_NATIVE_BRANCH_CALLBACK_OPTION(cx)                              \
+    JS_HAS_OPTION(cx, JSOPTION_NATIVE_BRANCH_CALLBACK)
+
+/*
+ * Wrappers for the JSVERSION_IS_* macros from jspubtd.h taking JSContext *cx
+ * and masking off the XML flag and any other high order bits.
+ */
+#define JS_VERSION_IS_ECMA(cx)          JSVERSION_IS_ECMA(JSVERSION_NUMBER(cx))
+#define JS_VERSION_IS_1_2(cx)           (JSVERSION_NUMBER(cx) == JSVERSION_1_2)
+
+/*
+ * Common subroutine of JS_SetVersion and js_SetVersion, to update per-context
+ * data that depends on version.
+ */
+extern void
+js_OnVersionChange(JSContext *cx);
+
+/*
+ * Unlike the JS_SetVersion API, this function stores JSVERSION_HAS_XML and
+ * any future non-version-number flags induced by compiler options.
+ */
+extern void
+js_SetVersion(JSContext *cx, JSVersion version);
+
+/*
+ * Create and destroy functions for JSContext, which is manually allocated
+ * and exclusively owned.
+ */
 extern JSContext *
 js_NewContext(JSRuntime *rt, size_t stackChunkSize);
 

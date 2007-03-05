@@ -203,6 +203,7 @@ js/jsscript.o \
 js/jsstr.o \
 js/jsutil.o \
 js/jsxdrapi.o \
+js/jsxml.o \
 js/prmjtime.o \
 js/fdlibm/e_acos.o \
 js/fdlibm/e_acosh.o \
