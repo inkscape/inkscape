@@ -30,7 +30,7 @@ class Maybe {
 public:
     Maybe(Nothing) : _is_nothing(true) {}
     Maybe(T const &t) : _t(t), _is_nothing(false) {}
-    Maybe(Maybe const &m) : _t(*m._t), _is_nothing(m._is_nothing) {}
+    Maybe(Maybe const &m) : _t(m._t), _is_nothing(m._is_nothing) {}
 
     template <typename T2> Maybe(Maybe<T2> const &m)
     : _is_nothing(!m)
@@ -163,7 +163,7 @@ public:
     Maybe(Maybe const &m) : _ref(m._ref) {}
 
     template <typename T2> Maybe(Maybe<T2> const &m)
-    : _ref( m ? *m : NULL ) {}
+    : _ref( m ? &*m : NULL ) {}
     template <typename T2> Maybe(T2 &t) : _ref(&t) {}
 
     operator bool() const { return _ref; }
@@ -195,7 +195,7 @@ public:
     template <typename T2>
     bool operator!=(NR::Maybe<T2> const &other) const {
         if ( !_ref || !other ) {
-            return _ref || _other;
+            return _ref || other;
         } else {
             return *_ref != *other;
         }
