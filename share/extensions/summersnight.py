@@ -50,10 +50,6 @@ class Project(inkex.Effect):
                 f = os.popen("inkscape --query-%s --query-id=%s %s" % (query,id,file))
                 self.q[query] = float(f.read())
                 f.close()
-            #glean document height from the SVG
-            docheight = inkex.unittouu(inkex.xml.xpath.Evaluate('/svg/@height',self.document)[0].value)
-            #Flip inkscapes transposed renderer coords
-            self.q['y'] = docheight - self.q['y'] - self.q['height']
 
             #process path
             d = obj.attributes.getNamedItem('d')
