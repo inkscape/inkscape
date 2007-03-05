@@ -28,12 +28,17 @@ struct Nothing {};
 template <typename T>
 class Maybe {
 public:
-    Maybe(Nothing) : _t(), _is_nothing(true) {}
+    Maybe(Nothing) : _is_nothing(true) {}
     Maybe(T const &t) : _t(t), _is_nothing(false) {}
-    Maybe(Maybe const &m) : _t(m._t), _is_nothing(m._is_nothing) {}
+    Maybe(Maybe const &m) : _t(*m._t), _is_nothing(m._is_nothing) {}
 
     template <typename T2> Maybe(Maybe<T2> const &m)
-    : _t(m._t), _is_nothing(m._is_nothing) {}
+    : _is_nothing(!m)
+    {
+        if (m) {
+            _t = *m;
+        }
+    }
 
     template <typename T2> Maybe(T2 const &t)
     : _t(t), _is_nothing(false) {}
@@ -72,18 +77,18 @@ public:
 
     template <typename T2>
     bool operator==(NR::Maybe<T2> const &other) const {
-        if ( _is_nothing || other._is_nothing ) {
-            return _is_nothing == other._is_nothing;
+        if ( _is_nothing || !other ) {
+            return _is_nothing && !other;
         } else {
-            return _t == other._t;
+            return _t == *other;
         }
     }
     template <typename T2>
     bool operator!=(NR::Maybe<T2> const &other) const {
-        if ( _is_nothing || other._is_nothing ) {
-            return _is_nothing != other._is_nothing;
+        if ( _is_nothing || !other ) {
+            return !_is_nothing || other;
         } else {
-            return _t != other._t;
+            return _t != *other;
         }
     }
 
@@ -95,12 +100,17 @@ private:
 template <typename T>
 class Maybe<T const> {
 public:
-    Maybe(Nothing) : _t(), _is_nothing(true) {}
+    Maybe(Nothing) : _is_nothing(true) {}
     Maybe(T const &t) : _t(t), _is_nothing(false) {}
     Maybe(Maybe const &m) : _t(m._t), _is_nothing(m._is_nothing) {}
 
     template <typename T2> Maybe(Maybe<T2> const &m)
-    : _t(m._t), _is_nothing(m._is_nothing) {}
+    : _is_nothing(!m)
+    {
+        if (m) {
+            _t = *m;
+        }
+    }
 
     template <typename T2> Maybe(T2 const &t)
     : _t(t), _is_nothing(false) {}
@@ -125,18 +135,18 @@ public:
 
     template <typename T2>
     bool operator==(NR::Maybe<T2> const &other) const {
-        if ( _is_nothing || other._is_nothing ) {
-            return _is_nothing == other._is_nothing;
+        if ( _is_nothing || !other ) {
+            return _is_nothing && !other;
         } else {
-            return _t == other._t;
+            return _t == *other;
         }
     }
     template <typename T2>
     bool operator!=(NR::Maybe<T2> const &other) const {
-        if ( _is_nothing || other._is_nothing ) {
-            return _is_nothing != other._is_nothing;
+        if ( _is_nothing || !other ) {
+            return !_is_nothing || other;
         } else {
-            return _t != other._t;
+            return _t != *other;
         }
     }
 
@@ -148,74 +158,53 @@ private:
 template <typename T>
 class Maybe<T &> {
 public:
-    Maybe(Nothing) : _t(), _is_nothing(true) {}
-    Maybe(T &t) : _t(&t), _is_nothing(false) {}
-    Maybe(Maybe const &m) : _t(m._t), _is_nothing(m._is_nothing) {}
+    Maybe(Nothing) : _ref(NULL) {}
+    Maybe(T &t) : _ref(&t) {}
+    Maybe(Maybe const &m) : _ref(m._ref) {}
 
     template <typename T2> Maybe(Maybe<T2> const &m)
-    : _t(&m._t), _is_nothing(m._is_nothing) {}
+    : _ref( m ? *m : NULL ) {}
+    template <typename T2> Maybe(T2 &t) : _ref(&t) {}
 
-    template <typename T2> Maybe(Maybe<T2 &> const &m)
-    : _t(m._t), _is_nothing(m._is_nothing) {}
-
-    template <typename T2> Maybe(T2 &t)
-    : _t(&t), _is_nothing(false) {};
-
-    operator bool() const { return !_is_nothing; }
+    operator bool() const { return _ref; }
 
     T &operator*() const throw(IsNothing) {
-        if (_is_nothing) {
+        if (_ref) {
             throw IsNothing();
         } else {
-            return *_t;
+            return *_ref;
         }
     }
 
     T *operator->() const throw(IsNothing) {
-        if (_is_nothing) {
+        if (_ref) {
             throw IsNothing();
         } else {
-            return _t;
+            return _ref;
         }
     }
 
     template <typename T2>
     bool operator==(NR::Maybe<T2> const &other) const {
-        if ( _is_nothing || other._is_nothing ) {
-            return _is_nothing == other._is_nothing;
+        if ( !_ref || !other ) {
+            return !_ref && !other;
         } else {
-            return *_t == other._t;
+            return *_ref == *other;
         }
     }
     template <typename T2>
     bool operator!=(NR::Maybe<T2> const &other) const {
-        if ( _is_nothing || other._is_nothing ) {
-            return _is_nothing != other._is_nothing;
+        if ( !_ref || !other ) {
+            return _ref || _other;
         } else {
-            return *_t != other._t;
-        }
-    }
-
-    template <typename T2>
-    bool operator==(NR::Maybe<T2 &> const &other) const {
-        if ( _is_nothing || other._is_nothing ) {
-            return _is_nothing == other._is_nothing;
-        } else {
-            return *_t == *other._t;
-        }
-    }
-    template <typename T2>
-    bool operator!=(NR::Maybe<T2 &> const &other) const {
-        if ( _is_nothing || other._is_nothing ) {
-            return _is_nothing != other._is_nothing;
-        } else {
-            return *_t != *other._t;
+            return *_ref != *other;
         }
     }
 
 private:
-    T *_t;
-    bool _is_nothing;
+    void operator=(Maybe const &); // no assign
+
+    T *_ref;
 };
 
 } /* namespace NR */
