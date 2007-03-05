@@ -700,19 +700,25 @@ public:
     /**
      *
      */
-    FileDialogBase(const Glib::ustring &title) :
-                        Gtk::FileChooserDialog(title)
-        {
-        }
+    FileDialogBase(const Glib::ustring &title, FileDialogType type, gchar const* preferenceBase) :
+        Gtk::FileChooserDialog(title),
+        preferenceBase(preferenceBase ? preferenceBase : "unknown"),
+        dialogType(type)
+    {
+        internalSetup();
+    }
 
     /**
      *
      */
     FileDialogBase(const Glib::ustring &title,
-                   Gtk::FileChooserAction dialogType) :
-                   Gtk::FileChooserDialog(title, dialogType)
-        {
-        }
+                   Gtk::FileChooserAction dialogType, FileDialogType type, gchar const* preferenceBase) :
+        Gtk::FileChooserDialog(title, dialogType),
+        preferenceBase(preferenceBase ? preferenceBase : "unknown"),
+        dialogType(type)
+    {
+        internalSetup();
+    }
 
     /**
      *
@@ -720,8 +726,93 @@ public:
     virtual ~FileDialogBase()
         {}
 
+protected:
+    void cleanup( bool showConfirmed );
+
+    Glib::ustring preferenceBase;
+    /**
+     * What type of 'open' are we? (open, import, place, etc)
+     */
+    FileDialogType dialogType;
+
+    /**
+     * Our svg preview widget
+     */
+    SVGPreview svgPreview;
+
+    //# Child widgets
+    Gtk::CheckButton previewCheckbox;
+
+private:
+    void internalSetup();
+
+    /**
+     * Callback for user changing preview checkbox
+     */
+    void _previewEnabledCB();
+
+    /**
+     * Callback for seeing if the preview needs to be drawn
+     */
+    void _updatePreviewCallback();
 };
 
+
+void FileDialogBase::internalSetup()
+{
+    bool enablePreview = (bool)prefs_get_int_attribute( preferenceBase.c_str(), "enable_preview", 1 );
+    previewCheckbox.set_label( Glib::ustring(_("Enable Preview")) );
+    previewCheckbox.set_active( enablePreview );
+
+    previewCheckbox.signal_toggled().connect(
+        sigc::mem_fun(*this, &FileDialogBase::_previewEnabledCB) );
+
+    //Catch selection-changed events, so we can adjust the text widget
+    signal_update_preview().connect(
+         sigc::mem_fun(*this, &FileDialogBase::_updatePreviewCallback) );
+
+    //###### Add a preview widget
+    set_preview_widget(svgPreview);
+    set_preview_widget_active( enablePreview );
+    set_use_preview_label (false);
+
+}
+
+void FileDialogBase::cleanup( bool showConfirmed )
+{
+    if ( showConfirmed ) {
+        prefs_set_int_attribute( preferenceBase.c_str(), "enable_preview", previewCheckbox.get_active() );
+    }
+}
+
+void FileDialogBase::_previewEnabledCB()
+{
+    bool enabled = previewCheckbox.get_active();
+    set_preview_widget_active(enabled);
+    if ( enabled ) {
+        _updatePreviewCallback();
+    }
+}
+
+
+/**
+ * Callback for checking if the preview needs to be redrawn
+ */
+void FileDialogBase::_updatePreviewCallback()
+{
+    Glib::ustring fileName = get_preview_filename();
+#ifdef WITH_GNOME_VFS
+    if (fileName.length() < 1)
+        fileName = get_preview_uri();
+#endif
+
+    if (fileName.length() < 1)
+        return;
+
+    svgPreview.set(fileName, dialogType);
+//         bool retval = svgPreview.set(fileName, dialogType);
+//         set_preview_widget_active(retval);
+}
 
 
 /*#########################################################################
@@ -749,27 +840,7 @@ public:
 
     std::vector<Glib::ustring> getFilenames ();
 
-protected:
-
-
-
 private:
-
-
-    /**
-     * What type of 'open' are we? (open, import, place, etc)
-     */
-    FileDialogType dialogType;
-
-    /**
-     * Our svg preview widget
-     */
-    SVGPreview svgPreview;
-
-    /**
-     * Callback for seeing if the preview needs to be drawn
-     */
-    void updatePreviewCallback();
 
     /**
      *  Create a filter menu for this type of dialog
@@ -792,25 +863,6 @@ private:
     Glib::ustring myFilename;
 
 };
-
-
-
-
-
-/**
- * Callback for checking if the preview needs to be redrawn
- */
-void FileOpenDialogImpl::updatePreviewCallback()
-{
-    Glib::ustring fileName = get_preview_filename();
-#ifdef WITH_GNOME_VFS
-    if (fileName.length() < 1)
-        fileName = get_preview_uri();
-#endif
-    if (fileName.length() < 1)
-        return;
-    svgPreview.set(fileName, dialogType);
-}
 
 
 
@@ -877,7 +929,7 @@ void FileOpenDialogImpl::createFilterMenu()
 FileOpenDialogImpl::FileOpenDialogImpl(const Glib::ustring &dir,
                                        FileDialogType fileTypes,
                                        const Glib::ustring &title) :
-                                       FileDialogBase(title)
+    FileDialogBase(title, fileTypes, "dialogs.open")
 {
 
 
@@ -909,21 +961,16 @@ FileOpenDialogImpl::FileOpenDialogImpl(const Glib::ustring &dir,
         set_current_folder(udir.c_str());
         }
 
+
+    set_extra_widget( previewCheckbox );
+
+
     //###### Add the file types menu
     createFilterMenu();
 
-    //###### Add a preview widget
-    set_preview_widget(svgPreview);
-    set_preview_widget_active(true);
-    set_use_preview_label (false);
-
-    //Catch selection-changed events, so we can adjust the text widget
-    signal_update_preview().connect(
-         sigc::mem_fun(*this, &FileOpenDialogImpl::updatePreviewCallback) );
 
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
     set_default(*add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK));
-
 }
 
 
@@ -986,10 +1033,12 @@ FileOpenDialogImpl::show()
         if (myFilename.length() < 1)
             myFilename = get_uri();
 #endif
+        cleanup( true );
         return TRUE;
         }
     else
        {
+       cleanup( false );
        return FALSE;
        }
 }
@@ -1077,31 +1126,10 @@ public:
 private:
 
     /**
-     * What type of 'open' are we? (save, export, etc)
-     */
-    FileDialogType dialogType;
-
-    /**
-     * Our svg preview widget
-     */
-    SVGPreview svgPreview;
-
-    /**
      * Fix to allow the user to type the file name
      */
     Gtk::Entry *fileNameEntry;
 
-    /**
-     * Callback for seeing if the preview needs to be drawn
-     */
-    void updatePreviewCallback();
-
-
-
-    /**
-     * Allow the specification of the output file type
-     */
-    Gtk::HBox fileTypeBox;
 
     /**
      * Allow the specification of the output file type
@@ -1115,6 +1143,9 @@ private:
     std::vector<FileType> fileTypes;
 
     //# Child widgets
+    Gtk::HBox childBox;
+    Gtk::VBox checksBox;
+
     Gtk::CheckButton fileTypeCheckbox;
 
     /**
@@ -1149,26 +1180,6 @@ private:
     std::set<Glib::ustring> knownExtensions;
 };
 
-
-
-
-
-
-/**
- * Callback for checking if the preview needs to be redrawn
- */
-void FileSaveDialogImpl::updatePreviewCallback()
-{
-    Glib::ustring fileName = get_preview_filename();
-#ifdef WITH_GNOME_VFS
-    if (fileName.length() < 1)
-        fileName = get_preview_uri();
-#endif
-    if (!fileName.c_str())
-        return;
-    bool retval = svgPreview.set(fileName, dialogType);
-    set_preview_widget_active(retval);
-}
 
 
 
@@ -1277,7 +1288,7 @@ FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
             FileDialogType fileTypes,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
-            FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE)
+    FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.save_as")
 {
     /* One file at a time */
     set_select_multiple(false);
@@ -1313,27 +1324,18 @@ FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
     fileTypeCheckbox.set_active( (bool)prefs_get_int_attribute("dialogs.save_as",
                                                                "append_extension", 1) );
 
-    fileTypeBox.pack_start(fileTypeCheckbox);
     createFileTypeMenu();
     fileTypeComboBox.set_size_request(200,40);
     fileTypeComboBox.signal_changed().connect(
          sigc::mem_fun(*this, &FileSaveDialogImpl::fileTypeChangedCallback) );
 
-    fileTypeBox.pack_start(fileTypeComboBox);
 
-    set_extra_widget(fileTypeBox);
-    //get_vbox()->pack_start(fileTypeBox, false, false, 0);
-    //get_vbox()->reorder_child(fileTypeBox, 2);
+    childBox.pack_start( checksBox );
+    childBox.pack_end( fileTypeComboBox );
+    checksBox.pack_start( fileTypeCheckbox );
+    checksBox.pack_start( previewCheckbox );
 
-    //###### Add a preview widget
-    set_preview_widget(svgPreview);
-    set_preview_widget_active(true);
-    set_use_preview_label (false);
-
-    //Catch selection-changed events, so we can adjust the text widget
-    signal_update_preview().connect(
-         sigc::mem_fun(*this, &FileSaveDialogImpl::updatePreviewCallback) );
-
+    set_extra_widget( childBox );
 
     //Let's do some customization
     fileNameEntry = NULL;
@@ -1421,10 +1423,14 @@ FileSaveDialogImpl::show()
         prefs_set_string_attribute("dialogs.save_as", "default",
                                    ( extension != NULL ? extension->get_id() : "" ));
 
+        cleanup( true );
+
         return TRUE;
         }
     else
         {
+        cleanup( false );
+
         return FALSE;
         }
 }
@@ -1692,24 +1698,9 @@ public:
 private:
 
     /**
-     * What type of 'open' are we? (save, export, etc)
-     */
-    FileDialogType dialogType;
-
-    /**
-     * Our svg preview widget
-     */
-    SVGPreview svgPreview;
-
-    /**
      * Fix to allow the user to type the file name
      */
     Gtk::Entry *fileNameEntry;
-
-    /**
-     * Callback for seeing if the preview needs to be drawn
-     */
-    void updatePreviewCallback();
 
     //##########################################
     //# EXTRA WIDGET -- SOURCE SIDE
@@ -1811,24 +1802,6 @@ private:
 
 
 /**
- * Callback for checking if the preview needs to be redrawn
- */
-void FileExportDialogImpl::updatePreviewCallback()
-{
-    Glib::ustring fileName = get_preview_filename();
-#ifdef WITH_GNOME_VFS
-    if (fileName.length() < 1)
-        fileName = get_preview_uri();
-#endif
-    if (!fileName.c_str())
-        return;
-    bool retval = svgPreview.set(fileName, dialogType);
-    set_preview_widget_active(retval);
-}
-
-
-
-/**
  * Callback for fileNameEntry widget
  */
 void FileExportDialogImpl::fileNameEntryChangedCallback()
@@ -1926,7 +1899,7 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
             FileDialogType fileTypes,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
-            FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE),
+            FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.export"),
             sourceX0Spinner("X0",         _("Left edge of source")),
             sourceY0Spinner("Y0",         _("Top edge of source")),
             sourceX1Spinner("X1",         _("Right edge of source")),
@@ -2062,16 +2035,6 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
     set_extra_widget(exportOptionsBox);
 
 
-
-
-    //###### PREVIEW WIDGET
-    set_preview_widget(svgPreview);
-    set_preview_widget_active(true);
-    set_use_preview_label (false);
-
-    //Catch selection-changed events, so we can adjust the text widget
-    signal_update_preview().connect(
-         sigc::mem_fun(*this, &FileExportDialogImpl::updatePreviewCallback) );
 
 
     //Let's do some customization
