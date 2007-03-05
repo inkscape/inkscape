@@ -105,6 +105,7 @@ private:
     
     std::vector<NR::Point> _snap_points;
     std::vector<NR::Point> _bbox_points;
+    std::vector<NR::Point> _bbox_4points;
     
     Inkscape::SelCue _selcue;
 

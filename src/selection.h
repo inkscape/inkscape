@@ -273,7 +273,7 @@ public:
     std::vector<NR::Point> getBBoxPoints() const;
 
     /**
-     * @return A vector containing the 2 (top-left and bottom-right)
+     * @return A vector containing the 2 (bottom-left and upper-right)
      * corners of the selection bounding box.
      */
     std::vector<NR::Point> getBBoxPointsOuter() const;

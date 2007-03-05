@@ -259,6 +259,9 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
 
     _snap_points = selection->getSnapPointsConvexHull();
     _bbox_points = selection->getBBoxPointsOuter();
+    _bbox_4points = _bbox_points;
+    _bbox_4points.push_back(NR::Point(_bbox_points[0][NR::X], _bbox_points[1][NR::Y]));
+    _bbox_4points.push_back(NR::Point(_bbox_points[1][NR::X], _bbox_points[0][NR::Y]));
 
     gchar const *scale_origin = prefs_get_string_attribute("tools.select", "scale_origin");
     bool const origin_on_bbox = (scale_origin == NULL || !strcmp(scale_origin, "bbox"));
@@ -860,7 +863,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
         /* Scale aspect ratio is unlocked */
         
         std::pair<NR::scale, bool> bb = m.freeSnapScale(Snapper::BBOX_POINT,
-                                                        _bbox_points,
+                                                        _bbox_4points,
                                                         it,
                                                         s,
                                                         _origin);
@@ -870,7 +873,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
                                                         s,
                                                         _origin);
 
-        /* Pick the snap that puts us closest to the original scale */
+	/* Pick the snap that puts us closest to the original scale */
         NR::Coord bd = bb.second ?
             fabs(NR::L2(NR::Point(bb.first[NR::X], bb.first[NR::Y])) -
                  NR::L2(NR::Point(s[NR::X], s[NR::Y])))
@@ -1406,7 +1409,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
             /* Snap to things with no constraint */
 
             s.push_back(m.freeSnapTranslation(Inkscape::Snapper::BBOX_POINT,
-                                              _bbox_points, it, dxy));
+                                              _bbox_4points, it, dxy));
             s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAP_POINT,
                                               _snap_points, it, dxy));
         }

@@ -175,10 +175,12 @@ void InkscapePreferences::initPageSteps()
 {
     this->AddPage(_page_steps, _("Steps"), PREFS_PAGE_STEPS);
 
-    _steps_arrow.init ( "options.nudgedistance", "value", 0.0, 3000.0, 0.01, 1.0, 2.0, false, false);
+    _steps_arrow.init ( "options.nudgedistance", "value", 0.0, 1000.0, 0.01, 1.0, 2.0, false, false);
+    //nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
     _page_steps.add_line( false, _("Arrow keys move by:"), _steps_arrow, _("px"), 
                           _("Pressing an arrow key moves selected object(s) or node(s) by this distance (in px units)"), false);
-    _steps_scale.init ( "options.defaultscale", "value", 0.0, 3000.0, 0.01, 1.0, 2.0, false, false);
+    _steps_scale.init ( "options.defaultscale", "value", 0.0, 1000.0, 0.01, 1.0, 2.0, false, false);
+    //defaultscale is limited to 1000 in select-context.cpp: use the same limit here 
     _page_steps.add_line( false, _("> and < scale by:"), _steps_scale, _("px"), 
                           _("Pressing > or < scales selection up or down by this increment (in px units)"), false);
     _steps_inset.init ( "options.defaultoffsetwidth", "value", 0.0, 3000.0, 0.01, 1.0, 2.0, false, false);
