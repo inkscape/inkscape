@@ -714,11 +714,7 @@ NR::Maybe<NR::Rect> SPItem::getBounds(NR::Matrix const &transform,
 {
     NRRect r;
     sp_item_invoke_bbox_full(this, &r, transform, type, TRUE);
-    if (nr_rect_d_test_empty(&r)) {
-        return NR::Nothing();
-    } else {
-        return NR::Rect(r);
-    }
+    return r;
 }
 
 void
@@ -804,7 +800,13 @@ NR::Rect sp_item_bbox_desktop(SPItem *item)
 {
     NRRect ret;
     sp_item_invoke_bbox(item, &ret, sp_item_i2d_affine(item), TRUE);
-    return NR::Rect(ret);
+    NR::Maybe<NR::Rect> result = ret.upgrade();
+    if (result) {
+        return *result;
+    } else {
+        // FIXME
+        return NR::Rect(NR::Point(0, 0), NR::Point(0, 0));
+    }
 }
 
 static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)

@@ -494,7 +494,7 @@ gdouble sp_document_height(SPDocument *document)
  */
 void SPDocument::fitToRect(NRRect const & rect)
 {
-    g_return_if_fail(!empty(rect));
+    g_return_if_fail(!nr_rect_d_test_empty(&rect));
     
     gdouble w = rect.x1 - rect.x0;
     gdouble h = rect.y1 - rect.y0;

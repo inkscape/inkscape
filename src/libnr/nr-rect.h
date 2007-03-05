@@ -15,6 +15,7 @@
 
 
 #include <stdexcept>
+#include <limits>
 
 #include "libnr/nr-values.h"
 #include <libnr/nr-coord.h>
@@ -24,62 +25,8 @@
 #include <libnr/nr-maybe.h>
 #include <libnr/nr-point-matrix-ops.h>
 
-struct NRMatrix;
 namespace NR {
     struct Matrix;
-}
-
-/* NULL rect is infinite */
-
-struct NRRect {
-    NR::Coord x0, y0, x1, y1;
-};
-
-inline bool empty(NRRect const &r)
-{
-    return ( ( r.x0 > r.x1 ) ||
-             ( r.y0 > r.y1 ) );
-}
-
-#define nr_rect_d_set_empty(r) (*(r) = NR_RECT_EMPTY)
-#define nr_rect_l_set_empty(r) (*(r) = NR_RECT_L_EMPTY)
-
-#define nr_rect_d_test_empty(r) ((r) && NR_RECT_DFLS_TEST_EMPTY(r))
-#define nr_rect_l_test_empty(r) ((r) && NR_RECT_DFLS_TEST_EMPTY(r))
-
-#define nr_rect_d_test_intersect(r0,r1) \
-        (!nr_rect_d_test_empty(r0) && !nr_rect_d_test_empty(r1) && \
-         !((r0) && (r1) && !NR_RECT_DFLS_TEST_INTERSECT(r0, r1)))
-#define nr_rect_l_test_intersect(r0,r1) \
-        (!nr_rect_l_test_empty(r0) && !nr_rect_l_test_empty(r1) && \
-         !((r0) && (r1) && !NR_RECT_DFLS_TEST_INTERSECT(r0, r1)))
-
-#define nr_rect_d_point_d_test_inside(r,p) ((p) && (!(r) || (!NR_RECT_DF_TEST_EMPTY(r) && NR_RECT_DF_POINT_DF_TEST_INSIDE(r,p))))
-#define nr_rect_l_point_l_test_inside(r,p) ((p) && (!(r) || (!NR_RECT_DFLS_TEST_EMPTY(r) && NR_RECT_LS_POINT_LS_TEST_INSIDE(r,p))))
-#define nr_rect_l_test_inside(r,x,y) ((!(r) || (!NR_RECT_DFLS_TEST_EMPTY(r) && NR_RECT_LS_TEST_INSIDE(r,x,y))))
-
-// returns minimal rect which covers all of r0 not covered by r1
-NRRectL *nr_rect_l_subtract(NRRectL *d, NRRectL const *r0, NRRectL const *r1);
-
-// returns the area of r
-NR::ICoord nr_rect_l_area(NRRectL *r);
-
-/* NULL values are OK for r0 and r1, but not for d */
-NRRect *nr_rect_d_intersect(NRRect *d, NRRect const *r0, NRRect const *r1);
-NRRectL *nr_rect_l_intersect(NRRectL *d, NRRectL const *r0, NRRectL const *r1);
-
-NRRect *nr_rect_d_union(NRRect *d, NRRect const *r0, NRRect const *r1);
-NRRectL *nr_rect_l_union(NRRectL *d, NRRectL const *r0, NRRectL const *r1);
-
-NRRect *nr_rect_union_pt(NRRect *dst, NR::Point const &p);
-NRRect *nr_rect_d_union_xy(NRRect *d, NR::Coord x, NR::Coord y);
-NRRectL *nr_rect_l_union_xy(NRRectL *d, NR::ICoord x, NR::ICoord y);
-
-NRRect *nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NR::Matrix const &m);
-NRRect *nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NRMatrix const *m);
-NRRectL *nr_rect_l_enlarge(NRRectL *d, int amount);
-
-namespace NR {
 
 /** A rectangle is always aligned to the X and Y axis.  This means it
  * can be defined using only 4 coordinates, and determining
@@ -89,9 +36,7 @@ namespace NR {
  * points.  Infinities are also permitted. */
 class Rect {
 public:
-    Rect() : _min(0.0, 0.0), _max(0.0, 0.0) {}
-    Rect(NRRect const &r) : _min(r.x0, r.y0), _max(r.x1, r.y1) {}
-    Rect(Rect const &r) : _min(r._min), _max(r._max) {}
+    Rect() : _min(-_inf(), -_inf()), _max(_inf(), _inf()) {}
     Rect(Point const &p0, Point const &p1);
 
     Point const &min() const { return _min; }
@@ -227,6 +172,9 @@ public:
     friend inline std::ostream &operator<<(std::ostream &out_file, NR::Rect const &in_rect);
 
 private:
+    static double _inf() {
+        return std::numeric_limits<double>::infinity();
+    }
 
     template <NR::Dim2 axis>
     double extent() const {
@@ -272,6 +220,63 @@ inline std::ostream
 }
 
 } /* namespace NR */
+
+/* legacy rect stuff */
+
+struct NRMatrix;
+
+/* NULL rect is infinite */
+
+struct NRRect {
+    NRRect() {}
+    NRRect(NR::Coord xmin, NR::Coord ymin, NR::Coord xmax, NR::Coord ymax)
+    : x0(xmin), y0(ymin), x1(xmin), y1(ymin)
+    {}
+    explicit NRRect(NR::Rect const &rect);
+    explicit NRRect(NR::Maybe<NR::Rect> const &rect);
+    operator NR::Maybe<NR::Rect>() const { return upgrade(); }
+    NR::Maybe<NR::Rect> upgrade() const;
+
+    NR::Coord x0, y0, x1, y1;
+};
+
+#define nr_rect_d_set_empty(r) (*(r) = NR_RECT_EMPTY)
+#define nr_rect_l_set_empty(r) (*(r) = NR_RECT_L_EMPTY)
+
+#define nr_rect_d_test_empty(r) ((r) && NR_RECT_DFLS_TEST_EMPTY(r))
+#define nr_rect_l_test_empty(r) ((r) && NR_RECT_DFLS_TEST_EMPTY(r))
+
+#define nr_rect_d_test_intersect(r0,r1) \
+        (!nr_rect_d_test_empty(r0) && !nr_rect_d_test_empty(r1) && \
+         !((r0) && (r1) && !NR_RECT_DFLS_TEST_INTERSECT(r0, r1)))
+#define nr_rect_l_test_intersect(r0,r1) \
+        (!nr_rect_l_test_empty(r0) && !nr_rect_l_test_empty(r1) && \
+         !((r0) && (r1) && !NR_RECT_DFLS_TEST_INTERSECT(r0, r1)))
+
+#define nr_rect_d_point_d_test_inside(r,p) ((p) && (!(r) || (!NR_RECT_DF_TEST_EMPTY(r) && NR_RECT_DF_POINT_DF_TEST_INSIDE(r,p))))
+#define nr_rect_l_point_l_test_inside(r,p) ((p) && (!(r) || (!NR_RECT_DFLS_TEST_EMPTY(r) && NR_RECT_LS_POINT_LS_TEST_INSIDE(r,p))))
+#define nr_rect_l_test_inside(r,x,y) ((!(r) || (!NR_RECT_DFLS_TEST_EMPTY(r) && NR_RECT_LS_TEST_INSIDE(r,x,y))))
+
+// returns minimal rect which covers all of r0 not covered by r1
+NRRectL *nr_rect_l_subtract(NRRectL *d, NRRectL const *r0, NRRectL const *r1);
+
+// returns the area of r
+NR::ICoord nr_rect_l_area(NRRectL *r);
+
+/* NULL values are OK for r0 and r1, but not for d */
+NRRect *nr_rect_d_intersect(NRRect *d, NRRect const *r0, NRRect const *r1);
+NRRectL *nr_rect_l_intersect(NRRectL *d, NRRectL const *r0, NRRectL const *r1);
+
+NRRect *nr_rect_d_union(NRRect *d, NRRect const *r0, NRRect const *r1);
+NRRectL *nr_rect_l_union(NRRectL *d, NRRectL const *r0, NRRectL const *r1);
+
+NRRect *nr_rect_union_pt(NRRect *dst, NR::Point const &p);
+NRRect *nr_rect_d_union_xy(NRRect *d, NR::Coord x, NR::Coord y);
+NRRectL *nr_rect_l_union_xy(NRRectL *d, NR::ICoord x, NR::ICoord y);
+
+NRRect *nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NR::Matrix const &m);
+NRRect *nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NRMatrix const *m);
+NRRectL *nr_rect_l_enlarge(NRRectL *d, int amount);
 
 
 #endif /* !LIBNR_NR_RECT_H_SEEN */

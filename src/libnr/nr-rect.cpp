@@ -11,6 +11,30 @@
 
 #include "nr-rect-l.h"
 
+NRRect::NRRect(NR::Rect const &rect)
+: x0(rect.min()[NR::X]), y0(rect.min()[NR::Y]),
+  x1(rect.max()[NR::X]), y1(rect.max()[NR::Y])
+{}
+
+NRRect::NRRect(NR::Maybe<NR::Rect> const &rect) {
+    if (rect) {
+        x0 = rect->min()[NR::X];
+        y0 = rect->min()[NR::Y];
+        x1 = rect->max()[NR::X];
+        y1 = rect->max()[NR::Y];
+    } else {
+        nr_rect_d_set_empty(this);
+    }
+}
+
+NR::Maybe<NR::Rect> NRRect::upgrade() const {
+    if (nr_rect_d_test_empty(this)) {
+        return NR::Nothing();
+    } else {
+        return NR::Rect(NR::Point(x0, y0), NR::Point(x1, y1));
+    }
+}
+
 /**
  *    \param r0 Rectangle.
  *    \param r1 Another rectangle.

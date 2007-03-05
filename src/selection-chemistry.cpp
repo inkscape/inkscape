@@ -2807,22 +2807,22 @@ void fit_canvas_to_selection(SPDesktop *desktop) {
     g_return_if_fail(doc != NULL);
     g_return_if_fail(desktop->selection != NULL);
     g_return_if_fail(!desktop->selection->isEmpty());
-    NRRect bbox = {0,0,0,0};
+    NRRect bbox(0, 0, 0, 0);
 
     desktop->selection->bounds(&bbox);
-    if (!empty(bbox)) {
+    if (!nr_rect_d_test_empty(&bbox)) {
         doc->fitToRect(bbox);
     }
 };
 
 void fit_canvas_to_drawing(SPDocument *doc) {
     g_return_if_fail(doc != NULL);
-    NRRect bbox = {0,0,0,0};
+    NRRect bbox(0, 0, 0, 0);
 
     sp_document_ensure_up_to_date (doc);
     sp_item_invoke_bbox(SP_ITEM(doc->root), &bbox, sp_item_i2r_affine(SP_ITEM(doc->root)), TRUE);
 
-    if (!empty(bbox)) {
+    if (!nr_rect_d_test_empty(&bbox)) {
         doc->fitToRect(bbox);
     }
 };

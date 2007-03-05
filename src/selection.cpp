@@ -354,7 +354,13 @@ NRRect *Selection::boundsInDocument(NRRect *bbox) const {
 
 NR::Rect Selection::boundsInDocument() const {
     NRRect r;
-    return NR::Rect(*boundsInDocument(&r));
+    NR::Maybe<NR::Rect> rect(boundsInDocument(&r)->upgrade());
+    if (rect) {
+        return *rect;
+    } else {
+        // FIXME
+        return NR::Rect(NR::Point(0, 0), NR::Point(0, 0));
+    }
 }
 
 /** Extract the position of the center from the first selected object */
