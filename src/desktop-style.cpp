@@ -476,7 +476,7 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
 
         if (paint_res->set && paint_effectively_set && paint->type == SP_PAINT_TYPE_COLOR) {
 
-            gfloat d[3];
+            gfloat d[4];
             sp_color_get_rgb_floatv (&paint->value.color, d);
 
             // Check if this color is the same as previous
