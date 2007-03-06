@@ -413,8 +413,8 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
     c[0] = c[1] = c[2] = c[3] = 0.0;
     gint num = 0;
 
-    gfloat prev[4];
-    prev[0] = prev[1] = prev[2] = prev[3] = 0.0;
+    gfloat prev[3];
+    prev[0] = prev[1] = prev[2] = 0.0;
     bool same_color = true;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
@@ -476,7 +476,7 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
 
         if (paint_res->set && paint_effectively_set && paint->type == SP_PAINT_TYPE_COLOR) {
 
-            gfloat d[4];
+            gfloat d[3];
             sp_color_get_rgb_floatv (&paint->value.color, d);
 
             // Check if this color is the same as previous
@@ -484,9 +484,8 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
                 prev[0] = d[0];
                 prev[1] = d[1];
                 prev[2] = d[2];
-                prev[3] = d[3];
             } else {
-                if (same_color && (prev[0] != d[0] || prev[1] != d[1] || prev[2] != d[2] || prev[3] != d[3]))
+                if (same_color && (prev[0] != d[0] || prev[1] != d[1] || prev[2] != d[2]))
                     same_color = false;
             }
 
