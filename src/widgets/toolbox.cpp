@@ -83,6 +83,8 @@
 
 #include "toolbox.h"
 
+#include "flood-context.h"
+
 #include "ink-action.h"
 #include "ege-adjustment-action.h"
 
@@ -4476,6 +4478,26 @@ sp_paintbucket_toolbox_new(SPDesktop *desktop)
                 AUX_SPACING);
     }
     
+    //  interval
+    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+    {
+      
+      sp_toolbox_add_label(tbl, _("Channels: "), false);
+      
+      GtkWidget *channels = gtk_combo_box_new_text();
+      
+      GList *items = flood_channels_dropdown_items_list();
+      
+      for ( ; items ; items = items->next ) 
+      {
+          gtk_combo_box_append_text(GTK_COMBO_BOX(channels), (char*)items->data);
+      }
+      
+      gtk_combo_box_set_active (GTK_COMBO_BOX(channels), prefs_get_int_attribute("tools.paintbucket", "channels", 0));
+      gtk_box_pack_start (GTK_BOX (tbl), channels, FALSE, FALSE, 0);
+      g_signal_connect (G_OBJECT (channels), "changed", G_CALLBACK (flood_channels_changed), tbl);
+    }
+
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of Paint Bucket fill objects"));
     swatch->setDesktop (desktop);
     swatch->setClickVerb (SP_VERB_CONTEXT_PAINTBUCKET_PREFS);

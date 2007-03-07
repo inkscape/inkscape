@@ -223,21 +223,57 @@ static void sp_flood_context_setup(SPEventContext *ec)
     rc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 }
 
+static void merge_pixel_with_background(unsigned char *orig, unsigned char *bg, unsigned char *base) {
+  for (int i = 0; i < 3; i++) { 
+    base[i] = (255 * (255 - bg[3])) / 255 + (bg[i] * bg[3]) / 255;
+    base[i] = (base[i] * (255 - orig[3])) / 255 + (orig[i] * orig[3]) / 255;
+  }
+  base[3] = 255;
+}
+
 inline unsigned char * get_pixel(guchar *px, int x, int y, int width) {
   return px + (x + y * width) * 4;
 }
 
-static bool compare_pixels(unsigned char *a, unsigned char *b, int tolerance) {
-  int diff = 0;
-  for (int i = 0; i < 4; i++) {
-    diff += (int)abs(a[i] - b[i]);
-  }
-  return ((diff / 4) <= tolerance);
+enum PaintBucketChannels {
+    FLOOD_CHANNELS_RGB,
+    FLOOD_CHANNELS_ALPHA
+};
+
+GList * flood_channels_dropdown_items_list() {
+    GList *glist = NULL;
+
+    glist = g_list_append (glist, _("Visible Colors"));
+    glist = g_list_append (glist, _("Alpha"));
+
+    return glist;
 }
 
-static bool try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig, int x, int y, int width, int tolerance, bool fill_switch) {
+static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned char *dtc, int tolerance, PaintBucketChannels method) {
+  int diff = 0;
+  
+  switch (method) {
+    case FLOOD_CHANNELS_ALPHA:
+      return ((int)abs(check[3] - orig[3]) <= (tolerance / 4));
+    case FLOOD_CHANNELS_RGB:
+      unsigned char merged_orig[4];
+      unsigned char merged_check[4];
+      
+      merge_pixel_with_background(orig, dtc, merged_orig);
+      merge_pixel_with_background(check, dtc, merged_check);
+      
+      for (int i = 0; i < 3; i++) {
+        diff += (int)abs(merged_check[i] - merged_orig[i]);
+      }
+      return ((diff / 3) <= ((tolerance * 3) / 4));
+  }
+  
+  return false;
+}
+
+static bool try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig, unsigned char *dtc, int x, int y, int width, int tolerance, PaintBucketChannels method, bool fill_switch) {
   unsigned char *t = get_pixel(px, x, y, width);
-  if (compare_pixels(t, orig, tolerance)) {
+  if (compare_pixels(t, orig, dtc, tolerance, method)) {
     unsigned char *trace_t = get_pixel(trace_px, x, y, width);
     if (trace_t[3] != 255) {
       if (fill_switch) {
@@ -343,6 +379,8 @@ struct bitmap_coords_info {
   int y_limit;
   int width;
   int tolerance;
+  PaintBucketChannels method;
+  unsigned char *dtc;
   bool top_fill;
   bool bottom_fill;
   NR::Rect bbox;
@@ -373,15 +411,15 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::queue<NR::Point> *
         
         if (keep_tracing) {
             t = get_pixel(px, bci.x, bci.y, bci.width);
-            if (compare_pixels(t, orig_color, bci.tolerance)) {
+            if (compare_pixels(t, orig_color, bci.dtc, bci.tolerance, bci.method)) {
                 for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
                 trace_t = get_pixel(trace_px, bci.x, bci.y, bci.width);
                 trace_t[3] = 255; 
                 if (bci.y > 0) { 
-                    bci.top_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.x, bci.y - 1, bci.width, bci.tolerance, bci.top_fill);
+                    bci.top_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.dtc, bci.x, bci.y - 1, bci.width, bci.tolerance, bci.method, bci.top_fill);
                 }
                 if (bci.y < bci.y_limit) { 
-                    bci.bottom_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.x, bci.y + 1, bci.width, bci.tolerance, bci.bottom_fill);
+                    bci.bottom_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.dtc, bci.x, bci.y + 1, bci.width, bci.tolerance, bci.method, bci.bottom_fill);
                 }
                 if (bci.is_left) {
                     bci.x--;
@@ -455,13 +493,31 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     nr_arena_item_invoke_update(root, &final_bbox, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
 
     guchar *px = g_new(guchar, 4 * width * height);
-    memset(px, 0x00, 4 * width * height);
-
+    //memset(px, 0x00, 4 * width * height);
+    
     NRPixBlock B;
     nr_pixblock_setup_extern( &B, NR_PIXBLOCK_MODE_R8G8B8A8N,
                               final_bbox.x0, final_bbox.y0, final_bbox.x1, final_bbox.y1,
                               px, 4 * width, FALSE, FALSE );
     
+    SPNamedView *nv = sp_desktop_namedview(desktop);
+    unsigned long bgcolor = nv->pagecolor;
+    
+    unsigned char dtc[4];
+    dtc[0] = NR_RGBA32_R(bgcolor);
+    dtc[1] = NR_RGBA32_G(bgcolor);
+    dtc[2] = NR_RGBA32_B(bgcolor);
+    dtc[3] = NR_RGBA32_A(bgcolor);
+    
+    for (int fy = 0; fy < height; fy++) {
+      guchar *p = NR_PIXBLOCK_PX(&B) + fy * B.rs;
+      for (int fx = 0; fx < width; fx++) {
+        for (int i = 0; i < 4; i++) { 
+          *p++ = dtc[i];
+        }
+      }
+    }
+
     nr_arena_item_invoke_render(NULL, root, &final_bbox, &B, NR_ARENA_ITEM_RENDER_NO_CACHE );
     nr_pixblock_release(&B);
     
@@ -489,7 +545,12 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     unsigned char *orig_px = get_pixel(px, (int)pw[NR::X], (int)pw[NR::Y], width);
     for (int i = 0; i < 4; i++) { orig_color[i] = orig_px[i]; }
 
+    unsigned char merged_orig[4];
+
+    merge_pixel_with_background(orig_color, dtc, merged_orig);
+    
     int tolerance = (255 * prefs_get_int_attribute_limited("tools.paintbucket", "tolerance", 1, 0, 100)) / 100;
+    PaintBucketChannels method = (PaintBucketChannels)prefs_get_int_attribute("tools.paintbucket", "channels", 0);
 
     bool reached_screen_boundary = false;
 
@@ -498,8 +559,10 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     bci.y_limit = y_limit;
     bci.width = width;
     bci.tolerance = tolerance;
+    bci.method = method;
     bci.bbox = *bbox;
     bci.screen = screen;
+    bci.dtc = dtc;
 
     while (!fill_queue.empty() && !aborted) {
       NR::Point cp = fill_queue.front();
@@ -507,7 +570,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
       unsigned char *s = get_pixel(px, (int)cp[NR::X], (int)cp[NR::Y], width);
       
       // same color at this point
-      if (compare_pixels(s, orig_color, tolerance)) {
+      if (compare_pixels(s, orig_color, dtc, tolerance, method)) {
         int x = (int)cp[NR::X];
         int y = (int)cp[NR::Y];
         
@@ -515,7 +578,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         bool bottom_fill = true;
         
         if (y > 0) { 
-          top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, x, y - 1, width, tolerance, top_fill);
+          top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y - 1, width, tolerance, method, top_fill);
         } else {
           if (bbox->min()[NR::Y] > screen.min()[NR::Y]) {
             aborted = true; break;
@@ -524,7 +587,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
           }
         }
         if (y < y_limit) { 
-          bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, x, y + 1, width, tolerance, bottom_fill);
+          bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y + 1, width, tolerance, method, bottom_fill);
         } else {
           if (bbox->max()[NR::Y] < screen.max()[NR::Y]) {
             aborted = true; break;
@@ -680,6 +743,10 @@ static void sp_flood_finish(SPFloodContext *rc)
     }
 }
 
+void flood_channels_changed(GtkComboBox *cbox, GtkWidget *tbl)
+{
+    prefs_set_int_attribute("tools.paintbucket", "channels", (gint)gtk_combo_box_get_active(cbox));
+}
 /*
   Local Variables:
   mode:c++

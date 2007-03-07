@@ -12,6 +12,7 @@
  */
 
 #include <sigc++/sigc++.h>
+#include <gtk/gtk.h>
 #include "event-context.h"
 struct SPKnotHolder;
 
@@ -20,6 +21,11 @@ struct SPKnotHolder;
 #define SP_FLOOD_CONTEXT_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOOD_CONTEXT, SPFloodContextClass))
 #define SP_IS_FLOOD_CONTEXT(obj)         (GTK_CHECK_TYPE ((obj), SP_TYPE_FLOOD_CONTEXT))
 #define SP_IS_FLOOD_CONTEXT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_FLOOD_CONTEXT))
+
+#define FLOOD_COLOR_CHANNEL_R 1
+#define FLOOD_COLOR_CHANNEL_G 2
+#define FLOOD_COLOR_CHANNEL_B 4
+#define FLOOD_COLOR_CHANNEL_A 8
 
 class SPFloodContext;
 class SPFloodContextClass;
@@ -39,5 +45,8 @@ struct SPFloodContextClass {
 /* Standard Gtk function */
 
 GtkType sp_flood_context_get_type (void);
+
+GList* flood_channels_dropdown_items_list (void);
+void flood_channels_changed(GtkComboBox *cbox, GtkWidget *tbl);
 
 #endif
