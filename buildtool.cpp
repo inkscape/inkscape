@@ -37,7 +37,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.6.5, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.6.6, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -3567,7 +3567,7 @@ bool MakeBase::executeCommand(const String &command,
         if (exitCode != STILL_ACTIVE)
             lastLoop = true;
 
-        Sleep(50);
+        Sleep(10);
         }    
     //trace("outbuf:%s", outbuf.c_str());
     if (!CloseHandle(stdoutRead))
@@ -7044,7 +7044,7 @@ public:
     TaskSharedLib(MakeBase &par) : Task(par)
         {
         type = TASK_SHAREDLIB; name = "dll";
-        command = "ar crv";
+        command = "dllwrap";
         }
 
     virtual ~TaskSharedLib()
