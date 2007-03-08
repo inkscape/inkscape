@@ -30,7 +30,7 @@ struct SPPathClass {
 };
 
 GType sp_path_get_type (void);
-
+gint sp_nodes_in_path(SPPath *path);
 
 #endif
 
