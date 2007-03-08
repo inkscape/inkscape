@@ -4453,6 +4453,29 @@ static GtkWidget *
 sp_paintbucket_toolbox_new(SPDesktop *desktop)
 {
     GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
+
+    //  interval
+    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+
+    {
+      sp_toolbox_add_label(tbl, _("Fill by:"), false);
+      
+      GtkWidget *channels = gtk_combo_box_new_text();
+      
+      GList *items = flood_channels_dropdown_items_list();
+      
+      for ( ; items ; items = items->next ) 
+      {
+          gtk_combo_box_append_text(GTK_COMBO_BOX(channels), (char*)items->data);
+      }
+      
+      gtk_combo_box_set_active (GTK_COMBO_BOX(channels), prefs_get_int_attribute("tools.paintbucket", "channels", 0));
+      gtk_box_pack_start (GTK_BOX (tbl), channels, FALSE, FALSE, 0);
+      g_signal_connect (G_OBJECT (channels), "changed", G_CALLBACK (flood_channels_changed), tbl);
+    }
+
+    //  interval
+    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
     
     // Spacing spinbox
     {
@@ -4476,8 +4499,8 @@ sp_paintbucket_toolbox_new(SPDesktop *desktop)
     
     // Offset spinbox
     {
-        GtkWidget *offset = sp_tb_spinbutton(_("Offset:"),
-                _("The amount to grow the path after it has been traced"),
+        GtkWidget *offset = sp_tb_spinbutton(_("Grow/shrink by:"),
+                _("The amount to grow (positive) or shrink (negative) the created fill path"),
                 "tools.paintbucket", "offset", 0, us, tbl, TRUE,
                 "inkscape:paintbucket-offset", -1e6, 1e6, 0.1, 0.5,
                 paintbucket_offset_changed, 1, 2);
@@ -4489,26 +4512,6 @@ sp_paintbucket_toolbox_new(SPDesktop *desktop)
         gtk_object_set_data(GTK_OBJECT(tbl), "units", us);
     }
     
-    //  interval
-    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-    {
-      
-      sp_toolbox_add_label(tbl, _("Channels: "), false);
-      
-      GtkWidget *channels = gtk_combo_box_new_text();
-      
-      GList *items = flood_channels_dropdown_items_list();
-      
-      for ( ; items ; items = items->next ) 
-      {
-          gtk_combo_box_append_text(GTK_COMBO_BOX(channels), (char*)items->data);
-      }
-      
-      gtk_combo_box_set_active (GTK_COMBO_BOX(channels), prefs_get_int_attribute("tools.paintbucket", "channels", 0));
-      gtk_box_pack_start (GTK_BOX (tbl), channels, FALSE, FALSE, 0);
-      g_signal_connect (G_OBJECT (channels), "changed", G_CALLBACK (flood_channels_changed), tbl);
-    }
-
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of Paint Bucket fill objects"));
     swatch->setDesktop (desktop);
     swatch->setClickVerb (SP_VERB_CONTEXT_PAINTBUCKET_PREFS);
