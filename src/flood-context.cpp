@@ -238,6 +238,9 @@ inline unsigned char * get_pixel(guchar *px, int x, int y, int width) {
 
 enum PaintBucketChannels {
     FLOOD_CHANNELS_RGB,
+    FLOOD_CHANNELS_R,
+    FLOOD_CHANNELS_G,
+    FLOOD_CHANNELS_B,
     FLOOD_CHANNELS_ALPHA
 };
 
@@ -245,6 +248,9 @@ GList * flood_channels_dropdown_items_list() {
     GList *glist = NULL;
 
     glist = g_list_append (glist, _("Visible Colors"));
+    glist = g_list_append (glist, _("Red"));
+    glist = g_list_append (glist, _("Green"));
+    glist = g_list_append (glist, _("Blue"));
     glist = g_list_append (glist, _("Alpha"));
 
     return glist;
@@ -255,7 +261,13 @@ static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned c
   
   switch (method) {
     case FLOOD_CHANNELS_ALPHA:
-      return ((int)abs(check[3] - orig[3]) <= (tolerance / 4));
+      return ((int)abs(check[3] - orig[3]) <= tolerance);
+    case FLOOD_CHANNELS_R:
+      return ((int)abs(check[0] - orig[0]) <= tolerance);
+    case FLOOD_CHANNELS_G:
+      return ((int)abs(check[1] - orig[1]) <= tolerance);
+    case FLOOD_CHANNELS_B:
+      return ((int)abs(check[2] - orig[2]) <= tolerance);
     case FLOOD_CHANNELS_RGB:
       unsigned char merged_orig[4];
       unsigned char merged_check[4];
