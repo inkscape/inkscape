@@ -302,7 +302,7 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
 
     long totalNodeCount = 0L;
 
-    double offset = prefs_get_double_attribute("tools.paintbucket", "offset", 2.0);
+    double offset = prefs_get_double_attribute("tools.paintbucket", "offset", 0.0);
 
     for (unsigned int i=0 ; i<results.size() ; i++) {
         Inkscape::Trace::TracingEngineResult result = results[i];

@@ -4478,7 +4478,7 @@ sp_paintbucket_toolbox_new(SPDesktop *desktop)
     {
         GtkWidget *offset = sp_tb_spinbutton(_("Offset:"),
                 _("The amount to grow the path after it has been traced"),
-                "tools.paintbucket", "offset", 5, us, tbl, TRUE,
+                "tools.paintbucket", "offset", 0, us, tbl, TRUE,
                 "inkscape:paintbucket-offset", -1e6, 1e6, 0.1, 0.5,
                 paintbucket_offset_changed, 1, 2);
 
