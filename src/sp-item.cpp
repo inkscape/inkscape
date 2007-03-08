@@ -499,6 +499,7 @@ sp_item_set(SPObject *object, unsigned key, gchar const *value)
             } else {
                 item->transform_center_x = 0;
             }
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_TRANSFORM_CENTER_Y:
             if (value) {
@@ -506,6 +507,7 @@ sp_item_set(SPObject *object, unsigned key, gchar const *value)
             } else {
                 item->transform_center_y = 0;
             }
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_PROP_SYSTEM_LANGUAGE:
         case SP_PROP_REQUIRED_FEATURES:
