@@ -220,12 +220,10 @@ void Inkscape::SelTrans::setCenter(NR::Point const &p)
 
     // Write the new center position into all selected items
     for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
-        SPItem *it = (SPItem*)sp_object_ref(SP_OBJECT(l->data), NULL);
+        SPItem *it = (SPItem*)SP_OBJECT(l->data);
         it->setCenter(p);
-        SP_OBJECT(it)->updateRepr();
+        // only set the value; updating repr and document_done will be done once, on ungrab
     }
-    sp_document_maybe_done (sp_desktop_document(_desktop), "center::move", SP_VERB_CONTEXT_SELECT, 
-                            _("Set center"));
 
     _updateHandles();
 }
@@ -387,6 +385,17 @@ void Inkscape::SelTrans::ungrab()
         }
 
     } else {
+
+        if (_center_is_set) {
+            // we were dragging center; update reprs and commit undoable action
+            for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
+                SPItem *it = (SPItem*)SP_OBJECT(l->data);
+                SP_OBJECT(it)->updateRepr();
+            }
+            sp_document_done (sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                            _("Set center"));
+        }
+
         _items.clear();
         _items_centers.clear();
         _updateHandles();
@@ -634,13 +643,13 @@ void Inkscape::SelTrans::handleClick(SPKnot *knot, guint state, SPSelTransHandle
             if (state & GDK_SHIFT_MASK) {
                 // Unset the  center position for all selected items
                 for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
-                    SPItem *it = (SPItem*)sp_object_ref(SP_OBJECT(l->data), NULL);
+                    SPItem *it = (SPItem*)(SP_OBJECT(l->data));
                     it->unsetCenter();
                     SP_OBJECT(it)->updateRepr();
                     _center_is_set = false;  // center has changed
                     _updateHandles();
                 }
-                sp_document_maybe_done (sp_desktop_document(_desktop), "center::unset", SP_VERB_CONTEXT_SELECT, 
+                sp_document_done (sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT, 
                                         _("Reset center"));
             }
             break;
