@@ -799,7 +799,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
                 // using X-coordinates only to determine the offset, assuming p has been snapped to the vector from begin to end.
                 double offset = get_offset_between_points (p, NR::Point(lg->x1.computed, lg->y1.computed), NR::Point(lg->x2.computed, lg->y2.computed));
                 SPGradient *vector = sp_gradient_get_vector (lg, false);
-                vector->vector.stops.at(point_i).offset = offset;
+                lg->vector.stops.at(point_i).offset = offset;
                 SPStop* stopi = sp_get_stop_i(vector, point_i);
                 stopi->offset = offset;
                 if (write_repr) {
@@ -885,15 +885,15 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 				new_transform = gradient->gradientTransform * i2d * move * i2d.inverse();
 				transform_set = true;
 
-				break;
-			}
+                break;
+            }
         case POINT_RG_MID1:
-			{
+            {
                 NR::Point start = NR::Point (rg->cx.computed, rg->cy.computed);
                 NR::Point end   = NR::Point (rg->cx.computed + rg->r.computed, rg->cy.computed);
                 double offset = get_offset_between_points (p, start, end);
                 SPGradient *vector = sp_gradient_get_vector (rg, false);
-                vector->vector.stops.at(point_i).offset = offset;
+                rg->vector.stops.at(point_i).offset = offset;
                 SPStop* stopi = sp_get_stop_i(vector, point_i);
                 stopi->offset = offset;
                 if (write_repr) {
@@ -901,14 +901,14 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
                 } else {
                     SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
                 }
-				break;
-			}
+                break;
+            }
         case POINT_RG_MID2:
                 NR::Point start = NR::Point (rg->cx.computed, rg->cy.computed);
                 NR::Point end   = NR::Point (rg->cx.computed, rg->cy.computed - rg->r.computed);
                 double offset = get_offset_between_points (p, start, end);
                 SPGradient *vector = sp_gradient_get_vector (rg, false);
-                vector->vector.stops.at(point_i).offset = offset;
+                rg->vector.stops.at(point_i).offset = offset;
                 SPStop* stopi = sp_get_stop_i(vector, point_i);
                 stopi->offset = offset;
                 if (write_repr) {
@@ -916,7 +916,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
                 } else {
                     SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
                 }
-				break;
+                break;
             }
 		if (transform_set) {
 				gradient->gradientTransform = new_transform;
