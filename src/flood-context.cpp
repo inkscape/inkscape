@@ -325,7 +325,7 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
         Shape *expanded_path_shape = new Shape();
         
         expanded_path_shape->ConvertToShape(path_shape, fill_nonZero);
-        path_shape->MakeOffset(expanded_path_shape, offset, join_round, 4);
+        path_shape->MakeOffset(expanded_path_shape, offset * desktop->current_zoom(), join_round, 4);
         expanded_path_shape->ConvertToShape(path_shape, fill_positive);
 
         Path *expanded_path = new Path();
