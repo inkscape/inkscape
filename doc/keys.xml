@@ -533,6 +533,8 @@ groups) with the same effect as Alt+click.)</note>
 <title>Rotation center</title>
 <mouse><key><left-drag/></key> <action>move rotation center</action></mouse>
 <note>Moved rotation center remembers its position for (all) selected object(s) until you reset it.</note>
+<note>Dragging the center snaps it to the centerlines and bounding box edges of the selection.</note>
+<mouse><key><shift/><left-drag/></key> <action>move without snapping</action></mouse>
 <mouse><key><shift/><left-click/></key> <action>reset rotation center</action></mouse>
 <note>Resetting rotation center moves it back to the geometric center of the object's or selection's bounding box.</note>
 </group>
