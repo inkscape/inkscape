@@ -60,6 +60,7 @@
 #include "sp-item.h"
 #include "sp-root.h"
 #include "sp-defs.h"
+#include "sp-path.h"
 #include "splivarot.h"
 #include "livarot/Path.h"
 #include "livarot/Shape.h"
@@ -315,33 +316,50 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
         NArtBpath *bpath = sp_svg_read_path(result.getPathData().c_str());
         Path *path = bpath_to_Path(bpath);
         g_free(bpath);
-        
-        Shape *path_shape = new Shape();
-        
-        path->ConvertWithBackData(0.03);
-        path->Fill(path_shape, 0);
-        delete path;
-        
-        Shape *expanded_path_shape = new Shape();
-        
-        expanded_path_shape->ConvertToShape(path_shape, fill_nonZero);
-        path_shape->MakeOffset(expanded_path_shape, offset * desktop->current_zoom(), join_round, 4);
-        expanded_path_shape->ConvertToShape(path_shape, fill_positive);
 
-        Path *expanded_path = new Path();
+        if (offset != 0) {
         
-        expanded_path->Reset();
-        expanded_path_shape->ConvertToForme(expanded_path);
-        expanded_path->ConvertEvenLines(1.0);
-        expanded_path->Simplify(1.0);
+            Shape *path_shape = new Shape();
         
-        delete path_shape;
-        delete expanded_path_shape;
+            path->ConvertWithBackData(0.03);
+            path->Fill(path_shape, 0);
+            delete path;
         
-        gchar *str = expanded_path->svg_dump_path();
-        delete expanded_path;
-        pathRepr->setAttribute("d", str);
-        g_free(str);
+            Shape *expanded_path_shape = new Shape();
+        
+            expanded_path_shape->ConvertToShape(path_shape, fill_nonZero);
+            path_shape->MakeOffset(expanded_path_shape, offset * desktop->current_zoom(), join_round, 4);
+            expanded_path_shape->ConvertToShape(path_shape, fill_positive);
+
+            Path *expanded_path = new Path();
+        
+            expanded_path->Reset();
+            expanded_path_shape->ConvertToForme(expanded_path);
+            expanded_path->ConvertEvenLines(1.0);
+            expanded_path->Simplify(1.0);
+        
+            delete path_shape;
+            delete expanded_path_shape;
+        
+            gchar *str = expanded_path->svg_dump_path();
+            if (str && *str) {
+                pathRepr->setAttribute("d", str);
+                g_free(str);
+            } else {
+                desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Too much inset</b>, the result is empty."));
+                Inkscape::GC::release(pathRepr);
+                g_free(str);
+                return;
+            }
+
+            delete expanded_path;
+
+        } else {
+            gchar *str = path->svg_dump_path();
+            delete path;
+            pathRepr->setAttribute("d", str);
+            g_free(str);
+        }
 
         layer_repr->addChild(pathRepr, NULL);
 
@@ -366,9 +384,12 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
             Inkscape::Selection *selection = sp_desktop_selection(desktop);
             selection->set(reprobj);
             pathRepr->setPosition(-1);
+
+            desktop->messageStack()->flashF(Inkscape::WARNING_MESSAGE, _("Area filled, path with <b>%d</b> nodes created."), sp_nodes_in_path(SP_PATH(reprobj)));
         }
         
         Inkscape::GC::release(pathRepr);
+
     }
 }
 
