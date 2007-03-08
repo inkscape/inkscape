@@ -39,8 +39,7 @@ typedef enum {
 } SPGradientState;
 
 typedef enum {
-    POINT_G_INVALID,
-    POINT_LG_BEGIN,
+    POINT_LG_BEGIN =0, //start enum at 0 (for indexing into gr_knot_shapes array for example)
     POINT_LG_END,
     POINT_LG_MID,
     POINT_RG_CENTER,
@@ -48,7 +47,10 @@ typedef enum {
     POINT_RG_R2,
     POINT_RG_FOCUS,
     POINT_RG_MID1,
-    POINT_RG_MID2
+    POINT_RG_MID2,
+    // insert new point types here.
+    
+    POINT_G_INVALID
 } GrPointType;
 
 /**
