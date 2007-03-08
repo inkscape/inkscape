@@ -66,6 +66,7 @@
 #include "livarot/Shape.h"
 #include "libnr/n-art-bpath.h"
 #include "svg/svg.h"
+#include "color.h"
 
 #include "trace/trace.h"
 #include "trace/potrace/inkscape-potrace.h"
@@ -241,6 +242,9 @@ enum PaintBucketChannels {
     FLOOD_CHANNELS_R,
     FLOOD_CHANNELS_G,
     FLOOD_CHANNELS_B,
+    FLOOD_CHANNELS_H,
+    FLOOD_CHANNELS_S,
+    FLOOD_CHANNELS_L,
     FLOOD_CHANNELS_ALPHA
 };
 
@@ -251,6 +255,9 @@ GList * flood_channels_dropdown_items_list() {
     glist = g_list_append (glist, _("Red"));
     glist = g_list_append (glist, _("Green"));
     glist = g_list_append (glist, _("Blue"));
+    glist = g_list_append (glist, _("Hue"));
+    glist = g_list_append (glist, _("Saturation"));
+    glist = g_list_append (glist, _("Lightness"));
     glist = g_list_append (glist, _("Alpha"));
 
     return glist;
@@ -258,6 +265,14 @@ GList * flood_channels_dropdown_items_list() {
 
 static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned char *dtc, int tolerance, PaintBucketChannels method) {
   int diff = 0;
+  float hsl_check[3], hsl_orig[3];
+  
+  if ((method == FLOOD_CHANNELS_H) ||
+      (method == FLOOD_CHANNELS_S) ||
+      (method == FLOOD_CHANNELS_L)) {
+    sp_color_rgb_to_hsl_floatv(hsl_check, check[0] / 255.0, check[1] / 255.0, check[2] / 255.0);
+    sp_color_rgb_to_hsl_floatv(hsl_orig, orig[0] / 255.0, orig[1] / 255.0, orig[2] / 255.0);
+  }
   
   switch (method) {
     case FLOOD_CHANNELS_ALPHA:
@@ -279,6 +294,13 @@ static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned c
         diff += (int)abs(merged_check[i] - merged_orig[i]);
       }
       return ((diff / 3) <= ((tolerance * 3) / 4));
+    
+    case FLOOD_CHANNELS_H:
+      return ((int)(fabs(hsl_check[0] - hsl_orig[0]) * 100.0) <= tolerance);
+    case FLOOD_CHANNELS_S:
+      return ((int)(fabs(hsl_check[1] - hsl_orig[1]) * 100.0) <= tolerance);
+    case FLOOD_CHANNELS_L:
+      return ((int)(fabs(hsl_check[2] - hsl_orig[2]) * 100.0) <= tolerance);
   }
   
   return false;
@@ -582,8 +604,22 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     merge_pixel_with_background(orig_color, dtc, merged_orig);
     
-    int tolerance = (255 * prefs_get_int_attribute_limited("tools.paintbucket", "tolerance", 1, 0, 100)) / 100;
     PaintBucketChannels method = (PaintBucketChannels)prefs_get_int_attribute("tools.paintbucket", "channels", 0);
+    int tolerance = prefs_get_int_attribute_limited("tools.paintbucket", "tolerance", 1, 0, 100);
+
+    switch(method) {
+      case FLOOD_CHANNELS_ALPHA:
+      case FLOOD_CHANNELS_RGB:
+      case FLOOD_CHANNELS_R:
+      case FLOOD_CHANNELS_G:
+      case FLOOD_CHANNELS_B:
+        tolerance = (255 * tolerance) / 100;
+        break;
+      case FLOOD_CHANNELS_H:
+      case FLOOD_CHANNELS_S:
+      case FLOOD_CHANNELS_L:
+        break;
+    }
 
     bool reached_screen_boundary = false;
 
