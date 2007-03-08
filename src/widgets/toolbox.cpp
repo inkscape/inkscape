@@ -4442,7 +4442,10 @@ static void paintbucket_tolerance_changed(GtkAdjustment *adj, GtkWidget *tbl)
 
 static void paintbucket_offset_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
-    prefs_set_double_attribute("tools.paintbucket", "offset", (gint)adj->value);
+    GtkWidget *us = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(tbl), "units");
+    SPUnit const *unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
+    
+    prefs_set_double_attribute("tools.paintbucket", "offset", (gdouble)sp_units_get_pixels(adj->value, *unit));
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
@@ -4466,16 +4469,24 @@ sp_paintbucket_toolbox_new(SPDesktop *desktop)
     //  interval
     gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
+    // Create the units menu.
+    GtkWidget *us = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
+    sp_unit_selector_setsize(us, AUX_OPTION_MENU_WIDTH, AUX_OPTION_MENU_HEIGHT);
+    sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us), sp_desktop_namedview(desktop)->doc_units);
+    
     // Offset spinbox
     {
         GtkWidget *offset = sp_tb_spinbutton(_("Offset:"),
                 _("The amount to grow the path after it has been traced"),
-                "tools.paintbucket", "offset", 5, NULL, tbl, TRUE,
-                "inkscape:paintbucket-offset", 0.0, 2.0, 0.1, 0.5,
+                "tools.paintbucket", "offset", 5, us, tbl, TRUE,
+                "inkscape:paintbucket-offset", -1e6, 1e6, 0.1, 0.5,
                 paintbucket_offset_changed, 1, 2);
 
         gtk_box_pack_start(GTK_BOX(tbl), offset, FALSE, FALSE,
                 AUX_SPACING);
+    
+        gtk_box_pack_start(GTK_BOX(tbl), us, FALSE, FALSE, AUX_SPACING);
+        gtk_object_set_data(GTK_OBJECT(tbl), "units", us);
     }
     
     //  interval

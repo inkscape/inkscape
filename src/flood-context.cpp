@@ -302,7 +302,7 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
 
     long totalNodeCount = 0L;
 
-    double offset = prefs_get_double_attribute_limited("tools.paintbucket", "offset", 1.5, 0.0, 2.0);
+    double offset = prefs_get_double_attribute("tools.paintbucket", "offset", 2.0);
 
     for (unsigned int i=0 ; i<results.size() ; i++) {
         Inkscape::Trace::TracingEngineResult result = results[i];
@@ -747,6 +747,7 @@ void flood_channels_changed(GtkComboBox *cbox, GtkWidget *tbl)
 {
     prefs_set_int_attribute("tools.paintbucket", "channels", (gint)gtk_combo_box_get_active(cbox));
 }
+
 /*
   Local Variables:
   mode:c++

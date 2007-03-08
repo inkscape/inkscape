@@ -14,6 +14,9 @@
 #include <sigc++/sigc++.h>
 #include <gtk/gtk.h>
 #include "event-context.h"
+#include "helper/unit-menu.h"
+#include "helper/units.h"
+
 struct SPKnotHolder;
 
 #define SP_TYPE_FLOOD_CONTEXT            (sp_flood_context_get_type ())
