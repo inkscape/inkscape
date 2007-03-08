@@ -706,7 +706,7 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
         *position = _point + ( *position - _point ) / 10;
     }
 
-    if (!(state & GDK_SHIFT_MASK) == !(_state == STATE_ROTATE)) {
+    if ((!(state & GDK_SHIFT_MASK) == !(_state == STATE_ROTATE)) && (&handle != &handle_center)) {
         _origin = _opposite;
     } else {
         _origin = _center;
