@@ -27,19 +27,16 @@ namespace GC {
 template <typename T>
 class soft_ptr {
 public:
-    soft_ptr(T * const &pointer=NULL) : _pointer(pointer) {
-        _register();
-    }
-    soft_ptr(soft_ptr const &other) : _pointer(other._pointer) {
+    soft_ptr(T *pointer=NULL) : _pointer(pointer) {
         _register();
     }
 
-    operator T *() const { return _pointer; }
-    T &operator*() const { return *_pointer; }
-    T *operator->() const { return _pointer; } 
-    T &operator[](int i) const { return _pointer[i]; }
+    operator T *() const { return static_cast<T *>(_pointer); }
+    T &operator*() const { return *static_cast<T *>(_pointer); }
+    T *operator->() const { return static_cast<T *>(_pointer); } 
+    T &operator[](int i) const { return static_cast<T *>(_pointer)[i]; }
 
-    soft_ptr &operator=(T * const &pointer) {
+    soft_ptr &operator=(T *pointer) {
         _pointer = pointer;
         return *this;
     }
@@ -50,11 +47,11 @@ private:
     void _register() {
         void *base=Core::base(this);
         if (base) {
-            Core::general_register_disappearing_link((void **)&_pointer, base);
+            Core::general_register_disappearing_link(&_pointer, base);
         }
     }
 
-    T *_pointer;
+    void *_pointer;
 };
 
 }
