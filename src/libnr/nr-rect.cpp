@@ -293,7 +293,7 @@ Maybe<Rect> intersection(Maybe<Rect const &> a, Maybe<Rect const &> b) {
         for ( int i=0 ; i < 2 ; i++ ) {
             r._min[i] = std::max(a->_min[i], b->_min[i]);
             r._max[i] = std::min(a->_max[i], b->_max[i]);
-            if ( r._min[i] > r._max[i] ) {
+            if ( r._min[i] >= r._max[i] ) {
 	        return Nothing();
             }
 	}
