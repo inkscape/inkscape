@@ -619,8 +619,8 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 /*
         case GDK_Insert:
         case GDK_KP_Insert:
-            // with any modifiers
-            sp_node_selected_add_node();
+            // with any modifiers:
+            // insert mid-stops between selected stops in gradient, or between all stops if none or only one selected
             ret = TRUE;
             break;
 */
