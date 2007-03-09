@@ -10,6 +10,7 @@
  */
 
 #include "nr-rect-l.h"
+#include <algorithm>
 
 NRRect::NRRect(NR::Rect const &rect)
 : x0(rect.min()[NR::X]), y0(rect.min()[NR::Y]),
@@ -242,8 +243,8 @@ nr_rect_l_enlarge(NRRectL *d, int amount)
 namespace NR {
 
 Rect::Rect(const Point &p0, const Point &p1)
-: _min(MIN(p0[X], p1[X]), MIN(p0[Y], p1[Y])),
-  _max(MAX(p0[X], p1[X]), MAX(p0[Y], p1[Y])) {}
+: _min(std::min(p0[X], p1[X]), std::min(p0[Y], p1[Y])),
+  _max(std::max(p0[X], p1[X]), std::max(p0[Y], p1[Y])) {}
 
 /** returns the four corners of the rectangle in the correct winding order */
 Point Rect::corner(unsigned i) const {
@@ -278,8 +279,8 @@ void Rect::offset(Point p) {
 /** Makes this rectangle large enough to include the point p. */
 void Rect::expandTo(Point p) {
 	for ( int i=0 ; i < 2 ; i++ ) {
-		_min[i] = MIN(_min[i], p[i]);
-		_max[i] = MAX(_max[i], p[i]);
+		_min[i] = std::min(_min[i], p[i]);
+		_max[i] = std::max(_max[i], p[i]);
 	}
 }
 
@@ -290,8 +291,8 @@ Maybe<Rect> intersection(Maybe<Rect const &> a, Maybe<Rect const &> b) {
     } else {
         Rect r;
         for ( int i=0 ; i < 2 ; i++ ) {
-            r._min[i] = MAX(a->_min[i], b->_min[i]);
-            r._max[i] = MIN(a->_max[i], b->_max[i]);
+            r._min[i] = std::max(a->_min[i], b->_min[i]);
+            r._max[i] = std::min(a->_max[i], b->_max[i]);
             if ( r._min[i] > r._max[i] ) {
 	        return Nothing();
             }
@@ -304,8 +305,8 @@ Maybe<Rect> intersection(Maybe<Rect const &> a, Maybe<Rect const &> b) {
 Rect union_bounds(Rect const &a, Rect const &b) {
     Rect r;
     for ( int i=0 ; i < 2 ; i++ ) {
-        r._min[i] = MIN(a._min[i], b._min[i]);
-        r._max[i] = MAX(a._max[i], b._max[i]);
+        r._min[i] = std::min(a._min[i], b._min[i]);
+        r._max[i] = std::max(a._max[i], b._max[i]);
     }
     return r;
 }
