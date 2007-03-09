@@ -320,7 +320,7 @@ NR::Rect Selection::bounds() const
 
     NR::Maybe<NR::Rect> bbox = NR::Nothing();
     for ( GSList const *i = items ; i != NULL ; i = i->next ) {
-        bbox = NR::Rect::union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data)));
+        bbox = NR::union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data)));
     }
 
     // TODO: return NR::Maybe<NR::Rect>

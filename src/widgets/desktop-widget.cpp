@@ -1289,7 +1289,7 @@ sp_desktop_widget_update_scrollbars (SPDesktopWidget *dtw, double scale)
     NR::Rect viewbox = dtw->canvas->getViewbox();
 
     /* Viewbox is always included into scrollable region */
-    carea = NR::Rect::union_bounds(carea, viewbox);
+    carea = NR::union_bounds(carea, viewbox);
 
     set_adjustment(dtw->hadj, carea.min()[NR::X], carea.max()[NR::X],
                    viewbox.dimensions()[NR::X],

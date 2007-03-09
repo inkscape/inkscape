@@ -125,36 +125,6 @@ public:
         _max[NR::Y] += by;
     }
 
-    /** Returns the set of points shared by both rectangles. */
-    static Maybe<Rect> intersection(Maybe<Rect> const &a, Maybe<Rect> const &b);
-
-    /** Returns the smallest rectangle that encloses both rectangles. */
-    static Maybe<Rect> union_bounds(Maybe<Rect> const &a, Maybe<Rect> const &b)
-    {
-        if (!a) {
-            return b;
-        } else if (!b) {
-            return a;
-        } else {
-            return union_bounds(*a, *b);
-        }
-    }
-    static Rect union_bounds(Maybe<Rect> const &a, Rect const &b) {
-        if (a) {
-            return union_bounds(*a, b);
-        } else {
-            return b;
-        }
-    }
-    static Rect union_bounds(Rect const &a, Maybe<Rect> const &b) {
-        if (b) {
-            return union_bounds(a, *b);
-        } else {
-            return a;
-        }
-    }
-    static Rect union_bounds(Rect const &a, Rect const &b);
-
     /** Scales the rect by s, with origin at 0, 0 */
     inline Rect operator*(double const s) const {
         return Rect(s * min(), s * max());
@@ -172,6 +142,8 @@ public:
     friend inline std::ostream &operator<<(std::ostream &out_file, NR::Rect const &in_rect);
 
 private:
+    Rect(Nothing) : _min(1, 1), _max(-1, -1) {}
+
     static double _inf() {
         return std::numeric_limits<double>::infinity();
     }
@@ -203,9 +175,54 @@ private:
 
     Point _min, _max;
 
-    /* evil, but temporary */
-    friend class Maybe<Rect>;
+    friend class MaybeStorage<Rect>;
 };
+
+template <>
+class MaybeStorage<Rect> {
+public:
+    MaybeStorage() : _rect(Nothing()) {}
+    MaybeStorage(Rect const &rect) : _rect(rect) {}
+
+    bool is_nothing() const {
+        return _rect._min[X] > _rect._max[X];
+    }
+    Rect const &value() const { return _rect; }
+    Rect &value() { return _rect; }
+
+private:
+    Rect _rect;
+};
+
+/** Returns the set of points shared by both rectangles. */
+Maybe<Rect> intersection(Maybe<Rect const &> a, Maybe<Rect const &> b);
+
+/** Returns the smallest rectangle that encloses both rectangles. */
+Rect union_bounds(Rect const &a, Rect const &b);
+inline Rect union_bounds(Maybe<Rect const &> a, Rect const &b) {
+    if (a) {
+        return union_bounds(*a, b);
+    } else {
+        return b;
+    }
+}
+inline Rect union_bounds(Rect const &a, Maybe<Rect const &> b) {
+    if (b) {
+        return union_bounds(a, *b);
+    } else {
+        return a;
+    }
+}
+inline Maybe<Rect> union_bounds(Maybe<Rect const &> a, Maybe<Rect const &> b)
+{
+    if (!a) {
+        return b;
+    } else if (!b) {
+        return a;
+    } else {
+        return union_bounds(*a, *b);
+    }
+}
 
 /** A function to print out the rectange if sent to an output
     stream. */

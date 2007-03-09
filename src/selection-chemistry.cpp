@@ -598,7 +598,7 @@ enclose_items(const GSList *items)
 
     NR::Maybe<NR::Rect> r = NR::Nothing();
     for (GSList const *i = items; i; i = i->next) {
-        r = NR::Rect::union_bounds(r, sp_item_bbox_desktop((SPItem *) i->data));
+        r = NR::union_bounds(r, sp_item_bbox_desktop((SPItem *) i->data));
     }
     return r;
 }

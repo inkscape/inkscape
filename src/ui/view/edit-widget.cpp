@@ -1395,7 +1395,7 @@ EditWidget::updateScrollbars (double scale)
     NR::Rect const viewbox = _svg_canvas.spobj()->getViewbox();
 
     /* Viewbox is always included into scrollable region */
-    carea = NR::Rect::union_bounds(carea, viewbox);
+    carea = NR::union_bounds(carea, viewbox);
 
     Gtk::Adjustment *adj = _bottom_scrollbar.get_adjustment();
     adj->set_value(viewbox.min()[NR::X]);

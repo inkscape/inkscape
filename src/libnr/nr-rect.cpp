@@ -284,7 +284,7 @@ void Rect::expandTo(Point p) {
 }
 
 /** Returns the set of points shared by both rectangles. */
-Maybe<Rect> Rect::intersection(Maybe<Rect> const &a, Maybe<Rect> const &b) {
+Maybe<Rect> intersection(Maybe<Rect const &> a, Maybe<Rect const &> b) {
     if ( !a || !b ) {
         return Nothing();
     } else {
@@ -301,7 +301,7 @@ Maybe<Rect> Rect::intersection(Maybe<Rect> const &a, Maybe<Rect> const &b) {
 }
 
 /** returns the smallest rectangle containing both rectangles */
-Rect Rect::union_bounds(Rect const &a, Rect const &b) {
+Rect union_bounds(Rect const &a, Rect const &b) {
     Rect r;
     for ( int i=0 ; i < 2 ; i++ ) {
         r._min[i] = MIN(a._min[i], b._min[i]);
