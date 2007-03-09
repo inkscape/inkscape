@@ -305,6 +305,9 @@ static void sp_gradient_rebuild_vector(SPGradient *gr);
 
 static void gradient_ref_changed(SPObject *old_ref, SPObject *ref, SPGradient *gradient);
 
+SPGradientSpread sp_gradient_get_spread(SPGradient *gradient);
+SPGradientUnits sp_gradient_get_units(SPGradient *gradient);
+
 static SPPaintServerClass *gradient_parent_class;
 
 /**
@@ -530,6 +533,16 @@ gradient_ref_changed(SPObject *old_ref, SPObject *ref, SPGradient *gr)
     {
         gr->modified_connection = ref->connectModified(sigc::bind<2>(sigc::ptr_fun(&gradient_ref_modified), gr));
     }
+
+    // Per SVG, all unset attributes must be inherited from linked gradient. 
+    // So, as we're now (re)linked, we assign linkee's values to this gradient if they are not yet set -
+    // but without setting the _set flags. 
+    // FIXME: do the same for gradientTransform too
+    if (!gr->units_set)
+        gr->units = sp_gradient_get_units (gr);
+    if (!gr->spread_set)
+        gr->spread = sp_gradient_get_spread (gr);
+
     /// \todo Fixme: what should the flags (second) argument be? */
     gradient_ref_modified(ref, 0, gr);
 }
@@ -788,6 +801,15 @@ has_spread_set(SPGradient const *gr)
     return gr->spread_set;
 }
 
+/**
+ * True if gradient has units set.
+ */
+static bool
+has_units_set(SPGradient const *gr)
+{
+    return gr->units_set;
+}
+
 
 /**
  * Returns private vector of given gradient (the gradient at the end of the href chain which has
@@ -823,6 +845,23 @@ sp_gradient_get_spread(SPGradient *gradient)
              ? src->spread
              : SP_GRADIENT_SPREAD_PAD ); // pad is the default
 }
+
+/**
+ * Returns the effective units of given gradient (climbing up the refs chain if needed).
+ *
+ * \pre SP_IS_GRADIENT(gradient).
+ */
+SPGradientUnits
+sp_gradient_get_units(SPGradient *gradient)
+{
+    g_return_val_if_fail(SP_IS_GRADIENT(gradient), SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX);
+
+    SPGradient const *src = chase_hrefs(gradient, has_units_set);
+    return ( src
+             ? src->units
+             : SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX ); // bbox is the default
+}
+
 
 /**
  * Clears the gradient's svg:stop children from its repr.
@@ -1237,7 +1276,7 @@ sp_gradient_set_gs2d_matrix(SPGradient *gr, NR::Matrix const &ctm,
                             NR::Rect const &bbox, NR::Matrix const &gs2d)
 {
     gr->gradientTransform = gs2d / ctm;
-    if ( gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX ) {
+    if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX ) {
         gr->gradientTransform = ( gr->gradientTransform
                                   / NR::translate(bbox.min())
                                   / NR::scale(bbox.dimensions()) );
