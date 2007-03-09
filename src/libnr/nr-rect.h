@@ -176,6 +176,8 @@ private:
     Point _min, _max;
 
     friend class MaybeStorage<Rect>;
+    friend Maybe<Rect> intersection(Maybe<Rect const &>, Maybe<Rect const &>);
+    friend Rect union_bounds(Rect const &, Rect const &);
 };
 
 template <>

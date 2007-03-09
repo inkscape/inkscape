@@ -290,8 +290,8 @@ Maybe<Rect> intersection(Maybe<Rect const &> a, Maybe<Rect const &> b) {
     } else {
         Rect r;
         for ( int i=0 ; i < 2 ; i++ ) {
-            r._min[i] = MAX(a->_min[i], b->_min[i]);
-            r._max[i] = MIN(a->_max[i], b->_max[i]);
+            r._min[i] = MAX(a->min()[i], b->min()[i]);
+            r._max[i] = MIN(a->max()[i], b->max()[i]);
             if ( r._min[i] > r._max[i] ) {
 	        return Nothing();
             }
