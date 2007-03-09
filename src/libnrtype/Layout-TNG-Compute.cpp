@@ -832,10 +832,12 @@ void Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) cons
         } else if (_flow._input_stream[input_index]->Type() == TEXT_SOURCE) {
             Layout::InputStreamTextSource *text_source = static_cast<Layout::InputStreamTextSource *>(_flow._input_stream[input_index]);
 
-            PangoFontDescription *temp_descr = text_source->styleGetFontDescription();
-            PangoAttribute *attribute_font_description = pango_attr_font_desc_new(temp_descr);
-            pango_font_description_free(temp_descr);
+			// create the font_instance
+			font_instance *font = text_source->styleGetFontInstance();
+			if (font == NULL)
+				continue;  // bad news: we'll have to ignore all this text because we know of no font to render it
 
+            PangoAttribute *attribute_font_description = pango_attr_font_desc_new(font->descr);
             attribute_font_description->start_index = para_text.bytes();
             para_text.append(&*text_source->text_begin.base(), text_source->text_length);     // build the combined text
             attribute_font_description->end_index = para_text.bytes();
