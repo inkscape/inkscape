@@ -176,7 +176,7 @@ private:
     Point _min, _max;
 
     friend class MaybeStorage<Rect>;
-    friend Maybe<Rect> intersection(Maybe<Rect const &>, Maybe<Rect const &>);
+    friend Maybe<Rect> intersection(Maybe<Rect> const &, Maybe<Rect> const &);
     friend Rect union_bounds(Rect const &, Rect const &);
 };
 
@@ -197,25 +197,25 @@ private:
 };
 
 /** Returns the set of points shared by both rectangles. */
-Maybe<Rect> intersection(Maybe<Rect const &> a, Maybe<Rect const &> b);
+Maybe<Rect> intersection(Maybe<Rect> const & a, Maybe<Rect> const & b);
 
 /** Returns the smallest rectangle that encloses both rectangles. */
 Rect union_bounds(Rect const &a, Rect const &b);
-inline Rect union_bounds(Maybe<Rect const &> a, Rect const &b) {
+inline Rect union_bounds(Maybe<Rect> const & a, Rect const &b) {
     if (a) {
         return union_bounds(*a, b);
     } else {
         return b;
     }
 }
-inline Rect union_bounds(Rect const &a, Maybe<Rect const &> b) {
+inline Rect union_bounds(Rect const &a, Maybe<Rect> const & b) {
     if (b) {
         return union_bounds(a, *b);
     } else {
         return a;
     }
 }
-inline Maybe<Rect> union_bounds(Maybe<Rect const &> a, Maybe<Rect const &> b)
+inline Maybe<Rect> union_bounds(Maybe<Rect> const & a, Maybe<Rect> const & b)
 {
     if (!a) {
         return b;

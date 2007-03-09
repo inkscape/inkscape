@@ -285,7 +285,7 @@ void Rect::expandTo(Point p) {
 }
 
 /** Returns the set of points shared by both rectangles. */
-Maybe<Rect> intersection(Maybe<Rect const &> a, Maybe<Rect const &> b) {
+Maybe<Rect> intersection(Maybe<Rect> const & a, Maybe<Rect> const & b) {
     if ( !a || !b ) {
         return Nothing();
     } else {
