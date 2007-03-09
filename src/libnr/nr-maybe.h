@@ -42,37 +42,13 @@ private:
 };
 
 template <typename T>
-class MaybeStorage<T &> {
-public:
-    MaybeStorage() : _ref(NULL) {}
-    MaybeStorage(T &value) : _ref(&value) {}
-
-    bool is_nothing() const { return !_ref; }
-    T &value() const { return *_ref; }
-
-private:
-    T *_ref;
-};
-
-template <typename T>
 class Maybe {
 public:
     Maybe() {}
-
     Maybe(Nothing) {}
-
-    Maybe(T &t) : _storage(t) {}
     Maybe(T const &t) : _storage(t) {}
-
-    Maybe(Maybe &m) : _storage(m._storage) {}
     Maybe(Maybe const &m) : _storage(m._storage) {}
 
-    template <typename T2>
-    Maybe(Maybe<T2> &m) {
-        if (m) {
-            _storage = *m;
-        }
-    }
     template <typename T2>
     Maybe(Maybe<T2> const &m) {
         if (m) {
@@ -80,12 +56,6 @@ public:
         }
     }
 
-    template <typename T2>
-    Maybe(Maybe<T2 &> m) {
-        if (m) {
-            _storage = *m;
-        }
-    }
     template <typename T2>
     Maybe(Maybe<T2 const &> m) {
         if (m) {
@@ -126,7 +96,7 @@ public:
     }
 
     template <typename T2>
-    bool operator==(NR::Maybe<T2> const &other) const {
+    bool operator==(Maybe<T2> const &other) const {
         bool is_nothing = _storage.is_nothing();
         if ( is_nothing || !other ) {
             return is_nothing && !other;
@@ -135,7 +105,7 @@ public:
         }
     }
     template <typename T2>
-    bool operator!=(NR::Maybe<T2> const &other) const {
+    bool operator!=(Maybe<T2> const &other) const {
         bool is_nothing = _storage.is_nothing();
         if ( is_nothing || !other ) {
             return !is_nothing || other;
@@ -146,6 +116,72 @@ public:
 
 private:
     MaybeStorage<T> _storage;
+};
+
+template <typename T>
+class Maybe<T &> {
+public:
+    Maybe() : _ref(NULL) {}
+    Maybe(Nothing) : _ref(NULL) {}
+    Maybe(T &t) : _ref(&t) {}
+
+    template <typename T2>
+    Maybe(Maybe<T2> const &m) {
+        if (m) {
+            _ref = &*m;
+        } 
+    }
+
+    template <typename T2>
+    Maybe(Maybe<T2 &> m) {
+        if (m) {
+            _ref = *m;
+        }
+    }
+
+    template <typename T2>
+    Maybe(Maybe<T2 const &> m) {
+        if (m) {
+            _ref = *m;
+        }
+    }
+
+    operator bool() const { return _ref; }
+
+    T &operator*() const throw(IsNothing) {
+        if (!_ref) {
+            throw IsNothing();
+        } else {
+            return *_ref;
+        }
+    }
+    T *operator->() const throw(IsNothing) {
+        if (!_ref) {
+            throw IsNothing();
+        } else {
+            return _ref;
+        }
+    }
+
+    template <typename T2>
+    bool operator==(Maybe<T2> const &other) const {
+        if ( !_ref || !other ) {
+            return !_ref && !other;
+        } else {
+            return *_ref == *other;
+        }
+    }
+    template <typename T2>
+    bool operator!=(Maybe <T2> const &other) const {
+        if ( !_ref || !other ) {
+            return _ref || other;
+        } else {
+            return *_ref != *other;
+        }
+    }
+
+private:
+    T *_ref;
 };
 
 } /* namespace NR */
