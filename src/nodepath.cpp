@@ -3445,11 +3445,9 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
     me->pos = NR::Point(rnew) + n->pos;
     sp_ctrlline_set_coords(SP_CTRLLINE(me->line), n->pos, me->pos);
 
-    // this is what sp_knot_set_position does, but without emitting the signal:
+    // move knot, but without emitting the signal:
     // we cannot emit a "moved" signal because we're now processing it
-    if (me->knot->item) SP_CTRL(me->knot->item)->moveto(me->pos);
-
-    knot->desktop->set_coordinate_status(me->pos);
+    sp_knot_moveto(me->knot, &(me->pos));
 
     update_object(n->subpath->nodepath);
 
