@@ -707,9 +707,7 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
         return TRUE;
     }
 
-    knot->desktop->set_coordinate_status(*position);
     knot->desktop->setPosition(*position);
-
 
     if (state & GDK_MOD1_MASK) {
         *position = _point + ( *position - _point ) / 10;
