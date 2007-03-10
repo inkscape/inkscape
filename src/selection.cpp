@@ -421,9 +421,11 @@ std::vector<NR::Point> Selection::getBBoxPoints() const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
     std::vector<NR::Point> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-        NR::Rect b = sp_item_bbox_desktop(SP_ITEM(iter->data));
-        p.push_back(b.min());
-        p.push_back(b.max());
+        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(SP_ITEM(iter->data));
+        if (b) {
+            p.push_back(b->min());
+            p.push_back(b->max());
+        }
     }
 
     return p;

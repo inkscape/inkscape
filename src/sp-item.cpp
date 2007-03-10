@@ -798,17 +798,11 @@ sp_item_bbox_desktop(SPItem *item, NRRect *bbox)
     sp_item_invoke_bbox(item, bbox, sp_item_i2d_affine(item), TRUE);
 }
 
-NR::Rect sp_item_bbox_desktop(SPItem *item)
+NR::Maybe<NR::Rect> sp_item_bbox_desktop(SPItem *item)
 {
     NRRect ret;
     sp_item_invoke_bbox(item, &ret, sp_item_i2d_affine(item), TRUE);
-    NR::Maybe<NR::Rect> result = ret.upgrade();
-    if (result) {
-        return *result;
-    } else {
-        // FIXME
-        return NR::Rect(NR::Point(0, 0), NR::Point(0, 0));
-    }
+    return ret.upgrade();
 }
 
 static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)

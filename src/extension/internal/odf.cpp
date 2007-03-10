@@ -958,14 +958,16 @@ static NR::Matrix getODFTransform(const SPItem *item)
  * Get the bounding box of an item, as mapped onto
  * an ODF document, in cm.
  */
-static NR::Rect getODFBoundingBox(const SPItem *item)
+static NR::Maybe<NR::Rect> getODFBoundingBox(const SPItem *item)
 {
-    NR::Rect bbox        = sp_item_bbox_desktop((SPItem *)item);
-    double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
-    NR::Matrix doc2dt_tf = NR::Matrix(NR::scale(1.0, -1.0));
-    doc2dt_tf            = doc2dt_tf * NR::Matrix(NR::translate(0, doc_height));
-    bbox                 = bbox * doc2dt_tf;
-    bbox                 = bbox * NR::Matrix(NR::scale(pxToCm));
+    NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop((SPItem *)item);
+    if (bbox) {
+        double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
+        NR::Matrix doc2dt_tf = NR::Matrix(NR::scale(1.0, -1.0));
+        doc2dt_tf            = doc2dt_tf * NR::Matrix(NR::translate(0, doc_height));
+        bbox                 = *bbox * doc2dt_tf;
+        bbox                 = *bbox * NR::Matrix(NR::scale(pxToCm));
+    }
     return bbox;
 }
 
@@ -1866,11 +1868,15 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
     NR::Matrix tf        = getODFTransform(item);
 
     //### Get ODF bounding box params for item
-    NR::Rect bbox        = getODFBoundingBox(item);
-    double bbox_x        = bbox.min()[NR::X];
-    double bbox_y        = bbox.min()[NR::Y];
-    double bbox_width    = bbox.max()[NR::X] - bbox.min()[NR::X];
-    double bbox_height   = bbox.max()[NR::Y] - bbox.min()[NR::Y];
+    NR::Maybe<NR::Rect> bbox = getODFBoundingBox(item);
+    if (!bbox) {
+        return true;
+    }
+
+    double bbox_x        = bbox->min()[NR::X];
+    double bbox_y        = bbox->min()[NR::Y];
+    double bbox_width    = bbox->extent(NR::X);
+    double bbox_height   = bbox->extent(NR::Y);
 
     double rotate;
     double xskew;

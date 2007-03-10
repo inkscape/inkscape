@@ -837,8 +837,8 @@ static GSList *find_items_in_area(GSList *s, SPGroup *group, unsigned int dkey, 
             s = find_items_in_area(s, SP_GROUP(o), dkey, area, test);
         } else {
             SPItem *child = SP_ITEM(o);
-            NR::Rect box = sp_item_bbox_desktop(child);
-            if (test(area, box) && (take_insensitive || child->isVisibleAndUnlocked(dkey))) {
+            NR::Maybe<NR::Rect> box = sp_item_bbox_desktop(child);
+            if ( box && test(area, *box) && (take_insensitive || child->isVisibleAndUnlocked(dkey))) {
                 s = g_slist_append(s, child);
             }
         }

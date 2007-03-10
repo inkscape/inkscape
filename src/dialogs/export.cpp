@@ -776,14 +776,12 @@ sp_export_selection_modified ( Inkscape::Application *inkscape,
             if ( SP_ACTIVE_DESKTOP ) {
                 SPDocument *doc;
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
-                NR::Rect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
-
-                if (!(bbox.min()[NR::X] > bbox.max()[NR::X] &&
-                      bbox.min()[NR::Y] > bbox.max()[NR::Y])) {
-                    sp_export_set_area (base, bbox.min()[NR::X],
-                                              bbox.min()[NR::Y],
-                                              bbox.max()[NR::X],
-                                              bbox.max()[NR::Y]);
+                NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
+                if (bbox) {
+                    sp_export_set_area (base, bbox->min()[NR::X],
+                                              bbox->min()[NR::Y],
+                                              bbox->max()[NR::X],
+                                              bbox->max()[NR::Y]);
                 }
             }
             break;
@@ -837,7 +835,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
     if ( SP_ACTIVE_DESKTOP )
     {
         SPDocument *doc;
-        NR::Rect bbox;
+        NR::Maybe<NR::Rect> bbox;
         doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
         /* Notice how the switch is used to 'fall through' here to get
@@ -860,11 +858,9 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                  * This returns wrong values if the document has a viewBox.
                  */
                 bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
-                
                 /* If the drawing is valid, then we'll use it and break
                    otherwise we drop through to the page settings */
-                if (!(bbox.min()[NR::X] > bbox.max()[NR::X] &&
-                      bbox.min()[NR::Y] > bbox.max()[NR::Y])) { 
+                if (bbox) {
                     // std::cout << "Using selection: DRAWING" << std::endl;
                     key = SELECTION_DRAWING;
                     break;
@@ -886,11 +882,11 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
         prefs_set_string_attribute ( "dialogs.export.exportarea", 
                                      "value", selection_names[key]);
 
-        if (key != SELECTION_CUSTOM) {
-            sp_export_set_area (base, bbox.min()[NR::X],
-                                      bbox.min()[NR::Y],
-                                      bbox.max()[NR::X],
-                                      bbox.max()[NR::Y]);
+        if ( key != SELECTION_CUSTOM && bbox ) {
+            sp_export_set_area (base, bbox->min()[NR::X],
+                                      bbox->min()[NR::Y],
+                                      bbox->max()[NR::X],
+                                      bbox->max()[NR::Y]);
         }
     
     } // end of if ( SP_ACTIVE_DESKTOP )
@@ -1417,10 +1413,10 @@ sp_export_detect_size(GtkObject * base) {
             case SELECTION_DRAWING: {
                 SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
-                NR::Rect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
+                NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
 
                 // std::cout << "Drawing " << bbox2;
-                if (sp_export_bbox_equal(bbox,current_bbox)) {
+                if ( bbox && sp_export_bbox_equal(*bbox,current_bbox) ) {
                     key = SELECTION_DRAWING;
                 }
                 break;

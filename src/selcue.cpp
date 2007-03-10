@@ -78,38 +78,38 @@ void Inkscape::SelCue::_updateItemBboxes()
     for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = (SPItem *) l->data;
 
-        NR::Rect const b = sp_item_bbox_desktop(item);
+        NR::Maybe<NR::Rect> const b = sp_item_bbox_desktop(item);
 
         SPCanvasItem* box = NULL;
 
-        if (mode == MARK) {
-            box = sp_canvas_item_new(sp_desktop_controls(_desktop),
-                                      SP_TYPE_CTRL,
-                                      "mode", SP_CTRL_MODE_XOR,
-                                      "shape", SP_CTRL_SHAPE_DIAMOND,
-                                      "size", 5.0,
-                                      "filled", TRUE,
-                                      "fill_color", 0x000000ff,
-                                      "stroked", FALSE,
-                                      "stroke_color", 0x000000ff,
-                                      NULL);
-            sp_canvas_item_show(box);
-            SP_CTRL(box)->moveto(NR::Point(b.min()[NR::X], b.max()[NR::Y]));
+        if (b) {
+            if (mode == MARK) {
+                box = sp_canvas_item_new(sp_desktop_controls(_desktop),
+                                         SP_TYPE_CTRL,
+                                         "mode", SP_CTRL_MODE_XOR,
+                                         "shape", SP_CTRL_SHAPE_DIAMOND,
+                                         "size", 5.0,
+                                         "filled", TRUE,
+                                         "fill_color", 0x000000ff,
+                                         "stroked", FALSE,
+                                         "stroke_color", 0x000000ff,
+                                         NULL);
+                sp_canvas_item_show(box);
+                SP_CTRL(box)->moveto(NR::Point(b->min()[NR::X], b->max()[NR::Y]));
 
-            sp_canvas_item_move_to_z(box, 0); // just low enough to not get in the way of other draggable knots
+                sp_canvas_item_move_to_z(box, 0); // just low enough to not get in the way of other draggable knots
 
-        } else if (mode == BBOX) {
-            box = sp_canvas_item_new(
-                sp_desktop_controls(_desktop),
-                SP_TYPE_CTRLRECT,
-                NULL
-                );
+            } else if (mode == BBOX) {
+                box = sp_canvas_item_new(sp_desktop_controls(_desktop),
+                                         SP_TYPE_CTRLRECT,
+                                         NULL);
 
-            SP_CTRLRECT(box)->setRectangle(b);
-            SP_CTRLRECT(box)->setColor(0x000000a0, 0, 0);
-            SP_CTRLRECT(box)->setDashed(true);
+                SP_CTRLRECT(box)->setRectangle(*b);
+                SP_CTRLRECT(box)->setColor(0x000000a0, 0, 0);
+                SP_CTRLRECT(box)->setDashed(true);
 
-            sp_canvas_item_move_to_z(box, 0);
+                sp_canvas_item_move_to_z(box, 0);
+            }
         }
 
         if (box) {

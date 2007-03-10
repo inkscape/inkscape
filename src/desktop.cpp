@@ -430,8 +430,12 @@ bool SPDesktop::isLayer(SPObject *object) const {
 bool SPDesktop::isWithinViewport (SPItem *item) const
 {
     NR::Rect const viewport = get_display_area();
-    NR::Rect const bbox = sp_item_bbox_desktop(item);
-    return viewport.contains(bbox);
+    NR::Maybe<NR::Rect> const bbox = sp_item_bbox_desktop(item);
+    if (bbox) {
+        return viewport.contains(*bbox);
+    } else {
+        return true;
+    }
 }
 
 ///
@@ -881,16 +885,16 @@ SPDesktop::zoom_drawing()
     SPItem *docitem = SP_ITEM (sp_document_root (doc()));
     g_return_if_fail (docitem != NULL);
 
-    NR::Rect d = sp_item_bbox_desktop(docitem);
+    NR::Maybe<NR::Rect> d = sp_item_bbox_desktop(docitem);
 
     /* Note that the second condition here indicates that
     ** there are no items in the drawing.
     */
-    if ( d.dimensions()[NR::X] < 1.0 || d.dimensions()[NR::Y] < 1.0 ) {
+    if ( !d || d->dimensions()[NR::X] < 1.0 || d->dimensions()[NR::Y] < 1.0 ) {
         return;
     }
 
-    set_display_area(d, 10);
+    set_display_area(*d, 10);
 }
 
 /**

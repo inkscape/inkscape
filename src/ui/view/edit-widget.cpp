@@ -1380,11 +1380,11 @@ EditWidget::updateScrollbars (double scale)
 
     /* The desktop region we always show unconditionally */
     SPDocument *doc = _desktop->doc();
-    NR::Rect const r = sp_item_bbox_desktop(SP_ITEM(SP_DOCUMENT_ROOT(doc)));
-    NR::Rect darea(NR::Point(MIN(r.min()[NR::X], -sp_document_width(doc)),
-                             MIN(r.min()[NR::Y], -sp_document_height(doc))),
-                   NR::Point(MAX(r.max()[NR::X], 2 * sp_document_width(doc)),
-                             MAX(r.max()[NR::Y], 2 * sp_document_height(doc))));
+    NR::Rect darea = NR::Rect(NR::Point(-sp_document_width(doc),
+                                        -sp_document_height(doc)),
+                              NR::Point(2 * sp_document_width(doc),
+                                        2 * sp_document_height(doc)));
+    darea = NR::union_bounds(darea, sp_item_bbox_desktop(SP_ITEM(SP_DOCUMENT_ROOT(doc))));
 
     /* Canvas region we always show unconditionally */
     NR::Rect carea(NR::Point(darea.min()[NR::X] * scale - 64,

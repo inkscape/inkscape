@@ -53,8 +53,8 @@ void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
                 if (SP_IS_GROUP(o)) {
                     _findCandidates(c, o, it, p);
                 } else {
-                    NR::Rect const b = NR::expand(sp_item_bbox_desktop(SP_ITEM(o)), -getDistance());
-                    if (b.contains(p)) {
+                    NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(SP_ITEM(o));
+                    if ( b && NR::expand(*b, -getDistance()).contains(p) ) {
                         c.push_back(SP_ITEM(o));
                     }
                 }

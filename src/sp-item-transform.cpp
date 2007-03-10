@@ -46,11 +46,12 @@ sp_item_rotate_rel(SPItem *item, NR::rotate const &rotation)
 void
 sp_item_scale_rel (SPItem *item, NR::scale const &scale)
 {
-    NR::translate const s(sp_item_bbox_desktop(item).midpoint()); // use getCenter?
-
-	sp_item_set_i2d_affine(item,
-			       sp_item_i2d_affine(item) * inverse(s) * scale * s);
-	sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
+    NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(item);
+    if (bbox) {
+        NR::translate const s(bbox->midpoint()); // use getCenter?
+        sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * inverse(s) * scale * s);
+        sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
+    }
 }
 
 void

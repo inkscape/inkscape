@@ -96,9 +96,16 @@ new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion
 SPFilter *
 new_filter_gaussian_blur_from_item (SPDocument *document, SPItem *item, gdouble radius)
 {
-    NR::Rect const r = sp_item_bbox_desktop(item);
-    double width = r.extent(NR::X);
-    double height = r.extent(NR::Y);
+    NR::Maybe<NR::Rect> const r = sp_item_bbox_desktop(item);
+
+    double width;
+    double height;
+    if (r) {
+        width = r->extent(NR::X);
+        height= r->extent(NR::Y);
+    } else {
+        width = height = 0;
+    }
 
     NR::Matrix i2d = sp_item_i2d_affine (item);
 

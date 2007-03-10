@@ -153,9 +153,13 @@ private :
             SPItem * thing = *master;
             selected.erase(master);
             //Compute the anchor point
-            NR::Rect b = sp_item_bbox_desktop (thing);
-            mp = NR::Point(a.mx0 * b.min()[NR::X] + a.mx1 * b.max()[NR::X],
-                           a.my0 * b.min()[NR::Y] + a.my1 * b.max()[NR::Y]);
+            NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (thing);
+            if (b) {
+                mp = NR::Point(a.mx0 * b->min()[NR::X] + a.mx1 * b->max()[NR::X],
+                               a.my0 * b->min()[NR::Y] + a.my1 * b->max()[NR::Y]);
+            } else {
+                return;
+            }
             break;
         }
 
@@ -166,10 +170,14 @@ private :
 
         case AlignAndDistribute::DRAWING:
         {
-            NR::Rect b = sp_item_bbox_desktop
+            NR::Maybe<NR::Rect> b = sp_item_bbox_desktop
                 ( (SPItem *) sp_document_root (sp_desktop_document (desktop)) );
-            mp = NR::Point(a.mx0 * b.min()[NR::X] + a.mx1 * b.max()[NR::X],
-                           a.my0 * b.min()[NR::Y] + a.my1 * b.max()[NR::Y]);
+            if (b) {
+                mp = NR::Point(a.mx0 * b->min()[NR::X] + a.mx1 * b->max()[NR::X],
+                               a.my0 * b->min()[NR::Y] + a.my1 * b->max()[NR::Y]);
+            } else {
+                return;
+            }
             break;
         }
 
@@ -202,13 +210,15 @@ private :
              it++)
         {
             sp_document_ensure_up_to_date(sp_desktop_document (desktop));
-            NR::Rect b = sp_item_bbox_desktop (*it);
-            NR::Point const sp(a.sx0 * b.min()[NR::X] + a.sx1 * b.max()[NR::X],
-                               a.sy0 * b.min()[NR::Y] + a.sy1 * b.max()[NR::Y]);
-            NR::Point const mp_rel( mp - sp );
-            if (LInfty(mp_rel) > 1e-9) {
-                sp_item_move_rel(*it, NR::translate(mp_rel));
-                changed = true;
+            NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (*it);
+            if (b) {
+                NR::Point const sp(a.sx0 * b->min()[NR::X] + a.sx1 * b->max()[NR::X],
+                                   a.sy0 * b->min()[NR::Y] + a.sy1 * b->max()[NR::Y]);
+                NR::Point const mp_rel( mp - sp );
+                if (LInfty(mp_rel) > 1e-9) {
+                    sp_item_move_rel(*it, NR::translate(mp_rel));
+                    changed = true;
+                }
             }
         }
 
@@ -246,9 +256,9 @@ struct BBoxSort
     SPItem *item;
     float anchor;
     NR::Rect bbox;
-    BBoxSort(SPItem *pItem, NR::Dim2 orientation, double kBegin, double kEnd) :
+    BBoxSort(SPItem *pItem, NR::Rect bounds, NR::Dim2 orientation, double kBegin, double kEnd) :
         item(pItem),
-        bbox (sp_item_bbox_desktop (pItem))
+        bbox (bounds)
     {
         anchor = kBegin * bbox.min()[orientation] + kEnd * bbox.max()[orientation];
     }
@@ -308,8 +318,10 @@ private :
             it != selected.end();
             ++it)
         {
-            BBoxSort b (*it, _orientation, _kBegin, _kEnd);
-            sorted.push_back(b);
+            NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(*it);
+            if (bbox) {
+                sorted.push_back(BBoxSort(*it, *bbox, _orientation, _kBegin, _kEnd));
+            }
         }
         //sort bbox by anchors
         std::sort(sorted.begin(), sorted.end());
@@ -595,15 +607,17 @@ private :
             ++it)
         {
             sp_document_ensure_up_to_date(sp_desktop_document (desktop));
-            NR::Rect item_box = sp_item_bbox_desktop (*it);
-            // find new center, staying within bbox 
-            double x = _dialog.randomize_bbox.min()[NR::X] + item_box.extent(NR::X)/2 +
-                g_random_double_range (0, _dialog.randomize_bbox.extent(NR::X) - item_box.extent(NR::X));
-            double y = _dialog.randomize_bbox.min()[NR::Y] + item_box.extent(NR::Y)/2 +
-                g_random_double_range (0, _dialog.randomize_bbox.extent(NR::Y) - item_box.extent(NR::Y));
-            // displacement is the new center minus old:
-            NR::Point t = NR::Point (x, y) - 0.5*(item_box.max() + item_box.min());
-            sp_item_move_rel(*it, NR::translate(t));
+            NR::Maybe<NR::Rect> item_box = sp_item_bbox_desktop (*it);
+            if (item_box) {
+                // find new center, staying within bbox 
+                double x = _dialog.randomize_bbox.min()[NR::X] + item_box->extent(NR::X)/2 +
+                    g_random_double_range (0, _dialog.randomize_bbox.extent(NR::X) - item_box->extent(NR::X));
+                double y = _dialog.randomize_bbox.min()[NR::Y] + item_box->extent(NR::Y)/2 +
+                    g_random_double_range (0, _dialog.randomize_bbox.extent(NR::Y) - item_box->extent(NR::Y));
+                // displacement is the new center minus old:
+                NR::Point t = NR::Point (x, y) - 0.5*(item_box->max() + item_box->min());
+                sp_item_move_rel(*it, NR::translate(t));
+            }
         }
 
         // restore compensation setting
@@ -1054,11 +1068,13 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = -1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            NR::Rect b = sp_item_bbox_desktop (*it);
-            gdouble dim = b.extent(horizontal ? NR::X : NR::Y);
-            if (dim > max) {
-                max = dim;
-                master = it;
+            NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (*it);
+            if (b) {
+                gdouble dim = b->extent(horizontal ? NR::X : NR::Y);
+                if (dim > max) {
+                    max = dim;
+                    master = it;
+                }
             }
         }
         return master;
@@ -1069,11 +1085,13 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = 1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            NR::Rect b = sp_item_bbox_desktop (*it);
-            gdouble dim = b.extent(horizontal ? NR::X : NR::Y);
-            if (dim < max) {
-                max = dim;
-                master = it;
+            NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (*it);
+            if (b) {
+                gdouble dim = b->extent(horizontal ? NR::X : NR::Y);
+                if (dim < max) {
+                    max = dim;
+                    master = it;
+                }
             }
         }
         return master;

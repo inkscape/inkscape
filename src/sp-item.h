@@ -240,7 +240,7 @@ gint sp_item_event (SPItem *item, SPEvent *event);
 NRArenaItem *sp_item_get_arenaitem(SPItem *item, unsigned int key);
 
 void sp_item_bbox_desktop(SPItem *item, NRRect *bbox) __attribute__ ((deprecated));
-NR::Rect sp_item_bbox_desktop(SPItem *item);
+NR::Maybe<NR::Rect> sp_item_bbox_desktop(SPItem *item);
 
 NR::Matrix i2anc_affine(SPObject const *item, SPObject const *ancestor);
 NR::Matrix i2i_affine(SPObject const *src, SPObject const *dest);

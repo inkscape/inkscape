@@ -604,15 +604,17 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
     if (prefs_get_int_attribute_limited ("dialogs.transformation", "applyseparately", 0, 0, 1) == 1) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
-            NR::Rect  bbox (sp_item_bbox_desktop(item));
             NR::scale scale (0,0);
             // the values are increments! 
             if (_units_scale.isAbsolute()) {
-                double new_width = bbox.extent(NR::X) + scaleX;
-                if (new_width < 1e-6) new_width = 1e-6; // not 0, as this would result in a nasty no-bbox object
-                double new_height = bbox.extent(NR::Y) + scaleY;
-                if (new_height < 1e-6) new_height = 1e-6;
-                scale = NR::scale(new_width / bbox.extent(NR::X), new_height / bbox.extent(NR::Y));
+                NR::Maybe<NR::Rect> bbox(sp_item_bbox_desktop(item));
+                if (bbox) {
+                    double new_width = bbox->extent(NR::X) + scaleX;
+                    if (new_width < 1e-6) new_width = 1e-6; // not 0, as this would result in a nasty no-bbox object
+                    double new_height = bbox->extent(NR::Y) + scaleY;
+                    if (new_height < 1e-6) new_height = 1e-6;
+                    scale = NR::scale(new_width / bbox->extent(NR::X), new_height / bbox->extent(NR::Y));
+                }
             } else {
                 double new_width = 100 + scaleX;
                 if (new_width < 1e-6) new_width = 1e-6;
@@ -686,10 +688,12 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
             } else { // absolute displacement
                 double skewX = _scalar_skew_horizontal.getValue("px");
                 double skewY = _scalar_skew_vertical.getValue("px");
-                NR::Rect bbox(sp_item_bbox_desktop(item));
-                double width = bbox.dimensions()[NR::X];
-                double height = bbox.dimensions()[NR::Y];
-                sp_item_skew_rel (item, skewX/height, skewY/width);
+                NR::Maybe<NR::Rect> bbox(sp_item_bbox_desktop(item));
+                if (bbox) {
+                    double width = bbox->dimensions()[NR::X];
+                    double height = bbox->dimensions()[NR::Y];
+                    sp_item_skew_rel (item, skewX/height, skewY/width);
+                }
             }
         }
     } else { // transform whole selection

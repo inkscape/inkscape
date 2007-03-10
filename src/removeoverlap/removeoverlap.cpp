@@ -14,8 +14,21 @@
 #include "sp-item-transform.h"
 #include "libvpsc/generate-constraints.h"
 #include "libvpsc/remove_rectangle_overlap.h"
+#include <utility>
 
 using vpsc::Rectangle;
+
+namespace {
+	struct Record {
+		SPItem *item;
+		NR::Point midpoint;
+		Rectangle *vspc_rect;
+
+		Record() {}
+		Record(SPItem *i, NR::Point m, Rectangle *r)
+		: item(i), midpoint(m), vspc_rect(r) {}
+	};
+}
 
 /**
 * Takes a list of inkscape items and moves them as little as possible
@@ -23,21 +36,11 @@ using vpsc::Rectangle;
 * horizontally and yGap vertically
 */
 void removeoverlap(GSList const *const items, double const xGap, double const yGap) {
-	if(!items) {
-		return;
-	}
-
 	using Inkscape::Util::GSListConstIterator;
 	std::list<SPItem *> selected;
 	selected.insert<GSListConstIterator<SPItem *> >(selected.end(), items, NULL);
-	if (selected.empty()) return;
-	int n=selected.size();
-
-	//Check 2 or more selected objects
-	if (n < 2) return;
-
-	Rectangle **rs = new Rectangle*[n];
-	int i=0;
+	std::vector<Record> records;
+	std::vector<Rectangle *> rs;
 
 	NR::Point const gap(xGap, yGap);
 	for (std::list<SPItem *>::iterator it(selected.begin());
@@ -45,38 +48,26 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 		++it)
 	{
 		using NR::X; using NR::Y;
-		NR::Rect const item_box(sp_item_bbox_desktop(*it));
-		
-		/* The current algorithm requires widths & heights to be strictly positive. */
-		NR::Point min(item_box.min());
-		NR::Point max(item_box.max());
-		for (unsigned d = 0; d < 2; ++d) {
-			double const minsize = 1; // arbitrary positive number
-			if (max[d] - min[d] + gap[d] < minsize) {
-				double const mid = .5 * (min[d] + max[d]);
-				min[d] = mid - .5*minsize;
-				max[d] = mid + .5*minsize;
-			} else {
-				min[d] -= .5*gap[d];
-				max[d] += .5*gap[d];
-			}
+		NR::Maybe<NR::Rect> item_box(sp_item_bbox_desktop(*it));
+		if (item_box) {
+			NR::Point min(item_box->min() - .5*gap);
+			NR::Point max(item_box->max() + .5*gap);
+			Rectangle *vspc_rect = new Rectangle(min[X], max[X], min[Y], max[Y]);
+			records.push_back(Record(*it, item_box->midpoint(), vspc_rect));
+			rs.push_back(vspc_rect);
 		}
-		rs[i++] = new Rectangle(min[X], max[X],
-					min[Y], max[Y]);
 	}
-	removeRectangleOverlap(n, rs, 0.0, 0.0);
-	i=0;
-	for (std::list<SPItem *>::iterator it(selected.begin());
-		it != selected.end();
-		++it)
+	if (!rs.empty()) {
+		removeRectangleOverlap(rs.size(), &rs[0], 0.0, 0.0);
+	}
+	for ( std::vector<Record>::iterator it = records.begin();
+	      it != records.end();
+	      ++it )
 	{
-		NR::Rect const item_box(sp_item_bbox_desktop(*it));
-		Rectangle *r = rs[i++];
-		NR::Point const curr(item_box.midpoint());
-		NR::Point const dest(r->getCentreX(),
-				     r->getCentreY());
-		sp_item_move_rel(*it, NR::translate(dest - curr));
-		delete r;
+		NR::Point const curr = it->midpoint;
+		NR::Point const dest(it->vspc_rect->getCentreX(),
+				     it->vspc_rect->getCentreY());
+		sp_item_move_rel(it->item, NR::translate(dest - curr));
+		delete it->vspc_rect;
 	}
-	delete [] rs;
 }

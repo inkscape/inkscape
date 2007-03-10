@@ -654,13 +654,16 @@ sp_selection_raise()
             // for each selected object, find the next sibling
             for (SPObject *newref = child->next; newref; newref = newref->next) {
                 // if the sibling is an item AND overlaps our selection,
-                if (SP_IS_ITEM(newref) && selected->intersects(sp_item_bbox_desktop(SP_ITEM(newref)))) {
-                    // AND if it's not one of our selected objects,
-                    if (!g_slist_find((GSList *) items, newref)) {
-                        // move the selected object after that sibling
-                        grepr->changeOrder(SP_OBJECT_REPR(child), SP_OBJECT_REPR(newref));
+                if (SP_IS_ITEM(newref)) {
+                    NR::Maybe<NR::Rect> newref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
+                    if ( newref_bbox && selected->intersects(*newref_bbox) ) {
+                        // AND if it's not one of our selected objects,
+                        if (!g_slist_find((GSList *) items, newref)) {
+                            // move the selected object after that sibling
+                            grepr->changeOrder(SP_OBJECT_REPR(child), SP_OBJECT_REPR(newref));
+                        }
+                        break;
                     }
-                    break;
                 }
             }
             rev = g_slist_remove(rev, child);
@@ -747,17 +750,20 @@ sp_selection_lower()
             // for each selected object, find the prev sibling
             for (SPObject *newref = prev_sibling(child); newref; newref = prev_sibling(newref)) {
                 // if the sibling is an item AND overlaps our selection,
-                if (SP_IS_ITEM(newref) && selected->intersects(sp_item_bbox_desktop(SP_ITEM(newref)))) {
-                    // AND if it's not one of our selected objects,
-                    if (!g_slist_find((GSList *) items, newref)) {
-                        // move the selected object before that sibling
-                        SPObject *put_after = prev_sibling(newref);
-                        if (put_after)
-                            grepr->changeOrder(SP_OBJECT_REPR(child), SP_OBJECT_REPR(put_after));
-                        else
-                            SP_OBJECT_REPR(child)->setPosition(0);
+                if (SP_IS_ITEM(newref)) {
+                    NR::Maybe<NR::Rect> ref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
+                    if ( ref_bbox && selected->intersects(*ref_bbox) ) {
+                        // AND if it's not one of our selected objects,
+                        if (!g_slist_find((GSList *) items, newref)) {
+                            // move the selected object before that sibling
+                            SPObject *put_after = prev_sibling(newref);
+                            if (put_after)
+                                grepr->changeOrder(SP_OBJECT_REPR(child), SP_OBJECT_REPR(put_after));
+                            else
+                                SP_OBJECT_REPR(child)->setPosition(0);
+                        }
+                        break;
                     }
-                    break;
                 }
             }
             rev = g_slist_remove(rev, child);
@@ -1223,13 +1229,13 @@ void sp_selection_paste_size_separately (bool apply_x, bool apply_y)
     for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = SP_ITEM(l->data);
 
-        NR::Rect current = sp_item_bbox_desktop(item);
-        if (current.extent(NR::X) < 1e-6 || current.extent(NR::Y) < 1e-6) {
+        NR::Maybe<NR::Rect> current = sp_item_bbox_desktop(item);
+        if ( !current || current->extent(NR::X) < 1e-6 || current->extent(NR::Y) < 1e-6 ) {
             continue;
         }
 
-        double scale_x = size_clipboard.extent(NR::X) / current.extent(NR::X);
-        double scale_y = size_clipboard.extent(NR::Y) / current.extent(NR::Y);
+        double scale_x = size_clipboard.extent(NR::X) / current->extent(NR::X);
+        double scale_y = size_clipboard.extent(NR::Y) / current->extent(NR::Y);
 
         sp_item_scale_rel (item,
                                  NR::scale(
@@ -1985,10 +1991,10 @@ SPItem *next_item(SPDesktop *desktop, GSList *path, SPObject *root,
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item)
 {
     NR::Rect dbox = desktop->get_display_area();
-    NR::Rect sbox = sp_item_bbox_desktop(item);
+    NR::Maybe<NR::Rect> sbox = sp_item_bbox_desktop(item);
 
-    if (dbox.contains(sbox) == false) {
-        NR::Point const s_dt = sbox.midpoint();
+    if ( sbox && dbox.contains(*sbox) == false ) {
+        NR::Point const s_dt = sbox->midpoint();
         NR::Point const s_w = desktop->d2w(s_dt);
         NR::Point const d_dt = dbox.midpoint();
         NR::Point const d_w = desktop->d2w(d_dt);

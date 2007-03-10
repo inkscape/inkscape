@@ -436,7 +436,10 @@ sp_text_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
             item_ungrouped = desktop->item_at_point(NR::Point(event->button.x, event->button.y), TRUE);
             if (SP_IS_TEXT(item_ungrouped) || SP_IS_FLOWTEXT(item_ungrouped)) {
                 sp_canvas_item_show(tc->indicator);
-                SP_CTRLRECT(tc->indicator)->setRectangle(sp_item_bbox_desktop(item_ungrouped));
+                NR::Maybe<NR::Rect> ibbox = sp_item_bbox_desktop(item_ungrouped);
+                if (ibbox) {
+                    SP_CTRLRECT(tc->indicator)->setRectangle(*ibbox);
+                }
 
                 ec->cursor_shape = cursor_text_insert_xpm;
                 ec->hot_x = 7;
@@ -1458,7 +1461,10 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
             SPItem *frame = SP_FLOWTEXT(tc->text)->get_frame (NULL); // first frame only
             if (frame) {
                 sp_canvas_item_show(tc->frame);
-                SP_CTRLRECT(tc->frame)->setRectangle(sp_item_bbox_desktop(frame));
+                NR::Maybe<NR::Rect> frame_bbox = sp_item_bbox_desktop(frame);
+                if (frame_bbox) {
+                    SP_CTRLRECT(tc->frame)->setRectangle(*frame_bbox);
+                }
             }
             SP_EVENT_CONTEXT(tc)->_message_context->set(Inkscape::NORMAL_MESSAGE, _("Type flowed text; <b>Enter</b> to start new paragraph."));
         } else {

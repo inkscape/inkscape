@@ -93,9 +93,10 @@ void graphlayout(GSList const *const items) {
 		++i)
 	{
 		SPItem *u=*i;
-		NR::Rect const item_box(sp_item_bbox_desktop(u));
-		NR::Point ll(item_box.min());
-		NR::Point ur(item_box.max());
+		NR::Maybe<NR::Rect> const item_box(sp_item_bbox_desktop(u));
+        g_assert(item_box);
+		NR::Point ll(item_box->min());
+		NR::Point ur(item_box->max());
 		nodelookup[u->id]=rs.size();
 		rs.push_back(new Rectangle(ll[0]-spacing,ur[0]+spacing,
                     ll[1]-spacing,ur[1]+spacing));
@@ -188,8 +189,9 @@ void graphlayout(GSList const *const items) {
 		SPItem *u=*it;
 		if(!isConnector(u)) {
 			Rectangle* r=rs[nodelookup[u->id]];
-			NR::Rect const item_box(sp_item_bbox_desktop(u));
-			NR::Point const curr(item_box.midpoint());
+			NR::Maybe<NR::Rect> item_box(sp_item_bbox_desktop(u));
+            g_assert(item_box);
+			NR::Point const curr(item_box->midpoint());
 			NR::Point const dest(r->getCentreX(),r->getCentreY());
 			sp_item_move_rel(u, NR::translate(dest - curr));
 		}
