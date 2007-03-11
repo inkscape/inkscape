@@ -1527,7 +1527,7 @@ sp_selection_scale_absolute(Inkscape::Selection *selection,
         return;
 
     NR::Maybe<NR::Rect> const bbox(selection->bounds());
-    if ( !bbox || bbox->isEmpty() ) {
+    if ( !bbox ) {
         return;
     }
 
@@ -1550,7 +1550,7 @@ void sp_selection_scale_relative(Inkscape::Selection *selection, NR::Point const
 
     NR::Maybe<NR::Rect> const bbox(selection->bounds());
 
-    if ( !bbox || bbox->isEmpty() ) {
+    if ( !bbox ) {
         return;
     }
 
@@ -2202,7 +2202,7 @@ sp_selection_tile(bool apply)
 
     sp_document_ensure_up_to_date(document);
     NR::Maybe<NR::Rect> r = selection->bounds();
-    if ( !r || r->isEmpty() ) {
+    if ( !r ) {
         return;
     }
 
