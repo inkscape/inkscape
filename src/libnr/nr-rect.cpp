@@ -246,8 +246,10 @@ Rect::Rect(const Point &p0, const Point &p1)
 : _min(std::min(p0[X], p1[X]), std::min(p0[Y], p1[Y])),
   _max(std::max(p0[X], p1[X]), std::max(p0[Y], p1[Y]))
 {
+    if (0) {
     if ( _min[X] == _max[X] || _min[Y] == _max[Y] ) {
         throw EmptyRectangle();
+    }
     }
 }
 
