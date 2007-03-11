@@ -1402,10 +1402,10 @@ sp_export_detect_size(GtkObject * base) {
         switch (this_test[i]) {
             case SELECTION_SELECTION:
                 if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
-                    NR::Rect bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds();
+                    NR::Maybe<NR::Rect> bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds();
 
                     //std::cout << "Selection " << bbox;
-                    if (sp_export_bbox_equal(bbox,current_bbox)) {
+                    if ( bbox && sp_export_bbox_equal(*bbox,current_bbox)) {
                         key = SELECTION_SELECTION;
                     }
                 }

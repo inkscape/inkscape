@@ -88,7 +88,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _show(SHOW_CONTENT),
     _grabbed(false),
     _show_handles(true),
-    _box(NR::Point(0,0), NR::Point(0,0)),
+    _box(NR::Nothing()),
     _chandle(NULL),
     _stamp_cache(NULL),
     _message_context(desktop->messageStack())
@@ -256,25 +256,33 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     _point = p;
 
     _snap_points = selection->getSnapPointsConvexHull();
-    _bbox_points = selection->getBBoxPointsOuter();
-    _bbox_4points = _bbox_points;
-    _bbox_4points.push_back(NR::Point(_bbox_points[0][NR::X], _bbox_points[1][NR::Y]));
-    _bbox_4points.push_back(NR::Point(_bbox_points[1][NR::X], _bbox_points[0][NR::Y]));
-
-    gchar const *scale_origin = prefs_get_string_attribute("tools.select", "scale_origin");
-    bool const origin_on_bbox = (scale_origin == NULL || !strcmp(scale_origin, "bbox"));
-    NR::Rect op_box = _box;
-    if (origin_on_bbox == false && _snap_points.empty() == false) {
-        std::vector<NR::Point>::iterator i = _snap_points.begin();
-        op_box = NR::Rect(*i, *i);
-        i++;
-        while (i != _snap_points.end()) {
-            op_box.expandTo(*i);
-            i++;
+    _box = selection->bounds();
+    _bbox_points.clear();
+    if (_box) {
+        for ( unsigned i = 0 ; i < 4 ; i++ ) {
+            _bbox_points.push_back(_box->corner(i));
         }
     }
 
-    _opposite = ( op_box.min() + ( op_box.dimensions() * NR::scale(1-x, 1-y) ) );
+    gchar const *scale_origin = prefs_get_string_attribute("tools.select", "scale_origin");
+    bool const origin_on_bbox = (scale_origin == NULL || !strcmp(scale_origin, "bbox"));
+
+    if (_box) {
+        NR::Rect op_box = *_box;
+        // FIXME: should be using ConvexHull here
+        if (origin_on_bbox == false && _snap_points.empty() == false) {
+            std::vector<NR::Point>::iterator i = _snap_points.begin();
+            op_box = NR::Rect(*i, *i);
+            i++;
+            while (i != _snap_points.end()) {
+                op_box.expandTo(*i);
+                i++;
+            }
+        }
+
+        _opposite = ( op_box.min() + ( op_box.dimensions() * NR::scale(1-x, 1-y) ) );
+    }
+
 
     if ((x != -1) && (y != -1)) {
         sp_canvas_item_show(_norm);
@@ -285,7 +293,6 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
         for (int i = 0; i < 4; i++)
             sp_canvas_item_show(_l[i]);
     }
-
 
     _updateHandles();
     g_return_if_fail(_stamp_cache == NULL);
@@ -306,13 +313,15 @@ void Inkscape::SelTrans::transform(NR::Matrix const &rel_affine, NR::Point const
             sp_item_set_i2d_affine(&item, prev_transform * affine);
         }
     } else {
-        NR::Point p[4];
-        /* update the outline */
-        for (unsigned i = 0 ; i < 4 ; i++) {
-            p[i] = _box.corner(i) * affine;
-        }
-        for (unsigned i = 0 ; i < 4 ; i++) {
-            sp_ctrlline_set_coords(SP_CTRLLINE(_l[i]), p[i], p[(i+1)%4]);
+        if (_box) {
+            NR::Point p[4];
+            /* update the outline */
+            for (unsigned i = 0 ; i < 4 ; i++) {
+                p[i] = _box->corner(i) * affine;
+            }
+            for (unsigned i = 0 ; i < 4 ; i++) {
+                sp_ctrlline_set_coords(SP_CTRLLINE(_l[i]), p[i], p[(i+1)%4]);
+            }
         }
     }
 
@@ -351,8 +360,10 @@ void Inkscape::SelTrans::ungrab()
 
     if (!_empty && _changed) {
         sp_selection_apply_affine(selection, _current, (_show == SHOW_OUTLINE)? true : false);
-        _center *= _current;
-        _center_is_set = true;
+        if (_center) {
+            *_center *= _current;
+            _center_is_set = true;
+        }
 
 // If dragging showed content live, sp_selection_apply_affine cannot change the centers
 // appropriately - it does not know the original positions of the centers (all objects already have
@@ -458,8 +469,8 @@ void Inkscape::SelTrans::stamp()
 
             sp_item_write_transform(copy_item, copy_repr, *new_affine);
 
-            if (copy_item->isCenterSet()) {
-                copy_item->setCenter(_center * _current);
+            if ( copy_item->isCenterSet() && _center ) {
+                copy_item->setCenter(*_center * _current);
             }
 
             Inkscape::GC::release(copy_repr);
@@ -529,11 +540,11 @@ void Inkscape::SelTrans::_updateHandles()
         _center_is_set = true;
     }
 
-    if ( _state == STATE_SCALE ) {
+    if ( _state == STATE_SCALE || !_center ) {
         sp_knot_hide(_chandle);
     } else {
         sp_knot_show(_chandle);
-        sp_knot_moveto(_chandle, &_center);
+        sp_knot_moveto(_chandle, &*_center);
     }
 }
 
@@ -547,7 +558,7 @@ void Inkscape::SelTrans::_updateVolatileState()
     }
 
     _box = selection->bounds();
-    if (_box.isEmpty()) {
+    if (!_box) {
         _empty = true;
         return;
     }
@@ -595,8 +606,10 @@ void Inkscape::SelTrans::_showHandles(SPKnot *knot[], SPSelTransHandle const han
         sp_knot_show(knot[i]);
 
         NR::Point const handle_pt(handle[i].x, handle[i].y);
-        NR::Point p( _box.min()
-                     + ( _box.dimensions()
+        // shouldn't have nullary bbox, but knots
+        g_assert(_box);
+        NR::Point p( _box->min()
+                     + ( _box->dimensions()
                          * NR::scale(handle_pt) ) );
 
         sp_knot_moveto(knot[i], &p);
@@ -715,8 +728,11 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
 
     if ((!(state & GDK_SHIFT_MASK) == !(_state == STATE_ROTATE)) && (&handle != &handle_center)) {
         _origin = _opposite;
+    } else if (_center) {
+        _origin = *_center;
     } else {
-        _origin = _center;
+        // FIXME
+        return TRUE;
     }
     if (handle.request(this, handle, *position, state)) {
         sp_knot_set_position(knot, position, state);
@@ -870,7 +886,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
         /* Scale aspect ratio is unlocked */
         
         std::pair<NR::scale, bool> bb = m.freeSnapScale(Snapper::BBOX_POINT,
-                                                        _bbox_4points,
+                                                        _bbox_points,
                                                         it,
                                                         s,
                                                         _origin);
@@ -1169,22 +1185,21 @@ gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
         }
     }
 
-    if (!(state & GDK_SHIFT_MASK)) {
+    if ( !(state & GDK_SHIFT_MASK) && _box ) {
         // screen pixels to snap center to bbox
 #define SNAP_DIST 5
         // FIXME: take from prefs
         double snap_dist = SNAP_DIST / _desktop->current_zoom();
 
         for (int i = 0; i < 2; i++) {
-
-            if (fabs(pt[i] - _box.min()[i]) < snap_dist) {
-                pt[i] = _box.min()[i];
+            if (fabs(pt[i] - _box->min()[i]) < snap_dist) {
+                pt[i] = _box->min()[i];
             }
-            if (fabs(pt[i] - _box.midpoint()[i]) < snap_dist) {
-                pt[i] = _box.midpoint()[i];
+            if (fabs(pt[i] - _box->midpoint()[i]) < snap_dist) {
+                pt[i] = _box->midpoint()[i];
             }
-            if (fabs(pt[i] - _box.max()[i]) < snap_dist) {
-                pt[i] = _box.max()[i];
+            if (fabs(pt[i] - _box->max()[i]) < snap_dist) {
+                pt[i] = _box->max()[i];
             }
         }
     }
@@ -1264,11 +1279,15 @@ void Inkscape::SelTrans::stretch(SPSelTransHandle const &handle, NR::Point &pt, 
         s[!dim] = fabs(s[dim]);
     }
 
-    NR::Point new_bbox_min = _box.min() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
-    NR::Point new_bbox_max = _box.max() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
+    if (!_box) {
+        return;
+    }
+
+    NR::Point new_bbox_min = _box->min() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
+    NR::Point new_bbox_max = _box->max() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
 
     int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
-    NR::Matrix scaler = get_scale_transform_with_stroke (_box, _strokewidth, transform_stroke,
+    NR::Matrix scaler = get_scale_transform_with_stroke (*_box, _strokewidth, transform_stroke,
                    new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
 
     transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
@@ -1276,6 +1295,10 @@ void Inkscape::SelTrans::stretch(SPSelTransHandle const &handle, NR::Point &pt, 
 
 void Inkscape::SelTrans::scale(NR::Point &pt, guint state)
 {
+    if (!_box) {
+        return;
+    }
+
     NR::Point const offset = _point - _origin;
 
     NR::scale s (1, 1);
@@ -1285,11 +1308,11 @@ void Inkscape::SelTrans::scale(NR::Point &pt, guint state)
         if (fabs(s[i]) < 1e-9)
             s[i] = 1e-9;
     }
-    NR::Point new_bbox_min = _box.min() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
-    NR::Point new_bbox_max = _box.max() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
+    NR::Point new_bbox_min = _box->min() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
+    NR::Point new_bbox_max = _box->max() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
 
     int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
-    NR::Matrix scaler = get_scale_transform_with_stroke (_box, _strokewidth, transform_stroke,
+    NR::Matrix scaler = get_scale_transform_with_stroke (*_box, _strokewidth, transform_stroke,
                    new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
 
     transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
@@ -1416,7 +1439,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
             /* Snap to things with no constraint */
 
             s.push_back(m.freeSnapTranslation(Inkscape::Snapper::BBOX_POINT,
-                                              _bbox_4points, it, dxy));
+                                              _bbox_points, it, dxy));
             s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAP_POINT,
                                               _snap_points, it, dxy));
         }

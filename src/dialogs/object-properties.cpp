@@ -342,13 +342,15 @@ sp_fillstroke_selection_changed ( Inkscape::Application *inkscape,
         case QUERY_STYLE_SINGLE:
         case QUERY_STYLE_MULTIPLE_AVERAGED:
         case QUERY_STYLE_MULTIPLE_SAME: 
-            NR::Rect bbox = sp_desktop_selection(SP_ACTIVE_DESKTOP)->bounds();
-            double perimeter = bbox.extent(NR::X) + bbox.extent(NR::Y);
-            gtk_widget_set_sensitive (b, TRUE);
-            //update blur widget value
-            float radius = query->filter_gaussianBlur_deviation.value;
-            float percent = radius * 400 / perimeter; // so that for a square, 100% == half side
-            gtk_adjustment_set_value(bluradjustment, percent);
+            NR::Maybe<NR::Rect> bbox = sp_desktop_selection(SP_ACTIVE_DESKTOP)->bounds();
+            if (bbox) {
+                double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
+                gtk_widget_set_sensitive (b, TRUE);
+                //update blur widget value
+                float radius = query->filter_gaussianBlur_deviation.value;
+                float percent = radius * 400 / perimeter; // so that for a square, 100% == half side
+                gtk_adjustment_set_value(bluradjustment, percent);
+            }
             break;
     }
     
@@ -411,13 +413,17 @@ sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *base)
     
     //get current selection
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
+
+    NR::Maybe<NR::Rect> bbox = selection->bounds();
+    if (!bbox) {
+        return;
+    }
     //get list of selected items
     GSList const *items = selection->itemList();
     //get current document
     SPDocument *document = sp_desktop_document (desktop);
 
-    NR::Rect bbox = selection->bounds();
-    double perimeter = bbox.extent(NR::X) + bbox.extent(NR::Y);
+    double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
     double radius = a->value * perimeter / 400;
         
     //apply created filter to every selected item

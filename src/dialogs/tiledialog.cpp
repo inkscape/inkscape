@@ -268,14 +268,14 @@ void TileDialog::Grid_Arrange ()
     }
 
 
+    NR::Maybe<NR::Rect> sel_bbox = selection->bounds();
     // Fit to bbox, calculate padding between rows accordingly.
-    if (!SpaceManualRadioButton.get_active()){
-        NR::Rect b = selection->bounds();
+    if ( sel_bbox && !SpaceManualRadioButton.get_active() ){
 #ifdef DEBUG_GRID_ARRANGE
 g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_height,total_col_width, b.extent(NR::X), b.extent(NR::Y));
 #endif
-        paddingx = (b.extent(NR::X) - total_col_width) / (NoOfCols -1);
-        paddingy = (b.extent(NR::Y) - total_row_height) / (NoOfRows -1);
+        paddingx = (sel_bbox->extent(NR::X) - total_col_width) / (NoOfCols -1);
+        paddingy = (sel_bbox->extent(NR::Y) - total_row_height) / (NoOfRows -1);
     }
 
 /*

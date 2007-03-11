@@ -455,13 +455,14 @@ Transformation::updatePageMove(Inkscape::Selection *selection)
 {
     if (selection && !selection->isEmpty()) {
         if (!_check_move_relative.get_active()) {
+            NR::Maybe<NR::Rect> bbox = selection->bounds();
+            if (bbox) {
+                double x = bbox->min()[NR::X];
+                double y = bbox->min()[NR::Y];
 
-            NR::Rect bbox = selection->bounds();
-            double x = bbox.min()[NR::X];
-            double y = bbox.min()[NR::Y];
-
-            _scalar_move_horizontal.setValue(x, "px");
-            _scalar_move_vertical.setValue(y, "px");
+                _scalar_move_horizontal.setValue(x, "px");
+                _scalar_move_vertical.setValue(y, "px");
+            }
         } else {
             // do nothing, so you can apply the same relative move to many objects in turn
         }
@@ -475,13 +476,17 @@ void
 Transformation::updatePageScale(Inkscape::Selection *selection)
 {
     if (selection && !selection->isEmpty()) {
-        NR::Rect bbox = selection->bounds();
-        double w = bbox.extent(NR::X);
-        double h = bbox.extent(NR::Y);
-        _scalar_scale_horizontal.setHundredPercent(w);
-        _scalar_scale_vertical.setHundredPercent(h);
-        onScaleXValueChanged(); // to update x/y proportionality if switch is on
-        _page_scale.set_sensitive(true);
+        NR::Maybe<NR::Rect> bbox = selection->bounds();
+        if (bbox) {
+            double w = bbox->extent(NR::X);
+            double h = bbox->extent(NR::Y);
+            _scalar_scale_horizontal.setHundredPercent(w);
+            _scalar_scale_vertical.setHundredPercent(h);
+            onScaleXValueChanged(); // to update x/y proportionality if switch is on
+            _page_scale.set_sensitive(true);
+        } else {
+            _page_scale.set_sensitive(false);
+        }
     } else {
         _page_scale.set_sensitive(false);
     }
@@ -586,9 +591,11 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
     if (_check_move_relative.get_active()) {
         sp_selection_move_relative(selection, x, y);
     } else {
-        NR::Rect bbox = selection->bounds();
-        sp_selection_move_relative(selection,
-            x - bbox.min()[NR::X], y - bbox.min()[NR::Y]);
+        NR::Maybe<NR::Rect> bbox = selection->bounds();
+        if (bbox) {
+            sp_selection_move_relative(selection,
+                x - bbox->min()[NR::X], y - bbox->min()[NR::Y]);
+        }
     }
 
     sp_document_done ( sp_desktop_document (selection->desktop()) , SP_VERB_DIALOG_TRANSFORM, 
@@ -625,24 +632,26 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
             sp_item_scale_rel (item, scale);
         }
     } else {
-        NR::Rect  bbox(selection->bounds());
-        NR::Point center(bbox.midpoint()); // use rotation center?
-        NR::scale scale (0,0);
-        // the values are increments!
-        if (_units_scale.isAbsolute()) {
-            double new_width = bbox.extent(NR::X) + scaleX;
-            if (new_width < 1e-6) new_width = 1e-6;
-            double new_height = bbox.extent(NR::Y) + scaleY;
-            if (new_height < 1e-6) new_height = 1e-6;
-            scale = NR::scale(new_width / bbox.extent(NR::X), new_height / bbox.extent(NR::Y));
-        } else {
-            double new_width = 100 + scaleX;
-            if (new_width < 1e-6) new_width = 1e-6;
-            double new_height = 100 + scaleY;
-            if (new_height < 1e-6) new_height = 1e-6;
-            scale = NR::scale(new_width / 100.0, new_height / 100.0);
+        NR::Maybe<NR::Rect> bbox(selection->bounds());
+        if (bbox) {
+            NR::Point center(bbox->midpoint()); // use rotation center?
+            NR::scale scale (0,0);
+            // the values are increments!
+            if (_units_scale.isAbsolute()) {
+                double new_width = bbox->extent(NR::X) + scaleX;
+                if (new_width < 1e-6) new_width = 1e-6;
+                double new_height = bbox->extent(NR::Y) + scaleY;
+                if (new_height < 1e-6) new_height = 1e-6;
+                scale = NR::scale(new_width / bbox->extent(NR::X), new_height / bbox->extent(NR::Y));
+            } else {
+                double new_width = 100 + scaleX;
+                if (new_width < 1e-6) new_width = 1e-6;
+                double new_height = 100 + scaleY;
+                if (new_height < 1e-6) new_height = 1e-6;
+                scale = NR::scale(new_width / 100.0, new_height / 100.0);
+            }
+            sp_selection_scale_relative(selection, center, scale);
         }
-        sp_selection_scale_relative(selection, center, scale);
     }
 
     sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
@@ -660,8 +669,10 @@ Transformation::applyPageRotate(Inkscape::Selection *selection)
             sp_item_rotate_rel(item, NR::rotate (angle*M_PI/180.0));
         }
     } else {
-        NR::Point center = selection->center();
-        sp_selection_rotate_relative(selection, center, angle);
+        NR::Maybe<NR::Point> center = selection->center();
+        if (center) {
+            sp_selection_rotate_relative(selection, *center, angle);
+        }
     }
 
     sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
@@ -690,32 +701,35 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
                 double skewY = _scalar_skew_vertical.getValue("px");
                 NR::Maybe<NR::Rect> bbox(sp_item_bbox_desktop(item));
                 if (bbox) {
-                    double width = bbox->dimensions()[NR::X];
-                    double height = bbox->dimensions()[NR::Y];
+                    double width = bbox->extent(NR::X);
+                    double height = bbox->extent(NR::Y);
                     sp_item_skew_rel (item, skewX/height, skewY/width);
                 }
             }
         }
     } else { // transform whole selection
-        NR::Rect bbox = selection->bounds();
-        double width  = bbox.max()[NR::X] - bbox.min()[NR::X];
-        double height = bbox.max()[NR::Y] - bbox.min()[NR::Y];
-        NR::Point center = selection->center();
+        NR::Maybe<NR::Rect> bbox = selection->bounds();
+        NR::Maybe<NR::Point> center = selection->center();
 
-        if (!_units_skew.isAbsolute()) { // percentage
-            double skewX = _scalar_skew_horizontal.getValue("%");
-            double skewY = _scalar_skew_vertical.getValue("%");
-            sp_selection_skew_relative(selection, center, 0.01*skewX, 0.01*skewY);
-        } else if (_units_skew.isRadial()) { //deg or rad
-            double angleX = _scalar_skew_horizontal.getValue("rad");
-            double angleY = _scalar_skew_vertical.getValue("rad");
-            double skewX = tan(-angleX);
-            double skewY = tan(angleY);
-            sp_selection_skew_relative(selection, center, skewX, skewY);
-        } else { // absolute displacement
-            double skewX = _scalar_skew_horizontal.getValue("px");
-            double skewY = _scalar_skew_vertical.getValue("px");
-            sp_selection_skew_relative(selection, center, skewX/height, skewY/width);
+        if ( bbox && center ) {
+            double width  = bbox->extent(NR::X);
+            double height = bbox->extent(NR::Y);
+
+            if (!_units_skew.isAbsolute()) { // percentage
+                double skewX = _scalar_skew_horizontal.getValue("%");
+                double skewY = _scalar_skew_vertical.getValue("%");
+                sp_selection_skew_relative(selection, *center, 0.01*skewX, 0.01*skewY);
+            } else if (_units_skew.isRadial()) { //deg or rad
+                double angleX = _scalar_skew_horizontal.getValue("rad");
+                double angleY = _scalar_skew_vertical.getValue("rad");
+                double skewX = tan(-angleX);
+                double skewY = tan(angleY);
+                sp_selection_skew_relative(selection, *center, skewX, skewY);
+            } else { // absolute displacement
+                double skewX = _scalar_skew_horizontal.getValue("px");
+                double skewY = _scalar_skew_vertical.getValue("px");
+                sp_selection_skew_relative(selection, *center, skewX/height, skewY/width);
+            }
         }
     }
 
@@ -777,18 +791,19 @@ Transformation::onMoveRelativeToggled()
 
     //g_message("onMoveRelativeToggled: %f, %f px\n", x, y);
 
-    NR::Rect bbox = selection->bounds();
+    NR::Maybe<NR::Rect> bbox = selection->bounds();
 
-    if (_check_move_relative.get_active()) {
-        // From absolute to relative
-        _scalar_move_horizontal.setValue(x - bbox.min()[NR::X], "px");
-        _scalar_move_vertical.setValue(  y - bbox.min()[NR::Y], "px");
-    } else {
-        // From relative to absolute
-        _scalar_move_horizontal.setValue(bbox.min()[NR::X] + x, "px");
-        _scalar_move_vertical.setValue(  bbox.min()[NR::Y] + y, "px");
+    if (bbox) {
+        if (_check_move_relative.get_active()) {
+            // From absolute to relative
+            _scalar_move_horizontal.setValue(x - bbox->min()[NR::X], "px");
+            _scalar_move_vertical.setValue(  y - bbox->min()[NR::Y], "px");
+        } else {
+            // From relative to absolute
+            _scalar_move_horizontal.setValue(bbox->min()[NR::X] + x, "px");
+            _scalar_move_vertical.setValue(  bbox->min()[NR::Y] + y, "px");
+        }
     }
-
 
     set_response_sensitive(Gtk::RESPONSE_APPLY, true);
 }
@@ -916,9 +931,11 @@ Transformation::onClear()
             _scalar_move_horizontal.setValue(0);
             _scalar_move_vertical.setValue(0);
         } else {
-            NR::Rect bbox = selection->bounds();
-            _scalar_move_horizontal.setValue(bbox.min()[NR::X], "px");
-            _scalar_move_vertical.setValue(bbox.min()[NR::Y], "px");
+            NR::Maybe<NR::Rect> bbox = selection->bounds();
+            if (bbox) {
+                _scalar_move_horizontal.setValue(bbox->min()[NR::X], "px");
+                _scalar_move_vertical.setValue(bbox->min()[NR::Y], "px");
+            }
         }
         break;
     }

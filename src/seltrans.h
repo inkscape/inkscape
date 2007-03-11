@@ -105,7 +105,6 @@ private:
     
     std::vector<NR::Point> _snap_points;
     std::vector<NR::Point> _bbox_points;
-    std::vector<NR::Point> _bbox_4points;
     
     Inkscape::SelCue _selcue;
 
@@ -118,12 +117,12 @@ private:
     bool _empty;
     bool _changed;
 
-    NR::Rect _box;
+    NR::Maybe<NR::Rect> _box;
     gdouble _strokewidth;
     NR::Matrix _current;
     NR::Point _opposite; ///< opposite point to where a scale is taking place
 
-    NR::Point _center;
+    NR::Maybe<NR::Point> _center;
     bool _center_is_set; ///< we've already set _center, no need to reread it from items
 
     SPKnot *_shandle[8];

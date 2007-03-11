@@ -58,9 +58,8 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
     using NR::X;
     using NR::Y;
     if ( sel && !sel->isEmpty() ) {
-        NR::Rect const bbox(sel->bounds());
-        NR::Point const dimensions(bbox.dimensions());
-        if ((dimensions[X] > 1e-6) || (dimensions[Y] > 1e-6)) {
+        NR::Maybe<NR::Rect> const bbox(sel->bounds());
+        if ( bbox && ( bbox->extent(X) > 1e-6 || bbox->extent(Y) > 1e-6 ) ) {
             GtkWidget *us = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(spw), "units");
             SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
 
@@ -73,10 +72,10 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
                 }
             } else {
                 struct { char const *key; double val; } const keyval[] = {
-                    { "X", bbox.min()[X] },
-                    { "Y", bbox.min()[Y] },
-                    { "width", dimensions[X] },
-                    { "height", dimensions[Y] }
+                    { "X", bbox->min()[X] },
+                    { "Y", bbox->min()[Y] },
+                    { "width", bbox->extent(X) },
+                    { "height", bbox->extent(Y) }
                 };
                 for (unsigned i = 0; i < G_N_ELEMENTS(keyval); ++i) {
                     GtkAdjustment *a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), keyval[i].key);
@@ -140,9 +139,9 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     SPDocument *document = sp_desktop_document(desktop);
 
     sp_document_ensure_up_to_date (document);
-    NR::Rect bbox = selection->bounds();
+    NR::Maybe<NR::Rect> bbox = selection->bounds();
 
-    if (!((bbox.max()[NR::X] - bbox.min()[NR::X] > 1e-6) || (bbox.max()[NR::Y] - bbox.min()[NR::Y] > 1e-6))) {
+    if ( !bbox || bbox->extent(NR::X) < 1e-6 || bbox->extent(NR::Y) < 1e-6 ) {
         return;
     }
 
@@ -158,41 +157,41 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         y0 = sp_units_get_pixels (a->value, unit);
         a_w = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "width");
         x1 = x0 + sp_units_get_pixels (a_w->value, unit);
-        xrel = sp_units_get_pixels (a_w->value, unit) / bbox.extent(NR::X);
+        xrel = sp_units_get_pixels (a_w->value, unit) / bbox->extent(NR::X);
         a_h = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "height");
         y1 = y0 + sp_units_get_pixels (a_h->value, unit);
-        yrel = sp_units_get_pixels (a_h->value, unit) / bbox.extent(NR::Y);
+        yrel = sp_units_get_pixels (a_h->value, unit) / bbox->extent(NR::Y);
     } else {
         GtkAdjustment *a;
         a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "X");
         double const x0_propn = a->value * unit.unittobase;
-        x0 = bbox.min()[NR::X] * x0_propn;
+        x0 = bbox->min()[NR::X] * x0_propn;
         a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "Y");
         double const y0_propn = a->value * unit.unittobase;
-        y0 = y0_propn * bbox.min()[NR::Y];
+        y0 = y0_propn * bbox->min()[NR::Y];
         a_w = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "width");
         xrel = a_w->value * unit.unittobase;
-        x1 = x0 + xrel * bbox.extent(NR::X);
+        x1 = x0 + xrel * bbox->extent(NR::X);
         a_h = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "height");
         yrel = a_h->value * unit.unittobase;
-        y1 = y0 + yrel * bbox.extent(NR::Y);
+        y1 = y0 + yrel * bbox->extent(NR::Y);
     }
 
     // Keep proportions if lock is on
     GtkWidget *lock = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "lock"));
     if (SP_BUTTON_IS_DOWN(lock)) {
         if (adj == a_h) {
-            x1 = x0 + yrel * bbox.extent(NR::X);
+            x1 = x0 + yrel * bbox->extent(NR::X);
         } else if (adj == a_w) {
-            y1 = y0 + xrel * bbox.extent(NR::Y);
+            y1 = y0 + xrel * bbox->extent(NR::Y);
         }
     }
 
     // scales and moves, in px
-    double mh = fabs(x0 - bbox.min()[NR::X]);
-    double sh = fabs(x1 - bbox.max()[NR::X]);
-    double mv = fabs(y0 - bbox.min()[NR::Y]);
-    double sv = fabs(y1 - bbox.max()[NR::Y]);
+    double mh = fabs(x0 - bbox->min()[NR::X]);
+    double sh = fabs(x1 - bbox->max()[NR::X]);
+    double mv = fabs(y0 - bbox->min()[NR::Y]);
+    double sv = fabs(y1 - bbox->max()[NR::Y]);
 
     // unless the unit is %, convert the scales and moves to the unit
     if (unit.base == SP_UNIT_ABSOLUTE || unit.base == SP_UNIT_DEVICE) {
@@ -220,7 +219,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         gdouble strokewidth = stroke_average_width (selection->itemList());
         int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
 
-        NR::Matrix scaler = get_scale_transform_with_stroke (bbox, strokewidth, transform_stroke, x0, y0, x1, y1);
+        NR::Matrix scaler = get_scale_transform_with_stroke (*bbox, strokewidth, transform_stroke, x0, y0, x1, y1);
 
         sp_selection_apply_affine(selection, scaler);
         sp_document_maybe_done (document, actionkey, SP_VERB_CONTEXT_SELECT, 
@@ -289,6 +288,11 @@ static gboolean aux_set_unit(SPUnitSelector *,
         && (new_units->base == SP_UNIT_DIMENSIONLESS))
     {
 
+        NR::Maybe<NR::Rect> bbox = selection->bounds();
+        if (!bbox) {
+            return FALSE;
+        }
+
         /* Absolute to percentage */
         g_object_set_data(dlg, "update", GUINT_TO_POINTER(TRUE));
 
@@ -302,17 +306,20 @@ static gboolean aux_set_unit(SPUnitSelector *,
         double const w = sp_units_get_pixels (aw->value, *old);
         double const h = sp_units_get_pixels (ah->value, *old);
 
-        NR::Rect bbox = selection->bounds();
-
-        gtk_adjustment_set_value(ax, fabs(bbox.min()[NR::X]) > 1e-6? 100.0 * x / bbox.min()[NR::X] : 100.0);
-        gtk_adjustment_set_value(ay, fabs(bbox.min()[NR::Y]) > 1e-6? 100.0 * y / bbox.min()[NR::Y] : 100.0);
-        gtk_adjustment_set_value(aw, fabs(bbox.extent(NR::X)) > 1e-6? 100.0 * w / bbox.extent(NR::X) : 100.0);
-        gtk_adjustment_set_value(ah, fabs(bbox.extent(NR::Y)) > 1e-6? 100.0 * h / bbox.extent(NR::Y) : 100.0);
+        gtk_adjustment_set_value(ax, fabs(bbox->min()[NR::X]) > 1e-6? 100.0 * x / bbox->min()[NR::X] : 100.0);
+        gtk_adjustment_set_value(ay, fabs(bbox->min()[NR::Y]) > 1e-6? 100.0 * y / bbox->min()[NR::Y] : 100.0);
+        gtk_adjustment_set_value(aw, fabs(bbox->extent(NR::X)) > 1e-6? 100.0 * w / bbox->extent(NR::X) : 100.0);
+        gtk_adjustment_set_value(ah, fabs(bbox->extent(NR::Y)) > 1e-6? 100.0 * h / bbox->extent(NR::Y) : 100.0);
 
         g_object_set_data(dlg, "update", GUINT_TO_POINTER(FALSE));
         return TRUE;
     } else if ((old->base == SP_UNIT_DIMENSIONLESS)
                && (new_units->base == SP_UNIT_ABSOLUTE || new_units->base == SP_UNIT_DEVICE)) {
+
+        NR::Maybe<NR::Rect> bbox = selection->bounds();
+        if (!bbox) {
+            return FALSE;
+        }
 
         /* Percentage to absolute */
         g_object_set_data(dlg, "update", GUINT_TO_POINTER(TRUE));
@@ -322,12 +329,10 @@ static gboolean aux_set_unit(SPUnitSelector *,
         GtkAdjustment *aw = GTK_ADJUSTMENT(g_object_get_data(dlg, "width"));
         GtkAdjustment *ah = GTK_ADJUSTMENT(g_object_get_data(dlg, "height"));
 
-        NR::Rect bbox = selection->bounds();
-
-        gtk_adjustment_set_value(ax, sp_pixels_get_units(0.01 * ax->value * bbox.min()[NR::X], *new_units));
-        gtk_adjustment_set_value(ay, sp_pixels_get_units(0.01 * ay->value * bbox.min()[NR::Y], *new_units));
-        gtk_adjustment_set_value(aw, sp_pixels_get_units(0.01 * aw->value * bbox.extent(NR::X), *new_units));
-        gtk_adjustment_set_value(ah, sp_pixels_get_units(0.01 * ah->value * bbox.extent(NR::Y), *new_units));
+        gtk_adjustment_set_value(ax, sp_pixels_get_units(0.01 * ax->value * bbox->min()[NR::X], *new_units));
+        gtk_adjustment_set_value(ay, sp_pixels_get_units(0.01 * ay->value * bbox->min()[NR::Y], *new_units));
+        gtk_adjustment_set_value(aw, sp_pixels_get_units(0.01 * aw->value * bbox->extent(NR::X), *new_units));
+        gtk_adjustment_set_value(ah, sp_pixels_get_units(0.01 * ah->value * bbox->extent(NR::Y), *new_units));
 
         g_object_set_data(dlg, "update", GUINT_TO_POINTER(FALSE));
         return TRUE;

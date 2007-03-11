@@ -183,9 +183,13 @@ private :
 
         case AlignAndDistribute::SELECTION:
         {
-            NR::Rect b =  selection->bounds();
-            mp = NR::Point(a.mx0 * b.min()[NR::X] + a.mx1 * b.max()[NR::X],
-                           a.my0 * b.min()[NR::Y] + a.my1 * b.max()[NR::Y]);
+            NR::Maybe<NR::Rect> b =  selection->bounds();
+            if (b) {
+                mp = NR::Point(a.mx0 * b->min()[NR::X] + a.mx1 * b->max()[NR::X],
+                               a.my0 * b->min()[NR::Y] + a.my1 * b->max()[NR::Y]);
+            } else {
+                return;
+            }
             break;
         }
 
@@ -590,11 +594,16 @@ private :
         //Check 2 or more selected objects
         if (selected.size() < 2) return;
 
+        NR::Maybe<NR::Rect> sel_bbox = selection->bounds();
+        if (!sel_bbox) {
+            return;
+        }
+
         // This bbox is cached between calls to randomize, so that there's no growth nor shrink
         // nor drift on sequential randomizations. Discard cache on global (or better active
         // desktop's) selection_change signal.
         if (!_dialog.randomize_bbox_set) {
-            _dialog.randomize_bbox = selection->bounds();
+            _dialog.randomize_bbox = *sel_bbox;
             _dialog.randomize_bbox_set = true;
         }
 

@@ -86,7 +86,10 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
                                  NR::Point(sp_document_width(doc),
                                            sp_document_height(doc)));
     } else {
-        bounding_area = selection->bounds();
+        NR::Maybe<NR::Rect> bounds = selection->bounds();
+        if (bounds) {
+            bounding_area = *bounds;
+        }
 
         gdouble doc_height  =  sp_document_height(document->doc());
         NR::Rect temprec = NR::Rect(NR::Point(bounding_area.min()[NR::X], doc_height - bounding_area.min()[NR::Y]),

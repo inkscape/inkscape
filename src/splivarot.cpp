@@ -1555,8 +1555,11 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
 
   bool didSomething = false;
 
-  NR::Rect selectionBbox = selection->bounds();
-  gdouble selectionSize  = L2(selectionBbox.dimensions());
+  NR::Maybe<NR::Rect> selectionBbox = selection->bounds();
+  if (!selectionBbox) {
+    return false;
+  }
+  gdouble selectionSize  = L2(selectionBbox->dimensions());
 
   gdouble simplifySize  = selectionSize;
   

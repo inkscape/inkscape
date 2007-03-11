@@ -306,15 +306,11 @@ Inkscape::XML::Node *Selection::singleRepr() {
 NRRect *Selection::bounds(NRRect *bbox) const
 {
     g_return_val_if_fail (bbox != NULL, NULL);
-    NR::Rect const b = bounds();
-    bbox->x0 = b.min()[NR::X];
-    bbox->y0 = b.min()[NR::Y];
-    bbox->x1 = b.max()[NR::X];
-    bbox->y1 = b.max()[NR::Y];
+    *bbox = NRRect(bounds());
     return bbox;
 }
 
-NR::Rect Selection::bounds() const
+NR::Maybe<NR::Rect> Selection::bounds() const
 {
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
@@ -322,13 +318,7 @@ NR::Rect Selection::bounds() const
     for ( GSList const *i = items ; i != NULL ; i = i->next ) {
         bbox = NR::union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data)));
     }
-
-    // TODO: return NR::Maybe<NR::Rect>
-    if (bbox) {
-        return *bbox;
-    } else {
-        return NR::Rect(NR::Point(0, 0), NR::Point(0, 0));
-    }
+    return bbox;
 }
 
 NRRect *Selection::boundsInDocument(NRRect *bbox) const {
@@ -352,32 +342,27 @@ NRRect *Selection::boundsInDocument(NRRect *bbox) const {
     return bbox;
 }
 
-NR::Rect Selection::boundsInDocument() const {
+NR::Maybe<NR::Rect> Selection::boundsInDocument() const {
     NRRect r;
-    NR::Maybe<NR::Rect> rect(boundsInDocument(&r)->upgrade());
-    if (rect) {
-        return *rect;
-    } else {
-        // FIXME
-        return NR::Rect(NR::Point(0, 0), NR::Point(0, 0));
-    }
+    return boundsInDocument(&r)->upgrade();
 }
 
 /** Extract the position of the center from the first selected object */
-NR::Point Selection::center() const {
+NR::Maybe<NR::Point> Selection::center() const {
     GSList *items = (GSList *) const_cast<Selection *>(this)->itemList();
     NR::Point center;
     if (items) {
         SPItem *first = reinterpret_cast<SPItem*>(g_slist_last(items)->data); // from the first item in selection
         if (first->isCenterSet()) { // only if set explicitly
-            center = first->getCenter();
-        } else {
-            center = bounds().midpoint();
+            return first->getCenter();
         }
-    } else {
-        center = bounds().midpoint();
     }
-    return center;
+    NR::Maybe<NR::Rect> bbox = bounds();
+    if (bbox) {
+        return bounds()->midpoint();
+    } else {
+        return NR::Nothing();
+    }
 }
 
 /**
@@ -415,28 +400,6 @@ std::vector<NR::Point> Selection::getSnapPointsConvexHull() const {
     pHull[3] = rHull.corner(3);
 
     return pHull;
-}
-
-std::vector<NR::Point> Selection::getBBoxPoints() const {
-    GSList const *items = const_cast<Selection *>(this)->itemList();
-    std::vector<NR::Point> p;
-    for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(SP_ITEM(iter->data));
-        if (b) {
-            p.push_back(b->min());
-            p.push_back(b->max());
-        }
-    }
-
-    return p;
-}
-
-std::vector<NR::Point> Selection::getBBoxPointsOuter() const {
-    std::vector<NR::Point> p;
-    NR::Rect bbox = bounds();
-    p.push_back(bbox.min());
-    p.push_back(bbox.max());
-    return p;
 }
 
 void Selection::_removeObjectDescendants(SPObject *obj) {

@@ -1257,7 +1257,11 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
     if (sel->isEmpty())
         return;
 
-    NR::Point const center(sel->bounds().midpoint());
+    NR::Maybe<NR::Rect> bbox = sel->bounds();
+    if (!bbox) {
+        return;
+    }
+    NR::Point const center(bbox->midpoint());
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_OBJECT_ROTATE_90_CW:

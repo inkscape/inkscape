@@ -855,13 +855,13 @@ SPDesktop::zoom_page_width()
 void
 SPDesktop::zoom_selection()
 {
-    NR::Rect const d = selection->bounds();
+    NR::Maybe<NR::Rect> const d = selection->bounds();
 
-    if (d.dimensions()[NR::X] < 0.1 || d.dimensions()[NR::Y] < 0.1) {
+    if ( !d || d->dimensions()[NR::X] < 0.1 || d->dimensions()[NR::Y] < 0.1) {
         return;
     }
 
-    set_display_area(d, 10);
+    set_display_area(*d, 10);
 }
 
 /**

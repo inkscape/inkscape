@@ -233,7 +233,7 @@ public:
     /** @brief Returns the bounding rectangle of the selection */
     NRRect *bounds(NRRect *dest) const;
     /** @brief Returns the bounding rectangle of the selection */
-    ::NR::Rect bounds() const;
+    NR::Maybe<NR::Rect> bounds() const;
 
     /**
      * @brief Returns the bounding rectangle of the selection
@@ -247,12 +247,12 @@ public:
      *
      * \todo how is this different from bounds()?
      */
-    ::NR::Rect boundsInDocument() const;
+    NR::Maybe<NR::Rect> boundsInDocument() const;
 
     /**
      * @brief Returns the rotation/skew center of the selection
      */
-    ::NR::Point center() const;
+    NR::Maybe<NR::Point> center() const;
 
     /**
      * @brief Gets the selection's snap points.
@@ -265,18 +265,6 @@ public:
      * @return Selection's convex hull points
      */
     std::vector<NR::Point> getSnapPointsConvexHull() const;
-
-    /**
-     * @return A vector containing the top-left and bottom-right
-     * corners of each selected object's bounding box.
-     */
-    std::vector<NR::Point> getBBoxPoints() const;
-
-    /**
-     * @return A vector containing the 2 (bottom-left and upper-right)
-     * corners of the selection bounding box.
-     */
-    std::vector<NR::Point> getBBoxPointsOuter() const;
 
     /**
      * @brief Connects a slot to be notified of selection changes

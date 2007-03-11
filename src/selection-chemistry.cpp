@@ -81,7 +81,7 @@ using NR::Y;
 GSList *clipboard = NULL;
 GSList *defs_clipboard = NULL;
 SPCSSAttr *style_clipboard = NULL;
-NR::Rect size_clipboard(NR::Point(0,0), NR::Point(0,0));
+NR::Maybe<NR::Rect> size_clipboard;
 
 static void sp_copy_stuff_used_by_item(GSList **defs_clip, SPItem *item, const GSList *items);
 
@@ -1128,7 +1128,11 @@ void sp_selection_paste(bool in_place)
     if (!in_place) {
         sp_document_ensure_up_to_date(document);
 
-        NR::Point m( desktop->point() - selection->bounds().midpoint() );
+        NR::Maybe<NR::Rect> sel_bbox = selection->bounds();
+        NR::Point m( desktop->point() );
+        if (sel_bbox) {
+            m -= sel_bbox->midpoint();
+        }
 
         /* Snap the offset of the new item(s) to the grid */
         /* FIXME: this gridsnap fiddling is a hack. */
@@ -1179,7 +1183,7 @@ void sp_selection_paste_size (bool apply_x, bool apply_y)
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     // check if something is in the clipboard
-    if (size_clipboard.extent(NR::X) < 1e-6 || size_clipboard.extent(NR::Y) < 1e-6) {
+    if (!size_clipboard) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the clipboard."));
         return;
     }
@@ -1190,15 +1194,15 @@ void sp_selection_paste_size (bool apply_x, bool apply_y)
         return;
     }
 
-    NR::Rect current = selection->bounds();
-    if (current.extent(NR::X) < 1e-6 || current.extent(NR::Y) < 1e-6) {
+    NR::Maybe<NR::Rect> current = selection->bounds();
+    if ( !current || current->extent(NR::X) < 1e-6 || current->extent(NR::Y) < 1e-6 ) {
         return;
     }
 
-    double scale_x = size_clipboard.extent(NR::X) / current.extent(NR::X);
-    double scale_y = size_clipboard.extent(NR::Y) / current.extent(NR::Y);
+    double scale_x = size_clipboard->extent(NR::X) / current->extent(NR::X);
+    double scale_y = size_clipboard->extent(NR::Y) / current->extent(NR::Y);
 
-    sp_selection_scale_relative (selection, current.midpoint(), 
+    sp_selection_scale_relative (selection, current->midpoint(),
                                  NR::scale(
                                      apply_x? scale_x : (desktop->isToolboxButtonActive ("lock")? scale_y : 1.0),
                                      apply_y? scale_y : (desktop->isToolboxButtonActive ("lock")? scale_x : 1.0)));
@@ -1215,7 +1219,7 @@ void sp_selection_paste_size_separately (bool apply_x, bool apply_y)
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     // check if something is in the clipboard
-    if (size_clipboard.extent(NR::X) < 1e-6 || size_clipboard.extent(NR::Y) < 1e-6) {
+    if ( !size_clipboard ) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the clipboard."));
         return;
     }
@@ -1234,8 +1238,8 @@ void sp_selection_paste_size_separately (bool apply_x, bool apply_y)
             continue;
         }
 
-        double scale_x = size_clipboard.extent(NR::X) / current->extent(NR::X);
-        double scale_y = size_clipboard.extent(NR::Y) / current->extent(NR::Y);
+        double scale_x = size_clipboard->extent(NR::X) / current->extent(NR::X);
+        double scale_y = size_clipboard->extent(NR::Y) / current->extent(NR::Y);
 
         sp_item_scale_rel (item,
                                  NR::scale(
@@ -1522,16 +1526,16 @@ sp_selection_scale_absolute(Inkscape::Selection *selection,
     if (selection->isEmpty())
         return;
 
-    NR::Rect const bbox(selection->bounds());
-    if (bbox.isEmpty()) {
+    NR::Maybe<NR::Rect> const bbox(selection->bounds());
+    if ( !bbox || bbox->isEmpty() ) {
         return;
     }
 
-    NR::translate const p2o(-bbox.min());
+    NR::translate const p2o(-bbox->min());
 
     NR::scale const newSize(x1 - x0,
                             y1 - y0);
-    NR::scale const scale( newSize / NR::scale(bbox.dimensions()) );
+    NR::scale const scale( newSize / NR::scale(bbox->dimensions()) );
     NR::translate const o2n(x0, y0);
     NR::Matrix const final( p2o * scale * o2n );
 
@@ -1544,15 +1548,15 @@ void sp_selection_scale_relative(Inkscape::Selection *selection, NR::Point const
     if (selection->isEmpty())
         return;
 
-    NR::Rect const bbox(selection->bounds());
+    NR::Maybe<NR::Rect> const bbox(selection->bounds());
 
-    if (bbox.isEmpty()) {
+    if ( !bbox || bbox->isEmpty() ) {
         return;
     }
 
     // FIXME: ARBITRARY LIMIT: don't try to scale above 1 Mpx, it won't display properly and will crash sooner or later anyway
-    if ( bbox.extent(NR::X) * scale[NR::X] > 1e6  ||
-         bbox.extent(NR::Y) * scale[NR::Y] > 1e6 )
+    if ( bbox->extent(NR::X) * scale[NR::X] > 1e6  ||
+         bbox->extent(NR::Y) * scale[NR::Y] > 1e6 )
     {
         return;
     }
@@ -1657,9 +1661,12 @@ sp_selection_rotate(Inkscape::Selection *selection, gdouble const angle_degrees)
     if (selection->isEmpty())
         return;
 
-    NR::Point center = selection->center();
+    NR::Maybe<NR::Point> center = selection->center();
+    if (!center) {
+        return;
+    }
 
-    sp_selection_rotate_relative(selection, center, angle_degrees);
+    sp_selection_rotate_relative(selection, *center, angle_degrees);
 
     sp_document_maybe_done(sp_desktop_document(selection->desktop()),
                            ( ( angle_degrees > 0 )
@@ -1678,17 +1685,20 @@ sp_selection_rotate_screen(Inkscape::Selection *selection, gdouble angle)
     if (selection->isEmpty())
         return;
 
-    NR::Rect const bbox(selection->bounds());
+    NR::Maybe<NR::Rect> const bbox(selection->bounds());
+    NR::Maybe<NR::Point> center = selection->center();
 
-    NR::Point center = selection->center();
+    if ( !bbox || !center ) {
+        return;
+    }
 
     gdouble const zoom = selection->desktop()->current_zoom();
     gdouble const zmove = angle / zoom;
-    gdouble const r = NR::L2(bbox.max() - center);
+    gdouble const r = NR::L2(bbox->max() - *center);
 
     gdouble const zangle = 180 * atan2(zmove, r) / M_PI;
 
-    sp_selection_rotate_relative(selection, center, zangle);
+    sp_selection_rotate_relative(selection, *center, zangle);
 
     sp_document_maybe_done(sp_desktop_document(selection->desktop()),
                            ( (angle > 0)
@@ -1704,11 +1714,15 @@ sp_selection_scale(Inkscape::Selection *selection, gdouble grow)
     if (selection->isEmpty())
         return;
 
-    NR::Rect const bbox(selection->bounds());
-    NR::Point const center(bbox.midpoint());
-    double const max_len = bbox.maxExtent();
+    NR::Maybe<NR::Rect> const bbox(selection->bounds());
+    if (!bbox) {
+        return;
+    }
+
+    NR::Point const center(bbox->midpoint());
 
     // you can't scale "do nizhe pola" (below zero)
+    double const max_len = bbox->maxExtent();
     if ( max_len + grow <= 1e-3 ) {
         return;
     }
@@ -1737,7 +1751,13 @@ sp_selection_scale_times(Inkscape::Selection *selection, gdouble times)
     if (selection->isEmpty())
         return;
 
-    NR::Point const center(selection->bounds().midpoint());
+    NR::Maybe<NR::Rect> sel_bbox = selection->bounds();
+
+    if (!sel_bbox) {
+        return;
+    }
+
+    NR::Point const center(sel_bbox->midpoint());
     sp_selection_scale_relative(selection, center, NR::scale(times, times));
     sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_CONTEXT_SELECT, 
                      _("Scale by whole factor"));
@@ -2181,13 +2201,13 @@ sp_selection_tile(bool apply)
     }
 
     sp_document_ensure_up_to_date(document);
-    NR::Rect r = selection->bounds();
-    if (r.isEmpty()) {
+    NR::Maybe<NR::Rect> r = selection->bounds();
+    if ( !r || r->isEmpty() ) {
         return;
     }
 
     // calculate the transform to be applied to objects to move them to 0,0
-    NR::Point move_p = NR::Point(0, sp_document_height(document)) - (r.min() + NR::Point (0, r.extent(NR::Y)));
+    NR::Point move_p = NR::Point(0, sp_document_height(document)) - (r->min() + NR::Point (0, r->extent(NR::Y)));
     move_p[NR::Y] = -move_p[NR::Y];
     NR::Matrix move = NR::Matrix (NR::translate (move_p));
 
@@ -2210,7 +2230,7 @@ sp_selection_tile(bool apply)
         repr_copies = g_slist_prepend (repr_copies, dup);
     }
 
-    NR::Rect bounds(desktop->dt2doc(r.min()), desktop->dt2doc(r.max()));
+    NR::Rect bounds(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
 
     if (apply) {
         // delete objects so that their clones don't get alerted; this object will be restored shortly
@@ -2227,7 +2247,7 @@ sp_selection_tile(bool apply)
     prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
     const gchar *pat_id = pattern_tile (repr_copies, bounds, document,
-                                        NR::Matrix(NR::translate(desktop->dt2doc(NR::Point(r.min()[NR::X], r.max()[NR::Y])))) * parent_transform.inverse(), parent_transform * move);
+                                        NR::Matrix(NR::translate(desktop->dt2doc(NR::Point(r->min()[NR::X], r->max()[NR::Y])))) * parent_transform.inverse(), parent_transform * move);
 
     // restore compensation setting
     prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
