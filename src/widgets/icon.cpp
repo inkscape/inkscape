@@ -623,7 +623,7 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
             }
 
             /* This is in document coordinates, i.e. pixels */
-            if ( dbox && !dbox->isEmpty() ) {
+            if ( dbox ) {
                 NRGC gc(NULL);
                 /* Update to renderable state */
                 double sf = 1.0;

@@ -585,7 +585,7 @@ sp_offset_set_shape(SPShape *shape)
 
         SPItem *item = shape;
         NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop (item);
-        if ( bbox && !bbox->isEmpty() ) {
+        if ( bbox ) {
             gdouble size = L2(bbox->dimensions());
             gdouble const exp = NR::expansion(item->transform);
             if (exp != 0)
