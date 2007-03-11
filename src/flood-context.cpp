@@ -737,10 +737,22 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
 {
     gint ret = FALSE;
 
+    SPDesktop *desktop = event_context->desktop;
+
     switch (event->type) {
     case GDK_BUTTON_PRESS:
+        if (event->button.state & GDK_CONTROL_MASK) {
+            NR::Point const button_w(event->button.x,
+                                     event->button.y);
+            
+            SPItem *item = sp_event_context_find_item (desktop, button_w, TRUE, TRUE);
+            
+            Inkscape::XML::Node *pathRepr = SP_OBJECT_REPR(item);
+            /* Set style */
+            sp_desktop_apply_style_tool (desktop, pathRepr, "tools.paintbucket", false);
+            ret = TRUE;
+        }
         break;
-        // motion and release are always on root (why?)
     default:
         break;
     }
@@ -760,18 +772,19 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
     switch (event->type) {
     case GDK_BUTTON_PRESS:
         if ( event->button.button == 1 ) {
-
-            // set "busy" cursor
-            GdkCursor *waiting = gdk_cursor_new(GDK_WATCH);
-            gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, waiting);
-
-            sp_flood_do_flood_fill(event_context, event);
-
-            // restore cursor when done
-            gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
-            gdk_cursor_unref(waiting);
-
-            ret = TRUE;
+            if (!(event->button.state & GDK_CONTROL_MASK)) {
+                // set "busy" cursor
+                GdkCursor *waiting = gdk_cursor_new(GDK_WATCH);
+                gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, waiting);
+    
+                sp_flood_do_flood_fill(event_context, event);
+    
+                // restore cursor when done
+                gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
+                gdk_cursor_unref(waiting);
+    
+                ret = TRUE;
+            }
         }
         break;
     case GDK_KEY_PRESS:
