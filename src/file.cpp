@@ -755,6 +755,9 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
         // move imported defs to our document's defs
         SPObject *in_defs = SP_DOCUMENT_DEFS(in_doc);
         SPObject *defs = SP_DOCUMENT_DEFS(doc);
+
+        Inkscape::IO::fixupHrefs(doc, in_doc->base, true);
+
         Inkscape::XML::Node *last_def = SP_OBJECT_REPR(in_defs)->lastChild();
         for (SPObject *child = sp_object_first_child(defs);
              child != NULL; child = SP_OBJECT_NEXT(child))
