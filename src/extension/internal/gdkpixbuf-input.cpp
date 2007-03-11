@@ -24,9 +24,6 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
     bool saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, false); // no need to undo in this temporary document
     GdkPixbuf *pb = Inkscape::IO::pixbuf_new_from_file( uri, NULL );
-    Inkscape::XML::Node *rdoc = sp_document_repr_root(doc);
-    gchar const *docbase = rdoc->attribute("sodipodi:docbase");
-    gchar const *relname = sp_relative_path_from_path(uri, docbase);
 
     if (pb) {         /* We are readable */
         Inkscape::XML::Node *repr = NULL;
@@ -58,8 +55,9 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         if (prefs_get_int_attribute("options.importbitmapsasimages", "value", 1) == 1) {
             // import as <image>
             repr = xml_doc->createElement("svg:image");
-            repr->setAttribute("xlink:href", relname);
-            repr->setAttribute("sodipodi:absref", uri);
+            // both are the same, as we don't know our base dir here and cannot relativate href (importer will fixupHrefs):
+            repr->setAttribute("xlink:href", uri); 
+            repr->setAttribute("sodipodi:absref", uri); 
 
             sp_repr_set_svg_double(repr, "width", width);
             sp_repr_set_svg_double(repr, "height", height);
@@ -76,7 +74,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
             SPObject *pat_object = doc->getObjectById(pat_id);
 
             Inkscape::XML::Node *im = xml_doc->createElement("svg:image");
-            im->setAttribute("xlink:href", relname);
+            im->setAttribute("xlink:href", uri);
             im->setAttribute("sodipodi:absref", uri);
             sp_repr_set_svg_double(im, "width", width);
             sp_repr_set_svg_double(im, "height", height);
