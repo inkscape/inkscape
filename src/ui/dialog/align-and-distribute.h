@@ -65,9 +65,7 @@ public:
     std::list<SPItem *>::iterator find_master(std::list <SPItem *> &list, bool horizontal);
     void setMode(bool nodeEdit);
 
-    NR::Rect randomize_bbox;
-    bool randomize_bbox_set;
-
+    NR::Maybe<NR::Rect> randomize_bbox;
 
 protected:
 

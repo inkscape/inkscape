@@ -71,12 +71,14 @@ sp_conn_end_move_compensate(NR::Matrix const *mp, SPItem *moved_item,
         };
         for (unsigned h = 0; h < 2; ++h) {
             NR::Maybe<NR::Rect> bbox = h2attItem[h]->getBounds(NR::identity());
-            if (bbox) {
-                h2bbox_icoordsys[h] = *bbox;
-            } else {
-                // FIXME
-                h2bbox_icoordsys[h] = NR::Rect(NR::Point(0, 0), NR::Point(0, 0));
+            if (!bbox) {
+                if (updatePathRepr) {
+                    path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+                    path->updateRepr();
+                }
+                return;
             }
+            h2bbox_icoordsys[h] = *bbox;
             h2i2anc[h] = i2anc_affine(h2attItem[h], ancestor);
             h2endPt_icoordsys[h] = h2bbox_icoordsys[h].midpoint();
         }
@@ -112,13 +114,15 @@ sp_conn_end_move_compensate(NR::Matrix const *mp, SPItem *moved_item,
         NR::Rect otherpt_rect = NR::Rect(other_endpt, other_endpt);
         NR::Rect h2bbox_icoordsys[2] = { otherpt_rect, otherpt_rect };
         NR::Maybe<NR::Rect> bbox = h2attItem[ind]->getBounds(NR::identity());
-        if (bbox) {
-            h2bbox_icoordsys[ind] = *bbox;
-        } else {
-            // FIXME
-            h2bbox_icoordsys[ind] = NR::Rect(NR::Point(0, 0), NR::Point(0, 0));
+        if (!bbox) {
+            if (updatePathRepr) {
+                path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+                path->updateRepr();
+            }
+            return;
         }
 
+        h2bbox_icoordsys[ind] = *bbox;
         h2i2anc = i2anc_affine(h2attItem[ind], ancestor);
         h2endPt_icoordsys[ind] = h2bbox_icoordsys[ind].midpoint();
 

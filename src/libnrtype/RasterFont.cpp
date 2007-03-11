@@ -107,20 +107,24 @@ void           raster_font::BBox(int glyph_id,NRRect *area)
 {
 	area->x0=area->y0=area->x1=area->y1=0;
 	if ( daddy == NULL ) return;
-	NR::Rect  res=daddy->BBox(glyph_id);
-	NR::Point bmi=res.min(),bma=res.max();
-	NR::Point tlp(bmi[0],bmi[1]),trp(bma[0],bmi[1]),blp(bmi[0],bma[1]),brp(bma[0],bma[1]);
-	tlp=tlp*style.transform;
-	trp=trp*style.transform;
-	blp=blp*style.transform;
-	brp=brp*style.transform;
-	res=NR::Rect(tlp,trp);
-	res.expandTo(blp);
-	res.expandTo(brp);
-	area->x0=(res.min())[0];
-	area->y0=(res.min())[1];
-	area->x1=(res.max())[0];
-	area->y1=(res.max())[1];
+	NR::Maybe<NR::Rect> res=daddy->BBox(glyph_id);
+	if (res) {
+		NR::Point bmi=res->min(),bma=res->max();
+		NR::Point tlp(bmi[0],bmi[1]),trp(bma[0],bmi[1]),blp(bmi[0],bma[1]),brp(bma[0],bma[1]);
+		tlp=tlp*style.transform;
+		trp=trp*style.transform;
+		blp=blp*style.transform;
+		brp=brp*style.transform;
+		*res=NR::Rect(tlp,trp);
+		res->expandTo(blp);
+		res->expandTo(brp);
+		area->x0=(res->min())[0];
+		area->y0=(res->min())[1];
+		area->x1=(res->max())[0];
+		area->y1=(res->max())[1];
+	} else {
+		nr_rect_d_set_empty(area);
+	}
 }
 
 void           raster_font::LoadRasterGlyph(int glyph_id)

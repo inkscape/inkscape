@@ -602,9 +602,8 @@ private :
         // This bbox is cached between calls to randomize, so that there's no growth nor shrink
         // nor drift on sequential randomizations. Discard cache on global (or better active
         // desktop's) selection_change signal.
-        if (!_dialog.randomize_bbox_set) {
+        if (!_dialog.randomize_bbox) {
             _dialog.randomize_bbox = *sel_bbox;
-            _dialog.randomize_bbox_set = true;
         }
 
         // see comment in ActionAlign above
@@ -619,10 +618,10 @@ private :
             NR::Maybe<NR::Rect> item_box = sp_item_bbox_desktop (*it);
             if (item_box) {
                 // find new center, staying within bbox 
-                double x = _dialog.randomize_bbox.min()[NR::X] + item_box->extent(NR::X)/2 +
-                    g_random_double_range (0, _dialog.randomize_bbox.extent(NR::X) - item_box->extent(NR::X));
-                double y = _dialog.randomize_bbox.min()[NR::Y] + item_box->extent(NR::Y)/2 +
-                    g_random_double_range (0, _dialog.randomize_bbox.extent(NR::Y) - item_box->extent(NR::Y));
+                double x = _dialog.randomize_bbox->min()[NR::X] + item_box->extent(NR::X)/2 +
+                    g_random_double_range (0, _dialog.randomize_bbox->extent(NR::X) - item_box->extent(NR::X));
+                double y = _dialog.randomize_bbox->min()[NR::Y] + item_box->extent(NR::Y)/2 +
+                    g_random_double_range (0, _dialog.randomize_bbox->extent(NR::Y) - item_box->extent(NR::Y));
                 // displacement is the new center minus old:
                 NR::Point t = NR::Point (x, y) - 0.5*(item_box->max() + item_box->min());
                 sp_item_move_rel(*it, NR::translate(t));
@@ -767,7 +766,7 @@ void on_tool_changed(Inkscape::Application *inkscape, SPEventContext *context, A
 
 void on_selection_changed(Inkscape::Application *inkscape, Inkscape::Selection *selection, AlignAndDistribute *daad)
 {
-    daad->randomize_bbox_set = false;
+    daad->randomize_bbox = NR::Nothing();
 }
 
 /////////////////////////////////////////////////////////
@@ -777,7 +776,7 @@ void on_selection_changed(Inkscape::Application *inkscape, Inkscape::Selection *
 
 AlignAndDistribute::AlignAndDistribute() 
     : Dialog ("dialogs.align", SP_VERB_DIALOG_ALIGN_DISTRIBUTE),
-      randomize_bbox (NR::Point (0, 0), NR::Point (0, 0)),
+      randomize_bbox(NR::Nothing()),
       _alignFrame(_("Align")),
       _distributeFrame(_("Distribute")),
       _removeOverlapFrame(_("Remove overlaps")),
@@ -941,8 +940,7 @@ AlignAndDistribute::AlignAndDistribute()
 
     // Connect to the global selection change, to invalidate cached randomize_bbox
     g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (on_selection_changed), this);
-    randomize_bbox = NR::Rect (NR::Point (0, 0), NR::Point (0, 0));
-    randomize_bbox_set = false;
+    randomize_bbox = NR::Nothing();
 
     show_all_children();
 

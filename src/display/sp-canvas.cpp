@@ -744,11 +744,16 @@ sp_canvas_group_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
         }
     }
 
-    NR::Rect const &bounds = corners.bounds();
-    item->x1 = bounds.min()[NR::X];
-    item->y1 = bounds.min()[NR::Y];
-    item->x2 = bounds.max()[NR::X];
-    item->y2 = bounds.max()[NR::Y];
+    NR::Maybe<NR::Rect> const bounds = corners.bounds();
+    if (bounds) {
+        item->x1 = bounds->min()[NR::X];
+        item->y1 = bounds->min()[NR::Y];
+        item->x2 = bounds->max()[NR::X];
+        item->y2 = bounds->max()[NR::Y];
+    } else {
+        item->x1 = item->x2 = corners.midpoint()[NR::X];
+        item->y1 = item->y2 = corners.midpoint()[NR::Y];
+    }
 }
 
 /**

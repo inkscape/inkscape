@@ -380,24 +380,28 @@ std::vector<NR::Point> Selection::getSnapPoints() const {
 
 std::vector<NR::Point> Selection::getSnapPointsConvexHull() const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
+
     std::vector<NR::Point> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
 	sp_item_snappoints(SP_ITEM(iter->data), SnapPointsIter(p));
     }
 
-    std::vector<NR::Point>::iterator i;
-    NR::ConvexHull cvh(*(p.begin()));
-    for (i = p.begin(); i != p.end(); i++) {
-	// these are the points we get back
-	cvh.add(*i);
-    }
+    std::vector<NR::Point> pHull;
+    if (!p.empty()) {
+        std::vector<NR::Point>::iterator i;
+        NR::ConvexHull cvh(p.front());
+        for (i = p.begin(); i != p.end(); i++) {
+            // these are the points we get back
+            cvh.add(*i);
+        }
 
-    NR::Rect rHull = cvh.bounds();
-    std::vector<NR::Point> pHull(4);
-    pHull[0] = rHull.corner(0);
-    pHull[1] = rHull.corner(1);
-    pHull[2] = rHull.corner(2);
-    pHull[3] = rHull.corner(3);
+        NR::Maybe<NR::Rect> rHull = cvh.bounds();
+        if (rHull) {
+            for ( unsigned i = 0 ; i < 4 ; ++i ) {
+                pHull.push_back(rHull->corner(i));
+            }
+        }
+    }
 
     return pHull;
 }

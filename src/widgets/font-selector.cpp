@@ -626,11 +626,13 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                         hpos[len] = base_pt[0];
                         len++;
                         if ( curF ) {
-                            NR::Rect nbbox = curF->BBox(str_text->glyph_text[i].gl);
-                            bbox.x0 = MIN(bbox.x0, base_pt[NR::X] + theSize * (nbbox.min())[0]);
-                            bbox.y0 = MIN(bbox.y0, base_pt[NR::Y] - theSize * (nbbox.max())[1]);
-                            bbox.x1 = MAX(bbox.x1, base_pt[NR::X] + theSize * (nbbox.max())[0]);
-                            bbox.y1 = MAX(bbox.y1, base_pt[NR::Y] - theSize * (nbbox.min())[1]);
+                            NR::Maybe<NR::Rect> nbbox = curF->BBox(str_text->glyph_text[i].gl);
+                            if (nbbox) {
+                                bbox.x0 = MIN(bbox.x0, base_pt[NR::X] + theSize * (nbbox->min())[0]);
+                                bbox.y0 = MIN(bbox.y0, base_pt[NR::Y] - theSize * (nbbox->max())[1]);
+                                bbox.x1 = MAX(bbox.x1, base_pt[NR::X] + theSize * (nbbox->max())[0]);
+                                bbox.y1 = MAX(bbox.y1, base_pt[NR::Y] - theSize * (nbbox->min())[1]);
+                            }
                         }
                     }
                     if ( curF ) {

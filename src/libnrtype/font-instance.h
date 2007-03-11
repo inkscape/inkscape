@@ -12,6 +12,7 @@
 #include <libnrtype/nrtype-forward.h>
 #include <libnrtype/font-style.h>
 #include <livarot/livarot-forward.h>
+#include "libnr/nr-rect.h"
 
 // the font_instance are the template of several raster_font; they provide metrics and outlines
 // that are drawn by the raster_font, so the raster_font needs info relative to the way the 
@@ -77,7 +78,7 @@ public:
     bool                 FontMetrics(double &ascent, double &descent, double &leading);
     bool                 FontSlope(double &run, double &rise);
                                 // for generating slanted cursors for oblique fonts
-    NR::Rect             BBox(int glyph_id);
+    NR::Maybe<NR::Rect>             BBox(int glyph_id);
 
 		// creates a rasterfont for the given style
     raster_font*         RasterFont(NR::Matrix const &trs, double stroke_width,
