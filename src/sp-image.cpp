@@ -66,7 +66,7 @@ static void sp_image_snappoints(SPItem const *item, SnapPointsIter p);
 static NRArenaItem *sp_image_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static NR::Matrix sp_image_set_transform (SPItem *item, NR::Matrix const &xform);
 
-GdkPixbuf * sp_image_repr_read_image (Inkscape::XML::Node * repr);
+GdkPixbuf *sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *base);
 static GdkPixbuf *sp_image_pixbuf_force_rgba (GdkPixbuf * pixbuf);
 static void sp_image_update_canvas_image (SPImage *image);
 static GdkPixbuf * sp_image_repr_read_dataURI (const gchar * uri_data);
@@ -681,9 +681,10 @@ sp_image_set (SPObject *object, unsigned int key, const gchar *value)
 static void
 sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 {
-	SPImage *image;
+    SPImage *image;
 
-	image = (SPImage *) object;
+    image = (SPImage *) object;
+    SPDocument *doc = SP_OBJECT_DOCUMENT(object);
 
 	if (((SPObjectClass *) (parent_class))->update)
 		((SPObjectClass *) (parent_class))->update (object, ctx, flags);
@@ -695,7 +696,10 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 		}
 		if (image->href) {
 			GdkPixbuf *pixbuf;
-			pixbuf = sp_image_repr_read_image (object->repr);
+			pixbuf = sp_image_repr_read_image (
+                    object->repr->attribute("xlink:href"), 
+                    object->repr->attribute("sodipodi:absref"), 
+                    doc->base);
 			if (pixbuf) {
 				pixbuf = sp_image_pixbuf_force_rgba (pixbuf);
 // BLIP
@@ -1030,55 +1034,68 @@ sp_image_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flag
  */
 
 GdkPixbuf *
-sp_image_repr_read_image (Inkscape::XML::Node * repr)
+sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *base)
 {
-	const gchar * filename, * docbase;
-	gchar * fullname;
-	GdkPixbuf * pixbuf;
+    const gchar *filename, *docbase;
+    gchar *fullname;
+    GdkPixbuf *pixbuf;
 
-	filename = repr->attribute("xlink:href");
-	if (filename == NULL) filename = repr->attribute("href"); /* FIXME */
-	if (filename != NULL) {
-		if (strncmp (filename,"file:",5) == 0) {
-			fullname = g_filename_from_uri(filename, NULL, NULL);
-			if (fullname) {
-				// TODO check this. Was doing a UTF-8 to filename conversion here.
-				pixbuf = Inkscape::IO::pixbuf_new_from_file (fullname, NULL);
-				if (pixbuf != NULL) return pixbuf;
-			}
-		} else if (strncmp (filename,"data:",5) == 0) {
-			/* data URI - embedded image */
-			filename += 5;
-			pixbuf = sp_image_repr_read_dataURI (filename);
-			if (pixbuf != NULL) return pixbuf;
-		} else if (!g_path_is_absolute (filename)) {
-			/* try to load from relative pos */
-			docbase = repr->document()->root()->attribute("sodipodi:docbase");
-			if (!docbase) docbase = ".";
-			fullname = g_build_filename(docbase, filename, NULL);
-			pixbuf = Inkscape::IO::pixbuf_new_from_file( fullname, NULL );
-			g_free (fullname);
-			if (pixbuf != NULL) return pixbuf;
-		} else {
-			/* try absolute filename */
-			pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, NULL );
-			if (pixbuf != NULL) return pixbuf;
-		}
-	}
-	/* at last try to load from sp absolute path name */
-	filename = repr->attribute("sodipodi:absref");
-	if (filename != NULL) {
-		pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, NULL );
-		if (pixbuf != NULL) return pixbuf;
-	}
-	/* Nope: We do not find any valid pixmap file :-( */
-	pixbuf = gdk_pixbuf_new_from_xpm_data ((const gchar **) brokenimage_xpm);
+    filename = href;
+    if (filename != NULL) {
+        if (strncmp (filename,"file:",5) == 0) {
+            fullname = g_filename_from_uri(filename, NULL, NULL);
+            if (fullname) {
+                // TODO check this. Was doing a UTF-8 to filename conversion here.
+                pixbuf = Inkscape::IO::pixbuf_new_from_file (fullname, NULL);
+                if (pixbuf != NULL) return pixbuf;
+            }
+        } else if (strncmp (filename,"data:",5) == 0) {
+            /* data URI - embedded image */
+            filename += 5;
+            pixbuf = sp_image_repr_read_dataURI (filename);
+            if (pixbuf != NULL) return pixbuf;
+        } else {
 
-	/* It should be included xpm, so if it still does not does load, */
-	/* our libraries are broken */
-	g_assert (pixbuf != NULL);
+            if (!g_path_is_absolute (filename)) {
+                /* try to load from relative pos combined with document base*/
+                docbase = base;
+                if (!docbase) docbase = ".";
+                fullname = g_build_filename(docbase, filename, NULL);
 
-	return pixbuf;
+                // document base can be wrong (on the temporary doc when importing bitmap from a 
+                // different dir) or unset (when doc is not saved yet), so we check for base+href existence first,
+                // and if it fails, we also try to use bare href regardless of its g_path_is_absolute
+                if (g_file_test (fullname, G_FILE_TEST_EXISTS) && !g_file_test (fullname, G_FILE_TEST_IS_DIR)) {
+                    pixbuf = Inkscape::IO::pixbuf_new_from_file( fullname, NULL );
+                    g_free (fullname);
+                    if (pixbuf != NULL) return pixbuf;
+                }
+            } 
+
+            /* try filename as absolute */
+            if (g_file_test (filename, G_FILE_TEST_EXISTS) && !g_file_test (filename, G_FILE_TEST_IS_DIR)) {
+                pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, NULL );
+                if (pixbuf != NULL) return pixbuf;
+            }
+        }
+    }
+
+    /* at last try to load from sp absolute path name */
+    filename = absref;
+    if (filename != NULL) {
+        // using absref is outside of SVG rules, so we must at least warn the user
+        g_warning ("<image xlink:href=\"%s\"> did not resolve to a valid image file (base dir is %s), now trying sodipodi:absref=\"%s\"", href, base, absref);
+        pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, NULL );
+        if (pixbuf != NULL) return pixbuf;
+    }
+    /* Nope: We do not find any valid pixmap file :-( */
+    pixbuf = gdk_pixbuf_new_from_xpm_data ((const gchar **) brokenimage_xpm);
+
+    /* It should be included xpm, so if it still does not does load, */
+    /* our libraries are broken */
+    g_assert (pixbuf != NULL);
+
+    return pixbuf;
 }
 
 static GdkPixbuf *
