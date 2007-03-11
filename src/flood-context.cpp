@@ -263,7 +263,7 @@ GList * flood_channels_dropdown_items_list() {
     return glist;
 }
 
-static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned char *dtc, int tolerance, PaintBucketChannels method) {
+static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned char *dtc, int threshold, PaintBucketChannels method) {
   int diff = 0;
   float hsl_check[3], hsl_orig[3];
   
@@ -276,13 +276,13 @@ static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned c
   
   switch (method) {
     case FLOOD_CHANNELS_ALPHA:
-      return ((int)abs(check[3] - orig[3]) <= tolerance);
+      return ((int)abs(check[3] - orig[3]) <= threshold);
     case FLOOD_CHANNELS_R:
-      return ((int)abs(check[0] - orig[0]) <= tolerance);
+      return ((int)abs(check[0] - orig[0]) <= threshold);
     case FLOOD_CHANNELS_G:
-      return ((int)abs(check[1] - orig[1]) <= tolerance);
+      return ((int)abs(check[1] - orig[1]) <= threshold);
     case FLOOD_CHANNELS_B:
-      return ((int)abs(check[2] - orig[2]) <= tolerance);
+      return ((int)abs(check[2] - orig[2]) <= threshold);
     case FLOOD_CHANNELS_RGB:
       unsigned char merged_orig[4];
       unsigned char merged_check[4];
@@ -293,22 +293,22 @@ static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned c
       for (int i = 0; i < 3; i++) {
         diff += (int)abs(merged_check[i] - merged_orig[i]);
       }
-      return ((diff / 3) <= ((tolerance * 3) / 4));
+      return ((diff / 3) <= ((threshold * 3) / 4));
     
     case FLOOD_CHANNELS_H:
-      return ((int)(fabs(hsl_check[0] - hsl_orig[0]) * 100.0) <= tolerance);
+      return ((int)(fabs(hsl_check[0] - hsl_orig[0]) * 100.0) <= threshold);
     case FLOOD_CHANNELS_S:
-      return ((int)(fabs(hsl_check[1] - hsl_orig[1]) * 100.0) <= tolerance);
+      return ((int)(fabs(hsl_check[1] - hsl_orig[1]) * 100.0) <= threshold);
     case FLOOD_CHANNELS_L:
-      return ((int)(fabs(hsl_check[2] - hsl_orig[2]) * 100.0) <= tolerance);
+      return ((int)(fabs(hsl_check[2] - hsl_orig[2]) * 100.0) <= threshold);
   }
   
   return false;
 }
 
-static bool try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig, unsigned char *dtc, int x, int y, int width, int tolerance, PaintBucketChannels method, bool fill_switch) {
+static bool try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig, unsigned char *dtc, int x, int y, int width, int threshold, PaintBucketChannels method, bool fill_switch) {
   unsigned char *t = get_pixel(px, x, y, width);
-  if (compare_pixels(t, orig, dtc, tolerance, method)) {
+  if (compare_pixels(t, orig, dtc, threshold, method)) {
     unsigned char *trace_t = get_pixel(trace_px, x, y, width);
     if (trace_t[3] != 255) {
       if (fill_switch) {
@@ -433,7 +433,7 @@ struct bitmap_coords_info {
   int y;
   int y_limit;
   int width;
-  int tolerance;
+  int threshold;
   PaintBucketChannels method;
   unsigned char *dtc;
   bool top_fill;
@@ -466,15 +466,15 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::queue<NR::Point> *
         
         if (keep_tracing) {
             t = get_pixel(px, bci.x, bci.y, bci.width);
-            if (compare_pixels(t, orig_color, bci.dtc, bci.tolerance, bci.method)) {
+            if (compare_pixels(t, orig_color, bci.dtc, bci.threshold, bci.method)) {
                 for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
                 trace_t = get_pixel(trace_px, bci.x, bci.y, bci.width);
                 trace_t[3] = 255; 
                 if (bci.y > 0) { 
-                    bci.top_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.dtc, bci.x, bci.y - 1, bci.width, bci.tolerance, bci.method, bci.top_fill);
+                    bci.top_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.dtc, bci.x, bci.y - 1, bci.width, bci.threshold, bci.method, bci.top_fill);
                 }
                 if (bci.y < bci.y_limit) { 
-                    bci.bottom_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.dtc, bci.x, bci.y + 1, bci.width, bci.tolerance, bci.method, bci.bottom_fill);
+                    bci.bottom_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.dtc, bci.x, bci.y + 1, bci.width, bci.threshold, bci.method, bci.bottom_fill);
                 }
                 if (bci.is_left) {
                     bci.x--;
@@ -605,7 +605,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     merge_pixel_with_background(orig_color, dtc, merged_orig);
     
     PaintBucketChannels method = (PaintBucketChannels)prefs_get_int_attribute("tools.paintbucket", "channels", 0);
-    int tolerance = prefs_get_int_attribute_limited("tools.paintbucket", "tolerance", 1, 0, 100);
+    int threshold = prefs_get_int_attribute_limited("tools.paintbucket", "threshold", 1, 0, 100);
 
     switch(method) {
       case FLOOD_CHANNELS_ALPHA:
@@ -613,7 +613,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
       case FLOOD_CHANNELS_R:
       case FLOOD_CHANNELS_G:
       case FLOOD_CHANNELS_B:
-        tolerance = (255 * tolerance) / 100;
+        threshold = (255 * threshold) / 100;
         break;
       case FLOOD_CHANNELS_H:
       case FLOOD_CHANNELS_S:
@@ -627,7 +627,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
     bci.y_limit = y_limit;
     bci.width = width;
-    bci.tolerance = tolerance;
+    bci.threshold = threshold;
     bci.method = method;
     bci.bbox = *bbox;
     bci.screen = screen;
@@ -639,7 +639,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
       unsigned char *s = get_pixel(px, (int)cp[NR::X], (int)cp[NR::Y], width);
       
       // same color at this point
-      if (compare_pixels(s, orig_color, dtc, tolerance, method)) {
+      if (compare_pixels(s, orig_color, dtc, threshold, method)) {
         int x = (int)cp[NR::X];
         int y = (int)cp[NR::Y];
         
@@ -647,7 +647,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         bool bottom_fill = true;
         
         if (y > 0) { 
-          top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y - 1, width, tolerance, method, top_fill);
+          top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y - 1, width, threshold, method, top_fill);
         } else {
           if (bbox->min()[NR::Y] > screen.min()[NR::Y]) {
             aborted = true; break;
@@ -656,7 +656,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
           }
         }
         if (y < y_limit) { 
-          bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y + 1, width, tolerance, method, bottom_fill);
+          bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y + 1, width, threshold, method, bottom_fill);
         } else {
           if (bbox->max()[NR::Y] < screen.max()[NR::Y]) {
             aborted = true; break;

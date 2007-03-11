@@ -4430,9 +4430,9 @@ sp_connector_toolbox_new(SPDesktop *desktop)
 
 } // end of sp_connector_toolbox_new()
 
-static void paintbucket_tolerance_changed(GtkAdjustment *adj, GtkWidget *tbl)
+static void paintbucket_threshold_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
-    prefs_set_int_attribute("tools.paintbucket", "tolerance", (gint)adj->value);
+    prefs_set_int_attribute("tools.paintbucket", "threshold", (gint)adj->value);
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
@@ -4475,13 +4475,13 @@ sp_paintbucket_toolbox_new(SPDesktop *desktop)
     
     // Spacing spinbox
     {
-        GtkWidget *tolerance = sp_tb_spinbutton(_("Tolerance:"),
+        GtkWidget *threshold = sp_tb_spinbutton(_("Threshold:"),
                 _("The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"),
-                "tools.paintbucket", "tolerance", 5, NULL, tbl, TRUE,
-                "inkscape:paintbucket-tolerance", 0, 100, 1.0, 10.0,
-                paintbucket_tolerance_changed, 1, 0);
+                "tools.paintbucket", "threshold", 5, NULL, tbl, TRUE,
+                "inkscape:paintbucket-threshold", 0, 100, 1.0, 10.0,
+                paintbucket_threshold_changed, 1, 0);
 
-        gtk_box_pack_start(GTK_BOX(tbl), tolerance, FALSE, FALSE,
+        gtk_box_pack_start(GTK_BOX(tbl), threshold, FALSE, FALSE,
                 AUX_SPACING);
     }
     
