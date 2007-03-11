@@ -347,7 +347,6 @@ SPDesktop::~SPDesktop() {}
 
 void SPDesktop::setDisplayModeNormal()
 {
-    prefs_set_int_attribute("options.outlinemode", "value", 0);
     SP_CANVAS_ARENA (drawing)->arena->rendermode = RENDERMODE_NORMAL;
     canvas->rendermode = RENDERMODE_NORMAL; // canvas needs that for choosing the best buffer size
     displayMode = RENDERMODE_NORMAL;
@@ -357,7 +356,6 @@ void SPDesktop::setDisplayModeNormal()
 
 void SPDesktop::setDisplayModeOutline()
 {
-    prefs_set_int_attribute("options.outlinemode", "value", 1);
     SP_CANVAS_ARENA (drawing)->arena->rendermode = RENDERMODE_OUTLINE;
     canvas->rendermode = RENDERMODE_OUTLINE; // canvas needs that for choosing the best buffer size
     displayMode = RENDERMODE_OUTLINE;
@@ -367,7 +365,7 @@ void SPDesktop::setDisplayModeOutline()
 
 void SPDesktop::displayModeToggle()
 {
-    if (prefs_get_int_attribute("options.outlinemode", "value", prefs_get_int_attribute("options.startmode", "outline", 0)))
+    if (displayMode == RENDERMODE_OUTLINE)
         setDisplayModeNormal();
     else 
         setDisplayModeOutline();
