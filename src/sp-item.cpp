@@ -159,8 +159,6 @@ void SPItem::init() {
 		sigc::slot2<void,SPObject*, SPObject *> sl2=sigc::bind(sigc::ptr_fun(mask_ref_changed), this);
     _mask_ref_connection = cs2.connect(sl2);
 
-    if (!this->style) this->style = sp_style_new_from_object(this);
-
     this->avoidRef = new SPAvoidRef(this);
 
     new (&this->_transformed_signal) sigc::signal<void, NR::Matrix const *, SPItem *>();
@@ -486,10 +484,6 @@ sp_item_set(SPObject *object, unsigned key, gchar const *value)
                 nr_arena_item_set_sensitive(v->arenaitem, item->sensitive);
             }
             break;
-        case SP_ATTR_STYLE:
-            sp_style_read_from_object(object->style, object);
-            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
-            break;
         case SP_ATTR_CONNECTOR_AVOID:
             item->avoidRef->setAvoid(value);
             break;
@@ -639,38 +633,6 @@ sp_item_write(SPObject *const object, Inkscape::XML::Node *repr, guint flags)
     gchar *c = sp_svg_transform_write(item->transform);
     repr->setAttribute("transform", c);
     g_free(c);
-
-    SPStyle const *const obj_style = SP_OBJECT_STYLE(object);
-    if (obj_style) {
-        gchar *s = sp_style_write_string(obj_style, SP_STYLE_FLAG_IFSET);
-        repr->setAttribute("style", ( *s ? s : NULL ));
-        g_free(s);
-    } else {
-        /** \todo I'm not sure what to do in this case.  Bug #1165868
-         * suggests that it can arise, but the submitter doesn't know
-         * how to do so reliably.  The main two options are either
-         * leave repr's style attribute unchanged, or explicitly clear it.
-         * Must also consider what to do with property attributes for
-         * the element; see below.
-         */
-        char const *style_str = repr->attribute("style");
-        if (!style_str) {
-            style_str = "NULL";
-        }
-        g_warning("Item's style is NULL; repr style attribute is %s", style_str);
-    }
-
-    /** \note We treat object->style as authoritative.  Its effects have
-     * been written to the style attribute above; any properties that are
-     * unset we take to be deliberately unset (e.g. so that clones can
-     * override the property).
-     *
-     * Note that the below has an undesirable consequence of changing the
-     * appearance on renderers that lack CSS support (e.g. SVG tiny);
-     * possibly we should write property attributes instead of a style
-     * attribute.
-     */
-    sp_style_unset_property_attrs (object);
 
     if (flags & SP_OBJECT_WRITE_EXT) {
         repr->setAttribute("sodipodi:insensitive", ( item->sensitive ? NULL : "true" ));

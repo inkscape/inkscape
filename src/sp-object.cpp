@@ -173,7 +173,8 @@ sp_object_init(SPObject *object)
     object->parent = object->next = NULL;
     object->repr = NULL;
     object->id = NULL;
-    object->style = NULL;
+
+    object->style = sp_style_new_from_object(object);
 
     object->_collection_policy = SPObject::COLLECT_WITH_PARENT;
 
@@ -999,6 +1000,10 @@ sp_object_private_set(SPObject *object, unsigned int key, gchar const *value)
             }
             object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
             break;
+        case SP_ATTR_STYLE:
+            sp_style_read_from_object(object->style, object);
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+            break;
         default:
             break;
     }
@@ -1111,6 +1116,38 @@ sp_object_private_write(SPObject *object, Inkscape::XML::Node *repr, guint flags
         } else {
             repr->setAttribute("inkscape:collect", NULL);
         }
+ 
+        SPStyle const *const obj_style = SP_OBJECT_STYLE(object);
+        if (obj_style) {
+            gchar *s = sp_style_write_string(obj_style, SP_STYLE_FLAG_IFSET);
+            repr->setAttribute("style", ( *s ? s : NULL ));
+            g_free(s);
+        } else {
+            /** \todo I'm not sure what to do in this case.  Bug #1165868
+             * suggests that it can arise, but the submitter doesn't know
+             * how to do so reliably.  The main two options are either
+             * leave repr's style attribute unchanged, or explicitly clear it.
+             * Must also consider what to do with property attributes for
+             * the element; see below.
+             */
+            char const *style_str = repr->attribute("style");
+            if (!style_str) {
+                style_str = "NULL";
+            }
+            g_warning("Item's style is NULL; repr style attribute is %s", style_str);
+        }
+
+        /** \note We treat object->style as authoritative.  Its effects have
+         * been written to the style attribute above; any properties that are
+         * unset we take to be deliberately unset (e.g. so that clones can
+         * override the property).
+         *
+         * Note that the below has an undesirable consequence of changing the
+         * appearance on renderers that lack CSS support (e.g. SVG tiny);
+         * possibly we should write property attributes instead of a style
+         * attribute.
+         */
+        sp_style_unset_property_attrs (object);
     }
 
     return repr;
