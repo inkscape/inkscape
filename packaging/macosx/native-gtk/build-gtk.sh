@@ -29,7 +29,7 @@
 #	Add -lexpat
 #	
 
-version=1.3-inkscape
+version=1.3.1-inkscape
 
 export PREFIX=${PREFIX-/opt/gtk}
 export PATH=$PREFIX/bin:/usr/bin:$PATH
@@ -112,6 +112,47 @@ if [ "x$UNIVERSAL_BUILD" = "xYes" ]; then
     
     CONFIGURE_popt="$COMMON_OPTIONS"
     POSTCONFIGURE_popt="patch_libtool_dylib"
+elif [ "x$STABLE_BUILD" = "xYes" ]; then
+    COMMON_OPTIONS="$COMMON_OPTIONS --disable-dependency-tracking"
+
+    CONFIGURE_pkg_config="--with-pc-path=$PREFIX/lib/pkgconfig:/usr/X11R6/lib/pkgconfig --enable-indirect-deps --disable-dependency-tracking"
+
+    CONFIGURE_libpng="--disable-dependency-tracking"
+    
+    CONFIGURE_tiff="--disable-dependency-tracking"
+
+    CONFIGURE_gc="--disable-dependency-tracking"
+    
+    CONFIGURE_fontconfig="--disable-dependency-tracking --disable-docs"
+
+    CONFIGURE_cairo="--disable-dependency-tracking --enable-shared --disable-quartz --disable-atsui --enable-glitz"
+    
+    CONFIGURE_glitz="--disable-dependency-tracking"
+
+    CONFIGURE_lcms="--disable-dependency-tracking"
+    
+    CONFIGURE_glib="$COMMON_OPTIONS"
+    
+    CONFIGURE_pango="$COMMON_OPTIONS"
+    POSTCONFIGURE_pango="eval perl -pi~ -e 's|SUBDIRS = pango modules examples docs tools tests|SUBDIRS = pango modules docs tools tests|g' Makefile && perl -pi~ -e 's|harfbuzz_dump_LDADD = |harfbuzz_dump_LDADD = -Xlinker -framework -Xlinker CoreServices -Xlinker -framework -Xlinker ApplicationServices|g' pango/opentype/Makefile"
+    
+    CONFIGURE_gtk="$COMMON_OPTIONS"
+
+    CONFIGURE_atk="$COMMON_OPTIONS"
+    
+    CONFIGURE_libxml2="$COMMON_OPTIONS"
+    
+    CONFIGURE_libsigc="$COMMON_OPTIONS"
+    
+    CONFIGURE_glibmm="$COMMON_OPTIONS"
+    
+    CONFIGURE_cairomm="$COMMON_OPTIONS"
+    
+    CONFIGURE_gtkmm="$COMMON_OPTIONS --disable-examples --disable-demos"
+    
+    CONFIGURE_libxslt="$COMMON_OPTIONS"
+    
+    CONFIGURE_popt="$COMMON_OPTIONS"
 fi
 
 if [ "x$PANTHER_BUILD" = "xYes" ]; then
@@ -481,7 +522,7 @@ function process_modules()
 
 
     # Other packages:
-    if [ "$UNIVERSAL_BUILD" == "Yes" ];
+    if [ "x$UNIVERSAL_BUILD" == "xYes" -o "x$STABLE_BUILD" = "xYes"  ];
     then
     	tarball_get_and_build http://cairographics.org/snapshots/glitz-0.5.6.tar.gz || exit 1
     	tarball_get_and_build http://cairographics.org/releases/cairo-1.2.6.tar.gz || exit 1
