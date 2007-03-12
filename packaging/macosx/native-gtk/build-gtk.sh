@@ -383,7 +383,8 @@ function svn_get_and_build
     fi
     
     echo "./autogen.sh $COMMON_OPTIONS $3"
-    (./autogen.sh $COMMON_OPTIONS $3 && ./configure --prefix=$PREFIX $COMMON_OPTIONS $3 && make && make install)
+    #(./autogen.sh $COMMON_OPTIONS $3 && ./configure --prefix=$PREFIX $COMMON_OPTIONS $3 && make && make install)
+    (./autogen.sh $COMMON_OPTIONS $3 && make && make install)
 }
 
 function set_automake
