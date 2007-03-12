@@ -843,10 +843,15 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
         /* Scale is locked to a 1:1 aspect ratio, so that s[X] must be made to equal s[Y].
         ** To do this, we snap along a suitable constraint vector from the origin.
         */
+        
+        // The inclination of the constraint vector is calculated from the aspect ratio
+        NR::Point bbox_dim = _box->dimensions();
+        double const aspect_ratio = bbox_dim[1] / bbox_dim[0]; // = height / width
 
+        // Determine direction of the constraint vector
         NR::Point const cv = NR::Point(
             pt[NR::X] > _origin[NR::X] ? 1 : -1,
-            pt[NR::Y] > _origin[NR::Y] ? 1 : -1
+            pt[NR::Y] > _origin[NR::Y] ? aspect_ratio : -aspect_ratio
             );
 
         std::pair<NR::scale, bool> bb = m.constrainedSnapScale(Snapper::BBOX_POINT,
@@ -991,7 +996,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
         s[axis] = fabs(ratio) * sign(s[axis]);
         s[perp] = fabs(s[axis]);
     } else {
-
+        
         std::pair<NR::Coord, bool> const bb = m.freeSnapStretch(
             Snapper::BBOX_POINT,
             _bbox_points,
@@ -1087,14 +1092,14 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
                                                        std::list<SPItem const *>(),
                                                        skew[dim_a],
                                                        _origin,
-                                                       dim_a);
+                                                       dim_b);
 
         std::pair<NR::Coord, bool> sn = m.freeSnapSkew(Inkscape::Snapper::SNAP_POINT,
                                                        _snap_points,
                                                        std::list<SPItem const *>(),
                                                        skew[dim_a],
                                                        _origin,
-                                                       dim_a);
+                                                       dim_b);
         
         if (bb.second || sn.second) {
             /* We snapped something, so change the skew to reflect it */
