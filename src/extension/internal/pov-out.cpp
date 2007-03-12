@@ -124,11 +124,7 @@ void PovOutput::out(char *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
-#if !defined(__GNUC__) || defined(__MINGW32__)
-    vsnprintf(fmtbuf, 4096, fmt, args);
-#else
-    vsprintf(fmtbuf, 4096, fmt, args);
-#endif
+    g_vsnprintf(fmtbuf, 4096, fmt, args);
     va_end(args);
     outbuf.append(fmtbuf);
 }
