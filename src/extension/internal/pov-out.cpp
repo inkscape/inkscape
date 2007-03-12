@@ -45,6 +45,10 @@ namespace Internal
 
 
 
+//########################################################################
+//# U T I L I T Y
+//########################################################################
+
 
 
 /**
@@ -83,6 +87,9 @@ effective_opacity(SPItem const *item)
 }
 
 
+
+
+
 //########################################################################
 //# OUTPUT FORMATTING
 //########################################################################
@@ -106,11 +113,18 @@ static const char *dstr(double d)
 }
 
 
+
+
+
+
+/**
+ *  Output data to the buffer, printf()-style
+ */
 void PovOutput::out(char *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
-#ifdef __MINGW32__
+#if !defined(__GNUC__) || defined(__MINGW32__)
     vsnprintf(fmtbuf, 4096, fmt, args);
 #else
     vsprintf(fmtbuf, 4096, fmt, args);
@@ -125,6 +139,9 @@ void PovOutput::out(char *fmt, ...)
 
 
 
+/**
+ *  Output a 3d vector
+ */
 void PovOutput::vec2(double a, double b)
 {
     outbuf.append("<");
@@ -134,6 +151,11 @@ void PovOutput::vec2(double a, double b)
     outbuf.append(">");
 }
 
+
+
+/**
+ * Output a 3d vector
+ */
 void PovOutput::vec3(double a, double b, double c)
 {
     outbuf.append("<");
@@ -145,6 +167,11 @@ void PovOutput::vec3(double a, double b, double c)
     outbuf.append(">");
 }
 
+
+
+/**
+ *  Output a v4d ector
+ */
 void PovOutput::vec4(double a, double b, double c, double d)
 {
     outbuf.append("<");
@@ -159,6 +186,9 @@ void PovOutput::vec4(double a, double b, double c, double d)
 }
 
 
+/**
+ *  Output an rgbf color vector
+ */
 void PovOutput::rgbf(double r, double g, double b, double f)
 {
     //"rgbf < %1.3f, %1.3f, %1.3f %1.3f>"
@@ -168,6 +198,9 @@ void PovOutput::rgbf(double r, double g, double b, double f)
 
 
 
+/**
+ *  Output one bezier's start, start-control, end-control, and end nodes
+ */
 void PovOutput::segment(int segNr, double a0, double a1,
                             double b0, double b1,
                             double c0, double c1,
@@ -190,6 +223,9 @@ void PovOutput::segment(int segNr, double a0, double a1,
 
 
 
+/**
+ * Output the file header
+ */
 void PovOutput::doHeader()
 {
     time_t tim = time(NULL);
@@ -224,6 +260,10 @@ void PovOutput::doHeader()
 }
 
 
+
+/**
+ *  Output the file footer
+ */
 void PovOutput::doTail()
 {
     out("\n\n");
@@ -235,6 +275,9 @@ void PovOutput::doTail()
 
 
 
+/**
+ *  Output the curve data to buffer
+ */
 void PovOutput::doCurves(SPDocument *doc)
 {
     std::vector<Inkscape::XML::Node *>results;
@@ -531,12 +574,17 @@ void PovOutput::doCurves(SPDocument *doc)
 }
 
 
+
+
 //########################################################################
 //# M A I N    O U T P U T
 //########################################################################
 
 
 
+/**
+ *  Set values back to initial state
+ */
 void PovOutput::reset()
 {
     nrNodes    = 0;
@@ -550,18 +598,12 @@ void PovOutput::reset()
 
 /**
  * Saves the <paths> of an Inkscape SVG file as PovRay spline definitions
-*/
-void
-PovOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *uri)
+ */
+void PovOutput::saveDocument(SPDocument *doc, gchar const *uri)
 {
-
-    Inkscape::IO::dump_fopen_call(uri, "L");
-    FILE *f = Inkscape::IO::fopen_utf8name(uri, "w");
-    if (!f)
-        return;
-
     reset();
 
+    //###### SAVE IN POV FORMAT TO BUFFER
     //# Lets do the curves first, to get the stats
     doCurves(doc);
     String curveBuf = outbuf;
@@ -572,7 +614,16 @@ PovOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *
     outbuf.append(curveBuf);
     
     doTail();
-    
+
+
+
+
+    //###### WRITE TO FILE
+    Inkscape::IO::dump_fopen_call(uri, "L");
+    FILE *f = Inkscape::IO::fopen_utf8name(uri, "w");
+    if (!f)
+        return;
+
     for (String::iterator iter = outbuf.begin() ; iter!=outbuf.end(); iter++)
         {
         int ch = *iter;
@@ -592,6 +643,18 @@ PovOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *
 
 
 #include "clear-n_.h"
+
+
+
+/**
+ * API call to save document
+*/
+void
+PovOutput::save(Inkscape::Extension::Output *mod,
+                        SPDocument *doc, gchar const *uri)
+{
+    saveDocument(doc, uri);
+}
 
 
 

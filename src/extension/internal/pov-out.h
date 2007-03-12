@@ -28,52 +28,101 @@ namespace Internal
 
 
 
+/**
+ * Output bezier splines in POVRay format.
+ * 
+ * For information, @see:  
+ * http://www.povray.org 
+ */ 
 class PovOutput : public Inkscape::Extension::Implementation::Implementation
 {
 
+
+/**
+ * Our internal String definition
+ */ 
 typedef Glib::ustring String;
 
 
 public:
 
+    /**
+     * Check whether we can actually output using this module
+     */
 	bool check (Inkscape::Extension::Extension * module);
 
-	void          save  (Inkscape::Extension::Output *mod,
-	                     SPDocument *doc,
-	                     const gchar *uri);
+    /**
+     * API call to perform the output to a file
+     */
+	void save (Inkscape::Extension::Output *mod,
+	           SPDocument *doc, const gchar *uri);
 
-	static void   init  (void);
+    /**
+     * Inkscape runtime startup call.
+     */
+	static void init(void);
 	
+    /**
+     * Reset variables to initial state
+     */
 	void reset();
 	
+private:
+
 	/**
 	 * Format text to our output buffer
 	 */     	
 	void out(char *fmt, ...);
 
+    /**
+     * Output a 2d vector
+     */
     void vec2(double a, double b);
 
+    /**
+     * Output a 3d vector
+     */
     void vec3(double a, double b, double c);
 
+    /**
+     * Output a 4d vector
+     */
     void vec4(double a, double b, double c, double d);
 
+    /**
+     * Output an rgbf color vector
+     */
     void rgbf(double r, double g, double b, double f);
 
+    /**
+     * Output one bezier's start, start-control, 
+     *      end-control, and end nodes
+     */
     void segment(int segNr, double a0, double a1,
                             double b0, double b1,
                             double c0, double c1,
                             double d0, double d1);
 
 
+    /**
+     * Output the file header
+     */
     void doHeader();
 
+    /**
+     * Output the file footer
+     */
     void doTail();
 
+    /**
+     * Output the SVG document's curve data as POV curves
+     */
     void doCurves(SPDocument *doc);
 
-	String outbuf;
-	
-    char fmtbuf[2048];
+    /**
+     * Actual method to save document
+     */
+	void saveDocument(SPDocument *doc, const gchar *uri);
 
 
     /**
@@ -82,28 +131,33 @@ public:
     class PovShapeInfo
     {
     public:
-    PovShapeInfo()
-        {}
-    PovShapeInfo(const PovShapeInfo &other)
-        { assign(other); }
-    PovShapeInfo operator=(const PovShapeInfo &other)
-        { assign(other); return *this; }
-    virtual ~PovShapeInfo()
-        {}
-    String id;
-    String color;
+        PovShapeInfo()
+            {}
+        PovShapeInfo(const PovShapeInfo &other)
+            { assign(other); }
+        PovShapeInfo operator=(const PovShapeInfo &other)
+            { assign(other); return *this; }
+        virtual ~PovShapeInfo()
+            {}
+        String id;
+        String color;
 
     private:
-    void assign(const PovShapeInfo &other)
-        {
-        id    = other.id;
-        color = other.color;
-        }
+        void assign(const PovShapeInfo &other)
+            {
+            id    = other.id;
+            color = other.color;
+            }
     };
 
     //A list for saving information about the shapes
     std::vector<PovShapeInfo> povShapes;
     
+    //For formatted output
+	String outbuf;
+    char fmtbuf[2048];
+
+    //For statistics
     int nrNodes;
     int nrSegments;
     int nrShapes;
