@@ -2016,16 +2016,16 @@ LockAndHideVerb::perform(SPAction *action, void *data, void *pdata)
     
     switch ((long) data) {
         case SP_VERB_UNLOCK_ALL:
-            unlock_all(dt);
+            unlock_all(dt, SP_VERB_UNLOCK_ALL);
             break;
         case SP_VERB_UNLOCK_ALL_IN_ALL_LAYERS:
-            unlock_all_in_all_layers(dt);
+            unlock_all_in_all_layers(dt, SP_VERB_UNLOCK_ALL_IN_ALL_LAYERS);
             break;
         case SP_VERB_UNHIDE_ALL:
-            unhide_all(dt);
+            unhide_all(dt, SP_VERB_UNHIDE_ALL);
             break;
         case SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS:
-            unhide_all_in_all_layers(dt);
+            unhide_all_in_all_layers(dt, SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS);
             break;
         default:
             return;
