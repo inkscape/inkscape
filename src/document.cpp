@@ -261,10 +261,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
 
     /* Quick hack 3 - Set uri attributes */
     if (uri) {
-        /* fixme: Think, what this means for images (Lauris) */
         rroot->setAttribute("sodipodi:docname", uri);
-        if (document->base)
-            rroot->setAttribute("sodipodi:docbase", document->base);
     }
     /* End of quick hack 3 */
 
@@ -548,8 +545,6 @@ void sp_document_set_uri(SPDocument *document, gchar const *uri)
     // changing uri in the document repr must not be not undoable
     bool saved = sp_document_get_undo_sensitive(document);
     sp_document_set_undo_sensitive(document, false);
-    if (document->base)
-        repr->setAttribute("sodipodi:docbase", document->base);
 
     repr->setAttribute("sodipodi:docname", document->name);
     sp_document_set_undo_sensitive(document, saved);
