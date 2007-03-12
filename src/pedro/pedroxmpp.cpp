@@ -1726,6 +1726,13 @@ bool XmppClient::saslMd5Authenticate()
     status("server says:: '%s'", recbuf.c_str());
     elem = parser.parse(recbuf);
     //elem->print();
+    //# Early success?
+    if (elem->findElements("success").size() > 0)
+        {
+        delete elem;
+        return true;
+        }
+    //# Continue for one more SASL cycle
     b64challenge = elem->getTagValue("challenge");
     delete elem;
 
