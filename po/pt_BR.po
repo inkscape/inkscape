@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-14 18:11+0100\n"
-"PO-Revision-Date: 2007-02-01 22:55-0300\n"
+"PO-Revision-Date: 2007-02-05 21:34-0300\n"
 "Last-Translator: Samy Marcelo Nascimento <samynascimento@gmail.com>\n"
 "Language-Team: Português Brasil <inkscape-brasil@listas.softwarelivre.org>\n"
 "MIME-Version: 1.0\n"
@@ -403,12 +403,12 @@ msgstr "<b>Ângulo:</b>"
 #: ../src/dialogs/clonetiler.cpp:1980
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
-msgstr "Rotacionar ladrilhos por este ângulo para cada fileira"
+msgstr "Girar ladrilhos por este ângulo para cada linha"
 
 #: ../src/dialogs/clonetiler.cpp:1988
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
-msgstr "Rotacionar ladrilhos por este ângulo para cada coluna"
+msgstr "Girar ladrilhos por este ângulo para cada coluna"
 
 #: ../src/dialogs/clonetiler.cpp:1995
 msgid "Randomize the rotation angle by this percentage"
@@ -424,31 +424,31 @@ msgstr "Alternar a direção da rotação para cada coluna"
 
 #: ../src/dialogs/clonetiler.cpp:2022
 msgid "_Blur & opacity"
-msgstr "_Borrado e Opacidade"
+msgstr "_Desfoque e Opacidade"
 
 #: ../src/dialogs/clonetiler.cpp:2031
 msgid "<b>Blur:</b>"
-msgstr "<b>Borrado:</b>"
+msgstr "<b>Desfoque:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2038
 msgid "Blur tiles by this percentage for each row"
-msgstr "Aplicar borrado ao ladrilho por esta porcentagem para cada linha"
+msgstr "Aplicar desfoque ao ladrilho por esta porcentagem para cada linha"
 
 #: ../src/dialogs/clonetiler.cpp:2045
 msgid "Blur tiles by this percentage for each column"
-msgstr "Aplicar borrado ao ladrilho por esta porcentagem para cada coluna"
+msgstr "Aplicar desfoque ao ladrilho por esta porcentagem para cada coluna"
 
 #: ../src/dialogs/clonetiler.cpp:2052
 msgid "Randomize the tile blur by this percentage"
-msgstr "Randomizar o borrado do ladrilho por esta porcentagem"
+msgstr "Randomizar o desfoque do ladrilho por esta porcentagem"
 
 #: ../src/dialogs/clonetiler.cpp:2066
 msgid "Alternate the sign of blur change for each row"
-msgstr "Alternar o sinal do borrado para cada linha"
+msgstr "Alternar o sinal do desfoque para cada linha"
 
 #: ../src/dialogs/clonetiler.cpp:2071
 msgid "Alternate the sign of blur change for each column"
-msgstr "Alternar o sinal do borrado para cada coluna"
+msgstr "Alternar o sinal do desfoque para cada coluna"
 
 #: ../src/dialogs/clonetiler.cpp:2080
 msgid "<b>Fade out:</b>"
@@ -1517,7 +1517,7 @@ msgstr "Estilo de traço"
 
 #: ../src/dialogs/object-properties.cpp:196
 msgid "_Blur, %"
-msgstr "_Borrado, %"
+msgstr "_Desfoque, %"
 
 #: ../src/dialogs/object-properties.cpp:229
 msgid "Master _opacity, %"
@@ -1527,11 +1527,11 @@ msgstr "_Opacidade Mestre, %"
 #: ../src/ui/widget/selected-style.cpp:806
 #: ../src/ui/widget/selected-style.cpp:1094
 msgid "Change opacity"
-msgstr "Modificar opacidade"
+msgstr "Alterar opacidade"
 
 #: ../src/dialogs/object-properties.cpp:438
 msgid "Change blur"
-msgstr "Modificar borrado"
+msgstr "Alterar desfoque"
 
 #: ../src/dialogs/rdf.cpp:178
 msgid "CC Attribution"
@@ -3678,7 +3678,7 @@ msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both "
 "handles"
-msgstr "<b>Alça do nó</b>: ângulo %0.2f&#176;, comprimento %s; com <b>Ctrl</b> para observar o ângulo; com <b>Alt</b> para travar o comprimento; com <b>Shift</b> para girar ambas as alças"
+msgstr "<b>Alça do nó</b>: ângulo %0.2f°, comprimento %s; com <b>Ctrl</b> para observar o ângulo; com <b>Alt</b> para travar o comprimento; com <b>Shift</b> para girar ambas as alças"
 
 #: ../src/nodepath.cpp:3643
 msgid "Rotate nodes"
@@ -4595,9 +4595,7 @@ msgstr ""
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
-msgstr ""
-"<b>Rodar</b> a seleção; com <b>Ctrl</b> para agarrar o ângulo; com <b>Shift</"
-"b> para rodar ao redor do canto oposto"
+msgstr "<b>Girar</b> a seleção; com <b>Ctrl</b> para agarrar o ângulo; com <b>Shift</b> para girar ao redor do canto oposto"
 
 #: ../src/seltrans.cpp:641
 msgid "Reset center"
@@ -4615,15 +4613,14 @@ msgstr ""
 #: ../src/seltrans.cpp:1092
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"<b>Enviesamento</b>: %0.2f&#176;; com <b>Ctrl</b> para segurar o ângulo"
+msgstr "<b>Enviesamento</b>: %0.2f°; com <b>Ctrl</b> para segurar o ângulo"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1141
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Rotacionar</b>: %0.2f&#176;; com <b>Ctrl</b> para  pegar ângulo"
+msgstr "<b>Girar</b>: %0.2f°; com <b>Ctrl</b> para agarrar o ângulo"
 
 #: ../src/seltrans.cpp:1185
 #, c-format
@@ -5409,7 +5406,7 @@ msgstr "Sobre o Inkscape"
 
 #: ../src/ui/dialog/aboutbox.cpp:71
 msgid "_Splash"
-msgstr "_Esparramar"
+msgstr "_Splash"
 
 #: ../src/ui/dialog/aboutbox.cpp:73
 msgid "_Authors"
@@ -5442,7 +5439,14 @@ msgstr "about.svg"
 #. one per line in the form of:  name surname (email). Use \n for newline.
 #: ../src/ui/dialog/aboutbox.cpp:265
 msgid "translator-credits"
-msgstr "Tradutores"
+msgstr ""
+"Aurélio A. Heckert\n"
+"Carol Rodart\n"
+"Fábio Sousa\n"
+"Frederico G. Guimarães\n"
+"Samy M. Nascimento\n"
+"Thiago Pimentel\n"
+"Valessio Brito"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:219
 #: ../src/ui/dialog/align-and-distribute.cpp:759
@@ -5786,11 +5790,11 @@ msgstr "Uma grade com linhas verticais e dois grupos de linhas diagonais, cada u
 
 #: ../src/ui/dialog/document-properties.cpp:247
 msgid "Grid _units:"
-msgstr "Unidades da grade:"
+msgstr "_Unidades da grade:"
 
 #: ../src/ui/dialog/document-properties.cpp:248
 msgid "_Origin X:"
-msgstr "X Original:"
+msgstr "X _Original:"
 
 #: ../src/ui/dialog/document-properties.cpp:248
 msgid "X coordinate of grid origin"
@@ -5798,7 +5802,7 @@ msgstr "Coordenada X da origem da grade"
 
 #: ../src/ui/dialog/document-properties.cpp:250
 msgid "O_rigin Y:"
-msgstr "Y Original:"
+msgstr "Y O_riginal:"
 
 #: ../src/ui/dialog/document-properties.cpp:250
 msgid "Y coordinate of grid origin"
@@ -5806,7 +5810,7 @@ msgstr "Coordenada Y da origem da grade"
 
 #: ../src/ui/dialog/document-properties.cpp:252
 msgid "Spacing _X:"
-msgstr "Espaçamento X:"
+msgstr "Espaçamento _X:"
 
 #: ../src/ui/dialog/document-properties.cpp:252
 msgid "Distance between vertical grid lines"
@@ -5814,7 +5818,7 @@ msgstr "Distância vertical entre linhas"
 
 #: ../src/ui/dialog/document-properties.cpp:254
 msgid "Spacing _Y:"
-msgstr "Espaçamento Y:"
+msgstr "Espaçamento _Y:"
 
 #: ../src/ui/dialog/document-properties.cpp:254
 msgid "Distance between horizontal grid lines"
@@ -5838,7 +5842,7 @@ msgstr "Ângulo do eixo Z da grade axonométrica"
 
 #: ../src/ui/dialog/document-properties.cpp:260
 msgid "Grid line _color:"
-msgstr "Cor da linha de _grade:"
+msgstr "_Cor da linha de grade:"
 
 #: ../src/ui/dialog/document-properties.cpp:260
 msgid "Grid line color"
@@ -5850,11 +5854,11 @@ msgstr "Cor das linhas de grade"
 
 #: ../src/ui/dialog/document-properties.cpp:262
 msgid "Ma_jor grid line color:"
-msgstr "Cor da linha de grade maior:"
+msgstr "Cor da linha de grade ma_ior:"
 
 #: ../src/ui/dialog/document-properties.cpp:262
 msgid "Major grid line color"
-msgstr "Cor da linha de grade principal"
+msgstr "Cor da linha de grade maior"
 
 #: ../src/ui/dialog/document-properties.cpp:263
 msgid "Color of the major (highlighted) grid lines"
@@ -5870,7 +5874,7 @@ msgstr "linhas"
 
 #: ../src/ui/dialog/document-properties.cpp:266
 msgid "Show _guides"
-msgstr "Mostrar guias"
+msgstr "Mostrar _guias"
 
 #: ../src/ui/dialog/document-properties.cpp:266
 msgid "Show or hide guides"
@@ -5890,7 +5894,7 @@ msgstr "Cor das linhas guias"
 
 #: ../src/ui/dialog/document-properties.cpp:269
 msgid "_Highlight color:"
-msgstr "Cor de destaque:"
+msgstr "Cor de _destaque:"
 
 #: ../src/ui/dialog/document-properties.cpp:269
 msgid "Highlighted guideline color"
@@ -5910,7 +5914,7 @@ msgstr "<b>Guias</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:308
 msgid "_Snap bounding boxes to objects"
-msgstr "Ajustar caixas limitadoras às guias"
+msgstr "_Ajustar caixas limitadoras às guias"
 
 #: ../src/ui/dialog/document-properties.cpp:309
 msgid "Snap the edges of the object bounding boxes to other objects"
@@ -5918,7 +5922,7 @@ msgstr "Ajustar caixas limitadoras a outros objetos"
 
 #: ../src/ui/dialog/document-properties.cpp:311
 msgid "Snap nodes _to objects"
-msgstr "Ajustar nós _aos objetos"
+msgstr "Ajustar nós a_os objetos"
 
 #: ../src/ui/dialog/document-properties.cpp:312
 msgid "Snap the nodes of objects to other objects"
@@ -5926,7 +5930,7 @@ msgstr "Ajustar nós a outros objetos"
 
 #: ../src/ui/dialog/document-properties.cpp:314
 msgid "Snap to object _paths"
-msgstr "Ajustar aos caminhos do objeto"
+msgstr "Ajustar aos _caminhos do objeto"
 
 #: ../src/ui/dialog/document-properties.cpp:315
 msgid "Snap to other object paths"
@@ -5934,7 +5938,7 @@ msgstr "Ajustar aos caminhos de outros objetos"
 
 #: ../src/ui/dialog/document-properties.cpp:317
 msgid "Snap to object _nodes"
-msgstr "Ajustar aos nós do objeto"
+msgstr "Ajustar aos _nós do objeto"
 
 #: ../src/ui/dialog/document-properties.cpp:318
 msgid "Snap to other object nodes"
@@ -5942,7 +5946,7 @@ msgstr "Ajustar aos nós de outros objetos"
 
 #: ../src/ui/dialog/document-properties.cpp:320
 msgid "Snap s_ensitivity:"
-msgstr "Sensibilidade do ajuste:"
+msgstr "S_ensibilidade do ajuste:"
 
 #: ../src/ui/dialog/document-properties.cpp:320
 #: ../src/ui/dialog/document-properties.cpp:330
@@ -5961,7 +5965,7 @@ msgstr "Objetos se ajustam ao objeto mais próximo quando movidos"
 
 #: ../src/ui/dialog/document-properties.cpp:324
 msgid "Snap _bounding boxes to grid"
-msgstr "Ajustar caixas limitadoras à grade"
+msgstr "Ajustar caixas _limitadoras à grade"
 
 #: ../src/ui/dialog/document-properties.cpp:325
 #: ../src/ui/dialog/document-properties.cpp:335
@@ -5970,16 +5974,16 @@ msgstr "Ajustar aos limites da caixa limitadora do objeto"
 
 #: ../src/ui/dialog/document-properties.cpp:327
 msgid "Snap nodes to _grid"
-msgstr "Ajustar nós à grade"
+msgstr "Ajustar nós à _grade"
 
 #: ../src/ui/dialog/document-properties.cpp:328
 #: ../src/ui/dialog/document-properties.cpp:338
 msgid "Snap path nodes, text baselines, ellipse centers, etc."
-msgstr "Ajustar a nós de caminhos, base de textos, centros de elipses, etc."
+msgstr "Ajustar a nós de caminhos, linhas base de textos, centros de elipses, etc."
 
 #: ../src/ui/dialog/document-properties.cpp:330
 msgid "Snap sens_itivity:"
-msgstr "Sensibilidade do ajuste:"
+msgstr "Sensib_ilidade do ajuste:"
 
 #: ../src/ui/dialog/document-properties.cpp:331
 msgid "Controls max. snapping distance from grid"
@@ -5993,15 +5997,15 @@ msgstr "Objetos se ajustam à linha de grade mais próxima quando movidos"
 
 #: ../src/ui/dialog/document-properties.cpp:334
 msgid "Snap bounding boxes to g_uides"
-msgstr "Ajustar caixas limitadoras às guias"
+msgstr "Ajustar caixas limitadoras às g_uias"
 
 #: ../src/ui/dialog/document-properties.cpp:337
 msgid "Snap p_oints to guides"
-msgstr "Ajustar pontos às guias"
+msgstr "Ajustar p_ontos às guias"
 
 #: ../src/ui/dialog/document-properties.cpp:340
 msgid "Snap sensiti_vity:"
-msgstr "Sensibilidade do ajuste:"
+msgstr "Sensi_bilidade do ajuste:"
 
 #: ../src/ui/dialog/document-properties.cpp:341
 msgid "Controls max. snapping distance from guides"
@@ -6784,7 +6788,7 @@ msgstr "Pior qualidade (mais rápido)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:511
 msgid "Gaussian blur quality for display:"
-msgstr "Qualidade do desfoque Gaussiano para exibição:"
+msgstr "Qualidade do desfoque gaussiano para exibição:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:513
 msgid ""
@@ -7222,7 +7226,7 @@ msgstr "Suavizar"
 
 #: ../src/ui/dialog/tracedialog.cpp:525
 msgid "Apply Gaussian blur to the bitmap before tracing"
-msgstr "Aplicar filtro blur gaussiano ao bitmap antes de traçá-lo"
+msgstr "Aplicar desfoque gaussiano ao bitmap antes de traçá-lo"
 
 #. TRANSLATORS: "Stack" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:528
@@ -9017,7 +9021,7 @@ msgstr "Converte os objetos selecionados em caminhos"
 
 #: ../src/verbs.cpp:2176
 msgid "_Flow into Frame"
-msgstr "_Formatar texto na moldura"
+msgstr "_Formatar Texto na Moldura"
 
 #: ../src/verbs.cpp:2177
 msgid ""
@@ -9432,7 +9436,7 @@ msgstr "Configurações do In_kscape"
 
 #: ../src/verbs.cpp:2303
 msgid "Edit global Inkscape preferences"
-msgstr "Editar preferencias globais do Inkscape"
+msgstr "Editar configurações globais do Inkscape"
 
 #: ../src/verbs.cpp:2304
 msgid "_Document Properties..."
@@ -9481,7 +9485,7 @@ msgstr "_Alinhar e Distribuir..."
 
 #: ../src/verbs.cpp:2316
 msgid "Align and distribute objects"
-msgstr "_Alinhar e distribuir objetos"
+msgstr "Alinhar e distribuir objetos"
 
 #: ../src/verbs.cpp:2317
 msgid "Undo _History..."
@@ -9545,11 +9549,10 @@ msgid "Create Tiled Clones..."
 msgstr "Ladrilhar clones..."
 
 #: ../src/verbs.cpp:2332
-#, fuzzy
 msgid ""
 "Create multiple clones of selected object, arranging them into a pattern or "
 "scattering"
-msgstr "Criar um clone dos objetos selecionados (uma cópia ligada ao original)"
+msgstr "Criar múltiplos clones do objeto selecionado, arrumando-os em um padrão definido"
 
 #: ../src/verbs.cpp:2333
 msgid "_Object Properties..."
@@ -9565,16 +9568,15 @@ msgstr "_Mensagens Instantâneas..."
 
 #: ../src/verbs.cpp:2337
 msgid "Jabber Instant Messaging Client"
-msgstr "Jabber Cliente de Mensagem Instantânea"
+msgstr "Cliente Jabber de Mensagem Instantânea"
 
 #: ../src/verbs.cpp:2339
 msgid "_Input Devices..."
 msgstr "D_ispositivos de Entrada..."
 
 #: ../src/verbs.cpp:2340
-#, fuzzy
 msgid "Configure extended input devices, such as a graphics tablet"
-msgstr "Configurar dispositivos de entrada extendidos"
+msgstr "Configurar dispositivos de entrada complementares, como uma mesa digitalizadora"
 
 #: ../src/verbs.cpp:2341
 msgid "_Extensions..."
@@ -10017,13 +10019,10 @@ msgid "No patterns in document"
 msgstr "Nenhum padrão no documento"
 
 #: ../src/widgets/paint-selector.cpp:859
-#, fuzzy
 msgid ""
 "Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new "
 "pattern from selection."
-msgstr ""
-"Use <b>Editar &gt; Objeto(s) para Textura</b> para criar uma nova textura a "
-"partir da seleção."
+msgstr "Use <b>Objeto &gt; Padrão de preenchimento &gt; Objeto para Padrão</b> para criar um novo padrão a partir da seleção."
 
 #: ../src/widgets/select-toolbar.cpp:227
 msgid "Transform by toolbar"
