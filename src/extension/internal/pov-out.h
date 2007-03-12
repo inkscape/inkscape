@@ -19,14 +19,22 @@
 #include <glib.h>
 #include "extension/implementation/implementation.h"
 
-namespace Inkscape {
-namespace Extension {
-namespace Internal {
+namespace Inkscape
+{
+namespace Extension
+{
+namespace Internal
+{
+
+
 
 class PovOutput : public Inkscape::Extension::Implementation::Implementation
 {
 
-    public:
+typedef Glib::ustring String;
+
+
+public:
 
 	bool check (Inkscape::Extension::Extension * module);
 
@@ -36,15 +44,78 @@ class PovOutput : public Inkscape::Extension::Implementation::Implementation
 
 	static void   init  (void);
 	
+	void reset();
+	
+	/**
+	 * Format text to our output buffer
+	 */     	
+	void out(char *fmt, ...);
+
+    void vec2(double a, double b);
+
+    void vec3(double a, double b, double c);
+
+    void vec4(double a, double b, double c, double d);
+
+    void rgbf(double r, double g, double b, double f);
+
+    void segment(int segNr, double a0, double a1,
+                            double b0, double b1,
+                            double c0, double c1,
+                            double d0, double d1);
+
+
+    void doHeader();
+
+    void doTail();
+
+    void doCurves(SPDocument *doc);
+
+	String outbuf;
+	
+    char fmtbuf[2048];
+
+
+    /**
+     * used for saving information about shapes
+     */
+    class PovShapeInfo
+    {
+    public:
+    PovShapeInfo()
+        {}
+    PovShapeInfo(const PovShapeInfo &other)
+        { assign(other); }
+    PovShapeInfo operator=(const PovShapeInfo &other)
+        { assign(other); return *this; }
+    virtual ~PovShapeInfo()
+        {}
+    String id;
+    String color;
+
+    private:
+    void assign(const PovShapeInfo &other)
+        {
+        id    = other.id;
+        color = other.color;
+        }
+    };
+
+    //A list for saving information about the shapes
+    std::vector<PovShapeInfo> povShapes;
+    
+    int nrNodes;
+    int nrSegments;
+    int nrShapes;
 
 };
 
 
 
 
-}  //namespace Internal
-}  //namespace Extension
-}  //namespace Inkscape
+}  // namespace Internal
+}  // namespace Extension
+}  // namespace Inkscape
 
 
 
