@@ -100,6 +100,12 @@ void fit_canvas_to_selection(SPDesktop *desktop);
 void fit_canvas_to_drawing(SPDocument *doc);
 void fit_canvas_to_selection_or_drawing(SPDesktop *desktop);
 
+void unlock_all(SPDesktop *dt);
+void unlock_all_in_all_layers(SPDesktop *dt);
+void unhide_all(SPDesktop *dt);
+void unhide_all_in_all_layers(SPDesktop *dt);
+
+
 /* selection cycling */
 
 typedef enum

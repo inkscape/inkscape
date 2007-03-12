@@ -1966,8 +1966,74 @@ FitCanvasVerb::perform(SPAction *action, void *data, void *pdata)
 /* *********** End Fit Canvas ********** */
 
 
+/* *********** Lock'N'Hide ********** */
 
+/** \brief A class to represent the object unlocking and unhiding verbs */
+class LockAndHideVerb : public Verb {
+private:
+    static void perform(SPAction *action, void *mydata, void *otherdata);
+    static SPActionEventVector vector;
+protected:
+    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+public:
+    /** \brief Use the Verb initializer with the same parameters. */
+    LockAndHideVerb(unsigned int const code,
+                   gchar const *id,
+                   gchar const *name,
+                   gchar const *tip,
+                   gchar const *image) :
+        Verb(code, id, name, tip, image)
+    {
+        set_default_sensitive(false);
+    }
+}; /* LockAndHideVerb class */
 
+/**
+ * The vector to attach in the lock'n'hide verb.
+ */
+SPActionEventVector LockAndHideVerb::vector =
+            {{NULL},LockAndHideVerb::perform, NULL, NULL, NULL, NULL};
+
+/** \brief  Create an action for a \c LockAndHideVerb
+    \param  view  Which view the action should be created for
+    \return The built action.
+
+    Calls \c make_action_helper with the \c vector.
+*/
+SPAction *
+LockAndHideVerb::make_action(Inkscape::UI::View::View *view)
+{
+    SPAction *action = make_action_helper(view, &vector);
+    return action;
+}
+
+/** \brief  Decode the verb code and take appropriate action */
+void
+LockAndHideVerb::perform(SPAction *action, void *data, void *pdata)
+{
+    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
+    if (!dt) return;
+    
+    switch ((long) data) {
+        case SP_VERB_UNLOCK_ALL:
+            unlock_all(dt);
+            break;
+        case SP_VERB_UNLOCK_ALL_IN_ALL_LAYERS:
+            unlock_all_in_all_layers(dt);
+            break;
+        case SP_VERB_UNHIDE_ALL:
+            unhide_all(dt);
+            break;
+        case SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS:
+            unhide_all_in_all_layers(dt);
+            break;
+        default:
+            return;
+    }
+
+    return;
+}
+/* *********** End Lock'N'Hide ********** */
 
 
 /* these must be in the same order as the SP_VERB_* enum in "verbs.h" */
@@ -2403,6 +2469,15 @@ Verb *Verb::_base_verbs[] = {
                        N_("Fit the page to the drawing"), NULL),
     new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING, "FitCanvasToSelectionOrDrawing", N_("Fit Page to Selection or Drawing"),
                        N_("Fit the page to the current selection or the drawing if there is no selection"), NULL),
+    /* LockAndHide */
+    new LockAndHideVerb(SP_VERB_UNLOCK_ALL, "UnlockAll", N_("Unlock All"),
+                       N_("Unlock all objects in the current layer"), NULL),
+    new LockAndHideVerb(SP_VERB_UNLOCK_ALL_IN_ALL_LAYERS, "UnlockAllInAllLayers", N_("Unlock All in All Layers"),
+                       N_("Unlock all objects in all layers"), NULL),
+    new LockAndHideVerb(SP_VERB_UNHIDE_ALL, "UnhideAll", N_("Unhide All"),
+                       N_("Unhide all objects in the current layer"), NULL),
+    new LockAndHideVerb(SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS, "UnhideAllInAllLayers", N_("Unhide All in All Layers"),
+                       N_("Unhide all objects in all layers"), NULL),
     /* Footer */
     new Verb(SP_VERB_LAST, " '\"invalid id", NULL, NULL, NULL)
 };

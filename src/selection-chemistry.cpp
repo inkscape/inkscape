@@ -2870,6 +2870,62 @@ void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
                      _("Fit page to selection"));
 };
 
+static void itemtree_map(void (*f)(SPItem *, SPDesktop *), SPObject *root, SPDesktop *desktop) {
+    // don't operate on layers
+    if (SP_IS_ITEM(root) && !desktop->isLayer(SP_ITEM(root))) {
+        f(SP_ITEM(root), desktop);
+    }
+    for ( SPObject::SiblingIterator iter = root->firstChild() ; iter ; ++iter ) {
+        //don't recurse into locked layers
+        if (!(desktop->isLayer(SP_ITEM(&*iter)) && SP_ITEM(&*iter)->isLocked())) {
+            itemtree_map(f, iter, desktop);
+        }
+    }
+}
+
+static void unlock(SPItem *item, SPDesktop *desktop) {
+    if (item->isLocked()) {
+        item->setLocked(FALSE);
+    }
+}
+
+static void unhide(SPItem *item, SPDesktop *desktop) {
+    if (desktop->itemIsHidden(item)) {
+        item->setExplicitlyHidden(FALSE);
+    }
+}
+
+static void process_all(void (*f)(SPItem *, SPDesktop *), SPDesktop *dt, bool layer_only, char *label) {
+    if (!dt) return;
+        
+    SPObject *root;
+    if (layer_only) {
+        root = dt->currentLayer();
+    } else {
+        root = dt->currentRoot();
+    }
+    
+    itemtree_map(f, root, dt);
+    
+    sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, label);
+}
+
+void unlock_all(SPDesktop *dt) {
+    process_all(&unlock, dt, true, _("Unlock all objects in the current layer"));
+}
+
+void unlock_all_in_all_layers(SPDesktop *dt) {
+    process_all(&unlock, dt, false, _("Unlock all objects in all layers"));
+}
+
+void unhide_all(SPDesktop *dt) {
+    process_all(&unhide, dt, true, _("Unhide all objects in the current layer"));
+}
+
+void unhide_all_in_all_layers(SPDesktop *dt) {
+    process_all(&unhide, dt, false, _("Unhide all objects in all layers"));
+}
+
 /*
   Local Variables:
   mode:c++
