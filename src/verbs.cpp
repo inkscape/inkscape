@@ -2013,19 +2013,25 @@ LockAndHideVerb::perform(SPAction *action, void *data, void *pdata)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt) return;
+    SPDocument *doc = sp_desktop_document(dt);
+    if (!doc) return;
     
     switch ((long) data) {
         case SP_VERB_UNLOCK_ALL:
-            unlock_all(dt, SP_VERB_UNLOCK_ALL);
+            unlock_all(dt);
+            sp_document_done(doc, SP_VERB_UNLOCK_ALL, _("Unlock all objects in the current layer"));
             break;
         case SP_VERB_UNLOCK_ALL_IN_ALL_LAYERS:
-            unlock_all_in_all_layers(dt, SP_VERB_UNLOCK_ALL_IN_ALL_LAYERS);
+            unlock_all_in_all_layers(dt);
+            sp_document_done(doc, SP_VERB_UNLOCK_ALL_IN_ALL_LAYERS, _("Unlock all objects in all layers"));
             break;
         case SP_VERB_UNHIDE_ALL:
-            unhide_all(dt, SP_VERB_UNHIDE_ALL);
+            unhide_all(dt);
+            sp_document_done(doc, SP_VERB_UNHIDE_ALL, _("Unhide all objects in the current layer"));
             break;
         case SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS:
-            unhide_all_in_all_layers(dt, SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS);
+            unhide_all_in_all_layers(dt);
+            sp_document_done(doc, SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS, _("Unhide all objects in all layers"));
             break;
         default:
             return;

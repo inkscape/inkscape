@@ -2895,10 +2895,8 @@ static void unhide(SPItem *item, SPDesktop *desktop) {
     }
 }
 
-static void process_all(void (*f)(SPItem *, SPDesktop *), SPDesktop *dt, unsigned int id, bool layer_only, char *label) {
+static void process_all(void (*f)(SPItem *, SPDesktop *), SPDesktop *dt, bool layer_only) {
     if (!dt) return;
-    SPDocument *doc = sp_desktop_document(dt);
-    if (!doc) return;
         
     SPObject *root;
     if (layer_only) {
@@ -2908,24 +2906,22 @@ static void process_all(void (*f)(SPItem *, SPDesktop *), SPDesktop *dt, unsigne
     }
     
     itemtree_map(f, root, dt);
-    
-    sp_document_done(doc, id, label);
 }
 
-void unlock_all(SPDesktop *dt, unsigned int id) {
-    process_all(&unlock, dt, id, true, _("Unlock all objects in the current layer"));
+void unlock_all(SPDesktop *dt) {
+    process_all(&unlock, dt, true);
 }
 
-void unlock_all_in_all_layers(SPDesktop *dt, unsigned int id) {
-    process_all(&unlock, dt, id, false, _("Unlock all objects in all layers"));
+void unlock_all_in_all_layers(SPDesktop *dt) {
+    process_all(&unlock, dt, false);
 }
 
-void unhide_all(SPDesktop *dt, unsigned int id) {
-    process_all(&unhide, dt, id, true, _("Unhide all objects in the current layer"));
+void unhide_all(SPDesktop *dt) {
+    process_all(&unhide, dt, true);
 }
 
-void unhide_all_in_all_layers(SPDesktop *dt, unsigned int id) {
-    process_all(&unhide, dt, id, false, _("Unhide all objects in all layers"));
+void unhide_all_in_all_layers(SPDesktop *dt) {
+    process_all(&unhide, dt, false);
 }
 
 /*
