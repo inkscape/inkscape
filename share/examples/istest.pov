@@ -5,9 +5,15 @@
 ## Authors:
 ##   Bob Jamison
 ##
-## Copyright (C) 2004 The Inkscape Organization
+## Copyright (C) 2004-2007 The Inkscape Organization
 ##
 ## Released under GNU GPL, read the file 'COPYING' for more information
+##
+###########################################################################   
+##
+## Notes:
+##
+## 070312: Tested on PovRay 3.7.0 beta
 ##
 ###########################################################################
 ##
@@ -32,6 +38,11 @@
 ##  povray +X +V +A +W320 +H320 +Iistest.pov +FN
 ##
 ##  6)  Adjust the values to suit your needs and desires.  Have fun.
+##
+##
+##  Remember that this is not the intended use of Inkscape's POVRay
+##  output, but is merely a demo.  The main purpose of POVRay output
+##  is to supply curves and other data to your own POVRay projects.
 ##
 #########################################################################*/
 
