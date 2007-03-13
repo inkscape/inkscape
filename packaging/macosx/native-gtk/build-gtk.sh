@@ -50,6 +50,19 @@ COMMON_OPTIONS="--prefix=$PREFIX --disable-static --enable-shared \
 
 #export MAKEFLAGS=-j2
 
+if [ "x$PANTHER_BUILD" = "xYes" ]; then
+    # XXX: Check the machine is PPC
+    #      or rework to have things like pkg-config built natively.
+
+    # Overwrite some build settings.
+    export SDK="/Developer/SDKs/MacOSX10.3.9.sdk"
+    export MACOSX_DEPLOYMENT_TARGET=10.3
+    export CFLAGS="-isysroot ${SDK} -arch ppc"
+    export CXXFLAGS="-isysroot ${SDK} -arch ppc"
+
+    export STABLE_BUILD=Yes
+fi
+
 if [ "x$UNIVERSAL_BUILD" = "xYes" ]; then
     COMMON_OPTIONS="$COMMON_OPTIONS --disable-dependency-tracking"
 
@@ -155,17 +168,6 @@ elif [ "x$STABLE_BUILD" = "xYes" ]; then
     CONFIGURE_popt="$COMMON_OPTIONS"
 fi
 
-if [ "x$PANTHER_BUILD" = "xYes" ]; then
-    # XXX: Check the machine is PPC
-    #      or rework to have things like pkg-config built natively.
-
-    # Overwrite some build settings.
-    export SDK="/Developer/SDKs/MacOSX10.3.9.sdk"
-    export MACOSX_DEPLOYMENT_TARGET=10.3
-    export CFLAGS="-isysroot ${SDK} -arch ppc"
-    export CXXFLAGS="-isysroot ${SDK} -arch ppc"
-fi
-
 
 # Support install-check from jhbuild to speed up compilation
 if [ -x $PREFIX/bin/install-check ]; then
@@ -191,7 +193,7 @@ if [ $# -eq 0 -o "x`echo "$*" | grep shell`" = xshell ]; then
     exit 0
 fi
 
-CORE_MODULES="cairo gnome-common glib pango atk gtk+"
+CORE_MODULES="glitz cairo gnome-common glib pango atk gtk+"
 EXTRA_MODULES="libxml2 libxslt loudmouth libglade gossip gtk-engines"
 PYGTK_MODULES=" pycairo pygobject pygtk"
 INKSCAPE_MODULES="$CORE_MODULES libxml2 libxslt gc lcms libsig++ doxygen glibmm cairomm gtkmm popt inkscape"
@@ -531,7 +533,7 @@ function process_modules()
         tarball_get_and_build ftp://ftp.gtk.org/pub/glib/2.12/glib-2.12.9.tar.bz2 || exit 1
         tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/pango/1.14/pango-1.14.5.tar.bz2 || exit 1
         tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/atk/1.12/atk-1.12.4.tar.bz2 || exit 1
-        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/gtk+/2.10/gtk+-2.10.9.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/gtk+/2.10/gtk+-2.10.10.tar.bz2 || exit 1
         tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libxml2/2.6/libxml2-2.6.26.tar.bz2 || exit 1
         tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libsigc++/2.0/libsigc++-2.0.17.tar.bz2 || exit 1
         tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/glibmm/2.12/glibmm-2.12.4.tar.bz2 || exit 1
@@ -600,7 +602,7 @@ if (echo "$*" | grep bootstrap) >/dev/null; then
     
     echo "Building bootstrap packages."
  
-    MODULES="pkg-config libtool autoconf automake libpng till jpeg-6b gettext \
+    MODULES="pkg-config libtool autoconf automake libpng tiff jpeg-6b gettext \
              expat fontconfig docbook-files \
 	     "
 	     # freetype
