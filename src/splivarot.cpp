@@ -442,10 +442,10 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
     // adjust style properties that depend on a possible transform in the source object in order
     // to get a correct style attribute for the new path
     SPItem* item_source = SP_ITEM(source);
-    NR::Matrix i2d = sp_item_i2d_affine(item_source);
-    sp_item_adjust_stroke(item_source, i2d.expansion());
-    sp_item_adjust_pattern(item_source, i2d);
-    sp_item_adjust_gradient(item_source, i2d);
+    NR::Matrix i2root = sp_item_i2root_affine(item_source);
+    sp_item_adjust_stroke(item_source, i2root.expansion());
+    sp_item_adjust_pattern(item_source, i2root);
+    sp_item_adjust_gradient(item_source, i2root);
 
     Inkscape::XML::Node *repr_source = SP_OBJECT_REPR(source);
 
