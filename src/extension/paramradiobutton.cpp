@@ -77,10 +77,16 @@ ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, c
                 const char * contents = sp_repr_children(child_repr)->content();
                 if (contents != NULL)
                      newguitext = new Glib::ustring(contents);
+                else
+                    continue;  
+                    
                 const char * val = child_repr->attribute("value");
                 if (val != NULL)
                     newvalue = new Glib::ustring(val);
-                if ( (newguitext) && (newvalue) ) {
+                else
+                    newvalue = new Glib::ustring(*newguitext);
+                            
+                if ( (newguitext) && (newvalue) ) {   // logical error if this is not true here
                     choices = g_slist_append( choices, new optionentry(newvalue, newguitext) );
                 }
             }
@@ -91,10 +97,10 @@ ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, c
     // Initialize _value with the default value from xml
     // for simplicity : default to the contents of the first xml-child
     const char * defaultval = NULL;
-    if (sp_repr_children(sp_repr_children(xml)) != NULL)
-        defaultval = sp_repr_children(xml)->attribute("value");
+    if (choices)
+        defaultval = ((optionentry*) choices->data)->value->c_str();
 
-        gchar * pref_name = this->pref_name();
+    gchar * pref_name = this->pref_name();
     const gchar * paramval = prefs_get_string_attribute(PREF_DIR, pref_name);
     g_free(pref_name);
 
