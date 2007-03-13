@@ -37,9 +37,10 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.6.6, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.6.7, 2007 Bob Jamison"
 
 #include <stdio.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <stdarg.h>
 #include <sys/stat.h>
