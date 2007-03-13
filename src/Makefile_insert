@@ -75,7 +75,6 @@ libinkpre_a_SOURCES =	\
 	fontsize-expansion.cpp fontsize-expansion.h	\
 	forward.h	\
 	geom.cpp geom.h	\
-	gnuc-attribute.h	\
 	gradient-context.cpp gradient-context.h \
 	gradient-drag.cpp gradient-drag.h \
 	help.cpp help.h	\
@@ -92,7 +91,6 @@ libinkpre_a_SOURCES =	\
 	layer-manager.cpp layer-manager.h	\
 	macros.h	\
 	main-cmdlineact.cpp main-cmdlineact.h \
-	marker-status.cpp marker-status.h	\
 	media.cpp media.h	\
 	message-context.cpp message-context.h \
 	message-stack.cpp message-stack.h \

@@ -46,7 +46,6 @@
 #include "display/canvas-bpath.h"
 #include "sp-item.h"
 #include "sp-item-group.h"
-#include "marker-status.h"
 #include "style.h"
 #include "marker.h"
 #include "sp-linear-gradient.h"
