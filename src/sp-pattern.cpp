@@ -538,6 +538,7 @@ pattern_getroot (SPPattern *pat)
 
 
 // Access functions that look up fields up the chain of referenced patterns and return the first one which is set
+// FIXME: all of them must use chase_hrefs the same as in SPGradient, to avoid lockup on circular refs
 
 guint pattern_patternUnits (SPPattern *pat)
 {
