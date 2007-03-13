@@ -15,7 +15,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006, 2007 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -1650,7 +1650,13 @@ bool OdfOutput::processStyle(Writer &outs, SPItem *item,
 bool OdfOutput::processGradient(Writer &outs, SPItem *item,
                                 const Glib::ustring &id, NR::Matrix &tf)
 {
+    if (!item)
+        return false;
+
     SPStyle *style = item->style;
+
+    if (!style)
+        return false;
 
     //## Gradient.  Look in writeStyle() below to see what info
     //   we need to read into GradientInfo.
