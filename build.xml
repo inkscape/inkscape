@@ -70,7 +70,7 @@
     <copy file="${src}/helper/sp-marshal.cpp.mingw"
           tofile="${src}/helper/sp-marshal.cpp"/>
     <makefile file="inkscape_version.h">
-    #define INKSCAPE_VERSION "${version}+devel"
+        #define INKSCAPE_VERSION "${version}+devel"
     </makefile>
     <makefile file="config.h">
         #ifndef _CONFIG_H_
@@ -156,77 +156,77 @@
     <!-- Compile from source to build -->
     <cc cc="${arch}gcc" cxx="${arch}g++"
              destdir="${build}/obj">
-	    <fileset dir="${src}">
+        <fileset dir="${src}">
             <!-- THINGS TO EXCLUDE -->
-	        <exclude name="ast/.*"/>
-	        <exclude name="bonobo/.*"/>
-	        <exclude name="deptool.cpp"/>
-	        <exclude name="test-all.cpp"/>
-	        <exclude name="dialogs/filedialog-win32.cpp"/>
-	        <exclude name="display/testnr.cpp"/>
-	        <exclude name="display/bezier-utils-test.cpp"/>
-	        <exclude name="dom/jsdombind.cpp"/>
-	        <exclude name="dom/work/.*"/>
-	        <exclude name="dom/odf/SvgOdg.cpp"/>
-	        <exclude name="extension/api.cpp"/>
-	        <exclude name="extension/dxf2svg/.*"/>
-	        <exclude name="extension/internal/gnome.cpp"/>
-	        <exclude name="extension/script/bindtest.cpp"/>
-	        <exclude name="extension/script/cpptest.cpp"/>
-	        <exclude name="extension/plugin/.*"/>
-	        <exclude name="extract-uri-test.cpp"/>
-	        <exclude name="helper/units-test.cpp"/>
-	        <!-- exclude name="inkview.cpp"/-->
-	        <exclude name="libnr/test-nr.cpp"/>
-	        <exclude name="libnr/test-nr-main.cpp"/>
-	        <exclude name="libnr/testnr.cpp"/>
-	        <exclude name="libnr/in-svg-plane-test.cpp"/>
-	        <exclude name="libnr/nr-compose-reference.cpp"/>
-	        <exclude name="libnr/nr-compose-test.cpp"/>
-	        <exclude name="libnr/nr-matrix-test.cpp"/>
-	        <exclude name="libnr/nr-point-fns-test.cpp"/>
-	        <exclude name="libnr/nr-rotate-fns-test.cpp"/>
-	        <exclude name="libnr/nr-rotate-test.cpp"/>
-	        <exclude name="libnr/nr-scale-test.cpp"/>
-	        <exclude name="libnr/nr-translate-test.cpp"/>
-	        <exclude name="libnr/nr-types-test.cpp"/>
-	        <exclude name="livarot/Path-test.cpp"/>
-	        <exclude name="mod360-test.cpp"/>
-	        <exclude name="trace/potrace/potest.cpp"/>
-	        <exclude name="round-test.cpp"/>
-	        <exclude name="sp-gradient-test.cpp"/>
-	        <exclude name="svg/ftos.cpp"/>
-	        <exclude name="svg/test-svg.cpp"/>
-	        <exclude name="svg/test-svg-main.cpp"/>
-	        <exclude name="utest/.*"/>
-	        <exclude name="widgets/test-widgets.cpp"/>
-	        <exclude name="xml/quote-test.cpp"/>
-	        <exclude name="xml/repr-action-test.cpp"/>
-	        <exclude name="xml/test-xml.cpp"/>
-	        <exclude name="xml/test-xml-main.cpp"/>
-	        <exclude name="io/streamtest.cpp"/>
+            <exclude name="ast/.*"/>
+            <exclude name="bonobo/.*"/>
+            <exclude name="deptool.cpp"/>
+            <exclude name="test-all.cpp"/>
+            <exclude name="dialogs/filedialog-win32.cpp"/>
+            <exclude name="display/testnr.cpp"/>
+            <exclude name="display/bezier-utils-test.cpp"/>
+            <exclude name="dom/jsdombind.cpp"/>
+            <exclude name="dom/work/.*"/>
+            <exclude name="dom/odf/SvgOdg.cpp"/>
+            <exclude name="extension/api.cpp"/>
+            <exclude name="extension/dxf2svg/.*"/>
+            <exclude name="extension/internal/gnome.cpp"/>
+            <exclude name="extension/script/bindtest.cpp"/>
+            <exclude name="extension/script/cpptest.cpp"/>
+            <exclude name="extension/plugin/.*"/>
+            <exclude name="extract-uri-test.cpp"/>
+            <exclude name="helper/units-test.cpp"/>
+            <!-- exclude name="inkview.cpp"/-->
+            <exclude name="libnr/test-nr.cpp"/>
+            <exclude name="libnr/test-nr-main.cpp"/>
+            <exclude name="libnr/testnr.cpp"/>
+            <exclude name="libnr/in-svg-plane-test.cpp"/>
+            <exclude name="libnr/nr-compose-reference.cpp"/>
+            <exclude name="libnr/nr-compose-test.cpp"/>
+            <exclude name="libnr/nr-matrix-test.cpp"/>
+            <exclude name="libnr/nr-point-fns-test.cpp"/>
+            <exclude name="libnr/nr-rotate-fns-test.cpp"/>
+            <exclude name="libnr/nr-rotate-test.cpp"/>
+            <exclude name="libnr/nr-scale-test.cpp"/>
+            <exclude name="libnr/nr-translate-test.cpp"/>
+            <exclude name="libnr/nr-types-test.cpp"/>
+            <exclude name="livarot/Path-test.cpp"/>
+            <exclude name="mod360-test.cpp"/>
+            <exclude name="trace/potrace/potest.cpp"/>
+            <exclude name="round-test.cpp"/>
+            <exclude name="sp-gradient-test.cpp"/>
+            <exclude name="svg/ftos.cpp"/>
+            <exclude name="svg/test-svg.cpp"/>
+            <exclude name="svg/test-svg-main.cpp"/>
+            <exclude name="utest/.*"/>
+            <exclude name="widgets/test-widgets.cpp"/>
+            <exclude name="xml/quote-test.cpp"/>
+            <exclude name="xml/repr-action-test.cpp"/>
+            <exclude name="xml/test-xml.cpp"/>
+            <exclude name="xml/test-xml-main.cpp"/>
+            <exclude name="io/streamtest.cpp"/>
             <!--JABBER-->
-	        <exclude name="pedro/pedrogui.cpp"/>
-	        <exclude name="pedro/pedrogui.h"/>
-	        <exclude name="pedro/work/.*"/>
+            <exclude name="pedro/pedrogui.cpp"/>
+            <exclude name="pedro/pedrogui.h"/>
+            <exclude name="pedro/work/.*"/>
             <!--WHITEBOARD-->
-	        <exclude name="ui/dialog/session-player.cpp"/>
-	        <exclude name="ui/dialog/whiteboard-connect.cpp"/>
-	        <exclude name="ui/dialog/whiteboard-sharewithchat.cpp"/>
-	        <exclude name="ui/dialog/whiteboard-sharewithuser.cpp"/>
-	        <exclude name="dialogs/whiteboard-connect-dialog.cpp"/>
-	        <exclude name="dialogs/whiteboard-common-dialog.cpp"/>
-	        <exclude name="dialogs/whiteboard-sharewithchat-dialog.cpp"/>
-	        <exclude name="dialogs/whiteboard-sharewithuser-dialog.cpp"/>
-	        <exclude name="jabber_whiteboard/node-tracker.cpp"/>
-	        <exclude name="jabber_whiteboard/node-utilities.cpp"/>
+            <exclude name="ui/dialog/session-player.cpp"/>
+            <exclude name="ui/dialog/whiteboard-connect.cpp"/>
+            <exclude name="ui/dialog/whiteboard-sharewithchat.cpp"/>
+            <exclude name="ui/dialog/whiteboard-sharewithuser.cpp"/>
+            <exclude name="dialogs/whiteboard-connect-dialog.cpp"/>
+            <exclude name="dialogs/whiteboard-common-dialog.cpp"/>
+            <exclude name="dialogs/whiteboard-sharewithchat-dialog.cpp"/>
+            <exclude name="dialogs/whiteboard-sharewithuser-dialog.cpp"/>
+            <exclude name="jabber_whiteboard/node-tracker.cpp"/>
+            <exclude name="jabber_whiteboard/node-utilities.cpp"/>
             <!--WHITEBOARD-->
-	        <exclude name="removeoverlap/placement_SolveVPSC.cpp"/>
-	        <exclude name="removeoverlap/placement_SolveVPSC.h"/>
-	        <exclude name="removeoverlap/test.cpp"/>
-	        <exclude name="removeoverlap/remove_rectangle_overlap-test.cpp"/>
-	        <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
-	    </fileset>
+            <exclude name="removeoverlap/placement_SolveVPSC.cpp"/>
+            <exclude name="removeoverlap/placement_SolveVPSC.h"/>
+            <exclude name="removeoverlap/test.cpp"/>
+            <exclude name="removeoverlap/remove_rectangle_overlap-test.cpp"/>
+            <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
+        </fileset>
         <flags>
             -Wall -O3
             -mms-bitfields
@@ -235,40 +235,40 @@
             -DVERSION=\"${version}\"
             -DHAVE_CONFIG_H
             -DXP_WIN <!-- for JS -->
-			-D_INTL_REDIRECT_INLINE
+            -D_INTL_REDIRECT_INLINE
             -DRELAYTOOL_SSL="static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }" <!-- inkboard -->
             -DWITH_INKBOARD -DHAVE_SSL <!-- inkboard -->
         </defines>
         <includes>
             -I${gtk}/include
-			<!-- GTK / GTKMM -->
+            <!-- GTK / GTKMM -->
             -I${gtk}/include/glibmm-2.4
-		    -I${gtk}/lib/glibmm-2.4/include
+            -I${gtk}/lib/glibmm-2.4/include
             -I${gtk}/include/gtkmm-2.4
-		    -I${gtk}/lib/gtkmm-2.4/include
+            -I${gtk}/lib/gtkmm-2.4/include
             -I${gtk}/include/gdkmm-2.4
-		    -I${gtk}/lib/gdkmm-2.4/include
+            -I${gtk}/lib/gdkmm-2.4/include
             -I${gtk}/include/pangomm-1.4
             -I${gtk}/include/atkmm-1.6
             -I${gtk}/include/cairomm-1.0
             -I${gtk}/include/sigc++-2.0
-		    -I${gtk}/lib/sigc++-2.0/include
+            -I${gtk}/lib/sigc++-2.0/include
             -I${gtk}/include/gtk-2.0
-		    -I${gtk}/lib/gtk-2.0/include
+            -I${gtk}/lib/gtk-2.0/include
             -I${gtk}/include/atk-1.0
-		    -I${gtk}/include/pango-1.0
+            -I${gtk}/include/pango-1.0
             -I${gtk}/include/glib-2.0
-		    -I${gtk}/lib/glib-2.0/include
-		    <!-- OTHER -->
+            -I${gtk}/lib/glib-2.0/include
+            <!-- OTHER -->
             -I${gtk}/include/libxml2 
-			-I${gtk}/include/freetype2
-		    -I${gtk}/include/cairo
-		    <!-- PERL -->
-		    -Wno-comment -I${gtk}/perl/lib/CORE
-		    <!-- PYTHON -->
-		    -I${gtk}/python/include
+            -I${gtk}/include/freetype2
+            -I${gtk}/include/cairo
+            <!-- PERL -->
+            -Wno-comment -I${gtk}/perl/lib/CORE
+            <!-- PYTHON -->
+            -I${gtk}/python/include
         </includes>
-	</cc>
+    </cc>
   </target>
   
 
@@ -281,12 +281,12 @@
       description="create a static library">
     <staticlib command="${archutil}ar crsv"
            file="${build}/libinkscape.a">
-	   <fileset dir="${build}/obj">
-	       <exclude name="main,o"/>
-	       <exclude name="winmain,o"/>
-	       <exclude name="inkview,o"/>
-	   </fileset>
-	</staticlib>
+       <fileset dir="${build}/obj">
+           <exclude name="main.o"/>
+           <exclude name="winmain.o"/>
+           <exclude name="inkview.o"/>
+       </fileset>
+    </staticlib>
   </target>
 
 
@@ -301,9 +301,9 @@
 
     <msgfmt todir="${build}/locale" owndir="true"
          out="LC_MESSAGES/inkscape.mo">
-	   <fileset dir="po">
-	   </fileset>
-	</msgfmt>
+       <fileset dir="po">
+       </fileset>
+    </msgfmt>
   </target>
 
 
@@ -319,12 +319,12 @@
       description="link objects and library to create executable">
 
     <rc command="${archutil}windres" 
-	    file="${src}/inkscape.rc"
-	    out="${build}/inkres.o">
-		<flags>
-		--include-dir=${src}
-		</flags>
-	</rc>
+        file="${src}/inkscape.rc"
+        out="${build}/inkres.o">
+        <flags>
+        --include-dir=${src}
+        </flags>
+    </rc>
     <link command="${arch}g++" out="${build}/inkscape.exe"
               strip="true" symfile="${build}/inkscape.dbg"
               stripcommand="${archutil}strip"
@@ -332,14 +332,14 @@
               >
        <flags>
        </flags>
-	   <fileset dir="${build}">
-	       <include name="inkres.o"/>
-	       <include name="obj/main.o"/>
-	       <include name="obj/winmain.o"/>
-	       <include name="libinkscape.a"/>
-	   </fileset>
-	   <libs>
-	       -L${gtk}/lib
+       <fileset dir="${build}">
+           <include name="inkres.o"/>
+           <include name="obj/main.o"/>
+           <include name="obj/winmain.o"/>
+           <include name="libinkscape.a"/>
+       </fileset>
+       <libs>
+           -L${gtk}/lib
            -lgtkmm-2.4 -lgdkmm-2.4 -lglibmm-2.4
            -latkmm-1.6 -lpangomm-1.4 -lsigc-2.0
            -lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0
@@ -347,7 +347,7 @@
            -lpangocairo-1.0 -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0
            -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0 -lcairo
            <!-- PERL -->
-		   -L${gtk}/perl/lib/CORE -lperl58
+           -L${gtk}/perl/lib/CORE -lperl58
            <!-- PYTHON -->
            -L${gtk}/python/libs -lpython24
            ${gtk}/bin/libxml2.dll
@@ -357,8 +357,8 @@
            -lssl -lcrypto
            -lpng -lpopt ${gtk}/lib/zdll.lib
            -lgc -mwindows -lws2_32 -lintl -lm
-	   </libs>
-	</link>
+       </libs>
+    </link>
   </target>
   
 
@@ -374,12 +374,12 @@
         description="link objects and library to create Inkview executable">
 
     <rc command="${archutil}windres" 
-	    file="${src}/inkview.rc"
-	    out="${build}/inkviewres.o">
-		<flags>
-		--include-dir=${src}
-		</flags>
-	</rc>
+        file="${src}/inkview.rc"
+        out="${build}/inkviewres.o">
+        <flags>
+        --include-dir=${src}
+        </flags>
+    </rc>
     <link command="${arch}g++" out="${build}/inkview.exe"
               strip="true" symfile="${build}/inkview.dbg"
               stripcommand="${archutil}strip"
@@ -387,13 +387,13 @@
               >
        <flags>
        </flags>
-	   <fileset dir="${build}">
-	       < include name="inkviewres.o"/ >
-	       <include name="obj/inkview.o"/>
-	       <include name="libinkscape.a"/>
-	   </fileset>
-	   <libs>
-	       -L${gtk}/lib
+       <fileset dir="${build}">
+           < include name="inkviewres.o"/ >
+           <include name="obj/inkview.o"/>
+           <include name="libinkscape.a"/>
+       </fileset>
+       <libs>
+           -L${gtk}/lib
            -lgtkmm-2.4 -lgdkmm-2.4 -lglibmm-2.4
            -latkmm-1.6 -lpangomm-1.4 -lsigc-2.0
            -lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0
@@ -401,7 +401,7 @@
            -lpangocairo-1.0 -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0
            -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0 -lcairo
            <!-- PERL -->
-		   -L${gtk}/perl/lib/CORE -lperl58
+           -L${gtk}/perl/lib/CORE -lperl58
            <!-- PYTHON -->
            -L${gtk}/python/libs -lpython24
            ${gtk}/bin/libxml2.dll
@@ -411,8 +411,8 @@
            -lssl -lcrypto
            -lpng -lpopt ${gtk}/lib/zdll.lib
            -lgc -mwindows -lws2_32 -lintl -lm
-	   </libs>
-	</link>
+       </libs>
+    </link>
   </target>
 
 
@@ -473,10 +473,10 @@
 
     <!-- MSGFMT files -->
     <copy todir="${dist}">
-	    <fileset dir="${build}/locale">
-		  <exclude name=".*\.am"/>
-		</fileset>
-	</copy>
+        <fileset dir="${build}/locale">
+          <exclude name=".*\.am"/>
+        </fileset>
+    </copy>
 
     <!-- GTK -->
     <copy todir="${dist}"> <fileset dir="${gtk}/etc"/> </copy>
@@ -485,10 +485,10 @@
     <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/glib-2.0"/> </copy>
     <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/locale"/> </copy>
     <copy todir="${dist}">
-	    <fileset dir="share">
-		  <exclude name=".*\.am"/>
-		</fileset>
-	</copy>
+        <fileset dir="share">
+          <exclude name=".*\.am"/>
+        </fileset>
+    </copy>
     <copy todir="${dist}/share"> <fileset dir="${gtk}/share/themes"/> </copy>
     <mkdir dir="${dist}/data"/>
     <mkdir dir="${dist}/locale"/>
