@@ -196,7 +196,7 @@ fi
 CORE_MODULES="glitz cairo gnome-common glib pango atk gtk+"
 EXTRA_MODULES="libxml2 libxslt loudmouth libglade gossip gtk-engines"
 PYGTK_MODULES=" pycairo pygobject pygtk"
-INKSCAPE_MODULES="$CORE_MODULES libxml2 libxslt gc lcms libsig++ doxygen glibmm cairomm gtkmm popt inkscape"
+INKSCAPE_MODULES="$CORE_MODULES libxml2 libxslt gc lcms libsigc++ doxygen glibmm cairomm gtkmm popt inkscape"
 
 # Could add those (orbit requires popt though)
 MORE_MODULES="libIDL ORBit2 gconf"
