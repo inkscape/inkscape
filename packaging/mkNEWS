@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-my $wiki = "http://wiki.inkscape.org:8080/wiki/index.php";
+my $wiki = "http://wiki.inkscape.org/wiki/index.php";
 
 if (@ARGV < 1) {
     print "Usage:  $0 <release-number>\n";
@@ -20,7 +20,7 @@ foreach my $line (@page) {
     last if $line =~ /^Previous releases/;
     next if $line =~ /\[\[\d+\]edit\]/;
 
-    if ($line =~ /^Inkscape .*overview/) {
+    if ($line =~ /^Inkscape .*0.45/ || $line =~ /^Inkscape .* changes with respect to/) {
         $seen_overview = 1;
     }
     next unless $seen_overview;
