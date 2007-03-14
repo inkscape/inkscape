@@ -771,6 +771,9 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
     Glib::ustring tempfilename_out= tmpname;
     g_free(tmpname);
 
+    SPDesktop *desktop = (SPDesktop *) doc;
+    sp_namedview_document_from_window(desktop);
+
     Inkscape::Extension::save(
               Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
               doc->doc(), tempfilename_in.c_str(), FALSE, FALSE, FALSE);
@@ -779,7 +782,6 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
 
     /* fixme: Should be some sort of checking here.  Don't know how to do this with structs instead
      * of classes. */
-    SPDesktop *desktop = (SPDesktop *) doc;
     if (desktop != NULL) {
         Inkscape::Util::GSListConstIterator<SPItem *> selected =
              sp_desktop_selection(desktop)->itemList();
