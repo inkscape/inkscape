@@ -210,14 +210,15 @@ cr_declaration_parse_list_from_buf (const guchar * a_str,
                 cr_parser_try_to_skip_spaces_and_comments (parser);
                 status = cr_tknzr_peek_char (tokenizer, &c);
                 if (status != CR_OK) {
-                        if (status == CR_END_OF_INPUT_ERROR)
+                        if (status == CR_END_OF_INPUT_ERROR) 
                                 status = CR_OK;
                         goto cleanup;
                 }
                 if (c == ';') {
                         status = cr_tknzr_read_char (tokenizer, &c);
                 } else {
-                        break;
+                        cr_tknzr_read_char (tokenizer, &c);
+                        continue; // try to keep reading until we reach the end or a ;
                 }
                 important = FALSE;
                 cr_parser_try_to_skip_spaces_and_comments (parser);
@@ -225,9 +226,11 @@ cr_declaration_parse_list_from_buf (const guchar * a_str,
                                                       &value, &important);
                 if (status != CR_OK || !property) {
                         if (status == CR_END_OF_INPUT_ERROR) {
-                                status = CR_OK;
-                        }
-                        break;
+                                status = CR_OK; // simply the end of input, do not delete what we got so far, just finish
+                                break; 
+                        } else {
+                                continue; // even if one declaration is broken, it's no reason to discard others (see http://www.w3.org/TR/CSS21/syndata.html#declaration)
+								}
                 }
                 cur_decl = cr_declaration_new (NULL, property, value);
                 if (cur_decl) {
