@@ -35,7 +35,7 @@ u'xlink'    :u'http://www.w3.org/1999/xlink'
 #a dictionary of unit to user unit conversion factors
 uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
 def unittouu(string):
-    '''Returns returns userunits given a string representation of units in another system'''
+    '''Returns userunits given a string representation of units in another system'''
     unit = re.compile('(%s)$' % '|'.join(uuconv.keys()))
     param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
 
@@ -129,11 +129,12 @@ class Effect:
 
         xattr = xml.xpath.Evaluate('//sodipodi:namedview/@inkscape:cx',self.document,context=ctx)
         yattr = xml.xpath.Evaluate('//sodipodi:namedview/@inkscape:cy',self.document,context=ctx)
+        doc_height = unittouu(self.document.documentElement.getAttribute('height'))
         if xattr and yattr:
             x = xattr[0].value
             y = yattr[0].value
             if x and y:
-                self.view_center = (float(x),float(y))
+                self.view_center = (float(x), doc_height - float(y)) # FIXME: y-coordinate flip, eliminate it when it's gone in Inkscape
     def getselected(self):
         """Collect selected nodes"""
         for id in self.options.ids:
