@@ -310,9 +310,10 @@ static bool try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, guch
   unsigned char *t = get_pixel(px, x, y, width);
   if (compare_pixels(t, orig, dtc, threshold, method)) {
     unsigned char *trace_t = get_pixel(trace_px, x, y, width);
-    if (trace_t[3] != 255) {
+    if (trace_t[3] != 255 && trace_t[0] != 255) {
       if (fill_switch) {
         fill_queue->push(NR::Point(x, y));
+        trace_t[0] = 255;
       }
     }
     return false;
