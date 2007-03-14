@@ -2252,9 +2252,11 @@ Verb *Verb::_base_verbs[] = {
 
     /* Object */
     new ObjectVerb(SP_VERB_OBJECT_ROTATE_90_CW, "ObjectRotate90", N_("Rotate _90&#176; CW"),
-                   N_("Rotate selection 90&#176; clockwise"), "object_rotate_90_CW"),
+                   // Tooltips cannot have entities: must use UTF-8 for symbols
+                   N_("Rotate selection 90° clockwise"), "object_rotate_90_CW"),
     new ObjectVerb(SP_VERB_OBJECT_ROTATE_90_CCW, "ObjectRotate90CCW", N_("Rotate 9_0&#176; CCW"),
-                   N_("Rotate selection 90&#176; counter-clockwise"), "object_rotate_90_CCW"),
+                   // Tooltips cannot have entities: must use UTF-8 for symbols
+                   N_("Rotate selection 90° counter-clockwise"), "object_rotate_90_CCW"),
     new ObjectVerb(SP_VERB_OBJECT_FLATTEN, "ObjectRemoveTransform", N_("Remove _Transformations"),
                    N_("Remove transformations from object"), "object_reset"),
     new ObjectVerb(SP_VERB_OBJECT_TO_CURVE, "ObjectToPath", N_("_Object to Path"),
