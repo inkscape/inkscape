@@ -72,6 +72,8 @@ extensions = \
 	simplestyle.py \
 	sk2svg.sh \
 	SpSVG.pm \
+	spirograph.py\
+	spirograph.inx\
 	straightseg.py \
 	summersnight.py \
 	svg_and_media_zip_output.py \
