@@ -190,6 +190,7 @@ sp_event_context_update_cursor(SPEventContext *ec)
         }
         gdk_window_set_cursor(w->window, ec->cursor);
     }
+    ec->desktop->waiting_cursor = false;
 }
 
 /**
