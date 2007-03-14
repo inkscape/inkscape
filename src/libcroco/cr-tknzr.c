@@ -2389,7 +2389,7 @@ cr_tknzr_get_next_token (CRTknzr * a_this, CRToken ** a_tk)
                                 next_bytes[0] = BYTE (input, 1, NULL);
                                 next_bytes[1] = BYTE (input, 2, NULL);
                                 next_bytes[2] = BYTE (input, 3, NULL);
-                                next_bytes[3] = BYTE (input, 3, NULL);
+                                next_bytes[3] = BYTE (input, 4, NULL);
 
                                 if (next_bytes[0] == 'e'
                                     && next_bytes[1] == 'm') {
