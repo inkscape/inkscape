@@ -99,6 +99,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     unsigned int number;
     bool is_fullscreen;
     unsigned int interaction_disabled_counter;
+    bool waiting_cursor;
 
     /// \todo fixme: This has to be implemented in different way */
     guint guides_active : 1;
@@ -240,6 +241,8 @@ struct SPDesktop : public Inkscape::UI::View::View
     
     void enableInteraction();
     void disableInteraction();
+
+    void setWaitingCursor();
     
     void fullscreen();
 
