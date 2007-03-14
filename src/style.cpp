@@ -516,7 +516,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
         style->cloned = true;
     }
 
-    /* 1. Style itself */
+    /* 1. Style attribute */
     gchar const *val = repr->attribute("style");
     if (val != NULL) {
         sp_style_merge_from_style_string(style, val);
