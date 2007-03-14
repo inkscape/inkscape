@@ -1,19 +1,19 @@
 #define __SP_FLOOD_CONTEXT_C__
 
 /*
- * Flood fill drawing context
- *
- * Author:
- *   Lauris Kaplinski <lauris@kaplinski.com>
- *   bulia byak <buliabyak@users.sf.net>
- *   John Bintz <jcoswell@coswellproductions.org>
- *
- * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 2000-2005 authors
- * Copyright (C) 2000-2001 Ximian, Inc.
- *
- * Released under GNU GPL, read the file 'COPYING' for more information
- */
+* Flood fill drawing context
+*
+* Author:
+*   Lauris Kaplinski <lauris@kaplinski.com>
+*   bulia byak <buliabyak@users.sf.net>
+*   John Bintz <jcoswell@coswellproductions.org>
+*
+* Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
+* Copyright (C) 2000-2005 authors
+* Copyright (C) 2000-2001 Ximian, Inc.
+*
+* Released under GNU GPL, read the file 'COPYING' for more information
+*/
 
 #include "config.h"
 
@@ -225,16 +225,19 @@ static void sp_flood_context_setup(SPEventContext *ec)
     rc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 }
 
-static void merge_pixel_with_background(unsigned char *orig, unsigned char *bg, unsigned char *base) {
-  for (int i = 0; i < 3; i++) { 
-    base[i] = (255 * (255 - bg[3])) / 255 + (bg[i] * bg[3]) / 255;
-    base[i] = (base[i] * (255 - orig[3])) / 255 + (orig[i] * orig[3]) / 255;
-  }
-  base[3] = 255;
+static void
+merge_pixel_with_background (unsigned char *orig, unsigned char *bg,
+           unsigned char *base)
+{
+    for (int i = 0; i < 3; i++) {
+        base[i] = (255 * (255 - bg[3])) / 255 + (bg[i] * bg[3]) / 255;
+        base[i] = (base[i] * (255 - orig[3])) / 255 + (orig[i] * orig[3]) / 255;
+    }
+    base[3] = 255;
 }
 
 inline unsigned char * get_pixel(guchar *px, int x, int y, int width) {
-  return px + (x + y * width) * 4;
+    return px + (x + y * width) * 4;
 }
 
 enum PaintBucketChannels {
@@ -264,61 +267,61 @@ GList * flood_channels_dropdown_items_list() {
 }
 
 static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned char *dtc, int threshold, PaintBucketChannels method) {
-  int diff = 0;
-  float hsl_check[3], hsl_orig[3];
-  
-  if ((method == FLOOD_CHANNELS_H) ||
-      (method == FLOOD_CHANNELS_S) ||
-      (method == FLOOD_CHANNELS_L)) {
-    sp_color_rgb_to_hsl_floatv(hsl_check, check[0] / 255.0, check[1] / 255.0, check[2] / 255.0);
-    sp_color_rgb_to_hsl_floatv(hsl_orig, orig[0] / 255.0, orig[1] / 255.0, orig[2] / 255.0);
-  }
-  
-  switch (method) {
-    case FLOOD_CHANNELS_ALPHA:
-      return ((int)abs(check[3] - orig[3]) <= threshold);
-    case FLOOD_CHANNELS_R:
-      return ((int)abs(check[0] - orig[0]) <= threshold);
-    case FLOOD_CHANNELS_G:
-      return ((int)abs(check[1] - orig[1]) <= threshold);
-    case FLOOD_CHANNELS_B:
-      return ((int)abs(check[2] - orig[2]) <= threshold);
-    case FLOOD_CHANNELS_RGB:
-      unsigned char merged_orig[4];
-      unsigned char merged_check[4];
-      
-      merge_pixel_with_background(orig, dtc, merged_orig);
-      merge_pixel_with_background(check, dtc, merged_check);
-      
-      for (int i = 0; i < 3; i++) {
-        diff += (int)abs(merged_check[i] - merged_orig[i]);
-      }
-      return ((diff / 3) <= ((threshold * 3) / 4));
+    int diff = 0;
+    float hsl_check[3], hsl_orig[3];
     
-    case FLOOD_CHANNELS_H:
-      return ((int)(fabs(hsl_check[0] - hsl_orig[0]) * 100.0) <= threshold);
-    case FLOOD_CHANNELS_S:
-      return ((int)(fabs(hsl_check[1] - hsl_orig[1]) * 100.0) <= threshold);
-    case FLOOD_CHANNELS_L:
-      return ((int)(fabs(hsl_check[2] - hsl_orig[2]) * 100.0) <= threshold);
-  }
-  
-  return false;
+    if ((method == FLOOD_CHANNELS_H) ||
+        (method == FLOOD_CHANNELS_S) ||
+        (method == FLOOD_CHANNELS_L)) {
+        sp_color_rgb_to_hsl_floatv(hsl_check, check[0] / 255.0, check[1] / 255.0, check[2] / 255.0);
+        sp_color_rgb_to_hsl_floatv(hsl_orig, orig[0] / 255.0, orig[1] / 255.0, orig[2] / 255.0);
+    }
+    
+    switch (method) {
+        case FLOOD_CHANNELS_ALPHA:
+            return ((int)abs(check[3] - orig[3]) <= threshold);
+        case FLOOD_CHANNELS_R:
+            return ((int)abs(check[0] - orig[0]) <= threshold);
+        case FLOOD_CHANNELS_G:
+            return ((int)abs(check[1] - orig[1]) <= threshold);
+        case FLOOD_CHANNELS_B:
+            return ((int)abs(check[2] - orig[2]) <= threshold);
+        case FLOOD_CHANNELS_RGB:
+            unsigned char merged_orig[4];
+            unsigned char merged_check[4];
+            
+            merge_pixel_with_background(orig, dtc, merged_orig);
+            merge_pixel_with_background(check, dtc, merged_check);
+            
+            for (int i = 0; i < 3; i++) {
+              diff += (int)abs(merged_check[i] - merged_orig[i]);
+            }
+            return ((diff / 3) <= ((threshold * 3) / 4));
+        
+        case FLOOD_CHANNELS_H:
+            return ((int)(fabs(hsl_check[0] - hsl_orig[0]) * 100.0) <= threshold);
+        case FLOOD_CHANNELS_S:
+            return ((int)(fabs(hsl_check[1] - hsl_orig[1]) * 100.0) <= threshold);
+        case FLOOD_CHANNELS_L:
+            return ((int)(fabs(hsl_check[2] - hsl_orig[2]) * 100.0) <= threshold);
+    }
+    
+    return false;
 }
 
 static bool try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig, unsigned char *dtc, int x, int y, int width, int threshold, PaintBucketChannels method, bool fill_switch) {
-  unsigned char *t = get_pixel(px, x, y, width);
-  if (compare_pixels(t, orig, dtc, threshold, method)) {
-    unsigned char *trace_t = get_pixel(trace_px, x, y, width);
-    if (trace_t[3] != 255 && trace_t[0] != 255) {
-      if (fill_switch) {
-        fill_queue->push(NR::Point(x, y));
-        trace_t[0] = 255;
-      }
+    unsigned char *t = get_pixel(px, x, y, width);
+    if (compare_pixels(t, orig, dtc, threshold, method)) {
+        unsigned char *trace_t = get_pixel(trace_px, x, y, width);
+        if (trace_t[3] != 255 && trace_t[0] != 255) {
+            if (fill_switch) {
+                fill_queue->push(NR::Point(x, y));
+                trace_t[0] = 255;
+            }
+        }
+        return false;
     }
-    return false;
-  }
-  return true;
+    return true;
 }
 
 static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
@@ -429,24 +432,24 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
 }
 
 struct bitmap_coords_info {
-  bool is_left;
-  int x;
-  int y;
-  int y_limit;
-  int width;
-  int threshold;
-  PaintBucketChannels method;
-  unsigned char *dtc;
-  bool top_fill;
-  bool bottom_fill;
-  NR::Rect bbox;
-  NR::Rect screen;
+    bool is_left;
+    int x;
+    int y;
+    int y_limit;
+    int width;
+    int threshold;
+    PaintBucketChannels method;
+    unsigned char *dtc;
+    bool top_fill;
+    bool bottom_fill;
+    NR::Rect bbox;
+    NR::Rect screen;
 };
 
 enum ScanlineCheckResult {
-  SCANLINE_CHECK_OK,
-  SCANLINE_CHECK_ABORTED,
-  SCANLINE_CHECK_BOUNDARY
+    SCANLINE_CHECK_OK,
+    SCANLINE_CHECK_ABORTED,
+    SCANLINE_CHECK_BOUNDARY
 };
 
 static ScanlineCheckResult perform_bitmap_scanline_check(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
@@ -512,8 +515,8 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     NR::Maybe<NR::Rect> bbox = document_root->getBounds(NR::identity());
 
     if (!bbox) {
-      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
-      return;
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
+        return;
     }
     
     double zoom_scale = desktop->current_zoom();
@@ -526,7 +529,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     NR::Point origin(screen.min()[NR::X],
                      sp_document_height(document) - screen.extent(NR::Y) - screen.min()[NR::Y]);
-                     
+                    
     origin[NR::X] = origin[NR::X] + (screen.extent(NR::X) * ((1 - padding) / 2));
     origin[NR::Y] = origin[NR::Y] + (screen.extent(NR::Y) * ((1 - padding) / 2));
     
@@ -566,13 +569,13 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     dtc[3] = NR_RGBA32_A(bgcolor);
     
     for (int fy = 0; fy < height; fy++) {
-      guchar *p = NR_PIXBLOCK_PX(&B) + fy * B.rs;
-      for (int fx = 0; fx < width; fx++) {
-        for (int i = 0; i < 4; i++) { 
-          *p++ = dtc[i];
-        }
+        guchar *p = NR_PIXBLOCK_PX(&B) + fy * B.rs;
+        for (int fx = 0; fx < width; fx++) {
+            for (int i = 0; i < 4; i++) { 
+                *p++ = dtc[i];
+            }
+          }
       }
-    }
 
     nr_arena_item_invoke_render(NULL, root, &final_bbox, &B, NR_ARENA_ITEM_RENDER_NO_CACHE );
     nr_pixblock_release(&B);
@@ -609,18 +612,18 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     int threshold = prefs_get_int_attribute_limited("tools.paintbucket", "threshold", 1, 0, 100);
 
     switch(method) {
-      case FLOOD_CHANNELS_ALPHA:
-      case FLOOD_CHANNELS_RGB:
-      case FLOOD_CHANNELS_R:
-      case FLOOD_CHANNELS_G:
-      case FLOOD_CHANNELS_B:
-        threshold = (255 * threshold) / 100;
-        break;
-      case FLOOD_CHANNELS_H:
-      case FLOOD_CHANNELS_S:
-      case FLOOD_CHANNELS_L:
-        break;
-    }
+        case FLOOD_CHANNELS_ALPHA:
+        case FLOOD_CHANNELS_RGB:
+        case FLOOD_CHANNELS_R:
+        case FLOOD_CHANNELS_G:
+        case FLOOD_CHANNELS_B:
+            threshold = (255 * threshold) / 100;
+            break;
+        case FLOOD_CHANNELS_H:
+        case FLOOD_CHANNELS_S:
+        case FLOOD_CHANNELS_L:
+            break;
+      }
 
     bool reached_screen_boundary = false;
 
@@ -635,87 +638,87 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     bci.dtc = dtc;
 
     while (!fill_queue.empty() && !aborted) {
-      NR::Point cp = fill_queue.front();
-      fill_queue.pop();
-      unsigned char *s = get_pixel(px, (int)cp[NR::X], (int)cp[NR::Y], width);
-      
-      // same color at this point
-      if (compare_pixels(s, orig_color, dtc, threshold, method)) {
-        int x = (int)cp[NR::X];
-        int y = (int)cp[NR::Y];
+        NR::Point cp = fill_queue.front();
+        fill_queue.pop();
+        unsigned char *s = get_pixel(px, (int)cp[NR::X], (int)cp[NR::Y], width);
         
-        bool top_fill = true;
-        bool bottom_fill = true;
-        
-        if (y > 0) { 
-          top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y - 1, width, threshold, method, top_fill);
-        } else {
-          if (bbox->min()[NR::Y] > screen.min()[NR::Y]) {
-            aborted = true; break;
-          } else {
-            reached_screen_boundary = true;
-          }
+        // same color at this point
+        if (compare_pixels(s, orig_color, dtc, threshold, method)) {
+            int x = (int)cp[NR::X];
+            int y = (int)cp[NR::Y];
+            
+            bool top_fill = true;
+            bool bottom_fill = true;
+            
+            if (y > 0) { 
+                top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y - 1, width, threshold, method, top_fill);
+            } else {
+                if (bbox->min()[NR::Y] > screen.min()[NR::Y]) {
+                    aborted = true; break;
+                } else {
+                    reached_screen_boundary = true;
+                }
+            }
+            if (y < y_limit) { 
+                bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y + 1, width, threshold, method, bottom_fill);
+              } else {
+                  if (bbox->max()[NR::Y] < screen.max()[NR::Y]) {
+                      aborted = true; break;
+                  } else {
+                      reached_screen_boundary = true;
+                  }
+            }
+            
+            bci.is_left = true;
+            bci.x = x;
+            bci.y = y;
+            bci.top_fill = top_fill;
+            bci.bottom_fill = bottom_fill;
+            
+            ScanlineCheckResult result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
+            
+            switch (result) {
+                case SCANLINE_CHECK_ABORTED:
+                    aborted = true;
+                    break;
+                case SCANLINE_CHECK_BOUNDARY:
+                    reached_screen_boundary = true;
+                    break;
+                default:
+                    break;
+            }
+            
+            bci.is_left = false;
+            bci.x = x + 1;
+            bci.y = y;
+            bci.top_fill = top_fill;
+            bci.bottom_fill = bottom_fill;
+            
+            result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
+            
+            switch (result) {
+                case SCANLINE_CHECK_ABORTED:
+                    aborted = true;
+                    break;
+                case SCANLINE_CHECK_BOUNDARY:
+                    reached_screen_boundary = true;
+                    break;
+                default:
+                    break;
+            }
         }
-        if (y < y_limit) { 
-          bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y + 1, width, threshold, method, bottom_fill);
-        } else {
-          if (bbox->max()[NR::Y] < screen.max()[NR::Y]) {
-            aborted = true; break;
-          } else {
-            reached_screen_boundary = true;
-          }
-        }
-        
-        bci.is_left = true;
-        bci.x = x;
-        bci.y = y;
-        bci.top_fill = top_fill;
-        bci.bottom_fill = bottom_fill;
-        
-        ScanlineCheckResult result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
-        
-        switch (result) {
-            case SCANLINE_CHECK_ABORTED:
-                aborted = true;
-                break;
-            case SCANLINE_CHECK_BOUNDARY:
-                reached_screen_boundary = true;
-                break;
-            default:
-                break;
-        }
-        
-        bci.is_left = false;
-        bci.x = x + 1;
-        bci.y = y;
-        bci.top_fill = top_fill;
-        bci.bottom_fill = bottom_fill;
-        
-        result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
-        
-        switch (result) {
-            case SCANLINE_CHECK_ABORTED:
-                aborted = true;
-                break;
-            case SCANLINE_CHECK_BOUNDARY:
-                reached_screen_boundary = true;
-                break;
-            default:
-                break;
-        }
-      }
     }
     
     g_free(px);
     
     if (aborted) {
-      g_free(trace_px);
-      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
-      return;
+        g_free(trace_px);
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
+        return;
     }
     
     if (reached_screen_boundary) {
-      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again.")); 
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again.")); 
     }
     
     GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(trace_px,
@@ -744,7 +747,7 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
     case GDK_BUTTON_PRESS:
         if (event->button.state & GDK_CONTROL_MASK) {
             NR::Point const button_w(event->button.x,
-                                     event->button.y);
+                                    event->button.y);
             
             SPItem *item = sp_event_context_find_item (desktop, button_w, TRUE, TRUE);
             
@@ -831,7 +834,7 @@ static void sp_flood_finish(SPFloodContext *rc)
 
         sp_desktop_selection(desktop)->set(rc->item);
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET,
-                         _("Fill bounded area"));
+                        _("Fill bounded area"));
 
         rc->item = NULL;
     }
