@@ -379,11 +379,12 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         }
         item->render_opacity = FALSE;
     }
-    if ( item->render_opacity == TRUE
-         && shape->_fill.paint.type()   != NRArenaShape::Paint::NONE
-         && shape->_stroke.paint.type() != NRArenaShape::Paint::NONE )
+    if (  (shape->_fill.paint.type() != NRArenaShape::Paint::NONE && 
+           shape->_stroke.paint.type() != NRArenaShape::Paint::NONE)
+          || (shape->markers)
+        )
     {
-        // don't merge item opacity with paint opacity if there is a stroke on the fill
+        // don't merge item opacity with paint opacity if there is a stroke on the fill, or markers on stroke
         item->render_opacity = FALSE;
     }
 
