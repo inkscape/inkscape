@@ -301,7 +301,9 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
         }
     }
         
-    return std::make_pair(best_transformation, best_metric < NR_HUGE);
+    // Using " < 1e6" instead of " < NR::HUGE" for catching some rounding errors
+    // These rounding errors might be caused by NRRects, see bug #1584301
+    return std::make_pair(best_transformation, best_metric < 1e6);
 }
 
 
