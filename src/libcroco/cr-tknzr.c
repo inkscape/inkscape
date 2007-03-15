@@ -711,12 +711,13 @@ cr_tknzr_parse_string (CRTknzr * a_this, CRString ** a_str)
                 guchar next_chars[2] = { 0 };
 
                 PEEK_BYTE (a_this, 1, &next_chars[0]);
-                PEEK_BYTE (a_this, 2, &next_chars[1]);
 
                 if (next_chars[0] == '\\') {
                         guchar *tmp_char_ptr1 = NULL,
                                 *tmp_char_ptr2 = NULL;
                         guint32 esc_code = 0;
+
+                        PEEK_BYTE (a_this, 2, &next_chars[1]);
 
                         if (next_chars[1] == '\'' || next_chars[1] == '"') {
                                 g_string_append_unichar (str->stryng, 
