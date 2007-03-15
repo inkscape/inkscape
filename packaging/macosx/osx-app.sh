@@ -71,27 +71,29 @@ fi
 pkg=Inkscape
 package="$pkg.app"
 
-# TODO: Rewrite handling of command line args and make more robust.
 
 strip=false
-if [ "$1" = "-s" ]; then
-	strip=true
-	shift
-fi
+while getopts 's' flag; do
+	case $flag in
+		s)  strip=true ;;
+		\?) echo "Invalid command line option."; exit 1 ;;
+		*)  echo "Internal error in getopts."; exit 2 ;;
+	esac
+done
+shift `expr $OPTIND - 1`;
+
 
 binary="$1"
 if [ ! -x "$binary" ]; then
         echo "Not executable: $binary" >&2
         exit 1
 fi
-shift
 
-plist="$1"
+plist="$2"
 if [ ! -f "$plist" ]; then
 	echo "Need plist file" >&2
 	exit 1
 fi
-shift
 
 # Set the 'macosx' directory, usually the current directory.
 resdir=`pwd`
