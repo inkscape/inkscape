@@ -3,8 +3,9 @@
 # Inkscape packaging script for Mac OS X
 #
 # The script creates a read-write disk image, 
-# copies Inkscape in it, customizes its appearance using a 
-# previously created .DS_Store file (inkscape.ds_store),
+# copies Inkscape in it, copies additional python packages
+# if needed, customizes its appearance using a 
+# previously created .DS_Store file (inkscape*.ds_store),
 # and then compresses the disk image for distribution.
 #
 # Authors:
@@ -25,16 +26,35 @@
 #
 # Run this script with the '-s' option.  It will apply the
 # 'dmg_set_style.scpt' AppleScript file, and then prompt the
-# user to check the window size # and position before writing
+# user to check the window size and position before writing
 # a new 'inkscape.ds_store' file to work around a bug in Finder
 # and AppleScript.  The updated 'inkscape.ds_store' will need 
 # to be commited to the repository when this is done.
 #
 
+# Defaults
 set_ds_store=false
-if [ "$1" = "-s" ]; then
-	set_ds_store=true
-	shift
+add_python=false
+ds_store_file="inkscape.ds_store"
+
+# Parse command line arguments
+while [ "$1" != "" ]
+do
+	case $1 in
+	  	-s)
+			set_ds_store=true ;;
+   		-py|--with-python)
+			add_python=true 
+			python_dir=$2 
+			ds_store_file="inkscape_python.ds_store"
+			shift 1 ;;
+	esac
+	shift 1
+done
+# some checks
+if [ ! -e $python_dir ]; then
+	echo "Cannot find your python packages directory"
+	exit 1
 fi
 
 RWNAME="RWinkscape.dmg"
@@ -48,11 +68,18 @@ mkdir "$TMPDIR"
 
 echo "Copying files to temp directory..."
 # Copy Inkscape.app folder.
-cp -rf ../Inkscape.app "$TMPDIR"/
+cp -rf Inkscape.app "$TMPDIR"/
 
 # link to Applications in order to drag and drop inkscape onto it.
 ln -sf /Applications "$TMPDIR"/
 	
+if [ ${add_python} = "true" ]; then
+	# Copy python libraries
+	cp -rf $python_dir/* "$TMPDIR"/
+	# link python environment in order to drag and drop inkscape onto it
+	ln -sf /Library/Python/2.3/site-packages "$TMPDIR"/Python\ site-packages
+fi
+
 # Copy a background image inside a hidden directory so the image
 # file itself won't be shown.
 mkdir "$TMPDIR/.background"
@@ -62,9 +89,9 @@ AUTOOPENOPT=
 if [ ${set_ds_store} = "false" ]; then
 	# Copy the .DS_Store file which contains information about
 	# window size, appearance, etc.  Most of this can be set
-	# with Apple script but involves # user intervention so we
+	# with Apple script but involves user intervention so we
 	# just keep a copy of the correct settings and use that instead.
-	cp inkscape.ds_store "$TMPDIR/.DS_Store"
+	cp $ds_store_file "$TMPDIR/.DS_Store"
 	AUTOOPENOPT=-noautoopen
 fi
 
@@ -105,8 +132,9 @@ if [ ${set_ds_store} = "true" ]; then
 	AUTOOPENOPT=-noautoopen
 	DEV_NAME=`/usr/bin/hdiutil attach -readwrite -noverify $AUTOOPENOPT  "$RWNAME" | egrep '^/dev/' | sed 1q | awk '{print $1}'`
 	echo
-	echo "New inkscape.ds_store file written."
-	cp /Volumes/$VOLNAME/.DS_Store ./inkscape.ds_store
+	echo "New $ds_store_file file written."
+	cp /Volumes/$VOLNAME/.DS_Store ./$ds_store_file
+	SetFile -a v ./$ds_store_file
 
 	# Unmount the disk image.
 	hdiutil detach "$DEV_NAME"
@@ -119,7 +147,6 @@ fi
 hdiutil detach "$DEV_NAME"
 
 # Create the offical release image by compressing the RW one.
-DATE=`date "+%Y%m%d"`
-/usr/bin/hdiutil convert "$RWNAME" -format UDZO -imagekey zlib-level=9 -o "../Inkscape_$DATE.dmg"
+/usr/bin/hdiutil convert "$RWNAME" -format UDZO -imagekey zlib-level=9 -o "Inkscape.dmg"
 rm -f "$RWNAME"
 

@@ -1,19 +1,27 @@
 #! /bin/bash
-# Copyright 2005, Kees Cook <kees@outflux.net>
-# Licensed under GNU General Public License
 #
 # Usage: osx-app [-s] /path/to/bin/inkscape Info.plist
 #
-# This attempts to build an Inkscape.app package for OSX, resolving
-# Dynamic libraries, etc.  Strips the executable and libraries if
+# This script attempts to build an Inkscape.app package for OS X, resolving
+# dynamic libraries, etc.  It strips the executable and libraries if
 # '-s' is given.
+#
+#
+# Authors:
+#    Kees Cook <kees@outflux.net>
+#    Michael Wybrow <mjwybrow@users.sourceforge.net>
+#    Jean-Olivier Irisson <jo.irisson@gmail.com>
+# 
+# Copyright (C) 2005 Kees Cook
+# Copyright (C) 2005-2007 Michael Wybrow
+# Copyright (C) 2007 Jean-Olivier Irisson
+#
+#
+# Released under GNU GPL, read the file 'COPYING' for more information
 #
 # Thanks to GNUnet's "build_app" script for help with library dep resolution.
 # https://gnunet.org/svn/GNUnet/contrib/OSX/build_app
 # 
-# Fixes and modifications to use Gimp.app style launcher:
-#   Michael Wybrow <mjwybrow@users.sourceforge.net>
-#
 #
 # Notes:
 # The Info.plist file can be found in the base inkscape directory once
@@ -24,8 +32,8 @@
 # files inside the app bundle.
 # 
 # Thus, the usual use of this file would be to run it from the within the
-# inkscape/packaging directory, substituting in the inkscape binary path:
-# 	./osx-app.sh /path/to/bin/inkscape ../Info.plist
+# inkscape/packaging/macosx directory, substituting in the inkscape binary path:
+# 	./osx-app.sh /path/to/bin/inkscape ../../Info.plist
 
 
 
@@ -39,7 +47,10 @@ if [ "$VERSION" -ge "4" ]; then
   # libXinerama.1.dylib is not installed as part of X11 on Panther but
   # is introduced as a dependency if Inkscape is compiled on Tiger or
   # later.  Thus, add the library to the bundle for Panther users
-  EXTRALIBS="/usr/X11R6/lib/libXinerama.1.dylib"
+  # Building on Tiger gives app bundles incompatible with Panther anyway
+  # so we do not need to add this now
+  # EXTRALIBS="/usr/X11R6/lib/libXinerama.1.dylib"
+  EXTRALIBS=""
 else
   # Panther (10.3) or earlier.
   XCODEFLAGS="-buildstyle Deployment"
@@ -47,11 +58,12 @@ else
   EXTRALIBS=""
 fi
 
-
-SW="$HOME/ws-fat"
-
-pangover=1.5.0
-gtkver=2.10.0
+# set LIBPREFIX only if it has not been set before 
+# (by osx-build.sh for example)
+if [ -z $LIBPREFIX ]
+then
+	export LIBPREFIX="$HOME/ws-fat"
+fi
 
 
 # Package always has the same name.  Version information is stored in
@@ -81,6 +93,7 @@ if [ ! -f "$plist" ]; then
 fi
 shift
 
+# Set the 'macosx' directory, usually the current directory.
 resdir=`pwd`
 
 # Fix a given executable or library to be relocatable
@@ -146,9 +159,9 @@ echo "APPLInks" > $package/Contents/PkgInfo
 # Pull in extra requirements.
 pkgetc="$package/Contents/Resources/etc"
 mkdir -p $pkgetc/pango
-cp $SW/etc/pango/pangox.aliases $pkgetc/pango/
+cp $LIBPREFIX/etc/pango/pangox.aliases $pkgetc/pango/
 # Need to adjust path and quote incase of spaces in path.
-sed -e "s,$SW,\"\${CWD},g" -e 's,\.so ,.so" ,g' $SW/etc/pango/pango.modules > $pkgetc/pango/pango.modules
+sed -e "s,$LIBPREFIX,\"\${CWD},g" -e 's,\.so ,.so" ,g' $LIBPREFIX/etc/pango/pango.modules > $pkgetc/pango/pango.modules
 cat > $pkgetc/pango/pangorc <<END_PANGO
 [Pango]
 ModuleFiles=\${HOME}/.inkscape-etc/pango.modules
@@ -158,40 +171,42 @@ END_PANGO
 
 # We use a modified fonts.conf file so only need the dtd
 mkdir -p $pkgetc/fonts
-cp $SW/etc/fonts/fonts.dtd $pkgetc/fonts/
-cp -r $SW/etc/fonts/conf.avail $pkgetc/fonts/
-cp -r $SW/etc/fonts/conf.d $pkgetc/fonts/
+cp $LIBPREFIX/etc/fonts/fonts.dtd $pkgetc/fonts/
+cp -r $LIBPREFIX/etc/fonts/conf.avail $pkgetc/fonts/
+cp -r $LIBPREFIX/etc/fonts/conf.d $pkgetc/fonts/
 
 mkdir -p $pkgetc/gtk-2.0
-sed -e "s,$SW,\${CWD},g" $SW/etc/gtk-2.0/gdk-pixbuf.loaders > $pkgetc/gtk-2.0/gdk-pixbuf.loaders
-sed -e "s,$SW,\${CWD},g" $SW/etc/gtk-2.0/gtk.immodules > $pkgetc/gtk-2.0/gtk.immodules
+sed -e "s,$LIBPREFIX,\${CWD},g" $LIBPREFIX/etc/gtk-2.0/gdk-pixbuf.loaders > $pkgetc/gtk-2.0/gdk-pixbuf.loaders
+sed -e "s,$LIBPREFIX,\${CWD},g" $LIBPREFIX/etc/gtk-2.0/gtk.immodules > $pkgetc/gtk-2.0/gtk.immodules
 
 for item in gnome-vfs-mime-magic gnome-vfs-2.0
 do
-  cp -r $SW/etc/$item $pkgetc/
+  cp -r $LIBPREFIX/etc/$item $pkgetc/
 done
 
 
 pkglib="$package/Contents/Resources/lib"
+pangover=`ls $LIBPREFIX/lib/pango/`
 mkdir -p $pkglib/pango/$pangover/modules
-cp $SW/lib/pango/$pangover/modules/*.so $pkglib/pango/$pangover/modules/
+cp $LIBPREFIX/lib/pango/$pangover/modules/*.so $pkglib/pango/$pangover/modules/
 
-
+gtkver=`ls $LIBPREFIX/lib/gtk-2.0/ | grep "2\."`
 mkdir -p $pkglib/gtk-2.0/$gtkver/{engines,immodules,loaders}
-cp -r $SW/lib/gtk-2.0/$gtkver/engines/* $pkglib/gtk-2.0/$gtkver/engines/
-cp $SW/lib/gtk-2.0/$gtkver/immodules/*.so $pkglib/gtk-2.0/$gtkver/immodules/
-cp $SW/lib/gtk-2.0/$gtkver/loaders/*.so $pkglib/gtk-2.0/$gtkver/loaders/
+cp -r $LIBPREFIX/lib/gtk-2.0/$gtkver/engines/* $pkglib/gtk-2.0/$gtkver/engines/
+cp $LIBPREFIX/lib/gtk-2.0/$gtkver/immodules/*.so $pkglib/gtk-2.0/$gtkver/immodules/
+cp $LIBPREFIX/lib/gtk-2.0/$gtkver/loaders/*.so $pkglib/gtk-2.0/$gtkver/loaders/
 
 mkdir -p $pkglib/gnome-vfs-2.0/modules
-cp $SW/lib/gnome-vfs-2.0/modules/*.so $pkglib/gnome-vfs-2.0/modules/
+cp $LIBPREFIX/lib/gnome-vfs-2.0/modules/*.so $pkglib/gnome-vfs-2.0/modules/
 
-# Find out libs we need from fink (e.g. $SW) - loop until no changes
+# Find out libs we need from fink, darwinports, or from a custom install
+# (e.g. $LIBPREFIX), then loop until no changes.
 a=1
 nfiles=0
 endl=true
 while $endl; do
   echo "Looking for dependencies. Round " $a
-  libs="`otool -L $pkglib/gtk-2.0/$gtkver/loaders/* $pkglib/gtk-2.0/$gtkver/immodules/* $pkglib/gtk-2.0/$gtkver/engines/*.so $pkglib/pango/$pangover/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $SW | sort | uniq`"
+  libs="`otool -L $pkglib/gtk-2.0/$gtkver/loaders/* $pkglib/gtk-2.0/$gtkver/immodules/* $pkglib/gtk-2.0/$gtkver/engines/*.so $pkglib/pango/$pangover/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $LIBPREFIX | sort | uniq`"
   cp -f $libs $package/Contents/Resources/lib
   let "a+=1"  
   nnfiles=`ls $package/Contents/Resources/lib | wc -l`
@@ -230,7 +245,6 @@ fi
 # Get all the icons and the rest of the script framework
 rsync -av $resdir/Resources/* $package/Contents/Resources/
 
-
 # Make an image
 #/usr/bin/hdiutil create -srcfolder "$pkg.app" "$pkg.dmg"
-./osx-dmg.sh
+# ./osx-dmg.sh

@@ -87,10 +87,12 @@ EXTRA_DIST = \
 	cxxtest/cxxtest/X11Gui.h \
 	cxxtest/cxxtest/YesNoRunner.h \
 	packaging/autopackage/default.apspec.in	\
-	packaging/osx-app.sh	\
 	packaging/macosx/dmg_background.png	\
 	packaging/macosx/inkscape.ds_store	\
+	packaging/macosx/inkscape_python.ds_store	\
+	packaging/macosx/osx-app.sh	\
 	packaging/macosx/osx-dmg.sh	\
+	packaging/macosx/osx-build.sh	\
 	packaging/macosx/Resources/MenuBar.nib/classes.nib	\
 	packaging/macosx/Resources/MenuBar.nib/info.nib	\
 	packaging/macosx/Resources/MenuBar.nib/objects.xib	\
