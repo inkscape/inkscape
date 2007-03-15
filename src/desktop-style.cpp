@@ -1031,6 +1031,7 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
         SPObject *obj = SP_OBJECT (i->data);
         SPStyle *style = SP_OBJECT_STYLE (obj);
         if (!style) continue;
+        if (!SP_IS_ITEM(obj)) continue;
 
         NR::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
 
