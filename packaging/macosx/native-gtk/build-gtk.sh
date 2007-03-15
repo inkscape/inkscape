@@ -91,8 +91,9 @@ if [ "x$UNIVERSAL_BUILD" = "xYes" ]; then
     CONFIGURE_fontconfig="--disable-dependency-tracking --disable-docs"
     POSTCONFIGURE_fontconfig="eval cd fc-arch && make all && cd .. && perl -pi~ -e 's|#define FC_ARCHITECTURE \"x86\"|#ifdef __ppc__\n#define FC_ARCHITECTURE \"ppc\"\n#else\n#define FC_ARCHITECTURE \"x86\"\n#endif|g' fc-arch/fcarch.h"
 
+    PRECONFIGURE_cairo="export ax_cv_c_float_words_bigendian=no"
     CONFIGURE_cairo="--disable-dependency-tracking --enable-shared --disable-quartz --disable-atsui --enable-glitz"
-    POSTCONFIGURE_cairo="patch_libtool_dylib"
+    POSTCONFIGURE_cairo="eval patch_libtool_dylib && export ax_cv_c_float_words_bigendian='' && perl -pi~ -e 's|/\* #undef FLOAT_WORDS_BIGENDIAN \*/|#ifdef __ppc__\n#define FLOAT_WORDS_BIGENDIAN 1\n#endif|g;s|/\* #undef WORDS_BIGENDIAN \*/|#ifdef __ppc__\n#define WORDS_BIGENDIAN 1\n#endif|g' config.h && perl -pi~ -e 's|DIST_SUBDIRS = pixman src boilerplate test perf doc|DIST_SUBDIRS = pixman src test perf doc|g;s|am__append_1 = boilerplate test|am__append_1 = test|g' Makefile"
     
     CONFIGURE_glitz="--disable-dependency-tracking"
 
@@ -527,19 +528,19 @@ function process_modules()
     if [ "x$UNIVERSAL_BUILD" == "xYes" -o "x$STABLE_BUILD" = "xYes"  ];
     then
     	tarball_get_and_build http://cairographics.org/snapshots/glitz-0.5.6.tar.gz || exit 1
-    	tarball_get_and_build http://cairographics.org/releases/cairo-1.2.6.tar.gz || exit 1
+    	tarball_get_and_build http://cairographics.org/releases/cairo-1.4.0.tar.gz || exit 1
         tarball_get_and_build http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/gc6.8.tar.gz || exit 1
         tarball_get_and_build http://www.littlecms.com/lcms-1.16.tar.gz || exit 1
-        tarball_get_and_build ftp://ftp.gtk.org/pub/glib/2.12/glib-2.12.9.tar.bz2 || exit 1
-        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/pango/1.14/pango-1.14.5.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/glib/2.12/glib-2.12.11.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/pango/1.14/pango-1.14.10.tar.bz2 || exit 1
         tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/atk/1.12/atk-1.12.4.tar.bz2 || exit 1
-        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/gtk+/2.10/gtk+-2.10.10.tar.bz2 || exit 1
-        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libxml2/2.6/libxml2-2.6.26.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/gtk+/2.10/gtk+-2.10.11.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libxml2/2.6/libxml2-2.6.27.tar.bz2 || exit 1
         tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libsigc++/2.0/libsigc++-2.0.17.tar.bz2 || exit 1
-        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/glibmm/2.12/glibmm-2.12.4.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/glibmm/2.12/glibmm-2.12.7.tar.bz2 || exit 1
         tarball_get_and_build http://cairographics.org/releases/cairomm-1.2.4.tar.gz || exit 1
-        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/gtkmm/2.10/gtkmm-2.10.6.tar.bz2 || exit 1
-        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libxslt/1.1/libxslt-1.1.17.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/gtkmm/2.10/gtkmm-2.10.8.tar.bz2 || exit 1
+        tarball_get_and_build ftp://ftp.gnome.org/mirror/gnome.org/sources/libxslt/1.1/libxslt-1.1.20.tar.bz2 || exit 1
 	tarball_get_and_build ftp://ftp.rpm.org/pub/rpm/dist/rpm-4.1.x/popt-1.7.tar.gz || exit 1
 
         svn_get_and_build $INKSCAPESVNURL inkscape || exit 1
@@ -603,10 +604,10 @@ if (echo "$*" | grep bootstrap) >/dev/null; then
     echo "Building bootstrap packages."
  
     MODULES="pkg-config libtool autoconf automake libpng tiff jpeg-6b gettext \
-             expat fontconfig docbook-files \
+             expat fontconfig docbook-files intltool \
 	     "
 	     # freetype
-	     # XML-Parser intltool hicolor-icon-theme gnome-icon-theme"
+	     # XML-Parser hicolor-icon-theme gnome-icon-theme"
 	     # gnome-doc-utils-fake gtk-doc \
     process_modules
     
