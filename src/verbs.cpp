@@ -1984,7 +1984,7 @@ public:
                    gchar const *image) :
         Verb(code, id, name, tip, image)
     {
-        set_default_sensitive(false);
+        set_default_sensitive(true);
     }
 }; /* LockAndHideVerb class */
 
