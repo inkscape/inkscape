@@ -94,12 +94,19 @@ void graphlayout(GSList const *const items) {
 	{
 		SPItem *u=*i;
 		NR::Maybe<NR::Rect> const item_box(sp_item_bbox_desktop(u));
-        g_assert(item_box);
-		NR::Point ll(item_box->min());
-		NR::Point ur(item_box->max());
-		nodelookup[u->id]=rs.size();
-		rs.push_back(new Rectangle(ll[0]-spacing,ur[0]+spacing,
-                    ll[1]-spacing,ur[1]+spacing));
+        if(item_box) {
+            NR::Point ll(item_box->min());
+            NR::Point ur(item_box->max());
+            nodelookup[u->id]=rs.size();
+            rs.push_back(new Rectangle(ll[0]-spacing,ur[0]+spacing,
+                        ll[1]-spacing,ur[1]+spacing));
+        } else {
+            // I'm not actually sure if it's possible for something with a
+            // NULL item-box to be attached to a connector in which case we
+            // should never get to here... but if such a null box can occur it's
+            // probably pretty safe to simply ignore
+            //fprintf(stderr,"NULL item_box found in graphlayout, ignoring!\n");
+        }
 	}
 
 	SimpleConstraints scx,scy;
@@ -190,10 +197,11 @@ void graphlayout(GSList const *const items) {
 		if(!isConnector(u)) {
 			Rectangle* r=rs[nodelookup[u->id]];
 			NR::Maybe<NR::Rect> item_box(sp_item_bbox_desktop(u));
-            g_assert(item_box);
-			NR::Point const curr(item_box->midpoint());
-			NR::Point const dest(r->getCentreX(),r->getCentreY());
-			sp_item_move_rel(u, NR::translate(dest - curr));
+            if(item_box) {
+                NR::Point const curr(item_box->midpoint());
+                NR::Point const dest(r->getCentreX(),r->getCentreY());
+                sp_item_move_rel(u, NR::translate(dest - curr));
+            }
 		}
 	}
     for(unsigned i=0;i<scx.size();i++) {
