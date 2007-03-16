@@ -155,8 +155,6 @@ static gint sp_style_write_ilengthornormal(gchar *p, gint const len, gchar const
 static gint sp_style_write_itextdecoration(gchar *p, gint const len, gchar const *const key, SPITextDecoration const *const val, SPITextDecoration const *const base, guint const flags);
 static gint sp_style_write_ifilter(gchar *b, gint len, gchar const *key, SPIFilter const *filter, SPIFilter const *base, guint flags);
 
-static void css2_unescape_unquote(SPIString *val);
-
 static void sp_style_paint_clear(SPStyle *style, SPIPaint *paint);
 
 static void sp_style_filter_clear(SPStyle *style);
@@ -677,8 +675,9 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
         val = repr->attribute("font-family");
         if (val) {
             if (!style->text_private) sp_style_privatize_text(style);
-            sp_style_read_istring(&style->text->font_family, val);
-            css2_unescape_unquote(&style->text->font_family);
+            gchar *val_unquoted = attribute_unquote(val);
+            sp_style_read_istring(&style->text->font_family, val_unquoted);
+            if (val_unquoted) g_free (val_unquoted);
         }
     }
 
@@ -777,8 +776,9 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
         case SP_PROP_FONT_FAMILY:
             if (!style->text_private) sp_style_privatize_text(style);
             if (!style->text->font_family.set) {
-                sp_style_read_istring(&style->text->font_family, val);
-                css2_unescape_unquote(&style->text->font_family);
+                gchar *val_unquoted = attribute_unquote(val);
+                sp_style_read_istring(&style->text->font_family, val_unquoted);
+                if (val_unquoted) g_free (val_unquoted);
             }
             break;
         case SP_PROP_FONT_SIZE:
@@ -3352,7 +3352,9 @@ sp_style_write_istring(gchar *p, gint const len, gchar const *const key,
         if (val->inherit) {
             return g_snprintf(p, len, "%s:inherit;", key);
         } else {
-            return g_snprintf(p, len, "%s:%s;", key, val->value);
+            gchar *val_quoted = css2_escape_quote(val->value);
+            return g_snprintf(p, len, "%s:%s;", key, val_quoted);
+            g_free (val_quoted);
         }
     }
     return 0;
@@ -4027,28 +4029,60 @@ sp_css_attr_scale(SPCSSAttr *css, double ex)
 
 
 /**
- * Remove quotes from SPIString object value.
- *
- * \todo FIXME: now used for font family, but perhaps this should apply to
- * ALL strings (check CSS spec), in which case this should be part of
- * read_istring.
+ * Remove quotes and escapes from a string. Returned value must be g_free'd.
+ * Note: in CSS (in style= and in stylesheets), unquoting and unescaping is done 
+ * by libcroco, our CSS parser, though it adds a new pair of "" quotes for the strings
+ * it parsed for us. So this function is only used to remove those quotes and for 
+ * presentation attributes, without any unescaping. (XML unescaping
+ * (&amp; etc) is done by XML parser.)
  */
-static void
-css2_unescape_unquote(SPIString *val)
+gchar *
+attribute_unquote(gchar const *val)
 {
-    if (val->set && val->value && strlen(val->value) >= 2) {
-
-        /// \todo unescape all \-escaped chars
-
-        int l = strlen(val->value);
-        if ( ( val->value[0] == '"' && val->value[l - 1] == '"' )  ||
-             ( val->value[0] == '\'' && val->value[l - 1] == '\'' )  ) {
-            memcpy(val->value, val->value + 1, l - 2);
-            val->value[l - 2] = '\0';
+    if (val) {
+        if (*val == '\'' || *val == '"') {
+            int l = strlen(val);
+            if (l >= 2) {
+                if ( ( val[0] == '"' && val[l - 1] == '"' )  ||
+                     ( val[0] == '\'' && val[l - 1] == '\'' )  ) {
+                    return (g_strndup (val+1, l-2));
+                } 
+            }
         }
     }
+
+    return (val? g_strdup (val) : NULL);
 }
 
+/**
+ * Quote and/or escape string for writing to CSS (style=). Returned value must be g_free'd.
+ */
+gchar *
+css2_escape_quote(gchar const *val) {
+
+    Glib::ustring t;
+    bool quote = false;
+
+    for (gchar const *i = val; *i; i++) {
+        if (g_ascii_isalnum(*i) || *i=='-' || *i=='_') {
+            t.push_back(*i);
+        } else if (*i=='\'') {
+            t.push_back('\\');
+            t.push_back(*i);
+            quote = true;
+        } else {
+            t.push_back(*i);
+            quote = true;
+        } 
+    }
+
+    if (quote) { // we use the ' quotes so the result can go to the XML attribute
+        t.insert(t.begin(), '\'');
+        t.push_back('\'');
+    }
+
+    return (t.empty() ? NULL : g_strdup (t.c_str()));
+}
 
 /*
   Local Variables:
