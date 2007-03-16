@@ -25,7 +25,7 @@ class Project(inkex.Effect):
             inkex.Effect.__init__(self)
     def effect(self):
         if len(self.options.ids) < 2:
-            inkex.debug("Requires two selected paths. The second must be exctly four nodes long.")
+            inkex.debug("Requires two selected paths. The second must be exactly four nodes long.")
             exit()            
             
         #obj is selected second
