@@ -62,7 +62,7 @@ type2term(GType type)
     if (type == SP_TYPE_TEXT)
         { return _("Text"); }
     if (type == SP_TYPE_USE)
-        { return _("Clone"); }
+        { return Q_("object|Clone"); }
     if (type == SP_TYPE_ARC)
         { return _("Ellipse"); }
     if (type == SP_TYPE_OFFSET)

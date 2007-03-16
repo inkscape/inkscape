@@ -2073,7 +2073,7 @@ sp_selection_clone()
     }
     
     sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_CLONE, 
-                     _("Clone"));
+                     Q_("action|Clone"));
 
     selection->setReprList(newsel);
  
