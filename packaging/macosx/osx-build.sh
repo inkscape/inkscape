@@ -96,32 +96,32 @@ PYTHON="f"
 while [ "$1" != "" ]
 do
 	case $1 in
-	  	h|help)
-	   	help 
-			exit 1 ;;
+	h|help)
+		help 
+		exit 1 ;;
    	u|up|update)
-      	SVNUPDATE="t" ;;
+		SVNUPDATE="t" ;;
    	a|auto|autogen)
-      	AUTOGEN="t" ;;
-	  	c|conf|configure)
-      	CONFIGURE="t" ;;
-	  	b|build)
-      	BUILD="t" ;;
-	  	i|install)
-      	INSTALL="t" ;;
-	  	p|pack|package)
-      	PACKAGE="t" ;;
-	  	# -p|--prefix)
-	  	# 	      INSTALLPREFIX=$2
-	  	# 	 		shift 1 ;;
-	  	-s|-strip)
+		AUTOGEN="t" ;;
+	c|conf|configure)
+		CONFIGURE="t" ;;
+	b|build)
+		BUILD="t" ;;
+	i|install)
+		INSTALL="t" ;;
+	p|pack|package)
+		PACKAGE="t" ;;
+	# -p|--prefix)
+	  	#INSTALLPREFIX=$2
+	  	#shift 1 ;;
+	-s|-strip)
 	     	STRIP="t" ;;
-	  	-py|--with-python)
-      	PYTHON="t" 
-			PYTHONDIR=$2
-			shift 1 ;;
+	-py|--with-python)
+		PYTHON="t" 
+		PYTHONDIR=$2
+		shift 1 ;;
 	esac
-   shift 1
+	shift 1
 done
 
 
@@ -191,7 +191,7 @@ if [[ "$PACKAGE" == "t" ]]; then
 	fi
 	./osx-app.sh $STRIPPARAM $INSTALLPREFIX/bin/inkscape $SRCROOT/Info.plist
 
-	if [[ "PYTHON" == "t" ]]; then
+	if [[ "$PYTHON" == "t" ]]; then
 		./osx-dmg.sh -py "$PYTHONDIR"
 	else
 		./osx-dmg.sh
