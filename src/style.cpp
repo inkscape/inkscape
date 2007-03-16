@@ -4074,6 +4074,9 @@ css2_escape_quote(gchar const *val) {
             t.push_back(*i);
             quote = true;
         } 
+        if (i == val && !g_ascii_isalpha(*i)) {
+            quote = true;
+        }
     }
 
     if (quote) { // we use the ' quotes so the result can go to the XML attribute
