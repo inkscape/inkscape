@@ -9,6 +9,8 @@
 
 #include "xml/repr.h"
 #include "xml/simple-node.h"
+#include "style.h"
+#include "libcroco/cr-sel-eng.h"
 
 using Inkscape::Util::List;
 using Inkscape::XML::AttributeRecord;
@@ -144,7 +146,18 @@ sp_repr_css_write_string(SPCSSAttr *css)
 
         buffer.append(g_quark_to_string(iter->key));
         buffer.push_back(':');
-        buffer.append(iter->value);
+        if (!strcmp(g_quark_to_string(iter->key), "font-family")) { // we only quote font-family, as SPStyle does
+            gchar *t = g_strdup (iter->value);
+            g_free (t);
+            gchar *val_quoted = css2_escape_quote (iter->value);
+            if (val_quoted) {
+                buffer.append(val_quoted);
+                g_free (val_quoted);
+            }
+        } else {
+            buffer.append(iter->value); // unquoted
+        }
+
         if (rest(iter)) {
             buffer.push_back(';');
         }
@@ -189,34 +202,40 @@ sp_repr_css_merge(SPCSSAttr *dst, SPCSSAttr *src)
     dst->mergeFrom(src, "");
 }
 
-void
-sp_repr_css_attr_add_from_string(SPCSSAttr *css, gchar const *data)
-{
-    if (data != NULL) {
-        char *new_str = g_strdup(data);
-        char **token = g_strsplit(new_str, ";", 0);
-        for (char **ctoken = token; *ctoken != NULL; ctoken++) {
-            char *current = g_strstrip(*ctoken);
-            char *key = current;
-            char *val;
-            for (val = key; *val != '\0'; val++)
-                if (*val == ':') break;
-            if (*val == '\0') break;
-            *val++ = '\0';
-            key = g_strstrip(key);
-            val = g_strstrip(val);
-            if (*val == '\0') break;
 
-            /* fixme: CSS specifies that later declarations override earlier ones with the same
-               key.  (Ref: http://www.w3.org/TR/REC-CSS2/cascade.html#cascading-order point 4.)
-               Either add a precondition that there are no key duplicates in the string, or get rid
-               of the below condition (documenting the change that data[] will override existing
-               values in *css), or process the list in reverse order. */
-            if (!css->attribute(key))
-                sp_repr_set_attr((Node *) css, key, val);
+static void
+sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *const decl)
+{
+    guchar *const str_value_unsigned = cr_term_to_string(decl->value);
+    gchar *const str_value = reinterpret_cast<gchar *>(str_value_unsigned);
+    gchar *value_unquoted = attribute_unquote (str_value); // libcroco returns strings quoted in ""
+    sp_repr_set_attr((Node *) css, decl->property->stryng->str, value_unquoted);
+    g_free(value_unquoted);
+    g_free(str_value);
+}
+
+/**
+ * \pre decl_list != NULL
+ */
+static void
+sp_repr_css_merge_from_decl_list(SPCSSAttr *css, CRDeclaration const *const decl_list)
+{
+    if (decl_list->next) {
+        sp_repr_css_merge_from_decl_list(css, decl_list->next);
+    }
+    sp_repr_css_merge_from_decl(css, decl_list);
+}
+
+void
+sp_repr_css_attr_add_from_string(SPCSSAttr *css, gchar const *p)
+{
+    if (p != NULL) {
+        CRDeclaration *const decl_list
+            = cr_declaration_parse_list_from_buf(reinterpret_cast<guchar const *>(p), CR_UTF_8);
+        if (decl_list) {
+            sp_repr_css_merge_from_decl_list(css, decl_list);
+            cr_declaration_destroy(decl_list);
         }
-        g_strfreev(token);
-        g_free(new_str);
     }
 }
 
