@@ -1658,6 +1658,9 @@ bool OdfOutput::processGradient(Writer &outs, SPItem *item,
     if (!style)
         return false;
 
+    if (style->fill.type != SP_PAINT_TYPE_PAINTSERVER)
+        return false;
+
     //## Gradient.  Look in writeStyle() below to see what info
     //   we need to read into GradientInfo.
     if (!SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)))
