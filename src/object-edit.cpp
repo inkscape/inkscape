@@ -331,18 +331,18 @@ static NR::Point sp_rect_wh_get(SPItem *item)
     return NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed);
 }
 
-static NR::Point rect_snap_knot_position(NR::Point const &p)
+static NR::Point rect_snap_knot_position(SPRect *rect, NR::Point const &p)
 {
     SPDesktop const *desktop = inkscape_active_desktop();
     NR::Point s = sp_desktop_dt2root_xy_point(desktop, p);
     SnapManager const &m = desktop->namedview->snap_manager;
-    s = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, s, NULL).getPoint();
+    s = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, s, rect).getPoint();
     return sp_desktop_root2dt_xy_point(desktop, s);
 }
 
 static void sp_rect_wh_set_internal(SPRect *rect, NR::Point const &p, NR::Point const &origin, guint state)
 {
-    NR::Point const s = rect_snap_knot_position(p);
+    NR::Point const s = rect_snap_knot_position(rect, p);
 
     if (state & GDK_CONTROL_MASK) {
         // original width/height when drag started
@@ -420,7 +420,7 @@ static void sp_rect_xy_set(SPItem *item, NR::Point const &p, NR::Point const &or
     gdouble w_orig = opposite_x - origin[NR::X];
     gdouble h_orig = opposite_y - origin[NR::Y];
 
-    NR::Point const s = rect_snap_knot_position(p);
+    NR::Point const s = rect_snap_knot_position(rect, p);
 
     // mouse displacement since drag started
     gdouble minx = s[NR::X] - origin[NR::X];
