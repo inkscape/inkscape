@@ -699,6 +699,8 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                     if (fabs(p1[NR::Y] - tc->p0[NR::Y]) > cursor_height) {
                         // otherwise even one line won't fit; most probably a slip of hand (even if bigger than tolerance)
                         SPItem *ft = create_flowtext_with_internal_frame (desktop, tc->p0, p1);
+                        /* Set style */
+                        sp_desktop_apply_style_tool(SP_EVENT_CONTEXT_DESKTOP(ec), SP_OBJECT_REPR(ft), "tools.text", true);
                         sp_desktop_selection(desktop)->set(ft);
                         ec->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Flowed text is created."));
                         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
