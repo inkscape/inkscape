@@ -231,12 +231,20 @@ nr_path_matrix_point_bbox_wind_distance (NRBPath *bpath, NR::Matrix const &m, NR
 	x0 = y0 = 0.0;
 	x3 = y3 = 0.0;
 
+	// remembering the start of subpath
+	NR::Coord x_start = 0, y_start = 0; bool start_set = false;
+
 	for (p = bpath->path; p->code != NR_END; p+= 1) {
 		switch (p->code) {
 		case NR_MOVETO_OPEN:
 		case NR_MOVETO:
+			if (start_set) { // this is a new subpath
+				if (x0 != x_start || y0 != y_start) // for correct picking, each subpath must be closed
+					nr_line_wind_distance (x0, y0, x_start, y_start, pt, wind, dist);
+			}
 			x0 = m[0] * p->x3 + m[2] * p->y3 + m[4];
 			y0 = m[1] * p->x3 + m[3] * p->y3 + m[5];
+			x_start = x0; y_start = y0; start_set = true;
 			if (bbox) {
 				bbox->x0 = (NR::Coord) MIN (bbox->x0, x0);
 				bbox->y0 = (NR::Coord) MIN (bbox->y0, y0);
@@ -276,6 +284,11 @@ nr_path_matrix_point_bbox_wind_distance (NRBPath *bpath, NR::Matrix const &m, NR
 		default:
 			break;
 		}
+	}
+
+	if (start_set) { 
+		if (x0 != x_start || y0 != y_start) // for correct picking, each subpath must be closed
+			nr_line_wind_distance (x0, y0, x_start, y_start, pt, wind, dist);
 	}
 }
 
