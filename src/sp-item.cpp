@@ -1098,22 +1098,27 @@ sp_item_adjust_paint_recursive (SPItem *item, NR::Matrix advertized_transform, N
     NR::Matrix t_item = sp_item_transform_repr (item);
     NR::Matrix paint_delta = t_item * t_ancestors * advertized_transform * t_ancestors.inverse() * t_item.inverse();
 
+// Within text, we do not fork gradients, and so must not recurse to avoid double compensation
+    if (!(item && SP_IS_TEXT(item))) {
+        for (SPObject *o = SP_OBJECT(item)->children; o != NULL; o = o->next) {
+            if (SP_IS_ITEM(o)) {
+// At the level of the transformed item, t_ancestors is identity;
+// below it, it is the accmmulated chain of transforms from this level to the top level
+                sp_item_adjust_paint_recursive (SP_ITEM(o), advertized_transform, t_item * t_ancestors, is_pattern);
+            }
+        }
+    }
+
+// We recursed into children first, and are now adjusting this object second;
+// this is so that adjustments in a tree are done from leaves up to the root,
+// and paintservers on leaves inheriting their values from ancestors could adjust themselves properly
+// before ancestors themselves are adjusted, probably differently (bug 1286535)
+
     if (is_pattern)
         sp_item_adjust_pattern (item, paint_delta);
     else
         sp_item_adjust_gradient (item, paint_delta);
 
-// Within text, we do not fork gradients, and so must not recurse to avoid double compensation
-    if (item && SP_IS_TEXT(item))
-        return;
-
-    for (SPObject *o = SP_OBJECT(item)->children; o != NULL; o = o->next) {
-        if (SP_IS_ITEM(o)) {
-// At the level of the transformed item, t_ancestors is identity;
-// below it, it is the accmmulated chain of transforms from this level to the top level
-            sp_item_adjust_paint_recursive (SP_ITEM(o), advertized_transform, t_item * t_ancestors, is_pattern);
-        }
-    }
 }
 
 /**
