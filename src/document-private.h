@@ -70,6 +70,8 @@ struct SPDocumentPrivate {
 
 	// XXX only for testing!
 	Inkscape::ConsoleOutputUndoObserver console_output_undo_observer;
+
+	bool seeking;
 };
 
 #endif

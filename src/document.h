@@ -117,6 +117,9 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 
         bool _updateDocument();
 
+	/// Are we currently in a transition between two "known good" states of the document?
+	bool isSeeking() const;
+
 private:
 	SPDocument(SPDocument const &); // no copy
 	void operator=(SPDocument const &); // no assign

@@ -106,6 +106,7 @@ SPDocument::SPDocument() {
     p->history_size = 0;
     p->undo = NULL;
     p->redo = NULL;
+    p->seeking = false;
 
     priv = p;
 
@@ -1153,6 +1154,10 @@ vacuum_document(SPDocument *document)
     } while (iterations < 100 && newend < end);
 
     return start - newend;
+}
+
+bool SPDocument::isSeeking() const {
+    return priv->seeking;
 }
 
 

@@ -821,20 +821,26 @@ sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::No
         object->document->bindObjectToRepr(object->repr, object);
 
         if (Inkscape::XML::id_permitted(object->repr)) {
-            /* If we are not cloned, force unique id */
+            /* If we are not cloned, and not seeking, force unique id */
             gchar const *id = object->repr->attribute("id");
-            gchar *realid = sp_object_get_unique_id(object, id);
-            g_assert(realid != NULL);
+            if (!document->isSeeking()) {
+                gchar *realid = sp_object_get_unique_id(object, id);
+                g_assert(realid != NULL);
 
-            object->document->bindObjectToId(realid, object);
-            object->id = realid;
+                object->document->bindObjectToId(realid, object);
+                object->id = realid;
 
-            /* Redefine ID, if required */
-            if ((id == NULL) || (strcmp(id, realid) != 0)) {
-                bool saved = sp_document_get_undo_sensitive(document);
-                sp_document_set_undo_sensitive(document, false);
-                object->repr->setAttribute("id", realid);
-                sp_document_set_undo_sensitive(document, saved);
+                /* Redefine ID, if required */
+                if ((id == NULL) || (strcmp(id, realid) != 0)) {
+                    object->repr->setAttribute("id", realid);
+                }
+            } else if (id) {
+                // bind if id, but no conflict -- otherwise, we can expect
+                // a subsequent setting of the id attribute
+                if (!object->document->getObjectById(id)) {
+                    object->document->bindObjectToId(id, object);
+                    object->id = g_strdup(id);
+                }
             }
         }
     } else {
@@ -945,16 +951,23 @@ sp_object_private_set(SPObject *object, unsigned int key, gchar const *value)
                 SPDocument *document=object->document;
                 SPObject *conflict=NULL;
 
-                if (value) {
-                    conflict = document->getObjectById((char const *)value);
+                gchar const *new_id = value;
+
+                if (new_id) {
+                    conflict = document->getObjectById((char const *)new_id);
                 }
+
                 if ( conflict && conflict != object ) {
-                    sp_object_ref(conflict, NULL);
-                    // give the conflicting object a new ID
-                    gchar *new_conflict_id = sp_object_get_unique_id(conflict, NULL);
-                    SP_OBJECT_REPR(conflict)->setAttribute("id", new_conflict_id);
-                    g_free(new_conflict_id);
-                    sp_object_unref(conflict, NULL);
+                    if (!document->isSeeking()) {
+                        sp_object_ref(conflict, NULL);
+                        // give the conflicting object a new ID
+                        gchar *new_conflict_id = sp_object_get_unique_id(conflict, NULL);
+                        SP_OBJECT_REPR(conflict)->setAttribute("id", new_conflict_id);
+                        g_free(new_conflict_id);
+                        sp_object_unref(conflict, NULL);
+                    } else {
+                        new_id = NULL;
+                    }
                 }
 
                 if (object->id) {
@@ -962,8 +975,8 @@ sp_object_private_set(SPObject *object, unsigned int key, gchar const *value)
                     g_free(object->id);
                 }
 
-                if (value) {
-                    object->id = g_strdup((char const*)value);
+                if (new_id) {
+                    object->id = g_strdup((char const*)new_id);
                     document->bindObjectToId(object->id, object);
                 } else {
                     object->id = NULL;

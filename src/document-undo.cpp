@@ -7,6 +7,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   MenTaLguY <mental@rydia.net>
  *
+ * Copyright (C) 2007  MenTaLguY <mental@rydia.net>
  * Copyright (C) 1999-2003 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
@@ -222,6 +223,7 @@ sp_document_undo (SPDocument *doc)
 	g_assert (doc->priv->sensitive);
 
 	doc->priv->sensitive = FALSE;
+        doc->priv->seeking = true;
 
 	doc->actionkey = NULL;
 
@@ -244,6 +246,7 @@ sp_document_undo (SPDocument *doc)
 	sp_repr_begin_transaction (doc->rdoc);
 
 	doc->priv->sensitive = TRUE;
+        doc->priv->seeking = false;
 
 	if (ret)
 		inkscape_external_change();
@@ -266,6 +269,7 @@ sp_document_redo (SPDocument *doc)
 	g_assert (doc->priv->sensitive);
 
 	doc->priv->sensitive = FALSE;
+        doc->priv->seeking = true;
 
 	doc->actionkey = NULL;
 
@@ -288,6 +292,7 @@ sp_document_redo (SPDocument *doc)
 	sp_repr_begin_transaction (doc->rdoc);
 
 	doc->priv->sensitive = TRUE;
+        doc->priv->seeking = false;
 
 	if (ret)
 		inkscape_external_change();
