@@ -1630,7 +1630,7 @@ EditWidget::onWindowRealize()
     NR::Rect d(NR::Point(0, 0),
                NR::Point(sp_document_width(_desktop->doc()), sp_document_height(_desktop->doc())));
 
-    if (fabs(d.dimensions()[NR::X]) < 1.0 || fabs(d.dimensions()[NR::Y]) < 1.0) {
+    if (d.isEmpty(1.0)) {
         return;
     }
 

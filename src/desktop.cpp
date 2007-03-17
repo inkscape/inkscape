@@ -826,7 +826,7 @@ SPDesktop::zoom_page()
     NR::Rect d(NR::Point(0, 0),
                NR::Point(sp_document_width(doc()), sp_document_height(doc())));
 
-    if (d.dimensions()[NR::X] < 1.0 || d.dimensions()[NR::Y] < 1.0) {
+    if (d.isEmpty(1.0)) {
         return;
     }
 
@@ -859,7 +859,7 @@ SPDesktop::zoom_selection()
 {
     NR::Maybe<NR::Rect> const d = selection->bounds();
 
-    if ( !d || d->dimensions()[NR::X] < 0.1 || d->dimensions()[NR::Y] < 0.1) {
+    if ( !d || d->isEmpty(0.1) ) {
         return;
     }
 
@@ -890,7 +890,7 @@ SPDesktop::zoom_drawing()
     /* Note that the second condition here indicates that
     ** there are no items in the drawing.
     */
-    if ( !d || d->dimensions()[NR::X] < 1.0 || d->dimensions()[NR::Y] < 1.0 ) {
+    if ( !d || d->isEmpty(1.0) ) {
         return;
     }
 

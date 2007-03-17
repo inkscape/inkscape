@@ -103,7 +103,7 @@ get_scale_transform_with_stroke (NR::Rect &bbox_param, gdouble strokewidth, bool
     gdouble h1 = y1 - y0;
     gdouble r0 = strokewidth;
 
-    if (bbox.extent(NR::X) < 1e-06 || bbox.extent(NR::Y) < 1e-06) {
+    if (bbox.isEmpty()) {
         NR::Matrix move = NR::Matrix(NR::translate(x0 - bbox.min()[NR::X], y0 - bbox.min()[NR::Y]));
         return (move); // cannot scale from empty boxes at all, so only translate
     }

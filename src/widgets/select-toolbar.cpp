@@ -59,7 +59,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
     using NR::Y;
     if ( sel && !sel->isEmpty() ) {
         NR::Maybe<NR::Rect> const bbox(sel->bounds());
-        if ( bbox && ( bbox->extent(X) > 1e-6 || bbox->extent(Y) > 1e-6 ) ) {
+        if ( bbox && !bbox->isEmpty() ) {
             GtkWidget *us = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(spw), "units");
             SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
 
@@ -141,7 +141,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     sp_document_ensure_up_to_date (document);
     NR::Maybe<NR::Rect> bbox = selection->bounds();
 
-    if ( !bbox || bbox->extent(NR::X) < 1e-6 || bbox->extent(NR::Y) < 1e-6 ) {
+    if ( !bbox || bbox->isEmpty() ) {
         return;
     }
 

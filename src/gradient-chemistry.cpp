@@ -260,7 +260,7 @@ sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item)
     sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
     NR::Maybe<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
 
-    g_assert( bbox );
+    g_assert( bbox && !bbox->isEmpty() );
     NR::Coord const width = bbox->dimensions()[NR::X];
     NR::Coord const height = bbox->dimensions()[NR::Y];
 
@@ -318,7 +318,7 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
         sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
         NR::Matrix bbox2user;
         NR::Maybe<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
-        if ( bbox ) {
+        if ( bbox && !bbox->isEmpty() ) {
             bbox2user = NR::Matrix(bbox->dimensions()[NR::X], 0,
                                    0, bbox->dimensions()[NR::Y],
                                    bbox->min()[NR::X], bbox->min()[NR::Y]);

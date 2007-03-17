@@ -1195,7 +1195,7 @@ void sp_selection_paste_size (bool apply_x, bool apply_y)
     }
 
     NR::Maybe<NR::Rect> current = selection->bounds();
-    if ( !current || current->extent(NR::X) < 1e-6 || current->extent(NR::Y) < 1e-6 ) {
+    if ( !current || current->isEmpty() ) {
         return;
     }
 
@@ -1234,7 +1234,7 @@ void sp_selection_paste_size_separately (bool apply_x, bool apply_y)
         SPItem *item = SP_ITEM(l->data);
 
         NR::Maybe<NR::Rect> current = sp_item_bbox_desktop(item);
-        if ( !current || current->extent(NR::X) < 1e-6 || current->extent(NR::Y) < 1e-6 ) {
+        if ( !current || current->isEmpty() ) {
             continue;
         }
 
@@ -1527,7 +1527,7 @@ sp_selection_scale_absolute(Inkscape::Selection *selection,
         return;
 
     NR::Maybe<NR::Rect> const bbox(selection->bounds());
-    if ( !bbox ) {
+    if ( !bbox || bbox->isEmpty() ) {
         return;
     }
 
@@ -1550,7 +1550,7 @@ void sp_selection_scale_relative(Inkscape::Selection *selection, NR::Point const
 
     NR::Maybe<NR::Rect> const bbox(selection->bounds());
 
-    if ( !bbox ) {
+    if ( !bbox || bbox->isEmpty() ) {
         return;
     }
 
@@ -2202,7 +2202,7 @@ sp_selection_tile(bool apply)
 
     sp_document_ensure_up_to_date(document);
     NR::Maybe<NR::Rect> r = selection->bounds();
-    if ( !r ) {
+    if ( !r || r->isEmpty() ) {
         return;
     }
 
