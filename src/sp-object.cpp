@@ -174,12 +174,6 @@ sp_object_init(SPObject *object)
     object->repr = NULL;
     object->id = NULL;
 
-    // FIXME: now we create style for all objects, but per SVG, only the following can have style attribute:
-    // vg, g, defs, desc, title, symbol, use, image, switch, path, rect, circle, ellipse, line, polyline, 
-    // polygon, text, tspan, tref, textPath, altGlyph, glyphRef, marker, linearGradient, radialGradient, 
-    // stop, pattern, clipPath, mask, filter, feImage, a, font, glyph, missing-glyph, foreignObject
-    object->style = sp_style_new_from_object(object);
-
     object->_collection_policy = SPObject::COLLECT_WITH_PARENT;
 
     new (&object->_release_signal) sigc::signal<void, SPObject *>();
@@ -187,6 +181,12 @@ sp_object_init(SPObject *object)
     new (&object->_delete_signal) sigc::signal<void, SPObject *>();
     new (&object->_position_changed_signal) sigc::signal<void, SPObject *>();
     object->_successor = NULL;
+
+    // FIXME: now we create style for all objects, but per SVG, only the following can have style attribute:
+    // vg, g, defs, desc, title, symbol, use, image, switch, path, rect, circle, ellipse, line, polyline, 
+    // polygon, text, tspan, tref, textPath, altGlyph, glyphRef, marker, linearGradient, radialGradient, 
+    // stop, pattern, clipPath, mask, filter, feImage, a, font, glyph, missing-glyph, foreignObject
+    object->style = sp_style_new_from_object(object);
 
     object->_label = NULL;
     object->_default_label = NULL;
