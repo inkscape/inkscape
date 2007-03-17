@@ -751,8 +751,8 @@ sp_canvas_group_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
         item->x2 = bounds->max()[NR::X];
         item->y2 = bounds->max()[NR::Y];
     } else {
-        item->x1 = item->x2 = corners.midpoint()[NR::X];
-        item->y1 = item->y2 = corners.midpoint()[NR::Y];
+        // FIXME ?
+        item->x1 = item->x2 = item->y1 = item->y2 = 0;
     }
 }
 

@@ -17,39 +17,32 @@ namespace NR {
 
 class ConvexHull {
 public:
-	explicit ConvexHull(Point const &p)
-    : _initial(p) {}
+    ConvexHull() : _bounds() {}
+	explicit ConvexHull(Point const &p) : _bounds(Rect(p, p)) {}
 
-    Point midpoint() const {
+    Maybe<Point> midpoint() const {
         if (_bounds) {
             return _bounds->midpoint();
         } else {
-            return _initial;
+            return Nothing();
         }
     }
 
 	void add(Point const &p) {
         if (_bounds) {
 		    _bounds->expandTo(p);
-        } else if ( p != _initial ) {
-            _bounds = Rect(_initial, p);
+        } else {
+            _bounds = Rect(p, p);
         }
 	}
-	void add(Rect const &p) {
+	void add(Rect const &r) {
 		// Note that this is a hack.  when convexhull actually works
 		// you will need to add all four points.
-		if (_bounds) {
-            _bounds = union_bounds(*_bounds, p);
-        } else {
-            _bounds = p;
-            _bounds->expandTo(_initial);
-        }
+        _bounds = union_bounds(_bounds, r);
 	}
 	void add(ConvexHull const &h) {
         if (h._bounds) {
             add(*h._bounds);
-        } else {
-            add(h._initial);
         }
 	}
 
@@ -58,8 +51,7 @@ public:
 	}
 	
 private:
-    Point _initial;
-	Maybe<Rect> _bounds;
+    Maybe<Rect> _bounds;
 };
 
 } /* namespace NR */

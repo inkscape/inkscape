@@ -28,16 +28,13 @@
 namespace NR {
     struct Matrix;
 
-class EmptyRectangle : public std::logic_error {
-public:
-    EmptyRectangle() : logic_error("Attempt to create empty rectangle") {}
-};
-
 /** A rectangle is always aligned to the X and Y axis.  This means it
  * can be defined using only 4 coordinates, and determining
  * intersection is very efficient.  The points inside a rectangle are
- * min[dim] <= _pt[dim] <= max[dim].  Emptiness, in the sense of having
- * a zero area, is not permitted.  Infinities are, however. */
+ * min[dim] <= _pt[dim] <= max[dim].  A rectangle may be empty, in the
+ * sense of having zero area, but it will always contain at least one
+ * point.  Infinities are also permitted.
+ */
 class Rect {
 public:
     Rect() : _min(-_inf(), -_inf()), _max(_inf(), _inf()) {}
@@ -55,6 +52,10 @@ public:
 
     /** returns the midpoint of this rect. */
     Point midpoint() const;
+
+    bool isEmpty(double epsilon=1e-6) const {
+        return isEmpty<X>(epsilon) || isEmpty<Y>(epsilon);
+    }
 
     bool intersects(Rect const &r) const {
         return intersects<X>(r) && intersects<Y>(r);
@@ -150,6 +151,11 @@ private:
     template <NR::Dim2 axis>
     double extent() const {
         return _max[axis] - _min[axis];
+    }
+
+    template <NR::Dim2 axis>
+    bool isEmpty(double epsilon) const {
+        return extent<axis>() < epsilon;
     }
 
     template <Dim2 axis>
