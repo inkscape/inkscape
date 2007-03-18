@@ -708,8 +708,10 @@ static void
 sp_star_knot1_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPStar *star = SP_STAR(item);
+    
+    NR::Point const s = snap_knot_position(star, p);
 
-    NR::Point d = p - star->center;
+    NR::Point d = s - star->center;
 
     double arg1 = atan2(d);
     double darg1 = arg1 - star->arg[0];
@@ -732,8 +734,11 @@ static void
 sp_star_knot2_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPStar *star = SP_STAR(item);
+    
+    NR::Point const s = snap_knot_position(star, p);
+    
     if (star->flatsided == false) {
-        NR::Point d = p - star->center;
+        NR::Point d = s - star->center;
 
         double arg1 = atan2(d);
         double darg1 = arg1 - star->arg[1];
