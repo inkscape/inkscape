@@ -788,8 +788,7 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
     
                     // restore cursor when done; note that it may already be different if e.g. user 
                     // switched to another tool during interruptible tracing or drawing, in which case do nothing
-                    if (desktop->waiting_cursor)
-                        sp_event_context_update_cursor(event_context);
+                    desktop->clearWaitingCursor();
     
                     ret = TRUE;
                 }
