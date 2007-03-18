@@ -243,6 +243,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void disableInteraction();
 
     void setWaitingCursor();
+    void clearWaitingCursor();
     
     void fullscreen();
 

@@ -1087,6 +1087,13 @@ void SPDesktop::setWaitingCursor()
        Gtk::Main::iteration();
 }
 
+void SPDesktop::clearWaitingCursor()
+{
+  if (waiting_cursor)
+      sp_event_context_update_cursor(sp_desktop_event_context(this));
+}
+
+
 //----------------------------------------------------------------------
 // Callback implementations. The virtual ones are connected by the view.
 
