@@ -36,7 +36,6 @@
 using namespace std;
 using namespace cola;
 using namespace vpsc;
-
 /**
  * Returns true if item is a connector
  */
@@ -47,6 +46,36 @@ bool isConnector(SPItem const *const i) {
 	}
 	return path && path->connEndPair.isAutoRoutingConn();
 }
+
+struct CheckProgress : TestConvergence {
+    CheckProgress(double d,unsigned i,list<SPItem *>&
+            selected,vector<Rectangle*>& rs,map<string,unsigned>& nodelookup) :
+        TestConvergence(d,i), selected(selected), rs(rs), nodelookup(nodelookup) {}
+	bool operator()(double new_stress, double* X, double* Y) {
+        /* This is where, if we wanted to animate the layout, we would need to update
+         * the positions of all objects and redraw the canvas and maybe sleep a bit
+		cout << "stress="<<new_stress<<endl;
+        cout << "x[0]="<<rs[0]->getMinX()<<endl;
+        for (list<SPItem *>::iterator it(selected.begin());
+            it != selected.end();
+            ++it)
+        {
+            SPItem *u=*it;
+            if(!isConnector(u)) {
+                Rectangle* r=rs[nodelookup[u->id]];
+                NR::Rect const item_box(sp_item_bbox_desktop(u));
+                NR::Point const curr(item_box.midpoint());
+                NR::Point const dest(r->getCentreX(),r->getCentreY());
+                sp_item_move_rel(u, NR::translate(dest - curr));
+            }
+        }
+        */
+		return TestConvergence::operator()(new_stress,X,Y);
+	}
+    list<SPItem *>& selected;
+    vector<Rectangle*>& rs;
+    map<string,unsigned>& nodelookup;
+};
 
 /**
  * Scans the items list and places those items that are 
@@ -131,45 +160,50 @@ void graphlayout(GSList const *const items) {
 		++i)
 	{
 		SPItem *iu=*i;
-		unsigned u=nodelookup[iu->id];
-		GSList *nlist=iu->avoidRef->getAttachedConnectors(Avoid::runningFrom);
-		list<SPItem *> connectors;
-		
-		connectors.insert<GSListConstIterator<SPItem *> >(connectors.end(),nlist,NULL);
-		for (list<SPItem *>::iterator j(connectors.begin());
-				j != connectors.end();
-				++j) {
-			SPItem *conn=*j;
-			SPItem *iv;
-			SPItem *items[2];
-			assert(isConnector(conn));
-			SP_PATH(conn)->connEndPair.getAttachedItems(items);
-			if(items[0]==iu) {
-				iv=items[1];
-			} else {
-				iv=items[0];
-			}
-	
+        map<string,unsigned>::iterator i=nodelookup.find(iu->id);
+        if(i==nodelookup.end()) {
+            continue;
+        }
+        unsigned u=i->second;
+        GSList *nlist=iu->avoidRef->getAttachedConnectors(Avoid::runningFrom);
+        list<SPItem *> connectors;
+        
+        connectors.insert<GSListConstIterator<SPItem *> >(connectors.end(),nlist,NULL);
+        for (list<SPItem *>::iterator j(connectors.begin());
+                j != connectors.end();
+                ++j) {
+            SPItem *conn=*j;
+            SPItem *iv;
+            SPItem *items[2];
+            assert(isConnector(conn));
+            SP_PATH(conn)->connEndPair.getAttachedItems(items);
+            if(items[0]==iu) {
+                iv=items[1];
+            } else {
+                iv=items[0];
+            }
+    
             if (iv == NULL) {
                 // The connector is not attached to anything at the 
                 // other end so we should just ignore it.
                 continue;
             }
 
-			// What do we do if iv not in nodelookup?!?!
-			map<string,unsigned>::iterator v_pair=nodelookup.find(iv->id);
-			if(v_pair!=nodelookup.end()) {
-				unsigned v=v_pair->second;
-				//cout << "Edge: (" << u <<","<<v<<")"<<endl;
-				es.push_back(make_pair(u,v));
-				if(conn->style->marker[SP_MARKER_LOC_END].set) {
-					if(directed && strcmp(conn->style->marker[SP_MARKER_LOC_END].value,"none")) {
-						scy.push_back(new SimpleConstraint(v, u, 
+            // If iv not in nodelookup we again treat the connector
+            // as disconnected and continue
+            map<string,unsigned>::iterator v_pair=nodelookup.find(iv->id);
+            if(v_pair!=nodelookup.end()) {
+                unsigned v=v_pair->second;
+                //cout << "Edge: (" << u <<","<<v<<")"<<endl;
+                es.push_back(make_pair(u,v));
+                if(conn->style->marker[SP_MARKER_LOC_END].set) {
+                    if(directed && strcmp(conn->style->marker[SP_MARKER_LOC_END].value,"none")) {
+                        scy.push_back(new SimpleConstraint(v, u, 
                                     (ideal_connector_length * directed_edge_height_modifier)));
-					}
-				}
-			}
-		}
+                    }
+                }
+            }
+        }
 		if(nlist) {
 			g_slist_free(nlist);
 		}
@@ -182,7 +216,8 @@ void graphlayout(GSList const *const items) {
     for(unsigned i=0;i<cs.size();i++) {
         Component* c=cs[i];
         if(c->edges.size()<2) continue;
-        ConstrainedMajorizationLayout alg(c->rects,c->edges,eweights,ideal_connector_length);
+        CheckProgress test(0.0001,100,selected,rs,nodelookup);
+        ConstrainedMajorizationLayout alg(c->rects,c->edges,eweights,ideal_connector_length,test);
         alg.setupConstraints(NULL,NULL,avoid_overlaps,
                 NULL,NULL,&c->scx,&c->scy,NULL,NULL);
         alg.run();
@@ -195,12 +230,15 @@ void graphlayout(GSList const *const items) {
 	{
 		SPItem *u=*it;
 		if(!isConnector(u)) {
-			Rectangle* r=rs[nodelookup[u->id]];
-			NR::Maybe<NR::Rect> item_box(sp_item_bbox_desktop(u));
-            if(item_box) {
-                NR::Point const curr(item_box->midpoint());
-                NR::Point const dest(r->getCentreX(),r->getCentreY());
-                sp_item_move_rel(u, NR::translate(dest - curr));
+			map<string,unsigned>::iterator i=nodelookup.find(u->id);
+			if(i!=nodelookup.end()) {
+                Rectangle* r=rs[i->second];
+                NR::Maybe<NR::Rect> item_box(sp_item_bbox_desktop(u));
+                if(item_box) {
+                    NR::Point const curr(item_box->midpoint());
+                    NR::Point const dest(r->getCentreX(),r->getCentreY());
+                    sp_item_move_rel(u, NR::translate(dest - curr));
+                }
             }
 		}
 	}
