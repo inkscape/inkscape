@@ -247,6 +247,16 @@ Rect::Rect(const Point &p0, const Point &p1)
   _max(std::max(p0[X], p1[X]), std::max(p0[Y], p1[Y]))
 {}
 
+Rect::Rect(NRRect *r)
+    : _min(r->x0, r->y0),
+      _max(r->x1, r->y1)
+{}
+
+Rect::Rect(NRRectL *r)
+    : _min(r->x0, r->y0),
+      _max(r->x1, r->y1)
+{}
+
 /** returns the four corners of the rectangle in the correct winding order */
 Point Rect::corner(unsigned i) const {
 	switch (i % 4) {
@@ -284,6 +294,16 @@ void Rect::expandTo(Point p) {
 		_max[i] = std::max(_max[i], p[i]);
 	}
 }
+
+void Rect::growBy(double size) {
+  for ( unsigned d = 0 ; d < 2 ; d++ ) {
+    _min[d] -= size;
+    _max[d] += size;
+    if ( _min[d] > _max[d] ) {
+      _min[d] = _max[d] = ( _min[d] + _max[d] ) / 2;
+    }
+  }
+} 
 
 /** Returns the set of points shared by both rectangles. */
 Maybe<Rect> intersection(Maybe<Rect> const & a, Maybe<Rect> const & b) {

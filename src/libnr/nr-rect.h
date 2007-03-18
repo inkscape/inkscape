@@ -25,6 +25,9 @@
 #include <libnr/nr-maybe.h>
 #include <libnr/nr-point-matrix-ops.h>
 
+struct NRRect;
+struct NRRectL;
+
 namespace NR {
     struct Matrix;
 
@@ -39,6 +42,8 @@ class Rect {
 public:
     Rect() : _min(-_inf(), -_inf()), _max(_inf(), _inf()) {}
     Rect(Point const &p0, Point const &p1);
+    Rect(NRRect *r);
+    Rect(NRRectL *r);
 
     Point const &min() const { return _min; }
     Point const &max() const { return _max; }
@@ -124,6 +129,8 @@ public:
     inline void move_bottom (gdouble by) {
         _max[NR::Y] += by;
     }
+
+    void growBy (gdouble by);
 
     /** Scales the rect by s, with origin at 0, 0 */
     inline Rect operator*(double const s) const {
