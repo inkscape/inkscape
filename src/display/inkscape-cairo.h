@@ -11,7 +11,7 @@
  */
 
 cairo_t *nr_create_cairo_context (NRRectL *area, NRPixBlock *pb);
-void feed_curve_to_cairo (cairo_t *ct, NArtBpath *bpath, NR::Matrix trans, NR::Point shift);
+void feed_curve_to_cairo (cairo_t *ct, NArtBpath *bpath, NR::Matrix trans, NR::Rect area, bool optimize_stroke, double stroke_width);
 
 #endif
 /*

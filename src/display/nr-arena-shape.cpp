@@ -728,7 +728,7 @@ nr_arena_shape_add_bboxes(NRArenaShape* shape, NRRect &bbox)
 
 // cairo outline rendering:
 static unsigned int
-cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, NR::Point shift)
+cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, NR::Rect area)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
 
@@ -744,7 +744,7 @@ cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, NR::Point shift
     cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
     cairo_new_path(ct);
 
-    feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), shift);
+    feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), area, true, 0);
 
     cairo_stroke(ct);
 
@@ -827,7 +827,7 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
     cairo_set_tolerance(ct, 0.1);
     cairo_new_path(ct);
 
-    feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), NR::Point(area->x0, area->y0));
+    feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), NR::Rect(area), true, style_width);
 
     cairo_stroke(ct);
 
@@ -856,7 +856,7 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
     if (outline) { // cairo outline rendering
 
         pb->empty = FALSE;
-        unsigned int ret = cairo_arena_shape_render_outline (ct, item, NR::Point(pb->area.x0, pb->area.y0));
+        unsigned int ret = cairo_arena_shape_render_outline (ct, item, NR::Rect(&pb->area));
         if (ret & NR_ARENA_ITEM_STATE_INVALID) return ret;
 
     } else {
@@ -1004,7 +1004,7 @@ cairo_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 
         cairo_new_path(ct);
 
-        feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), NR::Point(area->x0, area->y0));
+        feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), NR::Rect(area), false, 0);
 
         cairo_fill(ct);
 
@@ -1091,10 +1091,11 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
     bp.path = SP_CURVE_BPATH(shape->curve);
     double dist = NR_HUGE;
     int wind = 0;
-    nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, &wind, &dist, NR_EPSILON);
+    bool needfill = (shape->_fill.paint.type() != NRArenaShape::Paint::NONE && !outline);
+    nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, needfill? &wind : NULL, &dist, 0.5);
 
     // pick fill
-    if (shape->_fill.paint.type() != NRArenaShape::Paint::NONE && !outline) {
+    if (needfill) {
         if (!shape->style->fill_rule.computed) {
             if (wind != 0) return item;
         } else {

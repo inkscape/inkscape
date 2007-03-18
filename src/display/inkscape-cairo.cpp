@@ -46,9 +46,13 @@ nr_create_cairo_context (NRRectL *area, NRPixBlock *pb)
 
 /** Feeds path-creating calls to the cairo context translating them from the SPCurve, with the given transform and shift */
 void
-feed_curve_to_cairo (cairo_t *ct, NArtBpath *bpath, NR::Matrix trans, NR::Point shift)
+feed_curve_to_cairo (cairo_t *ct, NArtBpath *bpath, NR::Matrix trans, NR::Rect area, bool optimize_stroke, double stroke_width)
 {
-    NR::Point lastX(0,0);
+    NR::Point next(0,0), last(0,0);
+    NR::Point shift = area.min();
+    NR::Rect view = area;
+    view.growBy (stroke_width);
+    NR::Rect swept;
     bool  closed = false;
     for (int i = 0; bpath[i].code != NR_END; i++) {
         switch (bpath[i].code) {
@@ -56,19 +60,30 @@ feed_curve_to_cairo (cairo_t *ct, NArtBpath *bpath, NR::Matrix trans, NR::Point 
             case NR_MOVETO:
                 if (closed) cairo_close_path(ct);
                 closed = (bpath[i].code == NR_MOVETO);
-                lastX[NR::X] = bpath[i].x3;
-                lastX[NR::Y] = bpath[i].y3;
-                lastX *= trans;
-                lastX -= shift;
-                cairo_move_to(ct, lastX[NR::X], lastX[NR::Y]);
+                next[NR::X] = bpath[i].x3;
+                next[NR::Y] = bpath[i].y3;
+                next *= trans;
+                last = next;
+                next -= shift;
+                cairo_move_to(ct, next[NR::X], next[NR::Y]);
                 break;
 
             case NR_LINETO:
-                lastX[NR::X] = bpath[i].x3;
-                lastX[NR::Y] = bpath[i].y3;
-                lastX *= trans;
-                lastX -= shift;
-                cairo_line_to(ct, lastX[NR::X], lastX[NR::Y]);
+                next[NR::X] = bpath[i].x3;
+                next[NR::Y] = bpath[i].y3;
+                next *= trans;
+                if (optimize_stroke) {
+                    swept = NR::Rect(last, next);
+                    //std::cout << "swept: " << swept;
+                    //std::cout << "view: " << view;
+                    //std::cout << "intersects? " << (swept.intersects(view)? "YES" : "NO") << "\n";
+                }
+                last = next;
+                next -= shift;
+                if (!optimize_stroke || swept.intersects(view)) 
+                    cairo_line_to(ct, next[NR::X], next[NR::Y]);
+                else 
+                    cairo_move_to(ct, next[NR::X], next[NR::Y]);
                 break;
 
             case NR_CURVETO: {
@@ -82,10 +97,20 @@ feed_curve_to_cairo (cairo_t *ct, NArtBpath *bpath, NR::Matrix trans, NR::Point 
                 tm1 *= trans;
                 tm2 *= trans;
                 tm3 *= trans;
+                if (optimize_stroke) {
+                    swept = NR::Rect(last, last);
+                    swept.expandTo(tm1);
+                    swept.expandTo(tm2);
+                    swept.expandTo(tm3);
+                }
+                last = tm3;
                 tm1 -= shift;
                 tm2 -= shift;
                 tm3 -= shift;
-                cairo_curve_to (ct, tm1[NR::X], tm1[NR::Y], tm2[NR::X], tm2[NR::Y], tm3[NR::X], tm3[NR::Y]);
+                if (!optimize_stroke || swept.intersects(view)) 
+                    cairo_curve_to (ct, tm1[NR::X], tm1[NR::Y], tm2[NR::X], tm2[NR::Y], tm3[NR::X], tm3[NR::Y]);
+                else
+                    cairo_move_to(ct, tm3[NR::X], tm3[NR::Y]);
                 break;
             }
 
