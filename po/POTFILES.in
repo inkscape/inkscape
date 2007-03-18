@@ -68,6 +68,7 @@ src/event-context.cpp
 src/event-log.cpp
 src/extension/db.cpp
 src/extension/dependency.cpp
+src/extension/effect.cpp
 src/extension/extension.cpp
 src/extension/error-file.cpp
 src/extension/implementation/implementation.cpp
@@ -75,6 +76,7 @@ src/extension/implementation/script.cpp
 src/extension/init.cpp
 src/extension/internal/bluredge.cpp
 src/extension/internal/eps-out.cpp
+src/extension/internal/emf-win32-inout.cpp
 src/extension/internal/gdkpixbuf-input.cpp
 src/extension/internal/gimpgrad.cpp
 src/extension/internal/gnome.cpp
@@ -95,6 +97,7 @@ src/extension/system.cpp
 src/extract-uri.cpp
 src/file.cpp
 src/fixes.cpp
+src/flood-context.cpp
 src/geom.cpp
 src/gradient-chemistry.cpp
 src/gradient-context.cpp
@@ -107,6 +110,7 @@ src/helper/stock-items.cpp
 src/helper/unit-menu.cpp
 src/helper/units.cpp
 src/helper/window.cpp
+src/ink-action.cpp
 src/inkjar/jar.cpp
 src/inkscape-stock.cpp
 src/inkscape.cpp
@@ -162,7 +166,7 @@ src/livarot/ShapeMisc.cpp
 src/livarot/ShapeRaster.cpp
 src/livarot/ShapeSweep.cpp
 src/main.cpp
-src/marker-status.cpp
+src/main-cmdlineact.cpp
 src/menus-skeleton.h
 src/message-context.cpp
 src/message-stack.cpp
@@ -187,6 +191,7 @@ src/selection-describer.cpp
 src/selection.cpp
 src/seltrans-handles.cpp
 src/seltrans.cpp
+src/shape-editor.cpp
 src/shortcuts.cpp
 src/slideshow.cpp
 src/sp-anchor.cpp
@@ -365,7 +370,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/inkscape_help_reportabug.inx
 [type: gettext/xml] share/extensions/inkscape_help_svgspec.inx
 [type: gettext/xml] share/extensions/interp.inx
-[type: gettext/xml] share/extensions/lindenmayer.inx 
+[type: gettext/xml] share/extensions/lindenmayer.inx
 [type: gettext/xml] share/extensions/lorem_ipsum.inx
 [type: gettext/xml] share/extensions/markers_strokepaint.inx
 [type: gettext/xml] share/extensions/measure.inx
