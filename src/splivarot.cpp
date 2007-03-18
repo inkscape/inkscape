@@ -1548,9 +1548,9 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
   
   gchar *simplificationType;
   if (simplifyIndividualPaths) {
-    simplificationType = "individual paths";
+      simplificationType = _("Simplifying paths (separately):");
   } else {
-    simplificationType = "as a group";
+      simplificationType = _("Simplifying paths:");
   }
 
   bool didSomething = false;
@@ -1566,7 +1566,8 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
   int pathsSimplified = 0;
   int totalPathCount  = g_slist_length(items);
   
-  desktop->disableInteraction();
+  // set "busy" cursor
+  desktop->setWaitingCursor();
   
   for (; items != NULL; items = items->next) {
       SPItem *item = (SPItem *) items->data;
@@ -1583,23 +1584,21 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
           }
       }
 
-
       pathsSimplified++;
 
       if (pathsSimplified % 20 == 0) {
-        gchar *message = g_strdup_printf(_("Simplifying %s - <b>%d</b> of <b>%d</b> paths simplified..."), simplificationType, pathsSimplified, totalPathCount);
-        desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, message);
-        desktop->updateCanvasNow();
+        gchar *message = g_strdup_printf(_("%s <b>%d</b> of <b>%d</b> paths simplified..."), simplificationType, pathsSimplified, totalPathCount);
+        desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, message);
       }
 
       didSomething |= sp_selected_path_simplify_item(desktop, selection, item,
                           threshold, justCoalesce, angleLimit, breakableAngles, simplifySize, modifySelection);
   }
 
-  desktop->enableInteraction();
-  
+  desktop->clearWaitingCursor();
+
   if (pathsSimplified > 20) {
-    desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, g_strdup_printf(_("Done - <b>%d</b> paths simplified."), pathsSimplified));
+    desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, g_strdup_printf(_("<b>%d</b> paths simplified."), pathsSimplified));
   }
   
   return didSomething;
