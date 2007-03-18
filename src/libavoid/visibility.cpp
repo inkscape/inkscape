@@ -21,6 +21,7 @@
 */
 
 
+#include <algorithm>
 #include <cfloat>
 
 #include "libavoid/shape.h"

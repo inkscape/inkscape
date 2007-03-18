@@ -11,6 +11,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <algorithm>
 
 #include "composite-undo-stack-observer.h"
 #include "xml/event.h"

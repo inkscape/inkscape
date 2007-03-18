@@ -17,6 +17,7 @@
 #include "libnr/nr-rotate-ops.h"
 #include <glibmm/ustring.h>
 #include <pango/pango-break.h>
+#include <algorithm>
 #include <vector>
 
 #ifdef HAVE_CAIRO_PDF

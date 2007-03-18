@@ -1,6 +1,7 @@
 #ifndef __REMOVE_LAST_H__
 #define __REMOVE_LAST_H__
 
+#include <algorithm>
 #include <vector>
 #include <glib.h>
 

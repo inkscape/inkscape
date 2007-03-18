@@ -40,7 +40,7 @@ char const *demangle_helper(char const *name) {
 }
 
 struct string_less_than {
-    bool operator()(char const *a, char const *b) {
+    bool operator()(char const *a, char const *b) const {
         return ( strcmp(a, b) < 0 );
     }
 };

@@ -31,7 +31,9 @@
 #include "libavoid/connector.h"
 #include "libavoid/graph.h"
 #include "libavoid/router.h"
+#include <algorithm>
 #include <vector>
+#include <limits.h>
 #include <math.h>
 
 namespace Avoid {

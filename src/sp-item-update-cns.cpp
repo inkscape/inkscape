@@ -3,6 +3,7 @@
 #include "sp-guide-constraint.h"
 #include <sp-guide.h>
 #include <sp-item.h>
+#include <algorithm>
 using std::find;
 using std::vector;
 

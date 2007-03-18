@@ -11,6 +11,7 @@
  */
 
 
+#include <algorithm>
 #include <map>
 #include "libnr/nr-matrix-ops.h"
 #include "sp-item.h"

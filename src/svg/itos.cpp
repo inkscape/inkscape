@@ -14,6 +14,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 // Standard include files
+#include <algorithm>
 #include <string>		// for string
 
 using namespace std;
