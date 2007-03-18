@@ -1,3 +1,5 @@
+#ifndef __GECKOEMBED_H__
+#define __GECKOEMBED_H__
 /*
  * Implementation the Pedro mini-XMPP client
  *
@@ -22,72 +24,40 @@
  */
 
 #include <stdio.h>
+#include <stdarg.h>
 
 
-
-
-//#######################################################################
-//# G E C K O (xulrunner)
-//#######################################################################
-
-#ifdef GECKO_EMBED
-
-
-#include "geckoembed.h"
-
-int main(int argc, char *argv[])
+namespace Pedro
 {
-    GeckoEmbed embedder;
-    
-    embedder.run();
-
-    return 0;
-}
 
 
-//#######################################################################
-//# G T K M M  (pedrogui)
-//#######################################################################
-#else /* NOT GECKO_EMBED */
-
-
-
-#include "pedrogui.h"
-
-int main(int argc, char *argv[])
+class GeckoEmbed
 {
-    Gtk::Main kit(argc, argv);
+public:
 
-    Pedro::PedroGui window;
-
-    kit.run(window);
-
-    return 0;
-}
-
-
-
-#endif /* GECKO_EMBED */
+    GeckoEmbed()
+        {
+        init();
+        }
+        
+    virtual ~GeckoEmbed()
+        {
+        }
 
 
 
+private:
+
+    void init()
+        {
+        }
 
 
-#ifdef __WIN32__
-#include <windows.h>
-
-extern "C" int __export WINAPI
-WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
-         char *lpszCmdLine, int nCmdShow)
-{
-    int ret = main (__argc, __argv);
-    return ret;
-}
-
-#endif
+};
 
 
-
+} //namespace Pedro
+#define __GECKOEMBED_H__
 //########################################################################
 //# E N D    O F     F I L E
 //########################################################################
