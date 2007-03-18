@@ -902,7 +902,7 @@ static Glib::ustring getExtension(const Glib::ustring &fname)
 {
     Glib::ustring ext;
 
-    unsigned int pos = fname.rfind('.');
+    std::string::size_type pos = fname.rfind('.');
     if (pos == fname.npos)
         {
         ext = "";

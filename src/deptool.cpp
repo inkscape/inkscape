@@ -497,7 +497,7 @@ void DepTool::parseName(const String &fullname,
     if (fullname.size() < 2)
         return;
 
-    unsigned int pos = fullname.find_last_of('/');
+    String::size_type pos = fullname.find_last_of('/');
     if (pos != fullname.npos && pos<fullname.size()-1)
         {
         path = fullname.substr(0, pos);
@@ -529,7 +529,7 @@ String DepTool::getSuffix(const String &fname)
 {
     if (fname.size() < 2)
         return "";
-    unsigned int pos = fname.find_last_of('.');
+    String::size_type pos = fname.find_last_of('.');
     if (pos == fname.npos)
         return "";
     pos++;

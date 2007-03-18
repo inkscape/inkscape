@@ -332,7 +332,7 @@ URI URI::resolve(const URI &other) const
             }
         else
             {
-            unsigned int pos = path.find_last_of('/');
+            std::string::size_type pos = path.find_last_of('/');
             if (pos != path.npos)
                 {
                 DOMString tpath = path.substr(0, pos+1);
@@ -378,7 +378,7 @@ void URI::normalize()
         }
     while (pos < path.size())
         {
-        unsigned int pos2 = path.find('/', pos);
+        std::string::size_type pos2 = path.find('/', pos);
         if (pos2==path.npos)
             {
             DOMString seg = path.substr(pos);

@@ -596,12 +596,12 @@ bool parseNum( char*& str, int& val ) {
 static bool getBlock( std::string& dst, guchar ch, std::string const str )
 {
     bool good = false;
-    size_t pos = str.find(ch);
+    std::string::size_type pos = str.find(ch);
     if ( pos != std::string::npos )
     {
-        size_t pos2 = str.find( '(', pos );
+        std::string::size_type pos2 = str.find( '(', pos );
         if ( pos2 != std::string::npos ) {
-            size_t endPos = str.find( ')', pos2 );
+            std::string::size_type endPos = str.find( ')', pos2 );
             if ( endPos != std::string::npos ) {
                 dst = str.substr( pos2 + 1, (endPos - pos2 - 1) );
                 good = true;
@@ -614,7 +614,7 @@ static bool getBlock( std::string& dst, guchar ch, std::string const str )
 static bool popVal( guint64& numVal, std::string& str )
 {
     bool good = false;
-    size_t endPos = str.find(',');
+    std::string::size_type endPos = str.find(',');
     if ( endPos == std::string::npos ) {
         endPos = str.length();
     }
@@ -644,11 +644,11 @@ void ColorItem::_wireMagicColors( void* p )
     {
         for ( std::vector<ColorItem*>::iterator it = onceMore->_colors.begin(); it != onceMore->_colors.end(); ++it )
         {
-            size_t pos = (*it)->def.descr.find("*{");
+            std::string::size_type pos = (*it)->def.descr.find("*{");
             if ( pos != std::string::npos )
             {
                 std::string subby = (*it)->def.descr.substr( pos + 2 );
-                size_t endPos = subby.find("}*");
+                std::string::size_type endPos = subby.find("}*");
                 if ( endPos != std::string::npos )
                 {
                     subby.erase( endPos );

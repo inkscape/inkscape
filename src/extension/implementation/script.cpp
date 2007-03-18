@@ -293,8 +293,8 @@ Script::check_existance(const Glib::ustring &command)
            The default search path is the current directory */
         path = G_SEARCHPATH_SEPARATOR_S;
 
-    unsigned int pos  = 0;
-    unsigned int pos2 = 0;
+    std::string::size_type pos  = 0;
+    std::string::size_type pos2 = 0;
     while ( pos < path.size() ) {
 
         Glib::ustring localPath;

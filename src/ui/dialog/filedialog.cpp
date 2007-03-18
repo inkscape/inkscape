@@ -1554,7 +1554,7 @@ void FileSaveDialogImpl::updateNameAndExtension()
         try {
             bool appendExtension = true;
             Glib::ustring utf8Name = Glib::filename_to_utf8( myFilename );
-            size_t pos = utf8Name.rfind('.');
+            Glib::ustring::size_type pos = utf8Name.rfind('.');
             if ( pos != Glib::ustring::npos ) {
                 Glib::ustring trail = utf8Name.substr( pos );
                 Glib::ustring foldedTrail = trail.casefold();

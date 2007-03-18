@@ -94,7 +94,7 @@ void LayerManager::renameLayer( SPObject* obj, gchar const *label )
     Glib::ustring base(incoming);
     guint startNum = 1;
 
-    size_t pos = base.rfind('#');
+    Glib::ustring::size_type pos = base.rfind('#');
     if ( pos != Glib::ustring::npos ) {
         gchar* numpart = g_strdup(base.substr(pos+1).c_str());
         if ( numpart ) {
