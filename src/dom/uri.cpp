@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2007 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -53,7 +53,7 @@ typedef struct
     int  port;
 } LookupEntry;
 
-LookupEntry schemes[] =
+static LookupEntry schemes[] =
 {
     { URI::SCHEME_DATA,   "data:",    0 },
     { URI::SCHEME_HTTP,   "http:",   80 },
@@ -332,7 +332,7 @@ URI URI::resolve(const URI &other) const
             }
         else
             {
-            std::string::size_type pos = path.find_last_of('/');
+            DOMString::size_type pos = path.find_last_of('/');
             if (pos != path.npos)
                 {
                 DOMString tpath = path.substr(0, pos+1);
@@ -378,7 +378,7 @@ void URI::normalize()
         }
     while (pos < path.size())
         {
-        std::string::size_type pos2 = path.find('/', pos);
+        DOMString::size_type pos2 = path.find('/', pos);
         if (pos2==path.npos)
             {
             DOMString seg = path.substr(pos);
