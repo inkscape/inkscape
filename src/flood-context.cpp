@@ -779,15 +779,20 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
             if (!(event->button.state & GDK_CONTROL_MASK)) {
                 // set "busy" cursor
                 desktop->setWaitingCursor();
+
+                if (SP_IS_EVENT_CONTEXT(event_context)) { 
+                    // Since setWaitingCursor runs main loop iterations, we may have already left this tool!
+                    // So check if the tool is valid before doing anything
+
+                    sp_flood_do_flood_fill(event_context, event);
     
-                sp_flood_do_flood_fill(event_context, event);
+                    // restore cursor when done; note that it may already be different if e.g. user 
+                    // switched to another tool during interruptible tracing or drawing, in which case do nothing
+                    if (desktop->waiting_cursor)
+                        sp_event_context_update_cursor(event_context);
     
-                // restore cursor when done; note that it may already be different if e.g. user 
-                // switched to another tool during interruptible tracing or drawing, in which case do nothing
-                if (desktop->waiting_cursor)
-                    sp_event_context_update_cursor(event_context);
-    
-                ret = TRUE;
+                    ret = TRUE;
+                }
             }
         }
         break;
