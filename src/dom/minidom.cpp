@@ -176,7 +176,7 @@ void Parser::error(char *fmt, ...)
     int colNr;
     getLineAndColumn(currentPosition, &lineNr, &colNr);
     va_list args;
-    fprintf(stderr, "xml error at line %ld, column %ld:", lineNr, colNr);
+    fprintf(stderr, "xml error at line %d, column %d:", lineNr, colNr);
     va_start(args,fmt);
     vfprintf(stderr,fmt,args);
     va_end(args) ;
