@@ -213,6 +213,15 @@ static NR::Point sp_pattern_scale_get(SPItem *item)
 
 /* SPRect */
 
+static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
+{
+    SPDesktop const *desktop = inkscape_active_desktop();
+    NR::Point s = sp_desktop_dt2root_xy_point(desktop, p);
+    SnapManager const &m = desktop->namedview->snap_manager;
+    s = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, s, item).getPoint();
+    return sp_desktop_root2dt_xy_point(desktop, s);
+}
+
 static NR::Point sp_rect_rx_get(SPItem *item)
 {
     SPRect *rect = SP_RECT(item);
@@ -223,14 +232,16 @@ static NR::Point sp_rect_rx_get(SPItem *item)
 static void sp_rect_rx_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPRect *rect = SP_RECT(item);
+    
+    NR::Point const s = snap_knot_position(rect, p);
 
     if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - p[NR::X], 0.0, temp);
+        rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - s[NR::X], 0.0, temp);
         rect->rx._set = rect->ry._set = true;
 
     } else {
-        rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - p[NR::X], 0.0, rect->width.computed / 2.0);
+        rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - s[NR::X], 0.0, rect->width.computed / 2.0);
         rect->rx._set = true;
     }
 
@@ -248,18 +259,20 @@ static NR::Point sp_rect_ry_get(SPItem *item)
 static void sp_rect_ry_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPRect *rect = SP_RECT(item);
+    
+    NR::Point const s = snap_knot_position(rect, p);
 
     if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed, 0.0, temp);
+        rect->rx.computed = rect->ry.computed = CLAMP(s[NR::Y] - rect->y.computed, 0.0, temp);
         rect->ry._set = rect->rx._set = true;
     } else {
         if (!rect->rx._set || rect->rx.computed == 0) {
-            rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed,
+            rect->ry.computed = CLAMP(s[NR::Y] - rect->y.computed,
                                       0.0,
                                       MIN(rect->height.computed / 2.0, rect->width.computed / 2.0));
         } else {
-            rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed,
+            rect->ry.computed = CLAMP(s[NR::Y] - rect->y.computed,
                                       0.0,
                                       rect->height.computed / 2.0);
         }
@@ -331,18 +344,9 @@ static NR::Point sp_rect_wh_get(SPItem *item)
     return NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed);
 }
 
-static NR::Point rect_snap_knot_position(SPRect *rect, NR::Point const &p)
-{
-    SPDesktop const *desktop = inkscape_active_desktop();
-    NR::Point s = sp_desktop_dt2root_xy_point(desktop, p);
-    SnapManager const &m = desktop->namedview->snap_manager;
-    s = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, s, rect).getPoint();
-    return sp_desktop_root2dt_xy_point(desktop, s);
-}
-
 static void sp_rect_wh_set_internal(SPRect *rect, NR::Point const &p, NR::Point const &origin, guint state)
 {
-    NR::Point const s = rect_snap_knot_position(rect, p);
+    NR::Point const s = snap_knot_position(rect, p);
 
     if (state & GDK_CONTROL_MASK) {
         // original width/height when drag started
@@ -420,7 +424,7 @@ static void sp_rect_xy_set(SPItem *item, NR::Point const &p, NR::Point const &or
     gdouble w_orig = opposite_x - origin[NR::X];
     gdouble h_orig = opposite_y - origin[NR::Y];
 
-    NR::Point const s = rect_snap_knot_position(rect, p);
+    NR::Point const s = snap_knot_position(rect, p);
 
     // mouse displacement since drag started
     gdouble minx = s[NR::X] - origin[NR::X];
@@ -610,8 +614,10 @@ sp_arc_rx_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint s
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
+    
+    NR::Point const s = snap_knot_position(arc, p);
 
-    ge->rx.computed = fabs( ge->cx.computed - p[NR::X] );
+    ge->rx.computed = fabs( ge->cx.computed - s[NR::X] );
 
     if ( state & GDK_CONTROL_MASK ) {
         ge->ry.computed = ge->rx.computed;
@@ -632,8 +638,10 @@ sp_arc_ry_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint s
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
+    
+    NR::Point const s = snap_knot_position(arc, p);
 
-    ge->ry.computed = fabs( ge->cy.computed - p[NR::Y] );
+    ge->ry.computed = fabs( ge->cy.computed - s[NR::Y] );
 
     if ( state & GDK_CONTROL_MASK ) {
         ge->rx.computed = ge->ry.computed;
