@@ -55,6 +55,7 @@ enum {
     PREFS_PAGE_TOOLS_DROPPER,
     PREFS_PAGE_WINDOWS,
     PREFS_PAGE_CLONES,
+    PREFS_PAGE_MASKS,
     PREFS_PAGE_FILTERS,
     PREFS_PAGE_TRANSFORMS,
     PREFS_PAGE_SELECTING,
@@ -96,12 +97,13 @@ protected:
     Gtk::TreeModel::Path _path_shapes;
 
     DialogPage _page_mouse, _page_scrolling, _page_steps, _page_tools, _page_windows,
-               _page_clones, _page_transforms, _page_filters, _page_select, _page_misc;
+        _page_clones, _page_mask, _page_transforms, _page_filters, _page_select, _page_misc;
     DialogPage _page_selector, _page_node, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper;
     DialogPage _page_rectangle, _page_ellipse, _page_star, _page_spiral, _page_paintbucket;
 
     PrefSpinButton _mouse_sens, _mouse_thres;
+    PrefCheckButton _mouse_use_ext_input;
 
     PrefSpinButton _scroll_wheel, _scroll_arrow_px, _scroll_arrow_acc, _scroll_auto_speed, _scroll_auto_thres;
 
@@ -130,6 +132,9 @@ protected:
     PrefRadioButton _clone_option_parallel, _clone_option_stay, _clone_option_transform,
                     _clone_option_unlink, _clone_option_delete;
 
+    PrefCheckButton _mask_mask_on_top;
+    PrefCheckButton _mask_mask_remove;
+
     PrefRadioButton _blur_quality_best, _blur_quality_better, _blur_quality_normal, _blur_quality_worse, _blur_quality_worst;
 
     PrefCheckButton _trans_scale_stroke, _trans_scale_corner, _trans_gradient,_trans_pattern;
@@ -144,9 +149,6 @@ protected:
     PrefSpinButton  _misc_export, _misc_recent, _misc_simpl;
     PrefCheckButton _misc_imp_bitmap, _misc_comment, _misc_scripts;
     PrefCombo       _misc_overs_bitmap;
-    PrefCheckButton _misc_mask_on_top;
-    PrefCheckButton _misc_mask_remove;
-    PrefCheckButton _misc_use_ext_input;
 
     int _max_dialog_width;
     int _max_dialog_height;
@@ -169,6 +171,7 @@ protected:
     void initPageTools();
     void initPageWindows();
     void initPageClones();
+    void initPageMasks();
     void initPageTransforms();
     void initPageFilters();
     void initPageSelecting();

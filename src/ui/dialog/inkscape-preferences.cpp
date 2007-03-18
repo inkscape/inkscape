@@ -96,6 +96,7 @@ InkscapePreferences::InkscapePreferences()
     initPageTools();
     initPageWindows();
     initPageClones();
+    initPageMasks();
     initPageTransforms();
     initPageFilters();
     initPageSelecting();
@@ -147,6 +148,11 @@ void InkscapePreferences::initPageMouse()
     _mouse_thres.init ( "options.dragtolerance", "value", 0.0, 20.0, 1.0, 1.0, 4.0, true, false);
     _page_mouse.add_line( false, _("Click/drag threshold:"), _mouse_thres, _("pixels"), 
                            _("Maximum mouse drag (in screen pixels) which is considered a click, not a drag"), false);
+
+    _mouse_use_ext_input.init( _("Use pressure-sensitive tablet (requires restart)"), "options.useextinput", "value", true);
+    _page_mouse.add_line(true, "",_mouse_use_ext_input, "",
+                        _("Use the capabilities of a tablet or other pressure-sensitive device. Disable this only if you have problems with the tablet (you can still use it as a mouse)"));
+
 }
 
 void InkscapePreferences::initPageScrolling()
@@ -474,6 +480,17 @@ void InkscapePreferences::initPageClones()
     this->AddPage(_page_clones, _("Clones"), PREFS_PAGE_CLONES);
 }
 
+void InkscapePreferences::initPageMasks()
+{
+    _mask_mask_on_top.init ( _("When applying, use the topmost selected object as clippath/mask"), "options.maskobject", "topmost", true);
+    _page_mask.add_line(true, "", _mask_mask_on_top, "", 
+                        _("Uncheck this to use the bottom selected object as the clipping path or mask"));
+    _mask_mask_remove.init ( _("Remove clippath/mask object after applying"), "options.maskobject", "remove", true);
+    _page_mask.add_line(true, "", _mask_mask_remove, "", 
+                        _("After applying, remove the object used as the clipping path or mask from the drawing"));
+    this->AddPage(_page_mask, _("Clippaths and masks"), PREFS_PAGE_MASKS);
+}
+
 void InkscapePreferences::initPageTransforms()
 {
     _trans_scale_stroke.init ( _("Scale stroke width"), "options.transform", "stroke", true);
@@ -580,17 +597,6 @@ void InkscapePreferences::initPageMisc()
     _misc_overs_bitmap.set_size_request(_sb_width);
     _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, num_items, 1);
     _page_misc.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
-
-    _page_misc.add_group_header( _("Clipping and masking:"));
-    _misc_mask_on_top.init ( _("Use the topmost selected object as a clipping path or mask"), "options.maskobject", "topmost", true);
-    _page_misc.add_line(true, "", _misc_mask_on_top, "", 
-                        _("Uncheck this to use the bottom selected object as the clipping path or mask"));
-    _misc_mask_remove.init ( _("Remove clipping path or mask after applying"), "options.maskobject", "remove", true);
-    _page_misc.add_line(true, "", _misc_mask_remove, "", 
-                        _("After applying, remove the object used as the clipping path or mask from the drawing"));
-    _misc_use_ext_input.init( _("Use a pressure sensitive tablet or other device (requires restart)"), "options.useextinput", "value", true);
-    _page_misc.add_line(true, "",_misc_use_ext_input, "",
-                        _("Use the capabilities of a tablet or other pressure sensitive device. Disable this only if you have problems with the tablet."));
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
