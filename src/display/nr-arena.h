@@ -36,6 +36,8 @@ enum {
 	RENDERMODE_OUTLINE
 };
 
+struct SPCanvasArena;
+
 struct NRArena : public NRActiveObject {
 	static NRArena *create() {
 		return reinterpret_cast<NRArena *>(nr_object_new(NR_TYPE_ARENA));
@@ -44,6 +46,7 @@ struct NRArena : public NRActiveObject {
 	double delta;
 	int rendermode;
 	guint32 outlinecolor;
+	SPCanvasArena *canvasarena; // may be NULL is this arena is not the screen but used for export etc.
 };
 
 struct NRArenaClass : public NRActiveObjectClass {

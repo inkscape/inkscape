@@ -101,6 +101,7 @@ sp_canvas_arena_init (SPCanvasArena *arena)
 	arena->sticky = FALSE;
 
 	arena->arena = NRArena::create();
+	arena->arena->canvasarena = arena;
 	arena->root = NRArenaGroup::create(arena->arena);
 	nr_arena_group_set_transparent (NR_ARENA_GROUP (arena->root), TRUE);
 
