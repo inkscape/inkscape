@@ -14,6 +14,7 @@
 
 
 
+#include <display/canvas-arena.h>
 #include <display/nr-arena.h>
 #include <display/nr-arena-shape.h>
 #include "display/nr-filter.h"
@@ -124,6 +125,9 @@ nr_arena_shape_init(NRArenaShape *shape)
     nr_matrix_set_identity(&shape->cached_sctm);
 
     shape->markers = NULL;
+
+    shape->last_pick = NULL;
+    shape->repick_after = 0;
 }
 
 static void
@@ -728,7 +732,7 @@ nr_arena_shape_add_bboxes(NRArenaShape* shape, NRRect &bbox)
 
 // cairo outline rendering:
 static unsigned int
-cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, NR::Rect area)
+cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, NR::Maybe<NR::Rect> area)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
 
@@ -827,7 +831,7 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
     cairo_set_tolerance(ct, 0.1);
     cairo_new_path(ct);
 
-    feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), NR::Rect(area), true, style_width);
+    feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), area->upgrade(), true, style_width);
 
     cairo_stroke(ct);
 
@@ -856,7 +860,7 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
     if (outline) { // cairo outline rendering
 
         pb->empty = FALSE;
-        unsigned int ret = cairo_arena_shape_render_outline (ct, item, NR::Rect(&pb->area));
+        unsigned int ret = cairo_arena_shape_render_outline (ct, item, (&pb->area)->upgrade());
         if (ret & NR_ARENA_ITEM_STATE_INVALID) return ret;
 
     } else {
@@ -1004,7 +1008,7 @@ cairo_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 
         cairo_new_path(ct);
 
-        feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), NR::Rect(area), false, 0);
+        feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), (area)->upgrade(), false, 0);
 
         cairo_fill(ct);
 
@@ -1074,8 +1078,18 @@ static NRArenaItem *
 nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /*sticky*/)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
+
+    if (shape->repick_after > 0)
+        shape->repick_after--;
+
+    if (shape->repick_after > 0) // we are a slow, huge path. skip this pick, returning what was returned last time
+        return shape->last_pick;
+
     if (!shape->curve) return NULL;
     if (!shape->style) return NULL;
+
+    GTimeVal tstart, tfinish;
+    g_get_current_time (&tstart);
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
@@ -1092,30 +1106,57 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
     double dist = NR_HUGE;
     int wind = 0;
     bool needfill = (shape->_fill.paint.type() != NRArenaShape::Paint::NONE && !outline);
-    nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, needfill? &wind : NULL, &dist, 0.5);
+
+    if (item->arena->canvasarena) {
+        NR::Rect viewbox = item->arena->canvasarena->item.canvas->getViewbox();
+        viewbox.growBy (width);
+        nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, needfill? &wind : NULL, &dist, 0.5, &viewbox);
+    } else {
+        nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, needfill? &wind : NULL, &dist, 0.5, NULL);
+    }
+
+    g_get_current_time (&tfinish);
+    glong this_pick = (tfinish.tv_sec - tstart.tv_sec) * 1000000 + (tfinish.tv_usec - tstart.tv_usec);
+    //g_print ("pick time %lu\n", this_pick);
+
+    if (this_pick > 10000) { // slow picking, remember to skip several new picks
+        shape->repick_after = this_pick / 5000;
+    }
 
     // pick fill
     if (needfill) {
         if (!shape->style->fill_rule.computed) {
-            if (wind != 0) return item;
+            if (wind != 0) {
+                shape->last_pick = item;
+                return item;
+            }
         } else {
-            if (wind & 0x1) return item;
+            if (wind & 0x1) {
+                shape->last_pick = item;
+                return item;
+            }
         }
     }
 
     // pick stroke
     if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
         // this ignores dashing (as if the stroke is solid) and always works as if caps are round
-        if ((dist - width) < delta) return item;
+        if ((dist - width) < delta) {
+                shape->last_pick = item;
+                return item;
+        }
     }
 
     // if not picked on the shape itself, try its markers
     for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
         NRArenaItem *ret = nr_arena_item_invoke_pick(child, p, delta, 0);
-        if (ret)
-            return ret;
+        if (ret) {
+            shape->last_pick = item;
+            return item;
+        }
     }
 
+    shape->last_pick = NULL;
     return NULL;
 }
 
