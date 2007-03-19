@@ -361,8 +361,7 @@ PageSizer::setDim (double w, double h, bool changeList)
     
     if (changeList)
         {
-        int index = find_paper_size(w, h);
-        Gtk::TreeModel::Row row = _paperSizeListStore->children()[index];
+        Gtk::TreeModel::Row row = (*find_paper_size(w, h));
         if (row)
             _paperSizeListSelection->select(row);
         }
@@ -382,10 +381,11 @@ PageSizer::setDim (double w, double h, bool changeList)
 
 
 /** 
- * Returns an index into paperSizeTable of a paper of the specified 
- * size (specified in px), or -1 if there's no such paper.
+ * Returns an iterator pointing to a row in paperSizeListStore which
+ * contains a paper of the specified size (specified in px), or 
+ * paperSizeListStore->children().end() if no such paper exists.
  */
-int
+Gtk::ListStore::iterator
 PageSizer::find_paper_size (double w, double h) const
 {
     double smaller = w;
@@ -394,9 +394,8 @@ PageSizer::find_paper_size (double w, double h) const
         smaller = h; larger = w;
     }
 
-    g_return_val_if_fail(smaller <= larger, -1);
+    g_return_val_if_fail(smaller <= larger, _paperSizeListStore->children().end());
     
-    int index = 0;
     std::map<Glib::ustring, PaperSize>::const_iterator iter;
     for (iter = _paperSizeTable.begin() ;
 	     iter != _paperSizeTable.end() ; iter++) {
@@ -405,15 +404,22 @@ PageSizer::find_paper_size (double w, double h) const
         double smallX = sp_units_get_pixels(paper.smaller, i_unit);
         double largeX = sp_units_get_pixels(paper.larger,  i_unit);
         
-        g_return_val_if_fail(smallX <= largeX, -1);
+        g_return_val_if_fail(smallX <= largeX, _paperSizeListStore->children().end());
         
         if ((std::abs(smaller - smallX) <= 0.1) &&
-            (std::abs(larger  - largeX) <= 0.1)   )
-            return index;
-            
-        index++;
+            (std::abs(larger  - largeX) <= 0.1)   ) {
+            Gtk::ListStore::iterator p;
+            // We need to search paperSizeListStore explicitly for the
+            // specified paper size because it is sorted in a different
+            // way than paperSizeTable (which is sorted alphabetically)
+            for (p = _paperSizeListStore->children().begin(); p != _paperSizeListStore->children().end(); p++) {
+                if ((*p)[_paperSizeListColumns.nameColumn] == paper.name) {
+                    return p;
+                }
+            }
+        }
     }
-    return -1;
+    return _paperSizeListStore->children().end();
 }
 
 

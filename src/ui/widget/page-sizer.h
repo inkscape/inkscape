@@ -152,7 +152,7 @@ protected:
     /**
      *	Find the closest standard paper size in the table, to the
      */
-    int find_paper_size (double w, double h) const;
+    Gtk::ListStore::iterator find_paper_size (double w, double h) const;
  
     void fire_fit_canvas_to_selection_or_drawing();
     
