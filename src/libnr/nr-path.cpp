@@ -217,29 +217,33 @@ nr_curve_bbox_wind_distance (NR::Coord x000, NR::Coord y000,
 void
 nr_path_matrix_point_bbox_wind_distance (NRBPath *bpath, NR::Matrix const &m, NR::Point &pt,
 					     NRRect *bbox, int *wind, NR::Coord *dist,
-					     NR::Coord tolerance)
+						 NR::Coord tolerance, NR::Rect *viewbox)
 {
-	NR::Coord x0, y0, x3, y3;
-	const NArtBpath *p;
-
 	if (!bpath->path) {
 		if (wind) *wind = 0;
 		if (dist) *dist = NR_HUGE;
 		return;
 	}
 
-	x0 = y0 = 0.0;
-	x3 = y3 = 0.0;
+	NR::Coord x0 = 0;
+	NR::Coord y0 = 0;
+	NR::Coord x1 = 0;
+	NR::Coord y1 = 0;
+	NR::Coord x2 = 0;
+	NR::Coord y2 = 0;
+	NR::Coord x3 = 0;
+	NR::Coord y3 = 0;
 
 	// remembering the start of subpath
 	NR::Coord x_start = 0, y_start = 0; bool start_set = false;
+	NR::Rect swept;
 
-	for (p = bpath->path; p->code != NR_END; p+= 1) {
+	for (const NArtBpath *p = bpath->path; p->code != NR_END; p+= 1) {
 		switch (p->code) {
 		case NR_MOVETO_OPEN:
 		case NR_MOVETO:
 			if (start_set) { // this is a new subpath
-				if (x0 != x_start || y0 != y_start) // for correct picking, each subpath must be closed
+				if (wind && (x0 != x_start || y0 != y_start)) // for correct fill picking, each subpath must be closed
 					nr_line_wind_distance (x0, y0, x_start, y_start, pt, wind, dist);
 			}
 			x0 = m[0] * p->x3 + m[2] * p->y3 + m[4];
@@ -262,24 +266,50 @@ nr_path_matrix_point_bbox_wind_distance (NRBPath *bpath, NR::Matrix const &m, NR
 				bbox->y1 = (NR::Coord) MAX (bbox->y1, y3);
 			}
 			if (dist || wind) {
-				nr_line_wind_distance (x0, y0, x3, y3, pt, wind, dist);
+				if (wind) { // we need to pick fill, so do what we're told
+					nr_line_wind_distance (x0, y0, x3, y3, pt, wind, dist);
+				} else { // only stroke is being picked; skip this segment if it's totally outside the viewbox
+					swept = NR::Rect(NR::Point(x0, y0), NR::Point(x3, y3));
+					//std::cout << "swept: " << swept;
+					//std::cout << "view: " << *viewbox;
+					//std::cout << "intersects? " << (swept.intersects(*viewbox)? "YES" : "NO") << "\n";
+					if (swept.intersects(*viewbox))
+   					nr_line_wind_distance (x0, y0, x3, y3, pt, wind, dist);
+				}
 			}
 			x0 = x3;
 			y0 = y3;
 			break;
 		case NR_CURVETO:
+			{
 			x3 = m[0] * p->x3 + m[2] * p->y3 + m[4];
 			y3 = m[1] * p->x3 + m[3] * p->y3 + m[5];
-			nr_curve_bbox_wind_distance (x0, y0,
-						     m[0] * p->x1 + m[2] * p->y1 + m[4],
-						     m[1] * p->x1 + m[3] * p->y1 + m[5],
-						     m[0] * p->x2 + m[2] * p->y2 + m[4],
-						     m[1] * p->x2 + m[3] * p->y2 + m[5],
+			x1 = m[0] * p->x1 + m[2] * p->y1 + m[4];
+			y1 = m[1] * p->x1 + m[3] * p->y1 + m[5];
+			x2 = m[0] * p->x2 + m[2] * p->y2 + m[4];
+			y2 = m[1] * p->x2 + m[3] * p->y2 + m[5];
+
+			swept = NR::Rect(NR::Point(x0, y0), NR::Point(x3, y3));
+			swept.expandTo(NR::Point(x1, y1));
+			swept.expandTo(NR::Point(x2, y2));
+
+			if (swept.intersects(*viewbox)) { // we see this segment, so do full processing
+				nr_curve_bbox_wind_distance (
+                       x0, y0,
+                       x1, y1,
+                       x2, y2,
 						     x3, y3,
 						     pt,
 						     bbox, wind, dist, tolerance);
+			} else {
+				if (wind) { // if we need fill, we can just pretend it's a straight line
+					nr_line_wind_distance (x0, y0, x3, y3, pt, wind, dist);
+				} else { // otherwise, skip it completely
+				}
+			}
 			x0 = x3;
 			y0 = y3;
+			}
 			break;
 		default:
 			break;
@@ -287,7 +317,7 @@ nr_path_matrix_point_bbox_wind_distance (NRBPath *bpath, NR::Matrix const &m, NR
 	}
 
 	if (start_set) { 
-		if (x0 != x_start || y0 != y_start) // for correct picking, each subpath must be closed
+		if (wind && (x0 != x_start || y0 != y_start)) // for correct picking, each subpath must be closed
 			nr_line_wind_distance (x0, y0, x_start, y_start, pt, wind, dist);
 	}
 }

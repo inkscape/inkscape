@@ -44,7 +44,7 @@ NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NR::Matrix const tr
 
 void nr_path_matrix_point_bbox_wind_distance (NRBPath *bpath, NR::Matrix const &m, NR::Point &pt,
 					      NRRect *bbox, int *wind, NR::Coord *dist,
-					      NR::Coord tolerance);
+                     NR::Coord tolerance, NR::Rect *viewbox);
 
 void nr_path_matrix_bbox_union(NRBPath const *bpath, NR::Matrix const &m, NRRect *bbox);
 
