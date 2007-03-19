@@ -31,6 +31,9 @@
 
 version=1.3.1-inkscape
 
+
+SCRIPTDIR=`dirname $0`
+
 export PREFIX=${PREFIX-/opt/gtk}
 export PATH=$PREFIX/bin:/usr/bin:$PATH
 #export PATH=$PREFIX/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:
@@ -100,7 +103,7 @@ if [ "x$UNIVERSAL_BUILD" = "xYes" ]; then
     CONFIGURE_lcms="--disable-dependency-tracking"
     
     CONFIGURE_glib="$COMMON_OPTIONS"
-    POSTCONFIGURE_glib="eval make glibconfig.h config.h && cp ~/ws-fat/{glib,}config.h ."
+    POSTCONFIGURE_glib="eval make glibconfig.h config.h && cp $DIRNAME/{glib,}config.h ."
     #POSTCONFIGURE_glib="eval make glibconfig.h && perl -pi~ -e 's|#define G_BYTE_ORDER G_LITTLE_ENDIAN|#include <machine/endian.h>\n#define G_BYTE_ORDER __DARWIN_BYTE_ORDER|g' glibconfig.h"
     
     CONFIGURE_pango="$COMMON_OPTIONS"
