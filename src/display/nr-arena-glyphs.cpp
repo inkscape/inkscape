@@ -458,7 +458,7 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
 
             cairo_new_path(ct);
             NR::Matrix g_t(g->g_transform);
-            feed_curve_to_cairo (ct, bpath, g_t * group->ctm, NR::Rect(&pb->area), false, 0);
+            feed_curve_to_cairo (ct, bpath, g_t * group->ctm, (pb->area).upgrade(), false, 0);
             cairo_fill(ct);
             pb->empty = FALSE;
         }
