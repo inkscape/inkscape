@@ -150,6 +150,9 @@ struct NRArenaShape : public NRArenaItem {
 	/* Markers */
 	NRArenaItem *markers;
 
+	NRArenaItem *last_pick;
+	guint repick_after;
+
 	static NRArenaShape *create(NRArena *arena) {
 		NRArenaShape *obj=reinterpret_cast<NRArenaShape *>(nr_object_new(NR_TYPE_ARENA_SHAPE));
 		obj->init(arena);
