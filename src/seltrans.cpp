@@ -267,10 +267,21 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     gchar const *scale_origin = prefs_get_string_attribute("tools.select", "scale_origin");
     bool const origin_on_bbox = (scale_origin == NULL || !strcmp(scale_origin, "bbox"));
 
+    
+    /*Snapping will be to either nodes or to boundingbox-cornes; each will require its own origin, which 
+    is only slightly different from the other. When we would use an origin at one of the nodes while 
+    trying to snap the boundingbox, all four points of the boundingbox would be moving (e.g. during stretching),
+    and would therefore also be snapping (which is bad). This leads to bugs similar to #1540195, in which 
+    a box is caught between to guides. To solve this, we need two different points: _opposite_for_snappoints and
+    _opposite_for_boundingbox
+    */
+    
     if (_box) {
+        _opposite_for_bboxpoints = _box->min() + _box->dimensions() * NR::scale(1-x, 1-y);
+        
         NR::Rect op_box = *_box;
         // FIXME: should be using ConvexHull here
-        if (origin_on_bbox == false && _snap_points.empty() == false) {
+        if ( _snap_points.empty() == false) {
             std::vector<NR::Point>::iterator i = _snap_points.begin();
             op_box = NR::Rect(*i, *i);
             i++;
@@ -279,11 +290,13 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
                 i++;
             }
         }
-
-        _opposite = ( op_box.min() + ( op_box.dimensions() * NR::scale(1-x, 1-y) ) );
+        _opposite_for_snappoints = ( op_box.min() + ( op_box.dimensions() * NR::scale(1-x, 1-y) ) );
+        //until we can kick out the old _opposite, and use _opposite_for_bboxpoints or _opposite_for_snappoints everywhere
+        //keep the old behavior for _opposite:
+        _opposite = origin_on_bbox ? _opposite_for_bboxpoints : _opposite_for_snappoints;
+        //FIXME: get rid of _opposite. Requires different handling of preferences, see Bulia Byak's comment for bug #1540195
     }
-
-
+    
     if ((x != -1) && (y != -1)) {
         sp_canvas_item_show(_norm);
         sp_canvas_item_show(_grip);
@@ -728,8 +741,12 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
 
     if ((!(state & GDK_SHIFT_MASK) == !(_state == STATE_ROTATE)) && (&handle != &handle_center)) {
         _origin = _opposite;
+        _origin_for_bboxpoints = _opposite_for_bboxpoints;
+        _origin_for_snappoints = _opposite_for_snappoints;
     } else if (_center) {
         _origin = *_center;
+        _origin_for_bboxpoints = *_center;
+        _origin_for_snappoints = *_center;
     } else {
         // FIXME
         return TRUE;
@@ -857,16 +874,16 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
         std::pair<NR::scale, bool> bb = m.constrainedSnapScale(Snapper::BBOX_POINT,
                                                                _bbox_points,
                                                                it,
-                                                               Snapper::ConstraintLine(_origin, cv),
+                                                               Snapper::ConstraintLine(_origin_for_bboxpoints, cv),
                                                                s,
-                                                               _origin);
+                                                               _origin_for_bboxpoints);
 
         std::pair<NR::scale, bool> sn = m.constrainedSnapScale(Snapper::SNAP_POINT,
                                                                _snap_points,
                                                                it,
-                                                               Snapper::ConstraintLine(_origin, cv),
+                                                               Snapper::ConstraintLine(_origin_for_snappoints, cv),
                                                                s,
-                                                               _origin);
+                                                               _origin_for_snappoints);
 
         if (bb.second == false && sn.second == false) {
 
@@ -894,12 +911,12 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
                                                         _bbox_points,
                                                         it,
                                                         s,
-                                                        _origin);
+                                                        _origin_for_bboxpoints);
         std::pair<NR::scale, bool> sn = m.freeSnapScale(Snapper::SNAP_POINT,
                                                         _snap_points,
                                                         it,
                                                         s,
-                                                        _origin);
+                                                        _origin_for_snappoints);
 
 	/* Pick the snap that puts us closest to the original scale */
         NR::Coord bd = bb.second ?
@@ -976,7 +993,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             _bbox_points,
             it,
             s[axis],
-            _origin,
+            _origin_for_bboxpoints,
             axis,
             true);
 
@@ -985,7 +1002,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             _snap_points,
             it,
             s[axis],
-            _origin,
+            _origin_for_snappoints,
             axis,
             true);
 
@@ -1002,7 +1019,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             _bbox_points,
             it,
             s[axis],
-            _origin,
+            _origin_for_bboxpoints,
             axis,
             false);
 
@@ -1011,7 +1028,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             _snap_points,
             it,
             s[axis],
-            _origin,
+            _origin_for_snappoints,
             axis,
             false);
 
@@ -1091,14 +1108,14 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
                                                        _bbox_points,
                                                        std::list<SPItem const *>(),
                                                        skew[dim_a],
-                                                       _origin,
+                                                       _origin_for_bboxpoints,
                                                        dim_b);
 
         std::pair<NR::Coord, bool> sn = m.freeSnapSkew(Inkscape::Snapper::SNAP_POINT,
                                                        _snap_points,
                                                        std::list<SPItem const *>(),
                                                        skew[dim_a],
-                                                       _origin,
+                                                       _origin_for_snappoints,
                                                        dim_b);
         
         if (bb.second || sn.second) {

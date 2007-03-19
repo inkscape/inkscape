@@ -121,6 +121,11 @@ private:
     gdouble _strokewidth;
     NR::Matrix _current;
     NR::Point _opposite; ///< opposite point to where a scale is taking place
+    
+    NR::Point _opposite_for_snappoints;
+    NR::Point _opposite_for_bboxpoints;
+    NR::Point _origin_for_snappoints;
+    NR::Point _origin_for_bboxpoints;
 
     NR::Maybe<NR::Point> _center;
     bool _center_is_set; ///< we've already set _center, no need to reread it from items
