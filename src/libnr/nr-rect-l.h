@@ -2,13 +2,15 @@
 #define SEEN_NR_RECT_L_H
 
 #include <libnr/nr-i-coord.h>
+#include <libnr/nr-maybe.h>
+#include <libnr/nr-rect.h>
+#include <libnr/nr-point-l.h>
 
 struct NRRectL {
+    NR::Maybe<NR::Rect> upgrade() const;
     NR::ICoord x0, y0, x1, y1;
 };
 
-#include <libnr/nr-rect.h>
-#include <libnr/nr-point-l.h>
 
 namespace NR {
 

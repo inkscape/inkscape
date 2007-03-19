@@ -1,5 +1,13 @@
 #include <libnr/nr-rect-l.h>
 
+NR::Maybe<NR::Rect> NRRectL::upgrade() const {
+    if (nr_rect_l_test_empty(this)) {
+        return NR::Nothing();
+    } else {
+        return NR::Rect(NR::Point(x0, y0), NR::Point(x1, y1));
+    }
+}
+
 namespace NR {
 
 IRect::IRect(Rect const &r) :
