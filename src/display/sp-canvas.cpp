@@ -2318,7 +2318,7 @@ bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, NR::Point const &w
 }
 
 /**
- * Return canvas window coordinates as NRRect.
+ * Return canvas window coordinates as NR::Rect.
  */
 NR::Rect SPCanvas::getViewbox() const
 {
