@@ -1087,25 +1087,30 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
 
     if (!shape->curve) return NULL;
     if (!shape->style) return NULL;
+    if (SP_SCALE24_TO_FLOAT(shape->style->opacity.value) == 0) // fully transparent, no pick
+        return NULL;
 
     GTimeVal tstart, tfinish;
     g_get_current_time (&tstart);
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
-    float const scale = NR_MATRIX_DF_EXPANSION(&shape->ctm);
     double width;
     if (outline) {
         width = 0.5;
-    } else {
+    } else if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE && shape->_stroke.opacity > 1e-3) {
+        float const scale = NR_MATRIX_DF_EXPANSION(&shape->ctm);
         width = MAX(0.125, shape->_stroke.width * scale) / 2;
+    } else {
+        width = 0;
     }
 
     NRBPath bp;
     bp.path = SP_CURVE_BPATH(shape->curve);
     double dist = NR_HUGE;
     int wind = 0;
-    bool needfill = (shape->_fill.paint.type() != NRArenaShape::Paint::NONE && !outline);
+    bool needfill = (shape->_fill.paint.type() != NRArenaShape::Paint::NONE 
+             && shape->_fill.opacity > 1e-3 && !outline);
 
     if (item->arena->canvasarena) {
         NR::Rect viewbox = item->arena->canvasarena->item.canvas->getViewbox();
@@ -1123,7 +1128,7 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
         shape->repick_after = this_pick / 5000;
     }
 
-    // pick fill
+    // covered by fill?
     if (needfill) {
         if (!shape->style->fill_rule.computed) {
             if (wind != 0) {
@@ -1138,12 +1143,12 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
         }
     }
 
-    // pick stroke
-    if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
-        // this ignores dashing (as if the stroke is solid) and always works as if caps are round
+    // close to the edge, as defined by strokewidth and delta?
+    // this ignores dashing (as if the stroke is solid) and always works as if caps are round
+    if (needfill || width > 0) { // if either fill or stroke visible,
         if ((dist - width) < delta) {
-                shape->last_pick = item;
-                return item;
+            shape->last_pick = item;
+            return item;
         }
     }
 
