@@ -29,6 +29,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <glib.h>
 
 #include "dom.h"
 
@@ -81,7 +82,7 @@ protected:
     /**
      *
      */
-    void error(char *fmt, ...);
+    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     /**
      * Get the character at the given location in the buffer.

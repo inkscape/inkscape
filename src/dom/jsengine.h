@@ -29,6 +29,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <glib.h>
 
 #include "dom.h"
 #include "js/jsapi.h"
@@ -133,12 +134,12 @@ private:
     /**
      * Ouput a printf-formatted error message
      */
-    void error(char *fmt, ...);
+    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     /**
      * Ouput a printf-formatted error message
      */
-    void trace(char *fmt, ...);
+    void trace(char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     JSRuntime *rt;
 

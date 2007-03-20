@@ -29,6 +29,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <glib.h>
+
 #include "domimpl.h"
 #include "events.h"
 #include "traversal.h"
@@ -236,7 +238,7 @@ private:
 
     void spaces();
 
-    void po(char *fmt, ...);
+    void po(char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     void pos(const DOMString &str);
 

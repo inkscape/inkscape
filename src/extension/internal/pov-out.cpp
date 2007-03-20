@@ -124,9 +124,10 @@ void PovOutput::out(char *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
-    g_vsnprintf(fmtbuf, 4096, fmt, args);
+    gchar * output = g_strdup_vprintf(fmt, args);
     va_end(args);
-    outbuf.append(fmtbuf);
+    outbuf.append(output);
+    g_free(output);
 }
 
 

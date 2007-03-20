@@ -795,9 +795,9 @@ public:
     XmppConfig config;
 
 
-    virtual void error(const char *fmt, ...);
+    virtual void error(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
-    virtual void status(const char *fmt, ...);
+    virtual void status(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
 
 
@@ -900,10 +900,6 @@ private:
     std::vector<ChatWindow *>chats;
 
     std::vector<GroupChatWindow *>groupChats;
-
-    static const int writeBufLen = 2048;
-
-    char writeBuf[writeBufLen];
 };
 
 

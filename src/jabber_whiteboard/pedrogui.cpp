@@ -2048,24 +2048,26 @@ void PedroGui::error(const char *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
-    vsnprintf(writeBuf, writeBufLen, fmt, args);
+    gchar * buffer = g_strdup_vprintf(fmt, args);
     va_end(args) ;
 
-    Gtk::MessageDialog dlg(writeBuf,
+    Gtk::MessageDialog dlg(buffer,
                            false,
                            Gtk::MESSAGE_ERROR,
                            Gtk::BUTTONS_OK,
                            true);
     dlg.run();
+    g_free(buffer);
 }
 
 void PedroGui::status(const char *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
-    vsnprintf(writeBuf, writeBufLen, fmt, args);
+    gchar * buffer = g_strdup_vprintf(fmt, args);
     va_end(args) ;
-    messageList.postMessage("STATUS", writeBuf);
+    messageList.postMessage("STATUS", buffer);
+    g_free(buffer);
 }
 
 //################################
@@ -2286,13 +2288,13 @@ void PedroGui::doEvent(const XmppEvent &event)
         case XmppEvent::EVENT_STATUS:
             {
             //printf("##### STATUS: %s\n", event.getData().c_str());
-            status(event.getData().c_str());
+            status("%s", event.getData().c_str());
             break;
             }
         case XmppEvent::EVENT_ERROR:
             {
             //printf("##### ERROR: %s\n", event.getData().c_str());
-            error(event.getData().c_str());
+            error("%s", event.getData().c_str());
             padlockDisable();
             break;
             }

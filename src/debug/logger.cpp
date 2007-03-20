@@ -116,7 +116,7 @@ static void set_category_mask(bool * const mask, char const *filter) {
                 }
             }
             if (!iter->name) {
-                g_warning("Unknown debugging category %*s", end - start, start);
+                g_warning("Unknown debugging category %*s", (int)(end - start), start);
             }
         }
         if (*end) {

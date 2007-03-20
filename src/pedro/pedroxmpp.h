@@ -24,6 +24,7 @@
  */
 
 #include <stdio.h>
+#include <glib.h>
 #include <vector>
 #include <map>
 
@@ -566,13 +567,13 @@ public:
     /**
      * Send an error message to all subscribers
      */
-    void error(char *fmt, ...);
+    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
 
 
     /**
      * Send a status message to all subscribers
      */
-    void status(char *fmt, ...);
+    void status(char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     //###########################
     //# LISTENERS
@@ -629,10 +630,6 @@ private:
 
     std::vector<XmppEvent> eventQueue;
     bool eventQueueEnabled;
-
-    static const int targetWriteBufLen = 2048;
-
-    char targetWriteBuf[targetWriteBufLen];
 };
 
 
@@ -725,7 +722,7 @@ public:
     /**
      *
      */
-    virtual bool write(char *fmt, ...);
+    virtual bool write(char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     //#######################
     //# V A R I A B L E S
@@ -1145,10 +1142,6 @@ private:
     bool keepGoing;
 
     bool doRegister;
-
-    static const int writeBufLen = 2048;
-
-    unsigned char writeBuf[writeBufLen];
 
     std::vector<XmppGroupChat *>groupChats;
 

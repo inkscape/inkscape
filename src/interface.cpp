@@ -1247,7 +1247,7 @@ sp_ui_error_dialog(gchar const *message)
     gchar *safeMsg = Inkscape::IO::sanitizeString(message);
 
     dlg = gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
-                                 GTK_BUTTONS_CLOSE, safeMsg);
+                                 GTK_BUTTONS_CLOSE, "%s", safeMsg);
     sp_transientize(dlg);
     gtk_window_set_resizable(GTK_WINDOW(dlg), FALSE);
     gtk_dialog_run(GTK_DIALOG(dlg));

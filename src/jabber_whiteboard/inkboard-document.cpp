@@ -156,7 +156,7 @@ InkboardDocument::send(const Glib::ustring &destJid, Message::Wrapper &wrapper, 
             Vars::WHITEBOARD_MESSAGE, this->sessionType, this->sm->getClient().getJid(),
             destJid, Vars::INKBOARD_XMLNS, this->getSessionId(), mes).c_str());
 
-        if (!this->sm->getClient().write(finalmessage)) 
+        if (!this->sm->getClient().write("%s",finalmessage)) 
             { return false; }
         else 
             { return true; }

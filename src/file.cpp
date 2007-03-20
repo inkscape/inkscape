@@ -283,7 +283,7 @@ void dump_str(gchar const *str, gchar const *prefix)
     }
 
     tmp += "]";
-    g_message(tmp.c_str());
+    g_message("%s", tmp.c_str());
 }
 
 void dump_ustr(Glib::ustring const &ustr)
@@ -344,7 +344,7 @@ void dump_ustr(Glib::ustring const &ustr)
                 tmp += "            ";
             }
 
-            g_message( tmp.c_str() );
+            g_message( "%s", tmp.c_str() );
         }
     } catch (...) {
         g_message("XXXXXXXXXXXXXXXXXX Exception" );

@@ -120,7 +120,7 @@ _load_uri (const gchar *uri)
     GnomeVFSResult result = gnome_vfs_open (&handle, uri_local, GNOME_VFS_OPEN_READ);
 
     if (result != GNOME_VFS_OK) {
-        g_warning(gnome_vfs_result_to_string(result));
+        g_warning("%s", gnome_vfs_result_to_string(result));
     }
 
     std::vector<gchar> doc;

@@ -30,6 +30,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <glib.h>
 
 #include "svgimpl.h"
 
@@ -122,7 +123,7 @@ protected:
     /**
      *
      */
-    void error(char *format, ...);
+    void error(char *format, ...) G_GNUC_PRINTF(2,3);
 
 
 

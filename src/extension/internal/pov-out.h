@@ -72,7 +72,7 @@ private:
 	/**
 	 * Format text to our output buffer
 	 */     	
-	void out(char *fmt, ...);
+	void out(char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     /**
      * Output a 2d vector
@@ -155,7 +155,6 @@ private:
     
     //For formatted output
 	String outbuf;
-    char fmtbuf[2048];
 
     //For statistics
     int nrNodes;

@@ -186,10 +186,9 @@ sp_repr_css_print(SPCSSAttr *css)
     for ( List<AttributeRecord const> iter = css->attributeList() ;
           iter ; ++iter )
     {
-        g_print(g_quark_to_string(iter->key));
-        g_print(":\t");
-        g_print(iter->value);
-        g_print("\n");
+        gchar const * key = g_quark_to_string(iter->key);
+        gchar const * val = iter->value;
+        g_print("%s:\t%s\n",key,val);
     }
 }
 

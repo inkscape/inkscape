@@ -788,7 +788,7 @@ int XmlReader::parseNode(int p0, NodePtr node, int depth)
                         closeTagQualifiedName);
     if (openTagQualifiedName != closeTagQualifiedName)
         {
-        error("Mismatched closing tag.  Expected </%S>. Got '%S'.",
+        error("Mismatched closing tag.  Expected </%s>. Got '%s'.",
               openTagQualifiedName.c_str(), closeTagQualifiedName.c_str());
         return p0;
         }

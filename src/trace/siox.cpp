@@ -884,7 +884,7 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
         return workImage;
         }
 
-    trace("knownBg:%d knownFg:%d", knownBg.size(), knownFg.size());
+    trace("knownBg:%zu knownFg:%zu", knownBg.size(), knownFg.size());
 
 
     std::vector<CieLab> bgSignature ;

@@ -30,6 +30,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <glib.h>
 
 #include "dom.h"
 
@@ -80,7 +81,7 @@ public:
 
 protected:
 
-    void error(char *format, ...);
+    void error(char *format, ...) G_GNUC_PRINTF(2,3);
 
     int  get(int ch);
     int  peek(int ch);

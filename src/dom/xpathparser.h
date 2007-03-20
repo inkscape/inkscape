@@ -33,6 +33,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+#include <glib.h>
 
 #include <string>
 #include <vector>
@@ -415,7 +416,7 @@ private:
     /**
      *
      */
-    void trace(const char *fmt, ...);
+    void trace(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     /**
      *
@@ -425,7 +426,7 @@ private:
     /**
      *
      */
-    void error(const char *fmt, ...);
+    void error(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     //#################################
     //# LEXICAL  SCANNING

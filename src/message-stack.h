@@ -15,7 +15,7 @@
 #define SEEN_INKSCAPE_MESSAGE_STACK_H
 
 #include <sigc++/sigc++.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <stdarg.h>
 #include "gc-managed.h"
 #include "gc-finalized.h"
@@ -85,7 +85,7 @@ public:
       *
       * @return the id of the pushed message
       */
-    MessageId pushF(MessageType type, gchar const *format, ...);
+    MessageId pushF(MessageType type, gchar const *format, ...) G_GNUC_PRINTF(3,4);
 
     /** @brief pushes a message onto the stack using printf-like formatting,
       *        using a stdarg argument list
@@ -124,7 +124,7 @@ public:
       *
       * @return the id of the pushed message
       */
-    MessageId flashF(MessageType type, gchar const *format, ...);
+    MessageId flashF(MessageType type, gchar const *format, ...) G_GNUC_PRINTF(3,4);
 
     /** @brief temporarily pushes a message onto the stack using
       *        printf-like formatting, using a stdarg argument list

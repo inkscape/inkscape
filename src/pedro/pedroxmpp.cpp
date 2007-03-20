@@ -295,12 +295,13 @@ void XmppEventTarget::error(char *fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
-    vsnprintf(targetWriteBuf, targetWriteBufLen, fmt, args);
+    gchar * buffer = g_strdup_vprintf(fmt, args);
     va_end(args) ;
-    fprintf(stderr, "Error:%s\n", targetWriteBuf);
+    fprintf(stderr, "Error:%s\n", buffer);
     XmppEvent evt(XmppEvent::EVENT_ERROR);
-    evt.setData(targetWriteBuf);
+    evt.setData(buffer);
     dispatchXmppEvent(evt);
+    g_free(buffer);
 }
 
 
@@ -312,12 +313,13 @@ void XmppEventTarget::status(char *fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
-    vsnprintf(targetWriteBuf, targetWriteBufLen, fmt, args);
+    gchar * buffer = g_strdup_vprintf(fmt, args);
     va_end(args) ;
-    //printf("Status:%s\n", targetWriteBuf);
+    //printf("Status:%s\n", buffer);
     XmppEvent evt(XmppEvent::EVENT_STATUS);
-    evt.setData(targetWriteBuf);
+    evt.setData(buffer);
     dispatchXmppEvent(evt);
+    g_free(buffer);
 }
 
 
@@ -1158,7 +1160,7 @@ bool XmppClient::processIq(Element *root)
              "IQ set does not contain a 'from' address because "
              "the entity is not registered with the server");
             }
-        error((char *)errMsg.c_str());
+        error("%s",(char *)errMsg.c_str());
         }
 
     else if (id.find("regcancel") != id.npos)
@@ -1197,7 +1199,7 @@ bool XmppClient::processIq(Element *root)
                  "IQ set does not contain a 'from' address because "
                  "the entity is not registered with the server");
             }
-        error((char *)errMsg.c_str());
+        error("%s",(char *)errMsg.c_str());
         }
 
     return true;
@@ -1287,17 +1289,19 @@ bool XmppClient::receiveAndProcessLoop()
 
 bool XmppClient::write(char *fmt, ...)
 {
+    bool rc = true;
     va_list args;
     va_start(args,fmt);
-    vsnprintf((char *)writeBuf, writeBufLen, fmt,args);
+    gchar * buffer = g_strdup_vprintf(fmt,args);
     va_end(args) ;
-    status("SEND: %s", writeBuf);
-    if (!sock->write((char *)writeBuf))
+    status("SEND: %s", buffer);
+    if (!sock->write(buffer))
         {
         error("Cannot write to socket");
-        return false;
+        rc = false;
         }
-    return true;
+    g_free(buffer);
+    return rc;
 }
 
 
@@ -1388,7 +1392,7 @@ bool XmppClient::inBandRegistrationNew()
             {
             errMsg.append("some registration information was not provided");
             }
-        error((char *)errMsg.c_str());
+        error("%s",(char *)errMsg.c_str());
         delete elem;
         return false;
         }
@@ -1612,7 +1616,7 @@ bool XmppClient::saslMd5Authenticate()
     char *fmt =
     "<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' "
         "mechanism='DIGEST-MD5'/>\n";
-    if (!write(fmt))
+    if (!write("%s",fmt))
         return false;
 
     DOMString recbuf = readStanza();
@@ -1760,7 +1764,7 @@ bool XmppClient::saslMd5Authenticate()
 
     fmt =
     "<response xmlns='urn:ietf:params:xml:ns:xmpp-sasl'/>\n";
-    if (!write(fmt))
+    if (!write("%s",fmt))
         return false;
 
     recbuf = readStanza();
@@ -1843,7 +1847,7 @@ bool XmppClient::saslAuthenticate()
         delete elem;
         char *fmt =
         "<starttls xmlns='urn:ietf:params:xml:ns:xmpp-tls'/>\n";
-        if (!write(fmt))
+        if (!write("%s",fmt))
             return false;
         recbuf = readStanza();
         status("RECV: '%s'\n", recbuf.c_str());
@@ -2087,7 +2091,7 @@ bool XmppClient::createSession()
         DOMString givenJid, givenResource;
         parseJid(givenFullJid, givenJid, givenResource);
         status("given user: %s realm: %s, rsrc: %s",
-           givenJid.c_str(), givenResource.c_str());
+           givenJid.c_str(), realm.c_str(), givenResource.c_str());
         setResource(givenResource);
         }
         
@@ -2143,7 +2147,7 @@ bool XmppClient::createSession()
 
     fmt =
      "<presence/>\n";
-    if (!write(fmt))
+    if (!write("%s",fmt))
         return false;
 
     /*
@@ -2217,7 +2221,7 @@ bool XmppClient::disconnect()
         {
         char *fmt =
         "<presence type='unavailable'/>\n";
-        write(fmt);
+        write("%s",fmt);
         }
     keepGoing = false;
     connected = false;

@@ -30,6 +30,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <glib.h>
 
 #include "dom.h"
 
@@ -197,9 +198,9 @@ private:
 
     DOMString fragment;
 
-    void error(const char *fmt, ...);
+    void error(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
-    void trace(const char *fmt, ...);
+    void trace(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
 
     int peek(int p);

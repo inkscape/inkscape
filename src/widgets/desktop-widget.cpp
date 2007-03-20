@@ -823,7 +823,7 @@ SPDesktopWidget::warnDialog (gchar* text)
                 GTK_DIALOG_DESTROY_WITH_PARENT,
                 GTK_MESSAGE_WARNING,
                 GTK_BUTTONS_YES_NO,
-                text);
+                "%s", text);
         gint response = gtk_dialog_run(GTK_DIALOG(dialog));
         gtk_widget_destroy(dialog);
         if (response == GTK_RESPONSE_YES)

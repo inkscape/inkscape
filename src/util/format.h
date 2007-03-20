@@ -13,7 +13,7 @@
 #define SEEN_INKSCAPE_UTIL_FORMAT_H
 
 #include <stdarg.h>
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 #include "util/share.h"
 
 namespace Inkscape {
@@ -27,6 +27,8 @@ inline ptr_shared<char> vformat(char const *format, va_list args) {
     return result;
 }
 
+       // needed since G_GNUC_PRINTF can only be used on a declaration
+       ptr_shared<char> format(char const *format, ...) G_GNUC_PRINTF(1,2);
 inline ptr_shared<char> format(char const *format, ...) {
     va_list args;
 

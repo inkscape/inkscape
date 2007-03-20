@@ -32,6 +32,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <glib.h>
 
 #include <vector>
 #include <string>
@@ -203,8 +204,8 @@ private:
     std::string fileName;
 
     //debug messages
-    void error(char *fmt, ...);
-    void trace(char *fmt, ...);
+    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void trace(char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     unsigned long crc;
 
@@ -469,8 +470,8 @@ public:
 private:
 
     //debug messages
-    void error(char *fmt, ...);
-    void trace(char *fmt, ...);
+    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void trace(char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     //# Private writing methods
 

@@ -15,7 +15,7 @@
 #define SEEN_INKSCAPE_MESSAGE_CONTEXT_H
 
 #include <stdarg.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 #include "message.h"
 
 namespace Inkscape {
@@ -56,7 +56,7 @@ public:
       * @param type the message type
       * @param format a printf-style formatting string
       */
-    void setF(MessageType type, gchar const *format, ...);
+    void setF(MessageType type, gchar const *format, ...) G_GNUC_PRINTF(3,4);
 
     /** @brief pushes a message on the stack using printf-style formatting,
       *        and a stdarg argument list
@@ -82,7 +82,7 @@ public:
       * @param type the message type
       * @param format a printf-style formatting string
       */
-    void flashF(MessageType type, gchar const *format, ...);
+    void flashF(MessageType type, gchar const *format, ...) G_GNUC_PRINTF(3,4);
 
     /** @brief pushes a message onto the stack for a brief period of time
       *        using printf-style formatting and a stdarg argument list;

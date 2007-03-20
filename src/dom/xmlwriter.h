@@ -33,6 +33,7 @@
 
 #include "dom.h"
 #include <stdio.h>
+#include <glib.h>
 
 
 namespace org
@@ -64,7 +65,7 @@ protected:
 
     void spaces();
 
-    void po(char *str, ...);
+    void po(char *str, ...) G_GNUC_PRINTF(2,3);
 
     void pos(const DOMString &str);
 
