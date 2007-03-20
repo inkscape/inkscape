@@ -116,7 +116,8 @@ static void sp_namedview_init(SPNamedView *nv)
 
     nv->guides = NULL;
     nv->viewcount = 0;
-
+    nv->grids = NULL;
+    
     nv->default_layer_id = 0;
 
     nv->connector_spacing = defaultConnSpacing;
@@ -208,6 +209,13 @@ static void sp_namedview_release(SPObject *object)
         namedview->gridviews = g_slist_remove(namedview->gridviews, namedview->gridviews->data);
     }
 
+    // delete grids:
+    while ( namedview->grids ) {
+        Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)namedview->grids->data;
+        delete gr;
+        namedview->grids = g_slist_remove_link(namedview->grids, namedview->grids);
+    }
+    
     if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release(object);
     }
@@ -552,6 +560,8 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
 
 static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
+g_message("named view:: child added");
+
     SPNamedView *nv = (SPNamedView *) object;
 
     if (((SPObjectClass *) (parent_class))->child_added) {
@@ -559,27 +569,42 @@ static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *chil
     }
 
     const gchar *id = child->attribute("id");
-    SPObject *no = object->document->getObjectById(id);
-    g_assert(SP_IS_OBJECT(no));
+    if (!strcmp(child->name(), "inkscape:grid")) {
+        // check for which grid-type
+        Inkscape::CanvasGrid* addedgrid;
+        const char * gridtype = child->attribute("type");
+        if (!gridtype) {
+            gridtype = "xygrid"; // use this as default gridtype when none is specified
+            child->setAttribute("type", gridtype);
+        }
+        addedgrid = Inkscape::CanvasXYGrid::NewGrid( (SPDesktop*) nv->views->data, child, gridtype);
+        if (addedgrid) {
+            nv->grids = g_slist_append(nv->grids, addedgrid);
+            addedgrid->show();
+        }
+    } else {
+        SPObject *no = object->document->getObjectById(id);
+        g_assert(SP_IS_OBJECT(no));
 
-    if (SP_IS_GUIDE(no)) {
-        SPGuide *g = (SPGuide *) no;
-        nv->guides = g_slist_prepend(nv->guides, g);
-        g_object_set(G_OBJECT(g), "color", nv->guidecolor, "hicolor", nv->guidehicolor, NULL);
-        if (nv->editable) {
-            for (GSList *l = nv->views; l != NULL; l = l->next) {
-                sp_guide_show(g, static_cast<SPDesktop*>(l->data)->guides, (GCallback) sp_dt_guide_event);
-                if (static_cast<SPDesktop*>(l->data)->guides_active)
-                    sp_guide_sensitize(g,
-                                       sp_desktop_canvas(static_cast<SPDesktop*> (l->data)),
-                                       TRUE);
-                if (nv->showguides) {
-                    for (GSList *v = SP_GUIDE(g)->views; v != NULL; v = v->next) {
-                        sp_canvas_item_show(SP_CANVAS_ITEM(v->data));
-                    }
-                } else {
-                    for (GSList *v = SP_GUIDE(g)->views; v != NULL; v = v->next) {
-                        sp_canvas_item_hide(SP_CANVAS_ITEM(v->data));
+        if (SP_IS_GUIDE(no)) {
+            SPGuide *g = (SPGuide *) no;
+            nv->guides = g_slist_prepend(nv->guides, g);
+            g_object_set(G_OBJECT(g), "color", nv->guidecolor, "hicolor", nv->guidehicolor, NULL);
+            if (nv->editable) {
+                for (GSList *l = nv->views; l != NULL; l = l->next) {
+                    sp_guide_show(g, static_cast<SPDesktop*>(l->data)->guides, (GCallback) sp_dt_guide_event);
+                    if (static_cast<SPDesktop*>(l->data)->guides_active)
+                        sp_guide_sensitize(g,
+                                           sp_desktop_canvas(static_cast<SPDesktop*> (l->data)),
+                                           TRUE);
+                    if (nv->showguides) {
+                        for (GSList *v = SP_GUIDE(g)->views; v != NULL; v = v->next) {
+                            sp_canvas_item_show(SP_CANVAS_ITEM(v->data));
+                        }
+                    } else {
+                        for (GSList *v = SP_GUIDE(g)->views; v != NULL; v = v->next) {
+                            sp_canvas_item_hide(SP_CANVAS_ITEM(v->data));
+                        }
                     }
                 }
             }
@@ -589,17 +614,29 @@ static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *chil
 
 static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {
+g_message("named view:: child removed");
     SPNamedView *nv = (SPNamedView *) object;
 
-    GSList **ref = &nv->guides;
-    for ( GSList *iter = nv->guides ; iter ; iter = iter->next ) {
-        if ( SP_OBJECT_REPR((SPObject *)iter->data) == child ) {
-            *ref = iter->next;
-            iter->next = NULL;
-            g_slist_free_1(iter);
-            break;
+    if (!strcmp(child->name(), "inkscape:grid")) {
+        for ( GSList *iter = nv->grids ; iter ; iter = iter->next ) {
+            Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)iter->data;
+            if ( gr->repr == child ) {
+                delete gr;
+                nv->grids = g_slist_remove_link(nv->grids, iter);
+                break;
+            }
         }
-        ref = &iter->next;
+    } else {
+        GSList **ref = &nv->guides;
+        for ( GSList *iter = nv->guides ; iter ; iter = iter->next ) {
+            if ( SP_OBJECT_REPR((SPObject *)iter->data) == child ) {
+                *ref = iter->next;
+                iter->next = NULL;
+                g_slist_free_1(iter);
+                break;
+            }
+            ref = &iter->next;
+        }
     }
 
     if (((SPObjectClass *) (parent_class))->remove_child) {
@@ -651,6 +688,22 @@ void SPNamedView::show(SPDesktop *desktop)
     // since we're keeping a copy, we need to bump up the ref count
     gtk_object_ref(GTK_OBJECT(item));
     gridviews = g_slist_prepend(gridviews, item);
+    
+    // generate grids specified in SVG:
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(this);
+    if (repr) {
+        for (Inkscape::XML::Node * child = repr->firstChild() ; child != NULL; child = child->next() ) {
+            if (!strcmp(child->name(), "inkscape:grid")) {
+                Inkscape::CanvasXYGrid* addedgrid = new Inkscape::CanvasXYGrid(desktop, child);
+                if (addedgrid) {
+                    grids = g_slist_append(grids, addedgrid);
+                    addedgrid->enabled = true;
+                    addedgrid->show();
+                }
+            }
+        }
+    }
+    
 
     sp_namedview_setup_grid(this);
 }
@@ -778,6 +831,13 @@ void SPNamedView::hide(SPDesktop const *desktop)
             gtk_object_unref(GTK_OBJECT(l->data));
             gridviews = g_slist_remove(gridviews, l->data);
         }
+    }
+    
+    // delete grids:
+    while ( grids ) {
+        Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)grids->data;
+        delete gr;
+        grids = g_slist_remove_link(grids, grids);
     }
 }
 
@@ -1035,4 +1095,4 @@ SPMetric SPNamedView::getDefaultMetric() const
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtab

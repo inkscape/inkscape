@@ -42,11 +42,14 @@ public:
     static void destroy();
     sigc::connection _doc_replaced_connection;
 
+    void  update_gridspage();
+    
 protected:
     void  build_page();
     void  build_grid();
     void  build_guides();
     void  build_snap();
+    void  build_gridspage();
     void  init();
     virtual void  on_response (int);
 
@@ -55,7 +58,9 @@ protected:
 
     NotebookPage   _page_page, _page_grid, _page_guides;
     NotebookPage   _page_snap;
+    NotebookPage   _page_grids;
 
+    //---------------------------------------------------------------
     RegisteredCheckButton _rcb_canb, _rcb_bord, _rcb_shad;
     RegisteredColorPicker _rcp_bg, _rcp_bord;
     RegisteredUnitMenu    _rum_deflt;
@@ -78,6 +83,11 @@ protected:
     ToleranceSlider       _rsu_sno;
     RegisteredRadioButtonPair _rrb_pix;
     //---------------------------------------------------------------
+    Gtk::Notebook   _grids_notebook;
+    Gtk::Button     _grids_button_new;
+    Gtk::Button     _grids_button_remove;
+    Gtk::Entry      _grids_entry_gridtype;
+    //---------------------------------------------------------------
 
     gchar * _prefs_path;
     Registry _wr;
@@ -85,6 +95,10 @@ protected:
 private:
     DocumentProperties();
     virtual ~DocumentProperties();
+
+    // callback methods for buttons on grids page.
+    void onNewGrid();
+    void onRemoveGrid();    
 };
 
 } // namespace Dialog

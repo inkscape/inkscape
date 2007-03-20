@@ -38,6 +38,8 @@
 
 #include "document-properties.h"
 
+#include "display/canvas-grid.h"
+
 using std::pair;
 
 namespace Inkscape {
@@ -53,14 +55,16 @@ namespace Dialog {
 
 static DocumentProperties *_instance = 0;
 
+static void on_child_added(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void * data);
+static void on_child_removed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void * data);
 static void on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer);
 static void on_doc_replaced (SPDesktop* dt, SPDocument* doc);
 static void on_activate_desktop (Inkscape::Application *, SPDesktop* dt, void*);
 static void on_deactivate_desktop (Inkscape::Application *, SPDesktop* dt, void*);
 
 static Inkscape::XML::NodeEventVector const _repr_events = {
-    NULL, /* child_added */
-    NULL, /* child_removed */
+    on_child_added, /* child_added */
+    on_child_removed, /* child_removed */
     on_repr_attr_changed,
     NULL, /* content_changed */
     NULL  /* order_changed */
@@ -86,11 +90,13 @@ DocumentProperties::destroy()
     }
 }
 
-DocumentProperties::DocumentProperties() 
+DocumentProperties::DocumentProperties()
     : Dialog ("dialogs.documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
       _page_page(1, 1), _page_grid(1, 1), _page_guides(1, 1),
-      _page_snap(1, 1), 
-      _prefs_path("dialogs.documentoptions")
+      _page_snap(1, 1), _page_grids(1, 1),
+      _prefs_path("dialogs.documentoptions"),
+      _grids_button_new(_("_New"), _("Create new grid.")),
+      _grids_button_remove(_("_Remove"), _("Remove selected grid."))
 {
     set_resizable (false);
     _tt.enable();
@@ -100,10 +106,15 @@ DocumentProperties::DocumentProperties()
     _notebook.append_page(_page_page,      _("Page"));
     _notebook.append_page(_page_grid,      _("Grid/Guides"));
     _notebook.append_page(_page_snap,      _("Snap"));
+    _notebook.append_page(_page_grids,     _("Grids setup"));
 
     build_page();
     build_grid();
     build_snap();
+    build_gridspage();
+
+    _grids_button_new.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onNewGrid));
+    _grids_button_remove.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onRemoveGrid));
 }
 
 void
@@ -120,10 +131,10 @@ DocumentProperties::init()
 
     g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
                      G_CALLBACK(on_activate_desktop), 0);
-    
+
     g_signal_connect(G_OBJECT(INKSCAPE), "deactivate_desktop",
                      G_CALLBACK(on_deactivate_desktop), 0);
-    
+
     show_all_children();
     if (prefs_get_int_attribute("dialogs.documentoptions", "axonomgrid_enabled", 0) != 1) {
         _rrb_gridtype._hbox->hide();
@@ -134,7 +145,7 @@ DocumentProperties::init()
     present();
 }
 
-DocumentProperties::~DocumentProperties() 
+DocumentProperties::~DocumentProperties()
 {
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
     repr->removeListenerByData (this);
@@ -159,28 +170,28 @@ attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int star
     {
         if (arr[i] && arr[i+1])
         {
-            table.attach (const_cast<Gtk::Widget&>(*arr[i]),   1, 2, r, r+1, 
+            table.attach (const_cast<Gtk::Widget&>(*arr[i]),   1, 2, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 2, 3, r, r+1, 
+            table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 2, 3, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
         }
         else
         {
             if (arr[i+1])
-                table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 1, 3, r, r+1, 
+                table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 1, 3, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
             else if (arr[i])
             {
                 Gtk::Label& label = reinterpret_cast<Gtk::Label&> (const_cast<Gtk::Widget&>(*arr[i]));
                 label.set_alignment (0.0);
-                table.attach (label, 0, 3, r, r+1, 
+                table.attach (label, 0, 3, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
             }
             else
             {
                 Gtk::HBox *space = manage (new Gtk::HBox);
                 space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
-                table.attach (*space, 0, 1, r, r+1, 
+                table.attach (*space, 0, 1, r, r+1,
                       (Gtk::AttachOptions)0, (Gtk::AttachOptions)0,0,0);
             }
         }
@@ -211,7 +222,7 @@ DocumentProperties::build_page()
     label_for->set_markup (_("<b>Format</b>"));
     _page_sizer.init (_wr);
 
-    const Gtk::Widget* widget_array[] = 
+    const Gtk::Widget* widget_array[] =
     {
         label_gen,         0,
         _rum_deflt._label, _rum_deflt._sel,
@@ -226,7 +237,7 @@ DocumentProperties::build_page()
         0,                 _rcb_shad._button,
         _rcp_bord._label,  _rcp_bord._cp,
     };
-    
+
     attach_all (_page_page.table(), widget_array, sizeof(widget_array));
 }
 
@@ -237,36 +248,36 @@ DocumentProperties::build_grid()
 
     /// \todo FIXME: gray out snapping when grid is off.
     /// Dissenting view: you want snapping without grid.
-    
+
     _rcbgrid.init (_("_Show grid"), _("Show or hide grid"), "showgrid", _wr);
     _rrb_gridtype.init (_("Grid type:"), _("Normal (2D)"), _("Axonometric (3D)"),
                 _("The normal grid with vertical and horizontal lines."),
                 _("A grid with vertical lines and two diagonal line groups, each representing the projection of a primary axis."),
                 "gridtype", _wr);
-    
+
     _rumg.init (_("Grid _units:"), "grid_units", _wr);
-    _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"), 
+    _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
                   "gridoriginx", _rumg, _wr);
-    _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"), 
+    _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
                   "gridoriginy", _rumg, _wr);
-    _rsu_sx.init (_("Spacing _X:"), _("Distance between vertical grid lines"), 
+    _rsu_sx.init (_("Spacing _X:"), _("Distance between vertical grid lines"),
                   "gridspacingx", _rumg, _wr);
-    _rsu_sy.init (_("Spacing _Y:"), _("Distance between horizontal grid lines"), 
+    _rsu_sy.init (_("Spacing _Y:"), _("Distance between horizontal grid lines"),
                   "gridspacingy", _rumg, _wr);
-    _rsu_ax.init (_("Angle X:"), _("Angle of x-axis of axonometric grid"), 
+    _rsu_ax.init (_("Angle X:"), _("Angle of x-axis of axonometric grid"),
                   "gridanglex", _rumg, _wr);
-    _rsu_az.init (_("Angle Z:"), _("Angle of z-axis of axonometric grid"), 
+    _rsu_az.init (_("Angle Z:"), _("Angle of z-axis of axonometric grid"),
                   "gridanglez", _rumg, _wr);
-    _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"), 
+    _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"),
                     _("Color of grid lines"), "gridcolor", "gridopacity", _wr);
-    _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"), 
-                     _("Color of the major (highlighted) grid lines"), 
+    _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"),
+                     _("Color of the major (highlighted) grid lines"),
                      "gridempcolor", "gridempopacity", _wr);
     _rsi.init (_("_Major grid line every:"), _("lines"), "gridempspacing", _wr);
     _rcb_sgui.init (_("Show _guides"), _("Show or hide guides"), "showguides", _wr);
-    _rcp_gui.init (_("Guide co_lor:"), _("Guideline color"), 
+    _rcp_gui.init (_("Guide co_lor:"), _("Guideline color"),
                    _("Color of guidelines"), "guidecolor", "guideopacity", _wr);
-    _rcp_hgui.init (_("_Highlight color:"), _("Highlighted guideline color"), 
+    _rcp_hgui.init (_("_Highlight color:"), _("Highlighted guideline color"),
                     _("Color of a guideline when it is under mouse"),
                     "guidehicolor", "guidehiopacity", _wr);
     Gtk::Label *label_grid = manage (new Gtk::Label);
@@ -274,11 +285,11 @@ DocumentProperties::build_grid()
     Gtk::Label *label_gui = manage (new Gtk::Label);
     label_gui->set_markup (_("<b>Guides</b>"));
 
-    const Gtk::Widget* widget_array[] = 
+    const Gtk::Widget* widget_array[] =
     {
         label_grid,         0,
         0,                  _rcbgrid._button,
-        0,                  _rrb_gridtype._hbox, 
+        0,                  _rrb_gridtype._hbox,
         _rumg._label,       _rumg._sel,
         0,                  _rsu_ox.getSU(),
         0,                  _rsu_oy.getSU(),
@@ -286,7 +297,7 @@ DocumentProperties::build_grid()
         0,                  _rsu_sy.getSU(),
         0,                  _rsu_ax.getSU(),
         0,                  _rsu_az.getSU(),
-        _rcp_gcol._label,   _rcp_gcol._cp, 
+        _rcp_gcol._label,   _rcp_gcol._cp,
         0,                  0,
         _rcp_gmcol._label,  _rcp_gmcol._cp,
         _rsi._label,        &_rsi._hbox,
@@ -305,40 +316,40 @@ DocumentProperties::build_snap()
 {
     _page_snap.show();
 
-    _rcbsnbo.init (_("_Snap bounding boxes to objects"), 
-                _("Snap the edges of the object bounding boxes to other objects"), 
+    _rcbsnbo.init (_("_Snap bounding boxes to objects"),
+                _("Snap the edges of the object bounding boxes to other objects"),
                 "inkscape:object-bbox", _wr);
-    _rcbsnnob.init (_("Snap nodes _to objects"), 
-                _("Snap the nodes of objects to other objects"), 
+    _rcbsnnob.init (_("Snap nodes _to objects"),
+                _("Snap the nodes of objects to other objects"),
                 "inkscape:object-points", _wr);
-    _rcbsnop.init (_("Snap to object _paths"), 
-                _("Snap to other object paths"), 
+    _rcbsnop.init (_("Snap to object _paths"),
+                _("Snap to other object paths"),
                 "inkscape:object-paths", _wr);
-    _rcbsnon.init (_("Snap to object _nodes"), 
-                _("Snap to other object nodes"), 
+    _rcbsnon.init (_("Snap to object _nodes"),
+                _("Snap to other object nodes"),
                 "inkscape:object-nodes", _wr);
     _rsu_sno.init (_("Snap s_ensitivity:"), _("Always snap"),
                   _("Controls max. snapping distance from object"),
                   _("If set, objects snap to the nearest object when moved, regardless of distance"),
                   "objecttolerance", _wr);
-    _rcbsnbb.init (_("Snap _bounding boxes to grid"), 
-                _("Snap the edges of the object bounding boxes"), 
+    _rcbsnbb.init (_("Snap _bounding boxes to grid"),
+                _("Snap the edges of the object bounding boxes"),
                 "inkscape:grid-bbox", _wr);
-    _rcbsnnod.init (_("Snap nodes to _grid"), 
-                _("Snap path nodes, text baselines, ellipse centers, etc."), 
+    _rcbsnnod.init (_("Snap nodes to _grid"),
+                _("Snap path nodes, text baselines, ellipse centers, etc."),
                 "inkscape:grid-points", _wr);
     _rsu_sn.init (_("Snap sens_itivity:"), _("Always snap"),
                   _("Controls max. snapping distance from grid"),
                   _("If set, objects snap to the nearest grid line when moved, regardless of distance"),
                   "gridtolerance", _wr);
-    _rcb_snpgui.init (_("Snap bounding boxes to g_uides"),  
-                     _("Snap the edges of the object bounding boxes"), 
+    _rcb_snpgui.init (_("Snap bounding boxes to g_uides"),
+                     _("Snap the edges of the object bounding boxes"),
                      "inkscape:guide-bbox", _wr);
-    _rcb_snbgui.init (_("Snap p_oints to guides"), 
-                _("Snap path nodes, text baselines, ellipse centers, etc."), 
+    _rcb_snbgui.init (_("Snap p_oints to guides"),
+                _("Snap path nodes, text baselines, ellipse centers, etc."),
                 "inkscape:guide-points", _wr);
     _rsu_gusn.init (_("Snap sensiti_vity:"), _("Always snap"),
-                _("Controls max. snapping distance from guides"), 
+                _("Controls max. snapping distance from guides"),
                 _("If set, objects snap to the nearest guide when moved, regardless of distance"),
                 "guidetolerance", _wr);
 //    _rrb_pix.init (_("Sensitivity:"), _("S_creen pixels"), _("p_x units"),
@@ -351,8 +362,8 @@ DocumentProperties::build_snap()
     label_gr->set_markup (_("<b>Grid Snapping</b>"));
     Gtk::Label *label_gu = manage (new Gtk::Label);
     label_gu->set_markup (_("<b>Guide Snapping</b>"));
-     
-    const Gtk::Widget* array[] = 
+
+    const Gtk::Widget* array[] =
     {
         label_o,            0,
         0,                  _rcbsnbo._button,
@@ -378,15 +389,85 @@ DocumentProperties::build_snap()
  }
 
 /**
- * Update dialog widgets from desktop.
+* Called for _updating_ the dialog (e.g. when a new grid was manually added in XML)
+*/
+void
+DocumentProperties::update_gridspage()
+{
+    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    SPNamedView *nv = sp_desktop_namedview(dt);
+
+    //remove all tabs
+    while (_grids_notebook.get_current_page() != -1) {
+        _grids_notebook.remove_page(-1);
+    }
+
+    //add tabs
+    for (GSList const * l = nv->grids; l != NULL; l = l->next) {
+        Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
+        _grids_notebook.append_page(grid->getWidget(), grid->repr->attribute("id"));
+
+    }
+    _grids_notebook.show_all();
+
+    const Gtk::Widget* widget_array[] =
+    {
+        (Gtk::Widget*) &_grids_notebook, 0
+    };
+    attach_all (_page_grids.table(), widget_array, sizeof(widget_array),3); // FIXME: a hack to let GTK show all tabs, otherwise XML manually added grids setting widgets do no show.
+}
+
+/**
+ * Build grid page of dialog.
+ */
+void
+DocumentProperties::build_gridspage()
+{
+    _page_grids.show();
+
+    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    SPNamedView *nv = sp_desktop_namedview(dt);
+
+    Gtk::Label* label_crea = manage (new Gtk::Label);
+    label_crea->set_markup (_("<b>Creation</b>"));
+    Gtk::Label* label_crea_type = manage (new Gtk::Label);
+    label_crea_type->set_markup (_("Gridtype"));
+    
+    _grids_entry_gridtype.set_text(Glib::ustring("xygrid"));
+    
+    Gtk::Label* label_def = manage (new Gtk::Label);
+    label_def->set_markup (_("<b>Defined grids</b>"));
+
+    for (GSList const * l = nv->grids; l != NULL; l = l->next) {
+        Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
+        _grids_notebook.append_page(grid->getWidget(), grid->repr->attribute("id"));
+    }
+
+    const Gtk::Widget* widget_array[] =
+    {
+        label_crea, 0,
+        label_crea_type, (Gtk::Widget*) &_grids_entry_gridtype,
+        (Gtk::Widget*) &_grids_button_new,         (Gtk::Widget*) &_grids_button_remove, 
+        label_def,         0,
+        (Gtk::Widget*) &_grids_notebook, 0
+    };
+
+    attach_all (_page_grids.table(), widget_array, sizeof(widget_array));
+}
+
+
+
+/**
+ * Update dialog widgets from desktop. Also call updateWidget routines of the grids.
  */
 void
 DocumentProperties::update()
 {
     if (_wr.isUpdating()) return;
-    
+
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
     SPNamedView *nv = sp_desktop_namedview(dt);
+
     _wr.setUpdating (true);
     set_sensitive (true);
 
@@ -396,8 +477,8 @@ DocumentProperties::update()
     _rcb_bord.setActive (nv->borderlayer == SP_BORDER_LAYER_TOP);
     _rcp_bord.setRgba32 (nv->bordercolor);
     _rcb_shad.setActive (nv->showpageshadow);
-    
-    if (nv->doc_units) 
+
+    if (nv->doc_units)
         _rum_deflt.setUnit (nv->doc_units);
 
     double const doc_w_px = sp_document_width(sp_desktop_document(dt));
@@ -408,7 +489,7 @@ DocumentProperties::update()
     _rcbgrid.setActive (nv->showgrid);
     _rrb_gridtype.setValue (nv->gridtype);
     _rumg.setUnit (nv->gridunit);
-    
+
     gdouble val;
     val = nv->gridorigin[NR::X];
     val = sp_pixels_get_units (val, *(nv->gridunit));
@@ -443,15 +524,19 @@ DocumentProperties::update()
     _rcbsnop.setActive (nv->snap_manager.object.getSnapToPaths());
     _rcbsnop.setActive (nv->snap_manager.object.getSnapToNodes());
     _rsu_sno.setValue (nv->objecttolerance, nv->has_abs_tolerance);
-     
+
     _rcbsnbb.setActive (nv->snap_manager.grid.getSnapTo(Inkscape::Snapper::BBOX_POINT));
     _rcbsnnod.setActive (nv->snap_manager.grid.getSnapTo(Inkscape::Snapper::SNAP_POINT));
     _rsu_sn.setValue (nv->gridtolerance, nv->has_abs_tolerance);
-    
+
     _rcb_snpgui.setActive (nv->snap_manager.guide.getSnapTo(Inkscape::Snapper::BBOX_POINT));
     _rcb_snbgui.setActive (nv->snap_manager.guide.getSnapTo(Inkscape::Snapper::SNAP_POINT));
     _rsu_gusn.setValue (nv->guidetolerance, nv->has_abs_tolerance);
 //    _rrb_pix.setValue (true);
+
+    //-----------------------------------------------------------grids page
+
+    update_gridspage();
 
     _wr.setUpdating (false);
 }
@@ -469,11 +554,33 @@ DocumentProperties::on_response (int id)
         _rcp_gmcol.closeWindow();
         _rcp_gui.closeWindow();
         _rcp_hgui.closeWindow();
-    } 
-    
+    }
+
     if (id == Gtk::RESPONSE_CLOSE)
         hide();
 }
+
+
+
+static void
+on_child_added(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void * data)
+{
+    if (!_instance)
+        return;
+
+    _instance->update_gridspage();
+}
+
+static void
+on_child_removed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void * data)
+{
+    if (!_instance)
+        return;
+
+    _instance->update_gridspage();
+}
+
+
 
 /**
  * Called when XML node attribute changed; updates dialog widgets.
@@ -487,7 +594,7 @@ on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar
     _instance->update();
 }
 
-static void 
+static void
 on_activate_desktop (Inkscape::Application *, SPDesktop* dt, void*)
 {
     if (!_instance)
@@ -501,7 +608,7 @@ on_activate_desktop (Inkscape::Application *, SPDesktop* dt, void*)
     _instance->update();
 }
 
-static void 
+static void
 on_deactivate_desktop (Inkscape::Application *, SPDesktop* dt, void*)
 {
     if (!_instance)
@@ -514,7 +621,7 @@ on_deactivate_desktop (Inkscape::Application *, SPDesktop* dt, void*)
     _instance->_doc_replaced_connection.disconnect();
 }
 
-static void 
+static void
 on_doc_replaced (SPDesktop* dt, SPDocument* doc)
 {
     if (!_instance)
@@ -528,6 +635,49 @@ on_doc_replaced (SPDesktop* dt, SPDocument* doc)
 }
 
 
+
+
+/*########################################################################
+# BUTTON CLICK HANDLERS    (callbacks)
+########################################################################*/
+
+void
+DocumentProperties::onNewGrid()
+{
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
+
+    Glib::ustring typestring = _grids_entry_gridtype.get_text();
+    CanvasGrid::writeNewGridToRepr(repr, typestring.c_str()); // FIXME ofcourse user should supply choice for gridtype 
+}
+
+
+void
+DocumentProperties::onRemoveGrid()
+{
+    gint pagenum = _grids_notebook.get_current_page();
+    Gtk::Widget *page = _grids_notebook.get_nth_page(pagenum);
+    Glib::ustring tabtext = _grids_notebook.get_tab_label_text(*page);
+    
+    // find the grid with name tabtext (it's id) and delete that one.
+    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    SPNamedView *nv = sp_desktop_namedview(dt);
+    Inkscape::CanvasGrid * found_grid = NULL;
+    for (GSList const * l = nv->grids; l != NULL; l = l->next) {
+        Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
+        gchar const *idtext = grid->repr->attribute("id");
+        if ( !strcmp(tabtext.c_str(), idtext) ) {
+            found_grid = grid;
+            break; // break out of for-loop
+        }
+    }
+    if (found_grid) {
+        // delete the grid that corresponds with the selected tab
+        // when the grid is deleted from SVG, the SPNamedview handler automatically deletes the object, so found_grid becomes an invalid pointer!
+        found_grid->repr->parent()->removeChild(found_grid->repr);
+    }
+}
+
+
 } // namespace Dialog
 } // namespace UI
 } // namespace Inkscape
@@ -537,7 +687,7 @@ on_doc_replaced (SPDesktop* dt, SPDocument* doc)
   mode:c++
   c-file-style:"stroustrup"
   c-file-offsets:((innamespace . 0)(inline-open . 0))
-  indent-tabs-mode:nil
+  indent-tabs-mode:nilu
   fill-column:99
   End:
 */

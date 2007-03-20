@@ -83,6 +83,7 @@
 #include "message-context.h"
 #include "layer-manager.h"
 #include "event-log.h"
+#include "display/canvas-grid.h"
 
 namespace Inkscape { namespace XML { class Node; }}
 
@@ -1407,12 +1408,22 @@ _update_snap_distances (SPDesktop *desktop)
 
     SPNamedView &nv = *desktop->namedview;
 
+    
+    // FIXME GRID: make one gridsnapper object that snaps to all enabled grids by calling their snappers.
     nv.snap_manager.grid.setDistance(sp_convert_distance_full(nv.gridtolerance,
                                                                       *nv.gridtoleranceunit,
                                                                       px));
     nv.snap_manager.axonomgrid.setDistance(sp_convert_distance_full(nv.gridtolerance,
                                                                       *nv.gridtoleranceunit,
                                                                       px));
+    //new grid snappers
+    for ( GSList const *l = nv.grids; l != NULL; l = l->next) {
+        Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
+        grid->snapper->setDistance(sp_convert_distance_full(nv.gridtolerance,
+                                                                      *nv.gridtoleranceunit,
+                                                                      px));
+    }
+    
     nv.snap_manager.guide.setDistance(sp_convert_distance_full(nv.guidetolerance,
                                                                        *nv.guidetoleranceunit,
                                                                        px));

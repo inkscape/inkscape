@@ -59,7 +59,7 @@ RegisteredCheckButton::~RegisteredCheckButton()
 }
 
 void
-RegisteredCheckButton::init (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right)
+RegisteredCheckButton::init (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right, Inkscape::XML::Node* repr_in)
 {
     _button = new Gtk::CheckButton;
     _tt.set_tip (*_button, tip);
@@ -70,6 +70,8 @@ RegisteredCheckButton::init (const Glib::ustring& label, const Glib::ustring& ti
     _key = key;
     _wr = &wr;
     _toggled_connection = _button->signal_toggled().connect (sigc::mem_fun (*this, &RegisteredCheckButton::on_toggled));
+
+    repr = repr_in;
 }
 
 void
@@ -91,7 +93,9 @@ RegisteredCheckButton::on_toggled()
 
     SPDocument *doc = sp_desktop_document(dt);
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
+    if (!repr)
+        repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
+
     _wr->setUpdating (true);
 
     bool saved = sp_document_get_undo_sensitive (doc);
@@ -101,7 +105,7 @@ RegisteredCheckButton::on_toggled()
     sp_document_set_undo_sensitive (doc, saved);
     sp_document_done (doc, SP_VERB_NONE,
                       /* TODO: annotate */ "registered-widget.cpp:103");
-    
+
     _wr->setUpdating (false);
 }
 
@@ -118,7 +122,7 @@ RegisteredUnitMenu::~RegisteredUnitMenu()
 }
 
 void
-RegisteredUnitMenu::init (const Glib::ustring& label, const Glib::ustring& key, Registry& wr)
+RegisteredUnitMenu::init (const Glib::ustring& label, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in)
 {
     _label = new Gtk::Label (label, 1.0, 0.5);
     _label->set_use_underline (true);
@@ -128,9 +132,11 @@ RegisteredUnitMenu::init (const Glib::ustring& label, const Glib::ustring& key, 
     _wr = &wr;
     _key = key;
     _changed_connection = _sel->signal_changed().connect (sigc::mem_fun (*this, &RegisteredUnitMenu::on_changed));
+
+    repr = repr_in;
 }
 
-void 
+void
 RegisteredUnitMenu::setUnit (const SPUnit* unit)
 {
     _sel->setUnit (sp_unit_get_abbreviation (unit));
@@ -143,7 +149,7 @@ RegisteredUnitMenu::on_changed()
         return;
 
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
-    if (!dt) 
+    if (!dt)
         return;
 
     Inkscape::SVGOStringStream os;
@@ -154,13 +160,14 @@ RegisteredUnitMenu::on_changed()
     SPDocument *doc = sp_desktop_document(dt);
     bool saved = sp_document_get_undo_sensitive (doc);
     sp_document_set_undo_sensitive (doc, false);
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
+    if (!repr)
+        repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     repr->setAttribute(_key.c_str(), os.str().c_str());
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
-    sp_document_done (doc, SP_VERB_NONE, 
+    sp_document_done (doc, SP_VERB_NONE,
                       /* TODO: annotate */ "registered-widget.cpp:162");
-    
+
     _wr->setUpdating (false);
 }
 
@@ -177,7 +184,7 @@ RegisteredScalarUnit::~RegisteredScalarUnit()
 }
 
 void
-RegisteredScalarUnit::init (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, const RegisteredUnitMenu &rum, Registry& wr)
+RegisteredScalarUnit::init (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, const RegisteredUnitMenu &rum, Registry& wr, Inkscape::XML::Node* repr_in)
 {
     _widget = new ScalarUnit (label, tip, UNIT_TYPE_LINEAR, "", "", rum._sel);
     _widget->initScalar (-1e6, 1e6);
@@ -187,6 +194,8 @@ RegisteredScalarUnit::init (const Glib::ustring& label, const Glib::ustring& tip
     _um = rum._sel;
     _value_changed_connection = _widget->signal_value_changed().connect (sigc::mem_fun (*this, &RegisteredScalarUnit::on_value_changed));
     _wr = &wr;
+
+    repr = repr_in;
 }
 
 ScalarUnit*
@@ -195,7 +204,7 @@ RegisteredScalarUnit::getSU()
     return _widget;
 }
 
-void 
+void
 RegisteredScalarUnit::setValue (double val)
 {
     _widget->setValue (val);
@@ -209,7 +218,7 @@ RegisteredScalarUnit::on_value_changed()
         return;
 
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
-    if (!dt) 
+    if (!dt)
         return;
 
     Inkscape::SVGOStringStream os;
@@ -222,13 +231,14 @@ RegisteredScalarUnit::on_value_changed()
     SPDocument *doc = sp_desktop_document(dt);
     bool saved = sp_document_get_undo_sensitive (doc);
     sp_document_set_undo_sensitive (doc, false);
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
+    if (!repr)
+        repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     repr->setAttribute(_key.c_str(), os.str().c_str());
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
-    sp_document_done (doc, SP_VERB_NONE, 
+    sp_document_done (doc, SP_VERB_NONE,
                       /* TODO: annotate */ "registered-widget.cpp:230");
-    
+
     _wr->setUpdating (false);
 }
 
@@ -245,7 +255,7 @@ RegisteredColorPicker::~RegisteredColorPicker()
 }
 
 void
-RegisteredColorPicker::init (const Glib::ustring& label, const Glib::ustring& title, const Glib::ustring& tip, const Glib::ustring& ckey, const Glib::ustring& akey, Registry& wr)
+RegisteredColorPicker::init (const Glib::ustring& label, const Glib::ustring& title, const Glib::ustring& tip, const Glib::ustring& ckey, const Glib::ustring& akey, Registry& wr, Inkscape::XML::Node* repr_in)
 {
     _label = new Gtk::Label (label, 1.0, 0.5);
     _label->set_use_underline (true);
@@ -255,9 +265,11 @@ RegisteredColorPicker::init (const Glib::ustring& label, const Glib::ustring& ti
     _akey = akey;
     _wr = &wr;
     _changed_connection = _cp->connectChanged (sigc::mem_fun (*this, &RegisteredColorPicker::on_changed));
+
+    repr = repr_in;
 }
 
-void 
+void
 RegisteredColorPicker::setRgba32 (guint32 rgba)
 {
     _cp->setRgba32 (rgba);
@@ -276,7 +288,8 @@ RegisteredColorPicker::on_changed (guint32 rgba)
         return;
 
     _wr->setUpdating (true);
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
+    if (!repr)
+        repr = SP_OBJECT_REPR (sp_desktop_namedview(SP_ACTIVE_DESKTOP));
     gchar c[32];
     sp_svg_write_color(c, 32, rgba);
     repr->setAttribute(_ckey.c_str(), c);
@@ -286,7 +299,7 @@ RegisteredColorPicker::on_changed (guint32 rgba)
 
 RegisteredSuffixedInteger::RegisteredSuffixedInteger()
 : _label(0), _sb(0),
-  _adj(0.0,0.0,100.0,1.0,1.0,1.0), 
+  _adj(0.0,0.0,100.0,1.0,1.0,1.0),
   _suffix(0)
 {
 }
@@ -300,7 +313,7 @@ RegisteredSuffixedInteger::~RegisteredSuffixedInteger()
 }
 
 void
-RegisteredSuffixedInteger::init (const Glib::ustring& label, const Glib::ustring& suffix, const Glib::ustring& key, Registry& wr)
+RegisteredSuffixedInteger::init (const Glib::ustring& label, const Glib::ustring& suffix, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in)
 {
     _key = key;
     _label = new Gtk::Label (label);
@@ -314,9 +327,11 @@ RegisteredSuffixedInteger::init (const Glib::ustring& label, const Glib::ustring
 
     _changed_connection = _adj.signal_value_changed().connect (sigc::mem_fun(*this, &RegisteredSuffixedInteger::on_value_changed));
     _wr = &wr;
+
+    repr = repr_in;
 }
 
-void 
+void
 RegisteredSuffixedInteger::setValue (int i)
 {
     _adj.set_value (i);
@@ -329,17 +344,18 @@ RegisteredSuffixedInteger::on_value_changed()
         return;
 
     _wr->setUpdating (true);
-    
+
     SPDesktop* dt = SP_ACTIVE_DESKTOP;
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(dt));
+    if (!repr)
+        repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     Inkscape::SVGOStringStream os;
     int value = int(_adj.get_value());
     os << value;
 
     repr->setAttribute(_key.c_str(), os.str().c_str());
-    sp_document_done(sp_desktop_document(dt), SP_VERB_NONE, 
+    sp_document_done(sp_desktop_document(dt), SP_VERB_NONE,
                      /* TODO: annotate */ "registered-widget.cpp:341");
-    
+
     _wr->setUpdating (false);
 }
 
@@ -354,10 +370,10 @@ RegisteredRadioButtonPair::~RegisteredRadioButtonPair()
 }
 
 void
-RegisteredRadioButtonPair::init (const Glib::ustring& label, 
-const Glib::ustring& label1, const Glib::ustring& label2, 
-const Glib::ustring& tip1, const Glib::ustring& tip2, 
-const Glib::ustring& key, Registry& wr)
+RegisteredRadioButtonPair::init (const Glib::ustring& label,
+const Glib::ustring& label1, const Glib::ustring& label2,
+const Glib::ustring& tip1, const Glib::ustring& tip2,
+const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in)
 {
     _hbox = new Gtk::HBox;
     _hbox->add (*manage (new Gtk::Label (label)));
@@ -372,9 +388,11 @@ const Glib::ustring& key, Registry& wr)
     _key = key;
     _wr = &wr;
     _changed_connection = _rb1->signal_toggled().connect (sigc::mem_fun (*this, &RegisteredRadioButtonPair::on_value_changed));
+
+    repr = repr_in;
 }
 
-void 
+void
 RegisteredRadioButtonPair::setValue (bool second)
 {
     if (second) _rb2->set_active();
@@ -388,22 +406,23 @@ RegisteredRadioButtonPair::on_value_changed()
         return;
 
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
-    if (!dt) 
+    if (!dt)
         return;
 
     _wr->setUpdating (true);
-    
+
     bool second = _rb2->get_active();
     SPDocument *doc = sp_desktop_document(dt);
     bool saved = sp_document_get_undo_sensitive (doc);
     sp_document_set_undo_sensitive (doc, false);
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
+    if (!repr)
+        repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     repr->setAttribute(_key.c_str(), second ? "true" : "false");
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
-    sp_document_done (doc, SP_VERB_NONE, 
+    sp_document_done (doc, SP_VERB_NONE,
                       /* TODO: annotate */ "registered-widget.cpp:405");
-    
+
     _wr->setUpdating (false);
 }
 

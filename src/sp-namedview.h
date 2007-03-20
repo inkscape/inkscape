@@ -25,6 +25,10 @@
 #include "sp-metric.h"
 #include "snap.h"
 
+namespace Inkscape {
+class CanvasGrid;
+}
+
 enum {
     SP_BORDER_LAYER_BOTTOM,
     SP_BORDER_LAYER_TOP
@@ -49,6 +53,7 @@ struct SPNamedView : public SPObjectGroup {
 
     SnapManager snap_manager;
     //GridManager grid_manager;
+    GSList * grids;
 
     SPUnit const *gridunit;
     /* Grid data is in points regardless of unit */

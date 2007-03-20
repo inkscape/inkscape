@@ -9,7 +9,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   Carl Hetherington <inkscape@carlh.net>
  *
- * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) 2006-2007      Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 1999-2002 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -20,6 +20,8 @@
 #include <libnr/nr-point-fns.h>
 #include <libnr/nr-scale-ops.h>
 #include <libnr/nr-values.h>
+
+#include "display/canvas-grid.h"
 
 /**
  *  Construct a SnapManager for a SPNamedView.
@@ -52,6 +54,18 @@ SnapManager::SnapperList SnapManager::getSnappers() const
     }
     s.push_back(&guide);
     s.push_back(&object);
+
+    //add new grid snappers that are active for this desktop
+//    SPDesktop* desktop = SP_ACTIVE_DESKTOP;
+//    if (desktop) {
+
+        for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
+            Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
+            s.push_back(grid->snapper);
+        }
+
+//    }
+
     return s;
 }
 
@@ -213,7 +227,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
 
     /* The current best transformation */
     NR::Point best_transformation = transformation;
-    
+
     /* The current best metric for the best transformation; lower is better, NR_HUGE
     ** means that we haven't snapped anything.
     */
@@ -249,7 +263,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
             default:
                 g_assert_not_reached();
         }
-        
+
         /* Snap it */
         Inkscape::SnappedPoint const snapped = constrained ?
             constrainedSnap(type, transformed, constraint, ignore) : freeSnap(type, transformed, ignore);
@@ -300,7 +314,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
             }
         }
     }
-        
+
     // Using " < 1e6" instead of " < NR::HUGE" for catching some rounding errors
     // These rounding errors might be caused by NRRects, see bug #1584301
     return std::make_pair(best_transformation, best_metric < 1e6);
