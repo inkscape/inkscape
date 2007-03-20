@@ -44,7 +44,8 @@
 #include "sp-stop.h"
 #include "svg/css-ostringstream.h"
 #include "svg/svg-color.h"
-
+#include "snap.h"
+#include "sp-namedview.h"
 
 
 
@@ -410,8 +411,9 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             /* Position center */
             NR::Point const button_dt = desktop->w2d(button_w);
             /* Snap center to nearest magnetic point */
-
-            rc->origin = button_dt;
+            
+            SnapManager const &m = desktop->namedview->snap_manager;
+            rc->origin = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, button_dt, NULL).getPoint();
 
             ret = TRUE;
         }

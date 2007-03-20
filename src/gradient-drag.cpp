@@ -41,6 +41,10 @@
 #include "gradient-drag.h"
 #include "sp-stop.h"
 
+#include "snap.h"
+#include "sp-namedview.h"
+
+
 #define GR_KNOT_COLOR_NORMAL 0xffffff00
 #define GR_KNOT_COLOR_SELECTED 0x0000ff00
 
@@ -429,19 +433,26 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
         }
     }
 
-
     if (!((state & GDK_SHIFT_MASK) || ((state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK)))) {
-        // See if we need to snap to any of the levels
-        for (guint i = 0; i < dragger->parent->hor_levels.size(); i++) {
-            if (fabs(p[NR::Y] - dragger->parent->hor_levels[i]) < snap_dist) {
-                p[NR::Y] = dragger->parent->hor_levels[i];
-                sp_knot_moveto (knot, &p);
+        // Try snapping to the grid or guides
+        SnapManager const &m = dragger->parent->desktop->namedview->snap_manager;
+        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAP_POINT | Inkscape::Snapper::BBOX_POINT, p, NULL);
+        if (s.getDistance() < 1e6) {
+            p = s.getPoint();
+            sp_knot_moveto (knot, &p);
+        } else {
+            // No snapping so far, let's see if we need to snap to any of the levels
+            for (guint i = 0; i < dragger->parent->hor_levels.size(); i++) {
+                if (fabs(p[NR::Y] - dragger->parent->hor_levels[i]) < snap_dist) {
+                    p[NR::Y] = dragger->parent->hor_levels[i];
+                    sp_knot_moveto (knot, &p);
+                }
             }
-        }
-        for (guint i = 0; i < dragger->parent->vert_levels.size(); i++) {
-            if (fabs(p[NR::X] - dragger->parent->vert_levels[i]) < snap_dist) {
-                p[NR::X] = dragger->parent->vert_levels[i];
-                sp_knot_moveto (knot, &p);
+            for (guint i = 0; i < dragger->parent->vert_levels.size(); i++) {
+                if (fabs(p[NR::X] - dragger->parent->vert_levels[i]) < snap_dist) {
+                    p[NR::X] = dragger->parent->vert_levels[i];
+                    sp_knot_moveto (knot, &p);
+                }
             }
         }
     }

@@ -274,7 +274,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
             }
             break;
         case GDK_MOTION_NOTIFY:
-            if (dragging && event->motion.state && GDK_BUTTON1_MASK) {
+            if (dragging && (event->motion.state & GDK_BUTTON1_MASK)) {
 
                 if ( event_context->within_tolerance
                      && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
