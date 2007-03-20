@@ -1113,7 +1113,7 @@ static Inkscape::XML::Node *
 sp_object_private_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     if (!repr && (flags & SP_OBJECT_WRITE_BUILD)) {
-        repr = SP_OBJECT_REPR(object)->duplicate();
+        repr = SP_OBJECT_REPR(object)->duplicate(repr->document());
         if (!( flags & SP_OBJECT_WRITE_EXT )) {
             repr->setAttribute("inkscape:collect", NULL);
         }
@@ -1189,6 +1189,10 @@ SPObject::updateRepr(unsigned int flags) {
     }
 }
 
+/** Used both to create reprs in the original document, and to create 
+ *  reprs in another document (e.g. a temporary document used when
+ *  saving as "Plain SVG"
+ */
 Inkscape::XML::Node *
 SPObject::updateRepr(Inkscape::XML::Node *repr, unsigned int flags) {
     if (SP_OBJECT_IS_CLONED(this)) {
@@ -1204,9 +1208,10 @@ SPObject::updateRepr(Inkscape::XML::Node *repr, unsigned int flags) {
         g_warning("Class %s does not implement ::write", G_OBJECT_TYPE_NAME(this));
         if (!repr) {
             if (flags & SP_OBJECT_WRITE_BUILD) {
-                repr = SP_OBJECT_REPR(this)->duplicate();
+                /// \todo FIXME:  Plumb an appropriate XML::Document into this
+                repr = SP_OBJECT_REPR(this)->duplicate(NULL);
             }
-            /// \todo fixme: else probably error (Lauris) */
+            /// \todo FIXME: else probably error (Lauris) */
         } else {
             repr->mergeFrom(SP_OBJECT_REPR(this), "id");
         }

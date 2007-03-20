@@ -39,7 +39,7 @@ public:
         return const_cast<SimpleNode *>(this)->document();
     }
 
-    Node *duplicate() const { return _duplicate(); }
+    Node *duplicate(Document* doc) const { return _duplicate(doc); }
 
     Node *root();
     Node const *root() const {
@@ -107,7 +107,7 @@ protected:
     SimpleNode(int code);
     SimpleNode(SimpleNode const &repr);
 
-    virtual SimpleNode *_duplicate() const=0;
+    virtual SimpleNode *_duplicate(Document *doc) const=0;
 
 public: // ideally these should be protected somehow...
     void _setParent(Node *parent) { _parent = parent; }

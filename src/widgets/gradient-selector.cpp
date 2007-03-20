@@ -305,13 +305,14 @@ sp_gradient_selector_add_vector_clicked (GtkWidget *w, SPGradientSelector *sel)
 	SPDocument *doc;
 	SPGradient *gr;
 	Inkscape::XML::Node *repr;
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
 	doc = sp_gradient_vector_selector_get_document (SP_GRADIENT_VECTOR_SELECTOR (sel->vectors));
 	if (!doc) return;
 	gr = sp_gradient_vector_selector_get_gradient (SP_GRADIENT_VECTOR_SELECTOR (sel->vectors));
 
 	if (gr) {
-		repr = SP_OBJECT_REPR (gr)->duplicate();
+		repr = SP_OBJECT_REPR (gr)->duplicate(xml_doc);
 	} else {
 		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 		Inkscape::XML::Node *stop;

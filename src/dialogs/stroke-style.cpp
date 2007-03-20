@@ -585,7 +585,8 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
         return NULL;
 
     // Create a copy repr of the marker with id="sample"
-    Inkscape::XML::Node *mrepr = SP_OBJECT_REPR (marker)->duplicate();
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(sandbox);
+    Inkscape::XML::Node *mrepr = SP_OBJECT_REPR (marker)->duplicate(xml_doc);
     mrepr->setAttribute("id", "sample");
 
     // Replace the old sample in the sandbox by the new one

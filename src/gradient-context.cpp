@@ -286,7 +286,7 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
         }
 
         Inkscape::XML::Node *new_stop_repr = NULL;
-        new_stop_repr = SP_OBJECT_REPR(prev_stop)->duplicate();
+        new_stop_repr = SP_OBJECT_REPR(prev_stop)->duplicate(SP_OBJECT_REPR(vector)->document());
         SP_OBJECT_REPR(vector)->addChild(new_stop_repr, SP_OBJECT_REPR(prev_stop));
 
         SPStop *newstop = (SPStop *) SP_OBJECT_DOCUMENT(vector)->getObjectByRepr(new_stop_repr);

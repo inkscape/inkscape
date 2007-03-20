@@ -167,7 +167,7 @@ sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
     g_return_if_fail(SP_IS_ANCHOR(object));
 
     const char *id = SP_OBJECT_REPR(item)->attribute("id");
-    Inkscape::XML::Node *child = SP_OBJECT_REPR(item)->duplicate();
+    Inkscape::XML::Node *child = SP_OBJECT_REPR(item)->duplicate(xml_doc);
     SP_OBJECT(item)->deleteObject(false);
     repr->addChild(child, NULL);
     child->setAttribute("id", id);

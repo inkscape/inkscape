@@ -526,7 +526,7 @@ static void stamp_repr(Inkscape::NodePath::Path *np)
     g_assert(np);
 
     Inkscape::XML::Node *old_repr = SP_OBJECT(np->path)->repr;
-    Inkscape::XML::Node *new_repr = old_repr->duplicate();
+    Inkscape::XML::Node *new_repr = old_repr->duplicate(old_repr->document());
 
     // remember the position of the item
     gint pos = old_repr->position();

@@ -70,7 +70,8 @@ static SPObject * sp_marker_load_from_svg(gchar const *name, SPDocument *current
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_MARKER(object)) {
             SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
-            Inkscape::XML::Node *mark_repr = SP_OBJECT_REPR(object)->duplicate();
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_doc);
+            Inkscape::XML::Node *mark_repr = SP_OBJECT_REPR(object)->duplicate(xml_doc);
             SP_OBJECT_REPR(defs)->addChild(mark_repr, NULL);
             SPObject *cloned_item = current_doc->getObjectByRepr(mark_repr);
             Inkscape::GC::release(mark_repr);
@@ -113,7 +114,8 @@ sp_pattern_load_from_svg(gchar const *name, SPDocument *current_doc)
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_PATTERN(object)) {
             SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
-            Inkscape::XML::Node *pat_repr = SP_OBJECT_REPR(object)->duplicate();
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_doc);
+            Inkscape::XML::Node *pat_repr = SP_OBJECT_REPR(object)->duplicate(xml_doc);
             SP_OBJECT_REPR(defs)->addChild(pat_repr, NULL);
             Inkscape::GC::release(pat_repr);
             return object;
@@ -155,7 +157,8 @@ sp_gradient_load_from_svg(gchar const *name, SPDocument *current_doc)
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_GRADIENT(object)) {
             SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
-            Inkscape::XML::Node *pat_repr = SP_OBJECT_REPR(object)->duplicate();
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_doc);
+            Inkscape::XML::Node *pat_repr = SP_OBJECT_REPR(object)->duplicate(xml_doc);
             SP_OBJECT_REPR(defs)->addChild(pat_repr, NULL);
             Inkscape::GC::release(pat_repr);
             return object;

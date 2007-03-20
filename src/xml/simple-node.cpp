@@ -175,14 +175,13 @@ SimpleNode::SimpleNode(SimpleNode const &node)
   _cached_positions_valid(node._cached_positions_valid)
 {
     _document = NULL;
-    _document = NULL;
     _parent = _next = NULL;
     _first_child = _last_child = NULL;
 
     for ( Node *child = node._first_child ;
           child != NULL ; child = child->next() )
     {
-        Node *child_copy=child->duplicate();
+        Node *child_copy=child->duplicate(NULL); // FIXME
 
         child_copy->_setParent(this);
         if (_last_child) {
@@ -591,12 +590,12 @@ void SimpleNode::mergeFrom(Node const *src, gchar const *key) {
             if (rch) {
                 rch->mergeFrom(child, key);
             } else {
-                rch = child->duplicate();
+                rch = child->duplicate(_document);
                 appendChild(rch);
                 rch->release();
             }
         } else {
-            Node *rch=child->duplicate();
+            Node *rch=child->duplicate(_document);
             appendChild(rch);
             rch->release();
         }

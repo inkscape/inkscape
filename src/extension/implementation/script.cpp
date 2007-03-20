@@ -861,7 +861,7 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
             child = child->next()) {
         if (!strcmp("sodipodi:namedview", child->name()))
             continue;
-        oldroot->appendChild(child->duplicate());
+        oldroot->appendChild(child->duplicate(newroot->document()));
     }
 
     /** \todo  Restore correct layer */

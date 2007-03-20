@@ -757,13 +757,14 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
         SPObject *defs = SP_DOCUMENT_DEFS(doc);
 
         Inkscape::IO::fixupHrefs(doc, in_doc->base, true);
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
         Inkscape::XML::Node *last_def = SP_OBJECT_REPR(in_defs)->lastChild();
         for (SPObject *child = sp_object_first_child(defs);
              child != NULL; child = SP_OBJECT_NEXT(child))
         {
             // FIXME: in case of id conflict, newly added thing will be re-ided and thus likely break a reference to it from imported stuff
-            SP_OBJECT_REPR(in_defs)->addChild(SP_OBJECT_REPR(child)->duplicate(), last_def);
+            SP_OBJECT_REPR(in_defs)->addChild(SP_OBJECT_REPR(child)->duplicate(xml_doc), last_def);
         }
 
         guint items_count = 0;
@@ -784,7 +785,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
 
             for (SPObject *child = sp_object_first_child(SP_DOCUMENT_ROOT(doc)); child != NULL; child = SP_OBJECT_NEXT(child) ) {
                 if (SP_IS_ITEM(child)) {
-                    Inkscape::XML::Node *newchild = SP_OBJECT_REPR(child)->duplicate();
+                    Inkscape::XML::Node *newchild = SP_OBJECT_REPR(child)->duplicate(xml_doc);
 
                     // convert layers to groups; FIXME: add "preserve layers" mode where each layer
                     // from impot is copied to the same-named layer in host
@@ -808,7 +809,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
             // just add one item
             for (SPObject *child = sp_object_first_child(SP_DOCUMENT_ROOT(doc)); child != NULL; child = SP_OBJECT_NEXT(child) ) {
                 if (SP_IS_ITEM(child)) {
-                    Inkscape::XML::Node *newitem = SP_OBJECT_REPR(child)->duplicate();
+                    Inkscape::XML::Node *newitem = SP_OBJECT_REPR(child)->duplicate(xml_doc);
                     newitem->setAttribute("inkscape:groupmode", NULL);
 
                     if (desktop) {

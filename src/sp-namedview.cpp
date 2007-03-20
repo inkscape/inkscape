@@ -652,7 +652,8 @@ static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::
         if (repr) {
             repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate();
+             /// \todo FIXME:  Plumb an appropriate XML::Document into this
+             repr = SP_OBJECT_REPR(object)->duplicate(NULL);
         }
     }
 

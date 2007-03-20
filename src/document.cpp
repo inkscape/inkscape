@@ -279,7 +279,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
             rnew->setAttribute("id", "base");
         } else {
             // otherwise, take from preferences
-            rnew = r->duplicate();
+            rnew = r->duplicate(rroot->document());
         }
         // insert into the document
         rroot->addChild(rnew, NULL);

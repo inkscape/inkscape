@@ -130,7 +130,7 @@ protected:
 		_initBindings();
 	}
 
-	XML::SimpleNode* _duplicate() const
+	XML::SimpleNode* _duplicate(XML::Document* xml_doc) const
 	{
 		return new InkboardDocument(*this);
 	}

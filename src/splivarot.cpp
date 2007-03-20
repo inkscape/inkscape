@@ -823,7 +823,7 @@ sp_selected_path_outline()
                             tr = marker_item->transform * marker->c2p * tr * transform;
 
                             if (SP_OBJECT_REPR(marker_item)) {
-                                Inkscape::XML::Node *m_repr = SP_OBJECT_REPR(marker_item)->duplicate();
+                                Inkscape::XML::Node *m_repr = SP_OBJECT_REPR(marker_item)->duplicate(xml_doc);
                                 g_repr->appendChild(m_repr);
                                 SPItem *marker_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(m_repr);
                                 sp_item_write_transform(marker_item, m_repr, tr);

@@ -51,7 +51,7 @@ public:
     virtual Document *document()=0;
     virtual Document const *document() const=0;
 
-    virtual Node *duplicate() const=0;
+    virtual Node *duplicate(Document *doc) const=0;
 
     virtual Node *root()=0;
     virtual Node const *root() const=0;

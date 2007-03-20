@@ -151,7 +151,8 @@ sp_filter_primitive_write(SPObject *object, Inkscape::XML::Node *repr, guint fla
             // is this sane?
             //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate();
+             /// \todo FIXME:  Plumb an appropriate XML::Document into this
+             repr = SP_OBJECT_REPR(object)->duplicate(NULL);
         }
     }
 

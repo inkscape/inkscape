@@ -665,11 +665,11 @@ sp_use_unlink(SPUse *use)
     if (SP_IS_SYMBOL(orig)) { // make a group, copy children
         copy = xml_doc->createElement("svg:g");
         for (Inkscape::XML::Node *child = SP_OBJECT_REPR(orig)->firstChild() ; child != NULL; child = child->next()) {
-                Inkscape::XML::Node *newchild = child->duplicate();
+                Inkscape::XML::Node *newchild = child->duplicate(copy->document());
                 copy->appendChild(newchild);
         }
     } else { // just copy
-        copy = SP_OBJECT_REPR(orig)->duplicate();
+        copy = SP_OBJECT_REPR(orig)->duplicate(copy->document());
     }
 
     // Add the duplicate repr just after the existing one.

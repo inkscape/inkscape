@@ -165,8 +165,8 @@ text_put_on_path()
     SP_OBJECT_REPR(text)->addChild(textpath, NULL);
 
     for ( GSList *i = text_reprs ; i ; i = i->next ) {
-        // make a copy of each text child
-        Inkscape::XML::Node *copy = ((Inkscape::XML::Node *) i->data)->duplicate();
+        // Make a copy of each text child
+        Inkscape::XML::Node *copy = ((Inkscape::XML::Node *) i->data)->duplicate(xml_doc);
         // We cannot have multiline in textpath, so remove line attrs from tspans
         if (!strcmp(copy->name(), "svg:tspan")) {
             copy->setAttribute("sodipodi:role", NULL);
@@ -346,7 +346,7 @@ text_flow_into_shape()
     } else { // reflow an already flowed text, preserving paras
         for (SPObject *o = SP_OBJECT(text)->children; o != NULL; o = o->next) {
             if (SP_IS_FLOWPARA(o)) {
-                Inkscape::XML::Node *para_repr = SP_OBJECT_REPR(o)->duplicate();
+                Inkscape::XML::Node *para_repr = SP_OBJECT_REPR(o)->duplicate(xml_doc);
                 root_repr->appendChild(para_repr);
                 object = doc->getObjectByRepr(para_repr);
                 g_return_if_fail(SP_IS_FLOWPARA(object));

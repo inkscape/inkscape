@@ -576,7 +576,7 @@ sp_textpath_to_text(SPObject *tp)
 
     for ( GSList *i = tp_reprs ; i ; i = i->next ) {
         // make a copy of each textpath child
-        Inkscape::XML::Node *copy = ((Inkscape::XML::Node *) i->data)->duplicate();
+        Inkscape::XML::Node *copy = ((Inkscape::XML::Node *) i->data)->duplicate(SP_OBJECT_REPR(text)->document());
         // remove the old repr from under textpath
         SP_OBJECT_REPR(tp)->removeChild((Inkscape::XML::Node *) i->data);
         // put its copy into under textPath

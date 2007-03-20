@@ -191,7 +191,7 @@ sp_skeleton_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
             // is this sane?
             repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate();
+            repr = SP_OBJECT_REPR(object)->duplicate(repr->document());
         }
     }
 

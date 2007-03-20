@@ -83,7 +83,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
         for (int i = 0; i < steps; i++) {
             double offset = (width / (float)(steps - 1) * (float)i) - (width / 2.0);
 
-            new_items[i] = (SP_OBJECT_REPR(spitem))->duplicate();
+            new_items[i] = (SP_OBJECT_REPR(spitem))->duplicate(xml_doc);
 
             SPCSSAttr * css = sp_repr_css_attr(new_items[i], "style");
             sp_repr_css_set_property(css, "opacity", opacity_string);

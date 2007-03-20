@@ -234,11 +234,12 @@ SPGradient *
 sp_gradient_fork_vector_if_necessary (SPGradient *gr)
 {
     if (SP_OBJECT_HREFCOUNT(gr) > 1) {
-        SPDocument *document = SP_OBJECT_DOCUMENT(gr);
+        SPDocument *doc = SP_OBJECT_DOCUMENT(gr);
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR (gr)->duplicate();
-        SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document))->addChild(repr, NULL);
-        SPGradient *gr_new = (SPGradient *) document->getObjectByRepr(repr);
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR (gr)->duplicate(xml_doc);
+        SP_OBJECT_REPR (SP_DOCUMENT_DEFS (doc))->addChild(repr, NULL);
+        SPGradient *gr_new = (SPGradient *) doc->getObjectByRepr(repr);
         gr_new = sp_gradient_ensure_vector_normalized (gr_new);
         Inkscape::GC::release(repr);
         return gr_new;
@@ -695,7 +696,8 @@ sp_item_gradient_reverse_vector (SPItem *item, bool fill_or_stroke)
     GSList *child_copies = NULL;
     for (GSList *i = child_reprs; i != NULL; i = i->next) {
         Inkscape::XML::Node *repr = (Inkscape::XML::Node *) i->data;
-        child_copies = g_slist_append (child_copies, repr->duplicate());
+        Inkscape::XML::Document *xml_doc = SP_OBJECT_REPR(vector)->document();
+        child_copies = g_slist_append (child_copies, repr->duplicate(xml_doc));
     }
 
 

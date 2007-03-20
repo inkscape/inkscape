@@ -1407,7 +1407,7 @@ void cmd_duplicate_node(GtkObject *object, gpointer data)
     g_assert(selected_repr != NULL);
 
     Inkscape::XML::Node *parent = sp_repr_parent(selected_repr);
-    Inkscape::XML::Node *dup = selected_repr->duplicate();
+    Inkscape::XML::Node *dup = selected_repr->duplicate(parent->document());
     parent->addChild(dup, selected_repr);
 
     sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,

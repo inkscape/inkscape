@@ -974,11 +974,13 @@ sp_ui_drag_data_received(GtkWidget *widget,
                          guint event_time,
                          gpointer user_data)
 {
+    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
     switch (info) {
 #if ENABLE_MAGIC_COLORS
         case APP_X_INKY_COLOR:
         {
-            SPDesktop *desktop = SP_ACTIVE_DESKTOP;
             int destX = 0;
             int destY = 0;
             gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
@@ -1039,7 +1041,6 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     sp_desktop_apply_css_recursive( item, css, true );
                     item->updateRepr();
 
-                    SPDocument *doc = SP_ACTIVE_DOCUMENT;
                     sp_document_done( doc , SP_VERB_NONE, 
                                       _("Drop color"));
 
@@ -1054,7 +1055,6 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
         case APP_X_COLOR:
         {
-            SPDesktop *desktop = SP_ACTIVE_DESKTOP;
             int destX = 0;
             int destY = 0;
             gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
@@ -1081,7 +1081,6 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     sp_desktop_apply_css_recursive( item, css, true );
                     item->updateRepr();
 
-                    SPDocument *doc = SP_ACTIVE_DOCUMENT;
                     sp_document_done( doc , SP_VERB_NONE, 
                                       _("Drop color"));
                 }
@@ -1092,8 +1091,6 @@ sp_ui_drag_data_received(GtkWidget *widget,
         case SVG_DATA:
         case SVG_XML_DATA: {
             gchar *svgdata = (gchar *)data->data;
-
-            SPDocument *doc = SP_ACTIVE_DOCUMENT;
 
             Inkscape::XML::Document *rnewdoc = sp_repr_read_mem(svgdata, data->length, SP_SVG_NS_URI);
 
@@ -1108,14 +1105,14 @@ sp_ui_drag_data_received(GtkWidget *widget,
             Inkscape::XML::Node *newgroup = rnewdoc->createElement("svg:g");
             newgroup->setAttribute("style", style);
 
+            Inkscape::XML::Document * xml_doc =  sp_document_repr_doc(doc);
             for (Inkscape::XML::Node *child = repr->firstChild(); child != NULL; child = child->next()) {
-                Inkscape::XML::Node *newchild = child->duplicate();
+                Inkscape::XML::Node *newchild = child->duplicate(xml_doc);
                 newgroup->appendChild(newchild);
             }
 
             Inkscape::GC::release(rnewdoc);
 
-            SPDesktop *desktop = SP_ACTIVE_DESKTOP;
             // Add it to the current layer
 
             // Greg's edits to add intelligent positioning of svg drops
@@ -1159,7 +1156,6 @@ sp_ui_drag_data_received(GtkWidget *widget,
             Base64OutputStream b64out(outs);
             b64out.setColumnWidth(0);
 
-            SPDocument *doc = SP_ACTIVE_DOCUMENT;
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
             Inkscape::XML::Node *newImage = xml_doc->createElement("svg:image");
@@ -1193,8 +1189,6 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     }
                 }
             }
-
-            SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
             // Add it to the current layer
             desktop->currentLayer()->appendChildRepr(newImage);

@@ -364,7 +364,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 
 			child->updateRepr();
 
-			Inkscape::XML::Node *nrepr = SP_OBJECT_REPR (child)->duplicate();
+			Inkscape::XML::Node *nrepr = SP_OBJECT_REPR (child)->duplicate(prepr->document());
 
 			// Merging transform
 			NR::Matrix ctrans;
@@ -394,7 +394,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 			items = g_slist_prepend (items, nrepr);
 
 		} else {
-			Inkscape::XML::Node *nrepr = SP_OBJECT_REPR (child)->duplicate();
+			Inkscape::XML::Node *nrepr = SP_OBJECT_REPR (child)->duplicate(prepr->document());
 			objects = g_slist_prepend (objects, nrepr);
 		}
 	}

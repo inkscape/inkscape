@@ -17,6 +17,7 @@ using Inkscape::XML::AttributeRecord;
 using Inkscape::XML::SimpleNode;
 using Inkscape::XML::Node;
 using Inkscape::XML::NodeType;
+using Inkscape::XML::Document;
 
 struct SPCSSAttrImpl : public SimpleNode, public SPCSSAttr {
 public:
@@ -25,7 +26,7 @@ public:
     NodeType type() const { return Inkscape::XML::ELEMENT_NODE; }
 
 protected:
-    SimpleNode *_duplicate() const { return new SPCSSAttrImpl(*this); }
+    SimpleNode *_duplicate(Document* doc) const { return new SPCSSAttrImpl(*this); }
 };
 
 static void sp_repr_css_add_components(SPCSSAttr *css, Node *repr, gchar const *attr);
