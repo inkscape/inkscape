@@ -255,7 +255,14 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
 
     _point = p;
 
-    _snap_points = selection->getSnapPointsConvexHull();
+    _snap_points = selection->getSnapPoints();
+    if (_snap_points.size() > 100) {
+        /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
+        An average user would rarely ever try to snap such a large number of nodes anyway, because 
+        (s)he could hardly discern which node would be snapping */
+        _snap_points = selection->getSnapPointsConvexHull();
+        // Unfortunately, by now we will have lost the font-baseline snappoints :-(
+    }
     _box = selection->bounds();
     _bbox_points.clear();
     if (_box) {
