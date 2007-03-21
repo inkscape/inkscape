@@ -42,7 +42,7 @@ EXTRA_DIST = \
 	Info.plist.in	\
 	Info.plist		\
 	inkscape.nsi		\
-	config.h.mingw Makefile.mingw Makefile.mingw.common mingwenv.bat buildtool.cpp build.xml	\
+	buildtool.cpp build.xml	\
 	README README.ca.txt README.de.txt README.es.txt README.fr.txt README.it.txt	\
 	HACKING.txt HACKING.de.txt HACKING.fr.txt HACKING.it.txt	\
 	TRANSLATORS \
@@ -142,11 +142,9 @@ EXTRA_DIST = \
 	packaging/win32/slovenian.nsh	\
 	packaging/win32/spanish.nsh	\
 	packaging/win32/header.bmp	\
-	po/Makefile.mingw \
         po/inkscape.pot \
         po/update_po_files.sh \
-	src/Makefile.mingw src/inkscape_version.h.mingw src/inkscape.rc	src/inkview.rc	src/makedef.pl \
-	src/helper/sp-marshal.h.mingw src/helper/sp-marshal.cpp.mingw
+	src/inkscape.rc	src/inkview.rc
 
 # We want the built inkscape.1 to go in the distributed .tar.gz so
 # that .tar.gz users don't need a full perl distribution to get a man
