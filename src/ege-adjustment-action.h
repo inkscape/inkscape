@@ -85,6 +85,7 @@ GtkAdjustment* ege_adjustment_action_get_adjustment( EgeAdjustmentAction* action
 void ege_adjustment_action_set_focuswidget( EgeAdjustmentAction* action, GtkWidget* widget );
 GtkWidget* ege_adjustment_action_get_focuswidget( EgeAdjustmentAction* action );
 
+void ege_adjustment_action_set_descriptions( EgeAdjustmentAction* action, gchar const** descriptions, gdouble const* values, guint count );
 
 typedef void (*EgeWidgetFixup)(GtkWidget *widget);
 

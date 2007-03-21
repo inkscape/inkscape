@@ -75,6 +75,14 @@ static void ege_adjustment_action_defocus( EgeAdjustmentAction* action );
 static GtkActionClass* gParentClass = 0;
 static GQuark gDataName = 0;
 
+typedef struct _EgeAdjustmentDescr EgeAdjustmentDescr;
+
+struct _EgeAdjustmentDescr
+{
+    gchar* descr;
+    gdouble value;
+};
+
 struct _EgeAdjustmentActionPrivate
 {
     GtkAdjustment* adj;
@@ -87,6 +95,7 @@ struct _EgeAdjustmentActionPrivate
     gdouble step;
     gdouble page;
     gboolean transferFocus;
+    GList* descriptions;
 };
 
 #define EGE_ADJUSTMENT_ACTION_GET_PRIVATE( o ) ( G_TYPE_INSTANCE_GET_PRIVATE( (o), EGE_ADJUSTMENT_ACTION_TYPE, EgeAdjustmentActionPrivate ) )
@@ -213,6 +222,7 @@ static void ege_adjustment_action_init( EgeAdjustmentAction* action )
     action->private_data->step = 0.0;
     action->private_data->page = 0.0;
     action->private_data->transferFocus = FALSE;
+    action->private_data->descriptions = 0;
 }
 
 EgeAdjustmentAction* ege_adjustment_action_new( GtkAdjustment* adjustment,
@@ -349,6 +359,59 @@ GtkWidget* ege_adjustment_action_get_focuswidget( EgeAdjustmentAction* action )
     return action->private_data->focusWidget;
 }
 
+static void i_free_description( gpointer data, gpointer user_data ) {
+    (void)user_data;
+    if ( data ) {
+        EgeAdjustmentDescr* descr = (EgeAdjustmentDescr*)data;
+	if ( descr->descr ) {
+  	    g_free( descr->descr );
+	    descr->descr = 0;
+	}
+	g_free( descr );
+    }
+}
+
+static gint i_compare_descriptions( gconstpointer a, gconstpointer b )
+{
+    gint val = 0;
+
+    EgeAdjustmentDescr const * aa = (EgeAdjustmentDescr const *)a;
+    EgeAdjustmentDescr const * bb = (EgeAdjustmentDescr const *)b;
+
+    if ( aa && bb ) {
+        if ( aa->value < bb->value ) {
+	    val = -1;
+	} else if ( aa->value > bb->value ) {
+	    val = 1;
+	}
+    }
+
+    return val;
+}
+
+void ege_adjustment_action_set_descriptions( EgeAdjustmentAction* action, gchar const** descriptions, gdouble const* values, guint count )
+{
+    g_return_if_fail( IS_EGE_ADJUSTMENT_ACTION(action) );
+
+    if ( action->private_data->descriptions ) {
+        g_list_foreach( action->private_data->descriptions, i_free_description, 0 );
+	g_list_free( action->private_data->descriptions );
+	action->private_data->descriptions = 0;
+    }
+
+    if ( count && descriptions && values ) {
+        guint i = 0;
+        for ( i = 0; i < count; i++ ) {
+	    EgeAdjustmentDescr* descr = g_new0( EgeAdjustmentDescr, 1 );
+	    if ( descriptions[i] ) {
+	        descr->descr = g_strdup( descriptions[i] );
+		descr->value = values[i];
+	    }
+	    action->private_data->descriptions = g_list_insert_sorted( action->private_data->descriptions, (gpointer)descr, i_compare_descriptions );
+	}
+    }
+}
+
 static void process_menu_action( GtkWidget* obj, gpointer data )
 {
     GtkCheckMenuItem* item = GTK_CHECK_MENU_ITEM(obj);
@@ -397,10 +460,37 @@ static void process_menu_action( GtkWidget* obj, gpointer data )
     }
 }
 
-static void create_single_menu( GCallback toggleCb, int val, GtkWidget* menu, EgeAdjustmentAction* act, GtkWidget** dst, GSList** group, gdouble num, gboolean active )
+static void create_single_menu_item( GCallback toggleCb, int val, GtkWidget* menu, EgeAdjustmentAction* act, GtkWidget** dst, GSList** group, gdouble num, gboolean active )
 {
-    char* fmt = g_strdup_printf("%%0.%df", act->private_data->digits);
-    char *str = g_strdup_printf ( fmt, num );
+    gdouble epsilon = 0.1;
+    char* fmt = 0;
+    char* str = 0;
+    EgeAdjustmentDescr* marker = 0;
+    GList* cur = act->private_data->descriptions;
+
+    switch ( act->private_data->digits ) {
+        case 0: epsilon = 1.0; break;
+        case 1: epsilon = 0.1; break;
+        case 2: epsilon = 0.01; break;
+        case 3: epsilon = 0.001; break;
+        case 4: epsilon = 0.0001; break;
+    }
+
+    while ( cur ) {
+        EgeAdjustmentDescr* descr = (EgeAdjustmentDescr*)cur->data;
+	gdouble delta = num - descr->value;
+	if ( delta < 0.0 ) {
+	    delta = -delta;
+	}
+	if ( delta < epsilon ) {
+  	    marker = descr;
+  	    break;
+	}
+	cur = g_list_next( cur );
+    }
+
+    fmt = g_strdup_printf("%%0.%df%%s%%s", act->private_data->digits);
+    str = g_strdup_printf ( fmt, num, (marker?" ":""), (marker?marker->descr:"") );
 
     *dst = gtk_radio_menu_item_new_with_label( *group, str );
     if ( !*group) {
@@ -438,24 +528,25 @@ static GtkWidget* create_popup_number_menu( EgeAdjustmentAction* act )
                   NULL );
 
     if ( base < upper ) {
-        create_single_menu( G_CALLBACK(process_menu_action), BUMP_TOP, menu, act, &single, &group, upper, FALSE );
+        create_single_menu_item( G_CALLBACK(process_menu_action), BUMP_TOP, menu, act, &single, &group, upper, FALSE );
         if ( (base + page) < upper ) {
-            create_single_menu( G_CALLBACK(process_menu_action), BUMP_PAGE_UP, menu, act, &single, &group, base + page, FALSE );
+            create_single_menu_item( G_CALLBACK(process_menu_action), BUMP_PAGE_UP, menu, act, &single, &group, base + page, FALSE );
         }
         if ( (base + step) < upper ) {
-            create_single_menu( G_CALLBACK(process_menu_action), BUMP_UP, menu, act, &single, &group, base + step, FALSE );
+            create_single_menu_item( G_CALLBACK(process_menu_action), BUMP_UP, menu, act, &single, &group, base + step, FALSE );
         }
     }
 
-    create_single_menu( G_CALLBACK(process_menu_action), BUMP_NONE, menu, act, &single, &group, base, TRUE );
+    create_single_menu_item( G_CALLBACK(process_menu_action), BUMP_NONE, menu, act, &single, &group, base, TRUE );
+
     if ( base > lower ) {
         if ( (base - step) > lower ) {
-            create_single_menu( G_CALLBACK(process_menu_action), BUMP_DOWN, menu, act, &single, &group, base - step, FALSE );
+            create_single_menu_item( G_CALLBACK(process_menu_action), BUMP_DOWN, menu, act, &single, &group, base - step, FALSE );
         }
         if ( (base - page) > lower ) {
-            create_single_menu( G_CALLBACK(process_menu_action), BUMP_PAGE_DOWN, menu, act, &single, &group, base - page, FALSE );
+            create_single_menu_item( G_CALLBACK(process_menu_action), BUMP_PAGE_DOWN, menu, act, &single, &group, base - page, FALSE );
         }
-        create_single_menu( G_CALLBACK(process_menu_action), BUMP_BOTTOM, menu, act, &single, &group, lower, FALSE );
+        create_single_menu_item( G_CALLBACK(process_menu_action), BUMP_BOTTOM, menu, act, &single, &group, lower, FALSE );
     }
 
     return menu;

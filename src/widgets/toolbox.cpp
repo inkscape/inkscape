@@ -828,6 +828,7 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
                                                        GtkWidget *dataKludge,
                                                        gboolean altx, gchar const *altx_mark,
                                                        gdouble lower, gdouble upper, gdouble step, gdouble page,
+                                                       gchar const** descrLabels, gdouble const* descrValues, guint descrCount,
                                                        void (*callback)(GtkAdjustment *, GtkWidget *),
                                                        gdouble climb = 0.1, guint digits = 3, double factor = 1.0 )
 {
@@ -840,6 +841,10 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
     gtk_signal_connect( GTK_OBJECT(adj), "value-changed", GTK_SIGNAL_FUNC(callback), dataKludge );
 
     EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, label, tooltip, 0, climb, digits );
+
+    if ( (descrCount > 0) && descrLabels && descrValues ) {
+        ege_adjustment_action_set_descriptions( act, descrLabels, descrValues, descrCount );
+    }
 
     if ( focusTarget ) {
         ege_adjustment_action_set_focuswidget( act, focusTarget );
@@ -1265,16 +1270,22 @@ sp_star_toolbox_new(SPDesktop *desktop)
         }
 
         /* Magnitude */
+        //gchar const* labels[] = {_("tri (default)"), _("quad"), _("pent")};
+        //gdouble values[] = {3, 4, 5};
         eact = create_adjustment_action( "MagnitudeAction",
                                          _("Corners:"), _("Number of corners of a polygon or star"),
                                          "tools.shapes.star", "magnitude", 3,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                         3, 1024, 1, 1,
-                                         sp_stb_magnitude_value_changed );
+                                         3, 1024, 1, 5,
+                                         0, 0, 0, // labels, values, G_N_ELEMENTS(labels), 
+                                         sp_stb_magnitude_value_changed,
+                                         1.0, 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
 
         /* Spoke ratio */
+        //gchar const* labels2[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
+        //gdouble values2[] = {-90, 0, 30, 90};
         eact = create_adjustment_action( "SpokeAction",
                                          _("Spoke ratio:"),
                                          // TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
@@ -1283,6 +1294,7 @@ sp_star_toolbox_new(SPDesktop *desktop)
                                          "tools.shapes.star", "proportion", 0.5,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.01, 1.0, 0.01, 0.1,
+                                         0, 0, 0, // labels2, values2, G_N_ELEMENTS(labels2),
                                          sp_stb_proportion_value_changed );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         g_object_set_data(G_OBJECT(holder), "prop_action", eact);
@@ -1294,21 +1306,27 @@ sp_star_toolbox_new(SPDesktop *desktop)
         }
 
         /* Roundedness */
+        //gchar const* labels3[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
+        //gdouble values3[] = {-90, 0, 30, 90};
         eact = create_adjustment_action( "RoundednessAction",
                                          _("Rounded:"), _("How much rounded are the corners (0 for sharp)"),
                                          "tools.shapes.star", "rounded", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          -100.0, 100.0, 0.01, 0.1,
+                                         0, 0, 0, // labels3, values3, G_N_ELEMENTS(labels3),
                                          sp_stb_rounded_value_changed );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
 
         /* Randomization */
+        //gchar const* labels4[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
+        //gdouble values4[] = {-90, 0, 30, 90};
         eact = create_adjustment_action( "RandomizationAction",
                                          _("Randomized:"), _("Scatter randomly the corners and angles"),
                                          "tools.shapes.star", "randomized", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          -10.0, 10.0, 0.001, 0.01,
+                                         0, 0, 0, // labels4, values4, G_N_ELEMENTS(labels4),
                                          sp_stb_randomized_value_changed, 0.1, 3 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -2213,84 +2231,108 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         EgeAdjustmentAction* eact = 0;
 
         /* Width */
+        //gchar const* labels1[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
+        //gdouble values1[] = {-90, 0, 30, 90};
         eact = create_adjustment_action( "WidthAction",
                                          _("Width:"), _("The width of the calligraphic pen (relative to the visible canvas area)"),
                                          "tools.calligraphic", "width", 15,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-calligraphy",
                                          1, 100, 1.0, 10.0,
+                                         0, 0, 0, // labels1, values1, G_N_ELEMENTS(labels1),
                                          sp_ddc_width_value_changed2,  0.01, 0, 100 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
 
         /* Thinning */
+        //gchar const* labels2[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
+        //gdouble values2[] = {-90, 0, 30, 90};
         eact = create_adjustment_action( "ThinningAction",
                                          _("Thinning:"), _("How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"),
                                          "tools.calligraphic", "thinning", 0.1,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          -1.0, 1.0, 0.01, 0.1,
+                                         0, 0, 0, // labels2, values2, G_N_ELEMENTS(labels2),
                                          sp_ddc_velthin_value_changed2, 0.01, 2);
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
 
         /* Angle */
+        gchar const* labels3[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
+        gdouble values3[] = {-90, 0, 30, 90};
         eact = create_adjustment_action( "AngleAction",
                                          _("Angle:"), _("The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if fixation = 0)"),
                                          "tools.calligraphic", "angle", 30,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "calligraphy-angle",
                                          -90.0, 90.0, 1.0, 10.0,
+                                         labels3, values3, G_N_ELEMENTS(labels3),
                                          sp_ddc_angle_value_changed2, 1, 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         calligraphy_angle = eact;
 
         /* Fixation */
+        //gchar const* labels4[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
+        //gdouble values4[] = {-90, 0, 30, 90};
         eact = create_adjustment_action( "FixationAction",
                                          _("Fixation:"), _("Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed angle)"),
                                          "tools.calligraphic", "flatness", 0.9,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
+                                         0, 0, 0, // labels4, values4, G_N_ELEMENTS(labels4),
                                          sp_ddc_flatness_value_changed2, 0.01, 2 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
 
         /* Cap Rounding */
+        //gchar const* labels5[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
+        //gdouble values5[] = {-90, 0, 30, 90};
         // TRANSLATORS: "cap" means "end" (both start and finish) here
         eact = create_adjustment_action( "CapRoundingAction",
                                          _("Caps:"), _("Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = round caps)"),
                                          "tools.calligraphic", "cap_rounding", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.0, 5.0, 0.01, 0.1,
+                                         0, 0, 0, // labels5, values5, G_N_ELEMENTS(labels5),
                                          sp_ddc_cap_rounding_value_changed2, 0.01, 2 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
 
         /* Tremor */
+        //gchar const* labels6[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
+        //gdouble values6[] = {-90, 0, 30, 90};
         eact = create_adjustment_action( "TremorAction",
                                          _("Tremor:"), _("Increase to make strokes rugged and trembling"),
                                          "tools.calligraphic", "tremor", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
+                                         0, 0, 0, // labels6, values6, G_N_ELEMENTS(labels6),
                                          sp_ddc_tremor_value_changed2, 0.01, 2 );
 
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
 
         /* Wiggle */
+        //gchar const* labels7[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
+        //gdouble values7[] = {-90, 0, 30, 90};
         eact = create_adjustment_action( "WiggleAction",
                                          _("Wiggle:"), _("Increase to make the pen waver and wiggle"),
                                          "tools.calligraphic", "wiggle", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
+                                         0, 0, 0, // labels7, values7, G_N_ELEMENTS(labels7),
                                          sp_ddc_wiggle_value_changed2, 0.01, 2 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
 
         /* Mass */
+        //gchar const* labels8[] = {_("low"), _("(default)"), _("high")};
+        //gdouble values8[] = {0.0, 0.2, 1.0};
         eact = create_adjustment_action( "MassAction",
                                          _("Mass:"), _("Increase to make the pen drag behind, as if slowed by inertia"),
                                          "tools.calligraphic", "mass", 0.02,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
+                                         0, 0, 0, //labels8, values8, G_N_ELEMENTS(labels8),
                                          sp_ddc_mass_value_changed2, 0.01, 2 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
