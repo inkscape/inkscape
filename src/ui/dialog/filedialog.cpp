@@ -59,7 +59,7 @@ void dump_str( const gchar* str, const gchar* prefix );
 void dump_ustr( const Glib::ustring& ustr );
 #endif
 
-
+extern int errno;
 
 
 namespace Inkscape
@@ -630,7 +630,6 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
     g_message("fname:%s", fileName.c_str());
 
     if (Glib::file_test(fileName, Glib::FILE_TEST_IS_DIR)) {
-        g_message("dir");
         showNoPreview();
         return false;
     }
@@ -640,9 +639,10 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
         Glib::ustring fileNameUtf8 = Glib::filename_to_utf8(fileName);
         gchar *fName = (gchar *)fileNameUtf8.c_str();
         struct stat info;
-        if (stat(fName, &info))
+        if (g_stat(fName, &info))
             {
-            g_message("SVGPreview::set() : %s", strerror(errno));
+            g_warning("SVGPreview::set() : %s : %s",
+                           fName, strerror(errno));
             return FALSE;
             }
         long fileLen = info.st_size;
@@ -653,7 +653,7 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
             return FALSE;
             }
         }
-
+        
     Glib::ustring svg = ".svg";
     Glib::ustring svgz = ".svgz";
 
