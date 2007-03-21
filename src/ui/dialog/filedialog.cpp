@@ -1,47 +1,42 @@
-/*
+/**
  * Implementation of the file dialog interfaces defined in filedialog.h
  *
  * Authors:
  *   Bob Jamison
  *   Other dudes from The Inkscape Organization
  *
+ * Copyright (C) 2004-2007 Bob Jamison
  * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 2004-2006 The Inkscape Organization
+ * Copyright (C) 2004-2007 The Inkscape Organization
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
 
+//General includes
+#include <unistd.h>
+#include <sys/stat.h>
+#include <set>
 
-
+//Gtk includes
+#include <gtkmm.h>
+#include <glibmm/i18n.h>
+#include <glib/gstdio.h>
 //Temporary ugly hack
-//Remove these after the get_filter() calls in
+//Remove this after the get_filter() calls in
 //show() on both classes are fixed
 #include <gtk/gtkfilechooser.h>
-
 //Another hack
 #include <gtk/gtkentry.h>
 #include <gtk/gtkexpander.h>
 
-#include <unistd.h>
-#include <sys/stat.h>
-#include <set>
-#include <glibmm/i18n.h>
-#include <gtkmm/box.h>
-#include <gtkmm/colorbutton.h>
-#include <gtkmm/frame.h>
-#include <gtkmm/filechooserdialog.h>
-#include <gtkmm/menubar.h>
-#include <gtkmm/menu.h>
-#include <gtkmm/entry.h>
-#include <gtkmm/expander.h>
-#include <gtkmm/comboboxtext.h>
-#include <gtkmm/stock.h>
-#include <gdkmm/pixbuf.h>
 
+
+//Inkscape includes
 #include "prefs-utils.h"
 #include <dialogs/dialog-events.h>
 #include <extension/input.h>
@@ -56,12 +51,16 @@
 #include "ui/widget/scalar-unit.h"
 
 
+//Routines from file.cpp
 #undef INK_DUMP_FILENAME_CONV
 
 #ifdef INK_DUMP_FILENAME_CONV
 void dump_str( const gchar* str, const gchar* prefix );
 void dump_ustr( const Glib::ustring& ustr );
 #endif
+
+
+
 
 namespace Inkscape
 {
@@ -240,6 +239,7 @@ bool SVGPreview::setDocument(SPDocument *doc)
     return true;
 }
 
+
 bool SVGPreview::setFileName(Glib::ustring &theFileName)
 {
     Glib::ustring fileName = theFileName;
@@ -332,7 +332,7 @@ void SVGPreview::showImage(Glib::ustring &theFileName)
           "<svg\n"
           "xmlns=\"http://www.w3.org/2000/svg\"\n"
           "xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n"
-          "width=\"%d\" height=\"%d\">\n"
+          "width=\"%d\" height=\"%d\">\n"  //# VALUES HERE
           "<rect\n"
           "  style=\"fill:#eeeeee;stroke:none\"\n"
           "  x=\"-100\" y=\"-100\" width=\"4000\" height=\"4000\"/>\n"
@@ -348,7 +348,7 @@ void SVGPreview::showImage(Glib::ustring &theFileName)
           "  style=\"font-size:24.000000;font-style:normal;font-weight:normal;"
           "    fill:#000000;fill-opacity:1.0000000;stroke:none;"
           "    font-family:Bitstream Vera Sans\"\n"
-          "  x=\"10\" y=\"26\">%d x %d</text>\n"
+          "  x=\"10\" y=\"26\">%d x %d</text>\n" //# VALUES HERE
           "</svg>\n\n";
 
     //if (!Glib::get_charset()) //If we are not utf8
@@ -388,7 +388,7 @@ void SVGPreview::showNoPreview()
           "<svg\n"
           "xmlns=\"http://www.w3.org/2000/svg\"\n"
           "xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n"
-          "width=\"%d\" height=\"%d\">\n"
+          "width=\"%d\" height=\"%d\">\n" //# VALUES HERE
           "<g transform=\"translate(-190,24.27184)\" style=\"opacity:0.12\">\n"
           "<path\n"
           "style=\"font-size:12;fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.936193pt\"\n"
@@ -451,7 +451,7 @@ void SVGPreview::showNoPreview()
           "font-stretch:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000pt;"
           "stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;"
           "font-family:Bitstream Vera Sans;text-anchor:middle;writing-mode:lr\"\n"
-          "x=\"190\" y=\"240\">%s</text></g>\n"
+          "x=\"190\" y=\"240\">%s</text></g>\n"  //# VALUE HERE
           "</svg>\n\n";
 
     //Fill in the template
@@ -467,6 +467,11 @@ void SVGPreview::showNoPreview()
 
 }
 
+
+/**
+ * Inform the user that the svg file is too large to be displayed.
+ * This does not check for sizes of embedded images (yet) 
+ */ 
 void SVGPreview::showTooLarge(long fileLength)
 {
 
@@ -480,7 +485,7 @@ void SVGPreview::showTooLarge(long fileLength)
           "<svg\n"
           "xmlns=\"http://www.w3.org/2000/svg\"\n"
           "xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n"
-          "width=\"%d\" height=\"%d\">\n"
+          "width=\"%d\" height=\"%d\">\n"  //# VALUES HERE
           "<g transform=\"translate(-170,24.27184)\" style=\"opacity:0.12\">\n"
           "<path\n"
           "style=\"font-size:12;fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.936193pt\"\n"
@@ -543,13 +548,13 @@ void SVGPreview::showTooLarge(long fileLength)
           "font-stretch:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000pt;"
           "stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;"
           "font-family:Bitstream Vera Sans;text-anchor:middle;writing-mode:lr\"\n"
-          "x=\"170\" y=\"215\">%5.1f MB</text>\n"
+          "x=\"170\" y=\"215\">%5.1f MB</text>\n" //# VALUE HERE
           "<text xml:space=\"preserve\"\n"
           "style=\"font-size:24.000000;font-style:normal;font-variant:normal;font-weight:bold;"
           "font-stretch:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000pt;"
           "stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;"
           "font-family:Bitstream Vera Sans;text-anchor:middle;writing-mode:lr\"\n"
-          "x=\"180\" y=\"245\">%s</text>\n"
+          "x=\"180\" y=\"245\">%s</text>\n" //# VALUE HERE
           "</svg>\n\n";
 
     //Fill in the template
@@ -622,19 +627,22 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
     if (!Glib::file_test(fileName, Glib::FILE_TEST_EXISTS))
         return false;
 
-    gchar *fName = (gchar *)fileName.c_str();
-    //g_message("fname:%s\n", fName);
+    g_message("fname:%s", fileName.c_str());
 
     if (Glib::file_test(fileName, Glib::FILE_TEST_IS_DIR)) {
+        g_message("dir");
         showNoPreview();
         return false;
     }
 
     if (Glib::file_test(fileName, Glib::FILE_TEST_IS_REGULAR))
         {
+        Glib::ustring fileNameUtf8 = Glib::filename_to_utf8(fileName);
+        gchar *fName = (gchar *)fileNameUtf8.c_str();
         struct stat info;
         if (stat(fName, &info))
             {
+            g_message("SVGPreview::set() : %s", strerror(errno));
             return FALSE;
             }
         long fileLen = info.st_size;
@@ -760,7 +768,10 @@ private:
 
 void FileDialogBase::internalSetup()
 {
-    bool enablePreview = (bool)prefs_get_int_attribute( preferenceBase.c_str(), "enable_preview", 1 );
+    bool enablePreview = 
+        (bool)prefs_get_int_attribute( preferenceBase.c_str(),
+             "enable_preview", 1 );
+
     previewCheckbox.set_label( Glib::ustring(_("Enable Preview")) );
     previewCheckbox.set_active( enablePreview );
 
@@ -778,12 +789,14 @@ void FileDialogBase::internalSetup()
 
 }
 
+
 void FileDialogBase::cleanup( bool showConfirmed )
 {
-    if ( showConfirmed ) {
-        prefs_set_int_attribute( preferenceBase.c_str(), "enable_preview", previewCheckbox.get_active() );
-    }
+    if ( showConfirmed )
+        prefs_set_int_attribute( preferenceBase.c_str(),
+               "enable_preview", previewCheckbox.get_active() );
 }
+
 
 void FileDialogBase::_previewEnabledCB()
 {
@@ -795,12 +808,14 @@ void FileDialogBase::_previewEnabledCB()
 }
 
 
+
 /**
  * Callback for checking if the preview needs to be redrawn
  */
 void FileDialogBase::_updatePreviewCallback()
 {
     Glib::ustring fileName = get_preview_filename();
+
 #ifdef WITH_GNOME_VFS
     if (fileName.length() < 1)
         fileName = get_preview_uri();
@@ -810,8 +825,6 @@ void FileDialogBase::_updatePreviewCallback()
         return;
 
     svgPreview.set(fileName, dialogType);
-//         bool retval = svgPreview.set(fileName, dialogType);
-//         set_preview_widget_active(retval);
 }
 
 
