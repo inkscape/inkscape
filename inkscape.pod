@@ -9,7 +9,7 @@ C<inkscape [options] [filename ...]>
 
 options:
 
-    -?, --help		
+    -?, --help        
         --usage       
     -V, --version
 
@@ -47,6 +47,10 @@ options:
     -H, --query-height
 
     -x, --extension-directory
+        --verb-list
+
+        --verb=VERB-ID
+        --select=OBJECT-ID
 
     -p, --print=PRINTER
 
@@ -167,11 +171,34 @@ show in export even if they overlay the exported object. Without --export-id, th
 
 Export document(s) to plain SVG format, without sodipodi: or inkscape: namespaces and without RDF metadata.
 
-=item B<-l>, B<--extension-directory>
+=item B<-x>, B<--extension-directory>
 
 Lists the current extension directory that Inkscape is configured to use and
 then exits.  This is used for external extension to use the same configuration
 as the original Inkscape installation.
+
+=item B<--verb-list>
+
+Lists all the verbs that are available in Inkscape by ID.  This ID can be
+used in defining keymaps or menus.  It can also be used with the --verb
+command line option.
+
+=item B<--verb>=I<VERB-ID>, B<--select>=I<OBJECT-ID>
+
+These two options work together to provide some basic scripting for
+Inkscape from the command line.  They both can occur as many times as
+needed on the command line and are executed in order on every document that
+is specified.
+
+The --verb command will execute a specific verb like it
+was called from a menu or button.  Dialogs will appear if that is part
+of the verb.  To get a list of the verb IDs available use the --verb-list
+command line option.
+
+The --select command will cause objects that have the ID
+specified to be selected.  This allows various verbs to act upon them.  To
+remove all the selections use --verb=EditDeselect.  The object IDs
+available are dependent on the document specified to load.
 
 =item B<-p> I<PRINTER>, B<--print>=I<PRINTER>
 
