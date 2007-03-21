@@ -724,10 +724,10 @@ static GtkWidget* create_tool_item( GtkAction* action )
             g_object_get_property( G_OBJECT(action), "tooltip", &tooltip );
             const gchar* tipstr = g_value_get_string( &tooltip );
             if ( tipstr && *tipstr ) {
-                if ( !action->private_data->toolTips ) {
-                    action->private_data->toolTips = gtk_tooltips_new();
+                if ( !act->private_data->toolTips ) {
+                    act->private_data->toolTips = gtk_tooltips_new();
                 }
-                gtk_tooltips_set_tip( action->private_data->toolTips, spinbutton, tipstr, 0 );
+                gtk_tooltips_set_tip( act->private_data->toolTips, spinbutton, tipstr, 0 );
             }
         }
 
