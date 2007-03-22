@@ -20,6 +20,7 @@
 //General includes
 #include <unistd.h>
 #include <sys/stat.h>
+#include <errno.h>
 #include <set>
 
 //Gtk includes
@@ -59,7 +60,6 @@ void dump_str( const gchar* str, const gchar* prefix );
 void dump_ustr( const Glib::ustring& ustr );
 #endif
 
-extern int errno;
 
 
 namespace Inkscape
