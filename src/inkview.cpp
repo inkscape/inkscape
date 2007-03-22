@@ -86,7 +86,7 @@ struct SPSlideShow {
     int current;
     SPDocument *doc;
     GtkWidget *view;
-    GtkWindow *window;
+    GtkWidget *window;
     bool fullscreen;
     int timer;
 };
@@ -134,10 +134,10 @@ sp_svgview_main_key_press (GtkWidget *widget, GdkEventKey *event, struct SPSlide
     case GDK_F11:
 #ifdef HAVE_GTK_WINDOW_FULLSCREEN
 	if (ss->fullscreen) {
-	    gtk_window_unfullscreen ((GtkWindow *) widget);
+	    gtk_window_unfullscreen (GTK_WINDOW(ss->window));
 	    ss->fullscreen = false;
 	} else {
-	    gtk_window_fullscreen ((GtkWindow *) widget);
+	    gtk_window_fullscreen (GTK_WINDOW(ss->window));
 	    ss->fullscreen = true;
 	}
 #else
@@ -167,8 +167,8 @@ sp_svgview_main_key_press (GtkWidget *widget, GdkEventKey *event, struct SPSlide
     default:
 	break;
     }
-    gtk_window_set_title(GTK_WINDOW(widget), SP_DOCUMENT_NAME(ss->doc));
-    return FALSE;
+    gtk_window_set_title(GTK_WINDOW(ss->window), SP_DOCUMENT_NAME(ss->doc));
+    return TRUE;
 }
 
 int
@@ -316,6 +316,7 @@ main (int argc, const char **argv)
 				 MIN ((int)sp_document_width (ss.doc), (int)gdk_screen_width () - 64),
 				 MIN ((int)sp_document_height (ss.doc), (int)gdk_screen_height () - 64));
     gtk_window_set_policy (GTK_WINDOW (w), TRUE, TRUE, FALSE);
+    ss.window = w;
 
     g_signal_connect (G_OBJECT (w), "delete_event", (GCallback) sp_svgview_main_delete, &ss);
     g_signal_connect (G_OBJECT (w), "key_press_event", (GCallback) sp_svgview_main_key_press, &ss);
@@ -347,6 +348,8 @@ sp_svgview_control_show (struct SPSlideShow *ss)
     if (!ctrlwin) {
 	GtkWidget *t, *b;
 	ctrlwin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_transient_for (GTK_WINDOW(ctrlwin), GTK_WINDOW(ss->window));
+    g_signal_connect (G_OBJECT (ctrlwin), "key_press_event", (GCallback) sp_svgview_main_key_press, ss);
 	g_signal_connect (G_OBJECT (ctrlwin), "delete_event", (GCallback) sp_svgview_ctrlwin_delete, NULL);
 	t = gtk_table_new (1, 4, TRUE);
 	gtk_container_add ((GtkContainer *) ctrlwin, t);
@@ -411,71 +414,109 @@ sp_svgview_goto_last_cb (GtkWidget *widget, void *data)
 }
 
 static void
-sp_svgview_show_next (struct SPSlideShow *ss)
+sp_svgview_waiting_cursor(struct SPSlideShow *ss)
 {
-    SPDocument *doc;
-    int current;
-    doc = NULL;
-    current = ss->current;
-    while (!doc && (current < ss->length - 1)) {
-	doc = sp_document_new (ss->slides[++current], TRUE, false);
+    GdkCursor *waiting = gdk_cursor_new(GDK_WATCH);
+    gdk_window_set_cursor(GTK_WIDGET(ss->window)->window, waiting);
+    gdk_cursor_unref(waiting);
+    if (ctrlwin) {
+        GdkCursor *waiting = gdk_cursor_new(GDK_WATCH);
+        gdk_window_set_cursor(GTK_WIDGET(ctrlwin)->window, waiting);
+        gdk_cursor_unref(waiting);
     }
-    if (doc) {
-	reinterpret_cast<SPSVGView*>(SP_VIEW_WIDGET_VIEW (ss->view))->setDocument (doc);
-	sp_document_ensure_up_to_date (doc);
-	ss->doc = doc;
-	ss->current = current;
+    while(gtk_events_pending())
+       gtk_main_iteration();
+}
+
+static void
+sp_svgview_normal_cursor(struct SPSlideShow *ss)
+{
+   gdk_window_set_cursor(GTK_WIDGET(ss->window)->window, NULL);
+    if (ctrlwin) {
+        gdk_window_set_cursor(GTK_WIDGET(ctrlwin)->window, NULL);
     }
 }
 
 static void
+sp_svgview_set_document(struct SPSlideShow *ss, SPDocument *doc, int current)
+{
+    if (doc && doc != ss->doc) {
+        reinterpret_cast<SPSVGView*>(SP_VIEW_WIDGET_VIEW (ss->view))->setDocument (doc);
+        sp_document_ensure_up_to_date (doc);
+        if (ss->doc) {
+            delete ss->doc;
+        }
+        ss->doc = doc;
+        ss->current = current;
+    }
+}
+
+static void
+sp_svgview_show_next (struct SPSlideShow *ss)
+{
+    sp_svgview_waiting_cursor(ss);
+
+    SPDocument *doc = NULL;
+    int current = ss->current;
+    while (!doc && (current < ss->length - 1)) {
+        doc = sp_document_new (ss->slides[++current], TRUE, false);
+    }
+
+    sp_svgview_set_document(ss, doc, current);
+
+    sp_svgview_normal_cursor(ss);
+} 
+
+static void
 sp_svgview_show_prev (struct SPSlideShow *ss)
 {
-    SPDocument *doc;
-    int current;
-    doc = NULL;
-    current = ss->current;
+    sp_svgview_waiting_cursor(ss);
+
+    SPDocument *doc = NULL;
+    int current = ss->current;
     while (!doc && (current > 0)) {
-	doc = sp_document_new (ss->slides[--current], TRUE, false);
+        doc = sp_document_new (ss->slides[--current], TRUE, false);
     }
-    if (doc) {
-	reinterpret_cast<SPSVGView*>(SP_VIEW_WIDGET_VIEW (ss->view))->setDocument (doc);
-	sp_document_ensure_up_to_date (doc);
-	ss->doc = doc;
-	ss->current = current;
-    }
+
+    sp_svgview_set_document(ss, doc, current);
+
+    sp_svgview_normal_cursor(ss);
 }
 
 static void
 sp_svgview_goto_first (struct SPSlideShow *ss)
 {
+    sp_svgview_waiting_cursor(ss);
+
     SPDocument *doc = NULL;
     int current = 0;
-    for ( ; !doc && (current < ss->length); current++) {
-	doc = sp_document_new (ss->slides[current], TRUE, false);
+    while ( !doc && (current < ss->length - 1)) {
+        if (current == ss->current) 
+            break;
+        doc = sp_document_new (ss->slides[current++], TRUE, false);
     }
-    if (doc) {
-	reinterpret_cast<SPSVGView*>(SP_VIEW_WIDGET_VIEW (ss->view))->setDocument (doc);
-	sp_document_ensure_up_to_date (doc);
-	ss->doc = doc;
-	ss->current = current;
-    }
+
+    sp_svgview_set_document(ss, doc, current - 1);
+
+    sp_svgview_normal_cursor(ss);
 }
 
 static void
 sp_svgview_goto_last (struct SPSlideShow *ss)
 {
+    sp_svgview_waiting_cursor(ss);
+
     SPDocument *doc = NULL;
     int current = ss->length - 1;
-    for ( ; !doc && (current >= 0); current--) {
-	doc = sp_document_new (ss->slides[current], TRUE, false);
+    while (!doc && (current >= 0)) {
+        if (current == ss->current) 
+            break;
+        doc = sp_document_new (ss->slides[current--], TRUE, false);
     }
-    if (doc) {
-	reinterpret_cast<SPSVGView*>(SP_VIEW_WIDGET_VIEW (ss->view))->setDocument (doc);
-	sp_document_ensure_up_to_date (doc);
-	ss->doc = doc;
-	ss->current = current;
-    }
+
+    sp_svgview_set_document(ss, doc, current + 1);
+
+    sp_svgview_normal_cursor(ss);
 }
 
 #ifdef WITH_INKJAR
