@@ -453,10 +453,8 @@ void ege_adjustment_action_set_descriptions( EgeAdjustmentAction* action, gchar 
         guint i = 0;
         for ( i = 0; i < count; i++ ) {
             EgeAdjustmentDescr* descr = g_new0( EgeAdjustmentDescr, 1 );
-            if ( descriptions[i] ) {
-                descr->descr = g_strdup( descriptions[i] );
-                descr->value = values[i];
-            }
+            descr->descr = descriptions[i] ? g_strdup( descriptions[i] ) : 0;
+            descr->value = values[i];
             action->private_data->descriptions = g_list_insert_sorted( action->private_data->descriptions, (gpointer)descr, egeAct_compare_descriptions );
         }
     }
@@ -540,7 +538,7 @@ static void create_single_menu_item( GCallback toggleCb, int val, GtkWidget* men
         cur = g_list_next( cur );
     }
 
-    str = g_strdup_printf( act->private_data->format, num, (marker?" ":""), (marker?marker->descr:"") );
+    str = g_strdup_printf( act->private_data->format, num, (marker?" ":""), ( (marker && marker->descr) ? marker->descr:"") );
 
     *dst = gtk_radio_menu_item_new_with_label( *group, str );
     if ( !*group) {

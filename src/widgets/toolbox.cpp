@@ -2257,8 +2257,8 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
 
         /* Angle */
-        gchar const* labels3[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
-        gdouble values3[] = {-90, 0, 30, 90};
+        gchar const* labels3[] = {_("(left edge up)"), 0, 0, _("(horizontal)"), _("(default)"), 0, _("(right edge up)")};
+        gdouble values3[] = {-90, -60, -30, 0, 30, 60, 90};
         eact = create_adjustment_action( "AngleAction",
                                          _("Angle:"), _("The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if fixation = 0)"),
                                          "tools.calligraphic", "angle", 30,
