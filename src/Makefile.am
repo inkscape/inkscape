@@ -116,9 +116,6 @@ DISTCLEANFILES =	\
 	inkscape_version.h
 
 EXTRA_DIST =	\
-	mkdep.pl	\
-	mkfiles.pl	\
-	make.exclude	\
 	Doxyfile	\
 	sp-skeleton.cpp sp-skeleton.h	\
 	algorithms/makefile.in	\

@@ -13,7 +13,6 @@ libvpsc_libvpsc_a_SOURCES = libvpsc/block.cpp\
 	libvpsc/solve_VPSC.cpp\
 	libvpsc/csolve_VPSC.cpp\
 	libvpsc/variable.cpp\
-	libvpsc/isnan.h\
 	libvpsc/block.h\
 	libvpsc/blocks.h\
 	libvpsc/constraint.h\
