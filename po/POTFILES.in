@@ -193,7 +193,6 @@ src/seltrans-handles.cpp
 src/seltrans.cpp
 src/shape-editor.cpp
 src/shortcuts.cpp
-src/slideshow.cpp
 src/sp-anchor.cpp
 src/sp-clippath.cpp
 src/sp-cursor.cpp
