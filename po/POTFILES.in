@@ -271,9 +271,6 @@ src/ui/dialog/scriptdialog.cpp
 src/ui/dialog/text-properties.cpp
 src/ui/dialog/tracedialog.cpp
 src/ui/dialog/transformation.cpp
-src/ui/dialog/whiteboard-connect.cpp
-src/ui/dialog/whiteboard-sharewithchat.cpp
-src/ui/dialog/whiteboard-sharewithuser.cpp
 src/ui/stock-items.cpp
 src/ui/view/edit.cpp
 src/ui/view/edit-widget.cpp
