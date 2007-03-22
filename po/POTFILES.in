@@ -268,7 +268,6 @@ src/ui/dialog/inkscape-preferences.cpp
 src/ui/dialog/memory.cpp
 src/ui/dialog/messages.cpp
 src/ui/dialog/scriptdialog.cpp
-src/ui/dialog/session-player.cpp
 src/ui/dialog/text-properties.cpp
 src/ui/dialog/tracedialog.cpp
 src/ui/dialog/transformation.cpp
