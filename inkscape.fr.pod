@@ -14,7 +14,6 @@ options:
     -V, --version
 
     -f, --file=NOMDEFICHIER
-    -s, --slideshow
 
     -e, --export-png=NOMDEFICHIER
     -a, --export-area=x0:y0:x1:y1
@@ -147,10 +146,6 @@ Imprime le(s) document(s) vers l'imprimante spécifiée en utilisant `lpr -P IMP
 Vous pouvez aussi utiliser `| COMMANDE' pour spécifier un tube de commande différent, ou utiliser `> NOMDEFICHIER' pour écrire le résultat  PostScript dans un fichier au lieu de l'imprimer.
 N'oubliez pas d'utiliser les guillemets appropriés pour votre shell, par exemple
 inkscape --print='| ps2pdf - mondoc.pdf' mondoc.svg
-
-=item B<-s>, B<--slideshow>
-
-Affiche les fichiers spécifiés un par un, passant au suivant à chaque évènement clavier ou souris.
 
 =item B<-t>, B<--export-use-hints>
 

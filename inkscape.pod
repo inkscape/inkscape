@@ -14,7 +14,6 @@ options:
     -V, --version
 
     -f, --file=FILENAME               
-    -s, --slideshow                   
 
     -e, --export-png=FILENAME         
     -a, --export-area=x0:y0:x1:y1     
@@ -208,10 +207,6 @@ or use `> FILENAME' to write the PostScript output to a file instead of printing
 Remember to do appropriate quoting for your shell, e.g.
 
 inkscape --print='| ps2pdf - mydoc.pdf' mydoc.svg
-
-=item B<-s>, B<--slideshow>
-
-Show given files one by one, switching to the next one by any key or mouse event.
 
 =item B<-t>, B<--export-use-hints>
 

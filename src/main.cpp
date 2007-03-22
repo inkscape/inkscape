@@ -56,7 +56,6 @@
 #include "sp-object.h"
 #include "interface.h"
 #include "print.h"
-#include "slideshow.h"
 #include "color.h"
 #include "sp-item.h"
 #include "sp-root.h"
@@ -138,7 +137,6 @@ enum {
     SP_ARG_EXPORT_BBOX_PAGE,
     SP_ARG_EXTENSIONDIR,
     SP_ARG_FIT_PAGE_TO_DRAWING,
-    SP_ARG_SLIDESHOW,
     SP_ARG_QUERY_X,
     SP_ARG_QUERY_Y,
     SP_ARG_QUERY_WIDTH,
@@ -161,7 +159,6 @@ static void do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axi
 
 
 static gchar *sp_global_printer = NULL;
-static gboolean sp_global_slideshow = FALSE;
 static gchar *sp_export_png = NULL;
 static gchar *sp_export_dpi = NULL;
 static gchar *sp_export_area = NULL;
@@ -359,11 +356,6 @@ struct poptOption options[] = {
      POPT_ARG_NONE, NULL, SP_ARG_EXTENSIONDIR,
      // TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
      N_("Print out the extension directory and exit"),
-     NULL},
-
-    {"slideshow", 's',
-     POPT_ARG_NONE, &sp_global_slideshow, SP_ARG_SLIDESHOW,
-     N_("Show given files one-by-one, switch to next on any key/mouse event"),
      NULL},
 
     {"vacuum-defs", 0,
@@ -646,32 +638,19 @@ sp_main_gui(int argc, char const **argv)
     g_free (filename);
     filename = 0;
 
-    if (!sp_global_slideshow) {
-        gboolean create_new = TRUE;
+    gboolean create_new = TRUE;
 
-        /// \todo FIXME BROKEN - non-UTF-8 sneaks in here.
-        inkscape_application_init(argv[0], true);
+    /// \todo FIXME BROKEN - non-UTF-8 sneaks in here.
+    inkscape_application_init(argv[0], true);
 
-        while (fl) {
-            if (sp_file_open((gchar *)fl->data,NULL)) {
-                create_new=FALSE;
-            }
-            fl = g_slist_remove(fl, fl->data);
+    while (fl) {
+        if (sp_file_open((gchar *)fl->data,NULL)) {
+            create_new=FALSE;
         }
-        if (create_new) {
-            sp_file_new_default();
-        }
-    } else {
-        if (fl) {
-            GtkWidget *ss;
-            /// \todo FIXME BROKEN - non-UTF-8 sneaks in here.
-            inkscape_application_init(argv[0], true);
-            ss = sp_slideshow_new(fl);
-            if (ss) gtk_widget_show(ss);
-        } else {
-            g_warning ("No slides to display");
-            exit(0);
-        }
+        fl = g_slist_remove(fl, fl->data);
+    }
+    if (create_new) {
+        sp_file_new_default();
     }
 
     Glib::signal_idle().connect(sigc::ptr_fun(&Inkscape::CmdLineAction::idle));

@@ -130,7 +130,6 @@ libinkpre_a_SOURCES =	\
 	seltrans.cpp seltrans.h	\
 	shape-editor.cpp shape-editor.h \
 	shortcuts.cpp shortcuts.h	\
-	slideshow.cpp slideshow.h	\
 	snap.cpp snap.h	\
 	snapped-point.cpp snapped-point.h \
 	snapper.cpp snapper.h \
