@@ -246,7 +246,11 @@ bool SVGPreview::setFileName(Glib::ustring &theFileName)
 
     fileName = Glib::filename_to_utf8(fileName);
 
-    SPDocument *doc = sp_document_new (fileName.c_str(), 0);
+    /**
+     * I don't know why passing false to keepalive is bad.  But it
+     * prevents the display of an svg with a non-ascii filename
+     */              
+    SPDocument *doc = sp_document_new (fileName.c_str(), true);
     if (!doc) {
         g_warning("SVGView: error loading document '%s'\n", fileName.c_str());
         return false;
