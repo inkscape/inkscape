@@ -118,8 +118,6 @@ SPDocument::~SPDocument() {
     collectOrphans();
 
     if (priv) {
-        inkscape_remove_document(this);
-
         if (priv->partial) {
             sp_repr_free_log(priv->partial);
             priv->partial = NULL;
@@ -315,7 +313,6 @@ sp_document_create(Inkscape::XML::Document *rdoc,
         document->_selection_changed_connection = Inkscape::NSApplication::Editor::connectSelectionChanged (sigc::mem_fun (*document, &SPDocument::reset_key));
         document->_desktop_activated_connection = Inkscape::NSApplication::Editor::connectDesktopActivated (sigc::mem_fun (*document, &SPDocument::reset_key));
     }
-    inkscape_add_document(document);
 
     return document;
 }
@@ -402,7 +399,6 @@ sp_document_new_from_mem(gchar const *buffer, gint length, unsigned int keepaliv
 
 SPDocument *sp_document_new_dummy() {
     SPDocument *document = new SPDocument();
-    inkscape_add_document(document);
     return document;
 }
 

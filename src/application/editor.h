@@ -19,6 +19,7 @@
 #include <sigc++/sigc++.h>
 #include <glib/gslist.h>
 #include <glibmm/ustring.h>
+#include <set>
 #include "app-prototype.h"
 
 class SPDesktop;
@@ -96,6 +97,7 @@ protected:
     Editor(Editor const &);
     Editor& operator=(Editor const &);
 
+    std::multiset<SPDocument *> _document_set;
     GSList         *_documents;
     GSList         *_desktops;
     gchar          *_argv0;

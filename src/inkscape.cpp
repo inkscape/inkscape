@@ -18,6 +18,7 @@
 #endif
 
 
+#include <set>
 #include "debug/simple-event.h"
 #include "debug/event-tracker.h"
 
@@ -109,6 +110,7 @@ static bool inkscape_init_config (Inkscape::XML::Document *doc, const gchar *con
 struct Inkscape::Application {
     GObject object;
     Inkscape::XML::Document *menus;
+    std::multiset<SPDocument *> document_set;
     GSList *documents;
     GSList *desktops;
     gchar *argv0;
@@ -292,6 +294,8 @@ inkscape_init (SPObject * object)
         g_assert_not_reached ();
     }
 
+    new (&inkscape->document_set) std::multiset<SPDocument *>();
+
     inkscape->menus = sp_repr_read_mem (_(menus_skeleton), MENUS_SKELETON_SIZE, NULL);
 
     inkscape->documents = NULL;
@@ -320,6 +324,8 @@ inkscape_dispose (GObject *object)
         Inkscape::GC::release(inkscape->menus);
         inkscape->menus = NULL;
     }
+
+    inkscape->document_set.~multiset();
 
     G_OBJECT_CLASS (parent_class)->dispose (object);
 
@@ -1112,8 +1118,11 @@ inkscape_add_document (SPDocument *document)
 
     if (!Inkscape::NSApplication::Application::getNewGui())
     {
-        g_assert (!g_slist_find (inkscape->documents, document));
-        inkscape->documents = g_slist_append (inkscape->documents, document);
+        if ( inkscape->document_set.find(document) != inkscape->document_set.end() ) {
+    
+            inkscape->documents = g_slist_append (inkscape->documents, document);
+        }
+        inkscape->document_set.insert(document);
     }
     else
     {
@@ -1130,8 +1139,10 @@ inkscape_remove_document (SPDocument *document)
 
     if (!Inkscape::NSApplication::Application::getNewGui())
     {
-        g_assert (g_slist_find (inkscape->documents, document));
-        inkscape->documents = g_slist_remove (inkscape->documents, document);
+        inkscape->document_set.erase(document);
+        if ( inkscape->document_set.find(document) == inkscape->document_set.end() ) {
+            inkscape->documents = g_slist_remove (inkscape->documents, document);
+        }
     }
     else
     {

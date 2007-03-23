@@ -109,15 +109,19 @@ Editor::getActiveDocument()
 void
 Editor::addDocument (SPDocument *doc)
 {
-    g_assert (!g_slist_find (_instance->_documents, doc));
-    _instance->_documents = g_slist_append (_instance->_documents, doc);
+    if ( _instance->_document_set.find(doc) == _instance->_document_set.end() ) {
+        _instance->_documents = g_slist_append (_instance->_documents, doc);
+    }
+    _instance->_document_set.insert(doc);
 }
 
 void
 Editor::removeDocument (SPDocument *doc)
 {
-    g_assert (g_slist_find (_instance->_documents, doc));
-    _instance->_documents = g_slist_remove (_instance->_documents, doc);
+    _instance->_document_set.erase(doc);
+    if ( _instance->_document_set.find(doc) == _instance->_document_set.end() ) {
+        _instance->_documents = g_slist_remove (_instance->_documents, doc);
+    }
 }
 
 SPDesktop* 

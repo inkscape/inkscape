@@ -23,6 +23,7 @@
 #include "message-stack.h"
 #include "message-context.h"
 #include "verbs.h"
+#include "inkscape-private.h"
 
 namespace Inkscape {
 namespace UI {
@@ -83,6 +84,9 @@ View::View()
  */
 View::~View()
 {
+    if (_doc) {
+        inkscape_remove_document(_doc);
+    }
     _close();
 }
 
@@ -138,7 +142,10 @@ void View::setDocument(SPDocument *doc) {
     if (_doc) {
         _document_uri_set_connection.disconnect();
         _document_resized_connection.disconnect();
+        inkscape_remove_document(_doc);
     }
+
+    inkscape_add_document(doc);
 
     _doc = doc;
     _document_uri_set_connection = 
