@@ -293,9 +293,6 @@ clonetiler_get_transform (
     NR::Matrix flip_x = NR::translate(-cx, -cy) * NR::scale (-1, 1) * NR::translate(cx, cy);
     NR::Matrix flip_y = NR::translate(-cx, -cy) * NR::scale (1, -1) * NR::translate(cx, cy);
 
-    x = (int) pow ((double) x, d_per_x_exp);
-    y = (int) pow ((double) y, d_per_y_exp);
-
     switch (type) {
 
     case TILE_P1:
@@ -408,7 +405,7 @@ clonetiler_get_transform (
 
     case TILE_P4:
     {
-        NR::Matrix ori (NR::translate ((w + h) * (x/2) + dx,  (h + w) * (y/2) + dy));
+        NR::Matrix ori (NR::translate ((w + h) * pow((x/2), d_per_x_exp) + dx,  (h + w) * pow((y/2), d_per_y_exp) + dy));
         NR::Matrix dia1 (NR::translate (w/2 + h/2, -h/2 + w/2));
         NR::Matrix dia2 (NR::translate (-w/2 + h/2, h/2 + w/2));
         if (y % 2 == 0) {
@@ -430,7 +427,7 @@ clonetiler_get_transform (
     case TILE_P4M:
     {
         double max = MAX(w, h);
-        NR::Matrix ori (NR::translate ((max + max) * (x/4) + dx,  (max + max) * (y/2) + dy));
+        NR::Matrix ori (NR::translate ((max + max) * pow((x/4), d_per_x_exp) + dx,  (max + max) * pow((y/2), d_per_y_exp) + dy));
         NR::Matrix dia1 (NR::translate (w/2 - h/2, h/2 - w/2));
         NR::Matrix dia2 (NR::translate (-h/2 + w/2, w/2 - h/2));
         if (y % 2 == 0) {
@@ -460,7 +457,7 @@ clonetiler_get_transform (
     case TILE_P4G:
     {
         double max = MAX(w, h);
-        NR::Matrix ori (NR::translate ((max + max) * (x/4) + dx,  (max + max) * y + dy));
+        NR::Matrix ori (NR::translate ((max + max) * pow((x/4), d_per_x_exp) + dx,  (max + max) * pow(y, d_per_y_exp) + dy));
         NR::Matrix dia1 (NR::translate (w/2 + h/2, h/2 - w/2));
         NR::Matrix dia2 (NR::translate (-h/2 + w/2, w/2 + h/2));
         if (((x/4) + y) % 2 == 0) {
@@ -504,7 +501,7 @@ clonetiler_get_transform (
             dia1 = NR::Matrix (NR::translate (h/2 * cos30, -(h/2 * sin30)));
             dia2 = dia1 * NR::Matrix (NR::translate (0, h/2));
         }
-        NR::Matrix ori (NR::translate (width * (2*(x/3) + y%2) + dx,  (height/2) * y + dy));
+        NR::Matrix ori (NR::translate (width * pow((2*(x/3) + y%2), d_per_x_exp) + dx,  (height/2) * pow(y, d_per_y_exp) + dy));
         if (x % 3 == 0) {
             return d_s_r * ori;
         } else if (x % 3 == 1) {
@@ -523,13 +520,13 @@ clonetiler_get_transform (
         NR::Matrix dia3;
         NR::Matrix dia4;
         if (w > h) {
-            ori = NR::Matrix(NR::translate (w * (x/6) + w/2 * (y%2) + dx,  (w * cos30) * y + dy));
+            ori = NR::Matrix(NR::translate (w * pow((x/6) + 1/2 * (y%2), d_per_x_exp) + dx,  (w * cos30) * pow(y, d_per_y_exp) + dy));
             dia1 = NR::Matrix (NR::translate (0, h/2) * NR::translate (w/2, 0) * NR::translate (w/2 * cos60, -w/2 * sin60) * NR::translate (-h/2 * cos30, -h/2 * sin30) );
             dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, h * sin30));
             dia3 = dia2 * NR::Matrix (NR::translate (0, 2 * (w/2 * sin60 - h/2 * sin30)));
             dia4 = dia3 * NR::Matrix (NR::translate (-h * cos30, h * sin30));
         } else {
-            ori  = NR::Matrix (NR::translate (2*h * cos30  * (x/6 + 0.5*(y%2)) + dx,  (2*h - h * sin30) * y + dy));
+            ori  = NR::Matrix (NR::translate (2*h * cos30  * pow((x/6 + 0.5*(y%2)), d_per_x_exp) + dx,  (2*h - h * sin30) * pow(y, d_per_y_exp) + dy));
             dia1 = NR::Matrix (NR::translate (0, -h/2) * NR::translate (h/2 * cos30, h/2 * sin30));
             dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, h * sin30));
             dia3 = dia2 * NR::Matrix (NR::translate (0, h/2));
@@ -574,7 +571,7 @@ clonetiler_get_transform (
             dia3 = dia2 * NR::Matrix (NR::translate (0, h/2));
             dia4 = dia3 * NR::Matrix (NR::translate (-h * cos30, h * sin30));
         }
-        NR::Matrix ori (NR::translate (width * (2*(x/6) + y%2) + dx,  (height/2) * y + dy));
+        NR::Matrix ori (NR::translate (width * pow((2*(x/6) + y%2), d_per_x_exp) + dx,  (height/2) * pow(y, d_per_y_exp) + dy));
         if (x % 6 == 0) {
             return d_s_r * ori;
         } else if (x % 6 == 1) {
@@ -600,14 +597,14 @@ clonetiler_get_transform (
         NR::Matrix dia4;
         NR::Matrix dia5;
         if (w > h) {
-            ori = NR::Matrix(NR::translate (2*w * (x/6) + w * (y%2) + dx,  (2*w * sin60) * y + dy));
+            ori = NR::Matrix(NR::translate (w * pow((2*(x/6) + (y%2)), d_per_x_exp) + dx,  (2*w * sin60) * pow(y, d_per_y_exp) + dy));
             dia1 = NR::Matrix (NR::translate (w/2 * cos60, -w/2 * sin60));
             dia2 = dia1 * NR::Matrix (NR::translate (w/2, 0));
             dia3 = dia2 * NR::Matrix (NR::translate (w/2 * cos60, w/2 * sin60));
             dia4 = dia3 * NR::Matrix (NR::translate (-w/2 * cos60, w/2 * sin60));
             dia5 = dia4 * NR::Matrix (NR::translate (-w/2, 0));
         } else {
-            ori = NR::Matrix(NR::translate (2*h * cos30 * (x/6 + 0.5*(y%2)) + dx,  (h + h * sin30) * y + dy));
+            ori = NR::Matrix(NR::translate (2*h * cos30 * pow((x/6 + 0.5*(y%2)), d_per_x_exp) + dx,  (h + h * sin30) * pow(y, d_per_y_exp) + dy));
             dia1 = NR::Matrix (NR::translate (-w/2, -h/2) * NR::translate (h/2 * cos30, -h/2 * sin30) * NR::translate (w/2 * cos60, w/2 * sin60));
             dia2 = dia1 * NR::Matrix (NR::translate (-w/2 * cos60, -w/2 * sin60) * NR::translate (h/2 * cos30, -h/2 * sin30) * NR::translate (h/2 * cos30, h/2 * sin30) * NR::translate (-w/2 * cos60, w/2 * sin60));
             dia3 = dia2 * NR::Matrix (NR::translate (w/2 * cos60, -w/2 * sin60) * NR::translate (h/2 * cos30, h/2 * sin30) * NR::translate (-w/2, h/2));
@@ -636,7 +633,7 @@ clonetiler_get_transform (
         NR::Matrix ori;
         NR::Matrix dia1, dia2, dia3, dia4, dia5, dia6, dia7, dia8, dia9, dia10;
         if (w > h) {
-            ori = NR::Matrix(NR::translate (2*w * (x/12) + w * (y%2) + dx,  (2*w * sin60) * y + dy));
+            ori = NR::Matrix(NR::translate (w * pow((2*(x/12) + (y%2)), d_per_x_exp) + dx,  (2*w * sin60) * pow(y, d_per_y_exp) + dy));
             dia1 = NR::Matrix (NR::translate (w/2, h/2) * NR::translate (-w/2 * cos60, -w/2 * sin60) * NR::translate (-h/2 * cos30, h/2 * sin30));
             dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, -h * sin30));
             dia3 = dia2 * NR::Matrix (NR::translate (-h/2 * cos30, h/2 * sin30) * NR::translate (w * cos60, 0) * NR::translate (-h/2 * cos30, -h/2 * sin30));
@@ -648,7 +645,7 @@ clonetiler_get_transform (
             dia9 = dia6 * dia3.inverse();
             dia10 = dia6 * dia4.inverse();
         } else {
-            ori = NR::Matrix(NR::translate (4*h * cos30 * (x/12 + 0.5*(y%2)) + dx,  (2*h  + 2*h * sin30) * y + dy));
+            ori = NR::Matrix(NR::translate (4*h * cos30 * pow((x/12 + 0.5*(y%2)), d_per_x_exp) + dx,  (2*h  + 2*h * sin30) * pow(y, d_per_y_exp) + dy));
             dia1 = NR::Matrix (NR::translate (-w/2, -h/2) * NR::translate (h/2 * cos30, -h/2 * sin30) * NR::translate (w/2 * cos60, w/2 * sin60));
             dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, -h * sin30));
             dia3 = dia2 * NR::Matrix (NR::translate (-w/2 * cos60, -w/2 * sin60) * NR::translate (h * cos30, 0) * NR::translate (-w/2 * cos60, w/2 * sin60));
