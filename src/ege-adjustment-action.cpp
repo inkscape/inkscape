@@ -228,7 +228,7 @@ static void ege_adjustment_action_init( EgeAdjustmentAction* action )
     action->private_data->focusWidget = 0;
     action->private_data->climbRate = 0.0;
     action->private_data->digits = 2;
-    action->private_data->epsilon = 0.01;
+    action->private_data->epsilon = 0.009;
     action->private_data->format = g_strdup_printf("%%0.%df%%s%%s", action->private_data->digits);
     action->private_data->selfId = 0;
     action->private_data->toolPost = 0;
@@ -348,11 +348,11 @@ void ege_adjustment_action_set_property( GObject* obj, guint propId, const GValu
             /* TODO pass on */
             action->private_data->digits = g_value_get_uint( value );
             switch ( action->private_data->digits ) {
-                case 0: action->private_data->epsilon = 1.0; break;
-                case 1: action->private_data->epsilon = 0.1; break;
-                case 2: action->private_data->epsilon = 0.01; break;
-                case 3: action->private_data->epsilon = 0.001; break;
-                case 4: action->private_data->epsilon = 0.0001; break;
+                case 0: action->private_data->epsilon = 0.9; break;
+                case 1: action->private_data->epsilon = 0.09; break;
+                case 2: action->private_data->epsilon = 0.009; break;
+                case 3: action->private_data->epsilon = 0.0009; break;
+                case 4: action->private_data->epsilon = 0.00009; break;
             }
             if ( action->private_data->format ) {
                 g_free( action->private_data->format );
