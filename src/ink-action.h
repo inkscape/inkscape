@@ -5,7 +5,10 @@
 #include <glib.h>
 #include <gtk/gtkaction.h>
 #include <gtk/gtktoggleaction.h>
+#include <gtk/gtkradioaction.h>
 #include <glib-object.h>
+
+/* Equivalent to GTK Actions of the same type, but can support Inkscape SVG icons */
 
 G_BEGIN_DECLS
 
@@ -71,10 +74,47 @@ struct _InkToggleActionClass
 GType ink_toggle_action_get_type( void );
 
 InkToggleAction* ink_toggle_action_new( const gchar *name,
-					const gchar *label,
-					const gchar *tooltip,
-					const gchar *inkId,
-					Inkscape::IconSize size );
+                                        const gchar *label,
+                                        const gchar *tooltip,
+                                        const gchar *inkId,
+                                        Inkscape::IconSize size );
+
+
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+
+
+#define INK_RADIO_ACTION_TYPE                ( ink_radio_action_get_type() )
+#define INK_RADIO_ACTION( obj )              ( G_TYPE_CHECK_INSTANCE_CAST( (obj), INK_RADIO_ACTION_TYPE, InkRadioAction) )
+#define INK_RADIO_ACTION_CLASS( klass )      ( G_TYPE_CHECK_CLASS_CAST( (klass), INK_RADIO_ACTION_TYPE, InkRadioActionClass) )
+#define IS_INK_RADIO_ACTION( obj )           ( G_TYPE_CHECK_INSTANCE_TYPE( (obj), INK_RADIO_ACTION_TYPE) )
+#define IS_INK_RADIO_ACTION_CLASS( klass )   ( G_TYPE_CHECK_CLASS_TYPE( (klass), INK_RADIO_ACTION_TYPE) )
+#define INK_RADIO_ACTION_GET_CLASS( obj )    ( G_TYPE_INSTANCE_GET_CLASS( (obj), INK_RADIO_ACTION_TYPE, InkRadioActionClass) )
+
+typedef struct _InkRadioAction      InkRadioAction;
+typedef struct _InkRadioActionClass InkRadioActionClass;
+typedef struct _InkRadioActionPrivate InkRadioActionPrivate;
+
+struct _InkRadioAction
+{
+    GtkRadioAction action;
+    InkRadioActionPrivate *private_data;
+};
+
+struct _InkRadioActionClass
+{
+    GtkRadioActionClass parent_class;
+};
+
+GType ink_radio_action_get_type( void );
+
+InkRadioAction* ink_radio_action_new( const gchar *name,
+                                      const gchar *label,
+                                      const gchar *tooltip,
+                                      const gchar *inkId,
+                                      Inkscape::IconSize size );
 
 
 
