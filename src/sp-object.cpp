@@ -1113,7 +1113,7 @@ static Inkscape::XML::Node *
 sp_object_private_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     if (!repr && (flags & SP_OBJECT_WRITE_BUILD)) {
-        repr = SP_OBJECT_REPR(object)->duplicate(repr->document());
+        repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
         if (!( flags & SP_OBJECT_WRITE_EXT )) {
             repr->setAttribute("inkscape:collect", NULL);
         }
