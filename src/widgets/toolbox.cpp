@@ -1088,13 +1088,14 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
         adj = GTK_ADJUSTMENT( gtk_object_get_data(GTK_OBJECT(tbl), "rounded") );
         gtk_adjustment_set_value(adj, sp_repr_get_double_attribute(repr, "inkscape:rounded", 0.0));
     } else if (!strcmp(name, "inkscape:flatsided")) {
-        GtkToggleAction* flat_action = GTK_TOGGLE_ACTION( g_object_get_data( G_OBJECT(tbl), "flat_action" ) );
         GtkAction* prop_action = GTK_ACTION( g_object_get_data(G_OBJECT(tbl), "prop_action") );
         char const *flatsides = repr->attribute("inkscape:flatsided");
         if (flatsides && !strcmp(flatsides,"false" )) {
-            gtk_toggle_action_set_active( flat_action, FALSE );
+            GtkToggleAction* flat2_action = GTK_TOGGLE_ACTION( g_object_get_data( G_OBJECT(tbl), "flat2_action" ) );
+            gtk_toggle_action_set_active( flat2_action, TRUE );
             gtk_action_set_sensitive( prop_action, TRUE );
         } else {
+            GtkToggleAction* flat_action = GTK_TOGGLE_ACTION( g_object_get_data( G_OBJECT(tbl), "flat_action" ) );
             gtk_toggle_action_set_active( flat_action, TRUE );
             gtk_action_set_sensitive( prop_action, FALSE );
         }
@@ -1190,7 +1191,8 @@ static void sp_stb_defaults( GtkWidget *widget, GtkWidget *dataKludge )
     gdouble rounded = 0;
 
     GtkToggleAction* flat_action = GTK_TOGGLE_ACTION( g_object_get_data( G_OBJECT(dataKludge), "flat_action" ) );
-    gtk_toggle_action_set_active( flat_action, flat );
+    GtkToggleAction* flat2_action = GTK_TOGGLE_ACTION( g_object_get_data( G_OBJECT(dataKludge), "flat2_action" ) );
+    gtk_toggle_action_set_active( flat ? flat_action : flat2_action, TRUE );
 
     GtkAction* sb2 = GTK_ACTION( g_object_get_data(G_OBJECT(dataKludge), "prop_action") );
     gtk_action_set_sensitive( sb2, !flat );
@@ -1287,6 +1289,7 @@ sp_star_toolbox_new(SPDesktop *desktop)
 
             g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_stb_sides_flat_state_changed), holder);
             gtk_object_set_data( GTK_OBJECT(holder), "flat_action", act );
+            gtk_object_set_data( GTK_OBJECT(holder), "flat2_action", act2 );
         }
 
         /* Magnitude */
