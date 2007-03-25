@@ -802,7 +802,9 @@ GrDragger::fireDraggables (bool write_repr, bool scale_radial, bool merging_focu
         // to the center, unless it's the first update upon merge when we must snap it to the point
         if (merging_focus ||
             !(draggable->point_type == POINT_RG_FOCUS && this->isA(draggable->item, POINT_RG_CENTER, draggable->point_i, draggable->fill_or_stroke)))
+        {
             sp_item_gradient_set_coords (draggable->item, draggable->point_type, draggable->point_i, this->point, draggable->fill_or_stroke, write_repr, scale_radial);
+        }
     }
 }
 

@@ -248,6 +248,21 @@ sp_gradient_fork_vector_if_necessary (SPGradient *gr)
 }
 
 /**
+ *  Obtain the vector from the gradient. A forked vector will be created and linked to this gradient if another gradient uses it.
+ */
+SPGradient *
+sp_gradient_get_forked_vector_if_necessary(SPGradient *gradient, bool force_vector)
+{
+    SPGradient *vector = sp_gradient_get_vector (gradient, force_vector);
+    vector = sp_gradient_fork_vector_if_necessary (vector);
+    if ( gradient != vector && gradient->ref->getObject() != vector ) {
+        sp_gradient_repr_set_link(SP_OBJECT_REPR(gradient), vector);
+    }
+    return vector;
+}
+
+
+/**
  * Convert an item's gradient to userspace _without_ preserving coords, setting them to defaults
  * instead. No forking or reapplying is done because this is only called for newly created privates.
  * @return The new gradient.
@@ -799,9 +814,9 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
             case POINT_LG_MID:
             {                              
                 // using X-coordinates only to determine the offset, assuming p has been snapped to the vector from begin to end.
-                sp_gradient_ensure_vector(gradient);
                 double offset = get_offset_between_points (p, NR::Point(lg->x1.computed, lg->y1.computed), NR::Point(lg->x2.computed, lg->y2.computed));
-                SPGradient *vector = sp_gradient_get_vector (lg, false);
+                SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (lg, false);
+                sp_gradient_ensure_vector(lg);
                 lg->vector.stops.at(point_i).offset = offset;
                 SPStop* stopi = sp_get_stop_i(vector, point_i);
                 stopi->offset = offset;
@@ -816,16 +831,15 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 			break;
 		}
 	} else if (SP_IS_RADIALGRADIENT(gradient)) {
-
-		SPRadialGradient *rg = SP_RADIALGRADIENT(gradient);
-		NR::Point c (rg->cx.computed, rg->cy.computed);
-		NR::Point c_w = c * gradient->gradientTransform * i2d; // now in desktop coords
-           if ((point_type == POINT_RG_R1 || point_type == POINT_RG_R2) && NR::L2 (p_w - c_w) < 1e-3) {
-               // prevent setting a radius too close to the center
-               return;
-           }
-		NR::Matrix new_transform;
-		bool transform_set = false;
+        SPRadialGradient *rg = SP_RADIALGRADIENT(gradient);
+        NR::Point c (rg->cx.computed, rg->cy.computed);
+        NR::Point c_w = c * gradient->gradientTransform * i2d; // now in desktop coords
+        if ((point_type == POINT_RG_R1 || point_type == POINT_RG_R2) && NR::L2 (p_w - c_w) < 1e-3) {
+            // prevent setting a radius too close to the center
+            return;
+        }
+        NR::Matrix new_transform;
+        bool transform_set = false;
 
 		switch (point_type) {
 		case POINT_RG_CENTER:
@@ -854,7 +868,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 			break;
 		case POINT_RG_R1:
 			{
-				NR::Point r1_w = (c + NR::Point(rg->r.computed, 0)) * gradient->gradientTransform * i2d;
+                NR::Point r1_w = (c + NR::Point(rg->r.computed, 0)) * gradient->gradientTransform * i2d;
 				double r1_angle = NR::atan2(r1_w - c_w);
 				double move_angle = NR::atan2(p_w - c_w) - r1_angle;
 				double move_stretch = NR::L2(p_w - c_w) / NR::L2(r1_w - c_w);
@@ -893,16 +907,17 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
         case POINT_RG_MID1:
             {
                 NR::Point start = NR::Point (rg->cx.computed, rg->cy.computed);
-                NR::Point end   = NR::Point (rg->cx.computed + rg->r.computed, rg->cy.computed);
+                 NR::Point end   = NR::Point (rg->cx.computed + rg->r.computed, rg->cy.computed);
                 double offset = get_offset_between_points (p, start, end);
-                SPGradient *vector = sp_gradient_get_vector (rg, false);
-                rg->vector.stops.at(point_i).offset = offset;
+                SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (rg, false);
+                sp_gradient_ensure_vector(rg);
+                rg->vector.stops.at(point_i).offset = offset; //crash
                 SPStop* stopi = sp_get_stop_i(vector, point_i);
                 stopi->offset = offset;
                 if (write_repr) {
                     sp_repr_set_css_double(SP_OBJECT_REPR(stopi), "offset", stopi->offset);
                 } else {
-                    SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+                    SP_OBJECT (stopi)->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
                 }
                 break;
             }
@@ -910,14 +925,15 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
                 NR::Point start = NR::Point (rg->cx.computed, rg->cy.computed);
                 NR::Point end   = NR::Point (rg->cx.computed, rg->cy.computed - rg->r.computed);
                 double offset = get_offset_between_points (p, start, end);
-                SPGradient *vector = sp_gradient_get_vector (rg, false);
+                SPGradient *vector = sp_gradient_get_forked_vector_if_necessary(rg, false);
+                sp_gradient_ensure_vector(rg);
                 rg->vector.stops.at(point_i).offset = offset;
                 SPStop* stopi = sp_get_stop_i(vector, point_i);
                 stopi->offset = offset;
                 if (write_repr) {
                     sp_repr_set_css_double(SP_OBJECT_REPR(stopi), "offset", stopi->offset);
                 } else {
-                    SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+                    SP_OBJECT (stopi)->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
                 }
                 break;
             }
@@ -1223,17 +1239,6 @@ sp_gradient_vector_for_object(SPDocument *const doc, SPDesktop *const desktop,
     return sp_document_default_gradient_vector(doc, rgba);
 }
 
-
-SPGradient *
-sp_gradient_get_forked_vector_if_necessary(SPGradient *gradient, bool force_vector)
-{
-    SPGradient *vector = sp_gradient_get_vector (gradient, force_vector);
-    vector = sp_gradient_fork_vector_if_necessary (vector);
-    if ( gradient != vector && gradient->ref->getObject() != vector ) {
-        sp_gradient_repr_set_link(SP_OBJECT_REPR(gradient), vector);
-    }
-    return vector;
-}
 
 /*
   Local Variables:
