@@ -94,9 +94,9 @@ DocumentProperties::DocumentProperties()
     : Dialog ("dialogs.documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
       _page_page(1, 1), _page_grid(1, 1), _page_guides(1, 1),
       _page_snap(1, 1), _page_grids(1, 1),
-      _prefs_path("dialogs.documentoptions"),
       _grids_button_new(_("_New"), _("Create new grid.")),
-      _grids_button_remove(_("_Remove"), _("Remove selected grid."))
+      _grids_button_remove(_("_Remove"), _("Remove selected grid.")),
+      _prefs_path("dialogs.documentoptions")
 {
     set_resizable (false);
     _tt.enable();
