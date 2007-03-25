@@ -273,7 +273,7 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
     } while (!fill_or_stroke && !addknot) ;
 
     if (addknot) {
-        SPGradient *vector = sp_gradient_get_vector (gradient, false);
+        SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
         SPStop* prev_stop = sp_first_stop(vector);
         SPStop* next_stop = sp_next_stop(prev_stop);
         while ( (next_stop) && (next_stop->offset < offset) ) {
