@@ -1033,6 +1033,30 @@ create_progress_dialog (GtkObject *base, gchar *progress_text) {
     return dlg;
 }
 
+// FIXME: Some lib function should be available to do this ...
+static gchar *
+filename_add_extension (const gchar *filename, const gchar *extension)
+{
+  gchar *dot;
+
+  dot = strrchr (filename, '.');
+  if ( !dot )
+    return g_strconcat (filename, ".", extension, NULL);
+  {
+    if (dot[1] == '\0')
+      return g_strconcat (filename, extension, NULL);
+    else
+    {
+      if (g_strcasecmp (dot + 1, extension) == 0)
+        return g_strdup (filename);
+      else
+      {
+        return g_strconcat (filename, ".", extension, NULL);
+      }
+    }
+  }
+}
+
 /// Called when export button is clicked
 static void
 sp_export_export_clicked (GtkButton *button, GtkObject *base)
@@ -1130,7 +1154,7 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
         return;
     }
 
-    gchar *dirname = g_dirname(filename);
+    gchar *dirname = g_path_get_dirname(filename);
     if ( dirname == NULL
          || !Inkscape::IO::file_test(dirname, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)) )
     {
@@ -1145,14 +1169,19 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
     }
     g_free(dirname);
 
-    gchar *fn = g_path_get_basename (filename);
+    // make sure that .png is the extension of the file:
+    gchar * filename_ext = filename_add_extension(filename, "png");
+    gtk_entry_set_text(GTK_ENTRY(fe), filename_ext);
+
+    gchar *fn = g_path_get_basename (filename_ext);
+
     gchar *progress_text = g_strdup_printf (_("Exporting %s (%d x %d)"), fn, width, height);
     g_free (fn);
     GtkWidget *prog_dlg = create_progress_dialog (base, progress_text);
     g_free (progress_text);
     
     /* Do export */
-    if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), filename, 
+    if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), filename_ext, 
                              x0, y0, x1, y1, width, height, xdpi, ydpi, 
                              nv->pagecolor, 
                              sp_export_progress_callback, base, FALSE,
@@ -1169,7 +1198,7 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
     /* Reset the filename so that it can be changed again by changing
        selections and all that */
     g_free(original_name);
-    original_name = g_strdup(filename);
+    original_name = g_strdup(filename_ext);
     gtk_object_set_data (GTK_OBJECT (base), "filename-modified", (gpointer)FALSE);
 
     gtk_widget_destroy (prog_dlg);
@@ -1188,8 +1217,8 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
             sp_document_set_undo_sensitive(doc, false);
 
             temp_string = repr->attribute("inkscape:export-filename");
-            if (temp_string == NULL || strcmp(temp_string, filename)) {
-                repr->setAttribute("inkscape:export-filename", filename);
+            if (temp_string == NULL || strcmp(temp_string, filename_ext)) {
+                repr->setAttribute("inkscape:export-filename", filename_ext);
                 modified = true;
             }
             temp_string = repr->attribute("inkscape:export-xdpi");
@@ -1222,12 +1251,12 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
                 const gchar * temp_string;
 
                 if (repr->attribute("id") == NULL ||
-                        !(g_strrstr(filename, repr->attribute("id")) != NULL &&
+                        !(g_strrstr(filename_ext, repr->attribute("id")) != NULL &&
                           (!SP_DOCUMENT_URI(SP_ACTIVE_DOCUMENT) ||
                             strcmp(g_dirname(filename), g_dirname(SP_DOCUMENT_URI(SP_ACTIVE_DOCUMENT))) == 0))) {
                     temp_string = repr->attribute("inkscape:export-filename");
-                    if (temp_string == NULL || strcmp(temp_string, filename)) {
-                        repr->setAttribute("inkscape:export-filename", filename);
+                    if (temp_string == NULL || strcmp(temp_string, filename_ext)) {
+                        repr->setAttribute("inkscape:export-filename", filename_ext);
                         modified = true;
                     }
                 }
@@ -1255,34 +1284,11 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
             break;
     }
 
+    g_free (filename_ext);
+
     }
 
 } // end of sp_export_export_clicked()
-
-
-// FIXME: Some lib function should be available to do this ...
-static gchar *
-filename_add_extension (const gchar *filename, const gchar *extension)
-{
-  gchar *dot;
-
-  dot = strrchr (filename, '.');
-  if ( !dot )
-    return g_strconcat (filename, ".", extension, NULL);
-  {
-    if (dot[1] == '\0')
-      return g_strconcat (filename, extension, NULL);
-    else
-    {
-      if (g_strcasecmp (dot + 1, extension) == 0)
-        return g_strdup (filename);
-      else
-      {
-        return g_strconcat (filename, ".", extension, NULL);
-      }
-    }
-  }
-}
 
 /// Called when Browse button is clicked
 static void
@@ -1321,15 +1327,12 @@ sp_export_browse_clicked (GtkButton *button, gpointer userdata)
         gchar *file;
 
         file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (fs));
-        // make sure that .png is the extension of the file:
-        gchar * file_ext = filename_add_extension(file, "png");
 
-        gchar * utf8file = g_filename_to_utf8( file_ext, -1, NULL, NULL, NULL );
+        gchar * utf8file = g_filename_to_utf8( file, -1, NULL, NULL, NULL );
         gtk_entry_set_text (GTK_ENTRY (fe), utf8file);
 
         g_object_set_data (G_OBJECT (dlg), "filename", fe);
 
-        g_free(file_ext);
         g_free(utf8file);
         g_free(file);
     }
