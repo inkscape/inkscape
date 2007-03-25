@@ -60,7 +60,6 @@ static SPStyleProp const props[] = {
     /* SPNamedView */
     {SP_ATTR_VIEWONLY, "viewonly"},
     {SP_ATTR_SHOWGRID, "showgrid"},
-    {SP_ATTR_GRIDTYPE, "gridtype"},
     {SP_ATTR_SHOWGUIDES, "showguides"},
     {SP_ATTR_GRIDTOLERANCE, "gridtolerance"},
     {SP_ATTR_GUIDETOLERANCE, "guidetolerance"},
@@ -70,8 +69,6 @@ static SPStyleProp const props[] = {
     {SP_ATTR_GRIDORIGINY, "gridoriginy"},
     {SP_ATTR_GRIDSPACINGX, "gridspacingx"},
     {SP_ATTR_GRIDSPACINGY, "gridspacingy"},
-    {SP_ATTR_GRIDANGLEX, "gridanglex"},
-    {SP_ATTR_GRIDANGLEZ, "gridanglez"},
     {SP_ATTR_GRIDCOLOR, "gridcolor"},
     {SP_ATTR_GRIDOPACITY, "gridopacity"},
     {SP_ATTR_GRIDEMPCOLOR, "gridempcolor"},

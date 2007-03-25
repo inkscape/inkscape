@@ -136,11 +136,6 @@ DocumentProperties::init()
                      G_CALLBACK(on_deactivate_desktop), 0);
 
     show_all_children();
-    if (prefs_get_int_attribute("dialogs.documentoptions", "axonomgrid_enabled", 0) != 1) {
-        _rrb_gridtype._hbox->hide();
-        _rsu_ax.getSU()->hide();
-        _rsu_az.getSU()->hide();
-    }
 
     present();
 }
@@ -250,10 +245,6 @@ DocumentProperties::build_grid()
     /// Dissenting view: you want snapping without grid.
 
     _rcbgrid.init (_("_Show grid"), _("Show or hide grid"), "showgrid", _wr);
-    _rrb_gridtype.init (_("Grid type:"), _("Normal (2D)"), _("Axonometric (3D)"),
-                _("The normal grid with vertical and horizontal lines."),
-                _("A grid with vertical lines and two diagonal line groups, each representing the projection of a primary axis."),
-                "gridtype", _wr);
 
     _rumg.init (_("Grid _units:"), "grid_units", _wr);
     _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
@@ -264,10 +255,6 @@ DocumentProperties::build_grid()
                   "gridspacingx", _rumg, _wr);
     _rsu_sy.init (_("Spacing _Y:"), _("Distance between horizontal grid lines"),
                   "gridspacingy", _rumg, _wr);
-    _rsu_ax.init (_("Angle X:"), _("Angle of x-axis of axonometric grid"),
-                  "gridanglex", _rumg, _wr);
-    _rsu_az.init (_("Angle Z:"), _("Angle of z-axis of axonometric grid"),
-                  "gridanglez", _rumg, _wr);
     _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"),
                     _("Color of grid lines"), "gridcolor", "gridopacity", _wr);
     _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"),
@@ -289,14 +276,11 @@ DocumentProperties::build_grid()
     {
         label_grid,         0,
         0,                  _rcbgrid._button,
-        0,                  _rrb_gridtype._hbox,
         _rumg._label,       _rumg._sel,
         0,                  _rsu_ox.getSU(),
         0,                  _rsu_oy.getSU(),
         0,                  _rsu_sx.getSU(),
         0,                  _rsu_sy.getSU(),
-        0,                  _rsu_ax.getSU(),
-        0,                  _rsu_az.getSU(),
         _rcp_gcol._label,   _rcp_gcol._cp,
         0,                  0,
         _rcp_gmcol._label,  _rcp_gmcol._cp,
@@ -433,7 +417,9 @@ DocumentProperties::build_gridspage()
     Gtk::Label* label_crea_type = manage (new Gtk::Label);
     label_crea_type->set_markup (_("Gridtype"));
     
-    _grids_entry_gridtype.set_text(Glib::ustring("xygrid"));
+    _grids_combo_gridtype.append_text(Glib::ustring("xygrid"));
+    _grids_combo_gridtype.append_text(Glib::ustring("axonometric"));
+    _grids_combo_gridtype.set_active_text(Glib::ustring("xygrid"));
     
     Gtk::Label* label_def = manage (new Gtk::Label);
     label_def->set_markup (_("<b>Defined grids</b>"));
@@ -446,7 +432,7 @@ DocumentProperties::build_gridspage()
     const Gtk::Widget* widget_array[] =
     {
         label_crea, 0,
-        label_crea_type, (Gtk::Widget*) &_grids_entry_gridtype,
+        label_crea_type, (Gtk::Widget*) &_grids_combo_gridtype,
         (Gtk::Widget*) &_grids_button_new,         (Gtk::Widget*) &_grids_button_remove, 
         label_def,         0,
         (Gtk::Widget*) &_grids_notebook, 0
@@ -487,7 +473,6 @@ DocumentProperties::update()
 
     //-----------------------------------------------------------grid page
     _rcbgrid.setActive (nv->showgrid);
-    _rrb_gridtype.setValue (nv->gridtype);
     _rumg.setUnit (nv->gridunit);
 
     gdouble val;
@@ -503,11 +488,6 @@ DocumentProperties::update()
     val = nv->gridspacing[NR::Y];
     double gridy = sp_pixels_get_units (val, *(nv->gridunit));
     _rsu_sy.setValue (gridy);
-
-    val = nv->gridangle[0];
-    _rsu_ax.setValue (val);
-    val = nv->gridangle[1];
-    _rsu_az.setValue (val);
 
     _rcp_gcol.setRgba32 (nv->gridcolor);
     _rcp_gmcol.setRgba32 (nv->gridempcolor);
@@ -646,7 +626,7 @@ DocumentProperties::onNewGrid()
 {
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
 
-    Glib::ustring typestring = _grids_entry_gridtype.get_text();
+    Glib::ustring typestring = _grids_combo_gridtype.get_active_text();
     CanvasGrid::writeNewGridToRepr(repr, typestring.c_str()); // FIXME ofcourse user should supply choice for gridtype 
 }
 
@@ -655,7 +635,12 @@ void
 DocumentProperties::onRemoveGrid()
 {
     gint pagenum = _grids_notebook.get_current_page();
+    if (pagenum == -1) // no pages
+      return;
+      
     Gtk::Widget *page = _grids_notebook.get_nth_page(pagenum);
+    if (!page) return;
+    
     Glib::ustring tabtext = _grids_notebook.get_tab_label_text(*page);
     
     // find the grid with name tabtext (it's id) and delete that one.

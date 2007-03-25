@@ -31,7 +31,6 @@
 
 SnapManager::SnapManager(SPNamedView const *v) :
     grid(v, 0),
-    axonomgrid(v, 0),
     guide(v, 0),
     object(v, 0),
     _named_view(v)
@@ -47,11 +46,7 @@ SnapManager::SnapManager(SPNamedView const *v) :
 SnapManager::SnapperList SnapManager::getSnappers() const
 {
     SnapManager::SnapperList s;
-    if (_named_view->gridtype == 0) {
-      s.push_back(&grid);
-    } else {
-      s.push_back(&axonomgrid);
-    }
+    s.push_back(&grid);
     s.push_back(&guide);
     s.push_back(&object);
 

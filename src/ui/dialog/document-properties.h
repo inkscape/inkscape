@@ -67,9 +67,8 @@ protected:
     PageSizer             _page_sizer;
     //---------------------------------------------------------------
     RegisteredCheckButton _rcbgrid, _rcbsnbb, _rcbsnnod;
-    RegisteredRadioButtonPair _rrb_gridtype;
     RegisteredUnitMenu    _rumg, _rums;
-    RegisteredScalarUnit  _rsu_ox, _rsu_oy, _rsu_sx, _rsu_sy, _rsu_ax, _rsu_az;
+    RegisteredScalarUnit  _rsu_ox, _rsu_oy, _rsu_sx, _rsu_sy;
     RegisteredColorPicker _rcp_gcol, _rcp_gmcol;
     RegisteredSuffixedInteger _rsi;
     //---------------------------------------------------------------
@@ -86,7 +85,7 @@ protected:
     Gtk::Notebook   _grids_notebook;
     Gtk::Button     _grids_button_new;
     Gtk::Button     _grids_button_remove;
-    Gtk::Entry      _grids_entry_gridtype;
+    Gtk::ComboBoxText _grids_combo_gridtype;
     //---------------------------------------------------------------
 
     gchar * _prefs_path;

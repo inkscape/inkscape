@@ -101,7 +101,6 @@ public:
                                             NR::Dim2 d) const;
 
     Inkscape::GridSnapper grid;        ///< grid snapper
-    Inkscape::AxonomGridSnapper axonomgrid;  ///< axonometricgrid snapper
     Inkscape::GuideSnapper guide;      ///< guide snapper
     Inkscape::ObjectSnapper object;    ///< snapper to other objects
 

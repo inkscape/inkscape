@@ -17,7 +17,6 @@
 #include "config.h"
 
 #include "display/canvas-grid.h"
-#include "display/canvas-axonomgrid.h"
 #include "helper/units.h"
 #include "svg/svg-color.h"
 #include "xml/repr.h"
@@ -109,7 +108,6 @@ static void sp_namedview_init(SPNamedView *nv)
 {
     nv->editable = TRUE;
     nv->showgrid = FALSE;
-    nv->gridtype = 0;
     nv->showguides = TRUE;
     nv->showborder = TRUE;
     nv->showpageshadow = TRUE;
@@ -117,7 +115,7 @@ static void sp_namedview_init(SPNamedView *nv)
     nv->guides = NULL;
     nv->viewcount = 0;
     nv->grids = NULL;
-    
+
     nv->default_layer_id = 0;
 
     nv->connector_spacing = defaultConnSpacing;
@@ -137,7 +135,6 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:document-units");
     sp_object_read_attr(object, "viewonly");
     sp_object_read_attr(object, "showgrid");
-    sp_object_read_attr(object, "gridtype");
     sp_object_read_attr(object, "showguides");
     sp_object_read_attr(object, "gridtolerance");
     sp_object_read_attr(object, "guidetolerance");
@@ -147,8 +144,6 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "gridoriginy");
     sp_object_read_attr(object, "gridspacingx");
     sp_object_read_attr(object, "gridspacingy");
-    sp_object_read_attr(object, "gridanglex");
-    sp_object_read_attr(object, "gridanglez");
     sp_object_read_attr(object, "gridempspacing");
     sp_object_read_attr(object, "gridcolor");
     sp_object_read_attr(object, "gridempcolor");
@@ -215,7 +210,7 @@ static void sp_namedview_release(SPObject *object)
         delete gr;
         namedview->grids = g_slist_remove_link(namedview->grids, namedview->grids);
     }
-    
+
     if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release(object);
     }
@@ -238,12 +233,6 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             sp_namedview_setup_grid(nv);
             /* Disable grid snaps if the grid is turned off */
             nv->snap_manager.grid.setEnabled(nv->showgrid);
-            nv->snap_manager.axonomgrid.setEnabled(nv->showgrid);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	case SP_ATTR_GRIDTYPE:
-            nv->gridtype = sp_str_to_bool(value);
-            sp_namedview_setup_grid(nv);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_SHOWGUIDES:
@@ -314,19 +303,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	}
-	case SP_ATTR_GRIDANGLEX:
-	case SP_ATTR_GRIDANGLEZ:
-	{
-            unsigned const d = (key == SP_ATTR_GRIDANGLEZ); // 0=X  1=Z
-            nv->gridangle[d] = 30; // 30 deg default
-            if (value) {
-                nv->gridangle[d] = g_ascii_strtod(value, NULL);
-            }
-            sp_namedview_setup_grid(nv);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	}
-	case SP_ATTR_GRIDCOLOR:
+    case SP_ATTR_GRIDCOLOR:
             nv->gridcolor = (nv->gridcolor & 0xff) | (DEFAULTGRIDCOLOR & 0xffffff00);
             if (value) {
                 nv->gridcolor = (nv->gridcolor & 0xff) | sp_svg_read_color(value, nv->gridcolor);
@@ -468,12 +445,10 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
 	case SP_ATTR_INKSCAPE_GRID_BBOX:
             nv->snap_manager.grid.setSnapTo(Inkscape::Snapper::BBOX_POINT, value ? sp_str_to_bool(value) : TRUE);
-            nv->snap_manager.axonomgrid.setSnapTo(Inkscape::Snapper::BBOX_POINT, value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_INKSCAPE_GRID_POINTS:
             nv->snap_manager.grid.setSnapTo(Inkscape::Snapper::SNAP_POINT, value ? sp_str_to_bool(value) : FALSE);
-            nv->snap_manager.axonomgrid.setSnapTo(Inkscape::Snapper::SNAP_POINT, value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_INKSCAPE_GUIDE_BBOX:
@@ -577,7 +552,7 @@ g_message("named view:: child added");
             gridtype = "xygrid"; // use this as default gridtype when none is specified
             child->setAttribute("type", gridtype);
         }
-        addedgrid = Inkscape::CanvasXYGrid::NewGrid( (SPDesktop*) nv->views->data, child, gridtype);
+        addedgrid = Inkscape::CanvasGrid::NewGrid( (SPDesktop*) nv->views->data, child, gridtype);
         if (addedgrid) {
             nv->grids = g_slist_append(nv->grids, addedgrid);
             addedgrid->show();
@@ -685,11 +660,6 @@ void SPNamedView::show(SPDesktop *desktop)
     gtk_object_ref(GTK_OBJECT(item));
     gridviews = g_slist_prepend(gridviews, item);
 
-    item = sp_canvas_item_new(sp_desktop_grid(desktop), SP_TYPE_CAXONOMGRID, NULL);
-    // since we're keeping a copy, we need to bump up the ref count
-    gtk_object_ref(GTK_OBJECT(item));
-    gridviews = g_slist_prepend(gridviews, item);
-    
     // generate grids specified in SVG:
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(this);
     if (repr) {
@@ -704,7 +674,7 @@ void SPNamedView::show(SPDesktop *desktop)
             }
         }
     }
-    
+
 
     sp_namedview_setup_grid(this);
 }
@@ -833,7 +803,7 @@ void SPNamedView::hide(SPDesktop const *desktop)
             gridviews = g_slist_remove(gridviews, l->data);
         }
     }
-    
+
     // delete grids:
     while ( grids ) {
         Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)grids->data;
@@ -903,17 +873,6 @@ void sp_namedview_toggle_grid(SPDocument *doc, Inkscape::XML::Node *repr)
     sp_document_set_undo_sensitive(doc, saved);
 }
 
-void sp_namedview_set_gridtype(unsigned int type, SPDocument *doc, Inkscape::XML::Node *repr)
-{
-    bool saved = sp_document_get_undo_sensitive(doc);
-    sp_document_set_undo_sensitive(doc, false);
-
-    sp_repr_set_int(repr, "gridtype", (gint)type);
-
-    doc->rroot->setAttribute("sodipodi:modified", "true");
-    sp_document_set_undo_sensitive(doc, saved);
-}
-
 static void sp_namedview_setup_grid(SPNamedView *nv)
 {
     for (GSList *l = nv->gridviews; l != NULL; l = l->next) {
@@ -923,34 +882,21 @@ static void sp_namedview_setup_grid(SPNamedView *nv)
 
 static void sp_namedview_setup_grid_item(SPNamedView *nv, SPCanvasItem *item)
 {
-    bool btype = SP_IS_CAXONOMGRID(GTK_OBJECT(item));
-
-    if ( nv->showgrid && (nv->gridtype == btype) ) {
+    if ( nv->showgrid ) {
         sp_canvas_item_show(item);
     } else {
         sp_canvas_item_hide(item);
     }
-    
+
     sp_canvas_item_set((GtkObject *) item,
                        "color", nv->gridcolor,
                        "originx", nv->gridorigin[NR::X],
                        "originy", nv->gridorigin[NR::Y],
+                       "spacingx", nv->gridspacing[NR::X],
                        "spacingy", nv->gridspacing[NR::Y],
                        "empcolor", nv->gridempcolor,
                        "empspacing", nv->gridempspacing,
                        NULL);
-    if (!btype){
-        // CXYGRID
-        sp_canvas_item_set((GtkObject *) item,
-                           "spacingx", nv->gridspacing[NR::X],
-                           NULL);
-    } else {
-        // CAXONOMGRID
-        sp_canvas_item_set((GtkObject *) item,
-                           "anglex", nv->gridangle[0],
-                           "anglez", nv->gridangle[1],
-                           NULL);
-    }
 }
 
 

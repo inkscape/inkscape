@@ -1,25 +1,22 @@
-#define SP_CANVAS_AXONOMGRID_C
+#define CANVAS_AXONOMGRID_C
 
 /*
- * SPCAxonomGrid
- *
- * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 2000 Lauris Kaplinski
- *
- */                         
- 
- /* 
+ * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
+ */
+
+ /*
   * Current limits are: one axis (y-axis) is always vertical. The other two
-  * axes are bound to a certain range of angles. The z-axis always has an angle 
+  * axes are bound to a certain range of angles. The z-axis always has an angle
   * smaller than 90 degrees (measured from horizontal, 0 degrees being a line extending
   * to the right). The x-axis will always have an angle between 0 and 90 degrees.
   * When I quickly think about it: all possibilities are probably covered this way. Eg.
   * a z-axis with negative angle can be replaced with an x-axis, etc.
-  */              
-  
+  */
+
  /*
-  *  TODO:  LOTS LOTS LOTS. Optimization etc.
-  *
+  *  TODO:  LOTS LOTS LOTS. Clean up code. dirty as hell
+  * THIS FILE AND THE HEADER FILE NEED HUGE CLEANING UP. PLEASE DO NOT HESISTATE TO DO SO.
+*  For example: the line drawing code should not be here. There _must_ be a function somewhere else that can provide this functionality...
   */
 
 #include "sp-canvas-util.h"
@@ -27,19 +24,21 @@
 #include "display-forward.h"
 #include <libnr/nr-pixops.h>
 
-#define SAFE_SETPIXEL   //undefine this when it is certain that setpixel is never called with invalid params
 
-enum {
-    ARG_0,
-    ARG_ORIGINX,
-    ARG_ORIGINY,
-    ARG_ANGLEX,
-    ARG_SPACINGY,
-    ARG_ANGLEZ,
-    ARG_COLOR,
-    ARG_EMPCOLOR,
-    ARG_EMPSPACING
-};
+#include "canvas-grid.h"
+#include "desktop-handles.h"
+#include "helper/units.h"
+#include "svg/svg-color.h"
+#include "xml/node-event-vector.h"
+#include "sp-object.h"
+
+#include "sp-namedview.h"
+#include "inkscape.h"
+#include "desktop.h"
+
+#include "../document.h"
+
+#define SAFE_SETPIXEL   //undefine this when it is certain that setpixel is never called with invalid params
 
 enum Dim3 { X=0, Y, Z };
 
@@ -50,144 +49,9 @@ enum Dim3 { X=0, Y, Z };
 static double deg_to_rad(double deg) { return deg*M_PI/180.0;}
 
 
-static void sp_caxonomgrid_class_init (SPCAxonomGridClass *klass);
-static void sp_caxonomgrid_init (SPCAxonomGrid *grid);
-static void sp_caxonomgrid_destroy (GtkObject *object);
-static void sp_caxonomgrid_set_arg (GtkObject *object, GtkArg *arg, guint arg_id);
-
-static void sp_caxonomgrid_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
-static void sp_caxonomgrid_render (SPCanvasItem *item, SPCanvasBuf *buf);
-
-static SPCanvasItemClass * parent_class;
-
-GtkType
-sp_caxonomgrid_get_type (void)
-{
-    static GtkType caxonomgrid_type = 0;
-
-    if (!caxonomgrid_type) {
-        GtkTypeInfo caxonomgrid_info = {
-            "SPCAxonomGrid",
-            sizeof (SPCAxonomGrid),
-            sizeof (SPCAxonomGridClass),
-            (GtkClassInitFunc) sp_caxonomgrid_class_init,
-            (GtkObjectInitFunc) sp_caxonomgrid_init,
-            NULL, NULL,
-            (GtkClassInitFunc) NULL
-        };
-        caxonomgrid_type = gtk_type_unique (sp_canvas_item_get_type (), &caxonomgrid_info);
-    }
-    return caxonomgrid_type;
-}
-
-static void
-sp_caxonomgrid_class_init (SPCAxonomGridClass *klass)
-{
-
-    GtkObjectClass *object_class;
-    SPCanvasItemClass *item_class;
-
-    object_class = (GtkObjectClass *) klass;
-    item_class = (SPCanvasItemClass *) klass;
-
-    parent_class = (SPCanvasItemClass*)gtk_type_class (sp_canvas_item_get_type ());
-
-    gtk_object_add_arg_type ("SPCAxonomGrid::originx", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_ORIGINX);
-    gtk_object_add_arg_type ("SPCAxonomGrid::originy", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_ORIGINY);
-    gtk_object_add_arg_type ("SPCAxonomGrid::anglex", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_ANGLEX);
-    gtk_object_add_arg_type ("SPCAxonomGrid::spacingy", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_SPACINGY);
-    gtk_object_add_arg_type ("SPCAxonomGrid::anglez", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_ANGLEZ);
-    gtk_object_add_arg_type ("SPCAxonomGrid::color", GTK_TYPE_INT, GTK_ARG_WRITABLE, ARG_COLOR);
-    gtk_object_add_arg_type ("SPCAxonomGrid::empcolor", GTK_TYPE_INT, GTK_ARG_WRITABLE, ARG_EMPCOLOR);
-    gtk_object_add_arg_type ("SPCAxonomGrid::empspacing", GTK_TYPE_INT, GTK_ARG_WRITABLE, ARG_EMPSPACING);
-
-    object_class->destroy = sp_caxonomgrid_destroy;
-    object_class->set_arg = sp_caxonomgrid_set_arg;
-
-    item_class->update = sp_caxonomgrid_update;
-    item_class->render = sp_caxonomgrid_render;
-  
-}
-
-static void
-sp_caxonomgrid_init (SPCAxonomGrid *grid)
-{
-    grid->origin[NR::X] = grid->origin[NR::Y] = 0.0;
-//    grid->spacing[X] = grid->spacing[Y] = grid->spacing[Z] = 8.0;
-    grid->color = 0x0000ff7f;
-    grid->empcolor = 0x3F3FFF40;
-    grid->empspacing = 5;
-}
-
-static void
-sp_caxonomgrid_destroy (GtkObject *object)
-{
-    g_return_if_fail (object != NULL);
-    g_return_if_fail (SP_IS_CAXONOMGRID (object));
-
-    if (GTK_OBJECT_CLASS (parent_class)->destroy)
-        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
-}
-
-static void
-sp_caxonomgrid_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
-{
-    SPCanvasItem *item = SP_CANVAS_ITEM (object);
-    SPCAxonomGrid *grid = SP_CAXONOMGRID (object);
-    
-    switch (arg_id) {
-    case ARG_ORIGINX:
-        grid->origin[NR::X] = GTK_VALUE_DOUBLE (* arg);
-        sp_canvas_item_request_update (item);
-        break;
-    case ARG_ORIGINY:
-        grid->origin[NR::Y] = GTK_VALUE_DOUBLE (* arg);
-        sp_canvas_item_request_update (item);
-        break;
-    case ARG_ANGLEX:
-        grid->angle_deg[X] = GTK_VALUE_DOUBLE (* arg);
-        if (grid->angle_deg[X] < 0.0) grid->angle_deg[X] = 0.0;
-        if (grid->angle_deg[X] > 89.0) grid->angle_deg[X] = 89.0;
-        grid->angle_rad[X] = deg_to_rad(grid->angle_deg[X]);
-        grid->tan_angle[X] = tan(grid->angle_rad[X]);
-        sp_canvas_item_request_update (item);
-        break;
-    case ARG_SPACINGY:
-        grid->lengthy = GTK_VALUE_DOUBLE (* arg);
-        if (grid->lengthy < 0.01) grid->lengthy = 0.01;
-        sp_canvas_item_request_update (item);
-        break;
-    case ARG_ANGLEZ:
-        grid->angle_deg[Z] = GTK_VALUE_DOUBLE (* arg);
-        if (grid->angle_deg[Z] < 0.0) grid->angle_deg[Z] = 0.0;
-        if (grid->angle_deg[X] > 89.0) grid->angle_deg[X] = 89.0;
-        grid->angle_rad[Z] = deg_to_rad(grid->angle_deg[Z]);
-        grid->tan_angle[Z] = tan(grid->angle_rad[Z]);
-        sp_canvas_item_request_update (item);
-        break;
-    case ARG_COLOR:
-        grid->color = GTK_VALUE_INT (* arg);
-        sp_canvas_item_request_update (item);
-        break;
-    case ARG_EMPCOLOR:
-        grid->empcolor = GTK_VALUE_INT (* arg);
-        sp_canvas_item_request_update (item);
-        break;
-    case ARG_EMPSPACING:
-        grid->empspacing = GTK_VALUE_INT (* arg);
-        // std::cout << "Emphasis Spacing: " << grid->empspacing << std::endl;
-        sp_canvas_item_request_update (item);
-        break;
-    default:
-        break;
-    }
-}
-
-
-
 /**
     \brief  This function renders a pixel on a particular buffer.
-                
+
     The topleft of the buffer equals
                         ( rect.x0 , rect.y0 )  in screen coordinates
                         ( 0 , 0 )  in setpixel coordinates
@@ -195,32 +59,32 @@ sp_caxonomgrid_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
                         ( rect.x1 , rect,y1 )  in screen coordinates
                         ( rect.x1 - rect.x0 , rect.y1 - rect.y0 )  in setpixel coordinates
 */
-static void 
+static void
 sp_caxonomgrid_setpixel (SPCanvasBuf *buf, gint x, gint y, guint32 rgba) {
 #ifdef SAFE_SETPIXEL
     if ( (x >= buf->rect.x0) && (x < buf->rect.x1) && (y >= buf->rect.y0) && (y < buf->rect.y1) ) {
-#endif        
-        guint r, g, b, a;          
+#endif
+        guint r, g, b, a;
         r = NR_RGBA32_R (rgba);
         g = NR_RGBA32_G (rgba);
         b = NR_RGBA32_B (rgba);
-        a = NR_RGBA32_A (rgba);  
+        a = NR_RGBA32_A (rgba);
         guchar * p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
         p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
         p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
         p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
 #ifdef SAFE_SETPIXEL
     }
-#endif    
+#endif
 }
 
 /**
     \brief  This function renders a line on a particular canvas buffer,
             using Bresenham's line drawing function.
-            http://www.cs.unc.edu/~mcmillan/comp136/Lecture6/Lines.html 
+            http://www.cs.unc.edu/~mcmillan/comp136/Lecture6/Lines.html
             Coordinates are interpreted as SCREENcoordinates
 */
-static void 
+static void
 sp_caxonomgrid_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, guint32 rgba) {
     int dy = y1 - y0;
     int dx = x1 - x0;
@@ -255,7 +119,7 @@ sp_caxonomgrid_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, g
             sp_caxonomgrid_setpixel(buf, x0, y0, rgba);
         }
     }
-    
+
 }
 
 static void
@@ -281,181 +145,523 @@ sp_grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
     }
 }
 
+namespace Inkscape {
+
+
 /**
-    \brief  This function renders the grid on a particular canvas buffer
-    \param  item  The grid to render on the buffer
-    \param  buf   The buffer to render the grid on
-    
-    This function gets called a touch more than you might believe,
-    about once per tile.  This means that it could probably be optimized
-    and help things out.
-
-    Basically this function has to determine where in the canvas it is,
-    and how that associates with the grid.  It does this first by looking
-    at the bounding box of the buffer, and then calculates where the grid
-    starts in that buffer.  It will then step through grid lines until
-    it is outside of the buffer.
-
-    For each grid line it is drawn using the function \c sp_grid_hline
-    or \c sp_grid_vline.  These are convience functions for the sake
-    of making the function easier to read.
-
-    Also, there are emphasized lines on the grid.  While the \c syg and
-    \c sxg variable track grid positioning, the \c xlinestart and \c
-    ylinestart variables track the 'count' of what lines they are.  If
-    that count is a multiple of the line seperation between emphasis
-    lines, then that line is drawn in the emphasis color.
-*/
-static void
-sp_caxonomgrid_render (SPCanvasItem * item, SPCanvasBuf * buf)
+* A DIRECT COPY-PASTE FROM DOCUMENT-PROPERTIES.CPP  TO QUICKLY GET RESULTS
+*
+ * Helper function that attachs widgets in a 3xn table. The widgets come in an
+ * array that has two entries per table row. The two entries code for four
+ * possible cases: (0,0) means insert space in first column; (0, non-0) means
+ * widget in columns 2-3; (non-0, 0) means label in columns 1-3; and
+ * (non-0, non-0) means two widgets in columns 2 and 3.
+**/
+#define SPACE_SIZE_X 15
+#define SPACE_SIZE_Y 10
+static inline void
+attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int start = 0)
 {
-    SPCAxonomGrid *grid = SP_CAXONOMGRID (item);
+    for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2)
+    {
+        if (arr[i] && arr[i+1])
+        {
+            table.attach (const_cast<Gtk::Widget&>(*arr[i]),   1, 2, r, r+1,
+                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+            table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 2, 3, r, r+1,
+                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+        }
+        else
+        {
+            if (arr[i+1])
+                table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 1, 3, r, r+1,
+                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+            else if (arr[i])
+            {
+                Gtk::Label& label = reinterpret_cast<Gtk::Label&> (const_cast<Gtk::Widget&>(*arr[i]));
+                label.set_alignment (0.0);
+                table.attach (label, 0, 3, r, r+1,
+                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+            }
+            else
+            {
+                Gtk::HBox *space = manage (new Gtk::HBox);
+                space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
+                table.attach (*space, 0, 1, r, r+1,
+                      (Gtk::AttachOptions)0, (Gtk::AttachOptions)0,0,0);
+            }
+        }
+        ++r;
+    }
+}
 
-    sp_canvas_prepare_buffer (buf);
-              
+CanvasAxonomGrid::CanvasAxonomGrid (SPDesktop *desktop, Inkscape::XML::Node * in_repr)
+    : CanvasGrid(desktop, in_repr), table(1, 1)
+{
+
+    origin[NR::X] = origin[NR::Y] = 0.0;
+//            nv->gridcolor = (nv->gridcolor & 0xff) | (DEFAULTGRIDCOLOR & 0xffffff00);
+//	case SP_ATTR_GRIDOPACITY:
+//            nv->gridcolor = (nv->gridcolor & 0xffffff00) | (DEFAULTGRIDCOLOR & 0xff);
+    color = 0xff3f3f20;
+    empcolor = 0xFF3F3F40;
+    empspacing = 5;
+    gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
+    angle_deg[X] = angle_deg[Z] = 30;
+    angle_deg[Y] =0;
+    lengthy = 1;
+
+    angle_rad[X] = deg_to_rad(angle_deg[X]);
+    tan_angle[X] = tan(angle_rad[X]);
+    angle_rad[Z] = deg_to_rad(angle_deg[Z]);
+    tan_angle[Z] = tan(angle_rad[Z]);
+
+    snapper = new CanvasAxonomGridSnapper(this, namedview, 0);
+
+    // initialize widgets:
+    vbox.set_border_width(2);
+    table.set_spacings(2);
+    vbox.pack_start(table, false, false, 0);
+
+    _rumg.init (_("Grid _units:"), "units", _wr, repr);
+    _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
+                  "originx", _rumg, _wr, repr);
+    _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
+                  "originy", _rumg, _wr, repr);
+    _rsu_sy.init (_("Spacing _Y:"), _("Base length of z-axis"),
+                  "spacingy", _rumg, _wr, repr);
+    _rsu_ax.init (_("Angle X:"), _("Angle of x-axis"),
+                  "gridanglex", _rumg, _wr, repr);
+    _rsu_az.init (_("Angle Z:"), _("Angle of z-axis"),
+                  "gridanglez", _rumg, _wr, repr);
+    _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"),
+                    _("Color of grid lines"), "color", "opacity", _wr, repr);
+    _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"),
+                     _("Color of the major (highlighted) grid lines"),
+                     "empcolor", "empopacity", _wr, repr);
+    _rsi.init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr);
+
+    const Gtk::Widget* widget_array[] =
+    {
+        0,                  _rcbgrid._button,
+        _rumg._label,       _rumg._sel,
+        0,                  _rsu_ox.getSU(),
+        0,                  _rsu_oy.getSU(),
+        0,                  _rsu_sy.getSU(),
+        0,                  _rsu_ax.getSU(),
+        0,                  _rsu_az.getSU(),
+        _rcp_gcol._label,   _rcp_gcol._cp,
+        0,                  0,
+        _rcp_gmcol._label,  _rcp_gmcol._cp,
+        _rsi._label,        &_rsi._hbox,
+    };
+
+    attach_all (table, widget_array, sizeof(widget_array));
+
+    vbox.show();
+
+    if (repr) readRepr();
+    updateWidgets();
+}
+
+CanvasAxonomGrid::~CanvasAxonomGrid ()
+{
+   if (snapper) delete snapper;
+}
+
+
+/* fixme: Collect all these length parsing methods and think common sane API */
+
+static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, const SPUnit **unit)
+{
+    if (!str) {
+        return FALSE;
+    }
+
+    gchar *u;
+    gdouble v = g_ascii_strtod(str, &u);
+    if (!u) {
+        return FALSE;
+    }
+    while (isspace(*u)) {
+        u += 1;
+    }
+
+    if (!*u) {
+        /* No unit specified - keep default */
+        *val = v;
+        return TRUE;
+    }
+
+    if (base & SP_UNIT_DEVICE) {
+        if (u[0] && u[1] && !isalnum(u[2]) && !strncmp(u, "px", 2)) {
+            *unit = &sp_unit_get_by_id(SP_UNIT_PX);
+            *val = v;
+            return TRUE;
+        }
+    }
+
+    if (base & SP_UNIT_ABSOLUTE) {
+        if (!strncmp(u, "pt", 2)) {
+            *unit = &sp_unit_get_by_id(SP_UNIT_PT);
+        } else if (!strncmp(u, "mm", 2)) {
+            *unit = &sp_unit_get_by_id(SP_UNIT_MM);
+        } else if (!strncmp(u, "cm", 2)) {
+            *unit = &sp_unit_get_by_id(SP_UNIT_CM);
+        } else if (!strncmp(u, "m", 1)) {
+            *unit = &sp_unit_get_by_id(SP_UNIT_M);
+        } else if (!strncmp(u, "in", 2)) {
+            *unit = &sp_unit_get_by_id(SP_UNIT_IN);
+        } else {
+            return FALSE;
+        }
+        *val = v;
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color)
+{
+    if (!str) {
+        return FALSE;
+    }
+
+    gchar *u;
+    gdouble v = g_ascii_strtod(str, &u);
+    if (!u) {
+        return FALSE;
+    }
+    v = CLAMP(v, 0.0, 1.0);
+
+    *color = (*color & 0xffffff00) | (guint32) floor(v * 255.9999);
+
+    return TRUE;
+}
+
+
+
+void
+CanvasAxonomGrid::readRepr()
+{
+    gchar const* value;
+    if ( (value = repr->attribute("originx")) ) {
+        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::X], &gridunit);
+        origin[NR::X] = sp_units_get_pixels(origin[NR::X], *(gridunit));
+    }
+    if ( (value = repr->attribute("originy")) ) {
+        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::Y], &gridunit);
+        origin[NR::Y] = sp_units_get_pixels(origin[NR::Y], *(gridunit));
+    }
+
+    if ( (value = repr->attribute("spacingy")) ) {
+        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &lengthy, &gridunit);
+        lengthy = sp_units_get_pixels(lengthy, *(gridunit));
+        if (lengthy < 1.0) lengthy = 1.0;
+    }
+
+    if ( (value = repr->attribute("gridanglex")) ) {
+        angle_deg[X] = g_ascii_strtod(value, NULL);
+        if (angle_deg[X] < 1.0) angle_deg[X] = 1.0;
+        if (angle_deg[X] > 89.0) angle_deg[X] = 89.0;
+        angle_rad[X] = deg_to_rad(angle_deg[X]);
+        tan_angle[X] = tan(angle_rad[X]);
+    }
+
+    if ( (value = repr->attribute("gridanglez")) ) {
+        angle_deg[Z] = g_ascii_strtod(value, NULL);
+        if (angle_deg[Z] < 1.0) angle_deg[Z] = 1.0;
+        if (angle_deg[Z] > 89.0) angle_deg[Z] = 89.0;
+        angle_rad[Z] = deg_to_rad(angle_deg[Z]);
+        tan_angle[Z] = tan(angle_rad[Z]);
+    }
+
+    if ( (value = repr->attribute("color")) ) {
+        color = (color & 0xff) | sp_svg_read_color(value, color);
+    }
+
+    if ( (value = repr->attribute("empcolor")) ) {
+        empcolor = (empcolor & 0xff) | sp_svg_read_color(value, empcolor);
+    }
+
+    if ( (value = repr->attribute("opacity")) ) {
+        sp_nv_read_opacity(value, &color);
+    }
+    if ( (value = repr->attribute("empopacity")) ) {
+        sp_nv_read_opacity(value, &empcolor);
+    }
+
+    if ( (value = repr->attribute("empspacing")) ) {
+        empspacing = atoi(value);
+    }
+
+    sp_canvas_item_request_update (canvasitem);
+
+    return;
+}
+
+/**
+ * Called when XML node attribute changed; updates dialog widgets if change was not done by widgets themselves.
+ */
+void
+CanvasAxonomGrid::onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive)
+{
+    readRepr();
+
+    if ( ! (_wr.isUpdating()) )
+        updateWidgets();
+}
+
+
+
+
+Gtk::Widget &
+CanvasAxonomGrid::getWidget()
+{
+    return vbox;
+}
+
+
+/**
+ * Update dialog widgets from object's values.
+ */
+void
+CanvasAxonomGrid::updateWidgets()
+{
+    if (_wr.isUpdating()) return;
+
+    _wr.setUpdating (true);
+
+//    _rrb_gridtype.setValue (nv->gridtype);
+    _rumg.setUnit (gridunit);
+
+    gdouble val;
+    val = origin[NR::X];
+    val = sp_pixels_get_units (val, *(gridunit));
+    _rsu_ox.setValue (val);
+    val = origin[NR::Y];
+    val = sp_pixels_get_units (val, *(gridunit));
+    _rsu_oy.setValue (val);
+    val = lengthy;
+    double gridy = sp_pixels_get_units (val, *(gridunit));
+    _rsu_sy.setValue (gridy);
+
+    _rsu_ax.setValue(angle_deg[X]);
+    _rsu_az.setValue(angle_deg[Z]);
+
+    _rcp_gcol.setRgba32 (color);
+    _rcp_gmcol.setRgba32 (empcolor);
+    _rsi.setValue (empspacing);
+
+    _wr.setUpdating (false);
+
+    return;
+}
+
+
+
+void
+CanvasAxonomGrid::Update (NR::Matrix const &affine, unsigned int flags)
+{
+    ow = origin * affine;
+    sw = NR::Point(fabs(affine[0]),fabs(affine[3]));
+    
+    for(int dim = 0; dim < 2; dim++) {
+        gint scaling_factor = empspacing;
+
+        if (scaling_factor <= 1)
+            scaling_factor = 5;
+
+        scaled = FALSE;
+        int watchdog = 0;
+        while (  (sw[dim] < 8.0) & (watchdog < 100) ) {
+            scaled = TRUE;
+            sw[dim] *= scaling_factor;
+            // First pass, go up to the major line spacing, then
+            // keep increasing by two.
+            scaling_factor = 2;
+            watchdog++;
+        }
+
+    }
+
+    spacing_ylines = sw[NR::X] * lengthy  /(tan_angle[X] + tan_angle[Z]);
+    lyw            = lengthy * sw[NR::Y];
+    lxw_x          = (lengthy / tan_angle[X]) * sw[NR::X];
+    lxw_z          = (lengthy / tan_angle[Z]) * sw[NR::X];
+
+    if (empspacing == 0) {
+        scaled = TRUE;
+    }
+
+}
+
+void
+CanvasAxonomGrid::Render (SPCanvasBuf *buf)
+{
      // gc = gridcoordinates (the coordinates calculated from the grids origin 'grid->ow'.
      // sc = screencoordinates ( for example "buf->rect.x0" is in screencoordinates )
-     // bc = buffer patch coordinates 
-     
+     // bc = buffer patch coordinates
+
      // tl = topleft ; br = bottomright
     NR::Point buf_tl_gc;
     NR::Point buf_br_gc;
-    buf_tl_gc[NR::X] = buf->rect.x0 - grid->ow[NR::X];
-    buf_tl_gc[NR::Y] = buf->rect.y0 - grid->ow[NR::Y];
-    buf_br_gc[NR::X] = buf->rect.x1 - grid->ow[NR::X];
-    buf_br_gc[NR::Y] = buf->rect.y1 - grid->ow[NR::Y];
-
+    buf_tl_gc[NR::X] = buf->rect.x0 - ow[NR::X];
+    buf_tl_gc[NR::Y] = buf->rect.y0 - ow[NR::Y];
+    buf_br_gc[NR::X] = buf->rect.x1 - ow[NR::X];
+    buf_br_gc[NR::Y] = buf->rect.y1 - ow[NR::Y];
 
     gdouble x;
     gdouble y;
 
     // render the three separate line groups representing the main-axes:
-    // x-axis always goes from topleft to bottomright. (0,0) - (1,1)  
-    const gdouble xintercept_y_bc = (buf_tl_gc[NR::X] * grid->tan_angle[X]) - buf_tl_gc[NR::Y] ;
-    const gdouble xstart_y_sc = ( xintercept_y_bc - floor(xintercept_y_bc/grid->lyw)*grid->lyw ) + buf->rect.y0;
-    const gint  xlinestart = (gint) Inkscape::round( (xstart_y_sc - grid->ow[NR::Y]) / grid->lyw );
+    // x-axis always goes from topleft to bottomright. (0,0) - (1,1)
+    const gdouble xintercept_y_bc = (buf_tl_gc[NR::X] * tan_angle[X]) - buf_tl_gc[NR::Y] ;
+    const gdouble xstart_y_sc = ( xintercept_y_bc - floor(xintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
+    const gint  xlinestart = (gint) Inkscape::round( (xstart_y_sc - ow[NR::Y]) / lyw );
     gint xlinenum;
     // lijnen vanaf linker zijkant.
-    for (y = xstart_y_sc, xlinenum = xlinestart; y < buf->rect.y1; y += grid->lyw, xlinenum++) {
+    for (y = xstart_y_sc, xlinenum = xlinestart; y < buf->rect.y1; y += lyw, xlinenum++) {
         const gint x0 = buf->rect.x0;
         const gint y0 = (gint) Inkscape::round(y);
-        const gint x1 = x0 + (gint) Inkscape::round( (buf->rect.y1 - y) / grid->tan_angle[X] );
+        const gint x1 = x0 + (gint) Inkscape::round( (buf->rect.y1 - y) / tan_angle[X] );
         const gint y1 = buf->rect.y1;
-            
-        if (!grid->scaled && (xlinenum % grid->empspacing) == 0) {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, grid->empcolor);
+
+        if (!scaled && (xlinenum % empspacing) == 0) {
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
         } else {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, grid->color);
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
         }
     }
     // lijnen vanaf bovenkant.
-    const gdouble xstart_x_sc = buf->rect.x0 + (grid->lxw_x - (xstart_y_sc - buf->rect.y0) / grid->tan_angle[X]) ;
-    for (x = xstart_x_sc, xlinenum = xlinestart; x < buf->rect.x1; x += grid->lxw_x, xlinenum--) {
+    const gdouble xstart_x_sc = buf->rect.x0 + (lxw_x - (xstart_y_sc - buf->rect.y0) / tan_angle[X]) ;
+    for (x = xstart_x_sc, xlinenum = xlinestart; x < buf->rect.x1; x += lxw_x, xlinenum--) {
         const gint y0 = buf->rect.y0;
         const gint y1 = buf->rect.y1;
         const gint x0 = (gint) Inkscape::round(x);
-        const gint x1 = x0 + (gint) Inkscape::round( (y1 - y0) / grid->tan_angle[X] );
-            
-        if (!grid->scaled && (xlinenum % grid->empspacing) == 0) {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, grid->empcolor);
+        const gint x1 = x0 + (gint) Inkscape::round( (y1 - y0) / tan_angle[X] );
+
+        if (!scaled && (xlinenum % empspacing) == 0) {
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
         } else {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, grid->color);
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
         }
     }
-    
+
 
     // y-axis lines (vertical)
-    const gdouble ystart_x_sc = floor (buf_tl_gc[NR::X] / grid->spacing_ylines) * grid->spacing_ylines + grid->ow[NR::X];
-    const gint  ylinestart = (gint) Inkscape::round((ystart_x_sc - grid->ow[NR::X]) / grid->spacing_ylines);
+    const gdouble ystart_x_sc = floor (buf_tl_gc[NR::X] / spacing_ylines) * spacing_ylines + ow[NR::X];
+    const gint  ylinestart = (gint) Inkscape::round((ystart_x_sc - ow[NR::X]) / spacing_ylines);
     gint ylinenum;
-    for (x = ystart_x_sc, ylinenum = ylinestart; x < buf->rect.x1; x += grid->spacing_ylines, ylinenum++) {
+    for (x = ystart_x_sc, ylinenum = ylinestart; x < buf->rect.x1; x += spacing_ylines, ylinenum++) {
         const gint x0 = (gint) Inkscape::round(x);
 
-        if (!grid->scaled && (ylinenum % grid->empspacing) == 0) {
-            sp_grid_vline (buf, x0, buf->rect.y0, buf->rect.y1 - 1, grid->empcolor);
+        if (!scaled && (ylinenum % empspacing) == 0) {
+            sp_grid_vline (buf, x0, buf->rect.y0, buf->rect.y1 - 1, empcolor);
         } else {
-            sp_grid_vline (buf, x0, buf->rect.y0, buf->rect.y1 - 1, grid->color);
+            sp_grid_vline (buf, x0, buf->rect.y0, buf->rect.y1 - 1, color);
         }
     }
 
-    // z-axis always goes from bottomleft to topright. (0,1) - (1,0)  
-    const gdouble zintercept_y_bc = (buf_tl_gc[NR::X] * -grid->tan_angle[Z]) - buf_tl_gc[NR::Y] ;
-    const gdouble zstart_y_sc = ( zintercept_y_bc - floor(zintercept_y_bc/grid->lyw)*grid->lyw ) + buf->rect.y0;
-    const gint  zlinestart = (gint) Inkscape::round( (zstart_y_sc - grid->ow[NR::Y]) / grid->lyw );
+    // z-axis always goes from bottomleft to topright. (0,1) - (1,0)
+    const gdouble zintercept_y_bc = (buf_tl_gc[NR::X] * -tan_angle[Z]) - buf_tl_gc[NR::Y] ;
+    const gdouble zstart_y_sc = ( zintercept_y_bc - floor(zintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
+    const gint  zlinestart = (gint) Inkscape::round( (zstart_y_sc - ow[NR::Y]) / lyw );
     gint zlinenum;
     // lijnen vanaf linker zijkant.
-    for (y = zstart_y_sc, zlinenum = zlinestart; y < buf->rect.y1; y += grid->lyw, zlinenum++) {
+    for (y = zstart_y_sc, zlinenum = zlinestart; y < buf->rect.y1; y += lyw, zlinenum++) {
         const gint x0 = buf->rect.x0;
         const gint y0 = (gint) Inkscape::round(y);
-        const gint x1 = x0 + (gint) Inkscape::round( (y - buf->rect.y0 ) / grid->tan_angle[Z] );
+        const gint x1 = x0 + (gint) Inkscape::round( (y - buf->rect.y0 ) / tan_angle[Z] );
         const gint y1 = buf->rect.y0;
-            
-        if (!grid->scaled && (zlinenum % grid->empspacing) == 0) {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, grid->empcolor);
+
+        if (!scaled && (zlinenum % empspacing) == 0) {
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
         } else {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, grid->color);
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
         }
     }
-    // lijnen vanaf onderkant.
-    const gdouble zstart_x_sc = buf->rect.x0 + (y - buf->rect.y1) / grid->tan_angle[Z] ;
-    for (x = zstart_x_sc; x < buf->rect.x1; x += grid->lxw_z, zlinenum--) {
+    // draw lines from bottom-up
+    const gdouble zstart_x_sc = buf->rect.x0 + (y - buf->rect.y1) / tan_angle[Z] ;
+    for (x = zstart_x_sc; x < buf->rect.x1; x += lxw_z, zlinenum--) {
         const gint y0 = buf->rect.y1;
         const gint y1 = buf->rect.y0;
         const gint x0 = (gint) Inkscape::round(x);
-        const gint x1 = x0 + (gint) Inkscape::round( (buf->rect.y1 - buf->rect.y0) / grid->tan_angle[Z] );
-            
-        if (!grid->scaled && (zlinenum % grid->empspacing) == 0) {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, grid->empcolor);
+        const gint x1 = x0 + (gint) Inkscape::round( (buf->rect.y1 - buf->rect.y0) / tan_angle[Z] );
+
+        if (!scaled && (zlinenum % empspacing) == 0) {
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
         } else {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, grid->color);
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
         }
     }
-    
 }
 
-static void
-sp_caxonomgrid_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * \return x rounded to the nearest multiple of c1 plus c0.
+ *
+ * \note
+ * If c1==0 (and c0 is finite), then returns +/-inf.  This makes grid spacing of zero
+ * mean "ignore the grid in this dimention".  We're currently discussing "good" semantics
+ * for guide/grid snapping.
+ */
+
+/* FIXME: move this somewhere else, perhaps */
+static double round_to_nearest_multiple_plus(double x, double const c1, double const c0)
 {
-    SPCAxonomGrid *grid = SP_CAXONOMGRID (item);
-
-    if (parent_class->update)
-        (* parent_class->update) (item, affine, flags);
-
-    grid->ow = grid->origin * affine;
-    grid->sw = NR::Point(fabs(affine[0]),fabs(affine[3]));
-    
-    for(int dim = 0; dim < 2; dim++) {
-        gint scaling_factor = grid->empspacing;
-
-        if (scaling_factor <= 1)
-            scaling_factor = 5;
-
-        grid->scaled = FALSE;
-        while (grid->sw[dim] < 8.0) {
-            grid->scaled = TRUE;
-            grid->sw[dim] *= scaling_factor;
-            // First pass, go up to the major line spacing, then
-            // keep increasing by two.
-            scaling_factor = 2;
-        }
-    }
-
-    grid->spacing_ylines = grid->sw[NR::X] * grid->lengthy  /(grid->tan_angle[X] + grid->tan_angle[Z]);
-    grid->lyw            = grid->lengthy * grid->sw[NR::Y];
-    grid->lxw_x          = (grid->lengthy / grid->tan_angle[X]) * grid->sw[NR::X];
-    grid->lxw_z          = (grid->lengthy / grid->tan_angle[Z]) * grid->sw[NR::X];
-
-    if (grid->empspacing == 0) {
-        grid->scaled = TRUE;
-    }
-
-    sp_canvas_request_redraw (item->canvas,
-                     -1000000, -1000000,
-                     1000000, 1000000);
-                     
-    item->x1 = item->y1 = -1000000;
-    item->x2 = item->y2 = 1000000;
+    return floor((x - c0) / c1 + .5) * c1 + c0;
 }
+
+CanvasAxonomGridSnapper::CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SPNamedView const *nv, NR::Coord const d) : LineSnapper(nv, d)
+{
+    this->grid = grid;
+}
+
+LineSnapper::LineList
+CanvasAxonomGridSnapper::_getSnapLines(NR::Point const &p) const
+{
+    LineList s;
+
+    if ( grid == NULL ) {
+        return s;
+    }
+
+    for (unsigned int i = 0; i < 2; ++i) {
+
+        /* This is to make sure we snap to only visible grid lines */
+        double scaled_spacing = grid->sw[i]; // this is spacing of visible lines if screen pixels
+
+        // convert screen pixels to px
+        // FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
+        if (SP_ACTIVE_DESKTOP) {
+            scaled_spacing /= SP_ACTIVE_DESKTOP->current_zoom();
+        }
+
+        NR::Coord const rounded = round_to_nearest_multiple_plus(p[i],
+                                                                 scaled_spacing,
+                                                                 grid->origin[i]);
+
+        s.push_back(std::make_pair(NR::Dim2(i), rounded));
+    }
+
+    return s;
+}
+
+
+}; // namespace Inkscape
+
 
 /*
   Local Variables:

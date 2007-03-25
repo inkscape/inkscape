@@ -31,18 +31,6 @@ private:
     LineList _getSnapLines(NR::Point const &p) const;
 };           
 
-
-class AxonomGridSnapper : public LineSnapper
-{
-public:
-    AxonomGridSnapper(SPNamedView const *nv, NR::Coord const d);
-
-private:    
-    LineList _getSnapLines(NR::Point const &p) const;
-};           
-
-
-
 }
 
 #endif

@@ -9,7 +9,6 @@
 
 
 #include "sp-canvas-util.h"
-#include "canvas-grid.h"
 #include "display-forward.h"
 #include <libnr/nr-pixops.h>
 #include "desktop-handles.h"
@@ -21,11 +20,11 @@
 #include "sp-namedview.h"
 #include "inkscape.h"
 #include "desktop.h"
-#include "display/canvas-grid.h"
-#include "display/canvas-axonomgrid.h"
+
 #include "../document.h"
 
-
+#include "canvas-grid.h"
+#include "canvas-axonomgrid.h"
 
 namespace Inkscape {
 
@@ -184,9 +183,7 @@ CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, const char * gridtype
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(sp_desktop_document(SP_ACTIVE_DESKTOP));
     Inkscape::XML::Node *newnode;
     newnode = xml_doc->createElement("inkscape:grid");
-    if (!strcmp(gridtype,"xygrid")) {
-        newnode->setAttribute("type","xygrid");
-    }
+    newnode->setAttribute("type",gridtype);
     
     repr->appendChild(newnode);
 
@@ -207,6 +204,8 @@ CanvasGrid::NewGrid(SPDesktop *desktop, Inkscape::XML::Node * in_repr, const cha
     
     if (!strcmp(gridtype,"xygrid")) {
         return (CanvasGrid*) new CanvasXYGrid(desktop, in_repr);
+    } else if (!strcmp(gridtype,"axonometric")) {
+        return (CanvasGrid*) new CanvasAxonomGrid(desktop, in_repr);
     }
     
     return NULL;
@@ -331,7 +330,6 @@ CanvasXYGrid::CanvasXYGrid (SPDesktop *desktop, Inkscape::XML::Node * in_repr)
     const Gtk::Widget* widget_array[] =
     {
         0,                  _rcbgrid._button,
-        0,                  _rrb_gridtype._hbox,
         _rumg._label,       _rumg._sel,
         0,                  _rsu_ox.getSU(),
         0,                  _rsu_oy.getSU(),

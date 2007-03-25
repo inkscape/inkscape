@@ -1,56 +1,103 @@
-#ifndef SP_CANVAS_AXONOMGRID_H
-#define SP_CANVAS_AXONOMGRID_H
+#ifndef CANVAS_AXONOMGRID_H
+#define CANVAS_AXONOMGRID_H
 
 /*
- * SPCAxonomGrid
+ * Copyright (C) 2006-2007 Johan Engelen  <johan@shouraizou.nl>
  *
- * Generic (and quite unintelligent) modified copy of the grid item for gnome canvas
- *
- * Copyright (C) 2006 Johan Engelen  <johan@shouraizou.nl>
- * Copyright (C) 2000 Lauris Kaplinski 2000
- *
- */
+  */
 
 #include <display/sp-canvas.h>
 #include <libnr/nr-coord.h>
+#include "xml/repr.h"
+#include <gtkmm/box.h>
 
+#include <gtkmm.h>
+#include "ui/widget/color-picker.h"
+#include "ui/widget/scalar-unit.h"
 
-#define SP_TYPE_CAXONOMGRID            (sp_caxonomgrid_get_type ())
-#define SP_CAXONOMGRID(obj)            (GTK_CHECK_CAST ((obj), SP_TYPE_CAXONOMGRID, SPCAxonomGrid))
-#define SP_CAXONOMGRID_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), SP_TYPE_CAXONOMGRID, SPCAxonomGridClass))
-#define SP_IS_CAXONOMGRID(obj)         (GTK_CHECK_TYPE ((obj), SP_TYPE_CAXONOMGRID))
-#define SP_IS_CAXONOMGRID_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_CAXONOMGRID))
+#include "ui/widget/registered-widget.h"
+#include "ui/widget/registry.h"
+#include "ui/widget/tolerance-slider.h"
 
+#include "xml/node-event-vector.h"
 
-/** \brief  All the variables that are tracked for a axonometric grid specific
-            canvas item. */
-struct SPCAxonomGrid : public SPCanvasItem{
-	NR::Point origin;     /**< Origin of the grid */
-	double lengthy;       /**< The lengths of the primary y-axis */
-	double angle_deg[3];  /**< Angle of each axis (note that angle[2] == 0) */
-	double angle_rad[3];  /**< Angle of each axis (note that angle[2] == 0) */
-	double tan_angle[3];  /**< tan(angle[.]) */
-	guint32 color;        /**< Color for normal lines */
-	guint32 empcolor;     /**< Color for emphasis lines */
-	gint empspacing;      /**< Spacing between emphasis lines */
-	bool scaled;          /**< Whether the grid is in scaled mode */
-	
-	NR::Point ow;         /**< Transformed origin by the affine for the zoom */
-	double lyw;           /**< Transformed length y by the affine for the zoom */
-	double lxw_x;
-	double lxw_z;
-	double spacing_ylines;
+#include "snapper.h"
+#include "line-snapper.h"
+
+#include "canvas-grid.h"
+
+struct SPDesktop;
+struct SPNamedView;
+
+namespace Inkscape {
+
+class CanvasAxonomGrid : public CanvasGrid {
+public:
+    CanvasAxonomGrid(SPDesktop *desktop, Inkscape::XML::Node * in_repr);
+    ~CanvasAxonomGrid();
+
+    void Update (NR::Matrix const &affine, unsigned int flags);
+    void Render (SPCanvasBuf *buf);
+    
+    void readRepr();
+    void onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive);
+    
+    Gtk::Widget & getWidget();
+
+    SPUnit const* gridunit;
+
+    NR::Point origin;     /**< Origin of the grid */
+    double lengthy;       /**< The lengths of the primary y-axis */
+    double angle_deg[3];  /**< Angle of each axis (note that angle[2] == 0) */
+    double angle_rad[3];  /**< Angle of each axis (note that angle[2] == 0) */
+    double tan_angle[3];  /**< tan(angle[.]) */
+    guint32 color;        /**< Color for normal lines */
+    guint32 empcolor;     /**< Color for emphasis lines */
+    gint empspacing;      /**< Spacing between emphasis lines */
+    bool scaled;          /**< Whether the grid is in scaled mode */
+
+    NR::Point ow;         /**< Transformed origin by the affine for the zoom */
+    double lyw;           /**< Transformed length y by the affine for the zoom */
+    double lxw_x;
+    double lxw_z;
+    double spacing_ylines;
                           
     NR::Point sw;          /**< the scaling factors of the affine transform */
+    
+    
+private:
+    CanvasAxonomGrid(const CanvasAxonomGrid&);
+    CanvasAxonomGrid& operator=(const CanvasAxonomGrid&);
+    
+    void updateWidgets();
+
+    Gtk::Table table;
+    
+    Inkscape::UI::Widget::RegisteredCheckButton _rcbgrid, _rcbsnbb, _rcbsnnod;
+    Inkscape::UI::Widget::RegisteredUnitMenu    _rumg, _rums;
+    Inkscape::UI::Widget::RegisteredScalarUnit  _rsu_ox, _rsu_oy, _rsu_sy, _rsu_ax, _rsu_az;
+    Inkscape::UI::Widget::RegisteredColorPicker _rcp_gcol, _rcp_gmcol;
+    Inkscape::UI::Widget::RegisteredSuffixedInteger _rsi;
+    
+    Inkscape::UI::Widget::Registry _wr;
+
 };
 
-struct SPCAxonomGridClass {
-	SPCanvasItemClass parent_class;
-};
 
 
-/* Standard Gtk function */
-GtkType sp_caxonomgrid_get_type (void);
+class CanvasAxonomGridSnapper : public LineSnapper
+{
+public:
+    CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SPNamedView const *nv, NR::Coord const d);
+
+private:    
+    LineList _getSnapLines(NR::Point const &p) const;
+    
+    CanvasAxonomGrid *grid;
+}; 
+
+
+}; //namespace Inkscape
 
 
 
