@@ -631,7 +631,7 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
     if (!Glib::file_test(fileName, Glib::FILE_TEST_EXISTS))
         return false;
 
-    g_message("fname:%s", fileName.c_str());
+    //g_message("fname:%s", fileName.c_str());
 
     if (Glib::file_test(fileName, Glib::FILE_TEST_IS_DIR)) {
         showNoPreview();
