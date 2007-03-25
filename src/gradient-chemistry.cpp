@@ -799,6 +799,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
             case POINT_LG_MID:
             {                              
                 // using X-coordinates only to determine the offset, assuming p has been snapped to the vector from begin to end.
+                sp_gradient_ensure_vector(gradient);
                 double offset = get_offset_between_points (p, NR::Point(lg->x1.computed, lg->y1.computed), NR::Point(lg->x2.computed, lg->y2.computed));
                 SPGradient *vector = sp_gradient_get_vector (lg, false);
                 lg->vector.stops.at(point_i).offset = offset;
@@ -807,7 +808,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
                 if (write_repr) {
                     sp_repr_set_css_double(SP_OBJECT_REPR(stopi), "offset", stopi->offset);
                 } else {
-                    SP_OBJECT (gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+                    SP_OBJECT (stopi)->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
                 }
             }
             break;
