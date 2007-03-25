@@ -271,6 +271,20 @@ sp_text_edit_dialog (void)
                         gtk_box_pack_start (GTK_BOX (row), b, FALSE, FALSE, 0);
                         g_object_set_data (G_OBJECT (dlg), "text_anchor_end", b);
                     }
+                    
+                    // align justify
+                    {
+                        // TODO - replace with Inkscape-specific call
+                        GtkWidget *px = gtk_image_new_from_stock ( GTK_STOCK_JUSTIFY_FILL, GTK_ICON_SIZE_LARGE_TOOLBAR );
+                        GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
+                        gtk_tooltips_set_tip (tt, b, _("Justify lines"), NULL);
+                        gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
+                        g_signal_connect ( G_OBJECT (b), "toggled", G_CALLBACK (sp_text_edit_dialog_any_toggled), dlg );
+                        gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (b), FALSE);
+                        gtk_container_add (GTK_CONTAINER (b), px);
+                        gtk_box_pack_start (GTK_BOX (row), b, FALSE, FALSE, 0);
+                        g_object_set_data (G_OBJECT (dlg), "text_anchor_justify", b);
+                    }
 
                     gtk_box_pack_start (GTK_BOX (l_vb), row, FALSE, FALSE, 0);
                 }
@@ -540,18 +554,29 @@ sp_get_text_dialog_style ()
         /* Layout */
         GtkWidget *b = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "text_anchor_start");
         
+        // Align Left
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (b))) {
             sp_repr_css_set_property (css, "text-anchor", "start");
             sp_repr_css_set_property (css, "text-align", "start");
         } else {
+            // Align Center
             b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), 
                                                 "text_anchor_middle");
             if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (b))) {
                 sp_repr_css_set_property (css, "text-anchor", "middle");
                 sp_repr_css_set_property (css, "text-align", "center");
             } else {
-                sp_repr_css_set_property (css, "text-anchor", "end");
-                sp_repr_css_set_property (css, "text-align", "end");
+                // Align Right
+            	b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), 
+                                                    "text_anchor_end");
+                if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (b))) {
+                    sp_repr_css_set_property (css, "text-anchor", "end");
+                    sp_repr_css_set_property (css, "text-align", "end");
+                } else {
+                    // Align Justify
+                    sp_repr_css_set_property (css, "text-anchor", "start");
+                    sp_repr_css_set_property (css, "text-align", "justify");
+                }
             }
         }
 
@@ -738,7 +763,11 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
 
         GtkWidget *b;
         if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_START) {
-            b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), "text_anchor_start" );
+            if (query->text_align.computed == SP_CSS_TEXT_ALIGN_JUSTIFY) {
+                b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), "text_anchor_justify" );
+            } else {
+                b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), "text_anchor_start" );
+            }
         } else if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_MIDDLE) {
             b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), "text_anchor_middle" );
         } else {
