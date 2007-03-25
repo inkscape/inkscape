@@ -37,7 +37,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.6.7, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.6.9, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -4774,23 +4774,23 @@ public:
      *  Constructor
      */
     FileRec()
-        {init(); type = UNKNOWN;}
+        { init(); type = UNKNOWN; }
 
     /**
      *  Copy constructor
      */
     FileRec(const FileRec &other)
-        {init(); assign(other);}
+        { init(); assign(other); }
     /**
      *  Constructor
      */
     FileRec(int typeVal)
-        {init(); type = typeVal;}
+        { init(); type = typeVal; }
     /**
      *  Assignment operator
      */
     FileRec &operator=(const FileRec &other)
-        {init(); assign(other); return *this;}
+        { init(); assign(other); return *this; }
 
 
     /**
@@ -4912,7 +4912,7 @@ private:
         path     = other.path;
         name     = other.name;
         suffix   = other.suffix;
-        files    = other.files;
+        files    = other.files; //avoid recursion
         }
 
 };
@@ -4926,19 +4926,19 @@ public:
      *  Constructor
      */
     DepTool()
-        {init();}
+        { init(); }
 
     /**
      *  Copy constructor
      */
     DepTool(const DepTool &other)
-        {init(); assign(other);}
+        { init(); assign(other); }
 
     /**
      *  Assignment operator
      */
     DepTool &operator=(const DepTool &other)
-        {init(); assign(other); return *this;}
+        { init(); assign(other); return *this; }
 
 
     /**
@@ -5059,9 +5059,7 @@ private:
     /**
      *
      */
-    bool processDependency(FileRec *ofile,
-                           FileRec *include,
-                           int depth);
+    bool processDependency(FileRec *ofile, FileRec *include);
 
     /**
      *
@@ -5080,8 +5078,7 @@ private:
 
     /**
      * A list of all files which will be processed for
-     * dependencies.  This is the only list that has the actual
-     * records.  All other lists have pointers to these records.     
+     * dependencies.
      */
     std::map<String, FileRec *> allFiles;
 
@@ -5089,7 +5086,7 @@ private:
      * The list of .o files, and the
      * dependencies upon them.
      */
-    std::map<String, FileRec *> depFiles;
+    std::map<String, FileRec *> oFiles;
 
     int depFileSize;
     char *depFileBuf;
@@ -5114,13 +5111,15 @@ void DepTool::init()
     fileList.clear();
     directories.clear();
     
-    //clear refs
-    depFiles.clear();
-    //clear records
+    //clear output file list
     std::map<String, FileRec *>::iterator iter;
-    for (iter=allFiles.begin() ; iter!=allFiles.end() ; iter++)
-         delete iter->second;
+    for (iter=oFiles.begin(); iter!=oFiles.end() ; iter++)
+        delete iter->second;
+    oFiles.clear();
 
+    //allFiles actually contains the master copies. delete them
+    for (iter= allFiles.begin(); iter!=allFiles.end() ; iter++)
+        delete iter->second;
     allFiles.clear(); 
 
 }
@@ -5285,7 +5284,8 @@ bool DepTool::sequ(int pos, char *key)
  */
 bool DepTool::addIncludeFile(FileRec *frec, const String &iname)
 {
-
+    //# if the name is an exact match to a path name
+    //# in allFiles, like "myinc.h"
     std::map<String, FileRec *>::iterator iter =
            allFiles.find(iname);
     if (iter != allFiles.end()) //already exists
@@ -5298,6 +5298,7 @@ bool DepTool::addIncludeFile(FileRec *frec, const String &iname)
         }
     else 
         {
+        //## Ok, it was not found directly
         //look in other dirs
         std::vector<String>::iterator diter;
         for (diter=directories.begin() ;
@@ -5306,12 +5307,17 @@ bool DepTool::addIncludeFile(FileRec *frec, const String &iname)
             String dfname = *diter;
             dfname.append("/");
             dfname.append(iname);
-            iter = allFiles.find(dfname);
+            URI fullPathURI(dfname);  //normalize path name
+            String fullPath = fullPathURI.getPath();
+            if (fullPath[0] == '/')
+                fullPath = fullPath.substr(1);
+            //trace("Normalized %s to %s", dfname.c_str(), fullPath.c_str());
+            iter = allFiles.find(fullPath);
             if (iter != allFiles.end())
                 {
                 FileRec *other = iter->second;
                 //trace("other: '%s'", iname.c_str());
-                frec->files[dfname] = other;
+                frec->files[fullPath] = other;
                 return true;
                 }
             }
@@ -5418,9 +5424,7 @@ bool DepTool::scanFile(const String &fname, FileRec *frec)
  *  Recursively check include lists to find all files in allFiles to which
  *  a given file is dependent.
  */
-bool DepTool::processDependency(FileRec *ofile,
-                             FileRec *include,
-                             int depth)
+bool DepTool::processDependency(FileRec *ofile, FileRec *include)
 {
     std::map<String, FileRec *>::iterator iter;
     for (iter=include->files.begin() ; iter!=include->files.end() ; iter++)
@@ -5434,7 +5438,7 @@ bool DepTool::processDependency(FileRec *ofile,
         FileRec *child  = iter->second;
         ofile->files[fname] = child;
       
-        processDependency(ofile, child, depth+1);
+        processDependency(ofile, child);
         }
 
 
@@ -5467,23 +5471,23 @@ bool DepTool::generateDependencies()
         FileRec *include = iter->second;
         if (include->type == FileRec::CFILE)
             {
-            String cFileName = iter->first;
-            FileRec *ofile      = new FileRec(FileRec::OFILE);
-            ofile->path         = include->path;
-            ofile->baseName     = include->baseName;
-            ofile->suffix       = include->suffix;
-            String fname     = include->path;
+            String cFileName   = iter->first;
+            FileRec *ofile     = new FileRec(FileRec::OFILE);
+            ofile->path        = include->path;
+            ofile->baseName    = include->baseName;
+            ofile->suffix      = include->suffix;
+            String fname       = include->path;
             if (fname.size()>0)
                 fname.append("/");
             fname.append(include->baseName);
             fname.append(".o");
-            depFiles[fname]    = ofile;
+            oFiles[fname]    = ofile;
             //add the .c file first?   no, don't
             //ofile->files[cFileName] = include;
             
             //trace("ofile:%s", fname.c_str());
 
-            processDependency(ofile, include, 0);
+            processDependency(ofile, include);
             }
         }
 
@@ -5531,7 +5535,7 @@ bool DepTool::saveDepFile(const String &fileName)
 
     fprintf(f, "<dependencies source='%s'>\n\n", sourceDir.c_str());
     std::map<String, FileRec *>::iterator iter;
-    for (iter=depFiles.begin() ; iter!=depFiles.end() ; iter++)
+    for (iter=oFiles.begin() ; iter!=oFiles.end() ; iter++)
         {
         FileRec *frec = iter->second;
         if (frec->type == FileRec::OFILE)
@@ -5831,7 +5835,7 @@ public:
     virtual ~TaskCC()
         {}
 
-    virtual bool needsCompiling(const DepRec &depRec,
+    virtual bool needsCompiling(const FileRec &depRec,
               const String &src, const String &dest)
         {
         return false;
@@ -8623,7 +8627,7 @@ static bool depTest()
     deptool.setSourceDirectory("/dev/ink/inkscape/src");
     if (!deptool.generateDependencies("build.dep"))
         return false;
-    std::vector<buildtool::DepRec> res =
+    std::vector<buildtool::FileRec> res =
            deptool.loadDepFile("build.dep");
     if (res.size() == 0)
         return false;
