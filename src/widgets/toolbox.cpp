@@ -2161,7 +2161,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         {
         /* Thinning */
             gchar const* labels[] = {_("(speed blows up stroke)"), 0, 0, _("(slight widening)"), _("(constant width)"), _("(slight thinning, default)"), 0, 0, _("(speed deflates stroke)")};
-            gdouble values[] = {-1, -0.4, -0.2, -0.1, 0, 0.1, -0.2, 0.4, 1};
+            gdouble values[] = {-1, -0.4, -0.2, -0.1, 0, 0.1, 0.2, 0.4, 1};
         EgeAdjustmentAction* eact = create_adjustment_action( "ThinningAction",
                                          _("Thinning:"), _("How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"),
                                          "tools.calligraphic", "thinning", 0.1,
