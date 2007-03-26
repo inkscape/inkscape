@@ -10,6 +10,8 @@
 
 #include "libnr/nr-values.h"
 #include "sp-namedview.h"
+#include "inkscape.h"
+#include "desktop.h"
 
 Inkscape::Snapper::PointType const Inkscape::Snapper::BBOX_POINT = 0x1;
 Inkscape::Snapper::PointType const Inkscape::Snapper::SNAP_POINT = 0x2;
@@ -37,11 +39,11 @@ void Inkscape::Snapper::setDistance(NR::Coord const d)
 }
 
 /**
- *  \return Snap distance (desktop coordinates)
+ *  \return Snap distance (desktop coordinates); depends on current zoom so that it's always the same in screen pixels
  */
 NR::Coord Inkscape::Snapper::getDistance() const
 {
-    return _distance;
+    return _distance / SP_ACTIVE_DESKTOP->current_zoom();
 }
 
 /**
