@@ -27,6 +27,7 @@
 #include "xml/repr.h"
 
 #include "sp-shape.h"
+#include "sp-path.h"
 
 #include <sigc++/functors/mem_fun.h>
 
@@ -367,12 +368,20 @@ NR::Maybe<NR::Point> Selection::center() const {
 
 /**
  * Compute the list of points in the selection that are to be considered for snapping.
+ * This includes all special points of each item in the selection, except path nodes
  */
 std::vector<NR::Point> Selection::getSnapPoints() const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
     std::vector<NR::Point> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-        sp_item_snappoints(SP_ITEM(iter->data), SnapPointsIter(p));
+        // getSnapPoints() is only being used in the selector tool, which should
+        // not snap path nodes. Only the node tool should snap those.
+        SPItem *this_item = SP_ITEM(iter->data);
+        if (!SP_IS_PATH(this_item)) {
+            // Only snap if we don't have a path at hand
+            // (Same check occurs in sp-item-group)
+            sp_item_snappoints(this_item, SnapPointsIter(p));
+        }
     }
 
     return p;

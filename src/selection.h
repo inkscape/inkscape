@@ -71,7 +71,7 @@ public:
     ~Selection();
 
     /**
-     * @brief Returns the desktop the seoection is bound to
+     * @brief Returns the desktop the selection is bound to
      *
      * @return the desktop the selection is bound to
      */

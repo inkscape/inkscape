@@ -88,19 +88,19 @@ sp_shape_get_type (void)
 static void
 sp_shape_class_init (SPShapeClass *klass)
 {
-        GObjectClass *gobject_class;
+    GObjectClass *gobject_class;
 	SPObjectClass *sp_object_class;
 	SPItemClass * item_class;
 	SPPathClass * path_class;
 
-        gobject_class = (GObjectClass *) klass;
+    gobject_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
 	item_class = (SPItemClass *) klass;
 	path_class = (SPPathClass *) klass;
 
 	parent_class = (SPItemClass *)g_type_class_peek_parent (klass);
 
-        gobject_class->finalize = sp_shape_finalize;
+    gobject_class->finalize = sp_shape_finalize;
 
 	sp_object_class->build = sp_shape_build;
 	sp_object_class->release = sp_shape_release;
@@ -111,7 +111,7 @@ sp_shape_class_init (SPShapeClass *klass)
 	item_class->print = sp_shape_print;
 	item_class->show = sp_shape_show;
 	item_class->hide = sp_shape_hide;
-        item_class->snappoints = sp_shape_snappoints;
+    item_class->snappoints = sp_shape_snappoints;
 }
 
 /**

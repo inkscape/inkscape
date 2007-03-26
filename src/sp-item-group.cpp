@@ -34,6 +34,7 @@
 #include "prefs-utils.h"
 #include "sp-clippath.h"
 #include "sp-mask.h"
+#include "sp-path.h"
 
 static void sp_group_class_init (SPGroupClass *klass);
 static void sp_group_init (SPGroup *group);
@@ -297,8 +298,10 @@ static void sp_group_snappoints (SPItem const *item, SnapPointsIter p)
 	     o != NULL;
 	     o = SP_OBJECT_NEXT(o))
 	{
-		if (SP_IS_ITEM(o)) {
-			sp_item_snappoints(SP_ITEM(o), p);
+		if (SP_IS_ITEM(o) && !SP_IS_PATH(o)) {
+            // getSnapPoints() and sp_group_snappoints are only being used in the selector tool,
+            // which should not snap path nodes. Only the node tool should snap those.
+            sp_item_snappoints(SP_ITEM(o), p);
 		}
 	}
 }
