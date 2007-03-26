@@ -33,7 +33,7 @@ public:
             const Glib::ustring& tip2, 
             const Glib::ustring& key, 
             Registry& wr);
-    void setValue (double, bool=true);
+    void setValue (double);
     void setLimits (double, double);
     Gtk::VBox* _vbox;
 
