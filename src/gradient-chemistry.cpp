@@ -911,7 +911,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
                 double offset = get_offset_between_points (p, start, end);
                 SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (rg, false);
                 sp_gradient_ensure_vector(rg);
-                rg->vector.stops.at(point_i).offset = offset; //crash
+                rg->vector.stops.at(point_i).offset = offset; 
                 SPStop* stopi = sp_get_stop_i(vector, point_i);
                 stopi->offset = offset;
                 if (write_repr) {
