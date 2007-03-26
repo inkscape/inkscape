@@ -64,7 +64,6 @@ static SPStyleProp const props[] = {
     {SP_ATTR_GRIDTOLERANCE, "gridtolerance"},
     {SP_ATTR_GUIDETOLERANCE, "guidetolerance"},
     {SP_ATTR_OBJECTTOLERANCE, "objecttolerance"},
-    {SP_ATTR_ABS_TOLERANCE, "has_abs_tolerance"},
     {SP_ATTR_GRIDORIGINX, "gridoriginx"},
     {SP_ATTR_GRIDORIGINY, "gridoriginy"},
     {SP_ATTR_GRIDSPACINGX, "gridspacingx"},

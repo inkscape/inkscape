@@ -139,7 +139,6 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "gridtolerance");
     sp_object_read_attr(object, "guidetolerance");
     sp_object_read_attr(object, "objecttolerance");
-    sp_object_read_attr(object, "inkscape:has_abs_tolerance");
     sp_object_read_attr(object, "gridoriginx");
     sp_object_read_attr(object, "gridoriginy");
     sp_object_read_attr(object, "gridspacingx");
@@ -268,13 +267,6 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             }
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
- 	case SP_ATTR_ABS_TOLERANCE:
-             if (!value)
-                 nv->has_abs_tolerance = true;
-             else
-                 nv->has_abs_tolerance = (sp_str_to_bool (value) == TRUE);
-             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-             break;
 	case SP_ATTR_GRIDORIGINX:
 	case SP_ATTR_GRIDORIGINY:
 	{

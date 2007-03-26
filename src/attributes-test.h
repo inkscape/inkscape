@@ -407,7 +407,6 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"gridtolerance", true},
     {"guidetolerance", true},
     {"objecttolerance", true},
-    {"has_abs_tolerance", true},
     {"gridoriginx", true},
     {"gridoriginy", true},
     {"gridspacingx", true},
