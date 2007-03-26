@@ -61,11 +61,13 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2,
     Gtk::Label *theLabel1 = manage (new Gtk::Label (label1));
     theLabel1->set_use_underline();
     _hbox->add (*theLabel1);
-    _hscale = manage (new Gtk::HScale (0.4, 50.1, 0.1));
+    _hscale = manage (new Gtk::HScale (1.0, 51, 1.0));
     theLabel1->set_mnemonic_widget (*_hscale);
     _hscale->set_draw_value (true);
     _hscale->set_value_pos (Gtk::POS_RIGHT);
     _hscale->set_size_request (100, -1);
+    _old_val = 10;
+    _hscale->set_value (_old_val);
     _tt.set_tip (*_hscale, tip1);
     _hbox->add (*_hscale);
     _vbox->add (*_hbox);
@@ -89,7 +91,7 @@ ToleranceSlider::setValue (double val)
     Gtk::Adjustment *adj = _hscale->get_adjustment();
 
     adj->set_lower (1.0);
-    adj->set_upper (50.0);
+    adj->set_upper (51.0);
     adj->set_step_increment (1.0);
 
     if (val > 9999.9) // magic value 10000.0
@@ -125,6 +127,7 @@ ToleranceSlider::on_toggled()
 {
     if (_button->get_active())
     {
+        _old_val = _hscale->get_value();
         _hbox->set_sensitive (false);
         _hbox->show_all();
         setValue (10000.0);
@@ -134,8 +137,8 @@ ToleranceSlider::on_toggled()
     {
         _hbox->set_sensitive (true);
         _hbox->show_all();
-        setValue (50.0);
-        update (50.0);
+        setValue (_old_val);
+        update (_old_val);
     }
 }
 
@@ -161,8 +164,6 @@ ToleranceSlider::update (double val)
     repr->setAttribute(_key.c_str(), os.str().c_str());
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
-    sp_document_done (doc, SP_VERB_NONE,
-                      /* TODO: annotate */ "tolerance-slider.cpp:173");
     
     _wr->setUpdating (false);
 }

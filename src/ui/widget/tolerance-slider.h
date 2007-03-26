@@ -49,6 +49,7 @@ protected:
     Glib::ustring      _key;
     sigc::connection   _scale_changed_connection;
     sigc::connection   _btn_toggled_connection;
+    double _old_val;
 };
 
 
