@@ -6096,7 +6096,7 @@ msgstr "<b>Apuviivoihin tarttuminen</b>"
 
 #: ../src/ui/dialog/export.cpp:34 ../share/extensions/g2pngs.inx.h:2
 msgid "Export"
-msgstr "Vie"
+msgstr "Tallenna"
 
 #: ../src/ui/dialog/extension-editor.cpp:80
 msgid "Information"
