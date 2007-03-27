@@ -143,7 +143,7 @@ void PreviewHolder::setOrientation( Gtk::AnchorType how )
             case Gtk::ANCHOR_NORTH:
             case Gtk::ANCHOR_SOUTH:
             {
-                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_ALWAYS, _wrap ? Gtk::POLICY_AUTOMATIC : Gtk::POLICY_NEVER );
+                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, _wrap ? Gtk::POLICY_AUTOMATIC : Gtk::POLICY_NEVER );
             }
             break;
 
@@ -172,7 +172,7 @@ void PreviewHolder::setWrap( bool b )
             case Gtk::ANCHOR_NORTH:
             case Gtk::ANCHOR_SOUTH:
             {
-                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_ALWAYS, _wrap ? Gtk::POLICY_AUTOMATIC : Gtk::POLICY_NEVER );
+                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, _wrap ? Gtk::POLICY_AUTOMATIC : Gtk::POLICY_NEVER );
             }
             break;
             default:
