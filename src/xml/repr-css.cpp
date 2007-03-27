@@ -54,6 +54,20 @@ SPCSSAttr *sp_repr_css_attr(Node *repr, gchar const *attr)
     return css;
 }
 
+static void
+sp_repr_css_attr_inherited_recursive(SPCSSAttr *css, Node *repr, gchar const *attr)
+{
+    Node *parent = sp_repr_parent(repr);
+
+    // read the ancestors from root down, using head recursion, so that children override parents
+    if (parent) {
+        sp_repr_css_attr_inherited_recursive(css, parent, attr);
+    }
+
+    sp_repr_css_add_components(css, repr, attr);
+}
+
+
 SPCSSAttr *sp_repr_css_attr_inherited(Node *repr, gchar const *attr)
 {
     g_assert(repr != NULL);
@@ -61,13 +75,7 @@ SPCSSAttr *sp_repr_css_attr_inherited(Node *repr, gchar const *attr)
 
     SPCSSAttr *css = sp_repr_css_attr_new();
 
-    sp_repr_css_add_components(css, repr, attr);
-    Node *current = sp_repr_parent(repr);
-
-    while (current) {
-        sp_repr_css_add_components(css, current, attr);
-        current = sp_repr_parent(current);
-    }
+    sp_repr_css_attr_inherited_recursive(css, repr, attr);
 
     return css;
 }
@@ -220,10 +228,13 @@ sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *const decl)
 static void
 sp_repr_css_merge_from_decl_list(SPCSSAttr *css, CRDeclaration const *const decl_list)
 {
+    // read the decls from start to end, using tail recursion, so that latter declarations override
+    // (Ref: http://www.w3.org/TR/REC-CSS2/cascade.html#cascading-order point 4.)
+    // because sp_repr_css_merge_from_decl sets properties unconditionally
+    sp_repr_css_merge_from_decl(css, decl_list);
     if (decl_list->next) {
         sp_repr_css_merge_from_decl_list(css, decl_list->next);
     }
-    sp_repr_css_merge_from_decl(css, decl_list);
 }
 
 void
