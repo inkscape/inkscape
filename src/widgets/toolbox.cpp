@@ -87,6 +87,7 @@
 
 #include "ink-action.h"
 #include "ege-adjustment-action.h"
+#include "ege-output-action.h"
 
 typedef void (*SetupFunction)(GtkWidget *toolbox, SPDesktop *desktop);
 typedef void (*UpdateFunction)(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
@@ -1147,12 +1148,12 @@ sp_star_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *tbl
         }
     }
 
-    //GtkWidget *l = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(tbl), "mode_label"));
+    EgeOutputAction* act = EGE_OUTPUT_ACTION( gtk_object_get_data(GTK_OBJECT(tbl), "mode_action") );
 
     if (n_selected == 0) {
-        //gtk_label_set_markup(GTK_LABEL(l), _("<b>New:</b>"));
+        g_object_set( G_OBJECT(act), "label", _("<b>New:</b>"), NULL );
     } else if (n_selected == 1) {
-        //gtk_label_set_markup(GTK_LABEL(l), _("<b>Change:</b>"));
+        g_object_set( G_OBJECT(act), "label", _("<b>Change:</b>"), NULL );
 
         oldrepr = (Inkscape::XML::Node *) gtk_object_get_data(GTK_OBJECT(tbl), "repr");
         if (oldrepr) { // remove old listener
@@ -1238,6 +1239,8 @@ sp_star_toolbox_new(SPDesktop *desktop)
         "<ui>"
         "  <toolbar name='StarToolbar'>"
         "    <separator />"
+        "    <toolitem action='StarStateAction' />"
+        "    <separator />"
         "    <toolitem action='FlatAction' />"
         "    <toolitem action='FlatAction2' />"
         "    <separator />"
@@ -1252,7 +1255,12 @@ sp_star_toolbox_new(SPDesktop *desktop)
     GtkUIManager* mgr = gtk_ui_manager_new();
     GError* errVal = 0;
     GtkActionGroup* mainActions = gtk_action_group_new("main");
-//     sp_toolbox_add_label(tbl, _("<b>New:</b>"));
+    {
+        EgeOutputAction* act = ege_output_action_new( "StarStateAction", _("<b>New:</b>"), "", 0 );
+        ege_output_action_set_use_markup( act, TRUE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        gtk_object_set_data( GTK_OBJECT(holder), "mode_action", act );
+    }
 
     {
         gtk_object_set_data(GTK_OBJECT(holder), "dtw", desktop->canvas);

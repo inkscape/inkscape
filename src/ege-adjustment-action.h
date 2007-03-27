@@ -39,7 +39,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-/* Note: this file should be kept compliable as both .cpp and .c */
+/* Note: this file should be kept compilable as both .cpp and .c */
 
 #include <glib.h>
 #include <gtk/gtkaction.h>
