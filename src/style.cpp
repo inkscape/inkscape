@@ -1128,6 +1128,9 @@ sp_style_merge_from_props(SPStyle *const style, CRPropList *const props)
 static void
 sp_style_merge_from_decl_list(SPStyle *const style, CRDeclaration const *const decl_list)
 {
+    // read the decls from end to start, using head recursion, so that latter declarations override
+    // (Ref: http://www.w3.org/TR/REC-CSS2/cascade.html#cascading-order point 4.)
+    // because sp_style_merge_style_from_decl only sets properties that are unset
     if (decl_list->next) {
         sp_style_merge_from_decl_list(style, decl_list->next);
     }
