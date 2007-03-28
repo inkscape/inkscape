@@ -784,8 +784,16 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
                     // Since setWaitingCursor runs main loop iterations, we may have already left this tool!
                     // So check if the tool is valid before doing anything
 
+                    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+                    GSList *items = g_slist_copy((GSList *) selection->itemList());
+
                     sp_flood_do_flood_fill(event_context, event);
-    
+
+                    if (event->button.state & GDK_SHIFT_MASK) {
+                        selection->addList(items);
+                        sp_selected_path_union();
+                    }
+                    
                     // restore cursor when done; note that it may already be different if e.g. user 
                     // switched to another tool during interruptible tracing or drawing, in which case do nothing
                     desktop->clearWaitingCursor();
