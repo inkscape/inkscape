@@ -42,6 +42,9 @@ EventLog::notifyUndoEvent(Event* log)
 {
     if ( !_notifications_blocked ) {
     
+        // make sure the supplied event matches the next undoable event
+        g_return_if_fail ( _getUndoEvent() && (*(_getUndoEvent()))[_columns.event] == log );
+
         // if we're on the first child event...
         if ( _curr_event->parent() &&
              _curr_event == _curr_event->parent()->children().begin() )
@@ -92,6 +95,9 @@ void
 EventLog::notifyRedoEvent(Event* log)
 {
     if ( !_notifications_blocked ) {
+
+        // make sure the supplied event matches the next redoable event
+        g_return_if_fail ( _getRedoEvent() && (*(_getRedoEvent()))[_columns.event] == log );
 
         // if we're on a parent event...
         if ( !_curr_event->children().empty() ) {
@@ -207,6 +213,7 @@ EventLog::notifyUndoCommitEvent(Event* log)
 
     _curr_event = _last_event = curr_row;
 
+    curr_row[_columns.event] = log;
     curr_row[_columns.type] = event_type;
     curr_row[_columns.description] = log->description;
 

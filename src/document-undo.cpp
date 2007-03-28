@@ -201,7 +201,7 @@ void finish_incomplete_transaction(SPDocument &doc) {
 		g_warning ("Incomplete undo transaction:");
 		priv.partial = sp_repr_coalesce_log(priv.partial, log);
 		sp_repr_debug_print_log(priv.partial);
-		priv.undo = g_slist_prepend(priv.undo, priv.partial);
+		priv.undo = g_slist_prepend(priv.undo, new Inkscape::Event(priv.partial));
 		priv.partial = NULL;
 	}
 }

@@ -53,13 +53,14 @@ public:
 
     struct EventModelColumns : public Gtk::TreeModelColumnRecord
     {
+        Gtk::TreeModelColumn<Event *> event;
         Gtk::TreeModelColumn<unsigned int> type;
         Gtk::TreeModelColumn<Glib::ustring> description;
         Gtk::TreeModelColumn<int> child_count;
 
         EventModelColumns()
         { 
-            add(type); add(description); add(child_count);
+            add(event); add(type); add(description); add(child_count);
         }
     };
 
