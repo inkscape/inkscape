@@ -263,26 +263,27 @@ DOMString URI::getPath() const
 
 DOMString URI::getNativePath() const
 {
+    DOMString pathStr = toStr(path);
     DOMString npath;
 #ifdef __WIN32__
     unsigned int firstChar = 0;
-    if (path.size() >= 3)
+    if (pathStr.size() >= 3)
         {
-        if (path[0] == '/' &&
-            isLetter(path[1]) &&
-            path[2] == ':')
+        if (pathStr[0] == '/' &&
+            isLetter(pathStr[1]) &&
+            pathStr[2] == ':')
             firstChar++;
          }
-    for (unsigned int i=firstChar ; i<path.size() ; i++)
+    for (unsigned int i=firstChar ; i<pathStr.size() ; i++)
         {
-        XMLCh ch = (XMLCh) path[i];
+        XMLCh ch = (XMLCh) pathStr[i];
         if (ch == '/')
             npath.push_back((XMLCh)'\\');
         else
             npath.push_back(ch);
         }
 #else
-    npath = path;
+    npath = pathStr;
 #endif
     return npath;
 }
@@ -416,8 +417,8 @@ URI URI::resolve(const URI &other) const
             if (pos >= 0)
                 {
                 newUri.path.clear();
-                //# append my path up to the /
-                for (int i = 0; i<pos+1 ; i++)
+                //# append my path up to and including the '/'
+                for (int i = 0; i<=pos ; i++)
                        newUri.path.push_back(path[i]);
                 //# append other path
                 for (unsigned int i = 0; i<other.path.size() ; i++)
