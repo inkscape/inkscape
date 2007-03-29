@@ -59,6 +59,17 @@ public:
 	 * \param log Pointer to an Event describing the committed events.
 	 */
 	virtual void notifyUndoCommitEvent(Event* log) = 0;
+
+	/**
+	 * Triggered when the undo log is cleared.
+	 */
+	virtual void notifyClearUndoEvent() = 0;
+
+	/**
+	 * Triggered when the redo log is cleared.
+	 */
+	virtual void notifyClearRedoEvent() = 0;
+
 };
 
 }

@@ -79,6 +79,30 @@ CompositeUndoStackObserver::notifyUndoCommitEvent(Event* log)
 	this->_unlock();
 }
 
+void
+CompositeUndoStackObserver::notifyClearUndoEvent()
+{
+	this->_lock();
+	for(UndoObserverRecordList::iterator i = this->_active.begin(); i != _active.end(); ++i) {
+		if (!i->to_remove) {
+			i->issueClearUndo();
+		}
+	}
+	this->_unlock();
+}
+
+void
+CompositeUndoStackObserver::notifyClearRedoEvent()
+{
+	this->_lock();
+	for(UndoObserverRecordList::iterator i = this->_active.begin(); i != _active.end(); ++i) {
+		if (!i->to_remove) {
+			i->issueClearRedo();
+		}
+	}
+	this->_unlock();
+}
+
 bool
 CompositeUndoStackObserver::_remove_one(UndoObserverRecordList& list, UndoStackObserver& o)
 {

@@ -2,7 +2,7 @@
  * Author:
  *   Gustav Broberg <broberg@kth.se>
  *
- * Copyright (c) 2006 Authors
+ * Copyright (c) 2006, 2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -155,34 +155,7 @@ EventLog::notifyRedoEvent(Event* log)
 void 
 EventLog::notifyUndoCommitEvent(Event* log)
 {
-    // If we're not at the last event in list then erase the previously undone events 
-    if ( _last_event != _curr_event ) {
-
-        _last_event = _curr_event;
-
-        if ( !_last_event->children().empty() ) {
-            _last_event = _last_event->children().begin();
-        } else {
-            ++_last_event;
-        }
-
-        while ( _last_event != _event_list_store->children().end() ) {
-
-            if (_last_event->parent()) {
-                while ( _last_event != _last_event->parent()->children().end() ) {
-                    _last_event = _event_list_store->erase(_last_event);
-                }
-                _last_event = _last_event->parent();
-
-                (*_last_event)[_columns.child_count] = _last_event->children().size() + 1;
-
-                ++_last_event;
-            } else {
-                _last_event = _event_list_store->erase(_last_event);
-            }
-
-        }
-    }
+    _clearRedo();
 
     const unsigned int event_type = log->type;
 
@@ -232,6 +205,20 @@ EventLog::notifyUndoCommitEvent(Event* log)
         (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
     }
 
+    updateUndoVerbs();
+}
+
+void
+EventLog::notifyClearUndoEvent()
+{
+    _clearUndo();    
+    updateUndoVerbs();
+}
+
+void
+EventLog::notifyClearRedoEvent()
+{
+    _clearRedo();
     updateUndoVerbs();
 }
 
@@ -324,7 +311,47 @@ EventLog::_getRedoEvent() const
     return redo_event;
 }
 
+void
+EventLog::_clearUndo()
+{
+    // TODO: Implement when needed
 }
+
+void
+EventLog::_clearRedo()
+{
+    if ( _last_event != _curr_event ) {
+
+        _last_event = _curr_event;
+
+        if ( !_last_event->children().empty() ) {
+            _last_event = _last_event->children().begin();
+        } else {
+            ++_last_event;
+        }
+
+        while ( _last_event != _event_list_store->children().end() ) {
+
+            if (_last_event->parent()) {
+                while ( _last_event != _last_event->parent()->children().end() ) {
+                    _last_event = _event_list_store->erase(_last_event);
+                }
+                _last_event = _last_event->parent();
+
+                (*_last_event)[_columns.child_count] = _last_event->children().size() + 1;
+
+                ++_last_event;
+            } else {
+                _last_event = _event_list_store->erase(_last_event);
+            }
+
+        }
+
+    }
+}
+
+} // namespace Inkscape
+
 
 /*
   Local Variables:

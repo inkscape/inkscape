@@ -85,6 +85,26 @@ public:
 			this->_observer.notifyUndoCommitEvent(log);
 		}
 
+		/**
+		 * Issue a clear undo event to the UndoStackObserver
+		 * that is associated with this
+		 * UndoStackObserverRecord.
+		 */
+		void issueClearUndo()
+		{
+			this->_observer.notifyClearUndoEvent();
+		}
+	     
+		/**
+		 * Issue a clear redo event to the UndoStackObserver
+		 * that is associated with this
+		 * UndoStackObserverRecord.
+		 */
+		void issueClearRedo()
+		{
+			this->_observer.notifyClearRedoEvent();
+		}
+
 	private:
 		UndoStackObserver& _observer;
 	};
@@ -133,6 +153,9 @@ public:
 	 * \param log The event log being committed to the undo stack.
 	 */
 	void notifyUndoCommitEvent(Event* log);
+
+	virtual void notifyClearUndoEvent();
+	virtual void notifyClearRedoEvent();
 
 private:
 	// Remove an observer from a given list

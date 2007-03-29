@@ -16,7 +16,7 @@
  * Author:
  *   Gustav Broberg <broberg@kth.se>
  *
- * Copyright (c) 2006 Authors
+ * Copyright (c) 2006, 2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -72,6 +72,8 @@ public:
     void notifyUndoEvent(Event *log);
     void notifyRedoEvent(Event *log);
     void notifyUndoCommitEvent(Event *log);
+    void notifyClearUndoEvent();
+    void notifyClearRedoEvent();
 
     /**
      * Accessor functions
@@ -116,10 +118,6 @@ private:
 
     const EventModelColumns _columns;
 
-    /**
-     * Helper functions for initialization
-     */
-
     Glib::RefPtr<Gtk::TreeStore> _event_list_store; 
     Glib::RefPtr<Gtk::TreeSelection> _event_list_selection;
     Gtk::TreeView *_event_list_view;
@@ -133,8 +131,15 @@ private:
     // Map of connections used to temporary block/unblock callbacks in a TreeView
     CallbackMap *_callback_connections;
 
+    /**
+     * Helper functions
+     */
+
     const_iterator _getUndoEvent() const; //< returns the current undoable event or NULL if none
     const_iterator _getRedoEvent() const; //< returns the current redoable event or NULL if none
+
+    void _clearUndo();  //< erase all previously commited events
+    void _clearRedo();  //< erase all previously undone events
 
     // noncopyable, nonassignable
     EventLog(EventLog const &other);

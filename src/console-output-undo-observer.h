@@ -25,6 +25,8 @@ public:
     void notifyUndoEvent(Event* log);
     void notifyRedoEvent(Event* log);
     void notifyUndoCommitEvent(Event* log);
+    void notifyClearUndoEvent();
+    void notifyClearRedoEvent();
 
 };
 }

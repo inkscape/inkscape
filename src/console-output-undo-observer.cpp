@@ -34,6 +34,18 @@ ConsoleOutputUndoObserver::notifyUndoCommitEvent(Event* log)
     //g_message("notifyUndoCommitEvent (sp_document_maybe_done) called; log=%p\n", log->event);
 }
 
+void
+ConsoleOutputUndoObserver::notifyClearUndoEvent()
+{
+    //g_message("notifyClearUndoEvent (sp_document_clear_undo) called);
+}
+
+void
+ConsoleOutputUndoObserver::notifyClearRedoEvent()
+{
+    //g_message("notifyClearRedoEvent (sp_document_clear_redo) called);
+}
+
 }
 
 /*

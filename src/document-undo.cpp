@@ -201,7 +201,9 @@ void finish_incomplete_transaction(SPDocument &doc) {
 		g_warning ("Incomplete undo transaction:");
 		priv.partial = sp_repr_coalesce_log(priv.partial, log);
 		sp_repr_debug_print_log(priv.partial);
-		priv.undo = g_slist_prepend(priv.undo, new Inkscape::Event(priv.partial));
+                Inkscape::Event *event = new Inkscape::Event(priv.partial);
+		priv.undo = g_slist_prepend(priv.undo, event);
+                priv.undoStackObservers.notifyUndoCommitEvent(event);
 		priv.partial = NULL;
 	}
 }
@@ -303,6 +305,9 @@ sp_document_redo (SPDocument *doc)
 void
 sp_document_clear_undo (SPDocument *doc)
 {
+        if (doc->priv->undo)
+                doc->priv->undoStackObservers.notifyClearUndoEvent();
+
 	while (doc->priv->undo) {
 		GSList *current;
 
@@ -318,6 +323,9 @@ sp_document_clear_undo (SPDocument *doc)
 void
 sp_document_clear_redo (SPDocument *doc)
 {
+        if (doc->priv->redo)
+                doc->priv->undoStackObservers.notifyClearRedoEvent();
+
 	while (doc->priv->redo) {
 		GSList *current;
 
