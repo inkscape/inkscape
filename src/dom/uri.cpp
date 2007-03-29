@@ -142,14 +142,14 @@ void URI::init()
     parsebuf  = NULL;
     parselen  = 0;
     scheme    = SCHEME_NONE;
-    schemeStr = "";
+    schemeStr.clear();
     port      = 0;
-    authority = "";
-    path      = "";
+    authority.clear();
+    path.clear();
     absolute  = false;
     opaque    = false;
-    query     = "";
-    fragment  = "";
+    query.clear();
+    fragment.clear();
 }
 
 
@@ -173,6 +173,29 @@ void URI::assign(const URI &other)
 //#########################################################################
 //#A T T R I B U T E S
 //#########################################################################
+static char *hexChars = "0123456789abcdef";
+
+static DOMString toStr(const std::vector<int> &arr)
+{
+    DOMString buf;
+    std::vector<int>::const_iterator iter;
+    for (iter=arr.begin() ; iter!=arr.end() ; iter++)
+        {
+        int ch = *iter;
+        if (isprint(ch))
+            buf.push_back((XMLCh)ch);
+        else
+            {
+            buf.push_back('%');
+            int hi = ((ch>>4) & 0xf);
+            buf.push_back(hexChars[hi]);
+            int lo = ((ch   ) & 0xf);
+            buf.push_back(hexChars[lo]);
+            }
+        }
+    return buf;
+}
+
 
 DOMString URI::toString() const
 {
@@ -180,18 +203,18 @@ DOMString URI::toString() const
     if (authority.size() > 0)
         {
         str.append("//");
-        str.append(authority);
+        str.append(toStr(authority));
         }
-    str.append(path);
+    str.append(toStr(path));
     if (query.size() > 0)
         {
         str.append("?");
-        str.append(query);
+        str.append(toStr(query));
         }
     if (fragment.size() > 0)
         {
         str.append("#");
-        str.append(fragment);
+        str.append(toStr(fragment));
         }
     return str;
 }
@@ -210,7 +233,7 @@ DOMString URI::getSchemeStr() const
 
 DOMString URI::getAuthority() const
 {
-    DOMString ret = authority;
+    DOMString ret = toStr(authority);
     if (portSpecified && port>=0)
         {
         char buf[7];
@@ -222,7 +245,8 @@ DOMString URI::getAuthority() const
 
 DOMString URI::getHost() const
 {
-    return authority;
+    DOMString str = toStr(authority);
+    return str;
 }
 
 int URI::getPort() const
@@ -233,7 +257,8 @@ int URI::getPort() const
 
 DOMString URI::getPath() const
 {
-    return path;
+    DOMString str = toStr(path);
+    return str;
 }
 
 DOMString URI::getNativePath() const
@@ -276,13 +301,68 @@ bool URI::isOpaque() const
 
 DOMString URI::getQuery() const
 {
-    return query;
+    DOMString str = toStr(query);
+    return str;
 }
 
 
 DOMString URI::getFragment() const
 {
-    return fragment;
+    DOMString str = toStr(fragment);
+    return str;
+}
+
+
+
+
+static int find(const std::vector<int> &str, int ch, int startpos)
+{
+    for (unsigned int i = startpos ; i < str.size() ; i++)
+        {
+        if (ch == str[i])
+            return i;
+        }
+    return -1;
+}
+
+
+static int findLast(const std::vector<int> &str, int ch)
+{
+    for (unsigned int i = str.size()-1 ; i>=0 ; i--)
+        {
+        if (ch == str[i])
+            return i;
+        }
+    return -1;
+}
+
+
+static bool sequ(const std::vector<int> &str, char *key)
+{
+    char *c = key;
+    for (unsigned int i=0 ; i<str.size() ; i++)
+        {
+        if (! (*c))
+            return false;
+        if (*c != str[i])
+            return false;
+        }
+    return true;
+}
+
+
+static std::vector<int> substr(const std::vector<int> &str,
+                      int startpos, int len)
+{
+    std::vector<int> buf;
+    unsigned int pos = startpos;
+    for (int i=0 ; i<len ; i++)
+        {
+        if (pos >= str.size())
+            break;
+        buf.push_back(str[pos++]);
+        }
+    return buf;
 }
 
 
@@ -332,12 +412,16 @@ URI URI::resolve(const URI &other) const
             }
         else
             {
-            DOMString::size_type pos = path.find_last_of('/');
-            if (pos != path.npos)
+            int pos = findLast(path, '/');
+            if (pos >= 0)
                 {
-                DOMString tpath = path.substr(0, pos+1);
-                tpath.append(other.path);
-                newUri.path = tpath;
+                newUri.path.clear();
+                //# append my path up to the /
+                for (int i = 0; i<pos+1 ; i++)
+                       newUri.path.push_back(path[i]);
+                //# append other path
+                for (unsigned int i = 0; i<other.path.size() ; i++)
+                       newUri.path.push_back(other.path[i]);
                 }
             else
                 newUri.path = other.path;
@@ -345,6 +429,7 @@ URI URI::resolve(const URI &other) const
         }
 
     newUri.normalize();
+
     return newUri;
 }
 
@@ -364,32 +449,35 @@ URI URI::resolve(const URI &other) const
  */
 void URI::normalize()
 {
-    std::vector<DOMString> segments;
+    std::vector< std::vector<int> > segments;
 
     //## Collect segments
     if (path.size()<2)
         return;
     bool abs = false;
-    unsigned int pos=0;
+    int pos=0;
+    int len = (int) path.size();
+
     if (path[0]=='/')
         {
         abs = true;
         pos++;
         }
-    while (pos < path.size())
+
+    while (pos < len)
         {
-        DOMString::size_type pos2 = path.find('/', pos);
-        if (pos2==path.npos)
+        int pos2 = find(path, '/', pos);
+        if (pos2 < 0)
             {
-            DOMString seg = path.substr(pos);
-            //printf("last segment:%s\n", seg.c_str());
+            std::vector<int> seg = substr(path, pos, path.size()-pos);
+            //printf("last segment:%s\n", toStr(seg).c_str());
             segments.push_back(seg);
             break;
             }
         if (pos2>pos)
             {
-            DOMString seg = path.substr(pos, pos2-pos);
-            //printf("segment:%s\n", seg.c_str());
+            std::vector<int> seg = substr(path, pos, pos2-pos);
+            //printf("segment:%s\n", toStr(seg).c_str());
             segments.push_back(seg);
             }
         pos = pos2;
@@ -398,18 +486,17 @@ void URI::normalize()
 
     //## Clean up (normalize) segments
     bool edited = false;
-    std::vector<DOMString>::iterator iter;
+    std::vector< std::vector<int> >::iterator iter;
     for (iter=segments.begin() ; iter!=segments.end() ; )
         {
-        DOMString s = *iter;
-        if (s == ".")
+        std::vector<int> s = *iter;
+        if (sequ(s,"."))
             {
             iter = segments.erase(iter);
             edited = true;
             }
-        else if (s == ".." &&
-                 iter != segments.begin() &&
-                 *(iter-1) != "..")
+        else if (sequ(s, "..") && iter != segments.begin() &&
+                 !sequ(*(iter-1), ".."))
             {
             iter--; //back up, then erase two entries
             iter = segments.erase(iter);
@@ -426,14 +513,16 @@ void URI::normalize()
         path.clear();
         if (abs)
             {
-            path.append("/");
+            path.push_back('/');
             }
-        std::vector<DOMString>::iterator iter;
+        std::vector< std::vector<int> >::iterator iter;
         for (iter=segments.begin() ; iter!=segments.end() ; iter++)
             {
             if (iter != segments.begin())
-                path.append("/");
-            path.append(*iter);
+                path.push_back('/');
+            std::vector<int> seg = *iter;
+            for (unsigned int i = 0; i<seg.size() ; i++)
+                path.push_back(seg[i]);
             }
         }
 
@@ -507,7 +596,7 @@ int URI::parseHex(int p0, int &result)
     int val = 0;
 
     //# Upper 4
-    XMLCh ch = peek(p);
+    int ch = peek(p);
     if (ch >= '0' && ch <= '9')
         val += (ch - '0');
     else if (ch >= 'a' && ch <= 'f')
@@ -535,6 +624,7 @@ int URI::parseHex(int p0, int &result)
         error("parseHex : unexpected character : %c", ch);
         return -1;
         }
+    p++;
     result = val;
     return p;
 }
@@ -544,7 +634,7 @@ int URI::parseHex(int p0, int &result)
 int URI::parseEntity(int p0, int &result)
 {
     int p = p0;
-    XMLCh ch = peek(p);
+    int ch = peek(p);
     if (ch != '&')
         return p0;
     p++;
@@ -558,6 +648,13 @@ int URI::parseEntity(int p0, int &result)
     p = parseHex(p, val);
     if (p<0)
         return -1;
+    ch = peek(p);
+    if (ch != ';')
+        {
+        error("parseEntity: expected ';'");
+        return -1;
+        }
+    p++;
     result = val;
     return p;
 }
@@ -565,7 +662,7 @@ int URI::parseEntity(int p0, int &result)
 int URI::parseAsciiEntity(int p0, int &result)
 {
     int p = p0;
-    XMLCh ch = peek(p);
+    int ch = peek(p);
     if (ch != '%')
         return p0;
     p++;
@@ -615,13 +712,43 @@ int URI::parseHierarchicalPart(int p0)
             ch = peek(p);
             if (ch == '/')
                 break;
+            else if (ch == '&') //IRI entity
+                {
+                int val;
+                p2 = parseEntity(p, val);
+                if (p2<p)
+                    {
+                    return -1;
+                    }
+                p = p2;
+                authority.push_back((XMLCh)val);
+                }
+            else if (ch == '%') //ascii hex excape
+                {
+                int val;
+                p2 = parseAsciiEntity(p, val);
+                if (p2<p)
+                    {
+                    return -1;
+                    }
+                p = p2;
+                authority.push_back((XMLCh)val);
+                }
             else if (ch == ':')
+                {
                 portSpecified = true;
+                p++;
+                }
             else if (portSpecified)
+                {
                 portStr.push_back((XMLCh)ch);
+                p++;
+                }
             else
+                {
                 authority.push_back((XMLCh)ch);
-            p++;
+                p++;
+                }
             }
         if (portStr.size() > 0)
             {
@@ -682,7 +809,7 @@ int URI::parseHierarchicalPart(int p0)
             p++;
             }
         }
-
+    //trace("path:%s", toStr(path).c_str());
     return p;
 }
 
@@ -721,7 +848,7 @@ int URI::parseFragment(int p0)
         ch = peek(p);
         if (ch == '?')
             break;
-        fragment.push_back((XMLCh)ch);
+        fragment.push_back(ch);
         p++;
         }
 
@@ -779,21 +906,29 @@ bool URI::parse(const DOMString &str)
 {
 
     parselen = str.size();
-
-    DOMString tmp;
-    for (unsigned int i=0 ; i<str.size() ; i++)
+    parsebuf = new int[str.size()];
+    if (!parsebuf)
         {
-        XMLCh ch = (XMLCh) str[i];
-        if (ch == '\\')
-            tmp.push_back((XMLCh)'/');
-        else
-            tmp.push_back(ch);
+        error("parse : could not allocate parsebuf");
+        return false;
         }
-    parsebuf = (char *) tmp.c_str();
+
+    DOMString::const_iterator iter;
+    unsigned int i=0;
+    for (iter= str.begin() ; iter!=str.end() ; iter++)
+        {
+        int ch = *iter;
+        if (ch == '\\')
+            parsebuf[i++] = '/';
+        else
+            parsebuf[i++] = ch;
+        }
 
 
     int p = parse(0);
     normalize();
+
+    delete[] parsebuf;
 
     if (p < 0)
         {
@@ -802,7 +937,7 @@ bool URI::parse(const DOMString &str)
         }
 
     //printf("uri:%s\n", toString().c_str());
-    //printf("path:%s\n", path.c_str());
+    //printf("parse:%s\n", toStr(path).c_str());
 
     return true;
 

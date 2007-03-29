@@ -180,21 +180,21 @@ private:
 
     DOMString schemeStr;
 
-    DOMString authority;
+    std::vector<int> authority;
 
     bool portSpecified;
 
     int port;
 
-    DOMString path;
+    std::vector<int> path;
 
     bool absolute;
 
     bool opaque;
 
-    DOMString query;
+    std::vector<int> query;
 
-    DOMString fragment;
+    std::vector<int> fragment;
 
     void error(const char *fmt, ...)
     #ifdef G_GNUC_PRINTF
@@ -228,7 +228,7 @@ private:
 
     int parse(int p);
 
-    char *parsebuf;
+    int *parsebuf;
 
     int parselen;
 
