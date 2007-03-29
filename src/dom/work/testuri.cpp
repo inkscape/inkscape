@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006-2007 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -35,7 +35,8 @@ typedef org::w3c::dom::URI URI;
 static bool doURI(char *uristr)
 {
     org::w3c::dom::URI uri(uristr);
-
+    printf("##################################\n");
+    printf("String  : '%s'\n", uristr);
     printf("URI     : '%s'\n", uri.toString().c_str());
     printf("scheme  : '%s'\n", uri.getSchemeStr().c_str());
     printf("auth    : '%s'\n", uri.getAuthority().c_str());
@@ -52,15 +53,25 @@ static bool doURI(char *uristr)
 
 static bool test1()
 {
+    printf("########################################\n");
+    printf("## TEST 1\n");
+    printf("########################################\n");
     char *uristr = "http://www.mit.edu:80/index.html?test=good#hello";
     doURI(uristr);
     uristr = "http://www.mit.edu:80";
     doURI(uristr);
+    uristr = "http://r&#xE9;sum&#xE9;.example.org";
+    doURI(uristr);
+
+    printf("\n\n");
     return true;
 }
 
 static bool test2()
 {
+    printf("########################################\n");
+    printf("## TEST 2\n");
+    printf("########################################\n");
     printf("############ uri.resolve() #######\n");
     URI absUri("file:/this/is/an/./absolute/path.sfx");
     printf("absUri:%s\n", absUri.getPath().c_str());
@@ -68,11 +79,16 @@ static bool test2()
     printf("relUri:%s\n", relUri.getPath().c_str());
     URI resUri = absUri.resolve(relUri);
     printf("resUri:%s\n", resUri.getPath().c_str());
+
+    printf("\n\n");
     return true;
 }
 
 static bool test3()
 {
+    printf("########################################\n");
+    printf("## TEST 3\n");
+    printf("########################################\n");
     printf("############ windows-style uri.resolve() #######\n");
     URI absUri("file:C:\\this\\is\\an\\.\\absolute/path.sfx");
     printf("absUri:%s\n", absUri.getPath().c_str());
@@ -83,8 +99,11 @@ static bool test3()
     URI resUri = absUri.resolve(relUri);
     printf("resUri:%s\n", resUri.getPath().c_str());
     printf("resUri:%s\n", resUri.getNativePath().c_str());
+
+    printf("\n\n");
     return true;
 }
+
 
 int main(int argc, char **argv)
 {
