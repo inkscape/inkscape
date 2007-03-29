@@ -13,7 +13,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2007 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -33,7 +33,6 @@
 
 #include <stdio.h>
 #include <stdarg.h>
-#include <glib.h>
 
 #include <string>
 #include <vector>
@@ -416,7 +415,11 @@ private:
     /**
      *
      */
-    void trace(const char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void trace(const char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
 
     /**
      *
@@ -426,7 +429,11 @@ private:
     /**
      *
      */
-    void error(const char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void error(const char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
 
     //#################################
     //# LEXICAL  SCANNING

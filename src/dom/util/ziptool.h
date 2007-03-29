@@ -15,7 +15,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006-2007 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -32,7 +32,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <glib.h>
 
 #include <vector>
 #include <string>
@@ -204,8 +203,17 @@ private:
     std::string fileName;
 
     //debug messages
-    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
-    void trace(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void error(char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
+
+    void trace(char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
 
     unsigned long crc;
 
@@ -470,8 +478,16 @@ public:
 private:
 
     //debug messages
-    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
-    void trace(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void error(char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
+    void trace(char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
 
     //# Private writing methods
 

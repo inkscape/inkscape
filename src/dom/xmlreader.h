@@ -13,7 +13,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2007 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -29,8 +29,6 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-
-#include <glib.h>
 
 #include "dom.h"
 
@@ -79,9 +77,13 @@ public:
     org::w3c::dom::DocumentPtr parseFile(char *fileName);
 
 
-protected:
+private:
 
-    void error(char *format, ...) G_GNUC_PRINTF(2,3);
+    void error(char *format, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
 
     int  get(int ch);
     int  peek(int ch);

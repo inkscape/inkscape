@@ -501,6 +501,83 @@ int URI::match(int p0, char *key)
 //#  http://www.gbiv.com/protocols/uri/rfc/rfc3986.html#components
 //#########################################################################
 
+int URI::parseHex(int p0, int &result)
+{
+    int p = p0;
+    int val = 0;
+
+    //# Upper 4
+    XMLCh ch = peek(p);
+    if (ch >= '0' && ch <= '9')
+        val += (ch - '0');
+    else if (ch >= 'a' && ch <= 'f')
+        val += (10 + ch - 'a');
+    else if (ch >= 'A' && ch <= 'F')
+        val += (10 + ch - 'A');
+    else
+        {
+        error("parseHex : unexpected character : %c", ch);
+        return -1;
+        }
+    p++;
+    val <<= 4;
+
+    //# Lower 4
+    ch = peek(p);
+    if (ch >= '0' && ch <= '9')
+        val += (ch - '0');
+    else if (ch >= 'a' && ch <= 'f')
+        val += (10 + ch - 'a');
+    else if (ch >= 'A' && ch <= 'F')
+        val += (10 + ch - 'A');
+    else
+        {
+        error("parseHex : unexpected character : %c", ch);
+        return -1;
+        }
+    result = val;
+    return p;
+}
+
+
+
+int URI::parseEntity(int p0, int &result)
+{
+    int p = p0;
+    XMLCh ch = peek(p);
+    if (ch != '&')
+        return p0;
+    p++;
+    if (!match(p, "#x"))
+        {
+        error("parseEntity: expected '#x'");
+        return -1;
+        }
+    p += 2;
+    int val;
+    p = parseHex(p, val);
+    if (p<0)
+        return -1;
+    result = val;
+    return p;
+}
+
+int URI::parseAsciiEntity(int p0, int &result)
+{
+    int p = p0;
+    XMLCh ch = peek(p);
+    if (ch != '%')
+        return p0;
+    p++;
+    int val;
+    p = parseHex(p, val);
+    if (p<0)
+        return -1;
+    result = val;
+    return p;
+}
+
+
 int URI::parseScheme(int p0)
 {
     int p = p0;
@@ -577,8 +654,33 @@ int URI::parseHierarchicalPart(int p0)
         ch = peek(p);
         if (ch == '?' || ch == '#')
             break;
-        path.push_back((XMLCh)ch);
-        p++;
+        else if (ch == '&') //IRI entity
+            {
+            int val;
+            p2 = parseEntity(p, val);
+            if (p2<p)
+                {
+                return -1;
+                }
+            p = p2;
+            path.push_back((XMLCh)val);
+            }
+        else if (ch == '%') //ascii hex excape
+            {
+            int val;
+            p2 = parseAsciiEntity(p, val);
+            if (p2<p)
+                {
+                return -1;
+                }
+            p = p2;
+            path.push_back((XMLCh)val);
+            }
+        else
+            {
+            path.push_back((XMLCh)ch);
+            p++;
+            }
         }
 
     return p;

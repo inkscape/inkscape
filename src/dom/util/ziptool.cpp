@@ -13,7 +13,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006-2007 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -231,12 +231,20 @@ private:
     /**
      *
      */
-    void error(char *fmt, ...);
+    void error(char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
 
     /**
      *
      */
-    void trace(char *fmt, ...);
+    void trace(char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
 
     /**
      *
@@ -836,8 +844,17 @@ public:
 private:
 
     //debug messages
-    void error(char *fmt, ...);
-    void trace(char *fmt, ...);
+    void error(char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
+
+    void trace(char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
 
     bool compressWindow();
 

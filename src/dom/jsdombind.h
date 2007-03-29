@@ -12,7 +12,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006-2007 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -28,8 +28,6 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-
-#include <glib.h>
 
 #include "jsengine.h"
 
@@ -127,12 +125,20 @@ private:
     /**
      * Ouput a printf-formatted error message
      */
-    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void error(char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
 
     /**
      * Ouput a printf-formatted error message
      */
-    void trace(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void trace(char *fmt, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
 
     JSRuntime *rt;
 
