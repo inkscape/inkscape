@@ -669,7 +669,7 @@ sp_use_unlink(SPUse *use)
                 copy->appendChild(newchild);
         }
     } else { // just copy
-        copy = SP_OBJECT_REPR(orig)->duplicate(copy->document());
+        copy = SP_OBJECT_REPR(orig)->duplicate(SP_OBJECT_REPR(orig)->document());
     }
 
     // Add the duplicate repr just after the existing one.
