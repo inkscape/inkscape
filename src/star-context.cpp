@@ -468,7 +468,7 @@ sp_star_finish (SPStarContext * sc)
 
         sp_shape_set_shape(SP_SHAPE(sc->item));
 
-        object->updateRepr(NULL, SP_OBJECT_WRITE_EXT);
+        object->updateRepr(SP_OBJECT_WRITE_EXT);
 
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 
