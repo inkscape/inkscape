@@ -22,6 +22,7 @@ extern "C" {
 
 #ifdef ENABLE_BINRELOC
 #  define INKSCAPE_APPICONDIR     BR_DATADIR( "/pixmaps" )
+#  define INKSCAPE_EXAMPLESDIR    BR_DATADIR( "/inkscape/examples" )
 #  define INKSCAPE_EXTENSIONDIR   BR_DATADIR( "/inkscape/extensions" )
 #  define INKSCAPE_GRADIENTSDIR   BR_DATADIR( "/inkscape/gradients" )
 #  define INKSCAPE_KEYSDIR        BR_DATADIR( "/inkscape/keys" )
@@ -41,6 +42,7 @@ extern "C" {
 #else
 #  ifdef WIN32
 #    define INKSCAPE_APPICONDIR   "pixmaps"
+#    define INKSCAPE_EXAMPLESDIR  "share\\examples"
 #    define INKSCAPE_EXTENSIONDIR "share\\extensions"
 #    define INKSCAPE_GRADIENTSDIR "share\\gradients"
 #    define INKSCAPE_KEYSDIR      "share\\keys"
@@ -59,6 +61,7 @@ extern "C" {
 #    define CREATE_PATTERNSDIR  INKSCAPE_DATADIR "create\\patterns\\vector"
 #  elif defined ENABLE_OSX_APP_LOCATIONS
 #    define INKSCAPE_APPICONDIR   "Contents/Resources/pixmaps"
+#    define INKSCAPE_EXAMPLESDIR  "Contents/Resources/examples"
 #    define INKSCAPE_EXTENSIONDIR "Contents/Resources/extensions"
 #    define INKSCAPE_GRADIENTSDIR "Contents/Resources/gradients"
 #    define INKSCAPE_KEYSDIR      "Contents/Resources/keys"
@@ -77,6 +80,7 @@ extern "C" {
 #    define CREATE_PATTERNSDIR   "/Library/Application Support/create/patterns/vector"
 #  else
 #    define INKSCAPE_APPICONDIR   INKSCAPE_DATADIR "/pixmaps"
+#    define INKSCAPE_EXAMPLESDIR  INKSCAPE_DATADIR "/inkscape/examples"
 #    define INKSCAPE_EXTENSIONDIR INKSCAPE_DATADIR "/inkscape/extensions"
 #    define INKSCAPE_GRADIENTSDIR INKSCAPE_DATADIR "/inkscape/gradients"
 #    define INKSCAPE_KEYSDIR      INKSCAPE_DATADIR "/inkscape/keys"
