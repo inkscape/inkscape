@@ -138,7 +138,7 @@ struct SPItem : public SPObject {
     void setCenter(NR::Point object_centre);
     void unsetCenter();
     bool isCenterSet();
-    NR::Point getCenter();
+    NR::Point getCenter() const;
 
     bool isVisibleAndUnlocked() const;
     

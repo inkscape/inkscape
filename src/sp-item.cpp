@@ -296,7 +296,7 @@ bool SPItem::isCenterSet() {
     return (transform_center_x != 0 || transform_center_y != 0);
 }
 
-NR::Point SPItem::getCenter() {
+NR::Point SPItem::getCenter() const {
     NR::Maybe<NR::Rect> bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
         return bbox->midpoint() + NR::Point (this->transform_center_x, this->transform_center_y);
