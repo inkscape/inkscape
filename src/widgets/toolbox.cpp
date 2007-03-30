@@ -1535,8 +1535,8 @@ static void rect_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
     GtkWidget *us = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(tbl), "units");
     SPUnit const *unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
 
-    SPItem *item = SP_ITEM(g_object_get_data(G_OBJECT(tbl), "item"));
-    if (SP_IS_RECT(item)) {
+    gpointer item = g_object_get_data(G_OBJECT(tbl), "item");
+    if (item && SP_IS_RECT(item)) {
         {
             GtkAdjustment *adj = (GtkAdjustment*)gtk_object_get_data(GTK_OBJECT(tbl), "rx");
             gdouble rx = sp_rect_get_visible_rx(SP_RECT(item));
@@ -1624,6 +1624,7 @@ sp_rect_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *tbl
             Inkscape::GC::release(oldrepr);
             oldrepr = 0;
             g_object_set_data(G_OBJECT(tbl), "repr", NULL);
+            g_object_set_data(G_OBJECT(tbl), "item", NULL);
         }
         if (repr) {
             g_object_set_data(G_OBJECT(tbl), "repr", repr);
