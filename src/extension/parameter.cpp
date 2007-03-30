@@ -6,7 +6,7 @@
  * Author:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2005-2006 Author
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -16,6 +16,9 @@
 # include "config.h"
 #endif
 
+#ifdef linux
+# define ESCAPE_DOLLAR_COMMANDLINE
+#endif
 
 #include <gtkmm/adjustment.h>
 #include <gtkmm/box.h>
@@ -898,10 +901,25 @@ ParamFloat::string (void)
 Glib::ustring *
 ParamString::string (void)
 {
+    gchar * esc = g_strescape(_value, NULL);
+    Glib::ustring escaped(esc);
+    g_free(esc);
+    
+#ifdef ESCAPE_DOLLAR_COMMANDLINE // escape the dollar sign 
+    Glib::ustring::iterator i;
+    for (i = escaped.begin(); i != escaped.end(); ++i) {
+        if ( *i == '$') {
+            i = escaped.insert(i, '\\');
+            i++;
+        }
+    }
+#endif
+
     Glib::ustring * mystring = new Glib::ustring("");
     *mystring += "\"";
-    *mystring += _value;
+    *mystring += escaped;
     *mystring += "\"";
+    
     return mystring;
 }
 
