@@ -1064,42 +1064,52 @@ clonetiler_apply (GtkWidget *widget, void *)
         clonetiler_trace_setup (sp_desktop_document(desktop), 1.0, SP_ITEM (obj));
     }
 
-    NR::Point c;
+    NR::Point center;
     double w;
     double h;
+    double x0;
+    double y0;
 
     if (keepbbox &&
         obj_repr->attribute("inkscape:tile-w") &&
         obj_repr->attribute("inkscape:tile-h") &&
+        obj_repr->attribute("inkscape:tile-x0") &&
+        obj_repr->attribute("inkscape:tile-y0") &&
         obj_repr->attribute("inkscape:tile-cx") &&
         obj_repr->attribute("inkscape:tile-cy")) {
 
         double cx = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-cx", 0);
         double cy = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-cy", 0);
-
-        c = NR::Point (cx, cy);
+        center = NR::Point (cx, cy);
 
         w = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-w", 0);
         h = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-h", 0);
+        x0 = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-x0", 0);
+        y0 = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-y0", 0);
     } else {
         NR::Maybe<NR::Rect> r = SP_ITEM(obj)->getBounds(sp_item_i2doc_affine(SP_ITEM(obj)));
         if (r) {
-            c = r->midpoint();
             w = r->dimensions()[NR::X];
             h = r->dimensions()[NR::Y];
+            x0 = r->min()[NR::X];
+            y0 = r->min()[NR::Y];
+            center = desktop->dt2doc(SP_ITEM(obj)->getCenter());
 
-            sp_repr_set_svg_double(obj_repr, "inkscape:tile-cx", c[NR::X]);
-            sp_repr_set_svg_double(obj_repr, "inkscape:tile-cy", c[NR::Y]);
+            sp_repr_set_svg_double(obj_repr, "inkscape:tile-cx", center[NR::X]);
+            sp_repr_set_svg_double(obj_repr, "inkscape:tile-cy", center[NR::Y]);
             sp_repr_set_svg_double(obj_repr, "inkscape:tile-w", w);
             sp_repr_set_svg_double(obj_repr, "inkscape:tile-h", h);
+            sp_repr_set_svg_double(obj_repr, "inkscape:tile-x0", x0);
+            sp_repr_set_svg_double(obj_repr, "inkscape:tile-y0", y0);
         } else {
-            c = NR::Point(0, 0);
+            center = NR::Point(0, 0);
             w = h = 0;
+            x0 = y0 = 0;
         }
     }
 
     NR::Point cur = NR::Point (0, 0);
-    NR::Rect bbox_original = NR::Rect (NR::Point (c[NR::X] - w/2, c[NR::Y] - h/2), NR::Point (c[NR::X] + w/2, c[NR::Y] + h/2));
+    NR::Rect bbox_original = NR::Rect (NR::Point (x0, y0), NR::Point (x0 + w, y0 + h));
     double perimeter_original = (w + h)/4;
 
     for (int x = 0;
@@ -1116,14 +1126,14 @@ clonetiler_apply (GtkWidget *widget, void *)
             // Note: We create a clone at 0,0 too, right over the original, in case our clones are colored
 
             // Get transform from symmetry, shift, scale, rotation
-            NR::Matrix t = clonetiler_get_transform (type, x, y, c[NR::X], c[NR::Y], w, h,
+            NR::Matrix t = clonetiler_get_transform (type, x, y, center[NR::X], center[NR::Y], w, h,
                                                      d_x_per_x, d_y_per_x, d_x_per_y, d_y_per_y, alternate_x, alternate_y, rand_x, rand_y,
                                                      d_per_x_exp, d_per_y_exp,
                                                      d_rot_per_x, d_rot_per_y, alternate_rotx, alternate_roty, rand_rot,
                                                      d_scalex_per_x, d_scaley_per_x, d_scalex_per_y, d_scaley_per_y,
                                                      alternate_scalex, alternate_scaley, rand_scalex, rand_scaley);
 
-            cur = c * t - c;
+            cur = center * t - center;
             if (fillrect) {
                 if ((cur[NR::X] > fillwidth) || (cur[NR::Y] > fillheight)) { // off limits
                     continue;
@@ -1256,7 +1266,7 @@ clonetiler_apply (GtkWidget *widget, void *)
                     }
                 }
                 if (pick_to_size) {
-                    t = NR::translate(-c[NR::X], -c[NR::Y]) * NR::scale (val, val) * NR::translate(c[NR::X], c[NR::Y]) * t;
+                    t = NR::translate(-center[NR::X], -center[NR::Y]) * NR::scale (val, val) * NR::translate(center[NR::X], center[NR::Y]) * t;
                 }
                 if (pick_to_opacity) {
                     opacity *= val;
