@@ -324,7 +324,7 @@ static bool try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, guch
     return true;
 }
 
-static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
+static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform, bool union_with_selection) {
     SPDocument *document = sp_desktop_document(desktop);
     
     Inkscape::Trace::Potrace::PotraceTracingEngine pte;
@@ -420,12 +420,20 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform) {
             }
 
             Inkscape::Selection *selection = sp_desktop_selection(desktop);
-            selection->set(reprobj);
+
             pathRepr->setPosition(-1);
 
-            desktop->messageStack()->flashF(Inkscape::WARNING_MESSAGE, _("Area filled, path with <b>%d</b> nodes created."), sp_nodes_in_path(SP_PATH(reprobj)));
+            if (union_with_selection) {
+                desktop->messageStack()->flashF(Inkscape::WARNING_MESSAGE, _("Area filled, path with <b>%d</b> nodes created and unioned with selection."), sp_nodes_in_path(SP_PATH(reprobj)));
+                selection->add(reprobj);
+                sp_selected_path_union_skip_undo();
+            } else {
+                desktop->messageStack()->flashF(Inkscape::WARNING_MESSAGE, _("Area filled, path with <b>%d</b> nodes created."), sp_nodes_in_path(SP_PATH(reprobj)));
+                selection->set(reprobj);
+            }
+
         }
-        
+
         Inkscape::GC::release(pathRepr);
 
     }
@@ -501,7 +509,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::queue<NR::Point> *
     return SCANLINE_CHECK_OK;
 }
 
-static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event) {
+static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event, bool union_with_selection) {
     SPDesktop *desktop = event_context->desktop;
     SPDocument *document = sp_desktop_document(desktop);
 
@@ -730,7 +738,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     NR::Matrix inverted_affine = NR::Matrix(affine).inverse();
     
-    do_trace(pixbuf, desktop, inverted_affine);
+    do_trace(pixbuf, desktop, inverted_affine, union_with_selection);
 
     g_free(trace_px);
     
@@ -784,15 +792,7 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
                     // Since setWaitingCursor runs main loop iterations, we may have already left this tool!
                     // So check if the tool is valid before doing anything
 
-                    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-                    GSList *items = g_slist_copy((GSList *) selection->itemList());
-
-                    sp_flood_do_flood_fill(event_context, event);
-
-                    if (event->button.state & GDK_SHIFT_MASK) {
-                        selection->addList(items);
-                        sp_selected_path_union();
-                    }
+                    sp_flood_do_flood_fill(event_context, event, event->button.state & GDK_SHIFT_MASK);
                     
                     // restore cursor when done; note that it may already be different if e.g. user 
                     // switched to another tool during interruptible tracing or drawing, in which case do nothing

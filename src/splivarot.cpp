@@ -67,6 +67,12 @@ sp_selected_path_union()
 }
 
 void
+sp_selected_path_union_skip_undo()
+{
+    sp_selected_path_boolop(bool_op_union, SP_VERB_NONE, _("Union"));
+}
+
+void
 sp_selected_path_intersect()
 {
     sp_selected_path_boolop(bool_op_inters, SP_VERB_SELECTION_INTERSECT, _("Intersection"));
@@ -573,7 +579,9 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
 
     g_free(transform);
 
-    sp_document_done(sp_desktop_document(desktop), verb, description);
+    if (verb != SP_VERB_NONE) {
+        sp_document_done(sp_desktop_document(desktop), verb, description);
+    }
 
     delete res;
 }

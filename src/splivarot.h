@@ -13,6 +13,7 @@
 // work on the current selection
 // selection has 2 contain exactly 2 items
 void sp_selected_path_union ();
+void sp_selected_path_union_skip_undo ();
 void sp_selected_path_intersect ();
 void sp_selected_path_diff ();
 void sp_selected_path_symdiff ();
