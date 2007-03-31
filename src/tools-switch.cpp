@@ -213,7 +213,7 @@ tools_switch(SPDesktop *dt, int num)
             dt->set_event_context(SP_TYPE_FLOOD_CONTEXT, tool_names[num]);
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
-            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> to paint a bounded area, <b>Ctrl+click</b> to change the clicked object's fill and stroke to the current setting."));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new fill with the current selection, <b>Ctrl+click</b> to change the clicked object's fill and stroke to the current setting."));
             break;
     }
 }
