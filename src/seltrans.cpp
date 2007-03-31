@@ -864,10 +864,17 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
     }
 
     if ((state & GDK_CONTROL_MASK) || _desktop->isToolboxButtonActive ("lock")) {
-        /* Scale is locked to a 1:1 aspect ratio, so that s[X] must be made to equal s[Y].
-        ** To do this, we snap along a suitable constraint vector from the origin.
-        */
-        
+        // Scale is locked to a 1:1 aspect ratio, so that s[X] must be made to equal s[Y].
+        //
+        // The aspect-ratio must be locked before snapping
+        if (fabs(s[NR::X]) > fabs(s[NR::Y])) {
+                s[NR::X] = fabs(s[NR::Y]) * sign(s[NR::X]);
+            } else {
+                s[NR::Y] = fabs(s[NR::X]) * sign(s[NR::Y]);
+            }
+            
+        // Snap along a suitable constraint vector from the origin.
+
         // The inclination of the constraint vector is calculated from the aspect ratio
         NR::Point bbox_dim = _box->dimensions();
         double const aspect_ratio = bbox_dim[1] / bbox_dim[0]; // = height / width
@@ -893,16 +900,8 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
                                                                _origin_for_snappoints);
 
         if (bb.second == false && sn.second == false) {
-
-            /* We didn't snap, so just lock aspect ratio */
-            if (fabs(s[NR::X]) > fabs(s[NR::Y])) {
-                s[NR::X] = fabs(s[NR::Y]) * sign(s[NR::X]);
-            } else {
-                s[NR::Y] = fabs(s[NR::X]) * sign(s[NR::Y]);
-            }
-
+            /* We didn't snap, so just keep the locked aspect ratio */
         } else {
-
             /* Choose the smaller difference in scale.  Since s[X] == s[Y] we can
             ** just compare difference in s[X].
             */
@@ -993,6 +992,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
     SnapManager const &m = _desktop->namedview->snap_manager;
 
     if ( state & GDK_CONTROL_MASK ) {
+        // on ctrl, apply symmetrical scaling instead of stretching
         s[perp] = fabs(s[axis]);
 
         std::pair<NR::Coord, bool> const bb = m.freeSnapStretch(
