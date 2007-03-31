@@ -21,14 +21,6 @@ import math, inkex, cubicsuperpath
 class Whirl(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
-        self.OptionParser.add_option("-x", "--centerx",
-                        action="store", type="float", 
-                        dest="centerx", default=10.0,
-                        help="")
-        self.OptionParser.add_option("-y", "--centery",
-                        action="store", type="float", 
-                        dest="centery", default=0.0,
-                        help="")
         self.OptionParser.add_option("-t", "--whirl",
                         action="store", type="float", 
                         dest="whirl", default=1.0,
@@ -49,16 +41,16 @@ class Whirl(inkex.Effect):
                 for sub in p:
                     for csp in sub:
                         for point in csp:
-                            point[0] -= self.options.centerx
-                            point[1] -= self.options.centery
+                            point[0] -= self.view_center[0]
+                            point[1] -= self.view_center[1]
                             dist = math.sqrt((point[0] ** 2) + (point[1] ** 2))
                             if dist != 0:
                                 a = rotation * dist * whirl
                                 theta = math.atan2(point[1], point[0]) + a
                                 point[0] = (dist * math.cos(theta))
                                 point[1] = (dist * math.sin(theta))
-                            point[0] += self.options.centerx
-                            point[1] += self.options.centery
+                            point[0] += self.view_center[0]
+                            point[1] += self.view_center[1]
                 d.value = cubicsuperpath.formatPath(p)
 
 e = Whirl()
