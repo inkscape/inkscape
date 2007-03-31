@@ -762,6 +762,7 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
             Inkscape::XML::Node *pathRepr = SP_OBJECT_REPR(item);
             /* Set style */
             sp_desktop_apply_style_tool (desktop, pathRepr, "tools.paintbucket", false);
+            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET, _("Set style on object"));
             ret = TRUE;
         }
         break;
