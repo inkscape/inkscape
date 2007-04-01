@@ -1745,11 +1745,31 @@ GrDrag::deleteSelected (bool just_one)
         else
         { // delete the gradient from the object. set fill to unset  FIXME: set to fill of unselected node?
             SPCSSAttr *css = sp_repr_css_attr_new ();
-            if (stopinfo->draggable->fill_or_stroke) {
-                sp_repr_css_unset_property (css, "fill");
-            } else {
-                sp_repr_css_unset_property (css, "stroke");
+
+            // stopinfo->spstop is the selected stop
+            Inkscape::XML::Node *unselectedrepr = SP_OBJECT_REPR(stopinfo->vector)->firstChild();
+            if (unselectedrepr == SP_OBJECT_REPR(stopinfo->spstop) ) {
+                unselectedrepr = unselectedrepr->next();
             }
+
+            if (unselectedrepr == NULL) {
+                if (stopinfo->draggable->fill_or_stroke) {
+                    sp_repr_css_unset_property (css, "fill");
+                } else {
+                    sp_repr_css_unset_property (css, "stroke");
+                }
+            } else {
+                SPCSSAttr *stopcss = sp_repr_css_attr(unselectedrepr, "style");
+                if (stopinfo->draggable->fill_or_stroke) {
+                    sp_repr_css_set_property(css, "fill", sp_repr_css_property(stopcss, "stop-color", "inkscape:unset"));
+                    sp_repr_css_set_property(css, "fill-opacity", sp_repr_css_property(stopcss, "stop-opacity", "1"));
+                } else {
+                    sp_repr_css_set_property(css, "stroke", sp_repr_css_property(stopcss, "stop-color", "inkscape:unset"));
+                    sp_repr_css_set_property(css, "stroke-opacity", sp_repr_css_property(stopcss, "stop-opacity", "1"));
+                }
+                sp_repr_css_attr_unref (stopcss);
+            }
+            
             sp_repr_css_change (SP_OBJECT_REPR (stopinfo->draggable->item), css, "style");
             sp_repr_css_attr_unref (css);
         }
