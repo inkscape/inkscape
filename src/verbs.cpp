@@ -1552,6 +1552,7 @@ ZoomVerb::perform(SPAction *action, void *data, void *pdata)
             break;
         case SP_VERB_TOGGLE_GRID:
             sp_namedview_toggle_grid(doc, repr);
+            dt->toggleGrid();
             break;
 #ifdef HAVE_GTK_WINDOW_FULLSCREEN
         case SP_VERB_FULLSCREEN:

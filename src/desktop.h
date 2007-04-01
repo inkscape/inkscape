@@ -245,6 +245,8 @@ struct SPDesktop : public Inkscape::UI::View::View
     void setWaitingCursor();
     void clearWaitingCursor();
     
+    void toggleGrid();
+    
     void fullscreen();
 
     void registerEditWidget (Inkscape::UI::View::EditWidgetInterface *widget)

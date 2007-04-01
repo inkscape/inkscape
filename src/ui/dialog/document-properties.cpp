@@ -388,11 +388,7 @@ DocumentProperties::update_gridspage()
     }
     _grids_notebook.show_all();
 
-    const Gtk::Widget* widget_array[] =
-    {
-        (Gtk::Widget*) &_grids_notebook, 0
-    };
-    attach_all (_page_grids.table(), widget_array, sizeof(widget_array),3); // FIXME: a hack to let GTK show all tabs, otherwise XML manually added grids setting widgets do no show.
+    _page_grids.table().resize_children();
 }
 
 /**

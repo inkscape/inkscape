@@ -1094,6 +1094,14 @@ void SPDesktop::clearWaitingCursor()
       sp_event_context_update_cursor(sp_desktop_event_context(this));
 }
 
+void SPDesktop::toggleGrid()
+{
+    for ( GSList const *l = namedview->grids; l != NULL; l = l->next) {
+        Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
+        grid->toggle_visibility();
+    }
+}
+
 
 //----------------------------------------------------------------------
 // Callback implementations. The virtual ones are connected by the view.

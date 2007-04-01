@@ -527,8 +527,6 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
 
 static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
-g_message("named view:: child added");
-
     SPNamedView *nv = (SPNamedView *) object;
 
     if (((SPObjectClass *) (parent_class))->child_added) {
@@ -660,7 +658,7 @@ void SPNamedView::show(SPDesktop *desktop)
                 Inkscape::CanvasXYGrid* addedgrid = new Inkscape::CanvasXYGrid(desktop, child);
                 if (addedgrid) {
                     grids = g_slist_append(grids, addedgrid);
-                    addedgrid->enabled = true;
+                    addedgrid->enable_snapping();
                     addedgrid->show();
                 }
             }

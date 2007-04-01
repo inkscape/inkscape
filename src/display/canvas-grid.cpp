@@ -143,7 +143,7 @@ CanvasGrid::CanvasGrid(SPDesktop *desktop, Inkscape::XML::Node * in_repr)
     gtk_object_ref(GTK_OBJECT(canvasitem));    // since we're keeping a copy, we need to bump up the ref count
     canvasitem->grid = this;
 
-    enabled = false;
+    snapenabled = false;
     visible = false;
 
 //    sp_canvas_item_hide(canvasitem);
@@ -166,7 +166,6 @@ CanvasGrid::~CanvasGrid()
    // deref canvasitem
    gtk_object_unref(GTK_OBJECT(canvasitem));
    g_free(canvasitem);
-   g_message("~CanvasGrid");
 }
 
 /*
@@ -217,6 +216,7 @@ CanvasGrid::hide()
 {
     sp_canvas_item_hide(canvasitem);
     visible = false;
+    disable_snapping(); // temporary hack, because at the moment visibilty and snapping are linked
 }
 
 void
@@ -224,6 +224,25 @@ CanvasGrid::show()
 {
     sp_canvas_item_show(canvasitem);
     visible = true;
+    enable_snapping(); // temporary hack, because at the moment visibilty and snapping are linked
+}
+
+void 
+CanvasGrid::set_visibility(bool visible)
+{
+    this->visible = visible;
+    if(visible) {
+        show();
+    } else {
+        hide();
+    }
+}
+
+void
+CanvasGrid::toggle_visibility()
+{
+    visible = !visible;
+    set_visibility(visible);
 }
 
 void
