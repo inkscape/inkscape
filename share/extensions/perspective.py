@@ -20,8 +20,12 @@ Perspective approach & math by Dmitry Platonov, shadowjack@mail.ru, 2006
 """
 import sys, inkex, os, re, simplepath, cubicsuperpath 
 from ffgeom import *
-from numpy import *
-from numpy.linalg import *
+try:
+    from numpy import *
+    from numpy.linalg import *
+except:
+    inkex.debug("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.")
+    sys.exit()
 
 uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
 def unittouu(string):
@@ -43,11 +47,11 @@ def unittouu(string):
 
 class Project(inkex.Effect):
     def __init__(self):
-            inkex.Effect.__init__(self)
+        inkex.Effect.__init__(self)
     def effect(self):
         if len(self.options.ids) < 2:
             inkex.debug("Requires two selected paths. The second must be exactly four nodes long.")
-            exit()            
+            sys.exit()            
             
         #obj is selected second
         obj = self.selected[self.options.ids[0]]
@@ -55,9 +59,9 @@ class Project(inkex.Effect):
         if (obj.tagName == 'path' or obj.tagName == 'g') and envelope.tagName == 'path':
             path = cubicsuperpath.parsePath(envelope.attributes.getNamedItem('d').value)
             dp = zeros((4,2), dtype=float64)
-	    for i in range(4):
+            for i in range(4):
                 dp[i][0] = path[0][i][1][0]
-		dp[i][1] = path[0][i][1][1]
+                dp[i][1] = path[0][i][1][1]
 
             #query inkscape about the bounding box of obj
             q = {'x':0,'y':0,'width':0,'height':0}
@@ -69,28 +73,28 @@ class Project(inkex.Effect):
                 f.close()
             sp = array([[q['x'], q['y']+q['height']],[q['x'], q['y']],[q['x']+q['width'], q['y']],[q['x']+q['width'], q['y']+q['height']]], dtype=float64)
 
-	    solmatrix = zeros((8,8), dtype=float64)
-	    free_term = zeros((8), dtype=float64)
-	    for i in (0,1,2,3):
-	        solmatrix[i][0] = sp[i][0]
-		solmatrix[i][1] = sp[i][1]
-		solmatrix[i][2] = 1
-	        solmatrix[i][6] = -dp[i][0]*sp[i][0]
-	        solmatrix[i][7] = -dp[i][0]*sp[i][1]
-	        solmatrix[i+4][3] = sp[i][0]
-		solmatrix[i+4][4] = sp[i][1]
-		solmatrix[i+4][5] = 1
-	        solmatrix[i+4][6] = -dp[i][1]*sp[i][0]
-	        solmatrix[i+4][7] = -dp[i][1]*sp[i][1]
-		free_term[i] = dp[i][0]
-		free_term[i+4] = dp[i][1]
+        solmatrix = zeros((8,8), dtype=float64)
+        free_term = zeros((8), dtype=float64)
+        for i in (0,1,2,3):
+            solmatrix[i][0] = sp[i][0]
+            solmatrix[i][1] = sp[i][1]
+            solmatrix[i][2] = 1
+            solmatrix[i][6] = -dp[i][0]*sp[i][0]
+            solmatrix[i][7] = -dp[i][0]*sp[i][1]
+            solmatrix[i+4][3] = sp[i][0]
+            solmatrix[i+4][4] = sp[i][1]
+            solmatrix[i+4][5] = 1
+            solmatrix[i+4][6] = -dp[i][1]*sp[i][0]
+            solmatrix[i+4][7] = -dp[i][1]*sp[i][1]
+            free_term[i] = dp[i][0]
+            free_term[i+4] = dp[i][1]
 
-	    res = solve(solmatrix, free_term)
-	    projmatrix = array([[res[0],res[1],res[2]],[res[3],res[4],res[5]],[res[6],res[7],1.0]],dtype=float64)
-	    if obj.tagName == "path":
-	        self.process_path(obj,projmatrix)
-	    if obj.tagName == "g":
-	        self.process_group(obj,projmatrix)
+        res = solve(solmatrix, free_term)
+        projmatrix = array([[res[0],res[1],res[2]],[res[3],res[4],res[5]],[res[6],res[7],1.0]],dtype=float64)
+        if obj.tagName == "path":
+            self.process_path(obj,projmatrix)
+        if obj.tagName == "g":
+            self.process_group(obj,projmatrix)
 
 
     def process_group(self,group,m):
@@ -99,8 +103,8 @@ class Project(inkex.Effect):
                 if node.tagName == 'path':
                      self.process_path(node,m)
                 if node.tagName == 'g':
-                     self.process_group(node,m)	
-	
+                     self.process_group(node,m)    
+
 
     def process_path(self,path,m):
         d = path.attributes.getNamedItem('d')
@@ -115,9 +119,9 @@ class Project(inkex.Effect):
 
 
     def project_point(self,p,m):
-    	x = p[0]
-    	y = p[1]
-	return [(x*m[0][0] + y*m[0][1] + m[0][2])/(x*m[2][0]+y*m[2][1]+m[2][2]),(x*m[1][0] + y*m[1][1] + m[1][2])/(x*m[2][0]+y*m[2][1]+m[2][2])]
+        x = p[0]
+        y = p[1]
+        return [(x*m[0][0] + y*m[0][1] + m[0][2])/(x*m[2][0]+y*m[2][1]+m[2][2]),(x*m[1][0] + y*m[1][1] + m[1][2])/(x*m[2][0]+y*m[2][1]+m[2][2])]
 
 e = Project()
 e.affect()
