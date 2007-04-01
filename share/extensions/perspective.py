@@ -68,9 +68,10 @@ class Project(inkex.Effect):
             file = self.args[-1]
             id = self.options.ids[0]
             for query in q.keys():
-                f = os.popen("inkscape --query-%s --query-id=%s %s" % (query,id,file))
+                _,f,err = os.popen3("inkscape --query-%s --query-id=%s %s" % (query,id,file))
                 q[query] = float(f.read())
                 f.close()
+		err.close()
             sp = array([[q['x'], q['y']+q['height']],[q['x'], q['y']],[q['x']+q['width'], q['y']],[q['x']+q['width'], q['y']+q['height']]], dtype=float64)
 
         solmatrix = zeros((8,8), dtype=float64)
