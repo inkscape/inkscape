@@ -97,7 +97,7 @@ sp_object_attr_show_dialog ( SPObject *object,
         attrs[i] = desc[i].attribute;
     }
 
-    title = g_strdup_printf (_("%s attributes"), tag);
+    title = g_strdup_printf (_("%s Properties"), tag);
     w = sp_window_new (title, TRUE);
     g_free (title);
 

@@ -235,10 +235,6 @@ sp_anchor_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_anchor_link_properties), item);
     gtk_widget_show(w);
     gtk_menu_append(GTK_MENU(m), w);
-    /* Separator */
-    w = gtk_menu_item_new();
-    gtk_widget_show(w);
-    gtk_menu_append(GTK_MENU(m), w);
     /* Select item */
     w = gtk_menu_item_new_with_mnemonic(_("_Follow Link"));
     gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_anchor_link_follow), item);
