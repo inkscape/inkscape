@@ -16,7 +16,7 @@
 # include "config.h"
 #endif
 
-#ifdef linux
+#ifdef linux  // does the dollar sign need escaping when passed as string parameter?
 # define ESCAPE_DOLLAR_COMMANDLINE
 #endif
 
