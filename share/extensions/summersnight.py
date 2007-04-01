@@ -47,9 +47,10 @@ class Project(inkex.Effect):
             file = self.args[-1]
             id = self.options.ids[0]
             for query in self.q.keys():
-                f = os.popen("inkscape --query-%s --query-id=%s %s" % (query,id,file))
+                _,f,err = os.popen3("inkscape --query-%s --query-id=%s %s" % (query,id,file))
                 self.q[query] = float(f.read())
                 f.close()
+                err.close()
 
             #process path
             d = obj.attributes.getNamedItem('d')

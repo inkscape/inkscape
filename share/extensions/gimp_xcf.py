@@ -41,9 +41,10 @@ class MyEffect(inkex.Effect):
             name = "%s.png" % id
             filename = os.path.join(tmp_dir, name)
             command = "inkscape -i %s -j %s -e %s %s " % (id, area, filename, svg_file)
-            f = os.popen(command,'r')
+            _,f,err = os.popen3(command,'r')
             f.read()
             f.close()
+            err.close()
             pngs.append(filename)
             names.append(id)
 
