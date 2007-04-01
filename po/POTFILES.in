@@ -383,7 +383,6 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/straightseg.inx
 [type: gettext/xml] share/extensions/summersnight.inx
 [type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
-[type: gettext/xml] share/extensions/svg_dropshadow.inx
 [type: gettext/xml] share/extensions/svgz_input.inx
 [type: gettext/xml] share/extensions/svgz_output.inx
 [type: gettext/xml] share/extensions/txt2svg.inx
