@@ -129,12 +129,13 @@ static void show_panel( Inkscape::UI::Widget::Panel &panel, char const *prefs_pa
         Gtk::VBox *mainVBox = dia->get_vbox();
         mainVBox->pack_start(panel);
         dia->show_all_children();
-        dia->present();
         dia->read_geometry();
+        dia->present();
     } else {
-        Gtk::Dialog *dia = dynamic_cast<Gtk::Dialog*>(container);
+        PanelDialog *dia = dynamic_cast<PanelDialog*>(container);
         if ( dia ) {
             //g_message("Found an existing dialog");
+            dia->read_geometry();
             dia->present();
         } else {
             g_message("Failed to find an existing dialog");

@@ -66,6 +66,7 @@ sp_dialog_shutdown (GtkObject *object, gpointer dlgPtr)
 void 
 Dialog::present()
 {
+    _user_hidden = false;
     Gtk::Dialog::present();
 }
 
