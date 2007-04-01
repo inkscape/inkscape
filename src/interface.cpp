@@ -936,7 +936,8 @@ sp_ui_context_menu(Inkscape::UI::View::View *view, SPItem *item)
     }
 
     if (( group && group != dt->currentLayer() ) ||
-        ( dt->currentLayer() != dt->currentRoot() ) ) {
+        ( dt->currentLayer() != dt->currentRoot() && SP_OBJECT_PARENT(dt->currentLayer()) != dt->currentRoot() ) ) {
+        /* Separator */
         sp_ui_menu_append_item(GTK_MENU(m), NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
