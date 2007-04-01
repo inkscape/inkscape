@@ -621,6 +621,11 @@ sp_file_save_dialog(SPDocument *doc, bool is_copy)
     saveDialog->change_title(dialog_title);
     saveDialog->setSelectionType(extension);
 
+    // allow easy access to the user's own templates folder		 
+    gchar *templates = profile_path ("templates");
+    dynamic_cast<Gtk::FileChooser *>(saveDialog)->add_shortcut_folder(templates);
+    g_free (templates);
+
     bool success = saveDialog->show();
     if (!success) {
         delete saveDialog;
