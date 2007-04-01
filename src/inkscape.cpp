@@ -1238,6 +1238,29 @@ inkscape_init_config (Inkscape::XML::Document *doc, const gchar *config_name, co
                 return false;
             }
         }
+
+        // Also create (empty for now) subdirectories for the user's stuff
+        {
+            gchar *temp_dn = profile_path("templates");
+            Inkscape::IO::mkdir_utf8name(temp_dn);
+        }
+        {
+            gchar *temp_dn = profile_path("keys");
+            Inkscape::IO::mkdir_utf8name(temp_dn);
+        }
+        {
+            gchar *temp_dn = profile_path("icons");
+            Inkscape::IO::mkdir_utf8name(temp_dn);
+        }
+        {
+            gchar *temp_dn = profile_path("extensions");
+            Inkscape::IO::mkdir_utf8name(temp_dn);
+        }
+        {
+            gchar *temp_dn = profile_path("palettes");
+            Inkscape::IO::mkdir_utf8name(temp_dn);
+        }
+
     } else if (!Inkscape::IO::file_test(dn, G_FILE_TEST_IS_DIR)) {
         if (use_gui) {
             // Not a directory
