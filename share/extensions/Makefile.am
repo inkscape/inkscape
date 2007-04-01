@@ -77,7 +77,6 @@ extensions = \
 	straightseg.py \
 	summersnight.py \
 	svg_and_media_zip_output.py \
-	svg_dropshadow \
 	txt2svg.pl \
 	webbrowser_commandline.py \
 	webbrowser_faq.py\
@@ -155,7 +154,6 @@ modules = \
 	straightseg.inx \
 	summersnight.inx \
 	svg_and_media_zip_output.inx \
-	svg_dropshadow.inx \
 	svgz_input.inx \
 	svgz_output.inx \
 	txt2svg.inx \
