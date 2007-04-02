@@ -99,6 +99,8 @@ static void sp_nodepath_node_select(Inkscape::NodePath::Node *node, gboolean inc
 
 static void sp_node_set_selected(Inkscape::NodePath::Node *node, gboolean selected);
 
+static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeType type);
+
 /* Adjust handle placement, if the node or the other handle is moved */
 static void sp_node_adjust_handle(Inkscape::NodePath::Node *node, gint which_adjust);
 static void sp_node_adjust_handles(Inkscape::NodePath::Node *node);
@@ -840,12 +842,14 @@ static void sp_nodepath_set_line_type(Inkscape::NodePath::Node *end, NRPathcode 
     end->code = code;
 
     if (code == NR_LINETO) {
-        if (start->code == NR_LINETO) start->type =Inkscape::NodePath::NODE_CUSP;
-        if (end->n.other) {
-            if (end->n.other->code == NR_LINETO) end->type =Inkscape::NodePath::NODE_CUSP;
+        if (start->code == NR_LINETO) {
+            sp_nodepath_set_node_type (start, Inkscape::NodePath::NODE_CUSP);
         }
-        sp_node_adjust_handle(start, -1);
-        sp_node_adjust_handle(end, 1);
+        if (end->n.other) {
+            if (end->n.other->code == NR_LINETO) {
+                sp_nodepath_set_node_type (end, Inkscape::NodePath::NODE_CUSP);
+            }
+        }
     } else {
         NR::Point delta = end->pos - start->pos;
         start->n.pos = start->pos + delta / 3;
