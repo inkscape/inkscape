@@ -745,8 +745,10 @@ static Inkscape::NodePath::Node *sp_nodepath_line_add_node(Inkscape::NodePath::N
                                                &start->pos, &start->pos, &start->n.pos);
     sp_nodepath_line_midpoint(newnode, end, t);
 
+    sp_node_adjust_handles(start);
     sp_node_update_handles(start);
     sp_node_update_handles(newnode);
+    sp_node_adjust_handles(end);
     sp_node_update_handles(end);
 
     return newnode;
@@ -3450,12 +3452,14 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
     }
 
     if (( n->type !=Inkscape::NodePath::NODE_CUSP || (state & GDK_SHIFT_MASK))
-        && rme.a != HUGE_VAL && rnew.a != HUGE_VAL && fabs(rme.a - rnew.a) > 0.001) {
+        && rme.a != HUGE_VAL && rnew.a != HUGE_VAL && (fabs(rme.a - rnew.a) > 0.001 || n->type ==Inkscape::NodePath::NODE_SYMM)) {
         // rotate the other handle correspondingly, if both old and new angles exist and are not the same
         rother.a += rnew.a - rme.a;
         other->pos = NR::Point(rother) + n->pos;
-        sp_ctrlline_set_coords(SP_CTRLLINE(other->line), n->pos, other->pos);
-        sp_knot_set_position(other->knot, &other->pos, 0);
+        if (other->knot) {
+            sp_ctrlline_set_coords(SP_CTRLLINE(other->line), n->pos, other->pos);
+            sp_knot_moveto(other->knot, &other->pos);
+        }
     }
 
     me->pos = NR::Point(rnew) + n->pos;
