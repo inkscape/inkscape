@@ -22,16 +22,16 @@ LangString lng_Caption   ${LANG_SLOVENIAN} "${PRODUCT_NAME} -- Odprtokodni ureje
 LangString lng_LICENSE_BUTTON   ${LANG_SLOVENIAN} "Naprej >"
 
 ; Bottom text for the license page
-LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_SLOVENIAN} "$(^Name) je izdan pod licenco GNU General Public License (GPL). Licenca tukaj je namenjena le za informativne namene. $_CLICK"
+LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_SLOVENIAN} "$(^Name) je izdan pod licenco GNU General Public License (GPL). Priložena licenca služi le v informativne namene. $_CLICK"
 
 ;has been installed by different user
-LangString lng_DIFFERENT_USER ${LANG_SLOVENIAN} "Inkscape je že namestil uporabnik $0.$\r$\nÈe nadaljujete, namestitev morda ne bo uspešno dokonèana!$\r$\nPonovno se prijavite kot $0 in poskusite znova."
+LangString lng_DIFFERENT_USER ${LANG_SLOVENIAN} "Uporabnik $0 je že namestil Inkscape.$\r$\nÈe nadaljujete, namestitev morda ne bo uspešno dokonèana!$\r$\nPonovno se prijavite kot $0 in poskusite znova."
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_SLOVENIAN} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_SLOVENIAN} "$R1 je že namešèen. $\nŽelite odstraniti predhodno razlièico, preden namestite $(^Name) ?"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_SLOVENIAN} "$\n$\nPress OK to continue or press CANCEL to abort."
+LangString lng_OK_CANCEL_DESC ${LANG_SLOVENIAN} "$\n$\nPritisnite V redu za nadaljevanje ali Preklièi za preklic."
 
 ;you have no admin rigths
 LangString lng_NO_ADMIN ${LANG_SLOVENIAN} "Nimate skrbniških pravic.$\r$\nNamešèanje aplikacije Inkscape za vse uporabnike se morda ne bo konèala uspešno.$\r$\nIzklopite možnost 'za vse uporabnike'."
@@ -67,7 +67,7 @@ LangString lng_Shortcuts $(LANG_SLOVENIAN) "Bližnjice"
 LangString lng_ShortcutsDesc $(LANG_SLOVENIAN) "Bližnjice za zagon ${PRODUCT_NAME}"
 
 ; All user install section
-LangString lng_Alluser $(LANG_SLOVENIAN) "za vse uporabnike"
+LangString lng_Alluser $(LANG_SLOVENIAN) "Za vse uporabnike"
 
 ; All user install section description
 LangString lng_AlluserDesc $(LANG_SLOVENIAN) "Namesti aplikacijo za vse, ki uporabljajo ta raèunalnik (vsi uporabniki)"
@@ -103,10 +103,10 @@ LangString lng_ContextMenu ${LANG_SLOVENIAN} "Pojavni meni"
 LangString lng_ContextMenuDesc ${LANG_SLOVENIAN} "Doda ${PRODUCT_NAME} v pojavni meni za datoteke SVG"
 
 ; remove personal preferences
-LangString lng_DeletePrefs ${LANG_SLOVENIAN} "Delete personal preferences"
+LangString lng_DeletePrefs ${LANG_SLOVENIAN} "Izbriši osebne nastavitve"
 
 ; remove personal preferences description
-LangString lng_DeletePrefsDesc ${LANG_SLOVENIAN} "Delete personal preferences leftover from previous installations"
+LangString lng_DeletePrefsDesc ${LANG_SLOVENIAN} "Izbriši osebne nastavitve, ki so ostale od predhodno namešèene razlièice"
 
 
 ; Additional files section
@@ -138,7 +138,7 @@ LangString lng_am $(LANG_SLOVENIAN) "amharski (am)"
 LangString lng_az $(LANG_SLOVENIAN) "azerbajdžanski (az)"
 LangString lng_be $(LANG_SLOVENIAN) "beloruski (be)"
 LangString lng_bg $(LANG_SLOVENIAN) "bolgarski (bg)"
-LangString lng_bn $(LANG_SLOVENIAN) "bn  Bengali"
+LangString lng_bn $(LANG_SLOVENIAN) "bengalski (bn)"
 LangString lng_ca $(LANG_SLOVENIAN) "katalonski (ca)"
 LangString lng_cs $(LANG_SLOVENIAN) "èeški (cs)"
 LangString lng_da $(LANG_SLOVENIAN) "danski (da)"
@@ -146,25 +146,25 @@ LangString lng_de $(LANG_SLOVENIAN) "nemški (de)"
 LangString lng_dz $(LANG_SLOVENIAN) "džongški (dz)"
 LangString lng_el $(LANG_SLOVENIAN) "grški (el)"
 LangString lng_en $(LANG_SLOVENIAN) "angleški (en)"
-LangString lng_en_AU $(LANG_SLOVENIAN) "en_AU Australian English"
+LangString lng_en_AU $(LANG_SLOVENIAN) "avstralsko angleški (en_AU)"
 LangString lng_en_CA $(LANG_SLOVENIAN) "kanadsko angleški (en_CA)"
 LangString lng_en_GB $(LANG_SLOVENIAN) "britansko angleški (en_GB)"
-LangString lng_en_US@piglatin $(LANG_SLOVENIAN) "Pig Latin (en_US@piglatin)"
-LangString lng_eo $(LANG_SLOVENIAN) "eo  Esperanto"
+LangString lng_en_US@piglatin $(LANG_SLOVENIAN) "obrnjeni angleški zlogi (en_US@piglatin)"
+LangString lng_eo $(LANG_SLOVENIAN) "esperanto (eo)"
 LangString lng_es $(LANG_SLOVENIAN) "španski (es)"
 LangString lng_es_MX $(LANG_SLOVENIAN) "mehiško španski (es_MX)"
 LangString lng_et $(LANG_SLOVENIAN) "estonski (et)"
-LangString lng_eu $(LANG_SLOVENIAN) "eu  Basque"
+LangString lng_eu $(LANG_SLOVENIAN) "baskovski (eu)"
 LangString lng_fi $(LANG_SLOVENIAN) "finski (fi)"
 LangString lng_fr $(LANG_SLOVENIAN) "francoski (fr)"
 LangString lng_ga $(LANG_SLOVENIAN) "irski (ga)"
 LangString lng_gl $(LANG_SLOVENIAN) "galegaški (gl)"
 LangString lng_hr $(LANG_SLOVENIAN) "hrvaški (hr)"
 LangString lng_hu $(LANG_SLOVENIAN) "madžarski (hu)"
-LangString lng_id $(LANG_SLOVENIAN) "id  Indonesian"
+LangString lng_id $(LANG_SLOVENIAN) "indonezijski (id)"
 LangString lng_it $(LANG_SLOVENIAN) "italijanski (it)"
 LangString lng_ja $(LANG_SLOVENIAN) "japonski (ja)"
-LangString lng_km $(LANG_SLOVENIAN) "km  Khmer"
+LangString lng_km $(LANG_SLOVENIAN) "kmerski (km)"
 LangString lng_ko $(LANG_SLOVENIAN) "korejski (ko)"
 LangString lng_lt $(LANG_SLOVENIAN) "litovski (lt)"
 LangString lng_mk $(LANG_SLOVENIAN) "makedonski (mk)"
@@ -177,16 +177,16 @@ LangString lng_pa $(LANG_SLOVENIAN) "pundžabski (pa)"
 LangString lng_pl $(LANG_SLOVENIAN) "poljski (po)"
 LangString lng_pt $(LANG_SLOVENIAN) "portugalski (pt)"
 LangString lng_pt_BR $(LANG_SLOVENIAN) "brazilski portugalski (pt_BR)"
-LangString lng_ro $(LANG_SLOVENIAN) "ro  Romanian"
+LangString lng_ro $(LANG_SLOVENIAN) "romunski (ro)"
 LangString lng_ru $(LANG_SLOVENIAN) "ruski (ru)"
 LangString lng_rw $(LANG_SLOVENIAN) "kinjarvandski (rw)"
 LangString lng_sk $(LANG_SLOVENIAN) "slovaški (sk)"
 LangString lng_sl $(LANG_SLOVENIAN) "slovenski (sl)"
 LangString lng_sq $(LANG_SLOVENIAN) "albanski (sq)"
 LangString lng_sr $(LANG_SLOVENIAN) "srbski (sr)"
-LangString lng_sr@Latn $(LANG_SLOVENIAN) "sr@Latn  srbski v latinici (sr@Latn)"
+LangString lng_sr@Latn $(LANG_SLOVENIAN) "srbski - latinica (sr@Latn)"
 LangString lng_sv $(LANG_SLOVENIAN) "švedski (sv)"
-LangString lng_th $(LANG_SLOVENIAN) "Thai (th)"
+LangString lng_th $(LANG_SLOVENIAN) "tajski (th)"
 LangString lng_tr $(LANG_SLOVENIAN) "turški (tr)"
 LangString lng_uk $(LANG_SLOVENIAN) "ukrajinski (uk)"
 LangString lng_vi $(LANG_SLOVENIAN) "vietnamski (vi)"
