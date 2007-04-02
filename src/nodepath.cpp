@@ -908,9 +908,16 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
 */
 void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeType type)
 {
+    bool p_line = (node->p.other != NULL) && (node->code == NR_LINETO || node->pos == node->p.pos);
+    bool n_line = (node->n.other != NULL) && (node->n.other->code == NR_LINETO || node->pos == node->n.pos);
+
     if (type == Inkscape::NodePath::NODE_SYMM || type == Inkscape::NodePath::NODE_SMOOTH) {
-        if ((node->p.other != NULL) && (node->code == NR_LINETO || node->pos == node->p.pos)) {
-            // convert adjacent segment BEFORE to curve
+        if (p_line && n_line) {
+            // only if both adjacent segments are lines, 
+            // convert both to curves:
+
+            // BEFORE:
+            {
             node->code = NR_CURVETO;
             NR::Point delta;
             if (node->n.other != NULL)
@@ -919,10 +926,10 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
                 delta = node->pos - node->p.other->pos;
             node->p.pos = node->pos - delta / 4;
             sp_node_update_handles(node);
-        }
+            }
 
-        if ((node->n.other != NULL) && (node->n.other->code == NR_LINETO || node->pos == node->n.pos)) {
-            // convert adjacent segment AFTER to curve
+            // AFTER:
+            {
             node->n.other->code = NR_CURVETO;
             NR::Point delta;
             if (node->p.other != NULL)
@@ -931,6 +938,7 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
                 delta = node->pos - node->n.other->pos;
             node->n.pos = node->pos - delta / 4;
             sp_node_update_handles(node);
+            }
         }
     }
 
@@ -948,22 +956,33 @@ void sp_node_moveto(Inkscape::NodePath::Node *node, NR::Point p)
     node->p.pos += delta;
     node->n.pos += delta;
 
+    Inkscape::NodePath::Node *node_p = NULL;
+    Inkscape::NodePath::Node *node_n = NULL;
+
     if (node->p.other) {
         if (node->code == NR_LINETO) {
             sp_node_adjust_handle(node, 1);
             sp_node_adjust_handle(node->p.other, -1);
+            node_p = node->p.other;
         }
     }
     if (node->n.other) {
         if (node->n.other->code == NR_LINETO) {
             sp_node_adjust_handle(node, -1);
             sp_node_adjust_handle(node->n.other, 1);
+            node_n = node->n.other;
         }
     }
 
     // this function is only called from batch movers that will update display at the end
     // themselves, so here we just move all the knots without emitting move signals, for speed
     sp_node_update_handles(node, false);
+    if (node_n) {
+        sp_node_update_handles(node_n, false);
+    }
+    if (node_p) {
+        sp_node_update_handles(node_p, false);
+    }
 }
 
 /**
