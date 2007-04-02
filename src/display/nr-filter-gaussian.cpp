@@ -19,7 +19,7 @@
 #include <glib.h>
 #include <limits>
 
-#include "isnormal.h"
+#include "isnan.h"
 
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-gaussian.h"
@@ -752,14 +752,14 @@ int FilterGaussian::get_enlarge(Matrix const &trans)
 
 void FilterGaussian::set_deviation(double deviation)
 {
-    if(isnormal(deviation) && deviation >= 0) {
+    if(isFinite(deviation) && deviation >= 0) {
         _deviation_x = _deviation_y = deviation;
     }
 }
 
 void FilterGaussian::set_deviation(double x, double y)
 {
-    if(isnormal(x) && x >= 0 && isnormal(y) && y >= 0) {
+    if(isFinite(x) && x >= 0 && isFinite(y) && y >= 0) {
         _deviation_x = x;
         _deviation_y = y;
     }
