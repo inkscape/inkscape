@@ -11,7 +11,6 @@
 ; 24 october 2006 new languages en_US@piglatin, th
 ; 3rd December 2006 new languages eu km
 ; 14th December 2006 new lng_DeletePrefs, lng_DeletePrefsDesc, lng_WANT_UNINSTALL_BEFORE and lng_OK_CANCEL_DESC
-; february 15 2007 new language bn, en_AU, eo, id, ro
 
 !insertmacro MUI_LANGUAGE "Catalan"
 
@@ -26,15 +25,18 @@ LangString lng_LICENSE_BUTTON   ${LANG_CATALAN} "Següent >"
 ; Bottom text for the license page
 ; LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_CATALAN} "$(^Name) is released under the GNU General Public License (GPL). The license is provided here for information purposes only. $_CLICK"
 LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_CATALAN} "L'$(^Name) s'ha alliberat sota la Llicència Pública General de GNU (GPL). La llicència es proporciona aquí només per raons informatives. $_CLICK"
+
 ;has been installed by different user
 ;LangString lng_DIFFERENT_USER ${LANG_CATALAN} "Inkscape has been installed by user $0.$\r$\nIf you continue you might not complete successfully!$\r$\nPlease log in as $0 and try again."
 LangString lng_DIFFERENT_USER ${LANG_CATALAN} "L'usuari $0.$\r ha instal·lat l'Inkscape.$\nSi continueu, és possible que no acabeu correctament.$\r$\nEntreu com a $0 i proveu de nou."
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_CATALAN} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+;LangString lng_WANT_UNINSTALL_BEFORE ${LANG_ENGLISH} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_CATALAN} "Ja s'ha instal·lat $R1. $\nVoleu suprimir la versió anterior abans d'instal·lar $(^Name)?"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_CATALAN} "$\n$\nPress OK to continue or press CANCEL to abort."
+;LangString lng_OK_CANCEL_DESC ${LANG_ENGLISH} "$\n$\nPress OK to continue or press CANCEL to abort."
+LangString lng_OK_CANCEL_DESC ${LANG_CATALAN} "$\n$\nPremeu D'acord per continuar, o Cancel·la per interrompre."
 
 ;you have no admin rigths
 ;LangString lng_NO_ADMIN ${LANG_CATALAN} "You do not have administrator privileges.$\r$\nInstalling Inkscape for all users might not complete successfully.$\r$\nUncheck the 'for all users' option."
@@ -94,7 +96,7 @@ LangString lng_Desktop $(LANG_CATALAN) "Escriptori"
 
 ; Desktop section description
 ; LangString lng_DesktopDesc $(LANG_CATALAN) "Create a shortcut to ${PRODUCT_NAME} on the Desktop"
-LangString lng_DesktopDesc $(LANG_CATALAN) "Crea una drecera cap a l'${PRODUCT_NAME} a l'Escriptori"
+LangString lng_DesktopDesc $(LANG_CATALAN) "Crea una drecera cap a l'${PRODUCT_NAME} a l'escriptori"
 
 ; Start Menu  section
 ; LangString lng_Startmenu $(LANG_CATALAN) "Start Menu"
@@ -129,10 +131,12 @@ LangString lng_ContextMenu ${LANG_CATALAN} "Menú contextual"
 LangString lng_ContextMenuDesc ${LANG_CATALAN} "Afegeix l'${PRODUCT_NAME} al menú contextual per als fitxers SVG"
 
 ; remove personal preferences
-LangString lng_DeletePrefs ${LANG_CATALAN} "Delete personal preferences"
+;LangString lng_DeletePrefs ${LANG_CATALAN} "Delete personal preferences"
+LangString lng_DeletePrefs ${LANG_CATALAN} "Suprimeix les preferències personals"
 
 ; remove personal preferences description
-LangString lng_DeletePrefsDesc ${LANG_CATALAN} "Delete personal preferences leftover from previous installations"
+;LangString lng_DeletePrefsDesc ${LANG_CATALAN} "Delete personal preferences leftover from previous installations"
+LangString lng_DeletePrefsDesc ${LANG_CATALAN} "Suprimeix les preferències personals d'anteriors instal·lacions"
 
 
 ; Additional files section
@@ -170,11 +174,11 @@ LangString lng_LanguagesDesc $(LANG_CATALAN) "Instal·la més traduccions per a l'
 LangString lng_am $(LANG_CATALAN) "am  Amharic"
 LangString lng_az $(LANG_CATALAN) "az  Azerbaijani"
 ; LangString lng_be $(LANG_CATALAN) "be  Byelorussian"
-LangString lng_be $(LANG_CATALAN) "be  Biel·lorús"
-LangString lng_bg $(LANG_CATALAN) "bg  Bulgarian"
-LangString lng_bn $(LANG_CATALAN) "bn  Bengali"
+  LangString lng_be $(LANG_CATALAN) "be  Biel·lorús"
+; LangString lng_bg $(LANG_CATALAN) "bg  Bulgarian"
+  LangString lng_bg $(LANG_CATALAN) "bg  Búlgar"
 ; LangString lng_ca $(LANG_CATALAN) "ca  Catalan"
-LangString lng_ca $(LANG_CATALAN) "ca  Català"
+  LangString lng_ca $(LANG_CATALAN) "ca  Català"
 ; LangString lng_cs $(LANG_CATALAN) "cs  Czech"
   LangString lng_cs $(LANG_CATALAN) "cs  Txec"
 ; LangString lng_da $(LANG_CATALAN) "da  Danish"
@@ -186,29 +190,31 @@ LangString lng_dz $(LANG_CATALAN) "dz  Dzongkha"
   LangString lng_el $(LANG_CATALAN) "el  Grec"
 ; LangString lng_en $(LANG_CATALAN) "en  English"
   LangString lng_en $(LANG_CATALAN) "en  Anglès"
-LangString lng_en_AU $(LANG_CATALAN) "en_AU Australian English"
-LangString lng_en_CA $(LANG_CATALAN) "en_CA Canadian English"
-LangString lng_en_GB $(LANG_CATALAN) "en_GB British English"
+; LangString lng_en_CA $(LANG_CATALAN) "en_CA Canadian English"
+  LangString lng_en_CA $(LANG_CATALAN) "en_CA Anglès del Canadà"
+; LangString lng_en_GB $(LANG_CATALAN) "en_GB British English"
+  LangString lng_en_GB $(LANG_CATALAN) "en_GB Anglès britànic"
 LangString lng_en_US@piglatin $(LANG_CATALAN) "en_US@piglatin Pig Latin"
-LangString lng_eo $(LANG_CATALAN) "eo  Esperanto"
 ; LangString lng_es $(LANG_CATALAN) "es  Spanish"
   LangString lng_es $(LANG_CATALAN) "es  Espanyol"
 ; LangString lng_es_MX $(LANG_CATALAN) "es_MX  Mexican Spanish"
   LangString lng_es_MX $(LANG_CATALAN) "es_MX  Espanyol mexicà"
 ; LangString lng_et $(LANG_CATALAN) "es  Estonian"
   LangString lng_et $(LANG_CATALAN) "et  Estonià"
-  LangString lng_eu $(LANG_CATALAN) "eu  Basque"
-  LangString lng_fi $(LANG_CATALAN) "fi  Finish"
+; LangString lng_eu $(LANG_CATALAN) "eu  Basque"
+  LangString lng_eu $(LANG_CATALAN) "eu  Basc"
+; LangString lng_fi $(LANG_CATALAN) "fi  Finish"
+  LangString lng_fi $(LANG_CATALAN) "fi  Finès"
 ; LangString lng_fr $(LANG_CATALAN) "fr  French"
   LangString lng_fr $(LANG_CATALAN) "fr  Francès"
 ; LangString lng_ga $(LANG_CATALAN) "ga  Irish"
   LangString lng_ga $(LANG_CATALAN) "ga  Irlandès"
 ; LangString lng_gl $(LANG_CATALAN) "gl  Gallegan"
   LangString lng_gl $(LANG_CATALAN) "gl  Gallec"
-  LangString lng_hr $(LANG_CATALAN) "hr  Croatian"
+; LangString lng_hr $(LANG_CATALAN) "hr  Croatian"
+  LangString lng_hr $(LANG_CATALAN) "hr  Croat"
 ; LangString lng_hu $(LANG_CATALAN) "hu  Hungarian"
   LangString lng_hu $(LANG_CATALAN) "hu  Hongarès"
-LangString lng_id $(LANG_CATALAN) "id  Indonesian"
 ; LangString lng_it $(LANG_CATALAN) "it  Italian"
   LangString lng_it $(LANG_CATALAN) "it  Italià"
 ; LangString lng_ja $(LANG_CATALAN) "ja  Japanese"
@@ -235,32 +241,32 @@ LangString lng_ne $(LANG_CATALAN) "ne  Nepali"
   LangString lng_pt $(LANG_CATALAN) "pt  Portuguès"
 ; LangString lng_pt_BR $(LANG_CATALAN) "pt_BR Brazilian Portuguese"
   LangString lng_pt_BR $(LANG_CATALAN) "pt_BR Portuguès brasiler"
-LangString lng_ro $(LANG_CATALAN) "ro  Romanian"
 ; LangString lng_ru $(LANG_CATALAN) "ru  Russian"
-LangString lng_ru $(LANG_CATALAN) "ru  Rus"
+  LangString lng_ru $(LANG_CATALAN) "ru  Rus"
 LangString lng_rw $(LANG_CATALAN) "rw  Kinyarwanda"
 ; LangString lng_sk $(LANG_CATALAN) "sk  Slovak"
-LangString lng_sk $(LANG_CATALAN) "sk  Eslovac"
+  LangString lng_sk $(LANG_CATALAN) "sk  Eslovac"
 ; LangString lng_sl $(LANG_CATALAN) "sl  Slovenian"
-LangString lng_sl $(LANG_CATALAN) "sl  Esloveni"
-LangString lng_sq $(LANG_CATALAN) "sq  Albanian"
+  LangString lng_sl $(LANG_CATALAN) "sl  Esloveni"
+; LangString lng_sq $(LANG_CATALAN) "sq  Albanian"
+  LangString lng_sq $(LANG_CATALAN) "sq  Albanès"
 ; LangString lng_sr $(LANG_CATALAN) "sr  Serbian"
-LangString lng_sr $(LANG_CATALAN) "sr  Serbi"
+  LangString lng_sr $(LANG_CATALAN) "sr  Serbi"
 ; LangString lng_sr@Latn $(LANG_CATALAN) "sr@Latn  Serbian in Latin script"
-LangString lng_sr@Latn $(LANG_CATALAN) "sr@Latn  Serbi en alfabet llatí"
+  LangString lng_sr@Latn $(LANG_CATALAN) "sr@Latn  Serbi en alfabet llatí"
 ; LangString lng_sv $(LANG_CATALAN) "sv  Swedish"
-LangString lng_sv $(LANG_CATALAN) "sv  Suec"
+  LangString lng_sv $(LANG_CATALAN) "sv  Suec"
 LangString lng_th $(LANG_CATALAN) "th  Thai"
 ; LangString lng_tr $(LANG_CATALAN) "tr  Turkish"
-LangString lng_tr $(LANG_CATALAN) "tr  Turc"
+  LangString lng_tr $(LANG_CATALAN) "tr  Turc"
 ; LangString lng_uk $(LANG_CATALAN) "uk  Ukrainian"
-LangString lng_uk $(LANG_CATALAN) "uk  Ucraïnès"
-;LangString lng_vi $(LANG_ENGLISH) "vi  Vietnamese"
-LangString lng_vi $(LANG_CATALAN) "vi  Vietnamese"
+  LangString lng_uk $(LANG_CATALAN) "uk  Ucraïnès"
+; LangString lng_vi $(LANG_ENGLISH) "vi  Vietnamese"
+  LangString lng_vi $(LANG_CATALAN) "vi  Vietnamese"
 ; LangString lng_zh_CN $(LANG_CATALAN) "zh_CH  Simplifed Chinese"
-LangString lng_zh_CN $(LANG_CATALAN) "zh_CH  Xinès simplificat"
-;LangString lng_zh_TW $(LANG_CATALAN) "zh_TW  Traditional Chinese"
-LangString lng_zh_TW $(LANG_CATALAN) "zh_TW  Xinès tradicional"
+  LangString lng_zh_CN $(LANG_CATALAN) "zh_CH  Xinès simplificat"
+; LangString lng_zh_TW $(LANG_CATALAN) "zh_TW  Traditional Chinese"
+  LangString lng_zh_TW $(LANG_CATALAN) "zh_TW  Xinès tradicional"
 
 
 
@@ -276,3 +282,5 @@ LangString lng_UInstOpt1  ${LANG_CATALAN} "Seleccioneu les vostres opcions addic
 ; Ask to purge the personal preferences
 ; LangString lng_PurgePrefs ${LANG_CATALAN} "Keep personal Preferences"
 LangString lng_PurgePrefs ${LANG_CATALAN} "Conserva les preferències personals"
+
+ 	  	 
