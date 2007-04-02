@@ -698,7 +698,7 @@ static void sp_nodepath_line_midpoint(Inkscape::NodePath::Node *new_path,Inkscap
     if (end->code == NR_LINETO) {
         new_path->type =Inkscape::NodePath::NODE_CUSP;
         new_path->code = NR_LINETO;
-        new_path->pos  = (t * start->pos + (1 - t) * end->pos);
+        new_path->pos = new_path->n.pos = new_path->p.pos = (t * start->pos + (1 - t) * end->pos);
     } else {
         new_path->type =Inkscape::NodePath::NODE_SMOOTH;
         new_path->code = NR_CURVETO;
@@ -737,7 +737,8 @@ static Inkscape::NodePath::Node *sp_nodepath_line_add_node(Inkscape::NodePath::N
     g_assert( start->n.other == end );
    Inkscape::NodePath::Node *newnode = sp_nodepath_node_new(end->subpath,
                                                end,
-                                              Inkscape::NodePath::NODE_SMOOTH,
+                                               (NRPathcode)end->code == NR_LINETO? 
+                                                  Inkscape::NodePath::NODE_CUSP : Inkscape::NodePath::NODE_SMOOTH,
                                                (NRPathcode)end->code,
                                                &start->pos, &start->pos, &start->n.pos);
     sp_nodepath_line_midpoint(newnode, end, t);
@@ -919,26 +920,18 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
             // BEFORE:
             {
             node->code = NR_CURVETO;
-            NR::Point delta;
-            if (node->n.other != NULL)
-                delta = node->n.other->pos - node->p.other->pos;
-            else
-                delta = node->pos - node->p.other->pos;
+            NR::Point delta = node->n.other->pos - node->p.other->pos;
             node->p.pos = node->pos - delta / 4;
-            sp_node_update_handles(node);
             }
 
             // AFTER:
             {
             node->n.other->code = NR_CURVETO;
-            NR::Point delta;
-            if (node->p.other != NULL)
-                delta = node->p.other->pos - node->n.other->pos;
-            else
-                delta = node->pos - node->n.other->pos;
+            NR::Point delta = node->p.other->pos - node->n.other->pos;
             node->n.pos = node->pos - delta / 4;
-            sp_node_update_handles(node);
             }
+
+            sp_node_update_handles(node);
         }
     }
 
@@ -4168,7 +4161,7 @@ static NRPathcode sp_node_path_code_from_side(Inkscape::NodePath::Node *node,Ink
 }
 
 /**
- * Call sp_nodepath_line_add_node() at t on the segment denoted by piece
+ * Return node with the given index
  */
 Inkscape::NodePath::Node *
 sp_nodepath_get_node_by_index(int index)
