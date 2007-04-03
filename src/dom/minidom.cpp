@@ -548,7 +548,7 @@ int Parser::parseElement(int p0, Element *par,int lineNr)
     p = getWord(p, closeTagName);
     if (openTagName != closeTagName)
         {
-        error("Mismatched closing tag.  Expected </%S>. Got '%S'.",
+        error("Mismatched closing tag.  Expected </%s>. Got '%s'.",
                 openTagName.c_str(), closeTagName.c_str());
         return p0;
         }
