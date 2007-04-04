@@ -147,16 +147,6 @@ struct rdf_double_t rdf_license_cc_a_nc_nd [] = {
     { NULL, NULL }
 };
 
-struct rdf_double_t rdf_license_gpl [] = {
-    { "cc:permits", "http://web.resource.org/cc/Reproduction", },
-    { "cc:permits", "http://web.resource.org/cc/Distribution", },
-    { "cc:requires", "http://web.resource.org/cc/Notice", },
-    { "cc:permits", "http://web.resource.org/cc/DerivativeWorks", },
-    { "cc:requires", "http://web.resource.org/cc/ShareAlike", },
-    { "cc:requires", "http://web.resource.org/cc/SourceCode", },
-    { NULL, NULL }
-};
-
 struct rdf_double_t rdf_license_pd [] = {
     { "cc:permits", "http://web.resource.org/cc/Reproduction", },
     { "cc:permits", "http://web.resource.org/cc/Distribution", },
@@ -203,16 +193,6 @@ struct rdf_license_t rdf_licenses [] = {
     { N_("CC Attribution-NonCommercial-NoDerivs"), 
       "http://creativecommons.org/licenses/by-nc-nd/3.0/",
       rdf_license_cc_a_nc_nd,
-    },
-
-    { N_("GNU General Public License"), 
-      "http://creativecommons.org/licenses/GPL/2.0/",
-      rdf_license_gpl,
-    },
-
-    { N_("GNU Lesser General Public License"), 
-      "http://creativecommons.org/licenses/LGPL/2.1/",
-      rdf_license_gpl,
     },
 
     { N_("Public Domain"),
