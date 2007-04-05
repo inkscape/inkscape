@@ -690,7 +690,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     }
     SPS_READ_PENUM_IF_UNSET(&style->enable_background, repr,
                             "enable-background", enum_enable_background, true);
-            
+
     /* 3. Merge from parent */
     if (object) {
         if (object->parent) {
@@ -1937,7 +1937,7 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
 
         if (!style->filter.set || style->filter.inherit)
         {
-            // FIXME: 
+            // FIXME:
             // instead of just copying over, we need to _really merge_ the two filters by combining their
             // filter primitives
             sp_style_merge_ifilter(style, &parent->filter);
@@ -2089,7 +2089,7 @@ sp_style_filter_modified(SPObject *obj, guint flags, SPStyle *style)
         if (style->object) {
             style->object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
         }
-    } 
+    }
 }
 
 
@@ -3077,7 +3077,7 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
                     delete tmp;
                     tmp = 0;
                 }
-                paint->iccColor = tmp;
+                paint->value.iccColor = tmp;
             }
         }
     }
@@ -3558,10 +3558,10 @@ sp_paint_differ(SPIPaint const *const a, SPIPaint const *const b)
         return true;
     if (a->type == SP_PAINT_TYPE_COLOR)
         return !(sp_color_is_equal(&a->value.color, &b->value.color)
-                 && ((a->iccColor == b->iccColor)
-                     || (a->iccColor && b->iccColor
-                         && (a->iccColor->colorProfile == b->iccColor->colorProfile)
-                         && (a->iccColor->colors == b->iccColor->colors))));
+                 && ((a->value.iccColor == b->value.iccColor)
+                     || (a->value.iccColor && b->value.iccColor
+                         && (a->value.iccColor->colorProfile == b->value.iccColor->colorProfile)
+                         && (a->value.iccColor->colors == b->value.iccColor->colors))));
     /* todo: Allow for epsilon differences in iccColor->colors, e.g. changes small enough not to show up
      * in the string representation. */
     if (a->type == SP_PAINT_TYPE_PAINTSERVER)
@@ -3592,11 +3592,11 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
                 case SP_PAINT_TYPE_COLOR: {
                     char color_buf[8];
                     sp_svg_write_color(color_buf, sizeof(color_buf), sp_color_get_rgba32_ualpha(&paint->value.color, 0));
-                    if (paint->iccColor) {
+                    if (paint->value.iccColor) {
                         CSSOStringStream css;
-                        css << color_buf << " icc-color(" << paint->iccColor->colorProfile;
-                        for (vector<double>::const_iterator i(paint->iccColor->colors.begin()),
-                                 iEnd(paint->iccColor->colors.end());
+                        css << color_buf << " icc-color(" << paint->value.iccColor->colorProfile;
+                        for (vector<double>::const_iterator i(paint->value.iccColor->colors.begin()),
+                                 iEnd(paint->value.iccColor->colors.end());
                              i != iEnd; ++i) {
                             css << ", " << *i;
                         }
@@ -3724,8 +3724,8 @@ sp_style_paint_clear(SPStyle *style, SPIPaint *paint)
     }
     paint->value.paint.uri = NULL;
     paint->type = SP_PAINT_TYPE_NONE;
-    delete paint->iccColor;
-    paint->iccColor = NULL;
+    delete paint->value.iccColor;
+    paint->value.iccColor = NULL;
 }
 
 
@@ -4033,9 +4033,9 @@ sp_css_attr_scale(SPCSSAttr *css, double ex)
 
 /**
  * Remove quotes and escapes from a string. Returned value must be g_free'd.
- * Note: in CSS (in style= and in stylesheets), unquoting and unescaping is done 
+ * Note: in CSS (in style= and in stylesheets), unquoting and unescaping is done
  * by libcroco, our CSS parser, though it adds a new pair of "" quotes for the strings
- * it parsed for us. So this function is only used to remove those quotes and for 
+ * it parsed for us. So this function is only used to remove those quotes and for
  * presentation attributes, without any unescaping. (XML unescaping
  * (&amp; etc) is done by XML parser.)
  */
@@ -4049,7 +4049,7 @@ attribute_unquote(gchar const *val)
                 if ( ( val[0] == '"' && val[l - 1] == '"' )  ||
                      ( val[0] == '\'' && val[l - 1] == '\'' )  ) {
                     return (g_strndup (val+1, l-2));
-                } 
+                }
             }
         }
     }
@@ -4076,7 +4076,7 @@ css2_escape_quote(gchar const *val) {
         } else {
             t.push_back(*i);
             quote = true;
-        } 
+        }
         if (i == val && !g_ascii_isalpha(*i)) {
             quote = true;
         }

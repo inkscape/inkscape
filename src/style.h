@@ -159,14 +159,14 @@ struct SPIPaint {
     unsigned inherit : 1;
     unsigned currentcolor : 1;
     unsigned type : 2;
-    union {
-        SPColor color;
+    struct {
         struct {
             SPPaintServer *server;
             gchar *uri;
         } paint;
+        SPColor color;
+        SVGICCColor *iccColor;
     } value;
-    SVGICCColor *iccColor;
 };
 
 /// Filter type internal to SPStyle
