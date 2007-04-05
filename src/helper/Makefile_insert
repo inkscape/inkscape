@@ -26,6 +26,8 @@ helper_libspchelp_a_SOURCES =	\
 	helper/stlport.h	\
 	helper/unit-menu.cpp	\
 	helper/unit-menu.h	\
+	helper/unit-tracker.cpp	\
+	helper/unit-tracker.h	\
 	helper/units.cpp	\
 	helper/units.h	\
 	helper/window.cpp	\

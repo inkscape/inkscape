@@ -275,6 +275,8 @@ libinkpost_a_SOURCES =	\
 	ege-adjustment-action.h	\
 	ege-output-action.cpp	\
 	ege-output-action.h	\
+	ege-select-one-action.cpp	\
+	ege-select-one-action.h	\
 	fill-or-stroke.h	\
 	filter-chemistry.cpp filter-chemistry.h \
 	fixes.cpp \

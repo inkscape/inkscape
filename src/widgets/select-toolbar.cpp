@@ -4,6 +4,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2003-2005 authors
  *
@@ -15,6 +16,7 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <gtk/gtkaction.h>
 
 #include "widgets/button.h"
 #include "widgets/spw-utilities.h"
@@ -43,6 +45,10 @@
 #include "sp-item-transform.h"
 #include "message-stack.h"
 #include "display/sp-canvas.h"
+#include "ege-select-one-action.h"
+#include "helper/unit-tracker.h"
+
+using Inkscape::UnitTracker;
 
 static void
 sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
@@ -60,23 +66,24 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
     if ( sel && !sel->isEmpty() ) {
         NR::Maybe<NR::Rect> const bbox(sel->bounds());
         if ( bbox && !bbox->isEmpty() ) {
-            GtkWidget *us = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(spw), "units");
-            SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
+            UnitTracker *tracker = reinterpret_cast<UnitTracker*>(gtk_object_get_data(GTK_OBJECT(spw), "tracker"));
+            SPUnit const &unit = *tracker->getActiveUnit();
+
+            struct { char const *key; double val; } const keyval[] = {
+                { "X", bbox->min()[X] },
+                { "Y", bbox->min()[Y] },
+                { "width", bbox->extent(X) },
+                { "height", bbox->extent(Y) }
+            };
 
             if (unit.base == SP_UNIT_DIMENSIONLESS) {
-                char const * const keys[] = {"X", "Y", "width", "height"};
                 double const val = 1. / unit.unittobase;
-                for (unsigned i = 0; i < G_N_ELEMENTS(keys); ++i) {
-                    GtkAdjustment *a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), keys[i]);
+                for (unsigned i = 0; i < G_N_ELEMENTS(keyval); ++i) {
+                    GtkAdjustment *a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), keyval[i].key);
                     gtk_adjustment_set_value(a, val);
+                    tracker->setFullVal( a, keyval[i].val );
                 }
             } else {
-                struct { char const *key; double val; } const keyval[] = {
-                    { "X", bbox->min()[X] },
-                    { "Y", bbox->min()[Y] },
-                    { "width", bbox->extent(X) },
-                    { "height", bbox->extent(Y) }
-                };
                 for (unsigned i = 0; i < G_N_ELEMENTS(keyval); ++i) {
                     GtkAdjustment *a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), keyval[i].key);
                     gtk_adjustment_set_value(a, sp_pixels_get_units(keyval[i].val, unit));
@@ -123,9 +130,8 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         return;
     }
 
-    GtkWidget *us = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(spw), "units");
-    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
-    if (sp_unit_selector_update_test(SP_UNIT_SELECTOR(us))) {
+    UnitTracker *tracker = reinterpret_cast<UnitTracker*>(gtk_object_get_data(GTK_OBJECT(spw), "tracker"));
+    if ( !tracker || tracker->isUpdating() ) {
         /*
          * When only units are being changed, don't treat changes
          * to adjuster values as object changes.
@@ -145,34 +151,33 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         return;
     }
 
-    gdouble x0, y0, x1, y1, xrel, yrel;
-    GtkAdjustment *a_w;
-    GtkAdjustment *a_h;
+    gdouble x0 = 0;
+    gdouble y0 = 0;
+    gdouble x1 = 0;
+    gdouble y1 = 0;
+    gdouble xrel = 0;
+    gdouble yrel = 0;
+    SPUnit const &unit = *tracker->getActiveUnit();
+
+    GtkAdjustment* a_x = (GtkAdjustment *)gtk_object_get_data( GTK_OBJECT(spw), "X" );
+    GtkAdjustment* a_y = (GtkAdjustment *)gtk_object_get_data( GTK_OBJECT(spw), "Y" );
+    GtkAdjustment* a_w = (GtkAdjustment *)gtk_object_get_data( GTK_OBJECT(spw), "width" );
+    GtkAdjustment* a_h = (GtkAdjustment *)gtk_object_get_data( GTK_OBJECT(spw), "height" );
 
     if (unit.base == SP_UNIT_ABSOLUTE || unit.base == SP_UNIT_DEVICE) {
-        GtkAdjustment *a;
-        a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "X");
-        x0 = sp_units_get_pixels (a->value, unit);
-        a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "Y");
-        y0 = sp_units_get_pixels (a->value, unit);
-        a_w = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "width");
+        x0 = sp_units_get_pixels (a_x->value, unit);
+        y0 = sp_units_get_pixels (a_y->value, unit);
         x1 = x0 + sp_units_get_pixels (a_w->value, unit);
         xrel = sp_units_get_pixels (a_w->value, unit) / bbox->extent(NR::X);
-        a_h = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "height");
         y1 = y0 + sp_units_get_pixels (a_h->value, unit);
         yrel = sp_units_get_pixels (a_h->value, unit) / bbox->extent(NR::Y);
     } else {
-        GtkAdjustment *a;
-        a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "X");
-        double const x0_propn = a->value * unit.unittobase;
+        double const x0_propn = a_x->value * unit.unittobase;
         x0 = bbox->min()[NR::X] * x0_propn;
-        a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "Y");
-        double const y0_propn = a->value * unit.unittobase;
+        double const y0_propn = a_y->value * unit.unittobase;
         y0 = y0_propn * bbox->min()[NR::Y];
-        a_w = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "width");
         xrel = a_w->value * unit.unittobase;
         x1 = x0 + xrel * bbox->extent(NR::X);
-        a_h = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), "height");
         yrel = a_h->value * unit.unittobase;
         y1 = y0 + yrel * bbox->extent(NR::Y);
     }
@@ -206,9 +211,9 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     // the value was changed by the user, the difference will be at least that much; otherwise it's
     // just rounding difference between the spinbox value and actual value, so no action is
     // performed
-    char const * const actionkey = ( mh > 5e-4 ? "selector:toolbar:move:horizontal" : 
-                                     sh > 5e-4 ? "selector:toolbar:scale:horizontal" : 
-                                     mv > 5e-4 ? "selector:toolbar:move:vertical" : 
+    char const * const actionkey = ( mh > 5e-4 ? "selector:toolbar:move:horizontal" :
+                                     sh > 5e-4 ? "selector:toolbar:scale:horizontal" :
+                                     mv > 5e-4 ? "selector:toolbar:move:vertical" :
                                      sv > 5e-4 ? "selector:toolbar:scale:vertical" : NULL );
 
     if (actionkey != NULL) {
@@ -222,7 +227,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         NR::Matrix scaler = get_scale_transform_with_stroke (*bbox, strokewidth, transform_stroke, x0, y0, x1, y1);
 
         sp_selection_apply_affine(selection, scaler);
-        sp_document_maybe_done (document, actionkey, SP_VERB_CONTEXT_SELECT, 
+        sp_document_maybe_done (document, actionkey, SP_VERB_CONTEXT_SELECT,
                                 _("Transform by toolbar"));
 
         // defocus spinbuttons by moving focus to the canvas, unless "stay" is on
@@ -236,7 +241,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
 }
 
 GtkWidget *
-sp_select_toolbox_spinbutton(gchar *label, gchar *data, float lower_limit, GtkWidget *us, GtkWidget *spw, gchar *tooltip, gboolean altx)
+sp_select_toolbox_spinbutton(gchar *label, gchar *data, float lower_limit, UnitTracker* tracker, GtkWidget *spw, gchar *tooltip, gboolean altx)
 {
     GtkTooltips *tt = gtk_tooltips_new();
 
@@ -248,7 +253,9 @@ sp_select_toolbox_spinbutton(gchar *label, gchar *data, float lower_limit, GtkWi
     gtk_container_add(GTK_CONTAINER(hb), l);
 
     GtkObject *a = gtk_adjustment_new(0.0, lower_limit, 1e6, SPIN_STEP, SPIN_PAGE_STEP, SPIN_PAGE_STEP);
-    sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(us), GTK_ADJUSTMENT(a));
+    if ( tracker ) {
+        tracker->addAdjustment( GTK_ADJUSTMENT(a) );
+    }
     gtk_object_set_data(GTK_OBJECT(spw), data, a);
 
     GtkWidget *sb = gtk_spin_button_new(GTK_ADJUSTMENT(a), SPIN_STEP, 3);
@@ -266,79 +273,6 @@ sp_select_toolbox_spinbutton(gchar *label, gchar *data, float lower_limit, GtkWi
     }
 
     return hb;
-}
-
-static gboolean aux_set_unit(SPUnitSelector *,
-                             SPUnit const *old,
-                             SPUnit const *new_units,
-                             GObject *dlg)
-{
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
-    if (!desktop) {
-        return FALSE;
-    }
-
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-
-    if (selection->isEmpty())
-        return FALSE;
-
-    if ((old->base == SP_UNIT_ABSOLUTE || old->base == SP_UNIT_DEVICE)
-        && (new_units->base == SP_UNIT_DIMENSIONLESS))
-    {
-
-        NR::Maybe<NR::Rect> bbox = selection->bounds();
-        if (!bbox) {
-            return FALSE;
-        }
-
-        /* Absolute to percentage */
-        g_object_set_data(dlg, "update", GUINT_TO_POINTER(TRUE));
-
-        GtkAdjustment *ax = GTK_ADJUSTMENT(g_object_get_data(dlg, "X"));
-        GtkAdjustment *ay = GTK_ADJUSTMENT(g_object_get_data(dlg, "Y"));
-        GtkAdjustment *aw = GTK_ADJUSTMENT(g_object_get_data(dlg, "width"));
-        GtkAdjustment *ah = GTK_ADJUSTMENT(g_object_get_data(dlg, "height"));
-
-        double const x = sp_units_get_pixels (ax->value, *old);
-        double const y = sp_units_get_pixels (ay->value, *old);
-        double const w = sp_units_get_pixels (aw->value, *old);
-        double const h = sp_units_get_pixels (ah->value, *old);
-
-        gtk_adjustment_set_value(ax, fabs(bbox->min()[NR::X]) > 1e-6? 100.0 * x / bbox->min()[NR::X] : 100.0);
-        gtk_adjustment_set_value(ay, fabs(bbox->min()[NR::Y]) > 1e-6? 100.0 * y / bbox->min()[NR::Y] : 100.0);
-        gtk_adjustment_set_value(aw, fabs(bbox->extent(NR::X)) > 1e-6? 100.0 * w / bbox->extent(NR::X) : 100.0);
-        gtk_adjustment_set_value(ah, fabs(bbox->extent(NR::Y)) > 1e-6? 100.0 * h / bbox->extent(NR::Y) : 100.0);
-
-        g_object_set_data(dlg, "update", GUINT_TO_POINTER(FALSE));
-        return TRUE;
-    } else if ((old->base == SP_UNIT_DIMENSIONLESS)
-               && (new_units->base == SP_UNIT_ABSOLUTE || new_units->base == SP_UNIT_DEVICE)) {
-
-        NR::Maybe<NR::Rect> bbox = selection->bounds();
-        if (!bbox) {
-            return FALSE;
-        }
-
-        /* Percentage to absolute */
-        g_object_set_data(dlg, "update", GUINT_TO_POINTER(TRUE));
-
-        GtkAdjustment *ax = GTK_ADJUSTMENT(g_object_get_data(dlg, "X"));
-        GtkAdjustment *ay = GTK_ADJUSTMENT(g_object_get_data(dlg, "Y"));
-        GtkAdjustment *aw = GTK_ADJUSTMENT(g_object_get_data(dlg, "width"));
-        GtkAdjustment *ah = GTK_ADJUSTMENT(g_object_get_data(dlg, "height"));
-
-        gtk_adjustment_set_value(ax, sp_pixels_get_units(0.01 * ax->value * bbox->min()[NR::X], *new_units));
-        gtk_adjustment_set_value(ay, sp_pixels_get_units(0.01 * ay->value * bbox->min()[NR::Y], *new_units));
-        gtk_adjustment_set_value(aw, sp_pixels_get_units(0.01 * aw->value * bbox->extent(NR::X), *new_units));
-        gtk_adjustment_set_value(ah, sp_pixels_get_units(0.01 * ah->value * bbox->extent(NR::Y), *new_units));
-
-        g_object_set_data(dlg, "update", GUINT_TO_POINTER(FALSE));
-        return TRUE;
-    }
-
-    return FALSE;
 }
 
 // toggle button callbacks and updaters
@@ -399,6 +333,15 @@ static void toggle_lock (GtkWidget *button, gpointer data) {
     }
 }
 
+static void destroy_tracker( GtkObject* obj, gpointer /*user_data*/ )
+{
+    UnitTracker *tracker = reinterpret_cast<UnitTracker*>(gtk_object_get_data(obj, "tracker"));
+    if ( tracker ) {
+        delete tracker;
+        gtk_object_set_data( obj, "tracker", 0 );
+    }
+}
+
 GtkWidget *
 sp_select_toolbox_new(SPDesktop *desktop)
 {
@@ -432,29 +375,31 @@ sp_select_toolbox_new(SPDesktop *desktop)
     gtk_object_set_data(GTK_OBJECT(spw), "frame", vb);
 
     // Create the units menu.
-    GtkWidget *us = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
-    sp_unit_selector_setsize(us, AUX_OPTION_MENU_WIDTH, AUX_OPTION_MENU_HEIGHT);
-    sp_unit_selector_add_unit(SP_UNIT_SELECTOR(us), &sp_unit_get_by_id(SP_UNIT_PERCENT), 0);
-    sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us), sp_desktop_namedview(desktop)->doc_units);
-    g_signal_connect(G_OBJECT(us), "set_unit", G_CALLBACK(aux_set_unit), spw);
+    UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
+    tracker->addUnit( SP_UNIT_PERCENT, 0 );
+    tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
+
+    gtk_object_set_data( GTK_OBJECT(spw), "tracker", tracker );
+    g_signal_connect( G_OBJECT(spw), "destroy", G_CALLBACK(destroy_tracker), spw );
+
 
     // four spinbuttons
 
     gtk_container_add(GTK_CONTAINER(vb),
-                      //TRANSLATORS: only translate "string" in "context|string". 
+                      //TRANSLATORS: only translate "string" in "context|string".
                       // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                      sp_select_toolbox_spinbutton(_("select_toolbar|X"), "X", -1e6, us, spw, _("Horizontal coordinate of selection"), TRUE));
+                      sp_select_toolbox_spinbutton(_("select_toolbar|X"), "X", -1e6, tracker, spw, _("Horizontal coordinate of selection"), TRUE));
     aux_toolbox_space(vb, AUX_BETWEEN_SPINBUTTONS);
     gtk_container_add(GTK_CONTAINER(vb),
-                      //TRANSLATORS: only translate "string" in "context|string". 
+                      //TRANSLATORS: only translate "string" in "context|string".
                       // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                      sp_select_toolbox_spinbutton(_("select_toolbar|Y"), "Y", -1e6, us, spw, _("Vertical coordinate of selection"), FALSE));
+                      sp_select_toolbox_spinbutton(_("select_toolbar|Y"), "Y", -1e6, tracker, spw, _("Vertical coordinate of selection"), FALSE));
     aux_toolbox_space(vb, AUX_BETWEEN_BUTTON_GROUPS);
 
     gtk_container_add(GTK_CONTAINER(vb),
-                      //TRANSLATORS: only translate "string" in "context|string". 
+                      //TRANSLATORS: only translate "string" in "context|string".
                       // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                      sp_select_toolbox_spinbutton(_("select_toolbar|W"), "width", 1e-3, us, spw, _("Width of selection"), FALSE));
+                      sp_select_toolbox_spinbutton(_("select_toolbar|W"), "width", 1e-3, tracker, spw, _("Width of selection"), FALSE));
 
     // lock toggle
     GtkWidget *lockbox = gtk_vbox_new(TRUE, 0);
@@ -470,16 +415,20 @@ sp_select_toolbox_new(SPDesktop *desktop)
     g_signal_connect_after (G_OBJECT (lock), "clicked", G_CALLBACK (toggle_lock), desktop);
 
     gtk_container_add(GTK_CONTAINER(vb),
-                      //TRANSLATORS: only translate "string" in "context|string". 
+                      //TRANSLATORS: only translate "string" in "context|string".
                       // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                      sp_select_toolbox_spinbutton(_("select_toolbar|H"), "height", 1e-3, us, spw, _("Height of selection"), FALSE));
+                      sp_select_toolbox_spinbutton(_("select_toolbar|H"), "height", 1e-3, tracker, spw, _("Height of selection"), FALSE));
 
     aux_toolbox_space(vb, 2);
 
     // Add the units menu.
-    gtk_widget_show(us);
-    gtk_container_add(GTK_CONTAINER(vb), us);
-    gtk_object_set_data(GTK_OBJECT(spw), "units", us);
+    {
+        GtkAction* act = tracker->createAction( "UnitAction", _("Units"), _("") );
+
+        GtkWidget* normal = gtk_action_create_tool_item( act );
+        gtk_widget_show( normal );
+        gtk_container_add( GTK_CONTAINER(vb), normal );
+    }
 
     // Set font size.
     sp_set_font_size_smaller (vb);
