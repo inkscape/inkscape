@@ -354,17 +354,11 @@ grayMapCanny(GrayMap *gm, double lowThreshold, double highThreshold)
 {
     if (!gm)
         return NULL;
-    GrayMap *gaussGm = grayMapGaussian(gm);
-    if (!gaussGm)
-        return NULL;
-    /*gaussGm->writePPM(gaussGm, "gauss.ppm");*/
 
-    GrayMap *cannyGm = grayMapSobel(gaussGm, lowThreshold, highThreshold);
+    GrayMap *cannyGm = grayMapSobel(gm, lowThreshold, highThreshold);
     if (!cannyGm)
         return NULL;
     /*cannyGm->writePPM(cannyGm, "canny.ppm");*/
-
-    gaussGm->destroy(gaussGm);
 
     return cannyGm;
 }
