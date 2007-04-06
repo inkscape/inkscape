@@ -1464,18 +1464,16 @@ FileSaveDialogImpl::getSelectionType()
 
 void FileSaveDialogImpl::setSelectionType( Inkscape::Extension::Extension * key )
 {
-    extension = key;
-
     // If no pointer to extension is passed in, look up based on filename extension.
-    if ( !extension ) {
+    if ( !key ) {
         // Not quite UTF-8 here.
         gchar *filenameLower = g_ascii_strdown(myFilename.c_str(), -1);
-        for ( int i = 0; !extension && (i < (int)fileTypes.size()); i++ ) {
+        for ( int i = 0; !key && (i < (int)fileTypes.size()); i++ ) {
             Inkscape::Extension::Output *ext = dynamic_cast<Inkscape::Extension::Output*>(fileTypes[i].extension);
             if ( ext && ext->get_extension() ) {
                 gchar *extensionLower = g_ascii_strdown( ext->get_extension(), -1 );
                 if ( g_str_has_suffix(filenameLower, extensionLower) ) {
-                    extension = fileTypes[i].extension;
+                    key = fileTypes[i].extension;
                 }
                 g_free(extensionLower);
             }
@@ -1484,7 +1482,8 @@ void FileSaveDialogImpl::setSelectionType( Inkscape::Extension::Extension * key 
     }
 
     // Ensure the proper entry in the combo box is selected.
-    if ( extension ) {
+    if ( key ) {
+        extension = key;
         gchar const * extensionID = extension->get_id();
         if ( extensionID ) {
             for ( int i = 0; i < (int)fileTypes.size(); i++ ) {
