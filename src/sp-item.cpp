@@ -704,8 +704,8 @@ sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, NR::Matrix const &tra
         ((SPItemClass *) G_OBJECT_GET_CLASS(item))->bbox(item, &this_bbox, transform, flags);
     }
 
-    // crop the bbox by clip path, if any
-    if (item->clip_ref->getObject()) {
+    // unless this is geometric bbox, crop the bbox by clip path, if any
+    if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX && item->clip_ref->getObject()) {
         NRRect b;
         sp_clippath_get_bbox(SP_CLIPPATH(item->clip_ref->getObject()), &b, transform, flags);
         nr_rect_d_intersect (&this_bbox, &this_bbox, &b);

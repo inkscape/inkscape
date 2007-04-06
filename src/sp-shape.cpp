@@ -618,43 +618,45 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
 
         nr_path_matrix_bbox_union(&bp, transform, &cbbox);
 
-        SPStyle* style=SP_OBJECT_STYLE (item);
-        if (style->stroke.type != SP_PAINT_TYPE_NONE) {
-            double const scale = expansion(transform);
-            if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
-                double const width = MAX(0.125, style->stroke_width.computed * scale);
-                if ( fabs(cbbox.x1-cbbox.x0) > -0.00001 && fabs(cbbox.y1-cbbox.y0) > -0.00001 ) {
-                    cbbox.x0-=0.5*width;
-                    cbbox.x1+=0.5*width;
-                    cbbox.y0-=0.5*width;
-                    cbbox.y1+=0.5*width;
+        if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX) {
+            SPStyle* style=SP_OBJECT_STYLE (item);
+            if (style->stroke.type != SP_PAINT_TYPE_NONE) {
+                double const scale = expansion(transform);
+                if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
+                    double const width = MAX(0.125, style->stroke_width.computed * scale);
+                    if ( fabs(cbbox.x1-cbbox.x0) > -0.00001 && fabs(cbbox.y1-cbbox.y0) > -0.00001 ) {
+                        cbbox.x0-=0.5*width;
+                        cbbox.x1+=0.5*width;
+                        cbbox.y0-=0.5*width;
+                        cbbox.y1+=0.5*width;
+                    }
                 }
             }
-        }
 
-        // Union with bboxes of the markers, if any
-        if (sp_shape_has_markers (shape)) {
-            for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
-                for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
-                    if (sp_shape_marker_required (shape, m, bp)) {
+            // Union with bboxes of the markers, if any
+            if (sp_shape_has_markers (shape)) {
+                for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
+                    for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
+                        if (sp_shape_marker_required (shape, m, bp)) {
 
-                        SPMarker* marker = SP_MARKER (shape->marker[m]);
-                        SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[m]));
+                            SPMarker* marker = SP_MARKER (shape->marker[m]);
+                            SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[m]));
 
-                        NR::Matrix tr(sp_shape_marker_get_transform(shape, bp));
+                            NR::Matrix tr(sp_shape_marker_get_transform(shape, bp));
 
-                        if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                            tr = NR::scale(style->stroke_width.computed) * tr;
+                            if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+                                tr = NR::scale(style->stroke_width.computed) * tr;
+                            }
+
+                            // total marker transform
+                            tr = marker_item->transform * marker->c2p * tr * transform;
+
+                            // get bbox of the marker with that transform
+                            NRRect marker_bbox;
+                            sp_item_invoke_bbox (marker_item, &marker_bbox, tr, true);
+                            // union it with the shape bbox
+                            nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                         }
-
-                        // total marker transform
-                        tr = marker_item->transform * marker->c2p * tr * transform;
-
-                        // get bbox of the marker with that transform
-                        NRRect marker_bbox;
-                        sp_item_invoke_bbox (marker_item, &marker_bbox, tr, true);
-                        // union it with the shape bbox
-                        nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                     }
                 }
             }
