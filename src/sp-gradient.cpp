@@ -208,6 +208,12 @@ sp_stop_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         repr = xml_doc->createElement("svg:stop");
     }
 
+    if (((SPObjectClass *) stop_parent_class)->write)
+        (* ((SPObjectClass *) stop_parent_class)->write)(object, repr, flags);
+
+    // Since we do a hackish style setting here (because SPStyle does not support stop-color and
+    // stop-opacity), we must do it AFTER calling the parent write method; otherwise
+    // sp_object_write would clear our style= attribute (bug 1695287)
 
     Inkscape::CSSOStringStream os;
     os << "stop-color:";
@@ -225,9 +231,6 @@ sp_stop_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     sp_repr_set_css_double(repr, "offset", stop->offset);
     /* strictly speaking, offset an SVG <number> rather than a CSS one, but exponents make no sense
      * for offset proportions. */
-
-    if (((SPObjectClass *) stop_parent_class)->write)
-        (* ((SPObjectClass *) stop_parent_class)->write)(object, repr, flags);
 
     return repr;
 }
