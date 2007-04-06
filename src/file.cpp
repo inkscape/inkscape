@@ -389,7 +389,9 @@ sp_file_open_dialog(gpointer object, gpointer data)
                  Inkscape::UI::Dialog::SVG_TYPES,
                  (char const *)_("Select file to open"));
         // allow easy access to our examples folder		 
-        dynamic_cast<Gtk::FileChooser *>(openDialogInstance)->add_shortcut_folder(INKSCAPE_EXAMPLESDIR);
+        if (Inkscape::IO::file_test(INKSCAPE_EXAMPLESDIR, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))) {
+            dynamic_cast<Gtk::FileChooser *>(openDialogInstance)->add_shortcut_folder(INKSCAPE_EXAMPLESDIR);
+        }
     }
 
 
@@ -623,7 +625,9 @@ sp_file_save_dialog(SPDocument *doc, bool is_copy)
 
     // allow easy access to the user's own templates folder		 
     gchar *templates = profile_path ("templates");
-    dynamic_cast<Gtk::FileChooser *>(saveDialog)->add_shortcut_folder(templates);
+    if (Inkscape::IO::file_test(templates, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))) {
+        dynamic_cast<Gtk::FileChooser *>(saveDialog)->add_shortcut_folder(templates);
+    }
     g_free (templates);
 
     bool success = saveDialog->show();
