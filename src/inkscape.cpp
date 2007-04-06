@@ -727,7 +727,7 @@ inkscape_load_menus (Inkscape::Application *inkscape)
 Inkscape::XML::Node *
 inkscape_get_repr (Inkscape::Application *inkscape, const gchar *key)
 {
-    if (key == NULL) {
+    if ( (key == NULL) || (inkscape == NULL) ) {
         return NULL;
     }
 
