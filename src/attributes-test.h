@@ -5,6 +5,8 @@
 #include <cxxtest/TestSuite.h>
 
 #include <vector>
+#include <glib.h>
+#include <glib/gprintf.h>
 #include "utest/utest.h"
 #include "attributes.h"
 #include "streq.h"
@@ -485,11 +487,20 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
         unsigned const n_ids = ids.size();
         for (unsigned id = 1; id < n_ids; ++id) {
             if (!ids[id]) {
-	        TS_WARN( std::string((const char*)sp_attribute_name(id)) );
+                gchar* tmp = g_strdup_printf( "Attribute string with enum %d {%s} not handled", id, sp_attribute_name(id) );
+                TS_WARN( std::string((const char*)tmp) );
+                g_free( tmp );
                 found = true;
             }
         }
         TS_ASSERT(!found);
+
+        for ( guint index = 1; index < n_ids; index++ ) {
+            guchar const* name = sp_attribute_name(index);
+            gint postLookup = sp_attribute_lookup( reinterpret_cast<gchar const*>(name) );
+            TSM_ASSERT_EQUALS( std::string("Enum round-trip through string {") + (char const*)name + "} failed.", index, postLookup );
+        }
+
     }
 };
 
