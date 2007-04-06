@@ -731,7 +731,12 @@ inkscape_get_repr (Inkscape::Application *inkscape, const gchar *key)
         return NULL;
     }
 
-    Inkscape::XML::Node *repr = Inkscape::Preferences::get()->root();
+    Inkscape::XML::Node *prefs = Inkscape::Preferences::get();
+    if ( !prefs ) {
+        return NULL;
+    }
+
+    Inkscape::XML::Node *repr = prefs->root();
     if (!repr) return NULL;
     g_assert (!(strcmp (repr->name(), "inkscape")));
 

@@ -73,6 +73,12 @@ public:
 
     void testWrite()
     {
+        TS_ASSERT( _doc );
+        TS_ASSERT( sp_document_repr_doc(_doc) );
+        if ( !sp_document_repr_doc(_doc) ) {
+            return; // evil early return
+        }
+
         SPStyleElem *style_elem = SP_STYLE_ELEM(g_object_new(SP_TYPE_STYLE_ELEM, NULL));
         SP_OBJECT(style_elem)->document = _doc;
 
@@ -93,6 +99,12 @@ public:
 
     void testBuild()
     {
+        TS_ASSERT( _doc );
+        TS_ASSERT( sp_document_repr_doc(_doc) );
+        if ( !sp_document_repr_doc(_doc) ) {
+            return; // evil early return
+        }
+
         SPStyleElem &style_elem = *SP_STYLE_ELEM(g_object_new(SP_TYPE_STYLE_ELEM, NULL));
         Inkscape::XML::Node *const repr = sp_document_repr_doc(_doc)->createElement("svg:style");
         repr->setAttribute("type", "text/css");
@@ -115,6 +127,12 @@ public:
 
     void testReadContent()
     {
+        TS_ASSERT( _doc );
+        TS_ASSERT( sp_document_repr_doc(_doc) );
+        if ( !sp_document_repr_doc(_doc) ) {
+            return; // evil early return
+        }
+
         SPStyleElem &style_elem = *SP_STYLE_ELEM(g_object_new(SP_TYPE_STYLE_ELEM, NULL));
         Inkscape::XML::Node *const repr = sp_document_repr_doc(_doc)->createElement("svg:style");
         repr->setAttribute("type", "text/css");
