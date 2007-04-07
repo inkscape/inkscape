@@ -989,6 +989,11 @@ SPDesktop::setWindowTransient (void *p, int transient_policy)
     _widget->setTransient (p, transient_policy);
 }
 
+void SPDesktop::getToplevel( GtkWidget*& toplevel )
+{
+    toplevel = GTK_WIDGET( _widget->getWindow() );
+}
+
 void
 SPDesktop::presentWindow()
 {

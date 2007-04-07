@@ -35,6 +35,8 @@
 
 class NRRect;
 class SPCSSAttr;
+struct _GtkWidget;
+typedef struct _GtkWidget GtkWidget;
 struct SPCanvas;
 struct SPCanvasItem;
 struct SPCanvasGroup;
@@ -227,6 +229,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void setWindowPosition (NR::Point p);
     void setWindowSize (gint w, gint h);
     void setWindowTransient (void* p, int transient_policy=1);
+    void getToplevel( GtkWidget*& toplevel );
     void presentWindow();
     bool warnDialog (gchar *text);
     void toggleRulers();

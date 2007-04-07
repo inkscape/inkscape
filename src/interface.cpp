@@ -1254,52 +1254,39 @@ bool
 sp_ui_overwrite_file(gchar const *filename)
 {
     bool return_value = FALSE;
-    GtkWidget *dialog;
-    GtkWidget *hbox;
-    GtkWidget *boxdata;
-    gchar *title;
-    gchar *text;
 
     if (Inkscape::IO::file_test(filename, G_FILE_TEST_EXISTS)) {
+        GtkWidget* ancestor = 0;
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        if ( desktop ) {
+            desktop->getToplevel( ancestor );
+        }
+        GtkWindow *window = GTK_WIDGET_TOPLEVEL(ancestor) ? GTK_WINDOW( ancestor ) : 0;
+        gchar* baseName = g_path_get_basename( filename );
+        gchar* dirName = g_path_get_dirname( filename );
+        GtkWidget* dialog = gtk_message_dialog_new_with_markup( window,
+                                                                (GtkDialogFlags)(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+                                                                GTK_MESSAGE_QUESTION,
+                                                                GTK_BUTTONS_NONE,
+                                                                _( "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do you want to replace it?</span>\n\n"
+                                                                   "The file already exists in \"%s\". Replacing it will overwrite its contents." ),
+                                                                baseName,
+                                                                dirName
+            );
+        gtk_dialog_add_buttons( GTK_DIALOG(dialog),
+                                GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
+                                _("Replace"), GTK_RESPONSE_YES,
+                                NULL );
+        gtk_dialog_set_default_response( GTK_DIALOG(dialog), GTK_RESPONSE_YES );
 
-        title = g_strdup_printf(_("Overwrite %s"), filename);
-        dialog = gtk_dialog_new_with_buttons(title,
-                                             NULL,
-                                             (GtkDialogFlags)(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
-                                             GTK_STOCK_NO,
-                                             GTK_RESPONSE_NO,
-                                             GTK_STOCK_YES,
-                                             GTK_RESPONSE_YES,
-                                             NULL);
-        gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_YES);
-
-        sp_transientize(dialog);
-        gtk_window_set_resizable(GTK_WINDOW(dialog), FALSE);
-
-        hbox = gtk_hbox_new(FALSE, 5);
-
-        // TODO - replace with Inkscape-specific call
-        boxdata = gtk_image_new_from_stock(GTK_STOCK_DIALOG_QUESTION, GTK_ICON_SIZE_DIALOG);
-
-        gtk_widget_show(boxdata);
-        gtk_box_pack_start(GTK_BOX(hbox), boxdata, TRUE, TRUE, 5);
-        text = g_strdup_printf(_("The file %s already exists.  Do you want to overwrite that file with the current document?"), filename);
-        boxdata = gtk_label_new(text);
-        gtk_label_set_line_wrap(GTK_LABEL(boxdata), TRUE);
-        gtk_widget_show(boxdata);
-        gtk_box_pack_start(GTK_BOX(hbox), boxdata, FALSE, FALSE, 5);
-        gtk_widget_show(hbox);
-        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), hbox, TRUE, TRUE, 5);
-
-        if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_YES) {
+        if ( gtk_dialog_run( GTK_DIALOG(dialog) ) == GTK_RESPONSE_YES ) {
             return_value = TRUE;
         } else {
             return_value = FALSE;
         }
-
         gtk_widget_destroy(dialog);
-        g_free(title);
-        g_free(text);
+        g_free( baseName );
+        g_free( dirName );
     } else {
         return_value = TRUE;
     }
