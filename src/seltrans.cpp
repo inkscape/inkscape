@@ -88,11 +88,15 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _show(SHOW_CONTENT),
     _grabbed(false),
     _show_handles(true),
-    _box(NR::Nothing()),
+    _bbox(NR::Nothing()),
+    _approximate_bbox(NR::Nothing()),
     _chandle(NULL),
     _stamp_cache(NULL),
     _message_context(desktop->messageStack())
 {
+    //_snap_bbox_type = SPItem::GEOMETRIC_BBOX; //TODO: Get this parameter from UI; hardcoded for the time being
+    _snap_bbox_type = SPItem::APPROXIMATE_BBOX;
+    
     g_return_if_fail(desktop != NULL);
 
     for (int i = 0; i < 8; i++) {
@@ -108,6 +112,8 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _updateHandles();
 
     _selection = sp_desktop_selection(desktop);
+    
+    
 
     _norm = sp_canvas_item_new(sp_desktop_controls(desktop),
                                SP_TYPE_CTRL,
@@ -254,55 +260,69 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     _current.set_identity();
 
     _point = p;
+    
+    // The selector tool should snap the bbox and the special snappoints, but not path nodes
+    // (The special points are the handles, center, rotation axis, font baseline, ends of spiral, etc.)
 
-    _snap_points = selection->getSnapPoints();
+    // First, get all special points for snapping
+    _snap_points = selection->getSnapPoints(); // Excludes path nodes
+    std::vector<NR::Point> snap_points_hull = selection->getSnapPointsConvexHull(); // Includes path nodes
     if (_snap_points.size() > 100) {
         /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
         An average user would rarely ever try to snap such a large number of nodes anyway, because 
         (s)he could hardly discern which node would be snapping */
-        _snap_points = selection->getSnapPointsConvexHull();
+        _snap_points = snap_points_hull;
         // Unfortunately, by now we will have lost the font-baseline snappoints :-(
     }
-    _box = selection->bounds();
-    _bbox_points.clear();
-    if (_box) {
-        for ( unsigned i = 0 ; i < 4 ; i++ ) {
-            _bbox_points.push_back(_box->corner(i));
-        }
-    }
-
-    gchar const *scale_origin = prefs_get_string_attribute("tools.select", "scale_origin");
-    bool const origin_on_bbox = (scale_origin == NULL || !strcmp(scale_origin, "bbox"));
-
     
-    /*Snapping will be to either nodes or to boundingbox-cornes; each will require its own origin, which 
-    is only slightly different from the other. When we would use an origin at one of the nodes while 
-    trying to snap the boundingbox, all four points of the boundingbox would be moving (e.g. during stretching),
-    and would therefore also be snapping (which is bad). This leads to bugs similar to #1540195, in which 
-    a box is caught between to guides. To solve this, we need two different points: _opposite_for_snappoints and
-    _opposite_for_boundingbox
-    */
-    
-    if (_box) {
-        _opposite_for_bboxpoints = _box->min() + _box->dimensions() * NR::scale(1-x, 1-y);
-        
-        NR::Rect op_box = *_box;
-        // FIXME: should be using ConvexHull here
-        if ( _snap_points.empty() == false) {
-            std::vector<NR::Point>::iterator i = _snap_points.begin();
-            op_box = NR::Rect(*i, *i);
+    // Find bbox hulling all special points, which excludes stroke width. Here we need to include the
+    // path nodes, for example because a rectangle which has been converted to a path doesn't have 
+    // any other special points
+    NR::Rect snap_points_bbox;
+    if ( snap_points_hull.empty() == false ) {
+        std::vector<NR::Point>::iterator i = snap_points_hull.begin();
+        snap_points_bbox = NR::Rect(*i, *i);
+        i++;
+        while (i != snap_points_hull.end()) {
+            snap_points_bbox.expandTo(*i);
             i++;
-            while (i != _snap_points.end()) {
-                op_box.expandTo(*i);
-                i++;
-            }
         }
-        _opposite_for_snappoints = ( op_box.min() + ( op_box.dimensions() * NR::scale(1-x, 1-y) ) );
-        //until we can kick out the old _opposite, and use _opposite_for_bboxpoints or _opposite_for_snappoints everywhere
-        //keep the old behavior for _opposite:
-        _opposite = origin_on_bbox ? _opposite_for_bboxpoints : _opposite_for_snappoints;
-        //FIXME: get rid of _opposite. Requires different handling of preferences, see Bulia Byak's comment for bug #1540195
     }
+    
+    // Next, determine the bounding box for snapping ...
+    _bbox = selection->bounds(_snap_bbox_type);
+    
+    _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX); // Used for correctly scaling the strokewidth
+    
+    _bbox_points.clear();
+    if (_bbox) {
+        // ... and add the bbox corners to _bbox_points
+        for ( unsigned i = 0 ; i < 4 ; i++ ) {
+            _bbox_points.push_back(_bbox->corner(i));
+        }
+        // There are two separate "opposites" (i.e. opposite w.r.t. the handle being dragged):
+        //  - one for snapping the boundingbox, which can be either visual or geometric
+        //  - one for snapping the special points
+        // The "opposite" in case of a geometric boundingbox always coincides with the "opposite" for the special points
+        // These distinct "opposites" are needed in the snapmanager to avoid bugs such as #1540195 (in which 
+        // a box is caught between to guides)
+        _opposite_for_bboxpoints = _bbox->min() + _bbox->dimensions() * NR::scale(1-x, 1-y);
+        _opposite_for_specpoints = (snap_points_bbox.min() + (snap_points_bbox.dimensions() * NR::scale(1-x, 1-y) ) );
+        // Only a single "opposite" can be used in calculating transformations.
+        _opposite = _opposite_for_bboxpoints;
+    }
+    
+    /*std::cout << "Number of snap points:  " << _snap_points.size() << std::endl;
+    for (std::vector<NR::Point>::const_iterator i = _snap_points.begin(); i != _snap_points.end(); i++)
+    {
+        std::cout << "    " << *i << std::endl;
+    }
+    
+    std::cout << "Number of bbox points:  " << _bbox_points.size() << std::endl;
+    for (std::vector<NR::Point>::const_iterator i = _bbox_points.begin(); i != _bbox_points.end(); i++)
+    {
+        std::cout << "    " << *i << std::endl;
+    }*/
     
     if ((x != -1) && (y != -1)) {
         sp_canvas_item_show(_norm);
@@ -333,11 +353,11 @@ void Inkscape::SelTrans::transform(NR::Matrix const &rel_affine, NR::Point const
             sp_item_set_i2d_affine(&item, prev_transform * affine);
         }
     } else {
-        if (_box) {
+        if (_bbox) {
             NR::Point p[4];
             /* update the outline */
             for (unsigned i = 0 ; i < 4 ; i++) {
-                p[i] = _box->corner(i) * affine;
+                p[i] = _bbox->corner(i) * affine;
             }
             for (unsigned i = 0 ; i < 4 ; i++) {
                 sp_ctrlline_set_coords(SP_CTRLLINE(_l[i]), p[i], p[(i+1)%4]);
@@ -577,8 +597,31 @@ void Inkscape::SelTrans::_updateVolatileState()
         return;
     }
 
-    _box = selection->bounds();
-    if (!_box) {
+    // First, get all special points for snapping
+    std::vector<NR::Point> snap_points_hull = selection->getSnapPointsConvexHull(); // Includes path nodes
+    // Find bbox hulling all special points, which excludes stroke width. Here we need to include the
+    // path nodes, for example because a rectangle which has been converted to a path doesn't have 
+    // any other special points
+    NR::Rect snap_points_bbox;
+    if ( snap_points_hull.empty() == false ) {
+        std::vector<NR::Point>::iterator i = snap_points_hull.begin();
+        snap_points_bbox = NR::Rect(*i, *i);
+        i++;
+        while (i != snap_points_hull.end()) {
+            snap_points_bbox.expandTo(*i);
+            i++;
+        }
+    }
+    
+    // Next, determine the bounding box for snapping ...
+    _bbox = selection->bounds(_snap_bbox_type);
+    _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX);
+    
+    /*std::cout << "Approximate BBox: " << _approximate_bbox->min() << " - " << _approximate_bbox->max() << std::endl;
+    std::cout << "Geometric BBox: " << selection->bounds(SPItem::GEOMETRIC_BBOX)->min() << " - " << selection->bounds(SPItem::GEOMETRIC_BBOX)->max() << std::endl;
+    */
+    
+    if (!_bbox) {
         _empty = true;
         return;
     }
@@ -627,9 +670,9 @@ void Inkscape::SelTrans::_showHandles(SPKnot *knot[], SPSelTransHandle const han
 
         NR::Point const handle_pt(handle[i].x, handle[i].y);
         // shouldn't have nullary bbox, but knots
-        g_assert(_box);
-        NR::Point p( _box->min()
-                     + ( _box->dimensions()
+        g_assert(_bbox);
+        NR::Point p( _bbox->min()
+                     + ( _bbox->dimensions()
                          * NR::scale(handle_pt) ) );
 
         sp_knot_moveto(knot[i], &p);
@@ -749,11 +792,11 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
     if ((!(state & GDK_SHIFT_MASK) == !(_state == STATE_ROTATE)) && (&handle != &handle_center)) {
         _origin = _opposite;
         _origin_for_bboxpoints = _opposite_for_bboxpoints;
-        _origin_for_snappoints = _opposite_for_snappoints;
+        _origin_for_specpoints = _opposite_for_specpoints;
     } else if (_center) {
         _origin = *_center;
         _origin_for_bboxpoints = *_center;
-        _origin_for_snappoints = *_center;
+        _origin_for_specpoints = *_center;
     } else {
         // FIXME
         return TRUE;
@@ -876,7 +919,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
         // Snap along a suitable constraint vector from the origin.
 
         // The inclination of the constraint vector is calculated from the aspect ratio
-        NR::Point bbox_dim = _box->dimensions();
+        NR::Point bbox_dim = _bbox->dimensions();
         double const aspect_ratio = bbox_dim[1] / bbox_dim[0]; // = height / width
 
         // Determine direction of the constraint vector
@@ -895,9 +938,9 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
         std::pair<NR::scale, bool> sn = m.constrainedSnapScale(Snapper::SNAP_POINT,
                                                                _snap_points,
                                                                it,
-                                                               Snapper::ConstraintLine(_origin_for_snappoints, cv),
+                                                               Snapper::ConstraintLine(_origin_for_specpoints, cv),
                                                                s,
-                                                               _origin_for_snappoints);
+                                                               _origin_for_specpoints);
 
         if (bb.second == false && sn.second == false) {
             /* We didn't snap, so just keep the locked aspect ratio */
@@ -922,7 +965,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
                                                         _snap_points,
                                                         it,
                                                         s,
-                                                        _origin_for_snappoints);
+                                                        _origin_for_specpoints);
 
 	/* Pick the snap that puts us closest to the original scale */
         NR::Coord bd = bb.second ?
@@ -1009,7 +1052,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             _snap_points,
             it,
             s[axis],
-            _origin_for_snappoints,
+            _origin_for_specpoints,
             axis,
             true);
 
@@ -1035,7 +1078,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             _snap_points,
             it,
             s[axis],
-            _origin_for_snappoints,
+            _origin_for_specpoints,
             axis,
             false);
 
@@ -1122,7 +1165,7 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
                                                        _snap_points,
                                                        std::list<SPItem const *>(),
                                                        skew[dim_a],
-                                                       _origin_for_snappoints,
+                                                       _origin_for_specpoints,
                                                        dim_b);
         
         if (bb.second || sn.second) {
@@ -1214,21 +1257,21 @@ gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
         }
     }
 
-    if ( !(state & GDK_SHIFT_MASK) && _box ) {
+    if ( !(state & GDK_SHIFT_MASK) && _bbox ) {
         // screen pixels to snap center to bbox
 #define SNAP_DIST 5
         // FIXME: take from prefs
         double snap_dist = SNAP_DIST / _desktop->current_zoom();
 
         for (int i = 0; i < 2; i++) {
-            if (fabs(pt[i] - _box->min()[i]) < snap_dist) {
-                pt[i] = _box->min()[i];
+            if (fabs(pt[i] - _bbox->min()[i]) < snap_dist) {
+                pt[i] = _bbox->min()[i];
             }
-            if (fabs(pt[i] - _box->midpoint()[i]) < snap_dist) {
-                pt[i] = _box->midpoint()[i];
+            if (fabs(pt[i] - _bbox->midpoint()[i]) < snap_dist) {
+                pt[i] = _bbox->midpoint()[i];
             }
-            if (fabs(pt[i] - _box->max()[i]) < snap_dist) {
-                pt[i] = _box->max()[i];
+            if (fabs(pt[i] - _bbox->max()[i]) < snap_dist) {
+                pt[i] = _bbox->max()[i];
             }
         }
     }
@@ -1308,23 +1351,30 @@ void Inkscape::SelTrans::stretch(SPSelTransHandle const &handle, NR::Point &pt, 
         s[!dim] = fabs(s[dim]);
     }
 
-    if (!_box) {
+    if (!_bbox) {
         return;
     }
 
-    NR::Point new_bbox_min = _box->min() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
-    NR::Point new_bbox_max = _box->max() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
+    NR::Point new_bbox_min = _approximate_bbox->min() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
+    NR::Point new_bbox_max = _approximate_bbox->max() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
 
-    int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
-    NR::Matrix scaler = get_scale_transform_with_stroke (*_box, _strokewidth, transform_stroke,
-                   new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
+    int transform_stroke = false;
+    gdouble strokewidth = 0;
+        
+    if ( _snap_bbox_type != SPItem::GEOMETRIC_BBOX) {
+        transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
+        strokewidth = _strokewidth;
+    }
+        
+    NR::Matrix scaler = get_scale_transform_with_stroke (*_approximate_bbox, strokewidth, transform_stroke,
+                    new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
 
     transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
 }
 
 void Inkscape::SelTrans::scale(NR::Point &pt, guint state)
 {
-    if (!_box) {
+    if (!_bbox) {
         return;
     }
 
@@ -1337,13 +1387,20 @@ void Inkscape::SelTrans::scale(NR::Point &pt, guint state)
         if (fabs(s[i]) < 1e-9)
             s[i] = 1e-9;
     }
-    NR::Point new_bbox_min = _box->min() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
-    NR::Point new_bbox_max = _box->max() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
+    NR::Point new_bbox_min = _approximate_bbox->min() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
+    NR::Point new_bbox_max = _approximate_bbox->max() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
 
-    int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
-    NR::Matrix scaler = get_scale_transform_with_stroke (*_box, _strokewidth, transform_stroke,
-                   new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
+    int transform_stroke = false;
+    gdouble strokewidth = 0;
 
+    if ( _snap_bbox_type != SPItem::GEOMETRIC_BBOX) {
+        transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
+        strokewidth = _strokewidth;
+    }
+        
+    NR::Matrix scaler = get_scale_transform_with_stroke (*_approximate_bbox, strokewidth, transform_stroke,
+                    new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
+    
     transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
 }
 

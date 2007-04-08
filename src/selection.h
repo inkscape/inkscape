@@ -28,6 +28,7 @@
 #include "gc-anchored.h"
 #include "gc-soft-ptr.h"
 #include "util/list.h"
+#include "sp-item.h"
 
 class SPItem;
 
@@ -231,23 +232,23 @@ public:
     guint numberOfParents();
 
     /** @brief Returns the bounding rectangle of the selection */
-    NRRect *bounds(NRRect *dest) const;
+    NRRect *bounds(NRRect *dest, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
     /** @brief Returns the bounding rectangle of the selection */
-    NR::Maybe<NR::Rect> bounds() const;
+    NR::Maybe<NR::Rect> bounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
      * @brief Returns the bounding rectangle of the selection
      *
      * \todo how is this different from bounds()?
      */ 
-    NRRect *boundsInDocument(NRRect *dest) const;
+    NRRect *boundsInDocument(NRRect *dest, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
      * @brief Returns the bounding rectangle of the selection
      *
      * \todo how is this different from bounds()?
      */
-    NR::Maybe<NR::Rect> boundsInDocument() const;
+    NR::Maybe<NR::Rect> boundsInDocument(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
      * @brief Returns the rotation/skew center of the selection

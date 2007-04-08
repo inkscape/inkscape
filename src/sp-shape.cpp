@@ -619,6 +619,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
         nr_path_matrix_bbox_union(&bp, transform, &cbbox);
 
         if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX) {
+            
             SPStyle* style=SP_OBJECT_STYLE (item);
             if (style->stroke.type != SP_PAINT_TYPE_NONE) {
                 double const scale = expansion(transform);

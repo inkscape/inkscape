@@ -207,7 +207,7 @@ struct SPItemClass {
 
 /* Methods */
 
-void sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const clear);
+void sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
 void sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear);
 
 unsigned sp_item_pos_in_parent(SPItem *item);
@@ -239,8 +239,8 @@ gint sp_item_event (SPItem *item, SPEvent *event);
 
 NRArenaItem *sp_item_get_arenaitem(SPItem *item, unsigned int key);
 
-void sp_item_bbox_desktop(SPItem *item, NRRect *bbox) __attribute__ ((deprecated));
-NR::Maybe<NR::Rect> sp_item_bbox_desktop(SPItem *item);
+void sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
+NR::Maybe<NR::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
 
 NR::Matrix i2anc_affine(SPObject const *item, SPObject const *ancestor);
 NR::Matrix i2i_affine(SPObject const *src, SPObject const *dest);

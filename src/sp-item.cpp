@@ -674,9 +674,9 @@ NR::Maybe<NR::Rect> SPItem::getBounds(NR::Matrix const &transform,
 }
 
 void
-sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const clear)
+sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
 {
-    sp_item_invoke_bbox_full(item, bbox, transform, 0, clear);
+    sp_item_invoke_bbox_full(item, bbox, transform, type, clear);
 }
 
 /** Calls \a item's subclass' bounding box method; clips it by the bbox of clippath, if any; and
@@ -743,19 +743,19 @@ unsigned sp_item_pos_in_parent(SPItem *item)
 }
 
 void
-sp_item_bbox_desktop(SPItem *item, NRRect *bbox)
+sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
     g_assert(bbox != NULL);
 
-    sp_item_invoke_bbox(item, bbox, sp_item_i2d_affine(item), TRUE);
+    sp_item_invoke_bbox(item, bbox, sp_item_i2d_affine(item), TRUE, type);
 }
 
-NR::Maybe<NR::Rect> sp_item_bbox_desktop(SPItem *item)
+NR::Maybe<NR::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
 {
     NRRect ret;
-    sp_item_invoke_bbox(item, &ret, sp_item_i2d_affine(item), TRUE);
+    sp_item_invoke_bbox(item, &ret, sp_item_i2d_affine(item), TRUE, type);
     return ret.upgrade();
 }
 

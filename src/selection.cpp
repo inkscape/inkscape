@@ -304,25 +304,25 @@ Inkscape::XML::Node *Selection::singleRepr() {
     return obj ? SP_OBJECT_REPR(obj) : NULL;
 }
 
-NRRect *Selection::bounds(NRRect *bbox) const
+NRRect *Selection::bounds(NRRect *bbox, SPItem::BBoxType type) const
 {
     g_return_val_if_fail (bbox != NULL, NULL);
-    *bbox = NRRect(bounds());
+    *bbox = NRRect(bounds(type));
     return bbox;
 }
 
-NR::Maybe<NR::Rect> Selection::bounds() const
+NR::Maybe<NR::Rect> Selection::bounds(SPItem::BBoxType type) const
 {
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
     NR::Maybe<NR::Rect> bbox = NR::Nothing();
     for ( GSList const *i = items ; i != NULL ; i = i->next ) {
-        bbox = NR::union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data)));
+        bbox = NR::union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data), type));
     }
     return bbox;
 }
 
-NRRect *Selection::boundsInDocument(NRRect *bbox) const {
+NRRect *Selection::boundsInDocument(NRRect *bbox, SPItem::BBoxType type) const {
     g_return_val_if_fail (bbox != NULL, NULL);
 
     GSList const *items=const_cast<Selection *>(this)->itemList();
@@ -336,16 +336,16 @@ NRRect *Selection::boundsInDocument(NRRect *bbox) const {
 
     for ( GSList const *iter=items ; iter != NULL ; iter = iter->next ) {
         SPItem *item=SP_ITEM(iter->data);
-        NR::Matrix const i2doc(sp_item_i2doc_affine(item));
-        sp_item_invoke_bbox(item, bbox, i2doc, FALSE);
+        NR::Matrix i2doc(sp_item_i2doc_affine(item));
+        sp_item_invoke_bbox(item, bbox, i2doc, FALSE, type);
     }
 
     return bbox;
 }
 
-NR::Maybe<NR::Rect> Selection::boundsInDocument() const {
+NR::Maybe<NR::Rect> Selection::boundsInDocument(SPItem::BBoxType type) const {
     NRRect r;
-    return boundsInDocument(&r)->upgrade();
+    return boundsInDocument(&r, type)->upgrade();
 }
 
 /** Extract the position of the center from the first selected object */

@@ -117,14 +117,17 @@ private:
     bool _empty;
     bool _changed;
 
-    NR::Maybe<NR::Rect> _box;
+    SPItem::BBoxType _snap_bbox_type;
+    
+    NR::Maybe<NR::Rect> _bbox;
+    NR::Maybe<NR::Rect> _approximate_bbox;
     gdouble _strokewidth;
     NR::Matrix _current;
     NR::Point _opposite; ///< opposite point to where a scale is taking place
     
-    NR::Point _opposite_for_snappoints;
+    NR::Point _opposite_for_specpoints;
     NR::Point _opposite_for_bboxpoints;
-    NR::Point _origin_for_snappoints;
+    NR::Point _origin_for_specpoints;
     NR::Point _origin_for_bboxpoints;
 
     NR::Maybe<NR::Point> _center;
