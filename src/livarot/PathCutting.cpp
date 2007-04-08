@@ -991,9 +991,15 @@ Path::cut_position Path::PointToCurvilignPosition(NR::Point const &pos) const
             double nearestY =  (localPos[NR::X] * gradient + localPos[NR::Y] - intersection * gradient)
                              / (gradient * gradient + 1.0);
             t = (nearestY - p1[NR::Y]) / (p2[NR::Y] - p1[NR::Y]);
-            if (t <= 0.0) thisRangeSquared = square(p1[NR::X] - localPos[NR::X]) + square(p1[NR::Y] - localPos[NR::Y]);
-            else if (t >= 1.0) thisRangeSquared = square(p2[NR::X] - localPos[NR::X]) + square(p2[NR::Y] - localPos[NR::Y]);
-            else thisRangeSquared = square(nearestY * gradient + intersection - localPos[NR::X]) + square(nearestY - localPos[NR::Y]);
+            if (t <= 0.0) {
+                thisRangeSquared = square(p1[NR::X] - localPos[NR::X]) + square(p1[NR::Y] - localPos[NR::Y]);
+                t = 0.0;
+            } else if (t >= 1.0) {
+                thisRangeSquared = square(p2[NR::X] - localPos[NR::X]) + square(p2[NR::Y] - localPos[NR::Y]);
+                t = 1.0;
+            } else {
+                thisRangeSquared = square(nearestY * gradient + intersection - localPos[NR::X]) + square(nearestY - localPos[NR::Y]);
+            }
         }
 
         if (thisRangeSquared < bestRangeSquared) {
@@ -1008,10 +1014,11 @@ Path::cut_position Path::PointToCurvilignPosition(NR::Point const &pos) const
         result.t = 0.0;
     } else {
         result.piece = pts[bestSeg].piece;
-        if (result.piece == pts[bestSeg - 1].piece)
+        if (result.piece == pts[bestSeg - 1].piece) {
             result.t = pts[bestSeg - 1].t * (1.0 - bestT) + pts[bestSeg].t * bestT;
-        else
+        } else {
             result.t = pts[bestSeg].t * bestT;
+        }
     }
     return result;
 }
