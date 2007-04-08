@@ -56,7 +56,7 @@
 #if defined (SOLARIS_2_8)
 #include "round.h"
 using Inkscape::round;
-#endif 
+#endif
 
 #ifdef WITH_INKBOARD
 #endif
@@ -105,7 +105,7 @@ static void sp_dtw_zoom_selection (GtkMenuItem *item, gpointer data);
 
 SPViewWidgetClass *dtw_parent_class;
 
-void 
+void
 SPDesktopWidget::setMessage (Inkscape::MessageType type, const gchar *message)
 {
     GtkLabel *sb=GTK_LABEL(this->select_status);
@@ -185,11 +185,11 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     widget = GTK_WIDGET (dtw);
 
     dtw->window = 0;
-    
+
     dtw->desktop = NULL;
 
     dtw->_interaction_disabled_counter = 0;
-    
+
     dtw->tt = gtk_tooltips_new ();
 
     /* Main table */
@@ -320,10 +320,12 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     GtkWidget *label_y = gtk_label_new("Y:");
     gtk_misc_set_alignment (GTK_MISC(label_y), 0.0, 0.5);
     gtk_table_attach(GTK_TABLE(dtw->coord_status),  label_y, 1,2, 1,2, GTK_FILL, GTK_FILL, 0, 0);
-    dtw->coord_status_x = gtk_label_new("0.0");
-    gtk_misc_set_alignment (GTK_MISC(dtw->coord_status_x), 0.0, 0.5);
-    dtw->coord_status_y = gtk_label_new("0.0");
-    gtk_misc_set_alignment (GTK_MISC(dtw->coord_status_y), 0.0, 0.5);
+    dtw->coord_status_x = gtk_label_new(NULL);
+    gtk_label_set_markup( GTK_LABEL(dtw->coord_status_x), "<tt>   0.00 </tt>" );
+    gtk_misc_set_alignment (GTK_MISC(dtw->coord_status_x), 1.0, 0.5);
+    dtw->coord_status_y = gtk_label_new(NULL);
+    gtk_label_set_markup( GTK_LABEL(dtw->coord_status_y), "<tt>   0.00 </tt>" );
+    gtk_misc_set_alignment (GTK_MISC(dtw->coord_status_y), 1.0, 0.5);
     gtk_table_attach(GTK_TABLE(dtw->coord_status), dtw->coord_status_x, 2,3, 0,1, GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach(GTK_TABLE(dtw->coord_status), dtw->coord_status_y, 2,3, 1,2, GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach(GTK_TABLE(dtw->coord_status),  gtk_label_new("Z:"), 3,4, 0,2, GTK_FILL, GTK_FILL, 0, 0);
@@ -388,7 +390,7 @@ sp_desktop_widget_destroy (GtkObject *object)
 
 /**
  * Set the title in the desktop-window (if desktop has an own window).
- * 
+ *
  * The title has form file name: desktop number - Inkscape.
  * The desktop number is only shown if it's 2 or higher,
  */
@@ -549,7 +551,7 @@ sp_dtw_desktop_deactivate (SPDesktopWidget *dtw)
  *  to save, discard, or cancel.  Returns TRUE if the shutdown operation
  *  is cancelled or if the save is cancelled or fails, FALSE otherwise.
  */
-bool 
+bool
 SPDesktopWidget::shutdown()
 {
     g_assert(desktop != NULL);
@@ -567,7 +569,7 @@ SPDesktopWidget::shutdown()
 
             gchar *markup;
             /** \todo
-             * FIXME !!! obviously this will have problems if the document 
+             * FIXME !!! obviously this will have problems if the document
              * name contains markup characters
              */
             markup = g_strdup_printf(
@@ -576,11 +578,11 @@ SPDesktopWidget::shutdown()
                 SP_DOCUMENT_NAME(doc));
 
             /** \todo
-             * FIXME !!! Gtk 2.3+ gives us gtk_message_dialog_set_markup() 
-             * (and actually even 
-             * gtk_message_dialog_new_with_markup(..., format, ...)!) -- 
-             * until then, we will have to be a little bit evil here and 
-             * poke at GtkMessageDialog::label, which is private... 
+             * FIXME !!! Gtk 2.3+ gives us gtk_message_dialog_set_markup()
+             * (and actually even
+             * gtk_message_dialog_new_with_markup(..., format, ...)!) --
+             * until then, we will have to be a little bit evil here and
+             * poke at GtkMessageDialog::label, which is private...
              */
 
             gtk_label_set_markup(GTK_LABEL(GTK_MESSAGE_DIALOG(dialog)->label), markup);
@@ -629,8 +631,8 @@ SPDesktopWidget::shutdown()
                 "Document modified");
 
             gchar *markup;
-            /** \todo 
-             * FIXME !!! obviously this will have problems if the document 
+            /** \todo
+             * FIXME !!! obviously this will have problems if the document
              * name contains markup characters
              */
             markup = g_strdup_printf(
@@ -640,11 +642,11 @@ SPDesktopWidget::shutdown()
                 Inkscape::Extension::db.get(sp_document_repr_root(doc)->attribute("inkscape:output_extension"))->get_name());
 
             /** \todo
-             * FIXME !!! Gtk 2.3+ gives us gtk_message_dialog_set_markup() 
-             * (and actually even 
-             * gtk_message_dialog_new_with_markup(..., format, ...)!) -- 
-             * until then, we will have to be a little bit evil here and 
-             * poke at GtkMessageDialog::label, which is private... 
+             * FIXME !!! Gtk 2.3+ gives us gtk_message_dialog_set_markup()
+             * (and actually even
+             * gtk_message_dialog_new_with_markup(..., format, ...)!) --
+             * until then, we will have to be a little bit evil here and
+             * poke at GtkMessageDialog::label, which is private...
              */
 
             gtk_label_set_markup(GTK_LABEL(GTK_MESSAGE_DIALOG(dialog)->label), markup);
@@ -689,16 +691,16 @@ SPDesktopWidget::shutdown()
 /**
  * \pre this->desktop->main != 0
  */
-void 
+void
 SPDesktopWidget::requestCanvasUpdate() {
     gtk_widget_queue_draw (GTK_WIDGET (SP_CANVAS_ITEM (this->desktop->main)->canvas));
 }
 
-void 
+void
 SPDesktopWidget::requestCanvasUpdateAndWait() {
     requestCanvasUpdate();
-    
-    while (gtk_events_pending()) 
+
+    while (gtk_events_pending())
       gtk_main_iteration_do(FALSE);
 
 }
@@ -707,9 +709,9 @@ void
 SPDesktopWidget::enableInteraction()
 {
   g_return_if_fail(_interaction_disabled_counter > 0);
-  
+
   _interaction_disabled_counter--;
-  
+
   if (_interaction_disabled_counter == 0) {
     gtk_widget_set_sensitive(GTK_WIDGET(this), TRUE);
   }
@@ -721,30 +723,31 @@ SPDesktopWidget::disableInteraction()
   if (_interaction_disabled_counter == 0) {
     gtk_widget_set_sensitive(GTK_WIDGET(this), FALSE);
   }
-  
+
   _interaction_disabled_counter++;
 }
 
-void 
+void
 SPDesktopWidget::setCoordinateStatus(NR::Point p)
 {
     gchar *cstr;
-    cstr=g_strdup_printf("%6.2f", dt2r * p[NR::X]);
-    gtk_label_set_text (GTK_LABEL (this->coord_status_x), cstr);
+    cstr = g_strdup_printf("<tt>%7.2f </tt>", dt2r * p[NR::X]);
+    gtk_label_set_markup( GTK_LABEL(this->coord_status_x), cstr );
     g_free(cstr);
-    cstr=g_strdup_printf("%6.2f", dt2r * p[NR::Y]);
-    gtk_label_set_text (GTK_LABEL (this->coord_status_y), cstr);
+
+    cstr = g_strdup_printf("<tt>%7.2f </tt>", dt2r * p[NR::Y]);
+    gtk_label_set_markup( GTK_LABEL(this->coord_status_y), cstr );
     g_free(cstr);
 }
 
 void
 SPDesktopWidget::letZoomGrabFocus()
 {
-    if (zoom_status) 
+    if (zoom_status)
         gtk_widget_grab_focus (zoom_status);
 }
-    
-void 
+
+void
 SPDesktopWidget::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
 {
     GtkWindow *window = GTK_WINDOW (gtk_object_get_data (GTK_OBJECT(this), "window"));
@@ -777,8 +780,8 @@ SPDesktopWidget::setWindowSize (gint w, gint h)
 }
 
 /**
- * \note transientizing does not work on windows; when you minimize a document 
- * and then open it back, only its transient emerges and you cannot access 
+ * \note transientizing does not work on windows; when you minimize a document
+ * and then open it back, only its transient emerges and you cannot access
  * the document window. The document window must be restored by rightclicking
  * the taskbar button and pressing "Restore"
  */
@@ -789,18 +792,18 @@ SPDesktopWidget::setWindowTransient (void *p, int transient_policy)
     if (w)
     {
         gtk_window_set_transient_for (GTK_WINDOW(p), w);
-        
-        /* 
+
+        /*
          * This enables "aggressive" transientization,
-         * i.e. dialogs always emerging on top when you switch documents. Note 
-         * however that this breaks "click to raise" policy of a window 
-         * manager because the switched-to document will be raised at once 
+         * i.e. dialogs always emerging on top when you switch documents. Note
+         * however that this breaks "click to raise" policy of a window
+         * manager because the switched-to document will be raised at once
          * (so that its transients also could raise)
          */
         if (transient_policy == 2)
-        
+
             // without this, a transient window not always emerges on top
-            gtk_window_present (w); 
+            gtk_window_present (w);
     }
 }
 
@@ -809,7 +812,7 @@ SPDesktopWidget::presentWindow()
 {
     GtkWindow *w =GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(this)));
     if (w)
-        gtk_window_present (w); 
+        gtk_window_present (w);
 }
 
 bool
@@ -918,7 +921,7 @@ void
 SPDesktopWidget::setToolboxFocusTo (const gchar* label)
 {
     gpointer hb = sp_search_by_data_recursive(aux_toolbox, (gpointer) label);
-    if (hb && GTK_IS_WIDGET(hb)) 
+    if (hb && GTK_IS_WIDGET(hb))
     {
         gtk_widget_grab_focus(GTK_WIDGET(hb));
     }
@@ -959,7 +962,7 @@ sp_desktop_widget_new (SPNamedView *namedview)
     // Add the shape geometry to libavoid for autorouting connectors.
     // This needs desktop set for its spacing preferences.
     init_avoided_shape_geometry(dtw->desktop);
-    
+
     dtw->selected_style->setDesktop(dtw->desktop);
 
     /* Once desktop is set, we can update rulers */
