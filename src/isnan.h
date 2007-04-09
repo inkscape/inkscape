@@ -27,6 +27,8 @@
  */
 
 #if defined(__isnan)
+# define isNaN(_a) (__isnan(_a))
+#elif defined(__APPLE__) && __GNUC__ == 3
 # define isNaN(_a) (__isnan(_a))	/* MacOSX/Darwin definition < 10.4 */
 #elif defined(WIN32) || defined(_isnan)
 # define isNaN(_a) (_isnan(_a)) 	/* Win32 definition */
@@ -44,6 +46,8 @@
 
 
 #if defined(__isfinite)
+# define isFinite(_a) (__isfinite(_a))
+#elif defined(__APPLE__) && __GNUC__ == 3
 # define isFinite(_a) (__isfinite(_a))	/* MacOSX/Darwin definition < 10.4 */
 #elif defined(__sgi)
 # define isFinite(_a) (_isfinite(_a))
