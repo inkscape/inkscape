@@ -337,13 +337,7 @@ void InkscapePreferences::initPageTools()
     _t_sel_cue_box.init ( _("Box"), "options.selcue", "value", Inkscape::SelCue::BBOX, false, &_t_sel_cue_none);
     _page_selector.add_line( true, "", _t_sel_cue_box, "", 
                             _("Each selected object displays its bounding box"));
-    _page_selector.add_group_header( _("Default scale origin:"));
-    _t_sel_org_edge.init ( _("Opposite bounding box edge"), "tools.select", "scale_origin", "bbox", true, 0);
-    _page_selector.add_line( true, "", _t_sel_org_edge, "", 
-                            _("Default scale origin will be on the bounding box of the item"));
-    _t_sel_org_node.init ( _("Farthest opposite node"), "tools.select", "scale_origin", "points", false, &_t_sel_org_edge);
-    _page_selector.add_line( true, "", _t_sel_org_node, "", 
-                            _("Default scale origin will be on the bounding box of the item's points"));
+    
     //Node
     this->AddPage(_page_node, _("Node"), iter_tools, PREFS_PAGE_TOOLS_NODE);
     AddSelcueCheckbox(_page_node, "tools.nodes", true);
