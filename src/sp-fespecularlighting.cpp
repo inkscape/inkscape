@@ -150,7 +150,7 @@ sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint f
             // is this sane?
             repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(repr->document());
+            repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
         }
     }
 

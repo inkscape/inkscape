@@ -269,7 +269,7 @@ sp_filter_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     SPFilter *filter = SP_FILTER(object);
 
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(repr->document());
+        repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
     }
 
     if ((flags & SP_OBJECT_WRITE_ALL) || filter->filterUnits_set) {

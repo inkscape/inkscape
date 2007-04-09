@@ -192,7 +192,7 @@ sp_metadata_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         if (repr) {
             repr->mergeFrom(SP_OBJECT_REPR (object), "id");
         } else {
-            repr = SP_OBJECT_REPR (object)->duplicate(repr->document());
+            repr = SP_OBJECT_REPR (object)->duplicate(NULL); // FIXME
         }
     }
 
