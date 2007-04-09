@@ -121,5 +121,3 @@ InkRadioAction* ink_radio_action_new( const gchar *name,
 G_END_DECLS
 
 #endif /* SEEN_INK_ACTION */
-
-
