@@ -1,12 +1,23 @@
 #!/bin/sh
 #
 # Author: Aaron Voisine <aaron@voisine.org>
-# Inkscape Modifications: Michael Wybrow <mjwybrow@users.sourceforge.net>
+# Inkscape Modifications:
+#	Michael Wybrow <mjwybrow@users.sourceforge.net>
+#	Jean-Olivier Irisson <jo.irisson@gmail.com>
+#
 
 CWD="`(cd \"\`dirname \\\"$0\\\"\`\"; echo $PWD)`"
 TOP="`dirname \"$CWD\"`"
 
 export DYLD_LIBRARY_PATH="$TOP/lib"
+if [ -d /sw/bin ]
+then
+	export PATH="/sw/bin/:$PATH"
+fi
+if [ -d /opt/local/bin ]
+then
+	export PATH="/opt/local/bin:$PATH"
+fi
 export PATH="$CWD:$PATH"
 export PANGO_RC_FILE="$HOME/.inkscape-etc/pangorc"
 export FONTCONFIG_PATH="$TOP/etc/fonts"
