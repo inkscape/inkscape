@@ -230,6 +230,8 @@ static void ink_toggle_action_set_property( GObject* obj, guint propId, const GV
 static GtkWidget* ink_toggle_action_create_menu_item( GtkAction* action );
 static GtkWidget* ink_toggle_action_create_tool_item( GtkAction* action );
 
+static void ink_toggle_action_update_icon( InkToggleAction* action );
+
 static GtkToggleActionClass* gInkToggleActionParentClass = 0;
 
 struct _InkToggleActionPrivate
@@ -368,6 +370,8 @@ void ink_toggle_action_set_property( GObject* obj, guint propId, const GValue *v
             gchar* tmp = action->private_data->iconId;
             action->private_data->iconId = g_value_dup_string( value );
             g_free( tmp );
+
+            ink_toggle_action_update_icon( action );
         }
         break;
 
@@ -415,6 +419,26 @@ static GtkWidget* ink_toggle_action_create_tool_item( GtkAction* action )
     return item;
 }
 
+
+static void ink_toggle_action_update_icon( InkToggleAction* action )
+{
+    if ( action ) {
+        GSList* proxies = gtk_action_get_proxies( GTK_ACTION(action) );
+        while ( proxies ) {
+            if ( GTK_IS_TOOL_ITEM(proxies->data) ) {
+                if ( GTK_IS_TOOL_BUTTON(proxies->data) ) {
+                    GtkToolButton* button = GTK_TOOL_BUTTON(proxies->data);
+
+                    GtkWidget* child = sp_icon_new( action->private_data->iconSize, action->private_data->iconId );
+                    gtk_widget_show_all( child );
+                    gtk_tool_button_set_icon_widget( button, child );
+                }
+            }
+
+            proxies = g_slist_next( proxies );
+        }
+    }
+}
 
 
 /* --------------------------------------------------------------- */
