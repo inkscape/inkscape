@@ -94,11 +94,11 @@ void SPAvoidRef::handleSettingChange(void)
     
     _transformed_connection.disconnect();
     if (new_setting) {
-        _transformed_connection = item->connectTransformed(
-                sigc::ptr_fun(&avoid_item_move));
-
         Avoid::Polygn poly = avoid_item_poly(item);
         if (poly.pn > 0) {
+            _transformed_connection = item->connectTransformed(
+                    sigc::ptr_fun(&avoid_item_move));
+
             const char *id = SP_OBJECT_REPR(item)->attribute("id");
             g_assert(id != NULL);
             
