@@ -746,6 +746,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
         g_signal_connect( G_OBJECT(spinbutton), "value-changed", G_CALLBACK(value_changed_cb), action );
 
         g_signal_connect_swapped( G_OBJECT(spinbutton), "event", G_CALLBACK(event_cb), action );
+        gtk_entry_set_width_chars( GTK_ENTRY(spinbutton), act->private_data->digits + 3 );
 
         gtk_widget_show_all( item );
 
