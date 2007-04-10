@@ -940,9 +940,21 @@ SPDesktopWidget::setToolboxAdjustmentValue (gchar const *id, double value)
 bool
 SPDesktopWidget::isToolboxButtonActive (const gchar* id)
 {
-    GtkToggleButton *b = (GtkToggleButton *) sp_search_by_data_recursive(aux_toolbox, (gpointer) id);
+    bool isActive = false;
+    gpointer thing = sp_search_by_data_recursive(aux_toolbox, (gpointer) id);
+    if ( !thing ) {
+        //g_message( "Unable to locate item for {%s}", id );
+    } else if ( GTK_IS_TOGGLE_BUTTON(thing) ) {
+        GtkToggleButton *b = GTK_TOGGLE_BUTTON(thing);
+        isActive = gtk_toggle_button_get_active( b ) != 0;
+    } else if ( GTK_IS_TOGGLE_ACTION(thing) ) {
+        GtkToggleAction* act = GTK_TOGGLE_ACTION(thing);
+        isActive = gtk_toggle_action_get_active( act ) != 0;
+    } else {
+        //g_message( "Item for {%s} is of an unsupported type", id );
+    }
 
-    return gtk_toggle_button_get_active (b) != 0;
+    return isActive;
 }
 
 SPViewWidget *

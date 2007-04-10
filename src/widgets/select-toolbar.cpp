@@ -47,6 +47,8 @@
 #include "display/sp-canvas.h"
 #include "ege-select-one-action.h"
 #include "helper/unit-tracker.h"
+#include "ege-adjustment-action.h"
+#include "ink-action.h"
 
 using Inkscape::UnitTracker;
 
@@ -58,8 +60,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
     }
 
     gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
-
-    GtkWidget *f = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(spw), "frame");
+    bool setActive = false;
 
     using NR::X;
     using NR::Y;
@@ -90,12 +91,17 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
                 }
             }
 
-            gtk_widget_set_sensitive(f, TRUE);
+            setActive = true;
         } else {
-            gtk_widget_set_sensitive(f, FALSE);
+            setActive = false;
         }
     } else {
-        gtk_widget_set_sensitive(f, FALSE);
+        setActive = false;
+    }
+
+    GtkActionGroup *selectionActions = GTK_ACTION_GROUP( gtk_object_get_data(GTK_OBJECT(spw), "selectionActions") );
+    if ( selectionActions ) {
+        gtk_action_group_set_sensitive( selectionActions, setActive );
     }
 
     gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
@@ -148,6 +154,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     NR::Maybe<NR::Rect> bbox = selection->bounds();
 
     if ( !bbox || bbox->isEmpty() ) {
+        gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
         return;
     }
 
@@ -183,8 +190,8 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     }
 
     // Keep proportions if lock is on
-    GtkWidget *lock = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "lock"));
-    if (SP_BUTTON_IS_DOWN(lock)) {
+    GtkToggleAction *lock = GTK_TOGGLE_ACTION( gtk_object_get_data(GTK_OBJECT(spw), "lock") );
+    if ( gtk_toggle_action_get_active(lock) ) {
         if (adj == a_h) {
             x1 = x0 + yrel * bbox->extent(NR::X);
         } else if (adj == a_w) {
@@ -240,96 +247,93 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
 }
 
-GtkWidget *
-sp_select_toolbox_spinbutton(gchar *label, gchar *data, float lower_limit, UnitTracker* tracker, GtkWidget *spw, gchar *tooltip, gboolean altx)
+static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
+                                                       gchar const *label,
+                                                       gchar const *data,
+                                                       gdouble lower,
+                                                       GtkWidget* focusTarget,
+                                                       UnitTracker* tracker,
+                                                       GtkWidget* spw,
+                                                       gchar const *tooltip,
+                                                       gboolean altx )
 {
-    GtkTooltips *tt = gtk_tooltips_new();
-
-    GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-    GtkWidget *l = gtk_label_new(Q_(label));
-    gtk_tooltips_set_tip(tt, l, tooltip, NULL);
-    gtk_widget_show(l);
-    gtk_misc_set_alignment(GTK_MISC(l), 1.0, 0.5);
-    gtk_container_add(GTK_CONTAINER(hb), l);
-
-    GtkObject *a = gtk_adjustment_new(0.0, lower_limit, 1e6, SPIN_STEP, SPIN_PAGE_STEP, SPIN_PAGE_STEP);
-    if ( tracker ) {
-        tracker->addAdjustment( GTK_ADJUSTMENT(a) );
+    GtkAdjustment* adj = GTK_ADJUSTMENT( gtk_adjustment_new( 0.0, lower, 1e6, SPIN_STEP, SPIN_PAGE_STEP, SPIN_PAGE_STEP ) );
+    if (tracker) {
+        tracker->addAdjustment(adj);
     }
-    gtk_object_set_data(GTK_OBJECT(spw), data, a);
-
-    GtkWidget *sb = gtk_spin_button_new(GTK_ADJUSTMENT(a), SPIN_STEP, 3);
-    gtk_tooltips_set_tip(tt, sb, tooltip, NULL);
-    gtk_widget_set_size_request(sb, AUX_SPINBUTTON_WIDTH, AUX_SPINBUTTON_HEIGHT);
-    gtk_widget_show(sb);
-    gtk_signal_connect(GTK_OBJECT(sb), "focus-in-event", GTK_SIGNAL_FUNC(spinbutton_focus_in), spw);
-    gtk_signal_connect(GTK_OBJECT(sb), "key-press-event", GTK_SIGNAL_FUNC(spinbutton_keypress), spw);
-
-    gtk_container_add(GTK_CONTAINER(hb), sb);
-    gtk_signal_connect(GTK_OBJECT(a), "value_changed", GTK_SIGNAL_FUNC(sp_object_layout_any_value_changed), spw);
-
-    if (altx) { // this spinbutton will be activated by alt-x
-        gtk_object_set_data(GTK_OBJECT(sb), "altx", sb);
+    if ( spw ) {
+        gtk_object_set_data( GTK_OBJECT(spw), data, adj );
     }
 
-    return hb;
+    EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, Q_(label), tooltip, 0, SPIN_STEP, 3 );
+
+    gtk_signal_connect( GTK_OBJECT(adj), "value_changed", GTK_SIGNAL_FUNC(sp_object_layout_any_value_changed), spw );
+    if ( focusTarget ) {
+        ege_adjustment_action_set_focuswidget( act, focusTarget );
+    }
+
+    if ( altx ) { // this spinbutton will be activated by alt-x
+        g_object_set( G_OBJECT(act), "self-id", "altx", NULL );
+    }
+
+    // Using a cast just to make sure we pass in the right kind of function pointer
+    g_object_set( G_OBJECT(act), "tool-post", static_cast<EgeWidgetFixup>(sp_set_font_size_smaller), NULL );
+
+    return act;
 }
 
 // toggle button callbacks and updaters
 
-static void toggle_stroke (GtkWidget *button, gpointer data) {
-    prefs_set_int_attribute ("options.transform", "stroke", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ? 1 : 0);
+static void toggle_stroke( GtkToggleAction* act, gpointer data ) {
+    gboolean active = gtk_toggle_action_get_active( act );
+    prefs_set_int_attribute( "options.transform", "stroke", active ? 1 : 0 );
     SPDesktop *desktop = (SPDesktop *)data;
-    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
+    if ( active ) {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."));
     } else {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>stroke width</b> is <b>not scaled</b> when objects are scaled."));
     }
 }
 
-static void toggle_corners (GtkWidget *button, gpointer data) {
-    prefs_set_int_attribute ("options.transform", "rectcorners", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ? 1 : 0);
+static void toggle_corners( GtkToggleAction* act, gpointer data) {
+    gboolean active = gtk_toggle_action_get_active( act );
+    prefs_set_int_attribute( "options.transform", "rectcorners", active ? 1 : 0 );
     SPDesktop *desktop = (SPDesktop *)data;
-    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
+    if ( active ) {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>rounded rectangle corners</b> are <b>scaled</b> when rectangles are scaled."));
     } else {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>rounded rectangle corners</b> are <b>not scaled</b> when rectangles are scaled."));
     }
 }
 
-static void toggle_gradient (GtkWidget *button, gpointer data) {
-    prefs_set_int_attribute ("options.transform", "gradient", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ? 1 : 0);
+static void toggle_gradient( GtkToggleAction *act, gpointer data ) {
+    gboolean active = gtk_toggle_action_get_active( act );
+    prefs_set_int_attribute( "options.transform", "gradient", active ? 1 : 0 );
     SPDesktop *desktop = (SPDesktop *)data;
-    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
+    if ( active ) {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>gradients</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."));
     } else {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>gradients</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."));
     }
 }
 
-static void toggle_pattern (GtkWidget *button, gpointer data) {
-    prefs_set_int_attribute ("options.transform", "pattern", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ? 1 : 0);
+static void toggle_pattern( GtkToggleAction* act, gpointer data ) {
+    gboolean active = gtk_toggle_action_get_active( act );
+    prefs_set_int_attribute( "options.transform", "pattern", active ? 1 : 0 );
     SPDesktop *desktop = (SPDesktop *)data;
-    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
+    if ( active ) {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>patterns</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."));
     } else {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>patterns</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."));
     }
 }
 
-static void toggle_lock (GtkWidget *button, gpointer data) {
-
-    GtkWidget *old_child = gtk_bin_get_child(GTK_BIN(button));
-    gtk_container_remove (GTK_CONTAINER(button), old_child);
-
-    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
-        GtkWidget *child = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, "width_height_lock");
-        gtk_widget_show (child);
-        gtk_container_add (GTK_CONTAINER (button), child);
+static void toggle_lock( GtkToggleAction *act, gpointer data ) {
+    gboolean active = gtk_toggle_action_get_active( act );
+    if ( active ) {
+        g_object_set( G_OBJECT(act), "iconId", "width_height_lock", NULL );
     } else {
-        GtkWidget *child = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, "lock_unlocked");
-        gtk_widget_show (child);
-        gtk_container_add (GTK_CONTAINER (button), child);
+        g_object_set( G_OBJECT(act), "iconId", "lock_unlocked", NULL );
     }
 }
 
@@ -342,25 +346,83 @@ static void destroy_tracker( GtkObject* obj, gpointer /*user_data*/ )
     }
 }
 
+static void trigger_sp_action( GtkAction* act, gpointer user_data )
+{
+    SPAction* targetAction = SP_ACTION(user_data);
+    if ( targetAction ) {
+        sp_action_perform( targetAction, NULL );
+    }
+}
+
+static GtkAction* create_action_for_verb( Inkscape::Verb* verb, Inkscape::UI::View::View* view, Inkscape::IconSize size )
+{
+    GtkAction* act = 0;
+
+    SPAction* targetAction = verb->get_action(view);
+    InkAction* inky = ink_action_new( verb->get_id(), verb->get_name(), verb->get_tip(), verb->get_image(), size  );
+    act = GTK_ACTION(inky);
+
+    g_signal_connect( G_OBJECT(inky), "activate", GTK_SIGNAL_FUNC(trigger_sp_action), targetAction );
+
+    return act;
+}
+
 GtkWidget *
 sp_select_toolbox_new(SPDesktop *desktop)
 {
     Inkscape::UI::View::View *view = desktop;
 
-    GtkTooltips *tt = gtk_tooltips_new();
-    GtkWidget *tb = gtk_hbox_new(FALSE, 0);
+    GtkWidget *holder = gtk_hbox_new(FALSE, 0);
 
-    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CCW), view, tt);
-    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CW), view, tt);
-    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_OBJECT_FLIP_HORIZONTAL), view, tt);
-    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_OBJECT_FLIP_VERTICAL), view, tt);
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='SelectToolbar'>"
+        "    <toolitem action='ObjectRotate90CCW' />"
+        "    <toolitem action='ObjectRotate90' />"
+        "    <toolitem action='ObjectFlipHorizontally' />"
+        "    <toolitem action='ObjectFlipVertically' />"
+        "    <separator />"
+        "    <toolitem action='SelectionToBack' />"
+        "    <toolitem action='SelectionLower' />"
+        "    <toolitem action='SelectionRaise' />"
+        "    <toolitem action='SelectionToFront' />"
+        "    <separator />"
+        "    <toolitem action='XAction' />"
+        "    <toolitem action='YAction' />"
+        "    <toolitem action='WidthAction' />"
+        "    <toolitem action='LockAction' />"
+        "    <toolitem action='HeightAction' />"
+        "    <toolitem action='UnitsAction' />"
+        "    <separator />"
+        "    <toolitem action='transform_stroke' />"
+        "    <toolitem action='transform_corners' />"
+        "    <toolitem action='transform_gradient' />"
+        "    <toolitem action='transform_pattern' />"
+        "  </toolbar>"
+        "</ui>";
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+    GtkActionGroup* mainActions = gtk_action_group_new("main");
+    GtkActionGroup* selectionActions = gtk_action_group_new("selection");
+    GtkAction* act = 0;
 
-    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CCW), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    gtk_action_group_add_action( selectionActions, act );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CW), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    gtk_action_group_add_action( selectionActions, act );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_FLIP_HORIZONTAL), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    gtk_action_group_add_action( selectionActions, act );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_FLIP_VERTICAL), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    gtk_action_group_add_action( selectionActions, act );
 
-    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_SELECTION_TO_BACK), view, tt);
-    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_SELECTION_LOWER), view, tt);
-    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_SELECTION_RAISE), view, tt);
-    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_SELECTION_TO_FRONT), view, tt);
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_TO_BACK), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    gtk_action_group_add_action( selectionActions, act );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_LOWER), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    gtk_action_group_add_action( selectionActions, act );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_RAISE), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    gtk_action_group_add_action( selectionActions, act );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_TO_FRONT), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    gtk_action_group_add_action( selectionActions, act );
 
     // Create the parent widget for x y w h tracker.
     GtkWidget *spw = sp_widget_new_global(INKSCAPE);
@@ -372,7 +434,6 @@ sp_select_toolbox_new(SPDesktop *desktop)
     GtkWidget *vb = gtk_hbox_new(FALSE, 0);
     gtk_widget_show(vb);
     gtk_container_add(GTK_CONTAINER(spw), vb);
-    gtk_object_set_data(GTK_OBJECT(spw), "frame", vb);
 
     // Create the units menu.
     UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
@@ -382,56 +443,55 @@ sp_select_toolbox_new(SPDesktop *desktop)
     gtk_object_set_data( GTK_OBJECT(spw), "tracker", tracker );
     g_signal_connect( G_OBJECT(spw), "destroy", G_CALLBACK(destroy_tracker), spw );
 
+    EgeAdjustmentAction* eact = 0;
 
     // four spinbuttons
 
-    gtk_container_add(GTK_CONTAINER(vb),
-                      //TRANSLATORS: only translate "string" in "context|string".
-                      // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                      sp_select_toolbox_spinbutton(_("select_toolbar|X"), "X", -1e6, tracker, spw, _("Horizontal coordinate of selection"), TRUE));
-    aux_toolbox_space(vb, AUX_BETWEEN_SPINBUTTONS);
-    gtk_container_add(GTK_CONTAINER(vb),
-                      //TRANSLATORS: only translate "string" in "context|string".
-                      // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                      sp_select_toolbox_spinbutton(_("select_toolbar|Y"), "Y", -1e6, tracker, spw, _("Vertical coordinate of selection"), FALSE));
-    aux_toolbox_space(vb, AUX_BETWEEN_BUTTON_GROUPS);
+    //TRANSLATORS: only translate "string" in "context|string".
+    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+    eact = create_adjustment_action( "XAction", _("select_toolbar|X"), "X",
+                                     -1e6, GTK_WIDGET(desktop->canvas), tracker, spw,
+                                     _("Horizontal coordinate of selection"), TRUE );
+    gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
 
-    gtk_container_add(GTK_CONTAINER(vb),
-                      //TRANSLATORS: only translate "string" in "context|string".
-                      // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                      sp_select_toolbox_spinbutton(_("select_toolbar|W"), "width", 1e-3, tracker, spw, _("Width of selection"), FALSE));
+    //TRANSLATORS: only translate "string" in "context|string".
+    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+    eact = create_adjustment_action( "YAction", _("select_toolbar|Y"), "Y",
+                                     -1e6, GTK_WIDGET(desktop->canvas), tracker, spw,
+                                     _("Vertical coordinate of selection"), FALSE );
+    gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
+
+    //TRANSLATORS: only translate "string" in "context|string".
+    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+    eact = create_adjustment_action( "WidthAction", _("select_toolbar|W"), "width",
+                                     1e-3, GTK_WIDGET(desktop->canvas), tracker, spw,
+                                     _("Width of selection"), FALSE );
+    gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
 
     // lock toggle
-    GtkWidget *lockbox = gtk_vbox_new(TRUE, 0);
-    GtkWidget *lock = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
-                                              SP_BUTTON_TYPE_TOGGLE,
-                                              NULL,
-                                              "lock_unlocked",
-                                              _("When locked, change both width and height by the same proportion"),
-                                              tt);
-    gtk_box_pack_start(GTK_BOX(lockbox), lock, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vb), lockbox, FALSE, FALSE, 0);
-    gtk_object_set_data(GTK_OBJECT(spw), "lock", lock);
-    g_signal_connect_after (G_OBJECT (lock), "clicked", G_CALLBACK (toggle_lock), desktop);
-
-    gtk_container_add(GTK_CONTAINER(vb),
-                      //TRANSLATORS: only translate "string" in "context|string".
-                      // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                      sp_select_toolbox_spinbutton(_("select_toolbar|H"), "height", 1e-3, tracker, spw, _("Height of selection"), FALSE));
-
-    aux_toolbox_space(vb, 2);
-
-    // Add the units menu.
     {
-        GtkAction* act = tracker->createAction( "UnitAction", _("Units"), _("") );
-
-        GtkWidget* normal = gtk_action_create_tool_item( act );
-        gtk_widget_show( normal );
-        gtk_container_add( GTK_CONTAINER(vb), normal );
+    InkToggleAction* itact = ink_toggle_action_new( "LockAction",
+                                                    _("Lock"),
+                                                    _("When locked, change both width and height by the same proportion"),
+                                                    "lock_unlocked",
+                                                    Inkscape::ICON_SIZE_DECORATION );
+    gtk_object_set_data( GTK_OBJECT(spw), "lock", itact );
+    g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_lock), desktop) ;
+    gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
     }
 
-    // Set font size.
-    sp_set_font_size_smaller (vb);
+    //TRANSLATORS: only translate "string" in "context|string".
+    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+    eact = create_adjustment_action( "HeightAction", _("select_toolbar|H"), "height",
+                                     1e-3, GTK_WIDGET(desktop->canvas), tracker, spw,
+                                     _("Height of selection"), FALSE );
+    gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
+
+    // Add the units menu.
+    act = tracker->createAction( "UnitsAction", _("Units"), _("") );
+    gtk_action_group_add_action( selectionActions, act );
+
+    gtk_object_set_data( GTK_OBJECT(spw), "selectionActions", selectionActions );
 
     // Force update when selection changes.
     gtk_signal_connect(GTK_OBJECT(spw), "modify_selection", GTK_SIGNAL_FUNC(sp_selection_layout_widget_modify_selection), desktop);
@@ -441,69 +501,67 @@ sp_select_toolbox_new(SPDesktop *desktop)
     sp_selection_layout_widget_update(SP_WIDGET(spw), SP_ACTIVE_DESKTOP ? sp_desktop_selection(SP_ACTIVE_DESKTOP) : NULL);
 
     // Insert spw into the toolbar.
-    gtk_box_pack_start(GTK_BOX(tb), spw, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-
-    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
+    gtk_box_pack_start(GTK_BOX(holder), spw, FALSE, FALSE, 0);
 
     // "Transform with object" buttons
 
-    GtkWidget *cvbox = gtk_vbox_new (FALSE, 0);
-    GtkWidget *cbox = gtk_hbox_new (FALSE, 0);
-
     {
-    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
-                                              SP_BUTTON_TYPE_TOGGLE,
-                                              NULL,
-                                              "transform_stroke",
-                                              _("When scaling objects, scale the stroke width by the same proportion"),
-                                              tt);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), prefs_get_int_attribute ("options.transform", "stroke", 1));
-    g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (toggle_stroke), desktop);
-    gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
+    InkToggleAction* itact = ink_toggle_action_new( "transform_stroke",
+                                                    _("Stroke"),
+                                                    _("When scaling objects, scale the stroke width by the same proportion"),
+                                                    "transform_stroke",
+                                                    Inkscape::ICON_SIZE_DECORATION );
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs_get_int_attribute("options.transform", "stroke", 1) );
+    g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_stroke), desktop) ;
+    gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
     }
 
     {
-    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
-                                              SP_BUTTON_TYPE_TOGGLE,
-                                              NULL,
-                                              "transform_corners",
-                                              _("When scaling rectangles, scale the radii of rounded corners"),
-                                              tt);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), prefs_get_int_attribute ("options.transform", "rectcorners", 1));
-    g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (toggle_corners), desktop);
-    gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
+    InkToggleAction* itact = ink_toggle_action_new( "transform_corners",
+                                                    _("Corners"),
+                                                    _("When scaling rectangles, scale the radii of rounded corners"),
+                                                    "transform_corners",
+                                                  Inkscape::ICON_SIZE_DECORATION );
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs_get_int_attribute("options.transform", "rectcorners", 1) );
+    g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_corners), desktop) ;
+    gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
     }
 
     {
-    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
-                                              SP_BUTTON_TYPE_TOGGLE,
-                                              NULL,
-                                              "transform_gradient",
-                                              _("Transform gradients (in fill or stroke) along with the objects"),
-                                              tt);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), prefs_get_int_attribute ("options.transform", "gradient", 1));
-    g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (toggle_gradient), desktop);
-    gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
+    InkToggleAction* itact = ink_toggle_action_new( "transform_gradient",
+                                                    _("Gradient"),
+                                                    _("When scaling rectangles, scale the radii of rounded corners"),
+                                                    "transform_gradient",
+                                                  Inkscape::ICON_SIZE_DECORATION );
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs_get_int_attribute("options.transform", "gradient", 1) );
+    g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_gradient), desktop) ;
+    gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
     }
 
     {
-    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
-                                              SP_BUTTON_TYPE_TOGGLE,
-                                              NULL,
-                                              "transform_pattern",
-                                              _("Transform patterns (in fill or stroke) along with the objects"),
-                                              tt);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), prefs_get_int_attribute ("options.transform", "pattern", 1));
-    g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (toggle_pattern), desktop);
-    gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
+    InkToggleAction* itact = ink_toggle_action_new( "transform_pattern",
+                                                    _("Patterns"),
+                                                    _("Transform patterns (in fill or stroke) along with the objects"),
+                                                    "transform_pattern",
+                                                  Inkscape::ICON_SIZE_DECORATION );
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs_get_int_attribute("options.transform", "pattern", 1) );
+    g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_pattern), desktop) ;
+    gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
     }
 
-    gtk_box_pack_start(GTK_BOX(cvbox), cbox, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(tb), cvbox, FALSE, FALSE, 0);
+    gtk_widget_show_all(holder);
 
-    gtk_widget_show_all(tb);
+    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_insert_action_group( mgr, selectionActions, 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
 
-    return tb;
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/SelectToolbar" );
+    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
+
+    gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0);
+
+    return holder;
 }
 
 
