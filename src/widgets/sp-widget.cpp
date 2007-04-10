@@ -176,7 +176,9 @@ sp_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 
 	bin = GTK_BIN (widget);
 
-	gtk_container_propagate_expose (GTK_CONTAINER(widget), bin->child, event);
+        if ( bin->child ) {
+            gtk_container_propagate_expose (GTK_CONTAINER(widget), bin->child, event);
+        }
 	/*
 	if ((bin->child) && (GTK_WIDGET_NO_WINDOW (bin->child))) {
 		GdkEventExpose ce;
