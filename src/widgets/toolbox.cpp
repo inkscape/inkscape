@@ -156,6 +156,8 @@ static struct {
     { NULL, NULL, NULL }
 };
 
+static GtkActionGroup* create_or_fetch_actions( SPDesktop* desktop );
+
 static void toolbox_set_desktop (GtkWidget *toolbox, SPDesktop *desktop, SetupFunction setup_func, UpdateFunction update_func, sigc::connection*);
 
 static void setup_tool_toolbox (GtkWidget *toolbox, SPDesktop *desktop);
@@ -223,6 +225,112 @@ GtkWidget * sp_toolbox_button_normal_new_from_verb(GtkWidget *t, Inkscape::IconS
 {
     return sp_toolbox_button_new_from_verb(t, size, SP_BUTTON_TYPE_NORMAL, verb, view, tt);
 }
+
+
+static void trigger_sp_action( GtkAction* act, gpointer user_data )
+{
+    SPAction* targetAction = SP_ACTION(user_data);
+    if ( targetAction ) {
+        sp_action_perform( targetAction, NULL );
+    }
+}
+
+static void sp_action_action_set_sensitive (SPAction *action, unsigned int sensitive, void *data)
+{
+    if ( data ) {
+        GtkAction* act = GTK_ACTION(data);
+        gtk_action_set_sensitive( act, sensitive );
+    }
+}
+
+static SPActionEventVector action_event_vector = {
+    {NULL},
+    NULL,
+    NULL,
+    sp_action_action_set_sensitive,
+    NULL,
+    NULL
+};
+
+static GtkAction* create_action_for_verb( Inkscape::Verb* verb, Inkscape::UI::View::View* view, Inkscape::IconSize size )
+{
+    GtkAction* act = 0;
+
+    SPAction* targetAction = verb->get_action(view);
+    InkAction* inky = ink_action_new( verb->get_id(), verb->get_name(), verb->get_tip(), verb->get_image(), size  );
+    act = GTK_ACTION(inky);
+    gtk_action_set_sensitive( act, targetAction->sensitive );
+
+    g_signal_connect( G_OBJECT(inky), "activate", GTK_SIGNAL_FUNC(trigger_sp_action), targetAction );
+
+    SPAction*rebound = dynamic_cast<SPAction *>( nr_object_ref( dynamic_cast<NRObject *>(targetAction) ) );
+    nr_active_object_add_listener( (NRActiveObject *)rebound, (NRObjectEventVector *)&action_event_vector, sizeof(SPActionEventVector), inky );
+
+    return act;
+}
+
+GtkActionGroup* create_or_fetch_actions( SPDesktop* desktop )
+{
+    Inkscape::UI::View::View *view = desktop;
+    gint verbsToUse[] = {
+        // disabled until we have icons for them:
+        //find
+        //SP_VERB_EDIT_TILE,
+        //SP_VERB_EDIT_UNTILE,
+        SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+        SP_VERB_DIALOG_DISPLAY,
+        SP_VERB_DIALOG_FILL_STROKE,
+        SP_VERB_DIALOG_NAMEDVIEW,
+        SP_VERB_DIALOG_TEXT,
+        SP_VERB_DIALOG_XML_EDITOR,
+        SP_VERB_EDIT_CLONE,
+        SP_VERB_EDIT_COPY,
+        SP_VERB_EDIT_CUT,
+        SP_VERB_EDIT_DUPLICATE,
+        SP_VERB_EDIT_PASTE,
+        SP_VERB_EDIT_REDO,
+        SP_VERB_EDIT_UNDO,
+        SP_VERB_EDIT_UNLINK_CLONE,
+        SP_VERB_FILE_EXPORT,
+        SP_VERB_FILE_IMPORT,
+        SP_VERB_FILE_NEW,
+        SP_VERB_FILE_OPEN,
+        SP_VERB_FILE_PRINT,
+        SP_VERB_FILE_SAVE,
+        SP_VERB_SELECTION_GROUP,
+        SP_VERB_SELECTION_UNGROUP,
+        SP_VERB_ZOOM_DRAWING,
+        SP_VERB_ZOOM_PAGE,
+        SP_VERB_ZOOM_SELECTION
+    };
+
+    gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
+    Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
+
+    static std::map<SPDesktop*, GtkActionGroup*> groups;
+    GtkActionGroup* mainActions = 0;
+    if ( groups.find(desktop) != groups.end() ) {
+        mainActions = groups[desktop];
+    }
+
+    if ( !mainActions ) {
+        mainActions = gtk_action_group_new("main");
+        groups[desktop] = mainActions;
+    }
+
+    for ( guint i = 0; i < G_N_ELEMENTS(verbsToUse); i++ ) {
+        Inkscape::Verb* verb = Inkscape::Verb::get(verbsToUse[i]);
+        if ( verb ) {
+            if ( !gtk_action_group_get_action( mainActions, verb->get_id() ) ) {
+                GtkAction* act = create_action_for_verb( verb, view, toolboxSize );
+                gtk_action_group_add_action( mainActions, act );
+            }
+        }
+    }
+
+    return mainActions;
+}
+
 
 GtkWidget *
 sp_tool_toolbox_new()
@@ -665,74 +773,59 @@ update_aux_toolbox(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *
 static void
 setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 {
-    Inkscape::UI::View::View *view = desktop;
-
-    GtkTooltips *tt = gtk_tooltips_new();
-    GtkWidget *tb = gtk_hbox_new(FALSE, 0);
-
     gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
     Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
+    GtkActionGroup* mainActions = create_or_fetch_actions( desktop );
 
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_FILE_NEW), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_FILE_OPEN), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_FILE_SAVE), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_FILE_PRINT), view, tt);
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='CommandsToolbar'>"
+        "    <toolitem action='FileNew' />"
+        "    <toolitem action='FileOpen' />"
+        "    <toolitem action='FileSave' />"
+        "    <toolitem action='FilePrint' />"
+        "    <separator />"
+        "    <toolitem action='FileImport' />"
+        "    <toolitem action='FileExport' />"
+        "    <separator />"
+        "    <toolitem action='EditUndo' />"
+        "    <toolitem action='EditRedo' />"
+        "    <separator />"
+        "    <toolitem action='EditCopy' />"
+        "    <toolitem action='EditCut' />"
+        "    <toolitem action='EditPaste' />"
+        "    <separator />"
+        "    <toolitem action='ZoomSelection' />"
+        "    <toolitem action='ZoomDrawing' />"
+        "    <toolitem action='ZoomPage' />"
+        "    <separator />"
+        "    <toolitem action='EditDuplicate' />"
+        "    <toolitem action='EditClone' />"
+        "    <toolitem action='EditUnlinkClone' />"
+        "    <separator />"
+        "    <toolitem action='SelectionGroup' />"
+        "    <toolitem action='SelectionUnGroup' />"
+        "    <separator />"
+        "    <toolitem action='DialogFillStroke' />"
+        "    <toolitem action='DialogText' />"
+        "    <toolitem action='DialogXMLEditor' />"
+        "    <toolitem action='DialogAlignDistribute' />"
+        "    <separator />"
+        "    <toolitem action='DialogPreferences' />"
+        "    <toolitem action='DialogDocumentProperties' />"
+        "  </toolbar>"
+        "</ui>";
 
-    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
 
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_FILE_IMPORT), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_FILE_EXPORT), view, tt);
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/CommandsToolbar" );
+    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), (GtkIconSize)toolboxSize );
 
-    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_EDIT_UNDO), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_EDIT_REDO), view, tt);
-
-    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_EDIT_COPY), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_EDIT_CUT), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_EDIT_PASTE), view, tt);
-
-    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_SELECTION), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_DRAWING), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_PAGE), view, tt);
-
-    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_EDIT_DUPLICATE), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_EDIT_CLONE), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_EDIT_UNLINK_CLONE), view, tt);
-
-    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_normal_new_from_verb(tb, toolboxSize, Inkscape::Verb::get(SP_VERB_SELECTION_GROUP), view, tt);
-    sp_toolbox_button_normal_new_from_verb(tb, toolboxSize, Inkscape::Verb::get(SP_VERB_SELECTION_UNGROUP), view, tt);
-
-    // disabled until we have icons for them:
-
-    //find
-
-    //sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_EDIT_TILE), view, tt);
-    //sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_EDIT_UNTILE), view, tt);
-
-    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_DIALOG_FILL_STROKE), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_DIALOG_TEXT), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_DIALOG_XML_EDITOR), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_DIALOG_ALIGN_DISTRIBUTE), view, tt);
-
-    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_DIALOG_DISPLAY), view, tt);
-    sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_DIALOG_NAMEDVIEW), view, tt);
-
-    gtk_widget_show_all(tb);
-
-    gtk_container_add(GTK_CONTAINER(toolbox), tb);
+    gtk_container_add( GTK_CONTAINER(toolbox), toolBar );
 }
 
 static void
