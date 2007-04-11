@@ -963,7 +963,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                                 // so _gradually_ let go attraction to prevent jerks
                                 target = (dc->hatch_spacing * speed + hatch_dist * (SPEED_NORMAL - speed))/SPEED_NORMAL;                            
                             }
-                            if (!isnan(dot) && dot < -0.5) {// flip
+                            if (!isNaN(dot) && dot < -0.5) {// flip
                                 target = -target;
                                 //g_print ("FLIP\n");
                             }
