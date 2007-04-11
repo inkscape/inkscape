@@ -525,13 +525,15 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int wildPath,in
 // offsets
 // take each edge, offset it, and make joins with previous at edge start and next at edge end (previous and
 // next being with respect to the clockwise order)
-// you gotta be very careful with the join, has anything but the right one will fuck everything up
+// you gotta be very careful with the join, as anything but the right one will fuck everything up
 // see PathStroke.cpp for the "right" joins
 int
-Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter)
+Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_profile, double cx, double cy, double radius)
 {
   Reset (0, 0);
   MakeBackData(a->_has_back_data);
+
+	bool done_something = false;
   
   if (dec == 0)
   {
@@ -591,7 +593,7 @@ Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter)
     stD = a->getEdge(stB).dx;
     seD = a->getEdge(i).dx;
     enD = a->getEdge(enB).dx;
-    
+
     stL = sqrt (dot(stD,stD));
     seL = sqrt (dot(seD,seD));
     enL = sqrt (dot(enD,enD));
@@ -602,6 +604,25 @@ Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter)
     NR::Point ptP;
     int stNo, enNo;
     ptP = a->getPoint(a->getEdge(i).st).x;
+
+		double this_dec;
+		if (do_profile) {
+			double alpha = 1;
+			double x = (NR::L2(ptP - NR::Point(cx,cy))/radius);
+			if (x > 1) {
+				this_dec = 0;
+			} else if (x <= 0) {
+				this_dec = dec;
+			} else {
+				this_dec = dec * (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5);
+			}
+		} else {
+			this_dec = dec;
+		}
+
+		if (this_dec != 0)
+			done_something = true;
+
     int   usePathID=-1;
     int   usePieceID=0;
     double useT=0.0;
@@ -619,24 +640,26 @@ Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter)
     }
     if (dec > 0)
     {
-      Path::DoRightJoin (this, dec, join, ptP, stD, seD, miter, stL, seL,
+      Path::DoRightJoin (this, this_dec, join, ptP, stD, seD, miter, stL, seL,
                          stNo, enNo,usePathID,usePieceID,useT);
       a->swsData[i].stPt = enNo;
       a->swsData[stB].enPt = stNo;
     }
     else
     {
-      Path::DoLeftJoin (this, -dec, join, ptP, stD, seD, miter, stL, seL,
+      Path::DoLeftJoin (this, -this_dec, join, ptP, stD, seD, miter, stL, seL,
                         stNo, enNo,usePathID,usePieceID,useT);
       a->swsData[i].stPt = enNo;
       a->swsData[stB].enPt = stNo;
     }
   }
+
   if (dec < 0)
   {
     for (int i = 0; i < numberOfEdges(); i++)
       Inverse (i);
   }
+
   if ( _has_back_data ) {
     for (int i = 0; i < a->numberOfEdges(); i++)
     {
@@ -649,10 +672,11 @@ Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter)
       AddEdge (a->swsData[i].stPt, a->swsData[i].enPt);
     }
   }
+
   a->MakeSweepSrcData (false);
   a->MakeSweepDestData (false);
   
-  return 0;
+  return (done_something? 0 : shape_nothing_to_do);
 }
 
 // we found a contour, now reassemble the edges on it, instead of dumping them in the Path "dest" as a

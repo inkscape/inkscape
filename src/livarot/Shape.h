@@ -281,7 +281,7 @@ public:
     // create a graph that is an offseted version of the graph "of"
     // the offset is dec, with joins between edges of type "join" (see LivarotDefs.h)
     // the result is NOT a polygon; you need a subsequent call to ConvertToShape to get a real polygon
-    int MakeOffset(Shape *of, double dec, JoinType join, double miter);
+    int MakeOffset(Shape *of, double dec, JoinType join, double miter, bool do_profile=false, double cx = 0, double cy = 0, double radius = 0);
   
     int PtWinding(const NR::Point px) const; // plus rapide
     int Winding(const NR::Point px) const;
