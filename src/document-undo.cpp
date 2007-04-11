@@ -152,9 +152,8 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int ev
 	}
 
 	if (key && doc->actionkey && !strcmp (key, doc->actionkey) && doc->priv->undo) {
-                doc->priv->undo->data = 
-                    new Inkscape::Event(sp_repr_coalesce_log (((Inkscape::Event *)
-                                                               doc->priv->undo->data)->event, log));
+                ((Inkscape::Event *)doc->priv->undo->data)->event =
+                    sp_repr_coalesce_log (((Inkscape::Event *)doc->priv->undo->data)->event, log);
 	} else {
                 Inkscape::Event *event = new Inkscape::Event(log, event_type, event_description);
                 doc->priv->undo = g_slist_prepend (doc->priv->undo, event);
