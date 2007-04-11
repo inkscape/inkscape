@@ -36,7 +36,8 @@ enum
   // despite the rounding sheme, this still happen with uber-complex graphs
   // note that coordinates are stored in double => double precision for the computation is not even
   // enough to get exact results (need quadruple precision, i think).
-  shape_input_err = 5		// the function was given an incorrect input (not a polygon, or not eulerian)
+  shape_input_err = 5,		// the function was given an incorrect input (not a polygon, or not eulerian)
+  shape_nothing_to_do = 6		// the function had nothing to do (zero offset, etc)
 };
 
 // return codes for the find function in the AVL tree (private)
