@@ -937,9 +937,6 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                         // We are NOT attracted to the guide!
 
                         //g_print ("\nlast_nearest %g %g   nearest %g %g  pointer %g %g  pos %d %g\n", dc->last_nearest[NR::X], dc->last_nearest[NR::Y], nearest[NR::X], nearest[NR::Y], pointer[NR::X], pointer[NR::Y], position->piece, position->t);
-                        //g_print ("------nm %g  pm %g  ratio %g\n", nearest_moved, pointer_moved, ratio);
-                        //g_print ("------dist %g  spacing %g\n", dist, dc->spacing);
-                        //g_print ("acting up: %s dist %g \n", position_is_ok? (dc->hatch_escaped? "escaped" : "dist") : "livarot", dist/dc->hatch_spacing);
 
                         // Remember hatch_escaped so we don't get
                         // attracted again until the end of this stroke
@@ -965,12 +962,10 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                             }
                             if (!isNaN(dot) && dot < -0.5) {// flip
                                 target = -target;
-                                //g_print ("FLIP\n");
                             }
 
                             // This is the track pointer that we will use instead of the real one
                             NR::Point new_pointer = nearest + target * hatch_unit_vector;
-                            //g_print ("NEW %g %g\n", new_point[NR::X], new_point[NR::Y]);
 
                             // some limited feedback: allow persistent pulling to slightly change
                             // the spacing
