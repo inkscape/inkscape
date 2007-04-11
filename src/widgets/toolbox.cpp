@@ -88,6 +88,9 @@
 #include "ink-action.h"
 #include "ege-adjustment-action.h"
 #include "ege-output-action.h"
+#include "helper/unit-tracker.h"
+
+using Inkscape::UnitTracker;
 
 typedef void (*SetupFunction)(GtkWidget *toolbox, SPDesktop *desktop);
 typedef void (*UpdateFunction)(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
@@ -1507,12 +1510,12 @@ sp_rtb_sensitivize (GtkWidget *tbl)
 {
     GtkAdjustment *adj1 = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(tbl), "rx"));
     GtkAdjustment *adj2 = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(tbl), "ry"));
-    GtkWidget *not_rounded = (GtkWidget*) g_object_get_data(G_OBJECT(tbl), "not_rounded");
+    GtkAction* not_rounded = GTK_ACTION( g_object_get_data(G_OBJECT(tbl), "not_rounded") );
 
     if (adj1->value == 0 && adj2->value == 0 && gtk_object_get_data(GTK_OBJECT(tbl), "single")) { // only for a single selected rect (for now)
-        gtk_widget_set_sensitive(GTK_WIDGET(not_rounded), FALSE);
+        gtk_action_set_sensitive( not_rounded, FALSE );
     } else {
-        gtk_widget_set_sensitive(GTK_WIDGET(not_rounded), TRUE);
+        gtk_action_set_sensitive( not_rounded, TRUE );
     }
 }
 
@@ -1523,8 +1526,8 @@ sp_rtb_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const *value_name
 {
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
 
-    GtkWidget *us = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(tbl), "units");
-    SPUnit const *unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
+    UnitTracker* tracker = reinterpret_cast<UnitTracker*>(gtk_object_get_data(GTK_OBJECT(tbl), "tracker"));
+    SPUnit const *unit = tracker->getActiveUnit();
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_double_attribute("tools.shapes.rect", value_name, sp_units_get_pixels(adj->value, *unit));
@@ -1595,20 +1598,18 @@ sp_rtb_defaults( GtkWidget *widget, GtkObject *obj)
 {
     GtkWidget *tbl = GTK_WIDGET(obj);
 
-    GtkAdjustment *adj;
+    GtkAdjustment *adj = 0;
 
-    adj = (GtkAdjustment*)gtk_object_get_data(obj, "rx");
+    adj = GTK_ADJUSTMENT( gtk_object_get_data(obj, "rx") );
     gtk_adjustment_set_value(adj, 0.0);
     // this is necessary if the previous value was 0, but we still need to run the callback to change all selected objects
     gtk_adjustment_value_changed(adj);
 
-    adj = (GtkAdjustment*)gtk_object_get_data(obj, "ry");
+    adj = GTK_ADJUSTMENT( gtk_object_get_data(obj, "ry") );
     gtk_adjustment_set_value(adj, 0.0);
     gtk_adjustment_value_changed(adj);
 
     sp_rtb_sensitivize (tbl);
-
-    spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
 static void rect_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
@@ -1625,8 +1626,8 @@ static void rect_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
     // in turn, prevent callbacks from responding
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
-    GtkWidget *us = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(tbl), "units");
-    SPUnit const *unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
+    UnitTracker* tracker = reinterpret_cast<UnitTracker*>( gtk_object_get_data(GTK_OBJECT(tbl), "tracker") );
+    SPUnit const *unit = tracker->getActiveUnit();
 
     gpointer item = g_object_get_data(G_OBJECT(tbl), "item");
     if (item && SP_IS_RECT(item)) {
@@ -1690,26 +1691,26 @@ sp_rect_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *tbl
         }
     }
 
-    GtkWidget *l = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(tbl), "mode_label"));
+    EgeOutputAction* act = EGE_OUTPUT_ACTION( gtk_object_get_data(GTK_OBJECT(tbl), "mode_action") );
 
     g_object_set_data(G_OBJECT(tbl), "single", GINT_TO_POINTER(FALSE));
 
     if (n_selected == 0) {
-        gtk_label_set_markup(GTK_LABEL(l), _("<b>New:</b>"));
+        g_object_set( G_OBJECT(act), "label", _("<b>New:</b>"), NULL );
 
-        GtkWidget *w = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(tbl), "width_sb");
-        gtk_widget_set_sensitive(w, FALSE);
-        GtkWidget *h = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(tbl), "height_sb");
-        gtk_widget_set_sensitive(h, FALSE);
+        GtkAction* w = GTK_ACTION( gtk_object_get_data(GTK_OBJECT(tbl), "width_action") );
+        gtk_action_set_sensitive(w, FALSE);
+        GtkAction* h = GTK_ACTION( gtk_object_get_data(GTK_OBJECT(tbl), "height_action") );
+        gtk_action_set_sensitive(h, FALSE);
 
     } else if (n_selected == 1) {
-        gtk_label_set_markup(GTK_LABEL(l), _("<b>Change:</b>"));
+        g_object_set( G_OBJECT(act), "label", _("<b>Change:</b>"), NULL );
         g_object_set_data(G_OBJECT(tbl), "single", GINT_TO_POINTER(TRUE));
 
-        GtkWidget *w = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(tbl), "width_sb");
-        gtk_widget_set_sensitive(w, TRUE);
-        GtkWidget *h = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(tbl), "height_sb");
-        gtk_widget_set_sensitive(h, TRUE);
+        GtkAction* w = GTK_ACTION( gtk_object_get_data(GTK_OBJECT(tbl), "width_action") );
+        gtk_action_set_sensitive(w, TRUE);
+        GtkAction* h = GTK_ACTION( gtk_object_get_data(GTK_OBJECT(tbl), "height_action") );
+        gtk_action_set_sensitive(h, TRUE);
 
         oldrepr = (Inkscape::XML::Node *) gtk_object_get_data(GTK_OBJECT(tbl), "repr");
         if (oldrepr) { // remove old listener
@@ -1729,7 +1730,7 @@ sp_rect_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *tbl
     } else {
         // FIXME: implement averaging of all parameters for multiple selected
         //gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-        gtk_label_set_markup(GTK_LABEL(l), _("<b>Change:</b>"));
+        g_object_set( G_OBJECT(act), "label", _("<b>Change:</b>"), NULL );
         sp_rtb_sensitivize (GTK_WIDGET(tbl));
     }
 }
@@ -1738,80 +1739,113 @@ sp_rect_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *tbl
 static GtkWidget *
 sp_rect_toolbox_new(SPDesktop *desktop)
 {
-    GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
+    GtkWidget *holder = gtk_hbox_new(FALSE, 0);
+    gtk_object_set_data(GTK_OBJECT(holder), "dtw", desktop->canvas);
+    gtk_object_set_data(GTK_OBJECT(holder), "desktop", desktop);
 
-    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
-    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='RectToolbar'>"
+        "    <toolitem action='RectStateAction' />"
+        "    <toolitem action='WidthAction' />"
+        "    <toolitem action='HeightAction' />"
+        "    <toolitem action='RadiusXAction' />"
+        "    <toolitem action='RadiusYAction' />"
+        "    <toolitem action='RectUnitsAction' />"
+        "    <separator />"
+        "    <toolitem action='RectResetAction' />"
+        "  </toolbar>"
+        "</ui>";
+    GtkActionGroup* mainActions = gtk_action_group_new("main");
+    EgeAdjustmentAction* eact = 0;
 
-    GtkTooltips *tt = gtk_tooltips_new();
-
-    sp_toolbox_add_label(tbl, _("<b>New:</b>"));
+    {
+        EgeOutputAction* act = ege_output_action_new( "RectStateAction", _("<b>New:</b>"), "", 0 );
+        ege_output_action_set_use_markup( act, TRUE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        gtk_object_set_data( GTK_OBJECT(holder), "mode_action", act );
+    }
 
     // rx/ry units menu: create
-    GtkWidget *us = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
-    sp_unit_selector_setsize(us, AUX_OPTION_MENU_WIDTH, AUX_OPTION_MENU_HEIGHT);
-    sp_unit_selector_set_unit(SP_UNIT_SELECTOR(us), desktop->namedview->doc_units);
+    UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
+    //tracker->addUnit( SP_UNIT_PERCENT, 0 );
     // fixme: add % meaning per cent of the width/height
+    tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
+    gtk_object_set_data( GTK_OBJECT(holder), "tracker", tracker );
 
     /* W */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("W:"), _("Width of rectangle"),
+        eact = create_adjustment_action( "WidthAction",
+                                         _("W:"), _("Width of rectangle"),
                                          "tools.shapes.rect", "width", 0,
-                                         us, tbl, TRUE, "altx-rect",
+                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, TRUE, "altx-rect",
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
-                                         sp_rtb_width_value_changed);
-        gtk_object_set_data(GTK_OBJECT(tbl), "width_sb", hb);
-        gtk_widget_set_sensitive(hb, FALSE);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+                                         0, 0, 0,
+                                         sp_rtb_width_value_changed );
+        tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
+        gtk_object_set_data( GTK_OBJECT(holder), "width_action", eact );
+        gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
     /* H */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("H:"), _("Height of rectangle"),
+        eact = create_adjustment_action( "HeightAction",
+                                         _("H:"), _("Height of rectangle"),
                                          "tools.shapes.rect", "height", 0,
-                                         us, tbl, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
-                                         sp_rtb_height_value_changed);
-        gtk_object_set_data(GTK_OBJECT(tbl), "height_sb", hb);
-        gtk_widget_set_sensitive(hb, FALSE);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+                                         0, 0, 0,
+                                         sp_rtb_height_value_changed );
+        tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
+        gtk_object_set_data( GTK_OBJECT(holder), "height_action", eact );
+        gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
     /* rx */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("Rx:"), _("Horizontal radius of rounded corners"),
+        eact = create_adjustment_action( "RadiusXAction",
+                                         _("Rx:"), _("Horizontal radius of rounded corners"),
                                          "tools.shapes.rect", "rx", 0,
-                                         us, tbl, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
+                                         0, 0, 0,
                                          sp_rtb_rx_value_changed);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+        tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
     /* ry */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("Ry:"), _("Vertical radius of rounded corners"),
+        eact = create_adjustment_action( "RadiusYAction",
+                                         _("Ry:"), _("Vertical radius of rounded corners"),
                                          "tools.shapes.rect", "ry", 0,
-                                         us, tbl, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
+                                         0, 0, 0,
                                          sp_rtb_ry_value_changed);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+        tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
     // add the units menu
-    gtk_widget_show(us);
-    gtk_box_pack_start(GTK_BOX(tbl), us, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-    gtk_object_set_data(GTK_OBJECT(tbl), "units", us);
+    {
+        GtkAction* act = tracker->createAction( "RectUnitsAction", _("Units"), _("") );
+        gtk_action_group_add_action( mainActions, act );
+    }
 
     /* Reset */
     {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-        GtkWidget *b = gtk_button_new_with_label(_("Not rounded"));
-        gtk_object_set_data(GTK_OBJECT(tbl), "not_rounded", b);
-        gtk_tooltips_set_tip(tt, b, _("Make corners sharp"), NULL);
-        gtk_widget_show(b);
-        gtk_container_add(GTK_CONTAINER(hb), b);
-        gtk_signal_connect(GTK_OBJECT(b), "clicked", GTK_SIGNAL_FUNC(sp_rtb_defaults), tbl);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+        InkAction* inky = ink_action_new( "RectResetAction",
+                                          _("Not rounded"),
+                                          _("Make corners sharp"),
+                                          "squared_corner",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_rtb_defaults), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+        gtk_action_set_sensitive( GTK_ACTION(inky), TRUE );
+        gtk_object_set_data( GTK_OBJECT(holder), "not_rounded", inky );
     }
 
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new rectangles"));
@@ -1819,20 +1853,33 @@ sp_rect_toolbox_new(SPDesktop *desktop)
     swatch->setClickVerb (SP_VERB_CONTEXT_RECT_PREFS);
     swatch->setWatchedTool ("tools.shapes.rect", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+    gtk_box_pack_end(GTK_BOX(holder), swatch_, FALSE, FALSE, 0);
 
-    g_object_set_data(G_OBJECT(tbl), "single", GINT_TO_POINTER(TRUE));
-    sp_rtb_sensitivize (tbl);
+    g_object_set_data(G_OBJECT(holder), "single", GINT_TO_POINTER(TRUE));
+    sp_rtb_sensitivize (holder);
 
-    gtk_widget_show_all(tbl);
-    sp_set_font_size_smaller (tbl);
+
+    GError* errVal = 0;
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
+
+    GtkWidget *toolBar = gtk_ui_manager_get_widget( mgr, "/ui/RectToolbar" );
+    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
+
+    gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0 );
+
+
+    gtk_widget_show_all(holder);
+    sp_set_font_size_smaller(holder);
 
     sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), (GtkObject *)tbl))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), (GtkObject *)holder))
         );
-    g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
+    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(delete_connection), connection);
 
-    return tbl;
+    return holder;
 }
 
 //########################
