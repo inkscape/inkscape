@@ -6,6 +6,7 @@
 #include <gtk/gtktoolitem.h>
 #include <gtk/gtktoggletoolbutton.h>
 #include <gtk/gtkcheckmenuitem.h>
+#include <gtk/gtkimagemenuitem.h>
 
 #include "icon-size.h"
 #include "ink-action.h"
@@ -182,9 +183,37 @@ void ink_action_set_property( GObject* obj, guint propId, const GValue *value, G
     }
 }
 
+#include <gtk/gtkstock.h>
+
 static GtkWidget* ink_action_create_menu_item( GtkAction* action )
 {
-    GtkWidget* item = gInkActionParentClass->create_menu_item( action );
+    InkAction* act = INK_ACTION( action );
+    GtkWidget* item = 0;
+
+    if ( act->private_data->iconId ) {
+        gchar* label = 0;
+        g_object_get( G_OBJECT(act), "label", &label, NULL );
+
+        item = gtk_image_menu_item_new_with_mnemonic( label );
+        GtkWidget* child = sp_icon_new( Inkscape::ICON_SIZE_MENU, act->private_data->iconId );
+        // TODO this work-around is until SPIcon will live properly inside of a popup menu
+        if ( SP_IS_ICON(child) ) {
+            SPIcon* icon = SP_ICON(child);
+            sp_icon_fetch_pixbuf( icon );
+            GdkPixbuf* target = gtk_action_is_sensitive(action) ? icon->pb : icon->pb_faded;
+            if ( target ) {
+                child = gtk_image_new_from_pixbuf( target );
+                gtk_widget_destroy( GTK_WIDGET(icon) );
+            }
+        }
+        gtk_widget_show_all( child );
+        gtk_image_menu_item_set_image( GTK_IMAGE_MENU_ITEM(item), child );
+
+        g_free( label );
+        label = 0;
+    } else {
+        item = gInkActionParentClass->create_menu_item( action );
+    }
 
     return item;
 }
