@@ -871,6 +871,10 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
 
 
 /* Helper class used by Script::execute */
+/*
+ * This *REALLY* needs to be replaced with g_spawn_async_with_pipes()
+ * and proper usage of argv arrays, not just plain strings.
+ */
 class pipe_t {
 public:
     /* These functions set errno if they return false.
