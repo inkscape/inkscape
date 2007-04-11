@@ -17,7 +17,7 @@ are configurable by the user; see the default.xml file for details on how to do 
 supposed to work the same as corresponding regular keys. If you have a new shortcut
 idea, please contact the developers (by writing to the <a href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">devel mailing list</a>
 or by <a href="http://sourceforge.net/tracker/?group_id=93438&amp;atid=604309">submitting an
-RFE</a>).</p><p class="contents"><strong>Contents:</strong>  <a href="#Tools">Tools</a> | <a href="#Dialogs">Dialogs</a> | <a href="#Controls bar">Controls bar</a> | <a href="#Canvas">Canvas</a> | <a href="#Palette">Palette</a> | <a href="#File">File</a> | <a href="#Window">Window</a> | <a href="#Layers">Layers</a> | <a href="#Object">Object</a> | <a href="#Path">Path</a> | <a href="#Selector">Selector</a> | <a href="#Node tool">Node tool</a> | <a href="#Rectangle tool">Rectangle tool</a> | <a href="#Ellipse tool">Ellipse tool</a> | <a href="#Star tool">Star tool</a> | <a href="#Spiral tool">Spiral tool</a> | <a href="#Zoom tool">Zoom tool</a> | <a href="#Pencil tool">Pencil tool</a> | <a href="#Pen (Bezier) tool">Pen (Bezier) tool</a> | <a href="#Calligraphy">Calligraphy</a> | <a href="#Gradient tool">Gradient tool</a> | <a href="#Dropper tool">Dropper tool</a> | <a href="#Text tool">Text tool</a></p><center><table border="0" cellspacing="0" cellpadding="4" width="100%"><tr><td colspan="3"><a name="Tools"></a><h1>Tools</h1></td></tr>
+RFE</a>).</p><p class="contents"><strong>Contents:</strong>  <a href="#Tools">Tools</a> | <a href="#Dialogs">Dialogs</a> | <a href="#Controls bar">Controls bar</a> | <a href="#Canvas">Canvas</a> | <a href="#Palette">Palette</a> | <a href="#File">File</a> | <a href="#Window">Window</a> | <a href="#Layers">Layers</a> | <a href="#Object">Object</a> | <a href="#Path">Path</a> | <a href="#Selector">Selector</a> | <a href="#Node tool">Node tool</a> | <a href="#Rectangle tool">Rectangle tool</a> | <a href="#Ellipse tool">Ellipse tool</a> | <a href="#Star tool">Star tool</a> | <a href="#Spiral tool">Spiral tool</a> | <a href="#Zoom tool">Zoom tool</a> | <a href="#Pencil tool">Pencil tool</a> | <a href="#Pen (Bezier) tool">Pen (Bezier) tool</a> | <a href="#Calligraphy">Calligraphy</a> | <a href="#Paint Bucket">Paint Bucket</a> | <a href="#Gradient tool">Gradient tool</a> | <a href="#Dropper tool">Dropper tool</a> | <a href="#Text tool">Text tool</a></p><center><table border="0" cellspacing="0" cellpadding="4" width="100%"><tr><td colspan="3"><a name="Tools"></a><h1>Tools</h1></td></tr>
 
 
 <tr bgcolor="f5f5f5"><td align="right"><span class="key">F1</span>,
@@ -37,7 +37,7 @@ RFE</a>).</p><p class="contents"><strong>Contents:</strong>  <a href="#Tools">To
 <tr bgcolor="f5f5f5"><td align="right"><span class="key">Shift+F6</span>,
 <span class="key">b</span></td><td><span class="action">Bezier (Pen) tool</span></td></tr>
 <tr bgcolor="f5f5f5"><td align="right"><span class="key">Ctrl+F6</span>,
-<span class="key">c</span></td><td><span class="action">Calligraphic tool</span></td></tr>
+<span class="key">c</span></td><td><span class="action">Calligraphy tool</span></td></tr>
 <tr bgcolor="f5f5f5"><td align="right"><span class="key">Shift+F7</span>,
 <span class="key">u</span></td><td><span class="action">Paint Bucket tool</span></td></tr>
 <tr bgcolor="f5f5f5"><td align="right"><span class="key">Ctrl+F1</span>,
@@ -942,12 +942,30 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr><td colspan="3"><a name="Calligraphy"></a><h1>Calligraphy</h1></td></tr>
 
 <tr bgcolor="e9dfef"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">draw a calligraphic line</span></td></tr>
+<tr bgcolor="e9dfef"><td align="right"><span class="key">Shift+mouse drag</span></td><td><span class="action">add to selected path</span></td></tr>
+<tr bgcolor="e9dfef"><td colspan="3"><span class="note">Drawing with Shift unions the newly created stroke with the previous selection</span></td></tr>
+<tr bgcolor="e9dfef"><td align="right"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">track a guide path</span></td></tr>
+<tr bgcolor="e9dfef"><td colspan="3"><span class="note">Drawing with Ctrl tracks a selected guide path at the constant distance</span></td></tr>
+<tr bgcolor="e9dfef"><td align="right"><span class="key">Alt+mouse drag</span></td><td><span class="action">thin selected paths</span></td></tr>
+<tr bgcolor="e9dfef"><td align="right"><span class="key">Shift+Alt+mouse drag</span></td><td><span class="action">thicken selected paths</span></td></tr>
+<tr bgcolor="e9dfef"><td colspan="3"><span class="note">Dragging with Alt or Shift+Alt over selected paths makes them thinner/thicker where you drag</span></td></tr>
 <tr bgcolor="e9dfef"><td align="right"><span class="key">Left arrow</span>,
-<span class="key">Right arrow</span></td><td><span class="action">adjust pen width</span></td></tr>
+<span class="key">Right arrow</span></td><td><span class="action">adjust pen width by 1</span></td></tr>
+<tr bgcolor="e9dfef"><td align="right"><span class="key">Home</span>,
+<span class="key">End</span></td><td><span class="action">set pen width to 1 or 100</span></td></tr>
 <tr bgcolor="e9dfef"><td align="right"><span class="key">Up arrow</span>,
 <span class="key">Down arrow</span></td><td><span class="action">adjust pen angle</span></td></tr>
 <tr bgcolor="e9dfef"><td colspan="3"><span class="note">Width and angle can be adjusted while drawing. </span></td></tr>
 <tr bgcolor="e9dfef"><td align="right"><span class="key">Esc</span></td><td><span class="action">deselect</span></td></tr>
+
+<tr><td colspan="3"><a name="Paint Bucket"></a><h1>Paint Bucket</h1></td></tr>
+
+<tr bgcolor="f2f9da"><td align="right"><span class="key">click</span></td><td><span class="action">fill a bounded area</span></td></tr>
+<tr bgcolor="f2f9da"><td align="right"><span class="key">Shift+click</span></td><td><span class="action">add to selected path</span></td></tr>
+<tr bgcolor="f2f9da"><td colspan="3"><span class="note">Clicking with Shift unions the newly created fill with the previous selection</span></td></tr>
+<tr bgcolor="f2f9da"><td align="right"><span class="key">Ctrl+click</span></td><td><span class="action">set fill color</span></td></tr>
+<tr bgcolor="f2f9da"><td align="right"><span class="key">Shift+Ctrl+click</span></td><td><span class="action">set stroke color</span></td></tr>
+<tr bgcolor="f2f9da"><td colspan="3"><span class="note">Ctrl+clicking an object sets its fill (or stroke with Shift) to the tool's current style</span></td></tr>
 
 <tr><td colspan="3"><a name="Gradient tool"></a><h1>Gradient tool</h1></td></tr>
 

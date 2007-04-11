@@ -25,7 +25,7 @@ RFE</a>).</p>
 <keys><key><keyf f="F5"/></key><key>e</key>	 <action>Ellipse/arc tool</action></keys>
 <keys><key><keyf f="F6"/></key><key>p</key>	 <action>Freehand (Pencil) tool</action></keys>
 <keys><key><shift/><keyf f="F6"/></key><key>b</key>	 <action>Bezier (Pen) tool</action></keys>
-<keys><key><ctrl/><keyf f="F6"/></key><key>c</key>	 <action>Calligraphic tool</action></keys>
+<keys><key><ctrl/><keyf f="F6"/></key><key>c</key>	 <action>Calligraphy tool</action></keys>
 <keys><key><shift/><keyf f="F7"/></key><key>u</key>	 <action>Paint Bucket tool</action></keys>
 <keys><key><ctrl/><keyf f="F1"/></key><key>g</key>	 <action>Gradient tool</action></keys>
 <keys><key><keyf f="F7"/></key><key>d</key>	 <action>Dropper tool</action></keys>
@@ -970,10 +970,29 @@ groups) with the same effect as Alt+click.)</note>
 *<section title="Calligraphy" color="e9dfef">
 <group>
 <mouse><key><left-drag/></key> <action>draw a calligraphic line</action></mouse>
-<mouse><key><left-arrow/></key> <key><right-arrow/></key> <action>adjust pen width</action></mouse>
+<mouse><key><shift/><left-drag/></key> <action>add to selected path</action></mouse>
+<note>Drawing with Shift unions the newly created stroke with the previous selection</note>
+<mouse><key><ctrl/><left-drag/></key> <action>track a guide path</action></mouse>
+<note>Drawing with Ctrl tracks a selected guide path at the constant distance</note>
+<mouse><key><alt/><left-drag/></key> <action>thin selected paths</action></mouse>
+<mouse><key><shift/><alt/><left-drag/></key> <action>thicken selected paths</action></mouse>
+<note>Dragging with Alt or Shift+Alt over selected paths makes them thinner/thicker where you drag</note>
+<mouse><key><left-arrow/></key> <key><right-arrow/></key> <action>adjust pen width by 1</action></mouse>
+<mouse><key><misc f="Home"/></key> <key><misc f="End"/></key> <action>set pen width to 1 or 100</action></mouse>
 <mouse><key><up/></key> <key><down/></key> <action>adjust pen angle</action></mouse>
 <note>Width and angle can be adjusted while drawing. </note>
 <keys><key><misc f="Esc"/></key> <action>deselect</action></keys>
+</group>
+</section>
+
+*<section title="Paint Bucket" color="f2f9da">
+<group>
+<mouse><key><left-click/></key> <action>fill a bounded area</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>add to selected path</action></mouse>
+<note>Clicking with Shift unions the newly created fill with the previous selection</note>
+<mouse><key><ctrl/><left-click/></key> <action>set fill color</action></mouse>
+<mouse><key><shift/><ctrl/><left-click/></key> <action>set stroke color</action></mouse>
+<note>Ctrl+clicking an object sets its fill (or stroke with Shift) to the tool's current style</note>
 </group>
 </section>
 
