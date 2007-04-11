@@ -24,6 +24,7 @@
 #include "jabber_whiteboard/pedrogui.h"
 #include "jabber_whiteboard/session-manager.h"
 
+#include <glibmm/i18n.h>
 
 #include <stdarg.h>
 
@@ -2621,11 +2622,13 @@ void PedroGui::sendFileCallback()
 void PedroGui::aboutCallback()
 {
     Gtk::AboutDialog dlg;
+    dlg.set_name("Inkboard");
     std::vector<Glib::ustring>authors;
-    authors.push_back("Bob Jamison");
+    authors.push_back("David Yip <yipdw@rose-hulman.edu>");
+    authors.push_back("Dale Harvey <harveyd@gmail.com>");
     dlg.set_authors(authors);
-    DOMString comments = "A simple XMPP gui client  ";
-    comments.append("Based on the Pedro XMPP client");
+    DOMString comments = _("Shared SVG whiteboard tool.");
+    comments.append(_("Based on the Pedro XMPP client"));
     dlg.set_comments(comments);
     dlg.set_version("1.0");
     dlg.run();
