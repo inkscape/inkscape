@@ -15,7 +15,7 @@
  * Copyright (C) 1998 The Free Software Foundation
  * Copyright (C) 1999-2005 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
- * Copyright (C) 2005-2006 bulia byak
+ * Copyright (C) 2005-2007 bulia byak
  * Copyright (C) 2006 MenTaLguY
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -28,6 +28,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
+
+#include <numeric>
 
 #include "svg/svg.h"
 #include "display/canvas-bpath.h"
@@ -44,20 +46,31 @@
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-calligraphy.xpm"
-#include "dyna-draw-context.h"
+#include "pixmaps/cursor-thin.xpm"
+#include "pixmaps/cursor-thicken.xpm"
 #include "libnr/n-art-bpath.h"
 #include "libnr/nr-path.h"
+#include "libnr/nr-matrix-ops.h"
+#include "libnr/nr-scale-translate-ops.h"
 #include "xml/repr.h"
 #include "context-fns.h"
 #include "sp-item.h"
 #include "inkscape.h"
 #include "color.h"
+#include "splivarot.h"
+#include "sp-shape.h"
+#include "sp-path.h"
+#include "sp-text.h"
+#include "display/canvas-bpath.h"
+#include "display/canvas-arena.h"
+#include "livarot/Shape.h"
+#include "isnan.h"
+
+#include "dyna-draw-context.h"
 
 #define DDC_RED_RGBA 0xff0000ff
 
-#define SAMPLE_TIMEOUT 10
-#define TOLERANCE_LINE 1.0
-#define TOLERANCE_CALLIGRAPHIC 3.0
+#define TOLERANCE_CALLIGRAPHIC 0.1
 
 #define DYNA_EPSILON 0.5e-6
 #define DYNA_EPSILON_START 0.5e-2
@@ -69,6 +82,19 @@
 #define DRAG_DEFAULT 1.0
 #define DRAG_MAX 1.0
 
+// FIXME: move it to some shared file to be reused by both calligraphy and dropper
+#define C1 0.552
+static NArtBpath const hatch_area_circle[] = {
+    { NR_MOVETO, 0, 0, 0, 0, -1, 0 },
+    { NR_CURVETO, -1, C1, -C1, 1, 0, 1 },
+    { NR_CURVETO, C1, 1, 1, C1, 1, 0 },
+    { NR_CURVETO, 1, -C1, C1, -1, 0, -1 },
+    { NR_CURVETO, -C1, -1, -1, -C1, -1, 0 },
+    { NR_END, 0, 0, 0, 0, 0, 0 }
+};
+#undef C1
+
+
 static void sp_dyna_draw_context_class_init(SPDynaDrawContextClass *klass);
 static void sp_dyna_draw_context_init(SPDynaDrawContext *ddc);
 static void sp_dyna_draw_context_dispose(GObject *object);
@@ -78,7 +104,7 @@ static void sp_dyna_draw_context_set(SPEventContext *ec, gchar const *key, gchar
 static gint sp_dyna_draw_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
 static void clear_current(SPDynaDrawContext *dc);
-static void set_to_accumulated(SPDynaDrawContext *dc);
+static void set_to_accumulated(SPDynaDrawContext *dc, bool unionize);
 static void add_cap(SPCurve *curve, NR::Point const &pre, NR::Point const &from, NR::Point const &to, NR::Point const &post, double rounding);
 static void accumulate_calligraphic(SPDynaDrawContext *dc);
 
@@ -161,6 +187,7 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     ddc->drag = DRAG_DEFAULT;
     ddc->angle = 30.0;
     ddc->width = 0.2;
+    ddc->pressure = DDC_DEFAULT_PRESSURE;
 
     ddc->vel_thin = 0.1;
     ddc->flatness = 0.9;
@@ -168,12 +195,37 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
 
     ddc->abs_width = false;
     ddc->keep_selected = true;
+
+    ddc->hatch_spacing = 0;
+    new (&ddc->hatch_pointer_past) std::list<double>();
+    new (&ddc->hatch_nearest_past) std::list<double>();
+    ddc->hatch_last_nearest = NR::Point(0,0);
+    ddc->hatch_last_pointer = NR::Point(0,0);
+    ddc->hatch_vector_accumulated = NR::Point(0,0);
+    ddc->hatch_escaped = false;
+    ddc->hatch_area = NULL;
+    ddc->hatch_item = NULL;
+    ddc->hatch_livarot_path = NULL;
+
+    ddc->trace_bg = false;
+
+    ddc->is_dilating = false;
 }
 
 static void
 sp_dyna_draw_context_dispose(GObject *object)
 {
     SPDynaDrawContext *ddc = SP_DYNA_DRAW_CONTEXT(object);
+
+    if (ddc->hatch_area) {
+        gtk_object_destroy(GTK_OBJECT(ddc->hatch_area));
+        ddc->hatch_area = NULL;
+    }
+
+    if (ddc->dilate_area) {
+        gtk_object_destroy(GTK_OBJECT(ddc->dilate_area));
+        ddc->dilate_area = NULL;
+    }
 
     if (ddc->accumulated) {
         ddc->accumulated = sp_curve_unref(ddc->accumulated);
@@ -198,6 +250,9 @@ sp_dyna_draw_context_dispose(GObject *object)
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
+
+    ddc->hatch_pointer_past.~list();
+    ddc->hatch_nearest_past.~list();
 }
 
 static void
@@ -220,6 +275,24 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     /* fixme: Cannot we cascade it to root more clearly? */
     g_signal_connect(G_OBJECT(ddc->currentshape), "event", G_CALLBACK(sp_desktop_root_handler), ec->desktop);
 
+    {
+        SPCurve *c = sp_curve_new_from_foreign_bpath(hatch_area_circle);
+        ddc->hatch_area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
+        sp_curve_unref(c);
+        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->hatch_area), 0x00000000,(SPWindRule)0);
+        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(ddc->hatch_area), 0x0000007f, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+        sp_canvas_item_hide(ddc->hatch_area);
+    }
+
+    {
+        SPCurve *c = sp_curve_new_from_foreign_bpath(hatch_area_circle);
+        ddc->dilate_area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
+        sp_curve_unref(c);
+        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->dilate_area), 0x00000000,(SPWindRule)0);
+        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(ddc->dilate_area), 0xff9900ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+        sp_canvas_item_hide(ddc->dilate_area);
+    }
+
     sp_event_context_read(ec, "mass");
     sp_event_context_read(ec, "wiggle");
     sp_event_context_read(ec, "angle");
@@ -227,6 +300,7 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "thinning");
     sp_event_context_read(ec, "tremor");
     sp_event_context_read(ec, "flatness");
+    sp_event_context_read(ec, "tracebackground");
     sp_event_context_read(ec, "usepressure");
     sp_event_context_read(ec, "usetilt");
     sp_event_context_read(ec, "abs_width");
@@ -264,6 +338,8 @@ sp_dyna_draw_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
     } else if (!strcmp(key, "flatness")) {
         double const dval = ( val ? g_ascii_strtod (val, NULL) : 1.0 );
         ddc->flatness = CLAMP(dval, 0, 1.0);
+    } else if (!strcmp(key, "tracebackground")) {
+        ddc->trace_bg = (val && strcmp(val, "0"));
     } else if (!strcmp(key, "usepressure")) {
         ddc->usepressure = (val && strcmp(val, "0"));
     } else if (!strcmp(key, "usetilt")) {
@@ -345,6 +421,14 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, NR::Point p)
 
     /* Calculate force and acceleration */
     NR::Point force = n - dc->cur;
+
+    // If force is below the absolute threshold DYNA_EPSILON,
+    // or we haven't yet reached DYNA_VEL_START (i.e. at the beginning of stroke)
+    // _and_ the force is below the (higher) DYNA_EPSILON_START threshold,
+    // discard this move. 
+    // This prevents flips, blobs, and jerks caused by microscopic tremor of the tablet pen,
+    // especially bothersome at the start of the stroke where we don't yet have the inertia to
+    // smooth them out.
     if ( NR::L2(force) < DYNA_EPSILON || (dc->vel_max < DYNA_VEL_START && NR::L2(force) < DYNA_EPSILON_START)) {
         return FALSE;
     }
@@ -403,8 +487,9 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, NR::Point p)
     // FIXME: when dc->vel is oscillating around the fixed angle, the new_ang flips back and forth. How to avoid this?
     double new_ang = a1 + (1 - dc->flatness) * (a2 - a1) - (flipped? M_PI : 0);
 
+    // Try to detect a sudden flip when the new angle differs too much from the previous for the
+    // current velocity; in that case discard this move
     double angle_delta = NR::L2(NR::Point (cos (new_ang), sin (new_ang)) - dc->ang);
-
     if ( angle_delta / NR::L2(dc->vel) > 4000 ) {
         return FALSE;
     }
@@ -435,7 +520,32 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
     // Influence of pressure on thickness
     double pressure_thick = (dc->usepressure ? dc->pressure : 1.0);
 
-    double width = ( pressure_thick - vel_thin * NR::L2(dc->vel) ) * dc->width;
+    // get the real brush point, not the same as pointer (affected by hatch tracking and/or mass
+    // drag)
+    NR::Point brush = sp_dyna_draw_get_vpoint(dc, dc->cur);
+    NR::Point brush_w = SP_EVENT_CONTEXT(dc)->desktop->d2w(brush); 
+
+    double trace_thick = 1;
+    if (dc->trace_bg) {
+        // pick single pixel
+        NRPixBlock pb;
+        int x = (int) floor(brush_w[NR::X]);
+        int y = (int) floor(brush_w[NR::Y]);
+        nr_pixblock_setup_fast(&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, x, y, x+1, y+1, TRUE);
+        sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(sp_desktop_drawing(SP_EVENT_CONTEXT(dc)->desktop)), &pb);
+        const unsigned char *s = NR_PIXBLOCK_PX(&pb);
+        double R = s[0] / 255.0;
+        double G = s[1] / 255.0;
+        double B = s[2] / 255.0;
+        double A = s[3] / 255.0;
+        double max = MAX (MAX (R, G), B);
+        double min = MIN (MIN (R, G), B);
+        double L = A * (max + min)/2 + (1 - A); // blend with white bg
+        trace_thick = 1 - L;
+        //g_print ("L %g thick %g\n", L, trace_thick);
+    }
+
+    double width = (pressure_thick * trace_thick - vel_thin * NR::L2(dc->vel)) * dc->width;
 
     double tremble_left = 0, tremble_right = 0;
     if (dc->tremor > 0) {
@@ -471,14 +581,150 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
     NR::Point del_left = dezoomify_factor * (width + tremble_left) * dc->ang;
     NR::Point del_right = dezoomify_factor * (width + tremble_right) * dc->ang;
 
-    NR::Point abs_middle = sp_dyna_draw_get_vpoint(dc, dc->cur);
-
-    dc->point1[dc->npoints] = abs_middle + del_left;
-    dc->point2[dc->npoints] = abs_middle - del_right;
+    dc->point1[dc->npoints] = brush + del_left;
+    dc->point2[dc->npoints] = brush - del_right;
 
     dc->del = 0.5*(del_left + del_right);
 
     dc->npoints++;
+}
+
+double
+get_dilate_radius (SPDynaDrawContext *dc)
+{
+    // 10 times the pen width:
+    return 500 * dc->width/SP_EVENT_CONTEXT(dc)->desktop->current_zoom(); 
+}
+
+double
+get_dilate_force (SPDynaDrawContext *dc)
+{
+    return 8 * dc->pressure/SP_EVENT_CONTEXT(dc)->desktop->current_zoom(); 
+}
+
+bool
+sp_ddc_dilate (SPDynaDrawContext *dc, NR::Point p, bool expand)
+{
+    Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(dc)->desktop);
+
+    if (selection->isEmpty()) {
+        return false;
+    }
+
+    bool did = false;
+    double radius = get_dilate_radius(dc); 
+    double offset = get_dilate_force(dc); 
+
+    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
+         items != NULL;
+         items = items->next) {
+
+        SPItem *item = (SPItem *) items->data;
+
+        // only paths
+        if (!SP_IS_PATH(item))
+            continue;
+
+        SPCurve *curve = NULL;
+        curve = sp_shape_get_curve(SP_SHAPE(item));
+        if (curve == NULL)
+            continue;
+
+        // skip those paths whose bboxes are entirely out of reach with our radius
+        NR::Maybe<NR::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item));
+        if (bbox) {
+            bbox->growBy(radius);
+            if (!bbox->contains(p)) {
+                continue;
+            }
+        }
+
+        Path *orig = Path_for_item(item, false);
+        if (orig == NULL) {
+            sp_curve_unref(curve);
+            continue;
+        }
+        Path *res = new Path;
+        res->SetBackData(false);
+
+        Shape *theShape = new Shape;
+        Shape *theRes = new Shape;
+
+        orig->ConvertWithBackData(0.05);
+        orig->Fill(theShape, 0);
+
+        SPCSSAttr *css = sp_repr_css_attr(SP_OBJECT_REPR(item), "style");
+        gchar const *val = sp_repr_css_property(css, "fill-rule", NULL);
+        if (val && strcmp(val, "nonzero") == 0)
+        {
+            theRes->ConvertToShape(theShape, fill_nonZero);
+        }
+        else if (val && strcmp(val, "evenodd") == 0)
+        {
+            theRes->ConvertToShape(theShape, fill_oddEven);
+        }
+        else
+        {
+            theRes->ConvertToShape(theShape, fill_nonZero);
+        }
+
+        bool did_this = false;
+        if (theShape->MakeOffset(theRes, 
+                                  expand? offset : -offset,
+                                  join_straight, butt_straight,
+                                  true, p[NR::X], p[NR::Y], radius) == 0) // 0 means the shape was actually changed
+            did_this = true;
+
+        // the rest only makes sense if we actually changed the path
+        if (did_this) {
+            theRes->ConvertToShape(theShape, fill_positive);
+
+            res->Reset();
+            theRes->ConvertToForme(res);
+
+            if (offset >= 0.5)
+            {
+                res->ConvertEvenLines(0.5);
+                res->Simplify(0.5);
+            }
+            else
+            {
+                res->ConvertEvenLines(0.5*offset);
+                res->Simplify(0.5 * offset);
+            }
+
+            sp_curve_unref(curve);
+            if (res->descr_cmd.size() > 1) { 
+                gchar *str = res->svg_dump_path();
+                SP_OBJECT_REPR(item)->setAttribute("d", str);
+                g_free(str);
+            } else {
+                // TODO: if there's 0 or 1 node left, delete this path altogether
+            }
+        }
+
+        delete theShape;
+        delete theRes;
+        delete orig;
+        delete res;
+
+        if (did_this) 
+            did = true;
+    }
+
+    return did;
+}
+
+void
+sp_ddc_update_cursors (SPDynaDrawContext *dc)
+{
+    if (dc->is_dilating) {
+        double radius = get_dilate_radius(dc);
+        NR::Matrix const sm (NR::scale(radius, radius) * NR::translate(SP_EVENT_CONTEXT(dc)->desktop->point()));
+        sp_canvas_item_affine_absolute(dc->dilate_area, sm);
+        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0xff9900ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+        sp_canvas_item_show(dc->dilate_area);
+    }
 }
 
 void
@@ -518,70 +764,304 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
     gint ret = FALSE;
 
     switch (event->type) {
-    case GDK_BUTTON_PRESS:
-        if ( event->button.button == 1 ) {
+        case GDK_BUTTON_PRESS:
+            if ( event->button.button == 1 ) {
 
-            SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
+                SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
 
-            if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
+                if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
+                    return TRUE;
+                }
+
+                NR::Point const button_w(event->button.x,
+                                         event->button.y);
+                NR::Point const button_dt(desktop->w2d(button_w));
+                sp_dyna_draw_reset(dc, button_dt);
+                sp_dyna_draw_extinput(dc, event);
+                sp_dyna_draw_apply(dc, button_dt);
+                sp_curve_reset(dc->accumulated);
+                if (dc->repr) {
+                    dc->repr = NULL;
+                }
+
+                /* initialize first point */
+                dc->npoints = 0;
+
+                sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
+                                    ( GDK_KEY_PRESS_MASK |
+                                      GDK_BUTTON_RELEASE_MASK |
+                                      GDK_POINTER_MOTION_MASK |
+                                      GDK_BUTTON_PRESS_MASK ),
+                                    NULL,
+                                    event->button.time);
+
+                ret = TRUE;
+
+                dc->is_drawing = true;
+            }
+            break;
+        case GDK_MOTION_NOTIFY:
+        {
+            NR::Point const motion_w(event->motion.x,
+                                     event->motion.y);
+            NR::Point motion_dt(desktop->w2d(motion_w));
+
+            // draw the dilating cursor
+            if (event->motion.state & GDK_MOD1_MASK) {
+                double radius = get_dilate_radius(dc);
+                NR::Matrix const sm (NR::scale(radius, radius) * NR::translate(desktop->w2d(motion_w)));
+                sp_canvas_item_affine_absolute(dc->dilate_area, sm);
+                sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0xff9900ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                sp_canvas_item_show(dc->dilate_area);
+
+                guint num = 0;
+                if (!desktop->selection->isEmpty()) {
+                    num = g_slist_length((GSList *) desktop->selection->itemList());
+                }
+                if (num == 0) {
+                    dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Select paths</b> to thin or thicken"));
+                } else {
+                    dc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
+                                           event->motion.state & GDK_SHIFT_MASK?
+                                           _("<b>Thickening %d</b> selected paths; without <b>Shift</b> to thin") :
+                                           _("<b>Thinning %d</b> selected paths; with <b>Shift</b> to thicken"), num);
+                }
+
+            } else {
+                dc->_message_context->clear();
+                sp_canvas_item_hide(dc->dilate_area);
+            }
+
+            // dilating:
+            if (dc->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK ) && event->motion.state & GDK_MOD1_MASK) {  
+                sp_ddc_dilate (dc, desktop->dt2doc(motion_dt), event->motion.state & GDK_SHIFT_MASK? true : false);
+                dc->is_dilating = true;
+                // it's slow, so prevent clogging up with events
+                gobble_motion_events(GDK_BUTTON1_MASK);
                 return TRUE;
             }
 
-            NR::Point const button_w(event->button.x,
-                                     event->button.y);
-            NR::Point const button_dt(desktop->w2d(button_w));
-            sp_dyna_draw_reset(dc, button_dt);
-            sp_dyna_draw_extinput(dc, event);
-            sp_dyna_draw_apply(dc, button_dt);
-            sp_curve_reset(dc->accumulated);
-            if (dc->repr) {
-                dc->repr = NULL;
-            }
 
-            /* initialize first point */
-            dc->npoints = 0;
+            // for hatching:
+            double hatch_dist = 0;
+            NR::Point hatch_unit_vector(0,0);
+            NR::Point nearest(0,0);
+            NR::Point pointer(0,0);
+            NR::Matrix motion_to_curve(NR::identity());
 
-            sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
-                                ( GDK_KEY_PRESS_MASK |
-                                  GDK_BUTTON_RELEASE_MASK |
-                                  GDK_POINTER_MOTION_MASK |
-                                  GDK_BUTTON_PRESS_MASK ),
-                                NULL,
-                                event->button.time);
+            if (event->motion.state & GDK_CONTROL_MASK) { // hatching - sense the item
 
-            ret = TRUE;
+                SPItem *selected = sp_desktop_selection(desktop)->singleItem();
+                if (selected && (SP_IS_SHAPE(selected) || SP_IS_TEXT(selected))) {
+                    // One item selected, and it's a path;
+                    // let's try to track it as a guide
 
-            dc->is_drawing = true;
-        }
-        break;
-    case GDK_MOTION_NOTIFY:
-        if ( dc->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK ) ) {
-            dc->dragging = TRUE;
+                    if (selected != dc->hatch_item) {
+                        dc->hatch_item = selected;
+                        if (dc->hatch_livarot_path)
+                            delete dc->hatch_livarot_path;
+                        dc->hatch_livarot_path = Path_for_item (dc->hatch_item, true, true);
+                        dc->hatch_livarot_path->ConvertWithBackData(0.01);
+                    }
 
-            NR::Point const motion_w(event->motion.x,
-                                     event->motion.y);
-            NR::Point const motion_dt(desktop->w2d(motion_w));
+                    // calculate pointer point in the guide item's coords
+                    motion_to_curve = sp_item_dt2i_affine(selected) * sp_item_i2doc_affine(selected);
+                    pointer = motion_dt * motion_to_curve;
 
-            sp_dyna_draw_extinput(dc, event);
-            if (!sp_dyna_draw_apply(dc, motion_dt)) {
+                    // calculate the nearest point on the guide path
+                    NR::Maybe<Path::cut_position> position = get_nearest_position_on_Path(dc->hatch_livarot_path, pointer);
+                    nearest = get_point_on_Path(dc->hatch_livarot_path, position->piece, position->t);
+
+
+                    // distance from pointer to nearest
+                    hatch_dist = NR::L2(pointer - nearest);
+                    // unit-length vector
+                    hatch_unit_vector = (pointer - nearest)/hatch_dist;
+
+                    dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"));
+                } else {
+                    dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Select a guide path</b> to track with <b>Ctrl</b>"));
+                }
+            } 
+
+            if ( dc->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK ) ) {
+                dc->dragging = TRUE;
+
+                if (event->motion.state & GDK_CONTROL_MASK && dc->hatch_item) { // hatching
+
+#define SPEED_ELEMENTS 12
+#define SPEED_MIN 0.12
+#define SPEED_NORMAL 0.65
+
+                    // speed is the movement of the nearest point along the guide path, divided by
+                    // the movement of the pointer at the same period; it is averaged for the last
+                    // SPEED_ELEMENTS motion events.  Normally, as you track the guide path, speed
+                    // is about 1, i.e. the nearest point on the path is moved by about the same
+                    // distance as the pointer. If the speed starts to decrease, we are losing
+                    // contact with the guide; if it drops below SPEED_MIN, we are on our own and
+                    // not attracted to guide anymore. Most often this happens when you have
+                    // tracked to the end of a guide calligraphic stroke and keep moving
+                    // further. We try to handle this situation gracefully: not stick with the
+                    // guide forever but let go of it smoothly and without sharp jerks (non-zero
+                    // mass recommended; with zero mass, jerks are still quite noticeable).
+
+                    double speed = 1;
+                    if (NR::L2(dc->hatch_last_nearest) != 0) {
+                        // the distance nearest moved since the last motion event
+                        double nearest_moved = NR::L2(nearest - dc->hatch_last_nearest);
+                        // the distance pointer moved since the last motion event
+                        double pointer_moved = NR::L2(pointer - dc->hatch_last_pointer);
+                        // store them in stacks limited to SPEED_ELEMENTS
+                        dc->hatch_nearest_past.push_front(nearest_moved);
+                        if (dc->hatch_nearest_past.size() > SPEED_ELEMENTS)
+                            dc->hatch_nearest_past.pop_back();
+                        dc->hatch_pointer_past.push_front(pointer_moved);
+                        if (dc->hatch_pointer_past.size() > SPEED_ELEMENTS)
+                            dc->hatch_pointer_past.pop_back();
+
+                        // If the stacks are full,
+                        if (dc->hatch_nearest_past.size() == SPEED_ELEMENTS) {
+                            // calculate the sums of all stored movements
+                            double nearest_sum = std::accumulate (dc->hatch_nearest_past.begin(), dc->hatch_nearest_past.end(), 0.0);
+                            double pointer_sum = std::accumulate (dc->hatch_pointer_past.begin(), dc->hatch_pointer_past.end(), 0.0);
+                            // and divide to get the speed
+                            speed = nearest_sum/pointer_sum;
+                            //g_print ("nearest sum %g  pointer_sum %g  speed %g\n", nearest_sum, pointer_sum, speed);
+                        }
+                    }
+
+                    if (   dc->hatch_escaped  // already escaped, do not reattach
+                        || (speed < SPEED_MIN) // stuck; most likely reached end of traced stroke
+                        || (dc->hatch_spacing > 0 && hatch_dist > 50 * dc->hatch_spacing) // went too far from the guide
+                        ) {
+                        // We are NOT attracted to the guide!
+
+                        //g_print ("\nlast_nearest %g %g   nearest %g %g  pointer %g %g  pos %d %g\n", dc->last_nearest[NR::X], dc->last_nearest[NR::Y], nearest[NR::X], nearest[NR::Y], pointer[NR::X], pointer[NR::Y], position->piece, position->t);
+                        //g_print ("------nm %g  pm %g  ratio %g\n", nearest_moved, pointer_moved, ratio);
+                        //g_print ("------dist %g  spacing %g\n", dist, dc->spacing);
+                        //g_print ("acting up: %s dist %g \n", position_is_ok? (dc->hatch_escaped? "escaped" : "dist") : "livarot", dist/dc->hatch_spacing);
+
+                        // Remember hatch_escaped so we don't get
+                        // attracted again until the end of this stroke
+                        dc->hatch_escaped = true;
+
+                    } else {
+
+                        // Calculate angle cosine of this vector-to-guide and all past vectors
+                        // summed, to detect if we accidentally flipped to the other side of the
+                        // guide
+                        double dot = NR::dot (pointer - nearest, dc->hatch_vector_accumulated);
+                        dot /= NR::L2(pointer - nearest) * NR::L2(dc->hatch_vector_accumulated);
+
+                        if (dc->hatch_spacing != 0) { // spacing was already set
+                            double target;
+                            if (speed > SPEED_NORMAL) {
+                                // all ok, strictly obey the spacing
+                                target = dc->hatch_spacing;
+                            } else {
+                                // looks like we're starting to lose speed,
+                                // so _gradually_ let go attraction to prevent jerks
+                                target = (dc->hatch_spacing * speed + hatch_dist * (SPEED_NORMAL - speed))/SPEED_NORMAL;                            
+                            }
+                            if (!isnan(dot) && dot < -0.5) {// flip
+                                target = -target;
+                                //g_print ("FLIP\n");
+                            }
+
+                            // This is the track pointer that we will use instead of the real one
+                            NR::Point new_pointer = nearest + target * hatch_unit_vector;
+                            //g_print ("NEW %g %g\n", new_point[NR::X], new_point[NR::Y]);
+
+                            // some limited feedback: allow persistent pulling to slightly change
+                            // the spacing
+                            dc->hatch_spacing += (hatch_dist - dc->hatch_spacing)/3500;
+
+                            // return it to the desktop coords
+                            motion_dt = new_pointer * motion_to_curve.inverse();
+
+                        } else {
+                            // this is the first motion event, set the dist 
+                            dc->hatch_spacing = hatch_dist;
+                        }
+
+                        // remember last points
+                        dc->hatch_last_pointer = pointer;
+                        dc->hatch_last_nearest = nearest;
+                        dc->hatch_vector_accumulated += (pointer - nearest);
+                    }
+
+                    dc->_message_context->set(Inkscape::NORMAL_MESSAGE, dc->hatch_escaped? _("Tracking: <b>connection to guide path lost!</b>") : _("<b>Tracking</b> a guide path"));
+
+                } else {
+                    dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Drawing</b> a calligraphic stroke"));
+                }
+
+                sp_dyna_draw_extinput(dc, event);
+                if (!sp_dyna_draw_apply(dc, motion_dt)) {
+                    ret = TRUE;
+                    break;
+                }
+
+                if ( dc->cur != dc->last ) {
+                    sp_dyna_draw_brush(dc);
+                    g_assert( dc->npoints > 0 );
+                    fit_and_split(dc, FALSE);
+                }
                 ret = TRUE;
-                break;
             }
 
-            if ( dc->cur != dc->last ) {
-                sp_dyna_draw_brush(dc);
-                g_assert( dc->npoints > 0 );
-                fit_and_split(dc, FALSE);
+            // Draw the hatching circle if necessary
+            if (event->motion.state & GDK_CONTROL_MASK) { 
+                if (dc->hatch_spacing == 0 && hatch_dist != 0) { 
+                    // Haven't set spacing yet: gray, center free, update radius live
+                    NR::Point c = desktop->w2d(motion_w);
+                    NR::Matrix const sm (NR::scale(hatch_dist, hatch_dist) * NR::translate(c));
+                    sp_canvas_item_affine_absolute(dc->hatch_area, sm);
+                    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                    sp_canvas_item_show(dc->hatch_area);
+                } else if (dc->dragging && !dc->hatch_escaped) {
+                    // Tracking: green, center snapped, fixed radius
+                    NR::Point c = motion_dt;
+                    NR::Matrix const sm (NR::scale(dc->hatch_spacing, dc->hatch_spacing) * NR::translate(c));
+                    sp_canvas_item_affine_absolute(dc->hatch_area, sm);
+                    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x00FF00ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                    sp_canvas_item_show(dc->hatch_area);
+                } else if (dc->dragging && dc->hatch_escaped) {
+                    // Tracking escaped: red, center free, fixed radius
+                    NR::Point c = desktop->w2d(motion_w);
+                    NR::Matrix const sm (NR::scale(dc->hatch_spacing, dc->hatch_spacing) * NR::translate(c));
+
+                    sp_canvas_item_affine_absolute(dc->hatch_area, sm);
+                    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0xFF0000ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                    sp_canvas_item_show(dc->hatch_area);
+                } else {
+                    // Not drawing but spacing set: gray, center snapped, fixed radius
+                    NR::Point c = (nearest + dc->hatch_spacing * hatch_unit_vector) * motion_to_curve.inverse();
+                    if (!isNaN(c[NR::X]) && !isNaN(c[NR::Y])) {
+                        NR::Matrix const sm (NR::scale(dc->hatch_spacing, dc->hatch_spacing) * NR::translate(c));
+                        sp_canvas_item_affine_absolute(dc->hatch_area, sm);
+                        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                        sp_canvas_item_show(dc->hatch_area);
+                    }
+                }
+            } else {
+                sp_canvas_item_hide(dc->hatch_area);
             }
-            ret = TRUE;
         }
         break;
+
 
     case GDK_BUTTON_RELEASE:
         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
         dc->is_drawing = false;
 
-        if ( dc->dragging && event->button.button == 1 ) {
+        if ( dc->is_dilating && event->button.button == 1 ) {
+            dc->is_dilating = false;
+            sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(dc)->desktop), 
+                         SP_VERB_CONTEXT_CALLIGRAPHIC,
+                         (event->button.state & GDK_SHIFT_MASK ? _("Thicken paths") : _("Thin paths")));
+            ret = TRUE;
+        } else if ( dc->dragging && event->button.button == 1 ) {
             dc->dragging = FALSE;
 
             NR::Point const motion_w(event->button.x, event->button.y);
@@ -593,19 +1073,34 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 gtk_object_destroy(GTK_OBJECT(dc->segments->data));
                 dc->segments = g_slist_remove(dc->segments, dc->segments->data);
             }
+
             /* Create object */
             fit_and_split(dc, TRUE);
             accumulate_calligraphic(dc);
-            set_to_accumulated(dc); /* temporal implementation */
+            set_to_accumulated(dc, event->button.state & GDK_SHIFT_MASK); // performs document_done
+
             /* reset accumulated curve */
             sp_curve_reset(dc->accumulated);
+
             clear_current(dc);
             if (dc->repr) {
                 dc->repr = NULL;
             }
+
+            if (!dc->hatch_pointer_past.empty()) dc->hatch_pointer_past.clear();
+            if (!dc->hatch_nearest_past.empty()) dc->hatch_nearest_past.clear();
+            dc->hatch_last_nearest = NR::Point(0,0);
+            dc->hatch_last_pointer = NR::Point(0,0);
+            dc->hatch_vector_accumulated = NR::Point(0,0);
+            dc->hatch_escaped = false;
+            dc->hatch_item = NULL;
+            dc->hatch_livarot_path = NULL;
+
+            dc->_message_context->clear();
             ret = TRUE;
         }
         break;
+
     case GDK_KEY_PRESS:
         switch (get_group0_keyval (&event->key)) {
         case GDK_Up:
@@ -635,6 +1130,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 if (dc->width > 1.0)
                     dc->width = 1.0;
                 sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100); // the same spinbutton is for alt+x
+                sp_ddc_update_cursors(dc);
                 ret = TRUE;
             }
             break;
@@ -645,8 +1141,23 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 if (dc->width < 0.01)
                     dc->width = 0.01;
                 sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
+                sp_ddc_update_cursors(dc);
                 ret = TRUE;
             }
+            break;
+        case GDK_Home:
+        case GDK_KP_Home:
+            dc->width = 0.01;
+            sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
+            sp_ddc_update_cursors(dc);
+            ret = TRUE;
+            break;
+        case GDK_End:
+        case GDK_KP_End:
+            dc->width = 1.0;
+            sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
+            sp_ddc_update_cursors(dc);
+            ret = TRUE;
             break;
         case GDK_x:
         case GDK_X:
@@ -670,9 +1181,61 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 ret = TRUE;
             }
             break;
+        case GDK_Meta_L:
+        case GDK_Meta_R:
+            event_context->cursor_shape = cursor_thicken_xpm;
+            sp_event_context_update_cursor(event_context);
+            break;
+        case GDK_Alt_L:
+        case GDK_Alt_R:
+            if (MOD__SHIFT) {
+                event_context->cursor_shape = cursor_thicken_xpm;
+                sp_event_context_update_cursor(event_context);
+            } else {
+                event_context->cursor_shape = cursor_thin_xpm;
+                sp_event_context_update_cursor(event_context);
+            }
+            break;
+        case GDK_Shift_L:
+        case GDK_Shift_R:
+            if (MOD__ALT) {
+                event_context->cursor_shape = cursor_thicken_xpm;
+                sp_event_context_update_cursor(event_context);
+            }
+            break;
         default:
             break;
         }
+        break;
+
+    case GDK_KEY_RELEASE:
+        switch (get_group0_keyval(&event->key)) {
+            case GDK_Control_L:
+            case GDK_Control_R:
+                dc->_message_context->clear();
+                dc->hatch_spacing = 0;
+                break;
+            case GDK_Alt_L:
+            case GDK_Alt_R:
+                event_context->cursor_shape = cursor_calligraphy_xpm;
+                sp_event_context_update_cursor(event_context);
+                break;
+            case GDK_Shift_L:
+            case GDK_Shift_R:
+                if (MOD__ALT) {
+                    event_context->cursor_shape = cursor_thin_xpm;
+                    sp_event_context_update_cursor(event_context);
+                }
+                break;
+            case GDK_Meta_L:
+            case GDK_Meta_R:
+                event_context->cursor_shape = cursor_calligraphy_xpm;
+                sp_event_context_update_cursor(event_context);
+            break;
+            default:
+                break;
+        }
+
     default:
         break;
     }
@@ -701,7 +1264,7 @@ clear_current(SPDynaDrawContext *dc)
 }
 
 static void
-set_to_accumulated(SPDynaDrawContext *dc)
+set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
 
@@ -723,11 +1286,6 @@ set_to_accumulated(SPDynaDrawContext *dc)
             Inkscape::GC::release(dc->repr);
             item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
             item->updateRepr();
-            if (dc->keep_selected) {
-                sp_desktop_selection(desktop)->set(dc->repr);
-            } else {
-                sp_desktop_selection(desktop)->clear();
-            }
         }
         abp = nr_artpath_affine(sp_curve_first_bpath(dc->accumulated), sp_desktop_dt2root_affine(desktop));
         str = sp_svg_write_path(abp);
@@ -735,6 +1293,18 @@ set_to_accumulated(SPDynaDrawContext *dc)
         g_free(abp);
         dc->repr->setAttribute("d", str);
         g_free(str);
+
+        if (unionize) {
+            sp_desktop_selection(desktop)->add(dc->repr);
+            sp_selected_path_union_skip_undo();
+        } else {
+            if (dc->keep_selected) {
+                sp_desktop_selection(desktop)->set(dc->repr);
+            } else {
+                sp_desktop_selection(desktop)->clear();
+            }
+        }
+
     } else {
         if (dc->repr) {
             sp_repr_unparent(dc->repr);
@@ -743,7 +1313,7 @@ set_to_accumulated(SPDynaDrawContext *dc)
     }
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_CALLIGRAPHIC, 
-                     _("Create calligraphic stroke"));
+                     _("Draw calligraphic stroke"));
 }
 
 static void
