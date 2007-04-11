@@ -2178,6 +2178,11 @@ static void sp_ddc_pressure_state_changed( GtkToggleAction *act, gpointer data )
     prefs_set_int_attribute( "tools.calligraphic", "usepressure", gtk_toggle_action_get_active( act ) ? 1 : 0);
 }
 
+static void sp_ddc_trace_background_changed( GtkToggleAction *act, gpointer data )
+{
+    prefs_set_int_attribute( "tools.calligraphic", "tracebackground", gtk_toggle_action_get_active( act ) ? 1 : 0);
+}
+
 static void sp_ddc_tilt_state_changed( GtkToggleAction *act, GtkAction *calligraphy_angle )
 {
     prefs_set_int_attribute( "tools.calligraphic", "usetilt", gtk_toggle_action_get_active( act ) ? 1 : 0 );
@@ -2233,6 +2238,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         "    <toolitem action='WiggleAction' />"
         "    <toolitem action='MassAction' />"
         "    <separator />"
+        "    <toolitem action='TraceAction' />"
         "    <toolitem action='PressureAction' />"
         "    <toolitem action='TiltAction' />"
         "    <toolitem action='ResetAction' />"
@@ -2368,6 +2374,18 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
 
+
+        /* Trace Background button */
+        {
+            InkToggleAction* act = ink_toggle_action_new( "TraceAction",
+                                                          _("Trace Background"),
+                                                          _("Trace the lightness of the background by the width of the pen (white - minimum width, black - maximum width)"),
+                                                          "trace_background",
+                                                          Inkscape::ICON_SIZE_DECORATION );
+            gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_trace_background_changed), NULL);
+            gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.calligraphic", "tracebackground", 0 ) );
+        }
 
         /* Use Pressure button */
         {
