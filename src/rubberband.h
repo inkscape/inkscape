@@ -18,10 +18,18 @@
 #include "libnr/nr-forward.h"
 #include "libnr/nr-point.h"
 #include "libnr/nr-maybe.h"
+#include <vector>
 
 /* fixme: do multidocument safe */
 
 class CtrlRect;
+class SPCanvasItem;
+class SPCurve;
+
+enum {
+    RUBBERBAND_MODE_RECT,
+    RUBBERBAND_MODE_TOUCHPATH
+};
 
 namespace Inkscape
 {
@@ -36,6 +44,11 @@ public:
     void stop();
     bool is_started();
 
+    inline int getMode() {return _mode;}
+    inline std::vector<NR::Point> getPoints() {return _points;}
+
+    void setMode(int mode);
+
     static Rubberband* get();
 
 private:
@@ -46,8 +59,17 @@ private:
     SPDesktop *_desktop;
     NR::Point _start;
     NR::Point _end;
-    CtrlRect *_canvas;
+
+    std::vector<NR::Point> _points;
+
+    CtrlRect *_rect;
+    SPCanvasItem *_touchpath;
+    SPCurve *_touchpath_curve;
+
+    void delete_canvas_items();
+
     bool _started;
+    int _mode;
 };
 
 }
