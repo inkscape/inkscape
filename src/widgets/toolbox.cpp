@@ -301,7 +301,9 @@ GtkActionGroup* create_or_fetch_actions( SPDesktop* desktop )
         SP_VERB_FILE_OPEN,
         SP_VERB_FILE_PRINT,
         SP_VERB_FILE_SAVE,
+        SP_VERB_OBJECT_TO_CURVE,
         SP_VERB_SELECTION_GROUP,
+        SP_VERB_SELECTION_OUTLINE,
         SP_VERB_SELECTION_UNGROUP,
         SP_VERB_ZOOM_1_1,
         SP_VERB_ZOOM_1_2,
@@ -522,8 +524,8 @@ sp_node_path_edit_symmetrical(void)
     sp_node_selected_set_type(Inkscape::NodePath::NODE_SYMM);
 }
 
-static void toggle_show_handles (GtkWidget *button, gpointer data) {
-    bool show = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+static void toggle_show_handles (GtkToggleAction *act, gpointer data) {
+    bool show = gtk_toggle_action_get_active( act );
     prefs_set_int_attribute ("tools.nodes", "show_handles",  show ? 1 : 0);
     sp_nodepath_show_handles(show);
 }
@@ -535,80 +537,167 @@ static void toggle_show_handles (GtkWidget *button, gpointer data) {
 static GtkWidget *
 sp_node_toolbox_new(SPDesktop *desktop)
 {
-    Inkscape::UI::View::View *view = desktop;
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='NodeToolbar'>"
+        "    <toolitem action='NodeInsertAction' />"
+        "    <toolitem action='NodeDeleteAction' />"
+        "    <separator />"
+        "    <toolitem action='NodeJoinAction' />"
+        "    <toolitem action='NodeJoinSegmentAction' />"
+        "    <toolitem action='NodeDeleteSegmentAction' />"
+        "    <toolitem action='NodeBreakAction' />"
+        "    <separator />"
+        "    <toolitem action='NodeCuspAction' />"
+        "    <toolitem action='NodeSmoothAction' />"
+        "    <toolitem action='NodeSymmetricAction' />"
+        "    <separator />"
+        "    <toolitem action='NodeLineAction' />"
+        "    <toolitem action='NodeCurveAction' />"
+        "    <separator />"
+        "    <toolitem action='ObjectToPath' />"
+        "    <toolitem action='StrokeToPath' />"
+        "    <separator />"
+        "    <toolitem action='NodesShowHandlesAction' />"
+        "  </toolbar>"
+        "</ui>";
+    GtkActionGroup* mainActions = create_or_fetch_actions( desktop );
 
-    GtkTooltips *tt = gtk_tooltips_new();
-    GtkWidget *tb = gtk_hbox_new(FALSE, 0);
-
-    gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_insert",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_add), tt, _("Insert new nodes into selected segments"));
-    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_delete",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_delete), tt, _("Delete selected nodes"));
-
-    gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_join",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_join), tt, _("Join selected endnodes"));
-    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_join_segment",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_join_segment), tt, _("Join selected endnodes with a new segment"));
-
-    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_delete_segment",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_delete_segment), tt, _("Split path between two non-endpoint nodes"));
-
-    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_break",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_break), tt, _("Break path at selected nodes"));
-
-    gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_cusp",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_cusp), tt, _("Make selected nodes corner"));
-
-    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_smooth",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_smooth), tt, _("Make selected nodes smooth"));
-
-    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_symmetric",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_symmetrical), tt, _("Make selected nodes symmetric"));
-
-    gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_line",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_toline), tt, _("Make selected segments lines"));
-
-    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_curve",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_tocurve), tt, _("Make selected segments curves"));
-
-    gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_OBJECT_TO_CURVE), view, tt);
-
-    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_SELECTION_OUTLINE), view, tt);
-
-    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
-
-    GtkWidget *cvbox = gtk_vbox_new (FALSE, 0);
-    GtkWidget *cbox = gtk_hbox_new (FALSE, 0);
 
     {
-    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
-                                              SP_BUTTON_TYPE_TOGGLE,
-                                              NULL,
-                                              "nodes_show_handles",
-                                              _("Show the Bezier handles of selected nodes"),
-                                              tt);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), prefs_get_int_attribute ("tools.nodes", "show_handles", 1));
-    g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (toggle_show_handles), desktop);
-    gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
+        InkAction* inky = ink_action_new( "NodeInsertAction",
+                                          _("Insert"),
+                                          _("Insert new nodes into selected segments"),
+                                          "node_insert",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_add), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
 
-    gtk_box_pack_start(GTK_BOX(cvbox), cbox, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(tb), cvbox, FALSE, FALSE, 0);
+    {
+        InkAction* inky = ink_action_new( "NodeDeleteAction",
+                                          _("Delete"),
+                                          _("Delete selected nodes"),
+                                          "node_delete",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_delete), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
 
-    gtk_widget_show_all(tb);
+    {
+        InkAction* inky = ink_action_new( "NodeJoinAction",
+                                          _("Join"),
+                                          _("Join selected endnodes"),
+                                          "node_join",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_join), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
 
-    return tb;
+    {
+        InkAction* inky = ink_action_new( "NodeJoinSegmentAction",
+                                          _("Join Segment"),
+                                          _("Join selected endnodes with a new segment"),
+                                          "node_join_segment",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_join_segment), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
 
+    {
+        InkAction* inky = ink_action_new( "NodeDeleteSegmentAction",
+                                          _("Delete Segment"),
+                                          _("Split path between two non-endpoint nodes"),
+                                          "node_delete_segment",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_delete_segment), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+
+    {
+        InkAction* inky = ink_action_new( "NodeBreakAction",
+                                          _("Node Break"),
+                                          _("Break path at selected nodes"),
+                                          "node_break",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_break), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+
+    {
+        InkAction* inky = ink_action_new( "NodeCuspAction",
+                                          _("Node Cusp"),
+                                          _("Make selected nodes corner"),
+                                          "node_cusp",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_cusp), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+
+    {
+        InkAction* inky = ink_action_new( "NodeSmoothAction",
+                                          _("Node Smooth"),
+                                          _("Make selected nodes smooth"),
+                                          "node_smooth",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_smooth), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+
+    {
+        InkAction* inky = ink_action_new( "NodeSymmetricAction",
+                                          _("Node Symmetric"),
+                                          _("Make selected nodes symmetric"),
+                                          "node_symmetric",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_symmetrical), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+
+    {
+        InkAction* inky = ink_action_new( "NodeLineAction",
+                                          _("Node Line"),
+                                          _("Make selected segments lines"),
+                                          "node_line",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_toline), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+
+    {
+        InkAction* inky = ink_action_new( "NodeCurveAction",
+                                          _("Node Curve"),
+                                          _("Make selected segments curves"),
+                                          "node_curve",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_tocurve), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+
+    {
+        InkToggleAction* act = ink_toggle_action_new( "NodesShowHandlesAction",
+                                                      _("Show Handles"),
+                                                      _("Show the Bezier handles of selected nodes"),
+                                                      "nodes_show_handles",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_show_handles), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.nodes", "show_handles", 1 ) );
+    }
+
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+
+    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
+
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/NodeToolbar" );
+    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
+    Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), (GtkIconSize)toolboxSize );
+
+    return toolBar;
 } // end of sp_node_toolbox_new()
 
 
