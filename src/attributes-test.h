@@ -341,8 +341,8 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:groupmode", true},
     {"sodipodi:version", true},
     {"inkscape:version", true},
-    {"inkscape:object-bbox", true},
-    {"inkscape:object-points", true},
+/*  {"inkscape:object-bbox", true},
+    {"inkscape:object-points", true},*/
     {"inkscape:object-paths", true},
     {"inkscape:object-nodes", true},
     {"inkscape:pageopacity", true},
@@ -356,10 +356,10 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:window-height", true},
     {"inkscape:window-x", true},
     {"inkscape:window-y", true},
-    {"inkscape:grid-bbox", true},
+/*  {"inkscape:grid-bbox", true},
     {"inkscape:guide-bbox", true},
     {"inkscape:grid-points", true},
-    {"inkscape:guide-points", true},
+    {"inkscape:guide-points", true},*/
     {"inkscape:current-layer", true},
     {"inkscape:connector-type", true},
     {"inkscape:connection-start", true},

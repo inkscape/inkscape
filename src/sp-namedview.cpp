@@ -167,12 +167,12 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:window-height");
     sp_object_read_attr(object, "inkscape:window-x");
     sp_object_read_attr(object, "inkscape:window-y");
-    sp_object_read_attr(object, "inkscape:grid-bbox");
+/*  sp_object_read_attr(object, "inkscape:grid-bbox");
     sp_object_read_attr(object, "inkscape:guide-bbox");
     sp_object_read_attr(object, "inkscape:object-bbox");
     sp_object_read_attr(object, "inkscape:grid-points");
     sp_object_read_attr(object, "inkscape:guide-points");
-    sp_object_read_attr(object, "inkscape:object-points");
+    sp_object_read_attr(object, "inkscape:object-points");*/
     sp_object_read_attr(object, "inkscape:object-paths");
     sp_object_read_attr(object, "inkscape:object-nodes");
     sp_object_read_attr(object, "inkscape:current-layer");
@@ -435,7 +435,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->window_y = value ? atoi(value) : -1; // -1 means not set
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-	case SP_ATTR_INKSCAPE_GRID_BBOX:
+/*	case SP_ATTR_INKSCAPE_GRID_BBOX:
             nv->snap_manager.grid.setSnapTo(Inkscape::Snapper::BBOX_POINT, value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
@@ -459,6 +459,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->snap_manager.object.setSnapTo(Inkscape::Snapper::SNAP_POINT, (value) ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
+*/
         case SP_ATTR_INKSCAPE_OBJECT_PATHS:
             nv->snap_manager.object.setSnapToPaths(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);

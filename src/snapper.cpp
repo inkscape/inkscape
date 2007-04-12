@@ -26,7 +26,7 @@ Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const d) : _named_vi
     g_assert(_named_view != NULL);
     g_assert(SP_IS_NAMEDVIEW(_named_view));
 
-    setSnapTo(BBOX_POINT, true);
+    setSnapTo(BBOX_POINT | SNAP_POINT, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
 }
 
 /**
