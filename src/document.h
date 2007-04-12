@@ -28,6 +28,7 @@
 #include "gc-anchored.h"
 #include <glibmm/ustring.h>
 #include "verbs.h"
+#include <vector>
 
 namespace Avoid {
 class Router;
@@ -233,7 +234,8 @@ GSList * sp_document_items_in_box(SPDocument *document, unsigned int dkey, NR::R
 GSList * sp_document_partial_items_in_box(SPDocument *document, unsigned int dkey, NR::Rect const &box);
 SPItem* sp_document_item_from_list_at_point_bottom (unsigned int dkey, SPGroup *group, const GSList *list, NR::Point const p, bool take_insensitive = false);
 SPItem * sp_document_item_at_point (SPDocument *document, unsigned int key, NR::Point const p, gboolean into_groups, SPItem *upto = NULL);
-SPItem * sp_document_group_at_point (SPDocument *document, unsigned int key,  NR::Point const p);
+GSList *sp_document_items_at_points(SPDocument *document, unsigned const key, std::vector<NR::Point> points);
+SPItem *sp_document_group_at_point (SPDocument *document, unsigned int key,  NR::Point const p);
 
 void sp_document_set_uri (SPDocument *document, const gchar *uri);
 void sp_document_resized_signal_emit (SPDocument *doc, gdouble width, gdouble height);

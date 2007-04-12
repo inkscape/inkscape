@@ -996,6 +996,30 @@ GSList *sp_document_partial_items_in_box(SPDocument *document, unsigned int dkey
     return find_items_in_area(NULL, SP_GROUP(document->root), dkey, box, overlaps);
 }
 
+GSList *
+sp_document_items_at_points(SPDocument *document, unsigned const key, std::vector<NR::Point> points)
+{
+    GSList *items = NULL;
+
+    // When picking along the path, we don't want small objects close together 
+    // (such as hatching strokes) to obscure each other by their deltas, 
+    // so we temporarily set delta to a small value
+    gdouble saved_delta = prefs_get_double_attribute ("options.cursortolerance", "value", 1.0);
+    prefs_set_double_attribute ("options.cursortolerance", "value", 0.25);
+
+    for(unsigned int i = 0; i < points.size(); i++) {
+        SPItem *item = sp_document_item_at_point(document, key, points[i],
+                                         false, NULL);
+        if (item && !g_slist_find(items, item))
+            items = g_slist_prepend (items, item);
+    }
+
+    // and now we restore it back
+    prefs_set_double_attribute ("options.cursortolerance", "value", saved_delta);
+
+    return items;
+}
+
 SPItem *
 sp_document_item_at_point(SPDocument *document, unsigned const key, NR::Point const p,
                           gboolean const into_groups, SPItem *upto)
