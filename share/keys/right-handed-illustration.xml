@@ -24,11 +24,13 @@ Shift-2 - Calligraphy Tool
 Ctrl-2  - Pencil Tool
 3       - Eyedropper
 4       - Node Tool
+K       - Paint Bucket Tool
 
 Q       - Union
 W       - Difference
 E       - Simplify
 R       - Toggle Dialogs
+Shift-Ctrl-Alt-Q - Set Clipping Path
 
 A       - Move Selection Up
 Shift-A - Bring to Front
@@ -126,6 +128,9 @@ Future improvements:
   <bind key="i" action="ToolSpiral" />
   <bind key="I" action="ToolSpiral" />
 
+  <bind key="K" action="ToolPaintBucket" display="true"/>
+  <bind key="k" action="ToolPaintBucket" />
+  
   <bind action="SpiralPrefs" />
 
   <bind key="F6" action="ToolPencil" display="true"/>
@@ -362,7 +367,8 @@ Future improvements:
   <bind action="ObjectSetMask" />
   <bind action="ObjectUnSetMask" />
 
-  <bind action="ObjectSetClipPath" />
+  <bind action="ObjectSetClipPath" key="Q" modifiers="Ctrl,Alt,Shift" display="true" />
+  <bind action="ObjectSetClipPath" key="q" modifiers="Ctrl,Alt,Shift" />
   <bind action="ObjectUnSetClipPath" />
 
   <!-- FIXME: currently these bypass the verbs, so the verbs are not bound to ctrl+[] as they should be -->
