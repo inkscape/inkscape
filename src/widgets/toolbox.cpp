@@ -303,9 +303,17 @@ GtkActionGroup* create_or_fetch_actions( SPDesktop* desktop )
         SP_VERB_FILE_SAVE,
         SP_VERB_SELECTION_GROUP,
         SP_VERB_SELECTION_UNGROUP,
+        SP_VERB_ZOOM_1_1,
+        SP_VERB_ZOOM_1_2,
+        SP_VERB_ZOOM_2_1,
         SP_VERB_ZOOM_DRAWING,
+        SP_VERB_ZOOM_IN,
+        SP_VERB_ZOOM_NEXT,
+        SP_VERB_ZOOM_OUT,
         SP_VERB_ZOOM_PAGE,
-        SP_VERB_ZOOM_SELECTION
+        SP_VERB_ZOOM_PAGE_WIDTH,
+        SP_VERB_ZOOM_PREV,
+        SP_VERB_ZOOM_SELECTION,
     };
 
     gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
@@ -611,46 +619,41 @@ sp_node_toolbox_new(SPDesktop *desktop)
 static GtkWidget *
 sp_zoom_toolbox_new(SPDesktop *desktop)
 {
-    Inkscape::UI::View::View *view=desktop;
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='ZoomToolbar'>"
+        "    <toolitem action='ZoomIn' />"
+        "    <toolitem action='ZoomOut' />"
+        "    <separator />"
+        "    <toolitem action='ZoomSelection' />"
+        "    <toolitem action='ZoomDrawing' />"
+        "    <toolitem action='ZoomPage' />"
+        "    <toolitem action='ZoomPageWidth' />"
+        "    <separator />"
+        "    <toolitem action='ZoomPrev' />"
+        "    <toolitem action='ZoomNext' />"
+        "    <separator />"
+        "    <toolitem action='Zoom1:0' />"
+        "    <toolitem action='Zoom1:2' />"
+        "    <toolitem action='Zoom2:1' />"
+        "  </toolbar>"
+        "</ui>";
+    GtkActionGroup* mainActions = create_or_fetch_actions( desktop );
 
-    GtkTooltips *tt = gtk_tooltips_new();
-    GtkWidget *tb = gtk_hbox_new(FALSE, 0);
 
-    gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0),
-                       FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
 
-    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_IN), view, tt);
+    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
 
-    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_OUT), view, tt);
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/ZoomToolbar" );
+    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
+    Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), (GtkIconSize)toolboxSize );
 
-    gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_SELECTION), view, tt);
-
-    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_DRAWING), view, tt);
-
-    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_PAGE), view, tt);
-
-    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_PAGE_WIDTH), view, tt);
-
-    gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_PREV), view, tt);
-
-    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_NEXT), view, tt);
-
-    gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_1_1), view, tt);
-
-    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_1_2), view, tt);
-
-    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_2_1), view, tt);
-
-    gtk_widget_show_all(tb);
-
-    return tb;
-
+    return toolBar;
 } // end of sp_zoom_toolbox_new()
 
 void
