@@ -228,10 +228,10 @@ sp_select_context_abort(SPEventContext *event_context)
             return true;
         }
     } else {
-        NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
-        if (b) {
+        if (Inkscape::Rubberband::get()->is_started()) {
             Inkscape::Rubberband::get()->stop();
             rb_escaped = 1;
+            SP_EVENT_CONTEXT(sc)->defaultMessageContext()->clear();
             SP_EVENT_CONTEXT(sc)->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selection canceled."));
             return true;
         }
@@ -312,7 +312,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                 sc->button_press_ctrl = (event->button.state & GDK_CONTROL_MASK) ? true : false;
                 sc->button_press_alt = (event->button.state & GDK_MOD1_MASK) ? true : false;
 
-                if (event->button.state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) {
+                if (event->button.state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)) {
                     // if shift or ctrl was pressed, do not move objects;
                     // pass the event to root handler which will perform rubberband, shift-click, ctrl-click, ctrl-drag
                 } else {
@@ -333,7 +333,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                         sc->grabbed = NULL;
                     }
                     sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->drawing),
-                                        GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON_PRESS_MASK |
+                                        GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON_PRESS_MASK |
                                         GDK_POINTER_MOTION_MASK,
                                         NULL, event->button.time);
                     sc->grabbed = SP_CANVAS_ITEM(desktop->drawing);
@@ -433,13 +433,15 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 NR::Point const button_pt(event->button.x, event->button.y);
                 NR::Point const p(desktop->w2d(button_pt));
+                if (event->button.state & GDK_MOD1_MASK)
+                    Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
                 Inkscape::Rubberband::get()->start(desktop, p);
                 if (sc->grabbed) {
                     sp_canvas_item_ungrab(sc->grabbed, event->button.time);
                     sc->grabbed = NULL;
                 }
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
-                                    GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK,
+                                    GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK,
                                     NULL, event->button.time);
                 sc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
 
@@ -474,8 +476,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 // motion notify coordinates as given (no snapping back to origin)
                 within_tolerance = false;
 
-                if (sc->button_press_ctrl || sc->button_press_alt) {
-                    // if ctrl or alt was pressed and it's not click, we want to drag rather than rubberband
+                if (sc->button_press_ctrl || (sc->button_press_alt && !sc->button_press_shift && !selection->isEmpty())) {
+                    // if it's not click and ctrl or alt was pressed (the latter with some selection
+                    // but not with shift) we want to drag rather than rubberband
                     sc->dragging = TRUE;
 
                     sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
@@ -486,6 +489,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     // not only that; we will end up here when ctrl-dragging as well
                     // and also when we started within tolerance, but trespassed tolerance outside of item
                     Inkscape::Rubberband::get()->stop();
+                    SP_EVENT_CONTEXT(sc)->defaultMessageContext()->clear();
                     item_at_point = desktop->item_at_point(NR::Point(event->button.x, event->button.y), FALSE);
                     if (!item_at_point) // if no item at this point, try at the click point (bug 1012200)
                         item_at_point = desktop->item_at_point(NR::Point(xp, yp), FALSE);
@@ -523,6 +527,11 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 } else {
                     if (Inkscape::Rubberband::get()->is_started()) {
                         Inkscape::Rubberband::get()->move(p);
+                        if (Inkscape::Rubberband::get()->getMode() == RUBBERBAND_MODE_TOUCHPATH) {
+                            event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to rubberband selection"));
+                        } else {
+                            event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to touch selection"));
+                        }
                         gobble_motion_events(GDK_BUTTON1_MASK);
                     }
                 }
@@ -566,13 +575,21 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     }
                     sc->item = NULL;
                 } else {
-                    NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
-                    if (b && !within_tolerance) {
+                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+                    if (r->is_started() && !within_tolerance) {
                         // this was a rubberband drag
-                        Inkscape::Rubberband::get()->stop();
+                        GSList *items = NULL;
+                        if (r->getMode() == RUBBERBAND_MODE_RECT) {
+                            NR::Maybe<NR::Rect> const b = r->getRectangle();
+                            items = sp_document_items_in_box(sp_desktop_document(desktop), desktop->dkey, *b);
+                        } else if (r->getMode() == RUBBERBAND_MODE_TOUCHPATH) {
+                            items = sp_document_items_at_points(sp_desktop_document(desktop), desktop->dkey, r->getPoints());
+                        }
+
                         seltrans->resetState();
-                        // find out affected items:
-                        GSList *items = sp_document_items_in_box(sp_desktop_document(desktop), desktop->dkey, *b);
+                        r->stop();
+                        SP_EVENT_CONTEXT(sc)->defaultMessageContext()->clear();
+
                         if (event->button.state & GDK_SHIFT_MASK) {
                             // with shift, add to selection
                             selection->addList (items);
@@ -582,7 +599,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         }
                         g_slist_free (items);
                     } else { // it was just a click, or a too small rubberband
-                        Inkscape::Rubberband::get()->stop();
+                        r->stop();
                         if (sc->button_press_shift && !rb_escaped && !drag_escaped) {
                             // this was a shift-click, select what was clicked upon
 
@@ -646,31 +663,41 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_KEY_PRESS: // keybindings for select context
 
-            if (!key_is_a_modifier (get_group0_keyval (&event->key))) {
-                    event_context->defaultMessageContext()->clear();
-            } else if (sc->grabbed || seltrans->isGrabbed()) {
-                // do not change the statusbar text when mousekey is down to move or transform the object,
-                // because the statusbar text is already updated somewhere else.
-                   break;
-            } else {
-                    sp_event_show_modifier_tip (event_context->defaultMessageContext(), event,
-                                                _("<b>Ctrl</b>: select in groups, move hor/vert"),
-                                                _("<b>Shift</b>: toggle select, force rubberband, disable snapping"),
-                                                _("<b>Alt</b>: select under, move selected"));
-                    // if Alt then change cursor to moving cursor:
-                    guint keyval = get_group0_keyval(&event->key);
-                    bool alt = ( MOD__ALT
+            {
+            guint keyval = get_group0_keyval(&event->key);
+            bool alt = ( MOD__ALT
                                     || (keyval == GDK_Alt_L)
                                     || (keyval == GDK_Alt_R)
                                     || (keyval == GDK_Meta_L)
                                     || (keyval == GDK_Meta_R));
+
+            if (!key_is_a_modifier (keyval)) {
+                    event_context->defaultMessageContext()->clear();
+            } else if (sc->grabbed || seltrans->isGrabbed()) {
+                if (Inkscape::Rubberband::get()->is_started()) {
+                    // if Alt then change cursor to moving cursor:
                     if (alt) {
+                        Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
+                    }
+                } else {
+                // do not change the statusbar text when mousekey is down to move or transform the object,
+                // because the statusbar text is already updated somewhere else.
+                   break;
+                }
+            } else {
+                    sp_event_show_modifier_tip (event_context->defaultMessageContext(), event,
+                                                _("<b>Ctrl</b>: click to select in groups; drag to move hor/vert"),
+                                                _("<b>Shift</b>: click to toggle select; drag for rubberband selection"),
+                                                _("<b>Alt</b>: click to select under; drag to move selected or select by touch"));
+                    // if Alt and nonempty selection, show moving cursor ("move selected"):
+                    if (alt && !selection->isEmpty()) {
                         GdkCursor *cursor = gdk_cursor_new(GDK_FLEUR);
                         gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, cursor);
                         gdk_cursor_destroy(cursor);
                     }
                     //*/
                     break;
+            }
             }
 
             switch (get_group0_keyval (&event->key)) {
@@ -827,11 +854,28 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
             }
             break;
+
         case GDK_KEY_RELEASE:
-            if (key_is_a_modifier (get_group0_keyval (&event->key)))
+            {
+            guint keyval = get_group0_keyval(&event->key);
+            if (key_is_a_modifier (keyval))
                 event_context->defaultMessageContext()->clear();
-                // set cursor to default.
-                gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
+
+            bool alt = ( MOD__ALT
+                         || (keyval == GDK_Alt_L)
+                         || (keyval == GDK_Alt_R)
+                         || (keyval == GDK_Meta_L)
+                         || (keyval == GDK_Meta_R));
+
+            if (Inkscape::Rubberband::get()->is_started()) {
+                // if Alt then change cursor to moving cursor:
+                if (alt) {
+                    Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_RECT);
+                }
+            }
+            }
+            // set cursor to default.
+            gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
             break;
         default:
             break;
