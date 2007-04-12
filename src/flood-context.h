@@ -50,6 +50,6 @@ struct SPFloodContextClass {
 GtkType sp_flood_context_get_type (void);
 
 GList* flood_channels_dropdown_items_list (void);
-void flood_channels_changed(GtkComboBox *cbox, GtkWidget *tbl);
+void flood_channels_set_channels( gint channels );
 
 #endif

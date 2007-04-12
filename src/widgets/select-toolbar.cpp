@@ -45,7 +45,6 @@
 #include "sp-item-transform.h"
 #include "message-stack.h"
 #include "display/sp-canvas.h"
-#include "ege-select-one-action.h"
 #include "helper/unit-tracker.h"
 #include "ege-adjustment-action.h"
 #include "ink-action.h"

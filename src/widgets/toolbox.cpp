@@ -88,6 +88,7 @@
 #include "ink-action.h"
 #include "ege-adjustment-action.h"
 #include "ege-output-action.h"
+#include "ege-select-one-action.h"
 #include "helper/unit-tracker.h"
 
 using Inkscape::UnitTracker;
@@ -776,10 +777,6 @@ update_aux_toolbox(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *
 static void
 setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 {
-    gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
-    Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
-    GtkActionGroup* mainActions = create_or_fetch_actions( desktop );
-
     gchar const * descr =
         "<ui>"
         "  <toolbar name='CommandsToolbar'>"
@@ -818,15 +815,21 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='DialogDocumentProperties' />"
         "  </toolbar>"
         "</ui>";
+    GtkActionGroup* mainActions = create_or_fetch_actions( desktop );
+
 
     GtkUIManager* mgr = gtk_ui_manager_new();
     GError* errVal = 0;
+
     gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
     gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
 
     GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/CommandsToolbar" );
     gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
+    Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
     gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), (GtkIconSize)toolboxSize );
+
 
     gtk_container_add( GTK_CONTAINER(toolbox), toolBar );
 }
@@ -1328,7 +1331,6 @@ sp_toolbox_add_label(GtkWidget *tbl, gchar const *title, bool wide)
 static GtkWidget *
 sp_star_toolbox_new(SPDesktop *desktop)
 {
-    GtkWidget *toolBar = 0;
     GtkWidget* holder = gtk_table_new( 1, 2, FALSE );
 
     gchar const * descr =
@@ -1348,9 +1350,8 @@ sp_star_toolbox_new(SPDesktop *desktop)
         "    <toolitem action='ResetAction' />"
         "  </toolbar>"
         "</ui>";
-    GtkUIManager* mgr = gtk_ui_manager_new();
-    GError* errVal = 0;
     GtkActionGroup* mainActions = gtk_action_group_new("main");
+
     {
         EgeOutputAction* act = ege_output_action_new( "StarStateAction", _("<b>New:</b>"), "", 0 );
         ege_output_action_set_use_markup( act, TRUE );
@@ -1472,10 +1473,14 @@ sp_star_toolbox_new(SPDesktop *desktop)
         }
     }
 
+
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+
     gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
     gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
 
-    toolBar = gtk_ui_manager_get_widget( mgr, "/ui/StarToolbar" );
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/StarToolbar" );
     gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
     gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
 
@@ -1757,6 +1762,7 @@ sp_rect_toolbox_new(SPDesktop *desktop)
         "  </toolbar>"
         "</ui>";
     GtkActionGroup* mainActions = gtk_action_group_new("main");
+
     EgeAdjustmentAction* eact = 0;
 
     {
@@ -1859,14 +1865,16 @@ sp_rect_toolbox_new(SPDesktop *desktop)
     sp_rtb_sensitivize (holder);
 
 
-    GError* errVal = 0;
     GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+
     gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
     gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
 
-    GtkWidget *toolBar = gtk_ui_manager_get_widget( mgr, "/ui/RectToolbar" );
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/RectToolbar" );
     gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
     gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
+
 
     gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0 );
 
@@ -2267,7 +2275,6 @@ static void sp_ddc_defaults(GtkWidget *, GtkWidget *dataKludge)
 static GtkWidget *
 sp_calligraphy_toolbox_new(SPDesktop *desktop)
 {
-    GtkWidget *toolBar = 0;
     GtkWidget* holder = gtk_table_new( 1, 2, FALSE );
 
     gchar const * descr =
@@ -2291,8 +2298,6 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         "    <toolitem action='ResetAction' />"
         "  </toolbar>"
         "</ui>";
-    GtkUIManager* mgr = gtk_ui_manager_new();
-    GError* errVal = 0;
     GtkActionGroup* mainActions = gtk_action_group_new("main");
 
     {
@@ -2472,10 +2477,13 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
     }
 
 
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+
     gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
     gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
 
-    toolBar = gtk_ui_manager_get_widget( mgr, "/ui/CalligraphyToolbar" );
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/CalligraphyToolbar" );
     gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
     gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
 
@@ -4409,16 +4417,22 @@ sp_connector_toolbox_new(SPDesktop *desktop)
 
 } // end of sp_connector_toolbox_new()
 
+static void paintbucket_channels_changed(EgeSelectOneAction* act, GtkWidget* tbl)
+{
+    gint channels = ege_select_one_action_get_active( act );
+    flood_channels_set_channels( channels );
+}
+
 static void paintbucket_threshold_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
     prefs_set_int_attribute("tools.paintbucket", "threshold", (gint)adj->value);
-    spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
 static void paintbucket_offset_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
-    GtkWidget *us = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(tbl), "units");
-    SPUnit const *unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
+    UnitTracker* tracker = reinterpret_cast<UnitTracker*>(gtk_object_get_data(GTK_OBJECT(tbl), "tracker"));
+    SPUnit const *unit = tracker->getActiveUnit();
+
 
     prefs_set_double_attribute("tools.paintbucket", "offset", (gdouble)sp_units_get_pixels(adj->value, *unit));
     spinbutton_defocus(GTK_OBJECT(tbl));
@@ -4427,76 +4441,107 @@ static void paintbucket_offset_changed(GtkAdjustment *adj, GtkWidget *tbl)
 static GtkWidget *
 sp_paintbucket_toolbox_new(SPDesktop *desktop)
 {
-    GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
+    GtkWidget *holder = gtk_hbox_new(FALSE, 0);
+    gtk_object_set_data(GTK_OBJECT(holder), "dtw", desktop->canvas);
+    gtk_object_set_data(GTK_OBJECT(holder), "desktop", desktop);
 
-    //  interval
-    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='PaintbucketToolbar'>"
+        "    <toolitem action='ChannelsAction' />"
+        "    <separator />"
+        "    <toolitem action='ThresholdAction' />"
+        "    <separator />"
+        "    <toolitem action='OffsetAction' />"
+        "  </toolbar>"
+        "</ui>";
+    GtkActionGroup* mainActions = gtk_action_group_new("main");
+
+    EgeAdjustmentAction* eact = 0;
 
     {
-      sp_toolbox_add_label(tbl, _("Fill by:"), false);
+        GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
 
-      GtkWidget *channels = gtk_combo_box_new_text();
-
-      GList *items = flood_channels_dropdown_items_list();
-
-      for ( ; items ; items = items->next )
-      {
-          gtk_combo_box_append_text(GTK_COMBO_BOX(channels), (char*)items->data);
-      }
-
-      gtk_combo_box_set_active (GTK_COMBO_BOX(channels), prefs_get_int_attribute("tools.paintbucket", "channels", 0));
-      gtk_box_pack_start (GTK_BOX (tbl), channels, FALSE, FALSE, 0);
-      g_signal_connect (G_OBJECT (channels), "changed", G_CALLBACK (flood_channels_changed), tbl);
+        GList* items = 0;
+        gint count = 0;
+        for ( items = flood_channels_dropdown_items_list(); items ; items = g_list_next(items) )
+        {
+            GtkTreeIter iter;
+            gtk_list_store_append( model, &iter );
+            gtk_list_store_set( model, &iter, 0, reinterpret_cast<gchar*>(items->data), 1, count, -1 );
+            count++;
+        }
+        g_list_free( items );
+        items = 0;
+        EgeSelectOneAction* act1 = ege_select_one_action_new( "ChannelsAction", _("Fill by:"), _(""), NULL, GTK_TREE_MODEL(model) );
+        ege_select_one_action_set_active( act1, prefs_get_int_attribute("tools.paintbucket", "channels", 0) );
+        g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(paintbucket_channels_changed), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
     }
-
-    //  interval
-    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
     // Spacing spinbox
     {
-        GtkWidget *threshold = sp_tb_spinbutton(_("Threshold:"),
-                _("The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"),
-                "tools.paintbucket", "threshold", 5, NULL, tbl, TRUE,
-                "inkscape:paintbucket-threshold", 0, 100, 1.0, 10.0,
-                paintbucket_threshold_changed, 1, 0);
+        eact = create_adjustment_action(
+            "ThresholdAction",
+            _("Threshold:"),
+            _("The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"),
+            "tools.paintbucket", "threshold", 5, GTK_WIDGET(desktop->canvas), NULL, holder, TRUE,
+            "inkscape:paintbucket-threshold", 0, 100.0, 1.0, 10.0,
+            0, 0, 0,
+            paintbucket_threshold_changed, 1, 0 );
 
-        gtk_box_pack_start(GTK_BOX(tbl), threshold, FALSE, FALSE,
-                AUX_SPACING);
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
-    //  interval
-    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-
     // Create the units menu.
-    GtkWidget *us = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
-    sp_unit_selector_setsize(us, AUX_OPTION_MENU_WIDTH, AUX_OPTION_MENU_HEIGHT);
-    sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us), sp_desktop_namedview(desktop)->doc_units);
+    UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
+    tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
+    gtk_object_set_data( GTK_OBJECT(holder), "tracker", tracker );
+    {
+        GtkAction* act = tracker->createAction( "PaintbucketUnitsAction", _("Units"), _("") );
+        gtk_action_group_add_action( mainActions, act );
+    }
 
     // Offset spinbox
     {
-        GtkWidget *offset = sp_tb_spinbutton(_("Grow/shrink by:"),
-                _("The amount to grow (positive) or shrink (negative) the created fill path"),
-                "tools.paintbucket", "offset", 0, us, tbl, TRUE,
-                "inkscape:paintbucket-offset", -1e6, 1e6, 0.1, 0.5,
-                paintbucket_offset_changed, 1, 2);
+        eact = create_adjustment_action(
+            "OffsetAction",
+            _("Grow/shrink by:"),
+            _("The amount to grow (positive) or shrink (negative) the created fill path"),
+            "tools.paintbucket", "offset", 0, GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, TRUE,
+            "inkscape:paintbucket-offset", -1e6, 1e6, 0.1, 0.5,
+            0, 0, 0,
+            paintbucket_offset_changed, 1, 2);
+        tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
 
-        gtk_box_pack_start(GTK_BOX(tbl), offset, FALSE, FALSE,
-                AUX_SPACING);
-
-        gtk_box_pack_start(GTK_BOX(tbl), us, FALSE, FALSE, AUX_SPACING);
-        gtk_object_set_data(GTK_OBJECT(tbl), "units", us);
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
+
+
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+
+    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
+
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/PaintbucketToolbar" );
+    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
+
+    gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0 );
+
 
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of Paint Bucket fill objects"));
     swatch->setDesktop (desktop);
     swatch->setClickVerb (SP_VERB_CONTEXT_PAINTBUCKET_PREFS);
     swatch->setWatchedTool ("tools.paintbucket", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+    gtk_box_pack_end( GTK_BOX(holder), swatch_, FALSE, FALSE, 0 );
 
-    gtk_widget_show_all(tbl);
-    sp_set_font_size_smaller (tbl);
-    return tbl;
+    gtk_widget_show_all( holder );
+    sp_set_font_size_smaller( holder );
+
+    return holder;
 }
 
 /*

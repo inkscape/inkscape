@@ -853,9 +853,9 @@ static void sp_flood_finish(SPFloodContext *rc)
     }
 }
 
-void flood_channels_changed(GtkComboBox *cbox, GtkWidget *tbl)
+void flood_channels_set_channels( gint channels )
 {
-    prefs_set_int_attribute("tools.paintbucket", "channels", (gint)gtk_combo_box_get_active(cbox));
+    prefs_set_int_attribute("tools.paintbucket", "channels", channels);
 }
 
 /*
