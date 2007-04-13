@@ -528,7 +528,7 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int wildPath,in
 // you gotta be very careful with the join, as anything but the right one will fuck everything up
 // see PathStroke.cpp for the "right" joins
 int
-Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_profile, double cx, double cy, double radius)
+Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_profile, double cx, double cy, double radius, NR::Matrix *i2doc)
 {
   Reset (0, 0);
   MakeBackData(a->_has_back_data);
@@ -606,9 +606,9 @@ Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_p
     ptP = a->getPoint(a->getEdge(i).st).x;
 
 		double this_dec;
-		if (do_profile) {
+		if (do_profile && i2doc) {
 			double alpha = 1;
-			double x = (NR::L2(ptP - NR::Point(cx,cy))/radius);
+			double x = (NR::L2(ptP * (*i2doc) - NR::Point(cx,cy))/radius);
 			if (x > 1) {
 				this_dec = 0;
 			} else if (x <= 0) {

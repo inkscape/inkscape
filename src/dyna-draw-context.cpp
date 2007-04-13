@@ -669,10 +669,11 @@ sp_ddc_dilate (SPDynaDrawContext *dc, NR::Point p, bool expand)
         }
 
         bool did_this = false;
+        NR::Matrix i2doc(sp_item_i2doc_affine(item));
         if (theShape->MakeOffset(theRes, 
-                                  expand? offset : -offset,
-                                  join_straight, butt_straight,
-                                  true, p[NR::X], p[NR::Y], radius) == 0) // 0 means the shape was actually changed
+                                 expand? offset : -offset,
+                                 join_straight, butt_straight,
+                                 true, p[NR::X], p[NR::Y], radius, &i2doc) == 0) // 0 means the shape was actually changed
             did_this = true;
 
         // the rest only makes sense if we actually changed the path
