@@ -261,7 +261,12 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     // The selector tool should snap the bbox and the special snappoints, but not path nodes
     // (The special points are the handles, center, rotation axis, font baseline, ends of spiral, etc.)
 
-    // First, get all special points for snapping
+    // First, determine the bounding box for snapping ...
+    _bbox = selection->bounds(_snap_bbox_type);    
+    _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX); // Used for correctly scaling the strokewidth
+
+
+    // Next, get all special points for snapping
     _snap_points = selection->getSnapPoints(); // Excludes path nodes
     std::vector<NR::Point> snap_points_hull = selection->getSnapPointsConvexHull(); // Includes path nodes
     if (_snap_points.size() > 100) {
@@ -285,11 +290,6 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
             i++;
         }
     }
-    
-    // Next, determine the bounding box for snapping ...
-    _bbox = selection->bounds(_snap_bbox_type);
-    
-    _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX); // Used for correctly scaling the strokewidth
     
     _bbox_points.clear();
     if (_bbox) {
@@ -594,23 +594,7 @@ void Inkscape::SelTrans::_updateVolatileState()
         return;
     }
 
-    // First, get all special points for snapping
-    std::vector<NR::Point> snap_points_hull = selection->getSnapPointsConvexHull(); // Includes path nodes
-    // Find bbox hulling all special points, which excludes stroke width. Here we need to include the
-    // path nodes, for example because a rectangle which has been converted to a path doesn't have 
-    // any other special points
-    NR::Rect snap_points_bbox;
-    if ( snap_points_hull.empty() == false ) {
-        std::vector<NR::Point>::iterator i = snap_points_hull.begin();
-        snap_points_bbox = NR::Rect(*i, *i);
-        i++;
-        while (i != snap_points_hull.end()) {
-            snap_points_bbox.expandTo(*i);
-            i++;
-        }
-    }
-    
-    // Next, determine the bounding box for snapping ...
+    //Update the bboxes
     _bbox = selection->bounds(_snap_bbox_type);
     _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX);
     
