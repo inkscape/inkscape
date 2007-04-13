@@ -86,6 +86,18 @@ void ege_select_one_action_set_active( EgeSelectOneAction* action, gint val );
 gint ege_select_one_action_get_label_column( EgeSelectOneAction* action );
 void ege_select_one_action_set_label_column( EgeSelectOneAction* action, gint col );
 
+gint ege_select_one_action_get_icon_column( EgeSelectOneAction* action );
+void ege_select_one_action_set_icon_column( EgeSelectOneAction* action, gint col );
+
+gint ege_select_one_action_get_tooltip_column( EgeSelectOneAction* action );
+void ege_select_one_action_set_tooltip_column( EgeSelectOneAction* action, gint col );
+
+void ege_select_one_action_set_appearance( EgeSelectOneAction* action, gchar const* val );
+
+
+/* bit of a work-around */
+void ege_select_one_action_set_radio_action_type( EgeSelectOneAction* action, GType radioActionType );
+
 G_END_DECLS
 
 #endif /* SEEN_EGE_SELECT_ONE_ACTION */

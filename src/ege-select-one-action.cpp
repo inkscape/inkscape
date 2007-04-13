@@ -47,6 +47,7 @@
 #include <gtk/gtkcombobox.h>
 #include <gtk/gtkcellrenderertext.h>
 #include <gtk/gtkcelllayout.h>
+#include <gtk/gtkradioaction.h>
 #include <gtk/gtkradiomenuitem.h>
 
 #include "ege-select-one-action.h"
@@ -64,6 +65,7 @@ static void ege_select_one_action_set_property( GObject* obj, guint propId, cons
 static void resync_active( EgeSelectOneAction* act, gint active );
 static void combo_changed_cb( GtkComboBox* widget, gpointer user_data );
 static void menu_toggled_cb( GtkWidget* obj, gpointer data );
+static void proxy_action_chagned_cb( GtkRadioAction* action, GtkRadioAction* current, gpointer user_data );
 
 static GtkWidget* create_menu_item( GtkAction* action );
 static GtkWidget* create_tool_item( GtkAction* action );
@@ -75,11 +77,25 @@ static guint signals[LAST_SIGNAL] = {0};
 static GQuark gDataName = 0;
 
 
+enum {
+    APPEARANCE_UNKNOWN = -1,
+    APPEARANCE_NONE = 0,
+    APPEARANCE_FULL,
+    APPEARANCE_COMPACT,
+    APPEARANCE_MINIMAL,
+};
+
 struct _EgeSelectOneActionPrivate
 {
-    GtkTreeModel* model;
     gint active;
-    gint column;
+    gint labelColumn;
+    gint iconColumn;
+    gint tooltipColumn;
+    gint appearanceMode;
+    GType radioActionType;
+    GtkTreeModel* model;
+    gchar* iconProperty;
+    gchar* appearance;
 };
 
 #define EGE_SELECT_ONE_ACTION_GET_PRIVATE( o ) ( G_TYPE_INSTANCE_GET_PRIVATE( (o), EGE_SELECT_ONE_ACTION_TYPE, EgeSelectOneActionPrivate ) )
@@ -87,7 +103,11 @@ struct _EgeSelectOneActionPrivate
 enum {
     PROP_MODEL = 1,
     PROP_ACTIVE,
-    PROP_COLUMN
+    PROP_LABEL_COLUMN,
+    PROP_ICON_COLUMN,
+    PROP_TOOLTIP_COLUMN,
+    PROP_ICON_PROP,
+    PROP_APPEARANCE
 };
 
 GType ege_select_one_action_get_type( void )
@@ -146,12 +166,44 @@ void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
         g_object_class_install_property( objClass,
-                                         PROP_COLUMN,
-                                         g_param_spec_int( "column",
+                                         PROP_LABEL_COLUMN,
+                                         g_param_spec_int( "label-column",
                                                            "Display Column",
                                                            "The column of the model that holds display strings",
                                                            0, 20, 0,
                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
+        g_object_class_install_property( objClass,
+                                         PROP_ICON_COLUMN,
+                                         g_param_spec_int( "icon-column",
+                                                           "Icon Column",
+                                                           "The column of the model that holds display icon name",
+                                                           -1, 20, -1,
+                                                           (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
+        g_object_class_install_property( objClass,
+                                         PROP_TOOLTIP_COLUMN,
+                                         g_param_spec_int( "tooltip-column",
+                                                           "Tooltip Column",
+                                                          "The column of the model that holds tooltip strings",
+                                                           -1, 20, -1,
+                                                           (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
+        g_object_class_install_property( objClass,
+                                         PROP_ICON_PROP,
+                                         g_param_spec_string( "icon-property",
+                                                              "Icon Property",
+                                                              "Target icon property",
+                                                              "",
+                                                              (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
+        g_object_class_install_property( objClass,
+                                         PROP_APPEARANCE,
+                                         g_param_spec_string( "appearance",
+                                                              "Appearance hint",
+                                                              "A hint for how to display",
+                                                              "",
+                                                              (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
         signals[CHANGED] = g_signal_new( "changed",
                                          G_TYPE_FROM_CLASS(klass),
@@ -169,7 +221,15 @@ void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
 void ege_select_one_action_init( EgeSelectOneAction* action )
 {
     action->private_data = EGE_SELECT_ONE_ACTION_GET_PRIVATE( action );
+    action->private_data->active = 0;
+    action->private_data->labelColumn = 0;
+    action->private_data->iconColumn = -1;
+    action->private_data->tooltipColumn = -1;
+    action->private_data->appearanceMode = APPEARANCE_NONE;
+    action->private_data->radioActionType = 0;
     action->private_data->model = 0;
+    action->private_data->iconProperty = g_strdup("stock-id");
+    action->private_data->appearance = 0;
 
 /*     g_signal_connect( action, "notify", G_CALLBACK( fixup_labels ), NULL ); */
 }
@@ -187,6 +247,7 @@ EgeSelectOneAction* ege_select_one_action_new( const gchar *name,
                                            "stock_id", stock_id,
                                            "model", model,
                                            "active", 0,
+                                           "icon-property", "stock-id",
                                            NULL );
 
     EgeSelectOneAction* action = EGE_SELECT_ONE_ACTION( obj );
@@ -209,14 +270,40 @@ void ege_select_one_action_set_active( EgeSelectOneAction* action, gint val )
 gint ege_select_one_action_get_label_column( EgeSelectOneAction* action )
 {
     g_return_val_if_fail( IS_EGE_SELECT_ONE_ACTION(action), 0 );
-    return action->private_data->column;
+    return action->private_data->labelColumn;
 }
 
 void ege_select_one_action_set_label_column( EgeSelectOneAction* action, gint col )
 {
-    g_object_set( G_OBJECT(action), "column", col, NULL );
+    g_object_set( G_OBJECT(action), "label-column", col, NULL );
 }
 
+gint ege_select_one_action_get_icon_column( EgeSelectOneAction* action )
+{
+    g_return_val_if_fail( IS_EGE_SELECT_ONE_ACTION(action), 0 );
+    return action->private_data->iconColumn;
+}
+
+void ege_select_one_action_set_icon_column( EgeSelectOneAction* action, gint col )
+{
+    g_object_set( G_OBJECT(action), "icon-column", col, NULL );
+}
+
+gint ege_select_one_action_get_tooltip_column( EgeSelectOneAction* action )
+{
+    g_return_val_if_fail( IS_EGE_SELECT_ONE_ACTION(action), 0 );
+    return action->private_data->tooltipColumn;
+}
+
+void ege_select_one_action_set_tooltip_column( EgeSelectOneAction* action, gint col )
+{
+    g_object_set( G_OBJECT(action), "tooltip-column", col, NULL );
+}
+
+void ege_select_one_action_set_appearance( EgeSelectOneAction* action, gchar const* val )
+{
+    g_object_set( G_OBJECT(action), "appearance", val, NULL );
+}
 
 void ege_select_one_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec )
 {
@@ -230,8 +317,24 @@ void ege_select_one_action_get_property( GObject* obj, guint propId, GValue* val
             g_value_set_int( value, action->private_data->active );
             break;
 
-        case PROP_COLUMN:
-            g_value_set_int( value, action->private_data->column );
+        case PROP_LABEL_COLUMN:
+            g_value_set_int( value, action->private_data->labelColumn );
+            break;
+
+        case PROP_ICON_COLUMN:
+            g_value_set_int( value, action->private_data->iconColumn );
+            break;
+
+        case PROP_TOOLTIP_COLUMN:
+            g_value_set_int( value, action->private_data->tooltipColumn );
+            break;
+
+        case PROP_ICON_PROP:
+            g_value_set_string( value, action->private_data->iconProperty );
+            break;
+
+        case PROP_APPEARANCE:
+            g_value_set_string( value, action->private_data->appearance );
             break;
 
         default:
@@ -255,9 +358,51 @@ void ege_select_one_action_set_property( GObject* obj, guint propId, const GValu
         }
         break;
 
-        case PROP_COLUMN:
+        case PROP_LABEL_COLUMN:
         {
-            action->private_data->column = g_value_get_int( value );
+            action->private_data->labelColumn = g_value_get_int( value );
+        }
+        break;
+
+        case PROP_ICON_COLUMN:
+        {
+            action->private_data->iconColumn = g_value_get_int( value );
+        }
+        break;
+
+        case PROP_TOOLTIP_COLUMN:
+        {
+            action->private_data->tooltipColumn = g_value_get_int( value );
+        }
+        break;
+
+        case PROP_ICON_PROP:
+        {
+            gchar* tmp = action->private_data->iconProperty;
+            gchar* newVal = g_value_dup_string( value );
+            action->private_data->iconProperty = newVal;
+            g_free( tmp );
+        }
+        break;
+
+        case PROP_APPEARANCE:
+        {
+            gchar* tmp = action->private_data->appearance;
+            gchar* newVal = g_value_dup_string( value );
+            action->private_data->appearance = newVal;
+            g_free( tmp );
+
+            if ( !action->private_data->appearance || (strcmp("", newVal) == 0) ) {
+                action->private_data->appearanceMode = APPEARANCE_NONE;
+            } else if ( strcmp("full", newVal) == 0 ) {
+                action->private_data->appearanceMode = APPEARANCE_FULL;
+            } else if ( strcmp("compact", newVal) == 0 ) {
+                action->private_data->appearanceMode = APPEARANCE_COMPACT;
+            } else if ( strcmp("minimal", newVal) == 0 ) {
+                action->private_data->appearanceMode = APPEARANCE_MINIMAL;
+            } else {
+                action->private_data->appearanceMode = APPEARANCE_UNKNOWN;
+            }
         }
         break;
 
@@ -287,7 +432,7 @@ GtkWidget* create_menu_item( GtkAction* action )
         while ( valid ) {
             gchar* str = 0;
             gtk_tree_model_get( act->private_data->model, &iter,
-                                act->private_data->column, &str,
+                                act->private_data->labelColumn, &str,
                                 -1 );
 
             GtkWidget *item = gtk_radio_menu_item_new_with_label( group, str );
@@ -316,6 +461,18 @@ GtkWidget* create_menu_item( GtkAction* action )
     return item;
 }
 
+
+void ege_select_one_action_set_radio_action_type( EgeSelectOneAction* action, GType radioActionType )
+{
+    (void)action;
+
+    if ( g_type_is_a( radioActionType, GTK_TYPE_RADIO_ACTION ) ) {
+        action->private_data->radioActionType = radioActionType;
+    } else {
+        g_warning("Passed in type '%s' is not derived from '%s'", g_type_name(radioActionType), g_type_name(GTK_TYPE_RADIO_ACTION) );
+    }
+}
+
 GtkWidget* create_tool_item( GtkAction* action )
 {
     GtkWidget* item = 0;
@@ -325,17 +482,98 @@ GtkWidget* create_tool_item( GtkAction* action )
         EgeSelectOneAction* act = EGE_SELECT_ONE_ACTION(action);
         item = GTK_WIDGET( gtk_tool_item_new() );
 
-        GtkWidget* normal = gtk_combo_box_new_with_model( act->private_data->model );
+        if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
+            GtkWidget* holder = gtk_hbox_new( FALSE, 0 );
 
-        GtkCellRenderer * renderer = gtk_cell_renderer_text_new();
-        gtk_cell_layout_pack_start( GTK_CELL_LAYOUT(normal), renderer, TRUE );
-        gtk_cell_layout_set_attributes( GTK_CELL_LAYOUT(normal), renderer, "text", act->private_data->column, (gchar*)0);
+            GtkRadioAction* ract = 0;
+            GtkWidget* sub = 0;
+            GSList* group = 0;
+            GtkTreeIter iter;
+            gboolean valid = FALSE;
+            gint index = 0;
+            GtkTooltips* tooltips = gtk_tooltips_new();
 
-        gtk_combo_box_set_active( GTK_COMBO_BOX(normal), act->private_data->active );
+            valid = gtk_tree_model_get_iter_first( act->private_data->model, &iter );
+            while ( valid ) {
+                gchar* str = 0;
+                gchar* tip = 0;
+                gchar* iconId = 0;
+                /*
+                gint size = 0;
+                */
+                gtk_tree_model_get( act->private_data->model, &iter,
+                                    act->private_data->labelColumn, &str,
+                                    -1 );
+                if ( act->private_data->iconColumn >= 0 ) {
+                    gtk_tree_model_get( act->private_data->model, &iter,
+                                        act->private_data->iconColumn, &iconId,
+                                        -1 );
+                }
+                if ( act->private_data->tooltipColumn >= 0 ) {
+                    gtk_tree_model_get( act->private_data->model, &iter,
+                                        act->private_data->tooltipColumn, &tip,
+                                        -1 );
+                }
 
-        g_signal_connect( G_OBJECT(normal), "changed", G_CALLBACK(combo_changed_cb), action );
+                if ( act->private_data->radioActionType ) {
+                    void* obj = g_object_new( act->private_data->radioActionType,
+                                              "name", "Name 1",
+                                              "label", str,
+                                              "tooltip", tip,
+                                              "value", index,
+                                              /*
+                                              "iconId", iconId,
+                                              "iconSize", size,
+                                              */
+                                              NULL );
+                    if ( iconId ) {
+                        g_object_set( G_OBJECT(obj), act->private_data->iconProperty, iconId, NULL );
+                    }
 
-        gtk_container_add( GTK_CONTAINER(item), normal );
+                    ract = GTK_RADIO_ACTION(obj);
+                } else {
+                    ract = gtk_radio_action_new( "Name 1", str, tip, iconId, index );
+                }
+
+                gtk_radio_action_set_group( ract, group );
+                group = gtk_radio_action_get_group( ract );
+
+                if ( index == act->private_data->active ) {
+                    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(ract), TRUE );
+                }
+                g_signal_connect( G_OBJECT(ract), "changed", G_CALLBACK( proxy_action_chagned_cb ), act );
+
+                sub = gtk_action_create_tool_item( GTK_ACTION(ract) );
+                gtk_action_connect_proxy( GTK_ACTION(ract), sub );
+                gtk_tool_item_set_tooltip( GTK_TOOL_ITEM(sub), tooltips, tip, NULL );
+
+                gtk_box_pack_start( GTK_BOX(holder), sub, FALSE, FALSE, 0 );
+
+                g_free( str );
+                g_free( tip );
+                g_free( iconId );
+
+                index++;
+                valid = gtk_tree_model_iter_next( act->private_data->model, &iter );
+            }
+
+            g_object_set_data( G_OBJECT(holder), "ege-proxy_action-group", group );
+            g_object_set_data( G_OBJECT(holder), "ege-tooltips", tooltips );
+
+            gtk_container_add( GTK_CONTAINER(item), holder );
+        } else {
+            GtkWidget* normal = gtk_combo_box_new_with_model( act->private_data->model );
+
+            GtkCellRenderer * renderer = gtk_cell_renderer_text_new();
+            gtk_cell_layout_pack_start( GTK_CELL_LAYOUT(normal), renderer, TRUE );
+            gtk_cell_layout_set_attributes( GTK_CELL_LAYOUT(normal), renderer, "text", act->private_data->labelColumn, (gchar*)0);
+
+            gtk_combo_box_set_active( GTK_COMBO_BOX(normal), act->private_data->active );
+
+            g_signal_connect( G_OBJECT(normal), "changed", G_CALLBACK(combo_changed_cb), action );
+
+            gtk_container_add( GTK_CONTAINER(item), normal );
+        }
 
         gtk_widget_show_all( item );
     } else {
@@ -344,6 +582,7 @@ GtkWidget* create_tool_item( GtkAction* action )
 
     return item;
 }
+
 
 void connect_proxy( GtkAction *action, GtkWidget *proxy )
 {
@@ -366,9 +605,21 @@ void resync_active( EgeSelectOneAction* act, gint active )
                 /* Search for the things we built up in create_tool_item() */
                 GList* children = gtk_container_get_children( GTK_CONTAINER(proxies->data) );
                 if ( children && children->data ) {
-                    GtkComboBox* combo = GTK_COMBO_BOX(children->data);
-                    if ( gtk_combo_box_get_active(combo) != active ) {
-                        gtk_combo_box_set_active( combo, active );
+                    if ( GTK_IS_COMBO_BOX(children->data) ) {
+                        GtkComboBox* combo = GTK_COMBO_BOX(children->data);
+                        if ( gtk_combo_box_get_active(combo) != active ) {
+                            gtk_combo_box_set_active( combo, active );
+                        }
+                    } else if ( GTK_IS_HBOX(children->data) ) {
+                        gpointer data = g_object_get_data( G_OBJECT(children->data), "ege-proxy_action-group" );
+                        if ( data ) {
+                            GSList* group = (GSList*)data;
+                            GtkRadioAction* oneAction = GTK_RADIO_ACTION(group->data);
+                            gint hot = gtk_radio_action_get_current_value( oneAction );
+                            if ( hot != active ) {
+                                gtk_radio_action_set_current_value( oneAction, active );
+                            }
+                        }
                     }
                 }
             } else if ( GTK_IS_MENU_ITEM(proxies->data) ) {
@@ -403,5 +654,17 @@ void menu_toggled_cb( GtkWidget* obj, gpointer data )
     gint newActive = GPOINTER_TO_INT(data);
     if ( gtk_check_menu_item_get_active(item) && (newActive != act->private_data->active) ) {
         g_object_set( G_OBJECT(act), "active", newActive, NULL );
+    }
+}
+
+void proxy_action_chagned_cb( GtkRadioAction* action, GtkRadioAction* current, gpointer user_data )
+{
+    (void)current;
+    if ( gtk_toggle_action_get_active( GTK_TOGGLE_ACTION(action) ) ) {
+        EgeSelectOneAction* act = EGE_SELECT_ONE_ACTION(user_data);
+        gint newActive = gtk_radio_action_get_current_value( action );
+        if ( newActive != act->private_data->active ) {
+            g_object_set( G_OBJECT(act), "active", newActive, NULL );
+        }
     }
 }
