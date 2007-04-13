@@ -2604,17 +2604,17 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
 static void
 sp_arctb_sensitivize (GtkWidget *tbl, double v1, double v2)
 {
-    GtkWidget *ocb = (GtkWidget*) g_object_get_data(G_OBJECT(tbl), "open_checkbox");
-    GtkWidget *make_whole = (GtkWidget*) g_object_get_data(G_OBJECT(tbl), "make_whole");
+    GtkAction *ocb = GTK_ACTION( g_object_get_data(G_OBJECT(tbl), "open_action") );
+    GtkAction *make_whole = GTK_ACTION( g_object_get_data(G_OBJECT(tbl), "make_whole") );
 
     if (v1 == 0 && v2 == 0) {
         if (gtk_object_get_data(GTK_OBJECT(tbl), "single")) { // only for a single selected ellipse (for now)
-            gtk_widget_set_sensitive(GTK_WIDGET(ocb), FALSE);
-            gtk_widget_set_sensitive(GTK_WIDGET(make_whole), FALSE);
+            gtk_action_set_sensitive( ocb, FALSE );
+            gtk_action_set_sensitive( make_whole, FALSE );
         }
     } else {
-        gtk_widget_set_sensitive(GTK_WIDGET(ocb), TRUE);
-        gtk_widget_set_sensitive(GTK_WIDGET(make_whole), TRUE);
+        gtk_action_set_sensitive( ocb, TRUE );
+        gtk_action_set_sensitive( make_whole, TRUE );
     }
 }
 
@@ -2693,12 +2693,11 @@ sp_arctb_end_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 }
 
 static void
-sp_arctb_open_state_changed(GtkWidget *widget, GtkObject *tbl)
+sp_arctb_open_state_changed( EgeSelectOneAction *act, GtkObject *tbl )
 {
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
-
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-        if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
+        if ( ege_select_one_action_get_active( act ) != 0 ) {
             prefs_set_string_attribute("tools.shapes.arc", "open", "true");
         } else {
             prefs_set_string_attribute("tools.shapes.arc", "open", NULL);
@@ -2715,7 +2714,7 @@ sp_arctb_open_state_changed(GtkWidget *widget, GtkObject *tbl)
 
     bool modmade = false;
 
-    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
+    if ( ege_select_one_action_get_active(act) != 0 ) {
         for (GSList const *items = sp_desktop_selection(desktop)->itemList();
              items != NULL;
              items = items->next)
@@ -2794,12 +2793,12 @@ static void arc_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *na
 
     char const *openstr = NULL;
     openstr = repr->attribute("sodipodi:open");
-    GtkWidget *ocb = (GtkWidget*) g_object_get_data(G_OBJECT(tbl), "open_checkbox");
+    EgeSelectOneAction *ocb = EGE_SELECT_ONE_ACTION( g_object_get_data(G_OBJECT(tbl), "open_action") );
 
     if (openstr) {
-        gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(ocb),  TRUE);
+        ege_select_one_action_set_active( ocb, 1 );
     } else {
-        gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(ocb),  FALSE);
+        ege_select_one_action_set_active( ocb, 0 );
     }
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
@@ -2831,14 +2830,14 @@ sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *tbl)
         }
     }
 
-    GtkWidget *l = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(tbl), "mode_label"));
+    EgeOutputAction* act = EGE_OUTPUT_ACTION( gtk_object_get_data(GTK_OBJECT(tbl), "mode_action") );
 
     g_object_set_data(G_OBJECT(tbl), "single", GINT_TO_POINTER(FALSE));
     if (n_selected == 0) {
-        gtk_label_set_markup(GTK_LABEL(l), _("<b>New:</b>"));
+        g_object_set( G_OBJECT(act), "label", _("<b>New:</b>"), NULL );
     } else if (n_selected == 1) {
         g_object_set_data(G_OBJECT(tbl), "single", GINT_TO_POINTER(TRUE));
-        gtk_label_set_markup(GTK_LABEL(l), _("<b>Change:</b>"));
+        g_object_set( G_OBJECT(act), "label", _("<b>Change:</b>"), NULL );
 
         oldrepr = (Inkscape::XML::Node *) gtk_object_get_data(GTK_OBJECT(tbl), "repr");
 
@@ -2858,7 +2857,7 @@ sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *tbl)
     } else {
         // FIXME: implement averaging of all parameters for multiple selected
         //gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-        gtk_label_set_markup(GTK_LABEL(l), _("<b>Change:</b>"));
+        g_object_set( G_OBJECT(act), "label", _("<b>Change:</b>"), NULL );
         sp_arctb_sensitivize (GTK_WIDGET(tbl), 1, 0);
     }
 }
@@ -2867,91 +2866,146 @@ sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *tbl)
 static GtkWidget *
 sp_arc_toolbox_new(SPDesktop *desktop)
 {
-    GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
+    GtkWidget *holder = gtk_hbox_new(FALSE, 0);
+    gtk_object_set_data(GTK_OBJECT(holder), "dtw", desktop->canvas);
+    gtk_object_set_data(GTK_OBJECT(holder), "desktop", desktop);
 
-    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
-    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='ArcToolbar'>"
+        "    <toolitem action='ArcStateAction' />"
+        "    <separator />"
+        "    <toolitem action='ArcStartAction' />"
+        "    <toolitem action='ArcEndAction' />"
+        "    <separator />"
+        "    <toolitem action='ArcOpenAction' />"
+        "    <separator />"
+        "    <toolitem action='ArcResetAction' />"
+        "    <separator />"
+        "  </toolbar>"
+        "</ui>";
+    GtkActionGroup* mainActions = gtk_action_group_new("main");
 
-    GtkTooltips *tt = gtk_tooltips_new();
+    EgeAdjustmentAction* eact = 0;
 
-    sp_toolbox_add_label(tbl, _("<b>New:</b>"));
+
+    {
+        EgeOutputAction* act = ege_output_action_new( "ArcStateAction", _("<b>New:</b>"), "", 0 );
+        ege_output_action_set_use_markup( act, TRUE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        gtk_object_set_data( GTK_OBJECT(holder), "mode_action", act );
+    }
 
     /* Start */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("Start:"), _("The angle (in degrees) from the horizontal to the arc's start point"),
+        eact = create_adjustment_action( "ArcStartAction",
+                                         _("Start:"), _("The angle (in degrees) from the horizontal to the arc's start point"),
                                          "tools.shapes.arc", "start", 0.0,
-                                         NULL, tbl, TRUE, "altx-arc",
+                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, TRUE, "altx-arc",
                                          -360.0, 360.0, 1.0, 10.0,
+                                         0, 0, 0,
                                          sp_arctb_start_value_changed);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
     /* End */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("End:"), _("The angle (in degrees) from the horizontal to the arc's end point"),
+        eact = create_adjustment_action( "ArcEndAction",
+                                         _("End:"), _("The angle (in degrees) from the horizontal to the arc's end point"),
                                          "tools.shapes.arc", "end", 0.0,
-                                         NULL, tbl, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
                                          -360.0, 360.0, 1.0, 10.0,
+                                         0, 0, 0,
                                          sp_arctb_end_value_changed);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
     /* Segments / Pie checkbox */
     {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-        GtkWidget *fscb = gtk_check_button_new_with_label(_("Open arc"));
-        gtk_tooltips_set_tip(tt, fscb, _("Switch between arc (unclosed shape) and segment (closed shape with two radii)"), NULL);
+        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
 
-        gchar const *openstr = NULL;
-        openstr = prefs_get_string_attribute("tools.shapes.arc", "open");
-        if (!openstr || (openstr && !strcmp(openstr, "false")))
-            gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(fscb),  FALSE);
-        else
-            gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(fscb),  TRUE);
+        GtkTreeIter iter;
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Closed arc"),
+                            1, _("Switch to segment (closed shape with two radii)"),
+                            2, "circle_closed_arc",
+                            -1 );
 
-        gtk_widget_show(fscb);
-        gtk_object_set_data(GTK_OBJECT(tbl), "open_checkbox", fscb);
-        gtk_container_add(GTK_CONTAINER(hb), fscb);
-        g_signal_connect(G_OBJECT(fscb), "toggled", GTK_SIGNAL_FUNC(sp_arctb_open_state_changed ), tbl);
-        gtk_box_pack_start(GTK_BOX(tbl),hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Open Arc"),
+                            1, _("Switch to arc (unclosed shape)"),
+                            2, "circle_open_arc",
+                            -1 );
+
+        EgeSelectOneAction* act = ege_select_one_action_new( "ArcOpenAction", _(""), _(""), NULL, GTK_TREE_MODEL(model) );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        gtk_object_set_data( GTK_OBJECT(holder), "open_action", act );
+
+        ege_select_one_action_set_appearance( act, "full" );
+        ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+        g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+        ege_select_one_action_set_icon_column( act, 2 );
+        ege_select_one_action_set_tooltip_column( act, 1  );
+
+        gchar const *openstr = prefs_get_string_attribute("tools.shapes.arc", "open");
+        bool isClosed = (!openstr || (openstr && !strcmp(openstr, "false")));
+        ege_select_one_action_set_active( act, isClosed ? 0 : 1 );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_arctb_open_state_changed), holder);
     }
 
     /* Make Whole */
     {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-        GtkWidget *b = gtk_button_new_with_label(_("Make whole"));
-        gtk_object_set_data(GTK_OBJECT(tbl), "make_whole", b);
-        gtk_tooltips_set_tip(tt, b, _("Make the shape a whole ellipse, not arc or segment"), NULL);
-        gtk_widget_show(b);
-        gtk_container_add(GTK_CONTAINER(hb), b);
-        gtk_signal_connect(GTK_OBJECT(b), "clicked", GTK_SIGNAL_FUNC(sp_arctb_defaults), tbl);
-        gtk_box_pack_start(GTK_BOX(tbl),hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+        InkAction* inky = ink_action_new( "ArcResetAction",
+                                          _("Make whole"),
+                                          _("Make the shape a whole ellipse, not arc or segment"),
+                                          "reset_circle",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_arctb_defaults), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+        gtk_action_set_sensitive( GTK_ACTION(inky), TRUE );
+        gtk_object_set_data( GTK_OBJECT(holder), "make_whole", inky );
     }
 
-    g_object_set_data(G_OBJECT(tbl), "single", GINT_TO_POINTER(TRUE));
+    g_object_set_data( G_OBJECT(holder), "single", GINT_TO_POINTER(TRUE) );
     // sensitivize make whole and open checkbox
     {
-        GtkAdjustment *adj1 = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(tbl), "start"));
-        GtkAdjustment *adj2 = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(tbl), "end"));
-        sp_arctb_sensitivize (tbl, adj1->value, adj2->value);
+        GtkAdjustment *adj1 = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(holder), "start"));
+        GtkAdjustment *adj2 = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(holder), "end"));
+        sp_arctb_sensitivize( holder, adj1->value, adj2->value );
     }
 
+
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+
+    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
+
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/ArcToolbar" );
+    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
+
+
+    gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0 );
+
     sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), (GtkObject *)tbl))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), (GtkObject *)holder))
         );
-    g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
+    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(delete_connection), connection);
 
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new ellipses"));
     swatch->setDesktop (desktop);
     swatch->setClickVerb (SP_VERB_CONTEXT_ARC_PREFS);
     swatch->setWatchedTool ("tools.shapes.arc", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+    gtk_box_pack_end(GTK_BOX(holder), swatch_, FALSE, FALSE, 0);
 
-    gtk_widget_show_all(tbl);
-    sp_set_font_size_smaller (tbl);
+    gtk_widget_show_all( holder );
+    sp_set_font_size_smaller( holder );
 
-    return tbl;
+    return holder;
 }
 
 
