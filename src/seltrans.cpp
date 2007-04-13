@@ -88,14 +88,13 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _show(SHOW_CONTENT),
     _grabbed(false),
     _show_handles(true),
+    _snap_bbox_type(SPItem::GEOMETRIC_BBOX),
     _bbox(NR::Nothing()),
     _approximate_bbox(NR::Nothing()),
     _chandle(NULL),
     _stamp_cache(NULL),
     _message_context(desktop->messageStack())
 {
-    //_snap_bbox_type = SPItem::GEOMETRIC_BBOX; //TODO: Get this parameter from UI; hardcoded for the time being
-    _snap_bbox_type = SPItem::APPROXIMATE_BBOX;
     
     g_return_if_fail(desktop != NULL);
 
@@ -112,8 +111,6 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _updateHandles();
 
     _selection = sp_desktop_selection(desktop);
-    
-    
 
     _norm = sp_canvas_item_new(sp_desktop_controls(desktop),
                                SP_TYPE_CTRL,
@@ -617,10 +614,6 @@ void Inkscape::SelTrans::_updateVolatileState()
     _bbox = selection->bounds(_snap_bbox_type);
     _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX);
     
-    /*std::cout << "Approximate BBox: " << _approximate_bbox->min() << " - " << _approximate_bbox->max() << std::endl;
-    std::cout << "Geometric BBox: " << selection->bounds(SPItem::GEOMETRIC_BBOX)->min() << " - " << selection->bounds(SPItem::GEOMETRIC_BBOX)->max() << std::endl;
-    */
-    
     if (!_bbox) {
         _empty = true;
         return;
@@ -814,6 +807,10 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
 void Inkscape::SelTrans::_selChanged(Inkscape::Selection *selection)
 {
     if (!_grabbed) {
+        gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
+        _snap_bbox_type = (prefs_bbox == NULL || strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
+        //SPItem::APPROXIMATE_BBOX will be replaced by SPItem::VISUAL_BBOX, as soon as the latter is implemented properly
+    
         _updateVolatileState();
         _current.set_identity();
         _center_is_set = false; // center(s) may have changed
