@@ -322,6 +322,10 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                     sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
                     
                     // remember the clicked item in sc->item:
+                    if (sc->item) {
+                        sp_object_unref(sc->item, NULL);
+                        sc->item = NULL;
+                    }
                     sc->item = sp_event_context_find_item (desktop,
                                               NR::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, FALSE);
                     sp_object_ref(sc->item, NULL);
@@ -601,7 +605,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     } else { // it was just a click, or a too small rubberband
                         r->stop();
                         if (sc->button_press_shift && !rb_escaped && !drag_escaped) {
-                            // this was a shift-click, select what was clicked upon
+                            // this was a shift+click or alt+shift+click, select what was clicked upon
 
                             sc->button_press_shift = false;
 
@@ -621,7 +625,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                 item = NULL;
                             }
 
-                        } else if (sc->button_press_ctrl && !rb_escaped && !drag_escaped) { // ctrl-click
+                        } else if ((sc->button_press_ctrl || sc->button_press_alt) && !rb_escaped && !drag_escaped) { // ctrl+click, alt+click
 
                             sc->button_press_ctrl = FALSE;
 
