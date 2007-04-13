@@ -85,7 +85,7 @@
 #include "event-log.h"
 #include "display/canvas-grid.h"
 
-#include "sp-canvas.h"
+#include "display/sp-canvas.h"
 
 namespace Inkscape { namespace XML { class Node; }}
 
