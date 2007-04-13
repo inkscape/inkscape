@@ -23,6 +23,9 @@
 
 #include "display/canvas-grid.h"
 
+#include "inkscape.h"
+#include "desktop.h"
+
 /**
  *  Construct a SnapManager for a SPNamedView.
  *
@@ -50,16 +53,14 @@ SnapManager::SnapperList SnapManager::getSnappers() const
     s.push_back(&guide);
     s.push_back(&object);
 
-    //add new grid snappers that are active for this desktop
-//    SPDesktop* desktop = SP_ACTIVE_DESKTOP;
-//    if (desktop) {
-
+    //FIXME: this code should do this: add new grid snappers that are active for this desktop
+    SPDesktop* desktop = SP_ACTIVE_DESKTOP;
+    if (desktop && desktop->gridsEnabled()) {
         for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
             Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
             s.push_back(grid->snapper);
         }
-
-//    }
+    }
 
     return s;
 }

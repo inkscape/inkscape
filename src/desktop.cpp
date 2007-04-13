@@ -301,7 +301,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     //   (Setting up after the connections are all in place, as it may use some of them)
     layer_manager = new Inkscape::LayerManager( this );
     
-    grids_visible = false;
+    grids_visible = true;
 }
 
 

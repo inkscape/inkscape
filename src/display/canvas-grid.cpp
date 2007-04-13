@@ -137,9 +137,6 @@ grid_canvasitem_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 
 CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr)
 {
-    snapenabled = true;
-    visible = true;
-
     repr = in_repr;
     if (repr) {
         repr->addListener (&_repr_events, this);
@@ -221,55 +218,12 @@ CanvasGrid::createCanvasItem(SPDesktop * desktop)
 
     GridCanvasItem * item = INKSCAPE_GRID_CANVASITEM( sp_canvas_item_new(sp_desktop_gridgroup(desktop), INKSCAPE_TYPE_GRID_CANVASITEM, NULL) );
     item->grid = this;
-    if (desktop->gridsEnabled()) {
-        sp_canvas_item_show(SP_CANVAS_ITEM(item));
-    } else {
-        sp_canvas_item_hide(SP_CANVAS_ITEM(item));
-    }
+    sp_canvas_item_show(SP_CANVAS_ITEM(item));
 
     gtk_object_ref(GTK_OBJECT(item));    // since we're keeping a link to this item, we need to bump up the ref count
     canvasitems = g_slist_prepend(canvasitems, item);
 
     return item;
-}
-
-
-void
-CanvasGrid::hide()
-{
-    for (GSList *l = canvasitems; l != NULL; l = l->next) {
-        sp_canvas_item_hide ( SP_CANVAS_ITEM(l->data) );
-    }
-    visible = false;
-    disable_snapping(); // temporary hack, because at the moment visibilty and snapping are linked
-}
-
-void
-CanvasGrid::show()
-{
-    for (GSList *l = canvasitems; l != NULL; l = l->next) {
-        sp_canvas_item_show ( SP_CANVAS_ITEM(l->data) );
-    }
-    visible = true;
-    enable_snapping(); // temporary hack, because at the moment visibilty and snapping are linked
-}
-
-void
-CanvasGrid::set_visibility(bool visible)
-{
-    this->visible = visible;
-    if(visible) {
-        show();
-    } else {
-        hide();
-    }
-}
-
-void
-CanvasGrid::toggle_visibility()
-{
-    visible = !visible;
-    set_visibility(visible);
 }
 
 void

@@ -10,7 +10,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   Carl Hetherington <inkscape@carlh.net>
  *
- * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2000-2002 Lauris Kaplinski
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -106,7 +106,6 @@ public:
 
     typedef std::list<const Inkscape::Snapper*> SnapperList;
     SnapperList getSnappers() const;
-    SnapperList gridSnappers;          ///< List of grid snappers to enable multiple grids
 
 protected:
     SPNamedView const *_named_view;

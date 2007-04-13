@@ -75,14 +75,6 @@ public:
     
     virtual Gtk::Widget & getWidget() = 0;
 
-    void hide();
-    void show();
-    void set_visibility(bool visible);
-    void toggle_visibility();
-    void enable_snapping()  { snapenabled = true; snapper->setEnabled(true); } ;
-    void disable_snapping() { snapenabled = false; snapper->setEnabled(false); } ;
-    void toggle_snapping()  { snapenabled = !snapenabled; snapper->setEnabled(snapenabled);};
-
     Inkscape::XML::Node * repr;
     
     Inkscape::Snapper* snapper;
@@ -95,9 +87,6 @@ protected:
     SPNamedView * namedview;
     
     Gtk::VBox vbox;
-
-    bool snapenabled;
-    bool visible;
 
 private:
     CanvasGrid(const CanvasGrid&);

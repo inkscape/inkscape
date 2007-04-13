@@ -9,7 +9,7 @@
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
  *
- * Copyright (C) 2006 Johan Engelen  <johan@shouraizou.nl>
+ * Copyright (C) 2006-2007 Johan Engelen  <johan@shouraizou.nl>
  * Copyright (C) 2000 - 2005 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information

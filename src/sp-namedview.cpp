@@ -563,7 +563,6 @@ sp_namedview_add_grid(SPNamedView *nv, Inkscape::XML::Node *repr, SPDesktop *des
         //add canvasitem only for specified desktop
         grid->createCanvasItem(desktop);
     }
-    grid->show();
 
     return grid;
 }
