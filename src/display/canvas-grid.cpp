@@ -135,25 +135,18 @@ grid_canvasitem_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
         NULL  /* order_changed */
     };
 
-CanvasGrid::CanvasGrid(SPDesktop *desktop, Inkscape::XML::Node * in_repr)
+CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr)
 {
-    //create canvasitem
-    // FIXME: probably this creation has to be done on demand. I think for multiple desktops it is best if each has their own canvasitem, but share the same CanvasGrid object.
-    canvasitem = INKSCAPE_GRID_CANVASITEM( sp_canvas_item_new(sp_desktop_grid(desktop), INKSCAPE_TYPE_GRID_CANVASITEM, NULL) );
-    gtk_object_ref(GTK_OBJECT(canvasitem));    // since we're keeping a copy, we need to bump up the ref count
-    canvasitem->grid = this;
-
-    snapenabled = false;
-    visible = false;
-
-//    sp_canvas_item_hide(canvasitem);
+    snapenabled = true;
+    visible = true;
 
     repr = in_repr;
     if (repr) {
         repr->addListener (&_repr_events, this);
     }
-    
-    namedview = sp_desktop_namedview(desktop);
+
+    namedview = nv;
+    canvasitems = NULL;
 }
 
 CanvasGrid::~CanvasGrid()
@@ -162,28 +155,28 @@ CanvasGrid::~CanvasGrid()
         repr->removeListenerByData (this);
     }
 
-    sp_canvas_item_hide(canvasitem);
-   // deref canvasitem
-   gtk_object_unref(GTK_OBJECT(canvasitem));
-   g_free(canvasitem);
+    while (canvasitems) {
+        gtk_object_destroy(GTK_OBJECT(canvasitems->data));
+        canvasitems = g_slist_remove(canvasitems, canvasitems->data);
+    }
 }
 
 /*
-*  writes an <inkscape:grid> child to repr. 
+*  writes an <inkscape:grid> child to repr.
 */
-void 
+void
 CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, const char * gridtype)
 {
     if (!repr) return;
     if (!gridtype) return;
-    
+
     // first create the child xml node, then hook it to repr. This order is important, to not set off listeners to repr before the new node is complete.
-    
+
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(sp_desktop_document(SP_ACTIVE_DESKTOP));
     Inkscape::XML::Node *newnode;
     newnode = xml_doc->createElement("inkscape:grid");
     newnode->setAttribute("type",gridtype);
-    
+
     repr->appendChild(newnode);
 
     // FIXME: add this to history?
@@ -192,29 +185,61 @@ CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, const char * gridtype
 }
 
 /*
-* Creates a new CanvasGrid object of type gridtype 
+* Creates a new CanvasGrid object of type gridtype
 */
-CanvasGrid* 
-CanvasGrid::NewGrid(SPDesktop *desktop, Inkscape::XML::Node * in_repr, const char * gridtype)
+CanvasGrid*
+CanvasGrid::NewGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, const char * gridtype)
 {
-    if (!desktop) return NULL;
     if (!in_repr) return NULL;
     if (!gridtype) return NULL;
-    
+
     if (!strcmp(gridtype,"xygrid")) {
-        return (CanvasGrid*) new CanvasXYGrid(desktop, in_repr);
+        return (CanvasGrid*) new CanvasXYGrid(nv, in_repr);
     } else if (!strcmp(gridtype,"axonometric")) {
-        return (CanvasGrid*) new CanvasAxonomGrid(desktop, in_repr);
+        return (CanvasGrid*) new CanvasAxonomGrid(nv, in_repr);
     }
-    
+
     return NULL;
+}
+
+
+/**
+*  creates a new grid canvasitem for the SPDesktop given as parameter. Keeps a link to this canvasitem in the canvasitems list.
+*/
+GridCanvasItem *
+CanvasGrid::createCanvasItem(SPDesktop * desktop)
+{
+    if (!desktop) return NULL;
+    //Johan: I think for multiple desktops it is best if each has their own canvasitem, but share the same CanvasGrid object; that is what this function is for.
+
+    // check if there is already a canvasitem on this desktop linking to this grid
+    for (GSList *l = canvasitems; l != NULL; l = l->next) {
+        if ( sp_desktop_gridgroup(desktop) == SP_CANVAS_GROUP(SP_CANVAS_ITEM(l->data)->parent) ) {
+            return NULL;
+        }
+    }
+
+    GridCanvasItem * item = INKSCAPE_GRID_CANVASITEM( sp_canvas_item_new(sp_desktop_gridgroup(desktop), INKSCAPE_TYPE_GRID_CANVASITEM, NULL) );
+    item->grid = this;
+    if (desktop->gridsEnabled()) {
+        sp_canvas_item_show(SP_CANVAS_ITEM(item));
+    } else {
+        sp_canvas_item_hide(SP_CANVAS_ITEM(item));
+    }
+
+    gtk_object_ref(GTK_OBJECT(item));    // since we're keeping a link to this item, we need to bump up the ref count
+    canvasitems = g_slist_prepend(canvasitems, item);
+
+    return item;
 }
 
 
 void
 CanvasGrid::hide()
 {
-    sp_canvas_item_hide(canvasitem);
+    for (GSList *l = canvasitems; l != NULL; l = l->next) {
+        sp_canvas_item_hide ( SP_CANVAS_ITEM(l->data) );
+    }
     visible = false;
     disable_snapping(); // temporary hack, because at the moment visibilty and snapping are linked
 }
@@ -222,12 +247,14 @@ CanvasGrid::hide()
 void
 CanvasGrid::show()
 {
-    sp_canvas_item_show(canvasitem);
+    for (GSList *l = canvasitems; l != NULL; l = l->next) {
+        sp_canvas_item_show ( SP_CANVAS_ITEM(l->data) );
+    }
     visible = true;
     enable_snapping(); // temporary hack, because at the moment visibilty and snapping are linked
 }
 
-void 
+void
 CanvasGrid::set_visibility(bool visible)
 {
     this->visible = visible;
@@ -310,8 +337,8 @@ attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int star
     }
 }
 
-CanvasXYGrid::CanvasXYGrid (SPDesktop *desktop, Inkscape::XML::Node * in_repr)
-    : CanvasGrid(desktop, in_repr), table(1, 1)
+CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr)
+    : CanvasGrid(nv, in_repr), table(1, 1)
 {
     origin[NR::X] = origin[NR::Y] = 0.0;
 //            nv->gridcolor = (nv->gridcolor & 0xff) | (DEFAULTGRIDCOLOR & 0xffffff00);
@@ -322,9 +349,9 @@ CanvasXYGrid::CanvasXYGrid (SPDesktop *desktop, Inkscape::XML::Node * in_repr)
     empspacing = 5;
     spacing[NR::X] = spacing[NR::Y] = 8.0;
     gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
-    
+
     snapper = new CanvasXYGridSnapper(this, namedview, 0);
-    
+
     // initialize widgets:
     vbox.set_border_width(2);
     table.set_spacings(2);
@@ -487,7 +514,9 @@ CanvasXYGrid::readRepr()
         empspacing = atoi(value);
     }
 
-    sp_canvas_item_request_update (canvasitem);
+    for (GSList *l = canvasitems; l != NULL; l = l->next) {
+        sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
+    }
 
     return;
 }
@@ -546,7 +575,7 @@ CanvasXYGrid::updateWidgets()
     _rsi.setValue (empspacing);
 
     _wr.setUpdating (false);
-    
+
     return;
 }
 
@@ -640,7 +669,7 @@ CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SPNamedView const *
     this->grid = grid;
 }
 
-LineSnapper::LineList 
+LineSnapper::LineList
 CanvasXYGridSnapper::_getSnapLines(NR::Point const &p) const
 {
     LineList s;

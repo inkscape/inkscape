@@ -616,7 +616,7 @@ DocumentProperties::onNewGrid()
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
 
     Glib::ustring typestring = _grids_combo_gridtype.get_active_text();
-    CanvasGrid::writeNewGridToRepr(repr, typestring.c_str()); // FIXME ofcourse user should supply choice for gridtype 
+    CanvasGrid::writeNewGridToRepr(repr, typestring.c_str());
 }
 
 

@@ -59,11 +59,13 @@ GtkType grid_canvasitem_get_type (void);
 
 class CanvasGrid {
 public:
-    CanvasGrid(SPDesktop *desktop, Inkscape::XML::Node * in_repr);
+    CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr);
     virtual ~CanvasGrid();
     
-    static CanvasGrid* NewGrid(SPDesktop *desktop, Inkscape::XML::Node * in_repr, const char * gridtype);
+    static CanvasGrid* NewGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, const char * gridtype);
     static void writeNewGridToRepr(Inkscape::XML::Node * repr, const char * gridtype);
+
+    GridCanvasItem * createCanvasItem(SPDesktop * desktop);
     
     virtual void Update (NR::Matrix const &affine, unsigned int flags) = 0;
     virtual void Render (SPCanvasBuf *buf) = 0;
@@ -86,8 +88,9 @@ public:
     Inkscape::Snapper* snapper;
 
     static void on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
+    
 protected:
-    GridCanvasItem * canvasitem;
+    GSList * canvasitems;  // list of created canvasitems
 
     SPNamedView * namedview;
     
@@ -105,7 +108,7 @@ private:
 
 class CanvasXYGrid : public CanvasGrid {
 public:
-    CanvasXYGrid(SPDesktop *desktop, Inkscape::XML::Node * in_repr);
+    CanvasXYGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr);
     ~CanvasXYGrid();
 
     void Update (NR::Matrix const &affine, unsigned int flags);

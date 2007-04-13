@@ -85,7 +85,7 @@ struct SPDesktop : public Inkscape::UI::View::View
 
     SPCanvasItem  *acetate;
     SPCanvasGroup *main;
-    SPCanvasGroup *grid;
+    SPCanvasGroup *gridgroup;
     SPCanvasGroup *guides;
     SPCanvasItem  *drawing;
     SPCanvasGroup *sketch;
@@ -249,6 +249,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void clearWaitingCursor();
     
     void toggleGrid();
+    bool gridsEnabled() { return grids_visible; }
     
     void fullscreen();
 
@@ -275,6 +276,8 @@ private:
     NR::Matrix _w2d;
     NR::Matrix _d2w;
     NR::Matrix _doc2dt;
+    
+    bool grids_visible;
     
     void push_current_zoom (GList**);
 

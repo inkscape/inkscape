@@ -526,6 +526,48 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
     }
 }
 
+/**
+* add a grid item from SVG-repr. Check if this namedview already has a gridobject for this one! If desktop=null, add grid-canvasitem to all desktops of this namedview,
+* otherwise only add it to the specified desktop.
+*/
+static Inkscape::CanvasGrid* 
+sp_namedview_add_grid(SPNamedView *nv, Inkscape::XML::Node *repr, SPDesktop *desktop) {
+    Inkscape::CanvasGrid* grid = NULL;
+    //check if namedview already has an object for this grid
+    for (GSList *l = nv->grids; l != NULL; l = l->next) {
+        Inkscape::CanvasGrid* g = (Inkscape::CanvasGrid*) l->data;
+        if (repr == g->repr) {
+            grid = g;
+            break;
+        }
+    }
+    
+    if (!grid) {
+        //create grid object
+        const char * gridtype = repr->attribute("type");
+        if (!gridtype) {
+            gridtype = "xygrid"; // use this as default gridtype when none is specified
+            repr->setAttribute("type", gridtype);
+        }
+        grid = Inkscape::CanvasGrid::NewGrid(nv, repr, gridtype);
+        nv->grids = g_slist_append(nv->grids, grid);
+    }
+    
+    if (!desktop) {
+        //add canvasitem to all desktops
+        for (GSList *l = nv->views; l != NULL; l = l->next) {
+            SPDesktop *dt = static_cast<SPDesktop*>(l->data);
+            grid->createCanvasItem(dt);
+        }
+    } else {
+        //add canvasitem only for specified desktop
+        grid->createCanvasItem(desktop);
+    }
+    grid->show();
+
+    return grid;
+}
+
 static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
     SPNamedView *nv = (SPNamedView *) object;
@@ -536,18 +578,7 @@ static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *chil
 
     const gchar *id = child->attribute("id");
     if (!strcmp(child->name(), "inkscape:grid")) {
-        // check for which grid-type
-        Inkscape::CanvasGrid* addedgrid;
-        const char * gridtype = child->attribute("type");
-        if (!gridtype) {
-            gridtype = "xygrid"; // use this as default gridtype when none is specified
-            child->setAttribute("type", gridtype);
-        }
-        addedgrid = Inkscape::CanvasGrid::NewGrid( (SPDesktop*) nv->views->data, child, gridtype);
-        if (addedgrid) {
-            nv->grids = g_slist_append(nv->grids, addedgrid);
-            addedgrid->show();
-        }
+        sp_namedview_add_grid(nv, child, NULL);
     } else {
         SPObject *no = object->document->getObjectById(id);
         g_assert(SP_IS_OBJECT(no));
@@ -580,7 +611,6 @@ static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *chil
 
 static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {
-g_message("named view:: child removed");
     SPNamedView *nv = (SPNamedView *) object;
 
     if (!strcmp(child->name(), "inkscape:grid")) {
@@ -646,7 +676,7 @@ void SPNamedView::show(SPDesktop *desktop)
 
     views = g_slist_prepend(views, desktop);
 
-    SPCanvasItem * item = sp_canvas_item_new(sp_desktop_grid(desktop), INKSCAPE_TYPE_CXYGRID, NULL);
+    SPCanvasItem * item = sp_canvas_item_new(sp_desktop_gridgroup(desktop), INKSCAPE_TYPE_CXYGRID, NULL);
     // since we're keeping a copy, we need to bump up the ref count
     gtk_object_ref(GTK_OBJECT(item));
     gridviews = g_slist_prepend(gridviews, item);
@@ -656,17 +686,11 @@ void SPNamedView::show(SPDesktop *desktop)
     if (repr) {
         for (Inkscape::XML::Node * child = repr->firstChild() ; child != NULL; child = child->next() ) {
             if (!strcmp(child->name(), "inkscape:grid")) {
-                Inkscape::CanvasXYGrid* addedgrid = new Inkscape::CanvasXYGrid(desktop, child);
-                if (addedgrid) {
-                    grids = g_slist_append(grids, addedgrid);
-                    addedgrid->enable_snapping();
-                    addedgrid->show();
-                }
+                sp_namedview_add_grid(this, child, desktop);
             }
         }
     }
-
-
+    
     sp_namedview_setup_grid(this);
 }
 

@@ -85,6 +85,8 @@
 #include "event-log.h"
 #include "display/canvas-grid.h"
 
+#include "sp-canvas.h"
+
 namespace Inkscape { namespace XML { class Node; }}
 
 // Callback declarations
@@ -111,7 +113,7 @@ SPDesktop::SPDesktop()
     selection = NULL;
     acetate = NULL;
     main = NULL;
-    grid = NULL;
+    gridgroup = NULL;
     guides = NULL;
     drawing = NULL;
     sketch = NULL;
@@ -201,7 +203,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
         setDisplayModeNormal();
     }
 
-    grid = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
+    gridgroup = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
     guides = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
     sketch = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
     controls = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
@@ -298,6 +300,8 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     /* setup LayerManager */
     //   (Setting up after the connections are all in place, as it may use some of them)
     layer_manager = new Inkscape::LayerManager( this );
+    
+    grids_visible = false;
 }
 
 
@@ -1101,9 +1105,13 @@ void SPDesktop::clearWaitingCursor()
 
 void SPDesktop::toggleGrid()
 {
-    for ( GSList const *l = namedview->grids; l != NULL; l = l->next) {
-        Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
-        grid->toggle_visibility();
+    if(gridgroup) {
+        grids_visible = !grids_visible;
+        if (grids_visible) {
+            sp_canvas_item_show(SP_CANVAS_ITEM(gridgroup));
+        } else {
+            sp_canvas_item_hide(SP_CANVAS_ITEM(gridgroup));
+        }
     }
 }
 

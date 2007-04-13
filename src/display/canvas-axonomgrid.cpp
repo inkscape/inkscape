@@ -195,8 +195,8 @@ attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int star
     }
 }
 
-CanvasAxonomGrid::CanvasAxonomGrid (SPDesktop *desktop, Inkscape::XML::Node * in_repr)
-    : CanvasGrid(desktop, in_repr), table(1, 1)
+CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr)
+    : CanvasGrid(nv, in_repr), table(1, 1)
 {
 
     origin[NR::X] = origin[NR::Y] = 0.0;
@@ -396,8 +396,9 @@ CanvasAxonomGrid::readRepr()
         empspacing = atoi(value);
     }
 
-    sp_canvas_item_request_update (canvasitem);
-
+    for (GSList *l = canvasitems; l != NULL; l = l->next) {
+        sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
+    }
     return;
 }
 

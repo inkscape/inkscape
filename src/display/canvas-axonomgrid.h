@@ -33,7 +33,7 @@ namespace Inkscape {
 
 class CanvasAxonomGrid : public CanvasGrid {
 public:
-    CanvasAxonomGrid(SPDesktop *desktop, Inkscape::XML::Node * in_repr);
+    CanvasAxonomGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr);
     ~CanvasAxonomGrid();
 
     void Update (NR::Matrix const &affine, unsigned int flags);
