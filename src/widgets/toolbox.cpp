@@ -1144,10 +1144,10 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GtkWidget *data
     g_object_set_data(G_OBJECT(dataKludge), "freeze", GINT_TO_POINTER(FALSE));
 }
 
-static void sp_stb_sides_flat_state_changed( GtkToggleAction *act, GtkObject *dataKludge )
+static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GtkObject *dataKludge )
 {
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(dataKludge), "desktop");
-    bool flat = gtk_toggle_action_get_active(act);
+    bool flat = ege_select_one_action_get_active( act ) == 0;
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_string_attribute( "tools.shapes.star", "isflatsided",
@@ -1282,13 +1282,12 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
     } else if (!strcmp(name, "inkscape:flatsided")) {
         GtkAction* prop_action = GTK_ACTION( g_object_get_data(G_OBJECT(tbl), "prop_action") );
         char const *flatsides = repr->attribute("inkscape:flatsided");
-        if (flatsides && !strcmp(flatsides,"false" )) {
-            GtkToggleAction* flat2_action = GTK_TOGGLE_ACTION( g_object_get_data( G_OBJECT(tbl), "flat2_action" ) );
-            gtk_toggle_action_set_active( flat2_action, TRUE );
+        EgeSelectOneAction* flat_action = EGE_SELECT_ONE_ACTION( g_object_get_data( G_OBJECT(tbl), "flat_action" ) );
+        if ( flatsides && !strcmp(flatsides,"false") ) {
+            ege_select_one_action_set_active( flat_action, 1 );
             gtk_action_set_sensitive( prop_action, TRUE );
         } else {
-            GtkToggleAction* flat_action = GTK_TOGGLE_ACTION( g_object_get_data( G_OBJECT(tbl), "flat_action" ) );
-            gtk_toggle_action_set_active( flat_action, TRUE );
+            ege_select_one_action_set_active( flat_action, 0 );
             gtk_action_set_sensitive( prop_action, FALSE );
         }
     } else if (!strcmp(name, "sodipodi:r1") || !strcmp(name, "sodipodi:r2")) {
@@ -1382,9 +1381,8 @@ static void sp_stb_defaults( GtkWidget *widget, GtkWidget *dataKludge )
     gdouble randomized = 0;
     gdouble rounded = 0;
 
-    GtkToggleAction* flat_action = GTK_TOGGLE_ACTION( g_object_get_data( G_OBJECT(dataKludge), "flat_action" ) );
-    GtkToggleAction* flat2_action = GTK_TOGGLE_ACTION( g_object_get_data( G_OBJECT(dataKludge), "flat2_action" ) );
-    gtk_toggle_action_set_active( flat ? flat_action : flat2_action, TRUE );
+    EgeSelectOneAction* flat_action = EGE_SELECT_ONE_ACTION( g_object_get_data( G_OBJECT(dataKludge), "flat_action" ) );
+    ege_select_one_action_set_active( flat_action, flat ? 0 : 1 );
 
     GtkAction* sb2 = GTK_ACTION( g_object_get_data(G_OBJECT(dataKludge), "prop_action") );
     gtk_action_set_sensitive( sb2, !flat );
@@ -1432,7 +1430,6 @@ sp_star_toolbox_new(SPDesktop *desktop)
         "    <toolitem action='StarStateAction' />"
         "    <separator />"
         "    <toolitem action='FlatAction' />"
-        "    <toolitem action='FlatAction2' />"
         "    <separator />"
         "    <toolitem action='MagnitudeAction' />"
         "    <toolitem action='SpokeAction' />"
@@ -1462,31 +1459,35 @@ sp_star_toolbox_new(SPDesktop *desktop)
 
         /* Flatsided checkbox */
         {
-            InkRadioAction* act = ink_radio_action_new( "FlatAction",
-                                                        _("Polygon"),
-                                                        _("Regular polygon (with one handle) instead of a star"),
-                                                        "star_flat",
-                                                        Inkscape::ICON_SIZE_SMALL_TOOLBAR );
-            gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+            GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
 
-            InkRadioAction* act2 = ink_radio_action_new( "FlatAction2",
-                                                         _("Star"),
-                                                         _("Star instead of a regular polygon (with one handle)"),
-                                                         "star_angled",
-                                                         Inkscape::ICON_SIZE_SMALL_TOOLBAR );
-            gtk_action_group_add_action( mainActions, GTK_ACTION( act2 ) );
+            GtkTreeIter iter;
+            gtk_list_store_append( model, &iter );
+            gtk_list_store_set( model, &iter,
+                                0, _("Polygon"),
+                                1, _("Regular polygon (with one handle) instead of a star"),
+                                2, "star_flat",
+                                -1 );
 
-            // Connect to be in the same radio button group.
-            gtk_radio_action_set_group( GTK_RADIO_ACTION(act), 0 );
-            GSList* radioGroup = gtk_radio_action_get_group( GTK_RADIO_ACTION(act) );
-            gtk_radio_action_set_group( GTK_RADIO_ACTION(act2), radioGroup );
+            gtk_list_store_append( model, &iter );
+            gtk_list_store_set( model, &iter,
+                                0, _("Star"),
+                                1, _("Star instead of a regular polygon (with one handle)"),
+                                2, "star_angled",
+                                -1 );
 
-            gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), isFlatSided );
-            gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act2), !isFlatSided );
-
-            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_stb_sides_flat_state_changed), holder);
+            EgeSelectOneAction* act = ege_select_one_action_new( "FlatAction", _(""), _(""), NULL, GTK_TREE_MODEL(model) );
+            gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
             gtk_object_set_data( GTK_OBJECT(holder), "flat_action", act );
-            gtk_object_set_data( GTK_OBJECT(holder), "flat2_action", act2 );
+
+            ege_select_one_action_set_appearance( act, "full" );
+            ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+            g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+            ege_select_one_action_set_icon_column( act, 2 );
+            ege_select_one_action_set_tooltip_column( act, 1  );
+
+            ege_select_one_action_set_active( act, isFlatSided ? 0 : 1 );
+            g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_stb_sides_flat_state_changed), holder);
         }
 
         /* Magnitude */
