@@ -492,7 +492,7 @@ DocumentProperties::update()
     //_rcbsnbo.setActive (nv->snap_manager.object.getSnapTo(Inkscape::Snapper::BBOX_POINT));
     //_rcbsnnob.setActive (nv->snap_manager.object.getSnapTo(Inkscape::Snapper::SNAP_POINT));
     _rcbsnop.setActive (nv->snap_manager.object.getSnapToPaths());
-    _rcbsnop.setActive (nv->snap_manager.object.getSnapToNodes());
+    _rcbsnon.setActive (nv->snap_manager.object.getSnapToNodes());
     _rsu_sno.setValue (nv->objecttolerance);
 
     //_rcbsnbb.setActive (nv->snap_manager.grid.getSnapTo(Inkscape::Snapper::BBOX_POINT));
