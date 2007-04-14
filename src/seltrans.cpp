@@ -88,13 +88,14 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _show(SHOW_CONTENT),
     _grabbed(false),
     _show_handles(true),
-    _snap_bbox_type(SPItem::GEOMETRIC_BBOX),
     _bbox(NR::Nothing()),
     _approximate_bbox(NR::Nothing()),
     _chandle(NULL),
     _stamp_cache(NULL),
     _message_context(desktop->messageStack())
 {
+    gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
+    _snap_bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
     
     g_return_if_fail(desktop != NULL);
 
@@ -791,8 +792,9 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
 void Inkscape::SelTrans::_selChanged(Inkscape::Selection *selection)
 {
     if (!_grabbed) {
+        // reread in case it changed on the fly:
         gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
-        _snap_bbox_type = (prefs_bbox == NULL || strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
+        _snap_bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
         //SPItem::APPROXIMATE_BBOX will be replaced by SPItem::VISUAL_BBOX, as soon as the latter is implemented properly
     
         _updateVolatileState();
