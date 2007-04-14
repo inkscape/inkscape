@@ -58,6 +58,7 @@
 #include "inkscape.h"
 #include "color.h"
 #include "splivarot.h"
+#include "sp-item-group.h"
 #include "sp-shape.h"
 #include "sp-path.h"
 #include "sp-text.h"
@@ -607,49 +608,37 @@ get_dilate_force (SPDynaDrawContext *dc)
 }
 
 bool
-sp_ddc_dilate (SPDynaDrawContext *dc, NR::Point p, bool expand)
+sp_ddc_dilate_recursive (SPItem *item, NR::Point p, bool expand, double radius, double offset)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(dc)->desktop);
-
-    if (selection->isEmpty()) {
-        return false;
-    }
-
     bool did = false;
-    double radius = get_dilate_radius(dc); 
-    double offset = get_dilate_force(dc); 
-    if (radius == 0 || offset == 0) {
-        return false;
-    }
 
-    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
-         items != NULL;
-         items = items->next) {
+    if (SP_IS_GROUP(item)) {
+        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            if (SP_IS_ITEM(child)) {
+                did = did || sp_ddc_dilate_recursive (SP_ITEM(child), p, expand, radius, offset);
+            }
+        }
 
-        SPItem *item = (SPItem *) items->data;
-
-        // only paths
-        if (!SP_IS_PATH(item))
-            continue;
+    } else if (SP_IS_PATH(item)) {
 
         SPCurve *curve = NULL;
         curve = sp_shape_get_curve(SP_SHAPE(item));
         if (curve == NULL)
-            continue;
+            return false;
 
         // skip those paths whose bboxes are entirely out of reach with our radius
         NR::Maybe<NR::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item));
         if (bbox) {
             bbox->growBy(radius);
             if (!bbox->contains(p)) {
-                continue;
+                return false;
             }
         }
 
         Path *orig = Path_for_item(item, false);
         if (orig == NULL) {
             sp_curve_unref(curve);
-            continue;
+            return false;
         }
         Path *res = new Path;
         res->SetBackData(false);
@@ -718,6 +707,36 @@ sp_ddc_dilate (SPDynaDrawContext *dc, NR::Point p, bool expand)
 
         if (did_this) 
             did = true;
+    }
+
+    return did;
+}
+
+
+bool
+sp_ddc_dilate (SPDynaDrawContext *dc, NR::Point p, bool expand)
+{
+    Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(dc)->desktop);
+
+    if (selection->isEmpty()) {
+        return false;
+    }
+
+    bool did = false;
+    double radius = get_dilate_radius(dc); 
+    double offset = get_dilate_force(dc); 
+    if (radius == 0 || offset == 0) {
+        return false;
+    }
+
+    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
+         items != NULL;
+         items = items->next) {
+
+        SPItem *item = (SPItem *) items->data;
+
+        did = did || sp_ddc_dilate_recursive (item, p, expand, radius, offset);
+
     }
 
     return did;
@@ -836,8 +855,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 } else {
                     dc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
                                            event->motion.state & GDK_SHIFT_MASK?
-                                           _("<b>Thickening %d</b> selected paths; without <b>Shift</b> to thin") :
-                                           _("<b>Thinning %d</b> selected paths; with <b>Shift</b> to thicken"), num);
+                                           _("<b>Thickening %d</b> selected objects; without <b>Shift</b> to thin") :
+                                           _("<b>Thinning %d</b> selected objects; with <b>Shift</b> to thicken"), num);
                 }
 
             } else {
