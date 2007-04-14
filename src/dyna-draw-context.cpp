@@ -599,7 +599,11 @@ get_dilate_radius (SPDynaDrawContext *dc)
 double
 get_dilate_force (SPDynaDrawContext *dc)
 {
-    return 8 * dc->pressure/SP_EVENT_CONTEXT(dc)->desktop->current_zoom(); 
+    double force = 4 * dc->pressure/SP_EVENT_CONTEXT(dc)->desktop->current_zoom(); 
+    if (force > 3) {
+        force += 8 * (force - 3);
+    }
+    return force;
 }
 
 bool
@@ -614,6 +618,9 @@ sp_ddc_dilate (SPDynaDrawContext *dc, NR::Point p, bool expand)
     bool did = false;
     double radius = get_dilate_radius(dc); 
     double offset = get_dilate_force(dc); 
+    if (radius == 0 || offset == 0) {
+        return false;
+    }
 
     for (GSList *items = g_slist_copy((GSList *) selection->itemList());
          items != NULL;
@@ -806,6 +813,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             NR::Point const motion_w(event->motion.x,
                                      event->motion.y);
             NR::Point motion_dt(desktop->w2d(motion_w));
+            sp_dyna_draw_extinput(dc, event);
 
             // draw the dilating cursor
             if (event->motion.state & GDK_MOD1_MASK) {
@@ -992,7 +1000,6 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Drawing</b> a calligraphic stroke"));
                 }
 
-                sp_dyna_draw_extinput(dc, event);
                 if (!sp_dyna_draw_apply(dc, motion_dt)) {
                     ret = TRUE;
                     break;
