@@ -7,9 +7,9 @@
  * as Python or Perl
  *
  * Authors:
- *   Bob Jamison <rjamison@titan.com>
+ *   Bob Jamison <ishmalius@gmail.com>
  *
- * Copyright (C) 2004 Authors
+ * Copyright (C) 2004-2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */

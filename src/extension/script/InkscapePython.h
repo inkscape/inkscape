@@ -7,7 +7,7 @@
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
  *
- * Copyright (C) 2004 Authors
+ * Copyright (C) 2004-2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -15,9 +15,14 @@
 #include "InkscapeInterpreter.h"
 #include <glibmm.h>
 
-namespace Inkscape {
-namespace Extension {
-namespace Script {
+
+
+namespace Inkscape
+{
+namespace Extension
+{
+namespace Script
+{
 
 
 
@@ -25,21 +30,28 @@ class InkscapePython : public InkscapeInterpreter
 {
 public:
 
-    /*
-     *
+    /**
+     * Constructor.  Create and initialize python binding.
+     * Note that we will only actually start up the Python
+     * interpreter when there is a demand.          
      */
-    InkscapePython();
+    InkscapePython()
+        {
+        initialized = false;
+        }
 
 
-    /*
-     *
+    /**
+     * Destructor
      */
-    virtual ~InkscapePython();
+    virtual ~InkscapePython()
+        {
+        }
 
 
 
-    /*
-     *
+    /**
+     *  Overloaded from InkscapeInterpreter
      */
     virtual bool interpretScript(const Glib::ustring &script,
                                  Glib::ustring &output,
@@ -50,8 +62,17 @@ public:
 
 private:
 
+    /**
+     * First-time call to set things up
+     */         
+    bool initialize();
+
+    bool initialized;
+
 
 };
+
+
 
 
 }  // namespace Script

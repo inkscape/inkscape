@@ -1,3 +1,18 @@
+/**
+ * This file is an attempt to provide a hierarchical design
+ * to wrap Inkscape in an OO model.  This file is parsed by Swig
+ * to produce scripting extension modules for such interpreters
+ * as Python or Perl
+ *
+ * Authors:
+ *   Bob Jamison <ishmalius@gmail.com>
+ *
+ * Copyright (C) 2004-2007 Authors
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
+
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -21,6 +36,7 @@ class DocumentImpl;
 class DocumentImpl : public Document
 {
 public:
+
     DocumentImpl();
     
     virtual ~DocumentImpl();
