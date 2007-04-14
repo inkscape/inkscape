@@ -803,6 +803,10 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                                     NULL,
                                     event->button.time);
 
+                if (event->motion.state & GDK_MOD1_MASK) {
+                    sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
+                }
+
                 ret = TRUE;
 
                 dc->is_drawing = true;
@@ -1060,6 +1064,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
         if ( dc->is_dilating && event->button.button == 1 ) {
             dc->is_dilating = false;
+            sp_canvas_end_forced_full_redraws(desktop->canvas);
             sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(dc)->desktop), 
                          SP_VERB_CONTEXT_CALLIGRAPHIC,
                          (event->button.state & GDK_SHIFT_MASK ? _("Thicken paths") : _("Thin paths")));
