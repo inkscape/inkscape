@@ -802,7 +802,7 @@ type_error:
     obj = pyobj;
     if (PyCFunction_Check(obj)) {
       /* here we get the method pointer for callbacks */
-      char *doc = (((PyCFunctionObject *)obj) -> m_ml -> ml_doc);
+      char *doc = (char *) (((PyCFunctionObject *)obj) -> m_ml -> ml_doc);
       c = doc ? strstr(doc, "swig_ptr: ") : 0;
       if (c) {
 	c += 10;
@@ -977,7 +977,7 @@ SWIG_Python_FixMethods(PyMethodDef *methods,
 		       swig_type_info **types_initial) {
   int i;
   for (i = 0; methods[i].ml_name; ++i) {
-    char *c = methods[i].ml_doc;
+    char *c = (char *) methods[i].ml_doc;
     if (c && (c = strstr(c, "swig_ptr: "))) {
       int j;
       swig_const_info *ci = 0;
