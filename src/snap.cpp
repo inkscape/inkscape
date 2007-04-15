@@ -33,7 +33,6 @@
  */
 
 SnapManager::SnapManager(SPNamedView const *v) :
-    grid(v, 0),
     guide(v, 0),
     object(v, 0),
     _named_view(v)
@@ -45,15 +44,28 @@ SnapManager::SnapManager(SPNamedView const *v) :
 /**
  *  \return List of snappers that we use.
  */
-
-SnapManager::SnapperList SnapManager::getSnappers() const
+SnapManager::SnapperList 
+SnapManager::getSnappers() const
 {
     SnapManager::SnapperList s;
-    s.push_back(&grid);
     s.push_back(&guide);
     s.push_back(&object);
 
-    //FIXME: this code should do this: add new grid snappers that are active for this desktop
+    SnapManager::SnapperList gs = getGridSnappers();
+    s.splice(s.begin(), gs);
+
+    return s;
+}
+
+/**
+ *  \return List of gridsnappers that we use.
+ */
+SnapManager::SnapperList 
+SnapManager::getGridSnappers() const
+{
+    SnapperList s;
+
+    //FIXME: this code should actually do this: add new grid snappers that are active for this desktop. now it just adds all gridsnappers
     SPDesktop* desktop = SP_ACTIVE_DESKTOP;
     if (desktop && desktop->gridsEnabled()) {
         for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
@@ -114,9 +126,28 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
                                              NR::Point const &p,
                                              std::list<SPItem const *> const &it) const
 {
+    SnapperList const snappers = getSnappers();
+
+    return freeSnap(t, p, it, snappers);
+}
+
+/**
+ *  Try to snap a point to any of the specified snappers.
+ *
+ *  \param t Type of point.
+ *  \param p Point.
+ *  \param it List of items to ignore when snapping.
+ * \param snappers  List of snappers to try to snap to
+ *  \return Snapped point.
+ */
+
+Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
+                                             NR::Point const &p,
+                                             std::list<SPItem const *> const &it,
+                                             SnapperList const &snappers) const
+{
     Inkscape::SnappedPoint r(p, NR_HUGE);
 
-    SnapperList const snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
         Inkscape::SnappedPoint const s = (*i)->freeSnap(t, p, it);
         if (s.getDistance() < r.getDistance()) {
@@ -126,6 +157,60 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
 
     return r;
 }
+
+/**
+ *  Try to snap a point to any of the specified snappers. Snap always, ignoring the snap-distance
+ *
+ *  \param t Type of point.
+ *  \param p Point.
+ *  \param it Item to ignore when snapping.
+ * \param snappers  List of snappers to try to snap to
+ *  \return Snapped point.
+ */
+
+Inkscape::SnappedPoint
+SnapManager::freeSnapAlways( Inkscape::Snapper::PointType t,
+                             NR::Point const &p,
+                             SPItem const *it,
+                             SnapperList &snappers )
+{
+    std::list<SPItem const *> lit;
+    lit.push_back(it);
+    return freeSnapAlways(t, p, lit, snappers);
+}
+
+/**
+ *  Try to snap a point to any of the specified snappers. Snap always, ignoring the snap-distance
+ *
+ *  \param t Type of point.
+ *  \param p Point.
+ *  \param it List of items to ignore when snapping.
+ * \param snappers  List of snappers to try to snap to
+ *  \return Snapped point.
+ */
+
+Inkscape::SnappedPoint
+SnapManager::freeSnapAlways( Inkscape::Snapper::PointType t,
+                             NR::Point const &p,
+                             std::list<SPItem const *> const &it,
+                             SnapperList &snappers )
+{
+    Inkscape::SnappedPoint r(p, NR_HUGE);
+
+    for (SnapperList::iterator i = snappers.begin(); i != snappers.end(); i++) {
+        gdouble const curr_gridsnap = (*i)->getDistance();
+        const_cast<Inkscape::Snapper*> (*i)->setDistance(NR_HUGE);
+        Inkscape::SnappedPoint const s = (*i)->freeSnap(t, p, it);
+        const_cast<Inkscape::Snapper*> (*i)->setDistance(curr_gridsnap);
+
+        if (s.getDistance() < r.getDistance()) {
+            r = s;
+        }
+    }
+
+    return r;
+}
+
 
 
 /**

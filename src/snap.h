@@ -22,7 +22,6 @@
 #include <libnr/nr-dim2.h>
 #include <libnr/nr-forward.h>
 #include <libnr/nr-scale.h>
-#include "grid-snapper.h"
 #include "guide-snapper.h"
 #include "object-snapper.h"
 
@@ -40,7 +39,9 @@ class SnapManager
 {
 public:
     SnapManager(SPNamedView const *v);
-    
+
+    typedef std::list<const Inkscape::Snapper*> SnapperList;
+
     bool willSnapSomething() const;
 
     Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,
@@ -50,7 +51,22 @@ public:
     Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,
                                     NR::Point const &p,
                                     std::list<SPItem const *> const &it) const;
-    
+
+     Inkscape::SnappedPoint freeSnap( Inkscape::Snapper::PointType t,
+                                      NR::Point const &p,
+                                      std::list<SPItem const *> const &it,
+                                      SnapperList const &snappers ) const;
+
+    Inkscape::SnappedPoint freeSnapAlways( Inkscape::Snapper::PointType t,
+                                           NR::Point const &p,
+                                           SPItem const *it,
+                                           SnapperList &snappers );
+
+    Inkscape::SnappedPoint freeSnapAlways( Inkscape::Snapper::PointType t,
+                                           NR::Point const &p,
+                                           std::list<SPItem const *> const &it,
+                                           SnapperList &snappers );
+
     Inkscape::SnappedPoint constrainedSnap(Inkscape::Snapper::PointType t,
                                            NR::Point const &p,
                                            Inkscape::Snapper::ConstraintLine const &c,
@@ -100,12 +116,11 @@ public:
                                             NR::Point const &o,
                                             NR::Dim2 d) const;
 
-    Inkscape::GridSnapper grid;        ///< grid snapper
     Inkscape::GuideSnapper guide;      ///< guide snapper
     Inkscape::ObjectSnapper object;    ///< snapper to other objects
 
-    typedef std::list<const Inkscape::Snapper*> SnapperList;
     SnapperList getSnappers() const;
+    SnapperList getGridSnappers() const;
 
 protected:
     SPNamedView const *_named_view;

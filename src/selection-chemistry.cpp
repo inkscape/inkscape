@@ -1145,12 +1145,9 @@ void sp_selection_paste(bool in_place)
         }
 
         /* Snap the offset of the new item(s) to the grid */
-        /* FIXME: this gridsnap fiddling is a hack. */
-        Inkscape::GridSnapper &s = desktop->namedview->snap_manager.grid;
-        gdouble const curr_gridsnap = s.getDistance();
-        s.setDistance(NR_HUGE);
-        m = s.freeSnap(Inkscape::Snapper::SNAP_POINT, m, NULL).getPoint();
-        s.setDistance(curr_gridsnap);
+        SnapManager &sm = desktop->namedview->snap_manager;
+        SnapManager::SnapperList gs = sm.getGridSnappers();
+        m = sm.freeSnapAlways(Inkscape::Snapper::SNAP_POINT, m, NULL, gs).getPoint();
         sp_selection_move_relative(selection, m);
     }
 

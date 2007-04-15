@@ -963,7 +963,8 @@ sp_desktop_widget_new (SPNamedView *namedview)
     SPDesktopWidget *dtw = (SPDesktopWidget*)gtk_type_new (SP_TYPE_DESKTOP_WIDGET);
 
     dtw->dt2r = 1.0 / namedview->doc_units->unittobase;
-    dtw->ruler_origin = namedview->gridorigin;
+
+    dtw->ruler_origin = NR::Point(0,0); //namedview->gridorigin;   Why was the grid origin used here?
 
     dtw->desktop = new SPDesktop();
     dtw->stub = new SPDesktopWidget::WidgetStub (dtw);
@@ -1032,7 +1033,7 @@ sp_desktop_widget_namedview_modified (SPObject *obj, guint flags, SPDesktopWidge
     SPNamedView *nv=SP_NAMEDVIEW(obj);
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         dtw->dt2r = 1.0 / nv->doc_units->unittobase;
-        dtw->ruler_origin = nv->gridorigin;
+        dtw->ruler_origin = NR::Point(0,0); //nv->gridorigin;   Why was the grid origin used here?
 
         sp_ruler_set_metric (GTK_RULER (dtw->vruler), nv->getDefaultMetric());
         sp_ruler_set_metric (GTK_RULER (dtw->hruler), nv->getDefaultMetric());

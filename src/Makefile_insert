@@ -135,7 +135,6 @@ libinkpre_a_SOURCES =	\
 	snapped-point.cpp snapped-point.h \
 	snapper.cpp snapper.h \
 	line-snapper.cpp line-snapper.h \
-	grid-snapper.cpp grid-snapper.h \
 	guide-snapper.cpp guide-snapper.h \
 	object-snapper.cpp object-snapper.h \
 	sp-anchor.cpp sp-anchor.h	\

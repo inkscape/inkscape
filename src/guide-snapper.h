@@ -17,7 +17,7 @@
 
 #include "libnr/nr-forward.h"
 #include "libnr/nr-coord.h"
-#include "snapper.h"
+#include "line-snapper.h"
 
 struct SPNamedView;
 

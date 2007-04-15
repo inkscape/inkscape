@@ -1429,12 +1429,7 @@ _update_snap_distances (SPDesktop *desktop)
 
     SPNamedView &nv = *desktop->namedview;
 
-    
-    // FIXME GRID: make one gridsnapper object that snaps to all enabled grids by calling their snappers.
-    nv.snap_manager.grid.setDistance(sp_convert_distance_full(nv.gridtolerance,
-                                                                      *nv.gridtoleranceunit,
-                                                                      px));
-    //new grid snappers
+    //tell all grid snappers
     for ( GSList const *l = nv.grids; l != NULL; l = l->next) {
         Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
         grid->snapper->setDistance(sp_convert_distance_full(nv.gridtolerance,

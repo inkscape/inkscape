@@ -56,7 +56,7 @@ protected:
     Gtk::Tooltips _tt;
     Gtk::Notebook  _notebook;
 
-    NotebookPage   _page_page, _page_grid, _page_guides;
+    NotebookPage   _page_page, _page_guides;
     NotebookPage   _page_snap;
     NotebookPage   _page_grids;
 
@@ -67,19 +67,15 @@ protected:
     PageSizer             _page_sizer;
     //---------------------------------------------------------------
     RegisteredCheckButton _rcbgrid; //_rcbsnbb, _rcbsnnod
-    RegisteredUnitMenu    _rumg, _rums;
-    RegisteredScalarUnit  _rsu_ox, _rsu_oy, _rsu_sx, _rsu_sy;
-    RegisteredColorPicker _rcp_gcol, _rcp_gmcol;
-    RegisteredSuffixedInteger _rsi;
+    RegisteredUnitMenu    _rums;
     //---------------------------------------------------------------
     RegisteredCheckButton _rcb_sgui; //_rcb_snpgui, _rcb_snbgui
     RegisteredUnitMenu    _rum_gusn;
-    ToleranceSlider      _rsu_sn, _rsu_gusn;
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
     RegisteredCheckButton _rcbsnop, _rcbsnon; //_rcbsnbo, _rcbsnnob
     RegisteredUnitMenu    _rumso;
-    ToleranceSlider       _rsu_sno;
+    ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
     RegisteredRadioButtonPair _rrb_pix;
     //---------------------------------------------------------------
     Gtk::Notebook   _grids_notebook;

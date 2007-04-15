@@ -92,7 +92,7 @@ DocumentProperties::destroy()
 
 DocumentProperties::DocumentProperties()
     : Dialog ("dialogs.documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
-      _page_page(1, 1), _page_grid(1, 1), _page_guides(1, 1),
+      _page_page(1, 1), _page_guides(1, 1),
       _page_snap(1, 1), _page_grids(1, 1),
       _grids_button_new(_("_New"), _("Create new grid.")),
       _grids_button_remove(_("_Remove"), _("Remove selected grid.")),
@@ -104,12 +104,12 @@ DocumentProperties::DocumentProperties()
     get_vbox()->pack_start (_notebook, true, true);
 
     _notebook.append_page(_page_page,      _("Page"));
-    _notebook.append_page(_page_grid,      _("Grid/Guides"));
+    _notebook.append_page(_page_guides,    _("Guides"));
     _notebook.append_page(_page_snap,      _("Snap"));
-    _notebook.append_page(_page_grids,     _("Grids setup"));
+    _notebook.append_page(_page_grids,     _("Grids"));
 
     build_page();
-    build_grid();
+    build_guides();
     build_snap();
     build_gridspage();
 
@@ -237,62 +237,28 @@ DocumentProperties::build_page()
 }
 
 void
-DocumentProperties::build_grid()
+DocumentProperties::build_guides()
 {
-    _page_grid.show();
+    _page_guides.show();
 
-    /// \todo FIXME: gray out snapping when grid is off.
-    /// Dissenting view: you want snapping without grid.
-
-    _rcbgrid.init (_("_Show grid"), _("Show or hide grid"), "showgrid", _wr);
-
-    _rumg.init (_("Grid _units:"), "grid_units", _wr);
-    _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
-                  "gridoriginx", _rumg, _wr);
-    _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
-                  "gridoriginy", _rumg, _wr);
-    _rsu_sx.init (_("Spacing _X:"), _("Distance between vertical grid lines"),
-                  "gridspacingx", _rumg, _wr);
-    _rsu_sy.init (_("Spacing _Y:"), _("Distance between horizontal grid lines"),
-                  "gridspacingy", _rumg, _wr);
-    _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"),
-                    _("Color of grid lines"), "gridcolor", "gridopacity", _wr);
-    _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"),
-                     _("Color of the major (highlighted) grid lines"),
-                     "gridempcolor", "gridempopacity", _wr);
-    _rsi.init (_("_Major grid line every:"), _("lines"), "gridempspacing", _wr);
     _rcb_sgui.init (_("Show _guides"), _("Show or hide guides"), "showguides", _wr);
     _rcp_gui.init (_("Guide co_lor:"), _("Guideline color"),
                    _("Color of guidelines"), "guidecolor", "guideopacity", _wr);
     _rcp_hgui.init (_("_Highlight color:"), _("Highlighted guideline color"),
                     _("Color of a guideline when it is under mouse"),
                     "guidehicolor", "guidehiopacity", _wr);
-    Gtk::Label *label_grid = manage (new Gtk::Label);
-    label_grid->set_markup (_("<b>Grid</b>"));
     Gtk::Label *label_gui = manage (new Gtk::Label);
     label_gui->set_markup (_("<b>Guides</b>"));
 
     const Gtk::Widget* widget_array[] =
     {
-        label_grid,         0,
-        0,                  _rcbgrid._button,
-        _rumg._label,       _rumg._sel,
-        0,                  _rsu_ox.getSU(),
-        0,                  _rsu_oy.getSU(),
-        0,                  _rsu_sx.getSU(),
-        0,                  _rsu_sy.getSU(),
-        _rcp_gcol._label,   _rcp_gcol._cp,
-        0,                  0,
-        _rcp_gmcol._label,  _rcp_gmcol._cp,
-        _rsi._label,        &_rsi._hbox,
-        0, 0,
         label_gui,       0,
         0,               _rcb_sgui._button,
         _rcp_gui._label, _rcp_gui._cp,
         _rcp_hgui._label, _rcp_hgui._cp,
     };
 
-    attach_all (_page_grid.table(), widget_array, sizeof(widget_array));
+    attach_all (_page_guides.table(), widget_array, sizeof(widget_array));
 }
 
 void
@@ -399,6 +365,9 @@ DocumentProperties::build_gridspage()
 {
     _page_grids.show();
 
+    /// \todo FIXME: gray out snapping when grid is off.
+    /// Dissenting view: you want snapping without grid.
+
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
     SPNamedView *nv = sp_desktop_namedview(dt);
 
@@ -461,28 +430,6 @@ DocumentProperties::update()
     double const doc_h_px = sp_document_height(sp_desktop_document(dt));
     _page_sizer.setDim (doc_w_px, doc_h_px);
 
-    //-----------------------------------------------------------grid page
-    _rcbgrid.setActive (nv->showgrid);
-    _rumg.setUnit (nv->gridunit);
-
-    gdouble val;
-    val = nv->gridorigin[NR::X];
-    val = sp_pixels_get_units (val, *(nv->gridunit));
-    _rsu_ox.setValue (val);
-    val = nv->gridorigin[NR::Y];
-    val = sp_pixels_get_units (val, *(nv->gridunit));
-    _rsu_oy.setValue (val);
-    val = nv->gridspacing[NR::X];
-    double gridx = sp_pixels_get_units (val, *(nv->gridunit));
-    _rsu_sx.setValue (gridx);
-    val = nv->gridspacing[NR::Y];
-    double gridy = sp_pixels_get_units (val, *(nv->gridunit));
-    _rsu_sy.setValue (gridy);
-
-    _rcp_gcol.setRgba32 (nv->gridcolor);
-    _rcp_gmcol.setRgba32 (nv->gridempcolor);
-    _rsi.setValue (nv->gridempspacing);
-
     //-----------------------------------------------------------guide
     _rcb_sgui.setActive (nv->showguides);
     _rcp_gui.setRgba32 (nv->guidecolor);
@@ -519,8 +466,6 @@ DocumentProperties::on_response (int id)
     {
         _rcp_bg.closeWindow();
         _rcp_bord.closeWindow();
-        _rcp_gcol.closeWindow();
-        _rcp_gmcol.closeWindow();
         _rcp_gui.closeWindow();
         _rcp_hgui.closeWindow();
     }

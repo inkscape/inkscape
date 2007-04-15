@@ -1342,7 +1342,9 @@ EditWidget::deactivateDesktop()
 void
 EditWidget::viewSetPosition (NR::Point p)
 {
-    p -= _namedview->gridorigin;
+    // p -= _namedview->gridorigin;    
+    /// \todo Why was the origin corrected for the grid origin? (johan)
+    
     double lo, up, pos, max;
     _top_ruler.get_range (lo, up, pos, max);
     _top_ruler.set_range (lo, up, p[NR::X], max);
@@ -1353,18 +1355,19 @@ EditWidget::viewSetPosition (NR::Point p)
 void
 EditWidget::updateRulers()
 {
-    NR::Point origin = _namedview->gridorigin;
-
+    //NR::Point gridorigin = _namedview->gridorigin;
+    /// \todo Why was the origin corrected for the grid origin? (johan)
+    
     NR::Rect const viewbox = _svg_canvas.spobj()->getViewbox();
     double lo, up, pos, max;
     double const scale = _desktop->current_zoom();
-    double s = viewbox.min()[NR::X] / scale - origin[NR::X];
-    double e = viewbox.max()[NR::X] / scale - origin[NR::X];
+    double s = viewbox.min()[NR::X] / scale; //- gridorigin[NR::X];
+    double e = viewbox.max()[NR::X] / scale; //- gridorigin[NR::X];
     _top_ruler.get_range(lo, up, pos, max);
     _top_ruler.set_range(s, e, pos, e);
-    s = viewbox.min()[NR::Y] / -scale - origin[NR::Y];
-    e = viewbox.max()[NR::Y] / -scale - origin[NR::Y];
-    _left_ruler.set_range(s, e, origin[NR::Y], e);
+    s = viewbox.min()[NR::Y] / -scale; //- gridorigin[NR::Y];
+    e = viewbox.max()[NR::Y] / -scale; //- gridorigin[NR::Y];
+    _left_ruler.set_range(s, e, 0 /*gridorigin[NR::Y]*/, e);
     /// \todo is that correct?
 }
 

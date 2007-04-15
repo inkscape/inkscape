@@ -36,7 +36,6 @@ enum {
 
 struct SPNamedView : public SPObjectGroup {
     unsigned int editable : 1;
-    unsigned int showgrid : 1;
     unsigned int showguides : 1;
     unsigned int showborder : 1;
     unsigned int showpageshadow : 1;
@@ -51,14 +50,7 @@ struct SPNamedView : public SPObjectGroup {
     gint window_y;
 
     SnapManager snap_manager;
-    //GridManager grid_manager;
     GSList * grids;
-
-    SPUnit const *gridunit;
-    /* Grid data is in points regardless of unit */
-    NR::Point gridorigin;
-    gdouble gridspacing[2];
-    gint gridempspacing;
 
     SPUnit const *doc_units;
 
@@ -75,8 +67,6 @@ struct SPNamedView : public SPObjectGroup {
     
     double connector_spacing;
 
-    guint32 gridcolor;
-    guint32 gridempcolor;
     guint32 guidecolor;
     guint32 guidehicolor;
     guint32 bordercolor;
@@ -85,7 +75,6 @@ struct SPNamedView : public SPObjectGroup {
 
     GSList *guides;
     GSList *views;
-    GSList *gridviews;
     
     gint viewcount;
 
@@ -111,8 +100,6 @@ void sp_namedview_document_from_window(SPDesktop *desktop);
 void sp_namedview_update_layers_from_document (SPDesktop *desktop);
 
 void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr);
-void sp_namedview_toggle_grid(SPDocument *doc, Inkscape::XML::Node *repr);
-void sp_namedview_set_gridtype(unsigned int type, SPDocument *doc, Inkscape::XML::Node *repr);
 
 #endif /* !INKSCAPE_SP_NAMEDVIEW_H */
 

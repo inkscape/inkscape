@@ -55,9 +55,6 @@ static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::
 
 static void sp_namedview_setup_guides(SPNamedView * nv);
 
-static void sp_namedview_setup_grid(SPNamedView * nv);
-static void sp_namedview_setup_grid_item(SPNamedView * nv, SPCanvasItem * item);
-
 static gboolean sp_str_to_bool(const gchar *str);
 static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, const SPUnit **unit);
 static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color);
@@ -107,7 +104,6 @@ static void sp_namedview_class_init(SPNamedViewClass * klass)
 static void sp_namedview_init(SPNamedView *nv)
 {
     nv->editable = TRUE;
-    nv->showgrid = FALSE;
     nv->showguides = TRUE;
     nv->showborder = TRUE;
     nv->showpageshadow = TRUE;
@@ -134,20 +130,10 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
 
     sp_object_read_attr(object, "inkscape:document-units");
     sp_object_read_attr(object, "viewonly");
-    sp_object_read_attr(object, "showgrid");
     sp_object_read_attr(object, "showguides");
     sp_object_read_attr(object, "gridtolerance");
     sp_object_read_attr(object, "guidetolerance");
     sp_object_read_attr(object, "objecttolerance");
-    sp_object_read_attr(object, "gridoriginx");
-    sp_object_read_attr(object, "gridoriginy");
-    sp_object_read_attr(object, "gridspacingx");
-    sp_object_read_attr(object, "gridspacingy");
-    sp_object_read_attr(object, "gridempspacing");
-    sp_object_read_attr(object, "gridcolor");
-    sp_object_read_attr(object, "gridempcolor");
-    sp_object_read_attr(object, "gridopacity");
-    sp_object_read_attr(object, "gridempopacity");
     sp_object_read_attr(object, "guidecolor");
     sp_object_read_attr(object, "guideopacity");
     sp_object_read_attr(object, "guidehicolor");
@@ -198,11 +184,6 @@ static void sp_namedview_release(SPObject *object)
         namedview->guides = NULL;
     }
 
-    while (namedview->gridviews) {
-        gtk_object_unref(GTK_OBJECT(namedview->gridviews->data));
-        namedview->gridviews = g_slist_remove(namedview->gridviews, namedview->gridviews->data);
-    }
-
     // delete grids:
     while ( namedview->grids ) {
         Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)namedview->grids->data;
@@ -225,13 +206,6 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
     switch (key) {
 	case SP_ATTR_VIEWONLY:
             nv->editable = (!value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	case SP_ATTR_SHOWGRID:
-            nv->showgrid = sp_str_to_bool(value);
-            sp_namedview_setup_grid(nv);
-            /* Disable grid snaps if the grid is turned off */
-            nv->snap_manager.grid.setEnabled(nv->showgrid);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_SHOWGUIDES:
@@ -265,69 +239,6 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             if (value) {
                 sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &nv->objecttolerance, &nv->objecttoleranceunit);
             }
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	case SP_ATTR_GRIDORIGINX:
-	case SP_ATTR_GRIDORIGINY:
-	{
-            unsigned const d = (key == SP_ATTR_GRIDORIGINY);
-            nv->gridunit = nv->doc_units;
-            nv->gridorigin[d] = 0.0;
-            if (value) {
-                sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &nv->gridorigin[d], &nv->gridunit);
-            }
-            nv->gridorigin[d] = sp_units_get_pixels(nv->gridorigin[d], *(nv->gridunit));
-            sp_namedview_setup_grid(nv);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	}
-	case SP_ATTR_GRIDSPACINGX:
-	case SP_ATTR_GRIDSPACINGY:
-	{
-            unsigned const d = (key == SP_ATTR_GRIDSPACINGY);
-            nv->gridunit = nv->doc_units;
-            nv->gridspacing[d] = 1.0;
-            if (value) {
-                sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &nv->gridspacing[d], &nv->gridunit);
-            }
-            nv->gridspacing[d] = sp_units_get_pixels(nv->gridspacing[d], *(nv->gridunit));
-            sp_namedview_setup_grid(nv);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	}
-    case SP_ATTR_GRIDCOLOR:
-            nv->gridcolor = (nv->gridcolor & 0xff) | (DEFAULTGRIDCOLOR & 0xffffff00);
-            if (value) {
-                nv->gridcolor = (nv->gridcolor & 0xff) | sp_svg_read_color(value, nv->gridcolor);
-            }
-            sp_namedview_setup_grid(nv);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	case SP_ATTR_GRIDEMPCOLOR:
-            nv->gridempcolor = (nv->gridempcolor & 0xff) | (DEFAULTGRIDEMPCOLOR & 0xffffff00);
-            if (value) {
-                nv->gridempcolor = (nv->gridempcolor & 0xff) | sp_svg_read_color(value, nv->gridempcolor);
-            }
-            sp_namedview_setup_grid(nv);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	case SP_ATTR_GRIDOPACITY:
-            nv->gridcolor = (nv->gridcolor & 0xffffff00) | (DEFAULTGRIDCOLOR & 0xff);
-            sp_nv_read_opacity(value, &nv->gridcolor);
-            sp_namedview_setup_grid(nv);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	case SP_ATTR_GRIDEMPOPACITY:
-            nv->gridempcolor = (nv->gridempcolor & 0xffffff00) | (DEFAULTGRIDEMPCOLOR & 0xff);
-            sp_nv_read_opacity(value, &nv->gridempcolor);
-            sp_namedview_setup_grid(nv);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	case SP_ATTR_GRIDEMPSPACING:
-            nv->gridempspacing = DEFAULTGRIDEMPSPACING;
-            if (value != NULL)
-                nv->gridempspacing = atoi(value);
-            sp_namedview_setup_grid(nv);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_GUIDECOLOR:
@@ -675,11 +586,6 @@ void SPNamedView::show(SPDesktop *desktop)
 
     views = g_slist_prepend(views, desktop);
 
-    SPCanvasItem * item = sp_canvas_item_new(sp_desktop_gridgroup(desktop), INKSCAPE_TYPE_CXYGRID, NULL);
-    // since we're keeping a copy, we need to bump up the ref count
-    gtk_object_ref(GTK_OBJECT(item));
-    gridviews = g_slist_prepend(gridviews, item);
-
     // generate grids specified in SVG:
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(this);
     if (repr) {
@@ -689,8 +595,6 @@ void SPNamedView::show(SPDesktop *desktop)
             }
         }
     }
-    
-    sp_namedview_setup_grid(this);
 }
 
 #define MIN_ONSCREEN_DISTANCE 50
@@ -804,20 +708,6 @@ void SPNamedView::hide(SPDesktop const *desktop)
 
     views = g_slist_remove(views, desktop);
 
-    GSList *l;
-    for (l = gridviews; l != NULL; l = l->next) {
-        if (! l->data) {
-            continue;
-        }
-        SPCanvasItem *item = static_cast<SPCanvasItem*>(l->data);
-
-        if (item->canvas == sp_desktop_canvas(desktop)) {
-            sp_canvas_item_hide(SP_CANVAS_ITEM(l->data));
-            gtk_object_unref(GTK_OBJECT(l->data));
-            gridviews = g_slist_remove(gridviews, l->data);
-        }
-    }
-
     // delete grids:
     while ( grids ) {
         Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)grids->data;
@@ -871,48 +761,6 @@ void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive(doc, saved);
 }
-
-void sp_namedview_toggle_grid(SPDocument *doc, Inkscape::XML::Node *repr)
-{
-    unsigned int v;
-    sp_repr_get_boolean(repr, "showgrid", &v);
-    v = !v;
-
-    bool saved = sp_document_get_undo_sensitive(doc);
-    sp_document_set_undo_sensitive(doc, false);
-
-    sp_repr_set_boolean(repr, "showgrid", v);
-
-    doc->rroot->setAttribute("sodipodi:modified", "true");
-    sp_document_set_undo_sensitive(doc, saved);
-}
-
-static void sp_namedview_setup_grid(SPNamedView *nv)
-{
-    for (GSList *l = nv->gridviews; l != NULL; l = l->next) {
-        sp_namedview_setup_grid_item(nv, SP_CANVAS_ITEM(l->data));
-    }
-}
-
-static void sp_namedview_setup_grid_item(SPNamedView *nv, SPCanvasItem *item)
-{
-    if ( nv->showgrid ) {
-        sp_canvas_item_show(item);
-    } else {
-        sp_canvas_item_hide(item);
-    }
-
-    sp_canvas_item_set((GtkObject *) item,
-                       "color", nv->gridcolor,
-                       "originx", nv->gridorigin[NR::X],
-                       "originy", nv->gridorigin[NR::Y],
-                       "spacingx", nv->gridspacing[NR::X],
-                       "spacingy", nv->gridspacing[NR::Y],
-                       "empcolor", nv->gridempcolor,
-                       "empspacing", nv->gridempspacing,
-                       NULL);
-}
-
 
 gchar const *SPNamedView::getName() const
 {
