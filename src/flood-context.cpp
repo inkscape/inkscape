@@ -610,10 +610,6 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         points.push_back(NR::Point(event->button.x, event->button.y));
     }
 
-    unsigned char *orig_px = get_pixel(px, (int)points[0][NR::X], (int)points[0][NR::Y], width);
-    unsigned char orig_color[4];
-    for (int i = 0; i < 4; i++) { orig_color[i] = orig_px[i]; }
-    
     for (unsigned int i = 0; i < points.size(); i++) {
         NR::Point pw = NR::Point(points[i][NR::X] / zoom_scale, sp_document_height(document) + (points[i][NR::Y] / zoom_scale)) * affine;
         
@@ -622,6 +618,12 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         
         fill_queue.push(pw);
     }
+
+    NR::Point first_point = NR::Point(points[0][NR::X] / zoom_scale, sp_document_height(document) + (points[0][NR::Y] / zoom_scale)) * affine;
+    
+    unsigned char *orig_px  = get_pixel(px, (int)first_point[NR::X], (int)first_point[NR::Y], width);
+    unsigned char orig_color[4];
+    for (int i = 0; i < 4; i++) { orig_color[i] = orig_px[i]; }
     
     bool aborted = false;
     int y_limit = height - 1;
