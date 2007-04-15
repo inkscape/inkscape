@@ -108,6 +108,7 @@ struct SPDynaDrawContext
     bool keep_selected;
 
     double hatch_spacing;
+    double hatch_spacing_step;
     SPItem *hatch_item;
     Path *hatch_livarot_path;
     std::list<double> hatch_nearest_past;

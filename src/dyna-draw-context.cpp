@@ -198,6 +198,7 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     ddc->keep_selected = true;
 
     ddc->hatch_spacing = 0;
+    ddc->hatch_spacing_step = 0;
     new (&ddc->hatch_pointer_past) std::list<double>();
     new (&ddc->hatch_nearest_past) std::list<double>();
     ddc->hatch_last_nearest = NR::Point(0,0);
@@ -822,12 +823,9 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                                     NULL,
                                     event->button.time);
 
-                if (event->motion.state & GDK_MOD1_MASK) {
-                    sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
-                }
-
                 ret = TRUE;
 
+                sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
                 dc->is_drawing = true;
             }
             break;
@@ -1079,11 +1077,11 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
     case GDK_BUTTON_RELEASE:
         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
+        sp_canvas_end_forced_full_redraws(desktop->canvas);
         dc->is_drawing = false;
 
         if ( dc->is_dilating && event->button.button == 1 ) {
             dc->is_dilating = false;
-            sp_canvas_end_forced_full_redraws(desktop->canvas);
             sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(dc)->desktop), 
                          SP_VERB_CONTEXT_CALLIGRAPHIC,
                          (event->button.state & GDK_SHIFT_MASK ? _("Thicken paths") : _("Thin paths")));
@@ -1122,6 +1120,14 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             dc->hatch_escaped = false;
             dc->hatch_item = NULL;
             dc->hatch_livarot_path = NULL;
+
+            if (dc->hatch_spacing != 0 && !dc->keep_selected) { 
+                // we do not select the newly drawn path, so increase spacing by step
+                if (dc->hatch_spacing_step == 0) {
+                    dc->hatch_spacing_step = dc->hatch_spacing;
+                }
+                dc->hatch_spacing += dc->hatch_spacing_step;
+            }
 
             dc->_message_context->clear();
             ret = TRUE;
@@ -1241,6 +1247,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             case GDK_Control_R:
                 dc->_message_context->clear();
                 dc->hatch_spacing = 0;
+                dc->hatch_spacing_step = 0;
                 break;
             case GDK_Alt_L:
             case GDK_Alt_R:
@@ -1327,9 +1334,7 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
         } else {
             if (dc->keep_selected) {
                 sp_desktop_selection(desktop)->set(dc->repr);
-            } else {
-                sp_desktop_selection(desktop)->clear();
-            }
+            } 
         }
 
     } else {
