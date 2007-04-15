@@ -2,7 +2,7 @@
  * Python Interpreter wrapper for Inkscape
  *
  * Authors:
- *   Bob Jamison <rjamison@titan.com>
+ *   Bob Jamison <ishmalius@gmail.com>
  *
  * Copyright (C) 2004-2007 Authors
  *
@@ -177,8 +177,15 @@ private:
 
 
 
+
+
 //########################################################################
-//# I N K S C A P E
+//# I N K S C A P E    and siblings
+//#
+//# The following are children of PyInkscapeModule and are spawned
+//# by its methods.  The classes above are spawned by PyInkscape and
+//# it descendants.
+//#
 //########################################################################
 
 
@@ -186,7 +193,7 @@ class PyInkscape : public Py::PythonExtension<PyInkscape>
 {
 public:
 
-    PyInkscape()
+    PyInkscape(InkscapePython &par) : parent(par)
         {
         inkscape = INKSCAPE;
         }
@@ -241,6 +248,8 @@ public:
 
 private:
 
+    InkscapePython &parent;
+
     Inkscape::Application *inkscape;
 
 };
@@ -252,14 +261,13 @@ private:
 //# O U T P U T S
 //########################################################################
 
-static InkscapePython *inkscapePython = NULL;
 
 
 class PyStdOut : public Py::PythonExtension<PyStdOut>
 {
 public:
 
-    PyStdOut()
+    PyStdOut(InkscapePython &par) : parent(par)
         {
         }
         
@@ -270,14 +278,10 @@ public:
         
     virtual Py::Object write(const Py::Tuple &args)
         {
-        g_message("PyStdOut");
-        if (inkscapePython)
+        for(unsigned int i=0 ; i<args.length() ; i++)
             {
-            for(unsigned int i=0 ; i<args.length() ; i++)
-                {
-                Py::String str(args[i]);
-                inkscapePython->writeStdOut(str.as_std_string());
-                }
+            Py::String str(args[i]);
+            parent.writeStdOut(str.as_std_string());
             }
         return Py::Nothing();
         }
@@ -290,6 +294,9 @@ public:
              "redirects stdout");
         }
 
+private:
+
+    InkscapePython &parent;
 
 };
 
@@ -300,7 +307,7 @@ class PyStdErr : public Py::PythonExtension<PyStdErr>
 {
 public:
 
-    PyStdErr()
+    PyStdErr(InkscapePython &par) : parent(par)
         {
         }
         
@@ -311,14 +318,10 @@ public:
         
     virtual Py::Object write(const Py::Tuple &args)
         {
-        g_message("PyStdErr");
-        if (inkscapePython)
+        for(unsigned int i=0 ; i<args.length() ; i++)
             {
-            for(unsigned int i=0 ; i<args.length() ; i++)
-                {
-                Py::String str(args[i]);
-                inkscapePython->writeStdErr(str.as_std_string());
-                }
+            Py::String str(args[i]);
+            parent.writeStdErr(str.as_std_string());
             }
         return Py::Nothing();
         }
@@ -330,6 +333,10 @@ public:
         add_varargs_method("write", &PyStdErr::write,
              "redirects stderr");
         }
+
+private:
+
+    InkscapePython &parent;
 
 
 };
@@ -345,8 +352,9 @@ public:
 class PyInkscapeModule : public Py::ExtensionModule<PyInkscapeModule>
 {
 public:
-    PyInkscapeModule()
-        : Py::ExtensionModule<PyInkscapeModule>( "PyInkscapeModule" )
+    PyInkscapeModule(InkscapePython &par)
+        : Py::ExtensionModule<PyInkscapeModule>( "PyInkscapeModule" ),
+          parent(par)
         {
         //# Init our module's classes
         PyInkscape::init_type();
@@ -372,19 +380,23 @@ public:
 
     virtual Py::Object getInkscape(const Py::Tuple &args)
         {
-        Py::Object obj(Py::asObject(new PyInkscape()));
+        Py::Object obj(Py::asObject(new PyInkscape(parent)));
         return obj;
         }
     virtual Py::Object getStdOut(const Py::Tuple &args)
         {
-        Py::Object obj(Py::asObject(new PyStdOut()));
+        Py::Object obj(Py::asObject(new PyStdOut(parent)));
         return obj;
         }
     virtual Py::Object getStdErr(const Py::Tuple &args)
         {
-        Py::Object obj(Py::asObject(new PyStdErr()));
+        Py::Object obj(Py::asObject(new PyStdErr(parent)));
         return obj;
         }
+
+private:
+
+    InkscapePython &parent;
 
 
 };
@@ -405,8 +417,6 @@ bool InkscapePython::interpretScript(const Glib::ustring &script,
           Glib::ustring &output, Glib::ustring &error)
 {
 
-    inkscapePython = this;
-
     stdOut.clear();
     stdErr.clear();
 
@@ -415,7 +425,7 @@ bool InkscapePython::interpretScript(const Glib::ustring &script,
     
 
     //# Init our custom objects
-    PyInkscapeModule inkscapeModule;
+    PyInkscapeModule inkscapeModule(*this);
 
     PyObject *globalMod  = PyImport_AddModule("__main__");
     PyObject *globalDict = PyModule_GetDict(globalMod);
