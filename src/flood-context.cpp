@@ -858,6 +858,7 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
                     ret = TRUE;
                 }
                 r->stop();
+                event_context->defaultMessageContext()->clear();
             }
         }
         break;
