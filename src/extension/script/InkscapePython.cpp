@@ -16,8 +16,8 @@
 
 
 #include <stdio.h>
-#include <CXX/Extensions.hxx>
-#include <CXX/Objects.hxx>
+#include "CXX/Extensions.hxx"
+#include "CXX/Objects.hxx"
 
 
 #include <inkscape.h>
