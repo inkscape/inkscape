@@ -83,21 +83,21 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
         }
     else
         {
-        g_error("interpretScript: Unknown Script Language type: %d\n",
+        g_warning("interpretScript: Unknown Script Language type: %d\n",
                         language);
         return false;
         }
 
     if (!interp)
         {
-        g_error("interpretScript: error starting Language '%s'\n",
+        g_warning("interpretScript: error starting Language '%s'\n",
                         langname);
         return false;
         }
 
     if (!interp->interpretScript(script, output, error))
         {
-        g_error("interpretScript: error in executing %s script\n",
+        g_warning("interpretScript: error in executing %s script\n",
                         langname);
         return false;
         }
@@ -135,7 +135,7 @@ bool InkscapeScript::interpretUri(const Glib::ustring &uri,
         }
     else
         {
-        g_error("interpretUri: Unknown Script Language type:%d\n",
+        g_warning("interpretUri: Unknown Script Language type:%d\n",
                            language);
         return false;
         }
@@ -145,7 +145,7 @@ bool InkscapeScript::interpretUri(const Glib::ustring &uri,
 
     if (!interp->interpretUri(uri, output, error))
         {
-        g_error("interpretUri: error in executing script '%s'\n",
+        g_warning("interpretUri: error in executing script '%s'\n",
                            uri.raw().c_str());
         return false;
         }

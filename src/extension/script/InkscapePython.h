@@ -37,7 +37,6 @@ public:
      */
     InkscapePython()
         {
-        initialized = false;
         }
 
 
@@ -58,17 +57,20 @@ public:
                                  Glib::ustring &error);
 
 
+    virtual void writeStdOut(const Glib::ustring &txt)
+        {
+        stdOut.append(txt);
+        }
 
+    virtual void writeStdErr(const Glib::ustring &txt)
+        {
+        stdErr.append(txt);
+        }
 
 private:
 
-    /**
-     * First-time call to set things up
-     */         
-    bool initialize();
-
-    bool initialized;
-
+    Glib::ustring stdOut;
+    Glib::ustring stdErr;
 
 };
 
