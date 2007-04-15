@@ -1105,13 +1105,21 @@ void SPDesktop::clearWaitingCursor()
 
 void SPDesktop::toggleGrid()
 {
-    if(gridgroup) {
-        grids_visible = !grids_visible;
-        if (grids_visible) {
-            sp_canvas_item_show(SP_CANVAS_ITEM(gridgroup));
-        } else {
-            sp_canvas_item_hide(SP_CANVAS_ITEM(gridgroup));
+    if (namedview->grids) {
+        if(gridgroup) {
+            grids_visible = !grids_visible;
+            if (grids_visible) {
+                sp_canvas_item_show(SP_CANVAS_ITEM(gridgroup));
+            } else {
+                sp_canvas_item_hide(SP_CANVAS_ITEM(gridgroup));
+            }
         }
+    } else {
+        //there is no grid present at the moment. add a rectangular grid and make it visible
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR(namedview);
+        Inkscape::CanvasGrid::writeNewGridToRepr(repr, "xygrid");
+        grids_visible = true;
+        sp_canvas_item_show(SP_CANVAS_ITEM(gridgroup));
     }
 }
 
