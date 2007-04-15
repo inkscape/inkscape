@@ -617,7 +617,19 @@ void resync_active( EgeSelectOneAction* act, gint active )
                             GtkRadioAction* oneAction = GTK_RADIO_ACTION(group->data);
                             gint hot = gtk_radio_action_get_current_value( oneAction );
                             if ( hot != active ) {
-                                gtk_radio_action_set_current_value( oneAction, active );
+                                /*gtk_radio_action_set_current_value( oneAction, active );*/
+                                gint value = 0;
+                                while ( group ) {
+                                    GtkRadioAction* possible = GTK_RADIO_ACTION(group->data);
+                                    g_object_get( G_OBJECT(possible), "value", &value, NULL );
+                                    if ( value == active ) {
+                                        /* Found the group member to set active */
+                                        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(possible), TRUE );
+                                        break;
+                                    }
+
+                                    group = g_slist_next(group);
+                                }
                             }
                         }
                     }
