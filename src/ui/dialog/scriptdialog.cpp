@@ -1,7 +1,10 @@
-/*
- *   Other dudes from The Inkscape Organization
+/**
+ *  Dialog for executing and monitoring script execution
+ *  
+ * Author:  
+ *   Bob Jamison
  *
- * Copyright (C) 2004, 2005 Authors
+ * Copyright (C) 2004-2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -101,10 +104,10 @@ static char *defaultPythonCodeStr =
 #if defined(WITH_PYTHON)
     "# This is a sample Python script.\n"
     "# To run it, select 'Execute Python' from the File menu above.\n"
-    "desktop = inkscape.getDesktop()\n"
-    "dialogmanager = inkscape.getDialogManager()\n"
-    "document = desktop.getDocument()\n"
-    "document.hello()\n"
+    "desktop = inkscape.activeDesktop\n"
+    "dialogmanager = desktop.dialogManager\n"
+    "document = inkscape.activeDocument\n"
+    "inkscape.hello()\n"
     "dialogmanager.showAbout()\n"
 #elif defined(WITH_PERL)
     "# This is a sample Perl script.\n"
@@ -158,9 +161,12 @@ lang)
     Glib::ustring error;
     Inkscape::Extension::Script::InkscapeScript engine;
     bool ok = engine.interpretScript(script, output, error, lang);
-    if (!ok) return;
     outputText.get_buffer()->set_text(output);
     errorText.get_buffer()->set_text(error);
+    if (!ok)
+        {
+        //do we want something here?
+        }
 }
 
 /**
