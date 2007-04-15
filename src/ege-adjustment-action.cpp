@@ -714,6 +714,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
         g_object_get_property( G_OBJECT(action), "label", &value );
         const gchar* sss = g_value_get_string( &value );
         GtkWidget* lbl = gtk_label_new( sss ? sss : "wwww" );
+        GtkWidget* filler1 = gtk_label_new(" ");
 
         {
             GValue tooltip;
@@ -731,8 +732,10 @@ static GtkWidget* create_tool_item( GtkAction* action )
 
         gtk_misc_set_alignment( GTK_MISC(lbl), 1.0, 0.5 );
 
+        gtk_box_pack_start( GTK_BOX(hb), filler1, FALSE, FALSE, 0 );
         gtk_box_pack_start( GTK_BOX(hb), lbl, FALSE, FALSE, 0 );
-        gtk_box_pack_end( GTK_BOX(hb), spinbutton, FALSE, FALSE, 0 );
+        gtk_box_pack_start( GTK_BOX(hb), spinbutton, FALSE, FALSE, 0 );
+
         gtk_container_add( GTK_CONTAINER(item), hb );
 
         if ( act->private_data->selfId ) {

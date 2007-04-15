@@ -49,6 +49,7 @@
 #include <gtk/gtkcelllayout.h>
 #include <gtk/gtkradioaction.h>
 #include <gtk/gtkradiomenuitem.h>
+#include <gtk/gtktable.h>
 
 #include "ege-select-one-action.h"
 
@@ -562,6 +563,7 @@ GtkWidget* create_tool_item( GtkAction* action )
 
             gtk_container_add( GTK_CONTAINER(item), holder );
         } else {
+            GtkWidget* holder = gtk_table_new( 1, 3, FALSE );
             GtkWidget* normal = gtk_combo_box_new_with_model( act->private_data->model );
 
             GtkCellRenderer * renderer = gtk_cell_renderer_text_new();
@@ -572,7 +574,14 @@ GtkWidget* create_tool_item( GtkAction* action )
 
             g_signal_connect( G_OBJECT(normal), "changed", G_CALLBACK(combo_changed_cb), action );
 
-            gtk_container_add( GTK_CONTAINER(item), normal );
+            g_object_set_data( G_OBJECT(holder), "ege-combo-box", normal );
+
+            GtkWidget* lbl = gtk_label_new(" ");
+            gtk_table_attach( GTK_TABLE(holder), lbl, 0, 1, 0, 1, GTK_SHRINK, GTK_SHRINK, 0, 0 );
+            gtk_table_attach( GTK_TABLE(holder), normal, 1, 2, 0, 1, GTK_FILL, GTK_EXPAND, 0, 0 );
+            lbl = gtk_label_new(" ");
+            gtk_table_attach( GTK_TABLE(holder), lbl, 2, 3, 0, 1, GTK_SHRINK, GTK_SHRINK, 0, 0 );
+            gtk_container_add( GTK_CONTAINER(item), holder );
         }
 
         gtk_widget_show_all( item );
@@ -605,8 +614,9 @@ void resync_active( EgeSelectOneAction* act, gint active )
                 /* Search for the things we built up in create_tool_item() */
                 GList* children = gtk_container_get_children( GTK_CONTAINER(proxies->data) );
                 if ( children && children->data ) {
-                    if ( GTK_IS_COMBO_BOX(children->data) ) {
-                        GtkComboBox* combo = GTK_COMBO_BOX(children->data);
+                    gpointer combodata = g_object_get_data( G_OBJECT(children->data), "ege-combo-box" );
+                    if ( GTK_IS_COMBO_BOX(combodata) ) {
+                        GtkComboBox* combo = GTK_COMBO_BOX(combodata);
                         if ( gtk_combo_box_get_active(combo) != active ) {
                             gtk_combo_box_set_active( combo, active );
                         }
