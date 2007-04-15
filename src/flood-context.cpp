@@ -43,6 +43,7 @@
 #include "xml/node-event-vector.h"
 #include "prefs-utils.h"
 #include "context-fns.h"
+#include "rubberband.h"
 
 #include "display/nr-arena-item.h"
 #include "display/nr-arena.h"
@@ -509,7 +510,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::queue<NR::Point> *
     return SCANLINE_CHECK_OK;
 }
 
-static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event, bool union_with_selection) {
+static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event, bool union_with_selection, bool use_rubberband_points) {
     SPDesktop *desktop = event_context->desktop;
     SPDocument *document = sp_desktop_document(desktop);
 
@@ -594,23 +595,36 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     nr_arena_item_unref(root);
     nr_object_unref((NRObject *) arena);
     
-    NR::Point pw = NR::Point(event->button.x / zoom_scale, sp_document_height(document) + (event->button.y / zoom_scale)) * affine;
-    
-    pw[NR::X] = (int)MIN(width - 1, MAX(0, pw[NR::X]));
-    pw[NR::Y] = (int)MIN(height - 1, MAX(0, pw[NR::Y]));
-
     guchar *trace_px = g_new(guchar, 4 * width * height);
     memset(trace_px, 0x00, 4 * width * height);
     
     std::queue<NR::Point> fill_queue;
-    fill_queue.push(pw);
+    
+    
+    std::vector<NR::Point> points;
+    
+    if (use_rubberband_points) {
+        Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+        points = r->getPoints();
+    } else {
+        points.push_back(NR::Point(event->button.x, event->button.y));
+    }
+
+    unsigned char *orig_px = get_pixel(px, (int)points[0][NR::X], (int)points[0][NR::Y], width);
+    unsigned char orig_color[4];
+    for (int i = 0; i < 4; i++) { orig_color[i] = orig_px[i]; }
+    
+    for (unsigned int i = 0; i < points.size(); i++) {
+        NR::Point pw = NR::Point(points[i][NR::X] / zoom_scale, sp_document_height(document) + (points[i][NR::Y] / zoom_scale)) * affine;
+        
+        pw[NR::X] = (int)MIN(width - 1, MAX(0, pw[NR::X]));
+        pw[NR::Y] = (int)MIN(height - 1, MAX(0, pw[NR::Y]));
+        
+        fill_queue.push(pw);
+    }
     
     bool aborted = false;
     int y_limit = height - 1;
-    
-    unsigned char orig_color[4];
-    unsigned char *orig_px = get_pixel(px, (int)pw[NR::X], (int)pw[NR::Y], width);
-    for (int i = 0; i < 4; i++) { orig_color[i] = orig_px[i]; }
 
     unsigned char merged_orig[4];
 
@@ -786,6 +800,46 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
     case GDK_BUTTON_PRESS:
         if ( event->button.button == 1 ) {
             if (!(event->button.state & GDK_CONTROL_MASK)) {
+                if (event->button.state & GDK_MOD1_MASK) {
+                    NR::Point const button_pt(event->button.x, event->button.y);
+                    NR::Point const p(desktop->w2d(button_pt));
+                    Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
+                    Inkscape::Rubberband::get()->start(desktop, p);
+                } else {
+                    // set "busy" cursor
+                    desktop->setWaitingCursor();
+    
+                    if (SP_IS_EVENT_CONTEXT(event_context)) { 
+                        // Since setWaitingCursor runs main loop iterations, we may have already left this tool!
+                        // So check if the tool is valid before doing anything
+    
+                        sp_flood_do_flood_fill(event_context, event, event->button.state & GDK_SHIFT_MASK, false);
+                        
+                        // restore cursor when done; note that it may already be different if e.g. user 
+                        // switched to another tool during interruptible tracing or drawing, in which case do nothing
+                        desktop->clearWaitingCursor();
+        
+                        ret = TRUE;
+                    }
+                }
+            }
+        }
+    case GDK_MOTION_NOTIFY:
+        if (event->motion.state & GDK_BUTTON1_MASK) {
+            NR::Point const motion_pt(event->motion.x, event->motion.y);
+            NR::Point const p(desktop->w2d(motion_pt));
+            if (Inkscape::Rubberband::get()->is_started()) {
+                Inkscape::Rubberband::get()->move(p);
+                event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw over</b> areas to add to fill"));
+                gobble_motion_events(GDK_BUTTON1_MASK);
+            }
+        }
+        break;
+
+    case GDK_BUTTON_RELEASE:
+        if ( event->button.button == 1 ) {
+            Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+            if (r->is_started()) {
                 // set "busy" cursor
                 desktop->setWaitingCursor();
 
@@ -793,7 +847,7 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
                     // Since setWaitingCursor runs main loop iterations, we may have already left this tool!
                     // So check if the tool is valid before doing anything
 
-                    sp_flood_do_flood_fill(event_context, event, event->button.state & GDK_SHIFT_MASK);
+                    sp_flood_do_flood_fill(event_context, event, event->button.state & GDK_SHIFT_MASK, true);
                     
                     // restore cursor when done; note that it may already be different if e.g. user 
                     // switched to another tool during interruptible tracing or drawing, in which case do nothing
@@ -801,6 +855,7 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
     
                     ret = TRUE;
                 }
+                r->stop();
             }
         }
         break;
