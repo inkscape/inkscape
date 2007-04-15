@@ -313,7 +313,7 @@ void InkscapePreferences::initPageTools()
     _path_tools = _page_list.get_model()->get_path(iter_tools);
 
     _calligrapy_use_abs_size.init ( _("Width is in absolute units"), "tools.calligraphic", "abs_width", false);
-    _calligrapy_keep_selected.init ( _("Keep selected"), "tools.calligraphic", "keep_selected", true);
+    _calligrapy_keep_selected.init ( _("Select new path"), "tools.calligraphic", "keep_selected", true);
     _connector_ignore_text.init( _("Don't attach connectors to text objects"), "tools.connector", "ignoretext", true);
 
     //Selector
@@ -389,7 +389,7 @@ void InkscapePreferences::initPageTools()
     _page_calligraphy.add_line( false, "", _calligrapy_use_abs_size, "", 
                             _("If on, pen width is in absolute units (px) independent of zoom; otherwise pen width depends on zoom so that it looks the same at any zoom"));
     _page_calligraphy.add_line( false, "", _calligrapy_keep_selected, "", 
-                            _("If on, each object created with this tool will remain selected after you finish drawing it"));
+                            _("If on, each newly created object will be selected (deselecting previous selection)"));
     //Paint Bucket
     this->AddPage(_page_paintbucket, _("Paint Bucket"), iter_tools, PREFS_PAGE_TOOLS_PAINTBUCKET);
     this->AddNewObjectsStyle(_page_paintbucket, "tools.paintbucket");
