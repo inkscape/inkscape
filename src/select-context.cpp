@@ -627,10 +627,11 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                         } else if ((sc->button_press_ctrl || sc->button_press_alt) && !rb_escaped && !drag_escaped) { // ctrl+click, alt+click
 
-                            sc->button_press_ctrl = FALSE;
-
                             item = sp_event_context_find_item (desktop,
-                                         NR::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, TRUE);
+                                         NR::Point(event->button.x, event->button.y), sc->button_press_alt, sc->button_press_ctrl);
+
+                            sc->button_press_ctrl = FALSE;
+                            sc->button_press_alt = FALSE;
 
                             if (item) {
                                 if (selection->includes(item)) {
