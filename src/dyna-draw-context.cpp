@@ -736,7 +736,8 @@ sp_ddc_dilate (SPDynaDrawContext *dc, NR::Point p, bool expand)
 
         SPItem *item = (SPItem *) items->data;
 
-        did = did || sp_ddc_dilate_recursive (item, p, expand, radius, offset);
+        if (sp_ddc_dilate_recursive (item, p, expand, radius, offset))
+            did = true;
 
     }
 
