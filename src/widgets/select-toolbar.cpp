@@ -529,7 +529,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
     {
     InkToggleAction* itact = ink_toggle_action_new( "transform_gradient",
                                                     _("Gradient"),
-                                                    _("When scaling rectangles, scale the radii of rounded corners"),
+                                                    _("Transform gradients (in fill or stroke) along with the objects"),
                                                     "transform_gradient",
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs_get_int_attribute("options.transform", "gradient", 1) );

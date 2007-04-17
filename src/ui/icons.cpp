@@ -603,9 +603,9 @@ init()
     small.set_filename(get_icon_path("transform-corners.svg"));
     _transform_corners.add_source(small);
     icons->add(Stock::TRANSFORM_CORNERS, _transform_corners);
-    //  Transform Grandient
+    //  Transform Gradient
     Gtk::IconSet _transform_gradient;
-    small.set_icon_name("TransformGrandient");
+    small.set_icon_name("TransformGradient");
     small.set_filename(get_icon_path("transform-gradient.svg"));
     _transform_gradient.add_source(small);
     icons->add(Stock::TRANSFORM_GRADIENT, _transform_gradient);
