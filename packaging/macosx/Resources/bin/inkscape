@@ -10,10 +10,19 @@ CWD="`(cd \"\`dirname \\\"$0\\\"\`\"; echo $PWD)`"
 TOP="`dirname \"$CWD\"`"
 
 export DYLD_LIBRARY_PATH="$TOP/lib"
+# add /usr/local/bin which, though standard, don't seem to be in the PATH
+PATH="/usr/local/bin:$PATH"
+# add python from MacPython http://homepages.cwi.nl/~jack/macpython/macpython-osx.html
+if [ -d /Library/Frameworks/Python.framework/Versions/Current/bin ]
+then
+	export PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH"
+fi
+# add Fink
 if [ -d /sw/bin ]
 then
 	export PATH="/sw/bin/:$PATH"
 fi
+# add MacPorts (former DarwinPorts)
 if [ -d /opt/local/bin ]
 then
 	export PATH="/opt/local/bin:$PATH"
