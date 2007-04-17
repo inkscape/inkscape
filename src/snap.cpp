@@ -89,6 +89,7 @@ bool SnapManager::willSnapSomething() const
         i++;
     }
 
+    
     return (i != s.end());
 }
 

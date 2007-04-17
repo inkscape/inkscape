@@ -44,7 +44,11 @@ public:
     bool getSnapTo(PointType t) const;
     ::NR::Coord getDistance() const;
 
-    bool willSnapSomething() const;
+    /**
+    *  \return true if this Snapper will snap at least one kind of point.
+    */
+    virtual bool willSnapSomething() const {return (_enabled && _snap_to != 0);} // will likely be overridden by derived classes
+
 
     void setEnabled(bool s);
 
@@ -92,6 +96,8 @@ public:
                                  std::list<SPItem const *> const &it) const;
 protected:
     SPNamedView const *_named_view;
+    int _snap_to; ///< bitmap of point types that we will snap to
+    bool _enabled; ///< true if this snapper is enabled, otherwise false
     
 private:
 
@@ -122,8 +128,6 @@ private:
                                             std::list<SPItem const *> const &it) const = 0;
     
     ::NR::Coord _distance; ///< snap distance (desktop coordinates)
-    int _snap_to; ///< bitmap of point types that we will snap to
-    bool _enabled; ///< true if this snapper is enabled, otherwise false
 };
 
 }

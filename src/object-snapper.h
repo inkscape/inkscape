@@ -43,6 +43,8 @@ public:
     return _snap_to_paths;
   }
   
+  bool willSnapSomething() const;
+  
 private:
   SnappedPoint _doFreeSnap(NR::Point const &p,
 			   std::list<SPItem const *> const &it) const;

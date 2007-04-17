@@ -21,7 +21,7 @@ Inkscape::Snapper::PointType const Inkscape::Snapper::SNAP_POINT = 0x2;
  *  \param nv Named view.
  *  \param d Snap distance.
  */
-Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const d) : _named_view(nv), _distance(d), _enabled(true)
+Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const d) : _named_view(nv), _enabled(true), _distance(d)
 {
     g_assert(_named_view != NULL);
     g_assert(SP_IS_NAMEDVIEW(_named_view));
@@ -68,15 +68,6 @@ bool Inkscape::Snapper::getSnapTo(PointType t) const
 {
     return (_snap_to & t);
 }
-
-/**
- *  \return true if this Snapper will snap at least one kind of point.
- */
-bool Inkscape::Snapper::willSnapSomething() const
-{
-    return (_enabled && _snap_to != 0);
-}
-
 
 /**
  *  \param s true to enable this snapper, otherwise false.

@@ -38,28 +38,30 @@ void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
                                               std::list<SPItem const *> const &it,
                                               NR::Point const &p) const
 {
-    SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
-    for (SPObject* o = sp_object_first_child(r); o != NULL; o = SP_OBJECT_NEXT(o)) {
-        if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !desktop->itemIsHidden(SP_ITEM(o))) {
-
-            /* See if this item is on the ignore list */
-            std::list<SPItem const *>::const_iterator i = it.begin();
-            while (i != it.end() && *i != o) {
-                i++;
-            }
-
-            if (i == it.end()) {
-                /* See if the item is within range */
-                if (SP_IS_GROUP(o)) {
-                    _findCandidates(c, o, it, p);
-                } else {
-                    NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(SP_ITEM(o));
-                    if ( b && NR::expand(*b, -getDistance()).contains(p) ) {
-                        c.push_back(SP_ITEM(o));
+    if (willSnapSomething()) {    
+        SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
+        for (SPObject* o = sp_object_first_child(r); o != NULL; o = SP_OBJECT_NEXT(o)) {
+            if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !desktop->itemIsHidden(SP_ITEM(o))) {
+    
+                /* See if this item is on the ignore list */
+                std::list<SPItem const *>::const_iterator i = it.begin();
+                while (i != it.end() && *i != o) {
+                    i++;
+                }
+    
+                if (i == it.end()) {
+                    /* See if the item is within range */
+                    if (SP_IS_GROUP(o)) {
+                        _findCandidates(c, o, it, p);
+                    } else {
+                        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(SP_ITEM(o));
+                        if ( b && NR::expand(*b, -getDistance()).contains(p) ) {
+                            c.push_back(SP_ITEM(o));
+                        }
                     }
                 }
+    
             }
-
         }
     }
 }
@@ -180,6 +182,15 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doConstrainedSnap(NR::Point con
     */
     return _doFreeSnap(p, it);
 }
+
+/**
+ *  \return true if this Snapper will snap at least one kind of point.
+ */
+bool Inkscape::ObjectSnapper::willSnapSomething() const
+{
+    return (_enabled && _snap_to != 0 && (_snap_to_paths || _snap_to_nodes));
+}
+
 
 /*
   Local Variables:

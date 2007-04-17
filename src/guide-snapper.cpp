@@ -26,7 +26,7 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(NR::Point
 {
     LineList s;
 
-    if ( NULL == _named_view ) {
+    if ( NULL == _named_view || willSnapSomething() == false) {
         return s;
     }
 
@@ -42,6 +42,14 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(NR::Point
     }
 
     return s;
+}
+
+/**
+ *  \return true if this Snapper will snap at least one kind of point.
+ */
+bool Inkscape::GuideSnapper::willSnapSomething() const
+{
+    return _named_view == NULL ? false : (_enabled && _snap_to != 0 && _named_view->showguides);
 }
 
 /*
