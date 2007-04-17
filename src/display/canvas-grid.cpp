@@ -244,55 +244,9 @@ CanvasGrid::on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, 
 // ##########################################################
 //   CanvasXYGrid
 
-static void
-grid_hline (SPCanvasBuf *buf, gint y, gint xs, gint xe, guint32 rgba)
-{
-    if ((y >= buf->rect.y0) && (y < buf->rect.y1)) {
-        guint r, g, b, a;
-        gint x0, x1, x;
-        guchar *p;
-        r = NR_RGBA32_R (rgba);
-        g = NR_RGBA32_G (rgba);
-        b = NR_RGBA32_B (rgba);
-        a = NR_RGBA32_A (rgba);
-        x0 = MAX (buf->rect.x0, xs);
-        x1 = MIN (buf->rect.x1, xe + 1);
-        p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 3;
-        for (x = x0; x < x1; x++) {
-            p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
-            p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
-            p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
-            p += 3;
-        }
-    }
-}
-
-static void
-grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
-{
-    if ((x >= buf->rect.x0) && (x < buf->rect.x1)) {
-        guint r, g, b, a;
-        gint y0, y1, y;
-        guchar *p;
-        r = NR_RGBA32_R(rgba);
-        g = NR_RGBA32_G (rgba);
-        b = NR_RGBA32_B (rgba);
-        a = NR_RGBA32_A (rgba);
-        y0 = MAX (buf->rect.y0, ys);
-        y1 = MIN (buf->rect.y1, ye + 1);
-        p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
-        for (y = y0; y < y1; y++) {
-            p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
-            p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
-            p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
-            p += buf->buf_rowstride;
-        }
-    }
-}
-
-
 
 /**
+* "attach_all" function
 * A DIRECT COPY-PASTE FROM DOCUMENT-PROPERTIES.CPP  TO QUICKLY GET RESULTS
 *
  * Helper function that attachs widgets in a 3xn table. The widgets come in an
@@ -348,6 +302,7 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr)
     empspacing = 5;
     spacing[NR::X] = spacing[NR::Y] = 8.0;
     gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
+    render_dotted = false;
 
     snapper = new CanvasXYGridSnapper(this, namedview, 0);
 
@@ -371,10 +326,12 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr)
                      _("Color of the major (highlighted) grid lines"),
                      "empcolor", "empopacity", _wr, repr);
     _rsi.init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr);
+    _rcb_dotted.init ( _("_Show dots instead of lines"), 
+                       _("If set, displays dots at gridpoints instead of gridlines"),
+                        "dotted", _wr, false, repr);
 
     const Gtk::Widget* widget_array[] =
     {
-        0,                  _rcbgrid._button,
         _rumg._label,       _rumg._sel,
         0,                  _rsu_ox.getSU(),
         0,                  _rsu_oy.getSU(),
@@ -384,6 +341,7 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr)
         0,                  0,
         _rcp_gmcol._label,  _rcp_gmcol._cp,
         _rsi._label,        &_rsi._hbox,
+        0,                  _rcb_dotted._button,
     };
 
     attach_all (table, widget_array, sizeof(widget_array));
@@ -512,6 +470,10 @@ CanvasXYGrid::readRepr()
     if ( (value = repr->attribute("empspacing")) ) {
         empspacing = atoi(value);
     }
+    
+    if ( (value = repr->attribute("dotted")) ) {
+        render_dotted = (strcmp(value,"true") == 0);
+    }    
 
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
         sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
@@ -604,6 +566,71 @@ CanvasXYGrid::Update (NR::Matrix const &affine, unsigned int flags)
     }
 }
 
+
+static void
+grid_hline (SPCanvasBuf *buf, gint y, gint xs, gint xe, guint32 rgba)
+{
+    if ((y >= buf->rect.y0) && (y < buf->rect.y1)) {
+        guint r, g, b, a;
+        gint x0, x1, x;
+        guchar *p;
+        r = NR_RGBA32_R (rgba);
+        g = NR_RGBA32_G (rgba);
+        b = NR_RGBA32_B (rgba);
+        a = NR_RGBA32_A (rgba);
+        x0 = MAX (buf->rect.x0, xs);
+        x1 = MIN (buf->rect.x1, xe + 1);
+        p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 3;
+        for (x = x0; x < x1; x++) {
+            p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
+            p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
+            p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
+            p += 3;
+        }
+    }
+}
+
+static void
+grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
+{
+    if ((x >= buf->rect.x0) && (x < buf->rect.x1)) {
+        guint r, g, b, a;
+        gint y0, y1, y;
+        guchar *p;
+        r = NR_RGBA32_R(rgba);
+        g = NR_RGBA32_G (rgba);
+        b = NR_RGBA32_B (rgba);
+        a = NR_RGBA32_A (rgba);
+        y0 = MAX (buf->rect.y0, ys);
+        y1 = MIN (buf->rect.y1, ye + 1);
+        p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
+        for (y = y0; y < y1; y++) {
+            p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
+            p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
+            p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
+            p += buf->buf_rowstride;
+        }
+    }
+}
+
+static void
+grid_dot (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
+{
+    if ( (y >= buf->rect.y0) && (y < buf->rect.y1) 
+         && (x >= buf->rect.x0) && (x < buf->rect.x1) ) {
+        guint r, g, b, a;
+        guchar *p;
+        r = NR_RGBA32_R (rgba);
+        g = NR_RGBA32_G (rgba);
+        b = NR_RGBA32_B (rgba);
+        a = NR_RGBA32_A (rgba);
+        p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
+        p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
+        p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
+        p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);   
+    }
+}
+
 void
 CanvasXYGrid::Render (SPCanvasBuf *buf)
 {
@@ -612,37 +639,53 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     const gdouble syg = floor ((buf->rect.y0 - ow[NR::Y]) / sw[NR::Y]) * sw[NR::Y] + ow[NR::Y];
     const gint  ylinestart = (gint) Inkscape::round((syg - ow[NR::Y]) / sw[NR::Y]);
 
-    gint ylinenum;
-    gdouble y;
-    for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[NR::Y], ylinenum++) {
-        const gint y0 = (gint) Inkscape::round(y);
-
-        if (!scaled[NR::Y] && (ylinenum % 5 /*empspacing*/) == 0) {
-            grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, empcolor);
-        } else {
-            grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, color);
+    if (!render_dotted) {
+        gint ylinenum;
+        gdouble y;
+        for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[NR::Y], ylinenum++) {
+            const gint y0 = (gint) Inkscape::round(y);
+    
+            if (!scaled[NR::Y] && (ylinenum % empspacing) == 0) {
+                grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, empcolor);
+            } else {
+                grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, color);
+            }
         }
-    }
+    
+        gint xlinenum;
+        gdouble x;
+        for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
+            const gint ix = (gint) Inkscape::round(x);
+            if (!scaled[NR::X] && (xlinenum % empspacing) == 0) {
+                grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, empcolor);
+            } else {
+                grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, color);
+            }
+        }
+    } else {
+        gint ylinenum;
+        gdouble y;
+        for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[NR::Y], ylinenum++) {
+            const gint iy = (gint) Inkscape::round(y);
 
-    gint xlinenum;
-    gdouble x;
-    for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
-        const gint ix = (gint) Inkscape::round(x);
-        if (!scaled[NR::X] && (xlinenum % 5 /*empspacing*/) == 0) {
-            grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, empcolor);
-        } else {
-            grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, color);
+            gint xlinenum;
+            gdouble x;
+            for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
+                const gint ix = (gint) Inkscape::round(x);
+                if ( (!scaled[NR::X] && (xlinenum % empspacing) == 0) 
+                     || (!scaled[NR::Y] && (ylinenum % empspacing) == 0) ) 
+                {
+                    grid_dot (buf, ix, iy, empcolor | (guint32)0x000000FF); // put alpha to max value
+                } 
+                else 
+                {
+                    grid_dot (buf, ix, iy, color | (guint32)0x000000FF);  // put alpha to max value
+                }
+            }
+
         }
     }
 }
-
-
-
-
-
-
-
-
 
 
 
