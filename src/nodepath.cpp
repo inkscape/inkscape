@@ -136,7 +136,7 @@ static Inkscape::NodePath::NodeSide *sp_node_opposite_side(Inkscape::NodePath::N
 static NRPathcode sp_node_path_code_from_side(Inkscape::NodePath::Node *node,Inkscape::NodePath::NodeSide *me);
 
 // active_node indicates mouseover node
-static Inkscape::NodePath::Node *active_node = NULL;
+Inkscape::NodePath::Node * Inkscape::NodePath::Path::active_node = NULL;
 
 /**
  * \brief Creates new nodepath from item
@@ -2897,10 +2897,10 @@ static gboolean node_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::No
     gboolean ret = FALSE;
     switch (event->type) {
         case GDK_ENTER_NOTIFY:
-            active_node = n;
+            Inkscape::NodePath::Path::active_node = n;
             break;
         case GDK_LEAVE_NOTIFY:
-            active_node = NULL;
+            Inkscape::NodePath::Path::active_node = NULL;
             break;
         case GDK_SCROLL:
             if ((event->scroll.state & GDK_CONTROL_MASK) && !(event->scroll.state & GDK_SHIFT_MASK)) { // linearly
@@ -2971,33 +2971,33 @@ gboolean node_key(GdkEvent *event)
     Inkscape::NodePath::Path *np;
 
     // there is no way to verify nodes so set active_node to nil when deleting!!
-    if (active_node == NULL) return FALSE;
+    if (Inkscape::NodePath::Path::active_node == NULL) return FALSE;
 
     if ((event->type == GDK_KEY_PRESS) && !(event->key.state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK))) {
         gint ret = FALSE;
         switch (get_group0_keyval (&event->key)) {
             /// \todo FIXME: this does not seem to work, the keys are stolen by tool contexts!
             case GDK_BackSpace:
-                np = active_node->subpath->nodepath;
-                sp_nodepath_node_destroy(active_node);
+                np = Inkscape::NodePath::Path::active_node->subpath->nodepath;
+                sp_nodepath_node_destroy(Inkscape::NodePath::Path::active_node);
                 sp_nodepath_update_repr(np, _("Delete node"));
-                active_node = NULL;
+                Inkscape::NodePath::Path::active_node = NULL;
                 ret = TRUE;
                 break;
             case GDK_c:
-                sp_nodepath_set_node_type(active_node,Inkscape::NodePath::NODE_CUSP);
+                sp_nodepath_set_node_type(Inkscape::NodePath::Path::active_node,Inkscape::NodePath::NODE_CUSP);
                 ret = TRUE;
                 break;
             case GDK_s:
-                sp_nodepath_set_node_type(active_node,Inkscape::NodePath::NODE_SMOOTH);
+                sp_nodepath_set_node_type(Inkscape::NodePath::Path::active_node,Inkscape::NodePath::NODE_SMOOTH);
                 ret = TRUE;
                 break;
             case GDK_y:
-                sp_nodepath_set_node_type(active_node,Inkscape::NodePath::NODE_SYMM);
+                sp_nodepath_set_node_type(Inkscape::NodePath::Path::active_node,Inkscape::NodePath::NODE_SYMM);
                 ret = TRUE;
                 break;
             case GDK_b:
-                sp_nodepath_node_break(active_node);
+                sp_nodepath_node_break(Inkscape::NodePath::Path::active_node);
                 ret = TRUE;
                 break;
         }
@@ -3513,6 +3513,16 @@ static gboolean node_handle_event(SPKnot *knot, GdkEvent *event,Inkscape::NodePa
                     break;
             }
             break;
+        case GDK_ENTER_NOTIFY:
+            // we use an experimentally determined threshold that seems to work fine
+            if (NR::L2(n->pos - knot->pos) < 0.75)
+                Inkscape::NodePath::Path::active_node = n;
+            break;
+        case GDK_LEAVE_NOTIFY:
+            // we use an experimentally determined threshold that seems to work fine
+            if (NR::L2(n->pos - knot->pos) < 0.75)
+                Inkscape::NodePath::Path::active_node = NULL;
+            break;
         default:
             break;
     }
@@ -3803,11 +3813,11 @@ void sp_nodepath_selected_nodes_scale_screen(Inkscape::NodePath::Path *nodepath,
 /**
  * Flip selected nodes horizontally/vertically.
  */
-void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis)
+void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, NR::Maybe<NR::Point> center)
 {
     if (!nodepath || !nodepath->selected) return;
 
-    if (g_list_length(nodepath->selected) == 1) {
+    if (g_list_length(nodepath->selected) == 1 && !center) {
         // flip handles of the single selected node
         Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) nodepath->selected->data;
         double temp = n->p.pos[axis];
@@ -3824,10 +3834,13 @@ void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis)
             box.expandTo (n->pos); // contain all selected nodes
         }
 
+        if (!center) {
+            center = box.midpoint();
+        }
         NR::Matrix t =
-            NR::Matrix (NR::translate(-box.midpoint())) *
+            NR::Matrix (NR::translate(- *center)) *
             NR::Matrix ((axis == NR::X)? NR::scale(-1, 1) : NR::scale(1, -1)) *
-            NR::Matrix (NR::translate(box.midpoint()));
+            NR::Matrix (NR::translate(*center));
 
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;

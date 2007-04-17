@@ -76,6 +76,8 @@
 #include "sp-flowtext.h"
 #include "layer-fns.h"
 #include "node-context.h"
+#include "select-context.h"
+#include "seltrans.h"
 #include "gradient-context.h"
 #include "shape-editor.h"
 
@@ -1262,7 +1264,13 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
     if (!bbox) {
         return;
     }
-    NR::Point const center(bbox->midpoint());
+    // If the rotation center of the selection is visible, choose it as reference point
+    // for horizontal and vertical flips. Otherwise, take the center of the bounding box.
+    NR::Point center;
+    if (tools_isactive(dt, TOOLS_SELECT) && sel->center() && SP_SELECT_CONTEXT(ec)->_seltrans->centerIsVisible())
+        center = *sel->center();
+    else
+        center = bbox->midpoint();
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_OBJECT_ROTATE_90_CW:
@@ -1287,8 +1295,23 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
             flowtext_to_text();
             break;
         case SP_VERB_OBJECT_FLIP_HORIZONTAL:
+            // When working with the node tool ...
             if (tools_isactive(dt, TOOLS_NODES)) {
-                SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::X);
+                Inkscape::NodePath::Node *active_node = Inkscape::NodePath::Path::active_node;
+
+                // ... and one of the nodes is currently mouseovered ...
+                if (active_node) {
+
+                    // ... flip the selected nodes about that node
+                    SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::X, active_node->pos);
+            	} else {
+
+                    // ... or else about the center of their bounding box.
+                    SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::X);
+                }
+
+            // When working with the selector tool, flip the selection about its rotation center 
+            // (if it is visible) or about the center of the bounding box.
             } else {
                 sp_selection_scale_relative(sel, center, NR::scale(-1.0, 1.0));
             }
@@ -1296,8 +1319,14 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
                              _("Flip horizontally"));
             break;
         case SP_VERB_OBJECT_FLIP_VERTICAL:
+            // The behaviour is analogous to flipping horizontally
             if (tools_isactive(dt, TOOLS_NODES)) {
-                SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::Y);
+                Inkscape::NodePath::Node *active_node = Inkscape::NodePath::Path::active_node;
+                if (active_node) {
+                    SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::Y, active_node->pos);
+                } else {
+                    SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::Y);
+                }
             } else {
                 sp_selection_scale_relative(sel, center, NR::scale(1.0, -1.0));
             }

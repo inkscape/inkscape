@@ -22,6 +22,7 @@ class Path;
 
 #include "libnr/nr-path-code.h"
 #include "libnr/nr-point.h"
+#include "libnr/nr-maybe.h"
 
 class SPKnotHolder;
 class SPDesktop;
@@ -101,7 +102,7 @@ public:
     void select_next ();
     void select_prev ();
 
-    void flip (NR::Dim2 axis);
+    void flip (NR::Dim2 axis, NR::Maybe<NR::Point> center = NR::Nothing());
 
     void distribute (NR::Dim2 axis);
     void align (NR::Dim2 axis);

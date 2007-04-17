@@ -134,6 +134,11 @@ class Path {
 
 	/// true if we're showing selected nodes' handles
 	bool show_handles;
+
+	/// active_node points to the node that is currently mouseovered (= NULL if
+	/// there isn't any); we also consider the node mouseovered if it is covered
+	/// by one of its handles and the latter is mouseovered
+	static Node *active_node;
 };
 
 
@@ -285,6 +290,6 @@ void sp_nodepath_selected_nodes_rotate (Inkscape::NodePath::Path * nodepath, gdo
 void sp_nodepath_selected_nodes_scale (Inkscape::NodePath::Path * nodepath, gdouble grow, int which);
 void sp_nodepath_selected_nodes_scale_screen (Inkscape::NodePath::Path * nodepath, gdouble grow, int which);
 
-void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis);
+void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, NR::Maybe<NR::Point> center);
 
 #endif

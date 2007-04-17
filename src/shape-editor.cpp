@@ -412,9 +412,9 @@ void ShapeEditor::select_prev () {
         sp_nodepath_select_prev (this->nodepath);
 }
 
-void ShapeEditor::flip (NR::Dim2 axis) {
+void ShapeEditor::flip (NR::Dim2 axis, NR::Maybe<NR::Point> center) {
     if (this->nodepath) 
-        sp_nodepath_flip (this->nodepath, axis);
+        sp_nodepath_flip (this->nodepath, axis, center);
 }
 
 void ShapeEditor::distribute (NR::Dim2 axis) {

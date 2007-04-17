@@ -18,6 +18,7 @@
 #include <libnr/nr-point.h>
 #include <libnr/nr-matrix.h>
 #include <libnr/nr-rect.h>
+#include "knot.h"
 #include "forward.h"
 #include "selcue.h"
 #include "message-context.h"
@@ -84,7 +85,10 @@ public:
     bool isGrabbed() {
         return _grabbed;    
     }
-    
+	bool centerIsVisible() {
+		return ( _chandle && SP_KNOT_IS_VISIBLE (_chandle) );
+	}
+
 private:
     void _updateHandles();
     void _updateVolatileState();
