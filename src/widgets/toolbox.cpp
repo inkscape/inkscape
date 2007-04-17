@@ -2130,12 +2130,12 @@ sp_spiral_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *t
         }
     }
 
-    GtkWidget *l = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(tbl), "mode_label"));
+    EgeOutputAction* act = EGE_OUTPUT_ACTION( gtk_object_get_data(GTK_OBJECT(tbl), "mode_action") );
 
     if (n_selected == 0) {
-        gtk_label_set_markup(GTK_LABEL(l), _("<b>New:</b>"));
+        g_object_set( G_OBJECT(act), "label", _("<b>New:</b>"), NULL );
     } else if (n_selected == 1) {
-        gtk_label_set_markup(GTK_LABEL(l), _("<b>Change:</b>"));
+        g_object_set( G_OBJECT(act), "label", _("<b>Change:</b>"), NULL );
 
         oldrepr = (Inkscape::XML::Node *) gtk_object_get_data(GTK_OBJECT(tbl), "repr");
         if (oldrepr) { // remove old listener
@@ -2154,7 +2154,7 @@ sp_spiral_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *t
     } else {
         // FIXME: implement averaging of all parameters for multiple selected
         //gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-        gtk_label_set_markup(GTK_LABEL(l), _("<b>Change:</b>"));
+        g_object_set( G_OBJECT(act), "label", _("<b>Change:</b>"), NULL );
     }
 }
 
@@ -2162,55 +2162,77 @@ sp_spiral_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *t
 static GtkWidget *
 sp_spiral_toolbox_new(SPDesktop *desktop)
 {
-    GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
-    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
-    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
+    GtkWidget *holder = gtk_hbox_new(FALSE, 0);
+    gtk_object_set_data(GTK_OBJECT(holder), "dtw", desktop->canvas);
+    gtk_object_set_data(GTK_OBJECT(holder), "desktop", desktop);
 
-    GtkTooltips *tt = gtk_tooltips_new();
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='SpiralToolbar'>"
+        "    <toolitem action='SpiralStateAction' />"
+        "    <toolitem action='SpiralRevolutionAction' />"
+        "    <toolitem action='SpiralExpansionAction' />"
+        "    <toolitem action='SpiralT0Action' />"
+        "    <separator />"
+        "    <toolitem action='SpiralResetAction' />"
+        "  </toolbar>"
+        "</ui>";
+    GtkActionGroup* mainActions = gtk_action_group_new("main");
 
-    sp_toolbox_add_label(tbl, _("<b>New:</b>"));
+    EgeAdjustmentAction* eact = 0;
+
+    {
+        EgeOutputAction* act = ege_output_action_new( "SpiralStateAction", _("<b>New:</b>"), "", 0 );
+        ege_output_action_set_use_markup( act, TRUE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        gtk_object_set_data( GTK_OBJECT(holder), "mode_action", act );
+    }
 
     /* Revolution */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("Turns:"), _("Number of revolutions"),
+        eact = create_adjustment_action( "SpiralRevolutionAction",
+                                         _("Turns:"), _("Number of revolutions"),
                                          "tools.shapes.spiral", "revolution", 3.0,
-                                         NULL, tbl, TRUE, "altx-spiral",
+                                         GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-spiral",
                                          0.01, 1024.0, 0.1, 1.0,
+                                         0, 0, 0,
                                          sp_spl_tb_revolution_value_changed, 1, 2);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
     /* Expansion */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("Divergence:"), _("How much denser/sparser are outer revolutions; 1 = uniform"),
+        eact = create_adjustment_action( "SpiralExpansionAction",
+                                         _("Divergence:"), _("How much denser/sparser are outer revolutions; 1 = uniform"),
                                          "tools.shapes.spiral", "expansion", 1.0,
-                                         NULL, tbl, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.0, 1000.0, 0.01, 1.0,
+                                         0, 0, 0,
                                          sp_spl_tb_expansion_value_changed);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
     /* T0 */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("Inner radius:"), _("Radius of the innermost revolution (relative to the spiral size)"),
+        eact = create_adjustment_action( "SpiralT0Action",
+                                         _("Inner radius:"), _("Radius of the innermost revolution (relative to the spiral size)"),
                                          "tools.shapes.spiral", "t0", 0.0,
-                                         NULL, tbl, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.0, 0.999, 0.01, 1.0,
+                                         0, 0, 0,
                                          sp_spl_tb_t0_value_changed);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
-
-    aux_toolbox_space(tbl, AUX_SPACING);
 
     /* Reset */
     {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-        GtkWidget *b = gtk_button_new_with_label(_("Defaults"));
-        gtk_tooltips_set_tip(tt, b, _("Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"), NULL);
-        gtk_widget_show(b);
-        gtk_container_add(GTK_CONTAINER(hb), b);
-        gtk_signal_connect(GTK_OBJECT(b), "clicked", GTK_SIGNAL_FUNC(sp_spl_tb_defaults), tbl);
-        gtk_box_pack_start(GTK_BOX(tbl),hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+        InkAction* inky = ink_action_new( "SpiralResetAction",
+                                          _("Defaults"),
+                                          _("Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
+                                          GTK_STOCK_CLEAR,
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_spl_tb_defaults), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
 
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new spirals"));
@@ -2218,17 +2240,37 @@ sp_spiral_toolbox_new(SPDesktop *desktop)
     swatch->setClickVerb (SP_VERB_CONTEXT_SPIRAL_PREFS);
     swatch->setWatchedTool ("tools.shapes.spiral", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+    gtk_box_pack_end(GTK_BOX(holder), swatch_, FALSE, FALSE, 0);
 
-    gtk_widget_show_all(tbl);
-    sp_set_font_size_smaller (tbl);
+    gtk_widget_show_all(holder);
+    sp_set_font_size_smaller (holder);
+
+
+
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+
+    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
+
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/SpiralToolbar" );
+    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
+
+
+    gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0 );
+
+
+    gtk_widget_show_all( holder );
+    sp_set_font_size_smaller( holder );
+
 
     sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_spiral_toolbox_selection_changed), (GtkObject *)tbl))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_spiral_toolbox_selection_changed), (GtkObject *)holder))
         );
-    g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
+    g_signal_connect( G_OBJECT(holder), "destroy", G_CALLBACK(delete_connection), connection );
 
-    return tbl;
+    return holder;
 }
 
 //########################
