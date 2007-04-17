@@ -28,6 +28,10 @@
 
 namespace Inkscape {
 
+#define DEFAULTGRIDCOLOR    0x0000FF20
+#define DEFAULTGRIDEMPCOLOR 0x0000FF40
+
+
 static void grid_canvasitem_class_init (GridCanvasItemClass *klass);
 static void grid_canvasitem_init (GridCanvasItem *grid);
 static void grid_canvasitem_destroy (GtkObject *object);
@@ -339,11 +343,8 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr)
     : CanvasGrid(nv, in_repr), table(1, 1)
 {
     origin[NR::X] = origin[NR::Y] = 0.0;
-//            nv->gridcolor = (nv->gridcolor & 0xff) | (DEFAULTGRIDCOLOR & 0xffffff00);
-//	case SP_ATTR_GRIDOPACITY:
-//            nv->gridcolor = (nv->gridcolor & 0xffffff00) | (DEFAULTGRIDCOLOR & 0xff);
-    color = 0xff3f3f20;
-    empcolor = 0xFF3F3F40;
+    color = DEFAULTGRIDCOLOR;
+    empcolor = DEFAULTGRIDEMPCOLOR;
     empspacing = 5;
     spacing[NR::X] = spacing[NR::Y] = 8.0;
     gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
@@ -551,7 +552,6 @@ CanvasXYGrid::updateWidgets()
 
     _wr.setUpdating (true);
 
-//    _rrb_gridtype.setValue (nv->gridtype);
     _rumg.setUnit (gridunit);
 
     gdouble val;
