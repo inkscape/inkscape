@@ -4600,6 +4600,7 @@ sp_paintbucket_toolbox_new(SPDesktop *desktop)
         "    <toolitem action='ThresholdAction' />"
         "    <separator />"
         "    <toolitem action='OffsetAction' />"
+        "    <toolitem action='PaintbucketUnitsAction' />"
         "  </toolbar>"
         "</ui>";
     GtkActionGroup* mainActions = gtk_action_group_new("main");
