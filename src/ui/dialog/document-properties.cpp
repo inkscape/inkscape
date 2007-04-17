@@ -105,13 +105,13 @@ DocumentProperties::DocumentProperties()
 
     _notebook.append_page(_page_page,      _("Page"));
     _notebook.append_page(_page_guides,    _("Guides"));
-    _notebook.append_page(_page_snap,      _("Snap"));
     _notebook.append_page(_page_grids,     _("Grids"));
+    _notebook.append_page(_page_snap,      _("Snapping"));
 
     build_page();
     build_guides();
-    build_snap();
     build_gridspage();
+    build_snap();
 
     _grids_button_new.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onNewGrid));
     _grids_button_remove.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onRemoveGrid));
