@@ -357,6 +357,21 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 case GDK_Escape:
                     sp_desktop_selection(desktop)->clear();
                     //TODO: make dragging escapable by Esc
+                    break;
+
+                case GDK_space:
+                    if (dragging) {
+                        sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
+                                              event->button.time);
+                        dragging = false;
+                        if (!event_context->within_tolerance) {
+                            // we've been dragging, finish the rect
+                            sp_arc_finish(ac);
+                        }
+                        // do not return true, so that space would work switching to selector
+                    }
+                    break;
+
                 default:
                     break;
             }
