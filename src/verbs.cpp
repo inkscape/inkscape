@@ -80,6 +80,7 @@
 #include "seltrans.h"
 #include "gradient-context.h"
 #include "shape-editor.h"
+#include "draw-context.h"
 
 
 /**
@@ -1512,6 +1513,7 @@ ZoomVerb::perform(SPAction *action, void *data, void *pdata)
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
         return;
+    SPEventContext *ec = dt->event_context;
 
     SPDocument *doc = sp_desktop_document(dt);
 
@@ -1524,12 +1526,32 @@ ZoomVerb::perform(SPAction *action, void *data, void *pdata)
     switch (GPOINTER_TO_INT(data)) {
         case SP_VERB_ZOOM_IN:
         {
+            // While drawing with the pen/pencil tool, zoom towards the end of the unfinished path
+            if (tools_isactive(dt, TOOLS_FREEHAND_PENCIL) || tools_isactive(dt, TOOLS_FREEHAND_PEN)) {
+                SPCurve *rc = SP_DRAW_CONTEXT(ec)->red_curve;
+                if (sp_curve_last_bpath(rc)) {
+                    NR::Point const zoom_to (sp_curve_last_point(rc));
+                    dt->zoom_relative_keep_point(zoom_to, zoom_inc);
+                    break;
+                }
+            }
+
             NR::Rect const d = dt->get_display_area();
             dt->zoom_relative( d.midpoint()[NR::X], d.midpoint()[NR::Y], zoom_inc);
             break;
         }
         case SP_VERB_ZOOM_OUT:
         {
+            // While drawing with the pen/pencil tool, zoom away from the end of the unfinished path
+            if (tools_isactive(dt, TOOLS_FREEHAND_PENCIL) || tools_isactive(dt, TOOLS_FREEHAND_PEN)) {
+                SPCurve *rc = SP_DRAW_CONTEXT(ec)->red_curve;
+                if (sp_curve_last_bpath(rc)) {
+                    NR::Point const zoom_to (sp_curve_last_point(rc));
+                    dt->zoom_relative_keep_point(zoom_to, 1 / zoom_inc);
+                    break;
+                }
+            }
+
             NR::Rect const d = dt->get_display_area();
             dt->zoom_relative( d.midpoint()[NR::X], d.midpoint()[NR::Y], 1 / zoom_inc );
             break;
