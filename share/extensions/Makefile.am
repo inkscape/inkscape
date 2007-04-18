@@ -43,6 +43,7 @@ extensions = \
 	fractalize.py \
 	funcplot.py \
 	g2pngs.py\
+	gears.py\
 	gimp_xcf.py \
 	handles.py \
 	ill2svg.pl \
@@ -126,6 +127,7 @@ modules = \
 	fractalize.inx \
 	funcplot.inx \
 	g2pngs.inx\
+	gears.inx\
 	gimp_xcf.inx \
 	handles.inx \
 	inkscape_help_commandline.inx \
