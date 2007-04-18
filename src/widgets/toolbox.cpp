@@ -1587,8 +1587,8 @@ sp_star_toolbox_new(SPDesktop *desktop)
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_table_attach( GTK_TABLE(holder), swatch_, 1, 2, 0, 1, (GtkAttachOptions)(GTK_SHRINK | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), AUX_BETWEEN_BUTTON_GROUPS, 0 );
 
-    gtk_widget_show_all(holder);
-    //sp_set_font_size_smaller (tbl);
+    gtk_widget_show_all( holder );
+    sp_set_font_size_smaller( holder );
 
     sigc::connection *connection = new sigc::connection(
         sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_star_toolbox_selection_changed), (GtkObject *)holder))
@@ -1947,15 +1947,16 @@ sp_rect_toolbox_new(SPDesktop *desktop)
         gtk_object_set_data( GTK_OBJECT(holder), "not_rounded", inky );
     }
 
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new rectangles"));
-    swatch->setDesktop (desktop);
-    swatch->setClickVerb (SP_VERB_CONTEXT_RECT_PREFS);
-    swatch->setWatchedTool ("tools.shapes.rect", true);
-    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end(GTK_BOX(holder), swatch_, FALSE, FALSE, 0);
-
     g_object_set_data(G_OBJECT(holder), "single", GINT_TO_POINTER(TRUE));
     sp_rtb_sensitivize (holder);
+
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new rectangles"));
+    swatch->setDesktop( desktop );
+    swatch->setClickVerb( SP_VERB_CONTEXT_RECT_PREFS );
+    swatch->setWatchedTool( "tools.shapes.rect", true );
+    GtkWidget *swatch_ = GTK_WIDGET( swatch->gobj() );
+    gtk_box_pack_end( GTK_BOX(holder), swatch_, FALSE, FALSE, 0 );
+
 
 
     GtkUIManager* mgr = gtk_ui_manager_new();
@@ -1972,13 +1973,13 @@ sp_rect_toolbox_new(SPDesktop *desktop)
     gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0 );
 
 
-    gtk_widget_show_all(holder);
-    sp_set_font_size_smaller(holder);
+    gtk_widget_show_all( holder );
+    sp_set_font_size_smaller( holder );
 
     sigc::connection *connection = new sigc::connection(
         sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), (GtkObject *)holder))
         );
-    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(delete_connection), connection);
+    g_signal_connect( G_OBJECT(holder), "destroy", G_CALLBACK(delete_connection), connection );
 
     return holder;
 }
@@ -2236,14 +2237,11 @@ sp_spiral_toolbox_new(SPDesktop *desktop)
     }
 
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new spirals"));
-    swatch->setDesktop (desktop);
-    swatch->setClickVerb (SP_VERB_CONTEXT_SPIRAL_PREFS);
-    swatch->setWatchedTool ("tools.shapes.spiral", true);
-    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end(GTK_BOX(holder), swatch_, FALSE, FALSE, 0);
-
-    gtk_widget_show_all(holder);
-    sp_set_font_size_smaller (holder);
+    swatch->setDesktop( desktop );
+    swatch->setClickVerb( SP_VERB_CONTEXT_SPIRAL_PREFS );
+    swatch->setWatchedTool( "tools.shapes.spiral", true );
+    GtkWidget *swatch_ = GTK_WIDGET( swatch->gobj() );
+    gtk_box_pack_end( GTK_BOX(holder), swatch_, FALSE, FALSE, 0 );
 
 
 
@@ -2264,7 +2262,6 @@ sp_spiral_toolbox_new(SPDesktop *desktop)
     gtk_widget_show_all( holder );
     sp_set_font_size_smaller( holder );
 
-
     sigc::connection *connection = new sigc::connection(
         sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_spiral_toolbox_selection_changed), (GtkObject *)holder))
         );
@@ -2281,41 +2278,93 @@ sp_spiral_toolbox_new(SPDesktop *desktop)
 static GtkWidget *
 sp_pen_toolbox_new(SPDesktop *desktop)
 {
-    GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
-    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
-    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
+    GtkWidget *holder = gtk_hbox_new(FALSE, 0);
+    gtk_object_set_data(GTK_OBJECT(holder), "dtw", desktop->canvas);
+    gtk_object_set_data(GTK_OBJECT(holder), "desktop", desktop);
+
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='PenToolbar'>"
+        "  </toolbar>"
+        "</ui>";
+    GtkActionGroup* mainActions = gtk_action_group_new("main");
+
+    // Put stuff here
+
 
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new paths created by Pen"));
-    swatch->setDesktop (desktop);
-    swatch->setClickVerb (SP_VERB_CONTEXT_PEN_PREFS);
-    swatch->setWatchedTool ("tools.freehand.pen", true);
-    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+    swatch->setDesktop( desktop );
+    swatch->setClickVerb( SP_VERB_CONTEXT_PEN_PREFS );
+    swatch->setWatchedTool( "tools.freehand.pen", true );
+    GtkWidget *swatch_ = GTK_WIDGET( swatch->gobj() );
+    gtk_box_pack_end( GTK_BOX(holder), swatch_, FALSE, FALSE, 0 );
 
-    gtk_widget_show_all(tbl);
-    sp_set_font_size_smaller (tbl);
 
-    return tbl;
+
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+
+    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
+
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/PenToolbar" );
+    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
+
+
+    gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0 );
+
+
+    gtk_widget_show_all( holder );
+    sp_set_font_size_smaller( holder );
+
+    return holder;
 }
 
 static GtkWidget *
 sp_pencil_toolbox_new(SPDesktop *desktop)
 {
-    GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
-    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
-    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
+    GtkWidget *holder = gtk_hbox_new(FALSE, 0);
+    gtk_object_set_data(GTK_OBJECT(holder), "dtw", desktop->canvas);
+    gtk_object_set_data(GTK_OBJECT(holder), "desktop", desktop);
+
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='PencilToolbar'>"
+        "  </toolbar>"
+        "</ui>";
+    GtkActionGroup* mainActions = gtk_action_group_new("main");
+
+    // Put stuff here
+
 
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new paths created by Pencil"));
-    swatch->setDesktop (desktop);
-    swatch->setClickVerb (SP_VERB_CONTEXT_PENCIL_PREFS);
-    swatch->setWatchedTool ("tools.freehand.pencil", true);
-    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+    swatch->setDesktop( desktop );
+    swatch->setClickVerb( SP_VERB_CONTEXT_PENCIL_PREFS );
+    swatch->setWatchedTool( "tools.freehand.pencil", true );
+    GtkWidget *swatch_ = GTK_WIDGET( swatch->gobj() );
+    gtk_box_pack_end( GTK_BOX(holder), swatch_, FALSE, FALSE, 0 );
 
-    gtk_widget_show_all(tbl);
-    sp_set_font_size_smaller (tbl);
 
-    return tbl;
+
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+
+    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
+
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/PencilToolbar" );
+    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
+
+
+    gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0 );
+
+
+    gtk_widget_show_all( holder );
+    sp_set_font_size_smaller( holder );
+
+    return holder;
 }
 
 
@@ -2632,8 +2681,8 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_table_attach( GTK_TABLE(holder), swatch_, 1, 2, 0, 1, (GtkAttachOptions)(GTK_SHRINK | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), AUX_BETWEEN_BUTTON_GROUPS, 0 );
 
-    gtk_widget_show_all(holder);
-    //sp_set_font_size_smaller (tbl);
+    gtk_widget_show_all( holder );
+    sp_set_font_size_smaller( holder );
 
     return holder;
 }
@@ -3018,6 +3067,14 @@ sp_arc_toolbox_new(SPDesktop *desktop)
         sp_arctb_sensitivize( holder, adj1->value, adj2->value );
     }
 
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new ellipses"));
+    swatch->setDesktop( desktop );
+    swatch->setClickVerb( SP_VERB_CONTEXT_ARC_PREFS );
+    swatch->setWatchedTool( "tools.shapes.arc", true );
+    GtkWidget *swatch_ = GTK_WIDGET( swatch->gobj() );
+    gtk_box_pack_end( GTK_BOX(holder), swatch_, FALSE, FALSE, 0 );
+
+
 
     GtkUIManager* mgr = gtk_ui_manager_new();
     GError* errVal = 0;
@@ -3032,20 +3089,14 @@ sp_arc_toolbox_new(SPDesktop *desktop)
 
     gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0 );
 
+
+    gtk_widget_show_all( holder );
+    sp_set_font_size_smaller( holder );
+
     sigc::connection *connection = new sigc::connection(
         sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), (GtkObject *)holder))
         );
     g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(delete_connection), connection);
-
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of new ellipses"));
-    swatch->setDesktop (desktop);
-    swatch->setClickVerb (SP_VERB_CONTEXT_ARC_PREFS);
-    swatch->setWatchedTool ("tools.shapes.arc", true);
-    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end(GTK_BOX(holder), swatch_, FALSE, FALSE, 0);
-
-    gtk_widget_show_all( holder );
-    sp_set_font_size_smaller( holder );
 
     return holder;
 }
@@ -4707,6 +4758,14 @@ sp_paintbucket_toolbox_new(SPDesktop *desktop)
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of Paint Bucket fill objects"));
+    swatch->setDesktop( desktop );
+    swatch->setClickVerb( SP_VERB_CONTEXT_PAINTBUCKET_PREFS );
+    swatch->setWatchedTool( "tools.paintbucket", true );
+    GtkWidget *swatch_ = GTK_WIDGET( swatch->gobj() );
+    gtk_box_pack_end( GTK_BOX(holder), swatch_, FALSE, FALSE, 0 );
+
+
 
     GtkUIManager* mgr = gtk_ui_manager_new();
     GError* errVal = 0;
@@ -4718,15 +4777,9 @@ sp_paintbucket_toolbox_new(SPDesktop *desktop)
     gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
     gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
 
+
     gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0 );
 
-
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL, _("Style of Paint Bucket fill objects"));
-    swatch->setDesktop (desktop);
-    swatch->setClickVerb (SP_VERB_CONTEXT_PAINTBUCKET_PREFS);
-    swatch->setWatchedTool ("tools.paintbucket", true);
-    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end( GTK_BOX(holder), swatch_, FALSE, FALSE, 0 );
 
     gtk_widget_show_all( holder );
     sp_set_font_size_smaller( holder );
