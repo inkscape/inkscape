@@ -355,20 +355,9 @@ print " xmlns=\"http://www.w3.org/2000/svg\"";
 print " xmlns:xlink=\"http://www.w3.org/1999/xlink\">\r\n";
 
 while (<>) {
-    if (m/$NL_DOS$/) { 
-	$/ = $NL_DOS; 
-	foreach (split /$NL_DOS/) {
-	    process_line($_);
-	}
-    } elsif (m/$NL_MAC$/) {
-	$/ = $NL_MAC;
-	foreach (split /$NL_MAC/) {
-	    process_line($_);
-	}
-    } else {
-	chomp;
+    foreach (split /[\015\012]+/) {
 	process_line($_);
-    }
+      }
 }
 print "</svg>\n";
 
