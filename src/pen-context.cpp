@@ -59,7 +59,7 @@ static void spdc_pen_finish(SPPenContext *pc, gboolean closed);
 static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const &bevent);
 static gint pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent);
 static gint pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent);
-static gint pen_handle_2button_press(SPPenContext *const pc);
+static gint pen_handle_2button_press(SPPenContext *const pc, GdkEventButton const &bevent);
 static gint pen_handle_key_press(SPPenContext *const pc, GdkEvent *event);
 static void spdc_reset_colors(SPPenContext *pc);
 
@@ -308,7 +308,7 @@ sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event)
             break;
 
         case GDK_2BUTTON_PRESS:
-            ret = pen_handle_2button_press(pc);
+            ret = pen_handle_2button_press(pc, event->button);
             break;
 
         case GDK_KEY_PRESS:
@@ -710,10 +710,10 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
 }
 
 static gint
-pen_handle_2button_press(SPPenContext *const pc)
+pen_handle_2button_press(SPPenContext *const pc, GdkEventButton const &bevent)
 {
     gint ret = FALSE;
-    if (pc->npoints != 0) {
+    if (pc->npoints != 0 && bevent.button != 2) {
         spdc_pen_finish(pc, FALSE);
         ret = TRUE;
     }
