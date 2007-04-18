@@ -11,6 +11,7 @@
  *   John Bintz <jcoswell@coswellproductions.org>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
+ * Copyright (C) 2007 Jon A. Cruz
  * Copyright (C) 2006-2007 Johan Engelen
  * Copyright (C) 2006 John Bintz
  * Copyright (C) 2004 MenTaLguY
@@ -105,48 +106,56 @@ static void _update_snap_distances (SPDesktop *desktop);
  * \pre namedview != NULL.
  * \pre canvas != NULL.
  */
-SPDesktop::SPDesktop()
+SPDesktop::SPDesktop() :
+    _dlg_mgr( 0 ),
+    namedview( 0 ),
+    canvas( 0 ),
+    selection( 0 ),
+    event_context( 0 ),
+    layer_manager( 0 ),
+    event_log( 0 ),
+    acetate( 0 ),
+    main( 0 ),
+    gridgroup( 0 ),
+    guides( 0 ),
+    drawing( 0 ),
+    sketch( 0 ),
+    controls( 0 ),
+    table( 0 ),
+    page( 0 ),
+    page_border( 0 ),
+    current( 0 ),
+    zooms_past( 0 ),
+    zooms_future( 0 ),
+    dkey( 0 ),
+    number( 0 ),
+    is_fullscreen( false ),
+    interaction_disabled_counter( 0 ),
+    waiting_cursor( false ),
+    guides_active( false ),
+    gr_item( 0 ),
+    gr_point_type( 0 ),
+    gr_point_i( 0 ),
+    gr_fill_or_stroke( true ),
+    _layer_hierarchy( 0 ),
+    _reconstruction_old_layer_id( 0 ),
+    _widget( 0 ),
+    _inkscape( 0 ),
+    _guides_message_context( 0 ),
+    _active( false ),
+    _w2d(),
+    _d2w(),
+    _doc2dt( NR::Matrix(NR::scale(1, -1)) ),
+    grids_visible( true )
 {
-    _dlg_mgr = NULL;
-    _widget = 0;
-    namedview = NULL;
-    selection = NULL;
-    acetate = NULL;
-    main = NULL;
-    gridgroup = NULL;
-    guides = NULL;
-    drawing = NULL;
-    sketch = NULL;
-    controls = NULL;
-    event_context = 0;
-    layer_manager = 0;
-
     _d2w.set_identity();
     _w2d.set_identity();
-    _doc2dt = NR::Matrix(NR::scale(1, -1));
 
-    guides_active = false;
-
-    zooms_past = NULL;
-    zooms_future = NULL;
-
-    is_fullscreen = false;
-    waiting_cursor = false;
-
-    gr_item = NULL;
-    gr_point_type = 0;
-    gr_point_i = 0;
-    gr_fill_or_stroke = true;
-
-    _layer_hierarchy = NULL;
-    _active = false;
-
-    selection = Inkscape::GC::release (new Inkscape::Selection (this));
+    selection = Inkscape::GC::release( new Inkscape::Selection(this) );
 }
 
 void
 SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
-
 {
     _guides_message_context = new Inkscape::MessageContext(const_cast<Inkscape::MessageStack*>(messageStack()));
 
@@ -263,9 +272,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     _reconstruction_finish_connection =
         document->connectReconstructionFinish(sigc::bind(sigc::ptr_fun(_reconstruction_finish), this));
     _reconstruction_old_layer_id = NULL;
-    
-    _commit_connection = document->connectCommit(sigc::mem_fun(*this, &SPDesktop::updateNow));
-    
+
     // ?
     // sp_active_desktop_set (desktop);
     _inkscape = INKSCAPE;
@@ -300,7 +307,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     /* setup LayerManager */
     //   (Setting up after the connections are all in place, as it may use some of them)
     layer_manager = new Inkscape::LayerManager( this );
-    
+
     grids_visible = true;
 }
 
@@ -1159,7 +1166,6 @@ SPDesktop::updateCanvasNow()
 /**
  * Associate document with desktop.
  */
-/// \todo fixme: refactor SPDesktop::init to use setDocument
 void
 SPDesktop::setDocument (SPDocument *doc)
 {
@@ -1186,10 +1192,11 @@ SPDesktop::setDocument (SPDocument *doc)
     _commit_connection = doc->connectCommit(sigc::mem_fun(*this, &SPDesktop::updateNow));
 
     /// \todo fixme: This condition exists to make sure the code
-    /// inside is called only once on initialization. But there
+    /// inside is NOT called on initialization, only on replacement. But there
     /// are surely more safe methods to accomplish this.
+    // TODO since the comment had reversed logic, check the intent of this block of code:
     if (drawing) {
-        NRArenaItem *ai;
+        NRArenaItem *ai = 0;
 
         namedview = sp_document_namedview (doc, NULL);
         _modified_connection = namedview->connectModified(sigc::bind<2>(sigc::ptr_fun(&_namedview_modified), this));
