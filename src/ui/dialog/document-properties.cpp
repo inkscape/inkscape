@@ -266,12 +266,6 @@ DocumentProperties::build_snap()
 {
     _page_snap.show();
 
-/*  _rcbsnbo.init (_("_Snap bounding boxes to objects"),
-                _("Snap the edges of the object bounding boxes to other objects"),
-                "inkscape:object-bbox", _wr);
-    _rcbsnnob.init (_("Snap nodes _to objects"),
-                _("Snap the nodes of objects to other objects"),
-                "inkscape:object-points", _wr);*/
     _rcbsnop.init (_("Snap to object _paths"),
                 _("Snap to other object paths"),
                 "inkscape:object-paths", _wr);
@@ -282,22 +276,10 @@ DocumentProperties::build_snap()
                   _("Snapping distance, in screen pixels, for snapping to objects"),
                   _("If set, objects snap to the nearest object, regardless of distance"),
                   "objecttolerance", _wr);
-/*  _rcbsnbb.init (_("Snap _bounding boxes to grid"),
-                _("Snap the edges of the object bounding boxes"),
-                "inkscape:grid-bbox", _wr);
-    _rcbsnnod.init (_("Snap nodes to _grid"),
-                _("Snap path nodes, text baselines, ellipse centers, etc."),
-                "inkscape:grid-points", _wr);*/
     _rsu_sn.init (_("Snap sens_itivity:"), _("Always snap"),
                   _("Snapping distance, in screen pixels, for snapping to grid"),
                   _("If set, objects snap to the nearest grid line, regardless of distance"),
                   "gridtolerance", _wr);
-/*  _rcb_snpgui.init (_("Snap bounding boxes to g_uides"),
-                     _("Snap the edges of the object bounding boxes"),
-                     "inkscape:guide-bbox", _wr);
-    _rcb_snbgui.init (_("Snap p_oints to guides"),
-                _("Snap path nodes, text baselines, ellipse centers, etc."),
-                "inkscape:guide-points", _wr);*/
     _rsu_gusn.init (_("Snap sensiti_vity:"), _("Always snap"),
                 _("Snapping distance, in screen pixels, for snapping to guides"),
                 _("If set, objects snap to the nearest guide, regardless of distance"),
@@ -312,20 +294,14 @@ DocumentProperties::build_snap()
     const Gtk::Widget* array[] =
     {
         label_o,            0,
-//      0,                  _rcbsnbo._button,
-//      0,                  _rcbsnnob._button,
         0,                  _rcbsnop._button,
         0,                  _rcbsnon._button,
         0,                  _rsu_sno._vbox,
         0, 0,
         label_gr,           0,
-//      0,                  _rcbsnbb._button,
-//      0,                  _rcbsnnod._button,
         0,                  _rsu_sn._vbox,
         0, 0,
         label_gu,         0,
-//      0,                _rcb_snpgui._button,
-//      0,                _rcb_snbgui._button,
         0,                _rsu_gusn._vbox,
     };
 
@@ -436,18 +412,12 @@ DocumentProperties::update()
     _rcp_hgui.setRgba32 (nv->guidehicolor);
 
     //-----------------------------------------------------------snap
-    //_rcbsnbo.setActive (nv->snap_manager.object.getSnapTo(Inkscape::Snapper::BBOX_POINT));
-    //_rcbsnnob.setActive (nv->snap_manager.object.getSnapTo(Inkscape::Snapper::SNAP_POINT));
     _rcbsnop.setActive (nv->snap_manager.object.getSnapToPaths());
     _rcbsnon.setActive (nv->snap_manager.object.getSnapToNodes());
     _rsu_sno.setValue (nv->objecttolerance);
 
-    //_rcbsnbb.setActive (nv->snap_manager.grid.getSnapTo(Inkscape::Snapper::BBOX_POINT));
-    //_rcbsnnod.setActive (nv->snap_manager.grid.getSnapTo(Inkscape::Snapper::SNAP_POINT));
     _rsu_sn.setValue (nv->gridtolerance);
 
-    //_rcb_snpgui.setActive (nv->snap_manager.guide.getSnapTo(Inkscape::Snapper::BBOX_POINT));
-    //_rcb_snbgui.setActive (nv->snap_manager.guide.getSnapTo(Inkscape::Snapper::SNAP_POINT));
     _rsu_gusn.setValue (nv->guidetolerance);
 
     //-----------------------------------------------------------grids page

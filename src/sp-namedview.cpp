@@ -233,7 +233,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             }
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-        case SP_ATTR_OBJECTTOLERANCE:
+    case SP_ATTR_OBJECTTOLERANCE:
             nv->objecttoleranceunit = &px;
             nv->objecttolerance = DEFAULTTOLERANCE;
             if (value) {
@@ -314,7 +314,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->pageshadow = value? atoi(value) : 2; // 2 is the default
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-        case SP_ATTR_SHOWPAGESHADOW:
+    case SP_ATTR_SHOWPAGESHADOW:
             nv->showpageshadow = (value) ? sp_str_to_bool(value) : TRUE;
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
@@ -346,36 +346,11 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->window_y = value ? atoi(value) : -1; // -1 means not set
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-/*	case SP_ATTR_INKSCAPE_GRID_BBOX:
-            nv->snap_manager.grid.setSnapTo(Inkscape::Snapper::BBOX_POINT, value ? sp_str_to_bool(value) : TRUE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	case SP_ATTR_INKSCAPE_GRID_POINTS:
-            nv->snap_manager.grid.setSnapTo(Inkscape::Snapper::SNAP_POINT, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	case SP_ATTR_INKSCAPE_GUIDE_BBOX:
-            nv->snap_manager.guide.setSnapTo(Inkscape::Snapper::BBOX_POINT, value ? sp_str_to_bool(value) : TRUE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-	case SP_ATTR_INKSCAPE_GUIDE_POINTS:
-            nv->snap_manager.guide.setSnapTo(Inkscape::Snapper::SNAP_POINT, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-        case SP_ATTR_INKSCAPE_OBJECT_BBOX:
-            nv->snap_manager.object.setSnapTo(Inkscape::Snapper::BBOX_POINT, (value) ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-        case SP_ATTR_INKSCAPE_OBJECT_POINTS:
-            nv->snap_manager.object.setSnapTo(Inkscape::Snapper::SNAP_POINT, (value) ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-*/
-        case SP_ATTR_INKSCAPE_OBJECT_PATHS:
+    case SP_ATTR_INKSCAPE_OBJECT_PATHS:
             nv->snap_manager.object.setSnapToPaths(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-        case SP_ATTR_INKSCAPE_OBJECT_NODES:
+    case SP_ATTR_INKSCAPE_OBJECT_NODES:
             nv->snap_manager.object.setSnapToNodes(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;

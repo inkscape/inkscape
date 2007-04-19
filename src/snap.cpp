@@ -81,11 +81,11 @@ SnapManager::getGridSnappers() const
  * \return true if one of the snappers will try to snap something.
  */
 
-bool SnapManager::willSnapSomething() const
+bool SnapManager::SomeSnapperMightSnap() const
 {
     SnapperList const s = getSnappers();
     SnapperList::const_iterator i = s.begin();
-    while (i != s.end() && (*i)->willSnapSomething() == false) {
+    while (i != s.end() && (*i)->ThisSnapperMightSnap() == false) {
         i++;
     }
 
@@ -303,7 +303,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
     */
 
     /* Quick check to see if we have any snappers that are enabled */
-    if (willSnapSomething() == false) {
+    if (SomeSnapperMightSnap() == false) {
         return std::make_pair(transformation, false);
     }
 

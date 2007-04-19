@@ -30,7 +30,7 @@ class GuideSnapper : public LineSnapper
 public:
     GuideSnapper(SPNamedView const *nv, NR::Coord const d);
     
-    bool willSnapSomething() const;
+    bool ThisSnapperMightSnap() const;
 
 private:
     LineList _getSnapLines(NR::Point const &p) const;

@@ -1342,7 +1342,7 @@ void Inkscape::SelTrans::stretch(SPSelTransHandle const &handle, NR::Point &pt, 
     NR::Point p1 = _approximate_bbox->min() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
     NR::Point p2 = _approximate_bbox->max() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
 
-    //Find the ones at the lower-left and upper-right, as required by get_scale_transform_with_stroke
+    //Find the corners at the lower-left and upper-right, as required by get_scale_transform_with_stroke
     NR::Point new_bbox_min = NR::Point(std::min(p1[NR::X], p2[NR::X]), std::min(p1[NR::Y], p2[NR::Y]));
     NR::Point new_bbox_max = NR::Point(std::max(p1[NR::X], p2[NR::X]), std::max(p1[NR::Y], p2[NR::Y]));
 
@@ -1380,7 +1380,7 @@ void Inkscape::SelTrans::scale(NR::Point &pt, guint state)
     NR::Point p1 = _approximate_bbox->min() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
     NR::Point p2 = _approximate_bbox->max() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
 
-    //Find the ones at the lower-left and upper-right, as required by get_scale_transform_with_stroke
+    //Find the corners at the lower-left and upper-right, as required by get_scale_transform_with_stroke
     NR::Point new_bbox_min = NR::Point(std::min(p1[NR::X], p2[NR::X]), std::min(p1[NR::Y], p2[NR::Y]));
     NR::Point new_bbox_max = NR::Point(std::max(p1[NR::X], p2[NR::X]), std::max(p1[NR::Y], p2[NR::Y]));
     

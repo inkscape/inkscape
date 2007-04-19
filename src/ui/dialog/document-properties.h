@@ -66,14 +66,14 @@ protected:
     RegisteredUnitMenu    _rum_deflt;
     PageSizer             _page_sizer;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbgrid; //_rcbsnbb, _rcbsnnod
+    RegisteredCheckButton _rcbgrid;
     RegisteredUnitMenu    _rums;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcb_sgui; //_rcb_snpgui, _rcb_snbgui
+    RegisteredCheckButton _rcb_sgui;
     RegisteredUnitMenu    _rum_gusn;
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbsnop, _rcbsnon; //_rcbsnbo, _rcbsnnob
+    RegisteredCheckButton _rcbsnop, _rcbsnon;
     RegisteredUnitMenu    _rumso;
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
     RegisteredRadioButtonPair _rrb_pix;

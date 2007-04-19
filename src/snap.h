@@ -42,7 +42,7 @@ public:
 
     typedef std::list<const Inkscape::Snapper*> SnapperList;
 
-    bool willSnapSomething() const;
+    bool SomeSnapperMightSnap() const;
 
     Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,
                                     NR::Point const &p,

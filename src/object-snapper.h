@@ -43,7 +43,7 @@ public:
     return _snap_to_paths;
   }
   
-  bool willSnapSomething() const;
+  bool ThisSnapperMightSnap() const;
   
 private:
   SnappedPoint _doFreeSnap(NR::Point const &p,

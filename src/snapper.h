@@ -47,7 +47,7 @@ public:
     /**
     *  \return true if this Snapper will snap at least one kind of point.
     */
-    virtual bool willSnapSomething() const {return (_enabled && _snap_to != 0);} // will likely be overridden by derived classes
+    virtual bool ThisSnapperMightSnap() const {return (_enabled && _snap_to != 0);} // will likely be overridden by derived classes
 
 
     void setEnabled(bool s);

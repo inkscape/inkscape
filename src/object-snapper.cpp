@@ -38,7 +38,7 @@ void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
                                               std::list<SPItem const *> const &it,
                                               NR::Point const &p) const
 {
-    if (willSnapSomething()) {    
+    if (ThisSnapperMightSnap()) {    
         SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
         for (SPObject* o = sp_object_first_child(r); o != NULL; o = SP_OBJECT_NEXT(o)) {
             if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !desktop->itemIsHidden(SP_ITEM(o))) {
@@ -186,7 +186,7 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doConstrainedSnap(NR::Point con
 /**
  *  \return true if this Snapper will snap at least one kind of point.
  */
-bool Inkscape::ObjectSnapper::willSnapSomething() const
+bool Inkscape::ObjectSnapper::ThisSnapperMightSnap() const
 {
     return (_enabled && _snap_to != 0 && (_snap_to_paths || _snap_to_nodes));
 }
