@@ -19,6 +19,7 @@
 
 #include <gdk/gdkkeysyms.h>
 #include <queue>
+#include <deque>
 
 #include "macros.h"
 #include "display/sp-canvas.h"
@@ -306,13 +307,13 @@ static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned c
     return false;
 }
 
-static bool try_add_to_queue(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig, unsigned char *dtc, int x, int y, int width, int threshold, PaintBucketChannels method, bool fill_switch) {
+static bool try_add_to_queue(std::deque<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig, unsigned char *dtc, int x, int y, int width, int threshold, PaintBucketChannels method, bool fill_switch) {
     unsigned char *t = get_pixel(px, x, y, width);
     if (compare_pixels(t, orig, dtc, threshold, method)) {
         unsigned char *trace_t = get_pixel(trace_px, x, y, width);
         if (trace_t[3] != 255 && trace_t[0] != 255) {
             if (fill_switch) {
-                fill_queue->push(NR::Point(x, y));
+                fill_queue->push_back(NR::Point(x, y));
                 trace_t[0] = 255;
             }
         }
@@ -457,7 +458,7 @@ enum ScanlineCheckResult {
     SCANLINE_CHECK_BOUNDARY
 };
 
-static ScanlineCheckResult perform_bitmap_scanline_check(std::queue<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
+static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
     bool aborted = false;
     bool reached_screen_boundary = false;
     bool ok;
@@ -506,7 +507,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::queue<NR::Point> *
     return SCANLINE_CHECK_OK;
 }
 
-static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event, bool union_with_selection, bool use_rubberband_points) {
+static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event, bool union_with_selection, bool is_point_fill, bool is_touch_fill) {
     SPDesktop *desktop = event_context->desktop;
     SPDocument *document = sp_desktop_document(desktop);
 
@@ -557,7 +558,6 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     nr_arena_item_invoke_update(root, &final_bbox, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
 
     guchar *px = g_new(guchar, 4 * width * height);
-    //memset(px, 0x00, 4 * width * height);
     
     NRPixBlock B;
     nr_pixblock_setup_extern( &B, NR_PIXBLOCK_MODE_R8G8B8A8N,
@@ -579,8 +579,8 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
             for (int i = 0; i < 4; i++) { 
                 *p++ = dtc[i];
             }
-          }
-      }
+        }
+    }
 
     nr_arena_item_invoke_render(NULL, root, &final_bbox, &B, NR_ARENA_ITEM_RENDER_NO_CACHE );
     nr_pixblock_release(&B);
@@ -594,40 +594,38 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     guchar *trace_px = g_new(guchar, 4 * width * height);
     memset(trace_px, 0x00, 4 * width * height);
     
-    std::queue<NR::Point> fill_queue;
+    std::deque<NR::Point> fill_queue;
+    std::queue<NR::Point> color_queue;
     
+    std::vector<NR::Point> fill_points;
     
-    std::vector<NR::Point> points;
-    
-    if (use_rubberband_points) {
-        Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
-        points = r->getPoints();
+    if (is_point_fill) {
+        fill_points.push_back(NR::Point(event->button.x, event->button.y));
     } else {
-        points.push_back(NR::Point(event->button.x, event->button.y));
+        Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+        fill_points = r->getPoints();
     }
 
-    for (unsigned int i = 0; i < points.size(); i++) {
-        NR::Point pw = NR::Point(points[i][NR::X] / zoom_scale, sp_document_height(document) + (points[i][NR::Y] / zoom_scale)) * affine;
+    for (unsigned int i = 0; i < fill_points.size(); i++) {
+        NR::Point pw = NR::Point(fill_points[i][NR::X] / zoom_scale, sp_document_height(document) + (fill_points[i][NR::Y] / zoom_scale)) * affine;
         
         pw[NR::X] = (int)MIN(width - 1, MAX(0, pw[NR::X]));
         pw[NR::Y] = (int)MIN(height - 1, MAX(0, pw[NR::Y]));
         
-        fill_queue.push(pw);
+        if (is_touch_fill) {
+            if (i == 0) {
+                color_queue.push(pw);
+            } else {
+                fill_queue.push_back(pw);
+            }
+        } else {
+            color_queue.push(pw);
+        }
     }
 
-    NR::Point first_point = NR::Point(points[0][NR::X] / zoom_scale, sp_document_height(document) + (points[0][NR::Y] / zoom_scale)) * affine;
-    
-    unsigned char *orig_px  = get_pixel(px, (int)first_point[NR::X], (int)first_point[NR::Y], width);
-    unsigned char orig_color[4];
-    for (int i = 0; i < 4; i++) { orig_color[i] = orig_px[i]; }
-    
     bool aborted = false;
     int y_limit = height - 1;
 
-    unsigned char merged_orig[4];
-
-    merge_pixel_with_background(orig_color, dtc, merged_orig);
-    
     PaintBucketChannels method = (PaintBucketChannels)prefs_get_int_attribute("tools.paintbucket", "channels", 0);
     int threshold = prefs_get_int_attribute_limited("tools.paintbucket", "threshold", 1, 0, 100);
 
@@ -657,74 +655,90 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     bci.screen = screen;
     bci.dtc = dtc;
 
-    while (!fill_queue.empty() && !aborted) {
-        NR::Point cp = fill_queue.front();
-        fill_queue.pop();
-        unsigned char *s = get_pixel(px, (int)cp[NR::X], (int)cp[NR::Y], width);
+    while (!color_queue.empty() && !aborted) {
+        NR::Point color_point = color_queue.front();
+        color_queue.pop();
         
-        // same color at this point
-        if (compare_pixels(s, orig_color, dtc, threshold, method)) {
-            int x = (int)cp[NR::X];
-            int y = (int)cp[NR::Y];
+        unsigned char *orig_px = get_pixel(px, (int)color_point[NR::X], (int)color_point[NR::Y], width);
+        unsigned char orig_color[4];
+        for (int i = 0; i < 4; i++) { orig_color[i] = orig_px[i]; }
+        
+        unsigned char merged_orig[4];
+    
+        merge_pixel_with_background(orig_color, dtc, merged_orig);
+        
+        fill_queue.push_front(color_point);
+        
+        while (!fill_queue.empty() && !aborted) {
+            NR::Point cp = fill_queue.front();
+            fill_queue.pop_front();
             
-            bool top_fill = true;
-            bool bottom_fill = true;
+            unsigned char *s = get_pixel(px, (int)cp[NR::X], (int)cp[NR::Y], width);
             
-            if (y > 0) { 
-                top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y - 1, width, threshold, method, top_fill);
-            } else {
-                if (bbox->min()[NR::Y] > screen.min()[NR::Y]) {
-                    aborted = true; break;
+            // same color at this point
+            if (compare_pixels(s, orig_color, dtc, threshold, method)) {
+                int x = (int)cp[NR::X];
+                int y = (int)cp[NR::Y];
+                
+                bool top_fill = true;
+                bool bottom_fill = true;
+                
+                if (y > 0) { 
+                    top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y - 1, width, threshold, method, top_fill);
                 } else {
-                    reached_screen_boundary = true;
+                    if (bbox->min()[NR::Y] > screen.min()[NR::Y]) {
+                        aborted = true; break;
+                    } else {
+                        reached_screen_boundary = true;
+                    }
                 }
-            }
-            if (y < y_limit) { 
-                bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y + 1, width, threshold, method, bottom_fill);
-              } else {
-                  if (bbox->max()[NR::Y] < screen.max()[NR::Y]) {
-                      aborted = true; break;
+                if (y < y_limit) { 
+                    bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y + 1, width, threshold, method, bottom_fill);
                   } else {
-                      reached_screen_boundary = true;
-                  }
-            }
-            
-            bci.is_left = true;
-            bci.x = x;
-            bci.y = y;
-            bci.top_fill = top_fill;
-            bci.bottom_fill = bottom_fill;
-            
-            ScanlineCheckResult result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
-            
-            switch (result) {
-                case SCANLINE_CHECK_ABORTED:
-                    aborted = true;
-                    break;
-                case SCANLINE_CHECK_BOUNDARY:
-                    reached_screen_boundary = true;
-                    break;
-                default:
-                    break;
-            }
-            
-            bci.is_left = false;
-            bci.x = x + 1;
-            bci.y = y;
-            bci.top_fill = top_fill;
-            bci.bottom_fill = bottom_fill;
-            
-            result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
-            
-            switch (result) {
-                case SCANLINE_CHECK_ABORTED:
-                    aborted = true;
-                    break;
-                case SCANLINE_CHECK_BOUNDARY:
-                    reached_screen_boundary = true;
-                    break;
-                default:
-                    break;
+                      if (bbox->max()[NR::Y] < screen.max()[NR::Y]) {
+                          aborted = true; break;
+                      } else {
+                          reached_screen_boundary = true;
+                      }
+                }
+                
+                bci.is_left = true;
+                bci.x = x;
+                bci.y = y;
+                bci.top_fill = top_fill;
+                bci.bottom_fill = bottom_fill;
+                
+                ScanlineCheckResult result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
+                
+                switch (result) {
+                    case SCANLINE_CHECK_ABORTED:
+                        aborted = true;
+                        break;
+                    case SCANLINE_CHECK_BOUNDARY:
+                        reached_screen_boundary = true;
+                        break;
+                    default:
+                        break;
+                }
+                
+                bci.is_left = false;
+                bci.x = x + 1;
+                bci.y = y;
+                bci.top_fill = top_fill;
+                bci.bottom_fill = bottom_fill;
+                
+                result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
+                
+                switch (result) {
+                    case SCANLINE_CHECK_ABORTED:
+                        aborted = true;
+                        break;
+                    case SCANLINE_CHECK_BOUNDARY:
+                        reached_screen_boundary = true;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
@@ -791,6 +805,8 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
 
 static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
+    static bool dragging;
+    
     gint ret = FALSE;
     SPDesktop *desktop = event_context->desktop;
 
@@ -798,37 +814,38 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
     case GDK_BUTTON_PRESS:
         if ( event->button.button == 1 ) {
             if (!(event->button.state & GDK_CONTROL_MASK)) {
-                if (event->button.state & GDK_MOD1_MASK) {
-                    NR::Point const button_pt(event->button.x, event->button.y);
-                    NR::Point const p(desktop->w2d(button_pt));
-                    Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
-                    Inkscape::Rubberband::get()->start(desktop, p);
-                } else {
-                    // set "busy" cursor
-                    desktop->setWaitingCursor();
+                NR::Point const button_w(event->button.x,
+                                        event->button.y);
     
-                    if (SP_IS_EVENT_CONTEXT(event_context)) { 
-                        // Since setWaitingCursor runs main loop iterations, we may have already left this tool!
-                        // So check if the tool is valid before doing anything
-    
-                        sp_flood_do_flood_fill(event_context, event, event->button.state & GDK_SHIFT_MASK, false);
-                        
-                        // restore cursor when done; note that it may already be different if e.g. user 
-                        // switched to another tool during interruptible tracing or drawing, in which case do nothing
-                        desktop->clearWaitingCursor();
-        
-                        ret = TRUE;
-                    }
-                }
+                // save drag origin
+                event_context->xp = (gint) button_w[NR::X];
+                event_context->yp = (gint) button_w[NR::Y];
+                event_context->within_tolerance = true;
+                
+                dragging = true;
+                
+                NR::Point const p(desktop->w2d(button_w));
+                Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
+                Inkscape::Rubberband::get()->start(desktop, p);
             }
         }
     case GDK_MOTION_NOTIFY:
-        if (event->motion.state & GDK_BUTTON1_MASK) {
+        if ( dragging
+             && ( event->motion.state & GDK_BUTTON1_MASK ) )
+        {
+            if ( event_context->within_tolerance
+                 && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
+                 && ( abs( (gint) event->motion.y - event_context->yp ) < event_context->tolerance ) ) {
+                break; // do not drag if we're within tolerance from origin
+            }
+            
+            event_context->within_tolerance = false;
+            
             NR::Point const motion_pt(event->motion.x, event->motion.y);
             NR::Point const p(desktop->w2d(motion_pt));
             if (Inkscape::Rubberband::get()->is_started()) {
                 Inkscape::Rubberband::get()->move(p);
-                event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw over</b> areas to add to fill"));
+                event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"));
                 gobble_motion_events(GDK_BUTTON1_MASK);
             }
         }
@@ -844,15 +861,20 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
                 if (SP_IS_EVENT_CONTEXT(event_context)) { 
                     // Since setWaitingCursor runs main loop iterations, we may have already left this tool!
                     // So check if the tool is valid before doing anything
+                    dragging = false;
 
-                    sp_flood_do_flood_fill(event_context, event, event->button.state & GDK_SHIFT_MASK, true);
+                    bool is_point_fill = event_context->within_tolerance;
+                    bool is_touch_fill = event->button.state & GDK_MOD1_MASK;
                     
+                    sp_flood_do_flood_fill(event_context, event, event->button.state & GDK_SHIFT_MASK, is_point_fill, is_touch_fill);
+                    
+                    desktop->clearWaitingCursor();
                     // restore cursor when done; note that it may already be different if e.g. user 
                     // switched to another tool during interruptible tracing or drawing, in which case do nothing
-                    desktop->clearWaitingCursor();
-    
+
                     ret = TRUE;
                 }
+
                 r->stop();
                 event_context->defaultMessageContext()->clear();
             }
