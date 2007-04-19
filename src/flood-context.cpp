@@ -125,7 +125,7 @@ static void sp_flood_context_init(SPFloodContext *flood_context)
     event_context->hot_y = 30;
     event_context->xp = 0;
     event_context->yp = 0;
-    event_context->tolerance = 0;
+    event_context->tolerance = 4;
     event_context->within_tolerance = false;
     event_context->item_to_select = NULL;
 
@@ -667,7 +667,10 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
         merge_pixel_with_background(orig_color, dtc, merged_orig);
         
-        fill_queue.push_front(color_point);
+        unsigned char *trace_t = get_pixel(trace_px, (int)color_point[NR::X], (int)color_point[NR::Y], width);
+        if (trace_t[0] != 255) {
+          fill_queue.push_front(color_point);
+        }
         
         while (!fill_queue.empty() && !aborted) {
             NR::Point cp = fill_queue.front();
