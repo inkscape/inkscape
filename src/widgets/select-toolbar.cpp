@@ -54,11 +54,11 @@ using Inkscape::UnitTracker;
 static void
 sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
 {
-    if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
+    if (g_object_get_data(G_OBJECT(spw), "update")) {
         return;
     }
 
-    gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
+    g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
     bool setActive = false;
 
     using NR::X;
@@ -66,7 +66,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
     if ( sel && !sel->isEmpty() ) {
         NR::Maybe<NR::Rect> const bbox(sel->bounds());
         if ( bbox && !bbox->isEmpty() ) {
-            UnitTracker *tracker = reinterpret_cast<UnitTracker*>(gtk_object_get_data(GTK_OBJECT(spw), "tracker"));
+            UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(G_OBJECT(spw), "tracker"));
             SPUnit const &unit = *tracker->getActiveUnit();
 
             struct { char const *key; double val; } const keyval[] = {
@@ -79,13 +79,13 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
             if (unit.base == SP_UNIT_DIMENSIONLESS) {
                 double const val = 1. / unit.unittobase;
                 for (unsigned i = 0; i < G_N_ELEMENTS(keyval); ++i) {
-                    GtkAdjustment *a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), keyval[i].key);
+                    GtkAdjustment *a = (GtkAdjustment *) g_object_get_data(G_OBJECT(spw), keyval[i].key);
                     gtk_adjustment_set_value(a, val);
                     tracker->setFullVal( a, keyval[i].val );
                 }
             } else {
                 for (unsigned i = 0; i < G_N_ELEMENTS(keyval); ++i) {
-                    GtkAdjustment *a = (GtkAdjustment *) gtk_object_get_data(GTK_OBJECT(spw), keyval[i].key);
+                    GtkAdjustment *a = (GtkAdjustment *) g_object_get_data(G_OBJECT(spw), keyval[i].key);
                     gtk_adjustment_set_value(a, sp_pixels_get_units(keyval[i].val, unit));
                 }
             }
@@ -98,12 +98,12 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
         setActive = false;
     }
 
-    GtkActionGroup *selectionActions = GTK_ACTION_GROUP( gtk_object_get_data(GTK_OBJECT(spw), "selectionActions") );
+    GtkActionGroup *selectionActions = GTK_ACTION_GROUP( g_object_get_data(G_OBJECT(spw), "selectionActions") );
     if ( selectionActions ) {
-        gtk_action_group_set_sensitive( selectionActions, setActive );
+//         gtk_action_group_set_sensitive( selectionActions, setActive );
     }
 
-    gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
+    g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
 }
 
 
@@ -131,11 +131,11 @@ sp_selection_layout_widget_change_selection(SPWidget *spw, Inkscape::Selection *
 static void
 sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
 {
-    if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
+    if (g_object_get_data(G_OBJECT(spw), "update")) {
         return;
     }
 
-    UnitTracker *tracker = reinterpret_cast<UnitTracker*>(gtk_object_get_data(GTK_OBJECT(spw), "tracker"));
+    UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(G_OBJECT(spw), "tracker"));
     if ( !tracker || tracker->isUpdating() ) {
         /*
          * When only units are being changed, don't treat changes
@@ -143,7 +143,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
          */
         return;
     }
-    gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
+    g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -153,7 +153,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     NR::Maybe<NR::Rect> bbox = selection->bounds();
 
     if ( !bbox || bbox->isEmpty() ) {
-        gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
+        g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
         return;
     }
 
@@ -165,10 +165,10 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     gdouble yrel = 0;
     SPUnit const &unit = *tracker->getActiveUnit();
 
-    GtkAdjustment* a_x = (GtkAdjustment *)gtk_object_get_data( GTK_OBJECT(spw), "X" );
-    GtkAdjustment* a_y = (GtkAdjustment *)gtk_object_get_data( GTK_OBJECT(spw), "Y" );
-    GtkAdjustment* a_w = (GtkAdjustment *)gtk_object_get_data( GTK_OBJECT(spw), "width" );
-    GtkAdjustment* a_h = (GtkAdjustment *)gtk_object_get_data( GTK_OBJECT(spw), "height" );
+    GtkAdjustment* a_x = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "X" ) );
+    GtkAdjustment* a_y = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "Y" ) );
+    GtkAdjustment* a_w = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "width" ) );
+    GtkAdjustment* a_h = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "height" ) );
 
     if (unit.base == SP_UNIT_ABSOLUTE || unit.base == SP_UNIT_DEVICE) {
         x0 = sp_units_get_pixels (a_x->value, unit);
@@ -189,7 +189,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     }
 
     // Keep proportions if lock is on
-    GtkToggleAction *lock = GTK_TOGGLE_ACTION( gtk_object_get_data(GTK_OBJECT(spw), "lock") );
+    GtkToggleAction *lock = GTK_TOGGLE_ACTION( g_object_get_data(G_OBJECT(spw), "lock") );
     if ( gtk_toggle_action_get_active(lock) ) {
         if (adj == a_h) {
             x1 = x0 + yrel * bbox->extent(NR::X);
@@ -236,14 +236,11 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         sp_document_maybe_done (document, actionkey, SP_VERB_CONTEXT_SELECT,
                                 _("Transform by toolbar"));
 
-        // defocus spinbuttons by moving focus to the canvas, unless "stay" is on
-        spinbutton_defocus(GTK_OBJECT(spw));
-
         // resume interruptibility
         sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
     }
 
-    gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
+    g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
 }
 
 static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
@@ -261,7 +258,7 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
         tracker->addAdjustment(adj);
     }
     if ( spw ) {
-        gtk_object_set_data( GTK_OBJECT(spw), data, adj );
+        g_object_set_data( G_OBJECT(spw), data, adj );
     }
 
     EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, Q_(label), tooltip, 0, SPIN_STEP, 3 );
@@ -336,12 +333,12 @@ static void toggle_lock( GtkToggleAction *act, gpointer data ) {
     }
 }
 
-static void destroy_tracker( GtkObject* obj, gpointer /*user_data*/ )
+static void destroy_tracker( GObject* obj, gpointer /*user_data*/ )
 {
-    UnitTracker *tracker = reinterpret_cast<UnitTracker*>(gtk_object_get_data(obj, "tracker"));
+    UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(obj, "tracker"));
     if ( tracker ) {
         delete tracker;
-        gtk_object_set_data( obj, "tracker", 0 );
+        g_object_set_data( obj, "tracker", 0 );
     }
 }
 
@@ -366,44 +363,13 @@ static GtkAction* create_action_for_verb( Inkscape::Verb* verb, Inkscape::UI::Vi
     return act;
 }
 
-GtkWidget *
-sp_select_toolbox_new(SPDesktop *desktop)
+void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     Inkscape::UI::View::View *view = desktop;
 
-    GtkWidget *holder = gtk_hbox_new(FALSE, 0);
-
-    gchar const * descr =
-        "<ui>"
-        "  <toolbar name='SelectToolbar'>"
-        "    <toolitem action='ObjectRotate90CCW' />"
-        "    <toolitem action='ObjectRotate90' />"
-        "    <toolitem action='ObjectFlipHorizontally' />"
-        "    <toolitem action='ObjectFlipVertically' />"
-        "    <separator />"
-        "    <toolitem action='SelectionToBack' />"
-        "    <toolitem action='SelectionLower' />"
-        "    <toolitem action='SelectionRaise' />"
-        "    <toolitem action='SelectionToFront' />"
-        "    <separator />"
-        "    <toolitem action='XAction' />"
-        "    <toolitem action='YAction' />"
-        "    <toolitem action='WidthAction' />"
-        "    <toolitem action='LockAction' />"
-        "    <toolitem action='HeightAction' />"
-        "    <toolitem action='UnitsAction' />"
-        "    <separator />"
-        "    <toolitem action='transform_stroke' />"
-        "    <toolitem action='transform_corners' />"
-        "    <toolitem action='transform_gradient' />"
-        "    <toolitem action='transform_pattern' />"
-        "  </toolbar>"
-        "</ui>";
-    GtkUIManager* mgr = gtk_ui_manager_new();
-    GError* errVal = 0;
-    GtkActionGroup* mainActions = gtk_action_group_new("main");
-    GtkActionGroup* selectionActions = gtk_action_group_new("selection");
     GtkAction* act = 0;
+
+    GtkActionGroup* selectionActions = mainActions; // temporary
 
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CCW), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
@@ -427,7 +393,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
     GtkWidget *spw = sp_widget_new_global(INKSCAPE);
 
     // Remember the desktop's canvas widget, to be used for defocusing.
-    gtk_object_set_data(GTK_OBJECT(spw), "dtw", sp_desktop_canvas(desktop));
+    g_object_set_data(G_OBJECT(spw), "dtw", sp_desktop_canvas(desktop));
 
     // The vb frame holds all other widgets and is used to set sensitivity depending on selection state.
     GtkWidget *vb = gtk_hbox_new(FALSE, 0);
@@ -439,7 +405,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
     tracker->addUnit( SP_UNIT_PERCENT, 0 );
     tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
 
-    gtk_object_set_data( GTK_OBJECT(spw), "tracker", tracker );
+    g_object_set_data( G_OBJECT(spw), "tracker", tracker );
     g_signal_connect( G_OBJECT(spw), "destroy", G_CALLBACK(destroy_tracker), spw );
 
     EgeAdjustmentAction* eact = 0;
@@ -474,7 +440,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
                                                     _("When locked, change both width and height by the same proportion"),
                                                     "lock_unlocked",
                                                     Inkscape::ICON_SIZE_DECORATION );
-    gtk_object_set_data( GTK_OBJECT(spw), "lock", itact );
+    g_object_set_data( G_OBJECT(spw), "lock", itact );
     g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_lock), desktop) ;
     gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
     }
@@ -490,7 +456,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
     act = tracker->createAction( "UnitsAction", _("Units"), _("") );
     gtk_action_group_add_action( selectionActions, act );
 
-    gtk_object_set_data( GTK_OBJECT(spw), "selectionActions", selectionActions );
+    g_object_set_data( G_OBJECT(spw), "selectionActions", selectionActions );
 
     // Force update when selection changes.
     gtk_signal_connect(GTK_OBJECT(spw), "modify_selection", GTK_SIGNAL_FUNC(sp_selection_layout_widget_modify_selection), desktop);
@@ -547,20 +513,6 @@ sp_select_toolbox_new(SPDesktop *desktop)
     g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_pattern), desktop) ;
     gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
     }
-
-    gtk_widget_show_all(holder);
-
-    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
-    gtk_ui_manager_insert_action_group( mgr, selectionActions, 0 );
-    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
-
-    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/SelectToolbar" );
-    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
-    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
-
-    gtk_box_pack_start( GTK_BOX(holder), toolBar, TRUE, TRUE, 0);
-
-    return holder;
 }
 
 

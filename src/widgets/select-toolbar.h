@@ -17,7 +17,7 @@
 
 #include <forward.h>
 
-GtkWidget *sp_select_toolbox_new(SPDesktop *desktop);
+void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 
 
 #endif /* !SEEN_SELECT_TOOLBAR_H */
