@@ -300,7 +300,7 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr)
     color = DEFAULTGRIDCOLOR;
     empcolor = DEFAULTGRIDEMPCOLOR;
     empspacing = 5;
-    spacing[NR::X] = spacing[NR::Y] = 8.0;
+    spacing[NR::X] = spacing[NR::Y] = 1.0;
     gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
     render_dotted = false;
 
