@@ -351,6 +351,18 @@ static void delete_connection(GObject *obj, sigc::connection *connection) {
     delete connection;
 }
 
+static void purge_repr_listener( GObject* obj, GObject* tbl )
+{
+    (void)obj;
+    Inkscape::XML::Node* oldrepr = reinterpret_cast<Inkscape::XML::Node *>( g_object_get_data( tbl, "repr" ) );
+    if (oldrepr) { // remove old listener
+        sp_repr_remove_listener_by_data(oldrepr, tbl);
+        Inkscape::GC::release(oldrepr);
+        oldrepr = 0;
+        g_object_set_data( tbl, "repr", NULL );
+    }
+}
+
 static GtkWidget *
 sp_toolbox_button_new(GtkWidget *t, Inkscape::IconSize size, gchar const *pxname, GtkSignalFunc handler,
                       GtkTooltips *tt, gchar const *tip)
@@ -1481,7 +1493,8 @@ sp_star_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
 {
     int n_selected = 0;
     Inkscape::XML::Node *repr = NULL;
-    Inkscape::XML::Node *oldrepr = NULL;
+
+    purge_repr_listener( tbl, tbl );
 
     for (GSList const *items = selection->itemList();
          items != NULL;
@@ -1499,14 +1512,6 @@ sp_star_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
         g_object_set( G_OBJECT(act), "label", _("<b>New:</b>"), NULL );
     } else if (n_selected == 1) {
         g_object_set( G_OBJECT(act), "label", _("<b>Change:</b>"), NULL );
-
-        oldrepr = (Inkscape::XML::Node *) g_object_get_data( tbl, "repr" );
-        if (oldrepr) { // remove old listener
-            sp_repr_remove_listener_by_data(oldrepr, tbl);
-            Inkscape::GC::release(oldrepr);
-            oldrepr = 0;
-            g_object_set_data( tbl, "repr", NULL );
-        }
 
         if (repr) {
             g_object_set_data( tbl, "repr", repr );
@@ -1701,6 +1706,7 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_star_toolbox_selection_changed), (GObject *)holder))
         );
     g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
+    g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
 }
 
 
@@ -1876,7 +1882,11 @@ sp_rect_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
     int n_selected = 0;
     Inkscape::XML::Node *repr = NULL;
     SPItem *item = NULL;
-    Inkscape::XML::Node *oldrepr = NULL;
+
+    if ( g_object_get_data( tbl, "repr" ) ) {
+        g_object_set_data( tbl, "item", NULL );
+    }
+    purge_repr_listener( tbl, tbl );
 
     for (GSList const *items = selection->itemList();
          items != NULL;
@@ -1909,14 +1919,6 @@ sp_rect_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
         GtkAction* h = GTK_ACTION( g_object_get_data( tbl, "height_action" ) );
         gtk_action_set_sensitive(h, TRUE);
 
-        oldrepr = (Inkscape::XML::Node *) g_object_get_data( tbl, "repr" );
-        if (oldrepr) { // remove old listener
-            sp_repr_remove_listener_by_data(oldrepr, tbl);
-            Inkscape::GC::release(oldrepr);
-            oldrepr = 0;
-            g_object_set_data( tbl, "repr", NULL );
-            g_object_set_data( tbl, "item", NULL );
-        }
         if (repr) {
             g_object_set_data( tbl, "repr", repr );
             g_object_set_data( tbl, "item", item );
@@ -2033,6 +2035,7 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), (GObject *)holder))
         );
     g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
+    g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
 }
 
 //########################
@@ -2168,7 +2171,8 @@ sp_spiral_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl
 {
     int n_selected = 0;
     Inkscape::XML::Node *repr = NULL;
-    Inkscape::XML::Node *oldrepr = NULL;
+
+    purge_repr_listener( tbl, tbl );
 
     for (GSList const *items = selection->itemList();
          items != NULL;
@@ -2186,14 +2190,6 @@ sp_spiral_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl
         g_object_set( G_OBJECT(act), "label", _("<b>New:</b>"), NULL );
     } else if (n_selected == 1) {
         g_object_set( G_OBJECT(act), "label", _("<b>Change:</b>"), NULL );
-
-        oldrepr = (Inkscape::XML::Node *) g_object_get_data( tbl, "repr" );
-        if (oldrepr) { // remove old listener
-            sp_repr_remove_listener_by_data(oldrepr, tbl);
-            Inkscape::GC::release(oldrepr);
-            oldrepr = 0;
-            g_object_set_data( tbl, "repr", NULL );
-        }
 
         if (repr) {
             g_object_set_data( tbl, "repr", repr );
@@ -2272,6 +2268,7 @@ static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
         sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_spiral_toolbox_selection_changed), (GObject *)holder))
         );
     g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
+    g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
 }
 
 //########################
@@ -2767,7 +2764,8 @@ static void sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GOb
 {
     int n_selected = 0;
     Inkscape::XML::Node *repr = NULL;
-    Inkscape::XML::Node *oldrepr = NULL;
+
+    purge_repr_listener( tbl, tbl );
 
     for (GSList const *items = selection->itemList();
          items != NULL;
@@ -2787,15 +2785,6 @@ static void sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GOb
     } else if (n_selected == 1) {
         g_object_set_data( tbl, "single", GINT_TO_POINTER(TRUE) );
         g_object_set( G_OBJECT(act), "label", _("<b>Change:</b>"), NULL );
-
-        oldrepr = (Inkscape::XML::Node *) g_object_get_data( tbl, "repr" );
-
-        if (oldrepr) { // remove old listener
-            sp_repr_remove_listener_by_data(oldrepr, tbl);
-            Inkscape::GC::release(oldrepr);
-            oldrepr = 0;
-            g_object_set_data( tbl, "repr", NULL );
-        }
 
         if (repr) {
             g_object_set_data( tbl, "repr", repr );
@@ -2909,6 +2898,7 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
         sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), (GObject *)holder))
         );
     g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
+    g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
 }
 
 
@@ -4446,15 +4436,7 @@ sp_connector_toolbox_new(SPDesktop *desktop)
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
     g_assert(repr != NULL);
 
-    Inkscape::XML::Node *oldrepr = (Inkscape::XML::Node *)
-            gtk_object_get_data(GTK_OBJECT(tbl), "repr");
-
-    if (oldrepr) { // remove old listener
-        sp_repr_remove_listener_by_data(oldrepr, tbl);
-        Inkscape::GC::release(oldrepr);
-        oldrepr = NULL;
-        g_object_set_data(G_OBJECT(tbl), "repr", NULL);
-    }
+    purge_repr_listener( G_OBJECT(tbl), G_OBJECT(tbl) );
 
     if (repr) {
         g_object_set_data(G_OBJECT(tbl), "repr", repr);
