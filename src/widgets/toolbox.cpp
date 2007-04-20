@@ -105,7 +105,7 @@ static void       sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mai
 static void       sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_pen_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
-static GtkWidget *sp_dropper_toolbox_new(SPDesktop *desktop);
+static void       sp_dropper_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static GtkWidget *sp_empty_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_connector_toolbox_new(SPDesktop *desktop);
 static void       sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
@@ -169,7 +169,7 @@ static struct {
       SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS, "tools.calligraphic", _("Style of new calligraphic strokes")},
     { "SPTextContext",   "text_toolbox",   sp_text_toolbox_new, 0,               0,
       SP_VERB_INVALID, 0, 0},
-    { "SPDropperContext", "dropper_toolbox", sp_dropper_toolbox_new, 0,          0,
+    { "SPDropperContext", "dropper_toolbox", 0, sp_dropper_toolbox_prep,         "DropperToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPGradientContext", "gradient_toolbox", sp_gradient_toolbox_new, 0,       0,
       SP_VERB_INVALID, 0, 0},
@@ -324,6 +324,11 @@ static gchar const * ui_descr =
         "    <separator />"
         "    <toolitem action='OffsetAction' />"
         "    <toolitem action='PaintbucketUnitsAction' />"
+        "  </toolbar>"
+
+        "  <toolbar name='DropperToolbar'>"
+        "    <toolitem action='DropperPickAlphaAction' />"
+        "    <toolitem action='DropperSetAlphaAction' />"
         "  </toolbar>"
         "</ui>"
 ;
@@ -2910,100 +2915,24 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
 //##      Dropper       ##
 //########################
 
-static void toggle_dropper_pick_alpha (GtkWidget *button, gpointer tbl) {
-    prefs_set_int_attribute ("tools.dropper", "pick",
-        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)));
-    GtkWidget *set_checkbox = (GtkWidget*) g_object_get_data(G_OBJECT(tbl), "set_checkbox");
-    if (set_checkbox) {
-        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
-            gtk_widget_set_sensitive (GTK_WIDGET (set_checkbox), TRUE);
+static void toggle_dropper_pick_alpha( GtkToggleAction* act, gpointer tbl ) {
+    prefs_set_int_attribute( "tools.dropper", "pick", gtk_toggle_action_get_active( act ) );
+    GtkAction* set_action = GTK_ACTION( g_object_get_data(G_OBJECT(tbl), "set_action") );
+    if ( set_action ) {
+        if ( gtk_toggle_action_get_active( act ) ) {
+            gtk_action_set_sensitive( set_action, TRUE );
         } else {
-            gtk_widget_set_sensitive (GTK_WIDGET (set_checkbox), FALSE);
+            gtk_action_set_sensitive( set_action, FALSE );
         }
     }
+
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
-static void toggle_dropper_set_alpha (GtkWidget *button, gpointer tbl) {
-    prefs_set_int_attribute ("tools.dropper", "setalpha",
-        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ? 1 : 0);
+static void toggle_dropper_set_alpha( GtkToggleAction* act, gpointer tbl ) {
+    prefs_set_int_attribute( "tools.dropper", "setalpha", gtk_toggle_action_get_active( act ) ? 1 : 0 );
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
-
-
-/**
- * Copy the current saved desktop color to the clipboard as full hex + alpha
- * color representation. This is useful for passing values between various
- * input boxes, or directly to xml.
- */
-/* static void
-sp_dropper_copy( GtkWidget *widget, GtkObject *obj)
-{
-    GtkWidget *tbl = GTK_WIDGET(obj);
-
-    SPDesktop *desktop =
-        (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
-
-
-    sp_dropper_c32_color_copy( sp_desktop_get_color(desktop, true) );
-}*/
-
-
-/**
- * Copies currently saved desktop color to the clipboard as a hex value. This
- * is useful for editing webpages and needing a value quickly for web
- * colors.
- *
- * TODO: When the toggle of the dropper is set to not mix color against
- *       page background, this still just gets the color of the page and
- *       doesn't get the actual mixed against background which is needed
- *       for the hex value ppl. want for web pages, etc.
- */
-
-/* static void
-sp_dropper_copy_as_hex ( GtkWidget *widget, GtkObject *obj)
-{
-    GtkWidget *tbl = GTK_WIDGET(obj);
-
-    SPDesktop *desktop =
-        (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
-
-    sp_dropper_c32_color_copy_hex( sp_desktop_get_color(desktop, true) );
-}*/
-
-
-/**
- * Sets the input boxes with the changed color and opacity. This is used as a
- * callback for style changing.
- */
-/* static bool
-sp_style_changed (const SPCSSAttr *css, gpointer data)
-{
-    // GrDrag *drag = (GrDrag *) data;
-
-    // set fill of text entry box
-    if (css->attribute("fill"))
-        gtk_entry_set_text((GtkEntry *)dropper_rgb_entry,
-            css->attribute("fill"));
-
-    // set opacity of text entry box
-    if (css->attribute("fill-opacity"))
-        gtk_entry_set_text((GtkEntry *)dropper_opacity_entry,
-            css->attribute("fill-opacity"));
-
-    // set fill of text entry box
-    if (css->attribute("stroke"))
-        gtk_entry_set_text((GtkEntry *)dropper_rgb_entry,
-            css->attribute("stroke"));
-
-    // set opacity of text entry box
-    if (css->attribute("stroke-opacity"))
-        gtk_entry_set_text((GtkEntry *)dropper_opacity_entry,
-            css->attribute("stroke-opacity"));
-    return false;
-
-}
-*/
 
 
 /**
@@ -3013,162 +2942,35 @@ sp_style_changed (const SPCSSAttr *css, gpointer data)
  * TODO: Add queue of last 5 or so colors selected with new swatches so that
  *       can drag and drop places. Will provide a nice mixing palette.
  */
-static GtkWidget *
-sp_dropper_toolbox_new(SPDesktop *desktop)
+static void sp_dropper_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-    GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
-
-    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
-    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
-
-    GtkTooltips *tt = gtk_tooltips_new();
-
-
-    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE,
-                       AUX_BETWEEN_BUTTON_GROUPS);
-    // sp_toolbox_add_label(tbl, _("<b>New:</b>"));
-
-
-
-    /* RGB Input Field */
- /*   {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-        GtkWidget *dropper_rgba_label = gtk_label_new ("Color:");
-        gtk_widget_show (dropper_rgba_label);
-        gtk_container_add(GTK_CONTAINER(hb), dropper_rgba_label);
-
-      	dropper_rgb_entry = gtk_entry_new ();
-	sp_dialog_defocus_on_enter (dropper_rgb_entry);
-	gtk_entry_set_max_length (GTK_ENTRY (dropper_rgb_entry), 7);
-	gtk_entry_set_width_chars (GTK_ENTRY (dropper_rgb_entry), 7);
-        gtk_tooltips_set_tip(tt, dropper_rgb_entry,
-                         _("Hexidecimal representation of last selected "
-                           "color"),
-                         NULL);
-	gtk_widget_show (dropper_rgb_entry);
-        gtk_container_add(GTK_CONTAINER(hb), dropper_rgb_entry);
-
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE,
-                           AUX_BETWEEN_BUTTON_GROUPS);
-    } */
-
-    /* Opacity Input Field */
-/*    {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-        GtkWidget *dropper_opacity_label = gtk_label_new ( _("Opacity:") );
-        gtk_widget_show (dropper_opacity_label);
-        gtk_container_add(GTK_CONTAINER(hb), dropper_opacity_label);
-
-      	dropper_opacity_entry = gtk_entry_new ();
-	sp_dialog_defocus_on_enter (dropper_opacity_entry);
-	gtk_entry_set_max_length (GTK_ENTRY (dropper_opacity_entry), 11);
-	gtk_entry_set_width_chars (GTK_ENTRY (dropper_opacity_entry), 11);
-        gtk_tooltips_set_tip(tt, dropper_opacity_entry,
-                         _("Opacity of last selected color"),
-                         NULL);
-	gtk_widget_show (dropper_opacity_entry);
-        gtk_container_add(GTK_CONTAINER(hb), dropper_opacity_entry);
-
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE,
-                           AUX_BETWEEN_BUTTON_GROUPS);
-    } */
-
-
-    /* Copy to Clipboard */
-/*    {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-        GtkWidget *b = gtk_button_new_with_label(_("Copy as RGBA"));
-        gtk_tooltips_set_tip(tt, b, _("Copy last saved color as hexidecimal "
-				      "RGB + Alpha (RGBA) to "
-                                      "clipboard"),
-                             NULL);
-        gtk_widget_show(b);
-        gtk_container_add(GTK_CONTAINER(hb), b);
-        gtk_signal_connect(GTK_OBJECT(b), "clicked",
-            GTK_SIGNAL_FUNC(sp_dropper_copy), tbl);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE,
-                           AUX_BETWEEN_BUTTON_GROUPS);
-    } */
-
-
-    /* Copy to Clipboard as HEX */
-/*    {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-        GtkWidget *b = gtk_button_new_with_label(_("Copy as HEX"));
-        gtk_tooltips_set_tip(tt, b, _("Copy last saved color as "
-				      "hexidecimal RGB without alpha "
-				      "to clipboard"), NULL);
-        gtk_widget_show(b);
-        gtk_container_add(GTK_CONTAINER(hb), b);
-        gtk_signal_connect(GTK_OBJECT(b), "clicked",
-            GTK_SIGNAL_FUNC(sp_dropper_copy_as_hex), tbl);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE,
-                           AUX_BETWEEN_BUTTON_GROUPS);
-    } */
-
-    // aux_toolbox_space(tbl, AUX_BETWEEN_BUTTON_GROUPS);
+    gint pickAlpha = prefs_get_int_attribute( "tools.dropper", "pick", 1 );
 
     {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-
-        GtkWidget *button = gtk_check_button_new_with_label(_("Pick alpha"));
-        gtk_tooltips_set_tip(tt, button, _("Pick both the color and the alpha (transparency) under cursor; otherwise, pick only the visible color premultiplied by alpha"), NULL);
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                      prefs_get_int_attribute ("tools.dropper",
-                                                               "pick", 1));
-        gtk_widget_show(button);
-        gtk_container_add (GTK_CONTAINER (hb), button);
-        gtk_object_set_data(GTK_OBJECT(tbl), "pick_checkbox", button);
-        g_signal_connect (G_OBJECT (button), "toggled", G_CALLBACK (toggle_dropper_pick_alpha), tbl);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE,
-                   AUX_BETWEEN_BUTTON_GROUPS);
+        InkToggleAction* act = ink_toggle_action_new( "DropperPickAlphaAction",
+                                                      _("Pick alpha"),
+                                                      _("Pick both the color and the alpha (transparency) under cursor; otherwise, pick only the visible color premultiplied by alpha"),
+                                                      "color_alpha_get",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_object_set_data( holder, "pick_action", act );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), pickAlpha );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_dropper_pick_alpha), holder );
     }
 
     {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-
-        GtkWidget *button = gtk_check_button_new_with_label(_("Set alpha"));
-        gtk_tooltips_set_tip(tt, button, _("If alpha was picked, assign it to selection as fill or stroke transparency"), NULL);
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                      prefs_get_int_attribute ("tools.dropper",
-                                                               "setalpha", 1));
-        gtk_widget_show(button);
-        gtk_container_add (GTK_CONTAINER (hb), button);
-        gtk_object_set_data(GTK_OBJECT(tbl), "set_checkbox", button);
-        g_signal_connect (G_OBJECT (button), "toggled", G_CALLBACK (toggle_dropper_set_alpha), tbl);
-
+        InkToggleAction* act = ink_toggle_action_new( "DropperSetAlphaAction",
+                                                      _("Set alpha"),
+                                                      _("If alpha was picked, assign it to selection as fill or stroke transparency"),
+                                                      "color_alpha_set",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_object_set_data( holder, "set_action", act );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.dropper", "setalpha", 1 ) );
         // make sure it's disabled if we're not picking alpha
-        GtkWidget *pick_checkbox = (GtkWidget*) g_object_get_data(G_OBJECT(tbl), "pick_checkbox");
-        if (pick_checkbox) {
-            if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (pick_checkbox))) {
-                gtk_widget_set_sensitive (GTK_WIDGET (button), TRUE);
-            } else {
-                gtk_widget_set_sensitive (GTK_WIDGET (button), FALSE);
-            }
-        }
-
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE,
-                   AUX_BETWEEN_BUTTON_GROUPS);
+        gtk_action_set_sensitive( GTK_ACTION(act), pickAlpha );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_dropper_set_alpha), holder );
     }
-
-    aux_toolbox_space(tbl, AUX_BETWEEN_BUTTON_GROUPS);
-
-
-    // where new gtkmm stuff should go
-
-    gtk_widget_show_all(tbl);
-    sp_set_font_size_smaller (tbl);
-
-    /*
-    sigc::connection *connection = new sigc::connection(
-        desktop->connectSetStyle(
-            sigc::bind(sigc::ptr_fun(sp_style_changed),
-                       desktop)) );
-
-    g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection),
-                     connection); */
-
-    return tbl;
 }
 
 
