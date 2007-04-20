@@ -1,0 +1,178 @@
+#ifndef __INKSCAPE_IDL__
+#define __INKSCAPE_IDL__
+/**
+ * Inkscape API Description
+ *
+ * This is a place where people can discuss and modify their ideas
+ * of what an Inkscape exported API should look like. 
+ * 
+ * This IDL file should be considered to be somewhat of a Wish List,
+ * and people should feel free to add their ideas to it.   
+ *
+ * Authors:
+ *   Inkscape members
+ *
+ * Copyright (C) 2007 Inkscape.org
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+
+
+module inkscape
+{
+module api
+{
+
+    /**
+     * This will actually be defined as a Glib::ustring
+     * but people should use the word 'String'
+     */
+    valuetype String sequence<unsigned short>;
+
+    /**
+     * Forward declarations
+     */     
+    interface Env;
+    interface Application;
+    interface Document;
+    interface Desktop;
+    interface DialogManager;
+
+
+
+    exception Exception {
+        unsigned short   code;
+    };
+
+    /**
+     *   ExceptionCodes
+     *   These muse be constants, since languages handle enums
+     *   differently.   
+     */   
+    const unsigned short      INKER                       = 1;
+    const unsigned short      INKERR_NOT_FOUND            = 2;
+    const unsigned short      INKERR_NOT_SUPPORTED        = 3;
+
+
+
+    /**
+     * This is the top-level root of all Inkscape interfaces.
+     * It is the single point of contact from which all other
+     * interfaces can be accessed.  Anything top-level or
+     * global should be parented here.
+     * 
+     * This allows an entire set of interfaces to be exported
+     * to a shared object with only a single symbol.  This symbol
+     * can be accessed something like:
+     *
+     *  typedef (Env *)(EnvCreateFunc)();     
+     *  EnvCreateFunc createEnvironment =
+     *              (EnvCreateFunc) dlsym("createEnvironment");
+     *  Env *ink = createEnvironment();
+     *       
+     *  
+     *  This allows shared object linking to be much easier, and
+     *  allows binding to other languages to be performed however
+     *  is best for each.                    
+     *
+     */
+    interface Env {
+
+        /**
+         *  This is the main application, which
+         */         
+        Application *getApplication();
+
+    };
+    
+    /**
+     *
+     * Top-level Inkscape application
+     *
+     */
+    interface Application {
+
+        /**
+         *  Return the currently-focused desktop
+         */         
+        Desktop *getActiveDesktop();
+
+        /**
+         *  Return the document in the currently-focused desktop
+         */         
+        Document *getActiveDocument();
+
+    };
+    
+    /**
+     *    
+     * This is a main editing window, with all of its chrome.
+     *
+     */
+    interface Desktop {
+
+        /**
+         *  Return the dialog manager for this desktop
+         */         
+        DialogManager *getDialogManager();
+
+    };
+    
+    /**
+     * An Inkscape Document, which is SPObject + XML
+     *
+     */
+    interface Document {
+
+
+        /**
+         *  Copy the document's XML into a DOM tree and
+         *  return a pointer to it.         
+         */         
+        org::w3c::dom::Document *getDOM();
+
+        /**
+         *  Set the Document's repr tree to the specified 
+         *  DOM document
+         */         
+        bool setDOM(org::w3c::dom::Document *doc);
+
+    };
+    
+    /**
+     * The interface that controls Inkscape's dialogs
+     *
+     */
+    interface DialogManager {
+
+        /**
+         *
+         */         
+        //some method
+
+    };
+    
+
+
+
+
+}; // module api
+
+}; // module inkscape
+
+
+#endif // __INKSCAPE_IDL__
+
