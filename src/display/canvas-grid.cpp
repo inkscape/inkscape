@@ -549,7 +549,7 @@ CanvasXYGrid::Update (NR::Matrix const &affine, unsigned int flags)
     sw -= NR::Point(affine[4], affine[5]);
 
     for(int dim = 0; dim < 2; dim++) {
-        gint scaling_factor = 5; //empspacing;
+        gint scaling_factor = empspacing;
 
         if (scaling_factor <= 1)
             scaling_factor = 5;
