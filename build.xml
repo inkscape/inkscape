@@ -125,6 +125,13 @@
         #define RENDER_WITH_PANGO_CAIRO       1
 
         #define HAVE_GTK_WINDOW_FULLSCREEN    1
+        
+        /* internal interpreter */
+        #define WITH_PYTHON                   1
+
+        /* shared whiteboard */
+        #define WITH_INKBOARD                 1
+        #define HAVE_SSL                      1
 
         #endif /* _CONFIG_H_ */
     </makefile>
@@ -237,7 +244,6 @@
             -DXP_WIN <!-- for JS -->
             -D_INTL_REDIRECT_INLINE
             -DRELAYTOOL_SSL="static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }" <!-- inkboard -->
-            -DWITH_INKBOARD -DHAVE_SSL <!-- inkboard -->
         </defines>
         <includes>
             -I${gtk}/include
@@ -388,7 +394,7 @@
        <flags>
        </flags>
        <fileset dir="${build}">
-           < include name="inkviewres.o"/ >
+           <include name="inkviewres.o"/>
            <include name="obj/inkview.o"/>
            <include name="libinkscape.a"/>
        </fileset>

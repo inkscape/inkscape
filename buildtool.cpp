@@ -37,7 +37,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.6.9, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.6.10, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -5586,7 +5586,7 @@ std::vector<DepRec> DepTool::loadDepFile(const String &depFile)
     if (root->getChildren().size()==0 ||
         root->getChildren()[0]->getName()!="dependencies")
         {
-        error("Main xml element should be <dependencies>");
+        error("loadDepFile: main xml element should be <dependencies>");
         delete root;
         return result;
         }
@@ -5599,47 +5599,53 @@ std::vector<DepRec> DepTool::loadDepFile(const String &depFile)
         {
         Element *objectElem = objects[i];
         String tagName = objectElem->getName();
-        if (tagName == "object")
+        if (tagName != "object")
             {
-            String objName   = objectElem->getAttribute("name");
-             //trace("object:%s", objName.c_str());
-            DepRec depObject(objName);
-            depObject.path   = objectElem->getAttribute("path");
-            depObject.suffix = objectElem->getAttribute("suffix");
-            //########## DESCRIPTION
-            std::vector<Element *> depElems = objectElem->getChildren();
-            for (unsigned int i=0 ; i<depElems.size() ; i++)
-                {
-                Element *depElem = depElems[i];
-                tagName = depElem->getName();
-                if (tagName == "dep")
-                    {
-                    String depName = depElem->getAttribute("name");
-                    //trace("    dep:%s", depName.c_str());
-                    depObject.files.push_back(depName);
-                    }
-                }
-            //Insert into the result list, in a sorted manner
-            bool inserted = false;
-            std::vector<DepRec>::iterator iter;
-            for (iter = result.begin() ; iter != result.end() ; iter++)
-                {
-                String vpath = iter->path;
-                vpath.append("/");
-                vpath.append(iter->name);
-                String opath = depObject.path;
-                opath.append("/");
-                opath.append(depObject.name);
-                if (vpath > opath)
-                    {
-                    inserted = true;
-                    iter = result.insert(iter, depObject);
-                    break;
-                    }
-                }
-            if (!inserted)
-                result.push_back(depObject);
+            error("loadDepFile: <dependencies> should have only <object> children");
+            return result;
             }
+
+        String objName   = objectElem->getAttribute("name");
+         //trace("object:%s", objName.c_str());
+        DepRec depObject(objName);
+        depObject.path   = objectElem->getAttribute("path");
+        depObject.suffix = objectElem->getAttribute("suffix");
+        //########## DESCRIPTION
+        std::vector<Element *> depElems = objectElem->getChildren();
+        for (unsigned int i=0 ; i<depElems.size() ; i++)
+            {
+            Element *depElem = depElems[i];
+            tagName = depElem->getName();
+            if (tagName != "dep")
+                {
+                error("loadDepFile: <object> should have only <dep> children");
+                return result;
+                }
+            String depName = depElem->getAttribute("name");
+            //trace("    dep:%s", depName.c_str());
+            depObject.files.push_back(depName);
+            }
+
+        //Insert into the result list, in a sorted manner
+        bool inserted = false;
+        std::vector<DepRec>::iterator iter;
+        for (iter = result.begin() ; iter != result.end() ; iter++)
+            {
+            String vpath = iter->path;
+            vpath.append("/");
+            vpath.append(iter->name);
+            String opath = depObject.path;
+            opath.append("/");
+            opath.append(depObject.name);
+            if (vpath > opath)
+                {
+                inserted = true;
+                iter = result.insert(iter, depObject);
+                break;
+                }
+            }
+        if (!inserted)
+            result.push_back(depObject);
         }
 
     delete root;
@@ -5907,8 +5913,8 @@ public:
             //## Select command
             String sfx = dep.suffix;
             String command = ccCommand;
-            if (sfx == "cpp" || sfx == "c++" || sfx == "cc"
-                 || sfx == "CC")
+            if (sfx == "cpp" || sfx == "cxx" || sfx == "c++" ||
+                 sfx == "cc" || sfx == "CC")
                 command = cxxCommand;
  
             //## Make paths
@@ -5946,6 +5952,7 @@ public:
             srcName.append(dep.suffix);
             String srcFullName = parent.resolve(srcName);
             bool compileMe = false;
+            //# First we check if the source is newer than the .o
             if (isNewerThan(srcFullName, destFullName))
                 {
                 status("          : compile of %s required by %s",
@@ -5954,17 +5961,22 @@ public:
                 }
             else
                 {
+                //# secondly, we check if any of the included dependencies
+                //# of the .c/.cpp is newer than the .o
                 for (unsigned int i=0 ; i<dep.files.size() ; i++)
                     {
                     String depName;
-                    if (srcPath.size()>0)
+                    if (source.size()>0)
                         {
-                        depName.append(srcPath);
+                        depName.append(source);
                         depName.append("/");
                         }
                     depName.append(dep.files[i]);
                     String depFullName = parent.resolve(depName);
-                    if (isNewerThan(depFullName, destFullName))
+                    bool depRequires = isNewerThan(depFullName, destFullName);
+                    //trace("%d %s %s\n", depRequires,
+                    //        destFullName.c_str(), depFullName.c_str());
+                    if (depRequires)
                         {
                         status("          : compile of %s required by %s",
                                 destFullName.c_str(), depFullName.c_str());
