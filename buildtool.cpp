@@ -31,13 +31,14 @@
  * or 
  * btool {target}
  * 
- * Note: recent win32api builds from MinGW have gettimeofday()
- * defined, so you might need to build with 
- * g++ -O3 -DHAVE_GETTIMEOFDAY buildtool.cpp -o btool.exe
+ * Note: if you are using MinGW, and a not very recent version of it,
+ * gettimeofday() might be missing.  If so, just build this file with
+ * this command:
+ * g++ -O3 -DNEED_GETTIMEOFDAY buildtool.cpp -o btool.exe
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.6.11, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.6.12, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -65,7 +66,7 @@
 //########################################################################
 //# Definition of gettimeofday() for those who don't have it
 //########################################################################
-#ifndef HAVE_GETTIMEOFDAY
+#ifdef NEED_GETTIMEOFDAY
 #include <sys/timeb.h>
 
 struct timezone {
