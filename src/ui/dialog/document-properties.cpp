@@ -352,9 +352,10 @@ DocumentProperties::build_gridspage()
     Gtk::Label* label_crea_type = manage (new Gtk::Label);
     label_crea_type->set_markup (_("Gridtype"));
     
-    _grids_combo_gridtype.append_text(Glib::ustring("xygrid"));
-    _grids_combo_gridtype.append_text(Glib::ustring("axonometric"));
-    _grids_combo_gridtype.set_active_text(Glib::ustring("xygrid"));
+    for (gint t = 0; t <= GRID_MAXTYPENR; t++) {
+        _grids_combo_gridtype.append_text( CanvasGrid::getName( (GridType) t ) );
+    }
+    _grids_combo_gridtype.set_active_text( CanvasGrid::getName(GRID_RECTANGULAR) );
     
     Gtk::Label* label_def = manage (new Gtk::Label);
     label_def->set_markup (_("<b>Defined grids</b>"));
@@ -531,7 +532,7 @@ DocumentProperties::onNewGrid()
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
 
     Glib::ustring typestring = _grids_combo_gridtype.get_active_text();
-    CanvasGrid::writeNewGridToRepr(repr, typestring.c_str());
+    CanvasGrid::writeNewGridToRepr(repr, CanvasGrid::getGridTypeFromName(typestring.c_str()));
 }
 
 

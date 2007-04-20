@@ -31,7 +31,18 @@ namespace Inkscape {
 #define DEFAULTGRIDCOLOR    0x0000FF20
 #define DEFAULTGRIDEMPCOLOR 0x0000FF40
 
+const gchar *grid_name [] = {
+    N_("Rectangular grid"),
+    N_("Axonometric grid")
+};
+const gchar *grid_svgname [] = {
+    "xygrid",
+    "axonomgrid"
+};
 
+
+// ##########################################################
+// Grid CanvasItem
 static void grid_canvasitem_class_init (GridCanvasItemClass *klass);
 static void grid_canvasitem_init (GridCanvasItem *grid);
 static void grid_canvasitem_destroy (GtkObject *object);
@@ -162,21 +173,60 @@ CanvasGrid::~CanvasGrid()
     }
 }
 
+
+
+const char * 
+CanvasGrid::getName(GridType type)
+{
+    return _(grid_name[type]);
+}
+
+const char * 
+CanvasGrid::getSVGName(GridType type)
+{
+    return grid_svgname[type];
+}
+
+GridType
+CanvasGrid::getGridTypeFromSVGName(const char * typestr)
+{
+    if (!typestr) return GRID_RECTANGULAR;
+
+    gint t = 0;
+    for (t = GRID_MAXTYPENR; t >= 0; t--) {  //this automatically defaults to grid0 which is rectangular grid
+        if (!strcmp(typestr, grid_svgname[t])) break;
+    }
+    return (GridType) t;
+}
+
+GridType
+CanvasGrid::getGridTypeFromName(const char * typestr)
+{
+    if (!typestr) return GRID_RECTANGULAR;
+
+    gint t = 0;
+    for (t = GRID_MAXTYPENR; t >= 0; t--) {  //this automatically defaults to grid0 which is rectangular grid
+        if (!strcmp(typestr, _(grid_name[t]))) break;
+    }
+    return (GridType) t;
+}
+
+
 /*
 *  writes an <inkscape:grid> child to repr.
 */
 void
-CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, const char * gridtype)
+CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, GridType gridtype)
 {
     if (!repr) return;
-    if (!gridtype) return;
+    if (gridtype > GRID_MAXTYPENR) return;
 
     // first create the child xml node, then hook it to repr. This order is important, to not set off listeners to repr before the new node is complete.
 
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(sp_desktop_document(SP_ACTIVE_DESKTOP));
     Inkscape::XML::Node *newnode;
     newnode = xml_doc->createElement("inkscape:grid");
-    newnode->setAttribute("type",gridtype);
+    newnode->setAttribute("type", getSVGName(gridtype));
 
     repr->appendChild(newnode);
 
@@ -189,15 +239,15 @@ CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, const char * gridtype
 * Creates a new CanvasGrid object of type gridtype
 */
 CanvasGrid*
-CanvasGrid::NewGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, const char * gridtype)
+CanvasGrid::NewGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, GridType gridtype)
 {
     if (!in_repr) return NULL;
-    if (!gridtype) return NULL;
 
-    if (!strcmp(gridtype,"xygrid")) {
-        return (CanvasGrid*) new CanvasXYGrid(nv, in_repr);
-    } else if (!strcmp(gridtype,"axonometric")) {
-        return (CanvasGrid*) new CanvasAxonomGrid(nv, in_repr);
+    switch (gridtype) {
+        case GRID_RECTANGULAR:
+            return (CanvasGrid*) new CanvasXYGrid(nv, in_repr);
+        case GRID_AXONOMETRIC:
+            return (CanvasGrid*) new CanvasAxonomGrid(nv, in_repr);
     }
 
     return NULL;

@@ -430,11 +430,7 @@ sp_namedview_add_grid(SPNamedView *nv, Inkscape::XML::Node *repr, SPDesktop *des
     
     if (!grid) {
         //create grid object
-        const char * gridtype = repr->attribute("type");
-        if (!gridtype) {
-            gridtype = "xygrid"; // use this as default gridtype when none is specified
-            repr->setAttribute("type", gridtype);
-        }
+        Inkscape::GridType gridtype = Inkscape::CanvasGrid::getGridTypeFromSVGName(repr->attribute("type"));
         grid = Inkscape::CanvasGrid::NewGrid(nv, repr, gridtype);
         nv->grids = g_slist_append(nv->grids, grid);
     }

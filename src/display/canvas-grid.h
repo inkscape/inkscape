@@ -34,6 +34,13 @@ struct SPNamedView;
 
 namespace Inkscape {
 
+
+enum GridType {
+    GRID_RECTANGULAR = 0,
+    GRID_AXONOMETRIC = 1
+};
+#define GRID_MAXTYPENR 1
+
 #define INKSCAPE_TYPE_GRID_CANVASITEM            (Inkscape::grid_canvasitem_get_type ())
 #define INKSCAPE_GRID_CANVASITEM(obj)            (GTK_CHECK_CAST ((obj), INKSCAPE_TYPE_GRID_CANVASITEM, GridCanvasItem))
 #define INKSCAPE_GRID_CANVASITEM_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), INKSCAPE_TYPE_GRID_CANVASITEM, GridCanvasItem))
@@ -62,8 +69,13 @@ public:
     CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr);
     virtual ~CanvasGrid();
     
-    static CanvasGrid* NewGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, const char * gridtype);
-    static void writeNewGridToRepr(Inkscape::XML::Node * repr, const char * gridtype);
+    static const char * getName(GridType type);
+    static const char * getSVGName(GridType type);
+    static GridType     getGridTypeFromSVGName(const char * typestr);
+    static GridType     getGridTypeFromName(const char * typestr);
+    
+    static CanvasGrid* NewGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, GridType gridtype);
+    static void writeNewGridToRepr(Inkscape::XML::Node * repr, GridType gridtype);
 
     GridCanvasItem * createCanvasItem(SPDesktop * desktop);
     

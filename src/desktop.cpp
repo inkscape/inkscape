@@ -1124,7 +1124,7 @@ void SPDesktop::toggleGrid()
     } else {
         //there is no grid present at the moment. add a rectangular grid and make it visible
         Inkscape::XML::Node *repr = SP_OBJECT_REPR(namedview);
-        Inkscape::CanvasGrid::writeNewGridToRepr(repr, "xygrid");
+        Inkscape::CanvasGrid::writeNewGridToRepr(repr, Inkscape::GRID_RECTANGULAR);
         grids_visible = true;
         sp_canvas_item_show(SP_CANVAS_ITEM(gridgroup));
     }
