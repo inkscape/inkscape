@@ -37,7 +37,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.6.10, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.6.11, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -6164,6 +6164,7 @@ public:
                        }
                    if (!isNewerThan(fullSource, fullDest))
                        {
+                       status("          : skipped");
                        return true;
                        }
                    if (!copyFile(fullSource, fullDest))
@@ -6261,6 +6262,7 @@ public:
                        }
                    if (!isNewerThan(fullSource, fullDest))
                        {
+                       status("          : skipped");
                        return true;
                        }
                    if (!copyFile(fullSource, fullDest))
