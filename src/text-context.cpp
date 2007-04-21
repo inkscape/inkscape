@@ -1545,6 +1545,8 @@ sp_text_context_forget_text(SPTextContext *tc)
         // the XML editor
         if ( text_repr && sp_repr_parent(text_repr) ) {
             sp_repr_unparent(text_repr);
+            sp_document_done(sp_desktop_document(tc->desktop), SP_VERB_CONTEXT_TEXT, 
+                     _("Remove empty text"));
         }
     }
 }
