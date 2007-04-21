@@ -302,22 +302,23 @@ sp_gradient_selector_edit_vector_clicked (GtkWidget *w, SPGradientSelector *sel)
 static void
 sp_gradient_selector_add_vector_clicked (GtkWidget *w, SPGradientSelector *sel)
 {
-	SPDocument *doc;
-	SPGradient *gr;
-	Inkscape::XML::Node *repr;
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+	SPDocument *doc = sp_gradient_vector_selector_get_document (
+              SP_GRADIENT_VECTOR_SELECTOR (sel->vectors));
 
-	doc = sp_gradient_vector_selector_get_document (SP_GRADIENT_VECTOR_SELECTOR (sel->vectors));
-	if (!doc) return;
-	gr = sp_gradient_vector_selector_get_gradient (SP_GRADIENT_VECTOR_SELECTOR (sel->vectors));
+	if (!doc)
+        return;
 
-	if (gr) {
+	SPGradient *gr = sp_gradient_vector_selector_get_gradient(
+            SP_GRADIENT_VECTOR_SELECTOR (sel->vectors));
+	Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);		
+
+	Inkscape::XML::Node *repr = NULL;
+
+	if (gr)
 		repr = SP_OBJECT_REPR (gr)->duplicate(xml_doc);
-	} else {
-		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
-		Inkscape::XML::Node *stop;
+	else {
 		repr = xml_doc->createElement("svg:linearGradient");
-		stop = xml_doc->createElement("svg:stop");
+		Inkscape::XML::Node *stop = xml_doc->createElement("svg:stop");
 		stop->setAttribute("offset", "0");
 		stop->setAttribute("style", "stop-color:#000;stop-opacity:1;");
 		repr->appendChild(stop);
@@ -330,11 +331,15 @@ sp_gradient_selector_add_vector_clicked (GtkWidget *w, SPGradientSelector *sel)
 	}
 
 	SP_OBJECT_REPR (SP_DOCUMENT_DEFS (doc))->addChild(repr, NULL);
-	Inkscape::GC::release(repr);
 
 	gr = (SPGradient *) doc->getObjectByRepr(repr);
-	sp_gradient_vector_selector_set_gradient (SP_GRADIENT_VECTOR_SELECTOR (sel->vectors), doc, gr);
+	sp_gradient_vector_selector_set_gradient(
+            SP_GRADIENT_VECTOR_SELECTOR (sel->vectors), doc, gr);
+
+	Inkscape::GC::release(repr);
 }
+
+
 
 static void
 sp_gradient_selector_spread_activate (GtkWidget *widget, SPGradientSelector *sel)
