@@ -121,6 +121,7 @@ struct SPDynaDrawContext
     bool trace_bg;
 
     bool is_dilating;
+    bool has_dilated;
     SPCanvasItem *dilate_area;
 };
 

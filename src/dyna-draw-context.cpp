@@ -212,6 +212,7 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     ddc->trace_bg = false;
 
     ddc->is_dilating = false;
+    ddc->has_dilated = false;
 }
 
 static void
@@ -616,7 +617,8 @@ sp_ddc_dilate_recursive (SPItem *item, NR::Point p, bool expand, double radius, 
     if (SP_IS_GROUP(item)) {
         for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             if (SP_IS_ITEM(child)) {
-                did = did || sp_ddc_dilate_recursive (SP_ITEM(child), p, expand, radius, offset);
+                if (sp_ddc_dilate_recursive (SP_ITEM(child), p, expand, radius, offset))
+                    did = true;
             }
         }
 
@@ -828,6 +830,10 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
                 sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
                 dc->is_drawing = true;
+                if (event->button.state & GDK_MOD1_MASK) {
+                    dc->is_dilating = true;
+                    dc->has_dilated = false;
+                }
             }
             break;
         case GDK_MOTION_NOTIFY:
@@ -866,7 +872,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             // dilating:
             if (dc->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK ) && event->motion.state & GDK_MOD1_MASK) {  
                 sp_ddc_dilate (dc, desktop->dt2doc(motion_dt), event->motion.state & GDK_SHIFT_MASK? true : false);
-                dc->is_dilating = true;
+                dc->has_dilated = true;
                 // it's slow, so prevent clogging up with events
                 gobble_motion_events(GDK_BUTTON1_MASK);
                 return TRUE;
@@ -1077,21 +1083,30 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
 
     case GDK_BUTTON_RELEASE:
+    {
+        NR::Point const motion_w(event->button.x, event->button.y);
+        NR::Point const motion_dt(desktop->w2d(motion_w));
+
         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
         sp_canvas_end_forced_full_redraws(desktop->canvas);
         dc->is_drawing = false;
 
         if ( dc->is_dilating && event->button.button == 1 ) {
+            if (!dc->has_dilated) {
+                // if we did not rub, do a light tap
+                dc->pressure = 0.03;
+                sp_ddc_dilate (dc, desktop->dt2doc(motion_dt), event->button.state & GDK_SHIFT_MASK? true : false);
+            }
             dc->is_dilating = false;
+            dc->has_dilated = false;
             sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(dc)->desktop), 
                          SP_VERB_CONTEXT_CALLIGRAPHIC,
                          (event->button.state & GDK_SHIFT_MASK ? _("Thicken paths") : _("Thin paths")));
             ret = TRUE;
+
         } else if ( dc->dragging && event->button.button == 1 ) {
             dc->dragging = FALSE;
 
-            NR::Point const motion_w(event->button.x, event->button.y);
-            NR::Point const motion_dt(desktop->w2d(motion_w));
             sp_dyna_draw_apply(dc, motion_dt);
 
             /* Remove all temporary line segments */
@@ -1134,6 +1149,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             ret = TRUE;
         }
         break;
+    }
 
     case GDK_KEY_PRESS:
         switch (get_group0_keyval (&event->key)) {
