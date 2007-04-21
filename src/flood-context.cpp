@@ -668,7 +668,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         merge_pixel_with_background(orig_color, dtc, merged_orig);
         
         unsigned char *trace_t = get_pixel(trace_px, (int)color_point[NR::X], (int)color_point[NR::Y], width);
-        if (trace_t[0] != 255) {
+        if ((trace_t[0] != 255) && (trace_t[3] != 255)) {
           fill_queue.push_front(color_point);
         }
         
