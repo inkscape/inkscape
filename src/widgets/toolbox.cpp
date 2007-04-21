@@ -107,7 +107,7 @@ static void       sp_pen_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAc
 static void       sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_dropper_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static GtkWidget *sp_empty_toolbox_new(SPDesktop *desktop);
-static GtkWidget *sp_connector_toolbox_new(SPDesktop *desktop);
+static void       sp_connector_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 
 namespace { GtkWidget *sp_text_toolbox_new (SPDesktop *desktop); }
@@ -173,7 +173,7 @@ static struct {
       SP_VERB_INVALID, 0, 0},
     { "SPGradientContext", "gradient_toolbox", sp_gradient_toolbox_new, 0,       0,
       SP_VERB_INVALID, 0, 0},
-    { "SPConnectorContext", "connector_toolbox", sp_connector_toolbox_new, 0,    0,
+    { "SPConnectorContext", "connector_toolbox", 0, sp_connector_toolbox_prep,   "ConnectorToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPFloodContext",  "paintbucket_toolbox",  0, sp_paintbucket_toolbox_prep, "PaintbucketToolbar",
       SP_VERB_CONTEXT_PAINTBUCKET_PREFS, "tools.paintbucket", _("Style of Paint Bucket fill objects")},
@@ -330,6 +330,17 @@ static gchar const * ui_descr =
         "    <toolitem action='DropperPickAlphaAction' />"
         "    <toolitem action='DropperSetAlphaAction' />"
         "  </toolbar>"
+
+        "  <toolbar name='ConnectorToolbar'>"
+        "    <toolitem action='ConnectorAvoidAction' />"
+        "    <toolitem action='ConnectorIgnoreAction' />"
+        "    <toolitem action='ConnectorSpacingAction' />"
+        "    <toolitem action='ConnectorGraphAction' />"
+        "    <toolitem action='ConnectorLengthAction' />"
+        "    <toolitem action='ConnectorDirectedAction' />"
+        "    <toolitem action='ConnectorOverlapAction' />"
+        "  </toolbar>"
+
         "</ui>"
 ;
 
@@ -366,18 +377,6 @@ static void purge_repr_listener( GObject* obj, GObject* tbl )
         oldrepr = 0;
         g_object_set_data( tbl, "repr", NULL );
     }
-}
-
-static GtkWidget *
-sp_toolbox_button_new(GtkWidget *t, Inkscape::IconSize size, gchar const *pxname, GtkSignalFunc handler,
-                      GtkTooltips *tt, gchar const *tip)
-{
-    GtkWidget *b = sp_button_new_from_data(size, SP_BUTTON_TYPE_NORMAL, NULL, pxname, tip, tt);
-    gtk_widget_show(b);
-    if (handler) gtk_signal_connect(GTK_OBJECT(b), "clicked", handler, NULL);
-    gtk_box_pack_start(GTK_BOX(t), b, FALSE, FALSE, 0);
-
-    return b;
 }
 
 GtkWidget *
@@ -4031,15 +4030,14 @@ static void sp_connector_path_set_ignore(void)
 
 
 
-static void connector_spacing_changed(GtkAdjustment *adj, GtkWidget *tbl)
+static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
 {
     // quit if run by the _changed callbacks
-    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+    if (g_object_get_data( tbl, "freeze" )) {
         return;
     }
 
-    SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl),
-            "desktop");
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
     SPDocument *doc = sp_desktop_document(desktop);
 
     if (!sp_document_get_undo_sensitive(doc))
@@ -4048,7 +4046,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GtkWidget *tbl)
     }
 
     // in turn, prevent callbacks from responding
-    g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
 
@@ -4069,7 +4067,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GtkWidget *tbl)
     sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR,
             _("Change connector spacing"));
 
-    g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
@@ -4089,10 +4087,9 @@ static void sp_connector_graph_layout(void)
     sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, _("Arrange connector network"));
 }
 
-static void
-sp_directed_graph_layout_toggled(GtkWidget *widget, GtkObject *tbl)
+static void sp_directed_graph_layout_toggled( GtkToggleAction* act, GtkObject *tbl )
 {
-    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
+    if ( gtk_toggle_action_get_active( act ) ) {
         prefs_set_string_attribute("tools.connector", "directedlayout",
                 "true");
     } else {
@@ -4100,10 +4097,10 @@ sp_directed_graph_layout_toggled(GtkWidget *widget, GtkObject *tbl)
                 "false");
     }
 }
-static void
-sp_nooverlaps_graph_layout_toggled(GtkWidget *widget, GtkObject *tbl)
+
+static void sp_nooverlaps_graph_layout_toggled( GtkToggleAction* act, GtkObject *tbl )
 {
-    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
+    if ( gtk_toggle_action_get_active( act ) ) {
         prefs_set_string_attribute("tools.connector", "avoidoverlaplayout",
                 "true");
     } else {
@@ -4113,7 +4110,7 @@ sp_nooverlaps_graph_layout_toggled(GtkWidget *widget, GtkObject *tbl)
 }
 
 
-static void connector_length_changed(GtkAdjustment *adj, GtkWidget *tbl)
+static void connector_length_changed(GtkAdjustment *adj, GObject* tbl)
 {
     prefs_set_double_attribute("tools.connector", "length", adj->value);
     spinbutton_defocus(GTK_OBJECT(tbl));
@@ -4150,106 +4147,108 @@ static Inkscape::XML::NodeEventVector connector_tb_repr_events = {
 };
 
 
-static GtkWidget *
-sp_connector_toolbox_new(SPDesktop *desktop)
+static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder )
 {
-    GtkTooltips *tt = gtk_tooltips_new();
-    GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
+    {
+        InkAction* inky = ink_action_new( "ConnectorAvoidAction",
+                                          _("Avoid"),
+                                          _("Make connectors avoid selected objects"),
+                                          "connector_avoid",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_path_set_avoid), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
 
-    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
-    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
+    {
+        InkAction* inky = ink_action_new( "ConnectorIgnoreAction",
+                                          _("Ignore"),
+                                          _("Make connectors ignore selected objects"),
+                                          "connector_ignore",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_path_set_ignore), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
 
-    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE,
-            AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_SMALL_TOOLBAR,
-            "connector_avoid", GTK_SIGNAL_FUNC(sp_connector_path_set_avoid),
-            tt, _("Make connectors avoid selected objects"));
-
-    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_SMALL_TOOLBAR,
-            "connector_ignore", GTK_SIGNAL_FUNC(sp_connector_path_set_ignore),
-            tt, _("Make connectors ignore selected objects"));
-
-    //  interval
-    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE,
-            AUX_BETWEEN_BUTTON_GROUPS);
+    EgeAdjustmentAction* eact = 0;
 
     // Spacing spinbox
-    {
-        GtkWidget *object_spacing = sp_tb_spinbutton(_("Spacing:"),
-                _("The amount of space left around objects by auto-routing connectors"),
-                "tools.connector", "spacing", 10, NULL, tbl, TRUE,
-                "inkscape:connector-spacing", 0, 100, 1.0, 10.0,
-                connector_spacing_changed, 1, 0);
+    eact = create_adjustment_action( "ConnectorSpacingAction",
+                                     _("Spacing:"), _("The amount of space left around objects by auto-routing connectors"),
+                                     "tools.connector", "spacing", 10,
+                                     GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "inkscape:connector-spacing",
+                                     0, 100, 1.0, 10.0,
+                                     0, 0, 0,
+                                     connector_spacing_changed, 1, 0 );
+    gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
 
-        gtk_box_pack_start(GTK_BOX(tbl), object_spacing, FALSE, FALSE,
-                AUX_SPACING);
-    }
     // Graph (connector network) layout
-    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_SMALL_TOOLBAR,
-            "graph_layout", GTK_SIGNAL_FUNC(sp_connector_graph_layout),
-            tt, _("Nicely arrange selected connector network"));
-    // Default connector length spinbox
     {
-        GtkWidget *connector_length = sp_tb_spinbutton(_("Length:"),
-                _("Ideal length for connectors when layout is applied"),
-                "tools.connector", "length", 100, NULL, tbl, TRUE,
-                "inkscape:connector-length", 10, 1000, 10.0, 100.0,
-                connector_length_changed, 1, 0);
-
-        gtk_box_pack_start(GTK_BOX(tbl), connector_length, FALSE, FALSE,
-                AUX_SPACING);
+        InkAction* inky = ink_action_new( "ConnectorGraphAction",
+                                          _("Graph"),
+                                          _("Nicely arrange selected connector network"),
+                                          "graph_layout",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_graph_layout), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
-    gchar const *tbuttonstate;
+
+    // Default connector length spinbox
+    eact = create_adjustment_action( "ConnectorLengthAction",
+                                     _("Length:"), _("Ideal length for connectors when layout is applied"),
+                                     "tools.connector", "length", 100,
+                                     GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "inkscape:connector-length",
+                                     10, 1000, 10.0, 100.0,
+                                     0, 0, 0,
+                                     connector_length_changed, 1, 0 );
+    gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+
+
     // Directed edges toggle button
     {
-        GtkWidget *tbutton = gtk_toggle_button_new ();
-        gtk_button_set_relief       (GTK_BUTTON (tbutton), GTK_RELIEF_NONE);
-        gtk_container_add           (GTK_CONTAINER (tbutton), sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, "directed_graph"));
-        gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (tbutton), FALSE);
-        gtk_tooltips_set_tip(tt, tbutton, _("Make connectors with end-markers (arrows) point downwards"), NULL);
+        InkToggleAction* act = ink_toggle_action_new( "ConnectorDirectedAction",
+                                                      _("Downwards"),
+                                                      _("Make connectors with end-markers (arrows) point downwards"),
+                                                      "directed_graph",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
 
-        gtk_box_pack_start  (GTK_BOX  (tbl), tbutton, FALSE, FALSE, 0);
-        g_signal_connect(G_OBJECT(tbutton), "toggled", GTK_SIGNAL_FUNC(sp_directed_graph_layout_toggled), tbl);
-        tbuttonstate = prefs_get_string_attribute("tools.connector", "directedlayout");
-        gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(tbutton),
-                (tbuttonstate && !strcmp(tbuttonstate, "true"))?TRUE:FALSE );
+        gchar const* tbuttonstate = prefs_get_string_attribute( "tools.connector", "directedlayout" );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act),
+                (tbuttonstate && !strcmp(tbuttonstate, "true")) ? TRUE:FALSE );
+
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_directed_graph_layout_toggled), holder );
     }
+
     // Avoid overlaps toggle button
     {
-        GtkWidget *tbutton = gtk_toggle_button_new ();
-        gtk_button_set_relief       (GTK_BUTTON (tbutton), GTK_RELIEF_NONE);
-        gtk_container_add           (GTK_CONTAINER (tbutton), sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, "remove_overlaps"));
-        gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (tbutton), FALSE);
-        gtk_tooltips_set_tip(tt, tbutton, _("Do not allow overlapping shapes"), NULL);
+        InkToggleAction* act = ink_toggle_action_new( "ConnectorOverlapAction",
+                                                      _("Remove overlaps"),
+                                                      _("Do not allow overlapping shapes"),
+                                                      "remove_overlaps",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
 
-        gtk_box_pack_start  (GTK_BOX  (tbl), tbutton, FALSE, FALSE, 0);
-        g_signal_connect(G_OBJECT(tbutton), "toggled", GTK_SIGNAL_FUNC(sp_nooverlaps_graph_layout_toggled), tbl);
-        tbuttonstate = prefs_get_string_attribute("tools.connector", "avoidoverlaplayout");
-        gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(tbutton),
-                (tbuttonstate && !strcmp(tbuttonstate, "true"))?TRUE:FALSE );
+        gchar const* tbuttonstate = prefs_get_string_attribute( "tools.connector", "avoidoverlaplayout" );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act),
+                (tbuttonstate && !strcmp(tbuttonstate, "true")) ? TRUE:FALSE );
+
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_nooverlaps_graph_layout_toggled), holder );
     }
-
-    gtk_widget_show_all(tbl);
-    sp_set_font_size_smaller (tbl);
 
     // Code to watch for changes to the connector-spacing attribute in
     // the XML.
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
     g_assert(repr != NULL);
 
-    purge_repr_listener( G_OBJECT(tbl), G_OBJECT(tbl) );
+    purge_repr_listener( holder, holder );
 
     if (repr) {
-        g_object_set_data(G_OBJECT(tbl), "repr", repr);
+        g_object_set_data( holder, "repr", repr );
         Inkscape::GC::anchor(repr);
-        sp_repr_add_listener(repr, &connector_tb_repr_events, tbl);
-        sp_repr_synthesize_events(repr, &connector_tb_repr_events, tbl);
+        sp_repr_add_listener( repr, &connector_tb_repr_events, holder );
+        sp_repr_synthesize_events( repr, &connector_tb_repr_events, holder );
     }
-
-    return tbl;
-
-} // end of sp_connector_toolbox_new()
+} // end of sp_connector_toolbox_prep()
 
 static void paintbucket_channels_changed(EgeSelectOneAction* act, GObject* tbl)
 {
