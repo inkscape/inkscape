@@ -820,16 +820,18 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
                 NR::Point const button_w(event->button.x,
                                         event->button.y);
     
-                // save drag origin
-                event_context->xp = (gint) button_w[NR::X];
-                event_context->yp = (gint) button_w[NR::Y];
-                event_context->within_tolerance = true;
-                
-                dragging = true;
-                
-                NR::Point const p(desktop->w2d(button_w));
-                Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
-                Inkscape::Rubberband::get()->start(desktop, p);
+                if (Inkscape::have_viable_layer(desktop, event_context->defaultMessageContext())) {
+                    // save drag origin
+                    event_context->xp = (gint) button_w[NR::X];
+                    event_context->yp = (gint) button_w[NR::Y];
+                    event_context->within_tolerance = true;
+                    
+                    dragging = true;
+                    
+                    NR::Point const p(desktop->w2d(button_w));
+                    Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
+                    Inkscape::Rubberband::get()->start(desktop, p);
+                }
             }
         }
     case GDK_MOTION_NOTIFY:
