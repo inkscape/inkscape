@@ -808,7 +808,7 @@ unsigned int
 PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
               SPStyle const *const style)
 {
-    bool dirty_pattern = false;
+    //bool dirty_pattern = false;
 
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;

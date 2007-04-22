@@ -816,7 +816,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                     }
                 }
             } else {
-                if (index >= 0 && index < d->n_obj) {
+                if (index >= 0 && index < (unsigned int)d->n_obj) {
                     switch (d->emf_obj[index].type)
                     {
                         case EMR_CREATEPEN:
