@@ -4045,10 +4045,20 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
         return;
     }
 
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
+
+    if ( repr->attribute("inkscape:connector-spacing") ) {
+        gdouble priorValue = gtk_adjustment_get_value(adj);
+        sp_repr_get_double( repr, "inkscape:connector-spacing", &priorValue );
+        if ( priorValue == gtk_adjustment_get_value(adj) ) {
+            return;
+        }
+    } else if ( adj->value == defaultConnSpacing ) {
+        return;
+    }
+
     // in turn, prevent callbacks from responding
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
-
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
 
     sp_repr_set_css_double(repr, "inkscape:connector-spacing", adj->value);
     SP_OBJECT(desktop->namedview)->updateRepr();
@@ -4174,7 +4184,7 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
     // Spacing spinbox
     eact = create_adjustment_action( "ConnectorSpacingAction",
                                      _("Spacing:"), _("The amount of space left around objects by auto-routing connectors"),
-                                     "tools.connector", "spacing", 10,
+                                     "tools.connector", "spacing", defaultConnSpacing,
                                      GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "inkscape:connector-spacing",
                                      0, 100, 1.0, 10.0,
                                      0, 0, 0,
