@@ -48,6 +48,7 @@ static void sp_use_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_use_modified(SPObject *object, guint flags);
 
 static void sp_use_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_use_snappoints(SPItem const *item, SnapPointsIter p);
 static void sp_use_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_use_description(SPItem *item);
 static NRArenaItem *sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags);
@@ -107,6 +108,7 @@ sp_use_class_init(SPUseClass *classname)
     item_class->print = sp_use_print;
     item_class->show = sp_use_show;
     item_class->hide = sp_use_hide;
+    item_class->snappoints = sp_use_snappoints;
 }
 
 static void
@@ -725,6 +727,22 @@ sp_use_get_original(SPUse *use)
 {
     SPItem *ref = use->ref->getObject();
     return ref;
+}
+
+static void
+sp_use_snappoints(SPItem const *item, SnapPointsIter p)
+{
+    g_assert (item != NULL);
+    g_assert (SP_IS_ITEM(item));
+    g_assert (SP_IS_USE(item));
+    
+    SPUse *use = SP_USE(item);
+    SPItem *root = sp_use_root(use);
+    
+    SPItemClass const &item_class = *(SPItemClass const *) G_OBJECT_GET_CLASS(root);
+    if (item_class.snappoints) {
+        item_class.snappoints(root, p);
+    }
 }
 
 
