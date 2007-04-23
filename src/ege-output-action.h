@@ -39,6 +39,10 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+/** \file
+ *  GtkAction subclass that represents a string for output.
+ */
+
 /* Note: this file should be kept compilable as both .cpp and .c */
 
 #include <glib.h>
@@ -59,25 +63,58 @@ typedef struct _EgeOutputAction      EgeOutputAction;
 typedef struct _EgeOutputActionClass EgeOutputActionClass;
 typedef struct _EgeOutputActionPrivate EgeOutputActionPrivate;
 
+/**
+ * Instance structure of EgeOutputAction.
+ */
 struct _EgeOutputAction
 {
+    /** Parent instance structure. */
     GtkAction action;
+
+    /** Pointer to private instance data. */
     EgeOutputActionPrivate *private_data;
 };
 
+/**
+ * Class structure of EgeOutputAction.
+ */
 struct _EgeOutputActionClass
 {
+    /** Parent class structure. */
     GtkActionClass parent_class;
 };
 
+/** Standard Gtk type function */
 GType ege_output_action_get_type( void );
 
+/**
+ * Creates a new EgeOutputAction instance.
+ * This is a GtkAction subclass that displays a string.
+ *
+ * @param name Functional name for the action.
+ * @param label Display label for the action.
+ * @param tooltip Tooltip for the action.
+ * @param stock_id Icon id to use.
+ */
 EgeOutputAction* ege_output_action_new( const gchar *name,
                                         const gchar *label,
                                         const gchar *tooltip,
                                         const gchar *stock_id );
 
+/**
+ * Return whether or not the displayed text is interpreted as markup.
+ *
+ * @param action The action to fetch the markup state for.
+ * @return True if the text is to be interpreted as markup, false otherwise.
+ */
 gboolean ege_output_action_get_use_markup( EgeOutputAction* action );
+
+/**
+ * Sets whether or not the displayed text is interpreted as markup.
+ *
+ * @param action The action to set the markup state for.
+ * @param setting True if the text is to be interpreted as markup, false otherwise.
+ */
 void ege_output_action_set_use_markup( EgeOutputAction* action, gboolean setting );
 
 G_END_DECLS

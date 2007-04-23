@@ -39,6 +39,13 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+/** \file
+ * GtkAction subclass that represents a set of values the user may select
+ *  one from at a given time.
+ * This can manifest as a popup menu, a ComboBox, a set of toggle buttons,
+ *  etc.
+ */
+
 /* Note: this file should be kept compilable as both .cpp and .c */
 
 #include <glib.h>
@@ -60,38 +67,122 @@ typedef struct _EgeSelectOneAction      EgeSelectOneAction;
 typedef struct _EgeSelectOneActionClass EgeSelectOneActionClass;
 typedef struct _EgeSelectOneActionPrivate EgeSelectOneActionPrivate;
 
+/**
+ * Instance structure of EgeSelectOneAction.
+ */
 struct _EgeSelectOneAction
 {
+    /** Parent instance structure. */
     GtkAction action;
+
+    /** Pointer to private instance data. */
     EgeSelectOneActionPrivate *private_data;
 };
 
+/**
+ * Class structure of EgeSelectOneAction.
+ */
 struct _EgeSelectOneActionClass
 {
+    /** Parent class structure. */
     GtkActionClass parent_class;
+
     void (*changed) (EgeSelectOneAction* action);
 };
 
+/** Standard Gtk type function */
 GType ege_select_one_action_get_type( void );
 
+/**
+ * Creates a new EgeSelectOneAction instance.
+ * This is a GtkAction subclass that represents a set of values the user
+ *  may select one from at a given time.
+ * This can manifest as a popup menu, a ComboBox, a set of toggle buttons,
+ *  etc.
+ *
+ * @param name Functional name for the action.
+ * @param label Display label for the action.
+ * @param tooltip Tooltip for the action.
+ * @param stock_id Icon id to use.
+ * @param model the source of choices to present.
+ */
 EgeSelectOneAction* ege_select_one_action_new( const gchar *name,
                                                const gchar *label,
                                                const gchar *tooltip,
                                                const gchar *stock_id,
                                                GtkTreeModel* model );
 
+/**
+ * Returns the index of the currently selected item.
+ *
+ * @param action The action to fetch the selected index for.
+ */
 gint ege_select_one_action_get_active( EgeSelectOneAction* action );
+
+/**
+ * Sets the  currently selected item.
+ *
+ * @param action The action to fetch the selected index for.
+ * @param val index of the item to make selected.
+ */
 void ege_select_one_action_set_active( EgeSelectOneAction* action, gint val );
 
+
+/**
+ * Returns the column used for the display label.
+ *
+ * @param action The action to fetch the label column for.
+ */
 gint ege_select_one_action_get_label_column( EgeSelectOneAction* action );
+
+/**
+ * Sets the column used for the display label.
+ *
+ * @param action The action to set the label column for.
+ * @param col column to use.
+ */
 void ege_select_one_action_set_label_column( EgeSelectOneAction* action, gint col );
 
+
+/**
+ * Returns the column used for the display icon.
+ *
+ * @param action The action to fetch the icon column for.
+ */
 gint ege_select_one_action_get_icon_column( EgeSelectOneAction* action );
+
+/**
+ * Sets the column used for the display icon.
+ *
+ * @param action The action to set the icon column for.
+ * @param col column to use.
+ */
 void ege_select_one_action_set_icon_column( EgeSelectOneAction* action, gint col );
 
+
+/**
+ * Returns the column used for the tooltip.
+ *
+ * @param action The action to fetch the tooltip column for.
+ */
 gint ege_select_one_action_get_tooltip_column( EgeSelectOneAction* action );
+
+/**
+ * Sets the column used for the tooltip.
+ *
+ * @param action The action to set the tooltip column for.
+ * @param col column to use.
+ */
 void ege_select_one_action_set_tooltip_column( EgeSelectOneAction* action, gint col );
 
+
+/**
+ * Sets a hint to be used in determining the display form.
+ * This is the XForms style 'appearance' hint: "full", "compact", "minimal".
+ *
+ * @param action The action to set the tooltip column for.
+ * @param val The value of the appearance hint.
+ */
 void ege_select_one_action_set_appearance( EgeSelectOneAction* action, gchar const* val );
 
 

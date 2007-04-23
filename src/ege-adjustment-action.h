@@ -39,6 +39,10 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+/** \file
+ *  GtkAction subclass that represents a GtkAdjustment value.
+ */
+
 /* Note: this file should be kept compilable as both .cpp and .c */
 
 #include <glib.h>
@@ -59,34 +63,92 @@ typedef struct _EgeAdjustmentAction      EgeAdjustmentAction;
 typedef struct _EgeAdjustmentActionClass EgeAdjustmentActionClass;
 typedef struct _EgeAdjustmentActionPrivate EgeAdjustmentActionPrivate;
 
+/**
+ * Instance structure of EgeAdjustmentAction.
+ */
 struct _EgeAdjustmentAction
 {
+    /** Parent instance structure. */
     GtkAction action;
+
+    /** Pointer to private instance data. */
     EgeAdjustmentActionPrivate *private_data;
 };
 
+/**
+ * Class structure of EgeAdjustmentAction.
+ */
 struct _EgeAdjustmentActionClass
 {
+    /** Parent class structure. */
     GtkActionClass parent_class;
 };
 
+/** Standard Gtk type function */
 GType ege_adjustment_action_get_type( void );
 
+/**
+ * Creates a new EgeAdjustmentAction instance.
+ * This is a GtkAction subclass that manages a value stored in a
+ * GtkAdjustment.
+ *
+ * @param adjustment The GtkAdjustment to manage.
+ * @param name Functional name for the action.
+ * @param label Display label for the action.
+ * @param tooltip Tooltip for the action.
+ * @param stock_id Icon id to use.
+ * @param climb_rate Used for created widgets.
+ * @param digits Used for created widgets.
+ */
 EgeAdjustmentAction* ege_adjustment_action_new( GtkAdjustment* adjustment,
                                                 const gchar *name,
                                                 const gchar *label,
                                                 const gchar *tooltip,
                                                 const gchar *stock_id,
                                                 gdouble climb_rate,
-                                                guint digits );
-
+                                                guint digits
+                                                );
+/**
+ * Returns a pointer to the GtkAdjustment represented by the given
+ * EgeAdjustmentAction.
+ *
+ * @param action The action to fetch the GtkAdjustment for.
+ */
 GtkAdjustment* ege_adjustment_action_get_adjustment( EgeAdjustmentAction* action );
 
+/**
+ * Sets the GtkWidget to return focus to.
+ * This is used to be able to transfer focus back out of a toolbar.
+ *
+ * @param action The action to set the widget for.
+ * @param widget The widget to return focus to after editing.
+ * @see ege_adjustment_action_get_focuswidget
+ */
 void ege_adjustment_action_set_focuswidget( EgeAdjustmentAction* action, GtkWidget* widget );
+
+/**
+ * Returns a pointer to the GtkWidget to return focus to after changing
+ * the value.
+ *
+ * @param action The action to fetch the focus widget for.
+ * @returns A pointer to the widget to return focus to, NULL if none set.
+ * @see ege_adjustment_action_set_focuswidget
+ */
 GtkWidget* ege_adjustment_action_get_focuswidget( EgeAdjustmentAction* action );
 
+/**
+ * Set a list of values with labels to explicitly include in menus.
+ *
+ * @param action The action to set explicit entries for.
+ * @param descriptions Array of descriptions to include.
+ *          Descriptions will be matched one-for-one with numbers in the 'values' array.
+ * @param values Array of values to include.
+ *          Values will be matched one-for-one with numbers in the 'descriptions' array.
+ * @param count Number of items in the 'descriptions' and 'values' arrays.
+ */
 void ege_adjustment_action_set_descriptions( EgeAdjustmentAction* action, gchar const** descriptions, gdouble const* values, guint count );
 
+/** Callback type for post-creation 'fixup' pass on generated widgets */
 typedef void (*EgeWidgetFixup)(GtkWidget *widget);
 
 
