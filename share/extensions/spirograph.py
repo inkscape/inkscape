@@ -39,7 +39,7 @@ class Spirograph(inkex.Effect):
                         help="Selects whether the gear is inside or outside the ring")
         self.OptionParser.add_option("-a", "--rotation",
                         action="store", type="float", 
-                        dest="rotation", default=100.0,
+                        dest="rotation", default=0.0,
                         help="The number of degrees to rotate the image by")                        
         self.OptionParser.add_option("-q", "--quality",
                         action="store", type="int", 
@@ -64,13 +64,10 @@ class Spirograph(inkex.Effect):
             return
         scale = 2 * math.pi / (ratio * self.options.quality)
         
-        rotation = 2 * math.pi * self.options.rotation / 180;
+        rotation = - math.pi * self.options.rotation / 180;
         
         new = self.document.createElement('svg:path')
-        s = {'stroke-linejoin': 'miter', 'stroke-width': '1.0px', 
-            'stroke-opacity': '1.0', 'fill-opacity': '1.0', 
-            'stroke': '#000000', 'stroke-linecap': 'butt', 
-            'fill': 'none'}
+        s = { 'stroke': '#000000', 'fill': 'none' }
         new.setAttribute('style', simplestyle.formatStyle(s))
         
         pathString = ''
