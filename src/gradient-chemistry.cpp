@@ -276,7 +276,9 @@ sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item)
     sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
     NR::Maybe<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
 
-    g_assert( bbox && !bbox->isEmpty() );
+    if ( !bbox || bbox->isEmpty() )
+        return gr;
+
     NR::Coord const width = bbox->dimensions()[NR::X];
     NR::Coord const height = bbox->dimensions()[NR::Y];
 
