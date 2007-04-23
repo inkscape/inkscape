@@ -340,24 +340,24 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
         return FALSE;
     }
 
+    SPDrawContext * const dc = SP_DRAW_CONTEXT(pc);
+    SPDesktop * const desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
+    NR::Point const event_w(bevent.x, bevent.y);
+    NR::Point const event_dt(desktop->w2d(event_w));
+
     gint ret = FALSE;
     if (bevent.button == 1) {
-
-        SPDrawContext * const dc = SP_DRAW_CONTEXT(pc);
-        SPDesktop * const desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
 
         if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
             return TRUE;
         }
 
-        NR::Point const event_w(bevent.x, bevent.y);
         pen_drag_origin_w = event_w;
         pen_within_tolerance = true;
 
         /* Test whether we hit any anchor. */
         SPDrawAnchor * const anchor = spdc_test_inside(pc, event_w);
 
-        NR::Point const event_dt(desktop->w2d(event_w));
         switch (pc->mode) {
             case SP_PEN_CONTEXT_MODE_CLICK:
                 /* In click mode we add point on release */
@@ -458,7 +458,16 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
         }
     } else if (bevent.button == 3) {
         if (pc->npoints != 0) {
-            spdc_pen_finish(pc, FALSE);
+
+            spdc_pen_finish_segment(pc, event_dt, bevent.state);
+            if (pc->green_closed) {
+                // finishing at the start anchor, close curve
+                spdc_pen_finish(pc, TRUE);
+            } else {
+                // finishing at some other anchor, finish curve but not close
+                spdc_pen_finish(pc, FALSE);
+            }
+
             ret = TRUE;
         }
     }
