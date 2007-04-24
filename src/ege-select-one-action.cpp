@@ -46,6 +46,7 @@
 #include <gtk/gtktoolitem.h>
 #include <gtk/gtkcombobox.h>
 #include <gtk/gtkcellrenderertext.h>
+#include <gtk/gtkcellrendererpixbuf.h>
 #include <gtk/gtkcelllayout.h>
 #include <gtk/gtkradioaction.h>
 #include <gtk/gtkradiomenuitem.h>
@@ -566,9 +567,19 @@ GtkWidget* create_tool_item( GtkAction* action )
             GtkWidget* holder = gtk_table_new( 1, 3, FALSE );
             GtkWidget* normal = gtk_combo_box_new_with_model( act->private_data->model );
 
-            GtkCellRenderer * renderer = gtk_cell_renderer_text_new();
+            GtkCellRenderer * renderer = 0;
+
+            if ( act->private_data->iconColumn >= 0 ) {
+                renderer = gtk_cell_renderer_pixbuf_new();
+                gtk_cell_layout_pack_start( GTK_CELL_LAYOUT(normal), renderer, TRUE );
+
+                // "icon-name"
+                gtk_cell_layout_add_attribute( GTK_CELL_LAYOUT(normal), renderer, "stock-id", act->private_data->iconColumn );
+            }
+
+            renderer = gtk_cell_renderer_text_new();
             gtk_cell_layout_pack_start( GTK_CELL_LAYOUT(normal), renderer, TRUE );
-            gtk_cell_layout_set_attributes( GTK_CELL_LAYOUT(normal), renderer, "text", act->private_data->labelColumn, (gchar*)0);
+            gtk_cell_layout_add_attribute( GTK_CELL_LAYOUT(normal), renderer, "text", act->private_data->labelColumn );
 
             gtk_combo_box_set_active( GTK_COMBO_BOX(normal), act->private_data->active );
 
