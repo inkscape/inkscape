@@ -1060,6 +1060,10 @@ sp_item_adjust_stroke_width_recursive(SPItem *item, double expansion)
 {
     sp_item_adjust_stroke (item, expansion);
 
+// A clone's child is the ghost of its original - we must not touch it, skip recursion
+    if (item && SP_IS_USE(item))
+        return;
+
     for (SPObject *o = SP_OBJECT(item)->children; o != NULL; o = o->next) {
         if (SP_IS_ITEM(o))
             sp_item_adjust_stroke_width_recursive(SP_ITEM(o), expansion);
@@ -1088,18 +1092,16 @@ sp_item_adjust_rects_recursive(SPItem *item, NR::Matrix advertized_transform)
 void
 sp_item_adjust_paint_recursive (SPItem *item, NR::Matrix advertized_transform, NR::Matrix t_ancestors, bool is_pattern)
 {
-// A clone must not touch the style (it's that of its parent!) and has no children, so quit now
-    if (item && SP_IS_USE(item))
-        return;
-
 // _Before_ full pattern/gradient transform: t_paint * t_item * t_ancestors
 // _After_ full pattern/gradient transform: t_paint_new * t_item * t_ancestors * advertised_transform
 // By equating these two expressions we get t_paint_new = t_paint * paint_delta, where:
     NR::Matrix t_item = sp_item_transform_repr (item);
     NR::Matrix paint_delta = t_item * t_ancestors * advertized_transform * t_ancestors.inverse() * t_item.inverse();
 
-// Within text, we do not fork gradients, and so must not recurse to avoid double compensation
-    if (!(item && SP_IS_TEXT(item))) {
+// Within text, we do not fork gradients, and so must not recurse to avoid double compensation;
+// also we do not recurse into clones, because a clone's child is the ghost of its original - 
+// we must not touch it
+    if (!(item && (SP_IS_TEXT(item) || SP_IS_USE(item)))) {
         for (SPObject *o = SP_OBJECT(item)->children; o != NULL; o = o->next) {
             if (SP_IS_ITEM(o)) {
 // At the level of the transformed item, t_ancestors is identity;
