@@ -23,20 +23,33 @@ It is generated automatically from doc/keys.xml by doc/keys-html.xsl.
 .key {font-weight: bold}
 .action {}
 .note {padding-left: 50px; font-size: 70%}
-.contents {padding: 1em; background-color: #eeeeee; font-size: small;}
-.contents strong {font-size: large;}
+.contents {padding: 1em; padding-left: 50px; background-color: #eeeeee; font-size: small; line-height: 1.7em;}
+.contents-title {font-size: large; font-weight: bold; letter-spacing: 0.4em;}
+.contents-section {font-size: large; font-weight: bold;}
+.contents-group {font-size: small; }
 body {margin: 1em; background-color: #ffffff;}
 h1 {margin-top: 0.5em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em; letter-spacing: -0.02em}
+h2 {margin-top: 0.0em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em; font-size: small;}
 h4 {font-weight: bold; font-style: italic; margin-top: 1em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em}
 </style>
 </head>
 <body>
+<h1><xsl:value-of select="/k:root/@title"/></h1>
+<h2>Version <xsl:value-of select="/k:root/@ver"/></h2>
+
 <xsl:apply-templates select="k:p"/>
 
-<p class="contents"><strong>Contents:</strong><xsl:text>  </xsl:text>
+<p class="contents"><span class="contents-title">Contents:</span><xsl:text>   </xsl:text>
 <xsl:for-each select="//k:section">
-<a href="#{./@title}"><xsl:value-of select="./@title"/></a>
-<xsl:if test="following::k:section"><xsl:text> | </xsl:text></xsl:if>
+<a class="contents-section" href="#{generate-id()}"><xsl:value-of select="./@title"/></a>
+<xsl:if test="./k:group[k:title]">
+<span class="contents-section">: </span>
+</xsl:if>
+<xsl:for-each select="./k:group[k:title]">
+<a class="contents-group" href="#{generate-id()}"><xsl:value-of select="./k:title"/></a>
+<xsl:if test="following-sibling::k:group[k:title]"><xsl:text>&#160;&#183; </xsl:text></xsl:if>
+</xsl:for-each>
+<span class="contents-section"><xsl:if test="following::k:section"><xsl:text>&#160;| </xsl:text></xsl:if></span>
 </xsl:for-each>
 </p>
 
@@ -71,12 +84,12 @@ h4 {font-weight: bold; font-style: italic; margin-top: 1em; padding-left: 50px; 
 </xsl:template>
 
 <xsl:template match="k:section">
-<tr><td colspan="3"><a name="{@title}"/><h1><xsl:value-of select="@title"/></h1></td></tr>
+<tr><td colspan="3"><a name="{generate-id()}"/><h1><xsl:value-of select="@title"/></h1></td></tr>
 <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="k:title">
-<tr bgcolor="{ancestor::k:section/@color}"><td colspan="3"><h4><xsl:value-of select="text()"/></h4></td></tr>
+<xsl:template match="k:group/k:title">
+<tr bgcolor="{ancestor::k:section/@color}"><td colspan="3"><h4><a name="{generate-id(..)}"/><xsl:value-of select="text()"/></h4></td></tr>
 </xsl:template>
 
 <xsl:template match="k:note">
