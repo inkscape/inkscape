@@ -661,7 +661,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 
                 desktop->updateNow();
             }
-            Inkscape::Rubberband::get()->stop(); // might have been started in another tool!
+            if (event->button.button == 1) {
+                Inkscape::Rubberband::get()->stop(); // might have been started in another tool!
+            }
             sc->button_press_shift = false;
             sc->button_press_ctrl = false;
             sc->button_press_alt = false;
