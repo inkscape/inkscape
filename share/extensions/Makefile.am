@@ -1,4 +1,6 @@
 
+SUBDIRS = Barcode
+
 extensiondir = $(datadir)/inkscape/extensions
 
 otherstuffdir = $(datadir)/inkscape/extensions

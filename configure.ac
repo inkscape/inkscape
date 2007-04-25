@@ -843,6 +843,7 @@ share/Makefile
 share/clipart/Makefile
 share/examples/Makefile
 share/extensions/Makefile
+share/extensions/Barcode/Makefile
 share/fonts/Makefile
 share/gradients/Makefile
 share/icons/Makefile
