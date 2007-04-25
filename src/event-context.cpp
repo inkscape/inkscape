@@ -418,17 +418,16 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                      && ( abs( (gint) event->motion.y - yp ) < tolerance ) ) {
                     break; // do not drag if we're within tolerance from origin
                 }
-
-                if (within_tolerance) {
-                    Inkscape::Rubberband::get()->start(desktop, motion_dt);
-                } else {
-                    Inkscape::Rubberband::get()->move(motion_dt);
-                }
-
                 // Once the user has moved farther than tolerance from the original location
                 // (indicating they intend to move the object, not click), then always process the
                 // motion notify coordinates as given (no snapping back to origin)
                 within_tolerance = false;
+
+                if (Inkscape::Rubberband::get()->is_started()) {
+                    Inkscape::Rubberband::get()->move(motion_dt);
+                } else {
+                    Inkscape::Rubberband::get()->start(desktop, motion_dt);
+                } 
             }
             break;
         case GDK_BUTTON_RELEASE:
