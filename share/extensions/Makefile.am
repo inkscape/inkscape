@@ -66,6 +66,7 @@ extensions = \
 	ps2pdf.sh \
 	pturtle.py \
 	radiusrand.py \
+	render_barcode.py \
 	rtree.py \
 	rubberstretch.py\
 	simplepath.py \
@@ -151,6 +152,7 @@ modules = \
 	radiusrand.inx \
 	randompnt.inx \
 	randompos.inx \
+	render_barcode.inx \
 	rtree.inx \
 	sk_input.inx \
 	straightseg.inx \
