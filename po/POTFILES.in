@@ -354,8 +354,10 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/extractimage.inx
 [type: gettext/xml] share/extensions/fig_input.inx
 [type: gettext/xml] share/extensions/flatten.inx
+[type: gettext/xml] share/extensions/fractalize.inx
 [type: gettext/xml] share/extensions/funcplot.inx
 [type: gettext/xml] share/extensions/g2pngs.inx
+[type: gettext/xml] share/extensions/gears.inx
 [type: gettext/xml] share/extensions/gimp_xcf.inx
 [type: gettext/xml] share/extensions/handles.inx
 [type: gettext/xml] share/extensions/inkscape_help_commandline.inx
@@ -380,6 +382,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/randompos.inx
 [type: gettext/xml] share/extensions/rtree.inx
 [type: gettext/xml] share/extensions/sk_input.inx
+[type: gettext/xml] share/extensions/spirograph.inx
 [type: gettext/xml] share/extensions/straightseg.inx
 [type: gettext/xml] share/extensions/summersnight.inx
 [type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
