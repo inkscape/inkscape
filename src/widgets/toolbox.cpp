@@ -324,6 +324,8 @@ static gchar const * ui_descr =
         "    <separator />"
         "    <toolitem action='OffsetAction' />"
         "    <toolitem action='PaintbucketUnitsAction' />"
+        "    <separator />"
+        "    <toolitem action='PaintbucketResetAction' />"
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"
@@ -4280,6 +4282,29 @@ static void paintbucket_offset_changed(GtkAdjustment *adj, GObject *tbl)
     prefs_set_double_attribute("tools.paintbucket", "offset", (gdouble)sp_units_get_pixels(adj->value, *unit));
 }
 
+static void paintbucket_defaults(GtkWidget *, GObject *dataKludge)
+{
+    // FIXME: make defaults settable via Inkscape Options
+    struct KeyValue {
+        char const *key;
+        double value;
+    } const key_values[] = {
+        {"threshold", 15},
+        {"offset", 0.0}
+    };
+
+    for (unsigned i = 0; i < G_N_ELEMENTS(key_values); ++i) {
+        KeyValue const &kv = key_values[i];
+        GtkAdjustment* adj = static_cast<GtkAdjustment *>(g_object_get_data(dataKludge, kv.key));
+        if ( adj ) {
+            gtk_adjustment_set_value(adj, kv.value);
+        }
+    }
+    
+    EgeSelectOneAction* channels_action = EGE_SELECT_ONE_ACTION( g_object_get_data( dataKludge, "channels_action" ) );
+    ege_select_one_action_set_active( channels_action, FLOOD_CHANNELS_RGB );
+}
+
 static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     EgeAdjustmentAction* eact = 0;
@@ -4302,6 +4327,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         ege_select_one_action_set_active( act1, prefs_get_int_attribute("tools.paintbucket", "channels", 0) );
         g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(paintbucket_channels_changed), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
+        g_object_set_data( holder, "channels_action", act1 );
     }
 
     // Spacing spinbox
@@ -4341,6 +4367,18 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
 
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
+    
+    /* Reset */
+    {
+        GtkAction* act = gtk_action_new( "PaintbucketResetAction",
+                                          _("Defaults"),
+                                          _("Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
+                                          GTK_STOCK_CLEAR );
+        g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(paintbucket_defaults), holder );
+        gtk_action_group_add_action( mainActions, act );
+        gtk_action_set_sensitive( act, TRUE );
+    }
+
 }
 
 /*

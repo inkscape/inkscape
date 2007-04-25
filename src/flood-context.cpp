@@ -238,17 +238,6 @@ inline unsigned char * get_pixel(guchar *px, int x, int y, int width) {
     return px + (x + y * width) * 4;
 }
 
-enum PaintBucketChannels {
-    FLOOD_CHANNELS_RGB,
-    FLOOD_CHANNELS_R,
-    FLOOD_CHANNELS_G,
-    FLOOD_CHANNELS_B,
-    FLOOD_CHANNELS_H,
-    FLOOD_CHANNELS_S,
-    FLOOD_CHANNELS_L,
-    FLOOD_CHANNELS_ALPHA
-};
-
 GList * flood_channels_dropdown_items_list() {
     GList *glist = NULL;
 

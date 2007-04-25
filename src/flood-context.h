@@ -52,4 +52,15 @@ GtkType sp_flood_context_get_type (void);
 GList* flood_channels_dropdown_items_list (void);
 void flood_channels_set_channels( gint channels );
 
+enum PaintBucketChannels {
+    FLOOD_CHANNELS_RGB,
+    FLOOD_CHANNELS_R,
+    FLOOD_CHANNELS_G,
+    FLOOD_CHANNELS_B,
+    FLOOD_CHANNELS_H,
+    FLOOD_CHANNELS_S,
+    FLOOD_CHANNELS_L,
+    FLOOD_CHANNELS_ALPHA
+};
+
 #endif
