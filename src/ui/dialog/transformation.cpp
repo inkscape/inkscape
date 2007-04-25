@@ -88,9 +88,9 @@ Transformation::Transformation()
       _scalar_rotate          (_("A_ngle"), _("Rotation angle (positive = counterclockwise)"), UNIT_TYPE_RADIAL, 
                                "", "transform_rotate", &_units_rotate),
       _scalar_skew_horizontal (_("_Horizontal"), _("Horizontal skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"), UNIT_TYPE_LINEAR, 
-                               "", "arrows_hor", &_units_skew),
+                               "", "transform_scew_hor", &_units_skew),
       _scalar_skew_vertical   (_("_Vertical"),  _("Vertical skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"),  UNIT_TYPE_LINEAR, 
-                               "", "arrows_ver", &_units_skew),
+                               "", "transform_scew_ver", &_units_skew),
 
       _scalar_transform_a     ("_A", _("Transformation matrix element A")),
       _scalar_transform_b     ("_B", _("Transformation matrix element B")),
