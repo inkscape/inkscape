@@ -3662,10 +3662,16 @@ void sp_nodepath_selected_nodes_rotate(Inkscape::NodePath::Path *nodepath, gdoub
             rot = angle;
         }
 
+        NR::Point rot_center;
+        if (Inkscape::NodePath::Path::active_node == NULL)
+            rot_center = box.midpoint();
+        else
+            rot_center = Inkscape::NodePath::Path::active_node->pos;
+
         NR::Matrix t =
-            NR::Matrix (NR::translate(-box.midpoint())) *
+            NR::Matrix (NR::translate(-rot_center)) *
             NR::Matrix (NR::rotate(rot)) *
-            NR::Matrix (NR::translate(box.midpoint()));
+            NR::Matrix (NR::translate(rot_center));
 
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
@@ -3787,10 +3793,16 @@ void sp_nodepath_selected_nodes_scale(Inkscape::NodePath::Path *nodepath, gdoubl
 
         double scale = (box.maxExtent() + grow)/box.maxExtent();
 
+        NR::Point scale_center;
+        if (Inkscape::NodePath::Path::active_node == NULL)
+            scale_center = box.midpoint();
+        else
+            scale_center = Inkscape::NodePath::Path::active_node->pos;
+
         NR::Matrix t =
-            NR::Matrix (NR::translate(-box.midpoint())) *
+            NR::Matrix (NR::translate(-scale_center)) *
             NR::Matrix (NR::scale(scale, scale)) *
-            NR::Matrix (NR::translate(box.midpoint()));
+            NR::Matrix (NR::translate(scale_center));
 
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
