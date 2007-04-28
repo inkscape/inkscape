@@ -14,19 +14,39 @@
     <string>org.inkscape.Inkscape</string>
     <key>CFBundleDocumentTypes</key>
     <array>
+		    <dict>
+		        <key>CFBundleTypeExtensions</key>
+		        <array>
+		            <string>SVG</string>
+		        </array>
+		        <key>CFBundleTypeIconFile</key>
+		        <string>inkscape_svg.icns</string>
+		        <key>CFBundleTypeMIMETypes</key>
+		        <array>
+		            <string>svg</string>
+		        </array>
+		        <key>CFBundleTypeName</key>
+		        <string>Scalable Vector Graphics Image</string>
+		        <key>CFBundleTypeOSTypes</key>
+		        <array>
+		            <string>SVG </string>
+		        </array>
+		        <key>CFBundleTypeRole</key>
+		        <string>Viewer</string>
+		    </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
                 <string>SVGZ</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>inkscape_svg.icns</string>
+            <string>inkscape_svgz.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
                 <string>svgz</string>
             </array>
             <key>CFBundleTypeName</key>
-            <string>SVGZ</string>
+            <string>Compressed SVG</string>
             <key>CFBundleTypeOSTypes</key>
             <array>
                 <string>SVGZ</string>
@@ -40,13 +60,13 @@
                 <string>EPS</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>EPS.icns</string>
+            <string>inkscape_eps.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
                 <string>eps</string>
             </array>
             <key>CFBundleTypeName</key>
-            <string>EPS</string>
+            <string>PostScript Document</string>
             <key>CFBundleTypeOSTypes</key>
             <array>
                 <string>EPS </string>
@@ -60,13 +80,13 @@
                 <string>EPSI</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>EPSI.icns</string>
+            <string>inkscape_epsi.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
                 <string>epsi</string>
             </array>
             <key>CFBundleTypeName</key>
-            <string>EPSI</string>
+            <string>PostScript Document</string>
             <key>CFBundleTypeOSTypes</key>
             <array>
                 <string>EPSI</string>
@@ -77,36 +97,16 @@
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
-                <string>SVG</string>
-            </array>
-            <key>CFBundleTypeIconFile</key>
-            <string>inkscape_svg.icns</string>
-            <key>CFBundleTypeMIMETypes</key>
-            <array>
-                <string>svg</string>
-            </array>
-            <key>CFBundleTypeName</key>
-            <string>SVG</string>
-            <key>CFBundleTypeOSTypes</key>
-            <array>
-                <string>SVG </string>
-            </array>
-            <key>CFBundleTypeRole</key>
-            <string>Viewer</string>
-        </dict>
-        <dict>
-            <key>CFBundleTypeExtensions</key>
-            <array>
                 <string>PS</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>postscript.icns</string>
+            <string>inkscape_ps.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
                 <string>ps</string>
             </array>
             <key>CFBundleTypeName</key>
-            <string>Postscript</string>
+            <string>PostScript Document</string>
             <key>CFBundleTypeOSTypes</key>
             <array>
                 <string>PS  </string>
@@ -114,7 +114,67 @@
             <key>CFBundleTypeRole</key>
             <string>Viewer</string>
         </dict>
-    </array>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>AI</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>inkscape_ai.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>ai</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Adobe Illustrator Document</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>AI  </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>WMF</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>inkscape_wmf.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>wmf</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Windows MetaFile</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>WMF </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>PDF</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>inkscape_pdf.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>pdf</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>PDF Document</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>PDF </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+        </dict>    
+		</array>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundlePackageType</key>
