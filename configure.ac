@@ -92,6 +92,10 @@ if test "x$PKG_CONFIG" = "xno"; then
 	AC_MSG_ERROR(You have to install pkg-config to compile inkscape.)
 fi
 
+dnl Find msgfmt.  Without this, po/Makefile fails to set MSGFMT on some platforms.
+AC_PATH_PROG(MSGFMT, msgfmt, msgfmt)
+AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
+
 dnl ******************************
 dnl Check for libpng 
 dnl ******************************
