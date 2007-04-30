@@ -22,6 +22,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import simplepath 
 from math import *
 
+class SuperSubpath(list):
+    def __init__(self, items=[]):
+        self.closed = False
+        list.__init__(self, items)
+    def close(self, state=True):
+        self.closed = state
+
 def matprod(mlist):
     prod=mlist[0]
     for m in mlist[1:]:
@@ -104,10 +111,8 @@ def CubicSuperPath(simplepath):
     for s in simplepath:
         cmd, params = s        
         if cmd == 'M':
-            if last:
-                csp[subpath].append([lastctrl[:],last[:],last[:]])
             subpath += 1
-            csp.append([])
+            csp.append(SuperSubpath())
             subpathstart =  params[:]
             last = params[:]
             lastctrl = params[:]
@@ -141,11 +146,9 @@ def CubicSuperPath(simplepath):
             lastctrl = arcp[-1][0]
             csp[subpath]+=arcp[:-1]
         elif cmd == 'Z':
-            csp[subpath].append([lastctrl[:],last[:],last[:]])
+            csp[subpath].close()
             last = subpathstart[:]
             lastctrl = subpathstart[:]
-    #append final superpoint
-    csp[subpath].append([lastctrl[:],last[:],last[:]])
     return csp    
 
 def unCubicSuperPath(csp):
@@ -155,6 +158,11 @@ def unCubicSuperPath(csp):
             a.append(['M',subpath[0][1][:]])
             for i in range(1,len(subpath)):
                 a.append(['C',subpath[i-1][2][:] + subpath[i][0][:] + subpath[i][1][:]])
+            try:
+                if subpath.closed:
+                    a.append(['Z',[]])
+            except:
+                pass
     return a
 
 def parsePath(d):
