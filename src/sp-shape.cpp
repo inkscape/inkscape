@@ -1025,10 +1025,6 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
         *p = bp->c(3) * i2d;
         bp++;
     }
-    
-    // Additionaly, add the center for snapping
-    *p = shape->getCenter();
-    
 }
 
 

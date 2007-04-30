@@ -114,25 +114,43 @@ get_scale_transform_with_stroke (NR::Rect &bbox_param, gdouble strokewidth, bool
         return (p2o * direct * o2n); // can't solve the equation: one of the dimensions is equal to stroke width, so return the straightforward scaler
     }
 
-    gdouble ratio_x = (w1 - r0) / (w0 - r0);
-    gdouble ratio_y = (h1 - r0) / (h0 - r0);
-    NR::Matrix direct_constant_r = NR::Matrix (NR::scale(ratio_x, ratio_y));
+    // Flip when the width or height changes sign
+    int flip_x = ((w1 < 0) == (w0 < 0)) ? 1 : -1;
+    int flip_y = ((h1 < 0) == (h0 < 0)) ? 1 : -1;
+    
+    // w1 and h1 can be negative, but if so then e.g. w1-r0 won't make sense
+    // therefore we should use fabs() all over the place
+    gdouble ratio_x = (fabs(w1) - fabs(r0)) / (fabs(w0) - fabs(r0));
+    gdouble ratio_y = (fabs(h1) - fabs(r0)) / (fabs(h0) - fabs(r0));    
+    
+    NR::Matrix direct_constant_r = NR::Matrix (NR::scale(flip_x * ratio_x, flip_y*ratio_y));
 
     if (transform_stroke && r0 != 0 && r0 != NR_HUGE) { // there's stroke, and we need to scale it
         // These coefficients are obtained from the assumption that scaling applies to the
         // non-stroked "shape proper" and that stroke scale is scaled by the expansion of that
         // matrix
-        gdouble A = -(w0 *h0) + r0*(w0 + h0);
-        gdouble B = -(w1 + h1) * r0*r0;
-        gdouble C = w1 * h1 * r0*r0;
+        // In fact, we're trying to solve this equation:
+        // r1 = r0 * sqrt (((w1-r0)/(w0-r0))*((h1-r1)/(h0-r0)))
+        // To make sense of this, the operant of the sqrt() should
+        // be positive, hence all the fabs() below
+        // (w1 and h1 will be negative when mirroring, w0 and h0 will probably never be negative)
+        gdouble A = -fabs(w0*h0) + fabs(r0)*(fabs(w0) + fabs(h0));
+        gdouble B = -(fabs(w1) + fabs(h1)) * r0*r0;
+        gdouble C = fabs(w1 * h1 * r0*r0);
         if (B*B - 4*A*C > 0) {
             gdouble r1 = (-B - sqrt (B*B - 4*A*C))/(2*A);
             //gdouble r2 = (-B + sqrt (B*B - 4*A*C))/(2*A);
             //std::cout << "r0" << r0 << " r1" << r1 << " r2" << r2 << "\n";
-            gdouble scale_x = (w1 - r1)/(w0 - r0);
-            gdouble scale_y = (h1 - r1)/(h0 - r0);
-            scale *= NR::scale(scale_x, scale_y);
-            unbudge *= NR::translate (-0.5 * (r0 * scale_x - r1), -0.5 * (r0 * scale_y - r1));
+            //
+            // I think r1 will always be positive if r0 is (mathematical proof?)
+            // but if w1 becomes negative, then the scale will be wrong if we just do  
+            // gdouble scale_x = (w1 - r1)/(w0 - r0);
+            // gdouble scale_y = (h1 - r1)/(h0 - r0);
+            // So let's do it like this: Calculate the absolute scale
+            gdouble scale_x = (fabs(w1) - fabs(r1))/(fabs(w0) - fabs(r0));
+            gdouble scale_y = (fabs(h1) - fabs(r1))/(fabs(h0) - fabs(r0));
+            scale *= NR::scale(flip_x*scale_x, flip_y*scale_y);
+            unbudge *= NR::translate (-flip_x * 0.5 * (fabs(r0) * scale_x - fabs(r1)), -flip_y * 0.5 * (fabs(r0) * scale_y - fabs(r1)));
         } else {
             scale *= direct;
         }
@@ -141,7 +159,7 @@ get_scale_transform_with_stroke (NR::Rect &bbox_param, gdouble strokewidth, bool
             scale *= direct;
         } else {// nonscaling strokewidth
             scale *= direct_constant_r;
-            unbudge *= NR::translate (0.5 * r0 * (1 - ratio_x), 0.5 * r0 * (1 - ratio_y));
+            unbudge *= NR::translate (flip_x * 0.5 * fabs(r0) * (1 - ratio_x), flip_y * 0.5 * fabs(r0) * (1 - ratio_y));
         }
     }
 

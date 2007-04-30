@@ -1338,22 +1338,17 @@ void Inkscape::SelTrans::stretch(SPSelTransHandle const &handle, NR::Point &pt, 
         return;
     }
 
-    //Get two corners of the new bbox
-    NR::Point p1 = _approximate_bbox->min() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
-    NR::Point p2 = _approximate_bbox->max() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
-
-    //Find the corners at the lower-left and upper-right, as required by get_scale_transform_with_stroke
-    NR::Point new_bbox_min = NR::Point(std::min(p1[NR::X], p2[NR::X]), std::min(p1[NR::Y], p2[NR::Y]));
-    NR::Point new_bbox_max = NR::Point(std::max(p1[NR::X], p2[NR::X]), std::max(p1[NR::Y], p2[NR::Y]));
+    NR::Point new_bbox_min = _approximate_bbox->min() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
+    NR::Point new_bbox_max = _approximate_bbox->max() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
 
     int transform_stroke = false;
     gdouble strokewidth = 0;
-        
+
     if ( _snap_bbox_type != SPItem::GEOMETRIC_BBOX) {
         transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
         strokewidth = _strokewidth;
     }
-        
+
     NR::Matrix scaler = get_scale_transform_with_stroke (*_approximate_bbox, strokewidth, transform_stroke,
                     new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
 
@@ -1376,13 +1371,8 @@ void Inkscape::SelTrans::scale(NR::Point &pt, guint state)
             s[i] = 1e-9;
     }
     
-    //Get two corners of the new bbox
-    NR::Point p1 = _approximate_bbox->min() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
-    NR::Point p2 = _approximate_bbox->max() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
-
-    //Find the corners at the lower-left and upper-right, as required by get_scale_transform_with_stroke
-    NR::Point new_bbox_min = NR::Point(std::min(p1[NR::X], p2[NR::X]), std::min(p1[NR::Y], p2[NR::Y]));
-    NR::Point new_bbox_max = NR::Point(std::max(p1[NR::X], p2[NR::X]), std::max(p1[NR::Y], p2[NR::Y]));
+    NR::Point new_bbox_min = _approximate_bbox->min() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
+    NR::Point new_bbox_max = _approximate_bbox->max() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
     
     int transform_stroke = false;
     gdouble strokewidth = 0;
