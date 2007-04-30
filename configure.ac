@@ -33,16 +33,18 @@ AC_HEADER_STDC
 dnl These next few lines are needed only while libcroco is in our source tree.
 AC_PROG_CC
 AM_PROG_CC_C_O
+AC_MSG_NOTICE([Testing -Wno-pointer-sign])
 if test "$GCC" = "yes"; then
   # Enable some warnings from gcc.
 
+  AC_LANG_PUSH(C)
   # -Wno-pointer-sign is probably new in gcc 4.0; certainly it isn't accepted
   # by gcc 2.95.
   ink_svd_CFLAGS="$CFLAGS"
   CFLAGS="-Wno-pointer-sign $CFLAGS"
-  AC_COMPILE_IFELSE([int dummy;
-], , CFLAGS="$ink_svd_CFLAGS",)
+  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), AC_MSG_NOTICE([ compiler supports -Wno-pointer-sign]), CFLAGS="$ink_svd_CFLAGS")
   CFLAGS="-Wall -Wformat-security -W -D_FORTIFY_SOURCE=2 $CFLAGS"
+  AC_LANG_POP
 fi
 
 dnl Honor aclocal flags
