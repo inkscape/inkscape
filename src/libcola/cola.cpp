@@ -2,6 +2,7 @@
 #include "conjugate_gradient.h"
 #include "straightener.h"
 #include "shortest_paths.h"
+#include "isnan.h"
 
 namespace cola {
 
@@ -131,7 +132,7 @@ void ConstrainedMajorizationLayout::majlayout(
             }
             b[i] += degree * coords[i];
         }
-        assert(!isnan(b[i]));
+        assert(!isNaN(b[i]));
     }
     if(constrainedLayout) {
         setupDummyVars();

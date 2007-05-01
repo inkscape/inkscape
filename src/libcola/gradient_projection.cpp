@@ -19,7 +19,7 @@
 #include <iostream>
 #include "isnan.h"
 #include "isinf.h"
-
+#include <math.h>
 
 using namespace std;
 using namespace vpsc;
