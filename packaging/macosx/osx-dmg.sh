@@ -43,7 +43,7 @@ do
 	case $1 in
 	  	-s)
 			set_ds_store=true ;;
-   		-py|--with-python)
+		-py|--with-python)
 			add_python=true 
 			python_dir=$2 
 			ds_store_file="inkscape_python.ds_store"
@@ -150,3 +150,4 @@ hdiutil detach "$DEV_NAME"
 /usr/bin/hdiutil convert "$RWNAME" -format UDZO -imagekey zlib-level=9 -o "Inkscape.dmg"
 rm -f "$RWNAME"
 
+exit 0

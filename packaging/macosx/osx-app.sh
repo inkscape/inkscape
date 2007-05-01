@@ -71,6 +71,11 @@ fi
 pkg=Inkscape
 package="$pkg.app"
 
+# Remove a previously existing package
+if [ -d $package ]; then
+	echo "Removing previous Inkscape.app"
+	rm -Rf $package
+fi
 
 strip=false
 while getopts 's' flag; do
@@ -245,8 +250,6 @@ fi
 # done)
 
 # Get all the icons and the rest of the script framework
-rsync -av $resdir/Resources/* $package/Contents/Resources/
+rsync -av --exclude ".svn" $resdir/Resources/* $package/Contents/Resources/
 
-# Make an image
-#/usr/bin/hdiutil create -srcfolder "$pkg.app" "$pkg.dmg"
-# ./osx-dmg.sh
+exit 0

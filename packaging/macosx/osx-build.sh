@@ -56,9 +56,10 @@ Compilation script for Inkscape on Mac OS X.
     install the build products locally, inside the source
     directory (run make install)
   \033[1mp,pack,package\033[0m
-    package Inkscape in a double clickable .app bundle and
-    store it in a .dmg image for distribution
+    package Inkscape in a double clickable .app bundle 
     \033[1m-s,--strip\033[0m	remove debugging information in Inkscape package
+  \033[1md,dist,distrib\033[0m
+    store Inkscape.app in a disk image (dmg) for distribution
     \033[1m-py,--with-python\033[0m	specify python packages path for inclusion into the dmg image
 	
 \033[1mEXAMPLES\033[0m
@@ -80,13 +81,17 @@ HERE=`pwd`
 SRCROOT=$HERE/../..		# we are currently in packaging/macosx
 
 # Defaults
-INSTALLPREFIX=$SRCROOT/Build/
+if [ "$INSTALLPREFIX" = "" ]
+then
+	INSTALLPREFIX=$SRCROOT/Build/
+fi
 SVNUPDATE="f"
 AUTOGEN="f"
 CONFIGURE="f"
 BUILD="f"
 INSTALL="f"
 PACKAGE="f"
+DISTRIB="f"
 
 STRIP="f"
 PYTHON="f"
@@ -99,9 +104,9 @@ do
 	h|help)
 		help 
 		exit 1 ;;
-   	u|up|update)
+   u|up|update)
 		SVNUPDATE="t" ;;
-   	a|auto|autogen)
+   a|auto|autogen)
 		AUTOGEN="t" ;;
 	c|conf|configure)
 		CONFIGURE="t" ;;
@@ -111,9 +116,11 @@ do
 		INSTALL="t" ;;
 	p|pack|package)
 		PACKAGE="t" ;;
+	d|dist|distrib)
+		DISTRIB="t" ;;
 	# -p|--prefix)
-	  	#INSTALLPREFIX=$2
-	  	#shift 1 ;;
+	#   	INSTALLPREFIX=$2
+	#   	shift 1 ;;
 	-s|-strip)
 	     	STRIP="t" ;;
 	-py|--with-python)
@@ -151,6 +158,11 @@ if [[ "$SVNUPDATE" == "t" ]]
 then
 	cd $SRCROOT
 	svn up
+	status=$?
+	if [[ $status -ne 0 ]]; then
+		echo -e "\nSVN update failed"
+		exit $status
+	fi
 	cd $HERE
 fi
 
@@ -158,6 +170,11 @@ if [[ "$AUTOGEN" == "t" ]]
 then
 	cd $SRCROOT
 	./autogen.sh
+	status=$?
+	if [[ $status -ne 0 ]]; then
+		echo -e "\nautogen failed"
+		exit $status
+	fi
 	cd $HERE
 fi
 
@@ -165,7 +182,17 @@ if [[ "$CONFIGURE" == "t" ]]
 then
 	ALLCONFFLAGS=`echo "$CONFFLAGS --prefix=$INSTALLPREFIX"`
 	cd $SRCROOT
+	if [ ! -f configure ]
+	then
+		echo "Configure script not found in $SRCROOT. Run autogen.sh first"
+		exit 1
+	fi
 	./configure $ALLCONFFLAGS
+	status=$?
+	if [[ $status -ne 0 ]]; then
+		echo -e "\nConfigure failed"
+		exit $status
+	fi
 	cd $HERE
 fi
 
@@ -173,6 +200,11 @@ if [[ "$BUILD" == "t" ]]
 then
 	cd $SRCROOT
 	make
+	status=$?
+	if [[ $status -ne 0 ]]; then
+		echo -e "\nBuild failed"
+		exit $status
+	fi
 	cd $HERE
 fi
 
@@ -180,21 +212,58 @@ if [[ "$INSTALL" == "t" ]]
 then
 	cd $SRCROOT
 	make install
+	status=$?
+	if [[ $status -ne 0 ]]; then
+		echo -e "\nInstall failed"
+		exit $status
+	fi
 	cd $HERE
 fi
 
-if [[ "$PACKAGE" == "t" ]]; then
+if [[ "$PACKAGE" == "t" ]]
+then
+	
+	# Detect strip parameter
 	if [[ "$STRIP" == "t" ]]; then
 		STRIPPARAM="-s"
 	else
 		STRIPPARAM=""
 	fi
+	
+	# Test the existence of required files
+	if [ ! -e $INSTALLPREFIX/bin/inkscape ]
+	then
+		echo "The inkscape executable \"$INSTALLPREFIX/bin/inkscape\" cound not be found."
+		exit 1
+	fi
+	if [ ! -e $SRCROOT/Info.plist ]
+	then
+		echo "The file \"$SRCROOT/Info.plist\" could not be found, please re-run configure."
+		exit 1
+	fi
+	
+	# Create app bundle
 	./osx-app.sh $STRIPPARAM $INSTALLPREFIX/bin/inkscape $SRCROOT/Info.plist
+	status=$?
+	if [[ $status -ne 0 ]]; then
+		echo -e "\nApplication bundle creation failed"
+		exit $status
+	fi
+fi
 
+if [[ "$DISTRIB" == "t" ]]
+then	
+	# Create dmg bundle
 	if [[ "$PYTHON" == "t" ]]; then
-		./osx-dmg.sh -py "$PYTHONDIR"
+		PYTHONOPTS="-py \"$PYTHONDIR\""
 	else
-		./osx-dmg.sh
+		PYTHONOPTS=""
+	fi
+	./osx-dmg.sh $PYTHONOPTS
+	status=$?
+	if [[ $status -ne 0 ]]; then
+		echo -e "\nDisk image creation failed"
+		exit $status
 	fi
 
 	DATE=`date "+%Y%m%d"`
@@ -214,7 +283,6 @@ if [[ "$PACKAGE" == "t" ]]; then
 	Pango        `pkg-config --modversion pango`
 Configure options:
 	$CONFFLAGS" > $INFOFILE
-
 	if [[ "$STRIP" == "t" ]]; then
 		echo "Debug info
 	no" >> $INFOFILE
@@ -228,4 +296,3 @@ Configure options:
 fi
 
 exit 0
-
