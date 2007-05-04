@@ -38,7 +38,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.6.12, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.6.13, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -6561,7 +6561,8 @@ public:
                 }
             obj.append(fileSet[i]);
             String fullObj = parent.resolve(obj);
-            cmd.append(fullObj);
+            String nativeFullObj = getNativePath(fullObj);
+            cmd.append(nativeFullObj);
             //trace("link: tgt:%s obj:%s", fullTarget.c_str(),
             //          fullObj.c_str());
             if (isNewerThan(fullObj, fullTarget))
