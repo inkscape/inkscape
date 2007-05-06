@@ -2353,7 +2353,7 @@ Verb *Verb::_base_verbs[] = {
                     N_("Draw freehand lines"), "draw_freehand"),
     new ContextVerb(SP_VERB_CONTEXT_PEN, "ToolPen", N_("Pen"),
                     N_("Draw Bezier curves and straight lines"), "draw_pen"),
-    new ContextVerb(SP_VERB_CONTEXT_CALLIGRAPHIC, "ToolCalligrphic", N_("Calligraphy"),
+    new ContextVerb(SP_VERB_CONTEXT_CALLIGRAPHIC, "ToolCalligraphic", N_("Calligraphy"),
                     N_("Draw calligraphic lines"), "draw_calligraphic"),
     new ContextVerb(SP_VERB_CONTEXT_TEXT, "ToolText", N_("Text"),
                     N_("Create and edit text objects"), "draw_text"),
