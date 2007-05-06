@@ -105,6 +105,7 @@ static void set_category_mask(bool * const mask, char const *filter) {
                 { "REFCOUNT", Event::REFCOUNT },
                 { "EXTENSION", Event::EXTENSION },
                 { "FINALIZERS", Event::FINALIZERS },
+                { "INTERACTION", Event::INTERACTION },
                 { "OTHER", Event::OTHER },
                 { NULL, Event::OTHER }
             };
