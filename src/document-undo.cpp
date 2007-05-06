@@ -63,6 +63,7 @@
 #include "inkscape.h"
 #include "debug/event-tracker.h"
 #include "debug/simple-event.h"
+#include "debug/timestamp.h"
 #include "event.h"
 
 
@@ -129,6 +130,37 @@ sp_document_reset_key (Inkscape::Application *inkscape, SPDesktop *desktop, GtkO
 	doc->actionkey = NULL;
 }
 
+namespace {
+
+using Inkscape::Debug::Event;
+using Inkscape::Debug::SimpleEvent;
+using Inkscape::Util::share_static_string;
+using Inkscape::Debug::timestamp;
+using Inkscape::Verb;
+
+typedef SimpleEvent<Event::INTERACTION> InteractionEvent;
+
+class CommitEvent : public InteractionEvent {
+public:
+
+    CommitEvent(SPDocument *doc, const gchar *key, const unsigned int type,
+                Glib::ustring const &description)
+    : InteractionEvent(share_static_string("commit"))
+    {
+        _addProperty(share_static_string("timestamp"), timestamp()); 
+        Verb *verb = Verb::get(type);
+        if (verb) {
+            _addProperty(share_static_string("verb"), verb->get_id());
+        }
+        if (key) {
+            _addProperty(share_static_string("merge-key"), key);
+        }
+        _addProperty(share_static_string("description"), description.c_str());
+    }
+};
+
+}
+
 void
 sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int event_type,
                         Glib::ustring event_description)
@@ -136,6 +168,8 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int ev
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
 	g_assert (doc->priv->sensitive);
+
+        Inkscape::Debug::Logger::write<CommitEvent>(doc, key, event_type, event_description);
 
 	doc->collectOrphans();
 
