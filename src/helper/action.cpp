@@ -16,6 +16,7 @@
 #include "debug/logger.h"
 #include "debug/timestamp.h"
 #include "debug/simple-event.h"
+#include "debug/event-tracker.h"
 #include "helper/action.h"
 
 static void sp_action_class_init (SPActionClass *klass);
@@ -156,7 +157,7 @@ sp_action_perform (SPAction *action, void * data)
 	nr_return_if_fail (action != NULL);
 	nr_return_if_fail (SP_IS_ACTION (action));
 
-        Inkscape::Debug::Logger::write<ActionEvent>(action);
+        Inkscape::Debug::EventTracker<ActionEvent> tracker(action);
 
 	aobject = NR_ACTIVE_OBJECT(action);
 	if (aobject->callbacks) {
