@@ -142,6 +142,81 @@ public:
         }
     }
 
+    template <typename EventType>
+    inline static void write() {
+        start<EventType>();
+        finish();
+    }
+
+    template <typename EventType, typename A>
+    inline static void write(A const &a) {
+        start<EventType, A>(a);
+        finish();
+    }
+
+    template <typename EventType, typename A, typename B>
+    inline static void write(A const &a, B const &b) {
+        start<EventType, A, B>(a, b);
+        finish();
+    }
+
+    template <typename EventType, typename A, typename B, typename C>
+    inline static void write(A const &a, B const &b, C const &c) {
+        start<EventType, A, B, C>(a, b, c);
+        finish();
+    }
+
+    template <typename EventType, typename A, typename B,
+                                  typename C, typename D>
+    inline static void write(A const &a, B const &b, C const &c, D const &d) {
+        start<EventType, A, B, C, D>(a, b, c, d);
+        finish();
+    }
+
+    template <typename EventType, typename A, typename B,
+                                  typename C, typename D,
+                                  typename E>
+    inline static void write(A const &a, B const &b, C const &c,
+                             D const &d, E const &e)
+    {
+        start<EventType, A, B, C, D, E>(a, b, c, d, e);
+        finish();
+    }
+
+    template <typename EventType, typename A, typename B,
+                                  typename C, typename D,
+                                  typename E, typename F>
+    inline static void write(A const &a, B const &b, C const &c,
+                             D const &d, E const &e, F const &f)
+    {
+        start<EventType, A, B, C, D, E, F>(a, b, c, d, e, f);
+        finish();
+    }
+
+    template <typename EventType, typename A, typename B,
+                                  typename C, typename D,
+                                  typename E, typename F,
+                                  typename G>
+    inline static void write(A const &a, B const &b, C const &c,
+                             D const &d, E const &e, F const &f,
+                             G const &g)
+    {
+        start<EventType, A, B, C, D, E, F, G>(a, b, c, d, e, f, g);
+        finish();
+    }
+
+    template <typename EventType, typename A, typename B,
+                                  typename C, typename D,
+                                  typename E, typename F,
+                                  typename G, typename H>
+    inline static void write(A const &a, B const &b, C const &c,
+                             D const &d, E const &e, F const &f,
+                             G const &g, H const &h)
+    {
+        start<EventType, A, B, C, D, E, F, G, H>(a, b, c, d, e, f, g, h);
+        finish();
+    }
+
     static void shutdown();
 
 private:

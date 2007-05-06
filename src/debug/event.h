@@ -31,6 +31,7 @@ public:
         REFCOUNT,
         EXTENSION,
         FINALIZERS,
+        INTERACTION,
         OTHER
     };
     enum { N_CATEGORIES=OTHER+1 };
