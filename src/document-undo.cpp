@@ -143,19 +143,17 @@ typedef SimpleEvent<Event::INTERACTION> InteractionEvent;
 class CommitEvent : public InteractionEvent {
 public:
 
-    CommitEvent(SPDocument *doc, const gchar *key, const unsigned int type,
-                Glib::ustring const &description)
+    CommitEvent(SPDocument *doc, const gchar *key, const unsigned int type)
     : InteractionEvent(share_static_string("commit"))
     {
         _addProperty(share_static_string("timestamp"), timestamp()); 
         Verb *verb = Verb::get(type);
         if (verb) {
-            _addProperty(share_static_string("verb"), verb->get_id());
+            _addProperty(share_static_string("context"), verb->get_id());
         }
         if (key) {
             _addProperty(share_static_string("merge-key"), key);
         }
-        _addProperty(share_static_string("description"), description.c_str());
     }
 };
 
@@ -169,7 +167,7 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int ev
 	g_assert (doc->priv != NULL);
 	g_assert (doc->priv->sensitive);
 
-        Inkscape::Debug::Logger::write<CommitEvent>(doc, key, event_type, event_description);
+        Inkscape::Debug::EventTracker<CommitEvent> tracker(doc, key, event_type);
 
 	doc->collectOrphans();
 
