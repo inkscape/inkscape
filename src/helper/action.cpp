@@ -13,6 +13,9 @@
 
 #include <string.h>
 
+#include "debug/logger.h"
+#include "debug/timestamp.h"
+#include "debug/simple-event.h"
 #include "helper/action.h"
 
 static void sp_action_class_init (SPActionClass *klass);
@@ -110,6 +113,27 @@ sp_action_new(Inkscape::UI::View::View *view,
 	return action;
 }
 
+namespace {
+
+using Inkscape::Debug::SimpleEvent;
+using Inkscape::Debug::Event;
+using Inkscape::Util::share_static_string;
+using Inkscape::Debug::timestamp;
+
+typedef SimpleEvent<Event::INTERACTION> ActionEventBase;
+
+class ActionEvent : public ActionEventBase {
+public:
+    ActionEvent(SPAction const *action)
+    : ActionEventBase(share_static_string("action"))
+    {
+        _addProperty(share_static_string("timestamp"), timestamp());
+        _addProperty(share_static_string("verb"), action->id);
+    }
+};
+
+}
+
 /**
 	\return   None
 	\brief    Executes an action
@@ -131,6 +155,8 @@ sp_action_perform (SPAction *action, void * data)
 
 	nr_return_if_fail (action != NULL);
 	nr_return_if_fail (SP_IS_ACTION (action));
+
+        Inkscape::Debug::Logger::write<ActionEvent>(action);
 
 	aobject = NR_ACTIVE_OBJECT(action);
 	if (aobject->callbacks) {
