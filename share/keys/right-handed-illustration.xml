@@ -143,11 +143,11 @@ Future improvements:
 
   <bind action="PenPrefs" />
 
-  <bind key="F6" modifiers="Ctrl" action="ToolCalligrphic" display="true"/>
+  <bind key="F6" modifiers="Ctrl" action="ToolCalligraphic" display="true"/>
 
   <bind key="2" modifiers="Ctrl" action="ToolPencil" />
-  <bind key="at" modifiers="Shift" action="ToolCalligrphic" />
-  <bind key="at" action="ToolCalligrphic" />
+  <bind key="at" modifiers="Shift" action="ToolCalligraphic" />
+  <bind key="at" action="ToolCalligraphic" />
   
   <bind key="2" action="ToolPen" />
   
