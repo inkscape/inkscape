@@ -10,6 +10,8 @@
 	#include <ieeefp.h>
 	#define isinf(x) ((fpclass(x) == FP_NINF) || (fpclass(x) == FP_PINF))
 	
+#elif defined(__APPLE__) && __GNUC__ == 3
+#define isinf(x) __isinf(x)
 #endif
 
 #endif /* __ISINF_H__ */
