@@ -587,6 +587,9 @@ void InkscapePreferences::initPageMisc()
     _misc_comment.init( _("Add label comments to printing output"), "printing.debug", "show-label-comments", false);
     _page_misc.add_line( false, "", _misc_comment, "", 
                            _("When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"), true);
+    _misc_small_toolbar.init( _("Make commands toolbar smaller"), "toolbox", "small", true);
+    _page_misc.add_line( false, "", _misc_small_toolbar, "",
+                           _("Make the commands toolbar use the 'secondary' toolbar size (requires restart)"), true);
     _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
     _page_misc.add_line( false, _("Max recent documents:"), _misc_recent, "", 
                            _("The maximum length of the Open Recent list in the File menu"), false);

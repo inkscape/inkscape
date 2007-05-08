@@ -909,7 +909,14 @@ static void
 setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 {
     GtkTooltips *tooltips=GTK_TOOLTIPS(g_object_get_data(G_OBJECT(toolbox), "tooltips"));
-    gint shrinkLeft = prefs_get_int_attribute_limited( "toolbox.left", "small", 0, 0, 1 );
+    gint shrinkLeft = prefs_get_int_attribute_limited( "toolbox.tools", "small", 0, 0, 1 );
+    if ( (shrinkLeft == 0) && (prefs_get_int_attribute_limited( "toolbox.tools", "small", 1, 0, 1 ) == 1) ) {
+        // "toolbox.tools" was not set. Fallback to older value
+        shrinkLeft = prefs_get_int_attribute_limited( "toolbox.left", "small", 0, 0, 1 );
+
+        // Copy the setting forwards
+        prefs_set_int_attribute( "toolbox.tools", "small", shrinkLeft );
+    }
     Inkscape::IconSize toolboxSize = shrinkLeft ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
 
     for (int i = 0 ; tools[i].type_name ; i++ ) {
@@ -994,7 +1001,9 @@ setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
             gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
             Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
-            gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+            if ( prefs_get_int_attribute_limited( "toolbox", "icononly", 1, 0, 1 ) ) {
+                gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+            }
             gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), static_cast<GtkIconSize>(toolboxSize) );
 
 
@@ -1090,7 +1099,9 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
     gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
 
     GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/CommandsToolbar" );
-    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    if ( prefs_get_int_attribute_limited( "toolbox", "icononly", 1, 0, 1 ) ) {
+        gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    }
     gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
     Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
     gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), (GtkIconSize)toolboxSize );
