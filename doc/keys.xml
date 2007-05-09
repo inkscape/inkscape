@@ -706,7 +706,8 @@ groups) with the same effect as Alt+click.)</note>
 
 <group>
 <title>Scale nodes (&gt;1 nodes selected)</title>
-<note>These commands scale the selected nodes as if they were an "object", around the center of that object.</note>
+<note>These commands scale the selected nodes as if they were an "object".</note>
+<note>If mouse is over a node, that node becomes the axis of scaling; otherwise it scales around geometric center of selected nodes.</note>
 <keys><key>.</key> <key>&gt;</key> <action>scale nodes up by the scale step</action></keys> 
 <keys><key>,</key> <key>&lt;</key> <action>scale nodes down by the scale step</action></keys> 
 <note>The default scale step is 2 px (SVG pixel units, not screen pixels).</note>
@@ -718,7 +719,8 @@ groups) with the same effect as Alt+click.)</note>
 
 <group>
 <title>Rotate nodes (&gt;1 nodes selected)</title>
-<note>These commands rotate the selected nodes as if they were an "object", around the center of that object.</note>
+<note>These commands rotate the selected nodes as if they were an "object".</note>
+<note>If mouse is over a node, that node becomes the axis of rotation; otherwise it rotates around geometric center of selected nodes.</note>
 <keys><key>[</key> <key>]</key> <action>rotate nodes by the angle step</action></keys> 
 <note>The default angle step is 15 degrees. ] rotates clockwise, [ rotates counterclockwise.</note>
 <keys><key><alt/>[</key> <key><alt/>]</key> <action>rotate nodes by 1 pixel</action></keys>
