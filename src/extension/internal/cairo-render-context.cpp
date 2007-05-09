@@ -8,7 +8,7 @@
  *   Miklos Erdelyi <erdelyim@gmail.com>
  *
  * Copyright (C) 2006 Miklos Erdelyi
- * 
+ *
  * Licensed under GNU GPL
  */
 
@@ -169,7 +169,7 @@ CairoRenderContext::setStateForStyle(SPStyle const *style)
 
 /**
  * \brief Creates a new render context which will be compatible with the given context's Cairo surface
- * 
+ *
  * \param width     width of the surface to be created
  * \param height    height of the surface to be created
  */
@@ -239,7 +239,7 @@ CairoRenderContext::setPdfTarget(gchar const *utf8_fn)
     gchar *local_fn = g_filename_from_utf8(utf8_fn,
                                            -1,  &bytesRead,  &bytesWritten, &error);
     gchar const *fn = local_fn;
-    
+
     /* TODO: Replace the below fprintf's with something that does the right thing whether in
     * gui or batch mode (e.g. --print=blah).  Consider throwing an exception: currently one of
     * the callers (sp_print_document_to_file, "ret = mod->begin(doc)") wrongly ignores the
@@ -299,7 +299,90 @@ CairoRenderContext::setPdfTarget(gchar const *utf8_fn)
         (void) signal(SIGPIPE, SIG_IGN);
 #endif
     }
-            
+
+    return true;
+}
+
+bool
+CairoRenderContext::setPsTarget(gchar const *utf8_fn)
+{
+#ifndef CAIRO_HAS_PS_SURFACE
+    return false;
+#else
+    _target = CAIRO_SURFACE_TYPE_PS;
+    _vector_based_target = TRUE;
+#endif
+
+    FILE *osf = NULL;
+    FILE *osp = NULL;
+
+    gsize bytesRead = 0;
+    gsize bytesWritten = 0;
+    GError *error = NULL;
+    gchar *local_fn = g_filename_from_utf8(utf8_fn,
+                                           -1,  &bytesRead,  &bytesWritten, &error);
+    gchar const *fn = local_fn;
+
+    /* TODO: Replace the below fprintf's with something that does the right thing whether in
+    * gui or batch mode (e.g. --print=blah).  Consider throwing an exception: currently one of
+    * the callers (sp_print_document_to_file, "ret = mod->begin(doc)") wrongly ignores the
+    * return code.
+    */
+    if (fn != NULL) {
+        if (*fn == '|') {
+            fn += 1;
+            while (isspace(*fn)) fn += 1;
+#ifndef WIN32
+            osp = popen(fn, "w");
+#else
+            osp = _popen(fn, "w");
+#endif
+            if (!osp) {
+                fprintf(stderr, "inkscape: popen(%s): %s\n",
+                        fn, strerror(errno));
+                return false;
+            }
+            _stream = osp;
+        } else if (*fn == '>') {
+            fn += 1;
+            while (isspace(*fn)) fn += 1;
+            Inkscape::IO::dump_fopen_call(fn, "K");
+            osf = Inkscape::IO::fopen_utf8name(fn, "w+");
+            if (!osf) {
+                fprintf(stderr, "inkscape: fopen(%s): %s\n",
+                        fn, strerror(errno));
+                return false;
+            }
+            _stream = osf;
+        } else {
+            /* put cwd stuff in here */
+            gchar *qn = ( *fn
+                    ? g_strdup_printf("lpr -P %s", fn)  /* FIXME: quote fn */
+                : g_strdup("lpr") );
+#ifndef WIN32
+            osp = popen(qn, "w");
+#else
+            osp = _popen(qn, "w");
+#endif
+            if (!osp) {
+                fprintf(stderr, "inkscape: popen(%s): %s\n",
+                        qn, strerror(errno));
+                return false;
+            }
+            g_free(qn);
+            _stream = osp;
+        }
+    }
+
+    g_free(local_fn);
+
+    if (_stream) {
+        /* fixme: this is kinda icky */
+#if !defined(_WIN32) && !defined(__WIN32__)
+        (void) signal(SIGPIPE, SIG_IGN);
+#endif
+    }
+
     return true;
 }
 
@@ -307,7 +390,7 @@ cairo_surface_t*
 CairoRenderContext::getSurface(void)
 {
     g_assert( _is_valid );
-    
+
     return _surface;
 }
 
@@ -385,7 +468,7 @@ CairoRenderContext::pushLayer(void)
 
     TRACE(("--pushLayer\n"));
     cairo_push_group(_cr);
-                
+
     // clear buffer
     if (!_vector_based_target) {
         cairo_save(_cr);
@@ -515,7 +598,7 @@ CairoRenderContext::popLayer(void)
                         guint32 *pixel = (guint32 *)row_data + i;
                         *pixel = ((((*pixel & 0x00ff0000) >> 16) * 13817 +
                                 ((*pixel & 0x0000ff00) >>  8) * 46518 +
-                                ((*pixel & 0x000000ff)      ) * 4688) * 
+                                ((*pixel & 0x000000ff)      ) * 4688) *
                                 int_opacity);
                     }
                 }
@@ -611,24 +694,24 @@ bool
 CairoRenderContext::finish(void)
 {
     g_assert( _is_valid );
-    
+
     if (_vector_based_target)
         cairo_show_page(_cr);
-    
+
     cairo_destroy(_cr);
     cairo_surface_destroy(_surface);
     _cr = NULL;
     _surface = NULL;
-    
+
     if (_layout)
         g_object_unref(_layout);
-    
+
     _is_valid = FALSE;
-    
+
     if (_vector_based_target) {
         /* Flush stream to be sure. */
         (void) fflush(_stream);
-    
+
         fclose(_stream);
         _stream = NULL;
     }
@@ -644,7 +727,7 @@ CairoRenderContext::transform(NRMatrix const *transform)
     cairo_matrix_t matrix;
     _initCairoMatrix(&matrix, transform);
     cairo_transform(_cr, &matrix);
-    
+
     // store new CTM
     getTransform(&_state->transform);
 }
@@ -653,7 +736,7 @@ void
 CairoRenderContext::setTransform(NRMatrix const *transform)
 {
     g_assert( _is_valid );
-    
+
     cairo_matrix_t matrix;
     _initCairoMatrix(&matrix, transform);
     cairo_set_matrix(_cr, &matrix);
@@ -702,9 +785,9 @@ void
 CairoRenderContext::popState(void)
 {
     g_assert( _is_valid );
-    
+
     cairo_restore(_cr);
-    
+
     g_free(_state_stack->data);
     _state_stack = g_slist_remove_link(_state_stack, _state_stack);
     _state = (CairoRenderState*)_state_stack->data;
@@ -726,13 +809,13 @@ cairo_pattern_t*
 CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver, NRRect const *pbox)
 {
     g_assert( SP_IS_PATTERN(paintserver) );
-        
+
     SPPattern *pat = SP_PATTERN (paintserver);
-    
+
     NRMatrix ps2user, pcs2dev;
     nr_matrix_set_identity(&ps2user);
     nr_matrix_set_identity(&pcs2dev);
-    
+
     double x = pattern_x(pat);
     double y = pattern_y(pat);
     double width = pattern_width(pat);
@@ -741,7 +824,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     double bbox_height_scaler;
 
     TRACE(("%f x %f pattern\n", width, height));
-    
+
     if (pbox && pattern_patternUnits(pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
         //NR::Matrix bbox2user (pbox->x1 - pbox->x0, 0.0, 0.0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
         bbox_width_scaler = pbox->x1 - pbox->x0;
@@ -754,7 +837,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
         ps2user[4] = x;
         ps2user[5] = y;
     }
-    
+
     // apply pattern transformation
     NRMatrix pattern_transform(pattern_patternTransform(pat));
     nr_matrix_multiply(&ps2user, &ps2user, &pattern_transform);
@@ -762,7 +845,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     // create pattern contents coordinate system
     if (pat->viewBox_set) {
         NRRect *view_box = pattern_viewBox(pat);
-        
+
         double x, y, w, h;
         double view_width, view_height;
         x = 0;
@@ -782,7 +865,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
         pcs2dev[0] = pbox->x1 - pbox->x0;
         pcs2dev[3] = pbox->y1 - pbox->y0;
     }
-    
+
     // calculate the size of the surface which has to be created
     // the scaling needs to be taken into account in the ctm after the pattern transformation
     NRMatrix temp;
@@ -817,11 +900,11 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     pattern_ctx->setTransform(&pcs2dev);
     pattern_ctx->pushState();
-    
+
     // create arena and group
     NRArena *arena = NRArena::create();
     unsigned dkey = sp_item_display_key_new(1);
-    
+
     // show items and render them
     for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
         if (pat_i && SP_IS_OBJECT (pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
@@ -834,9 +917,9 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
             break; // do not go further up the chain if children are found
         }
     }
-    
+
     pattern_ctx->popState();
-    
+
     // setup a cairo_pattern_t
     cairo_surface_t *pattern_surface = pattern_ctx->getSurface();
     TEST(pattern_ctx->saveAsPng("pattern.png"));
@@ -848,9 +931,9 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     _initCairoMatrix(&pattern_matrix, &ps2user);
     cairo_matrix_invert(&pattern_matrix);
     cairo_pattern_set_matrix(result, &pattern_matrix);
-    
+
     delete pattern_ctx;
-    
+
     // hide all items
     for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
         if (pat_i && SP_IS_OBJECT (pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
@@ -862,7 +945,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
             break; // do not go further up the chain if children are found
         }
     }
-    
+
     return result;
 }
 
@@ -872,11 +955,11 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
 {
     cairo_pattern_t *pattern = NULL;
     bool apply_bbox2user = FALSE;
-    
+
     if (SP_IS_LINEARGRADIENT (paintserver)) {
 
             SPLinearGradient *lg=SP_LINEARGRADIENT(paintserver);
-            
+
             sp_gradient_ensure_vector(SP_GRADIENT(lg)); // when exporting from commandline, vector is not built
 
             NR::Point p1 (lg->x1.computed, lg->y1.computed);
@@ -887,10 +970,10 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
                 p1 *= bbox2user;
                 p2 *= bbox2user;
             }
-            
+
             // create linear gradient pattern
             pattern = cairo_pattern_create_linear(p1[NR::X], p1[NR::Y], p2[NR::X], p2[NR::Y]);
-            
+
             // add stops
             for (gint i = 0; unsigned(i) < lg->vector.stops.size(); i++) {
                 float rgb[3];
@@ -908,7 +991,7 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
         double r = rg->r.computed;
         if (pbox && SP_GRADIENT(rg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX)
             apply_bbox2user = true;
-        
+
         // create radial gradient pattern
         pattern = cairo_pattern_create_radial(f[NR::X], f[NR::Y], 0, c[NR::X], c[NR::Y], r);
 
@@ -924,7 +1007,7 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
     } else {
         return NULL;
     }
-        
+
     if (pattern && SP_IS_GRADIENT (paintserver)) {
         SPGradient *g = SP_GRADIENT(paintserver);
 
@@ -969,7 +1052,7 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
         cairo_matrix_invert(&pattern_matrix);   // because Cairo expects a userspace->patternspace matrix
         cairo_pattern_set_matrix(pattern, &pattern_matrix);
     }
-        
+
     return pattern;
 }
 
@@ -978,13 +1061,13 @@ CairoRenderContext::_setFillStyle(SPStyle const *const style, NRRect const *pbox
 {
     g_return_if_fail( style->fill.type == SP_PAINT_TYPE_COLOR
                       || style->fill.type == SP_PAINT_TYPE_PAINTSERVER );
-    
+
     float alpha = SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
     if (_state->merge_opacity) {
         alpha *= _state->opacity;
         TRACE(("merged op=%f\n", alpha));
     }
-    
+
     if (style->fill.type == SP_PAINT_TYPE_COLOR) {
         float rgb[3];
         sp_color_get_rgb_floatv(&style->fill.value.color, rgb);
@@ -994,9 +1077,9 @@ CairoRenderContext::_setFillStyle(SPStyle const *const style, NRRect const *pbox
         g_assert( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
                   || SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style))
                   || SP_IS_PATTERN(SP_STYLE_FILL_SERVER(style)) );
-        
+
         cairo_pattern_t *pattern = _createPatternForPaintServer(SP_STYLE_FILL_SERVER(style), pbox, alpha);
-        
+
         if (pattern) {
             cairo_set_source(_cr, pattern);
             cairo_pattern_destroy(pattern);
@@ -1010,19 +1093,19 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, NRRect const *pbox)
     float alpha = SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
     if (_state->merge_opacity)
         alpha *= _state->opacity;
-    
+
     if (style->stroke.type == SP_PAINT_TYPE_COLOR) {
         float rgb[3];
         sp_color_get_rgb_floatv(&style->stroke.value.color, rgb);
-      
+
         cairo_set_source_rgba(_cr, rgb[0], rgb[1], rgb[2], alpha);
     } else {
         g_assert( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
                   || SP_IS_GRADIENT(SP_STYLE_STROKE_SERVER(style))
                   || SP_IS_PATTERN(SP_STYLE_STROKE_SERVER(style)) );
-                
+
         cairo_pattern_t *pattern = _createPatternForPaintServer(SP_STYLE_STROKE_SERVER(style), pbox, alpha);
-        
+
         if (pattern) {
             cairo_set_source(_cr, pattern);
             cairo_pattern_destroy(pattern);
@@ -1036,7 +1119,7 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, NRRect const *pbox)
     } else {
     	cairo_set_dash(_cr, NULL, 0, 0.0);	// disable dashing
     }
-    
+
     cairo_set_line_width(_cr, style->stroke_width.computed);
 
     // set line join type
@@ -1051,9 +1134,9 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, NRRect const *pbox)
     	case SP_STROKE_LINEJOIN_BEVEL:
     	    join = CAIRO_LINE_JOIN_BEVEL;
     	    break;
-    }    	
+    }
     cairo_set_line_join(_cr, join);
-    
+
     // set line cap type
     cairo_line_cap_t cap = CAIRO_LINE_CAP_BUTT;
     switch (style->stroke_linecap.computed) {
@@ -1066,7 +1149,7 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, NRRect const *pbox)
     	case SP_STROKE_LINECAP_SQUARE:
     	    cap = CAIRO_LINE_CAP_SQUARE;
     	    break;
-    }    	
+    }
     cairo_set_line_cap(_cr, cap);
     cairo_set_miter_limit(_cr, MAX(1, style->stroke_miterlimit.value));
 }
@@ -1106,27 +1189,27 @@ CairoRenderContext::renderPath(NRBPath const *bpath, SPStyle const *style, NRRec
     if (style->fill.type != SP_PAINT_TYPE_NONE) {
         _setFillStyle(style, pbox);
         setBpath(bpath->path);
-        
+
         if (style->fill_rule.value == SP_WIND_RULE_EVENODD) {
             cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_EVEN_ODD);
         } else {
             cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_WINDING);
         }
-    
+
         if (style->stroke.type == SP_PAINT_TYPE_NONE)
             cairo_fill(_cr);
         else
             cairo_fill_preserve(_cr);
     }
-    
+
     if (style->stroke.type != SP_PAINT_TYPE_NONE) {
         _setStrokeStyle(style, pbox);
         if (style->fill.type == SP_PAINT_TYPE_NONE)
             setBpath(bpath->path);
 
-        cairo_stroke(_cr);    
+        cairo_stroke(_cr);
     }
-    
+
     if (need_layer)
         popLayer();
     else
@@ -1140,20 +1223,20 @@ CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsi
                                 NRMatrix const *image_transform, SPStyle const *style)
 {
     g_assert( _is_valid );
-    
+
     if (_render_mode == RENDER_MODE_CLIP)
         return true;
-    
+
     guchar* px_rgba = (guchar*)g_malloc(4 * w * h);
     if (!px_rgba)
         return false;
-    
+
     float opacity;
     if (_state->merge_opacity)
         opacity = _state->opacity;
     else
         opacity = 1.0;
-    
+
     // make a copy of the original pixbuf with premultiplied alpha
     // if we pass the original pixbuf it will get messed up
     for (unsigned i = 0; i < h; i++) {
@@ -1161,7 +1244,7 @@ CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsi
             guchar const *src = px + i * rs + j * 4;
             guint32 *dst = (guint32 *)(px_rgba + i * rs + j * 4);
             guchar r, g, b, alpha_dst;
-            
+
             // calculate opacity-modified alpha
             alpha_dst = src[3];
             if (opacity != 1.0 && _vector_based_target)
@@ -1171,23 +1254,23 @@ CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsi
             r = src[0]*alpha_dst/255;
             g = src[1]*alpha_dst/255;
             b = src[2]*alpha_dst/255;
-            
+
             *dst = (((alpha_dst) << 24) | (((r)) << 16) | (((g)) << 8) | (b));
     	}
     }
-    
+
     cairo_surface_t *image_surface = cairo_image_surface_create_for_data(px_rgba, CAIRO_FORMAT_ARGB32, w, h, w * 4);
     if (cairo_surface_status(image_surface)) {
         TRACE(("Image surface creation failed:\n%s\n", cairo_status_to_string(cairo_surface_status(image_surface))));
     	return false;
     }
-    
+
     // setup automatic freeing of the image data when destroying the surface
     static cairo_user_data_key_t key;
     cairo_surface_set_user_data(image_surface, &key, px_rgba, (cairo_destroy_func_t)g_free);
 
     cairo_save(_cr);
-    
+
     // scaling by width & height is not needed because it will be done by Cairo
     if (image_transform)
         transform(image_transform);
@@ -1205,11 +1288,11 @@ CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsi
         cairo_paint(_cr);
     else
         cairo_paint_with_alpha(_cr, opacity);
-    
+
     cairo_restore(_cr);
 
     cairo_surface_destroy(image_surface);
-    
+
     return true;
 }
 
@@ -1259,17 +1342,16 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, NRMatrix const *font_matrix
     double size = style->font_size.computed;
     PangoFcFont *fc_font = PANGO_FC_FONT(font);
     FcPattern *fc_pattern = fc_font->font_pattern;
-    
+
     cairo_save(_cr);
 
 #ifndef PANGO_ENABLE_BACKEND
-
     cairo_font_face_t *font_face = cairo_ft_font_face_create_for_pattern(fc_pattern);
     cairo_set_font_face(_cr, font_face);
-    
+
     if (FcPatternGetDouble(fc_pattern, FC_PIXEL_SIZE, 0, &size) != FcResultMatch)
         size = 12.0;
-    
+
     // set the given font matrix
     cairo_matrix_t matrix;
     _initCairoMatrix(&matrix, font_matrix);
@@ -1372,7 +1454,7 @@ CairoRenderContext::_concatTransform(cairo_t *cr, double xx, double yx, double x
 {
     cairo_matrix_t matrix;
 
-    cairo_matrix_init(&matrix, xx, yx, xy, yy, x0, y0); 
+    cairo_matrix_init(&matrix, xx, yx, xy, yy, x0, y0);
     cairo_transform(cr, &matrix);
 }
 

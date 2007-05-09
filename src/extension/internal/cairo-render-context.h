@@ -84,6 +84,7 @@ public:
     
     bool setImageTarget(cairo_format_t format);
     bool setPdfTarget(gchar const *utf8_fn);
+    bool setPsTarget(gchar const *utf8_fn);
 
     /** Creates the cairo_surface_t for the context with the
     given width, height and with the currently set target
