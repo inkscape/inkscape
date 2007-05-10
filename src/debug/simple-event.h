@@ -15,6 +15,7 @@
 #include <stdarg.h>
 #include <vector>
 #include "glib/gstrfuncs.h"
+#include "glib/gmessages.h"
 #include "gc-alloc.h"
 #include "debug/event.h"
 
@@ -57,7 +58,7 @@ protected:
         _addProperty(Util::share_string(name), Util::share_string(value));
     }
     void _addProperty(Util::ptr_shared<char> name, long value) {
-        _addFormattedProperty(name, "%l", value);
+        _addFormattedProperty(name, "%ld", value);
     }
     void _addProperty(char const *name, long value) {
         _addProperty(Util::share_string(name), value);
@@ -72,6 +73,7 @@ private:
         va_list args;
         va_start(args, format);
         gchar *value=g_strdup_vprintf(format, args);
+        g_assert(value != NULL);
         va_end(args);
         _addProperty(name, value);
         g_free(value);
