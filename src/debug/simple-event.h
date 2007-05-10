@@ -12,7 +12,9 @@
 #ifndef SEEN_INKSCAPE_DEBUG_SIMPLE_EVENT_H
 #define SEEN_INKSCAPE_DEBUG_SIMPLE_EVENT_H
 
+#include <stdarg.h>
 #include <vector>
+#include "glib/gstrfuncs.h"
 #include "gc-alloc.h"
 #include "debug/event.h"
 
@@ -37,6 +39,8 @@ public:
         return _properties[property];
     }
 
+    void generateChildEvents() const {}
+
 protected:
     void _addProperty(Util::ptr_shared<char> name,
                       Util::ptr_shared<char> value)
@@ -52,10 +56,26 @@ protected:
     void _addProperty(char const *name, char const *value) {
         _addProperty(Util::share_string(name), Util::share_string(value));
     }
+    void _addProperty(Util::ptr_shared<char> name, unsigned long value) {
+        _addFormattedProperty(name, "%ul", value);
+    }
+    void _addProperty(char const *name, unsigned long value) {
+        _addProperty(Util::share_string(name), value);
+    }
 
 private:
     Util::ptr_shared<char> _name;
     std::vector<PropertyPair, GC::Alloc<PropertyPair, GC::AUTO> > _properties;
+
+    void _addFormattedProperty(Util::ptr_shared<char> name, char const *format, ...)
+    {
+        va_list args;
+        va_start(args, format);
+        gchar *value=g_strdup_vprintf(format, args);
+        va_end(args);
+        _addProperty(name, value);
+        g_free(value);
+    }
 };
 
 }

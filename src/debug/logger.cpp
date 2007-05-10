@@ -170,6 +170,8 @@ void Logger::_start(Event const &event) {
 
     tag_stack().push_back(name);
     empty_tag = true;
+
+    event.generateChildEvents();
 }
 
 void Logger::_skip() {

@@ -59,6 +59,8 @@ public:
     virtual Util::ptr_shared<char> name() const=0;
     virtual unsigned propertyCount() const=0;
     virtual PropertyPair property(unsigned property) const=0;
+
+    virtual void generateChildEvents() const=0;
 };
 
 }
