@@ -32,6 +32,7 @@ public:
         EXTENSION,
         FINALIZERS,
         INTERACTION,
+        CONFIGURATION,
         OTHER
     };
     enum { N_CATEGORIES=OTHER+1 };
