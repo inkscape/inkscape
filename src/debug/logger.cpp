@@ -12,6 +12,7 @@
 #include <fstream>
 #include <vector>
 #include <glib/gmessages.h>
+#include "inkscape_version.h"
 #include "debug/logger.h"
 #include "debug/simple-event.h"
 #include "gc-alloc.h"
@@ -127,6 +128,15 @@ static void set_category_mask(bool * const mask, char const *filter) {
     }
 }
 
+typedef SimpleEvent<Event::CORE> CoreEvent;
+
+class SessionEvent : public CoreEvent {
+public:
+    SessionEvent() : CoreEvent(Util::share_static_string("session")) {
+        _addProperty("inkscape-version", INKSCAPE_VERSION);
+    }
+};
+
 }
 
 void Logger::init() {
@@ -140,7 +150,7 @@ void Logger::init() {
                 log_stream << "<?xml version=\"1.0\"?>\n";
                 log_stream.flush();
                 _enabled = true;
-                start<SimpleEvent<Event::CORE> >(Util::share_static_string("session"));
+                start<SessionEvent>();
                 std::atexit(&do_shutdown);
             }
         }
