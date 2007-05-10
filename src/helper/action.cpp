@@ -17,6 +17,8 @@
 #include "debug/timestamp.h"
 #include "debug/simple-event.h"
 #include "debug/event-tracker.h"
+#include "ui/view/view.h"
+#include "document.h"
 #include "helper/action.h"
 
 static void sp_action_class_init (SPActionClass *klass);
@@ -129,6 +131,10 @@ public:
     : ActionEventBase(share_static_string("action"))
     {
         _addProperty(share_static_string("timestamp"), timestamp());
+        SPDocument *document = action->view->doc();
+        if (document) {
+            _addProperty(share_static_string("document"), document->serial());
+        }
         _addProperty(share_static_string("verb"), action->id);
     }
 };
