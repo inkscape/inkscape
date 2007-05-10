@@ -56,10 +56,10 @@ protected:
     void _addProperty(char const *name, char const *value) {
         _addProperty(Util::share_string(name), Util::share_string(value));
     }
-    void _addProperty(Util::ptr_shared<char> name, unsigned long value) {
-        _addFormattedProperty(name, "%ul", value);
+    void _addProperty(Util::ptr_shared<char> name, long value) {
+        _addFormattedProperty(name, "%l", value);
     }
-    void _addProperty(char const *name, unsigned long value) {
+    void _addProperty(char const *name, long value) {
         _addProperty(Util::share_string(name), value);
     }
 
