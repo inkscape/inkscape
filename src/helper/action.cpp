@@ -131,9 +131,11 @@ public:
     : ActionEventBase(share_static_string("action"))
     {
         _addProperty(share_static_string("timestamp"), timestamp());
-        SPDocument *document = action->view->doc();
-        if (document) {
-            _addProperty(share_static_string("document"), document->serial());
+        if (action->view) {
+            SPDocument *document = action->view->doc();
+            if (document) {
+                _addProperty(share_static_string("document"), document->serial());
+            }
         }
         _addProperty(share_static_string("verb"), action->id);
     }
