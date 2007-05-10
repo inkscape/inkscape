@@ -70,6 +70,8 @@ gboolean sp_document_resource_list_free(gpointer key, gpointer value, gpointer d
 
 static gint doc_count = 0;
 
+static unsigned long next_serial = 0;
+
 SPDocument::SPDocument() {
     SPDocumentPrivate *p;
 
@@ -95,6 +97,8 @@ SPDocument::SPDocument() {
     router->ConsolidateMoves = false;
 
     p = new SPDocumentPrivate();
+
+    p->serial = next_serial++;
 
     p->iddef = g_hash_table_new(g_direct_hash, g_direct_equal);
     p->reprdef = g_hash_table_new(g_direct_hash, g_direct_equal);
@@ -180,6 +184,10 @@ SPDocument::~SPDocument() {
     }
 
     //delete this->_whiteboard_session_manager;
+}
+
+unsigned long SPDocument::serial() const {
+    return priv->serial;
 }
 
 void SPDocument::queueForOrphanCollection(SPObject *object) {

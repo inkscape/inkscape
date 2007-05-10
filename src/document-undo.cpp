@@ -147,6 +147,9 @@ public:
     : InteractionEvent(share_static_string("commit"))
     {
         _addProperty(share_static_string("timestamp"), timestamp()); 
+        gchar *serial = g_strdup_printf("%ul", doc->serial());
+        _addProperty(share_static_string("document"), serial);
+        g_free(serial);
         Verb *verb = Verb::get(type);
         if (verb) {
             _addProperty(share_static_string("context"), verb->get_id());

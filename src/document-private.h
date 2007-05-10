@@ -43,6 +43,8 @@ struct SPDocumentPrivate {
 	GHashTable *iddef;	/**< Dictionary of id -> SPObject mappings */
 	GHashTable *reprdef;   /**< Dictionary of Inkscape::XML::Node -> SPObject mappings */
 
+	unsigned long serial;
+
 	/** Dictionary of signals for id changes */
 	IDChangedSignalMap id_changed_signals;
 

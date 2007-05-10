@@ -131,6 +131,7 @@ public:
 	void emitReconstructionStart (void);
 	void emitReconstructionFinish  (void);
 
+	unsigned long serial() const;
         void reset_key (void *dummy);
         sigc::connection _selection_changed_connection;
         sigc::connection _desktop_activated_connection;
