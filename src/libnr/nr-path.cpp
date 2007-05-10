@@ -273,7 +273,7 @@ nr_path_matrix_point_bbox_wind_distance (NRBPath *bpath, NR::Matrix const &m, NR
 					//std::cout << "swept: " << swept;
 					//std::cout << "view: " << *viewbox;
 					//std::cout << "intersects? " << (swept.intersects(*viewbox)? "YES" : "NO") << "\n";
-					if (swept.intersects(*viewbox))
+					if (!viewbox || swept.intersects(*viewbox))
    					nr_line_wind_distance (x0, y0, x3, y3, pt, wind, dist);
 				}
 			}
@@ -293,7 +293,7 @@ nr_path_matrix_point_bbox_wind_distance (NRBPath *bpath, NR::Matrix const &m, NR
 			swept.expandTo(NR::Point(x1, y1));
 			swept.expandTo(NR::Point(x2, y2));
 
-			if (swept.intersects(*viewbox)) { // we see this segment, so do full processing
+			if (!viewbox || swept.intersects(*viewbox)) { // we see this segment, so do full processing
 				nr_curve_bbox_wind_distance (
                        x0, y0,
                        x1, y1,
