@@ -77,6 +77,7 @@
 #include "io/sys.h"
 
 #include "debug/logger.h"
+#include "debug/log-display-config.h"
 
 #include "helper/png-write.h"
 
@@ -629,6 +630,8 @@ sp_main_gui(int argc, char const **argv)
     g_return_val_if_fail(retVal == 0, 1);
 
     inkscape_gtk_stock_init();
+
+    Inkscape::Debug::log_display_config();
 
     /* Set default icon */
     gchar *filename = (gchar *) g_build_filename (INKSCAPE_APPICONDIR, "inkscape.png", NULL);

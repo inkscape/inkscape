@@ -11,6 +11,7 @@ debug_libinkdebug_a_SOURCES = \
 	debug/heap.cpp debug/heap.h \
 	debug/gc-heap.h \
 	debug/logger.cpp debug/logger.h \
+	debug/log-display-config.cpp debug/log-display-config.h \
 	debug/simple-event.h \
 	debug/sysv-heap.cpp debug/sysv-heap.h \
         debug/timestamp.cpp debug/timestamp.h
