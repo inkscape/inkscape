@@ -23,7 +23,7 @@ Util::ptr_shared<char> timestamp() {
     Util::ptr_shared<char> result;
     GTimeVal timestamp;
     g_get_current_time(&timestamp);
-    gchar *value = g_strdup_printf("%d.%d", timestamp.tv_sec, timestamp.tv_usec);
+    gchar *value = g_strdup_printf("%d.%06d", timestamp.tv_sec, timestamp.tv_usec);
     result = Util::share_string(value);
     g_free(value);
     return result;
