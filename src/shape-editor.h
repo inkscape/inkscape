@@ -79,11 +79,13 @@ public:
 
     void delete_nodes();
     void delete_nodes_preserving_shape();
+    void delete_segment();
 
     void set_node_type(int type);
 
     void break_at_nodes();
     void join_nodes();
+    void join_segments();
 
     void duplicate_nodes();
 
@@ -101,6 +103,8 @@ public:
     void select_all_from_subpath (bool invert);
     void select_next ();
     void select_prev ();
+
+    void show_handles (bool show);
 
     void flip (NR::Dim2 axis, NR::Maybe<NR::Point> center = NR::Nothing());
 

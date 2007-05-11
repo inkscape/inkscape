@@ -343,11 +343,11 @@ void ShapeEditor::deselect() {
 }
 
 void ShapeEditor::add_node () {
-    sp_node_selected_add_node(); // FIXME fix that function by removing nodepath_current lookup, and pass it this->nodepath instead (needs fixing verbs/buttons first)
+    sp_node_selected_add_node(this->nodepath);
 }
 
 void ShapeEditor::delete_nodes () {
-    sp_node_selected_delete(); // FIXME fix that function by removing nodepath_current lookup, and pass it this->nodepath instead (needs fixing verbs/buttons first)
+    sp_node_selected_delete(this->nodepath);
 }
 
 void ShapeEditor::delete_nodes_preserving_shape () {
@@ -356,31 +356,39 @@ void ShapeEditor::delete_nodes_preserving_shape () {
     }
 }
 
+void ShapeEditor::delete_segment () {
+    sp_node_selected_delete_segment(this->nodepath);
+}
+
 void ShapeEditor::set_node_type(int type) {
-    sp_node_selected_set_type((Inkscape::NodePath::NodeType) type); // FIXME fix that function by removing nodepath_current lookup, and pass it this->nodepath instead (needs fixing verbs/buttons first)
+    sp_node_selected_set_type(this->nodepath, (Inkscape::NodePath::NodeType) type);
 }
 
 void ShapeEditor::break_at_nodes() {
-    sp_node_selected_break(); // FIXME fix that function by removing nodepath_current lookup, and pass it this->nodepath instead (needs fixing verbs/buttons first)
+    sp_node_selected_break(this->nodepath);
 }
 
 void ShapeEditor::join_nodes() {
-    sp_node_selected_join(); // FIXME fix that function by removing nodepath_current lookup, and pass it this->nodepath instead (needs fixing verbs/buttons first)
+    sp_node_selected_join(this->nodepath);
+}
+
+void ShapeEditor::join_segments() {
+    sp_node_selected_join_segment(this->nodepath);
 }
 
 void ShapeEditor::duplicate_nodes() {
-    sp_node_selected_duplicate(); // FIXME fix that function by removing nodepath_current lookup, and pass it this->nodepath instead (needs fixing verbs/buttons first)
+    sp_node_selected_duplicate(this->nodepath);
 }
 
 void ShapeEditor::set_type_of_segments(NRPathcode code) {
-    sp_node_selected_set_line_type(code); // FIXME fix that function by removing nodepath_current lookup, and pass it this->nodepath instead (needs fixing verbs/buttons first)
+    sp_node_selected_set_line_type(this->nodepath, code);
 }
 
 void ShapeEditor::move_nodes_screen(gdouble dx, gdouble dy) {
-    sp_node_selected_move_screen(dx, dy); // FIXME fix that function by removing nodepath_current lookup, and pass it this->nodepath instead (needs fixing verbs/buttons first)
+    sp_node_selected_move_screen(this->nodepath, dx, dy);
 }
 void ShapeEditor::move_nodes(gdouble dx, gdouble dy) {
-    sp_node_selected_move(dx, dy); // FIXME fix that function by removing nodepath_current lookup, and pass it this->nodepath instead (needs fixing verbs/buttons first)
+    sp_node_selected_move(this->nodepath, dx, dy);
 }
 
 void ShapeEditor::rotate_nodes(gdouble angle, int which, bool screen) {
@@ -411,6 +419,12 @@ void ShapeEditor::select_prev () {
     if (this->nodepath) 
         sp_nodepath_select_prev (this->nodepath);
 }
+
+void ShapeEditor::show_handles (bool show) {
+    if (this->nodepath) 
+        sp_nodepath_show_handles (this->nodepath, show);
+}
+
 
 void ShapeEditor::flip (NR::Dim2 axis, NR::Maybe<NR::Point> center) {
     if (this->nodepath) 

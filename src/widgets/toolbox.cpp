@@ -47,7 +47,6 @@
 #include "sp-namedview.h"
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "nodepath.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
 #include <glibmm/i18n.h>
@@ -62,6 +61,8 @@
 #include "gradient-toolbar.h"
 
 #include "connector-context.h"
+#include "node-context.h"
+#include "shape-editor.h"
 #include "sp-rect.h"
 #include "sp-star.h"
 #include "sp-spiral.h"
@@ -644,76 +645,107 @@ sp_commands_toolbox_new()
 //# node editing callbacks
 //####################################
 
+/**
+ * FIXME: Returns current shape_editor in context. // later eliminate this function at all!
+ */
+static ShapeEditor *get_current_shape_editor()
+{
+    if (!SP_ACTIVE_DESKTOP) {
+        return NULL;
+    }
+
+    SPEventContext *event_context = (SP_ACTIVE_DESKTOP)->event_context;
+
+    if (!SP_IS_NODE_CONTEXT(event_context)) {
+        return NULL;
+    }
+
+    return SP_NODE_CONTEXT(event_context)->shape_editor;
+}
+
+
 void
 sp_node_path_edit_add(void)
 {
-    sp_node_selected_add_node();
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->add_node();
 }
 
 void
 sp_node_path_edit_delete(void)
 {
-    sp_node_selected_delete();
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->delete_nodes();
 }
 
 void
 sp_node_path_edit_delete_segment(void)
 {
-    sp_node_selected_delete_segment();
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->delete_segment();
 }
 
 void
 sp_node_path_edit_break(void)
 {
-    sp_node_selected_break();
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->break_at_nodes();
 }
 
 void
 sp_node_path_edit_join(void)
 {
-    sp_node_selected_join();
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->join_nodes();
 }
 
 void
 sp_node_path_edit_join_segment(void)
 {
-    sp_node_selected_join_segment();
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->join_segments();
 }
 
 void
 sp_node_path_edit_toline(void)
 {
-    sp_node_selected_set_line_type(NR_LINETO);
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->set_type_of_segments(NR_LINETO);
 }
 
 void
 sp_node_path_edit_tocurve(void)
 {
-    sp_node_selected_set_line_type(NR_CURVETO);
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->set_type_of_segments(NR_CURVETO);
 }
 
 void
 sp_node_path_edit_cusp(void)
 {
-    sp_node_selected_set_type(Inkscape::NodePath::NODE_CUSP);
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->set_node_type(Inkscape::NodePath::NODE_CUSP);
 }
 
 void
 sp_node_path_edit_smooth(void)
 {
-    sp_node_selected_set_type(Inkscape::NodePath::NODE_SMOOTH);
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->set_node_type(Inkscape::NodePath::NODE_SMOOTH);
 }
 
 void
 sp_node_path_edit_symmetrical(void)
 {
-    sp_node_selected_set_type(Inkscape::NodePath::NODE_SYMM);
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->set_node_type(Inkscape::NodePath::NODE_SYMM);
 }
 
 static void toggle_show_handles (GtkToggleAction *act, gpointer data) {
     bool show = gtk_toggle_action_get_active( act );
     prefs_set_int_attribute ("tools.nodes", "show_handles",  show ? 1 : 0);
-    sp_nodepath_show_handles(show);
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->show_handles(show);
 }
 
 //################################

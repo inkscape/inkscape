@@ -1228,9 +1228,8 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
  * handle possible snapping, and commit the change with possible undo.
  */
 void
-sp_node_selected_move(gdouble dx, gdouble dy)
+sp_node_selected_move(Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) return;
 
     sp_nodepath_selected_nodes_move(nodepath, dx, dy, false);
@@ -1248,7 +1247,7 @@ sp_node_selected_move(gdouble dx, gdouble dy)
  * Move node selection off screen and commit the change.
  */
 void
-sp_node_selected_move_screen(gdouble dx, gdouble dy)
+sp_node_selected_move_screen(Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy)
 {
     // borrowed from sp_selection_move_screen in selection-chemistry.c
     // we find out the current zoom factor and divide deltas by it
@@ -1258,7 +1257,6 @@ sp_node_selected_move_screen(gdouble dx, gdouble dy)
     gdouble zdx = dx / zoom;
     gdouble zdy = dy / zoom;
 
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) return;
 
     sp_nodepath_selected_nodes_move(nodepath, zdx, zdy, false);
@@ -1407,9 +1405,8 @@ static void sp_nodepath_update_handles(Inkscape::NodePath::Path *nodepath)
 }
 
 void
-sp_nodepath_show_handles(bool show)
+sp_nodepath_show_handles(Inkscape::NodePath::Path *nodepath, bool show)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (nodepath == NULL) return;
 
     nodepath->show_handles = show;
@@ -1517,9 +1514,8 @@ void sp_nodepath_selected_distribute(Inkscape::NodePath::Path *nodepath, NR::Dim
  * Call sp_nodepath_line_add_node() for all selected segments.
  */
 void
-sp_node_selected_add_node(void)
+sp_node_selected_add_node(Inkscape::NodePath::Path *nodepath)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) {
         return;
     }
@@ -1682,9 +1678,8 @@ sp_nodepath_curve_drag(int node, double t, NR::Point delta)
 /**
  * Call sp_nodepath_break() for all selected segments.
  */
-void sp_node_selected_break()
+void sp_node_selected_break(Inkscape::NodePath::Path *nodepath)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) return;
 
     GList *temp = NULL;
@@ -1710,9 +1705,8 @@ void sp_node_selected_break()
 /**
  * Duplicate the selected node(s).
  */
-void sp_node_selected_duplicate()
+void sp_node_selected_duplicate(Inkscape::NodePath::Path *nodepath)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) {
         return;
     }
@@ -1740,9 +1734,8 @@ void sp_node_selected_duplicate()
 /**
  *  Join two nodes by merging them into one.
  */
-void sp_node_selected_join()
+void sp_node_selected_join(Inkscape::NodePath::Path *nodepath)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) return; // there's no nodepath when editing rects, stars, spirals or ellipses
 
     if (g_list_length(nodepath->selected) != 2) {
@@ -1842,9 +1835,8 @@ void sp_node_selected_join()
 /**
  *  Join two nodes by adding a segment between them.
  */
-void sp_node_selected_join_segment()
+void sp_node_selected_join_segment(Inkscape::NodePath::Path *nodepath)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) return; // there's no nodepath when editing rects, stars, spirals or ellipses
 
     if (g_list_length(nodepath->selected) != 2) {
@@ -2079,9 +2071,8 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
 /**
  * Delete one or more selected nodes.
  */
-void sp_node_selected_delete()
+void sp_node_selected_delete(Inkscape::NodePath::Path *nodepath)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) return;
     if (!nodepath->selected) return;
 
@@ -2117,12 +2108,11 @@ void sp_node_selected_delete()
  * This is the code for 'split'.
  */
 void
-sp_node_selected_delete_segment(void)
+sp_node_selected_delete_segment(Inkscape::NodePath::Path *nodepath)
 {
    Inkscape::NodePath::Node *start, *end;     //Start , end nodes.  not inclusive
    Inkscape::NodePath::Node *curr, *next;     //Iterators
 
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) return; // there's no nodepath when editing rects, stars, spirals or ellipses
 
     if (g_list_length(nodepath->selected) != 2) {
@@ -2278,9 +2268,8 @@ sp_node_selected_delete_segment(void)
  * Call sp_nodepath_set_line() for all selected segments.
  */
 void
-sp_node_selected_set_line_type(NRPathcode code)
+sp_node_selected_set_line_type(Inkscape::NodePath::Path *nodepath, NRPathcode code)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (nodepath == NULL) return;
 
     for (GList *l = nodepath->selected; l != NULL; l = l->next) {
@@ -2298,9 +2287,8 @@ sp_node_selected_set_line_type(NRPathcode code)
  * Call sp_nodepath_convert_node_type() for all selected nodes.
  */
 void
-sp_node_selected_set_type(Inkscape::NodePath::NodeType type)
+sp_node_selected_set_type(Inkscape::NodePath::Path *nodepath, Inkscape::NodePath::NodeType type)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (nodepath == NULL) return;
 
     for (GList *l = nodepath->selected; l != NULL; l = l->next) {

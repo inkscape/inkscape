@@ -270,20 +270,20 @@ void sp_nodepath_curve_drag(int node, double t, NR::Point delta);
 Inkscape::NodePath::Node * sp_nodepath_get_node_by_index(int index);
 /* possibly private functions */
 
-void sp_node_selected_add_node (void);
-void sp_node_selected_break (void);
-void sp_node_selected_duplicate (void);
-void sp_node_selected_join (void);
-void sp_node_selected_join_segment (void);
+void sp_node_selected_add_node (Inkscape::NodePath::Path *nodepath);
+void sp_node_selected_break (Inkscape::NodePath::Path *nodepath);
+void sp_node_selected_duplicate (Inkscape::NodePath::Path *nodepath);
+void sp_node_selected_join (Inkscape::NodePath::Path *nodepath);
+void sp_node_selected_join_segment (Inkscape::NodePath::Path *nodepath);
 void sp_node_delete_preserve (GList *nodes_to_delete);
-void sp_node_selected_delete (void);
-void sp_node_selected_delete_segment (void);
-void sp_node_selected_set_type (Inkscape::NodePath::NodeType type);
-void sp_node_selected_set_line_type (NRPathcode code);
-void sp_node_selected_move (gdouble dx, gdouble dy);
-void sp_node_selected_move_screen (gdouble dx, gdouble dy);
+void sp_node_selected_delete (Inkscape::NodePath::Path *nodepath);
+void sp_node_selected_delete_segment (Inkscape::NodePath::Path *nodepath);
+void sp_node_selected_set_type (Inkscape::NodePath::Path *nodepath, Inkscape::NodePath::NodeType type);
+void sp_node_selected_set_line_type (Inkscape::NodePath::Path *nodepath, NRPathcode code);
+void sp_node_selected_move (Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy);
+void sp_node_selected_move_screen (Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy);
 
-void sp_nodepath_show_handles(bool show);
+void sp_nodepath_show_handles(Inkscape::NodePath::Path *nodepath, bool show);
 
 void sp_nodepath_selected_nodes_rotate (Inkscape::NodePath::Path * nodepath, gdouble angle, int which, bool screen);
 
