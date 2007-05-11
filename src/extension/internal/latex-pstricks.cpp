@@ -221,7 +221,7 @@ PrintLatex::fill(Inkscape::Extension::Print *mod,
         sp_color_get_rgb_floatv(&style->fill.value.color, rgb);
         os << "{\n\\newrgbcolor{curcolor}{" << rgb[0] << " " << rgb[1] << " " << rgb[2] << "}\n";
 
-        os << "\\pscustom[fillstyle=solid,fillcolor=curcolor]\n{\n";
+        os << "\\pscustom[linestyle=none,fillstyle=solid,fillcolor=curcolor]\n{\n";
 
         print_bpath(os, bpath->path, transform);
 
