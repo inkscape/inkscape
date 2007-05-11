@@ -140,6 +140,10 @@ class Length(inkex.Effect):
                     factor=0.0000002822219 # px->km
                 elif self.options.unit=="in":
                     factor=0.2822219/25.4 # px->in
+                elif self.options.unit=="ft":
+                    factor=0.2822219/(25.4*12) # px->ft
+                elif self.options.unit=="yd":
+                    factor=0.2822219/(25.4*36) # px->yd
                 else :
                     ''' Default unit is px'''
                     factor=1

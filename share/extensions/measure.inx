@@ -15,6 +15,8 @@
         <item value="px">px</item>
         <item value="pt">pt</item>
         <item value="in">in</item>
+        <item value="ft">ft</item>
+        <item value="yd">yd</item>
         <item value="mm">mm</item>
         <item value="cm">cm</item>
         <item value="m">m</item>
