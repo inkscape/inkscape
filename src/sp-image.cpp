@@ -697,8 +697,8 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 		if (image->href) {
 			GdkPixbuf *pixbuf;
 			pixbuf = sp_image_repr_read_image (
-                    object->repr->attribute("xlink:href"), 
-                    object->repr->attribute("sodipodi:absref"), 
+                    object->repr->attribute("xlink:href"),
+                    object->repr->attribute("sodipodi:absref"),
                     doc->base);
 			if (pixbuf) {
 				pixbuf = sp_image_pixbuf_force_rgba (pixbuf);
@@ -740,7 +740,7 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
                                                         intent = INTENT_PERCEPTUAL;
                                                 }
                                                 cmsHPROFILE destProf = cmsCreate_sRGBProfile();
-                                                cmsHTRANSFORM transf = cmsCreateTransform( prof, 
+                                                cmsHTRANSFORM transf = cmsCreateTransform( prof,
                                                                                            TYPE_RGBA_8,
                                                                                            destProf,
                                                                                            TYPE_RGBA_8,
@@ -1062,7 +1062,7 @@ sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *b
                 if (!docbase) docbase = ".";
                 fullname = g_build_filename(docbase, filename, NULL);
 
-                // document base can be wrong (on the temporary doc when importing bitmap from a 
+                // document base can be wrong (on the temporary doc when importing bitmap from a
                 // different dir) or unset (when doc is not saved yet), so we check for base+href existence first,
                 // and if it fails, we also try to use bare href regardless of its g_path_is_absolute
                 if (g_file_test (fullname, G_FILE_TEST_EXISTS) && !g_file_test (fullname, G_FILE_TEST_IS_DIR)) {
@@ -1070,7 +1070,7 @@ sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *b
                     g_free (fullname);
                     if (pixbuf != NULL) return pixbuf;
                 }
-            } 
+            }
 
             /* try filename as absolute */
             if (g_file_test (filename, G_FILE_TEST_EXISTS) && !g_file_test (filename, G_FILE_TEST_IS_DIR)) {
@@ -1084,7 +1084,11 @@ sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *b
     filename = absref;
     if (filename != NULL) {
         // using absref is outside of SVG rules, so we must at least warn the user
-        g_warning ("<image xlink:href=\"%s\"> did not resolve to a valid image file (base dir is %s), now trying sodipodi:absref=\"%s\"", href, base, absref);
+        if ( base != NULL && href != NULL )
+        	g_warning ("<image xlink:href=\"%s\"> did not resolve to a valid image file (base dir is %s), now trying sodipodi:absref=\"%s\"", href, base, absref);
+		else
+		    g_warning ("xlink:href did not resolve to a valid image file, now trying sodipodi:absref=\"%s\"", absref);
+
         pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, NULL );
         if (pixbuf != NULL) return pixbuf;
     }
