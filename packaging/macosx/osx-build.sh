@@ -253,6 +253,12 @@ fi
 
 if [[ "$DISTRIB" == "t" ]]
 then	
+	REVISION=`head -n 4 ../../.svn/entries | tail -n 1`
+	ARCH=`arch | tr [p,c] [P,C]`
+	NEWNAME="Inkscape-$REVISION-$ARCH"
+	DMGFILE="$NEWNAME.dmg"
+	INFOFILE="$NEWNAME-info.txt"
+
 	# Create dmg bundle
 	if [[ "$PYTHON" == "t" ]]; then
 		./osx-dmg.sh -py "$PYTHONDIR"
@@ -265,30 +271,29 @@ then
 		exit $status
 	fi
 
-	DATE=`date "+%Y%m%d"`
-	mv Inkscape.dmg Inkscape_$DATE.dmg
+	mv Inkscape.dmg $DMGFILE
 	
 	# Prepare information file
-# 	INFOFILE=Inkscape_$DATE-info.txt
-# 	echo "Version information on $DATE for `whoami`:
-# 	OS X      `/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d \:`
-# 	DarwinPorts  `port version | cut -f2 -d \ `
-# 	GCC          `gcc --version | grep GCC`
-# 	GTK          `pkg-config --modversion gtk+-2.0`
-# 	GTKmm        `pkg-config --modversion gtkmm-2.4`
-# 	Cairo        `pkg-config --modversion cairo`
-# 	Cairomm      `pkg-config --modversion cairomm-1.0`
-# 	CairoPDF     `pkg-config --modversion cairo-pdf`
-# 	Pango        `pkg-config --modversion pango`
-# Configure options:
-# 	$CONFFLAGS" > $INFOFILE
-# 	if [[ "$STRIP" == "t" ]]; then
-# 		echo "Debug info
-# 	no" >> $INFOFILE
-# 	else
-# 		echo "Debug info
-# 	yes" >> $INFOFILE
-# 	fi
+	echo "Version information on $DATE for `whoami`:
+	OS X      `/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d \:`
+	Architecture $ARCH
+	DarwinPorts  `port version | cut -f2 -d \ `
+	GCC          `gcc --version | grep GCC`
+	GTK          `pkg-config --modversion gtk+-2.0`
+	GTKmm        `pkg-config --modversion gtkmm-2.4`
+	Cairo        `pkg-config --modversion cairo`
+	Cairomm      `pkg-config --modversion cairomm-1.0`
+	CairoPDF     `pkg-config --modversion cairo-pdf`
+	Pango        `pkg-config --modversion pango`
+Configure options:
+	$CONFFLAGS" > $INFOFILE
+	if [[ "$STRIP" == "t" ]]; then
+		echo "Debug info
+	no" >> $INFOFILE
+	else
+		echo "Debug info
+	yes" >> $INFOFILE
+	fi
 	
 	# open a Finder window here
 	open .
