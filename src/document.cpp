@@ -405,11 +405,6 @@ sp_document_new_from_mem(gchar const *buffer, gint length, unsigned int keepaliv
     return doc;
 }
 
-SPDocument *sp_document_new_dummy() {
-    SPDocument *document = new SPDocument();
-    return document;
-}
-
 SPDocument *
 sp_document_ref(SPDocument *doc)
 {

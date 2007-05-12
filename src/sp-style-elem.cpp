@@ -367,7 +367,9 @@ sp_style_elem_read_content(SPObject *const object)
     // that uses a style from it. It just forces the parent of <style> to reread its style as soon as the stylesheet
     // is fully loaded. Naturally, this won't work if the user of the stylesheet is its grandparent or precedent.
     SPObject *parent = SP_OBJECT_PARENT (object);
-    sp_style_read_from_object(parent->style, parent);
+    if ( parent ) {
+        sp_style_read_from_object(parent->style, parent);
+    }
 }
 
 /**

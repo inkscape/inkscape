@@ -141,7 +141,6 @@ public:
 
 SPDocument *sp_document_new (const gchar *uri, unsigned int keepalive, bool make_new = false);
 SPDocument *sp_document_new_from_mem (const gchar *buffer, gint length, unsigned int keepalive);
-SPDocument *sp_document_new_dummy(); 
 
 SPDocument *sp_document_ref (SPDocument *doc);
 SPDocument *sp_document_unref (SPDocument *doc);
