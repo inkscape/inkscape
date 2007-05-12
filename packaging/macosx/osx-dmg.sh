@@ -44,15 +44,15 @@ do
 	  	-s)
 			set_ds_store=true ;;
 		-py|--with-python)
-			add_python=true 
-			python_dir=$2 
+			add_python=true
+			python_dir="$2"
 			ds_store_file="inkscape_python.ds_store"
 			shift 1 ;;
 	esac
 	shift 1
 done
 # some checks
-if [ ! -e $python_dir ]; then
+if [ ! -e "$python_dir" ]; then
 	echo "Cannot find your python packages directory"
 	exit 1
 fi
@@ -75,7 +75,7 @@ ln -sf /Applications "$TMPDIR"/
 	
 if [ ${add_python} = "true" ]; then
 	# Copy python libraries
-	cp -rf $python_dir/* "$TMPDIR"/
+	cp -rf "$python_dir"/* "$TMPDIR"/
 	# link python environment in order to drag and drop inkscape onto it
 	ln -sf /Library/Python/2.3/site-packages "$TMPDIR"/Python\ site-packages
 fi

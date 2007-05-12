@@ -66,7 +66,7 @@ Compilation script for Inkscape on Mac OS X.
   \033[1m$0 conf build install\033[0m
     configure, build and install a dowloaded version of Inkscape in the default
     directory, keeping debugging information.	
-  \033[1m$0 -p ~ -s -py ~/pyxml/ u a c b i p\033[0m
+  \033[1m$0 -p ~ -s -py ~/pyxml/ u a c b i p d\033[0m
     update an svn checkout, prepare configure script, configure,
     build and install Inkscape in the user home directory. 	
     Then package Inkscape withouth debugging information,
@@ -125,7 +125,7 @@ do
 	     	STRIP="t" ;;
 	-py|--with-python)
 		PYTHON="t" 
-		PYTHONDIR=$2
+		PYTHONDIR="$2"
 		shift 1 ;;
 	esac
 	shift 1
@@ -255,11 +255,10 @@ if [[ "$DISTRIB" == "t" ]]
 then	
 	# Create dmg bundle
 	if [[ "$PYTHON" == "t" ]]; then
-		PYTHONOPTS="-py \"$PYTHONDIR\""
+		./osx-dmg.sh -py "$PYTHONDIR"
 	else
-		PYTHONOPTS=""
+		./osx-dmg.sh
 	fi
-	./osx-dmg.sh $PYTHONOPTS
 	status=$?
 	if [[ $status -ne 0 ]]; then
 		echo -e "\nDisk image creation failed"
@@ -270,26 +269,26 @@ then
 	mv Inkscape.dmg Inkscape_$DATE.dmg
 	
 	# Prepare information file
-	INFOFILE=Inkscape_$DATE-info.txt
-	echo "Version information on $DATE for `whoami`:
-	OS X      `/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d \:`
-	DarwinPorts  `port version | cut -f2 -d \ `
-	GCC          `gcc --version | grep GCC`
-	GTK          `pkg-config --modversion gtk+-2.0`
-	GTKmm        `pkg-config --modversion gtkmm-2.4`
-	Cairo        `pkg-config --modversion cairo`
-	Cairomm      `pkg-config --modversion cairomm-1.0`
-	CairoPDF     `pkg-config --modversion cairo-pdf`
-	Pango        `pkg-config --modversion pango`
-Configure options:
-	$CONFFLAGS" > $INFOFILE
-	if [[ "$STRIP" == "t" ]]; then
-		echo "Debug info
-	no" >> $INFOFILE
-	else
-		echo "Debug info
-	yes" >> $INFOFILE
-	fi
+# 	INFOFILE=Inkscape_$DATE-info.txt
+# 	echo "Version information on $DATE for `whoami`:
+# 	OS X      `/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d \:`
+# 	DarwinPorts  `port version | cut -f2 -d \ `
+# 	GCC          `gcc --version | grep GCC`
+# 	GTK          `pkg-config --modversion gtk+-2.0`
+# 	GTKmm        `pkg-config --modversion gtkmm-2.4`
+# 	Cairo        `pkg-config --modversion cairo`
+# 	Cairomm      `pkg-config --modversion cairomm-1.0`
+# 	CairoPDF     `pkg-config --modversion cairo-pdf`
+# 	Pango        `pkg-config --modversion pango`
+# Configure options:
+# 	$CONFFLAGS" > $INFOFILE
+# 	if [[ "$STRIP" == "t" ]]; then
+# 		echo "Debug info
+# 	no" >> $INFOFILE
+# 	else
+# 		echo "Debug info
+# 	yes" >> $INFOFILE
+# 	fi
 	
 	# open a Finder window here
 	open .
