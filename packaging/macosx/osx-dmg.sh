@@ -36,6 +36,11 @@
 set_ds_store=false
 add_python=false
 ds_store_file="inkscape.ds_store"
+package="Inkscape.app"
+RWNAME="RWinkscape.dmg"
+VOLNAME="Inkscape"
+TMPDIR="/tmp/dmg-$$"
+AUTOOPENOPT=
 
 # Parse command line arguments
 while [ "$1" != "" ]
@@ -52,29 +57,31 @@ do
 	shift 1
 done
 # some checks
-if [ ! -e "$python_dir" ]; then
-	echo "Cannot find your python packages directory"
+if [ ! -e "$package" ]; then
+	echo "Cannot find $package"
 	exit 1
 fi
-
-RWNAME="RWinkscape.dmg"
-VOLNAME="Inkscape"
-FIRSTTIME="false"
-TMPDIR="/tmp/dmg-$$"
+if [ ${add_python} = "true" ]; then
+	if [ ! -e "$python_dir" ]; then
+		echo "Cannot find your python packages directory"
+		exit 1
+	fi
+fi
 
 # Create temp directory with desired contents of the release volume.
 rm -rf "$TMPDIR"
 mkdir "$TMPDIR"
 
 echo "Copying files to temp directory..."
-# Copy Inkscape.app folder.
-cp -rf Inkscape.app "$TMPDIR"/
-
+# Inkscape itself
+# copy Inkscape.app
+cp -rf "$package" "$TMPDIR"/
 # link to Applications in order to drag and drop inkscape onto it.
 ln -sf /Applications "$TMPDIR"/
-	
+
+# Python
 if [ ${add_python} = "true" ]; then
-	# Copy python libraries
+	# copy python libraries
 	cp -rf "$python_dir"/* "$TMPDIR"/
 	# link python environment in order to drag and drop inkscape onto it
 	ln -sf /Library/Python/2.3/site-packages "$TMPDIR"/Python\ site-packages
@@ -85,7 +92,7 @@ fi
 mkdir "$TMPDIR/.background"
 cp dmg_background.png "$TMPDIR/.background/background.png"
 
-AUTOOPENOPT=
+# If the appearance settings are not to be modified we just copy them
 if [ ${set_ds_store} = "false" ]; then
 	# Copy the .DS_Store file which contains information about
 	# window size, appearance, etc.  Most of this can be set
@@ -111,6 +118,7 @@ DEV_NAME=`/usr/bin/hdiutil attach -readwrite -noverify $AUTOOPENOPT  "$RWNAME" |
 # Have the disk image window open automatically when mounted.
 bless -openfolder /Volumes/$VOLNAME
 
+# In case the apperance has to be modified, mount the image and apply the base settings to it via Applescript
 if [ ${set_ds_store} = "true" ]; then
 	/usr/bin/osascript dmg_set_style.scpt
 
@@ -132,7 +140,7 @@ if [ ${set_ds_store} = "true" ]; then
 	AUTOOPENOPT=-noautoopen
 	DEV_NAME=`/usr/bin/hdiutil attach -readwrite -noverify $AUTOOPENOPT  "$RWNAME" | egrep '^/dev/' | sed 1q | awk '{print $1}'`
 	echo
-	echo "New $ds_store_file file written."
+	echo "New $ds_store_file file written. Re-run $0 without the -s option to use it"
 	cp /Volumes/$VOLNAME/.DS_Store ./$ds_store_file
 	SetFile -a v ./$ds_store_file
 
