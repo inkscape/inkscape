@@ -2,30 +2,68 @@
 #include <glib.h>
 
 // FIXME: kill this ugliness when we have a proper CSS parser
+
+// Functions as per 4.3.4 of CSS 2.1
+// http://www.w3.org/TR/CSS21/syndata.html#uri
 gchar *extract_uri(gchar const *s)
 {
+    gchar* result = 0;
     gchar const *sb = s;
     g_assert( strncmp(sb, "url", 3) == 0 );
     sb += 3;
 
+    // This first whitespace technically is not allowed.
+    // Just left in for now for legacy behavior.
     while ( ( *sb == ' ' ) ||
-            ( *sb == '(' ) )
+            ( *sb == '\t' ) )
     {
         sb++;
     }
 
-    gchar const *se = sb + strlen(sb);
-    while ( ( se[-1] == ' ' ) ||
-            ( se[-1] == ')' ) )
-    {
-        se--;
+    if ( *sb == '(' ) {
+        sb++;
+        while ( ( *sb == ' ' ) ||
+                ( *sb == '\t' ) )
+        {
+            sb++;
+        }
+
+        gchar delim = ')';
+        if ( (*sb == '\'' || *sb == '"') ) {
+            delim = *sb;
+            sb++;
+        }
+        gchar const* se = sb + 1;
+        while ( *se && (*se != delim) ) {
+            se++;
+        }
+
+        // we found the delimiter
+        if ( *se ) {
+            if ( delim == ')' ) {
+                // back up for any trailing whitespace
+                se--;
+                while ( ( se[-1] == ' ' ) ||
+                        ( se[-1] == '\t' ) )
+                {
+                    se--;
+                }
+                result = g_strndup(sb, se - sb + 1);
+            } else {
+                gchar const* tail = se + 1;
+                while ( ( *tail == ' ' ) ||
+                        ( *tail == '\t' ) )
+                {
+                    tail++;
+                }
+                if ( *tail == ')' ) {
+                    result = g_strndup(sb, se - sb);
+                }
+            }
+        }
     }
 
-    if ( sb < se ) {
-        return g_strndup(sb, se - sb);
-    } else {
-        return NULL;
-    }
+    return result;
 }
 
 /*

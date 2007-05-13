@@ -9,27 +9,66 @@
 class ExtractURITest : public CxxTest::TestSuite
 {
 public:
+    void checkOne( char const* str, char const* expected )
+    {
+        gchar* result = extract_uri( str );
+        TS_ASSERT_EQUALS( ( result == NULL ), ( expected == NULL ) );
+        if ( result && expected ) {
+            TS_ASSERT_EQUALS( std::string(result), std::string(expected) );
+        } else if ( result ) {
+            TS_FAIL( std::string("Expected null, found (") + result + ")" );
+        } else if ( expected ) {
+            TS_FAIL( std::string("Expected (") + expected + "), found null" );
+        }
+        g_free( result );
+    }
+
     void testBase()
     {
         char const* cases[][2] = {
             { "url(#foo)", "#foo" },
-            { "url  foo  ", "foo" },
+            { "url  foo  ", NULL },
             { "url", NULL },
             { "url ", NULL },
             { "url()", NULL },
             { "url ( ) ", NULL },
-            { "url foo bar ", "foo bar" }
+            { "url foo bar ", NULL },
         };
 
         for ( size_t i = 0; i < G_N_ELEMENTS(cases); i++ )
         {
-            char const* result = extract_uri( cases[i][0] );
+            checkOne( cases[i][0], cases[i][1] );
+        }
+    }
 
-            TS_ASSERT_EQUALS( ( result == NULL ), ( cases[i][1] == NULL ) );
-            if ( result )
-            {
-                TS_ASSERT_EQUALS( std::string(result), std::string(cases[i][1]) );
-            }
+    void testWithTrailing()
+    {
+        char const* cases[][2] = {
+            { "url(#foo) bar", "#foo" },
+            { "url() bar", NULL },
+            { "url ( ) bar ", NULL }
+        };
+
+        for ( size_t i = 0; i < G_N_ELEMENTS(cases); i++ )
+        {
+            checkOne( cases[i][0], cases[i][1] );
+        }
+    }
+
+    void testQuoted()
+    {
+        char const* cases[][2] = {
+            { "url('#foo')", "#foo" },
+            { "url(\"#foo\")", "#foo" },
+            { "url('#f o o')", "#f o o" },
+            { "url(\"#f o o\")", "#f o o" },
+            { "url('#fo\"o')", "#fo\"o" },
+            { "url(\"#fo'o\")", "#fo'o" },
+        };
+
+        for ( size_t i = 0; i < G_N_ELEMENTS(cases); i++ )
+        {
+            checkOne( cases[i][0], cases[i][1] );
         }
     }
 
