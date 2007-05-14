@@ -19,6 +19,8 @@
 #include "style.h"
 #include "sp-filter.h"
 #include "sp-gaussian-blur.h"
+#include "sp-feblend.h"
+#include "display/nr-filter-blend.h"
 
 static void nr_arena_group_class_init (NRArenaGroupClass *klass);
 static void nr_arena_group_init (NRArenaGroup *group);
@@ -219,6 +221,12 @@ void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
                     else
                         gaussian->set_deviation((double) num);
                 }
+            } else if(SP_IS_FEBLEND(primitive)) {
+                // TODO: this is just a test. Besides this whole filter
+                // creation needs to be redone
+                NR::FilterBlend *nrblend = (NR::FilterBlend *) group->filter->add_primitive(NR::NR_FILTER_BLEND);
+                SPFeBlend *spblend = SP_FEBLEND(primitive);
+                nrblend->set_mode(spblend->blend_mode);
             }
         }
     }

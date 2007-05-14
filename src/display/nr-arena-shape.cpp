@@ -17,9 +17,6 @@
 #include <display/canvas-arena.h>
 #include <display/nr-arena.h>
 #include <display/nr-arena-shape.h>
-#include "display/nr-filter.h"
-#include "display/nr-filter-gaussian.h"
-#include "display/nr-filter-types.h"
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-path.h>
 #include <libnr/nr-pixops.h>
@@ -32,8 +29,14 @@
 #include <style.h>
 #include "prefs-utils.h"
 #include "sp-filter.h"
-#include "sp-gaussian-blur.h"
 #include "inkscape-cairo.h"
+
+#include "display/nr-filter.h"
+#include "display/nr-filter-gaussian.h"
+#include "display/nr-filter-types.h"
+#include "sp-gaussian-blur.h"
+#include "sp-feblend.h"
+#include "display/nr-filter-blend.h"
 
 #include <cairo.h>
 
@@ -1386,6 +1389,12 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
                     else
                         gaussian->set_deviation((double) num);
                 }
+            } else if(SP_IS_FEBLEND(primitive)) {
+                // TODO: this is just a test. Besides this whole filter
+                // creation needs to be redone
+                NR::FilterBlend *nrblend = (NR::FilterBlend *) shape->filter->add_primitive(NR::NR_FILTER_BLEND);
+                SPFeBlend *spblend = SP_FEBLEND(primitive);
+                nrblend->set_mode(spblend->blend_mode);
             }
         }
     }

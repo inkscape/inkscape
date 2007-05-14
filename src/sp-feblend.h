@@ -7,8 +7,9 @@
 /*
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006 Hugo Rodrigues
+ * Copyright (C) 2006,2007 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -16,12 +17,14 @@
 #include "sp-filter.h"
 #include "sp-feblend-fns.h"
 
+#include "display/nr-filter-blend.h"
+
 /* FeBlend base class */
 class SPFeBlendClass;
 
 struct SPFeBlend : public SPFilterPrimitive {
     /** BLEND ATTRIBUTES HERE */
-    
+    NR::FilterBlendMode blend_mode;
 };
 
 struct SPFeBlendClass {

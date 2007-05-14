@@ -16,11 +16,12 @@
 
 #include "display/nr-filter.h"
 #include "display/nr-filter-primitive.h"
-#include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-types.h"
 #include "display/pixblock-scaler.h"
 #include "display/pixblock-transform.h"
+#include "display/nr-filter-gaussian.h"
+#include "display/nr-filter-blend.h"
 
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
@@ -63,7 +64,7 @@ Filter::Filter()
     _primitive_count = 0;
     _primitive_table_size = 1;
     _primitive = new FilterPrimitive*[1];
-	_primitive[0] = NULL;
+    _primitive[0] = NULL;
     //_primitive_count = 1;
     //_primitive[0] = new FilterGaussian;
     _common_init();
@@ -213,8 +214,9 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     slot.set(NR_FILTER_SOURCEGRAPHIC, in);
     in = NULL; // in is now handled by FilterSlot, we should not touch it
 
-    // TODO: loop through ALL the primitives and render them one at a time
-    _primitive[0]->render(slot, paraller_trans);
+    for (int i = 0 ; i < _primitive_count ; i++) {
+        _primitive[i]->render(slot, paraller_trans);
+    }
     NRPixBlock *out = slot.get(_output_slot);
 
     // Clear the pixblock, where the output will be put
@@ -310,7 +312,7 @@ void Filter::_create_constructor_table()
     if(created) return;
 
     /* Filter effects not yet implemented are set to NULL */
-    _constructor[NR_FILTER_BLEND] = NULL;
+    _constructor[NR_FILTER_BLEND] = &FilterBlend::create;
     _constructor[NR_FILTER_COLORMATRIX] = NULL;
     _constructor[NR_FILTER_COMPONENTTRANSFER] = NULL;
     _constructor[NR_FILTER_COMPOSITE] = NULL;

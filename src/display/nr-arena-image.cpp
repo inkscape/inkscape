@@ -24,6 +24,8 @@
 #include <livarot/Shape.h>
 #include "sp-filter.h"
 #include "sp-gaussian-blur.h"
+#include "sp-feblend.h"
+#include "display/nr-filter-blend.h"
 
 int nr_arena_image_x_sample = 1;
 int nr_arena_image_y_sample = 1;
@@ -392,6 +394,12 @@ void nr_arena_image_set_style (NRArenaImage *image, SPStyle *style)
                     else
                         gaussian->set_deviation((double) num);
                 }
+            } else if(SP_IS_FEBLEND(primitive)) {
+                // TODO: this is just a test. Besides this whole filter
+                // creation needs to be redone
+                NR::FilterBlend *nrblend = (NR::FilterBlend *) image->filter->add_primitive(NR::NR_FILTER_BLEND);
+                SPFeBlend *spblend = SP_FEBLEND(primitive);
+                nrblend->set_mode(spblend->blend_mode);
             }
         }
     }

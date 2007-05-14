@@ -6,9 +6,10 @@
  */
 /*
  * Authors:
- *   hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006 Hugo Rodrigues
+ * Copyright (C) 2006,2007 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -17,11 +18,14 @@
 # include "config.h"
 #endif
 
+#include <string.h>
+
 #include "attributes.h"
 #include "svg/svg.h"
 #include "sp-feblend.h"
 #include "xml/repr.h"
 
+#include "display/nr-filter-blend.h"
 
 /* FeBlend base class */
 
@@ -89,6 +93,7 @@ sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
+    sp_object_read_attr(object, "mode");
 }
 
 /**
@@ -99,6 +104,37 @@ sp_feBlend_release(SPObject *object)
 {
     if (((SPObjectClass *) feBlend_parent_class)->release)
         ((SPObjectClass *) feBlend_parent_class)->release(object);
+}
+
+static NR::FilterBlendMode sp_feBlend_readmode(gchar const *value)
+{
+    if (!value) return NR::BLEND_NORMAL;
+    switch (value[0]) {
+        case 'n':
+            if (strncmp(value, "normal", 6) == 0)
+                return NR::BLEND_NORMAL;
+            break;
+        case 'm':
+            if (strncmp(value, "multiply", 8) == 0)
+                return NR::BLEND_MULTIPLY;
+            break;
+        case 's':
+            if (strncmp(value, "screen", 6) == 0)
+                return NR::BLEND_SCREEN;
+            break;
+        case 'd':
+            if (strncmp(value, "darken", 6) == 0)
+                return NR::BLEND_DARKEN;
+            break;
+        case 'l':
+            if (strncmp(value, "lighten", 7) == 0)
+                return NR::BLEND_LIGHTEN;
+            break;
+        default:
+            // do nothing by default
+            break;
+    }
+    return NR::BLEND_NORMAL;
 }
 
 /**
@@ -112,6 +148,9 @@ sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value)
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
+        case SP_ATTR_MODE:
+            feBlend->blend_mode = sp_feBlend_readmode(value);
+            break;
         default:
             if (((SPObjectClass *) feBlend_parent_class)->set)
                 ((SPObjectClass *) feBlend_parent_class)->set(object, key, value);
@@ -148,7 +187,7 @@ sp_feBlend_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {
             // is this sane?
-            repr->mergeFrom(SP_OBJECT_REPR(object), "id");
+            // repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
             repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
         }
