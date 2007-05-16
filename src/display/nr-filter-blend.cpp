@@ -21,12 +21,15 @@
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-blit.h"
+#include "libnr/nr-pixops.h"
 
+/*
 static inline int clamp(const int val, const int min, const int max) {
     if (val < min) return min;
     if (val > max) return max;
     return val;
 }
+*/
 
 template <void(*blend)(unsigned char *cr, unsigned char const *ca, unsigned char const *cb)>
 static void _render(NRPixBlock &out, NRPixBlock &in1, NRPixBlock &in2) {
@@ -142,52 +145,67 @@ static void _render(NRPixBlock &out, NRPixBlock &in1, NRPixBlock &in2) {
  * qb = Opacity value at a given pixel for image B
  * ca = Color (RGB) at a given pixel for image A - premultiplied
  * cb = Color (RGB) at a given pixel for image B - premultiplied
-*/
+ */
+
+/*
+ * These blending equations given in SVG standard are for color values
+ * in the range 0..1. As these values are stored as unsigned char values,
+ * they need some reworking. An unsigned char value can be thought as
+ * 0.8 fixed point representation of color value. This is how I've
+ * ended up with these equations here.
+ */
+
+// Set alpha / opacity. This line is same for all the blending modes,
+// so let's save some copy-pasting.
+#define SET_ALPHA r[3] = NR_NORMALIZE_21((255 * 255) - (255 - a[3]) * (255 - b[3]))
 
 // cr = (1 - qa) * cb + ca
 inline void blend_normal(unsigned char *r, unsigned char const *a, unsigned char const *b) {
-    r[0] = (((255 - a[3]) * b[0]) >> 8) + a[0];
-    r[1] = (((255 - a[3]) * b[1]) >> 8) + a[1];
-    r[2] = (((255 - a[3]) * b[2]) >> 8) + a[2];
-    r[3] = 255 - (((255 - a[3]) * (255 - b[3])) >> 8);
+    r[0] = NR_NORMALIZE_21((255 - a[3]) * b[0]) + a[0];
+    r[1] = NR_NORMALIZE_21((255 - a[3]) * b[1]) + a[1];
+    r[2] = NR_NORMALIZE_21((255 - a[3]) * b[2]) + a[2];
+    SET_ALPHA;
 }
 
 // cr = (1-qa)*cb + (1-qb)*ca + ca*cb
 inline void blend_multiply(unsigned char *r, unsigned char const *a, unsigned char const *b) {
-    r[0] = ((255 - a[3]) * b[0] + (255 - b[3]) * a[0] + a[0] * b[0]) >> 8;
-    r[1] = ((255 - a[3]) * b[1] + (255 - b[3]) * a[1] + a[1] * b[1]) >> 8;
-    r[2] = ((255 - a[3]) * b[2] + (255 - b[3]) * a[2] + a[2] * b[2]) >> 8;
-    r[3] = 255 - (((255 - a[3]) * (255 - b[3])) >> 8);
+    r[0] = NR_NORMALIZE_21((255 - a[3]) * b[0] + (255 - b[3]) * a[0]
+                           + a[0] * b[0]);
+    r[1] = NR_NORMALIZE_21((255 - a[3]) * b[1] + (255 - b[3]) * a[1]
+                           + a[1] * b[1]);
+    r[2] = NR_NORMALIZE_21((255 - a[3]) * b[2] + (255 - b[3]) * a[2]
+                           + a[2] * b[2]);
+    SET_ALPHA;
 }
 
 // cr = cb + ca - ca * cb
 inline void blend_screen(unsigned char *r, unsigned char const *a, unsigned char const *b) {
-    r[0] = b[0] + a[0] - ((a[0] * b[0]) >> 8);
-    r[1] = b[1] + a[1] - ((a[1] * b[1]) >> 8);
-    r[2] = b[2] + a[2] - ((a[2] * b[2]) >> 8);
-    r[3] = 255 - (((255 - a[3]) * (255 - b[3])) >> 8);
+    r[0] = NR_NORMALIZE_21(b[0] * 255 + a[0] * 255 - a[0] * b[0]);
+    r[1] = NR_NORMALIZE_21(b[1] * 255 + a[1] * 255 - a[1] * b[1]);
+    r[2] = NR_NORMALIZE_21(b[2] * 255 + a[2] * 255 - a[2] * b[2]);
+    SET_ALPHA;
 }
 
 // cr = Min ((1 - qa) * cb + ca, (1 - qb) * ca + cb)
 inline void blend_darken(unsigned char *r, unsigned char const *a, unsigned char const *b) {
-    r[0] = std::min((((255 - a[3]) * b[0]) >> 8) + a[0],
-                    (((255 - b[3]) * a[0]) >> 8) + b[0]);
-    r[1] = std::min((((255 - a[3]) * b[1]) >> 8) + a[1],
-                    (((255 - b[3]) * a[1]) >> 8) + b[1]);
-    r[2] = std::min((((255 - a[3]) * b[2]) >> 8) + a[2],
-                    (((255 - b[3]) * a[2]) >> 8) + b[2]);
-    r[3] = 255 - (((255 - a[3]) * (255 - b[3])) >> 8);
+    r[0] = std::min(NR_NORMALIZE_21((255 - a[3]) * b[0]) + a[0],
+                    NR_NORMALIZE_21((255 - b[3]) * a[0]) + b[0]);
+    r[1] = std::min(NR_NORMALIZE_21((255 - a[3]) * b[1]) + a[1],
+                    NR_NORMALIZE_21((255 - b[3]) * a[1]) + b[1]);
+    r[2] = std::min(NR_NORMALIZE_21((255 - a[3]) * b[2]) + a[2],
+                    NR_NORMALIZE_21((255 - b[3]) * a[2]) + b[2]);
+    SET_ALPHA;
 }
 
 // cr = Max ((1 - qa) * cb + ca, (1 - qb) * ca + cb)
 inline void blend_lighten(unsigned char *r, unsigned char const *a, unsigned char const *b) {
-    r[0] = std::max((((255 - a[3]) * b[0]) >> 8) + a[0],
-                    (((255 - b[3]) * a[0]) >> 8) + b[0]);
-    r[1] = std::max((((255 - a[3]) * b[1]) >> 8) + a[1],
-                    (((255 - b[3]) * a[1]) >> 8) + b[1]);
-    r[2] = std::max((((255 - a[3]) * b[2]) >> 8) + a[2],
-                    (((255 - b[3]) * a[2]) >> 8) + b[2]);
-    r[3] = 255 - (((255 - a[3]) * (255 - b[3])) >> 8);
+    r[0] = std::max(NR_NORMALIZE_21((255 - a[3]) * b[0]) + a[0],
+                    NR_NORMALIZE_21((255 - b[3]) * a[0]) + b[0]);
+    r[1] = std::max(NR_NORMALIZE_21((255 - a[3]) * b[1]) + a[1],
+                    NR_NORMALIZE_21((255 - b[3]) * a[1]) + b[1]);
+    r[2] = std::max(NR_NORMALIZE_21((255 - a[3]) * b[2]) + a[2],
+                    NR_NORMALIZE_21((255 - b[3]) * a[2]) + b[2]);
+    SET_ALPHA;
 }
 
 namespace NR {
