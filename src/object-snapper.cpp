@@ -16,6 +16,7 @@
 #include "sp-namedview.h"
 #include "sp-path.h"
 #include "sp-item-group.h"
+#include "sp-use.h"
 #include "display/curve.h"
 #include "desktop.h"
 #include "inkscape.h"
@@ -77,20 +78,30 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::SnappedPoint &s,
     SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
 
     for (std::list<SPItem*>::const_iterator i = cand.begin(); i != cand.end(); i++) {
-        if (SP_IS_SHAPE(*i)) {
+        
+        NR::Matrix i2doc(NR::identity());
+        SPItem *root_item = NULL;
+        if (SP_IS_USE(*i)) {
+            i2doc = sp_use_get_root_transform(SP_USE(*i));
+            root_item = sp_use_root(SP_USE(*i));
+        } else { 
+            i2doc = sp_item_i2doc_affine(*i);
+            root_item = *i;
+        }
+        
+        if (SP_IS_SHAPE(root_item)) {
 
-            SPShape const *sh = SP_SHAPE(*i);
+            SPShape const *sh = SP_SHAPE(root_item);
             if (sh->curve) {
 
                 int j = 0;
-                NR::Matrix const i2doc = sp_item_i2doc_affine(*i);
 
                 while (SP_CURVE_BPATH(sh->curve)[j].code != NR_END) {
-
+            
                     /* Get this node in desktop coordinates */
                     NArtBpath const &bp = SP_CURVE_BPATH(sh->curve)[j];
                     NR::Point const n = desktop->doc2dt(bp.c(3) * i2doc);
-
+            
                     /* Try to snap to this node of the path */
                     NR::Coord const dist = NR::L2(n - p);
                     if (dist < getDistance() && dist < s.getDistance()) {
@@ -119,10 +130,20 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
     for (std::list<SPItem*>::const_iterator i = cand.begin(); i != cand.end(); i++) {
 
         /* Transform the requested snap point to this item's coordinates */
-        NR::Matrix const i2doc = sp_item_i2doc_affine(*i);
+        NR::Matrix i2doc(NR::identity());
+        SPItem *root_item = NULL;
+        /* We might have a clone at hand, so make sure we get the root item */        
+        if (SP_IS_USE(*i)) {
+            i2doc = sp_use_get_root_transform(SP_USE(*i));
+            root_item = sp_use_root(SP_USE(*i));
+        } else {
+            i2doc = sp_item_i2doc_affine(*i);
+            root_item = *i;
+        }
+        
         NR::Point const p_it = p_doc * i2doc.inverse();
 
-        Path *livarot_path = Path_for_item(*i, true, true);
+        Path *livarot_path = Path_for_item(root_item, false, false);
         if (!livarot_path)
             continue;
 
@@ -144,7 +165,6 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
 
         delete livarot_path;
     }
-
 }
 
 
