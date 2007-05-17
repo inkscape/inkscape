@@ -152,16 +152,16 @@ DocumentProperties::~DocumentProperties()
 //========================================================================
 
 /**
- * Helper function that attachs widgets in a 3xn table. The widgets come in an
+ * Helper function that attaches widgets in a 3xn table. The widgets come in an
  * array that has two entries per table row. The two entries code for four
  * possible cases: (0,0) means insert space in first column; (0, non-0) means
  * widget in columns 2-3; (non-0, 0) means label in columns 1-3; and
  * (non-0, non-0) means two widgets in columns 2 and 3.
 **/
 inline void
-attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned size, int start = 0)
+attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned const n, int start = 0)
 {
-    for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2)
+    for (unsigned i = 0, r = start; i < n; i += 2)
     {
         if (arr[i] && arr[i+1])
         {
@@ -233,7 +233,7 @@ DocumentProperties::build_page()
         _rcp_bord._label,  _rcp_bord._cp,
     };
 
-    attach_all (_page_page.table(), widget_array, sizeof(widget_array));
+    attach_all(_page_page.table(), widget_array, G_N_ELEMENTS(widget_array));
 }
 
 void
@@ -258,7 +258,7 @@ DocumentProperties::build_guides()
         _rcp_hgui._label, _rcp_hgui._cp,
     };
 
-    attach_all (_page_guides.table(), widget_array, sizeof(widget_array));
+    attach_all(_page_guides.table(), widget_array, G_N_ELEMENTS(widget_array));
 }
 
 void
@@ -305,7 +305,7 @@ DocumentProperties::build_snap()
         0,                _rsu_gusn._vbox,
     };
 
-    attach_all (_page_snap.table(), array, sizeof(array));
+    attach_all(_page_snap.table(), array, G_N_ELEMENTS(array));
  }
 
 /**
@@ -374,7 +374,7 @@ DocumentProperties::build_gridspage()
         (Gtk::Widget*) &_grids_notebook, 0
     };
 
-    attach_all (_page_grids.table(), widget_array, sizeof(widget_array));
+    attach_all(_page_grids.table(), widget_array, G_N_ELEMENTS(widget_array));
 }
 
 
