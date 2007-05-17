@@ -226,9 +226,7 @@ sp_document_cancel (SPDocument *doc)
 	sp_repr_begin_transaction (doc->rdoc);
 }
 
-namespace {
-
-void finish_incomplete_transaction(SPDocument &doc) {
+static void finish_incomplete_transaction(SPDocument &doc) {
 	SPDocumentPrivate &priv=*doc.priv;
 	Inkscape::XML::Event *log=sp_repr_commit_undoable(doc.rdoc);
 	if (log || priv.partial) {
@@ -240,8 +238,6 @@ void finish_incomplete_transaction(SPDocument &doc) {
                 priv.undoStackObservers.notifyUndoCommitEvent(event);
 		priv.partial = NULL;
 	}
-}
-
 }
 
 gboolean
