@@ -159,25 +159,25 @@ DocumentProperties::~DocumentProperties()
  * (non-0, non-0) means two widgets in columns 2 and 3.
 **/
 inline void
-attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int start = 0)
+attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned size, int start = 0)
 {
     for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2)
     {
         if (arr[i] && arr[i+1])
         {
-            table.attach (const_cast<Gtk::Widget&>(*arr[i]),   1, 2, r, r+1,
+            table.attach(*arr[i],   1, 2, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 2, 3, r, r+1,
+            table.attach(*arr[i+1], 2, 3, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
         }
         else
         {
             if (arr[i+1])
-                table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 1, 3, r, r+1,
+                table.attach(*arr[i+1], 1, 3, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
             else if (arr[i])
             {
-                Gtk::Label& label = reinterpret_cast<Gtk::Label&> (const_cast<Gtk::Widget&>(*arr[i]));
+                Gtk::Label& label = reinterpret_cast<Gtk::Label&>(*arr[i]);
                 label.set_alignment (0.0);
                 table.attach (label, 0, 3, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
@@ -217,7 +217,7 @@ DocumentProperties::build_page()
     label_for->set_markup (_("<b>Format</b>"));
     _page_sizer.init (_wr);
 
-    const Gtk::Widget* widget_array[] =
+    Gtk::Widget *const widget_array[] =
     {
         label_gen,         0,
         _rum_deflt._label, _rum_deflt._sel,
@@ -250,7 +250,7 @@ DocumentProperties::build_guides()
     Gtk::Label *label_gui = manage (new Gtk::Label);
     label_gui->set_markup (_("<b>Guides</b>"));
 
-    const Gtk::Widget* widget_array[] =
+    Gtk::Widget *const widget_array[] =
     {
         label_gui,       0,
         0,               _rcb_sgui._button,
@@ -291,7 +291,7 @@ DocumentProperties::build_snap()
     Gtk::Label *label_gu = manage (new Gtk::Label);
     label_gu->set_markup (_("<b>Guide Snapping</b>"));
 
-    const Gtk::Widget* array[] =
+    Gtk::Widget *const array[] =
     {
         label_o,            0,
         0,                  _rcbsnop._button,
@@ -365,7 +365,7 @@ DocumentProperties::build_gridspage()
         _grids_notebook.append_page(grid->getWidget(), grid->repr->attribute("id"));
     }
 
-    const Gtk::Widget* widget_array[] =
+    Gtk::Widget *const widget_array[] =
     {
         label_crea, 0,
         label_crea_type, (Gtk::Widget*) &_grids_combo_gridtype,
