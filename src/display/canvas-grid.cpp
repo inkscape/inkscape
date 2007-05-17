@@ -223,16 +223,15 @@ CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, GridType gridtype)
 
     // first create the child xml node, then hook it to repr. This order is important, to not set off listeners to repr before the new node is complete.
 
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(sp_desktop_document(SP_ACTIVE_DESKTOP));
+    SPDocument *current_document = sp_desktop_document(SP_ACTIVE_DESKTOP);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_document);
     Inkscape::XML::Node *newnode;
     newnode = xml_doc->createElement("inkscape:grid");
     newnode->setAttribute("type", getSVGName(gridtype));
 
     repr->appendChild(newnode);
 
-    // FIXME: add this to history?
-//    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
-//                     _("Create new element node"));
+    sp_document_done(current_document, SP_VERB_DIALOG_NAMEDVIEW, _("Create new grid"));
 }
 
 /*

@@ -564,6 +564,7 @@ DocumentProperties::onRemoveGrid()
         // delete the grid that corresponds with the selected tab
         // when the grid is deleted from SVG, the SPNamedview handler automatically deletes the object, so found_grid becomes an invalid pointer!
         found_grid->repr->parent()->removeChild(found_grid->repr);
+	sp_document_done(sp_desktop_document(dt), SP_VERB_DIALOG_NAMEDVIEW, _("Remove grid"));
     }
 }
 
