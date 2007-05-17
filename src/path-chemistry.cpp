@@ -282,7 +282,7 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
 
         selection->remove(item);
 
-        // it's going to resurrect, so we delete without advertisement
+        // It's going to resurrect, so we delete without notifying listeners.
         SP_OBJECT(item)->deleteObject(false);
 
         // restore id
@@ -292,6 +292,8 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
         // move to the saved position
         repr->setPosition(pos > 0 ? pos : 0);
 
+        /* Buglet: We don't re-add the (new version of the) object to the selection of any other
+         * desktops where it was previously selected. */
         selection->add(repr);
         Inkscape::GC::release(repr);
     }
