@@ -370,11 +370,11 @@ DocumentProperties::build_gridspage()
         label_crea, 0,
         label_crea_type, (Gtk::Widget*) &_grids_combo_gridtype,
         (Gtk::Widget*) &_grids_button_new,         (Gtk::Widget*) &_grids_button_remove, 
-        label_def,         0,
-        (Gtk::Widget*) &_grids_notebook, 0
+        label_def,         0
     };
-
     attach_all(_page_grids.table(), widget_array, G_N_ELEMENTS(widget_array));
+    _page_grids.table().attach(_grids_notebook, 0, 3, 4, 5,
+			       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
 }
 
 
