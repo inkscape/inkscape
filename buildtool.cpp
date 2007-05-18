@@ -38,7 +38,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.6.13, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.7.0, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -2918,6 +2918,39 @@ public:
     int getLine()
         { return line; }
 
+
+    /**
+     * Set a property to a given value
+     */
+    virtual void setProperty(const String &name, const String &val)
+        {
+        properties[name] = val;
+        }
+
+    /**
+     * Return a named property is found, else a null string
+     */
+    virtual String getProperty(const String &name)
+        {
+        String val;
+        std::map<String, String>::iterator iter = properties.find(name);
+        if (iter != properties.end())
+            val = iter->second;
+        return val;
+        }
+
+    /**
+     * Return true if a named property is found, else false
+     */
+    virtual bool hasProperty(const String &name)
+        {
+        std::map<String, String>::iterator iter = properties.find(name);
+        if (iter == properties.end())
+            return false;
+        return true;
+        }
+
+
 protected:
 
     /**
@@ -2972,6 +3005,11 @@ protected:
      *  remove leading and trailing whitespace from string
      */
     String trim(const String &s);
+
+    /**
+     *  Return a lower case version of the given string
+     */
+    String toLower(const String &s);
 
     /**
      * Return the native format of the canonical
@@ -3029,19 +3067,6 @@ protected:
      */
     virtual std::map<String, String> &getProperties()
         { return properties; }
-
-    /**
-     * Return a named property if found, else a null string
-     */
-    virtual String getProperty(const String &name)
-        {
-        String val;
-        std::map<String, String>::iterator iter;
-        iter = properties.find(name);
-        if (iter != properties.end())
-            val = iter->second;
-        return val;
-        }
 
 
     std::map<String, String> properties;
@@ -3348,6 +3373,24 @@ String MakeBase::trim(const String &s)
     String res = s.substr(begin, end-begin+1);
     return res;
 }
+
+
+/**
+ *  Return a lower case version of the given string
+ */
+String MakeBase::toLower(const String &s)
+{
+    if (s.size()==0)
+        return s;
+
+    String ret;
+    for(unsigned int i=0; i<s.size() ; i++)
+        {
+        ret.push_back(tolower(s[i]));
+        }
+    return ret;
+}
+
 
 /**
  * Return the native format of the canonical
@@ -4312,13 +4355,7 @@ public:
      *
      */
     PkgConfig()
-        { init(); }
-
-    /**
-     *
-     */
-    PkgConfig(const String &namearg)
-        { init(); name = namearg; }
+        { path="."; init(); }
 
     /**
      *
@@ -4347,6 +4384,30 @@ public:
     /**
      *
      */
+    virtual String getPath()
+        { return path; }
+
+    /**
+     *
+     */
+    virtual void setPath(const String &val)
+        { path = val; }
+
+    /**
+     *
+     */
+    virtual String getPrefix()
+        { return prefix; }
+
+    /**
+     *  Allow the user to override the prefix in the file
+     */
+    virtual void setPrefix(const String &val)
+        { prefix = val; }
+
+    /**
+     *
+     */
     virtual String getDescription()
         { return description; }
 
@@ -4361,6 +4422,17 @@ public:
      */
     virtual String getLibs()
         { return libs; }
+
+    /**
+     *
+     */
+    virtual String getAll()
+        {
+         String ret = cflags;
+         ret.append(" ");
+         ret.append(libs);
+         return ret;
+        }
 
     /**
      *
@@ -4398,12 +4470,21 @@ public:
     virtual std::vector<String> &getRequireList()
         { return requireList; }
 
+    /**
+     *  Read a file for its details
+     */         
     virtual bool readFile(const String &fileName);
+
+    /**
+     *  Read a file for its details
+     */         
+    virtual bool query(const String &name);
 
 private:
 
     void init()
         {
+        //do not set path or prefix here
         name         = "";
         description  = "";
         cflags       = "";
@@ -4421,6 +4502,8 @@ private:
     void assign(const PkgConfig &other)
         {
         name         = other.name;
+        path         = other.path;
+        prefix       = other.prefix;
         description  = other.description;
         cflags       = other.cflags;
         libs         = other.libs;
@@ -4446,11 +4529,17 @@ private:
 
     void parseVersion();
 
+    bool parseLine(const String &lineBuf);
+
     bool parse(const String &buf);
 
     void dumpAttrs();
 
     String name;
+
+    String path;
+
+    String prefix;
 
     String description;
 
@@ -4495,6 +4584,7 @@ int PkgConfig::get(int pos)
 /**
  *  Skip over all whitespace characters beginning at pos.  Return
  *  the position of the first non-whitespace character.
+ *  Pkg-config is line-oriented, so check for newline
  */
 int PkgConfig::skipwhite(int pos)
 {
@@ -4604,15 +4694,12 @@ void PkgConfig::parseVersion()
 }
 
 
-bool PkgConfig::parse(const String &buf)
+bool PkgConfig::parseLine(const String &lineBuf)
 {
-    init();
-
-    parsebuf = (char *)buf.c_str();
-    parselen = buf.size();
+    parsebuf = (char *)lineBuf.c_str();
+    parselen = lineBuf.size();
     int pos = 0;
-
-
+    
     while (pos < parselen)
         {
         String attrName;
@@ -4633,6 +4720,7 @@ bool PkgConfig::parse(const String &buf)
         pos = getword(pos, attrName);
         if (attrName.size() == 0)
             continue;
+        
         pos = skipwhite(pos);
         ch = get(pos);
         if (ch != ':' && ch != '=')
@@ -4667,10 +4755,18 @@ bool PkgConfig::parse(const String &buf)
                         subName.push_back((char)ch);
                     pos++;
                     }
-                //trace("subName:%s", subName.c_str());
-                String subVal = attrs[subName];
-                //trace("subVal:%s", subVal.c_str());
-                attrVal.append(subVal);
+                trace("subName:%s %s", subName.c_str(), prefix.c_str());
+                if (subName == "prefix" && prefix.size()>0)
+                    {
+                    attrVal.append(prefix);
+                    trace("prefix override:%s", prefix.c_str());
+                    }
+                else
+                    {
+                    String subVal = attrs[subName];
+                    trace("subVal:%s", subVal.c_str());
+                    attrVal.append(subVal);
+                    }
                 }
             else
                 attrVal.push_back((char)ch);
@@ -4680,29 +4776,64 @@ bool PkgConfig::parse(const String &buf)
         attrVal = trim(attrVal);
         attrs[attrName] = attrVal;
 
-        if (attrName == "Name")
+        String attrNameL = toLower(attrName);
+
+        if (attrNameL == "name")
             name = attrVal;
-        else if (attrName == "Description")
+        else if (attrNameL == "description")
             description = attrVal;
-        else if (attrName == "Cflags")
+        else if (attrNameL == "cflags")
             cflags = attrVal;
-        else if (attrName == "Libs")
+        else if (attrNameL == "libs")
             libs = attrVal;
-        else if (attrName == "Requires")
+        else if (attrNameL == "requires")
             requires = attrVal;
-        else if (attrName == "Version")
+        else if (attrNameL == "version")
             version = attrVal;
 
         //trace("name:'%s'  value:'%s'",
         //      attrName.c_str(), attrVal.c_str());
         }
 
+    return true;
+}
+
+
+bool PkgConfig::parse(const String &buf)
+{
+    init();
+
+    String line;
+    int lineNr = 0;
+    for (unsigned int p=0 ; p<buf.size() ; p++)
+        {
+        int ch = buf[p];
+        if (ch == '\n' || ch == '\r')
+            {
+            if (!parseLine(line))
+                return false;
+            line.clear();
+            lineNr++;
+            }
+        else
+            {
+            line.push_back(ch);
+            }
+        }
+    if (line.size()>0)
+        {
+        if (!parseLine(line))
+            return false;
+        }
 
     parseRequires();
     parseVersion();
 
     return true;
 }
+
+
+
 
 void PkgConfig::dumpAttrs()
 {
@@ -4715,9 +4846,9 @@ void PkgConfig::dumpAttrs()
 }
 
 
-bool PkgConfig::readFile(const String &fileNameArg)
+bool PkgConfig::readFile(const String &fname)
 {
-    fileName = fileNameArg;
+    fileName = getNativePath(fname);
 
     FILE *f = fopen(fileName.c_str(), "r");
     if (!f)
@@ -4741,8 +4872,25 @@ bool PkgConfig::readFile(const String &fileNameArg)
         return false;
         }
 
-    dumpAttrs();
+    //dumpAttrs();
 
+    return true;
+}
+
+
+
+bool PkgConfig::query(const String &pkgName)
+{
+    name = pkgName;
+
+    String fname = path;
+    fname.append("/");
+    fname.append(name);
+    fname.append(".pc");
+
+    if (!readFile(fname))
+        return false;
+    
     return true;
 }
 
@@ -6939,7 +7087,7 @@ public:
         {
         PKG_CONFIG_QUERY_CFLAGS,
         PKG_CONFIG_QUERY_LIBS,
-        PKG_CONFIG_QUERY_BOTH
+        PKG_CONFIG_QUERY_ALL
         } QueryTypes;
 
     TaskPkgConfig(MakeBase &par) : Task(par)
@@ -6953,17 +7101,89 @@ public:
     virtual bool execute()
         {
         String path = parent.resolve(pkg_config_path);
-        //fill this in
+        PkgConfig pkgconfig;
+        pkgconfig.setPath(path);
+        pkgconfig.setPrefix(prefix);
+        if (!pkgconfig.query(name))
+            {
+            error("<pkg-config> query failed for '%s", name.c_str());
+            return false;
+            }
+        String ret;
+        switch (query)
+            {
+            case PKG_CONFIG_QUERY_CFLAGS:
+                {
+                ret = pkgconfig.getCflags();
+                break;
+                }
+            case PKG_CONFIG_QUERY_LIBS:
+                {
+                ret = pkgconfig.getLibs();
+                break;
+                }
+            case PKG_CONFIG_QUERY_ALL:
+                {
+                ret = pkgconfig.getAll();
+                break;
+                }
+            default:
+                {
+                error("<pkg-config> unhandled query : %d", query);
+                return false;
+                }
+            
+            }
+        //trace("ret: %s", ret.c_str());
+        parent.setProperty(propName, ret);
         return true;
         }
 
     virtual bool parse(Element *elem)
         {
         String s;
+        //# NAME
+        if (!parent.getAttribute(elem, "name", s))
+            return false;
+        if (s.size()>0)
+           name = s;
+        else
+            {
+            error("<pkg-config> requires 'name=\"package\"' attribute");
+            return false;
+            }
+
+        //# PROPERTY
+        if (!parent.getAttribute(elem, "property", s))
+            return false;
+        if (s.size()>0)
+           propName = s;
+        else
+            {
+            error("<pkg-config> requires 'property=\"name\"' attribute");
+            return false;
+            }
+        if (parent.hasProperty(propName))
+            {
+            error("<pkg-config> property '%s' is already defined",
+                          propName.c_str());
+            return false;
+            }
+        parent.setProperty(propName, "undefined");
+
+        //# PATH
         if (!parent.getAttribute(elem, "path", s))
             return false;
         if (s.size()>0)
            pkg_config_path = s;
+
+        //# PREFIX
+        if (!parent.getAttribute(elem, "prefix", s))
+            return false;
+        if (s.size()>0)
+           prefix = s;
+
+        //# QUERY
         if (!parent.getAttribute(elem, "query", s))
             return false;
         if (s == "cflags")
@@ -6971,7 +7191,7 @@ public:
         else if (s == "libs")
             query = PKG_CONFIG_QUERY_LIBS;
         else if (s == "both")
-            query = PKG_CONFIG_QUERY_BOTH;
+            query = PKG_CONFIG_QUERY_ALL;
         else
             {
             error("<pkg-config> requires 'query=\"type\"' attribute");
@@ -6983,6 +7203,9 @@ public:
 
 private:
 
+    String name;
+    String prefix;
+    String propName;
     String pkg_config_path;
     int query;
 
@@ -7537,6 +7760,8 @@ Task *Task::createTask(Element *elem, int lineNr)
         task = new TaskMkDir(parent);
     else if (tagName == "msgfmt")
         task = new TaskMsgFmt(parent);
+    else if (tagName == "pkg-config")
+        task = new TaskPkgConfig(parent);
     else if (tagName == "ranlib")
         task = new TaskRanlib(parent);
     else if (tagName == "rc")

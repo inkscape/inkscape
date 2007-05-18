@@ -63,6 +63,15 @@
   <target name="init"
       description="Create the build directory structure used by compile">
 
+
+    <!-- example of the <pkg-config> task
+      query can be cflags, libs, or both
+      prefix overrides the value of prefix="" in the file
+      the result of this entry can be later used as ${gtkmm}
+    <pkg-config name="gtkmm-2.4" path="${gtk}/lib/pkgconfig"
+                query="both" property="gtkmm" prefix="${gtk}"/>
+    -->
+
     <mkdir dir="${build}"/>
     <mkdir dir="${dist}"/>
     <copy file="${src}/helper/sp-marshal.h.mingw"
