@@ -127,49 +127,10 @@ PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     _width = sp_document_width(doc) * PT_PER_PX;
     _height = sp_document_height(doc) * PT_PER_PX;
 
-    NRRect d;
-    bool   pageLandscape;
-    // printf("Page Bounding Box: %s\n", pageBoundingBox ? "TRUE" : "FALSE");
-/*    if (pageBoundingBox) {
-       d.x0 = d.y0 = 0;
-        d.x1 = ceil(_width);
-        d.y1 = ceil(_height);
-    } else */{ // no bounding boxes for now
-        SPItem* doc_item = SP_ITEM(sp_document_root(doc));
-        sp_item_invoke_bbox(doc_item, &d, sp_item_i2r_affine(doc_item), TRUE);
-        // convert from px to pt
-        d.x0 *= PT_PER_PX;
-        d.x1 *= PT_PER_PX;
-        d.y0 *= PT_PER_PX;
-        d.y1 *= PT_PER_PX;
-    }
-
-
     if (res >= 0) {
 
         os << "%%Creator: " << PACKAGE_STRING << "\n";
 	os << "%%Please note this file requires PSTricks extensions\n";
-
-        // 2004 Dec 10, BFC:
-        // The point of the following code is (1) to do the thing that's expected by users
-        // who have done File>New>A4_landscape or ...letter_landscape (i.e., rotate
-        // the output), while (2) not messing up users who simply want their output wider
-        // than it is tall (e.g., small figures for inclusion in LaTeX).
-        // The original patch by WQ only had the w>h condition.
-        {
-             double w = (d.x1 - d.x0); // width and height of bounding box, in pt
-             double h = (d.y1 - d.y0);
-             pageLandscape = (
-                 (w > 0. && h > 0.) // empty documents fail this sanity check, have w<0, h<0
-                 && (w > h)   // implies, but does not prove, the user wanted landscape
-                 && (w > 600) // approximate maximum printable width of an A4
-             )
-             ? true : false;
-        }
-
-        if (pageLandscape) {
-            os << "\\rotate{90}\n";
-        }
 
         os << "\\psset{xunit=.5pt,yunit=.5pt,runit=.5pt}\n";
         // from now on we can output px, but they will be treated as pt
