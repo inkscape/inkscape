@@ -4755,16 +4755,16 @@ bool PkgConfig::parseLine(const String &lineBuf)
                         subName.push_back((char)ch);
                     pos++;
                     }
-                trace("subName:%s %s", subName.c_str(), prefix.c_str());
+                //trace("subName:%s %s", subName.c_str(), prefix.c_str());
                 if (subName == "prefix" && prefix.size()>0)
                     {
                     attrVal.append(prefix);
-                    trace("prefix override:%s", prefix.c_str());
+                    //trace("prefix override:%s", prefix.c_str());
                     }
                 else
                     {
                     String subVal = attrs[subName];
-                    trace("subVal:%s", subVal.c_str());
+                    //trace("subVal:%s", subVal.c_str());
                     attrVal.append(subVal);
                     }
                 }
@@ -7092,7 +7092,8 @@ public:
 
     TaskPkgConfig(MakeBase &par) : Task(par)
         {
-        type = TASK_PKG_CONFIG; name = "pkg-config";
+        type = TASK_PKG_CONFIG;
+        name = "pkg-config";
         }
 
     virtual ~TaskPkgConfig()
@@ -7104,7 +7105,7 @@ public:
         PkgConfig pkgconfig;
         pkgconfig.setPath(path);
         pkgconfig.setPrefix(prefix);
-        if (!pkgconfig.query(name))
+        if (!pkgconfig.query(pkgName))
             {
             error("<pkg-config> query failed for '%s", name.c_str());
             return false;
@@ -7134,7 +7135,7 @@ public:
                 }
             
             }
-        //trace("ret: %s", ret.c_str());
+        status("          : %s", ret.c_str());
         parent.setProperty(propName, ret);
         return true;
         }
@@ -7146,7 +7147,7 @@ public:
         if (!parent.getAttribute(elem, "name", s))
             return false;
         if (s.size()>0)
-           name = s;
+           pkgName = s;
         else
             {
             error("<pkg-config> requires 'name=\"package\"' attribute");
@@ -7203,7 +7204,7 @@ public:
 
 private:
 
-    String name;
+    String pkgName;
     String prefix;
     String propName;
     String pkg_config_path;
@@ -8229,7 +8230,8 @@ bool Make::executeTarget(Target &target,
             }
         }
 
-    status("## Target : %s", name.c_str());
+    status("## Target : %s : %s", name.c_str(),
+            target.getDescription().c_str());
 
     //Now let's do the tasks
     std::vector<Task *> &tasks = target.getTasks();

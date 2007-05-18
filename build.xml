@@ -61,13 +61,16 @@
   ########################################################################
   -->
   <target name="init"
-      description="Create the build directory structure used by compile">
+      description=
+      "Do all prepatory tasks, like make directories and copy files">
 
 
     <!-- example of the <pkg-config> task
       query can be cflags, libs, or both
       prefix overrides the value of prefix="" in the file
       the result of this entry can be later used as ${gtkmm}
+    -->
+    <!--
     <pkg-config name="gtkmm-2.4" path="${gtk}/lib/pkgconfig"
                 query="both" property="gtkmm" prefix="${gtk}"/>
     -->
