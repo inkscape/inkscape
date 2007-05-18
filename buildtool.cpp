@@ -1150,7 +1150,7 @@ private:
 
     void getLineAndColumn(int pos, int *lineNr, int *colNr);
 
-    void error(char *fmt, ...);
+    void error(const char *fmt, ...);
 
     int peek(int pos);
 
@@ -1325,7 +1325,7 @@ void Element::print()
 
 typedef struct
     {
-    char *escaped;
+    const char *escaped;
     char value;
     } EntityEntry;
 
@@ -1405,7 +1405,7 @@ void Parser::getLineAndColumn(int pos, int *lineNr, int *colNr)
 }
 
 
-void Parser::error(char *fmt, ...)
+void Parser::error(const char *fmt, ...)
 {
     int lineNr;
     int colNr;
@@ -1643,7 +1643,7 @@ int Parser::parseElement(int p0, Element *par,int lineNr)
     if (ch!='<')
         return p0;
 
-    int line, col;
+    //int line, col;
     //getLineAndColumn(p, &line, &col);
 
     p++;
@@ -2149,7 +2149,7 @@ private:
 
     int peek(int p);
 
-    int match(int p, char *key);
+    int match(int p, const char *key);
 
     int parseScheme(int p);
 
@@ -2171,9 +2171,9 @@ private:
 
 typedef struct
 {
-    int  ival;
-    char *sval;
-    int  port;
+    int         ival;
+    const char *sval;
+    int         port;
 } LookupEntry;
 
 LookupEntry schemes[] =
@@ -2501,7 +2501,7 @@ int URI::peek(int p)
 
 
 
-int URI::match(int p0, char *key)
+int URI::match(int p0, const char *key)
 {
     int p = p0;
     while (p < parselen)
@@ -2929,17 +2929,17 @@ protected:
     /**
      *  Print a printf()-like formatted error message
      */
-    void error(char *fmt, ...);
+    void error(const char *fmt, ...);
 
     /**
      *  Print a printf()-like formatted trace message
      */
-    void status(char *fmt, ...);
+    void status(const char *fmt, ...);
 
     /**
      *  Print a printf()-like formatted trace message
      */
-    void trace(char *fmt, ...);
+    void trace(const char *fmt, ...);
 
     /**
      *  Check if a given string matches a given regex pattern
@@ -3100,7 +3100,7 @@ private:
 /**
  *  Print a printf()-like formatted error message
  */
-void MakeBase::error(char *fmt, ...)
+void MakeBase::error(const char *fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
@@ -3115,7 +3115,7 @@ void MakeBase::error(char *fmt, ...)
 /**
  *  Print a printf()-like formatted trace message
  */
-void MakeBase::status(char *fmt, ...)
+void MakeBase::status(const char *fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
@@ -3142,7 +3142,7 @@ String MakeBase::resolve(const String &otherPath)
 /**
  *  Print a printf()-like formatted trace message
  */
-void MakeBase::trace(char *fmt, ...)
+void MakeBase::trace(const char *fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
@@ -5045,7 +5045,7 @@ private:
     /**
      *
      */
-    bool sequ(int pos, char *key);
+    bool sequ(int pos, const char *key);
 
     /**
      *
@@ -5265,7 +5265,7 @@ int DepTool::getword(int pos, String &ret)
  * Return whether the sequence of characters in the buffer
  * beginning at pos match the key,  for the length of the key
  */
-bool DepTool::sequ(int pos, char *key)
+bool DepTool::sequ(int pos, const char *key)
 {
     while (*key)
         {
@@ -5711,6 +5711,7 @@ public:
         TASK_MAKEFILE,
         TASK_MKDIR,
         TASK_MSGFMT,
+        TASK_PKG_CONFIG,
         TASK_RANLIB,
         TASK_RC,
         TASK_SHAREDLIB,
@@ -6015,7 +6016,7 @@ public:
                              srcFullName.c_str());
                 fprintf(f, "#### COMMAND ###\n");
                 int col = 0;
-                for (int i = 0 ; i < cmd.size() ; i++)
+                for (unsigned int i = 0 ; i < cmd.size() ; i++)
                     {
                     char ch = cmd[i];
                     if (isspace(ch)  && col > 63)
@@ -6924,6 +6925,69 @@ private:
     bool    owndir;
 
 };
+
+
+
+/**
+ *  Perform a Package-Config query similar to pkg-config
+ */
+class TaskPkgConfig : public Task
+{
+public:
+
+    typedef enum
+        {
+        PKG_CONFIG_QUERY_CFLAGS,
+        PKG_CONFIG_QUERY_LIBS,
+        PKG_CONFIG_QUERY_BOTH
+        } QueryTypes;
+
+    TaskPkgConfig(MakeBase &par) : Task(par)
+        {
+        type = TASK_PKG_CONFIG; name = "pkg-config";
+        }
+
+    virtual ~TaskPkgConfig()
+        {}
+
+    virtual bool execute()
+        {
+        String path = parent.resolve(pkg_config_path);
+        //fill this in
+        return true;
+        }
+
+    virtual bool parse(Element *elem)
+        {
+        String s;
+        if (!parent.getAttribute(elem, "path", s))
+            return false;
+        if (s.size()>0)
+           pkg_config_path = s;
+        if (!parent.getAttribute(elem, "query", s))
+            return false;
+        if (s == "cflags")
+            query = PKG_CONFIG_QUERY_CFLAGS;
+        else if (s == "libs")
+            query = PKG_CONFIG_QUERY_LIBS;
+        else if (s == "both")
+            query = PKG_CONFIG_QUERY_BOTH;
+        else
+            {
+            error("<pkg-config> requires 'query=\"type\"' attribute");
+            error("where type = cflags, libs, or both");
+            return false;
+            }
+        return true;
+        }
+
+private:
+
+    String pkg_config_path;
+    int query;
+
+};
+
 
 
 
@@ -8469,7 +8533,7 @@ typedef buildtool::String String;
 /**
  *  Format an error message in printf() style
  */
-static void error(char *fmt, ...)
+static void error(const char *fmt, ...)
 {
     va_list ap;
     va_start(ap, fmt);
@@ -8509,7 +8573,7 @@ static bool parseProperty(const String &s, String &name, String &val)
 /**
  * Compare a buffer with a key, for the length of the key
  */
-static bool sequ(const String &buf, char *key)
+static bool sequ(const String &buf, const char *key)
 {
     int len = buf.size();
     for (int i=0 ; key[i] && i<len ; i++)
