@@ -866,6 +866,7 @@ SPMetric SPNamedView::getDefaultMetric() const
     }
 }
 
+
 /*
   Local Variables:
   mode:c++
@@ -875,4 +876,4 @@ SPMetric SPNamedView::getDefaultMetric() const
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtab
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
