@@ -19,6 +19,16 @@
 #include <signal.h>
 #include <errno.h>
 
+
+#include "libnr/nr-matrix.h" 
+#include "libnr/nr-matrix-ops.h" 
+#include "libnr/nr-matrix-scale-ops.h"
+#include "libnr/nr-matrix-translate-ops.h"
+#include "libnr/nr-scale-translate-ops.h"
+#include "libnr/nr-translate-scale-ops.h"
+#include <libnr/nr-matrix-fns.h>
+
+
 #include "libnr/n-art-bpath.h"
 #include "sp-item.h"
 
@@ -138,6 +148,8 @@ PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
         os << "\\begin{pspicture}(" << sp_document_width(doc) << "," << sp_document_height(doc) << ")\n";
     }
 
+    m_tr_stack.push( NR::scale(1, -1) * NR::translate(0, sp_document_height(doc)));
+
     return fprintf(_stream, "%s", os.str().c_str());
 }
 
@@ -156,6 +168,27 @@ PrintLatex::finish (Inkscape::Extension::Print *mod)
     fclose(_stream);
     _stream = NULL;
     return 0;
+}
+
+unsigned int
+PrintLatex::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, float opacity)
+{
+    NR::Matrix tr = *transform;
+    
+    if(m_tr_stack.size()){
+        NR::Matrix tr_top = m_tr_stack.top();
+        m_tr_stack.push(tr * tr_top);
+    }else
+        m_tr_stack.push(tr);
+
+    return 1;
+}
+
+unsigned int
+PrintLatex::release(Inkscape::Extension::Print *mod)
+{
+    m_tr_stack.pop();
+    return 1;
 }
 
 unsigned int PrintLatex::comment (Inkscape::Extension::Print * module,
@@ -203,13 +236,14 @@ PrintLatex::stroke (Inkscape::Extension::Print *mod, const NRBPath *bpath, const
     if (style->stroke.type == SP_PAINT_TYPE_COLOR) {
         Inkscape::SVGOStringStream os;
         float rgb[3];
-
+        NR::Matrix tr_stack = m_tr_stack.top();
+        double const scale = expansion(tr_stack);
         os.setf(std::ios::fixed);
 
         sp_color_get_rgb_floatv(&style->stroke.value.color, rgb);
         os << "{\n\\newrgbcolor{curcolor}{" << rgb[0] << " " << rgb[1] << " " << rgb[2] << "}\n";
 
-        os << "\\pscustom[linewidth=" << style->stroke_width.computed<< ",linecolor=curcolor";
+        os << "\\pscustom[linewidth=" << style->stroke_width.computed*scale<< ",linecolor=curcolor";
 
         if (style->stroke_dasharray_set &&
                 style->stroke_dash.n_dash &&
@@ -241,16 +275,22 @@ PrintLatex::print_bpath(SVGOStringStream &os, const NArtBpath *bp, const NRMatri
 {
     unsigned int closed;
     NR::Matrix tf=*transform;
-
+    NR::Matrix tf_stack=m_tr_stack.top();
 
     os << "\\newpath\n";
     closed = FALSE;
     while (bp->code != NR_END) {
         using NR::X;
         using NR::Y;
-        NR::Point const p1(bp->c(1) * tf);
-        NR::Point const p2(bp->c(2) * tf);
-        NR::Point const p3(bp->c(3) * tf);
+
+//        NR::Point const p1(bp->c(1) * tf);
+//        NR::Point const p2(bp->c(2) * tf);
+//        NR::Point const p3(bp->c(3) * tf);
+
+        NR::Point const p1(bp->c(1) * tf_stack);
+        NR::Point const p2(bp->c(2) * tf_stack);
+        NR::Point const p3(bp->c(3) * tf_stack);
+
         double const x1 = p1[X], y1 = p1[Y];
         double const x2 = p2[X], y2 = p2[Y];
         double const x3 = p3[X], y3 = p3[Y];

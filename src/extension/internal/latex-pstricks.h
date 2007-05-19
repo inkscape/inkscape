@@ -19,6 +19,8 @@
 
 #include "svg/stringstream.h"
 
+#include <stack>
+
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
@@ -28,8 +30,10 @@ class PrintLatex : public Inkscape::Extension::Implementation::Implementation {
     float  _width;
     float  _height;
     FILE * _stream;
+    
+    std::stack<NR::Matrix> m_tr_stack;
 
-	void print_bpath (SVGOStringStream &os, const NArtBpath *bp, const NRMatrix *transform);
+    void print_bpath (SVGOStringStream &os, const NArtBpath *bp, const NRMatrix *transform);
 
 public:
         PrintLatex (void);
@@ -42,7 +46,10 @@ public:
         virtual unsigned int finish (Inkscape::Extension::Print * module);
 
         /* Rendering methods */
-        virtual unsigned int fill (Inkscape::Extension::Print * module, const NRBPath *bpath, const NRMatrix *ctm, const SPStyle *style,
+	virtual unsigned int bind(Inkscape::Extension::Print *module, NRMatrix const *transform, float opacity);
+	virtual unsigned int release(Inkscape::Extension::Print *module);
+
+	virtual unsigned int fill (Inkscape::Extension::Print * module, const NRBPath *bpath, const NRMatrix *ctm, const SPStyle *style,
                 const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
         virtual unsigned int stroke (Inkscape::Extension::Print * module, const NRBPath *bpath, const NRMatrix *transform, const SPStyle *style,
                 const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
