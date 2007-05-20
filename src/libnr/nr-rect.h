@@ -53,6 +53,7 @@ public:
     /** returns the midpoint of this rect. */
     Point midpoint() const;
 
+    /** True iff either width or height is less than \a epsilon. */
     bool isEmpty(double epsilon=1e-6) const {
         return isEmpty<X>(epsilon) || isEmpty<Y>(epsilon);
     }
@@ -264,6 +265,7 @@ struct NRRect {
 #define nr_rect_d_set_empty(r) (*(r) = NR_RECT_EMPTY)
 #define nr_rect_l_set_empty(r) (*(r) = NR_RECT_L_EMPTY)
 
+/** "Empty" here includes the case of zero width or zero height. */
 #define nr_rect_d_test_empty(r) ((r) && NR_RECT_DFLS_TEST_EMPTY(r))
 #define nr_rect_l_test_empty(r) ((r) && NR_RECT_DFLS_TEST_EMPTY(r))
 
