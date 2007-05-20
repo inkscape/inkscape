@@ -1,7 +1,6 @@
 <inkscape-extension>
     <_name>Postscript Input</_name>
     <id>org.inkscape.input.ps</id>
-    <dependency type="extension">org.inkscape.input.sk</dependency>
     <dependency type="executable">pstoedit</dependency>
     <input>
         <extension>.ps</extension>
@@ -11,7 +10,6 @@
         <output_extension>org.inkscape.output.ps</output_extension>
     </input>
     <script>
-        <command reldir="path">pstoedit -f sk</command>
-        <helper_extension>org.inkscape.input.sk</helper_extension>
+        <command reldir="path">pstoedit -f plot-svg</command>
     </script>
 </inkscape-extension>
