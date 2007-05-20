@@ -2843,23 +2843,21 @@ void fit_canvas_to_selection(SPDesktop *desktop) {
     g_return_if_fail(doc != NULL);
     g_return_if_fail(desktop->selection != NULL);
     g_return_if_fail(!desktop->selection->isEmpty());
-    NRRect bbox(0, 0, 0, 0);
 
-    desktop->selection->bounds(&bbox);
-    if (!nr_rect_d_test_empty(&bbox)) {
-        doc->fitToRect(bbox);
+    NR::Maybe<NR::Rect> const bbox(desktop->selection->bounds());
+    if (bbox && !bbox->isEmpty()) {
+        doc->fitToRect(*bbox);
     }
 };
 
 void fit_canvas_to_drawing(SPDocument *doc) {
     g_return_if_fail(doc != NULL);
-    NRRect bbox(0, 0, 0, 0);
 
-    sp_document_ensure_up_to_date (doc);
-    sp_item_invoke_bbox(SP_ITEM(doc->root), &bbox, sp_item_i2r_affine(SP_ITEM(doc->root)), TRUE);
-
-    if (!nr_rect_d_test_empty(&bbox)) {
-        doc->fitToRect(bbox);
+    sp_document_ensure_up_to_date(doc);
+    SPItem const *const root = SP_ITEM(doc->root);
+    NR::Maybe<NR::Rect> const bbox(root->getBounds(sp_item_i2r_affine(root)));
+    if (bbox && !bbox->isEmpty()) {
+        doc->fitToRect(*bbox);
     }
 };
 

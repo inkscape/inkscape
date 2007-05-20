@@ -485,23 +485,26 @@ gdouble sp_document_height(SPDocument *document)
 }
 
 /**
- * Given an NRRect that may, for example, correspond to the bbox of an object
+ * Given an NR::Rect that may, for example, correspond to the bbox of an object,
  * this function fits the canvas to that rect by resizing the canvas
  * and translating the document root into position.
  */
-void SPDocument::fitToRect(NRRect const & rect)
+void SPDocument::fitToRect(NR::Rect const &rect)
 {
-    g_return_if_fail(!nr_rect_d_test_empty(&rect));
-    
-    gdouble w = rect.x1 - rect.x0;
-    gdouble h = rect.y1 - rect.y0;
-    gdouble old_height = sp_document_height(this);
-    SPUnit unit = sp_unit_get_by_id(SP_UNIT_PX);
-    sp_document_set_width(this, w, &unit);
-    sp_document_set_height(this, h, &unit);
+    g_return_if_fail(!rect.isEmpty());
 
-    NR::translate tr = NR::translate::translate(-rect.x0,-(rect.y0 + (h - old_height)));
-    static_cast<SPGroup *>(root)->translateChildItems(tr);
+    using NR::X; using NR::Y;
+    double const w = rect.extent(X);
+    double const h = rect.extent(Y);
+
+    double const old_height = sp_document_height(this);
+    SPUnit const &px(sp_unit_get_by_id(SP_UNIT_PX));
+    sp_document_set_width(this, w, &px);
+    sp_document_set_height(this, h, &px);
+
+    NR::translate const tr(NR::Point(0, (old_height - h))
+                           - rect.min());
+    SP_GROUP(root)->translateChildItems(tr);
 }
 
 void sp_document_set_uri(SPDocument *document, gchar const *uri)

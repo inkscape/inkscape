@@ -136,7 +136,7 @@ public:
         sigc::connection _selection_changed_connection;
         sigc::connection _desktop_activated_connection;
 
-	void fitToRect(NRRect const & rect);
+	void fitToRect(NR::Rect const &rect);
 };
 
 SPDocument *sp_document_new (const gchar *uri, unsigned int keepalive, bool make_new = false);
