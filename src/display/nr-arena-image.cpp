@@ -360,57 +360,39 @@ nr_arena_image_set_geometry (NRArenaImage *image, double x, double y, double wid
 
 void nr_arena_image_set_style (NRArenaImage *image, SPStyle *style)
 {
-  g_return_if_fail(image != NULL);
-  g_return_if_fail(NR_IS_ARENA_IMAGE(image));
+    g_return_if_fail(image != NULL);
+    g_return_if_fail(NR_IS_ARENA_IMAGE(image));
 
-  if (style) sp_style_ref(style);
-  if (image->style) sp_style_unref(image->style);
-  image->style = style;
+    if (style) sp_style_ref(style);
+    if (image->style) sp_style_unref(image->style);
+    image->style = style;
 
-  //if there is a filter set for this group
-  if (style && style->filter.set && style->filter.filter) {
-  
-        image->filter = new NR::Filter();
-        image->filter->set_x(style->filter.filter->x);
-        image->filter->set_y(style->filter.filter->y);
-        image->filter->set_width(style->filter.filter->width);
-        image->filter->set_height(style->filter.filter->height);
-        
-        //go through all SP filter primitives
-        for(int i=0; i<style->filter.filter->_primitive_count; i++)
-        {
-            SPFilterPrimitive *primitive = style->filter.filter->_primitives[i];
-            //if primitive is gaussianblur
-            if(SP_IS_GAUSSIANBLUR(primitive))
-            {
-                NR::FilterGaussian * gaussian = (NR::FilterGaussian *) image->filter->add_primitive(NR::NR_FILTER_GAUSSIANBLUR);
-                SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
-                float num = spblur->stdDeviation.getNumber();
-                if( num>=0.0 )
-                {
-                    float optnum = spblur->stdDeviation.getOptNumber();
-                    if( optnum>=0.0 )
-                        gaussian->set_deviation((double) num, (double) optnum);
-                    else
-                        gaussian->set_deviation((double) num);
-                }
-            } else if(SP_IS_FEBLEND(primitive)) {
-                // TODO: this is just a test. Besides this whole filter
-                // creation needs to be redone
-                NR::FilterBlend *nrblend = (NR::FilterBlend *) image->filter->add_primitive(NR::NR_FILTER_BLEND);
-                SPFeBlend *spblend = SP_FEBLEND(primitive);
-                nrblend->set_mode(spblend->blend_mode);
-            }
+    //if image has a filter
+    if (style->filter.set && style->filter.filter) {
+        if (!image->filter) {
+            int primitives = sp_filter_primitive_count(style->filter.filter);
+            image->filter = new NR::Filter(primitives);
         }
-    }
-    else
-    {
-        //no filter set for this group
+        sp_filter_build_renderer(style->filter.filter, image->filter);
+    } else {
+        //no filter set for this image
+        delete image->filter;
         image->filter = NULL;
     }
 
-  if (style && style->enable_background.set
-      && style->enable_background.value == SP_CSS_BACKGROUND_NEW) {
-    image->background_new = true;
-  }
+    if (style && style->enable_background.set
+        && style->enable_background.value == SP_CSS_BACKGROUND_NEW) {
+        image->background_new = true;
+    }
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

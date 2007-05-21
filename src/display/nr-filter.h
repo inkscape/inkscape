@@ -37,11 +37,11 @@ public:
      * Should this filter not have enough space for a new primitive, the filter
      * is enlarged to accomodate the new filter element. It may be enlarged by
      * more that one element.
-     * Returns a pointer to the filter primitive created.
-     * Returns NULL, if type is not valid filter primitive type or filter
+     * Returns a handle (non-negative integer) to the filter primitive created.
+     * Returns -1, if type is not valid filter primitive type or filter
      * primitive of such type cannot be created.
      */
-    FilterPrimitive *add_primitive(FilterPrimitiveType type);
+    int add_primitive(FilterPrimitiveType type);
     /**
      * Removes all filter primitives from this filter.
      * All pointers to filter primitives inside this filter should be
@@ -54,14 +54,19 @@ public:
      * If 'target' does not correspond to any primitive inside this filter OR
      * 'type' is not a valid filter primitive type OR
      * filter primitive of such type cannot be created,
-     * this function returns NULL and doesn't change the internal state of this
+     * this function returns -1 and doesn't change the internal state of this
      * filter.
      * Otherwise, a new filter primitive is created. Any pointers to filter
-     * primitive 'target' should be considered invalid. A pointer to the
+     * primitive 'target' should be considered invalid. A handle to the
      * newly created primitive is returned.
      */
-    FilterPrimitive *replace_primitive(FilterPrimitive *primitive,
-                                       FilterPrimitiveType type);
+    int replace_primitive(int primitive, FilterPrimitiveType type);
+
+    /**
+     * Returns a pointer to the primitive, which the handle corrensponds to.
+     * If the handle is not valid, returns NULL.
+     */
+    FilterPrimitive *get_primitive(int handle);
 
     /**
      * Sets the slot number 'slot' to be used as result from this filter.

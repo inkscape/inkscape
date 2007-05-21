@@ -7,8 +7,9 @@
 /*
  * Authors:
  *   Kees Cook <kees@outflux.net>
+ *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2004 Kees Cook
+ * Copyright (C) 2004-2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -21,6 +22,7 @@
 #include "sp-filter-primitive.h"
 #include "xml/repr.h"
 #include "sp-filter.h"
+#include "display/nr-filter-primitive.h"
 
 /* FilterPrimitive base class */
 
@@ -69,6 +71,10 @@ sp_filter_primitive_class_init(SPFilterPrimitiveClass *klass)
     sp_object_class->write = sp_filter_primitive_write;
     sp_object_class->set = sp_filter_primitive_set;
     sp_object_class->update = sp_filter_primitive_update;
+    
+    /* This should never be called on this base class, but only on derived
+     * classes. */
+    klass->build_renderer = NULL;
 }
 
 static void
@@ -162,6 +168,16 @@ sp_filter_primitive_write(SPObject *object, Inkscape::XML::Node *repr, guint fla
 
     return repr;
 }
+
+/* Common initialization for filter primitives */
+void sp_filter_primitive_renderer_common(SPFilterPrimitive *sp_prim, NR::FilterPrimitive *nr_prim)
+{
+    g_assert(sp_prim != NULL);
+    g_assert(nr_prim != NULL);
+
+    /* TODO: place here code to handle input images, filter area etc. */
+}
+
 
 
 /*

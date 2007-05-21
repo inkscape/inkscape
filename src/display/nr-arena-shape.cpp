@@ -28,15 +28,10 @@
 #include <livarot/int-line.h>
 #include <style.h>
 #include "prefs-utils.h"
-#include "sp-filter.h"
 #include "inkscape-cairo.h"
 
+#include "sp-filter.h"
 #include "display/nr-filter.h"
-#include "display/nr-filter-gaussian.h"
-#include "display/nr-filter-types.h"
-#include "sp-gaussian-blur.h"
-#include "sp-feblend.h"
-#include "display/nr-filter-blend.h"
 
 #include <cairo.h>
 
@@ -1364,43 +1359,15 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
     shape->setMitreLimit(style->stroke_miterlimit.value);
 
     //if shape has a filter
-    if (style->filter.set && style->filter.filter) 
-    {
-        shape->filter = new NR::Filter();
-        shape->filter->set_x(style->filter.filter->x);
-        shape->filter->set_y(style->filter.filter->y);
-        shape->filter->set_width(style->filter.filter->width);
-        shape->filter->set_height(style->filter.filter->height);
-        
-        //go through all SP filter primitives
-        for(int i=0; i<style->filter.filter->_primitive_count; i++)
-        {
-            SPFilterPrimitive *primitive = style->filter.filter->_primitives[i];
-            //if primitive is gaussianblur
-            if(SP_IS_GAUSSIANBLUR(primitive)) {
-                NR::FilterGaussian * gaussian = (NR::FilterGaussian *) shape->filter->add_primitive(NR::NR_FILTER_GAUSSIANBLUR);
-                SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
-                float num = spblur->stdDeviation.getNumber();
-                if( num>=0.0 )
-                {
-                    float optnum = spblur->stdDeviation.getOptNumber();
-                    if( optnum>=0.0 )
-                        gaussian->set_deviation((double) num, (double) optnum);
-                    else
-                        gaussian->set_deviation((double) num);
-                }
-            } else if(SP_IS_FEBLEND(primitive)) {
-                // TODO: this is just a test. Besides this whole filter
-                // creation needs to be redone
-                NR::FilterBlend *nrblend = (NR::FilterBlend *) shape->filter->add_primitive(NR::NR_FILTER_BLEND);
-                SPFeBlend *spblend = SP_FEBLEND(primitive);
-                nrblend->set_mode(spblend->blend_mode);
-            }
+    if (style->filter.set && style->filter.filter) {
+        if (!shape->filter) {
+            int primitives = sp_filter_primitive_count(style->filter.filter);
+            shape->filter = new NR::Filter(primitives);
         }
-    }
-    else
-    {
+        sp_filter_build_renderer(style->filter.filter, shape->filter);
+    } else {
         //no filter set for this shape
+        delete shape->filter;
         shape->filter = NULL;
     }
 

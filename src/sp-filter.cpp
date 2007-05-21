@@ -6,8 +6,9 @@
 /*
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006 Hugo Rodrigues
+ * Copyright (C) 2006,2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -26,6 +27,7 @@
 #define SP_MACROS_SILENT
 #include "macros.h"
 
+#include "display/nr-filter.cpp"
 
 /* Filter base class */
 
@@ -106,6 +108,7 @@ sp_filter_init(SPFilter *filter)
     filter->_primitives = new SPFilterPrimitive*[1];
     filter->_primitives[0] = NULL;
 
+    filter->_renderer = NULL;
 }
 
 /**
@@ -422,6 +425,34 @@ sp_filter_remove_child(SPObject *object, Inkscape::XML::Node *child)
 	*/
 }
 
+void sp_filter_build_renderer(SPFilter *sp_filter, NR::Filter *nr_filter)
+{
+    g_assert(sp_filter != NULL);
+    g_assert(nr_filter != NULL);
+
+    sp_filter->_renderer = nr_filter;
+
+    nr_filter->set_x(sp_filter->x);
+    nr_filter->set_y(sp_filter->y);
+    nr_filter->set_width(sp_filter->width);
+    nr_filter->set_height(sp_filter->height);
+
+    nr_filter->clear_primitives();
+    for (int i = 0 ; i < sp_filter->_primitive_count ; i++) {
+        SPFilterPrimitive *primitive = sp_filter->_primitives[i];
+        g_assert(primitive != NULL);
+        if (((SPFilterPrimitiveClass*) G_OBJECT_GET_CLASS(primitive))->build_renderer) {
+            ((SPFilterPrimitiveClass *) G_OBJECT_GET_CLASS(primitive))->build_renderer(primitive, nr_filter);
+        } else {
+            g_warning("Cannot build filter renderer: missing builder");
+        }
+    }
+}
+
+int sp_filter_primitive_count(SPFilter *filter) {
+    g_assert(filter != NULL);
+    return filter->_primitive_count;
+}
 
 /*
   Local Variables:

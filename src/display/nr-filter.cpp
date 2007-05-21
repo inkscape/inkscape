@@ -348,14 +348,14 @@ void Filter::_enlarge_primitive_table() {
     _primitive = new_tbl;
 }
 
-FilterPrimitive *Filter::add_primitive(FilterPrimitiveType type)
+int Filter::add_primitive(FilterPrimitiveType type)
 {
     _create_constructor_table();
 
     // Check that we can create a new filter of specified type
     if (type < 0 || type >= NR_FILTER_ENDPRIMITIVETYPE)
-        return NULL;
-    if (!_constructor[type]) return NULL;
+        return -1;
+    if (!_constructor[type]) return -1;
     FilterPrimitive *created = _constructor[type]();
 
     // If there is no space for new filter primitive, enlarge the table
@@ -364,28 +364,24 @@ FilterPrimitive *Filter::add_primitive(FilterPrimitiveType type)
     }
 
     _primitive[_primitive_count] = created;
+    int handle = _primitive_count;
     _primitive_count++;
-    return created;
+    return handle;
 }
 
-FilterPrimitive *Filter::replace_primitive(FilterPrimitive *target, FilterPrimitiveType type)
+int Filter::replace_primitive(int target, FilterPrimitiveType type)
 {
     _create_constructor_table();
 
     // Check that target is valid primitive inside this filter
-    int place = -1;
-    for (int i = 0 ; i < _primitive_count ; i++) {
-        if (target == _primitive[i]) {
-            place = i;
-            break;
-        }
-    }
-    if (place < 0) return NULL;
+    if (target < 0) return -1;
+    if (target >= _primitive_count) return -1;
+    if (!_primitive[target]) return -1;
 
     // Check that we can create a new filter of specified type
     if (type < 0 || type >= NR_FILTER_ENDPRIMITIVETYPE)
-        return NULL;
-    if (!_constructor[type]) return NULL;
+        return -1;
+    if (!_constructor[type]) return -1;
     FilterPrimitive *created = _constructor[type]();
 
     // If there is no space for new filter primitive, enlarge the table
@@ -393,9 +389,14 @@ FilterPrimitive *Filter::replace_primitive(FilterPrimitive *target, FilterPrimit
         _enlarge_primitive_table();
     }
 
-    delete target;
-    _primitive[place] = created;
-    return created;
+    delete _primitive[target];
+    _primitive[target] = created;
+    return target;
+}
+
+FilterPrimitive *Filter::get_primitive(int handle) {
+    if (handle < 0 || handle >= _primitive_count) return NULL;
+    return _primitive[handle];
 }
 
 void Filter::clear_primitives()

@@ -187,59 +187,30 @@ nr_arena_group_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int 
 
 void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
 {
-  g_return_if_fail(group != NULL);
-  g_return_if_fail(NR_IS_ARENA_GROUP(group));
+    g_return_if_fail(group != NULL);
+    g_return_if_fail(NR_IS_ARENA_GROUP(group));
 
-  if (style) sp_style_ref(style);
-  if (group->style) sp_style_unref(group->style);
-  group->style = style;
+    if (style) sp_style_ref(style);
+    if (group->style) sp_style_unref(group->style);
+    group->style = style;
 
-  //if there is a filter set for this group
-  if (style && style->filter.set && style->filter.filter) {
-  
-        group->filter = new NR::Filter();
-        group->filter->set_x(style->filter.filter->x);
-        group->filter->set_y(style->filter.filter->y);
-        group->filter->set_width(style->filter.filter->width);
-        group->filter->set_height(style->filter.filter->height);
-        
-        //go through all SP filter primitives
-        for(int i=0; i<style->filter.filter->_primitive_count; i++)
-        {
-            SPFilterPrimitive *primitive = style->filter.filter->_primitives[i];
-            //if primitive is gaussianblur
-            if(SP_IS_GAUSSIANBLUR(primitive))
-            {
-                NR::FilterGaussian * gaussian = (NR::FilterGaussian *) group->filter->add_primitive(NR::NR_FILTER_GAUSSIANBLUR);
-                SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
-                float num = spblur->stdDeviation.getNumber();
-                if( num>=0.0 )
-                {
-                    float optnum = spblur->stdDeviation.getOptNumber();
-                    if( optnum>=0.0 )
-                        gaussian->set_deviation((double) num, (double) optnum);
-                    else
-                        gaussian->set_deviation((double) num);
-                }
-            } else if(SP_IS_FEBLEND(primitive)) {
-                // TODO: this is just a test. Besides this whole filter
-                // creation needs to be redone
-                NR::FilterBlend *nrblend = (NR::FilterBlend *) group->filter->add_primitive(NR::NR_FILTER_BLEND);
-                SPFeBlend *spblend = SP_FEBLEND(primitive);
-                nrblend->set_mode(spblend->blend_mode);
-            }
+    //if group has a filter
+    if (style->filter.set && style->filter.filter) {
+        if (!group->filter) {
+            int primitives = sp_filter_primitive_count(style->filter.filter);
+            group->filter = new NR::Filter(primitives);
         }
-    }
-    else
-    {
+        sp_filter_build_renderer(style->filter.filter, group->filter);
+    } else {
         //no filter set for this group
+        delete group->filter;
         group->filter = NULL;
     }
-
-  if (style && style->enable_background.set
-      && style->enable_background.value == SP_CSS_BACKGROUND_NEW) {
-    group->background_new = true;
-  }
+  
+    if (style && style->enable_background.set
+        && style->enable_background.value == SP_CSS_BACKGROUND_NEW) {
+        group->background_new = true;
+    }
 }
 
 static unsigned int
@@ -314,4 +285,13 @@ void nr_arena_group_set_child_transform(NRArenaGroup *group, NRMatrix const *t)
 	}
 }
 
-
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

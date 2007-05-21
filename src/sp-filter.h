@@ -7,8 +7,9 @@
 /*
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006 Hugo Rodrigues
+ * Copyright (C) 2006,2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -18,6 +19,7 @@
 #include "sp-filter-units.h"
 #include "sp-filter-fns.h"
 #include "svg/svg-length.h"
+#include "display/nr-filter.h"
 
 /* Filter base class */
 
@@ -49,16 +51,26 @@ struct SPFilter : public SPObject {
     /** HREF attribute */
     SPFilterReference *href;
 
-	int _primitive_count;
-	int _primitive_table_size;
-	SPFilterPrimitive ** _primitives;
+    int _primitive_count;
+    int _primitive_table_size;
+    SPFilterPrimitive ** _primitives;
+    NR::Filter *_renderer;
 };
 
 struct SPFilterClass {
     SPObjectClass parent_class;
 };
 
+/*
+ * Initializes the given NR::Filter object as a renderer for this
+ * SPFilter object.
+ */
+void sp_filter_build_renderer(SPFilter *sp_filter, NR::Filter *nr_filter);
 
+/*
+ * Returns the number of filter primitives in this SPFilter object.
+ */
+int sp_filter_primitive_count(SPFilter *filter);
 
 #endif /* !SP_FILTER_H_SEEN */
 

@@ -6,9 +6,10 @@
  */
 /*
  * Authors:
- *   hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006 Hugo Rodrigues
+ * Copyright (C) 2006,2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -21,6 +22,11 @@
 #include "svg/svg.h"
 #include "sp-gaussian-blur.h"
 #include "xml/repr.h"
+
+#include "display/nr-filter.h"
+#include "display/nr-filter-primitive.h"
+#include "display/nr-filter-gaussian.h"
+#include "display/nr-filter-types.h"
 
 //#define SP_MACROS_SILENT
 //#include "macros.h"
@@ -35,6 +41,7 @@ static void sp_gaussianBlur_release(SPObject *object);
 static void sp_gaussianBlur_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_gaussianBlur_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_gaussianBlur_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void sp_gaussianBlur_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *gaussianBlur_parent_class;
 
@@ -63,6 +70,7 @@ static void
 sp_gaussianBlur_class_init(SPGaussianBlurClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
+    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
 
     gaussianBlur_parent_class = (SPFilterPrimitiveClass *)g_type_class_peek_parent(klass);
 
@@ -71,6 +79,8 @@ sp_gaussianBlur_class_init(SPGaussianBlurClass *klass)
     sp_object_class->write = sp_gaussianBlur_write;
     sp_object_class->set = sp_gaussianBlur_set;
     sp_object_class->update = sp_gaussianBlur_update;
+
+    sp_primitive_class->build_renderer = sp_gaussianBlur_build_renderer;
 }
 
 static void
@@ -112,10 +122,11 @@ static void
 sp_gaussianBlur_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPGaussianBlur *gaussianBlur = SP_GAUSSIANBLUR(object);
-
+    
     switch(key) {
-    case SP_ATTR_STDDEVIATION:
-        gaussianBlur->stdDeviation.set(value);
+        case SP_ATTR_STDDEVIATION:
+            gaussianBlur->stdDeviation.set(value);
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
             if (((SPObjectClass *) gaussianBlur_parent_class)->set)
@@ -131,12 +142,8 @@ sp_gaussianBlur_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_gaussianBlur_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-
-    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
-                 SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-
-        /* do something to trigger redisplay, updates? */
-
+    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG)) {
+        sp_object_read_attr(object, "stdDeviation");
     }
 
     if (((SPObjectClass *) gaussianBlur_parent_class)->update) {
@@ -179,6 +186,24 @@ void  sp_gaussianBlur_setDeviation(SPGaussianBlur *blur, float num, float optnum
     blur->stdDeviation.setOptNumber(optnum);
 }
 
+static void sp_gaussianBlur_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    SPGaussianBlur *sp_blur = SP_GAUSSIANBLUR(primitive);
+
+    int handle = filter->add_primitive(NR::NR_FILTER_GAUSSIANBLUR);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(handle);
+    NR::FilterGaussian *nr_blur = dynamic_cast<NR::FilterGaussian*>(nr_primitive);
+
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+
+    gfloat num = sp_blur->stdDeviation.getNumber();
+    if (num >= 0.0) {
+        gfloat optnum = sp_blur->stdDeviation.getOptNumber();
+        if(optnum >= 0.0)
+            nr_blur->set_deviation((double) num, (double) optnum);
+        else
+            nr_blur->set_deviation((double) num);
+    }
+}
 
 /*
   Local Variables:

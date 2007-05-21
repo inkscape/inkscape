@@ -25,7 +25,10 @@
 #include "sp-feblend.h"
 #include "xml/repr.h"
 
+#include "display/nr-filter.h"
+#include "display/nr-filter-primitive.h"
 #include "display/nr-filter-blend.h"
+#include "display/nr-filter-types.h"
 
 /* FeBlend base class */
 
@@ -37,8 +40,10 @@ static void sp_feBlend_release(SPObject *object);
 static void sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feBlend_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void sp_feBlend_build_renderer(SPFilterPrimitive *sp_prim, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feBlend_parent_class;
+static int renderer;
 
 GType
 sp_feBlend_get_type()
@@ -65,6 +70,7 @@ static void
 sp_feBlend_class_init(SPFeBlendClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
+    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
 
     feBlend_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
@@ -73,11 +79,14 @@ sp_feBlend_class_init(SPFeBlendClass *klass)
     sp_object_class->write = sp_feBlend_write;
     sp_object_class->set = sp_feBlend_set;
     sp_object_class->update = sp_feBlend_update;
+
+    sp_primitive_class->build_renderer = sp_feBlend_build_renderer;
 }
 
 static void
 sp_feBlend_init(SPFeBlend *feBlend)
 {
+    renderer = -1;
 }
 
 /**
@@ -150,6 +159,14 @@ sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value)
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         case SP_ATTR_MODE:
             feBlend->blend_mode = sp_feBlend_readmode(value);
+/*
+            if (renderer >= 0) {
+                NR::Filter *filter = SP_FILTER(object->parent)->_renderer;
+                NR::FilterBlend *blend = dynamic_cast<NR::FilterBlend*>(filter->get_primitive(renderer));
+                blend->set_mode(feBlend->blend_mode);
+            }
+*/
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
             if (((SPObjectClass *) feBlend_parent_class)->set)
@@ -165,11 +182,8 @@ sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
-                 SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-
-        /* do something to trigger redisplay, updates? */
-
+    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG)) {
+        sp_object_read_attr(object, "mode");
     }
 
     if (((SPObjectClass *) feBlend_parent_class)->update) {
@@ -200,6 +214,23 @@ sp_feBlend_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     return repr;
 }
 
+static void sp_feBlend_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    g_assert(primitive != NULL);
+    g_assert(filter != NULL);
+
+    SPFeBlend *sp_blend = SP_FEBLEND(primitive);
+
+    int primitive_n = filter->add_primitive(NR::NR_FILTER_BLEND);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    NR::FilterBlend *nr_blend = dynamic_cast<NR::FilterBlend*>(nr_primitive);
+    g_assert(nr_blend != NULL);
+
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+
+    nr_blend->set_mode(sp_blend->blend_mode);
+
+    renderer = primitive_n;
+}
 
 /*
   Local Variables:
