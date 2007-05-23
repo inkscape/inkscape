@@ -1087,7 +1087,13 @@ clonetiler_apply (GtkWidget *widget, void *)
         x0 = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-x0", 0);
         y0 = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-y0", 0);
     } else {
-        NR::Maybe<NR::Rect> r = SP_ITEM(obj)->getBounds(sp_item_i2doc_affine(SP_ITEM(obj)));
+        NR::Maybe<NR::Rect> r = SP_ITEM(obj)->getBounds(sp_item_i2doc_affine(SP_ITEM(obj)),
+                                                        SPItem::GEOMETRIC_BBOX);
+        /* impl: Use of GEOMETRIC_BBOX is so that the stroke of rectangles will be shared
+         * (overlapped) rather than effectively doubled in width.
+         *
+         * (If you wish to change this, then please consider discussing at bug #1722238.) */
+
         if (r) {
             w = r->dimensions()[NR::X];
             h = r->dimensions()[NR::Y];
