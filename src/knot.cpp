@@ -28,6 +28,9 @@
 #include "message-stack.h"
 #include "message-context.h"
 #include "event-context.h"
+#include "sp-namedview.h"
+#include "snap.h"
+#include "selection.h"
 
 
 #define KNOT_EVENT_MASK (GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | \
@@ -375,9 +378,21 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
                                      TRUE);
                 }
                 NR::Point const motion_w(event->motion.x, event->motion.y);
-                NR::Point const motion_dt = knot->desktop->w2d(motion_w);
-                NR::Point p = motion_dt - knot->grabbed_rel_pos;
-                sp_knot_request_position (knot, &p, event->motion.state);
+                NR::Point motion_dt = knot->desktop->w2d(motion_w) - knot->grabbed_rel_pos;
+                
+                // Only snap path nodes, for which the anchor is set to GTK_ANCHOR_CENTER
+                // (according to default value as set in sp_knot_init())
+                // If we have one of the transform handles at hand, then the anchor will be
+                // set to e.g. GTK_ANCHOR_SW (see seltrans-handles.cpp). The transform handles
+                // will be snapped in seltrans.cpp, not here
+                if (knot->anchor == GTK_ANCHOR_CENTER) {
+                    SnapManager const &m = knot->desktop->namedview->snap_manager;
+                    SPItem *curr = knot->desktop->selection->singleItem(); //Is this really the only way to get to the item to which this knot belongs?
+                    g_assert(curr != NULL);
+                    motion_dt = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, motion_dt, curr).getPoint();
+                }
+            
+                sp_knot_request_position (knot, &motion_dt, event->motion.state);
                 knot->desktop->scroll_to_point (&motion_dt);
                 knot->desktop->set_coordinate_status(knot->pos); // display the coordinate of knot, not cursor - they may be different!
                 moved = TRUE;

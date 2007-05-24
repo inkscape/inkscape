@@ -256,7 +256,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void registerEditWidget (Inkscape::UI::View::EditWidgetInterface *widget)
     { _widget = widget; }
 
-    NR::Matrix w2d() const;
+    NR::Matrix w2d() const; //transformation from window to desktop coordinates (used for zooming)
     NR::Point w2d(NR::Point const &p) const;
     NR::Point d2w(NR::Point const &p) const;
     NR::Matrix doc2dt() const;

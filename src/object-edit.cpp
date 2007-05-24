@@ -14,8 +14,6 @@
 # include "config.h"
 #endif
 
-
-
 #include "sp-item.h"
 #include "sp-rect.h"
 #include "sp-ellipse.h"
@@ -25,7 +23,6 @@
 #include "sp-flowtext.h"
 #include "prefs-utils.h"
 #include "inkscape.h"
-#include "snap.h"
 #include "desktop-affine.h"
 #include <style.h>
 #include "desktop.h"
@@ -211,17 +208,6 @@ static NR::Point sp_pattern_scale_get(SPItem *item)
     return delta;
 }
 
-/* SPRect */
-
-static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
-{
-    SPDesktop const *desktop = inkscape_active_desktop();
-    NR::Point s = sp_desktop_dt2root_xy_point(desktop, p);
-    SnapManager const &m = desktop->namedview->snap_manager;
-    s = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, s, item).getPoint();
-    return sp_desktop_root2dt_xy_point(desktop, s);
-}
-
 static NR::Point sp_rect_rx_get(SPItem *item)
 {
     SPRect *rect = SP_RECT(item);
@@ -233,15 +219,13 @@ static void sp_rect_rx_set(SPItem *item, NR::Point const &p, NR::Point const &or
 {
     SPRect *rect = SP_RECT(item);
     
-    NR::Point const s = snap_knot_position(rect, p);
-
     if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - s[NR::X], 0.0, temp);
+        rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - p[NR::X], 0.0, temp);
         rect->rx._set = rect->ry._set = true;
 
     } else {
-        rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - s[NR::X], 0.0, rect->width.computed / 2.0);
+        rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - p[NR::X], 0.0, rect->width.computed / 2.0);
         rect->rx._set = true;
     }
 
@@ -260,19 +244,17 @@ static void sp_rect_ry_set(SPItem *item, NR::Point const &p, NR::Point const &or
 {
     SPRect *rect = SP_RECT(item);
     
-    NR::Point const s = snap_knot_position(rect, p);
-
     if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(s[NR::Y] - rect->y.computed, 0.0, temp);
+        rect->rx.computed = rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed, 0.0, temp);
         rect->ry._set = rect->rx._set = true;
     } else {
         if (!rect->rx._set || rect->rx.computed == 0) {
-            rect->ry.computed = CLAMP(s[NR::Y] - rect->y.computed,
+            rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed,
                                       0.0,
                                       MIN(rect->height.computed / 2.0, rect->width.computed / 2.0));
         } else {
-            rect->ry.computed = CLAMP(s[NR::Y] - rect->y.computed,
+            rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed,
                                       0.0,
                                       rect->height.computed / 2.0);
         }
@@ -346,8 +328,6 @@ static NR::Point sp_rect_wh_get(SPItem *item)
 
 static void sp_rect_wh_set_internal(SPRect *rect, NR::Point const &p, NR::Point const &origin, guint state)
 {
-    NR::Point const s = snap_knot_position(rect, p);
-
     if (state & GDK_CONTROL_MASK) {
         // original width/height when drag started
         gdouble const w_orig = (origin[NR::X] - rect->x.computed);
@@ -357,8 +337,8 @@ static void sp_rect_wh_set_internal(SPRect *rect, NR::Point const &p, NR::Point 
         gdouble const ratio = (w_orig / h_orig);
 
         // mouse displacement since drag started
-        gdouble const minx = s[NR::X] - origin[NR::X];
-        gdouble const miny = s[NR::Y] - origin[NR::Y];
+        gdouble const minx = p[NR::X] - origin[NR::X];
+        gdouble const miny = p[NR::Y] - origin[NR::Y];
 
         if (fabs(minx) > fabs(miny)) {
 
@@ -388,8 +368,8 @@ static void sp_rect_wh_set_internal(SPRect *rect, NR::Point const &p, NR::Point 
 
     } else {
         // move freely
-        rect->width.computed = MAX(s[NR::X] - rect->x.computed, 0);
-        rect->height.computed = MAX(s[NR::Y] - rect->y.computed, 0);
+        rect->width.computed = MAX(p[NR::X] - rect->x.computed, 0);
+        rect->height.computed = MAX(p[NR::Y] - rect->y.computed, 0);
         rect->width._set = rect->height._set = true;
     }
 
@@ -424,11 +404,9 @@ static void sp_rect_xy_set(SPItem *item, NR::Point const &p, NR::Point const &or
     gdouble w_orig = opposite_x - origin[NR::X];
     gdouble h_orig = opposite_y - origin[NR::Y];
 
-    NR::Point const s = snap_knot_position(rect, p);
-
     // mouse displacement since drag started
-    gdouble minx = s[NR::X] - origin[NR::X];
-    gdouble miny = s[NR::Y] - origin[NR::Y];
+    gdouble minx = p[NR::X] - origin[NR::X];
+    gdouble miny = p[NR::Y] - origin[NR::Y];
 
     if (state & GDK_CONTROL_MASK) {
         //original ratio
@@ -437,7 +415,7 @@ static void sp_rect_xy_set(SPItem *item, NR::Point const &p, NR::Point const &or
         if (fabs(minx) > fabs(miny)) {
 
             // snap to horizontal or diagonal
-            rect->x.computed = MIN(s[NR::X], opposite_x);
+            rect->x.computed = MIN(p[NR::X], opposite_x);
             rect->width.computed = MAX(w_orig - minx, 0);
             if (minx != 0 && fabs(miny/minx) > 0.5 * 1/ratio && (SGN(minx) == SGN(miny))) {
                 // closer to the diagonal and in same-sign quarters, change both using ratio
@@ -452,7 +430,7 @@ static void sp_rect_xy_set(SPItem *item, NR::Point const &p, NR::Point const &or
         } else {
 
             // snap to vertical or diagonal
-            rect->y.computed = MIN(s[NR::Y], opposite_y);
+            rect->y.computed = MIN(p[NR::Y], opposite_y);
             rect->height.computed = MAX(h_orig - miny, 0);
             if (miny != 0 && fabs(minx/miny) > 0.5 *ratio && (SGN(minx) == SGN(miny))) {
                 // closer to the diagonal and in same-sign quarters, change both using ratio
@@ -470,13 +448,13 @@ static void sp_rect_xy_set(SPItem *item, NR::Point const &p, NR::Point const &or
 
     } else {
         // move freely
-        rect->x.computed = MIN(s[NR::X], opposite_x);
+        rect->x.computed = MIN(p[NR::X], opposite_x);
         rect->width.computed = MAX(w_orig - minx, 0);
-        rect->y.computed = MIN(s[NR::Y], opposite_y);
+        rect->y.computed = MIN(p[NR::Y], opposite_y);
         rect->height.computed = MAX(h_orig - miny, 0);
         rect->width._set = rect->height._set = rect->x._set = rect->y._set = true;
     }
-
+    
     sp_rect_clamp_radii(rect);
 
     ((SPObject *)rect)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -513,6 +491,8 @@ static SPKnotHolder *sp_rect_knot_holder(SPItem *item, SPDesktop *desktop)
         "or stretch in one dimension only")
       );
 
+    SPRect *rect = SP_RECT(item);
+    
     sp_pat_knot_holder(item, knot_holder);
     return knot_holder;
 }
@@ -615,9 +595,7 @@ sp_arc_rx_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint s
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
     
-    NR::Point const s = snap_knot_position(arc, p);
-
-    ge->rx.computed = fabs( ge->cx.computed - s[NR::X] );
+    ge->rx.computed = fabs( ge->cx.computed - p[NR::X] );
 
     if ( state & GDK_CONTROL_MASK ) {
         ge->ry.computed = ge->rx.computed;
@@ -639,9 +617,7 @@ sp_arc_ry_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint s
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
     
-    NR::Point const s = snap_knot_position(arc, p);
-
-    ge->ry.computed = fabs( ge->cy.computed - s[NR::Y] );
+    ge->ry.computed = fabs( ge->cy.computed - p[NR::Y] );
 
     if ( state & GDK_CONTROL_MASK ) {
         ge->rx.computed = ge->ry.computed;
@@ -709,9 +685,7 @@ sp_star_knot1_set(SPItem *item, NR::Point const &p, NR::Point const &origin, gui
 {
     SPStar *star = SP_STAR(item);
     
-    NR::Point const s = snap_knot_position(star, p);
-
-    NR::Point d = s - star->center;
+    NR::Point d = p - star->center;
 
     double arg1 = atan2(d);
     double darg1 = arg1 - star->arg[0];
@@ -735,10 +709,8 @@ sp_star_knot2_set(SPItem *item, NR::Point const &p, NR::Point const &origin, gui
 {
     SPStar *star = SP_STAR(item);
     
-    NR::Point const s = snap_knot_position(star, p);
-    
     if (star->flatsided == false) {
-        NR::Point d = s - star->center;
+        NR::Point d = p - star->center;
 
         double arg1 = atan2(d);
         double darg1 = arg1 - star->arg[1];
