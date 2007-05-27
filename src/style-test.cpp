@@ -624,7 +624,6 @@ test_style()
         gchar *str0_set = sp_style_write_string(style, SP_STYLE_FLAG_IFSET);
         UTEST_ASSERT(*str0_set == '\0');
         UTEST_ASSERT(streq(str0_all, str0_all_exp));
-        printf(str0_all);
         g_free(str0_all);
         g_free(str0_set);
         sp_style_unref(style);
