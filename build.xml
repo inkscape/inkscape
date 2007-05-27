@@ -477,6 +477,7 @@
     <copy file="${gtk}/bin/libfontconfig-1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libxml2.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/xmlparse.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/xmlparse.dll" tofile="${dist}/libexpat.dll"/>
     <copy file="${gtk}/bin/jpeg62.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpng13.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libtiff3.dll" todir="${dist}"/>
