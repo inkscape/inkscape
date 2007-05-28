@@ -253,6 +253,17 @@ GList * flood_channels_dropdown_items_list() {
     return glist;
 }
 
+GList * flood_autogap_dropdown_items_list() {
+    GList *glist = NULL;
+
+    glist = g_list_append (glist, _("None"));
+    glist = g_list_append (glist, _("Small"));
+    glist = g_list_append (glist, _("Medium"));
+    glist = g_list_append (glist, _("Large"));
+
+    return glist;
+}
+
 static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned char *dtc, int threshold, PaintBucketChannels method) {
     int diff = 0;
     float hsl_check[3], hsl_orig[3];
@@ -296,12 +307,12 @@ static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned c
     return false;
 }
 
-static bool try_add_to_queue(std::deque<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig, unsigned char *dtc, int x, int y, int width, int threshold, PaintBucketChannels method, bool fill_switch) {
+static bool try_add_to_queue(std::deque<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig, unsigned char *dtc, int x, int y, int width, int threshold, PaintBucketChannels method, bool fill_switch, unsigned int max_queue_size) {
     unsigned char *t = get_pixel(px, x, y, width);
     if (compare_pixels(t, orig, dtc, threshold, method)) {
         unsigned char *trace_t = get_pixel(trace_px, x, y, width);
         if (trace_t[3] != 255 && trace_t[0] != 255) {
-            if (fill_switch) {
+            if (fill_switch && (fill_queue->size() < max_queue_size)) {
                 fill_queue->push_back(NR::Point(x, y));
                 trace_t[0] = 255;
             }
@@ -432,7 +443,9 @@ struct bitmap_coords_info {
     int y;
     int y_limit;
     int width;
+    int height;
     int threshold;
+    int radius;
     PaintBucketChannels method;
     unsigned char *dtc;
     bool top_fill;
@@ -447,13 +460,49 @@ enum ScanlineCheckResult {
     SCANLINE_CHECK_BOUNDARY
 };
 
+static void paint_pixel(guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
+    unsigned char *t, *trace_t;
+  
+    for (int r = 0; r <= bci.radius; r++) {
+        if (r == 0) {
+            t = get_pixel(px, bci.x, bci.y, bci.width);
+            if (compare_pixels(t, orig_color, bci.dtc, bci.threshold, bci.method)) {
+                for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
+                trace_t = get_pixel(trace_px, bci.x, bci.y, bci.width);
+                trace_t[3] = 255; 
+            }
+        } else {
+            for (int y = -bci.radius; y <= bci.radius; y++) {
+                for (int x = -bci.radius; x <= bci.radius; x++) {
+                    int tx = bci.x + x;
+                    int ty = bci.y + y;
+                    
+                    if (   (tx >= 0) 
+                        && (tx < bci.width)
+                        && (ty >= 0)
+                        && (ty < bci.height)) {
+                        t = get_pixel(px, tx, ty, bci.width);
+                        if (compare_pixels(t, orig_color, bci.dtc, bci.threshold, bci.method)) {
+                            for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
+                            trace_t = get_pixel(trace_px, tx, ty, bci.width);
+                            trace_t[3] = 255; 
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
     bool aborted = false;
     bool reached_screen_boundary = false;
     bool ok;
   
     bool keep_tracing;
-    unsigned char *t, *trace_t;
+    unsigned char *t;
+  
+    unsigned int max_queue_size = bci.width * bci.height;
   
     do {
         ok = false;
@@ -466,19 +515,17 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
         if (keep_tracing) {
             t = get_pixel(px, bci.x, bci.y, bci.width);
             if (compare_pixels(t, orig_color, bci.dtc, bci.threshold, bci.method)) {
-                for (int i = 0; i < 4; i++) { t[i] = 255 - t[i]; }
-                trace_t = get_pixel(trace_px, bci.x, bci.y, bci.width);
-                trace_t[3] = 255; 
+                paint_pixel(px, trace_px, orig_color, bci);
                 if (bci.y > 0) { 
-                    bci.top_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.dtc, bci.x, bci.y - 1, bci.width, bci.threshold, bci.method, bci.top_fill);
+                    bci.top_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.dtc, bci.x, bci.y - (1 + bci.radius), bci.width, bci.threshold, bci.method, bci.top_fill, max_queue_size);
                 }
                 if (bci.y < bci.y_limit) { 
-                    bci.bottom_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.dtc, bci.x, bci.y + 1, bci.width, bci.threshold, bci.method, bci.bottom_fill);
+                    bci.bottom_fill = try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.dtc, bci.x, bci.y + (1 + bci.radius), bci.width, bci.threshold, bci.method, bci.bottom_fill, max_queue_size);
                 }
                 if (bci.is_left) {
-                    bci.x--;
+                    bci.x -= (1 + bci.radius);
                 } else {
-                    bci.x++;
+                    bci.x += (1 + bci.radius);
                 }
                 ok = true;
             }
@@ -638,11 +685,15 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
     bci.y_limit = y_limit;
     bci.width = width;
+    bci.height = height;
     bci.threshold = threshold;
     bci.method = method;
     bci.bbox = *bbox;
     bci.screen = screen;
     bci.dtc = dtc;
+    bci.radius = prefs_get_int_attribute_limited("tools.paintbucket", "autogap", 0, 0, 3);
+
+    unsigned int max_queue_size = width * height;
 
     while (!color_queue.empty() && !aborted) {
         NR::Point color_point = color_queue.front();
@@ -676,7 +727,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                 bool bottom_fill = true;
                 
                 if (y > 0) { 
-                    top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y - 1, width, threshold, method, top_fill);
+                    top_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y - (1 + bci.radius), width, threshold, method, top_fill, max_queue_size);
                 } else {
                     if (bbox->min()[NR::Y] > screen.min()[NR::Y]) {
                         aborted = true; break;
@@ -685,7 +736,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                     }
                 }
                 if (y < y_limit) { 
-                    bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y + 1, width, threshold, method, bottom_fill);
+                    bottom_fill = try_add_to_queue(&fill_queue, px, trace_px, orig_color, dtc, x, y + (1 + bci.radius), width, threshold, method, bottom_fill, max_queue_size);
                   } else {
                       if (bbox->max()[NR::Y] < screen.max()[NR::Y]) {
                           aborted = true; break;
@@ -714,7 +765,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                 }
                 
                 bci.is_left = false;
-                bci.x = x + 1;
+                bci.x = x + (1 + bci.radius);
                 bci.y = y;
                 bci.top_fill = top_fill;
                 bci.bottom_fill = bottom_fill;

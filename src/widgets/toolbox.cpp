@@ -326,6 +326,8 @@ static gchar const * ui_descr =
         "    <toolitem action='OffsetAction' />"
         "    <toolitem action='PaintbucketUnitsAction' />"
         "    <separator />"
+        "    <toolitem action='AutoGapAction' />"
+        "    <separator />"
         "    <toolitem action='PaintbucketResetAction' />"
         "  </toolbar>"
 
@@ -4316,6 +4318,11 @@ static void paintbucket_threshold_changed(GtkAdjustment *adj, GObject *tbl)
     prefs_set_int_attribute("tools.paintbucket", "threshold", (gint)adj->value);
 }
 
+static void paintbucket_autogap_changed(EgeSelectOneAction* act, GObject *tbl)
+{
+    prefs_set_int_attribute("tools.paintbucket", "autogap", ege_select_one_action_get_active( act ));
+}
+
 static void paintbucket_offset_changed(GtkAdjustment *adj, GObject *tbl)
 {
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data( tbl, "tracker" ));
@@ -4346,6 +4353,8 @@ static void paintbucket_defaults(GtkWidget *, GObject *dataKludge)
     
     EgeSelectOneAction* channels_action = EGE_SELECT_ONE_ACTION( g_object_get_data( dataKludge, "channels_action" ) );
     ege_select_one_action_set_active( channels_action, FLOOD_CHANNELS_RGB );
+    EgeSelectOneAction* autogap_action = EGE_SELECT_ONE_ACTION( g_object_get_data( dataKludge, "autogap_action" ) );
+    ege_select_one_action_set_active( autogap_action, 0 );
 }
 
 static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
@@ -4411,6 +4420,28 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
     
+    /* Auto Gap */
+    {
+        GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
+
+        GList* items = 0;
+        gint count = 0;
+        for ( items = flood_autogap_dropdown_items_list(); items ; items = g_list_next(items) )
+        {
+            GtkTreeIter iter;
+            gtk_list_store_append( model, &iter );
+            gtk_list_store_set( model, &iter, 0, reinterpret_cast<gchar*>(items->data), 1, count, -1 );
+            count++;
+        }
+        g_list_free( items );
+        items = 0;
+        EgeSelectOneAction* act2 = ege_select_one_action_new( "AutoGapAction", _("Fill gaps:"), _(""), NULL, GTK_TREE_MODEL(model) );
+        ege_select_one_action_set_active( act2, prefs_get_int_attribute("tools.paintbucket", "autogap", 0) );
+        g_signal_connect( G_OBJECT(act2), "changed", G_CALLBACK(paintbucket_autogap_changed), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act2) );
+        g_object_set_data( holder, "autogap_action", act2 );
+    }
+
     /* Reset */
     {
         GtkAction* act = gtk_action_new( "PaintbucketResetAction",
