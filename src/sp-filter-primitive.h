@@ -17,6 +17,7 @@
 #include "sp-object.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-primitive.h"
+#include "display/nr-filter-types.h"
 
 #define SP_TYPE_FILTER_PRIMITIVE (sp_filter_primitive_get_type ())
 #define SP_FILTER_PRIMITIVE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FILTER_PRIMITIVE, SPFilterPrimitive))
@@ -28,6 +29,7 @@ class SPFilterPrimitive;
 class SPFilterPrimitiveClass;
 
 struct SPFilterPrimitive : public SPObject {
+    int image_in, image_out;
 };
 
 struct SPFilterPrimitiveClass {
@@ -39,6 +41,9 @@ GType sp_filter_primitive_get_type (void);
 
 /* Common initialization for filter primitives */
 void sp_filter_primitive_renderer_common(SPFilterPrimitive *sp_prim, NR::FilterPrimitive *nr_prim);
+
+int sp_filter_primitive_read_in(SPFilterPrimitive *prim, gchar const *name);
+int sp_filter_primitive_read_result(SPFilterPrimitive *prim, gchar const *name);
 
 #endif
 /*

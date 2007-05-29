@@ -35,8 +35,6 @@
 using Inkscape::round;
 #endif 
 
-//#include "display/nr-arena-shape.h"
-
 __attribute__ ((const))
 inline static int _max4(const double a, const double b,
                         const double c, const double d) {

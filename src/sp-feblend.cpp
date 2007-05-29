@@ -43,7 +43,6 @@ static Inkscape::XML::Node *sp_feBlend_write(SPObject *object, Inkscape::XML::No
 static void sp_feBlend_build_renderer(SPFilterPrimitive *sp_prim, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feBlend_parent_class;
-static int renderer;
 
 GType
 sp_feBlend_get_type()
@@ -86,7 +85,7 @@ sp_feBlend_class_init(SPFeBlendClass *klass)
 static void
 sp_feBlend_init(SPFeBlend *feBlend)
 {
-    renderer = -1;
+    feBlend->in2 = NR::NR_FILTER_SLOT_NOT_SET;
 }
 
 /**
@@ -103,6 +102,7 @@ sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
     sp_object_read_attr(object, "mode");
+    sp_object_read_attr(object, "in2");
 }
 
 /**
@@ -155,18 +155,23 @@ sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value)
     SPFeBlend *feBlend = SP_FEBLEND(object);
     (void)feBlend;
 
+    NR::FilterBlendMode mode;
+    int input;
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         case SP_ATTR_MODE:
-            feBlend->blend_mode = sp_feBlend_readmode(value);
-/*
-            if (renderer >= 0) {
-                NR::Filter *filter = SP_FILTER(object->parent)->_renderer;
-                NR::FilterBlend *blend = dynamic_cast<NR::FilterBlend*>(filter->get_primitive(renderer));
-                blend->set_mode(feBlend->blend_mode);
+            mode = sp_feBlend_readmode(value);
+            if (mode != feBlend->blend_mode) {
+                feBlend->blend_mode = mode;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
-*/
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_IN2:
+            input = sp_filter_primitive_read_in(feBlend, value);
+            if (input != feBlend->in2) {
+                feBlend->in2 = input;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
             break;
         default:
             if (((SPObjectClass *) feBlend_parent_class)->set)
@@ -228,8 +233,7 @@ static void sp_feBlend_build_renderer(SPFilterPrimitive *primitive, NR::Filter *
     sp_filter_primitive_renderer_common(primitive, nr_primitive);
 
     nr_blend->set_mode(sp_blend->blend_mode);
-
-    renderer = primitive_n;
+    nr_blend->set_input(1, sp_blend->in2);
 }
 
 /*

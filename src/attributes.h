@@ -165,6 +165,9 @@ enum SPAttributeEnum {
     SP_ATTR_FILTERUNITS,
     SP_ATTR_PRIMITIVEUNITS,
     SP_ATTR_FILTERRES,
+    /* Filter primitives common */
+    SP_ATTR_IN,
+    SP_ATTR_RESULT,
     /*feBlend*/
     SP_ATTR_MODE,
     SP_ATTR_IN2,

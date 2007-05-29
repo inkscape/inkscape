@@ -17,6 +17,11 @@
 # include "config.h"
 #endif
 
+#include <map>
+#include <string.h>
+using std::map;
+using std::pair;
+
 #include "attributes.h"
 #include "document.h"
 #include "sp-filter.h"
@@ -453,6 +458,31 @@ int sp_filter_primitive_count(SPFilter *filter) {
     g_assert(filter != NULL);
     return filter->_primitive_count;
 }
+
+int sp_filter_get_image_name(SPFilter *filter, gchar const *name) {
+    gchar *name_copy = strdup(name);
+    map<gchar *, int, ltstr>::iterator result = filter->_image_name.find(name_copy);
+    free(name_copy);
+    if (result == filter->_image_name.end()) return -1;
+    else return (*result).second;
+}
+
+int sp_filter_set_image_name(SPFilter *filter, gchar const *name) {
+    int value = filter->_image_number_next;
+    filter->_image_number_next++;
+    gchar *name_copy = strdup(name);
+    pair<map<gchar*,int,ltstr>::iterator,bool> ret = filter->_image_name.insert(pair<gchar*,int>(name_copy, value));
+    if (ret.second == false) {
+        return (*ret.first).second;
+    }
+    return value;
+}
+
+bool ltstr::operator()(const char* s1, const char* s2) const
+{
+    return strcmp(s1, s2) < 0;
+}
+
 
 /*
   Local Variables:

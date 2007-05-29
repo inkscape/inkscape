@@ -23,14 +23,6 @@
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixops.h"
 
-/*
-static inline int clamp(const int val, const int min, const int max) {
-    if (val < min) return min;
-    if (val > max) return max;
-    return val;
-}
-*/
-
 template <void(*blend)(unsigned char *cr, unsigned char const *ca, unsigned char const *cb)>
 static void _render(NRPixBlock &out, NRPixBlock &in1, NRPixBlock &in2) {
     unsigned char *in1_data = NR_PIXBLOCK_PX(&in1);

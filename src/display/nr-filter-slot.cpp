@@ -62,7 +62,7 @@ NRPixBlock *FilterSlot::get(int slot_nr)
             || slot_nr == NR_FILTER_BACKGROUNDIMAGE
             || slot_nr == NR_FILTER_BACKGROUNDALPHA
             || slot_nr == NR_FILTER_FILLPAINT
-            || slot_nr == NR_FILTER_SOURCEPAINT))
+            || slot_nr == NR_FILTER_STROKEPAINT))
     {
         /* If needed, fetch background */
         if (slot_nr == NR_FILTER_BACKGROUNDIMAGE
@@ -70,7 +70,22 @@ NRPixBlock *FilterSlot::get(int slot_nr)
         {
             NRPixBlock *pb;
             pb = nr_arena_item_get_background(_arena_item);
-            this->set(NR_FILTER_BACKGROUNDIMAGE, pb);
+            if (pb) {
+                this->set(NR_FILTER_BACKGROUNDIMAGE, pb);
+            } else {
+                NRPixBlock *source = this->get(NR_FILTER_SOURCEGRAPHIC);
+                pb = new NRPixBlock();
+                if (!pb) return NULL; // Allocation failed
+                nr_pixblock_setup_fast(pb, source->mode,
+                                       source->area.x0, source->area.y0,
+                                       source->area.x1, source->area.y1, true);
+                if (pb->size != NR_PIXBLOCK_SIZE_TINY && pb->data.px == NULL) {
+                    // allocation failed
+                    delete pb;
+                    return NULL;
+                }
+                this->set(NR_FILTER_BACKGROUNDIMAGE, pb);
+            }
         }
         /* If only a alpha channel is needed, strip it from full image */
         if (slot_nr == NR_FILTER_SOURCEALPHA) {
@@ -83,7 +98,7 @@ NRPixBlock *FilterSlot::get(int slot_nr)
         if (slot_nr == NR_FILTER_FILLPAINT) {
             // TODO
         }
-        if (slot_nr == NR_FILTER_SOURCEPAINT) {
+        if (slot_nr == NR_FILTER_STROKEPAINT) {
             // TODO
         }
     }
@@ -125,7 +140,7 @@ int FilterSlot::_get_index(int slot_nr)
            slot_nr == NR_FILTER_BACKGROUNDIMAGE ||
            slot_nr == NR_FILTER_BACKGROUNDALPHA ||
            slot_nr == NR_FILTER_FILLPAINT ||
-           slot_nr == NR_FILTER_SOURCEPAINT);
+           slot_nr == NR_FILTER_STROKEPAINT);
 
     int index = -1;
     if (slot_nr == NR_FILTER_SLOT_NOT_SET) {

@@ -25,6 +25,7 @@ class SPFeBlendClass;
 struct SPFeBlend : public SPFilterPrimitive {
     /** BLEND ATTRIBUTES HERE */
     NR::FilterBlendMode blend_mode;
+    int in2;
 };
 
 struct SPFeBlendClass {

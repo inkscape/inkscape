@@ -165,6 +165,9 @@ static SPStyleProp const props[] = {
     {SP_ATTR_FILTERUNITS, "filterUnits"},
     {SP_ATTR_PRIMITIVEUNITS, "primitiveUnits"},
     {SP_ATTR_FILTERRES, "filterRes"},
+    /* Filter primitives common */
+    {SP_ATTR_IN, "in"},
+    {SP_ATTR_RESULT, "result"},
     /*feBlend*/
     {SP_ATTR_MODE, "mode"},
     {SP_ATTR_IN2, "in2"},

@@ -14,6 +14,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <map>
+
 #include "number-opt-number.h"
 #include "sp-object.h"
 #include "sp-filter-units.h"
@@ -29,6 +31,10 @@ struct SPFilterReference;
 
 class SPFilter;
 class SPFilterClass;
+
+struct ltstr {
+    bool operator()(const char* s1, const char* s2) const;
+};
 
 struct SPFilter : public SPObject {
 
@@ -55,6 +61,9 @@ struct SPFilter : public SPObject {
     int _primitive_table_size;
     SPFilterPrimitive ** _primitives;
     NR::Filter *_renderer;
+
+    std::map<gchar *, int, ltstr> _image_name;
+    int _image_number_next;
 };
 
 struct SPFilterClass {
@@ -71,6 +80,9 @@ void sp_filter_build_renderer(SPFilter *sp_filter, NR::Filter *nr_filter);
  * Returns the number of filter primitives in this SPFilter object.
  */
 int sp_filter_primitive_count(SPFilter *filter);
+
+int sp_filter_get_image_name(SPFilter *filter, gchar const *name);
+int sp_filter_set_image_name(SPFilter *filter, gchar const *name);
 
 #endif /* !SP_FILTER_H_SEEN */
 
