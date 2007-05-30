@@ -1021,6 +1021,11 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
 
     /* Use the end points of each segment of the path */
     NArtBpath const *bp = SP_CURVE_BPATH(shape->curve);
+
+    if (bp->code == NR_MOVETO) { // Indicates the start of a closed subpath, see nr-path-code.h
+        bp++; //The first point of a closed path is coincident with the end point. Skip the first point as we need only one
+    }
+
     while (bp->code != NR_END) {
         *p = bp->c(3) * i2d;
         bp++;
