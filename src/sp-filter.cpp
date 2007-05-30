@@ -114,6 +114,8 @@ sp_filter_init(SPFilter *filter)
     filter->_primitives[0] = NULL;
 
     filter->_renderer = NULL;
+    
+    filter->_image_name = map<gchar *, int, ltstr>();
 }
 
 /**
