@@ -335,6 +335,7 @@ struct bitmap_coords_info {
     NR::Rect bbox;
     NR::Rect screen;
     unsigned int max_queue_size;
+    unsigned int max_vertical_check;
 };
 
 static bool check_if_pixel_is_paintable(guchar *px, guchar *trace_px, int x, int y, unsigned char *orig_color, bitmap_coords_info bci) {
@@ -601,6 +602,8 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
     bool keep_tracing;
     bool initial_paint = true;
     
+    int vertical_check_count = 0;
+    
     do {
         ok = false;
         if (bci.is_left) {
@@ -623,12 +626,19 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
                 }
                 initial_paint = false;
                 
-                if (paint_directions & PAINT_DIRECTION_UP) { 
-                    try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.x, bci.y - 1, bci.width, bci, bci.max_queue_size);
+                if (vertical_check_count == 0) {
+                    if (paint_directions & PAINT_DIRECTION_UP) { 
+                        try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.x, bci.y - 1, bci.width, bci, bci.max_queue_size);
+                    }
+                    if (paint_directions & PAINT_DIRECTION_DOWN) { 
+                        try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.x, bci.y + 1, bci.width, bci, bci.max_queue_size);
+                    }
                 }
-                if (paint_directions & PAINT_DIRECTION_DOWN) { 
-                    try_add_to_queue(fill_queue, px, trace_px, orig_color, bci.x, bci.y + 1, bci.width, bci, bci.max_queue_size);
+                
+                if (bci.max_vertical_check > 0) {
+                    vertical_check_count = (vertical_check_count + 1) % bci.max_vertical_check;
                 }
+                
                 if (bci.is_left) {
                     if (paint_directions & PAINT_DIRECTION_LEFT) {
                         bci.x -= 1;
@@ -805,10 +815,11 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     bci.dtc = dtc;
     bci.radius = prefs_get_int_attribute_limited("tools.paintbucket", "autogap", 0, 0, 3);
     bci.max_queue_size = width * height;
+    bci.max_vertical_check = prefs_get_int_attribute_limited("tools.paintbucket", "fillaccuracy", 0, 0, 5);
 
     bool first_run = true;
 
-    // Time values to measure each buffer's paint time
+//     Time values to measure each buffer's paint time
 //     GTimeVal tstart, tfinish;
 
 //     g_get_current_time (&tstart);
@@ -909,7 +920,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
 //     g_get_current_time (&tfinish);
     
-    // Remember the slowest_buffer of this paint.
+//     Remember the slowest_buffer of this paint.
 //     glong this_buffer = (tfinish.tv_sec - tstart.tv_sec) * 1000000 + (tfinish.tv_usec - tstart.tv_usec);
     
 //     g_message("time: %ld", this_buffer);
