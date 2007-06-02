@@ -1662,6 +1662,7 @@ DialogVerb::perform(SPAction *action, void *data, void *pdata)
             break;
         case SP_VERB_DIALOG_FILL_STROKE:
             sp_object_properties_dialog();
+            // dt->_dlg_mgr->showDialog("FillAndStroke");
             break;
         case SP_VERB_DIALOG_SWATCHES:
             show_panel( Inkscape::UI::Dialogs::SwatchesPanel::getInstance(), "dialogs.swatches", SP_VERB_DIALOG_SWATCHES);

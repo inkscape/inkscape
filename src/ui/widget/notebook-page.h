@@ -24,7 +24,7 @@ class NotebookPage : public Gtk::VBox
 {
 public:
     NotebookPage();
-    NotebookPage(int n_rows, int n_columns);
+    NotebookPage(int n_rows, int n_columns, bool expand=false, bool fill=false, guint padding=0);
 
     Gtk::Table& table() { return _table; }
 
