@@ -656,8 +656,8 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     NR::Rect screen = desktop->get_display_area();
 
-    int width = (int)ceil(screen.extent(NR::X) * zoom_scale * padding);
-    int height = (int)ceil(screen.extent(NR::Y) * zoom_scale * padding);
+    unsigned int width = (int)ceil(screen.extent(NR::X) * zoom_scale * padding);
+    unsigned int height = (int)ceil(screen.extent(NR::Y) * zoom_scale * padding);
 
     NR::Point origin(screen.min()[NR::X],
                      sp_document_height(document) - screen.extent(NR::Y) - screen.min()[NR::Y]);
@@ -699,9 +699,9 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     dtc[2] = NR_RGBA32_B(bgcolor);
     dtc[3] = NR_RGBA32_A(bgcolor);
     
-    for (int fy = 0; fy < height; fy++) {
+    for (unsigned int fy = 0; fy < height; fy++) {
         guchar *p = NR_PIXBLOCK_PX(&B) + fy * B.rs;
-        for (int fx = 0; fx < width; fx++) {
+        for (unsigned int fx = 0; fx < width; fx++) {
             for (int i = 0; i < 4; i++) { 
                 *p++ = dtc[i];
             }
@@ -806,10 +806,11 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                 fill_queue.push_front(color_point);
                 
                 if (!first_run) {
-                    for (int y = 0; y < height; y++) {
-                        for (int x = 0; x < width; x++) {
-                            trace_t = get_pixel(trace_px, x, y, width);
+                    for (unsigned int y = 0; y < height; y++) {
+                        trace_t = get_pixel(trace_px, 0, y, width);
+                        for (unsigned int x = 0; x < width; x++) {
                             clear_pixel_paintability(trace_t);
+                            trace_t += 4;
                         }
                     }
                 }
@@ -823,6 +824,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
             
             unsigned char *trace_t = get_pixel(trace_px, (int)cp[NR::X], (int)cp[NR::Y], width);
             if (!is_pixel_checked(trace_t)) {
+                mark_pixel_checked(trace_t);
                 int x = (int)cp[NR::X];
                 int y = (int)cp[NR::Y];
                 
@@ -859,20 +861,26 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                         break;
                 }
 
-                bci.is_left = false;
-                bci.x = x + 1;
-
-                result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
-
-                switch (result) {
-                    case SCANLINE_CHECK_ABORTED:
-                        aborted = true;
-                        break;
-                    case SCANLINE_CHECK_BOUNDARY:
-                        reached_screen_boundary = true;
-                        break;
-                    default:
-                        break;
+                if (bci.x < width) {
+                    trace_t += 4;
+                    if (!is_pixel_checked(trace_t) && !is_pixel_queued(trace_t)) {
+                        mark_pixel_checked(trace_t);
+                        bci.is_left = false;
+                        bci.x = x + 1;
+        
+                        result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
+        
+                        switch (result) {
+                            case SCANLINE_CHECK_ABORTED:
+                                aborted = true;
+                                break;
+                            case SCANLINE_CHECK_BOUNDARY:
+                                reached_screen_boundary = true;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
         }
