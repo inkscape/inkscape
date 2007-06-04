@@ -319,7 +319,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
     if (nr_rect_l_test_empty (&carea))
         return item->state | NR_ARENA_ITEM_STATE_RENDER;
     if (item->filter && !outline) {
-        nr_rect_l_enlarge (&carea, item->filter->get_enlarge (item->ctm));
+        item->filter->area_enlarge (carea, item->ctm);
         nr_rect_l_intersect (&carea, &carea, &item->bbox);
     }
 

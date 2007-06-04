@@ -241,16 +241,10 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     return 0;
 }
 
-int Filter::get_enlarge(Matrix const &m)
-{
-    // Just sum the enlargement factor of all filter elements.
-    // TODO: this both sucks and blows for filters like feOffset
-    // -> ditch this method and design a better one...
-    int enlarge = 0;
-    for ( int i = 0 ; i < _primitive_count ; i++ ) {
-        if(_primitive[i]) enlarge += _primitive[i]->get_enlarge(m);
+void Filter::area_enlarge(NRRectL &bbox, Matrix const &m) {
+    for (int i = 0 ; i < _primitive_count ; i++) {
+        if (_primitive[i]) _primitive[i]->area_enlarge(bbox, m);
     }
-    return enlarge;
 }
 
 void Filter::bbox_enlarge(NRRectL &bbox)

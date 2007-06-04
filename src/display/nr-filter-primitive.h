@@ -15,6 +15,7 @@
 #include "display/nr-filter-slot.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
+#include "libnr/nr-rect-l.h"
 #include "svg/svg-length.h"
 
 namespace NR {
@@ -26,7 +27,7 @@ public:
 
     int render(FilterSlot &slot, NRMatrix const *trans);
     virtual int render(FilterSlot &slot, Matrix const &trans) = 0;
-    virtual int get_enlarge(Matrix const &m);
+    virtual void area_enlarge(NRRectL &area, Matrix const &m);
 
     /**
      * Sets the input slot number 'slot' to be used as input in rendering

@@ -743,11 +743,17 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
     return 0;
 }
 
-int FilterGaussian::get_enlarge(Matrix const &trans)
+void FilterGaussian::area_enlarge(NRRectL &area, Matrix const &trans)
 {
     int area_x = _effect_area_scr(_deviation_x * trans.expansionX());
     int area_y = _effect_area_scr(_deviation_y * trans.expansionY());
-    return std::max(area_x, area_y);
+    // maximum is used because rotations can mix up these directions
+    // TODO: calculate a more tight-fitting rendering area
+    int area_max = std::max(area_x, area_y);
+    area.x0 -= area_max;
+    area.x1 += area_max;
+    area.y0 -= area_max;
+    area.y1 += area_max;
 }
 
 void FilterGaussian::set_deviation(double deviation)

@@ -18,6 +18,7 @@
 #include "display/nr-filter-slot.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
+#include "libnr/nr-rect-l.h"
 
 enum {
     BLUR_QUALITY_BEST = 2,
@@ -36,7 +37,7 @@ public:
     virtual ~FilterGaussian();
 
     virtual int render(FilterSlot &slot, Matrix const &trans);
-    virtual int get_enlarge(Matrix const &m);
+    virtual void area_enlarge(NRRectL &area, Matrix const &m);
 
     /**
      * Set the standard deviation value for gaussian blur. Deviation along

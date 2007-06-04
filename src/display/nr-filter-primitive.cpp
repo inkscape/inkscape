@@ -47,9 +47,9 @@ int FilterPrimitive::render(FilterSlot &slot, NRMatrix const *trans) {
     }
 }
 
-int FilterPrimitive::get_enlarge(Matrix const &m)
+void FilterPrimitive::area_enlarge(NRRectL &area, Matrix const &m)
 {
-    return 0;
+    // This doesn't need to do anything by default
 }
 
 void FilterPrimitive::set_input(int slot) {

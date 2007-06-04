@@ -138,11 +138,13 @@ public:
     void set_primitive_units(SPFilterUnits unit);
 
     /** 
-     * Returns the amount of pixels the rendering area should be enlarged
-     * to prevent visual artefacts when filter needs to read pixels that
-     * are outside its output area (e.g. gaussian blur)
+     * Modifies the given area to accommodate for filters needing pixels
+     * outside the rendered area.
+     * When this function returns, area contains the area that needs
+     * to be rendered so that after filtering, the original area is
+     * drawn correctly.
      */
-    int get_enlarge(Matrix const &m);
+    void area_enlarge(NRRectL &area, Matrix const &m);
     /**
      * Given an object bounding box, this function enlarges it so that
      * it contains the filter effect area.
