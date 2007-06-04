@@ -33,7 +33,6 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/page-sizer.cpp        \
 	ui/widget/page-sizer.h          \
 	ui/widget/panel.cpp		\
-	ui/widget/panel.cpp		\
 	ui/widget/panel.h		\
 	ui/widget/preferences-widget.cpp \
 	ui/widget/preferences-widget.h   \
