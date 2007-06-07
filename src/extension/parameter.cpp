@@ -901,9 +901,11 @@ ParamFloat::string (void)
 Glib::ustring *
 ParamString::string (void)
 {
-    gchar * esc = g_strescape(_value, NULL);
-    Glib::ustring escaped(esc);
-    g_free(esc);
+    // FIXME: I think the string should NOT be escaped. Just put between "..."
+    // Otherwise \frac{1}{2} will become \\frac{1}{2} and then the LaTeX effect won't work....
+    //gchar * esc = g_strescape(_value, NULL);
+    Glib::ustring escaped(_value);
+    //g_free(esc);
     
 #ifdef ESCAPE_DOLLAR_COMMANDLINE // escape the dollar sign 
     Glib::ustring::iterator i;
