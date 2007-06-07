@@ -84,6 +84,7 @@ NRPixBlock *FilterSlot::get(int slot_nr)
                     delete pb;
                     return NULL;
                 }
+                pb->empty = FALSE;
                 this->set(NR_FILTER_BACKGROUNDIMAGE, pb);
             }
         }

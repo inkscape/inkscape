@@ -21,7 +21,7 @@ class SPFeOffsetClass;
 
 struct SPFeOffset : public SPFilterPrimitive {
     /** OFFSET ATTRIBUTES HERE */
-    
+    double dx, dy;
 };
 
 struct SPFeOffsetClass {

@@ -414,9 +414,10 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
 
         /* If background access is used, save the pixblock address.
          * This address is set to NULL at the end of this block */
-        if (item->background_new
-            || (item->parent && item->parent->background_pb)) {
+        if (item->background_new) {
             item->background_pb = &ipb;
+        } else if (item->parent && item->parent->background_pb) {
+            item->background_pb = item->parent->background_pb;
         }
         ipb.visible_area = pb->visible_area;
         unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, &ipb, flags);

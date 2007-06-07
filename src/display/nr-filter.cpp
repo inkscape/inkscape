@@ -22,6 +22,7 @@
 #include "display/pixblock-transform.h"
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-blend.h"
+#include "display/nr-filter-offset.h"
 
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
@@ -209,6 +210,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
             return 0;
         nr_blit_pixblock_pixblock(in, pb);
     }
+    in->empty = FALSE;
     slot.set(NR_FILTER_SOURCEGRAPHIC, in);
     in = NULL; // in is now handled by FilterSlot, we should not touch it
 
@@ -316,7 +318,7 @@ void Filter::_create_constructor_table()
     _constructor[NR_FILTER_IMAGE] = NULL;
     _constructor[NR_FILTER_MERGE] = NULL;
     _constructor[NR_FILTER_MORPHOLOGY] = NULL;
-    _constructor[NR_FILTER_OFFSET] = NULL;
+    _constructor[NR_FILTER_OFFSET] = &FilterOffset::create;
     _constructor[NR_FILTER_SPECULARLIGHTING] = NULL;
     _constructor[NR_FILTER_TILE] = NULL;
     _constructor[NR_FILTER_TURBULENCE] = NULL;

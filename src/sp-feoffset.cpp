@@ -7,8 +7,9 @@
 /*
  * Authors:
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006 Hugo Rodrigues
+ * Copyright (C) 2006,2007 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -21,7 +22,7 @@
 #include "svg/svg.h"
 #include "sp-feoffset.h"
 #include "xml/repr.h"
-
+#include "display/nr-filter-offset.h"
 
 /* FeOffset base class */
 
@@ -33,6 +34,7 @@ static void sp_feOffset_release(SPObject *object);
 static void sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feOffset_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feOffset_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void sp_feOffset_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feOffset_parent_class;
 
@@ -61,6 +63,7 @@ static void
 sp_feOffset_class_init(SPFeOffsetClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
+    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
 
     feOffset_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
@@ -69,11 +72,15 @@ sp_feOffset_class_init(SPFeOffsetClass *klass)
     sp_object_class->write = sp_feOffset_write;
     sp_object_class->set = sp_feOffset_set;
     sp_object_class->update = sp_feOffset_update;
+
+    sp_primitive_class->build_renderer = sp_feOffset_build_renderer;
 }
 
 static void
 sp_feOffset_init(SPFeOffset *feOffset)
 {
+    feOffset->dx = 0;
+    feOffset->dy = 0;
 }
 
 /**
@@ -88,7 +95,8 @@ sp_feOffset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *r
         ((SPObjectClass *) feOffset_parent_class)->build(object, document, repr);
     }
 
-    /*LOAD ATTRIBUTES FROM REPR HERE*/
+    sp_object_read_attr(object, "dx");
+    sp_object_read_attr(object, "dy");
 }
 
 /**
@@ -101,6 +109,18 @@ sp_feOffset_release(SPObject *object)
         ((SPObjectClass *) feOffset_parent_class)->release(object);
 }
 
+double sp_feOffset_read_number(gchar const *value) {
+    char *end;
+    double ret = g_ascii_strtod(value, &end);
+    if (*end) {
+        g_warning("Unable to convert \"%s\" to number", value);
+        // We could leave this out, too. If strtod can't convert
+        // anything, it will return zero.
+        ret = 0;
+    }
+    return ret;
+}
+
 /**
  * Sets a specific value in the SPFeOffset.
  */
@@ -108,9 +128,17 @@ static void
 sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeOffset *feOffset = SP_FEOFFSET(object);
-    (void)feOffset;
 
     switch(key) {
+        case SP_ATTR_DX:
+            feOffset->dx = sp_feOffset_read_number(value);
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_DY:
+            feOffset->dy = sp_feOffset_read_number(value);
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+            
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         default:
             if (((SPObjectClass *) feOffset_parent_class)->set)
@@ -148,7 +176,8 @@ sp_feOffset_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {
             // is this sane?
-            repr->mergeFrom(SP_OBJECT_REPR(object), "id");
+            // Not. Causes coredumps.
+            // repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
             repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
         }
@@ -159,6 +188,23 @@ sp_feOffset_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     return repr;
+}
+
+static void sp_feOffset_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    g_assert(primitive != NULL);
+    g_assert(filter != NULL);
+
+    SPFeOffset *sp_offset = SP_FEOFFSET(primitive);
+
+    int primitive_n = filter->add_primitive(NR::NR_FILTER_OFFSET);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    NR::FilterOffset *nr_offset = dynamic_cast<NR::FilterOffset*>(nr_primitive);
+    g_assert(nr_offset != NULL);
+
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+
+    nr_offset->set_dx(sp_offset->dx);
+    nr_offset->set_dy(sp_offset->dy);
 }
 
 

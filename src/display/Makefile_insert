@@ -71,6 +71,8 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-gaussian.h    \
 	display/nr-filter-blend.cpp     \
 	display/nr-filter-blend.h       \
+	display/nr-filter-offset.cpp	\
+	display/nr-filter-offset.h	\
 	display/nr-filter-slot.cpp      \
 	display/nr-filter-slot.h        \
 	display/nr-filter-types.h       \
