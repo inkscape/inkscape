@@ -414,10 +414,9 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
 
         /* If background access is used, save the pixblock address.
          * This address is set to NULL at the end of this block */
-        if (item->background_new) {
+        if (item->background_new ||
+            (item->parent && item->parent->background_pb)) {
             item->background_pb = &ipb;
-        } else if (item->parent && item->parent->background_pb) {
-            item->background_pb = item->parent->background_pb;
         }
         ipb.visible_area = pb->visible_area;
         unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, &ipb, flags);
@@ -540,9 +539,6 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
                 nr_blit_pixblock_pixblock_mask (dpb, &ipb, &mpb);
             }
             nr_pixblock_release (&mpb);
-            /* This pointer wouldn't be valid outside this block, so clear it */
-            item->background_pb = NULL;
-
         } else {
             if (item->render_opacity) { // opacity was already rendered in, just copy to dpb here
                 nr_blit_pixblock_pixblock(dpb, &ipb);
@@ -552,6 +548,8 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
         }
         nr_pixblock_release (&ipb);
         dpb->empty = FALSE;
+        /* This pointer wouldn't be valid outside this block, so clear it */
+        item->background_pb = NULL;
     } else {
         /* Just render */
         unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, dpb, flags);

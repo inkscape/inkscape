@@ -16,9 +16,10 @@
 #include <assert.h>
 
 #include "display/nr-arena-item.h"
-#include "libnr/nr-pixblock.h"
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-slot.h"
+#include "libnr/nr-pixblock.h"
+#include "libnr/nr-blit.h"
 
 namespace NR {
 
@@ -71,7 +72,16 @@ NRPixBlock *FilterSlot::get(int slot_nr)
             NRPixBlock *pb;
             pb = nr_arena_item_get_background(_arena_item);
             if (pb) {
-                this->set(NR_FILTER_BACKGROUNDIMAGE, pb);
+                NRPixBlock *bg = new NRPixBlock;
+                nr_pixblock_setup_fast(bg, pb->mode,
+                                       pb->area.x0, pb->area.y0,
+                                       pb->area.x1, pb->area.y1, true);
+                bool empty = pb->empty;
+                pb->empty = false;
+                nr_blit_pixblock_pixblock(bg, pb);
+                pb->empty = empty;
+                bg->empty = false;
+                this->set(NR_FILTER_BACKGROUNDIMAGE, bg);
             } else {
                 NRPixBlock *source = this->get(NR_FILTER_SOURCEGRAPHIC);
                 pb = new NRPixBlock();
