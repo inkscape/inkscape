@@ -310,6 +310,8 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
         _opposite = _opposite_for_bboxpoints;
     }
     
+    // The lines below are usefull for debugging any snapping issues, as they'll spit out all points that are considered for snapping
+    
     /*std::cout << "Number of snap points:  " << _snap_points.size() << std::endl;
     for (std::vector<NR::Point>::const_iterator i = _snap_points.begin(); i != _snap_points.end(); i++)
     {

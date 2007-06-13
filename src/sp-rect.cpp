@@ -43,6 +43,7 @@ static gchar *sp_rect_description(SPItem *item);
 static NR::Matrix sp_rect_set_transform(SPItem *item, NR::Matrix const &xform);
 
 static void sp_rect_set_shape(SPShape *shape);
+static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p);
 
 static SPShapeClass *parent_class;
 
@@ -85,6 +86,7 @@ sp_rect_class_init(SPRectClass *klass)
 
     item_class->description = sp_rect_description;
     item_class->set_transform = sp_rect_set_transform;
+    item_class->snappoints = sp_rect_snappoints; //override the default sp_shape_snappoints; see sp_rect_snappoints for details
 
     shape_class->set_shape = sp_rect_set_shape;
 }
@@ -549,6 +551,31 @@ sp_rect_get_visible_height(SPRect *rect)
         NR::Point(rect->x.computed, rect->y.computed + 1),
         NR::Point(rect->x.computed, rect->y.computed),
         SP_ITEM(rect)->transform);
+}
+
+/**
+ * Sets the snappoint p to the unrounded corners of the rectangle
+ */
+static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p)
+{
+    /* This method overrides sp_shape_snappoints, which is the default for any shape. The default method
+    returns all eight points along the path of a rounded rectangle, but not the real corners. Snapping
+    the startpoint and endpoint of each rounded corner is not very usefull and really confusing. Instead 
+    we could snap either the real corners, or not snap at all. Bulia Byak opted to snap the real corners,
+    but it should be noted that this might be confusing in some cases with relatively large radii. With 
+    small radii though the user will easily understand which point is snapping. */
+    
+    g_assert(item != NULL);
+    g_assert(SP_IS_RECT(item));
+
+    SPRect *rect = SP_RECT(item);
+
+    NR::Matrix const i2d (sp_item_i2d_affine (item));
+
+    *p = NR::Point(rect->x.computed, rect->y.computed) * i2d;
+    *p = NR::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d;
+    *p = NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d;
+    *p = NR::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d;
 }
 
 /*
