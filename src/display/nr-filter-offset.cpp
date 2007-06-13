@@ -72,10 +72,17 @@ void FilterOffset::area_enlarge(NRRectL &area, Matrix const &trans)
     offset[X] -= trans[4];
     offset[Y] -= trans[5];
 
-    area.x0 -= static_cast<NR::ICoord>(offset[X]);
-    area.x1 -= static_cast<NR::ICoord>(offset[X]);
-    area.y0 -= static_cast<NR::ICoord>(offset[Y]);
-    area.y1 -= static_cast<NR::ICoord>(offset[Y]);
+    if (offset[X] > 0) {
+        area.x0 -= static_cast<NR::ICoord>(offset[X]);
+    } else {
+        area.x1 -= static_cast<NR::ICoord>(offset[X]);
+    }
+
+    if (offset[Y] > 0) {
+        area.y0 -= static_cast<NR::ICoord>(offset[Y]);
+    } else {
+        area.y1 -= static_cast<NR::ICoord>(offset[Y]);
+    }
 }
 
 } /* namespace NR */
