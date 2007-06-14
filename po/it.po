@@ -1687,7 +1687,7 @@ msgstr "Identificatore"
 
 #: ../src/dialogs/rdf.cpp:264
 msgid "Unique URI to reference this document."
-msgstr "URI unico di riferimento al documento"
+msgstr "URI univoco di riferimento al documento"
 
 #: ../src/dialogs/rdf.cpp:266 ../src/ui/dialog/filedialog.cpp:1915
 msgid "Source"
@@ -1695,7 +1695,7 @@ msgstr "Sorgente"
 
 #: ../src/dialogs/rdf.cpp:267
 msgid "Unique URI to reference the source of this document."
-msgstr "URI unico di riferimento alla sorgente del documento"
+msgstr "URI univoco di riferimento alla sorgente del documento"
 
 #: ../src/dialogs/rdf.cpp:269
 msgid "Relation"
@@ -2089,7 +2089,7 @@ msgstr "Cancella nodo"
 
 #: ../src/dialogs/xml-tree.cpp:384 ../src/dialogs/xml-tree.cpp:1580
 msgid "Unindent node"
-msgstr "Dis-indenta nodo"
+msgstr "Deindenta nodo"
 
 #: ../src/dialogs/xml-tree.cpp:399 ../src/dialogs/xml-tree.cpp:1559
 msgid "Indent node"
@@ -8716,7 +8716,7 @@ msgstr "_Chiudi"
 
 #: ../src/verbs.cpp:1998
 msgid "Close this document window"
-msgstr "Chiudi la finestra di questo documento"
+msgstr "Chiude la finestra di questo documento"
 
 #: ../src/verbs.cpp:1999
 msgid "_Quit"
@@ -9022,7 +9022,7 @@ msgstr "Rimuovi trasformazioni"
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2082
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr "Rimuovi tutte le trasformazioni e rotazioni da un oggetto testuale"
+msgstr "Rimuove tutte le trasformazioni e rotazioni da un oggetto testuale"
 
 #: ../src/verbs.cpp:2084
 msgid "_Union"
@@ -9066,7 +9066,7 @@ msgstr "Di_visione"
 
 #: ../src/verbs.cpp:2093
 msgid "Cut the bottom path into pieces"
-msgstr "Taglia il tracciati inferiore in pezzi"
+msgstr "Taglia il tracciato inferiore in pezzi"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
@@ -9148,7 +9148,7 @@ msgstr "Proiezione co_llegata"
 
 #: ../src/verbs.cpp:2124
 msgid "Create a dynamic offset object linked to the original path"
-msgstr "Creata una proiezione dinamica del tracciato originale"
+msgstr "Crea una proiezione dinamica del tracciato originale"
 
 #: ../src/verbs.cpp:2126
 msgid "_Stroke to Path"
@@ -9173,8 +9173,8 @@ msgstr "Inve_rti"
 #: ../src/verbs.cpp:2131
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
 msgstr ""
-"Inverti la direzione dei tracciati selezionati (utile per riflettere i "
-"terminatori)"
+"Inverte la direzione dei tracciati selezionati (utile per riflettere i "
+"delimitatori)"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2133
@@ -9390,7 +9390,7 @@ msgstr "Riflette verticalmente gli oggetti selezionati"
 #: ../src/verbs.cpp:2191
 msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr ""
-"Applica la maschera alla selezione (usando come mashera l'oggetto superiore)"
+"Applica la maschera alla selezione (usando come maschera l'oggetto superiore)"
 
 #: ../src/verbs.cpp:2192 ../src/verbs.cpp:2196
 msgid "_Release"
@@ -9466,7 +9466,7 @@ msgstr "Crea e modifica i gradienti"
 
 #: ../src/verbs.cpp:2223
 msgid "Zoom in or out"
-msgstr "Ingrandisci o rimpicciolisci"
+msgstr "Ingrandisce o rimpicciolisce"
 
 #: ../src/verbs.cpp:2225
 msgid "Pick averaged colors from image"
@@ -9833,7 +9833,7 @@ msgstr "_Testo e carattere..."
 #: ../src/verbs.cpp:2322
 msgid "View and select font family, font size and other text properties"
 msgstr ""
-"Vedi e seleziona la il tipo di font, la dimensione ed altre proprietà del "
+"Mostra e modifica il tipo di font, la dimensione ed altre proprietà del "
 "testo"
 
 #: ../src/verbs.cpp:2323
@@ -9842,7 +9842,7 @@ msgstr "Editor _XML..."
 
 #: ../src/verbs.cpp:2324
 msgid "View and edit the XML tree of the document"
-msgstr "Vedi e modifica l'albero XML del documento"
+msgstr "Mostra e modifica l'albero XML del documento"
 
 #: ../src/verbs.cpp:2325
 msgid "_Find..."
@@ -9885,7 +9885,7 @@ msgid ""
 "Create multiple clones of selected object, arranging them into a pattern or "
 "scattering"
 msgstr ""
-"Crea un cloni multipli dell'oggetto selezionato, posizionandoli secondo una "
+"Crea cloni multipli dell'oggetto selezionato, posizionandoli secondo una "
 "trama"
 
 #: ../src/verbs.cpp:2335
@@ -9927,7 +9927,7 @@ msgstr "Liv_elli..."
 
 #: ../src/verbs.cpp:2346
 msgid "View Layers"
-msgstr "Mostra livelli"
+msgstr "Mostra i livelli"
 
 #. Help
 #: ../src/verbs.cpp:2349
@@ -9981,7 +9981,7 @@ msgstr "Ink_scape: Forme"
 
 #: ../src/verbs.cpp:2364
 msgid "Using shape tools to create and edit shapes"
-msgstr "Utilizzo gli strumenti per creare e moficare forme"
+msgstr "Utilizzo degli strumenti per creare e modificare forme"
 
 #: ../src/verbs.cpp:2365
 msgid "Inkscape: _Advanced"
