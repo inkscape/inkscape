@@ -6,11 +6,14 @@
 # Luca Ferretti <elle.uca@infinito.it>, 2005.
 # Luca Bruno <luca.br@uno.it>, 2005-2007.
 #
+#: ../src/widgets/toolbox.cpp:4037 ../src/widgets/toolbox.cpp:4058
+#: ../src/widgets/toolbox.cpp:4087 ../src/widgets/toolbox.cpp:4108
+#: ../src/widgets/toolbox.cpp:4135
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.45+devel\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-11 15:02+0100\n"
+"Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2007-02-13 17:45+0100\n"
 "PO-Revision-Date: 2007-01-27 14:59+0100\n"
 "Last-Translator: Luca Bruno <luca.br@uno.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -167,7 +170,7 @@ msgstr "Selezionare <b>un oggetto</b> da cui rimuovere i cloni in serie"
 msgid "Delete tiled clones"
 msgstr "Elimina cloni in serie"
 
-#: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1990
+#: ../src/dialogs/clonetiler.cpp:972 ../src/selection-chemistry.cpp:1984
 msgid "Select an <b>object</b> to clone."
 msgstr "Selezionare un <b>oggetto</b> da clonare."
 
@@ -910,76 +913,97 @@ msgstr "_y0:"
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:331 ../src/dialogs/export.cpp:445
+#: ../src/dialogs/export.cpp:331 ../src/dialogs/export.cpp:491
 #: ../src/dialogs/object-attributes.cpp:56
 msgid "Height:"
 msgstr "Altezza:"
 
-#: ../src/dialogs/export.cpp:416
+#: ../src/dialogs/export.cpp:462
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Dimensione bitmap</b></big>"
 
-#: ../src/dialogs/export.cpp:429 ../src/ui/widget/page-sizer.cpp:301
+#: ../src/dialogs/export.cpp:475 ../src/ui/widget/page-sizer.cpp:301
 msgid "_Width:"
 msgstr "_Larghezza:"
 
-#: ../src/dialogs/export.cpp:429 ../src/dialogs/export.cpp:445
+#: ../src/dialogs/export.cpp:475 ../src/dialogs/export.cpp:491
 msgid "pixels at"
 msgstr "pixel a"
 
-#: ../src/dialogs/export.cpp:439
+#: ../src/dialogs/export.cpp:485
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:458 ../src/ui/dialog/inkscape-preferences.cpp:558
+#: ../src/dialogs/export.cpp:504 ../src/ui/dialog/inkscape-preferences.cpp:558
 msgid "dpi"
 msgstr "dpi"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:469
+#: ../src/dialogs/export.cpp:515
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>Nome del _file</b></big>"
 
-#: ../src/dialogs/export.cpp:540
+#: ../src/dialogs/export.cpp:586
 msgid "_Browse..."
 msgstr "_Sfoglia..."
 
-#: ../src/dialogs/export.cpp:579
+#: ../src/dialogs/export.cpp:615
+#, fuzzy
+msgid "Batch export all selected objects"
+msgstr "Duplica gli oggetti selezionati"
+
+#: ../src/dialogs/export.cpp:619
+msgid ""
+"Export each selected object into its own PNG file, using export hints if any "
+"(caution, overwrites without asking!)"
+msgstr ""
+
+#: ../src/dialogs/export.cpp:637
 msgid "_Export"
 msgstr "_Esporta"
 
-#: ../src/dialogs/export.cpp:583
+#: ../src/dialogs/export.cpp:641
 msgid "Export the bitmap file with these settings"
 msgstr "Esporta il file bitmap con queste impostazioni"
 
-#: ../src/dialogs/export.cpp:966
-msgid "You have to enter a filename"
-msgstr "Bisogna inserire il nome del file"
+#: ../src/dialogs/export.cpp:666
+#, fuzzy, c-format
+msgid "Batch export %d selected objects"
+msgstr "Duplica gli oggetti selezionati"
 
-#: ../src/dialogs/export.cpp:971
-msgid "The chosen area to be exported is invalid"
-msgstr "L'area di esportazione selezionata non è valida"
-
-#: ../src/dialogs/export.cpp:980
-#, c-format
-msgid "Directory %s does not exist or is not a directory.\n"
-msgstr "La cartella %s non esiste o non è una cartella.\n"
-
-#: ../src/dialogs/export.cpp:996
+#: ../src/dialogs/export.cpp:997
 msgid "Export in progress"
 msgstr "Esportazione in avanzamento"
 
-#: ../src/dialogs/export.cpp:1002
-#, c-format
-msgid "Exporting %s (%d x %d)"
+#: ../src/dialogs/export.cpp:1041
+#, fuzzy, c-format
+msgid "Exporting %d files"
 msgstr "Sto esportando %s (%d x %d) "
 
-#: ../src/dialogs/export.cpp:1029
+#: ../src/dialogs/export.cpp:1079 ../src/dialogs/export.cpp:1144
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Impossibile esportare col nome del file %s. \n"
 
-#: ../src/dialogs/export.cpp:1160
+#: ../src/dialogs/export.cpp:1107
+msgid "You have to enter a filename"
+msgstr "Bisogna inserire il nome del file"
+
+#: ../src/dialogs/export.cpp:1112
+msgid "The chosen area to be exported is invalid"
+msgstr "L'area di esportazione selezionata non è valida"
+
+#: ../src/dialogs/export.cpp:1121
+#, c-format
+msgid "Directory %s does not exist or is not a directory.\n"
+msgstr "La cartella %s non esiste o non è una cartella.\n"
+
+#: ../src/dialogs/export.cpp:1132
+#, c-format
+msgid "Exporting %s (%d x %d)"
+msgstr "Sto esportando %s (%d x %d) "
+
+#: ../src/dialogs/export.cpp:1275
 msgid "Select a filename for exporting"
 msgstr "Selezionare il nome del file dove esportare"
 
@@ -1638,7 +1662,7 @@ msgstr "Creatore"
 #: ../src/dialogs/rdf.cpp:254
 msgid ""
 "Name of entity primarily responsible for making the content of this document."
-msgstr "Nome del reponsabile della creazione del documento."
+msgstr "Nome del responsabile della creazione del documento."
 
 #: ../src/dialogs/rdf.cpp:256
 msgid "Rights"
@@ -1655,7 +1679,7 @@ msgstr "Editore"
 
 #: ../src/dialogs/rdf.cpp:260
 msgid "Name of entity responsible for making this document available."
-msgstr "Nome del reponsabile della pubblicazione del documento."
+msgstr "Nome del responsabile della pubblicazione del documento."
 
 #: ../src/dialogs/rdf.cpp:263
 msgid "Identifier"
@@ -3373,7 +3397,7 @@ msgstr "NOMEFILE"
 #: ../src/main.cpp:219
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
-"Stampa il documento al file di output specificato (usare'|·programma' per il "
+"Stampa il documento al file di output specificato (usare'| programma' per il "
 "pipe)"
 
 #: ../src/main.cpp:224
@@ -4240,202 +4264,199 @@ msgid "Delete all"
 msgstr "Elimina tutto"
 
 #: ../src/selection-chemistry.cpp:440
-msgid "Select <b>two or more objects</b> to group."
+#, fuzzy
+msgid "Select <b>some objects</b> to group."
 msgstr "Selezionare <b>due o più oggetti</b> da raggruppare."
 
-#: ../src/selection-chemistry.cpp:448
-msgid "Select <b>at least two objects</b> to group."
-msgstr "Selezionare <b>almeno due oggetti</b> da raggruppare."
-
-#: ../src/selection-chemistry.cpp:519 ../src/selection-describer.cpp:49
+#: ../src/selection-chemistry.cpp:513 ../src/selection-describer.cpp:49
 msgid "Group"
 msgstr "Raggruppa"
 
-#: ../src/selection-chemistry.cpp:534
+#: ../src/selection-chemistry.cpp:528
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Selezionare un <b>gruppo</b> da dividere."
 
-#: ../src/selection-chemistry.cpp:575
+#: ../src/selection-chemistry.cpp:569
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>Nessun gruppo</b> nella selezione da dividere."
 
-#: ../src/selection-chemistry.cpp:581 ../src/sp-item-group.cpp:445
+#: ../src/selection-chemistry.cpp:575 ../src/sp-item-group.cpp:445
 msgid "Ungroup"
 msgstr "Dividi"
 
-#: ../src/selection-chemistry.cpp:645
+#: ../src/selection-chemistry.cpp:639
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Selezionare l'<b>oggetto</b> da alzare."
 
-#: ../src/selection-chemistry.cpp:651 ../src/selection-chemistry.cpp:704
-#: ../src/selection-chemistry.cpp:739 ../src/selection-chemistry.cpp:798
+#: ../src/selection-chemistry.cpp:645 ../src/selection-chemistry.cpp:698
+#: ../src/selection-chemistry.cpp:733 ../src/selection-chemistry.cpp:792
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 "Non è possibile alzare/abbassare oggetti in <b>gruppi</b> o <b>livelli "
 "differenti</b>."
 
-#: ../src/selection-chemistry.cpp:683
+#: ../src/selection-chemistry.cpp:677
 msgid "Raise"
 msgstr "Alza"
 
-#: ../src/selection-chemistry.cpp:696
+#: ../src/selection-chemistry.cpp:690
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Selezionare l'<b>oggetto</b> da spostare in cima."
 
-#: ../src/selection-chemistry.cpp:719
+#: ../src/selection-chemistry.cpp:713
 msgid "Raise to top"
 msgstr "Sposta in cima"
 
-#: ../src/selection-chemistry.cpp:733
+#: ../src/selection-chemistry.cpp:727
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Selezionare l'<b>oggetto</b> da abbassare."
 
-#: ../src/selection-chemistry.cpp:776
+#: ../src/selection-chemistry.cpp:770
 msgid "Lower"
 msgstr "Abbassa"
 
-#: ../src/selection-chemistry.cpp:790
+#: ../src/selection-chemistry.cpp:784
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Selezionare l'<b>oggetto</b> da spostare in fondo."
 
-#: ../src/selection-chemistry.cpp:825
+#: ../src/selection-chemistry.cpp:819
 msgid "Lower to bottom"
 msgstr "Sposta in fondo"
 
-#: ../src/selection-chemistry.cpp:832
+#: ../src/selection-chemistry.cpp:826
 msgid "Nothing to undo."
 msgstr "Niente da annullare."
 
-#: ../src/selection-chemistry.cpp:839
+#: ../src/selection-chemistry.cpp:833
 msgid "Nothing to redo."
 msgstr "Niente da ripetere."
 
-#: ../src/selection-chemistry.cpp:1020
+#: ../src/selection-chemistry.cpp:1014
 msgid "Nothing was copied."
 msgstr "Niente da copiare."
 
-#: ../src/selection-chemistry.cpp:1120 ../src/selection-chemistry.cpp:1157
-#: ../src/selection-chemistry.cpp:1184 ../src/selection-chemistry.cpp:1220
+#: ../src/selection-chemistry.cpp:1114 ../src/selection-chemistry.cpp:1151
+#: ../src/selection-chemistry.cpp:1178 ../src/selection-chemistry.cpp:1214
 msgid "Nothing on the clipboard."
 msgstr "Niente negli appunti."
 
-#: ../src/selection-chemistry.cpp:1145
+#: ../src/selection-chemistry.cpp:1139
 msgid "Paste"
 msgstr "Incolla"
 
-#: ../src/selection-chemistry.cpp:1163
+#: ../src/selection-chemistry.cpp:1157
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Selezionare l'<b>oggetto</b> a cui incollare lo stile."
 
-#: ../src/selection-chemistry.cpp:1172
+#: ../src/selection-chemistry.cpp:1166
 msgid "Paste style"
 msgstr "Incolla stile"
 
-#: ../src/selection-chemistry.cpp:1190 ../src/selection-chemistry.cpp:1226
+#: ../src/selection-chemistry.cpp:1184 ../src/selection-chemistry.cpp:1220
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Selezionare l'<b>oggetto</b> a cui incollare la dimensione."
 
-#: ../src/selection-chemistry.cpp:1208
+#: ../src/selection-chemistry.cpp:1202
 msgid "Paste size"
 msgstr "Incolla dimensione"
 
-#: ../src/selection-chemistry.cpp:1249
+#: ../src/selection-chemistry.cpp:1243
 msgid "Paste size separately"
 msgstr "Incolla dimensione separatamente"
 
-#: ../src/selection-chemistry.cpp:1260
+#: ../src/selection-chemistry.cpp:1254
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Selezionare l'<b>oggetto</b> da spostare al livello superiore."
 
-#: ../src/selection-chemistry.cpp:1285
+#: ../src/selection-chemistry.cpp:1279
 msgid "Raise to next layer"
 msgstr "Sposta al livello successivo"
 
-#: ../src/selection-chemistry.cpp:1291
+#: ../src/selection-chemistry.cpp:1285
 msgid "No more layers above."
 msgstr "Nessun livello superiore."
 
-#: ../src/selection-chemistry.cpp:1305
+#: ../src/selection-chemistry.cpp:1299
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Selezionare l'<b>oggetto</b> da spostare al livello inferiore."
 
-#: ../src/selection-chemistry.cpp:1330
+#: ../src/selection-chemistry.cpp:1324
 msgid "Lower to previous layer"
 msgstr "Sposta al livello precedente"
 
-#: ../src/selection-chemistry.cpp:1336
+#: ../src/selection-chemistry.cpp:1330
 msgid "No more layers below."
 msgstr "Nessun livello inferiore."
 
-#: ../src/selection-chemistry.cpp:1482
+#: ../src/selection-chemistry.cpp:1476
 msgid "Remove transform"
 msgstr "Rimuovi trasformazione"
 
-#: ../src/selection-chemistry.cpp:1591
+#: ../src/selection-chemistry.cpp:1585
 msgid "Rotate 90&#176; CW"
 msgstr "Ruota di 90° orari"
 
-#: ../src/selection-chemistry.cpp:1619
+#: ../src/selection-chemistry.cpp:1613
 msgid "Rotate 90&#176; CCW"
 msgstr "Ruota di 90° anti-orari"
 
-#: ../src/selection-chemistry.cpp:1637 ../src/seltrans.cpp:380
+#: ../src/selection-chemistry.cpp:1631 ../src/seltrans.cpp:380
 #: ../src/ui/dialog/transformation.cpp:666
 msgid "Rotate"
 msgstr "Ruota"
 
-#: ../src/selection-chemistry.cpp:1666
+#: ../src/selection-chemistry.cpp:1660
 msgid "Rotate by pixels"
 msgstr "Ruota tramite pixel"
 
-#: ../src/selection-chemistry.cpp:1692 ../src/seltrans.cpp:377
+#: ../src/selection-chemistry.cpp:1686 ../src/seltrans.cpp:377
 #: ../src/ui/dialog/transformation.cpp:647
 msgid "Scale"
 msgstr "Ridimensiona"
 
-#: ../src/selection-chemistry.cpp:1711
+#: ../src/selection-chemistry.cpp:1705
 msgid "Scale by whole factor"
 msgstr "Ridimensiona di un fattore intero"
 
-#: ../src/selection-chemistry.cpp:1727
+#: ../src/selection-chemistry.cpp:1721
 msgid "Move vertically"
 msgstr "Muovi verticalmente"
 
-#: ../src/selection-chemistry.cpp:1730
+#: ../src/selection-chemistry.cpp:1724
 msgid "Move horizontally"
 msgstr "Muovi orizzontalmente"
 
-#: ../src/selection-chemistry.cpp:1733 ../src/selection-chemistry.cpp:1761
+#: ../src/selection-chemistry.cpp:1727 ../src/selection-chemistry.cpp:1755
 #: ../src/seltrans.cpp:374 ../src/ui/dialog/transformation.cpp:595
 msgid "Move"
 msgstr "Muovi"
 
-#: ../src/selection-chemistry.cpp:1755
+#: ../src/selection-chemistry.cpp:1749
 msgid "Move vertically by pixels"
 msgstr "Scosta verticalmente di pixel"
 
-#: ../src/selection-chemistry.cpp:1758
+#: ../src/selection-chemistry.cpp:1752
 msgid "Move horizontally by pixels"
 msgstr "Scosta orizzontalmente di pixel"
 
-#: ../src/selection-chemistry.cpp:2024 ../src/selection-describer.cpp:65
+#: ../src/selection-chemistry.cpp:2018 ../src/selection-describer.cpp:65
 msgid "Clone"
 msgstr "Clona"
 
-#: ../src/selection-chemistry.cpp:2041
+#: ../src/selection-chemistry.cpp:2035
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Selezionare un <b>clone</b> da scollegare."
 
-#: ../src/selection-chemistry.cpp:2072
+#: ../src/selection-chemistry.cpp:2066
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "<b>Nessuna clone da scollegare</b> nella selezione."
 
-#: ../src/selection-chemistry.cpp:2076
+#: ../src/selection-chemistry.cpp:2070
 msgid "Unlink clone"
 msgstr "Scollega clone"
 
-#: ../src/selection-chemistry.cpp:2090
+#: ../src/selection-chemistry.cpp:2084
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -4446,7 +4467,7 @@ msgstr ""
 "<b>testo su tracciato</b> per andare al tracciato. Selezionare un <b>testo "
 "dinamico</b> per andare al suo riquadro."
 
-#: ../src/selection-chemistry.cpp:2113
+#: ../src/selection-chemistry.cpp:2107
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -4454,76 +4475,76 @@ msgstr ""
 "<b>Impossibile trovare</b> l'oggetto da selezionare (clone orfano, "
 "proiezione, testo su percorso o testo dinamico?)"
 
-#: ../src/selection-chemistry.cpp:2119
+#: ../src/selection-chemistry.cpp:2113
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr ""
 "L'oggetto che si vuole selezionare <b>non è visibile</b> (è in &lt;defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2147
+#: ../src/selection-chemistry.cpp:2141
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Selezionare l'<b>oggetto</b> da convertire in motivo."
 
-#: ../src/selection-chemistry.cpp:2229
+#: ../src/selection-chemistry.cpp:2223
 msgid "Objects to pattern"
 msgstr "Da oggetto a motivo"
 
-#: ../src/selection-chemistry.cpp:2245
+#: ../src/selection-chemistry.cpp:2239
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Selezionare un <b>oggetto con motivo di riempimento</b> da cui estrarre "
 "l'oggetto."
 
-#: ../src/selection-chemistry.cpp:2298
+#: ../src/selection-chemistry.cpp:2292
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "<b>Nessun motivo di riempimento</b> nella selezione."
 
-#: ../src/selection-chemistry.cpp:2301
+#: ../src/selection-chemistry.cpp:2295
 msgid "Pattern to objects"
 msgstr "Da motivo a oggetto"
 
-#: ../src/selection-chemistry.cpp:2387
+#: ../src/selection-chemistry.cpp:2381
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Selezionare l'<b>oggetto</b> di cui fare una copia bitmap."
 
-#: ../src/selection-chemistry.cpp:2546
+#: ../src/selection-chemistry.cpp:2540
 msgid "Create bitmap"
 msgstr "Crea bitmap"
 
-#: ../src/selection-chemistry.cpp:2578
+#: ../src/selection-chemistry.cpp:2572
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 "Selezionare l'<b>oggetto</b> da cui creare la maschera o il  fissaggio."
 
-#: ../src/selection-chemistry.cpp:2581
+#: ../src/selection-chemistry.cpp:2575
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 "Selezionare l'oggetto mascher e l'<b>oggetto</b> a cui applicare la maschera "
 "o il fissaggio."
 
-#: ../src/selection-chemistry.cpp:2703
+#: ../src/selection-chemistry.cpp:2697
 msgid "Set clipping path"
 msgstr "Imposta fissaggio"
 
-#: ../src/selection-chemistry.cpp:2705
+#: ../src/selection-chemistry.cpp:2699
 msgid "Set mask"
 msgstr "Imposta maschera"
 
-#: ../src/selection-chemistry.cpp:2718
+#: ../src/selection-chemistry.cpp:2712
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 "Selezionare <b>l'oggetto</b> da cui rimuovere la maschera o il fissaggio."
 
-#: ../src/selection-chemistry.cpp:2786
+#: ../src/selection-chemistry.cpp:2780
 msgid "Release clipping path"
 msgstr "Rimuovi fissaggio"
 
-#: ../src/selection-chemistry.cpp:2788
+#: ../src/selection-chemistry.cpp:2782
 msgid "Release mask"
 msgstr "Rimuovi maschera"
 
-#: ../src/selection-chemistry.cpp:2832
+#: ../src/selection-chemistry.cpp:2826
 msgid "Fit page to selection"
 msgstr "Adatta la pagina alla selezione"
 
@@ -8042,7 +8063,7 @@ msgid ""
 "\n"
 "Do you want to save this file in another format?"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Il·file·\"%s\"·è stato salvato con un "
+"<span weight=\"bold\" size=\"larger\">Il file \"%s\" è stato salvato con un "
 "formato (%s) che può provocare perdite di dati!</span>\n"
 "\n"
 "Salvarlo con un altro formato?"
@@ -11263,7 +11284,7 @@ msgid ""
 "sourceforge.net/"
 msgstr ""
 "dxf2svg potrebbe essere fornito da Inkscape, ma è reperibile anche "
-"pressohttp://dxf-svg-convert.sourceforge.net/"
+"presso http://dxf-svg-convert.sourceforge.net/"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid "Desktop Cutting Plotter"
@@ -11817,6 +11838,9 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Input Windows Metafile"
+
+#~ msgid "Select <b>at least two objects</b> to group."
+#~ msgstr "Selezionare <b>almeno due oggetti</b> da raggruppare."
 
 #~ msgid ""
 #~ "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
