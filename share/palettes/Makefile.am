@@ -18,7 +18,8 @@ palettes_DATA = \
     Royal.gpl \
     Topographic.gpl \
     Ubuntu.gpl \
-    windows.gpl
+    windows.gpl \
+    LaTeX-Beamer.gpl
     
 
 EXTRA_DIST = $(palettes_DATA)
