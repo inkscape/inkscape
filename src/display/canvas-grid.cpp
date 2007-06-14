@@ -477,15 +477,72 @@ static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color)
     return TRUE;
 }
 
+/** If the passed scalar is invalid (<=0), then set the widget and the scalar
+    to use the given old value.
+    @param oldVal		old value to use if the new one is invalid
+    @param pTarget		the scalar to validate
+    @param widget		widget associated with the scalar
+*/
+static void validateScalar(double oldVal,
+						   double* pTarget,
+						   Inkscape::UI::Widget::RegisteredScalarUnit& widget)
+{
+	// Avoid nullness.
+	if ( pTarget == NULL )
+		return;
 
+	// Invalid new value?
+	if ( *pTarget <= 0 )
+	{
+		// If the old value is somehow invalid as well, then default to 1.
+		if ( oldVal <= 0 )
+			oldVal = 1;
+
+		// Reset the scalar and associated widget to the old value.
+		*pTarget = oldVal;
+		widget.setValue( *pTarget);
+	} //if
+
+} //validateScalar
+
+
+/** If the passed int is invalid (<=0), then set the widget and the int
+    to use the given old value.
+    @param oldVal		old value to use if the new one is invalid
+    @param pTarget		the int to validate
+    @param widget		widget associated with the int
+*/
+static void validateInt(gint oldVal,
+						gint* pTarget,
+						Inkscape::UI::Widget::RegisteredSuffixedInteger& widget)
+{
+	// Avoid nullness.
+	if ( pTarget == NULL )
+		return;
+
+	// Invalid new value?
+	if ( *pTarget <= 0 )
+	{
+		// If the old value is somehow invalid as well, then default to 1.
+		if ( oldVal <= 0 )
+			oldVal = 1;
+
+		// Reset the int and associated widget to the old value.
+		*pTarget = oldVal;
+		widget.setValue( *pTarget);
+	} //if
+
+} //validateInt
 
 void
 CanvasXYGrid::readRepr()
 {
+	char buff[100];
     gchar const* value;
     if ( (value = repr->attribute("originx")) ) {
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::X], &gridunit);
         origin[NR::X] = sp_units_get_pixels(origin[NR::X], *(gridunit));
+
     }
     if ( (value = repr->attribute("originy")) ) {
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::Y], &gridunit);
@@ -493,12 +550,18 @@ CanvasXYGrid::readRepr()
     }
 
     if ( (value = repr->attribute("spacingx")) ) {
+		double oldVal = spacing[NR::X];
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[NR::X], &gridunit);
+        validateScalar( oldVal, &spacing[NR::X], _rsu_sx );
         spacing[NR::X] = sp_units_get_pixels(spacing[NR::X], *(gridunit));
+
     }
     if ( (value = repr->attribute("spacingy")) ) {
+		double oldVal = spacing[NR::Y];
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[NR::Y], &gridunit);
+		validateScalar( oldVal, &spacing[NR::Y], _rsu_sy );
         spacing[NR::Y] = sp_units_get_pixels(spacing[NR::Y], *(gridunit));
+
     }
 
     if ( (value = repr->attribute("color")) ) {
@@ -517,12 +580,14 @@ CanvasXYGrid::readRepr()
     }
 
     if ( (value = repr->attribute("empspacing")) ) {
+		gint oldVal = empspacing;
         empspacing = atoi(value);
+        validateInt( oldVal, &empspacing, _rsi );
     }
-    
+
     if ( (value = repr->attribute("dotted")) ) {
         render_dotted = (strcmp(value,"true") == 0);
-    }    
+    }
 
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
         sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
