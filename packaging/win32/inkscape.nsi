@@ -29,6 +29,25 @@ SetCompressor /SOLID lzma
 !define MUI_HEADERIMAGE_BITMAP "header.bmp"
 !define MUI_COMPONENTSPAGE_SMALLDESC
 
+;..................................................................................................
+;Following two definitions required. Uninstall log will use these definitions.
+;You may use these definitions also, when you want to set up the InstallDirRagKey,
+;store the language selection, store Start Menu folder etc.
+;Enter the windows uninstall reg sub key to add uninstall information to Add/Remove Programs also.
+
+!define INSTDIR_REG_ROOT "HKLM"
+!define INSTDIR_REG_KEY PRODUCT_UNINST_KEY
+
+;include the Uninstall log header
+!include AdvUninstLog.nsh
+
+;Specify the preferred uninstaller operation mode, either unattended or interactive.
+;You have to type either !insertmacro UNATTENDED_UNINSTALL, or !insertmacro INTERACTIVE_UNINSTALL.
+;Be aware only one of the following two macros has to be inserted, neither both, neither none.
+
+;!insertmacro UNATTENDED_UNINSTALL
+!insertmacro INTERACTIVE_UNINSTALL
+
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
@@ -401,26 +420,42 @@ FunctionEnd
 !macro Language polng lng
   SectionIn 1 2 3
   SetOutPath $INSTDIR
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a "..\..\inkscape\*.${lng}.txt"
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\locale
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r "..\..\inkscape\locale\${polng}"
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\lib\locale
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r "..\..\inkscape\lib\locale\${polng}"
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\share\clipart
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r "..\..\inkscape\share\clipart\*.${polng}.svg"  
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   ; the keyboard tables
   SetOutPath $INSTDIR\share\screens
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r "..\..\inkscape\share\screens\*.${polng}.svg"  
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\share\templates
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r "..\..\inkscape\share\templates\*.${polng}.svg"  
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\doc
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r "..\..\inkscape\doc\keys.${polng}.xml"  
   File /nonfatal /a /r "..\..\inkscape\doc\keys.${polng}.html"  
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SectionGetFlags ${SecTutorials} $R1 
   IntOp $R1 $R1 & ${SF_SELECTED} 
   IntCmp $R1 ${SF_SELECTED} 0 skip_tutorials 
     SetOutPath $INSTDIR\share\tutorials
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /nonfatal /a "..\..\inkscape\share\tutorials\*.${polng}.*"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   skip_tutorials:
 !macroend
 
@@ -521,6 +556,7 @@ Section $(lng_Core) SecCore
 
   SectionIn 1 2 3 RO
   SetOutPath $INSTDIR
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   SetOverwrite on
   SetAutoClose false
 
@@ -537,22 +573,31 @@ Section $(lng_Core) SecCore
   File /nonfatal /a /r "..\..\inkscape\doc"
   File /nonfatal /a /r "..\..\inkscape\plugins"
   File /nonfatal /a /r /x *.??*.???* /x "examples" /x "tutorials" "..\..\inkscape\share"
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   ; this files are added because it slips through the filter
   SetOutPath $INSTDIR\share\clipart
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /a "..\..\inkscape\share\clipart\inkscape.logo.svg"
   ;File /a "..\..\inkscape\share\clipart\inkscape.logo.classic.svg"  
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\share\extensions
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /a "..\..\inkscape\share\extensions\pdf_output.inx.txt"
   File /a "..\..\inkscape\share\extensions\pdf_output_via_gs_on_win32.inx.txt"
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\share\icons
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /a "..\..\inkscape\share\icons\inkscape.file.png"
   File /a "..\..\inkscape\share\icons\inkscape.file.svg"
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\modules
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r "..\..\inkscape\modules\*.*"
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\python
-  File /nonfatal /a /r "..\..\inkscape\python\*.*"
-
-  
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+  File /nonfatal /a /r "..\..\inkscape\python\*.*" 
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section $(lng_GTKFiles) SecGTK
@@ -561,10 +606,12 @@ Section $(lng_GTKFiles) SecGTK
   
   SectionIn 1 2 3 RO
   SetOutPath $INSTDIR
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   SetOverwrite on
   File /a /r "..\..\inkscape\*.dll"
   File /a /r /x "locale" "..\..\inkscape\lib"
   File /a /r "..\..\inkscape\etc"
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section $(lng_Alluser) SecAlluser
@@ -662,13 +709,17 @@ SectionGroup $(lng_Addfiles) SecAddfiles
 Section $(lng_Examples) SecExamples
   SectionIn 1 2
   SetOutPath $INSTDIR\share
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r /x "*.??*.???*" "..\..\inkscape\share\examples"
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section $(lng_Tutorials) SecTutorials
   SectionIn 1 2
   SetOutPath $INSTDIR\share
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r /x "*.??*.???*" "..\..\inkscape\share\tutorials"
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 SectionGroupEnd
@@ -997,6 +1048,9 @@ SectionEnd
 !macroend
 
 Function .onInit
+  ;prepare log always within .onInit function
+  !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
+
   ;Extract InstallOptions INI files
   StrCpy $AskMultiUser "1"
   StrCpy $MultiUser "0"
@@ -1164,6 +1218,12 @@ FunctionEnd
 Function .onSelChange
 FunctionEnd
 
+
+Function .onInstSuccess
+  ;create/update log always within .onInstSuccess function
+  !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
+FunctionEnd
+
 ; --------------------------------------------------
 
 Function un.CustomPageUninstall
@@ -1180,6 +1240,9 @@ FunctionEnd
 
 
 Function un.onInit
+  ;begin uninstall, could be added on top of uninstall section instead
+  !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
+
   ClearErrors
   StrCpy $User ""
 	UserInfo::GetName
@@ -1351,7 +1414,26 @@ Section Uninstall
   RMDir  "$SMPROGRAMS\Inkscape"
 
   DetailPrint "removing uninstall info"
-  RMDir /r "$INSTDIR"
+
+  ;uninstall from path, must be repeated for every install logged path individual
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\lib\locale"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\locale"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\doc"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\tutorials"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\templates"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\screens"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\clipart"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\extensions"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\icons"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\modules"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\python"
+  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
+
+  ;end uninstall, after uninstall from all logged paths has been performed
+  !insertmacro UNINSTALL.LOG_END_UNINSTALL
+
+  ;RMDir /r "$INSTDIR"
 
   SetAutoClose false
 
