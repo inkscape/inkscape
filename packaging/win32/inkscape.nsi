@@ -1002,8 +1002,9 @@ Section -FinalizeInstallation
 
   ; uninstall settings
   ClearErrors
-  WriteUninstaller "$INSTDIR\uninst.exe"
-  WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "UninstallString" '"$INSTDIR\uninst.exe"'
+  ; WriteUninstaller "$INSTDIR\uninst.exe"
+  WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\${UNINST_EXE}"
+  WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "InstallDir" "$INSTDIR"
   WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "InstallLocation" "$INSTDIR"
   WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "DisplayName" "${PRODUCT_NAME} ${PRODUCT_VERSION}"
   WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\Inkscape.exe,0"
