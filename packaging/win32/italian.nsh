@@ -11,6 +11,7 @@
 ; 3rd December 2006 new languages eu km
 ; 14th December 2006 new lng_DeletePrefs, lng_DeletePrefsDesc, lng_WANT_UNINSTALL_BEFORE and lng_OK_CANCEL_DESC
 ; february 15 2007 new language bn, en_AU, eo, id, ro
+; april 11 2007 new language he
 
 !insertmacro MUI_LANGUAGE "Italian"
 
@@ -158,6 +159,7 @@ LangString lng_fi $(LANG_ITALIAN) "fi  Finnish"
 LangString lng_fr $(LANG_ITALIAN) "fr  Francese"
 LangString lng_ga $(LANG_ITALIAN) "ga  Irlandese"
 LangString lng_gl $(LANG_ITALIAN) "gl  Gallese"
+LangString lng_he $(LANG_ITALIAN) "he  Hebrew"
 LangString lng_hr $(LANG_ITALIAN) "hr  Croatian"
 LangString lng_hu $(LANG_ITALIAN) "hu  Ungherese"
 LangString lng_id $(LANG_ITALIAN) "id  Indonesian"

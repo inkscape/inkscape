@@ -12,6 +12,7 @@
 ; 3rd December 2006 new languages eu km
 ; 14th December 2006 new lng_DeletePrefs, lng_DeletePrefsDesc, lng_WANT_UNINSTALL_BEFORE and lng_OK_CANCEL_DESC
 ; february 15 2007 new language bn, en_AU, eo, id, ro
+; april 11 2007 new language he
 
 !insertmacro MUI_LANGUAGE "Czech"
 
@@ -160,6 +161,7 @@ LangString lng_fi $(LANG_CZECH) "fi  Finština"
 LangString lng_fr $(LANG_CZECH) "fr  Francouzština"
 LangString lng_ga $(LANG_CZECH) "ga  Irština"
 LangString lng_gl $(LANG_CZECH) "gl  Gallegan"
+LangString lng_he $(LANG_CZECH) "he  Hebrew"
 LangString lng_hr $(LANG_CZECH) "hr  Chorvatština"
 LangString lng_hu $(LANG_CZECH) "hu  Maïarština"
 LangString lng_id $(LANG_CZECH) "id  Indonesian"

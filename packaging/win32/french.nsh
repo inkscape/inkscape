@@ -12,6 +12,7 @@
 ; 3rd December 2006 new languages eu km
 ; 14th December 2006 new lng_DeletePrefs, lng_DeletePrefsDesc, lng_WANT_UNINSTALL_BEFORE and lng_OK_CANCEL_DESC
 ; february 15 2007 new language bn, en_AU, eo, id, ro
+; april 11 2007 new language he
 
 !insertmacro MUI_LANGUAGE "French"
 
@@ -157,6 +158,7 @@ LangString lng_et $(LANG_FRENCH) "et  Estonien"
 LangString lng_eu $(LANG_FRENCH) "eu  Basque"
 LangString lng_fi $(LANG_FRENCH) "fi  Finnish"
 LangString lng_fr $(LANG_FRENCH) "fr  French"
+LangString lng_he $(LANG_FRENCH) "he  Hebrew"
 LangString lng_ga $(LANG_FRENCH) "ga  Irlandais"
 LangString lng_gl $(LANG_FRENCH) "gl  Galicien"
 LangString lng_hr $(LANG_FRENCH) "hr  Croatian"

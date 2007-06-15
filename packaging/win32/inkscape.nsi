@@ -69,7 +69,7 @@ ShowUninstDetails hide
 
 ; Language files
 !include "english.nsh" 
-!include "catalan.nsh" 
+; !include "catalan.nsh" the catalan support has been abandoned by NSIS as of version 2.28
 !include "czech.nsh" 
 !include "finnish.nsh" 
 !include "french.nsh" 
@@ -406,7 +406,7 @@ FunctionEnd
   File /nonfatal /a /r "..\..\inkscape\locale\${polng}"
   SetOutPath $INSTDIR\lib\locale
   File /nonfatal /a /r "..\..\inkscape\lib\locale\${polng}"
-  SetOutPath $INSTDIR\share\cliparts
+  SetOutPath $INSTDIR\share\clipart
   File /nonfatal /a /r "..\..\inkscape\share\clipart\*.${polng}.svg"  
   ; the keyboard tables
   SetOutPath $INSTDIR\share\screens

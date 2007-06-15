@@ -6,6 +6,7 @@
 ; Kenji Inoue kenz@oct.zaq.ne.jp
 ;
 ; february 15 2007 new language bn, en_AU, eo, id, ro
+; april 11 2007 new language he
 
 !insertmacro MUI_LANGUAGE "Japanese"
 
@@ -153,6 +154,7 @@ LangString lng_fi $(LANG_JAPANESE) "fi  フィンランド語"
 LangString lng_fr $(LANG_JAPANESE) "fr  フランス語"
 LangString lng_ga $(LANG_JAPANESE) "ga  アイルランド語"
 LangString lng_gl $(LANG_JAPANESE) "gl  ガリシア語"
+LangString lng_he $(LANG_JAPANESE) "he  Hebrew"
 LangString lng_hr $(LANG_JAPANESE) "hr  クロアチア語"
 LangString lng_hu $(LANG_JAPANESE) "hu  ハンガリー語"
 LangString lng_id $(LANG_JAPANESE) "id  Indonesian"
