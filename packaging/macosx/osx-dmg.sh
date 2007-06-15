@@ -84,7 +84,7 @@ if [ ${add_python} = "true" ]; then
 	# copy python libraries
 	cp -rf "$python_dir"/* "$TMPDIR"/
 	# link python environment in order to drag and drop inkscape onto it
-	ln -sf /Library/Python/2.3/site-packages "$TMPDIR"/Python\ site-packages
+	ln -sf /System/Library/Frameworks/Python.framework/Versions/2.3/lib/python2.3/site-packages "$TMPDIR"/Python\ site-packages
 fi
 
 # Copy a background image inside a hidden directory so the image
