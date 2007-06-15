@@ -763,7 +763,7 @@ Section $(lng_fr) SecFrench
   !insertmacro Language 'fr' 'fr'
 SectionEnd
 
-Section $(lng_fi) SecFinish
+Section $(lng_fi) SecFinnish
   !insertmacro Language 'fi' 'fi'
 SectionEnd
 
@@ -773,6 +773,11 @@ SectionEnd
 
 Section $(lng_gl) SecGallegan
   !insertmacro Language gl gl
+  SectionIn 1 2 3
+SectionEnd
+
+Section $(lng_he) SecHebrew
+  !insertmacro Language he he
   SectionIn 1 2 3
 SectionEnd
 
@@ -1092,10 +1097,11 @@ Function .onInit
   !insertmacro Parameter "es_MX" ${SecSpanishMexico}
   !insertmacro Parameter "et" ${SecEstonian}
   !insertmacro Parameter "eu" ${SecBasque}
-  !insertmacro Parameter "fi" ${SecFinish}
+  !insertmacro Parameter "fi" ${SecFinnish}
   !insertmacro Parameter "fr" ${SecFrench}
   !insertmacro Parameter "ga" ${SecIrish}
   !insertmacro Parameter "gl" ${SecGallegan}
+  !insertmacro Parameter "he" ${SecHebrew}
   !insertmacro Parameter "hr" ${SecCroatian}
   !insertmacro Parameter "hu" ${SecHungarian}
   !insertmacro Parameter "id" ${SecIndonesian}

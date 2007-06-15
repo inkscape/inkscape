@@ -27,10 +27,10 @@ LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_FINNISH} "$(^Name) on julkaistu GNU 
 LangString lng_DIFFERENT_USER ${LANG_FINNISH} "Käyttäjä $0.$\r$\n on asentanut Inkscapen\nJos jatkat, asennus saattaa epäonnistua.!$\r$\nKirjaudu sisään käyttäjänä $0 ja yritä uudestaan."
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_FINISH} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_FINNISH} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_FINISH} "$\n$\nPress OK to continue or press CANCEL to abort."
+LangString lng_OK_CANCEL_DESC ${LANG_FINNISH} "$\n$\nPress OK to continue or press CANCEL to abort."
 
 ;you have no admin rigths
 LangString lng_NO_ADMIN ${LANG_FINNISH} "Sinulla ei ole pääkäyttäjän oikeuksia.$\r$\nInkscapen asennus kaikille käyttäjille saattaa epäonnistua.$\r$\nÄlä käytä kaikille käyttäjille -ominaisuutta."
@@ -153,7 +153,7 @@ LangString lng_eo $(LANG_FINNISH) "eo  Esperanto"
 LangString lng_es $(LANG_FINNISH) "es  espanja"
 LangString lng_es_MX $(LANG_FINNISH) "es_MX  Meksikon espanja"
 LangString lng_et $(LANG_FINNISH) "et  eesti"
-LangString lng_eu $(LANG_FINISH) "eu  Basque"
+LangString lng_eu $(LANG_FINNISH) "eu  Basque"
 LangString lng_fi $(LANG_FINNISH) "fi  suomi"
 LangString lng_fr $(LANG_FINNISH) "fr  ranska"
 LangString lng_ga $(LANG_FINNISH) "ga  iiri"
