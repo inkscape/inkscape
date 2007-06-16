@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-06-16 22:36+0200\n"
-"PO-Revision-Date: 2007-06-16 23:59+0200\n"
+"PO-Revision-Date: 2007-06-17 01:14+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2277,11 +2277,11 @@ msgstr "Linien"
 
 #: ../src/display/canvas-grid.cpp:378
 msgid "_Show dots instead of lines"
-msgstr ""
+msgstr "_Zeige Punkte anstatt Linien"
 
 #: ../src/display/canvas-grid.cpp:379
 msgid "If set, displays dots at gridpoints instead of gridlines"
-msgstr ""
+msgstr "Wenn gesetzt, Punkte an Gitterpunkten anstelle Gitterlinien verwenden"
 
 #: ../src/document.cpp:369
 #, c-format
@@ -2366,19 +2366,19 @@ msgstr "<b>Ausdünnen von %d</b> gewählten Objekten; mit <b>Umschalt</b> verdic
 #: ../src/dyna-draw-context.cpp:918
 msgid ""
 "<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
-msgstr ""
+msgstr "<b>Führungspfad ausgewählt</b>; starte Zeichnen entlang der Führung mit <b>Strg</b>"
 
 #: ../src/dyna-draw-context.cpp:920
 msgid "<b>Select a guide path</b> to track with <b>Ctrl</b>"
-msgstr ""
+msgstr "<b>Führungspfad auswählen</b> mit <b>Ctrl</b>"
 
 #: ../src/dyna-draw-context.cpp:1025
 msgid "Tracking: <b>connection to guide path lost!</b>"
-msgstr ""
+msgstr "Verfolgen: <b>Verbindung zum Führungspfad verloren!</b>"
 
 #: ../src/dyna-draw-context.cpp:1025
 msgid "<b>Tracking</b> a guide path"
-msgstr ""
+msgstr "<b>Verfolge</b> einen Führungspfad"
 
 #: ../src/dyna-draw-context.cpp:1028
 msgid "<b>Drawing</b> a calligraphic stroke"
@@ -2386,7 +2386,7 @@ msgstr "<b>Zeichne</b> einen kalligrafischen Strich"
 
 #: ../src/dyna-draw-context.cpp:1104
 msgid "Thicken paths"
-msgstr ""
+msgstr "Pfade verdicken"
 
 #: ../src/dyna-draw-context.cpp:1104
 msgid "Thin paths"
@@ -3136,23 +3136,21 @@ msgstr ""
 
 #: ../src/flood-context.cpp:650 ../src/flood-context.cpp:893
 msgid "<b>Area is not bounded</b>, cannot fill."
-msgstr ""
+msgstr "<b>Gebiet ist nicht abgegrenzt</b>, kann nicht füllen."
 
 #: ../src/flood-context.cpp:898
 msgid ""
 "<b>Only the visible part of the bounded area was filled.</b> If you want to "
 "fill all of the area, undo, zoom out, and fill again."
-msgstr ""
+msgstr "<b>Nur der sichtbare Teil des abgegrenzten Gebiets wurde gefüllt.</b> Wenn Sie das gesamte Gebiet füllen wollen, dann machen Sie rückgängig, zoomen heraus, und füllen Sie noch einmal."
 
 #: ../src/flood-context.cpp:914 ../src/flood-context.cpp:1071
-#, fuzzy
 msgid "Fill bounded area"
-msgstr "Füllung und _Kontur"
+msgstr "Fülle abgegrenztes Gebiet"
 
 #: ../src/flood-context.cpp:934
-#, fuzzy
 msgid "Set style on object"
-msgstr "Füllmuster in Objekte umwandeln"
+msgstr "Stil auf Objekte anwenden"
 
 #: ../src/flood-context.cpp:993
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
@@ -3869,23 +3867,23 @@ msgstr "Unbenutzte Elemente aus den &lt;defs&gt; des Dokuments entfernen"
 
 #: ../src/main.cpp:369
 msgid "List the IDs of all the verbs in Inkscape"
-msgstr ""
+msgstr "Liste die Kennungen von allen Verben in Inkscape"
 
 #: ../src/main.cpp:374
 msgid "Verb to call when Inkscape opens."
-msgstr ""
+msgstr "Aufzurufendes Verb wenn Inkscape startet."
 
 #: ../src/main.cpp:375
 msgid "VERB-ID"
-msgstr ""
+msgstr "VERB-ID"
 
 #: ../src/main.cpp:379
 msgid "Object ID to select when Inkscape opens."
-msgstr ""
+msgstr "Auszuwählende Objekt-Kennung wenn Inkscape startet."
 
 #: ../src/main.cpp:380
 msgid "OBJECT-ID"
-msgstr ""
+msgstr "OBJECT-ID"
 
 #: ../src/main.cpp:577
 msgid ""
@@ -4520,9 +4518,9 @@ msgid "Print"
 msgstr "Drucken"
 
 #: ../src/print.cpp:189
-#, fuzzy, c-format
+#, c-format
 msgid "Could not set print source: %s"
-msgstr "Konnte nicht als Datei %s exportieren.\n"
+msgstr "Konnte Quelle zum Drucken nicht setzen: %s"
 
 #: ../src/print.cpp:189 ../src/print.cpp:233
 msgid "unknown error"
@@ -4531,7 +4529,7 @@ msgstr "Unbekannter Fehler"
 #: ../src/print.cpp:194
 #, c-format
 msgid "Printer '%s' does not support PS output"
-msgstr ""
+msgstr "Drucker »%s« unterstützt keine PS-Ausgabe"
 
 #. since we didn't include the Preview capability,
 #. this should never happen.
@@ -4593,25 +4591,17 @@ msgid ""
 msgstr ""
 
 #: ../src/select-context.cpp:697
-#, fuzzy
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
-msgstr ""
-"<b>Strg</b> Objekt aus einer Gruppierung auswählen; horizontal/vertikal "
-"bewegen"
+msgstr "<b>Strg</b>: Klicken um in Gruppierung auszuwählen; Ziehen um horizontal/vertikal bewegen"
 
 #: ../src/select-context.cpp:698
-#, fuzzy
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
-msgstr ""
-"<b>Umschalt</b>: Auswahl aktivieren/deaktivieren, Gummiband erzwingen, "
-"Einrasten ausschalten"
+msgstr "<b>Umschalt</b>: Klicken um Auswahl aktivieren/deaktivieren, Ziehen für Gummiband-Auswahl"
 
 #: ../src/select-context.cpp:699
-#, fuzzy
 msgid ""
 "<b>Alt</b>: click to select under; drag to move selected or select by touch"
-msgstr ""
-"<b>Alt</b>: Verdeckte Objekte auswählen. Ausgewähltes Objekt verschieben"
+msgstr "<b>Alt</b>: Klicken um verdeckte Objekte auswählen; Ziehen um gewähltes Objekt zu verschieben oder durch Berühren auszuwählen"
 
 #: ../src/select-context.cpp:849
 msgid "Selected object is not a group. Cannot enter."
@@ -4644,9 +4634,8 @@ msgid "Delete all"
 msgstr "Alles löschen"
 
 #: ../src/selection-chemistry.cpp:440
-#, fuzzy
 msgid "Select <b>some objects</b> to group."
-msgstr "<b>Zwei oder mehr Objekte</b> zum Gruppieren auswählen."
+msgstr "<b>Einige Objekte</b> zum Gruppieren auswählen."
 
 #: ../src/selection-chemistry.cpp:513 ../src/selection-describer.cpp:49
 msgid "Group"
@@ -5544,22 +5533,21 @@ msgstr "Die Auswahl enthält <b>keine Pfade</b> zum Schrumpfen/Erweitern."
 
 #: ../src/splivarot.cpp:1559
 msgid "Simplifying paths (separately):"
-msgstr ""
+msgstr "Vereinfache Pfade (getrennt):"
 
 #: ../src/splivarot.cpp:1561
-#, fuzzy
 msgid "Simplifying paths:"
-msgstr "Schwellwert für Vereinfachungen:"
+msgstr "Vereinfache Pfade:"
 
 #: ../src/splivarot.cpp:1598
-#, fuzzy, c-format
+#, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
-msgstr "Vereinfache %s - <b>%d</b> von <b>%d</b> Pfaden vereinfacht…"
+msgstr "%s <b>%d</b> von <b>%d</b> Pfaden vereinfacht…"
 
 #: ../src/splivarot.cpp:1609
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%d</b> paths simplified."
-msgstr "Fertig - <b>%d</b> Pfade vereinfacht."
+msgstr "<b>%d</b> Pfade vereinfacht."
 
 #: ../src/splivarot.cpp:1625
 msgid "Select <b>path(s)</b> to simplify."
@@ -6332,9 +6320,8 @@ msgid "_Remove"
 msgstr "_Entfernen"
 
 #: ../src/ui/dialog/document-properties.cpp:98
-#, fuzzy
 msgid "Remove selected grid."
-msgstr "Ausgewählt lassen"
+msgstr "Ausgewähltes Gitter entfernen."
 
 #: ../src/ui/dialog/document-properties.cpp:107
 msgid "Guides"
@@ -6547,14 +6534,11 @@ msgstr "<b>Erzeugen</b>"
 msgid "Gridtype"
 msgstr "Gittertyp"
 
-# !!!
 #: ../src/ui/dialog/document-properties.cpp:361
-#, fuzzy
 msgid "<b>Defined grids</b>"
-msgstr "<b>Allgemein</b>"
+msgstr "<b>Definierte Gitter</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:567
-#, fuzzy
 msgid "Remove grid"
 msgstr "Gitter entfernen"
 
@@ -6584,9 +6568,8 @@ msgid "too large for preview"
 msgstr "Zu groß für Vorschau"
 
 #: ../src/ui/dialog/filedialog.cpp:779
-#, fuzzy
 msgid "Enable Preview"
-msgstr "Vorschau"
+msgstr "Mit Vorschau"
 
 #: ../src/ui/dialog/filedialog.cpp:894 ../src/ui/dialog/filedialog.cpp:895
 msgid "All Images"
@@ -6717,22 +6700,15 @@ msgstr ""
 "interpretiert wird"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:152
-#, fuzzy
 msgid "Use pressure-sensitive tablet (requires restart)"
-msgstr ""
-"Ein druckempfindliches Grafiktablett oder anderes Gerät verwenden (erfordert "
-"Neustart)"
+msgstr "Druckempfindliches Grafiktablett verwenden (erfordert Neustart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:154
-#, fuzzy
 msgid ""
 "Use the capabilities of a tablet or other pressure-sensitive device. Disable "
 "this only if you have problems with the tablet (you can still use it as a "
 "mouse)"
-msgstr ""
-"Die Möglichkeiten eines druckempfindlichen Grafiktabletts oder anderen "
-"Geräts verwenden. Schalten Sie dies nur aus, wenn Sie Probleme mit dem Gerät "
-"haben."
+msgstr "Die Möglichkeiten eines Grafiktabletts oder anderen druckempfindlichen Geräts verwenden. Schalten Sie dies nur aus, wenn Sie Probleme mit dem Gerät haben (Sie können es immer noch als Maus verwenden)."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:160
 msgid "Scrolling"
@@ -6951,9 +6927,8 @@ msgid "Take from selection"
 msgstr "Aus Auswahl übernehmen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:299
-#, fuzzy
 msgid "This tool's style of new objects"
-msgstr "Stilvorgaben für dieses Werkzeug:"
+msgstr "Stilvorgaben für dieses Werkzeug für neue Objekte:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:307
 msgid "Remember the style of the (first) selected object as this tool's style"
@@ -6969,9 +6944,8 @@ msgid "Width is in absolute units"
 msgstr "Breitenangabe in absoluten Einheiten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:316
-#, fuzzy
 msgid "Select new path"
-msgstr "Nächstes auswählen"
+msgstr "Neuen Pfad auswählen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:317
 msgid "Don't attach connectors to text objects"
@@ -7030,27 +7004,24 @@ msgstr ""
 "Jedes gewählte Objekt zeigt sein umschließendes Rechteck (Umrandungsbox)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:341
-#, fuzzy
 msgid "Bounding box to use:"
-msgstr "Umrandungsboxen an _Führungslinien einrasten"
+msgstr "Zu verwendende Umrandungsbox:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:342
-#, fuzzy
 msgid "Visual bounding box"
-msgstr "Gegenüberliegende Kante der Umrandungsbox"
+msgstr "Visuelle Umrandungsbox"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:344
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
-msgstr ""
+msgstr "Diese Umrandungsbox berücksichtigt Strichbreiten, Markierungen, Filterränder usw."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:345
-#, fuzzy
 msgid "Geometric bounding box"
-msgstr "Gegenüberliegende Kante der Umrandungsbox"
+msgstr "Geometrische Umrandungsbox"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:347
 msgid "This bounding box includes only the bare path"
-msgstr ""
+msgstr "Diese Umrandungsbox berücksichtigt nur den reinen Pfad"
 
 #. Node
 #: ../src/ui/dialog/inkscape-preferences.cpp:350
@@ -8276,15 +8247,13 @@ msgstr "Andere"
 
 #: ../src/ui/widget/selected-style.cpp:92
 #: ../src/ui/widget/style-swatch.cpp:105
-#, fuzzy
 msgid "Fill:"
-msgstr "Füllung"
+msgstr "Füllung:"
 
 #: ../src/ui/widget/selected-style.cpp:93
 #: ../src/ui/widget/style-swatch.cpp:106
-#, fuzzy
 msgid "Stroke:"
-msgstr "Breite der Konturlinie"
+msgstr "Konturlinie:"
 
 #: ../src/ui/widget/selected-style.cpp:94
 msgid "O:"
@@ -9677,7 +9646,7 @@ msgstr "Objektverbinder erzeugen"
 
 #: ../src/verbs.cpp:2370
 msgid "Fill bounded areas"
-msgstr ""
+msgstr "Fülle abgegrenzte Gebiete"
 
 #. Tool prefs
 #: ../src/verbs.cpp:2373
@@ -9793,7 +9762,6 @@ msgid "Open Preferences for the Connector tool"
 msgstr "Eigenschaften für das Objektverbinder-Werkzeug öffnen"
 
 #: ../src/verbs.cpp:2401
-#, fuzzy
 msgid "Paint Bucket Preferences"
 msgstr "Einstellungen für den Farbeimer"
 
@@ -10878,25 +10846,22 @@ msgid "Delete selected nodes"
 msgstr "Die gewählten Knoten löschen"
 
 #: ../src/widgets/toolbox.cpp:781
-#, fuzzy
 msgid "Join"
-msgstr "Verbindungsart:"
+msgstr "Verbinden"
 
 #: ../src/widgets/toolbox.cpp:782
 msgid "Join selected endnodes"
 msgstr "Gewählte Endknoten verbinden"
 
 #: ../src/widgets/toolbox.cpp:791
-#, fuzzy
 msgid "Join Segment"
-msgstr "Knoten durch Segment verbinden"
+msgstr "Segment verbinden"
 
 #: ../src/widgets/toolbox.cpp:792
 msgid "Join selected endnodes with a new segment"
 msgstr "Gewählte Endknoten durch ein neues Segment verbinden"
 
 #: ../src/widgets/toolbox.cpp:801
-#, fuzzy
 msgid "Delete Segment"
 msgstr "Segment löschen"
 
@@ -11120,17 +11085,15 @@ msgstr "Radius der innersten Umdrehung (relativ zur Gesamtgröße der Spirale)"
 #. Width
 #: ../src/widgets/toolbox.cpp:2436
 msgid "(hairline)"
-msgstr ""
+msgstr "(Haarline)"
 
 #: ../src/widgets/toolbox.cpp:2436 ../src/widgets/toolbox.cpp:2466
-#, fuzzy
 msgid "(default)"
-msgstr "Vorgabe"
+msgstr "(Vorgabe)"
 
 #: ../src/widgets/toolbox.cpp:2436
-#, fuzzy
 msgid "(broad stroke)"
-msgstr " (Konturlinie)"
+msgstr "(breiter Strich)"
 
 #: ../src/widgets/toolbox.cpp:2439
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
@@ -11148,9 +11111,8 @@ msgid "(slight widening)"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2451
-#, fuzzy
 msgid "(constant width)"
-msgstr "Zielbreite"
+msgstr "(Konstante Breite)"
 
 #: ../src/widgets/toolbox.cpp:2451
 msgid "(slight thinning, default)"
@@ -11179,9 +11141,8 @@ msgid "(left edge up)"
 msgstr "Linke Kante der Quelle"
 
 #: ../src/widgets/toolbox.cpp:2466
-#, fuzzy
 msgid "(horizontal)"
-msgstr "_Horizontal"
+msgstr "(horizontal)"
 
 #: ../src/widgets/toolbox.cpp:2466
 #, fuzzy
@@ -11387,9 +11348,8 @@ msgid "The angle (in degrees) from the horizontal to the arc's end point"
 msgstr "Der Winkel (in Grad) von der Horizontalen bis zum Endpunkt des Bogens"
 
 #: ../src/widgets/toolbox.cpp:2898
-#, fuzzy
 msgid "Closed arc"
-msgstr "Schließen"
+msgstr "Geschlossener Bogen"
 
 #: ../src/widgets/toolbox.cpp:2899
 #, fuzzy
@@ -11399,7 +11359,6 @@ msgstr ""
 "zwei Radien) umschalten"
 
 #: ../src/widgets/toolbox.cpp:2905
-#, fuzzy
 msgid "Open Arc"
 msgstr "Offener Bogen"
 
@@ -11520,9 +11479,8 @@ msgstr ""
 
 # CHECK
 #: ../src/widgets/toolbox.cpp:4221
-#, fuzzy
 msgid "Ignore"
-msgstr "deaktiviert"
+msgstr "Ignorieren"
 
 #: ../src/widgets/toolbox.cpp:4233
 msgid "Spacing:"
@@ -11533,13 +11491,12 @@ msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Platz, der von den Objektverbindern um Objekte herum gelassen wird"
 
 #: ../src/widgets/toolbox.cpp:4244
-#, fuzzy
 msgid "Graph"
-msgstr "Umbrechen"
+msgstr "Graph"
 
 #: ../src/widgets/toolbox.cpp:4254
 msgid "Length:"
-msgstr "Länge"
+msgstr "Länge:"
 
 #: ../src/widgets/toolbox.cpp:4254
 msgid "Ideal length for connectors when layout is applied"
