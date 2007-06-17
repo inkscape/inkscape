@@ -49,10 +49,6 @@ SPUsePath::SPUsePath(SPObject* i_owner):SPUseReference(i_owner)
     sourceHref = NULL;
     sourceRepr = NULL;
     sourceObject = NULL;
-    new (&_modified_connection) sigc::connection();
-    new (&_delete_connection) sigc::connection();
-    new (&_changed_connection) sigc::connection();
-    new (&_transformed_connection) sigc::connection();
     _changed_connection = changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_usepath_href_changed), this)); // listening to myself, this should be virtual instead
 
     user_unlink = NULL;
@@ -67,11 +63,6 @@ SPUsePath::~SPUsePath(void)
 
     quit_listening();
     unlink();
-
-    _modified_connection.~connection();
-    _delete_connection.~connection();
-    _changed_connection.~connection();
-    _transformed_connection.~connection();
 }
 
 void
