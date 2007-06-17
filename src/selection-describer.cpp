@@ -61,6 +61,8 @@ type2term(GType type)
         { return _("Rectangle"); }
     if (type == SP_TYPE_TEXT)
         { return _("Text"); }
+    // TRANSLATORS: only translate "string" in "context|string".
+    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
     if (type == SP_TYPE_USE)
         { return Q_("object|Clone"); }
     if (type == SP_TYPE_ARC)
