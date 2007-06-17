@@ -2079,6 +2079,8 @@ sp_selection_clone()
         Inkscape::GC::release(clone);
     }
     
+    // TRANSLATORS: only translate "string" in "context|string".
+    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
     sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_CLONE, 
                      Q_("action|Clone"));
 
