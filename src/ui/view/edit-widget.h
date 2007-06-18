@@ -106,6 +106,8 @@ public:
     virtual void setPosition (NR::Point p);
     virtual void setTransient (void*, int);
     virtual NR::Point getPointer();
+    virtual void setIconified();
+    virtual void setMaximized();
     virtual void setFullscreen();
     virtual bool shutdown();
     virtual void destroy();

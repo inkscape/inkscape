@@ -99,7 +99,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     GList *zooms_future;
     unsigned int dkey;
     unsigned int number;
-    bool is_fullscreen;
+    guint window_state;
     unsigned int interaction_disabled_counter;
     bool waiting_cursor;
 
@@ -251,6 +251,12 @@ struct SPDesktop : public Inkscape::UI::View::View
     void toggleGrid();
     bool gridsEnabled() { return grids_visible; }
     
+    bool is_iconified();
+    bool is_maximized();
+    bool is_fullscreen();
+
+    void iconify();
+    void maximize();
     void fullscreen();
 
     void registerEditWidget (Inkscape::UI::View::EditWidgetInterface *widget)

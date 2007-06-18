@@ -1168,6 +1168,18 @@ EditWidget::getPointer()
 }
 
 void
+EditWidget::setIconified()
+{
+    iconify();
+}
+
+void
+EditWidget::setMaximized()
+{
+    maximize();
+}
+
+void
 EditWidget::setFullscreen()
 {
     fullscreen();
@@ -1426,11 +1438,11 @@ EditWidget::toggleRulers()
     {
         _top_ruler.hide_all();
         _left_ruler.hide_all();
-        prefs_set_int_attribute (_desktop->is_fullscreen ? "fullscreen.rulers" : "window.rulers", "state", 0);
+        prefs_set_int_attribute (_desktop->is_fullscreen() ? "fullscreen.rulers" : "window.rulers", "state", 0);
     } else {
         _top_ruler.show_all();
         _left_ruler.show_all();
-        prefs_set_int_attribute (_desktop->is_fullscreen ? "fullscreen.rulers" : "window.rulers", "state", 1);
+        prefs_set_int_attribute (_desktop->is_fullscreen() ? "fullscreen.rulers" : "window.rulers", "state", 1);
     }
 }
 
@@ -1441,11 +1453,11 @@ EditWidget::toggleScrollbars()
     {
         _bottom_scrollbar.hide_all();
         _right_scrollbar.hide_all();
-        prefs_set_int_attribute (_desktop->is_fullscreen ? "fullscreen.scrollbars" : "window.scrollbars", "state", 0);
+        prefs_set_int_attribute (_desktop->is_fullscreen() ? "fullscreen.scrollbars" : "window.scrollbars", "state", 0);
     } else {
         _bottom_scrollbar.show_all();
         _right_scrollbar.show_all();
-        prefs_set_int_attribute (_desktop->is_fullscreen ? "fullscreen.scrollbars" : "window.scrollbars", "state", 1);
+        prefs_set_int_attribute (_desktop->is_fullscreen() ? "fullscreen.scrollbars" : "window.scrollbars", "state", 1);
     }
 }
 

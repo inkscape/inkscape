@@ -117,7 +117,8 @@ protected:
     PrefSpinButton  _t_pencil_tolerance;
 
     PrefRadioButton _win_ontop_none, _win_ontop_normal, _win_ontop_agressive;
-    PrefCheckButton _win_save_geom, _win_hide_task, _win_zoom_resize , _win_show_close;
+    PrefRadioButton _win_save_geom_off, _win_save_geom, _win_save_geom_prefs;
+    PrefCheckButton _win_hide_task, _win_zoom_resize , _win_show_close;
 
 // FIXME: Temporary Win32 special code to enable transient dialogs
 #ifdef WIN32 

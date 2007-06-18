@@ -69,6 +69,8 @@ using Inkscape::IO::Base64OutputStream;
 
 /* forward declaration */
 static gint sp_ui_delete(GtkWidget *widget, GdkEvent *event, Inkscape::UI::View::View *view);
+static void sp_ui_state_event(GtkWidget *widget, GdkEventWindowState *event, SPDesktop*desktop);
+
 
 /* Drag and Drop */
 typedef enum {
@@ -125,32 +127,82 @@ SPActionEventVector menu_item_event_vector = {
     sp_ui_menu_item_set_name /* set_name */
 };
 
+static const int MIN_ONSCREEN_DISTANCE = 50;
+
 void
 sp_create_window(SPViewWidget *vw, gboolean editable)
 {
     g_return_if_fail(vw != NULL);
     g_return_if_fail(SP_IS_VIEW_WIDGET(vw));
 
-    GtkWidget *w = sp_window_new("", TRUE);
+    GtkWidget *win = sp_window_new("", TRUE);
 
     if (editable) {
-      g_object_set_data(G_OBJECT(vw), "window", w);
+      g_object_set_data(G_OBJECT(vw), "window", win);
       reinterpret_cast<SPDesktopWidget*>(vw)->window =
-        static_cast<GtkWindow*>((void*)w);
+        static_cast<GtkWindow*>((void*)win);
     }
 
     if (editable) {
-        /* fixme: */
-        gtk_window_set_default_size((GtkWindow *) w, 640, 480);
-        g_object_set_data(G_OBJECT(w), "desktop", SP_DESKTOP_WIDGET(vw)->desktop);
-        g_object_set_data(G_OBJECT(w), "desktopwidget", vw);
-        g_signal_connect(G_OBJECT(w), "delete_event", G_CALLBACK(sp_ui_delete), vw->view);
-        g_signal_connect(G_OBJECT(w), "focus_in_event", G_CALLBACK(sp_desktop_widget_set_focus), vw);
+        SPDesktop* desktop = SP_DESKTOP_WIDGET(vw)->desktop;
+
+        /* fixme: doesn't allow making window any smaller than this */
+        gtk_window_set_default_size((GtkWindow *) win, 640, 480);
+        g_object_set_data(G_OBJECT(win), "desktop", desktop);
+        g_object_set_data(G_OBJECT(win), "desktopwidget", vw);
+        g_signal_connect(G_OBJECT(win), "delete_event", G_CALLBACK(sp_ui_delete), vw->view);
+
+        g_signal_connect(G_OBJECT(win), "window_state_event", G_CALLBACK(sp_ui_state_event), static_cast<SPDesktop*>(vw->view));
+        g_signal_connect(G_OBJECT(win), "focus_in_event", G_CALLBACK(sp_desktop_widget_set_focus), vw);
+
+        gint prefs_geometry = 
+            (2==prefs_get_int_attribute("options.savewindowgeometry", "value", 0));
+        if (prefs_geometry) {
+            gint pw = prefs_get_int_attribute("desktop.geometry", "width", -1);
+            gint ph = prefs_get_int_attribute("desktop.geometry", "height", -1);
+            gint px = prefs_get_int_attribute("desktop.geometry", "x", -1);
+            gint py = prefs_get_int_attribute("desktop.geometry", "y", -1);
+            gint full = prefs_get_int_attribute("desktop.geometry", "fullscreen", 0);
+            gint maxed = prefs_get_int_attribute("desktop.geometry", "maximized", 0);
+            if (pw>0 && ph>0) {
+                gint w = MIN(gdk_screen_width(), pw);
+                gint h = MIN(gdk_screen_height(), ph);
+                gint x = MIN(gdk_screen_width() - MIN_ONSCREEN_DISTANCE, px);
+                gint y = MIN(gdk_screen_height() - MIN_ONSCREEN_DISTANCE, py);
+                if (w>0 && h>0 && x>0 && y>0) {
+                    x = MIN(gdk_screen_width() - w, x);
+                    y = MIN(gdk_screen_height() - h, y);
+                }
+                if (w>0 && h>0) {
+                    desktop->setWindowSize(w, h);
+                }
+
+                // Only restore xy for the first window so subsequent windows don't overlap exactly
+                // with first.  (Maybe rule should be only restore xy if it's different from xy of
+                // other desktops?)
+
+                // Empirically it seems that active_desktop==this desktop only the first time a
+                // desktop is created.
+                if (x>0 && y>0) {
+                    SPDesktop *active_desktop = SP_ACTIVE_DESKTOP;
+                    if (active_desktop == desktop || active_desktop==NULL) {
+                        desktop->setWindowPosition(NR::Point(x, y));
+                    }
+                }
+            }
+            if (maxed) {
+                gtk_window_maximize(GTK_WINDOW(win));
+            }
+            if (full) {
+                gtk_window_fullscreen(GTK_WINDOW(win));
+            }
+        }
+
     } else {
-        gtk_window_set_policy(GTK_WINDOW(w), TRUE, TRUE, TRUE);
+        gtk_window_set_policy(GTK_WINDOW(win), TRUE, TRUE, TRUE);
     }
 
-    gtk_container_add(GTK_CONTAINER(w), GTK_WIDGET(vw));
+    gtk_container_add(GTK_CONTAINER(win), GTK_WIDGET(vw));
     gtk_widget_show(GTK_WIDGET(vw));
 
     if ( completeDropTargets == 0 || completeDropTargetsCount == 0 )
@@ -184,16 +236,16 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
         }
     }
 
-    gtk_drag_dest_set(w,
+    gtk_drag_dest_set(win,
                       GTK_DEST_DEFAULT_ALL,
                       completeDropTargets,
                       completeDropTargetsCount,
                       GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE));
-    g_signal_connect(G_OBJECT(w),
+    g_signal_connect(G_OBJECT(win),
                      "drag_data_received",
                      G_CALLBACK(sp_ui_drag_data_received),
                      NULL);
-    gtk_widget_show(w);
+    gtk_widget_show(win);
 
     // needed because the first ACTIVATE_DESKTOP was sent when there was no window yet
     inkscape_reactivate_desktop(SP_DESKTOP_WIDGET(vw)->desktop);
@@ -281,6 +333,53 @@ static gint
 sp_ui_delete(GtkWidget *widget, GdkEvent *event, Inkscape::UI::View::View *view)
 {
     return view->shutdown();
+}
+
+/**
+ *  sp_ui_state_event
+ *
+ *  Called when the window changes its maximize/fullscreen/iconify/pinned state.
+ *  Since GTK doesn't have a way to query this state information directly, we
+ *  record it for the desktop here, and also possibly trigger a layout.
+ */
+static void
+sp_ui_state_event(GtkWidget *widget, GdkEventWindowState *event, SPDesktop* desktop)
+{
+    // Record the desktop window's state
+    desktop->window_state = event->new_window_state;
+
+    // Layout may differ depending on full-screen mode or not
+    GdkWindowState changed = event->changed_mask;
+    if (changed & (GDK_WINDOW_STATE_FULLSCREEN|GDK_WINDOW_STATE_MAXIMIZED)) {
+        desktop->layoutWidget();
+    }
+/*
+    // debug info
+    g_message("State event desktop=0x%p", desktop);
+    GdkWindowState state = event->new_window_state;
+    GdkWindowState changed = event->changed_mask;
+    if (changed & GDK_WINDOW_STATE_WITHDRAWN) {
+        g_message("-- WIDTHDRAWN = %d", 0!=(state&GDK_WINDOW_STATE_WITHDRAWN));
+    }
+    if (changed & GDK_WINDOW_STATE_ICONIFIED) {
+        g_message("-- ICONIFIED = %d", 0!=(state&GDK_WINDOW_STATE_ICONIFIED));
+    }
+    if (changed & GDK_WINDOW_STATE_MAXIMIZED) {
+        g_message("-- MAXIMIZED = %d", 0!=(state&GDK_WINDOW_STATE_MAXIMIZED));
+    }
+    if (changed & GDK_WINDOW_STATE_STICKY) {
+        g_message("-- STICKY = %d", 0!=(state&GDK_WINDOW_STATE_STICKY));
+    }
+    if (changed & GDK_WINDOW_STATE_FULLSCREEN) {
+        g_message("-- FULLSCREEN = %d", 0!=(state&GDK_WINDOW_STATE_FULLSCREEN));
+    }
+    if (changed & GDK_WINDOW_STATE_ABOVE) {
+        g_message("-- ABOVE = %d", 0!=(state&GDK_WINDOW_STATE_ABOVE));
+    }
+    if (changed & GDK_WINDOW_STATE_BELOW) {
+        g_message("-- BELOW = %d", 0!=(state&GDK_WINDOW_STATE_BELOW));
+    }
+*/
 }
 
 /*
@@ -565,7 +664,7 @@ checkitem_toggled(GtkCheckMenuItem *menuitem, gpointer user_data)
     Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(menuitem), "view");
 
     gchar const *pref_path;
-    if (reinterpret_cast<SPDesktop*>(view)->is_fullscreen)
+    if (reinterpret_cast<SPDesktop*>(view)->is_fullscreen())
         pref_path = g_strconcat("fullscreen.", pref, NULL);
     else
         pref_path = g_strconcat("window.", pref, NULL);
@@ -585,7 +684,7 @@ checkitem_update(GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
     Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(menuitem), "view");
 
     gchar const *pref_path;
-    if (static_cast<SPDesktop*>(view)->is_fullscreen)
+    if ((static_cast<SPDesktop*>(view))->is_fullscreen())
         pref_path = g_strconcat("fullscreen.", pref, NULL);
     else
         pref_path = g_strconcat("window.", pref, NULL);

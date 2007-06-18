@@ -129,7 +129,7 @@ SPDesktop::SPDesktop() :
     zooms_future( 0 ),
     dkey( 0 ),
     number( 0 ),
-    is_fullscreen( false ),
+    window_state(0),
     interaction_disabled_counter( 0 ),
     waiting_cursor( false ),
     guides_active( false ),
@@ -968,6 +968,36 @@ SPDesktop::scroll_to_point (NR::Point const *p, gdouble autoscrollspeed)
         return true;
     }
     return false;
+}
+
+bool
+SPDesktop::is_iconified()
+{
+    return 0!=(window_state & GDK_WINDOW_STATE_ICONIFIED);
+}
+
+void
+SPDesktop::iconify()
+{
+    _widget->setIconified();
+}
+
+bool
+SPDesktop::is_maximized()
+{
+    return 0!=(window_state & GDK_WINDOW_STATE_MAXIMIZED);
+}
+
+void
+SPDesktop::maximize()
+{
+    _widget->setMaximized();
+}
+
+bool
+SPDesktop::is_fullscreen()
+{
+    return 0!=(window_state & GDK_WINDOW_STATE_FULLSCREEN);
 }
 
 void

@@ -56,6 +56,12 @@ struct EditWidgetInterface
     /// Return mouse position in widget
     virtual NR::Point getPointer() = 0;
     
+    /// Make widget iconified
+    virtual void setIconified() = 0;
+    
+    /// Make widget maximized on screen
+    virtual void setMaximized() = 0;
+    
     /// Make widget fill screen and show it if possible.
     virtual void setFullscreen() = 0;
     

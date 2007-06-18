@@ -414,7 +414,10 @@ void InkscapePreferences::initPageTools()
 
 void InkscapePreferences::initPageWindows()
 {
-    _win_save_geom.init ( _("Save window geometry"), "options.savewindowgeometry", "value", true);
+    _win_save_geom.init ( _("Save and restore window geometry for each document"), "options.savewindowgeometry", "value", 1, true, 0);
+    _win_save_geom_prefs.init ( _("Remember and use last window's geometry"), "options.savewindowgeometry", "value", 2, false, &_win_save_geom);
+    _win_save_geom_off.init ( _("Don't save window geometry"), "options.savewindowgeometry", "value", 0, false, &_win_save_geom);
+
     _win_hide_task.init ( _("Dialogs are hidden in taskbar"), "options.dialogsskiptaskbar", "value", true);
     _win_zoom_resize.init ( _("Zoom when window is resized"), "options.stickyzoom", "value", false);
     _win_show_close.init ( _("Show close button on dialogs"), "dialogs", "showclose", false);
@@ -427,16 +430,14 @@ void InkscapePreferences::initPageWindows()
     _win_ontop_win32.init ( _("Dialogs stay on top (experimental!)"), "options.dialogsontopwin32", "value", false);
 #endif 
 
+    _page_windows.add_group_header( _("Saving window geometry (size and position):"));
+    _page_windows.add_line( false, "", _win_save_geom_off, "", 
+                            _("Let the window manager determine placement of all windows"));
+    _page_windows.add_line( false, "", _win_save_geom_prefs, "", 
+                            _("Remember and use the last window's geometry (saves geometry to user preferences)"));
     _page_windows.add_line( false, "", _win_save_geom, "", 
-                            _("Save the window size and position with each document (only for Inkscape SVG format)"));
-#ifndef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
-    _page_windows.add_line( false, "", _win_hide_task, "", 
-                            _("Whether dialog windows are to be hidden in the window manager taskbar"));
-#endif                           
-    _page_windows.add_line( false, "", _win_zoom_resize, "", 
-                            _("Zoom drawing when document window is resized, to keep the same area visible (this is the default which can be changed in any window using the button above the right scrollbar)"));
-    _page_windows.add_line( false, "", _win_show_close, "", 
-                            _("Whether dialog windows have a close button (requires restart)"));
+                            _("Save and restore window geometry for each document (saves geometry in the document)"));
+
     _page_windows.add_group_header( _("Dialogs on top:"));
 #ifndef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
     _page_windows.add_line( true, "", _win_ontop_none, "", 
@@ -450,6 +451,15 @@ void InkscapePreferences::initPageWindows()
                             _("Whether dialogs should stay on top of document windows. Read the ReleaseNotes on this issue! (Rightclick the taskbar button and press 'Restore' to bring back a minimized document window)"));
 #endif                            
 
+    _page_windows.add_group_header( _("Miscellaneous:"));
+#ifndef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
+    _page_windows.add_line( false, "", _win_hide_task, "", 
+                            _("Whether dialog windows are to be hidden in the window manager taskbar"));
+#endif                           
+    _page_windows.add_line( false, "", _win_zoom_resize, "", 
+                            _("Zoom drawing when document window is resized, to keep the same area visible (this is the default which can be changed in any window using the button above the right scrollbar)"));
+    _page_windows.add_line( false, "", _win_show_close, "", 
+                            _("Whether dialog windows have a close button (requires restart)"));
     this->AddPage(_page_windows, _("Windows"), PREFS_PAGE_WINDOWS);
 }
 

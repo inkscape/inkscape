@@ -571,15 +571,16 @@ void SPNamedView::show(SPDesktop *desktop)
 #define MIN_ONSCREEN_DISTANCE 50
 
 /*
- * Restores window geometry from the document settings
+ * Restores window geometry from the document settings or defaults in prefs
  */
 void sp_namedview_window_from_document(SPDesktop *desktop)
 {
     SPNamedView *nv = desktop->namedview;
-    gint save_geometry = prefs_get_int_attribute("options.savewindowgeometry", "value", 0);
+    gint geometry_from_file = 
+        (1==prefs_get_int_attribute("options.savewindowgeometry", "value", 0));
 
-    // restore window size and position
-    if (save_geometry) {
+    // restore window size and position stored with the document
+    if (geometry_from_file) {
         gint w = MIN(gdk_screen_width(), nv->window_width);
         gint h = MIN(gdk_screen_height(), nv->window_height);
         gint x = MIN(gdk_screen_width() - MIN_ONSCREEN_DISTANCE, nv->window_x);
@@ -588,10 +589,12 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
             x = MIN(gdk_screen_width() - w, x);
             y = MIN(gdk_screen_height() - h, y);
         }
-        if (w>0 && h>0)
+        if (w>0 && h>0) {
             desktop->setWindowSize(w, h);
-        if (x>0 && y>0)
+        }
+        if (x>0 && y>0) {
             desktop->setWindowPosition(NR::Point(x, y));
+        }
     }
 
     // restore zoom and view
@@ -641,7 +644,8 @@ void sp_namedview_update_layers_from_document (SPDesktop *desktop)
 
 void sp_namedview_document_from_window(SPDesktop *desktop)
 {
-    gint save_geometry = prefs_get_int_attribute("options.savewindowgeometry", "value", 0);
+    gint save_geometry_in_file = 
+        (1==prefs_get_int_attribute("options.savewindowgeometry", "value", 0));
     Inkscape::XML::Node *view = SP_OBJECT_REPR(desktop->namedview);
     NR::Rect const r = desktop->get_display_area();
 
@@ -653,7 +657,7 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     sp_repr_set_svg_double(view, "inkscape:cx", r.midpoint()[NR::X]);
     sp_repr_set_svg_double(view, "inkscape:cy", r.midpoint()[NR::Y]);
 
-    if (save_geometry) {
+    if (save_geometry_in_file) {
         gint w, h, x, y;
         desktop->getWindowGeometry(x, y, w, h);
         sp_repr_set_int(view, "inkscape:window-width", w);

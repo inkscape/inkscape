@@ -84,8 +84,6 @@ static void sp_desktop_widget_realize (GtkWidget *widget);
 
 static gint sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw);
 
-
-
 static void sp_desktop_widget_adjustment_value_changed (GtkAdjustment *adj, SPDesktopWidget *dtw);
 static void sp_desktop_widget_namedview_modified (SPObject *obj, guint flags, SPDesktopWidget *dtw);
 
@@ -555,6 +553,7 @@ bool
 SPDesktopWidget::shutdown()
 {
     g_assert(desktop != NULL);
+
     if (inkscape_is_sole_desktop_for_document(*desktop)) {
         SPDocument *doc = desktop->doc();
         if (sp_document_repr_root(doc)->attribute("sodipodi:modified") != NULL) {
@@ -685,6 +684,28 @@ SPDesktopWidget::shutdown()
         }
     }
 
+    /* Save window geometry to prefs for use as a default.
+     * Use depends on setting of "options.savewindowgeometry".
+     * But we save the info here regardless of the setting.
+     */
+    {
+        gint full = desktop->is_fullscreen() ? 1 : 0;
+        gint maxed = desktop->is_maximized() ? 1 : 0;
+        prefs_set_int_attribute("desktop.geometry", "fullscreen", full);
+        prefs_set_int_attribute("desktop.geometry", "maximized", maxed);
+        gint w, h, x, y;
+        desktop->getWindowGeometry(x, y, w, h);
+        // Don't save geom for maximized windows.  It 
+        // just tells you the current maximized size, which is not
+        // as useful as whatever value it had previously.
+        if (!maxed && !full) {
+            prefs_set_int_attribute("desktop.geometry", "width", w);
+            prefs_set_int_attribute("desktop.geometry", "height", h);
+            prefs_set_int_attribute("desktop.geometry", "x", x);
+            prefs_set_int_attribute("desktop.geometry", "y", y);
+        }
+    }
+
     return FALSE;
 }
 
@@ -750,6 +771,8 @@ SPDesktopWidget::letZoomGrabFocus()
 void
 SPDesktopWidget::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
 {
+    gboolean vis = GTK_WIDGET_VISIBLE (this);
+
     GtkWindow *window = GTK_WINDOW (gtk_object_get_data (GTK_OBJECT(this), "window"));
     if (window)
     {
@@ -836,19 +859,67 @@ SPDesktopWidget::warnDialog (gchar* text)
 }
 
 void
+sp_desktop_widget_iconify(SPDesktopWidget *dtw)
+{
+    GtkWindow *topw = GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(dtw->canvas)));
+    if (GTK_IS_WINDOW(topw)) {
+        if (dtw->desktop->is_iconified()) {
+            gtk_window_deiconify(topw);
+        } else {
+            gtk_window_iconify(topw);
+        }
+    }
+}
+
+void
+sp_desktop_widget_maximize(SPDesktopWidget *dtw)
+{
+    GtkWindow *topw = GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(dtw->canvas)));
+    if (GTK_IS_WINDOW(topw)) {
+        if (dtw->desktop->is_maximized()) {
+            gtk_window_unmaximize(topw);
+        } else {
+            // Save geometry to prefs before maximizing so that 
+            // something useful is stored there, because GTK doesn't maintain
+            // a separate non-maximized size.
+            if (!dtw->desktop->is_iconified() && !dtw->desktop->is_fullscreen()) 
+            {
+                gint w, h, x, y;
+                dtw->getWindowGeometry(x, y, w, h);
+                prefs_set_int_attribute("desktop.geometry", "width", w);
+                prefs_set_int_attribute("desktop.geometry", "height", h);
+                prefs_set_int_attribute("desktop.geometry", "x", x);
+                prefs_set_int_attribute("desktop.geometry", "y", y);
+            }
+            gtk_window_maximize(topw);
+        }
+    }
+}
+
+void
 sp_desktop_widget_fullscreen(SPDesktopWidget *dtw)
 {
 #ifdef HAVE_GTK_WINDOW_FULLSCREEN
     GtkWindow *topw = GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(dtw->canvas)));
     if (GTK_IS_WINDOW(topw)) {
-        if (dtw->desktop->is_fullscreen) {
-            dtw->desktop->is_fullscreen = FALSE;
+        if (dtw->desktop->is_fullscreen()) {
             gtk_window_unfullscreen(topw);
-            sp_desktop_widget_layout (dtw);
+            // widget layout is triggered by the resulting window_state_event
         } else {
-            dtw->desktop->is_fullscreen = TRUE;
+            // Save geometry to prefs before maximizing so that 
+            // something useful is stored there, because GTK doesn't maintain
+            // a separate non-maximized size.
+            if (!dtw->desktop->is_iconified() && !dtw->desktop->is_maximized()) 
+            {
+                gint w, h, x, y;
+                dtw->getWindowGeometry(x, y, w, h);
+                prefs_set_int_attribute("desktop.geometry", "width", w);
+                prefs_set_int_attribute("desktop.geometry", "height", h);
+                prefs_set_int_attribute("desktop.geometry", "x", x);
+                prefs_set_int_attribute("desktop.geometry", "y", y);
+            }
             gtk_window_fullscreen(topw);
-            sp_desktop_widget_layout (dtw);
+            // widget layout is triggered by the resulting window_state_event
         }
     }
 #endif /* HAVE_GTK_WINDOW_FULLSCREEN */
@@ -860,7 +931,7 @@ sp_desktop_widget_fullscreen(SPDesktopWidget *dtw)
 void
 sp_desktop_widget_layout (SPDesktopWidget *dtw)
 {
-    bool fullscreen = dtw->desktop->is_fullscreen;
+    bool fullscreen = dtw->desktop->is_fullscreen();
 
     if (prefs_get_int_attribute (fullscreen ? "fullscreen.menu" : "window.menu", "state", 1) == 0) {
         gtk_widget_hide_all (dtw->menubar);
@@ -1228,11 +1299,11 @@ sp_desktop_widget_toggle_rulers (SPDesktopWidget *dtw)
     if (GTK_WIDGET_VISIBLE (dtw->hruler)) {
         gtk_widget_hide_all (dtw->hruler);
         gtk_widget_hide_all (dtw->vruler);
-        prefs_set_int_attribute (dtw->desktop->is_fullscreen ? "fullscreen.rulers" : "window.rulers", "state", 0);
+        prefs_set_int_attribute (dtw->desktop->is_fullscreen() ? "fullscreen.rulers" : "window.rulers", "state", 0);
     } else {
         gtk_widget_show_all (dtw->hruler);
         gtk_widget_show_all (dtw->vruler);
-        prefs_set_int_attribute (dtw->desktop->is_fullscreen ? "fullscreen.rulers" : "window.rulers", "state", 1);
+        prefs_set_int_attribute (dtw->desktop->is_fullscreen() ? "fullscreen.rulers" : "window.rulers", "state", 1);
     }
 }
 
@@ -1242,11 +1313,11 @@ sp_desktop_widget_toggle_scrollbars (SPDesktopWidget *dtw)
     if (GTK_WIDGET_VISIBLE (dtw->hscrollbar)) {
         gtk_widget_hide_all (dtw->hscrollbar);
         gtk_widget_hide_all (dtw->vscrollbar_box);
-        prefs_set_int_attribute (dtw->desktop->is_fullscreen ? "fullscreen.scrollbars" : "window.scrollbars", "state", 0);
+        prefs_set_int_attribute (dtw->desktop->is_fullscreen() ? "fullscreen.scrollbars" : "window.scrollbars", "state", 0);
     } else {
         gtk_widget_show_all (dtw->hscrollbar);
         gtk_widget_show_all (dtw->vscrollbar_box);
-        prefs_set_int_attribute (dtw->desktop->is_fullscreen ? "fullscreen.scrollbars" : "window.scrollbars", "state", 1);
+        prefs_set_int_attribute (dtw->desktop->is_fullscreen() ? "fullscreen.scrollbars" : "window.scrollbars", "state", 1);
     }
 }
 
