@@ -1,6 +1,7 @@
 #!/usr/bin/env python 
 '''
 Copyright (C) 2006 Jos Hirth, kaioa.com
+Copyright (C) 2007 Aaron C. Spike
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,8 +19,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 import sys, copy, optparse, simplestyle, inkex
 
-import xml.xpath
-
 import random
 
 color_props_fill=('fill:','stop-color:','flood-color:','lighting-color:')
@@ -29,26 +28,24 @@ color_props = color_props_fill + color_props_stroke
 
 class ColorEffect(inkex.Effect):
   def __init__(self):
-    inkex.Effect.__init__(self,use_minidom=True)
+    inkex.Effect.__init__(self)
     self.visited = []
 
   def effect(self):
     if len(self.selected)==0:
-      self.getAttribs(self.document)
+      self.getAttribs(self.document.getroot())
     else:
       for id,node in self.selected.iteritems():
         self.getAttribs(node)
 
   def getAttribs(self,node):
     self.changeStyle(node)
-    if node.hasChildNodes():
-      childs=node.childNodes
-      for child in childs:
-        self.getAttribs(child)
+    for child in node:
+      self.getAttribs(child)
   
   def changeStyle(self,node):
-    if node.hasAttributes():
-      style=node.getAttribute('style') # fixme: this will break for presentation attributes!
+    if node.attrib.has_key('style'):
+      style=node.get('style') # fixme: this will break for presentation attributes!
       if style!='':
         #inkex.debug('old style:'+style)
         styles=style.split(';')
@@ -57,7 +54,7 @@ class ColorEffect(inkex.Effect):
             if styles[i].startswith(color_props[c]):
               styles[i]=color_props[c]+self.process_prop(styles[i][len(color_props[c]):])
         #inkex.debug('new style:'+';'.join(styles))
-        node.setAttribute('style',';'.join(styles))
+        node.set('style',';'.join(styles))
 
   def process_prop(self,col):
     #debug('got:'+col)
@@ -66,13 +63,13 @@ class ColorEffect(inkex.Effect):
       col='#'+self.colmod(c[0],c[1],c[2])
       #debug('made:'+col)
     if col.startswith('url(#'):
-	id = col[len('url(#'):col.find(')')]
-	newid = '%s-%d' % (id, int(random.random() * 1000))
-	#inkex.debug('ID:' + id )
-	path = '//*[@id="%s"]' % id
-	for node in xml.xpath.Evaluate(path,self.document):
-	  self.process_gradient(node, newid)
-	col = 'url(#%s)' % newid
+      id = col[len('url(#'):col.find(')')]
+      newid = '%s-%d' % (id, int(random.random() * 1000))
+      #inkex.debug('ID:' + id )
+      path = '//*[@id="%s"]' % id
+      for node in self.document.xpath(path, inkex.NSS):
+        self.process_gradient(node, newid)
+      col = 'url(#%s)' % newid
     return col
 
   def process_gradient(self, node, newid):
@@ -84,22 +81,22 @@ class ColorEffect(inkex.Effect):
          #return
        #self.visited.append(this_id)
        #inkex.debug("visited: " + str(self.visited))
-    newnode = node.cloneNode(True)
-    newnode.setAttribute('id', newid)
-    node.parentNode.appendChild(newnode)
+    newnode = inkex.etree.fromstring(inkex.etree.tostring(node))
+    newnode.set('id', newid)
+    node.xpath('..')[0].append(newnode)
     self.changeStyle(newnode)
-    if newnode.hasChildNodes():
-      for child in newnode.childNodes:
-        self.changeStyle(child)
-    if newnode.hasAttributes():				
-      href=newnode.getAttribute('xlink:href')
+    for child in newnode:
+      self.changeStyle(child)
+    xlink = inkex.addNS('href','xlink')
+    if newnode.attrib.has_key(xlink):
+      href=newnode.get(xlink)
       if href.startswith('#'):
         id = href[len('#'):len(href)]
         #inkex.debug('ID:' + id )
-	newhref = '%s-%d' % (id, int(random.random() * 1000))
-	newnode.setAttribute('xlink:href', '#%s' % newhref)
+        newhref = '%s-%d' % (id, int(random.random() * 1000))
+        newnode.set(xlink, '#%s' % newhref)
         path = '//*[@id="%s"]' % id
-        for node in xml.xpath.Evaluate(path,self.document):
+        for node in self.document.xpath(path,inkex.NSS):
           self.process_gradient(node, newhref)
  
   def colmod(self,r,g,b):

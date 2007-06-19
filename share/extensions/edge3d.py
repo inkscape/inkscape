@@ -40,6 +40,7 @@ class Edge3d(inkex.Effect):
         for o in opts:
             self.OptionParser.add_option(o[0], o[1], action="store", type=o[2],
                                          dest=o[3], default=o[4], help=o[5])
+        self.filtId = ''
 
     def angleBetween(self, start, end, angle):
         """Return true if angle (degrees, clockwise, 0 = up/north) is between
@@ -72,9 +73,9 @@ class Edge3d(inkex.Effect):
         # size of a wedge for shade i, wedges come in pairs
         delta = 360. / self.options.shades / 2.
         for id, node in self.selected.iteritems():
-            if node.tagName == 'path':
-                d = node.attributes.getNamedItem('d')
-                p = simplepath.parsePath(d.value)
+            if node.tag == inkex.addNS('path','svg'):
+                d = node.get('d')
+                p = simplepath.parsePath(d)
                 g = None
                 for shade in range(0, self.options.shades):
                     if (self.options.bw and shade > 0 and
@@ -102,48 +103,41 @@ class Edge3d(inkex.Effect):
                     if result:
                         if not g:
                             g = self.getGroup(node)
-                        nn = g.appendChild(node.cloneNode(True))
-                        d2 = nn.attributes.getNamedItem('d')
-                        d2.value = simplepath.formatPath(result)
-    
-                        a = nn.ownerDocument.createAttribute('style')
+                        nn = inkex.etree.fromstring(inkex.etree.tostring(node))
+                        nn.set('d',simplepath.formatPath(result))
+                        
                         col = 255 - int(255. * level)
-                        a.value = 'fill:none;stroke:#%02x%02x%02x;stroke-opacity:1;stroke-width:10;%s' % ((col,)*3 + (self.filtId,))
-                        nn.attributes.setNamedItem(a)
- 
-    def setAttr(self, node, name, value):
-        attr = node.ownerDocument.createAttribute(name)
-        attr.value = value
-        node.attributes.setNamedItem(attr)
+                        a = 'fill:none;stroke:#%02x%02x%02x;stroke-opacity:1;stroke-width:10;%s' % ((col,)*3 + (self.filtId,))
+                        nn.set('style',a)
+                        g.append(nn)
         
     def getGroup(self, node):
-        defs = node.ownerDocument.getElementsByTagName('defs')
+        defs = self.document.getroot().xpath('//svg:defs',inkex.NSS)
         if defs:
             defs = defs[0]
-        if defs:
             # make a clipped group, clip with clone of original, clipped group
             # include original and group of paths
-            clip = defs.appendChild(node.ownerDocument.createElement('clipPath'))
-            clip.appendChild(node.cloneNode(True))
+            clip = inkex.etree.SubElement(defs,inkex.addNS('clipPath','svg'))
+            clip.append(inkex.etree.fromstring(inkex.etree.tostring(node)))
             clipId = self.uniqueId('clipPath')
-            self.setAttr(clip, 'id', clipId)
-            clipG = node.parentNode.appendChild(node.ownerDocument.createElement('g'))
-            clipG.appendChild(node)
-            g = clipG.appendChild(node.ownerDocument.createElement('g'))
-            self.setAttr(clipG, 'clip-path', 'url(#'+clipId+')')
+            clip.set('id', clipId)
+            clipG = inkex.etree.SubElement(node.xpath('..')[0],inkex.addNS('g','svg'))
+            g = inkex.etree.SubElement(clipG,inkex.addNS('g','svg'))
+            clipG.set('clip-path', 'url(#'+clipId+')')
             # make a blur filter reference by the style of each path
-            filt = defs.appendChild(node.ownerDocument.createElement('filter'))
+            filt = inkex.etree.SubElement(defs,inkex.addNS('filter','svg'))
             filtId = self.uniqueId('filter')
+            self.filtId = 'filter:url(#%s);' % filtId
             for k, v in [('id', filtId), ('height', str(self.options.blurheight)),
                          ('width', str(self.options.blurwidth)),
                          ('x', '-0.5'), ('y', '-0.5')]:
-                self.setAttr(filt, k, v)
-            fe = filt.appendChild(node.ownerDocument.createElement('feGaussianBlur'))
-            self.setAttr(fe, 'stdDeviation', str(self.options.stddev))
-            self.filtId = 'filter:url(#%s);' % filtId
+                filt.set(k, v)
+            fe = inkex.etree.SubElement(filt,inkex.addNS('feGaussianBlur','svg'))
+            fe.set('stdDeviation', str(self.options.stddev))
         else:
             # can't find defs, just group paths
-            g = node.parentNode.appendChild(node.ownerDocument.createElement('g'))
+            g = inkex.etree.SubElement(node.xpath('..')[0],inkex.addNS('g','svg'))
+            g.append(node)
 
         return g
 

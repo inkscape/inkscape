@@ -101,14 +101,12 @@ class LSystem(inkex.Effect):
         return level_string
             
     def effect(self):
-        new = self.document.createElement('svg:path')
         s = {'stroke-linejoin': 'miter', 'stroke-width': '1.0px', 
             'stroke-opacity': '1.0', 'fill-opacity': '1.0', 
             'stroke': '#000000', 'stroke-linecap': 'butt', 
             'fill': 'none'}
-        new.setAttribute('style', simplestyle.formatStyle(s))
-        new.setAttribute('d', self.iterate())
-        self.current_layer.appendChild(new)
+        attribs = {'style':simplestyle.formatStyle(s),'d':self.iterate()}
+        inkex.etree.SubElement(self.current_layer,inkex.addNS('path','svg'),attribs)
 
 e = LSystem()
 e.affect()

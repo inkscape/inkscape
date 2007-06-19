@@ -18,7 +18,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
-import inkex, simplestyle, sys
+import inkex
+import simplestyle, sys
 from math import *
 
 def involute_intersect_angle(Rb, R):
@@ -145,21 +146,17 @@ class Gears(inkex.Effect):
 
         path = points_to_svgd( points )
 
-        # Create SVG Path for gear
-        gear = self.document.createElement( 'svg:path' )
-        style = { 'stroke': '#000000', 'fill': 'none' }
-        gear.setAttribute( 'style', simplestyle.formatStyle(style) )
-        gear.setAttribute( 'd', path )
-
         # Embed gear in group to make animation easier:
         #  Translate group, Rotate path.
-        g=self.document.createElement('g')
-
-        g.setAttribute( 'inkscape:label', 'Gear' + str( teeth ) )
         t = 'translate(' + str( self.view_center[0] ) + ',' + str( self.view_center[1] ) + ')'
-        g.setAttribute( 'transform', t )
-        self.current_layer.appendChild( g )
-        g.appendChild( gear )
+        g_attribs = {'inkscape:label':'Gear' + str( teeth ),
+                   'transform':t }
+        g = inkex.etree.SubElement(self.current_layer, 'g', g_attribs)
+
+        # Create SVG Path for gear
+        style = { 'stroke': '#000000', 'fill': 'none' }
+        gear_attribs = {'style':simplestyle.formatStyle(style), 'd':path}
+        gear = inkex.etree.SubElement(g, 'svg:path', gear_attribs )
 
 e = Gears()
 e.affect()

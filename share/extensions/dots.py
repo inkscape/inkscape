@@ -31,24 +31,23 @@ class Dots(inkex.Effect):
                         help="Size of node label numbers")    
     def effect(self):
         for id, node in self.selected.iteritems():
-            if node.tagName == 'path':
-                self.group = self.document.createElement('svg:g')
-                node.parentNode.appendChild(self.group)
-                new = self.document.createElement('svg:path')
+            if node.tag == inkex.addNS('path','svg'):
+                self.group = inkex.etree.SubElement(node.xpath('..')[0],inkex.addNS('g','svg'))
+                new = inkex.etree.SubElement(self.group,inkex.addNS('path','svg'))
                 
                 try:
-                    t = node.attributes.getNamedItem('transform').value
-                    self.group.setAttribute('transform', t)
-                except AttributeError:
+                    t = node.get('transform')
+                    self.group.set('transform', t)
+                except:
                     pass
 
-                s = simplestyle.parseStyle(node.attributes.getNamedItem('style').value)
+                s = simplestyle.parseStyle(node.get('style'))
                 s['stroke-linecap']='round'
                 s['stroke-width']=self.options.dotsize
-                new.setAttribute('style', simplestyle.formatStyle(s))
+                new.set('style', simplestyle.formatStyle(s))
 
                 a =[]
-                p = simplepath.parsePath(node.attributes.getNamedItem('d').value)
+                p = simplepath.parsePath(node.get('d'))
                 num = 1
                 for cmd,params in p:
                     if cmd != 'Z':
@@ -56,20 +55,18 @@ class Dots(inkex.Effect):
                         a.append(['L',params[-2:]])
                         self.addText(self.group,params[-2],params[-1],num)
                         num += 1
-                new.setAttribute('d', simplepath.formatPath(a))
-                self.group.appendChild(new)
-                node.parentNode.removeChild(node)
+                new.set('d', simplepath.formatPath(a))
+                node.clear()
 
                 
     def addText(self,node,x,y,text):
-                new = self.document.createElement('svg:text')
+                new = inkex.etree.SubElement(node,inkex.addNS('text','svg'))
                 s = {'font-size': self.options.fontsize, 'fill-opacity': '1.0', 'stroke': 'none',
                     'font-weight': 'normal', 'font-style': 'normal', 'fill': '#000000'}
-                new.setAttribute('style', simplestyle.formatStyle(s))
-                new.setAttribute('x', str(x))
-                new.setAttribute('y', str(y))
-                new.appendChild(self.document.createTextNode(str(text)))
-                node.appendChild(new)
+                new.set('style', simplestyle.formatStyle(s))
+                new.set('x', str(x))
+                new.set('y', str(y))
+                new.text = str(text)
 
 e = Dots()
 e.affect()

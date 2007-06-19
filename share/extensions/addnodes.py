@@ -1,6 +1,6 @@
 #!/usr/bin/env python 
 '''
-Copyright (C) 2005 Aaron Spike, aaron@ekips.org
+Copyright (C) 2005,2007 Aaron Spike, aaron@ekips.org
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -64,9 +64,8 @@ class SplitIt(inkex.Effect):
                         help="maximum segment length")
     def effect(self):
         for id, node in self.selected.iteritems():
-            if node.tagName == 'path':
-                d = node.attributes.getNamedItem('d')
-                p = cubicsuperpath.parsePath(d.value)
+            if node.tag == inkex.addNS('path','svg'):
+                p = cubicsuperpath.parsePath(node.get('d'))
                 
                 #lens, total = csplength(p)
                 #avg = total/numlengths(lens)
@@ -86,7 +85,7 @@ class SplitIt(inkex.Effect):
                         new[-1].append(sub[i])
                         i+=1
                     
-                d.value = cubicsuperpath.formatPath(new)
+                node.set('d',cubicsuperpath.formatPath(new))
 
 e = SplitIt()
 e.affect()

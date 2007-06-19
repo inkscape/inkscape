@@ -1,6 +1,6 @@
 #!/usr/bin/env python 
 '''
-Copyright (C) 2005 Aaron Spike, aaron@ekips.org
+Copyright (C) 2005,2007 Aaron Spike, aaron@ekips.org
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,23 +40,22 @@ class Embedder(inkex.Effect):
         self.selected=selected
         if (self.options.ids):
             for id, node in selected.iteritems():
-                if node.tagName == 'image':
+                if node.tag == inkex.addNS('image','svg'):
                     self.embedImage(node)
 
     def embedAll(self, document):
         self.document=document #not that nice... oh well
-        ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
-        path = '//image'
-        for node in inkex.xml.xpath.Evaluate(path, self.document, context=ctx):
+        path = '//svg:image'
+        for node in self.document.getroot().xpath(path, inkex.NSS):
             self.embedImage(node)
 
     def embedImage(self, node):
-        xlink = node.attributes.getNamedItemNS(inkex.NSS[u'xlink'],'href')
-        if (xlink.value[:4]!='data'):
-            absref=node.attributes.getNamedItemNS(inkex.NSS[u'sodipodi'],'absref')
-            href=node.attributes.getNamedItemNS(inkex.NSS[u'xlink'],'href')
-            svg=self.document.getElementsByTagName('svg')[0]
-            docbase=svg.attributes.getNamedItemNS(inkex.NSS[u'sodipodi'],'docbase')
+        xlink = node.get(inkex.addNS('href','xlink'))
+        if (xlink[:4]!='data'):
+            absref=node.get(inkex.addNS('absref','sodipodi'))
+            href=xlink
+            svg=self.document.getroot().xpath('/svg:svg',inkex.NSS)[0]
+            docbase=svg.get(inkex.addNS('docbase','sodipodi'))
 
             path=''
             #path selection strategy:
@@ -65,15 +64,15 @@ class Embedder(inkex.Effect):
             # 3. realpath-ified href
             # 4. absref, only if the above does not point to a file
             if (href != None):
-                if (os.path.isabs(href.value)):
-                    path=os.path.realpath(href.value)
+                if (os.path.isabs(href)):
+                    path=os.path.realpath(href)
                 elif (docbase != None):
-                    path=os.path.join(docbase.value,href.value)
+                    path=os.path.join(docbase,href)
                 else:
-                    path=os.path.realpath(href.value)
+                    path=os.path.realpath(href)
             if (not os.path.isfile(path)):
                 if (absref != None):
-                    path=absref.value
+                    path=absref
             if (not os.path.isfile(path)):
                 inkex.debug('No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image.')
             
@@ -94,8 +93,8 @@ class Embedder(inkex.Effect):
                 else:
                     embed=False
                 if (embed):
-                    xlink.value = 'data:%s;base64,%s' % (type, base64.encodestring(file))
-                    node.removeAttributeNS(inkex.NSS[u'sodipodi'],'absref')
+                    node.set(inkex.addNS('href','xlink'), 'data:%s;base64,%s' % (type, base64.encodestring(file)))
+                    del node.attrib[inkex.addNS('absref',u'sodipodi')]
                 else:
                     inkex.debug("%s is not of type image/png, image/jpeg, image/bmp, image/gif or image/x-icon" % path)
             else:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python 
 '''
-Copyright (C) 2005 Aaron Spike, aaron@ekips.org
+Copyright (C) 2005,2007 Aaron Spike, aaron@ekips.org
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -45,11 +45,11 @@ class MyEffect(inkex.Effect):
         self.dxf_add("999\nDXF created by Inkscape\n0\nSECTION\n2\nENTITIES")
         
         scale = 25.4/90.0
-        h = inkex.unittouu(inkex.xml.xpath.Evaluate('/svg/@height',self.document)[0].value)
-
-        path = '//path'
-        for node in inkex.xml.xpath.Evaluate(path,self.document):
-            d = node.attributes.getNamedItem('d').value
+        h = inkex.unittouu(self.document.getroot().xpath('@height',inkex.NSS)[0])
+        
+        path = '//svg:path'
+        for node in self.document.getroot().xpath(path,inkex.NSS):
+            d = node.get('d')
             sim = simplepath.parsePath(d)
             simplepath.scalePath(sim,scale,-scale)
             simplepath.translatePath(sim,0,h*scale)            
