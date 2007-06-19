@@ -18,7 +18,7 @@ palettes_DATA = \
     Royal.gpl \
     Topographic.gpl \
     Ubuntu.gpl \
-    windows.gpl \
+    windowsXP.gpl \
     LaTeX-Beamer.gpl
     
 
