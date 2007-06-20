@@ -21,8 +21,8 @@ import inkex, simplepath, simplestyle
 class Handles(inkex.Effect):
     def effect(self):
         for id, node in self.selected.iteritems():
-            if node.tagName == 'path':
-                p = simplepath.parsePath(node.attributes.getNamedItem('d').value)
+            if node.tag == inkex.addNS('path','svg'):
+                p = simplepath.parsePath(node.get('d'))
                 a =[]
                 pen = None
                 subPathStart = None
@@ -43,14 +43,12 @@ class Handles(inkex.Effect):
                         pen = params[-2:]
                     
                 if len(a) > 0:
-                    new = self.document.createElement('svg:path')
                     s = {'stroke-linejoin': 'miter', 'stroke-width': '1.0px', 
                         'stroke-opacity': '1.0', 'fill-opacity': '1.0', 
                         'stroke': '#000000', 'stroke-linecap': 'butt', 
                         'fill': 'none'}
-                    new.setAttribute('style', simplestyle.formatStyle(s))
-                    new.setAttribute('d', simplepath.formatPath(a))
-                    node.parentNode.appendChild(new)
-
+                    attribs = {'style':simplestyle.formatStyle(s),'d':simplepath.formatPath(a)}
+                    inkex.etree.SubElement(node.getparent(), inkex.addNS('path','svg'), attribs)
+                    
 e = Handles()
 e.affect()

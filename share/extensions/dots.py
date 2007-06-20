@@ -32,7 +32,7 @@ class Dots(inkex.Effect):
     def effect(self):
         for id, node in self.selected.iteritems():
             if node.tag == inkex.addNS('path','svg'):
-                self.group = inkex.etree.SubElement(node.xpath('..')[0],inkex.addNS('g','svg'))
+                self.group = inkex.etree.SubElement(node.getparent(),inkex.addNS('g','svg'))
                 new = inkex.etree.SubElement(self.group,inkex.addNS('path','svg'))
                 
                 try:

@@ -122,9 +122,9 @@ class Interp(inkex.Effect):
         styles = {}
         for id in self.options.ids:
             node = self.selected[id]
-            if node.tagName =='path':
-                paths[id] = cubicsuperpath.parsePath(node.attributes.getNamedItem('d').value)
-                styles[id] = simplestyle.parseStyle(node.attributes.getNamedItem('style').value)
+            if node.tag ==inkex.addNS('path','svg'):
+                paths[id] = cubicsuperpath.parsePath(node.get('d'))
+                styles[id] = simplestyle.parseStyle(node.get('style'))
             else:
                 self.options.ids.remove(id)
 
@@ -272,8 +272,7 @@ class Interp(inkex.Effect):
             if self.options.dup:
                 steps = [0] + steps + [1]    
             #create an interpolated path for each interval
-            group = self.document.createElement('svg:g')    
-            self.current_layer.appendChild(group)
+            group = inkex.etree.SubElement(self.current_layer,inkex.addNS('g','svg'))    
             for time in steps:
                 interp = []
                 #process subpaths
@@ -295,7 +294,6 @@ class Interp(inkex.Effect):
                 #remove final subpath if empty.
                 if not interp[-1]:
                     del interp[-1]
-                new = self.document.createElement('svg:path')
 
                 #basic style tweening
                 if self.options.style:
@@ -307,9 +305,8 @@ class Interp(inkex.Effect):
                     if dofill:
                         basestyle['fill-opacity'] = tweenstylefloat('fill-opacity',sst,est,time)
                         basestyle['fill'] = tweenstylecolor('fill',sst,est,time)
-                new.setAttribute('style', simplestyle.formatStyle(basestyle))
-                new.setAttribute('d', cubicsuperpath.formatPath(interp))
-                group.appendChild(new)
+                attribs = {'style':simplestyle.formatStyle(basestyle),'d':cubicsuperpath.formatPath(interp)}
+                new = inkex.etree.SubElement(group,inkex.addNS('path','svg'), attribs)
 
 e = Interp()
 e.affect()

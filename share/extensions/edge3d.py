@@ -121,7 +121,7 @@ class Edge3d(inkex.Effect):
             clip.append(inkex.etree.fromstring(inkex.etree.tostring(node)))
             clipId = self.uniqueId('clipPath')
             clip.set('id', clipId)
-            clipG = inkex.etree.SubElement(node.xpath('..')[0],inkex.addNS('g','svg'))
+            clipG = inkex.etree.SubElement(node.getparent(),inkex.addNS('g','svg'))
             g = inkex.etree.SubElement(clipG,inkex.addNS('g','svg'))
             clipG.set('clip-path', 'url(#'+clipId+')')
             # make a blur filter reference by the style of each path
@@ -136,7 +136,7 @@ class Edge3d(inkex.Effect):
             fe.set('stdDeviation', str(self.options.stddev))
         else:
             # can't find defs, just group paths
-            g = inkex.etree.SubElement(node.xpath('..')[0],inkex.addNS('g','svg'))
+            g = inkex.etree.SubElement(node.getparent(),inkex.addNS('g','svg'))
             g.append(node)
 
         return g

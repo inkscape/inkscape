@@ -36,31 +36,30 @@ class MyEffect(inkex.Effect):
             'icon':'.ico',
             'gif' :'.gif'
         }
-        #ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
         
         # exbed the first embedded image
         path = self.options.filepath
         if (path != ''):
             if (self.options.ids):
                 for id, node in self.selected.iteritems():
-                    if node.tagName == 'image':
-                        xlink = node.attributes.getNamedItemNS(inkex.NSS[u'xlink'],'href')
-                        if (xlink.value[:4]=='data'):
-                            comma = xlink.value.find(',')
+                    if node.tag == inkex.addNS('image','svg'):
+                        xlink = node.get(inkex.addNS('href','xlink'))
+                        if (xlink[:4]=='data'):
+                            comma = xlink.find(',')
                             if comma>0:
                                 #get extension
                                 fileext=''
-                                semicolon = xlink.value.find(';')
+                                semicolon = xlink.find(';')
                                 if semicolon>0:
                                     for sub in mimesubext.keys():
-                                        if sub in xlink.value[5:semicolon]:
+                                        if sub in xlink[5:semicolon]:
                                             fileext=mimesubext[sub]
                                             path=path+fileext;
                                             break
                                 #save
-                                data = base64.decodestring(xlink.value[comma:])
+                                data = base64.decodestring(xlink[comma:])
                                 open(path,'wb').write(data)
-                                xlink.value = os.path.realpath(path) #absolute for making in-mem cycles work
+                                node.set(inkex.addNS('href','xlink'),os.path.realpath(path)) #absolute for making in-mem cycles work
                             else:
                                 inkex.debug('Difficulty finding the image data.')
                             break

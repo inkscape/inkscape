@@ -83,7 +83,7 @@ class ColorEffect(inkex.Effect):
        #inkex.debug("visited: " + str(self.visited))
     newnode = inkex.etree.fromstring(inkex.etree.tostring(node))
     newnode.set('id', newid)
-    node.xpath('..')[0].append(newnode)
+    node.getparent().append(newnode)
     self.changeStyle(newnode)
     for child in newnode:
       self.changeStyle(child)

@@ -27,9 +27,9 @@ class MyEffect(inkex.Effect):
                         help="Minimum flatness of the subdivided curves")
     def effect(self):
         for id, node in self.selected.iteritems():
-            if node.tagName == 'path':
-                d = node.attributes.getNamedItem('d')
-                p = cubicsuperpath.parsePath(d.value)
+            if node.tag == inkex.addNS('path','svg'):
+                d = node.get('d')
+                p = cubicsuperpath.parsePath(d)
                 cspsubdiv.cspsubdiv(p, self.options.flat)
                 np = []
                 for sp in p:
@@ -40,7 +40,7 @@ class MyEffect(inkex.Effect):
                             cmd = 'M'
                         first = False
                         np.append([cmd,[csp[1][0],csp[1][1]]])
-                        d.value = simplepath.formatPath(np)
+                        node.set('d',simplepath.formatPath(np))
 
 e = MyEffect()
 e.affect()

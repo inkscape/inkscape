@@ -174,25 +174,25 @@ class FuncPlot(inkex.Effect):
 
     def effect(self):
         for id, node in self.selected.iteritems():
-            if node.tagName == 'rect':
+            if node.tag == inkex.addNS('rect','svg'):
                 # create new path with basic dimensions of selected rectangle
-                newpath = self.document.createElement('svg:path')
-                x = float(node.attributes.getNamedItem('x').value)
-                y = float(node.attributes.getNamedItem('y').value)
-                w = float(node.attributes.getNamedItem('width').value)
-                h = float(node.attributes.getNamedItem('height').value)
+                newpath = inkex.etree.Element(inkex.addNS('path','svg'))
+                x = float(node.get('x'))
+                y = float(node.get('y'))
+                w = float(node.get('width'))
+                h = float(node.get('height'))
 
                 #copy attributes of rect
-                s = node.attributes.getNamedItem('style').value
-                newpath.setAttribute('style', s)
+                s = node.get('style')
+                newpath.set('style', s)
                 try:
-                    t = node.attributes.getNamedItem('transform').value
-                    newpath.setAttribute('transform', t)
+                    t = node.get('transform')
+                    newpath.set('transform', t)
                 except AttributeError:
                     pass
                     
                 # top and bottom where exchanhged
-                newpath.setAttribute('d', simplepath.formatPath(
+                newpath.set('d', simplepath.formatPath(
                             drawfunction(self.options.xstart,
                                 self.options.xend,
                                 self.options.ybottom,
@@ -205,7 +205,7 @@ class FuncPlot(inkex.Effect):
                                 self.options.times2pi,
                                 self.options.isoscale,
                                 self.options.drawaxis)))
-                newpath.setAttribute('title', self.options.fofx)
+                newpath.set('title', self.options.fofx)
                 
                 #newpath.setAttribute('desc', '!func;' + self.options.fofx + ';' 
                 #                                      + self.options.fpofx + ';'
@@ -215,10 +215,10 @@ class FuncPlot(inkex.Effect):
                 #                                      + `self.options.samples`)
                                 
                 # add path into SVG structure
-                node.parentNode.appendChild(newpath)
+                node.getparent().append(newpath)
                 # option wether to remove the rectangle or not.
                 if self.options.remove:
-                  node.parentNode.removeChild(node)
+                    node.getparent().remove(node)
                 
 e = FuncPlot()
 e.affect()
