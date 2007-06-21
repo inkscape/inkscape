@@ -153,16 +153,7 @@ Input::open (const gchar *uri)
     }
     timer->touch();
 
-    SPDocument * doc = NULL;
-
-#ifdef WITH_GNOME_VFS
-    doc = imp->open(this, uri);
-#else
-    if (Inkscape::IO::file_test(uri, G_FILE_TEST_EXISTS)) {
-        doc = imp->open(this, uri);
-    }
-#endif
-    
+    SPDocument *const doc = imp->open(this, uri);
     if (doc != NULL) {
         Inkscape::XML::Node * repr = sp_document_repr_root(doc);
         bool saved = sp_document_get_undo_sensitive(doc);

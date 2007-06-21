@@ -34,6 +34,9 @@
 //Another hack
 #include <gtk/gtkentry.h>
 #include <gtk/gtkexpander.h>
+#ifdef WITH_GNOME_VFS
+# include <libgnomevfs/gnome-vfs-init.h>  // gnome_vfs_initialized
+#endif
 
 
 
@@ -821,12 +824,14 @@ void FileDialogBase::_updatePreviewCallback()
     Glib::ustring fileName = get_preview_filename();
 
 #ifdef WITH_GNOME_VFS
-    if (fileName.length() < 1)
+    if ( fileName.empty() && gnome_vfs_initialized() ) {
         fileName = get_preview_uri();
+    }
 #endif
 
-    if (fileName.length() < 1)
+    if (fileName.empty()) {
         return;
+    }
 
     svgPreview.set(fileName, dialogType);
 }
@@ -955,7 +960,9 @@ FileOpenDialogImpl::FileOpenDialogImpl(const Glib::ustring &dir,
     set_select_multiple(true);
 
 #ifdef WITH_GNOME_VFS
-    set_local_only(false);
+    if (gnome_vfs_initialized()) {
+        set_local_only(false);
+    }
 #endif
 
     /* Initalize to Autodetect */
@@ -1047,7 +1054,7 @@ FileOpenDialogImpl::show()
             }
         myFilename = get_filename();
 #ifdef WITH_GNOME_VFS
-        if (myFilename.length() < 1)
+        if (myFilename.empty() && gnome_vfs_initialized())
             myFilename = get_uri();
 #endif
         cleanup( true );
@@ -1090,7 +1097,7 @@ std::vector<Glib::ustring>FileOpenDialogImpl::getFilenames()
 {    
     std::vector<Glib::ustring> result = get_filenames();
 #ifdef WITH_GNOME_VFS
-    if (result.empty())
+    if (result.empty() && gnome_vfs_initialized())
         result = get_uris();
 #endif
     return result;
@@ -1311,7 +1318,9 @@ FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
     set_select_multiple(false);
 
 #ifdef WITH_GNOME_VFS
-    set_local_only(false);
+    if (gnome_vfs_initialized()) {
+        set_local_only(false);
+    }
 #endif
 
     /* Initalize to Autodetect */
@@ -1557,7 +1566,7 @@ void FileSaveDialogImpl::updateNameAndExtension()
     // Pick up any changes the user has typed in.
     Glib::ustring tmp = get_filename();
 #ifdef WITH_GNOME_VFS
-    if ( tmp.empty() ) {
+    if ( tmp.empty() && gnome_vfs_initialized() ) {
         tmp = get_uri();
     }
 #endif
@@ -1932,7 +1941,9 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
     set_select_multiple(false);
 
 #ifdef WITH_GNOME_VFS
-    set_local_only(false);
+    if (gnome_vfs_initialized()) {
+        set_local_only(false);
+    }
 #endif
 
     /* Initalize to Autodetect */
@@ -2141,8 +2152,9 @@ FileExportDialogImpl::show()
             }
         myFilename = get_filename();
 #ifdef WITH_GNOME_VFS
-        if (myFilename.length() < 1)
+        if ( myFilename.empty() && gnome_vfs_initialized() ) {
             myFilename = get_uri();
+        }
 #endif
 
         /*

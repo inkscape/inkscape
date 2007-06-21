@@ -102,7 +102,7 @@ Svg::init(void)
 #ifdef WITH_GNOME_VFS
 #define BUF_SIZE 8192
 
-gchar *
+static gchar *
 _load_uri (const gchar *uri)
 {
     GnomeVFSHandle   *handle = NULL;
@@ -148,7 +148,7 @@ SPDocument *
 Svg::open (Inkscape::Extension::Input *mod, const gchar *uri)
 {
 #ifdef WITH_GNOME_VFS
-    if (gnome_vfs_uri_is_local(gnome_vfs_uri_new(uri))) {
+    if (!gnome_vfs_initialized() || gnome_vfs_uri_is_local(gnome_vfs_uri_new(uri))) {
         // Use built-in loader instead of VFS for this
         return sp_document_new(uri, TRUE);
     }

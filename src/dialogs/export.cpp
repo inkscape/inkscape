@@ -30,6 +30,9 @@
 #include <gtkmm/image.h>
 #include <gtkmm/stockid.h>
 #include <gtkmm/stock.h>
+#ifdef WITH_GNOME_VFS
+# include <libgnomevfs/gnome-vfs-init.h>  // gnome_vfs_initialized
+#endif
 
 #include <glibmm/i18n.h>
 #include "helper/unit-menu.h"
@@ -1305,7 +1308,9 @@ sp_export_browse_clicked (GtkButton *button, gpointer userdata)
                                       NULL );
 
 #ifdef WITH_GNOME_VFS
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER (fs), false);
+    if (gnome_vfs_initialized()) {
+        gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(fs), false);
+    }
 #endif
 
     fe = (GtkWidget *)g_object_get_data (G_OBJECT (dlg), "filename");
