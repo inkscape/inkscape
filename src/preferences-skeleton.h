@@ -51,6 +51,7 @@ static char const preferences_skeleton[] =
 "         style=\"fill:none;stroke:black;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;\">\n"
 "    <group id=\"shapes\" style=\"fill-rule:evenodd;\" selcue=\"1\" gradientdrag=\"1\">\n"
 "      <eventcontext id=\"rect\" style=\"fill:blue;\" usecurrent=\"1\"/>\n"
+"      <eventcontext id=\"3dbox\" style=\"fill:blue;\" usecurrent=\"1\"/>\n"
 "      <eventcontext id=\"arc\" style=\"fill:red;\" end=\"0\" start=\"0\" usecurrent=\"1\"/>\n"
 "      <eventcontext id=\"star\" magnitude=\"5\" style=\"fill:yellow;\" usecurrent=\"1\"/>\n"
 "      <eventcontext id=\"spiral\" style=\"fill:none;\" usecurrent=\"0\"/>\n"

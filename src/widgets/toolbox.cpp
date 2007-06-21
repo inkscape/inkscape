@@ -64,6 +64,7 @@
 #include "node-context.h"
 #include "shape-editor.h"
 #include "sp-rect.h"
+#include "box3d-context.h"
 #include "sp-star.h"
 #include "sp-spiral.h"
 #include "sp-ellipse.h"
@@ -102,6 +103,7 @@ static void       sp_zoom_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainA
 static void       sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
+static void       sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_pen_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
@@ -124,6 +126,7 @@ static struct {
     { "SPNodeContext",     "node_tool",      SP_VERB_CONTEXT_NODE, SP_VERB_CONTEXT_NODE_PREFS },
     { "SPZoomContext",     "zoom_tool",      SP_VERB_CONTEXT_ZOOM, SP_VERB_CONTEXT_ZOOM_PREFS },
     { "SPRectContext",     "rect_tool",      SP_VERB_CONTEXT_RECT, SP_VERB_CONTEXT_RECT_PREFS },
+//    { "SP3DBoxContext",    "3dbox_tool",     SP_VERB_CONTEXT_3DBOX, SP_VERB_CONTEXT_3DBOX_PREFS },
     { "SPArcContext",      "arc_tool",       SP_VERB_CONTEXT_ARC, SP_VERB_CONTEXT_ARC_PREFS },
     { "SPStarContext",     "star_tool",      SP_VERB_CONTEXT_STAR, SP_VERB_CONTEXT_STAR_PREFS },
     { "SPSpiralContext",   "spiral_tool",    SP_VERB_CONTEXT_SPIRAL, SP_VERB_CONTEXT_SPIRAL_PREFS },
@@ -158,6 +161,8 @@ static struct {
       SP_VERB_CONTEXT_STAR_PREFS,   "tools.shapes.star",     _("Style of new stars")},
     { "SPRectContext",   "rect_toolbox",   0, sp_rect_toolbox_prep,              "RectToolbar",
       SP_VERB_CONTEXT_RECT_PREFS,   "tools.shapes.rect",     _("Style of new rectangles")},
+    { "SP3DBoxContext",  "3dbox_toolbox",  0, sp_3dbox_toolbox_prep,             "3DBoxToolbar",
+      SP_VERB_CONTEXT_3DBOX_PREFS,  "tools.shapes.3dbox",    _("Style of new 3D boxes")},
     { "SPArcContext",    "arc_toolbox",    0, sp_arc_toolbox_prep,               "ArcToolbar",
       SP_VERB_CONTEXT_ARC_PREFS,    "tools.shapes.arc",      _("Style of new ellipses")},
     { "SPSpiralContext", "spiral_toolbox", 0, sp_spiral_toolbox_prep,            "SpiralToolbar",
@@ -270,6 +275,12 @@ static gchar const * ui_descr =
         "    <toolitem action='RectUnitsAction' />"
         "    <separator />"
         "    <toolitem action='RectResetAction' />"
+        "  </toolbar>"
+
+        "  <toolbar name='3DBoxToolbar'>"
+        "    <toolitem action='3DBoxVPXAction' />"
+        "    <toolitem action='3DBoxVPYAction' />"
+        "    <toolitem action='3DBoxVPZAction' />"
         "  </toolbar>"
 
         "  <toolbar name='SpiralToolbar'>"
@@ -2087,6 +2098,89 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         );
     g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
+}
+
+//########################
+//##       3D Box       ##
+//########################
+
+static void sp_3dbox_toggle_vp_changed( GtkToggleAction *act, gpointer data )
+{
+    guint dir = (guint) data;
+    Box3D::PerspDir axis;// = (Box3D::PerspDir) data;
+
+    GString *pstring;
+    switch (dir) {
+        case 0:
+            pstring = g_string_new("togglevpx");
+            axis = Box3D::X;
+            break;
+        case 1:
+            pstring = g_string_new("togglevpy");
+            axis = Box3D::Y;
+            break;
+        case 2:
+            pstring = g_string_new("togglevpz");
+            axis = Box3D::Z;
+            break;
+    }
+    
+    if (SP3DBoxContext::current_perspective) {
+        Box3D::VanishingPoint *vp = SP3DBoxContext::current_perspective->get_vanishing_point(axis);
+        vp->toggle_parallel();
+        vp->draw(axis);
+        prefs_set_int_attribute( "tools.shapes.3dbox", pstring->str, vp->is_finite() ? 0 : 1);
+    }
+    
+}
+
+static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
+{
+    bool toggled = false;
+    /* toggle VP in X direction */
+    {
+    InkToggleAction* act = ink_toggle_action_new( "3DBoxVPXAction",
+                                                  _("Toggle VP in X direction"),
+                                                  _("Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"),
+                                                  "toggle_vp_x",
+                                                  Inkscape::ICON_SIZE_DECORATION );
+    gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+    g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), (gpointer) 0);
+    if (SP3DBoxContext::current_perspective) {
+        toggled = SP3DBoxContext::current_perspective->get_vanishing_point(Box3D::X)->is_finite();
+    }
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), toggled );
+    }
+
+    /* toggle VP in Y direction */
+    {
+    InkToggleAction* act = ink_toggle_action_new( "3DBoxVPYAction",
+                                                  _("Toggle VP in Y direction"),
+                                                  _("Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"),
+                                                  "toggle_vp_y",
+                                                  Inkscape::ICON_SIZE_DECORATION );
+    gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+    g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), (gpointer) 1);
+    if (SP3DBoxContext::current_perspective) {
+        toggled = SP3DBoxContext::current_perspective->get_vanishing_point(Box3D::Y)->is_finite();
+    }
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), toggled );
+    }
+
+    /* toggle VP in Z direction */
+    {
+    InkToggleAction* act = ink_toggle_action_new( "3DBoxVPZAction",
+                                                  _("Toggle VP in Z direction"),
+                                                  _("Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"),
+                                                  "toggle_vp_z",
+                                                  Inkscape::ICON_SIZE_DECORATION );
+    gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+    g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), (gpointer) 2);
+    if (SP3DBoxContext::current_perspective) {
+        toggled = SP3DBoxContext::current_perspective->get_vanishing_point(Box3D::Z)->is_finite();
+    }
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), toggled );
+    }
 }
 
 //########################

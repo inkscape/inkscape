@@ -1388,6 +1388,9 @@ ContextVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_CONTEXT_RECT:
             tools_switch_current(TOOLS_SHAPES_RECT);
             break;
+        case SP_VERB_CONTEXT_3DBOX:
+            tools_switch_current(TOOLS_SHAPES_3DBOX);
+            break;
         case SP_VERB_CONTEXT_ARC:
             tools_switch_current(TOOLS_SHAPES_ARC);
             break;
@@ -1435,6 +1438,10 @@ ContextVerb::perform(SPAction *action, void *data, void *pdata)
             break;
         case SP_VERB_CONTEXT_RECT_PREFS:
             prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SHAPES_RECT);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
+            break;
+        case SP_VERB_CONTEXT_3DBOX_PREFS:
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SHAPES_3DBOX);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_ARC_PREFS:
@@ -2344,6 +2351,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Edit path nodes or control handles"), "draw_node"),
     new ContextVerb(SP_VERB_CONTEXT_RECT, "ToolRect", N_("Rectangle"),
                     N_("Create rectangles and squares"), "draw_rect"),
+    new ContextVerb(SP_VERB_CONTEXT_3DBOX, "Tool3DBox", N_("3D Box"),
+                    N_("Create 3D boxes"), "draw_3dbox"),
     new ContextVerb(SP_VERB_CONTEXT_ARC, "ToolArc", N_("Ellipse"),
                     N_("Create circles, ellipses, and arcs"), "draw_arc"),
     new ContextVerb(SP_VERB_CONTEXT_STAR, "ToolStar", N_("Star"),
@@ -2376,6 +2385,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Open Preferences for the Node tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_RECT_PREFS, "RectPrefs", N_("Rectangle Preferences"),
                     N_("Open Preferences for the Rectangle tool"), NULL),
+    new ContextVerb(SP_VERB_CONTEXT_3DBOX_PREFS, "3DBoxPrefs", N_("3D Box Preferences"),
+                    N_("Open Preferences for the 3D Box tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_ARC_PREFS, "ArcPrefs", N_("Ellipse Preferences"),
                     N_("Open Preferences for the Ellipse tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_STAR_PREFS, "StarPrefs", N_("Star Preferences"),

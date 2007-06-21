@@ -21,6 +21,7 @@
 #include "sp-path.h"
 #include "sp-radial-gradient-fns.h"
 #include "sp-rect.h"
+#include "box3d.h"
 #include "sp-ellipse.h"
 #include "sp-star.h"
 #include "sp-stop-fns.h"
@@ -171,7 +172,9 @@ populate_dtables()
         { "arc", SP_TYPE_ARC },
         { "inkscape:offset", SP_TYPE_OFFSET },
         { "spiral", SP_TYPE_SPIRAL },
-        { "star", SP_TYPE_STAR }
+        { "star", SP_TYPE_STAR },
+        { "inkscape:3dbox", SP_TYPE_3DBOX }//,
+        //{ "inkscape:3dboxface", SP_TYPE_3DBOX_FACE }
     };
 
     NameTypeEntry const *const t2entries[] = {

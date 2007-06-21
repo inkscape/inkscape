@@ -29,6 +29,7 @@
 #include "spiral-context.h"
 #include "sp-spiral.h"
 #include "sp-offset.h"
+#include "box3d.h"
 
 #include <libnr/nr-matrix-div.h>
 #include <glibmm/i18n.h>
@@ -236,6 +237,8 @@ static void knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
 
     if (SP_IS_RECT(item))
         object_verb = SP_VERB_CONTEXT_RECT;
+    else if (SP_IS_3DBOX(item))
+        object_verb = SP_VERB_CONTEXT_3DBOX;
     else if (SP_IS_GENERICELLIPSE(item))
         object_verb = SP_VERB_CONTEXT_ARC;
     else if (SP_IS_STAR(item))
@@ -289,6 +292,8 @@ static void knot_ungrabbed_handler(SPKnot *knot, unsigned int state, SPKnotHolde
 
         if (SP_IS_RECT(object))
             object_verb = SP_VERB_CONTEXT_RECT;
+        else if (SP_IS_3DBOX(object))
+            object_verb = SP_VERB_CONTEXT_3DBOX;
         else if (SP_IS_GENERICELLIPSE(object))
             object_verb = SP_VERB_CONTEXT_ARC;
         else if (SP_IS_STAR(object))

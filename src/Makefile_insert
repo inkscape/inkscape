@@ -41,6 +41,9 @@ libinkpre_a_SOURCES =	\
 	arc-context.cpp arc-context.h	\
 	attributes.cpp attributes.h	\
 	bad-uri-exception.h	\
+	box3d.cpp box3d.h \
+	box3d-context.cpp box3d-context.h \
+	box3d-face.cpp box3d-face.h \
 	brokenimage.xpm	\
 	color-rgba.h	\
 	color-profile.cpp color-profile.h	\
@@ -90,6 +93,7 @@ libinkpre_a_SOURCES =	\
 	knotholder.cpp knotholder.h	\
 	layer-fns.cpp layer-fns.h	\
 	layer-manager.cpp layer-manager.h	\
+	line-geometry.cpp line-geometry.h	\
 	macros.h	\
 	main-cmdlineact.cpp main-cmdlineact.h \
 	media.cpp media.h	\
@@ -110,6 +114,8 @@ libinkpre_a_SOURCES =	\
 	pen-context.h	\
 	pencil-context.cpp	\
 	pencil-context.h	\
+	perspective-line.cpp perspective-line.h	\
+	perspective3d.cpp perspective3d.h	\
 	preferences.cpp preferences.h \
 	preferences-skeleton.h	\
 	menus-skeleton.h	\
@@ -257,6 +263,7 @@ libinkpre_a_SOURCES =	\
 	text-tag-attributes.h	\
 	tools-switch.cpp tools-switch.h\
 	uri-references.cpp uri-references.h	\
+	vanishing-point.cpp vanishing-point.h	\
 	verbs.cpp verbs.h	\
 	version.cpp version.h	\
 	zoom-context.cpp zoom-context.h

@@ -362,6 +362,9 @@ void InkscapePreferences::initPageTools()
     //Rectangle
     this->AddPage(_page_rectangle, _("Rectangle"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_RECT);
     this->AddNewObjectsStyle(_page_rectangle, "tools.shapes.rect");
+    //3D box
+    this->AddPage(_page_3dbox, _("3D Box"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_3DBOX);
+    this->AddNewObjectsStyle(_page_3dbox, "tools.shapes.3dbox");
     //ellipse
     this->AddPage(_page_ellipse, _("Ellipse"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_ELLIPSE);
     this->AddNewObjectsStyle(_page_ellipse, "tools.shapes.arc");

@@ -27,6 +27,8 @@
 #include "sp-path.h"
 #include "rect-context.h"
 #include "sp-rect.h"
+#include "box3d-context.h"
+#include "box3d.h"
 #include "arc-context.h"
 #include "sp-ellipse.h"
 #include "star-context.h"
@@ -54,6 +56,7 @@ static char const *const tool_names[] = {
     "tools.select",
     "tools.nodes",
     "tools.shapes.rect",
+    "tools.shapes.3dbox",
     "tools.shapes.arc",
     "tools.shapes.star",
     "tools.shapes.spiral",
@@ -74,6 +77,7 @@ static char const *const tool_ids[] = {
     "select",
     "nodes",
     "rect",
+    "3dbox",
     "arc",
     "star",
     "spiral",
@@ -142,6 +146,12 @@ tools_switch(SPDesktop *dt, int num)
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
             dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and resize. <b>Click</b> to select."));
+            break;
+        case TOOLS_SHAPES_3DBOX:
+            dt->set_event_context(SP_TYPE_3DBOX_CONTEXT, tool_names[num]);
+            dt->activate_guides(false);
+            inkscape_eventcontext_set(sp_desktop_event_context(dt));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in perspective. <b>Click</b> to select."));
             break;
         case TOOLS_SHAPES_ARC:
             dt->set_event_context(SP_TYPE_ARC_CONTEXT, tool_names[num]);

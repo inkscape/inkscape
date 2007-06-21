@@ -42,6 +42,7 @@ enum {
     PREFS_PAGE_TOOLS_ZOOM,
     PREFS_PAGE_TOOLS_SHAPES,
     PREFS_PAGE_TOOLS_SHAPES_RECT,
+    PREFS_PAGE_TOOLS_SHAPES_3DBOX,
     PREFS_PAGE_TOOLS_SHAPES_ELLIPSE,
     PREFS_PAGE_TOOLS_SHAPES_STAR,
     PREFS_PAGE_TOOLS_SHAPES_SPIRAL,
@@ -100,7 +101,7 @@ protected:
         _page_clones, _page_mask, _page_transforms, _page_filters, _page_select, _page_misc;
     DialogPage _page_selector, _page_node, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper;
-    DialogPage _page_rectangle, _page_ellipse, _page_star, _page_spiral, _page_paintbucket;
+    DialogPage _page_rectangle, _page_3dbox, _page_ellipse, _page_star, _page_spiral, _page_paintbucket;
 
     PrefSpinButton _mouse_sens, _mouse_thres;
     PrefCheckButton _mouse_use_ext_input;
