@@ -184,12 +184,12 @@ class FuncPlot(inkex.Effect):
 
                 #copy attributes of rect
                 s = node.get('style')
-                newpath.set('style', s)
-                try:
-                    t = node.get('transform')
+                if s:
+                    newpath.set('style', s)
+                
+                t = node.get('transform')
+                if t:
                     newpath.set('transform', t)
-                except AttributeError:
-                    pass
                     
                 # top and bottom where exchanhged
                 newpath.set('d', simplepath.formatPath(
