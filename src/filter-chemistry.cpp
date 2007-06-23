@@ -179,7 +179,7 @@ modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
     // If there are more users for this filter, duplicate it
     if (SP_OBJECT_HREFCOUNT(filter) > count_filter_hrefs(item, filter)) {
         Inkscape::XML::Node *repr;
-        repr = SP_OBJECT_REPR(item)->duplicate(xml_doc);
+        repr = SP_OBJECT_REPR(item->style->filter.filter)->duplicate(xml_doc);
         SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
         SP_OBJECT_REPR(defs)->appendChild(repr);
 
