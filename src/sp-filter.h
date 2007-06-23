@@ -57,9 +57,6 @@ struct SPFilter : public SPObject {
     /** HREF attribute */
     SPFilterReference *href;
 
-    int _primitive_count;
-    int _primitive_table_size;
-    SPFilterPrimitive ** _primitives;
     NR::Filter *_renderer;
 
     std::map<gchar *, int, ltstr> _image_name;

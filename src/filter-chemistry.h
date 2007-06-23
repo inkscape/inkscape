@@ -7,8 +7,9 @@
  * Authors:
  *   Hugo Rodrigues
  *   bulia byak
+ *   Niko Kiirala
  *
- * Copyright (C) 2006 authors
+ * Copyright (C) 2006,2007 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -18,7 +19,9 @@
 
 SPFilter *new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation, double expansion, double expansionX, double expansionY, double width, double height);
 SPFilter *new_filter_gaussian_blur_from_item (SPDocument *document, SPItem *item, gdouble stdDeviation);
+SPFilter *modify_filter_gaussian_blur_from_item (SPDocument *document, SPItem *item, gdouble stdDeviation);
 void remove_filter (SPObject *item, bool recursive);
+void remove_filter_gaussian_blur (SPObject *item);
 
 #endif
 

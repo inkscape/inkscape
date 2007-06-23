@@ -6,8 +6,9 @@
  * Authors:
  *   Hugo Rodrigues
  *   bulia byak
+ *   Niko Kiirala
  *
- * Copyright (C) 2006 authors
+ * Copyright (C) 2006,2007 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -24,24 +25,46 @@
 #include "xml/repr.h"
 
 /**
- * Creates a filter with blur primitive of specified radius for an item with the given matrix expansion, width and height
+ * Count how many times the filter is used by the styles of o and its
+ * descendants
  */
-SPFilter *
-new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion, double expansionX, double expansionY, double width, double height)
+static guint
+count_filter_hrefs(SPObject *o, SPFilter *filter)
 {
-    g_return_val_if_fail(document != NULL, NULL);
+    if (!o)
+        return 1;
 
-    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+    guint i = 0;
 
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    SPStyle *style = SP_OBJECT_STYLE(o);
+    if (style
+        && style->filter.set
+        && style->filter.filter == filter)
+    {
+        i ++;
+    }
 
-    // create a new filter
-    Inkscape::XML::Node *repr;
-    repr = xml_doc->createElement("svg:filter");
-    repr->setAttribute("inkscape:collect", "always");
+    for (SPObject *child = sp_object_first_child(o);
+         child != NULL; child = SP_OBJECT_NEXT(child)) {
+        i += count_filter_hrefs(child, filter);
+    }
 
-    double rx = radius * (expansionY != 0? (expansion / expansionY) : 1);
-    double ry = radius * (expansionX != 0? (expansion / expansionX) : 1);
+    return i;
+}
+
+/**
+ * Sets a suitable filter effects area according to given blur radius,
+ * expansion and object size.
+ */
+static void set_filter_area(Inkscape::XML::Node *repr, gdouble radius,
+                            double expansion, double expansionX,
+                            double expansionY, double width, double height)
+{
+    // TODO: make this more generic, now assumed, that only the blur
+    // being added can affect the required filter area
+
+    double rx = radius * (expansionY != 0 ? (expansion / expansionY) : 1);
+    double ry = radius * (expansionX != 0 ? (expansion / expansionX) : 1);
 
     if (width != 0 && height != 0 && (2.4 * rx > width * 0.1 || 2.4 * ry > height * 0.1)) {
         // If not within the default 10% margin (see
@@ -57,11 +80,32 @@ new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion
         sp_repr_set_svg_double(repr, "y", -ymargin);
         sp_repr_set_svg_double(repr, "height", 1 + 2 * ymargin);
     }
+}
+
+/**
+ * Creates a filter with blur primitive of specified radius for an item with the given matrix expansion, width and height
+ */
+SPFilter *
+new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion, double expansionX, double expansionY, double width, double height)
+{
+    g_return_val_if_fail(document != NULL, NULL);
+
+    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+
+    // create a new filter
+    Inkscape::XML::Node *repr;
+    repr = xml_doc->createElement("svg:filter");
+    //repr->setAttribute("inkscape:collect", "always");
+
+    set_filter_area(repr, radius, expansion, expansionX, expansionY,
+                    width, height);
 
     //create feGaussianBlur node
     Inkscape::XML::Node *b_repr;
     b_repr = xml_doc->createElement("svg:feGaussianBlur");
-    b_repr->setAttribute("inkscape:collect", "always");
+    //b_repr->setAttribute("inkscape:collect", "always");
     
     double stdDeviation = radius;
     if (expansion != 0)
@@ -112,6 +156,89 @@ new_filter_gaussian_blur_from_item (SPDocument *document, SPItem *item, gdouble 
     return (new_filter_gaussian_blur (document, radius, i2d.expansion(), i2d.expansionX(), i2d.expansionY(), width, height));
 }
 
+/**
+ * Modifies the gaussian blur applied to the item.
+ * If no filters are applied to given item, creates a new blur filter.
+ * If a filter is applied and it contains a blur, modify that blur.
+ * If the filter doesn't contain blur, a blur is added to the filter.
+ * Should there be more references to modified filter, that filter is
+ * duplicated, so that other elements referring that filter are not modified.
+ */
+/* TODO: this should be made more generic, not just for blurs */
+SPFilter *
+modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
+                                      gdouble radius)
+{
+    if (!item->style || !item->style->filter.set) {
+        return new_filter_gaussian_blur_from_item(document, item, radius);
+    }
+
+    SPFilter *filter = SP_FILTER(item->style->filter.filter);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+
+    // If there are more users for this filter, duplicate it
+    if (SP_OBJECT_HREFCOUNT(filter) > count_filter_hrefs(item, filter)) {
+        Inkscape::XML::Node *repr;
+        repr = SP_OBJECT_REPR(item)->duplicate(xml_doc);
+        SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+        SP_OBJECT_REPR(defs)->appendChild(repr);
+
+        filter = SP_FILTER( document->getObjectByRepr(repr) );
+        Inkscape::GC::release(repr);
+    }
+
+    // Determine the required standard deviation value
+    NR::Matrix i2d = sp_item_i2d_affine (item);
+    double expansion = i2d.expansion();
+    double stdDeviation = radius;
+    if (expansion != 0)
+        stdDeviation /= expansion;
+
+    // Get the object size
+    NR::Maybe<NR::Rect> const r = sp_item_bbox_desktop(item);
+    double width;
+    double height;
+    if (r) {
+        width = r->extent(NR::X);
+        height= r->extent(NR::Y);
+    } else {
+        width = height = 0;
+    }
+
+    // Set the filter effects area
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(item->style->filter.filter);
+    set_filter_area(repr, radius, expansion, i2d.expansionX(),
+                    i2d.expansionY(), width, height);
+
+    // Search for gaussian blur primitives. If found, set the stdDeviation
+    // of the first one and return.
+    Inkscape::XML::Node *primitive = repr->firstChild();
+    while (primitive) {
+        if (strcmp("svg:feGaussianBlur", primitive->name()) == 0) {
+            sp_repr_set_svg_double(primitive, "stdDeviation",
+                                   stdDeviation);
+            return filter;
+        }
+        primitive = primitive->next();
+    }
+
+    // If there were no gaussian blur primitives, create a new one
+
+    //create feGaussianBlur node
+    Inkscape::XML::Node *b_repr;
+    b_repr = xml_doc->createElement("svg:feGaussianBlur");
+    //b_repr->setAttribute("inkscape:collect", "always");
+    
+    //set stdDeviation attribute
+    sp_repr_set_svg_double(b_repr, "stdDeviation", stdDeviation);
+    
+    //set feGaussianBlur as child of filter node
+    SP_OBJECT_REPR(filter)->appendChild(b_repr);
+    Inkscape::GC::release(b_repr);
+
+    return filter;
+}
+
 void remove_filter (SPObject *item, bool recursive)
 {
 	SPCSSAttr *css = sp_repr_css_attr_new ();
@@ -121,6 +248,34 @@ void remove_filter (SPObject *item, bool recursive)
 	else
 		sp_repr_css_change (SP_OBJECT_REPR(item), css, "style");
       sp_repr_css_attr_unref (css);
+}
+
+/**
+ * Removes the first feGaussianBlur from the filter attached to given item.
+ * Should this leave us with an empty filter, remove that filter.
+ */
+/* TODO: the removed filter primitive may had had a named result image, so
+ * after removing, the filter may be in erroneous state, this situation should
+ * be handled gracefully */
+void remove_filter_gaussian_blur (SPObject *item)
+{
+    if (item->style && item->style->filter.set && item->style->filter.filter) {
+        // Search for the first blur primitive and remove it. (if found)
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR(item->style->filter.filter);
+        Inkscape::XML::Node *primitive = repr->firstChild();
+        while (primitive) {
+            if (strcmp("svg:feGaussianBlur", primitive->name()) == 0) {
+                sp_repr_unparent(primitive);
+                break;
+            }
+            primitive = primitive->next();
+        }
+
+        // If there are no more primitives left in this filter, discard it.
+        if (repr->childCount() == 0) {
+            remove_filter(item, false);
+        }
+    }
 }
 
 /*

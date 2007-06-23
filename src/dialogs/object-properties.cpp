@@ -434,9 +434,9 @@ sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *base)
         g_assert(style != NULL);
 
         if (radius == 0.0) {
-            remove_filter (item, false);
+            remove_filter_gaussian_blur(item);
         } else {
-            SPFilter *constructed = new_filter_gaussian_blur_from_item(document, item, radius); 
+            SPFilter *constructed = modify_filter_gaussian_blur_from_item(document, item, radius); 
             sp_style_set_property_url (SP_OBJECT(item), "filter", SP_OBJECT(constructed), false);
         }
         //request update

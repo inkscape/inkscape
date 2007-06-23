@@ -154,11 +154,9 @@ sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_feOffset_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
-                 SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-
-        /* do something to trigger redisplay, updates? */
-
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        sp_object_read_attr(object, "dx");
+        sp_object_read_attr(object, "dy");
     }
 
     if (((SPObjectClass *) feOffset_parent_class)->update) {

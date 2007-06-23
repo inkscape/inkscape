@@ -107,11 +107,6 @@ sp_filter_init(SPFilter *filter)
     filter->primitiveUnits = SP_FILTER_UNITS_OBJECTBOUNDINGBOX;
     filter->filterUnits_set = FALSE;
     filter->primitiveUnits_set = FALSE;
-    filter->_primitive_count=0;
-    
-    filter->_primitive_table_size = 1;
-    filter->_primitives = new SPFilterPrimitive*[1];
-    filter->_primitives[0] = NULL;
 
     filter->_renderer = NULL;
     
@@ -375,43 +370,18 @@ filter_ref_modified(SPObject *href, guint flags, SPFilter *filter)
     SP_OBJECT(filter)->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-
-void _enlarge_primitive_table(SPFilter * filter) {
-    SPFilterPrimitive **new_tbl = new SPFilterPrimitive*[filter->_primitive_table_size * 2];
-    for (int i = 0 ; i < filter->_primitive_count ; i++) {
-        new_tbl[i] = filter->_primitives[i];
-    }
-    filter->_primitive_table_size *= 2;
-    for (int i = filter->_primitive_count ; i < filter->_primitive_table_size ; i++) {
-        new_tbl[i] = NULL;
-    }
-    delete[] filter->_primitives;
-    filter->_primitives = new_tbl;
-}
-
-SPFilterPrimitive *add_primitive(SPFilter *filter, SPFilterPrimitive *primitive)
-{
-    if (filter->_primitive_count >= filter->_primitive_table_size) {
-        _enlarge_primitive_table(filter);
-    }
-    filter->_primitives[filter->_primitive_count] = primitive;
-    filter->_primitive_count++;
-    return primitive;
-}
-
 /**
  * Callback for child_added event.
  */
 static void
 sp_filter_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
-{/*
-    SPFilter *f = SP_FILTER(object);
+{
+    //SPFilter *f = SP_FILTER(object);
 
     if (((SPObjectClass *) filter_parent_class)->child_added)
         (* ((SPObjectClass *) filter_parent_class)->child_added)(object, child, ref);
 
     object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-	*/
 }
 
 /**
@@ -419,17 +389,13 @@ sp_filter_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XM
  */
 static void
 sp_filter_remove_child(SPObject *object, Inkscape::XML::Node *child)
-{/*
-    SPFilter *f = SP_FILTER(object);
+{
+//    SPFilter *f = SP_FILTER(object);
 
     if (((SPObjectClass *) filter_parent_class)->remove_child)
         (* ((SPObjectClass *) filter_parent_class)->remove_child)(object, child);
 
-    SPObject *ochild;
-
-    
     object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-	*/
 }
 
 void sp_filter_build_renderer(SPFilter *sp_filter, NR::Filter *nr_filter)
@@ -445,20 +411,31 @@ void sp_filter_build_renderer(SPFilter *sp_filter, NR::Filter *nr_filter)
     nr_filter->set_height(sp_filter->height);
 
     nr_filter->clear_primitives();
-    for (int i = 0 ; i < sp_filter->_primitive_count ; i++) {
-        SPFilterPrimitive *primitive = sp_filter->_primitives[i];
-        g_assert(primitive != NULL);
-        if (((SPFilterPrimitiveClass*) G_OBJECT_GET_CLASS(primitive))->build_renderer) {
-            ((SPFilterPrimitiveClass *) G_OBJECT_GET_CLASS(primitive))->build_renderer(primitive, nr_filter);
-        } else {
-            g_warning("Cannot build filter renderer: missing builder");
+    SPObject *primitive_obj = sp_filter->children;
+    while (primitive_obj) {
+        if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) {
+            SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);
+            g_assert(primitive != NULL);
+            if (((SPFilterPrimitiveClass*) G_OBJECT_GET_CLASS(primitive))->build_renderer) {
+                ((SPFilterPrimitiveClass *) G_OBJECT_GET_CLASS(primitive))->build_renderer(primitive, nr_filter);
+            } else {
+                g_warning("Cannot build filter renderer: missing builder");
+            }
         }
+        primitive_obj = primitive_obj->next;
     }
 }
 
 int sp_filter_primitive_count(SPFilter *filter) {
     g_assert(filter != NULL);
-    return filter->_primitive_count;
+    int count = 0;
+
+    SPObject *primitive_obj = filter->children;
+    while (primitive_obj) {
+        if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) count++;
+        primitive_obj = primitive_obj->next;
+    }
+    return count;
 }
 
 int sp_filter_get_image_name(SPFilter *filter, gchar const *name) {

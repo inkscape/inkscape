@@ -1040,23 +1040,26 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
         //if object has a filter
         if (style->filter.set && style->filter.filter) {
             //cycle through filter primitives
-            for(int i=0; i<style->filter.filter->_primitive_count; i++)
-            {
-                SPFilterPrimitive *primitive = style->filter.filter->_primitives[i];
-                //if primitive is gaussianblur
-                if(SP_IS_GAUSSIANBLUR(primitive)) {
-                    SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
-                    float num = spblur->stdDeviation.getNumber();
-                    blur_sum += num * NR::expansion(i2d);
-                    if (blur_prev != -1 && fabs (num - blur_prev) > 1e-2) // rather low tolerance because difference in blur radii is much harder to notice than e.g. difference in sizes
-                        same_blur = false;
-                    blur_prev = num;
-                    //TODO: deal with opt number, for the moment it's not necessary to the ui.
-                    blur_items ++;
+            SPObject *primitive_obj = style->filter.filter->children;
+            while (primitive_obj) {
+                if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) {
+                    SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);
+                    
+                    //if primitive is gaussianblur
+                    if(SP_IS_GAUSSIANBLUR(primitive)) {
+                        SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
+                        float num = spblur->stdDeviation.getNumber();
+                        blur_sum += num * NR::expansion(i2d);
+                        if (blur_prev != -1 && fabs (num - blur_prev) > 1e-2) // rather low tolerance because difference in blur radii is much harder to notice than e.g. difference in sizes
+                            same_blur = false;
+                        blur_prev = num;
+                        //TODO: deal with opt number, for the moment it's not necessary to the ui.
+                        blur_items ++;
+                    }
                 }
+                primitive_obj = primitive_obj->next;
             }
         }
-
     }
 
     if (items > 0) {

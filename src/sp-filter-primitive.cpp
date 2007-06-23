@@ -99,9 +99,6 @@ sp_filter_primitive_build(SPObject *object, SPDocument *document, Inkscape::XML:
 
     sp_object_read_attr(object, "in");
     sp_object_read_attr(object, "result");
-
-    if (object->parent)
-        add_primitive((SPFilter*)object->parent, (SPFilterPrimitive*)object);
 }
 
 /**
@@ -164,10 +161,9 @@ sp_filter_primitive_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     //SPFilterPrimitive *filter_primitive = SP_FILTER_PRIMITIVE(object);
 
-    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
-                 SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-
-        /* do something to trigger redisplay, updates? */
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        sp_object_read_attr(object, "in");
+        sp_object_read_attr(object, "result");
     }
 
     if (((SPObjectClass *) filter_primitive_parent_class)->update) {

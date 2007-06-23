@@ -187,8 +187,9 @@ sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG)) {
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
         sp_object_read_attr(object, "mode");
+        sp_object_read_attr(object, "in2");
     }
 
     if (((SPObjectClass *) feBlend_parent_class)->update) {
