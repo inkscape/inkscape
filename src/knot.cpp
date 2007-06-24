@@ -388,7 +388,6 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
                 if (knot->anchor == GTK_ANCHOR_CENTER) {
                     SnapManager const &m = knot->desktop->namedview->snap_manager;
                     SPItem *curr = knot->desktop->selection->singleItem(); //Is this really the only way to get to the item to which this knot belongs?
-                    g_assert(curr != NULL);
                     motion_dt = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, motion_dt, curr).getPoint();
                 }
             
