@@ -214,18 +214,28 @@ static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
 //     return TRUE;
 // }
 
-static void bouncy( GtkWidget* widget, gpointer callback_data ) {
-    ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
-    if ( item ) {
-        item->buttonClicked(false);
+static gboolean onButtonPressed (GtkWidget *widget, GdkEventButton *event, gpointer userdata)
+{
+    /* single click with the right mouse button? */
+    if(event->type == GDK_BUTTON_RELEASE)
+    {
+        ColorItem* item = reinterpret_cast<ColorItem*>(userdata);
+        if(item)
+        {
+            if (event->button == 1)
+            { 
+                item->buttonClicked(false);
+                return TRUE; /* we handled this */    
+            }
+            else if (event->button == 3)
+            {
+                item->buttonClicked(true);
+                return TRUE; /* we handled this */
+            }
+        }
     }
-}
 
-static void bouncy2( GtkWidget* widget, gint arg1, gpointer callback_data ) {
-    ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
-    if ( item ) {
-        item->buttonClicked(true);
-    }
+    return FALSE; /* we did not handle this */
 }
 
 static void dieDieDie( GtkObject *obj, gpointer user_data )
@@ -479,15 +489,10 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Inkscape::
         sigc::signal<void> type_signal_something;
 */
         g_signal_connect( G_OBJECT(newBlot->gobj()),
-                          "clicked",
-                          G_CALLBACK(bouncy),
+                          "button-release-event",
+                          G_CALLBACK(onButtonPressed),
                           this);
-
-        g_signal_connect( G_OBJECT(newBlot->gobj()),
-                          "alt-clicked",
-                          G_CALLBACK(bouncy2),
-                          this);
-
+                          
         gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
                              GDK_BUTTON1_MASK,
                              sourceColorEntries,
