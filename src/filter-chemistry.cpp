@@ -211,21 +211,6 @@ new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdo
     // get corresponding object
     SPFilter *f = SP_FILTER( document->getObjectByRepr(repr) );
 
-    // Blend primitive
-    if(strcmp(blendmode, "normal")) {
-        Inkscape::XML::Node *b_repr;
-        b_repr = xml_doc->createElement("svg:feBlend");
-        b_repr->setAttribute("inkscape::collect", "always");
-        b_repr->setAttribute("mode", blendmode);
-
-        // set feBlend as child of filter node
-        repr->appendChild(b_repr);
-        Inkscape::GC::release(b_repr);
-
-        SPFeBlend *b = SP_FEBLEND(document->getObjectByRepr(b_repr));
-        g_assert(b != NULL);
-        g_assert(SP_IS_FEBLEND(b));
-    }
     // Gaussian blur primitive
     if(radius != 0) {
         set_filter_area(repr, radius, expansion, expansionX, expansionY, width, height);
@@ -249,6 +234,28 @@ new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdo
         SPGaussianBlur *b = SP_GAUSSIANBLUR( document->getObjectByRepr(b_repr) );
         g_assert(b != NULL);
         g_assert(SP_IS_GAUSSIANBLUR(b));
+    }
+    // Blend primitive
+    if(strcmp(blendmode, "normal")) {
+        Inkscape::XML::Node *b_repr;
+        b_repr = xml_doc->createElement("svg:feBlend");
+        b_repr->setAttribute("inkscape:collect", "always");
+        b_repr->setAttribute("mode", blendmode);
+        b_repr->setAttribute("in2", "BackgroundImage");
+
+        // set feBlend as child of filter node
+        repr->appendChild(b_repr);
+        Inkscape::GC::release(b_repr);
+
+        // Enable background image buffer for document
+        Inkscape::XML::Node *root = b_repr->root();
+        if (!root->attribute("enable-background")) {
+            root->setAttribute("enable-background", "new");
+        }
+
+        SPFeBlend *b = SP_FEBLEND(document->getObjectByRepr(b_repr));
+        g_assert(b != NULL);
+        g_assert(SP_IS_FEBLEND(b));
     }
     
     g_assert(f != NULL);
