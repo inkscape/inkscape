@@ -2106,7 +2106,7 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
 static void sp_3dbox_toggle_vp_changed( GtkToggleAction *act, gpointer data )
 {
-    guint dir = (guint) data;
+    guint dir = GPOINTER_TO_UINT(data);
     Box3D::PerspDir axis;// = (Box3D::PerspDir) data;
 
     GString *pstring;
