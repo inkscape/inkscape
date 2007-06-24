@@ -183,8 +183,8 @@ FillAndStroke::_blurValueChanged()
         if (radius == 0.0) {
             remove_filter (item, false);
         } else {
-            SPFilter *constructed = new_filter_gaussian_blur_from_item(document, item, radius); 
-            sp_style_set_property_url (SP_OBJECT(item), "filter", SP_OBJECT(constructed), false);
+            //SPFilter *constructed = new_filter_gaussian_blur_from_item(document, item, radius); 
+            //sp_style_set_property_url (SP_OBJECT(item), "filter", SP_OBJECT(constructed), false);
         }
         //request update
         SP_OBJECT(item)->requestDisplayUpdate(( SP_OBJECT_MODIFIED_FLAG |

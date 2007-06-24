@@ -24,6 +24,7 @@
 #include "style.h"
 #include "prefs-utils.h"
 #include "sp-use.h"
+#include "sp-feblend.h"
 #include "sp-filter.h"
 #include "sp-gaussian-blur.h"
 #include "sp-flowtext.h"
@@ -1010,6 +1011,84 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
     }
 }
 
+int
+objects_query_blend (GSList *objects, SPStyle *style_res)
+{
+    const int empty_prev = -2;
+    const int complex_filter = 5;
+    int blend = 0;
+    float blend_prev = empty_prev;
+    bool same_blend = true;
+    guint items = 0;
+    
+    for (GSList const *i = objects; i != NULL; i = i->next) {
+        SPObject *obj = SP_OBJECT (i->data);
+        SPStyle *style = SP_OBJECT_STYLE (obj);
+        if(!style || !SP_IS_ITEM(obj)) continue;
+
+        items++;
+
+        //if object has a filter
+        if (style->filter.set && style->filter.filter) {
+            int blurcount = 0;
+            int blendcount = 0;
+
+            // determine whether filter is simple (blend and/or blur) or complex
+            for(SPObject *primitive_obj = style->filter.filter->children;
+                primitive_obj && SP_IS_FILTER_PRIMITIVE(primitive_obj);
+                primitive_obj = primitive_obj->next) {
+                SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);
+                if(SP_IS_FEBLEND(primitive))
+                    ++blendcount;
+                else if(SP_IS_GAUSSIANBLUR(primitive))
+                    ++blurcount;
+                else {
+                    blurcount = complex_filter;
+                    break;
+                }
+            }
+
+            // simple filter
+            if(blurcount == 1 || blendcount == 1) {
+                for(SPObject *primitive_obj = style->filter.filter->children;
+                    primitive_obj && SP_IS_FILTER_PRIMITIVE(primitive_obj);
+                    primitive_obj = primitive_obj->next) {
+                    if(SP_IS_FEBLEND(primitive_obj)) {
+                        SPFeBlend *spblend = SP_FEBLEND(primitive_obj);
+                        blend = spblend->blend_mode;
+                    }
+                }
+            }
+            else {
+                blend = complex_filter;
+            }
+        }
+        // defaults to blend mode = "normal"
+        else {
+            blend = 0;
+        }
+
+        if(blend_prev != empty_prev && blend_prev != blend)
+            same_blend = false;
+        blend_prev = blend;
+    }
+
+    if (items > 0) {
+        style_res->filter_blend_mode.value = blend;
+    }
+
+    if (items == 0) {
+        return QUERY_STYLE_NOTHING;
+    } else if (items == 1) {
+        return QUERY_STYLE_SINGLE;
+    } else {
+        if(same_blend)
+            return QUERY_STYLE_MULTIPLE_SAME;
+        else
+            return QUERY_STYLE_MULTIPLE_DIFFERENT;
+    }
+}
+
 /**
  * Write to style_res the average blurring of a list of objects.
  */
@@ -1111,6 +1190,8 @@ sp_desktop_query_style_from_list (GSList *list, SPStyle *style, int property)
     } else if (property == QUERY_STYLE_PROPERTY_FONTNUMBERS) {
         return objects_query_fontnumbers (list, style);
 
+    } else if (property == QUERY_STYLE_PROPERTY_BLEND) {
+        return objects_query_blend (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_BLUR) {
         return objects_query_blur (list, style);
     }

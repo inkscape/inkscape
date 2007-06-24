@@ -86,6 +86,7 @@ extern Gtk::StockID const LAYER_TO_BOTTOM;
 // Object menu
 extern Gtk::StockID const FILL_STROKE;
 extern Gtk::StockID const OBJECT_PROPERTIES;
+extern Gtk::StockID const FILTER_EFFECTS;
 extern Gtk::StockID const GROUP;
 extern Gtk::StockID const UNGROUP;
 extern Gtk::StockID const RAISE;

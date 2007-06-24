@@ -28,7 +28,8 @@ enum FilterBlendMode {
     BLEND_MULTIPLY,
     BLEND_SCREEN,
     BLEND_DARKEN,
-    BLEND_LIGHTEN
+    BLEND_LIGHTEN,
+    BLEND_ENDMODE
 };
 
 class FilterBlend : public FilterPrimitive {

@@ -336,6 +336,8 @@ struct SPStyle {
     /** Filter effect */
     SPIFilter filter;
 
+    SPIEnum filter_blend_mode;
+
    /** normally not used, but duplicates the Gaussian blur deviation (if any) from the attached
         filter when the style is used for querying */
     SPILength filter_gaussianBlur_deviation;

@@ -18,6 +18,9 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/entity-entry.h        \
 	ui/widget/entry.cpp      \
 	ui/widget/entry.h        \
+	ui/widget/filter-effect-chooser.h \
+	ui/widget/filter-effect-chooser.cpp \
+	ui/widget/filter-effect-enums.h \
 	ui/widget/handlebox.cpp		\
 	ui/widget/handlebox.h		\
 	ui/widget/icon-widget.cpp	\
@@ -48,6 +51,8 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/scalar.h		\
 	ui/widget/selected-style.h	\
 	ui/widget/selected-style.cpp	\
+	ui/widget/spin-slider.h		\
+	ui/widget/spin-slider.cpp	\
 	ui/widget/style-swatch.h        \
 	ui/widget/style-swatch.cpp      \
 	ui/widget/svg-canvas.cpp        \

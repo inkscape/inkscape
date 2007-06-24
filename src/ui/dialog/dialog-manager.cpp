@@ -23,6 +23,7 @@
 #include "ui/dialog/export.h"
 #include "ui/dialog/extension-editor.h"
 #include "ui/dialog/fill-and-stroke.h"
+#include "ui/dialog/filter-effects-dialog.h"
 #include "ui/dialog/find.h"
 #include "ui/dialog/inkscape-preferences.h"
 #include "ui/dialog/layer-editor.h"
@@ -75,6 +76,7 @@ DialogManager::DialogManager() {
     registerFactory("Export",              &create<Export>);
     registerFactory("ExtensionEditor",     &create<ExtensionEditor>);
     registerFactory("FillAndStroke",       &create<FillAndStroke>);
+    registerFactory("FilterEffectsDialog", &create<FilterEffectsDialog>);
     registerFactory("Find",                &create<Find>);
     registerFactory("InkscapePreferences", &create<InkscapePreferences>);
     registerFactory("LayerEditor",         &create<LayerEditor>);

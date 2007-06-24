@@ -24,6 +24,8 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/filedialog.h			\
 	ui/dialog/fill-and-stroke.cpp		\
 	ui/dialog/fill-and-stroke.h		\
+	ui/dialog/filter-effects-dialog.h	\
+	ui/dialog/filter-effects-dialog.cpp	\
 	ui/dialog/find.cpp			\
 	ui/dialog/find.h			\
 	ui/dialog/inkscape-preferences.cpp	\

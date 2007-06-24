@@ -229,6 +229,7 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"EffectLast\" />\n"
 "       <verb verb-id=\"EffectLastPref\" />\n"
 "       <separator/>\n"
+"       <verb verb-id=\"DialogFilterEffects\" />\n"
 "       <effects-list/>\n"
 "   </submenu>\n"
 #ifdef WITH_INKBOARD

@@ -83,6 +83,7 @@ Gtk::StockID const LAYER_TO_BOTTOM("layer-to-bottom");
 // Object menu
 Gtk::StockID const FILL_STROKE("fill-stroke");
 Gtk::StockID const OBJECT_PROPERTIES("object-properties");
+Gtk::StockID const FILTER_EFFECTS("filter-effects");
 Gtk::StockID const GROUP("group");
 Gtk::StockID const UNGROUP("upgroup");
 Gtk::StockID const RAISE("raise");

@@ -18,6 +18,7 @@
 #include "document-private.h"
 #include "desktop-style.h"
 
+#include "sp-feblend.h"
 #include "sp-filter.h"
 #include "sp-gaussian-blur.h"
 #include "svg/css-ostringstream.h"
@@ -82,6 +83,55 @@ static void set_filter_area(Inkscape::XML::Node *repr, gdouble radius,
     }
 }
 
+SPFilter *new_filter(SPDocument *document)
+{
+    g_return_val_if_fail(document != NULL, NULL);
+
+    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+
+    // create a new filter
+    Inkscape::XML::Node *repr;
+    repr = xml_doc->createElement("svg:filter");
+
+    // Append the new filter node to defs
+    SP_OBJECT_REPR(defs)->appendChild(repr);
+    Inkscape::GC::release(repr);
+
+    // get corresponding object
+    SPFilter *f = SP_FILTER( document->getObjectByRepr(repr) );
+    
+    
+    g_assert(f != NULL);
+    g_assert(SP_IS_FILTER(f));
+
+    return f;
+}
+
+SPFilterPrimitive *
+filter_add_primitive(SPFilter *filter, const gchar *type)
+{
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(filter->document);
+
+    //create filter primitive node
+    Inkscape::XML::Node *repr;
+    repr = xml_doc->createElement(type);
+    repr->setAttribute("inkscape:collect", "always");
+
+    //set primitive as child of filter node
+    filter->repr->appendChild(repr);
+    Inkscape::GC::release(repr);
+    
+    // get corresponding object
+    SPFilterPrimitive *prim = SP_FILTER_PRIMITIVE( filter->document->getObjectByRepr(repr) );
+ 
+    g_assert(prim != NULL);
+    g_assert(SP_IS_FILTER_PRIMITIVE(prim));
+
+    return prim;
+}
+
 /**
  * Creates a filter with blur primitive of specified radius for an item with the given matrix expansion, width and height
  */
@@ -134,11 +184,85 @@ new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion
     return f;
 }
 
+
 /**
- * Creates a filter with blur primitive of specified radius for the given item
+ * Creates a simple filter with a blend primitive and a blur primitive of specified radius for
+ * an item with the given matrix expansion, width and height
  */
 SPFilter *
-new_filter_gaussian_blur_from_item (SPDocument *document, SPItem *item, gdouble radius)
+new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdouble radius, double expansion,
+                                double expansionX, double expansionY, double width, double height)
+{
+    g_return_val_if_fail(document != NULL, NULL);
+
+    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+
+    // create a new filter
+    Inkscape::XML::Node *repr;
+    repr = xml_doc->createElement("svg:filter");
+    repr->setAttribute("inkscape:collect", "always");
+
+    // Append the new filter node to defs
+    SP_OBJECT_REPR(defs)->appendChild(repr);
+    Inkscape::GC::release(repr);
+ 
+    // get corresponding object
+    SPFilter *f = SP_FILTER( document->getObjectByRepr(repr) );
+
+    // Blend primitive
+    if(strcmp(blendmode, "normal")) {
+        Inkscape::XML::Node *b_repr;
+        b_repr = xml_doc->createElement("svg:feBlend");
+        b_repr->setAttribute("inkscape::collect", "always");
+        b_repr->setAttribute("mode", blendmode);
+
+        // set feBlend as child of filter node
+        repr->appendChild(b_repr);
+        Inkscape::GC::release(b_repr);
+
+        SPFeBlend *b = SP_FEBLEND(document->getObjectByRepr(b_repr));
+        g_assert(b != NULL);
+        g_assert(SP_IS_FEBLEND(b));
+    }
+    // Gaussian blur primitive
+    if(radius != 0) {
+        set_filter_area(repr, radius, expansion, expansionX, expansionY, width, height);
+
+        //create feGaussianBlur node
+        Inkscape::XML::Node *b_repr;
+        b_repr = xml_doc->createElement("svg:feGaussianBlur");
+        b_repr->setAttribute("inkscape:collect", "always");
+        
+        double stdDeviation = radius;
+        if (expansion != 0)
+            stdDeviation /= expansion;
+        
+        //set stdDeviation attribute
+        sp_repr_set_svg_double(b_repr, "stdDeviation", stdDeviation);
+     
+        //set feGaussianBlur as child of filter node
+        repr->appendChild(b_repr);
+        Inkscape::GC::release(b_repr);
+
+        SPGaussianBlur *b = SP_GAUSSIANBLUR( document->getObjectByRepr(b_repr) );
+        g_assert(b != NULL);
+        g_assert(SP_IS_GAUSSIANBLUR(b));
+    }
+    
+    g_assert(f != NULL);
+    g_assert(SP_IS_FILTER(f));
+ 
+    return f;
+}
+
+/**
+ * Creates a simple filter for the given item with blend and blur primitives, using the
+ * specified mode and radius, respectively
+ */
+SPFilter *
+new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mode, gdouble radius)
 {
     NR::Maybe<NR::Rect> const r = sp_item_bbox_desktop(item);
 
@@ -153,7 +277,7 @@ new_filter_gaussian_blur_from_item (SPDocument *document, SPItem *item, gdouble 
 
     NR::Matrix i2d = sp_item_i2d_affine (item);
 
-    return (new_filter_gaussian_blur (document, radius, i2d.expansion(), i2d.expansionX(), i2d.expansionY(), width, height));
+    return (new_filter_blend_gaussian_blur (document, mode, radius, i2d.expansion(), i2d.expansionX(), i2d.expansionY(), width, height));
 }
 
 /**
@@ -170,7 +294,7 @@ modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
                                       gdouble radius)
 {
     if (!item->style || !item->style->filter.set) {
-        return new_filter_gaussian_blur_from_item(document, item, radius);
+        //return new_filter_gaussian_blur_from_item(document, item, radius);
     }
 
     SPFilter *filter = SP_FILTER(item->style->filter.filter);

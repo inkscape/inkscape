@@ -1725,6 +1725,9 @@ DialogVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_DIALOG_LAYERS:
             show_panel( Inkscape::UI::Dialogs::LayersPanel::getInstance(), "dialogs.layers", SP_VERB_DIALOG_LAYERS );
             break;
+        case SP_VERB_DIALOG_FILTER_EFFECTS:
+            dt->_dlg_mgr->showDialog("FilterEffectsDialog");
+            break;
         default:
             break;
     }
@@ -2500,6 +2503,8 @@ Verb *Verb::_base_verbs[] = {
                    N_("Query information about extensions"), NULL),
     new DialogVerb(SP_VERB_DIALOG_LAYERS, "DialogLayers", N_("Layer_s..."),
                    N_("View Layers"), "layers"),
+    new DialogVerb(SP_VERB_DIALOG_FILTER_EFFECTS, "DialogFilterEffects", N_("Filter Effects..."),
+                   N_("Manage SVG filter effects"), NULL),
 
     /* Help */
     new HelpVerb(SP_VERB_HELP_KEYS, "HelpKeys", N_("_Keys and Mouse"),

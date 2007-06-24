@@ -635,6 +635,9 @@ EditWidget::initMenuActions()
                                       Stock::OBJECT_PROPERTIES),
                   sigc::mem_fun(*this, &EditWidget::onDialogObjectProperties));
 
+    _act_grp->add(Gtk::Action::create("FilterEffects",
+                                      Stock::FILTER_EFFECTS));
+
     _act_grp->add(Gtk::Action::create("Group",
                                       Stock::GROUP, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")));
