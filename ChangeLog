@@ -1,3 +1,7 @@
+2007-06-24  Joel Holdsworth  <joelholdsworth@yahoo.com>
+    
+    * modified the windows RC files to add version info and manifest data
+
 2007-03-16  Tim Dwyer  <Tim.Dwyer@infotech.monash.edu.au>
 
 	* src/graphlayout/graphlayout.cpp: handle null bounding boxes
