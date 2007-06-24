@@ -50,9 +50,9 @@ class RadiusRandomize(inkex.Effect):
                         help="Use normal distribution")
     def effect(self):
         for id, node in self.selected.iteritems():
-            if node.tagName == 'path':
-                d = node.attributes.getNamedItem('d')
-                p = cubicsuperpath.parsePath(d.value)
+            if node.tag == inkex.addNS('path','svg'):
+                d = node.get('d')
+                p = cubicsuperpath.parsePath(d)
                 for subpath in p:
                     for csp in subpath:
                         if self.options.end:
@@ -66,7 +66,7 @@ class RadiusRandomize(inkex.Effect):
                         if self.options.ctrl:
                             csp[0]=randomize(csp[0], self.options.radius, self.options.norm)
                             csp[2]=randomize(csp[2], self.options.radius, self.options.norm)
-                d.value = cubicsuperpath.formatPath(p)
+                node.set('d',cubicsuperpath.formatPath(p))
 
 e = RadiusRandomize()
 e.affect()

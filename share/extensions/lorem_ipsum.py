@@ -205,37 +205,26 @@ class MyEffect(inkex.Effect):
   
   def addText(self, node):
     for i in range(self.options.num):
-      para=self.document.createElement('flowPara')
-      text=self.document.createTextNode(self.makePara())
-      para.appendChild(text)
-      node.appendChild(para)
-      node.appendChild(self.document.createElement('flowPara'))
+      para=inkex.etree.SubElement(node,inkex.addNS('flowPara','svg'))
+      para.text = self.makePara()
+      inkex.etree.SubElement(node,inkex.addNS('flowPara','svg'))
   
   def effect(self):
     found=0
     for id, node in self.selected.iteritems():
-      if node.tagName == 'flowRoot':
+      if node.tag == inkex.addNS('flowRoot','svg'):
         found+=1
         if found==1:
           self.addText(node)
     if found==0:
       #inkex.debug('No "flowRoot" elements selected. Unable to add text.')
-      svg=self.document.getElementsByTagName('svg')[0]
-      g=self.document.createElement('g')
-      g.setAttribute('inkscape:label','fill text')
-      g.setAttribute('inkscape:groupmode','layer')
-      flowRoot=self.document.createElement('flowRoot')
-      flowRoot.setAttribute('xml:space','preserve')
-      flowRegion=self.document.createElement('flowRegion')
-      rect=self.document.createElement('rect')
-      rect.setAttribute('x','0')
-      rect.setAttribute('y','0')
-      rect.setAttribute('width',svg.getAttribute('width'))
-      rect.setAttribute('height',svg.getAttribute('height'))
-      svg.appendChild(g)
-      g.appendChild(flowRoot)
-      flowRoot.appendChild(flowRegion)
-      flowRegion.appendChild(rect)
+      svg=self.document.getroot()
+      gattribs = {inkex.addNS('label','inkscape'):'fill text',inkex.addNS('groupmode','inkscape'):'layer'}
+      g=inkex.etree.SubElement(svg,inkex.addNS('g','svg'),gattribs)
+      flowRoot=inkex.etree.SubElement(g,inkex.addNS('flowRoot','svg'),{'xml:space':'preserve'})
+      flowRegion=inkex.etree.SubElement(flowRoot,inkex.addNS('flowRegion','svg'))
+      rattribs = {'x':'0','y':'0','width':svg.get('width'),'height':svg.get('height')}
+      rect=inkex.etree.SubElement(flowRegion,inkex.addNS('rect','svg'),rattribs)
       self.addText(flowRoot)
 
 e = MyEffect()

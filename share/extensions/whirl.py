@@ -35,9 +35,9 @@ class Whirl(inkex.Effect):
             if self.options.rotation == True:
                 rotation = 1
             whirl = self.options.whirl / 1000
-            if node.tagName == 'path':
-                d = node.attributes.getNamedItem('d')
-                p = cubicsuperpath.parsePath(d.value)
+            if node.tag == inkex.addNS('path','svg'):
+                d = node.get('d')
+                p = cubicsuperpath.parsePath(d)
                 for sub in p:
                     for csp in sub:
                         for point in csp:
@@ -51,7 +51,7 @@ class Whirl(inkex.Effect):
                                 point[1] = (dist * math.sin(theta))
                             point[0] += self.view_center[0]
                             point[1] += self.view_center[1]
-                d.value = cubicsuperpath.formatPath(p)
+                node.set('d',cubicsuperpath.formatPath(p))
 
 e = Whirl()
 e.affect()

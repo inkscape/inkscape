@@ -53,33 +53,26 @@ class Motion(inkex.Effect):
         a.append([cmd,np[:]])
             
         a.append(['Z',[]])
-        face = self.document.createElement('svg:path')
-        self.facegroup.appendChild(face)
-        face.setAttribute('d', simplepath.formatPath(a))
-        
+        face = inkex.etree.SubElement(self.facegroup,inkex.addNS('path','svg'),{'d':simplepath.formatPath(a)})
         
     def effect(self):
         self.vx = math.cos(math.radians(self.options.angle))*self.options.magnitude
         self.vy = math.sin(math.radians(self.options.angle))*self.options.magnitude
         for id, node in self.selected.iteritems():
-            if node.tagName == 'path':
-                group = self.document.createElement('svg:g')
-                self.facegroup = self.document.createElement('svg:g')
-                node.parentNode.appendChild(group)
-                group.appendChild(self.facegroup)
-                group.appendChild(node)
+            if node.tag == inkex.addNS('path','svg'):
+                group = inkex.etree.SubElement(node.getparent(),inkex.addNS('g','svg'))
+                self.facegroup = inkex.etree.SubElement(group, inkex.addNS('g','svg'))
+                group.append(node)
                 
-                try:
-                    t = node.attributes.getNamedItem('transform').value
-                    group.setAttribute('transform', t)
-                    node.attributes.getNamedItem('transform').value=""
-                except AttributeError:
-                    pass
+                t = node.get('transform')
+                if t:
+                    group.set('transform', t)
+                    node.set('transform','')
+                    
+                s = node.get('style')
+                self.facegroup.set('style', s)
 
-                s = node.attributes.getNamedItem('style').value
-                self.facegroup.setAttribute('style', s)
-
-                p = simplepath.parsePath(node.attributes.getNamedItem('d').value)
+                p = simplepath.parsePath(node.get('d'))
                 for cmd,params in p:
                     tees = []
                     if cmd == 'C':

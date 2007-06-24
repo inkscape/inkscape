@@ -27,15 +27,14 @@ class MyEffect(inkex.Effect):
                         help="do not create a copy, modify the markers")
         
     def effect(self):
-        defs = self.xpathSingle('/svg//defs')
+        defs = self.xpathSingle('/svg:svg//svg:defs')
         if not defs:
-            defs = self.document.createElement('svg:defs')
-            self.document.documentElement.appendChile(defs)
+            defs = inkex.etree.SubElement(self.document.getroot(),inkex.addNS('defs','svg'))
         
         for id, node in self.selected.iteritems():
             mprops = ['marker','marker-start','marker-mid','marker-end']
             try:
-                style = simplestyle.parseStyle(node.attributes.getNamedItem('style').value)
+                style = simplestyle.parseStyle(node.get('style'))
             except:
                 inkex.debug("No style attribute found for id: %s" % id)
                 continue
@@ -46,9 +45,9 @@ class MyEffect(inkex.Effect):
                 if style.has_key(mprop) and style[mprop] != 'none'and style[mprop][:5] == 'url(#':
                     marker_id = style[mprop][5:-1]
                     try:
-                        old_mnode = self.xpathSingle('/svg//marker[@id="%s"]' % marker_id)
+                        old_mnode = self.xpathSingle('/svg:svg//svg:marker[@id="%s"]' % marker_id)
                         if not self.options.modify:
-                            mnode = old_mnode.cloneNode(True)
+                            mnode = inkex.etree.fromstring(inkex.etree.tostring(old_mnode))
                         else:
                             mnode = old_mnode
                     except:
@@ -58,18 +57,18 @@ class MyEffect(inkex.Effect):
                     new_id = self.uniqueId(marker_id, not self.options.modify)
                     
                     style[mprop] = "url(#%s)" % new_id
-                    mnode.attributes.getNamedItem('id').value = new_id
-                    mnode.attributes.getNamedItemNS(inkex.NSS['inkscape'],'stockid').value = new_id
-                    defs.appendChild(mnode)
+                    mnode.set('id', new_id)
+                    mnode.set(inkex.addNS('stockid','inkscape'), new_id)
+                    defs.append(mnode)
                     
-                    children = inkex.xml.xpath.Evaluate('/svg//marker[@id="%s"]//*[@style]' % new_id,self.document,context=self.ctx)
+                    children = self.document.getroot().xpath('/svg:svg//svg:marker[@id="%s"]//*[@style]' % new_id,inkex.NSS)
                     for child in children:
-                        cstyle = simplestyle.parseStyle(child.attributes.getNamedItem('style').value)
+                        cstyle = simplestyle.parseStyle(child.get('style'))
                         if ('stroke' in cstyle and cstyle['stroke'] != 'none') or 'stroke' not in cstyle:
                                 cstyle['stroke'] = stroke
                         if ('fill' in cstyle and cstyle['fill'] != 'none') or 'fill' not in cstyle:
                                 cstyle['fill'] = stroke
-                        child.attributes.getNamedItem('style').value = simplestyle.formatStyle(cstyle)
-            node.attributes.getNamedItem('style').value = simplestyle.formatStyle(style)
+                        child.set('style',simplestyle.formatStyle(cstyle))
+            node.set('style',simplestyle.formatStyle(style))
 e = MyEffect()
 e.affect()

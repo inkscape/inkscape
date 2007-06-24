@@ -56,8 +56,8 @@ class Project(inkex.Effect):
         #obj is selected second
         obj = self.selected[self.options.ids[0]]
         envelope = self.selected[self.options.ids[1]]
-        if (obj.tagName == 'path' or obj.tagName == 'g') and envelope.tagName == 'path':
-            path = cubicsuperpath.parsePath(envelope.attributes.getNamedItem('d').value)
+        if (obj.tag == inkex.addNS('path','svg') or obj.tag == inkex.addNS('g','svg')) and envelope.tag == inkex.addNS('path','svg'):
+            path = cubicsuperpath.parsePath(envelope.get('d'))
             dp = zeros((4,2), dtype=float64)
             for i in range(4):
                 dp[i][0] = path[0][i][1][0]
@@ -71,7 +71,7 @@ class Project(inkex.Effect):
                 _,f,err = os.popen3("inkscape --query-%s --query-id=%s %s" % (query,id,file))
                 q[query] = float(f.read())
                 f.close()
-		err.close()
+                err.close()
             sp = array([[q['x'], q['y']+q['height']],[q['x'], q['y']],[q['x']+q['width'], q['y']],[q['x']+q['width'], q['y']+q['height']]], dtype=float64)
 
         solmatrix = zeros((8,8), dtype=float64)
@@ -92,30 +92,29 @@ class Project(inkex.Effect):
 
         res = solve(solmatrix, free_term)
         projmatrix = array([[res[0],res[1],res[2]],[res[3],res[4],res[5]],[res[6],res[7],1.0]],dtype=float64)
-        if obj.tagName == "path":
+        if obj.tag == inkex.addNS("path",'svg'):
             self.process_path(obj,projmatrix)
-        if obj.tagName == "g":
+        if obj.tag == inkex.addNS("g",'svg'):
             self.process_group(obj,projmatrix)
 
 
     def process_group(self,group,m):
-        for node in group.childNodes:
-            if node.nodeType==node.ELEMENT_NODE:
-                if node.tagName == 'path':
-                     self.process_path(node,m)
-                if node.tagName == 'g':
-                     self.process_group(node,m)    
+        for node in group:
+            if node.tag == inkex.addNS('path','svg'):
+                self.process_path(node,m)
+            if node.tagName == inkex.addNS('g','svg'):
+                self.process_group(node,m)    
 
 
     def process_path(self,path,m):
-        d = path.attributes.getNamedItem('d')
-        p = cubicsuperpath.parsePath(d.value)
+        d = path.get('d')
+        p = cubicsuperpath.parsePath(d)
         for subs in p:
             for csp in subs:
                 csp[0] = self.project_point(csp[0],m)
                 csp[1] = self.project_point(csp[1],m)
                 csp[2] = self.project_point(csp[2],m)
-        d.value = cubicsuperpath.formatPath(p)
+        path.set('d',cubicsuperpath.formatPath(p))
 
 
 

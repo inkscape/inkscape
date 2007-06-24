@@ -48,7 +48,7 @@ class InsertBarcode(inkex.Effect):
 		if object:
 			barcode = object.generate()
 			if barcode:
-				self.current_layer.appendChild(barcode)
+				self.current_layer.append(barcode)
 			else:
 				sys.stderr.write("No barcode was generated\n")
 		else:

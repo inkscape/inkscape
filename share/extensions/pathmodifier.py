@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 barraud@math.univ-lille1.fr
 '''
 import inkex, cubicsuperpath, bezmisc, simplestyle
-import copy, math, re, random, xml.xpath
+import copy, math, re, random
 
 def parseTransform(transf,mat=[[1.0,0.0,0.0],[0.0,1.0,0.0]]):
     if transf=="":
@@ -84,9 +84,9 @@ def composeTransform(M1,M2):
     return [[a11,a12,v1],[a21,a22,v2]]
 
 def applyTransformToNode(mat,node):
-    m=parseTransform(node.getAttributeNS(None,"transform"))
+    m=parseTransform(node.get("transform"))
     newtransf=formatTransform(composeTransform(mat,m))
-    node.setAttributeNS(None,"transform", newtransf)
+    node.set("transform", newtransf)
 
 def applyTransformToPoint(mat,pt):
     x=mat[0][0]*pt[0]+mat[0][1]*pt[1]+mat[0][2]
@@ -95,15 +95,18 @@ def applyTransformToPoint(mat,pt):
     pt[1]=y
 
 def fuseTransform(node):
-    m=parseTransform(node.getAttributeNS(None,"transform"))
-    d = node.getAttributeNS(None,'d')
+    t = node.get("transform")
+    if t == None:
+        return
+    m=parseTransform(t)
+    d = node.get('d')
     p=cubicsuperpath.parsePath(d)
     for comp in p:
         for ctl in comp:
             for pt in ctl:
                 applyTransformToPoint(m,pt)
-    node.setAttributeNS(None,'d', cubicsuperpath.formatPath(p))
-    node.removeAttributeNS(None,"transform")
+    node.set('d', cubicsuperpath.formatPath(p))
+    del node.attribs["transform"]
 
 
 def boxunion(b1,b2):
@@ -134,83 +137,83 @@ class PathModifier(inkex.Effect):
 #-- Selectionlists manipulation --
 ##################################
     def computeBBox(self, aList):
-	bbox=None
-	for id, node in aList.iteritems():
-	    if node.tagName == 'path':
-		d = node.attributes.getNamedItem('d')
-		p = cubicsuperpath.parsePath(d.value)
-		bbox=boxunion(roughBBox(p),bbox)
-	return bbox
+        bbox=None
+        for id, node in aList.iteritems():
+            if node.tag == inkex.addNS('path','svg') or node.tag == 'path':
+                d = node.get('d')
+                p = cubicsuperpath.parsePath(d)
+                bbox=boxunion(roughBBox(p),bbox)
+        return bbox
 
     def duplicateNodes(self, aList):
         clones={}
         for id,node in aList.iteritems():
-            clone=node.cloneNode(True)
-    #!!!--> should it be given an id?
-    #seems to work without this!?!
-            clone.setAttributeNS(None,"id", self.uniqueId(node.tagName))
-            node.parentNode.appendChild(clone)
-            clones[clone.getAttributeNS(None,"id")]=clone
+            clone=inkex.etree.fromstring(inkex.etree.tostring(node))
+            #!!!--> should it be given an id?
+            #seems to work without this!?!
+            clone.set("id", self.uniqueId(node.tag))
+            node.getparent().append(clone)
+            clones[clone.get("id")]=clone
         return(clones)
 
     def uniqueId(self, prefix):
         id="%s%04i"%(prefix,random.randint(0,9999))
-        while len(xml.xpath.Evaluate('//*[@id="%s"]' % id,self.document)):
+        while len(self.document.getroot().xpath('//*[@id="%s"]' % id,inkex.NSS)):
             id="%s%04i"%(prefix,random.randint(0,9999))
         return(id)
 
     def expandGroups(self,aList,transferTransform=True):
         for id, node in aList.items():      
-            if node.tagName == 'g':
-                mat=parseTransform(node.getAttributeNS(None,"transform"))
-                for child in node.childNodes:
-                    if child.nodeType==child.ELEMENT_NODE:
-                        if transferTransform:
-                            applyTransformToNode(mat,child)
-                        aList.update(self.expandGroups({child.getAttribute('id'):child}))
+            if node.tag == inkex.addNS('g','svg'):
+                mat=parseTransform(node.get("transform"))
+                for child in node:
+                    if transferTransform:
+                        applyTransformToNode(mat,child)
+                    aList.update(self.expandGroups({child.get('id'):child}))
                 if transferTransform:
-                    node.removeAttribute("transform")
+                    del node.attribs["transform"]
                 del aList[id]
-	return(aList)
+        return(aList)
 
     def expandGroupsUnlinkClones(self,aList,transferTransform=True,doReplace=True):
         for id in aList.keys()[:]:     
             node=aList[id]
-            if node.tagName == 'g':
+            if node.tag == inkex.addNS('g','svg'):
                 self.expandGroups(aList,transferTransform)
                 self.expandGroupsUnlinkClones(aList,transferTransform,doReplace)
-		#Hum... not very efficient if there are many clones of groups...
-            elif node.tagName == 'use':
-                refid=node.getAttributeNS(inkex.NSS[u'xlink'],'href')
+                #Hum... not very efficient if there are many clones of groups...
+            elif node.tag == inkex.addNS('use','svg'):
+                refid=node.get(inkex.addNS('href','xlink'))
                 path = '//*[@id="%s"]' % refid[1:]
-                refnode = xml.xpath.Evaluate(path,self.document)[0]
-                newnode=refnode.cloneNode(True)
-		self.recursNewIds(newnode)
+                refnode = self.document.getroot().xpath(path,inkex.NSS)
+                newnode=inkex.etree.fromstring(inkex.etree.tostring(refnode))
+                self.recursNewIds(newnode)
 
-		if node.hasAttributeNS(None,u'style'):
-		    style=simplestyle.parseStyle(node.getAttributeNS(None,u'style'))
-		    refstyle=simplestyle.parseStyle(refnode.getAttributeNS(None,u'style'))
-		    style.update(refstyle)
-		    newnode.setAttributeNS(None,'style',simplestyle.formatStyle(style))
-                applyTransformToNode(parseTransform(node.getAttributeNS(None,'transform')),newnode)
-                if doReplace:
-                    parent=node.parentNode
-                    parent.insertBefore(newnode,node)
-                    parent.removeChild(node)
-                del aList[id]
-		newid=newnode.getAttributeNS(None,'id')
+                s = node.get('style')
+                if s:
+                    style=simplestyle.parseStyle(s)
+                    refstyle=simplestyle.parseStyle(refnode.get('style'))
+                    style.update(refstyle)
+                    newnode.set('style',simplestyle.formatStyle(style))
+                    applyTransformToNode(parseTransform(node.get('transform')),newnode)
+                    if doReplace:
+                        parent=node.getparent()
+                        parent.insert(node.index,newnode)
+                        parent.remove(node)
+                    del aList[id]
+                newid=newnode.get('id')
                 aList.update(self.expandGroupsUnlinkClones({newid:newnode},transferTransform,doReplace))
         return aList
     
     def recursNewIds(self,node):
-	if node.nodeType==node.ELEMENT_NODE and node.hasAttributeNS(None,u'id'):
-	    node.setAttributeNS(None,u'id',self.uniqueId(node.tagName))
-	for child in node.childNodes:
-	    self.recursNewIds(child)
-		
+        if node.get('id'):
+            node.set('id',self.uniqueId(node.tag))
+        for child in node:
+            self.recursNewIds(child)
+            
 
 	
-
+# Had not been rewritten for ElementTree
 #     def makeClonesReal(self,aList,doReplace=True,recursivelytransferTransform=True):
 #         for id in aList.keys():     
 #             node=aList[id]
@@ -246,17 +249,18 @@ class PathModifier(inkex.Effect):
 ################################
 
     def rectToPath(self,node,doReplace=True):
-        if node.tagName == 'rect':
-            x =float(node.getAttributeNS(None,u'x'))
-            y =float(node.getAttributeNS(None,u'y'))
+        if node.tag == inkex.addNS('rect','svg'):
+            x =float(node.get('x'))
+            y =float(node.get('y'))
+            #FIXME: no exception anymore and sometimes just one
             try:
-                rx=float(node.getAttributeNS(None,u'rx'))
-                ry=float(node.getAttributeNS(None,u'ry'))
+                rx=float(node.get('rx'))
+                ry=float(node.get('ry'))
             except:
                 rx=0
                 ry=0
-            w =float(node.getAttributeNS(None,u'width' ))
-            h =float(node.getAttributeNS(None,u'height'))
+            w =float(node.get('width' ))
+            h =float(node.get('height'))
             d ='M %f,%f '%(x+rx,y)
             d+='L %f,%f '%(x+w-rx,y)
             d+='A %f,%f,%i,%i,%i,%f,%f '%(rx,ry,0,0,1,x+w,y+ry)
@@ -267,33 +271,39 @@ class PathModifier(inkex.Effect):
             d+='L %f,%f '%(x,y+ry)
             d+='A %f,%f,%i,%i,%i,%f,%f '%(rx,ry,0,0,1,x+rx,y)
 
-            newnode=self.document.createElement('path')
-            newnode.setAttributeNS(None,'d',d)
-            newnode.setAttributeNS(None,'id', self.uniqueId('path'))
-            newnode.setAttributeNS(None,'style',node.getAttributeNS(None,u'style'))
-            newnode.setAttributeNS(None,'transform',node.getAttributeNS(None,u'transform'))
-            fuseTransform(newnode)
+            newnode=inkex.etree.Element('path')
+            newnode.set('d',d)
+            newnode.set('id', self.uniqueId('path'))
+            newnode.set('style',node.get('style'))
+            nnt = node.get('transform')
+            if nnt:
+                newnode.set('transform',nnt)
+                fuseTransform(newnode)
             if doReplace:
-                parent=node.parentNode
-                parent.insertBefore(newnode,node)
-                parent.removeChild(node)
+                parent=node.getparent()
+                parent.insert(node.index,newnode)
+                parent.remove(node)
             return newnode
 
     def objectToPath(self,node,doReplace=True):
-    #--TODO: support other object types!!!!
-    #--TODO: make sure cubicsuperpath supports A and Q commands... 
-        if node.tagName == 'rect':
-	    return(self.rectToPath(node,doReplace))
-        elif node.tagName == 'path':
-            attributes = node.attributes.keys()
-            for uri,attName in attributes:
-		if uri in [inkex.NSS[u'sodipodi'],inkex.NSS[u'inkscape']]:
-#                if attName not in ["d","id","style","transform"]:
-                    node.removeAttributeNS(uri,attName)
+        #--TODO: support other object types!!!!
+        #--TODO: make sure cubicsuperpath supports A and Q commands... 
+        if node.tag == inkex.addNS('rect','svg'):
+            return(self.rectToPath(node,doReplace))
+        elif node.tag == inkex.addNS('path','svg') or node.tag == 'path':
+            attributes = node.keys()
+            for attName in attributes:
+                uri = None
+                if attName[0] == '{':
+                    uri,attName = attName.split('}')
+                    uri = uri[1:]
+                if uri in [inkex.NSS[u'sodipodi'],inkex.NSS[u'inkscape']]:
+                    #if attName not in ["d","id","style","transform"]:
+                    del node.attribs[inkex.addNS(attName,uri)]
             fuseTransform(node)
             return node
         else:
-            inkex.debug("Please first convert objects to paths!...(got '%s')"%node.tagName)
+            inkex.debug("Please first convert objects to paths!...(got '%s')"%node.tag)
             return None
 
     def objectsToPaths(self,aList,doReplace=True):
@@ -301,27 +311,27 @@ class PathModifier(inkex.Effect):
         for id,node in aList.items():
             newnode=self.objectToPath(node,self.document)
             del aList[id]
-	    aList[newnode.getAttributeNS(None,u'id')]=newnode
+            aList[newnode.get('id')]=newnode
 
 
 ################################
 #-- Action ----------
 ################################
-	    
+        
     #-- overwrite this method in subclasses...
     def effect(self):
         #self.duplicateNodes(self.selected)
         self.expandGroupsUnlinkClones(self.selected, True)
-	self.objectsToPaths(self.selected, True)
+        self.objectsToPaths(self.selected, True)
         self.bbox=self.computeBBox(self.selected)
         for id, node in self.selected.iteritems():
-            if node.tagName == 'path':
-                d = node.attributes.getNamedItem('d')
-                p = cubicsuperpath.parsePath(d.value)
+            if node.tag == inkex.addNS('path','svg'):
+                d = node.get('d')
+                p = cubicsuperpath.parsePath(d)
 
 		#do what ever you want with p!
 
-		d.value = cubicsuperpath.formatPath(p)
+		node.set('d',cubicsuperpath.formatPath(p))
 
 
 class Diffeo(PathModifier):
@@ -355,20 +365,20 @@ class Diffeo(PathModifier):
 
     def effect(self):
         #self.duplicateNodes(self.selected)
-	self.expandGroupsUnlinkClones(self.selected, True)
+        self.expandGroupsUnlinkClones(self.selected, True)
         self.expandGroups(self.selected, True)
-	self.objectsToPaths(self.selected, True)
+        self.objectsToPaths(self.selected, True)
         self.bbox=self.computeBBox(self.selected)
         for id, node in self.selected.iteritems():
-            if node.tagName == 'path':
-                d = node.attributes.getNamedItem('d')
-                p = cubicsuperpath.parsePath(d.value)
+            if node.tag == inkex.addNS('path','svg'):
+                d = node.get('d')
+                p = cubicsuperpath.parsePath(d)
 
                 for sub in p:
                     for ctlpt in sub:
                         self.applyDiffeo(ctlpt[1],(ctlpt[0],ctlpt[2]))
 
-		d.value = cubicsuperpath.formatPath(p)
+                node.set('d',cubicsuperpath.formatPath(p))
 
 #e = Diffeo()
 #e.affect()

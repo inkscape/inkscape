@@ -33,45 +33,45 @@ class RubberStretch(pathmodifier.Diffeo):
                         dest="curve", default=0.5)
 
     def applyDiffeo(self,bpt,vects=()):
-	for v in vects:
-	    v[0]-=bpt[0]
-	    v[1]-=bpt[1]
-	    v[1]*=-1
-	bpt[1]*=-1
-	a=self.options.ratio/100
-	b=min(self.options.curve/100,0.99)
-	x0= (self.bbox[0]+self.bbox[1])/2
-	y0=-(self.bbox[2]+self.bbox[3])/2
-	w,h=(self.bbox[1]-self.bbox[0])/2,(self.bbox[3]-self.bbox[2])/2
-	
-	x,y=(bpt[0]-x0),(bpt[1]-y0)
-      	sx=(1+b*(x/w+1)*(x/w-1))*2**(-a)
-	sy=(1+b*(y/h+1)*(y/h-1))*2**(-a)
-	bpt[0]=x0+x*sy
-	bpt[1]=y0+y/sx
-	for v in vects:
-	    dx,dy=v
-	    dXdx=sy
-	    dXdy= x*2*b*y/h/h*2**(-a)
-	    dYdx=-y*2*b*x/w/w*2**(-a)/sx/sx
-	    dYdy=1/sx
-	    v[0]=dXdx*dx+dXdy*dy
-	    v[1]=dYdx*dx+dYdy*dy
-
-	#--spherify
-#	s=((x*x+y*y)/(w*w+h*h))**(-a/2)
-#	bpt[0]=x0+s*x
-#	bpt[1]=y0+s*y
-#	for v in vects:
-#	    dx,dy=v
-#	    v[0]=(1-a/2/(x*x+y*y)*2*x*x)*s*dx+( -a/2/(x*x+y*y)*2*y*x)*s*dy
-#	    v[1]=( -a/2/(x*x+y*y)*2*x*y)*s*dx+(1-a/2/(x*x+y*y)*2*y*y)*s*dy
-
-	for v in vects:
-	    v[0]+=bpt[0]
-	    v[1]+=bpt[1]
-	    v[1]*=-1
-	bpt[1]*=-1
+        for v in vects:
+            v[0]-=bpt[0]
+            v[1]-=bpt[1]
+            v[1]*=-1
+        bpt[1]*=-1
+        a=self.options.ratio/100
+        b=min(self.options.curve/100,0.99)
+        x0= (self.bbox[0]+self.bbox[1])/2
+        y0=-(self.bbox[2]+self.bbox[3])/2
+        w,h=(self.bbox[1]-self.bbox[0])/2,(self.bbox[3]-self.bbox[2])/2
+        
+        x,y=(bpt[0]-x0),(bpt[1]-y0)
+            sx=(1+b*(x/w+1)*(x/w-1))*2**(-a)
+        sy=(1+b*(y/h+1)*(y/h-1))*2**(-a)
+        bpt[0]=x0+x*sy
+        bpt[1]=y0+y/sx
+        for v in vects:
+            dx,dy=v
+            dXdx=sy
+            dXdy= x*2*b*y/h/h*2**(-a)
+            dYdx=-y*2*b*x/w/w*2**(-a)/sx/sx
+            dYdy=1/sx
+            v[0]=dXdx*dx+dXdy*dy
+            v[1]=dYdx*dx+dYdy*dy
+    
+        #--spherify
+        #s=((x*x+y*y)/(w*w+h*h))**(-a/2)
+        #bpt[0]=x0+s*x
+        #bpt[1]=y0+s*y
+        #for v in vects:
+        #    dx,dy=v
+        #    v[0]=(1-a/2/(x*x+y*y)*2*x*x)*s*dx+( -a/2/(x*x+y*y)*2*y*x)*s*dy
+        #    v[1]=( -a/2/(x*x+y*y)*2*x*y)*s*dx+(1-a/2/(x*x+y*y)*2*y*y)*s*dy
+    
+        for v in vects:
+            v[0]+=bpt[0]
+            v[1]+=bpt[1]
+            v[1]*=-1
+        bpt[1]*=-1
 
 e = RubberStretch()
 e.affect()

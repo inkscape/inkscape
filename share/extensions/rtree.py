@@ -44,19 +44,18 @@ class RTreeTurtle(inkex.Effect):
                         dest="minimum", default=4.0,
                         help="minimum branch size")
     def effect(self):
-        new = self.document.createElement('svg:path')
         s = {'stroke-linejoin': 'miter', 'stroke-width': '1.0px', 
             'stroke-opacity': '1.0', 'fill-opacity': '1.0', 
             'stroke': '#000000', 'stroke-linecap': 'butt', 
             'fill': 'none'}
-        new.setAttribute('style', simplestyle.formatStyle(s))
         t = pturtle.pTurtle()
         t.pu()
         t.setpos(self.view_center)
         t.pd()
         rtree(t, self.options.size, self.options.minimum)
-        new.setAttribute('d', t.getPath())
-        self.current_layer.appendChild(new)
+        
+        attribs = {'d':t.getPath(),'style':simplestyle.formatStyle(s)}
+        inkex.etree.SubElement(self.current_layer, inkex.addNS('path','svg'), attribs)
 
 e = RTreeTurtle()
 e.affect()

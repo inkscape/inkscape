@@ -110,21 +110,18 @@ class Length(inkex.Effect):
     def effect(self):
         # get number of digits
         prec = int(self.options.precision)
-        # loop over all selected pathes
+        # loop over all selected paths
         for id, node in self.selected.iteritems():
-            if node.tagName == 'path':
-                # self.group = self.document.createElement('svg:g')
-                self.group = self.document.createElement('svg:text')
-                node.parentNode.appendChild(self.group)
+            if node.tag == inkex.addNS('path','svg'):
+                self.group = inkex.etree.SubElement(node.getparent(),inkex.addNS('text','svg'))
                 
-                try:
-                    t = node.attributes.getNamedItem('transform').value
-                    self.group.setAttribute('transform', t)
-                except AttributeError:
-                    pass
+                t = node.get('transform')
+                if t:
+                    self.group.set('transform', t)
+
 
                 a =[]
-                p = cubicsuperpath.parsePath(node.attributes.getNamedItem('d').value)
+                p = cubicsuperpath.parsePath(node.get('d'))
                 num = 1
                 slengths, stotal = csplength(p)
                 ''' Wio: Umrechnung in unit '''
@@ -155,22 +152,20 @@ class Length(inkex.Effect):
 
 
     def addTextOnPath(self,node,x,y,text, id,dy=0):
-                #new = self.document.createElement('svg:text')
-                new = self.document.createElement('svg:textPath')
+                new = inkex.etree.SubElement(node,inkex.addNS('textPath','svg'))
                 s = {'text-align': 'center', 'vertical-align': 'bottom',
                     'text-anchor': 'middle', 'font-size': str(self.options.fontsize),
                     'fill-opacity': '1.0', 'stroke': 'none',
                     'font-weight': 'normal', 'font-style': 'normal', 'fill': '#000000'}
-                new.setAttribute('style', simplestyle.formatStyle(s))
-                node.setAttribute('x', str(x))
-                node.setAttribute('y', str(y))
-                #node.setAttribute('transform','rotate(180,'+str(-x)+','+str(-y)+')')
-                new.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href', '#'+id)
-                new.setAttribute('startOffset', "50%")
-                new.setAttribute('dy', str(dy)) # dubious merit
-                #new.appendChild(tp)
-                new.appendChild(self.document.createTextNode(str(text)))
-                node.appendChild(new)
+                new.set('style', simplestyle.formatStyle(s))
+                new.set(inkex.addNS('href','xlink'), '#'+id)
+                new.set('startOffset', "50%")
+                new.set('dy', str(dy)) # dubious merit
+                #new.append(tp)
+                new.text = str(text)
+                #node.set('transform','rotate(180,'+str(-x)+','+str(-y)+')')
+                node.set('x', str(x))
+                node.set('y', str(y))
 
 e = Length()
 e.affect()

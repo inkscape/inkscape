@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+dfa#!/usr/bin/env python
 """
 Copyright (C) 2005 Aaron Spike, aaron@ekips.org
 
@@ -31,9 +31,9 @@ class Project(inkex.Effect):
         #obj is selected second
         obj = self.selected[self.options.ids[0]]
         trafo = self.selected[self.options.ids[1]]
-        if obj.tagName == 'path' and trafo.tagName == 'path':
+        if obj.tag == inkex.addNS('path','svg) and trafo.tag == inkex.addNS('path','svg'):
             #distil trafo into four node points
-            trafo = cubicsuperpath.parsePath(trafo.attributes.getNamedItem('d').value)
+            trafo = cubicsuperpath.parsePath(trafo.get('d'))
             trafo = [[Point(csp[1][0],csp[1][1]) for csp in subs] for subs in trafo][0][:4]
 
             #vectors pointing away from the trafo origin
@@ -53,14 +53,14 @@ class Project(inkex.Effect):
                 err.close()
 
             #process path
-            d = obj.attributes.getNamedItem('d')
-            p = cubicsuperpath.parsePath(d.value)
+            d = obj.get('d')
+            p = cubicsuperpath.parsePath(d)
             for subs in p:
                 for csp in subs:
                     csp[0] = self.trafopoint(csp[0])
                     csp[1] = self.trafopoint(csp[1])
                     csp[2] = self.trafopoint(csp[2])
-            d.value = cubicsuperpath.formatPath(p)
+            obj.set('d',cubicsuperpath.formatPath(p))
 
     def trafopoint(self,(x,y)):
         #Transform algorithm thanks to Jose Hevia (freon)

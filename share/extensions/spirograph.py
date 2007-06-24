@@ -66,9 +66,9 @@ class Spirograph(inkex.Effect):
         
         rotation = - math.pi * self.options.rotation / 180;
         
-        new = self.document.createElement('svg:path')
+        new = inkex.etree.Element(inkex.addNS('path','svg'))
         s = { 'stroke': '#000000', 'fill': 'none' }
-        new.setAttribute('style', simplestyle.formatStyle(s))
+        new.set('style', simplestyle.formatStyle(s))
         
         pathString = ''
         maxPointCount = 1000
@@ -104,8 +104,8 @@ class Spirograph(inkex.Effect):
                         pathString += ' C ' + str(x + dx) + ',' + str(y + dy) + ' '
                     
         
-        new.setAttribute('d', pathString)
-        self.current_layer.appendChild(new)
+        new.set('d', pathString)
+        self.current_layer.append(new)
 
 e = Spirograph()
 e.affect()

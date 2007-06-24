@@ -34,7 +34,7 @@ they move and rotate, deforming the pattern.
 import inkex, cubicsuperpath, bezmisc
 import pathmodifier 
 
-import copy, math, re, random, xml.xpath
+import copy, math, re, random
 
 def flipxy(path):
     for pathcomp in path:
@@ -212,15 +212,15 @@ class PathAlongPath(pathmodifier.Diffeo):
         dx=width+self.options.space
 
         for id, node in self.patterns.iteritems():
-            if node.tagName == 'path':
-                d = node.attributes.getNamedItem('d')
-                p0 = cubicsuperpath.parsePath(d.value)
+            if node.tag == inkex.addNS('path','svg'):
+                d = node.get('d')
+                p0 = cubicsuperpath.parsePath(d)
                 if self.options.vertical:
                     flipxy(p0)
 
                 newp=[]
                 for skelnode in self.skeletons.itervalues(): 
-                    self.curSekeleton=cubicsuperpath.parsePath(skelnode.getAttribute('d'))
+                    self.curSekeleton=cubicsuperpath.parsePath(skelnode.get('d'))
                     if self.options.vertical:
                         flipxy(self.curSekeleton)
                     for comp in self.curSekeleton:
@@ -261,7 +261,7 @@ class PathAlongPath(pathmodifier.Diffeo):
                             flipxy(p)
                         newp+=p
 
-                d.value = cubicsuperpath.formatPath(newp)
+                node.set('d', cubicsuperpath.formatPath(newp))
 
 e = PathAlongPath()
 e.affect()
