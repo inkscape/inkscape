@@ -164,6 +164,19 @@ struct rdf_double_t rdf_license_freeart [] = {
     { NULL, NULL }
 };
 
+struct rdf_double_t rdf_license_ofl [] = {
+    { "cc:permits", "http://scripts.sil.org/pub/OFL/Reproduction", },
+    { "cc:permits", "http://scripts.sil.org/pub/OFL/Distribution", },
+    { "cc:permits", "http://scripts.sil.org/pub/OFL/Embedding", },
+    { "cc:permits", "http://scripts.sil.org/pub/OFL/DerivativeWorks", },
+    { "cc:requires", "http://scripts.sil.org/pub/OFL/Notice", },
+    { "cc:requires", "http://scripts.sil.org/pub/OFL/Attribution", },
+    { "cc:requires", "http://scripts.sil.org/pub/OFL/ShareAlike", },
+    { "cc:requires", "http://scripts.sil.org/pub/OFL/DerivativeRenaming", },
+    { "cc:requires", "http://scripts.sil.org/pub/OFL/BundlingWhenSelling", },
+    { NULL, NULL }
+};
+
 struct rdf_license_t rdf_licenses [] = {
     { N_("CC Attribution"), 
       "http://creativecommons.org/licenses/by/3.0/",
@@ -203,6 +216,11 @@ struct rdf_license_t rdf_licenses [] = {
     { N_("FreeArt"),
       "http://artlibre.org/licence.php/lalgb.html",
       rdf_license_freeart,
+    },
+
+    { N_("Open Font License"),
+      "http://scripts.sil.org/OFL",
+      rdf_license_ofl,
     },
 
     { NULL, NULL, rdf_license_empty, }
