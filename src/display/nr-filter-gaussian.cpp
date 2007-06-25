@@ -44,7 +44,7 @@
 // "Recursive Gaussian Derivative Filters" says this is enough though (and
 // some testing indeed shows that the quality doesn't improve much if larger
 // filters are used).
-const size_t N = 3;
+static size_t const N = 3;
 
 template<typename InIt, typename OutIt, typename Size>
 void copy_n(InIt beg_in, Size N, OutIt beg_out) {
@@ -95,12 +95,14 @@ FilterGaussian::~FilterGaussian()
     // Nothing to do here
 }
 
-int _effect_area_scr(double deviation)
+static int
+_effect_area_scr(double const deviation)
 {
     return (int)std::ceil(deviation * 3.0);
 }
 
-void _make_kernel(FIRValue *kernel, double deviation)
+static void
+_make_kernel(FIRValue *const kernel, double const deviation)
 {
     int const scr_len = _effect_area_scr(deviation);
     double const d_sq = sqr(deviation) * 2;
@@ -134,7 +136,8 @@ void _make_kernel(FIRValue *kernel, double deviation)
 //  8<=32-2*v
 //  2*v<=24
 //  v<=12
-int _effect_subsample_step_log2(double deviation, int quality)
+static int
+_effect_subsample_step_log2(double const deviation, int const quality)
 {
     // To make sure FIR will always be used (unless the kernel is VERY big):
     //  deviation/step <= 3
@@ -181,7 +184,8 @@ int _effect_subsample_step_log2(double deviation, int quality)
  * Catches reading and writing outside the pixblock area.
  * When enabled, decreases filter rendering speed massively.
  */
-inline void _check_index(NRPixBlock const * const pb, int const location, int const line)
+static inline void
+_check_index(NRPixBlock const * const pb, int const location, int const line)
 {
     if (false) {
         int max_loc = pb->rs * (pb->area.y1 - pb->area.y0);
@@ -257,7 +261,12 @@ static void calcTriggsSdikaInitialization(double const M[N*N], IIRValue const uo
 
 // Filters over 1st dimension
 template<typename PT, unsigned int PC, bool PREMULTIPLIED_ALPHA>
-void filter2D_IIR(PT *dest, int dstr1, int dstr2, PT const *src, int sstr1, int sstr2, int n1, int n2, IIRValue const b[N+1], double const M[N*N], IIRValue *const tmpdata) {
+static void
+filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
+             PT const *const src, int const sstr1, int const sstr2,
+             int const n1, int const n2, IIRValue const b[N+1], double const M[N*N],
+             IIRValue *const tmpdata)
+{
     for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
         // corresponding line in the source and output buffer
         PT const * srcimg = src  + c2*sstr2;
@@ -311,7 +320,11 @@ void filter2D_IIR(PT *dest, int dstr1, int dstr2, PT const *src, int sstr1, int 
 // Assumes kernel is symmetric
 // scr_len should be size of kernel - 1
 template<typename PT, unsigned int PC>
-void filter2D_FIR(PT *dst, int dstr1, int dstr2, PT const *src, int sstr1, int sstr2, int n1, int n2, FIRValue const *const kernel, int scr_len) {
+static void
+filter2D_FIR(PT *const dst, int const dstr1, int const dstr2,
+             PT const *const src, int const sstr1, int const sstr2,
+             int const n1, int const n2, FIRValue const *const kernel, int const scr_len)
+{
     // Past pixels seen (to enable in-place operation)
     PT history[scr_len+1][PC];
 
@@ -406,7 +419,11 @@ void filter2D_FIR(PT *dst, int dstr1, int dstr2, PT const *src, int sstr1, int s
 }
 
 template<typename PT, unsigned int PC>
-void downsample(PT *dst, int dstr1, int dstr2, int dn1, int dn2, PT const *src, int sstr1, int sstr2, int sn1, int sn2, int step1_l2, int step2_l2) {
+static void
+downsample(PT *const dst, int const dstr1, int const dstr2, int const dn1, int const dn2,
+           PT const *const src, int const sstr1, int const sstr2, int const sn1, int const sn2,
+           int const step1_l2, int const step2_l2)
+{
     unsigned int const divisor_l2 = step1_l2+step2_l2; // step1*step2=2^(step1_l2+step2_l2)
     unsigned int const round_offset = (1<<divisor_l2)/2;
     int const step1 = 1<<step1_l2;
@@ -436,7 +453,11 @@ void downsample(PT *dst, int dstr1, int dstr2, int dn1, int dn2, PT const *src, 
 }
 
 template<typename PT, unsigned int PC>
-void upsample(PT *dst, int dstr1, int dstr2, unsigned int dn1, unsigned int dn2, PT const *src, int sstr1, int sstr2, unsigned int sn1, unsigned int sn2, unsigned int step1_l2, unsigned int step2_l2) {
+static void
+upsample(PT *const dst, int const dstr1, int const dstr2, unsigned int const dn1, unsigned int const dn2,
+         PT const *const src, int const sstr1, int const sstr2, unsigned int const sn1, unsigned int const sn2,
+         unsigned int const step1_l2, unsigned int const step2_l2)
+{
     assert(((sn1-1)<<step1_l2)>=dn1 && ((sn2-1)<<step2_l2)>=dn2); // The last pixel of the source image should fall outside the destination image
     unsigned int const divisor_l2 = step1_l2+step2_l2; // step1*step2=2^(step1_l2+step2_l2)
     unsigned int const round_offset = (1<<divisor_l2)/2;
