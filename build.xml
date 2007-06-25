@@ -367,7 +367,7 @@
            <!-- PERL -->
            -L${gtk}/perl/lib/CORE -lperl58
            <!-- PYTHON -->
-           -L${gtk}/python/libs -lpython24
+           -L${gtk}/python/libs -lpython25
            ${gtk}/bin/libxml2.dll
            ${gtk}/lib/iconv.lib
            -lfreetype.dll -lfontconfig.dll
@@ -519,7 +519,7 @@
     <copy file="${gtk}/perl/bin/perl58.dll" todir="${dist}"/>
 
     <!-- PYTHON -->
-    <copy file="${gtk}/python/python24.dll" todir="${dist}"/>
+    <copy file="${gtk}/python/python25.dll" todir="${dist}"/>
     <copy file="${gtk}/python/python.exe" todir="${dist}/python"/>
     <copy todir="${dist}/python"> <fileset dir="${gtk}/python/Lib"/> </copy>
     <copy todir="${dist}/python"> <fileset dir="${gtk}/python/DLLs"/> </copy>
