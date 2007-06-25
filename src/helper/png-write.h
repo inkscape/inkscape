@@ -13,19 +13,9 @@
  */
 
 #include <glib/gtypes.h>
+struct SPDocument;
 
-int sp_png_write_rgba(gchar const *filename, guchar const *px, int width, int height, double xdpi, double ydpi, int rowstride);
-
-int sp_png_write_rgba_striped(gchar const *filename, int width, int height, double xdpi, double ydpi,
-			      int (* get_rows) (guchar const **rows, int row, int num_rows, void *data),
-			      void *data);
-
-/**
- * Export the given document as a Portable Network Graphics (PNG)
- * file.  Returns FALSE if an error was encountered while writing
- * the file, TRUE otherwise.
- */
-int sp_export_png_file (SPDocument *doc, const gchar *filename,
+bool sp_export_png_file (SPDocument *doc, gchar const *filename,
 			 double x0, double y0, double x1, double y1,
 			 unsigned int width, unsigned int height, double xdpi, double ydpi,
 			 unsigned long bgcolor,

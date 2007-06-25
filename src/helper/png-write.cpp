@@ -61,31 +61,7 @@ typedef struct SPPNGBD {
     int rowstride;
 } SPPNGBD;
 
-static int
-sp_png_get_block_stripe(guchar const **rows, int row, int num_rows, void *data)
-{
-    SPPNGBD *bd = (SPPNGBD *) data;
-
-    for (int r = 0; r < num_rows; r++) {
-        rows[r] = bd->px + (row + r) * bd->rowstride;
-    }
-
-    return num_rows;
-}
-
-int
-sp_png_write_rgba(gchar const *filename, guchar const *px,
-                  int width, int height, double xdpi, double ydpi, int rowstride)
-{
-    SPPNGBD bd;
-
-    bd.px = px;
-    bd.rowstride = rowstride;
-
-    return sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_png_get_block_stripe, &bd);
-}
-
-int
+static bool
 sp_png_write_rgba_striped(gchar const *filename, int width, int height, double xdpi, double ydpi,
                           int (* get_rows)(guchar const **rows, int row, int num_rows, void *data),
                           void *data)
@@ -98,13 +74,13 @@ sp_png_write_rgba_striped(gchar const *filename, int width, int height, double x
     png_text text_ptr[3];
     png_uint_32 r;
 
-    g_return_val_if_fail(filename != NULL, FALSE);
+    g_return_val_if_fail(filename != NULL, false);
 
     /* open the file */
 
     Inkscape::IO::dump_fopen_call(filename, "M");
     fp = Inkscape::IO::fopen_utf8name(filename, "wb");
-    g_return_val_if_fail(fp != NULL, FALSE);
+    g_return_val_if_fail(fp != NULL, false);
 
     /* Create and initialize the png_struct with the desired error handler
      * functions.  If you want to use the default stderr and longjump method,
@@ -116,7 +92,7 @@ sp_png_write_rgba_striped(gchar const *filename, int width, int height, double x
 
     if (png_ptr == NULL) {
         fclose(fp);
-        return FALSE;
+        return false;
     }
 
     /* Allocate/initialize the image information data.  REQUIRED */
@@ -124,7 +100,7 @@ sp_png_write_rgba_striped(gchar const *filename, int width, int height, double x
     if (info_ptr == NULL) {
         fclose(fp);
         png_destroy_write_struct(&png_ptr, NULL);
-        return FALSE;
+        return false;
     }
 
     /* Set error handling.  REQUIRED if you aren't supplying your own
@@ -134,7 +110,7 @@ sp_png_write_rgba_striped(gchar const *filename, int width, int height, double x
         /* If we get here, we had a problem reading the file */
         fclose(fp);
         png_destroy_write_struct(&png_ptr, &info_ptr);
-        return FALSE;
+        return false;
     }
 
     /* set up the output control if you are using standard C streams */
@@ -224,7 +200,7 @@ sp_png_write_rgba_striped(gchar const *filename, int width, int height, double x
     fclose(fp);
 
     /* that's it */
-    return TRUE;
+    return true;
 }
 
 
@@ -311,11 +287,11 @@ hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
 
 
 /**
- *  Render the SVG drawing onto a PNG raster image, then save to
- *  a file.  Returns TRUE if succeeded in writing the file,
- *  FALSE otherwise.
+ * Export the given document as a Portable Network Graphics (PNG) file.
+ *
+ * \return true if succeeded, false if an error occurred.
  */
-int
+bool
 sp_export_png_file(SPDocument *doc, gchar const *filename,
                    double x0, double y0, double x1, double y1,
                    unsigned width, unsigned height, double xdpi, double ydpi,
@@ -324,14 +300,13 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
                    void *data, bool force_overwrite,
                    GSList *items_only)
 {
-    int write_status = TRUE;
-    g_return_val_if_fail(doc != NULL, FALSE);
-    g_return_val_if_fail(filename != NULL, FALSE);
-    g_return_val_if_fail(width >= 1, FALSE);
-    g_return_val_if_fail(height >= 1, FALSE);
+    g_return_val_if_fail(doc != NULL, false);
+    g_return_val_if_fail(filename != NULL, false);
+    g_return_val_if_fail(width >= 1, false);
+    g_return_val_if_fail(height >= 1, false);
 
     if (!force_overwrite && !sp_ui_overwrite_file(filename)) {
-        return FALSE;
+        return false;
     }
 
     // export with maximum blur rendering quality
@@ -394,6 +369,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     ebp.status = status;
     ebp.data   = data;
 
+    bool write_status;
     if (width * height < 65536 / 4) {
         ebp.px = nr_pixelstore_64K_new(FALSE, 0);
         ebp.sheight = height;
