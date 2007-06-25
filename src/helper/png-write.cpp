@@ -18,6 +18,7 @@
 
 #include <interface.h>
 #include <libnr/nr-pixops.h>
+#include <libnr/nr-translate-scale-ops.h>
 #include <glib/gmessages.h>
 #include <png.h>
 #include "png-write.h"
@@ -362,13 +363,9 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
      * (2) a[5] = -a[3] * y1
      */
 
-    NRMatrix affine;
-    affine.c[0] = width / (x1 - x0);
-    affine.c[1] = 0.0;
-    affine.c[2] = 0.0;
-    affine.c[3] = height / (y1 - y0);
-    affine.c[4] = -affine.c[0] * x0;
-    affine.c[5] = -affine.c[3] * y0;
+    NR::Matrix const affine(NR::translate(-x0, -y0)
+                            * NR::scale(width / (x1 - x0),
+                                        height / (y1 - y0)));
 
     //SP_PRINT_MATRIX("SVG2PNG", &affine);
 
@@ -386,7 +383,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
 
     /* Create ArenaItems and set transform */
     ebp.root = sp_item_invoke_show(SP_ITEM(sp_document_root(doc)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
-    nr_arena_item_set_transform(NR_ARENA_ITEM(ebp.root), NR::Matrix(&affine));
+    nr_arena_item_set_transform(NR_ARENA_ITEM(ebp.root), affine);
 
     // We show all and then hide all items we don't want, instead of showing only requested items,
     // because that would not work if the shown item references something in defs
