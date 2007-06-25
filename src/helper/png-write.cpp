@@ -42,7 +42,7 @@
  * working PNG reader/writer, see pngtest.c, included in this distribution.
  */
 
-const unsigned int MAX_STRIPE_SIZE = 1024*1024;
+static unsigned int const MAX_STRIPE_SIZE = 1024*1024;
 
 struct SPEBP {
     int width, height, sheight;
@@ -56,12 +56,12 @@ struct SPEBP {
 /* write a png file */
 
 typedef struct SPPNGBD {
-	const guchar *px;
+	guchar const *px;
 	int rowstride;
 } SPPNGBD;
 
 static int
-sp_png_get_block_stripe (const guchar **rows, int row, int num_rows, void *data)
+sp_png_get_block_stripe (guchar const **rows, int row, int num_rows, void *data)
 {
 	SPPNGBD *bd = (SPPNGBD *) data;
 
@@ -73,7 +73,8 @@ sp_png_get_block_stripe (const guchar **rows, int row, int num_rows, void *data)
 }
 
 int
-sp_png_write_rgba (const gchar *filename, const guchar *px, int width, int height, double xdpi, double ydpi, int rowstride)
+sp_png_write_rgba(gchar const *filename, guchar const *px,
+                  int width, int height, double xdpi, double ydpi, int rowstride)
 {
 	SPPNGBD bd;
 
@@ -84,8 +85,8 @@ sp_png_write_rgba (const gchar *filename, const guchar *px, int width, int heigh
 }
 
 int
-sp_png_write_rgba_striped (const gchar *filename, int width, int height, double xdpi, double ydpi,
-			   int (* get_rows) (const guchar **rows, int row, int num_rows, void *data),
+sp_png_write_rgba_striped (gchar const *filename, int width, int height, double xdpi, double ydpi,
+			   int (* get_rows) (guchar const **rows, int row, int num_rows, void *data),
 			   void *data)
 {
     struct SPEBP *ebp = (struct SPEBP *) data;
@@ -198,7 +199,7 @@ sp_png_write_rgba_striped (const gchar *filename, int width, int height, double 
 
 	r = 0;
 	while (r < static_cast< png_uint_32 > (height) ) {
-		int n = get_rows ((const unsigned char **) row_pointers, r, height-r, data);
+		int n = get_rows ((unsigned char const **) row_pointers, r, height-r, data);
 		if (!n) break;
 		png_write_rows (png_ptr, row_pointers, n);
 		r += n;
@@ -339,9 +340,11 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     sp_document_ensure_up_to_date(doc);
 
     /* Go to document coordinates */
-    gdouble t = y0;
-    y0 = sp_document_height(doc) - y1;
-    y1 = sp_document_height(doc) - t;
+    {
+        gdouble const t = y0;
+        y0 = sp_document_height(doc) - y1;
+        y1 = sp_document_height(doc) - t;
+    }
 
     /*
      * 1) a[0] * x0 + a[2] * y1 + a[4] = 0.0
@@ -378,8 +381,8 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     ebp.a      = NR_RGBA32_A(bgcolor);
 
     /* Create new arena */
-    NRArena *arena = NRArena::create();
-    unsigned dkey = sp_item_display_key_new(1);
+    NRArena *const arena = NRArena::create();
+    unsigned const dkey = sp_item_display_key_new(1);
 
     /* Create ArenaItems and set transform */
     ebp.root = sp_item_invoke_show(SP_ITEM(sp_document_root(doc)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
@@ -394,7 +397,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     ebp.status = status;
     ebp.data   = data;
 
-    if (4 * width * height < 65536) {
+    if (width * height < 65536 / 4) {
         ebp.px = nr_pixelstore_64K_new(FALSE, 0);
         ebp.sheight = height;
         write_status = sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
