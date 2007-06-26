@@ -21,6 +21,7 @@
 //#define GDK_PIXBUF_ENABLE_BACKEND 1
 //#include <gdk-pixbuf/gdk-pixbuf-io.h>
 #include "display/nr-arena-image.h"
+#include <display/curve.h>
 
 //Added for preserveAspectRatio support -- EAF
 #include "enums.h"
@@ -30,6 +31,7 @@
 #include "brokenimage.xpm"
 #include "document.h"
 #include "sp-image.h"
+#include "sp-clippath.h"
 #include <glibmm/i18n.h>
 #include "xml/quote.h"
 #include <xml/repr.h>
@@ -65,6 +67,8 @@ static gchar * sp_image_description (SPItem * item);
 static void sp_image_snappoints(SPItem const *item, SnapPointsIter p);
 static NRArenaItem *sp_image_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static NR::Matrix sp_image_set_transform (SPItem *item, NR::Matrix const &xform);
+static void sp_image_set_curve(SPImage *image);
+
 
 GdkPixbuf *sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *base);
 static GdkPixbuf *sp_image_pixbuf_force_rgba (GdkPixbuf * pixbuf);
@@ -502,6 +506,7 @@ sp_image_init (SPImage *image)
 	image->width.unset();
 	image->height.unset();
 	image->aspect_align = SP_ASPECT_NONE;
+	image->curve = NULL;
 }
 
 static void
@@ -550,6 +555,10 @@ sp_image_release (SPObject *object)
 		image->color_profile = NULL;
 	}
 #endif // ENABLE_LCMS
+
+    if (image->curve) {
+		image->curve = sp_curve_unref (image->curve);
+	}
 
 	if (((SPObjectClass *) parent_class)->release)
 		((SPObjectClass *) parent_class)->release (object);
@@ -873,7 +882,7 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 				}
 			}
 	}
-
+	sp_image_set_curve((SPImage *) object); //creates a curve at the image's boundary for snapping
 	sp_image_update_canvas_image ((SPImage *) object);
 }
 
@@ -1164,9 +1173,30 @@ sp_image_update_canvas_image (SPImage *image)
 
 static void sp_image_snappoints(SPItem const *item, SnapPointsIter p)
 {
-     if (((SPItemClass *) parent_class)->snappoints) {
-         ((SPItemClass *) parent_class)->snappoints (item, p);
-     }
+    /* An image doesn't have any nodes to snap, but still we want to be able snap one image 
+    to another. Therefore we will create some snappoints at the corner, similar to a rect. If
+    the image is rotated, then the snappoints will rotate with it. Again, just like a rect.
+    */
+     
+    g_assert(item != NULL);
+    g_assert(SP_IS_IMAGE(item));
+
+    if (item->clip_ref->getObject()) {
+        //We are looking at a clipped image: do not return any snappoints, as these might be
+        //far far away from the visible part from the clipped image
+    } else {
+        // The image has not been clipped: return its corners, which might be rotated for example
+        SPImage &image = *SP_IMAGE(item);
+        double const x0 = image.x.computed;
+		double const y0 = image.y.computed;
+		double const x1 = x0 + image.width.computed;
+		double const y1 = y0 + image.height.computed;
+		NR::Matrix const i2d (sp_item_i2d_affine (item));
+		*p = NR::Point(x0, y0) * i2d;
+        *p = NR::Point(x0, y1) * i2d;
+        *p = NR::Point(x1, y1) * i2d;
+        *p = NR::Point(x1, y0) * i2d;
+    }
 }
 
 /*
@@ -1353,6 +1383,56 @@ sp_image_repr_read_b64 (const gchar * uri_data)
 	if (!failed) pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
 
 	return pixbuf;
+}
+
+static void
+sp_image_set_curve(SPImage *image) 
+{
+    //create a curve at the image's boundary for snapping
+    if ((image->height.computed < 1e-18) || (image->width.computed < 1e-18) || (image->clip_ref->getObject())) {
+        if (image->curve) {
+            image->curve = sp_curve_unref(image->curve);
+        }
+        return;
+    }
+    
+    SPCurve *c = sp_curve_new();
+
+    double const x = image->x.computed;
+    double const y = image->y.computed;
+    double const w = image->width.computed;
+    double const h = image->height.computed;
+    
+    sp_curve_moveto(c, x, y);
+    sp_curve_lineto(c, x + w, y);
+    sp_curve_lineto(c, x + w, y + h);
+    sp_curve_lineto(c, x, y + h);
+    sp_curve_lineto(c, x, y);
+
+    sp_curve_closepath_current(c);
+    
+    if (image->curve) {
+        image->curve = sp_curve_unref(image->curve);
+    }
+    
+    if (c) {
+        image->curve = sp_curve_ref(c);
+    }
+    
+    sp_curve_unref(c);
+    
+}
+
+/**
+ * Return duplicate of curve (if any exists) or NULL if there is no curve
+ */
+SPCurve *
+sp_image_get_curve (SPImage *image)
+{
+	if (image->curve) {
+		return sp_curve_copy(image->curve);
+	}
+	return NULL;
 }
 
 /*

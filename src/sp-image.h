@@ -28,6 +28,7 @@ class SPImageClass;
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "svg/svg-length.h"
 #include "sp-item.h"
+#include "display/display-forward.h"
 
 #define SP_IMAGE_HREF_MODIFIED_FLAG SP_OBJECT_USER_MODIFIED_FLAG_A
 
@@ -43,6 +44,8 @@ struct SPImage : public SPItem {
 	unsigned int aspect_clip : 1;
 	int trimx, trimy, trimwidth, trimheight;
 	double viewx, viewy, viewwidth, viewheight;
+	
+	SPCurve *curve; // This curve is at the image's boundary for snapping
 
 	gchar *href;
 #if ENABLE_LCMS
@@ -58,6 +61,8 @@ struct SPImageClass {
 
 GType sp_image_get_type (void);
 
+/* Return duplicate of curve or NULL */
+SPCurve *sp_image_get_curve (SPImage *image);
 
 
 #endif

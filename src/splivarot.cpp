@@ -23,6 +23,7 @@
 #include "svg/svg.h"
 #include "sp-path.h"
 #include "sp-shape.h"
+#include "sp-image.h"
 #include "marker.h"
 #include "enums.h"
 #include "sp-text.h"
@@ -1712,6 +1713,10 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
     else if (SP_IS_TEXT(item))
     {
         curve = SP_TEXT(item)->getNormalizedBpath();
+    }
+    else if (SP_IS_IMAGE(item))
+    {
+        curve = sp_image_get_curve(SP_IMAGE(item));
     }
     else
     {

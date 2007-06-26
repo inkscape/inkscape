@@ -762,12 +762,17 @@ NR::Maybe<NR::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
 static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
 {
     NR::Maybe<NR::Rect> bbox = item->getBounds(sp_item_i2d_affine(item));
-    /* Just a pair of opposite corners of the bounding box suffices given that we don't yet
+    /* Just the corners of the bounding box suffices given that we don't yet
        support angled guide lines. */
 
     if (bbox) {
-        *p = bbox->min();
-        *p = bbox->max();
+        NR::Point p1, p2;
+        p1 = bbox->min();
+        p2 = bbox->max();
+        *p = p1;
+        *p = NR::Point(p1[NR::X], p2[NR::Y]);
+        *p = p2;
+        *p = NR::Point(p1[NR::Y], p2[NR::X]);
     }
 }
 

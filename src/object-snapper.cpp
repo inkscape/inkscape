@@ -15,7 +15,9 @@
 #include "document.h"
 #include "sp-namedview.h"
 #include "sp-path.h"
+#include "sp-image.h"
 #include "sp-item-group.h"
+#include "sp-item.h"
 #include "sp-use.h"
 #include "display/curve.h"
 #include "desktop.h"
@@ -89,27 +91,33 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::SnappedPoint &s,
             root_item = *i;
         }
         
+        SPCurve *curve = NULL;
+        
         if (SP_IS_SHAPE(root_item)) {
-
             SPShape const *sh = SP_SHAPE(root_item);
-            if (sh->curve) {
-
-                int j = 0;
-
-                while (SP_CURVE_BPATH(sh->curve)[j].code != NR_END) {
+            curve = sh->curve;
+        } else if (SP_IS_IMAGE(root_item)) {
+            SPImage const *im = SP_IMAGE(root_item);
+            curve = im->curve;
+        }
             
-                    /* Get this node in desktop coordinates */
-                    NArtBpath const &bp = SP_CURVE_BPATH(sh->curve)[j];
-                    NR::Point const n = desktop->doc2dt(bp.c(3) * i2doc);
-            
-                    /* Try to snap to this node of the path */
-                    NR::Coord const dist = NR::L2(n - p);
-                    if (dist < getDistance() && dist < s.getDistance()) {
-                        s = SnappedPoint(n, dist);
-                    }
+        if (curve) {
 
-                    j++;
+            int j = 0;
+
+            while (SP_CURVE_BPATH(curve)[j].code != NR_END) {
+        
+                /* Get this node in desktop coordinates */
+                NArtBpath const &bp = SP_CURVE_BPATH(curve)[j];
+                NR::Point const n = desktop->doc2dt(bp.c(3) * i2doc);
+        
+                /* Try to snap to this node of the path */
+                NR::Coord const dist = NR::L2(n - p);
+                if (dist < getDistance() && dist < s.getDistance()) {
+                    s = SnappedPoint(n, dist);
                 }
+
+                j++;
             }
         }
     }
@@ -126,13 +134,13 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
     SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
 
     NR::Point const p_doc = desktop->dt2doc(p);
-
+    
     for (std::list<SPItem*>::const_iterator i = cand.begin(); i != cand.end(); i++) {
 
         /* Transform the requested snap point to this item's coordinates */
         NR::Matrix i2doc(NR::identity());
         SPItem *root_item = NULL;
-        /* We might have a clone at hand, so make sure we get the root item */        
+        /* We might have a clone at hand, so make sure we get the root item */
         if (SP_IS_USE(*i)) {
             i2doc = sp_use_get_root_transform(SP_USE(*i));
             root_item = sp_use_root(SP_USE(*i));
