@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-05-22 10:43+0300\n"
-"PO-Revision-Date: 2007-02-12 07:33+0200\n"
+"PO-Revision-Date: 2007-06-27 00:31+0200\n"
 "Last-Translator: Maxim Dziumanenko <dziumanenko@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5969,10 +5969,10 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:321
 msgid "translator-credits"
 msgstr ""
-"Yuri Syrota <rasta@renome.rovno.ua>\n"
-"Alex <pilipchukap@rambler.ru>\n"
-"Максим Дзюманенко <dziumanenko@gmail.com>\n"
-"Юрій Чорноіван <yurchor@ukr.net>"
+"Yuri Syrota (rasta@renome.rovno.ua)\n"
+"Alex (pilipchukap@rambler.ru)\n"
+"Максим Дзюманенко (dziumanenko@gmail.com)\n"
+"Юрій Чорноіван (yurchor@ukr.net)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:234
 #: ../src/ui/dialog/align-and-distribute.cpp:780
