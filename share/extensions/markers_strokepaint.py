@@ -61,14 +61,15 @@ class MyEffect(inkex.Effect):
                     mnode.set(inkex.addNS('stockid','inkscape'), new_id)
                     defs.append(mnode)
                     
-                    children = self.document.getroot().xpath('/svg:svg//svg:marker[@id="%s"]//*[@style]' % new_id,inkex.NSS)
+                    children = mnode.xpath('.//*[@style]',inkex.NSS)
                     for child in children:
                         cstyle = simplestyle.parseStyle(child.get('style'))
                         if ('stroke' in cstyle and cstyle['stroke'] != 'none') or 'stroke' not in cstyle:
-                                cstyle['stroke'] = stroke
+                            cstyle['stroke'] = stroke
                         if ('fill' in cstyle and cstyle['fill'] != 'none') or 'fill' not in cstyle:
-                                cstyle['fill'] = stroke
+                            cstyle['fill'] = stroke
                         child.set('style',simplestyle.formatStyle(cstyle))
             node.set('style',simplestyle.formatStyle(style))
+
 e = MyEffect()
 e.affect()
