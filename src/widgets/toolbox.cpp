@@ -2145,7 +2145,7 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                   "toggle_vp_x",
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-    g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), (gpointer) 0);
+    g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), GUINT_TO_POINTER(0));
     if (SP3DBoxContext::current_perspective) {
         toggled = SP3DBoxContext::current_perspective->get_vanishing_point(Box3D::X)->is_finite();
     }
@@ -2160,7 +2160,7 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                   "toggle_vp_y",
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-    g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), (gpointer) 1);
+    g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), GUINT_TO_POINTER(1));
     if (SP3DBoxContext::current_perspective) {
         toggled = SP3DBoxContext::current_perspective->get_vanishing_point(Box3D::Y)->is_finite();
     }
@@ -2175,7 +2175,7 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                   "toggle_vp_z",
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-    g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), (gpointer) 2);
+    g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), GUINT_TO_POINTER(2));
     if (SP3DBoxContext::current_perspective) {
         toggled = SP3DBoxContext::current_perspective->get_vanishing_point(Box3D::Z)->is_finite();
     }
