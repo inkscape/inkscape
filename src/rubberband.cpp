@@ -70,7 +70,8 @@ void Inkscape::Rubberband::stop()
 
     delete_canvas_items();
 
-    sp_canvas_end_forced_full_redraws(_desktop->canvas);
+    if (_desktop)
+        sp_canvas_end_forced_full_redraws(_desktop->canvas);
 }
 
 void Inkscape::Rubberband::move(NR::Point const &p)
