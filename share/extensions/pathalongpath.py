@@ -212,7 +212,7 @@ class PathAlongPath(pathmodifier.Diffeo):
         dx=width+self.options.space
 
         for id, node in self.patterns.iteritems():
-            if node.tag == inkex.addNS('path','svg'):
+            if node.tag == inkex.addNS('path','svg') or node.tag=='path':
                 d = node.get('d')
                 p0 = cubicsuperpath.parsePath(d)
                 if self.options.vertical:

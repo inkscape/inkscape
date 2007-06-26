@@ -106,7 +106,7 @@ def fuseTransform(node):
             for pt in ctl:
                 applyTransformToPoint(m,pt)
     node.set('d', cubicsuperpath.formatPath(p))
-    del node.attribs["transform"]
+    del node.attrib["transform"]
 
 
 def boxunion(b1,b2):
@@ -151,7 +151,8 @@ class PathModifier(inkex.Effect):
             clone=inkex.etree.fromstring(inkex.etree.tostring(node))
             #!!!--> should it be given an id?
             #seems to work without this!?!
-            clone.set("id", self.uniqueId(node.tag))
+            myid = node.tag.split('}')[-1]
+            clone.set("id", self.uniqueId(myid))
             node.getparent().append(clone)
             clones[clone.get("id")]=clone
         return(clones)
@@ -164,25 +165,25 @@ class PathModifier(inkex.Effect):
 
     def expandGroups(self,aList,transferTransform=True):
         for id, node in aList.items():      
-            if node.tag == inkex.addNS('g','svg'):
+            if node.tag == inkex.addNS('g','svg') or node.tag=='g':
                 mat=parseTransform(node.get("transform"))
                 for child in node:
                     if transferTransform:
                         applyTransformToNode(mat,child)
                     aList.update(self.expandGroups({child.get('id'):child}))
                 if transferTransform:
-                    del node.attribs["transform"]
+                    del node.attrib["transform"]
                 del aList[id]
         return(aList)
 
     def expandGroupsUnlinkClones(self,aList,transferTransform=True,doReplace=True):
         for id in aList.keys()[:]:     
             node=aList[id]
-            if node.tag == inkex.addNS('g','svg'):
+            if node.tag == inkex.addNS('g','svg') or node.tag=='g':
                 self.expandGroups(aList,transferTransform)
                 self.expandGroupsUnlinkClones(aList,transferTransform,doReplace)
                 #Hum... not very efficient if there are many clones of groups...
-            elif node.tag == inkex.addNS('use','svg'):
+            elif node.tag == inkex.addNS('use','svg') or node.tag=='use':
                 refid=node.get(inkex.addNS('href','xlink'))
                 path = '//*[@id="%s"]' % refid[1:]
                 refnode = self.document.getroot().xpath(path,inkex.NSS)
@@ -299,7 +300,7 @@ class PathModifier(inkex.Effect):
                     uri = uri[1:]
                 if uri in [inkex.NSS[u'sodipodi'],inkex.NSS[u'inkscape']]:
                     #if attName not in ["d","id","style","transform"]:
-                    del node.attribs[inkex.addNS(attName,uri)]
+                    del node.attrib[inkex.addNS(attName,uri)]
             fuseTransform(node)
             return node
         else:
@@ -370,7 +371,7 @@ class Diffeo(PathModifier):
         self.objectsToPaths(self.selected, True)
         self.bbox=self.computeBBox(self.selected)
         for id, node in self.selected.iteritems():
-            if node.tag == inkex.addNS('path','svg'):
+            if node.tag == inkex.addNS('path','svg') or node.tag=='path':
                 d = node.get('d')
                 p = cubicsuperpath.parsePath(d)
 
