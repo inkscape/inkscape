@@ -38,7 +38,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.7.0, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.7.1, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -6852,8 +6852,9 @@ public:
             //trace("skipped <makefile>");
             return true;
             }
+        String fullNative = getNativePath(fullName);
         //trace("fullName:%s", fullName.c_str());
-        FILE *f = fopen(fullName.c_str(), "w");
+        FILE *f = fopen(fullNative.c_str(), "w");
         if (!f)
             {
             error("<makefile> could not open %s for writing : %s",

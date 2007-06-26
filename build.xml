@@ -499,7 +499,6 @@
 
     <!-- GTK -->
     <copy todir="${dist}"> <fileset dir="${gtk}/etc"/> </copy>
-    <copy file="${gtk}/share/themes/MS-Windows/gtk-2.0/gtkrc" todir="${dist}/etc/gtk-2.0"/>
     <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/gtk-2.0"/> </copy>
     <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/glib-2.0"/> </copy>
     <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/locale"/> </copy>
@@ -524,6 +523,53 @@
     <copy todir="${dist}/python"> <fileset dir="${gtk}/python/Lib"/> </copy>
     <copy todir="${dist}/python"> <fileset dir="${gtk}/python/DLLs"/> </copy>
     <copy todir="${dist}/python"> <fileset dir="${gtk}/python/Scripts"/> </copy>
+
+    <!--<copy file="${gtk}/share/themes/MS-Windows/gtk-2.0/gtkrc" todir="${dist}/etc/gtk-2.0"/>-->
+    <makefile file="${dist}/etc/gtk-2.0/gtkrc">
+    gtk-icon-sizes = "gtk-menu=13,13:gtk-small-toolbar=16,16:gtk-large-toolbar=24,24:gtk-dnd=32,32:inkscape-decoration=16,16"
+    gtk-toolbar-icon-size = small-toolbar
+
+    # disable images in buttons. i've only seen ugly delphi apps use this feature.
+    gtk-button-images = 0
+
+    # enable/disable images in menus. most "stock" microsoft apps don't use these, except sparingly.
+    # the office apps use them heavily, though.
+    gtk-menu-images = 1
+
+    # use the win32 button ordering instead of the GNOME HIG one, where applicable
+    gtk-alternative-button-order = 1
+
+    style "msw-default"
+    {
+      GtkWidget::interior-focus = 1
+      GtkOptionMenu::indicator-size = { 9, 5 }
+      GtkOptionMenu::indicator-spacing = { 7, 5, 2, 2 }
+      GtkSpinButton::shadow-type = in
+
+      # Owen and I disagree that these should be themable
+      #GtkUIManager::add-tearoffs = 0
+      #GtkComboBox::add-tearoffs = 0
+
+      GtkComboBox::appears-as-list = 1
+      GtkComboBox::focus-on-click = 0
+
+      GOComboBox::add_tearoffs = 0
+
+      GtkTreeView::allow-rules = 0
+      GtkTreeView::expander-size = 12
+
+      GtkExpander::expander-size = 12
+
+      GtkScrolledWindow::scrollbar_spacing = 1
+
+      GtkSeparatorMenuItem::horizontal-padding = 2
+
+      engine "wimp"
+      {
+      }
+    }
+    class "*" style "msw-default"
+    </makefile>
 
   </target>
 
