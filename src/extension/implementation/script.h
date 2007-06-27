@@ -97,9 +97,12 @@ public:
     virtual void effect(Inkscape::Extension::Effect *module,
                         Inkscape::UI::View::View *doc);
 
-
+    virtual bool cancelProcessing (void);
 
 private:
+    bool _canceled;
+    Glib::Pid _pid;
+    Glib::RefPtr<Glib::MainLoop> _main_loop;
 
     /**
      * The command that has been dirived from
@@ -139,6 +142,60 @@ private:
                       const Glib::ustring &message);
 
 
+    class file_listener {
+        Glib::ustring _string;
+        sigc::connection _conn;
+        Glib::RefPtr<Glib::IOChannel> _channel;
+        Glib::RefPtr<Glib::MainLoop> _main_loop;
+        
+    public:
+        file_listener () { };
+        ~file_listener () {
+            _conn.disconnect();
+        };
+
+        void init (int fd, Glib::RefPtr<Glib::MainLoop> main) {
+            _channel = Glib::IOChannel::create_from_fd(fd);
+            _channel->set_encoding();
+            _conn = Glib::signal_io().connect(sigc::mem_fun(*this, &file_listener::read), _channel, Glib::IO_IN | Glib::IO_HUP | Glib::IO_ERR);
+            _main_loop = main;
+
+            return;
+        };
+
+        bool read (Glib::IOCondition condition) {
+            if (condition != Glib::IO_IN) {
+                _main_loop->quit();
+                return false;
+            }
+
+            Glib::IOStatus status;
+            Glib::ustring out;
+            status = _channel->read_to_end(out);
+
+            if (status != Glib::IO_STATUS_NORMAL) {
+                _main_loop->quit();
+                return false;
+            }
+
+            _string += out;
+            return true;
+        };
+
+        // Note, doing a copy here, on purpose
+        Glib::ustring string (void) { return _string; };
+
+        void toFile (const Glib::ustring &name) {
+            Glib::RefPtr<Glib::IOChannel> stdout_file = Glib::IOChannel::create_from_file(name, "w");
+            stdout_file->write(_string);
+            return;
+        };
+    };
+
+    int execute (const std::list<std::string> &in_command,
+                 const std::list<std::string> &in_params,
+                 const Glib::ustring &filein,
+                 file_listener &fileout);
 }; // class Script
 
 
