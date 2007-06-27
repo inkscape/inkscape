@@ -249,7 +249,7 @@ sp_fill_style_widget_update (SPWidget *spw)
         }
     }
 
-    g_free (query);
+    sp_style_unref(query);
 
     g_object_set_data (G_OBJECT (spw), "update", GINT_TO_POINTER (FALSE));
 
@@ -441,7 +441,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                         }
                         vector = sp_document_default_gradient_vector(document, common_rgb);
                     }
-                    g_free (query);
+                    sp_style_unref(query);
 
                     for (GSList const *i = items; i != NULL; i = i->next) {
                         //FIXME: see above

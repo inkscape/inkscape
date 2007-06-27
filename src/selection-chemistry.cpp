@@ -1095,7 +1095,7 @@ void sp_selection_copy()
                 style_clipboard = css;
             }
         }
-        g_free (query);
+        sp_style_unref(query);
     }
 
     size_clipboard = selection->bounds();

@@ -1041,7 +1041,7 @@ SelectedStyle::update()
         break;
     }
 
-    g_free (query);
+    sp_style_unref(query);
 }
 
 void SelectedStyle::opacity_0(void) {_opacity_sb.set_value(0);}

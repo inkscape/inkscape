@@ -792,7 +792,7 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
         gtk_entry_set_text ((GtkEntry *) ((GtkCombo *) (combo))->entry, sstr);
         g_free(sstr);
 
-        g_free (query);
+        sp_style_unref(query);
     }
 
     g_object_set_data (G_OBJECT (dlg), "blocked", NULL);

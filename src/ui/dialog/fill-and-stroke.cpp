@@ -277,7 +277,7 @@ FillAndStroke::selectionChanged(Inkscape::Application *inkscape,
             break;
     }
     
-    g_free (query);
+    sp_style_unref(query);
 
     _blocked = false;
 }

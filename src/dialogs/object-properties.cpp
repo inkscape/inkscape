@@ -361,7 +361,7 @@ sp_fillstroke_selection_changed ( Inkscape::Application *inkscape,
         }
     }
     
-    g_free (query);
+    sp_style_unref(query);
     gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (FALSE));
 }
 

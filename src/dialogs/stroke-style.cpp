@@ -261,7 +261,7 @@ sp_stroke_style_paint_update (SPWidget *spw)
         }
     }
 
-    g_free (query);
+    sp_style_unref(query);
 
     gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
 }
@@ -397,7 +397,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
                         }
                         vector = sp_document_default_gradient_vector(document, common_rgb);
                     }
-                    g_free (query);
+                    sp_style_unref(query);
 
                     for (GSList const *i = items; i != NULL; i = i->next) {
                         if (!vector) {
@@ -1469,7 +1469,7 @@ sp_stroke_style_line_update(SPWidget *spw, Inkscape::Selection *sel)
         sp_stroke_style_set_cap_buttons(spw, NULL);
     }
 
-    g_free (query);
+    sp_style_unref(query);
 
     if (!sel || sel->isEmpty())
         return;
