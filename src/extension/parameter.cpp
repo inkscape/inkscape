@@ -662,7 +662,7 @@ public:
 void
 ParamFloatAdjustment::val_changed (void)
 {
-    std::cout << "Value Changed to: " << this->get_value() << std::endl;
+    //std::cout << "Value Changed to: " << this->get_value() << std::endl;
     _pref->set(this->get_value(), _doc, _node);
     if (_changeSignal != NULL) {
         _changeSignal->emit();
@@ -701,7 +701,7 @@ public:
 void
 ParamIntAdjustment::val_changed (void)
 {
-    std::cout << "Value Changed to: " << this->get_value() << std::endl;
+    //std::cout << "Value Changed to: " << this->get_value() << std::endl;
     _pref->set((int)this->get_value(), _doc, _node);
     if (_changeSignal != NULL) {
         _changeSignal->emit();

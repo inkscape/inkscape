@@ -17,6 +17,7 @@
 #include "prefdialog.h"
 #include "implementation/implementation.h"
 #include "effect.h"
+#include "timer.h"
 #include "ui/view/view.h"
 
 #include "gtkmm/messagedialog.h"
@@ -213,6 +214,7 @@ private:
     bool _finished;
     bool _humanWait;
     bool _canceled;
+    bool _prefsChanged;
     Glib::RefPtr<Glib::MainLoop> _mainloop;
     Inkscape::UI::View::View * _doc;
     std::list<Glib::ustring> _selected;
@@ -227,6 +229,7 @@ public:
         _finished(false),
         _humanWait(false),
         _canceled(false),
+        _prefsChanged(false),
         _doc(doc) {
 
         SPDesktop *desktop = (SPDesktop *)_doc;
@@ -239,7 +242,7 @@ public:
                 Glib::ustring selected_id;
                 selected_id = SP_OBJECT_ID(*selected);
                 _selected.insert(_selected.end(), selected_id);
-                std::cout << "Selected: " << selected_id << std::endl;
+                //std::cout << "Selected: " << selected_id << std::endl;
                 ++selected;
             }
         }
@@ -263,7 +266,8 @@ public:
     }
 
     void preferencesChange (void) {
-        std::cout << "Preferences are a changin'" << std::endl;
+        //std::cout << "Preferences are a changin'" << std::endl;
+        _prefsChanged = true;
         if (_humanWait) {
             _mainloop->quit();
             documentCancel();
@@ -337,6 +341,8 @@ private:
     }
 
     void processingComplete(void) {
+        //std::cout << "Processing Complete" << std::endl;
+        if (_prefsChanged) { return; } // do it all again
         if (_prefsVisible) {
             _humanWait = true;
         } else {
@@ -387,6 +393,7 @@ ExecutionEnv::run (void) {
         if (_humanWait) {
             _mainloop->run();
         } else {
+            _prefsChanged = false;
             _effect->get_imp()->effect(_effect, _doc);
             processingComplete();
         }
@@ -416,7 +423,10 @@ Effect::prefs (Inkscape::UI::View::View * doc)
 
     ExecutionEnv executionEnv(this, doc, controls);
     changeSignal.connect(sigc::mem_fun(executionEnv, &ExecutionEnv::preferencesChange));
+
+    timer->lock();
     executionEnv.run();
+    timer->unlock();
 
     return true;
 }
