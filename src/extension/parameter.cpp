@@ -5,9 +5,9 @@
 /*
  * Author:
  *   Ted Gould <ted@gould.cx>
+ *   Johan Engelen <johan@shouraizou.nl>
  *
- * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 2005-2006 Author
+ * Copyright (C) 2005-2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
