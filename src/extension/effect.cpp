@@ -15,6 +15,8 @@
 #include "effect.h"
 #include "ui/view/view.h"
 
+#include "gtkmm/messagedialog.h"
+
 /* Inkscape::Extension::Effect */
 
 namespace Inkscape {
@@ -239,10 +241,21 @@ Effect::effect (Inkscape::UI::View::View * doc)
         set_state(Extension::STATE_LOADED);
     if (!loaded()) return;
 
+    gchar * dlgmessage = g_strdup_printf(_("The effect '%s' is working on your document.  Please wait."), get_name());
+    Gtk::MessageDialog working(dlgmessage,
+                               false, // use markup
+                               Gtk::MESSAGE_INFO,
+                               Gtk::BUTTONS_CANCEL,
+                               true); // modal
+    g_free(dlgmessage);
+    working.show();
+
     set_last_effect(this);
     imp->effect(this, doc);
 
     sp_document_done(doc->doc(), SP_VERB_NONE, _(this->get_name()));
+
+    working.hide();
 
     return;
 }

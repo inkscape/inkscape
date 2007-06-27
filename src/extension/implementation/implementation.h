@@ -46,6 +46,7 @@ public:
     /** Verify any dependencies. */
     virtual bool check(Inkscape::Extension::Extension *module);
 
+    virtual bool cancelProcessing (void);
 
     /* ----- Input functions ----- */
     /** Find out information about the file. */

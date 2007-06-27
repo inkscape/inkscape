@@ -789,17 +789,6 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
         return;
     }
 
-    gchar * dlgmessage = g_strdup_printf(_("The effect '%s' is working on your document.  Please wait."), module->get_name());
-
-    Gtk::MessageDialog working(dlgmessage,
-                               false, // use markup
-                               Gtk::MESSAGE_INFO,
-                               Gtk::BUTTONS_CANCEL,
-                               true); // modal
-    g_free(dlgmessage);
-    working.show();
-
-
     gchar *tmpname;
     // FIXME: process the GError instead of passing NULL
     gint tempfd_in = g_file_open_tmp("ink_ext_XXXXXX", &tmpname, NULL);
@@ -890,7 +879,6 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
         sp_namedview_update_layers_from_document(desktop);
     }
 
-    working.hide();
     return;
 }
 

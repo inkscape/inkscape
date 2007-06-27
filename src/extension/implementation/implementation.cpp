@@ -44,6 +44,11 @@ Implementation::check(Inkscape::Extension::Extension *module) {
     return TRUE;
 } /* Implemenation::check */
 
+bool
+Implementation::cancelProcessing (void) {
+    return true;
+}
+
 Gtk::Widget *
 Implementation::prefs_input(Inkscape::Extension::Input *module, gchar const *filename) {
     return module->autogui(NULL, NULL);
