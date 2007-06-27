@@ -41,6 +41,7 @@ public:
 	 *              is holding a reference to the target object.
 	 */
 	URIReference(SPObject *owner);
+	URIReference(SPDocument *owner_document);
 
 	/**
 	 * Destructor.  Calls shutdown() if the reference has not been
@@ -118,6 +119,7 @@ protected:
 
 private:
 	SPObject *_owner;
+	SPDocument *_owner_document;
 	sigc::connection _connection;
 	sigc::connection _release_connection;
 	SPObject *_obj;

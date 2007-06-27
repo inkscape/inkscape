@@ -304,7 +304,7 @@ sp_fillstroke_selection_changed ( Inkscape::Application *inkscape,
     GtkAdjustment *a = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(dlg), "master_opacity_adjustment"));
 
     // create temporary style
-    SPStyle *query = sp_style_new ();
+    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
     int result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
 

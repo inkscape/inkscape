@@ -18,6 +18,7 @@
 #include "display/nr-filter-types.h"
 #include "style.h"
 #include "sp-filter.h"
+#include "sp-filter-reference.h"
 #include "sp-gaussian-blur.h"
 #include "sp-feblend.h"
 #include "display/nr-filter-blend.h"
@@ -195,12 +196,12 @@ void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
     group->style = style;
 
     //if group has a filter
-    if (style->filter.set && style->filter.filter) {
+    if (style->filter.set && style->filter.href->getObject()) {
         if (!group->filter) {
-            int primitives = sp_filter_primitive_count(style->filter.filter);
+            int primitives = sp_filter_primitive_count(style->filter.href->getObject());
             group->filter = new NR::Filter(primitives);
         }
-        sp_filter_build_renderer(style->filter.filter, group->filter);
+        sp_filter_build_renderer(style->filter.href->getObject(), group->filter);
     } else {
         //no filter set for this group
         delete group->filter;

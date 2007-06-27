@@ -73,6 +73,7 @@
 #include "sp-item.h"
 #include "unit-constants.h"
 #include "xml/simple-document.h"
+#include "sp-filter-reference.h"
 
 using NR::X;
 using NR::Y;
@@ -952,8 +953,8 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList 
         }
     }
 
-    if (style->filter.filter) {
-        SPObject *filter = style->filter.filter;
+    if (style->filter.href->getObject()) {
+        SPObject *filter = style->filter.href->getObject();
         if (SP_IS_FILTER(filter)) {
             sp_copy_single (defs_clip, filter, xml_doc);
         }
@@ -1082,7 +1083,7 @@ void sp_selection_copy()
     sp_selection_copy_impl (items, &clipboard, &defs_clipboard, &style_clipboard, clipboard_document);
 
     if (tools_isactive (desktop, TOOLS_TEXT)) { // take style from cursor/text selection, overwriting the style just set by copy_impl
-        SPStyle *const query = sp_style_new();
+        SPStyle *const query = sp_style_new(SP_ACTIVE_DOCUMENT);
         if (sp_desktop_query_style_all (desktop, query)) {
             SPCSSAttr *css = sp_css_attr_from_style (query, SP_STYLE_FLAG_ALWAYS);
             if (css != NULL) {

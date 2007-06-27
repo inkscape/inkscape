@@ -3156,7 +3156,7 @@ void
 sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
 {
     SPStyle *query =
-        sp_style_new ();
+        sp_style_new (SP_ACTIVE_DOCUMENT);
 
     int result_family =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
@@ -3350,7 +3350,7 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     gtk_entry_set_text (GTK_ENTRY (entry), family);
 
     SPStyle *query =
-        sp_style_new ();
+        sp_style_new (SP_ACTIVE_DOCUMENT);
 
     int result_numbers =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
@@ -3443,7 +3443,7 @@ sp_text_toolbox_anchoring_toggled (GtkRadioButton   *button,
     }
 
     SPStyle *query =
-        sp_style_new ();
+        sp_style_new (SP_ACTIVE_DOCUMENT);
     int result_numbers =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 
@@ -3491,7 +3491,7 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
     }
 
     SPStyle *query =
-        sp_style_new ();
+        sp_style_new (SP_ACTIVE_DOCUMENT);
     int result_numbers =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 
@@ -3540,7 +3540,7 @@ sp_text_toolbox_orientation_toggled (GtkRadioButton  *button,
     }
 
     SPStyle *query =
-        sp_style_new ();
+        sp_style_new (SP_ACTIVE_DOCUMENT);
     int result_numbers =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 
@@ -3636,7 +3636,7 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
     free (text);
 
     SPStyle *query =
-        sp_style_new ();
+        sp_style_new (SP_ACTIVE_DOCUMENT);
     int result_numbers =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 

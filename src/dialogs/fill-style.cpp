@@ -185,7 +185,7 @@ sp_fill_style_widget_update (SPWidget *spw)
     SPPaintSelector *psel = SP_PAINT_SELECTOR (g_object_get_data (G_OBJECT (spw), "paint-selector"));
 
     // create temporary style
-    SPStyle *query = sp_style_new ();
+    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
     int result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FILL); 
 
@@ -430,7 +430,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                 if (!vector) {
                     /* No vector in paint selector should mean that we just changed mode */
 
-                    SPStyle *query = sp_style_new ();
+                    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
                     int result = objects_query_fillstroke ((GSList *) items, query, true); 
                     guint32 common_rgb = 0;
                     if (result == QUERY_STYLE_MULTIPLE_SAME) {

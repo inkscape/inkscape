@@ -169,12 +169,13 @@ struct SPIPaint {
     } value;
 };
 
+struct SPFilterReference;
+
 /// Filter type internal to SPStyle
 struct SPIFilter {
     unsigned set : 1;
     unsigned inherit : 1;
-    SPFilter *filter;
-    gchar *uri;
+    SPFilterReference *href;
 };
 
 enum {
@@ -351,7 +352,6 @@ struct SPStyle {
     /// style has hreffed its fill/stroke paintservers, needs to release.
     bool fill_hreffed; 
     bool stroke_hreffed; 
-    bool filter_hreffed; 
 
     sigc::connection release_connection;
 
@@ -360,12 +360,9 @@ struct SPStyle {
 
     sigc::connection stroke_release_connection;
     sigc::connection stroke_modified_connection;
-
-    sigc::connection filter_release_connection;
-    sigc::connection filter_modified_connection;
 };
 
-SPStyle *sp_style_new();
+SPStyle *sp_style_new(SPDocument *document);
 
 SPStyle *sp_style_new_from_object(SPObject *object);
 

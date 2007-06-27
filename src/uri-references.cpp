@@ -24,10 +24,16 @@ static gchar *uri_to_id(SPDocument *document, const gchar *uri);
 namespace Inkscape {
 
 URIReference::URIReference(SPObject *owner)
-: _owner(owner), _obj(NULL), _uri(NULL)
+	: _owner(owner), _owner_document(NULL), _obj(NULL), _uri(NULL)
 {
 	g_assert(_owner != NULL);
 	/* FIXME !!! attach to owner's destroy signal to clean up in case */
+}
+
+URIReference::URIReference(SPDocument *owner_document)
+	: _owner_document(owner_document), _owner(NULL), _obj(NULL), _uri(NULL)
+{
+	g_assert(_owner_document != NULL);
 }
 
 URIReference::~URIReference() {
@@ -36,7 +42,14 @@ URIReference::~URIReference() {
 
 void URIReference::attach(const URI &uri) throw(BadURIException)
 {
-	SPDocument *document = SP_OBJECT_DOCUMENT(_owner);
+	SPDocument *document;
+  if (_owner) {
+    document = SP_OBJECT_DOCUMENT(_owner);
+	} else if (_owner_document) {
+    document = _owner_document;
+	} else {
+    g_assert_not_reached();
+	}
 	gchar const *fragment = uri.getFragment();
 	if ( !uri.isRelative() || uri.getQuery() || !fragment ) {
 		throw UnsupportedURIException();

@@ -863,7 +863,7 @@ SelectedStyle::update()
         return;
 
     // create temporary style
-    SPStyle *query = sp_style_new ();
+    SPStyle *query = sp_style_new (sp_desktop_document(_desktop));
 
     for (int i = SS_FILL; i <= SS_STROKE; i++) {
         Gtk::EventBox *place = (i == SS_FILL)? &_fill_place : &_stroke_place;

@@ -139,7 +139,7 @@ sp_dash_selector_new (Inkscape::XML::Node *drepr)
 
 		if (ndashes > 0) {
 			int pos = 0;
-			SPStyle *style = sp_style_new ();
+			SPStyle *style = sp_style_new (NULL);
 			dashes = g_new (double *, ndashes + 1);
 			for (Inkscape::XML::Node *dr = drepr->firstChild(); dr; dr = dr->next()) {
 				if (!strcmp (dr->name(), "dash")) {

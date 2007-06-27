@@ -31,6 +31,7 @@
 #include "inkscape-cairo.h"
 
 #include "sp-filter.h"
+#include "sp-filter-reference.h"
 #include "display/nr-filter.h"
 
 #include <cairo.h>
@@ -1359,12 +1360,12 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
     shape->setMitreLimit(style->stroke_miterlimit.value);
 
     //if shape has a filter
-    if (style->filter.set && style->filter.filter) {
+    if (style->filter.set && style->filter.href->getObject()) {
         if (!shape->filter) {
-            int primitives = sp_filter_primitive_count(style->filter.filter);
+            int primitives = sp_filter_primitive_count(style->filter.href->getObject());
             shape->filter = new NR::Filter(primitives);
         }
-        sp_filter_build_renderer(style->filter.filter, shape->filter);
+        sp_filter_build_renderer(style->filter.href->getObject(), shape->filter);
     } else {
         //no filter set for this shape
         delete shape->filter;

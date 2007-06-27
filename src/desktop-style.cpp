@@ -26,6 +26,7 @@
 #include "sp-use.h"
 #include "sp-feblend.h"
 #include "sp-filter.h"
+#include "sp-filter-reference.h"
 #include "sp-gaussian-blur.h"
 #include "sp-flowtext.h"
 #include "sp-flowregion.h"
@@ -351,7 +352,7 @@ sp_desktop_get_font_size_tool(SPDesktop *desktop)
 
     double ret = 12;
     if (style_str) {
-        SPStyle *style = sp_style_new();
+        SPStyle *style = sp_style_new(SP_ACTIVE_DOCUMENT);
         sp_style_merge_from_style_string(style, style_str);
         ret = style->font_size.computed;
         sp_style_unref(style);
@@ -1029,12 +1030,12 @@ objects_query_blend (GSList *objects, SPStyle *style_res)
         items++;
 
         //if object has a filter
-        if (style->filter.set && style->filter.filter) {
+        if (style->filter.set && style->filter.href->getObject()) {
             int blurcount = 0;
             int blendcount = 0;
 
             // determine whether filter is simple (blend and/or blur) or complex
-            for(SPObject *primitive_obj = style->filter.filter->children;
+            for(SPObject *primitive_obj = style->filter.href->getObject()->children;
                 primitive_obj && SP_IS_FILTER_PRIMITIVE(primitive_obj);
                 primitive_obj = primitive_obj->next) {
                 SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);
@@ -1050,7 +1051,7 @@ objects_query_blend (GSList *objects, SPStyle *style_res)
 
             // simple filter
             if(blurcount == 1 || blendcount == 1) {
-                for(SPObject *primitive_obj = style->filter.filter->children;
+                for(SPObject *primitive_obj = style->filter.href->getObject()->children;
                     primitive_obj && SP_IS_FILTER_PRIMITIVE(primitive_obj);
                     primitive_obj = primitive_obj->next) {
                     if(SP_IS_FEBLEND(primitive_obj)) {
@@ -1117,9 +1118,9 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
         items ++;
 
         //if object has a filter
-        if (style->filter.set && style->filter.filter) {
+        if (style->filter.set && style->filter.href->getObject()) {
             //cycle through filter primitives
-            SPObject *primitive_obj = style->filter.filter->children;
+            SPObject *primitive_obj = style->filter.href->getObject()->children;
             while (primitive_obj) {
                 if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) {
                     SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);

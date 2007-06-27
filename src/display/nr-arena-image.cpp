@@ -23,6 +23,7 @@
 #include <livarot/Path.h>
 #include <livarot/Shape.h>
 #include "sp-filter.h"
+#include "sp-filter-reference.h"
 #include "sp-gaussian-blur.h"
 #include "sp-feblend.h"
 #include "display/nr-filter-blend.h"
@@ -368,12 +369,12 @@ void nr_arena_image_set_style (NRArenaImage *image, SPStyle *style)
     image->style = style;
 
     //if image has a filter
-    if (style->filter.set && style->filter.filter) {
+    if (style->filter.set && style->filter.href->getObject()) {
         if (!image->filter) {
-            int primitives = sp_filter_primitive_count(style->filter.filter);
+            int primitives = sp_filter_primitive_count(style->filter.href->getObject());
             image->filter = new NR::Filter(primitives);
         }
-        sp_filter_build_renderer(style->filter.filter, image->filter);
+        sp_filter_build_renderer(style->filter.href->getObject(), image->filter);
     } else {
         //no filter set for this image
         delete image->filter;

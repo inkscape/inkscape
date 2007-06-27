@@ -200,7 +200,7 @@ sp_stroke_style_paint_update (SPWidget *spw)
     SPPaintSelector *psel = SP_PAINT_SELECTOR(gtk_object_get_data(GTK_OBJECT(spw), "paint-selector"));
 
     // create temporary style
-    SPStyle *query = sp_style_new ();
+    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     // query into it
     int result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKE); 
 
@@ -386,7 +386,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
                 if (!vector) {
                     /* No vector in paint selector should mean that we just changed mode */
 
-                    SPStyle *query = sp_style_new ();
+                    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
                     int result = objects_query_fillstroke ((GSList *) items, query, false); 
                     guint32 common_rgb = 0;
                     if (result == QUERY_STYLE_MULTIPLE_SAME) {
@@ -1417,7 +1417,7 @@ sp_stroke_style_line_update(SPWidget *spw, Inkscape::Selection *sel)
     GtkWidget *dsel = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "dash"));
 
     // create temporary style
-    SPStyle *query = sp_style_new ();
+    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     // query into it
     int result_sw = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKEWIDTH); 
     int result_ml = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKEMITERLIMIT); 

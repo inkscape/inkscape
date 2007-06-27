@@ -262,7 +262,7 @@ StyleSwatch::setStyle(SPCSSAttr *css)
     sp_repr_css_merge(_css, css);
 
     gchar const *css_string = sp_repr_css_write_string (_css);
-    SPStyle *temp_spstyle = sp_style_new();
+    SPStyle *temp_spstyle = sp_style_new(SP_ACTIVE_DOCUMENT);
     if (css_string)
         sp_style_merge_from_style_string (temp_spstyle, css_string);
 

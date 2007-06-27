@@ -31,6 +31,7 @@
 #include "document.h"
 #include "extract-uri.h"
 #include "uri-references.h"
+#include "uri.h"
 #include "sp-paint-server.h"
 #include "streq.h"
 #include "strneq.h"
@@ -39,6 +40,9 @@
 #include "xml/repr.h"
 #include "unit-constants.h"
 #include "isnan.h"
+#include "macros.h"
+
+#include "sp-filter-reference.h"
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
@@ -386,14 +390,44 @@ sp_style_object_release(SPObject *object, SPStyle *style)
     style->object = NULL;
 }
 
+/**
+ * Emit style modified signal on style's object if the filter changed.
+ */
+static void
+sp_style_filter_ref_modified(SPObject *obj, guint flags, SPStyle *style)
+{
+    SPFilter *filter=static_cast<SPFilter *>(obj);
+    if (style->filter.href->getObject() == filter)
+    {
+        if (style->object) {
+            style->object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+        }
+    }
+}
 
+/**
+ * Gets called when the filter is (re)attached to the style
+ */
+static void
+sp_style_filter_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle *style)
+{
+    if (old_ref) {
+        sp_signal_disconnect_by_data(old_ref, style);
+    }
+    if ( SP_IS_FILTER(ref))
+    {
+        ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_filter_ref_modified), style));
+    }
+
+    sp_style_filter_ref_modified(ref, 0, style);
+}
 
 
 /**
  * Returns a new SPStyle object with settings as per sp_style_clear().
  */
 SPStyle *
-sp_style_new()
+sp_style_new(SPDocument *document)
 {
     SPStyle *const style = g_new0(SPStyle, 1);
 
@@ -402,13 +436,17 @@ sp_style_new()
     style->text = sp_text_style_new();
     style->text_private = TRUE;
 
+    if (document) {
+        style->filter.href = new SPFilterReference(document);
+        style->filter.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
+    }
+
     sp_style_clear(style);
 
     style->cloned = false;
 
     style->fill_hreffed = false;
     style->stroke_hreffed = false;
-    style->filter_hreffed = false;
 
     new (&style->release_connection) sigc::connection();
 
@@ -417,9 +455,6 @@ sp_style_new()
 
     new (&style->stroke_release_connection) sigc::connection();
     new (&style->stroke_modified_connection) sigc::connection();
-
-    new (&style->filter_release_connection) sigc::connection();
-    new (&style->filter_modified_connection) sigc::connection();
 
     return style;
 }
@@ -434,7 +469,7 @@ sp_style_new_from_object(SPObject *object)
     g_return_val_if_fail(object != NULL, NULL);
     g_return_val_if_fail(SP_IS_OBJECT(object), NULL);
 
-    SPStyle *style = sp_style_new();
+    SPStyle *style = sp_style_new(SP_OBJECT_DOCUMENT(object));
     style->object = object;
     style->release_connection = object->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_style_object_release), style));
 
@@ -487,10 +522,6 @@ sp_style_unref(SPStyle *style)
         style->stroke_release_connection.~connection();
         style->stroke_modified_connection.disconnect();
         style->stroke_modified_connection.~connection();
-        style->filter_modified_connection.disconnect();
-        style->filter_modified_connection.~connection();
-        style->filter_release_connection.disconnect();
-        style->filter_release_connection.~connection();
         g_free(style->stroke_dash.dash);
         g_free(style);
     }
@@ -699,7 +730,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     } else {
         if (sp_repr_parent(repr)) {
             /// \todo fixme: This is not the prettiest thing (Lauris)
-            SPStyle *parent = sp_style_new();
+            SPStyle *parent = sp_style_new(NULL);
             sp_style_read(parent, NULL, sp_repr_parent(repr));
             sp_style_merge_from_parent(style, parent);
             sp_style_unref(parent);
@@ -2061,38 +2092,6 @@ sp_style_paint_server_modified(SPObject *obj, guint flags, SPStyle *style)
     }
 }
 
-
-
-/**
- * Disconnects from filter.
- */
-static void
-sp_style_filter_release(SPObject *obj, SPStyle *style)
-{
-    SPFilter *filter=static_cast<SPFilter *>(obj);
-    if (style->filter.filter == filter)
-    {
-        sp_style_filter_clear(style);
-    }
-}
-
-
-/**
- * Emit style modified signal on style's object if the filter changed.
- */
-static void
-sp_style_filter_modified(SPObject *obj, guint flags, SPStyle *style)
-{
-    SPFilter *filter=static_cast<SPFilter *>(obj);
-    if (style->filter.filter == filter)
-    {
-        if (style->object) {
-            style->object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
-        }
-    }
-}
-
-
 /**
  *
  */
@@ -2162,20 +2161,15 @@ sp_style_merge_ifilter(SPStyle *style, SPIFilter const *parent)
     sp_style_filter_clear(style);
     style->filter.set = parent->set;
     style->filter.inherit = parent->inherit;
-    style->filter.filter = parent->filter;
-    style->filter.uri = parent->uri;
-    if (style->filter.filter) {
-        if (style->object && !style->cloned) { // href filter for style of non-clones only
-            sp_object_href(SP_OBJECT(style->filter.filter), style);
-            style->filter_hreffed = true;
-        }
-        if (style->object || style->cloned) { // connect to signals for style of real objects or clones (this excludes temp styles)
-            SPObject *filter = style->filter.filter;
-            style->filter_release_connection
-                = filter->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_style_filter_release), style));
-            style->filter_modified_connection
-                = filter->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_style_filter_modified), style));
-        }
+
+    if (style->filter.href && style->filter.href->getObject())
+       style->filter.href->detach();
+
+    try {
+        style->filter.href->attach(*parent->href->getURI());
+    } catch (Inkscape::BadURIException &e) {
+        g_warning("%s", e.what());
+        style->filter.href->detach();
     }
 }
 
@@ -2573,10 +2567,6 @@ sp_style_clear(SPStyle *style)
         g_free(style->marker[i].value);
         style->marker[i].set = FALSE;
     }
-
-    style->filter.set = FALSE;
-    style->filter.uri = NULL;
-    style->filter.filter = NULL;
 
     style->enable_background.value = SP_CSS_BACKGROUND_ACCUMULATE;
     style->enable_background.set = false;
@@ -3162,49 +3152,46 @@ sp_style_read_ifilter(gchar const *str, SPStyle * style, SPDocument *document)
     if (streq(str, "inherit")) {
         f->set = TRUE;
         f->inherit = TRUE;
-        f->filter = NULL;
+        if (f->href && f->href->getObject())
+            f->href->detach(); //f->filter = NULL;
     } else if(streq(str, "none")) {
         f->set = TRUE;
         f->inherit = FALSE;
-        f->filter = NULL;
+        if (f->href && f->href->getObject())
+           f->href->detach(); //f->filter = NULL;
     } else if (strneq(str, "url", 3)) {
-        f->uri = extract_uri(str);
-        if(f->uri == NULL || f->uri[0] == '\0') {
+        char *uri = extract_uri(str);
+        if(uri == NULL || uri[0] == '\0') {
             g_warning("Specified filter url is empty");
             f->set = TRUE;
             f->inherit = FALSE;
-            f->filter = NULL;
             return;
         }
         f->set = TRUE;
         f->inherit = FALSE;
-        f->filter = NULL;
-        if (document) {
-            SPObject *obj = sp_uri_reference_resolve(document, str);
-            if (SP_IS_FILTER(obj)) {
-                f->filter = SP_FILTER(obj);
-                if (style->object && !style->cloned) {
-                    sp_object_href(obj, style);
-                    style->filter_hreffed = true;
-                }
-                if (style->object || style->cloned) { // connect to signals for style of real objects or clones (this excludes temp styles)
-                    SPObject *filter = style->filter.filter;
-                    style->filter_release_connection
-                        = filter->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_style_filter_release), style));
-                    style->filter_modified_connection
-                        = filter->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_style_filter_modified), style));
-                }
-            } else {
-                g_warning("Element '%s' not found or is not a filter", f->uri);
-            }
+        if (f->href && f->href->getObject())
+            f->href->detach();
+
+        // it may be that this style has not yet created its SPFilterReference;
+        // now that we have a document, we can create it here
+        if (!f->href) {
+            f->href = new SPFilterReference(document);
+            f->href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
+        }
+
+        try {
+            f->href->attach(Inkscape::URI(uri));
+        } catch (Inkscape::BadURIException &e) {
+            g_warning("%s", e.what());
+            f->href->detach();
         }
 
     } else {
         /* We shouldn't reach this if SVG input is well-formed */
         f->set = FALSE;
         f->inherit = FALSE;
-        f->filter = NULL;
-        f->uri = NULL;
+        if (f->href && f->href->getObject())
+            f->href->detach(); 
     }
 }
 
@@ -3686,8 +3673,8 @@ sp_style_write_ifilter(gchar *p, gint const len, gchar const *key,
     {
         if (val->inherit) {
             return g_snprintf(p, len, "%s:inherit;", key);
-        } else if (val->uri) {
-            return g_snprintf(p, len, "%s:url(%s);", key, val->uri);
+        } else if (val->href->getURI()) {
+            return g_snprintf(p, len, "%s:url(%s);", key, val->href->getURI()->toString());
         }
     }
 
@@ -3735,15 +3722,8 @@ sp_style_paint_clear(SPStyle *style, SPIPaint *paint)
 static void
 sp_style_filter_clear(SPStyle *style)
 {
-
-    if (style->filter_hreffed) {
-        sp_object_hunref(SP_OBJECT(style->filter.filter), style);
-        style->filter_hreffed = false;
-    }
-    style->filter_release_connection.disconnect();
-    style->filter_modified_connection.disconnect();
-
-    style->filter.filter = NULL;
+    if (style->filter.href && style->filter.href->getObject())
+        style->filter.href->detach(); 
 }
 
 

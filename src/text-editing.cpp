@@ -1103,7 +1103,7 @@ as opposed to sp_style_merge_from_style_string which merges its parameter
 underneath the existing styles (ie ignoring already set properties). */
 static void overwrite_style_with_string(SPObject *item, gchar const *style_string)
 {
-    SPStyle *new_style = sp_style_new();
+    SPStyle *new_style = sp_style_new(SP_OBJECT_DOCUMENT(item));
     sp_style_merge_from_style_string(new_style, style_string);
     gchar const *item_style_string = SP_OBJECT_REPR(item)->attribute("style");
     if (item_style_string && *item_style_string)
@@ -1128,7 +1128,7 @@ static bool objects_have_equal_style(SPObject const *parent, SPObject const *chi
     gchar *parent_style = sp_style_write_string(parent->style, SP_STYLE_FLAG_ALWAYS);
     // we have to write parent_style then read it again, because some properties format their values
     // differently depending on whether they're set or not (*cough*dash-offset*cough*)
-    SPStyle *parent_spstyle = sp_style_new();
+    SPStyle *parent_spstyle = sp_style_new(SP_OBJECT_DOCUMENT(parent));
     sp_style_merge_from_style_string(parent_spstyle, parent_style);
     g_free(parent_style);
     parent_style = sp_style_write_string(parent_spstyle, SP_STYLE_FLAG_ALWAYS);
@@ -1144,7 +1144,7 @@ static bool objects_have_equal_style(SPObject const *parent, SPObject const *chi
         }
         child = SP_OBJECT_PARENT(child);
     }
-    SPStyle *child_spstyle = sp_style_new();
+    SPStyle *child_spstyle = sp_style_new(SP_OBJECT_DOCUMENT(parent));
     sp_style_merge_from_style_string(child_spstyle, child_style_construction.c_str());
     gchar *child_style = sp_style_write_string(child_spstyle, SP_STYLE_FLAG_ALWAYS);
     sp_style_unref(child_spstyle);
