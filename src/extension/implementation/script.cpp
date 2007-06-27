@@ -187,53 +187,6 @@ public:
         _conn.disconnect();
     };
 
-    void init (int fd, Glib::RefPtr<Glib::MainLoop> main) {
-        _channel = Glib::IOChannel::create_from_fd(fd);
-        _channel->set_encoding();
-        _conn = Glib::signal_io().connect(sigc::mem_fun(*this, &file_listener::read), _channel, Glib::IO_IN | Glib::IO_HUP | Glib::IO_ERR);
-        _main_loop = main;
-
-        return;
-    };
-
-    bool read (Glib::IOCondition condition) {
-        if (condition != Glib::IO_IN) {
-            _main_loop->quit();
-            return false;
-        }
-
-        Glib::IOStatus status;
-        Glib::ustring out;
-        status = _channel->read_to_end(out);
-
-        if (status != Glib::IO_STATUS_NORMAL) {
-            _main_loop->quit();
-            return false;
-        }
-
-        _string += out;
-        return true;
-    };
-
-    // Note, doing a copy here, on purpose
-    Glib::ustring string (void) { return _string; };
-
-    void toFile (const Glib::ustring &name) {
-        Glib::RefPtr<Glib::IOChannel> stdout_file = Glib::IOChannel::create_from_file(name, "w");
-        stdout_file->write(_string);
-        return;
-    };
-};
-
-int execute (const std::list<std::string> &in_command,
-             const std::list<std::string> &in_params,
-             const Glib::ustring &filein,
-             file_listener &fileout);
-void checkStderr (const Glib::ustring &data,
-                        Gtk::MessageType type,
-                  const Glib::ustring &message);
-
-
 /** \brief     This function creates a script object and sets up the
                variables.
     \return    A script object
@@ -868,9 +821,9 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
      \param  filename  Filename of the stderr file
 */
 void
-checkStderr (const Glib::ustring &data,
-                   Gtk::MessageType type,
-             const Glib::ustring &message)
+Script::checkStderr (const Glib::ustring &data,
+                           Gtk::MessageType type,
+                     const Glib::ustring &message)
 {
     Gtk::MessageDialog warning(message, false, type, Gtk::BUTTONS_OK, true);
     warning.set_resizable(true);
@@ -900,6 +853,16 @@ checkStderr (const Glib::ustring &data,
     return;
 }
 
+bool
+Script::cancelProcessing (void) {
+    _canceled = true;
+    _main_loop->quit();
+    Glib::spawn_close_pid(_pid);
+
+    return true;
+}
+
+
 /** \brief    This is the core of the extension file as it actually does
               the execution of the extension.
     \param    in_command  The command to be executed
@@ -928,10 +891,10 @@ checkStderr (const Glib::ustring &data,
     are closed, and we return to what we were doing.
 */
 int
-execute (const std::list<std::string> &in_command,
-         const std::list<std::string> &in_params,
-         const Glib::ustring &filein,
-         file_listener &fileout)
+Script::execute (const std::list<std::string> &in_command,
+                 const std::list<std::string> &in_params,
+                 const Glib::ustring &filein,
+                 file_listener &fileout)
 {
     g_return_val_if_fail(in_command.size() > 0, 0);
     // printf("Executing\n");
@@ -959,7 +922,6 @@ execute (const std::list<std::string> &in_command,
     }
 */
 
-    Glib::Pid pid;
     int stdout_pipe, stderr_pipe;
 
     try {
@@ -967,7 +929,7 @@ execute (const std::list<std::string> &in_command,
                                      argv,  // arg v
                                      Glib::SPAWN_SEARCH_PATH /*| Glib::SPAWN_DO_NOT_REAP_CHILD*/,
                                      sigc::slot<void>(),
-                                     &pid,           // Pid
+                                     &_pid,          // Pid
                                      NULL,           // STDIN
                                      &stdout_pipe,   // STDOUT
                                      &stderr_pipe);  // STDERR
@@ -976,13 +938,25 @@ execute (const std::list<std::string> &in_command,
         return 0;
     }
 
-    Glib::RefPtr<Glib::MainLoop> main_loop = Glib::MainLoop::create(false);
+    _main_loop = Glib::MainLoop::create(false);
 
     file_listener fileerr;
-    fileout.init(stdout_pipe, main_loop);
-    fileerr.init(stderr_pipe, main_loop);
+    fileout.init(stdout_pipe, _main_loop);
+    fileerr.init(stderr_pipe, _main_loop);
 
-    main_loop->run();
+    _canceled = false;
+    _main_loop->run();
+
+    // Ensure all the data is out of the pipe
+    while (!fileout.isDead())
+        fileout.read(Glib::IO_IN);
+    while (!fileerr.isDead())
+        fileerr.read(Glib::IO_IN);
+
+    if (_canceled) {
+        // std::cout << "Script Canceled" << std::endl;
+        return 0;
+    }
 
     Glib::ustring stderr_data = fileerr.string();
     if (stderr_data.length() != 0) {
