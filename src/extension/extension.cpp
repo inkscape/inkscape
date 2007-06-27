@@ -642,30 +642,30 @@ Extension::autogui (SPDocument * doc, Inkscape::XML::Node * node)
 
 /**
     \brief  A function to get the parameters in a string form
-    \return A string with all the parameters as command line arguements
+    \return An array with all the parameters in it.
 
-    I don't really like this function, but it works for now.
-
-    \todo  Do this better.
 */
-Glib::ustring *
-Extension::paramString (void)
+void
+Extension::paramListString (std::list <std::string> &retlist)
 {
-    Glib::ustring * param_string = new Glib::ustring("");
+    //std::list <std::string> retarray;
 
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
 
-        *param_string += " --";
-        *param_string += param->name();
-        *param_string += "=";
-        Glib::ustring * paramstr = param->string();
-        *param_string += *paramstr;
-        delete paramstr;
+        std::string param_string;
+        param_string += "--";
+        param_string += param->name();
+        param_string += "=";
+        Glib::ustring * out = param->string();
+        param_string += *out;
+        delete out;
+
+        retlist.insert(retlist.end(), param_string);
     }
     //g_message("paramstring=%s", param_string->c_str());
 
-    return param_string;
+    return;
 }
 
 /* Extension editor dialog stuff */

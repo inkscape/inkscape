@@ -84,6 +84,12 @@ struct interpreter_t {
 };
 
 
+/** \brief  A table of what interpreters to call for a given language
+
+    This table is used to keep track of all the programs to execute a
+    given script.  It also tracks the preference to use to overwrite
+    the given interpreter to a custom one per user.
+*/
 static interpreter_t interpreterTab[] = {
         {"perl",   "perl-interpreter",   "perl"   },
         {"python", "python-interpreter", "python" },
@@ -168,14 +174,68 @@ resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
 }
 
 
+class file_listener {
+    Glib::ustring _string;
+    sigc::connection _conn;
+    Glib::RefPtr<Glib::IOChannel> _channel;
+    Glib::RefPtr<Glib::MainLoop> _main_loop;
+    
+public:
+    file_listener () { };
+    ~file_listener () {
+        _conn.disconnect();
+    };
+
+    void init (int fd, Glib::RefPtr<Glib::MainLoop> main) {
+        _channel = Glib::IOChannel::create_from_fd(fd);
+        _channel->set_encoding();
+        _conn = Glib::signal_io().connect(sigc::mem_fun(*this, &file_listener::read), _channel, Glib::IO_IN | Glib::IO_HUP | Glib::IO_ERR);
+        _main_loop = main;
+
+        return;
+    };
+
+    bool read (Glib::IOCondition condition) {
+        if (condition != Glib::IO_IN) {
+            _main_loop->quit();
+            return false;
+        }
+
+        Glib::IOStatus status;
+        Glib::ustring out;
+        status = _channel->read_to_end(out);
+
+        if (status != Glib::IO_STATUS_NORMAL) {
+            _main_loop->quit();
+            return false;
+        }
+
+        _string += out;
+        return true;
+    };
+
+    // Note, doing a copy here, on purpose
+    Glib::ustring string (void) { return _string; };
+
+    void toFile (const Glib::ustring &name) {
+        Glib::RefPtr<Glib::IOChannel> stdout_file = Glib::IOChannel::create_from_file(name, "w");
+        stdout_file->write(_string);
+        return;
+    };
+};
+
+int execute (const Glib::ustring &in_command,
+             const std::list<std::string> &in_params,
+             const Glib::ustring &filein,
+             file_listener &fileout);
+void checkStderr (const Glib::ustring &data,
+                        Gtk::MessageType type,
+                  const Glib::ustring &message);
 
 
-
-
-/**
-    \return    A script object
-    \brief     This function creates a script object and sets up the
+/** \brief     This function creates a script object and sets up the
                variables.
+    \return    A script object
 
    This function just sets the command to NULL.  It should get built
    officially in the load function.  This allows for less allocation
@@ -501,8 +561,10 @@ Script::prefs_effect(Inkscape::Extension::Effect *module,
     GSListConstIterator<SPItem *> selected =
            sp_desktop_selection((SPDesktop *)view)->itemList();
     Inkscape::XML::Node * first_select = NULL;
-    if (selected != NULL) 
-           first_select = SP_OBJECT_REPR(*selected);
+    if (selected != NULL) {
+        const SPItem * item = *selected;
+        first_select = SP_OBJECT_REPR(item);
+    }
 
     return module->autogui(current_document, first_select);
 }
@@ -535,7 +597,7 @@ SPDocument *
 Script::open(Inkscape::Extension::Input *module,
              const gchar *filenameArg)
 {
-
+#if 0
     Glib::ustring filename = filenameArg;
 
     gchar *tmpname;
@@ -593,6 +655,7 @@ Script::open(Inkscape::Extension::Input *module,
 
 
     return mydoc;
+#endif
 }
 
 
@@ -626,7 +689,7 @@ Script::save(Inkscape::Extension::Output *module,
              SPDocument *doc,
              const gchar *filenameArg)
 {
-
+#if 0
     Glib::ustring filename = filenameArg;
 
     gchar *tmpname;
@@ -679,6 +742,7 @@ Script::save(Inkscape::Extension::Output *module,
     close(tempfd);
     // FIXME: convert to utf8 (from "filename encoding") and unlink_utf8name
     unlink(tempfilename_in.c_str());
+#endif
 }
 
 
@@ -714,15 +778,17 @@ Script::save(Inkscape::Extension::Output *module,
 void
 Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc)
 {
+    std::list<std::string> params;
+    Glib::ustring local_command(command);
+
     if (module->no_doc) { 
         // this is a no-doc extension, e.g. a Help menu command; 
         // just run the command without any files, ignoring errors
-        Glib::ustring local_command(command);
-        Glib::ustring paramString = *module->paramString();
-        local_command.append(paramString);
+        module->paramListString(params);
 
         Glib::ustring empty;
-        execute(local_command, empty, empty);
+        file_listener outfile;
+        execute(local_command, params, empty, outfile);
 
         return;
     }
@@ -778,27 +844,21 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
               Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
               doc->doc(), tempfilename_in.c_str(), FALSE, FALSE, FALSE);
 
-    Glib::ustring local_command(command);
-
-    /* fixme: Should be some sort of checking here.  Don't know how to do this with structs instead
-     * of classes. */
     if (desktop != NULL) {
         Inkscape::Util::GSListConstIterator<SPItem *> selected =
              sp_desktop_selection(desktop)->itemList();
         while ( selected != NULL ) {
-            local_command += " --id=";
-            local_command += SP_OBJECT_ID(*selected);
+            Glib::ustring selected_id;
+            selected_id += "--id=";
+            selected_id += SP_OBJECT_ID(*selected);
+            params.insert(params.begin(), selected_id);
             ++selected;
         }
     }
 
-    Glib::ustring paramString = *module->paramString();
-    local_command.append(paramString);
-
-
-    // std::cout << local_command << std::endl;
-
-    int data_read = execute(local_command, tempfilename_in, tempfilename_out);
+    file_listener fileout;
+    int data_read = execute(local_command, params, tempfilename_in, fileout);
+    fileout.toFile(tempfilename_out);
 
     SPDocument * mydoc = NULL;
     if (data_read > 10)
@@ -813,7 +873,6 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
     // FIXME: convert to utf8 (from "filename encoding") and unlink_utf8name
     unlink(tempfilename_in.c_str());
     unlink(tempfilename_out.c_str());
-
 
     /* Do something with mydoc.... */
     if (mydoc) {
@@ -868,49 +927,44 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
     /** \todo  Restore correct selection */
 }
 
+/**  \brief  This function checks the stderr file, and if it has data,
+             shows it in a warning dialog to the user
+     \param  filename  Filename of the stderr file
+*/
+void
+checkStderr (const Glib::ustring &data,
+                   Gtk::MessageType type,
+             const Glib::ustring &message)
+{
+    Gtk::MessageDialog warning(message, false, type, Gtk::BUTTONS_OK, true);
+    warning.set_resizable(true);
+    GtkWidget *dlg = GTK_WIDGET(warning.gobj());
+    sp_transientize(dlg);
 
+    Gtk::VBox * vbox = warning.get_vbox();
 
-/* Helper class used by Script::execute */
-/*
- * This *REALLY* needs to be replaced with g_spawn_async_with_pipes()
- * and proper usage of argv arrays, not just plain strings.
- */
-class pipe_t {
-public:
-    /* These functions set errno if they return false.
-       I'm not sure whether that's a good idea or not, but it should be reasonably
-       straightforward to change it if needed. */
-    bool open(const Glib::ustring &command,
-              const Glib::ustring &errorFile,
-              int mode);
-    bool close();
+    /* Gtk::TextView * textview = new Gtk::TextView(Gtk::TextBuffer::create()); */
+    Gtk::TextView * textview = new Gtk::TextView();
+    textview->set_editable(false);
+    textview->set_wrap_mode(Gtk::WRAP_WORD);
+    textview->show();
 
-    /* These return the number of bytes read/written. */
-    size_t read(void *buffer, size_t size);
-    size_t write(void const *buffer, size_t size);
+    textview->get_buffer()->set_text(data.c_str());
 
-    enum {
-        mode_read  = 1 << 0,
-        mode_write = 1 << 1,
-    };
+    Gtk::ScrolledWindow * scrollwindow = new Gtk::ScrolledWindow();
+    scrollwindow->add(*textview);
+    scrollwindow->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    scrollwindow->set_shadow_type(Gtk::SHADOW_IN);
+    scrollwindow->show();
 
-private:
-#ifdef WIN32
-    /* This is used to translate win32 errors into errno errors.
-       It only recognizes a few win32 errors for the moment though. */
-    static int translate_error(DWORD err);
+    vbox->pack_start(*scrollwindow, true, true, 5 /* fix these */);
 
-    HANDLE hpipe;
-#else
-    FILE *ppipe;
-#endif
-};
+    warning.run();
 
+    return;
+}
 
-
-
-/**
-    \brief    This is the core of the extension file as it actually does
+/** \brief    This is the core of the extension file as it actually does
               the execution of the extension.
     \param    in_command  The command to be executed
     \param    filein      Filename coming in
@@ -938,343 +992,62 @@ private:
     are closed, and we return to what we were doing.
 */
 int
-Script::execute (const Glib::ustring &in_command,
-                 const Glib::ustring &filein,
-                 const Glib::ustring &fileout)
+execute (const Glib::ustring &in_command,
+         const std::list<std::string> &in_params,
+         const Glib::ustring &filein,
+         file_listener &fileout)
 {
     g_return_val_if_fail(in_command.size() > 0, 0);
     // printf("Executing: %s\n", in_command);
 
-    gchar *tmpname;
-    gint errorFileNum;
-    errorFileNum = g_file_open_tmp("ink_ext_stderr_XXXXXX", &tmpname, NULL);
-    if (errorFileNum != 0) {
-        close(errorFileNum);
-    } else {
-        g_free(tmpname);
-    }
 
-    Glib::ustring errorFile = tmpname;
-    g_free(tmpname);
+    std::vector <std::string> argv;
 
-    Glib::ustring localCommand = in_command;
-
+    argv.push_back(in_command);
     if (!(filein.empty())) {
-        localCommand .append(" \"");
-        localCommand .append(filein);
-        localCommand .append("\"");
+        argv.push_back(filein);
     }
 
-    // std::cout << "Command to run: " << command << std::endl;
+    for (std::list<std::string>::const_iterator i = in_params.begin();
+            i != in_params.end(); i++) {
+        argv.push_back(*i);
+    }
 
-    pipe_t pipe;
-    bool open_success = pipe.open((char *)localCommand.c_str(),
-                                  errorFile.c_str(),
-                                  pipe_t::mode_read);
 
-    /* Run script */
-    if (!open_success) {
-        /* Error - could not open pipe - check errno */
-        if (errno == EINVAL) {
-            perror("Extension::Script:  Invalid mode argument in popen\n");
-        } else if (errno == ECHILD) {
-            perror("Extension::Script:  Cannot obtain child extension status in popen\n");
-        } else {
-            perror("Extension::Script:  Unknown error for popen\n");
-        }
+    Glib::Pid pid;
+    int stdout_pipe, stderr_pipe;
+
+    Glib::spawn_async_with_pipes(Glib::get_tmp_dir(), // working directory
+                                 argv,  // arg v
+                                 Glib::SPAWN_DO_NOT_REAP_CHILD,
+                                 sigc::slot<void>(),
+                                 &pid,           // Pid
+                                 NULL,           // STDIN
+                                 &stdout_pipe,   // STDOUT
+                                 &stderr_pipe);  // STDERR
+
+    Glib::RefPtr<Glib::MainLoop> main_loop = Glib::MainLoop::create(false);
+
+    file_listener fileerr;
+    fileout.init(stdout_pipe, main_loop);
+    fileerr.init(stderr_pipe, main_loop);
+
+    main_loop->run();
+
+    Glib::ustring stderr_data = fileerr.string();
+    if (stderr_data.length() != 0) {
+        checkStderr(stderr_data, Gtk::MESSAGE_INFO,
+                                 _("Inkscape has received additional data from the script executed.  "
+                                   "The script did not return an error, but this may indicate the results will not be as expected."));
+    }
+
+    Glib::ustring stdout_data = fileout.string();
+    if (stdout_data.length() == 0) {
         return 0;
     }
 
-    if (fileout.empty()) { // no output file to create; just close everything and return 0
-        if (errorFile.size()>0) {
-            unlink(errorFile.c_str());
-        }
-        pipe.close();
-        return 0;
-    }
-
-    /* Copy pipe output to fileout (temporary file) */
-    Inkscape::IO::dump_fopen_call(fileout.c_str(), "J");
-    FILE *pfile = Inkscape::IO::fopen_utf8name(fileout.c_str(), "w");
-
-    if (pfile == NULL) {
-        /* Error - could not open file */
-        if (errno == EINVAL) {
-            perror("Extension::Script:  The mode provided to fopen was invalid\n");
-        } else {
-            perror("Extension::Script:  Unknown error attempting to open temporary file\n");
-        }
-        return 0;
-    }
-
-    int amount_read = 0;
-    char buf[BUFSIZE];
-    int num_read;
-    while ((num_read = pipe.read(buf, BUFSIZE)) != 0) {
-        amount_read += num_read;
-        fwrite(buf, 1, num_read, pfile);
-    }
-
-    /* Close file */
-    if (fclose(pfile) == EOF) {
-        if (errno == EBADF) {
-            perror("Extension::Script:  The filedescriptor for the temporary file is invalid\n");
-            return 0;
-        } else {
-            perror("Extension::Script:  Unknown error closing temporary file\n");
-        }
-    }
-
-    /* Close pipe */
-    if (!pipe.close()) {
-        if (errno == EINVAL) {
-            perror("Extension::Script:  Invalid mode set for pclose\n");
-        } else if (errno == ECHILD) {
-            perror("Extension::Script:  Could not obtain child status for pclose\n");
-        } else {
-            if (!errorFile.empty()) {
-                checkStderr(errorFile, Gtk::MESSAGE_ERROR,
-                    _("Inkscape has received an error from the script that it called.  "
-                      "The text returned with the error is included below.  "
-                      "Inkscape will continue working, but the action you requested has been cancelled."));
-            } else {
-                perror("Extension::Script:  Unknown error for pclose\n");
-            }
-        }
-        /* Could be a lie, but if there is an error, we don't want
-         * to count on what was read being good */
-        amount_read = 0;
-    } else {
-        if (errorFile.size()>0) {
-            checkStderr(errorFile, Gtk::MESSAGE_INFO,
-                _("Inkscape has received additional data from the script executed.  "
-                  "The script did not return an error, but this may indicate the results will not be as expected."));
-        }
-    }
-
-    if (errorFile.size()>0) {
-        unlink(errorFile.c_str());
-    }
-
-    return amount_read;
+    return stdout_data.length();
 }
-
-
-
-
-/**  \brief  This function checks the stderr file, and if it has data,
-             shows it in a warning dialog to the user
-     \param  filename  Filename of the stderr file
-*/
-void
-Script::checkStderr (const Glib::ustring &filename,
-                     Gtk::MessageType type,
-                     const Glib::ustring &message)
-{
-
-    // magic win32 crlf->lf conversion means the file length is not the same as
-    // the text length, but luckily gtk will accept crlf in textviews so we can
-    // just use binary mode
-    std::ifstream stderrf (filename.c_str(), std::ios_base::in | std::ios_base::binary);
-    if (!stderrf.is_open()) return;
-
-    stderrf.seekg(0, std::ios::end);
-    int length = stderrf.tellg();
-    if (0 == length) return;
-    stderrf.seekg(0, std::ios::beg);
-
-    Gtk::MessageDialog warning(message, false, type, Gtk::BUTTONS_OK, true);
-    warning.set_resizable(true);
-    GtkWidget *dlg = GTK_WIDGET(warning.gobj());
-    sp_transientize(dlg);
-
-    Gtk::VBox * vbox = warning.get_vbox();
-
-    /* Gtk::TextView * textview = new Gtk::TextView(Gtk::TextBuffer::create()); */
-    Gtk::TextView * textview = new Gtk::TextView();
-    textview->set_editable(false);
-    textview->set_wrap_mode(Gtk::WRAP_WORD);
-    textview->show();
-
-    char * buffer = new char [length];
-    stderrf.read(buffer, length);
-    textview->get_buffer()->set_text(buffer, buffer + length);
-    delete buffer;
-    stderrf.close();
-
-    Gtk::ScrolledWindow * scrollwindow = new Gtk::ScrolledWindow();
-    scrollwindow->add(*textview);
-    scrollwindow->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-    scrollwindow->set_shadow_type(Gtk::SHADOW_IN);
-    scrollwindow->show();
-
-    vbox->pack_start(*scrollwindow, true, true, 5 /* fix these */);
-
-    warning.run();
-
-    return;
-}
-
-
-
-
-#ifdef WIN32
-
-
-bool pipe_t::open(const Glib::ustring &command,
-                  const Glib::ustring &errorFile,
-                  int mode_p) {
-    HANDLE pipe_write;
-
-    //###############  Create pipe
-    SECURITY_ATTRIBUTES secattrs;
-    ZeroMemory(&secattrs, sizeof(secattrs));
-    secattrs.nLength = sizeof(secattrs);
-    secattrs.lpSecurityDescriptor = 0;
-    secattrs.bInheritHandle = TRUE;
-    HANDLE t_pipe_read = 0;
-    if ( !CreatePipe(&t_pipe_read, &pipe_write, &secattrs, 0) ) {
-        errno = translate_error(GetLastError());
-        return false;
-    }
-    // This duplicate handle makes the read pipe uninheritable
-    BOOL ret = DuplicateHandle(GetCurrentProcess(),
-                               t_pipe_read,
-                               GetCurrentProcess(),
-                               &hpipe, 0, FALSE,
-                               DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
-    if (!ret) {
-        int en = translate_error(GetLastError());
-        CloseHandle(t_pipe_read);
-        CloseHandle(pipe_write);
-        errno = en;
-        return false;
-    }
-
-    //############### Open stderr file
-    HANDLE hStdErrFile = CreateFile(errorFile.c_str(),
-                      GENERIC_WRITE,
-                      FILE_SHARE_READ | FILE_SHARE_WRITE,
-                      NULL, CREATE_ALWAYS, 0, NULL);
-    HANDLE hInheritableStdErr;
-    DuplicateHandle(GetCurrentProcess(),
-                    hStdErrFile,
-                    GetCurrentProcess(),
-                    &hInheritableStdErr,
-                    0, 
-                    TRUE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
-
-    //############### Create process
-    PROCESS_INFORMATION procinfo;
-    STARTUPINFO startupinfo;
-    ZeroMemory(&procinfo, sizeof(procinfo));
-    ZeroMemory(&startupinfo, sizeof(startupinfo));
-    startupinfo.cb = sizeof(startupinfo);
-    //startupinfo.lpReserved = 0;
-    //startupinfo.lpDesktop = 0;
-    //startupinfo.lpTitle = 0;
-    startupinfo.dwFlags = STARTF_USESTDHANDLES;
-    startupinfo.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
-    startupinfo.hStdOutput = pipe_write;
-    startupinfo.hStdError = hInheritableStdErr;
-
-    if ( !CreateProcess(NULL, (CHAR *)command.c_str(),
-                        NULL, NULL, TRUE,
-                        0, NULL, NULL,
-                        &startupinfo, &procinfo) ) {
-        errno = translate_error(GetLastError());
-        return false;
-    }
-    CloseHandle(procinfo.hThread);
-    CloseHandle(procinfo.hProcess);
-
-    // Close our copy of the write handle
-    CloseHandle(hInheritableStdErr);
-    CloseHandle(pipe_write);
-
-    return true;
-}
-
-
-
-bool pipe_t::close() {
-    BOOL retval = CloseHandle(hpipe);
-    if ( !retval )
-        errno = translate_error(GetLastError());
-    return retval != FALSE;
-}
-
-size_t pipe_t::read(void *buffer, size_t size) {
-    DWORD bytes_read = 0;
-    ReadFile(hpipe, buffer, size, &bytes_read, 0);
-    return bytes_read;
-}
-
-size_t pipe_t::write(void const *buffer, size_t size) {
-    DWORD bytes_written = 0;
-    WriteFile(hpipe, buffer, size, &bytes_written, 0);
-    return bytes_written;
-}
-
-int pipe_t::translate_error(DWORD err) {
-    switch (err) {
-        case ERROR_FILE_NOT_FOUND:
-            return ENOENT;
-        case ERROR_INVALID_HANDLE:
-        case ERROR_INVALID_PARAMETER:
-            return EINVAL;
-        default:
-            return 0;
-    }
-}
-
-
-#else // not Win32
-
-
-bool pipe_t::open(const Glib::ustring &command,
-                  const Glib::ustring &errorFile,
-                  int mode_p) {
-
-    Glib::ustring popen_mode;
-
-    if ( (mode_p & mode_read) != 0 )
-        popen_mode.append("r");
-
-    if ( (mode_p & mode_write) != 0 )
-        popen_mode.append("w");
-
-    // Get the commandline to be run
-    Glib::ustring pipeStr = command;
-    if (errorFile.size()>0) {
-        pipeStr .append(" 2> ");
-        pipeStr .append(errorFile);
-    }
-
-    ppipe = popen(pipeStr.c_str(), popen_mode.c_str());
-
-    return ppipe != NULL;
-}
-
-
-bool pipe_t::close() {
-    return fclose(ppipe) == 0;
-}
-
-
-size_t pipe_t::read(void *buffer, size_t size) {
-    return fread(buffer, 1, size, ppipe);
-}
-
-
-size_t pipe_t::write(void const *buffer, size_t size) {
-    return fwrite(buffer, 1, size, ppipe);
-}
-
-
-
-
-#endif // (Non-)Win32
 
 
 
@@ -1282,9 +1055,6 @@ size_t pipe_t::write(void const *buffer, size_t size) {
 }  // namespace Implementation
 }  // namespace Extension
 }  // namespace Inkscape
-
-
-
 
 /*
   Local Variables:

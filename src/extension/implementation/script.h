@@ -115,14 +115,6 @@ private:
     Glib::ustring helper_extension;
 
     /**
-     * This function actually does the work, everything else is preparing
-     * for this function.  It is the core here
-     */
-    int execute (const Glib::ustring &command,
-                 const Glib::ustring &filein,
-                 const Glib::ustring &fileout);
-
-    /**
      * Just a quick function to find and resolve relative paths for
      * the incoming scripts
      */

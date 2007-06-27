@@ -183,7 +183,7 @@ public:
 
 public:
     Gtk::Widget *    autogui (SPDocument * doc, Inkscape::XML::Node * node);
-    Glib::ustring *  paramString (void);
+    void paramListString (std::list <std::string> & retlist);
 
     /* Extension editor dialog stuff */
 public:
