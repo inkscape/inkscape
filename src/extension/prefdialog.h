@@ -31,6 +31,8 @@ public:
     PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls);
     int run (void);
 
+    void setPreviewState (Glib::ustring state);
+    void setPinned (bool in_pin);
 };
 
 

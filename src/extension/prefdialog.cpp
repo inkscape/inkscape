@@ -79,6 +79,16 @@ PrefDialog::run (void) {
     return resp;
 }
 
+void
+PrefDialog::setPreviewState (Glib::ustring state) {
+
+}
+
+void
+PrefDialog::setPinned (bool in_pin) {
+    set_modal(!in_pin);
+}
+
 }; }; /* namespace Inkscape, Extension */
 
 /*
