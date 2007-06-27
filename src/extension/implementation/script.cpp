@@ -563,7 +563,7 @@ Script::prefs_effect(Inkscape::Extension::Effect *module,
         first_select = SP_OBJECT_REPR(item);
     }
 
-    return module->autogui(current_document, first_select);
+    return module->autogui(current_document, first_select, changeSignal);
 }
 
 

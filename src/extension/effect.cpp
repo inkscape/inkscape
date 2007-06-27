@@ -9,6 +9,10 @@
 
 #include "inkscape-private.h"
 #include "helper/action.h"
+#include "ui/view/view.h"
+#include "desktop-handles.h"
+#include "selection.h"
+#include "sp-namedview.h"
 #include "document.h"
 #include "prefdialog.h"
 #include "implementation/implementation.h"
@@ -16,6 +20,8 @@
 #include "ui/view/view.h"
 
 #include "gtkmm/messagedialog.h"
+
+#include "util/glib-list-iterators.h"
 
 /* Inkscape::Extension::Effect */
 
@@ -209,6 +215,7 @@ private:
     bool _canceled;
     Glib::RefPtr<Glib::MainLoop> _mainloop;
     Inkscape::UI::View::View * _doc;
+    std::list<Glib::ustring> _selected;
 
 public:
     void run (void);
@@ -221,6 +228,21 @@ public:
         _humanWait(false),
         _canceled(false),
         _doc(doc) {
+
+        SPDesktop *desktop = (SPDesktop *)_doc;
+        sp_namedview_document_from_window(desktop);
+
+        if (desktop != NULL) {
+            Inkscape::Util::GSListConstIterator<SPItem *> selected =
+                 sp_desktop_selection(desktop)->itemList();
+            while ( selected != NULL ) {
+                Glib::ustring selected_id;
+                selected_id = SP_OBJECT_ID(*selected);
+                _selected.insert(_selected.end(), selected_id);
+                std::cout << "Selected: " << selected_id << std::endl;
+                ++selected;
+            }
+        }
 
         _mainloop = Glib::MainLoop::create(false);
 
@@ -241,6 +263,7 @@ public:
     }
 
     void preferencesChange (void) {
+        std::cout << "Preferences are a changin'" << std::endl;
         if (_humanWait) {
             _mainloop->quit();
             documentCancel();
@@ -338,6 +361,23 @@ private:
         Effect::set_last_effect(_effect);
         return;
     }
+    
+    void reselect (void) {
+        SPDocument * doc = _doc->doc();
+
+        SPDesktop *desktop = (SPDesktop *)_doc;
+        sp_namedview_document_from_window(desktop);
+
+        if (desktop == NULL) { return; }
+
+        Inkscape::Selection * selection = sp_desktop_selection(desktop);
+
+        for (std::list<Glib::ustring>::iterator i = _selected.begin(); i != _selected.end(); i++) {
+            selection->add(doc->getObjectById(i->c_str()));
+        }
+
+        return;
+    }
 };
 
 void
@@ -352,6 +392,7 @@ ExecutionEnv::run (void) {
         }
         if (_canceled) {
             sp_document_cancel(_doc->doc());
+            reselect();
         }
     }
     return;

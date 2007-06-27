@@ -631,7 +631,7 @@ Extension::autogui (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<v
 
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
-        Gtk::Widget * widg = param->get_widget(doc, node);
+        Gtk::Widget * widg = param->get_widget(doc, node, changeSignal);
         gchar const * tip = param->get_tooltip();
         agui->addWidget(widg, tip);
     }

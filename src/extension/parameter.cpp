@@ -52,7 +52,7 @@ private:
     gchar * _value;
 public:
     ParamDescription(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
-    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
 };
 
 /** \brief  A boolean parameter */
@@ -65,7 +65,7 @@ public:
     /** \brief  Returns \c _value */
     bool get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
     bool set (bool in, SPDocument * doc, Inkscape::XML::Node * node);
-    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);
 };
 
@@ -103,7 +103,7 @@ public:
     int set (int in, SPDocument * doc, Inkscape::XML::Node * node);
     int max (void) { return _max; }
     int min (void) { return _min; }
-    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);
 };
 
@@ -157,7 +157,7 @@ public:
     float set (float in, SPDocument * doc, Inkscape::XML::Node * node);
     float max (void) { return _max; }
     float min (void) { return _min; }
-    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);
 };
 
@@ -209,7 +209,7 @@ public:
     /** \brief  Returns \c _value, with a \i const to protect it. */
     const gchar * get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
     const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
-    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);
 };
 
@@ -242,7 +242,7 @@ public:
     /** \brief  Returns \c _value, with a \i const to protect it. */
     const gchar * get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _current_choice != NULL ? _current_choice->_value : NULL; }
     const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
-    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);
 }; /* class ParamEnum */
 
@@ -620,7 +620,7 @@ Parameter::document_param_node (SPDocument * doc)
 
 /** \brief  Basically, if there is no widget pass a NULL. */
 Gtk::Widget *
-Parameter::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+Parameter::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     return NULL;
 }
@@ -639,11 +639,12 @@ class ParamFloatAdjustment : public Gtk::Adjustment {
     ParamFloat * _pref;
     SPDocument * _doc;
     Inkscape::XML::Node * _node;
+    sigc::signal<void> * _changeSignal;
 public:
     /** \brief  Make the adjustment using an extension and the string
                 describing the parameter. */
-    ParamFloatAdjustment (ParamFloat * param, SPDocument * doc, Inkscape::XML::Node * node) :
-            Gtk::Adjustment(0.0, param->min(), param->max(), 0.1), _pref(param), _doc(doc), _node(node) {
+    ParamFloatAdjustment (ParamFloat * param, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+            Gtk::Adjustment(0.0, param->min(), param->max(), 0.1), _pref(param), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->set_value(_pref->get(NULL, NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamFloatAdjustment::val_changed));
         return;
@@ -661,8 +662,13 @@ public:
 void
 ParamFloatAdjustment::val_changed (void)
 {
-    // std::cout << "Value Changed to: " << this->get_value() << std::endl;
+    std::cout << "Value Changed to: " << this->get_value() << std::endl;
     _pref->set(this->get_value(), _doc, _node);
+    if (_changeSignal != NULL) {
+        _changeSignal->emit();
+    } else {
+        std::cout << "_changeSignal is NULL" << std::endl;
+    }
     return;
 }
 
@@ -672,11 +678,12 @@ class ParamIntAdjustment : public Gtk::Adjustment {
     ParamInt * _pref;
     SPDocument * _doc;
     Inkscape::XML::Node * _node;
+    sigc::signal<void> * _changeSignal;
 public:
     /** \brief  Make the adjustment using an extension and the string
                 describing the parameter. */
-    ParamIntAdjustment (ParamInt * param, SPDocument * doc, Inkscape::XML::Node * node) :
-            Gtk::Adjustment(0.0, param->min(), param->max(), 1.0), _pref(param), _doc(doc), _node(node) {
+    ParamIntAdjustment (ParamInt * param, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+            Gtk::Adjustment(0.0, param->min(), param->max(), 1.0), _pref(param), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->set_value(_pref->get(NULL, NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamIntAdjustment::val_changed));
         return;
@@ -694,8 +701,13 @@ public:
 void
 ParamIntAdjustment::val_changed (void)
 {
-    // std::cout << "Value Changed to: " << this->get_value() << std::endl;
+    std::cout << "Value Changed to: " << this->get_value() << std::endl;
     _pref->set((int)this->get_value(), _doc, _node);
+    if (_changeSignal != NULL) {
+        _changeSignal->emit();
+    } else {
+        std::cout << "_changeSignal is NULL" << std::endl;
+    }
     return;
 }
 
@@ -705,7 +717,7 @@ ParamIntAdjustment::val_changed (void)
     Builds a hbox with a label and a float adjustment in it.
 */
 Gtk::Widget *
-ParamFloat::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+ParamFloat::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
@@ -713,7 +725,7 @@ ParamFloat::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
     label->show();
     hbox->pack_start(*label, true, true);
 
-    ParamFloatAdjustment * fadjust = Gtk::manage(new ParamFloatAdjustment(this, doc, node));
+    ParamFloatAdjustment * fadjust = Gtk::manage(new ParamFloatAdjustment(this, doc, node, changeSignal));
     Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 0.1, 1));
     spin->show();
     hbox->pack_start(*spin, false, false);
@@ -729,7 +741,7 @@ ParamFloat::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
     Builds a hbox with a label and a int adjustment in it.
 */
 Gtk::Widget *
-ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
@@ -737,7 +749,7 @@ ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
     label->show();
     hbox->pack_start(*label, true, true);
 
-    ParamIntAdjustment * fadjust = Gtk::manage(new ParamIntAdjustment(this, doc, node));
+    ParamIntAdjustment * fadjust = Gtk::manage(new ParamIntAdjustment(this, doc, node, changeSignal));
     Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 1.0, 0));
     spin->show();
     hbox->pack_start(*spin, false, false);
@@ -790,7 +802,7 @@ ParamBoolCheckButton::on_toggle (void)
     Builds a hbox with a label and a check button in it.
 */
 Gtk::Widget *
-ParamBool::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+ParamBool::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
@@ -846,7 +858,7 @@ ParamStringEntry::changed_text (void)
     Builds a hbox with a label and a text box in it.
 */
 Gtk::Widget *
-ParamString::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+ParamString::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
@@ -927,7 +939,7 @@ ParamString::string (void)
 
 /** \brief  Create a label for the description */
 Gtk::Widget *
-ParamDescription::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+ParamDescription::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_value)));
     label->set_line_wrap();
@@ -978,7 +990,7 @@ ParamEnum::string (void)
 }
 
 Gtk::Widget *
-ParamEnum::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+ParamEnum::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     return NULL;
 }

@@ -54,7 +54,7 @@ public:
 
     ParamNotebookPage(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     ~ParamNotebookPage(void);
-    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * paramString (void);
     gchar * get_guitext (void) {return _text;};
     
@@ -187,7 +187,7 @@ ParamNotebookPage::makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension:
     Builds a notebook page (a vbox) and puts parameters on it.
 */
 Gtk::Widget *
-ParamNotebookPage::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+ParamNotebookPage::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {                      
     if (!_tooltips) _tooltips = new Gtk::Tooltips();
     
@@ -197,7 +197,7 @@ ParamNotebookPage::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
     // add parameters onto page (if any)    
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
-        Gtk::Widget * widg = param->get_widget(doc, node);
+        Gtk::Widget * widg = param->get_widget(doc, node, changeSignal);
         gchar const * tip = param->get_tooltip();
         
         vbox->pack_start(*widg, true, true, 2);
@@ -387,7 +387,7 @@ ParamNotebookWdg::changed_page(GtkNotebookPage *page,
     Builds a notebook and puts pages in it.
 */
 Gtk::Widget *
-ParamNotebook::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+ParamNotebook::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     ParamNotebookWdg * nb = Gtk::manage(new ParamNotebookWdg(this, doc, node));
 
@@ -397,7 +397,7 @@ ParamNotebook::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
     for (GSList * list = pages; list != NULL; list = g_slist_next(list)) {
         i++;  
         ParamNotebookPage * page = reinterpret_cast<ParamNotebookPage *>(list->data);
-        Gtk::Widget * widg = page->get_widget(doc, node);
+        Gtk::Widget * widg = page->get_widget(doc, node, changeSignal);
         nb->append_page(*widg, _(page->get_guitext()));
         if (!strcmp(_value, page->name())) {
             pagenr = i; // this is the page to be displayed?

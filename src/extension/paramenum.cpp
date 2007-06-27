@@ -209,7 +209,7 @@ ParamComboBoxEntry::changed (void)
     \brief  Creates a combobox widget for an enumeration parameter
 */
 Gtk::Widget *
-ParamComboBox::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+ParamComboBox::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
