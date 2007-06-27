@@ -752,49 +752,23 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
         return;
     }
 
-    gchar *tmpname;
-    // FIXME: process the GError instead of passing NULL
-    gint tempfd_in = g_file_open_tmp("ink_ext_XXXXXX", &tmpname, NULL);
-    if (tempfd_in == -1) {
-        /* Error, couldn't create temporary filename */
-        if (errno == EINVAL) {
-            /* The  last  six characters of template were not XXXXXX.  Now template is unchanged. */
-            perror("Extension::Script:  template for filenames is misconfigured.\n");
-            exit(-1);
-        } else if (errno == EEXIST) {
-            /* Now the  contents of template are undefined. */
-            perror("Extension::Script:  Could not create a unique temporary filename\n");
-            return;
-        } else {
-            perror("Extension::Script:  Unknown error creating temporary filename\n");
-            exit(-1);
-        }
+    std::string tempfilename_in;
+    int tempfd_in = 0;
+    try {
+        tempfd_in = Glib::file_open_tmp(tempfilename_in, "ink_ext_XXXXXX.svg");
+    } catch (...) {
+        /// \todo Popup dialog here
+        return;
     }
 
-    Glib::ustring tempfilename_in = tmpname;
-    g_free(tmpname);
-
-
-    // FIXME: process the GError instead of passing NULL
-    gint tempfd_out = g_file_open_tmp("ink_ext_XXXXXX", &tmpname, NULL);
-    if (tempfd_out == -1) {
-        /* Error, couldn't create temporary filename */
-        if (errno == EINVAL) {
-            /* The  last  six characters of template were not XXXXXX.  Now template is unchanged. */
-            perror("Extension::Script:  template for filenames is misconfigured.\n");
-            exit(-1);
-        } else if (errno == EEXIST) {
-            /* Now the  contents of template are undefined. */
-            perror("Extension::Script:  Could not create a unique temporary filename\n");
-            return;
-        } else {
-            perror("Extension::Script:  Unknown error creating temporary filename\n");
-            exit(-1);
-        }
+    std::string tempfilename_out;
+    int tempfd_out = 0;
+    try {
+        tempfd_out = Glib::file_open_tmp(tempfilename_out, "ink_ext_XXXXXX.svg");
+    } catch (...) {
+        /// \todo Popup dialog here
+        return;
     }
-
-    Glib::ustring tempfilename_out= tmpname;
-    g_free(tmpname);
 
     SPDesktop *desktop = (SPDesktop *) doc;
     sp_namedview_document_from_window(desktop);
