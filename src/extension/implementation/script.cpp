@@ -595,8 +595,8 @@ Script::open(Inkscape::Extension::Input *module,
              const gchar *filenameArg)
 {
     std::list<std::string> params;
+    module->paramListString(params);
 
-    // FIXME: process the GError instead of passing NULL
     std::string tempfilename_out;
     int tempfd_out = 0;
     try {
@@ -668,30 +668,17 @@ Script::save(Inkscape::Extension::Output *module,
              SPDocument *doc,
              const gchar *filenameArg)
 {
-#if 0
-    Glib::ustring filename = filenameArg;
+    std::list<std::string> params;
+    module->paramListString(params);
 
-    gchar *tmpname;
-    // FIXME: process the GError instead of passing NULL
-    gint tempfd = g_file_open_tmp("ink_ext_XXXXXX", &tmpname, NULL);
-    if (tempfd == -1) {
-        /* Error, couldn't create temporary filename */
-        if (errno == EINVAL) {
-            /* The  last  six characters of template were not XXXXXX.  Now template is unchanged. */
-            perror("Extension::Script:  template for filenames is misconfigured.\n");
-            exit(-1);
-        } else if (errno == EEXIST) {
-            /* Now the  contents of template are undefined. */
-            perror("Extension::Script:  Could not create a unique temporary filename\n");
-            return;
-        } else {
-            perror("Extension::Script:  Unknown error creating temporary filename\n");
-            exit(-1);
-        }
+    std::string tempfilename_in;
+    int tempfd_in = 0;
+    try {
+        tempfd_in = Glib::file_open_tmp(tempfilename_in, "ink_ext_XXXXXX");
+    } catch (...) {
+        /// \todo Popup dialog here
+        return;
     }
-
-    Glib::ustring tempfilename_in = tmpname;
-    g_free(tmpname);
 
     if (helper_extension.size() == 0) {
         Inkscape::Extension::save(
@@ -703,25 +690,19 @@ Script::save(Inkscape::Extension::Output *module,
                    doc, tempfilename_in.c_str(), FALSE, FALSE, FALSE);
     }
 
-    gsize bytesRead = 0;
-    gsize bytesWritten = 0;
-    GError *error = NULL;
-    Glib::ustring local_filename =
-            g_filename_from_utf8( filename.c_str(), -1,
-                                 &bytesRead,  &bytesWritten, &error);
 
-    Glib::ustring local_command = command;
-    Glib::ustring paramString   = *module->paramString();
-    local_command.append(paramString);
+    file_listener fileout;
+    execute(command, params, tempfilename_in, fileout);
 
-    execute(local_command, tempfilename_in, local_filename);
-
+    std::string lfilename = Glib::filename_from_utf8(filenameArg);
+    fileout.toFile(lfilename);
 
     // make sure we don't leak file descriptors from g_file_open_tmp
-    close(tempfd);
+    close(tempfd_in);
     // FIXME: convert to utf8 (from "filename encoding") and unlink_utf8name
     unlink(tempfilename_in.c_str());
-#endif
+
+    return;
 }
 
 
@@ -758,11 +739,11 @@ void
 Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc)
 {
     std::list<std::string> params;
+    module->paramListString(params);
 
     if (module->no_doc) { 
         // this is a no-doc extension, e.g. a Help menu command; 
         // just run the command without any files, ignoring errors
-        module->paramListString(params);
 
         Glib::ustring empty;
         file_listener outfile;
