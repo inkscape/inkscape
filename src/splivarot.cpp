@@ -481,7 +481,7 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
     // premultiply by the inverse of parent's repr
     SPItem *parent_item = SP_ITEM(sp_desktop_document(desktop)->getObjectByRepr(parent));
     NR::Matrix local = sp_item_i2doc_affine(parent_item);
-    gchar *transform = sp_svg_transform_write(local);
+    gchar *transform = sp_svg_transform_write(local.inverse());
 
     // now that we have the result, add it on the canvas
     if ( bop == bool_op_cut || bop == bool_op_slice ) {
