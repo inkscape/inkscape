@@ -3961,7 +3961,7 @@ msgstr "Hautatu <b>gutxienez bi objektu</b> konbinatzeko."
 
 #: ../src/path-chemistry.cpp:63
 msgid "At least one of the objects is <b>not a path</b>, cannot combine."
-msgstr "Objektuetariko bat <b>ez da bidea<b>, ezin da konbinatu"
+msgstr "Objektuetariko bat <b>ez da bidea</b>, ezin da konbinatu"
 
 #: ../src/path-chemistry.cpp:71
 msgid "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
@@ -4413,7 +4413,7 @@ msgstr "Eredutik objektuak"
 
 #: ../src/selection-chemistry.cpp:2382
 msgid "Select <b>object(s)</b> to make a bitmap copy."
-msgstr "Hautatu <b>objektua(k) bit-maparen kopia egiteko."
+msgstr "Hautatu <b>objektua(k)</b> bit-maparen kopia egiteko."
 
 #: ../src/selection-chemistry.cpp:2541
 msgid "Create bitmap"
@@ -5146,7 +5146,7 @@ msgstr "Bihurtu testu mugikorra testuan"
 
 #: ../src/text-chemistry.cpp:508
 msgid "<b>No flowed text(s)</b> to convert in the selection."
-msgstr "<b>Ez dago testu mugikorrik<b> bihurtzeko hautapenean."
+msgstr "<b>Ez dago testu mugikorrik</b> bihurtzeko hautapenean."
 
 #: ../src/text-context.cpp:448
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -6353,7 +6353,7 @@ msgstr "'>' eta '<' eskalatzeko:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:183
 msgid "Pressing > or < scales selection up or down by this increment (in px units)"
-msgstr "'>' edo '<' teklak sakatzeak hautapena eskalatzen du (pixeletan)"
+msgstr "> edo < teklak sakatzeak hautapena eskalatzen du (pixeletan)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:185
 msgid "Inset/Outset by:"
