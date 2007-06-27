@@ -2165,11 +2165,13 @@ sp_style_merge_ifilter(SPStyle *style, SPIFilter const *parent)
     if (style->filter.href && style->filter.href->getObject())
        style->filter.href->detach();
 
-    try {
-        style->filter.href->attach(*parent->href->getURI());
-    } catch (Inkscape::BadURIException &e) {
-        g_warning("%s", e.what());
-        style->filter.href->detach();
+    if (style->filter.href && parent->href) {
+        try {
+            style->filter.href->attach(*parent->href->getURI());
+        } catch (Inkscape::BadURIException &e) {
+            g_warning("%s", e.what());
+            style->filter.href->detach();
+        }
     }
 }
 
@@ -3673,7 +3675,7 @@ sp_style_write_ifilter(gchar *p, gint const len, gchar const *key,
     {
         if (val->inherit) {
             return g_snprintf(p, len, "%s:inherit;", key);
-        } else if (val->href->getURI()) {
+        } else if (val->href && val->href->getURI()) {
             return g_snprintf(p, len, "%s:url(%s);", key, val->href->getURI()->toString());
         }
     }
