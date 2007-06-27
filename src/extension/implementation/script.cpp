@@ -549,9 +549,9 @@ Script::prefs_output(Inkscape::Extension::Output *module)
 */
 Gtk::Widget *
 Script::prefs_effect(Inkscape::Extension::Effect *module,
-                     Inkscape::UI::View::View *view)
+                     Inkscape::UI::View::View *view,
+                     Glib::SignalProxy0<void> * changeSignal)
 {
-
     SPDocument * current_document = view->doc();
 
     using Inkscape::Util::GSListConstIterator;

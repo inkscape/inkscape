@@ -120,7 +120,7 @@ public:
     void          deactivate   (void);
     bool          deactivated  (void);
     void          printFailure (Glib::ustring reason);
-
+    Implementation::Implementation * get_imp (void) { return imp; };
 
 /* Parameter Stuff */
 private:
@@ -182,7 +182,7 @@ public:
     static void      error_file_close (void);
 
 public:
-    Gtk::Widget *    autogui (SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget *    autogui (SPDocument * doc, Inkscape::XML::Node * node, Glib::SignalProxy0<void> * changeSignal = NULL);
     void paramListString (std::list <std::string> & retlist);
 
     /* Extension editor dialog stuff */

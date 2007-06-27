@@ -86,6 +86,8 @@ class Effect : public Extension {
     EffectVerb _verb_nopref;
     /** \brief  Menu node created for this effect */
     Inkscape::XML::Node * _menu_node;
+    /** \brief  Whehter a working dialog should be shown */
+    bool _workingDialog;
 public:
                  Effect  (Inkscape::XML::Node * in_repr,
                           Implementation::Implementation * in_imp);
@@ -109,9 +111,6 @@ public:
 
 private:
     static gchar *   remove_ (gchar * instr);
-
-    bool _canceled;
-    void workingCanceled (const int resp);
 };
 
 } }  /* namespace Inkscape, Extension */

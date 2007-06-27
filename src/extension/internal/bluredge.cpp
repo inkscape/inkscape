@@ -117,9 +117,9 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
 }
 
 Gtk::Widget *
-BlurEdge::prefs_effect(Inkscape::Extension::Effect * module, Inkscape::UI::View::View * view)
+BlurEdge::prefs_effect(Inkscape::Extension::Effect * module, Inkscape::UI::View::View * view, Glib::SignalProxy0<void> * changeSignal)
 {
-    return module->autogui(NULL, NULL);
+    return module->autogui(NULL, NULL, changeSignal);
 }
 
 #include "clear-n_.h"

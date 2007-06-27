@@ -169,7 +169,7 @@ PrefAdjustment::val_changed (void)
     Uses AutoGUI for creating the GUI.
 */
 Gtk::Widget *
-Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view)
+Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, Glib::SignalProxy0<void> * changeSignal)
 {
     SPDocument * current_document = view->doc();
 
@@ -179,7 +179,7 @@ Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View
     if (selected != NULL) 
         first_select = SP_OBJECT_REPR(*selected);
 
-    return module->autogui(current_document, first_select);
+    return module->autogui(current_document, first_select, changeSignal);
 }
 
 #include "clear-n_.h"

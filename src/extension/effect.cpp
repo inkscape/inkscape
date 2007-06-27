@@ -31,7 +31,7 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
       _name_noprefs(Glib::ustring(get_name()) + _(" (No preferences)")),
       _verb(get_id(), get_name(), NULL, NULL, this, true),
       _verb_nopref(_id_noprefs.c_str(), _name_noprefs.c_str(), NULL, NULL, this, false),
-      _menu_node(NULL)
+      _menu_node(NULL), _workingDialog(true)
 {
     Inkscape::XML::Node * local_effects_menu = NULL;
 
@@ -199,6 +199,164 @@ Effect::check (void)
     return true;
 }
 
+class ExecutionEnv {
+private:
+    Effect * _effect;
+    Gtk::Dialog * _visibleDialog;
+    bool _prefsVisible;
+    bool _finished;
+    bool _humanWait;
+    bool _canceled;
+    Glib::RefPtr<Glib::MainLoop> _mainloop;
+    Inkscape::UI::View::View * _doc;
+
+public:
+    void run (void);
+
+    ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls = NULL) :
+        _effect(effect),
+        _visibleDialog(NULL),
+        _prefsVisible(false),
+        _finished(false),
+        _humanWait(false),
+        _canceled(false),
+        _doc(doc) {
+
+        _mainloop = Glib::MainLoop::create(false);
+
+        if (controls != NULL) {
+            createPrefsDialog(controls);
+        } else {
+            createWorkingDialog();
+        }
+
+        return;
+    }
+
+    ~ExecutionEnv (void) {
+        if (_visibleDialog != NULL) {
+            delete _visibleDialog;
+        }
+        return;
+    }
+
+    void preferencesChange (void) {
+        if (_humanWait) {
+            _mainloop->quit();
+            documentCancel();
+            _humanWait = false;
+        } else {
+            processingCancel();
+            documentCancel();
+        }
+        return;
+    }
+
+private:
+    void createPrefsDialog (Gtk::Widget * controls) {
+        if (_visibleDialog != NULL) {
+            delete _visibleDialog;
+        }
+
+        _visibleDialog = new PrefDialog(_effect->get_name(), _effect->get_help(), controls);
+        _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesResponse));
+        _visibleDialog->show();
+
+        _prefsVisible = true;
+        return;
+    }
+
+    void createWorkingDialog (void) {
+        if (_visibleDialog != NULL) {
+            delete _visibleDialog;
+        }
+
+        gchar * dlgmessage = g_strdup_printf(_("The effect '%s' is working on your document.  Please wait."), _effect->get_name());
+        _visibleDialog = new Gtk::MessageDialog(dlgmessage,
+                                   false, // use markup
+                                   Gtk::MESSAGE_INFO,
+                                   Gtk::BUTTONS_CANCEL,
+                                   true); // modal
+        _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::workingCanceled));
+        g_free(dlgmessage);
+        _visibleDialog->show();
+
+        _prefsVisible = false;
+        return;
+    }
+
+    void workingCanceled (const int resp) {
+        processingCancel();
+        documentCancel();
+        _finished = true;
+        return;
+    }
+
+    void preferencesResponse (const int resp) {
+        if (resp == Gtk::RESPONSE_OK) {
+            if (_humanWait) {
+                documentCommit();
+                _mainloop->quit();
+                _finished = true;
+            } else {
+                createWorkingDialog();
+            }
+        } else {
+            if (_humanWait) {
+                _mainloop->quit();
+            } else {
+                processingCancel();
+            }
+            documentCancel();
+            _finished = true;
+        }
+        return;
+    }
+
+    void processingComplete(void) {
+        if (_prefsVisible) {
+            _humanWait = true;
+        } else {
+            documentCommit();
+            _finished = true;
+        }
+        return;
+    }
+
+    void processingCancel (void) {
+        _effect->get_imp()->cancelProcessing();
+        return;
+    }
+
+    void documentCancel (void) {
+        _canceled = true;
+        return;
+    }
+
+    void documentCommit (void) {
+        sp_document_done(_doc->doc(), SP_VERB_NONE, _(_effect->get_name()));
+        Effect::set_last_effect(_effect);
+        return;
+    }
+};
+
+void
+ExecutionEnv::run (void) {
+    while (!_finished) {
+        _canceled = false;
+        if (_humanWait) {
+            _mainloop->run();
+        } else {
+            _effect->get_imp()->effect(_effect, _doc);
+            processingComplete();
+        }
+        if (_canceled) {
+            sp_document_cancel(_doc->doc());
+        }
+    }
+    return;
+}
+
 bool
 Effect::prefs (Inkscape::UI::View::View * doc)
 {
@@ -206,22 +364,22 @@ Effect::prefs (Inkscape::UI::View::View * doc)
         set_state(Extension::STATE_LOADED);
     if (!loaded()) return false;
 
+    Glib::SignalProxyInfo changeSignalInfo = {signal_name: "Effect Preference Changed",
+                                              callback: NULL, notify_callback: NULL};
+    Glib::SignalProxy0<void> changeSignal(NULL, &changeSignalInfo);
+
     Gtk::Widget * controls;
-    controls = imp->prefs_effect(this, doc);
+    controls = imp->prefs_effect(this, doc, &changeSignal);
     if (controls == NULL) {
         // std::cout << "No preferences for Effect" << std::endl;
         return true;
     }
 
-    PrefDialog * dialog = new PrefDialog(this->get_name(), this->get_help(), controls);
-    int response = dialog->run();
-    dialog->hide();
+    ExecutionEnv executionEnv(this, doc, controls);
+    //changeSignal.connect(sigc::mem_fun(executionEnv, &ExecutionEnv::preferencesChange));
+    executionEnv.run();
 
-    delete dialog;
-
-    if (response == Gtk::RESPONSE_OK) return true;
-
-    return false;
+    return true;
 }
 
 /**
@@ -241,47 +399,10 @@ Effect::effect (Inkscape::UI::View::View * doc)
         set_state(Extension::STATE_LOADED);
     if (!loaded()) return;
 
-    gchar * dlgmessage = g_strdup_printf(_("The effect '%s' is working on your document.  Please wait."), get_name());
-    Gtk::MessageDialog working(dlgmessage,
-                               false, // use markup
-                               Gtk::MESSAGE_INFO,
-                               Gtk::BUTTONS_CANCEL,
-                               true); // modal
-    working.signal_response().connect(sigc::mem_fun(this, &Effect::workingCanceled));
-    g_free(dlgmessage);
-    _canceled = false;
-    working.show();
 
-    set_last_effect(this);
-    imp->effect(this, doc);
+    ExecutionEnv executionEnv(this, doc, NULL);
+    executionEnv.run();
 
-    if (!_canceled) {
-        sp_document_done(doc->doc(), SP_VERB_NONE, _(this->get_name()));
-    } else {
-        sp_document_cancel(doc->doc());
-    }
-
-    working.hide();
-
-    return;
-}
-
-/** \internal
-    \brief  A function used by the working dialog to recieve the cancel
-            button press
-    \param  resp  The key that was pressed (should always be cancel)
-
-    This function recieves the key event and marks the effect as being
-    canceled.  It calls the function in the implementation that would
-    cancel the implementation.
-*/
-void
-Effect::workingCanceled (const int resp) {
-    if (resp == Gtk::RESPONSE_CANCEL) {
-        std::cout << "Canceling Effect" << std::endl;
-        _canceled = true;
-        imp->cancelProcessing();
-    }
     return;
 }
 
@@ -360,13 +481,11 @@ Effect::EffectVerb::perform (SPAction *action, void * data, void *pdata)
     if (effect == NULL) return;
     if (current_view == NULL) return;
 
-    // std::cout << "Executing: " << effect->get_name() << std::endl;
-    bool execute = true;
-
-    if (ev->_showPrefs)
-        execute = effect->prefs(current_view);
-    if (execute)
+    if (ev->_showPrefs) {
+        effect->prefs(current_view);
+    } else {
         effect->effect(current_view);
+    }
 
     return;
 }
