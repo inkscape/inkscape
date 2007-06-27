@@ -105,7 +105,7 @@ private:
      * The command that has been dirived from
      * the configuration file with appropriate directories
      */
-    Glib::ustring command;
+    std::list<std::string> command;
 
      /**
       * This is the extension that will be used

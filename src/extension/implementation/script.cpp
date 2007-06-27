@@ -224,7 +224,7 @@ public:
     };
 };
 
-int execute (const Glib::ustring &in_command,
+int execute (const std::list<std::string> &in_command,
              const std::list<std::string> &in_params,
              const Glib::ustring &filein,
              file_listener &fileout);
@@ -373,8 +373,9 @@ Script::check_existance(const Glib::ustring &command)
                       Glib::build_filename(localPath, command);
 
         if (Inkscape::IO::file_test(candidatePath .c_str(),
-                      G_FILE_TEST_EXISTS))
+                      G_FILE_TEST_EXISTS)) {
             return true;
+        }
 
     }
 
@@ -413,26 +414,23 @@ Script::load(Inkscape::Extension::Extension *module)
 
     /* This should probably check to find the executable... */
     Inkscape::XML::Node *child_repr = sp_repr_children(module->get_repr());
-    Glib::ustring command_text;
     while (child_repr != NULL) {
         if (!strcmp(child_repr->name(), "script")) {
             child_repr = sp_repr_children(child_repr);
             while (child_repr != NULL) {
                 if (!strcmp(child_repr->name(), "command")) {
-                    command_text = solve_reldir(child_repr);
-
                     const gchar *interpretstr = child_repr->attribute("interpreter");
                     if (interpretstr != NULL) {
                         Glib::ustring interpString =
                             resolveInterpreterExecutable(interpretstr);
-                        interpString .append(" \"");
-                        interpString .append(command_text);
-                        interpString .append("\"");                        
-                        command_text = interpString;
+                        command.insert(command.end(), interpretstr);
                     }
+
+                    command.insert(command.end(), solve_reldir(child_repr));
                 }
-                if (!strcmp(child_repr->name(), "helper_extension"))
+                if (!strcmp(child_repr->name(), "helper_extension")) {
                     helper_extension = sp_repr_children(child_repr)->content();
+                }
                 child_repr = sp_repr_next(child_repr);
             }
 
@@ -441,9 +439,8 @@ Script::load(Inkscape::Extension::Extension *module)
         child_repr = sp_repr_next(child_repr);
     }
 
-    g_return_val_if_fail(command_text.size() > 0, FALSE);
+    //g_return_val_if_fail(command.length() > 0, FALSE);
 
-    command = command_text;
     return true;
 }
 
@@ -459,7 +456,7 @@ Script::load(Inkscape::Extension::Extension *module)
 void
 Script::unload(Inkscape::Extension::Extension *module)
 {
-    command          = "";
+    command.clear();
     helper_extension = "";
 }
 
@@ -779,7 +776,6 @@ void
 Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc)
 {
     std::list<std::string> params;
-    Glib::ustring local_command(command);
 
     if (module->no_doc) { 
         // this is a no-doc extension, e.g. a Help menu command; 
@@ -788,7 +784,7 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
 
         Glib::ustring empty;
         file_listener outfile;
-        execute(local_command, params, empty, outfile);
+        execute(command, params, empty, outfile);
 
         return;
     }
@@ -857,7 +853,7 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
     }
 
     file_listener fileout;
-    int data_read = execute(local_command, params, tempfilename_in, fileout);
+    int data_read = execute(command, params, tempfilename_in, fileout);
     fileout.toFile(tempfilename_out);
 
     SPDocument * mydoc = NULL;
@@ -992,7 +988,7 @@ checkStderr (const Glib::ustring &data,
     are closed, and we return to what we were doing.
 */
 int
-execute (const Glib::ustring &in_command,
+execute (const std::list<std::string> &in_command,
          const std::list<std::string> &in_params,
          const Glib::ustring &filein,
          file_listener &fileout)
@@ -1000,10 +996,13 @@ execute (const Glib::ustring &in_command,
     g_return_val_if_fail(in_command.size() > 0, 0);
     // printf("Executing: %s\n", in_command);
 
-
     std::vector <std::string> argv;
 
-    argv.push_back(in_command);
+    for (std::list<std::string>::const_iterator i = in_command.begin();
+            i != in_command.end(); i++) {
+        argv.push_back(*i);
+    }
+
     if (!(filein.empty())) {
         argv.push_back(filein);
     }
@@ -1013,18 +1012,29 @@ execute (const Glib::ustring &in_command,
         argv.push_back(*i);
     }
 
+/*
+    for (std::vector<std::string>::const_iterator i = argv.begin();
+            i != argv.end(); i++) {
+        std::cout << *i << std::endl;
+    }
+*/
 
     Glib::Pid pid;
     int stdout_pipe, stderr_pipe;
 
-    Glib::spawn_async_with_pipes(Glib::get_tmp_dir(), // working directory
-                                 argv,  // arg v
-                                 Glib::SPAWN_DO_NOT_REAP_CHILD,
-                                 sigc::slot<void>(),
-                                 &pid,           // Pid
-                                 NULL,           // STDIN
-                                 &stdout_pipe,   // STDOUT
-                                 &stderr_pipe);  // STDERR
+    try {
+        Glib::spawn_async_with_pipes(Glib::get_tmp_dir(), // working directory
+                                     argv,  // arg v
+                                     Glib::SPAWN_SEARCH_PATH /*| Glib::SPAWN_DO_NOT_REAP_CHILD*/,
+                                     sigc::slot<void>(),
+                                     &pid,           // Pid
+                                     NULL,           // STDIN
+                                     &stdout_pipe,   // STDOUT
+                                     &stderr_pipe);  // STDERR
+    } catch (Glib::SpawnError e) {
+        printf("Can't Spawn!!! %d\n", e.code());
+        return 0;
+    }
 
     Glib::RefPtr<Glib::MainLoop> main_loop = Glib::MainLoop::create(false);
 
@@ -1046,6 +1056,7 @@ execute (const Glib::ustring &in_command,
         return 0;
     }
 
+    // std::cout << "Finishing Execution." << std::endl;
     return stdout_data.length();
 }
 
