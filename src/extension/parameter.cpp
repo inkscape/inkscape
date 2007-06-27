@@ -666,8 +666,6 @@ ParamFloatAdjustment::val_changed (void)
     _pref->set(this->get_value(), _doc, _node);
     if (_changeSignal != NULL) {
         _changeSignal->emit();
-    } else {
-        std::cout << "_changeSignal is NULL" << std::endl;
     }
     return;
 }
@@ -705,8 +703,6 @@ ParamIntAdjustment::val_changed (void)
     _pref->set((int)this->get_value(), _doc, _node);
     if (_changeSignal != NULL) {
         _changeSignal->emit();
-    } else {
-        std::cout << "_changeSignal is NULL" << std::endl;
     }
     return;
 }
@@ -768,6 +764,7 @@ private:
     ParamBool * _pref;
     SPDocument * _doc;
     Inkscape::XML::Node * _node;
+    sigc::signal<void> * _changeSignal;
 public:
     /** \brief  Initialize the check button
         \param  param  Which parameter to adjust on changing the check button
@@ -775,8 +772,8 @@ public:
         This function sets the value of the checkbox to be that of the
         parameter, and then sets up a callback to \c on_toggle.
     */
-    ParamBoolCheckButton (ParamBool * param, SPDocument * doc, Inkscape::XML::Node * node) :
-            Gtk::CheckButton(), _pref(param), _doc(doc), _node(node) {
+    ParamBoolCheckButton (ParamBool * param, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+            Gtk::CheckButton(), _pref(param), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->set_active(_pref->get(NULL, NULL) /**\todo fix */);
         this->signal_toggled().connect(sigc::mem_fun(this, &ParamBoolCheckButton::on_toggle));
         return;
@@ -793,6 +790,9 @@ void
 ParamBoolCheckButton::on_toggle (void)
 {
     _pref->set(this->get_active(), NULL /**\todo fix this */, NULL);
+    if (_changeSignal != NULL) {
+        _changeSignal->emit();
+    }
     return;
 }
 
@@ -810,7 +810,7 @@ ParamBool::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signa
     label->show();
     hbox->pack_start(*label, true, true);
 
-    ParamBoolCheckButton * checkbox = new ParamBoolCheckButton(this, doc, node);
+    ParamBoolCheckButton * checkbox = new ParamBoolCheckButton(this, doc, node, changeSignal);
     checkbox->show();
     hbox->pack_start(*checkbox, false, false);
 
@@ -825,13 +825,14 @@ private:
     ParamString * _pref;
     SPDocument * _doc;
     Inkscape::XML::Node * _node;
+    sigc::signal<void> * _changeSignal;
 public:
     /** \brief  Build a string preference for the given parameter
         \param  pref  Where to get the string from, and where to put it
                       when it changes.
     */
-    ParamStringEntry (ParamString * pref, SPDocument * doc, Inkscape::XML::Node * node) :
-        Gtk::Entry(), _pref(pref), _doc(doc), _node(node) {
+    ParamStringEntry (ParamString * pref, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+        Gtk::Entry(), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
         if (_pref->get(NULL, NULL) != NULL)
             this->set_text(Glib::ustring(_pref->get(NULL, NULL)));
         this->signal_changed().connect(sigc::mem_fun(this, &ParamStringEntry::changed_text));
@@ -849,6 +850,9 @@ ParamStringEntry::changed_text (void)
 {
     Glib::ustring data = this->get_text();
     _pref->set(data.c_str(), _doc, _node);
+    if (_changeSignal != NULL) {
+        _changeSignal->emit();
+    }
     return;
 }
 
@@ -866,7 +870,7 @@ ParamString::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::sig
     label->show();
     hbox->pack_start(*label, false, false);
 
-    ParamStringEntry * textbox = new ParamStringEntry(this, doc, node);
+    ParamStringEntry * textbox = new ParamStringEntry(this, doc, node, changeSignal);
     textbox->show();
     hbox->pack_start(*textbox, true, true);
 
