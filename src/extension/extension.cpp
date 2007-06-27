@@ -623,7 +623,7 @@ public:
     If there are no parameters, this function just returns NULL.
 */
 Gtk::Widget *
-Extension::autogui (SPDocument * doc, Inkscape::XML::Node * node, Glib::SignalProxy0<void> * changeSignal)
+Extension::autogui (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     if (g_slist_length(parameters) == 0) return NULL;
 

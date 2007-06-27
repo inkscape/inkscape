@@ -550,7 +550,7 @@ Script::prefs_output(Inkscape::Extension::Output *module)
 Gtk::Widget *
 Script::prefs_effect(Inkscape::Extension::Effect *module,
                      Inkscape::UI::View::View *view,
-                     Glib::SignalProxy0<void> * changeSignal)
+                     sigc::signal<void> * changeSignal)
 {
     SPDocument * current_document = view->doc();
 

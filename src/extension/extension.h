@@ -182,7 +182,7 @@ public:
     static void      error_file_close (void);
 
 public:
-    Gtk::Widget *    autogui (SPDocument * doc, Inkscape::XML::Node * node, Glib::SignalProxy0<void> * changeSignal = NULL);
+    Gtk::Widget *    autogui (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal = NULL);
     void paramListString (std::list <std::string> & retlist);
 
     /* Extension editor dialog stuff */

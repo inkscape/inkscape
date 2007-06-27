@@ -63,7 +63,7 @@ public:
 
     /* ----- Effect functions ----- */
     /** Find out information about the file. */
-    virtual Gtk::Widget * prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, Glib::SignalProxy0<void> * changeSignal);
+    virtual Gtk::Widget * prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal);
     /* TODO: need to figure out what we need here */
 
     virtual void effect(Inkscape::Extension::Effect *module,

@@ -2,7 +2,7 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2002-2006 Authors
+ * Copyright (C) 2002-2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -364,9 +364,7 @@ Effect::prefs (Inkscape::UI::View::View * doc)
         set_state(Extension::STATE_LOADED);
     if (!loaded()) return false;
 
-    Glib::SignalProxyInfo changeSignalInfo = {signal_name: "Effect Preference Changed",
-                                              callback: NULL, notify_callback: NULL};
-    Glib::SignalProxy0<void> changeSignal(NULL, &changeSignalInfo);
+    sigc::signal<void> changeSignal;
 
     Gtk::Widget * controls;
     controls = imp->prefs_effect(this, doc, &changeSignal);
@@ -376,7 +374,7 @@ Effect::prefs (Inkscape::UI::View::View * doc)
     }
 
     ExecutionEnv executionEnv(this, doc, controls);
-    //changeSignal.connect(sigc::mem_fun(executionEnv, &ExecutionEnv::preferencesChange));
+    changeSignal.connect(sigc::mem_fun(executionEnv, &ExecutionEnv::preferencesChange));
     executionEnv.run();
 
     return true;

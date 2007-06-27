@@ -90,7 +90,7 @@ public:
      */
     virtual Gtk::Widget *prefs_effect(Inkscape::Extension::Effect *module,
                                       Inkscape::UI::View::View * view,
-                                      Glib::SignalProxy0<void> * changeSignal);
+                                      sigc::signal<void> * changeSignal);
 
     /**
      *

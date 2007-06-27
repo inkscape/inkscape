@@ -72,7 +72,7 @@ Implementation::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar
 } /* Implementation::save */
 
 Gtk::Widget *
-Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *view, Glib::SignalProxy0<void> * changeSignal) {
+Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *view, sigc::signal<void> * changeSignal) {
     return module->autogui(NULL, NULL);
 } /* Implementation::prefs_effect */
 

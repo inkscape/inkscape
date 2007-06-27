@@ -169,7 +169,7 @@ PrefAdjustment::val_changed (void)
     Uses AutoGUI for creating the GUI.
 */
 Gtk::Widget *
-Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, Glib::SignalProxy0<void> * changeSignal)
+Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal)
 {
     SPDocument * current_document = view->doc();
 
