@@ -3155,7 +3155,6 @@ bool visible = false;
 void
 sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
 {
-
     SPStyle *query =
         sp_style_new ();
 
@@ -3303,6 +3302,8 @@ sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
         g_object_set_data (G_OBJECT (button), "block", gpointer(0));
         g_object_set_data (G_OBJECT (button1), "block", gpointer(0));
     }
+
+    sp_style_unref(query);
 }
 
 void
@@ -3367,6 +3368,8 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     {
         sp_desktop_set_style (desktop, css, true, true);
     }
+
+    sp_style_unref(query);
 
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                                    _("Text: Change font family"));
@@ -3450,6 +3453,8 @@ sp_text_toolbox_anchoring_toggled (GtkRadioButton   *button,
         sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
     }
 
+    sp_style_unref(query);
+
     sp_desktop_set_style (desktop, css, true, true);
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                                    _("Text: Change alignment"));
@@ -3495,6 +3500,8 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
     {
         sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
     }
+
+    sp_style_unref(query);
 
     sp_desktop_set_style (desktop, css, true, true);
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
@@ -3638,6 +3645,8 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
     {
         sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
     }
+
+    sp_style_unref(query);
 
     sp_desktop_set_style (desktop, css, true, true);
     sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:size", SP_VERB_NONE,
