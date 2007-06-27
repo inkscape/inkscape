@@ -175,17 +175,6 @@ resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
 }
 
 
-class file_listener {
-    Glib::ustring _string;
-    sigc::connection _conn;
-    Glib::RefPtr<Glib::IOChannel> _channel;
-    Glib::RefPtr<Glib::MainLoop> _main_loop;
-    
-public:
-    file_listener () { };
-    ~file_listener () {
-        _conn.disconnect();
-    };
 
 /** \brief     This function creates a script object and sets up the
                variables.
