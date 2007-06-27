@@ -1201,7 +1201,7 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix cons
              !preserve && // user did not chose to preserve all transforms
              !item->clip_ref->getObject() && // the object does not have a clippath
              !item->mask_ref->getObject() && // the object does not have a mask
-         !(!transform.is_translation() && SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->filter.href->getObject()) 
+         !(!transform.is_translation() && SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->getFilter()) 
              // the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
         ) {
         transform_attr = ((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform(item, transform);

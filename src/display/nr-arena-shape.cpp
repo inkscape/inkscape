@@ -1360,12 +1360,12 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
     shape->setMitreLimit(style->stroke_miterlimit.value);
 
     //if shape has a filter
-    if (style->filter.set && style->filter.href->getObject()) {
+    if (style->filter.set && style->getFilter()) {
         if (!shape->filter) {
-            int primitives = sp_filter_primitive_count(style->filter.href->getObject());
+            int primitives = sp_filter_primitive_count(SP_FILTER(style->getFilter()));
             shape->filter = new NR::Filter(primitives);
         }
-        sp_filter_build_renderer(style->filter.href->getObject(), shape->filter);
+        sp_filter_build_renderer(SP_FILTER(style->getFilter()), shape->filter);
     } else {
         //no filter set for this shape
         delete shape->filter;

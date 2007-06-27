@@ -397,7 +397,7 @@ static void
 sp_style_filter_ref_modified(SPObject *obj, guint flags, SPStyle *style)
 {
     SPFilter *filter=static_cast<SPFilter *>(obj);
-    if (style->filter.href->getObject() == filter)
+    if (style->getFilter() == filter)
     {
         if (style->object) {
             style->object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);

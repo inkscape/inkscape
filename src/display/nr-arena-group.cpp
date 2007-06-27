@@ -196,12 +196,12 @@ void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
     group->style = style;
 
     //if group has a filter
-    if (style->filter.set && style->filter.href->getObject()) {
+    if (style->filter.set && style->getFilter()) {
         if (!group->filter) {
-            int primitives = sp_filter_primitive_count(style->filter.href->getObject());
+            int primitives = sp_filter_primitive_count(SP_FILTER(style->getFilter()));
             group->filter = new NR::Filter(primitives);
         }
-        sp_filter_build_renderer(style->filter.href->getObject(), group->filter);
+        sp_filter_build_renderer(SP_FILTER(style->getFilter()), group->filter);
     } else {
         //no filter set for this group
         delete group->filter;

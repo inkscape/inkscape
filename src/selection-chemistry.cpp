@@ -953,8 +953,8 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList 
         }
     }
 
-    if (style->filter.href->getObject()) {
-        SPObject *filter = style->filter.href->getObject();
+    if (style->getFilter()) {
+        SPObject *filter = style->getFilter();
         if (SP_IS_FILTER(filter)) {
             sp_copy_single (defs_clip, filter, xml_doc);
         }

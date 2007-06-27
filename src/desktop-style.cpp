@@ -1030,12 +1030,12 @@ objects_query_blend (GSList *objects, SPStyle *style_res)
         items++;
 
         //if object has a filter
-        if (style->filter.set && style->filter.href->getObject()) {
+        if (style->filter.set && style->getFilter()) {
             int blurcount = 0;
             int blendcount = 0;
 
             // determine whether filter is simple (blend and/or blur) or complex
-            for(SPObject *primitive_obj = style->filter.href->getObject()->children;
+            for(SPObject *primitive_obj = style->getFilter()->children;
                 primitive_obj && SP_IS_FILTER_PRIMITIVE(primitive_obj);
                 primitive_obj = primitive_obj->next) {
                 SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);
@@ -1051,7 +1051,7 @@ objects_query_blend (GSList *objects, SPStyle *style_res)
 
             // simple filter
             if(blurcount == 1 || blendcount == 1) {
-                for(SPObject *primitive_obj = style->filter.href->getObject()->children;
+                for(SPObject *primitive_obj = style->getFilter()->children;
                     primitive_obj && SP_IS_FILTER_PRIMITIVE(primitive_obj);
                     primitive_obj = primitive_obj->next) {
                     if(SP_IS_FEBLEND(primitive_obj)) {
@@ -1118,9 +1118,9 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
         items ++;
 
         //if object has a filter
-        if (style->filter.set && style->filter.href->getObject()) {
+        if (style->filter.set && style->getFilter()) {
             //cycle through filter primitives
-            SPObject *primitive_obj = style->filter.href->getObject()->children;
+            SPObject *primitive_obj = style->getFilter()->children;
             while (primitive_obj) {
                 if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) {
                     SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);

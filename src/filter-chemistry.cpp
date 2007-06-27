@@ -41,7 +41,7 @@ count_filter_hrefs(SPObject *o, SPFilter *filter)
     SPStyle *style = SP_OBJECT_STYLE(o);
     if (style
         && style->filter.set
-        && style->filter.href->getObject() == filter)
+        && style->getFilter() == filter)
     {
         i ++;
     }
@@ -305,13 +305,13 @@ modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
         //return new_filter_gaussian_blur_from_item(document, item, radius);
     }
 
-    SPFilter *filter = SP_FILTER(item->style->filter.href->getObject());
+    SPFilter *filter = SP_FILTER(item->style->getFilter());
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
     // If there are more users for this filter, duplicate it
     if (SP_OBJECT_HREFCOUNT(filter) > count_filter_hrefs(item, filter)) {
         Inkscape::XML::Node *repr;
-        repr = SP_OBJECT_REPR(item->style->filter.href->getObject())->duplicate(xml_doc);
+        repr = SP_OBJECT_REPR(item->style->getFilter())->duplicate(xml_doc);
         SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
         SP_OBJECT_REPR(defs)->appendChild(repr);
 
@@ -338,7 +338,7 @@ modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
     }
 
     // Set the filter effects area
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(item->style->filter.href->getObject());
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(item->style->getFilter());
     set_filter_area(repr, radius, expansion, i2d.expansionX(),
                     i2d.expansionY(), width, height);
 
@@ -391,9 +391,9 @@ void remove_filter (SPObject *item, bool recursive)
  * be handled gracefully */
 void remove_filter_gaussian_blur (SPObject *item)
 {
-    if (item->style && item->style->filter.set && item->style->filter.href->getObject()) {
+    if (item->style && item->style->filter.set && item->style->getFilter()) {
         // Search for the first blur primitive and remove it. (if found)
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR(item->style->filter.href->getObject());
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR(item->style->getFilter());
         Inkscape::XML::Node *primitive = repr->firstChild();
         while (primitive) {
             if (strcmp("svg:feGaussianBlur", primitive->name()) == 0) {

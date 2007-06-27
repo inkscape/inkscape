@@ -17,6 +17,7 @@
 #include "forward.h"
 #include "sp-marker-loc.h"
 #include "sp-filter.h"
+#include "sp-filter-reference.h"
 
 #include <sigc++/connection.h>
 
@@ -168,8 +169,6 @@ struct SPIPaint {
         SVGICCColor *iccColor;
     } value;
 };
-
-struct SPFilterReference;
 
 /// Filter type internal to SPStyle
 struct SPIFilter {
@@ -360,6 +359,8 @@ struct SPStyle {
 
     sigc::connection stroke_release_connection;
     sigc::connection stroke_modified_connection;
+
+    SPObject *getFilter() {if (filter.href) return filter.href->getObject(); else return NULL;}
 };
 
 SPStyle *sp_style_new(SPDocument *document);
