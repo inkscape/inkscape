@@ -247,19 +247,53 @@ Effect::effect (Inkscape::UI::View::View * doc)
                                Gtk::MESSAGE_INFO,
                                Gtk::BUTTONS_CANCEL,
                                true); // modal
+    working.signal_response().connect(sigc::mem_fun(this, &Effect::workingCanceled));
     g_free(dlgmessage);
+    _canceled = false;
     working.show();
 
     set_last_effect(this);
     imp->effect(this, doc);
 
-    sp_document_done(doc->doc(), SP_VERB_NONE, _(this->get_name()));
+    if (!_canceled) {
+        sp_document_done(doc->doc(), SP_VERB_NONE, _(this->get_name()));
+    } else {
+        sp_document_cancel(doc->doc());
+    }
 
     working.hide();
 
     return;
 }
 
+/** \internal
+    \brief  A function used by the working dialog to recieve the cancel
+            button press
+    \param  resp  The key that was pressed (should always be cancel)
+
+    This function recieves the key event and marks the effect as being
+    canceled.  It calls the function in the implementation that would
+    cancel the implementation.
+*/
+void
+Effect::workingCanceled (const int resp) {
+    if (resp == Gtk::RESPONSE_CANCEL) {
+        std::cout << "Canceling Effect" << std::endl;
+        _canceled = true;
+        imp->cancelProcessing();
+    }
+    return;
+}
+
+/** \brief  Sets which effect was called last
+    \param in_effect  The effect that has been called
+    
+    This function sets the static variable \c _last_effect and it
+    ensures that the last effect verb is sensitive.
+
+    If the \c in_effect variable is \c NULL then the last effect
+    verb is made insesitive.
+*/
 void
 Effect::set_last_effect (Effect * in_effect)
 {

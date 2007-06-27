@@ -14,6 +14,7 @@
 #include <config.h>
 
 #include <glibmm/i18n.h>
+#include <gtkmm/dialog.h>
 #include <gtk/gtkdialog.h>
 #include "verbs.h"
 
@@ -108,6 +109,9 @@ public:
 
 private:
     static gchar *   remove_ (gchar * instr);
+
+    bool _canceled;
+    void workingCanceled (const int resp);
 };
 
 } }  /* namespace Inkscape, Extension */
