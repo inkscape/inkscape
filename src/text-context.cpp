@@ -1402,8 +1402,9 @@ sp_text_context_style_query(SPStyle *style, int property, SPTextContext *tc)
         layout->getSourceOfCharacter(it, &rawptr);
         pos_obj = SP_OBJECT(rawptr);
         if (pos_obj == 0) continue;
-        while (SP_OBJECT_STYLE(pos_obj) == NULL && SP_OBJECT_PARENT(pos_obj))
-            pos_obj = SP_OBJECT_PARENT(pos_obj);   // SPStrings don't have style
+        while (SP_IS_STRING(pos_obj) && SP_OBJECT_PARENT(pos_obj)) {
+           pos_obj = SP_OBJECT_PARENT(pos_obj);   // SPStrings don't have style
+        }
         styles_list = g_slist_prepend(styles_list, (gpointer)pos_obj);
     }
 
