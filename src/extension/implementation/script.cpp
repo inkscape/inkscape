@@ -6,7 +6,7 @@
  *   Bryce Harrington <bryce@osdl.org>
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2002-2005 Authors
+ * Copyright (C) 2002-2005,2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -996,7 +996,7 @@ execute (const std::list<std::string> &in_command,
          file_listener &fileout)
 {
     g_return_val_if_fail(in_command.size() > 0, 0);
-    // printf("Executing: %s\n", in_command);
+    // printf("Executing\n");
 
     std::vector <std::string> argv;
 
