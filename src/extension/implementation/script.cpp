@@ -48,6 +48,7 @@ FIXME:
 #include "../system.h"
 #include "extension/effect.h"
 #include "extension/output.h"
+#include "extension/input.h"
 #include "extension/db.h"
 #include "script.h"
 #include "dialogs/dialog-events.h"
@@ -519,8 +520,7 @@ Gtk::Widget *
 Script::prefs_input(Inkscape::Extension::Input *module,
                     const gchar *filename)
 {
-    /*return module->autogui(); */
-    return NULL;
+    return module->autogui(NULL, NULL);
 }
 
 
@@ -594,66 +594,48 @@ SPDocument *
 Script::open(Inkscape::Extension::Input *module,
              const gchar *filenameArg)
 {
-#if 0
-    Glib::ustring filename = filenameArg;
-
-    gchar *tmpname;
+    std::list<std::string> params;
 
     // FIXME: process the GError instead of passing NULL
-    gint tempfd = g_file_open_tmp("ink_ext_XXXXXX", &tmpname, NULL);
-    if (tempfd == -1) {
-        /* Error, couldn't create temporary filename */
-        if (errno == EINVAL) {
-            /* The  last  six characters of template were not XXXXXX.  Now template is unchanged. */
-            perror("Extension::Script:  template for filenames is misconfigured.\n");
-            exit(-1);
-        } else if (errno == EEXIST) {
-            /* Now the  contents of template are undefined. */
-            perror("Extension::Script:  Could not create a unique temporary filename\n");
-            return NULL;
-        } else {
-            perror("Extension::Script:  Unknown error creating temporary filename\n");
-            exit(-1);
-        }
+    std::string tempfilename_out;
+    int tempfd_out = 0;
+    try {
+        tempfd_out = Glib::file_open_tmp(tempfilename_out, "ink_ext_XXXXXX");
+    } catch (...) {
+        /// \todo Popup dialog here
+        return NULL;
     }
 
-    Glib::ustring tempfilename_out = tmpname;
-    g_free(tmpname);
+    std::string lfilename = Glib::filename_from_utf8(filenameArg);
 
-    gsize bytesRead = 0;
-    gsize bytesWritten = 0;
-    GError *error = NULL;
-    Glib::ustring local_filename =
-            g_filename_from_utf8( filename.c_str(), -1,
-                                  &bytesRead,  &bytesWritten, &error);
+    file_listener fileout;
+    int data_read = execute(command, params, lfilename, fileout);
+    fileout.toFile(tempfilename_out);
 
-    int data_read = execute(command, local_filename, tempfilename_out);
-
-    SPDocument *mydoc = NULL;
+    SPDocument * mydoc = NULL;
     if (data_read > 10) {
         if (helper_extension.size()==0) {
             mydoc = Inkscape::Extension::open(
-                Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG),
-                                            tempfilename_out.c_str());
+                  Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG),
+                  tempfilename_out.c_str());
         } else {
             mydoc = Inkscape::Extension::open(
-                Inkscape::Extension::db.get(helper_extension.c_str()),
-                                            tempfilename_out.c_str());
+                  Inkscape::Extension::db.get(helper_extension.c_str()),
+                  tempfilename_out.c_str());
         }
+    } // data_read
+
+    if (mydoc != NULL) {
+        sp_document_set_uri(mydoc, filenameArg);
     }
 
-    if (mydoc != NULL)
-        sp_document_set_uri(mydoc, (const gchar *)filename.c_str());
-
     // make sure we don't leak file descriptors from g_file_open_tmp
-    close(tempfd);
-    // FIXME: convert to utf8 (from "filename encoding") and unlink_utf8name
+    close(tempfd_out);
+
     unlink(tempfilename_out.c_str());
 
-
     return mydoc;
-#endif
-}
+} // open
 
 
 
@@ -857,10 +839,11 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
     fileout.toFile(tempfilename_out);
 
     SPDocument * mydoc = NULL;
-    if (data_read > 10)
+    if (data_read > 10) {
         mydoc = Inkscape::Extension::open(
               Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG),
               tempfilename_out.c_str());
+    } // data_read
 
     // make sure we don't leak file descriptors from g_file_open_tmp
     close(tempfd_in);

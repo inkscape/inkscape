@@ -148,12 +148,15 @@ private:
         sigc::connection _conn;
         Glib::RefPtr<Glib::IOChannel> _channel;
         Glib::RefPtr<Glib::MainLoop> _main_loop;
+        bool _dead;
         
     public:
-        file_listener () { };
+        file_listener () : _dead(false) { };
         ~file_listener () {
             _conn.disconnect();
         };
+
+        bool isDead () { return _dead; }
 
         void init (int fd, Glib::RefPtr<Glib::MainLoop> main) {
             _channel = Glib::IOChannel::create_from_fd(fd);
@@ -172,14 +175,15 @@ private:
 
             Glib::IOStatus status;
             Glib::ustring out;
-            status = _channel->read_to_end(out);
+            status = _channel->read_line(out);
+            _string += out;
 
             if (status != Glib::IO_STATUS_NORMAL) {
                 _main_loop->quit();
+                _dead = true;
                 return false;
             }
 
-            _string += out;
             return true;
         };
 
