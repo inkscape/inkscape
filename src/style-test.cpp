@@ -223,7 +223,7 @@ static char const *const paint_enum_vals[] = {"none", "currentColor", NULL};
 static gchar *
 merge_then_write_string(gchar const *const str, guint const flags)
 {
-    SPStyle *const style = sp_style_new();
+    SPStyle *const style = sp_style_new(NULL);
     sp_style_merge_from_style_string(style, str);
     gchar *const ret = sp_style_write_string(style, flags);
     sp_style_unref(style);
@@ -432,8 +432,8 @@ test_scale24_mul()
 static void
 test_merge_opacity()
 {
-    SPStyle &parent = *sp_style_new();
-    SPStyle &child = *sp_style_new();
+    SPStyle &parent = *sp_style_new(NULL);
+    SPStyle &child = *sp_style_new(NULL);
 
     unsigned const either = 2;
     struct {
@@ -618,7 +618,7 @@ test_style()
 
     utest_start("style");
     UTEST_TEST("sp_style_new, sp_style_write_string") {
-        SPStyle *style = sp_style_new();
+        SPStyle *style = sp_style_new(NULL);
         g_assert(style);
         gchar *str0_all = sp_style_write_string(style, SP_STYLE_FLAG_ALWAYS);
         gchar *str0_set = sp_style_write_string(style, SP_STYLE_FLAG_IFSET);
