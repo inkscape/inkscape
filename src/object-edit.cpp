@@ -216,10 +216,11 @@ static NR::Point sp_pattern_scale_get(SPItem *item)
 static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
 {
     SPDesktop const *desktop = inkscape_active_desktop();
-    NR::Point s = sp_desktop_dt2root_xy_point(desktop, p);
+    NR::Matrix const i2d (sp_item_i2d_affine (item));
+    NR::Point s = p * i2d;    
     SnapManager const &m = desktop->namedview->snap_manager;
     s = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, s, item).getPoint();
-    return sp_desktop_root2dt_xy_point(desktop, s);
+    return s * i2d.inverse();
 }
 
 static NR::Point sp_rect_rx_get(SPItem *item)
@@ -233,15 +234,17 @@ static void sp_rect_rx_set(SPItem *item, NR::Point const &p, NR::Point const &or
 {
     SPRect *rect = SP_RECT(item);
     
-    NR::Point const s = snap_knot_position(rect, p);
+    //In general we cannot just snap this radius to an arbitrary point, as we have only a single
+    //degree of freedom. For snapping to an arbitrary point we need two DOF. If we're going to snap
+    //the radius then we should have a constrained snap. snap_knot_position() is unconstrained
 
     if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - s[NR::X], 0.0, temp);
+        rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - p[NR::X], 0.0, temp);
         rect->rx._set = rect->ry._set = true;
 
     } else {
-        rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - s[NR::X], 0.0, rect->width.computed / 2.0);
+        rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - p[NR::X], 0.0, rect->width.computed / 2.0);
         rect->rx._set = true;
     }
 
@@ -260,19 +263,21 @@ static void sp_rect_ry_set(SPItem *item, NR::Point const &p, NR::Point const &or
 {
     SPRect *rect = SP_RECT(item);
     
-    NR::Point const s = snap_knot_position(rect, p);
+    //In general we cannot just snap this radius to an arbitrary point, as we have only a single
+    //degree of freedom. For snapping to an arbitrary point we need two DOF. If we're going to snap
+    //the radius then we should have a constrained snap. snap_knot_position() is unconstrained
 
     if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(s[NR::Y] - rect->y.computed, 0.0, temp);
+        rect->rx.computed = rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed, 0.0, temp);
         rect->ry._set = rect->rx._set = true;
     } else {
         if (!rect->rx._set || rect->rx.computed == 0) {
-            rect->ry.computed = CLAMP(s[NR::Y] - rect->y.computed,
+            rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed,
                                       0.0,
                                       MIN(rect->height.computed / 2.0, rect->width.computed / 2.0));
         } else {
-            rect->ry.computed = CLAMP(s[NR::Y] - rect->y.computed,
+            rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed,
                                       0.0,
                                       rect->height.computed / 2.0);
         }
