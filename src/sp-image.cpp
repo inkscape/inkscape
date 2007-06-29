@@ -685,6 +685,8 @@ sp_image_set (SPObject *object, unsigned int key, const gchar *value)
 			((SPObjectClass *) (parent_class))->set (object, key, value);
 		break;
 	}
+	
+	sp_image_set_curve(image); //creates a curve at the image's boundary for snapping
 }
 
 static void
@@ -882,7 +884,6 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 				}
 			}
 	}
-	sp_image_set_curve((SPImage *) object); //creates a curve at the image's boundary for snapping
 	sp_image_update_canvas_image ((SPImage *) object);
 }
 
