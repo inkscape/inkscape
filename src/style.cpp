@@ -4047,24 +4047,42 @@ css2_escape_quote(gchar const *val) {
 
     Glib::ustring t;
     bool quote = false;
+    bool last_was_space = false;
 
     for (gchar const *i = val; *i; i++) {
+        bool is_space = ( *i == ' ' );
         if (g_ascii_isalnum(*i) || *i=='-' || *i=='_') {
+            // ASCII alphanumeric, - and _ don't require quotes
+            t.push_back(*i);
+        } else if ( is_space && !last_was_space ) {
+            // non-consecutive spaces don't require quotes
             t.push_back(*i);
         } else if (*i=='\'') {
+            // single quotes require escaping and quotes
             t.push_back('\\');
             t.push_back(*i);
             quote = true;
         } else {
+            // everything else requires quotes
             t.push_back(*i);
             quote = true;
         }
         if (i == val && !g_ascii_isalpha(*i)) {
+            // a non-ASCII/non-alpha initial character requires quotes
             quote = true;
         }
+        last_was_space = is_space;
     }
 
-    if (quote) { // we use the ' quotes so the result can go to the XML attribute
+    if (last_was_space) {
+        // a trailing space requires quotes
+        quote = true;
+    }
+
+    if (quote) {
+        // we use single quotes so the result can be stored in an XML
+        // attribute without incurring un-aesthetic additional quoting
+        // (our XML emitter always uses double quotes)
         t.insert(t.begin(), '\'');
         t.push_back('\'');
     }
