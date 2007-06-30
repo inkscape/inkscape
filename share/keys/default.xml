@@ -103,6 +103,12 @@ override) the bindings in the main default.xml.
 
   <bind action="RectPrefs" />
 
+  <bind key="F4" modifiers="Shift" action="Tool3DBox" display="true"/>
+  <bind key="x" action="Tool3DBox" />
+  <bind key="X" action="Tool3DBox" />
+
+  <bind action="3DBoxPrefs" />
+
   <bind key="F5" action="ToolArc" display="true"/>
   <bind key="e" action="ToolArc" />
   <bind key="E" action="ToolArc" />
