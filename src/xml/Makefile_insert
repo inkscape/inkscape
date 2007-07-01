@@ -46,6 +46,8 @@ xml_libspxml_a_SOURCES =	\
 	xml/node-event-vector.h \
 	xml/node-iterators.h	\
 	xml/sp-css-attr.h \
+	xml/subtree.cpp	\
+	xml/subtree.h	\
 	xml/text-node.h \
 	xml/invalid-operation-exception.h
 
