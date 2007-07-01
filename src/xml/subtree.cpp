@@ -32,25 +32,16 @@ void recursively(void (Node::*m)(NodeObserver &observer),
 
 }
 
-Subtree::Subtree(Node &root) : _root(&root) {
-    recursively(&Node::addObserver, *_root, *this);
+Subtree::Subtree(Node &root) : _root(root) {
+    recursively(&Node::addObserver, _root, *this);
 }
 
 Subtree::~Subtree() {
-    finish();
-}
-
-void Subtree::finish() {
-    if (_root) {
-        recursively(&Node::removeObserver, *_root, *this);
-        _root = NULL;
-    }
+    recursively(&Node::removeObserver, _root, *this);
 }
 
 void Subtree::synthesizeEvents(NodeObserver &observer) {
-    if (_root) {
-        recursively(&Node::synthesizeEvents, *_root, *this);
-    }
+    recursively(&Node::synthesizeEvents, _root, *this);
 }
 
 void Subtree::addObserver(NodeObserver &observer) {

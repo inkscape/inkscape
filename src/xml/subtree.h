@@ -17,21 +17,19 @@
 
 #include "xml/node-observer.h"
 #include "xml/composite-node-observer.h"
+#include "gc-finalized.h"
 
 namespace Inkscape {
 namespace XML {
 
 class Node;
 
-class Subtree : public Inkscape::GC::Anchored,
-                public Inkscape::GC::Managed<>,
+class Subtree : public GC::Managed<GC::SCANNED, GC::MANUAL>,
                 private NodeObserver
 {
 public:
     Subtree(Node &root);
     ~Subtree();
-
-    void finish();
 
     void synthesizeEvents(NodeObserver &observer);
     void addObserver(NodeObserver &observer);
@@ -53,7 +51,7 @@ private:
                                 Util::ptr_shared<char> old_value,
                                 Util::ptr_shared<char> new_value);
 
-    Node *_root;
+    Node &_root;
     CompositeNodeObserver _observers;
 };
 
