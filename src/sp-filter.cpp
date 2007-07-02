@@ -111,6 +111,8 @@ sp_filter_init(SPFilter *filter)
     filter->_renderer = NULL;
     
     filter->_image_name = map<gchar *, int, ltstr>();
+
+    new (&filter->modified_connection) sigc::connection();
 }
 
 /**
@@ -156,13 +158,13 @@ sp_filter_release(SPObject *object)
 
     //release href
     if (filter->href) {
-        if (filter->href->getObject()) {
-            sp_signal_disconnect_by_data(filter->href->getObject(), filter);
-        }
+        filter->modified_connection.disconnect();
         filter->href->detach();
         delete filter->href;
         filter->href = NULL;
     }
+
+    filter->modified_connection.~connection();
 
     if (((SPObjectClass *) filter_parent_class)->release)
         ((SPObjectClass *) filter_parent_class)->release(object);
@@ -352,13 +354,13 @@ static void
 filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter)
 {
     if (old_ref) {
-        sp_signal_disconnect_by_data(old_ref, filter);
+        filter->modified_connection.disconnect();
     }
     if ( SP_IS_FILTER(ref)
          && ref != filter )
     {
-        ref->connectModified(sigc::bind(sigc::ptr_fun(&filter_ref_modified), filter));
-        //g_signal_connect(G_OBJECT(ref), "modified", G_CALLBACK(filter_ref_modified), filter);
+        filter->modified_connection = 
+            ref->connectModified(sigc::bind(sigc::ptr_fun(&filter_ref_modified), filter));
     }
 
     filter_ref_modified(ref, 0, filter);

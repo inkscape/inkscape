@@ -56,6 +56,7 @@ struct SPFilter : public SPObject {
     NumberOptNumber filterRes;
     /** HREF attribute */
     SPFilterReference *href;
+    sigc::connection modified_connection;
 
     NR::Filter *_renderer;
 
