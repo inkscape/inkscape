@@ -164,11 +164,7 @@ Glib::ustring *
 ParamComboBox::string (void)
 {
     Glib::ustring * param_string = new Glib::ustring("");
-
-    *param_string += "\"";
     *param_string += _value;
-    *param_string += "\"";
-
     return param_string;
 }
 

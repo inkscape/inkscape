@@ -987,9 +987,7 @@ Glib::ustring *
 ParamEnum::string (void)
 {
     Glib::ustring * mystring = new Glib::ustring("");
-    *mystring += "\"";
     *mystring += this->get(NULL, NULL);
-    *mystring += "\"";
     return mystring;
 }
 
