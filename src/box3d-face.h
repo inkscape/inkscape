@@ -26,17 +26,23 @@ class SP3DBox;
 class Box3DFace {
 public:
     Box3DFace(SP3DBox *box3d);
+    Box3DFace(SP3DBox *box3d, NR::Point &A, NR::Point &B, NR::Point &C, NR::Point &D);
     //Box3DFace(SP3DBox *box3d, NR::Point const ul, NR::Point const lr,
     //          Box3D::Axis const dir1, Box3D::Axis const dir2,
     //          unsigned int shift_count = 0, NR::Maybe<NR::Point> pt_align = NR::Nothing(), bool align_along_PL = false);
     Box3DFace(Box3DFace const &box3dface);
+    ~Box3DFace();
+
     NR::Point operator[](unsigned int i);
     void draw(SP3DBox *box3d, SPCurve *c);
 
+    /***
     void set_shape(NR::Point const ul, NR::Point const lr,
                    Box3D::Axis const dir1, Box3D::Axis const dir2,
                    unsigned int shift_count = 0, NR::Maybe<NR::Point> pt_align = NR::Nothing(),
                    bool align_along_PL = false);
+    ***/
+    void set_corners (NR::Point &A, NR::Point &B, NR::Point &C, NR::Point &D);
     void set_face (NR::Point const A, NR::Point const C, Box3D::Axis const dir1, Box3D::Axis const dir2);
     
     void hook_path_to_3dbox();
@@ -45,7 +51,7 @@ public:
     gchar * svg_repr_string();
 
 private:
-    NR::Point corners[4];
+    NR::Point *corners[4];
 
     Box3D::Axis dir1;
     Box3D::Axis dir2;

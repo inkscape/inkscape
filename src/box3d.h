@@ -34,6 +34,7 @@
 
 
 struct SP3DBox : public SPGroup {
+    NR::Point corners[8];
     Box3DFace *faces[6];
 };
 
@@ -44,6 +45,11 @@ struct SP3DBoxClass {
 GType sp_3dbox_get_type (void);
 
 void sp_3dbox_position_set (SP3DBoxContext &bc);
-void sp_3dbox_compute_specific_corners (SP3DBoxContext *box3d_context, NR::Point &corner1, NR::Point &corner2, NR::Point &corner3, NR::Point &corner4);
+void sp_3dbox_recompute_corners (SP3DBox *box, NR::Point const pt1, NR::Point const pt2, NR::Point const pt3);
+void sp_3dbox_update_curves (SP3DBox *box);
+void sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt);
+void sp_3dbox_move_corner_in_constrained_Z_direction (SP3DBox *box, guint id, NR::Point pt);
+
+inline NR::Point sp_3dbox_get_corner (SP3DBox *box, guint id) { return box->corners[id]; }
 
 #endif

@@ -61,7 +61,7 @@ static void
 sp_3dbox_class_init(SP3DBoxClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
-    SPItemClass *item_class = (SPItemClass *) klass;
+    // SPItemClass *item_class = (SPItemClass *) klass;
 
     parent_class = (SPGroupClass *) g_type_class_ref(SP_TYPE_GROUP);
 
@@ -76,7 +76,6 @@ sp_3dbox_class_init(SP3DBoxClass *klass)
 static void
 sp_3dbox_init(SP3DBox *box3d)
 {
-    if (box3d == NULL) { g_warning ("box3d is NULL!\n"); }
     box3d->faces[4] = new Box3DFace (box3d);
     //box3d->faces[4]->hook_path_to_3dbox();
     for (int i = 0; i < 6; ++i) {
@@ -163,8 +162,6 @@ static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node
 
     box3d->faces[4]->set_path_repr();
     if (bc->extruded) {
-        NR::Point corner1, corner2, corner3, corner4;
-        sp_3dbox_compute_specific_corners (bc, corner1, corner2, corner3, corner4);
         for (int i = 0; i < 6; ++i) {
             if (i == 4) continue;
             box3d->faces[i]->set_path_repr();
@@ -211,61 +208,87 @@ sp_3dbox_set_shape(SP3DBox *box3d)
         return;
     SP3DBoxContext *bc = SP_3DBOX_CONTEXT(inkscape_active_event_context());
 
-    // FIXME: Why must the coordinates be flipped vertically???
-    //SPDocument *doc = SP_OBJECT_DOCUMENT(box3d);
-    //gdouble height = sp_document_height(doc);
-
-    /* Curve-adaption variant: */
-    NR::Point corner1, corner2, corner3, corner4;
-    corner1 = bc->drag_origin;
-
+    /* Only update the curves during dragging; setting the svg representations 
+       is expensive and only done once at the end */
+    sp_3dbox_recompute_corners (box3d, bc->drag_origin, bc->drag_ptB, bc->drag_ptC);
     if (bc->extruded) {
-        sp_3dbox_compute_specific_corners (bc, corner1, corner2, corner3, corner4);
-        for (int i=0; i < 6; ++i) {
-            if (!box3d->faces[i]) {
-                g_warning ("Face no. %d does not exist!\n", i);
-                return;
-            }
-        }
-        box3d->faces[0]->set_face (bc->drag_origin, corner4, Box3D::Z, Box3D::Y);
-        box3d->faces[0]->set_curve();
-        box3d->faces[5]->set_face (corner3, bc->drag_ptC, Box3D::Y, Box3D::X);
-        box3d->faces[5]->set_curve();
-        box3d->faces[3]->set_face (bc->drag_origin, corner2, Box3D::X, Box3D::Z);
-        box3d->faces[3]->set_curve();
-        box3d->faces[2]->set_face (bc->drag_ptB, corner4, Box3D::X, Box3D::Z);
-        box3d->faces[2]->set_curve();
-
-        box3d->faces[1]->set_face (corner1, bc->drag_ptC, Box3D::Z, Box3D::Y);
-        box3d->faces[1]->set_curve();
+        box3d->faces[0]->set_corners (box3d->corners[0], box3d->corners[4], box3d->corners[6], box3d->corners[2]);
+        box3d->faces[1]->set_corners (box3d->corners[1], box3d->corners[5], box3d->corners[7], box3d->corners[3]);
+        box3d->faces[2]->set_corners (box3d->corners[0], box3d->corners[1], box3d->corners[5], box3d->corners[4]);
+        box3d->faces[3]->set_corners (box3d->corners[2], box3d->corners[3], box3d->corners[7], box3d->corners[6]);
+        box3d->faces[5]->set_corners (box3d->corners[4], box3d->corners[5], box3d->corners[7], box3d->corners[6]);
     }
-    box3d->faces[4]->set_face(bc->drag_origin, bc->drag_ptB, Box3D::Y, Box3D::X);
-    box3d->faces[4]->set_curve();
+    box3d->faces[4]->set_corners (box3d->corners[0], box3d->corners[1], box3d->corners[3], box3d->corners[2]);
+
+    sp_3dbox_update_curves (box3d);
 }
 
+
+void sp_3dbox_recompute_corners (SP3DBox *box, NR::Point const A, NR::Point const B, NR::Point const C)
+{
+    sp_3dbox_move_corner_in_XY_plane (box, 2, A);
+    sp_3dbox_move_corner_in_XY_plane (box, 1, B);
+    sp_3dbox_move_corner_in_constrained_Z_direction (box, 5, C);
+}
 
 void
-sp_3dbox_compute_specific_corners (SP3DBoxContext *box3d_context, NR::Point &corner1, NR::Point &corner2, NR::Point &corner3, NR::Point &corner4)
-{
-        // TODO: Check for numerical stability and handle "wrong" cases more gracefully.
-        //       (This now mostly applies to the intersection code in the PerspectiveLine class)
-        Box3D::PerspectiveLine pl1 (box3d_context->drag_origin, Box3D::X);
-        Box3D::PerspectiveLine pl2 (box3d_context->drag_ptB, Box3D::Y);
-        corner1 = pl1.meet(pl2);
-
-        Box3D::PerspectiveLine pl3 (corner1, Box3D::Z);
-        Box3D::PerspectiveLine pl4 (box3d_context->drag_ptC, Box3D::Y);
-        corner2 = pl3.meet(pl4);
-
-        Box3D::PerspectiveLine pl5 (corner2, Box3D::X);
-        Box3D::PerspectiveLine pl6 (box3d_context->drag_origin, Box3D::Z);
-        corner3 = pl5.meet(pl6);
-
-        Box3D::PerspectiveLine pl7 (box3d_context->drag_ptC, Box3D::X);
-        Box3D::PerspectiveLine pl8 (corner3, Box3D::Y);
-        corner4 = pl7.meet(pl8);
+sp_3dbox_update_curves (SP3DBox *box) {
+    for (int i = 0; i < 6; ++i) {
+        if (box->faces[i]) box->faces[i]->set_curve();
+    }
 }
 
+void
+sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt)
+{
+    NR::Point A (box->corners[id ^ Box3D::XY]);
+
+    /* set the 'front' corners */
+    box->corners[id] = pt;
+
+    Box3D::PerspectiveLine pl_one (A, Box3D::Y);
+    Box3D::PerspectiveLine pl_two (pt, Box3D::X);
+    box->corners[id ^ Box3D::X] = pl_one.meet(pl_two);
+
+    pl_one = Box3D::PerspectiveLine (A, Box3D::X);
+    pl_two = Box3D::PerspectiveLine (pt, Box3D::Y);
+    box->corners[id ^ Box3D::Y] = pl_one.meet(pl_two);
+
+    /* set the 'rear' corners */
+    NR::Point B (box->corners[id ^ Box3D::XYZ]);
+
+    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::X], Box3D::Z);
+    pl_two = Box3D::PerspectiveLine (B, Box3D::Y);
+    box->corners[id ^ Box3D::XZ] = pl_one.meet(pl_two);
+
+    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::XZ], Box3D::X);
+    pl_two = Box3D::PerspectiveLine (pt, Box3D::Z);
+    box->corners[id ^ Box3D::Z] = pl_one.meet(pl_two);
+
+    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::Z], Box3D::Y);
+    pl_two = Box3D::PerspectiveLine (B, Box3D::X);
+    box->corners[id ^ Box3D::YZ] = pl_one.meet(pl_two);
+    
+}
+
+void
+sp_3dbox_move_corner_in_constrained_Z_direction (SP3DBox *box, guint id, NR::Point pt)
+{
+    /* set the four corners of the face containing corners[id] */
+    box->corners[id] = Box3D::PerspectiveLine (box->corners[id], Box3D::Z).closest_to(pt);
+
+    Box3D::PerspectiveLine pl_one (box->corners[id], Box3D::X);
+    Box3D::PerspectiveLine pl_two (box->corners[id ^ Box3D::XZ], Box3D::Z);
+    box->corners[id ^ Box3D::X] = pl_one.meet(pl_two);
+
+    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::X], Box3D::Y);
+    pl_two = Box3D::PerspectiveLine (box->corners[id ^ Box3D::XYZ], Box3D::Z);
+    box->corners[id ^ Box3D::XY] = pl_one.meet(pl_two);
+
+    pl_one = Box3D::PerspectiveLine (box->corners[id], Box3D::Y);
+    pl_two = Box3D::PerspectiveLine (box->corners[id ^ Box3D::YZ], Box3D::Z);
+    box->corners[id ^ Box3D::Y] = pl_one.meet(pl_two);
+}
 
 
 /*

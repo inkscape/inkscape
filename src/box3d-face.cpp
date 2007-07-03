@@ -17,10 +17,34 @@
 Box3DFace::Box3DFace(SP3DBox *box3d) : dir1 (Box3D::NONE), dir2 (Box3D::NONE), path (NULL), parent_box3d (box3d)
 {
     for (int i = 0; i < 4; ++i) {
-        this->corners[i] = NR::Point(0, 0);
+        this->corners[i] = new NR::Point(0, 0);
     }
 } 
 
+Box3DFace::Box3DFace(SP3DBox *box3d, NR::Point &A, NR::Point &B, NR::Point &C, NR::Point &D)
+{
+    set_corners (A, B, C, D);
+}
+
+Box3DFace::~Box3DFace()
+{
+    for (int i = 0; i < 4; ++i) {
+        if (this->corners[i]) {
+            delete this->corners[i];
+            this->corners[i] = NULL;
+        }
+    }
+} 
+
+void Box3DFace::set_corners(NR::Point &A, NR::Point &B, NR::Point &C, NR::Point &D)
+{
+    corners[0] = &A;
+    corners[1] = &B;
+    corners[2] = &C;
+    corners[3] = &D;
+}
+
+/***
 void Box3DFace::set_shape(NR::Point const ul, NR::Point const lr,
                      Box3D::Axis const dir1, Box3D::Axis const dir2,
                      unsigned int shift_count, NR::Maybe<NR::Point> pt_align, bool align_along_PL)
@@ -68,6 +92,7 @@ void Box3DFace::set_shape(NR::Point const ul, NR::Point const lr,
     	corners[0] = tmp_pt;
     }
 }
+***/
 
 Box3DFace::Box3DFace(Box3DFace const &box3dface)
 {
@@ -90,8 +115,8 @@ Box3DFace::Box3DFace(Box3DFace const &box3dface)
 void
 Box3DFace::set_face (NR::Point const A, NR::Point const C, Box3D::Axis const axis1, Box3D::Axis const axis2)
 {
-    corners[0] = A;
-    corners[2] = C;
+    *corners[0] = A;
+    *corners[2] = C;
     if (!SP_IS_3DBOX_CONTEXT(inkscape_active_event_context()))
         return;
     SP3DBoxContext *bc = SP_3DBOX_CONTEXT(inkscape_active_event_context());
@@ -100,8 +125,8 @@ Box3DFace::set_face (NR::Point const A, NR::Point const C, Box3D::Axis const axi
     Box3D::PerspectiveLine line2 (C, axis2);
     NR::Maybe<NR::Point> B = line1.intersect(line2);
 
-    Box3D::PerspectiveLine line3 (corners[0], axis2);
-    Box3D::PerspectiveLine line4 (corners[2], axis1);
+    Box3D::PerspectiveLine line3 (*corners[0], axis2);
+    Box3D::PerspectiveLine line4 (*corners[2], axis1);
     NR::Maybe<NR::Point> D = line3.intersect(line4);
 
     // FIXME: How to handle the case if one of the intersections doesn't exist?
@@ -109,8 +134,8 @@ Box3DFace::set_face (NR::Point const A, NR::Point const C, Box3D::Axis const axi
     if (!D) D = NR::Point(0.0, 0.0);    
     if (!B) B = NR::Point(0.0, 0.0);
 
-    corners[1] = *B;
-    corners[3] = *D;
+    *corners[1] = *B;
+    *corners[3] = *D;
 
     this->dir1 = axis1;
     this->dir2 = axis2;
@@ -119,7 +144,7 @@ Box3DFace::set_face (NR::Point const A, NR::Point const C, Box3D::Axis const axi
 
 NR::Point Box3DFace::operator[](unsigned int i)
 {
-    return corners[i % 4];
+    return *corners[i % 4];
 }
 
 /**
@@ -156,10 +181,10 @@ void Box3DFace::set_curve()
         return;
     }
     SPCurve *curve = sp_curve_new();
-    sp_curve_moveto(curve, corners[0][NR::X], height - corners[0][NR::Y]);
-    sp_curve_lineto(curve, corners[1][NR::X], height - corners[1][NR::Y]);
-    sp_curve_lineto(curve, corners[2][NR::X], height - corners[2][NR::Y]);
-    sp_curve_lineto(curve, corners[3][NR::X], height - corners[3][NR::Y]);
+    sp_curve_moveto(curve, (*corners[0])[NR::X], height - (*corners[0])[NR::Y]);
+    sp_curve_lineto(curve, (*corners[1])[NR::X], height - (*corners[1])[NR::Y]);
+    sp_curve_lineto(curve, (*corners[2])[NR::X], height - (*corners[2])[NR::Y]);
+    sp_curve_lineto(curve, (*corners[3])[NR::X], height - (*corners[3])[NR::Y]);
     sp_curve_closepath(curve);
     sp_shape_set_curve(SP_SHAPE(this->path), curve, true);
     sp_curve_unref(curve);
@@ -172,10 +197,10 @@ gchar * Box3DFace::svg_repr_string()
 
     GString *pstring = g_string_new("");
     g_string_sprintf (pstring, "M %f,%f L %f,%f L %f,%f L %f,%f z",
-                               corners[0][NR::X], height - corners[0][NR::Y],
-                               corners[1][NR::X], height - corners[1][NR::Y],
-                               corners[2][NR::X], height - corners[2][NR::Y],
-                               corners[3][NR::X], height - corners[3][NR::Y]);
+                               (*corners[0])[NR::X], height - (*corners[0])[NR::Y],
+                               (*corners[1])[NR::X], height - (*corners[1])[NR::Y],
+                               (*corners[2])[NR::X], height - (*corners[2])[NR::Y],
+                               (*corners[3])[NR::X], height - (*corners[3])[NR::Y]);
     return pstring->str;
 }
 
