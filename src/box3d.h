@@ -34,7 +34,7 @@
 
 
 struct SP3DBox : public SPGroup {
-    Box3DFace faces[6];
+    Box3DFace *faces[6];
 };
 
 struct SP3DBoxClass {

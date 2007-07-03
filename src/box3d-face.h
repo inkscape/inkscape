@@ -37,6 +37,7 @@ public:
                    Box3D::Axis const dir1, Box3D::Axis const dir2,
                    unsigned int shift_count = 0, NR::Maybe<NR::Point> pt_align = NR::Nothing(),
                    bool align_along_PL = false);
+    void set_face (NR::Point const A, NR::Point const C, Box3D::Axis const dir1, Box3D::Axis const dir2);
     
     void hook_path_to_3dbox();
     void set_path_repr();

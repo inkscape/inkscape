@@ -357,8 +357,18 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
 
             rc->ctrl_dragged  = event->motion.state & GDK_CONTROL_MASK;
 
-            if (event->motion.state & GDK_SHIFT_MASK)
-                rc->extruded = true; // set rc->extruded once shift is pressed
+            if (event->motion.state & GDK_SHIFT_MASK && !rc->extruded) {
+                /* once shift is pressed, set rc->extruded and create the remaining faces */
+                rc->extruded = true;
+                
+                /* The separate faces */
+                SP3DBox *box3d = SP_3DBOX(rc->item);
+                for (int i = 0; i < 6; ++i) {
+                    if (i == 4 || box3d->faces[i]) continue;
+                    box3d->faces[i] = new Box3DFace (box3d);
+                    box3d->faces[i]->hook_path_to_3dbox();
+                }
+            }
 
             if (!rc->extruded) {
             	rc->drag_ptB = motion_dt;
@@ -522,14 +532,8 @@ static void sp_3dbox_drag(SP3DBoxContext &rc, guint state)
         Inkscape::GC::release(repr);
         rc.item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
 
-        /* The separate faces (created from rear to front) */
-        SP3DBox *box3d = SP_3DBOX(rc.item);
-        box3d->faces[2].hook_path_to_3dbox();
-        box3d->faces[3].hook_path_to_3dbox();
-        box3d->faces[4].hook_path_to_3dbox();
-        box3d->faces[5].hook_path_to_3dbox();
-        box3d->faces[0].hook_path_to_3dbox();
-        box3d->faces[1].hook_path_to_3dbox();
+        /* Hook path to the only currenctly existing face */
+        SP_3DBOX(rc.item)->faces[4]->hook_path_to_3dbox();
 
         rc.item->updateRepr();
 

@@ -78,6 +78,45 @@ Box3DFace::Box3DFace(Box3DFace const &box3dface)
     this->dir2 = box3dface.dir2;
 }
 
+/**
+ * Construct a 3D box face with opposite corners A and C whose sides are directed
+ * along axis1 and axis2. The corners have the following order:
+ *
+ * A = corners[0]  --> along axis1 --> B = corners[1] --> along axis2 --> C = corners[2]
+ *                 --> along axis1 --> D = corners[3] --> along axis2 --> D = corners[0].
+ * 
+ * Note that several other functions rely on this precise order.
+ */
+void
+Box3DFace::set_face (NR::Point const A, NR::Point const C, Box3D::Axis const axis1, Box3D::Axis const axis2)
+{
+    corners[0] = A;
+    corners[2] = C;
+    if (!SP_IS_3DBOX_CONTEXT(inkscape_active_event_context()))
+        return;
+    SP3DBoxContext *bc = SP_3DBOX_CONTEXT(inkscape_active_event_context());
+    
+    Box3D::PerspectiveLine line1 (A, axis1);
+    Box3D::PerspectiveLine line2 (C, axis2);
+    NR::Maybe<NR::Point> B = line1.intersect(line2);
+
+    Box3D::PerspectiveLine line3 (corners[0], axis2);
+    Box3D::PerspectiveLine line4 (corners[2], axis1);
+    NR::Maybe<NR::Point> D = line3.intersect(line4);
+
+    // FIXME: How to handle the case if one of the intersections doesn't exist?
+    //        Maybe set them equal to the corresponding VPs? 
+    if (!D) D = NR::Point(0.0, 0.0);    
+    if (!B) B = NR::Point(0.0, 0.0);
+
+    corners[1] = *B;
+    corners[3] = *D;
+
+    this->dir1 = axis1;
+    this->dir2 = axis2;
+}
+
+
 NR::Point Box3DFace::operator[](unsigned int i)
 {
     return corners[i % 4];
@@ -89,6 +128,8 @@ NR::Point Box3DFace::operator[](unsigned int i)
  */
 void Box3DFace::hook_path_to_3dbox()
 {
+    if (this->path) return; // This test can probably be removed.
+
     SPDesktop *desktop = inkscape_active_desktop();
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(inkscape_active_event_context()));
     Inkscape::XML::Node *repr_face = xml_doc->createElement("svg:path");
@@ -110,6 +151,10 @@ void Box3DFace::set_curve()
     SPDocument *doc = SP_OBJECT_DOCUMENT(this->parent_box3d);
     gdouble height = sp_document_height(doc);
 
+    if (this->path == NULL) {
+        g_warning("this->path is NULL! \n");
+        return;
+    }
     SPCurve *curve = sp_curve_new();
     sp_curve_moveto(curve, corners[0][NR::X], height - corners[0][NR::Y]);
     sp_curve_lineto(curve, corners[1][NR::X], height - corners[1][NR::Y]);
