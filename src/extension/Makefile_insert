@@ -15,6 +15,8 @@ extension_libextension_a_SOURCES =	\
 	extension/dependency.h \
 	extension/error-file.cpp \
 	extension/error-file.h \
+	extension/execution-env.cpp \
+	extension/execution-env.h \
 	extension/init.cpp	\
 	extension/init.h	\
 	extension/parameter.h \
