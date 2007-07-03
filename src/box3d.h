@@ -17,7 +17,6 @@
 
 #include "inkscape.h"
 #include "perspective-line.h"
-//#include "display/curve.h"
 
 #include "sp-item-group.h"
 #include "sp-path.h"
@@ -35,12 +34,7 @@
 
 
 struct SP3DBox : public SPGroup {
-	Box3DFace face1;
-	Box3DFace face2;
-	Box3DFace face3;
-	Box3DFace face4;
-	Box3DFace face5;
-	Box3DFace face6;
+    Box3DFace faces[6];
 };
 
 struct SP3DBoxClass {

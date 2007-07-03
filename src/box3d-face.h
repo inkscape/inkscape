@@ -44,10 +44,7 @@ public:
     gchar * svg_repr_string();
 
 private:
-    NR::Point corner1;
-    NR::Point corner2;
-    NR::Point corner3;
-    NR::Point corner4;
+    NR::Point corners[4];
 
     Box3D::PerspDir dir1;
     Box3D::PerspDir dir2;

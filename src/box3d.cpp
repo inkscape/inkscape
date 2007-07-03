@@ -75,12 +75,9 @@ sp_3dbox_class_init(SP3DBoxClass *klass)
 static void
 sp_3dbox_init(SP3DBox *box3d)
 {
-    box3d->face1 = Box3DFace (box3d);
-    box3d->face2 = Box3DFace (box3d);
-    box3d->face3 = Box3DFace (box3d);
-    box3d->face4 = Box3DFace (box3d);
-    box3d->face5 = Box3DFace (box3d);
-    box3d->face6 = Box3DFace (box3d);
+    for (int i = 0; i < 6; ++i) {
+        box3d->faces[i] = Box3DFace (box3d);
+    }
 }
 
 static void
@@ -143,15 +140,13 @@ static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node
     }
 
 
-    box3d->face1.set_path_repr();
+    box3d->faces[0].set_path_repr();
     if (bc->extruded) {
         NR::Point corner1, corner2, corner3, corner4;
         sp_3dbox_compute_specific_corners (bc, corner1, corner2, corner3, corner4);
-        box3d->face2.set_path_repr();
-        box3d->face3.set_path_repr();
-        box3d->face4.set_path_repr();
-        box3d->face5.set_path_repr();
-        box3d->face6.set_path_repr();
+        for (int i = 0; i < 6; ++i) {
+            box3d->faces[i].set_path_repr();
+        }
     }
     if (((SPObjectClass *) (parent_class))->write) {
         ((SPObjectClass *) (parent_class))->write(object, repr, flags);
@@ -204,20 +199,20 @@ sp_3dbox_set_shape(SP3DBox *box3d)
 
     if (bc->extruded) {
         sp_3dbox_compute_specific_corners (bc, corner1, corner2, corner3, corner4);
-        box3d->face3.set_shape(bc->drag_origin, corner4, Box3D::Y, Box3D::Z);
-        box3d->face3.set_curve();
-        box3d->face4.set_shape(corner2, corner4, Box3D::X, Box3D::Z);
-        box3d->face4.set_curve();
-        box3d->face5.set_shape(bc->drag_origin, corner2, Box3D::X, Box3D::Y);
-        box3d->face5.set_curve();
-        box3d->face6.set_shape(bc->drag_ptB, corner4, Box3D::X, Box3D::Y);
-        box3d->face6.set_curve();
+        box3d->faces[2].set_shape(bc->drag_origin, corner4, Box3D::Y, Box3D::Z);
+        box3d->faces[2].set_curve();
+        box3d->faces[3].set_shape(corner2, corner4, Box3D::X, Box3D::Z);
+        box3d->faces[3].set_curve();
+        box3d->faces[4].set_shape(bc->drag_origin, corner2, Box3D::X, Box3D::Y);
+        box3d->faces[4].set_curve();
+        box3d->faces[5].set_shape(bc->drag_ptB, corner4, Box3D::X, Box3D::Y);
+        box3d->faces[5].set_curve();
 
-        box3d->face2.set_shape(corner1, bc->drag_ptC, Box3D::Y, Box3D::Z);
-        box3d->face2.set_curve();
+        box3d->faces[1].set_shape(corner1, bc->drag_ptC, Box3D::Y, Box3D::Z);
+        box3d->faces[1].set_curve();
     }
-    box3d->face1.set_shape(bc->drag_origin, bc->drag_ptB, Box3D::X, Box3D::Z);
-    box3d->face1.set_curve();
+    box3d->faces[0].set_shape(bc->drag_origin, bc->drag_ptB, Box3D::X, Box3D::Z);
+    box3d->faces[0].set_curve();
 }
 
 

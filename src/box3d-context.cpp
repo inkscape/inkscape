@@ -524,12 +524,12 @@ static void sp_3dbox_drag(SP3DBoxContext &rc, guint state)
 
         /* The separate faces (created from rear to front) */
         SP3DBox *box3d = SP_3DBOX(rc.item);
-        box3d->face3.hook_path_to_3dbox();
-        box3d->face4.hook_path_to_3dbox();
-        box3d->face5.hook_path_to_3dbox();
-        box3d->face6.hook_path_to_3dbox();
-        box3d->face1.hook_path_to_3dbox();
-        box3d->face2.hook_path_to_3dbox();
+        box3d->faces[2].hook_path_to_3dbox();
+        box3d->faces[3].hook_path_to_3dbox();
+        box3d->faces[4].hook_path_to_3dbox();
+        box3d->faces[5].hook_path_to_3dbox();
+        box3d->faces[0].hook_path_to_3dbox();
+        box3d->faces[1].hook_path_to_3dbox();
 
         rc.item->updateRepr();
 

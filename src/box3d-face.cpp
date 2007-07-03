@@ -14,18 +14,20 @@
 #include "box3d-face.h"
 #include <iostream>
 
-Box3DFace::Box3DFace(SP3DBox *box3d) : corner1 (0, 0), corner2 (0, 0), corner3 (0, 0), corner4 (0, 0),
-                                       dir1 (Box3D::NONE), dir2 (Box3D::NONE), path (NULL), parent_box3d (box3d)
+Box3DFace::Box3DFace(SP3DBox *box3d) : dir1 (Box3D::NONE), dir2 (Box3D::NONE), path (NULL), parent_box3d (box3d)
 {
+    for (int i = 0; i < 4; ++i) {
+        this->corners[i] = NR::Point(0, 0);
+    }
 } 
 
 void Box3DFace::set_shape(NR::Point const ul, NR::Point const lr,
                      Box3D::PerspDir const dir1, Box3D::PerspDir const dir2,
                      unsigned int shift_count, NR::Maybe<NR::Point> pt_align, bool align_along_PL)
 {
-    corner1 = ul;
+    corners[0] = ul;
     if (!pt_align) {
-        corner3 = lr;
+        corners[2] = lr;
     } else {
         if (align_along_PL) {
         	Box3D::PerspDir dir3;
@@ -37,18 +39,18 @@ void Box3DFace::set_shape(NR::Point const ul, NR::Point const lr,
             if (dir1 == Box3D::Z && dir2 == Box3D::Y) dir3 = Box3D::X;
             Box3D::Line line1(*SP3DBoxContext::current_perspective->get_vanishing_point(dir1), lr);
             Box3D::Line line2(*pt_align, *SP3DBoxContext::current_perspective->get_vanishing_point(dir3));
-            corner3 = *line1.intersect(line2);
+            corners[2] = *line1.intersect(line2);
         } else {
-            corner3 = Box3D::Line(*pt_align, *SP3DBoxContext::current_perspective->get_vanishing_point(dir1)).closest_to(lr);
+            corners[2] = Box3D::Line(*pt_align, *SP3DBoxContext::current_perspective->get_vanishing_point(dir1)).closest_to(lr);
         }
     }
 
-    Box3D::PerspectiveLine first_line  (corner1, dir1);
-    Box3D::PerspectiveLine second_line (corner3, dir2);
+    Box3D::PerspectiveLine first_line  (corners[0], dir1);
+    Box3D::PerspectiveLine second_line (corners[2], dir2);
     NR::Maybe<NR::Point> ur = first_line.intersect(second_line);
 
-    Box3D::PerspectiveLine third_line  (corner1, dir2);
-    Box3D::PerspectiveLine fourth_line (corner3, dir1);
+    Box3D::PerspectiveLine third_line  (corners[0], dir2);
+    Box3D::PerspectiveLine fourth_line (corners[2], dir1);
     NR::Maybe<NR::Point> ll = third_line.intersect(fourth_line);
 
     // FIXME: How to handle the case if one of the intersections doesn't exist?
@@ -56,46 +58,35 @@ void Box3DFace::set_shape(NR::Point const ul, NR::Point const lr,
     if (!ur) ur = NR::Point(0.0, 0.0);    
     if (!ll) ll = NR::Point(0.0, 0.0);
 
-    corner2 = *ll;
-    corner4 = *ur;
+    corners[1] = *ll;
+    corners[3] = *ur;
 
     this->dir1 = dir1;
     this->dir2 = dir2;
 
-    // FIXME: More effective with array of corners
+    // FIXME: Can be made more concise
     NR::Point tmp_pt;
     for (unsigned int i=0; i < shift_count; i++) {
-    	tmp_pt = corner4;
-    	corner2 = corner1;
-    	corner3 = corner2;
-    	corner4 = corner3;
-    	corner1 = tmp_pt;
+    	tmp_pt = corners[3];
+    	corners[1] = corners[0];
+    	corners[2] = corners[1];
+    	corners[3] = corners[2];
+    	corners[0] = tmp_pt;
     }
 }
 
 Box3DFace::Box3DFace(Box3DFace const &box3dface)
 {
-	this->corner1 = box3dface.corner1;
-	this->corner2 = box3dface.corner2;
-	this->corner3 = box3dface.corner3;
-	this->corner4 = box3dface.corner4;
-	this->dir1 = box3dface.dir1;
-	this->dir2 = box3dface.dir2;
+    for (int i = 0; i < 4; ++i) {
+        this->corners[i] = box3dface.corners[i];
+    }
+    this->dir1 = box3dface.dir1;
+    this->dir2 = box3dface.dir2;
 }
 
 NR::Point Box3DFace::operator[](unsigned int i)
 {
-	unsigned int index = i % 4;
-    switch (index) {
-    	case 0: return corner1; break;
-    	case 1: return corner2; break;
-    	case 2: return corner3; break;
-    	case 3: return corner4; break;
-    }
-    // The following two lines are just to prevent a compiler warning ("control reaches
-    // end of non-void function); they can be removed if desired
-    g_message ("Error: This code line hould not be reached\n");
-    return NR::Point (0, 0);
+    return corners[i % 4];
 }
 
 /**
@@ -126,10 +117,10 @@ void Box3DFace::set_curve()
     gdouble height = sp_document_height(doc);
 
     SPCurve *curve = sp_curve_new();
-    sp_curve_moveto(curve, corner1[NR::X], height - corner1[NR::Y]);
-    sp_curve_lineto(curve, corner2[NR::X], height - corner2[NR::Y]);
-    sp_curve_lineto(curve, corner3[NR::X], height - corner3[NR::Y]);
-    sp_curve_lineto(curve, corner4[NR::X], height - corner4[NR::Y]);
+    sp_curve_moveto(curve, corners[0][NR::X], height - corners[0][NR::Y]);
+    sp_curve_lineto(curve, corners[1][NR::X], height - corners[1][NR::Y]);
+    sp_curve_lineto(curve, corners[2][NR::X], height - corners[2][NR::Y]);
+    sp_curve_lineto(curve, corners[3][NR::X], height - corners[3][NR::Y]);
     sp_curve_closepath(curve);
     sp_shape_set_curve(SP_SHAPE(this->path), curve, true);
     sp_curve_unref(curve);
@@ -142,10 +133,10 @@ gchar * Box3DFace::svg_repr_string()
 
     GString *pstring = g_string_new("");
     g_string_sprintf (pstring, "M %f,%f L %f,%f L %f,%f L %f,%f z",
-                               corner1[NR::X], height - corner1[NR::Y],
-                               corner2[NR::X], height - corner2[NR::Y],
-                               corner3[NR::X], height - corner3[NR::Y],
-                               corner4[NR::X], height - corner4[NR::Y]);
+                               corners[0][NR::X], height - corners[0][NR::Y],
+                               corners[1][NR::X], height - corners[1][NR::Y],
+                               corners[2][NR::X], height - corners[2][NR::Y],
+                               corners[3][NR::X], height - corners[3][NR::Y]);
     return pstring->str;
 }
 
