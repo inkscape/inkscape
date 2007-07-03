@@ -18,6 +18,7 @@
 
 #include "sp-item.h"
 #include "sp-rect.h"
+#include "box3d.h"
 #include "sp-ellipse.h"
 #include "sp-star.h"
 #include "sp-spiral.h"
@@ -48,6 +49,7 @@
 #define sp_round(v,m) (((v) < 0.0) ? ((ceil((v) / (m) - 0.5)) * (m)) : ((floor((v) / (m) + 0.5)) * (m)))
 
 static SPKnotHolder *sp_rect_knot_holder(SPItem *item, SPDesktop *desktop);
+static SPKnotHolder *sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_arc_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_star_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_spiral_knot_holder(SPItem *item, SPDesktop *desktop);
@@ -61,6 +63,8 @@ sp_item_knot_holder(SPItem *item, SPDesktop *desktop)
 {
     if (SP_IS_RECT(item)) {
         return sp_rect_knot_holder(item, desktop);
+    } else if (SP_IS_3DBOX(item)) {
+        return sp_3dbox_knot_holder(item, desktop);
     } else if (SP_IS_ARC(item)) {
         return sp_arc_knot_holder(item, desktop);
     } else if (SP_IS_STAR(item)) {
@@ -519,6 +523,83 @@ static SPKnotHolder *sp_rect_knot_holder(SPItem *item, SPDesktop *desktop)
       );
 
     sp_pat_knot_holder(item, knot_holder);
+    return knot_holder;
+}
+
+/* 3D Box */
+
+static void sp_3dbox_knot_set(SPItem *item, guint knot_id, Box3D::Axis direction,
+                               NR::Point const &new_pos, NR::Point const &origin, guint state)
+{
+    g_assert(item != NULL);
+    SP3DBox *box = SP_3DBOX(item);
+
+    // FIXME: Why must the coordinates be flipped vertically???
+    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
+    gdouble height = sp_document_height(doc);
+
+    if (direction == Box3D::Z) {
+        sp_3dbox_move_corner_in_constrained_Z_direction (box, knot_id,
+                                                         NR::Point (new_pos[NR::X], height - new_pos[NR::Y]));
+    } else {
+        sp_3dbox_move_corner_in_XY_plane (box, knot_id, NR::Point (new_pos[NR::X], height - new_pos[NR::Y]));
+    }
+    sp_3dbox_update_curves (box);
+}
+
+static NR::Point sp_3dbox_knot_get(SPItem *item, guint knot_id)
+{
+    g_assert(item != NULL);
+    SP3DBox *box = SP_3DBOX(item);
+
+    // FIXME: Why must the coordinates be flipped vertically???
+    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
+    gdouble height = sp_document_height(doc);
+
+    return NR::Point(sp_3dbox_get_corner(box, knot_id)[NR::X], height - sp_3dbox_get_corner(box, knot_id)[NR::Y]);
+}
+
+static void sp_3dbox_knot1_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+{
+    sp_3dbox_knot_set (item, 1, Box3D::XY, new_pos, origin, state);
+}
+
+static NR::Point sp_3dbox_knot1_get(SPItem *item)
+{
+    return sp_3dbox_knot_get(item, 1);
+}
+
+static void sp_3dbox_knot2_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+{
+    sp_3dbox_knot_set (item, 2, Box3D::XY, new_pos, origin, state);
+}
+
+static NR::Point sp_3dbox_knot2_get(SPItem *item)
+{
+    return sp_3dbox_knot_get(item, 2);
+}
+
+static void sp_3dbox_knot5_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+{
+    sp_3dbox_knot_set (item, 5, Box3D::Z, new_pos, origin, state);
+}
+
+static NR::Point sp_3dbox_knot5_get(SPItem *item)
+{
+    return sp_3dbox_knot_get(item, 5);
+}
+
+static SPKnotHolder *
+sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop)
+{
+    g_assert(item != NULL);
+    SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
+
+    sp_knot_holder_add(knot_holder, sp_3dbox_knot1_set, sp_3dbox_knot1_get, NULL,_("Resize box in X/Y direction"));
+    sp_knot_holder_add(knot_holder, sp_3dbox_knot2_set, sp_3dbox_knot2_get, NULL,_("Resize box in X/Y direction"));
+    sp_knot_holder_add(knot_holder, sp_3dbox_knot5_set, sp_3dbox_knot5_get, NULL,_("Resize box in Z direction"));
+    sp_pat_knot_holder(item, knot_holder);
+
     return knot_holder;
 }
 
