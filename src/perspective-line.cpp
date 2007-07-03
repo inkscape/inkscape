@@ -15,7 +15,7 @@
 
 namespace Box3D {
 
-PerspectiveLine::PerspectiveLine (NR::Point const &pt, PerspDir const axis, Perspective3D *perspective) :
+PerspectiveLine::PerspectiveLine (NR::Point const &pt, Box3D::Axis const axis, Perspective3D *perspective) :
         Line (pt, *(perspective->get_vanishing_point(axis)), true)
 {
     g_assert (perspective != NULL);

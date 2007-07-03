@@ -22,7 +22,7 @@ namespace Box3D {
  * vanishing points in the given directions.
  */
 // FIXME: This has been moved to a virtual method inside PerspectiveLine; can probably be purged
-NR::Point perspective_intersection (NR::Point pt1, Box3D::PerspDir dir1, NR::Point pt2, Box3D::PerspDir dir2)
+NR::Point perspective_intersection (NR::Point pt1, Box3D::Axis dir1, NR::Point pt2, Box3D::Axis dir2)
 {
     VanishingPoint const *vp1 = SP3DBoxContext::current_perspective->get_vanishing_point(dir1);
     VanishingPoint const *vp2 = SP3DBoxContext::current_perspective->get_vanishing_point(dir2);
@@ -36,7 +36,7 @@ NR::Point perspective_intersection (NR::Point pt1, Box3D::PerspDir dir1, NR::Poi
  * Find the point on the perspective line from line_pt to the
  * vanishing point in direction dir that is closest to ext_pt.
  */
-NR::Point perspective_line_snap (NR::Point line_pt, PerspDir dir, NR::Point ext_pt)
+NR::Point perspective_line_snap (NR::Point line_pt, Box3D::Axis dir, NR::Point ext_pt)
 {
     return PerspectiveLine(line_pt, dir).closest_to(ext_pt);
 }  
@@ -52,7 +52,7 @@ Perspective3D::Perspective3D (VanishingPoint const &pt_x, VanishingPoint const &
     vp_z.draw(Z);
 }
 
-VanishingPoint *Perspective3D::get_vanishing_point (PerspDir const dir)
+VanishingPoint *Perspective3D::get_vanishing_point (Box3D::Axis const dir)
 {
     // FIXME: Also handle value 'NONE' in switch
     switch (dir) {
@@ -68,9 +68,8 @@ VanishingPoint *Perspective3D::get_vanishing_point (PerspDir const dir)
     }
 }
 
-void Perspective3D::set_vanishing_point (PerspDir const dir, VanishingPoint const &pt)
+void Perspective3D::set_vanishing_point (Box3D::Axis const dir, VanishingPoint const &pt)
 {
-    // FIXME: Also handle value 'NONE' in switch
     switch (dir) {
         case X:
             vp_x = pt;
@@ -80,6 +79,9 @@ void Perspective3D::set_vanishing_point (PerspDir const dir, VanishingPoint cons
             break;
         case Z:
             vp_z = pt;
+            break;
+        case NONE:
+            // no vanishing point to set
             break;
     }
 }

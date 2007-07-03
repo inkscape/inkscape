@@ -16,8 +16,8 @@
 
 namespace Box3D {
 
-NR::Point perspective_intersection (NR::Point pt1, Box3D::PerspDir dir1, NR::Point pt2, Box3D::PerspDir dir2);
-NR::Point perspective_line_snap (NR::Point pt, PerspDir dir, NR::Point ext_pt);
+NR::Point perspective_intersection (NR::Point pt1, Box3D::Axis dir1, NR::Point pt2, Box3D::Axis dir2);
+NR::Point perspective_line_snap (NR::Point pt, Box3D::Axis dir, NR::Point ext_pt);
 
 class PerspectiveLine;
 
@@ -25,8 +25,8 @@ class Perspective3D {
 public:
     Perspective3D(VanishingPoint const &pt_x, VanishingPoint const &pt_y, VanishingPoint const &pt_z);
 
-    VanishingPoint *get_vanishing_point (PerspDir const dir);
-    void set_vanishing_point (PerspDir const dir, VanishingPoint const &pt);
+    VanishingPoint *get_vanishing_point (Box3D::Axis const dir);
+    void set_vanishing_point (Box3D::Axis const dir, VanishingPoint const &pt);
 
 private:
     VanishingPoint vp_x;

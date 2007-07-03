@@ -63,7 +63,7 @@ VPState VanishingPoint::toggle_parallel()
     return this->state;
 }
 
-void VanishingPoint::draw(PerspDir const axis)
+void VanishingPoint::draw(Box3D::Axis const axis)
 {
     switch (axis) {
         case X:
