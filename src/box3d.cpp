@@ -199,19 +199,19 @@ sp_3dbox_set_shape(SP3DBox *box3d)
 
     if (bc->extruded) {
         sp_3dbox_compute_specific_corners (bc, corner1, corner2, corner3, corner4);
-        box3d->faces[2].set_shape(bc->drag_origin, corner4, Box3D::Y, Box3D::Z);
+        box3d->faces[2].set_shape(bc->drag_origin, corner4, Box3D::Z, Box3D::Y);
         box3d->faces[2].set_curve();
-        box3d->faces[3].set_shape(corner2, corner4, Box3D::X, Box3D::Z);
+        box3d->faces[3].set_shape(corner2, corner4, Box3D::X, Box3D::Y);
         box3d->faces[3].set_curve();
-        box3d->faces[4].set_shape(bc->drag_origin, corner2, Box3D::X, Box3D::Y);
+        box3d->faces[4].set_shape(bc->drag_origin, corner2, Box3D::X, Box3D::Z);
         box3d->faces[4].set_curve();
-        box3d->faces[5].set_shape(bc->drag_ptB, corner4, Box3D::X, Box3D::Y);
+        box3d->faces[5].set_shape(bc->drag_ptB, corner4, Box3D::X, Box3D::Z);
         box3d->faces[5].set_curve();
 
-        box3d->faces[1].set_shape(corner1, bc->drag_ptC, Box3D::Y, Box3D::Z);
+        box3d->faces[1].set_shape(corner1, bc->drag_ptC, Box3D::Z, Box3D::Y);
         box3d->faces[1].set_curve();
     }
-    box3d->faces[0].set_shape(bc->drag_origin, bc->drag_ptB, Box3D::X, Box3D::Z);
+    box3d->faces[0].set_shape(bc->drag_origin, bc->drag_ptB, Box3D::X, Box3D::Y);
     box3d->faces[0].set_curve();
 }
 
@@ -222,19 +222,19 @@ sp_3dbox_compute_specific_corners (SP3DBoxContext *box3d_context, NR::Point &cor
         // TODO: Check for numerical stability and handle "wrong" cases more gracefully.
         //       (This now mostly applies to the intersection code in the PerspectiveLine class)
         Box3D::PerspectiveLine pl1 (box3d_context->drag_origin, Box3D::X);
-        Box3D::PerspectiveLine pl2 (box3d_context->drag_ptB, Box3D::Z);
+        Box3D::PerspectiveLine pl2 (box3d_context->drag_ptB, Box3D::Y);
         corner1 = pl1.meet(pl2);
 
-        Box3D::PerspectiveLine pl3 (corner1, Box3D::Y);
-        Box3D::PerspectiveLine pl4 (box3d_context->drag_ptC, Box3D::Z);
+        Box3D::PerspectiveLine pl3 (corner1, Box3D::Z);
+        Box3D::PerspectiveLine pl4 (box3d_context->drag_ptC, Box3D::Y);
         corner2 = pl3.meet(pl4);
 
         Box3D::PerspectiveLine pl5 (corner2, Box3D::X);
-        Box3D::PerspectiveLine pl6 (box3d_context->drag_origin, Box3D::Y);
+        Box3D::PerspectiveLine pl6 (box3d_context->drag_origin, Box3D::Z);
         corner3 = pl5.meet(pl6);
 
         Box3D::PerspectiveLine pl7 (box3d_context->drag_ptC, Box3D::X);
-        Box3D::PerspectiveLine pl8 (corner3, Box3D::Z);
+        Box3D::PerspectiveLine pl8 (corner3, Box3D::Y);
         corner4 = pl7.meet(pl8);
 }
 

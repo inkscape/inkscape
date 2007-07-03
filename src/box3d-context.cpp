@@ -123,11 +123,11 @@ static void sp_3dbox_context_init(SP3DBoxContext *box3d_context)
                                               Box3D::VanishingPoint( NR::Point( 50.0, 600.0),
                                                                      NR::Point( -1.0,   0.0), Box3D::VP_INFINITE),
                                               // VP in y-direction
-                                              Box3D::VanishingPoint( NR::Point(700.0, 500.0),
-                                                                     NR::Point(sqrt(3.0),1.0), Box3D::VP_INFINITE),
-                                              // VP in z-direction
                                               Box3D::VanishingPoint( NR::Point(500.0,1000.0),
-                                                                     NR::Point(  0.0,   1.0), Box3D::VP_INFINITE));
+                                                                     NR::Point(  0.0,   1.0), Box3D::VP_INFINITE),
+                                              // VP in z-direction
+                                              Box3D::VanishingPoint( NR::Point(700.0, 500.0),
+                                                                     NR::Point(sqrt(3.0),1.0), Box3D::VP_INFINITE));
     }
     
     new (&box3d_context->sel_changed_connection) sigc::connection();
@@ -366,18 +366,18 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
                 // Without Ctrl, motion of the extruded corner is constrained to the
                 // perspective line from drag_ptB to vanishing point Y.
                 if (!rc->ctrl_dragged) {
-                	rc->drag_ptC = Box3D::perspective_line_snap (rc->drag_ptB, Box3D::Y, motion_dt);
+                	rc->drag_ptC = Box3D::perspective_line_snap (rc->drag_ptB, Box3D::Z, motion_dt);
                 } else {
                     rc->drag_ptC = motion_dt;
                 }
                 rc->drag_ptC = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, rc->drag_ptC, rc->item).getPoint();
                 if (rc->ctrl_dragged) {
-                	Box3D::PerspectiveLine pl1 (NR::Point (event_context->xp, event_context->yp), Box3D::Z);
+                	Box3D::PerspectiveLine pl1 (NR::Point (event_context->xp, event_context->yp), Box3D::Y);
                 	Box3D::PerspectiveLine pl2 (rc->drag_ptB, Box3D::X);
                 	NR::Point corner1 = pl1.meet(pl2);
                 	
                 	Box3D::PerspectiveLine pl3 (corner1, Box3D::X);
-                	Box3D::PerspectiveLine pl4 (rc->drag_ptC, Box3D::Y);
+                	Box3D::PerspectiveLine pl4 (rc->drag_ptC, Box3D::Z);
                 	rc->drag_ptB = pl3.meet(pl4);
                 }
             }
