@@ -914,7 +914,7 @@ Script::execute (const std::list<std::string> &in_command,
     int stdout_pipe, stderr_pipe;
 
     try {
-        Glib::spawn_async_with_pipes(Glib::get_tmp_dir(), // working directory
+        Glib::spawn_async_with_pipes(Glib::get_current_dir(), // working directory
                                      argv,  // arg v
                                      Glib::SPAWN_SEARCH_PATH /*| Glib::SPAWN_DO_NOT_REAP_CHILD*/,
                                      sigc::slot<void>(),
