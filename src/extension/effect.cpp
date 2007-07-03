@@ -416,10 +416,6 @@ Effect::prefs (Inkscape::UI::View::View * doc)
 
     Gtk::Widget * controls;
     controls = imp->prefs_effect(this, doc, &changeSignal);
-    if (controls == NULL) {
-        // std::cout << "No preferences for Effect" << std::endl;
-        return true;
-    }
 
     ExecutionEnv executionEnv(this, doc, controls);
     changeSignal.connect(sigc::mem_fun(executionEnv, &ExecutionEnv::preferencesChange));
