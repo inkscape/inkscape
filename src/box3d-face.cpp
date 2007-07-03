@@ -30,13 +30,7 @@ void Box3DFace::set_shape(NR::Point const ul, NR::Point const lr,
         corners[2] = lr;
     } else {
         if (align_along_PL) {
-        	Box3D::PerspDir dir3;
-            if (dir1 == Box3D::X && dir2 == Box3D::Z) dir3 = Box3D::Y;
-            if (dir1 == Box3D::X && dir2 == Box3D::Y) dir3 = Box3D::Z;
-            if (dir1 == Box3D::Z && dir2 == Box3D::X) dir3 = Box3D::Y;
-            if (dir1 == Box3D::Z && dir2 == Box3D::Y) dir3 = Box3D::X;
-            if (dir1 == Box3D::Y && dir2 == Box3D::X) dir3 = Box3D::Z;
-            if (dir1 == Box3D::Y && dir2 == Box3D::Z) dir3 = Box3D::X;
+            Box3D::PerspDir dir3 = Box3D::third_axis_direction (dir1, dir2);
             Box3D::Line line1(*SP3DBoxContext::current_perspective->get_vanishing_point(dir1), lr);
             Box3D::Line line2(*pt_align, *SP3DBoxContext::current_perspective->get_vanishing_point(dir3));
             corners[2] = *line1.intersect(line2);

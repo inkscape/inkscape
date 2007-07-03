@@ -22,12 +22,21 @@ enum VPState {
     VP_INFINITE    // perspective lines are parallel
 };
 
+// The X-/Y-/Z-axis corresponds to the first/second/third digit
+// in binary representation, respectively.
 enum PerspDir {
-    X,
-    Y,
-    Z,
-    NONE
+    X = 1,
+    Y = 2,
+    Z = 4,
+    NONE = 0
 };
+
+
+/** Given two axis directions out of {X, Y, Z}, returns the remaining one */
+inline Box3D::PerspDir third_axis_direction (Box3D::PerspDir dir1, Box3D::PerspDir dir2) {
+    return (Box3D::PerspDir) ((dir1 + dir2) ^ 0x7);
+}
+
 
 // FIXME: Store the PerspDir of the VP inside the class
 class VanishingPoint : public NR::Point {
