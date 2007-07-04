@@ -49,7 +49,8 @@
 #define sp_round(v,m) (((v) < 0.0) ? ((ceil((v) / (m) - 0.5)) * (m)) : ((floor((v) / (m) + 0.5)) * (m)))
 
 static SPKnotHolder *sp_rect_knot_holder(SPItem *item, SPDesktop *desktop);
-static SPKnotHolder *sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop);
+//static 
+SPKnotHolder *sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop, guint number_of_handles);
 static SPKnotHolder *sp_arc_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_star_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_spiral_knot_holder(SPItem *item, SPDesktop *desktop);
@@ -64,7 +65,7 @@ sp_item_knot_holder(SPItem *item, SPDesktop *desktop)
     if (SP_IS_RECT(item)) {
         return sp_rect_knot_holder(item, desktop);
     } else if (SP_IS_3DBOX(item)) {
-        return sp_3dbox_knot_holder(item, desktop);
+        return sp_3dbox_knot_holder(item, desktop, SP3DBoxContext::number_of_handles);
     } else if (SP_IS_ARC(item)) {
         return sp_arc_knot_holder(item, desktop);
     } else if (SP_IS_STAR(item)) {
@@ -529,7 +530,7 @@ static SPKnotHolder *sp_rect_knot_holder(SPItem *item, SPDesktop *desktop)
 /* 3D Box */
 
 static void sp_3dbox_knot_set(SPItem *item, guint knot_id, Box3D::Axis direction,
-                               NR::Point const &new_pos, NR::Point const &origin, guint state)
+                              NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
     g_assert(item != NULL);
     SP3DBox *box = SP_3DBOX(item);
@@ -538,11 +539,13 @@ static void sp_3dbox_knot_set(SPItem *item, guint knot_id, Box3D::Axis direction
     SPDocument *doc = SP_OBJECT_DOCUMENT(box);
     gdouble height = sp_document_height(doc);
 
-    if (direction == Box3D::Z) {
-        sp_3dbox_move_corner_in_Z_direction (box, knot_id, NR::Point (new_pos[NR::X], height - new_pos[NR::Y]));
-    } else {
-        sp_3dbox_move_corner_in_XY_plane (box, knot_id, NR::Point (new_pos[NR::X], height - new_pos[NR::Y]));
-    }
+      if (direction == Box3D::Z) {
+         sp_3dbox_move_corner_in_Z_direction (box, knot_id, NR::Point (new_pos[NR::X], height - new_pos[NR::Y]),
+                                              !(state & GDK_SHIFT_MASK));
+      } else {
+         sp_3dbox_move_corner_in_XY_plane (box, knot_id, NR::Point (new_pos[NR::X], height - new_pos[NR::Y]),
+                                           (state & GDK_SHIFT_MASK) ? direction : Box3D::XY);
+      }
     sp_3dbox_update_curves (box);
 }
 
@@ -560,7 +563,12 @@ static NR::Point sp_3dbox_knot_get(SPItem *item, guint knot_id)
 
 static void sp_3dbox_knot1_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    sp_3dbox_knot_set (item, 1, Box3D::XY, new_pos, origin, state);
+    sp_3dbox_knot_set (item, 1, Box3D::Y, new_pos, origin, state);
+}
+
+static void sp_3dbox_knot1_set_constrained(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+{
+    sp_3dbox_knot_set (item, 1, Box3D::Y, new_pos, origin, state ^ GDK_SHIFT_MASK);
 }
 
 static NR::Point sp_3dbox_knot1_get(SPItem *item)
@@ -570,12 +578,31 @@ static NR::Point sp_3dbox_knot1_get(SPItem *item)
 
 static void sp_3dbox_knot2_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    sp_3dbox_knot_set (item, 2, Box3D::XY, new_pos, origin, state);
+    sp_3dbox_knot_set (item, 2, Box3D::X, new_pos, origin, state);
+}
+
+static void sp_3dbox_knot2_set_constrained(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+{
+    sp_3dbox_knot_set (item, 2, Box3D::X, new_pos, origin, state ^ GDK_SHIFT_MASK);
 }
 
 static NR::Point sp_3dbox_knot2_get(SPItem *item)
 {
     return sp_3dbox_knot_get(item, 2);
+}
+
+static void sp_3dbox_knot3_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+{
+    if (!(state & GDK_SHIFT_MASK)) {
+        sp_3dbox_knot_set (item, 3, Box3D::Y, new_pos, origin, state);
+    } else {
+        sp_3dbox_knot_set (item, 3, Box3D::Z, new_pos, origin, state ^ GDK_SHIFT_MASK);
+    }
+}
+
+static NR::Point sp_3dbox_knot3_get(SPItem *item)
+{
+    return sp_3dbox_knot_get(item, 3);
 }
 
 static void sp_3dbox_knot5_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
@@ -588,16 +615,42 @@ static NR::Point sp_3dbox_knot5_get(SPItem *item)
     return sp_3dbox_knot_get(item, 5);
 }
 
-static SPKnotHolder *
-sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop)
+static void sp_3dbox_knot7_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+{
+    sp_3dbox_knot_set (item, 7, Box3D::Z, new_pos, origin, state);
+}
+
+static NR::Point sp_3dbox_knot7_get(SPItem *item)
+{
+    return sp_3dbox_knot_get(item, 7);
+}
+
+//static
+SPKnotHolder *
+sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop, guint number_of_handles)
 {
     g_assert(item != NULL);
     SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
 
-    sp_knot_holder_add(knot_holder, sp_3dbox_knot1_set, sp_3dbox_knot1_get, NULL,_("Resize box in X/Y direction"));
-    sp_knot_holder_add(knot_holder, sp_3dbox_knot2_set, sp_3dbox_knot2_get, NULL,_("Resize box in X/Y direction"));
-    sp_knot_holder_add(knot_holder, sp_3dbox_knot5_set, sp_3dbox_knot5_get, NULL,_("Resize box in Z direction"));
-    sp_pat_knot_holder(item, knot_holder);
+    switch (number_of_handles) {
+    case 3:
+        sp_knot_holder_add(knot_holder, sp_3dbox_knot1_set, sp_3dbox_knot1_get, NULL,_("Resize box in X/Y direction"));
+        sp_knot_holder_add(knot_holder, sp_3dbox_knot2_set, sp_3dbox_knot2_get, NULL,_("Resize box in X/Y direction"));
+        sp_knot_holder_add(knot_holder, sp_3dbox_knot5_set, sp_3dbox_knot5_get, NULL,_("Resize box in Z direction"));
+        sp_pat_knot_holder(item, knot_holder);
+        break;
+    case 4:
+        sp_knot_holder_add(knot_holder, sp_3dbox_knot1_set_constrained, sp_3dbox_knot1_get, NULL,_("Resize box in X/Y direction"));
+        sp_knot_holder_add(knot_holder, sp_3dbox_knot2_set_constrained, sp_3dbox_knot2_get, NULL,_("Resize box in X/Y direction"));
+        sp_knot_holder_add_full(knot_holder, sp_3dbox_knot3_set, sp_3dbox_knot3_get, NULL,
+                                SP_KNOT_SHAPE_CIRCLE,  SP_KNOT_MODE_XOR, _("Resize box in Y direction"));
+        sp_knot_holder_add(knot_holder, sp_3dbox_knot7_set, sp_3dbox_knot7_get, NULL,_("Resize box in Z direction"));
+        sp_pat_knot_holder(item, knot_holder);
+        break;
+    default:
+        g_print ("Wrong number of handles (%d): Not implemented yet.\n", number_of_handles);
+        break;
+    }
 
     return knot_holder;
 }

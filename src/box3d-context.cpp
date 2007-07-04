@@ -91,6 +91,7 @@ static void sp_3dbox_context_class_init(SP3DBoxContextClass *klass)
 }
 
 Box3D::Perspective3D * SP3DBoxContext::current_perspective = NULL;
+guint SP3DBoxContext::number_of_handles = 3;
 
 static void sp_3dbox_context_init(SP3DBoxContext *box3d_context)
 {

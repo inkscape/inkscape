@@ -64,6 +64,7 @@
 #include "node-context.h"
 #include "shape-editor.h"
 #include "sp-rect.h"
+#include "box3d.h"
 #include "box3d-context.h"
 #include "sp-star.h"
 #include "sp-spiral.h"
@@ -92,6 +93,11 @@
 #include "ege-output-action.h"
 #include "ege-select-one-action.h"
 #include "helper/unit-tracker.h"
+
+// FIXME: The next two lines are only temporarily added until
+//        the final resizing behaviour of 3D boxes is sorted out.
+#include "knotholder.h"
+SPKnotHolder *sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop, guint number_of_handles);
 
 using Inkscape::UnitTracker;
 
@@ -281,6 +287,9 @@ static gchar const * ui_descr =
         "    <toolitem action='3DBoxVPXAction' />"
         "    <toolitem action='3DBoxVPYAction' />"
         "    <toolitem action='3DBoxVPZAction' />"
+        "    <separator />"
+        "    <toolitem action='3DBoxHandlesAction' />"
+        "    <separator />"
         "  </toolbar>"
 
         "  <toolbar name='SpiralToolbar'>"
@@ -2130,6 +2139,60 @@ static void sp_3dbox_toggle_vp_changed( GtkToggleAction *act, gpointer data )
     
 }
 
+static void sp_3dboxtb_handles_state_changed( EgeSelectOneAction *act, GObject *tbl )
+{
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+        if ( ege_select_one_action_get_active( act ) != 0 ) {
+            prefs_set_string_attribute("tools.shapes.3dbox", "constrainedXYmoving", "true");
+        } else {
+            prefs_set_string_attribute("tools.shapes.3dbox", "constrainedXYmoving", NULL);
+        }
+    }
+
+    // quit if run by the attr_changed listener
+    if (g_object_get_data( tbl, "freeze" )) {
+        return;
+    }
+
+    // in turn, prevent listener from responding
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    bool modmade = false;
+
+    SPEventContext *ec = SP_EVENT_CONTEXT(inkscape_active_event_context());
+    if (!SP_IS_3DBOX_CONTEXT(ec)) return;
+    SP3DBoxContext *bc = SP_3DBOX_CONTEXT(ec);
+    for (GSList const *items = sp_desktop_selection(desktop)->itemList();
+         items != NULL;
+         items = items->next)
+    {
+        if (SP_IS_3DBOX((SPItem *) items->data)) {
+            if (ec->shape_knot_holder) {
+                sp_knot_holder_destroy(ec->shape_knot_holder);
+                if ( ege_select_one_action_get_active(act) != 0 ) {
+                    bc->number_of_handles = 4;
+                    ec->shape_knot_holder = sp_3dbox_knot_holder((SPItem *) items->data, SP_ACTIVE_DESKTOP, 4);;
+                } else {
+                    bc->number_of_handles = 3;
+                    ec->shape_knot_holder = sp_3dbox_knot_holder((SPItem *) items->data, SP_ACTIVE_DESKTOP, 3);;
+                }
+            } else {
+                g_print ("Warning: No KnotHolder detected!!!\n");
+            }
+            modmade = true;
+        }
+    }
+
+    if (modmade) {
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+                                   _("3D Box: Change number of handles"));
+    }
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+
 static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     bool toggled = false;
@@ -2176,6 +2239,42 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         toggled = SP3DBoxContext::current_perspective->get_vanishing_point(Box3D::Z)->is_finite();
     }
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), toggled );
+    }
+
+
+    /* Number of handles and resizing behaviour */
+    {
+        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
+
+        GtkTreeIter iter;
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Three Handles"),
+                            1, _("Switch to three handles (arbitrary resizing in XY-direction)"),
+                            2, "3dbox_three_handles",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Four Handles"),
+                            1, _("Switch to four handles (constrained resizing in XY-direction)"),
+                            2, "3dbox_four_handles",
+                            -1 );
+
+        EgeSelectOneAction* act = ege_select_one_action_new( "3DBoxHandlesAction", _(""), _(""), NULL, GTK_TREE_MODEL(model) );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_object_set_data( holder, "handles_action", act );
+
+        ege_select_one_action_set_appearance( act, "full" );
+        ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+        g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+        ege_select_one_action_set_icon_column( act, 2 );
+        ege_select_one_action_set_tooltip_column( act, 1  );
+
+        gchar const *handlestr = prefs_get_string_attribute("tools.shapes.3dbox", "constrainedXYmoving");
+        bool isConstrained = (!handlestr || (handlestr && !strcmp(handlestr, "true")));
+        ege_select_one_action_set_active( act, isConstrained ? 0 : 1 );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_3dboxtb_handles_state_changed), holder );
     }
 }
 

@@ -51,6 +51,9 @@ struct SP3DBoxContext : public SPEventContext {
     bool ctrl_dragged; /* whether we are ctrl-dragging */
     bool extruded; /* whether shift-dragging already occured (i.e. the box is already extruded) */
 
+    /* temporary member until the precise behaviour is sorted out */
+    static guint number_of_handles;
+
     static Box3D::Perspective3D *current_perspective;
 
 	sigc::connection sel_changed_connection;
