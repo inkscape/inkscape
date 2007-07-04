@@ -15,8 +15,7 @@
 
 #include <libnr/nr-pixblock.h>
 #include "sp-object.h"
-
-
+#include "uri-references.h"
 
 class SPPainter;
 
@@ -61,6 +60,17 @@ SPPainter *sp_paint_server_painter_new (SPPaintServer *ps, NR::Matrix const &ful
 
 SPPainter *sp_painter_free (SPPainter *painter);
 
-
+class SPPaintServerReference : public Inkscape::URIReference {
+public:
+        SPPaintServerReference (SPObject *obj) : URIReference(obj) {}
+        SPPaintServerReference (SPDocument *doc) : URIReference(doc) {}
+        SPPaintServer *getObject() const {
+                return (SPPaintServer *)URIReference::getObject();
+        }
+protected:
+        virtual bool _acceptObject(SPObject *obj) const {
+                return SP_IS_PAINT_SERVER (obj);
+        }
+};
 
 #endif
