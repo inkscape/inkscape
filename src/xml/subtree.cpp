@@ -19,29 +19,27 @@
 namespace Inkscape {
 namespace XML {
 
+Subtree::Subtree(Node &root) : _root(root) {
+    _root.addSubtreeObserver(_observers);
+}
+
+Subtree::~Subtree() {
+    _root.removeSubtreeObserver(_observers);
+}
+
 namespace {
 
-void recursively(void (Node::*m)(NodeObserver &observer),
-                 Node &node, NodeObserver &observer)
-{
-    (node.*m)(observer);
+void synthesize_events_recursive(Node &node, NodeObserver &observer) {
+    node.synthesizeEvents(observer);
     for ( NodeSiblingIterator iter = node.firstChild() ; iter ; ++iter ) {
-        recursively(m, *iter, observer);
+        synthesize_events_recursive(*iter, observer);
     }
 }
 
 }
 
-Subtree::Subtree(Node &root) : _root(root) {
-    recursively(&Node::addObserver, _root, *this);
-}
-
-Subtree::~Subtree() {
-    recursively(&Node::removeObserver, _root, *this);
-}
-
 void Subtree::synthesizeEvents(NodeObserver &observer) {
-    recursively(&Node::synthesizeEvents, _root, *this);
+    synthesize_events_recursive(_root, observer);
 }
 
 void Subtree::addObserver(NodeObserver &observer) {
@@ -50,36 +48,6 @@ void Subtree::addObserver(NodeObserver &observer) {
 
 void Subtree::removeObserver(NodeObserver &observer) {
     _observers.remove(observer); 
-}
-
-void Subtree::notifyChildAdded(Node &node, Node &child, Node *prev) {
-    recursively(&Node::addObserver, child, *this);
-    _observers.notifyChildAdded(node, child, prev);
-}
-
-void Subtree::notifyChildRemoved(Node &node, Node &child, Node *prev) {
-    recursively(&Node::removeObserver, child, *this);
-    _observers.notifyChildRemoved(node, child, prev);
-}
-
-void Subtree::notifyChildOrderChanged(Node &node, Node &child,
-                                      Node *old_prev, Node *new_prev)
-{
-    _observers.notifyChildOrderChanged(node, child, old_prev, new_prev);
-}
-
-void Subtree::notifyContentChanged(Node &node,
-                                   Util::ptr_shared<char> old_content,
-                                   Util::ptr_shared<char> new_content)
-{
-    _observers.notifyContentChanged(node, old_content, new_content);
-}
-
-void Subtree::notifyAttributeChanged(Node &node, GQuark name,
-                                     Util::ptr_shared<char> old_value,
-                                     Util::ptr_shared<char> new_value)
-{
-    _observers.notifyAttributeChanged(node, name, old_value, new_value);
 }
 
 }

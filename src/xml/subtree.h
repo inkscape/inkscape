@@ -24,9 +24,7 @@ namespace XML {
 
 class Node;
 
-class Subtree : public GC::Managed<GC::SCANNED, GC::MANUAL>,
-                private NodeObserver
-{
+class Subtree : public GC::Managed<GC::SCANNED, GC::MANUAL> {
 public:
     Subtree(Node &root);
     ~Subtree();
@@ -36,21 +34,6 @@ public:
     void removeObserver(NodeObserver &observer);
 
 private:
-    void notifyChildAdded(Node &node, Node &child, Node *prev);
-
-    void notifyChildRemoved(Node &node, Node &child, Node *prev);
-
-    void notifyChildOrderChanged(Node &node, Node &child,
-                                 Node *old_prev, Node *new_prev);
-
-    void notifyContentChanged(Node &node,
-                              Util::ptr_shared<char> old_content,
-                              Util::ptr_shared<char> new_content);
-
-    void notifyAttributeChanged(Node &node, GQuark name,
-                                Util::ptr_shared<char> old_value,
-                                Util::ptr_shared<char> new_value);
-
     Node &_root;
     CompositeNodeObserver _observers;
 };

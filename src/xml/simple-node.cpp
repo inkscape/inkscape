@@ -165,6 +165,8 @@ SimpleNode::SimpleNode(int code)
     this->_document = NULL;
     this->_parent = this->_next = NULL;
     this->_first_child = this->_last_child = NULL;
+
+    _observers.add(_subtree_observers);
 }
 
 SimpleNode::SimpleNode(SimpleNode const &node)
@@ -199,6 +201,8 @@ SimpleNode::SimpleNode(SimpleNode const &node)
     {
         _attributes = cons(*iter, _attributes);
     }
+
+    _observers.add(_subtree_observers);
 }
 
 gchar const *SimpleNode::name() const {
@@ -265,6 +269,16 @@ bool SimpleNode::matchAttributeName(gchar const *partial_name) const {
     }
 
     return false;
+}
+
+void SimpleNode::_setParent(Node *parent) {
+   if (_parent) {
+        _subtree_observers.remove(_parent->_subtreeObservers());
+    }
+    _parent = parent;
+    if (parent) {
+        _subtree_observers.add(parent->_subtreeObservers());
+    }
 }
 
 void SimpleNode::setContent(gchar const *content) {

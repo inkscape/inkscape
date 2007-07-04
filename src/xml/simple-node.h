@@ -103,6 +103,13 @@ public:
         _observers.remove(observer);
     }
 
+    void addSubtreeObserver(NodeObserver &observer) {
+        _subtree_observers.add(observer);
+    }
+    void removeSubtreeObserver(NodeObserver &observer) {
+        _subtree_observers.remove(observer);
+    }
+
 protected:
     SimpleNode(int code);
     SimpleNode(SimpleNode const &repr);
@@ -110,7 +117,8 @@ protected:
     virtual SimpleNode *_duplicate(Document *doc) const=0;
 
 public: // ideally these should be protected somehow...
-    void _setParent(Node *parent) { _parent = parent; }
+    NodeObserver &_subtreeObservers() { return _subtree_observers; }
+    void _setParent(Node *parent);
     void _setNext(Node *next) { _next = next; }
     void _bindDocument(Document &document);
 
@@ -140,6 +148,7 @@ private:
     Node *_last_child;
 
     CompositeNodeObserver _observers;
+    CompositeNodeObserver _subtree_observers;
 };
 
 }
