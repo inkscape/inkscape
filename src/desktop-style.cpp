@@ -37,7 +37,6 @@
 #include "xml/repr.h"
 #include "libnrtype/font-style-to-pos.h"
 
-
 #include "desktop-style.h"
 
 /**
@@ -499,14 +498,14 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
             num ++;
         }
 
+       paint_res->type = paint->type;
        if (paint_res->set && paint_effectively_set && paint->type == SP_PAINT_TYPE_PAINTSERVER) { // copy the server
            if (isfill) {
-               SP_STYLE_FILL_SERVER (style_res) = SP_STYLE_FILL_SERVER (style);
+               sp_style_set_to_uri_string (style_res, true, style->getFillURI());
            } else {
-               SP_STYLE_STROKE_SERVER (style_res) = SP_STYLE_STROKE_SERVER (style);
+               sp_style_set_to_uri_string (style_res, false, style->getStrokeURI());
            }
        }
-       paint_res->type = paint->type;
        paint_res->set = paint_effectively_set;
        style_res->fill_rule.computed = style->fill_rule.computed; // no averaging on this, just use the last one
     }

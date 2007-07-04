@@ -1282,7 +1282,7 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
             break;
         }
         case SP_PAINT_TYPE_PAINTSERVER: {
-            shape->setFill(style->fill.value.paint.server);
+            shape->setFill(style->getFillPaintServer());
             break;
         }
         default: {
@@ -1314,7 +1314,7 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
             break;
         }
         case SP_PAINT_TYPE_PAINTSERVER: {
-            shape->setStroke(style->stroke.value.paint.server);
+            shape->setStroke(style->getStrokePaintServer());
             break;
         }
         default: {
