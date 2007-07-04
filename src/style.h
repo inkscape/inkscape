@@ -18,6 +18,9 @@
 #include "sp-marker-loc.h"
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
+#include "uri-references.h"
+#include "uri.h"
+#include "sp-paint-server.h"
 
 #include <sigc++/connection.h>
 
@@ -28,10 +31,6 @@ class Node;
 }
 
 class SPCSSAttr;
-
-namespace Inkscape {
-gchar *parse_css_url(gchar const *string);
-}
 
 class SPIFloat;
 class SPIScale24;
@@ -140,10 +139,10 @@ struct SPILength {
     float computed;
 };
 
-#define SP_STYLE_FILL_SERVER(s) (((SPStyle *) (s))->fill.value.paint.server)
-#define SP_STYLE_STROKE_SERVER(s) (((SPStyle *) (s))->stroke.value.paint.server)
-#define SP_OBJECT_STYLE_FILL_SERVER(o) (SP_OBJECT (o)->style->fill.value.paint.server)
-#define SP_OBJECT_STYLE_STROKE_SERVER(o) (SP_OBJECT (o)->style->stroke.value.paint.server)
+#define SP_STYLE_FILL_SERVER(s) (((SPStyle *) (s))->getFillPaintServer())
+#define SP_STYLE_STROKE_SERVER(s) (((SPStyle *) (s))->getStrokePaintServer())
+#define SP_OBJECT_STYLE_FILL_SERVER(o) (SP_OBJECT (o)->style->getFillPaintServer())
+#define SP_OBJECT_STYLE_STROKE_SERVER(o) (SP_OBJECT (o)->style->getStrokePaintServer())
 
 enum {
     SP_PAINT_TYPE_NONE,
@@ -161,10 +160,7 @@ struct SPIPaint {
     unsigned currentcolor : 1;
     unsigned type : 2;
     struct {
-        struct {
-            SPPaintServer *server;
-            gchar *uri;
-        } paint;
+        SPPaintServerReference *href; 
         SPColor color;
         SVGICCColor *iccColor;
     } value;
@@ -234,8 +230,12 @@ public:
 /// An SVG style object.
 struct SPStyle {
     int refcount;
+
     /** Object we are attached to */
     SPObject *object;
+    /** Document we are associated with */
+    SPDocument *document;
+
     /** Our text style component */
     SPTextStyle *text;
     unsigned text_private : 1;
@@ -346,21 +346,21 @@ struct SPStyle {
      * their background image */
     SPIEnum enable_background;
 
-    /// style belongs to a cloned object, must not href anything
+    /// style belongs to a cloned object
     bool cloned; 
-    /// style has hreffed its fill/stroke paintservers, needs to release.
-    bool fill_hreffed; 
-    bool stroke_hreffed; 
 
     sigc::connection release_connection;
 
-    sigc::connection fill_release_connection;
-    sigc::connection fill_modified_connection;
-
-    sigc::connection stroke_release_connection;
-    sigc::connection stroke_modified_connection;
+    sigc::connection filter_modified_connection;
+    sigc::connection fill_ps_modified_connection;
+    sigc::connection stroke_ps_modified_connection;
 
     SPObject *getFilter() {if (filter.href) return filter.href->getObject(); else return NULL;}
+    const gchar *getFilterURI() {if (filter.href) return filter.href->getURI()->toString(); else return NULL;}
+    SPPaintServer *getFillPaintServer() {if (fill.value.href) return fill.value.href->getObject(); else return NULL;}
+    const gchar *getFillURI() {if (fill.value.href) return fill.value.href->getURI()->toString(); else return NULL;}
+    SPPaintServer *getStrokePaintServer() {if (stroke.value.href) return stroke.value.href->getObject(); else return NULL;}
+    const gchar *getStrokeURI() {if (stroke.value.href) return stroke.value.href->getURI()->toString(); else return NULL;}
 };
 
 SPStyle *sp_style_new(SPDocument *document);
@@ -384,6 +384,8 @@ void sp_style_merge_from_dying_parent(SPStyle *style, SPStyle const *parent);
 gchar *sp_style_write_string(SPStyle const *style, guint flags = SP_STYLE_FLAG_IFSET);
 
 gchar *sp_style_write_difference(SPStyle const *from, SPStyle const *to);
+
+void sp_style_set_to_uri_string (SPStyle *style, bool isfill, const gchar *uri);
 
 /* SPTextStyle */
 

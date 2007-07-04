@@ -50,65 +50,6 @@
 using Inkscape::CSSOStringStream;
 using std::vector;
 
-namespace Inkscape {
-
-/**
- * Parses a CSS url() specification; temporary hack until
- * style stuff is redone.
- * \param string the CSS string to parse
- * \return a newly-allocated URL string (or NULL); free with g_free()
- */
-gchar *parse_css_url(gchar const *string) {
-    if (!string)
-        return NULL;
-
-    gchar const *iter = string;
-    for ( ; g_ascii_isspace(*iter) ; iter = g_utf8_next_char(iter) );
-    if (strncmp(iter, "url(", 4))
-        return NULL;
-    iter += 4;
-
-    gchar const end_char = *iter;
-    if ( *iter == '"' || *iter == '\'' ) {
-        iter += 1;
-    }
-
-    GString *temp = g_string_new(NULL);
-    for ( ; *iter ; iter = g_utf8_next_char(iter) ) {
-        if ( *iter == '(' || *iter == ')'  ||
-             *iter == '"' || *iter == '\'' ||
-             g_ascii_isspace(*iter)        ||
-             g_ascii_iscntrl(*iter)           )
-        {
-            break;
-        }
-        if ( *iter == '\\' ) {
-            iter = g_utf8_next_char(iter);
-        }
-        if ( *iter & (gchar)0x80 ) {
-            break;
-        } else {
-            g_string_append_c(temp, *iter);
-        }
-    }
-
-    if ( *iter == end_char && end_char != ')' ) {
-        iter = g_utf8_next_char(iter);
-    }
-    gchar *result;
-    if ( *iter == ')' ) {
-        result = temp->str;
-        g_string_free(temp, FALSE);
-    } else {
-        result = NULL;
-        g_string_free(temp, TRUE);
-    }
-
-    return result;
-}
-
-}
-
 #define BMAX 8192
 
 class SPStyleEnum;
@@ -412,16 +353,85 @@ static void
 sp_style_filter_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle *style)
 {
     if (old_ref) {
-        sp_signal_disconnect_by_data(old_ref, style);
+        style->filter_modified_connection.disconnect();
     }
     if ( SP_IS_FILTER(ref))
     {
-        ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_filter_ref_modified), style));
+        style->filter_modified_connection = 
+           ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_filter_ref_modified), style));
     }
 
     sp_style_filter_ref_modified(ref, 0, style);
 }
 
+/**
+ * Emit style modified signal on style's object if server is style's fill
+ * or stroke paint server.
+ */
+static void
+sp_style_paint_server_ref_modified(SPObject *obj, guint flags, SPStyle *style)
+{
+    SPPaintServer *server = static_cast<SPPaintServer *>(obj);
+
+    if ((style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
+        && style->getFillPaintServer() == server)
+    {
+        if (style->object) {
+            /** \todo
+             * fixme: I do not know, whether it is optimal - we are
+             * forcing reread of everything (Lauris)
+             */
+            /** \todo
+             * fixme: We have to use object_modified flag, because parent
+             * flag is only available downstreams.
+             */
+            style->object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+        }
+    } else if ((style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)
+        && style->getStrokePaintServer() == server)
+    {
+        if (style->object) {
+            /// \todo fixme:
+            style->object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+        }
+    } else {
+        g_assert_not_reached();
+    }
+}
+
+/**
+ * Gets called when the paintserver is (re)attached to the style
+ */
+static void
+sp_style_fill_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle *style)
+{
+    if (old_ref) {
+        style->fill_ps_modified_connection.disconnect();
+    }
+    if (SP_IS_PAINT_SERVER(ref)) {
+        style->fill_ps_modified_connection = 
+           ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_paint_server_ref_modified), style));
+    }
+
+    sp_style_paint_server_ref_modified(ref, 0, style);
+}
+
+/**
+ * Gets called when the paintserver is (re)attached to the style
+ */
+static void
+sp_style_stroke_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle *style)
+{
+    if (old_ref) {
+        style->stroke_ps_modified_connection.disconnect();
+    }
+    if (SP_IS_PAINT_SERVER(ref)) {
+        style->stroke_ps_modified_connection = 
+          ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_paint_server_ref_modified), style));
+    }
+
+    sp_style_paint_server_ref_modified(ref, 0, style);
+}
 
 /**
  * Returns a new SPStyle object with settings as per sp_style_clear().
@@ -433,28 +443,18 @@ sp_style_new(SPDocument *document)
 
     style->refcount = 1;
     style->object = NULL;
+    style->document = document;
     style->text = sp_text_style_new();
     style->text_private = TRUE;
-
-    if (document) {
-        style->filter.href = new SPFilterReference(document);
-        style->filter.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
-    }
 
     sp_style_clear(style);
 
     style->cloned = false;
 
-    style->fill_hreffed = false;
-    style->stroke_hreffed = false;
-
     new (&style->release_connection) sigc::connection();
-
-    new (&style->fill_release_connection) sigc::connection();
-    new (&style->fill_modified_connection) sigc::connection();
-
-    new (&style->stroke_release_connection) sigc::connection();
-    new (&style->stroke_modified_connection) sigc::connection();
+    new (&style->filter_modified_connection) sigc::connection();
+    new (&style->fill_ps_modified_connection) sigc::connection();
+    new (&style->stroke_ps_modified_connection) sigc::connection();
 
     return style;
 }
@@ -511,17 +511,31 @@ sp_style_unref(SPStyle *style)
         style->release_connection.disconnect();
         style->release_connection.~connection();
         if (style->text) sp_text_style_unref(style->text);
+
+         if (style->fill.value.href) {
+             style->fill_ps_modified_connection.disconnect();
+             delete style->fill.value.href;
+             style->fill.value.href = NULL;
+         }
+         if (style->stroke.value.href) {
+             style->stroke_ps_modified_connection.disconnect();
+             delete style->stroke.value.href;
+             style->stroke.value.href = NULL;
+         }
+         if (style->filter.href) {
+             style->filter_modified_connection.disconnect();
+             delete style->filter.href;
+             style->filter.href = NULL;
+         }
+
+        style->filter_modified_connection.~connection();
+        style->fill_ps_modified_connection.~connection();
+        style->stroke_ps_modified_connection.~connection();
+
         sp_style_paint_clear(style, &style->fill);
         sp_style_paint_clear(style, &style->stroke);
         sp_style_filter_clear(style);
-        style->fill_release_connection.disconnect();
-        style->fill_release_connection.~connection();
-        style->fill_modified_connection.disconnect();
-        style->fill_modified_connection.~connection();
-        style->stroke_release_connection.disconnect();
-        style->stroke_release_connection.~connection();
-        style->stroke_modified_connection.disconnect();
-        style->stroke_modified_connection.~connection();
+
         g_free(style->stroke_dash.dash);
         g_free(style);
     }
@@ -716,7 +730,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     if (!style->filter.set) {
         val = repr->attribute("filter");
         if (val) {
-		sp_style_read_ifilter(val, style, (object) ? SP_OBJECT_DOCUMENT(object) : NULL);
+		      sp_style_read_ifilter(val, style, (object) ? SP_OBJECT_DOCUMENT(object) : NULL);
         }
     }
     SPS_READ_PENUM_IF_UNSET(&style->enable_background, repr,
@@ -2034,62 +2048,33 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
 }
 
 
-
-/**
- * Disconnects from possible fill and stroke paint servers.
- */
 static void
-sp_style_paint_server_release(SPObject *obj, SPStyle *style)
+sp_style_set_ipaint_to_uri(SPIPaint *paint, const Inkscape::URI *uri)
 {
-    SPPaintServer *server=static_cast<SPPaintServer *>(obj);
-    if ((style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
-        && (server == style->fill.value.paint.server))
-    {
-        sp_style_paint_clear(style, &style->fill);
-    }
+    if (paint->value.href && paint->value.href->getObject())
+        paint->value.href->detach();
 
-    if ((style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)
-        && (server == style->stroke.value.paint.server))
-    {
-        sp_style_paint_clear(style, &style->stroke);
+    if (paint->value.href) {
+        try {
+            paint->value.href->attach(*uri);
+        } catch (Inkscape::BadURIException &e) {
+            g_warning("%s", e.what());
+            paint->value.href->detach();
+        }
     }
 }
 
-
-
-
-/**
- * Emit style modified signal on style's object if server is style's fill
- * or stroke paint server.
- */
 static void
-sp_style_paint_server_modified(SPObject *obj, guint flags, SPStyle *style)
+sp_style_set_ipaint_to_uri_string (SPIPaint *paint, const gchar *uri)
 {
-    SPPaintServer *server = static_cast<SPPaintServer *>(obj);
-    if ((style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
-        && (server == style->fill.value.paint.server))
-    {
-        if (style->object) {
-            /** \todo
-             * fixme: I do not know, whether it is optimal - we are
-             * forcing reread of everything (Lauris)
-             */
-            /** \todo
-             * fixme: We have to use object_modified flag, because parent
-             * flag is only available downstreams.
-             */
-            style->object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
-        }
-    } else if ((style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)
-               && (server == style->stroke.value.paint.server))
-    {
-        if (style->object) {
-            /// \todo fixme:
-            style->object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
-        }
-    } else {
-        g_assert_not_reached();
-    }
+    const Inkscape::URI IURI(uri);
+    sp_style_set_ipaint_to_uri(paint, &IURI);
+}
+
+void
+sp_style_set_to_uri_string (SPStyle *style, bool isfill, const gchar *uri)
+{
+    sp_style_set_ipaint_to_uri_string (isfill? &style->fill : &style->stroke, uri);
 }
 
 /**
@@ -2113,34 +2098,8 @@ sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
             sp_color_copy(&paint->value.color, &parent->value.color);
             break;
         case SP_PAINT_TYPE_PAINTSERVER:
-            paint->value.paint.server = parent->value.paint.server;
-            paint->value.paint.uri = parent->value.paint.uri;
-            if (paint->value.paint.server) {
-                if (style->object && !style->cloned) { // href paintserver for style of non-clones only
-                    sp_object_href(SP_OBJECT(paint->value.paint.server), style);
-                    if (paint == &style->fill) {
-                        style->fill_hreffed = true;
-                    } else {
-                        assert(paint == &style->stroke);
-                        style->stroke_hreffed = true;
-                    }
-                }
-                if (style->object || style->cloned) { // connect to signals for style of real objects or clones (this excludes temp styles)
-                    SPObject *server = paint->value.paint.server;
-                    sigc::connection release_connection
-                      = server->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_style_paint_server_release), style));
-                    sigc::connection modified_connection
-                      = server->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_style_paint_server_modified), style));
-                    if (paint == &style->fill) {
-                        style->fill_release_connection = release_connection;
-                        style->fill_modified_connection = modified_connection;
-                    } else {
-                        assert(paint == &style->stroke);
-                        style->stroke_release_connection = release_connection;
-                        style->stroke_modified_connection = modified_connection;
-                    }
-                }
-            }
+            if (parent->value.href)
+                sp_style_set_ipaint_to_uri(paint, parent->value.href->getURI());
             break;
         case SP_PAINT_TYPE_NONE:
             break;
@@ -2450,20 +2409,45 @@ sp_style_clear(SPStyle *style)
     sp_style_paint_clear(style, &style->fill);
     sp_style_paint_clear(style, &style->stroke);
     sp_style_filter_clear(style);
+
+    if (style->fill.value.href) 
+        delete style->fill.value.href;
+    if (style->stroke.value.href)
+        delete style->stroke.value.href;
+    if (style->filter.href)
+        delete style->filter.href;
+
     if (style->stroke_dash.dash) {
         g_free(style->stroke_dash.dash);
     }
 
     /** \todo fixme: Do that text manipulation via parents */
     SPObject *object = style->object;
+    SPDocument *document = style->document;
     gint const refcount = style->refcount;
     SPTextStyle *text = style->text;
     unsigned const text_private = style->text_private;
+
     memset(style, 0, sizeof(SPStyle));
+
     style->refcount = refcount;
     style->object = object;
+    style->document = document;
+
+    if (document) {
+        style->filter.href = new SPFilterReference(document);
+        style->filter.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
+
+        style->fill.value.href = new SPPaintServerReference(document);
+        style->fill.value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_fill_paint_server_ref_changed), style));
+
+        style->stroke.value.href = new SPPaintServerReference(document);
+        style->stroke.value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_stroke_paint_server_ref_changed), style));
+    }
+
     style->text = text;
     style->text_private = text_private;
+
     /* fixme: */
     style->text->font.set = FALSE;
     style->text->font_family.set = FALSE;
@@ -3008,10 +2992,8 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
         paint->inherit = FALSE;
         paint->currentcolor = FALSE;
     } else if (strneq(str, "url", 3) && paint != &style->color) {
-        // this is alloc'd uri, but seems to be shared with a parent
-        // potentially, so it's not any easy g_free case...
-        paint->value.paint.uri = extract_uri(str);
-        if (paint->value.paint.uri == NULL || *(paint->value.paint.uri) == '\0') {
+        gchar *uri = extract_uri(str);
+        if(uri == NULL || uri[0] == '\0') {
             paint->type = SP_PAINT_TYPE_NONE;
             return;
         }
@@ -3019,38 +3001,18 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
         paint->set = TRUE;
         paint->inherit = FALSE;
         paint->currentcolor = FALSE;
-        if (document) {
-            SPObject *ps = sp_uri_reference_resolve(document, str);
-            if (ps && SP_IS_PAINT_SERVER(ps)) {
-                paint->value.paint.server = SP_PAINT_SERVER(ps);
-                if (style->object && !style->cloned) {
-                    sp_object_href(SP_OBJECT(paint->value.paint.server), style);
-                    if (paint == &style->fill) {
-                        style->fill_hreffed = true;
-                    } else {
-                        assert(paint == &style->stroke);
-                        style->stroke_hreffed = true;
-                    }
-                }
-                if (style->object || style->cloned) {
-                    SPObject *server = paint->value.paint.server;
-                    sigc::connection release_connection
-                      = server->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_style_paint_server_release), style));
-                    sigc::connection modified_connection
-                      = server->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_style_paint_server_modified), style));
-                    if (paint == &style->fill) {
-                        style->fill_release_connection = release_connection;
-                        style->fill_modified_connection = modified_connection;
-                    } else {
-                        assert(paint == &style->stroke);
-                        style->stroke_release_connection = release_connection;
-                        style->stroke_modified_connection = modified_connection;
-                    }
-                }
-            } else {
-                paint->value.paint.server = NULL;
-            }
+
+        // it may be that this style's SPIPaint has not yet created its URIReference;
+        // now that we have a document, we can create it here
+        if (!paint->value.href && document) {
+            paint->value.href = new SPPaintServerReference(document);
+            paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun((paint == &style->fill)? sp_style_fill_paint_server_ref_changed : sp_style_stroke_paint_server_ref_changed), style));
         }
+
+        sp_style_set_ipaint_to_uri_string (paint, uri);
+
+        g_free (uri);
+        
     } else {
         guint32 const rgb0 = sp_svg_read_color(str, &str, 0xff);
         if (rgb0 != 0xff) {
@@ -3155,12 +3117,12 @@ sp_style_read_ifilter(gchar const *str, SPStyle * style, SPDocument *document)
         f->set = TRUE;
         f->inherit = TRUE;
         if (f->href && f->href->getObject())
-            f->href->detach(); //f->filter = NULL;
+            f->href->detach(); 
     } else if(streq(str, "none")) {
         f->set = TRUE;
         f->inherit = FALSE;
         if (f->href && f->href->getObject())
-           f->href->detach(); //f->filter = NULL;
+           f->href->detach(); 
     } else if (strneq(str, "url", 3)) {
         char *uri = extract_uri(str);
         if(uri == NULL || uri[0] == '\0') {
@@ -3176,7 +3138,7 @@ sp_style_read_ifilter(gchar const *str, SPStyle * style, SPDocument *document)
 
         // it may be that this style has not yet created its SPFilterReference;
         // now that we have a document, we can create it here
-        if (!f->href) {
+        if (!f->href && document) {
             f->href = new SPFilterReference(document);
             f->href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
         }
@@ -3187,6 +3149,7 @@ sp_style_read_ifilter(gchar const *str, SPStyle * style, SPDocument *document)
             g_warning("%s", e.what());
             f->href->detach();
         }
+        g_free (uri);
 
     } else {
         /* We shouldn't reach this if SVG input is well-formed */
@@ -3554,7 +3517,7 @@ sp_paint_differ(SPIPaint const *const a, SPIPaint const *const b)
     /* todo: Allow for epsilon differences in iccColor->colors, e.g. changes small enough not to show up
      * in the string representation. */
     if (a->type == SP_PAINT_TYPE_PAINTSERVER)
-        return (a->value.paint.server != b->value.paint.server);
+        return (a->value.href == NULL || b->value.href == NULL || a->value.href->getObject() != b->value.href->getObject());
     return false;
 }
 
@@ -3596,7 +3559,7 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
                     }
                 }
                 case SP_PAINT_TYPE_PAINTSERVER:
-                    return g_snprintf(b, len, "%s:url(%s);", key, paint->value.paint.uri);
+                    return g_snprintf(b, len, "%s:url(%s);", key, paint->value.href? paint->value.href->getURI()->toString() : "");
                 default:
                     break;
             }
@@ -3691,27 +3654,9 @@ sp_style_write_ifilter(gchar *p, gint const len, gchar const *key,
 static void
 sp_style_paint_clear(SPStyle *style, SPIPaint *paint)
 {
-    if ((paint->type == SP_PAINT_TYPE_PAINTSERVER) && paint->value.paint.server) {
-        if (paint == &style->fill) {
-            if (style->fill_hreffed) {
-                sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
-                style->fill_hreffed = false;
-            }
-            style->fill_release_connection.disconnect();
-            style->fill_modified_connection.disconnect();
-        } else {
-            assert(paint == &style->stroke);  // Only fill & stroke can have a paint server.
-            if (style->stroke_hreffed) {
-                sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
-                style->stroke_hreffed = false;
-            }
-            style->stroke_release_connection.disconnect();
-            style->stroke_modified_connection.disconnect();
-        }
+    if (paint->value.href && paint->value.href->getObject())
+        paint->value.href->detach(); 
 
-        paint->value.paint.server = NULL;
-    }
-    paint->value.paint.uri = NULL;
     paint->type = SP_PAINT_TYPE_NONE;
     delete paint->value.iccColor;
     paint->value.iccColor = NULL;
