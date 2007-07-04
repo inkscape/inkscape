@@ -43,7 +43,9 @@
 # include "internal/cairo-png-out.h"
 # include "internal/cairo-ps-out.h"
 #endif
-#include "internal/pdf-input-cairo.h"
+#ifdef HAVE_POPPLER_GLIB
+# include "internal/pdf-input-cairo.h"
+#endif
 #include "internal/pov-out.h"
 #include "internal/odf.h"
 #include "internal/latex-pstricks-out.h"
@@ -125,7 +127,9 @@ init()
     }
     Internal::CairoPsOutput::init();
 #endif
+#ifdef HAVE_POPPLER_GLIB
     Internal::PdfInputCairo::init();
+#endif
 #ifdef WITH_GNOME_PRINT
     Internal::PrintGNOME::init();
 #endif
