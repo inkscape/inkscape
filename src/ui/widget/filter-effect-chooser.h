@@ -29,7 +29,7 @@ namespace Widget {
 class FilterEffectChooser
 {
 public:
-    virtual ~FilterEffectChooser() {}
+    virtual ~FilterEffectChooser();
 
     virtual Glib::SignalProxy0<void> signal_selection_changed() = 0;
     virtual SPFilter* get_selected_filter() = 0;

@@ -33,6 +33,12 @@ FilterEffectChooser::FilterEffectChooser()
     on_activate_desktop(INKSCAPE, SP_ACTIVE_DESKTOP, this);
 }
 
+FilterEffectChooser::~FilterEffectChooser()
+{
+   _resource_changed.disconnect();
+   _doc_replaced.disconnect();
+}
+
 void FilterEffectChooser::on_activate_desktop(Inkscape::Application*, SPDesktop* desktop, FilterEffectChooser* fec)
 {
     fec->update_filters();
