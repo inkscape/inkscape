@@ -495,6 +495,38 @@ AC_SUBST(LCMS_CFLAGS)
 AC_SUBST(LCMS_LIBS)
 
 dnl ******************************
+dnl Libpoppler checking
+dnl ******************************
+
+POPPLER_CFLAGS=""
+PKG_CHECK_MODULES(POPPLER, poppler >= 0.5, poppler=yes, poppler=no)
+
+if test "x$poppler" = "xyes"; then
+	dnl Working libpoppler
+	POPPLER_LIBS="-lpoppler "
+	dnl Have to test libpoppler-glib presence
+	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.5, poppler_glib=yes, poppler_glib=no)
+	if test "x$poppler_glib" = "xyes"; then
+		dnl Working libpoppler-glib found
+		dnl Check whether the Cairo SVG backend is available
+		PKG_CHECK_MODULES(CAIRO_SVG, cairo-svg, cairo_svg=yes, cairo_svg=no)
+		if test "x$cairo_svg" = "xyes"; then
+			POPPLER_LIBS="$POPPLER_LIBS -lpoppler-glib "
+		fi
+	fi
+fi
+
+if test "x$poppler" = "xyes"; then
+	LIBS="$LIBS $POPPLER_LIBS"
+	AC_DEFINE(HAVE_POPPLER, 1, [Use libpoppler for direct PDF import])
+fi
+if test "x$poppler_glib" = "xyes" -a "x$cairo_svg" = "xyes"; then
+	AC_DEFINE(HAVE_POPPLER_GLIB, 1, [Use libpoppler-glib and Cairo-SVG for PDF import])
+fi
+AC_SUBST(POPPLER_CFLAGS)
+AC_SUBST(POPPLER_LIBS)
+
+dnl ******************************
 dnl Inkboard dependency checking
 dnl ******************************
 

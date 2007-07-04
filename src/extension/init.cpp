@@ -43,6 +43,7 @@
 # include "internal/cairo-png-out.h"
 # include "internal/cairo-ps-out.h"
 #endif
+#include "internal/pdf-input-cairo.h"
 #include "internal/pov-out.h"
 #include "internal/odf.h"
 #include "internal/latex-pstricks-out.h"
@@ -124,6 +125,7 @@ init()
     }
     Internal::CairoPsOutput::init();
 #endif
+    Internal::PdfInputCairo::init();
 #ifdef WITH_GNOME_PRINT
     Internal::PrintGNOME::init();
 #endif

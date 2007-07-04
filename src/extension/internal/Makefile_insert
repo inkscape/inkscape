@@ -29,6 +29,8 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/ps-out.cpp	\
 	extension/internal/pdf-cairo.cpp \
 	extension/internal/pdf-cairo.h \
+	extension/internal/pdf-input-cairo.cpp \
+	extension/internal/pdf-input-cairo.h \
 	extension/internal/cairo-pdf-out.h	\
 	extension/internal/cairo-pdf-out.cpp	\
 	extension/internal/cairo-ps-out.h	\
