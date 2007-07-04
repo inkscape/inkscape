@@ -62,6 +62,7 @@
 #include "util/reverse-list.h"
 
 #include "xml/repr.h"
+#include "extract-uri.h"
 
 #define noSP_ITEM_DEBUG_IDLE
 
@@ -448,7 +449,7 @@ sp_item_set(SPObject *object, unsigned key, gchar const *value)
             break;
         }
         case SP_PROP_CLIP_PATH: {
-            gchar *uri = Inkscape::parse_css_url(value);
+            gchar *uri = extract_uri(value);
             if (uri) {
                 try {
                     item->clip_ref->attach(Inkscape::URI(uri));
@@ -464,7 +465,7 @@ sp_item_set(SPObject *object, unsigned key, gchar const *value)
             break;
         }
         case SP_PROP_MASK: {
-            gchar *uri=Inkscape::parse_css_url(value);
+            gchar *uri = extract_uri(value);
             if (uri) {
                 try {
                     item->mask_ref->attach(Inkscape::URI(uri));
