@@ -228,7 +228,7 @@ void sp_3dbox_recompute_corners (SP3DBox *box, NR::Point const A, NR::Point cons
 {
     sp_3dbox_move_corner_in_XY_plane (box, 2, A);
     sp_3dbox_move_corner_in_XY_plane (box, 1, B);
-    sp_3dbox_move_corner_in_constrained_Z_direction (box, 5, C);
+    sp_3dbox_move_corner_in_Z_direction (box, 5, C);
 }
 
 void
@@ -239,9 +239,12 @@ sp_3dbox_update_curves (SP3DBox *box) {
 }
 
 void
-sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt)
+sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt, Box3D::Axis axes)
 {
     NR::Point A (box->corners[id ^ Box3D::XY]);
+    if (Box3D::is_single_axis_direction (axes)) {
+        pt = Box3D::PerspectiveLine (box->corners[id], axes).closest_to(pt);
+    }
 
     /* set the 'front' corners */
     box->corners[id] = pt;
@@ -272,8 +275,10 @@ sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt)
 }
 
 void
-sp_3dbox_move_corner_in_constrained_Z_direction (SP3DBox *box, guint id, NR::Point pt)
+sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, bool constrained)
 {
+    if (!constrained) sp_3dbox_move_corner_in_XY_plane (box, id, pt, Box3D::XY);
+
     /* set the four corners of the face containing corners[id] */
     box->corners[id] = Box3D::PerspectiveLine (box->corners[id], Box3D::Z).closest_to(pt);
 
@@ -290,6 +295,36 @@ sp_3dbox_move_corner_in_constrained_Z_direction (SP3DBox *box, guint id, NR::Poi
     box->corners[id ^ Box3D::Y] = pl_one.meet(pl_two);
 }
 
+NR::Maybe<NR::Point>
+sp_3dbox_get_center (SP3DBox *box)
+{
+    return sp_3dbox_get_midpoint_between_corners (box, 0, 7);
+}
+
+NR::Maybe<NR::Point>
+sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_corner2)
+{
+    Box3D::Axis corner_axes = (Box3D::Axis) (id_corner1 ^ id_corner2);
+
+    // Is all this sufficiently precise also for degenerate cases?
+    if (sp_3dbox_corners_are_adjacent (id_corner1, id_corner2)) {
+        Box3D::Axis orth_dir = get_perpendicular_axis_direction (corner_axes);
+
+        Box3D::Line diag1 (box->corners[id_corner1], box->corners[id_corner2 ^ orth_dir]);
+        Box3D::Line diag2 (box->corners[id_corner1 ^ orth_dir], box->corners[id_corner2]);
+        NR::Maybe<NR::Point> adjacent_face_center = diag1.intersect(diag2);
+
+        if (!adjacent_face_center) return NR::Nothing();
+
+        Box3D::PerspectiveLine pl (*adjacent_face_center, orth_dir);
+        return pl.intersect(Box3D::PerspectiveLine(box->corners[id_corner1], corner_axes));
+    } else {
+        Box3D::Axis dir = Box3D::extract_single_axis_direction (corner_axes);
+        Box3D::Line diag1 (box->corners[id_corner1], box->corners[id_corner2]);
+        Box3D::Line diag2 (box->corners[id_corner1 ^ dir], box->corners[id_corner2 ^ dir]);
+        return diag1.intersect(diag2);
+    }
+}
 
 /*
   Local Variables:

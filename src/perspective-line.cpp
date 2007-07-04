@@ -19,6 +19,7 @@ PerspectiveLine::PerspectiveLine (NR::Point const &pt, Box3D::Axis const axis, P
         Line (pt, *(perspective->get_vanishing_point(axis)), true)
 {
     g_assert (perspective != NULL);
+    g_assert (Box3D::is_single_axis_direction (axis));
 
     if (perspective->get_vanishing_point(axis)->state == VP_INFINITE) {
         this->set_direction(perspective->get_vanishing_point(axis)->v_dir);

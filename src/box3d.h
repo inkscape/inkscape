@@ -47,9 +47,14 @@ GType sp_3dbox_get_type (void);
 void sp_3dbox_position_set (SP3DBoxContext &bc);
 void sp_3dbox_recompute_corners (SP3DBox *box, NR::Point const pt1, NR::Point const pt2, NR::Point const pt3);
 void sp_3dbox_update_curves (SP3DBox *box);
-void sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt);
-void sp_3dbox_move_corner_in_constrained_Z_direction (SP3DBox *box, guint id, NR::Point pt);
+void sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt, Box3D::Axis axes = Box3D::XY);
+void sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, bool constrained = true);
+NR::Maybe<NR::Point> sp_3dbox_get_center (SP3DBox *box);
+NR::Maybe<NR::Point> sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_corner2);
 
 inline NR::Point sp_3dbox_get_corner (SP3DBox *box, guint id) { return box->corners[id]; }
+inline bool sp_3dbox_corners_are_adjacent (guint id_corner1, guint id_corner2) {
+  return Box3D::is_single_axis_direction ((Box3D::Axis) (id_corner1 ^ id_corner2));
+}
 
 #endif

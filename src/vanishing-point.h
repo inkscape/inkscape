@@ -36,9 +36,30 @@ enum Axis {
 };
 
 
+inline bool is_single_axis_direction (Box3D::Axis dir) {
+    // tests whether dir is nonzero and a power of 2
+    return (!(dir & (dir - 1)) && dir);
+}
+
 /** Given two axis directions out of {X, Y, Z}, returns the remaining one */
 inline Box3D::Axis third_axis_direction (Box3D::Axis dir1, Box3D::Axis dir2) {
     return (Box3D::Axis) ((dir1 + dir2) ^ 0x7);
+}
+
+/* returns the first axis direction occuring in the (possibly compound) expression 'dirs' */
+inline Box3D::Axis extract_single_axis_direction (Box3D::Axis dirs) {
+    if (dirs & Box3D::X) return Box3D::X;
+    if (dirs & Box3D::Y) return Box3D::Y;
+    if (dirs & Box3D::Z) return Box3D::Z;
+    return Box3D::NONE;
+}
+
+/* returns an axis direction perpendicular to the ones occuring in the (possibly compound) expression 'dirs' */
+inline Box3D::Axis get_perpendicular_axis_direction (Box3D::Axis dirs) {
+    if (!(dirs & Box3D::X)) return Box3D::X;
+    if (!(dirs & Box3D::Y)) return Box3D::Y;
+    if (!(dirs & Box3D::Z)) return Box3D::Z;
+    return Box3D::NONE;
 }
 
 

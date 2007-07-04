@@ -539,8 +539,7 @@ static void sp_3dbox_knot_set(SPItem *item, guint knot_id, Box3D::Axis direction
     gdouble height = sp_document_height(doc);
 
     if (direction == Box3D::Z) {
-        sp_3dbox_move_corner_in_constrained_Z_direction (box, knot_id,
-                                                         NR::Point (new_pos[NR::X], height - new_pos[NR::Y]));
+        sp_3dbox_move_corner_in_Z_direction (box, knot_id, NR::Point (new_pos[NR::X], height - new_pos[NR::Y]));
     } else {
         sp_3dbox_move_corner_in_XY_plane (box, knot_id, NR::Point (new_pos[NR::X], height - new_pos[NR::Y]));
     }

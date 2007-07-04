@@ -84,6 +84,9 @@ void VanishingPoint::draw(Box3D::Axis const axis)
             else
                 create_canvas_point(*this, 6.0, 0xffffff00);
             break;
+        default:
+            g_assert_not_reached();
+            break;
     }
 }
 
