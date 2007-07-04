@@ -235,6 +235,7 @@ const EnumData<NR::FilterPrimitiveType> FPData[NR::NR_FILTER_ENDPRIMITIVETYPE] =
     {NR::NR_FILTER_TURBULENCE,        _("Turbulence"),         "svg:feTurbulence"}
 };
 const Converter<NR::FilterPrimitiveType> FPConverter(FPData, NR::NR_FILTER_ENDPRIMITIVETYPE);
+
 const EnumData<NR::FilterBlendMode> BlendModeData[NR::BLEND_ENDMODE] = {
     {NR::BLEND_NORMAL, _("Normal"), "normal"},
     {NR::BLEND_MULTIPLY, _("Multiply"), "multiply"},

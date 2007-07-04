@@ -24,7 +24,7 @@ enum FilterPrimitiveType {
 };
 //const int Filter::_filter_primitive_type_count = 16;
 
-enum {
+enum FilterSlotType {
     NR_FILTER_SLOT_NOT_SET = -1,
     NR_FILTER_SOURCEGRAPHIC = -2,
     NR_FILTER_SOURCEALPHA = -3,

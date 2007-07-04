@@ -21,6 +21,7 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/menu.h>
+#include <gtkmm/sizegroup.h>
 #include <gtkmm/treeview.h>
 
 #include "attributes.h"
@@ -52,7 +53,7 @@ private:
         virtual void select_filter(const SPFilter*);
         virtual Glib::SignalProxy0<void> signal_selection_changed();
     private:
-        void filter_list_button_press(GdkEventButton*);
+        void filter_list_button_release(GdkEventButton*);
         void add_filter();
         void remove_filter();
         void duplicate_filter();
@@ -80,17 +81,46 @@ private:
         Gtk::TreeModelColumn<Glib::ustring> id;
     };
 
-    class SettingsFrame : public Gtk::Table
+    class PrimitiveList : public Gtk::TreeView
     {
     public:
-        SettingsFrame();
+        PrimitiveList(FilterEffectsDialog&);
 
-        void init(Gtk::VBox& box);
-        void add_setting(Gtk::Widget& w, const Glib::ustring& label);
+        Glib::SignalProxy0<void> signal_selection_changed();
+
+        void update();
+        void set_menu(Glib::RefPtr<Gtk::Menu>);
+
+        SPFilterPrimitive* get_selected();
+        void select(SPFilterPrimitive *prim);
+    protected:
+        bool on_expose_event(GdkEventExpose*);
+        bool on_button_press_event(GdkEventButton*);
+        bool on_motion_notify_event(GdkEventMotion*);
+        bool on_button_release_event(GdkEventButton*);
+        void on_drag_end(const Glib::RefPtr<Gdk::DragContext>&);
     private:
-        Gtk::Alignment _alignment;
-        Gtk::Table _table;
-        int _where;
+        bool get_coords_at_pos(const int x, const int y, int& row, int& col, SPFilterPrimitive **prim);
+        const Gtk::TreeIter find_result(const Gtk::TreeIter& start);
+        void draw_connection(const Gtk::TreeIter&, const int x, const int y);
+
+        FilterEffectsDialog& _dialog;
+        Glib::RefPtr<Gtk::ListStore> _primitive_model;
+        PrimitiveColumns _primitive_columns;
+        Glib::RefPtr<Gtk::Menu> _primitive_menu;
+        int _in_drag;
+    };
+
+    class SettingsGroup : public Gtk::VBox
+    {
+    public:
+        SettingsGroup();
+
+        void init(Gtk::VBox& box, Glib::RefPtr<Gtk::SizeGroup> sg);
+        void add_setting(Gtk::Widget& w, const Glib::ustring& label = "");
+        void add_setting(std::vector<Gtk::Widget*>& w, const Glib::ustring& label = "");
+    private:
+        Glib::RefPtr<Gtk::SizeGroup> _sizegroup;
     };
 
     void init_settings_widgets();
@@ -99,77 +129,73 @@ private:
     void add_primitive();
     void remove_primitive();
     void duplicate_primitive();
-    void primitive_name_edited(const Glib::ustring& path, const Glib::ustring& text);
-    void primitive_list_button_press(GdkEventButton* event);
-    void primitive_list_drag_end(const Glib::RefPtr<Gdk::DragContext>&);
 
     void set_attr(const SPAttributeEnum);
     void update_settings_view();
-    void update_primitive_list();
-
-    SPFilterPrimitive* get_selected_primitive();
-    void select_primitive(SPFilterPrimitive *prim);
 
     // Filter effect selection
     FilterModifier _filter_modifier;
 
     // View/add primitives
     Gtk::VBox _primitive_box;
-    Gtk::TreeView _primitive_list;
-    Glib::RefPtr<Gtk::ListStore> _primitive_model;
-    PrimitiveColumns _primitive_columns;
-    Glib::RefPtr<Gtk::Menu> _primitive_menu;
+    PrimitiveList _primitive_list;
     UI::Widget::ComboBoxEnum<NR::FilterPrimitiveType> _add_primitive_type;
     Gtk::Button _add_primitive;
 
     // Right pane (filter effect primitive settings)
     Gtk::VBox _settings;
+    Glib::RefPtr<Gtk::SizeGroup> _settings_labels;
     Gtk::Label _empty_settings;
 
-    SettingsFrame _blend;
+    // Generic settings
+    SettingsGroup _generic_settings;
+    Gtk::ComboBoxText _primitive_input1;
+
+    SettingsGroup _blend;
     UI::Widget::ComboBoxEnum<NR::FilterBlendMode> _blend_mode;
 
-    SettingsFrame _colormatrix;
+    SettingsGroup _colormatrix;
     Gtk::ComboBoxText _colormatrix_type;
 
-    SettingsFrame _componenttransfer;
+    SettingsGroup _componenttransfer;
 
-    SettingsFrame _composite;
+    SettingsGroup _composite;
 
-    SettingsFrame _convolvematrix;
+    SettingsGroup _convolvematrix;
 
-    SettingsFrame _diffuselighting;
+    SettingsGroup _diffuselighting;
 
-    SettingsFrame _displacementmap;
+    SettingsGroup _displacementmap;
 
-    SettingsFrame _flood;
+    SettingsGroup _flood;
 
-    SettingsFrame _gaussianblur;
+    SettingsGroup _gaussianblur;
     SpinSlider _gaussianblur_stddeviation;
 
-    SettingsFrame _image;
+    SettingsGroup _image;
 
-    SettingsFrame _merge;
+    SettingsGroup _merge;
 
-    SettingsFrame _morphology;
+    SettingsGroup _morphology;
     Gtk::ComboBoxText _morphology_operator;
     SpinSlider _morphology_radius;
 
-    SettingsFrame _offset;
+    SettingsGroup _offset;
     SpinSlider _offset_dx;
     SpinSlider _offset_dy;
 
-    SettingsFrame _specularlighting;
+    SettingsGroup _specularlighting;
 
-    SettingsFrame _tile;
+    SettingsGroup _tile;
 
-    SettingsFrame _turbulence;
+    SettingsGroup _turbulence;
     SpinSlider _turbulence_basefrequency;
     SpinSlider _turbulence_numoctaves;
     SpinSlider _turbulence_seed;
-    Gtk::ComboBoxText _turbulence_stitchtiles;
-    Gtk::ComboBoxText _turbulence_type;
-
+    Gtk::CheckButton _turbulence_stitchtiles;
+    Gtk::RadioButton::Group _turbulence_type;
+    Gtk::RadioButton _turbulence_fractalnoise;
+    Gtk::RadioButton _turbulence_turbulence;
 
     FilterEffectsDialog(FilterEffectsDialog const &d);
     FilterEffectsDialog& operator=(FilterEffectsDialog const &d);
