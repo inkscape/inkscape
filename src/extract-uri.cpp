@@ -7,9 +7,15 @@
 // http://www.w3.org/TR/CSS21/syndata.html#uri
 gchar *extract_uri(gchar const *s)
 {
-    gchar* result = 0;
+    if (!s)
+        return NULL;
+
+    gchar* result = NULL;
     gchar const *sb = s;
-    g_assert( strncmp(sb, "url", 3) == 0 );
+    if ( strlen(sb) < 4 || strncmp(sb, "url", 3) != 0 ) {
+        return NULL;
+    }
+
     sb += 3;
 
     // This first whitespace technically is not allowed.
