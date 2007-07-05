@@ -224,7 +224,9 @@ static gboolean onButtonPressed (GtkWidget *widget, GdkEventButton *event, gpoin
         {
             if (event->button == 1)
             { 
-                item->buttonClicked(false);
+				if(event->state & GDK_SHIFT_MASK)
+					item->buttonClicked(true);	/* the button was pressed with shift held down. set the stroke */
+                else item->buttonClicked(false);
                 return TRUE; /* we handled this */    
             }
             else if (event->button == 3)

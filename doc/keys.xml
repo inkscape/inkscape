@@ -176,6 +176,7 @@ RFE</a>).</p>
 <note>These keys work both in the floating palette dialog and in the palette frame at the bottom of the window.</note>
 <mouse><key><left-click/></key> <action>set fill color on selection</action></mouse>
 <mouse><key><shift/><left-click/></key> <action>set stroke color on selection</action></mouse>
+<mouse><key><right-click/></key> <action>set stroke color on selection</action></mouse>
 <mouse><key><left-drag/></key> <action>drag fill color to objects</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>drag stroke color to objects</action></mouse>
 <note>To change fill/stroke of an object by dragging color on it, that object need not be selected.</note>
