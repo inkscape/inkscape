@@ -93,8 +93,10 @@ RegisteredCheckButton::on_toggled()
 
     SPDocument *doc = sp_desktop_document(dt);
 
-    if (!repr)
-        repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
+    //always get the obj.repr. of the current view, as the focus
+    //might have changed when multiple documents are open. Never
+    //use the old value of "repr" here 
+    repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
 
     _wr->setUpdating (true);
 
