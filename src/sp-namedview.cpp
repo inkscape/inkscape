@@ -431,7 +431,12 @@ sp_namedview_add_grid(SPNamedView *nv, Inkscape::XML::Node *repr, SPDesktop *des
     if (!grid) {
         //create grid object
         Inkscape::GridType gridtype = Inkscape::CanvasGrid::getGridTypeFromSVGName(repr->attribute("type"));
-        grid = Inkscape::CanvasGrid::NewGrid(nv, repr, gridtype);
+        SPDocument *doc = NULL;
+        if (desktop)
+            doc = sp_desktop_document(desktop);
+        else
+            doc = sp_desktop_document(static_cast<SPDesktop*>(nv->views->data));
+        grid = Inkscape::CanvasGrid::NewGrid(nv, repr, doc, gridtype);
         nv->grids = g_slist_append(nv->grids, grid);
     }
     

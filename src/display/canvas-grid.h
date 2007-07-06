@@ -31,6 +31,7 @@
 
 struct SPDesktop;
 struct SPNamedView;
+class SPDocument;
 
 namespace Inkscape {
 
@@ -66,7 +67,7 @@ GtkType grid_canvasitem_get_type (void);
 
 class CanvasGrid {
 public:
-    CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr);
+    CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc);
     virtual ~CanvasGrid();
     
     static const char * getName(GridType type);
@@ -74,8 +75,8 @@ public:
     static GridType     getGridTypeFromSVGName(const char * typestr);
     static GridType     getGridTypeFromName(const char * typestr);
     
-    static CanvasGrid* NewGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, GridType gridtype);
-    static void writeNewGridToRepr(Inkscape::XML::Node * repr, GridType gridtype);
+    static CanvasGrid* NewGrid(SPNamedView * nv, Inkscape::XML::Node * repr, SPDocument *doc, GridType gridtype);
+    static void writeNewGridToRepr(Inkscape::XML::Node * repr, SPDocument * doc, GridType gridtype);
 
     GridCanvasItem * createCanvasItem(SPDesktop * desktop);
     
@@ -88,6 +89,7 @@ public:
     virtual Gtk::Widget & getWidget() = 0;
 
     Inkscape::XML::Node * repr;
+    SPDocument *doc;
     
     Inkscape::Snapper* snapper;
 
@@ -109,7 +111,7 @@ private:
 
 class CanvasXYGrid : public CanvasGrid {
 public:
-    CanvasXYGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr);
+    CanvasXYGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc);
     ~CanvasXYGrid();
 
     void Update (NR::Matrix const &affine, unsigned int flags);

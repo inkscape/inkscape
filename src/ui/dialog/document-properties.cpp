@@ -529,10 +529,12 @@ on_doc_replaced (SPDesktop* dt, SPDocument* doc)
 void
 DocumentProperties::onNewGrid()
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
+    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(dt));
+    SPDocument *doc = sp_desktop_document(dt);
 
     Glib::ustring typestring = _grids_combo_gridtype.get_active_text();
-    CanvasGrid::writeNewGridToRepr(repr, CanvasGrid::getGridTypeFromName(typestring.c_str()));
+    CanvasGrid::writeNewGridToRepr(repr, doc, CanvasGrid::getGridTypeFromName(typestring.c_str()));
 }
 
 
@@ -564,7 +566,7 @@ DocumentProperties::onRemoveGrid()
         // delete the grid that corresponds with the selected tab
         // when the grid is deleted from SVG, the SPNamedview handler automatically deletes the object, so found_grid becomes an invalid pointer!
         found_grid->repr->parent()->removeChild(found_grid->repr);
-	sp_document_done(sp_desktop_document(dt), SP_VERB_DIALOG_NAMEDVIEW, _("Remove grid"));
+        sp_document_done(sp_desktop_document(dt), SP_VERB_DIALOG_NAMEDVIEW, _("Remove grid"));
     }
 }
 

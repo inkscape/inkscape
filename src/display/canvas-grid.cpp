@@ -150,9 +150,10 @@ grid_canvasitem_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
         NULL  /* order_changed */
     };
 
-CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr)
+CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc)
 {
     repr = in_repr;
+    doc = in_doc;
     if (repr) {
         repr->addListener (&_repr_events, this);
     }
@@ -216,37 +217,41 @@ CanvasGrid::getGridTypeFromName(const char * typestr)
 *  writes an <inkscape:grid> child to repr.
 */
 void
-CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, GridType gridtype)
+CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, SPDocument * doc, GridType gridtype)
 {
     if (!repr) return;
     if (gridtype > GRID_MAXTYPENR) return;
 
     // first create the child xml node, then hook it to repr. This order is important, to not set off listeners to repr before the new node is complete.
 
-    SPDocument *current_document = sp_desktop_document(SP_ACTIVE_DESKTOP);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_document);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
     Inkscape::XML::Node *newnode;
     newnode = xml_doc->createElement("inkscape:grid");
     newnode->setAttribute("type", getSVGName(gridtype));
 
     repr->appendChild(newnode);
+//    Inkscape::GC::release(repr);  FIX THIS. THIS SHOULD BE HERE!!!
 
-    sp_document_done(current_document, SP_VERB_DIALOG_NAMEDVIEW, _("Create new grid"));
+    sp_document_done(doc, SP_VERB_DIALOG_NAMEDVIEW, _("Create new grid"));
 }
 
 /*
 * Creates a new CanvasGrid object of type gridtype
 */
 CanvasGrid*
-CanvasGrid::NewGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, GridType gridtype)
+CanvasGrid::NewGrid(SPNamedView * nv, Inkscape::XML::Node * repr, SPDocument * doc, GridType gridtype)
 {
-    if (!in_repr) return NULL;
+    if (!repr) return NULL;
+    if (!doc) {
+        g_error("CanvasGrid::NewGrid - doc==NULL");
+        return NULL;
+    }
 
     switch (gridtype) {
         case GRID_RECTANGULAR:
-            return (CanvasGrid*) new CanvasXYGrid(nv, in_repr);
+            return (CanvasGrid*) new CanvasXYGrid(nv, repr, doc);
         case GRID_AXONOMETRIC:
-            return (CanvasGrid*) new CanvasAxonomGrid(nv, in_repr);
+            return (CanvasGrid*) new CanvasAxonomGrid(nv, repr, doc);
     }
 
     return NULL;
@@ -342,8 +347,8 @@ attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int star
     }
 }
 
-CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr)
-    : CanvasGrid(nv, in_repr), table(1, 1)
+CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
+    : CanvasGrid(nv, in_repr, in_doc), table(1, 1)
 {
     origin[NR::X] = origin[NR::Y] = 0.0;
     color = DEFAULTGRIDCOLOR;
@@ -360,24 +365,24 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr)
     table.set_spacings(2);
     vbox.pack_start(table, false, false, 0);
 
-    _rumg.init (_("Grid _units:"), "units", _wr, repr);
+    _rumg.init (_("Grid _units:"), "units", _wr, repr, doc);
     _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
-                  "originx", _rumg, _wr, repr);
+                  "originx", _rumg, _wr, repr, doc);
     _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
-                  "originy", _rumg, _wr, repr);
+                  "originy", _rumg, _wr, repr, doc);
     _rsu_sx.init (_("Spacing _X:"), _("Distance between vertical grid lines"),
-                  "spacingx", _rumg, _wr, repr);
+                  "spacingx", _rumg, _wr, repr, doc);
     _rsu_sy.init (_("Spacing _Y:"), _("Distance between horizontal grid lines"),
-                  "spacingy", _rumg, _wr, repr);
+                  "spacingy", _rumg, _wr, repr, doc);
     _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"),
-                    _("Color of grid lines"), "color", "opacity", _wr, repr);
+                    _("Color of grid lines"), "color", "opacity", _wr, repr, doc);
     _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"),
                      _("Color of the major (highlighted) grid lines"),
-                     "empcolor", "empopacity", _wr, repr);
-    _rsi.init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr);
+                     "empcolor", "empopacity", _wr, repr, doc);
+    _rsi.init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
     _rcb_dotted.init ( _("_Show dots instead of lines"), 
                        _("If set, displays dots at gridpoints instead of gridlines"),
-                        "dotted", _wr, false, repr);
+                        "dotted", _wr, false, repr, doc);
 
     const Gtk::Widget* widget_array[] =
     {

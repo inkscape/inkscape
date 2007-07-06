@@ -195,8 +195,8 @@ attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int star
     }
 }
 
-CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr)
-    : CanvasGrid(nv, in_repr), table(1, 1)
+CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
+    : CanvasGrid(nv, in_repr, in_doc), table(1, 1)
 {
 
     origin[NR::X] = origin[NR::Y] = 0.0;
@@ -223,23 +223,23 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     table.set_spacings(2);
     vbox.pack_start(table, false, false, 0);
 
-    _rumg.init (_("Grid _units:"), "units", _wr, repr);
+    _rumg.init (_("Grid _units:"), "units", _wr, repr, doc);
     _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
-                  "originx", _rumg, _wr, repr);
+                  "originx", _rumg, _wr, repr, doc);
     _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
-                  "originy", _rumg, _wr, repr);
+                  "originy", _rumg, _wr, repr, doc);
     _rsu_sy.init (_("Spacing _Y:"), _("Base length of z-axis"),
-                  "spacingy", _rumg, _wr, repr);
+                  "spacingy", _rumg, _wr, repr, doc);
     _rsu_ax.init (_("Angle X:"), _("Angle of x-axis"),
-                  "gridanglex", _rumg, _wr, repr);
+                  "gridanglex", _rumg, _wr, repr, doc);
     _rsu_az.init (_("Angle Z:"), _("Angle of z-axis"),
-                  "gridanglez", _rumg, _wr, repr);
+                  "gridanglez", _rumg, _wr, repr, doc);
     _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"),
-                    _("Color of grid lines"), "color", "opacity", _wr, repr);
+                    _("Color of grid lines"), "color", "opacity", _wr, repr, doc);
     _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"),
                      _("Color of the major (highlighted) grid lines"),
-                     "empcolor", "empopacity", _wr, repr);
-    _rsi.init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr);
+                     "empcolor", "empopacity", _wr, repr, doc);
+    _rsi.init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
 
     const Gtk::Widget* widget_array[] =
     {

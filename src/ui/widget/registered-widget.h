@@ -16,6 +16,7 @@
 #include <gtkmm/adjustment.h>
 
 class SPUnit;
+class SPDocument;
 
 namespace Gtk {
     class HScale;
@@ -37,7 +38,7 @@ class RegisteredCheckButton {
 public:
     RegisteredCheckButton();
     ~RegisteredCheckButton();
-    void init (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right=true, Inkscape::XML::Node* repr_in=NULL);
+    void init (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right=true, Inkscape::XML::Node* repr_in=NULL, SPDocument *doc_in=NULL);
     void setActive (bool);
 
     Gtk::ToggleButton *_button;
@@ -49,13 +50,14 @@ protected:
     Glib::ustring      _key;
     void on_toggled();
     Inkscape::XML::Node *repr;
+    SPDocument *doc;
 };
 
 class RegisteredUnitMenu {
 public:
     RegisteredUnitMenu();
     ~RegisteredUnitMenu();
-    void init (const Glib::ustring& label, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in=NULL);
+    void init (const Glib::ustring& label, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in=NULL, SPDocument *doc_in=NULL);
     void setUnit (const SPUnit*);
     Gtk::Label   *_label;
     UnitMenu     *_sel;
@@ -66,6 +68,7 @@ protected:
     Registry     *_wr;
     Glib::ustring _key;
     Inkscape::XML::Node *repr;
+    SPDocument *doc;
 };
 
 class RegisteredScalarUnit {
@@ -77,7 +80,8 @@ public:
             const Glib::ustring& key, 
             const RegisteredUnitMenu &rum,
             Registry& wr,
-            Inkscape::XML::Node* repr_in=NULL);
+            Inkscape::XML::Node* repr_in=NULL,
+            SPDocument *doc_in=NULL);
     ScalarUnit* getSU();
     void setValue (double);
 
@@ -89,6 +93,7 @@ protected:
     Glib::ustring    _key;
     void on_value_changed();
     Inkscape::XML::Node *repr;
+    SPDocument *doc;
 };
 
 class RegisteredColorPicker {
@@ -101,7 +106,8 @@ public:
             const Glib::ustring& ckey, 
             const Glib::ustring& akey,
             Registry& wr,
-            Inkscape::XML::Node* repr_in=NULL);
+            Inkscape::XML::Node* repr_in=NULL,
+            SPDocument *doc_in=NULL);
     void setRgba32 (guint32);
     void closeWindow();
 
@@ -114,6 +120,7 @@ protected:
     void on_changed (guint32);
     sigc::connection _changed_connection;
     Inkscape::XML::Node *repr;
+    SPDocument *doc;
 };
 
 class RegisteredSuffixedInteger {
@@ -124,7 +131,8 @@ public:
                const Glib::ustring& label2, 
                const Glib::ustring& key,
                Registry& wr,
-               Inkscape::XML::Node* repr_in=NULL);
+               Inkscape::XML::Node* repr_in=NULL,
+               SPDocument *doc_in=NULL);
     void setValue (int);
     Gtk::Label *_label;
     Gtk::HBox _hbox;
@@ -138,6 +146,7 @@ protected:
     sigc::connection _changed_connection;
     void on_value_changed();
     Inkscape::XML::Node *repr;
+    SPDocument *doc;
 };
 
 class RegisteredRadioButtonPair {
@@ -151,7 +160,8 @@ public:
                const Glib::ustring& tip2, 
                const Glib::ustring& key,
                Registry& wr,
-               Inkscape::XML::Node* repr_in=NULL);
+               Inkscape::XML::Node* repr_in=NULL,
+               SPDocument *doc_in=NULL);
     void setValue (bool second);
     Gtk::HBox *_hbox;
 
@@ -163,6 +173,7 @@ protected:
     sigc::connection _changed_connection;
     void on_value_changed();
     Inkscape::XML::Node *repr;
+    SPDocument *doc;
 };
 
 
