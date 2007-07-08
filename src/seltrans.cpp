@@ -765,10 +765,6 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
 
     knot->desktop->setPosition(*position);
 
-    if (state & GDK_MOD1_MASK) {
-        *position = _point + ( *position - _point ) / 10;
-    }
-
     if ((!(state & GDK_SHIFT_MASK) == !(_state == STATE_ROTATE)) && (&handle != &handle_center)) {
         _origin = _opposite;
         _origin_for_bboxpoints = _opposite_for_bboxpoints;
@@ -878,6 +874,15 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
             if ( fabs(s[i]) < 1e-9 ) {
                 s[i] = 1e-9;
             }
+        }
+    }
+
+    if (state & GDK_MOD1_MASK) { // scale by an integer multiplier/divider
+        for ( unsigned int i = 0 ; i < 2 ; i++ ) {
+            if (fabs(s[i]) > 1) 
+                s[i] = round(s[i]);
+            else 
+                s[i] = 1/round(1/(MIN(s[i], 10)));
         }
     }
 
@@ -1007,6 +1012,13 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
                 / ( _point[axis] - _origin[axis] ) );
     if ( fabs(s[axis]) < 1e-15 ) {
         s[axis] = 1e-15;
+    }
+
+    if (state & GDK_MOD1_MASK) { // scale by an integer multiplier/divider
+        if (fabs(s[axis]) > 1) 
+            s[axis] = round(s[axis]);
+        else 
+            s[axis] = 1/round(1/(MIN(s[axis], 10)));
     }
 
     /* Get a STL list of the selected items.
