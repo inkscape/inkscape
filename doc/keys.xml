@@ -497,12 +497,11 @@ groups) with the same effect as Alt+click.)</note>
 <title>Scale by handles</title>
 <mouse><key><left-drag/></key> <action>scale</action></mouse>
 <mouse><key><ctrl/><left-drag/></key> <action>scale preserving aspect ratio</action></mouse>
-<!--<mouse><key><ctrl/><left-drag/></key> only smaller, keep aspect ratio--> <!-- TO BE REMOVED -->
 <mouse><key><shift/><left-drag/></key> <action>symmetric transformation</action></mouse>
 <note>Holding Shift while transforming makes transformation symmetric around the center of the selection.</note>
 <!-- FIXME: why not disable snapping? inconsistent! -->
-<mouse><key><alt/><left-drag/></key> <action>slow movement</action></mouse>
-<note>Holding Alt while transforming makes transformation lag behind mouse movement, allowing finer changes.</note>
+<mouse><key><alt/><left-drag/></key> <action>scale by integer</action></mouse>
+<note>Hold Alt while scaling to limit scale to 2, 3, 4, etc. or 1/2, 1/3, 1/4 etc. of the initial size.</note>
 </group>
 
 <group>
