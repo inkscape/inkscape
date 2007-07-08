@@ -55,7 +55,7 @@ static SPKnotHolder *sp_arc_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_star_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_spiral_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_offset_knot_holder(SPItem *item, SPDesktop *desktop);
-static SPKnotHolder *sp_path_knot_holder(SPItem *item, SPDesktop *desktop);
+static SPKnotHolder *sp_misc_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_flowtext_knot_holder(SPItem *item, SPDesktop *desktop);
 static void sp_pat_knot_holder(SPItem *item, SPKnotHolder *knot_holder);
 
@@ -74,10 +74,10 @@ sp_item_knot_holder(SPItem *item, SPDesktop *desktop)
         return sp_spiral_knot_holder(item, desktop);
     } else if (SP_IS_OFFSET(item)) {
         return sp_offset_knot_holder(item, desktop);
-    } else if (SP_IS_PATH(item)) {
-        return sp_path_knot_holder(item, desktop);
     } else if (SP_IS_FLOWTEXT(item) && SP_FLOWTEXT(item)->has_internal_frame()) {
         return sp_flowtext_knot_holder(item, desktop);
+    } else {
+        return sp_misc_knot_holder(item, desktop);
     }
 
     return NULL;
@@ -1157,7 +1157,7 @@ sp_offset_knot_holder(SPItem *item, SPDesktop *desktop)
 }
 
 static SPKnotHolder *
-sp_path_knot_holder(SPItem *item, SPDesktop *desktop) // FIXME: eliminate, instead make a pattern-drag similar to gradient-drag
+sp_misc_knot_holder(SPItem *item, SPDesktop *desktop) // FIXME: eliminate, instead make a pattern-drag similar to gradient-drag
 {
     if ((SP_OBJECT(item)->style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
         && SP_IS_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style)))
