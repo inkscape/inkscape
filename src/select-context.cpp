@@ -858,6 +858,15 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         ret = TRUE;
                     }
                     break;
+                case GDK_s:
+                case GDK_S:
+                    if (MOD__SHIFT_ONLY) {
+                        if (!selection->isEmpty()) {
+                            seltrans->increaseState();
+                        }
+                        ret = TRUE;
+                    }
+                    break;                  
                 default:
                     break;
             }
