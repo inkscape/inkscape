@@ -114,6 +114,9 @@ public:
 		return (bool)_uri;
 	}
 
+  SPDocument *getOwnerDocument() {return _owner_document;}
+  SPObject *getOwnerObject() {return _owner;}
+
 protected:
 	virtual bool _acceptObject(SPObject *obj) const { return true; }
 
