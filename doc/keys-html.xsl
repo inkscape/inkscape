@@ -22,7 +22,7 @@ It is generated automatically from doc/keys.xml by doc/keys-html.xsl.
 <style type="text/css">
 .key {font-weight: bold}
 .action {}
-.note {padding-left: 50px; font-size: 70%}
+.note {padding-left: 100px; font-size: 70%}
 .contents {padding: 1em; padding-left: 50px; background-color: #eeeeee; font-size: small; line-height: 1.7em;}
 .contents-title {font-size: large; font-weight: bold; letter-spacing: 0.4em;}
 .contents-section {font-size: large; font-weight: bold;}
@@ -98,7 +98,7 @@ h4 {font-weight: bold; font-style: italic; margin-top: 1em; padding-left: 50px; 
 
 <xsl:template match="k:keys | k:mouse">
 <tr bgcolor="{ancestor::k:section/@color}">
-<td align="right">
+<td align="right" width="40%">
 <xsl:choose>
 <xsl:when test="count(k:key) = 2">
 <span class="key"><xsl:apply-templates select="k:key[1]"/></span>,
