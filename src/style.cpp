@@ -2049,8 +2049,15 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
 
 
 static void
-sp_style_set_ipaint_to_uri(SPIPaint *paint, const Inkscape::URI *uri)
+sp_style_set_ipaint_to_uri(SPStyle *style, SPIPaint *paint, const Inkscape::URI *uri, SPDocument *document)
 {
+    // it may be that this style's SPIPaint has not yet created its URIReference;
+    // now that we have a document, we can create it here
+    if (!paint->value.href && document) {
+        paint->value.href = new SPPaintServerReference(document);
+        paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun((paint == &style->fill)? sp_style_fill_paint_server_ref_changed : sp_style_stroke_paint_server_ref_changed), style));
+    }
+
     if (paint->value.href && paint->value.href->getObject())
         paint->value.href->detach();
 
@@ -2065,16 +2072,16 @@ sp_style_set_ipaint_to_uri(SPIPaint *paint, const Inkscape::URI *uri)
 }
 
 static void
-sp_style_set_ipaint_to_uri_string (SPIPaint *paint, const gchar *uri)
+sp_style_set_ipaint_to_uri_string (SPStyle *style, SPIPaint *paint, const gchar *uri)
 {
     const Inkscape::URI IURI(uri);
-    sp_style_set_ipaint_to_uri(paint, &IURI);
+    sp_style_set_ipaint_to_uri(style, paint, &IURI, style->document);
 }
 
 void
 sp_style_set_to_uri_string (SPStyle *style, bool isfill, const gchar *uri)
 {
-    sp_style_set_ipaint_to_uri_string (isfill? &style->fill : &style->stroke, uri);
+    sp_style_set_ipaint_to_uri_string (style, isfill? &style->fill : &style->stroke, uri);
 }
 
 /**
@@ -2098,8 +2105,9 @@ sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
             sp_color_copy(&paint->value.color, &parent->value.color);
             break;
         case SP_PAINT_TYPE_PAINTSERVER:
-            if (parent->value.href)
-                sp_style_set_ipaint_to_uri(paint, parent->value.href->getURI());
+            if (parent->value.href) {
+                sp_style_set_ipaint_to_uri(style, paint, parent->value.href->getURI(), parent->value.href->getOwnerDocument());
+            }
             break;
         case SP_PAINT_TYPE_NONE:
             break;
@@ -3009,7 +3017,7 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
             paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun((paint == &style->fill)? sp_style_fill_paint_server_ref_changed : sp_style_stroke_paint_server_ref_changed), style));
         }
 
-        sp_style_set_ipaint_to_uri_string (paint, uri);
+        sp_style_set_ipaint_to_uri_string (style, paint, uri);
 
         g_free (uri);
         
