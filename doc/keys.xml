@@ -488,7 +488,7 @@ groups) with the same effect as Alt+click.)</note>
 
 <group>
 <title>Transform (mouse)</title>
-<mouse><key><left-click/></key> <action>toggle scale/rotation handles</action></mouse>
+<mouse><key><left-click/></key><key><shift/>S</key> <action>toggle scale/rotation handles</action></mouse>
 <mouse><key><left-drag/></key> <action>scale (with scale handles)</action></mouse>
 <mouse><key><left-drag/></key> <action>rotate or skew (with rotation handles)</action></mouse>
 </group>
