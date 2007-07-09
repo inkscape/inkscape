@@ -21,6 +21,8 @@ example_DATA = \
 	gallardo.svgz \
 	gradient-mesh-experimental.svgz \
 	rope-3D.svg \
-	animated-clock.svg
+	animated-clock.svg \
+	blend_modes.svg \
+	flow-go.svg
 
 EXTRA_DIST = $(example_DATA)

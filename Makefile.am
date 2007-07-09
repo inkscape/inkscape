@@ -96,13 +96,17 @@ EXTRA_DIST = \
 	packaging/macosx/Resources/MenuBar.nib/classes.nib	\
 	packaging/macosx/Resources/MenuBar.nib/info.nib	\
 	packaging/macosx/Resources/MenuBar.nib/objects.xib	\
-	packaging/macosx/Resources/EPS.icns	\
-	packaging/macosx/Resources/EPSI.icns	\
-	packaging/macosx/Resources/Inkscape.icns	\
-	packaging/macosx/Resources/SVG_plain.icns	\
+	packaging/macosx/Resources/inkscape_ai.icns	\
+	packaging/macosx/Resources/inkscape_document.icns	\
+	packaging/macosx/Resources/inkscape_eps.icns	\
+	packaging/macosx/Resources/inkscape_epsi.icns	\
+	packaging/macosx/Resources/inkscape_pdf.icns	\
+	packaging/macosx/Resources/inkscape_ps.icns	\
 	packaging/macosx/Resources/inkscape_svg.icns	\
+	packaging/macosx/Resources/inkscape_svgz.icns	\
+	packaging/macosx/Resources/inkscape_wmf.icns	\
+	packaging/macosx/Resources/Inkscape.icns	\
 	packaging/macosx/Resources/openDoc	\
-	packaging/macosx/Resources/postscript.icns	\
 	packaging/macosx/Resources/script	\
 	packaging/macosx/Resources/ProgressWindow.nib/classes.nib	\
 	packaging/macosx/Resources/ProgressWindow.nib/info.nib	\
