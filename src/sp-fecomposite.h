@@ -16,12 +16,25 @@
 #include "sp-filter.h"
 #include "sp-fecomposite-fns.h"
 
+enum FeCompositeOperator {
+    // Default value is 'over', but let's distinquish specifying the
+    // default and implicitely using the default
+    COMPOSITE_DEFAULT,
+    COMPOSITE_OVER,
+    COMPOSITE_IN,
+    COMPOSITE_OUT,
+    COMPOSITE_ATOP,
+    COMPOSITE_XOR,
+    COMPOSITE_ARITHMETIC
+};
+
 /* FeComposite base class */
 class SPFeCompositeClass;
 
 struct SPFeComposite : public SPFilterPrimitive {
-    /** COMPOSITE ATTRIBUTES HERE */
-    
+    FeCompositeOperator composite_operator;
+    double k1, k2, k3, k4;
+    int in2;
 };
 
 struct SPFeCompositeClass {

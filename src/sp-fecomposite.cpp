@@ -21,7 +21,7 @@
 #include "svg/svg.h"
 #include "sp-fecomposite.h"
 #include "xml/repr.h"
-
+#include "display/nr-filter-composite.h"
 
 /* FeComposite base class */
 
@@ -33,6 +33,7 @@ static void sp_feComposite_release(SPObject *object);
 static void sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feComposite_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feComposite_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void sp_feComposite_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feComposite_parent_class;
 
@@ -61,6 +62,7 @@ static void
 sp_feComposite_class_init(SPFeCompositeClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
+    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
 
     feComposite_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
@@ -69,11 +71,19 @@ sp_feComposite_class_init(SPFeCompositeClass *klass)
     sp_object_class->write = sp_feComposite_write;
     sp_object_class->set = sp_feComposite_set;
     sp_object_class->update = sp_feComposite_update;
+
+    sp_primitive_class->build_renderer = sp_feComposite_build_renderer;
 }
 
 static void
 sp_feComposite_init(SPFeComposite *feComposite)
 {
+    feComposite->composite_operator = COMPOSITE_DEFAULT;
+    feComposite->k1 = 0;
+    feComposite->k2 = 0;
+    feComposite->k3 = 0;
+    feComposite->k4 = 0;
+    feComposite->in2 = NR::NR_FILTER_SLOT_NOT_SET;
 }
 
 /**
@@ -88,7 +98,16 @@ sp_feComposite_build(SPObject *object, SPDocument *document, Inkscape::XML::Node
         ((SPObjectClass *) feComposite_parent_class)->build(object, document, repr);
     }
 
-    /*LOAD ATTRIBUTES FROM REPR HERE*/
+    SPFeComposite *composite = SP_FECOMPOSITE(object);
+
+    sp_object_read_attr(object, "operator");
+    if (composite->composite_operator == COMPOSITE_ARITHMETIC) {
+        sp_object_read_attr(object, "k1");
+        sp_object_read_attr(object, "k2");
+        sp_object_read_attr(object, "k3");
+        sp_object_read_attr(object, "k4");
+    }
+    sp_object_read_attr(object, "in2");
 }
 
 /**
@@ -101,6 +120,32 @@ sp_feComposite_release(SPObject *object)
         ((SPObjectClass *) feComposite_parent_class)->release(object);
 }
 
+static double
+sp_feComposite_read_number(gchar const *value) {
+    char *end;
+    double ret = g_ascii_strtod(value, &end);
+    if (*end) {
+        g_warning("Unable to convert \"%s\" to number", value);
+        // We could leave this out, too. If strtod can't convert
+        // anything, it will return zero.
+        ret = 0;
+    }
+    return ret;
+}
+
+static FeCompositeOperator
+sp_feComposite_read_operator(gchar const *value) {
+    if (!value) return COMPOSITE_DEFAULT;
+
+    if (strcmp(value, "over") == 0) return COMPOSITE_OVER;
+    else if (strcmp(value, "in") == 0) return COMPOSITE_IN;
+    else if (strcmp(value, "out") == 0) return COMPOSITE_OUT;
+    else if (strcmp(value, "atop") == 0) return COMPOSITE_ATOP;
+    else if (strcmp(value, "xor") == 0) return COMPOSITE_XOR;
+    else if (strcmp(value, "arithmetic") == 0) return COMPOSITE_ARITHMETIC;
+    return COMPOSITE_DEFAULT;
+}
+
 /**
  * Sets a specific value in the SPFeComposite.
  */
@@ -110,8 +155,63 @@ sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
     SPFeComposite *feComposite = SP_FECOMPOSITE(object);
     (void)feComposite;
 
+    int input;
+    FeCompositeOperator op;
+    double k_n;
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
+        case SP_ATTR_OPERATOR:
+            op = sp_feComposite_read_operator(value);
+            if (op != feComposite->composite_operator) {
+                feComposite->composite_operator = op;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+
+        case SP_ATTR_K1:
+            k_n = sp_feComposite_read_number(value);
+            if (k_n != feComposite->k1) {
+                feComposite->k1 = k_n;
+                if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)
+                    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+
+        case SP_ATTR_K2:
+            k_n = sp_feComposite_read_number(value);
+            if (k_n != feComposite->k2) {
+                feComposite->k2 = k_n;
+                if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)
+                    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+
+        case SP_ATTR_K3:
+            k_n = sp_feComposite_read_number(value);
+            if (k_n != feComposite->k3) {
+                feComposite->k3 = k_n;
+                if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)
+                    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+
+        case SP_ATTR_K4:
+            k_n = sp_feComposite_read_number(value);
+            if (k_n != feComposite->k4) {
+                feComposite->k4 = k_n;
+                if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)
+                    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+
+        case SP_ATTR_IN2:
+            input = sp_filter_primitive_read_in(feComposite, value);
+            if (input != feComposite->in2) {
+                feComposite->in2 = input;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+
         default:
             if (((SPObjectClass *) feComposite_parent_class)->set)
                 ((SPObjectClass *) feComposite_parent_class)->set(object, key, value);
@@ -148,7 +248,7 @@ sp_feComposite_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {
             // is this sane?
-            repr->mergeFrom(SP_OBJECT_REPR(object), "id");
+            //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
             repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
         }
@@ -159,6 +259,27 @@ sp_feComposite_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     return repr;
+}
+
+static void sp_feComposite_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    g_assert(primitive != NULL);
+    g_assert(filter != NULL);
+
+    SPFeComposite *sp_composite = SP_FECOMPOSITE(primitive);
+
+    int primitive_n = filter->add_primitive(NR::NR_FILTER_COMPOSITE);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    NR::FilterComposite *nr_composite = dynamic_cast<NR::FilterComposite*>(nr_primitive);
+    g_assert(nr_composite != NULL);
+
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+
+    nr_composite->set_operator(sp_composite->composite_operator);
+    nr_composite->set_input(1, sp_composite->in2);
+    if (sp_composite->composite_operator == COMPOSITE_ARITHMETIC) {
+        nr_composite->set_arithmetic(sp_composite->k1, sp_composite->k2,
+                                     sp_composite->k3, sp_composite->k4);
+    }
 }
 
 

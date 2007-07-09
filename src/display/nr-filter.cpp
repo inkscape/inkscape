@@ -20,9 +20,11 @@
 #include "display/nr-filter-types.h"
 #include "display/pixblock-scaler.h"
 #include "display/pixblock-transform.h"
+
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-blend.h"
 #include "display/nr-filter-offset.h"
+#include "display/nr-filter-composite.h"
 
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
@@ -309,7 +311,7 @@ void Filter::_create_constructor_table()
     _constructor[NR_FILTER_BLEND] = &FilterBlend::create;
     _constructor[NR_FILTER_COLORMATRIX] = NULL;
     _constructor[NR_FILTER_COMPONENTTRANSFER] = NULL;
-    _constructor[NR_FILTER_COMPOSITE] = NULL;
+    _constructor[NR_FILTER_COMPOSITE] = &FilterComposite::create;
     _constructor[NR_FILTER_CONVOLVEMATRIX] = NULL;
     _constructor[NR_FILTER_DIFFUSELIGHTING] = NULL;
     _constructor[NR_FILTER_DISPLACEMENTMAP] = NULL;

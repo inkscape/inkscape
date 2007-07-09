@@ -109,7 +109,8 @@ sp_feOffset_release(SPObject *object)
         ((SPObjectClass *) feOffset_parent_class)->release(object);
 }
 
-double sp_feOffset_read_number(gchar const *value) {
+static double
+sp_feOffset_read_number(gchar const *value) {
     char *end;
     double ret = g_ascii_strtod(value, &end);
     if (*end) {

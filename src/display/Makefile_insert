@@ -73,10 +73,13 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-blend.h       \
 	display/nr-filter-offset.cpp	\
 	display/nr-filter-offset.h	\
+	display/nr-filter-composite.h	\
+	display/nr-filter-composite.cpp	\
 	display/nr-filter-slot.cpp      \
 	display/nr-filter-slot.h        \
 	display/nr-filter-getalpha.cpp	\
 	display/nr-filter-getalpha.h	\
+	display/nr-filter-pixops.h	\
 	display/nr-filter-types.h       \
 	display/pixblock-scaler.cpp     \
 	display/pixblock-scaler.h       \

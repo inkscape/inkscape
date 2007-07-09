@@ -8,7 +8,7 @@
  * type, like gaussian or blend in respective case.
  *
  * This can be accomplished with the following sed command:
- * sed -e "s/Skeleton/Name/g" -e "s/skeleton/name" -e "s/SKELETON/NAME"
+ * sed -e "s/Skeleton/Name/g" -e "s/skeleton/name/" -e "s/SKELETON/NAME/"
  * nr-filter-skeleton.h >nr-filter-name.h
  *
  * (on one line, replace occurences of 'name' with your filter name)

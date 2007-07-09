@@ -15,6 +15,7 @@
  */
 
 #include "display/nr-filter-blend.h"
+#include "display/nr-filter-pixops.h"
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-types.h"
@@ -23,107 +24,7 @@
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixops.h"
 
-template <void(*blend)(unsigned char *cr, unsigned char const *ca, unsigned char const *cb)>
-static void _render(NRPixBlock &out, NRPixBlock &in1, NRPixBlock &in2) {
-    unsigned char *in1_data = NR_PIXBLOCK_PX(&in1);
-    unsigned char *in2_data = NR_PIXBLOCK_PX(&in2);
-    unsigned char *out_data = NR_PIXBLOCK_PX(&out);
-    unsigned char zero_rgba[4] = {0, 0, 0, 0};
-
-    if (in1.area.y0 < in2.area.y0) {
-        // in1 begins before in2 on y-axis
-        for (int y = in1.area.y0 ; y < in2.area.y0 ; y++) {
-            int out_line = (y - out.area.y0) * out.rs;
-            int in_line = (y - in1.area.y0) * in1.rs;
-            for (int x = in1.area.x0 ; x < in1.area.x1 ; x++) {
-                blend(out_data + out_line + 4 * (x - out.area.x0),
-                      in1_data + in_line + 4 * (x - in1.area.x0),
-                      zero_rgba);
-            }
-        }
-    } else if (in1.area.y0 > in2.area.y0) {
-        // in2 begins before in1 on y-axis
-        for (int y = in2.area.y0 ; y < in1.area.y0 ; y++) {
-            int out_line = (y - out.area.y0) * out.rs;
-            int in_line = (y - in2.area.y0) * in2.rs;
-            for (int x = in2.area.x0 ; x < in2.area.x1 ; x++) {
-                blend(out_data + out_line + 4 * (x - out.area.x0),
-                      zero_rgba,
-                      in2_data + in_line + 4 * (x - in2.area.x0));
-            }
-        }
-    }
-
-    for (int y = std::max(in1.area.y0, in2.area.y0) ;
-         y < std::min(in1.area.y1, in2.area.y1) ; ++y) {
-        int out_line = (y - out.area.y0) * out.rs;
-        int in1_line = (y - in1.area.y0) * in1.rs;
-        int in2_line = (y - in2.area.y0) * in2.rs;
-
-        if (in1.area.x0 < in2.area.x0) {
-            // in1 begins before in2 on x-axis
-            for (int x = in1.area.x0 ; x < in2.area.x0 ; ++x) {
-                blend(out_data + out_line + 4 * (x - out.area.x0),
-                      in1_data + in1_line + 4 * (x - in1.area.x0),
-                      zero_rgba);
-            }
-        } else if (in1.area.x0 > in2.area.x0) {
-            // in2 begins before in1 on x-axis
-            for (int x = in2.area.x0 ; x < in1.area.x0 ; ++x) {
-                blend(out_data + out_line + 4 * (x - out.area.x0),
-                      zero_rgba,
-                      in2_data + in2_line + 4 * (x - in2.area.x0));
-            }
-        }
-
-        for (int x = std::max(in1.area.x0, in2.area.x0) ;
-             x < std::min(in1.area.x1, in2.area.x1) ; ++x) {
-            blend(out_data + out_line + 4 * (x - out.area.x0),
-                  in1_data + in1_line + 4 * (x - in1.area.x0),
-                  in2_data + in2_line + 4 * (x - in2.area.x0));
-        }
-
-        if (in1.area.x1 > in2.area.x1) {
-            // in1 ends after in2 on x-axis
-            for (int x = in2.area.x1 ; x < in1.area.x1 ; ++x) {
-                blend(out_data + out_line + 4 * (x - out.area.x0),
-                      in1_data + in1_line + 4 * (x - in1.area.x0),
-                      zero_rgba);
-            }
-        } else if (in1.area.x1 < in2.area.x1) {
-            // in2 ends after in1 on x-axis
-            for (int x = in1.area.x1 ; x < in2.area.x1 ; ++x) {
-                blend(out_data + out_line + 4 * (x - out.area.x0),
-                      zero_rgba,
-                      in2_data + in2_line + 4 * (x - in2.area.x0));
-            }
-        }
-    }
-
-    if (in1.area.y1 > in2.area.y1) {
-        // in1 ends after in2 on y-axis
-        for (int y = in2.area.y1 ; y < in1.area.y1 ; y++) {
-            int out_line = (y - out.area.y0) * out.rs;
-            int in_line = (y - in1.area.y0) * in1.rs;
-            for (int x = in1.area.x0 ; x < in1.area.x1 ; x++) {
-                blend(out_data + out_line + 4 * (x - out.area.x0),
-                      in1_data + in_line + 4 * (x - in1.area.x0),
-                      zero_rgba);
-            }
-        }
-    } else if (in1.area.y1 < in2.area.y1) {
-        // in2 ends after in1 on y-axis
-        for (int y = in1.area.y1 ; y < in2.area.y1 ; y++) {
-            int out_line = (y - out.area.y0) * out.rs;
-            int in_line = (y - in2.area.y0) * in2.rs;
-            for (int x = in2.area.x0 ; x < in2.area.x1 ; x++) {
-                blend(out_data + out_line + 4 * (x - out.area.x0),
-                      zero_rgba,
-                      in2_data + in_line + 4 * (x - in2.area.x0));
-            }
-        }
-    }
-}
+namespace NR {
 
 /*
  * From http://www.w3.org/TR/SVG11/filters.html#feBlend
@@ -152,7 +53,9 @@ static void _render(NRPixBlock &out, NRPixBlock &in1, NRPixBlock &in2) {
 #define SET_ALPHA r[3] = NR_NORMALIZE_21((255 * 255) - (255 - a[3]) * (255 - b[3]))
 
 // cr = (1 - qa) * cb + ca
-inline void blend_normal(unsigned char *r, unsigned char const *a, unsigned char const *b) {
+inline void
+blend_normal(unsigned char *r, unsigned char const *a, unsigned char const *b)
+{
     r[0] = NR_NORMALIZE_21((255 - a[3]) * b[0]) + a[0];
     r[1] = NR_NORMALIZE_21((255 - a[3]) * b[1]) + a[1];
     r[2] = NR_NORMALIZE_21((255 - a[3]) * b[2]) + a[2];
@@ -160,7 +63,9 @@ inline void blend_normal(unsigned char *r, unsigned char const *a, unsigned char
 }
 
 // cr = (1-qa)*cb + (1-qb)*ca + ca*cb
-inline void blend_multiply(unsigned char *r, unsigned char const *a, unsigned char const *b) {
+inline void
+blend_multiply(unsigned char *r, unsigned char const *a, unsigned char const *b)
+{
     r[0] = NR_NORMALIZE_21((255 - a[3]) * b[0] + (255 - b[3]) * a[0]
                            + a[0] * b[0]);
     r[1] = NR_NORMALIZE_21((255 - a[3]) * b[1] + (255 - b[3]) * a[1]
@@ -171,7 +76,9 @@ inline void blend_multiply(unsigned char *r, unsigned char const *a, unsigned ch
 }
 
 // cr = cb + ca - ca * cb
-inline void blend_screen(unsigned char *r, unsigned char const *a, unsigned char const *b) {
+inline void
+blend_screen(unsigned char *r, unsigned char const *a, unsigned char const *b)
+{
     r[0] = NR_NORMALIZE_21(b[0] * 255 + a[0] * 255 - a[0] * b[0]);
     r[1] = NR_NORMALIZE_21(b[1] * 255 + a[1] * 255 - a[1] * b[1]);
     r[2] = NR_NORMALIZE_21(b[2] * 255 + a[2] * 255 - a[2] * b[2]);
@@ -179,7 +86,9 @@ inline void blend_screen(unsigned char *r, unsigned char const *a, unsigned char
 }
 
 // cr = Min ((1 - qa) * cb + ca, (1 - qb) * ca + cb)
-inline void blend_darken(unsigned char *r, unsigned char const *a, unsigned char const *b) {
+inline void
+blend_darken(unsigned char *r, unsigned char const *a, unsigned char const *b)
+{
     r[0] = std::min(NR_NORMALIZE_21((255 - a[3]) * b[0]) + a[0],
                     NR_NORMALIZE_21((255 - b[3]) * a[0]) + b[0]);
     r[1] = std::min(NR_NORMALIZE_21((255 - a[3]) * b[1]) + a[1],
@@ -190,7 +99,9 @@ inline void blend_darken(unsigned char *r, unsigned char const *a, unsigned char
 }
 
 // cr = Max ((1 - qa) * cb + ca, (1 - qb) * ca + cb)
-inline void blend_lighten(unsigned char *r, unsigned char const *a, unsigned char const *b) {
+inline void
+blend_lighten(unsigned char *r, unsigned char const *a, unsigned char const *b)
+{
     r[0] = std::max(NR_NORMALIZE_21((255 - a[3]) * b[0]) + a[0],
                     NR_NORMALIZE_21((255 - b[3]) * a[0]) + b[0]);
     r[1] = std::max(NR_NORMALIZE_21((255 - a[3]) * b[1]) + a[1],
@@ -199,8 +110,6 @@ inline void blend_lighten(unsigned char *r, unsigned char const *a, unsigned cha
                     NR_NORMALIZE_21((255 - b[3]) * a[2]) + b[2]);
     SET_ALPHA;
 }
-
-namespace NR {
 
 FilterBlend::FilterBlend() 
     : _blend_mode(BLEND_NORMAL),
@@ -253,22 +162,26 @@ int FilterBlend::render(FilterSlot &slot, Matrix const &trans) {
         nr_blit_pixblock_pixblock(in2, original_in2);
     }
 
+    /* pixops_mix is defined in display/nr-filter-pixops.h
+     * It mixes the two input images with the function given as template
+     * and places the result in output image.
+     */
     switch (_blend_mode) {
         case BLEND_MULTIPLY:
-            _render<blend_multiply>(*out, *in1, *in2);
+            pixops_mix<blend_multiply>(*out, *in1, *in2);
             break;
         case BLEND_SCREEN:
-            _render<blend_screen>(*out, *in1, *in2);
+            pixops_mix<blend_screen>(*out, *in1, *in2);
             break;
         case BLEND_DARKEN:
-            _render<blend_darken>(*out, *in1, *in2);
+            pixops_mix<blend_darken>(*out, *in1, *in2);
             break;
         case BLEND_LIGHTEN:
-            _render<blend_lighten>(*out, *in1, *in2);
+            pixops_mix<blend_lighten>(*out, *in1, *in2);
             break;
         case BLEND_NORMAL:
         default:
-            _render<blend_normal>(*out, *in1, *in2);
+            pixops_mix<blend_normal>(*out, *in1, *in2);
             break;
     }
 
