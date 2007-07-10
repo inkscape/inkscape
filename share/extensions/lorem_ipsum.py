@@ -176,6 +176,7 @@ foo=[
 class MyEffect(inkex.Effect):
   def __init__(self):
     inkex.Effect.__init__(self)
+    self.OptionParser.add_option("--title")
     self.OptionParser.add_option("-n", "--numberofparagraphs",
       action="store", type="int", 
       dest="num", default=5,
