@@ -30,6 +30,7 @@ extensions = \
 	color_removegreen.py\
 	color_removered.py\
 	color_rgbbarrel.py\
+	color_replace.py\
 	cspsubdiv.py \
 	cubicsuperpath.py \
 	dia2svg.sh \
@@ -120,6 +121,7 @@ modules = \
 	color_removegreen.inx\
 	color_removered.inx\
 	color_rgbbarrel.inx\
+	color_replace.inx\
 	dia.inx \
 	dots.inx \
 	dxf_input.inx \
