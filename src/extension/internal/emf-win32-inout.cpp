@@ -505,6 +505,15 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             if (pEmr->nHandles) {
                 d->n_obj = pEmr->nHandles;
                 d->emf_obj = new EMF_OBJECT[d->n_obj];
+
+                // Init the new emf_obj list elements to null, provided the
+                // dynamic allocation succeeded.
+                if ( d->emf_obj != NULL )
+                {
+                    for( unsigned int i=0; i < d->n_obj; ++i )
+                        d->emf_obj[i].lpEMFR = NULL;
+                } //if
+
             } else {
                 d->emf_obj = NULL;
             }
@@ -1349,7 +1358,7 @@ EmfWin32::open( Inkscape::Extension::Input *mod, const gchar *uri )
             delete_object(&d, i);
         delete[] d.emf_obj;
     }
-    
+
     if (d.style.stroke_dash.dash)
         delete[] d.style.stroke_dash.dash;
 
