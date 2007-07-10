@@ -151,7 +151,7 @@ tools_switch(SPDesktop *dt, int num)
             dt->set_event_context(SP_TYPE_3DBOX_CONTEXT, tool_names[num]);
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
-            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in perspective. <b>Click</b> to select."));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in perspective. <b>Click</b> to select (with <b>Ctrl+Alt</b> for single faces)."));
             break;
         case TOOLS_SHAPES_ARC:
             dt->set_event_context(SP_TYPE_ARC_CONTEXT, tool_names[num]);

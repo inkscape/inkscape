@@ -311,7 +311,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             event_context->within_tolerance = true;
             
             // remember clicked item, disregarding groups, honoring Alt
-            event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
+            event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, event->button.state & GDK_CONTROL_MASK);
 
             dragging = true;
             
