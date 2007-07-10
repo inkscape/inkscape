@@ -16,6 +16,10 @@
 
 namespace Box3D {
 
+Axis axes[3]   = { X,  Y,  Z };
+Axis planes[3] = { XY, XZ, YZ };
+FrontOrRear face_positions [2] = { FRONT, REAR };
+
 // FIXME: We should always require to have both the point (for finite VPs)
 //        and the direction (for infinite VPs) set. Otherwise toggling 
 //        shows very unexpected behaviour.

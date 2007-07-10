@@ -330,7 +330,7 @@ sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_
         Box3D::PerspectiveLine pl (*adjacent_face_center, orth_dir);
         return pl.intersect(Box3D::PerspectiveLine(box->corners[id_corner1], corner_axes));
     } else {
-        Box3D::Axis dir = Box3D::extract_single_axis_direction (corner_axes);
+        Box3D::Axis dir = Box3D::extract_first_axis_direction (corner_axes);
         Box3D::Line diag1 (box->corners[id_corner1], box->corners[id_corner2]);
         Box3D::Line diag2 (box->corners[id_corner1 ^ dir], box->corners[id_corner2 ^ dir]);
         return diag1.intersect(diag2);
