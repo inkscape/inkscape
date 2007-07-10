@@ -155,6 +155,7 @@ static char const menus_skeleton[] =
 "   </submenu>\n"
 "   <submenu name=\"" N_("_Object") "\">\n"
 "       <verb verb-id=\"DialogFillStroke\" />\n"
+"       <verb verb-id=\"DialogFilterEffects\" />\n"
 "       <verb verb-id=\"DialogObjectProperties\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"SelectionGroup\" />\n"
@@ -229,7 +230,6 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"EffectLast\" />\n"
 "       <verb verb-id=\"EffectLastPref\" />\n"
 "       <separator/>\n"
-"       <verb verb-id=\"DialogFilterEffects\" />\n"
 "       <effects-list/>\n"
 "   </submenu>\n"
 #ifdef WITH_INKBOARD
