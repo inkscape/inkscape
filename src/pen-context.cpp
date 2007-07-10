@@ -48,6 +48,7 @@ static void sp_pen_context_setup(SPEventContext *ec);
 static void sp_pen_context_finish(SPEventContext *ec);
 static void sp_pen_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
 static gint sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event);
+static gint sp_pen_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
 
 static void spdc_pen_set_initial_point(SPPenContext *pc, NR::Point const p);
 static void spdc_pen_set_subsequent_point(SPPenContext *pc, NR::Point const p, bool statusbar);
@@ -114,6 +115,7 @@ sp_pen_context_class_init(SPPenContextClass *klass)
     event_context_class->finish = sp_pen_context_finish;
     event_context_class->set = sp_pen_context_set;
     event_context_class->root_handler = sp_pen_context_root_handler;
+    event_context_class->item_handler = sp_pen_context_item_handler;
 }
 
 /**
@@ -282,6 +284,29 @@ spdc_endpoint_snap_handle(SPPenContext const *const pc, NR::Point &p, guint cons
 
     spdc_endpoint_snap_rotation(pc, p, pc->p[pc->npoints - 2], state);
     spdc_endpoint_snap_free(pc, p, state);
+}
+
+static gint 
+sp_pen_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
+{
+    SPPenContext *const pc = SP_PEN_CONTEXT(ec);
+
+    gint ret = FALSE;
+
+    switch (event->type) {
+        case GDK_BUTTON_PRESS:
+            ret = pen_handle_button_press(pc, event->button);
+            break;
+        default:
+            break;
+    }
+
+    if (!ret) {
+        if (((SPEventContextClass *) pen_parent_class)->item_handler)
+            ret = ((SPEventContextClass *) pen_parent_class)->item_handler(ec, item, event);
+    }
+
+    return ret;
 }
 
 /**
