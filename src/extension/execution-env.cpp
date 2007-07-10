@@ -106,7 +106,7 @@ ExecutionEnv::createWorkingDialog (void) {
         delete _visibleDialog;
     }
 
-    gchar * dlgmessage = g_strdup_printf(_("The effect '%s' is working on your document.  Please wait."), _effect->get_name());
+    gchar * dlgmessage = g_strdup_printf(_("'%s' working, please wait..."), _effect->get_name());
     _visibleDialog = new Gtk::MessageDialog(dlgmessage,
                                false, // use markup
                                Gtk::MESSAGE_INFO,
