@@ -187,63 +187,68 @@ void FilterEffectsDialog::FilterModifier::filter_name_edited(const Glib::ustring
         try_id_change((SPObject*)(*i)[_columns.filter], text);
 }
 
-/*** PrimitiveList ***/
-class CellRendererConnection : public Gtk::CellRenderer
+FilterEffectsDialog::CellRendererConnection::CellRendererConnection()
+    : Glib::ObjectBase(typeid(CellRendererConnection)),
+      _primitive(*this, "primitive", 0)
 {
-public:
-    CellRendererConnection()
-    {
-        
+}
+
+Glib::PropertyProxy<void*> FilterEffectsDialog::CellRendererConnection::property_primitive()
+{
+    return _primitive.get_proxy();
+}
+
+int FilterEffectsDialog::CellRendererConnection::input_count(const SPFilterPrimitive* prim)
+{
+    if(!prim)
+        return 0;
+    else if(SP_IS_FEBLEND(prim) || SP_IS_FECOMPOSITE(prim) || SP_IS_FEDISPLACEMENTMAP(prim))
+        return 2;
+    else
+        return 1;
+}
+
+void FilterEffectsDialog::CellRendererConnection::get_size_vfunc(
+    Gtk::Widget& widget, const Gdk::Rectangle* cell_area,
+    int* x_offset, int* y_offset, int* width, int* height) const
+{
+    PrimitiveList& primlist = dynamic_cast<PrimitiveList&>(widget);
+
+    if(x_offset)
+        (*x_offset) = 0;
+    if(y_offset)
+        (*y_offset) = 0;
+    if(width)
+        (*width) = size * primlist.primitive_count();
+    if(height) {
+        // Scale the height depending on the number of inputs, unless it's
+        // the first primitive, in which case their are no connections
+        SPFilterPrimitive* prim = (SPFilterPrimitive*)_primitive.get_value();
+        (*height) = primlist.is_first(prim) ? size : size * input_count(prim);
     }
+}
 
-    Glib::PropertyProxy<int> property_connection();
-
-    static int input_count(const SPFilterPrimitive* prim)
-    {
-        /*TODO*/
-
-        if(!prim)
-            return 0;
-        /*else if(SP_IS_FEBLEND(prim) || SP_IS_FECOMPOSITE(prim) || SP_IS_FEDISPLACEMENTMAP(prim))
-          return 2;*/
-        else
-            return 1;
-    }
-
-    static const int size = 32;
-protected:
-    virtual void get_size_vfunc(Gtk::Widget& widget, const Gdk::Rectangle* cell_area,
-                                int* x_offset, int* y_offset, int* width, int* height) const
-    {
-        if(x_offset)
-            (*x_offset) = 0;
-        if(y_offset)
-            (*y_offset) = 0;
-        if(width)
-            (*width) = size;
-        if(height)
-            (*height) = size;
-    }
-};
-
+/*** PrimitiveList ***/
 FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
     : _dialog(d), _in_drag(0)
 {
     add_events(Gdk::POINTER_MOTION_MASK | Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
 
-    _primitive_model = Gtk::ListStore::create(_primitive_columns);
+    _model = Gtk::ListStore::create(_columns);
 
-    set_reorderable(true);
-    set_model(_primitive_model);
-    append_column(_("_Type"), _primitive_columns.type);
+    // TODO: reenable this once it is possible to modify the order in the backend
+    //set_reorderable(true);
+
+    set_model(_model);
+    append_column(_("_Type"), _columns.type);
 
     signal_selection_changed().connect(sigc::mem_fun(*this, &PrimitiveList::queue_draw));
 
     CellRendererConnection* cell = new CellRendererConnection;
-    int cols_count = append_column("Connections", *cell);/*
-    Gtk::TreeViewColumn* pColumn = get_column(cols_count - 1);
-    if(pColumn)
-    pColumn->add_attribute(cell->property_connection(), _columns.con);*/
+    int cols_count = append_column("Connections", *cell);
+    Gtk::TreeViewColumn* col = get_column(cols_count - 1);
+    if(col)
+       col->add_attribute(cell->property_primitive(), _columns.primitive);
 }
 
 Glib::SignalProxy0<void> FilterEffectsDialog::PrimitiveList::signal_selection_changed()
@@ -259,7 +264,7 @@ void FilterEffectsDialog::PrimitiveList::update()
     const SPFilterPrimitive* active_prim = get_selected();
     bool active_found = false;
 
-    _primitive_model->clear();
+    _model->clear();
 
     if(f) {
         _dialog._primitive_box.set_sensitive(true);
@@ -269,11 +274,11 @@ void FilterEffectsDialog::PrimitiveList::update()
                 prim_obj = prim_obj->next) {
             SPFilterPrimitive *prim = SP_FILTER_PRIMITIVE(prim_obj);
             if(prim) {
-                Gtk::TreeModel::Row row = *_primitive_model->append();
-                row[_primitive_columns.primitive] = prim;
-                row[_primitive_columns.type_id] = FPConverter.get_id_from_name(prim->repr->name());
-                row[_primitive_columns.type] = FPConverter.get_label(row[_primitive_columns.type_id]);
-                row[_primitive_columns.id] = SP_OBJECT_ID(prim);
+                Gtk::TreeModel::Row row = *_model->append();
+                row[_columns.primitive] = prim;
+                row[_columns.type_id] = FPConverter.get_id_from_name(prim->repr->name());
+                row[_columns.type] = FPConverter.get_label(row[_columns.type_id]);
+                row[_columns.id] = SP_OBJECT_ID(prim);
 
                 if(prim == active_prim) {
                     get_selection()->select(row);
@@ -282,8 +287,8 @@ void FilterEffectsDialog::PrimitiveList::update()
             }
         }
 
-        if(!active_found && _primitive_model->children().begin())
-            get_selection()->select(_primitive_model->children().begin());
+        if(!active_found && _model->children().begin())
+            get_selection()->select(_model->children().begin());
     }
     else {
         _dialog._primitive_box.set_sensitive(false);
@@ -300,7 +305,7 @@ SPFilterPrimitive* FilterEffectsDialog::PrimitiveList::get_selected()
     if(_dialog._filter_modifier.get_selected_filter()) {
         Gtk::TreeModel::iterator i = get_selection()->get_selected();
         if(i)
-            return (*i)[_primitive_columns.primitive];
+            return (*i)[_columns.primitive];
     }
 
     return 0;
@@ -308,9 +313,9 @@ SPFilterPrimitive* FilterEffectsDialog::PrimitiveList::get_selected()
 
 void FilterEffectsDialog::PrimitiveList::select(SPFilterPrimitive* prim)
 {
-    for(Gtk::TreeIter i = _primitive_model->children().begin();
-        i != _primitive_model->children().end(); ++i) {
-        if((*i)[_primitive_columns.primitive] == prim)
+    for(Gtk::TreeIter i = _model->children().begin();
+        i != _model->children().end(); ++i) {
+        if((*i)[_columns.primitive] == prim)
             get_selection()->select(i);
     }
 }
@@ -319,57 +324,146 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_event(GdkEventExpose* e)
 {
     Gtk::TreeView::on_expose_event(e);
 
-    const int sz = CellRendererConnection::size;
     SPFilterPrimitive* prim = get_selected();
 
-    if(prim) {
-        int row_index = 0;
-        for(Gtk::TreeIter row = get_model()->children().begin();
-            row != get_model()->children().end(); ++row, ++row_index) {
-            const int inputs = CellRendererConnection::input_count(prim);
-            for(int i = 0; i < inputs; ++i) {
-                Gdk::Rectangle rct, clip(&e->area);
-                get_cell_area(get_model()->get_path(row), *get_column(1), rct);
-                const int x = rct.get_x() + sz / 4 + sz * i;
-                const int y = rct.get_y() + sz / 4;
-                const bool on_sel_row = (*row)[_primitive_columns.primitive] == prim;
-                
-                // Check mouse state
-                int mx, my;
-                Gdk::ModifierType mask;
-                get_bin_window()->get_pointer(mx, my, mask);
-                //const bool inside = mx >= x && my >= y && mx <= x + sz / 2 && my <= y + sz / 2;
+    int row_index = 0;
+    int row_count = get_model()->children().size();
+    int fheight = 0;
+    for(Gtk::TreeIter row = get_model()->children().begin();
+        row != get_model()->children().end(); ++row, ++row_index) {
+        Gdk::Rectangle rct, clip(&e->area);
+        get_cell_area(get_model()->get_path(row), *get_column(1), rct);
+        const int x = rct.get_x(), y = rct.get_y(), h = rct.get_height();
 
-                get_bin_window()->draw_rectangle(get_style()->get_black_gc(), on_sel_row, x, y, sz / 2, sz / 2);
+        // For calculating the width of cells, the height of the first row is used
+        if(row_index == 0)
+            fheight = h;
 
-                // draw input connection(s)
-                if(on_sel_row) {
-                    if(i == 0 && _in_drag != 1)
-                        draw_connection(find_result(row), x + sz / 4, y + sz / 4);
-                    else if(i == 1 && _in_drag != 2) {
-                        /*if(SP_IS_FEBLEND(prim))
-                          \                            draw_connection(SP_FEBLEND(prim)->in2, x + sz / 4, y + sz / 4);*/
-                    }
-                    else if(_in_drag > 0) {
-                        draw_connection(row, mx, my);
-                    }
-                }
-            }
+        // Check mouse state
+        int mx, my;
+        Gdk::ModifierType mask;
+        get_bin_window()->get_pointer(mx, my, mask);
+
+        // Outline the bottom of the connection area
+        const int outline_x = x + fheight * (row_count - row_index);
+        get_bin_window()->draw_line(get_style()->get_dark_gc(Gtk::STATE_NORMAL),
+                                    x, y + h, outline_x, y + h);
+
+        // The first row can't have any inputs
+        if(row_index == 0)
+            continue;
+
+        // Side outline
+        get_bin_window()->draw_line(get_style()->get_dark_gc(Gtk::STATE_NORMAL),
+                                    outline_x, y, outline_x, y + h);
+
+        std::vector<Gdk::Point> con_poly;
+        int con_drag_y;
+        bool inside;
+        // Draw "in" shape
+        inside = do_connection_node(row, 0, con_poly, mx, my);
+        con_drag_y = con_poly[2].get_y();
+        get_bin_window()->draw_polygon(inside && mask & GDK_BUTTON1_MASK ?
+                                       get_style()->get_dark_gc(Gtk::STATE_NORMAL) :
+                                       get_style()->get_dark_gc(Gtk::STATE_ACTIVE),
+                                       inside, con_poly);
+        // Draw "in" connection
+        draw_connection(find_result(row, SP_ATTR_IN), outline_x, con_poly[2].get_y(), row_count);
+
+        const SPFilterPrimitive* row_prim = (*row)[_columns.primitive];
+        if(CellRendererConnection::input_count(row_prim) == 2) {
+            // Draw "in2" shape
+            inside = do_connection_node(row, 1, con_poly, mx, my);
+            if(_in_drag == 2)
+                con_drag_y = con_poly[2].get_y();
+            get_bin_window()->draw_polygon(inside && mask & GDK_BUTTON1_MASK ?
+                                           get_style()->get_dark_gc(Gtk::STATE_NORMAL) :
+                                           get_style()->get_dark_gc(Gtk::STATE_ACTIVE),
+                                           inside, con_poly);
+            // Draw "in2" connection
+            draw_connection(find_result(row, SP_ATTR_IN2), outline_x, con_poly[2].get_y(), row_count);
+        }
+
+        // Draw drag connection
+        if(row_prim == prim && _in_drag) {
+            get_bin_window()->draw_line(get_style()->get_black_gc(), outline_x, con_drag_y,
+                                        mx, con_drag_y);
+            get_bin_window()->draw_line(get_style()->get_black_gc(), mx, con_drag_y, mx, my);
         }
     }
 
     return true;
 }
 
-const Gtk::TreeIter FilterEffectsDialog::PrimitiveList::find_result(const Gtk::TreeIter& start)
+void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& input, const int x1, const int y1,
+                                                         const int row_count)
 {
-    const int image = ((SPFilterPrimitive*)(*start)[_primitive_columns.primitive])->image_in;
-    Gtk::TreeIter target = _primitive_model->children().end();
+    if(input != _model->children().end()) {
+        Gdk::Rectangle rct;
+
+        get_cell_area(get_model()->get_path(_model->children().begin()), *get_column(1), rct);
+        const int fheight = rct.get_height();
+
+        get_cell_area(get_model()->get_path(input), *get_column(1), rct);
+        const int row_index = find_index(input);
+        const int x2 = rct.get_x() + fheight * (row_count - row_index) - fheight / 2;
+        const int y2 = rct.get_y() + rct.get_height();
+
+        // Draw an 'L'-shaped connection
+        get_bin_window()->draw_line(get_style()->get_black_gc(), x1, y1, x2, y1);
+        get_bin_window()->draw_line(get_style()->get_black_gc(), x2, y1, x2, y2);
+    }
+}
+
+// Creates a triangle outline of the connection node and returns true if (x,y) is inside the node
+bool FilterEffectsDialog::PrimitiveList::do_connection_node(const Gtk::TreeIter& row, const int input,
+                                                            std::vector<Gdk::Point>& points,
+                                                            const int ix, const int iy)
+{
+    Gdk::Rectangle rct;
+
+    get_cell_area(get_model()->get_path(_model->children().begin()), *get_column(1), rct);
+    const int h = rct.get_height();
+
+    get_cell_area(_model->get_path(row), *get_column(1), rct);
+
+    const int x = rct.get_x() + h * (_model->children().size() - find_index(row));
+    const int con_w = (int)(h * 0.35f);
+    const int con_y = rct.get_y() + h / 2 - con_w + input * h;
+    points.clear();
+    points.push_back(Gdk::Point(x, con_y));
+    points.push_back(Gdk::Point(x, con_y + con_w * 2));
+    points.push_back(Gdk::Point(x - con_w, con_y + con_w));
+
+    return ix >= x - h && iy >= con_y && ix <= x && iy <= points[1].get_y();
+}
+
+const Gtk::TreeIter FilterEffectsDialog::PrimitiveList::find_result(const Gtk::TreeIter& start,
+                                                                    const SPAttributeEnum attr)
+{
+    SPFilterPrimitive* prim = (*start)[_columns.primitive];
+    Gtk::TreeIter target = _model->children().end();
+    int image;
+
+    if(attr == SP_ATTR_IN)
+        image = prim->image_in;
+    else if(attr == SP_ATTR_IN2) {
+        if(SP_IS_FEBLEND(prim))
+            image = SP_FEBLEND(prim)->in2;
+        else if(SP_IS_FECOMPOSITE(prim))
+            image = SP_FECOMPOSITE(prim)->in2;
+        /*else if(SP_IS_FEDISPLACEMENTMAP(prim))
+        image = SP_FEDISPLACEMENTMAP(prim)->in2;*/
+        else
+            return target;
+    }
+    else
+        return target;
 
     if(image >= 0) {
-        for(Gtk::TreeIter i = _primitive_model->children().begin();
+        for(Gtk::TreeIter i = _model->children().begin();
             i != start; ++i) {
-            if(((SPFilterPrimitive*)(*i)[_primitive_columns.primitive])->image_out == image)
+            if(((SPFilterPrimitive*)(*i)[_columns.primitive])->image_out == image)
                 target = i;
         }
     }
@@ -377,74 +471,37 @@ const Gtk::TreeIter FilterEffectsDialog::PrimitiveList::find_result(const Gtk::T
     return target;
 }
 
-void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& input, const int x, const int y)
+int FilterEffectsDialog::PrimitiveList::find_index(const Gtk::TreeIter& target)
 {
-    if(input != _primitive_model->children().end()) {
-        Gdk::Rectangle rct;
-        const int sz = CellRendererConnection::size;
-
-        get_cell_area(get_model()->get_path(input), *get_column(1), rct);
-
-        get_bin_window()->draw_line(get_style()->get_black_gc(), x, y,
-                                    rct.get_x() + sz / 2, rct.get_y() + sz / 2);
-    }
-}
-
-// Gets (row, col) of the filter primitive input located at (x,y)
-bool FilterEffectsDialog::PrimitiveList::get_coords_at_pos(const int x, const int y, int& row,
-                                                           int& col, SPFilterPrimitive **prim)
-{
-    Gtk::TreePath path;
-    Gtk::TreeViewColumn* treecol;
-    Gdk::Rectangle rct;
-    int cx, cy;
-
-    if(get_path_at_pos(x, y, path, treecol, cx, cy)) {
-        get_cell_area(path, *treecol, rct);
-
-        if(x >= rct.get_x() && y >= rct.get_y() &&
-           x <= rct.get_x() + rct.get_width() && y <= rct.get_y() + rct.get_height()) {
-            if(treecol == get_column(1)) {
-                col = (x - rct.get_x()) / CellRendererConnection::size + 1;
-                if(col > 0 && col <= 2) {
-                    row = 0;
-                    Gtk::TreeIter key = _primitive_model->get_iter(path);
-                    for(Gtk::TreeIter i = _primitive_model->children().begin();
-                        i != _primitive_model->children().end(); ++i, ++row) {
-                        if(key == i)
-                            break;
-                    }
-                    if(prim)
-                        (*prim) = (*key)[_primitive_columns.primitive];
-                    return true;
-                }
-            }
-        }
-    }
-    
-    return false;
+    int i = 0;
+    for(Gtk::TreeIter iter = _model->children().begin();
+        iter != target; ++iter, ++i);
+    return i;
 }
 
 bool FilterEffectsDialog::PrimitiveList::on_button_press_event(GdkEventButton* e)
 {
-    int row, col;
+    Gtk::TreePath path;
+    Gtk::TreeViewColumn* col;
+    const int x = (int)e->x, y = (int)e->y;
+    int cx, cy;
     
-    if(get_coords_at_pos((int)e->x, (int)e->y, row, col, 0)) {
-        _in_drag = col;
-        
-        queue_draw();      
+    if(get_path_at_pos(x, y, path, col, cx, cy)) {
+        std::vector<Gdk::Point> points;
+        if(do_connection_node(_model->get_iter(path), 0, points, x, y))
+            _in_drag = 1;
+        else if(do_connection_node(_model->get_iter(path), 1, points, x, y))
+            _in_drag = 2;
+
+        queue_draw();
     }
 
-    if(_in_drag)
-        return true;
-    else
-        return Gtk::TreeView::on_button_press_event(e);
+    return Gtk::TreeView::on_button_press_event(e);
 }
 
 bool FilterEffectsDialog::PrimitiveList::on_motion_notify_event(GdkEventMotion* e)
 {
-    if(_in_drag)
-        queue_draw();
+    queue_draw();
 
     return Gtk::TreeView::on_motion_notify_event(e);
 }
@@ -454,9 +511,12 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
     SPFilterPrimitive *prim = get_selected(), *target;
 
     if(_in_drag && prim) {
-        int row, col;
-
-        if(get_coords_at_pos((int)e->x, (int)e->y, row, col, &target) && target != prim) {
+        Gtk::TreePath path;
+        Gtk::TreeViewColumn* col;
+        int cx, cy;
+        
+        if(get_path_at_pos((int)e->x, (int)e->y, path, col, cx, cy)) {
+            target = (*_model->get_iter(path))[_columns.primitive];
             Inkscape::XML::Node *repr = SP_OBJECT_REPR(target);
             // Make sure the target has a result
             const gchar *gres = repr->attribute("result");
@@ -466,7 +526,10 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
                 repr->setAttribute("result", result.c_str());
             }
 
-            SP_OBJECT_REPR(prim)->setAttribute("in", result.c_str());
+            if(_in_drag == 1)
+                SP_OBJECT_REPR(prim)->setAttribute("in", result.c_str());
+            else if(_in_drag == 2)
+                SP_OBJECT_REPR(prim)->setAttribute("in2", result.c_str());
         }
 
         _in_drag = 0;
@@ -490,17 +553,26 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
 // Reorder the filter primitives to match the list order
 void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::DragContext>&)
 {
-    int ndx = 0;
     SPFilter* filter = _dialog._filter_modifier.get_selected_filter();
 
-    for(Gtk::TreeModel::iterator iter = _primitive_model->children().begin();
-        iter != _primitive_model->children().end(); ++iter) {
-        SPFilterPrimitive* prim = (*iter)[_primitive_columns.primitive];
+    for(Gtk::TreeModel::iterator iter = _model->children().begin();
+        iter != _model->children().end(); ++iter) {
+        SPFilterPrimitive* prim = (*iter)[_columns.primitive];
         if(prim)
             ;//reorder_primitive(filter, prim->repr->position(), ndx); /* FIXME */
     }
 
     sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Reorder filter primitive"));
+}
+
+int FilterEffectsDialog::PrimitiveList::primitive_count() const
+{
+    return _model->children().size();
+}
+
+bool FilterEffectsDialog::PrimitiveList::is_first(const SPFilterPrimitive* prim) const
+{
+    return (*_model->children().begin())[_columns.primitive] == prim;
 }
 
 /*** SettingsGroup ***/

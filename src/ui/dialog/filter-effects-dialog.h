@@ -81,6 +81,22 @@ private:
         Gtk::TreeModelColumn<Glib::ustring> id;
     };
 
+    class CellRendererConnection : public Gtk::CellRenderer
+    {
+    public:
+        CellRendererConnection();
+        Glib::PropertyProxy<void*> property_primitive();
+        static int input_count(const SPFilterPrimitive* prim);
+
+        static const int size = 24;
+    protected:
+        virtual void get_size_vfunc(Gtk::Widget& widget, const Gdk::Rectangle* cell_area,
+                                    int* x_offset, int* y_offset, int* width, int* height) const;
+    private:
+        // void* should be SPFilterPrimitive*, some weirdness with properties prevents this
+        Glib::Property<void*> _primitive;
+    };
+
     class PrimitiveList : public Gtk::TreeView
     {
     public:
@@ -93,6 +109,9 @@ private:
 
         SPFilterPrimitive* get_selected();
         void select(SPFilterPrimitive *prim);
+
+        int primitive_count() const;
+        bool is_first(const SPFilterPrimitive*) const;
     protected:
         bool on_expose_event(GdkEventExpose*);
         bool on_button_press_event(GdkEventButton*);
@@ -100,13 +119,15 @@ private:
         bool on_button_release_event(GdkEventButton*);
         void on_drag_end(const Glib::RefPtr<Gdk::DragContext>&);
     private:
-        bool get_coords_at_pos(const int x, const int y, int& row, int& col, SPFilterPrimitive **prim);
-        const Gtk::TreeIter find_result(const Gtk::TreeIter& start);
-        void draw_connection(const Gtk::TreeIter&, const int x, const int y);
+        bool do_connection_node(const Gtk::TreeIter& row, const int input, std::vector<Gdk::Point>& points,
+                                const int ix, const int iy);
+        const Gtk::TreeIter find_result(const Gtk::TreeIter& start, const SPAttributeEnum attr);
+        int find_index(const Gtk::TreeIter& target);
+        void draw_connection(const Gtk::TreeIter&, const int x1, const int y1, const int row_count);
 
         FilterEffectsDialog& _dialog;
-        Glib::RefPtr<Gtk::ListStore> _primitive_model;
-        PrimitiveColumns _primitive_columns;
+        Glib::RefPtr<Gtk::ListStore> _model;
+        PrimitiveColumns _columns;
         Glib::RefPtr<Gtk::Menu> _primitive_menu;
         int _in_drag;
     };
