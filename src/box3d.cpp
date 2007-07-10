@@ -15,6 +15,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glibmm/i18n.h>
 #include "box3d.h"
 
 static void sp_3dbox_class_init(SP3DBoxClass *klass);
@@ -26,7 +27,7 @@ static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value)
 static void sp_3dbox_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
-//static gchar *sp_3dbox_description(SPItem *item);
+static gchar *sp_3dbox_description(SPItem *item);
 
 //static void sp_3dbox_set_shape(SPShape *shape);
 static void sp_3dbox_set_shape(SP3DBox *box3d);
@@ -61,7 +62,7 @@ static void
 sp_3dbox_class_init(SP3DBoxClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
-    // SPItemClass *item_class = (SPItemClass *) klass;
+    SPItemClass *item_class = (SPItemClass *) klass;
 
     parent_class = (SPGroupClass *) g_type_class_ref(SP_TYPE_GROUP);
 
@@ -71,7 +72,7 @@ sp_3dbox_class_init(SP3DBoxClass *klass)
     sp_object_class->update = sp_3dbox_update;
     //sp_object_class->release = sp_3dbox_release;
 
-    //item_class->description = sp_3dbox_description;
+    item_class->description = sp_3dbox_description;
 }
 
 static void
@@ -174,6 +175,14 @@ static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node
     }
 
     return repr;
+}
+
+static gchar *
+sp_3dbox_description(SPItem *item)
+{
+    g_return_val_if_fail(SP_IS_3DBOX(item), NULL);
+
+    return g_strdup(_("<b>3D Box</b>"));
 }
 
 void

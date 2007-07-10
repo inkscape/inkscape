@@ -406,7 +406,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             dragging = false;
 
             if (!event_context->within_tolerance) {
-                // we've been dragging, finish the rect
+                // we've been dragging, finish the box
                 sp_3dbox_finish(rc);
             } else if (event_context->item_to_select) {
                 // no dragging, select clicked item if any
@@ -436,12 +436,14 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_Shift_R:
         case GDK_Meta_L:  // Meta is when you press Shift+Alt (at least on my machine)
         case GDK_Meta_R:
+            /***
             if (!dragging){
                 sp_event_show_modifier_tip (event_context->defaultMessageContext(), event,
                                             _("<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"),
                                             _("<b>Shift</b>: draw around the starting point"),
                                             NULL);
             }
+            ***/
             break;
         case GDK_Up:
         case GDK_Down:
@@ -455,7 +457,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_x:
         case GDK_X:
             if (MOD__ALT_ONLY) {
-                desktop->setToolboxFocusTo ("altx-rect");
+                // desktop->setToolboxFocusTo ("altx-rect");
                 ret = TRUE;
             }
             break;
@@ -471,7 +473,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
                                       event->button.time);
                 dragging = false;
                 if (!event_context->within_tolerance) {
-                    // we've been dragging, finish the rect
+                    // we've been dragging, finish the box
                     sp_3dbox_finish(rc);
                 }
                 // do not return true, so that space would work switching to selector
@@ -511,70 +513,58 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
     return ret;
 }
 
-static void sp_3dbox_drag(SP3DBoxContext &rc, guint state)
+static void sp_3dbox_drag(SP3DBoxContext &bc, guint state)
 {
-    SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
+    SPDesktop *desktop = SP_EVENT_CONTEXT(&bc)->desktop;
 
-    if (!rc.item) {
+    if (!bc.item) {
 
-        if (Inkscape::have_viable_layer(desktop, rc._message_context) == false) {
+        if (Inkscape::have_viable_layer(desktop, bc._message_context) == false) {
             return;
         }
 
         /* Create object */
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(&rc));
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(&bc));
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:g");
         repr->setAttribute("sodipodi:type", "inkscape:3dbox");
 
         /* Set style */
         //sp_desktop_apply_style_tool (desktop, repr, "tools.shapes.3dbox", false);
 
-        rc.item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
+        bc.item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
         Inkscape::GC::release(repr);
-        rc.item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
+        bc.item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
 
         /* Hook path to the only currenctly existing face */
-        SP_3DBOX(rc.item)->faces[4]->hook_path_to_3dbox();
+        SP_3DBOX(bc.item)->faces[4]->hook_path_to_3dbox();
 
-        rc.item->updateRepr();
+        bc.item->updateRepr();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
     }
 
     // FIXME: remove these extra points
-    NR::Point pt = rc.drag_ptB;
-    NR::Point shift_pt = rc.drag_ptC;
+    NR::Point pt = bc.drag_ptB;
+    NR::Point shift_pt = bc.drag_ptC;
 
     NR::Rect r;
     if (!(state & GDK_SHIFT_MASK)) {
-        r = Inkscape::snap_rectangular_box(desktop, rc.item, pt, rc.center, state);
+        r = Inkscape::snap_rectangular_box(desktop, bc.item, pt, bc.center, state);
     } else {
-        r = Inkscape::snap_rectangular_box(desktop, rc.item, shift_pt, rc.center, state);
+        r = Inkscape::snap_rectangular_box(desktop, bc.item, shift_pt, bc.center, state);
     }
 
-    /*** artefacts of rect ***
-    if ( rc.rx != 0.0 ) {
-        sp_3dbox_set_rx (SP_3DBOX(rc.item), TRUE, rc.rx);
-    }
-    if ( rc.ry != 0.0 ) {
-        if (rc.rx == 0.0)
-            sp_3dbox_set_ry (SP_3DBOX(rc.item), TRUE, CLAMP(rc.ry, 0, MIN(r.dimensions()[NR::X], r.dimensions()[NR::Y])/2));
-        else
-            sp_3dbox_set_ry (SP_3DBOX(rc.item), TRUE, CLAMP(rc.ry, 0, r.dimensions()[NR::Y]));
-    }
-    ***/
-
-    SPEventContext *ec = SP_EVENT_CONTEXT(&rc);
+    SPEventContext *ec = SP_EVENT_CONTEXT(&bc);
     NR::Point origin_w(ec->xp, ec->yp);
     NR::Point origin(desktop->w2d(origin_w));
-    sp_3dbox_position_set(rc);
+    sp_3dbox_position_set(bc);
 
     // status text
-    GString *xs = SP_PX_TO_METRIC_STRING(r.dimensions()[NR::X], desktop->namedview->getDefaultMetric());
-    GString *ys = SP_PX_TO_METRIC_STRING(r.dimensions()[NR::Y], desktop->namedview->getDefaultMetric());
-    rc._message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
-    g_string_free(xs, FALSE);
-    g_string_free(ys, FALSE);
+    //GString *Ax = SP_PX_TO_METRIC_STRING(origin[NR::X], desktop->namedview->getDefaultMetric());
+    //GString *Ay = SP_PX_TO_METRIC_STRING(origin[NR::Y], desktop->namedview->getDefaultMetric());
+    bc._message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"));
+    //g_string_free(Ax, FALSE);
+    //g_string_free(Ay, FALSE);
 }
 
 static void sp_3dbox_finish(SP3DBoxContext *rc)
