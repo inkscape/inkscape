@@ -173,18 +173,16 @@ void Box3DFace::set_path_repr()
 
 void Box3DFace::set_curve()
 {
-    SPDocument *doc = SP_OBJECT_DOCUMENT(this->parent_box3d);
-    gdouble height = sp_document_height(doc);
-
     if (this->path == NULL) {
         g_warning("this->path is NULL! \n");
         return;
     }
+    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM (this->parent_box3d)));
     SPCurve *curve = sp_curve_new();
-    sp_curve_moveto(curve, (*corners[0])[NR::X], height - (*corners[0])[NR::Y]);
-    sp_curve_lineto(curve, (*corners[1])[NR::X], height - (*corners[1])[NR::Y]);
-    sp_curve_lineto(curve, (*corners[2])[NR::X], height - (*corners[2])[NR::Y]);
-    sp_curve_lineto(curve, (*corners[3])[NR::X], height - (*corners[3])[NR::Y]);
+    sp_curve_moveto(curve, (*corners[0]) * i2d);
+    sp_curve_lineto(curve, (*corners[1]) * i2d);
+    sp_curve_lineto(curve, (*corners[2]) * i2d);
+    sp_curve_lineto(curve, (*corners[3]) * i2d);
     sp_curve_closepath(curve);
     sp_shape_set_curve(SP_SHAPE(this->path), curve, true);
     sp_curve_unref(curve);
@@ -192,15 +190,13 @@ void Box3DFace::set_curve()
 
 gchar * Box3DFace::svg_repr_string()
 {
-    SPDocument *doc = SP_OBJECT_DOCUMENT(this->parent_box3d);
-    gdouble height = sp_document_height(doc);
-
+    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM (this->parent_box3d)));
     GString *pstring = g_string_new("");
     g_string_sprintf (pstring, "M %f,%f L %f,%f L %f,%f L %f,%f z",
-                               (*corners[0])[NR::X], height - (*corners[0])[NR::Y],
-                               (*corners[1])[NR::X], height - (*corners[1])[NR::Y],
-                               (*corners[2])[NR::X], height - (*corners[2])[NR::Y],
-                               (*corners[3])[NR::X], height - (*corners[3])[NR::Y]);
+                               ((*corners[0]) * i2d)[NR::X], ((*corners[0]) * i2d)[NR::Y],
+                               ((*corners[1]) * i2d)[NR::X], ((*corners[1]) * i2d)[NR::Y],
+                               ((*corners[2]) * i2d)[NR::X], ((*corners[2]) * i2d)[NR::Y],
+                               ((*corners[3]) * i2d)[NR::X], ((*corners[3]) * i2d)[NR::Y]);
     return pstring->str;
 }
 

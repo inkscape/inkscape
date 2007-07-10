@@ -539,13 +539,12 @@ static void sp_3dbox_knot_set(SPItem *item, guint knot_id, Box3D::Axis direction
     SPDocument *doc = SP_OBJECT_DOCUMENT(box);
     gdouble height = sp_document_height(doc);
 
-      if (direction == Box3D::Z) {
-         sp_3dbox_move_corner_in_Z_direction (box, knot_id, NR::Point (new_pos[NR::X], height - new_pos[NR::Y]),
-                                              !(state & GDK_SHIFT_MASK));
-      } else {
-         sp_3dbox_move_corner_in_XY_plane (box, knot_id, NR::Point (new_pos[NR::X], height - new_pos[NR::Y]),
-                                           (state & GDK_SHIFT_MASK) ? direction : Box3D::XY);
-      }
+    NR::Matrix const i2d (sp_item_i2d_affine (item));
+    if (direction == Box3D::Z) {
+         sp_3dbox_move_corner_in_Z_direction (box, knot_id, new_pos * i2d, !(state & GDK_SHIFT_MASK));
+    } else {
+        sp_3dbox_move_corner_in_XY_plane (box, knot_id, new_pos * i2d, (state & GDK_SHIFT_MASK) ? direction : Box3D::XY);
+    }
     sp_3dbox_update_curves (box);
 }
 
@@ -554,11 +553,8 @@ static NR::Point sp_3dbox_knot_get(SPItem *item, guint knot_id)
     g_assert(item != NULL);
     SP3DBox *box = SP_3DBOX(item);
 
-    // FIXME: Why must the coordinates be flipped vertically???
-    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
-    gdouble height = sp_document_height(doc);
-
-    return NR::Point(sp_3dbox_get_corner(box, knot_id)[NR::X], height - sp_3dbox_get_corner(box, knot_id)[NR::Y]);
+    NR::Matrix const i2d (sp_item_i2d_affine (item));
+    return sp_3dbox_get_corner(box, knot_id) * i2d;
 }
 
 static void sp_3dbox_knot1_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
