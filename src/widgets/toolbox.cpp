@@ -2149,7 +2149,7 @@ static void sp_3dboxtb_handles_state_changed( EgeSelectOneAction *act, GObject *
         if ( ege_select_one_action_get_active( act ) != 0 ) {
             prefs_set_string_attribute("tools.shapes.3dbox", "constrainedXYmoving", "true");
         } else {
-            prefs_set_string_attribute("tools.shapes.3dbox", "constrainedXYmoving", NULL);
+            prefs_set_string_attribute("tools.shapes.3dbox", "constrainedXYmoving", "false");
         }
     }
 
