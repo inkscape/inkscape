@@ -12,6 +12,7 @@ moduledir = $(datadir)/inkscape/extensions
 extensions = \
 	addnodes.py \
 	bezmisc.py \
+	chardataeffect.py\
 	color_brighter.py\
 	color_custom.py\
 	color_darker.py\
@@ -80,6 +81,12 @@ extensions = \
 	straightseg.py \
 	summersnight.py \
 	svg_and_media_zip_output.py \
+	text_uppercase.py \
+	text_lowercase.py \
+	text_sentencecase.py \
+	text_titlecase.py \
+	text_flipcase.py \
+	text_randomcase.py \
 	txt2svg.pl \
 	webbrowser_commandline.py \
 	webbrowser_faq.py\
@@ -160,6 +167,12 @@ modules = \
 	svg_and_media_zip_output.inx \
 	svgz_input.inx \
 	svgz_output.inx \
+	text_uppercase.inx\
+	text_lowercase.inx \
+	text_sentencecase.inx \
+	text_titlecase.inx \
+	text_flipcase.inx \
+	text_randomcase.inx \
 	txt2svg.inx \
 	whirl.inx \
 	wmf_input.inx

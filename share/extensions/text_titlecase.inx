@@ -1,0 +1,15 @@
+<inkscape-extension>
+	<_name>Title Case</_name>
+	<id>org.inkscape.text.titlecase</id>
+	<dependency type="executable" location="extensions">chardataeffect.py</dependency>
+	<dependency type="executable" location="extensions">text_titlecase.py</dependency>
+	<effect>
+		<object-type>all</object-type>
+		<effects-menu>
+			<submenu _name="Text"/>
+		</effects-menu>
+	</effect>
+	<script>
+		<command reldir="extensions" interpreter="python">text_titlecase.py</command>
+	</script>
+</inkscape-extension>

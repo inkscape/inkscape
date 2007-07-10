@@ -1,0 +1,15 @@
+<inkscape-extension>
+	<_name>Sentence case</_name>
+	<id>org.inkscape.text.sentencecase</id>
+	<dependency type="executable" location="extensions">chardataeffect.py</dependency>
+	<dependency type="executable" location="extensions">text_sentencecase.py</dependency>
+	<effect>
+		<object-type>all</object-type>
+		<effects-menu>
+			<submenu _name="Text"/>
+		</effects-menu>
+	</effect>
+	<script>
+		<command reldir="extensions" interpreter="python">text_sentencecase.py</command>
+	</script>
+</inkscape-extension>
