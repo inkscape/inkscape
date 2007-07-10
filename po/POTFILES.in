@@ -69,6 +69,7 @@ src/event-log.cpp
 src/extension/db.cpp
 src/extension/dependency.cpp
 src/extension/effect.cpp
+src/extension/execution-env.cpp
 src/extension/extension.cpp
 src/extension/error-file.cpp
 src/extension/implementation/implementation.cpp
