@@ -76,13 +76,27 @@ sp_3dbox_class_init(SP3DBoxClass *klass)
 }
 
 static void
-sp_3dbox_init(SP3DBox *box3d)
+sp_3dbox_init(SP3DBox *box)
 {
-    box3d->faces[4] = new Box3DFace (box3d);
-    //box3d->faces[4]->hook_path_to_3dbox();
-    for (int i = 0; i < 6; ++i) {
-        if (i == 4) continue;
-        box3d->faces[i] = NULL;
+    // We create all faces in the beginning (but only the non-degenerate ones
+    // should be written to the svg representation later in sp_3dbox_write).
+    Box3D::Axis cur_plane, axis, dir1, dir2;
+    Box3D::FrontOrRear cur_pos;
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 2; ++j) {
+            cur_plane = Box3D::planes[i];
+            cur_pos = Box3D::face_positions[j];
+            // FIXME: The following code could theoretically be moved to
+            //        the constructor of Box3DFace (but see the comment there).
+            axis = (cur_pos == Box3D::FRONT ? Box3D::NONE : Box3D::third_axis_direction (cur_plane));
+            dir1 = extract_first_axis_direction (cur_plane);
+            dir2 = extract_second_axis_direction (cur_plane);
+            
+            box->faces[Box3D::face_to_int(cur_plane ^ cur_pos)] =
+                new Box3DFace (box, box->corners[axis], box->corners[axis ^ dir1],
+                                    box->corners[axis ^ dir1 ^ dir2], box->corners[axis ^ dir2],
+                                    cur_plane, cur_pos);
+        }
     }
 }
 
@@ -154,7 +168,6 @@ static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node
     // FIXME: Is tools_isactive(..) more recommended to check for the current context/tool?
     if (!SP_IS_3DBOX_CONTEXT(inkscape_active_event_context()))
         return repr;
-    SP3DBoxContext *bc = SP_3DBOX_CONTEXT(inkscape_active_event_context());
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
@@ -162,14 +175,10 @@ static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node
         repr->setAttribute("sodipodi:type", "inkscape:3dbox");
     }
 
-
-    box3d->faces[4]->set_path_repr();
-    if (bc->extruded) {
-        for (int i = 0; i < 6; ++i) {
-            if (i == 4) continue;
-            box3d->faces[i]->set_path_repr();
-        }
+    for (int i = 0; i < 6; ++i) {
+        box3d->faces[i]->set_path_repr();
     }
+
     if (((SPObjectClass *) (parent_class))->write) {
         ((SPObjectClass *) (parent_class))->write(object, repr, flags);
     }

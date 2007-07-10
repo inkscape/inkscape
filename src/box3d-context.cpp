@@ -359,20 +359,14 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             rc->ctrl_dragged  = event->motion.state & GDK_CONTROL_MASK;
 
             if (event->motion.state & GDK_SHIFT_MASK && !rc->extruded) {
-                /* once shift is pressed, set rc->extruded and create the remaining faces */
+                /* once shift is pressed, set rc->extruded (no need to create further faces;
+                   all of them are already created in sp_3dbox_init) */
                 rc->extruded = true;
-                
-                /* The separate faces */
-                SP3DBox *box3d = SP_3DBOX(rc->item);
-                for (int i = 0; i < 6; ++i) {
-                    if (i == 4 || box3d->faces[i]) continue;
-                    box3d->faces[i] = new Box3DFace (box3d);
-                    box3d->faces[i]->hook_path_to_3dbox();
-                }
             }
 
             if (!rc->extruded) {
             	rc->drag_ptB = motion_dt;
+            	rc->drag_ptC = motion_dt;
             } else {
                 // Without Ctrl, motion of the extruded corner is constrained to the
                 // perspective line from drag_ptB to vanishing point Y.
@@ -535,8 +529,10 @@ static void sp_3dbox_drag(SP3DBoxContext &bc, guint state)
         Inkscape::GC::release(repr);
         bc.item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
 
-        /* Hook path to the only currenctly existing face */
-        SP_3DBOX(bc.item)->faces[4]->hook_path_to_3dbox();
+        /* Hook paths to the faces of the box */
+        for (int i = 0; i < 6; ++i) {
+            SP_3DBOX(bc.item)->faces[i]->hook_path_to_3dbox();
+        }
 
         bc.item->updateRepr();
 

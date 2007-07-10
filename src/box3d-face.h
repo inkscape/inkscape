@@ -25,11 +25,8 @@ class SP3DBox;
 
 class Box3DFace {
 public:
-    Box3DFace(SP3DBox *box3d);
-    Box3DFace(SP3DBox *box3d, NR::Point &A, NR::Point &B, NR::Point &C, NR::Point &D);
-    //Box3DFace(SP3DBox *box3d, NR::Point const ul, NR::Point const lr,
-    //          Box3D::Axis const dir1, Box3D::Axis const dir2,
-    //          unsigned int shift_count = 0, NR::Maybe<NR::Point> pt_align = NR::Nothing(), bool align_along_PL = false);
+    Box3DFace(SP3DBox *box, NR::Point &A, NR::Point &B, NR::Point &C, NR::Point &D,
+	                    Box3D::Axis plane, Box3D::FrontOrRear rel_pos);
     Box3DFace(Box3DFace const &box3dface);
     ~Box3DFace();
 
@@ -57,7 +54,7 @@ private:
     Box3D::Axis dir2;
     
     SPPath *path;
-    SP3DBox *parent_box3d; // the parent box
+    SP3DBox *parent_box3d;
 };
 
 #endif

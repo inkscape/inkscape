@@ -14,15 +14,24 @@
 #include "box3d-face.h"
 #include <iostream>
 
-Box3DFace::Box3DFace(SP3DBox *box3d) : dir1 (Box3D::NONE), dir2 (Box3D::NONE), path (NULL), parent_box3d (box3d)
-{
-    for (int i = 0; i < 4; ++i) {
-        this->corners[i] = new NR::Point(0, 0);
-    }
-} 
-
-Box3DFace::Box3DFace(SP3DBox *box3d, NR::Point &A, NR::Point &B, NR::Point &C, NR::Point &D)
-{
+// FIXME: It's quite redundant to pass the box plus the corners plus the axes. At least the corners can
+//        theoretically be reconstructed from the box and the axes, but in order to do this we need
+//        access to box->corners, which is not possible if we only have a forward declaration of SP3DBox
+//        in box3d-face.h. (But we can't include box3d.h itself because the latter already includes
+//        box3d-face.h).
+Box3DFace::Box3DFace(SP3DBox *box, NR::Point &A, NR::Point &B, NR::Point &C, NR::Point &D,
+                     Box3D::Axis plane, Box3D::FrontOrRear rel_pos)
+    : path (NULL), parent_box3d (box)
+ {
+    /*
+    Box3D::Axis axis = (rel_pos == Box3D::FRONT ? Box3D::NONE : Box3D::third_axis_direction (plane));
+    dir1 = extract_first_axis_direction (plane);
+    dir2 = extract_second_axis_direction (plane);
+    set_corners (box->corners[axis],
+                 box->corners[axis ^ dir1],
+                 box->corners[axis ^ dir1 ^ dir2],
+                 box->corners[axis ^ dir2]);
+    */
     set_corners (A, B, C, D);
 }
 
