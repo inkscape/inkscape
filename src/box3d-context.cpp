@@ -523,7 +523,7 @@ static void sp_3dbox_drag(SP3DBoxContext &bc, guint state)
         repr->setAttribute("sodipodi:type", "inkscape:3dbox");
 
         /* Set style */
-        //sp_desktop_apply_style_tool (desktop, repr, "tools.shapes.3dbox", false);
+        sp_desktop_apply_style_tool (desktop, repr, "tools.shapes.3dbox", false);
 
         bc.item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
         Inkscape::GC::release(repr);

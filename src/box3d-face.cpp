@@ -21,12 +21,12 @@
 //        box3d-face.h).
 Box3DFace::Box3DFace(SP3DBox *box, NR::Point &A, NR::Point &B, NR::Point &C, NR::Point &D,
                      Box3D::Axis plane, Box3D::FrontOrRear rel_pos)
-    : path (NULL), parent_box3d (box)
+    : front_or_rear (rel_pos), path (NULL), parent_box3d (box)
  {
-    /*
-    Box3D::Axis axis = (rel_pos == Box3D::FRONT ? Box3D::NONE : Box3D::third_axis_direction (plane));
     dir1 = extract_first_axis_direction (plane);
     dir2 = extract_second_axis_direction (plane);
+    /*
+    Box3D::Axis axis = (rel_pos == Box3D::FRONT ? Box3D::NONE : Box3D::third_axis_direction (plane));
     set_corners (box->corners[axis],
                  box->corners[axis ^ dir1],
                  box->corners[axis ^ dir1 ^ dir2],
@@ -156,6 +156,8 @@ NR::Point Box3DFace::operator[](unsigned int i)
     return *corners[i % 4];
 }
 
+
+
 /**
  * Append the curve's path as a child to the given 3D box (since SP3DBox
  * is derived from SPGroup, so we can append children to its svg representation)
@@ -166,9 +168,13 @@ void Box3DFace::hook_path_to_3dbox()
 
     SPDesktop *desktop = inkscape_active_desktop();
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(inkscape_active_event_context()));
+    GString *pstring = g_string_new("");
+    g_string_printf (pstring, "tools.shapes.3dbox.%s", axes_string());
+
     Inkscape::XML::Node *repr_face = xml_doc->createElement("svg:path");
-    sp_desktop_apply_style_tool (desktop, repr_face, "tools.shapes.3dbox", false);
+    sp_desktop_apply_style_tool (desktop, repr_face, pstring->str, false);
     this->path = SP_PATH(SP_OBJECT(parent_box3d)->appendChildRepr(repr_face));
+
     Inkscape::GC::release(repr_face);
 }
 
@@ -197,15 +203,35 @@ void Box3DFace::set_curve()
     sp_curve_unref(curve);
 }
 
+gchar * Box3DFace::axes_string()
+{
+    GString *pstring = g_string_new("");
+    g_string_printf (pstring, "%s", Box3D::string_from_axes ((Box3D::Axis) (dir1 ^ dir2)));
+    switch ((Box3D::Axis) (dir1 ^ dir2)) {
+        case Box3D::XY:
+            g_string_append_printf (pstring, (front_or_rear == Box3D::FRONT) ? "front" : "rear");
+            break;
+        case Box3D::XZ:
+            g_string_append_printf (pstring, (front_or_rear == Box3D::FRONT) ? "top" : "bottom");
+            break;
+        case Box3D::YZ:
+            g_string_append_printf (pstring, (front_or_rear == Box3D::FRONT) ? "right" : "left");
+            break;
+        default:
+            break;
+    }
+    return pstring->str;
+}
+
 gchar * Box3DFace::svg_repr_string()
 {
     NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM (this->parent_box3d)));
     GString *pstring = g_string_new("");
-    g_string_sprintf (pstring, "M %f,%f L %f,%f L %f,%f L %f,%f z",
-                               ((*corners[0]) * i2d)[NR::X], ((*corners[0]) * i2d)[NR::Y],
-                               ((*corners[1]) * i2d)[NR::X], ((*corners[1]) * i2d)[NR::Y],
-                               ((*corners[2]) * i2d)[NR::X], ((*corners[2]) * i2d)[NR::Y],
-                               ((*corners[3]) * i2d)[NR::X], ((*corners[3]) * i2d)[NR::Y]);
+    g_string_printf (pstring, "M %f,%f L %f,%f L %f,%f L %f,%f z",
+                              ((*corners[0]) * i2d)[NR::X], ((*corners[0]) * i2d)[NR::Y],
+                              ((*corners[1]) * i2d)[NR::X], ((*corners[1]) * i2d)[NR::Y],
+                              ((*corners[2]) * i2d)[NR::X], ((*corners[2]) * i2d)[NR::Y],
+                              ((*corners[3]) * i2d)[NR::X], ((*corners[3]) * i2d)[NR::Y]);
     return pstring->str;
 }
 

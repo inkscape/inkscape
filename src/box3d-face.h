@@ -45,6 +45,7 @@ public:
     void hook_path_to_3dbox();
     void set_path_repr();
     void set_curve();
+    gchar * axes_string();
     gchar * svg_repr_string();
 
 private:
@@ -52,6 +53,8 @@ private:
 
     Box3D::Axis dir1;
     Box3D::Axis dir2;
+
+    Box3D::FrontOrRear front_or_rear;
     
     SPPath *path;
     SP3DBox *parent_box3d;
