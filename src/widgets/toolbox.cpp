@@ -2128,6 +2128,9 @@ static void sp_3dbox_toggle_vp_changed( GtkToggleAction *act, gpointer data )
         case Box3D::Z:
             pstring = g_string_new("togglevpz");
             break;
+        default:
+            g_warning ("Only single axis directions may be used to toggle VPs!\n");
+            break;
     }
     
     if (SP3DBoxContext::current_perspective) {

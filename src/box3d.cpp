@@ -21,7 +21,7 @@ static void sp_3dbox_class_init(SP3DBoxClass *klass);
 static void sp_3dbox_init(SP3DBox *box3d);
 
 static void sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_shape_release (SPObject *object);
+//static void sp_3dbox_release (SPObject *object);
 static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value);
 static void sp_3dbox_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
@@ -69,6 +69,7 @@ sp_3dbox_class_init(SP3DBoxClass *klass)
     sp_object_class->set = sp_3dbox_set;
     sp_object_class->write = sp_3dbox_write;
     sp_object_class->update = sp_3dbox_update;
+    //sp_object_class->release = sp_3dbox_release;
 
     //item_class->description = sp_3dbox_description;
 }
@@ -94,6 +95,7 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
     //sp_object_read_attr(object, "width");
 }
 
+/*
 static void
 sp_3dbox_release (SPObject *object)
 {
@@ -108,7 +110,7 @@ sp_3dbox_release (SPObject *object)
 	  ((SPObjectClass *) parent_class)->release (object);
 	}
 }
-
+*/
 
 static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value)
 {

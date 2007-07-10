@@ -30,7 +30,7 @@ Box3DFace::~Box3DFace()
 {
     for (int i = 0; i < 4; ++i) {
         if (this->corners[i]) {
-            delete this->corners[i];
+            //delete this->corners[i];
             this->corners[i] = NULL;
         }
     }
