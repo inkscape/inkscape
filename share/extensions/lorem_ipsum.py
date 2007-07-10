@@ -219,7 +219,7 @@ class MyEffect(inkex.Effect):
     if found==0:
       #inkex.debug('No "flowRoot" elements selected. Unable to add text.')
       svg=self.document.getroot()
-      gattribs = {inkex.addNS('label','inkscape'):'fill text',inkex.addNS('groupmode','inkscape'):'layer'}
+      gattribs = {'inkscape:label':'lorem ipsum','inkscape:groupmode':'layer'}
       g=inkex.etree.SubElement(svg,inkex.addNS('g','svg'),gattribs)
       flowRoot=inkex.etree.SubElement(g,inkex.addNS('flowRoot','svg'),{'xml:space':'preserve'})
       flowRegion=inkex.etree.SubElement(flowRoot,inkex.addNS('flowRegion','svg'))
