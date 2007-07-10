@@ -341,6 +341,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/color_removegreen.inx
 [type: gettext/xml] share/extensions/color_removered.inx
 [type: gettext/xml] share/extensions/color_rgbbarrel.inx
+[type: gettext/xml] share/extensions/color_replace.inx
 [type: gettext/xml] share/extensions/dia.inx
 [type: gettext/xml] share/extensions/dots.inx
 [type: gettext/xml] share/extensions/dxf_input.inx
@@ -389,6 +390,12 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
 [type: gettext/xml] share/extensions/svgz_input.inx
 [type: gettext/xml] share/extensions/svgz_output.inx
+[type: gettext/xml] share/extensions/text_flipcase.inx
+[type: gettext/xml] share/extensions/text_lowercase.inx
+[type: gettext/xml] share/extensions/text_uppercase.inx
+[type: gettext/xml] share/extensions/text_randomcase.inx
+[type: gettext/xml] share/extensions/text_titlecase.inx
+[type: gettext/xml] share/extensions/text_sentencecase.inx
 [type: gettext/xml] share/extensions/txt2svg.inx
 [type: gettext/xml] share/extensions/whirl.inx
 [type: gettext/xml] share/extensions/wmf_input.inx
