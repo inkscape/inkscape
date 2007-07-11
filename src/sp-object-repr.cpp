@@ -31,6 +31,7 @@
 #include "sp-metadata.h"
 #include "sp-polyline.h"
 #include "sp-textpath.h"
+#include "sp-tref.h"
 #include "sp-tspan.h"
 #include "sp-pattern.h"
 #include "sp-clippath.h"
@@ -165,6 +166,7 @@ populate_dtables()
         { "svg:symbol", SP_TYPE_SYMBOL },
         { "svg:text", SP_TYPE_TEXT },
         { "svg:textPath", SP_TYPE_TEXTPATH },
+        { "svg:tref", SP_TYPE_TREF },
         { "svg:tspan", SP_TYPE_TSPAN },
         { "svg:use", SP_TYPE_USE }
     };

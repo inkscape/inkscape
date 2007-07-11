@@ -32,6 +32,7 @@
 #include "attributes.h"
 #include "sp-use-reference.h"
 #include "sp-tspan.h"
+#include "sp-tref.h"
 #include "sp-textpath.h"
 #include "text-editing.h"
 #include "style.h"
@@ -239,7 +240,7 @@ sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         GSList *l = NULL;
         for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
             Inkscape::XML::Node* c_repr=NULL;
-            if ( SP_IS_TSPAN(child) ) {
+            if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
                 c_repr = child->updateRepr(NULL, flags);
             } else if ( SP_IS_TEXTPATH(child) ) {
                 //c_repr = child->updateRepr(NULL, flags); // shouldn't happen
@@ -255,7 +256,7 @@ sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         }
     } else {
         for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-            if ( SP_IS_TSPAN(child) ) {
+            if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
                 child->updateRepr(flags);
             } else if ( SP_IS_TEXTPATH(child) ) {
                 //c_repr = child->updateRepr(NULL, flags); // shouldn't happen
@@ -515,7 +516,7 @@ sp_textpath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         GSList *l = NULL;
         for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
             Inkscape::XML::Node* c_repr=NULL;
-            if ( SP_IS_TSPAN(child) ) {
+            if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
                 c_repr = child->updateRepr(NULL, flags);
             } else if ( SP_IS_TEXTPATH(child) ) {
                 //c_repr = child->updateRepr(NULL, flags); // shouldn't happen
@@ -531,7 +532,7 @@ sp_textpath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         }
     } else {
         for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-            if ( SP_IS_TSPAN(child) ) {
+            if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
                 child->updateRepr(flags);
             } else if ( SP_IS_TEXTPATH(child) ) {
                 //c_repr = child->updateRepr(NULL, flags); // shouldn't happen

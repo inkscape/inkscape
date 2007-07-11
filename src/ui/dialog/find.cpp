@@ -35,6 +35,7 @@
 #include "sp-flowtext.h"
 #include "text-editing.h"
 #include "sp-tspan.h"
+#include "sp-tref.h"
 #include "selection-chemistry.h"
 #include "sp-defs.h"
 #include "sp-rect.h"
@@ -292,7 +293,7 @@ Find::item_type_match (SPItem *item)
     } else if (SP_IS_PATH(item) || SP_IS_LINE(item) || SP_IS_POLYLINE(item)) {
         return (_check_paths.get_active());
 
-    } else if (SP_IS_TEXT(item) || SP_IS_TSPAN(item) || SP_IS_STRING(item)) {
+    } else if (SP_IS_TEXT(item) || SP_IS_TSPAN(item) || SP_IS_TREF(item) || SP_IS_STRING(item)) {
         return (_check_texts.get_active());
 
     } else if (SP_IS_GROUP(item) && !desktop->isLayer(item) ) { // never select layers!

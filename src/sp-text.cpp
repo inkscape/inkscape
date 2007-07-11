@@ -46,6 +46,7 @@
 #include "mod360.h"
 
 #include "sp-textpath.h"
+#include "sp-tref.h"
 #include "sp-tspan.h"
 
 #include "text-editing.h"
@@ -516,6 +517,9 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
         bool use_xy = !in_textpath && (tspan->role == SP_TSPAN_ROLE_UNSPECIFIED || !tspan->attributes.singleXYCoordinates());
         tspan->attributes.mergeInto(&optional_attrs, parent_optional_attrs, parent_attrs_offset, use_xy, true);
     }
+    else if (SP_IS_TREF(root)) {
+        SP_TREF(root)->attributes.mergeInto(&optional_attrs, parent_optional_attrs, parent_attrs_offset, true, true);
+    }
     else if (SP_IS_TEXTPATH(root)) {
         in_textpath = true;
         SP_TEXTPATH(root)->attributes.mergeInto(&optional_attrs, parent_optional_attrs, parent_attrs_offset, false, true);
@@ -619,6 +623,9 @@ void SPText::_adjustCoordsRecursive(SPItem *item, NR::Matrix const &m, double ex
         SP_TEXT(item)->attributes.transform(m, ex, ex, is_root);
     else if (SP_IS_TEXTPATH(item))
         SP_TEXTPATH(item)->attributes.transform(m, ex, ex, is_root);
+    else if (SP_IS_TREF(item)) {
+        SP_TREF(item)->attributes.transform(m, ex, ex, is_root);
+    }
 
     for (SPObject *o = item->children; o != NULL; o = o->next) {
         if (SP_IS_ITEM(o))

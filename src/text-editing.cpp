@@ -14,7 +14,11 @@
 # include "config.h"
 #endif
 
+#include <glibmm/i18n.h>
+
 #include "desktop.h"
+#include "inkscape.h"
+#include "message-stack.h"
 #include "style.h"
 #include "unit-constants.h"
 
@@ -26,9 +30,12 @@
 #include "sp-flowtext.h"
 #include "sp-flowdiv.h"
 #include "sp-flowregion.h"
+#include "sp-tref.h"
 #include "sp-tspan.h"
 
 #include "text-editing.h"
+
+static const gchar *tref_edit_message = _("You cannot edit <b>cloned character data</b>.");
 
 static bool tidy_xml_tree_recursively(SPObject *root);
 
@@ -151,13 +158,15 @@ static bool is_line_break_object(SPObject const *object)
 }
 
 /** returns the attributes for an object, or NULL if it isn't a text,
-tspan or textpath. */
+tspan, tref, or textpath. */
 static TextTagAttributes* attributes_for_object(SPObject *object)
 {
     if (SP_IS_TSPAN(object))
         return &SP_TSPAN(object)->attributes;
     if (SP_IS_TEXT(object))
         return &SP_TEXT(object)->attributes;
+    if (SP_IS_TREF(object))
+        return &SP_TREF(object)->attributes;
     if (SP_IS_TEXTPATH(object))
         return &SP_TEXTPATH(object)->attributes;
     return NULL;
@@ -177,7 +186,9 @@ unsigned sp_text_get_length(SPObject const *item)
     unsigned length = 0;
 
     if (SP_IS_STRING(item)) return SP_STRING(item)->string.length();
+    
     if (is_line_break_object(item)) length++;
+    
     for (SPObject const *child = item->firstChild() ; child ; child = SP_OBJECT_NEXT(child)) {
         if (SP_IS_STRING(child)) length += SP_STRING(child)->string.length();
         else length += sp_text_get_length(child);
@@ -191,15 +202,20 @@ unsigned sp_text_get_length_upto(SPObject const *item, SPObject const *upto)
 {
     unsigned length = 0;
 
+    // The string is the lowest level and the length can be counted directly. 
     if (SP_IS_STRING(item)) {
         return SP_STRING(item)->string.length();
     }
+    
+    // Take care of new lines...
     if (is_line_break_object(item) && !SP_IS_TEXT(item)) {
         if (item != SP_OBJECT_PARENT(item)->firstChild()) {
             // add 1 for each newline
             length++;
         }
     }
+    
+    // Count the length of the children
     for (SPObject const *child = item->firstChild() ; child ; child = SP_OBJECT_NEXT(child)) {
         if (upto && child == upto) {
             // hit upto, return immediately
@@ -320,6 +336,8 @@ Inkscape::Text::Layout::iterator sp_te_insert_line (SPItem *item, Inkscape::Text
     // texpaths attached to the same path, with a vertical shift
     if (SP_IS_TEXT_TEXTPATH (item))
         return position;
+        
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP; 
 
     Inkscape::Text::Layout const *layout = te_get_layout(item);
     SPObject *split_obj = 0;
@@ -339,6 +357,12 @@ Inkscape::Text::Layout::iterator sp_te_insert_line (SPItem *item, Inkscape::Text
             Inkscape::GC::release(new_node);
         }
     } else if (SP_IS_STRING(split_obj)) {
+        // If the parent is a tref, editing on this particular string is disallowed.
+        if (SP_IS_TREF(SP_OBJECT_PARENT(split_obj))) {
+            desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
+            return position;
+        }
+        
         Glib::ustring *string = &SP_STRING(split_obj)->string;
         unsigned char_index = 0;
         for (Glib::ustring::iterator it = string->begin() ; it != split_text_iter ; it++)
@@ -408,6 +432,8 @@ sp_te_insert(SPItem *item, Inkscape::Text::Layout::iterator const &position, gch
         g_warning("Trying to insert invalid utf8");
         return position;
     }
+    
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     Inkscape::Text::Layout const *layout = te_get_layout(item);
     SPObject *source_obj = 0;
@@ -421,7 +447,13 @@ sp_te_insert(SPItem *item, Inkscape::Text::Layout::iterator const &position, gch
     layout->getSourceOfCharacter(it_prev_char, &rawptr, &iter_text);
     source_obj = SP_OBJECT(rawptr);
     if (SP_IS_STRING(source_obj)) {
-        // the simple case
+        // If the parent is a tref, editing on this particular string is disallowed.
+        if (SP_IS_TREF(SP_OBJECT_PARENT(source_obj))) {
+            desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
+            return position;
+        }
+        
+        // Now the simple case can begin...
         if (!cursor_at_start) iter_text++;
         SPString *string_item = SP_STRING(source_obj);
         insert_into_spstring(string_item, cursor_at_end ? string_item->string.end() : iter_text, utf8);
@@ -457,6 +489,12 @@ sp_te_insert(SPItem *item, Inkscape::Text::Layout::iterator const &position, gch
                 g_assert(SP_IS_STRING(source_obj->firstChild()));
                 string_item = SP_STRING(source_obj->firstChild());
             }
+            // If the parent is a tref, editing on this particular string is disallowed.
+            if (SP_IS_TREF(SP_OBJECT_PARENT(string_item))) {
+                desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
+                return position;
+            }
+            
             insert_into_spstring(string_item, cursor_at_end ? string_item->string.end() : string_item->string.begin(), utf8);
         }
     }
@@ -633,6 +671,9 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inksc
         first = end;
         last = start;
     }
+    
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    
     Inkscape::Text::Layout const *layout = te_get_layout(item);
     SPObject *start_item = 0, *end_item = 0;
     void *rawptr = 0;
@@ -657,6 +698,12 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inksc
     if (start_item == end_item) {
         // the quick case where we're deleting stuff all from the same string
         if (SP_IS_STRING(start_item)) {     // always true (if it_start != it_end anyway)
+            // If the parent is a tref, editing on this particular string is disallowed.
+            if (SP_IS_TREF(SP_OBJECT_PARENT(start_item))) {
+                desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
+                return end;
+            }
+            
             erase_from_spstring(SP_STRING(start_item), start_text_iter, end_text_iter);
         }
     } else {
@@ -665,6 +712,12 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inksc
         while (sub_item != item) {
             if (sub_item == end_item) {
                 if (SP_IS_STRING(sub_item)) {
+                    // If the parent is a tref, editing on this particular string is disallowed.
+                    if (SP_IS_TREF(SP_OBJECT_PARENT(sub_item))) {
+                        desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
+                        return end;
+                    }
+            
                     Glib::ustring *string = &SP_STRING(sub_item)->string;
                     erase_from_spstring(SP_STRING(sub_item), string->begin(), end_text_iter);
                 }
@@ -1683,6 +1736,16 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
     if (is_line_break_object(end_item))
         end_item = SP_OBJECT_NEXT(end_item);
     if (end_item == 0) end_item = text;
+    
+    
+    /* Special case: With a tref, we only want to change its style when the whole
+     * string is selected, in which case the style can be applied directly to the
+     * tref node.  If only part of the tref's string child is selected, just return. */
+     
+    if (!sp_tref_fully_contained(start_item, start_text_iter, end_item, end_text_iter)) {
+        
+        return;
+    } 
 
     /* stage 1: applying the style. Go up to the closest common ancestor of
     start and end and then semi-recursively apply the style to all the

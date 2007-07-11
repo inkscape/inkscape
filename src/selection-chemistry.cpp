@@ -35,6 +35,7 @@
 #include "sp-use.h"
 #include "sp-textpath.h"
 #include "sp-tspan.h"
+#include "sp-tref.h"
 #include "sp-flowtext.h"
 #include "sp-flowregion.h"
 #include "text-editing.h"
@@ -993,7 +994,7 @@ take_style_from_item (SPItem *item)
             }
         }
     }
-    if (!(SP_IS_TEXT (item) || SP_IS_TSPAN (item) || SP_IS_STRING (item))) {
+    if (!(SP_IS_TEXT (item) || SP_IS_TSPAN (item) || SP_IS_TREF(item) || SP_IS_STRING (item))) {
         // do not copy text properties from non-text objects, it's confusing
         css = sp_css_attr_unset_text (css);
     }
@@ -1354,6 +1355,7 @@ bool
 selection_contains_original (SPItem *item, Inkscape::Selection *selection)
 {
     bool contains_original = false;
+    
     bool is_use = SP_IS_USE(item);
     SPItem *item_use = item;
     SPItem *item_use_first = item;
@@ -1364,7 +1366,14 @@ selection_contains_original (SPItem *item, Inkscape::Selection *selection)
         if (item_use == item_use_first)
             break;
         is_use = SP_IS_USE(item_use);
-    }   
+    }
+    
+    // If it's a tref, check whether the object containing the character
+    // data is part of the selection
+    if (!contains_original && SP_IS_TREF(item)) {
+        contains_original = selection->includes(SP_TREF(item)->getObjectReferredTo());
+    }
+       
     return contains_original;
 }
 
@@ -2111,15 +2120,21 @@ sp_selection_unlink()
          items != NULL;
          items = items->next)
     {
-        SPItem *use = (SPItem *) items->data;
+        SPItem *item = (SPItem *) items->data;
 
-        if (!SP_IS_USE(use)) {
-            // keep the non-yse item in the new selection
-            new_select = g_slist_prepend(new_select, use);
+        if (!(SP_IS_USE(item) || SP_IS_TREF(item))) {
+            // keep the non-use item in the new selection
+            new_select = g_slist_prepend(new_select, item);
             continue;
         }
 
-        SPItem *unlink = sp_use_unlink(SP_USE(use));
+        SPItem *unlink;
+        if (SP_IS_USE(item)) { 
+            unlink = sp_use_unlink(SP_USE(item));
+        } else /*if (SP_IS_TREF(use))*/ {
+            unlink = SP_ITEM(sp_tref_convert_to_tspan(SP_TREF(item)));
+        }
+        
         unlinked = true;
         // Add ungrouped items to the new selection.
         new_select = g_slist_prepend(new_select, unlink);

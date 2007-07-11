@@ -18,8 +18,6 @@
 #include "svg/svg.h"
 #include "svg/svg-color.h"
 #include "selection.h"
-#include "sp-tspan.h"
-#include "sp-textpath.h"
 #include "inkscape.h"
 #include "style.h"
 #include "prefs-utils.h"
@@ -32,8 +30,11 @@
 #include "sp-flowregion.h"
 #include "sp-flowdiv.h"
 #include "sp-linear-gradient.h"
-#include "sp-radial-gradient.h"
 #include "sp-pattern.h"
+#include "sp-radial-gradient.h"
+#include "sp-textpath.h"
+#include "sp-tref.h"
+#include "sp-tspan.h"
 #include "xml/repr.h"
 #include "libnrtype/font-style-to-pos.h"
 
@@ -427,7 +428,10 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
 
         // We consider paint "effectively set" for anything within text hierarchy
         SPObject *parent = SP_OBJECT_PARENT (obj);
-        bool paint_effectively_set = paint->set || (SP_IS_TEXT(parent) || SP_IS_TEXTPATH(parent) || SP_IS_TSPAN(parent) || SP_IS_FLOWTEXT(parent) || SP_IS_FLOWDIV(parent) || SP_IS_FLOWPARA(parent) || SP_IS_FLOWTSPAN(parent) || SP_IS_FLOWLINE(parent));
+        bool paint_effectively_set = 
+            paint->set || (SP_IS_TEXT(parent) || SP_IS_TEXTPATH(parent) || SP_IS_TSPAN(parent)
+            || SP_IS_FLOWTEXT(parent) || SP_IS_FLOWDIV(parent) || SP_IS_FLOWPARA(parent) 
+            || SP_IS_FLOWTSPAN(parent) || SP_IS_FLOWLINE(parent));
 
         // 1. Bail out with QUERY_STYLE_MULTIPLE_DIFFERENT if necessary
 
@@ -826,7 +830,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
         SPObject *obj = SP_OBJECT (i->data);
 
         if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
-            && !SP_IS_TSPAN(obj) && !SP_IS_TEXTPATH(obj)
+            && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
             && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj))
             continue;
 
@@ -919,7 +923,7 @@ objects_query_fontstyle (GSList *objects, SPStyle *style_res)
         SPObject *obj = SP_OBJECT (i->data);
 
         if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
-            && !SP_IS_TSPAN(obj) && !SP_IS_TEXTPATH(obj)
+            && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
             && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj))
             continue;
 
@@ -974,7 +978,7 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
         SPObject *obj = SP_OBJECT (i->data);
 
         if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
-            && !SP_IS_TSPAN(obj) && !SP_IS_TEXTPATH(obj)
+            && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
             && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj))
             continue;
 

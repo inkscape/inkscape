@@ -51,6 +51,7 @@ sp_find_dialog(){
 #include "../sp-flowtext.h"
 #include "../text-editing.h"
 #include "../sp-tspan.h"
+#include "../sp-tref.h"
 #include "../selection-chemistry.h"
 #include "../sp-defs.h"
 #include "../sp-rect.h"
@@ -238,7 +239,7 @@ item_type_match (SPItem *item, GtkWidget *widget)
     } else if (SP_IS_PATH(item) || SP_IS_LINE(item) || SP_IS_POLYLINE(item)) {
         return (type_checkbox (widget, "paths"));
 
-    } else if (SP_IS_TEXT(item) || SP_IS_TSPAN(item) || SP_IS_STRING(item)) {
+    } else if (SP_IS_TEXT(item) || SP_IS_TSPAN(item) || SP_IS_TREF(item) || SP_IS_STRING(item)) {
         return (type_checkbox (widget, "texts"));
 
     } else if (SP_IS_GROUP(item) && !desktop->isLayer(item) ) { // never select layers!
