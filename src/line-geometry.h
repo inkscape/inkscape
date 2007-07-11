@@ -50,8 +50,8 @@ void create_canvas_point(NR::Point const &pos, double size = 4.0, guint32 rgba =
 void create_canvas_line(NR::Point const &p1, NR::Point const &p2, guint32 rgba = 0xff00007f);
 
 
-/** A function to print out the Line.  It just prints out the coordinates of start end end point
-    on the given output stream */
+/** A function to print out the Line.  It just prints out the coordinates of start point and
+    direction on the given output stream */
 inline std::ostream &operator<< (std::ostream &out_file, const Line &in_line) {
     out_file << "Start: " << in_line.pt << "  Direction: " << in_line.v_dir;
     return out_file;

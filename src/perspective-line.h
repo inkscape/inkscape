@@ -13,6 +13,7 @@
 #define SEEN_PERSPECTIVE_LINE_H
 
 #include "vanishing-point.h"
+#include "line-geometry.h"
 #include "box3d-context.h" 
 #include <glib.h>
 

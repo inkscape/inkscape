@@ -40,6 +40,7 @@ libinkpre_a_SOURCES =	\
 	approx-equal.h remove-last.h	\
 	arc-context.cpp arc-context.h	\
 	attributes.cpp attributes.h	\
+	axis-manip.cpp axis-manip.h	\
 	bad-uri-exception.h	\
 	box3d.cpp box3d.h \
 	box3d-context.cpp box3d-context.h \
