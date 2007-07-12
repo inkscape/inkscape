@@ -106,13 +106,13 @@ do
 	h|help)
 		help 
 		exit 1 ;;
-	all)
-		SVNUPDATE="t" ;;
-		AUTOGEN="t" ;;
-		CONFIGURE="t" ;;
-		BUILD="t" ;;
-		INSTALL="t" ;;
-		PACKAGE="t" ;;
+	all)            
+		SVNUPDATE="t"
+		AUTOGEN="t"
+		CONFIGURE="t"
+		BUILD="t" 
+		INSTALL="t"
+		PACKAGE="t"
 		DISTRIB="t" ;;
    u|up|update)
 		SVNUPDATE="t" ;;
