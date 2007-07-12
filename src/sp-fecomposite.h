@@ -25,7 +25,8 @@ enum FeCompositeOperator {
     COMPOSITE_OUT,
     COMPOSITE_ATOP,
     COMPOSITE_XOR,
-    COMPOSITE_ARITHMETIC
+    COMPOSITE_ARITHMETIC,
+    COMPOSITE_ENDOPERATOR
 };
 
 /* FeComposite base class */

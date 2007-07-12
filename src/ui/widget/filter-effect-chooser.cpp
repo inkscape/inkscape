@@ -245,6 +245,17 @@ const EnumData<NR::FilterBlendMode> BlendModeData[NR::BLEND_ENDMODE] = {
 };
 const Converter<NR::FilterBlendMode> BlendModeConverter(BlendModeData, NR::BLEND_ENDMODE);
 
+const EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR] = {
+    {COMPOSITE_DEFAULT,    _("Default"),    ""},
+    {COMPOSITE_OVER,       _("Over"),       "over"},
+    {COMPOSITE_IN,         _("In"),         "in"},
+    {COMPOSITE_OUT,        _("Out"),        "out"},
+    {COMPOSITE_ATOP,       _("Atop"),       "atop"},
+    {COMPOSITE_XOR,        _("XOR"),        "xor"},
+    {COMPOSITE_ARITHMETIC, _("Arithmetic"), "arithmetic"}
+};
+const Converter<FeCompositeOperator> CompositeOperatorConverter(CompositeOperatorData, COMPOSITE_ENDOPERATOR);
+
 }
 }
 }

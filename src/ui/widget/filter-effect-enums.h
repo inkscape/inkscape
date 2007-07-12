@@ -12,6 +12,7 @@
 #ifndef INKSCAPE_UI_WIDGET_FILTER_EFFECT_ENUMS_H
 #define INKSCAPE_UI_WIDGET_FILTER_EFFECT_ENUMS_H
 
+#include "sp-fecomposite.h"
 #include "display/nr-filter-blend.h"
 #include "display/nr-filter-types.h"
 
@@ -137,6 +138,10 @@ extern const Converter<NR::FilterPrimitiveType> FPConverter;
 /*** feBlend Mode ***/
 extern const EnumData<NR::FilterBlendMode> BlendModeData[NR::BLEND_ENDMODE];
 extern const Converter<NR::FilterBlendMode> BlendModeConverter;
+
+/*** feComposite Operator ***/
+extern const EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR];
+extern const Converter<FeCompositeOperator> CompositeOperatorConverter;
 
 }
 }

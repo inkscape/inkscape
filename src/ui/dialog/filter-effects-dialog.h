@@ -136,12 +136,21 @@ private:
     {
     public:
         SettingsGroup();
+        void init(FilterEffectsDialog* dlg, Glib::RefPtr<Gtk::SizeGroup> sg);
 
-        void init(Gtk::VBox& box, Glib::RefPtr<Gtk::SizeGroup> sg);
-        void add_setting(Gtk::Widget& w, const Glib::ustring& label = "");
+        void add_setting_generic(Gtk::Widget& w, const Glib::ustring& label);
+        void add_setting(SpinSlider& ss, const SPAttributeEnum attr, const Glib::ustring& label);
+        template<typename T> void add_setting(ComboBoxEnum<T>& combo, const SPAttributeEnum attr,
+                                              const Glib::ustring& label)
+        {
+            add_setting_generic(combo, label);
+            combo.signal_changed().connect(
+                sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_comboboxenum<T>), attr, &combo));
+        }
         void add_setting(std::vector<Gtk::Widget*>& w, const Glib::ustring& label = "");
     private:
         Glib::RefPtr<Gtk::SizeGroup> _sizegroup;
+        FilterEffectsDialog* _dialog;
     };
 
     void init_settings_widgets();
@@ -151,8 +160,16 @@ private:
     void remove_primitive();
     void duplicate_primitive();
 
-    void set_attr(const SPAttributeEnum);
+    void set_attr_spinslider(const SPAttributeEnum attr, const SpinSlider*);
+    template<typename T> void set_attr_comboboxenum(const SPAttributeEnum attr, ComboBoxEnum<T>* input)
+    {
+        if(input->is_sensitive())
+            set_attr(attr, input->get_active_data()->name);
+    }
+    void set_attr_special(const SPAttributeEnum);
+    void set_attr(const SPAttributeEnum, const Glib::ustring& val);
     void update_settings_view();
+    void update_settings_sensitivity();
 
     // Filter effect selection
     FilterModifier _filter_modifier;
@@ -181,6 +198,11 @@ private:
     SettingsGroup _componenttransfer;
 
     SettingsGroup _composite;
+    UI::Widget::ComboBoxEnum<FeCompositeOperator> _composite_operator;
+    SpinSlider _composite_k1;
+    SpinSlider _composite_k2;
+    SpinSlider _composite_k3;
+    SpinSlider _composite_k4;
 
     SettingsGroup _convolvematrix;
 
