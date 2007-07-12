@@ -499,13 +499,13 @@ dnl Libpoppler checking
 dnl ******************************
 
 POPPLER_CFLAGS=""
-PKG_CHECK_MODULES(POPPLER, poppler >= 0.5, poppler=yes, poppler=no)
+PKG_CHECK_MODULES(POPPLER, poppler >= 0.5.5, poppler=yes, poppler=no)
 
 if test "x$poppler" = "xyes"; then
 	dnl Working libpoppler
 	POPPLER_LIBS="-lpoppler "
 	dnl Have to test libpoppler-glib presence
-	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.5, poppler_glib=yes, poppler_glib=no)
+	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.5.5, poppler_glib=yes, poppler_glib=no)
 	if test "x$poppler_glib" = "xyes"; then
 		dnl Working libpoppler-glib found
 		dnl Check whether the Cairo SVG backend is available
