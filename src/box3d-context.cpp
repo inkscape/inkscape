@@ -392,7 +392,6 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             
             ret = TRUE;
         }
-        ret = TRUE;
         break;
     case GDK_BUTTON_RELEASE:
         event_context->xp = event_context->yp = 0;
