@@ -21,6 +21,8 @@ INCLUDES =	\
 	$(INKBOARD_CFLAGS) \
 	$(XFT_CFLAGS)	\
 	$(GTK_UNIX_PRINT_CFLAGS)	\
+	$(POPPLER_CFLAGS)	\
+	$(POPPLER_GLIB_CFLAGS)	\
 	-DPOTRACE=\"potrace\"	\
 	$(INKSCAPE_CFLAGS) \
 	-I$(top_srcdir)/cxxtest

@@ -43,6 +43,9 @@
 # include "internal/cairo-png-out.h"
 # include "internal/cairo-ps-out.h"
 #endif
+#ifdef HAVE_POPPLER
+# include "internal/pdfinput/pdf-input.h"
+#endif
 #ifdef HAVE_POPPLER_GLIB
 # include "internal/pdf-input-cairo.h"
 #endif
@@ -126,6 +129,9 @@ init()
     Internal::CairoRendererOutput::init();
     }
     Internal::CairoPsOutput::init();
+#endif
+#ifdef HAVE_POPPLER
+//    Internal::PdfInput::init();
 #endif
 #ifdef HAVE_POPPLER_GLIB
     Internal::PdfInputCairo::init();

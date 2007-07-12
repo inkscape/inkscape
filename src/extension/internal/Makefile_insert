@@ -47,6 +47,12 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/eps-out.cpp	\
 	extension/internal/gdkpixbuf-input.h	\
 	extension/internal/gdkpixbuf-input.cpp	\
+	extension/internal/pdfinput/svg-builder.h \
+	extension/internal/pdfinput/svg-builder.cpp \
+	extension/internal/pdfinput/pdf-parser.h \
+	extension/internal/pdfinput/pdf-parser.cpp \
+	extension/internal/pdfinput/pdf-input.h	\
+	extension/internal/pdfinput/pdf-input.cpp	\
 	extension/internal/pov-out.cpp	\
 	extension/internal/pov-out.h	\
 	extension/internal/odf.cpp	\
