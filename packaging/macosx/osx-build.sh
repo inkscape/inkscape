@@ -61,16 +61,18 @@ Compilation script for Inkscape on Mac OS X.
   \033[1md,dist,distrib\033[0m
     store Inkscape.app in a disk image (dmg) for distribution
     \033[1m-py,--with-python\033[0m	specify python packages path for inclusion into the dmg image
-	
+  \033[1mall\033[0m
+    do everything (update, configure, build, install, package, distribute)
+
 \033[1mEXAMPLES\033[0m
   \033[1m$0 conf build install\033[0m
     configure, build and install a dowloaded version of Inkscape in the default
     directory, keeping debugging information.	
-  \033[1m$0 -p ~ -s -py ~/pyxml/ u a c b i p d\033[0m
+  \033[1m$0 u a c b -p ~ i -s p -py ~/pyxml/ d\033[0m
     update an svn checkout, prepare configure script, configure,
-    build and install Inkscape in the user home directory. 	
+    build and install Inkscape in the user home directory (~). 	
     Then package Inkscape withouth debugging information,
-    with python packages from ~/pyxml/ and prepare it for   
+    with python packages from ~/pyxml/ and prepare a dmg for   
     distribution."
 }
 
@@ -104,6 +106,14 @@ do
 	h|help)
 		help 
 		exit 1 ;;
+	all)
+		SVNUPDATE="t" ;;
+		AUTOGEN="t" ;;
+		CONFIGURE="t" ;;
+		BUILD="t" ;;
+		INSTALL="t" ;;
+		PACKAGE="t" ;;
+		DISTRIB="t" ;;
    u|up|update)
 		SVNUPDATE="t" ;;
    a|auto|autogen)
@@ -118,9 +128,9 @@ do
 		PACKAGE="t" ;;
 	d|dist|distrib)
 		DISTRIB="t" ;;
-	# -p|--prefix)
-	#   	INSTALLPREFIX=$2
-	#   	shift 1 ;;
+	-p|--prefix)
+	  	INSTALLPREFIX=$2
+	  	shift 1 ;;
 	-s|-strip)
 	     	STRIP="t" ;;
 	-py|--with-python)
