@@ -153,6 +153,13 @@ private:
         FilterEffectsDialog* _dialog;
     };
 
+    class ComboBoxPrimInput : public Gtk::ComboBoxText
+    {
+    public:
+        ComboBoxPrimInput();
+        void set_active_input(const gchar*);
+    };
+
     void init_settings_widgets();
 
     // Handlers
@@ -164,10 +171,10 @@ private:
     template<typename T> void set_attr_comboboxenum(const SPAttributeEnum attr, ComboBoxEnum<T>* input)
     {
         if(input->is_sensitive())
-            set_attr(attr, input->get_active_data()->name);
+            set_attr(attr, input->get_active_data()->name.c_str());
     }
     void set_attr_special(const SPAttributeEnum);
-    void set_attr(const SPAttributeEnum, const Glib::ustring& val);
+    void set_attr(const SPAttributeEnum, const gchar* val);
     void update_settings_view();
     void update_settings_sensitivity();
 
@@ -187,7 +194,8 @@ private:
 
     // Generic settings
     SettingsGroup _generic_settings;
-    Gtk::ComboBoxText _primitive_input1;
+    ComboBoxPrimInput _primitive_input1;
+    ComboBoxPrimInput _primitive_input2;
 
     SettingsGroup _blend;
     UI::Widget::ComboBoxEnum<NR::FilterBlendMode> _blend_mode;

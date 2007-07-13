@@ -650,6 +650,40 @@ void FilterEffectsDialog::SettingsGroup::add_setting(std::vector<Gtk::Widget*>& 
     add_setting_generic(*hb, label);
 }
 
+/*** ComboBoxPrimInput ***/
+FilterEffectsDialog::ComboBoxPrimInput::ComboBoxPrimInput()
+{
+    append_text("Default");
+    append_text("Source Graphic");
+    append_text("Source Alpha");
+    append_text("Background Image");
+    append_text("Background Alpha");
+    append_text("Fill Paint");
+    append_text("Stroke Paint");
+    append_text("Connection");
+}
+
+void FilterEffectsDialog::ComboBoxPrimInput::set_active_input(const gchar* val)
+{
+    const Glib::ustring attr_in = val ? val : "";
+    if(attr_in == "")
+        set_active(0);
+    else if(attr_in == "SourceGraphic")
+        set_active(1);
+    else if(attr_in == "SourceAlpha")
+        set_active(2);
+    else if(attr_in == "BackgroundImage")
+        set_active(3);
+    else if(attr_in == "BackgroundAlpha")
+        set_active(4);
+    else if(attr_in == "Fill Paint")
+        set_active(5);
+    else if(attr_in == "Stroke Paint")
+        set_active(6);
+    else
+        set_active(7);
+}
+
 /*** FilterEffectsDialog ***/
 
 FilterEffectsDialog::FilterEffectsDialog() 
@@ -730,14 +764,9 @@ void FilterEffectsDialog::init_settings_widgets()
     _generic_settings.add_setting_generic(_primitive_input1, "Input");
     _primitive_input1.signal_changed().connect(
         sigc::bind(sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_special), SP_ATTR_IN));
-    _primitive_input1.append_text("Default");
-    _primitive_input1.append_text("Source Graphic");
-    _primitive_input1.append_text("Source Alpha");
-    _primitive_input1.append_text("Background Image");
-    _primitive_input1.append_text("Background Alpha");
-    _primitive_input1.append_text("Fill Paint");
-    _primitive_input1.append_text("Stroke Paint");
-    _primitive_input1.append_text("Connection");
+    _generic_settings.add_setting_generic(_primitive_input2, "Input 2");
+    _primitive_input2.signal_changed().connect(
+        sigc::bind(sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_special), SP_ATTR_IN2));
 
     _blend.init(this, _settings_labels);
     _blend.add_setting(_blend_mode, SP_ATTR_MODE, "Mode");
@@ -884,7 +913,7 @@ void FilterEffectsDialog::set_attr_spinslider(const SPAttributeEnum attr, const 
     if(input->is_sensitive()) {
         std::ostringstream os;
         os << input->get_value();
-        set_attr(attr, os.str());
+        set_attr(attr, os.str().c_str());
     }
 }
 
@@ -895,8 +924,13 @@ void FilterEffectsDialog::set_attr_special(const SPAttributeEnum attr)
     switch(attr) {
         case SP_ATTR_IN:
             val = _primitive_input1.get_active_text();
+        case SP_ATTR_IN2:
+            if(attr == SP_ATTR_IN2)
+                val = _primitive_input2.get_active_text();
             if(val == "Default") {
-                val = "";
+                // Remove the setting rather then set it
+                set_attr(attr, 0);
+                return;
             }
             else if(val == "Connection") {
                 return;
@@ -915,10 +949,10 @@ void FilterEffectsDialog::set_attr_special(const SPAttributeEnum attr)
             return;
     }
 
-    set_attr(attr, val);
+    set_attr(attr, val.c_str());
 }
 
-void FilterEffectsDialog::set_attr(const SPAttributeEnum attr, const Glib::ustring& val)
+void FilterEffectsDialog::set_attr(const SPAttributeEnum attr, const gchar* val)
 {
     SPFilter *filter = _filter_modifier.get_selected_filter();
     SPFilterPrimitive* prim = _primitive_list.get_selected();
@@ -926,8 +960,7 @@ void FilterEffectsDialog::set_attr(const SPAttributeEnum attr, const Glib::ustri
     if(filter && prim) {
         update_settings_sensitivity();
 
-        SP_OBJECT_REPR(prim)->setAttribute((gchar*)sp_attribute_name(attr), val.c_str());
-        sp_object_set(prim, attr, val.c_str());
+        SP_OBJECT_REPR(prim)->setAttribute((gchar*)sp_attribute_name(attr), val);
         filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
 
         sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Set filter primitive attribute"));
@@ -949,24 +982,8 @@ void FilterEffectsDialog::update_settings_view()
         const NR::FilterPrimitiveType tid = FPConverter.get_id_from_name(prim->repr->name());
 
         _generic_settings.show_all();
-        const gchar *attr_in_g = SP_OBJECT_REPR(prim)->attribute("in");
-        const Glib::ustring attr_in = attr_in_g ? attr_in_g : "";
-        if(attr_in == "")
-            _primitive_input1.set_active(0);
-        else if(attr_in == "SourceGraphic")
-            _primitive_input1.set_active(1);
-        else if(attr_in == "SourceAlpha")
-            _primitive_input1.set_active(2);
-        else if(attr_in == "BackgroundImage")
-            _primitive_input1.set_active(3);
-        else if(attr_in == "BackgroundAlpha")
-            _primitive_input1.set_active(4);
-        else if(attr_in == "Fill Paint")
-            _primitive_input1.set_active(5);
-        else if(attr_in == "Stroke Paint")
-            _primitive_input1.set_active(6);
-        else
-            _primitive_input1.set_active(7);
+        _primitive_input1.set_active_input(SP_OBJECT_REPR(prim)->attribute("in"));
+        _primitive_input2.set_active_input(SP_OBJECT_REPR(prim)->attribute("in2"));
 
         if(tid == NR::NR_FILTER_BLEND) {
             _blend.show_all();
@@ -991,8 +1008,9 @@ void FilterEffectsDialog::update_settings_view()
             _convolvematrix.show_all();
         else if(tid == NR::NR_FILTER_DIFFUSELIGHTING)
             _diffuselighting.show_all();
-        else if(tid == NR::NR_FILTER_DISPLACEMENTMAP)
+        else if(tid == NR::NR_FILTER_DISPLACEMENTMAP) {
             _displacementmap.show_all();
+        }
         else if(tid == NR::NR_FILTER_FLOOD)
             _flood.show_all();
         else if(tid == NR::NR_FILTER_GAUSSIANBLUR) {
@@ -1026,6 +1044,10 @@ void FilterEffectsDialog::update_settings_view()
 
 void FilterEffectsDialog::update_settings_sensitivity()
 {
+    SPFilterPrimitive* prim = _primitive_list.get_selected();
+
+    _primitive_input2.set_sensitive(SP_IS_FEBLEND(prim) || SP_IS_FECOMPOSITE(prim) || SP_IS_FEDISPLACEMENTMAP(prim));
+
     const bool use_k = _composite_operator.get_active_data()->id == COMPOSITE_ARITHMETIC;
     _composite_k1.set_sensitive(use_k);
     _composite_k2.set_sensitive(use_k);
