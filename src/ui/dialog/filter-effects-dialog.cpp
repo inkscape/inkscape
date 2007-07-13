@@ -34,6 +34,7 @@
 #include "sp-feblend.h"
 #include "sp-fecomposite.h"
 #include "sp-fedisplacementmap.h"
+#include "sp-femerge.h"
 #include "sp-filter-primitive.h"
 #include "sp-gaussian-blur.h"
 #include "sp-feoffset.h"
@@ -204,6 +205,12 @@ int FilterEffectsDialog::CellRendererConnection::input_count(const SPFilterPrimi
         return 0;
     else if(SP_IS_FEBLEND(prim) || SP_IS_FECOMPOSITE(prim) || SP_IS_FEDISPLACEMENTMAP(prim))
         return 2;
+    else if(SP_IS_FEMERGE(prim)) {
+        // Return the number of feMergeNode connections plus an extra one for adding a new input
+        int count = 1;
+        for(const SPObject* o = prim->firstChild(); o; o = o->next, ++count);
+        return count;
+    }
     else
         return 1;
 }
@@ -360,35 +367,50 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_event(GdkEventExpose* e)
         std::vector<Gdk::Point> con_poly;
         int con_drag_y;
         bool inside;
-        // Draw "in" shape
-        inside = do_connection_node(row, 0, con_poly, mx, my);
-        con_drag_y = con_poly[2].get_y();
-        get_bin_window()->draw_polygon(inside && mask & GDK_BUTTON1_MASK ?
-                                       get_style()->get_dark_gc(Gtk::STATE_NORMAL) :
-                                       get_style()->get_dark_gc(Gtk::STATE_ACTIVE),
-                                       inside, con_poly);
-        // Draw "in" connection
-        draw_connection(find_result(row, SP_ATTR_IN), outline_x, con_poly[2].get_y(), row_count);
-
         const SPFilterPrimitive* row_prim = (*row)[_columns.primitive];
-        if(CellRendererConnection::input_count(row_prim) == 2) {
-            // Draw "in2" shape
-            inside = do_connection_node(row, 1, con_poly, mx, my);
-            if(_in_drag == 2)
-                con_drag_y = con_poly[2].get_y();
+        const int inputs = CellRendererConnection::input_count(row_prim);
+
+        if(SP_IS_FEMERGE(row_prim)) {
+            for(int i = 0; i < inputs; ++i) {
+                inside = do_connection_node(row, i, con_poly, mx, my);
+                get_bin_window()->draw_polygon(inside && mask & GDK_BUTTON1_MASK ?
+                                               get_style()->get_dark_gc(Gtk::STATE_NORMAL) :
+                                               get_style()->get_dark_gc(Gtk::STATE_ACTIVE),
+                                               inside, con_poly);
+
+                // TODO: draw connections for each of the feMergeNodes
+            }
+        }
+        else {
+            // Draw "in" shape
+            inside = do_connection_node(row, 0, con_poly, mx, my);
+            con_drag_y = con_poly[2].get_y();
             get_bin_window()->draw_polygon(inside && mask & GDK_BUTTON1_MASK ?
                                            get_style()->get_dark_gc(Gtk::STATE_NORMAL) :
                                            get_style()->get_dark_gc(Gtk::STATE_ACTIVE),
                                            inside, con_poly);
-            // Draw "in2" connection
-            draw_connection(find_result(row, SP_ATTR_IN2), outline_x, con_poly[2].get_y(), row_count);
-        }
+            // Draw "in" connection
+            draw_connection(find_result(row, SP_ATTR_IN), outline_x, con_poly[2].get_y(), row_count);
 
-        // Draw drag connection
-        if(row_prim == prim && _in_drag) {
-            get_bin_window()->draw_line(get_style()->get_black_gc(), outline_x, con_drag_y,
-                                        mx, con_drag_y);
-            get_bin_window()->draw_line(get_style()->get_black_gc(), mx, con_drag_y, mx, my);
+            if(inputs == 2) {
+                // Draw "in2" shape
+                inside = do_connection_node(row, 1, con_poly, mx, my);
+                if(_in_drag == 2)
+                    con_drag_y = con_poly[2].get_y();
+                get_bin_window()->draw_polygon(inside && mask & GDK_BUTTON1_MASK ?
+                                               get_style()->get_dark_gc(Gtk::STATE_NORMAL) :
+                                               get_style()->get_dark_gc(Gtk::STATE_ACTIVE),
+                                               inside, con_poly);
+                // Draw "in2" connection
+                draw_connection(find_result(row, SP_ATTR_IN2), outline_x, con_poly[2].get_y(), row_count);
+            }
+
+            // Draw drag connection
+            if(row_prim == prim && _in_drag) {
+                get_bin_window()->draw_line(get_style()->get_black_gc(), outline_x, con_drag_y,
+                                            mx, con_drag_y);
+                get_bin_window()->draw_line(get_style()->get_black_gc(), mx, con_drag_y, mx, my);
+            }
         }
     }
 
@@ -421,15 +443,17 @@ bool FilterEffectsDialog::PrimitiveList::do_connection_node(const Gtk::TreeIter&
                                                             const int ix, const int iy)
 {
     Gdk::Rectangle rct;
+    const int input_count = CellRendererConnection::input_count((*row)[_columns.primitive]);
 
     get_cell_area(get_model()->get_path(_model->children().begin()), *get_column(1), rct);
-    const int h = rct.get_height();
+    const int fheight = rct.get_height();
 
     get_cell_area(_model->get_path(row), *get_column(1), rct);
+    const float h = rct.get_height() / input_count;
 
-    const int x = rct.get_x() + h * (_model->children().size() - find_index(row));
-    const int con_w = (int)(h * 0.35f);
-    const int con_y = rct.get_y() + h / 2 - con_w + input * h;
+    const int x = rct.get_x() + fheight * (_model->children().size() - find_index(row));
+    const int con_w = (int)(fheight * 0.35f);
+    const int con_y = (int)(rct.get_y() + (h / 2) - con_w + (input * h));
     points.clear();
     points.push_back(Gdk::Point(x, con_y));
     points.push_back(Gdk::Point(x, con_y + con_w * 2));
