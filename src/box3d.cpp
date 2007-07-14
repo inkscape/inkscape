@@ -16,6 +16,7 @@
  */
 
 #include <glibmm/i18n.h>
+#include "attributes.h"
 #include "box3d.h"
 
 static void sp_3dbox_class_init(SP3DBoxClass *klass);
@@ -31,6 +32,9 @@ static gchar *sp_3dbox_description(SPItem *item);
 
 //static void sp_3dbox_set_shape(SPShape *shape);
 static void sp_3dbox_set_shape(SP3DBox *box3d);
+
+static gchar * sp_3dbox_get_corner_coords_string (SP3DBox *box, guint id);
+static std::pair<gdouble, gdouble> sp_3dbox_get_coord_pair_from_string (const gchar *);
 
 static SPGroupClass *parent_class;
 
@@ -78,8 +82,25 @@ sp_3dbox_class_init(SP3DBoxClass *klass)
 static void
 sp_3dbox_init(SP3DBox *box)
 {
-    // We create all faces in the beginning (but only the non-degenerate ones
-    // should be written to the svg representation later in sp_3dbox_write).
+    for (int i = 0; i < 8; ++i) box->corners[i] = NR::Point(0,0);
+    for (int i = 0; i < 6; ++i) box->faces[i] = NULL;
+}
+
+static void
+sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+{
+    if (((SPObjectClass *) (parent_class))->build) {
+        ((SPObjectClass *) (parent_class))->build(object, document, repr);
+    }
+
+    SP3DBox *box = SP_3DBOX (object);
+
+    sp_object_read_attr(object, "inkscape:box3dcornerA");
+    sp_object_read_attr(object, "inkscape:box3dcornerB");
+    sp_object_read_attr(object, "inkscape:box3dcornerC");
+
+    // TODO: We create all faces in the beginning, but only the non-degenerate ones
+    //       should be written to the svg representation later in sp_3dbox_write.
     Box3D::Axis cur_plane, axis, dir1, dir2;
     Box3D::FrontOrRear cur_pos;
     for (int i = 0; i < 3; ++i) {
@@ -98,16 +119,10 @@ sp_3dbox_init(SP3DBox *box)
                                     cur_plane, cur_pos);
         }
     }
-}
 
-static void
-sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    if (((SPObjectClass *) (parent_class))->build) {
-        ((SPObjectClass *) (parent_class))->build(object, document, repr);
-    }
-
-    //sp_object_read_attr(object, "width");
+    // Check whether the paths of the faces of the box need to be linked to existing paths in the
+    // document (e.g., after a 'redo' operation or after opening a file) and do so if necessary.
+    sp_3dbox_link_to_existing_paths (box, repr);
 }
 
 /*
@@ -127,17 +142,30 @@ sp_3dbox_release (SPObject *object)
 }
 */
 
+static void
+sp_3dbox_update_corner_with_value_from_svg (SPObject *object, guint corner_id, const gchar *value)
+{
+    if (value == NULL) return;
+    SP3DBox *box = SP_3DBOX(object);
+
+    std::pair<gdouble, gdouble> coord_pair = sp_3dbox_get_coord_pair_from_string (value);
+    box->corners[corner_id] = NR::Point (coord_pair.first, coord_pair.second);
+    sp_3dbox_recompute_corners (box, box->corners[2], box->corners[1], box->corners[5]);
+    object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+}
+
 static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value)
 {
-    //SP3DBox *box3d = SP_3DBOX(object);
-
     switch (key) {
-        /***
-        case SP_ATTR_WIDTH:
-            rect->width.readOrUnset(value);
-            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        case SP_ATTR_INKSCAPE_3DBOX_CORNER_A:
+            sp_3dbox_update_corner_with_value_from_svg (object, 2, value);
             break;
-        ***/
+        case SP_ATTR_INKSCAPE_3DBOX_CORNER_B:
+            sp_3dbox_update_corner_with_value_from_svg (object, 1, value);
+            break;
+        case SP_ATTR_INKSCAPE_3DBOX_CORNER_C:
+            sp_3dbox_update_corner_with_value_from_svg (object, 5, value);
+            break;
 	default:
             if (((SPObjectClass *) (parent_class))->set) {
                 ((SPObjectClass *) (parent_class))->set(object, key, value);
@@ -146,24 +174,19 @@ static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value)
     }
 }
 
-
 static void
 sp_3dbox_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    //SP3DBox *box3d = SP_3DBOX(object);
-
     /* Invoke parent method */
     if (((SPObjectClass *) (parent_class))->update)
         ((SPObjectClass *) (parent_class))->update(object, ctx, flags);
-    
-    //sp_3dbox_set_shape (box3d);
 }
 
 
 
 static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
-    SP3DBox *box3d = SP_3DBOX(object);
+    SP3DBox *box = SP_3DBOX(object);
     // FIXME: How to handle other contexts???
     // FIXME: Is tools_isactive(..) more recommended to check for the current context/tool?
     if (!SP_IS_3DBOX_CONTEXT(inkscape_active_event_context()))
@@ -173,10 +196,28 @@ static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:g");
         repr->setAttribute("sodipodi:type", "inkscape:3dbox");
+        /* Hook paths to the faces of the box */
+        for (int i = 0; i < 6; ++i) {
+            box->faces[i]->hook_path_to_3dbox();
+        }
     }
 
     for (int i = 0; i < 6; ++i) {
-        box3d->faces[i]->set_path_repr();
+        box->faces[i]->set_path_repr();
+    }
+
+    if (flags & SP_OBJECT_WRITE_EXT) {
+        gchar *coords;
+        coords = sp_3dbox_get_corner_coords_string (box, 2);
+        repr->setAttribute("inkscape:box3dcornerA", coords);
+
+        coords = sp_3dbox_get_corner_coords_string (box, 1);
+        repr->setAttribute("inkscape:box3dcornerB", coords);
+
+        coords = sp_3dbox_get_corner_coords_string (box, 5);
+        repr->setAttribute("inkscape:box3dcornerC", coords);
+
+        g_free ((void *) coords);
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
@@ -255,6 +296,38 @@ void
 sp_3dbox_update_curves (SP3DBox *box) {
     for (int i = 0; i < 6; ++i) {
         if (box->faces[i]) box->faces[i]->set_curve();
+    }
+}
+
+void
+sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr) {
+    // TODO: We should probably destroy the existing paths and recreate them because we don't know
+    //       precisely which path corresponds to which face. Does this make a difference?
+    //       In sp_3dbox_write we write the correct paths anyway, don't we? But we could get into
+    //       trouble at a later stage when we only write single faces for degenerate boxes.
+
+    SPDocument *document = SP_OBJECT_DOCUMENT(box);
+    guint face_id = 0;
+
+    for (Inkscape::XML::Node *i = sp_repr_children(repr); i != NULL; i = sp_repr_next(i)) {
+        if (face_id > 5) {
+            g_warning ("SVG representation of 3D boxes must contain 6 paths or less.\n");
+            break;
+        }
+
+        SPObject *face_object = document->getObjectByRepr((Inkscape::XML::Node *) i);
+        if (!SP_IS_PATH(face_object)) {
+            g_warning ("SVG representation of 3D boxes should only contain paths.\n");
+            continue;
+        }
+        box->faces[face_id]->hook_path_to_3dbox(SP_PATH(face_object));
+        ++face_id;
+    }
+    if (face_id < 6) {
+        //g_warning ("SVG representation of 3D boxes should contain exactly 6 paths (degenerate boxes are not yet supported).\n");
+        // TODO: Check whether it is safe to add the remaining paths to the box and do so in case it is.
+        //       (But we also land here for newly created boxes where we shouldn't add any paths because
+        //       This is done in sp_3dbox_write later on.
     }
 }
 
@@ -344,6 +417,32 @@ sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_
         Box3D::Line diag2 (box->corners[id_corner1 ^ dir], box->corners[id_corner2 ^ dir]);
         return diag1.intersect(diag2);
     }
+}
+
+static gchar *
+sp_3dbox_get_corner_coords_string (SP3DBox *box, guint id)
+{
+    id = id % 8;
+    return g_strdup_printf ("%f,%f", box->corners[id][NR::X], box->corners[id][NR::Y]);
+}
+
+static std::pair<gdouble, gdouble>
+sp_3dbox_get_coord_pair_from_string (const gchar *coords)
+{
+    gchar **coordlist = g_strsplit( coords, ",", 0);
+    // We might as well rely on g_strtod to convert the NULL pointer to 0.0,
+    // but we include the following test anyway
+    if (coordlist[0] == NULL || coordlist[1] == NULL) {
+        g_strfreev (coordlist);
+        g_warning ("Coordinate conversion failed.\n");
+        return std::make_pair(0.0, 0.0);
+    }
+
+    gdouble coord1 = g_strtod(coordlist[0], NULL);
+    gdouble coord2 = g_strtod(coordlist[1], NULL);
+    g_strfreev (coordlist);
+
+    return std::make_pair(coord1, coord2);
 }
 
 /*

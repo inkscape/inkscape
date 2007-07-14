@@ -47,6 +47,7 @@ GType sp_3dbox_get_type (void);
 void sp_3dbox_position_set (SP3DBoxContext &bc);
 void sp_3dbox_recompute_corners (SP3DBox *box, NR::Point const pt1, NR::Point const pt2, NR::Point const pt3);
 void sp_3dbox_update_curves (SP3DBox *box);
+void sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr);
 void sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt, Box3D::Axis axes = Box3D::XY);
 void sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, bool constrained = true);
 NR::Maybe<NR::Point> sp_3dbox_get_center (SP3DBox *box);

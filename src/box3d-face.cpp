@@ -162,19 +162,27 @@ NR::Point Box3DFace::operator[](unsigned int i)
  * Append the curve's path as a child to the given 3D box (since SP3DBox
  * is derived from SPGroup, so we can append children to its svg representation)
  */
-void Box3DFace::hook_path_to_3dbox()
+void Box3DFace::hook_path_to_3dbox(SPPath * existing_path)
 {
-    if (this->path) return; // This test can probably be removed.
+    if (this->path) {
+        //g_print ("Path already exists. Returning ...\n");
+        return;
+    }
+
+    if (existing_path != NULL) {
+        // no need to create a new path
+        this->path = existing_path;
+        return;
+    }
 
     SPDesktop *desktop = inkscape_active_desktop();
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(inkscape_active_event_context()));
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(SP_OBJECT(parent_box3d)));
     GString *pstring = g_string_new("");
     g_string_printf (pstring, "tools.shapes.3dbox.%s", axes_string());
 
     Inkscape::XML::Node *repr_face = xml_doc->createElement("svg:path");
     sp_desktop_apply_style_tool (desktop, repr_face, pstring->str, false);
     this->path = SP_PATH(SP_OBJECT(parent_box3d)->appendChildRepr(repr_face));
-
     Inkscape::GC::release(repr_face);
 }
 

@@ -24,6 +24,7 @@
 #include "sp-flowtext.h"
 #include "sp-use.h"
 #include "sp-rect.h"
+#include "box3d.h"
 #include "sp-ellipse.h"
 #include "sp-star.h"
 #include "sp-anchor.h"
@@ -59,6 +60,8 @@ type2term(GType type)
         { return _("Polyline"); }
     if (type == SP_TYPE_RECT)
         { return _("Rectangle"); }
+    if (type == SP_TYPE_3DBOX)
+        { return _("3D Box"); }
     if (type == SP_TYPE_TEXT)
         { return _("Text"); }
     // TRANSLATORS: only translate "string" in "context|string".

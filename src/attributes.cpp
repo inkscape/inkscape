@@ -112,6 +112,11 @@ static SPStyleProp const props[] = {
     /* SPRect */
     {SP_ATTR_RX, "rx"},
     {SP_ATTR_RY, "ry"},
+    /* SP3DBox */
+    {SP_ATTR_INKSCAPE_3DBOX, "inkscape:3dbox"},
+    {SP_ATTR_INKSCAPE_3DBOX_CORNER_A, "inkscape:box3dcornerA"}, // "upper left front" corner
+    {SP_ATTR_INKSCAPE_3DBOX_CORNER_B, "inkscape:box3dcornerB"}, // "lower right front" corner
+    {SP_ATTR_INKSCAPE_3DBOX_CORNER_C, "inkscape:box3dcornerC"}, // "lower right rear" corner
     /* SPEllipse */
     {SP_ATTR_R, "r"},
     {SP_ATTR_CX, "cx"},
