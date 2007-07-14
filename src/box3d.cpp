@@ -33,6 +33,7 @@ static gchar *sp_3dbox_description(SPItem *item);
 //static void sp_3dbox_set_shape(SPShape *shape);
 static void sp_3dbox_set_shape(SP3DBox *box3d);
 
+static void sp_3dbox_update_corner_with_value_from_svg (SPObject *object, guint corner_id, const gchar *value);
 static gchar * sp_3dbox_get_corner_coords_string (SP3DBox *box, guint id);
 static std::pair<gdouble, gdouble> sp_3dbox_get_coord_pair_from_string (const gchar *);
 
@@ -142,18 +143,6 @@ sp_3dbox_release (SPObject *object)
 }
 */
 
-static void
-sp_3dbox_update_corner_with_value_from_svg (SPObject *object, guint corner_id, const gchar *value)
-{
-    if (value == NULL) return;
-    SP3DBox *box = SP_3DBOX(object);
-
-    std::pair<gdouble, gdouble> coord_pair = sp_3dbox_get_coord_pair_from_string (value);
-    box->corners[corner_id] = NR::Point (coord_pair.first, coord_pair.second);
-    sp_3dbox_recompute_corners (box, box->corners[2], box->corners[1], box->corners[5]);
-    object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-}
-
 static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value)
 {
     switch (key) {
@@ -177,6 +166,11 @@ static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value)
 static void
 sp_3dbox_update(SPObject *object, SPCtx *ctx, guint flags)
 {
+    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
+        SP3DBox *box = SP_3DBOX(object);
+        sp_3dbox_link_to_existing_paths (box, SP_OBJECT_REPR(object));
+    }
+
     /* Invoke parent method */
     if (((SPObjectClass *) (parent_class))->update)
         ((SPObjectClass *) (parent_class))->update(object, ctx, flags);
@@ -299,6 +293,11 @@ sp_3dbox_update_curves (SP3DBox *box) {
     }
 }
 
+/**
+ * In some situations (e.g., after cloning boxes, undo & redo, or reading boxes from a file) there are
+ * paths already present in the document which correspond to the faces of newly created boxes, but their
+ * 'path' members don't link to them yet. The following function corrects this if necessary.
+ */
 void
 sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr) {
     // TODO: We should probably destroy the existing paths and recreate them because we don't know
@@ -443,6 +442,19 @@ sp_3dbox_get_coord_pair_from_string (const gchar *coords)
     g_strfreev (coordlist);
 
     return std::make_pair(coord1, coord2);
+}
+
+// auxiliary function
+static void
+sp_3dbox_update_corner_with_value_from_svg (SPObject *object, guint corner_id, const gchar *value)
+{
+    if (value == NULL) return;
+    SP3DBox *box = SP_3DBOX(object);
+
+    std::pair<gdouble, gdouble> coord_pair = sp_3dbox_get_coord_pair_from_string (value);
+    box->corners[corner_id] = NR::Point (coord_pair.first, coord_pair.second);
+    sp_3dbox_recompute_corners (box, box->corners[2], box->corners[1], box->corners[5]);
+    object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /*

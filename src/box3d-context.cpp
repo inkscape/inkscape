@@ -203,14 +203,6 @@ void sp_3dbox_context_selection_changed(Inkscape::Selection *selection, gpointer
             ec->shape_repr = shape_repr;
             Inkscape::GC::anchor(shape_repr);
             sp_repr_add_listener(shape_repr, &ec_shape_repr_events, ec);
-
-            // FIXME: The following really belongs in sp_3dbox_build. But when undoing & redoing the
-            //        creation of a 3D box, we have no means of accessing the recreated paths, which
-            //        seem to be built after the box itself. Thus we need to check for untracked paths
-            //        here and hook them to the box if the latter was created by a redo operation.
-            if (SP_IS_3DBOX(item)) {
-                sp_3dbox_link_to_existing_paths (SP_3DBOX(item), shape_repr);
-            }
         }
     }
 }
