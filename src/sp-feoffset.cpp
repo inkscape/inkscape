@@ -111,6 +111,7 @@ sp_feOffset_release(SPObject *object)
 
 static double
 sp_feOffset_read_number(gchar const *value) {
+    if (!value) return 0;
     char *end;
     double ret = g_ascii_strtod(value, &end);
     if (*end) {
@@ -130,14 +131,21 @@ sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeOffset *feOffset = SP_FEOFFSET(object);
 
+    double read_num;
     switch(key) {
         case SP_ATTR_DX:
-            feOffset->dx = sp_feOffset_read_number(value);
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            read_num = sp_feOffset_read_number(value);
+            if (read_num != feOffset->dx) {
+                feOffset->dx = read_num;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
             break;
         case SP_ATTR_DY:
-            feOffset->dy = sp_feOffset_read_number(value);
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            read_num = sp_feOffset_read_number(value);
+            if (read_num != feOffset->dy) {
+                feOffset->dy = read_num;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
             break;
             
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/

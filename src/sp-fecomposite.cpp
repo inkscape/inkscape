@@ -122,6 +122,8 @@ sp_feComposite_release(SPObject *object)
 
 static double
 sp_feComposite_read_number(gchar const *value) {
+    if (!value) return 0;
+
     char *end;
     double ret = g_ascii_strtod(value, &end);
     if (*end) {
