@@ -17,7 +17,8 @@
 #include <gtkmm/liststore.h>
 #include <gtkmm/treeview.h>
 
-#include "filter-effect-enums.h"
+#include "combo-enums.h"
+#include "filter-enums.h"
 #include "labelled.h"
 #include "spin-slider.h"
 #include "sp-filter.h"

@@ -283,7 +283,7 @@ void FilterEffectsDialog::PrimitiveList::update()
             if(prim) {
                 Gtk::TreeModel::Row row = *_model->append();
                 row[_columns.primitive] = prim;
-                row[_columns.type_id] = FPConverter.get_id_from_name(prim->repr->name());
+                row[_columns.type_id] = FPConverter.get_id_from_key(prim->repr->name());
                 row[_columns.type] = FPConverter.get_label(row[_columns.type_id]);
                 row[_columns.id] = SP_OBJECT_ID(prim);
 
@@ -824,52 +824,9 @@ void FilterEffectsDialog::init_settings_widgets()
 void FilterEffectsDialog::add_primitive()
 {
     SPFilter* filter = _filter_modifier.get_selected_filter();
-    const EnumData<NR::FilterPrimitiveType>* data = _add_primitive_type.get_active_data();
     
-    if(filter && data) {
-        SPFilterPrimitive* prim = filter_add_primitive(filter, data->name.c_str());
-
-        // Set default values
-        switch(data->id) {
-            case NR::NR_FILTER_BLEND:
-                sp_object_set(prim, SP_ATTR_MODE, BlendModeConverter.get_name(NR::BLEND_NORMAL).c_str());
-                break;
-            case NR::NR_FILTER_COLORMATRIX:
-                break;
-            case NR::NR_FILTER_COMPONENTTRANSFER:
-                break;
-            case NR::NR_FILTER_COMPOSITE:
-                break;
-            case NR::NR_FILTER_CONVOLVEMATRIX:
-                break;
-            case NR::NR_FILTER_DIFFUSELIGHTING:
-                break;
-            case NR::NR_FILTER_DISPLACEMENTMAP:
-                break;
-            case NR::NR_FILTER_FLOOD:
-                break;
-            case NR::NR_FILTER_GAUSSIANBLUR:
-                sp_object_set(prim, SP_ATTR_STDDEVIATION, "1");
-                break;
-            case NR::NR_FILTER_IMAGE:
-                break;
-            case NR::NR_FILTER_MERGE:
-                break;
-            case NR::NR_FILTER_MORPHOLOGY:
-                break;
-            case NR::NR_FILTER_OFFSET:
-                sp_object_set(prim, SP_ATTR_DX, "0");
-                sp_object_set(prim, SP_ATTR_DY, "0");
-                break;
-            case NR::NR_FILTER_SPECULARLIGHTING:
-                break;
-            case NR::NR_FILTER_TILE:
-                break;
-            case NR::NR_FILTER_TURBULENCE:
-                break;
-            default:
-                break;
-        }
+    if(filter) {
+        SPFilterPrimitive* prim = filter_add_primitive(filter, _add_primitive_type.get_active_data()->id);
 
         _primitive_list.update();
         _primitive_list.select(prim);
@@ -979,7 +936,7 @@ void FilterEffectsDialog::update_settings_view()
     _empty_settings.show();
 
     if(prim) {
-        const NR::FilterPrimitiveType tid = FPConverter.get_id_from_name(prim->repr->name());
+        const NR::FilterPrimitiveType tid = FPConverter.get_id_from_key(prim->repr->name());
 
         _generic_settings.show_all();
         _primitive_input1.set_active_input(SP_OBJECT_REPR(prim)->attribute("in"));
@@ -989,7 +946,7 @@ void FilterEffectsDialog::update_settings_view()
             _blend.show_all();
             const gchar* val = prim->repr->attribute("mode");
             if(val)
-                _blend_mode.set_active(BlendModeConverter.get_id_from_name(val));
+                _blend_mode.set_active(BlendModeConverter.get_id_from_key(val));
         }
         else if(tid == NR::NR_FILTER_COLORMATRIX)
             _colormatrix.show_all();

@@ -17,7 +17,7 @@
 #include "forward.h"
 #include "sp-filter.h"
 
-SPFilterPrimitive *filter_add_primitive(SPFilter *filter, const gchar *type);
+SPFilterPrimitive *filter_add_primitive(SPFilter *filter, NR::FilterPrimitiveType);
 SPFilter *new_filter (SPDocument *document);
 SPFilter *new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation, double expansion, double expansionX, double expansionY, double width, double height);
 SPFilter *new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mode, gdouble stdDeviation);

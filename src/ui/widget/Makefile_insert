@@ -12,6 +12,7 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/color-picker.h        \
 	ui/widget/color-preview.cpp     \
 	ui/widget/color-preview.h       \
+	ui/widget/combo-enums.h \
 	ui/widget/combo-text.cpp	\
 	ui/widget/combo-text.h		\
 	ui/widget/entity-entry.cpp      \
@@ -20,7 +21,6 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/entry.h        \
 	ui/widget/filter-effect-chooser.h \
 	ui/widget/filter-effect-chooser.cpp \
-	ui/widget/filter-effect-enums.h \
 	ui/widget/handlebox.cpp		\
 	ui/widget/handlebox.h		\
 	ui/widget/icon-widget.cpp	\

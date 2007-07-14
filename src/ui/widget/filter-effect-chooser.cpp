@@ -155,7 +155,7 @@ sigc::signal<void>& SimpleFilterModifier::signal_blend_blur_changed()
 
 const Glib::ustring SimpleFilterModifier::get_blend_mode()
 {
-    return _blend.get_active_row_number() == 5 ? "filter" : _blend.get_active_data()->name;
+    return _blend.get_active_row_number() == 5 ? "filter" : _blend.get_active_data()->key;
 }
 
 void SimpleFilterModifier::set_blend_mode(const int val)
@@ -214,47 +214,6 @@ void SimpleFilterModifier::blend_mode_changed()
         _vb_blur.show();
     }
 }
-
-/*** From filter-effect-enums.h ***/
-const EnumData<NR::FilterPrimitiveType> FPData[NR::NR_FILTER_ENDPRIMITIVETYPE] = {
-    {NR::NR_FILTER_BLEND,             _("Blend"),              "svg:feBlend"},
-    {NR::NR_FILTER_COLORMATRIX,       _("Color Matrix"),       "svg:feColorMatrix"},
-    {NR::NR_FILTER_COMPONENTTRANSFER, _("Component Transfer"), "svg:feComponentTransfer"},
-    {NR::NR_FILTER_COMPOSITE,         _("Composite"),          "svg:feComposite"},
-    {NR::NR_FILTER_CONVOLVEMATRIX,    _("Convolve Matrix"),    "svg:feConvolveMatrix"},
-    {NR::NR_FILTER_DIFFUSELIGHTING,   _("Diffuse Lighting"),   "svg:feDiffuseLighting"},
-    {NR::NR_FILTER_DISPLACEMENTMAP,   _("Displacement Map"),   "svg:feDisplacementMap"},
-    {NR::NR_FILTER_FLOOD,             _("Flood"),              "svg:feFlood"},
-    {NR::NR_FILTER_GAUSSIANBLUR,      _("Gaussian Blur"),      "svg:feGaussianBlur"},
-    {NR::NR_FILTER_IMAGE,             _("Image"),              "svg:feImage"},
-    {NR::NR_FILTER_MERGE,             _("Merge"),              "svg:feMerge"},
-    {NR::NR_FILTER_MORPHOLOGY,        _("Morphology"),         "svg:feMorphology"},
-    {NR::NR_FILTER_OFFSET,            _("Offset"),             "svg:feOffset"},
-    {NR::NR_FILTER_SPECULARLIGHTING,  _("Specular Lighting"),  "svg:feSpecularLighting"},
-    {NR::NR_FILTER_TILE,              _("Tile"),               "svg:feTile"},
-    {NR::NR_FILTER_TURBULENCE,        _("Turbulence"),         "svg:feTurbulence"}
-};
-const Converter<NR::FilterPrimitiveType> FPConverter(FPData, NR::NR_FILTER_ENDPRIMITIVETYPE);
-
-const EnumData<NR::FilterBlendMode> BlendModeData[NR::BLEND_ENDMODE] = {
-    {NR::BLEND_NORMAL, _("Normal"), "normal"},
-    {NR::BLEND_MULTIPLY, _("Multiply"), "multiply"},
-    {NR::BLEND_SCREEN, _("Screen"), "screen"},
-    {NR::BLEND_DARKEN, _("Darken"), "darken"},
-    {NR::BLEND_LIGHTEN, _("Lighten"), "lighten"}
-};
-const Converter<NR::FilterBlendMode> BlendModeConverter(BlendModeData, NR::BLEND_ENDMODE);
-
-const EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR] = {
-    {COMPOSITE_DEFAULT,    _("Default"),    ""},
-    {COMPOSITE_OVER,       _("Over"),       "over"},
-    {COMPOSITE_IN,         _("In"),         "in"},
-    {COMPOSITE_OUT,        _("Out"),        "out"},
-    {COMPOSITE_ATOP,       _("Atop"),       "atop"},
-    {COMPOSITE_XOR,        _("XOR"),        "xor"},
-    {COMPOSITE_ARITHMETIC, _("Arithmetic"), "arithmetic"}
-};
-const Converter<FeCompositeOperator> CompositeOperatorConverter(CompositeOperatorData, COMPOSITE_ENDOPERATOR);
 
 }
 }

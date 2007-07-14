@@ -171,7 +171,7 @@ private:
     template<typename T> void set_attr_comboboxenum(const SPAttributeEnum attr, ComboBoxEnum<T>* input)
     {
         if(input->is_sensitive())
-            set_attr(attr, input->get_active_data()->name.c_str());
+            set_attr(attr, input->get_active_data()->key.c_str());
     }
     void set_attr_special(const SPAttributeEnum);
     void set_attr(const SPAttributeEnum, const gchar* val);

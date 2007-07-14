@@ -18,6 +18,9 @@
 #include "document-private.h"
 #include "desktop-style.h"
 
+#include "filter-chemistry.h"
+#include "filter-enums.h"
+
 #include "sp-feblend.h"
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
@@ -111,14 +114,56 @@ SPFilter *new_filter(SPDocument *document)
 }
 
 SPFilterPrimitive *
-filter_add_primitive(SPFilter *filter, const gchar *type)
+filter_add_primitive(SPFilter *filter, const NR::FilterPrimitiveType type)
 {
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(filter->document);
 
     //create filter primitive node
     Inkscape::XML::Node *repr;
-    repr = xml_doc->createElement(type);
+    repr = xml_doc->createElement(FPConverter.get_key(type).c_str());
     repr->setAttribute("inkscape:collect", "always");
+
+    // set default values
+    switch(type) {
+        case NR::NR_FILTER_BLEND:
+            repr->setAttribute("blend", "normal");
+            break;
+        case NR::NR_FILTER_COLORMATRIX:
+            break;
+        case NR::NR_FILTER_COMPONENTTRANSFER:
+            break;
+        case NR::NR_FILTER_COMPOSITE:
+            break;
+        case NR::NR_FILTER_CONVOLVEMATRIX:
+            break;
+        case NR::NR_FILTER_DIFFUSELIGHTING:
+            break;
+        case NR::NR_FILTER_DISPLACEMENTMAP:
+            break;
+        case NR::NR_FILTER_FLOOD:
+            break;
+        case NR::NR_FILTER_GAUSSIANBLUR:
+            repr->setAttribute("stddeviation", "1");
+            break;
+        case NR::NR_FILTER_IMAGE:
+            break;
+        case NR::NR_FILTER_MERGE:
+            break;
+        case NR::NR_FILTER_MORPHOLOGY:
+            break;
+        case NR::NR_FILTER_OFFSET:
+            repr->setAttribute("dx", "0");
+            repr->setAttribute("dy", "0");
+            break;
+        case NR::NR_FILTER_SPECULARLIGHTING:
+            break;
+        case NR::NR_FILTER_TILE:
+            break;
+        case NR::NR_FILTER_TURBULENCE:
+            break;
+        default:
+            break;
+    }
 
     //set primitive as child of filter node
     filter->repr->appendChild(repr);

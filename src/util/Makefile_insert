@@ -7,6 +7,7 @@ util/clean:
 util_libinkutil_a_SOURCES = \
 	util/compose.hpp	\
 	util/ucompose.hpp	\
+	util/enums.h \
 	util/filter-list.h \
 	util/fixed_point.h \
 	util/format.h	\

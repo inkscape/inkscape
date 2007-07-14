@@ -75,6 +75,7 @@ libinkpre_a_SOURCES =	\
 	extract-uri.cpp extract-uri.h	\
 	file.cpp file.h	\
 	filter-chemistry.cpp filter-chemistry.h \
+	filter-enums.cpp filter-enums.h \
 	flood-context.cpp flood-context.h	\
 	fontsize-expansion.cpp fontsize-expansion.h	\
 	forward.h	\
@@ -288,6 +289,7 @@ libinkpost_a_SOURCES =	\
 	ege-select-one-action.h	\
 	fill-or-stroke.h	\
 	filter-chemistry.cpp filter-chemistry.h \
+	filter-enums.cpp filter-enums.h \
 	fixes.cpp \
 	gc-alloc.h	\
 	gc-anchored.h gc-anchored.cpp	\
