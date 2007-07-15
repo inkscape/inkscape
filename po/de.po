@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-15 15:23+0200\n"
-"PO-Revision-Date: 2007-07-15 15:35+0200\n"
+"PO-Revision-Date: 2007-07-15 16:36+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2454,7 +2454,7 @@ msgstr " (Keine Einstellungen)"
 #: ../src/extension/execution-env.cpp:109
 #, c-format
 msgid "'%s' working, please wait..."
-msgstr ""
+msgstr "»%s« arbeitet, bitte warten…"
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
@@ -4302,21 +4302,21 @@ msgstr ""
 
 #: ../src/object-edit.cpp:710 ../src/object-edit.cpp:711
 msgid "Resize box in X/Y direction"
-msgstr ""
+msgstr "Größe der Box in X/Y-Richtung ändern"
 
 #: ../src/object-edit.cpp:712
 msgid "Resize box in Z direction"
-msgstr ""
+msgstr "Größe der Box in Z-Richtung ändern"
 
 #: ../src/object-edit.cpp:724 ../src/object-edit.cpp:726
 #: ../src/object-edit.cpp:728 ../src/object-edit.cpp:730
 msgid "Resize box in X/Y direction; with <b>Shift</b> along the Z axis"
-msgstr ""
+msgstr "Größe der Box in X/Y-Richtung ändern; mit <b>Umschalt</b> entlang der Z-Achse"
 
 #: ../src/object-edit.cpp:732 ../src/object-edit.cpp:734
 #: ../src/object-edit.cpp:736 ../src/object-edit.cpp:738
 msgid "Resize box along the Z axis; with <b>Shift</b> in X/Y direction"
-msgstr ""
+msgstr "Größe der Box entlang der Z-Achse ändern; mit <b>Umschalt</b> in X/Y-Richtung"
 
 #: ../src/object-edit.cpp:918
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
@@ -6760,11 +6760,11 @@ msgstr "_Typ"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:589
 msgid "Reorder filter primitive"
-msgstr ""
+msgstr "Filterprimitive umordnen"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:711
 msgid "Stitch Tiles"
-msgstr ""
+msgstr "Kacheln zusammenfügen"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:712
 msgid "Fractal Noise"
@@ -6777,15 +6777,15 @@ msgstr "Turbulenz"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:834
 msgid "Add filter primitive"
-msgstr ""
+msgstr "Filterprimitiv hinzufügen"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:846
 msgid "Remove filter primitive"
-msgstr ""
+msgstr "Filterprimitiv entfernen"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:862
 msgid "Duplicate filter primitive"
-msgstr ""
+msgstr "Filterprimitiv duplizieren"
 
 # !!! Filterprimitiv
 #: ../src/ui/dialog/filter-effects-dialog.cpp:923
@@ -7248,17 +7248,15 @@ msgstr "Farbpipette"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:420
 msgid "Save and restore window geometry for each document"
-msgstr ""
+msgstr "Fenstergeometrie für jedes Dokument speichern und wiederherstellen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:421
-#, fuzzy
 msgid "Remember and use last window's geometry"
-msgstr "Fenstergeometrie speichern"
+msgstr "Geometrie des letzten Fensters merken und verwenden"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
-#, fuzzy
 msgid "Don't save window geometry"
-msgstr "Fenstergeometrie speichern"
+msgstr "Fenstergeometrie nicht speichern"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:424
 msgid "Dialogs are hidden in taskbar"
@@ -7285,25 +7283,24 @@ msgid "Dialogs stay on top (experimental!)"
 msgstr "Dialoge bleiben vor Dokumentenfenstern (experimentell!)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:436
-#, fuzzy
 msgid "Saving window geometry (size and position):"
-msgstr "Fenstergeometrie speichern"
+msgstr "Fenstergeometrie speichern (Größe und Position):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid "Let the window manager determine placement of all windows"
-msgstr ""
+msgstr "Dem Fenstermanager die Platzierung aller Fenster entscheiden lassen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid ""
 "Remember and use the last window's geometry (saves geometry to user "
 "preferences)"
-msgstr ""
+msgstr "Geometrie des letzten Fensters merken und verwenden (speichert Geometrie in Benutzereinstellungen)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid ""
 "Save and restore window geometry for each document (saves geometry in the "
 "document)"
-msgstr ""
+msgstr "Fenstergeometrie für jedes Dokument speichern und wiederherstellen (speichert Geometrie im Dokument)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "Dialogs on top:"
@@ -7333,9 +7330,8 @@ msgstr ""
 "»Wiederherstellen«, um ein minimiertes Dokumentenfenster wiederzubekommen.)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:457
-#, fuzzy
 msgid "Miscellaneous:"
-msgstr "Verschiedene Tipps und Tricks"
+msgstr "Verschiedenes:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:460
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
@@ -9761,9 +9757,8 @@ msgid "Create rectangles and squares"
 msgstr "Rechtecke und Quadrate erstellen"
 
 #: ../src/verbs.cpp:2358
-#, fuzzy
 msgid "Create 3D boxes"
-msgstr "Gekachelte Klone erzeugen"
+msgstr "3D-Boxen erzeugen"
 
 #: ../src/verbs.cpp:2360
 msgid "Create circles, ellipses, and arcs"
@@ -9839,14 +9834,12 @@ msgid "Open Preferences for the Rectangle tool"
 msgstr "Einstellungen für das Rechteckwerkzeug öffnen"
 
 #: ../src/verbs.cpp:2391
-#, fuzzy
 msgid "3D Box Preferences"
-msgstr "Einstellungen für Textwerkzeug"
+msgstr "Einstellungen für 3D-Box"
 
 #: ../src/verbs.cpp:2392
-#, fuzzy
 msgid "Open Preferences for the 3D Box tool"
-msgstr "Einstellungen für das Knotenwerkzeug öffnen"
+msgstr "Einstellungen für das 3D-Box-Werkzeug öffnen"
 
 #: ../src/verbs.cpp:2393
 msgid "Ellipse Preferences"
@@ -10287,11 +10280,11 @@ msgstr "Ebenen anzeigen"
 
 #: ../src/verbs.cpp:2506
 msgid "Filter Effects..."
-msgstr ""
+msgstr "Filtereffekte…"
 
 #: ../src/verbs.cpp:2507
 msgid "Manage SVG filter effects"
-msgstr ""
+msgstr "SVG-Filtereffekte verwalten"
 
 #. Help
 #: ../src/verbs.cpp:2510
@@ -10995,9 +10988,8 @@ msgid "Style of new rectangles"
 msgstr "Stil von neuen Rechtecken"
 
 #: ../src/widgets/toolbox.cpp:171
-#, fuzzy
 msgid "Style of new 3D boxes"
-msgstr "Stil von neuen Sternen"
+msgstr "Stil von neuen 3D-Boxen"
 
 #: ../src/widgets/toolbox.cpp:173
 msgid "Style of new ellipses"
@@ -11238,13 +11230,12 @@ msgid "Make corners sharp"
 msgstr "Spitze Ecken"
 
 #: ../src/widgets/toolbox.cpp:2192
-#, fuzzy
 msgid "3D Box: Change number of handles"
-msgstr "Stern: Anzahl der Ecken ändern"
+msgstr "3D-Box: Anzahl der Anfasser ändern"
 
 #: ../src/widgets/toolbox.cpp:2205
 msgid "Toggle VP in X direction"
-msgstr ""
+msgstr "VP in X-Richtung umschalten"
 
 #: ../src/widgets/toolbox.cpp:2206
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
@@ -11267,18 +11258,16 @@ msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2255
-#, fuzzy
 msgid "Three Handles"
-msgstr "Anfasser zeigen"
+msgstr "Drei Anfasser"
 
 #: ../src/widgets/toolbox.cpp:2256
 msgid "Switch to three handles (arbitrary resizing in XY-direction)"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2262
-#, fuzzy
 msgid "Four Handles"
-msgstr "Anfasser zeigen"
+msgstr "Vier Anfasser"
 
 #: ../src/widgets/toolbox.cpp:2263
 msgid "Switch to four handles (constrained resizing in XY-direction)"
@@ -11909,16 +11898,15 @@ msgstr "RGB-Tonne"
 
 #: ../share/extensions/color_replace.inx.h:1
 msgid "By color (RRGGBB hex):"
-msgstr ""
+msgstr "mit Farbe (RRGGBB hex):"
 
 #: ../share/extensions/color_replace.inx.h:3
 msgid "Replace color (RRGGBB hex):"
-msgstr ""
+msgstr "Ersetze Farbe (RRGGBB hex):"
 
 #: ../share/extensions/color_replace.inx.h:4
-#, fuzzy
 msgid "Replace color..."
-msgstr "Übernommene Farbe setzen"
+msgstr "Farbe ersetzen…"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -12124,15 +12112,12 @@ msgid "Function Plotter"
 msgstr "Funktionsplotter"
 
 #: ../share/extensions/funcplot.inx.h:7
-#, fuzzy
 msgid "Functions"
-msgstr "Funktion"
+msgstr "Funktionen"
 
 #: ../share/extensions/funcplot.inx.h:8
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
-msgstr ""
-"Isotropische Skalierung (benutzt Kleinstes: Breite/x-Bereich oderr Höhe/y-"
-"Bereich)"
+msgstr "Isotropische Skalierung (benutzt Kleinstes: Breite/x-Bereich oder Höhe/y-Bereich)"
 
 #: ../share/extensions/funcplot.inx.h:9
 msgid "Multiply x-range by 2*pi"
@@ -12160,34 +12145,25 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/funcplot.inx.h:15
-#, fuzzy
 msgid ""
 "Standard python math functions are available: ceil(x); fabs(x); floor(x); "
 "fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); "
 "pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos"
 "(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The "
 "constants pi and e are also available."
-msgstr ""
-"Die folgenden Funktionen sind verfügbar: (Python's Standard-Mathematik-"
-"Funktionen) ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf"
-"(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); "
-"atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians"
-"(x); cosh(x); sinh(x); tanh(x). Die Konstanten pi und e sind ebenfalls "
-"verfügbar."
+msgstr "Die folgenden Standard-Mathematik-Funktionen von Python sind verfügbar: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Die Konstanten pi und e sind ebenfalls verfügbar."
 
 #: ../share/extensions/funcplot.inx.h:16
 msgid "Start x-value"
 msgstr "Beginn X-Achse"
 
 #: ../share/extensions/funcplot.inx.h:17
-#, fuzzy
 msgid "Use"
-msgstr "Aufgehoben"
+msgstr "Verwenden"
 
 #: ../share/extensions/funcplot.inx.h:18
-#, fuzzy
 msgid "Use polar coordinates"
-msgstr "Zeigerkoordinaten"
+msgstr "Polarkoordinaten verwenden"
 
 #: ../share/extensions/funcplot.inx.h:19
 msgid "y-value of rectangle's bottom"
@@ -12600,34 +12576,31 @@ msgstr "ZIP-Ausgabe"
 
 #: ../share/extensions/text_flipcase.inx.h:2
 msgid "fLIP cASE"
-msgstr ""
+msgstr "sCHREIBUNG uMKEHREN"
 
 #: ../share/extensions/text_lowercase.inx.h:2
-#, fuzzy
 msgid "lowercase"
-msgstr "Ebene absenken"
+msgstr "kleinschreibung"
 
 #: ../share/extensions/text_uppercase.inx.h:2
 msgid "UPPERCASE"
-msgstr ""
+msgstr "GROßSCHREIBUNG"
 
 #: ../share/extensions/text_randomcase.inx.h:2
 msgid "rANdOm CasE"
-msgstr ""
+msgstr "zuFäLLiGe scHreiBunG"
 
 #: ../share/extensions/text_replace.inx.h:1
-#, fuzzy
 msgid "Replace text..."
-msgstr "Ersetzen"
+msgstr "Text ersetzen…"
 
 #: ../share/extensions/text_titlecase.inx.h:2
-#, fuzzy
 msgid "Title Case"
-msgstr "Titel"
+msgstr "Großschreibung wie in Überschriften"
 
 #: ../share/extensions/text_sentencecase.inx.h:1
 msgid "Sentence case"
-msgstr ""
+msgstr "Großschreibung wie in Sätzen"
 
 #: ../share/extensions/txt2svg.inx.h:1
 msgid "ASCII Text"
