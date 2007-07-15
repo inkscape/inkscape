@@ -88,6 +88,7 @@ extensions = \
 	text_titlecase.py \
 	text_flipcase.py \
 	text_randomcase.py \
+	text_replace.py \
 	txt2svg.pl \
 	webbrowser_commandline.py \
 	webbrowser_faq.py\
@@ -175,6 +176,7 @@ modules = \
 	text_titlecase.inx \
 	text_flipcase.inx \
 	text_randomcase.inx \
+	text_replace.inx \
 	txt2svg.inx \
 	whirl.inx \
 	wmf_input.inx
