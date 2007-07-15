@@ -11,22 +11,12 @@ class C(coloreffect.ColorEffect):
   def colmod(self,r,g,b):
     this_color = '%02x%02x%02x' % (r, g, b)
 
-    if self.options.from_color[0] == '"':
-       self.options.from_color =  self.options.from_color[1:]
-    if self.options.from_color[0] == '#':
-       self.options.from_color =  self.options.from_color[1:]
-    if self.options.from_color[-1] == '"':
-       self.options.from_color =  self.options.from_color[:-1]
-    if self.options.to_color[0] == '"':
-       self.options.to_color =  self.options.to_color[1:]
-    if self.options.to_color[0] == '#':
-       self.options.to_color =  self.options.to_color[1:]
-    if self.options.to_color[-1] == '"':
-       self.options.to_color =  self.options.to_color[:-1]
+    fr = self.options.from_color.strip('"').replace('#', '')
+    to = self.options.to_color.strip('"').replace('#', '')
        
-    #inkex.debug(this_color+"|"+self.options.from_color)
-    if this_color == self.options.from_color:
-      return self.options.to_color
+    #inkex.debug(this_color+"|"+fr+"|"+to)
+    if this_color == fr:
+      return to
     else:
       return this_color
 
