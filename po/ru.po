@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-15 16:00+0400\n"
+"POT-Creation-Date: 2007-07-15 15:23+0200\n"
 "PO-Revision-Date: 2007-07-11 02:12+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
@@ -656,7 +656,7 @@ msgstr "1. Взять значение:"
 #: ../share/extensions/color_removegreen.inx.h:1
 #: ../share/extensions/color_removered.inx.h:1
 #: ../share/extensions/color_rgbbarrel.inx.h:1
-#: ../share/extensions/color_replace.inx.h:1
+#: ../share/extensions/color_replace.inx.h:2
 msgid "Color"
 msgstr "Цвет"
 
@@ -2721,7 +2721,7 @@ msgstr "Сдвиг по вертикали"
 #: ../share/extensions/lindenmayer.inx.h:9
 #: ../share/extensions/lorem_ipsum.inx.h:4
 #: ../share/extensions/render_barcode.inx.h:5
-#: ../share/extensions/rtree.inx.h:4 ../share/extensions/spirograph.inx.h:4
+#: ../share/extensions/rtree.inx.h:4 ../share/extensions/spirograph.inx.h:6
 msgid "Render"
 msgstr "Отрисовка"
 
@@ -6477,8 +6477,8 @@ msgstr "Расстояние прилипания к сетке, в экранн
 #: ../src/ui/dialog/document-properties.cpp:281
 msgid "If set, objects snap to the nearest grid line, regardless of distance"
 msgstr ""
-"Если включено, объекты прилипают к ближайшей линии сетки вне зависимости "
-"от расстояния до неё"
+"Если включено, объекты прилипают к ближайшей линии сетки вне зависимости от "
+"расстояния до неё"
 
 #: ../src/ui/dialog/document-properties.cpp:283
 msgid "Snap sensiti_vity:"
@@ -6491,8 +6491,8 @@ msgstr "Расстояние прилипания к направляющим, �
 #: ../src/ui/dialog/document-properties.cpp:285
 msgid "If set, objects snap to the nearest guide, regardless of distance"
 msgstr ""
-"Если включено, объекты прилипают к ближайшей направляющей вне зависимости "
-"от расстояния до неё"
+"Если включено, объекты прилипают к ближайшей направляющей вне зависимости от "
+"расстояния до неё"
 
 #: ../src/ui/dialog/document-properties.cpp:288
 msgid "<b>Object Snapping</b>"
@@ -7198,7 +7198,8 @@ msgstr "Пусть оконный менеджер сам определяет �
 msgid ""
 "Remember and use the last window's geometry (saves geometry to user "
 "preferences)"
-msgstr "Запоминать (в параметрах программы) и использовать геометрию последнего окна"
+msgstr ""
+"Запоминать (в параметрах программы) и использовать геометрию последнего окна"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid ""
@@ -11750,7 +11751,16 @@ msgstr "Удалить красный компонент"
 msgid "RGB Barrel"
 msgstr "«Бочка» RGB (RGB-&gt;BGR-&gt;GRB-&gt;...)"
 
-#: ../share/extensions/color_replace.inx.h:2
+#: ../share/extensions/color_replace.inx.h:1
+msgid "By color (RRGGBB hex):"
+msgstr ""
+
+#: ../share/extensions/color_replace.inx.h:3
+#, fuzzy
+msgid "Replace color (RRGGBB hex):"
+msgstr "Заменить цвет..."
+
+#: ../share/extensions/color_replace.inx.h:4
 msgid "Replace color..."
 msgstr "Заменить цвет..."
 
@@ -12368,26 +12378,34 @@ msgid "Gear Placement"
 msgstr "Размещение шестерёнки"
 
 #: ../share/extensions/spirograph.inx.h:2
+msgid "Inside (Hypotrochoid)"
+msgstr ""
+
+#: ../share/extensions/spirograph.inx.h:3
+msgid "Outside (Epitrochoid)"
+msgstr ""
+
+#: ../share/extensions/spirograph.inx.h:4
 msgid "Quality (Default = 16)"
 msgstr "Качество (по умолчанию = 16)"
 
-#: ../share/extensions/spirograph.inx.h:3
+#: ../share/extensions/spirograph.inx.h:5
 msgid "R - Ring Radius (px)"
 msgstr "R - радиус кольца (px)"
 
-#: ../share/extensions/spirograph.inx.h:5
+#: ../share/extensions/spirograph.inx.h:7
 msgid "Rotation (deg)"
 msgstr "Вращение (градусы)"
 
-#: ../share/extensions/spirograph.inx.h:6
+#: ../share/extensions/spirograph.inx.h:8
 msgid "Spirograph"
 msgstr "Спирограф"
 
-#: ../share/extensions/spirograph.inx.h:7
+#: ../share/extensions/spirograph.inx.h:9
 msgid "d - Pen Radius (px)"
 msgstr "d — радиус пера (px)"
 
-#: ../share/extensions/spirograph.inx.h:8
+#: ../share/extensions/spirograph.inx.h:10
 msgid "r - Gear Radius (px)"
 msgstr "r — радиус шестерёнки (px)"
 
