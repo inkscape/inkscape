@@ -62,7 +62,7 @@
   -->
   <target name="init"
       description=
-      "Do all prepatory tasks, like make directories and copy files">
+      "Do all preparatory tasks, like make directories and copy files">
 
 
     <!-- example of the <pkg-config> task
@@ -144,6 +144,9 @@
         /* shared whiteboard */
         #define WITH_INKBOARD                 1
         #define HAVE_SSL                      1
+        
+        /* use poppler for pdf import? */
+        #define HAVE_POPPLER                  1
 
         #endif /* _CONFIG_H_ */
     </makefile>
@@ -283,6 +286,7 @@
             -I${gtk}/include/libxml2 
             -I${gtk}/include/freetype2
             -I${gtk}/include/cairo
+            -I${gtk}/include/poppler
             <!-- PERL -->
             -Wno-comment -I${gtk}/perl/lib/CORE
             <!-- PYTHON -->
@@ -371,11 +375,12 @@
            <!-- PYTHON -->
            -L${gtk}/python/libs -lpython25
            ${gtk}/bin/libxml2.dll
+           -lpoppler
            ${gtk}/lib/iconv.lib
            -lfreetype.dll -lfontconfig.dll
            -llcms.dll
            -lssl -lcrypto
-           -lpng -lpopt ${gtk}/lib/zdll.lib
+           -lpng -ljpeg.dll -lpopt ${gtk}/lib/zdll.lib
            -lgc -mwindows -lws2_32 -lintl -lm
        </libs>
     </link>
