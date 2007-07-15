@@ -10,7 +10,7 @@ class C(chardataeffect.CharDataEffect):
     fr = self.options.from_text.strip('"').replace('\$','$')
     to = self.options.to_text.strip('"').replace('\$','$')
 
-    return (text.replace(fr, to))
+    return (text.replace(unicode(fr,"utf-8"), unicode(to,"utf-8")))
 
 c = C()
 c.affect()
