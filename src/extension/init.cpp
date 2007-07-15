@@ -131,7 +131,7 @@ init()
     Internal::CairoPsOutput::init();
 #endif
 #ifdef HAVE_POPPLER
-    //Internal::PdfInput::init();
+    Internal::PdfInput::init();
 #endif
 #ifdef HAVE_POPPLER_GLIB
     if (1) {
