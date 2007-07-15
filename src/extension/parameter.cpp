@@ -917,6 +917,9 @@ ParamFloat::string (void)
 Glib::ustring *
 ParamString::string (void)
 {
+    if (_value == NULL)
+        return new Glib::ustring("");
+
     // FIXME: I think the string should NOT be escaped. Just put between "..."
     // Otherwise \frac{1}{2} will become \\frac{1}{2} and then the LaTeX effect won't work....
     //gchar * esc = g_strescape(_value, NULL);
