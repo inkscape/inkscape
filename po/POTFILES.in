@@ -398,6 +398,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/text_replace.inx
 [type: gettext/xml] share/extensions/text_titlecase.inx
 [type: gettext/xml] share/extensions/text_sentencecase.inx
+[type: gettext/xml] share/extensions/text_replace.inx
 [type: gettext/xml] share/extensions/txt2svg.inx
 [type: gettext/xml] share/extensions/whirl.inx
 [type: gettext/xml] share/extensions/wmf_input.inx
