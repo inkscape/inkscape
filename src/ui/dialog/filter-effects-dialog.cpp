@@ -511,13 +511,16 @@ bool FilterEffectsDialog::PrimitiveList::on_button_press_event(GdkEventButton* e
     int cx, cy;
     
     if(get_path_at_pos(x, y, path, col, cx, cy)) {
-        std::vector<Gdk::Point> points;
-        if(do_connection_node(_model->get_iter(path), 0, points, x, y))
-            _in_drag = 1;
-        else if(do_connection_node(_model->get_iter(path), 1, points, x, y))
-            _in_drag = 2;
+        Gtk::TreeIter iter = _model->get_iter(path);
+        if(iter != _model->children().begin()) {
+            std::vector<Gdk::Point> points;
+            if(do_connection_node(_model->get_iter(path), 0, points, x, y))
+                _in_drag = 1;
+            else if(do_connection_node(_model->get_iter(path), 1, points, x, y))
+                _in_drag = 2;
 
-        queue_draw();
+            queue_draw();
+        }
     }
 
     return Gtk::TreeView::on_button_press_event(e);
@@ -540,20 +543,29 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
         int cx, cy;
         
         if(get_path_at_pos((int)e->x, (int)e->y, path, col, cx, cy)) {
+            const gchar *in_val;
             target = (*_model->get_iter(path))[_columns.primitive];
-            Inkscape::XML::Node *repr = SP_OBJECT_REPR(target);
-            // Make sure the target has a result
-            const gchar *gres = repr->attribute("result");
-            Glib::ustring result = gres ? gres : "";
-            if(!gres) {
-                result = "result" + Glib::Ascii::dtostr(SP_FILTER(prim->parent)->_image_number_next);
-                repr->setAttribute("result", result.c_str());
+            if(target == prim) {
+                in_val = 0;
+            }
+            else {
+                Inkscape::XML::Node *repr = SP_OBJECT_REPR(target);
+                // Make sure the target has a result
+                const gchar *gres = repr->attribute("result");
+                if(!gres) {
+                    const Glib::ustring result = "result" +
+                        Glib::Ascii::dtostr(SP_FILTER(prim->parent)->_image_number_next);
+                    repr->setAttribute("result", result.c_str());
+                    in_val = result.c_str();
+                }
+                else
+                    in_val = gres;
             }
 
             if(_in_drag == 1)
-                SP_OBJECT_REPR(prim)->setAttribute("in", result.c_str());
+                SP_OBJECT_REPR(prim)->setAttribute("in", in_val);
             else if(_in_drag == 2)
-                SP_OBJECT_REPR(prim)->setAttribute("in2", result.c_str());
+                SP_OBJECT_REPR(prim)->setAttribute("in2", in_val);
         }
 
         _in_drag = 0;
