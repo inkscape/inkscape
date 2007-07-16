@@ -55,6 +55,16 @@ public:
         return (E)0;
     }
 
+    bool is_valid_key(const Glib::ustring& key) const
+    {
+        for(int i = 0; i < end; ++i) {
+            if(_data[i].key == key)
+                return true;
+        }
+
+        return false;
+    }
+
     const Glib::ustring& get_label(const E e) const
     {
         return _data[e].label;

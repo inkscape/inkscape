@@ -20,6 +20,22 @@
 // Filter primitives
 extern const Inkscape::Util::EnumData<NR::FilterPrimitiveType> FPData[NR::NR_FILTER_ENDPRIMITIVETYPE];
 extern const Inkscape::Util::EnumDataConverter<NR::FilterPrimitiveType> FPConverter;
+
+enum FilterPrimitiveInput {
+    FPINPUT_DEFAULT,
+    FPINPUT_SOURCEGRAPHIC,
+    FPINPUT_SOURCEALPHA,
+    FPINPUT_BACKGROUNDGRAPHIC,
+    FPINPUT_BACKGROUNDALPHA,
+    FPINPUT_FILLPAINT,
+    FPINPUT_STROKEPAINT,
+    FPINPUT_CONNECTION,
+    FPINPUT_END
+};
+
+extern const Inkscape::Util::EnumData<FilterPrimitiveInput> FPInputData[FPINPUT_END];
+extern const Inkscape::Util::EnumDataConverter<FilterPrimitiveInput> FPInputConverter;
+
 // Blend mode
 extern const Inkscape::Util::EnumData<NR::FilterBlendMode> BlendModeData[NR::BLEND_ENDMODE];
 extern const Inkscape::Util::EnumDataConverter<NR::FilterBlendMode> BlendModeConverter;

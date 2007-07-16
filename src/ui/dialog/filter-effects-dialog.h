@@ -153,13 +153,6 @@ private:
         FilterEffectsDialog* _dialog;
     };
 
-    class ComboBoxPrimInput : public Gtk::ComboBoxText
-    {
-    public:
-        ComboBoxPrimInput();
-        void set_active_input(const gchar*);
-    };
-
     void init_settings_widgets();
 
     // Handlers
@@ -194,8 +187,8 @@ private:
 
     // Generic settings
     SettingsGroup _generic_settings;
-    ComboBoxPrimInput _primitive_input1;
-    ComboBoxPrimInput _primitive_input2;
+    UI::Widget::ComboBoxEnum<FilterPrimitiveInput> _primitive_input1;
+    UI::Widget::ComboBoxEnum<FilterPrimitiveInput> _primitive_input2;
 
     SettingsGroup _blend;
     UI::Widget::ComboBoxEnum<NR::FilterBlendMode> _blend_mode;

@@ -252,7 +252,7 @@ FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
     signal_selection_changed().connect(sigc::mem_fun(*this, &PrimitiveList::queue_draw));
 
     CellRendererConnection* cell = new CellRendererConnection;
-    int cols_count = append_column("Connections", *cell);
+    int cols_count = append_column(_("Connections"), *cell);
     Gtk::TreeViewColumn* col = get_column(cols_count - 1);
     if(col)
        col->add_attribute(cell->property_primitive(), _columns.primitive);
@@ -650,40 +650,6 @@ void FilterEffectsDialog::SettingsGroup::add_setting(std::vector<Gtk::Widget*>& 
     add_setting_generic(*hb, label);
 }
 
-/*** ComboBoxPrimInput ***/
-FilterEffectsDialog::ComboBoxPrimInput::ComboBoxPrimInput()
-{
-    append_text("Default");
-    append_text("Source Graphic");
-    append_text("Source Alpha");
-    append_text("Background Image");
-    append_text("Background Alpha");
-    append_text("Fill Paint");
-    append_text("Stroke Paint");
-    append_text("Connection");
-}
-
-void FilterEffectsDialog::ComboBoxPrimInput::set_active_input(const gchar* val)
-{
-    const Glib::ustring attr_in = val ? val : "";
-    if(attr_in == "")
-        set_active(0);
-    else if(attr_in == "SourceGraphic")
-        set_active(1);
-    else if(attr_in == "SourceAlpha")
-        set_active(2);
-    else if(attr_in == "BackgroundImage")
-        set_active(3);
-    else if(attr_in == "BackgroundAlpha")
-        set_active(4);
-    else if(attr_in == "Fill Paint")
-        set_active(5);
-    else if(attr_in == "Stroke Paint")
-        set_active(6);
-    else
-        set_active(7);
-}
-
 /*** FilterEffectsDialog ***/
 
 FilterEffectsDialog::FilterEffectsDialog() 
@@ -692,9 +658,11 @@ FilterEffectsDialog::FilterEffectsDialog()
       _add_primitive_type(FPConverter),
       _add_primitive(Gtk::Stock::ADD),
       _settings_labels(Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL)),
-      _empty_settings("No primitive selected", Gtk::ALIGN_LEFT),
+      _empty_settings(_("No primitive selected"), Gtk::ALIGN_LEFT),
       // TODO: Find better range/climb-rate/digits values for the SpinSliders,
       //       many of the current values are just guesses
+      _primitive_input1(FPInputConverter),
+      _primitive_input2(FPInputConverter),
       _blend_mode(BlendModeConverter),
       _composite_operator(CompositeOperatorConverter),
       _composite_k1(0, -10, 10, 1, 0.01, 1),
@@ -716,7 +684,7 @@ FilterEffectsDialog::FilterEffectsDialog()
     Gtk::HPaned* hpaned = Gtk::manage(new Gtk::HPaned);
     Gtk::ScrolledWindow* sw_prims = Gtk::manage(new Gtk::ScrolledWindow);
     Gtk::HBox* hb_prims = Gtk::manage(new Gtk::HBox);
-    Gtk::Frame* fr_settings = Gtk::manage(new Gtk::Frame("<b>Settings</b>"));
+    Gtk::Frame* fr_settings = Gtk::manage(new Gtk::Frame(_("<b>Settings</b>")));
     Gtk::Alignment* al_settings = Gtk::manage(new Gtk::Alignment);
     get_vbox()->add(*hpaned);
     hpaned->pack1(_filter_modifier);
@@ -761,27 +729,27 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings.pack_start(_empty_settings);
 
     _generic_settings.init(this, _settings_labels);
-    _generic_settings.add_setting_generic(_primitive_input1, "Input");
+    _generic_settings.add_setting_generic(_primitive_input1, _("Input"));
     _primitive_input1.signal_changed().connect(
         sigc::bind(sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_special), SP_ATTR_IN));
-    _generic_settings.add_setting_generic(_primitive_input2, "Input 2");
+    _generic_settings.add_setting_generic(_primitive_input2, _("Input 2"));
     _primitive_input2.signal_changed().connect(
         sigc::bind(sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_special), SP_ATTR_IN2));
 
     _blend.init(this, _settings_labels);
-    _blend.add_setting(_blend_mode, SP_ATTR_MODE, "Mode");
+    _blend.add_setting(_blend_mode, SP_ATTR_MODE, _("Mode"));
 
     _colormatrix.init(this, _settings_labels);
-    //_colormatrix.add_setting(_colormatrix_type, "Type");
+    //_colormatrix.add_setting(_colormatrix_type, _("Type"));
 
     _componenttransfer.init(this, _settings_labels);
 
     _composite.init(this, _settings_labels);
-    _composite.add_setting(_composite_operator, SP_ATTR_OPERATOR, "Operator");
-    _composite.add_setting(_composite_k1, SP_ATTR_K1, "K1");
-    _composite.add_setting(_composite_k2, SP_ATTR_K2, "K2");
-    _composite.add_setting(_composite_k3, SP_ATTR_K3, "K3");
-    _composite.add_setting(_composite_k4, SP_ATTR_K4, "K4");
+    _composite.add_setting(_composite_operator, SP_ATTR_OPERATOR, _("Operator"));
+    _composite.add_setting(_composite_k1, SP_ATTR_K1, _("K1"));
+    _composite.add_setting(_composite_k2, SP_ATTR_K2, _("K2"));
+    _composite.add_setting(_composite_k3, SP_ATTR_K3, _("K3"));
+    _composite.add_setting(_composite_k4, SP_ATTR_K4, _("K4"));
 
     _convolvematrix.init(this, _settings_labels);
     
@@ -792,19 +760,19 @@ void FilterEffectsDialog::init_settings_widgets()
     _flood.init(this, _settings_labels);
 
     _gaussianblur.init(this, _settings_labels);
-    _gaussianblur.add_setting(_gaussianblur_stddeviation, SP_ATTR_STDDEVIATION, "Standard Deviation");
+    _gaussianblur.add_setting(_gaussianblur_stddeviation, SP_ATTR_STDDEVIATION, _("Standard Deviation"));
 
     _image.init(this, _settings_labels);
     
     _merge.init(this, _settings_labels);
 
     _morphology.init(this, _settings_labels);
-    //_morphology.add_setting(_morphology_operator, "Operator");
-    //_morphology.add_setting(_morphology_radius, "Radius");
+    //_morphology.add_setting(_morphology_operator, _("Operator"));
+    //_morphology.add_setting(_morphology_radius, _("Radius"));
 
     _offset.init(this, _settings_labels);
-    _offset.add_setting(_offset_dx, SP_ATTR_DX, "Delta X");
-    _offset.add_setting(_offset_dy, SP_ATTR_DY, "Delta Y");
+    _offset.add_setting(_offset_dx, SP_ATTR_DX, _("Delta X"));
+    _offset.add_setting(_offset_dy, SP_ATTR_DY, _("Delta Y"));
 
     _specularlighting.init(this, _settings_labels);
 
@@ -815,9 +783,9 @@ void FilterEffectsDialog::init_settings_widgets()
     trb_grp.push_back(&_turbulence_fractalnoise);
     trb_grp.push_back(&_turbulence_turbulence);
     _turbulence.add_setting(trb_grp);
-    /*_turbulence.add_setting(_turbulence_numoctaves, "Octaves");
-    _turbulence.add_setting(_turbulence_basefrequency, "Base Frequency");
-    _turbulence.add_setting(_turbulence_seed, "Seed");
+    /*_turbulence.add_setting(_turbulence_numoctaves, _("Octaves"));
+    _turbulence.add_setting(_turbulence_basefrequency, _("Base Frequency"));
+    _turbulence.add_setting(_turbulence_seed, _("Seed"));
     _turbulence.add_setting(_turbulence_stitchtiles);*/
 }
 
@@ -877,29 +845,24 @@ void FilterEffectsDialog::set_attr_spinslider(const SPAttributeEnum attr, const 
 void FilterEffectsDialog::set_attr_special(const SPAttributeEnum attr)
 {
     Glib::ustring val;
+    FilterPrimitiveInput input_id;
 
     switch(attr) {
         case SP_ATTR_IN:
-            val = _primitive_input1.get_active_text();
+            input_id = _primitive_input1.get_active_data()->id;
         case SP_ATTR_IN2:
             if(attr == SP_ATTR_IN2)
-                val = _primitive_input2.get_active_text();
-            if(val == "Default") {
+                input_id = _primitive_input2.get_active_data()->id;
+            if(input_id == FPINPUT_DEFAULT) {
                 // Remove the setting rather then set it
                 set_attr(attr, 0);
                 return;
             }
-            else if(val == "Connection") {
+            else if(input_id == FPINPUT_CONNECTION) {
                 return;
             }
             else {
-                val.erase(val.find(" "), 1);
-                for(Glib::ustring::size_type i = 0; i < val.size(); ++i) {
-                    if(val[i] == ' ') {
-                        val.erase(i, i + 1);
-                        break;
-                    }
-                }
+                val = FPInputConverter.get_key(input_id);
             }
             break;
         default:
@@ -924,6 +887,19 @@ void FilterEffectsDialog::set_attr(const SPAttributeEnum attr, const gchar* val)
     }
 }
 
+FilterPrimitiveInput convert_fpinput(const gchar* in)
+{
+    if(in) {
+        const Glib::ustring val(in);
+        if(FPInputConverter.is_valid_key(val))
+            return FPInputConverter.get_id_from_key(val);
+        else
+            return FPINPUT_CONNECTION;
+    }
+    else
+        return FPINPUT_DEFAULT;
+}
+
 void FilterEffectsDialog::update_settings_view()
 {
     SPFilterPrimitive* prim = _primitive_list.get_selected();
@@ -939,8 +915,8 @@ void FilterEffectsDialog::update_settings_view()
         const NR::FilterPrimitiveType tid = FPConverter.get_id_from_key(prim->repr->name());
 
         _generic_settings.show_all();
-        _primitive_input1.set_active_input(SP_OBJECT_REPR(prim)->attribute("in"));
-        _primitive_input2.set_active_input(SP_OBJECT_REPR(prim)->attribute("in2"));
+        _primitive_input1.set_active(convert_fpinput(SP_OBJECT_REPR(prim)->attribute("in")));
+        _primitive_input2.set_active(convert_fpinput(SP_OBJECT_REPR(prim)->attribute("in2")));
 
         if(tid == NR::NR_FILTER_BLEND) {
             _blend.show_all();
