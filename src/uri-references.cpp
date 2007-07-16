@@ -31,7 +31,7 @@ URIReference::URIReference(SPObject *owner)
 }
 
 URIReference::URIReference(SPDocument *owner_document)
-	: _owner_document(owner_document), _owner(NULL), _obj(NULL), _uri(NULL)
+	: _owner(NULL), _owner_document(owner_document), _obj(NULL), _uri(NULL)
 {
 	g_assert(_owner_document != NULL);
 }
