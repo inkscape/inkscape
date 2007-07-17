@@ -124,12 +124,14 @@ private:
         const Gtk::TreeIter find_result(const Gtk::TreeIter& start, const SPAttributeEnum attr);
         int find_index(const Gtk::TreeIter& target);
         void draw_connection(const Gtk::TreeIter&, const int x1, const int y1, const int row_count);
+        void sanitize_connections(const Gtk::TreeIter& prim_iter);
 
         FilterEffectsDialog& _dialog;
         Glib::RefPtr<Gtk::ListStore> _model;
         PrimitiveColumns _columns;
         Glib::RefPtr<Gtk::Menu> _primitive_menu;
         int _in_drag;
+        SPFilterPrimitive* _drag_prim;
     };
 
     class SettingsGroup : public Gtk::VBox

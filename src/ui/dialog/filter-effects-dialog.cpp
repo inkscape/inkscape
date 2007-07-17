@@ -229,7 +229,7 @@ void FilterEffectsDialog::CellRendererConnection::get_size_vfunc(
         (*width) = size * primlist.primitive_count();
     if(height) {
         // Scale the height depending on the number of inputs, unless it's
-        // the first primitive, in which case their are no connections
+        // the first primitive, in which case there are no connections
         SPFilterPrimitive* prim = (SPFilterPrimitive*)_primitive.get_value();
         (*height) = primlist.is_first(prim) ? size : size * input_count(prim);
     }
@@ -243,8 +243,7 @@ FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
 
     _model = Gtk::ListStore::create(_columns);
 
-    // TODO: reenable this once it is possible to modify the order in the backend
-    //set_reorderable(true);
+    set_reorderable(true);
 
     set_model(_model);
     append_column(_("_Type"), _columns.type);
@@ -509,6 +508,8 @@ bool FilterEffectsDialog::PrimitiveList::on_button_press_event(GdkEventButton* e
     Gtk::TreeViewColumn* col;
     const int x = (int)e->x, y = (int)e->y;
     int cx, cy;
+
+    _drag_prim = 0;
     
     if(get_path_at_pos(x, y, path, col, cx, cy)) {
         Gtk::TreeIter iter = _model->get_iter(path);
@@ -521,9 +522,15 @@ bool FilterEffectsDialog::PrimitiveList::on_button_press_event(GdkEventButton* e
 
             queue_draw();
         }
+        _drag_prim = (*iter)[_columns.primitive];
     }
 
-    return Gtk::TreeView::on_button_press_event(e);
+    if(_in_drag) {
+        get_selection()->select(path);
+        return true;
+    }
+    else
+        return Gtk::TreeView::on_button_press_event(e);
 }
 
 bool FilterEffectsDialog::PrimitiveList::on_motion_notify_event(GdkEventMotion* e)
@@ -590,17 +597,64 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
         return Gtk::TreeView::on_button_release_event(e);
 }
 
+// Checks all of prim's inputs, removes any that use result
+void check_single_connection(SPFilterPrimitive* prim, const int result)
+{
+    if(prim && result >= 0) {
+
+        if(prim->image_in == result)
+            SP_OBJECT_REPR(prim)->setAttribute("in", 0);
+
+        if(SP_IS_FEBLEND(prim)) {
+            if(SP_FEBLEND(prim)->in2 == result)
+                SP_OBJECT_REPR(prim)->setAttribute("in2", 0);
+        }
+        else if(SP_IS_FECOMPOSITE(prim)) {
+            if(SP_FECOMPOSITE(prim)->in2 == result)
+                SP_OBJECT_REPR(prim)->setAttribute("in2", 0);
+        }
+    }
+}
+
+// Remove any connections going to/from prim_iter that forward-reference other primitives
+void FilterEffectsDialog::PrimitiveList::sanitize_connections(const Gtk::TreeIter& prim_iter)
+{
+    SPFilterPrimitive *prim = (*prim_iter)[_columns.primitive];
+    bool before = true;
+
+    for(Gtk::TreeIter iter = _model->children().begin();
+        iter != _model->children().end(); ++iter) {
+        if(iter == prim_iter)
+            before = false;
+        else {
+            SPFilterPrimitive* cur_prim = (*iter)[_columns.primitive];
+            if(before)
+                check_single_connection(cur_prim, prim->image_out);
+            else
+                check_single_connection(prim, cur_prim->image_out);
+        }
+    }
+}
+
 // Reorder the filter primitives to match the list order
 void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::DragContext>&)
 {
     SPFilter* filter = _dialog._filter_modifier.get_selected_filter();
+    int ndx = 0;
 
     for(Gtk::TreeModel::iterator iter = _model->children().begin();
-        iter != _model->children().end(); ++iter) {
+        iter != _model->children().end(); ++iter, ++ndx) {
         SPFilterPrimitive* prim = (*iter)[_columns.primitive];
-        if(prim)
-            ;//reorder_primitive(filter, prim->repr->position(), ndx); /* FIXME */
+        if(prim) {
+            SP_OBJECT_REPR(prim)->setPosition(ndx);
+            if(_drag_prim == prim) {
+                sanitize_connections(iter);
+                get_selection()->select(iter);
+            }
+        }
     }
+
+    filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
 
     sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Reorder filter primitive"));
 }
