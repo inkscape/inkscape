@@ -31,7 +31,6 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "Crea e modifica immagini Scalable Vector Graphics"
 
 #: ../inkscape.desktop.in.h:2
-#, fuzzy
 msgid "Inkscape Vector Graphics Editor"
 msgstr "Inkscape - Grafica Vettoriale SVG"
 
