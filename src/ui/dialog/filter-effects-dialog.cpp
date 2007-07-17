@@ -169,10 +169,12 @@ void FilterEffectsDialog::FilterModifier::remove_filter()
 
 void FilterEffectsDialog::FilterModifier::duplicate_filter()
 {
-    SPFilter *filter = get_selected_filter();
+    SPFilter* filter = get_selected_filter();
 
     if(filter) {
-        //SPFilter *dupfilter = filter_duplicate(sp_desktop_document(SP_ACTIVE_DESKTOP), filter);
+        Inkscape::XML::Node* repr = SP_OBJECT_REPR(filter), *parent = repr->parent();
+        repr = repr->duplicate(repr->document());
+        parent->appendChild(repr);
 
         sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Duplicate filter"));
 
