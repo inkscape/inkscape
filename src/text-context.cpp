@@ -916,7 +916,9 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     sp_text_context_setup_text(tc);
                                     tc->nascent_object = 0; // we don't need it anymore, having created a real <text>
                                 }
-                                tc->text_sel_start = tc->text_sel_end = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end);
+                                tc->text_sel_start = tc->text_sel_end 
+                                                   = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, SP_TE_DELETE_OTHER);
+                                
                                 tc->text_sel_start = tc->text_sel_end = sp_te_insert_line(tc->text, tc->text_sel_start);
                                 sp_text_context_update_cursor(tc);
                                 sp_text_context_update_text_selection(tc);
@@ -925,9 +927,16 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 return TRUE;
                             case GDK_BackSpace:
                                 if (tc->text) { // if nascent_object, do nothing, but return TRUE; same for all other delete and move keys
-                                    if (tc->text_sel_start == tc->text_sel_end)
+                                	sp_te_deletion_type deleteType = SP_TE_DELETE_OTHER;
+                                	
+                                    if (tc->text_sel_start == tc->text_sel_end) {
                                         tc->text_sel_start.prevCursorPosition();
-                                    tc->text_sel_start = tc->text_sel_end = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end);
+                                        deleteType = SP_TE_DELETE_SINGLE_BACKSPACE;
+                                    }
+                                    
+                                    tc->text_sel_start = tc->text_sel_end 
+                                                       = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, deleteType);
+                                    
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
                                     sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
@@ -937,9 +946,16 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                             case GDK_Delete:
                             case GDK_KP_Delete:
                                 if (tc->text) {
-                                    if (tc->text_sel_start == tc->text_sel_end)
+                                	sp_te_deletion_type deleteType = SP_TE_DELETE_OTHER;
+                                	
+                                    if (tc->text_sel_start == tc->text_sel_end) {
                                         tc->text_sel_end.nextCursorPosition();
-                                    tc->text_sel_start = tc->text_sel_end = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end);
+                                        deleteType = SP_TE_SINGLE_DELETE;
+                                    }
+                                    
+                                    tc->text_sel_start = tc->text_sel_end 
+                                                       = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, deleteType);
+                                    
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
                                     sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
@@ -1291,7 +1307,7 @@ bool sp_text_delete_selection(SPEventContext *ec)
 
     if (tc->text_sel_start == tc->text_sel_end)
         return false;
-    tc->text_sel_start = tc->text_sel_end = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end);
+    tc->text_sel_start = tc->text_sel_end = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, SP_TE_DELETE_OTHER);
     sp_text_context_update_cursor(tc);
     sp_text_context_update_text_selection(tc);
     return true;

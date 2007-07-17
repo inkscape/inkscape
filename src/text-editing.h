@@ -34,8 +34,10 @@ SPStyle const * sp_te_style_at_position(SPItem const *text, Inkscape::Text::Layo
 
 Inkscape::Text::Layout::iterator sp_te_insert(SPItem *item, Inkscape::Text::Layout::iterator const &position, gchar const *utf8);
 Inkscape::Text::Layout::iterator sp_te_replace(SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, gchar const *utf8);
-Inkscape::Text::Layout::iterator sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end);
 Inkscape::Text::Layout::iterator sp_te_insert_line (SPItem *text, Inkscape::Text::Layout::iterator const &position);
+
+enum sp_te_deletion_type { SP_TE_DELETE_SINGLE_BACKSPACE, SP_TE_SINGLE_DELETE, SP_TE_DELETE_OTHER };
+Inkscape::Text::Layout::iterator sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, sp_te_deletion_type deletionType);
 
 gchar *sp_te_get_string_multiline(SPItem const *text);
 Glib::ustring sp_te_get_string_multiline(SPItem const *text, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end);

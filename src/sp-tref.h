@@ -63,7 +63,7 @@ void sp_tref_update_text(SPTRef *tref);
 bool sp_tref_reference_allowed(SPTRef *tref, SPObject *possible_ref);
 bool sp_tref_fully_contained(SPObject *start_item, Glib::ustring::iterator &start, 
                              SPObject *end_item, Glib::ustring::iterator &end);
-SPObject * sp_tref_convert_to_tspan(SPTRef *item);
+SPObject * sp_tref_convert_to_tspan(SPObject *item);
 
 
 #endif /* !SP_TREF_H */

@@ -559,55 +559,84 @@ build_string_from_root(Inkscape::XML::Node *root, Glib::ustring *retString)
  * The code is based partially on sp_use_unlink
  */
 SPObject *
-sp_tref_convert_to_tspan(SPTRef *tref)
+sp_tref_convert_to_tspan(SPObject *obj)
 {
     SPObject * new_tspan = NULL;
     
-    if (tref && tref->stringChild) {
-        Inkscape::XML::Node *tref_repr = SP_OBJECT_REPR(tref);
-        Inkscape::XML::Node *tref_parent = sp_repr_parent(tref_repr);
+    ////////////////////
+    // BASE CASE
+    ////////////////////
+    if (SP_IS_TREF(obj)) {
         
-        SPDocument *document = SP_OBJECT(tref)->document;
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
-        
-        Inkscape::XML::Node *new_tspan_repr = xml_doc->createElement("svg:tspan");
-        
-        // Add the new tspan element just after the current tref
-        tref_parent->addChild(new_tspan_repr, tref_repr);
-        Inkscape::GC::release(new_tspan_repr);
-        
-        new_tspan = document->getObjectByRepr(new_tspan_repr);
-        
-        // Create a new string child for the tspan
-        Inkscape::XML::Node *new_string_repr = SP_OBJECT_REPR(tref->stringChild)->duplicate(xml_doc);
-        new_tspan_repr->addChild(new_string_repr, NULL);    
-        
-        SPObject * new_string_child = document->getObjectByRepr(new_string_repr);
-
-        // Merge style from the tref
-        SPStyle *new_tspan_sty = SP_OBJECT_STYLE(new_tspan);
-        SPStyle const *tref_sty = SP_OBJECT_STYLE(tref);
-        sp_style_merge_from_dying_parent(new_tspan_sty, tref_sty);
-        sp_style_merge_from_parent(new_tspan_sty, new_tspan->parent->style);
-        
-        
-        SP_OBJECT(new_tspan)->updateRepr();
-        
-        // Hold onto our SPObject and repr for now.
-        sp_object_ref(SP_OBJECT(tref), NULL);
-        Inkscape::GC::anchor(tref_repr);
-        
-        // Remove ourselves, not propagating delete events to avoid a
-        // chain-reaction with other elements that might reference us.
-        SP_OBJECT(tref)->deleteObject(false);
-        
-        // Give the copy our old id and let go of our old repr.
-        new_tspan_repr->setAttribute("id", tref_repr->attribute("id"));
-        Inkscape::GC::release(tref_repr);
-        
-        // Establish the succession and let go of our object.
-        SP_OBJECT(tref)->setSuccessor(new_tspan);
-        sp_object_unref(SP_OBJECT(tref), NULL);
+        SPTRef *tref = SP_TREF(obj);
+    
+        if (tref && tref->stringChild) {
+            Inkscape::XML::Node *tref_repr = SP_OBJECT_REPR(tref);
+            Inkscape::XML::Node *tref_parent = sp_repr_parent(tref_repr);
+            
+            SPDocument *document = SP_OBJECT(tref)->document;
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+            
+            Inkscape::XML::Node *new_tspan_repr = xml_doc->createElement("svg:tspan");
+            
+            // Add the new tspan element just after the current tref
+            tref_parent->addChild(new_tspan_repr, tref_repr);
+            Inkscape::GC::release(new_tspan_repr);
+            
+            new_tspan = document->getObjectByRepr(new_tspan_repr);
+            
+            // Create a new string child for the tspan
+            Inkscape::XML::Node *new_string_repr = SP_OBJECT_REPR(tref->stringChild)->duplicate(xml_doc);
+            new_tspan_repr->addChild(new_string_repr, NULL);    
+            
+            //SPObject * new_string_child = document->getObjectByRepr(new_string_repr);
+    
+            // Merge style from the tref
+            SPStyle *new_tspan_sty = SP_OBJECT_STYLE(new_tspan);
+            SPStyle const *tref_sty = SP_OBJECT_STYLE(tref);
+            sp_style_merge_from_dying_parent(new_tspan_sty, tref_sty);
+            sp_style_merge_from_parent(new_tspan_sty, new_tspan->parent->style);
+            
+            
+            SP_OBJECT(new_tspan)->updateRepr();
+            
+            // Hold onto our SPObject and repr for now.
+            sp_object_ref(SP_OBJECT(tref), NULL);
+            Inkscape::GC::anchor(tref_repr);
+            
+            // Remove ourselves, not propagating delete events to avoid a
+            // chain-reaction with other elements that might reference us.
+            SP_OBJECT(tref)->deleteObject(false);
+            
+            // Give the copy our old id and let go of our old repr.
+            new_tspan_repr->setAttribute("id", tref_repr->attribute("id"));
+            Inkscape::GC::release(tref_repr);
+            
+            // Establish the succession and let go of our object.
+            SP_OBJECT(tref)->setSuccessor(new_tspan);
+            sp_object_unref(SP_OBJECT(tref), NULL);
+        }
+    }
+    ////////////////////
+    // RECURSIVE CASE
+    ////////////////////
+    else {
+        GSList *l = NULL;
+        for (SPObject *child = sp_object_first_child(obj) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+            sp_object_ref (SP_OBJECT (child), obj);
+            l = g_slist_prepend (l, child);
+        }
+        l = g_slist_reverse (l);
+        while (l) {
+            SPObject *child = SP_OBJECT (l->data);
+            l = g_slist_remove (l, child);
+            
+            // Note that there may be more than one conversion happening here, so if it's not a
+            // tref being passed into this function, the returned value can't be specifically known
+            new_tspan = sp_tref_convert_to_tspan(child);
+            
+            sp_object_unref (SP_OBJECT (child), obj);
+        }
     }
     
     return new_tspan;

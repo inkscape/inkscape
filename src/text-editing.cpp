@@ -138,7 +138,7 @@ char * dump_hexy(const gchar * utf8)
 
 Inkscape::Text::Layout::iterator sp_te_replace(SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, gchar const *utf8)
 {
-    Inkscape::Text::Layout::iterator new_start = sp_te_delete(item, start, end);
+    Inkscape::Text::Layout::iterator new_start = sp_te_delete(item, start, end, SP_TE_DELETE_OTHER);
     return sp_te_insert(item, new_start, utf8);
 }
 
@@ -148,13 +148,28 @@ Inkscape::Text::Layout::iterator sp_te_replace(SPItem *item, Inkscape::Text::Lay
 
 static bool is_line_break_object(SPObject const *object)
 {
-    return    SP_IS_TEXT(object)
-           || (SP_IS_TSPAN(object) && SP_TSPAN(object)->role != SP_TSPAN_ROLE_UNSPECIFIED)
-           || SP_IS_TEXTPATH(object)
-           || SP_IS_FLOWDIV(object)
-           || SP_IS_FLOWPARA(object)
-           || SP_IS_FLOWLINE(object)
-           || SP_IS_FLOWREGIONBREAK(object);
+    bool is_line_break = false;
+    
+    if (object) {
+        if (SP_IS_TEXT(object)
+                || SP_IS_TEXTPATH(object)
+                || SP_IS_FLOWDIV(object)
+                || SP_IS_FLOWPARA(object)
+                || SP_IS_FLOWLINE(object)
+                || SP_IS_FLOWREGIONBREAK(object)) {
+                    
+            is_line_break = true;
+        }
+        
+        if (SP_IS_TSPAN(object) && SP_TSPAN(object)->role != SP_TSPAN_ROLE_UNSPECIFIED) {            
+            SPObject *prev_object = SP_OBJECT_PREV(object);
+            if (prev_object && SP_IS_TSPAN(prev_object)) {
+                is_line_break = true;
+            }
+        }
+    }
+    
+    return is_line_break;
 }
 
 /** returns the attributes for an object, or NULL if it isn't a text,
@@ -334,7 +349,7 @@ Inkscape::Text::Layout::iterator sp_te_insert_line (SPItem *item, Inkscape::Text
 {
     // Disable newlines in a textpath; TODO: maybe on Enter in a textpath, separate it into two
     // texpaths attached to the same path, with a vertical shift
-    if (SP_IS_TEXT_TEXTPATH (item))
+    if (SP_IS_TEXT_TEXTPATH (item) || SP_IS_TREF(item))
         return position;
         
     SPDesktop *desktop = SP_ACTIVE_DESKTOP; 
@@ -350,6 +365,12 @@ Inkscape::Text::Layout::iterator sp_te_insert_line (SPItem *item, Inkscape::Text
 
     if (split_obj == 0 || is_line_break_object(split_obj)) {
         if (split_obj == 0) split_obj = item->lastChild();
+        
+        if (SP_IS_TREF(split_obj)) {
+        	desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
+            return position;
+        }
+        
         if (split_obj) {
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(split_obj));
             Inkscape::XML::Node *new_node = duplicate_node_without_children(xml_doc, SP_OBJECT_REPR(split_obj));
@@ -660,7 +681,8 @@ of figuring out what is a line break and how to delete one. Returns the
 lesser of \a start and \a end, because that is where the cursor should be
 put after the deletion is done. */
 Inkscape::Text::Layout::iterator
-sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end)
+sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
+              Inkscape::Text::Layout::iterator const &end, sp_te_deletion_type deletionType)
 {
     if (start == end) return start;
     Inkscape::Text::Layout::iterator first, last;
@@ -701,10 +723,15 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inksc
             // If the parent is a tref, editing on this particular string is disallowed.
             if (SP_IS_TREF(SP_OBJECT_PARENT(start_item))) {
                 desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
-                return end;
+                
+                // Compensate so the cursor doesn't move when hitting backspace
+                if (deletionType == SP_TE_DELETE_SINGLE_BACKSPACE) {
+                    first = last;
+                }
+
+            } else {
+                erase_from_spstring(SP_STRING(start_item), start_text_iter, end_text_iter);
             }
-            
-            erase_from_spstring(SP_STRING(start_item), start_text_iter, end_text_iter);
         }
     } else {
         SPObject *sub_item = start_item;
@@ -715,7 +742,11 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inksc
                     // If the parent is a tref, editing on this particular string is disallowed.
                     if (SP_IS_TREF(SP_OBJECT_PARENT(sub_item))) {
                         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
-                        return end;
+                        // Compensate so the cursor doesn't move when hitting backspace
+                        if (deletionType == SP_TE_DELETE_SINGLE_BACKSPACE) {
+                            //first = last;
+                        }
+                        break;
                     }
             
                     Glib::ustring *string = &SP_STRING(sub_item)->string;
@@ -1686,7 +1717,7 @@ static bool tidy_xml_tree_recursively(SPObject *root)
     bool changes = false;
 
     for (SPObject *child = root->firstChild() ; child != NULL ; ) {
-        if (SP_IS_FLOWREGION(child) || SP_IS_FLOWREGIONEXCLUDE(child)) {
+        if (SP_IS_FLOWREGION(child) || SP_IS_FLOWREGIONEXCLUDE(child) || SP_IS_TREF(child)) {
             child = SP_OBJECT_NEXT(child);
             continue;
         }

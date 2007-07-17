@@ -2122,6 +2122,18 @@ sp_selection_unlink()
     {
         SPItem *item = (SPItem *) items->data;
 
+        if (SP_IS_TEXT(item)) {
+            SPObject *tspan = sp_tref_convert_to_tspan(SP_OBJECT(item));
+            
+            if (tspan) {            
+                SP_OBJECT(item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            }
+            
+            // Set unlink to true, and fall into the next if which
+            // will include this text item in the new selection
+            unlinked = true;
+        }
+
         if (!(SP_IS_USE(item) || SP_IS_TREF(item))) {
             // keep the non-use item in the new selection
             new_select = g_slist_prepend(new_select, item);
@@ -2132,7 +2144,7 @@ sp_selection_unlink()
         if (SP_IS_USE(item)) { 
             unlink = sp_use_unlink(SP_USE(item));
         } else /*if (SP_IS_TREF(use))*/ {
-            unlink = SP_ITEM(sp_tref_convert_to_tspan(SP_TREF(item)));
+            unlink = SP_ITEM(sp_tref_convert_to_tspan(SP_OBJECT(item)));
         }
         
         unlinked = true;
