@@ -143,7 +143,7 @@ filter_add_primitive(SPFilter *filter, const NR::FilterPrimitiveType type)
         case NR::NR_FILTER_FLOOD:
             break;
         case NR::NR_FILTER_GAUSSIANBLUR:
-            repr->setAttribute("stddeviation", "1");
+            repr->setAttribute("stdDeviation", "1");
             break;
         case NR::NR_FILTER_IMAGE:
             break;

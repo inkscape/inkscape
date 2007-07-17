@@ -543,23 +543,27 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
         int cx, cy;
         
         if(get_path_at_pos((int)e->x, (int)e->y, path, col, cx, cy)) {
-            const gchar *in_val;
-            target = (*_model->get_iter(path))[_columns.primitive];
-            if(target == prim) {
-                in_val = 0;
-            }
-            else {
-                Inkscape::XML::Node *repr = SP_OBJECT_REPR(target);
-                // Make sure the target has a result
-                const gchar *gres = repr->attribute("result");
-                if(!gres) {
-                    const Glib::ustring result = "result" +
-                        Glib::Ascii::dtostr(SP_FILTER(prim->parent)->_image_number_next);
-                    repr->setAttribute("result", result.c_str());
-                    in_val = result.c_str();
+            const gchar *in_val = 0;
+            Gtk::TreeIter target_iter = _model->get_iter(path);
+            target = (*target_iter)[_columns.primitive];
+
+            // Ensure that the target comes before the selected primitive
+            for(Gtk::TreeIter iter = _model->children().begin();
+                iter != get_selection()->get_selected(); ++iter) {
+                if(iter == target_iter) {
+                    Inkscape::XML::Node *repr = SP_OBJECT_REPR(target);
+                    // Make sure the target has a result
+                    const gchar *gres = repr->attribute("result");
+                    if(!gres) {
+                        const Glib::ustring result = "result" +
+                            Glib::Ascii::dtostr(SP_FILTER(prim->parent)->_image_number_next);
+                        repr->setAttribute("result", result.c_str());
+                        in_val = result.c_str();
+                    }
+                    else
+                        in_val = gres;
+                    break;
                 }
-                else
-                    in_val = gres;
             }
 
             if(_in_drag == 1)
