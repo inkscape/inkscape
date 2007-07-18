@@ -894,11 +894,10 @@ private:
 
 void FileOpenDialogImpl::createFilterMenu()
 {
-    //patterns added dynamically below
-    Gtk::FileFilter allImageFilter;
-    allImageFilter.set_name(_("All Images"));
-    extensionMap[Glib::ustring(_("All Images"))]=NULL;
-    add_filter(allImageFilter);
+    Gtk::FileFilter allInkscapeFilter;
+    allInkscapeFilter.set_name(_("All Inkscape Files"));
+    extensionMap[Glib::ustring(_("All Inkscape Files"))]=NULL;
+    add_filter(allInkscapeFilter);
 
     Gtk::FileFilter allFilter;
     allFilter.set_name(_("All Files"));
@@ -906,12 +905,12 @@ void FileOpenDialogImpl::createFilterMenu()
     allFilter.add_pattern("*");
     add_filter(allFilter);
 
-    //patterns added dynamically below
-    Gtk::FileFilter allInkscapeFilter;
-    allInkscapeFilter.set_name(_("All Inkscape Files"));
-    extensionMap[Glib::ustring(_("All Inkscape Files"))]=NULL;
-    add_filter(allInkscapeFilter);
+    Gtk::FileFilter allImageFilter;
+    allImageFilter.set_name(_("All Images"));
+    extensionMap[Glib::ustring(_("All Images"))]=NULL;
+    add_filter(allImageFilter);
 
+    //patterns added dynamically below
     Inkscape::Extension::DB::InputList extension_list;
     Inkscape::Extension::db.get_input_list(extension_list);
 
