@@ -422,24 +422,28 @@ static gchar *
 sp_3dbox_get_corner_coords_string (SP3DBox *box, guint id)
 {
     id = id % 8;
-    return g_strdup_printf ("%f,%f", box->corners[id][NR::X], box->corners[id][NR::Y]);
+    gchar str1[G_ASCII_DTOSTR_BUF_SIZE];
+    gchar str2[G_ASCII_DTOSTR_BUF_SIZE];
+    g_ascii_dtostr (str2, sizeof (str2), box->corners[id][NR::X]);
+    return g_strjoin (",", g_ascii_dtostr (str1, sizeof (str1), box->corners[id][NR::X]),
+                           g_ascii_dtostr (str2, sizeof (str2), box->corners[id][NR::Y]), NULL);
 }
 
 static std::pair<gdouble, gdouble>
 sp_3dbox_get_coord_pair_from_string (const gchar *coords)
 {
-    gchar **coordlist = g_strsplit( coords, ",", 0);
-    // We might as well rely on g_strtod to convert the NULL pointer to 0.0,
+    gchar **coordpair = g_strsplit( coords, ",", 0);
+    // We might as well rely on g_ascii_strtod to convert the NULL pointer to 0.0,
     // but we include the following test anyway
-    if (coordlist[0] == NULL || coordlist[1] == NULL) {
-        g_strfreev (coordlist);
+    if (coordpair[0] == NULL || coordpair[1] == NULL) {
+        g_strfreev (coordpair);
         g_warning ("Coordinate conversion failed.\n");
         return std::make_pair(0.0, 0.0);
     }
 
-    gdouble coord1 = g_strtod(coordlist[0], NULL);
-    gdouble coord2 = g_strtod(coordlist[1], NULL);
-    g_strfreev (coordlist);
+    gdouble coord1 = g_ascii_strtod(coordpair[0], NULL);
+    gdouble coord2 = g_ascii_strtod(coordpair[1], NULL);
+    g_strfreev (coordpair);
 
     return std::make_pair(coord1, coord2);
 }

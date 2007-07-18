@@ -235,11 +235,30 @@ gchar * Box3DFace::svg_repr_string()
 {
     NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM (this->parent_box3d)));
     GString *pstring = g_string_new("");
-    g_string_printf (pstring, "M %f,%f L %f,%f L %f,%f L %f,%f z",
-                              ((*corners[0]) * i2d)[NR::X], ((*corners[0]) * i2d)[NR::Y],
-                              ((*corners[1]) * i2d)[NR::X], ((*corners[1]) * i2d)[NR::Y],
-                              ((*corners[2]) * i2d)[NR::X], ((*corners[2]) * i2d)[NR::Y],
-                              ((*corners[3]) * i2d)[NR::X], ((*corners[3]) * i2d)[NR::Y]);
+    gchar str[G_ASCII_DTOSTR_BUF_SIZE];
+
+    g_string_append_printf (pstring, "M ");
+    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[0]) * i2d)[NR::X]));
+    g_string_append_printf (pstring, ",");
+    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[0]) * i2d)[NR::Y]));
+
+    g_string_append_printf (pstring, " L ");
+    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[1]) * i2d)[NR::X]));
+    g_string_append_printf (pstring, ",");
+    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[1]) * i2d)[NR::Y]));
+
+    g_string_append_printf (pstring, " L ");
+    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[2]) * i2d)[NR::X]));
+    g_string_append_printf (pstring, ",");
+    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[2]) * i2d)[NR::Y]));
+
+    g_string_append_printf (pstring, " L ");
+    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[3]) * i2d)[NR::X]));
+    g_string_append_printf (pstring, ",");
+    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[3]) * i2d)[NR::Y]));
+
+    g_string_append_printf (pstring, " z");
+
     return pstring->str;
 }
 
