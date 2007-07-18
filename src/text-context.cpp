@@ -912,30 +912,51 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
 
                             case GDK_Return:
                             case GDK_KP_Enter:
+                            {
                                 if (!tc->text) { // printable key; create text if none (i.e. if nascent_object)
                                     sp_text_context_setup_text(tc);
                                     tc->nascent_object = 0; // we don't need it anymore, having created a real <text>
                                 }
-                                tc->text_sel_start = tc->text_sel_end 
-                                                   = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, SP_TE_DELETE_OTHER);
+                                
+                                iterator_pair enter_pair;
+                                bool success = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, enter_pair);
+                                tc->text_sel_start = tc->text_sel_end = enter_pair.first;
                                 
                                 tc->text_sel_start = tc->text_sel_end = sp_te_insert_line(tc->text, tc->text_sel_start);
+                                
                                 sp_text_context_update_cursor(tc);
                                 sp_text_context_update_text_selection(tc);
                                 sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
                                                  _("New line"));
                                 return TRUE;
+                            }
                             case GDK_BackSpace:
                                 if (tc->text) { // if nascent_object, do nothing, but return TRUE; same for all other delete and move keys
-                                	sp_te_deletion_type deleteType = SP_TE_DELETE_OTHER;
-                                	
-                                    if (tc->text_sel_start == tc->text_sel_end) {
-                                        tc->text_sel_start.prevCursorPosition();
-                                        deleteType = SP_TE_DELETE_SINGLE_BACKSPACE;
-                                    }
                                     
-                                    tc->text_sel_start = tc->text_sel_end 
-                                                       = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, deleteType);
+                                    bool noSelection = false;
+                                    
+                                	if (tc->text_sel_start == tc->text_sel_end) {
+                                        tc->text_sel_start.prevCursorPosition();
+                                        noSelection = true;
+                                    }
+                                	
+                                	iterator_pair bspace_pair;
+                                	bool success = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, bspace_pair);
+                                    
+                                    if (noSelection) {
+                                        if (success) {
+                                            tc->text_sel_start = tc->text_sel_end = bspace_pair.first;
+                                        } else { // nothing deleted
+                                            tc->text_sel_start = tc->text_sel_end = bspace_pair.second;
+                                        }
+                                    } else {
+                                        if (success) {
+                                            tc->text_sel_start = tc->text_sel_end = bspace_pair.first;
+                                        } else { // nothing deleted
+                                            tc->text_sel_start = bspace_pair.first;
+                                            tc->text_sel_end = bspace_pair.second;
+                                        }
+                                    }
                                     
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
@@ -946,15 +967,27 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                             case GDK_Delete:
                             case GDK_KP_Delete:
                                 if (tc->text) {
-                                	sp_te_deletion_type deleteType = SP_TE_DELETE_OTHER;
-                                	
+                                    bool noSelection = false;
+                                    
                                     if (tc->text_sel_start == tc->text_sel_end) {
                                         tc->text_sel_end.nextCursorPosition();
-                                        deleteType = SP_TE_SINGLE_DELETE;
+                                        noSelection = true;
                                     }
                                     
-                                    tc->text_sel_start = tc->text_sel_end 
-                                                       = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, deleteType);
+                                    iterator_pair del_pair;
+                                    bool success = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, del_pair);
+                                    
+                                    if (noSelection) {
+                                        tc->text_sel_start = tc->text_sel_end = del_pair.first;
+                                    } else {
+                                        if (success) {
+                                            tc->text_sel_start = tc->text_sel_end = del_pair.first;
+                                        } else { // nothing deleted
+                                            tc->text_sel_start = del_pair.first;
+                                            tc->text_sel_end = del_pair.second;
+                                        }
+                                    }
+                                    
                                     
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
@@ -1307,9 +1340,21 @@ bool sp_text_delete_selection(SPEventContext *ec)
 
     if (tc->text_sel_start == tc->text_sel_end)
         return false;
-    tc->text_sel_start = tc->text_sel_end = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, SP_TE_DELETE_OTHER);
+    
+    iterator_pair pair;
+    bool success = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, pair);
+    
+    
+    if (success) {
+        tc->text_sel_start = tc->text_sel_end = pair.first;
+    } else { // nothing deleted
+        tc->text_sel_start = pair.first;
+        tc->text_sel_end = pair.second;
+    }
+    
     sp_text_context_update_cursor(tc);
     sp_text_context_update_text_selection(tc);
+    
     return true;
 }
 

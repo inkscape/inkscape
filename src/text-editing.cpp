@@ -138,8 +138,9 @@ char * dump_hexy(const gchar * utf8)
 
 Inkscape::Text::Layout::iterator sp_te_replace(SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, gchar const *utf8)
 {
-    Inkscape::Text::Layout::iterator new_start = sp_te_delete(item, start, end, SP_TE_DELETE_OTHER);
-    return sp_te_insert(item, new_start, utf8);
+    iterator_pair pair;
+    sp_te_delete(item, start, end, pair);
+    return sp_te_insert(item, pair.first, utf8);
 }
 
 
@@ -678,20 +679,21 @@ static void erase_from_spstring(SPString *string_item, Glib::ustring::iterator i
 quite a complicated operation, partly due to the cleanup that is done if all
 the text in a subobject has been deleted, and partly due to the difficulty
 of figuring out what is a line break and how to delete one. Returns the
-lesser of \a start and \a end, because that is where the cursor should be
-put after the deletion is done. */
-Inkscape::Text::Layout::iterator
+real start and ending iterators based on the situation. */
+bool
 sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
-              Inkscape::Text::Layout::iterator const &end, sp_te_deletion_type deletionType)
+              Inkscape::Text::Layout::iterator const &end, iterator_pair &iter_pair)
 {
-    if (start == end) return start;
-    Inkscape::Text::Layout::iterator first, last;
-    if (start < end) {
-        first = start;
-        last = end;
-    } else {
-        first = end;
-        last = start;
+    bool success = false;
+
+    iter_pair.first = start;
+    iter_pair.second = end;
+    
+    if (start == end) return success;
+    
+    if (start > end) {
+        iter_pair.first = end;
+        iter_pair.second = start;
     }
     
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -700,12 +702,12 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
     SPObject *start_item = 0, *end_item = 0;
     void *rawptr = 0;
     Glib::ustring::iterator start_text_iter, end_text_iter;
-    layout->getSourceOfCharacter(first, &rawptr, &start_text_iter);
+    layout->getSourceOfCharacter(iter_pair.first, &rawptr, &start_text_iter);
     start_item = SP_OBJECT(rawptr);
-    layout->getSourceOfCharacter(last, &rawptr, &end_text_iter);
+    layout->getSourceOfCharacter(iter_pair.second, &rawptr, &end_text_iter);
     end_item = SP_OBJECT(rawptr);
     if (start_item == 0)
-        return first;   // start is at end of text
+        return success;   // start is at end of text
     if (is_line_break_object(start_item))
         move_to_end_of_paragraph(&start_item, &start_text_iter);
     if (end_item == 0) {
@@ -723,14 +725,9 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
             // If the parent is a tref, editing on this particular string is disallowed.
             if (SP_IS_TREF(SP_OBJECT_PARENT(start_item))) {
                 desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
-                
-                // Compensate so the cursor doesn't move when hitting backspace
-                if (deletionType == SP_TE_DELETE_SINGLE_BACKSPACE) {
-                    first = last;
-                }
-
             } else {
                 erase_from_spstring(SP_STRING(start_item), start_text_iter, end_text_iter);
+                success = true;
             }
         }
     } else {
@@ -742,15 +739,12 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
                     // If the parent is a tref, editing on this particular string is disallowed.
                     if (SP_IS_TREF(SP_OBJECT_PARENT(sub_item))) {
                         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
-                        // Compensate so the cursor doesn't move when hitting backspace
-                        if (deletionType == SP_TE_DELETE_SINGLE_BACKSPACE) {
-                            //first = last;
-                        }
                         break;
                     }
             
                     Glib::ustring *string = &SP_STRING(sub_item)->string;
                     erase_from_spstring(SP_STRING(sub_item), string->begin(), end_text_iter);
+                    success = true;
                 }
                 break;
             }
@@ -760,6 +754,7 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
                     erase_from_spstring(string, start_text_iter, string->string.end());
                 else
                     erase_from_spstring(string, string->string.begin(), string->string.end());
+                success = true;
             }
             // walk to the next item in the tree
             if (sub_item->hasChildren())
@@ -788,8 +783,9 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
     while (tidy_xml_tree_recursively(common_ancestor));
     te_update_layout_now(item);
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-    layout->validateIterator(&first);
-    return first;
+    layout->validateIterator(&iter_pair.first);
+    layout->validateIterator(&iter_pair.second);
+    return success;
 }
 
 
