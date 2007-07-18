@@ -17,6 +17,7 @@
 
 #include <glibmm/i18n.h>
 #include "attributes.h"
+#include "svg/stringstream.h"
 #include "box3d.h"
 
 static void sp_3dbox_class_init(SP3DBoxClass *klass);
@@ -422,11 +423,9 @@ static gchar *
 sp_3dbox_get_corner_coords_string (SP3DBox *box, guint id)
 {
     id = id % 8;
-    gchar str1[G_ASCII_DTOSTR_BUF_SIZE];
-    gchar str2[G_ASCII_DTOSTR_BUF_SIZE];
-    g_ascii_dtostr (str2, sizeof (str2), box->corners[id][NR::X]);
-    return g_strjoin (",", g_ascii_dtostr (str1, sizeof (str1), box->corners[id][NR::X]),
-                           g_ascii_dtostr (str2, sizeof (str2), box->corners[id][NR::Y]), NULL);
+    Inkscape::SVGOStringStream os;
+    os << box->corners[id][NR::X] << "," << box->corners[id][NR::Y];
+    return g_strdup(os.str().c_str());
 }
 
 static std::pair<gdouble, gdouble>

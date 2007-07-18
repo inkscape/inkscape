@@ -11,8 +11,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "svg/svg.h"
 #include "box3d-face.h"
-#include <iostream>
 
 // FIXME: It's quite redundant to pass the box plus the corners plus the axes. At least the corners can
 //        theoretically be reconstructed from the box and the axes, but in order to do this we need
@@ -191,7 +191,14 @@ void Box3DFace::hook_path_to_3dbox(SPPath * existing_path)
  */
 void Box3DFace::set_path_repr()
 {
-    SP_OBJECT(this->path)->repr->setAttribute("d", svg_repr_string());
+    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM (this->parent_box3d)));
+    SPCurve * curve = sp_curve_new();
+    sp_curve_moveto (curve, ((*corners[0]) * i2d)[NR::X], ((*corners[0]) * i2d)[NR::Y]);
+    sp_curve_lineto (curve, ((*corners[1]) * i2d)[NR::X], ((*corners[1]) * i2d)[NR::Y]);
+    sp_curve_lineto (curve, ((*corners[2]) * i2d)[NR::X], ((*corners[2]) * i2d)[NR::Y]);
+    sp_curve_lineto (curve, ((*corners[3]) * i2d)[NR::X], ((*corners[3]) * i2d)[NR::Y]);
+    sp_curve_closepath (curve);
+    SP_OBJECT(this->path)->repr->setAttribute("d", sp_svg_write_path (SP_CURVE_BPATH(curve)));
 }
 
 void Box3DFace::set_curve()
@@ -228,37 +235,6 @@ gchar * Box3DFace::axes_string()
         default:
             break;
     }
-    return pstring->str;
-}
-
-gchar * Box3DFace::svg_repr_string()
-{
-    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM (this->parent_box3d)));
-    GString *pstring = g_string_new("");
-    gchar str[G_ASCII_DTOSTR_BUF_SIZE];
-
-    g_string_append_printf (pstring, "M ");
-    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[0]) * i2d)[NR::X]));
-    g_string_append_printf (pstring, ",");
-    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[0]) * i2d)[NR::Y]));
-
-    g_string_append_printf (pstring, " L ");
-    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[1]) * i2d)[NR::X]));
-    g_string_append_printf (pstring, ",");
-    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[1]) * i2d)[NR::Y]));
-
-    g_string_append_printf (pstring, " L ");
-    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[2]) * i2d)[NR::X]));
-    g_string_append_printf (pstring, ",");
-    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[2]) * i2d)[NR::Y]));
-
-    g_string_append_printf (pstring, " L ");
-    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[3]) * i2d)[NR::X]));
-    g_string_append_printf (pstring, ",");
-    g_string_append_printf (pstring, "%s", g_ascii_dtostr (str, sizeof (str), ((*corners[3]) * i2d)[NR::Y]));
-
-    g_string_append_printf (pstring, " z");
-
     return pstring->str;
 }
 
