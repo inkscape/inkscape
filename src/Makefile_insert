@@ -166,6 +166,7 @@ libinkpre_a_SOURCES =	\
 	sp-fediffuselighting-fns.h	\
 	sp-fedisplacementmap.cpp sp-fedisplacementmap.h	\
 	sp-fedisplacementmap-fns.h	\
+	sp-fedistantlight.cpp sp-fedistantlight.h \
 	sp-feflood.cpp sp-feflood.h	\
 	sp-feflood-fns.h	\
 	sp-feimage.cpp sp-feimage.h	\
@@ -176,8 +177,10 @@ libinkpre_a_SOURCES =	\
 	sp-femorphology-fns.h	\
 	sp-feoffset.cpp sp-feoffset.h	\
 	sp-feoffset-fns.h	\
+	sp-fepointlight.cpp sp-fepointlight.h \
 	sp-fespecularlighting.cpp sp-fespecularlighting.h	\
 	sp-fespecularlighting-fns.h	\
+	sp-fespotlight.cpp sp-fespotlight.h \
 	sp-fetile.cpp sp-fetile.h	\
 	sp-fetile-fns.h	\
 	sp-feturbulence.cpp sp-feturbulence.h	\

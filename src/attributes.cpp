@@ -213,6 +213,16 @@ static SPStyleProp const props[] = {
     {SP_ATTR_XCHANNELSELECTOR, "xChannelSelector"},
     {SP_ATTR_YCHANNELSELECTOR, "yChannelSelector"},
     //{SP_ATTR_IN2, "in2"},
+    /*feDistantLight*/
+    {SP_ATTR_AZIMUTH, "azimuth"},
+    {SP_ATTR_ELEVATION, "elevation"},
+    /*fePointLight*/
+    {SP_ATTR_Z, "z"},
+    /*feSpotLight*/
+    {SP_ATTR_POINTSATX, "pointsAtX"},
+    {SP_ATTR_POINTSATY, "pointsAtY"},
+    {SP_ATTR_POINTSATZ, "pointsAtZ"},
+    {SP_ATTR_LIMITINGCONEANGLE, "limitingConeAngle"},
     /*feFlood*/
     {SP_ATTR_FLOODCOLOR, "flood-color"},
     {SP_ATTR_FLOODOPACITY, "flood-opacity"},

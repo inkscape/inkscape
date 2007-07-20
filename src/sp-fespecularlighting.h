@@ -7,8 +7,10 @@
 /*
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Jean-Rene Reinhard <jr@komite.net>
  *
  * Copyright (C) 2006 Hugo Rodrigues
+ *               2007 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -16,12 +18,22 @@
 #include "sp-filter.h"
 #include "sp-fespecularlighting-fns.h"
 
+namespace NR {
+class FilterSpecularLighting;
+}
+
 /* FeSpecularLighting base class */
 class SPFeSpecularLightingClass;
 
 struct SPFeSpecularLighting : public SPFilterPrimitive {
     /** SPECULARLIGHTING ATTRIBUTES HERE */
-    
+    gfloat surfaceScale;
+    gfloat specularConstant;
+    gfloat specularExponent;
+    NumberOptNumber kernelUnitLength;
+    guint32 lighting_color;
+
+    NR::FilterSpecularLighting *renderer;
 };
 
 struct SPFeSpecularLightingClass {

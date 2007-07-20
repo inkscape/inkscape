@@ -25,6 +25,8 @@
 #include "display/nr-filter-blend.h"
 #include "display/nr-filter-offset.h"
 #include "display/nr-filter-composite.h"
+#include "display/nr-filter-diffuselighting.h"
+#include "display/nr-filter-specularlighting.h"
 
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
@@ -313,7 +315,7 @@ void Filter::_create_constructor_table()
     _constructor[NR_FILTER_COMPONENTTRANSFER] = NULL;
     _constructor[NR_FILTER_COMPOSITE] = &FilterComposite::create;
     _constructor[NR_FILTER_CONVOLVEMATRIX] = NULL;
-    _constructor[NR_FILTER_DIFFUSELIGHTING] = NULL;
+    _constructor[NR_FILTER_DIFFUSELIGHTING] = &FilterDiffuseLighting::create;
     _constructor[NR_FILTER_DISPLACEMENTMAP] = NULL;
     _constructor[NR_FILTER_FLOOD] = NULL;
     _constructor[NR_FILTER_GAUSSIANBLUR] = &FilterGaussian::create;
@@ -321,7 +323,7 @@ void Filter::_create_constructor_table()
     _constructor[NR_FILTER_MERGE] = NULL;
     _constructor[NR_FILTER_MORPHOLOGY] = NULL;
     _constructor[NR_FILTER_OFFSET] = &FilterOffset::create;
-    _constructor[NR_FILTER_SPECULARLIGHTING] = NULL;
+    _constructor[NR_FILTER_SPECULARLIGHTING] = &FilterSpecularLighting::create;
     _constructor[NR_FILTER_TILE] = NULL;
     _constructor[NR_FILTER_TURBULENCE] = NULL;
     created = true;

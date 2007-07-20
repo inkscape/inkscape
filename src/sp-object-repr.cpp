@@ -53,13 +53,16 @@
 #include "sp-fecomposite.h"
 #include "sp-feconvolvematrix.h"
 #include "sp-fediffuselighting.h"
+#include "sp-fedistantlight.h"
 #include "sp-fedisplacementmap.h"
 #include "sp-feflood.h"
 #include "sp-feimage.h"
 #include "sp-femerge.h"
 #include "sp-femorphology.h"
 #include "sp-feoffset.h"
+#include "sp-fepointlight.h"
 #include "sp-fespecularlighting.h"
+#include "sp-fespotlight.h"
 #include "sp-fetile.h"
 #include "sp-feturbulence.h"
 
@@ -137,6 +140,7 @@ populate_dtables()
         { "svg:feComposite", SP_TYPE_FECOMPOSITE },
         { "svg:feConvolveMatrix", SP_TYPE_FECONVOLVEMATRIX },
         { "svg:feDiffuseLighting", SP_TYPE_FEDIFFUSELIGHTING },
+        { "svg:feDistantLight", SP_TYPE_FEDISTANTLIGHT },
         { "svg:feDisplacementMap", SP_TYPE_FEDISPLACEMENTMAP },
         { "svg:feFlood", SP_TYPE_FEFLOOD },
         { "svg:feGaussianBlur", SP_TYPE_GAUSSIANBLUR },
@@ -144,7 +148,9 @@ populate_dtables()
         { "svg:feMerge", SP_TYPE_FEMERGE },
         { "svg:feMorphology", SP_TYPE_FEMORPHOLOGY },
         { "svg:feOffset", SP_TYPE_FEOFFSET },
+        { "svg:fePointLight", SP_TYPE_FEPOINTLIGHT },
         { "svg:feSpecularLighting", SP_TYPE_FESPECULARLIGHTING },
+        { "svg:feSpotLight", SP_TYPE_FESPOTLIGHT },
         { "svg:feTile", SP_TYPE_FETILE },
         { "svg:feTurbulence", SP_TYPE_FETURBULENCE },
         { "svg:image", SP_TYPE_IMAGE },

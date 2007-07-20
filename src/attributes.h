@@ -213,6 +213,16 @@ enum SPAttributeEnum {
     SP_ATTR_XCHANNELSELECTOR,
     SP_ATTR_YCHANNELSELECTOR,
     //SP_ATTR_IN2,
+    /*feDistantLight*/
+    SP_ATTR_AZIMUTH,
+    SP_ATTR_ELEVATION,
+    /*fePointLight*/
+    SP_ATTR_Z,
+    /*feSpotLight*/
+    SP_ATTR_POINTSATX,
+    SP_ATTR_POINTSATY,
+    SP_ATTR_POINTSATZ,
+    SP_ATTR_LIMITINGCONEANGLE,
     /*feFlood*/
     SP_ATTR_FLOODCOLOR,
     SP_ATTR_FLOODOPACITY,

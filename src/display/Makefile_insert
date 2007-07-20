@@ -15,6 +15,8 @@ display/canvas-arena.$(OBJEXT): helper/sp-marshal.h
 display/sp-canvas.$(OBJEXT): helper/sp-marshal.h
 
 display_libspdisplay_a_SOURCES = \
+	display/nr-3dutils.h \
+	display/nr-3dutils.cpp \
 	display/nr-arena-forward.h	\
 	display/nr-arena.cpp	\
 	display/nr-arena.h	\
@@ -71,8 +73,12 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-gaussian.h    \
 	display/nr-filter-blend.cpp     \
 	display/nr-filter-blend.h       \
+	display/nr-filter-diffuselighting.cpp     \
+	display/nr-filter-diffuselighting.h       \
 	display/nr-filter-offset.cpp	\
 	display/nr-filter-offset.h	\
+	display/nr-filter-specularlighting.cpp     \
+	display/nr-filter-specularlighting.h       \
 	display/nr-filter-composite.h	\
 	display/nr-filter-composite.cpp	\
 	display/nr-filter-slot.cpp      \
@@ -86,7 +92,10 @@ display_libspdisplay_a_SOURCES = \
 	display/pixblock-transform.cpp  \
 	display/pixblock-transform.h    \
 	display/inkscape-cairo.cpp      \
-	display/inkscape-cairo.h
+	display/inkscape-cairo.h		\
+	display/nr-light.h				\
+	display/nr-light.cpp			\
+	display/nr-light-types.h
 
 display_bezier_utils_test_SOURCES = display/bezier-utils-test.cpp
 display_bezier_utils_test_LDADD = libnr/libnr.a -lglib-2.0
