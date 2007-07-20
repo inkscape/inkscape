@@ -6,6 +6,7 @@
  */
 /*
  * Authors:
+ *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
  *
  * Copyright (C) 2006 Hugo Rodrigues
@@ -17,11 +18,12 @@
 # include "config.h"
 #endif
 
+#include <vector>
 #include "attributes.h"
 #include "svg/svg.h"
 #include "sp-feconvolvematrix.h"
 #include "xml/repr.h"
-
+#include "display/nr-filter-convolve-matrix.h"
 
 /* FeConvolveMatrix base class */
 
@@ -33,6 +35,7 @@ static void sp_feConvolveMatrix_release(SPObject *object);
 static void sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feConvolveMatrix_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feConvolveMatrix_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void sp_feConvolveMatrix_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feConvolveMatrix_parent_class;
 
@@ -61,6 +64,7 @@ static void
 sp_feConvolveMatrix_class_init(SPFeConvolveMatrixClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
+    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
 
     feConvolveMatrix_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
@@ -69,11 +73,16 @@ sp_feConvolveMatrix_class_init(SPFeConvolveMatrixClass *klass)
     sp_object_class->write = sp_feConvolveMatrix_write;
     sp_object_class->set = sp_feConvolveMatrix_set;
     sp_object_class->update = sp_feConvolveMatrix_update;
+
+    sp_primitive_class->build_renderer = sp_feConvolveMatrix_build_renderer;
 }
 
 static void
 sp_feConvolveMatrix_init(SPFeConvolveMatrix *feConvolveMatrix)
 {
+        feConvolveMatrix->divisor=0;
+        feConvolveMatrix->preserveAlpha = false;
+        feConvolveMatrix->order.set("3 3");
 }
 
 /**
@@ -89,6 +98,16 @@ sp_feConvolveMatrix_build(SPObject *object, SPDocument *document, Inkscape::XML:
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
+    sp_object_read_attr(object, "order");
+    sp_object_read_attr(object, "kernelMatrix");
+    sp_object_read_attr(object, "divisor");
+    sp_object_read_attr(object, "bias");
+    sp_object_read_attr(object, "targetX");
+    sp_object_read_attr(object, "targetY");
+    sp_object_read_attr(object, "edgeMode");
+    sp_object_read_attr(object, "kernelUnitLength");
+    sp_object_read_attr(object, "preserveAlpha");
+
 }
 
 /**
@@ -99,6 +118,30 @@ sp_feConvolveMatrix_release(SPObject *object)
 {
     if (((SPObjectClass *) feConvolveMatrix_parent_class)->release)
         ((SPObjectClass *) feConvolveMatrix_parent_class)->release(object);
+}
+
+
+static std::vector<gdouble> read_kernel_matrix(const gchar* value, int size){
+        std::vector<gdouble> v(size, (gdouble) 0);
+        int i;
+        gchar** values = g_strsplit(value , " ", size);
+        for (i=0;i<size;i++)
+                v[i] = g_ascii_strtod(values[i], NULL);
+        return v;
+}
+
+static double
+sp_feConvolveMatrix_read_number(gchar const *value) {
+    if (!value) return 0;
+    char *end;
+    double ret = g_ascii_strtod(value, &end);
+    if (*end) {
+        g_warning("Unable to convert \"%s\" to number", value);
+        // We could leave this out, too. If strtod can't convert
+        // anything, it will return zero.
+        ret = 0;
+    }
+    return ret;
 }
 
 /**
@@ -112,6 +155,41 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
+        case SP_ATTR_ORDER:
+            feConvolveMatrix->order.set(value);
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_KERNELMATRIX:
+            feConvolveMatrix->kernelMatrix = read_kernel_matrix(value, (int) (feConvolveMatrix->order.getNumber() * feConvolveMatrix->order.getOptNumber()));
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_DIVISOR:
+            feConvolveMatrix->divisor = sp_feConvolveMatrix_read_number(value);
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_BIAS:
+            feConvolveMatrix->bias = sp_feConvolveMatrix_read_number(value);
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_TARGETX:
+            feConvolveMatrix->targetX = (int) sp_feConvolveMatrix_read_number(value);
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_TARGETY:
+            feConvolveMatrix->targetY = (int) sp_feConvolveMatrix_read_number(value);
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_EDGEMODE:
+                //TODO
+            break;
+        case SP_ATTR_KERNELUNITLENGTH:
+            feConvolveMatrix->kernelUnitLength.set(value);
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_PRESERVEALPHA:
+                //TODO
+            break;
+
         default:
             if (((SPObjectClass *) feConvolveMatrix_parent_class)->set)
                 ((SPObjectClass *) feConvolveMatrix_parent_class)->set(object, key, value);
@@ -161,7 +239,28 @@ sp_feConvolveMatrix_write(SPObject *object, Inkscape::XML::Node *repr, guint fla
     return repr;
 }
 
+static void sp_feConvolveMatrix_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    g_assert(primitive != NULL);
+    g_assert(filter != NULL);
 
+    SPFeConvolveMatrix *sp_convolve = SP_FECONVOLVEMATRIX(primitive);
+
+    int primitive_n = filter->add_primitive(NR::NR_FILTER_CONVOLVEMATRIX);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    NR::FilterConvolveMatrix *nr_convolve = dynamic_cast<NR::FilterConvolveMatrix*>(nr_primitive);
+    g_assert(nr_convolve != NULL);
+
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+
+    nr_convolve->set_targetX(sp_convolve->targetX);
+    nr_convolve->set_targetY(sp_convolve->targetY);
+    nr_convolve->set_orderX( (int)sp_convolve->order.getNumber() );
+    nr_convolve->set_orderY( (int)sp_convolve->order.getOptNumber() );
+    nr_convolve->set_kernelMatrix(sp_convolve->kernelMatrix);
+    nr_convolve->set_divisor(sp_convolve->divisor);
+    nr_convolve->set_bias(sp_convolve->bias);
+
+}
 /*
   Local Variables:
   mode:c++

@@ -81,6 +81,8 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-specularlighting.h       \
 	display/nr-filter-composite.h	\
 	display/nr-filter-composite.cpp	\
+	display/nr-filter-convolve-matrix.cpp	\
+	display/nr-filter-convolve-matrix.h	\
 	display/nr-filter-slot.cpp      \
 	display/nr-filter-slot.h        \
 	display/nr-filter-getalpha.cpp	\

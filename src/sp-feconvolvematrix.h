@@ -6,6 +6,7 @@
  */
 /*
  * Authors:
+ *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *
  * Copyright (C) 2006 Hugo Rodrigues
@@ -15,13 +16,23 @@
 
 #include "sp-filter.h"
 #include "sp-feconvolvematrix-fns.h"
+#include "number-opt-number.h"
+#include <vector>
+//#include <glib.h>
+
 
 /* FeConvolveMatrix base class */
 class SPFeConvolveMatrixClass;
 
 struct SPFeConvolveMatrix : public SPFilterPrimitive {
-    /** CONVOLVEMATRIX ATTRIBUTES HERE */
-    
+    /* CONVOLVEMATRIX ATTRIBUTES */
+    NumberOptNumber order;
+    std::vector<gdouble> kernelMatrix;
+    double divisor, bias;
+    int targetX, targetY;
+    unsigned short edgeMode;
+    NumberOptNumber kernelUnitLength;
+    bool preserveAlpha;
 };
 
 struct SPFeConvolveMatrixClass {
