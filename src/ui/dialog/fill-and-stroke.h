@@ -15,6 +15,7 @@
 #define INKSCAPE_UI_DIALOG_FILL_AND_STROKE_H
 
 #include <gtkmm/adjustment.h>
+#include <gtkmm/alignment.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/scale.h>
 #include <gtkmm/spinbutton.h>
@@ -22,6 +23,7 @@
 
 #include "dialog.h"
 #include "ui/widget/notebook-page.h"
+#include "ui/widget/filter-effect-chooser.h"
 
 using namespace Inkscape::UI::Widget;
 
@@ -40,19 +42,14 @@ public:
                           Inkscape::Selection *selection);
 
 protected:
-    Gtk::Notebook  _notebook;
+    Gtk::Notebook   _notebook;
 
-    NotebookPage   _page_fill;
-    NotebookPage   _page_stroke_paint;
-    NotebookPage   _page_stroke_style;
+    NotebookPage    _page_fill;
+    NotebookPage    _page_stroke_paint;
+    NotebookPage    _page_stroke_style;
 
-    Gtk::VBox       _blur_vbox;
-    Gtk::HBox       _blur_label_box;
-    Gtk::HBox       _blur_hbox;
-    Gtk::Label      _blur_label;
-    Gtk::Adjustment _blur_adjustment;
-    Gtk::HScale     _blur_hscale;
-    Gtk::SpinButton _blur_spin_button;
+    Gtk::VBox       _fe_vbox;
+    Gtk::Alignment  _fe_alignment;
 
     Gtk::VBox       _opacity_vbox;
     Gtk::HBox       _opacity_label_box;
@@ -64,12 +61,13 @@ protected:
 
     Gtk::HBox& _createPageTabLabel(const Glib::ustring& label, 
                                    const char *label_image);
+    SimpleFilterModifier _fe_cb;
 
     void _layoutPageFill();
     void _layoutPageStrokePaint();
     void _layoutPageStrokeStyle();
 
-    void _blurValueChanged();
+    void _blendBlurValueChanged();
     void _opacityValueChanged();
 
     bool _blocked;

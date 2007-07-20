@@ -29,6 +29,7 @@
 #include "xml/repr.h"
 #include "widgets/icon.h"
 
+
 #include "dialogs/fill-style.h"
 #include "dialogs/stroke-style.h"
 
@@ -59,12 +60,8 @@ FillAndStroke::FillAndStroke()
       _page_fill(1, 1, true, true),
       _page_stroke_paint(1, 1, true, true),
       _page_stroke_style(1, 1, true, true),
-      _blur_vbox(false, 0),
-      _blur_label_box(false, 0),
-      _blur_label(_("_Blur, %"), 0.0, 1.0, true),
-      _blur_adjustment(0.0, 0.0, 100.0, 1.0, 1.0, 0.0),
-      _blur_hscale(_blur_adjustment),
-      _blur_spin_button(_blur_adjustment, 0.01, 1),
+      _fe_vbox(false, 0),
+      _fe_alignment(1, 1, 1, 1),
       _opacity_vbox(false, 0),
       _opacity_label_box(false, 0),
       _opacity_label(_("Master _opacity, %"), 0.0, 1.0, true),
@@ -86,15 +83,14 @@ FillAndStroke::FillAndStroke()
     _layoutPageStrokePaint();
     _layoutPageStrokeStyle();
 
-    // Blur
-    vbox->pack_start(_blur_vbox, false, false, 2);
-    _blur_label_box.pack_start(_blur_label, false, false, 4);
-    _blur_vbox.pack_start(_blur_label_box, false, false, 0);
-    _blur_vbox.pack_start(_blur_hbox, false, false, 0);
-    _blur_hbox.pack_start(_blur_hscale, true, true, 4);
-    _blur_hbox.pack_start(_blur_spin_button, false, false, 0);
-    _blur_hscale.set_draw_value(false);
-    _blur_adjustment.signal_value_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::FillAndStroke::_blurValueChanged));
+    // Filter Effects
+    vbox->pack_start(_fe_vbox, false, false, 2);
+    _fe_alignment.set_padding(0, 0, 4, 0);
+    _fe_alignment.add(_fe_cb);
+    _fe_vbox.pack_start(_fe_alignment, false, false, 0);
+
+    _fe_cb.signal_selection_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::FillAndStroke::_blendBlurValueChanged));
+    _fe_cb.signal_blend_blur_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::FillAndStroke::_blendBlurValueChanged));
     
     // Opacity
     vbox->pack_start(_opacity_vbox, false, false, 2);
@@ -143,7 +139,7 @@ FillAndStroke::_layoutPageStrokeStyle()
 }
 
 void
-FillAndStroke::_blurValueChanged()
+FillAndStroke::_blendBlurValueChanged()
 {
     if (_blocked)
         return;
@@ -171,24 +167,33 @@ FillAndStroke::_blurValueChanged()
     SPDocument *document = sp_desktop_document (desktop);
 
     double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
-    double radius = _blur_adjustment.get_value() * perimeter / 400;
-        
-    //apply created filter to every selected item
-    for (GSList const *i = items; i != NULL; i = i->next) {
-    
-        SPItem * item = SP_ITEM(i->data);
-        SPStyle *style = SP_OBJECT_STYLE(item);
-        g_assert(style != NULL);
 
-        if (radius == 0.0) {
-            remove_filter (item, false);
-        } else {
-            //SPFilter *constructed = new_filter_gaussian_blur_from_item(document, item, radius); 
-            //sp_style_set_property_url (SP_OBJECT(item), "filter", SP_OBJECT(constructed), false);
+    const Glib::ustring blendmode = _fe_cb.get_blend_mode();
+    double radius = _fe_cb.get_blur_value() * perimeter / 400;
+
+    SPFilter *filter = _fe_cb.get_selected_filter();
+    const bool remfilter = (blendmode == "normal" && radius == 0) || (blendmode == "filter" && !filter);
+        
+    if(blendmode != "filter" || filter) {
+        //apply created filter to every selected item
+        for (GSList const *i = items; i != NULL; i = i->next) {
+            SPItem * item = SP_ITEM(i->data);
+            SPStyle *style = SP_OBJECT_STYLE(item);
+            g_assert(style != NULL);
+            
+            if(remfilter) {
+                remove_filter (item, false);
+            }
+            else {
+                if(blendmode != "filter")
+                    filter = new_filter_simple_from_item(document, item, blendmode.c_str(), radius);
+                sp_style_set_property_url (SP_OBJECT(item), "filter", SP_OBJECT(filter), false);
+            }
+            
+            //request update
+            SP_OBJECT(item)->requestDisplayUpdate(( SP_OBJECT_MODIFIED_FLAG |
+                                                    SP_OBJECT_STYLE_MODIFIED_FLAG ));
         }
-        //request update
-        SP_OBJECT(item)->requestDisplayUpdate(( SP_OBJECT_MODIFIED_FLAG |
-                                                SP_OBJECT_STYLE_MODIFIED_FLAG ));
     }
 
     sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:blur", SP_VERB_DIALOG_FILL_STROKE,  _("Change blur"));
@@ -256,25 +261,43 @@ FillAndStroke::selectionChanged(Inkscape::Application *inkscape,
             break;
     }
 
-    //query now for current average blurring of selection
-    int blur_result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_BLUR);
-    switch (blur_result) {
-        case QUERY_STYLE_NOTHING: //no blurring
-            _blur_hbox.set_sensitive(false);
+    //query now for current filter mode and average blurring of selection
+    const int blend_result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_BLEND);
+    switch(blend_result) {
+        case QUERY_STYLE_NOTHING:
+            _fe_cb.set_sensitive(false);
             break;
         case QUERY_STYLE_SINGLE:
-        case QUERY_STYLE_MULTIPLE_AVERAGED:
-        case QUERY_STYLE_MULTIPLE_SAME: 
-            NR::Maybe<NR::Rect> bbox = sp_desktop_selection(SP_ACTIVE_DESKTOP)->bounds();
-            if (bbox) {
-                double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
-                _blur_hbox.set_sensitive(true);
-                //update blur widget value
-                float radius = query->filter_gaussianBlur_deviation.value;
-                float percent = radius * 400 / perimeter; // so that for a square, 100% == half side
-                _blur_adjustment.set_value(percent);
-            }
+        case QUERY_STYLE_MULTIPLE_SAME:
+            _fe_cb.set_blend_mode(query->filter_blend_mode.value);
+            _fe_cb.set_sensitive(true);
             break;
+        case QUERY_STYLE_MULTIPLE_DIFFERENT:
+            // TODO: set text
+            _fe_cb.set_sensitive(false);
+            break;
+    }
+
+    if(blend_result == QUERY_STYLE_SINGLE || blend_result == QUERY_STYLE_MULTIPLE_SAME) {
+        int blur_result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_BLUR);
+        switch (blur_result) {
+            case QUERY_STYLE_NOTHING: //no blurring
+                _fe_cb.set_blur_sensitive(false);
+                break;
+            case QUERY_STYLE_SINGLE:
+            case QUERY_STYLE_MULTIPLE_AVERAGED:
+            case QUERY_STYLE_MULTIPLE_SAME: 
+                NR::Maybe<NR::Rect> bbox = sp_desktop_selection(SP_ACTIVE_DESKTOP)->bounds();
+                if (bbox) {
+                    double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
+                    _fe_cb.set_blur_sensitive(true);
+                    //update blur widget value
+                    float radius = query->filter_gaussianBlur_deviation.value;
+                    float percent = radius * 400 / perimeter; // so that for a square, 100% == half side
+                    _fe_cb.set_blur_value(percent);
+                }
+                break;
+        }
     }
     
     sp_style_unref(query);
