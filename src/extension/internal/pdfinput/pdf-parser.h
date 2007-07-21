@@ -109,10 +109,8 @@ class PdfParser {
 public:
 
   // Constructor for regular output.
-  PdfParser(XRef *xrefA, SvgBuilder *builderA,
-            int pageNum, Dict *resDict, PDFRectangle *cropBox,
-            GBool (*abortCheckCbkA)(void *data) = NULL,
-            void *abortCheckCbkDataA = NULL);
+  PdfParser(XRef *xrefA, SvgBuilder *builderA, int pageNum, int rotate,
+            Dict *resDict, PDFRectangle *cropBox);
 
   ~PdfParser();
 
@@ -135,7 +133,6 @@ private:
   GBool subPage;		// is this a sub-page object?
   GBool printCommands;		// print the drawing commands (for debugging)
   GfxResources *res;		// resource stack
-  int updateLevel;
 
   GfxState *state;		// current graphics state
   GBool fontChanged;		// set if font or text matrix has changed
@@ -147,16 +144,12 @@ private:
 
   Parser *parser;		// parser for page content stream(s)
 
-  GBool				// callback to check for an abort
-    (*abortCheckCbk)(void *data);
-  void *abortCheckCbkData;
-
   static PdfOperator opTab[];	// table of operators
 
   OpHistoryEntry *operatorHistory;  // list containing the last N operators
   void pushOperator(const char *name);
   OpHistoryEntry *popOperator();
-  const char *getPreviousOperator();    // returns the previous operator's name
+  const char *getPreviousOperator(unsigned int look_back=1);    // returns the nth previous operator's name
 
   void go(GBool topLevel);
   void execOp(Object *cmd, Object args[], int numArgs);

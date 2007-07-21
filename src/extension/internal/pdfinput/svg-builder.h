@@ -26,12 +26,20 @@ namespace Inkscape {
     }
 }
 
+#include "libnr/nr-point.h"
+#include "libnr/nr-matrix.h"
+
+#include "CharTypes.h"
+class GooString;
 class Function;
 class SampledFunction;
 struct GfxState;
 class GfxPattern;
 class GfxShadingPattern;
 class GfxTilingPattern;
+class GfxFont;
+class GfxImageColorMap;
+class Stream;
 
 class SPCSSAttr;
 
@@ -41,6 +49,24 @@ class SPCSSAttr;
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
+
+/**
+ * \struct SvgGlyph
+ * Holds information about glyphs added by PdfParser which haven't been added
+ * to the document yet.
+ */
+struct SvgGlyph {
+    NR::Point position;    // Absolute glyph coords
+    NR::Point transformed_position; // Glyph coords transformed by text matrix
+    double dx, dy;  // Advance values
+    char code[8];   // UTF-8 coded character
+    int code_size;
+    bool is_space;
+
+    bool style_changed;  // Set to true if style has to be reset
+    SPCSSAttr *style;
+    int render_mode;    // Text render mode
+};
 
 /**
  * \class SvgBuilder
@@ -65,11 +91,27 @@ public:
     // Path adding
     void addPath(GfxState *state, bool fill, bool stroke, bool even_odd=false);
 
+    // Image handling
+    void addImage(GfxState *state, Stream *str, int width, int height,
+                  GfxImageColorMap *color_map, int *mask_colors);
+
+    // Text handling
+    void beginString(GfxState *state, GooString *s);
+    void endString(GfxState *state);
+    void addChar(GfxState *state, double x, double y,
+                 double dx, double dy,
+                 double originX, double originY,
+                 CharCode code, int nBytes, Unicode *u, int uLen);
+    void beginTextObject(GfxState *state);
+    void endTextObject(GfxState *state);
+
     bool isPatternTypeSupported(GfxPattern *pattern);
 
     // State manipulation
     void saveState();
     void restoreState();
+    void updateStyle(GfxState *state);
+    void updateFont(GfxState *state);
 
     // Clipping
     void clip(GfxState *state, bool even_odd=false);
@@ -82,29 +124,47 @@ public:
     bool getTransform(double *transform);
 
 private:
+    SvgBuilder();
+
     // Pattern creation
-    gchar *createPattern(GfxPattern *pattern);
-    gchar *createGradient(GfxShadingPattern *shading_pattern);
-    bool addStopsToGradient(Inkscape::XML::Node *gradient, Function *func, double opacity);
-    bool addSamplesToGradient(Inkscape::XML::Node *gradient, SampledFunction *func,
+    gchar *_createPattern(GfxPattern *pattern);
+    gchar *_createGradient(GfxShadingPattern *shading_pattern);
+    bool _addStopsToGradient(Inkscape::XML::Node *gradient, Function *func, double opacity);
+    bool _addSamplesToGradient(Inkscape::XML::Node *gradient, SampledFunction *func,
                               double offset0, double offset1, double opacity);
-    gchar *createTilingPattern(GfxTilingPattern *tiling_pattern);
+    gchar *_createTilingPattern(GfxTilingPattern *tiling_pattern);
+    // Image/mask creation
+    Inkscape::XML::Node *_createImage(Stream *str, int width, int height,
+                                      GfxImageColorMap *color_map, int *mask_colors,
+                                      bool alpha_only=false, bool invert_alpha=false);
     // Style setting
-    SPCSSAttr *setStyle(GfxState *state, bool fill, bool stroke, bool even_odd);
-    void setStrokeStyle(SPCSSAttr *css, GfxState *state);
-    void setFillStyle(SPCSSAttr *css, GfxState *state, bool even_odd);
+    SPCSSAttr *_setStyle(GfxState *state, bool fill, bool stroke, bool even_odd=false);
+    void _setStrokeStyle(SPCSSAttr *css, GfxState *state);
+    void _setFillStyle(SPCSSAttr *css, GfxState *state, bool even_odd);
 
-    std::vector<int> groupDepth;    // Depth of nesting groups
+    void _flushText();    // Write buffered text into doc
 
-    SPDocument *doc;
-    Inkscape::XML::Document *xml_doc;
-    Inkscape::XML::Node *root;  // Root node from the point of view of this SvgBuilder
-    Inkscape::XML::Node *container; // Current container (group/pattern/mask)
-    double width, height;       // Document size in px
+    std::vector<int> _group_depth;    // Depth of nesting groups
+
+    SPCSSAttr *_font_style;          // Current font style
+    GfxFont *_current_font;
+    char *_font_specification;
+    bool _need_font_update;
+    NR::Matrix _text_matrix;
+    std::vector<SvgGlyph> _glyphs;   // Added characters
+    bool _in_text_object;   // Whether we are inside a text object
+    bool _invalidated_style;
+    GfxState *_current_state;
+
+    SPDocument *_doc;
+    Inkscape::XML::Document *_xml_doc;
+    Inkscape::XML::Node *_root;  // Root node from the point of view of this SvgBuilder
+    Inkscape::XML::Node *_container; // Current container (group/pattern/mask)
+    double _width, _height;       // Document size in px
 };
 
 
-} } } /* namespace Inkscape, Extension, Internal, PdfInput */
+} } } /* namespace Inkscape, Extension, Internal */
 
 #endif /* HAVE_POPPLER */
 

@@ -44,7 +44,6 @@ PdfInput::open(::Inkscape::Extension::Input * mod, const gchar * uri) {
     // Initialize the globalParams variable for poppler
     if (!globalParams) {
         globalParams = new GlobalParams();
-        g_message("Created globalParams");
     }
     GooString *filename_goo = new GooString(uri);
     PDFDoc *pdf_doc = new PDFDoc(filename_goo, NULL, NULL, NULL);   // TODO: Could ask for password
@@ -65,23 +64,13 @@ PdfInput::open(::Inkscape::Extension::Input * mod, const gchar * uri) {
     Catalog *catalog = pdf_doc->getCatalog();
     Page *page = catalog->getPage(page_num);
 
-    double width, height;
-    int rotate = page->getRotate();
-    if (rotate == 90 || rotate == 270)  {
-        width = page->getCropHeight();
-        height = page->getCropWidth();
-    } else {
-        width = page->getCropWidth();
-        height = page->getCropHeight();
-    }
-    
     SPDocument *doc = sp_document_new(NULL, TRUE, TRUE);
     bool saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, false); // No need to undo in this temporary document
 
     // Create builder and parser
     SvgBuilder *builder = new SvgBuilder(doc);
-    PdfParser *pdf_parser = new PdfParser(pdf_doc->getXRef(), builder, page_num-1,
+    PdfParser *pdf_parser = new PdfParser(pdf_doc->getXRef(), builder, page_num-1, page->getRotate(),
                                           page->getResourceDict(), page->getCropBox());
 
     // Parse the document structure
@@ -97,6 +86,7 @@ PdfInput::open(::Inkscape::Extension::Input * mod, const gchar * uri) {
     obj.free();
     delete pdf_parser;
     delete builder;
+    delete pdf_doc;
 
     // Restore undo
     sp_document_set_undo_sensitive(doc, saved);

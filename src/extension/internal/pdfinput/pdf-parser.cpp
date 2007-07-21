@@ -93,7 +93,7 @@ extern "C" {
 #define patchColorDelta (dblToCol(1 / 256.0))
 
 // Max number of operators kept in the history list.
-#define maxOperatorHistoryDepth 5
+#define maxOperatorHistoryDepth 16
 
 //------------------------------------------------------------------------
 // Operator table
@@ -283,9 +283,8 @@ PdfOperator PdfParser::opTab[] = {
 //------------------------------------------------------------------------
 
 PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *builderA,
-                     int pageNum, Dict *resDict, PDFRectangle *cropBox,
-                     GBool (*abortCheckCbkA)(void *data),
-                     void *abortCheckCbkDataA) {
+                     int pageNum, int rotate, Dict *resDict, PDFRectangle *cropBox) {
+
   int i;
 
   xref = xrefA;
@@ -296,7 +295,7 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   res = new GfxResources(xref, resDict, NULL);
 
   // initialize
-  state = new GfxState(72.0, 72.0, cropBox, 0, gFalse);
+  state = new GfxState(72.0, 72.0, cropBox, rotate, gTrue);
   fontChanged = gFalse;
   clip = clipNone;
   ignoreUndef = 0;
@@ -304,16 +303,15 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   builder = builderA;
   builder->setDocumentSize(state->getPageWidth()*PX_PER_PT,
                            state->getPageHeight()*PX_PER_PT);
-  
+
+  double *ctm = state->getCTM();
+  double scaledCTM[6];
   for (i = 0; i < 6; ++i) {
-    baseMatrix[i] = state->getCTM()[i];
+    baseMatrix[i] = ctm[i];
+    scaledCTM[i] = PX_PER_PT * ctm[i];
   }
-  // scale by PX_PER_PT and flip by the y axis
-  builder->setTransform(PX_PER_PT, 0.0, 0.0, -PX_PER_PT, 0.0,
-                        state->getPageHeight()*PX_PER_PT);
+  builder->setTransform((double*)&scaledCTM);
   formDepth = 0;
-  abortCheckCbk = abortCheckCbkA;
-  abortCheckCbkData = abortCheckCbkDataA;
 
   // set crop box
   if (cropBox) {
@@ -382,7 +380,6 @@ void PdfParser::go(GBool topLevel) {
   int lastAbortCheck;
 
   // scan a sequence of objects
-  updateLevel = lastAbortCheck = 0;
   numArgs = 0;
   parser->getObj(&obj);
   while (!obj.isEOF()) {
@@ -406,16 +403,6 @@ void PdfParser::go(GBool topLevel) {
       for (i = 0; i < numArgs; ++i)
 	args[i].free();
       numArgs = 0;
-
-      // check for an abort
-      if (abortCheckCbk) {
-	if (updateLevel - lastAbortCheck > 10) {
-	  if ((*abortCheckCbk)(abortCheckCbkData)) {
-	    break;
-	  }
-	  lastAbortCheck = updateLevel;
-	}
-      }
 
     // got an argument - save it
     } else if (numArgs < maxArgs) {
@@ -481,10 +468,13 @@ void PdfParser::pushOperator(const char *name) {
     }
 }
 
-const char *PdfParser::getPreviousOperator() {
+const char *PdfParser::getPreviousOperator(unsigned int look_back) {
     OpHistoryEntry *prev = NULL;
-    if (operatorHistory != NULL) {
+    if (operatorHistory != NULL && look_back > 0) {
         prev = operatorHistory->next;
+        while (--look_back > 0 && prev != NULL) {
+            prev = prev->next;
+        }
     }
     if (prev != NULL) {
         return prev->name;
@@ -608,14 +598,20 @@ void PdfParser::opConcat(Object args[], int numArgs) {
   double a5 = args[5].getNum();
   if (!strcmp(prevOp, "q")) {
       builder->setTransform(a0, a1, a2, a3, a4, a5);
-  } else if (!strcmp(prevOp, "startPage")) {
-      // multiply it with the current baseMatrix
-      double c0 = baseMatrix[0]*a0 + baseMatrix[1]*a2;
-      double c1 = baseMatrix[0]*a1 + baseMatrix[1]*a3;
-      double c2 = baseMatrix[2]*a0 + baseMatrix[3]*a2;
-      double c3 = baseMatrix[2]*a1 + baseMatrix[3]*a3;
-      double c4 = baseMatrix[4]*a0 + baseMatrix[5]*a2 + a4;
-      double c5 = baseMatrix[4]*a1 + baseMatrix[5]*a3 + a5;
+  } else if (!strcmp(prevOp, "cm")) {
+      // multiply it with the previous transform
+      double otherMatrix[6];
+      if (!builder->getTransform((double*)&otherMatrix)) { // invalid transform
+          // construct identity matrix
+          otherMatrix[0] = otherMatrix[3] = 1.0;
+          otherMatrix[1] = otherMatrix[2] = otherMatrix[4] = otherMatrix[5] = 0.0;
+      }
+      double c0 = otherMatrix[0]*a0 + otherMatrix[1]*a2;
+      double c1 = otherMatrix[0]*a1 + otherMatrix[1]*a3;
+      double c2 = otherMatrix[2]*a0 + otherMatrix[3]*a2;
+      double c3 = otherMatrix[2]*a1 + otherMatrix[3]*a3;
+      double c4 = otherMatrix[4]*a0 + otherMatrix[5]*a2 + a4;
+      double c5 = otherMatrix[4]*a1 + otherMatrix[5]*a3 + a5;
       builder->setTransform(c0, c1, c2, c3, c4, c5);
   } else {
       builder->pushGroup();
@@ -643,6 +639,7 @@ void PdfParser::opSetDash(Object args[], int numArgs) {
     }
   }
   state->setLineDash(dash, length, args[1].getNum());
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetFlat(Object args[], int numArgs) {
@@ -651,18 +648,22 @@ void PdfParser::opSetFlat(Object args[], int numArgs) {
 
 void PdfParser::opSetLineJoin(Object args[], int numArgs) {
   state->setLineJoin(args[0].getInt());
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetLineCap(Object args[], int numArgs) {
   state->setLineCap(args[0].getInt());
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetMiterLimit(Object args[], int numArgs) {
   state->setMiterLimit(args[0].getNum());
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetLineWidth(Object args[], int numArgs) {
   state->setLineWidth(args[0].getNum());
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetExtGState(Object args[], int numArgs) {
@@ -926,6 +927,7 @@ void PdfParser::opSetFillGray(Object args[], int numArgs) {
   state->setFillColorSpace(new GfxDeviceGrayColorSpace());
   color.c[0] = dblToCol(args[0].getNum());
   state->setFillColor(&color);
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetStrokeGray(Object args[], int numArgs) {
@@ -935,6 +937,7 @@ void PdfParser::opSetStrokeGray(Object args[], int numArgs) {
   state->setStrokeColorSpace(new GfxDeviceGrayColorSpace());
   color.c[0] = dblToCol(args[0].getNum());
   state->setStrokeColor(&color);
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetFillCMYKColor(Object args[], int numArgs) {
@@ -947,6 +950,7 @@ void PdfParser::opSetFillCMYKColor(Object args[], int numArgs) {
     color.c[i] = dblToCol(args[i].getNum());
   }
   state->setFillColor(&color);
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetStrokeCMYKColor(Object args[], int numArgs) {
@@ -959,6 +963,7 @@ void PdfParser::opSetStrokeCMYKColor(Object args[], int numArgs) {
     color.c[i] = dblToCol(args[i].getNum());
   }
   state->setStrokeColor(&color);
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetFillRGBColor(Object args[], int numArgs) {
@@ -971,6 +976,7 @@ void PdfParser::opSetFillRGBColor(Object args[], int numArgs) {
     color.c[i] = dblToCol(args[i].getNum());
   }
   state->setFillColor(&color);
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetStrokeRGBColor(Object args[], int numArgs) {
@@ -983,6 +989,7 @@ void PdfParser::opSetStrokeRGBColor(Object args[], int numArgs) {
     color.c[i] = dblToCol(args[i].getNum());
   }
   state->setStrokeColor(&color);
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetFillColorSpace(Object args[], int numArgs) {
@@ -1002,6 +1009,7 @@ void PdfParser::opSetFillColorSpace(Object args[], int numArgs) {
     state->setFillColorSpace(colorSpace);
     colorSpace->getDefaultColor(&color);
     state->setFillColor(&color);
+    builder->updateStyle(state);
   } else {
     error(getPos(), "Bad color space (fill)");
   }
@@ -1024,6 +1032,7 @@ void PdfParser::opSetStrokeColorSpace(Object args[], int numArgs) {
     state->setStrokeColorSpace(colorSpace);
     colorSpace->getDefaultColor(&color);
     state->setStrokeColor(&color);
+    builder->updateStyle(state);
   } else {
     error(getPos(), "Bad color space (stroke)");
   }
@@ -1042,6 +1051,7 @@ void PdfParser::opSetFillColor(Object args[], int numArgs) {
     color.c[i] = dblToCol(args[i].getNum());
   }
   state->setFillColor(&color);
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetStrokeColor(Object args[], int numArgs) {
@@ -1057,6 +1067,7 @@ void PdfParser::opSetStrokeColor(Object args[], int numArgs) {
     color.c[i] = dblToCol(args[i].getNum());
   }
   state->setStrokeColor(&color);
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetFillColorN(Object args[], int numArgs) {
@@ -1078,6 +1089,7 @@ void PdfParser::opSetFillColorN(Object args[], int numArgs) {
 	}
       }
       state->setFillColor(&color);
+      builder->updateStyle(state);
     }
     if (args[numArgs-1].isName() &&
 	(pattern = res->lookupPattern(args[numArgs-1].getName()))) {
@@ -1096,6 +1108,7 @@ void PdfParser::opSetFillColorN(Object args[], int numArgs) {
       }
     }
     state->setFillColor(&color);
+    builder->updateStyle(state);
   }
 }
 
@@ -1119,6 +1132,7 @@ void PdfParser::opSetStrokeColorN(Object args[], int numArgs) {
 	}
       }
       state->setStrokeColor(&color);
+      builder->updateStyle(state);
     }
     if (args[numArgs-1].isName() &&
 	(pattern = res->lookupPattern(args[numArgs-1].getName()))) {
@@ -1137,6 +1151,7 @@ void PdfParser::opSetStrokeColorN(Object args[], int numArgs) {
       }
     }
     state->setStrokeColor(&color);
+    builder->updateStyle(state);
   }
 }
 
@@ -1922,10 +1937,11 @@ void PdfParser::opBeginText(Object args[], int numArgs) {
   state->setTextMat(1, 0, 0, 1, 0, 0);
   state->textMoveTo(0, 0);
   fontChanged = gTrue;
+  builder->beginTextObject(state);
 }
 
 void PdfParser::opEndText(Object args[], int numArgs) {
-  //NEEDED out->endTextObject(state);
+  builder->endTextObject(state);
 }
 
 //------------------------------------------------------------------------
@@ -1961,6 +1977,7 @@ void PdfParser::opSetTextLeading(Object args[], int numArgs) {
 
 void PdfParser::opSetTextRender(Object args[], int numArgs) {
   state->setRender(args[0].getInt());
+  builder->updateStyle(state);
 }
 
 void PdfParser::opSetTextRise(Object args[], int numArgs) {
@@ -1969,12 +1986,10 @@ void PdfParser::opSetTextRise(Object args[], int numArgs) {
 
 void PdfParser::opSetWordSpacing(Object args[], int numArgs) {
   state->setWordSpace(args[0].getNum());
-  //out->updateWordSpace(state);
 }
 
 void PdfParser::opSetHorizScaling(Object args[], int numArgs) {
   state->setHorizScaling(args[0].getNum());
-  //out->updateHorizScaling(state);
   fontChanged = gTrue;
 }
 
@@ -2026,12 +2041,10 @@ void PdfParser::opShowText(Object args[], int numArgs) {
     return;
   }
   if (fontChanged) {
-    //NEEDED out->updateFont(state);
+    builder->updateFont(state);
     fontChanged = gFalse;
   }
-  //out->beginStringOp(state);
   doShowText(args[0].getString());
-  //out->endStringOp(state);
 }
 
 void PdfParser::opMoveShowText(Object args[], int numArgs) {
@@ -2042,15 +2055,13 @@ void PdfParser::opMoveShowText(Object args[], int numArgs) {
     return;
   }
   if (fontChanged) {
-    //out->updateFont(state);
+    builder->updateFont(state);
     fontChanged = gFalse;
   }
   tx = state->getLineX();
   ty = state->getLineY() - state->getLeading();
   state->textMoveTo(tx, ty);
-  //out->beginStringOp(state);
   doShowText(args[0].getString());
-  //out->endStringOp(state);
 }
 
 void PdfParser::opMoveSetShowText(Object args[], int numArgs) {
@@ -2061,7 +2072,7 @@ void PdfParser::opMoveSetShowText(Object args[], int numArgs) {
     return;
   }
   if (fontChanged) {
-    //out->updateFont(state);
+    builder->updateFont(state);
     fontChanged = gFalse;
   }
   state->setWordSpace(args[0].getNum());
@@ -2069,9 +2080,7 @@ void PdfParser::opMoveSetShowText(Object args[], int numArgs) {
   tx = state->getLineX();
   ty = state->getLineY() - state->getLeading();
   state->textMoveTo(tx, ty);
-  //out->beginStringOp(state);
   doShowText(args[2].getString());
-  //out->endStringOp(state);
 }
 
 void PdfParser::opShowSpaceText(Object args[], int numArgs) {
@@ -2085,10 +2094,9 @@ void PdfParser::opShowSpaceText(Object args[], int numArgs) {
     return;
   }
   if (fontChanged) {
-    //out->updateFont(state);
+    builder->updateFont(state);
     fontChanged = gFalse;
   }
-  //out->beginStringOp(state);
   wMode = state->getFont()->getWMode();
   a = args[0].getArray();
   for (i = 0; i < a->getLength(); ++i) {
@@ -2110,36 +2118,7 @@ void PdfParser::opShowSpaceText(Object args[], int numArgs) {
     }
     obj.free();
   }
-  //out->endStringOp(state);
 }
-
-#include <glib-object.h>
-#include <UnicodeMap.h>
-                 
-static gchar *
-unicode_to_char (Unicode *unicode,
-                 int      len)
-{
-        static UnicodeMap *uMap = NULL;
-        if (uMap == NULL) {
-                GooString *enc = new GooString("UTF-8");
-                uMap = globalParams->getUnicodeMap(enc);
-                uMap->incRefCnt ();
-                delete enc;
-        }
-
-        GooString gstr;
-        gchar buf[8]; /* 8 is enough for mapping an unicode char to a string */
-        int i, n;
-
-        for (i = 0; i < len; ++i) {
-                n = uMap->mapUnicode(unicode[i], buf, sizeof(buf));
-                gstr.append(buf, n);
-        }
-
-        return g_strdup (gstr.getCString ());
-}
-
 
 void PdfParser::doShowText(GooString *s) {
   GfxFont *font;
@@ -2159,10 +2138,8 @@ void PdfParser::doShowText(GooString *s) {
 
   font = state->getFont();
   wMode = font->getWMode();
-printf("doShowText() called\n");
-//   if (out->useDrawChar()) {
-//       out->beginString(state, s);
-//   }
+
+  builder->beginString(state, s);
 
   // handle a Type 3 char
   if (font->getType() == fontType3 && 0) {//out->interpretType3Chars()) {
@@ -2239,7 +2216,7 @@ printf("doShowText() called\n");
     }
     parser = oldParser;
 
-  } else if (1){//out->useDrawChar()) {
+  } else {
     state->textTransformDelta(0, state->getRise(), &riseX, &riseY);
     p = s->getCString();
     len = s->getLength();
@@ -2248,11 +2225,6 @@ printf("doShowText() called\n");
 			    u, (int)(sizeof(u) / sizeof(Unicode)), &uLen,
 			    &dx, &dy, &originX, &originY);
       
-      if (uLen > 0) {
-          gchar *sc = unicode_to_char((Unicode*)&u, uLen);
-          printf("%s", sc);
-          g_free(sc);
-      }
       if (wMode) {
 	dx *= state->getFontSize();
 	dy = dy * state->getFontSize() + state->getCharSpace();
@@ -2271,53 +2243,15 @@ printf("doShowText() called\n");
       originX *= state->getFontSize();
       originY *= state->getFontSize();
       state->textTransformDelta(originX, originY, &tOriginX, &tOriginY);
-//       out->drawChar(state, state->getCurX() + riseX, state->getCurY() + riseY,
-// 		    tdx, tdy, tOriginX, tOriginY, code, n, u, uLen);
+      builder->addChar(state, state->getCurX() + riseX, state->getCurY() + riseY,
+ 		       tdx, tdy, tOriginX, tOriginY, code, n, u, uLen);
       state->shift(tdx, tdy);
       p += n;
       len -= n;
     }
-
-  } else {
-    dx = dy = 0;
-    p = s->getCString();
-    len = s->getLength();
-    nChars = nSpaces = 0;
-    while (len > 0) {
-      n = font->getNextChar(p, len, &code,
-			    u, (int)(sizeof(u) / sizeof(Unicode)), &uLen,
-			    &dx2, &dy2, &originX, &originY);
-      dx += dx2;
-      dy += dy2;
-      if (n == 1 && *p == ' ') {
-	++nSpaces;
-      }
-      ++nChars;
-      p += n;
-      len -= n;
-    }
-    if (wMode) {
-      dx *= state->getFontSize();
-      dy = dy * state->getFontSize()
-	   + nChars * state->getCharSpace()
-	   + nSpaces * state->getWordSpace();
-    } else {
-      dx = dx * state->getFontSize()
-	   + nChars * state->getCharSpace()
-	   + nSpaces * state->getWordSpace();
-      dx *= state->getHorizScaling();
-      dy *= state->getFontSize();
-    }
-    state->textTransformDelta(dx, dy, &tdx, &tdy);
-//    out->drawString(state, s);
-    state->shift(tdx, tdy);
   }
 
-//   if (out->useDrawChar()) {
-//     out->endString(state);
-//   }
-
-  updateLevel += 10 * s->getLength();
+  builder->endString(state);
 }
 
 //------------------------------------------------------------------------
@@ -2659,19 +2593,14 @@ void PdfParser::doImage(Object *ref, Stream *str, GBool inlineImg) {
 /*      out->drawMaskedImage(state, ref, str, width, height, colorMap,
 			   maskStr, maskWidth, maskHeight, maskInvert);*/
     } else {
-/*      out->drawImage(state, ref, str, width, height, colorMap,
-		     haveColorKeyMask ? maskColors : (int *)NULL, inlineImg);*/
+      builder->addImage(state, str, width, height, colorMap,
+		        haveColorKeyMask ? maskColors : (int *)NULL);
     }
     delete colorMap;
 
     maskObj.free();
     smaskObj.free();
   }
-
-  if ((i = width * height) > 1000) {
-    i = 1000;
-  }
-  updateLevel += i;
 
   return;
 
