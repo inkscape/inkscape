@@ -207,24 +207,25 @@ sp_filter_set(SPObject *object, unsigned int key, gchar const *value)
             }
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    case SP_ATTR_X:
+        case SP_ATTR_X:
             filter->x.readOrUnset(value);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    case SP_ATTR_Y:
-        filter->y.readOrUnset(value);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        case SP_ATTR_Y:
+            filter->y.readOrUnset(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    case SP_ATTR_WIDTH:
-        filter->width.readOrUnset(value);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        case SP_ATTR_WIDTH:
+            filter->width.readOrUnset(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    case SP_ATTR_HEIGHT:
-        filter->height.readOrUnset(value);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        case SP_ATTR_HEIGHT:
+            filter->height.readOrUnset(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    case SP_ATTR_FILTERRES:
-        filter->filterRes.set(value);
+        case SP_ATTR_FILTERRES:
+            filter->filterRes.set(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_XLINK_HREF:
             if (value) {
@@ -411,6 +412,15 @@ void sp_filter_build_renderer(SPFilter *sp_filter, NR::Filter *nr_filter)
     nr_filter->set_y(sp_filter->y);
     nr_filter->set_width(sp_filter->width);
     nr_filter->set_height(sp_filter->height);
+
+    if (sp_filter->filterRes.getNumber() >= 0) {
+        if (sp_filter->filterRes.getOptNumber() >= 0) {
+            nr_filter->set_resolution(sp_filter->filterRes.getNumber(),
+                                      sp_filter->filterRes.getOptNumber());
+        } else {
+            nr_filter->set_resolution(sp_filter->filterRes.getNumber());
+        }
+    }
 
     nr_filter->clear_primitives();
     SPObject *primitive_obj = sp_filter->children;

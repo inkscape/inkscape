@@ -406,25 +406,44 @@ void Filter::clear_primitives()
     _primitive_count = 0;
 }
 
-void Filter::set_x(SVGLength &length)
+void Filter::set_x(SVGLength const &length)
 { 
   if (length._set)
       _region_x = length;
 }
-void Filter::set_y(SVGLength &length)
+void Filter::set_y(SVGLength const &length)
 {
   if (length._set)
       _region_y = length;
 }
-void Filter::set_width(SVGLength &length)
+void Filter::set_width(SVGLength const &length)
 {
   if (length._set)
       _region_width = length;
 }
-void Filter::set_height(SVGLength &length)
+void Filter::set_height(SVGLength const &length)
 { 
   if (length._set)
       _region_height = length;
+}
+
+void Filter::set_resolution(double const pixels) {
+    if (pixels > 0) {
+        _x_pixels = pixels;
+        _y_pixels = pixels;
+    }
+}
+
+void Filter::set_resolution(double const x_pixels, double const y_pixels) {
+    if (x_pixels >= 0 && y_pixels >= 0) {
+        _x_pixels = x_pixels;
+        _y_pixels = y_pixels;
+    }
+}
+
+void Filter::reset_resolution() {
+    _x_pixels = -1;
+    _y_pixels = -1;
 }
 
 } /* namespace NR */

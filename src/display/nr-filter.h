@@ -77,10 +77,10 @@ public:
      */
     void set_output(int slot);
 
-    void set_x(SVGLength &lenght);
-    void set_y(SVGLength &length);
-    void set_width(SVGLength &length);
-    void set_height(SVGLength &length);
+    void set_x(SVGLength const &lenght);
+    void set_y(SVGLength const &length);
+    void set_width(SVGLength const &length);
+    void set_height(SVGLength const &length);
 
     /**
      * Sets the filter effects region.
@@ -105,7 +105,7 @@ public:
      * resolution is determined automatically. If x_pixels is less than zero,
      * calling this function results in no changes to filter state.
      */
-    void set_resolution(double x_pixels);
+    void set_resolution(double const x_pixels);
 
     /**
      * Sets the width and height of intermediate images in pixels. If not set,
@@ -113,7 +113,7 @@ public:
      * less than zero, calling this function results in no changes to filter
      * state.
      */
-    void set_resolution(double x_pixels, double y_pixels);
+    void set_resolution(double const x_pixels, double const y_pixels);
 
     /**
      * Resets the filter resolution to its default value, i.e. automatically
