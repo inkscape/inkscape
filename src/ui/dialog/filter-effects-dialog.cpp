@@ -722,6 +722,82 @@ void FilterEffectsDialog::SettingsGroup::add_setting(std::vector<Gtk::Widget*>& 
     add_setting_generic(*hb, label);
 }
 
+/*** ConvolveMatrix ***/
+FilterEffectsDialog::ConvolveMatrixColumns::ConvolveMatrixColumns()
+{
+    cols.resize(5);
+    for(unsigned i = 0; i < cols.size(); ++i)
+        add(cols[i]);
+}
+
+FilterEffectsDialog::ConvolveMatrix::ConvolveMatrix()
+{
+    _model = Gtk::ListStore::create(_columns);
+    set_model(_model);
+    set_headers_visible(false);
+}
+
+sigc::signal<void>& FilterEffectsDialog::ConvolveMatrix::signal_changed()
+{
+    return _signal_changed;
+}
+
+Glib::ustring FilterEffectsDialog::ConvolveMatrix::get_value() const
+{
+    std::ostringstream os;
+
+    for(Gtk::TreeIter iter = _model->children().begin();
+        iter != _model->children().end(); ++iter) {
+        for(unsigned c = 0; c < get_columns().size(); ++c) {
+            os << (*iter)[_columns.cols[c]] << " ";
+        }
+    }
+
+    return os.str();
+}
+
+void FilterEffectsDialog::ConvolveMatrix::update(SPFeConvolveMatrix* conv)
+{
+    if(conv) {
+        int cols, rows;
+
+        cols = (int)conv->order.getNumber();
+        if(cols > 5)
+            cols = 5;
+        rows = conv->order.optNumber_set ? (int)conv->order.getOptNumber() : cols;
+
+        update(conv, cols, rows);
+    }
+}
+
+void FilterEffectsDialog::ConvolveMatrix::update(SPFeConvolveMatrix* conv, const int rows, const int cols)
+{
+    _model->clear();
+
+    remove_all_columns();
+
+    if(conv) {
+        int ndx = 0;
+
+        for(int i = 0; i < cols; ++i) {
+            append_column_numeric_editable("", _columns.cols[i], "%.2f");
+            dynamic_cast<Gtk::CellRendererText*>(get_column(i)->get_first_cell_renderer())->signal_edited().connect(
+                sigc::mem_fun(*this, &ConvolveMatrix::rebind));
+        }
+
+        for(int r = 0; r < rows; ++r) {
+            Gtk::TreeRow row = *(_model->append());
+            for(int c = 0; c < cols; ++c, ++ndx)
+                row[_columns.cols[c]] = ndx < (int)conv->kernelMatrix.size() ? conv->kernelMatrix[ndx] : 0;
+        }
+    }
+}
+
+void FilterEffectsDialog::ConvolveMatrix::rebind(const Glib::ustring&, const Glib::ustring&)
+{
+    _signal_changed();
+}
+
 /*** FilterEffectsDialog ***/
 
 FilterEffectsDialog::FilterEffectsDialog() 
@@ -741,6 +817,10 @@ FilterEffectsDialog::FilterEffectsDialog()
       _composite_k2(0, -10, 10, 1, 0.01, 1),
       _composite_k3(0, -10, 10, 1, 0.01, 1),
       _composite_k4(0, -10, 10, 1, 0.01, 1),
+      _convolve_orderx(1, 0),
+      _convolve_ordery(1, 0),
+      _convolve_divisor(1, 0.01, 10, 1, 0.01, 1),
+      _convolve_bias(0, -10, 10, 1, 0.01, 1),
       _gaussianblur_stddeviation(1, 0, 100, 1, 0.01, 1),
       _morphology_radius(1, 0, 100, 1, 0.01, 1),
       _offset_dx(0, -100, 100, 1, 0.01, 1),
@@ -824,6 +904,25 @@ void FilterEffectsDialog::init_settings_widgets()
     _composite.add_setting(_composite_k4, SP_ATTR_K4, _("K4"));
 
     _convolvematrix.init(this, _settings_labels);
+    _convolvematrix.add_setting_generic(_convolve_orderx, _("Rows"));
+    _convolve_orderx.set_range(1, 5);
+    _convolve_orderx.get_adjustment()->set_step_increment(1);
+    _convolve_orderx.signal_value_changed().connect(
+        sigc::bind(sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_special), SP_ATTR_ORDER));
+    _convolvematrix.add_setting_generic(_convolve_ordery, _("Columns"));
+    _convolve_ordery.set_range(1, 5);
+    _convolve_ordery.get_adjustment()->set_step_increment(1);
+    _convolve_ordery.signal_value_changed().connect(
+        sigc::bind(sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_special), SP_ATTR_ORDER));
+    Gtk::ScrolledWindow* sw = Gtk::manage(new Gtk::ScrolledWindow);
+    sw->add(_convolve_kernelmatrix);
+    sw->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    sw->set_shadow_type(Gtk::SHADOW_IN);
+    _convolvematrix.add_setting_generic(*sw, _("Kernel"));
+    _convolve_kernelmatrix.signal_changed().connect(
+        sigc::bind(sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_special), SP_ATTR_KERNELMATRIX));
+    //_convolvematrix.add_setting(_convolve_divisor, SP_ATTR_DIVISOR, _("Divisor"));
+    //_convolvematrix.add_setting(_convolve_bias, SP_ATTR_BIAS, _("Bias"));
     
     _diffuselighting.init(this, _settings_labels);
 
@@ -918,6 +1017,7 @@ void FilterEffectsDialog::set_attr_special(const SPAttributeEnum attr)
 {
     Glib::ustring val;
     FilterPrimitiveInput input_id;
+    std::ostringstream os;
 
     switch(attr) {
         case SP_ATTR_IN:
@@ -936,6 +1036,18 @@ void FilterEffectsDialog::set_attr_special(const SPAttributeEnum attr)
             else {
                 val = FPInputConverter.get_key(input_id);
             }
+            break;
+        case SP_ATTR_ORDER:
+        {
+            int x = (int)(_convolve_orderx.get_value() + 0.5f);
+            int y = (int)(_convolve_ordery.get_value() + 0.5f);
+            os << x << " " << y;
+            val = os.str();
+            _convolve_kernelmatrix.update(SP_FECONVOLVEMATRIX(_primitive_list.get_selected()), x, y);
+            break;
+        }
+        case SP_ATTR_KERNELMATRIX:
+            val = _convolve_kernelmatrix.get_value();
             break;
         default:
             return;
@@ -1009,8 +1121,13 @@ void FilterEffectsDialog::update_settings_view()
             _composite_k3.set_value(comp->k3);
             _composite_k4.set_value(comp->k4);
         }
-        else if(tid == NR::NR_FILTER_CONVOLVEMATRIX)
+        else if(tid == NR::NR_FILTER_CONVOLVEMATRIX) {
             _convolvematrix.show_all();
+            SPFeConvolveMatrix* conv = SP_FECONVOLVEMATRIX(prim);
+            _convolve_orderx.set_value(conv->order.getNumber());
+            _convolve_ordery.set_value(conv->order.optNumber_set ? conv->order.getOptNumber() : conv->order.getNumber());
+            _convolve_kernelmatrix.update(conv);
+        }
         else if(tid == NR::NR_FILTER_DIFFUSELIGHTING)
             _diffuselighting.show_all();
         else if(tid == NR::NR_FILTER_DISPLACEMENTMAP) {

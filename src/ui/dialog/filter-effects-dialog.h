@@ -16,6 +16,7 @@
 #include <gtkmm/alignment.h>
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
+#include <gtkmm/cellrendererspin.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/frame.h>
@@ -27,6 +28,7 @@
 #include "attributes.h"
 #include "dialog.h"
 #include "sp-filter.h"
+#include "sp-feconvolvematrix.h"
 #include "ui/widget/filter-effect-chooser.h"
 #include "ui/widget/notebook-page.h"
 #include "ui/widget/spin-slider.h"
@@ -155,6 +157,30 @@ private:
         FilterEffectsDialog* _dialog;
     };
 
+    class ConvolveMatrixColumns : public Gtk::TreeModel::ColumnRecord
+    {
+    public:
+        ConvolveMatrixColumns();
+        std::vector<Gtk::TreeModelColumn<double> > cols;
+    };
+
+    class ConvolveMatrix : public Gtk::TreeView
+    {
+    public:
+        ConvolveMatrix();
+
+        sigc::signal<void>& signal_changed();        
+        Glib::ustring get_value() const;
+
+        void update(SPFeConvolveMatrix*);
+        void update(SPFeConvolveMatrix*, const int r, const int c);
+    private:
+        void rebind(const Glib::ustring&, const Glib::ustring&);
+        Glib::RefPtr<Gtk::ListStore> _model;
+        ConvolveMatrixColumns _columns;
+        sigc::signal<void> _signal_changed;
+    };
+
     void init_settings_widgets();
 
     // Handlers
@@ -208,6 +234,11 @@ private:
     SpinSlider _composite_k4;
 
     SettingsGroup _convolvematrix;
+    Gtk::SpinButton _convolve_orderx;
+    Gtk::SpinButton _convolve_ordery;
+    ConvolveMatrix _convolve_kernelmatrix;
+    SpinSlider _convolve_divisor;
+    SpinSlider _convolve_bias;
 
     SettingsGroup _diffuselighting;
 

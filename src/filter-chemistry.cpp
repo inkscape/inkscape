@@ -135,6 +135,8 @@ filter_add_primitive(SPFilter *filter, const NR::FilterPrimitiveType type)
         case NR::NR_FILTER_COMPOSITE:
             break;
         case NR::NR_FILTER_CONVOLVEMATRIX:
+            repr->setAttribute("order", "3 3");
+            repr->setAttribute("kernelMatrix", "0 0 0 0 0 0 0 0 0");
             break;
         case NR::NR_FILTER_DIFFUSELIGHTING:
             break;
