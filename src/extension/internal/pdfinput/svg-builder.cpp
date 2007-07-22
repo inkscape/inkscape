@@ -34,6 +34,7 @@
 #include "io/stringstream.h"
 #include "io/base64stream.h"
 #include "libnr/nr-matrix-ops.h"
+#include "libnr/nr-macros.h"
 #include "libnrtype/font-instance.h"
 
 #include "Function.h"
@@ -129,10 +130,10 @@ Inkscape::XML::Node *SvgBuilder::getContainer() {
 static gchar *svgConvertRGBToText(double r, double g, double b) {
     static gchar tmp[1023] = {0};
     snprintf(tmp, 1023,
-             "rgb(%i, %i, %i)",
-             SP_COLOR_F_TO_U(r),
-             SP_COLOR_F_TO_U(g),
-             SP_COLOR_F_TO_U(b));
+             "#%02x%02x%02x",
+             CLAMP(SP_COLOR_F_TO_U(r), 0, 255),
+             CLAMP(SP_COLOR_F_TO_U(g), 0, 255),
+             CLAMP(SP_COLOR_F_TO_U(b), 0, 255));
     return (gchar *)&tmp;
 }
 
