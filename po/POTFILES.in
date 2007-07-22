@@ -232,6 +232,7 @@ src/sp-star.cpp
 src/sp-symbol.cpp
 src/sp-switch.cpp
 src/sp-text.cpp
+src/sp-tspan.cpp
 src/sp-use-reference.cpp
 src/sp-use.cpp
 src/spiral-context.cpp
