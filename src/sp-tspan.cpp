@@ -27,6 +27,8 @@
 # include "config.h"
 #endif
 
+#include <glibmm/i18n.h>
+
 #include <livarot/Path.h>
 #include "svg/stringstream.h"
 #include "attributes.h"
@@ -55,6 +57,7 @@ static void sp_tspan_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_tspan_modified(SPObject *object, unsigned flags);
 static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
 static Inkscape::XML::Node *sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static char *sp_tspan_description (SPItem *item);
 
 static SPItemClass *tspan_parent_class;
 
@@ -102,6 +105,7 @@ sp_tspan_class_init(SPTSpanClass *classname)
     sp_object_class->write = sp_tspan_write;
 
     item_class->bbox = sp_tspan_bbox;
+    item_class->description = sp_tspan_description;
 }
 
 static void
@@ -271,6 +275,15 @@ sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	
     return repr;
 }
+
+static char *
+sp_tspan_description(SPItem *item)
+{
+    g_return_val_if_fail(SP_IS_TSPAN(item), NULL);
+
+    return g_strdup(_("<b>Text span</b>"));
+}
+
 
 /*#####################################################
 #  SPTEXTPATH
