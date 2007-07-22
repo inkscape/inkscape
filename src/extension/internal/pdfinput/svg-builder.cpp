@@ -634,6 +634,28 @@ void SvgBuilder::updateStyle(GfxState *state) {
 }
 
 /**
+ * This array holds info about translating font weight names to more or less CSS equivalents
+ */
+static char *font_weight_translator[][2] = {
+    {"bold", "bold"},
+    {"light", "300"},
+    {"black", "900"},
+    {"heavy", "900"},
+    {"ultrabold", "800"},
+    {"extrabold", "800"},
+    {"demibold", "600"},
+    {"semibold", "600"},
+    {"medium", "500"},
+    {"book", "normal"},
+    {"regular", "normal"},
+    {"roman", "normal"},
+    {"normal", "normal"},
+    {"ultralight", "200"},
+    {"extralight", "200"},
+    {"thin", "100"}
+};
+
+/**
  * \brief Updates _font_style according to the font set in parameter state
  */
 void SvgBuilder::updateFont(GfxState *state) {
@@ -659,6 +681,7 @@ void SvgBuilder::updateFont(GfxState *state) {
     // In a PDF font names can look like this: IONIPB+MetaPlusBold-Italic
     char *font_family = NULL;
     char *font_style = NULL;
+    char *font_style_lowercase = NULL;
     char *plus_sign = strstr(_font_specification, "+");
     if (plus_sign) {
         font_family = g_strdup(plus_sign + 1);
@@ -669,6 +692,7 @@ void SvgBuilder::updateFont(GfxState *state) {
     char *minus_sign = g_strrstr(font_family, "-");
     if (minus_sign) {
         font_style = minus_sign + 1;
+        font_style_lowercase = g_ascii_strdown(font_style, -1);
         minus_sign[0] = 0;
     }
 
@@ -679,11 +703,17 @@ void SvgBuilder::updateFont(GfxState *state) {
     } else {
         sp_repr_css_set_property(_font_style, "font-family", font_family);
     }
-    g_free(font_family);
 
     // Font style
     if (font->isItalic()) {
         sp_repr_css_set_property(_font_style, "font-style", "italic");
+    } else if (font_style) {
+        if ( strstr(font_style_lowercase, "italic") ||
+             strstr(font_style_lowercase, "slanted") ) {
+            sp_repr_css_set_property(_font_style, "font-style", "italic");
+        } else if (strstr(font_style_lowercase, "oblique")) {
+            sp_repr_css_set_property(_font_style, "font-style", "oblique");
+        }
     }
 
     // Font variant -- default 'normal' value
@@ -701,6 +731,19 @@ void SvgBuilder::updateFont(GfxState *state) {
             weight_num[0] = (gchar)( '1' + (font_weight - GfxFont::W100) );
             sp_repr_css_set_property(_font_style, "font-weight", (gchar *)&weight_num);
         }
+    } else if (font_style) {
+        // Apply the font weight translations
+        int num_translations = sizeof(font_weight_translator) / ( 2 * sizeof(char *) );
+        for ( int i = 0 ; i < num_translations ; i++ ) {
+            if (strstr(font_style_lowercase, font_weight_translator[i][0])) {
+                sp_repr_css_set_property(_font_style, "font-weight",
+                                         font_weight_translator[i][1]);
+            }
+        }
+    }
+    g_free(font_family);
+    if (font_style_lowercase) {
+        g_free(font_style_lowercase);
     }
 
     // Font stretch
