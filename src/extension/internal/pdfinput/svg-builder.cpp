@@ -787,6 +787,7 @@ void SvgBuilder::_flushText() {
     }
 
     Inkscape::XML::Node *text_node = _xml_doc->createElement("svg:text");
+    text_node->setAttribute("xml:space", "preserve");
     // Set current text position
     sp_repr_set_svg_double(text_node, "x", first_glyph.transformed_position[0]);
     sp_repr_set_svg_double(text_node, "y", first_glyph.transformed_position[1]);
@@ -843,6 +844,7 @@ void SvgBuilder::_flushText() {
                 break;
             } else {
                 tspan_node = _xml_doc->createElement("svg:tspan");
+                tspan_node->setAttribute("sodipodi:role", "line");
                 // Set style and unref SPCSSAttr if it won't be needed anymore
                 if ( i != _glyphs.begin() ) {
                     sp_repr_css_change(tspan_node, glyph.style, "style");
