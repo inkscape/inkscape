@@ -22,14 +22,12 @@ extern const Inkscape::Util::EnumData<NR::FilterPrimitiveType> FPData[NR::NR_FIL
 extern const Inkscape::Util::EnumDataConverter<NR::FilterPrimitiveType> FPConverter;
 
 enum FilterPrimitiveInput {
-    FPINPUT_DEFAULT,
     FPINPUT_SOURCEGRAPHIC,
     FPINPUT_SOURCEALPHA,
-    FPINPUT_BACKGROUNDGRAPHIC,
+    FPINPUT_BACKGROUNDIMAGE,
     FPINPUT_BACKGROUNDALPHA,
     FPINPUT_FILLPAINT,
     FPINPUT_STROKEPAINT,
-    FPINPUT_CONNECTION,
     FPINPUT_END
 };
 

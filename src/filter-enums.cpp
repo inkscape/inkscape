@@ -37,14 +37,12 @@ const EnumData<NR::FilterPrimitiveType> FPData[NR::NR_FILTER_ENDPRIMITIVETYPE] =
 const EnumDataConverter<NR::FilterPrimitiveType> FPConverter(FPData, NR::NR_FILTER_ENDPRIMITIVETYPE);
 
 const EnumData<FilterPrimitiveInput> FPInputData[FPINPUT_END] = {
-    {FPINPUT_DEFAULT,           _("Default"),            "Default"},
     {FPINPUT_SOURCEGRAPHIC,     _("Source Graphic"),     "SourceGraphic"},
     {FPINPUT_SOURCEALPHA,       _("Source Alpha"),       "SourceAlpha"},
-    {FPINPUT_BACKGROUNDGRAPHIC, _("Background Graphic"), "BackgroundGraphic"},
+    {FPINPUT_BACKGROUNDIMAGE,   _("Background Image"),   "BackgroundImage"},
     {FPINPUT_BACKGROUNDALPHA,   _("Background Alpha"),   "BackgroundAlpha"},
     {FPINPUT_FILLPAINT,         _("Fill Paint"),         "FillPaint"},
     {FPINPUT_STROKEPAINT,       _("Stroke Paint"),       "StrokePaint"},
-    {FPINPUT_CONNECTION,        _("Connection"),         "Connection"}
 };
 const EnumDataConverter<FilterPrimitiveInput> FPInputConverter(FPInputData, FPINPUT_END);
 

@@ -91,12 +91,16 @@ private:
         static int input_count(const SPFilterPrimitive* prim);
 
         static const int size = 24;
+        
+        void set_text_width(const int w);
+        int get_text_width() const;
     protected:
         virtual void get_size_vfunc(Gtk::Widget& widget, const Gdk::Rectangle* cell_area,
                                     int* x_offset, int* y_offset, int* width, int* height) const;
     private:
         // void* should be SPFilterPrimitive*, some weirdness with properties prevents this
         Glib::Property<void*> _primitive;
+        int _text_width;
     };
 
     class PrimitiveList : public Gtk::TreeView
@@ -113,25 +117,29 @@ private:
         void select(SPFilterPrimitive *prim);
 
         int primitive_count() const;
-        bool is_first(const SPFilterPrimitive*) const;
     protected:
-        bool on_expose_event(GdkEventExpose*);
+        bool on_expose_signal(GdkEventExpose*);
         bool on_button_press_event(GdkEventButton*);
         bool on_motion_notify_event(GdkEventMotion*);
         bool on_button_release_event(GdkEventButton*);
         void on_drag_end(const Glib::RefPtr<Gdk::DragContext>&);
     private:
+        int init_text();
+
         bool do_connection_node(const Gtk::TreeIter& row, const int input, std::vector<Gdk::Point>& points,
                                 const int ix, const int iy);
         const Gtk::TreeIter find_result(const Gtk::TreeIter& start, const SPAttributeEnum attr);
         int find_index(const Gtk::TreeIter& target);
-        void draw_connection(const Gtk::TreeIter&, const int x1, const int y1, const int row_count);
+        void draw_connection(const Gtk::TreeIter&, const SPAttributeEnum attr, const int text_start_x,
+                             const int x1, const int y1, const int row_count);
         void sanitize_connections(const Gtk::TreeIter& prim_iter);
 
         FilterEffectsDialog& _dialog;
         Glib::RefPtr<Gtk::ListStore> _model;
         PrimitiveColumns _columns;
+        CellRendererConnection _connection_cell;
         Glib::RefPtr<Gtk::Menu> _primitive_menu;
+        Glib::RefPtr<Pango::Layout> _vertical_layout;
         int _in_drag;
         SPFilterPrimitive* _drag_prim;
     };
@@ -214,10 +222,6 @@ private:
     Gtk::Label _empty_settings;
 
     // Generic settings
-    SettingsGroup _generic_settings;
-    UI::Widget::ComboBoxEnum<FilterPrimitiveInput> _primitive_input1;
-    UI::Widget::ComboBoxEnum<FilterPrimitiveInput> _primitive_input2;
-
     SettingsGroup _blend;
     UI::Widget::ComboBoxEnum<NR::FilterBlendMode> _blend_mode;
 
