@@ -148,8 +148,7 @@ sp_tspan_set(SPObject *object, unsigned key, gchar const *value)
     SPTSpan *tspan = SP_TSPAN(object);
 	
     if (tspan->attributes.readSingleAttribute(key, value)) {
-        if (tspan->role != SP_TSPAN_ROLE_LINE)
-            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     } else {
         switch (key) {
             case SP_ATTR_SODIPODI_ROLE:
