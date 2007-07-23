@@ -17,13 +17,13 @@
 #include "display/nr-filter-diffuselighting.h"
 #include "display/nr-filter-getalpha.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-utils.h"
 #include "display/nr-light.h"
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-rect-l.h"
 #include "color.h"
-#include "round.h"
 
 namespace NR {
 
@@ -47,6 +47,7 @@ do {\
     (inter) = (kd) * scalar_product((N), (L)); \
     if ((inter) < 0) (inter) = 0; \
 }while(0)
+
 
 int FilterDiffuseLighting::render(FilterSlot &slot, Matrix const &trans) {
     NRPixBlock *in = filter_get_alpha(slot.get(_input));
@@ -87,9 +88,9 @@ int FilterDiffuseLighting::render(FilterSlot &slot, Matrix const &trans) {
                 compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
                 COMPUTE_INTER(inter, N, L, kd);
 
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_RED]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_GREEN]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_BLUE]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
                 data_o[j++] = 255;
             }
             out->empty = FALSE;
@@ -113,9 +114,9 @@ int FilterDiffuseLighting::render(FilterSlot &slot, Matrix const &trans) {
                         ss * (double) data_i[4*i+3]/ 255);
                 COMPUTE_INTER(inter, N, L, kd);
 
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_RED]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_GREEN]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_BLUE]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
                 data_o[j++] = 255;
             }
             out->empty = FALSE;
@@ -139,9 +140,9 @@ int FilterDiffuseLighting::render(FilterSlot &slot, Matrix const &trans) {
                 sl->light_components(LC, L);
                 COMPUTE_INTER(inter, N, L, kd);
                 
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_RED]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_GREEN]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_BLUE]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
                 data_o[j++] = 255;
             }
             out->empty = FALSE;

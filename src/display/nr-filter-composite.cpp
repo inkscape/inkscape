@@ -16,6 +16,7 @@
 #include "display/nr-filter-composite.h"
 #include "display/nr-filter-pixops.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-utils.h"
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-pixops.h"
@@ -66,25 +67,19 @@ composite_xor(unsigned char *r, unsigned char const *a, unsigned char const *b)
     r[3] = NR_NORMALIZE_21(a[3] * (255 - b[3]) + b[3] * (255 - a[3]));
 }
 
-static int clamp(int val) {
-    if (val < 0) return 0;
-    if (val > 255) return 255;
-    return val;
-}
-
 // BUGBUG / TODO
 // This makes arithmetic compositing non re-entrant and non thread safe.
 static int arith_k1, arith_k2, arith_k3, arith_k4;
 inline void
 composite_arithmetic(unsigned char *r, unsigned char const *a, unsigned char const *b)
 {
-    r[0] = clamp(NR_NORMALIZE_31(arith_k1 * a[0] * b[0]
+    r[0] = NR::clamp(NR_NORMALIZE_31(arith_k1 * a[0] * b[0]
                  + arith_k2 * a[0] + arith_k3 * b[0] + arith_k4));
-    r[1] = clamp(NR_NORMALIZE_31(arith_k1 * a[1] * b[1]
+    r[1] = NR::clamp(NR_NORMALIZE_31(arith_k1 * a[1] * b[1]
                  + arith_k2 * a[1] + arith_k3 * b[1] + arith_k4));
-    r[2] = clamp(NR_NORMALIZE_31(arith_k1 * a[2] * b[2]
+    r[2] = NR::clamp(NR_NORMALIZE_31(arith_k1 * a[2] * b[2]
                  + arith_k2 * a[2] + arith_k3 * b[2] + arith_k4));
-    r[3] = clamp(NR_NORMALIZE_31(arith_k1 * a[3] * b[3]
+    r[3] = NR::clamp(NR_NORMALIZE_31(arith_k1 * a[3] * b[3]
                  + arith_k2 * a[3] + arith_k3 * b[3] + arith_k4));
 }
 

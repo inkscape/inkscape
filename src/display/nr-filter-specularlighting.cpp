@@ -18,13 +18,13 @@
 #include "display/nr-filter-specularlighting.h"
 #include "display/nr-filter-getalpha.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-utils.h"
 #include "display/nr-light.h"
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-rect-l.h"
 #include "color.h"
-#include "round.h"
 
 namespace NR {
 
@@ -46,10 +46,12 @@ FilterSpecularLighting::~FilterSpecularLighting()
 
 //Investigating Phong Lighting model we should not take N.H but
 //R.E which equals to 2*N.H^2 - 1
+//replace the second line by 
+//gdouble scal = scalar_product((N), (H)); scal = 2 * scal * scal - 1;\
+//to get the expected formula
 #define COMPUTE_INTER(inter, H, N, ks, speculaExponent) \
 do {\
-    gdouble scal = scalar_product((N), (H));\
-    scal = 2 * scal * scal - 1;\
+    gdouble scal = scalar_product((N), (H)); \
     if (scal <= 0)\
         (inter) = 0;\
     else\
@@ -97,9 +99,9 @@ int FilterSpecularLighting::render(FilterSlot &slot, Matrix const &trans) {
                 compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
                 COMPUTE_INTER(inter, N, H, ks, specularExponent);
 
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_RED]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_GREEN]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_BLUE]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
                 data_o[j++] = MAX(MAX(data_o[j-3], data_o[j-2]), data_o[j-1]);
             }
             out->empty = FALSE;
@@ -124,9 +126,9 @@ int FilterSpecularLighting::render(FilterSlot &slot, Matrix const &trans) {
                 normalized_sum(H, L, EYE_VECTOR);
                 COMPUTE_INTER(inter, N, H, ks, specularExponent);
                 
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_RED]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_GREEN]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_BLUE]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
                 data_o[j++] = MAX(MAX(data_o[j-3], data_o[j-2]), data_o[j-1]);
             }
             out->empty = FALSE;
@@ -151,9 +153,9 @@ int FilterSpecularLighting::render(FilterSlot &slot, Matrix const &trans) {
                 normalized_sum(H, L, EYE_VECTOR);
                 COMPUTE_INTER(inter, N, H, ks, specularExponent);
                 
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_RED]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_GREEN]);
-                data_o[j++] = (unsigned char) round(inter * LC[LIGHT_BLUE]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
                 data_o[j++] = MAX(MAX(data_o[j-3], data_o[j-2]), data_o[j-1]);
             }
             out->empty = FALSE;

@@ -89,6 +89,8 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-getalpha.h	\
 	display/nr-filter-pixops.h	\
 	display/nr-filter-types.h       \
+	display/nr-filter-utils.h       \
+	display/nr-filter-utils.cpp     \
 	display/pixblock-scaler.cpp     \
 	display/pixblock-scaler.h       \
 	display/pixblock-transform.cpp  \
