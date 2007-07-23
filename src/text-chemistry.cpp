@@ -31,6 +31,7 @@
 #include "sp-flowtext.h"
 #include "sp-flowregion.h"
 #include "sp-flowdiv.h"
+#include "sp-tspan.h"
 
 
 SPItem *
@@ -233,6 +234,20 @@ text_remove_all_kerns_recursively(SPObject *o)
     SP_OBJECT_REPR(o)->setAttribute("dy", NULL);
     SP_OBJECT_REPR(o)->setAttribute("rotate", NULL);
 
+    // if x contains a list, leave only the first value
+    gchar *x = (gchar *) SP_OBJECT_REPR(o)->attribute("x");
+    if (x) {
+        gchar **xa_space = g_strsplit(x, " ", 0);
+        gchar **xa_comma = g_strsplit(x, ",", 0);
+        if (xa_space && *xa_space && *(xa_space + 1)) {
+            SP_OBJECT_REPR(o)->setAttribute("x", g_strdup(*xa_space));
+        } else if (xa_comma && *xa_comma && *(xa_comma + 1)) {
+            SP_OBJECT_REPR(o)->setAttribute("x", g_strdup(*xa_comma));
+        }
+        g_strfreev(xa_space);
+        g_strfreev(xa_comma);
+    }
+
     for (SPObject *i = sp_object_first_child(o); i != NULL; i = SP_OBJECT_NEXT(i)) {
         text_remove_all_kerns_recursively(i);
     }
@@ -256,13 +271,14 @@ text_remove_all_kerns()
     for (GSList *items = g_slist_copy((GSList *) selection->itemList());
          items != NULL;
          items = items->next) {
+        SPObject *obj = SP_OBJECT(items->data);
 
-        if (!SP_IS_TEXT(SP_OBJECT(items->data))) {
+        if (!SP_IS_TEXT(obj) && !SP_IS_TSPAN(obj) && !SP_IS_FLOWTEXT(obj)) {
             continue;
         }
 
-        text_remove_all_kerns_recursively(SP_OBJECT(items->data));
-        SP_OBJECT(items->data)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
+        text_remove_all_kerns_recursively(obj);
+        obj->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
         did = true;
     }
 
