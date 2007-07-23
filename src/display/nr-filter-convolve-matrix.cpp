@@ -57,8 +57,8 @@ int FilterConvolveMatrix::render(FilterSlot &slot, Matrix const &trans) {
         }
     }
 
-    for (x=0; x < width; x++){
-        for (y=0; y < height; y++){
+    for (x=targetX; x < width - (orderX - targetX); x++){
+        for (y=targetY; y < height - (orderY - targetY); y++){
             result_R = 0;
             result_G = 0;
             result_B = 0;
@@ -125,6 +125,12 @@ void FilterConvolveMatrix::set_kernelMatrix(std::vector<gdouble> &km) {
 
 void FilterConvolveMatrix::area_enlarge(NRRectL &area, Matrix const &trans)
 {
+    //Seems to me that since this filter's operation is resolution dependent,
+    // some spurious pixels may still appear at the borders when low zooming or rotating. Needs a better fix.
+    area.x0 -= targetX;
+    area.y0 -= targetY;
+    area.x1 += orderX - targetX;
+    area.y1 += orderY - targetY;
 }
 
 } /* namespace NR */
