@@ -310,6 +310,7 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
     baseMatrix[i] = ctm[i];
     scaledCTM[i] = PX_PER_PT * ctm[i];
   }
+  saveState();
   builder->setTransform((double*)&scaledCTM);
   formDepth = 0;
 
@@ -598,7 +599,7 @@ void PdfParser::opConcat(Object args[], int numArgs) {
   double a5 = args[5].getNum();
   if (!strcmp(prevOp, "q")) {
       builder->setTransform(a0, a1, a2, a3, a4, a5);
-  } else if (!strcmp(prevOp, "cm")) {
+  } else if (!strcmp(prevOp, "cm") || !strcmp(prevOp, "startPage")) {
       // multiply it with the previous transform
       double otherMatrix[6];
       if (!builder->getTransform((double*)&otherMatrix)) { // invalid transform
@@ -606,12 +607,12 @@ void PdfParser::opConcat(Object args[], int numArgs) {
           otherMatrix[0] = otherMatrix[3] = 1.0;
           otherMatrix[1] = otherMatrix[2] = otherMatrix[4] = otherMatrix[5] = 0.0;
       }
-      double c0 = otherMatrix[0]*a0 + otherMatrix[1]*a2;
-      double c1 = otherMatrix[0]*a1 + otherMatrix[1]*a3;
-      double c2 = otherMatrix[2]*a0 + otherMatrix[3]*a2;
-      double c3 = otherMatrix[2]*a1 + otherMatrix[3]*a3;
-      double c4 = otherMatrix[4]*a0 + otherMatrix[5]*a2 + a4;
-      double c5 = otherMatrix[4]*a1 + otherMatrix[5]*a3 + a5;
+      double c0 = a0*otherMatrix[0] + a1*otherMatrix[2];
+      double c1 = a0*otherMatrix[1] + a1*otherMatrix[3];
+      double c2 = a2*otherMatrix[0] + a3*otherMatrix[2];
+      double c3 = a2*otherMatrix[1] + a3*otherMatrix[3];
+      double c4 = a4*otherMatrix[0] + a5*otherMatrix[2] + otherMatrix[4];
+      double c5 = a4*otherMatrix[1] + a5*otherMatrix[3] + otherMatrix[5];
       builder->setTransform(c0, c1, c2, c3, c4, c5);
   } else {
       builder->pushGroup();

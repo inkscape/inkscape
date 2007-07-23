@@ -77,9 +77,7 @@ PdfInput::open(::Inkscape::Extension::Input * mod, const gchar * uri) {
     Object obj;
     page->getContents(&obj);
     if (!obj.isNull()) {
-        pdf_parser->saveState();
         pdf_parser->parse(&obj);
-        pdf_parser->restoreState();
     }
     
     // Cleanup
