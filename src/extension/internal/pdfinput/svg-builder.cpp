@@ -41,6 +41,7 @@
 #include "GfxState.h"
 #include "GfxFont.h"
 #include "Stream.h"
+#include "Page.h"
 #include "UnicodeMap.h"
 #include "GlobalParams.h"
 
@@ -68,8 +69,9 @@ SvgBuilder::SvgBuilder() {
     _current_state = NULL;
 }
 
-SvgBuilder::SvgBuilder(SPDocument *document) {
+SvgBuilder::SvgBuilder(SPDocument *document, XRef *xref) {
     _doc = document;
+    _xref = xref;
     _xml_doc = sp_document_repr_doc(_doc);
     _container = _root = _doc->rroot;
     SvgBuilder();
@@ -77,6 +79,7 @@ SvgBuilder::SvgBuilder(SPDocument *document) {
 
 SvgBuilder::SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root) {
     _doc = parent->_doc;
+    _xref = parent->_xref;
     _xml_doc = parent->_xml_doc;
     _container = this->_root = root;
     SvgBuilder();
@@ -205,7 +208,7 @@ void SvgBuilder::_setStrokeStyle(SPCSSAttr *css, GfxState *state) {
 
     // Stroke color/pattern
     if ( state->getStrokeColorSpace()->getMode() == csPattern ) {
-        gchar *urltext = _createPattern(state->getStrokePattern());
+        gchar *urltext = _createPattern(state->getStrokePattern(), state, true);
         sp_repr_css_set_property(css, "stroke", urltext);
         if (urltext) {
             g_free(urltext);
@@ -289,7 +292,7 @@ void SvgBuilder::_setFillStyle(SPCSSAttr *css, GfxState *state, bool even_odd) {
 
     // Fill color/pattern
     if ( state->getFillColorSpace()->getMode() == csPattern ) {
-        gchar *urltext = _createPattern(state->getFillPattern());
+        gchar *urltext = _createPattern(state->getFillPattern(), state);
         sp_repr_css_set_property(css, "fill", urltext);
         if (urltext) {
             g_free(urltext);
@@ -444,13 +447,13 @@ bool SvgBuilder::isPatternTypeSupported(GfxPattern *pattern) {
  * build a tiling pattern.
  * \return an url pointing to the created pattern
  */
-gchar *SvgBuilder::_createPattern(GfxPattern *pattern) {
+gchar *SvgBuilder::_createPattern(GfxPattern *pattern, GfxState *state, bool is_stroke) {
     gchar *id = NULL;
     if ( pattern != NULL ) {
         if ( pattern->getType() == 2 ) {  // Shading pattern
             id = _createGradient((GfxShadingPattern*)pattern);
         } else if ( pattern->getType() == 1 ) {   // Tiling pattern
-            id = _createTilingPattern((GfxTilingPattern*)pattern);
+            id = _createTilingPattern((GfxTilingPattern*)pattern, state, is_stroke);
         }
     } else {
         return NULL;
@@ -460,8 +463,66 @@ gchar *SvgBuilder::_createPattern(GfxPattern *pattern) {
     return urltext;
 }
 
-gchar *SvgBuilder::_createTilingPattern(GfxTilingPattern *tiling_pattern) {
-    return NULL;
+/**
+ * \brief Creates a tiling pattern from poppler's data structure
+ * Creates a sub-page PdfParser and uses it to parse the pattern's content stream.
+ * \return id of the created pattern
+ */
+gchar *SvgBuilder::_createTilingPattern(GfxTilingPattern *tiling_pattern,
+                                        GfxState *state, bool is_stroke) {
+
+    Inkscape::XML::Node *pattern_node = _xml_doc->createElement("svg:pattern");
+    // Set pattern transform matrix
+    double *p2u = tiling_pattern->getMatrix();
+    NR::Matrix pat_matrix(p2u[0], p2u[1], p2u[2], p2u[3], p2u[4], p2u[5]);
+    gchar *transform_text = sp_svg_transform_write(pat_matrix);
+    pattern_node->setAttribute("patternTransform", transform_text);
+    g_free(transform_text);
+    pattern_node->setAttribute("patternUnits", "userSpaceOnUse");
+    // Set pattern tiling
+    // FIXME: don't ignore XStep and YStep
+    double *bbox = tiling_pattern->getBBox();
+    sp_repr_set_svg_double(pattern_node, "x", 0.0);
+    sp_repr_set_svg_double(pattern_node, "y", 0.0);
+    sp_repr_set_svg_double(pattern_node, "width", bbox[2] - bbox[0]);
+    sp_repr_set_svg_double(pattern_node, "height", bbox[3] - bbox[1]);
+
+    // Convert BBox for PdfParser
+    PDFRectangle box;
+    box.x1 = bbox[0];
+    box.y1 = bbox[1];
+    box.x2 = bbox[2];
+    box.y2 = bbox[3];
+    // Create new SvgBuilder and sub-page PdfParser
+    SvgBuilder *pattern_builder = new SvgBuilder(this, pattern_node);
+    PdfParser *pdf_parser = new PdfParser(_xref, pattern_builder, tiling_pattern->getResDict(),
+                                          &box);
+    // Get pattern color space
+    GfxPatternColorSpace *pat_cs = (GfxPatternColorSpace *)( is_stroke ? state->getStrokeColorSpace()
+                                                            : state->getFillColorSpace() );
+    // Set fill/stroke colors if this is an uncolored tiling pattern
+    GfxColorSpace *cs = NULL;
+    if ( tiling_pattern->getPaintType() == 2 && ( cs = pat_cs->getUnder() ) ) {
+        GfxState *pattern_state = pdf_parser->getState();
+        pattern_state->setFillColorSpace(cs->copy());
+        pattern_state->setFillColor(state->getFillColor());
+        pattern_state->setStrokeColorSpace(cs->copy());
+        pattern_state->setStrokeColor(state->getFillColor());
+    }
+
+    // Generate the SVG pattern
+    pdf_parser->parse(tiling_pattern->getContentStream());
+
+    // Cleanup
+    delete pdf_parser;
+    delete pattern_builder;
+
+    // Append the pattern to defs
+    SP_OBJECT_REPR (SP_DOCUMENT_DEFS (_doc))->appendChild(pattern_node);
+    gchar *id = g_strdup(pattern_node->attribute("id"));
+    Inkscape::GC::release(pattern_node);
+
+    return id;
 }
 
 /**

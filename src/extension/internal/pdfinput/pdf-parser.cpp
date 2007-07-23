@@ -335,6 +335,31 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   pushOperator("startPage");
 }
 
+PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *builderA,
+                     Dict *resDict, PDFRectangle *box) {
+
+  int i;
+
+  xref = xrefA;
+  subPage = gTrue;
+  printCommands = false;
+
+  // start the resource stack
+  res = new GfxResources(xref, resDict, NULL);
+
+  // initialize
+  operatorHistory = NULL;
+  builder = builderA;
+  state = new GfxState(72, 72, box, 0, gFalse);
+  fontChanged = gFalse;
+  clip = clipNone;
+  ignoreUndef = 0;
+  for (i = 0; i < 6; ++i) {
+    baseMatrix[i] = state->getCTM()[i];
+  }
+  formDepth = 0;
+}
+
 PdfParser::~PdfParser() {
   while (state->hasSaves()) {
     restoreState();

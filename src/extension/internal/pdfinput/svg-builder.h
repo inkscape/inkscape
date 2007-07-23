@@ -40,6 +40,7 @@ class GfxTilingPattern;
 class GfxFont;
 class GfxImageColorMap;
 class Stream;
+class XRef;
 
 class SPCSSAttr;
 
@@ -76,7 +77,7 @@ struct SvgGlyph {
  */
 class SvgBuilder {
 public:
-    SvgBuilder(SPDocument *document);
+    SvgBuilder(SPDocument *document, XRef *xref);
     SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root);
     ~SvgBuilder();
 
@@ -127,12 +128,13 @@ private:
     SvgBuilder();
 
     // Pattern creation
-    gchar *_createPattern(GfxPattern *pattern);
+    gchar *_createPattern(GfxPattern *pattern, GfxState *state, bool is_stroke=false);
     gchar *_createGradient(GfxShadingPattern *shading_pattern);
     bool _addStopsToGradient(Inkscape::XML::Node *gradient, Function *func, double opacity);
     bool _addSamplesToGradient(Inkscape::XML::Node *gradient, SampledFunction *func,
                               double offset0, double offset1, double opacity);
-    gchar *_createTilingPattern(GfxTilingPattern *tiling_pattern);
+    gchar *_createTilingPattern(GfxTilingPattern *tiling_pattern, GfxState *state,
+                                bool is_stroke=false);
     // Image/mask creation
     Inkscape::XML::Node *_createImage(Stream *str, int width, int height,
                                       GfxImageColorMap *color_map, int *mask_colors,
@@ -157,6 +159,7 @@ private:
     GfxState *_current_state;
 
     SPDocument *_doc;
+    XRef *_xref;    // Cross-reference table from the PDF doc we're converting from
     Inkscape::XML::Document *_xml_doc;
     Inkscape::XML::Node *_root;  // Root node from the point of view of this SvgBuilder
     Inkscape::XML::Node *_container; // Current container (group/pattern/mask)

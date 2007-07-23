@@ -112,6 +112,10 @@ public:
   PdfParser(XRef *xrefA, SvgBuilder *builderA, int pageNum, int rotate,
             Dict *resDict, PDFRectangle *cropBox);
 
+  // Constructor for a sub-page object.
+  PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *builderA,
+            Dict *resDict, PDFRectangle *box);
+
   ~PdfParser();
 
   // Interpret a stream or array of streams.

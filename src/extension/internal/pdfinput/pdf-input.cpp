@@ -69,7 +69,7 @@ PdfInput::open(::Inkscape::Extension::Input * mod, const gchar * uri) {
     sp_document_set_undo_sensitive(doc, false); // No need to undo in this temporary document
 
     // Create builder and parser
-    SvgBuilder *builder = new SvgBuilder(doc);
+    SvgBuilder *builder = new SvgBuilder(doc, pdf_doc->getXRef());
     PdfParser *pdf_parser = new PdfParser(pdf_doc->getXRef(), builder, page_num-1, page->getRotate(),
                                           page->getResourceDict(), page->getCropBox());
 
