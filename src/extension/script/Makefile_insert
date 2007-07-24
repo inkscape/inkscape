@@ -19,17 +19,17 @@ if WITH_PYTHON
 python_sources = \
 	extension/script/InkscapePython.h \
 	extension/script/InkscapePython.cpp \
-	extension/script/cxx/Config.hxx \
-	extension/script/cxx/cxxextensions.c \
-	extension/script/cxx/cxxsupport.cxx \
-	extension/script/cxx/cxx_extensions.cxx \
-	extension/script/cxx/Exception.hxx \
-	extension/script/cxx/Extensions.hxx \
-	extension/script/cxx/IndirectPythonInterface.cxx \
-	extension/script/cxx/IndirectPythonInterface.hxx \
-	extension/script/cxx/Objects.hxx \
-	extension/script/cxx/Version.hxx \
-	extension/script/cxx/WrapPython.h
+	extension/script/CXX/Config.hxx \
+	extension/script/CXX/cxxextensions.c \
+	extension/script/CXX/cxxsupport.cxx \
+	extension/script/CXX/cxx_extensions.cxx \
+	extension/script/CXX/Exception.hxx \
+	extension/script/CXX/Extensions.hxx \
+	extension/script/CXX/IndirectPythonInterface.cxx \
+	extension/script/CXX/IndirectPythonInterface.hxx \
+	extension/script/CXX/Objects.hxx \
+	extension/script/CXX/Version.hxx \
+	extension/script/CXX/WrapPython.h
 endif
 
 extension_script_libscript_a_SOURCES =	\
