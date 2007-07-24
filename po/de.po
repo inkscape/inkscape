@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-15 15:23+0200\n"
-"PO-Revision-Date: 2007-07-15 16:36+0200\n"
+"PO-Revision-Date: 2007-07-24 23:15+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5099,7 +5099,7 @@ msgstr " in %s"
 #: ../src/selection-describer.cpp:151
 #, c-format
 msgid " in group %s (%s)"
-msgstr "in Gruppe %s (%s)"
+msgstr " in Gruppe %s (%s)"
 
 #: ../src/selection-describer.cpp:153
 #, c-format
@@ -5375,7 +5375,7 @@ msgstr "<b>Verknüpfter Versatz</b>, %s um %f pt"
 
 #: ../src/sp-offset.cpp:432 ../src/sp-offset.cpp:436
 msgid "outset"
-msgstr "erweitern"
+msgstr "erweitert"
 
 #: ../src/sp-offset.cpp:432 ../src/sp-offset.cpp:436
 msgid "inset"
@@ -6179,7 +6179,7 @@ msgstr "Netzwerk von Objektverbindern anordnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:565
 msgid "Unclump"
-msgstr " Entklumpen"
+msgstr "Entklumpen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:635
 msgid "Randomize positions"
