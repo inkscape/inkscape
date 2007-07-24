@@ -23,12 +23,22 @@ namespace NR {
  * \return 0 if the value is smaller than 0, 255 if it is greater 255, else v
  * \param v the value to clamp
  */
-int clamp(int val);
+int clamp(int const val);
 
 /**
  * Macro to use the clamp function with double inputs and unsigned char output
  */
 #define CLAMP_D_TO_U8(v) (unsigned char) clamp((int)round((v)))
+
+/**
+ * Clamps an integer to a value between 0 and alpha. Useful when handling
+ * images with premultiplied alpha, as setting some of RGB channels
+ * to a value bigger than alpha confuses the alpha blending in Inkscape
+ * \return 0 if val is negative, alpha if val is bigger than alpha, val otherwise
+ * \param val the value to clamp
+ * \param alpha the maximum value to clamp to
+ */
+int clamp_alpha(int const val, int const alpha);
 
 } /* namespace NR */
 

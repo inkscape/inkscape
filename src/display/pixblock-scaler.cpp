@@ -15,6 +15,7 @@
 #include <cmath>
 using std::floor;
 
+#include "display/nr-filter-utils.h"
 #include "libnr/nr-pixblock.h"
 
 namespace NR {
@@ -61,16 +62,16 @@ inline int sampley(unsigned const char a, unsigned const char b,
  * Returns the interpolated value in 8-bit format, ready to be written
  * to output buffer.
  */
-inline unsigned char samplex(const int a, const int b, const int c, const int d, const double len) {
+inline int samplex(const int a, const int b, const int c, const int d, const double len) {
     double lenf = len - floor(len);
     int sum = 0;
     sum += (int)(a * (((-1.0 / 3.0) * lenf + 4.0 / 5.0) * lenf - 7.0 / 15.0) * lenf);
     sum += (int)(b * (((lenf - 9.0 / 5.0) * lenf - 1.0 / 5.0) * lenf + 1.0));
     sum += (int)(c * ((((1 - lenf) - 9.0 / 5.0) * (1 - lenf) - 1.0 / 5.0) * (1 - lenf) + 1.0));
     sum += (int)(d * (((-1.0 / 3.0) * (1 - lenf) + 4.0 / 5.0) * (1 - lenf) - 7.0 / 15.0) * (1 - lenf));
-    if (sum < 0) sum = 0;
-    if (sum >= 256*256) sum = 255 * 256;
-    return (unsigned char)(sum / 256);
+    //if (sum < 0) sum = 0;
+    //if (sum > 255 * 256) sum = 255 * 256;
+    return sum / 256;
 }
 
 /**
@@ -169,10 +170,24 @@ void scale_bicubic(NRPixBlock *to, NRPixBlock *from)
                                from_x);
 
             _check_index(to, to_y * to->rs + to_x * 4, __LINE__);
-            NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4] = result.r;
-            NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 1] = result.g;
-            NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 2] = result.b;
-            NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 3] = result.a;
+
+            if (to->mode == NR_PIXBLOCK_MODE_R8G8B8A8P) {
+                /* Clamp the colour channels to range from 0 to result.a to
+                 * make sure, we don't exceed 100% per colour channel with
+                 * images that have premultiplied alpha */
+
+                result.a = clamp(result.a);
+
+                NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4] = clamp_alpha(result.r, result.a);
+                NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 1] = clamp_alpha(result.g, result.a);
+                NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 2] = clamp_alpha(result.b, result.a);
+                NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 3] = result.a;
+            } else {
+                NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4] = clamp(result.r);
+                NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 1] = clamp(result.g);
+                NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 2] = clamp(result.b);
+                NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 3] = clamp(result.a);
+            }
         }
     }
 }
