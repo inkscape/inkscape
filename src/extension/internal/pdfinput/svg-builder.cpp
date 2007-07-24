@@ -751,11 +751,12 @@ void SvgBuilder::updateFont(GfxState *state) {
     } else {
         font_family = g_strdup(_font_specification);
     }
-    char *minus_sign = g_strrstr(font_family, "-");
-    if (minus_sign) {
-        font_style = minus_sign + 1;
+    char *style_delim = NULL;
+    if ( ( style_delim = g_strrstr(font_family, "-") ) ||
+         ( style_delim = g_strrstr(font_family, ",") ) ) {
+        font_style = style_delim + 1;
         font_style_lowercase = g_ascii_strdown(font_style, -1);
-        minus_sign[0] = 0;
+        style_delim[0] = 0;
     }
 
     // Font family
@@ -849,9 +850,9 @@ void SvgBuilder::updateFont(GfxState *state) {
     // Font size
     Inkscape::CSSOStringStream os_font_size;
     double *text_matrix = state->getTextMat();
-    double font_size = sqrt( text_matrix[0] * text_matrix[3] - text_matrix[1] * text_matrix[2] );
-    font_size *= state->getFontSize() * state->getHorizScaling();
-    os_font_size << font_size;
+    double text_descrim = sqrt( text_matrix[0] * text_matrix[3] - text_matrix[1] * text_matrix[2] );
+    double css_font_size = text_descrim * state->getFontSize() * state->getHorizScaling();
+    os_font_size << css_font_size;
     sp_repr_css_set_property(_font_style, "font-size", os_font_size.str().c_str());
 
     // Writing mode
@@ -868,7 +869,10 @@ void SvgBuilder::updateFont(GfxState *state) {
     NR::Matrix new_text_matrix(text_matrix[0], text_matrix[1],
                                -text_matrix[2], -text_matrix[3],
                                0.0, 0.0);
-    new_text_matrix *= NR::scale( 1.0 / font_size, 1.0 / font_size );
+    if ( fabs( text_descrim - 1.0 ) > EPSILON ) {
+        // Cancel out scaling by font size in text matrix
+        new_text_matrix *= NR::scale( 1.0 / text_descrim, 1.0 / text_descrim );
+    }
     _text_matrix = nr_font_matrix * new_text_matrix;
 
     _current_font = font;
