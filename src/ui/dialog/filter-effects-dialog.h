@@ -30,7 +30,6 @@
 #include "sp-filter.h"
 #include "sp-feconvolvematrix.h"
 #include "ui/widget/filter-effect-chooser.h"
-#include "ui/widget/notebook-page.h"
 #include "ui/widget/spin-slider.h"
 
 using namespace Inkscape::UI::Widget;
@@ -42,7 +41,6 @@ namespace Dialog {
 class FilterEffectsDialog : public Dialog {
 public:
     FilterEffectsDialog();
-    virtual ~FilterEffectsDialog();
 
     static FilterEffectsDialog *create() { return new FilterEffectsDialog(); }
 private:

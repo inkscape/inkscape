@@ -933,10 +933,6 @@ FilterEffectsDialog::FilterEffectsDialog()
     update_settings_view();
 }
 
-FilterEffectsDialog::~FilterEffectsDialog()
-{
-}
-
 void FilterEffectsDialog::init_settings_widgets()
 {
     _empty_settings.set_sensitive(false);
