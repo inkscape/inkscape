@@ -74,6 +74,7 @@ SvgBuilder::SvgBuilder(SPDocument *document, XRef *xref) {
     _xref = xref;
     _xml_doc = sp_document_repr_doc(_doc);
     _container = _root = _doc->rroot;
+    _root->setAttribute("xml:space", "preserve");
     SvgBuilder();
 }
 
@@ -891,7 +892,6 @@ void SvgBuilder::_flushText() {
     }
 
     Inkscape::XML::Node *text_node = _xml_doc->createElement("svg:text");
-    text_node->setAttribute("xml:space", "preserve");
     // Set current text position
     sp_repr_set_svg_double(text_node, "x", first_glyph.transformed_position[0]);
     sp_repr_set_svg_double(text_node, "y", first_glyph.transformed_position[1]);
