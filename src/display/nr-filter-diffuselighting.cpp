@@ -164,6 +164,7 @@ int FilterDiffuseLighting::render(FilterSlot &slot, Matrix const &trans) {
         
     //finishing
     slot.set(_output, out);
+    nr_pixblock_release(in);
     delete in;
     return 0;
 }
