@@ -2046,6 +2046,7 @@ void PdfParser::opSetTextMatrix(Object args[], int numArgs) {
 		    args[2].getNum(), args[3].getNum(),
 		    args[4].getNum(), args[5].getNum());
   state->textMoveTo(0, 0);
+  builder->updateTextMatrix(state);
   fontChanged = gTrue;
 }
 

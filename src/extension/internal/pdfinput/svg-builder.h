@@ -113,6 +113,7 @@ public:
     void restoreState();
     void updateStyle(GfxState *state);
     void updateFont(GfxState *state);
+    void updateTextMatrix(GfxState *state);
 
     // Clipping
     void clip(GfxState *state, bool even_odd=false);

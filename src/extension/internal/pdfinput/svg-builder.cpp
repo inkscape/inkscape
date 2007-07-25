@@ -724,8 +724,6 @@ void SvgBuilder::updateFont(GfxState *state) {
 
     TRACE(("updateFont()\n"));
     _need_font_update = false;
-    // Flush buffered text before resetting matrices and font style
-    _flushText();
 
     if (_font_style) {
         //sp_repr_css_attr_unref(_font_style);
@@ -784,11 +782,12 @@ void SvgBuilder::updateFont(GfxState *state) {
 
     // Font weight
     GfxFont::Weight font_weight = font->getWeight();
+    char *css_font_weight = NULL;
     if ( font_weight != GfxFont::WeightNotDefined ) {
         if ( font_weight == GfxFont::W400 ) {
-            sp_repr_css_set_property(_font_style, "font-weight", "normal");
+            css_font_weight = "normal";
         } else if ( font_weight == GfxFont::W700 ) {
-            sp_repr_css_set_property(_font_style, "font-weight", "bold");
+            css_font_weight = "bold";
         } else {
             gchar weight_num[4] = "100";
             weight_num[0] = (gchar)( '1' + (font_weight - GfxFont::W100) );
@@ -799,10 +798,14 @@ void SvgBuilder::updateFont(GfxState *state) {
         int num_translations = sizeof(font_weight_translator) / ( 2 * sizeof(char *) );
         for ( int i = 0 ; i < num_translations ; i++ ) {
             if (strstr(font_style_lowercase, font_weight_translator[i][0])) {
-                sp_repr_css_set_property(_font_style, "font-weight",
-                                         font_weight_translator[i][1]);
+                css_font_weight = font_weight_translator[i][1];
             }
         }
+    } else {
+        css_font_weight = "normal";
+    }
+    if (css_font_weight) {
+        sp_repr_css_set_property(_font_style, "font-weight", css_font_weight);
     }
     g_free(font_family);
     if (font_style_lowercase) {
@@ -876,6 +879,15 @@ void SvgBuilder::updateFont(GfxState *state) {
     _text_matrix = nr_font_matrix * new_text_matrix;
 
     _current_font = font;
+    _invalidated_style = true;
+}
+
+/**
+ * \brief Flushes the buffered characters
+ */
+void SvgBuilder::updateTextMatrix(GfxState *state) {
+    _flushText();
+    updateFont(state);   // Update text matrix
 }
 
 /**
@@ -887,7 +899,8 @@ void SvgBuilder::_flushText() {
         _glyphs.clear();
         return;
     }
-    const SvgGlyph& first_glyph = _glyphs[0];
+    std::vector<SvgGlyph>::iterator i = _glyphs.begin();
+    const SvgGlyph& first_glyph = (*i);
     int render_mode = first_glyph.render_mode;
     // Ignore invisible characters
     if ( render_mode == 3 ) {
@@ -896,18 +909,17 @@ void SvgBuilder::_flushText() {
     }
 
     Inkscape::XML::Node *text_node = _xml_doc->createElement("svg:text");
-    // Set current text position
-    sp_repr_set_svg_double(text_node, "x", first_glyph.transformed_position[0]);
-    sp_repr_set_svg_double(text_node, "y", first_glyph.transformed_position[1]);
-    // Set style
-    sp_repr_css_change(text_node, first_glyph.style, "style");
     text_node->setAttribute("inkscape:font-specification", _font_specification);
     // Set text matrix
-    gchar *transform = sp_svg_transform_write(_text_matrix);
+    NR::Matrix text_transform(_text_matrix);
+    text_transform[4] = first_glyph.position[0];
+    text_transform[5] = first_glyph.position[1];
+    gchar *transform = sp_svg_transform_write(text_transform);
     text_node->setAttribute("transform", transform);
     g_free(transform);
 
     bool new_tspan = true;
+    unsigned int glyphs_in_a_row = 0;
     Inkscape::XML::Node *tspan_node = NULL;
     Glib::ustring x_coords;
     Glib::ustring y_coords;
@@ -915,7 +927,6 @@ void SvgBuilder::_flushText() {
     bool is_vertical = !strcmp(sp_repr_css_property(_font_style, "writing-mode", "lr"), "tb");  // FIXME
 
     // Output all buffered glyphs
-    std::vector<SvgGlyph>::iterator i = _glyphs.begin();
     while (1) {
         const SvgGlyph& glyph = (*i);
         std::vector<SvgGlyph>::iterator prev_iterator = i - 1;
@@ -924,11 +935,14 @@ void SvgBuilder::_flushText() {
             new_tspan = true;
         } else if ( i != _glyphs.begin() ) {
             const SvgGlyph& prev_glyph = (*prev_iterator);
-            if ( ( is_vertical && prev_glyph.transformed_position[0] != glyph.transformed_position[0] ) ||
-                 ( !is_vertical && prev_glyph.transformed_position[1] != glyph.transformed_position[1] ) ) {
+            if ( !( ( glyph.dy == 0.0 && prev_glyph.dy == 0.0 &&
+                     glyph.transformed_position[1] == prev_glyph.transformed_position[1] ) ||
+                    ( glyph.dx == 0.0 && prev_glyph.dx == 0.0 &&
+                     glyph.transformed_position[0] == prev_glyph.transformed_position[0] ) ) ) {
                 new_tspan = true;
             }
         }
+
         // Create tspan node if needed
         if ( new_tspan || i == _glyphs.end() ) {
             if (tspan_node) {
@@ -936,6 +950,9 @@ void SvgBuilder::_flushText() {
                 tspan_node->setAttribute("x", x_coords.c_str());
                 tspan_node->setAttribute("y", y_coords.c_str());
                 TRACE(("tspan content: %s\n", text_buffer.c_str()));
+                if ( glyphs_in_a_row > 1 ) {
+                    tspan_node->setAttribute("sodipodi:role", "line");
+                }
                 // Add text content node to tspan
                 Inkscape::XML::Node *text_content = _xml_doc->createTextNode(text_buffer.c_str());
                 tspan_node->appendChild(text_content);
@@ -946,38 +963,38 @@ void SvgBuilder::_flushText() {
                 y_coords.clear();
                 text_buffer.clear();
                 Inkscape::GC::release(tspan_node);
+                glyphs_in_a_row = 0;
             }
             if ( i == _glyphs.end() ) {
                 sp_repr_css_attr_unref((*prev_iterator).style);
                 break;
             } else {
                 tspan_node = _xml_doc->createElement("svg:tspan");
-                tspan_node->setAttribute("sodipodi:role", "line");
                 // Set style and unref SPCSSAttr if it won't be needed anymore
-                if ( i != _glyphs.begin() ) {
-                    sp_repr_css_change(tspan_node, glyph.style, "style");
-                    if (glyph.style_changed) {  // Free previous style
-                        sp_repr_css_attr_unref((*prev_iterator).style);
-                    }
+                sp_repr_css_change(tspan_node, glyph.style, "style");
+                if ( glyph.style_changed && i != _glyphs.begin() ) {  // Free previous style
+                    sp_repr_css_attr_unref((*prev_iterator).style);
                 }
             }
             new_tspan = false;
         }
-        if ( x_coords.length() > 0 ) {
+        if ( glyphs_in_a_row > 0 ) {
             x_coords.append(" ");
             y_coords.append(" ");
         }
         // Append the coordinates to their respective strings
+        NR::Point delta_pos( glyph.transformed_position - first_glyph.transformed_position );
         Inkscape::CSSOStringStream os_x;
-        os_x << glyph.transformed_position[0];
+        os_x << delta_pos[0];
         x_coords.append(os_x.str());
         Inkscape::CSSOStringStream os_y;
-        os_y << glyph.transformed_position[1];
+        os_y << delta_pos[1];
         y_coords.append(os_y.str());
 
         // Append the character to the text buffer
         text_buffer.append((char *)&glyph.code, 1);
 
+        glyphs_in_a_row++;
         i++;
     }
     _container->appendChild(text_node);
@@ -1024,8 +1041,10 @@ void SvgBuilder::addChar(GfxState *state, double x, double y,
     new_glyph.is_space = is_space;
     new_glyph.position = NR::Point( x - originX, y - originY );
     new_glyph.transformed_position = new_glyph.position * _text_matrix;
-    new_glyph.dx = dx;
-    new_glyph.dy = dy;
+    NR::Point delta(dx, dy);
+    delta *= _text_matrix;
+    new_glyph.dx = delta[0];
+    new_glyph.dy = delta[1];
 
     // Convert the character to UTF-8 since that's our SVG document's encoding
     static UnicodeMap *u_map = NULL;
