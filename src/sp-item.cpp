@@ -787,8 +787,6 @@ void sp_item_snappoints(SPItem const *item, SnapPointsIter p)
     if (item_class.snappoints) {
         item_class.snappoints(item, p);
     }
-    
-    *p = item->getCenter();
 }
 
 void

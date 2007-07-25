@@ -28,6 +28,7 @@
 
 #include "sp-shape.h"
 #include "sp-path.h"
+#include "sp-item-group.h"
 
 #include <sigc++/functors/mem_fun.h>
 
@@ -382,6 +383,9 @@ std::vector<NR::Point> Selection::getSnapPoints() const {
             // (Same check occurs in sp-item-group)
             sp_item_snappoints(this_item, SnapPointsIter(p));
         }
+        //Include the transformation origin for snapping
+        //For a group only the group's origin is considered
+        p.push_back(this_item->getCenter());  
     }
 
     return p;
