@@ -21,6 +21,7 @@
 #include "display/pixblock-scaler.h"
 #include "display/pixblock-transform.h"
 
+#include "display/nr-filter-displacement-map.h"
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-convolve-matrix.h"
 #include "display/nr-filter-blend.h"
@@ -317,7 +318,7 @@ void Filter::_create_constructor_table()
     _constructor[NR_FILTER_COMPOSITE] = &FilterComposite::create;
     _constructor[NR_FILTER_CONVOLVEMATRIX] = &FilterConvolveMatrix::create;
     _constructor[NR_FILTER_DIFFUSELIGHTING] = &FilterDiffuseLighting::create;
-    _constructor[NR_FILTER_DISPLACEMENTMAP] = NULL;
+    _constructor[NR_FILTER_DISPLACEMENTMAP] = &FilterDisplacementMap::create;
     _constructor[NR_FILTER_FLOOD] = NULL;
     _constructor[NR_FILTER_GAUSSIANBLUR] = &FilterGaussian::create;
     _constructor[NR_FILTER_IMAGE] = NULL;

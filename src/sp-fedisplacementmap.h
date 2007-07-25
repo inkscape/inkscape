@@ -21,7 +21,10 @@ class SPFeDisplacementMapClass;
 
 struct SPFeDisplacementMap : public SPFilterPrimitive {
     /** DISPLACEMENTMAP ATTRIBUTES HERE */
-    
+    int in2; 
+    double scale;
+    int xChannelSelector;
+    int yChannelSelector;
 };
 
 struct SPFeDisplacementMapClass {

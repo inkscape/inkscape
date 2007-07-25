@@ -21,7 +21,7 @@
 #include "svg/svg.h"
 #include "sp-fedisplacementmap.h"
 #include "xml/repr.h"
-
+#include "display/nr-filter-displacement-map.h"
 
 /* FeDisplacementMap base class */
 
@@ -32,6 +32,7 @@ static void sp_feDisplacementMap_build(SPObject *object, SPDocument *document, I
 static void sp_feDisplacementMap_release(SPObject *object);
 static void sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feDisplacementMap_update(SPObject *object, SPCtx *ctx, guint flags);
+static void sp_feDisplacementMap_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 static Inkscape::XML::Node *sp_feDisplacementMap_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
 static SPFilterPrimitiveClass *feDisplacementMap_parent_class;
@@ -61,6 +62,7 @@ static void
 sp_feDisplacementMap_class_init(SPFeDisplacementMapClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
+    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
 
     feDisplacementMap_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
@@ -69,11 +71,16 @@ sp_feDisplacementMap_class_init(SPFeDisplacementMapClass *klass)
     sp_object_class->write = sp_feDisplacementMap_write;
     sp_object_class->set = sp_feDisplacementMap_set;
     sp_object_class->update = sp_feDisplacementMap_update;
+    sp_primitive_class->build_renderer = sp_feDisplacementMap_build_renderer;
 }
 
 static void
 sp_feDisplacementMap_init(SPFeDisplacementMap *feDisplacementMap)
 {
+    feDisplacementMap->scale=0;
+    feDisplacementMap->xChannelSelector=3;
+    feDisplacementMap->yChannelSelector=3;
+    feDisplacementMap->in2 = NR::NR_FILTER_SLOT_NOT_SET;
 }
 
 /**
@@ -89,6 +96,10 @@ sp_feDisplacementMap_build(SPObject *object, SPDocument *document, Inkscape::XML
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
+    sp_object_read_attr(object, "scale");
+    sp_object_read_attr(object, "in2");
+    sp_object_read_attr(object, "xChannelSelector");
+    sp_object_read_attr(object, "yChannelSelector");
 }
 
 /**
@@ -101,6 +112,44 @@ sp_feDisplacementMap_release(SPObject *object)
         ((SPObjectClass *) feDisplacementMap_parent_class)->release(object);
 }
 
+static int sp_feDisplacementMap_readChannelSelector(gchar const *value)
+{
+    if (!value) return 0;
+    switch (value[0]) {
+        case 'R':
+            return 0;
+            break;
+        case 'G':
+            return 1;
+            break;
+        case 'B':
+            return 2;
+            break;
+        case 'A':
+            return 3;
+            break;
+        default:
+            // error
+            g_warning("Invalid attribute for Channel Selector. Valid modes are 'R', 'G', 'B' or 'A'");
+            break;
+    }
+    return 3; //default is Alpha Channel
+}
+
+static double
+sp_feDisplacementMap_read_number(gchar const *value) {
+    if (!value) return 0;
+    char *end;
+    double ret = g_ascii_strtod(value, &end);
+    if (*end) {
+        g_warning("Unable to convert \"%s\" to number", value);
+        // We could leave this out, too. If strtod can't convert
+        // anything, it will return zero.
+        ret = 0;
+    }
+    return ret;
+}
+
 /**
  * Sets a specific value in the SPFeDisplacementMap.
  */
@@ -109,9 +158,39 @@ sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeDisplacementMap *feDisplacementMap = SP_FEDISPLACEMENTMAP(object);
     (void)feDisplacementMap;
-
+    int input;
+    double read_num;
+    int read_selector;
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
+        case SP_ATTR_XCHANNELSELECTOR:
+            read_selector = sp_feDisplacementMap_readChannelSelector(value);
+            if (read_selector != feDisplacementMap->xChannelSelector){
+                feDisplacementMap->xChannelSelector = read_selector;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+        case SP_ATTR_YCHANNELSELECTOR:
+            read_selector = sp_feDisplacementMap_readChannelSelector(value);
+            if (read_selector != feDisplacementMap->yChannelSelector){
+                feDisplacementMap->yChannelSelector = read_selector;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+        case SP_ATTR_SCALE:
+            read_num = sp_feDisplacementMap_read_number(value);
+            if (read_num != feDisplacementMap->scale) {
+                feDisplacementMap->scale = read_num;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+        case SP_ATTR_IN2:
+            input = sp_filter_primitive_read_in(feDisplacementMap, value);
+            if (input != feDisplacementMap->in2) {
+                feDisplacementMap->in2 = input;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
         default:
             if (((SPObjectClass *) feDisplacementMap_parent_class)->set)
                 ((SPObjectClass *) feDisplacementMap_parent_class)->set(object, key, value);
@@ -159,6 +238,25 @@ sp_feDisplacementMap_write(SPObject *object, Inkscape::XML::Node *repr, guint fl
     }
 
     return repr;
+}
+
+static void sp_feDisplacementMap_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    g_assert(primitive != NULL);
+    g_assert(filter != NULL);
+
+    SPFeDisplacementMap *sp_displacement_map = SP_FEDISPLACEMENTMAP(primitive);
+
+    int primitive_n = filter->add_primitive(NR::NR_FILTER_DISPLACEMENTMAP);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    NR::FilterDisplacementMap *nr_displacement_map = dynamic_cast<NR::FilterDisplacementMap*>(nr_primitive);
+    g_assert(nr_displacement_map != NULL);
+
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+
+    nr_displacement_map->set_input(1, sp_displacement_map->in2);
+    nr_displacement_map->set_scale(sp_displacement_map->scale);
+    nr_displacement_map->set_channel_selector(0, sp_displacement_map->xChannelSelector);
+    nr_displacement_map->set_channel_selector(1, sp_displacement_map->yChannelSelector);
 }
 
 

@@ -83,6 +83,8 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-composite.cpp	\
 	display/nr-filter-convolve-matrix.cpp	\
 	display/nr-filter-convolve-matrix.h	\
+    display/nr-filter-displacement-map.cpp      \
+    display/nr-filter-displacement-map.h        \
 	display/nr-filter-slot.cpp      \
 	display/nr-filter-slot.h        \
 	display/nr-filter-getalpha.cpp	\
