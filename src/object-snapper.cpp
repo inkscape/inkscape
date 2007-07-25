@@ -23,6 +23,7 @@
 #include "desktop.h"
 #include "inkscape.h"
 #include "splivarot.h"
+#include "prefs-utils.h"
 
 
 Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, NR::Coord const d)
@@ -78,6 +79,11 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::SnappedPoint &s,
     ** in SPDesktop rather than SPNamedView?
     */
     SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
+    
+    // Determine the type of bounding box we should snap to
+    //TODO if (_snap_to_bbox) ???? -> will save some cpu time 
+	gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
+	SPItem::BBoxType bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;        
 
     for (std::list<SPItem*>::const_iterator i = cand.begin(); i != cand.end(); i++) {
         
@@ -101,24 +107,34 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::SnappedPoint &s,
             curve = im->curve;
         }
             
-        if (curve) {
-
-            int j = 0;
-
-            while (SP_CURVE_BPATH(curve)[j].code != NR_END) {
+		std::list<NR::Point> points_to_snap_to;
         
+        //Collect all nodes so we can snap to them
+        if (curve) {
+            int j = 0;
+            while (SP_CURVE_BPATH(curve)[j].code != NR_END) {        
                 /* Get this node in desktop coordinates */
                 NArtBpath const &bp = SP_CURVE_BPATH(curve)[j];
-                NR::Point const n = desktop->doc2dt(bp.c(3) * i2doc);
-        
-                /* Try to snap to this node of the path */
-                NR::Coord const dist = NR::L2(n - p);
-                if (dist < getDistance() && dist < s.getDistance()) {
-                    s = SnappedPoint(n, dist);
-                }
-
+                points_to_snap_to.push_back(desktop->doc2dt(bp.c(3) * i2doc));
                 j++;
             }
+        }
+        
+        //Collect the bounding box's corners so we can snap to them
+        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
+        if (b) {
+	        for ( unsigned k = 0 ; k < 4 ; k++ ) {
+	            points_to_snap_to.push_back(b->corner(k));
+	        }
+        }        
+        
+        //Do the snapping, using all the nodes and corners collected above
+        for (std::list<NR::Point>::const_iterator k = points_to_snap_to.begin(); k != points_to_snap_to.end(); k++) {
+    	    /* Try to snap to this node of the path */
+            NR::Coord const dist = NR::L2(*k - p);
+            if (dist < getDistance() && dist < s.getDistance()) {
+                s = SnappedPoint(*k, dist);
+            }       
         }
     }
 }
@@ -135,6 +151,11 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
 
     NR::Point const p_doc = desktop->dt2doc(p);
     
+    // Determine the type of bounding box we should snap to
+    //TODO if (_snap_to_bbox) ???? -> will save some cpu time 
+	gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
+	SPItem::BBoxType bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;        
+    
     for (std::list<SPItem*>::const_iterator i = cand.begin(); i != cand.end(); i++) {
 
         /* Transform the requested snap point to this item's coordinates */
@@ -149,29 +170,46 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
             root_item = *i;
         }
         
-        NR::Point const p_it = p_doc * i2doc.inverse();
-
-        Path *livarot_path = Path_for_item(root_item, false, false);
-        if (!livarot_path)
-            continue;
-
-        livarot_path->ConvertWithBackData(0.01);
-
-        /* Look for the nearest position on this SPItem to our snap point */
-        NR::Maybe<Path::cut_position> const o = get_nearest_position_on_Path(livarot_path, p_it);
-        if (o && o->t >= 0 && o->t <= 1) {
-
-            /* Convert the nearest point back to desktop coordinates */
-            NR::Point const o_it = get_point_on_Path(livarot_path, o->piece, o->t);
-            NR::Point const o_dt = desktop->doc2dt(o_it * i2doc);
-
-            NR::Coord const dist = NR::L2(o_dt - p);
-            if (dist < getDistance() && dist < s.getDistance()) {
-                s = SnappedPoint(o_dt, dist);
-            }
-        }
-
-        delete livarot_path;
+        //Build a list of all paths considered for snapping to
+        std::list<Path*> paths_to_snap_to;
+        
+        //Add the item's path to snap to
+        paths_to_snap_to.push_back(Path_for_item(root_item, true, true));
+                
+        //Add the item's bounding box to snap to
+        //This will get ugly... rect -> curve -> bpath
+        NRRect rect;
+        sp_item_invoke_bbox(root_item, &rect, i2doc, TRUE, bbox_type);
+        NR::Maybe<NR::Rect> bbox = rect.upgrade();
+        SPCurve *curve = sp_curve_new_from_rect(bbox);
+        NArtBpath *bpath = SP_CURVE_BPATH(curve);
+        Path *path = bpath_to_Path(bpath);  
+        paths_to_snap_to.push_back(path);
+        delete curve;
+        delete bpath;
+        
+        //Now we can finally do the real snapping, using the paths collected above        
+        for (std::list<Path*>::const_iterator k = paths_to_snap_to.begin(); k != paths_to_snap_to.end(); k++) {
+	        if (*k) {
+	            (*k)->ConvertWithBackData(0.01);
+	    	
+		        /* Look for the nearest position on this SPItem to our snap point */
+		        NR::Maybe<Path::cut_position> const o = get_nearest_position_on_Path(*k, p_doc);
+		        if (o && o->t >= 0 && o->t <= 1) {
+		
+		            /* Convert the nearest point back to desktop coordinates */
+		            NR::Point const o_it = get_point_on_Path(*k, o->piece, o->t);		            
+		            NR::Point const o_dt = desktop->doc2dt(o_it);
+					
+		            NR::Coord const dist = NR::L2(o_dt - p);
+		            if (dist < getDistance() && dist < s.getDistance()) {
+		                s = SnappedPoint(o_dt, dist);
+		            }
+		        }
+		
+		        delete *k;
+	        }
+	    }
     }
 }
 
