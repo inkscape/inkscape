@@ -75,11 +75,11 @@ void Inkscape::SelCue::_updateItemBboxes()
 
     g_return_if_fail(_selection != NULL);
 
+	gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
+    SPItem::BBoxType bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
+    
     for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = (SPItem *) l->data;
-
-        gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
-        SPItem::BBoxType bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
 
         NR::Maybe<NR::Rect> const b = sp_item_bbox_desktop(item, bbox_type);
 
