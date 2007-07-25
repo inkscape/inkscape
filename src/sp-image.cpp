@@ -36,6 +36,8 @@
 #include "xml/quote.h"
 #include <xml/repr.h>
 
+#include "libnr/nr-matrix-fns.h"
+
 #include "io/sys.h"
 #include <png.h>
 #if ENABLE_LCMS
@@ -1397,21 +1399,11 @@ sp_image_set_curve(SPImage *image)
         return;
     }
     
-    SPCurve *c = sp_curve_new();
-
-    double const x = image->x.computed;
-    double const y = image->y.computed;
-    double const w = image->width.computed;
-    double const h = image->height.computed;
-    
-    sp_curve_moveto(c, x, y);
-    sp_curve_lineto(c, x + w, y);
-    sp_curve_lineto(c, x + w, y + h);
-    sp_curve_lineto(c, x, y + h);
-    sp_curve_lineto(c, x, y);
-
-    sp_curve_closepath_current(c);
-    
+    NRRect rect;
+	sp_image_bbox(image, &rect, NR::identity(), 0);
+	NR::Maybe<NR::Rect> rect2 = rect.upgrade();
+	SPCurve *c = sp_curve_new_from_rect(rect2);
+        
     if (image->curve) {
         image->curve = sp_curve_unref(image->curve);
     }
@@ -1420,8 +1412,7 @@ sp_image_set_curve(SPImage *image)
         image->curve = sp_curve_ref(c);
     }
     
-    sp_curve_unref(c);
-    
+    sp_curve_unref(c);    
 }
 
 /**

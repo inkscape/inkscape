@@ -124,6 +124,23 @@ SPCurve *sp_curve_new_from_foreign_bpath(NArtBpath const bpath[])
     return curve;
 }
 
+SPCurve *sp_curve_new_from_rect(NR::Maybe<NR::Rect> const &rect) 
+{
+	g_return_val_if_fail(rect, NULL);
+	
+	SPCurve *c = sp_curve_new();
+
+    NR::Point p = rect->corner(0);    
+    sp_curve_moveto(c, p);
+    
+    for (int i=3; i>=0; i--) {
+    	sp_curve_lineto(c, rect->corner(i));
+    }
+    sp_curve_closepath_current(c);
+    
+    return c;	
+}
+
 /**
  * Increase refcount of curve.
  *

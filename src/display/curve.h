@@ -19,6 +19,7 @@
 
 #include "libnr/nr-forward.h"
 #include "libnr/nr-point.h"
+#include "libnr/nr-rect.h"
 
 /// Wrapper around NArtBpath.
 struct SPCurve {
@@ -70,6 +71,7 @@ SPCurve *sp_curve_new();
 SPCurve *sp_curve_new_sized(gint length);
 SPCurve *sp_curve_new_from_bpath(NArtBpath *bpath);
 SPCurve *sp_curve_new_from_foreign_bpath(NArtBpath const bpath[]);
+SPCurve *sp_curve_new_from_rect(NR::Maybe<NR::Rect> const &rect);
 
 SPCurve *sp_curve_ref(SPCurve *curve);
 SPCurve *sp_curve_unref(SPCurve *curve);
