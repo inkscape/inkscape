@@ -23,6 +23,7 @@ example_DATA = \
 	rope-3D.svg \
 	animated-clock.svg \
 	blend_modes.svg \
-	flow-go.svg
+	flow-go.svg \
+	lighting_effects.svg
 
 EXTRA_DIST = $(example_DATA)
