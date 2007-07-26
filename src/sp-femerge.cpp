@@ -19,9 +19,11 @@
 
 #include "attributes.h"
 #include "svg/svg.h"
-#include "sp-femerge.h"
 #include "xml/repr.h"
 
+#include "sp-femerge.h"
+#include "sp-femergenode.h"
+#include "display/nr-filter-merge.h"
 
 /* FeMerge base class */
 
@@ -33,6 +35,7 @@ static void sp_feMerge_release(SPObject *object);
 static void sp_feMerge_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feMerge_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feMerge_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void sp_feMerge_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feMerge_parent_class;
 
@@ -61,6 +64,7 @@ static void
 sp_feMerge_class_init(SPFeMergeClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
+    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
 
     feMerge_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
@@ -69,6 +73,8 @@ sp_feMerge_class_init(SPFeMergeClass *klass)
     sp_object_class->write = sp_feMerge_write;
     sp_object_class->set = sp_feMerge_set;
     sp_object_class->update = sp_feMerge_update;
+
+    sp_primitive_class->build_renderer = sp_feMerge_build_renderer;
 }
 
 static void
@@ -126,11 +132,8 @@ sp_feMerge_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_feMerge_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
-                 SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-
-        /* do something to trigger redisplay, updates? */
-
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
     }
 
     if (((SPObjectClass *) feMerge_parent_class)->update) {
@@ -148,7 +151,7 @@ sp_feMerge_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {
             // is this sane?
-            repr->mergeFrom(SP_OBJECT_REPR(object), "id");
+            //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
             repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
         }
@@ -159,6 +162,31 @@ sp_feMerge_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     return repr;
+}
+
+static void sp_feMerge_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    g_assert(primitive != NULL);
+    g_assert(filter != NULL);
+
+    SPFeMerge *sp_merge = SP_FEMERGE(primitive);
+
+    int primitive_n = filter->add_primitive(NR::NR_FILTER_MERGE);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    NR::FilterMerge *nr_merge = dynamic_cast<NR::FilterMerge*>(nr_primitive);
+    g_assert(nr_merge != NULL);
+
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+
+    SPObject *input = primitive->children;
+    int in_nr = 0;
+    while (input) {
+        if (SP_IS_FEMERGENODE(input)) {
+            SPFeMergeNode *node = SP_FEMERGENODE(input);
+            nr_merge->set_input(in_nr, node->input);
+            in_nr++;
+        }
+        input = input->next;
+    }
 }
 
 

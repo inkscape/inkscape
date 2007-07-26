@@ -65,6 +65,7 @@
 #include "sp-fespotlight.h"
 #include "sp-fetile.h"
 #include "sp-feturbulence.h"
+#include "sp-femergenode.h"
 
 enum NameType { REPR_NAME, SODIPODI_TYPE };
 static unsigned const N_NAME_TYPES = SODIPODI_TYPE + 1;
@@ -153,6 +154,7 @@ populate_dtables()
         { "svg:feSpotLight", SP_TYPE_FESPOTLIGHT },
         { "svg:feTile", SP_TYPE_FETILE },
         { "svg:feTurbulence", SP_TYPE_FETURBULENCE },
+        { "svg:feMergeNode", SP_TYPE_FEMERGENODE },
         { "svg:image", SP_TYPE_IMAGE },
         { "svg:line", SP_TYPE_LINE },
         { "svg:linearGradient", SP_TYPE_LINEARGRADIENT },

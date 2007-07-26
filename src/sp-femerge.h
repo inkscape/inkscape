@@ -20,7 +20,6 @@
 class SPFeMergeClass;
 
 struct SPFeMerge : public SPFilterPrimitive {
-    /** MERGE ATTRIBUTES HERE */
     
 };
 

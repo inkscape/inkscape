@@ -83,6 +83,8 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-getalpha.h	\
     display/nr-filter-image.cpp	\
     display/nr-filter-image.h	\
+	display/nr-filter-merge.cpp	\
+	display/nr-filter-merge.h	\
 	display/nr-filter-offset.cpp	\
 	display/nr-filter-offset.h	\
 	display/nr-filter-primitive.cpp \

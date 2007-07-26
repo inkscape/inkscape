@@ -173,6 +173,7 @@ libinkpre_a_SOURCES =	\
 	sp-feimage-fns.h	\
 	sp-femerge.cpp sp-femerge.h	\
 	sp-femerge-fns.h	\
+	sp-femergenode.cpp sp-femergenode.h \
 	sp-femorphology.cpp sp-femorphology.h	\
 	sp-femorphology-fns.h	\
 	sp-feoffset.cpp sp-feoffset.h	\

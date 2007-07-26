@@ -28,6 +28,7 @@
 #include "display/nr-filter-displacement-map.h"
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-image.h"
+#include "display/nr-filter-merge.h"
 #include "display/nr-filter-offset.h"
 #include "display/nr-filter-specularlighting.h"
 #include "display/nr-filter-turbulence.h"
@@ -326,7 +327,7 @@ void Filter::_create_constructor_table()
     _constructor[NR_FILTER_FLOOD] = NULL;
     _constructor[NR_FILTER_GAUSSIANBLUR] = &FilterGaussian::create;
     _constructor[NR_FILTER_IMAGE] = &FilterImage::create;
-    _constructor[NR_FILTER_MERGE] = NULL;
+    _constructor[NR_FILTER_MERGE] = &FilterMerge::create;
     _constructor[NR_FILTER_MORPHOLOGY] = NULL;
     _constructor[NR_FILTER_OFFSET] = &FilterOffset::create;
     _constructor[NR_FILTER_SPECULARLIGHTING] = &FilterSpecularLighting::create;
