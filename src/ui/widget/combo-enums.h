@@ -15,17 +15,18 @@
 
 #include <gtkmm/combobox.h>
 #include <gtkmm/liststore.h>
+#include "attr-widget.h"
 #include "util/enums.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-template<typename E> class ComboBoxEnum : public Gtk::ComboBox
+template<typename E> class ComboBoxEnum : public Gtk::ComboBox, public AttrWidget
 {
 public:
-    ComboBoxEnum(const Util::EnumDataConverter<E>& c)
-        : _converter(c)
+    ComboBoxEnum(const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID)
+        : AttrWidget(a), _converter(c)
     {
         _model = Gtk::ListStore::create(_columns);
         set_model(_model);
@@ -42,8 +43,22 @@ public:
 
         set_active(0);
     }
+
+    virtual Glib::ustring get_as_attribute() const
+    {
+        return get_active_data()->key;
+    }
+
+    virtual void set_from_attribute(SPObject* o)
+    {
+        const gchar* val = attribute_value(o);
+        if(val)
+            set_active(_converter.get_id_from_key(val));
+        else
+            set_active(0);
+    }
     
-    const Util::EnumData<E>* get_active_data()
+    const Util::EnumData<E>* get_active_data() const
     {
         Gtk::TreeModel::iterator i = this->get_active();
         if(i)

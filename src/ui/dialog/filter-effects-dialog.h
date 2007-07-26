@@ -17,6 +17,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/cellrendererspin.h>
+#include "gtkmm/colorbutton.h"
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/frame.h>
@@ -40,7 +41,7 @@ namespace Dialog {
 
 class FilterEffectsDialog : public Dialog {
 public:
-    FilterEffectsDialog();
+    ~FilterEffectsDialog();
 
     static FilterEffectsDialog *create() { return new FilterEffectsDialog(); }
 private:
@@ -142,51 +143,7 @@ private:
         SPFilterPrimitive* _drag_prim;
     };
 
-    class SettingsGroup : public Gtk::VBox
-    {
-    public:
-        SettingsGroup();
-        void init(FilterEffectsDialog* dlg, Glib::RefPtr<Gtk::SizeGroup> sg);
-
-        void add_setting_generic(Gtk::Widget& w, const Glib::ustring& label);
-        void add_setting(SpinSlider& ss, const SPAttributeEnum attr, const Glib::ustring& label);
-        template<typename T> void add_setting(ComboBoxEnum<T>& combo, const SPAttributeEnum attr,
-                                              const Glib::ustring& label)
-        {
-            add_setting_generic(combo, label);
-            combo.signal_changed().connect(
-                sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_comboboxenum<T>), attr, &combo));
-        }
-        void add_setting(std::vector<Gtk::Widget*>& w, const Glib::ustring& label = "");
-    private:
-        Glib::RefPtr<Gtk::SizeGroup> _sizegroup;
-        FilterEffectsDialog* _dialog;
-    };
-
-    class ConvolveMatrixColumns : public Gtk::TreeModel::ColumnRecord
-    {
-    public:
-        ConvolveMatrixColumns();
-        std::vector<Gtk::TreeModelColumn<double> > cols;
-    };
-
-    class ConvolveMatrix : public Gtk::TreeView
-    {
-    public:
-        ConvolveMatrix();
-
-        sigc::signal<void>& signal_changed();        
-        Glib::ustring get_value() const;
-
-        void update(SPFeConvolveMatrix*);
-        void update(SPFeConvolveMatrix*, const int r, const int c);
-    private:
-        void rebind(const Glib::ustring&, const Glib::ustring&);
-        Glib::RefPtr<Gtk::ListStore> _model;
-        ConvolveMatrixColumns _columns;
-        sigc::signal<void> _signal_changed;
-    };
-
+    FilterEffectsDialog();
     void init_settings_widgets();
 
     // Handlers
@@ -194,12 +151,8 @@ private:
     void remove_primitive();
     void duplicate_primitive();
 
-    void set_attr_spinslider(const SPAttributeEnum attr, const SpinSlider*);
-    template<typename T> void set_attr_comboboxenum(const SPAttributeEnum attr, ComboBoxEnum<T>* input)
-    {
-        if(input->is_sensitive())
-            set_attr(attr, input->get_active_data()->key.c_str());
-    }
+    void set_attr_color(const SPAttributeEnum attr, const Gtk::ColorButton*);
+    void set_attr_direct(const SPAttributeEnum attr, const AttrWidget*);
     void set_attr_special(const SPAttributeEnum);
     void set_attr(const SPAttributeEnum, const gchar* val);
     void update_settings_view();
@@ -214,67 +167,16 @@ private:
     UI::Widget::ComboBoxEnum<NR::FilterPrimitiveType> _add_primitive_type;
     Gtk::Button _add_primitive;
 
-    // Right pane (filter effect primitive settings)
-    Gtk::VBox _settings;
-    Glib::RefPtr<Gtk::SizeGroup> _settings_labels;
+    // Bottom pane (filter effect primitive settings)
+    Gtk::VBox _settings_box;
     Gtk::Label _empty_settings;
 
-    // Generic settings
-    SettingsGroup _blend;
-    UI::Widget::ComboBoxEnum<NR::FilterBlendMode> _blend_mode;
+    class Settings;
+    class ConvolveMatrix;
+    Settings* _settings;
 
-    SettingsGroup _colormatrix;
-    Gtk::ComboBoxText _colormatrix_type;
-
-    SettingsGroup _componenttransfer;
-
-    SettingsGroup _composite;
-    UI::Widget::ComboBoxEnum<FeCompositeOperator> _composite_operator;
-    SpinSlider _composite_k1;
-    SpinSlider _composite_k2;
-    SpinSlider _composite_k3;
-    SpinSlider _composite_k4;
-
-    SettingsGroup _convolvematrix;
-    Gtk::SpinButton _convolve_orderx;
-    Gtk::SpinButton _convolve_ordery;
-    ConvolveMatrix _convolve_kernelmatrix;
-    SpinSlider _convolve_divisor;
-    SpinSlider _convolve_bias;
-
-    SettingsGroup _diffuselighting;
-
-    SettingsGroup _displacementmap;
-
-    SettingsGroup _flood;
-
-    SettingsGroup _gaussianblur;
-    SpinSlider _gaussianblur_stddeviation;
-
-    SettingsGroup _image;
-
-    SettingsGroup _merge;
-
-    SettingsGroup _morphology;
-    Gtk::ComboBoxText _morphology_operator;
-    SpinSlider _morphology_radius;
-
-    SettingsGroup _offset;
-    SpinSlider _offset_dx;
-    SpinSlider _offset_dy;
-
-    SettingsGroup _specularlighting;
-
-    SettingsGroup _tile;
-
-    SettingsGroup _turbulence;
-    SpinSlider _turbulence_basefrequency;
-    SpinSlider _turbulence_numoctaves;
-    SpinSlider _turbulence_seed;
-    Gtk::CheckButton _turbulence_stitchtiles;
-    Gtk::RadioButton::Group _turbulence_type;
-    Gtk::RadioButton _turbulence_fractalnoise;
-    Gtk::RadioButton _turbulence_turbulence;
+    // For controlling setting sensitivity
+    Gtk::Widget* _k1, *_k2, *_k3, *_k4;
 
     FilterEffectsDialog(FilterEffectsDialog const &d);
     FilterEffectsDialog& operator=(FilterEffectsDialog const &d);

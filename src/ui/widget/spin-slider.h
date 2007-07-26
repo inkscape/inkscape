@@ -16,16 +16,20 @@
 #include <gtkmm/box.h>
 #include <gtkmm/scale.h>
 #include <gtkmm/spinbutton.h>
+#include "attr-widget.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-class SpinSlider : public Gtk::HBox
+class SpinSlider : public Gtk::HBox, public AttrWidget
 {
 public:
     SpinSlider(double value, double lower, double upper, double step_inc,
-	       double climb_rate, int digits);
+	       double climb_rate, int digits, const SPAttributeEnum a = SP_ATTR_INVALID);
+
+    virtual Glib::ustring get_as_attribute() const;
+    virtual void set_from_attribute(SPObject*);
 
     // Shortcuts to _adjustment
     Glib::SignalProxy0<void> signal_value_changed();
@@ -40,10 +44,36 @@ public:
 
     const Gtk::SpinButton& get_spin_button() const;
     Gtk::SpinButton& get_spin_button();
+
+    void set_update_policy(const Gtk::UpdateType);
 private:
     Gtk::Adjustment _adjustment;
     Gtk::HScale _scale;
     Gtk::SpinButton _spin;
+};
+
+// Contains two SpinSliders for controlling number-opt-number attributes
+class DualSpinSlider : public AttrWidget
+{
+public:
+    DualSpinSlider(double value, double lower, double upper, double step_inc,
+                   double climb_rate, int digits, const SPAttributeEnum);
+
+    virtual Glib::ustring get_as_attribute() const;
+    virtual void set_from_attribute(SPObject*);
+
+    sigc::signal<void>& signal_value_changed();
+
+    const SpinSlider& get_spinslider1() const;
+    SpinSlider& get_spinslider1();
+
+    const SpinSlider& get_spinslider2() const;
+    SpinSlider& get_spinslider2();
+
+    void set_update_policy(const Gtk::UpdateType);
+private:
+    sigc::signal<void> _signal_value_changed;
+    SpinSlider _s1, _s2;
 };
 
 } // namespace Widget
