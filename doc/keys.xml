@@ -25,6 +25,7 @@ RFE</a>).</p>
 <keys><key><keyf f="F2"/></key><key>n</key>	<action>Node tool</action></keys>
 <keys><key><keyf f="F3"/></key><key>z</key>	 <action>Zoom tool</action></keys>
 <keys><key><keyf f="F4"/></key><key>r</key>	 <action>Rectangle tool</action></keys>
+<keys><key><shift/><keyf f="F4"/></key><key>x</key>	 <action>3D box tool</action></keys>
 <keys><key><keyf f="F5"/></key><key>e</key>	 <action>Ellipse/arc tool</action></keys>
 <keys><key><keyf f="F6"/></key><key>p</key>	 <action>Freehand (Pencil) tool</action></keys>
 <keys><key><shift/><keyf f="F6"/></key><key>b</key>	 <action>Bezier (Pen) tool</action></keys>
@@ -854,6 +855,22 @@ groups) with the same effect as Alt+click.)</note>
 <note>You can drag both handles for an elliptic rounded corner, or drag/click one with Ctrl to make it circular again.</note>
 <mouse><key><shift/><left-click/></key> <action>remove corner rounding</action></mouse>
 </group>
+</section>
+
+*<section title="3D box tool" color="cff4e2">
+<group>
+<title>Draw</title>
+<mouse><key><left-drag/></key> <action>draw a 3D box</action></mouse>
+</group>
+
+<group>
+<title>Select</title>
+<mouse><key><left-click/></key> <action>click to select</action></mouse>
+<mouse><key><alt/><left-click/></key> <key><ctrl/><alt/><left-click/></key> <action>select under</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>toggle selection</action></mouse>
+<keys><key><misc f="Esc"/></key> <action>deselect</action></keys>
+</group>
+
 </section>
 
 *<section title="Ellipse tool" color="ffece8">

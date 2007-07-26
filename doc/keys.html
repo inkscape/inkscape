@@ -20,7 +20,7 @@ are configurable by the user; see the default.xml file for details on how to do 
 supposed to work the same as corresponding regular keys. If you have a new shortcut
 idea, please contact the developers (by writing to the <a href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">devel mailing list</a>
 or by <a href="http://sourceforge.net/tracker/?group_id=93438&amp;atid=604309">submitting an
-RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>   <a class="contents-section" href="#id2245298">Tools</a><span class="contents-section"> | </span><a class="contents-section" href="#id2245756">Dialogs</a><span class="contents-section">: </span><a class="contents-group" href="#id2245762">Open</a> · <a class="contents-group" href="#id2245916">Toggle visibility</a> · <a class="contents-group" href="#id2245938">Within a dialog</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246057">Controls bar</a><span class="contents-section">: </span><a class="contents-group" href="#id2246064">Access</a> · <a class="contents-group" href="#id2246085">Navigate</a> · <a class="contents-group" href="#id2246118">Change values</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246195">Canvas</a><span class="contents-section">: </span><a class="contents-group" href="#id2246202">Zoom</a> · <a class="contents-group" href="#id2246290">Preset zooms</a> · <a class="contents-group" href="#id2246348">Zoom history</a> · <a class="contents-group" href="#id2246377">Scroll (pan)</a> · <a class="contents-group" href="#id2246436">Guides and grid</a> · <a class="contents-group" href="#id2246502">Display mode</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246521">Palette</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246593">File</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246691">Window</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246812">Layers</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246904">Object</a><span class="contents-section">: </span><a class="contents-group" href="#id2246911">Undo/redo</a> · <a class="contents-group" href="#id2246946">Clipboard</a> · <a class="contents-group" href="#id2247036">Duplicate</a> · <a class="contents-group" href="#id2247056">Clone</a> · <a class="contents-group" href="#id2247115">Bitmaps</a> · <a class="contents-group" href="#id2247156">Patterns</a> · <a class="contents-group" href="#id2247191">Group</a> · <a class="contents-group" href="#id2247238">Z-order</a><span class="contents-section"> | </span><a class="contents-section" href="#id2247287">Path</a><span class="contents-section">: </span><a class="contents-group" href="#id2247294">Convert to path</a> · <a class="contents-group" href="#id2247321">Boolean operations</a> · <a class="contents-group" href="#id2247422">Offsets</a> · <a class="contents-group" href="#id2247539">Combine</a> · <a class="contents-group" href="#id2247586">Simplify</a><span class="contents-section"> | </span><a class="contents-section" href="#id2247621">Selector</a><span class="contents-section">: </span><a class="contents-group" href="#id2247628">Select (mouse)</a> · <a class="contents-group" href="#id2247685">Rubberband, touch selection</a> · <a class="contents-group" href="#id2247751">Select (keyboard)</a> · <a class="contents-group" href="#id2247879">Select within group, select under</a> · <a class="contents-group" href="#id2248003">Move (mouse)</a> · <a class="contents-group" href="#id2248086">Move (keyboard)</a> · <a class="contents-group" href="#id2248139">Transform (mouse)</a> · <a class="contents-group" href="#id2248173">Scale by handles</a> · <a class="contents-group" href="#id2248229">Scale (keyboard)</a> · <a class="contents-group" href="#id2248330">Rotate/skew by handles</a> · <a class="contents-group" href="#id2248373">Rotate (keyboard)</a> · <a class="contents-group" href="#id2248433">Flip</a> · <a class="contents-group" href="#id2248462">Rotation center</a> · <a class="contents-group" href="#id2248510">Cancel</a><span class="contents-section"> | </span><a class="contents-section" href="#id2248536">Node tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2248543">Select objects (mouse)</a> · <a class="contents-group" href="#id2248581">Select nodes (mouse)</a> · <a class="contents-group" href="#id2248639">Rubberband selection</a> · <a class="contents-group" href="#id2248678">Select nodes (keyboard)</a> · <a class="contents-group" href="#id2248776">Grow/shrink node selection</a> · <a class="contents-group" href="#id2248848">Move nodes (mouse)</a> · <a class="contents-group" href="#id2248971">Move nodes (keyboard)</a> · <a class="contents-group" href="#id2249024">Move node handle (mouse)</a> · <a class="contents-group" href="#id2249089">Scale handle (1 node selected)</a> · <a class="contents-group" href="#id2249198">Rotate handle (1 node selected)</a> · <a class="contents-group" href="#id2249285">Scale nodes (&gt;1 nodes selected)</a> · <a class="contents-group" href="#id2249368">Rotate nodes (&gt;1 nodes selected)</a> · <a class="contents-group" href="#id2249420">Flip nodes (&gt;1 nodes selected)</a> · <a class="contents-group" href="#id2249455">Change segment(s)</a> · <a class="contents-group" href="#id2249484">Change node type</a> · <a class="contents-group" href="#id2249531">Join/break</a> · <a class="contents-group" href="#id2249570">Delete, create, duplicate</a> · <a class="contents-group" href="#id2249682">Reverse</a> · <a class="contents-group" href="#id2249711">Edit shapes</a> · <a class="contents-group" href="#id2249728">Cancel</a><span class="contents-section"> | </span><a class="contents-section" href="#id2249754">Rectangle tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2249761">Draw</a> · <a class="contents-group" href="#id2249803">Select</a> · <a class="contents-group" href="#id2249855">Resize by handles</a> · <a class="contents-group" href="#id2249890">Round corners by handles</a><span class="contents-section"> | </span><a class="contents-section" href="#id2249948">Ellipse tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2249955">Draw</a> · <a class="contents-group" href="#id2249997">Select</a> · <a class="contents-group" href="#id2250050">Edit by handles</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250108">Star tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2250115">Draw</a> · <a class="contents-group" href="#id2250142">Select</a> · <a class="contents-group" href="#id2250195">Edit by handles</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250261">Spiral tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2250268">Draw</a> · <a class="contents-group" href="#id2250296">Select</a> · <a class="contents-group" href="#id2250348">Edit by handles</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250455">Zoom tool</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250490">Pencil tool</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250537">Pen (Bezier) tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2250544">Create nodes</a> · <a class="contents-group" href="#id2250617">Move last node</a> · <a class="contents-group" href="#id2250674">Create/modify segments</a> · <a class="contents-group" href="#id2250717">Finish</a> · <a class="contents-group" href="#id2250755">Cancel</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250791">Calligraphy</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250918">Paint Bucket</a><span class="contents-section"> | </span><a class="contents-section" href="#id2251012">Gradient tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2251018">Select objects</a> · <a class="contents-group" href="#id2251051">Create gradients</a> · <a class="contents-group" href="#id2251086">Select handles</a> · <a class="contents-group" href="#id2251140">Create/delete stops</a> · <a class="contents-group" href="#id2251199">Move handles</a> · <a class="contents-group" href="#id2251265">Reverse</a> · <a class="contents-group" href="#id2251295">Gradient editor</a><span class="contents-section"> | </span><a class="contents-section" href="#id2251317">Dropper tool</a><span class="contents-section"> | </span><a class="contents-section" href="#id2251419">Text tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2251425">Select/create</a> · <a class="contents-group" href="#id2251464">Navigate in text</a> · <a class="contents-group" href="#id2251543">Flowed text (internal frame)</a> · <a class="contents-group" href="#id2251591">Flowed text (external frame)</a> · <a class="contents-group" href="#id2251646">Text on path</a> · <a class="contents-group" href="#id2251667">Edit text</a> · <a class="contents-group" href="#id2251738">Select text</a> · <a class="contents-group" href="#id2251845">Style selection</a> · <a class="contents-group" href="#id2251877">Letter spacing</a> · <a class="contents-group" href="#id2251934">Line spacing</a> · <a class="contents-group" href="#id2251996">Kerning and shifting</a> · <a class="contents-group" href="#id2252043">Rotate</a><span class="contents-section"></span></p><center><table border="0" cellspacing="0" cellpadding="4" width="100%"><tr><td colspan="3"><a name="id2245298"></a><h1>Tools</h1></td></tr>
+RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>   <a class="contents-section" href="#id2245298">Tools</a><span class="contents-section"> | </span><a class="contents-section" href="#id2245769">Dialogs</a><span class="contents-section">: </span><a class="contents-group" href="#id2245775">Open</a> · <a class="contents-group" href="#id2245930">Toggle visibility</a> · <a class="contents-group" href="#id2245951">Within a dialog</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246070">Controls bar</a><span class="contents-section">: </span><a class="contents-group" href="#id2246077">Access</a> · <a class="contents-group" href="#id2246098">Navigate</a> · <a class="contents-group" href="#id2246131">Change values</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246208">Canvas</a><span class="contents-section">: </span><a class="contents-group" href="#id2246215">Zoom</a> · <a class="contents-group" href="#id2246303">Preset zooms</a> · <a class="contents-group" href="#id2246362">Zoom history</a> · <a class="contents-group" href="#id2246391">Scroll (pan)</a> · <a class="contents-group" href="#id2246450">Guides and grid</a> · <a class="contents-group" href="#id2246515">Display mode</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246534">Palette</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246607">File</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246704">Window</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246826">Layers</a><span class="contents-section"> | </span><a class="contents-section" href="#id2246918">Object</a><span class="contents-section">: </span><a class="contents-group" href="#id2246924">Undo/redo</a> · <a class="contents-group" href="#id2246959">Clipboard</a> · <a class="contents-group" href="#id2247049">Duplicate</a> · <a class="contents-group" href="#id2247069">Clone</a> · <a class="contents-group" href="#id2247129">Bitmaps</a> · <a class="contents-group" href="#id2247169">Patterns</a> · <a class="contents-group" href="#id2247205">Group</a> · <a class="contents-group" href="#id2247251">Z-order</a><span class="contents-section"> | </span><a class="contents-section" href="#id2247300">Path</a><span class="contents-section">: </span><a class="contents-group" href="#id2247307">Convert to path</a> · <a class="contents-group" href="#id2247334">Boolean operations</a> · <a class="contents-group" href="#id2247436">Offsets</a> · <a class="contents-group" href="#id2247553">Combine</a> · <a class="contents-group" href="#id2247600">Simplify</a><span class="contents-section"> | </span><a class="contents-section" href="#id2247635">Selector</a><span class="contents-section">: </span><a class="contents-group" href="#id2247641">Select (mouse)</a> · <a class="contents-group" href="#id2247698">Rubberband, touch selection</a> · <a class="contents-group" href="#id2247765">Select (keyboard)</a> · <a class="contents-group" href="#id2247892">Select within group, select under</a> · <a class="contents-group" href="#id2248017">Move (mouse)</a> · <a class="contents-group" href="#id2248099">Move (keyboard)</a> · <a class="contents-group" href="#id2248152">Transform (mouse)</a> · <a class="contents-group" href="#id2248186">Scale by handles</a> · <a class="contents-group" href="#id2248242">Scale (keyboard)</a> · <a class="contents-group" href="#id2248343">Rotate/skew by handles</a> · <a class="contents-group" href="#id2248386">Rotate (keyboard)</a> · <a class="contents-group" href="#id2248446">Flip</a> · <a class="contents-group" href="#id2248476">Rotation center</a> · <a class="contents-group" href="#id2248524">Cancel</a><span class="contents-section"> | </span><a class="contents-section" href="#id2248549">Node tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2248556">Select objects (mouse)</a> · <a class="contents-group" href="#id2248594">Select nodes (mouse)</a> · <a class="contents-group" href="#id2248652">Rubberband selection</a> · <a class="contents-group" href="#id2248691">Select nodes (keyboard)</a> · <a class="contents-group" href="#id2248789">Grow/shrink node selection</a> · <a class="contents-group" href="#id2248862">Move nodes (mouse)</a> · <a class="contents-group" href="#id2248984">Move nodes (keyboard)</a> · <a class="contents-group" href="#id2249038">Move node handle (mouse)</a> · <a class="contents-group" href="#id2249103">Scale handle (1 node selected)</a> · <a class="contents-group" href="#id2249212">Rotate handle (1 node selected)</a> · <a class="contents-group" href="#id2249298">Scale nodes (&gt;1 nodes selected)</a> · <a class="contents-group" href="#id2249381">Rotate nodes (&gt;1 nodes selected)</a> · <a class="contents-group" href="#id2249434">Flip nodes (&gt;1 nodes selected)</a> · <a class="contents-group" href="#id2249468">Change segment(s)</a> · <a class="contents-group" href="#id2249497">Change node type</a> · <a class="contents-group" href="#id2249545">Join/break</a> · <a class="contents-group" href="#id2249583">Delete, create, duplicate</a> · <a class="contents-group" href="#id2249695">Reverse</a> · <a class="contents-group" href="#id2249724">Edit shapes</a> · <a class="contents-group" href="#id2249741">Cancel</a><span class="contents-section"> | </span><a class="contents-section" href="#id2249767">Rectangle tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2249774">Draw</a> · <a class="contents-group" href="#id2249816">Select</a> · <a class="contents-group" href="#id2249869">Resize by handles</a> · <a class="contents-group" href="#id2249903">Round corners by handles</a><span class="contents-section"> | </span><a class="contents-section" href="#id2249962">3D box tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2249968">Draw</a> · <a class="contents-group" href="#id2249983">Select</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250031">Ellipse tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2250038">Draw</a> · <a class="contents-group" href="#id2250080">Select</a> · <a class="contents-group" href="#id2250133">Edit by handles</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250191">Star tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2250198">Draw</a> · <a class="contents-group" href="#id2250225">Select</a> · <a class="contents-group" href="#id2250278">Edit by handles</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250344">Spiral tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2250351">Draw</a> · <a class="contents-group" href="#id2250379">Select</a> · <a class="contents-group" href="#id2250431">Edit by handles</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250538">Zoom tool</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250573">Pencil tool</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250620">Pen (Bezier) tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2250627">Create nodes</a> · <a class="contents-group" href="#id2250700">Move last node</a> · <a class="contents-group" href="#id2250758">Create/modify segments</a> · <a class="contents-group" href="#id2250800">Finish</a> · <a class="contents-group" href="#id2250838">Cancel</a><span class="contents-section"> | </span><a class="contents-section" href="#id2250874">Calligraphy</a><span class="contents-section"> | </span><a class="contents-section" href="#id2251001">Paint Bucket</a><span class="contents-section"> | </span><a class="contents-section" href="#id2251095">Gradient tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2251102">Select objects</a> · <a class="contents-group" href="#id2251134">Create gradients</a> · <a class="contents-group" href="#id2251169">Select handles</a> · <a class="contents-group" href="#id2251224">Create/delete stops</a> · <a class="contents-group" href="#id2251282">Move handles</a> · <a class="contents-group" href="#id2251348">Reverse</a> · <a class="contents-group" href="#id2251378">Gradient editor</a><span class="contents-section"> | </span><a class="contents-section" href="#id2251400">Dropper tool</a><span class="contents-section"> | </span><a class="contents-section" href="#id2251502">Text tool</a><span class="contents-section">: </span><a class="contents-group" href="#id2251508">Select/create</a> · <a class="contents-group" href="#id2251547">Navigate in text</a> · <a class="contents-group" href="#id2251626">Flowed text (internal frame)</a> · <a class="contents-group" href="#id2251674">Flowed text (external frame)</a> · <a class="contents-group" href="#id2251729">Text on path</a> · <a class="contents-group" href="#id2251750">Edit text</a> · <a class="contents-group" href="#id2251821">Select text</a> · <a class="contents-group" href="#id2251928">Style selection</a> · <a class="contents-group" href="#id2251960">Letter spacing</a> · <a class="contents-group" href="#id2252017">Line spacing</a> · <a class="contents-group" href="#id2252079">Kerning and shifting</a> · <a class="contents-group" href="#id2252126">Rotate</a><span class="contents-section"></span></p><center><table border="0" cellspacing="0" cellpadding="4" width="100%"><tr><td colspan="3"><a name="id2245298"></a><h1>Tools</h1></td></tr>
 
 
 <tr bgcolor="f5f5f5"><td align="right" width="40%"><span class="key">F1</span>,
@@ -33,6 +33,8 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 <span class="key">z</span></td><td><span class="action">Zoom tool</span></td></tr>
 <tr bgcolor="f5f5f5"><td align="right" width="40%"><span class="key">F4</span>,
 <span class="key">r</span></td><td><span class="action">Rectangle tool</span></td></tr>
+<tr bgcolor="f5f5f5"><td align="right" width="40%"><span class="key">Shift+F4</span>,
+<span class="key">x</span></td><td><span class="action">3D box tool</span></td></tr>
 <tr bgcolor="f5f5f5"><td align="right" width="40%"><span class="key">F5</span>,
 <span class="key">e</span></td><td><span class="action">Ellipse/arc tool</span></td></tr>
 <tr bgcolor="f5f5f5"><td align="right" width="40%"><span class="key">F6</span>,
@@ -57,9 +59,9 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 <span class="key">o</span></td><td><span class="action">Connector tool</span></td></tr>
 <tr bgcolor="f5f5f5"><td colspan="3"><span class="note">Double click on the tool buttons opens the Preferences dialog showing the page of the corresponding tool.</span></td></tr>
 
-<tr><td colspan="3"><a name="id2245756"></a><h1>Dialogs</h1></td></tr>
+<tr><td colspan="3"><a name="id2245769"></a><h1>Dialogs</h1></td></tr>
 
-<tr bgcolor="f0eae7"><td colspan="3"><h4><a name="id2245762"></a>Open</h4></td></tr>
+<tr bgcolor="f0eae7"><td colspan="3"><h4><a name="id2245775"></a>Open</h4></td></tr>
 <tr bgcolor="f0eae7"><td align="right" width="40%"><span class="key">Shift+Ctrl+F</span></td><td><span class="action">Fill and Stroke</span></td></tr>
 <tr bgcolor="f0eae7"><td align="right" width="40%"><span class="key">Shift+Ctrl+W</span></td><td><span class="action">Swatches</span></td></tr>
 <tr bgcolor="f0eae7"><td align="right" width="40%"><span class="key">Shift+Ctrl+T</span></td><td><span class="action">Text and Font</span></td></tr>
@@ -78,13 +80,13 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="f0eae7"><td colspan="3"><h4><a name="id2245916"></a>Toggle visibility</h4></td></tr>
+<tr bgcolor="f0eae7"><td colspan="3"><h4><a name="id2245930"></a>Toggle visibility</h4></td></tr>
 <tr bgcolor="f0eae7"><td align="right" width="40%"><span class="key">F12</span></td><td><span class="action">toggle dialogs</span></td></tr>
 <tr bgcolor="f0eae7"><td colspan="3"><span class="note">This temporarily hides all open dialogs; another F12 shows them again.</span></td></tr>
 
 
 
-<tr bgcolor="f0eae7"><td colspan="3"><h4><a name="id2245938"></a>Within a dialog</h4></td></tr>
+<tr bgcolor="f0eae7"><td colspan="3"><h4><a name="id2245951"></a>Within a dialog</h4></td></tr>
 <tr bgcolor="f0eae7"><td align="right" width="40%"><span class="key">Esc</span></td><td><span class="action">return to the canvas</span></td></tr>
 <tr bgcolor="f0eae7"><td align="right" width="40%"><span class="key">Ctrl+F4</span>,
 <span class="key">Ctrl+W</span></td><td><span class="action">close the dialog</span></td></tr>
@@ -99,23 +101,23 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 <tr bgcolor="f0eae7"><td align="right" width="40%"><span class="key">Ctrl+PgUp</span>,
 <span class="key">Ctrl+PgDn</span></td><td><span class="action">in a multi-tab dialog, switch tabs</span></td></tr>
 
-<tr><td colspan="3"><a name="id2246057"></a><h1>Controls bar</h1></td></tr>
+<tr><td colspan="3"><a name="id2246070"></a><h1>Controls bar</h1></td></tr>
 
 
-<tr bgcolor="f8f3e9"><td colspan="3"><h4><a name="id2246064"></a>Access</h4></td></tr>
+<tr bgcolor="f8f3e9"><td colspan="3"><h4><a name="id2246077"></a>Access</h4></td></tr>
 <tr bgcolor="f8f3e9"><td colspan="3"><span class="note">The Controls bar at the top of the document window provides different buttons and controls for each tool.</span></td></tr>
 <tr bgcolor="f8f3e9"><td align="right" width="40%"><span class="key">Alt+X</span></td><td><span class="action">jump to the first editable field</span></td></tr>
 
 
 
-<tr bgcolor="f8f3e9"><td colspan="3"><h4><a name="id2246085"></a>Navigate</h4></td></tr>
+<tr bgcolor="f8f3e9"><td colspan="3"><h4><a name="id2246098"></a>Navigate</h4></td></tr>
 <tr bgcolor="f8f3e9"><td align="right" width="40%"><span class="key">Tab</span></td><td><span class="action">jump to next field</span></td></tr>
 <tr bgcolor="f8f3e9"><td align="right" width="40%"><span class="key">Shift+Tab</span></td><td><span class="action">jump to previous field</span></td></tr>
 <tr bgcolor="f8f3e9"><td colspan="3"><span class="note">Use these to navigate between fields in the Controls bar (the value in the field you leave, if changed, is accepted).</span></td></tr>
 
 
 
-<tr bgcolor="f8f3e9"><td colspan="3"><h4><a name="id2246118"></a>Change values</h4></td></tr>
+<tr bgcolor="f8f3e9"><td colspan="3"><h4><a name="id2246131"></a>Change values</h4></td></tr>
 <tr bgcolor="f8f3e9"><td align="right" width="40%"><span class="key">Up arrow</span>,
 <span class="key">Down arrow</span></td><td><span class="action">change value by 0.1</span></td></tr>
 <tr bgcolor="f8f3e9"><td align="right" width="40%"><span class="key">PgUp</span>,
@@ -128,10 +130,10 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 <tr bgcolor="f8f3e9"><td colspan="3"><span class="note">This cancels any changes you made in a text field but you stay in the field.</span></td></tr>
 
  
-<tr><td colspan="3"><a name="id2246195"></a><h1>Canvas</h1></td></tr>
+<tr><td colspan="3"><a name="id2246208"></a><h1>Canvas</h1></td></tr>
 
 
-<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246202"></a>Zoom</h4></td></tr>
+<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246215"></a>Zoom</h4></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">=</span>,
 <span class="key">+</span></td><td><span class="action">zoom in</span></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">-</span></td><td><span class="action">zoom out</span></td></tr>
@@ -147,7 +149,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246290"></a>Preset zooms</h4></td></tr>
+<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246303"></a>Preset zooms</h4></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">1</span></td><td><span class="action">zoom 1:1</span></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">2</span></td><td><span class="action">zoom 1:2</span></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">3</span></td><td><span class="action">zoom to selection</span></td></tr>
@@ -158,14 +160,14 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246348"></a>Zoom history</h4></td></tr>
+<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246362"></a>Zoom history</h4></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">`</span></td><td><span class="action">(back quote) previous zoom </span></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">Shift+`</span></td><td><span class="action">next zoom</span></td></tr>
 <tr bgcolor="e5f1e7"><td colspan="3"><span class="note">With these keys, you can travel back and forth through the history of zooms in this session</span></td></tr>
 
 
 
-<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246377"></a>Scroll (pan)</h4></td></tr>
+<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246391"></a>Scroll (pan)</h4></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">Ctrl+arrows</span></td><td><span class="action">scroll canvas</span></td></tr>
 <tr bgcolor="e5f1e7"><td colspan="3"><span class="note">Scrolling by keys is accelerated, i.e. it speeds up when you press Ctrl+arrows in quick succession, or press and hold.</span></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">middle button drag</span></td><td><span class="action">pan canvas</span></td></tr>
@@ -176,7 +178,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246436"></a>Guides and grid</h4></td></tr>
+<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246450"></a>Guides and grid</h4></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">drag off a ruler to create guide</span></td></tr>
 <tr bgcolor="e5f1e7"><td colspan="3"><span class="note">Drag off the horizontal or vertical ruler to create a new guideline. Drag a guideline onto the ruler to delete it.</span></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">|</span>,
@@ -190,10 +192,10 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246502"></a>Display mode</h4></td></tr>
+<tr bgcolor="e5f1e7"><td colspan="3"><h4><a name="id2246515"></a>Display mode</h4></td></tr>
 <tr bgcolor="e5f1e7"><td align="right" width="40%"><span class="key">Ctrl+keypad 5</span></td><td><span class="action">toggle normal/outline mode</span></td></tr>
 
-<tr><td colspan="3"><a name="id2246521"></a><h1>Palette</h1></td></tr>
+<tr><td colspan="3"><a name="id2246534"></a><h1>Palette</h1></td></tr>
 
 <tr bgcolor="efcfdf"><td colspan="3"><span class="note">These keys work both in the floating palette dialog and in the palette frame at the bottom of the window.</span></td></tr>
 <tr bgcolor="efcfdf"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">set fill color on selection</span></td></tr>
@@ -204,7 +206,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 <tr bgcolor="efcfdf"><td colspan="3"><span class="note">To change fill/stroke of an object by dragging color on it, that object need not be selected.</span></td></tr>
 <tr bgcolor="efcfdf"><td colspan="3"><span class="note">You can also drag colors to the Fill (F) and Stroke (S) indicators in the statusbar to change the selection.</span></td></tr>
 
-<tr><td colspan="3"><a name="id2246593"></a><h1>File</h1></td></tr>
+<tr><td colspan="3"><a name="id2246607"></a><h1>File</h1></td></tr>
 
 
 <tr bgcolor="f3f2e2"><td align="right" width="40%"><span class="key">Ctrl+N</span></td><td><span class="action">create new document</span></td></tr>
@@ -218,7 +220,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 <tr bgcolor="f3f2e2"><td align="right" width="40%"><span class="key">Ctrl+Q</span></td><td><span class="action">exit Inkscape</span></td></tr>
 
 
-<tr><td colspan="3"><a name="id2246691"></a><h1>Window</h1></td></tr>
+<tr><td colspan="3"><a name="id2246704"></a><h1>Window</h1></td></tr>
 
 
 <tr bgcolor="e8fae1"><td align="right" width="40%"><span class="key">Ctrl+R</span></td><td><span class="action">toggle rulers</span></td></tr>
@@ -242,7 +244,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 <tr bgcolor="e8fae1"><td colspan="3"><span class="note">These cycle through the active document windows forward and backward.</span></td></tr>
 
 
-<tr><td colspan="3"><a name="id2246812"></a><h1>Layers</h1></td></tr>
+<tr><td colspan="3"><a name="id2246826"></a><h1>Layers</h1></td></tr>
 
 <tr bgcolor="f6f9d9"><td align="right" width="40%"><span class="key">Shift+PgUp</span></td><td><span class="action">move to layer above</span></td></tr>
 <tr bgcolor="f6f9d9"><td align="right" width="40%"><span class="key">Shift+PgDn</span></td><td><span class="action">move to layer below</span></td></tr>
@@ -254,10 +256,10 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 <tr bgcolor="f6f9d9"><td align="right" width="40%"><span class="key">Shift+Ctrl+End</span></td><td><span class="action">lower layer to bottom</span></td></tr>
 <tr bgcolor="f6f9d9"><td colspan="3"><span class="note">These commands move the current layer among its siblings (normally other layers).</span></td></tr>
 
-<tr><td colspan="3"><a name="id2246904"></a><h1>Object</h1></td></tr>
+<tr><td colspan="3"><a name="id2246918"></a><h1>Object</h1></td></tr>
 
 
-<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2246911"></a>Undo/redo</h4></td></tr>
+<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2246924"></a>Undo/redo</h4></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">Shift+Ctrl+Y</span>,
 <span class="key">Ctrl+Z</span></td><td><span class="action">undo</span></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">Shift+Ctrl+Z</span>,
@@ -265,7 +267,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2246946"></a>Clipboard</h4></td></tr>
+<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2246959"></a>Clipboard</h4></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">Ctrl+C</span></td><td><span class="action">copy selection</span></td></tr>
 <tr bgcolor="f4ecf5"><td colspan="3"><span class="note">This places a copy of the selection to the Inkscape clipboard. Text from text objects is also placed onto the system clipboard.</span></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">Ctrl+X</span></td><td><span class="action">cut selection</span></td></tr>
@@ -281,13 +283,13 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247036"></a>Duplicate</h4></td></tr>
+<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247049"></a>Duplicate</h4></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">Ctrl+D</span></td><td><span class="action">duplicate selection</span></td></tr> 
 <tr bgcolor="f4ecf5"><td colspan="3"><span class="note">New object(s) are placed exactly over the original(s) and selected.</span></td></tr>
 
 
 
-<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247056"></a>Clone</h4></td></tr>
+<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247069"></a>Clone</h4></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">Alt+D</span></td><td><span class="action">clone object</span></td></tr> 
 <tr bgcolor="f4ecf5"><td colspan="3"><span class="note">A clone can be moved/scaled/rotated/skewed independently, but it updates the path, fill, and stroke from its original.</span></td></tr>
 <tr bgcolor="f4ecf5"><td colspan="3"><span class="note">The clone is placed exactly over the original object and is selected.</span></td></tr>
@@ -299,7 +301,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247115"></a>Bitmaps</h4></td></tr>
+<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247129"></a>Bitmaps</h4></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">Alt+B</span></td><td><span class="action">create a bitmap copy</span></td></tr>
 <tr bgcolor="f4ecf5"><td colspan="3"><span class="note">This exports the selected object(s) (all other objects hidden) as PNG in the document's directory and imports it back.</span></td></tr>
 <tr bgcolor="f4ecf5"><td colspan="3"><span class="note">The imported bitmap is placed over the original selection and is selected.</span></td></tr>
@@ -308,7 +310,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247156"></a>Patterns</h4></td></tr>
+<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247169"></a>Patterns</h4></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">Alt+I</span></td><td><span class="action">object(s) to pattern</span></td></tr> 
 <tr bgcolor="f4ecf5"><td colspan="3"><span class="note">This converts the selection to a rectangle with tiled pattern fill.</span></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">Shift+Alt+I</span></td><td><span class="action">pattern to object(s)</span></td></tr> 
@@ -316,7 +318,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247191"></a>Group</h4></td></tr>
+<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247205"></a>Group</h4></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">Shift+Ctrl+U</span>,
 <span class="key">Ctrl+G</span></td><td><span class="action">group selected objects</span></td></tr>
 <tr bgcolor="f4ecf5"><td colspan="3"><span class="note">Use Ctrl+click to select objects within group.</span></td></tr>
@@ -326,23 +328,23 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247238"></a>Z-order</h4></td></tr>
+<tr bgcolor="f4ecf5"><td colspan="3"><h4><a name="id2247251"></a>Z-order</h4></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">Home</span></td><td><span class="action">raise selection to top</span></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">End</span></td><td><span class="action">lower selection to bottom</span></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">PgUp</span></td><td><span class="action">raise selection one step</span></td></tr>
 <tr bgcolor="f4ecf5"><td align="right" width="40%"><span class="key">PgDn</span></td><td><span class="action">lower selection one step</span></td></tr>
  
 
-<tr><td colspan="3"><a name="id2247287"></a><h1>Path</h1></td></tr>
+<tr><td colspan="3"><a name="id2247300"></a><h1>Path</h1></td></tr>
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2247294"></a>Convert to path</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2247307"></a>Convert to path</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+Ctrl+C</span></td><td><span class="action">convert selected object(s) to path</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Ctrl+Alt+C</span></td><td><span class="action">convert stroke to path</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2247321"></a>Boolean operations</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2247334"></a>Boolean operations</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Ctrl++</span></td><td><span class="action">union</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Union combines any number of objects into a single path, removing overlaps.</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Ctrl+-</span></td><td><span class="action">difference</span></td></tr>
@@ -360,7 +362,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2247422"></a>Offsets</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2247436"></a>Offsets</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Ctrl+(</span></td><td><span class="action">inset path (towards center)</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Ctrl+)</span></td><td><span class="action">outset path (away from center)</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">The default offset distance is 2 px (SVG pixel units, not screen pixels).</span></td></tr>
@@ -378,7 +380,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2247539"></a>Combine</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2247553"></a>Combine</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Ctrl+K</span></td><td><span class="action">combine paths</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">This is different from grouping in that combined paths create one object.</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">This is different from Union in that overlapping areas are not affected.</span></td></tr>
@@ -388,17 +390,17 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2247586"></a>Simplify</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2247600"></a>Simplify</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Ctrl+L</span></td><td><span class="action">simplify</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">This command attempts to simplify selected path(s) by removing extra nodes. It converts all objects to paths first.</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">If you invoke this command several times in quick succession, it will act more and more aggressively.</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Invoking Simplify again after a pause restores the default threshold (settable in the Inkscape Preferences dialog).</span></td></tr>
 
 
-<tr><td colspan="3"><a name="id2247621"></a><h1>Selector</h1></td></tr>
+<tr><td colspan="3"><a name="id2247635"></a><h1>Selector</h1></td></tr>
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2247628"></a>Select (mouse)</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2247641"></a>Select (mouse)</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">select an object</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">When you left-click on an object, previous selection is deselected.</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Shift+click</span></td><td><span class="action">toggle selection </span></td></tr>
@@ -410,7 +412,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2247685"></a>Rubberband, touch selection</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2247698"></a>Rubberband, touch selection</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">select by rubberband</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">Dragging around objects does "rubberband" selection; previous selection is deselected.</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Shift+mouse drag</span></td><td><span class="action">add objects to selection</span></td></tr>
@@ -424,7 +426,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2247751"></a>Select (keyboard)</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2247765"></a>Select (keyboard)</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Tab</span></td><td><span class="action">select next object </span></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Shift+Tab</span></td><td><span class="action">select previous object </span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">These keys pick objects in their z-order (Tab cycles from bottom to top, Shift+Tab cycles from top to bottom).</span></td></tr> 
@@ -445,7 +447,7 @@ RFE</a>).</p><p class="contents"><span class="contents-title">Contents:</span>  
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2247879"></a>Select within group, select under</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2247892"></a>Select within group, select under</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Ctrl+click</span></td><td><span class="action">select within group</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">Ctrl+click selects the object at click point disregarding any levels of grouping that this object might belong to.</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Ctrl+Shift+click</span></td><td><span class="action">toggle selection within group</span></td></tr>
@@ -466,7 +468,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248003"></a>Move (mouse)</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248017"></a>Move (mouse)</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">select + move</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">Dragging an object selects it if it was not selected, then moves selection.</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Alt+mouse drag</span></td><td><span class="action">move selected</span></td></tr>
@@ -481,7 +483,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248086"></a>Move (keyboard)</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248099"></a>Move (keyboard)</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">arrows</span></td><td><span class="action">move selection by the nudge distance</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Shift+arrows</span></td><td><span class="action">move selection by 10x nudge distance</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">The default nudge distance is 2 px (SVG pixel units, not screen pixels).</span></td></tr>
@@ -491,7 +493,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248139"></a>Transform (mouse)</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248152"></a>Transform (mouse)</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">click</span>,
 <span class="key">Shift+S</span></td><td><span class="action">toggle scale/rotation handles</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">scale (with scale handles)</span></td></tr>
@@ -499,7 +501,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248173"></a>Scale by handles</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248186"></a>Scale by handles</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">scale</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">scale preserving aspect ratio</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Shift+mouse drag</span></td><td><span class="action">symmetric transformation</span></td></tr>
@@ -510,7 +512,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248229"></a>Scale (keyboard)</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248242"></a>Scale (keyboard)</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">.</span>,
 <span class="key">&gt;</span></td><td><span class="action">scale selection up by the scale step</span></td></tr> 
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">,</span>,
@@ -529,7 +531,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248330"></a>Rotate/skew by handles</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248343"></a>Rotate/skew by handles</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">rotate or skew</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">snap skew angle</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">Holding Ctrl when dragging a skew (non-corner) handle snaps the skew angle to angle steps (default 15 degrees).</span></td></tr>
@@ -538,7 +540,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248373"></a>Rotate (keyboard)</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248386"></a>Rotate (keyboard)</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">[</span>,
 <span class="key">]</span></td><td><span class="action">rotate selection by the angle step</span></td></tr> 
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">The default angle step is 15 degrees. ] rotates clockwise, [ rotates counterclockwise.</span></td></tr>
@@ -551,14 +553,14 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248433"></a>Flip</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248446"></a>Flip</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">h</span></td><td><span class="action">flip selection horizontally</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">v</span></td><td><span class="action">flip selection vertically</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">If the tool is in rotate mode (rotation center visible), that center becomes the axis of flipping; otherwise it flips around geometric center of selection</span></td></tr>
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248462"></a>Rotation center</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248476"></a>Rotation center</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">move rotation center</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">Moved rotation center remembers and saves its position for (all) selected object(s); you can reset it.</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">Dragging the center snaps it to the centerlines and bounding box edges of the selection.</span></td></tr>
@@ -568,15 +570,15 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248510"></a>Cancel</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4><a name="id2248524"></a>Cancel</h4></td></tr>
 <tr bgcolor="eee4dc"><td align="right" width="40%"><span class="key">Esc</span></td><td><span class="action">cancel rubberband, move, transformation</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">Press Esc while mouse button is still down to cancel rubberband selection, move, or transformation of any kind.</span></td></tr>
 
 
-<tr><td colspan="3"><a name="id2248536"></a><h1>Node tool</h1></td></tr>
+<tr><td colspan="3"><a name="id2248549"></a><h1>Node tool</h1></td></tr>
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248543"></a>Select objects (mouse)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248556"></a>Select objects (mouse)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">click a non-selected object to select</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Alt+click</span></td><td><span class="action">select under</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+click</span></td><td><span class="action">toggle selection</span></td></tr>
@@ -584,7 +586,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248581"></a>Select nodes (mouse)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248594"></a>Select nodes (mouse)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">select a node</span></td></tr> 
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Clicking on a node selects it.</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">select two adjacent nodes</span></td></tr> 
@@ -596,7 +598,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248639"></a>Rubberband selection</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248652"></a>Rubberband selection</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">select multiple nodes</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Dragging around nodes does "rubberband" selection; previous node selection is deselected.</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+mouse drag</span></td><td><span class="action">add nodes to selection</span></td></tr>
@@ -605,7 +607,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248678"></a>Select nodes (keyboard)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248691"></a>Select nodes (keyboard)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Tab</span></td><td><span class="action">select next node</span></td></tr> 
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+Tab</span></td><td><span class="action">select previous node</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">These keys select nodes within the selected path</span></td></tr>
@@ -621,7 +623,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248776"></a>Grow/shrink node selection</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248789"></a>Grow/shrink node selection</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">PgUp</span>,
 <span class="key">PgDn</span></td><td><span class="action">grow/shrink selection (spatial)</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">mouse wheel</span></td><td><span class="action">grow/shrink selection (spatial)</span></td></tr>
@@ -634,7 +636,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248848"></a>Move nodes (mouse)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248862"></a>Move nodes (mouse)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">move selected nodes</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">restrict movement to horizontal or vertical</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Ctrl+Alt+mouse drag</span></td><td><span class="action">move along handles</span></td></tr>
@@ -655,7 +657,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248971"></a>Move nodes (keyboard)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2248984"></a>Move nodes (keyboard)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">arrows</span></td><td><span class="action">move selected node(s) by the nudge distance</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+arrows</span></td><td><span class="action">move selected node(s) by 10x nudge distance</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">The default nudge distance is 2 px (SVG pixel units, not screen pixels).</span></td></tr>
@@ -665,7 +667,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249024"></a>Move node handle (mouse)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249038"></a>Move node handle (mouse)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">move a node handle</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">snap the handle to angle steps</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">The default angle step is 15 degrees. This also snaps to the handle's original angle, its continuation and perpendiculars.</span></td></tr>
@@ -677,7 +679,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249089"></a>Scale handle (1 node selected)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249103"></a>Scale handle (1 node selected)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">&lt;</span>,
 <span class="key">&gt;</span></td><td><span class="action">contract/expand both handles by scale step</span></td></tr> 
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">The default scale step is 2 px (SVG pixel units, not screen pixels). May apply to more than one node.</span></td></tr>
@@ -694,7 +696,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249198"></a>Rotate handle (1 node selected)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249212"></a>Rotate handle (1 node selected)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">[</span>,
 <span class="key">]</span></td><td><span class="action">rotate both handles by the angle step</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">The default angle step is 15 degrees. ] rotates clockwise, [ rotates counterclockwise. May apply to more than one node.</span></td></tr>
@@ -710,7 +712,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249285"></a>Scale nodes (&gt;1 nodes selected)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249298"></a>Scale nodes (&gt;1 nodes selected)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">These commands scale the selected nodes as if they were an "object".</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">If mouse is over a node, that node becomes the axis of scaling; otherwise it scales around geometric center of selected nodes.</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">.</span>,
@@ -727,7 +729,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249368"></a>Rotate nodes (&gt;1 nodes selected)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249381"></a>Rotate nodes (&gt;1 nodes selected)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">These commands rotate the selected nodes as if they were an "object".</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">If mouse is over a node, that node becomes the axis of rotation; otherwise it rotates around geometric center of selected nodes.</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">[</span>,
@@ -739,7 +741,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249420"></a>Flip nodes (&gt;1 nodes selected)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249434"></a>Flip nodes (&gt;1 nodes selected)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">These commands flip the selected nodes as if they were an "object", around the center of that object.</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">h</span></td><td><span class="action">flip nodes horizontally</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">v</span></td><td><span class="action">flip nodes vertically</span></td></tr>
@@ -747,14 +749,14 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249455"></a>Change segment(s)</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249468"></a>Change segment(s)</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+L</span></td><td><span class="action">make line</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+U</span></td><td><span class="action">make curve</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">These commands require that more than two adjacent nodes be selected.</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249484"></a>Change node type</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249497"></a>Change node type</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+C</span></td><td><span class="action">make cusp</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+S</span></td><td><span class="action">make smooth</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+Y</span></td><td><span class="action">make symmetric</span></td></tr>
@@ -763,7 +765,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249531"></a>Join/break</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249545"></a>Join/break</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+J</span></td><td><span class="action">join selected nodes</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">This requires that exactly two end nodes within the path be selected.</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">You can lock the position of one of the two joined nodes by hovering mouse over it.</span></td></tr>
@@ -772,7 +774,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249570"></a>Delete, create, duplicate</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249583"></a>Delete, create, duplicate</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Backspace</span>,
 <span class="key">Del</span></td><td><span class="action">delete selected node(s)</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Ctrl+Backspace</span>,
@@ -794,25 +796,25 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249682"></a>Reverse</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249695"></a>Reverse</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Shift+r</span></td><td><span class="action">reverse path direction</span></td></tr> 
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249711"></a>Edit shapes</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249724"></a>Edit shapes</h4></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Node tool can also drag the handles of shapes (rectangles, ellipses, stars, spirals). Click on a shape to select it.</span></td></tr> 
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">See the corresponding shape tools for their editing shortcuts, all of which also work in node tool.</span></td></tr>
 
 
 
-<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249728"></a>Cancel</h4></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><h4><a name="id2249741"></a>Cancel</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right" width="40%"><span class="key">Esc</span></td><td><span class="action">cancel rubberband or move</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Press Esc while mouse button is still down to cancel rubberband selection, node move, handle move, or handle move.</span></td></tr>
 
 
-<tr><td colspan="3"><a name="id2249754"></a><h1>Rectangle tool</h1></td></tr>
+<tr><td colspan="3"><a name="id2249767"></a><h1>Rectangle tool</h1></td></tr>
 
-<tr bgcolor="ebf1fd"><td colspan="3"><h4><a name="id2249761"></a>Draw</h4></td></tr>
+<tr bgcolor="ebf1fd"><td colspan="3"><h4><a name="id2249774"></a>Draw</h4></td></tr>
 <tr bgcolor="ebf1fd"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">draw a rectangle</span></td></tr>
 <tr bgcolor="ebf1fd"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">make a square or integer-ratio rectangle</span></td></tr>
 <tr bgcolor="ebf1fd"><td colspan="3"><span class="note">This restricts rectangle so its height/width ratio is a whole number.</span></td></tr>
@@ -821,7 +823,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="ebf1fd"><td colspan="3"><h4><a name="id2249803"></a>Select</h4></td></tr>
+<tr bgcolor="ebf1fd"><td colspan="3"><h4><a name="id2249816"></a>Select</h4></td></tr>
 <tr bgcolor="ebf1fd"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">click to select</span></td></tr>
 <tr bgcolor="ebf1fd"><td align="right" width="40%"><span class="key">Alt+click</span>,
 <span class="key">Ctrl+Alt+click</span></td><td><span class="action">select under</span></td></tr>
@@ -831,7 +833,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="ebf1fd"><td colspan="3"><h4><a name="id2249855"></a>Resize by handles</h4></td></tr>
+<tr bgcolor="ebf1fd"><td colspan="3"><h4><a name="id2249869"></a>Resize by handles</h4></td></tr>
 <tr bgcolor="ebf1fd"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">drag a square handle to resize</span></td></tr>
 <tr bgcolor="ebf1fd"><td colspan="3"><span class="note">Initially, the two resize (square) handles are in top left and bottom right corners.</span></td></tr>
 <tr bgcolor="ebf1fd"><td colspan="3"><span class="note">Resize handles change the width and height of the rectangle in its own coordinate system, before any transforms are applied.</span></td></tr>
@@ -839,7 +841,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="ebf1fd"><td colspan="3"><h4><a name="id2249890"></a>Round corners by handles</h4></td></tr>
+<tr bgcolor="ebf1fd"><td colspan="3"><h4><a name="id2249903"></a>Round corners by handles</h4></td></tr>
 <tr bgcolor="ebf1fd"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">drag a circular handle to round corners</span></td></tr>
 <tr bgcolor="ebf1fd"><td colspan="3"><span class="note">Initially, the two rounding handles are in the top right corner of the rectangle.</span></td></tr>
 <tr bgcolor="ebf1fd"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">lock the corner circular</span></td></tr>
@@ -848,9 +850,24 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="ebf1fd"><td colspan="3"><span class="note">You can drag both handles for an elliptic rounded corner, or drag/click one with Ctrl to make it circular again.</span></td></tr>
 <tr bgcolor="ebf1fd"><td align="right" width="40%"><span class="key">Shift+click</span></td><td><span class="action">remove corner rounding</span></td></tr>
 
-<tr><td colspan="3"><a name="id2249948"></a><h1>Ellipse tool</h1></td></tr>
+<tr><td colspan="3"><a name="id2249962"></a><h1>3D box tool</h1></td></tr>
 
-<tr bgcolor="ffece8"><td colspan="3"><h4><a name="id2249955"></a>Draw</h4></td></tr>
+<tr bgcolor="cff4e2"><td colspan="3"><h4><a name="id2249968"></a>Draw</h4></td></tr>
+<tr bgcolor="cff4e2"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">draw a 3D box</span></td></tr>
+
+
+
+<tr bgcolor="cff4e2"><td colspan="3"><h4><a name="id2249983"></a>Select</h4></td></tr>
+<tr bgcolor="cff4e2"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">click to select</span></td></tr>
+<tr bgcolor="cff4e2"><td align="right" width="40%"><span class="key">Alt+click</span>,
+<span class="key">Ctrl+Alt+click</span></td><td><span class="action">select under</span></td></tr>
+<tr bgcolor="cff4e2"><td align="right" width="40%"><span class="key">Shift+click</span></td><td><span class="action">toggle selection</span></td></tr>
+<tr bgcolor="cff4e2"><td align="right" width="40%"><span class="key">Esc</span></td><td><span class="action">deselect</span></td></tr>
+
+
+<tr><td colspan="3"><a name="id2250031"></a><h1>Ellipse tool</h1></td></tr>
+
+<tr bgcolor="ffece8"><td colspan="3"><h4><a name="id2250038"></a>Draw</h4></td></tr>
 <tr bgcolor="ffece8"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">draw an ellipse</span></td></tr>
 <tr bgcolor="ffece8"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">make circle or integer-ratio ellipse</span></td></tr>
 <tr bgcolor="ffece8"><td colspan="3"><span class="note">This restricts ellipse so its height/width ratio is a whole number.</span></td></tr>
@@ -859,7 +876,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="ffece8"><td colspan="3"><h4><a name="id2249997"></a>Select</h4></td></tr>
+<tr bgcolor="ffece8"><td colspan="3"><h4><a name="id2250080"></a>Select</h4></td></tr>
 <tr bgcolor="ffece8"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">click to select</span></td></tr>
 <tr bgcolor="ffece8"><td align="right" width="40%"><span class="key">Alt+click</span>,
 <span class="key">Ctrl+Alt+click</span></td><td><span class="action">select under</span></td></tr>
@@ -869,7 +886,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="ffece8"><td colspan="3"><h4><a name="id2250050"></a>Edit by handles</h4></td></tr>
+<tr bgcolor="ffece8"><td colspan="3"><h4><a name="id2250133"></a>Edit by handles</h4></td></tr>
 <tr bgcolor="ffece8"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">resize, make arc or segment</span></td></tr>
 <tr bgcolor="ffece8"><td colspan="3"><span class="note">Initially, the two resize handles are at the topmost and leftmost points; the two arc/segment handles are in the rightmost point.</span></td></tr>
 <tr bgcolor="ffece8"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">lock circle (resize handles)</span></td></tr>
@@ -878,16 +895,16 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="ffece8"><td colspan="3"><span class="note">The default angle step is 15 degrees.</span></td></tr>
 <tr bgcolor="ffece8"><td align="right" width="40%"><span class="key">Shift+click</span></td><td><span class="action">make whole (arc/segment handles)</span></td></tr>
 
-<tr><td colspan="3"><a name="id2250108"></a><h1>Star tool</h1></td></tr>
+<tr><td colspan="3"><a name="id2250191"></a><h1>Star tool</h1></td></tr>
 
-<tr bgcolor="f8f7d5"><td colspan="3"><h4><a name="id2250115"></a>Draw</h4></td></tr>
+<tr bgcolor="f8f7d5"><td colspan="3"><h4><a name="id2250198"></a>Draw</h4></td></tr>
 <tr bgcolor="f8f7d5"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">draw a star</span></td></tr>
 <tr bgcolor="f8f7d5"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">snap star to angle steps</span></td></tr>
 <tr bgcolor="f8f7d5"><td colspan="3"><span class="note">The default angle step is 15 degrees.</span></td></tr>
 
 
 
-<tr bgcolor="f8f7d5"><td colspan="3"><h4><a name="id2250142"></a>Select</h4></td></tr>
+<tr bgcolor="f8f7d5"><td colspan="3"><h4><a name="id2250225"></a>Select</h4></td></tr>
 <tr bgcolor="f8f7d5"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">click to select</span></td></tr>
 <tr bgcolor="f8f7d5"><td align="right" width="40%"><span class="key">Alt+click</span>,
 <span class="key">Ctrl+Alt+click</span></td><td><span class="action">select under</span></td></tr>
@@ -897,7 +914,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f8f7d5"><td colspan="3"><h4><a name="id2250195"></a>Edit by handles</h4></td></tr>
+<tr bgcolor="f8f7d5"><td colspan="3"><h4><a name="id2250278"></a>Edit by handles</h4></td></tr>
 <tr bgcolor="f8f7d5"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">drag a handle to vary the star shape</span></td></tr>
 <tr bgcolor="f8f7d5"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">keep star rays radial (no skew)</span></td></tr>
 <tr bgcolor="f8f7d5"><td align="right" width="40%"><span class="key">Shift+mouse drag</span></td><td><span class="action">round the star</span></td></tr>
@@ -906,16 +923,16 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="f8f7d5"><td align="right" width="40%"><span class="key">Alt+click</span>,
 <span class="key">Ctrl+Alt+click</span></td><td><span class="action">remove randomization</span></td></tr>
 
-<tr><td colspan="3"><a name="id2250261"></a><h1>Spiral tool</h1></td></tr>
+<tr><td colspan="3"><a name="id2250344"></a><h1>Spiral tool</h1></td></tr>
 
-<tr bgcolor="f3f3f3"><td colspan="3"><h4><a name="id2250268"></a>Draw</h4></td></tr>
+<tr bgcolor="f3f3f3"><td colspan="3"><h4><a name="id2250351"></a>Draw</h4></td></tr>
 <tr bgcolor="f3f3f3"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">draw a spiral</span></td></tr>
 <tr bgcolor="f3f3f3"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">snap spiral to angle steps</span></td></tr>
 <tr bgcolor="f3f3f3"><td colspan="3"><span class="note">The default angle step is 15 degrees.</span></td></tr>
 
 
 
-<tr bgcolor="f3f3f3"><td colspan="3"><h4><a name="id2250296"></a>Select</h4></td></tr>
+<tr bgcolor="f3f3f3"><td colspan="3"><h4><a name="id2250379"></a>Select</h4></td></tr>
 <tr bgcolor="f3f3f3"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">click to select</span></td></tr>
 <tr bgcolor="f3f3f3"><td align="right" width="40%"><span class="key">Alt+click</span>,
 <span class="key">Ctrl+Alt+click</span></td><td><span class="action">select under</span></td></tr>
@@ -925,7 +942,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="f3f3f3"><td colspan="3"><h4><a name="id2250348"></a>Edit by handles</h4></td></tr>
+<tr bgcolor="f3f3f3"><td colspan="3"><h4><a name="id2250431"></a>Edit by handles</h4></td></tr>
 <tr bgcolor="f3f3f3"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">roll/unroll from inside (inner handle)</span></td></tr>
 <tr bgcolor="f3f3f3"><td colspan="3"><span class="note">Dragging the inner handle adjusts the "inner radius" parameter.</span></td></tr>
 <tr bgcolor="f3f3f3"><td align="right" width="40%"><span class="key">Alt+mouse drag</span></td><td><span class="action">converge/diverge (inner handle)</span></td></tr>
@@ -943,13 +960,13 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="f3f3f3"><td align="right" width="40%"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">snap handles to angle steps</span></td></tr>
 <tr bgcolor="f3f3f3"><td colspan="3"><span class="note">The default angle step is 15 degrees. This works for both handles.</span></td></tr>
 
-<tr><td colspan="3"><a name="id2250455"></a><h1>Zoom tool</h1></td></tr>
+<tr><td colspan="3"><a name="id2250538"></a><h1>Zoom tool</h1></td></tr>
 
 <tr bgcolor="e7e9f3"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">zoom in</span></td></tr>
 <tr bgcolor="e7e9f3"><td align="right" width="40%"><span class="key">Shift+click</span></td><td><span class="action">zoom out</span></td></tr>  
 <tr bgcolor="e7e9f3"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">zoom into the area</span></td></tr>
 
-<tr><td colspan="3"><a name="id2250490"></a><h1>Pencil tool</h1></td></tr>
+<tr><td colspan="3"><a name="id2250573"></a><h1>Pencil tool</h1></td></tr>
 
 <tr bgcolor="e9efc5"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">draw a freehand line</span></td></tr>
 <tr bgcolor="e9efc5"><td align="right" width="40%"><span class="key">Shift+mouse drag</span></td><td><span class="action">add to selected path</span></td></tr>
@@ -957,10 +974,10 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="e9efc5"><td align="right" width="40%"><span class="key">Shift+mouse drag</span></td><td><span class="action">temporarily disable snapping</span></td></tr>
 <tr bgcolor="e9efc5"><td colspan="3"><span class="note">Shift also temporaily disables snapping to grid or guides when you are drawing with grid or guides on.</span></td></tr>
 
-<tr><td colspan="3"><a name="id2250537"></a><h1>Pen (Bezier) tool</h1></td></tr>
+<tr><td colspan="3"><a name="id2250620"></a><h1>Pen (Bezier) tool</h1></td></tr>
 
 
-<tr bgcolor="e7f5d7"><td colspan="3"><h4><a name="id2250544"></a>Create nodes</h4></td></tr>
+<tr bgcolor="e7f5d7"><td colspan="3"><h4><a name="id2250627"></a>Create nodes</h4></td></tr>
 <tr bgcolor="e7f5d7"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">create a sharp node</span></td></tr>
 <tr bgcolor="e7f5d7"><td colspan="3"><span class="note">If no path is being created, this starts a new path.</span></td></tr>
 <tr bgcolor="e7f5d7"><td align="right" width="40%"><span class="key">Shift+click</span></td><td><span class="action">add to selected path</span></td></tr>
@@ -974,7 +991,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="e7f5d7"><td colspan="3"><h4><a name="id2250617"></a>Move last node</h4></td></tr>
+<tr bgcolor="e7f5d7"><td colspan="3"><h4><a name="id2250700"></a>Move last node</h4></td></tr>
 <tr bgcolor="e7f5d7"><td colspan="3"><span class="note">These commands move the last created node (at the start of the red segment) while creating a path.</span></td></tr>
 <tr bgcolor="e7f5d7"><td align="right" width="40%"><span class="key">arrows</span></td><td><span class="action">move last node by the nudge distance</span></td></tr>
 <tr bgcolor="e7f5d7"><td align="right" width="40%"><span class="key">Shift+arrows</span></td><td><span class="action">move last node by 10x nudge distance</span></td></tr>
@@ -985,7 +1002,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="e7f5d7"><td colspan="3"><h4><a name="id2250674"></a>Create/modify segments</h4></td></tr>
+<tr bgcolor="e7f5d7"><td colspan="3"><h4><a name="id2250758"></a>Create/modify segments</h4></td></tr>
 <tr bgcolor="e7f5d7"><td align="right" width="40%"><span class="key">Ctrl+</span></td><td><span class="action">snap last segment to angle steps</span></td></tr>
 <tr bgcolor="e7f5d7"><td colspan="3"><span class="note">This snaps the new node's angle, relative to the previous node, to angle steps (default 15 degrees).</span></td></tr>
 <tr bgcolor="e7f5d7"><td align="right" width="40%"><span class="key">Shift+L</span></td><td><span class="action">make last segment line</span></td></tr>
@@ -994,7 +1011,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="e7f5d7"><td colspan="3"><h4><a name="id2250717"></a>Finish</h4></td></tr>
+<tr bgcolor="e7f5d7"><td colspan="3"><h4><a name="id2250800"></a>Finish</h4></td></tr>
 <tr bgcolor="e7f5d7"><td align="right" width="40%"><span class="key">Enter</span></td><td><span class="action">finish current line</span></td></tr>
 <tr bgcolor="e7f5d7"><td align="right" width="40%"><span class="key">right click</span></td><td><span class="action">finish current line</span></td></tr>
 <tr bgcolor="e7f5d7"><td align="right" width="40%"><span class="key">clickclick</span></td><td><span class="action">finish current line</span></td></tr>
@@ -1002,13 +1019,13 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="e7f5d7"><td colspan="3"><h4><a name="id2250755"></a>Cancel</h4></td></tr>
+<tr bgcolor="e7f5d7"><td colspan="3"><h4><a name="id2250838"></a>Cancel</h4></td></tr>
 <tr bgcolor="e7f5d7"><td align="right" width="40%"><span class="key">Esc</span>,
 <span class="key">Ctrl+z</span></td><td><span class="action">cancel current line</span></td></tr>
 <tr bgcolor="e7f5d7"><td align="right" width="40%"><span class="key">Backspace</span>,
 <span class="key">Del</span></td><td><span class="action">erase last segment of current line</span></td></tr>
 
-<tr><td colspan="3"><a name="id2250791"></a><h1>Calligraphy</h1></td></tr>
+<tr><td colspan="3"><a name="id2250874"></a><h1>Calligraphy</h1></td></tr>
 
 <tr bgcolor="e9dfef"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">draw a calligraphic line</span></td></tr>
 <tr bgcolor="e9dfef"><td align="right" width="40%"><span class="key">Shift+mouse drag</span></td><td><span class="action">add to selected path</span></td></tr>
@@ -1028,7 +1045,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="e9dfef"><td colspan="3"><span class="note">Width and angle can be adjusted while drawing. </span></td></tr>
 <tr bgcolor="e9dfef"><td align="right" width="40%"><span class="key">Esc</span></td><td><span class="action">deselect</span></td></tr>
 
-<tr><td colspan="3"><a name="id2250918"></a><h1>Paint Bucket</h1></td></tr>
+<tr><td colspan="3"><a name="id2251001"></a><h1>Paint Bucket</h1></td></tr>
 
 <tr bgcolor="f2f9da"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">fill a bounded area</span></td></tr>
 <tr bgcolor="f2f9da"><td align="right" width="40%"><span class="key">Shift+click</span></td><td><span class="action">add to selected path</span></td></tr>
@@ -1043,17 +1060,17 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="f2f9da"><td align="right" width="40%"><span class="key">Shift+Ctrl+click</span></td><td><span class="action">set stroke color</span></td></tr>
 <tr bgcolor="f2f9da"><td colspan="3"><span class="note">Ctrl+clicking an object sets its fill (or stroke with Shift) to the tool's current style; the object need not be selected</span></td></tr>
 
-<tr><td colspan="3"><a name="id2251012"></a><h1>Gradient tool</h1></td></tr>
+<tr><td colspan="3"><a name="id2251095"></a><h1>Gradient tool</h1></td></tr>
 
 
-<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251018"></a>Select objects</h4></td></tr>
+<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251102"></a>Select objects</h4></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">click an object to select</span></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">Alt+click</span></td><td><span class="action">select under</span></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">Shift+click</span></td><td><span class="action">toggle selection</span></td></tr>
 
 
 
-<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251051"></a>Create gradients</h4></td></tr>
+<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251134"></a>Create gradients</h4></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">create gradient</span></td></tr>
 <tr bgcolor="e9f3e7"><td colspan="3"><span class="note">This creates gradient on selected objects. The Controls bar lets you select linear/radial and fill/stroke for the new gradient.</span></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">clickclick</span></td><td><span class="action">create default gradient</span></td></tr>
@@ -1061,7 +1078,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251086"></a>Select handles</h4></td></tr>
+<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251169"></a>Select handles</h4></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">select a handle</span></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">Shift+click</span></td><td><span class="action">add handle to selection</span></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">Tab</span></td><td><span class="action">select next handle</span></td></tr> 
@@ -1070,7 +1087,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251140"></a>Create/delete stops</h4></td></tr>
+<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251224"></a>Create/delete stops</h4></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">Ctrl+Alt+click</span></td><td><span class="action">create a stop</span></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">clickclick</span></td><td><span class="action">create a stop</span></td></tr>
 <tr bgcolor="e9f3e7"><td colspan="3"><span class="note">Ctrl+Alt+click or double click on a gradient line creates a new intermediate stop</span></td></tr>
@@ -1081,7 +1098,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251199"></a>Move handles</h4></td></tr>
+<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251282"></a>Move handles</h4></td></tr>
 
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">move selected handle(s)</span></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">arrows</span></td><td><span class="action">move selected handle by the nudge distance</span></td></tr>
@@ -1094,20 +1111,20 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251265"></a>Reverse</h4></td></tr>
+<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251348"></a>Reverse</h4></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">Shift+r</span></td><td><span class="action">reverse gradient definition</span></td></tr> 
 <tr bgcolor="e9f3e7"><td colspan="3"><span class="note">This mirrors the stop positions of the current gradient without moving the gradient handles.</span></td></tr>
 
 
 
 
-<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251295"></a>Gradient editor</h4></td></tr>
+<tr bgcolor="e9f3e7"><td colspan="3"><h4><a name="id2251378"></a>Gradient editor</h4></td></tr>
 <tr bgcolor="e9f3e7"><td align="right" width="40%"><span class="key">clickclick</span></td><td><span class="action">open gradient editor</span></td></tr>
 <tr bgcolor="e9f3e7"><td colspan="3"><span class="note">Double clicking a gradient handle opens the Gradient Editor with that gradient and the clicked handle chosen in the stops list.</span></td></tr>
 
 
 
-<tr><td colspan="3"><a name="id2251317"></a><h1>Dropper tool</h1></td></tr>
+<tr><td colspan="3"><a name="id2251400"></a><h1>Dropper tool</h1></td></tr>
 
 <tr bgcolor="feeffa"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">pick fill color</span></td></tr>
 <tr bgcolor="feeffa"><td align="right" width="40%"><span class="key">Shift+click</span></td><td><span class="action">pick stroke color</span></td></tr>
@@ -1120,10 +1137,10 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 <tr bgcolor="feeffa"><td align="right" width="40%"><span class="key">Ctrl+C</span></td><td><span class="action">copy color</span></td></tr>
 <tr bgcolor="feeffa"><td colspan="3"><span class="note">This copies the color under cursor to the system clipboard, as text in RRGGBBAA format (8 hex digits).</span></td></tr>
 
-<tr><td colspan="3"><a name="id2251419"></a><h1>Text tool</h1></td></tr>
+<tr><td colspan="3"><a name="id2251502"></a><h1>Text tool</h1></td></tr>
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251425"></a>Select/create</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251508"></a>Select/create</h4></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">click</span></td><td><span class="action">create/select a text object</span></td></tr>
 
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">Clicking in an empty space or on a non-text creates a text object; now you can type your text.</span></td></tr>
@@ -1132,7 +1149,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251464"></a>Navigate in text</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251547"></a>Navigate in text</h4></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">arrows</span></td><td><span class="action">move cursor by one character</span></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Ctrl+Left arrow</span>,
 <span class="key">Ctrl+Right arrow</span></td><td><span class="action">move cursor by one word</span></td></tr>
@@ -1146,7 +1163,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251543"></a>Flowed text (internal frame)</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251626"></a>Flowed text (internal frame)</h4></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">create flowed text</span></td></tr>
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">Clicking and dragging in an empty space or on a non-text creates a flowed text object with internal frame.</span></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">adjust frame size</span></td></tr>
@@ -1156,7 +1173,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251591"></a>Flowed text (external frame)</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251674"></a>Flowed text (external frame)</h4></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Alt+W</span></td><td><span class="action">flow text into frame</span></td></tr> 
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">With a text object and a shape/path selected, this flows text into the shape/path.</span></td></tr>
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">Both remain separate objects, but are linked; editing the shape/path causes the text to reflow.</span></td></tr>
@@ -1167,13 +1184,13 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251646"></a>Text on path</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251729"></a>Text on path</h4></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Shift+D</span></td><td><span class="action">select path from text</span></td></tr> 
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">To find out which path this text is put on, select it and press Shift+D. The path will be selected.</span></td></tr>
 
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251667"></a>Edit text</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251750"></a>Edit text</h4></td></tr>
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">To type + and - characters, use the main keyboard; keypad + and - are reserved for zoom (unless NumLock is on).</span></td></tr> 
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Enter</span></td><td><span class="action">start a new line or paragraph</span></td></tr>
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">Enter in regular text creates new line; in flowed text it creates a new paragraph</span></td></tr>
@@ -1187,7 +1204,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251738"></a>Select text</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251821"></a>Select text</h4></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">mouse drag</span></td><td><span class="action">select text</span></td></tr>
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">Left-dragging over a text object selects a text span.</span></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Shift+arrows</span></td><td><span class="action">select text by character</span></td></tr>
@@ -1203,14 +1220,14 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251845"></a>Style selection</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251928"></a>Style selection</h4></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Ctrl+B</span></td><td><span class="action">make selection bold</span></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Ctrl+I</span></td><td><span class="action">make selection italic</span></td></tr>
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">Also, you can use the Text&amp;Font or Fill&amp;Stroke dialogs to assign any style to text selection.</span></td></tr>
 
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251877"></a>Letter spacing</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251960"></a>Letter spacing</h4></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Alt+&gt;</span></td><td><span class="action">expand line/paragraph by 1 pixel</span></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Shift+Alt+&gt;</span></td><td><span class="action">expand line/paragraph by 10 pixels</span></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Alt+&lt;</span></td><td><span class="action">contract line/paragraph by 1 pixel</span></td></tr>
@@ -1220,7 +1237,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251934"></a>Line spacing</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2252017"></a>Line spacing</h4></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Ctrl+Alt+&gt;</span></td><td><span class="action">make the text object taller by 1 pixel</span></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Shift+Ctrl+Alt+&gt;</span></td><td><span class="action">make the text object taller by 10 pixels</span></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Ctrl+Alt+&lt;</span></td><td><span class="action">make the text object shorter by 1 pixel</span></td></tr>
@@ -1230,7 +1247,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2251996"></a>Kerning and shifting</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2252079"></a>Kerning and shifting</h4></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Alt+arrows</span></td><td><span class="action">shift characters by 1 pixel</span></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Shift+Alt+arrows</span></td><td><span class="action">shift characters by 10 pixels</span></td></tr>
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">These commands work when editing a regular text object. Kerning does not work in flowed text.</span></td></tr> 
@@ -1240,7 +1257,7 @@ groups) with the same effect as Alt+click.)</span></td></tr>
 
 
 
-<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2252043"></a>Rotate</h4></td></tr>
+<tr bgcolor="eefdf3"><td colspan="3"><h4><a name="id2252126"></a>Rotate</h4></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Ctrl+[</span>,
 <span class="key">Ctrl+]</span></td><td><span class="action">rotate character(s) by 90 degrees</span></td></tr>
 <tr bgcolor="eefdf3"><td align="right" width="40%"><span class="key">Alt+[</span>,
