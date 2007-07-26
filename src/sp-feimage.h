@@ -6,6 +6,7 @@
  */
 /*
  * Authors:
+ *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *
  * Copyright (C) 2006 Hugo Rodrigues
@@ -21,7 +22,11 @@ class SPFeImageClass;
 
 struct SPFeImage : public SPFilterPrimitive {
     /** IMAGE ATTRIBUTES HERE */
-    
+    /*
+        Apparently there's no attribute to keep here 
+        since 'in' and 'xlink:href' are common filter attributes.
+        --Juca
+    */
 };
 
 struct SPFeImageClass {

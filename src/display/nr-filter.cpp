@@ -29,6 +29,7 @@
 #include "display/nr-filter-composite.h"
 #include "display/nr-filter-diffuselighting.h"
 #include "display/nr-filter-specularlighting.h"
+#include "display/nr-filter-image.h"
 
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"

@@ -6,8 +6,10 @@
  */
 /*
  * Authors:
+ *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
  *
+ * Copyright (C) 2007 Felipe Sanches
  * Copyright (C) 2006 Hugo Rodrigues
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -21,7 +23,10 @@
 #include "svg/svg.h"
 #include "sp-feimage.h"
 #include "xml/repr.h"
+#include <string.h>
 
+#include "display/nr-filter.h"
+#include "display/nr-filter-image.h"
 
 /* FeImage base class */
 
@@ -33,6 +38,7 @@ static void sp_feImage_release(SPObject *object);
 static void sp_feImage_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feImage_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feImage_parent_class;
 
@@ -61,6 +67,7 @@ static void
 sp_feImage_class_init(SPFeImageClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
+    SPFilterPrimitiveClass * sp_primitive_class = (SPFilterPrimitiveClass *)klass;
 
     feImage_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
@@ -69,6 +76,8 @@ sp_feImage_class_init(SPFeImageClass *klass)
     sp_object_class->write = sp_feImage_write;
     sp_object_class->set = sp_feImage_set;
     sp_object_class->update = sp_feImage_update;
+
+    sp_primitive_class->build_renderer = sp_feImage_build_renderer;
 }
 
 static void
@@ -89,6 +98,11 @@ sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
+/* apparently there's no attribute to load here 
+since 'in' and 'xlink:href' are common filter attributes.
+--Juca
+*/
+
 }
 
 /**
@@ -162,6 +176,20 @@ sp_feImage_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     return repr;
 }
 
+static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    g_assert(primitive != NULL);
+    g_assert(filter != NULL);
+
+    SPFeImage *sp_image = SP_FEIMAGE(primitive);
+
+    int primitive_n = filter->add_primitive(NR::NR_FILTER_IMAGE);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    NR::FilterImage *nr_image = dynamic_cast<NR::FilterImage*>(nr_primitive);
+    g_assert(nr_image != NULL);
+
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+
+}
 
 /*
   Local Variables:
