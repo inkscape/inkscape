@@ -17,6 +17,7 @@ namespace NR {
 
 FilterImage::FilterImage()
 {
+    g_warning("FilterImage::render not implemented.");
 /* Testing with hardcoded xlink:href :  
     image = Gdk::Pixbuf::create_from_file("/home/felipe/images/image1.jpg");
     //TODO: handle errors
@@ -33,13 +34,11 @@ FilterImage::~FilterImage()
 {}
 
 int FilterImage::render(FilterSlot &slot, Matrix const &trans) {
+    return 0;
 /* TODO: Implement this renderer method.
-Specification: http://www.w3.org/TR/SVG11/filters.html#feImage
+        Specification: http://www.w3.org/TR/SVG11/filters.html#feImage
 
- It would be good to findout how to reuse sp-image.cpp code
- 
-After implementing it, add a reference to FilterImage::create
- on Filter::_create_constructor_table() (nr-filter.cpp file)
+        It would be good to findout how to reuse sp-image.cpp code
 */
  
 /*    int w,x,y;

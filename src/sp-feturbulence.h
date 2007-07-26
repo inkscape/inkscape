@@ -6,6 +6,7 @@
  */
 /*
  * Authors:
+ *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *
  * Copyright (C) 2006 Hugo Rodrigues
@@ -15,13 +16,18 @@
 
 #include "sp-filter.h"
 #include "sp-feturbulence-fns.h"
+#include "number-opt-number.h"
 
 /* FeTurbulence base class */
 class SPFeTurbulenceClass;
 
 struct SPFeTurbulence : public SPFilterPrimitive {
     /** TURBULENCE ATTRIBUTES HERE */
-    
+    NumberOptNumber baseFrequency;
+    int numOctaves;
+    double seed;
+    bool stitchTiles;
+    int type;   
 };
 
 struct SPFeTurbulenceClass {

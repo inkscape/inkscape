@@ -58,7 +58,7 @@ int FilterDisplacementMap::render(FilterSlot &slot, Matrix const &trans) {
     x1 = out->area.x1;
     y1 = out->area.y1;
     width = x1 - x0;
-
+   
     for (x=x0 + scale/2; x < x1 - scale/2; x++){
         for (y=y0 + scale/2; y < y1 - scale/2; y++){
 /* SVG spec states that pixel values must be alpha-demultiplied before processing this filter operation.

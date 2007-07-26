@@ -21,15 +21,16 @@
 #include "display/pixblock-scaler.h"
 #include "display/pixblock-transform.h"
 
+#include "display/nr-filter-blend.h"
+#include "display/nr-filter-composite.h"
+#include "display/nr-filter-convolve-matrix.h"
+#include "display/nr-filter-diffuselighting.h"
 #include "display/nr-filter-displacement-map.h"
 #include "display/nr-filter-gaussian.h"
-#include "display/nr-filter-convolve-matrix.h"
-#include "display/nr-filter-blend.h"
-#include "display/nr-filter-offset.h"
-#include "display/nr-filter-composite.h"
-#include "display/nr-filter-diffuselighting.h"
-#include "display/nr-filter-specularlighting.h"
 #include "display/nr-filter-image.h"
+#include "display/nr-filter-offset.h"
+#include "display/nr-filter-specularlighting.h"
+#include "display/nr-filter-turbulence.h"
 
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
@@ -312,7 +313,9 @@ void Filter::_create_constructor_table()
     static bool created = false;
     if(created) return;
 
-    /* Filter effects not yet implemented are set to NULL */
+/* Some filter classes are not implemented yet.
+   Filters with constructors appearing in this table are not necessarilly already implemented.
+   Some of them still have only boilerplate-code.*/
     _constructor[NR_FILTER_BLEND] = &FilterBlend::create;
     _constructor[NR_FILTER_COLORMATRIX] = NULL;
     _constructor[NR_FILTER_COMPONENTTRANSFER] = NULL;
@@ -322,13 +325,13 @@ void Filter::_create_constructor_table()
     _constructor[NR_FILTER_DISPLACEMENTMAP] = &FilterDisplacementMap::create;
     _constructor[NR_FILTER_FLOOD] = NULL;
     _constructor[NR_FILTER_GAUSSIANBLUR] = &FilterGaussian::create;
-    _constructor[NR_FILTER_IMAGE] = NULL;
+    _constructor[NR_FILTER_IMAGE] = &FilterImage::create;
     _constructor[NR_FILTER_MERGE] = NULL;
     _constructor[NR_FILTER_MORPHOLOGY] = NULL;
     _constructor[NR_FILTER_OFFSET] = &FilterOffset::create;
     _constructor[NR_FILTER_SPECULARLIGHTING] = &FilterSpecularLighting::create;
     _constructor[NR_FILTER_TILE] = NULL;
-    _constructor[NR_FILTER_TURBULENCE] = NULL;
+    _constructor[NR_FILTER_TURBULENCE] = &FilterTurbulence::create;
     created = true;
 }
 

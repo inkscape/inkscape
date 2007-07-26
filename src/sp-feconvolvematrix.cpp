@@ -144,6 +144,36 @@ sp_feConvolveMatrix_read_number(gchar const *value) {
     return ret;
 }
 
+static int sp_feConvolveMatrix_read_edgeMode(gchar const *value){
+    if (!value) return 0; //duplicate is default
+    switch(value[0]){
+        case 'd':
+            if (strncmp(value, "duplicate", 9) == 0) return 0;
+            break;
+        case 'w':
+            if (strncmp(value, "wrap", 4) == 0) return 1;
+            break;
+        case 'n':
+            if (strncmp(value, "none", 4) == 0) return 2;
+            break;
+    }
+    return 0; //duplicate is default
+}
+
+
+static bool sp_feConvolveMatrix_read_bool(gchar const *value){
+    if (!value) return false; //false is default
+    switch(value[0]){
+        case 't':
+            if (strncmp(value, "true", 4) == 0) return true;
+            break;
+        case 'f':
+            if (strncmp(value, "false", 5) == 0) return false;
+            break;
+    }
+    return false; //false is default
+}
+
 /**
  * Sets a specific value in the SPFeConvolveMatrix.
  */
@@ -152,7 +182,10 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeConvolveMatrix *feConvolveMatrix = SP_FECONVOLVEMATRIX(object);
     (void)feConvolveMatrix;
-
+    double read_num;
+    int read_int;
+    bool read_bool;
+   
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         case SP_ATTR_ORDER:
@@ -164,32 +197,51 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_DIVISOR:
-            feConvolveMatrix->divisor = sp_feConvolveMatrix_read_number(value);
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            read_num = sp_feConvolveMatrix_read_number(value);
+            if (read_num != feConvolveMatrix->divisor){
+                feConvolveMatrix->divisor = read_num;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
             break;
         case SP_ATTR_BIAS:
-            feConvolveMatrix->bias = sp_feConvolveMatrix_read_number(value);
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            read_num = sp_feConvolveMatrix_read_number(value);
+            if (read_num != feConvolveMatrix->bias){
+                feConvolveMatrix->bias = read_num;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
             break;
         case SP_ATTR_TARGETX:
-            feConvolveMatrix->targetX = (int) sp_feConvolveMatrix_read_number(value);
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            read_int = (int) sp_feConvolveMatrix_read_number(value);
+            if (read_int != feConvolveMatrix->targetX){
+                feConvolveMatrix->targetX = read_int;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
             break;
         case SP_ATTR_TARGETY:
-            feConvolveMatrix->targetY = (int) sp_feConvolveMatrix_read_number(value);
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            read_int = (int) sp_feConvolveMatrix_read_number(value);
+            if (read_int != feConvolveMatrix->targetY){
+                feConvolveMatrix->targetY = read_int;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
             break;
         case SP_ATTR_EDGEMODE:
-                //TODO
+            read_int = (int) sp_feConvolveMatrix_read_edgeMode(value);
+            if (read_int != feConvolveMatrix->edgeMode){
+                feConvolveMatrix->edgeMode = read_int;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
             break;
         case SP_ATTR_KERNELUNITLENGTH:
             feConvolveMatrix->kernelUnitLength.set(value);
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_PRESERVEALPHA:
-                //TODO
+            read_bool = sp_feConvolveMatrix_read_bool(value);
+            if (read_bool != feConvolveMatrix->preserveAlpha){
+                feConvolveMatrix->preserveAlpha = read_bool;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
             break;
-
         default:
             if (((SPObjectClass *) feConvolveMatrix_parent_class)->set)
                 ((SPObjectClass *) feConvolveMatrix_parent_class)->set(object, key, value);

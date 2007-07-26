@@ -30,7 +30,7 @@ struct SPFeConvolveMatrix : public SPFilterPrimitive {
     std::vector<gdouble> kernelMatrix;
     double divisor, bias;
     int targetX, targetY;
-    unsigned short edgeMode;
+    int edgeMode;
     NumberOptNumber kernelUnitLength;
     bool preserveAlpha;
 };

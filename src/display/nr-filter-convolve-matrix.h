@@ -36,13 +36,17 @@ public:
     void set_kernelMatrix(std::vector<gdouble>& km);
     void set_bias(double b);
     void set_divisor(double d);
+    void set_edgeMode(int mode);    
+    void set_preserveAlpha(bool pa);
 
 private:
     std::vector<gdouble> kernelMatrix;
     int targetX, targetY;
     int orderX, orderY;
     gdouble divisor, bias;
-    int dx, dy; //kernelUnitLength
+    int dx, dy, kernelUnitLength;
+    int edgeMode;
+    bool preserveAlpha;
 };
 
 } /* namespace NR */

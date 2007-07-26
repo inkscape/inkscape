@@ -14,6 +14,9 @@
 namespace NR {
 
 FilterConvolveMatrix::FilterConvolveMatrix()
+: bias(0),
+  edgeMode(0),
+  preserveAlpha(false)
 {}
 
 FilterPrimitive * FilterConvolveMatrix::create() {
@@ -121,6 +124,14 @@ void FilterConvolveMatrix::set_bias(double b) {
 
 void FilterConvolveMatrix::set_kernelMatrix(std::vector<gdouble> &km) {
     kernelMatrix = km;
+}
+
+void FilterConvolveMatrix::set_edgeMode(int mode){
+    edgeMode = mode;
+}    
+
+void FilterConvolveMatrix::set_preserveAlpha(bool pa){
+    preserveAlpha = pa;
 }
 
 void FilterConvolveMatrix::area_enlarge(NRRectL &area, Matrix const &trans)

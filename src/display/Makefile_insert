@@ -67,30 +67,32 @@ display_libspdisplay_a_SOURCES = \
 	display/sp-ctrlquadr.h \
 	display/nr-filter.cpp           \
 	display/nr-filter.h             \
-	display/nr-filter-primitive.cpp \
-	display/nr-filter-primitive.h   \
-	display/nr-filter-gaussian.cpp  \
-	display/nr-filter-gaussian.h    \
 	display/nr-filter-blend.cpp     \
 	display/nr-filter-blend.h       \
-	display/nr-filter-diffuselighting.cpp     \
-	display/nr-filter-diffuselighting.h       \
-	display/nr-filter-offset.cpp	\
-	display/nr-filter-offset.h	\
-	display/nr-filter-specularlighting.cpp     \
-	display/nr-filter-specularlighting.h       \
 	display/nr-filter-composite.h	\
 	display/nr-filter-composite.cpp	\
 	display/nr-filter-convolve-matrix.cpp	\
 	display/nr-filter-convolve-matrix.h	\
+	display/nr-filter-diffuselighting.cpp     \
+	display/nr-filter-diffuselighting.h       \
     display/nr-filter-displacement-map.cpp      \
     display/nr-filter-displacement-map.h        \
-    display/nr-filter-image.cpp	\
-    display/nr-filter-image.h	\
-	display/nr-filter-slot.cpp      \
-	display/nr-filter-slot.h        \
+	display/nr-filter-gaussian.cpp  \
+	display/nr-filter-gaussian.h    \
 	display/nr-filter-getalpha.cpp	\
 	display/nr-filter-getalpha.h	\
+    display/nr-filter-image.cpp	\
+    display/nr-filter-image.h	\
+	display/nr-filter-offset.cpp	\
+	display/nr-filter-offset.h	\
+	display/nr-filter-primitive.cpp \
+	display/nr-filter-primitive.h   \
+	display/nr-filter-slot.cpp      \
+	display/nr-filter-slot.h        \
+	display/nr-filter-specularlighting.cpp     \
+	display/nr-filter-specularlighting.h       \
+	display/nr-filter-turbulence.cpp      \
+	display/nr-filter-turbulence.h        \
 	display/nr-filter-pixops.h	\
 	display/nr-filter-types.h       \
 	display/nr-filter-utils.h       \
