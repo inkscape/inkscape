@@ -1402,9 +1402,19 @@ sp_ui_menu_item_set_sensitive(SPAction *action, unsigned int sensitive, void *da
 static void
 sp_ui_menu_item_set_name(SPAction *action, Glib::ustring name, void *data)
 {
-    gtk_label_set_markup_with_mnemonic(
-        GTK_LABEL (gtk_container_get_children(GTK_CONTAINER (GTK_BIN (data)->child))->data), 
+    void *child = GTK_BIN (data)->child;
+    //child is either
+    //- a GtkHBox, whose first child is a label displaying name if the menu
+    //item has an accel key
+    //- a GtkLabel if the menu has no accel key
+    if (GTK_IS_LABEL(child)) {
+        gtk_label_set_markup_with_mnemonic(GTK_LABEL (child), name.c_str());
+    } else if (GTK_IS_HBOX(child)) {
+        gtk_label_set_markup_with_mnemonic(
+        GTK_LABEL (gtk_container_get_children(GTK_CONTAINER (child))->data), 
         name.c_str());
+    }//else sp_ui_menu_append_item_from_verb has been modified and can set
+    //a menu item in yet another way...
 }
 
 
