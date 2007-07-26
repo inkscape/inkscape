@@ -27,11 +27,18 @@ class SPFeDiffuseLightingClass;
 
 struct SPFeDiffuseLighting : public SPFilterPrimitive {
     /** DIFFUSELIGHTING ATTRIBUTES HERE */
+    /** surfaceScale attribute */
     gfloat surfaceScale;
+    guint surfaceScale_set : 1;
+    /** diffuseConstant attribute */
     gfloat diffuseConstant;
+    guint diffuseConstant_set : 1;
+    /** kernelUnitLength attribute */
     NumberOptNumber kernelUnitLength;
+    /** lighting-color property */
     guint32 lighting_color;
-
+    guint lighting_color_set : 1;
+    /** pointer to the associated renderer */
     NR::FilterDiffuseLighting *renderer;
 };
 

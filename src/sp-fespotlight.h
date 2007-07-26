@@ -33,20 +33,28 @@ struct SPFeSpotLight : public SPObject {
 
     /** x coordinate of the light source */
     gfloat x; 
+    guint x_set : 1;
     /** y coordinate of the light source */
     gfloat y; 
+    guint y_set : 1;
     /** z coordinate of the light source */
     gfloat z; 
+    guint z_set : 1;
     /** x coordinate of the point the source is pointing at */
     gfloat pointsAtX;
+    guint pointsAtX_set : 1;
     /** y coordinate of the point the source is pointing at */
     gfloat pointsAtY;
+    guint pointsAtY_set : 1;
     /** z coordinate of the point the source is pointing at */
     gfloat pointsAtZ;
+    guint pointsAtZ_set : 1;
     /** specular exponent (focus of the light) */
     gfloat specularExponent;
+    guint specularExponent_set : 1;
     /** limiting cone angle */
     gfloat limitingConeAngle;
+    guint limitingConeAngle_set : 1;
     //other fields
 };
 

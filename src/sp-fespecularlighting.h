@@ -27,11 +27,20 @@ class SPFeSpecularLightingClass;
 
 struct SPFeSpecularLighting : public SPFilterPrimitive {
     /** SPECULARLIGHTING ATTRIBUTES HERE */
+    /** surfaceScale attribute */
     gfloat surfaceScale;
+    guint surfaceScale_set : 1;
+    /** specularConstant attribute */
     gfloat specularConstant;
+    guint specularConstant_set : 1;
+    /** specularConstant attribute */
     gfloat specularExponent;
+    guint specularExponent_set : 1;
+    /** kernelUnitLenght attribute */
     NumberOptNumber kernelUnitLength;
+    /** lighting-color property */
     guint32 lighting_color;
+    guint lighting_color_set : 1;
 
     NR::FilterSpecularLighting *renderer;
 };

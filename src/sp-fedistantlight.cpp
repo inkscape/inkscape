@@ -84,6 +84,8 @@ sp_fedistantlight_init(SPFeDistantLight *fedistantlight)
 {
     fedistantlight->azimuth = 0;
     fedistantlight->elevation = 0;
+    fedistantlight->azimuth_set = FALSE;
+    fedistantlight->elevation_set = FALSE;
 }
 
 /**
@@ -129,10 +131,20 @@ static void
 sp_fedistantlight_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeDistantLight *fedistantlight = SP_FEDISTANTLIGHT(object);
-
+    gchar *end_ptr;
     switch (key) {
     case SP_ATTR_AZIMUTH:
-        fedistantlight->azimuth = g_ascii_strtod(value, NULL);
+        end_ptr =NULL;
+        if (value) {
+            fedistantlight->azimuth = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr) {
+                fedistantlight->azimuth_set = TRUE;
+            }
+        }
+        if (!value || !end_ptr) {
+                fedistantlight->azimuth_set = FALSE;
+                fedistantlight->azimuth = 0;
+        }
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -140,7 +152,17 @@ sp_fedistantlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     case SP_ATTR_ELEVATION:
-        fedistantlight->elevation = g_ascii_strtod(value, NULL);
+        end_ptr =NULL;
+        if (value) {
+            fedistantlight->elevation = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr) {
+                fedistantlight->elevation_set = TRUE;
+            }
+        }
+        if (!value || !end_ptr) {
+                fedistantlight->elevation_set = FALSE;
+                fedistantlight->elevation = 0;
+        }
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -186,9 +208,11 @@ sp_fedistantlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags
     if (!repr) {
         repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
     }
-
-    sp_repr_set_css_double(repr, "azimuth", fedistantlight->azimuth);
-    sp_repr_set_css_double(repr, "elevation", fedistantlight->elevation);
+    
+    if (fedistantlight->azimuth_set)
+        sp_repr_set_css_double(repr, "azimuth", fedistantlight->azimuth);
+    if (fedistantlight->elevation_set)
+        sp_repr_set_css_double(repr, "elevation", fedistantlight->elevation);
     
     if (((SPObjectClass *) feDistantLight_parent_class)->write) {
         ((SPObjectClass *) feDistantLight_parent_class)->write(object, repr, flags);

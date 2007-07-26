@@ -99,6 +99,10 @@ sp_feDiffuseLighting_init(SPFeDiffuseLighting *feDiffuseLighting)
     feDiffuseLighting->lighting_color = 0xffffffff;
     //TODO kernelUnit
     feDiffuseLighting->renderer = NULL;
+
+    feDiffuseLighting->surfaceScale_set = FALSE;
+    feDiffuseLighting->diffuseConstant_set = FALSE;
+    feDiffuseLighting->lighting_color_set = FALSE;
 }
 
 /**
@@ -138,22 +142,47 @@ static void
 sp_feDiffuseLighting_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeDiffuseLighting *feDiffuseLighting = SP_FEDIFFUSELIGHTING(object);
+    gchar const *cend_ptr = NULL;
+    gchar *end_ptr = NULL;
     
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
 //TODO test forbidden values
         case SP_ATTR_SURFACESCALE:
-            feDiffuseLighting->surfaceScale = g_ascii_strtod(value, NULL);
+            end_ptr = NULL;
+            if (value) {
+                feDiffuseLighting->surfaceScale = g_ascii_strtod(value, &end_ptr);
+                if (end_ptr) {
+                    feDiffuseLighting->surfaceScale_set = TRUE;
+                }
+            } 
+            if (!value || !end_ptr) {
+                feDiffuseLighting->surfaceScale = 1;
+                feDiffuseLighting->surfaceScale_set = FALSE;
+            }
             if (feDiffuseLighting->renderer) {
                 feDiffuseLighting->renderer->surfaceScale = feDiffuseLighting->surfaceScale;
             }
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_DIFFUSECONSTANT:
-            feDiffuseLighting->diffuseConstant = g_ascii_strtod(value, NULL);
+            end_ptr = NULL;
+            if (value) {
+                feDiffuseLighting->diffuseConstant = g_ascii_strtod(value, &end_ptr);
+                if (end_ptr && feDiffuseLighting->diffuseConstant >= 0) {
+                    feDiffuseLighting->diffuseConstant_set = TRUE;
+                } else {
+                    end_ptr = NULL;
+                    g_warning("feDiffuseLighting: diffuseConstant should be a positive number ... defaulting to 1");
+                }
+            } 
+            if (!value || !end_ptr) {
+                feDiffuseLighting->diffuseConstant = 1;
+                feDiffuseLighting->diffuseConstant_set = FALSE;
+            }
             if (feDiffuseLighting->renderer) {
                 feDiffuseLighting->renderer->diffuseConstant = feDiffuseLighting->diffuseConstant;
-            }
+    }
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_KERNELUNITLENGTH:
@@ -166,7 +195,15 @@ sp_feDiffuseLighting_set(SPObject *object, unsigned int key, gchar const *value)
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_PROP_LIGHTING_COLOR:
-            feDiffuseLighting->lighting_color = sp_svg_read_color(value, 0xffffffff);
+            cend_ptr = NULL;
+            feDiffuseLighting->lighting_color = sp_svg_read_color(value, &cend_ptr, 0xffffffff);
+            //if a value was read
+            if (cend_ptr) {
+                feDiffuseLighting->lighting_color_set = TRUE; 
+            } else {
+                //lighting_color already contains the default value
+                feDiffuseLighting->lighting_color_set = FALSE; 
+            }
             if (feDiffuseLighting->renderer) {
                 feDiffuseLighting->renderer->lighting_color = feDiffuseLighting->lighting_color;
             }
@@ -215,13 +252,23 @@ sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint fl
             repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
         }
     }
-
-    sp_repr_set_css_double(repr, "surfaceScale", fediffuselighting->surfaceScale);
-    sp_repr_set_css_double(repr, "diffuseConstant", fediffuselighting->diffuseConstant);
+    
+    if (fediffuselighting->surfaceScale_set)
+        sp_repr_set_css_double(repr, "surfaceScale", fediffuselighting->surfaceScale);
+    else
+        repr->setAttribute("surfaceScale", NULL);
+    if (fediffuselighting->diffuseConstant_set)
+        sp_repr_set_css_double(repr, "diffuseConstant", fediffuselighting->diffuseConstant);
+    else
+        repr->setAttribute("diffuseConstant", NULL);
    /*TODO kernelUnits */ 
-    gchar c[64];
-    sp_svg_write_color(c, 64, fediffuselighting->lighting_color);
-    repr->setAttribute("lighting-color", c);
+    if (fediffuselighting->lighting_color_set) {
+        gchar c[64];
+        sp_svg_write_color(c, 64, fediffuselighting->lighting_color);
+        repr->setAttribute("lighting-color", c);
+    } else
+        repr->setAttribute("lighting-color", NULL);
+        
     if (((SPObjectClass *) feDiffuseLighting_parent_class)->write) {
         ((SPObjectClass *) feDiffuseLighting_parent_class)->write(object, repr, flags);
     }

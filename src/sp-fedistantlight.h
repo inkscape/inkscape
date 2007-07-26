@@ -33,10 +33,10 @@ struct SPFeDistantLight : public SPObject {
 
     /** azimuth attribute */
     gfloat azimuth;
+    guint azimuth_set : 1;
     /** elevation attribute */
     gfloat elevation;
-
-    //other fields
+    guint elevation_set : 1;
 };
 
 struct SPFeDistantLightClass {

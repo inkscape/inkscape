@@ -90,6 +90,15 @@ sp_fespotlight_init(SPFeSpotLight *fespotlight)
     fespotlight->pointsAtZ = 0;
     fespotlight->specularExponent = 1;
     fespotlight->limitingConeAngle = 90;
+    
+    fespotlight->x_set = FALSE;
+    fespotlight->y_set = FALSE;
+    fespotlight->z_set = FALSE;
+    fespotlight->pointsAtX_set = FALSE;
+    fespotlight->pointsAtY_set = FALSE;
+    fespotlight->pointsAtZ_set = FALSE;
+    fespotlight->specularExponent_set = FALSE;
+    fespotlight->limitingConeAngle_set = FALSE;
 }
 
 /**
@@ -141,10 +150,20 @@ static void
 sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeSpotLight *fespotlight = SP_FESPOTLIGHT(object);
-
+    gchar *end_ptr;
+    
     switch (key) {
     case SP_ATTR_X:
-        fespotlight->x = g_ascii_strtod(value, NULL);
+        end_ptr = NULL;
+        if (value) {
+            fespotlight->x = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr)
+                fespotlight->x_set = TRUE;
+        }
+        if(!value || !end_ptr) {
+            fespotlight->x = 0;
+            fespotlight->x_set = FALSE;
+        } 
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -152,7 +171,16 @@ sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     case SP_ATTR_Y:
-        fespotlight->y = g_ascii_strtod(value, NULL);
+        end_ptr = NULL;
+        if (value) {
+            fespotlight->y = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr)
+                fespotlight->y_set = TRUE;
+        }
+        if(!value || !end_ptr) {
+            fespotlight->y = 0;
+            fespotlight->y_set = FALSE;
+        } 
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -160,7 +188,16 @@ sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     case SP_ATTR_Z:
-        fespotlight->z = g_ascii_strtod(value, NULL);
+        end_ptr = NULL;
+        if (value) {
+            fespotlight->z = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr)
+                fespotlight->z_set = TRUE;
+        }
+        if(!value || !end_ptr) {
+            fespotlight->z = 0;
+            fespotlight->z_set = FALSE;
+        } 
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -168,7 +205,16 @@ sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     case SP_ATTR_POINTSATX:
-        fespotlight->pointsAtX = g_ascii_strtod(value, NULL);
+        end_ptr = NULL;
+        if (value) {
+            fespotlight->pointsAtX = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr)
+                fespotlight->pointsAtX_set = TRUE;
+        }
+        if(!value || !end_ptr) {
+            fespotlight->pointsAtX = 0;
+            fespotlight->pointsAtX_set = FALSE;
+        } 
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -176,7 +222,16 @@ sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     case SP_ATTR_POINTSATY:
-        fespotlight->pointsAtY = g_ascii_strtod(value, NULL);
+        end_ptr = NULL;
+        if (value) {
+            fespotlight->pointsAtY = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr)
+                fespotlight->pointsAtY_set = TRUE;
+        }
+        if(!value || !end_ptr) {
+            fespotlight->pointsAtY = 0;
+            fespotlight->pointsAtY_set = FALSE;
+        } 
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -184,7 +239,16 @@ sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     case SP_ATTR_POINTSATZ:
-        fespotlight->pointsAtZ = g_ascii_strtod(value, NULL);
+        end_ptr = NULL;
+        if (value) {
+            fespotlight->pointsAtZ = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr)
+                fespotlight->pointsAtZ_set = TRUE;
+        }
+        if(!value || !end_ptr) {
+            fespotlight->pointsAtZ = 0;
+            fespotlight->pointsAtZ_set = FALSE;
+        } 
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -192,7 +256,16 @@ sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     case SP_ATTR_SPECULAREXPONENT:
-        fespotlight->specularExponent = g_ascii_strtod(value, NULL);
+        end_ptr = NULL;
+        if (value) {
+            fespotlight->specularExponent = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr)
+                fespotlight->specularExponent_set = TRUE;
+        }
+        if(!value || !end_ptr) {
+            fespotlight->specularExponent = 1;
+            fespotlight->specularExponent_set = FALSE;
+        } 
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -200,7 +273,16 @@ sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     case SP_ATTR_LIMITINGCONEANGLE:
-        fespotlight->limitingConeAngle = g_ascii_strtod(value, NULL);
+        end_ptr = NULL;
+        if (value) {
+            fespotlight->limitingConeAngle = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr)
+                fespotlight->limitingConeAngle_set = TRUE;
+        }
+        if(!value || !end_ptr) {
+            fespotlight->limitingConeAngle = 90;
+            fespotlight->limitingConeAngle_set = FALSE;
+        } 
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -252,15 +334,23 @@ sp_fespotlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     if (!repr) {
         repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
     }
-
-    sp_repr_set_css_double(repr, "x", fespotlight->x);
-    sp_repr_set_css_double(repr, "y", fespotlight->y);
-    sp_repr_set_css_double(repr, "z", fespotlight->z);
-    sp_repr_set_css_double(repr, "pointsAtX", fespotlight->pointsAtX);
-    sp_repr_set_css_double(repr, "pointsAtY", fespotlight->pointsAtY);
-    sp_repr_set_css_double(repr, "pointsAtZ", fespotlight->pointsAtZ);
-    sp_repr_set_css_double(repr, "specularExponent", fespotlight->specularExponent);
-    sp_repr_set_css_double(repr, "limitingConeAngle", fespotlight->limitingConeAngle);
+    
+    if (fespotlight->x_set)
+        sp_repr_set_css_double(repr, "x", fespotlight->x);
+    if (fespotlight->y_set)
+        sp_repr_set_css_double(repr, "y", fespotlight->y);
+    if (fespotlight->z_set)
+        sp_repr_set_css_double(repr, "z", fespotlight->z);
+    if (fespotlight->pointsAtX_set)
+        sp_repr_set_css_double(repr, "pointsAtX", fespotlight->pointsAtX);
+    if (fespotlight->pointsAtY_set)
+        sp_repr_set_css_double(repr, "pointsAtY", fespotlight->pointsAtY);
+    if (fespotlight->pointsAtZ_set)
+        sp_repr_set_css_double(repr, "pointsAtZ", fespotlight->pointsAtZ);
+    if (fespotlight->specularExponent_set)
+        sp_repr_set_css_double(repr, "specularExponent", fespotlight->specularExponent);
+    if (fespotlight->limitingConeAngle_set)
+        sp_repr_set_css_double(repr, "limitingConeAngle", fespotlight->limitingConeAngle);
     
     if (((SPObjectClass *) feSpotLight_parent_class)->write) {
         ((SPObjectClass *) feSpotLight_parent_class)->write(object, repr, flags);

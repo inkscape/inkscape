@@ -100,6 +100,11 @@ sp_feSpecularLighting_init(SPFeSpecularLighting *feSpecularLighting)
     feSpecularLighting->lighting_color = 0xffffffff;
     //TODO kernelUnit
     feSpecularLighting->renderer = NULL;
+    
+    feSpecularLighting->surfaceScale_set = FALSE;
+    feSpecularLighting->specularConstant_set = FALSE;
+    feSpecularLighting->specularExponent_set = FALSE;
+    feSpecularLighting->lighting_color_set = FALSE;
 }
 
 /**
@@ -140,26 +145,67 @@ static void
 sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeSpecularLighting *feSpecularLighting = SP_FESPECULARLIGHTING(object);
-    
+    gchar const *cend_ptr = NULL;
+    gchar *end_ptr = NULL;
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
 //TODO test forbidden values
         case SP_ATTR_SURFACESCALE:
-            feSpecularLighting->surfaceScale = g_ascii_strtod(value, NULL);
+            end_ptr = NULL;
+            if (value) {
+                feSpecularLighting->surfaceScale = g_ascii_strtod(value, &end_ptr);
+                if (end_ptr) {
+                    feSpecularLighting->surfaceScale_set = TRUE;
+                } else {
+                    g_warning("feSpecularLighting: surfaceScale should be a number ... defaulting to 1");
+                }
+
+            }
+            //if the attribute is not set or has an unreadable value
+            if (!value || !end_ptr) {
+                feSpecularLighting->surfaceScale = 1;
+                feSpecularLighting->surfaceScale_set = FALSE;
+            }
             if (feSpecularLighting->renderer) {
                 feSpecularLighting->renderer->surfaceScale = feSpecularLighting->surfaceScale;
             }
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_SPECULARCONSTANT:
-            feSpecularLighting->specularConstant = g_ascii_strtod(value, NULL);
+            end_ptr = NULL;
+            if (value) {
+                feSpecularLighting->specularConstant = g_ascii_strtod(value, &end_ptr);
+                if (end_ptr && feSpecularLighting->specularConstant >= 0) {
+                    feSpecularLighting->specularConstant_set = TRUE;
+                } else {
+                    end_ptr = NULL;
+                    g_warning("feSpecularLighting: specularConstant should be a positive number ... defaulting to 1");
+                }
+            }
+            if (!value || !end_ptr) {
+                feSpecularLighting->specularConstant = 1;
+                feSpecularLighting->specularConstant_set = FALSE;
+            }
             if (feSpecularLighting->renderer) {
                 feSpecularLighting->renderer->specularConstant = feSpecularLighting->specularConstant;
             }
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_SPECULAREXPONENT:
-            feSpecularLighting->specularExponent = g_ascii_strtod(value, NULL);
+            end_ptr = NULL;
+            if (value) {
+                feSpecularLighting->specularExponent = g_ascii_strtod(value, &end_ptr);
+                if (feSpecularLighting->specularExponent >= 1 && feSpecularLighting->specularExponent <= 128) {
+                    feSpecularLighting->specularExponent_set = TRUE;
+                } else {
+                    end_ptr = NULL;
+                    g_warning("feSpecularLighting: specularExponent should be a number in range [1, 128] ... defaulting to 1");
+                }
+            } 
+            if (!value || !end_ptr) {
+                feSpecularLighting->specularExponent = 1;
+                feSpecularLighting->specularExponent_set = FALSE;
+            }
             if (feSpecularLighting->renderer) {
                 feSpecularLighting->renderer->specularExponent = feSpecularLighting->specularExponent;
             }
@@ -175,7 +221,15 @@ sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar const *value
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_PROP_LIGHTING_COLOR:
-            feSpecularLighting->lighting_color = sp_svg_read_color(value, 0xffffffff);
+            cend_ptr = NULL;
+            feSpecularLighting->lighting_color = sp_svg_read_color(value, &cend_ptr, 0xffffffff);
+            //if a value was read
+            if (cend_ptr) {
+                feSpecularLighting->lighting_color_set = TRUE;
+            } else {
+                //lighting_color already contains the default value
+                feSpecularLighting->lighting_color_set = FALSE;
+            }
             if (feSpecularLighting->renderer) {
                 feSpecularLighting->renderer->lighting_color = feSpecularLighting->lighting_color;
             }
@@ -225,14 +279,18 @@ sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint f
             repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
         }
     }
-
-    sp_repr_set_css_double(repr, "surfaceScale", fespecularlighting->surfaceScale);
-    sp_repr_set_css_double(repr, "specularConstant", fespecularlighting->specularConstant);
-    sp_repr_set_css_double(repr, "specularExponent", fespecularlighting->specularExponent);
+    if (fespecularlighting->surfaceScale_set)
+        sp_repr_set_css_double(repr, "surfaceScale", fespecularlighting->surfaceScale);
+    if (fespecularlighting->specularConstant_set)
+        sp_repr_set_css_double(repr, "specularConstant", fespecularlighting->specularConstant);
+    if (fespecularlighting->specularExponent_set)
+        sp_repr_set_css_double(repr, "specularExponent", fespecularlighting->specularExponent);
    /*TODO kernelUnits */ 
-    gchar c[64];
-    sp_svg_write_color(c, 64, fespecularlighting->lighting_color);
-    repr->setAttribute("lighting-color", c);
+    if (fespecularlighting->lighting_color_set) {
+        gchar c[64];
+        sp_svg_write_color(c, 64, fespecularlighting->lighting_color);
+        repr->setAttribute("lighting-color", c);
+    }
     if (((SPObjectClass *) feSpecularLighting_parent_class)->write) {
         ((SPObjectClass *) feSpecularLighting_parent_class)->write(object, repr, flags);
     }

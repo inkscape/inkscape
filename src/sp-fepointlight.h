@@ -33,10 +33,13 @@ struct SPFePointLight : public SPObject {
 
     /** x coordinate of the light source */
     gfloat x; 
+    guint x_set : 1;
     /** y coordinate of the light source */
     gfloat y; 
+    guint y_set : 1;
     /** z coordinate of the light source */
     gfloat z; 
+    guint z_set : 1;
 
     //other fields
 };

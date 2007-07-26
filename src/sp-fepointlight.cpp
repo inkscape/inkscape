@@ -85,6 +85,10 @@ sp_fepointlight_init(SPFePointLight *fepointlight)
     fepointlight->x = 0;
     fepointlight->y = 0;
     fepointlight->z = 0;
+    
+    fepointlight->x_set = FALSE;
+    fepointlight->y_set = FALSE;
+    fepointlight->z_set = FALSE;
 }
 
 /**
@@ -131,10 +135,20 @@ static void
 sp_fepointlight_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFePointLight *fepointlight = SP_FEPOINTLIGHT(object);
-
+    gchar *end_ptr;
     switch (key) {
     case SP_ATTR_X:
-        fepointlight->x = g_ascii_strtod(value, NULL);
+        end_ptr = NULL;
+        if (value) {
+            fepointlight->x = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr) {
+                fepointlight->x_set = TRUE;
+            }
+        }
+        if (!value || !end_ptr) {
+            fepointlight->x = 0;
+            fepointlight->x_set = FALSE;
+        }
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -142,7 +156,17 @@ sp_fepointlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     case SP_ATTR_Y:
-        fepointlight->y = g_ascii_strtod(value, NULL);
+        end_ptr = NULL;
+        if (value) {
+            fepointlight->y = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr) {
+                fepointlight->y_set = TRUE;
+            }
+        }
+        if (!value || !end_ptr) {
+            fepointlight->y = 0;
+            fepointlight->y_set = FALSE;
+        }
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -150,7 +174,17 @@ sp_fepointlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     case SP_ATTR_Z:
-        fepointlight->z = g_ascii_strtod(value, NULL);
+        end_ptr = NULL;
+        if (value) {
+            fepointlight->z = g_ascii_strtod(value, &end_ptr);
+            if (end_ptr) {
+                fepointlight->z_set = TRUE;
+            }
+        }
+        if (!value || !end_ptr) {
+            fepointlight->z = 0;
+            fepointlight->z_set = FALSE;
+        }
         if (object->parent &&
                 (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
                  SP_IS_FESPECULARLIGHTING(object->parent))) {
@@ -197,10 +231,13 @@ sp_fepointlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     if (!repr) {
         repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
     }
-
-    sp_repr_set_css_double(repr, "x", fepointlight->x);
-    sp_repr_set_css_double(repr, "y", fepointlight->y);
-    sp_repr_set_css_double(repr, "z", fepointlight->z);
+    
+    if (fepointlight->x_set)
+        sp_repr_set_css_double(repr, "x", fepointlight->x);
+    if (fepointlight->y_set)
+        sp_repr_set_css_double(repr, "y", fepointlight->y);
+    if (fepointlight->z_set)
+        sp_repr_set_css_double(repr, "z", fepointlight->z);
     
     if (((SPObjectClass *) fePointLight_parent_class)->write) {
         ((SPObjectClass *) fePointLight_parent_class)->write(object, repr, flags);
