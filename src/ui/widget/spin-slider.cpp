@@ -32,7 +32,12 @@ SpinSlider::SpinSlider(double value, double lower, double upper, double step_inc
 
 Glib::ustring SpinSlider::get_as_attribute() const
 {
-    return Glib::Ascii::dtostr((int)_adjustment.get_value());
+    const double val = _adjustment.get_value();
+
+    if(_spin.get_digits() == 0)
+        return Glib::Ascii::dtostr((int)val);
+    else
+        return Glib::Ascii::dtostr(val);
 }
 
 void SpinSlider::set_from_attribute(SPObject* o)
