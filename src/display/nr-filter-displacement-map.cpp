@@ -59,8 +59,8 @@ int FilterDisplacementMap::render(FilterSlot &slot, Matrix const &trans) {
     y1 = out->area.y1;
     width = x1 - x0;
    
-    for (x=x0 + scale/2; x < x1 - scale/2; x++){
-        for (y=y0 + scale/2; y < y1 - scale/2; y++){
+    for (x=x0 + (int)(scale/2); x < x1 - (int)(scale/2); x++){
+        for (y=y0 + (int)(scale/2); y < y1 - (int)(scale/2); y++){
 /* SVG spec states that pixel values must be alpha-demultiplied before processing this filter operation.
 The following code does it, but when we DON'T do it, output is more similar to output from Batik.
 
@@ -102,7 +102,7 @@ void FilterDisplacementMap::set_input(int slot) {
     _input = slot;
 }
 
-void FilterDisplacementMap::set_scale(int s) {
+void FilterDisplacementMap::set_scale(double s) {
     scale = s;
 }
 
@@ -119,10 +119,10 @@ void FilterDisplacementMap::set_channel_selector(int s, int channel) {
 void FilterDisplacementMap::area_enlarge(NRRectL &area, Matrix const &trans)
 {
     //I'm in doubt whether this affects all input buffers or only 'in'
-    area.x0 -= scale/2;
-    area.y0 -= scale/2;
-    area.x1 += scale/2;
-    area.y1 += scale/2;
+    area.x0 -= (int)(scale/2);
+    area.y0 -= (int)(scale/2);
+    area.x1 += (int)(scale/2);
+    area.y1 += (int)(scale/2);
 }
 
 } /* namespace NR */

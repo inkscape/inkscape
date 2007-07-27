@@ -79,11 +79,7 @@ sp_feConvolveMatrix_class_init(SPFeConvolveMatrixClass *klass)
 
 static void
 sp_feConvolveMatrix_init(SPFeConvolveMatrix *feConvolveMatrix)
-{
-        feConvolveMatrix->divisor=0;
-        feConvolveMatrix->preserveAlpha = false;
-        feConvolveMatrix->order.set("3 3");
-}
+{}
 
 /**
  * Reads the Inkscape::XML::Node, and initializes SPFeConvolveMatrix variables.  For this to get called,
@@ -190,6 +186,9 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         case SP_ATTR_ORDER:
             feConvolveMatrix->order.set(value);
+            //From SVG spec: If <orderY> is not provided, it defaults to <orderX>.
+            if (feConvolveMatrix->order.optNumIsSet() == false)
+                feConvolveMatrix->order.setOptNumber(feConvolveMatrix->order.getNumber());
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_KERNELMATRIX:

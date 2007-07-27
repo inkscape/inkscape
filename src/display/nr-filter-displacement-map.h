@@ -27,13 +27,13 @@ public:
 
     virtual void set_input(int slot);
     virtual void set_input(int input, int slot);
-    virtual void set_scale(int s);
+    virtual void set_scale(double s);
     virtual void set_channel_selector(int channel, int s);
     virtual int render(FilterSlot &slot, Matrix const &trans);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
 
 private:
-    int scale;
+    double scale;
     int _input2;
     int Xchannel;
     int Ychannel;

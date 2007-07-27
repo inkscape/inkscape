@@ -174,7 +174,7 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
         case SP_ATTR_BASEFREQUENCY:
             feTurbulence->baseFrequency.set(value);
                 //From SVG spec: If two <number>s are provided, the first number represents a base frequency in the X direction and the second value represents a base frequency in the Y direction. If one number is provided, then that value is used for both X and Y.
-            if (feTurbulence->baseFrequency.getOptNumber() == -1) // -1 means "not set"
+            if (feTurbulence->baseFrequency.optNumIsSet() == false)
                 feTurbulence->baseFrequency.setOptNumber(feTurbulence->baseFrequency.getNumber());
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;

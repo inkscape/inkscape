@@ -14,7 +14,11 @@
 namespace NR {
 
 FilterConvolveMatrix::FilterConvolveMatrix()
-: bias(0),
+: orderX(3),
+  orderY(3),
+  targetX((int)(orderX/2)),
+  targetY((int)(orderY/2)),
+  bias(0),
   edgeMode(0),
   preserveAlpha(false)
 {}

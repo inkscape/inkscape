@@ -73,6 +73,14 @@ public:
         number = num;
     }
 
+    bool optNumIsSet(){
+        return optNumber_set;
+    }
+
+    bool numIsSet(){
+        return _set;
+    }
+    
     gchar *getValueString()
     {
         Inkscape::SVGOStringStream os;
