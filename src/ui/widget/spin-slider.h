@@ -46,6 +46,9 @@ public:
     Gtk::SpinButton& get_spin_button();
 
     void set_update_policy(const Gtk::UpdateType);
+
+    // Change the SpinSlider into a SpinButton with AttrWidget support)
+    void remove_scale();
 private:
     Gtk::Adjustment _adjustment;
     Gtk::HScale _scale;

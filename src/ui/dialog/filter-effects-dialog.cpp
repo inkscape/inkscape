@@ -1153,7 +1153,8 @@ void FilterEffectsDialog::init_settings_widgets()
     ConvolveMatrix* convmat = _settings->add(SP_ATTR_KERNELMATRIX, _("Kernel"));
     order->signal_value_changed().connect(
         sigc::bind(sigc::mem_fun(*convmat, &ConvolveMatrix::update_direct), this));
-    order->set_update_policy(Gtk::UPDATE_DISCONTINUOUS);
+    order->get_spinslider1().remove_scale();
+    order->get_spinslider2().remove_scale();
     _settings->add(SP_ATTR_DIVISOR, _("Divisor"), 0.01, 10, 1, 0.01, 1);
     _settings->add(SP_ATTR_BIAS, _("Bias"), -10, 10, 1, 0.01, 1);
     

@@ -94,6 +94,11 @@ void SpinSlider::set_update_policy(const Gtk::UpdateType u)
     _scale.set_update_policy(u);
 }
 
+void SpinSlider::remove_scale()
+{
+    remove(_scale);
+}
+
 DualSpinSlider::DualSpinSlider(double value, double lower, double upper, double step_inc,
                                double climb_rate, int digits, const SPAttributeEnum a)
     : AttrWidget(a), _s1(value, lower, upper, step_inc, climb_rate, digits),
