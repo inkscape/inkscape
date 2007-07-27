@@ -43,6 +43,8 @@ class FilterEffectsDialog : public Dialog {
 public:
     ~FilterEffectsDialog();
 
+    void set_attrs_locked(const bool);
+
     static FilterEffectsDialog *create() { return new FilterEffectsDialog(); }
 private:
     class FilterModifier : public Gtk::VBox, public FilterEffectChooser
@@ -70,9 +72,10 @@ private:
             Glib::Property<int> _sel;
         };
         
-        static void on_inkscape_change_selection(Inkscape::Application *, Inkscape::Selection *,
-                                                 FilterModifier*);
+        static void on_inkscape_change_selection(Application *, Selection *, FilterModifier*);
+        void update_selection(Selection *);
 
+        void filter_list_button_press(GdkEventButton*);
         void filter_list_button_release(GdkEventButton*);
         void add_filter();
         void remove_filter();
@@ -197,6 +200,9 @@ private:
 
     // For controlling setting sensitivity
     Gtk::Widget* _k1, *_k2, *_k3, *_k4;
+
+    // To prevent unwanted signals
+    bool _locked;
 
     FilterEffectsDialog(FilterEffectsDialog const &d);
     FilterEffectsDialog& operator=(FilterEffectsDialog const &d);

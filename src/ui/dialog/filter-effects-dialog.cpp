@@ -175,8 +175,10 @@ public:
 
         SPObject* ob = _dialog._primitive_list.get_selected();
 
+        _dialog.set_attrs_locked(true);
         for(unsigned i = 0; i < _attrwidgets[_current_type].size(); ++i)
             _attrwidgets[_current_type][i]->set_from_attribute(ob);
+        _dialog.set_attrs_locked(false);
     }
 
     void type(const NR::FilterPrimitiveType t)
@@ -307,15 +309,14 @@ FilterEffectsDialog::FilterModifier::FilterModifier()
     Gtk::TreeViewColumn* col = _list.get_column(selcol - 1);
     if(col)
        col->add_attribute(_cell_sel.property_sel(), _columns.sel);
-
-    _list.append_column_editable(_("_Filter"), _columns.id);
-    ((Gtk::CellRendererText*)_list.get_column(1)->get_first_cell_renderer())->
-        signal_edited().connect(sigc::mem_fun(*this, &FilterEffectsDialog::FilterModifier::filter_name_edited));
+    _list.append_column(_("_Filter"), _columns.id);
 
     sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
     sw->set_shadow_type(Gtk::SHADOW_IN);
     show_all_children();
     _add.signal_clicked().connect(sigc::mem_fun(*this, &FilterModifier::add_filter));
+    _list.signal_button_press_event().connect_notify(
+        sigc::mem_fun(*this, &FilterModifier::filter_list_button_press));
     _list.signal_button_release_event().connect_notify(
         sigc::mem_fun(*this, &FilterModifier::filter_list_button_release));
     _menu = create_popup_menu(*this, sigc::mem_fun(*this, &FilterModifier::duplicate_filter),
@@ -369,9 +370,15 @@ void FilterEffectsDialog::FilterModifier::CellRendererSel::render_vfunc(
 }
 
 // When the selection changes, show the active filter(s) in the dialog
-void FilterEffectsDialog::FilterModifier::on_inkscape_change_selection(Inkscape::Application *inkscape,
-                                                                       Inkscape::Selection *sel,
+void FilterEffectsDialog::FilterModifier::on_inkscape_change_selection(Application *inkscape,
+                                                                       Selection *sel,
                                                                        FilterModifier* fm)
+{
+    if(fm && sel)
+        fm->update_selection(sel);
+}
+
+void FilterEffectsDialog::FilterModifier::update_selection(Selection *sel)
 {
     std::set<SPObject*> used;
 
@@ -388,16 +395,16 @@ void FilterEffectsDialog::FilterModifier::on_inkscape_change_selection(Inkscape:
 
     const int size = used.size();
 
-    for(Gtk::TreeIter iter = fm->_model->children().begin();
-        iter != fm->_model->children().end(); ++iter) {
-        if(used.find((*iter)[fm->_columns.filter]) != used.end()) {
+    for(Gtk::TreeIter iter = _model->children().begin();
+        iter != _model->children().end(); ++iter) {
+        if(used.find((*iter)[_columns.filter]) != used.end()) {
             // If only one filter is in use by the selection, select it
             if(size == 1)
-                fm->_list.get_selection()->select(iter);
-            (*iter)[fm->_columns.sel] = size;
+                _list.get_selection()->select(iter);
+            (*iter)[_columns.sel] = size;
         }
         else
-            (*iter)[fm->_columns.sel] = 0;
+            (*iter)[_columns.sel] = 0;
     }
 }
 
@@ -428,6 +435,31 @@ void FilterEffectsDialog::FilterModifier::select_filter(const SPFilter* filter)
                 break;
             }
         }
+    }
+}
+
+void FilterEffectsDialog::FilterModifier::filter_list_button_press(GdkEventButton* e)
+{
+    // Double-click
+    if(e->type == GDK_2BUTTON_PRESS) {
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPDocument *doc = sp_desktop_document(desktop);
+        SPFilter* filter = get_selected_filter();
+        Inkscape::Selection *sel = sp_desktop_selection(desktop);
+
+        GSList const *items = sel->itemList();
+
+        for (GSList const *i = items; i != NULL; i = i->next) {
+            SPItem * item = SP_ITEM(i->data);
+            SPStyle *style = SP_OBJECT_STYLE(item);
+            g_assert(style != NULL);
+            
+            sp_style_set_property_url(SP_OBJECT(item), "filter", SP_OBJECT(filter), false);
+            SP_OBJECT(item)->requestDisplayUpdate((SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG ));
+        }
+
+        update_selection(sel);
+        sp_document_maybe_done(doc, "fillstroke:blur", SP_VERB_DIALOG_FILL_STROKE,  _("Change blur"));
     }
 }
 
@@ -1042,7 +1074,8 @@ FilterEffectsDialog::FilterEffectsDialog()
       _primitive_list(*this),
       _add_primitive_type(FPConverter),
       _add_primitive(Gtk::Stock::ADD),
-      _empty_settings(_("No primitive selected"), Gtk::ALIGN_LEFT)
+      _empty_settings(_("No primitive selected"), Gtk::ALIGN_LEFT),
+      _locked(false)
 {
     _settings = new Settings(*this);
 
@@ -1087,6 +1120,11 @@ FilterEffectsDialog::FilterEffectsDialog()
 FilterEffectsDialog::~FilterEffectsDialog()
 {
     delete _settings;
+}
+
+void FilterEffectsDialog::set_attrs_locked(const bool l)
+{
+    _locked = l;
 }
 
 void FilterEffectsDialog::init_settings_widgets()
@@ -1202,16 +1240,18 @@ void FilterEffectsDialog::set_attr_direct(const SPAttributeEnum attr, const Attr
 
 void FilterEffectsDialog::set_attr(const SPAttributeEnum attr, const gchar* val)
 {
-    SPFilter *filter = _filter_modifier.get_selected_filter();
-    SPFilterPrimitive* prim = _primitive_list.get_selected();
-
-    if(filter && prim) {
-        update_settings_sensitivity();
-
-        SP_OBJECT_REPR(prim)->setAttribute((gchar*)sp_attribute_name(attr), val);
-        filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
-
-        sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Set filter primitive attribute"));
+    if(!_locked) {
+        SPFilter *filter = _filter_modifier.get_selected_filter();
+        SPFilterPrimitive* prim = _primitive_list.get_selected();
+        
+        if(filter && prim) {
+            update_settings_sensitivity();
+            
+            SP_OBJECT_REPR(prim)->setAttribute((gchar*)sp_attribute_name(attr), val);
+            filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Set filter primitive attribute"));
+        }
     }
 }
 
