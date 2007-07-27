@@ -20,6 +20,7 @@
 #include "attributes.h"
 #include "svg/svg.h"
 #include "sp-fecomposite.h"
+#include "helper-fns.h"
 #include "xml/repr.h"
 #include "display/nr-filter-composite.h"
 
@@ -120,21 +121,6 @@ sp_feComposite_release(SPObject *object)
         ((SPObjectClass *) feComposite_parent_class)->release(object);
 }
 
-static double
-sp_feComposite_read_number(gchar const *value) {
-    if (!value) return 0;
-
-    char *end;
-    double ret = g_ascii_strtod(value, &end);
-    if (*end) {
-        g_warning("Unable to convert \"%s\" to number", value);
-        // We could leave this out, too. If strtod can't convert
-        // anything, it will return zero.
-        ret = 0;
-    }
-    return ret;
-}
-
 static FeCompositeOperator
 sp_feComposite_read_operator(gchar const *value) {
     if (!value) return COMPOSITE_DEFAULT;
@@ -171,7 +157,7 @@ sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
             break;
 
         case SP_ATTR_K1:
-            k_n = sp_feComposite_read_number(value);
+            k_n = helperfns_read_number(value);
             if (k_n != feComposite->k1) {
                 feComposite->k1 = k_n;
                 if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)
@@ -180,7 +166,7 @@ sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
             break;
 
         case SP_ATTR_K2:
-            k_n = sp_feComposite_read_number(value);
+            k_n = helperfns_read_number(value);
             if (k_n != feComposite->k2) {
                 feComposite->k2 = k_n;
                 if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)
@@ -189,7 +175,7 @@ sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
             break;
 
         case SP_ATTR_K3:
-            k_n = sp_feComposite_read_number(value);
+            k_n = helperfns_read_number(value);
             if (k_n != feComposite->k3) {
                 feComposite->k3 = k_n;
                 if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)
@@ -198,7 +184,7 @@ sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
             break;
 
         case SP_ATTR_K4:
-            k_n = sp_feComposite_read_number(value);
+            k_n = helperfns_read_number(value);
             if (k_n != feComposite->k4) {
                 feComposite->k4 = k_n;
                 if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)

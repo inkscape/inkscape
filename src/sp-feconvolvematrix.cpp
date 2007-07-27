@@ -22,6 +22,7 @@
 #include "attributes.h"
 #include "svg/svg.h"
 #include "sp-feconvolvematrix.h"
+#include "helper-fns.h"
 #include "xml/repr.h"
 #include "display/nr-filter-convolve-matrix.h"
 
@@ -116,7 +117,6 @@ sp_feConvolveMatrix_release(SPObject *object)
         ((SPObjectClass *) feConvolveMatrix_parent_class)->release(object);
 }
 
-
 static std::vector<gdouble> read_kernel_matrix(const gchar* value, int size){
         std::vector<gdouble> v(size, (gdouble) 0);
         int i;
@@ -124,20 +124,6 @@ static std::vector<gdouble> read_kernel_matrix(const gchar* value, int size){
         for (i=0;i<size;i++)
                 v[i] = g_ascii_strtod(values[i], NULL);
         return v;
-}
-
-static double
-sp_feConvolveMatrix_read_number(gchar const *value) {
-    if (!value) return 0;
-    char *end;
-    double ret = g_ascii_strtod(value, &end);
-    if (*end) {
-        g_warning("Unable to convert \"%s\" to number", value);
-        // We could leave this out, too. If strtod can't convert
-        // anything, it will return zero.
-        ret = 0;
-    }
-    return ret;
 }
 
 static int sp_feConvolveMatrix_read_edgeMode(gchar const *value){
@@ -154,20 +140,6 @@ static int sp_feConvolveMatrix_read_edgeMode(gchar const *value){
             break;
     }
     return 0; //duplicate is default
-}
-
-
-static bool sp_feConvolveMatrix_read_bool(gchar const *value){
-    if (!value) return false; //false is default
-    switch(value[0]){
-        case 't':
-            if (strncmp(value, "true", 4) == 0) return true;
-            break;
-        case 'f':
-            if (strncmp(value, "false", 5) == 0) return false;
-            break;
-    }
-    return false; //false is default
 }
 
 /**
@@ -196,28 +168,28 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_DIVISOR:
-            read_num = sp_feConvolveMatrix_read_number(value);
+            read_num = helperfns_read_number(value);
             if (read_num != feConvolveMatrix->divisor){
                 feConvolveMatrix->divisor = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_BIAS:
-            read_num = sp_feConvolveMatrix_read_number(value);
+            read_num = helperfns_read_number(value);
             if (read_num != feConvolveMatrix->bias){
                 feConvolveMatrix->bias = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_TARGETX:
-            read_int = (int) sp_feConvolveMatrix_read_number(value);
+            read_int = (int) helperfns_read_number(value);
             if (read_int != feConvolveMatrix->targetX){
                 feConvolveMatrix->targetX = read_int;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_TARGETY:
-            read_int = (int) sp_feConvolveMatrix_read_number(value);
+            read_int = (int) helperfns_read_number(value);
             if (read_int != feConvolveMatrix->targetY){
                 feConvolveMatrix->targetY = read_int;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -235,7 +207,7 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_PRESERVEALPHA:
-            read_bool = sp_feConvolveMatrix_read_bool(value);
+            read_bool = helperfns_read_bool(value, false);
             if (read_bool != feConvolveMatrix->preserveAlpha){
                 feConvolveMatrix->preserveAlpha = read_bool;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);

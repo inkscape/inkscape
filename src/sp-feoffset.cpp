@@ -21,6 +21,7 @@
 #include "attributes.h"
 #include "svg/svg.h"
 #include "sp-feoffset.h"
+#include "helper-fns.h"
 #include "xml/repr.h"
 #include "display/nr-filter-offset.h"
 
@@ -109,20 +110,6 @@ sp_feOffset_release(SPObject *object)
         ((SPObjectClass *) feOffset_parent_class)->release(object);
 }
 
-static double
-sp_feOffset_read_number(gchar const *value) {
-    if (!value) return 0;
-    char *end;
-    double ret = g_ascii_strtod(value, &end);
-    if (*end) {
-        g_warning("Unable to convert \"%s\" to number", value);
-        // We could leave this out, too. If strtod can't convert
-        // anything, it will return zero.
-        ret = 0;
-    }
-    return ret;
-}
-
 /**
  * Sets a specific value in the SPFeOffset.
  */
@@ -134,14 +121,14 @@ sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value)
     double read_num;
     switch(key) {
         case SP_ATTR_DX:
-            read_num = sp_feOffset_read_number(value);
+            read_num = helperfns_read_number(value);
             if (read_num != feOffset->dx) {
                 feOffset->dx = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_DY:
-            read_num = sp_feOffset_read_number(value);
+            read_num = helperfns_read_number(value);
             if (read_num != feOffset->dy) {
                 feOffset->dy = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);

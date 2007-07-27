@@ -22,6 +22,7 @@
 #include "attributes.h"
 #include "svg/svg.h"
 #include "sp-feturbulence.h"
+#include "helper-fns.h"
 #include "xml/repr.h"
 #include <string.h>
 
@@ -115,20 +116,6 @@ sp_feTurbulence_release(SPObject *object)
         ((SPObjectClass *) feTurbulence_parent_class)->release(object);
 }
 
-static double
-sp_feTurbulence_read_number(gchar const *value) {
-    if (!value) return 0;
-    char *end;
-    double ret = g_ascii_strtod(value, &end);
-    if (*end) {
-        g_warning("Unable to convert \"%s\" to number", value);
-        // We could leave this out, too. If strtod can't convert
-        // anything, it will return zero.
-        ret = 0;
-    }
-    return ret;
-}
-
 static bool sp_feTurbulence_read_stitchTiles(gchar const *value){
     if (!value) return false; // 'noStitch' is default
     switch(value[0]){
@@ -179,14 +166,14 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_NUMOCTAVES:
-            read_int = (int) sp_feTurbulence_read_number(value);
+            read_int = (int) helperfns_read_number(value);
             if (read_int != feTurbulence->numOctaves){
                 feTurbulence->numOctaves = read_int;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_SEED:
-            read_num = sp_feTurbulence_read_number(value);
+            read_num = helperfns_read_number(value);
             if (read_num != feTurbulence->seed){
                 feTurbulence->seed = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
