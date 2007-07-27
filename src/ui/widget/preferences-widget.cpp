@@ -263,7 +263,6 @@ void PrefCombo::on_changed()
     if (this->is_visible()) //only take action if user changed value
     {    
         prefs_set_int_attribute (_prefs_path.c_str(), _attr.c_str(), _values[this->get_active_row_number()]);
-        std::cout << "combo set: " << _prefs_path << " " << _attr << " " << _values[this->get_active_row_number()] << std::endl;
     }
 }
 
