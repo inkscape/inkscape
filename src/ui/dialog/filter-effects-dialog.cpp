@@ -715,11 +715,11 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         int vis_x, vis_y;
         tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
 
-        text_start_x = rct.get_x() + row_count * fheight;
+        text_start_x = rct.get_x() + rct.get_width() - _connection_cell.get_text_width() * FPInputConverter.end;
         for(int i = 0; i < FPInputConverter.end; ++i) {
             _vertical_layout->set_text(FPInputConverter.get_label((FilterPrimitiveInput)i));
             const int x = text_start_x + _connection_cell.get_text_width() * (i + 1);
-            get_bin_window()->draw_rectangle(get_style()->get_white_gc(), true, x, vis_y, _connection_cell.get_text_width(), vis.get_height());
+            get_bin_window()->draw_rectangle(get_style()->get_bg_gc(Gtk::STATE_NORMAL), true, x, vis_y, _connection_cell.get_text_width(), vis.get_height());
             get_bin_window()->draw_layout(get_style()->get_text_gc(Gtk::STATE_NORMAL), x, vis_y, _vertical_layout);
             get_bin_window()->draw_line(darkgc, x, vis_y, x, vis_y + vis.get_height());
         }
