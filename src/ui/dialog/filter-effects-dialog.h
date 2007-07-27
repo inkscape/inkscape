@@ -54,6 +54,25 @@ private:
         virtual void select_filter(const SPFilter*);
         virtual Glib::SignalProxy0<void> signal_selection_changed();
     private:
+        class CellRendererSel : public Gtk::CellRenderer
+        {
+        public:
+            CellRendererSel();
+            Glib::PropertyProxy<int> property_sel();
+        protected:
+            virtual void get_size_vfunc(Gtk::Widget&, const Gdk::Rectangle*,
+                                    int*, int*, int*, int*) const;
+            virtual void render_vfunc(const Glib::RefPtr<Gdk::Drawable>& win, Gtk::Widget& w,
+                                      const Gdk::Rectangle& bg_area, const Gdk::Rectangle& cell_area,
+                                      const Gdk::Rectangle& expose_area, Gtk::CellRendererState flags);
+        private:
+            const int _size;
+            Glib::Property<int> _sel;
+        };
+        
+        static void on_inkscape_change_selection(Inkscape::Application *, Inkscape::Selection *,
+                                                 FilterModifier*);
+
         void filter_list_button_release(GdkEventButton*);
         void add_filter();
         void remove_filter();
@@ -61,6 +80,7 @@ private:
         void filter_name_edited(const Glib::ustring& path, const Glib::ustring& text);
 
         Gtk::TreeView _list;
+        CellRendererSel _cell_sel;
         Gtk::Button _add;
         Glib::RefPtr<Gtk::Menu> _menu;
     };

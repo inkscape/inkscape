@@ -31,6 +31,7 @@
 #include "filter-chemistry.h"
 #include "filter-effects-dialog.h"
 #include "inkscape.h"
+#include "selection.h"
 #include "sp-feblend.h"
 #include "sp-fecomposite.h"
 #include "sp-fedisplacementmap.h"
@@ -38,6 +39,7 @@
 #include "sp-filter-primitive.h"
 #include "sp-gaussian-blur.h"
 #include "sp-feoffset.h"
+#include "style.h"
 #include "verbs.h"
 #include "xml/node.h"
 #include "xml/repr.h"
@@ -301,8 +303,13 @@ FilterEffectsDialog::FilterModifier::FilterModifier()
     sw->add(_list);
 
     _list.set_model(_model);
+    const int selcol = _list.append_column("", _cell_sel);
+    Gtk::TreeViewColumn* col = _list.get_column(selcol - 1);
+    if(col)
+       col->add_attribute(_cell_sel.property_sel(), _columns.sel);
+
     _list.append_column_editable(_("_Filter"), _columns.id);
-    ((Gtk::CellRendererText*)_list.get_column(0)->get_first_cell_renderer())->
+    ((Gtk::CellRendererText*)_list.get_column(1)->get_first_cell_renderer())->
         signal_edited().connect(sigc::mem_fun(*this, &FilterEffectsDialog::FilterModifier::filter_name_edited));
 
     sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
@@ -314,7 +321,84 @@ FilterEffectsDialog::FilterModifier::FilterModifier()
     _menu = create_popup_menu(*this, sigc::mem_fun(*this, &FilterModifier::duplicate_filter),
                               sigc::mem_fun(*this, &FilterModifier::remove_filter));
 
+    g_signal_connect(G_OBJECT(INKSCAPE), "change_selection",
+                     G_CALLBACK(&FilterModifier::on_inkscape_change_selection), this);
+
     update_filters();
+}
+
+FilterEffectsDialog::FilterModifier::CellRendererSel::CellRendererSel()
+    : Glib::ObjectBase(typeid(CellRendererSel)),
+      _size(10),
+      _sel(*this, "sel", 0)
+{}
+
+Glib::PropertyProxy<int> FilterEffectsDialog::FilterModifier::CellRendererSel::property_sel()
+{
+    return _sel.get_proxy();
+}
+
+void FilterEffectsDialog::FilterModifier::CellRendererSel::get_size_vfunc(
+    Gtk::Widget&, const Gdk::Rectangle*, int* x, int* y, int* w, int* h) const
+{
+    if(x)
+        (*x) = 0;
+    if(y)
+        (*y) = 0;
+    if(w)
+        (*w) = _size;
+    if(h)
+        (*h) = _size;
+}
+
+void FilterEffectsDialog::FilterModifier::CellRendererSel::render_vfunc(
+    const Glib::RefPtr<Gdk::Drawable>& win, Gtk::Widget& widget, const Gdk::Rectangle& bg_area,
+    const Gdk::Rectangle& cell_area, const Gdk::Rectangle& expose_area, Gtk::CellRendererState flags)
+{
+    const int sel = _sel.get_value();
+
+    if(sel > 0) {
+        const int s = _size - 2;
+        const int w = cell_area.get_width();
+        const int h = cell_area.get_height();
+        const int x = cell_area.get_x() + w / 2 - s / 2;
+        const int y = cell_area.get_y() + h / 2 - s / 2;
+
+        win->draw_rectangle(widget.get_style()->get_text_gc(Gtk::STATE_NORMAL), (sel == 1), x, y, s, s);
+    }
+}
+
+// When the selection changes, show the active filter(s) in the dialog
+void FilterEffectsDialog::FilterModifier::on_inkscape_change_selection(Inkscape::Application *inkscape,
+                                                                       Inkscape::Selection *sel,
+                                                                       FilterModifier* fm)
+{
+    std::set<SPObject*> used;
+
+    for(GSList const *i = sel->itemList(); i != NULL; i = i->next) {
+        SPObject *obj = SP_OBJECT (i->data);
+        SPStyle *style = SP_OBJECT_STYLE (obj);
+        if(!style || !SP_IS_ITEM(obj)) continue;
+
+        if(style->filter.set && style->getFilter())
+            used.insert(style->getFilter());
+        else
+            used.insert(0);
+    }
+
+    const int size = used.size();
+
+    for(Gtk::TreeIter iter = fm->_model->children().begin();
+        iter != fm->_model->children().end(); ++iter) {
+        if(used.find((*iter)[fm->_columns.filter]) != used.end()) {
+            // If only one filter is in use by the selection, select it
+            if(size == 1)
+                fm->_list.get_selection()->select(iter);
+            (*iter)[fm->_columns.sel] = size;
+        }
+        else
+            (*iter)[fm->_columns.sel] = 0;
+    }
 }
 
 Glib::SignalProxy0<void> FilterEffectsDialog::FilterModifier::signal_selection_changed()

@@ -45,10 +45,12 @@ protected:
         {
             add(filter);
             add(id);
+            add(sel);
         }
 
         Gtk::TreeModelColumn<SPFilter*> filter;
         Gtk::TreeModelColumn<Glib::ustring> id;
+        Gtk::TreeModelColumn<int> sel;
     };
 
     virtual void update_filters();
