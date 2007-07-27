@@ -336,6 +336,7 @@ struct bitmap_coords_info {
     NR::Rect bbox;
     NR::Rect screen;
     unsigned int max_queue_size;
+    unsigned int current_step;
 };
 
 inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_t, int x, int y, unsigned char *orig_color, bitmap_coords_info bci) {
@@ -474,7 +475,7 @@ enum ScanlineCheckResult {
     SCANLINE_CHECK_BOUNDARY
 };
 
-static bool coords_in_range(unsigned int x, unsigned int y, bitmap_coords_info bci) {
+inline static bool coords_in_range(unsigned int x, unsigned int y, bitmap_coords_info bci) {
     return (x < bci.width) &&
            (y < bci.height);
 }
@@ -485,7 +486,7 @@ static bool coords_in_range(unsigned int x, unsigned int y, bitmap_coords_info b
 #define PAINT_DIRECTION_DOWN 8
 #define PAINT_DIRECTION_ALL 15
 
-static unsigned int paint_pixel(guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci, unsigned char *original_point_trace_t) {
+inline static unsigned int paint_pixel(guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci, unsigned char *original_point_trace_t) {
     if (bci.radius == 0) {
         mark_pixel_colored(original_point_trace_t); 
         return PAINT_DIRECTION_ALL;
@@ -497,21 +498,18 @@ static unsigned int paint_pixel(guchar *px, guchar *trace_px, unsigned char *ori
         bool can_paint_left = true;
         bool can_paint_right = true;
       
-        for (int y = -bci.radius; y <= (int)bci.radius; y++) {
-            int ty = bci.y + y;
-            for (int x = -bci.radius; x <= (int)bci.radius; x++) {
-                int tx = bci.x + x;
-                
+        for (unsigned int ty = bci.y - bci.radius; ty <= bci.y + bci.radius; ty++) {
+            for (unsigned int tx = bci.x - bci.radius; tx <= bci.x + bci.radius; tx++) {
                 if (coords_in_range(tx, ty, bci)) {
                     trace_t = get_pixel(trace_px, tx, ty, bci.width);
                     if (!is_pixel_colored(trace_t)) {
                         if (check_if_pixel_is_paintable(px, trace_t, tx, ty, orig_color, bci)) {
                             mark_pixel_colored(trace_t); 
                         } else {
-                            if (x < 0) { can_paint_left = false; }
-                            if (x > 0) { can_paint_right = false; }
-                            if (y < 0) { can_paint_up = false; }
-                            if (y > 0) { can_paint_down = false; }
+                            if (tx < bci.x) { can_paint_left = false; }
+                            if (tx > bci.x) { can_paint_right = false; }
+                            if (ty < bci.y) { can_paint_up = false; }
+                            if (ty > bci.y) { can_paint_down = false; }
                         }
                     }
                 }
@@ -544,6 +542,12 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
     
     unsigned int pix_width = bci.width * 4;
     
+    unsigned int top_ty = bci.y - 1;
+    unsigned int bottom_ty = bci.y + 1;
+    
+    bool can_paint_top = (top_ty > 0);
+    bool can_paint_bottom = (bottom_ty < bci.height);
+    
     do {
         ok = false;
         if (bci.is_left) {
@@ -559,19 +563,18 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
                     mark_pixel_checked(current_trace_t);
                 }
                 
-                if (paint_directions & PAINT_DIRECTION_UP) { 
-                    unsigned int ty = bci.y - 1;
-                    if (ty > 0) {
+                if (can_paint_top) {
+                    if (paint_directions & PAINT_DIRECTION_UP) { 
                         unsigned char *trace_t = current_trace_t - pix_width;
                         if (!is_pixel_queued(trace_t)) {
-                            bool ok_to_paint = check_if_pixel_is_paintable(px, trace_t, bci.x, ty, orig_color, bci);
+                            bool ok_to_paint = check_if_pixel_is_paintable(px, trace_t, bci.x, top_ty, orig_color, bci);
                             
                             if (initial_paint) { currently_painting_top = !ok_to_paint; }
                             
                             if (ok_to_paint && (!currently_painting_top)) {
                                 currently_painting_top = true;
                                 if ((fill_queue->size() < bci.max_queue_size)) {
-                                    fill_queue->push_back(NR::Point(bci.x, ty));
+                                    fill_queue->push_back(NR::Point(bci.x, top_ty));
                                     mark_pixel_queued(trace_t);
                                 }
                             }
@@ -582,19 +585,18 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
                     }
                 }
                 
-                if (paint_directions & PAINT_DIRECTION_DOWN) { 
-                    unsigned int ty = bci.y + 1;
-                    if (ty < bci.height) {
+                if (can_paint_bottom) {
+                    if (paint_directions & PAINT_DIRECTION_DOWN) { 
                         unsigned char *trace_t = current_trace_t + pix_width;
                         if (!is_pixel_queued(trace_t)) {
-                            bool ok_to_paint = check_if_pixel_is_paintable(px, trace_t, bci.x, ty, orig_color, bci);
+                            bool ok_to_paint = check_if_pixel_is_paintable(px, trace_t, bci.x, bottom_ty, orig_color, bci);
                             
                             if (initial_paint) { currently_painting_bottom = !ok_to_paint; }
                             
                             if (ok_to_paint && (!currently_painting_bottom)) {
                                 currently_painting_bottom = true;
                                 if ((fill_queue->size() < bci.max_queue_size)) {
-                                    fill_queue->push_back(NR::Point(bci.x, ty));
+                                    fill_queue->push_back(NR::Point(bci.x, bottom_ty));
                                     mark_pixel_queued(trace_t);
                                 }
                             }
@@ -783,28 +785,32 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     bci.dtc = dtc;
     bci.radius = prefs_get_int_attribute_limited("tools.paintbucket", "autogap", 0, 0, 3);
     bci.max_queue_size = width * height;
+    bci.current_step = 0;
 
     bool first_run = true;
 
     while (!color_queue.empty() && !aborted) {
         NR::Point color_point = color_queue.front();
         color_queue.pop();
-        
-        unsigned char *orig_px = get_pixel(px, (int)color_point[NR::X], (int)color_point[NR::Y], width);
+
+        int cx = (int)color_point[NR::X];
+        int cy = (int)color_point[NR::Y];
+
+        unsigned char *orig_px = get_pixel(px, cx, cy, width);
         unsigned char orig_color[4];
         for (int i = 0; i < 4; i++) { orig_color[i] = orig_px[i]; }
-        
+
         unsigned char merged_orig[3];
-    
+
         merge_pixel_with_background(orig_color, dtc, merged_orig);
-        
+
         bci.merged_orig_pixel = merged_orig;
-        
-        unsigned char *trace_t = get_pixel(trace_px, (int)color_point[NR::X], (int)color_point[NR::Y], width);
+
+        unsigned char *trace_t = get_pixel(trace_px, cx, cy, width);
         if (!is_pixel_checked(trace_t) && !is_pixel_colored(trace_t)) {
-            if (check_if_pixel_is_paintable(px, trace_px, (int)color_point[NR::X], (int)color_point[NR::Y], orig_color, bci)) {
+            if (check_if_pixel_is_paintable(px, trace_px, cx, cy, orig_color, bci)) {
                 fill_queue.push_front(color_point);
-                
+
                 if (!first_run) {
                     for (unsigned int y = 0; y < height; y++) {
                         trace_t = get_pixel(trace_px, 0, y, width);
@@ -817,17 +823,18 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                 first_run = false;
             }
         }
-        
+
         while (!fill_queue.empty() && !aborted) {
             NR::Point cp = fill_queue.front();
             fill_queue.pop_front();
+
+            int x = (int)cp[NR::X];
+            int y = (int)cp[NR::Y];
             
-            unsigned char *trace_t = get_pixel(trace_px, (int)cp[NR::X], (int)cp[NR::Y], width);
+            unsigned char *trace_t = get_pixel(trace_px, x, y, width);
             if (!is_pixel_checked(trace_t)) {
                 mark_pixel_checked(trace_t);
-                int x = (int)cp[NR::X];
-                int y = (int)cp[NR::Y];
-                
+
                 if (y == 0) {
                     if (bbox->min()[NR::Y] > screen.min()[NR::Y]) {
                         aborted = true; break;
@@ -867,9 +874,9 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                         mark_pixel_checked(trace_t);
                         bci.is_left = false;
                         bci.x = x + 1;
-        
+
                         result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
-        
+
                         switch (result) {
                             case SCANLINE_CHECK_ABORTED:
                                 aborted = true;
@@ -882,6 +889,12 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                         }
                     }
                 }
+            }
+
+            bci.current_step++;
+
+            if (bci.current_step > bci.max_queue_size) {
+                aborted = true;
             }
         }
     }
