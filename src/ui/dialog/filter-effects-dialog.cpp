@@ -89,23 +89,6 @@ public:
         return _signal_changed;
     }
 
-    void update_direct(FilterEffectsDialog* d)
-    {
-        update(SP_FECONVOLVEMATRIX(d->_primitive_list.get_selected()));
-    }
-private:
-    class ConvolveMatrixColumns : public Gtk::TreeModel::ColumnRecord
-    {
-    public:
-        ConvolveMatrixColumns()
-        {
-            cols.resize(5);
-            for(unsigned i = 0; i < cols.size(); ++i)
-                add(cols[i]);
-        }
-        std::vector<Gtk::TreeModelColumn<double> > cols;
-    };
-
     void update(SPFeConvolveMatrix* conv)
     {
         if(conv) {
@@ -119,6 +102,18 @@ private:
             update(conv, cols, rows);
         }
     }
+private:
+    class ConvolveMatrixColumns : public Gtk::TreeModel::ColumnRecord
+    {
+    public:
+        ConvolveMatrixColumns()
+        {
+            cols.resize(5);
+            for(unsigned i = 0; i < cols.size(); ++i)
+                add(cols[i]);
+        }
+        std::vector<Gtk::TreeModelColumn<double> > cols;
+    };
 
     void update(SPFeConvolveMatrix* conv, const int rows, const int cols)
     {
@@ -1176,17 +1171,16 @@ void FilterEffectsDialog::init_settings_widgets()
     _k4 = _settings->add(SP_ATTR_K4, _("K4"), -10, 10, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_CONVOLVEMATRIX);
-    DualSpinSlider* order = _settings->add(SP_ATTR_ORDER, _("Size"), "", 1, 5, 1, 1, 0);
-    order->remove_scale();
+    _convolve_order = _settings->add(SP_ATTR_ORDER, _("Size"), "", 1, 5, 1, 1, 0);
+    _convolve_order->remove_scale();
     _settings->combine();
-    SpinSlider* tx = _settings->add(SP_ATTR_TARGETX, _("Target"), 1, 5, 1, 1, 0);
-    tx->remove_scale();
-    SpinSlider* ty = _settings->add(SP_ATTR_TARGETY, "", 1, 5, 1, 1, 0);
-    ty->remove_scale();
+    _convolve_tx = _settings->add(SP_ATTR_TARGETX, _("Target"), 0, 4, 1, 1, 0);
+    _convolve_tx->remove_scale();
+    _convolve_ty = _settings->add(SP_ATTR_TARGETY, "", 0, 4, 1, 1, 0);
+    _convolve_ty->remove_scale();
     _settings->combine();
-    ConvolveMatrix* convmat = _settings->add(SP_ATTR_KERNELMATRIX, _("Kernel"));
-    order->signal_value_changed().connect(
-        sigc::bind(sigc::mem_fun(*convmat, &ConvolveMatrix::update_direct), this));
+    _convolve_matrix = _settings->add(SP_ATTR_KERNELMATRIX, _("Kernel"));
+    _convolve_order->signal_value_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::convolve_order_changed));
     _settings->add(SP_ATTR_DIVISOR, _("Divisor"), 0.01, 10, 1, 0.01, 1);
     _settings->add(SP_ATTR_BIAS, _("Bias"), -10, 10, 1, 0.01, 1);
     
@@ -1256,6 +1250,13 @@ void FilterEffectsDialog::duplicate_primitive()
 
         _primitive_list.update();
     }
+}
+
+void FilterEffectsDialog::convolve_order_changed()
+{
+    _convolve_matrix->update(SP_FECONVOLVEMATRIX(_primitive_list.get_selected()));
+    _convolve_tx->get_adjustment().set_upper(_convolve_order->get_spinslider1().get_value());
+    _convolve_ty->get_adjustment().set_upper(_convolve_order->get_spinslider2().get_value());
 }
 
 void FilterEffectsDialog::set_attr_color(const SPAttributeEnum attr, const Gtk::ColorButton* input)

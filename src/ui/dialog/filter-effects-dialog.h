@@ -173,6 +173,7 @@ private:
     void add_primitive();
     void remove_primitive();
     void duplicate_primitive();
+    void convolve_order_changed();
 
     void set_attr_color(const SPAttributeEnum attr, const Gtk::ColorButton*);
     void set_attr_direct(const SPAttributeEnum attr, const AttrWidget*);
@@ -197,6 +198,12 @@ private:
     class Settings;
     class ConvolveMatrix;
     Settings* _settings;
+
+    // Convolve Matrix
+    ConvolveMatrix* _convolve_matrix;
+    DualSpinSlider* _convolve_order;
+    SpinSlider* _convolve_tx;
+    SpinSlider* _convolve_ty;
 
     // For controlling setting sensitivity
     Gtk::Widget* _k1, *_k2, *_k3, *_k4;
