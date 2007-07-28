@@ -166,6 +166,12 @@ void DualSpinSlider::set_update_policy(const Gtk::UpdateType u)
     _s2.set_update_policy(u);
 }
 
+void DualSpinSlider::remove_scale()
+{
+    _s1.remove_scale();
+    _s2.remove_scale();
+}
+
 } // namespace Widget
 } // namespace UI
 } // namespace Inkscape

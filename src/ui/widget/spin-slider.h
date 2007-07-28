@@ -74,6 +74,8 @@ public:
     SpinSlider& get_spinslider2();
 
     void set_update_policy(const Gtk::UpdateType);
+
+    void remove_scale();
 private:
     sigc::signal<void> _signal_value_changed;
     SpinSlider _s1, _s2;

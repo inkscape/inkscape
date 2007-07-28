@@ -167,6 +167,14 @@ public:
         }
     }
 
+    ~Settings()
+    {
+        for(int i = 0; i < NR_FILTER_ENDPRIMITIVETYPE; ++i) {
+            for(unsigned j = 0; j < _attrwidgets[i].size(); ++j)
+                delete _attrwidgets[i][j];
+        }
+    }
+
     // Show the active settings group and update all the AttrWidgets with new values
     void show_and_update(const NR::FilterPrimitiveType t)
     {
@@ -240,6 +248,24 @@ public:
         combo->signal_changed().connect(
             sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_direct), attr, combo));
         return combo;
+    }
+
+    // Combine the two most recent settings widgets in to the same row
+    void combine()
+    {
+        Gtk::VBox& vb = _groups[_current_type];
+        const int size = vb.children().size();
+        if(size >= 2) {
+            Gtk::HBox* h1 = dynamic_cast<Gtk::HBox*>(vb.children()[size - 2].get_widget());
+            Gtk::HBox* h2 = dynamic_cast<Gtk::HBox*>(vb.children()[size - 1].get_widget());
+            Gtk::Widget* c1 = h1->children()[1].get_widget();
+            Gtk::Widget* c2 = h2->children()[1].get_widget();
+            h1->remove(*c1);
+            h2->remove(*c2);
+            h1->pack_start(*c1, false, false);
+            h1->pack_start(*c2, false, false);
+            vb.remove(*h2);
+        }
     }
 private:
     /* Adds a new settings widget using the specified label. The label will be formatted with a colon
@@ -1149,12 +1175,17 @@ void FilterEffectsDialog::init_settings_widgets()
     _k4 = _settings->add(SP_ATTR_K4, _("K4"), -10, 10, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_CONVOLVEMATRIX);
-    DualSpinSlider* order = _settings->add(SP_ATTR_ORDER, _("Rows"), _("Columns"), 1, 5, 1, 1, 0);
+    DualSpinSlider* order = _settings->add(SP_ATTR_ORDER, _("Size"), "", 1, 5, 1, 1, 0);
+    order->remove_scale();
+    _settings->combine();
+    SpinSlider* tx = _settings->add(SP_ATTR_TARGETX, _("Target"), 1, 5, 1, 1, 0);
+    tx->remove_scale();
+    SpinSlider* ty = _settings->add(SP_ATTR_TARGETY, "", 1, 5, 1, 1, 0);
+    ty->remove_scale();
+    _settings->combine();
     ConvolveMatrix* convmat = _settings->add(SP_ATTR_KERNELMATRIX, _("Kernel"));
     order->signal_value_changed().connect(
         sigc::bind(sigc::mem_fun(*convmat, &ConvolveMatrix::update_direct), this));
-    order->get_spinslider1().remove_scale();
-    order->get_spinslider2().remove_scale();
     _settings->add(SP_ATTR_DIVISOR, _("Divisor"), 0.01, 10, 1, 0.01, 1);
     _settings->add(SP_ATTR_BIAS, _("Bias"), -10, 10, 1, 0.01, 1);
     
