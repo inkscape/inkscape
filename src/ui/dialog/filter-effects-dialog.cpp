@@ -736,12 +736,12 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         int vis_x, vis_y;
         tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
 
-        text_start_x = rct.get_x() + rct.get_width() - _connection_cell.get_text_width() * (FPInputConverter.end + 1);
+        text_start_x = rct.get_x() + rct.get_width() - _connection_cell.get_text_width() * (FPInputConverter.end + 1) + 1;
         for(int i = 0; i < FPInputConverter.end; ++i) {
             _vertical_layout->set_text(FPInputConverter.get_label((FilterPrimitiveInput)i));
             const int x = text_start_x + _connection_cell.get_text_width() * (i + 1);
             get_bin_window()->draw_rectangle(get_style()->get_bg_gc(Gtk::STATE_NORMAL), true, x, vis_y, _connection_cell.get_text_width(), vis.get_height());
-            get_bin_window()->draw_layout(get_style()->get_text_gc(Gtk::STATE_NORMAL), x, vis_y, _vertical_layout);
+            get_bin_window()->draw_layout(get_style()->get_text_gc(Gtk::STATE_NORMAL), x + 1, vis_y, _vertical_layout);
             get_bin_window()->draw_line(darkgc, x, vis_y, x, vis_y + vis.get_height());
         }
     }
@@ -827,7 +827,7 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& in
         const int tw = _connection_cell.get_text_width();
         const int src = 1 + (int)FPInputConverter.get_id_from_key(
             SP_OBJECT_REPR((*res)[_columns.primitive])->attribute((const gchar*)sp_attribute_name(attr)));
-        gint end_x = text_start_x + tw * src + (int)(tw * 0.5f);
+        gint end_x = text_start_x + tw * src + (int)(tw * 0.5f) + 1;
         get_bin_window()->draw_rectangle(gc, true, end_x-2, y1-2, 5, 5);
         get_bin_window()->draw_line(gc, x1, y1, end_x, y1);
     }
