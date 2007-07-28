@@ -49,7 +49,7 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(NR::Point
  */
 bool Inkscape::GuideSnapper::ThisSnapperMightSnap() const
 {
-    return _named_view == NULL ? false : (_enabled && _snap_to != 0 && _named_view->showguides);
+    return _named_view == NULL ? false : (_enabled && _snap_from != 0 && _named_view->showguides);
 }
 
 /*

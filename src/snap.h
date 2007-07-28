@@ -52,7 +52,7 @@ public:
                                     NR::Point const &p,
                                     std::list<SPItem const *> const &it) const;
 
-     Inkscape::SnappedPoint freeSnap( Inkscape::Snapper::PointType t,
+ 	Inkscape::SnappedPoint freeSnap( Inkscape::Snapper::PointType t,
                                       NR::Point const &p,
                                       std::list<SPItem const *> const &it,
                                       SnapperList const &snappers ) const;
@@ -121,6 +121,11 @@ public:
 
     SnapperList getSnappers() const;
     SnapperList getGridSnappers() const;
+    
+    void setSnapModeBBox(bool enabled);
+    void setSnapModeNodes(bool enabled);
+    bool getSnapModeBBox() const;
+    bool getSnapModeNodes() const;
 
 protected:
     SPNamedView const *_named_view;

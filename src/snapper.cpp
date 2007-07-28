@@ -13,8 +13,8 @@
 #include "inkscape.h"
 #include "desktop.h"
 
-Inkscape::Snapper::PointType const Inkscape::Snapper::BBOX_POINT = 0x1;
-Inkscape::Snapper::PointType const Inkscape::Snapper::SNAP_POINT = 0x2;
+Inkscape::Snapper::PointType const Inkscape::Snapper::SNAPPOINT_BBOX = 0x1;
+Inkscape::Snapper::PointType const Inkscape::Snapper::SNAPPOINT_NODE = 0x2;
 
 /**
  *  Construct new Snapper for named view.
@@ -26,7 +26,7 @@ Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const d) : _named_vi
     g_assert(_named_view != NULL);
     g_assert(SP_IS_NAMEDVIEW(_named_view));
 
-    setSnapTo(BBOX_POINT | SNAP_POINT, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
+    setSnapFrom(SNAPPOINT_BBOX | SNAPPOINT_NODE, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
 }
 
 /**
@@ -51,12 +51,12 @@ NR::Coord Inkscape::Snapper::getDistance() const
  *  \param t Point type.
  *  \param s true to snap to this point type, otherwise false;
  */
-void Inkscape::Snapper::setSnapTo(PointType t, bool s)
+void Inkscape::Snapper::setSnapFrom(PointType t, bool s)
 {
     if (s) {
-        _snap_to |= t;
+        _snap_from |= t;
     } else {
-        _snap_to &= ~t;
+        _snap_from &= ~t;
     }
 }
 
@@ -64,9 +64,9 @@ void Inkscape::Snapper::setSnapTo(PointType t, bool s)
  *  \param t Point type.
  *  \return true if snapper will snap this type of point, otherwise false.
  */
-bool Inkscape::Snapper::getSnapTo(PointType t) const
+bool Inkscape::Snapper::getSnapFrom(PointType t) const
 {
-    return (_snap_to & t);
+    return (_snap_from & t);
 }
 
 /**
@@ -90,7 +90,7 @@ void Inkscape::Snapper::setEnabled(bool s)
  *  \return Snapped point.
  */
 
-Inkscape::SnappedPoint Inkscape::Snapper::freeSnap(PointType t,
+Inkscape::SnappedPoint Inkscape::Snapper::freeSnap(PointType const &t,
                                                    NR::Point const &p,
                                                    SPItem const *it) const
 {
@@ -111,15 +111,15 @@ Inkscape::SnappedPoint Inkscape::Snapper::freeSnap(PointType t,
  *  \return Snapped point.
  */
 
-Inkscape::SnappedPoint Inkscape::Snapper::freeSnap(PointType t,
+Inkscape::SnappedPoint Inkscape::Snapper::freeSnap(PointType const &t,
                                                    NR::Point const &p,
                                                    std::list<SPItem const *> const &it) const
 {
-    if (_enabled == false || getSnapTo(t) == false) {
+    if (_enabled == false || getSnapFrom(t) == false) {
         return SnappedPoint(p, NR_HUGE);
     }
 
-    return _doFreeSnap(p, it);
+    return _doFreeSnap(t, p, it);
 }
 
 
@@ -136,7 +136,7 @@ Inkscape::SnappedPoint Inkscape::Snapper::freeSnap(PointType t,
  *  \return Snapped point.
  */
 
-Inkscape::SnappedPoint Inkscape::Snapper::constrainedSnap(PointType t,
+Inkscape::SnappedPoint Inkscape::Snapper::constrainedSnap(PointType const &t,
                                                           NR::Point const &p,
                                                           ConstraintLine const &c,
                                                           SPItem const *it) const
@@ -158,16 +158,16 @@ Inkscape::SnappedPoint Inkscape::Snapper::constrainedSnap(PointType t,
  *  \return Snapped point.
  */
 
-Inkscape::SnappedPoint Inkscape::Snapper::constrainedSnap(PointType t,
+Inkscape::SnappedPoint Inkscape::Snapper::constrainedSnap(PointType const &t,
                                                           NR::Point const &p,
                                                           ConstraintLine const &c,
                                                           std::list<SPItem const *> const &it) const
 {
-    if (_enabled == false || getSnapTo(t) == false) {
+    if (_enabled == false || getSnapFrom(t) == false) {
         return SnappedPoint(p, NR_HUGE);
     }
 
-    return _doConstrainedSnap(p, c, it);
+    return _doConstrainedSnap(t, p, c, it);
 }
 
 /*

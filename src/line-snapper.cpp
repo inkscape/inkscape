@@ -8,13 +8,14 @@ Inkscape::LineSnapper::LineSnapper(SPNamedView const *nv, NR::Coord const d) : S
 
 }
 
-Inkscape::SnappedPoint Inkscape::LineSnapper::_doFreeSnap(NR::Point const &p,
-                                                          std::list<SPItem const *> const &it) const
+Inkscape::SnappedPoint Inkscape::LineSnapper::_doFreeSnap(Inkscape::Snapper::PointType const &t,
+													NR::Point const &p,
+                                                    std::list<SPItem const *> const &it) const
 {
     /* Snap along x (ie to vertical lines) */
-    Inkscape::SnappedPoint const v = _doConstrainedSnap(p, component_vectors[NR::X], it);
+    Inkscape::SnappedPoint const v = _doConstrainedSnap(t, p, component_vectors[NR::X], it);
     /* Snap along y (ie to horizontal lines) */
-    Inkscape::SnappedPoint const h = _doConstrainedSnap(p, component_vectors[NR::Y], it);
+    Inkscape::SnappedPoint const h = _doConstrainedSnap(t, p, component_vectors[NR::Y], it);
 
     /* If we snapped to both, combine the two results.  This is so that, for example,
     ** we snap nicely to the intersection of two guidelines.
@@ -34,9 +35,10 @@ Inkscape::SnappedPoint Inkscape::LineSnapper::_doFreeSnap(NR::Point const &p,
     return h;
 }
 
-Inkscape::SnappedPoint Inkscape::LineSnapper::_doConstrainedSnap(NR::Point const &p,
-                                                                 ConstraintLine const &c,
-                                                                 std::list<SPItem const *> const &it) const
+Inkscape::SnappedPoint Inkscape::LineSnapper::_doConstrainedSnap(Inkscape::Snapper::PointType const &t, 
+													NR::Point const &p,
+                                                    ConstraintLine const &c,
+                                                    std::list<SPItem const *> const &it) const
 {
     Inkscape::SnappedPoint s = SnappedPoint(p, NR_HUGE);
 

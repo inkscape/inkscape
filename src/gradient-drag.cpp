@@ -436,7 +436,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
     if (!((state & GDK_SHIFT_MASK) || ((state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK)))) {
         // Try snapping to the grid or guides
         SnapManager const &m = dragger->parent->desktop->namedview->snap_manager;
-        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAP_POINT | Inkscape::Snapper::BBOX_POINT, p, NULL);
+        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE | Inkscape::Snapper::SNAPPOINT_BBOX, p, NULL);
         if (s.getDistance() < 1e6) {
             p = s.getPoint();
             sp_knot_moveto (knot, &p);

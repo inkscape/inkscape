@@ -27,7 +27,8 @@
 
 
 Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, NR::Coord const d)
-    : Snapper(nv, d), _snap_to_nodes(true), _snap_to_paths(true)
+    : Snapper(nv, d), _snap_to_itemnodes(true), _snap_to_itempaths(true), 
+    _snap_to_bboxnodes(true), _snap_to_bboxpaths(true), _strict_snapping(true)
 {
 
 }
@@ -71,7 +72,8 @@ void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
 }
 
 
-void Inkscape::ObjectSnapper::_snapNodes(Inkscape::SnappedPoint &s,
+void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
+										 Inkscape::SnappedPoint &s,
                                          NR::Point const &p,
                                          std::list<SPItem*> const &cand) const
 {
@@ -81,9 +83,13 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::SnappedPoint &s,
     SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
     
     // Determine the type of bounding box we should snap to
-    //TODO if (_snap_to_bbox) ???? -> will save some cpu time 
-	gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
-	SPItem::BBoxType bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;        
+    SPItem::BBoxType bbox_type = SPItem::GEOMETRIC_BBOX; 
+	if (_snap_to_bboxnodes) {	
+		gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
+		bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
+	}        
+	
+	bool p_is_a_node = t & Inkscape::Snapper::SNAPPOINT_NODE;        
 
     for (std::list<SPItem*>::const_iterator i = cand.begin(); i != cand.end(); i++) {
         
@@ -110,23 +116,31 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::SnappedPoint &s,
 		std::list<NR::Point> points_to_snap_to;
         
         //Collect all nodes so we can snap to them
-        if (curve) {
-            int j = 0;
-            while (SP_CURVE_BPATH(curve)[j].code != NR_END) {        
-                /* Get this node in desktop coordinates */
-                NArtBpath const &bp = SP_CURVE_BPATH(curve)[j];
-                points_to_snap_to.push_back(desktop->doc2dt(bp.c(3) * i2doc));
-                j++;
-            }
+        if (_snap_to_itemnodes) {
+        	if (!(_strict_snapping && !p_is_a_node)) {
+		        if (curve) {
+		            int j = 0;
+		            while (SP_CURVE_BPATH(curve)[j].code != NR_END) {        
+		                /* Get this node in desktop coordinates */
+		                NArtBpath const &bp = SP_CURVE_BPATH(curve)[j];
+		                points_to_snap_to.push_back(desktop->doc2dt(bp.c(3) * i2doc));
+		                j++;
+		            }
+		        }
+        	}
         }
         
         //Collect the bounding box's corners so we can snap to them
-        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
-        if (b) {
-	        for ( unsigned k = 0 ; k < 4 ; k++ ) {
-	            points_to_snap_to.push_back(b->corner(k));
-	        }
-        }        
+        if (_snap_to_bboxnodes) {
+        	if (!(_strict_snapping && p_is_a_node)) {
+		        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
+		        if (b) {
+			        for ( unsigned k = 0 ; k < 4 ; k++ ) {
+			            points_to_snap_to.push_back(b->corner(k));
+			        }
+		        }
+        	}        
+        }
         
         //Do the snapping, using all the nodes and corners collected above
         for (std::list<NR::Point>::const_iterator k = points_to_snap_to.begin(); k != points_to_snap_to.end(); k++) {
@@ -140,7 +154,8 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::SnappedPoint &s,
 }
 
 
-void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
+void Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
+										 Inkscape::SnappedPoint &s,
                                          NR::Point const &p,
                                          std::list<SPItem*> const &cand) const
 {
@@ -152,10 +167,14 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
     NR::Point const p_doc = desktop->dt2doc(p);
     
     // Determine the type of bounding box we should snap to
-    //TODO if (_snap_to_bbox) ???? -> will save some cpu time 
-	gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
-	SPItem::BBoxType bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;        
-    
+    SPItem::BBoxType bbox_type = SPItem::GEOMETRIC_BBOX; 
+	if (_snap_to_bboxpaths) {	
+    	gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
+		bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;        
+	}
+	
+	bool p_is_a_node = t & Inkscape::Snapper::SNAPPOINT_NODE;        
+	
     for (std::list<SPItem*>::const_iterator i = cand.begin(); i != cand.end(); i++) {
 
         /* Transform the requested snap point to this item's coordinates */
@@ -174,19 +193,27 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
         std::list<Path*> paths_to_snap_to;
         
         //Add the item's path to snap to
-        paths_to_snap_to.push_back(Path_for_item(root_item, true, true));
+        if (_snap_to_itempaths) {
+        	if (!(_strict_snapping && !p_is_a_node)) {
+        		paths_to_snap_to.push_back(Path_for_item(root_item, true, true));
+        	}
+        }
                 
         //Add the item's bounding box to snap to
-        //This will get ugly... rect -> curve -> bpath
-        NRRect rect;
-        sp_item_invoke_bbox(root_item, &rect, i2doc, TRUE, bbox_type);
-        NR::Maybe<NR::Rect> bbox = rect.upgrade();
-        SPCurve *curve = sp_curve_new_from_rect(bbox);
-        NArtBpath *bpath = SP_CURVE_BPATH(curve);
-        Path *path = bpath_to_Path(bpath);  
-        paths_to_snap_to.push_back(path);
-        delete curve;
-        delete bpath;
+        if (_snap_to_bboxpaths) {
+        	if (!(_strict_snapping && p_is_a_node)) {    	        
+		        //This will get ugly... rect -> curve -> bpath
+		        NRRect rect;
+		        sp_item_invoke_bbox(root_item, &rect, i2doc, TRUE, bbox_type);
+		        NR::Maybe<NR::Rect> bbox = rect.upgrade();
+		        SPCurve *curve = sp_curve_new_from_rect(bbox);
+		        NArtBpath *bpath = SP_CURVE_BPATH(curve);
+		        Path *path = bpath_to_Path(bpath);  
+		        paths_to_snap_to.push_back(path);
+		        delete curve;
+		        delete bpath;
+        	}
+        }
         
         //Now we can finally do the real snapping, using the paths collected above        
         for (std::list<Path*>::const_iterator k = paths_to_snap_to.begin(); k != paths_to_snap_to.end(); k++) {
@@ -214,7 +241,8 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
 }
 
 
-Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doFreeSnap(NR::Point const &p,
+Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doFreeSnap(Inkscape::Snapper::PointType const &t,
+															NR::Point const &p,
                                                             std::list<SPItem const *> const &it) const
 {
     if ( NULL == _named_view ) {
@@ -227,11 +255,11 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doFreeSnap(NR::Point const &p,
 
     SnappedPoint s(p, NR_HUGE);
 
-    if (_snap_to_nodes) {
-        _snapNodes(s, p, cand);
+    if (_snap_to_itemnodes || _snap_to_bboxnodes) {
+        _snapNodes(t, s, p, cand);
     }
-    if (_snap_to_paths) {
-        _snapPaths(s, p, cand);
+    if (_snap_to_itempaths || _snap_to_bboxpaths) {
+        _snapPaths(t, s, p, cand);
     }
 
     return s;
@@ -239,14 +267,15 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doFreeSnap(NR::Point const &p,
 
 
 
-Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doConstrainedSnap(NR::Point const &p,
+Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doConstrainedSnap(Inkscape::Snapper::PointType const &t,
+																   NR::Point const &p,
                                                                    ConstraintLine const &c,
                                                                    std::list<SPItem const *> const &it) const
 {
     /* FIXME: this needs implementing properly; I think we have to do the
     ** intersection of c with the objects.
     */
-    return _doFreeSnap(p, it);
+    return _doFreeSnap(t, p, it);
 }
 
 /**
@@ -254,7 +283,8 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doConstrainedSnap(NR::Point con
  */
 bool Inkscape::ObjectSnapper::ThisSnapperMightSnap() const
 {
-    return (_enabled && _snap_to != 0 && (_snap_to_paths || _snap_to_nodes));
+    bool snap_to_something = _snap_to_itempaths || _snap_to_itemnodes || _snap_to_bboxpaths || _snap_to_bboxnodes;
+    return (_enabled && _snap_from != 0 && snap_to_something);
 }
 
 

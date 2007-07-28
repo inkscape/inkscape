@@ -25,12 +25,14 @@ protected:
   typedef std::list<std::pair<NR::Dim2, NR::Coord> > LineList;
 
 private:
-  SnappedPoint _doFreeSnap(NR::Point const &p,
-			   std::list<SPItem const *> const &it) const;
+  SnappedPoint _doFreeSnap(Inkscape::Snapper::PointType const &t,
+  					NR::Point const &p,
+			   		std::list<SPItem const *> const &it) const;
   
-  SnappedPoint _doConstrainedSnap(NR::Point const &p,
-				  ConstraintLine const &c,
-				  std::list<SPItem const *> const &it) const;
+  SnappedPoint _doConstrainedSnap(Inkscape::Snapper::PointType const &t,
+  					NR::Point const &p,
+				  	ConstraintLine const &c,
+				  	std::list<SPItem const *> const &it) const;
   
   /**
    *  \param p Point that we are trying to snap.

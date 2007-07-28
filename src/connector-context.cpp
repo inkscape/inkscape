@@ -528,7 +528,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                         // This is the first point, so just snap it to the grid
                         // as there's no other points to go off.
                         SnapManager const &m = cc->desktop->namedview->snap_manager;
-                        p = m.freeSnap(Inkscape::Snapper::SNAP_POINT | Inkscape::Snapper::BBOX_POINT,
+                        p = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE | Inkscape::Snapper::SNAPPOINT_BBOX,
                                        p, NULL).getPoint();
                     }
                     spcc_connector_set_initial_point(cc, p);

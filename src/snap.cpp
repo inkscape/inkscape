@@ -17,6 +17,7 @@
 
 #include "sp-namedview.h"
 #include "snap.h"
+
 #include <libnr/nr-point-fns.h>
 #include <libnr/nr-scale-ops.h>
 #include <libnr/nr-values.h>
@@ -93,6 +94,34 @@ bool SnapManager::SomeSnapperMightSnap() const
     return (i != s.end());
 }
 
+void SnapManager::setSnapModeBBox(bool enabled)
+{
+	guide.setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
+	object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
+	object.setSnapToBBoxNodes(enabled);
+	object.setSnapToBBoxPaths(enabled);
+	object.setStrictSnapping(true);
+}
+
+bool SnapManager::getSnapModeBBox() const
+{
+	return guide.getSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX);
+}
+
+
+void SnapManager::setSnapModeNodes(bool enabled)
+{
+	guide.setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
+	object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
+	object.setSnapToItemNodes(enabled);
+	object.setSnapToItemPaths(enabled);	
+	object.setStrictSnapping(true);
+}
+
+bool SnapManager::getSnapModeNodes() const
+{
+	return guide.getSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE);
+}
 
 /**
  *  Try to snap a point to any interested snappers.

@@ -918,14 +918,14 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
             pt[NR::Y] > _origin[NR::Y] ? aspect_ratio : -aspect_ratio
             );
 
-        std::pair<NR::scale, bool> bb = m.constrainedSnapScale(Snapper::BBOX_POINT,
+        std::pair<NR::scale, bool> bb = m.constrainedSnapScale(Snapper::SNAPPOINT_BBOX,
                                                                _bbox_points,
                                                                it,
                                                                Snapper::ConstraintLine(_origin_for_bboxpoints, cv),
                                                                s,
                                                                _origin_for_bboxpoints);
 
-        std::pair<NR::scale, bool> sn = m.constrainedSnapScale(Snapper::SNAP_POINT,
+        std::pair<NR::scale, bool> sn = m.constrainedSnapScale(Snapper::SNAPPOINT_NODE,
                                                                _snap_points,
                                                                it,
                                                                Snapper::ConstraintLine(_origin_for_specpoints, cv),
@@ -946,12 +946,12 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
     } else {
         /* Scale aspect ratio is unlocked */
         
-        std::pair<NR::scale, bool> bb = m.freeSnapScale(Snapper::BBOX_POINT,
+        std::pair<NR::scale, bool> bb = m.freeSnapScale(Snapper::SNAPPOINT_BBOX,
                                                         _bbox_points,
                                                         it,
                                                         s,
                                                         _origin_for_bboxpoints);
-        std::pair<NR::scale, bool> sn = m.freeSnapScale(Snapper::SNAP_POINT,
+        std::pair<NR::scale, bool> sn = m.freeSnapScale(Snapper::SNAPPOINT_NODE,
                                                         _snap_points,
                                                         it,
                                                         s,
@@ -1036,7 +1036,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
         s[perp] = fabs(s[axis]);
 
         std::pair<NR::Coord, bool> const bb = m.freeSnapStretch(
-            Snapper::BBOX_POINT,
+            Snapper::SNAPPOINT_BBOX,
             _bbox_points,
             it,
             s[axis],
@@ -1045,7 +1045,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             true);
 
         std::pair<NR::Coord, bool> const sn = m.freeSnapStretch(
-            Snapper::SNAP_POINT,
+            Snapper::SNAPPOINT_NODE,
             _snap_points,
             it,
             s[axis],
@@ -1062,7 +1062,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
     } else {
         
         std::pair<NR::Coord, bool> const bb = m.freeSnapStretch(
-            Snapper::BBOX_POINT,
+            Snapper::SNAPPOINT_BBOX,
             _bbox_points,
             it,
             s[axis],
@@ -1071,7 +1071,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             false);
 
         std::pair<NR::Coord, bool> const sn = m.freeSnapStretch(
-            Snapper::SNAP_POINT,
+            Snapper::SNAPPOINT_NODE,
             _snap_points,
             it,
             s[axis],
@@ -1151,14 +1151,14 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
     } else {
         SnapManager const &m = _desktop->namedview->snap_manager;
 
-        std::pair<NR::Coord, bool> bb = m.freeSnapSkew(Inkscape::Snapper::BBOX_POINT,
+        std::pair<NR::Coord, bool> bb = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_BBOX,
                                                        _bbox_points,
                                                        std::list<SPItem const *>(),
                                                        skew[dim_a],
                                                        _origin_for_bboxpoints,
                                                        dim_b);
 
-        std::pair<NR::Coord, bool> sn = m.freeSnapSkew(Inkscape::Snapper::SNAP_POINT,
+        std::pair<NR::Coord, bool> sn = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_NODE,
                                                        _snap_points,
                                                        std::list<SPItem const *>(),
                                                        skew[dim_a],
@@ -1244,7 +1244,7 @@ gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
     using NR::Y;
 
     SnapManager const &m = _desktop->namedview->snap_manager;
-    pt = m.freeSnap(Snapper::SNAP_POINT, pt, NULL).getPoint();
+    pt = m.freeSnap(Snapper::SNAPPOINT_NODE, pt, NULL).getPoint();
 
     if (state & GDK_CONTROL_MASK) {
         if ( fabs(_point[X] - pt[X]) > fabs(_point[Y] - pt[Y]) ) {
@@ -1488,7 +1488,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
         ** FIXME: this will snap to more than just the grid, nowadays.
         */
 
-        dxy = m.freeSnap(Snapper::SNAP_POINT, dxy, NULL).getPoint();
+        dxy = m.freeSnap(Snapper::SNAPPOINT_NODE, dxy, NULL).getPoint();
 
     } else if (!shift) {
 
@@ -1505,13 +1505,13 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
             /* Snap to things, and also constrain to horizontal or vertical movement */
 
             for (unsigned int dim = 0; dim < 2; dim++) {
-                s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::BBOX_POINT,
+                s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX,
                                                          _bbox_points,
                                                          it,
                                                          Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
                                                          dxy));
                             
-                s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::SNAP_POINT,
+                s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::SNAPPOINT_NODE,
                                                          _snap_points,
                                                          it,
                                                          Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
@@ -1522,9 +1522,9 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
 
             /* Snap to things with no constraint */
 
-            s.push_back(m.freeSnapTranslation(Inkscape::Snapper::BBOX_POINT,
+            s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX,
                                               _bbox_points, it, dxy));
-            s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAP_POINT,
+            s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_NODE,
                                               _snap_points, it, dxy));
         }
 

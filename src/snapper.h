@@ -33,30 +33,28 @@ public:
 
     /// Point types to snap.
     typedef int PointType;
-    static const PointType SNAP_POINT;
-    static const PointType BBOX_POINT;
+    static const PointType SNAPPOINT_NODE;
+    static const PointType SNAPPOINT_BBOX;
 
-    typedef std::pair<PointType, NR::Point> PointWithType;
-
-    void setSnapTo(PointType t, bool s);
+    void setSnapFrom(PointType t, bool s);
     void setDistance(::NR::Coord d);
 
-    bool getSnapTo(PointType t) const;
+    bool getSnapFrom(PointType t) const;
     ::NR::Coord getDistance() const;
 
     /**
     *  \return true if this Snapper will snap at least one kind of point.
     */
-    virtual bool ThisSnapperMightSnap() const {return (_enabled && _snap_to != 0);} // will likely be overridden by derived classes
+    virtual bool ThisSnapperMightSnap() const {return (_enabled && _snap_from != 0);} // will likely be overridden by derived classes
 
 
     void setEnabled(bool s);
 
-    SnappedPoint freeSnap(PointType t,
+    SnappedPoint freeSnap(PointType const &t,
                           NR::Point const &p,
                           SPItem const *it) const;
 
-    SnappedPoint freeSnap(PointType t,
+    SnappedPoint freeSnap(PointType const &t,
                           NR::Point const &p,
                           std::list<SPItem const *> const &it) const;
 
@@ -85,18 +83,18 @@ public:
         NR::Point _direction;
     };
 
-    SnappedPoint constrainedSnap(PointType t,
+    SnappedPoint constrainedSnap(PointType const &t,
                                  NR::Point const &p,
                                  ConstraintLine const &c,
                                  SPItem const *it) const;
 
-    SnappedPoint constrainedSnap(PointType t,
+    SnappedPoint constrainedSnap(PointType const &t,
                                  NR::Point const &p,
                                  ConstraintLine const &c,
                                  std::list<SPItem const *> const &it) const;
 protected:
     SPNamedView const *_named_view;
-    int _snap_to; ///< bitmap of point types that we will snap to
+    int _snap_from; ///< bitmap of point types that we will snap from
     bool _enabled; ///< true if this snapper is enabled, otherwise false
     
 private:
@@ -110,7 +108,8 @@ private:
      *  \param it Items that should not be snapped to.
      *  \return Snapped point.
      */
-    virtual SnappedPoint _doFreeSnap(NR::Point const &p,
+    virtual SnappedPoint _doFreeSnap(PointType const &t,
+    								 NR::Point const &p,
                                      std::list<SPItem const *> const &it) const = 0;
 
     /**
@@ -123,7 +122,8 @@ private:
      *  \param it Items that should not be snapped to.
      *  \return Snapped point.
      */    
-    virtual SnappedPoint _doConstrainedSnap(NR::Point const &p,
+    virtual SnappedPoint _doConstrainedSnap(PointType const &t,
+    										NR::Point const &p,
                                             ConstraintLine const &c,
                                             std::list<SPItem const *> const &it) const = 0;
     

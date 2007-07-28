@@ -1149,7 +1149,7 @@ void sp_selection_paste(bool in_place)
         /* Snap the offset of the new item(s) to the grid */
         SnapManager &sm = desktop->namedview->snap_manager;
         SnapManager::SnapperList gs = sm.getGridSnappers();
-        m = sm.freeSnapAlways(Inkscape::Snapper::SNAP_POINT, m, NULL, gs).getPoint();
+        m = sm.freeSnapAlways(Inkscape::Snapper::SNAPPOINT_NODE, m, NULL, gs).getPoint();
         sp_selection_move_relative(selection, m);
     }
 

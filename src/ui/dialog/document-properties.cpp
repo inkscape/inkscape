@@ -265,13 +265,12 @@ void
 DocumentProperties::build_snap()
 {
     _page_snap.show();
-
-    _rcbsnop.init (_("Snap to object _paths"),
-                _("Snap to other object paths"),
-                "inkscape:object-paths", _wr);
-    _rcbsnon.init (_("Snap to object _nodes"),
-                _("Snap to other object nodes"),
-                "inkscape:object-nodes", _wr);
+	_rcbsnbb.init (_("Snap bounding _boxes"),
+                _("Snap bounding box corners to grid lines, to guides, and to other bounding boxes"),
+                "inkscape:snap-bbox", _wr);
+    _rcbsnn.init (_("Snap _nodes"),
+                _("Snap nodes to grid lines, to guides, to paths, and to other nodes"),
+                "inkscape:snap-nodes", _wr);
     _rsu_sno.init (_("Snap s_ensitivity:"), _("Always snap"),
                   _("Snapping distance, in screen pixels, for snapping to objects"),
                   _("If set, objects snap to the nearest object, regardless of distance"),
@@ -284,6 +283,8 @@ DocumentProperties::build_snap()
                 _("Snapping distance, in screen pixels, for snapping to guides"),
                 _("If set, objects snap to the nearest guide, regardless of distance"),
                 "guidetolerance", _wr);
+    Gtk::Label *label_g = manage (new Gtk::Label);
+    label_g->set_markup (_("<b>General</b>"));
     Gtk::Label *label_o = manage (new Gtk::Label);
     label_o->set_markup (_("<b>Object Snapping</b>"));
     Gtk::Label *label_gr = manage (new Gtk::Label);
@@ -293,16 +294,17 @@ DocumentProperties::build_snap()
 
     Gtk::Widget *const array[] =
     {
+        label_g,            0,
+        0,                  _rcbsnbb._button,
+        0,                  _rcbsnn._button,        
         label_o,            0,
-        0,                  _rcbsnop._button,
-        0,                  _rcbsnon._button,
         0,                  _rsu_sno._vbox,
         0, 0,
         label_gr,           0,
         0,                  _rsu_sn._vbox,
         0, 0,
-        label_gu,         0,
-        0,                _rsu_gusn._vbox,
+        label_gu,         	0,
+        0,                	_rsu_gusn._vbox,
     };
 
     attach_all(_page_snap.table(), array, G_N_ELEMENTS(array));
@@ -413,8 +415,8 @@ DocumentProperties::update()
     _rcp_hgui.setRgba32 (nv->guidehicolor);
 
     //-----------------------------------------------------------snap
-    _rcbsnop.setActive (nv->snap_manager.object.getSnapToPaths());
-    _rcbsnon.setActive (nv->snap_manager.object.getSnapToNodes());
+    _rcbsnbb.setActive (nv->snap_manager.getSnapModeBBox());
+    _rcbsnn.setActive (nv->snap_manager.getSnapModeNodes());
     _rsu_sno.setValue (nv->objecttolerance);
 
     _rsu_sn.setValue (nv->gridtolerance);
