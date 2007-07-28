@@ -761,7 +761,7 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         get_bin_window()->draw_line(darkgc, x, y + h, outline_x, y + h);
 
         // Side outline
-        get_bin_window()->draw_line(darkgc, outline_x, y, outline_x, y + h);
+        get_bin_window()->draw_line(darkgc, outline_x, y - 1, outline_x, y + h);
 
         std::vector<Gdk::Point> con_poly;
         int con_drag_y;
