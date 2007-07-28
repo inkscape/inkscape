@@ -17,7 +17,6 @@
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/cellrendererspin.h>
-#include "gtkmm/colorbutton.h"
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/frame.h>
@@ -175,7 +174,6 @@ private:
     void duplicate_primitive();
     void convolve_order_changed();
 
-    void set_attr_color(const SPAttributeEnum attr, const Gtk::ColorButton*);
     void set_attr_direct(const SPAttributeEnum attr, const AttrWidget*);
     void set_attr_special(const SPAttributeEnum);
     void set_attr(const SPAttributeEnum, const gchar* val);

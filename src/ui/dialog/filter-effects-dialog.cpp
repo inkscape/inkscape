@@ -15,6 +15,7 @@
 
 #include <gtk/gtktreeview.h>
 #include <gtkmm/cellrenderertext.h>
+#include <gtkmm/colorbutton.h>
 #include <gtkmm/paned.h>
 #include <gtkmm/scale.h>
 #include <gtkmm/scrolledwindow.h>
@@ -40,6 +41,7 @@
 #include "sp-gaussian-blur.h"
 #include "sp-feoffset.h"
 #include "style.h"
+#include "svg/svg-color.h"
 #include "verbs.h"
 #include "xml/node.h"
 #include "xml/repr.h"
@@ -52,6 +54,41 @@ using namespace NR;
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
+
+class ColorButton : public Gtk::ColorButton, public AttrWidget
+{
+public:
+    ColorButton(const SPAttributeEnum a)
+        : AttrWidget(a)
+    {
+        Gdk::Color col;
+        col.set_rgb(65535, 65535, 65535);
+        set_color(col);
+    }
+    
+    // Returns the color in 'rgb(r,g,b)' form.
+    Glib::ustring get_as_attribute() const
+    {
+        std::ostringstream os;
+        const Gdk::Color c = get_color();
+        const int r = (c.get_red() + 1) / 256 - 1, g = (c.get_green() + 1) / 256 - 1, b = (c.get_blue() + 1) / 256 - 1;
+        os << "rgb(" << r << "," << g << "," << b << ")";
+        return os.str();
+    }
+
+
+    void set_from_attribute(SPObject* o)
+    {
+        const gchar* val = attribute_value(o);
+        if(val) {
+            const guint32 i = sp_svg_read_color(val, 0xFFFFFFFF);
+            const int r = SP_RGBA32_R_U(i) + 1, g = SP_RGBA32_G_U(i) + 1, b = SP_RGBA32_B_U(i) + 1;
+            Gdk::Color col;
+            col.set_rgb(r * 256 - 1, g * 256 - 1, b * 256 - 1);
+            set_color(col);
+        }
+    }
+};
 
 /* Displays/Edits the kernel matrix for feConvolveMatrix */
 class FilterEffectsDialog::ConvolveMatrix : public Gtk::TreeView, public AttrWidget
@@ -189,11 +226,14 @@ public:
         _current_type = t;
     }
 
-    void add(Gtk::ColorButton& cb, const SPAttributeEnum attr, const Glib::ustring& label)
+    ColorButton* add_color(const SPAttributeEnum attr, const Glib::ustring& label)
     {
-        //generic_add(cb, label);
-        //cb.signal_color_set().connect(
-        //    sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_color), attr, &cb));
+        ColorButton* col = new ColorButton(attr);
+        add_widget(*col, label);
+        _attrwidgets[_current_type].push_back(col);
+        col->signal_color_set().connect(
+            sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_direct), attr, col));
+        return col;
     }
 
     // ConvolveMatrix
@@ -1183,6 +1223,12 @@ void FilterEffectsDialog::init_settings_widgets()
     _convolve_order->signal_value_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::convolve_order_changed));
     _settings->add(SP_ATTR_DIVISOR, _("Divisor"), 0.01, 10, 1, 0.01, 1);
     _settings->add(SP_ATTR_BIAS, _("Bias"), -10, 10, 1, 0.01, 1);
+
+    _settings->type(NR_FILTER_DIFFUSELIGHTING);
+    _settings->add_color(SP_PROP_LIGHTING_COLOR, _("Diffuse Color"));
+    _settings->add(SP_ATTR_SURFACESCALE, _("Surface Scale"), -10, 10, 1, 0.01, 1);
+    _settings->add(SP_ATTR_DIFFUSECONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
+    _settings->add(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length X"), _("Kernel Unit Length Y"), 0.01, 10, 1, 0.01, 1);
     
     _settings->type(NR_FILTER_GAUSSIANBLUR);
     _settings->add(SP_ATTR_STDDEVIATION, _("Standard Deviation X"), _("Standard Deviation Y"), 0.01, 100, 1, 0.01, 1);
@@ -1192,10 +1238,11 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add(SP_ATTR_DY, _("Delta Y"), -100, 100, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_SPECULARLIGHTING);
-    //_settings->add(_specular_color, SP_PROP_LIGHTING_COLOR, _("Specular Color"));
+    _settings->add_color(SP_PROP_LIGHTING_COLOR, _("Specular Color"));
     _settings->add(SP_ATTR_SURFACESCALE, _("Surface Scale"), -10, 10, 1, 0.01, 1);
     _settings->add(SP_ATTR_SPECULARCONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
     _settings->add(SP_ATTR_SPECULAREXPONENT, _("Exponent"), 1, 128, 1, 0.01, 1);
+    _settings->add(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length X"), _("Kernel Unit Length Y"), 0.01, 10, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_TURBULENCE);
     /*std::vector<Gtk::Widget*> trb_grp;
@@ -1257,17 +1304,6 @@ void FilterEffectsDialog::convolve_order_changed()
     _convolve_matrix->update(SP_FECONVOLVEMATRIX(_primitive_list.get_selected()));
     _convolve_tx->get_adjustment().set_upper(_convolve_order->get_spinslider1().get_value());
     _convolve_ty->get_adjustment().set_upper(_convolve_order->get_spinslider2().get_value());
-}
-
-void FilterEffectsDialog::set_attr_color(const SPAttributeEnum attr, const Gtk::ColorButton* input)
-{
-    if(input->is_sensitive()) {
-        std::ostringstream os;
-        const Gdk::Color c = input->get_color();
-        const int r = 255 * c.get_red() / 65535, g = 255 * c.get_green() / 65535, b = 255 * c.get_blue() / 65535;
-        os << "rgb(" << r << "," << g << "," << b << ")";
-        set_attr(attr, os.str().c_str());
-    }
 }
 
 void FilterEffectsDialog::set_attr_direct(const SPAttributeEnum attr, const AttrWidget* input)
