@@ -741,7 +741,7 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         int vis_x, vis_y;
         tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
 
-        text_start_x = rct.get_x() + rct.get_width() - _connection_cell.get_text_width() * FPInputConverter.end;
+        text_start_x = rct.get_x() + rct.get_width() - _connection_cell.get_text_width() * (FPInputConverter.end + 1);
         for(int i = 0; i < FPInputConverter.end; ++i) {
             _vertical_layout->set_text(FPInputConverter.get_label((FilterPrimitiveInput)i));
             const int x = text_start_x + _connection_cell.get_text_width() * (i + 1);
@@ -973,13 +973,14 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
             Gtk::TreeIter target_iter = _model->get_iter(path);
             target = (*target_iter)[_columns.primitive];
 
-            const int sources_x = CellRendererConnection::size * _model->children().size() +
-                _connection_cell.get_text_width();
-
+            Gdk::Rectangle rct;
+            get_cell_area(path, *col, rct);
+            const int twidth = _connection_cell.get_text_width();
+            const int sources_x = rct.get_width() - twidth * FPInputConverter.end;
             if(cx > sources_x) {
-                int src = (cx - sources_x) / _connection_cell.get_text_width();
+                int src = (cx - sources_x) / twidth;
                 if(src < 0)
-                    src = 1;
+                    src = 0;
                 else if(src >= FPInputConverter.end)
                     src = FPInputConverter.end - 1;
                 result = FPInputConverter.get_key((FilterPrimitiveInput)src);
