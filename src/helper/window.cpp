@@ -13,14 +13,15 @@
 # include <config.h>
 #endif
 #include <gtk/gtkwindow.h>
+#include <gtkmm/window.h>
 
 #include "inkscape.h"
 #include "shortcuts.h"
 #include "desktop.h"
 #include "event-context.h"
+#include "window.h"
 
-static gboolean
-sp_window_key_press (GtkWidget *widget, GdkEventKey *event)
+static bool on_window_key_press(GdkEventKey* event)
 {
 	unsigned int shortcut;
 	shortcut = get_group0_keyval (event) |
@@ -33,6 +34,23 @@ sp_window_key_press (GtkWidget *widget, GdkEventKey *event)
 	return sp_shortcut_invoke (shortcut, SP_ACTIVE_DESKTOP);
 }
 
+Gtk::Window *
+Inkscape::UI::window_new (const gchar *title, unsigned int resizeable)
+{
+	Gtk::Window *window = new Gtk::Window(Gtk::WINDOW_TOPLEVEL);
+	window->set_title (title);
+	window->set_resizable (resizeable);
+	window->signal_key_press_event().connect(sigc::ptr_fun(&on_window_key_press));
+	
+	return window;
+}
+
+static gboolean
+sp_window_key_press (GtkWidget *widget, GdkEventKey *event)
+{
+	return on_window_key_press(event);
+}
+
 GtkWidget *
 sp_window_new (const gchar *title, unsigned int resizeable)
 {
@@ -43,5 +61,4 @@ sp_window_new (const gchar *title, unsigned int resizeable)
 
 	return window;
 }
-
 

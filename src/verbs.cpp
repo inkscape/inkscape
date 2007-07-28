@@ -790,24 +790,31 @@ FileVerb::perform(SPAction *action, void *data, void *pdata)
     Inkscape::UI::View::View *current_view = sp_action_get_view(action);
     SPDocument *current_document = current_view->doc();
 #endif
+    
+    SPDesktop *desktop = dynamic_cast<SPDesktop*>(sp_action_get_view(action));
+	Gtk::Window *parent = NULL;
+	if(desktop == NULL) return;
+	desktop->getToplevel((Gtk::Widget*&)parent);
+	if(parent == NULL) return;
+    
     switch ((long) data) {
         case SP_VERB_FILE_NEW:
             sp_file_new_default();
             break;
         case SP_VERB_FILE_OPEN:
-            sp_file_open_dialog(NULL, NULL);
+            sp_file_open_dialog(*parent, NULL, NULL);
             break;
         case SP_VERB_FILE_REVERT:
             sp_file_revert_dialog();
             break;
         case SP_VERB_FILE_SAVE:
-            sp_file_save(NULL, NULL);
+            sp_file_save(*parent, NULL, NULL);
             break;
         case SP_VERB_FILE_SAVE_AS:
-            sp_file_save_as(NULL, NULL);
+            sp_file_save_as(*parent, NULL, NULL);
             break;
         case SP_VERB_FILE_SAVE_A_COPY:
-            sp_file_save_a_copy(NULL, NULL);
+            sp_file_save_a_copy(*parent, NULL, NULL);
             break;
         case SP_VERB_FILE_PRINT:
             sp_file_print();
@@ -822,7 +829,7 @@ FileVerb::perform(SPAction *action, void *data, void *pdata)
             sp_file_print_preview(NULL, NULL);
             break;
         case SP_VERB_FILE_IMPORT:
-            sp_file_import(NULL);
+            sp_file_import(*parent);
             break;
         case SP_VERB_FILE_EXPORT:
             sp_file_export_dialog(NULL);
@@ -842,6 +849,7 @@ FileVerb::perform(SPAction *action, void *data, void *pdata)
         default:
             break;
     }
+   
 
 } // end of sp_verb_action_file_perform()
 

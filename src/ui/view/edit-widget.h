@@ -97,7 +97,7 @@ public:
     void onUriChanged();
 
     // from EditWidgetInterface
-    virtual void *getWindow();
+    virtual Gtk::Window* getWindow();
     virtual void setTitle (gchar const*);
     virtual void layout();
     virtual void present();

@@ -68,7 +68,7 @@ bool sp_file_open(
  * Displays a file open dialog. Calls sp_file_open on
  * an OK.
  */
-void sp_file_open_dialog (gpointer object, gpointer data);
+void sp_file_open_dialog (Gtk::Window &parentWindow, gpointer object, gpointer data);
 
 /**
  * Reverts file to disk-copy on "YES"
@@ -82,29 +82,29 @@ void sp_file_revert_dialog ();
 /**
  *
  */
-bool sp_file_save (gpointer object, gpointer data);
+bool sp_file_save (Gtk::Window &parentWindow, gpointer object, gpointer data);
 
 /**
  *  Saves the given document.  Displays a file select dialog
  *  to choose the new name.
  */
-bool sp_file_save_as (gpointer object, gpointer data);
+bool sp_file_save_as (Gtk::Window &parentWindow, gpointer object, gpointer data);
 
 /**
  *  Saves a copy of the given document.  Displays a file select dialog
  *  to choose a name for the copy.
  */
-bool sp_file_save_a_copy (gpointer object, gpointer data);
+bool sp_file_save_a_copy (Gtk::Window &parentWindow, gpointer object, gpointer data);
 
 
 /**
  *  Saves the given document.  Displays a file select dialog
  *  if needed.
  */
-bool sp_file_save_document (SPDocument *document);
+bool sp_file_save_document (Gtk::Window &parentWindow, SPDocument *document);
 
 /* Do the saveas dialog with a document as the parameter */
-bool sp_file_save_dialog (SPDocument *doc, bool bAsCopy = FALSE);
+bool sp_file_save_dialog (Gtk::Window &parentWindow, SPDocument *doc, bool bAsCopy = FALSE);
 
 
 /*######################
@@ -115,7 +115,7 @@ bool sp_file_save_dialog (SPDocument *doc, bool bAsCopy = FALSE);
  * Displays a file selector dialog, to allow the
  * user to import data into the current document.
  */
-void sp_file_import (GtkWidget * widget);
+void sp_file_import (Gtk::Window &parentWindow);
 
 /**
  * Imports a resource

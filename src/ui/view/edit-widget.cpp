@@ -178,7 +178,7 @@ void
 EditWidget::onActionFileOpen()
 {
 //    g_warning("onActionFileOpen called");
-    sp_file_open_dialog (NULL, NULL);
+    sp_file_open_dialog (*this, NULL, NULL);
 }
 
 void
@@ -1110,7 +1110,7 @@ EditWidget::initStatusbar()
 //========================================
 //----------implements EditWidgetInterface
 
-void *
+Gtk::Window *
 EditWidget::getWindow()
 {
     return this;
@@ -1231,7 +1231,7 @@ EditWidget::shutdown()
         {
             case Gtk::RESPONSE_YES:
                 sp_document_ref(doc);
-                if (sp_file_save_document(doc)) {
+                if (sp_file_save_document(*this, doc)) {
                     sp_document_unref(doc);
                 } else { // save dialog cancelled or save failed
                     sp_document_unref(doc);
@@ -1279,7 +1279,7 @@ EditWidget::shutdown()
         {
             case Gtk::RESPONSE_YES:
                 sp_document_ref(doc);
-                if (sp_file_save_document(doc)) {
+                if (sp_file_save_document(*this, doc)) {
                     sp_document_unref(doc);
                 } else { // save dialog cancelled or save failed
                     sp_document_unref(doc);

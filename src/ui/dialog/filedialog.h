@@ -79,7 +79,8 @@ public:
      * @param fileTypes one of FileDialogTypes
      * @param title the title of the dialog
      */
-    static FileOpenDialog *create(const Glib::ustring &path,
+    static FileOpenDialog *create(Gtk::Window& parentWindow, 
+                                  const Glib::ustring &path,
                                   FileDialogType fileTypes,
                                   const Glib::ustring &title);
 
@@ -139,7 +140,8 @@ public:
      * @param title the title of the dialog
      * @param key a list of file types from which the user can select
      */
-    static FileSaveDialog *create(const Glib::ustring &path,
+    static FileSaveDialog *create(Gtk::Window& parentWindow, 
+    							  const Glib::ustring &path,
                                   FileDialogType fileTypes,
                                   const Glib::ustring &title,
                                   const Glib::ustring &default_key);
@@ -218,7 +220,8 @@ public:
      * @param title the title of the dialog
      * @param key a list of file types from which the user can select
      */
-    static FileExportDialog *create(const Glib::ustring &path,
+    static FileExportDialog *create(Gtk::Window& parentWindow, 
+    		                        const Glib::ustring &path,
                                     FileDialogType fileTypes,
                                     const Glib::ustring &title,
                                     const Glib::ustring &default_key);

@@ -40,6 +40,7 @@
 #include "widgets/desktop-widget.h"
 #include "sp-item-group.h"
 #include "sp-namedview.h"
+#include "ui/view/view.h"
 
 #include "helper/action.h"
 #include "helper/gnome-utils.h"
@@ -63,14 +64,8 @@
 #include "desktop-style.h"
 #include "style.h"
 
-
 using Inkscape::IO::StringOutputStream;
 using Inkscape::IO::Base64OutputStream;
-
-/* forward declaration */
-static gint sp_ui_delete(GtkWidget *widget, GdkEvent *event, Inkscape::UI::View::View *view);
-static void sp_ui_state_event(GtkWidget *widget, GdkEventWindowState *event, SPDesktop*desktop);
-
 
 /* Drag and Drop */
 typedef enum {
@@ -135,26 +130,26 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
     g_return_if_fail(vw != NULL);
     g_return_if_fail(SP_IS_VIEW_WIDGET(vw));
 
-    GtkWidget *win = sp_window_new("", TRUE);
+    Gtk::Window *win = Inkscape::UI::window_new("", TRUE);
 
     if (editable) {
-      g_object_set_data(G_OBJECT(vw), "window", win);
-      reinterpret_cast<SPDesktopWidget*>(vw)->window =
-        static_cast<GtkWindow*>((void*)win);
-    }
-
-    if (editable) {
-        SPDesktop* desktop = SP_DESKTOP_WIDGET(vw)->desktop;
+		g_object_set_data(G_OBJECT(vw), "window", win);
+		
+		SPDesktopWidget *desktop_widget = reinterpret_cast<SPDesktopWidget*>(vw);
+		SPDesktop* desktop = desktop_widget->desktop;
+		
+		desktop_widget->window = win;
 
         /* fixme: doesn't allow making window any smaller than this */
-        gtk_window_set_default_size((GtkWindow *) win, 640, 480);
-        g_object_set_data(G_OBJECT(win), "desktop", desktop);
-        g_object_set_data(G_OBJECT(win), "desktopwidget", vw);
-        g_signal_connect(G_OBJECT(win), "delete_event", G_CALLBACK(sp_ui_delete), vw->view);
-
-        g_signal_connect(G_OBJECT(win), "window_state_event", G_CALLBACK(sp_ui_state_event), static_cast<SPDesktop*>(vw->view));
-        g_signal_connect(G_OBJECT(win), "focus_in_event", G_CALLBACK(sp_desktop_widget_set_focus), vw);
-
+        win->set_default_size(640, 480);
+		
+        win->set_data("desktop", desktop);
+        win->set_data("desktopwidget", desktop_widget);
+		
+        win->signal_delete_event().connect(sigc::mem_fun(*(SPDesktop*)vw->view, &SPDesktop::onDeleteUI));
+		win->signal_window_state_event().connect(sigc::mem_fun(*desktop, &SPDesktop::onWindowStateEvent));
+		win->signal_focus_in_event().connect(sigc::mem_fun(*desktop_widget, &SPDesktopWidget::onFocusInEvent));
+		
         gint prefs_geometry = 
             (2==prefs_get_int_attribute("options.savewindowgeometry", "value", 0));
         if (prefs_geometry) {
@@ -191,18 +186,18 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
                 }
             }
             if (maxed) {
-                gtk_window_maximize(GTK_WINDOW(win));
+                win->maximize();
             }
             if (full) {
-                gtk_window_fullscreen(GTK_WINDOW(win));
+                win->fullscreen();
             }
         }
 
     } else {
-        gtk_window_set_policy(GTK_WINDOW(win), TRUE, TRUE, TRUE);
+        gtk_window_set_policy(GTK_WINDOW(win->gobj()), TRUE, TRUE, TRUE);
     }
 
-    gtk_container_add(GTK_CONTAINER(win), GTK_WIDGET(vw));
+    gtk_container_add(GTK_CONTAINER(win->gobj()), GTK_WIDGET(vw));
     gtk_widget_show(GTK_WIDGET(vw));
 
     if ( completeDropTargets == 0 || completeDropTargetsCount == 0 )
@@ -236,16 +231,16 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
         }
     }
 
-    gtk_drag_dest_set(win,
+    gtk_drag_dest_set((GtkWidget*)win->gobj(),
                       GTK_DEST_DEFAULT_ALL,
                       completeDropTargets,
                       completeDropTargetsCount,
                       GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE));
-    g_signal_connect(G_OBJECT(win),
+    g_signal_connect(G_OBJECT(win->gobj()),
                      "drag_data_received",
                      G_CALLBACK(sp_ui_drag_data_received),
                      NULL);
-    gtk_widget_show(win);
+    win->show();
 
     // needed because the first ACTIVATE_DESKTOP was sent when there was no window yet
     inkscape_reactivate_desktop(SP_DESKTOP_WIDGET(vw)->desktop);
@@ -327,59 +322,6 @@ sp_ui_close_all(void)
     }
 
     return TRUE;
-}
-
-static gint
-sp_ui_delete(GtkWidget *widget, GdkEvent *event, Inkscape::UI::View::View *view)
-{
-    return view->shutdown();
-}
-
-/**
- *  sp_ui_state_event
- *
- *  Called when the window changes its maximize/fullscreen/iconify/pinned state.
- *  Since GTK doesn't have a way to query this state information directly, we
- *  record it for the desktop here, and also possibly trigger a layout.
- */
-static void
-sp_ui_state_event(GtkWidget *widget, GdkEventWindowState *event, SPDesktop* desktop)
-{
-    // Record the desktop window's state
-    desktop->window_state = event->new_window_state;
-
-    // Layout may differ depending on full-screen mode or not
-    GdkWindowState changed = event->changed_mask;
-    if (changed & (GDK_WINDOW_STATE_FULLSCREEN|GDK_WINDOW_STATE_MAXIMIZED)) {
-        desktop->layoutWidget();
-    }
-/*
-    // debug info
-    g_message("State event desktop=0x%p", desktop);
-    GdkWindowState state = event->new_window_state;
-    GdkWindowState changed = event->changed_mask;
-    if (changed & GDK_WINDOW_STATE_WITHDRAWN) {
-        g_message("-- WIDTHDRAWN = %d", 0!=(state&GDK_WINDOW_STATE_WITHDRAWN));
-    }
-    if (changed & GDK_WINDOW_STATE_ICONIFIED) {
-        g_message("-- ICONIFIED = %d", 0!=(state&GDK_WINDOW_STATE_ICONIFIED));
-    }
-    if (changed & GDK_WINDOW_STATE_MAXIMIZED) {
-        g_message("-- MAXIMIZED = %d", 0!=(state&GDK_WINDOW_STATE_MAXIMIZED));
-    }
-    if (changed & GDK_WINDOW_STATE_STICKY) {
-        g_message("-- STICKY = %d", 0!=(state&GDK_WINDOW_STATE_STICKY));
-    }
-    if (changed & GDK_WINDOW_STATE_FULLSCREEN) {
-        g_message("-- FULLSCREEN = %d", 0!=(state&GDK_WINDOW_STATE_FULLSCREEN));
-    }
-    if (changed & GDK_WINDOW_STATE_ABOVE) {
-        g_message("-- ABOVE = %d", 0!=(state&GDK_WINDOW_STATE_ABOVE));
-    }
-    if (changed & GDK_WINDOW_STATE_BELOW) {
-        g_message("-- BELOW = %d", 0!=(state&GDK_WINDOW_STATE_BELOW));
-    }
-*/
 }
 
 /*
@@ -1355,15 +1297,16 @@ sp_ui_overwrite_file(gchar const *filename)
     bool return_value = FALSE;
 
     if (Inkscape::IO::file_test(filename, G_FILE_TEST_EXISTS)) {
-        GtkWidget* ancestor = 0;
+        Gtk::Widget* ancestor = NULL;
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if ( desktop ) {
             desktop->getToplevel( ancestor );
         }
-        GtkWindow *window = GTK_WIDGET_TOPLEVEL(ancestor) ? GTK_WINDOW( ancestor ) : 0;
+        Gtk::Window *window = ancestor->is_toplevel() ?
+        		dynamic_cast<Gtk::Window*>( ancestor ) : 0;
         gchar* baseName = g_path_get_basename( filename );
         gchar* dirName = g_path_get_dirname( filename );
-        GtkWidget* dialog = gtk_message_dialog_new_with_markup( window,
+        GtkWidget* dialog = gtk_message_dialog_new_with_markup( window->gobj(),
                                                                 (GtkDialogFlags)(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
                                                                 GTK_MESSAGE_QUESTION,
                                                                 GTK_BUTTONS_NONE,

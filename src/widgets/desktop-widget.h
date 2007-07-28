@@ -32,8 +32,6 @@ GtkType sp_desktop_widget_get_type();
 
 void sp_desktop_widget_destroy (SPDesktopWidget* dtw);
 
-gint sp_desktop_widget_set_focus(GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw);
-
 void sp_desktop_widget_show_decorations(SPDesktopWidget *dtw, gboolean show);
 void sp_desktop_widget_iconify(SPDesktopWidget *dtw);
 void sp_desktop_widget_maximize(SPDesktopWidget *dtw);
@@ -66,7 +64,7 @@ struct SPDesktopWidget {
 
     SPDesktop *desktop;
 
-    GtkWindow *window;
+    Gtk::Window *window;
     
     // The root vbox of the window layout.
     GtkWidget *vbox;
@@ -113,7 +111,7 @@ struct SPDesktopWidget {
 
         virtual void setTitle (gchar const *uri)
             { _dtw->updateTitle (uri); }
-        virtual void* getWindow()
+        virtual Gtk::Window* getWindow()
             { return _dtw->window; }
         virtual void layout() 
             { sp_desktop_widget_layout (_dtw); }
@@ -138,7 +136,11 @@ struct SPDesktopWidget {
         virtual bool shutdown()
             { return _dtw->shutdown(); }
         virtual void destroy()
-            { gtk_widget_destroy (static_cast<GtkWidget*>((void*)(_dtw->window)));}
+            {
+				if(_dtw->window != NULL)
+        			delete _dtw->window;
+				_dtw->window = NULL;
+			}
         
         virtual void requestCanvasUpdate()
             { _dtw->requestCanvasUpdate(); }
@@ -202,6 +204,8 @@ struct SPDesktopWidget {
     void enableInteraction();
     void disableInteraction();
     void updateTitle(gchar const *uri);
+	
+	bool onFocusInEvent(GdkEventFocus*);
 };
 
 /// The SPDesktopWidget vtable

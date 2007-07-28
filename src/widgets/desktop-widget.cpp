@@ -395,7 +395,8 @@ sp_desktop_widget_destroy (GtkObject *object)
 void
 SPDesktopWidget::updateTitle(gchar const* uri)
 {
-    GtkWindow *window = GTK_WINDOW (gtk_object_get_data (GTK_OBJECT(this), "window"));
+	Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+
     if (window) {
         gchar const *fname = ( TRUE
                                ? uri
@@ -414,7 +415,7 @@ SPDesktopWidget::updateTitle(gchar const* uri)
                 g_string_printf (name, _("%s - Inkscape"), fname);
             }
         }
-        gtk_window_set_title (window, name->str);
+        window->set_title (name->str);
         g_string_free (name, TRUE);
     }
 }
@@ -602,14 +603,19 @@ SPDesktopWidget::shutdown()
 
             switch (response) {
             case GTK_RESPONSE_YES:
-                sp_document_ref(doc);
-                if (sp_file_save_document(doc)) {
+            {
+            	Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+            	    
+            	sp_document_ref(doc);
+                if (sp_file_save_document(*window, doc)) {
                     sp_document_unref(doc);
                 } else { // save dialog cancelled or save failed
                     sp_document_unref(doc);
                     return TRUE;
                 }
+                
                 break;
+            }
             case GTK_RESPONSE_NO:
                 break;
             default: // cancel pressed, or dialog was closed
@@ -666,14 +672,20 @@ SPDesktopWidget::shutdown()
 
             switch (response) {
             case GTK_RESPONSE_YES:
-                sp_document_ref(doc);
-                if (sp_file_save_dialog(doc)) {
+            {
+            	sp_document_ref(doc);
+            	
+            	Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+             	
+                if (sp_file_save_dialog(*window, doc)) {
                     sp_document_unref(doc);
                 } else { // save dialog cancelled or save failed
                     sp_document_unref(doc);
                     return TRUE;
                 }
+                
                 break;
+            }
             case GTK_RESPONSE_NO:
                 allow_data_loss = TRUE;
                 break;
@@ -773,32 +785,35 @@ SPDesktopWidget::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
 {
     gboolean vis = GTK_WIDGET_VISIBLE (this);
 
-    GtkWindow *window = GTK_WINDOW (gtk_object_get_data (GTK_OBJECT(this), "window"));
+    Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+    
     if (window)
     {
-        gtk_window_get_size (window, &w, &h);
-        gtk_window_get_position (window, &x, &y);
+        window->get_size (w, h);
+        window->get_position (x, y);
     }
 }
 
 void
 SPDesktopWidget::setWindowPosition (NR::Point p)
 {
-    GtkWindow *window = GTK_WINDOW (gtk_object_get_data (GTK_OBJECT(this), "window"));
+	Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+    
     if (window)
     {
-        gtk_window_move (window, gint(round(p[NR::X])), gint(round(p[NR::Y])));
+        window->move (gint(round(p[NR::X])), gint(round(p[NR::Y])));
     }
 }
 
 void
 SPDesktopWidget::setWindowSize (gint w, gint h)
 {
-    GtkWindow *window = GTK_WINDOW (gtk_object_get_data (GTK_OBJECT(this), "window"));
+	Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+    
     if (window)
     {
-        gtk_window_set_default_size (window, w, h);
-        gtk_window_reshow_with_initial_size (window);
+        window->set_default_size (w, h);
+        window->reshow_with_initial_size ();
     }
 }
 
@@ -1131,16 +1146,14 @@ sp_desktop_widget_adjustment_value_changed (GtkAdjustment *adj, SPDesktopWidget 
 }
 
 /* we make the desktop window with focus active, signal is connected in interface.c */
-
-gint
-sp_desktop_widget_set_focus (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw)
+bool SPDesktopWidget::onFocusInEvent(GdkEventFocus*)
 {
-    inkscape_activate_desktop (dtw->desktop);
+    inkscape_activate_desktop (desktop);
 
     /* give focus to canvas widget */
-    gtk_widget_grab_focus (GTK_WIDGET (dtw->canvas));
-
-    return FALSE;
+    gtk_widget_grab_focus (GTK_WIDGET (canvas));
+	
+	return false;
 }
 
 static gdouble

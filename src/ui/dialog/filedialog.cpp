@@ -715,8 +715,9 @@ public:
     /**
      *
      */
-    FileDialogBase(const Glib::ustring &title, FileDialogType type, gchar const* preferenceBase) :
-        Gtk::FileChooserDialog(title),
+    FileDialogBase(Gtk::Window& parentWindow, const Glib::ustring &title,
+    		FileDialogType type, gchar const* preferenceBase) :
+        Gtk::FileChooserDialog(parentWindow, title),
         preferenceBase(preferenceBase ? preferenceBase : "unknown"),
         dialogType(type)
     {
@@ -726,9 +727,9 @@ public:
     /**
      *
      */
-    FileDialogBase(const Glib::ustring &title,
+    FileDialogBase(Gtk::Window& parentWindow, const Glib::ustring &title,
                    Gtk::FileChooserAction dialogType, FileDialogType type, gchar const* preferenceBase) :
-        Gtk::FileChooserDialog(title, dialogType),
+        Gtk::FileChooserDialog(parentWindow, title, dialogType),
         preferenceBase(preferenceBase ? preferenceBase : "unknown"),
         dialogType(type)
     {
@@ -848,7 +849,8 @@ class FileOpenDialogImpl : public FileOpenDialog, public FileDialogBase
 {
 public:
 
-    FileOpenDialogImpl(const Glib::ustring &dir,
+    FileOpenDialogImpl(Gtk::Window& parentWindow,
+    		           const Glib::ustring &dir,
                        FileDialogType fileTypes,
                        const Glib::ustring &title);
 
@@ -947,10 +949,11 @@ void FileOpenDialogImpl::createFilterMenu()
 /**
  * Constructor.  Not called directly.  Use the factory.
  */
-FileOpenDialogImpl::FileOpenDialogImpl(const Glib::ustring &dir,
+FileOpenDialogImpl::FileOpenDialogImpl(Gtk::Window& parentWindow, 
+		                               const Glib::ustring &dir,
                                        FileDialogType fileTypes,
                                        const Glib::ustring &title) :
-    FileDialogBase(title, fileTypes, "dialogs.open")
+    FileDialogBase(parentWindow, title, fileTypes, "dialogs.open")
 {
 
 
@@ -1003,11 +1006,12 @@ FileOpenDialogImpl::FileOpenDialogImpl(const Glib::ustring &dir,
 /**
  * Public factory.  Called by file.cpp, among others.
  */
-FileOpenDialog *FileOpenDialog::create(const Glib::ustring &path,
+FileOpenDialog *FileOpenDialog::create(Gtk::Window &parentWindow,
+		                               const Glib::ustring &path,
                                        FileDialogType fileTypes,
                                        const Glib::ustring &title)
 {
-    FileOpenDialog *dialog = new FileOpenDialogImpl(path, fileTypes, title);
+    FileOpenDialog *dialog = new FileOpenDialogImpl(parentWindow, path, fileTypes, title);
     return dialog;
 }
 
@@ -1128,7 +1132,8 @@ class FileSaveDialogImpl : public FileSaveDialog, public FileDialogBase
 {
 
 public:
-    FileSaveDialogImpl(const Glib::ustring &dir,
+    FileSaveDialogImpl(Gtk::Window &parentWindow, 
+    		           const Glib::ustring &dir,
                        FileDialogType fileTypes,
                        const Glib::ustring &title,
                        const Glib::ustring &default_key);
@@ -1307,11 +1312,12 @@ void FileSaveDialogImpl::createFileTypeMenu()
 /**
  * Constructor
  */
-FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
+FileSaveDialogImpl::FileSaveDialogImpl(Gtk::Window &parentWindow, 
+			const Glib::ustring &dir,
             FileDialogType fileTypes,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
-    FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.save_as")
+    FileDialogBase(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.save_as")
 {
     /* One file at a time */
     set_select_multiple(false);
@@ -1402,12 +1408,13 @@ FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
 /**
  * Public factory method.  Used in file.cpp
  */
-FileSaveDialog *FileSaveDialog::create(const Glib::ustring &path,
+FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow, 
+									   const Glib::ustring &path,
                                        FileDialogType fileTypes,
                                        const Glib::ustring &title,
                                        const Glib::ustring &default_key)
 {
-    FileSaveDialog *dialog = new FileSaveDialogImpl(path, fileTypes, title, default_key);
+    FileSaveDialog *dialog = new FileSaveDialogImpl(parentWindow, path, fileTypes, title, default_key);
     return dialog;
 }
 
@@ -1616,10 +1623,11 @@ class FileExportDialogImpl : public FileExportDialog, public FileDialogBase
 {
 
 public:
-    FileExportDialogImpl(const Glib::ustring &dir,
-                       FileDialogType fileTypes,
-                       const Glib::ustring &title,
-                       const Glib::ustring &default_key);
+    FileExportDialogImpl(Gtk::Window& parentWindow, 
+    				     const Glib::ustring &dir,
+                         FileDialogType fileTypes,
+                         const Glib::ustring &title,
+                         const Glib::ustring &default_key);
 
     virtual ~FileExportDialogImpl();
 
@@ -1919,11 +1927,12 @@ void FileExportDialogImpl::createFileTypeMenu()
 /**
  * Constructor
  */
-FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
+FileExportDialogImpl::FileExportDialogImpl(Gtk::Window& parentWindow,
+			const Glib::ustring &dir,
             FileDialogType fileTypes,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
-            FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.export"),
+            FileDialogBase(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.export"),
             sourceX0Spinner("X0",         _("Left edge of source")),
             sourceY0Spinner("Y0",         _("Top edge of source")),
             sourceX1Spinner("X1",         _("Right edge of source")),
@@ -2103,12 +2112,13 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
 /**
  * Public factory method.  Used in file.cpp
  */
-FileExportDialog *FileExportDialog::create(const Glib::ustring &path,
-                                       FileDialogType fileTypes,
-                                       const Glib::ustring &title,
-                                       const Glib::ustring &default_key)
+FileExportDialog *FileExportDialog::create(Gtk::Window& parentWindow, 
+										   const Glib::ustring &path,
+                                           FileDialogType fileTypes,
+                                           const Glib::ustring &title,
+                                           const Glib::ustring &default_key)
 {
-    FileExportDialog *dialog = new FileExportDialogImpl(path, fileTypes, title, default_key);
+    FileExportDialog *dialog = new FileExportDialogImpl(parentWindow, path, fileTypes, title, default_key);
     return dialog;
 }
 

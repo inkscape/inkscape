@@ -25,8 +25,10 @@
 #include "config.h"
 #endif
 
+#include <gdk/gdkevents.h>
 #include <gtk/gtktypeutils.h>
 #include <sigc++/sigc++.h>
+
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-matrix-fns.h"
 #include "libnr/nr-rect.h"
@@ -48,7 +50,14 @@ struct SPObject;
 struct SPStyle;
 struct SPViewWidget;
 
+namespace Gtk
+{
+  class Widget;
+}
+
 typedef int sp_verb_t;
+
+
 
 namespace Inkscape { 
   class Application;
@@ -229,7 +238,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void setWindowPosition (NR::Point p);
     void setWindowSize (gint w, gint h);
     void setWindowTransient (void* p, int transient_policy=1);
-    void getToplevel( GtkWidget*& toplevel );
+    void getToplevel( Gtk::Widget*& toplevel );
     void presentWindow();
     bool warnDialog (gchar *text);
     void toggleRulers();
@@ -273,6 +282,9 @@ struct SPDesktop : public Inkscape::UI::View::View
     virtual bool shutdown();
     virtual void mouseover() {}
     virtual void mouseout() {}
+
+	virtual bool onDeleteUI (GdkEventAny*);
+	virtual bool onWindowStateEvent (GdkEventWindowState* event);
 
 private:
     Inkscape::UI::View::EditWidgetInterface       *_widget;

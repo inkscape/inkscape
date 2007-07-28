@@ -1030,9 +1030,9 @@ SPDesktop::setWindowTransient (void *p, int transient_policy)
     _widget->setTransient (p, transient_policy);
 }
 
-void SPDesktop::getToplevel( GtkWidget*& toplevel )
+void SPDesktop::getToplevel( Gtk::Widget*& toplevel )
 {
-    toplevel = GTK_WIDGET( _widget->getWindow() );
+    toplevel = (Gtk::Widget*)_widget->getWindow();
 }
 
 void
@@ -1075,6 +1075,35 @@ bool
 SPDesktop::shutdown()
 {
     return _widget->shutdown();
+}
+
+bool SPDesktop::onDeleteUI (GdkEventAny*)
+{
+	if(shutdown()) return true;
+	destroyWidget();
+	return false;
+}
+
+/**
+ *  onWindowStateEvent
+ *
+ *  Called when the window changes its maximize/fullscreen/iconify/pinned state.
+ *  Since GTK doesn't have a way to query this state information directly, we
+ *  record it for the desktop here, and also possibly trigger a layout.
+ */
+bool
+SPDesktop::onWindowStateEvent (GdkEventWindowState* event)
+{
+	// Record the desktop window's state
+    window_state = event->new_window_state;
+
+    // Layout may differ depending on full-screen mode or not
+    GdkWindowState changed = event->changed_mask;
+    if (changed & (GDK_WINDOW_STATE_FULLSCREEN|GDK_WINDOW_STATE_MAXIMIZED)) {
+        layoutWidget();
+    }
+	
+	return false;
 }
 
 void

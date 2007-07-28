@@ -11,8 +11,20 @@
  */
 
 #include <gtk/gtkwidget.h>
+#include <gtkmm/window.h>
 
+/*
+ * This function is depreciated. Use Inkscape::UI::window_new instead.
+ */
 GtkWidget *sp_window_new (const gchar *title, unsigned int resizeable);
+
+namespace Inkscape {
+namespace UI {
+
+Gtk::Window *window_new (const gchar *title, unsigned int resizeable);
+
+}
+}
 
 #endif
 

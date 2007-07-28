@@ -16,9 +16,10 @@
 #ifndef INKSCAPE_UI_VIEW_EDIT_WIDGET_IFACE_H
 #define INKSCAPE_UI_VIEW_EDIT_WIDGET_IFACE_H
 
-#include "gdk/gdktypes.h"
 #include "libnr/nr-point.h"
 #include "message.h"
+
+#include <gtkmm/window.h>
 
 namespace Inkscape {
 namespace UI {
@@ -30,7 +31,7 @@ struct EditWidgetInterface
     virtual ~EditWidgetInterface() {}
 
     /// Returns pointer to window UI object as void*
-    virtual void *getWindow() = 0;
+    virtual Gtk::Window *getWindow() = 0;
     
     /// Set the widget's title
     virtual void setTitle (gchar const*) = 0;
