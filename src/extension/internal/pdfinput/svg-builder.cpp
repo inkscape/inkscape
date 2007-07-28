@@ -69,8 +69,9 @@ SvgBuilder::SvgBuilder() {
     _current_state = NULL;
 }
 
-SvgBuilder::SvgBuilder(SPDocument *document, XRef *xref) {
+SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref) {
     _doc = document;
+    _docname = docname;
     _xref = xref;
     _xml_doc = sp_document_repr_doc(_doc);
     _container = _root = _doc->rroot;
@@ -80,6 +81,7 @@ SvgBuilder::SvgBuilder(SPDocument *document, XRef *xref) {
 
 SvgBuilder::SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root) {
     _doc = parent->_doc;
+    _docname = parent->_docname;
     _xref = parent->_xref;
     _xml_doc = parent->_xml_doc;
     _container = this->_root = root;
@@ -94,6 +96,16 @@ void SvgBuilder::setDocumentSize(double width, double height) {
     sp_repr_set_svg_double(_root, "height", height);
     this->_width = width;
     this->_height = height;
+}
+
+/**
+ * \brief Sets groupmode of the current container to 'layer' and sets its label if given
+ */
+void SvgBuilder::setAsLayer(char *layer_name) {
+    _container->setAttribute("inkscape:groupmode", "layer");
+    if (layer_name) {
+        _container->setAttribute("inkscape:label", layer_name);
+    }
 }
 
 void SvgBuilder::saveState() {
@@ -114,6 +126,17 @@ Inkscape::XML::Node *SvgBuilder::pushGroup() {
     _container = node;
     Inkscape::GC::release(node);
     _group_depth.back()++;
+    // Set as a layer if this is a top-level group
+    if ( _container->parent() == _root ) {
+        static int layer_count = 1;
+        if ( layer_count > 1 ) {
+            gchar *layer_name = g_strdup_printf("%s%d", _docname, layer_count);
+            setAsLayer(layer_name);
+            g_free(layer_name);
+        } else {
+            setAsLayer(_docname);
+        }
+    }
 
     return _container;
 }

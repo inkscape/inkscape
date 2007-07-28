@@ -79,12 +79,13 @@ struct SvgGlyph {
  */
 class SvgBuilder {
 public:
-    SvgBuilder(SPDocument *document, XRef *xref);
+    SvgBuilder(SPDocument *document, gchar *docname, XRef *xref);
     SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root);
     ~SvgBuilder();
 
     // Property setting
     void setDocumentSize(double width, double height);  // Document size in px
+    void setAsLayer(char *layer_name=NULL);
 
     // Handling the node stack
     Inkscape::XML::Node *pushGroup();
@@ -166,6 +167,7 @@ private:
     GfxState *_current_state;
 
     SPDocument *_doc;
+    gchar *_docname;    // Basename of the URI from which this document is created
     XRef *_xref;    // Cross-reference table from the PDF doc we're converting from
     Inkscape::XML::Document *_xml_doc;
     Inkscape::XML::Node *_root;  // Root node from the point of view of this SvgBuilder
