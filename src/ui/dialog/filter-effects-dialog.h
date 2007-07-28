@@ -149,9 +149,9 @@ private:
 
         bool do_connection_node(const Gtk::TreeIter& row, const int input, std::vector<Gdk::Point>& points,
                                 const int ix, const int iy);
-        const Gtk::TreeIter find_result(const Gtk::TreeIter& start, const SPAttributeEnum attr);
+        const Gtk::TreeIter find_result(const Gtk::TreeIter& start, const int attr, int& src_id);
         int find_index(const Gtk::TreeIter& target);
-        void draw_connection(const Gtk::TreeIter&, const SPAttributeEnum attr, const int text_start_x,
+        void draw_connection(const Gtk::TreeIter&, const int attr, const int text_start_x,
                              const int x1, const int y1, const int row_count);
         void sanitize_connections(const Gtk::TreeIter& prim_iter);
 
@@ -175,8 +175,7 @@ private:
     void convolve_order_changed();
 
     void set_attr_direct(const SPAttributeEnum attr, const AttrWidget*);
-    void set_attr_special(const SPAttributeEnum);
-    void set_attr(const SPAttributeEnum, const gchar* val);
+    void set_attr(SPObject*, const SPAttributeEnum, const gchar* val);
     void update_settings_view();
     void update_settings_sensitivity();
 

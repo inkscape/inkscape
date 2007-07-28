@@ -37,6 +37,7 @@
 #include "sp-fecomposite.h"
 #include "sp-fedisplacementmap.h"
 #include "sp-femerge.h"
+#include "sp-femergenode.h"
 #include "sp-filter-primitive.h"
 #include "sp-gaussian-blur.h"
 #include "sp-feoffset.h"
@@ -600,8 +601,8 @@ int FilterEffectsDialog::CellRendererConnection::input_count(const SPFilterPrimi
     else if(SP_IS_FEBLEND(prim) || SP_IS_FECOMPOSITE(prim) || SP_IS_FEDISPLACEMENTMAP(prim))
         return 2;
     else if(SP_IS_FEMERGE(prim)) {
-        // Return the number of feMergeNode connections plus an extra one for adding a new input
-        int count = 1;
+        // Return the number of feMergeNode connections
+        int count = 0;
         for(const SPObject* o = prim->firstChild(); o; o = o->next, ++count);
         return count;
     }
@@ -816,7 +817,11 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
                                                darkgc : get_style()->get_dark_gc(Gtk::STATE_ACTIVE),
                                                inside, con_poly);
 
-                // TODO: draw connections for each of the feMergeNodes
+                if(_in_drag == (i + 1))
+                    con_drag_y = con_poly[2].get_y();
+
+                if(_in_drag != (i + 1) || row_prim != prim)
+                    draw_connection(row, i, text_start_x, outline_x, con_poly[2].get_y(), row_count);
             }
         }
         else {
@@ -826,6 +831,7 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
             get_bin_window()->draw_polygon(inside && mask & GDK_BUTTON1_MASK ?
                                            darkgc : get_style()->get_dark_gc(Gtk::STATE_ACTIVE),
                                            inside, con_poly);
+
             // Draw "in" connection
             if(_in_drag != 1 || row_prim != prim)
                 draw_connection(row, SP_ATTR_IN, text_start_x, outline_x, con_poly[2].get_y(), row_count);
@@ -842,32 +848,31 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
                 if(_in_drag != 2 || row_prim != prim)
                     draw_connection(row, SP_ATTR_IN2, text_start_x, outline_x, con_poly[2].get_y(), row_count);
             }
+        }
 
-            // Draw drag connection
-            if(row_prim == prim && _in_drag) {
-                get_bin_window()->draw_line(get_style()->get_black_gc(), outline_x, con_drag_y,
-                                            mx, con_drag_y);
-                get_bin_window()->draw_line(get_style()->get_black_gc(), mx, con_drag_y, mx, my);
-            }
+        // Draw drag connection
+        if(row_prim == prim && _in_drag) {
+            get_bin_window()->draw_line(get_style()->get_black_gc(), outline_x, con_drag_y,
+                                        mx, con_drag_y);
+            get_bin_window()->draw_line(get_style()->get_black_gc(), mx, con_drag_y, mx, my);
         }
     }
 
     return true;
 }
 
-void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& input, const SPAttributeEnum attr,
+void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& input, const int attr,
                                                          const int text_start_x, const int x1, const int y1,
                                                          const int row_count)
 {
-    const Gtk::TreeIter res = find_result(input, attr);
+    int src_id;
+    const Gtk::TreeIter res = find_result(input, attr, src_id);
     Glib::RefPtr<Gdk::GC> gc = get_style()->get_black_gc();
     
     if(res == input) {
         // Draw straight connection to a standard input
         const int tw = _connection_cell.get_text_width();
-        const int src = 1 + (int)FPInputConverter.get_id_from_key(
-            SP_OBJECT_REPR((*res)[_columns.primitive])->attribute((const gchar*)sp_attribute_name(attr)));
-        gint end_x = text_start_x + tw * src + (int)(tw * 0.5f) + 1;
+        gint end_x = text_start_x + tw * (src_id + 1) + (int)(tw * 0.5f) + 1;
         get_bin_window()->draw_rectangle(gc, true, end_x-2, y1-2, 5, 5);
         get_bin_window()->draw_line(gc, x1, y1, end_x, y1);
     }
@@ -914,26 +919,35 @@ bool FilterEffectsDialog::PrimitiveList::do_connection_node(const Gtk::TreeIter&
 }
 
 const Gtk::TreeIter FilterEffectsDialog::PrimitiveList::find_result(const Gtk::TreeIter& start,
-                                                                    const SPAttributeEnum attr)
+                                                                    const int attr, int& src_id)
 {
     SPFilterPrimitive* prim = (*start)[_columns.primitive];
     Gtk::TreeIter target = _model->children().end();
     int image;
 
-    if(attr == SP_ATTR_IN)
-        image = prim->image_in;
-    else if(attr == SP_ATTR_IN2) {
-        if(SP_IS_FEBLEND(prim))
-            image = SP_FEBLEND(prim)->in2;
-        else if(SP_IS_FECOMPOSITE(prim))
-            image = SP_FECOMPOSITE(prim)->in2;
-        /*else if(SP_IS_FEDISPLACEMENTMAP(prim))
-        image = SP_FEDISPLACEMENTMAP(prim)->in2;*/
+    if(SP_IS_FEMERGE(prim)) {
+        int c = 0;
+        for(const SPObject* o = prim->firstChild(); o; o = o->next, ++c) {
+            if(c == attr && SP_IS_FEMERGENODE(o))
+                image = SP_FEMERGENODE(o)->input;
+        }
+    }
+    else {
+        if(attr == SP_ATTR_IN)
+            image = prim->image_in;
+        else if(attr == SP_ATTR_IN2) {
+            if(SP_IS_FEBLEND(prim))
+                image = SP_FEBLEND(prim)->in2;
+            else if(SP_IS_FECOMPOSITE(prim))
+                image = SP_FECOMPOSITE(prim)->in2;
+            /*else if(SP_IS_FEDISPLACEMENTMAP(prim))
+              image = SP_FEDISPLACEMENTMAP(prim)->in2;*/
+            else
+                return target;
+        }
         else
             return target;
     }
-    else
-        return target;
 
     if(image >= 0) {
         for(Gtk::TreeIter i = _model->children().begin();
@@ -943,8 +957,10 @@ const Gtk::TreeIter FilterEffectsDialog::PrimitiveList::find_result(const Gtk::T
         }
         return target;
     }
-    else if(image < -1)
+    else if(image < -1) {
+        src_id = -(image + 2);
         return start;
+    }
 
     return target;
 }
@@ -1041,10 +1057,19 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
                 }
             }
 
-            if(_in_drag == 1)
-                _dialog.set_attr(SP_ATTR_IN, in_val);
-            else if(_in_drag == 2)
-                _dialog.set_attr(SP_ATTR_IN2, in_val);
+            if(SP_IS_FEMERGE(prim)) {
+                int c = 1;
+                for(SPObject* o = prim->firstChild(); o; o = o->next, ++c) {
+                    if(c == _in_drag && SP_IS_FEMERGENODE(o))
+                        _dialog.set_attr(o, SP_ATTR_IN, in_val);
+                }
+            }
+            else {
+                if(_in_drag == 1)
+                    _dialog.set_attr(prim, SP_ATTR_IN, in_val);
+                else if(_in_drag == 2)
+                    _dialog.set_attr(prim, SP_ATTR_IN2, in_val);
+            }
         }
 
         _in_drag = 0;
@@ -1308,22 +1333,20 @@ void FilterEffectsDialog::convolve_order_changed()
 
 void FilterEffectsDialog::set_attr_direct(const SPAttributeEnum attr, const AttrWidget* input)
 {
-    set_attr(attr, input->get_as_attribute().c_str());
+    set_attr(_primitive_list.get_selected(), attr, input->get_as_attribute().c_str());
 }
 
-void FilterEffectsDialog::set_attr(const SPAttributeEnum attr, const gchar* val)
+void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, const gchar* val)
 {
     if(!_locked) {
         SPFilter *filter = _filter_modifier.get_selected_filter();
-        SPFilterPrimitive* prim = _primitive_list.get_selected();
-        
-        if(filter && prim) {
+        const gchar* name = (const gchar*)sp_attribute_name(attr);
+        if(filter && name) {
             update_settings_sensitivity();
-            
-            const gchar* name = (const gchar*)sp_attribute_name(attr);
-            SP_OBJECT_REPR(prim)->setAttribute(name, val);
+
+            SP_OBJECT_REPR(o)->setAttribute(name, val);
             filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            
+
             Glib::ustring undokey = "filtereffects:";
             undokey += name;
             sp_document_maybe_done(filter->document, undokey.c_str(), SP_VERB_DIALOG_FILTER_EFFECTS,
