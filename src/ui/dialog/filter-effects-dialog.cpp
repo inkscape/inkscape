@@ -480,7 +480,7 @@ void FilterEffectsDialog::FilterModifier::filter_list_button_press(GdkEventButto
         }
 
         update_selection(sel);
-        sp_document_maybe_done(doc, "fillstroke:blur", SP_VERB_DIALOG_FILL_STROKE,  _("Change blur"));
+        sp_document_done(doc, SP_VERB_DIALOG_FILTER_EFFECTS,  _("Apply filter"));
     }
 }
 
@@ -1185,7 +1185,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add(SP_ATTR_BIAS, _("Bias"), -10, 10, 1, 0.01, 1);
     
     _settings->type(NR_FILTER_GAUSSIANBLUR);
-    _settings->add(SP_ATTR_STDDEVIATION, _("Standard Deviation X"), _("Standard Deviation Y"), 0, 100, 1, 0.01, 1);
+    _settings->add(SP_ATTR_STDDEVIATION, _("Standard Deviation X"), _("Standard Deviation Y"), 0.01, 100, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_OFFSET);
     _settings->add(SP_ATTR_DX, _("Delta X"), -100, 100, 1, 0.01, 1);
@@ -1284,10 +1284,14 @@ void FilterEffectsDialog::set_attr(const SPAttributeEnum attr, const gchar* val)
         if(filter && prim) {
             update_settings_sensitivity();
             
-            SP_OBJECT_REPR(prim)->setAttribute((gchar*)sp_attribute_name(attr), val);
+            const gchar* name = (const gchar*)sp_attribute_name(attr);
+            SP_OBJECT_REPR(prim)->setAttribute(name, val);
             filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
             
-            sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Set filter primitive attribute"));
+            Glib::ustring undokey = "filtereffects:";
+            undokey += name;
+            sp_document_maybe_done(filter->document, undokey.c_str(), SP_VERB_DIALOG_FILTER_EFFECTS,
+                                   _("Set filter primitive attribute"));
         }
     }
 }
