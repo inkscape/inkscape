@@ -1297,13 +1297,7 @@ sp_ui_overwrite_file(gchar const *filename)
     bool return_value = FALSE;
 
     if (Inkscape::IO::file_test(filename, G_FILE_TEST_EXISTS)) {
-        Gtk::Widget* ancestor = NULL;
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-        if ( desktop ) {
-            desktop->getToplevel( ancestor );
-        }
-        Gtk::Window *window = ancestor->is_toplevel() ?
-        		dynamic_cast<Gtk::Window*>( ancestor ) : 0;
+        Gtk::Window *window = SP_ACTIVE_DESKTOP->getToplevel();
         gchar* baseName = g_path_get_basename( filename );
         gchar* dirName = g_path_get_dirname( filename );
         GtkWidget* dialog = gtk_message_dialog_new_with_markup( window->gobj(),

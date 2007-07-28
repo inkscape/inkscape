@@ -52,7 +52,7 @@ struct SPViewWidget;
 
 namespace Gtk
 {
-  class Widget;
+  class Window;
 }
 
 typedef int sp_verb_t;
@@ -238,7 +238,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void setWindowPosition (NR::Point p);
     void setWindowSize (gint w, gint h);
     void setWindowTransient (void* p, int transient_policy=1);
-    void getToplevel( Gtk::Widget*& toplevel );
+    Gtk::Window* getToplevel();
     void presentWindow();
     bool warnDialog (gchar *text);
     void toggleRulers();

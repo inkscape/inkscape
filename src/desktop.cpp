@@ -1030,9 +1030,10 @@ SPDesktop::setWindowTransient (void *p, int transient_policy)
     _widget->setTransient (p, transient_policy);
 }
 
-void SPDesktop::getToplevel( Gtk::Widget*& toplevel )
+Gtk::Window*
+SPDesktop::getToplevel( )
 {
-    toplevel = (Gtk::Widget*)_widget->getWindow();
+    return _widget->getWindow();
 }
 
 void

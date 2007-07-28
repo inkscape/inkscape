@@ -792,10 +792,9 @@ FileVerb::perform(SPAction *action, void *data, void *pdata)
 #endif
     
     SPDesktop *desktop = dynamic_cast<SPDesktop*>(sp_action_get_view(action));
-	Gtk::Window *parent = NULL;
-	if(desktop == NULL) return;
-	desktop->getToplevel((Gtk::Widget*&)parent);
-	if(parent == NULL) return;
+	g_assert(desktop != NULL);
+	Gtk::Window *parent = desktop->getToplevel();
+	g_assert(parent != NULL);
     
     switch ((long) data) {
         case SP_VERB_FILE_NEW:
