@@ -58,8 +58,9 @@ namespace Internal {
  */
 struct SvgGlyph {
     NR::Point position;    // Absolute glyph coords
-    NR::Point transformed_position; // Glyph coords transformed by text matrix
+    NR::Point text_position; // Absolute glyph coords in text space
     double dx, dy;  // Advance values
+    double rise;    // Text rise parameter
     char code[8];   // UTF-8 coded character
     int code_size;
     bool is_space;
@@ -67,6 +68,7 @@ struct SvgGlyph {
     bool style_changed;  // Set to true if style has to be reset
     SPCSSAttr *style;
     int render_mode;    // Text render mode
+    char *font_specification;   // Pointer to current font specification
 };
 
 /**
@@ -113,6 +115,8 @@ public:
     void restoreState();
     void updateStyle(GfxState *state);
     void updateFont(GfxState *state);
+    void updateTextPosition(double tx, double ty);
+    void updateTextShift(GfxState *state, double shift);
     void updateTextMatrix(GfxState *state);
 
     // Clipping
@@ -152,8 +156,10 @@ private:
     SPCSSAttr *_font_style;          // Current font style
     GfxFont *_current_font;
     char *_font_specification;
+    double _font_scaling;
     bool _need_font_update;
     NR::Matrix _text_matrix;
+    NR::Point _text_position;
     std::vector<SvgGlyph> _glyphs;   // Added characters
     bool _in_text_object;   // Whether we are inside a text object
     bool _invalidated_style;

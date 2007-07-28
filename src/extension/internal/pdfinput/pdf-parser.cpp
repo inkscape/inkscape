@@ -1962,6 +1962,7 @@ void PdfParser::opEOClip(Object args[], int numArgs) {
 void PdfParser::opBeginText(Object args[], int numArgs) {
   state->setTextMat(1, 0, 0, 1, 0, 0);
   state->textMoveTo(0, 0);
+  builder->updateTextPosition(0.0, 0.0);
   fontChanged = gTrue;
   builder->beginTextObject(state);
 }
@@ -2029,6 +2030,7 @@ void PdfParser::opTextMove(Object args[], int numArgs) {
   tx = state->getLineX() + args[0].getNum();
   ty = state->getLineY() + args[1].getNum();
   state->textMoveTo(tx, ty);
+  builder->updateTextPosition(tx, ty);
 }
 
 void PdfParser::opTextMoveSet(Object args[], int numArgs) {
@@ -2039,6 +2041,7 @@ void PdfParser::opTextMoveSet(Object args[], int numArgs) {
   state->setLeading(-ty);
   ty += state->getLineY();
   state->textMoveTo(tx, ty);
+  builder->updateTextPosition(tx, ty);
 }
 
 void PdfParser::opSetTextMatrix(Object args[], int numArgs) {
@@ -2047,6 +2050,7 @@ void PdfParser::opSetTextMatrix(Object args[], int numArgs) {
 		    args[4].getNum(), args[5].getNum());
   state->textMoveTo(0, 0);
   builder->updateTextMatrix(state);
+  builder->updateTextPosition(0.0, 0.0);
   fontChanged = gTrue;
 }
 
@@ -2056,6 +2060,7 @@ void PdfParser::opTextNextLine(Object args[], int numArgs) {
   tx = state->getLineX();
   ty = state->getLineY() - state->getLeading();
   state->textMoveTo(tx, ty);
+  builder->updateTextPosition(tx, ty);
 }
 
 //------------------------------------------------------------------------
@@ -2088,6 +2093,7 @@ void PdfParser::opMoveShowText(Object args[], int numArgs) {
   tx = state->getLineX();
   ty = state->getLineY() - state->getLeading();
   state->textMoveTo(tx, ty);
+  builder->updateTextPosition(tx, ty);
   doShowText(args[0].getString());
 }
 
@@ -2107,6 +2113,7 @@ void PdfParser::opMoveSetShowText(Object args[], int numArgs) {
   tx = state->getLineX();
   ty = state->getLineY() - state->getLeading();
   state->textMoveTo(tx, ty);
+  builder->updateTextPosition(tx, ty);
   doShowText(args[2].getString());
 }
 
@@ -2138,6 +2145,7 @@ void PdfParser::opShowSpaceText(Object args[], int numArgs) {
 	state->textShift(-obj.getNum() * 0.001 *
 			 fabs(state->getFontSize()), 0);
       }
+      builder->updateTextShift(state, obj.getNum());
     } else if (obj.isString()) {
       doShowText(obj.getString());
     } else {
@@ -2271,7 +2279,7 @@ void PdfParser::doShowText(GooString *s) {
       originY *= state->getFontSize();
       state->textTransformDelta(originX, originY, &tOriginX, &tOriginY);
       builder->addChar(state, state->getCurX() + riseX, state->getCurY() + riseY,
- 		       tdx, tdy, tOriginX, tOriginY, code, n, u, uLen);
+                       dx, dy, tOriginX, tOriginY, code, n, u, uLen);
       state->shift(tdx, tdy);
       p += n;
       len -= n;

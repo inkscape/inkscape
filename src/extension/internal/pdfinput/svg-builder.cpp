@@ -853,8 +853,16 @@ void SvgBuilder::updateFont(GfxState *state) {
     // Font size
     Inkscape::CSSOStringStream os_font_size;
     double *text_matrix = state->getTextMat();
-    double text_descrim = sqrt( text_matrix[0] * text_matrix[3] - text_matrix[1] * text_matrix[2] );
-    double css_font_size = text_descrim * state->getFontSize() * state->getHorizScaling();
+    double w_scale = sqrt( text_matrix[0] * text_matrix[0] + text_matrix[2] * text_matrix[2] );
+    double h_scale = sqrt( text_matrix[1] * text_matrix[1] + text_matrix[3] * text_matrix[3] );
+    double max_scale;
+    if ( w_scale > h_scale ) {
+        max_scale = w_scale;
+    } else {
+        max_scale = h_scale;
+    }
+    double css_font_size = max_scale * state->getFontSize();
+
     os_font_size << css_font_size;
     sp_repr_css_set_property(_font_style, "font-size", os_font_size.str().c_str());
 
@@ -869,17 +877,41 @@ void SvgBuilder::updateFont(GfxState *state) {
     double *font_matrix = font->getFontMatrix();
     NR::Matrix nr_font_matrix(font_matrix[0], font_matrix[1], font_matrix[2],
                               font_matrix[3], font_matrix[4], font_matrix[5]);
-    NR::Matrix new_text_matrix(text_matrix[0], text_matrix[1],
+    NR::Matrix new_text_matrix(text_matrix[0] * state->getHorizScaling(),
+                               text_matrix[1] * state->getHorizScaling(),
                                -text_matrix[2], -text_matrix[3],
                                0.0, 0.0);
-    if ( fabs( text_descrim - 1.0 ) > EPSILON ) {
+
+    if ( fabs( max_scale - 1.0 ) > EPSILON ) {
         // Cancel out scaling by font size in text matrix
-        new_text_matrix *= NR::scale( 1.0 / text_descrim, 1.0 / text_descrim );
+        for ( int i = 0 ; i < 4 ; i++ ) {
+            new_text_matrix[i] /= max_scale;
+        }
     }
     _text_matrix = nr_font_matrix * new_text_matrix;
-
+    _font_scaling = max_scale;
     _current_font = font;
     _invalidated_style = true;
+}
+
+/**
+ * \brief Shifts the current text position by the given amount (specified in text space)
+ */
+void SvgBuilder::updateTextShift(GfxState *state, double shift) {
+    double shift_value = -shift * 0.001 * fabs(state->getFontSize());
+    if (state->getFont()->getWMode()) {
+        _text_position[1] += shift_value;
+    } else {
+        _text_position[0] += shift_value;
+    }
+}
+
+/**
+ * \brief Updates current text position
+ */
+void SvgBuilder::updateTextPosition(double tx, double ty) {
+    NR::Point new_position(tx, ty);
+    _text_position = new_position;
 }
 
 /**
@@ -909,7 +941,6 @@ void SvgBuilder::_flushText() {
     }
 
     Inkscape::XML::Node *text_node = _xml_doc->createElement("svg:text");
-    text_node->setAttribute("inkscape:font-specification", _font_specification);
     // Set text matrix
     NR::Matrix text_transform(_text_matrix);
     text_transform[4] = first_glyph.position[0];
@@ -936,9 +967,9 @@ void SvgBuilder::_flushText() {
         } else if ( i != _glyphs.begin() ) {
             const SvgGlyph& prev_glyph = (*prev_iterator);
             if ( !( ( glyph.dy == 0.0 && prev_glyph.dy == 0.0 &&
-                     glyph.transformed_position[1] == prev_glyph.transformed_position[1] ) ||
+                     glyph.text_position[1] == prev_glyph.text_position[1] ) ||
                     ( glyph.dx == 0.0 && prev_glyph.dx == 0.0 &&
-                     glyph.transformed_position[0] == prev_glyph.transformed_position[0] ) ) ) {
+                     glyph.text_position[0] == prev_glyph.text_position[0] ) ) ) {
                 new_tspan = true;
             }
         }
@@ -970,9 +1001,10 @@ void SvgBuilder::_flushText() {
                 break;
             } else {
                 tspan_node = _xml_doc->createElement("svg:tspan");
+                tspan_node->setAttribute("inkscape:font-specification", glyph.font_specification);
                 // Set style and unref SPCSSAttr if it won't be needed anymore
                 sp_repr_css_change(tspan_node, glyph.style, "style");
-                if ( glyph.style_changed && i != _glyphs.begin() ) {  // Free previous style
+                if ( glyph.style_changed && i != _glyphs.begin() ) {    // Free previous style
                     sp_repr_css_attr_unref((*prev_iterator).style);
                 }
             }
@@ -983,7 +1015,10 @@ void SvgBuilder::_flushText() {
             y_coords.append(" ");
         }
         // Append the coordinates to their respective strings
-        NR::Point delta_pos( glyph.transformed_position - first_glyph.transformed_position );
+        NR::Point delta_pos( glyph.text_position - first_glyph.text_position );
+        delta_pos[1] += glyph.rise;
+        delta_pos[1] *= -1.0;   // flip it
+        delta_pos *= _font_scaling;
         Inkscape::CSSOStringStream os_x;
         os_x << delta_pos[0];
         x_coords.append(os_x.str());
@@ -1034,17 +1069,19 @@ void SvgBuilder::addChar(GfxState *state, double x, double y,
     // Allow only one space in a row
     if ( is_space && _glyphs[_glyphs.size() - 1].code_size == 1 &&
          _glyphs[_glyphs.size() - 1].code[0] == 32 ) {
+        NR::Point delta(dx, dy);
+        _text_position += delta;
         return;
     }
 
     SvgGlyph new_glyph;
     new_glyph.is_space = is_space;
     new_glyph.position = NR::Point( x - originX, y - originY );
-    new_glyph.transformed_position = new_glyph.position * _text_matrix;
+    new_glyph.text_position = _text_position;
+    new_glyph.dx = dx;
+    new_glyph.dy = dy;
     NR::Point delta(dx, dy);
-    delta *= _text_matrix;
-    new_glyph.dx = delta[0];
-    new_glyph.dy = delta[1];
+    _text_position += delta;
 
     // Convert the character to UTF-8 since that's our SVG document's encoding
     static UnicodeMap *u_map = NULL;
@@ -1078,6 +1115,9 @@ void SvgBuilder::addChar(GfxState *state, double x, double y,
         new_glyph.style = prev_glyph.style;
         new_glyph.render_mode = prev_glyph.render_mode;
     }
+    new_glyph.font_specification = _font_specification;
+    new_glyph.rise = state->getRise();
+
     _glyphs.push_back(new_glyph);
 }
 
