@@ -67,7 +67,6 @@ int input_count(const SPFilterPrimitive* prim)
         // Return the number of feMergeNode connections plus an extra
         int count = 1;
         for(const SPObject* o = prim->firstChild(); o; o = o->next, ++count);
-        std::cout << count << std::endl;
         return count;
     }
     else
