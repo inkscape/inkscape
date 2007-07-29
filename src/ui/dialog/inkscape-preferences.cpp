@@ -195,9 +195,9 @@ void InkscapePreferences::initPageSteps()
     _steps_compass.init ( _("Compass-like display of angles"), "options.compassangledisplay", "value", true);
     _page_steps.add_line( false, "", _steps_compass, "", 
                             _("When on, angles are displayed with 0 at north, 0 to 360 range, positive clockwise; otherwise with 0 at east, -180 to 180 range, positive counterclockwise"));
-    int const num_items = 12;
-    Glib::ustring labels[num_items] = {"90", "60", "45", "30", "15", "10", "7.5", "6", "3", "2", "1", _("None")};
-    int values[num_items] = {2, 3, 4, 6, 12, 18, 24, 30, 60, 90, 180, 0};
+    int const num_items = 17;
+    Glib::ustring labels[num_items] = {"90", "60", "45", "36", "30", "22.5", "18", "15", "12", "10", "7.5", "6", "3", "2", "1", "0.5", _("None")};
+    int values[num_items] = {2, 3, 4, 5, 6, 8, 10, 12, 15, 18, 24, 30, 60, 90, 180, 360, 0};
     _steps_rot_snap.set_size_request(_sb_width);
     _steps_rot_snap.init("options.rotationsnapsperpi", "value", labels, values, num_items, 12);
     _page_steps.add_line( false, _("Rotation snaps every:"), _steps_rot_snap, _("degrees"), 
