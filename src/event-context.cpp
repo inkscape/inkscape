@@ -600,6 +600,9 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             }
             break;
         case GDK_SCROLL:
+        {
+            bool ctrl = (event->scroll.state & GDK_CONTROL_MASK);
+            bool wheelzooms = (prefs_get_int_attribute("options.wheelzooms","value", 0) == 1);
             /* shift + wheel, pan left--right */
             if (event->scroll.state & GDK_SHIFT_MASK) {
                 switch (event->scroll.direction) {
@@ -614,7 +617,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 }
 
                 /* ctrl + wheel, zoom in--out */
-            } else if (event->scroll.state & GDK_CONTROL_MASK) {
+            } else if ((ctrl && !wheelzooms) || (!ctrl && wheelzooms)) {
                 double rel_zoom;
                 switch (event->scroll.direction) {
                     case GDK_SCROLL_UP:
@@ -650,6 +653,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 }
             }
             break;
+        }
         default:
             break;
     }
