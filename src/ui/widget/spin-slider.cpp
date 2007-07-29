@@ -22,6 +22,8 @@ SpinSlider::SpinSlider(double value, double lower, double upper, double step_inc
     : AttrWidget(a), _adjustment(value, lower, upper, step_inc),
       _scale(_adjustment), _spin(_adjustment, climb_rate, digits)
 {
+    signal_value_changed().connect(signal_attr_changed().make_slot());
+
     pack_start(_scale);
     pack_start(_spin, false, false);
 
@@ -104,6 +106,8 @@ DualSpinSlider::DualSpinSlider(double value, double lower, double upper, double 
     : AttrWidget(a), _s1(value, lower, upper, step_inc, climb_rate, digits),
       _s2(value, lower, upper, step_inc, climb_rate, digits)
 {
+    signal_value_changed().connect(signal_attr_changed().make_slot());
+
     _s1.get_adjustment().signal_value_changed().connect(_signal_value_changed.make_slot());
     _s2.get_adjustment().signal_value_changed().connect(_signal_value_changed.make_slot());
 }

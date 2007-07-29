@@ -109,7 +109,6 @@ private:
     public:
         CellRendererConnection();
         Glib::PropertyProxy<void*> property_primitive();
-        static int input_count(const SPFilterPrimitive* prim);
 
         static const int size = 24;
         
@@ -174,7 +173,7 @@ private:
     void duplicate_primitive();
     void convolve_order_changed();
 
-    void set_attr_direct(const SPAttributeEnum attr, const AttrWidget*);
+    void set_attr_direct(const AttrWidget*);
     void set_attr(SPObject*, const SPAttributeEnum, const gchar* val);
     void update_settings_view();
     void update_settings_sensitivity();

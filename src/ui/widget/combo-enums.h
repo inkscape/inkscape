@@ -28,6 +28,8 @@ public:
     ComboBoxEnum(const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID)
         : AttrWidget(a), _converter(c)
     {
+        signal_changed().connect(signal_attr_changed().make_slot());
+
         _model = Gtk::ListStore::create(_columns);
         set_model(_model);
 

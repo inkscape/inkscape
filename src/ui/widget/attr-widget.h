@@ -33,6 +33,15 @@ public:
     virtual Glib::ustring get_as_attribute() const = 0;
     virtual void set_from_attribute(SPObject*) = 0;
 
+    SPAttributeEnum get_attribute() const
+    {
+        return _attr;
+    }
+
+    sigc::signal<void>& signal_attr_changed()
+    {
+        return _signal;
+    }
 protected:
     const gchar* attribute_value(SPObject* o) const
     {
@@ -46,6 +55,7 @@ protected:
 
 private:
     const SPAttributeEnum _attr;
+    sigc::signal<void> _signal;
 };
 
 }

@@ -56,12 +56,32 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+// Returns the number of inputs available for the filter primitive type
+int input_count(const SPFilterPrimitive* prim)
+{
+    if(!prim)
+        return 0;
+    else if(SP_IS_FEBLEND(prim) || SP_IS_FECOMPOSITE(prim) || SP_IS_FEDISPLACEMENTMAP(prim))
+        return 2;
+    else if(SP_IS_FEMERGE(prim)) {
+        // Return the number of feMergeNode connections plus an extra
+        int count = 1;
+        for(const SPObject* o = prim->firstChild(); o; o = o->next, ++count);
+        std::cout << count << std::endl;
+        return count;
+    }
+    else
+        return 1;
+}
+
 class ColorButton : public Gtk::ColorButton, public AttrWidget
 {
 public:
     ColorButton(const SPAttributeEnum a)
         : AttrWidget(a)
     {
+        signal_color_set().connect(signal_attr_changed().make_slot());
+
         Gdk::Color col;
         col.set_rgb(65535, 65535, 65535);
         set_color(col);
@@ -98,6 +118,8 @@ public:
     ConvolveMatrix(const SPAttributeEnum a)
         : AttrWidget(a)
     {
+        signal_changed().connect(signal_attr_changed().make_slot());
+
         _model = Gtk::ListStore::create(_columns);
         set_model(_model);
         set_headers_visible(false);
@@ -227,13 +249,12 @@ public:
         _current_type = t;
     }
 
+    // ColorButton
     ColorButton* add_color(const SPAttributeEnum attr, const Glib::ustring& label)
     {
         ColorButton* col = new ColorButton(attr);
         add_widget(*col, label);
-        _attrwidgets[_current_type].push_back(col);
-        col->signal_color_set().connect(
-            sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_direct), attr, col));
+        add_attr_widget(col);
         return col;
     }
 
@@ -242,9 +263,7 @@ public:
     {
         ConvolveMatrix* conv = new ConvolveMatrix(attr);
         add_widget(*conv, label);
-        _attrwidgets[_current_type].push_back(conv);
-        conv->signal_changed().connect(
-            sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_direct), attr, conv));
+        add_attr_widget(conv);
         return conv;
     }
 
@@ -254,9 +273,7 @@ public:
     {
         SpinSlider* spinslider = new SpinSlider(lo, lo, hi, step_inc, climb, digits, attr);
         add_widget(*spinslider, label);
-        _attrwidgets[_current_type].push_back(spinslider);
-        spinslider->signal_value_changed().connect(
-            sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_direct), attr, spinslider));
+        add_attr_widget(spinslider);
         return spinslider;
     }
 
@@ -267,9 +284,7 @@ public:
         DualSpinSlider* dss = new DualSpinSlider(lo, lo, hi, step_inc, climb, digits, attr);
         add_widget(dss->get_spinslider1(), label1);
         add_widget(dss->get_spinslider2(), label2);
-        _attrwidgets[_current_type].push_back(dss);
-        dss->signal_value_changed().connect(
-            sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_direct), attr, dss));
+        add_attr_widget(dss);
         return dss;
     }
 
@@ -280,9 +295,7 @@ public:
     {
         ComboBoxEnum<T>* combo = new ComboBoxEnum<T>(conv, attr);
         add_widget(*combo, label);
-        _attrwidgets[_current_type].push_back(combo);
-        combo->signal_changed().connect(
-            sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_direct), attr, combo));
+        add_attr_widget(combo);
         return combo;
     }
 
@@ -304,6 +317,14 @@ public:
         }
     }
 private:
+    void add_attr_widget(AttrWidget* a)
+    {    
+        _attrwidgets[_current_type].push_back(a);
+        a->signal_attr_changed().connect(
+            sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_direct), a));
+
+    }
+
     /* Adds a new settings widget using the specified label. The label will be formatted with a colon
        and all widgets within the setting group are aligned automatically. */
     void add_widget(Gtk::Widget& w, const Glib::ustring& label)
@@ -594,22 +615,6 @@ Glib::PropertyProxy<void*> FilterEffectsDialog::CellRendererConnection::property
     return _primitive.get_proxy();
 }
 
-int FilterEffectsDialog::CellRendererConnection::input_count(const SPFilterPrimitive* prim)
-{
-    if(!prim)
-        return 0;
-    else if(SP_IS_FEBLEND(prim) || SP_IS_FECOMPOSITE(prim) || SP_IS_FEDISPLACEMENTMAP(prim))
-        return 2;
-    else if(SP_IS_FEMERGE(prim)) {
-        // Return the number of feMergeNode connections
-        int count = 0;
-        for(const SPObject* o = prim->firstChild(); o; o = o->next, ++count);
-        return count;
-    }
-    else
-        return 1;
-}
-
 void FilterEffectsDialog::CellRendererConnection::set_text_width(const int w)
 {
     _text_width = w;
@@ -808,7 +813,7 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         int con_drag_y;
         bool inside;
         const SPFilterPrimitive* row_prim = (*row)[_columns.primitive];
-        const int inputs = CellRendererConnection::input_count(row_prim);
+        const int inputs = input_count(row_prim);
 
         if(SP_IS_FEMERGE(row_prim)) {
             for(int i = 0; i < inputs; ++i) {
@@ -899,13 +904,13 @@ bool FilterEffectsDialog::PrimitiveList::do_connection_node(const Gtk::TreeIter&
                                                             const int ix, const int iy)
 {
     Gdk::Rectangle rct;
-    const int input_count = CellRendererConnection::input_count((*row)[_columns.primitive]);
+    const int icnt = input_count((*row)[_columns.primitive]);
 
     get_cell_area(get_model()->get_path(_model->children().begin()), *get_column(1), rct);
     const int fheight = CellRendererConnection::size;
 
     get_cell_area(_model->get_path(row), *get_column(1), rct);
-    const float h = rct.get_height() / input_count;
+    const float h = rct.get_height() / icnt;
 
     const int x = rct.get_x() + fheight * (_model->children().size() - find_index(row));
     const int con_w = (int)(fheight * 0.35f);
@@ -985,13 +990,18 @@ bool FilterEffectsDialog::PrimitiveList::on_button_press_event(GdkEventButton* e
     if(get_path_at_pos(x, y, path, col, cx, cy)) {
         Gtk::TreeIter iter = _model->get_iter(path);
         std::vector<Gdk::Point> points;
-        if(do_connection_node(_model->get_iter(path), 0, points, x, y))
-            _in_drag = 1;
-        else if(do_connection_node(_model->get_iter(path), 1, points, x, y))
-            _in_drag = 2;
+
+        _drag_prim = (*iter)[_columns.primitive];
+        const int icnt = input_count(_drag_prim);
+
+        for(int i = 0; i < icnt; ++i) {
+            if(do_connection_node(_model->get_iter(path), i, points, x, y)) {
+                _in_drag = i + 1;
+                break;
+            }
+        }
         
         queue_draw();
-        _drag_prim = (*iter)[_columns.primitive];
     }
 
     if(_in_drag) {
@@ -1059,9 +1069,31 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
 
             if(SP_IS_FEMERGE(prim)) {
                 int c = 1;
-                for(SPObject* o = prim->firstChild(); o; o = o->next, ++c) {
-                    if(c == _in_drag && SP_IS_FEMERGENODE(o))
-                        _dialog.set_attr(o, SP_ATTR_IN, in_val);
+                bool handled = false;
+                for(SPObject* o = prim->firstChild(); o && !handled; o = o->next, ++c) {
+                    if(c == _in_drag && SP_IS_FEMERGENODE(o)) {
+                        // If input is null, delete it
+                        if(!in_val) {
+                            sp_repr_unparent(o->repr);
+                            sp_document_done(prim->document, SP_VERB_DIALOG_FILTER_EFFECTS,
+                                             _("Remove merge node"));
+                            (*get_selection()->get_selected())[_columns.primitive] = prim;
+                        }
+                        else
+                            _dialog.set_attr(o, SP_ATTR_IN, in_val);
+                        handled = true;
+                    }
+                }
+                // Add new input?
+                if(!handled && c == _in_drag) {
+                    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(prim->document);
+                    Inkscape::XML::Node *repr = xml_doc->createElement("svg:feMergeNode");
+                    repr->setAttribute("inkscape:collect", "always");
+                    prim->repr->appendChild(repr);
+                    SPFeMergeNode *node = SP_FEMERGENODE(prim->document->getObjectByRepr(repr));
+                    Inkscape::GC::release(repr);
+                    _dialog.set_attr(node, SP_ATTR_IN, in_val);
+                    (*get_selection()->get_selected())[_columns.primitive] = prim;
                 }
             }
             else {
@@ -1331,9 +1363,9 @@ void FilterEffectsDialog::convolve_order_changed()
     _convolve_ty->get_adjustment().set_upper(_convolve_order->get_spinslider2().get_value());
 }
 
-void FilterEffectsDialog::set_attr_direct(const SPAttributeEnum attr, const AttrWidget* input)
+void FilterEffectsDialog::set_attr_direct(const AttrWidget* input)
 {
-    set_attr(_primitive_list.get_selected(), attr, input->get_as_attribute().c_str());
+    set_attr(_primitive_list.get_selected(), input->get_attribute(), input->get_as_attribute().c_str());
 }
 
 void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, const gchar* val)
