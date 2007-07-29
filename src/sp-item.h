@@ -71,9 +71,10 @@ struct SPItemView {
 #define SP_ITEM_SHOW_DISPLAY (1 << 0)
 
 /**
- * Flag for referenced views (i.e. clippaths, masks and patterns); always display
+ * Flag for referenced views (i.e. markers, clippaths, masks and patterns); 
+   currently unused, does the same as DISPLAY
  */
-#define SP_ITEM_REFERENCE_FLAGS SP_ITEM_SHOW_DISPLAY
+#define SP_ITEM_REFERENCE_FLAGS (1 << 1)
 
 class SPItemCtx;
 
