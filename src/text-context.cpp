@@ -338,10 +338,10 @@ sp_text_context_finish(SPEventContext *ec)
 
 
 static gint
-sp_text_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
+sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
 {
-    SPTextContext *tc = SP_TEXT_CONTEXT(ec);
-    SPDesktop *desktop = ec->desktop;
+    SPTextContext *tc = SP_TEXT_CONTEXT(event_context);
+    SPDesktop *desktop = event_context->desktop;
     SPItem *item_ungrouped;
 
     gint ret = FALSE;
@@ -350,14 +350,14 @@ sp_text_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1) {
+            if (event->button.button == 1 && !event_context->space_panning) {
                 // find out clicked item, disregarding groups
                 item_ungrouped = desktop->item_at_point(NR::Point(event->button.x, event->button.y), TRUE);
                 if (SP_IS_TEXT(item_ungrouped) || SP_IS_FLOWTEXT(item_ungrouped)) {
-                    sp_desktop_selection(ec->desktop)->set(item_ungrouped);
+                    sp_desktop_selection(desktop)->set(item_ungrouped);
                     if (tc->text) {
                         // find out click point in document coordinates
-                        NR::Point p = ec->desktop->w2d(NR::Point(event->button.x, event->button.y));
+                        NR::Point p = desktop->w2d(NR::Point(event->button.x, event->button.y));
                         // set the cursor closest to that point
                         tc->text_sel_start = tc->text_sel_end = sp_te_get_position_by_coords(tc->text, p);
                         // update display
@@ -395,17 +395,17 @@ sp_text_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
             }
             break;
         case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1 && tc->dragging) {
+            if (event->button.button == 1 && tc->dragging && !event_context->space_panning) {
                 tc->dragging = 0;
                 ret = TRUE;
             }
             break;
         case GDK_MOTION_NOTIFY:
-            if (event->motion.state & GDK_BUTTON1_MASK && tc->dragging) {
+            if (event->motion.state & GDK_BUTTON1_MASK && tc->dragging && !event_context->space_panning) {
                 Inkscape::Text::Layout const *layout = te_get_layout(tc->text);
                 if (!layout) break;
                 // find out click point in document coordinates
-                NR::Point p = ec->desktop->w2d(NR::Point(event->button.x, event->button.y));
+                NR::Point p = desktop->w2d(NR::Point(event->button.x, event->button.y));
                 // set the cursor closest to that point
                 Inkscape::Text::Layout::iterator new_end = sp_te_get_position_by_coords(tc->text, p);
                 if (tc->dragging == 2) {
@@ -441,10 +441,10 @@ sp_text_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
                     SP_CTRLRECT(tc->indicator)->setRectangle(*ibbox);
                 }
 
-                ec->cursor_shape = cursor_text_insert_xpm;
-                ec->hot_x = 7;
-                ec->hot_y = 10;
-                sp_event_context_update_cursor(ec);
+                event_context->cursor_shape = cursor_text_insert_xpm;
+                event_context->hot_x = 7;
+                event_context->hot_y = 10;
+                sp_event_context_update_cursor(event_context);
                 sp_text_context_update_text_selection(tc);
 
                 if (SP_IS_TEXT (item_ungrouped)) {
@@ -464,7 +464,7 @@ sp_text_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
 
     if (!ret) {
         if (((SPEventContextClass *) parent_class)->item_handler)
-            ret = ((SPEventContextClass *) parent_class)->item_handler(ec, item, event);
+            ret = ((SPEventContextClass *) parent_class)->item_handler(event_context, item, event);
     }
 
     return ret;
@@ -585,32 +585,30 @@ show_curr_uni_char(SPTextContext *const tc)
 }
 
 static gint
-sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
+sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *const event)
 {
-    SPTextContext *const tc = SP_TEXT_CONTEXT(ec);
+    SPTextContext *const tc = SP_TEXT_CONTEXT(event_context);
 
-    SPDesktop *desktop = ec->desktop;
+    SPDesktop *desktop = event_context->desktop;
 
     sp_canvas_item_hide(tc->indicator);
 
     sp_text_context_validate_cursor_iterators(tc);
 
-    ec->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
+    event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1) {
-
-                SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(ec);
+            if (event->button.button == 1 && !event_context->space_panning) {
 
                 if (Inkscape::have_viable_layer(desktop, desktop->messageStack()) == false) {
                     return TRUE;
                 }
 
                 // save drag origin
-                ec->xp = (gint) event->button.x;
-                ec->yp = (gint) event->button.y;
-                ec->within_tolerance = true;
+                event_context->xp = (gint) event->button.x;
+                event_context->yp = (gint) event->button.y;
+                event_context->within_tolerance = true;
 
                 NR::Point const button_pt(event->button.x, event->button.y);
                 tc->p0 = desktop->w2d(button_pt);
@@ -630,23 +628,23 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
             if (tc->over_text) {
                 tc->over_text = 0;
                 // update cursor and statusbar: we are not over a text object now
-                ec->cursor_shape = cursor_text_xpm;
-                ec->hot_x = 7;
-                ec->hot_y = 7;
-                sp_event_context_update_cursor(ec);
+                event_context->cursor_shape = cursor_text_xpm;
+                event_context->hot_x = 7;
+                event_context->hot_y = 7;
+                sp_event_context_update_cursor(event_context);
                 desktop->event_context->defaultMessageContext()->clear();
             }
 
-            if (tc->creating && event->motion.state & GDK_BUTTON1_MASK) {
-                if ( ec->within_tolerance
-                     && ( abs( (gint) event->motion.x - ec->xp ) < ec->tolerance )
-                     && ( abs( (gint) event->motion.y - ec->yp ) < ec->tolerance ) ) {
+            if (tc->creating && event->motion.state & GDK_BUTTON1_MASK && !event_context->space_panning) {
+                if ( event_context->within_tolerance
+                     && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
+                     && ( abs( (gint) event->motion.y - event_context->yp ) < event_context->tolerance ) ) {
                     break; // do not drag if we're within tolerance from origin
                 }
                 // Once the user has moved farther than tolerance from the original location
                 // (indicating they intend to draw, not click), then always process the
                 // motion notify coordinates as given (no snapping back to origin)
-                ec->within_tolerance = false;
+                event_context->within_tolerance = false;
 
                 NR::Point const motion_pt(event->motion.x, event->motion.y);
                 NR::Point const p = desktop->w2d(motion_pt);
@@ -657,14 +655,14 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                 // status text
                 GString *xs = SP_PX_TO_METRIC_STRING(fabs((p - tc->p0)[NR::X]), desktop->namedview->getDefaultMetric());
                 GString *ys = SP_PX_TO_METRIC_STRING(fabs((p - tc->p0)[NR::Y]), desktop->namedview->getDefaultMetric());
-                ec->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>Flowed text frame</b>: %s &#215; %s"), xs->str, ys->str);
+                event_context->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>Flowed text frame</b>: %s &#215; %s"), xs->str, ys->str);
                 g_string_free(xs, FALSE);
                 g_string_free(ys, FALSE);
 
             }
             break;
         case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1) {
+            if (event->button.button == 1 && !event_context->space_panning) {
 
                 if (tc->grabbed) {
                     sp_canvas_item_ungrab(tc->grabbed, GDK_CURRENT_TIME);
@@ -673,11 +671,11 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
 
                 Inkscape::Rubberband::get()->stop();
 
-                if (tc->creating && ec->within_tolerance) {
+                if (tc->creating && event_context->within_tolerance) {
                     /* Button 1, set X & Y & new item */
                     sp_desktop_selection(desktop)->clear();
-                    NR::Point dtp = ec->desktop->w2d(NR::Point(event->button.x, event->button.y));
-                    tc->pdoc = sp_desktop_dt2root_xy_point(ec->desktop, dtp);
+                    NR::Point dtp = desktop->w2d(NR::Point(event->button.x, event->button.y));
+                    tc->pdoc = sp_desktop_dt2root_xy_point(desktop, dtp);
 
                     tc->show = TRUE;
                     tc->phase = 1;
@@ -687,26 +685,26 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                     sp_canvas_item_show(tc->cursor);
                     // Cursor height is defined by the new text object's font size; it needs to be set
                     // articifically here, for the text object does not exist yet:
-                    double cursor_height = sp_desktop_get_font_size_tool(ec->desktop);
+                    double cursor_height = sp_desktop_get_font_size_tool(desktop);
                     sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), dtp, dtp + NR::Point(0, cursor_height));
-                    ec->_message_context->set(Inkscape::NORMAL_MESSAGE, _("Type text; <b>Enter</b> to start new line.")); // FIXME:: this is a copy of a string from _update_cursor below, do not desync
+                    event_context->_message_context->set(Inkscape::NORMAL_MESSAGE, _("Type text; <b>Enter</b> to start new line.")); // FIXME:: this is a copy of a string from _update_cursor below, do not desync
 
-                    ec->within_tolerance = false;
+                    event_context->within_tolerance = false;
                 } else if (tc->creating) {
                     NR::Point const button_pt(event->button.x, event->button.y);
                     NR::Point p1 = desktop->w2d(button_pt);
-                    double cursor_height = sp_desktop_get_font_size_tool(ec->desktop);
+                    double cursor_height = sp_desktop_get_font_size_tool(desktop);
                     if (fabs(p1[NR::Y] - tc->p0[NR::Y]) > cursor_height) {
                         // otherwise even one line won't fit; most probably a slip of hand (even if bigger than tolerance)
                         SPItem *ft = create_flowtext_with_internal_frame (desktop, tc->p0, p1);
                         /* Set style */
-                        sp_desktop_apply_style_tool(SP_EVENT_CONTEXT_DESKTOP(ec), SP_OBJECT_REPR(ft), "tools.text", true);
+                        sp_desktop_apply_style_tool(desktop, SP_OBJECT_REPR(ft), "tools.text", true);
                         sp_desktop_selection(desktop)->set(ft);
-                        ec->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Flowed text is created."));
+                        desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Flowed text is created."));
                         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
                                          _("Create flowed text"));
                     } else {
-                        ec->desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("The frame is <b>too small</b> for the current font size. Flowed text not created."));
+                        desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("The frame is <b>too small</b> for the current font size. Flowed text not created."));
                     }
                 }
                 tc->creating = false;
@@ -766,7 +764,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     }
                                     /* Exit unimode. */
                                     tc->unimode = false;
-                                    ec->defaultMessageContext()->clear();
+                                    event_context->defaultMessageContext()->clear();
                                     return TRUE;
                                 }
 
@@ -774,7 +772,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     // Cancel unimode.
                                     tc->unimode = false;
                                     gtk_im_context_reset(tc->imc);
-                                    ec->defaultMessageContext()->clear();
+                                    event_context->defaultMessageContext()->clear();
                                     return TRUE;
                                 }
 
@@ -832,8 +830,8 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     tc->text_sel_start = tc->text_sel_end = sp_te_replace(tc->text, tc->text_sel_start, tc->text_sel_end, "\302\240");
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
-                                    ec->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("No-break space"));
-                                    sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
+                                    desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("No-break space"));
+                                    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
                                                      _("Insert no-break space"));
                                     return TRUE;
                                 }
@@ -843,11 +841,11 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 if (MOD__CTRL_ONLY || (MOD__CTRL && MOD__SHIFT)) {
                                     if (tc->unimode) {
                                         tc->unimode = false;
-                                        ec->defaultMessageContext()->clear();
+                                        event_context->defaultMessageContext()->clear();
                                     } else {
                                         tc->unimode = true;
                                         tc->unipos = 0;
-                                        ec->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("Unicode (<b>Enter</b> to finish): "));
+                                        event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("Unicode (<b>Enter</b> to finish): "));
                                     }
                                     if (tc->imc) {
                                         gtk_im_context_reset(tc->imc);
@@ -870,7 +868,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                         sp_repr_css_set_property(css, "font-weight", "normal");
                                     sp_te_apply_style(tc->text, tc->text_sel_start, tc->text_sel_end, css);
                                     sp_repr_css_attr_unref(css);
-                                    sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
+                                    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
                                                      _("Make bold"));
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
@@ -888,7 +886,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                         sp_repr_css_set_property(css, "font-style", "normal");
                                     sp_te_apply_style(tc->text, tc->text_sel_start, tc->text_sel_end, css);
                                     sp_repr_css_attr_unref(css);
-                                    sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
+                                    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
                                                      _("Make italic"));
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
@@ -926,7 +924,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 
                                 sp_text_context_update_cursor(tc);
                                 sp_text_context_update_text_selection(tc);
-                                sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
+                                sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
                                                  _("New line"));
                                 return TRUE;
                             }
@@ -960,7 +958,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
-                                    sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
+                                    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
                                                      _("Backspace"));
                                 }
                                 return TRUE;
@@ -991,7 +989,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
-                                    sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
+                                    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
                                                      _("Delete"));
                                 }
                                 return TRUE;
@@ -1001,12 +999,12 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 if (tc->text) {
                                     if (MOD__ALT) {
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, NR::Point(-10, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(-10, 0));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, NR::Point(-1, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(-1, 0));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
-                                        sp_document_maybe_done(sp_desktop_document(ec->desktop), "kern:left", SP_VERB_CONTEXT_TEXT, 
+                                        sp_document_maybe_done(sp_desktop_document(desktop), "kern:left", SP_VERB_CONTEXT_TEXT, 
                                                                _("Kern to the left"));
                                     } else {
                                         cursor_movement_operator = MOD__CTRL ? &Inkscape::Text::Layout::iterator::cursorLeftWithControl
@@ -1021,12 +1019,12 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 if (tc->text) {
                                     if (MOD__ALT) {
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, NR::Point(10, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(10, 0));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, NR::Point(1, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(1, 0));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
-                                        sp_document_maybe_done(sp_desktop_document(ec->desktop), "kern:right", SP_VERB_CONTEXT_TEXT, 
+                                        sp_document_maybe_done(sp_desktop_document(desktop), "kern:right", SP_VERB_CONTEXT_TEXT, 
                                                                _("Kern to the right"));
                                     } else {
                                         cursor_movement_operator = MOD__CTRL ? &Inkscape::Text::Layout::iterator::cursorRightWithControl
@@ -1041,12 +1039,12 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 if (tc->text) {
                                     if (MOD__ALT) {
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, NR::Point(0, -10));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, -10));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, NR::Point(0, -1));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, -1));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
-                                        sp_document_maybe_done(sp_desktop_document(ec->desktop), "kern:up", SP_VERB_CONTEXT_TEXT, 
+                                        sp_document_maybe_done(sp_desktop_document(desktop), "kern:up", SP_VERB_CONTEXT_TEXT, 
                                                                _("Kern up"));
 
                                     } else {
@@ -1062,12 +1060,12 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 if (tc->text) {
                                     if (MOD__ALT) {
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, NR::Point(0, 10));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, 10));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, NR::Point(0, 1));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, 1));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
-                                        sp_document_maybe_done(sp_desktop_document(ec->desktop), "kern:down", SP_VERB_CONTEXT_TEXT, 
+                                        sp_document_maybe_done(sp_desktop_document(desktop), "kern:down", SP_VERB_CONTEXT_TEXT, 
                                                                _("Kern down"));
 
                                     } else {
@@ -1106,7 +1104,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     }
                                     Inkscape::Rubberband::get()->stop();
                                 } else {
-                                    sp_desktop_selection(ec->desktop)->clear();
+                                    sp_desktop_selection(desktop)->clear();
                                 }
                                 tc->nascent_object = FALSE;
                                 return TRUE;
@@ -1116,14 +1114,14 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                         if (MOD__ALT) {
                                             if (MOD__SHIFT) {
                                                 // FIXME: alt+shift+[] does not work, don't know why
-                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -10);
+                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -10);
                                             } else {
-                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -1);
+                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -1);
                                             }
                                         } else {
-                                            sp_te_adjust_rotation(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -90);
+                                            sp_te_adjust_rotation(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -90);
                                         }
-                                        sp_document_maybe_done(sp_desktop_document(ec->desktop), "textrot:ccw", SP_VERB_CONTEXT_TEXT, 
+                                        sp_document_maybe_done(sp_desktop_document(desktop), "textrot:ccw", SP_VERB_CONTEXT_TEXT, 
                                                                _("Rotate counterclockwise"));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
@@ -1137,14 +1135,14 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                         if (MOD__ALT) {
                                             if (MOD__SHIFT) {
                                                 // FIXME: alt+shift+[] does not work, don't know why
-                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 10);
+                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 10);
                                             } else {
-                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 1);
+                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 1);
                                             }
                                         } else {
-                                            sp_te_adjust_rotation(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 90);
+                                            sp_te_adjust_rotation(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 90);
                                         }
-                                        sp_document_maybe_done(sp_desktop_document(ec->desktop), "textrot:cw", SP_VERB_CONTEXT_TEXT, 
+                                        sp_document_maybe_done(sp_desktop_document(desktop), "textrot:cw", SP_VERB_CONTEXT_TEXT, 
                                                                 _("Rotate clockwise"));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
@@ -1158,18 +1156,18 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     if (MOD__ALT) {
                                         if (MOD__CTRL) {
                                             if (MOD__SHIFT)
-                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -10);
+                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -10);
                                             else
-                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -1);
-                                            sp_document_maybe_done(sp_desktop_document(ec->desktop), "linespacing:dec", SP_VERB_CONTEXT_TEXT, 
+                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -1);
+                                            sp_document_maybe_done(sp_desktop_document(desktop), "linespacing:dec", SP_VERB_CONTEXT_TEXT, 
                                                                     _("Contract line spacing"));
 
                                         } else {
                                             if (MOD__SHIFT)
-                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -10);
+                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -10);
                                             else
-                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -1);
-                                            sp_document_maybe_done(sp_desktop_document(ec->desktop), "letterspacing:dec", SP_VERB_CONTEXT_TEXT, 
+                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -1);
+                                            sp_document_maybe_done(sp_desktop_document(desktop), "letterspacing:dec", SP_VERB_CONTEXT_TEXT, 
                                                                     _("Contract letter spacing"));
 
                                         }
@@ -1185,18 +1183,18 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     if (MOD__ALT) {
                                         if (MOD__CTRL) {
                                             if (MOD__SHIFT)
-                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 10);
+                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 10);
                                             else
-                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 1);
-                                            sp_document_maybe_done(sp_desktop_document(ec->desktop), "linespacing:inc", SP_VERB_CONTEXT_TEXT, 
+                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 1);
+                                            sp_document_maybe_done(sp_desktop_document(desktop), "linespacing:inc", SP_VERB_CONTEXT_TEXT, 
                                                                     _("Expand line spacing"));
 
                                         } else {
                                             if (MOD__SHIFT)
-                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 10);
+                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 10);
                                             else
-                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 1);
-                                            sp_document_maybe_done(sp_desktop_document(ec->desktop), "letterspacing:inc", SP_VERB_CONTEXT_TEXT, 
+                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 1);
+                                            sp_document_maybe_done(sp_desktop_document(desktop), "letterspacing:inc", SP_VERB_CONTEXT_TEXT, 
                                                                     _("Expand letter spacing"));
 
                                         }
@@ -1257,7 +1255,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
 
     // if nobody consumed it so far
     if (((SPEventContextClass *) parent_class)->root_handler) { // and there's a handler in parent context,
-        return ((SPEventContextClass *) parent_class)->root_handler(ec, event); // send event to parent
+        return ((SPEventContextClass *) parent_class)->root_handler(event_context, event); // send event to parent
     } else {
         return FALSE; // return "I did nothing" value so that global shortcuts can be activated
     }

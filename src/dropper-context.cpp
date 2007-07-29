@@ -217,17 +217,18 @@ void sp_dropper_c32_color_copy_hex(guint32 c32)
 }
 
 
-static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
+static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
-    SPDropperContext *dc = (SPDropperContext *) ec;
+    SPDropperContext *dc = (SPDropperContext *) event_context;
     int ret = FALSE;
+    SPDesktop *desktop = event_context->desktop;
 
     int pick = prefs_get_int_attribute("tools.dropper", "pick", SP_DROPPER_PICK_VISIBLE);
     int setalpha = prefs_get_int_attribute("tools.dropper", "setalpha", 1);
 
     switch (event->type) {
 	case GDK_BUTTON_PRESS:
-            if (event->button.button == 1) {
+            if (event->button.button == 1 && !event_context->space_panning) {
                 dc->centre = NR::Point(event->button.x, event->button.y);
                 dc->dragging = TRUE;
                 ret = TRUE;
@@ -238,7 +239,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                 // pass on middle-drag
                 ret = FALSE;
                 break;
-            } else {
+            } else if (!event_context->space_panning) {
                 // otherwise, constantly calculate color no matter is any button pressed or not
 
                 double rw = 0.0;
@@ -254,8 +255,8 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                         break;
                     }
 
-                    NR::Point const cd = ec->desktop->w2d(dc->centre);
-                    NR::Matrix const w2dt = ec->desktop->w2d();
+                    NR::Point const cd = desktop->w2d(dc->centre);
+                    NR::Matrix const w2dt = desktop->w2d();
                     const double scale = rw * NR_MATRIX_DF_EXPANSION(&w2dt);
                     NR::Matrix const sm( NR::scale(scale, scale) * NR::translate(cd) );
                     sp_canvas_item_affine_absolute(dc->area, sm);
@@ -271,7 +272,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                         NRPixBlock pb;
                         nr_pixblock_setup_fast(&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, x0, y0, x1, y1, TRUE);
                         /* fixme: (Lauris) */
-                        sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(sp_desktop_drawing(ec->desktop)), &pb);
+                        sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), &pb);
                         for (int y = y0; y < y1; y++) {
                             const unsigned char *s = NR_PIXBLOCK_PX(&pb) + (y - y0) * pb.rs;
                             for (int x = x0; x < x1; x++) {
@@ -305,7 +306,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                     int x = (int) floor(event->button.x);
                     int y = (int) floor(event->button.y);
                     nr_pixblock_setup_fast(&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, x, y, x+1, y+1, TRUE);
-                    sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(sp_desktop_drawing(ec->desktop)), &pb);
+                    sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), &pb);
                     const unsigned char *s = NR_PIXBLOCK_PX(&pb);
 
                     R = s[0] / 255.0;
@@ -316,7 +317,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
 
                 if (pick == SP_DROPPER_PICK_VISIBLE) {
                     // compose with page color
-                    guint32 bg = sp_desktop_namedview(ec->desktop)->pagecolor;
+                    guint32 bg = sp_desktop_namedview(desktop)->pagecolor;
                     R = R + (SP_RGBA32_R_F(bg)) * (1 - A);
                     G = G + (SP_RGBA32_G_F(bg)) * (1 - A);
                     B = B + (SP_RGBA32_B_F(bg)) * (1 - A);
@@ -354,7 +355,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                 gchar *where = dc->dragging ? g_strdup_printf(_(", averaged with radius %d"), (int) rw) : g_strdup_printf(_(" under cursor"));
                 // message, to show in the statusbar
                 const gchar *message = dc->dragging ? _("<b>Release mouse</b> to set color.") : _("<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard");
-                ec->defaultMessageContext()->setF(
+                event_context->defaultMessageContext()->setF(
                     Inkscape::NORMAL_MESSAGE,
                     "<b>%s%s</b>%s. %s", c,
                     (pick == SP_DROPPER_PICK_VISIBLE)? "" : alpha,
@@ -368,7 +369,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
             }
             break;
 	case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1)
+            if (event->button.button == 1 && !event_context->space_panning)
             {
                 sp_canvas_item_hide(dc->area);
                 dc->dragging = FALSE;
@@ -376,7 +377,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                 double alpha_to_set = setalpha? dc->alpha : 1.0;
 
                 // do the actual color setting
-                sp_desktop_set_color(ec->desktop,
+                sp_desktop_set_color(desktop,
                                      (event->button.state & GDK_MOD1_MASK)?
                                      ColorRGBA(1 - dc->R, 1 - dc->G, 1 - dc->B, alpha_to_set) : ColorRGBA(dc->R, dc->G, dc->B, alpha_to_set),
                                      false,  !(event->button.state & GDK_SHIFT_MASK));
@@ -384,8 +385,8 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                 // REJON: set aux. toolbar input to hex color!
 
 
-                if (!(sp_desktop_selection(ec->desktop)->isEmpty())) {
-                    sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_DROPPER, 
+                if (!(sp_desktop_selection(desktop)->isEmpty())) {
+                    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_DROPPER, 
                                      _("Set picked color"));
                 }
 
@@ -404,7 +405,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                     }
                     break;
 		case GDK_Escape:
-                    sp_desktop_selection(ec->desktop)->clear();
+                    sp_desktop_selection(desktop)->clear();
 		default:
                     break;
             }
@@ -415,7 +416,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
 
     if (!ret) {
         if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(ec, event);
+            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
         }
     }
 

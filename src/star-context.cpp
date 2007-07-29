@@ -269,7 +269,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        if (event->button.button == 1) {
+        if (event->button.button == 1 && !event_context->space_panning) {
 
             dragging = TRUE;
 
@@ -286,7 +286,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
         }
         break;
     case GDK_MOTION_NOTIFY:
-        if (dragging && (event->motion.state & GDK_BUTTON1_MASK)) {
+        if (dragging && (event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning) {
 
             if ( event_context->within_tolerance
                  && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
@@ -310,7 +310,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
         break;
     case GDK_BUTTON_RELEASE:
         event_context->xp = event_context->yp = 0;
-        if (event->button.button == 1) {
+        if (event->button.button == 1 && !event_context->space_panning) {
             dragging = FALSE;
             if (!event_context->within_tolerance) {
                 // we've been dragging, finish the star

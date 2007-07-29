@@ -124,7 +124,7 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1) {
+            if (event->button.button == 1 && !event_context->space_panning) {
                 // save drag origin
                 xp = (gint) event->button.x;
                 yp = (gint) event->button.y;
@@ -141,7 +141,7 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
             break;
 
 	case GDK_MOTION_NOTIFY:
-            if (event->motion.state & GDK_BUTTON1_MASK) {
+            if (event->motion.state & GDK_BUTTON1_MASK && !event_context->space_panning) {
                 ret = TRUE;
 
                 if ( within_tolerance
@@ -161,7 +161,7 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
             break;
 
 	case GDK_BUTTON_RELEASE:
-            if ( event->button.button == 1 ) {
+            if ( event->button.button == 1  && !event_context->space_panning) {
                 NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
                 if (b && !within_tolerance) {
                     desktop->set_display_area(*b, 10);

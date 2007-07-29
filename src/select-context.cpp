@@ -299,7 +299,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1) {
+            if (event->button.button == 1 && !event_context->space_panning) {
                 /* Left mousebutton */
 
                 // save drag origin
@@ -428,7 +428,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             }
             break;
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1) {
+            if (event->button.button == 1 && !event_context->space_panning) {
 
                 // save drag origin
                 xp = (gint) event->button.x;
@@ -466,7 +466,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             break;
 
         case GDK_MOTION_NOTIFY:
-            if (event->motion.state & GDK_BUTTON1_MASK) {
+            if (event->motion.state & GDK_BUTTON1_MASK && !event_context->space_panning) {
                 NR::Point const motion_pt(event->motion.x, event->motion.y);
                 NR::Point const p(desktop->w2d(motion_pt));
 
@@ -543,7 +543,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             break;
         case GDK_BUTTON_RELEASE:
             xp = yp = 0;
-            if ((event->button.button == 1) && (sc->grabbed)) {
+            if ((event->button.button == 1) && (sc->grabbed) && !event_context->space_panning) {
                 if (sc->dragging) {
                     if (sc->moved) {
                         // item has been moved

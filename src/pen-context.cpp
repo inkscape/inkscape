@@ -369,9 +369,10 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
     SPDesktop * const desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
     NR::Point const event_w(bevent.x, bevent.y);
     NR::Point const event_dt(desktop->w2d(event_w));
+    SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
 
     gint ret = FALSE;
-    if (bevent.button == 1) {
+    if (bevent.button == 1 && !event_context->space_panning) {
 
         if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
             return TRUE;
@@ -508,8 +509,10 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
 {
     gint ret = FALSE;
 
-    if (mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
-        // allow middle-button scrolling
+    SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
+
+    if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
+        // allow scrolling
         return FALSE;
     }
     
@@ -639,7 +642,8 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
     }
 
     gint ret = FALSE;
-    if ( revent.button == 1 ) {
+    SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
+    if ( revent.button == 1  && !event_context->space_panning) {
 
         SPDrawContext *dc = SP_DRAW_CONTEXT (pc);
 

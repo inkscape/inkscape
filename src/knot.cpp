@@ -311,14 +311,14 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
             }
             break;
 	case GDK_BUTTON_PRESS:
-            if (event->button.button == 1) {
+            if (event->button.button == 1 && !knot->desktop->event_context->space_panning) {
                 NR::Point const p = knot->desktop->w2d(NR::Point(event->button.x, event->button.y));
                 sp_knot_start_dragging(knot, p, (gint) event->button.x, (gint) event->button.y, event->button.time);
                 consumed = TRUE;
             }
             break;
 	case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1) {
+            if (event->button.button == 1 && !knot->desktop->event_context->space_panning) {
                 knot->pressure = 0;
                 if (transform_escaped) {
                     transform_escaped = false;
@@ -347,7 +347,7 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
             }
             break;
 	case GDK_MOTION_NOTIFY:
-            if (grabbed) {
+            if (grabbed && !knot->desktop->event_context->space_panning) {
                 consumed = TRUE;
 
                 if ( within_tolerance

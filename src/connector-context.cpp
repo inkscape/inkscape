@@ -388,19 +388,19 @@ conn_pt_handle_test(SPConnectorContext *cc, NR::Point& p)
 
 
 static gint
-sp_connector_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
+sp_connector_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
 {
     gint ret = FALSE;
 
-    SPDesktop *desktop = ec->desktop;
+    SPDesktop *desktop = event_context->desktop;
 
-    SPConnectorContext *cc = SP_CONNECTOR_CONTEXT(ec);
+    SPConnectorContext *cc = SP_CONNECTOR_CONTEXT(event_context);
 
     NR::Point p(event->button.x, event->button.y);
 
     switch (event->type) {
         case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1) {
+            if (event->button.button == 1 && !event_context->space_panning) {
                 if ((cc->state == SP_CONNECTOR_CONTEXT_DRAGGING) &&
                         (connector_within_tolerance))
                 {
@@ -489,9 +489,10 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
     NR::Point const event_w(bevent.x, bevent.y);
     /* Find desktop coordinates */
     NR::Point p = cc->desktop->w2d(event_w);
+    SPEventContext *event_context = SP_EVENT_CONTEXT(cc);
 
     gint ret = FALSE;
-    if ( bevent.button == 1 ) {
+    if ( bevent.button == 1 && !event_context->space_panning ) {
 
         SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
 
@@ -586,8 +587,9 @@ static gint
 connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion const &mevent)
 {
     gint ret = FALSE;
+    SPEventContext *event_context = SP_EVENT_CONTEXT(cc);
 
-    if (mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
+    if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
         // allow middle-button scrolling
         return FALSE;
     }
@@ -665,7 +667,8 @@ static gint
 connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton const &revent)
 {
     gint ret = FALSE;
-    if ( revent.button == 1 ) {
+    SPEventContext *event_context = SP_EVENT_CONTEXT(cc);
+    if ( revent.button == 1 && !event_context->space_panning ) {
 
         SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
         SPDocument *doc = sp_desktop_document(desktop);

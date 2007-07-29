@@ -197,7 +197,8 @@ static gint
 pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &bevent)
 {
     gint ret = FALSE;
-    if ( bevent.button == 1 ) {
+    SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
+    if ( bevent.button == 1  && !event_context->space_panning) {
 
         SPDrawContext *dc = SP_DRAW_CONTEXT (pc);
         SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
@@ -257,8 +258,9 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
     gint ret = FALSE;
     SPDesktop *const dt = pc->desktop;
 
-    if (mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
-        // allow middle-button scrolling
+    SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
+    if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
+        // allow scrolling
         return FALSE;
     }
 
@@ -340,7 +342,8 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
 {
     gint ret = FALSE;
 
-    if ( revent.button == 1 && pc->is_drawing) {
+    SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
+    if ( revent.button == 1 && pc->is_drawing && !event_context->space_panning) {
         SPDesktop *const dt = pc->desktop;
 
         pc->is_drawing = false;

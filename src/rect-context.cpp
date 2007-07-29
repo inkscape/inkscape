@@ -249,7 +249,7 @@ static gint sp_rect_context_item_handler(SPEventContext *event_context, SPItem *
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        if ( event->button.button == 1 ) {
+        if ( event->button.button == 1 && !event_context->space_panning) {
             Inkscape::setup_for_drag_start(desktop, event_context, event);
             ret = TRUE;
         }
@@ -280,7 +280,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
     gint ret = FALSE;
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        if ( event->button.button == 1 ) {
+        if (event->button.button == 1 && !event_context->space_panning) {
             NR::Point const button_w(event->button.x,
                                      event->button.y);
 
@@ -313,7 +313,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         break;
     case GDK_MOTION_NOTIFY:
         if ( dragging
-             && ( event->motion.state & GDK_BUTTON1_MASK ) )
+             && (event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning)
         {
             if ( event_context->within_tolerance
                  && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
@@ -339,7 +339,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         break;
     case GDK_BUTTON_RELEASE:
         event_context->xp = event_context->yp = 0;
-        if ( event->button.button == 1 ) {
+        if (event->button.button == 1 && !event_context->space_panning) {
             dragging = false;
 
             if (!event_context->within_tolerance) {

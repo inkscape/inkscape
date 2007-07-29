@@ -796,7 +796,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if ( event->button.button == 1 ) {
+            if (event->button.button == 1 && !event_context->space_panning) {
 
                 SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
 
@@ -921,7 +921,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 }
             } 
 
-            if ( dc->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK ) ) {
+            if ( dc->is_drawing && (event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning) {
                 dc->dragging = TRUE;
 
                 if (event->motion.state & GDK_CONTROL_MASK && dc->hatch_item) { // hatching
@@ -1091,7 +1091,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
         sp_canvas_end_forced_full_redraws(desktop->canvas);
         dc->is_drawing = false;
 
-        if ( dc->is_dilating && event->button.button == 1 ) {
+        if (dc->is_dilating && event->button.button == 1 && !event_context->space_panning) {
             if (!dc->has_dilated) {
                 // if we did not rub, do a light tap
                 dc->pressure = 0.03;
@@ -1104,7 +1104,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                          (event->button.state & GDK_SHIFT_MASK ? _("Thicken paths") : _("Thin paths")));
             ret = TRUE;
 
-        } else if ( dc->dragging && event->button.button == 1 ) {
+        } else if (dc->dragging && event->button.button == 1 && !event_context->space_panning) {
             dc->dragging = FALSE;
 
             sp_dyna_draw_apply(dc, motion_dt);

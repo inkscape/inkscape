@@ -935,7 +935,7 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        if (event->button.state & GDK_CONTROL_MASK) {
+        if ((event->button.state & GDK_CONTROL_MASK) && event->button.button == 1 && !event_context->space_panning) {
             NR::Point const button_w(event->button.x,
                                     event->button.y);
             
@@ -968,7 +968,7 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        if ( event->button.button == 1 ) {
+        if (event->button.button == 1 && !event_context->space_panning) {
             if (!(event->button.state & GDK_CONTROL_MASK)) {
                 NR::Point const button_w(event->button.x,
                                         event->button.y);
@@ -989,7 +989,7 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
         }
     case GDK_MOTION_NOTIFY:
         if ( dragging
-             && ( event->motion.state & GDK_BUTTON1_MASK ) )
+             && ( event->motion.state & GDK_BUTTON1_MASK ) && !event_context->space_panning)
         {
             if ( event_context->within_tolerance
                  && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
@@ -1010,7 +1010,7 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
         break;
 
     case GDK_BUTTON_RELEASE:
-        if ( event->button.button == 1 ) {
+        if (event->button.button == 1 && !event_context->space_panning) {
             Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
             if (r->is_started()) {
                 // set "busy" cursor
