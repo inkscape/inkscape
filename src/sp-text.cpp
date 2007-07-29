@@ -587,8 +587,7 @@ void SPText::rebuildLayout()
         if (!tspan->attributes.singleXYCoordinates()) continue;
         Inkscape::Text::Layout::iterator iter = layout.sourceToIterator(tspan);
         NR::Point anchor_point = layout.chunkAnchorPoint(iter);
-        sp_repr_set_svg_double(SP_OBJECT_REPR(tspan), "x", anchor_point[NR::X]);
-        sp_repr_set_svg_double(SP_OBJECT_REPR(tspan), "y", anchor_point[NR::Y]);
+        tspan->attributes.setFirstXY(anchor_point);
     }
 }
 
@@ -723,6 +722,19 @@ NR::Point TextTagAttributes::firstXY() const
     if (attributes.y.empty()) point[NR::Y] = 0.0;
     else point[NR::Y] = attributes.y[0].computed;
     return point;
+}
+
+void TextTagAttributes::setFirstXY(NR::Point &point)
+{
+    SVGLength zero_length;
+    zero_length = 0.0;
+
+    if (attributes.x.empty())
+        attributes.x.resize(1, zero_length);
+    if (attributes.y.empty())
+        attributes.y.resize(1, zero_length);
+    attributes.x[0].computed = point[NR::X];
+    attributes.y[0].computed = point[NR::Y];
 }
 
 void TextTagAttributes::mergeInto(Inkscape::Text::Layout::OptionalTextTagAttrs *output, Inkscape::Text::Layout::OptionalTextTagAttrs const &parent_attrs, unsigned parent_attrs_offset, bool copy_xy, bool copy_dxdyrotate) const
