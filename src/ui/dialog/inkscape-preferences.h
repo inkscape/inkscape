@@ -107,6 +107,8 @@ protected:
     PrefCheckButton _mouse_use_ext_input;
 
     PrefSpinButton _scroll_wheel, _scroll_arrow_px, _scroll_arrow_acc, _scroll_auto_speed, _scroll_auto_thres;
+    PrefCheckButton _scroll_space;
+    PrefCheckButton _wheel_zoom;
 
     PrefCombo       _steps_rot_snap;
     PrefCheckButton _steps_compass;

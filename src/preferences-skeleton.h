@@ -186,6 +186,8 @@ static char const preferences_skeleton[] =
 "    <group id=\"zoomincrement\" value=\"1.414213562\"/>\n"
 "    <group id=\"keyscroll\" value=\"15\"/>\n"
 "    <group id=\"wheelscroll\" value=\"40\"/>\n"
+"    <group id=\"spacepans\" value=\"0\"/>\n"
+"    <group id=\"wheelzooms\" value=\"0\"/>\n"
 "    <group id=\"transientpolicy\" value=\"1\"/>\n"
 "    <group id=\"scrollingacceleration\" value=\"0.4\"/>\n"
 "    <group id=\"autoscrollspeed\" value=\"0.7\"/>\n"
