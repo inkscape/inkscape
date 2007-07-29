@@ -103,6 +103,9 @@ public:
     is zero length, 0.0 is used for that coordinate. */
     NR::Point firstXY() const;
 
+    /** Sets the first coordinates in the x and y vectors. */
+    void setFirstXY(NR::Point &point);
+
 private:
     /// This holds the actual values.
     Inkscape::Text::Layout::OptionalTextTagAttrs attributes;
