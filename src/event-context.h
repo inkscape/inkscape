@@ -74,6 +74,8 @@ struct SPEventContext : public GObject {
 
     SPKnotHolder *shape_knot_holder;
     Inkscape::XML::Node *shape_repr;
+
+    bool space_panning;
 };
 
 /**

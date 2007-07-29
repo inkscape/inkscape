@@ -30,6 +30,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmenu.h>
+#include <glibmm/i18n.h>
 
 #include "display/sp-canvas.h"
 #include "xml/node-event-vector.h"
@@ -130,6 +131,7 @@ sp_event_context_init(SPEventContext *event_context)
     event_context->_message_context = NULL;
     event_context->_selcue = NULL;
     event_context->_grdrag = NULL;
+    event_context->space_panning = false;
 }
 
 /**
@@ -344,10 +346,19 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             yp = (gint) event->button.y;
             within_tolerance = true;
 
+            button_w = NR::Point(event->button.x, event->button.y);
+
             switch (event->button.button) {
+                case 1:
+                    if (event_context->space_panning) {
+                        panning = 1;
+                        sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
+                            GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK,
+                            NULL, event->button.time-1);
+                        ret = TRUE;
+                    }
+                    break;
                 case 2:
-                    button_w = NR::Point(event->button.x,
-                                         event->button.y);
                     if (event->button.state == GDK_SHIFT_MASK) {
                         zoom_rb = 2;
                     } else {
@@ -361,8 +372,6 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 case 3:
                     if (event->button.state & GDK_SHIFT_MASK
                             || event->button.state & GDK_CONTROL_MASK) {
-                        button_w = NR::Point(event->button.x,
-                                             event->button.y);
                         panning = 3;
                         sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK,
@@ -379,7 +388,9 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
         case GDK_MOTION_NOTIFY:
             if (panning) {
                 if ((panning == 2 && !(event->motion.state & GDK_BUTTON2_MASK))
-                        || (panning == 3 && !(event->motion.state & GDK_BUTTON3_MASK))) {
+                        || (panning == 1 && !(event->motion.state & GDK_BUTTON1_MASK))
+                        || (panning == 3 && !(event->motion.state & GDK_BUTTON3_MASK))
+                   ) {
                     /* Gdk seems to lose button release for us sometimes :-( */
                     panning = 0;
                     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
@@ -402,7 +413,8 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     // gobble subsequent motion events to prevent "sticking"
                     // when scrolling is slow
                     gobble_motion_events(panning == 2 ?
-                            GDK_BUTTON2_MASK : GDK_BUTTON3_MASK);
+                                         GDK_BUTTON2_MASK :
+                                         (panning == 1 ? GDK_BUTTON1_MASK : GDK_BUTTON3_MASK));
 
                     NR::Point const motion_w(event->motion.x, event->motion.y);
                     NR::Point const moved_w( motion_w - button_w );
@@ -548,8 +560,14 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     }
                     break;
                 case GDK_space:
-                    sp_toggle_selector(desktop);
-                    ret= TRUE;
+                    if (prefs_get_int_attribute("options.spacepans","value", 0) == 1) {
+                        event_context->space_panning = true;
+                        event_context->_message_context->set(Inkscape::INFORMATION_MESSAGE, _("<b>Space+mouse drag</b> to pan canvas"));
+                        ret= TRUE;
+                    } else {
+                        sp_toggle_selector(desktop);
+                        ret= TRUE;
+                    }
                     break;
                 case GDK_z:
                 case GDK_Z:
@@ -557,6 +575,25 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                         desktop->zoom_grab_focus();
                         ret = TRUE;
                     }
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case GDK_KEY_RELEASE:
+            switch (get_group0_keyval(&event->key)) {
+                case GDK_space:
+                    if (event_context->space_panning) {
+                        event_context->space_panning = false;
+                        event_context->_message_context->clear();
+                        if (panning == 1) {
+                            panning = 0;
+                            sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
+                                  event->key.time);
+                            desktop->updateNow();
+                        }
+                        ret= TRUE;
+                    } 
                     break;
                 default:
                     break;
