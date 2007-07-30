@@ -124,21 +124,29 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
+        {
+            NR::Point const button_w(event->button.x, event->button.y);
+            NR::Point const button_dt(desktop->w2d(button_w));
             if (event->button.button == 1 && !event_context->space_panning) {
                 // save drag origin
                 xp = (gint) event->button.x;
                 yp = (gint) event->button.y;
                 within_tolerance = true;
 
-                NR::Point const button_w(event->button.x, event->button.y);
-                NR::Point const button_dt(desktop->w2d(button_w));
                 Inkscape::Rubberband::get()->start(desktop, button_dt);
 
                 escaped = false;
 
                 ret = TRUE;
+            } else if (event->button.button == 3) {
+                double const zoom_rel( (event->button.state & GDK_SHIFT_MASK)
+                                       ? zoom_inc
+                                       : 1 / zoom_inc );
+                desktop->zoom_relative_keep_point(button_dt, zoom_rel);
+                ret = TRUE;
             }
             break;
+        }
 
 	case GDK_MOTION_NOTIFY:
             if (event->motion.state & GDK_BUTTON1_MASK && !event_context->space_panning) {
@@ -160,26 +168,27 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
             }
             break;
 
-	case GDK_BUTTON_RELEASE:
+      	case GDK_BUTTON_RELEASE:
+        {
+            NR::Point const button_w(event->button.x, event->button.y);
+            NR::Point const button_dt(desktop->w2d(button_w));
             if ( event->button.button == 1  && !event_context->space_panning) {
                 NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
                 if (b && !within_tolerance) {
                     desktop->set_display_area(*b, 10);
                 } else if (!escaped) {
-                    NR::Point const button_w(event->button.x, event->button.y);
-                    NR::Point const button_dt(desktop->w2d(button_w));
                     double const zoom_rel( (event->button.state & GDK_SHIFT_MASK)
                                            ? 1 / zoom_inc
                                            : zoom_inc );
                     desktop->zoom_relative_keep_point(button_dt, zoom_rel);
                 }
                 ret = TRUE;
-            }
+            } 
             Inkscape::Rubberband::get()->stop();
             xp = yp = 0;
             escaped = false;
             break;
-
+        }
         case GDK_KEY_PRESS:
             switch (get_group0_keyval (&event->key)) {
                 case GDK_Escape:
