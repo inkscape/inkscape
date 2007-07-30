@@ -70,6 +70,7 @@ SvgBuilder::SvgBuilder() {
 }
 
 SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref) {
+    _is_top_level = true;
     _doc = document;
     _docname = docname;
     _xref = xref;
@@ -80,6 +81,7 @@ SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref) {
 }
 
 SvgBuilder::SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root) {
+    _is_top_level = false;
     _doc = parent->_doc;
     _docname = parent->_docname;
     _xref = parent->_xref;
@@ -127,7 +129,7 @@ Inkscape::XML::Node *SvgBuilder::pushGroup() {
     Inkscape::GC::release(node);
     _group_depth.back()++;
     // Set as a layer if this is a top-level group
-    if ( _container->parent() == _root ) {
+    if ( _container->parent() == _root && _is_top_level ) {
         static int layer_count = 1;
         if ( layer_count > 1 ) {
             gchar *layer_name = g_strdup_printf("%s%d", _docname, layer_count);

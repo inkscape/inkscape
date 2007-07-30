@@ -166,6 +166,7 @@ private:
     bool _invalidated_style;
     GfxState *_current_state;
 
+    bool _is_top_level;  // Whether this SvgBuilder is the top-level one
     SPDocument *_doc;
     gchar *_docname;    // Basename of the URI from which this document is created
     XRef *_xref;    // Cross-reference table from the PDF doc we're converting from
