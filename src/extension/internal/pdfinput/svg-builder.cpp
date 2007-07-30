@@ -1229,7 +1229,7 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
     }
 
     // Set header data
-    if (!invert_alpha) {
+    if ( !invert_alpha && !alpha_only ) {
         png_set_invert_alpha(png_ptr);
     }
     png_color_8 sig_bit;
@@ -1278,19 +1278,38 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
         image_stream->reset();
 
         // Convert grayscale values
-        if (color_map) {
-            unsigned char *buffer = new unsigned char[width];
+        unsigned char *buffer = NULL;
+        if ( color_map || invert_alpha ) {
+            buffer = new unsigned char[width];
+        }
+        if ( color_map ) {
             for ( int y = 0 ; y < height ; y++ ) {
                 unsigned char *row = image_stream->getLine();
                 color_map->getGrayLine(row, buffer, width);
+                if (invert_alpha) {
+                    unsigned char *buf_ptr = buffer;
+                    for ( int x = 0 ; x < width ; x++ ) {
+                        *buf_ptr++ = ~(*buf_ptr);
+                    }
+                }
                 png_write_row(png_ptr, (png_bytep)buffer);
             }
-            delete buffer;
         } else {
             for ( int y = 0 ; y < height ; y++ ) {
                 unsigned char *row = image_stream->getLine();
-                png_write_row(png_ptr, (png_bytep)row);
+                if (invert_alpha) {
+                    unsigned char *buf_ptr = buffer;
+                    for ( int x = 0 ; x < width ; x++ ) {
+                        *buf_ptr++ = ~row[x];
+                    }
+                    png_write_row(png_ptr, (png_bytep)buffer);
+                } else {
+                    png_write_row(png_ptr, (png_bytep)row);
+                }
             }
+        }
+        if (buffer) {
+            delete buffer;
         }
     } else if (color_map) {
         image_stream = new ImageStream(str, width,
@@ -1371,6 +1390,43 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
     return image_node;
 }
 
+/**
+ * \brief Creates a <mask> with the specified width and height and adds to <defs>
+ *  If we're not the top-level SvgBuilder, creates a <defs> too and adds the mask to it.
+ * \return the created XML node
+ */
+Inkscape::XML::Node *SvgBuilder::_createMask(double width, double height) {
+    Inkscape::XML::Node *mask_node = _xml_doc->createElement("svg:mask");
+    mask_node->setAttribute("maskUnits", "userSpaceOnUse");
+    sp_repr_set_svg_double(mask_node, "x", 0.0);
+    sp_repr_set_svg_double(mask_node, "y", 0.0);
+    sp_repr_set_svg_double(mask_node, "width", width);
+    sp_repr_set_svg_double(mask_node, "height", height);
+    // Append mask to defs
+    if (_is_top_level) {
+        SP_OBJECT_REPR (SP_DOCUMENT_DEFS (_doc))->appendChild(mask_node);
+        Inkscape::GC::release(mask_node);
+        return SP_OBJECT_REPR (SP_DOCUMENT_DEFS (_doc))->lastChild();
+    } else {    // Work around for renderer bug when mask isn't defined in pattern
+        static int mask_count = 0;
+        Inkscape::XML::Node *defs = _root->firstChild();
+        Inkscape::XML::Node *result = NULL;
+        if ( !( defs && !strcmp(defs->name(), "svg:defs") ) ) {
+            // Create <defs> node
+            defs = _xml_doc->createElement("svg:defs");
+            _root->addChild(defs, NULL);
+            Inkscape::GC::release(defs);
+            defs = _root->firstChild();
+        }
+        gchar *mask_id = g_strdup_printf("_mask%d", mask_count++);
+        mask_node->setAttribute("id", mask_id);
+        g_free(mask_id);
+        defs->appendChild(mask_node);
+        Inkscape::GC::release(mask_node);
+        return defs->lastChild();
+    }
+}
+
 void SvgBuilder::addImage(GfxState *state, Stream *str, int width, int height,
                           GfxImageColorMap *color_map, int *mask_colors) {
 
@@ -1381,6 +1437,103 @@ void SvgBuilder::addImage(GfxState *state, Stream *str, int width, int height,
      }
 }
 
+void SvgBuilder::addImageMask(GfxState *state, Stream *str, int width, int height,
+                              bool invert) {
+
+    // Create a rectangle
+    Inkscape::XML::Node *rect = _xml_doc->createElement("svg:rect");
+    sp_repr_set_svg_double(rect, "x", 0.0);
+    sp_repr_set_svg_double(rect, "y", 0.0);
+    sp_repr_set_svg_double(rect, "width", 1.0);
+    sp_repr_set_svg_double(rect, "height", 1.0);
+    svgSetTransform(rect, 1.0, 0.0, 0.0, -1.0, 0.0, 1.0);
+    // Get current fill style and set it on the rectangle
+    SPCSSAttr *css = sp_repr_css_attr_new();
+    _setFillStyle(css, state, false);
+    sp_repr_css_change(rect, css, "style");
+    sp_repr_css_attr_unref(css);
+
+    // Scaling 1x1 surfaces might not work so skip setting a mask with this size
+    if ( width > 1 || height > 1 ) {
+        Inkscape::XML::Node *mask_image_node = _createImage(str, width, height, NULL, NULL, true, invert);
+        if (mask_image_node) {
+            // Create the mask
+            Inkscape::XML::Node *mask_node = _createMask(1.0, 1.0);
+            // Remove unnecessary transformation from the mask image
+            mask_image_node->setAttribute("transform", NULL);
+            mask_node->appendChild(mask_image_node);
+            Inkscape::GC::release(mask_image_node);
+            gchar *mask_url = g_strdup_printf("url(#%s)", mask_node->attribute("id"));
+            rect->setAttribute("mask", mask_url);
+            g_free(mask_url);
+        }
+    }
+
+    // Add the rectangle to the container
+    _container->appendChild(rect);
+    Inkscape::GC::release(rect);
+}
+
+void SvgBuilder::addMaskedImage(GfxState *state, Stream *str, int width, int height,
+                                GfxImageColorMap *color_map,
+                                Stream *mask_str, int mask_width, int mask_height,
+                                bool invert_mask) {
+
+    Inkscape::XML::Node *mask_image_node = _createImage(mask_str, mask_width, mask_height,
+                                                        NULL, NULL, true, invert_mask);
+    Inkscape::XML::Node *image_node = _createImage(str, width, height, color_map, NULL);
+    if ( mask_image_node && image_node ) {
+        // Create mask for the image
+        Inkscape::XML::Node *mask_node = _createMask(1.0, 1.0);
+        // Remove unnecessary transformation from the mask image
+        mask_image_node->setAttribute("transform", NULL);
+        mask_node->appendChild(mask_image_node);
+        // Scale the mask to the size of the image
+        NR::Matrix mask_transform((double)width, 0.0, 0.0, (double)height, 0.0, 0.0);
+        gchar *transform_text = sp_svg_transform_write(mask_transform);
+        mask_node->setAttribute("maskTransform", transform_text);
+        g_free(transform_text);
+        // Set mask and add image
+        gchar *mask_url = g_strdup_printf("url(#%s)", mask_node->attribute("id"));
+        image_node->setAttribute("mask", mask_url);
+        g_free(mask_url);
+        _container->appendChild(image_node);
+    }
+    if (mask_image_node) {
+        Inkscape::GC::release(mask_image_node);
+    }
+    if (image_node) {
+        Inkscape::GC::release(image_node);
+    }
+}
+    
+void SvgBuilder::addSoftMaskedImage(GfxState *state, Stream *str, int width, int height,
+                                    GfxImageColorMap *color_map,
+                                    Stream *mask_str, int mask_width, int mask_height,
+                                    GfxImageColorMap *mask_color_map) {
+
+    Inkscape::XML::Node *mask_image_node = _createImage(mask_str, mask_width, mask_height,
+                                                        mask_color_map, NULL, true);
+    Inkscape::XML::Node *image_node = _createImage(str, width, height, color_map, NULL);
+    if ( mask_image_node && image_node ) {
+        // Create mask for the image
+        Inkscape::XML::Node *mask_node = _createMask(1.0, 1.0);
+        // Remove unnecessary transformation from the mask image
+        mask_image_node->setAttribute("transform", NULL);
+        mask_node->appendChild(mask_image_node);
+        // Set mask and add image
+        gchar *mask_url = g_strdup_printf("url(#%s)", mask_node->attribute("id"));
+        image_node->setAttribute("mask", mask_url);
+        g_free(mask_url);
+        _container->appendChild(image_node);
+    }
+    if (mask_image_node) {
+        Inkscape::GC::release(mask_image_node);
+    }
+    if (image_node) {
+        Inkscape::GC::release(image_node);
+    }
+}
 
 } } } /* namespace Inkscape, Extension, Internal */
 

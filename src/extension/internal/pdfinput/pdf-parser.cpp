@@ -2431,7 +2431,7 @@ void PdfParser::doImage(Object *ref, Stream *str, GBool inlineImg) {
     obj1.free();
 
     // draw it
-    //out->drawImageMask(state, ref, str, width, height, invert, inlineImg);
+    builder->addImageMask(state, str, width, height, invert);
 
   } else {
 
@@ -2621,12 +2621,12 @@ void PdfParser::doImage(Object *ref, Stream *str, GBool inlineImg) {
 
     // draw it
     if (haveSoftMask) {
-/*      out->drawSoftMaskedImage(state, ref, str, width, height, colorMap,
-			       maskStr, maskWidth, maskHeight, maskColorMap);*/
+        builder->addSoftMaskedImage(state, str, width, height, colorMap,
+                                    maskStr, maskWidth, maskHeight, maskColorMap);
       delete maskColorMap;
     } else if (haveExplicitMask) {
-/*      out->drawMaskedImage(state, ref, str, width, height, colorMap,
-			   maskStr, maskWidth, maskHeight, maskInvert);*/
+        builder->addMaskedImage(state, str, width, height, colorMap,
+                                maskStr, maskWidth, maskHeight, maskInvert);
     } else {
       builder->addImage(state, str, width, height, colorMap,
 		        haveColorKeyMask ? maskColors : (int *)NULL);

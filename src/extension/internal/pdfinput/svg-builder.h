@@ -98,6 +98,16 @@ public:
     // Image handling
     void addImage(GfxState *state, Stream *str, int width, int height,
                   GfxImageColorMap *color_map, int *mask_colors);
+    void addImageMask(GfxState *state, Stream *str, int width, int height,
+                      bool invert);
+    void addMaskedImage(GfxState *state, Stream *str, int width, int height,
+                        GfxImageColorMap *color_map,
+                        Stream *mask_str, int mask_width, int mask_height,
+                        bool invert_mask);
+    void addSoftMaskedImage(GfxState *state, Stream *str, int width, int height,
+                            GfxImageColorMap *color_map,
+                            Stream *mask_str, int mask_width, int mask_height,
+                            GfxImageColorMap *mask_color_map);
 
     // Text handling
     void beginString(GfxState *state, GooString *s);
@@ -145,6 +155,7 @@ private:
     Inkscape::XML::Node *_createImage(Stream *str, int width, int height,
                                       GfxImageColorMap *color_map, int *mask_colors,
                                       bool alpha_only=false, bool invert_alpha=false);
+    Inkscape::XML::Node *_createMask(double width, double height);
     // Style setting
     SPCSSAttr *_setStyle(GfxState *state, bool fill, bool stroke, bool even_odd=false);
     void _setStrokeStyle(SPCSSAttr *css, GfxState *state);
