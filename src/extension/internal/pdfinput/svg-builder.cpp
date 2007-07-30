@@ -1094,6 +1094,8 @@ void SvgBuilder::addChar(GfxState *state, double x, double y,
     bool is_space = ( uLen == 1 && u[0] == 32 );
     // Skip beginning space
     if ( is_space && _glyphs.size() < 1 ) {
+        NR::Point delta(dx, dy);
+         _text_position += delta;
          return;
     }
     // Allow only one space in a row
