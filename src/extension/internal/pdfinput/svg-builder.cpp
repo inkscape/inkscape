@@ -885,6 +885,12 @@ void SvgBuilder::updateFont(GfxState *state) {
         max_scale = h_scale;
     }
     double css_font_size = max_scale * state->getFontSize();
+    if ( font->getType() == fontType3 ) {
+        double *font_matrix = font->getFontMatrix();
+        if ( font_matrix[0] != 0.0 ) {
+            css_font_size *= font_matrix[3] / font_matrix[0];
+        }
+    }
 
     os_font_size << css_font_size;
     sp_repr_css_set_property(_font_style, "font-size", os_font_size.str().c_str());
@@ -897,9 +903,6 @@ void SvgBuilder::updateFont(GfxState *state) {
     }
 
     // Calculate new text matrix
-    double *font_matrix = font->getFontMatrix();
-    NR::Matrix nr_font_matrix(font_matrix[0], font_matrix[1], font_matrix[2],
-                              font_matrix[3], font_matrix[4], font_matrix[5]);
     NR::Matrix new_text_matrix(text_matrix[0] * state->getHorizScaling(),
                                text_matrix[1] * state->getHorizScaling(),
                                -text_matrix[2], -text_matrix[3],
@@ -911,7 +914,7 @@ void SvgBuilder::updateFont(GfxState *state) {
             new_text_matrix[i] /= max_scale;
         }
     }
-    _text_matrix = nr_font_matrix * new_text_matrix;
+    _text_matrix = new_text_matrix;
     _font_scaling = max_scale;
     _current_font = font;
     _invalidated_style = true;
