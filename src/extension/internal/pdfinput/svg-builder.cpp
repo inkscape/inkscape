@@ -758,8 +758,10 @@ void SvgBuilder::updateFont(GfxState *state) {
     // Store original name
     if (font->getOrigName()) {
         _font_specification = font->getOrigName()->getCString();
-    } else {
+    } else if (font->getName()) {
         _font_specification = font->getName()->getCString();
+    } else {
+        _font_specification = "Arial";
     }
 
     // Prune the font name to get the correct font family name
