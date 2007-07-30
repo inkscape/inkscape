@@ -1218,7 +1218,7 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
         png_set_write_fn(png_ptr, &base64_stream, png_write_base64stream, png_flush_base64stream);
     } else {
         static int counter = 0;
-        file_name = g_strdup_printf("createImage%d.png", counter++);
+        file_name = g_strdup_printf("%s_img%d.png", _docname, counter++);
         fp = fopen(file_name, "wb");
         if ( fp == NULL ) {
             png_destroy_write_struct(&png_ptr, &info_ptr);
@@ -1349,10 +1349,12 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
 
     // Create repr
     Inkscape::XML::Node *image_node = _xml_doc->createElement("svg:image");
-    sp_repr_set_svg_double(image_node, "width", width);
-    sp_repr_set_svg_double(image_node, "height", height);
+    sp_repr_set_svg_double(image_node, "width", 1);
+    sp_repr_set_svg_double(image_node, "height", 1);
     // Set transformation
-    svgSetTransform(image_node, 1.0/(double)width, 0.0, 0.0, -1.0/(double)height, 0.0, 1.0);
+    if (_is_top_level) {
+        svgSetTransform(image_node, 1.0, 0.0, 0.0, -1.0, 0.0, 1.0);
+    }
 
     // Create href
     if (embed_image) {
