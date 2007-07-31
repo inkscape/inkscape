@@ -38,6 +38,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+class DualSpinButton;
+class MultiSpinButton;
 class FilterEffectsDialog : public Dialog {
 public:
     ~FilterEffectsDialog();
@@ -197,9 +199,8 @@ private:
 
     // Convolve Matrix
     ConvolveMatrix* _convolve_matrix;
-    DualSpinSlider* _convolve_order;
-    SpinSlider* _convolve_tx;
-    SpinSlider* _convolve_ty;
+    DualSpinButton* _convolve_order;
+    MultiSpinButton* _convolve_target;
 
     // For controlling setting sensitivity
     Gtk::Widget* _k1, *_k2, *_k3, *_k4;

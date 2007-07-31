@@ -10,6 +10,7 @@
  */
 
 #include "glib/gstrfuncs.h"
+#include "glibmm/i18n.h"
 
 #include "spin-slider.h"
 
@@ -103,18 +104,34 @@ void SpinSlider::remove_scale()
 
 DualSpinSlider::DualSpinSlider(double value, double lower, double upper, double step_inc,
                                double climb_rate, int digits, const SPAttributeEnum a)
-    : AttrWidget(a), _s1(value, lower, upper, step_inc, climb_rate, digits),
-      _s2(value, lower, upper, step_inc, climb_rate, digits)
+    : AttrWidget(a),
+      _s1(value, lower, upper, step_inc, climb_rate, digits),
+      _s2(value, lower, upper, step_inc, climb_rate, digits),
+      _link(_("Link"))
 {
     signal_value_changed().connect(signal_attr_changed().make_slot());
 
     _s1.get_adjustment().signal_value_changed().connect(_signal_value_changed.make_slot());
     _s2.get_adjustment().signal_value_changed().connect(_signal_value_changed.make_slot());
+    _s1.get_adjustment().signal_value_changed().connect(sigc::mem_fun(*this, &DualSpinSlider::update_linked));
+    _link.signal_toggled().connect(sigc::mem_fun(*this, &DualSpinSlider::link_toggled));
+
+    Gtk::VBox* vb = Gtk::manage(new Gtk::VBox);
+    vb->add(_s1);
+    vb->add(_s2);
+    pack_start(*vb);
+    pack_start(_link, false, false);
+    _link.set_active(true);
+
+    show_all();
 }
 
 Glib::ustring DualSpinSlider::get_as_attribute() const
 {
-    return _s1.get_as_attribute() + " " + _s2.get_as_attribute();
+    if(_link.get_active())
+        return _s1.get_as_attribute();
+    else
+        return _s1.get_as_attribute() + " " + _s2.get_as_attribute();
 }
 
 void DualSpinSlider::set_from_attribute(SPObject* o)
@@ -174,6 +191,18 @@ void DualSpinSlider::remove_scale()
 {
     _s1.remove_scale();
     _s2.remove_scale();
+}
+
+void DualSpinSlider::link_toggled()
+{
+    _s2.set_sensitive(!_link.get_active());
+    update_linked();
+}
+
+void DualSpinSlider::update_linked()
+{
+    if(_link.get_active())
+        _s2.set_value(_s1.get_value());
 }
 
 } // namespace Widget

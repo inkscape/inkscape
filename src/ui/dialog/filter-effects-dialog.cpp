@@ -73,6 +73,123 @@ int input_count(const SPFilterPrimitive* prim)
         return 1;
 }
 
+class SpinButtonAttr : public Gtk::SpinButton, public AttrWidget
+{
+public:
+    SpinButtonAttr(double lower, double upper, double step_inc,
+                   double climb_rate, int digits, const SPAttributeEnum a)
+        : Gtk::SpinButton(climb_rate, digits),
+          AttrWidget(a)
+    {
+        set_range(lower, upper);
+        set_increments(step_inc, step_inc * 5);
+
+        signal_value_changed().connect(signal_attr_changed().make_slot());
+    }
+
+    Glib::ustring get_as_attribute() const
+    {
+        const double val = get_value();
+        
+        if(get_digits() == 0)
+            return Glib::Ascii::dtostr((int)val);
+        else
+            return Glib::Ascii::dtostr(val);
+    }
+    
+    void set_from_attribute(SPObject* o)
+    {
+        const gchar* val = attribute_value(o);
+        if(val)
+            set_value(Glib::Ascii::strtod(val));
+    }
+};
+
+// Contains an arbitrary number of spin buttons that use seperate attributes
+class MultiSpinButton : public Gtk::HBox
+{
+public:
+    MultiSpinButton(double lower, double upper, double step_inc,
+                    double climb_rate, int digits, std::vector<SPAttributeEnum> attrs)
+    {
+        for(unsigned i = 0; i < attrs.size(); ++i) {
+            _spins.push_back(new SpinButtonAttr(lower, upper, step_inc, climb_rate, digits, attrs[i]));
+            pack_start(*_spins.back(), false, false);
+        }
+    }
+
+    ~MultiSpinButton()
+    {
+        for(unsigned i = 0; i < _spins.size(); ++i)
+            delete _spins[i];
+    }
+
+    std::vector<SpinButtonAttr*>& get_spinbuttons()
+    {
+        return _spins;
+    }
+private:
+    std::vector<SpinButtonAttr*> _spins;
+};
+
+// Contains two spinbuttons that describe a NumberOptNumber
+class DualSpinButton : public Gtk::HBox, public AttrWidget
+{
+public:
+    DualSpinButton(double lower, double upper, double step_inc,
+                   double climb_rate, int digits, const SPAttributeEnum a)
+        : AttrWidget(a),
+          _s1(climb_rate, digits), _s2(climb_rate, digits)
+    {
+        _s1.set_range(lower, upper);
+        _s2.set_range(lower, upper);
+        _s1.set_increments(step_inc, step_inc * 5);
+        _s2.set_increments(step_inc, step_inc * 5);
+
+        _s1.signal_value_changed().connect(signal_attr_changed().make_slot());
+        _s2.signal_value_changed().connect(signal_attr_changed().make_slot());
+
+        pack_start(_s1, false, false);
+        pack_start(_s2, false, false);
+    }
+
+    Gtk::SpinButton& get_spinbutton1()
+    {
+        return _s1;
+    }
+
+    Gtk::SpinButton& get_spinbutton2()
+    {
+        return _s2;
+    }
+
+    virtual Glib::ustring get_as_attribute() const
+    {
+        double v1 = _s1.get_value();
+        double v2 = _s2.get_value();
+        
+        if(_s1.get_digits() == 0) {
+            v1 = (int)v1;
+            v2 = (int)v2;
+        }
+
+        return Glib::Ascii::dtostr(v1) + " " + Glib::Ascii::dtostr(v2);
+    }
+
+    virtual void set_from_attribute(SPObject* o)
+    {
+        const gchar* val = attribute_value(o);
+        if(val) {
+            NumberOptNumber n;
+            n.set(val);
+            _s1.set_value(n.getNumber());
+            _s2.set_value(n.getOptNumber());
+        }
+    }
+private:
+    Gtk::SpinButton _s1, _s2;
+};
+
 class ColorButton : public Gtk::ColorButton, public AttrWidget
 {
 public:
@@ -252,68 +369,76 @@ public:
     ColorButton* add_color(const SPAttributeEnum attr, const Glib::ustring& label)
     {
         ColorButton* col = new ColorButton(attr);
-        add_widget(*col, label);
+        add_widget(col, label);
         add_attr_widget(col);
         return col;
     }
 
     // ConvolveMatrix
-    ConvolveMatrix* add(const SPAttributeEnum attr, const Glib::ustring& label)
+    ConvolveMatrix* add_matrix(const SPAttributeEnum attr, const Glib::ustring& label)
     {
         ConvolveMatrix* conv = new ConvolveMatrix(attr);
-        add_widget(*conv, label);
+        add_widget(conv, label);
         add_attr_widget(conv);
         return conv;
     }
 
     // SpinSlider
-    SpinSlider* add(const SPAttributeEnum attr, const Glib::ustring& label,
-             const double lo, const double hi, const double step_inc, const double climb, const int digits)
+    SpinSlider* add_spinslider(const SPAttributeEnum attr, const Glib::ustring& label,
+                         const double lo, const double hi, const double step_inc, const double climb, const int digits)
     {
         SpinSlider* spinslider = new SpinSlider(lo, lo, hi, step_inc, climb, digits, attr);
-        add_widget(*spinslider, label);
+        add_widget(spinslider, label);
         add_attr_widget(spinslider);
         return spinslider;
     }
 
     // DualSpinSlider
-    DualSpinSlider* add(const SPAttributeEnum attr, const Glib::ustring& label1, const Glib::ustring& label2,
-                 const double lo, const double hi, const double step_inc, const double climb, const int digits)
+    DualSpinSlider* add_dualspinslider(const SPAttributeEnum attr, const Glib::ustring& label,
+                                       const double lo, const double hi, const double step_inc,
+                                       const double climb, const int digits)
     {
         DualSpinSlider* dss = new DualSpinSlider(lo, lo, hi, step_inc, climb, digits, attr);
-        add_widget(dss->get_spinslider1(), label1);
-        add_widget(dss->get_spinslider2(), label2);
+        add_widget(dss, label);
         add_attr_widget(dss);
         return dss;
     }
 
+    // DualSpinButton
+    DualSpinButton* add_dualspinbutton(const SPAttributeEnum attr, const Glib::ustring& label,
+                                       const double lo, const double hi, const double step_inc,
+                                       const double climb, const int digits)
+    {
+        DualSpinButton* dsb = new DualSpinButton(lo, hi, step_inc, climb, digits, attr);
+        add_widget(dsb, label);
+        add_attr_widget(dsb);
+        return dsb;
+    }
+
+    // MultiSpinButton
+    MultiSpinButton* add_multispinbutton(const SPAttributeEnum attr1, const SPAttributeEnum attr2,
+                                         const Glib::ustring& label, const double lo, const double hi,
+                                         const double step_inc, const double climb, const int digits)
+    {
+        std::vector<SPAttributeEnum> attrs;
+        attrs.push_back(attr1);
+        attrs.push_back(attr2);
+        MultiSpinButton* msb = new MultiSpinButton(lo, hi, step_inc, climb, digits, attrs);
+        add_widget(msb, label);
+        for(unsigned i = 0; i < msb->get_spinbuttons().size(); ++i)
+            add_attr_widget(msb->get_spinbuttons()[i]);
+        return msb;
+    }
+
     // ComboBoxEnum
-    template<typename T> ComboBoxEnum<T>* add(const SPAttributeEnum attr,
+    template<typename T> ComboBoxEnum<T>* add_combo(const SPAttributeEnum attr,
                                   const Glib::ustring& label,
                                   const Util::EnumDataConverter<T>& conv)
     {
         ComboBoxEnum<T>* combo = new ComboBoxEnum<T>(conv, attr);
-        add_widget(*combo, label);
+        add_widget(combo, label);
         add_attr_widget(combo);
         return combo;
-    }
-
-    // Combine the two most recent settings widgets in to the same row
-    void combine()
-    {
-        Gtk::VBox& vb = _groups[_current_type];
-        const int size = vb.children().size();
-        if(size >= 2) {
-            Gtk::HBox* h1 = dynamic_cast<Gtk::HBox*>(vb.children()[size - 2].get_widget());
-            Gtk::HBox* h2 = dynamic_cast<Gtk::HBox*>(vb.children()[size - 1].get_widget());
-            Gtk::Widget* c1 = h1->children()[1].get_widget();
-            Gtk::Widget* c2 = h2->children()[1].get_widget();
-            h1->remove(*c1);
-            h2->remove(*c2);
-            h1->pack_start(*c1, false, false);
-            h1->pack_start(*c2, false, false);
-            vb.remove(*h2);
-        }
     }
 private:
     void add_attr_widget(AttrWidget* a)
@@ -326,13 +451,13 @@ private:
 
     /* Adds a new settings widget using the specified label. The label will be formatted with a colon
        and all widgets within the setting group are aligned automatically. */
-    void add_widget(Gtk::Widget& w, const Glib::ustring& label)
+    void add_widget(Gtk::Widget* w, const Glib::ustring& label)
     {
         Gtk::Label *lbl = Gtk::manage(new Gtk::Label(label + (label == "" ? "" : ":"), Gtk::ALIGN_LEFT));
         Gtk::HBox *hb = Gtk::manage(new Gtk::HBox);
         hb->set_spacing(12);
         hb->pack_start(*lbl, false, false);
-        hb->pack_start(w);
+        hb->pack_start(*w);
         _groups[_current_type].pack_start(*hb);
 
         _sizegroup->add_widget(*lbl);
@@ -340,7 +465,7 @@ private:
         hb->show();
         lbl->show();
 
-        w.show();
+        w->show();
     }
 
     Gtk::VBox _groups[NR::NR_FILTER_ENDPRIMITIVETYPE];
@@ -1257,48 +1382,42 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings_box.pack_start(_empty_settings);
 
     _settings->type(NR_FILTER_BLEND);
-    _settings->add(SP_ATTR_MODE, _("Mode"), BlendModeConverter);
+    _settings->add_combo(SP_ATTR_MODE, _("Mode"), BlendModeConverter);
 
     _settings->type(NR_FILTER_COMPOSITE);
-    _settings->add(SP_ATTR_OPERATOR, _("Operator"), CompositeOperatorConverter);
-    _k1 = _settings->add(SP_ATTR_K1, _("K1"), -10, 10, 1, 0.01, 1);
-    _k2 = _settings->add(SP_ATTR_K2, _("K2"), -10, 10, 1, 0.01, 1);
-    _k3 = _settings->add(SP_ATTR_K3, _("K3"), -10, 10, 1, 0.01, 1);
-    _k4 = _settings->add(SP_ATTR_K4, _("K4"), -10, 10, 1, 0.01, 1);
+    _settings->add_combo(SP_ATTR_OPERATOR, _("Operator"), CompositeOperatorConverter);
+    _k1 = _settings->add_spinslider(SP_ATTR_K1, _("K1"), -10, 10, 1, 0.01, 1);
+    _k2 = _settings->add_spinslider(SP_ATTR_K2, _("K2"), -10, 10, 1, 0.01, 1);
+    _k3 = _settings->add_spinslider(SP_ATTR_K3, _("K3"), -10, 10, 1, 0.01, 1);
+    _k4 = _settings->add_spinslider(SP_ATTR_K4, _("K4"), -10, 10, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_CONVOLVEMATRIX);
-    _convolve_order = _settings->add(SP_ATTR_ORDER, _("Size"), "", 1, 5, 1, 1, 0);
-    _convolve_order->remove_scale();
-    _settings->combine();
-    _convolve_tx = _settings->add(SP_ATTR_TARGETX, _("Target"), 0, 4, 1, 1, 0);
-    _convolve_tx->remove_scale();
-    _convolve_ty = _settings->add(SP_ATTR_TARGETY, "", 0, 4, 1, 1, 0);
-    _convolve_ty->remove_scale();
-    _settings->combine();
-    _convolve_matrix = _settings->add(SP_ATTR_KERNELMATRIX, _("Kernel"));
-    _convolve_order->signal_value_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::convolve_order_changed));
-    _settings->add(SP_ATTR_DIVISOR, _("Divisor"), 0.01, 10, 1, 0.01, 1);
-    _settings->add(SP_ATTR_BIAS, _("Bias"), -10, 10, 1, 0.01, 1);
+    _convolve_order = _settings->add_dualspinbutton(SP_ATTR_ORDER, _("Size"), 1, 5, 1, 1, 0);
+    _convolve_target = _settings->add_multispinbutton(SP_ATTR_TARGETX, SP_ATTR_TARGETY, _("Target"), 0, 4, 1, 1, 0);
+    _convolve_matrix = _settings->add_matrix(SP_ATTR_KERNELMATRIX, _("Kernel"));
+    _convolve_order->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::convolve_order_changed));
+    _settings->add_spinslider(SP_ATTR_DIVISOR, _("Divisor"), 0.01, 10, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_BIAS, _("Bias"), -10, 10, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_DIFFUSELIGHTING);
     _settings->add_color(SP_PROP_LIGHTING_COLOR, _("Diffuse Color"));
-    _settings->add(SP_ATTR_SURFACESCALE, _("Surface Scale"), -10, 10, 1, 0.01, 1);
-    _settings->add(SP_ATTR_DIFFUSECONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
-    _settings->add(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length X"), _("Kernel Unit Length Y"), 0.01, 10, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_SURFACESCALE, _("Surface Scale"), -10, 10, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_DIFFUSECONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
+    _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
     
     _settings->type(NR_FILTER_GAUSSIANBLUR);
-    _settings->add(SP_ATTR_STDDEVIATION, _("Standard Deviation X"), _("Standard Deviation Y"), 0.01, 100, 1, 0.01, 1);
+    _settings->add_dualspinslider(SP_ATTR_STDDEVIATION, _("Standard Deviation"), 0.01, 100, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_OFFSET);
-    _settings->add(SP_ATTR_DX, _("Delta X"), -100, 100, 1, 0.01, 1);
-    _settings->add(SP_ATTR_DY, _("Delta Y"), -100, 100, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_DX, _("Delta X"), -100, 100, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_DY, _("Delta Y"), -100, 100, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_SPECULARLIGHTING);
     _settings->add_color(SP_PROP_LIGHTING_COLOR, _("Specular Color"));
-    _settings->add(SP_ATTR_SURFACESCALE, _("Surface Scale"), -10, 10, 1, 0.01, 1);
-    _settings->add(SP_ATTR_SPECULARCONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
-    _settings->add(SP_ATTR_SPECULAREXPONENT, _("Exponent"), 1, 128, 1, 0.01, 1);
-    _settings->add(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length X"), _("Kernel Unit Length Y"), 0.01, 10, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_SURFACESCALE, _("Surface Scale"), -10, 10, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_SPECULARCONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_SPECULAREXPONENT, _("Exponent"), 1, 128, 1, 0.01, 1);
+    _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_TURBULENCE);
     /*std::vector<Gtk::Widget*> trb_grp;
@@ -1358,8 +1477,8 @@ void FilterEffectsDialog::duplicate_primitive()
 void FilterEffectsDialog::convolve_order_changed()
 {
     _convolve_matrix->update(SP_FECONVOLVEMATRIX(_primitive_list.get_selected()));
-    _convolve_tx->get_adjustment().set_upper(_convolve_order->get_spinslider1().get_value());
-    _convolve_ty->get_adjustment().set_upper(_convolve_order->get_spinslider2().get_value());
+    _convolve_target->get_spinbuttons()[0]->get_adjustment()->set_upper(_convolve_order->get_spinbutton1().get_value() - 1);
+    _convolve_target->get_spinbuttons()[1]->get_adjustment()->set_upper(_convolve_order->get_spinbutton2().get_value() - 1);
 }
 
 void FilterEffectsDialog::set_attr_direct(const AttrWidget* input)

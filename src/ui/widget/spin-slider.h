@@ -56,7 +56,7 @@ private:
 };
 
 // Contains two SpinSliders for controlling number-opt-number attributes
-class DualSpinSlider : public AttrWidget
+class DualSpinSlider : public Gtk::HBox, public AttrWidget
 {
 public:
     DualSpinSlider(double value, double lower, double upper, double step_inc,
@@ -77,8 +77,11 @@ public:
 
     void remove_scale();
 private:
+    void link_toggled();
+    void update_linked();
     sigc::signal<void> _signal_value_changed;
     SpinSlider _s1, _s2;
+    Gtk::ToggleButton _link;
 };
 
 } // namespace Widget
