@@ -37,7 +37,7 @@ FileOpenDialog *FileOpenDialog::create(Gtk::Window &parentWindow,
                                        FileDialogType fileTypes,
                                        const Glib::ustring &title)
 {
-    FileOpenDialog *dialog = new FileOpenDialogImpl(parentWindow, path, fileTypes, title);
+    FileOpenDialog *dialog = new FileOpenDialogImplGtk(parentWindow, path, fileTypes, title);
     return dialog;
 }
 
@@ -54,7 +54,7 @@ FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow,
                                        const Glib::ustring &title,
                                        const Glib::ustring &default_key)
 {
-    FileSaveDialog *dialog = new FileSaveDialogImpl(parentWindow, path, fileTypes, title, default_key);
+    FileSaveDialog *dialog = new FileSaveDialogImplGtk(parentWindow, path, fileTypes, title, default_key);
     return dialog;
 }
 

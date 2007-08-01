@@ -125,14 +125,14 @@ private:
  * This class is the base implementation for the others.  This
  * reduces redundancies and bugs.
  */
-class FileDialogBase : public Gtk::FileChooserDialog
+class FileDialogBaseGtk : public Gtk::FileChooserDialog
 {
 public:
 
     /**
      *
      */
-    FileDialogBase(Gtk::Window& parentWindow, const Glib::ustring &title,
+    FileDialogBaseGtk(Gtk::Window& parentWindow, const Glib::ustring &title,
     		FileDialogType type, gchar const* preferenceBase) :
         Gtk::FileChooserDialog(parentWindow, title),
         preferenceBase(preferenceBase ? preferenceBase : "unknown"),
@@ -144,7 +144,7 @@ public:
     /**
      *
      */
-    FileDialogBase(Gtk::Window& parentWindow, const Glib::ustring &title,
+    FileDialogBaseGtk(Gtk::Window& parentWindow, const Glib::ustring &title,
                    Gtk::FileChooserAction dialogType, FileDialogType type, gchar const* preferenceBase) :
         Gtk::FileChooserDialog(parentWindow, title, dialogType),
         preferenceBase(preferenceBase ? preferenceBase : "unknown"),
@@ -156,7 +156,7 @@ public:
     /**
      *
      */
-    virtual ~FileDialogBase()
+    virtual ~FileDialogBaseGtk()
         {}
 
 protected:
@@ -200,16 +200,16 @@ private:
 /**
  * Our implementation class for the FileOpenDialog interface..
  */
-class FileOpenDialogImpl : public FileOpenDialog, public FileDialogBase
+class FileOpenDialogImplGtk : public FileOpenDialog, public FileDialogBaseGtk
 {
 public:
 
-    FileOpenDialogImpl(Gtk::Window& parentWindow,
+    FileOpenDialogImplGtk(Gtk::Window& parentWindow,
     		           const Glib::ustring &dir,
                        FileDialogType fileTypes,
                        const Glib::ustring &title);
 
-    virtual ~FileOpenDialogImpl();
+    virtual ~FileOpenDialogImplGtk();
 
     bool show();
 
@@ -263,17 +263,17 @@ class FileType
 /**
  * Our implementation of the FileSaveDialog interface.
  */
-class FileSaveDialogImpl : public FileSaveDialog, public FileDialogBase
+class FileSaveDialogImplGtk : public FileSaveDialog, public FileDialogBaseGtk
 {
 
 public:
-    FileSaveDialogImpl(Gtk::Window &parentWindow, 
+    FileSaveDialogImplGtk(Gtk::Window &parentWindow, 
     		           const Glib::ustring &dir,
                        FileDialogType fileTypes,
                        const Glib::ustring &title,
                        const Glib::ustring &default_key);
 
-    virtual ~FileSaveDialogImpl();
+    virtual ~FileSaveDialogImplGtk();
 
     bool show();
 
@@ -353,7 +353,7 @@ private:
 /**
  * Our implementation of the FileExportDialog interface.
  */
-class FileExportDialogImpl : public FileExportDialog, public FileDialogBase
+class FileExportDialogImpl : public FileExportDialog, public FileDialogBaseGtk
 {
 
 public:

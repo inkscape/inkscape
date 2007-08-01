@@ -610,7 +610,7 @@ SVGPreview::~SVGPreview()
 ### F I L E     D I A L O G    B A S E    C L A S S
 #########################################################################*/
 
-void FileDialogBase::internalSetup()
+void FileDialogBaseGtk::internalSetup()
 {
     bool enablePreview = 
         (bool)prefs_get_int_attribute( preferenceBase.c_str(),
@@ -620,11 +620,11 @@ void FileDialogBase::internalSetup()
     previewCheckbox.set_active( enablePreview );
 
     previewCheckbox.signal_toggled().connect(
-        sigc::mem_fun(*this, &FileDialogBase::_previewEnabledCB) );
+        sigc::mem_fun(*this, &FileDialogBaseGtk::_previewEnabledCB) );
 
     //Catch selection-changed events, so we can adjust the text widget
     signal_update_preview().connect(
-         sigc::mem_fun(*this, &FileDialogBase::_updatePreviewCallback) );
+         sigc::mem_fun(*this, &FileDialogBaseGtk::_updatePreviewCallback) );
 
     //###### Add a preview widget
     set_preview_widget(svgPreview);
@@ -634,7 +634,7 @@ void FileDialogBase::internalSetup()
 }
 
 
-void FileDialogBase::cleanup( bool showConfirmed )
+void FileDialogBaseGtk::cleanup( bool showConfirmed )
 {
     if ( showConfirmed )
         prefs_set_int_attribute( preferenceBase.c_str(),
@@ -642,7 +642,7 @@ void FileDialogBase::cleanup( bool showConfirmed )
 }
 
 
-void FileDialogBase::_previewEnabledCB()
+void FileDialogBaseGtk::_previewEnabledCB()
 {
     bool enabled = previewCheckbox.get_active();
     set_preview_widget_active(enabled);
@@ -656,7 +656,7 @@ void FileDialogBase::_previewEnabledCB()
 /**
  * Callback for checking if the preview needs to be redrawn
  */
-void FileDialogBase::_updatePreviewCallback()
+void FileDialogBaseGtk::_updatePreviewCallback()
 {
     Glib::ustring fileName = get_preview_filename();
 
@@ -681,11 +681,11 @@ void FileDialogBase::_updatePreviewCallback()
 /**
  * Constructor.  Not called directly.  Use the factory.
  */
-FileOpenDialogImpl::FileOpenDialogImpl(Gtk::Window& parentWindow, 
+FileOpenDialogImplGtk::FileOpenDialogImplGtk(Gtk::Window& parentWindow, 
 		                               const Glib::ustring &dir,
                                        FileDialogType fileTypes,
                                        const Glib::ustring &title) :
-    FileDialogBase(parentWindow, title, fileTypes, "dialogs.open")
+    FileDialogBaseGtk(parentWindow, title, fileTypes, "dialogs.open")
 {
 
 
@@ -734,12 +734,12 @@ FileOpenDialogImpl::FileOpenDialogImpl(Gtk::Window& parentWindow,
 /**
  * Destructor
  */
-FileOpenDialogImpl::~FileOpenDialogImpl()
+FileOpenDialogImplGtk::~FileOpenDialogImplGtk()
 {
 
 }
 
-void FileOpenDialogImpl::createFilterMenu()
+void FileOpenDialogImplGtk::createFilterMenu()
 {
     Gtk::FileFilter allInkscapeFilter;
     allInkscapeFilter.set_name(_("All Inkscape Files"));
@@ -793,7 +793,7 @@ void FileOpenDialogImpl::createFilterMenu()
  * Show this dialog modally.  Return true if user hits [OK]
  */
 bool
-FileOpenDialogImpl::show()
+FileOpenDialogImplGtk::show()
 {
     Glib::ustring s = Glib::filename_to_utf8 (get_current_folder());
     if (s.length() == 0) 
@@ -839,7 +839,7 @@ FileOpenDialogImpl::show()
  * Get the file extension type that was selected by the user. Valid after an [OK]
  */
 Inkscape::Extension::Extension *
-FileOpenDialogImpl::getSelectionType()
+FileOpenDialogImplGtk::getSelectionType()
 {
     return extension;
 }
@@ -849,7 +849,7 @@ FileOpenDialogImpl::getSelectionType()
  * Get the file name chosen by the user.   Valid after an [OK]
  */
 Glib::ustring
-FileOpenDialogImpl::getFilename (void)
+FileOpenDialogImplGtk::getFilename (void)
 {
     return g_strdup(myFilename.c_str());
 }
@@ -858,7 +858,7 @@ FileOpenDialogImpl::getFilename (void)
 /**
  * To Get Multiple filenames selected at-once.
  */
-std::vector<Glib::ustring>FileOpenDialogImpl::getFilenames()
+std::vector<Glib::ustring>FileOpenDialogImplGtk::getFilenames()
 {    
     std::vector<Glib::ustring> result = get_filenames();
 #ifdef WITH_GNOME_VFS
@@ -880,12 +880,12 @@ std::vector<Glib::ustring>FileOpenDialogImpl::getFilenames()
 /**
  * Constructor
  */
-FileSaveDialogImpl::FileSaveDialogImpl(Gtk::Window &parentWindow, 
+FileSaveDialogImplGtk::FileSaveDialogImplGtk(Gtk::Window &parentWindow, 
 			const Glib::ustring &dir,
             FileDialogType fileTypes,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
-    FileDialogBase(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.save_as")
+    FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.save_as")
 {
     /* One file at a time */
     set_select_multiple(false);
@@ -926,7 +926,7 @@ FileSaveDialogImpl::FileSaveDialogImpl(Gtk::Window &parentWindow,
     createFileTypeMenu();
     fileTypeComboBox.set_size_request(200,40);
     fileTypeComboBox.signal_changed().connect(
-         sigc::mem_fun(*this, &FileSaveDialogImpl::fileTypeChangedCallback) );
+         sigc::mem_fun(*this, &FileSaveDialogImplGtk::fileTypeChangedCallback) );
 
 
     childBox.pack_start( checksBox );
@@ -947,7 +947,7 @@ FileSaveDialogImpl::FileSaveDialogImpl(Gtk::Window &parentWindow,
         //Catch when user hits [return] on the text field
         fileNameEntry = entries[0];
         fileNameEntry->signal_activate().connect(
-             sigc::mem_fun(*this, &FileSaveDialogImpl::fileNameEntryChangedCallback) );
+             sigc::mem_fun(*this, &FileSaveDialogImplGtk::fileNameEntryChangedCallback) );
         }
 
     //Let's do more customization
@@ -974,14 +974,14 @@ FileSaveDialogImpl::FileSaveDialogImpl(Gtk::Window &parentWindow,
 /**
  * Destructor
  */
-FileSaveDialogImpl::~FileSaveDialogImpl()
+FileSaveDialogImplGtk::~FileSaveDialogImplGtk()
 {
 }
 
 /**
  * Callback for fileNameEntry widget
  */
-void FileSaveDialogImpl::fileNameEntryChangedCallback()
+void FileSaveDialogImplGtk::fileNameEntryChangedCallback()
 {
     if (!fileNameEntry)
         return;
@@ -1018,7 +1018,7 @@ void FileSaveDialogImpl::fileNameEntryChangedCallback()
 /**
  * Callback for fileNameEntry widget
  */
-void FileSaveDialogImpl::fileTypeChangedCallback()
+void FileSaveDialogImplGtk::fileTypeChangedCallback()
 {
     int sel = fileTypeComboBox.get_active_row_number();
     if (sel<0 || sel >= (int)fileTypes.size())
@@ -1036,7 +1036,7 @@ void FileSaveDialogImpl::fileTypeChangedCallback()
 
 
 
-void FileSaveDialogImpl::createFileTypeMenu()
+void FileSaveDialogImplGtk::createFileTypeMenu()
 {
     Inkscape::Extension::DB::OutputList extension_list;
     Inkscape::Extension::db.get_output_list(extension_list);
@@ -1082,7 +1082,7 @@ void FileSaveDialogImpl::createFileTypeMenu()
  * Show this dialog modally.  Return true if user hits [OK]
  */
 bool
-FileSaveDialogImpl::show()
+FileSaveDialogImplGtk::show()
 {
     change_path(myFilename);
     set_modal (TRUE);                      //Window
@@ -1119,12 +1119,12 @@ FileSaveDialogImpl::show()
  * Get the file extension type that was selected by the user. Valid after an [OK]
  */
 Inkscape::Extension::Extension *
-FileSaveDialogImpl::getSelectionType()
+FileSaveDialogImplGtk::getSelectionType()
 {
     return extension;
 }
 
-void FileSaveDialogImpl::setSelectionType( Inkscape::Extension::Extension * key )
+void FileSaveDialogImplGtk::setSelectionType( Inkscape::Extension::Extension * key )
 {
     // If no pointer to extension is passed in, look up based on filename extension.
     if ( !key ) {
@@ -1170,14 +1170,14 @@ void FileSaveDialogImpl::setSelectionType( Inkscape::Extension::Extension * key 
  * Get the file name chosen by the user.   Valid after an [OK]
  */
 Glib::ustring
-FileSaveDialogImpl::getFilename()
+FileSaveDialogImplGtk::getFilename()
 {
     return myFilename;
 }
 
 
 void 
-FileSaveDialogImpl::change_title(const Glib::ustring& title)
+FileSaveDialogImplGtk::change_title(const Glib::ustring& title)
 {
     this->set_title(title);
 }
@@ -1186,7 +1186,7 @@ FileSaveDialogImpl::change_title(const Glib::ustring& title)
   * Change the default save path location.
   */
 void 
-FileSaveDialogImpl::change_path(const Glib::ustring& path)
+FileSaveDialogImplGtk::change_path(const Glib::ustring& path)
 {
     myFilename = path;
     if (Glib::file_test(myFilename, Glib::FILE_TEST_IS_DIR)) {
@@ -1214,7 +1214,7 @@ FileSaveDialogImpl::change_path(const Glib::ustring& path)
     }
 }
 
-void FileSaveDialogImpl::updateNameAndExtension()
+void FileSaveDialogImplGtk::updateNameAndExtension()
 {
     // Pick up any changes the user has typed in.
     Glib::ustring tmp = get_filename();
@@ -1360,7 +1360,7 @@ FileExportDialogImpl::FileExportDialogImpl(Gtk::Window& parentWindow,
             FileDialogType fileTypes,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
-            FileDialogBase(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.export"),
+            FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.export"),
             sourceX0Spinner("X0",         _("Left edge of source")),
             sourceY0Spinner("Y0",         _("Top edge of source")),
             sourceX1Spinner("X1",         _("Right edge of source")),
