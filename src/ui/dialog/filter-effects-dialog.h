@@ -176,6 +176,7 @@ private:
     void convolve_order_changed();
 
     void set_attr_direct(const AttrWidget*);
+    void set_child_attr_direct(const AttrWidget*);
     void set_attr(SPObject*, const SPAttributeEnum, const gchar* val);
     void update_settings_view();
     void update_settings_sensitivity();
@@ -195,7 +196,9 @@ private:
 
     class Settings;
     class ConvolveMatrix;
+    class LightSourceControl;
     Settings* _settings;
+    Glib::RefPtr<Gtk::SizeGroup> _sizegroup;
 
     // Convolve Matrix
     ConvolveMatrix* _convolve_matrix;

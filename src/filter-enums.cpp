@@ -66,6 +66,13 @@ const EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR]
 };
 const EnumDataConverter<FeCompositeOperator> CompositeOperatorConverter(CompositeOperatorData, COMPOSITE_ENDOPERATOR);
 
+const EnumData<LightSource> LightSourceData[LIGHT_ENDSOURCE] = {
+    {LIGHT_DISTANT, _("Distance Light"), "svg:feDistanceLight"},
+    {LIGHT_POINT,   _("Point Light"),    "svg:fePointLight"},
+    {LIGHT_SPOT,    _("Spot Light"),     "svg:feSpotLight"}
+};
+const EnumDataConverter<LightSource> LightSourceConverter(LightSourceData, LIGHT_ENDSOURCE);
+
 /*
   Local Variables:
   mode:c++

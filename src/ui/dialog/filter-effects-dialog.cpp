@@ -36,11 +36,15 @@
 #include "sp-feblend.h"
 #include "sp-fecomposite.h"
 #include "sp-fedisplacementmap.h"
+#include "sp-fedistantlight.h"
 #include "sp-femerge.h"
 #include "sp-femergenode.h"
+#include "sp-feoffset.h"
+#include "sp-fepointlight.h"
+#include "sp-fespotlight.h"
 #include "sp-filter-primitive.h"
 #include "sp-gaussian-blur.h"
-#include "sp-feoffset.h"
+
 #include "style.h"
 #include "svg/svg-color.h"
 #include "verbs.h"
@@ -327,32 +331,36 @@ private:
 class FilterEffectsDialog::Settings
 {
 public:
-    Settings(FilterEffectsDialog& d)
-        : _dialog(d)
-    {
-        _sizegroup = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
-        _sizegroup->set_ignore_hidden();
+    typedef sigc::slot<void, const AttrWidget*> SetAttrSlot;
 
-        for(int i = 0; i < NR_FILTER_ENDPRIMITIVETYPE; ++i) {
-            _dialog._settings_box.add(_groups[i]);
+    Settings(FilterEffectsDialog& d, SetAttrSlot slot, const int maxtypes)
+        : _dialog(d), _set_attr_slot(slot), _max_types(maxtypes)
+    {
+        _groups.resize(_max_types);
+        _attrwidgets.resize(_max_types);
+
+        for(int i = 0; i < _max_types; ++i) {
+            _groups[i] = new Gtk::VBox;
+            d._settings_box.add(*_groups[i]);
         }
     }
 
     ~Settings()
     {
-        for(int i = 0; i < NR_FILTER_ENDPRIMITIVETYPE; ++i) {
+        for(int i = 0; i < _max_types; ++i) {
+            delete _groups[i];
             for(unsigned j = 0; j < _attrwidgets[i].size(); ++j)
                 delete _attrwidgets[i][j];
         }
     }
 
     // Show the active settings group and update all the AttrWidgets with new values
-    void show_and_update(const NR::FilterPrimitiveType t)
+    void show_and_update(const int t, SPObject* ob)
     {
         type(t);
-        _groups[t].show_all();
-
-        SPObject* ob = _dialog._primitive_list.get_selected();
+        for(unsigned i = 0; i < _groups.size(); ++i)
+            _groups[i]->hide();
+        _groups[t]->show_all();
 
         _dialog.set_attrs_locked(true);
         for(unsigned i = 0; i < _attrwidgets[_current_type].size(); ++i)
@@ -360,10 +368,13 @@ public:
         _dialog.set_attrs_locked(false);
     }
 
-    void type(const NR::FilterPrimitiveType t)
+    void type(const int t)
     {
         _current_type = t;
     }
+
+    // LightSource
+    LightSourceControl* add_lightsource(const Glib::ustring& label);
 
     // ColorButton
     ColorButton* add_color(const SPAttributeEnum attr, const Glib::ustring& label)
@@ -429,6 +440,20 @@ public:
             add_attr_widget(msb->get_spinbuttons()[i]);
         return msb;
     }
+    MultiSpinButton* add_multispinbutton(const SPAttributeEnum attr1, const SPAttributeEnum attr2,
+                                         const SPAttributeEnum attr3, const Glib::ustring& label, const double lo,
+                                         const double hi, const double step_inc, const double climb, const int digits)
+    {
+        std::vector<SPAttributeEnum> attrs;
+        attrs.push_back(attr1);
+        attrs.push_back(attr2);
+        attrs.push_back(attr3);
+        MultiSpinButton* msb = new MultiSpinButton(lo, hi, step_inc, climb, digits, attrs);
+        add_widget(msb, label);
+        for(unsigned i = 0; i < msb->get_spinbuttons().size(); ++i)
+            add_attr_widget(msb->get_spinbuttons()[i]);
+        return msb;
+    }
 
     // ComboBoxEnum
     template<typename T> ComboBoxEnum<T>* add_combo(const SPAttributeEnum attr,
@@ -444,9 +469,7 @@ private:
     void add_attr_widget(AttrWidget* a)
     {    
         _attrwidgets[_current_type].push_back(a);
-        a->signal_attr_changed().connect(
-            sigc::bind(sigc::mem_fun(_dialog, &FilterEffectsDialog::set_attr_direct), a));
-
+        a->signal_attr_changed().connect(sigc::bind(_set_attr_slot, a));
     }
 
     /* Adds a new settings widget using the specified label. The label will be formatted with a colon
@@ -458,9 +481,9 @@ private:
         hb->set_spacing(12);
         hb->pack_start(*lbl, false, false);
         hb->pack_start(*w);
-        _groups[_current_type].pack_start(*hb);
+        _groups[_current_type]->pack_start(*hb);
 
-        _sizegroup->add_widget(*lbl);
+        _dialog._sizegroup->add_widget(*lbl);
 
         hb->show();
         lbl->show();
@@ -468,13 +491,116 @@ private:
         w->show();
     }
 
-    Gtk::VBox _groups[NR::NR_FILTER_ENDPRIMITIVETYPE];
-    Glib::RefPtr<Gtk::SizeGroup> _sizegroup;
+    std::vector<Gtk::VBox*> _groups;
 
     FilterEffectsDialog& _dialog;
-    std::vector<AttrWidget*> _attrwidgets[NR::NR_FILTER_ENDPRIMITIVETYPE];
-    NR::FilterPrimitiveType _current_type;
+    SetAttrSlot _set_attr_slot;
+    std::vector<std::vector<AttrWidget*> > _attrwidgets;
+    int _current_type, _max_types;
 };
+
+// Settings for the three light source objects
+class FilterEffectsDialog::LightSourceControl : public AttrWidget
+{
+public:
+    LightSourceControl(FilterEffectsDialog& d)
+        : AttrWidget(SP_ATTR_INVALID),
+          _dialog(d),
+          _settings(d, sigc::mem_fun(_dialog, &FilterEffectsDialog::set_child_attr_direct), LIGHT_ENDSOURCE),
+          _light_source(LightSourceConverter)
+    {
+        _box.add(_light_source);
+        _box.reorder_child(_light_source, 0);
+        _light_source.signal_changed().connect(sigc::mem_fun(*this, &LightSourceControl::on_source_changed));
+
+        // FIXME: these range values are complete crap
+
+        _settings.type(LIGHT_DISTANT);
+        _settings.add_spinslider(SP_ATTR_AZIMUTH, _("Azimuth"), 0, 360, 1, 1, 0);
+        _settings.add_spinslider(SP_ATTR_AZIMUTH, _("Elevation"), 0, 360, 1, 1, 0);
+
+        _settings.type(LIGHT_POINT);
+        _settings.add_multispinbutton(SP_ATTR_X, SP_ATTR_Y, SP_ATTR_Z, _("Location"), -99999, 99999, 1, 100, 0);
+
+        _settings.type(LIGHT_SPOT);
+        _settings.add_multispinbutton(SP_ATTR_X, SP_ATTR_Y, SP_ATTR_Z, _("Location"), -99999, 99999, 1, 100, 0);
+        _settings.add_multispinbutton(SP_ATTR_POINTSATX, SP_ATTR_POINTSATY, SP_ATTR_POINTSATZ,
+                                      _("Points At"), -99999, 99999, 1, 100, 0);
+        _settings.add_spinslider(SP_ATTR_SPECULAREXPONENT, _("Specular Exponent"), 1, 100, 1, 1, 0);
+        _settings.add_spinslider(SP_ATTR_LIMITINGCONEANGLE, _("Cone Angle"), 1, 100, 1, 1, 0);
+    }
+
+    Gtk::VBox& get_box()
+    {
+        return _box;
+    }
+protected:
+    Glib::ustring get_as_attribute() const
+    {
+        return "";
+    }
+    void set_from_attribute(SPObject* o)
+    {
+        SPObject* child = o->children;
+        
+        if(SP_IS_FEDISTANTLIGHT(child))
+            _light_source.set_active(0);
+        else if(SP_IS_FEPOINTLIGHT(child))
+            _light_source.set_active(1);
+        else if(SP_IS_FESPOTLIGHT(child))
+            _light_source.set_active(2);
+
+        update();
+    }
+private:
+    void on_source_changed()
+    {
+        SPFilterPrimitive* prim = _dialog._primitive_list.get_selected();
+        if(prim) {
+            SPObject* child = prim->children;
+            const int ls = _light_source.get_active_row_number();
+            // Check if the light source type has changed
+            if(!(ls == 0 && SP_IS_FEDISTANTLIGHT(child)) &&
+               !(ls == 1 && SP_IS_FEPOINTLIGHT(child)) &&
+               !(ls == 2 && SP_IS_FESPOTLIGHT(child))) {
+                if(child)
+                    sp_repr_unparent(child->repr);
+
+                Inkscape::XML::Document *xml_doc = sp_document_repr_doc(prim->document);
+                Inkscape::XML::Node *repr = xml_doc->createElement(_light_source.get_active_data()->key.c_str());
+                repr->setAttribute("inkscape:collect", "always");
+                prim->repr->appendChild(repr);
+                Inkscape::GC::release(repr);
+                sp_document_done(prim->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("New light source"));
+                update();
+            }
+        }
+    }
+
+    void update()
+    {
+        _box.hide_all();
+        _box.show();
+        _light_source.show_all();
+        
+        SPFilterPrimitive* prim = _dialog._primitive_list.get_selected();
+        if(prim && prim->children)
+            _settings.show_and_update(_light_source.get_active_data()->id, prim->children);
+    }
+
+    FilterEffectsDialog& _dialog;
+    Gtk::VBox _box;
+    Settings _settings;
+    ComboBoxEnum<LightSource> _light_source;
+};
+
+FilterEffectsDialog::LightSourceControl* FilterEffectsDialog::Settings::add_lightsource(const Glib::ustring& label)
+{
+    LightSourceControl* ls = new LightSourceControl(_dialog);
+    add_attr_widget(ls);
+    add_widget(&ls->get_box(), label);
+    return ls;
+}
 
 Glib::RefPtr<Gtk::Menu> create_popup_menu(Gtk::Widget& parent, sigc::slot<void> dup,
                                           sigc::slot<void> rem)
@@ -1323,8 +1449,11 @@ FilterEffectsDialog::FilterEffectsDialog()
       _empty_settings(_("No primitive selected"), Gtk::ALIGN_LEFT),
       _locked(false)
 {
-    _settings = new Settings(*this);
-
+    _settings = new Settings(*this, sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_direct),
+                             NR_FILTER_ENDPRIMITIVETYPE);
+    _sizegroup = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
+    _sizegroup->set_ignore_hidden();
+        
     // Initialize widget hierarchy
     Gtk::HPaned* hpaned = Gtk::manage(new Gtk::HPaned);
     Gtk::ScrolledWindow* sw_prims = Gtk::manage(new Gtk::ScrolledWindow);
@@ -1404,6 +1533,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_spinslider(SP_ATTR_SURFACESCALE, _("Surface Scale"), -10, 10, 1, 0.01, 1);
     _settings->add_spinslider(SP_ATTR_DIFFUSECONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
+    _settings->add_lightsource(_("Light Source"));
     
     _settings->type(NR_FILTER_GAUSSIANBLUR);
     _settings->add_dualspinslider(SP_ATTR_STDDEVIATION, _("Standard Deviation"), 0.01, 100, 1, 0.01, 1);
@@ -1418,6 +1548,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_spinslider(SP_ATTR_SPECULARCONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
     _settings->add_spinslider(SP_ATTR_SPECULAREXPONENT, _("Exponent"), 1, 128, 1, 0.01, 1);
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
+    _settings->add_lightsource(_("Light Source"));
 
     _settings->type(NR_FILTER_TURBULENCE);
     /*std::vector<Gtk::Widget*> trb_grp;
@@ -1486,12 +1617,17 @@ void FilterEffectsDialog::set_attr_direct(const AttrWidget* input)
     set_attr(_primitive_list.get_selected(), input->get_attribute(), input->get_as_attribute().c_str());
 }
 
+void FilterEffectsDialog::set_child_attr_direct(const AttrWidget* input)
+{
+    set_attr(_primitive_list.get_selected()->children, input->get_attribute(), input->get_as_attribute().c_str());
+}
+
 void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, const gchar* val)
 {
     if(!_locked) {
         SPFilter *filter = _filter_modifier.get_selected_filter();
         const gchar* name = (const gchar*)sp_attribute_name(attr);
-        if(filter && name) {
+        if(filter && name && o) {
             update_settings_sensitivity();
 
             SP_OBJECT_REPR(o)->setAttribute(name, val);
@@ -1517,10 +1653,7 @@ void FilterEffectsDialog::update_settings_view()
     _empty_settings.show();
 
     if(prim) {
-        const FilterPrimitiveType tid = FPConverter.get_id_from_key(prim->repr->name());
-
-        _settings->show_and_update(tid);
-
+        _settings->show_and_update(FPConverter.get_id_from_key(prim->repr->name()), prim);
         _settings_box.set_sensitive(true);
         _empty_settings.hide();
     }

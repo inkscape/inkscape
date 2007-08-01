@@ -40,6 +40,15 @@ extern const Inkscape::Util::EnumDataConverter<NR::FilterBlendMode> BlendModeCon
 // Composite operator
 extern const Inkscape::Util::EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR];
 extern const Inkscape::Util::EnumDataConverter<FeCompositeOperator> CompositeOperatorConverter;
+// Lighting
+enum LightSource {
+    LIGHT_DISTANT,
+    LIGHT_POINT,
+    LIGHT_SPOT,
+    LIGHT_ENDSOURCE
+};
+extern const Inkscape::Util::EnumData<LightSource> LightSourceData[LIGHT_ENDSOURCE];
+extern const Inkscape::Util::EnumDataConverter<LightSource> LightSourceConverter;
 
 #endif
 
