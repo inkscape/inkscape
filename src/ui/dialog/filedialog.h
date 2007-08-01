@@ -16,10 +16,15 @@
 
 #include <glibmm.h>
 #include <vector>
+#include <gtkmm.h>
+
+namespace Inkscape {
+namespace Extension {
+class Extension;
+}
+}
 
 
-
-class Inkscape::Extension::Extension;
 
 
 namespace Inkscape
