@@ -72,8 +72,9 @@ void FilterEffectChooser::update_filters()
         Gtk::TreeModel::Row row = *_model->append();
         SPFilter* f = (SPFilter*)l->data;
         row[_columns.filter] = f;
+        const gchar* lbl = f->label();
         const gchar* id = SP_OBJECT_ID(f);
-        row[_columns.id] = id ? id : "";
+        row[_columns.label] = lbl ? lbl : (id ? id : "filter");
     }
 }
 
@@ -113,7 +114,7 @@ SimpleFilterModifier::SimpleFilterModifier()
     _blend.signal_changed().connect(signal_blend_blur_changed());
     _blur.signal_value_changed().connect(signal_blend_blur_changed());
     _filter.set_model(_model);
-    _filter.pack_start(_columns.id);
+    _filter.pack_start(_columns.label);
     _edit_filters.signal_clicked().connect(sigc::mem_fun(*this, &SimpleFilterModifier::show_filter_dialog));
     _edit_filters.set_use_underline();
 
@@ -188,7 +189,7 @@ void SimpleFilterModifier::update_filters()
         // Set state if no filters exist
         Gtk::TreeModel::Row row = *_model->prepend();
         row[_columns.filter] = 0;
-        row[_columns.id] = "None";
+        row[_columns.label] = "None";
         _filter.set_sensitive(false);
         _filter.set_active(0);
     }

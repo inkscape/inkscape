@@ -16,7 +16,6 @@
 #include <gtkmm/alignment.h>
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
-#include <gtkmm/cellrendererspin.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/frame.h>
@@ -51,7 +50,7 @@ private:
     class FilterModifier : public Gtk::VBox, public FilterEffectChooser
     {
     public:
-        FilterModifier();
+        FilterModifier(FilterEffectsDialog&);
 
         virtual SPFilter* get_selected_filter();
         virtual void select_filter(const SPFilter*);
@@ -81,8 +80,9 @@ private:
         void add_filter();
         void remove_filter();
         void duplicate_filter();
-        void filter_name_edited(const Glib::ustring& path, const Glib::ustring& text);
+        void rename_filter();
 
+        FilterEffectsDialog& _dialog;
         Gtk::TreeView _list;
         CellRendererSel _cell_sel;
         Gtk::Button _add;

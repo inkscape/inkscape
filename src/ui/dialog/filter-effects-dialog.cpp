@@ -16,6 +16,7 @@
 #include <gtk/gtktreeview.h>
 #include <gtkmm/cellrenderertext.h>
 #include <gtkmm/colorbutton.h>
+#include <gtkmm/messagedialog.h>
 #include <gtkmm/paned.h>
 #include <gtkmm/scale.h>
 #include <gtkmm/scrolledwindow.h>
@@ -617,20 +618,9 @@ Glib::RefPtr<Gtk::Menu> create_popup_menu(Gtk::Widget& parent, sigc::slot<void> 
     return menu;
 }
 
-static void try_id_change(SPObject* ob, const Glib::ustring& text)
-{
-    // FIXME: this needs more serious error checking...
-    if(ob && !SP_ACTIVE_DOCUMENT->getObjectById(text.c_str())) {
-        SPException ex;
-        SP_EXCEPTION_INIT(&ex);
-        sp_object_setAttribute(ob, "id", text.c_str(), &ex);
-        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_FILTER_EFFECTS, _("Set object ID"));
-    }
-}
-
 /*** FilterModifier ***/
-FilterEffectsDialog::FilterModifier::FilterModifier()
-    : _add(Gtk::Stock::ADD)
+FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
+    : _dialog(d), _add(Gtk::Stock::ADD)
 {
     Gtk::ScrolledWindow* sw = Gtk::manage(new Gtk::ScrolledWindow);
     pack_start(*sw);
@@ -642,7 +632,7 @@ FilterEffectsDialog::FilterModifier::FilterModifier()
     Gtk::TreeViewColumn* col = _list.get_column(selcol - 1);
     if(col)
        col->add_attribute(_cell_sel.property_sel(), _columns.sel);
-    _list.append_column(_("_Filter"), _columns.id);
+    _list.append_column(_("_Filter"), _columns.label);
 
     sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
     sw->set_shadow_type(Gtk::SHADOW_IN);
@@ -654,6 +644,9 @@ FilterEffectsDialog::FilterModifier::FilterModifier()
         sigc::mem_fun(*this, &FilterModifier::filter_list_button_release));
     _menu = create_popup_menu(*this, sigc::mem_fun(*this, &FilterModifier::duplicate_filter),
                               sigc::mem_fun(*this, &FilterModifier::remove_filter));
+    _menu->items().push_back(Gtk::Menu_Helpers::MenuElem(
+                                 _("R_ename"), sigc::mem_fun(*this, &FilterModifier::rename_filter)));
+    _menu->accelerate(*this);
 
     g_signal_connect(G_OBJECT(INKSCAPE), "change_selection",
                      G_CALLBACK(&FilterModifier::on_inkscape_change_selection), this);
@@ -811,6 +804,11 @@ void FilterEffectsDialog::FilterModifier::add_filter()
     SPDocument* doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
     SPFilter* filter = new_filter(doc);
 
+    const int count = _model->children().size();
+    std::ostringstream os;
+    os << "filter" << count;
+    filter->setLabel(os.str().c_str());
+
     update_filters();
 
     select_filter(filter);
@@ -847,12 +845,30 @@ void FilterEffectsDialog::FilterModifier::duplicate_filter()
     }
 }
 
-void FilterEffectsDialog::FilterModifier::filter_name_edited(const Glib::ustring& path, const Glib::ustring& text)
+void FilterEffectsDialog::FilterModifier::rename_filter()
 {
-    Gtk::TreeModel::iterator i = _model->get_iter(path);
-
-    if(i)
-        try_id_change((SPObject*)(*i)[_columns.filter], text);
+    SPFilter* filter = get_selected_filter();
+    Gtk::Dialog m("", _dialog, true);
+    m.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    m.add_button(_("_Rename"), Gtk::RESPONSE_OK);
+    m.set_default_response(Gtk::RESPONSE_OK);
+    Gtk::Label lbl(_("Filter name:"));
+    Gtk::Entry entry;
+    entry.set_text(filter->label() ? filter->label() : "");
+    Gtk::HBox hb;
+    hb.add(lbl);
+    hb.add(entry);
+    hb.set_spacing(12);
+    hb.show_all();
+    m.get_vbox()->add(hb);
+    const int res = m.run();
+    if(res == Gtk::RESPONSE_OK) {
+        filter->setLabel(entry.get_text().c_str());
+        sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Rename filter"));
+        Gtk::TreeIter iter = _list.get_selection()->get_selected();
+        if(iter)
+            (*iter)[_columns.label] = entry.get_text();
+    }
 }
 
 FilterEffectsDialog::CellRendererConnection::CellRendererConnection()
@@ -1443,6 +1459,7 @@ int FilterEffectsDialog::PrimitiveList::primitive_count() const
 
 FilterEffectsDialog::FilterEffectsDialog() 
     : Dialog ("dialogs.filtereffects", SP_VERB_DIALOG_FILTER_EFFECTS),
+      _filter_modifier(*this),
       _primitive_list(*this),
       _add_primitive_type(FPConverter),
       _add_primitive(Gtk::Stock::ADD),

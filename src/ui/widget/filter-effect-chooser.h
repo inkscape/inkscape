@@ -44,12 +44,12 @@ protected:
         Columns()
         {
             add(filter);
-            add(id);
+            add(label);
             add(sel);
         }
 
         Gtk::TreeModelColumn<SPFilter*> filter;
-        Gtk::TreeModelColumn<Glib::ustring> id;
+        Gtk::TreeModelColumn<Glib::ustring> label;
         Gtk::TreeModelColumn<int> sel;
     };
 
