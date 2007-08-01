@@ -104,6 +104,7 @@ void
 PdfInput::init(void) {
     Inkscape::Extension::Extension * ext;
 
+    /* PDF in */
     ext = Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
             "<name>PDF Input</name>\n"
@@ -111,8 +112,21 @@ PdfInput::init(void) {
             "<input>\n"
                 "<extension>.pdf</extension>\n"
                 "<mimetype>application/pdf</mimetype>\n"
-                "<filetypename>Adobe PDF (*.pdf) [native]</filetypename>\n"
-                "<filetypetooltip>PDF Document</filetypetooltip>\n"
+                "<filetypename>Adobe PDF (*.pdf) [via poppler]</filetypename>\n"
+                "<filetypetooltip>Adobe Portable Document Format</filetypetooltip>\n"
+            "</input>\n"
+        "</inkscape-extension>", new PdfInput());
+
+    /* AI in */
+    ext = Inkscape::Extension::build_from_mem(
+        "<inkscape-extension>\n"
+            "<name>AI Input</name>\n"
+            "<id>org.inkscape.input.ai</id>\n"
+            "<input>\n"
+                "<extension>.ai</extension>\n"
+                "<mimetype>image/x-adobe-illustrator</mimetype>\n"
+                "<filetypename>Adobe Illustrator (*.ai) [PDF-based]</filetypename>\n"
+                "<filetypetooltip>Open files saved with recent versions of Adobe Illustrator</filetypetooltip>\n"
             "</input>\n"
         "</inkscape-extension>", new PdfInput());
 } // init
