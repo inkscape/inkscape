@@ -22,6 +22,8 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/extension-editor.h		\
 	ui/dialog/filedialog.cpp		\
 	ui/dialog/filedialog.h			\
+	ui/dialog/filedialogimpl-gtkmm.cpp      \
+	ui/dialog/filedialogimpl-gtkmm.h        \
 	ui/dialog/fill-and-stroke.cpp		\
 	ui/dialog/fill-and-stroke.h		\
 	ui/dialog/filter-effects-dialog.h	\

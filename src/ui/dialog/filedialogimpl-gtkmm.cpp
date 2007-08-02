@@ -19,7 +19,7 @@
 #endif
 
 #include "filedialogimpl-gtkmm.h"
-#include <dialog-events.h>
+#include "dialogs/dialog-events.h"
 
 //Routines from file.cpp
 #undef INK_DUMP_FILENAME_CONV
