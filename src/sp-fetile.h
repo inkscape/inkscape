@@ -16,6 +16,9 @@
 #include "sp-filter.h"
 #include "sp-fetile-fns.h"
 
+#include "display/nr-filter.h"
+#include "display/nr-filter-tile.h"
+
 /* FeTile base class */
 class SPFeTileClass;
 

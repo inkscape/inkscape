@@ -31,6 +31,7 @@
 #include "display/nr-filter-merge.h"
 #include "display/nr-filter-offset.h"
 #include "display/nr-filter-specularlighting.h"
+#include "display/nr-filter-tile.h"
 #include "display/nr-filter-turbulence.h"
 
 #include "display/nr-arena-item.h"
@@ -331,7 +332,7 @@ void Filter::_create_constructor_table()
     _constructor[NR_FILTER_MORPHOLOGY] = NULL;
     _constructor[NR_FILTER_OFFSET] = &FilterOffset::create;
     _constructor[NR_FILTER_SPECULARLIGHTING] = &FilterSpecularLighting::create;
-    _constructor[NR_FILTER_TILE] = NULL;
+    _constructor[NR_FILTER_TILE] = &FilterTile::create;
     _constructor[NR_FILTER_TURBULENCE] = &FilterTurbulence::create;
     created = true;
 }

@@ -93,6 +93,8 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-slot.h        \
 	display/nr-filter-specularlighting.cpp     \
 	display/nr-filter-specularlighting.h       \
+	display/nr-filter-tile.cpp	\
+	display/nr-filter-tile.h	\
 	display/nr-filter-turbulence.cpp      \
 	display/nr-filter-turbulence.h        \
 	display/nr-filter-pixops.h	\
