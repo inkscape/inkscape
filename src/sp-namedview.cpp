@@ -155,6 +155,8 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:window-y");
     sp_object_read_attr(object, "inkscape:snap-bbox");
     sp_object_read_attr(object, "inkscape:snap-nodes");
+    sp_object_read_attr(object, "inkscape:object-paths");
+    sp_object_read_attr(object, "inkscape:object-nodes");
     sp_object_read_attr(object, "inkscape:current-layer");
     sp_object_read_attr(object, "inkscape:connector-spacing");
 
@@ -345,7 +347,15 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_NODES:
-            nv->snap_manager.setSnapModeNodes(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.setSnapModeNode(value ? sp_str_to_bool(value) : TRUE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    case SP_ATTR_INKSCAPE_OBJECT_PATHS:
+            nv->snap_manager.object.setSnapToItemPath(value ? sp_str_to_bool(value) : TRUE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    case SP_ATTR_INKSCAPE_OBJECT_NODES:
+            nv->snap_manager.object.setSnapToItemNode(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_INKSCAPE_CURRENT_LAYER:
@@ -432,6 +442,11 @@ sp_namedview_add_grid(SPNamedView *nv, Inkscape::XML::Node *repr, SPDesktop *des
             doc = sp_desktop_document(static_cast<SPDesktop*>(nv->views->data));
         grid = Inkscape::CanvasGrid::NewGrid(nv, repr, doc, gridtype);
         nv->grids = g_slist_append(nv->grids, grid);
+        //Initialize the snapping parameters for the new grid
+        bool enabled_node = nv->snap_manager.getSnapModeNode();
+        bool enabled_bbox = nv->snap_manager.getSnapModeBBox();
+    	grid->snapper->setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled_node);
+    	grid->snapper->setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled_bbox);
     }
     
     if (!desktop) {

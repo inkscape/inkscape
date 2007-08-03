@@ -123,9 +123,9 @@ public:
     SnapperList getGridSnappers() const;
     
     void setSnapModeBBox(bool enabled);
-    void setSnapModeNodes(bool enabled);
+    void setSnapModeNode(bool enabled);
     bool getSnapModeBBox() const;
-    bool getSnapModeNodes() const;
+    bool getSnapModeNode() const;
 
 protected:
     SPNamedView const *_named_view;

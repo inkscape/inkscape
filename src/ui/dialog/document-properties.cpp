@@ -265,24 +265,38 @@ void
 DocumentProperties::build_snap()
 {
     _page_snap.show();
-	_rcbsnbb.init (_("Snap bounding _boxes"),
+	//General options
+	_rcbsnbb.init (_("Snap bounding _box corners"),
                 _("Snap bounding box corners to grid lines, to guides, and to other bounding boxes"),
                 "inkscape:snap-bbox", _wr);
     _rcbsnn.init (_("Snap _nodes"),
                 _("Snap nodes to grid lines, to guides, to paths, and to other nodes"),
                 "inkscape:snap-nodes", _wr);
-    _rsu_sno.init (_("Snap s_ensitivity:"), _("Always snap"),
+    
+    //Options for snapping to objects
+    _rcbsnop.init (_("Snap to _paths"),
+                _("Snap nodes to object paths"),
+                "inkscape:object-paths", _wr);
+    _rcbsnon.init (_("Snap to n_odes"),
+                _("Snap nodes to object nodes"),
+                "inkscape:object-nodes", _wr);    
+    _rsu_sno.init (_(" Snap _distance"), _("Snap at any dist_ance"),
                   _("Snapping distance, in screen pixels, for snapping to objects"),
                   _("If set, objects snap to the nearest object, regardless of distance"),
                   "objecttolerance", _wr);
-    _rsu_sn.init (_("Snap sens_itivity:"), _("Always snap"),
+    
+    //Options for snapping to grids
+    _rsu_sn.init (_(" Snap d_istance"), _("Snap at any distan_ce"),
                   _("Snapping distance, in screen pixels, for snapping to grid"),
                   _("If set, objects snap to the nearest grid line, regardless of distance"),
                   "gridtolerance", _wr);
-    _rsu_gusn.init (_("Snap sensiti_vity:"), _("Always snap"),
+                  
+	//Options for snapping to guides                  
+    _rsu_gusn.init (_(" Snap di_stance"), _("Snap at any distanc_e"),
                 _("Snapping distance, in screen pixels, for snapping to guides"),
                 _("If set, objects snap to the nearest guide, regardless of distance"),
                 "guidetolerance", _wr);
+                
     Gtk::Label *label_g = manage (new Gtk::Label);
     label_g->set_markup (_("<b>General</b>"));
     Gtk::Label *label_o = manage (new Gtk::Label);
@@ -295,9 +309,12 @@ DocumentProperties::build_snap()
     Gtk::Widget *const array[] =
     {
         label_g,            0,
+        0,                  _rcbsnn._button,
         0,                  _rcbsnbb._button,
-        0,                  _rcbsnn._button,        
+        0, 0,        
         label_o,            0,
+        0, 					_rcbsnop._button,
+        0, 					_rcbsnon._button,
         0,                  _rsu_sno._vbox,
         0, 0,
         label_gr,           0,
@@ -416,7 +433,9 @@ DocumentProperties::update()
 
     //-----------------------------------------------------------snap
     _rcbsnbb.setActive (nv->snap_manager.getSnapModeBBox());
-    _rcbsnn.setActive (nv->snap_manager.getSnapModeNodes());
+    _rcbsnn.setActive (nv->snap_manager.getSnapModeNode());
+    _rcbsnop.setActive(nv->snap_manager.object.getSnapToItemPath());
+    _rcbsnon.setActive(nv->snap_manager.object.getSnapToItemNode());
     _rsu_sno.setValue (nv->objecttolerance);
 
     _rsu_sn.setValue (nv->gridtolerance);

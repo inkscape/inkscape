@@ -56,10 +56,22 @@ ToleranceSlider::~ToleranceSlider()
 void
 ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2, const Glib::ustring& tip1, const Glib::ustring& tip2, const Glib::ustring& key, Registry& wr)
 {
+    // hbox = label + slider
+    //
+    // e.g. 
+    //
+    // snap distance |-------X---| 37
+    
+    // vbox = checkbutton
+    //             +
+    //           hbox
+    
     _vbox = new Gtk::VBox;
     _hbox = manage (new Gtk::HBox);
+    
     Gtk::Label *theLabel1 = manage (new Gtk::Label (label1));
     theLabel1->set_use_underline();
+    theLabel1->set_alignment(0, 0.5);
     _hbox->add (*theLabel1);
     _hscale = manage (new Gtk::HScale (1.0, 51, 1.0));
     theLabel1->set_mnemonic_widget (*_hscale);
@@ -69,15 +81,17 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2,
     _old_val = 10;
     _hscale->set_value (_old_val);
     _tt.set_tip (*_hscale, tip1);
-    _hbox->add (*_hscale);
-    _vbox->add (*_hbox);
+    _hbox->add (*_hscale);    
+    
     Gtk::Label *theLabel2 = manage (new Gtk::Label (label2));
     theLabel2->set_use_underline();
     _button = manage (new Gtk::CheckButton);
     _tt.set_tip (*_button, tip2);
     _button->add (*theLabel2);
     _button->set_alignment (0.0, 0.5);
+    
     _vbox->add (*_button);
+    _vbox->add (*_hbox); 
     _key = key;
     _scale_changed_connection = _hscale->signal_value_changed().connect (sigc::mem_fun (*this, &ToleranceSlider::on_scale_changed));
     _btn_toggled_connection = _button->signal_toggled().connect (sigc::mem_fun (*this, &ToleranceSlider::on_toggled));

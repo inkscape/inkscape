@@ -38,7 +38,7 @@ SnapManager::SnapManager(SPNamedView const *v) :
     object(v, 0),
     _named_view(v)
 {
-
+	
 }
 
 
@@ -89,18 +89,34 @@ bool SnapManager::SomeSnapperMightSnap() const
     while (i != s.end() && (*i)->ThisSnapperMightSnap() == false) {
         i++;
     }
-
     
     return (i != s.end());
 }
 
+/*
+ *  The snappers have too many parameters to adjust individually. Therefore only
+ *  two snapping modes are presented to the user: snapping bounding box corners (to 
+ * 	other bounding boxes, grids or guides), and/or snapping nodes (to other nodes,
+ *  paths, grids or guides). To select either of these modes (or both), use the 
+ *  methods defined below: setSnapModeBBox() and setSnapModeNode().
+ * 
+ * */
+
+
 void SnapManager::setSnapModeBBox(bool enabled)
 {
+	//The default values are being set in sp_namedview_set() (in sp-namedview.cpp)
 	guide.setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
+	
+	for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
+        Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
+        grid->snapper->setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
+    }
+	
 	object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
-	object.setSnapToBBoxNodes(enabled);
-	object.setSnapToBBoxPaths(enabled);
-	object.setStrictSnapping(true);
+	object.setSnapToBBoxNode(enabled);
+	object.setSnapToBBoxPath(enabled);
+	object.setStrictSnapping(true); //don't snap bboxes to nodes/paths and vice versa	
 }
 
 bool SnapManager::getSnapModeBBox() const
@@ -108,17 +124,22 @@ bool SnapManager::getSnapModeBBox() const
 	return guide.getSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX);
 }
 
-
-void SnapManager::setSnapModeNodes(bool enabled)
+void SnapManager::setSnapModeNode(bool enabled)
 {
 	guide.setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
+	
+	for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
+        Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
+        grid->snapper->setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
+    }
+    	
 	object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
-	object.setSnapToItemNodes(enabled);
-	object.setSnapToItemPaths(enabled);	
-	object.setStrictSnapping(true);
+	//object.setSnapToItemNode(enabled); // On second thought, these should be controlled
+	//object.setSnapToItemPath(enabled); // separately by the snapping prefs dialog 
+	object.setStrictSnapping(true);	
 }
 
-bool SnapManager::getSnapModeNodes() const
+bool SnapManager::getSnapModeNode() const
 {
 	return guide.getSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE);
 }

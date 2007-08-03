@@ -27,8 +27,8 @@
 
 
 Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, NR::Coord const d)
-    : Snapper(nv, d), _snap_to_itemnodes(true), _snap_to_itempaths(true), 
-    _snap_to_bboxnodes(true), _snap_to_bboxpaths(true), _strict_snapping(true)
+    : Snapper(nv, d), _snap_to_itemnode(true), _snap_to_itempath(true), 
+    _snap_to_bboxnode(true), _snap_to_bboxpath(true), _strict_snapping(true)
 {
 
 }
@@ -84,7 +84,7 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
     
     // Determine the type of bounding box we should snap to
     SPItem::BBoxType bbox_type = SPItem::GEOMETRIC_BBOX; 
-	if (_snap_to_bboxnodes) {	
+	if (_snap_to_bboxnode) {	
 		gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
 		bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
 	}        
@@ -116,7 +116,7 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
 		std::list<NR::Point> points_to_snap_to;
         
         //Collect all nodes so we can snap to them
-        if (_snap_to_itemnodes) {
+        if (_snap_to_itemnode) {
         	if (!(_strict_snapping && !p_is_a_node)) {
 		        if (curve) {
 		            int j = 0;
@@ -131,7 +131,7 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
         }
         
         //Collect the bounding box's corners so we can snap to them
-        if (_snap_to_bboxnodes) {
+        if (_snap_to_bboxnode) {
         	if (!(_strict_snapping && p_is_a_node)) {
 		        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
 		        if (b) {
@@ -168,7 +168,7 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
     
     // Determine the type of bounding box we should snap to
     SPItem::BBoxType bbox_type = SPItem::GEOMETRIC_BBOX; 
-	if (_snap_to_bboxpaths) {	
+	if (_snap_to_bboxpath) {	
     	gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
 		bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;        
 	}
@@ -193,14 +193,14 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
         std::list<Path*> paths_to_snap_to;
         
         //Add the item's path to snap to
-        if (_snap_to_itempaths) {
+        if (_snap_to_itempath) {
         	if (!(_strict_snapping && !p_is_a_node)) {
         		paths_to_snap_to.push_back(Path_for_item(root_item, true, true));
         	}
         }
                 
         //Add the item's bounding box to snap to
-        if (_snap_to_bboxpaths) {
+        if (_snap_to_bboxpath) {
         	if (!(_strict_snapping && p_is_a_node)) {    	        
 		        //This will get ugly... rect -> curve -> bpath
 		        NRRect rect;
@@ -255,10 +255,10 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doFreeSnap(Inkscape::Snapper::P
 
     SnappedPoint s(p, NR_HUGE);
 
-    if (_snap_to_itemnodes || _snap_to_bboxnodes) {
+    if (_snap_to_itemnode || _snap_to_bboxnode) {
         _snapNodes(t, s, p, cand);
     }
-    if (_snap_to_itempaths || _snap_to_bboxpaths) {
+    if (_snap_to_itempath || _snap_to_bboxpath) {
         _snapPaths(t, s, p, cand);
     }
 
@@ -283,7 +283,7 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doConstrainedSnap(Inkscape::Sna
  */
 bool Inkscape::ObjectSnapper::ThisSnapperMightSnap() const
 {
-    bool snap_to_something = _snap_to_itempaths || _snap_to_itemnodes || _snap_to_bboxpaths || _snap_to_bboxnodes;
+    bool snap_to_something = _snap_to_itempath || _snap_to_itemnode || _snap_to_bboxpath || _snap_to_bboxnode;
     return (_enabled && _snap_from != 0 && snap_to_something);
 }
 

@@ -27,39 +27,39 @@ class ObjectSnapper : public Snapper
 public:
   ObjectSnapper(SPNamedView const *nv, NR::Coord const d);
 
-  void setSnapToItemNodes(bool s) {
-    _snap_to_itemnodes = s;
+  void setSnapToItemNode(bool s) {
+    _snap_to_itemnode = s;
   }
 
-  bool getSnapToItemNodes() const {
-    return _snap_to_itemnodes;
+  bool getSnapToItemNode() const {
+    return _snap_to_itemnode;
   }
 
-  void setSnapToItemPaths(bool s) {
-    _snap_to_itempaths = s;
+  void setSnapToItemPath(bool s) {
+    _snap_to_itempath = s;
   }
 
-  bool getSnapToItemPaths() const {
-    return _snap_to_itempaths;
+  bool getSnapToItemPath() const {
+    return _snap_to_itempath;
   }
   
-  void setSnapToBBoxNodes(bool s) {
-    _snap_to_bboxnodes = s;
+  void setSnapToBBoxNode(bool s) {
+    _snap_to_bboxnode = s;
   }
 
-  bool getSnapToBBoxNodes() const {
-    return _snap_to_bboxnodes;
+  bool getSnapToBBoxNode() const {
+    return _snap_to_bboxnode;
   }
 
-  void setSnapToBBoxPaths(bool s) {
-    _snap_to_bboxpaths = s;
+  void setSnapToBBoxPath(bool s) {
+    _snap_to_bboxpath = s;
   }
 
-  bool getSnapToBBoxPaths() const {
-    return _snap_to_bboxpaths;
+  bool getSnapToBBoxPath() const {
+    return _snap_to_bboxpath;
   }
   
-  bool setStrictSnapping(bool enabled) {
+  void setStrictSnapping(bool enabled) {
   	_strict_snapping = enabled;
   }
   
@@ -90,13 +90,15 @@ private:
   					NR::Point const &p, 
   					std::list<SPItem*> const &cand) const;
   
-  bool _snap_to_itemnodes;
-  bool _snap_to_itempaths;
-  bool _snap_to_bboxnodes;
-  bool _snap_to_bboxpaths;
+  bool _snap_to_itemnode;
+  bool _snap_to_itempath;
+  bool _snap_to_bboxnode;
+  bool _snap_to_bboxpath;
   
-  //if enabled, then bbox corners will only snap to bboxes, 
-  //and nodes will only snap to nodes and paths
+  //If enabled, then bbox corners will only snap to bboxes, 
+  //and nodes will only snap to nodes and paths. We will not
+  //snap bbox corners to nodes, or nodes to bboxes.
+  //(snapping to grids and guides is not affected by this)
   bool _strict_snapping; 
 };
 
