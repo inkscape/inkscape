@@ -259,7 +259,7 @@ public:
      * @brief Gets the selection's snap points.
      * @return Selection's snap points
      */
-    std::vector<NR::Point> getSnapPoints() const;
+    std::vector<NR::Point> getSnapPoints(bool includeItemCenter) const;
 
     /**
      * @brief Gets the snap points of a selection that form a convex hull.

@@ -36,7 +36,8 @@
 SnapManager::SnapManager(SPNamedView const *v) :
     guide(v, 0),
     object(v, 0),
-    _named_view(v)
+    _named_view(v),
+    _include_item_center(false)
 {
 	
 }

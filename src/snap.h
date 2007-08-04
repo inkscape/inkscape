@@ -127,6 +127,14 @@ public:
     bool getSnapModeBBox() const;
     bool getSnapModeNode() const;
 
+	void setIncludeItemCenter(bool enabled)	{
+		_include_item_center = enabled;
+	}
+	
+	bool getIncludeItemCenter()	const {
+		return _include_item_center;
+	}
+		
 protected:
     SPNamedView const *_named_view;
 
@@ -138,6 +146,8 @@ private:
         STRETCH,
         SKEW
     };
+    
+    bool _include_item_center; //If true, snapping nodes will also snap the item's center
     
     std::pair<NR::Point, bool> _snapTransformed(Inkscape::Snapper::PointType type,
                                                 std::vector<NR::Point> const &points,

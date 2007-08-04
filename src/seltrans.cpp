@@ -268,7 +268,8 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
 
 
     // Next, get all special points for snapping
-    _snap_points = selection->getSnapPoints(); // Excludes path nodes
+    SnapManager const &m = _desktop->namedview->snap_manager;
+    _snap_points = selection->getSnapPoints(m.getIncludeItemCenter()); // Excludes path nodes
     std::vector<NR::Point> snap_points_hull = selection->getSnapPointsConvexHull(); // Includes path nodes
     if (_snap_points.size() > 100) {
         /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes

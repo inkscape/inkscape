@@ -371,7 +371,7 @@ NR::Maybe<NR::Point> Selection::center() const {
  * Compute the list of points in the selection that are to be considered for snapping.
  * This includes all special points of each item in the selection, except path nodes
  */
-std::vector<NR::Point> Selection::getSnapPoints() const {
+std::vector<NR::Point> Selection::getSnapPoints(bool includeItemCenter) const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
     std::vector<NR::Point> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
@@ -385,7 +385,9 @@ std::vector<NR::Point> Selection::getSnapPoints() const {
         }
         //Include the transformation origin for snapping
         //For a group only the group's origin is considered
-        p.push_back(this_item->getCenter());  
+        if (includeItemCenter) {
+        	p.push_back(this_item->getCenter());
+        }  
     }
 
     return p;
