@@ -1714,7 +1714,7 @@ msgstr "Relazione"
 
 #: ../src/dialogs/rdf.cpp:268
 msgid "Unique URI to a related document."
-msgstr "URI unico di riferimento al documento relazionato"
+msgstr "URI univoco di riferimento al documento relazionato"
 
 #: ../src/dialogs/rdf.cpp:270
 msgid "Language"
@@ -8471,11 +8471,11 @@ msgstr "<b>Linea</b>"
 
 #: ../src/ui/widget/selected-style.cpp:180
 msgid "Flat color fill"
-msgstr "Riempimento con colore unico"
+msgstr "Riempimento con colore uniforme"
 
 #: ../src/ui/widget/selected-style.cpp:180
 msgid "Flat color stroke"
-msgstr "Contorno con colore unico"
+msgstr "Contorno con colore uniforme"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:183
@@ -10482,7 +10482,7 @@ msgid ""
 "(spreadMethod=\"repeat\"), or repeat the gradient in alternating opposite "
 "directions (spreadMethod=\"reflect\")"
 msgstr ""
-"Determina se riempire dopo la fine del gradiente con un colore unico "
+"Determina se riempire dopo la fine del gradiente con un colore uniforme "
 "(spreadMethod=\"pad\"), ripetere il gradiente nella stessa direzione "
 "(spreadMethod=\"repeat\") o ripetere il gradiente nella direzione opposta "
 "(spreadMethod=\"reflect\")"
@@ -10645,7 +10645,7 @@ msgstr "Nessun colore"
 
 #: ../src/widgets/paint-selector.cpp:170 ../src/widgets/paint-selector.cpp:617
 msgid "Flat color"
-msgstr "Colore unico"
+msgstr "Colore uniforme"
 
 #: ../src/widgets/paint-selector.cpp:172 ../src/widgets/paint-selector.cpp:684
 msgid "Linear gradient"
