@@ -15,15 +15,16 @@
 
 #include "sp-filter.h"
 #include "sp-fecolormatrix-fns.h"
+#include <vector>
 
-#include "display/nr-filter.h"
-#include "display/nr-filter-colormatrix.h"
 /* FeColorMatrix base class */
 class SPFeColorMatrixClass;
 
 struct SPFeColorMatrix : public SPFilterPrimitive {
     /** COLORMATRIX ATTRIBUTES HERE */
-    
+    int type;
+    gdouble value;
+    std::vector<gdouble> values;
 };
 
 struct SPFeColorMatrixClass {

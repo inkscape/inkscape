@@ -21,7 +21,9 @@
 #include "svg/svg.h"
 #include "sp-fecolormatrix.h"
 #include "xml/repr.h"
+#include "helper-fns.h"
 
+#include "display/nr-filter-colormatrix.h"
 
 /* FeColorMatrix base class */
 
@@ -92,6 +94,7 @@ sp_feColorMatrix_build(SPObject *object, SPDocument *document, Inkscape::XML::No
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
+    
 }
 
 /**
@@ -104,6 +107,25 @@ sp_feColorMatrix_release(SPObject *object)
         ((SPObjectClass *) feColorMatrix_parent_class)->release(object);
 }
 
+static int sp_feColorMatrix_read_type(gchar const *value){
+    if (!value) return 0; //matrix is default
+    switch(value[0]){
+        case 'm':
+            if (strcmp(value, "matrix") == 0) return 0;
+            break;
+        case 's':
+            if (strcmp(value, "saturate") == 0) return 1;
+            break;
+        case 'h':
+            if (strcmp(value, "hueRotate") == 0) return 2;
+            break;
+        case 'l':
+            if (strcmp(value, "luminanceToAlpha") == 0) return 3;
+            break;                        
+    }
+    return 0; //matrix is default
+}
+
 /**
  * Sets a specific value in the SPFeColorMatrix.
  */
@@ -113,14 +135,46 @@ sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *value)
     SPFeColorMatrix *feColorMatrix = SP_FECOLORMATRIX(object);
     (void)feColorMatrix;
 
-    switch(key) {
+    int read_int;
+    gdouble read_num;
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
+    switch(key) {
+        case SP_ATTR_TYPE:
+            read_int =  sp_feColorMatrix_read_type(value);
+            if (feColorMatrix->type != read_int){
+                feColorMatrix->type = read_int;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+        case SP_ATTR_VALUES:
+            switch(feColorMatrix->type){
+                case '0': //matrix
+                    feColorMatrix->values = helperfns_read_vector(value, 20);
+                    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                    break;
+                case '1': //saturate
+                    read_num = helperfns_read_number(value);
+                    if (feColorMatrix->value != read_num){ //TODO: check if it is a real number between 0 and 1;
+                        feColorMatrix->value = read_num;
+                        object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                    }
+                    break;
+                case '2': //hueRotate
+                    read_num = helperfns_read_number(value);
+                    if (feColorMatrix->value != read_num){
+                        feColorMatrix->value = read_num;
+                        object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                    }
+                    break;                
+                case '3': //luminanceToAlpha
+                 g_warning("value attribute is not applicable for feColorMatrix type='luminanceToAlpha'.");
+                    break;
+            }
         default:
             if (((SPObjectClass *) feColorMatrix_parent_class)->set)
                 ((SPObjectClass *) feColorMatrix_parent_class)->set(object, key, value);
             break;
     }
-
 }
 
 /**
@@ -176,6 +230,9 @@ static void sp_feColorMatrix_build_renderer(SPFilterPrimitive *primitive, NR::Fi
     g_assert(nr_colormatrix != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);
+    nr_colormatrix->set_type(sp_colormatrix->type);
+    nr_colormatrix->set_value(sp_colormatrix->value);
+    nr_colormatrix->set_values(sp_colormatrix->values);
 }
 
 /*

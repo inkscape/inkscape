@@ -117,15 +117,6 @@ sp_feConvolveMatrix_release(SPObject *object)
         ((SPObjectClass *) feConvolveMatrix_parent_class)->release(object);
 }
 
-static std::vector<gdouble> read_kernel_matrix(const gchar* value, int size){
-        std::vector<gdouble> v(size, (gdouble) 0);
-        int i;
-        gchar** values = g_strsplit(value , " ", size);
-        for (i=0;i<size;i++)
-                v[i] = g_ascii_strtod(values[i], NULL);
-        return v;
-}
-
 static int sp_feConvolveMatrix_read_edgeMode(gchar const *value){
     if (!value) return 0; //duplicate is default
     switch(value[0]){
@@ -164,7 +155,7 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_KERNELMATRIX:
-            feConvolveMatrix->kernelMatrix = read_kernel_matrix(value, (int) (feConvolveMatrix->order.getNumber() * feConvolveMatrix->order.getOptNumber()));
+            feConvolveMatrix->kernelMatrix = helperfns_read_vector(value, (int) (feConvolveMatrix->order.getNumber() * feConvolveMatrix->order.getOptNumber()));
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_DIVISOR:

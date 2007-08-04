@@ -14,6 +14,7 @@
 
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
+#include<vector>
 
 namespace NR {
 
@@ -25,6 +26,13 @@ public:
 
     virtual int render(FilterSlot &slot, Matrix const &trans);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
+    virtual void set_type(int type);
+    virtual void set_value(gdouble value);
+    virtual void set_values(std::vector<gdouble> values);
+private:
+    std::vector<gdouble> values;
+    gdouble value;
+    int type;
 };
 
 } /* namespace NR */

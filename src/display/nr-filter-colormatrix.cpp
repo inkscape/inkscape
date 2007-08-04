@@ -36,7 +36,15 @@ int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
 
 //IMPLEMENT ME!
-    
+        printf("type = %d\n", type);
+        if (type==0){
+            for (int i=0;i<20;i++){
+                printf("values[%d]=%f\n", i, values[i]);
+            }
+        } else {
+                printf("value = %f\n", value);
+        }
+        
     out->empty = FALSE;
     slot.set(_output, out);
     return 0;
@@ -44,6 +52,18 @@ int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
 
 void FilterColorMatrix::area_enlarge(NRRectL &area, Matrix const &trans)
 {
+}
+
+void FilterColorMatrix::set_type(int t){
+        type = t;
+}
+
+void FilterColorMatrix::set_value(gdouble v){
+        value = v;
+}
+
+void FilterColorMatrix::set_values(std::vector<gdouble> v){
+        values = v;
 }
 
 } /* namespace NR */
