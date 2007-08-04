@@ -110,6 +110,7 @@ Future improvements:
   <bind action="ZoomPrefs" />
 
   <bind key="F4" action="ToolRect" display="true"/>
+  <bind key="F4" modifiers="Shift" action="Tool3DBox" display="true"/>
 
   <bind action="RectPrefs" />
 
