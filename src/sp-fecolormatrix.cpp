@@ -33,6 +33,7 @@ static void sp_feColorMatrix_release(SPObject *object);
 static void sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feColorMatrix_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feColorMatrix_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void sp_feColorMatrix_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feColorMatrix_parent_class;
 
@@ -61,7 +62,8 @@ static void
 sp_feColorMatrix_class_init(SPFeColorMatrixClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-
+    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
+    
     feColorMatrix_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feColorMatrix_build;
@@ -69,6 +71,7 @@ sp_feColorMatrix_class_init(SPFeColorMatrixClass *klass)
     sp_object_class->write = sp_feColorMatrix_write;
     sp_object_class->set = sp_feColorMatrix_set;
     sp_object_class->update = sp_feColorMatrix_update;
+    sp_primitive_class->build_renderer = sp_feColorMatrix_build_renderer;
 }
 
 static void
@@ -161,6 +164,19 @@ sp_feColorMatrix_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     return repr;
 }
 
+static void sp_feColorMatrix_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    g_assert(primitive != NULL);
+    g_assert(filter != NULL);
+
+    SPFeColorMatrix *sp_colormatrix = SP_FECOLORMATRIX(primitive);
+
+    int primitive_n = filter->add_primitive(NR::NR_FILTER_COLORMATRIX);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    NR::FilterColorMatrix *nr_colormatrix = dynamic_cast<NR::FilterColorMatrix*>(nr_primitive);
+    g_assert(nr_colormatrix != NULL);
+
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+}
 
 /*
   Local Variables:

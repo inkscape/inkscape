@@ -33,6 +33,7 @@ static void sp_feFlood_release(SPObject *object);
 static void sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feFlood_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feFlood_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void sp_feFlood_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feFlood_parent_class;
 
@@ -61,7 +62,8 @@ static void
 sp_feFlood_class_init(SPFeFloodClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-
+    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
+    
     feFlood_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feFlood_build;
@@ -69,6 +71,7 @@ sp_feFlood_class_init(SPFeFloodClass *klass)
     sp_object_class->write = sp_feFlood_write;
     sp_object_class->set = sp_feFlood_set;
     sp_object_class->update = sp_feFlood_update;
+    sp_primitive_class->build_renderer = sp_feFlood_build_renderer;
 }
 
 static void
@@ -159,6 +162,20 @@ sp_feFlood_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     return repr;
+}
+
+static void sp_feFlood_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    g_assert(primitive != NULL);
+    g_assert(filter != NULL);
+
+    SPFeFlood *sp_flood = SP_FEFLOOD(primitive);
+
+    int primitive_n = filter->add_primitive(NR::NR_FILTER_FLOOD);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    NR::FilterFlood *nr_flood = dynamic_cast<NR::FilterFlood*>(nr_primitive);
+    g_assert(nr_flood != NULL);
+
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
 }
 
 

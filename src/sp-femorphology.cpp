@@ -33,6 +33,7 @@ static void sp_feMorphology_release(SPObject *object);
 static void sp_feMorphology_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feMorphology_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feMorphology_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void sp_feMorphology_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feMorphology_parent_class;
 
@@ -61,7 +62,8 @@ static void
 sp_feMorphology_class_init(SPFeMorphologyClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-
+    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
+    
     feMorphology_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feMorphology_build;
@@ -69,6 +71,7 @@ sp_feMorphology_class_init(SPFeMorphologyClass *klass)
     sp_object_class->write = sp_feMorphology_write;
     sp_object_class->set = sp_feMorphology_set;
     sp_object_class->update = sp_feMorphology_update;
+    sp_primitive_class->build_renderer = sp_feMorphology_build_renderer;
 }
 
 static void
@@ -161,6 +164,19 @@ sp_feMorphology_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     return repr;
 }
 
+static void sp_feMorphology_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    g_assert(primitive != NULL);
+    g_assert(filter != NULL);
+
+    SPFeMorphology *sp_morphology = SP_FEMORPHOLOGY(primitive);
+
+    int primitive_n = filter->add_primitive(NR::NR_FILTER_MORPHOLOGY);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    NR::FilterMorphology *nr_morphology = dynamic_cast<NR::FilterMorphology*>(nr_primitive);
+    g_assert(nr_morphology != NULL);
+
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+}
 
 /*
   Local Variables:

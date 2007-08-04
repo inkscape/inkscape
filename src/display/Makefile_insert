@@ -69,6 +69,10 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter.h             \
 	display/nr-filter-blend.cpp     \
 	display/nr-filter-blend.h       \
+	display/nr-filter-colormatrix.cpp	\
+	display/nr-filter-colormatrix.h	\
+	display/nr-filter-component-transfer.cpp	\
+	display/nr-filter-component-transfer.h	\
 	display/nr-filter-composite.h	\
 	display/nr-filter-composite.cpp	\
 	display/nr-filter-convolve-matrix.cpp	\
@@ -77,6 +81,8 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-diffuselighting.h       \
     display/nr-filter-displacement-map.cpp      \
     display/nr-filter-displacement-map.h        \
+	display/nr-filter-flood.cpp  \
+	display/nr-filter-flood.h    \
 	display/nr-filter-gaussian.cpp  \
 	display/nr-filter-gaussian.h    \
 	display/nr-filter-getalpha.cpp	\
@@ -85,6 +91,8 @@ display_libspdisplay_a_SOURCES = \
     display/nr-filter-image.h	\
 	display/nr-filter-merge.cpp	\
 	display/nr-filter-merge.h	\
+	display/nr-filter-morphology.cpp	\
+	display/nr-filter-morphology.h	\
 	display/nr-filter-offset.cpp	\
 	display/nr-filter-offset.h	\
 	display/nr-filter-primitive.cpp \

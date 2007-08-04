@@ -16,6 +16,10 @@
 #include "sp-filter.h"
 #include "sp-femorphology-fns.h"
 
+#include "display/nr-filter.h"
+#include "display/nr-filter-morphology.h"
+
+
 /* FeMorphology base class */
 class SPFeMorphologyClass;
 

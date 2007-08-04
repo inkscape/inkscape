@@ -16,6 +16,9 @@
 #include "sp-filter.h"
 #include "sp-feflood-fns.h"
 
+#include "display/nr-filter.h"
+#include "display/nr-filter-flood.h"
+
 /* FeFlood base class */
 class SPFeFloodClass;
 

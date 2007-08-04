@@ -16,6 +16,8 @@
 #include "sp-filter.h"
 #include "sp-fecolormatrix-fns.h"
 
+#include "display/nr-filter.h"
+#include "display/nr-filter-colormatrix.h"
 /* FeColorMatrix base class */
 class SPFeColorMatrixClass;
 
