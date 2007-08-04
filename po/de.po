@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-15 15:23+0200\n"
-"PO-Revision-Date: 2007-07-24 23:15+0200\n"
+"PO-Revision-Date: 2007-08-05 01:29+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -207,7 +207,7 @@ msgstr "<small>Zufallsfaktor:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1713
 msgid "_Symmetry"
-msgstr "Symmetrie"
+msgstr "_Symmetrie"
 
 #. TRANSLATORS: For the following 17 symmetry groups, see
 #. * http://www.bib.ulb.ac.be/coursmath/doc/17.htm (visual examples);
@@ -292,7 +292,7 @@ msgstr "<b>P6M</b>: Reflektion + 60&#176; Rotation"
 # Translators: This is *not* the key name.
 #: ../src/dialogs/clonetiler.cpp:1778
 msgid "S_hift"
-msgstr "Verschiebung"
+msgstr "_Verschiebung"
 
 # !!!
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
@@ -370,7 +370,7 @@ msgstr "Vorzeichenumkehrung bei der Verschiebungen für jede Spalte"
 
 #: ../src/dialogs/clonetiler.cpp:1894
 msgid "Sc_ale"
-msgstr "Maßstab"
+msgstr "_Maßstab"
 
 # !!!
 #: ../src/dialogs/clonetiler.cpp:1902
@@ -808,7 +808,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2646
 msgid " <b>_Create</b> "
-msgstr " <b>Erzeugen</b> "
+msgstr " <b>_Erzeugen</b> "
 
 #: ../src/dialogs/clonetiler.cpp:2648
 msgid "Create and tile the clones of the selection"
@@ -821,7 +821,7 @@ msgstr "Klone der Auswahl erzeugen und kacheln"
 #. So unclumping is the process of spreading a number of objects out more evenly.
 #: ../src/dialogs/clonetiler.cpp:2663
 msgid " _Unclump "
-msgstr " Entkl_umpen"
+msgstr " Entkl_umpen "
 
 #: ../src/dialogs/clonetiler.cpp:2664
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
@@ -831,7 +831,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2670
 msgid " Re_move "
-msgstr " Entfernen"
+msgstr " _Entfernen "
 
 #: ../src/dialogs/clonetiler.cpp:2671
 msgid "Remove existing tiled clones of the selected object (siblings only)"
@@ -841,7 +841,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2687
 msgid " R_eset "
-msgstr " Zurücksetzen "
+msgstr " _Zurücksetzen "
 
 #. TRANSLATORS: "change" is a noun here
 #: ../src/dialogs/clonetiler.cpp:2689
@@ -897,7 +897,7 @@ msgstr "_Auswahl"
 
 #: ../src/dialogs/export.cpp:142
 msgid "_Custom"
-msgstr "Benutzerdefiniert"
+msgstr "_Benutzerdefiniert"
 
 #: ../src/dialogs/export.cpp:266
 msgid "<big><b>Export area</b></big>"
@@ -1237,7 +1237,7 @@ msgstr "Suche auf aktuelle Auswahl beschränken"
 
 #: ../src/dialogs/find.cpp:718 ../src/ui/dialog/find.cpp:66
 msgid "Search in current _layer"
-msgstr "In aktueller Ebene suchen"
+msgstr "In aktueller _Ebene suchen"
 
 #: ../src/dialogs/find.cpp:722 ../src/ui/dialog/find.cpp:66
 msgid "Limit search to the current layer"
@@ -1245,7 +1245,7 @@ msgstr "Suche auf aktuelle Ebene beschränken"
 
 #: ../src/dialogs/find.cpp:727 ../src/ui/dialog/find.cpp:67
 msgid "Include _hidden"
-msgstr "einschließlich Ausgeblendete"
+msgstr "Einschließlich _Ausgeblendete"
 
 #: ../src/dialogs/find.cpp:731 ../src/ui/dialog/find.cpp:67
 msgid "Include hidden objects in search"
@@ -1253,7 +1253,7 @@ msgstr "Ausgeblendete Objekte bei Suche berücksichtigen"
 
 #: ../src/dialogs/find.cpp:736 ../src/ui/dialog/find.cpp:68
 msgid "Include l_ocked"
-msgstr "einschließlich Gesperrte"
+msgstr "Einschließlich _Gesperrte"
 
 #: ../src/dialogs/find.cpp:740 ../src/ui/dialog/find.cpp:68
 msgid "Include locked objects in search"
@@ -1403,11 +1403,11 @@ msgstr "Ausgeblendete Objekte anzeigen"
 
 #: ../src/dialogs/item-properties.cpp:394
 msgid "Id invalid! "
-msgstr "ID-Kennung ist ungültig"
+msgstr "ID-Kennung ungültig!"
 
 #: ../src/dialogs/item-properties.cpp:396
 msgid "Id exists! "
-msgstr "ID-Kennung existiert"
+msgstr "ID-Kennung existiert!"
 
 #: ../src/dialogs/item-properties.cpp:403
 #: ../src/ui/dialog/filter-effects-dialog.cpp:74
@@ -2105,7 +2105,7 @@ msgstr "<b>Klick</b> wählt Knoten aus, <b>Ziehen</b> zur neuen Anordnung."
 
 #: ../src/dialogs/xml-tree.cpp:185
 msgid "<b>Click</b> attribute to edit."
-msgstr "<b>Klick</b> auf Attribut zum Bearbeiten"
+msgstr "<b>Klick</b> auf Attribut zum Bearbeiten."
 
 #: ../src/dialogs/xml-tree.cpp:189
 #, c-format
@@ -3957,7 +3957,7 @@ msgstr "_Ansicht"
 
 #: ../src/menus-skeleton.h:95
 msgid "_Zoom"
-msgstr "Zoomfaktor"
+msgstr "_Zoomfaktor"
 
 #: ../src/menus-skeleton.h:111
 msgid "_Display mode"
@@ -4113,9 +4113,7 @@ msgstr "Knoten löschen, Form beibehalten"
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
-msgstr ""
-"Zwei Knoten wählen, <b>die keine Knoten am Anfang oder Ende sein dürfen</b>, "
-"um einen Pfadabschnitt zu löschen"
+msgstr "Zwei Knoten wählen, <b>die keine Knoten am Anfang oder Ende sein dürfen</b>, um einen Pfadabschnitt zu löschen."
 
 #: ../src/nodepath.cpp:2230
 msgid "Cannot find path between nodes."
@@ -4247,7 +4245,7 @@ msgstr[1] ""
 
 #: ../src/nodepath.cpp:4312
 msgid "Drag the handles of the object to modify it."
-msgstr "Anfasser des Objektes zum Bearbeiten ziehen"
+msgstr "Anfasser des Objektes zum Bearbeiten ziehen."
 
 #: ../src/nodepath.cpp:4320
 #, c-format
@@ -4949,9 +4947,7 @@ msgstr "Bitmap erstellen"
 
 #: ../src/selection-chemistry.cpp:2659
 msgid "Select <b>object(s)</b> to create clippath or mask from."
-msgstr ""
-"<b>Objekt(e)</b> auswählen, um Ausschneidepfad oder Maskierung daraus zu "
-"erzeugen"
+msgstr "<b>Objekt(e)</b> auswählen, um Ausschneidepfad oder Maskierung daraus zu erzeugen."
 
 #: ../src/selection-chemistry.cpp:2662
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
@@ -4969,9 +4965,7 @@ msgstr "Maskierung setzen"
 
 #: ../src/selection-chemistry.cpp:2784
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr ""
-"<b>Objekt(e)</b> auswählen, um Ausschneidepfad oder Maskierung davon zu "
-"entfernen"
+msgstr "<b>Objekt(e)</b> auswählen, um Ausschneidepfad oder Maskierung davon zu entfernen."
 
 #: ../src/selection-chemistry.cpp:2852
 msgid "Release clipping path"
@@ -5392,7 +5386,7 @@ msgstr "<b>Dynamischer Versatz</b>, %s um %f pt"
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
 msgstr[0] "<b>Pfad</b> (%i Knoten)"
-msgstr[1] "<b>Pfad</b> (%i Knoten) "
+msgstr[1] "<b>Pfad</b> (%i Knoten)"
 
 # !!!
 #: ../src/sp-polygon.cpp:235
@@ -5665,7 +5659,7 @@ msgstr ""
 
 #: ../src/text-chemistry.cpp:120
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
-msgstr "Der Fließtext muss sichtbar sein, um einem Pfad zugewiesen zu werden."
+msgstr "Der Fließtext muss <b>sichtbar</b> sein, um einem Pfad zugewiesen zu werden."
 
 #: ../src/text-chemistry.cpp:187 ../src/verbs.cpp:2223
 msgid "Put text on path"
@@ -5717,7 +5711,7 @@ msgstr "<b>Fließtext</b> zum Umwandeln auswählen."
 
 #: ../src/text-chemistry.cpp:480
 msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
-msgstr "Der Fließtext muss sichtbar sein, um umgewandelt werden zu können."
+msgstr "Der Fließtext muss <b>sichtbar</b> sein, um umgewandelt werden zu können."
 
 #: ../src/text-chemistry.cpp:508
 msgid "Convert flowed text to text"
@@ -6042,7 +6036,7 @@ msgstr "_Dies auswählen"
 #. Create link
 #: ../src/ui/context-menu.cpp:118
 msgid "_Create Link"
-msgstr "Verknüpfung erzeugen"
+msgstr "_Verknüpfung erzeugen"
 
 #: ../src/ui/context-menu.cpp:175
 msgid "Create link"
@@ -6056,22 +6050,22 @@ msgstr "Grupp_ierung aufheben"
 #. Link dialog
 #: ../src/ui/context-menu.cpp:233
 msgid "Link _Properties"
-msgstr "Verknüpfungseigenschaften"
+msgstr "Verknüpfungs_eigenschaften"
 
 #. Select item
 #: ../src/ui/context-menu.cpp:239
 msgid "_Follow Link"
-msgstr "Verknüpfung folgen"
+msgstr "Verknüpfung _folgen"
 
 #. Reset transformations
 #: ../src/ui/context-menu.cpp:244
 msgid "_Remove Link"
-msgstr "Verknüpfung entfernen"
+msgstr "Verknüpfung en_tfernen"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:293
 msgid "Image _Properties"
-msgstr "Bildeigenschaften"
+msgstr "_Bildeigenschaften"
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:334
@@ -7011,11 +7005,9 @@ msgstr ""
 msgid "Enable gradient editing"
 msgstr "Farbverlaufs-Editor aktiviert"
 
-# !!! Frage? Passiv formulieren?
 #: ../src/ui/dialog/inkscape-preferences.cpp:221
 msgid "Whether selected objects display gradient editing controls"
-msgstr ""
-"Anzeige der Farbverlaufs-Anfasser für die ausgewählten Objekte aktiviert?"
+msgstr "Ausgewählten Objekte zeigen Farbverlaufs-Anfasser an"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:234
 msgid "<b>No objects selected</b> to take the style from."
@@ -7025,9 +7017,7 @@ msgstr "<b>Objekte auswählen</b>, um Stil zu übernehmen."
 msgid ""
 "<b>More than one object selected.</b>  Cannot take style from multiple "
 "objects."
-msgstr ""
-"<b>Mehr als ein Objekt ausgewählt.</b> Mehrere Stile können nicht auf einmal "
-"übernommen werden"
+msgstr "<b>Mehr als ein Objekt ausgewählt.</b> Ein Stil kann nicht von mehreren Objekten übernommen werden."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:277
 msgid "Create new objects with:"
@@ -7063,8 +7053,7 @@ msgstr "Stilvorgaben für dieses Werkzeug für neue Objekte:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:307
 msgid "Remember the style of the (first) selected object as this tool's style"
-msgstr ""
-"Stil des ersten ausgewählten Objektes zur Vorgabe für dieses Werkzeug machen"
+msgstr "Stil des (ersten) ausgewählten Objektes zur Vorgabe für dieses Werkzeug machen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:312
 msgid "Tools"
@@ -7777,11 +7766,11 @@ msgstr ""
 
 #: ../src/ui/dialog/scriptdialog.cpp:204
 msgid "_Execute Python"
-msgstr "Python ausführen"
+msgstr "Python _ausführen"
 
 #: ../src/ui/dialog/scriptdialog.cpp:208
 msgid "_Execute Perl"
-msgstr "Perl ausführen"
+msgstr "Perl _ausführen"
 
 #: ../src/ui/dialog/scriptdialog.cpp:218
 msgid "Script"
@@ -8788,7 +8777,7 @@ msgstr "Zur vorherigen Ebene verschieben"
 
 #: ../src/verbs.cpp:1137
 msgid "Moved to previous layer."
-msgstr "Zur vorherigen Ebene verschoben"
+msgstr "Zur vorherigen Ebene verschoben."
 
 #: ../src/verbs.cpp:1139
 msgid "Cannot move past first layer."
@@ -8971,7 +8960,7 @@ msgstr "Das Dokument drucken"
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
 #: ../src/verbs.cpp:2130
 msgid "Vac_uum Defs"
-msgstr "Leere Defs aufräumen"
+msgstr "Leere Defs _aufräumen"
 
 #: ../src/verbs.cpp:2130
 msgid ""
@@ -9238,7 +9227,7 @@ msgstr "Alle Objekte in allen sichtbaren und entsperrten Ebenen auswählen"
 
 #: ../src/verbs.cpp:2197
 msgid "In_vert Selection"
-msgstr "Auswahl umkehren"
+msgstr "Auswahl _umkehren"
 
 #: ../src/verbs.cpp:2198
 msgid "Invert selection (unselect what is selected and select everything else)"
@@ -9353,7 +9342,7 @@ msgstr "Vereinigung der ausgewählten Pfade erzeugen"
 
 #: ../src/verbs.cpp:2233
 msgid "_Intersection"
-msgstr "_Überschneidung"
+msgstr "Ü_berschneidung"
 
 #: ../src/verbs.cpp:2234
 msgid "Create intersection of selected paths"
@@ -9419,7 +9408,7 @@ msgstr "Gewählte Pfade um 1 px erweitern (vergrößern)"
 
 #: ../src/verbs.cpp:2254
 msgid "O_utset Path by 10 px"
-msgstr "Pfad um 10 px erweitern (vergrößern)"
+msgstr "Pfad um 10 px _erweitern (vergrößern)"
 
 #: ../src/verbs.cpp:2255
 msgid "Outset selected paths by 10 px"
@@ -9543,7 +9532,7 @@ msgstr "Ausgewählte Objekte im Raster anordnen"
 #. Layer
 #: ../src/verbs.cpp:2293
 msgid "_Add Layer..."
-msgstr "Ebene hinzufügen…"
+msgstr "Ebene _hinzufügen…"
 
 #: ../src/verbs.cpp:2294
 msgid "Create a new layer"
@@ -9559,7 +9548,7 @@ msgstr "Aktuelle Ebene umbenennen"
 
 #: ../src/verbs.cpp:2297
 msgid "Switch to Layer Abov_e"
-msgstr "Zur darüberliegenden Ebene umschalten"
+msgstr "Zur darü_berliegenden Ebene umschalten"
 
 #: ../src/verbs.cpp:2298
 msgid "Switch to the layer above the current"
@@ -9567,7 +9556,7 @@ msgstr "Zur darüberliegenden Ebene im Dokument umschalten"
 
 #: ../src/verbs.cpp:2299
 msgid "Switch to Layer Belo_w"
-msgstr "Zur darunterliegenden Ebene umschalten"
+msgstr "Zur dar_unterliegenden Ebene umschalten"
 
 #: ../src/verbs.cpp:2300
 msgid "Switch to the layer below the current"
@@ -9575,7 +9564,7 @@ msgstr "Zur darunterliegenden Ebene im Dokument umschalten"
 
 #: ../src/verbs.cpp:2301
 msgid "Move Selection to Layer Abo_ve"
-msgstr "Auswahl zur darüberliegenden Ebene verschieben"
+msgstr "Auswahl zur darüber_liegenden Ebene verschieben"
 
 #: ../src/verbs.cpp:2302
 msgid "Move selection to the layer above the current"
@@ -9583,7 +9572,7 @@ msgstr "Die Auswahl auf die darüberliegende Ebene verschieben"
 
 #: ../src/verbs.cpp:2303
 msgid "Move Selection to Layer Bel_ow"
-msgstr "Auswahl zur darunterliegenden Ebene verschieben"
+msgstr "Auswahl zur darun_terliegenden Ebene verschieben"
 
 #: ../src/verbs.cpp:2304
 msgid "Move selection to the layer below the current"
@@ -9669,7 +9658,7 @@ msgstr "Gewähltes Objekt in Pfad umwandeln"
 # !!! Frame, not form?
 #: ../src/verbs.cpp:2329
 msgid "_Flow into Frame"
-msgstr "Umbruch an Form anpassen"
+msgstr "Umbruch an Form _anpassen"
 
 #: ../src/verbs.cpp:2330
 msgid ""
@@ -10127,7 +10116,7 @@ msgstr "Einstellungen bearbeiten, die mit dem Dokument gespeichert werden"
 
 #: ../src/verbs.cpp:2467
 msgid "Document _Metadata..."
-msgstr "_Dokument-Metadaten…"
+msgstr "Dokument-_Metadaten…"
 
 #: ../src/verbs.cpp:2468
 msgid "Edit document metadata (to be saved with the document)"
@@ -10732,9 +10721,7 @@ msgstr "Keine Füllmuster im Dokument"
 msgid ""
 "Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new "
 "pattern from selection."
-msgstr ""
-"Benutze <b>Objekt » Fülmuster » Objekte in Füllmuster umwandeln</b>, um ein "
-"neues Füllmuster vom ausgewählten Objekt zu erzeugen."
+msgstr "Benutze <b>Objekt » Füllmuster » Objekte in Füllmuster umwandeln</b>, um ein neues Füllmuster vom ausgewählten Objekt zu erzeugen."
 
 #: ../src/widgets/select-toolbar.cpp:237
 msgid "Transform by toolbar"
@@ -10819,7 +10806,7 @@ msgstr "Y"
 
 #: ../src/widgets/select-toolbar.cpp:426
 msgid "Vertical coordinate of selection"
-msgstr "Vertikale Koordinate der Auswahl "
+msgstr "Vertikale Koordinate der Auswahl"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -11605,9 +11592,7 @@ msgstr "Transparenz setzen"
 #: ../src/widgets/toolbox.cpp:3202
 msgid ""
 "If alpha was picked, assign it to selection as fill or stroke transparency"
-msgstr ""
-"Wenn Transparenz übernommenen wurde, wende diese als Füllung oder Kontur der "
-"Auswahl an."
+msgstr "Wenn Transparenz übernommenen wurde, diese als Füllung oder Kontur der Auswahl anwenden."
 
 #: ../src/widgets/toolbox.cpp:3473
 msgid "Text: Change font family"
@@ -11633,9 +11618,7 @@ msgstr "Text: Schriftgröße ändern"
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
-msgstr ""
-"Diese Schriftart ist im Moment nicht auf Ihrem System installiert. Inkscape "
-"wird die Standardschriftart verwenden"
+msgstr "Diese Schriftart ist im Moment nicht auf Ihrem System installiert. Inkscape wird die Standardschriftart verwenden."
 
 #: ../src/widgets/toolbox.cpp:3972
 msgid "Align left"
@@ -11924,9 +11907,7 @@ msgstr "Dia einlesen"
 msgid ""
 "In order to import Dia files, Dia itself must be installed.  You can get Dia "
 "at http://www.gnome.org/projects/dia/"
-msgstr ""
-"Um Dia-Dateien zu importieren, muss Dia selbst installiert sein. Sie können "
-"Dia von http://www.gnome.org/projects/dia/ bekommen."
+msgstr "Um Dia-Dateien zu importieren, muss Dia selbst installiert sein. Sie können Dia von http://www.gnome.org/projects/dia/ herunterladen."
 
 #: ../share/extensions/dia.inx.h:5
 msgid ""
