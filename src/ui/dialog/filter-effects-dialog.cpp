@@ -78,6 +78,38 @@ int input_count(const SPFilterPrimitive* prim)
         return 1;
 }
 
+class CheckButtonAttr : public Gtk::CheckButton, public AttrWidget
+{
+public:
+    CheckButtonAttr(const Glib::ustring& label,
+                    const Glib::ustring& tv, const Glib::ustring& fv,
+                    const SPAttributeEnum a)
+        : Gtk::CheckButton(label),
+          AttrWidget(a),
+          _true_val(tv), _false_val(fv)
+    {
+        signal_toggled().connect(signal_attr_changed().make_slot());
+    }
+
+    Glib::ustring get_as_attribute() const
+    {
+        return get_active() ? _true_val : _false_val;
+    }
+
+    void set_from_attribute(SPObject* o)
+    {
+        const gchar* val = attribute_value(o);
+        if(val) {
+            if(_true_val == val)
+                set_active(true);
+            else if(_false_val == val)
+                set_active(false);
+        }
+    }
+private:
+    const Glib::ustring _true_val, _false_val;
+};
+
 class SpinButtonAttr : public Gtk::SpinButton, public AttrWidget
 {
 public:
@@ -376,6 +408,16 @@ public:
 
     // LightSource
     LightSourceControl* add_lightsource(const Glib::ustring& label);
+
+    // CheckBox
+    CheckButtonAttr* add_checkbutton(const SPAttributeEnum attr, const Glib::ustring& label,
+                                     const Glib::ustring& tv, const Glib::ustring& fv)
+    {
+        CheckButtonAttr* cb = new CheckButtonAttr(label, tv, fv, attr);
+        add_widget(cb, "");
+        add_attr_widget(cb);
+        return cb;
+    }
 
     // ColorButton
     ColorButton* add_color(const SPAttributeEnum attr, const Glib::ustring& label)
@@ -1211,8 +1253,8 @@ const Gtk::TreeIter FilterEffectsDialog::PrimitiveList::find_result(const Gtk::T
                 image = SP_FEBLEND(prim)->in2;
             else if(SP_IS_FECOMPOSITE(prim))
                 image = SP_FECOMPOSITE(prim)->in2;
-            /*else if(SP_IS_FEDISPLACEMENTMAP(prim))
-              image = SP_FEDISPLACEMENTMAP(prim)->in2;*/
+            else if(SP_IS_FEDISPLACEMENTMAP(prim))
+                image = SP_FEDISPLACEMENTMAP(prim)->in2;
             else
                 return target;
         }
@@ -1568,14 +1610,10 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_lightsource(_("Light Source"));
 
     _settings->type(NR_FILTER_TURBULENCE);
-    /*std::vector<Gtk::Widget*> trb_grp;
-    trb_grp.push_back(&_turbulence_fractalnoise);
-    trb_grp.push_back(&_turbulence_turbulence);
-    _settings->add(trb_grp);
-    _turbulence.add_setting(_turbulence_numoctaves, _("Octaves"));
-    _turbulence.add_setting(_turbulence_basefrequency, _("Base Frequency"));
-    _turbulence.add_setting(_turbulence_seed, _("Seed"));
-    _turbulence.add_setting(_turbulence_stitchtiles);*/
+    _settings->add_checkbutton(SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
+    _settings->add_dualspinslider(SP_ATTR_BASEFREQUENCY, _("Base Frequency"), 0, 100, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_NUMOCTAVES, _("Octaves"), 1, 10, 1, 1, 0);
+    _settings->add_spinslider(SP_ATTR_SEED, _("Seed"), 0, 1000, 1, 1, 0);
 }
 
 void FilterEffectsDialog::add_primitive()
