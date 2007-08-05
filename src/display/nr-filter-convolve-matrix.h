@@ -20,6 +20,13 @@
 
 namespace NR {
 
+enum FilterConvolveMatrixEdgeMode {
+    CONVOLVEMATRIX_EDGEMODE_DUPLICATE,
+    CONVOLVEMATRIX_EDGEMODE_WRAP,
+    CONVOLVEMATRIX_EDGEMODE_NONE,
+    CONVOLVEMATRIX_EDGEMODE_ENDTYPE
+};
+
 class FilterConvolveMatrix : public FilterPrimitive {
 public:
     FilterConvolveMatrix();
@@ -36,7 +43,7 @@ public:
     void set_kernelMatrix(std::vector<gdouble>& km);
     void set_bias(double b);
     void set_divisor(double d);
-    void set_edgeMode(int mode);    
+    void set_edgeMode(FilterConvolveMatrixEdgeMode mode);    
     void set_preserveAlpha(bool pa);
 
 private:
@@ -45,7 +52,7 @@ private:
     int orderX, orderY;
     gdouble divisor, bias;
     int dx, dy, kernelUnitLength;
-    int edgeMode;
+    FilterConvolveMatrixEdgeMode edgeMode;
     bool preserveAlpha;
 };
 

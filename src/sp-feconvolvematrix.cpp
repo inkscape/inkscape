@@ -117,20 +117,20 @@ sp_feConvolveMatrix_release(SPObject *object)
         ((SPObjectClass *) feConvolveMatrix_parent_class)->release(object);
 }
 
-static int sp_feConvolveMatrix_read_edgeMode(gchar const *value){
-    if (!value) return 0; //duplicate is default
+static NR::FilterConvolveMatrixEdgeMode sp_feConvolveMatrix_read_edgeMode(gchar const *value){
+    if (!value) return NR::CONVOLVEMATRIX_EDGEMODE_DUPLICATE; //duplicate is default
     switch(value[0]){
         case 'd':
-            if (strncmp(value, "duplicate", 9) == 0) return 0;
+            if (strncmp(value, "duplicate", 9) == 0) return NR::CONVOLVEMATRIX_EDGEMODE_DUPLICATE;
             break;
         case 'w':
-            if (strncmp(value, "wrap", 4) == 0) return 1;
+            if (strncmp(value, "wrap", 4) == 0) return NR::CONVOLVEMATRIX_EDGEMODE_WRAP;
             break;
         case 'n':
-            if (strncmp(value, "none", 4) == 0) return 2;
+            if (strncmp(value, "none", 4) == 0) return NR::CONVOLVEMATRIX_EDGEMODE_NONE;
             break;
     }
-    return 0; //duplicate is default
+    return NR::CONVOLVEMATRIX_EDGEMODE_DUPLICATE; //duplicate is default
 }
 
 /**
@@ -144,6 +144,7 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
     double read_num;
     int read_int;
     bool read_bool;
+    NR::FilterConvolveMatrixEdgeMode read_mode;
    
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
@@ -187,9 +188,9 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         case SP_ATTR_EDGEMODE:
-            read_int = (int) sp_feConvolveMatrix_read_edgeMode(value);
-            if (read_int != feConvolveMatrix->edgeMode){
-                feConvolveMatrix->edgeMode = read_int;
+            read_mode = sp_feConvolveMatrix_read_edgeMode(value);
+            if (read_mode != feConvolveMatrix->edgeMode){
+                feConvolveMatrix->edgeMode = read_mode;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;

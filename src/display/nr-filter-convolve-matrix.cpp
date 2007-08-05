@@ -10,6 +10,7 @@
  */
 
 #include "display/nr-filter-convolve-matrix.h"
+#include "display/nr-filter-utils.h"
 #include <vector>
 namespace NR {
 
@@ -19,7 +20,7 @@ FilterConvolveMatrix::FilterConvolveMatrix()
   targetX((int)(orderX/2)),
   targetY((int)(orderY/2)),
   bias(0),
-  edgeMode(0),
+  edgeMode((NR::FilterConvolveMatrixEdgeMode) 0),
   preserveAlpha(false)
 {}
 
@@ -80,20 +81,11 @@ int FilterConvolveMatrix::render(FilterSlot &slot, Matrix const &trans) {
                     }
                 }
             }
-            result_R = result_R / div + bias;
-            result_G = result_G / div + bias;
-            result_B = result_B / div + bias;
-            result_A = result_A / div + bias;
 
-            result_R = (result_R > 0 ? result_R : 0);
-            result_G = (result_G > 0 ? result_G : 0);
-            result_B = (result_B > 0 ? result_B : 0);
-            result_A = (result_A > 0 ? result_A : 0);
-
-            out_data[4*( x + width*y )] = (result_R < 255 ? (unsigned char)result_R : 255);
-            out_data[4*( x + width*y )+1] = (result_G < 255 ? (unsigned char)result_G : 255);
-            out_data[4*( x + width*y )+2] = (result_B < 255 ? (unsigned char)result_B : 255);
-            out_data[4*( x + width*y )+3] = (result_A < 255 ? (unsigned char)result_A : 255);
+            out_data[4*( x + width*y )] = CLAMP_D_TO_U8(result_R / div + bias);
+            out_data[4*( x + width*y )+1] = CLAMP_D_TO_U8(result_G / div + bias);
+            out_data[4*( x + width*y )+2] = CLAMP_D_TO_U8(result_B / div + bias);
+            out_data[4*( x + width*y )+3] = CLAMP_D_TO_U8(result_A / div + bias);
         }
     }
 
@@ -130,7 +122,7 @@ void FilterConvolveMatrix::set_kernelMatrix(std::vector<gdouble> &km) {
     kernelMatrix = km;
 }
 
-void FilterConvolveMatrix::set_edgeMode(int mode){
+void FilterConvolveMatrix::set_edgeMode(FilterConvolveMatrixEdgeMode mode){
     edgeMode = mode;
 }    
 
