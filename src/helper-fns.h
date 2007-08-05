@@ -44,8 +44,8 @@ static std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
         std::vector<gdouble> v(size, (gdouble) 0);
         int i;
         gchar** values = g_strsplit(value , " ", size);
-        for (i=0;i<size;i++)
-                v[i] = g_ascii_strtod(values[i], NULL);
+        for (i=0;i<size && values[i];i++)
+            v[i] = g_ascii_strtod(values[i], NULL);
         return v;
 }
 

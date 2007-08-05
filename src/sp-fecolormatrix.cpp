@@ -94,7 +94,8 @@ sp_feColorMatrix_build(SPObject *object, SPDocument *document, Inkscape::XML::No
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
-    
+    sp_object_read_attr(object, "type");
+    sp_object_read_attr(object, "values");
 }
 
 /**
@@ -130,7 +131,7 @@ static int sp_feColorMatrix_read_type(gchar const *value){
  * Sets a specific value in the SPFeColorMatrix.
  */
 static void
-sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *value)
+sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *str)
 {
     SPFeColorMatrix *feColorMatrix = SP_FECOLORMATRIX(object);
     (void)feColorMatrix;
@@ -140,39 +141,22 @@ sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *value)
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
     switch(key) {
         case SP_ATTR_TYPE:
-            read_int =  sp_feColorMatrix_read_type(value);
+            read_int =  sp_feColorMatrix_read_type(str);
             if (feColorMatrix->type != read_int){
                 feColorMatrix->type = read_int;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_VALUES:
-            switch(feColorMatrix->type){
-                case '0': //matrix
-                    feColorMatrix->values = helperfns_read_vector(value, 20);
-                    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
-                    break;
-                case '1': //saturate
-                    read_num = helperfns_read_number(value);
-                    if (feColorMatrix->value != read_num){ //TODO: check if it is a real number between 0 and 1;
-                        feColorMatrix->value = read_num;
-                        object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
-                    }
-                    break;
-                case '2': //hueRotate
-                    read_num = helperfns_read_number(value);
-                    if (feColorMatrix->value != read_num){
-                        feColorMatrix->value = read_num;
-                        object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
-                    }
-                    break;                
-                case '3': //luminanceToAlpha
-                 g_warning("value attribute is not applicable for feColorMatrix type='luminanceToAlpha'.");
-                    break;
+            if (str){     
+                feColorMatrix->values = helperfns_read_vector(str, 20);
+                feColorMatrix->value = helperfns_read_number(str);
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
+            break;
         default:
             if (((SPObjectClass *) feColorMatrix_parent_class)->set)
-                ((SPObjectClass *) feColorMatrix_parent_class)->set(object, key, value);
+                ((SPObjectClass *) feColorMatrix_parent_class)->set(object, key, str);
             break;
     }
 }

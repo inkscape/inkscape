@@ -10,11 +10,13 @@
  */
 
 #include "display/nr-filter-colormatrix.h"
+#include "display/nr-filter-utils.h"
+#include<math.h>
+
 namespace NR {
 
 FilterColorMatrix::FilterColorMatrix()
 {
-    g_warning("FilterColorMatrix::render not implemented.");
 }
 
 FilterPrimitive * FilterColorMatrix::create() {
@@ -34,17 +36,92 @@ int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
 
     unsigned char *in_data = NR_PIXBLOCK_PX(in);
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
+    unsigned char r,g,b,a;
+    int x,y,x0,y0,x1,y1,i;
+    double a00,a01,a02,a10,a11,a12,a20,a21,a22, coshue, sinhue;
+    x0=in->area.x0;
+    y0=in->area.y0;
+    x1=in->area.x1;
+    y1=in->area.y1;    
 
-//IMPLEMENT ME!
-        printf("type = %d\n", type);
-        if (type==0){
-            for (int i=0;i<20;i++){
-                printf("values[%d]=%f\n", i, values[i]);
+    switch(type){
+        case 0: //matrix
+            if (values.size()!=20) {
+                g_warning("ColorMatrix: values parameter error. Wrong size.");
+                return -1;
             }
-        } else {
-                printf("value = %f\n", value);
-        }
-        
+            for (x=x0;x<x1;x++){
+                for (y=y0;y<y1;y++){
+                    i = ((x-x0) + (x1-x0)*(y-y0))*4;
+                    r = in_data[i];
+                    g = in_data[i+1];
+                    b = in_data[i+2];
+                    a = in_data[i+3];
+                    out_data[i] = CLAMP_D_TO_U8( r*values[0] + g*values[1] + b*values[2] + a*values[3] + values[4] );
+                    out_data[i+1] = CLAMP_D_TO_U8( r*values[5] + g*values[6] + b*values[7] + a*values[8] + values[9] );
+                    out_data[i+2] = CLAMP_D_TO_U8( r*values[10] + g*values[11] + b*values[12] + a*values[13] + values[14] );
+                    out_data[i+3] = CLAMP_D_TO_U8( r*values[15] + g*values[16] + b*values[17] + a*values[18] + values[19] );
+                }
+            }
+            break;
+        case 1: //saturate
+            for (x=x0;x<x1;x++){
+                for (y=y0;y<y1;y++){
+                    i = ((x-x0) + (x1-x0)*(y-y0))*4;
+                    r = in_data[i];
+                    g = in_data[i+1];
+                    b = in_data[i+2];
+                    a = in_data[i+3];
+                    out_data[i] = CLAMP_D_TO_U8( r*(0.213+0.787*value) + g*(0.715-0.715*value) + b*(0.072-0.072*value) );
+                    out_data[i+1] = CLAMP_D_TO_U8( r*(0.213-0.213*value) + g*(0.715+0.285*value) + b*(0.072-0.072*value) );
+                    out_data[i+2] = CLAMP_D_TO_U8( r*(0.213-0.213*value) + g*(0.715-0.715*value) + b*(0.072+0.928*value) );
+                    out_data[i+3] = a;
+                }
+            }
+            break;
+        case 2: //hueRotate
+            coshue = cos(value);
+            sinhue = sin(value);
+            a00 = 0.213 + coshue*( 0.787) + sinhue*(-0.213);
+            a01 = 0.715 + coshue*(-0.715) + sinhue*(-0.715);
+            a02 = 0.072 + coshue*(-0.072) + sinhue*( 0.928);
+            a10 = 0.213 + coshue*(-0.213) + sinhue*( 0.143);
+            a11 = 0.715 + coshue*( 0.285) + sinhue*( 0.140);
+            a12 = 0.072 + coshue*(-0.072) + sinhue*(-0.283);
+            a20 = 0.213 + coshue*(-0.213) + sinhue*(-0.787);
+            a21 = 0.715 + coshue*(-0.715) + sinhue*( 0.715);
+            a22 = 0.072 + coshue*( 0.928) + sinhue*( 0.072);
+                                    
+            for (x=x0;x<x1;x++){
+                for (y=y0;y<y1;y++){
+                    i = ((x-x0) + (x1-x0)*(y-y0))*4;
+                    r = in_data[i];
+                    g = in_data[i+1];
+                    b = in_data[i+2];
+                    a = in_data[i+3];
+                    
+                    out_data[i] = CLAMP_D_TO_U8( r*a00 + g*a01 + b*a02 );
+                    out_data[i+1] = CLAMP_D_TO_U8( r*a10 + g*a11 + b*a12 );
+                    out_data[i+2] = CLAMP_D_TO_U8( r*a20 + g*a21 + b*a22 );
+                    out_data[i+3] = a;
+                }
+            }
+            break;
+        case 3: //luminanceToAlpha
+            for (x=x0;x<x1;x++){
+                for (y=y0;y<y1;y++){
+                    i = ((x-x0) + (x1-x0)*(y-y0))*4;
+                    r = in_data[i];
+                    g = in_data[i+1];
+                    b = in_data[i+2];
+                    out_data[i] = 0;
+                    out_data[i+1] = 0;
+                    out_data[i+2] = 0;
+                    out_data[i+3] = CLAMP_D_TO_U8( r*0.2125 + g*0.7154 + b*0.0721);
+                }
+            }
+            break;
+    }
     out->empty = FALSE;
     slot.set(_output, out);
     return 0;
@@ -62,7 +139,7 @@ void FilterColorMatrix::set_value(gdouble v){
         value = v;
 }
 
-void FilterColorMatrix::set_values(std::vector<gdouble> v){
+void FilterColorMatrix::set_values(std::vector<gdouble> &v){
         values = v;
 }
 
