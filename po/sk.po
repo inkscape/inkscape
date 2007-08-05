@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-15 15:23+0200\n"
-"PO-Revision-Date: 2007-08-05 18:58+0100\n"
+"PO-Revision-Date: 2007-08-05 20:23+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -657,7 +657,7 @@ msgstr "Korekcia gama:"
 
 #: ../src/dialogs/clonetiler.cpp:2403
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
-msgstr "POsunutie stredného rozsahu zvolených hodnôt nahor (>0) alebo nadol (<0)"
+msgstr "Posunutie stredného rozsahu zvolených hodnôt nahor (>0) alebo nadol (<0)"
 
 #: ../src/dialogs/clonetiler.cpp:2410
 msgid "Randomize:"
@@ -912,7 +912,7 @@ msgstr "Dávkový export všetkých vybraných objektov"
 
 #: ../src/dialogs/export.cpp:622
 msgid "Export each selected object into its own PNG file, using export hints if any (caution, overwrites without asking!)"
-msgstr ""
+msgstr "Exportovať každý vybraný objekt do samostatného PNG súboru, s použitím pokynov k exportu, ak existujú (pozor, prepisuje bez pýtania!)"
 
 #: ../src/dialogs/export.cpp:630
 msgid "Hide all except selected"
@@ -920,7 +920,7 @@ msgstr "Skryť všetky okrem vybraných"
 
 #: ../src/dialogs/export.cpp:634
 msgid "In the exported image, hide all objects except those that are selected"
-msgstr ""
+msgstr "V exportovanom obrázku skryť všetky objekty okrem tých, ktoré sú vybrané"
 
 #: ../src/dialogs/export.cpp:651
 msgid "_Export"
@@ -2264,11 +2264,11 @@ msgstr "čiary"
 
 #: ../src/display/canvas-grid.cpp:383
 msgid "_Show dots instead of lines"
-msgstr ""
+msgstr "_Zobraziť body namiesto čiar"
 
 #: ../src/display/canvas-grid.cpp:384
 msgid "If set, displays dots at gridpoints instead of gridlines"
-msgstr ""
+msgstr "Ak je voľba nastavená, zobrazí bodky na body mriežky namiesto čiar mriežky"
 
 #: ../src/document.cpp:369
 #, c-format
@@ -2346,19 +2346,19 @@ msgstr "<b>Stenčovanie %d</b> vybraných objektov; pomocou <b>Shift</b> zväč�
 
 #: ../src/dyna-draw-context.cpp:918
 msgid "<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
-msgstr ""
+msgstr "<b>Vodiaca cesta vybraná</b>; začnite kresliť pozdĺž vodidla s <b>Ctrl</b>"
 
 #: ../src/dyna-draw-context.cpp:920
 msgid "<b>Select a guide path</b> to track with <b>Ctrl</b>"
-msgstr ""
+msgstr "<b>Vyberte vodiacu cestu</b>, ktorú budete vektorizovať s <b>Ctrl</b>"
 
 #: ../src/dyna-draw-context.cpp:1025
 msgid "Tracking: <b>connection to guide path lost!</b>"
-msgstr ""
+msgstr "Vektorizácia: <b>spojenie s vodiacou cestou stratené!</b>"
 
 #: ../src/dyna-draw-context.cpp:1025
 msgid "<b>Tracking</b> a guide path"
-msgstr ""
+msgstr "<b>Vektorizácia</b> vodiacej cesty"
 
 #: ../src/dyna-draw-context.cpp:1028
 msgid "<b>Drawing</b> a calligraphic stroke"
@@ -2366,7 +2366,7 @@ msgstr "<b>Kreslenie</b> kaligrafického ťahu"
 
 #: ../src/dyna-draw-context.cpp:1104
 msgid "Thicken paths"
-msgstr ""
+msgstr "Zväčšiť hrúbku ciest"
 
 #: ../src/dyna-draw-context.cpp:1104
 msgid "Thin paths"
@@ -2420,7 +2420,7 @@ msgstr "(žiadne nastavenia)"
 #: ../src/extension/execution-env.cpp:109
 #, c-format
 msgid "'%s' working, please wait..."
-msgstr ""
+msgstr "'%s' pracuje, prosím čakajte..."
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
@@ -2579,7 +2579,7 @@ msgstr "Rozšírené Metasúbory (*.wmf)"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1388
 msgid "Enhanced Metafiles"
-msgstr ""
+msgstr "Rozšírené metasúbory"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1396
 msgid "WMF Input"
@@ -3054,7 +3054,7 @@ msgstr "Jas"
 
 #: ../src/flood-context.cpp:252
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #: ../src/flood-context.cpp:261
 msgid "Small"
@@ -3070,26 +3070,26 @@ msgstr "veľký"
 
 #: ../src/flood-context.cpp:416
 msgid "<b>Too much inset</b>, the result is empty."
-msgstr ""
+msgstr "<b>Príliš veľký posun dnu</b>, výsledok je prázdny."
 
 #: ../src/flood-context.cpp:456
 #, c-format
 msgid "Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr ""
+msgstr "Oblasť vyplnená, vytvorená cesta s <b>%d</b> uzlami a zjednotená s výberom."
 
 #: ../src/flood-context.cpp:460
 #, c-format
 msgid "Area filled, path with <b>%d</b> nodes created."
-msgstr ""
+msgstr "Oblasť vyplnená, vytvorená cesta s <b>%d</b> uzlami."
 
 #: ../src/flood-context.cpp:650
 #: ../src/flood-context.cpp:893
 msgid "<b>Area is not bounded</b>, cannot fill."
-msgstr ""
+msgstr "<b>Oblast nie je ohraničené</b>, nie je možné ju vyplniť."
 
 #: ../src/flood-context.cpp:898
 msgid "<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again."
-msgstr ""
+msgstr "<b>Iba viditeľná časť ohraničenej oblasti bola vyplnená.</b> Ak chcete vyplniť celú oblasť vráťte poslednú zmenu, oddiaľte pohľad a zvoľte znova vyplniť."
 
 #: ../src/flood-context.cpp:914
 #: ../src/flood-context.cpp:1071
@@ -3102,7 +3102,7 @@ msgstr "Nastaviť štýl objektu"
 
 #: ../src/flood-context.cpp:993
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
-msgstr ""
+msgstr "<b>Kreslením cez</b> oblasti ich pridáte do výplne, držaním <b>Alt</b> výplň dotykom"
 
 #: ../src/gradient-context.cpp:308
 #: ../src/widgets/gradient-vector.cpp:736
@@ -3533,6 +3533,9 @@ msgid ""
 "\n"
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">Súbor s názvom \"%s\" už existuje. Želáte si ho nahradiť?</span>\n"
+"\n"
+"Súbor už existuje v \"%s\". Jeho nahradením prepíšete jeho súčasný obsah."
 
 #: ../src/interface.cpp:1377
 msgid "Replace"
@@ -3763,11 +3766,11 @@ msgstr "Odstrániť nepoužité definície zo sekcie defs dokumentu"
 
 #: ../src/main.cpp:369
 msgid "List the IDs of all the verbs in Inkscape"
-msgstr ""
+msgstr "Zoznam ID všetkých slovies v Inkscape"
 
 #: ../src/main.cpp:374
 msgid "Verb to call when Inkscape opens."
-msgstr ""
+msgstr "Sloveso, ktoré sa má zavolať, keď sa Inkscape otvorí."
 
 #: ../src/main.cpp:375
 msgid "VERB-ID"
@@ -3775,7 +3778,7 @@ msgstr ""
 
 #: ../src/main.cpp:379
 msgid "Object ID to select when Inkscape opens."
-msgstr ""
+msgstr "ID objektu, ktorý sa má vybrať, keď sa Inkscape otvorí."
 
 #: ../src/main.cpp:380
 msgid "OBJECT-ID"
@@ -3794,12 +3797,12 @@ msgstr ""
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
 msgid "Unable to find verb ID '%s' specified on the command line.\n"
-msgstr ""
+msgstr "Nepodarilo sa nájsť ID slovesa '%s' zadaného na príkazovom riadku.\n"
 
 #: ../src/main-cmdlineact.cpp:61
 #, c-format
 msgid "Unable to find node ID: '%s'\n"
-msgstr ""
+msgstr "Nepodarilo sa nájsť ID uzla: '%s'\n"
 
 #: ../src/menus-skeleton.h:17
 #: ../src/ui/dialog/document-properties.cpp:97
@@ -4122,25 +4125,25 @@ msgstr "Nastaviť <b>šírku a výšku</b> obdĺžnika; s <b>Ctrl</b> zamknúť 
 #: ../src/object-edit.cpp:710
 #: ../src/object-edit.cpp:711
 msgid "Resize box in X/Y direction"
-msgstr ""
+msgstr "Zmeniť veľkosť obdĺžnika v smere X/Y"
 
 #: ../src/object-edit.cpp:712
 msgid "Resize box in Z direction"
-msgstr ""
+msgstr "Zmeniť veľkosť obdĺžnika na osi Z"
 
 #: ../src/object-edit.cpp:724
 #: ../src/object-edit.cpp:726
 #: ../src/object-edit.cpp:728
 #: ../src/object-edit.cpp:730
 msgid "Resize box in X/Y direction; with <b>Shift</b> along the Z axis"
-msgstr ""
+msgstr "Zmeniť veľkosť obdĺžnika v smere X/Y; pomocou <b>Shift</b> na osi Z"
 
 #: ../src/object-edit.cpp:732
 #: ../src/object-edit.cpp:734
 #: ../src/object-edit.cpp:736
 #: ../src/object-edit.cpp:738
 msgid "Resize box along the Z axis; with <b>Shift</b> in X/Y direction"
-msgstr ""
+msgstr "Zmeniť veľkosť obdĺžnika na osi Z; pomocou <b>Shift</b> v smere X/Y"
 
 #: ../src/object-edit.cpp:918
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
@@ -4193,7 +4196,7 @@ msgstr "<b>Otočiť</b> vzorku výplne; s <b>Ctrl</b> prichytávanie k uhlu"
 
 #: ../src/object-edit.cpp:1302
 msgid "Drag to resize the <b>flowed text frame</b>"
-msgstr "Ťahaním zmeníte veľkosť <b>rámca textovéh toku</b>"
+msgstr "Ťahaním zmeníte veľkosť <b>rámca textového toku</b>"
 
 #: ../src/path-chemistry.cpp:57
 msgid "Select <b>at least two objects</b> to combine."
@@ -4345,7 +4348,7 @@ msgstr "neznáma chyba"
 #: ../src/print.cpp:194
 #, c-format
 msgid "Printer '%s' does not support PS output"
-msgstr ""
+msgstr "Tlačiareň '%s' nepodporuje PS výstup"
 
 #. since we didn't include the Preview capability,
 #. this should never happen.
@@ -4356,7 +4359,7 @@ msgstr "Ukážka pred tlačou nie je dostupná"
 #: ../src/print.cpp:232
 #, c-format
 msgid "Failed to create tempfile for printing: %s"
-msgstr ""
+msgstr "Nepodarilo sa vytvoriť dočasný súbor pre tlač: %s"
 
 #. redirect output to new print dialog
 #: ../src/print.cpp:272
@@ -4623,7 +4626,7 @@ msgstr "Posunúť vodorovne po pixeloch"
 
 #: ../src/selection-chemistry.cpp:2095
 msgid "action|Clone"
-msgstr ""
+msgstr "action|Klonovať"
 
 #: ../src/selection-chemistry.cpp:2112
 msgid "Select a <b>clone</b> to unlink."
@@ -4766,7 +4769,7 @@ msgstr "Kváder"
 
 #: ../src/selection-describer.cpp:70
 msgid "object|Clone"
-msgstr ""
+msgstr "object|Klon"
 
 #: ../src/selection-describer.cpp:74
 msgid "Offset path"
@@ -5284,7 +5287,7 @@ msgstr "Výber <b>neobsahuje cestu</b> na posun dnu/von."
 
 #: ../src/splivarot.cpp:1560
 msgid "Simplifying paths (separately):"
-msgstr ""
+msgstr "Zjednodušenie ciest (oddelene):"
 
 #: ../src/splivarot.cpp:1562
 msgid "Simplifying paths:"
@@ -5594,7 +5597,7 @@ msgstr "<b>Kliknutím a ťahaním</b> medzi tvarmi vytvoríte konektor."
 
 #: ../src/tools-switch.cpp:226
 msgid "<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new fill with the current selection, <b>Ctrl+click</b> to change the clicked object's fill and stroke to the current setting."
-msgstr ""
+msgstr "<b>Kliknutím</b> vyfarbíte ohraničenú oblasť, <b>Shift+kliknutím</b> zjednotíte novú výplň s aktuálnym výberom, <b>Ctrl+kliknutím</b> zmeníte výplň a ťah objektu, na ktorý klikáte na aktuálne nastavenie."
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:500
 #: ../src/trace/potrace/inkscape-potrace.cpp:574
@@ -6019,7 +6022,7 @@ msgstr "Zobraziť _okraj stránky"
 
 #: ../src/ui/dialog/document-properties.cpp:204
 msgid "If set, rectangular page border is shown"
-msgstr "Ak je nastavené, zobrazí sa obdĺžnikový okraj stránky"
+msgstr "Ak je voľba nastavená, zobrazí sa obdĺžnikový okraj stránky"
 
 #: ../src/ui/dialog/document-properties.cpp:205
 msgid "Border on _top of drawing"
@@ -6027,7 +6030,7 @@ msgstr "Okraj na _vrchole kresby"
 
 #: ../src/ui/dialog/document-properties.cpp:205
 msgid "If set, border is always on top of the drawing"
-msgstr "Ak je nastavené, okraj je na vrchole kresby"
+msgstr "Ak je voľba nastavená, okraj je na vrchole kresby"
 
 #: ../src/ui/dialog/document-properties.cpp:206
 msgid "Border _color:"
@@ -6047,7 +6050,7 @@ msgstr "_Zobraziť okraj stránky"
 
 #: ../src/ui/dialog/document-properties.cpp:209
 msgid "If set, page border shows a shadow on its right and lower side"
-msgstr "Ak je nastavené, na ľavom a spodnom okraji stránky sa zobrazí  tieň"
+msgstr "Ak je voľba nastavená, na ľavom a spodnom okraji stránky sa zobrazí  tieň"
 
 #: ../src/ui/dialog/document-properties.cpp:210
 msgid "Default _units:"
@@ -6129,7 +6132,7 @@ msgstr "Vždy prichytávať"
 
 #: ../src/ui/dialog/document-properties.cpp:276
 msgid "Snapping distance, in screen pixels, for snapping to objects"
-msgstr ""
+msgstr "Vzdialenosť prichytávania v obrazových bodoch pre prichytávanie k objektom"
 
 #: ../src/ui/dialog/document-properties.cpp:277
 msgid "If set, objects snap to the nearest object, regardless of distance"
@@ -6141,7 +6144,7 @@ msgstr "Citlivosť p_richytávania:"
 
 #: ../src/ui/dialog/document-properties.cpp:280
 msgid "Snapping distance, in screen pixels, for snapping to grid"
-msgstr ""
+msgstr "Vzdialenosť prichytávania v obrazových bodoch pre prichytávanie k mriežke"
 
 #: ../src/ui/dialog/document-properties.cpp:281
 msgid "If set, objects snap to the nearest grid line, regardless of distance"
@@ -6153,7 +6156,7 @@ msgstr "Citlivosť pr_ichytávania:"
 
 #: ../src/ui/dialog/document-properties.cpp:284
 msgid "Snapping distance, in screen pixels, for snapping to guides"
-msgstr ""
+msgstr "Vzdialenosť prichytávania v obrazových bodoch pre prichytávanie k vodidlám"
 
 #: ../src/ui/dialog/document-properties.cpp:285
 msgid "If set, objects snap to the nearest guide, regardless of distance"
@@ -6345,11 +6348,11 @@ msgstr "_Typ"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:589
 msgid "Reorder filter primitive"
-msgstr ""
+msgstr "Zmeniť poradie primitív filtra"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:711
 msgid "Stitch Tiles"
-msgstr ""
+msgstr "Zošiť dlaždice"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:712
 msgid "Fractal Noise"
@@ -6361,15 +6364,15 @@ msgstr "Turbulencia"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:834
 msgid "Add filter primitive"
-msgstr ""
+msgstr "Pridať primitívu filtra"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:846
 msgid "Remove filter primitive"
-msgstr ""
+msgstr "Odstrániť primitívu filtra"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:862
 msgid "Duplicate filter primitive"
-msgstr ""
+msgstr "Duplikovať primitívu filtra"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:923
 msgid "Set filter primitive attribute"
@@ -6656,7 +6659,7 @@ msgstr "Vizuálne ohraničenie"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:344
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
-msgstr ""
+msgstr "Do tohto ohraničenia patrí šírka ťahu, zakončenia čiar, okraje filtrov atď."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:345
 msgid "Geometric bounding box"
@@ -6664,7 +6667,7 @@ msgstr "Geometrické ohraničenie"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:347
 msgid "This bounding box includes only the bare path"
-msgstr ""
+msgstr "Do tohto ohraničenia patrí iba samotná cesta"
 
 #. Node
 #: ../src/ui/dialog/inkscape-preferences.cpp:350
@@ -6717,7 +6720,7 @@ msgstr "Ak je voľba zapnutá, hrúbka pera je v absolútnych jednotkách (px) n
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid "If on, each newly created object will be selected (deselecting previous selection)"
-msgstr ""
+msgstr "Ak je voľba zapnutá, vytvorený objekt bude vybratý (čím sa zruší predchádzajúci výber)"
 
 #. Paint Bucket
 #: ../src/ui/dialog/inkscape-preferences.cpp:397
@@ -6750,7 +6753,7 @@ msgstr "Pipeta"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:420
 msgid "Save and restore window geometry for each document"
-msgstr ""
+msgstr "Uložiť a obnoviť geometriu okna pre každý dokument"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:421
 msgid "Remember and use last window's geometry"
@@ -6790,15 +6793,15 @@ msgstr "Uložiť geometriu okien (veľkosť a polohu):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid "Let the window manager determine placement of all windows"
-msgstr ""
+msgstr "Nechať správcu okien určiť umiestnenie všetkých okien"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Remember and use the last window's geometry (saves geometry to user preferences)"
-msgstr ""
+msgstr "Pamätať si a používať poslednú geometriu okna (ukladá geometriu v používateľských nastaveniach)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid "Save and restore window geometry for each document (saves geometry in the document)"
-msgstr ""
+msgstr "Uložiť a obnoviť geometriu okna pre každý dokument (ukladá geometriu v dokumente)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "Dialogs on top:"
@@ -7098,11 +7101,11 @@ msgstr "Ak je voľba zapnutá, komentár (štítok) označí vykreslený výstup
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:603
 msgid "Make commands toolbar smaller"
-msgstr ""
+msgstr "Zmenšiť panel nástrojov príkazov "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:605
 msgid "Make the commands toolbar use the 'secondary' toolbar size (requires restart)"
-msgstr ""
+msgstr "Nech panel nástrojov príkazov používa 'sekundárnu' veľkosť panelu nástrojov (vyžaduje reštart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:607
 msgid "Max recent documents:"
@@ -9249,7 +9252,7 @@ msgstr "Vytvoriť konektory"
 
 #: ../src/verbs.cpp:2382
 msgid "Fill bounded areas"
-msgstr ""
+msgstr "Vyplniť ohraničené oblasti"
 
 #. Tool prefs
 #: ../src/verbs.cpp:2385
@@ -9577,7 +9580,7 @@ msgstr "Výp_lň a ťah..."
 
 #: ../src/verbs.cpp:2470
 msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
-msgstr ""
+msgstr "Upravovať farby, farebné prechody, šírku ťahu, zakončenia, vzorky atď. objektov"
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2472
@@ -9710,11 +9713,11 @@ msgstr "Zobrazí vrstvy"
 
 #: ../src/verbs.cpp:2506
 msgid "Filter Effects..."
-msgstr ""
+msgstr "Filter efekty..."
 
 #: ../src/verbs.cpp:2507
 msgid "Manage SVG filter effects"
-msgstr ""
+msgstr "Spravovať SVG filter efekty"
 
 #. Help
 #: ../src/verbs.cpp:2510
@@ -10362,7 +10365,7 @@ msgstr "Napísať text do textového uzla"
 
 #: ../src/widgets/toolbox.cpp:167
 msgid "Style of new stars"
-msgstr ""
+msgstr "Štýl nových hviezd"
 
 #: ../src/widgets/toolbox.cpp:169
 msgid "Style of new rectangles"
@@ -10374,19 +10377,19 @@ msgstr "Štýl nového kvádra"
 
 #: ../src/widgets/toolbox.cpp:173
 msgid "Style of new ellipses"
-msgstr ""
+msgstr "Štýl nových elíps"
 
 #: ../src/widgets/toolbox.cpp:175
 msgid "Style of new spirals"
-msgstr ""
+msgstr "Štýl nových špirál"
 
 #: ../src/widgets/toolbox.cpp:177
 msgid "Style of new paths created by Pencil"
-msgstr ""
+msgstr "Štýl nových ciest vytvorených Ceruzkou"
 
 #: ../src/widgets/toolbox.cpp:179
 msgid "Style of new paths created by Pen"
-msgstr ""
+msgstr "Štýl nových ciest vytvorených Perom"
 
 #: ../src/widgets/toolbox.cpp:181
 msgid "Style of new calligraphic strokes"
@@ -10394,7 +10397,7 @@ msgstr "Štýl nového kaligrafického ťahu"
 
 #: ../src/widgets/toolbox.cpp:191
 msgid "Style of Paint Bucket fill objects"
-msgstr ""
+msgstr "Štýl výplne objektov pomocou Vedra s farbou"
 
 #: ../src/widgets/toolbox.cpp:781
 msgid "Insert"
@@ -10613,27 +10616,27 @@ msgstr "Kváder: Zmeniť počet páčok"
 
 #: ../src/widgets/toolbox.cpp:2205
 msgid "Toggle VP in X direction"
-msgstr ""
+msgstr "Prepnúť VP v smere X"
 
 #: ../src/widgets/toolbox.cpp:2206
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
-msgstr ""
+msgstr "Prepnúť VP v smere X medzi 'konečným' a 'nekonečným' (=rovnobežné)"
 
 #: ../src/widgets/toolbox.cpp:2220
 msgid "Toggle VP in Y direction"
-msgstr ""
+msgstr "Prepnúť VP v smere Y"
 
 #: ../src/widgets/toolbox.cpp:2221
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
-msgstr ""
+msgstr "Prepnúť VP v smere Y medzi 'konečným' a 'nekonečným' (=rovnobežné)"
 
 #: ../src/widgets/toolbox.cpp:2235
 msgid "Toggle VP in Z direction"
-msgstr ""
+msgstr "Prepnúť VP v smere Z"
 
 #: ../src/widgets/toolbox.cpp:2236
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
-msgstr ""
+msgstr "Prepnúť VP v smere Z medzi 'konečným' a 'nekonečným' (=rovnobežné)"
 
 #: ../src/widgets/toolbox.cpp:2255
 msgid "Three Handles"
@@ -10641,7 +10644,7 @@ msgstr "Tri páčky"
 
 #: ../src/widgets/toolbox.cpp:2256
 msgid "Switch to three handles (arbitrary resizing in XY-direction)"
-msgstr ""
+msgstr "prepnúť na tri páčky (ľubovoľná zmena veľkosti v smere XY)"
 
 #: ../src/widgets/toolbox.cpp:2262
 msgid "Four Handles"
@@ -10649,7 +10652,7 @@ msgstr "Štyri páčky"
 
 #: ../src/widgets/toolbox.cpp:2263
 msgid "Switch to four handles (constrained resizing in XY-direction)"
-msgstr ""
+msgstr "prepnúť na štyri páčky (obmedzená zmena veľkosti v smere XY)"
 
 #: ../src/widgets/toolbox.cpp:2324
 msgid "Change spiral"
@@ -10682,7 +10685,7 @@ msgstr "Polomer najvnútornejšej revolúcie (relatívne k veľkosti špirály)"
 #. Width
 #: ../src/widgets/toolbox.cpp:2628
 msgid "(hairline)"
-msgstr ""
+msgstr "(hrúbka vlasu)"
 
 #: ../src/widgets/toolbox.cpp:2628
 #: ../src/widgets/toolbox.cpp:2658
@@ -10700,11 +10703,11 @@ msgstr "Šírka kaligrafického pera (v pomere k ploche viditeľného plátna)"
 #. Thinning
 #: ../src/widgets/toolbox.cpp:2643
 msgid "(speed blows up stroke)"
-msgstr ""
+msgstr "(rýchlosť zväčšuje ťah)"
 
 #: ../src/widgets/toolbox.cpp:2643
 msgid "(slight widening)"
-msgstr ""
+msgstr "(mierne rozšírenie)"
 
 #: ../src/widgets/toolbox.cpp:2643
 msgid "(constant width)"
@@ -10712,11 +10715,11 @@ msgstr "(nemenná šírka)"
 
 #: ../src/widgets/toolbox.cpp:2643
 msgid "(slight thinning, default)"
-msgstr ""
+msgstr "(mierne stenčenie, štandardné)"
 
 #: ../src/widgets/toolbox.cpp:2643
 msgid "(speed deflates stroke)"
-msgstr ""
+msgstr "(rýchlosť redukuje ťah)"
 
 #: ../src/widgets/toolbox.cpp:2646
 msgid "Thinning:"
@@ -10750,15 +10753,15 @@ msgstr "Uhol hrotu pera (v stupňoch; 0 = vodorovný; nemá účinok pri fixáci
 #. Fixation
 #: ../src/widgets/toolbox.cpp:2674
 msgid "(perpendicular to stroke, \"brush\")"
-msgstr ""
+msgstr "(kolmé na ťah, \"štetec\")"
 
 #: ../src/widgets/toolbox.cpp:2674
 msgid "(almost fixed, default)"
-msgstr ""
+msgstr "(takmer pevné, štandardné)"
 
 #: ../src/widgets/toolbox.cpp:2674
 msgid "(fixed by Angle, \"pen\")"
-msgstr ""
+msgstr "(pevné podľa Uhla, \"pero\")"
 
 #: ../src/widgets/toolbox.cpp:2677
 msgid "Fixation:"
@@ -10775,15 +10778,15 @@ msgstr "(tupé konce, štandardné)"
 
 #: ../src/widgets/toolbox.cpp:2689
 msgid "(slightly bulging)"
-msgstr ""
+msgstr "(mierne vyduté)"
 
 #: ../src/widgets/toolbox.cpp:2689
 msgid "(approximately round)"
-msgstr ""
+msgstr "(približne okrúhle)"
 
 #: ../src/widgets/toolbox.cpp:2689
 msgid "(long protruding caps)"
-msgstr ""
+msgstr "(dlhé, prečnievajúce zakončenia)"
 
 #: ../src/widgets/toolbox.cpp:2693
 msgid "Caps:"
@@ -10800,15 +10803,15 @@ msgstr "(hladká čiara)"
 
 #: ../src/widgets/toolbox.cpp:2705
 msgid "(slight tremor)"
-msgstr ""
+msgstr "(ľahké záchvevy)"
 
 #: ../src/widgets/toolbox.cpp:2705
 msgid "(noticeable tremor)"
-msgstr ""
+msgstr "(citeľné záchvevy)"
 
 #: ../src/widgets/toolbox.cpp:2705
 msgid "(maximum tremor)"
-msgstr ""
+msgstr "(maximálne záchvevy)"
 
 #: ../src/widgets/toolbox.cpp:2708
 msgid "Tremor:"
@@ -10821,7 +10824,7 @@ msgstr "Zväčšite aby boli ťahy drsné a rozochvené"
 #. Wiggle
 #: ../src/widgets/toolbox.cpp:2721
 msgid "(no wiggle)"
-msgstr ""
+msgstr "(bez chvenia)"
 
 #: ../src/widgets/toolbox.cpp:2721
 msgid "(slight deviation)"
@@ -10829,7 +10832,7 @@ msgstr "(mierna odchýlka)"
 
 #: ../src/widgets/toolbox.cpp:2721
 msgid "(wild waves and curls)"
-msgstr ""
+msgstr "(divoké vlny a kučery)"
 
 #: ../src/widgets/toolbox.cpp:2724
 msgid "Wiggle:"
@@ -10842,19 +10845,19 @@ msgstr "Zväčšite aby pero kmitalo a triaslo sa"
 #. Mass
 #: ../src/widgets/toolbox.cpp:2736
 msgid "(no inertia)"
-msgstr ""
+msgstr "(bez zotrvačnosti)"
 
 #: ../src/widgets/toolbox.cpp:2736
 msgid "(slight smoothing, default)"
-msgstr ""
+msgstr "(ľahké vyhladzovanie, štandardné)"
 
 #: ../src/widgets/toolbox.cpp:2736
 msgid "(noticeable lagging)"
-msgstr ""
+msgstr "(citeľné oneskorenie)"
 
 #: ../src/widgets/toolbox.cpp:2736
 msgid "(maximum inertia)"
-msgstr ""
+msgstr "(maximálna zotrvačnosť)"
 
 #: ../src/widgets/toolbox.cpp:2739
 msgid "Mass:"
@@ -10870,7 +10873,7 @@ msgstr "Vektorizácia pozadia"
 
 #: ../src/widgets/toolbox.cpp:2754
 msgid "Trace the lightness of the background by the width of the pen (white - minimum width, black - maximum width)"
-msgstr ""
+msgstr "Vektorizovať svetlosť pozadia ako šírku pera (biele - minimálna šírka, čierne - maximálna šírka)"
 
 #: ../src/widgets/toolbox.cpp:2765
 msgid "Pressure"
@@ -10926,7 +10929,7 @@ msgstr "Otvorený oblúk"
 
 #: ../src/widgets/toolbox.cpp:3098
 msgid "Switch to arc (unclosed shape)"
-msgstr ""
+msgstr "Prepnúť na oblúk (nezatvorený tvar)"
 
 #: ../src/widgets/toolbox.cpp:3121
 msgid "Make whole"
@@ -11026,7 +11029,7 @@ msgstr "Zmeniť rozostup konektorov"
 
 #: ../src/widgets/toolbox.cpp:4412
 msgid "Avoid"
-msgstr ""
+msgstr "Vyhnúť sa"
 
 #: ../src/widgets/toolbox.cpp:4422
 msgid "Ignore"
@@ -11054,7 +11057,7 @@ msgstr "ideálna dĺžka konektorov, keď je použité rozloženie"
 
 #: ../src/widgets/toolbox.cpp:4467
 msgid "Downwards"
-msgstr ""
+msgstr "Smerom dolu"
 
 #: ../src/widgets/toolbox.cpp:4468
 msgid "Make connectors with end-markers (arrows) point downwards"
@@ -11070,15 +11073,15 @@ msgstr "Vyplniť čím:"
 
 #: ../src/widgets/toolbox.cpp:4591
 msgid "The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"
-msgstr ""
+msgstr "Maximálny povolený rozdiel medzi pixelom, na ktorý sa kliklo a susednými pixealmi, ktoré sa majú počítať do výplne"
 
 #: ../src/widgets/toolbox.cpp:4613
 msgid "Grow/shrink by:"
-msgstr ""
+msgstr "Zväčšiť/zmenšiť o:"
 
 #: ../src/widgets/toolbox.cpp:4614
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
-msgstr ""
+msgstr "Okoľko zväčšiť (kladné číslo) alebo zmenšiť (záporné) vytvorenú cestu výplne"
 
 #: ../src/widgets/toolbox.cpp:4639
 msgid "Fill gaps:"
@@ -11229,11 +11232,11 @@ msgstr "RGB Barrel"
 
 #: ../share/extensions/color_replace.inx.h:1
 msgid "By color (RRGGBB hex):"
-msgstr ""
+msgstr "Podľa farby (RRGGBB hexadecimálne):"
 
 #: ../share/extensions/color_replace.inx.h:3
 msgid "Replace color (RRGGBB hex):"
-msgstr ""
+msgstr "Nahradiť farbu (RRGGBB hexadecimálne):"
 
 #: ../share/extensions/color_replace.inx.h:4
 msgid "Replace color..."
@@ -11452,7 +11455,7 @@ msgstr "Vzorky"
 
 #: ../share/extensions/funcplot.inx.h:14
 msgid "Select a rectangle before calling effect. Rectangle determines x and y scales. With polar coordinates: Start and End x-values define the angle range in radians. x scale is set so left and right edges of rectangle are at +/-1. Isotropic scaling is disabled. First derivative is always determined numerically."
-msgstr ""
+msgstr "Pred zavolaním efektu vytvorte obdĺžnik. Obdĺžnik určí veľkosti x a y. Pri polárnych súradniciach: x-hodnoty Začiatok: a Koniec: definujú rozsah uhla v radiánoch. Mierka x je nastavená tak, aby pravé a ľave okraje obdĺžnika boli na +/-1. Izotropická zmena veľkosti je vypnutá. Prvá derivácia sa vždy určuje numericky."
 
 #: ../share/extensions/funcplot.inx.h:15
 msgid "Standard python math functions are available: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and e are also available."
@@ -11480,7 +11483,7 @@ msgstr "hodnota y vrchu obdĺžnika"
 
 #: ../share/extensions/gears.inx.h:1
 msgid "Circular pitch, px"
-msgstr ""
+msgstr "Kruhový rozostup, px"
 
 #: ../share/extensions/gears.inx.h:2
 msgid "Gear"
@@ -11610,7 +11613,7 @@ msgstr "Viet na odstavec"
 
 #: ../share/extensions/lorem_ipsum.inx.h:6
 msgid "This effect creates the standard \"Lorem Ipsum\" pseudolatin placeholder text. If a flowed text is selected, Lorem Ipsum is added to it; otherwise a new flowed text object, the size of the page, is created in a new layer."
-msgstr ""
+msgstr "Tento efekt vytvorí štandardný pseudolatinský \"Lorem Ipsum\" text. Ak ste zvolili vytvorenie textového toku, Lorem Ipsum sa k nemu pridá; inak sa na novej vrstve vytvorí nový objekt textového toku vo veľkosti stránky."
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
@@ -11767,11 +11770,11 @@ msgstr "Výška čiary:"
 
 #: ../share/extensions/render_barcode.inx.h:2
 msgid "Barcode"
-msgstr ""
+msgstr "Čiarový kód"
 
 #: ../share/extensions/render_barcode.inx.h:3
 msgid "Barcode Data:"
-msgstr ""
+msgstr "Údaje čiarového kódu:"
 
 #: ../share/extensions/render_barcode.inx.h:4
 msgid "Barcode Type:"
@@ -11803,23 +11806,23 @@ msgstr "Vstup Sketch"
 
 #: ../share/extensions/spirograph.inx.h:1
 msgid "Gear Placement"
-msgstr ""
+msgstr "Umiestnenie ozubenia"
 
 #: ../share/extensions/spirograph.inx.h:2
 msgid "Inside (Hypotrochoid)"
-msgstr ""
+msgstr "Vnútri (hypotrochoid)"
 
 #: ../share/extensions/spirograph.inx.h:3
 msgid "Outside (Epitrochoid)"
-msgstr ""
+msgstr "Vonku (epitrochoid)"
 
 #: ../share/extensions/spirograph.inx.h:4
 msgid "Quality (Default = 16)"
-msgstr ""
+msgstr "Kvalita (štandardne = 16)"
 
 #: ../share/extensions/spirograph.inx.h:5
 msgid "R - Ring Radius (px)"
-msgstr ""
+msgstr "R - polomer kružnice (px)"
 
 #: ../share/extensions/spirograph.inx.h:7
 msgid "Rotation (deg)"
@@ -11831,11 +11834,11 @@ msgstr "Spirograf"
 
 #: ../share/extensions/spirograph.inx.h:9
 msgid "d - Pen Radius (px)"
-msgstr ""
+msgstr "d - polomer pera (px)"
 
 #: ../share/extensions/spirograph.inx.h:10
 msgid "r - Gear Radius (px)"
-msgstr ""
+msgstr "r - polomer ozubenia (px)"
 
 #: ../share/extensions/straightseg.inx.h:1
 msgid "Behavior"
