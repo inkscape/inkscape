@@ -15,6 +15,7 @@
 
 #include "sp-filter.h"
 #include "sp-fecolormatrix-fns.h"
+#include "display/nr-filter-colormatrix.h"
 #include <vector>
 
 /* FeColorMatrix base class */
@@ -22,7 +23,7 @@ class SPFeColorMatrixClass;
 
 struct SPFeColorMatrix : public SPFilterPrimitive {
     /** COLORMATRIX ATTRIBUTES HERE */
-    int type;
+    NR::FilterColorMatrixType type;
     gdouble value;
     std::vector<gdouble> values;
 };

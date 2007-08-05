@@ -45,7 +45,7 @@ int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
     y1=in->area.y1;    
 
     switch(type){
-        case 0: //matrix
+        case COLORMATRIX_MATRIX:
             if (values.size()!=20) {
                 g_warning("ColorMatrix: values parameter error. Wrong size.");
                 return -1;
@@ -64,7 +64,7 @@ int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
                 }
             }
             break;
-        case 1: //saturate
+        case COLORMATRIX_SATURATE:
             for (x=x0;x<x1;x++){
                 for (y=y0;y<y1;y++){
                     i = ((x-x0) + (x1-x0)*(y-y0))*4;
@@ -79,7 +79,7 @@ int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
                 }
             }
             break;
-        case 2: //hueRotate
+        case COLORMATRIX_HUEROTATE:
             coshue = cos(value);
             sinhue = sin(value);
             a00 = 0.213 + coshue*( 0.787) + sinhue*(-0.213);
@@ -107,7 +107,7 @@ int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
                 }
             }
             break;
-        case 3: //luminanceToAlpha
+        case COLORMATRIX_LUMINANCETOALPHA:
             for (x=x0;x<x1;x++){
                 for (y=y0;y<y1;y++){
                     i = ((x-x0) + (x1-x0)*(y-y0))*4;
@@ -121,6 +121,8 @@ int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
                 }
             }
             break;
+        case COLORMATRIX_ENDTYPE:
+            break;
     }
     out->empty = FALSE;
     slot.set(_output, out);
@@ -131,7 +133,7 @@ void FilterColorMatrix::area_enlarge(NRRectL &area, Matrix const &trans)
 {
 }
 
-void FilterColorMatrix::set_type(int t){
+void FilterColorMatrix::set_type(FilterColorMatrixType t){
         type = t;
 }
 

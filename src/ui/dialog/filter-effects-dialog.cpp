@@ -1572,6 +1572,9 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->type(NR_FILTER_BLEND);
     _settings->add_combo(SP_ATTR_MODE, _("Mode"), BlendModeConverter);
 
+    _settings->type(NR_FILTER_COLORMATRIX);
+    _settings->add_combo(SP_ATTR_TYPE, _("Type"), ColorMatrixTypeConverter);
+
     _settings->type(NR_FILTER_COMPOSITE);
     _settings->add_combo(SP_ATTR_OPERATOR, _("Operator"), CompositeOperatorConverter);
     _k1 = _settings->add_spinslider(SP_ATTR_K1, _("K1"), -10, 10, 1, 0.01, 1);

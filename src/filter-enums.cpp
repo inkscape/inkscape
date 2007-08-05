@@ -46,15 +46,26 @@ const EnumData<FilterPrimitiveInput> FPInputData[FPINPUT_END] = {
 };
 const EnumDataConverter<FilterPrimitiveInput> FPInputConverter(FPInputData, FPINPUT_END);
 
+// feBlend
 const EnumData<NR::FilterBlendMode> BlendModeData[NR::BLEND_ENDMODE] = {
-    {NR::BLEND_NORMAL, _("Normal"), "normal"},
+    {NR::BLEND_NORMAL,   _("Normal"),   "normal"},
     {NR::BLEND_MULTIPLY, _("Multiply"), "multiply"},
-    {NR::BLEND_SCREEN, _("Screen"), "screen"},
-    {NR::BLEND_DARKEN, _("Darken"), "darken"},
-    {NR::BLEND_LIGHTEN, _("Lighten"), "lighten"}
+    {NR::BLEND_SCREEN,   _("Screen"),   "screen"},
+    {NR::BLEND_DARKEN,   _("Darken"),   "darken"},
+    {NR::BLEND_LIGHTEN,  _("Lighten"),  "lighten"}
 };
 const EnumDataConverter<NR::FilterBlendMode> BlendModeConverter(BlendModeData, NR::BLEND_ENDMODE);
 
+
+const EnumData<NR::FilterColorMatrixType> ColorMatrixTypeData[NR::COLORMATRIX_ENDTYPE] = {
+    {NR::COLORMATRIX_MATRIX,           _("Matrix"),             "matrix"},
+    {NR::COLORMATRIX_SATURATE,         _("Saturate"),           "saturate"},
+    {NR::COLORMATRIX_HUEROTATE,        _("Hue Rotate"),         "hueRotate"},
+    {NR::COLORMATRIX_LUMINANCETOALPHA, _("Luminance to Alpha"), "luminanceToAlpha"}
+};
+const EnumDataConverter<NR::FilterColorMatrixType> ColorMatrixTypeConverter(ColorMatrixTypeData, NR::COLORMATRIX_ENDTYPE);
+
+// feComposite
 const EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR] = {
     {COMPOSITE_DEFAULT,    _("Default"),    ""},
     {COMPOSITE_OVER,       _("Over"),       "over"},
@@ -66,6 +77,7 @@ const EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR]
 };
 const EnumDataConverter<FeCompositeOperator> CompositeOperatorConverter(CompositeOperatorData, COMPOSITE_ENDOPERATOR);
 
+// Light source
 const EnumData<LightSource> LightSourceData[LIGHT_ENDSOURCE] = {
     {LIGHT_DISTANT, _("Distance Light"), "svg:feDistanceLight"},
     {LIGHT_POINT,   _("Point Light"),    "svg:fePointLight"},

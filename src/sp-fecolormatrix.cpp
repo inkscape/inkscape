@@ -108,23 +108,23 @@ sp_feColorMatrix_release(SPObject *object)
         ((SPObjectClass *) feColorMatrix_parent_class)->release(object);
 }
 
-static int sp_feColorMatrix_read_type(gchar const *value){
-    if (!value) return 0; //matrix is default
+static NR::FilterColorMatrixType sp_feColorMatrix_read_type(gchar const *value){
+    if (!value) return NR::COLORMATRIX_MATRIX; //matrix is default
     switch(value[0]){
         case 'm':
-            if (strcmp(value, "matrix") == 0) return 0;
+            if (strcmp(value, "matrix") == 0) return NR::COLORMATRIX_MATRIX;
             break;
         case 's':
-            if (strcmp(value, "saturate") == 0) return 1;
+            if (strcmp(value, "saturate") == 0) return NR::COLORMATRIX_SATURATE;
             break;
         case 'h':
-            if (strcmp(value, "hueRotate") == 0) return 2;
+            if (strcmp(value, "hueRotate") == 0) return NR::COLORMATRIX_HUEROTATE;
             break;
         case 'l':
-            if (strcmp(value, "luminanceToAlpha") == 0) return 3;
+            if (strcmp(value, "luminanceToAlpha") == 0) return NR::COLORMATRIX_LUMINANCETOALPHA;
             break;                        
     }
-    return 0; //matrix is default
+    return NR::COLORMATRIX_MATRIX; //matrix is default
 }
 
 /**
@@ -136,14 +136,14 @@ sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *str)
     SPFeColorMatrix *feColorMatrix = SP_FECOLORMATRIX(object);
     (void)feColorMatrix;
 
-    int read_int;
+    NR::FilterColorMatrixType read_type;
     gdouble read_num;
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
     switch(key) {
         case SP_ATTR_TYPE:
-            read_int =  sp_feColorMatrix_read_type(str);
-            if (feColorMatrix->type != read_int){
-                feColorMatrix->type = read_int;
+            read_type = sp_feColorMatrix_read_type(str);
+            if (feColorMatrix->type != read_type){
+                feColorMatrix->type = read_type;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;

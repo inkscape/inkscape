@@ -13,6 +13,7 @@
  */
 
 #include "display/nr-filter-blend.h"
+#include "display/nr-filter-colormatrix.h"
 #include "display/nr-filter-composite.h"
 #include "display/nr-filter-types.h"
 #include "util/enums.h"
@@ -37,6 +38,9 @@ extern const Inkscape::Util::EnumDataConverter<FilterPrimitiveInput> FPInputConv
 // Blend mode
 extern const Inkscape::Util::EnumData<NR::FilterBlendMode> BlendModeData[NR::BLEND_ENDMODE];
 extern const Inkscape::Util::EnumDataConverter<NR::FilterBlendMode> BlendModeConverter;
+// ColorMatrix type
+extern const Inkscape::Util::EnumData<NR::FilterColorMatrixType> ColorMatrixTypeData[NR::COLORMATRIX_ENDTYPE];
+extern const Inkscape::Util::EnumDataConverter<NR::FilterColorMatrixType> ColorMatrixTypeConverter;
 // Composite operator
 extern const Inkscape::Util::EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR];
 extern const Inkscape::Util::EnumDataConverter<FeCompositeOperator> CompositeOperatorConverter;

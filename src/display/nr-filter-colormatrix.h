@@ -18,6 +18,14 @@
 
 namespace NR {
 
+enum FilterColorMatrixType {
+    COLORMATRIX_MATRIX,
+    COLORMATRIX_SATURATE,
+    COLORMATRIX_HUEROTATE,
+    COLORMATRIX_LUMINANCETOALPHA,
+    COLORMATRIX_ENDTYPE
+};
+
 class FilterColorMatrix : public FilterPrimitive {
 public:
     FilterColorMatrix();
@@ -26,13 +34,13 @@ public:
 
     virtual int render(FilterSlot &slot, Matrix const &trans);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
-    virtual void set_type(int type);
+    virtual void set_type(FilterColorMatrixType type);
     virtual void set_value(gdouble value);
     virtual void set_values(std::vector<gdouble> &values);
 private:
     std::vector<gdouble> values;
     gdouble value;
-    int type;
+    FilterColorMatrixType type;
 };
 
 } /* namespace NR */
