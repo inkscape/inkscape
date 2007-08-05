@@ -35,7 +35,9 @@
 #include "inkscape.h"
 #include "selection.h"
 #include "sp-feblend.h"
+#include "sp-fecolormatrix.h"
 #include "sp-fecomposite.h"
+#include "sp-feconvolvematrix.h"
 #include "sp-fedisplacementmap.h"
 #include "sp-fedistantlight.h"
 #include "sp-femerge.h"
@@ -264,18 +266,19 @@ public:
     }
 };
 
-/* Displays/Edits the kernel matrix for feConvolveMatrix */
-class FilterEffectsDialog::ConvolveMatrix : public Gtk::TreeView, public AttrWidget
+/* Displays/Edits the matrix for feConvolveMatrix or feColorMatrix */
+class FilterEffectsDialog::MatrixAttr : public Gtk::Frame, public AttrWidget
 {
 public:
-    ConvolveMatrix(const SPAttributeEnum a)
+    MatrixAttr(const SPAttributeEnum a)
         : AttrWidget(a)
     {
-        signal_changed().connect(signal_attr_changed().make_slot());
-
         _model = Gtk::ListStore::create(_columns);
-        set_model(_model);
-        set_headers_visible(false);
+        _tree.set_model(_model);
+        _tree.set_headers_visible(false);
+        _tree.show();
+        add(_tree);
+        set_shadow_type(Gtk::SHADOW_IN);
     }
 
     Glib::ustring get_as_attribute() const
@@ -284,7 +287,7 @@ public:
         
         for(Gtk::TreeIter iter = _model->children().begin();
             iter != _model->children().end(); ++iter) {
-            for(unsigned c = 0; c < get_columns().size(); ++c) {
+            for(unsigned c = 0; c < _tree.get_columns().size(); ++c) {
                 os << (*iter)[_columns.cols[c]] << " ";
             }
         }
@@ -294,32 +297,25 @@ public:
     
     void set_from_attribute(SPObject* o)
     {
-        update(SP_FECONVOLVEMATRIX(o));
-    }
-
-    sigc::signal<void>& signal_changed()
-    {
-        return _signal_changed;
-    }
-
-    void update(SPFeConvolveMatrix* conv)
-    {
-        if(conv) {
-            int cols, rows;
-
-            cols = (int)conv->order.getNumber();
-            if(cols > 5)
-                cols = 5;
-            rows = conv->order.optNumber_set ? (int)conv->order.getOptNumber() : cols;
-
-            update(conv, cols, rows);
+        if(o) {
+            if(SP_IS_FECONVOLVEMATRIX(o)) {
+                SPFeConvolveMatrix* conv = SP_FECONVOLVEMATRIX(o);
+                int cols, rows;
+                cols = (int)conv->order.getNumber();
+                if(cols > 5)
+                    cols = 5;
+                rows = conv->order.optNumber_set ? (int)conv->order.getOptNumber() : cols;
+                update(o, rows, cols);
+            }
+            else if(SP_IS_FECOLORMATRIX(o))
+                update(o, 4, 5);
         }
     }
 private:
-    class ConvolveMatrixColumns : public Gtk::TreeModel::ColumnRecord
+    class MatrixColumns : public Gtk::TreeModel::ColumnRecord
     {
     public:
-        ConvolveMatrixColumns()
+        MatrixColumns()
         {
             cols.resize(5);
             for(unsigned i = 0; i < cols.size(); ++i)
@@ -328,37 +324,112 @@ private:
         std::vector<Gtk::TreeModelColumn<double> > cols;
     };
 
-    void update(SPFeConvolveMatrix* conv, const int rows, const int cols)
+    void update(SPObject* o, const int rows, const int cols)
     {
         _model->clear();
 
-        remove_all_columns();
+        _tree.remove_all_columns();
 
-        if(conv) {
+        SPFeColorMatrix* col = 0;
+        SPFeConvolveMatrix* conv = 0;
+        if(SP_IS_FECOLORMATRIX(o))
+            col = SP_FECOLORMATRIX(o);
+        else if(SP_IS_FECONVOLVEMATRIX(o))
+            conv = SP_FECONVOLVEMATRIX(o);
+        else
+            return;
+
+        if(o) {
             int ndx = 0;
 
             for(int i = 0; i < cols; ++i) {
-                append_column_numeric_editable("", _columns.cols[i], "%.2f");
-                dynamic_cast<Gtk::CellRendererText*>(get_column(i)->get_first_cell_renderer())->signal_edited().connect(
-                    sigc::mem_fun(*this, &ConvolveMatrix::rebind));
+                _tree.append_column_numeric_editable("", _columns.cols[i], "%.2f");
+                dynamic_cast<Gtk::CellRendererText*>(_tree.get_column(i)->get_first_cell_renderer())->signal_edited().connect(
+                    sigc::mem_fun(*this, &MatrixAttr::rebind));
             }
 
             for(int r = 0; r < rows; ++r) {
                 Gtk::TreeRow row = *(_model->append());
-                for(int c = 0; c < cols; ++c, ++ndx)
-                    row[_columns.cols[c]] = ndx < (int)conv->kernelMatrix.size() ? conv->kernelMatrix[ndx] : 0;
+                for(int c = 0; c < cols; ++c, ++ndx) {
+                    if(col)
+                        row[_columns.cols[c]] = ndx < (int)col->values.size() ? col->values[ndx] : 0;
+                    else
+                        row[_columns.cols[c]] = ndx < (int)conv->kernelMatrix.size() ? conv->kernelMatrix[ndx] : 0;
+                }
             }
         }
     }
 
     void rebind(const Glib::ustring&, const Glib::ustring&)
     {
-        _signal_changed();
+        signal_attr_changed()();
     }
 
+    Gtk::TreeView _tree;
     Glib::RefPtr<Gtk::ListStore> _model;
-    ConvolveMatrixColumns _columns;
-    sigc::signal<void> _signal_changed;
+    MatrixColumns _columns;
+};
+
+// Displays a matrix or a slider for feColorMatrix
+class FilterEffectsDialog::ColorMatrixValues : public Gtk::Frame, public AttrWidget
+{
+public:
+    ColorMatrixValues()
+        : AttrWidget(SP_ATTR_VALUES),
+          _matrix(SP_ATTR_VALUES),
+          _saturation(0, 0, 1, 0.1, 0.01, 2, SP_ATTR_VALUES),
+          _angle(0, 0, 360, 0.1, 0.01, 1, SP_ATTR_VALUES),
+          _label(_("None"), Gtk::ALIGN_LEFT)
+    {
+        _matrix.show();
+        _saturation.show();
+        _angle.show();
+
+        _label.set_sensitive(false);
+        _label.show();
+
+        set_shadow_type(Gtk::SHADOW_NONE);
+    }
+
+    virtual void set_from_attribute(SPObject* o)
+    {
+        if(SP_IS_FECOLORMATRIX(o)) {
+            SPFeColorMatrix* col = SP_FECOLORMATRIX(o);
+            remove();
+            switch(col->type) {
+                case COLORMATRIX_SATURATE:
+                    add(_saturation);
+                    _saturation.set_from_attribute(o);
+                    break;
+                case COLORMATRIX_HUEROTATE:
+                    add(_angle);
+                    _angle.set_from_attribute(o);
+                    break;
+                case COLORMATRIX_LUMINANCETOALPHA:
+                    add(_label);
+                    break;
+                case COLORMATRIX_MATRIX:
+                default:
+                    add(_matrix);
+                    _matrix.set_from_attribute(o);
+                    break;
+            }
+        }
+    }
+
+    virtual Glib::ustring get_as_attribute() const
+    {
+        const Widget* w = get_child();
+        if(w == &_label)
+            return "";
+        else
+            return dynamic_cast<const AttrWidget*>(w)->get_as_attribute();
+    }
+private:
+    MatrixAttr _matrix;
+    SpinSlider _saturation;
+    SpinSlider _angle;
+    Gtk::Label _label;
 };
 
 class FilterEffectsDialog::Settings
@@ -428,13 +499,22 @@ public:
         return col;
     }
 
-    // ConvolveMatrix
-    ConvolveMatrix* add_matrix(const SPAttributeEnum attr, const Glib::ustring& label)
+    // Matrix
+    MatrixAttr* add_matrix(const SPAttributeEnum attr, const Glib::ustring& label)
     {
-        ConvolveMatrix* conv = new ConvolveMatrix(attr);
+        MatrixAttr* conv = new MatrixAttr(attr);
         add_widget(conv, label);
         add_attr_widget(conv);
         return conv;
+    }
+
+    // ColorMatrixValues
+    ColorMatrixValues* add_colormatrixvalues(const Glib::ustring& label)
+    {
+        ColorMatrixValues* cmv = new ColorMatrixValues;
+        add_widget(cmv, label);
+        add_attr_widget(cmv);
+        return cmv;
     }
 
     // SpinSlider
@@ -1574,6 +1654,7 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_COLORMATRIX);
     _settings->add_combo(SP_ATTR_TYPE, _("Type"), ColorMatrixTypeConverter);
+    _settings->add_colormatrixvalues(_("Value(s)"));
 
     _settings->type(NR_FILTER_COMPOSITE);
     _settings->add_combo(SP_ATTR_OPERATOR, _("Operator"), CompositeOperatorConverter);
@@ -1665,7 +1746,7 @@ void FilterEffectsDialog::duplicate_primitive()
 
 void FilterEffectsDialog::convolve_order_changed()
 {
-    _convolve_matrix->update(SP_FECONVOLVEMATRIX(_primitive_list.get_selected()));
+    _convolve_matrix->set_from_attribute(SP_OBJECT(_primitive_list.get_selected()));
     _convolve_target->get_spinbuttons()[0]->get_adjustment()->set_upper(_convolve_order->get_spinbutton1().get_value() - 1);
     _convolve_target->get_spinbuttons()[1]->get_adjustment()->set_upper(_convolve_order->get_spinbutton2().get_value() - 1);
 }

@@ -27,7 +27,6 @@
 #include "attributes.h"
 #include "dialog.h"
 #include "sp-filter.h"
-#include "sp-feconvolvematrix.h"
 #include "ui/widget/filter-effect-chooser.h"
 #include "ui/widget/spin-slider.h"
 
@@ -195,13 +194,14 @@ private:
     Gtk::Label _empty_settings;
 
     class Settings;
-    class ConvolveMatrix;
+    class MatrixAttr;
+    class ColorMatrixValues;
     class LightSourceControl;
     Settings* _settings;
     Glib::RefPtr<Gtk::SizeGroup> _sizegroup;
 
     // Convolve Matrix
-    ConvolveMatrix* _convolve_matrix;
+    MatrixAttr* _convolve_matrix;
     DualSpinButton* _convolve_order;
     MultiSpinButton* _convolve_target;
 
