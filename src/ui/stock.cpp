@@ -19,6 +19,7 @@ namespace Stock {
 Gtk::StockID const OPEN_RECENT("open-recent");
 Gtk::StockID const IMPORT("import");
 Gtk::StockID const EXPORT("export");
+Gtk::StockID const EXPORTTOOCAL("export_to_ocal");
 Gtk::StockID const VACUUM_DEFS("vacuum-defs");
 // Edit menu
 Gtk::StockID const UNDO_HISTORY("undo-history");

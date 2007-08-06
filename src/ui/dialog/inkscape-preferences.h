@@ -5,6 +5,7 @@
  *   Carl Hetherington
  *   Marco Scholten
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Bruno Dilly <bruno.dilly@gmail.com>
  *
  * Copyright (C) 2004-2007 Authors
  *
@@ -154,6 +155,9 @@ protected:
     PrefCheckButton _misc_imp_bitmap, _misc_comment, _misc_scripts;
     PrefCheckButton _misc_small_toolbar;
     PrefCombo       _misc_overs_bitmap;
+    PrefEntry       _misc_ocal_url;
+    PrefEntry       _misc_ocal_username;
+    PrefEntry       _misc_ocal_password;
 
     int _max_dialog_width;
     int _max_dialog_height;

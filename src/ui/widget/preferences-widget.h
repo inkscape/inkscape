@@ -3,8 +3,9 @@
  *
  * Authors:
  *   Marco Scholten
+ *   Bruno Dilly <bruno.dilly@gmail.com>
  *
- * Copyright (C) 2004, 2006 Authors
+ * Copyright (C) 2004, 2006, 2007  Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -86,6 +87,17 @@ protected:
     std::string _attr;
     std::vector<int> _values;
     void on_changed();
+};
+
+class PrefEntry : public Gtk::Entry
+{
+public:
+    void init(const std::string& prefs_path, const std::string& attr,
+            bool mask);
+protected:
+    std::string _prefs_path;
+    std::string _attr;
+    void on_activate();
 };
 
 class DialogPage : public Gtk::Table

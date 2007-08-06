@@ -3,8 +3,9 @@
  *
  * Authors:
  *   Marco Scholten
+ *   Bruno Dilly <bruno.dilly@gmail.com>
  *
- * Copyright (C) 2004, 2006 Authors
+ * Copyright (C) 2004, 2006, 2007 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */ 
@@ -264,6 +265,25 @@ void PrefCombo::on_changed()
     {    
         prefs_set_int_attribute (_prefs_path.c_str(), _attr.c_str(), _values[this->get_active_row_number()]);
     }
+}
+
+void PrefEntry::init(const std::string& prefs_path, const std::string& attr,
+            bool visibility)
+{
+    _prefs_path = prefs_path;
+    _attr = attr;
+    this->set_invisible_char('*');
+    this->set_visibility(visibility);
+    this->set_text(prefs_get_string_attribute(_prefs_path.c_str(), _attr.c_str()));
+}
+
+void PrefEntry::on_activate()
+{
+    if (this->is_visible()) //only take action if user changed value
+    {
+        prefs_set_string_attribute(_prefs_path.c_str(), _attr.c_str(), this->get_text().c_str());
+    }
+    return;
 }
 
 } // namespace Widget

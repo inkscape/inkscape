@@ -79,6 +79,23 @@ void sp_file_revert_dialog ();
 ## S A V E
 ######################*/
 
+/*
+ * Added to make only the local savings.
+ */
+
+bool file_save_local(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
+		Inkscape::Extension::Extension *key, bool saveas, bool official);
+
+
+/*
+ * Added to make only the remote savings.
+ */
+
+bool file_save_remote(SPDocument *doc, const Glib::ustring &uri,
+		 Inkscape::Extension::Extension *key, bool saveas, bool official);
+
+
+
 /**
  *
  */
@@ -133,6 +150,22 @@ void file_import(SPDocument *in_doc, const Glib::ustring &uri,
  * the a document as a given type.
  */
 bool sp_file_export_dialog (void *widget);
+
+
+/*######################
+## E X P O R T  T O  O C A L
+######################*/
+
+/**
+ * Export the current document to OCAL
+ */
+void sp_file_export_to_ocal (Gtk::Window &parentWindow );
+
+
+/**
+ * Export the current document to OCAL
+ */
+bool sp_file_export_to_ocal_dialog (void *widget);
 
 
 

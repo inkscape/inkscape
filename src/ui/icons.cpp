@@ -57,6 +57,12 @@ init()
     src.set_filename(get_icon_path("export.svg"));
     _export.add_source(src);
     icons->add(Stock::EXPORT, _export);
+    //  Export to OCAL
+    Gtk::IconSet _export_to_ocal;
+    src.set_icon_name("ExportToOCAL");
+    src.set_filename(get_icon_path("export_to_ocal.svg"));
+    _export_to_ocal.add_source(src);
+    icons->add(Stock::EXPORTTOOCAL, _export_to_ocal);
     //  Vacuum Defs
     Gtk::IconSet _vacuum_defs;
     src.set_icon_name("VacuumDefs");

@@ -833,6 +833,9 @@ FileVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_FILE_EXPORT:
             sp_file_export_dialog(NULL);
             break;
+        case SP_VERB_FILE_EXPORT_TO_OCAL:
+            sp_file_export_to_ocal(*parent);
+            break;
         case SP_VERB_FILE_NEXT_DESKTOP:
             inkscape_switch_desktops_next();
             break;
@@ -2144,6 +2147,7 @@ Verb *Verb::_base_verbs[] = {
                  N_("Import a bitmap or SVG image into this document"), "file_import"),
     new FileVerb(SP_VERB_FILE_EXPORT, "FileExport", N_("_Export Bitmap..."),
                  N_("Export this document or a selection as a bitmap image"), "file_export"),
+    new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("_Export To OCAL"), N_("_Export this document to Open Clip Art Library"), "file_export_to_ocal"),
     new FileVerb(SP_VERB_FILE_NEXT_DESKTOP, "NextWindow", N_("N_ext Window"),
                  N_("Switch to the next document window"), "window_next"),
     new FileVerb(SP_VERB_FILE_PREV_DESKTOP, "PrevWindow", N_("P_revious Window"),

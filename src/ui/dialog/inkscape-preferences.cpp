@@ -5,6 +5,7 @@
  *   Carl Hetherington
  *   Marco Scholten
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Bruno Dilly <bruno.dilly@gmail.com>
  *
  * Copyright (C) 2004-2007 Authors
  *
@@ -621,6 +622,12 @@ void InkscapePreferences::initPageMisc()
     _misc_overs_bitmap.set_size_request(_sb_width);
     _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, num_items, 1);
     _page_misc.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
+    _misc_ocal_url.init("options.ocalurl", "str", true);
+    _page_misc.add_line( false, _("Open Clip Art Library URL:"), _misc_ocal_url, "", _("The url of the Open Clip Art Library webdav server. It's used by the Export to OCAL function."), true);
+    _misc_ocal_username.init("options.ocalusername", "str", true);
+    _page_misc.add_line( false, _("Open Clip Art Library Username:"), _misc_ocal_username, "", _("The username used to log into Open Clip Art Library."), true);
+    _misc_ocal_password.init("options.ocalpassword", "str", false);
+    _page_misc.add_line( false, _("Open Clip Art Library Password:"), _misc_ocal_password, "", _("The password used to log into Open Clip Art Library."), true);
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }

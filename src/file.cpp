@@ -7,6 +7,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Chema Celorio <chema@celorio.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Bruno Dilly <bruno.dilly@gmail.com>
  *
  * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 1999-2005 Authors
@@ -63,6 +64,10 @@
 #include "application/editor.h"
 #include "inkscape.h"
 #include "uri.h"
+
+#ifdef WITH_GNOME_VFS
+# include <libgnomevfs/gnome-vfs.h>
+#endif
 
 #ifdef WITH_INKBOARD
 #include "jabber_whiteboard/session-manager.h"
@@ -492,6 +497,8 @@ sp_file_vacuum()
 
 /**
  * This 'save' function called by the others below
+ * It was divided in file_save_local and file_save_remote
+ * to support remote saving too.
  *
  * \param    official  whether to set :output_module and :modified in the
  *                     document; is true for normal save, false for temporary saves
@@ -503,6 +510,31 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
     if (!doc || uri.size()<1) //Safety check
         return false;
 
+#ifdef WITH_GNOME_VFS
+    
+    if (gnome_vfs_initialized() && !gnome_vfs_uri_is_local(gnome_vfs_uri_new(uri.c_str()))) {
+        // Use VFS for this
+        bool success = file_save_remote(doc, uri, key, saveas, official);
+        if (!success) {
+            g_warning("Error:  Could not save file '%s' with VFS\n", uri.c_str());
+            return false;  
+        }    
+        else
+            return true;
+    }
+    else
+        return file_save_local(parentWindow, doc, uri, key, saveas, official);
+#else
+    
+    return file_save_local(parentWindow, doc, uri, key, saveas, official);
+    
+#endif
+}
+
+bool
+file_save_local(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
+          Inkscape::Extension::Extension *key, bool saveas, bool official)
+{
     try {
         Inkscape::Extension::save(key, doc, uri.c_str(),
                  false,
@@ -533,6 +565,92 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
 
 
 
+#ifdef WITH_GNOME_VFS
+
+
+bool
+file_save_remote(SPDocument *doc, const Glib::ustring &uri,
+                 Inkscape::Extension::Extension *key, bool saveas, bool official)
+{
+
+#define BUF_SIZE 8192
+    gnome_vfs_init();
+
+    GnomeVFSHandle    *from_handle = NULL;
+    GnomeVFSHandle    *to_handle = NULL;
+    GnomeVFSFileSize  bytes_read;
+    GnomeVFSFileSize  bytes_written;
+    GnomeVFSResult    result;
+    guint8 buffer[8192];
+
+    gchar* uri_local = g_filename_from_utf8( uri.c_str(), -1, NULL, NULL, NULL);
+    
+    if ( uri_local == NULL ) {
+        g_warning( "Error converting filename to locale encoding.");
+    }
+
+    // Gets the temp file name.
+    Glib::ustring fileName = Glib::get_tmp_dir ();
+    fileName.append(G_DIR_SEPARATOR_S);
+    fileName.append((gnome_vfs_uri_extract_short_name(gnome_vfs_uri_new(uri_local))));
+
+    // Open the temp file to send.
+    result = gnome_vfs_open (&from_handle, fileName.c_str(), GNOME_VFS_OPEN_READ);
+    
+    if (result != GNOME_VFS_OK) {
+        g_warning("Could not find the temp saving.");
+        return false;
+    }
+
+    
+    result = gnome_vfs_open (&to_handle, uri_local, GNOME_VFS_OPEN_WRITE);
+    
+        
+    if (result == GNOME_VFS_ERROR_NOT_FOUND){
+        result = gnome_vfs_create (&to_handle, uri_local, GNOME_VFS_OPEN_WRITE, FALSE, GNOME_VFS_PERM_USER_ALL);
+    }
+    
+    if (result != GNOME_VFS_OK) {
+        g_warning("file creating: %s", gnome_vfs_result_to_string(result));
+        return false;
+    }
+
+    ///g_warning("file_save_remote: temp dir: %s",fileName.c_str());
+
+    while (1) {
+        
+        result = gnome_vfs_read (from_handle, buffer, 8192, &bytes_read);
+        //g_warning("bytes lidos: %d",bytes_read);
+
+        if ((result == GNOME_VFS_ERROR_EOF) &&(!bytes_read)){
+            result = gnome_vfs_close (from_handle);
+            result = gnome_vfs_close (to_handle);
+            return true;
+        }
+        
+        //g_warning("while: %s", gnome_vfs_result_to_string(result));
+
+        if (result != GNOME_VFS_OK) {
+            g_warning("%s", gnome_vfs_result_to_string(result));
+            return false;
+        }
+        //g_warning("%s",buffer);
+        result = gnome_vfs_write (to_handle, buffer, bytes_read, &bytes_written);
+        //g_warning("escritos: %d",bytes_written);
+        if (result != GNOME_VFS_OK) {
+            g_warning("%s", gnome_vfs_result_to_string(result));
+            return false;
+        }
+        
+        
+        if (bytes_read != bytes_written){
+            return false;
+        }
+        
+    }
+    return true;
+}
+#endif
 
 
 /**
@@ -1071,6 +1189,156 @@ sp_file_export_dialog(void *widget)
 }
 
 #endif
+
+/*######################
+## E X P O R T  T O  O C A L
+######################*/
+
+
+/**
+ * Export the current document to OCAL
+ */
+
+
+/**
+ *  Display an Export dialog, export as the selected type if OK pressed
+ */
+bool
+sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
+{
+    //# temp hack for 'doc' until we can switch to this dialog
+    
+    if (!SP_ACTIVE_DOCUMENT)
+        return false;
+
+    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+
+    Glib::ustring export_path; 
+    Glib::ustring export_loc; 
+    Glib::ustring fileName;
+    Inkscape::Extension::Extension *selectionType;
+
+    bool success = false;
+    
+    static Inkscape::UI::Dialog::FileExportDialog *exportDialogInstance = NULL;
+    
+    Inkscape::XML::Node *repr = sp_document_repr_root(doc);
+    // Verify whether the document is saved, so save this as temporary
+
+    char *str = (char *) repr->attribute("sodipodi:modified");
+    if ((!doc->uri) && (!str))
+        return false;
+
+
+    Inkscape::Extension::Output *extension;
+        
+    //# Get the default extension name
+    Glib::ustring default_extension;
+    char *attr = (char *)repr->attribute("inkscape:output_extension");
+    if (!attr)
+        attr = (char *)prefs_get_string_attribute("dialogs.save_as", "default");
+    if (attr)
+        default_extension = attr;
+    
+    char formatBuf[256];
+    
+    Glib::ustring filename_extension = ".svg";
+    extension = dynamic_cast<Inkscape::Extension::Output *>
+        (Inkscape::Extension::db.get(default_extension.c_str()));
+    if (extension)
+        filename_extension = extension->get_extension();
+        
+    export_path = Glib::get_tmp_dir ();
+        
+    export_loc = export_path;
+    export_loc.append(G_DIR_SEPARATOR_S);
+    snprintf(formatBuf, 255, _("drawing%s"), filename_extension.c_str());
+    export_loc.append(formatBuf);
+    
+    // convert save_loc from utf-8 to locale
+    // is this needed any more, now that everything is handled in
+    // Inkscape::IO?
+    Glib::ustring export_path_local = Glib::filename_from_utf8(export_path);
+    if ( export_path_local.size() > 0) 
+        export_path = export_path_local;
+        
+    //# Show the Export To OCAL dialog
+    // MADE A CHANGE TO SUBMIT CHANGES. IN THE FUTURE WILL CALL FileExportToOCALDialog
+    if (!exportDialogInstance)
+        exportDialogInstance = Inkscape::UI::Dialog::FileExportDialog::create(
+                parentWindow,
+                export_path,
+                Inkscape::UI::Dialog::EXPORT_TYPES,
+                (char const *) _("Select file to export to"),
+                default_extension
+                );
+        
+    success = exportDialogInstance->show();
+    if (!success)
+        return success;
+    
+    fileName = exportDialogInstance->getFilename();
+    
+    selectionType = exportDialogInstance->getSelectionType();
+        
+    if (fileName.size() > 0) {
+        Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
+            
+        if ( newFileName.size()>0 )
+            fileName = newFileName;
+        else
+            g_warning( "Error converting save filename to UTF-8." );
+    }
+    Glib::ustring filePath = export_path;
+    filePath.append(G_DIR_SEPARATOR_S);
+    filePath.append(Glib::path_get_basename(fileName));
+    
+    fileName = filePath;    
+    
+    success = file_save(parentWindow, doc, filePath, selectionType, FALSE, FALSE);
+
+    if (!success){
+        g_warning( "Error saving a temporary copy." );
+        return success;
+    }
+    
+    /* Start now the submition */
+    
+    // Create the uri
+    Glib::ustring uri = "dav://";
+    char *username = (char *)prefs_get_string_attribute("options.ocalusername", "str");
+    char *password = (char *)prefs_get_string_attribute("options.ocalpassword", "str"); 
+    if ((username != NULL) && (password != NULL)){
+        uri.append(username);
+        uri.append(":");
+        uri.append(password);
+        uri.append("@");
+    } 
+    uri.append(prefs_get_string_attribute("options.ocalurl", "str"));
+    uri.append(Glib::path_get_basename(fileName));
+
+    success = file_save(parentWindow, doc, uri, selectionType, FALSE, FALSE);
+    remove(fileName.c_str());
+    if (!success)
+        g_warning( "Error exporting the document." );
+
+    return success;
+}
+
+
+void
+sp_file_export_to_ocal(Gtk::Window &parentWindow)
+{
+    
+    // Try to execute the new code and return;
+    if (!SP_ACTIVE_DOCUMENT)
+        return;
+    bool success = sp_file_export_to_ocal_dialog(parentWindow);
+    if (success)  
+        SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Document exported..."));
+    
+
+}
 
 /*######################
 ## P R I N T
