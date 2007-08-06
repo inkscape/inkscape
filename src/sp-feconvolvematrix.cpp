@@ -25,6 +25,7 @@
 #include "helper-fns.h"
 #include "xml/repr.h"
 #include "display/nr-filter-convolve-matrix.h"
+#include <math.h>
 
 /* FeConvolveMatrix base class */
 
@@ -80,7 +81,19 @@ sp_feConvolveMatrix_class_init(SPFeConvolveMatrixClass *klass)
 
 static void
 sp_feConvolveMatrix_init(SPFeConvolveMatrix *feConvolveMatrix)
-{}
+{
+    //Setting default values:
+    feConvolveMatrix->order.set("3 3");
+    feConvolveMatrix->targetX = 1;
+    feConvolveMatrix->targetY = 1;
+    feConvolveMatrix->edgeMode = NR::CONVOLVEMATRIX_EDGEMODE_DUPLICATE;
+    feConvolveMatrix->preserveAlpha = false;
+
+    //some helper variables:
+    feConvolveMatrix->targetXIsSet = false;
+    feConvolveMatrix->targetYIsSet = false;
+    feConvolveMatrix->kernelMatrixIsSet = false;
+}
 
 /**
  * Reads the Inkscape::XML::Node, and initializes SPFeConvolveMatrix variables.  For this to get called,
@@ -104,7 +117,6 @@ sp_feConvolveMatrix_build(SPObject *object, SPDocument *document, Inkscape::XML:
     sp_object_read_attr(object, "edgeMode");
     sp_object_read_attr(object, "kernelUnitLength");
     sp_object_read_attr(object, "preserveAlpha");
-
 }
 
 /**
@@ -153,21 +165,43 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             //From SVG spec: If <orderY> is not provided, it defaults to <orderX>.
             if (feConvolveMatrix->order.optNumIsSet() == false)
                 feConvolveMatrix->order.setOptNumber(feConvolveMatrix->order.getNumber());
+            if (feConvolveMatrix->targetXIsSet == false) feConvolveMatrix->targetX = (int) floor(feConvolveMatrix->order.getNumber()/2);
+            if (feConvolveMatrix->targetYIsSet == false) feConvolveMatrix->targetY = (int) floor(feConvolveMatrix->order.getOptNumber()/2);
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_KERNELMATRIX:
-            feConvolveMatrix->kernelMatrix = helperfns_read_vector(value, (int) (feConvolveMatrix->order.getNumber() * feConvolveMatrix->order.getOptNumber()));
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            if (value){
+                feConvolveMatrix->kernelMatrixIsSet = true;
+                feConvolveMatrix->kernelMatrix = helperfns_read_vector(value, (int) (feConvolveMatrix->order.getNumber() * feConvolveMatrix->order.getOptNumber()));
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            } else {
+                g_warning("You MUST pass a kernelMatrix parameter!");
+            }
             break;
         case SP_ATTR_DIVISOR:
-            read_num = helperfns_read_number(value);
+            if (!value){
+                read_num = 1; 
+            } else {
+                read_num = helperfns_read_number(value);
+                if (read_num == 0) {
+                    if (feConvolveMatrix->kernelMatrixIsSet){
+                        g_warning("You shouldn't pass a divisor value equal to 0! Assuming the sum of all values in kernelMatrix as the default value.");
+                        for (unsigned int i = 0; i< feConvolveMatrix->kernelMatrix.size(); i++)
+                            read_num += feConvolveMatrix->kernelMatrix[i];
+                    } else {
+                        g_warning("You shouldn't pass a divisor value equal to 0! Assuming 1 as the default value.");
+                        read_num = 1;
+                    }
+                }
+            }
             if (read_num != feConvolveMatrix->divisor){
                 feConvolveMatrix->divisor = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_BIAS:
-            read_num = helperfns_read_number(value);
+            read_num = 0;
+            if (value) read_num = helperfns_read_number(value);
             if (read_num != feConvolveMatrix->bias){
                 feConvolveMatrix->bias = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -175,6 +209,11 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             break;
         case SP_ATTR_TARGETX:
             read_int = (int) helperfns_read_number(value);
+            if (read_int < 0 || read_int > feConvolveMatrix->order.getNumber()){
+                g_warning("targetX must be a value between 0 and orderX! Assuming orderX as default value.");
+                read_int = (int) feConvolveMatrix->order.getNumber();
+            }
+            feConvolveMatrix->targetXIsSet = true;
             if (read_int != feConvolveMatrix->targetX){
                 feConvolveMatrix->targetX = read_int;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -182,6 +221,11 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             break;
         case SP_ATTR_TARGETY:
             read_int = (int) helperfns_read_number(value);
+            if (read_int < 0 || read_int > feConvolveMatrix->order.getOptNumber()){
+                g_warning("targetY must be a value between 0 and orderY! Assuming orderY as default value.");
+                read_int = (int) feConvolveMatrix->order.getOptNumber();
+            }
+            feConvolveMatrix->targetYIsSet = true;
             if (read_int != feConvolveMatrix->targetY){
                 feConvolveMatrix->targetY = read_int;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -196,6 +240,9 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             break;
         case SP_ATTR_KERNELUNITLENGTH:
             feConvolveMatrix->kernelUnitLength.set(value);
+            //From SVG spec: If the <dy> value is not specified, it defaults to the same value as <dx>.
+            if (feConvolveMatrix->kernelUnitLength.optNumIsSet() == false)
+                feConvolveMatrix->kernelUnitLength.setOptNumber(feConvolveMatrix->kernelUnitLength.getNumber());
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_PRESERVEALPHA:

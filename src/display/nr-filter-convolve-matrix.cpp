@@ -15,13 +15,6 @@
 namespace NR {
 
 FilterConvolveMatrix::FilterConvolveMatrix()
-: orderX(3),
-  orderY(3),
-  targetX((int)(orderX/2)),
-  targetY((int)(orderY/2)),
-  bias(0),
-  edgeMode((NR::FilterConvolveMatrixEdgeMode) 0),
-  preserveAlpha(false)
 {}
 
 FilterPrimitive * FilterConvolveMatrix::create() {
@@ -55,16 +48,6 @@ int FilterConvolveMatrix::render(FilterSlot &slot, Matrix const &trans) {
     int width = in->area.x1 - in->area.x0;
     int height = in->area.y1 - in->area.y0;
 
-    double div=0;
-
-    if (divisor != 0){
-        div = divisor;
-    } else {
-        for (i=0;i<orderX*orderY;i++){
-            div += kernelMatrix[i];
-        }
-    }
-
     for (x=targetX; x < width - (orderX - targetX); x++){
         for (y=targetY; y < height - (orderY - targetY); y++){
             result_R = 0;
@@ -82,10 +65,10 @@ int FilterConvolveMatrix::render(FilterSlot &slot, Matrix const &trans) {
                 }
             }
 
-            out_data[4*( x + width*y )] = CLAMP_D_TO_U8(result_R / div + bias);
-            out_data[4*( x + width*y )+1] = CLAMP_D_TO_U8(result_G / div + bias);
-            out_data[4*( x + width*y )+2] = CLAMP_D_TO_U8(result_B / div + bias);
-            out_data[4*( x + width*y )+3] = CLAMP_D_TO_U8(result_A / div + bias);
+            out_data[4*( x + width*y )] = CLAMP_D_TO_U8(result_R / divisor + bias);
+            out_data[4*( x + width*y )+1] = CLAMP_D_TO_U8(result_G / divisor + bias);
+            out_data[4*( x + width*y )+2] = CLAMP_D_TO_U8(result_B / divisor + bias);
+            out_data[4*( x + width*y )+3] = CLAMP_D_TO_U8(result_A / divisor + bias);
         }
     }
 

@@ -32,6 +32,11 @@ struct SPFeConvolveMatrix : public SPFilterPrimitive {
     NR::FilterConvolveMatrixEdgeMode edgeMode;
     NumberOptNumber kernelUnitLength;
     bool preserveAlpha;
+    //some helper variables:
+    bool targetXIsSet;
+    bool targetYIsSet;
+    bool divisorIsSet;
+    bool kernelMatrixIsSet;
 };
 
 struct SPFeConvolveMatrixClass {
