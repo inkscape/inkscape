@@ -42,6 +42,15 @@ public:
     void setActive (bool);
 
     Gtk::ToggleButton *_button;
+    std::list<Gtk::ToggleButton*> _slavebuttons;
+    
+    // a slave button is only sensitive when the master button is active
+    // i.e. a slave button is greyed-out when the master button is not checked
+    
+    void setSlaveButton(std::list<Gtk::ToggleButton*> btns) {
+    	_slavebuttons = btns;
+    }
+    
 
 protected:
     Gtk::Tooltips     _tt;

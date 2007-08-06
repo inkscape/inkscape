@@ -72,7 +72,8 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2,
     Gtk::Label *theLabel1 = manage (new Gtk::Label (label1));
     theLabel1->set_use_underline();
     theLabel1->set_alignment(0, 0.5);
-    _hbox->add (*theLabel1);
+    // align the label with the checkbox text above by indenting 22 px.
+    _hbox->pack_start(*theLabel1, Gtk::PACK_EXPAND_WIDGET, 22); 
     _hscale = manage (new Gtk::HScale (1.0, 51, 1.0));
     theLabel1->set_mnemonic_widget (*_hscale);
     _hscale->set_draw_value (true);
@@ -83,6 +84,7 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2,
     _tt.set_tip (*_hscale, tip1);
     _hbox->add (*_hscale);    
     
+    
     Gtk::Label *theLabel2 = manage (new Gtk::Label (label2));
     theLabel2->set_use_underline();
     _button = manage (new Gtk::CheckButton);
@@ -91,7 +93,8 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2,
     _button->set_alignment (0.0, 0.5);
     
     _vbox->add (*_button);
-    _vbox->add (*_hbox); 
+    // Here we need some extra pixels to get the vertical spacing right. Why? 
+    _vbox->pack_end(*_hbox, true, true, 3); // add 3 px.  
     _key = key;
     _scale_changed_connection = _hscale->signal_value_changed().connect (sigc::mem_fun (*this, &ToleranceSlider::on_scale_changed));
     _btn_toggled_connection = _button->signal_toggled().connect (sigc::mem_fun (*this, &ToleranceSlider::on_toggled));

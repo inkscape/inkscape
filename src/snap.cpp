@@ -137,7 +137,7 @@ void SnapManager::setSnapModeNode(bool enabled)
 	object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
 	//object.setSnapToItemNode(enabled); // On second thought, these should be controlled
 	//object.setSnapToItemPath(enabled); // separately by the snapping prefs dialog 
-	object.setStrictSnapping(true);	
+	object.setStrictSnapping(true);
 }
 
 bool SnapManager::getSnapModeNode() const

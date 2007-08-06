@@ -272,6 +272,9 @@ DocumentProperties::build_snap()
     _rcbsnn.init (_("Snap _nodes"),
                 _("Snap nodes to grid lines, to guides, to paths, and to other nodes"),
                 "inkscape:snap-nodes", _wr);
+    _rcbic.init (_("Include the object's center"),
+                _("Also snap the rotation center of an object when snapping nodes"),
+                "inkscape:snap-center", _wr);
     
     //Options for snapping to objects
     _rcbsnop.init (_("Snap to _paths"),
@@ -280,22 +283,29 @@ DocumentProperties::build_snap()
     _rcbsnon.init (_("Snap to n_odes"),
                 _("Snap nodes to object nodes"),
                 "inkscape:object-nodes", _wr);    
-    _rsu_sno.init (_(" Snap _distance"), _("Snap at any dist_ance"),
+    _rsu_sno.init (_("Snap _distance"), _("Snap at any dist_ance"),
                   _("Snapping distance, in screen pixels, for snapping to objects"),
                   _("If set, objects snap to the nearest object, regardless of distance"),
                   "objecttolerance", _wr);
     
     //Options for snapping to grids
-    _rsu_sn.init (_(" Snap d_istance"), _("Snap at any distan_ce"),
+    _rsu_sn.init (_("Snap d_istance"), _("Snap at any distan_ce"),
                   _("Snapping distance, in screen pixels, for snapping to grid"),
                   _("If set, objects snap to the nearest grid line, regardless of distance"),
                   "gridtolerance", _wr);
                   
 	//Options for snapping to guides                  
-    _rsu_gusn.init (_(" Snap di_stance"), _("Snap at any distanc_e"),
+    _rsu_gusn.init (_("Snap di_stance"), _("Snap at any distanc_e"),
                 _("Snapping distance, in screen pixels, for snapping to guides"),
                 _("If set, objects snap to the nearest guide, regardless of distance"),
                 "guidetolerance", _wr);
+                
+    std::list<Gtk::ToggleButton*> list;
+    list.push_back(_rcbic._button);
+    list.push_back(_rcbsnop._button);
+    list.push_back(_rcbsnon._button);
+    _rcbsnn.setSlaveButton(list);
+    
                 
     Gtk::Label *label_g = manage (new Gtk::Label);
     label_g->set_markup (_("<b>General</b>"));
@@ -310,21 +320,25 @@ DocumentProperties::build_snap()
     {
         label_g,            0,
         0,                  _rcbsnn._button,
+        0,					0,					//_rcbic._button will be inserted here
         0,                  _rcbsnbb._button,
-        0, 0,        
+        0, 					0,        
         label_o,            0,
         0, 					_rcbsnop._button,
         0, 					_rcbsnon._button,
         0,                  _rsu_sno._vbox,
-        0, 0,
+        0, 					0,
         label_gr,           0,
         0,                  _rsu_sn._vbox,
-        0, 0,
+        0, 					0,
         label_gu,         	0,
         0,                	_rsu_gusn._vbox,
     };
 
     attach_all(_page_snap.table(), array, G_N_ELEMENTS(array));
+    
+    // add _rcbic manually to get some additional indenting
+    _page_snap.table().attach(*_rcbic._button, 1, 3, 2, 3, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 18, 0);
  }
 
 /**
@@ -432,8 +446,10 @@ DocumentProperties::update()
     _rcp_hgui.setRgba32 (nv->guidehicolor);
 
     //-----------------------------------------------------------snap
+    
     _rcbsnbb.setActive (nv->snap_manager.getSnapModeBBox());
     _rcbsnn.setActive (nv->snap_manager.getSnapModeNode());
+    _rcbic.setActive (nv->snap_manager.getIncludeItemCenter());
     _rcbsnop.setActive(nv->snap_manager.object.getSnapToItemPath());
     _rcbsnon.setActive(nv->snap_manager.object.getSnapToItemNode());
     _rsu_sno.setValue (nv->objecttolerance);

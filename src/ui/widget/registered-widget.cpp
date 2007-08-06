@@ -81,6 +81,10 @@ void
 RegisteredCheckButton::setActive (bool b)
 {
     _button->set_active (b);
+	//The slave button is greyed out if the master button is unchecked
+	for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
+		(*i)->set_sensitive(b);
+	}
 }
 
 void
@@ -104,6 +108,11 @@ RegisteredCheckButton::on_toggled()
 
     _wr->setUpdating (true);
 
+	//The slave button is greyed out if the master button is unchecked
+	for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
+		(*i)->set_sensitive(_button->get_active());
+	}
+	
     bool saved = sp_document_get_undo_sensitive (local_doc);
     sp_document_set_undo_sensitive (local_doc, false);
     sp_repr_set_boolean(local_repr, _key.c_str(), _button->get_active());
