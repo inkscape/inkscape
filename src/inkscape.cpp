@@ -59,6 +59,7 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include "prefs-utils.h"
 #include "xml/repr.h"
 #include "io/sys.h"
+#include "perspective3d.h"
 
 #include "extension/init.h"
 
@@ -596,6 +597,21 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
 
     /* Initialize the extensions */
     Inkscape::Extension::init();
+
+    /* Create an initial perspective, append it to the list of existing perspectives and make it current */
+    Box3D::Perspective3D *initial_persp = new Box3D::Perspective3D (
+                                          // VP in x-direction
+                                          Box3D::VanishingPoint( NR::Point(-50.0, 600.0),
+                                                                 NR::Point( -1.0,   0.0), Box3D::VP_FINITE),
+                                          // VP in y-direction
+                                          Box3D::VanishingPoint( NR::Point(500.0,1000.0),
+                                                                 NR::Point(  0.0,   1.0), Box3D::VP_INFINITE),
+                                          // VP in z-direction
+                                          Box3D::VanishingPoint( NR::Point(700.0, 600.0),
+                                                                 NR::Point(sqrt(3.0),1.0), Box3D::VP_FINITE));
+
+    Box3D::Perspective3D::current_perspective = initial_persp;
+    Box3D::Perspective3D::add_perspective (initial_persp);
 
     return;
 }

@@ -41,10 +41,13 @@ public:
     static gint counter; // for testing only
     gint my_counter; // for testing only
 
-    static void print_debugging_info();
-    static Perspective3D * current_perspective; // should current_perspective be moved to desktop.h?
+    static GSList * perspectives; // All existing 3D perspectives
+    static void add_perspective (Box3D::Perspective3D * const persp);
+    static void remove_perspective (Box3D::Perspective3D * const persp);
+    static Box3D::Perspective3D * find_perspective (Box3D::Perspective3D * const persp); // find an existing perspective whose VPs are equal to those of persp
 
-    SPDesktop * desktop; // we need to store the perspective's desktop to be able to access it in the destructor
+    static void print_debugging_info();
+    static Perspective3D * current_perspective;
 
 private:
     VanishingPoint *vp_x;

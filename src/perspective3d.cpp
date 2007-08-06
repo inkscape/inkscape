@@ -15,7 +15,7 @@
 #include "box3d-context.h"
 #include "perspective-line.h"
 #include <iostream>
-#include "desktop.h"
+#include "perspective3d.h"
 
 // can probably be removed later
 #include "inkscape.h"
@@ -24,12 +24,13 @@
 namespace Box3D {
 
 gint Perspective3D::counter = 0;
+GSList * Perspective3D::perspectives = NULL;
+Perspective3D * Perspective3D::current_perspective = NULL;
 
 Perspective3D *
 get_persp_of_box (const SP3DBox *box)
 {
-    SPDesktop *desktop = inkscape_active_desktop(); // Should we pass the desktop as an argument?
-    for (GSList *p = desktop->perspectives; p != NULL; p = p->next) {
+    for (GSList *p = Perspective3D::perspectives; p != NULL; p = p->next) {
         if (((Perspective3D *) p->data)->has_box (box))
             return (Perspective3D *) p->data;
     }
@@ -64,8 +65,7 @@ perspective_line_snap (NR::Point line_pt, Box3D::Axis dir, NR::Point ext_pt, Per
 }  
 
 Perspective3D::Perspective3D (VanishingPoint const &pt_x, VanishingPoint const &pt_y, VanishingPoint const &pt_z)
-    : desktop (NULL),
-      boxes (NULL)
+    : boxes (NULL)
 {
     vp_x = new VanishingPoint (pt_x);
     vp_y = new VanishingPoint (pt_y);
@@ -75,8 +75,7 @@ Perspective3D::Perspective3D (VanishingPoint const &pt_x, VanishingPoint const &
 }
 
 Perspective3D::Perspective3D (Perspective3D &other)
-    : desktop (other.desktop),
-      boxes (NULL) // FIXME: Should we add an option to copy the list of boxes?
+    : boxes (NULL) // Should we add an option to copy the list of boxes?
 {
     vp_x = new VanishingPoint (*other.vp_x);
     vp_y = new VanishingPoint (*other.vp_y);
@@ -85,13 +84,9 @@ Perspective3D::Perspective3D (Perspective3D &other)
     my_counter = Perspective3D::counter++;
 }
 
-
 Perspective3D::~Perspective3D ()
 {
-    // we can have desktop == NULL when building a box whose attribute "inkscape:perspective" is set
-    if (desktop != NULL) {
-        desktop->remove_perspective (this);
-    }
+    Perspective3D::remove_perspective (this);
 
     delete vp_x;
     delete vp_y;
@@ -255,14 +250,40 @@ Perspective3D::svg_string ()
 ***/
 
 void
+Perspective3D::add_perspective (Box3D::Perspective3D * const persp)
+{
+    // FIXME: Should we handle the case that the perspectives have equal VPs but are not identical?
+    //        If so, we need to take care of relinking the boxes, etc.
+    if (persp == NULL || g_slist_find (Perspective3D::perspectives, persp)) return;
+    Perspective3D::perspectives = g_slist_prepend (Perspective3D::perspectives, persp);
+}
+
+void
+Perspective3D::remove_perspective (Box3D::Perspective3D * const persp)
+{
+    if (persp == NULL || !g_slist_find (Perspective3D::perspectives, persp)) return;
+    Perspective3D::perspectives = g_slist_remove (Perspective3D::perspectives, persp);
+}
+
+// find an existing perspective whose VPs are equal to those of persp
+Box3D::Perspective3D *
+Perspective3D::find_perspective (Box3D::Perspective3D * const persp)
+{
+    for (GSList *p = Perspective3D::perspectives; p != NULL; p = p->next) {
+        if (*((Box3D::Perspective3D *) p->data) == *persp) {
+            return ((Box3D::Perspective3D *) p->data);
+        }
+    }
+    return NULL; // perspective was not found
+}
+
+void
 Perspective3D::print_debugging_info ()
 {
     g_print ("====================================================\n");
-    SPDesktop *desktop = inkscape_active_desktop();
-    for (GSList *i = desktop->perspectives; i != NULL; i = i->next) {
+    for (GSList *i = Perspective3D::perspectives; i != NULL; i = i->next) {
         Perspective3D *persp = (Perspective3D *) i->data;
         g_print ("Perspective %d:\n", persp->my_counter);
-        //g_print ("Perspective:\n");
 
         VanishingPoint * vp = persp->get_vanishing_point(Box3D::X);
         g_print ("   VP X: (%f,%f) ", (*vp)[NR::X], (*vp)[NR::Y]);

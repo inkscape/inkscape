@@ -90,7 +90,6 @@ static void sp_3dbox_context_class_init(SP3DBoxContextClass *klass)
     event_context_class->item_handler  = sp_3dbox_context_item_handler;
 }
 
-Box3D::Perspective3D * Box3D::Perspective3D::current_perspective = NULL;
 guint SP3DBoxContext::number_of_handles = 3;
 
 static void sp_3dbox_context_init(SP3DBoxContext *box3d_context)

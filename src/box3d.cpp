@@ -112,11 +112,10 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
                                                                 Box3D::VanishingPoint (0,0),
                                                                 Box3D::VanishingPoint (0,0));
         sp_3dbox_update_perspective (persp, repr->attribute ("inkscape:perspective"));
-        SPDesktop *desktop = inkscape_active_desktop();
-        Box3D::Perspective3D *comp = desktop->find_perspective (persp);
+        Box3D::Perspective3D *comp =  Box3D::Perspective3D::find_perspective (persp);
         if (comp == NULL) {
             // perspective doesn't exist yet
-            desktop->add_perspective (persp);
+            Box3D::Perspective3D::add_perspective (persp);
             persp->add_box (box);
         } else {
             // link the box to the existing perspective and delete the temporary one
