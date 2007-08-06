@@ -554,6 +554,7 @@ static void sp_3dbox_finish(SP3DBoxContext *bc)
         desktop = SP_EVENT_CONTEXT_DESKTOP(bc);
 
         SP_OBJECT(bc->item)->updateRepr();
+        sp_3dbox_set_ratios(SP_3DBOX(bc->item));
 
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 

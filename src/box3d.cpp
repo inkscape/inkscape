@@ -32,11 +32,13 @@ static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node
 static gchar *sp_3dbox_description(SPItem *item);
 
 //static void sp_3dbox_set_shape(SPShape *shape);
-static void sp_3dbox_set_shape(SP3DBox *box3d);
+//static void sp_3dbox_set_shape(SP3DBox *box3d);
 
 static void sp_3dbox_update_corner_with_value_from_svg (SPObject *object, guint corner_id, const gchar *value);
+static void sp_3dbox_update_perspective (Box3D::Perspective3D *persp, const gchar *value);
 static gchar * sp_3dbox_get_corner_coords_string (SP3DBox *box, guint id);
 static std::pair<gdouble, gdouble> sp_3dbox_get_coord_pair_from_string (const gchar *);
+static gchar * sp_3dbox_get_perspective_string (SP3DBox *box);
 
 static SPGroupClass *parent_class;
 
@@ -97,7 +99,33 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
 
     SP3DBox *box = SP_3DBOX (object);
 
-    Box3D::Perspective3D::current_perspective->add_box (box);
+    if (repr->attribute ("inkscape:perspective") == NULL) {
+        // we are creating a new box; link it to the current perspective
+        Box3D::Perspective3D::current_perspective->add_box (box);
+    } else {
+        // create a new perspective that we can compare with existing ones
+        Box3D::Perspective3D *persp = new Box3D::Perspective3D (Box3D::VanishingPoint (0,0),
+                                                                Box3D::VanishingPoint (0,0),
+                                                                Box3D::VanishingPoint (0,0));
+        sp_3dbox_update_perspective (persp, repr->attribute ("inkscape:perspective"));
+        SPDesktop *desktop = inkscape_active_desktop();
+        Box3D::Perspective3D *comp = desktop->find_perspective (persp);
+        if (comp == NULL) {
+            // perspective doesn't exist yet
+            desktop->add_perspective (persp);
+            persp->add_box (box);
+        } else {
+            // link the box to the existing perspective and delete the temporary one
+            comp->add_box (box);
+            delete persp;
+            //g_assert (Box3D::get_persp_of_box (box) == comp);
+
+            // FIXME: If the paths of the box's faces do not correspond to the svg representation of the perspective
+            //        the box is shown with a "wrong" initial shape that is only corrected after dragging.
+            //        Should we "repair" this by updating the paths at the end of sp_3dbox_build()?
+            //        Maybe it would be better to simply destroy and rebuild them in sp_3dbox_link_to_existing_paths().
+        }
+    }
 
     sp_object_read_attr(object, "inkscape:box3dcornerA");
     sp_object_read_attr(object, "inkscape:box3dcornerB");
@@ -127,6 +155,8 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
     // Check whether the paths of the faces of the box need to be linked to existing paths in the
     // document (e.g., after a 'redo' operation or after opening a file) and do so if necessary.
     sp_3dbox_link_to_existing_paths (box, repr);
+
+    sp_3dbox_set_ratios (box);
 }
 
 static void
@@ -159,6 +189,9 @@ static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value)
             break;
         case SP_ATTR_INKSCAPE_3DBOX_CORNER_C:
             sp_3dbox_update_corner_with_value_from_svg (object, 5, value);
+            break;
+        case SP_ATTR_INKSCAPE_3DBOX_PERSPECTIVE:
+            sp_3dbox_update_perspective (Box3D::get_persp_of_box (SP_3DBOX (object)), value);
             break;
 	default:
             if (((SPObjectClass *) (parent_class))->set) {
@@ -206,17 +239,21 @@ static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node
     }
 
     if (flags & SP_OBJECT_WRITE_EXT) {
-        gchar *coords;
-        coords = sp_3dbox_get_corner_coords_string (box, 2);
-        repr->setAttribute("inkscape:box3dcornerA", coords);
+        gchar *str;
+        str = sp_3dbox_get_corner_coords_string (box, 2);
+        repr->setAttribute("inkscape:box3dcornerA", str);
 
-        coords = sp_3dbox_get_corner_coords_string (box, 1);
-        repr->setAttribute("inkscape:box3dcornerB", coords);
+        str = sp_3dbox_get_corner_coords_string (box, 1);
+        repr->setAttribute("inkscape:box3dcornerB", str);
 
-        coords = sp_3dbox_get_corner_coords_string (box, 5);
-        repr->setAttribute("inkscape:box3dcornerC", coords);
+        str = sp_3dbox_get_corner_coords_string (box, 5);
+        repr->setAttribute("inkscape:box3dcornerC", str);
 
-        g_free ((void *) coords);
+        str = sp_3dbox_get_perspective_string (box);
+        repr->setAttribute("inkscape:perspective", str);
+        sp_3dbox_set_ratios (box);
+
+        g_free ((void *) str);
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
@@ -232,6 +269,27 @@ sp_3dbox_description(SPItem *item)
     g_return_val_if_fail(SP_IS_3DBOX(item), NULL);
 
     return g_strdup(_("<b>3D Box</b>"));
+}
+
+void sp_3dbox_set_ratios (SP3DBox *box, Box3D::Axis axes)
+{
+    Box3D::Perspective3D *persp = Box3D::get_persp_of_box (box);
+    NR::Point pt;
+
+    if (axes & Box3D::X) {
+        pt = persp->get_vanishing_point (Box3D::X)->get_pos();
+        box->ratio_x = NR::L2 (pt - box->corners[2]) / NR::L2 (pt - box->corners[3]);
+    }
+
+    if (axes & Box3D::Y) {
+        pt = persp->get_vanishing_point (Box3D::Y)->get_pos();
+        box->ratio_y = NR::L2 (pt - box->corners[2]) / NR::L2 (pt - box->corners[0]);
+    }
+
+    if (axes & Box3D::Z) {
+        pt = persp->get_vanishing_point (Box3D::Z)->get_pos();
+        box->ratio_z = NR::L2 (pt - box->corners[4]) / NR::L2 (pt - box->corners[0]);
+    }
 }
 
 void
@@ -255,12 +313,13 @@ sp_3dbox_position_set (SP3DBoxContext &bc)
     ***/
 }
 
-static void
+//static
+void
 // FIXME: Note that this is _not_ the virtual set_shape() method inherited from SPShape,
 //        since SP3DBox is inherited from SPGroup. The following method is "artificially"
 //        called from sp_3dbox_update().
 //sp_3dbox_set_shape(SPShape *shape)
-sp_3dbox_set_shape(SP3DBox *box3d)
+sp_3dbox_set_shape(SP3DBox *box3d, bool use_previous_corners)
 {
     // FIXME: How to handle other contexts???
     // FIXME: Is tools_isactive(..) more recommended to check for the current context/tool?
@@ -270,7 +329,11 @@ sp_3dbox_set_shape(SP3DBox *box3d)
 
     /* Only update the curves during dragging; setting the svg representations 
        is expensive and only done once at the end */
-    sp_3dbox_recompute_corners (box3d, bc->drag_origin, bc->drag_ptB, bc->drag_ptC);
+    if (!use_previous_corners) {
+        sp_3dbox_recompute_corners (box3d, bc->drag_origin, bc->drag_ptB, bc->drag_ptC);
+    } else {
+        sp_3dbox_recompute_corners (box3d, box3d->corners[2], box3d->corners[1], box3d->corners[5]);
+    }
     if (bc->extruded) {
         box3d->faces[0]->set_corners (box3d->corners[0], box3d->corners[4], box3d->corners[6], box3d->corners[2]);
         box3d->faces[1]->set_corners (box3d->corners[1], box3d->corners[5], box3d->corners[7], box3d->corners[3]);
@@ -457,7 +520,50 @@ sp_3dbox_get_coord_pair_from_string (const gchar *coords)
     return std::make_pair(coord1, coord2);
 }
 
-// auxiliary function
+static gchar *
+sp_3dbox_get_perspective_string (SP3DBox *box)
+{
+    
+    return sp_3dbox_get_svg_descr_of_persp (Box3D::get_persp_of_box (box));
+}
+  
+gchar *
+sp_3dbox_get_svg_descr_of_persp (Box3D::Perspective3D *persp)
+{
+    // FIXME: We should move this code to perspective3d.cpp, but this yields compiler errors. Why?
+    Inkscape::SVGOStringStream os;
+
+    Box3D::VanishingPoint vp = *(persp->get_vanishing_point (Box3D::X));
+    os << vp[NR::X] << "," << vp[NR::Y] << ",";
+    os << vp.v_dir[NR::X] << "," << vp.v_dir[NR::Y] << ",";
+    if (vp.is_finite()) {
+        os << "finite,";
+    } else {
+        os << "infinite,";
+    }
+
+    vp = *(persp->get_vanishing_point (Box3D::Y));
+    os << vp[NR::X] << "," << vp[NR::Y] << ",";
+    os << vp.v_dir[NR::X] << "," << vp.v_dir[NR::Y] << ",";
+    if (vp.is_finite()) {
+        os << "finite,";
+    } else {
+        os << "infinite,";
+    }
+
+    vp = *(persp->get_vanishing_point (Box3D::Z));
+    os << vp[NR::X] << "," << vp[NR::Y] << ",";
+    os << vp.v_dir[NR::X] << "," << vp.v_dir[NR::Y] << ",";
+    if (vp.is_finite()) {
+        os << "finite";
+    } else {
+        os << "infinite";
+    }
+
+    return g_strdup(os.str().c_str());
+}
+
+// auxiliary functions
 static void
 sp_3dbox_update_corner_with_value_from_svg (SPObject *object, guint corner_id, const gchar *value)
 {
@@ -468,6 +574,36 @@ sp_3dbox_update_corner_with_value_from_svg (SPObject *object, guint corner_id, c
     box->corners[corner_id] = NR::Point (coord_pair.first, coord_pair.second);
     sp_3dbox_recompute_corners (box, box->corners[2], box->corners[1], box->corners[5]);
     object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+}
+
+static void
+sp_3dbox_update_perspective (Box3D::Perspective3D *persp, const gchar *value)
+{
+    // WARNING! This function changes the perspective associated to 'box'. Since there may be
+    // many other boxes linked to the same perspective, their perspective is also changed.
+    // If this behaviour is not desired in all cases, we need a different function.
+    if (value == NULL) return;
+
+    gchar **vps = g_strsplit( value, ",", 0);
+    for (int i = 0; i < 15; ++i) {
+        if (vps[i] == NULL) {
+            g_warning ("Malformed svg attribute 'perspective'\n");
+            return;
+        }
+    }
+
+    persp->set_vanishing_point (Box3D::X, g_ascii_strtod (vps[0], NULL), g_ascii_strtod (vps[1], NULL),
+                                          g_ascii_strtod (vps[2], NULL), g_ascii_strtod (vps[3], NULL),
+                                          Box3D::VP_FINITE);
+    persp->set_vanishing_point (Box3D::Y, g_ascii_strtod (vps[5], NULL), g_ascii_strtod (vps[6], NULL),
+                                          g_ascii_strtod (vps[7], NULL), g_ascii_strtod (vps[8], NULL),
+                                          Box3D::VP_FINITE);
+    persp->set_vanishing_point (Box3D::Z, g_ascii_strtod (vps[10], NULL), g_ascii_strtod (vps[11], NULL),
+                                          g_ascii_strtod (vps[12], NULL), g_ascii_strtod (vps[13], NULL),
+                                          Box3D::VP_FINITE);
+
+    // update the other boxes linked to the same perspective
+    persp->reshape_boxes (Box3D::XYZ);
 }
 
 /*

@@ -720,7 +720,13 @@ void SPDesktop::set_display_area(NR::Rect const &a, NR::Coord b, bool log)
 void
 SPDesktop::add_perspective (Box3D::Perspective3D * const persp)
 {
+    // check that the perspective is not yet linked to another desktop
+    if (persp->desktop != NULL) {
+        g_assert (persp->desktop == this);
+    }
+
     // FIXME: Should we handle the case that the perspectives have equal VPs but are not identical?
+    //        If so, we need to take care of relinking the boxes, etc.
     if (persp == NULL || g_slist_find (this->perspectives, persp)) return;
     this->perspectives = g_slist_prepend (this->perspectives, persp);
     persp->desktop = this;
@@ -729,13 +735,22 @@ SPDesktop::add_perspective (Box3D::Perspective3D * const persp)
 void SPDesktop::remove_perspective (Box3D::Perspective3D * const persp)
 {
     if (persp == NULL) return;
-
     if (!g_slist_find (this->perspectives, persp)) {
         g_warning ("Could not find perspective in current desktop. Not removed.\n");
         return;
     }
-
     this->perspectives = g_slist_remove (this->perspectives, persp);
+}
+
+// find an existing perspective whose VPs are equal to those of persp
+Box3D::Perspective3D * SPDesktop::find_perspective (Box3D::Perspective3D * const persp)
+{
+    for (GSList *p = this->perspectives; p != NULL; p = p->next) {
+        if (*((Box3D::Perspective3D *) p->data) == *persp) {
+            return ((Box3D::Perspective3D *) p->data);
+        }
+    }
+    return NULL; // perspective was not found
 }
 
 /**

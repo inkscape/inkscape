@@ -36,6 +36,12 @@
 struct SP3DBox : public SPGroup {
     NR::Point corners[8];
     Box3DFace *faces[6];
+
+    // TODO: Keeping/updating the ratios works reasonably well but is still an ad hoc implementation.
+    //       Use a mathematically correct model to update the boxes.
+    double ratio_x;
+    double ratio_y;
+    double ratio_z;
 };
 
 struct SP3DBoxClass {
@@ -45,13 +51,17 @@ struct SP3DBoxClass {
 GType sp_3dbox_get_type (void);
 
 void sp_3dbox_position_set (SP3DBoxContext &bc);
+void sp_3dbox_set_shape(SP3DBox *box3d, bool use_previous_corners = false);
 void sp_3dbox_recompute_corners (SP3DBox *box, NR::Point const pt1, NR::Point const pt2, NR::Point const pt3);
 void sp_3dbox_update_curves (SP3DBox *box);
 void sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr);
+void sp_3dbox_set_ratios (SP3DBox *box, Box3D::Axis axes = Box3D::XYZ);
 void sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt, Box3D::Axis axes = Box3D::XY);
 void sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, bool constrained = true);
 NR::Maybe<NR::Point> sp_3dbox_get_center (SP3DBox *box);
 NR::Maybe<NR::Point> sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_corner2);
+
+gchar * sp_3dbox_get_svg_descr_of_persp (Box3D::Perspective3D *persp);
 
 inline NR::Point sp_3dbox_get_corner (SP3DBox *box, guint id) { return box->corners[id]; }
 inline bool sp_3dbox_corners_are_adjacent (guint id_corner1, guint id_corner2) {

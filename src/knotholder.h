@@ -68,6 +68,9 @@ void sp_knot_holder_add_full(SPKnotHolder *knot_holder,
 
 GType sp_knot_holder_get_type();
 
+// For testing. What is the right way to update the knots from Perspective3D::reshape_boxes() ?
+void knotholder_update_knots(SPKnotHolder *knot_holder, SPItem *item);
+
 #define SP_TYPE_KNOT_HOLDER      (sp_knot_holder_get_type())
 
 #endif /* !__SP_KNOTHOLDER_H__ */

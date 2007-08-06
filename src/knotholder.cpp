@@ -195,7 +195,8 @@ void sp_knot_holder_add_full(
  * \param p In desktop coordinates.
  */
 
-static void knotholder_update_knots(SPKnotHolder *knot_holder, SPItem *item)
+//static
+void knotholder_update_knots(SPKnotHolder *knot_holder, SPItem *item)
 {
     NR::Matrix const i2d(sp_item_i2d_affine(item));
 

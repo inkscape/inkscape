@@ -45,6 +45,15 @@ VanishingPoint::VanishingPoint(VanishingPoint const &rhs) : NR::Point (rhs)
     this->v_dir = rhs.v_dir;
 }
 
+bool VanishingPoint::operator== (VanishingPoint const &other)
+{
+    // Should we compare the parent perspectives, too? Probably not.
+    if ((*this)[NR::X] == other[NR::X] && (*this)[NR::Y] == other[NR::Y]
+        && this->state == other.state && this->v_dir == other.v_dir) {
+        return true;
+    }
+    return false;
+}
 
 bool VanishingPoint::is_finite() const
 {

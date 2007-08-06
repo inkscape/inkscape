@@ -209,6 +209,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     // Methods to handle 3D perspective
     void add_perspective (Box3D::Perspective3D * const persp);
     void remove_perspective (Box3D::Perspective3D * const persp);
+    Box3D::Perspective3D * find_perspective (Box3D::Perspective3D * const persp); // find an existing perspective whose VPs are equal to those of persp
 
     NR::Rect get_display_area() const;
     void set_display_area (double x0, double y0, double x1, double y1, double border, bool log = true);

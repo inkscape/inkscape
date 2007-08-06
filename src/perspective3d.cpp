@@ -11,6 +11,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "box3d.h"
 #include "box3d-context.h"
 #include "perspective-line.h"
 #include <iostream>
@@ -18,6 +19,7 @@
 
 // can probably be removed later
 #include "inkscape.h"
+#include "knotholder.h"
 
 namespace Box3D {
 
@@ -80,8 +82,10 @@ Perspective3D::Perspective3D (Perspective3D &other)
 
 Perspective3D::~Perspective3D ()
 {
-    g_assert (desktop != NULL);
-    desktop->remove_perspective (this);
+    // we can have desktop == NULL when building a box whose attribute "inkscape:perspective" is set
+    if (desktop != NULL) {
+        desktop->remove_perspective (this);
+    }
 
     delete vp_x;
     delete vp_y;
@@ -90,6 +94,12 @@ Perspective3D::~Perspective3D ()
     g_slist_free (boxes);
 }
 
+bool
+Perspective3D::operator==(Perspective3D const &other)
+{
+    // Two perspectives are equal iff their vanishing points coincide and have identical states
+    return (*vp_x == *other.vp_x && *vp_y == *other.vp_y && *vp_z == *other.vp_z);
+}
 
 VanishingPoint *
 Perspective3D::get_vanishing_point (Box3D::Axis const dir)
@@ -135,6 +145,30 @@ Perspective3D::set_vanishing_point (Box3D::Axis const dir, VanishingPoint const 
 }
 
 void
+Perspective3D::set_vanishing_point (Box3D::Axis const dir, gdouble pt_x, gdouble pt_y, gdouble dir_x, gdouble dir_y, VPState st)
+{
+    VanishingPoint *vp;
+    switch (dir) {
+        case X:
+            vp = vp_x;
+            break;
+        case Y:
+            vp = vp_y;
+            break;
+        case Z:
+            vp = vp_z;
+            break;
+        case NONE:
+            // no vanishing point to set
+            return;
+    }
+
+    vp->set_pos (pt_x, pt_y);
+    vp->v_dir = NR::Point (dir_x, dir_y);
+    vp->state = st;
+}
+
+void
 Perspective3D::add_box (SP3DBox *box)
 {
     if (g_slist_find (this->boxes, box) != NULL) {
@@ -159,6 +193,60 @@ Perspective3D::has_box (const SP3DBox *box)
 {
     return (g_slist_find (this->boxes, box) != NULL);
 }
+
+/**
+ * Update the shape of a box after a handle was dragged or a VP was changed, according to the stored ratios.
+ */
+void
+Perspective3D::reshape_boxes (Box3D::Axis axes)
+{
+    // TODO: Leave the "correct" corner fixed according to which face is supposed to be on front.
+    NR::Point new_pt;
+    VanishingPoint *vp;
+    for (const GSList *i = this->boxes; i != NULL; i = i->next) {
+        SP3DBox *box = SP_3DBOX (i->data);
+        if (axes & Box3D::X) {
+            vp = this->get_vanishing_point (Box3D::X);
+            new_pt = vp->get_pos() + box->ratio_x * (box->corners[3] - vp->get_pos());
+            sp_3dbox_move_corner_in_XY_plane (box, 2, new_pt);
+        }
+        if (axes & Box3D::Y) {
+            vp = this->get_vanishing_point (Box3D::Y);
+            new_pt = vp->get_pos() + box->ratio_y * (box->corners[0] - vp->get_pos());
+            sp_3dbox_move_corner_in_XY_plane (box, 2, new_pt);
+        }
+        if (axes & Box3D::Z) {
+            vp = this->get_vanishing_point (Box3D::Z);
+            new_pt = vp->get_pos() + box->ratio_z * (box->corners[0] - vp->get_pos());
+            sp_3dbox_move_corner_in_Z_direction (box, 4, new_pt);
+        }                
+
+        sp_3dbox_set_shape (box, true);
+        // FIXME: Is there a way update the knots without accessing the
+        //        statically linked function knotholder_update_knots?
+        SPEventContext *ec = inkscape_active_event_context();
+        g_assert (ec != NULL);
+        if (ec->shape_knot_holder != NULL) {
+            knotholder_update_knots(ec->shape_knot_holder, (SPItem *) box);
+        }
+    }
+}
+
+void
+Perspective3D::update_box_reprs ()
+{
+    for (GSList *i = this->boxes; i != NULL; i = i->next) {
+        SP_OBJECT(SP_3DBOX (i->data))->updateRepr(SP_OBJECT_WRITE_EXT);
+    }
+}
+
+// FIXME: We get compiler errors when we try to move the code from sp_3dbox_get_perspective_string to this function
+/***
+gchar *
+Perspective3D::svg_string ()
+{
+}
+***/
 
 } // namespace Box3D 
  

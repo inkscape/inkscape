@@ -13,6 +13,7 @@
 #define SEEN_PERSPECTIVE3D_H
 
 #include "vanishing-point.h"
+#include "svg/stringstream.h"
 
 class SP3DBox;
 
@@ -26,11 +27,16 @@ public:
     Perspective3D(Perspective3D &other);
     ~Perspective3D();
 
+    bool operator== (Perspective3D const &other);
+
     VanishingPoint *get_vanishing_point (Box3D::Axis const dir);
     void set_vanishing_point (Box3D::Axis const dir, VanishingPoint const &pt);
+    void set_vanishing_point (Box3D::Axis const dir, gdouble pt_x, gdouble pt_y, gdouble dir_x, gdouble dir_y, VPState st);
     void add_box (SP3DBox *box);
     void remove_box (const SP3DBox *box);
     bool has_box (const SP3DBox *box);
+    void reshape_boxes (Box3D::Axis axes);
+    void update_box_reprs ();
 
     static Perspective3D * current_perspective; // should current_perspective be moved to desktop.h?
 
