@@ -21,7 +21,7 @@
 #include "svg/svg.h"
 #include "sp-fecomponenttransfer.h"
 #include "xml/repr.h"
-
+#include "display/nr-filter-component-transfer.h"
 
 /* FeComponentTransfer base class */
 
@@ -74,6 +74,14 @@ sp_feComponentTransfer_class_init(SPFeComponentTransferClass *klass)
 static void
 sp_feComponentTransfer_init(SPFeComponentTransfer *feComponentTransfer)
 {
+    //Setting default values:
+//TODO: tableValues = "" (empty list);
+    feComponentTransfer->slope = 1;
+    feComponentTransfer->intercept = 0;
+    feComponentTransfer->amplitude = 1;
+    feComponentTransfer->exponent = 1;
+    feComponentTransfer->offset = 0;
+//    feComponentTransfer->type = NR::COMPONENTTRANSFER_TYPE_ERROR;
 }
 
 /**
@@ -89,6 +97,13 @@ sp_feComponentTransfer_build(SPObject *object, SPDocument *document, Inkscape::X
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
+    sp_object_read_attr(object, "type");
+    sp_object_read_attr(object, "tableValues");
+    sp_object_read_attr(object, "slope");
+    sp_object_read_attr(object, "intercept");
+    sp_object_read_attr(object, "amplitude");
+    sp_object_read_attr(object, "exponent");
+    sp_object_read_attr(object, "offset");
 }
 
 /**
@@ -99,6 +114,28 @@ sp_feComponentTransfer_release(SPObject *object)
 {
     if (((SPObjectClass *) feComponentTransfer_parent_class)->release)
         ((SPObjectClass *) feComponentTransfer_parent_class)->release(object);
+}
+
+static NR::FilterComponentTransferType sp_feComponenttransfer_read_type(gchar const *value){
+    if (!value) return NR::COMPONENTTRANSFER_TYPE_ERROR; //type attribute is REQUIRED.
+    switch(value[0]){
+        case 'i':
+            if (strncmp(value, "identity", 8) == 0) return NR::COMPONENTTRANSFER_TYPE_IDENTITY;
+            break;
+        case 't':
+            if (strncmp(value, "table", 5) == 0) return NR::COMPONENTTRANSFER_TYPE_TABLE;
+            break;
+        case 'd':
+            if (strncmp(value, "discrete", 8) == 0) return NR::COMPONENTTRANSFER_TYPE_DISCRETE;
+            break;
+        case 'l':
+            if (strncmp(value, "linear", 6) == 0) return NR::COMPONENTTRANSFER_TYPE_LINEAR;
+            break;
+        case 'g':
+            if (strncmp(value, "gamma", 5) == 0) return NR::COMPONENTTRANSFER_TYPE_GAMMA;
+            break;
+    }
+    return NR::COMPONENTTRANSFER_TYPE_ERROR; //type attribute is REQUIRED.
 }
 
 /**

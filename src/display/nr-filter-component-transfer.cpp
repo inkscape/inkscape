@@ -10,6 +10,7 @@
  */
 
 #include "display/nr-filter-component-transfer.h"
+
 namespace NR {
 
 FilterComponentTransfer::FilterComponentTransfer()
@@ -44,6 +45,35 @@ int FilterComponentTransfer::render(FilterSlot &slot, Matrix const &trans) {
 
 void FilterComponentTransfer::area_enlarge(NRRectL &area, Matrix const &trans)
 {
+}
+
+void FilterComponentTransfer::set_type(FilterComponentTransferType t){
+    type = t;
+}
+
+void FilterComponentTransfer::set_slope(double s){
+        slope = s;
+}
+
+void FilterComponentTransfer::set_tableValues(std::vector<double> &tv){
+        tableValues = tv;
+}
+
+
+void FilterComponentTransfer::set_intercept(double i){
+        intercept = i;
+}
+
+void FilterComponentTransfer::set_amplitude(double a){
+        amplitude = a;
+}
+
+void FilterComponentTransfer::set_exponent(double e){
+        exponent = e;
+}
+
+void FilterComponentTransfer::set_offset(double o){
+        offset = o;
 }
 
 } /* namespace NR */

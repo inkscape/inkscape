@@ -14,8 +14,18 @@
 
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
+#include <vector>
 
 namespace NR {
+
+enum FilterComponentTransferType {
+    COMPONENTTRANSFER_TYPE_IDENTITY,
+    COMPONENTTRANSFER_TYPE_TABLE,
+    COMPONENTTRANSFER_TYPE_DISCRETE,
+    COMPONENTTRANSFER_TYPE_LINEAR,
+    COMPONENTTRANSFER_TYPE_GAMMA,
+    COMPONENTTRANSFER_TYPE_ERROR
+};
 
 class FilterComponentTransfer : public FilterPrimitive {
 public:
@@ -25,6 +35,23 @@ public:
 
     virtual int render(FilterSlot &slot, Matrix const &trans);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
+
+    void set_type(FilterComponentTransferType t);    
+    void set_tableValues(std::vector<gdouble>& tv);
+    void set_slope(double s);
+    void set_intercept(double i);
+    void set_amplitude(double a);
+    void set_exponent(double e);
+    void set_offset(double o);
+
+private:
+    FilterComponentTransferType type;
+    std::vector<gdouble> tableValues;
+    double slope;
+    double intercept;
+    double amplitude;
+    double exponent;
+    double offset;
 };
 
 } /* namespace NR */
