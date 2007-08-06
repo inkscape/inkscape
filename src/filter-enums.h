@@ -48,6 +48,9 @@ extern const Inkscape::Util::EnumDataConverter<FeCompositeOperator> CompositeOpe
 // ConvolveMatrix edgeMode
 extern const Inkscape::Util::EnumData<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeData[NR::CONVOLVEMATRIX_EDGEMODE_ENDTYPE];
 extern const Inkscape::Util::EnumDataConverter<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeConverter;
+// DisplacementMap channel
+extern const Inkscape::Util::EnumData<int> DisplacementMapChannelData[4];
+extern const Inkscape::Util::EnumDataConverter<int> DisplacementMapChannelConverter;
 // Lighting
 enum LightSource {
     LIGHT_DISTANT,

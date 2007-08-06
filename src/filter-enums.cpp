@@ -80,10 +80,19 @@ const EnumDataConverter<FeCompositeOperator> CompositeOperatorConverter(Composit
 // feConvolveMatrix
 const EnumData<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeData[NR::CONVOLVEMATRIX_EDGEMODE_ENDTYPE] = {
     {NR::CONVOLVEMATRIX_EDGEMODE_DUPLICATE, _("Duplicate"), "duplicate"},
-    {NR::CONVOLVEMATRIX_EDGEMODE_WRAP, _("Wrap"), "wrap"},
-    {NR::CONVOLVEMATRIX_EDGEMODE_NONE, _("None"), "none"}
+    {NR::CONVOLVEMATRIX_EDGEMODE_WRAP,      _("Wrap"),      "wrap"},
+    {NR::CONVOLVEMATRIX_EDGEMODE_NONE,      _("None"),      "none"}
 };
 const EnumDataConverter<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeConverter(ConvolveMatrixEdgeModeData, NR::CONVOLVEMATRIX_EDGEMODE_ENDTYPE);
+
+// feDisplacementMap
+const EnumData<int> DisplacementMapChannelData[4] = {
+    {0, _("Red"),   "R"},
+    {1, _("Green"), "G"},
+    {2, _("Blue"),  "B"},
+    {3, _("Alpha"), "A"}
+};
+const EnumDataConverter<int> DisplacementMapChannelConverter(DisplacementMapChannelData, 4);
 
 // Light source
 const EnumData<LightSource> LightSourceData[LIGHT_ENDSOURCE] = {

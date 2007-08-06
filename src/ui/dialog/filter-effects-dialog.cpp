@@ -1678,6 +1678,11 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_spinslider(SP_ATTR_DIFFUSECONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
     _settings->add_lightsource(_("Light Source"));
+
+    _settings->type(NR_FILTER_DISPLACEMENTMAP);
+    _settings->add_spinslider(SP_ATTR_SCALE, _("Scale"), 0, 100, 1, 0.01, 1);
+    _settings->add_combo(SP_ATTR_XCHANNELSELECTOR, _("X Channel"), DisplacementMapChannelConverter);
+    _settings->add_combo(SP_ATTR_YCHANNELSELECTOR, _("Y Channel"), DisplacementMapChannelConverter);
     
     _settings->type(NR_FILTER_GAUSSIANBLUR);
     _settings->add_dualspinslider(SP_ATTR_STDDEVIATION, _("Standard Deviation"), 0.01, 100, 1, 0.01, 1);
