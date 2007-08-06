@@ -685,13 +685,13 @@ sp_3dbox_update_perspective (Box3D::Perspective3D *persp, const gchar *value)
 
     persp->set_vanishing_point (Box3D::X, g_ascii_strtod (vps[0], NULL), g_ascii_strtod (vps[1], NULL),
                                           g_ascii_strtod (vps[2], NULL), g_ascii_strtod (vps[3], NULL),
-                                          Box3D::VP_FINITE);
+                                          strcmp (vps[4], "finite") == 0 ? Box3D::VP_FINITE : Box3D::VP_INFINITE);
     persp->set_vanishing_point (Box3D::Y, g_ascii_strtod (vps[5], NULL), g_ascii_strtod (vps[6], NULL),
                                           g_ascii_strtod (vps[7], NULL), g_ascii_strtod (vps[8], NULL),
-                                          Box3D::VP_FINITE);
+                                          strcmp (vps[9], "finite") == 0 ? Box3D::VP_FINITE : Box3D::VP_INFINITE);
     persp->set_vanishing_point (Box3D::Z, g_ascii_strtod (vps[10], NULL), g_ascii_strtod (vps[11], NULL),
                                           g_ascii_strtod (vps[12], NULL), g_ascii_strtod (vps[13], NULL),
-                                          Box3D::VP_FINITE);
+                                          strcmp (vps[14], "finite") == 0 ? Box3D::VP_FINITE : Box3D::VP_INFINITE);
 
     // update the other boxes linked to the same perspective
     persp->reshape_boxes (Box3D::XYZ);
