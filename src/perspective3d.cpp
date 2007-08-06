@@ -77,7 +77,8 @@ Perspective3D::~Perspective3D ()
 }
 
 
-VanishingPoint *Perspective3D::get_vanishing_point (Box3D::Axis const dir)
+VanishingPoint *
+Perspective3D::get_vanishing_point (Box3D::Axis const dir)
 {
     // FIXME: Also handle value 'NONE' in switch
     switch (dir) {
@@ -93,7 +94,8 @@ VanishingPoint *Perspective3D::get_vanishing_point (Box3D::Axis const dir)
     }
 }
 
-void Perspective3D::set_vanishing_point (Box3D::Axis const dir, VanishingPoint const &pt)
+void
+Perspective3D::set_vanishing_point (Box3D::Axis const dir, VanishingPoint const &pt)
 {
     switch (dir) {
         case X:

@@ -34,9 +34,6 @@ struct SP3DBoxContext : public SPEventContext {
 	SPItem *item;
 	NR::Point center;
 
-  	gdouble rx;	/* roundness radius (x direction) */
-  	gdouble ry;	/* roundness radius (y direction) */
-
     /**
      * save three corners while dragging:
      * 1) the starting point (already done by the event_context)
