@@ -38,6 +38,10 @@ public:
     void reshape_boxes (Box3D::Axis axes);
     void update_box_reprs ();
 
+    static gint counter; // for testing only
+    gint my_counter; // for testing only
+
+    static void print_debugging_info();
     static Perspective3D * current_perspective; // should current_perspective be moved to desktop.h?
 
     SPDesktop * desktop; // we need to store the perspective's desktop to be able to access it in the destructor

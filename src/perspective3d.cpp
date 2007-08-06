@@ -23,6 +23,8 @@
 
 namespace Box3D {
 
+gint Perspective3D::counter = 0;
+
 Perspective3D *
 get_persp_of_box (const SP3DBox *box)
 {
@@ -68,6 +70,8 @@ Perspective3D::Perspective3D (VanishingPoint const &pt_x, VanishingPoint const &
     vp_x = new VanishingPoint (pt_x);
     vp_y = new VanishingPoint (pt_y);
     vp_z = new VanishingPoint (pt_z);
+
+    my_counter = Perspective3D::counter++;
 }
 
 Perspective3D::Perspective3D (Perspective3D &other)
@@ -77,6 +81,8 @@ Perspective3D::Perspective3D (Perspective3D &other)
     vp_x = new VanishingPoint (*other.vp_x);
     vp_y = new VanishingPoint (*other.vp_y);
     vp_z = new VanishingPoint (*other.vp_z);
+
+    my_counter = Perspective3D::counter++;
 }
 
 
@@ -247,6 +253,45 @@ Perspective3D::svg_string ()
 {
 }
 ***/
+
+void
+Perspective3D::print_debugging_info ()
+{
+    g_print ("====================================================\n");
+    SPDesktop *desktop = inkscape_active_desktop();
+    for (GSList *i = desktop->perspectives; i != NULL; i = i->next) {
+        Perspective3D *persp = (Perspective3D *) i->data;
+        g_print ("Perspective %d:\n", persp->my_counter);
+        //g_print ("Perspective:\n");
+
+        VanishingPoint * vp = persp->get_vanishing_point(Box3D::X);
+        g_print ("   VP X: (%f,%f) ", (*vp)[NR::X], (*vp)[NR::Y]);
+        g_print ((vp->is_finite()) ? "(finite)\n" : "(infinite)\n");
+
+        vp = persp->get_vanishing_point(Box3D::Y);
+        g_print ("   VP Y: (%f,%f) ", (*vp)[NR::X], (*vp)[NR::Y]);
+        g_print ((vp->is_finite()) ? "(finite)\n" : "(infinite)\n");
+
+        vp = persp->get_vanishing_point(Box3D::Z);
+        g_print ("   VP Z: (%f,%f) ", (*vp)[NR::X], (*vp)[NR::Y]);
+        g_print ((vp->is_finite()) ? "(finite)\n" : "(infinite)\n");
+
+        g_print ("\nBoxes: ");
+        if (persp->boxes == NULL) {
+            g_print ("none");
+        } else {
+            GSList *j;
+            for (j = persp->boxes; j != NULL; j = j->next) {
+                if (j->next == NULL) break;
+                g_print ("%d, ", SP_3DBOX (j->data)->my_counter);
+            }
+            if (j != NULL) {
+                g_print ("%d", SP_3DBOX (j->data)->my_counter);
+            }
+        }
+    }
+    g_print ("\n====================================================\n");
+}
 
 } // namespace Box3D 
  

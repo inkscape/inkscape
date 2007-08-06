@@ -42,6 +42,8 @@ static gchar * sp_3dbox_get_perspective_string (SP3DBox *box);
 
 static SPGroupClass *parent_class;
 
+static gint counter = 0;
+
 GType
 sp_3dbox_get_type(void)
 {
@@ -98,6 +100,8 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
     }
 
     SP3DBox *box = SP_3DBOX (object);
+
+    box->my_counter = counter++;
 
     if (repr->attribute ("inkscape:perspective") == NULL) {
         // we are creating a new box; link it to the current perspective

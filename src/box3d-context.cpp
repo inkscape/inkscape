@@ -429,6 +429,11 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
                 ret = TRUE;
             break;
 
+        case GDK_I:
+            Box3D::Perspective3D::print_debugging_info();
+            ret = true;
+            break;
+
         case GDK_x:
         case GDK_X:
             if (MOD__ALT_ONLY) {

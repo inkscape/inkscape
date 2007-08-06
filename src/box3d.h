@@ -42,6 +42,8 @@ struct SP3DBox : public SPGroup {
     double ratio_x;
     double ratio_y;
     double ratio_z;
+
+    gint my_counter; // for testing only
 };
 
 struct SP3DBoxClass {
