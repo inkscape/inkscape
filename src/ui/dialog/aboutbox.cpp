@@ -312,7 +312,7 @@ void AboutBox::initStrings() {
         "Pat Suwalski\n"
         "Adib Taraben\n"
         "David Turner\n"
-        "Andre Twupack\n
+        "Andre Twupack\n"
         "Aleksandar Urošević\n"
         "Lucas Vieites\n"
         "Michael Wybrow\n"
