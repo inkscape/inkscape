@@ -113,6 +113,8 @@ inline gchar * string_from_axes (Box3D::Axis axes) {
     return pstring->str;
 }
 
+std::pair <Axis, Axis> get_remaining_axes (Axis axis);
+
 } // namespace Box3D
 
 #endif /* !SEEN_AXIS_MANIP_H */

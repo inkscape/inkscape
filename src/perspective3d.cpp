@@ -144,10 +144,16 @@ Perspective3D::~Perspective3D ()
 }
 
 bool
-Perspective3D::operator==(Perspective3D const &other)
+Perspective3D::operator==(Perspective3D const &other) const
 {
     // Two perspectives are equal iff their vanishing points coincide and have identical states
     return (*vp_x == *other.vp_x && *vp_y == *other.vp_y && *vp_z == *other.vp_z);
+}
+
+bool
+Perspective3D::has_vanishing_point (VanishingPoint *vp)
+{
+    return (vp == vp_x || vp == vp_y || vp == vp_z);
 }
 
 VanishingPoint *
@@ -249,9 +255,33 @@ Perspective3D::remove_box (const SP3DBox *box)
 }
 
 bool
-Perspective3D::has_box (const SP3DBox *box)
+Perspective3D::has_box (const SP3DBox *box) const
 {
     return (g_slist_find (this->boxes, box) != NULL);
+}
+
+bool
+Perspective3D::all_boxes_occur_in_list (GSList *boxes_to_do)
+{
+    for (GSList *i = boxes; i != NULL; i = i->next) {
+        if (!g_slist_find (boxes_to_do, i->data)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+GSList *
+Perspective3D::boxes_occurring_in_list (GSList * list_of_boxes)
+{
+    GSList * result = NULL;
+    for (GSList *i = list_of_boxes; i != NULL; i = i->next) {
+        if (this->has_box (SP_3DBOX (i->data))) {
+            result = g_slist_prepend (result, i->data);
+        }
+    }
+    // we reverse so as to retain the same order as in list_of_boxes
+    return g_slist_reverse (result);
 }
 
 /**
@@ -298,6 +328,20 @@ Perspective3D::update_box_reprs ()
     for (GSList *i = this->boxes; i != NULL; i = i->next) {
         SP_OBJECT(SP_3DBOX (i->data))->updateRepr(SP_OBJECT_WRITE_EXT);
     }
+}
+
+// swallow the list of boxes from the other perspective and delete it
+void
+Perspective3D::absorb (Perspective3D *other)
+{
+    g_return_if_fail (*this == *other);
+
+    // FIXME: Is copying necessary? Is other->boxes invalidated when other is deleted below?
+    this->boxes = g_slist_concat (this->boxes, g_slist_copy (other->boxes));
+
+    // Should we delete the other perspective here or at the place from where absorb() is called?
+    delete other;
+    other = NULL;
 }
 
 // FIXME: We get compiler errors when we try to move the code from sp_3dbox_get_perspective_string to this function

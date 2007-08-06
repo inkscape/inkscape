@@ -4,12 +4,16 @@
  * Vanishing point for 3D perspectives
  *
  * Authors:
+ *   bulia byak <buliabyak@users.sf.net>
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Maximilian Albert <Anhalter42@gmx.de>
  *
- * Copyright (C) 2007 authors
+ * Copyright (C) 2005-2007 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#include <glibmm/i18n.h>
 
 #include "vanishing-point.h"
 #include "desktop-handles.h"
@@ -144,38 +148,202 @@ vp_drag_sel_modified (Inkscape::Selection *selection, guint flags, gpointer data
     //drag->updateLines ();
 }
 
+// auxiliary function
+static GSList *
+eliminate_remaining_boxes_of_persp_starting_from_list_position (GSList *boxes_to_do, const SP3DBox *start_box, const Perspective3D *persp)
+{
+    GSList *i = g_slist_find (boxes_to_do, start_box);
+    g_return_val_if_fail (i != NULL, boxes_to_do);
+
+    SP3DBox *box;
+    GSList *successor;
+
+    i = i->next;
+    while (i != NULL) {
+        successor = i->next;
+        box = SP_3DBOX (i->data);
+        if (persp->has_box (box)) {
+            boxes_to_do = g_slist_remove (boxes_to_do, box);
+        }
+        i = successor;
+    }
+
+    return boxes_to_do;
+}
+
+static bool
+have_VPs_of_same_perspective (VPDragger *dr1, VPDragger *dr2)
+{
+    Perspective3D *persp;
+    for (GSList *i = dr1->vps; i != NULL; i = i->next) {
+        persp = get_persp_of_VP ((VanishingPoint *) i->data);
+        if (dr2->hasPerspective (persp)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 static void
 vp_knot_moved_handler (SPKnot *knot, NR::Point const *ppointer, guint state, gpointer data)
 {
-    g_warning ("Please implement vp_knot_moved_handler.\n");
     VPDragger *dragger = (VPDragger *) data;
-    //VPDrag *drag = dragger->parent;
+    VPDrag *drag = dragger->parent;
 
     NR::Point p = *ppointer;
+
+    // FIXME: take from prefs
+    double snap_dist = SNAP_DIST / drag->desktop->current_zoom();
+
+    if (!(state & GDK_SHIFT_MASK)) {
+        // without Shift; see if we need to snap to another dragger
+        for (GList *di = dragger->parent->draggers; di != NULL; di = di->next) {
+            VPDragger *d_new = (VPDragger *) di->data;
+            if ((d_new != dragger) && (NR::L2 (d_new->point - p) < snap_dist)) {
+                if (have_VPs_of_same_perspective (dragger, d_new)) {
+                    // this would result in degenerate boxes, which we disallow for the time being
+                    continue;
+                }
+
+                // update positions ...
+                for (GSList *j = dragger->vps; j != NULL; j = j->next) {
+                    ((VanishingPoint *) j->data)->set_pos (d_new->point);
+                }
+                // ... join lists of VPs ...
+                // FIXME: Do we have to copy the second list (i.e, is it invalidated when dragger is deleted below)?
+                d_new->vps = g_slist_concat (d_new->vps, g_slist_copy (dragger->vps));
+
+                // ... delete old dragger ...
+                drag->draggers = g_list_remove (drag->draggers, dragger);
+                delete dragger;
+                dragger = NULL;
+
+                // ... and merge any duplicate perspectives
+                d_new->mergePerspectives();
+                    
+                // TODO: Update the new merged dragger
+                //d_new->updateKnotShape ();
+                //d_new->updateTip ();
+
+                d_new->reshapeBoxes (p, Box3D::XYZ);
+                d_new->updateBoxReprs ();
+
+                // TODO: Undo machinery; this doesn't work yet because perspectives must be created and
+                //       deleted according to changes in the svg representation, not based on any user input
+                //       as is currently the case.
+
+                //sp_document_done (sp_desktop_document (drag->desktop), SP_VERB_CONTEXT_3DBOX,
+                //                  _("Merge vanishing points"));
+
+                return;
+            }
+        }
+    }
 
     dragger->point = p;
 
     dragger->reshapeBoxes (p, Box3D::XYZ);
+    dragger->updateBoxReprs ();
+
     //dragger->parent->updateLines ();
 
     //drag->local_change = false;
 }
 
+/***
 static void
+vp_knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
+{
+    VPDragger *dragger = (VPDragger *) data;
+}
+***/
+
+void
 vp_knot_grabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
 {
     VPDragger *dragger = (VPDragger *) data;
+    VPDrag *drag = dragger->parent;
 
     //sp_canvas_force_full_redraw_after_interruptions(dragger->parent->desktop->canvas, 5);
+
+    if ((state & GDK_SHIFT_MASK) && !drag->hasEmptySelection()) { // FIXME: Is the second check necessary?
+
+        if (drag->allBoxesAreSelected (dragger)) {
+            // if all of the boxes linked to dragger are selected, we don't need to split it
+            return;
+        }
+
+        // we are Shift-dragging; unsnap if we carry more than one VP
+
+        // FIXME: Should we distinguish between the following cases:
+        //        1) there are several VPs in a dragger
+        //        2) there is only a single VP but several boxes linked to it
+        //           ?
+        //        Or should we simply unlink all selected boxes? Currently we do the latter.
+        if (dragger->numberOfBoxes() > 1) {
+            // create a new dragger
+            VPDragger *dr_new = new VPDragger (drag, dragger->point, NULL);
+            drag->draggers = g_list_prepend (drag->draggers, dr_new);
+
+            // move all the VPs from dragger to dr_new
+            dr_new->vps = dragger->vps;
+            dragger->vps = NULL;
+
+            /* now we move all selected boxes back to the current dragger (splitting perspectives
+               if they also have unselected boxes) so that they are further reshaped during dragging */
+
+            GSList *boxes_to_do = drag->selectedBoxesWithVPinDragger (dr_new);
+
+            for (GSList *i = boxes_to_do; i != NULL; i = i->next) {
+                SP3DBox *box = SP_3DBOX (i->data);
+                Perspective3D *persp = get_persp_of_box (box);
+                VanishingPoint *vp = dr_new->getVPofPerspective (persp);
+                if (vp == NULL) {
+                    g_warning ("VP is NULL. We should be okay, though.\n");
+                }
+                if (persp->all_boxes_occur_in_list (boxes_to_do)) {
+                    // if all boxes of persp are selected, we can simply move the VP from dr_new back to dragger
+                    dr_new->removeVP (vp);
+                    dragger->addVP (vp);
+                    
+                    // some cleaning up for efficiency
+                    boxes_to_do = eliminate_remaining_boxes_of_persp_starting_from_list_position (boxes_to_do, box, persp);
+                } else {
+                    /* otherwise the unselected boxes need to stay linked to dr_new; thus we
+                       create a new perspective and link the VPs to the correct draggers */
+                    Perspective3D *persp_new = new Perspective3D (*persp);
+                    Perspective3D::add_perspective (persp_new);
+
+                    Axis vp_axis = persp->get_axis_of_VP (vp);
+                    dragger->addVP (persp_new->get_vanishing_point (vp_axis));
+                    std::pair<Axis, Axis> rem_axes = get_remaining_axes (vp_axis);
+                    drag->addDragger (persp->get_vanishing_point (rem_axes.first));
+                    drag->addDragger (persp->get_vanishing_point (rem_axes.second));
+
+                    // now we move the selected boxes from persp to persp_new
+                    GSList * selected_boxes_of_perspective = persp->boxes_occurring_in_list (boxes_to_do);
+                    for (GSList *j = selected_boxes_of_perspective; j != NULL; j = j->next) {
+                        persp->remove_box (SP_3DBOX (j->data));
+                        persp_new->add_box (SP_3DBOX (j->data));
+                    }
+
+                    // cleaning up
+                    boxes_to_do = eliminate_remaining_boxes_of_persp_starting_from_list_position (boxes_to_do, box, persp);
+                }
+            }
+
+            // TODO: Something is still wrong with updating the boxes' representations after snapping
+            //dr_new->updateBoxReprs ();
+        }
+    }
+
+    // TODO: Update the tips
 }
 
 static void
 vp_knot_ungrabbed_handler (SPKnot *knot, guint state, gpointer data)
 {
-    g_warning ("Please fully implement vp_knot_ungrabbed_handler.\n");
-    
     VPDragger *dragger = (VPDragger *) data;
-    //VPDrag *drag = dragger->parent;
 
     //sp_canvas_end_forced_full_redraws(dragger->parent->desktop->canvas);
 
@@ -199,11 +367,6 @@ vp_knot_ungrabbed_handler (SPKnot *knot, guint state, gpointer data)
 
 VPDragger::VPDragger(VPDrag *parent, NR::Point p, VanishingPoint *vp)
 {
-    if (vp == NULL) {
-        g_print ("VP used to create the VPDragger is NULL. This can happen when shift-dragging knots.\n");
-        g_print ("How to correctly handle this? Should we just ignore it, as we currently do?\n");
-        //g_assert (vp != NULL);
-    }
     this->vps = NULL;
 
     this->parent = parent;
@@ -268,9 +431,13 @@ void
 VPDragger::addVP (VanishingPoint *vp)
 {
     if (vp == NULL) {
-        g_print ("No VP present in addVP. We return without adding a new VP to the list.\n");
         return;
     }
+    if (g_slist_find (this->vps, vp)) {
+        // don't add the same VP twice
+        return;
+    }
+
     vp->set_pos (this->point);
     this->vps = g_slist_prepend (this->vps, vp);
 
@@ -288,6 +455,66 @@ VPDragger::removeVP (VanishingPoint *vp)
     this->vps = g_slist_remove (this->vps, vp);
 
     //this->updateTip();
+}
+
+// returns the VP contained in the dragger that belongs to persp
+VanishingPoint *
+VPDragger::getVPofPerspective (Perspective3D *persp)
+{
+    for (GSList *i = vps; i != NULL; i = i->next) {
+        if (persp->has_vanishing_point ((VanishingPoint *) i->data)) {
+            return ((VanishingPoint *) i->data);
+        }
+    }
+    return NULL;
+}
+
+bool
+VPDragger::hasBox(const SP3DBox *box)
+{
+    for (GSList *i = this->vps; i != NULL; i = i->next) {
+        if (get_persp_of_VP ((VanishingPoint *) i->data)->has_box (box)) return true;
+    }
+    return false;
+}
+
+guint
+VPDragger::numberOfBoxes ()
+{
+    guint num = 0;
+    for (GSList *i = this->vps; i != NULL; i = i->next) {
+        num += get_persp_of_VP ((VanishingPoint *) i->data)->number_of_boxes ();
+    }
+    return num;
+}
+
+bool
+VPDragger::hasPerspective (const Perspective3D *persp)
+{
+    for (GSList *i = this->vps; i != NULL; i = i->next) {
+        if (*persp == *get_persp_of_VP ((VanishingPoint *) i->data)) {
+            return true;
+        }        
+    }
+    return false;
+}
+
+void
+VPDragger::mergePerspectives ()
+{
+    Perspective3D *persp1, *persp2;
+    GSList * successor = NULL;
+    for (GSList *i = this->vps; i != NULL; i = i->next) {
+        persp1 = get_persp_of_VP ((VanishingPoint *) i->data);
+        for (GSList *j = i->next; j != NULL; j = successor) {
+            // if the perspective is deleted, the VP is invalidated, too, so we must store its successor beforehand
+            successor = j->next;
+            persp2 = get_persp_of_VP ((VanishingPoint *) j->data);
+            if (*persp1 == *persp2) {
+                persp1->absorb (persp2); // persp2 is deleted; hopefully this doesn't screw up the list of vanishing points and thus the loops
+            }
+        }
+    }
 }
 
 void
@@ -408,6 +635,35 @@ VPDrag::updateDraggers ()
         addDragger (persp->get_vanishing_point(Box3D::Z));
     }
 }
+
+
+/**
+ * Returns true if all boxes that are linked to a VP in the dragger are selected
+ */
+bool
+VPDrag::allBoxesAreSelected (VPDragger *dragger) {
+    GSList *selected_boxes = (GSList *) dragger->parent->selection->itemList();
+    for (GSList *i = dragger->vps; i != NULL; i = i->next) {
+        if (!get_persp_of_VP ((VanishingPoint *) i->data)->all_boxes_occur_in_list (selected_boxes)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+GSList *
+VPDrag::selectedBoxesWithVPinDragger (VPDragger *dragger)
+{
+    GSList *sel_boxes = g_slist_copy ((GSList *) dragger->parent->selection->itemList());
+    for (GSList const *i = sel_boxes; i != NULL; i = i->next) {
+        SP3DBox *box = SP_3DBOX (i->data);
+        if (!dragger->hasBox (box)) {
+            sel_boxes = g_slist_remove (sel_boxes, box);
+        }
+    }
+    return sel_boxes;
+}
+
 
 /**
  * If there already exists a dragger within MERGE_DIST of p, add the VP to it;

@@ -19,6 +19,8 @@
 
 #include "line-geometry.h" // TODO: Remove this include as soon as we don't need create_canvas_(point|line) any more.
 
+class SP3DBox;
+
 namespace Box3D {
 
 enum VPState {
@@ -70,6 +72,7 @@ public:
 private:
 };
 
+class Perspective3D;
 class VPDrag;
 
 struct VPDragger {
@@ -89,6 +92,14 @@ public:
 
     void addVP(VanishingPoint *vp);
     void removeVP(VanishingPoint *vp);
+    /* returns the VP of the dragger that belongs to the given perspective */
+    VanishingPoint *getVPofPerspective (Perspective3D *persp);
+
+    bool hasBox (const SP3DBox *box);
+    guint numberOfBoxes(); // the number of boxes linked to all VPs of the dragger
+
+    bool hasPerspective (const Perspective3D *perps);
+    void mergePerspectives (); // remove duplicate perspectives
 
     void reshapeBoxes(NR::Point const &p, Box3D::Axis axes);
     void updateBoxReprs();
@@ -112,11 +123,18 @@ public:
     void updateDraggers ();
     //void updateLines ();
 
+    inline bool hasEmptySelection() { return this->selection->isEmpty(); }
+    bool allBoxesAreSelected (VPDragger *dragger);
+    GSList * selectedBoxesWithVPinDragger (VPDragger *dragger);
+
+    // FIXME: Should this be private? (It's the case with the corresponding function in gradient-drag.h)
+    //        But vp_knot_grabbed_handler
+    void addDragger (VanishingPoint *vp);
+
 private:
     //void deselect_all();
 
     //void addLine (NR::Point p1, NR::Point p2, guint32 rgba);
-    void addDragger (VanishingPoint *vp);
 
     Inkscape::Selection *selection;
     sigc::connection sel_changed_connection;
