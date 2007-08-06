@@ -17,9 +17,8 @@
 #include "sp-filter.h"
 #include "sp-feconvolvematrix-fns.h"
 #include "number-opt-number.h"
+#include "display/nr-filter-convolve-matrix.h"
 #include <vector>
-//#include <glib.h>
-
 
 /* FeConvolveMatrix base class */
 class SPFeConvolveMatrixClass;
@@ -30,7 +29,7 @@ struct SPFeConvolveMatrix : public SPFilterPrimitive {
     std::vector<gdouble> kernelMatrix;
     double divisor, bias;
     int targetX, targetY;
-    int edgeMode;
+    NR::FilterConvolveMatrixEdgeMode edgeMode;
     NumberOptNumber kernelUnitLength;
     bool preserveAlpha;
 };

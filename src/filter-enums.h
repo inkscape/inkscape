@@ -15,6 +15,7 @@
 #include "display/nr-filter-blend.h"
 #include "display/nr-filter-colormatrix.h"
 #include "display/nr-filter-composite.h"
+#include "display/nr-filter-convolve-matrix.h"
 #include "display/nr-filter-types.h"
 #include "util/enums.h"
 
@@ -44,6 +45,9 @@ extern const Inkscape::Util::EnumDataConverter<NR::FilterColorMatrixType> ColorM
 // Composite operator
 extern const Inkscape::Util::EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR];
 extern const Inkscape::Util::EnumDataConverter<FeCompositeOperator> CompositeOperatorConverter;
+// ConvolveMatrix edgeMode
+extern const Inkscape::Util::EnumData<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeData[NR::CONVOLVEMATRIX_EDGEMODE_ENDTYPE];
+extern const Inkscape::Util::EnumDataConverter<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeConverter;
 // Lighting
 enum LightSource {
     LIGHT_DISTANT,

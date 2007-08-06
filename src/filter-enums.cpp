@@ -77,6 +77,14 @@ const EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR]
 };
 const EnumDataConverter<FeCompositeOperator> CompositeOperatorConverter(CompositeOperatorData, COMPOSITE_ENDOPERATOR);
 
+// feConvolveMatrix
+const EnumData<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeData[NR::CONVOLVEMATRIX_EDGEMODE_ENDTYPE] = {
+    {NR::CONVOLVEMATRIX_EDGEMODE_DUPLICATE, _("Duplicate"), "duplicate"},
+    {NR::CONVOLVEMATRIX_EDGEMODE_WRAP, _("Wrap"), "wrap"},
+    {NR::CONVOLVEMATRIX_EDGEMODE_NONE, _("None"), "none"}
+};
+const EnumDataConverter<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeConverter(ConvolveMatrixEdgeModeData, NR::CONVOLVEMATRIX_EDGEMODE_ENDTYPE);
+
 // Light source
 const EnumData<LightSource> LightSourceData[LIGHT_ENDSOURCE] = {
     {LIGHT_DISTANT, _("Distance Light"), "svg:feDistanceLight"},
