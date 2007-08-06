@@ -24,7 +24,7 @@ static void sp_3dbox_class_init(SP3DBoxClass *klass);
 static void sp_3dbox_init(SP3DBox *box3d);
 
 static void sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-//static void sp_3dbox_release (SPObject *object);
+static void sp_3dbox_release (SPObject *object);
 static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value);
 static void sp_3dbox_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
@@ -76,7 +76,7 @@ sp_3dbox_class_init(SP3DBoxClass *klass)
     sp_object_class->set = sp_3dbox_set;
     sp_object_class->write = sp_3dbox_write;
     sp_object_class->update = sp_3dbox_update;
-    //sp_object_class->release = sp_3dbox_release;
+    sp_object_class->release = sp_3dbox_release;
 
     item_class->description = sp_3dbox_description;
 }
@@ -96,6 +96,8 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
     }
 
     SP3DBox *box = SP_3DBOX (object);
+
+    Box3D::Perspective3D::current_perspective->add_box (box);
 
     sp_object_read_attr(object, "inkscape:box3dcornerA");
     sp_object_read_attr(object, "inkscape:box3dcornerB");
@@ -127,22 +129,24 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
     sp_3dbox_link_to_existing_paths (box, repr);
 }
 
-/*
 static void
 sp_3dbox_release (SPObject *object)
 {
-	SP3DBox *box3d = SP_3DBOX(object);
+	SP3DBox *box = SP_3DBOX(object);
         for (int i = 0; i < 6; ++i) {
-            if (box3d->faces[i]) {
-                delete box3d->faces[i]; // FIXME: Anything else to do? Do we need to clean up the face first?
+            if (box->faces[i]) {
+                delete box->faces[i]; // FIXME: Anything else to do? Do we need to clean up the face first?
             }
         }
+
+        // FIXME: We do not duplicate perspectives if they are the same for several boxes.
+        //        Thus, don't delete the perspective when deleting a box but rather unlink the box from it.
+        Box3D::get_persp_of_box (box)->remove_box (box);
 
 	if (((SPObjectClass *) parent_class)->release) {
 	  ((SPObjectClass *) parent_class)->release (object);
 	}
 }
-*/
 
 static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value)
 {
@@ -334,35 +338,37 @@ sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr) {
 void
 sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt, Box3D::Axis axes)
 {
+    Box3D::Perspective3D * persp = Box3D::get_persp_of_box (box);
+
     NR::Point A (box->corners[id ^ Box3D::XY]);
     if (Box3D::is_single_axis_direction (axes)) {
-        pt = Box3D::PerspectiveLine (box->corners[id], axes).closest_to(pt);
+        pt = Box3D::PerspectiveLine (box->corners[id], axes, persp).closest_to(pt);
     }
 
     /* set the 'front' corners */
     box->corners[id] = pt;
 
-    Box3D::PerspectiveLine pl_one (A, Box3D::Y);
-    Box3D::PerspectiveLine pl_two (pt, Box3D::X);
+    Box3D::PerspectiveLine pl_one (A, Box3D::Y, persp);
+    Box3D::PerspectiveLine pl_two (pt, Box3D::X, persp);
     box->corners[id ^ Box3D::X] = pl_one.meet(pl_two);
 
-    pl_one = Box3D::PerspectiveLine (A, Box3D::X);
-    pl_two = Box3D::PerspectiveLine (pt, Box3D::Y);
+    pl_one = Box3D::PerspectiveLine (A, Box3D::X, persp);
+    pl_two = Box3D::PerspectiveLine (pt, Box3D::Y, persp);
     box->corners[id ^ Box3D::Y] = pl_one.meet(pl_two);
 
     /* set the 'rear' corners */
     NR::Point B (box->corners[id ^ Box3D::XYZ]);
 
-    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::X], Box3D::Z);
-    pl_two = Box3D::PerspectiveLine (B, Box3D::Y);
+    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::X], Box3D::Z, persp);
+    pl_two = Box3D::PerspectiveLine (B, Box3D::Y, persp);
     box->corners[id ^ Box3D::XZ] = pl_one.meet(pl_two);
 
-    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::XZ], Box3D::X);
-    pl_two = Box3D::PerspectiveLine (pt, Box3D::Z);
+    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::XZ], Box3D::X, persp);
+    pl_two = Box3D::PerspectiveLine (pt, Box3D::Z, persp);
     box->corners[id ^ Box3D::Z] = pl_one.meet(pl_two);
 
-    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::Z], Box3D::Y);
-    pl_two = Box3D::PerspectiveLine (B, Box3D::X);
+    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::Z], Box3D::Y, persp);
+    pl_two = Box3D::PerspectiveLine (B, Box3D::X, persp);
     box->corners[id ^ Box3D::YZ] = pl_one.meet(pl_two);
     
 }
@@ -372,19 +378,21 @@ sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, bool 
 {
     if (!constrained) sp_3dbox_move_corner_in_XY_plane (box, id, pt, Box3D::XY);
 
-    /* set the four corners of the face containing corners[id] */
-    box->corners[id] = Box3D::PerspectiveLine (box->corners[id], Box3D::Z).closest_to(pt);
+    Box3D::Perspective3D * persp = Box3D::get_persp_of_box (box);
 
-    Box3D::PerspectiveLine pl_one (box->corners[id], Box3D::X);
-    Box3D::PerspectiveLine pl_two (box->corners[id ^ Box3D::XZ], Box3D::Z);
+    /* set the four corners of the face containing corners[id] */
+    box->corners[id] = Box3D::PerspectiveLine (box->corners[id], Box3D::Z, persp).closest_to(pt);
+
+    Box3D::PerspectiveLine pl_one (box->corners[id], Box3D::X, persp);
+    Box3D::PerspectiveLine pl_two (box->corners[id ^ Box3D::XZ], Box3D::Z, persp);
     box->corners[id ^ Box3D::X] = pl_one.meet(pl_two);
 
-    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::X], Box3D::Y);
-    pl_two = Box3D::PerspectiveLine (box->corners[id ^ Box3D::XYZ], Box3D::Z);
+    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::X], Box3D::Y, persp);
+    pl_two = Box3D::PerspectiveLine (box->corners[id ^ Box3D::XYZ], Box3D::Z, persp);
     box->corners[id ^ Box3D::XY] = pl_one.meet(pl_two);
 
-    pl_one = Box3D::PerspectiveLine (box->corners[id], Box3D::Y);
-    pl_two = Box3D::PerspectiveLine (box->corners[id ^ Box3D::YZ], Box3D::Z);
+    pl_one = Box3D::PerspectiveLine (box->corners[id], Box3D::Y, persp);
+    pl_two = Box3D::PerspectiveLine (box->corners[id ^ Box3D::YZ], Box3D::Z, persp);
     box->corners[id ^ Box3D::Y] = pl_one.meet(pl_two);
 }
 
@@ -409,8 +417,10 @@ sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_
 
         if (!adjacent_face_center) return NR::Nothing();
 
-        Box3D::PerspectiveLine pl (*adjacent_face_center, orth_dir);
-        return pl.intersect(Box3D::PerspectiveLine(box->corners[id_corner1], corner_axes));
+        Box3D::Perspective3D * persp = Box3D::get_persp_of_box (box);
+
+        Box3D::PerspectiveLine pl (*adjacent_face_center, orth_dir, persp);
+        return pl.intersect(Box3D::PerspectiveLine(box->corners[id_corner1], corner_axes, persp));
     } else {
         Box3D::Axis dir = Box3D::extract_first_axis_direction (corner_axes);
         Box3D::Line diag1 (box->corners[id_corner1], box->corners[id_corner2]);

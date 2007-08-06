@@ -54,8 +54,6 @@ struct SP3DBoxContext : public SPEventContext {
     /* temporary member until the precise behaviour is sorted out */
     static guint number_of_handles;
 
-    static Box3D::Perspective3D *current_perspective;
-
 	sigc::connection sel_changed_connection;
 
 	Inkscape::MessageContext *_message_context;

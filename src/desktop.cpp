@@ -132,6 +132,7 @@ SPDesktop::SPDesktop() :
     window_state(0),
     interaction_disabled_counter( 0 ),
     waiting_cursor( false ),
+    perspectives (NULL),
     guides_active( false ),
     gr_item( 0 ),
     gr_point_type( 0 ),
@@ -309,6 +310,21 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     layer_manager = new Inkscape::LayerManager( this );
 
     grids_visible = true;
+
+    /* Create initial perspective, append it to the list of existing perspectives
+       and make it the current perspective */
+    Box3D::Perspective3D *initial_persp = new Box3D::Perspective3D (
+                                          // VP in x-direction
+                                          Box3D::VanishingPoint( NR::Point(-50.0, 600.0),
+                                                                 NR::Point( -1.0,   0.0), Box3D::VP_FINITE),
+                                          // VP in y-direction
+                                          Box3D::VanishingPoint( NR::Point(500.0,1000.0),
+                                                                 NR::Point(  0.0,   1.0), Box3D::VP_INFINITE),
+                                          // VP in z-direction
+                                          Box3D::VanishingPoint( NR::Point(700.0, 600.0),
+                                                                 NR::Point(sqrt(3.0),1.0), Box3D::VP_FINITE));
+    this->add_perspective (initial_persp);
+    Box3D::Perspective3D::current_perspective = (Box3D::Perspective3D *) perspectives->data;
 }
 
 
@@ -352,6 +368,11 @@ void SPDesktop::destroy()
 
     g_list_free (zooms_past);
     g_list_free (zooms_future);
+
+    for (GSList *p = this->perspectives; p != NULL; p = p->next) {
+        delete ((Box3D::Perspective3D *) p->data);
+    }
+    g_slist_free (perspectives);
 }
 
 SPDesktop::~SPDesktop() {}
@@ -691,6 +712,30 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
 void SPDesktop::set_display_area(NR::Rect const &a, NR::Coord b, bool log)
 {
     set_display_area(a.min()[NR::X], a.min()[NR::Y], a.max()[NR::X], a.max()[NR::Y], b, log);
+}
+
+/**
+ * Add a perspective to the desktop if it doesn't exist yet
+ */
+void
+SPDesktop::add_perspective (Box3D::Perspective3D * const persp)
+{
+    // FIXME: Should we handle the case that the perspectives have equal VPs but are not identical?
+    if (persp == NULL || g_slist_find (this->perspectives, persp)) return;
+    this->perspectives = g_slist_prepend (this->perspectives, persp);
+    persp->desktop = this;
+}
+
+void SPDesktop::remove_perspective (Box3D::Perspective3D * const persp)
+{
+    if (persp == NULL) return;
+
+    if (!g_slist_find (this->perspectives, persp)) {
+        g_warning ("Could not find perspective in current desktop. Not removed.\n");
+        return;
+    }
+
+    this->perspectives = g_slist_remove (this->perspectives, persp);
 }
 
 /**

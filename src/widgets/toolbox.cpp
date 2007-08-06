@@ -2133,8 +2133,8 @@ static void sp_3dbox_toggle_vp_changed( GtkToggleAction *act, gpointer data )
             break;
     }
     
-    if (SP3DBoxContext::current_perspective) {
-        Box3D::VanishingPoint *vp = SP3DBoxContext::current_perspective->get_vanishing_point(axis);
+    if (Box3D::Perspective3D::current_perspective) {
+        Box3D::VanishingPoint *vp = Box3D::Perspective3D::current_perspective->get_vanishing_point(axis);
         vp->toggle_parallel();
         vp->draw(axis);
         prefs_set_int_attribute( "tools.shapes.3dbox", pstring->str, vp->is_finite() ? 0 : 1);
@@ -2208,8 +2208,8 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
     g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), GINT_TO_POINTER(Box3D::X));
-    if (SP3DBoxContext::current_perspective) {
-        toggled = SP3DBoxContext::current_perspective->get_vanishing_point(Box3D::X)->is_finite();
+    if (Box3D::Perspective3D::current_perspective) {
+        toggled = !Box3D::Perspective3D::current_perspective->get_vanishing_point(Box3D::X)->is_finite();
     }
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), toggled );
     }
@@ -2223,8 +2223,8 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
     g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), GINT_TO_POINTER(Box3D::Y));
-    if (SP3DBoxContext::current_perspective) {
-        toggled = SP3DBoxContext::current_perspective->get_vanishing_point(Box3D::Y)->is_finite();
+    if (Box3D::Perspective3D::current_perspective) {
+        toggled = !Box3D::Perspective3D::current_perspective->get_vanishing_point(Box3D::Y)->is_finite();
     }
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), toggled );
     }
@@ -2238,8 +2238,8 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
     g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_changed), GINT_TO_POINTER(Box3D::Z));
-    if (SP3DBoxContext::current_perspective) {
-        toggled = SP3DBoxContext::current_perspective->get_vanishing_point(Box3D::Z)->is_finite();
+    if (Box3D::Perspective3D::current_perspective) {
+        toggled = !Box3D::Perspective3D::current_perspective->get_vanishing_point(Box3D::Z)->is_finite();
     }
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), toggled );
     }

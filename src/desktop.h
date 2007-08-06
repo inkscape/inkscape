@@ -34,6 +34,7 @@
 #include "libnr/nr-rect.h"
 #include "ui/view/view.h"
 #include "ui/view/edit-widget-interface.h"
+#include "perspective3d.h"
 
 class NRRect;
 class SPCSSAttr;
@@ -111,6 +112,9 @@ struct SPDesktop : public Inkscape::UI::View::View
     guint window_state;
     unsigned int interaction_disabled_counter;
     bool waiting_cursor;
+
+    // All 3D perspectives that are present in the current desktop
+    GSList *perspectives;
 
     /// \todo fixme: This has to be implemented in different way */
     guint guides_active : 1;
@@ -201,6 +205,10 @@ struct SPDesktop : public Inkscape::UI::View::View
     SPItem *item_at_point (NR::Point const p, bool into_groups, SPItem *upto = NULL) const;
     SPItem *group_at_point (NR::Point const p) const;
     NR::Point point() const;
+
+    // Methods to handle 3D perspective
+    void add_perspective (Box3D::Perspective3D * const persp);
+    void remove_perspective (Box3D::Perspective3D * const persp);
 
     NR::Rect get_display_area() const;
     void set_display_area (double x0, double y0, double x1, double y1, double border, bool log = true);

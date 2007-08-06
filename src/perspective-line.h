@@ -27,8 +27,7 @@ public:
      * PL runs through it; otherwise it has the direction specified by the v_dir vector
      * of the VP.
      */
-    PerspectiveLine (NR::Point const &pt, Box3D::Axis const axis,
-                     Perspective3D *perspective = SP3DBoxContext::current_perspective);
+    PerspectiveLine (NR::Point const &pt, Box3D::Axis const axis, Perspective3D *perspective);
     NR::Maybe<NR::Point> intersect (Line const &line); // FIXME: Can we make this return only a NR::Point to remove the extra method meet()?
     NR::Point meet (Line const &line);
 	

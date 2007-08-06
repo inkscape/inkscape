@@ -64,11 +64,11 @@ void Box3DFace::set_shape(NR::Point const ul, NR::Point const lr,
     } else {
         if (align_along_PL) {
             Box3D::Axis dir3 = Box3D::third_axis_direction (dir1, dir2);
-            Box3D::Line line1(*SP3DBoxContext::current_perspective->get_vanishing_point(dir1), lr);
-            Box3D::Line line2(*pt_align, *SP3DBoxContext::current_perspective->get_vanishing_point(dir3));
+            Box3D::Line line1(*Box3D::Perspective3D::current_perspective->get_vanishing_point(dir1), lr);
+            Box3D::Line line2(*pt_align, *Box3D::Perspective3D::current_perspective->get_vanishing_point(dir3));
             corners[2] = *line1.intersect(line2);
         } else {
-            corners[2] = Box3D::Line(*pt_align, *SP3DBoxContext::current_perspective->get_vanishing_point(dir1)).closest_to(lr);
+            corners[2] = Box3D::Line(*pt_align, *Box3D::Perspective3D::current_perspective->get_vanishing_point(dir1)).closest_to(lr);
         }
     }
 
@@ -130,12 +130,12 @@ Box3DFace::set_face (NR::Point const A, NR::Point const C, Box3D::Axis const axi
         return;
     SP3DBoxContext *bc = SP_3DBOX_CONTEXT(inkscape_active_event_context());
     
-    Box3D::PerspectiveLine line1 (A, axis1);
-    Box3D::PerspectiveLine line2 (C, axis2);
+    Box3D::PerspectiveLine line1 (A, axis1, Box3D::Perspective3D::current_perspective);
+    Box3D::PerspectiveLine line2 (C, axis2, Box3D::Perspective3D::current_perspective);
     NR::Maybe<NR::Point> B = line1.intersect(line2);
 
-    Box3D::PerspectiveLine line3 (*corners[0], axis2);
-    Box3D::PerspectiveLine line4 (*corners[2], axis1);
+    Box3D::PerspectiveLine line3 (*corners[0], axis2, Box3D::Perspective3D::current_perspective);
+    Box3D::PerspectiveLine line4 (*corners[2], axis1, Box3D::Perspective3D::current_perspective);
     NR::Maybe<NR::Point> D = line3.intersect(line4);
 
     // FIXME: How to handle the case if one of the intersections doesn't exist?
