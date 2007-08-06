@@ -61,17 +61,31 @@ perspective_line_snap (NR::Point line_pt, Box3D::Axis dir, NR::Point ext_pt, Per
 
 Perspective3D::Perspective3D (VanishingPoint const &pt_x, VanishingPoint const &pt_y, VanishingPoint const &pt_z)
     : desktop (NULL),
-      vp_x (pt_x),
-      vp_y (pt_y),
-      vp_z (pt_z),
       boxes (NULL)
 {
+    vp_x = new VanishingPoint (pt_x);
+    vp_y = new VanishingPoint (pt_y);
+    vp_z = new VanishingPoint (pt_z);
 }
+
+Perspective3D::Perspective3D (Perspective3D &other)
+    : desktop (other.desktop),
+      boxes (NULL) // FIXME: Should we add an option to copy the list of boxes?
+{
+    vp_x = new VanishingPoint (*other.vp_x);
+    vp_y = new VanishingPoint (*other.vp_y);
+    vp_z = new VanishingPoint (*other.vp_z);
+}
+
 
 Perspective3D::~Perspective3D ()
 {
     g_assert (desktop != NULL);
     desktop->remove_perspective (this);
+
+    delete vp_x;
+    delete vp_y;
+    delete vp_z;
 
     g_slist_free (boxes);
 }
@@ -80,16 +94,23 @@ Perspective3D::~Perspective3D ()
 VanishingPoint *
 Perspective3D::get_vanishing_point (Box3D::Axis const dir)
 {
-    // FIXME: Also handle value 'NONE' in switch
     switch (dir) {
         case X:
-            return &vp_x;
+            return vp_x;
             break;
         case Y:
-            return &vp_y;
+            return vp_y;
             break;
         case Z:
-            return &vp_z;
+            return vp_z;
+            break;
+        case NONE:
+            g_warning ("Axis direction must be specified. As a workaround we return the VP in X direction.\n");
+            return vp_x;
+            break;
+        default:
+            g_warning ("Single axis direction needed to determine corresponding vanishing point.\n");
+            return get_vanishing_point (extract_first_axis_direction(dir));
             break;
     }
 }
@@ -99,13 +120,13 @@ Perspective3D::set_vanishing_point (Box3D::Axis const dir, VanishingPoint const 
 {
     switch (dir) {
         case X:
-            vp_x = pt;
+            (*vp_x) = pt;
             break;
         case Y:
-            vp_y = pt;
+            (*vp_y) = pt;
             break;
         case Z:
-            vp_z = pt;
+            (*vp_z) = pt;
             break;
         case NONE:
             // no vanishing point to set

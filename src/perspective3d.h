@@ -23,6 +23,7 @@ class PerspectiveLine;
 class Perspective3D {
 public:
     Perspective3D(VanishingPoint const &pt_x, VanishingPoint const &pt_y, VanishingPoint const &pt_z);
+    Perspective3D(Perspective3D &other);
     ~Perspective3D();
 
     VanishingPoint *get_vanishing_point (Box3D::Axis const dir);
@@ -36,9 +37,9 @@ public:
     SPDesktop * desktop; // we need to store the perspective's desktop to be able to access it in the destructor
 
 private:
-    VanishingPoint vp_x;
-    VanishingPoint vp_y;
-    VanishingPoint vp_z;
+    VanishingPoint *vp_x;
+    VanishingPoint *vp_y;
+    VanishingPoint *vp_z;
     GSList * boxes; // holds a list of boxes sharing this specific perspective
 };
 

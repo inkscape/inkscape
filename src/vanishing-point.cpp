@@ -46,7 +46,7 @@ VanishingPoint::VanishingPoint(VanishingPoint const &rhs) : NR::Point (rhs)
 }
 
 
-bool VanishingPoint::is_finite()
+bool VanishingPoint::is_finite() const
 {
     return this->state == VP_FINITE;
 }

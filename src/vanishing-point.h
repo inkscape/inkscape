@@ -47,7 +47,7 @@ public:
     VanishingPoint(NR::Coord x, NR::Coord y, NR::Coord dir_x, NR::Coord dir_y);
     VanishingPoint(VanishingPoint const &rhs);
 
-    bool is_finite();
+    bool is_finite() const;
     VPState toggle_parallel();
     void draw(Box3D::Axis const axis); // Draws a point on the canvas if state == VP_FINITE
     //inline VPState state() { return state; }
