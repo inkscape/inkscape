@@ -103,6 +103,8 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
 
     box->my_counter = counter++;
 
+    box->front_bits = 0x0;
+
     if (repr->attribute ("inkscape:perspective") == NULL) {
         // we are creating a new box; link it to the current perspective
         Box3D::Perspective3D::current_perspective->add_box (box);
@@ -294,6 +296,15 @@ void sp_3dbox_set_ratios (SP3DBox *box, Box3D::Axis axes)
         box->ratio_z = NR::L2 (pt - box->corners[4]) / NR::L2 (pt - box->corners[0]);
     }
 }
+
+void
+sp_3dbox_switch_front_face (SP3DBox *box, Box3D::Axis axis)
+{
+    if (Box3D::get_persp_of_box (box)->get_vanishing_point (axis)->is_finite()) {
+        box->front_bits = box->front_bits ^ axis;
+    }
+}
+
 
 void
 sp_3dbox_position_set (SP3DBoxContext &bc)
@@ -564,6 +575,83 @@ sp_3dbox_get_svg_descr_of_persp (Box3D::Perspective3D *persp)
     }
 
     return g_strdup(os.str().c_str());
+}
+
+void sp_3dbox_update_perspective_lines()
+{
+    SPEventContext *ec = inkscape_active_event_context();
+    if (!SP_IS_3DBOX_CONTEXT (ec))
+        return;
+
+    SP_3DBOX_CONTEXT (ec)->_vpdrag->updateLines();
+}
+
+/*
+ * Manipulates corner1 through corner4 to contain the indices of the corners
+ * from which the perspective lines in the direction of 'axis' emerge
+ */
+void sp_3dbox_corners_for_perspective_lines (const SP3DBox * box, Box3D::Axis axis, 
+        				     NR::Point &corner1, NR::Point &corner2, NR::Point &corner3, NR::Point &corner4)
+{
+    // along which axis to switch when takint
+    Box3D::Axis switch_axis;
+    if (axis == Box3D::X || axis == Box3D::Y) {
+        switch_axis = (box->front_bits & axis) ? Box3D::Z : Box3D::NONE;
+    } else {
+        switch_axis = (box->front_bits & axis) ? Box3D::X : Box3D::NONE;
+    }
+
+    switch (axis) {
+        case Box3D::X:
+            corner1 = sp_3dbox_get_corner_along_edge (box, 0 ^ switch_axis, axis, Box3D::REAR);
+            corner2 = sp_3dbox_get_corner_along_edge (box, 2 ^ switch_axis, axis, Box3D::REAR);
+            corner3 = sp_3dbox_get_corner_along_edge (box, 4 ^ switch_axis, axis, Box3D::REAR);
+            corner4 = sp_3dbox_get_corner_along_edge (box, 6 ^ switch_axis, axis, Box3D::REAR);
+            break;
+        case Box3D::Y:
+            corner1 = sp_3dbox_get_corner_along_edge (box, 0 ^ switch_axis, axis, Box3D::REAR);
+            corner2 = sp_3dbox_get_corner_along_edge (box, 1 ^ switch_axis, axis, Box3D::REAR);
+            corner3 = sp_3dbox_get_corner_along_edge (box, 4 ^ switch_axis, axis, Box3D::REAR);
+            corner4 = sp_3dbox_get_corner_along_edge (box, 5 ^ switch_axis, axis, Box3D::REAR);
+            break;
+        case Box3D::Z:
+            corner1 = sp_3dbox_get_corner_along_edge (box, 1 ^ switch_axis, axis, Box3D::REAR);
+            corner2 = sp_3dbox_get_corner_along_edge (box, 3 ^ switch_axis, axis, Box3D::REAR);
+            corner3 = sp_3dbox_get_corner_along_edge (box, 0 ^ switch_axis, axis, Box3D::REAR);
+            corner4 = sp_3dbox_get_corner_along_edge (box, 2 ^ switch_axis, axis, Box3D::REAR);
+            break;
+    }            
+}
+
+/**
+ * Returns the id of the corner on the edge along 'axis' and passing through 'corner' that
+ * lies on the front/rear face in this direction.
+ */
+guint
+sp_3dbox_get_corner_id_along_edge (const SP3DBox *box, guint corner, Box3D::Axis axis, Box3D::FrontOrRear rel_pos)
+{
+    guint result;
+    guint other_corner = corner ^ axis;
+    Box3D::VanishingPoint *vp = Box3D::get_persp_of_box (box)->get_vanishing_point(axis);
+    if (vp->is_finite()) {
+        result = (  NR::L2 (vp->get_pos() - box->corners[corner])
+                  < NR::L2 (vp->get_pos() - box->corners[other_corner]) ? other_corner : corner);
+    } else {
+        // clear the axis bit and switch to the appropriate corner along axis, depending on the value of front_bits
+        result = ((corner & (0xF ^ axis)) ^ (box->front_bits & axis));
+    }
+
+    if (rel_pos == Box3D::FRONT) {
+        return result;
+    } else {
+        return result ^ axis;
+    }
+}
+
+NR::Point
+sp_3dbox_get_corner_along_edge (const SP3DBox *box, guint corner, Box3D::Axis axis, Box3D::FrontOrRear rel_pos)
+{
+    return box->corners[sp_3dbox_get_corner_id_along_edge (box, corner, axis, rel_pos)];
 }
 
 // auxiliary functions

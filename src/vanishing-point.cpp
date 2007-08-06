@@ -19,6 +19,8 @@
 #include "desktop-handles.h"
 #include "box3d.h"
 
+#include "knotholder.h" // FIXME: can we avoid direct access to knotholder_update_knots?
+
 namespace Box3D {
 
 #define VP_KNOT_COLOR_NORMAL 0xffffff00
@@ -131,7 +133,7 @@ vp_drag_sel_changed(Inkscape::Selection *selection, gpointer data)
 {
     VPDrag *drag = (VPDrag *) data;
     drag->updateDraggers ();
-    //drag->updateLines ();
+    drag->updateLines ();
 }
 
 static void
@@ -145,7 +147,7 @@ vp_drag_sel_modified (Inkscape::Selection *selection, guint flags, gpointer data
         drag->updateDraggers ();
     }
     ***/
-    //drag->updateLines ();
+    drag->updateLines ();
 }
 
 // auxiliary function
@@ -225,8 +227,10 @@ vp_knot_moved_handler (SPKnot *knot, NR::Point const *ppointer, guint state, gpo
                 //d_new->updateKnotShape ();
                 //d_new->updateTip ();
 
-                d_new->reshapeBoxes (p, Box3D::XYZ);
+                d_new->reshapeBoxes (d_new->point, Box3D::XYZ);
                 d_new->updateBoxReprs ();
+
+                drag->updateLines ();
 
                 // TODO: Undo machinery; this doesn't work yet because perspectives must be created and
                 //       deleted according to changes in the svg representation, not based on any user input
@@ -245,7 +249,7 @@ vp_knot_moved_handler (SPKnot *knot, NR::Point const *ppointer, guint state, gpo
     dragger->reshapeBoxes (p, Box3D::XYZ);
     dragger->updateBoxReprs ();
 
-    //dragger->parent->updateLines ();
+    drag->updateLines ();
 
     //drag->local_change = false;
 }
@@ -530,6 +534,7 @@ VPDragger::reshapeBoxes (NR::Point const &p, Box3D::Axis axes)
         Box3D::Axis axis = persp->get_axis_of_VP (vp);
         get_persp_of_VP (vp)->reshape_boxes (axis); // FIXME: we should only update the direction of the VP
     }
+    parent->updateBoxHandles();
 }
 
 void
@@ -543,8 +548,15 @@ VPDragger::updateBoxReprs ()
 VPDrag::VPDrag (SPDesktop *desktop)
 {
     this->desktop = desktop;
-    this->draggers = NULL;
     this->selection = sp_desktop_selection(desktop);
+
+    this->draggers = NULL;
+    this->lines = NULL;
+    this->show_lines = true;
+    this->front_or_rear_lines = 0x1;
+
+    //this->selected = NULL;
+    this->local_change = false;
 
     this->sel_changed_connection = this->selection->connectChanged(
         sigc::bind (
@@ -559,7 +571,7 @@ VPDrag::VPDrag (SPDesktop *desktop)
         );
 
     this->updateDraggers ();
-    //this->updateLines ();
+    this->updateLines ();
 }
 
 VPDrag::~VPDrag()
@@ -572,6 +584,12 @@ VPDrag::~VPDrag()
     }
     g_list_free (this->draggers);
     this->draggers = NULL;
+
+    for (GSList const *i = this->lines; i != NULL; i = i->next) {
+        gtk_object_destroy( GTK_OBJECT (i->data));
+    }
+    g_slist_free (this->lines);
+    this->lines = NULL;
 }
 
 /**
@@ -636,6 +654,95 @@ VPDrag::updateDraggers ()
     }
 }
 
+/**
+Regenerates the lines list from the current selection; is called on each move
+of a dragger, so that lines are always in sync with the actual perspective
+*/
+void
+VPDrag::updateLines ()
+{
+    // delete old lines
+    for (GSList const *i = this->lines; i != NULL; i = i->next) {
+        gtk_object_destroy( GTK_OBJECT (i->data));
+    }
+    g_slist_free (this->lines);
+    this->lines = NULL;
+
+    // do nothing if perspective lines are currently disabled
+    if (this->show_lines == 0) return;
+
+    g_return_if_fail (this->selection != NULL);
+
+    for (GSList const* i = this->selection->itemList(); i != NULL; i = i->next) {
+        if (!SP_IS_3DBOX(i->data)) continue;
+        SP3DBox *box = SP_3DBOX (i->data);
+
+        this->drawLinesForFace (box, Box3D::X);
+        this->drawLinesForFace (box, Box3D::Y);
+        this->drawLinesForFace (box, Box3D::Z);
+    }
+}
+
+void
+VPDrag::updateBoxHandles ()
+{
+    // FIXME: Is there a way to update the knots without accessing the
+    //        statically linked function knotholder_update_knots?
+
+    GSList *sel = (GSList *) selection->itemList();
+    if (g_slist_length (sel) > 1) {
+        // Currently we only show handles if a single box is selected
+        return;
+    }
+
+    if (!SP_IS_3DBOX (sel->data))
+        return;
+
+    SPEventContext *ec = inkscape_active_event_context();
+    g_assert (ec != NULL);
+    if (ec->shape_knot_holder != NULL) {
+        knotholder_update_knots(ec->shape_knot_holder, (SPItem *) sel->data);
+    }
+}
+
+/**
+ * Depending on the value of all_lines, draw the front and/or rear perspective lines starting from the given corners.
+ */
+void
+VPDrag::drawLinesForFace (const SP3DBox *box, Box3D::Axis axis) //, guint corner1, guint corner2, guint corner3, guint corner4)
+{
+    guint color;
+    switch (axis) {
+        // TODO: Make color selectable by user
+        case Box3D::X: color = VP_LINE_COLOR_STROKE_X; break;
+        case Box3D::Y: color = VP_LINE_COLOR_STROKE_Y; break;
+        case Box3D::Z: color = VP_LINE_COLOR_STROKE_Z; break;
+        default: g_assert_not_reached();
+    }
+
+    NR::Point corner1, corner2, corner3, corner4;
+    sp_3dbox_corners_for_perspective_lines (box, axis, corner1, corner2, corner3, corner4);
+
+    //VanishingPoint *vp = box->perspective->get_vanishing_point (axis);
+    VanishingPoint *vp = Box3D::get_persp_of_box (box)->get_vanishing_point (axis);
+    if (vp->is_finite()) {
+        NR::Point pt = vp->get_pos();
+        if (this->front_or_rear_lines & 0x1) {
+            // draw 'front' perspective lines
+            this->addLine (corner1, pt, color);
+            this->addLine (corner2, pt, color);
+        }
+        if (this->front_or_rear_lines & 0x2) {
+            // draw 'rear' perspective lines
+            this->addLine (corner3, pt, color);
+            this->addLine (corner4, pt, color);
+        }
+    } else {
+        // TODO: Draw infinite PLs
+        g_warning ("Perspective lines for infinite vanishing points are not supported yet.\n");
+    }
+
+}
 
 /**
  * Returns true if all boxes that are linked to a VP in the dragger are selected
@@ -691,6 +798,20 @@ VPDrag::addDragger (VanishingPoint *vp)
     VPDragger *new_dragger = new VPDragger(this, p, vp);
     // fixme: draggers should be added AFTER the last one: this way tabbing through them will be from begin to end.
     this->draggers = g_list_append (this->draggers, new_dragger);
+}
+
+/**
+Create a line from p1 to p2 and add it to the lines list
+ */
+void
+VPDrag::addLine (NR::Point p1, NR::Point p2, guint32 rgba)
+{
+    SPCanvasItem *line = sp_canvas_item_new(sp_desktop_controls(this->desktop), SP_TYPE_CTRLLINE, NULL);
+    sp_ctrlline_set_coords(SP_CTRLLINE(line), p1, p2);
+    if (rgba != VP_LINE_COLOR_FILL) // fill is the default, so don't set color for it to speed up redraw
+        sp_ctrlline_set_rgba32 (SP_CTRLLINE(line), rgba);
+    sp_canvas_item_show (line);
+    this->lines = g_slist_append (this->lines, line);
 }
 
 } // namespace Box3D 

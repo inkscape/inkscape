@@ -43,6 +43,8 @@ struct SP3DBox : public SPGroup {
     double ratio_y;
     double ratio_z;
 
+    guint front_bits; /* used internally to determine which of two parallel faces is supposed to be the front face */
+
     gint my_counter; // for testing only
 };
 
@@ -58,10 +60,16 @@ void sp_3dbox_recompute_corners (SP3DBox *box, NR::Point const pt1, NR::Point co
 void sp_3dbox_update_curves (SP3DBox *box);
 void sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr);
 void sp_3dbox_set_ratios (SP3DBox *box, Box3D::Axis axes = Box3D::XYZ);
+void sp_3dbox_switch_front_face (SP3DBox *box, Box3D::Axis axis);
 void sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt, Box3D::Axis axes = Box3D::XY);
 void sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, bool constrained = true);
 NR::Maybe<NR::Point> sp_3dbox_get_center (SP3DBox *box);
 NR::Maybe<NR::Point> sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_corner2);
+
+void sp_3dbox_update_perspective_lines();
+void sp_3dbox_corners_for_perspective_lines (const SP3DBox * box, Box3D::Axis axis, NR::Point &corner1, NR::Point &corner2, NR::Point &corner3, NR::Point &corner4);
+guint sp_3dbox_get_corner_id_along_edge (const SP3DBox *box, guint corner, Box3D::Axis axis, Box3D::FrontOrRear rel_pos);
+NR::Point sp_3dbox_get_corner_along_edge (const SP3DBox *box, guint corner, Box3D::Axis axis, Box3D::FrontOrRear rel_pos);
 
 gchar * sp_3dbox_get_svg_descr_of_persp (Box3D::Perspective3D *persp);
 

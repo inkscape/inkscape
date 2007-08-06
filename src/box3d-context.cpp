@@ -440,13 +440,67 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             ret = true;
             break;
 
+        case GDK_L:
+        case GDK_l:
+            bc->_vpdrag->show_lines = !bc->_vpdrag->show_lines;
+            bc->_vpdrag->updateLines();
+            ret = true;
+            break;
+
+        case GDK_A:
+        case GDK_a:
+            if (MOD__CTRL) break; // Don't catch Ctrl+A ("select all")
+            if (bc->_vpdrag->show_lines) {
+                bc->_vpdrag->front_or_rear_lines = bc->_vpdrag->front_or_rear_lines ^ 0x2; // toggle rear PLs
+            }
+            bc->_vpdrag->updateLines();
+            ret = true;
+            break;
+
         case GDK_x:
         case GDK_X:
-            if (MOD__ALT_ONLY) {
-                // desktop->setToolboxFocusTo ("altx-rect");
-                ret = TRUE;
-            }
+        {
+            if (MOD__CTRL) break; // Don't catch Ctrl+X ('cut') and Ctrl+Shift+X ('open XML editor')
+            // FIXME: Shouldn't we access _vpdrag->selection instead?
+            Inkscape::Selection *selection = sp_desktop_selection (bc->_vpdrag->desktop);
+            for (GSList const *i = selection->itemList(); i != NULL; i = i->next) {
+                if (!SP_IS_3DBOX (i->data)) continue;
+                sp_3dbox_switch_front_face (SP_3DBOX (i->data), Box3D::X);
+             }
+            bc->_vpdrag->updateLines();
+            ret = true;
             break;
+        }
+ 
+        case GDK_y:
+        case GDK_Y:
+        {
+            if (MOD__CTRL) break; // Don't catch Ctrl+Y ("redo")
+            // FIXME: Shouldn't we access _vpdrag->selection instead?
+            Inkscape::Selection *selection = sp_desktop_selection (bc->_vpdrag->desktop);
+            for (GSList const *i = selection->itemList(); i != NULL; i = i->next) {
+                if (!SP_IS_3DBOX (i->data)) continue;
+                sp_3dbox_switch_front_face (SP_3DBOX (i->data), Box3D::Y);
+            }
+            bc->_vpdrag->updateLines();
+            ret = true;
+            break;
+        }
+
+        case GDK_z:
+        case GDK_Z:
+        {
+            if (MOD__CTRL) break; // Don't catch Ctrl+Z ("undo")
+            // FIXME: Shouldn't we access _vpdrag->selection instead?
+            Inkscape::Selection *selection = sp_desktop_selection (bc->_vpdrag->desktop);
+            for (GSList const *i = selection->itemList(); i != NULL; i = i->next) {
+                if (!SP_IS_3DBOX (i->data)) continue;
+                sp_3dbox_switch_front_face (SP_3DBOX (i->data), Box3D::Z);
+            }
+            bc->_vpdrag->updateLines();
+            ret = true;
+            break;
+        }
 
         case GDK_Escape:
             sp_desktop_selection(desktop)->clear();

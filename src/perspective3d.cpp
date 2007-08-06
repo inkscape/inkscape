@@ -19,7 +19,6 @@
 
 // can probably be removed later
 #include "inkscape.h"
-#include "knotholder.h"
 
 namespace Box3D {
 
@@ -312,13 +311,6 @@ Perspective3D::reshape_boxes (Box3D::Axis axes)
         }                
 
         sp_3dbox_set_shape (box, true);
-        // FIXME: Is there a way update the knots without accessing the
-        //        statically linked function knotholder_update_knots?
-        SPEventContext *ec = inkscape_active_event_context();
-        g_assert (ec != NULL);
-        if (ec->shape_knot_holder != NULL) {
-            knotholder_update_knots(ec->shape_knot_holder, (SPItem *) box);
-        }
     }
 }
 

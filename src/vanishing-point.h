@@ -118,10 +118,16 @@ public:
 
     SPDesktop *desktop;
     GList *draggers;
-    //GSList *lines;
+    GSList *lines;
 
     void updateDraggers ();
-    //void updateLines ();
+    void updateLines ();
+    void updateBoxHandles ();
+    void drawLinesForFace (const SP3DBox *box, Box3D::Axis axis); //, guint corner1, guint corner2, guint corner3, guint corner4);
+    bool show_lines; /* whether perspective lines are drawn at all */
+    guint front_or_rear_lines; /* whether we draw perspective lines from all corners or only the
+                                  front/rear corners (indicated by the first/second bit, respectively  */
+
 
     inline bool hasEmptySelection() { return this->selection->isEmpty(); }
     bool allBoxesAreSelected (VPDragger *dragger);
@@ -134,7 +140,7 @@ public:
 private:
     //void deselect_all();
 
-    //void addLine (NR::Point p1, NR::Point p2, guint32 rgba);
+    void addLine (NR::Point p1, NR::Point p2, guint32 rgba);
 
     Inkscape::Selection *selection;
     sigc::connection sel_changed_connection;
