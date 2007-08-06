@@ -2136,7 +2136,6 @@ static void sp_3dbox_toggle_vp_changed( GtkToggleAction *act, gpointer data )
     if (Box3D::Perspective3D::current_perspective) {
         Box3D::VanishingPoint *vp = Box3D::Perspective3D::current_perspective->get_vanishing_point(axis);
         vp->toggle_parallel();
-        vp->draw(axis);
         prefs_set_int_attribute( "tools.shapes.3dbox", pstring->str, vp->is_finite() ? 0 : 1);
     }
     
