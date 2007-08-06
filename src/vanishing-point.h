@@ -13,6 +13,8 @@
 #define SEEN_VANISHING_POINT_H
 
 #include "libnr/nr-point.h"
+#include "knot.h"
+#include "selection.h"
 #include "axis-manip.h"
 
 #include "line-geometry.h" // TODO: Remove this include as soon as we don't need create_canvas_(point|line) any more.
@@ -46,6 +48,7 @@ public:
     VanishingPoint(NR::Coord x, NR::Coord y, VPState const state);
     VanishingPoint(NR::Coord x, NR::Coord y, NR::Coord dir_x, NR::Coord dir_y);
     VanishingPoint(VanishingPoint const &rhs);
+    ~VanishingPoint();
 
     bool operator== (VanishingPoint const &other);
 
@@ -67,6 +70,58 @@ public:
 private:
 };
 
+class VPDrag;
+
+struct VPDragger {
+public:
+    VPDragger(VPDrag *parent, NR::Point p, VanishingPoint *vp);
+    ~VPDragger();
+
+    VPDrag *parent;
+    SPKnot *knot;
+
+    // position of the knot, desktop coords
+    NR::Point point;
+    // position of the knot before it began to drag; updated when released
+    NR::Point point_original;
+
+    GSList *vps; // the list of vanishing points
+
+    void addVP(VanishingPoint *vp);
+    void removeVP(VanishingPoint *vp);
+
+    void reshapeBoxes(NR::Point const &p, Box3D::Axis axes);
+    void updateBoxReprs();
+};
+
+struct VPDrag {
+public:
+    VPDrag(SPDesktop *desktop);
+    ~VPDrag();
+
+    VPDragger *getDraggerFor (VanishingPoint const &vp);
+
+    //void grabKnot (VanishingPoint const &vp, gint x, gint y, guint32 etime);
+
+    bool local_change;
+
+    SPDesktop *desktop;
+    GList *draggers;
+    //GSList *lines;
+
+    void updateDraggers ();
+    //void updateLines ();
+
+private:
+    //void deselect_all();
+
+    //void addLine (NR::Point p1, NR::Point p2, guint32 rgba);
+    void addDragger (VanishingPoint *vp);
+
+    Inkscape::Selection *selection;
+    sigc::connection sel_changed_connection;
+    sigc::connection sel_modified_connection;
+};
 
 } // namespace Box3D
 

@@ -30,6 +30,7 @@ public:
     bool operator== (Perspective3D const &other);
 
     VanishingPoint *get_vanishing_point (Box3D::Axis const dir);
+    Axis get_axis_of_VP (VanishingPoint *vp);
     void set_vanishing_point (Box3D::Axis const dir, VanishingPoint const &pt);
     void set_vanishing_point (Box3D::Axis const dir, gdouble pt_x, gdouble pt_y, gdouble dir_x, gdouble dir_y, VPState st);
     void add_box (SP3DBox *box);
@@ -57,6 +58,7 @@ private:
 };
 
 Perspective3D * get_persp_of_box (const SP3DBox *box);
+Perspective3D * get_persp_of_VP (const VanishingPoint *vp);
 
 NR::Point perspective_intersection (NR::Point pt1, Box3D::Axis dir1, NR::Point pt2, Box3D::Axis dir2, Perspective3D *persp);
 NR::Point perspective_line_snap (NR::Point pt, Box3D::Axis dir, NR::Point ext_pt, Perspective3D *persp);

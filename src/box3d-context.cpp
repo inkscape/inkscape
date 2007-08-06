@@ -113,6 +113,8 @@ static void sp_3dbox_context_init(SP3DBoxContext *box3d_context)
     box3d_context->ctrl_dragged = false;
     box3d_context->extruded = false;
     
+    box3d_context->_vpdrag = NULL;
+
     new (&box3d_context->sel_changed_connection) sigc::connection();
 }
 
@@ -122,6 +124,9 @@ static void sp_3dbox_context_dispose(GObject *object)
     SPEventContext *ec = SP_EVENT_CONTEXT(object);
 
     ec->enableGrDrag(false);
+
+    delete (bc->_vpdrag);
+    bc->_vpdrag = NULL;
 
     bc->sel_changed_connection.disconnect();
     bc->sel_changed_connection.~connection();
@@ -212,6 +217,8 @@ static void sp_3dbox_context_setup(SPEventContext *ec)
     bc->sel_changed_connection = sp_desktop_selection(ec->desktop)->connectChanged(
         sigc::bind(sigc::ptr_fun(&sp_3dbox_context_selection_changed), (gpointer)bc)
     );
+
+    bc->_vpdrag = new Box3D::VPDrag(ec->desktop);
 
     if (prefs_get_int_attribute("tools.shapes", "selcue", 0) != 0) {
         ec->enableSelectionCue();
@@ -520,6 +527,9 @@ static void sp_3dbox_drag(SP3DBoxContext &bc, guint state)
         }
 
         bc.item->updateRepr();
+        // TODO: It would be nice to show the VPs during dragging, but since there is no selection
+        //       at this point (only after finishing the box), we must do this "manually"
+        bc._vpdrag->updateDraggers();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
     }

@@ -38,6 +38,23 @@ get_persp_of_box (const SP3DBox *box)
     g_assert_not_reached();
 }
 
+Perspective3D *
+get_persp_of_VP (const VanishingPoint *vp)
+{
+    Perspective3D *persp;
+    for (GSList *p = Perspective3D::perspectives; p != NULL; p = p->next) {
+        persp = (Perspective3D *) p->data;
+        // we compare the pointers, not the position/state of the VPs; is this correct?
+        if (persp->get_vanishing_point (Box3D::X) == vp ||
+            persp->get_vanishing_point (Box3D::Y) == vp ||
+            persp->get_vanishing_point (Box3D::Z) == vp)
+            return persp;
+    }
+
+    g_warning ("Stray vanishing point!\n");
+    g_assert_not_reached();
+}
+
 /**
  * Computes the intersection of the two perspective lines from pt1 and pt2 to the respective
  * vanishing points in the given directions.
@@ -87,6 +104,37 @@ Perspective3D::Perspective3D (Perspective3D &other)
 Perspective3D::~Perspective3D ()
 {
     Perspective3D::remove_perspective (this);
+
+    // Remove the VPs from their draggers
+    SPEventContext *ec = inkscape_active_event_context();
+    if (SP_IS_3DBOX_CONTEXT (ec)) {
+        SP3DBoxContext *bc = SP_3DBOX_CONTEXT (ec);
+        // we need to check if there are any draggers because the selection
+        // is temporarily empty during duplication of boxes, e.g.
+        if (bc->_vpdrag->draggers != NULL) {
+            /***
+            g_assert (bc->_vpdrag->getDraggerFor (*vp_x) != NULL);
+            g_assert (bc->_vpdrag->getDraggerFor (*vp_y) != NULL);
+            g_assert (bc->_vpdrag->getDraggerFor (*vp_z) != NULL);
+            bc->_vpdrag->getDraggerFor (*vp_x)->removeVP (vp_x);
+            bc->_vpdrag->getDraggerFor (*vp_y)->removeVP (vp_y);
+            bc->_vpdrag->getDraggerFor (*vp_z)->removeVP (vp_z);
+            ***/
+            // TODO: the temporary perspective created when building boxes is not linked to any dragger, hence
+            //       we need to do the following checks. Maybe it would be better to not create a temporary
+            //       perspective at all but simply compare the VPs manually in sp_3dbox_build.
+            VPDragger * dragger;
+            dragger = bc->_vpdrag->getDraggerFor (*vp_x);
+            if (dragger)
+                dragger->removeVP (vp_x);
+            dragger = bc->_vpdrag->getDraggerFor (*vp_y);
+            if (dragger)
+                dragger->removeVP (vp_y);
+            dragger = bc->_vpdrag->getDraggerFor (*vp_z);
+            if (dragger)
+                dragger->removeVP (vp_z);
+        }
+    }
 
     delete vp_x;
     delete vp_y;
@@ -143,6 +191,17 @@ Perspective3D::set_vanishing_point (Box3D::Axis const dir, VanishingPoint const 
             // no vanishing point to set
             break;
     }
+}
+
+Axis
+Perspective3D::get_axis_of_VP (VanishingPoint *vp)
+{
+    if (vp == vp_x) return X;
+    if (vp == vp_y) return Y;
+    if (vp == vp_z) return Z;
+
+    g_warning ("Vanishing point not present in the perspective.\n");
+    return NONE;
 }
 
 void
