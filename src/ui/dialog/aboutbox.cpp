@@ -271,6 +271,7 @@ void AboutBox::initStrings() {
         "James Kilfiger\n"
         "Petr Kovar\n"
         "Raph Levien\n"
+        "Diederik van Lierop\n"
         "Nicklas Lindgren\n"
         "Vitaly Lipatov\n"
         "Colin Marquardt\n"
