@@ -41,6 +41,7 @@ public:
     inline guint number_of_boxes () { return g_slist_length (boxes); }
     void reshape_boxes (Box3D::Axis axes);
     void update_box_reprs ();
+    void update_z_orders ();
 
     /* convenience functions for interaction with dragging machinery: */
     bool all_boxes_occur_in_list (GSList *boxes_to_do);

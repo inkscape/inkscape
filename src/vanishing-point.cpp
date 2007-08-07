@@ -229,6 +229,7 @@ vp_knot_moved_handler (SPKnot *knot, NR::Point const *ppointer, guint state, gpo
 
                 d_new->reshapeBoxes (d_new->point, Box3D::XYZ);
                 d_new->updateBoxReprs ();
+                d_new->updateZOrders ();
 
                 drag->updateLines ();
 
@@ -248,6 +249,7 @@ vp_knot_moved_handler (SPKnot *knot, NR::Point const *ppointer, guint state, gpo
 
     dragger->reshapeBoxes (p, Box3D::XYZ);
     dragger->updateBoxReprs ();
+    dragger->updateZOrders ();
 
     drag->updateLines ();
 
@@ -542,6 +544,14 @@ VPDragger::updateBoxReprs ()
 {
     for (GSList *i = this->vps; i != NULL; i = i->next) {
         Box3D::get_persp_of_VP ((VanishingPoint *) i->data)->update_box_reprs ();
+    }
+}
+
+void
+VPDragger::updateZOrders ()
+{
+    for (GSList *i = this->vps; i != NULL; i = i->next) {
+        Box3D::get_persp_of_VP ((VanishingPoint *) i->data)->update_z_orders ();
     }
 }
 

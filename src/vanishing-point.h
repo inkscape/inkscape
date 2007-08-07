@@ -103,6 +103,7 @@ public:
 
     void reshapeBoxes(NR::Point const &p, Box3D::Axis axes);
     void updateBoxReprs();
+    void updateZOrders();
 };
 
 struct VPDrag {

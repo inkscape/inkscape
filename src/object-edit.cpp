@@ -548,6 +548,7 @@ static void sp_3dbox_knot_set(SPItem *item, guint knot_id, Box3D::Axis direction
     sp_3dbox_update_curves (box);
     sp_3dbox_set_ratios (box);
     sp_3dbox_update_perspective_lines ();
+    sp_3dbox_set_z_orders (box);
 }
 
 static NR::Point sp_3dbox_knot_get(SPItem *item, guint knot_id)
@@ -619,6 +620,7 @@ static void sp_3dbox_knot_set_uniformly(SPItem *item, guint knot_id, Box3D::Axis
     sp_3dbox_update_curves (box);
     sp_3dbox_set_ratios (box);
     sp_3dbox_update_perspective_lines ();
+    sp_3dbox_set_z_orders (box);
 }
 
 static void sp_3dbox_knot0_set_uniformly(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)

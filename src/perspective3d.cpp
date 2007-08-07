@@ -322,6 +322,14 @@ Perspective3D::update_box_reprs ()
     }
 }
 
+void
+Perspective3D::update_z_orders ()
+{
+    for (GSList *i = this->boxes; i != NULL; i = i->next) {
+        sp_3dbox_set_z_orders (SP_3DBOX (i->data));
+    }
+}
+
 // swallow the list of boxes from the other perspective and delete it
 void
 Perspective3D::absorb (Perspective3D *other)

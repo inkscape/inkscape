@@ -103,6 +103,11 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
 
     box->my_counter = counter++;
 
+    /* we initialize the z-orders to zero so that they are updated during dragging */
+    for (int i = 0; i < 6; ++i) {
+        box->z_orders[i] = 0;
+    }
+
     box->front_bits = 0x0;
 
     if (repr->attribute ("inkscape:perspective") == NULL) {
@@ -366,6 +371,110 @@ void sp_3dbox_recompute_corners (SP3DBox *box, NR::Point const A, NR::Point cons
     sp_3dbox_move_corner_in_XY_plane (box, 2, A);
     sp_3dbox_move_corner_in_XY_plane (box, 1, B);
     sp_3dbox_move_corner_in_Z_direction (box, 5, C);
+}
+
+inline static double
+normalized_angle (double angle) {
+    if (angle < -M_PI) {
+        return angle + 2*M_PI;
+    } else if (angle > M_PI) {
+        return angle - 2*M_PI;
+    }
+    return angle;
+}
+
+static gdouble
+sp_3dbox_corner_angle_to_VP (SP3DBox *box, Box3D::Axis axis, guint extreme_corner)
+{
+    Box3D::VanishingPoint *vp = Box3D::get_persp_of_box (box)->get_vanishing_point (axis);
+    NR::Point dir;
+
+    if (vp->is_finite()) {
+        dir = NR::unit_vector (vp->get_pos() - box->corners[extreme_corner]);
+    } else {
+        dir = NR::unit_vector (vp->v_dir);
+    }
+
+    return atan2 (dir[NR::Y], dir[NR::X]);
+}
+
+
+bool sp_3dbox_recompute_z_orders (SP3DBox *box)
+{
+    guint new_z_orders[6];
+
+    Box3D::Perspective3D *persp = Box3D::get_persp_of_box (box);
+
+    // TODO: Determine the front corner depending on the distance from VPs and/or the user presets
+    guint front_corner = 1;
+
+    gdouble dir_1x = sp_3dbox_corner_angle_to_VP (box, Box3D::X, front_corner);
+    gdouble dir_3x = sp_3dbox_corner_angle_to_VP (box, Box3D::X, front_corner ^ Box3D::Y);
+
+    gdouble dir_1y = sp_3dbox_corner_angle_to_VP (box, Box3D::Y, front_corner);
+    gdouble dir_0y = sp_3dbox_corner_angle_to_VP (box, Box3D::Y, front_corner ^ Box3D::X);
+
+    gdouble dir_1z = sp_3dbox_corner_angle_to_VP (box, Box3D::Z, front_corner);
+    gdouble dir_3z = sp_3dbox_corner_angle_to_VP (box, Box3D::Z, front_corner ^ Box3D::Y);
+
+    // Still not perfect, but only fails in some rather degenerate cases.
+    // I suspect that there is a more elegant model, though. :)
+    new_z_orders[0] = Box3D::face_to_int (Box3D::XY ^ Box3D::FRONT);
+    if (normalized_angle (dir_1y - dir_1z) > 0) {
+        new_z_orders[1] = Box3D::face_to_int (Box3D::YZ ^ Box3D::REAR);
+        if (normalized_angle (dir_1x - dir_1z) > 0) {
+            new_z_orders[2] = Box3D::face_to_int (Box3D::XZ ^ Box3D::REAR);
+        } else {
+            new_z_orders[2] = Box3D::face_to_int (Box3D::XZ ^ Box3D::FRONT);
+        }
+    } else {
+        if (normalized_angle (dir_3x - dir_3z) > 0) {
+            new_z_orders[1] = Box3D::face_to_int (Box3D::XZ ^ Box3D::REAR);
+            new_z_orders[2] = Box3D::face_to_int (Box3D::YZ ^ Box3D::FRONT);
+        } else {
+            if (normalized_angle (dir_1x - dir_1z) > 0) {
+                new_z_orders[1] = Box3D::face_to_int (Box3D::YZ ^ Box3D::FRONT);
+                new_z_orders[2] = Box3D::face_to_int (Box3D::XZ ^ Box3D::FRONT);
+            } else {
+                new_z_orders[1] = Box3D::face_to_int (Box3D::XZ ^ Box3D::FRONT);
+                new_z_orders[2] = Box3D::face_to_int (Box3D::YZ ^ Box3D::FRONT);
+            }
+        }
+    }
+
+    new_z_orders[3] = Box3D::opposite_face (new_z_orders[2]);
+    new_z_orders[4] = Box3D::opposite_face (new_z_orders[1]);
+    new_z_orders[5] = Box3D::opposite_face (new_z_orders[0]);
+
+    /* We only need to look for changes among the topmost three faces because the order
+       of the other ones is just inverted. */
+    // Currently we can even skip the first test since the front face is always in the XY plane.
+    if (// (box->z_orders[0] != new_z_orders[0]) ||
+        (box->z_orders[1] != new_z_orders[1]) ||
+        (box->z_orders[2] != new_z_orders[2]))
+    {
+        for (int i = 0; i < 6; ++i) {
+            box->z_orders[i] = new_z_orders[i];
+        }
+        return true;
+    }
+
+    return false;
+}
+
+void sp_3dbox_set_z_orders (SP3DBox *box)
+{
+    GSList *items = sp_item_group_item_list(SP_GROUP(box));
+
+    // For efficiency reasons, we only set the new z-orders if something really changed
+    if (sp_3dbox_recompute_z_orders (box)) {
+        box->faces[box->z_orders[0]]->lower_to_bottom ();
+        box->faces[box->z_orders[1]]->lower_to_bottom ();
+        box->faces[box->z_orders[2]]->lower_to_bottom ();
+        box->faces[box->z_orders[3]]->lower_to_bottom ();
+        box->faces[box->z_orders[4]]->lower_to_bottom ();
+        box->faces[box->z_orders[5]]->lower_to_bottom ();
+    }
 }
 
 void

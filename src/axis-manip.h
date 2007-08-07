@@ -66,6 +66,10 @@ inline gint face_to_int (guint face_id) {
     }
 }
 
+inline guint opposite_face (guint face_id) {
+    return face_id + ((face_id % 2 == 0) ? 1 : -1);
+}
+
 inline bool is_single_axis_direction (Box3D::Axis dir) {
     // tests whether dir is nonzero and a power of 2
     return (!(dir & (dir - 1)) && dir);

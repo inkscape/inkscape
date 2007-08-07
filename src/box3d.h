@@ -36,6 +36,7 @@
 struct SP3DBox : public SPGroup {
     NR::Point corners[8];
     Box3DFace *faces[6];
+    guint z_orders[6]; // z_orders[i] holds the ID of the face at position #i in the group (from top to bottom)
 
     // TODO: Keeping/updating the ratios works reasonably well but is still an ad hoc implementation.
     //       Use a mathematically correct model to update the boxes.
@@ -57,6 +58,9 @@ GType sp_3dbox_get_type (void);
 void sp_3dbox_position_set (SP3DBoxContext &bc);
 void sp_3dbox_set_shape(SP3DBox *box3d, bool use_previous_corners = false);
 void sp_3dbox_recompute_corners (SP3DBox *box, NR::Point const pt1, NR::Point const pt2, NR::Point const pt3);
+bool sp_3dbox_recompute_z_orders (SP3DBox *box); /* returns true if there was a change in the z-orders
+						    (which triggers an update of the repr) */
+void sp_3dbox_set_z_orders (SP3DBox *box);
 void sp_3dbox_update_curves (SP3DBox *box);
 void sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr);
 void sp_3dbox_set_ratios (SP3DBox *box, Box3D::Axis axes = Box3D::XYZ);

@@ -45,6 +45,8 @@ public:
     void hook_path_to_3dbox(SPPath * existing_path = NULL);
     void set_path_repr();
     void set_curve();
+    inline void lower_to_bottom() { SP_ITEM (path)->lowerToBottom(); }
+    inline void raise_to_top() { SP_ITEM (path)->raiseToTop(); }
     gchar * axes_string();
     gchar * svg_repr_string();
 
