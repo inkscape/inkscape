@@ -179,6 +179,7 @@ private:
     void set_attr(SPObject*, const SPAttributeEnum, const gchar* val);
     void update_settings_view();
     void update_settings_sensitivity();
+    void update_color_matrix();
 
     // Filter effect selection
     FilterModifier _filter_modifier;
@@ -199,6 +200,9 @@ private:
     class LightSourceControl;
     Settings* _settings;
     Glib::RefPtr<Gtk::SizeGroup> _sizegroup;
+
+    // Color Matrix
+    ColorMatrixValues* _color_matrix_values;
 
     // Convolve Matrix
     MatrixAttr* _convolve_matrix;

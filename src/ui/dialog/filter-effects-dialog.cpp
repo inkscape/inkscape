@@ -330,12 +330,11 @@ private:
 
         _tree.remove_all_columns();
 
-        SPFeColorMatrix* col = 0;
-        SPFeConvolveMatrix* conv = 0;
+        std::vector<gdouble>* values = NULL;
         if(SP_IS_FECOLORMATRIX(o))
-            col = SP_FECOLORMATRIX(o);
+            values = &SP_FECOLORMATRIX(o)->values;
         else if(SP_IS_FECONVOLVEMATRIX(o))
-            conv = SP_FECONVOLVEMATRIX(o);
+            values = &SP_FECONVOLVEMATRIX(o)->kernelMatrix;
         else
             return;
 
@@ -344,18 +343,15 @@ private:
 
             for(int i = 0; i < cols; ++i) {
                 _tree.append_column_numeric_editable("", _columns.cols[i], "%.2f");
-                dynamic_cast<Gtk::CellRendererText*>(_tree.get_column(i)->get_first_cell_renderer())->signal_edited().connect(
-                    sigc::mem_fun(*this, &MatrixAttr::rebind));
+                dynamic_cast<Gtk::CellRendererText*>(
+                    _tree.get_column(i)->get_first_cell_renderer())->signal_edited().connect(
+                        sigc::mem_fun(*this, &MatrixAttr::rebind));
             }
 
             for(int r = 0; r < rows; ++r) {
                 Gtk::TreeRow row = *(_model->append());
-                for(int c = 0; c < cols; ++c, ++ndx) {
-                    if(col)
-                        row[_columns.cols[c]] = ndx < (int)col->values.size() ? col->values[ndx] : 0;
-                    else
-                        row[_columns.cols[c]] = ndx < (int)conv->kernelMatrix.size() ? conv->kernelMatrix[ndx] : 0;
-                }
+                for(int c = 0; c < cols; ++c, ++ndx)
+                    row[_columns.cols[c]] = ndx < (int)values->size() ? (*values)[ndx] : 0;
             }
         }
     }
@@ -381,12 +377,15 @@ public:
           _angle(0, 0, 360, 0.1, 0.01, 1, SP_ATTR_VALUES),
           _label(_("None"), Gtk::ALIGN_LEFT)
     {
+        _matrix.signal_attr_changed().connect(signal_attr_changed().make_slot());
+        _saturation.signal_attr_changed().connect(signal_attr_changed().make_slot());
+        _angle.signal_attr_changed().connect(signal_attr_changed().make_slot());
+
         _matrix.show();
         _saturation.show();
         _angle.show();
-
-        _label.set_sensitive(false);
         _label.show();
+        _label.set_sensitive(false);
 
         set_shadow_type(Gtk::SHADOW_NONE);
     }
@@ -1653,8 +1652,9 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_combo(SP_ATTR_MODE, _("Mode"), BlendModeConverter);
 
     _settings->type(NR_FILTER_COLORMATRIX);
-    _settings->add_combo(SP_ATTR_TYPE, _("Type"), ColorMatrixTypeConverter);
-    _settings->add_colormatrixvalues(_("Value(s)"));
+    ComboBoxEnum<FilterColorMatrixType>* colmat = _settings->add_combo(SP_ATTR_TYPE, _("Type"), ColorMatrixTypeConverter);
+    _color_matrix_values = _settings->add_colormatrixvalues(_("Value(s)"));
+    colmat->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::update_color_matrix));
 
     _settings->type(NR_FILTER_COMPOSITE);
     _settings->add_combo(SP_ATTR_OPERATOR, _("Operator"), CompositeOperatorConverter);
@@ -1794,14 +1794,10 @@ void FilterEffectsDialog::update_settings_view()
     _settings_box.hide_all();
     _settings_box.show();
 
-    _settings_box.set_sensitive(false);
-    _empty_settings.show();
-
-    if(prim) {
+    if(prim)
         _settings->show_and_update(FPConverter.get_id_from_key(prim->repr->name()), prim);
-        _settings_box.set_sensitive(true);
-        _empty_settings.hide();
-    }
+    else
+        _empty_settings.show();
 
     update_settings_sensitivity();
 }
@@ -1814,6 +1810,11 @@ void FilterEffectsDialog::update_settings_sensitivity()
     _k2->set_sensitive(use_k);
     _k3->set_sensitive(use_k);
     _k4->set_sensitive(use_k);
+}
+
+void FilterEffectsDialog::update_color_matrix()
+{
+    _color_matrix_values->set_from_attribute(_primitive_list.get_selected());
 }
 
 } // namespace Dialog

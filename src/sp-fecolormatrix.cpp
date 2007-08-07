@@ -137,7 +137,6 @@ sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *str)
     (void)feColorMatrix;
 
     NR::FilterColorMatrixType read_type;
-    gdouble read_num;
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
     switch(key) {
         case SP_ATTR_TYPE:

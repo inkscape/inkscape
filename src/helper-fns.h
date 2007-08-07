@@ -13,6 +13,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <sstream>
+
 static double
 helperfns_read_number(gchar const *value) {
     if (!value) return 0;
@@ -42,10 +44,8 @@ static bool helperfns_read_bool(gchar const *value, bool default_value){
 
 static std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
         std::vector<gdouble> v(size, (gdouble) 0);
-        int i;
-        gchar** values = g_strsplit(value , " ", size);
-        for (i=0;i<size && values[i];i++)
-            v[i] = g_ascii_strtod(values[i], NULL);
+        std::istringstream is(value);
+        for(int i = 0; i < size && (is >> v[i]); i++);
         return v;
 }
 
