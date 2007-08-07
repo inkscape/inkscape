@@ -191,6 +191,22 @@ void sp_3dbox_context_selection_changed(Inkscape::Selection *selection, gpointer
             Inkscape::GC::anchor(shape_repr);
             sp_repr_add_listener(shape_repr, &ec_shape_repr_events, ec);
         }
+        if (SP_IS_3DBOX (item)) {
+            Box3D::Perspective3D::current_perspective = Box3D::get_persp_of_box (SP_3DBOX (item));
+        }
+    } else {
+        /* If several boxes sharing the same perspective are selected,
+           we can still set the current selection accordingly */
+        std::set<Box3D::Perspective3D *> perspectives;
+        for (GSList *i = (GSList *) selection->itemList(); i != NULL; i = i->next) {
+            if (SP_IS_3DBOX (i->data)) {
+                perspectives.insert (Box3D::get_persp_of_box (SP_3DBOX (i->data)));
+            }
+        }
+        if (perspectives.size() == 1) {
+            Box3D::Perspective3D::current_perspective = *(perspectives.begin());
+        }
+        // TODO: What to do if several boxes with different perspectives are selected?
     }
 }
 
