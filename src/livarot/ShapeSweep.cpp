@@ -171,7 +171,8 @@ Shape::ConvertToShape (Shape * a, FillRule directed, bool invert)
     }
     
     if ( directed != fill_justDont && directedEulerian(a) == false ) {
-	return shape_input_err;
+  			g_warning ("Shape error in ConvertToShape: directedEulerian(a) == false\n");
+				return shape_input_err;
     }
   
     a->ResetSweep();
