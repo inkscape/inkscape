@@ -75,6 +75,16 @@ inline bool is_single_axis_direction (Box3D::Axis dir) {
     return (!(dir & (dir - 1)) && dir);
 }
 
+// Warning: We don't check that axis really unamiguously specifies a plane.
+//          Make sure this is the case when calling this function.
+inline guint face_containing_corner (Box3D::Axis axis, guint corner) {
+    if (!is_single_axis_direction (axis)) {
+        axis = (Box3D::Axis) (axis ^ Box3D::XYZ);
+    }
+    return face_to_int (axis ^ ((corner & axis) ? Box3D::REAR : Box3D::FRONT));
+}
+
+
 /**
  * Given two axis directions out of {X, Y, Z} or the corresponding plane, return the remaining one
  * We don't check if 'plane' really specifies a plane (i.e., if it consists of precisely two directions).

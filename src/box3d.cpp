@@ -406,7 +406,7 @@ bool sp_3dbox_recompute_z_orders (SP3DBox *box)
     Box3D::Perspective3D *persp = Box3D::get_persp_of_box (box);
 
     // TODO: Determine the front corner depending on the distance from VPs and/or the user presets
-    guint front_corner = 1;
+    guint front_corner = sp_3dbox_get_front_corner_id (box);
 
     gdouble dir_1x = sp_3dbox_corner_angle_to_VP (box, Box3D::X, front_corner);
     gdouble dir_3x = sp_3dbox_corner_angle_to_VP (box, Box3D::X, front_corner ^ Box3D::Y);
@@ -419,25 +419,25 @@ bool sp_3dbox_recompute_z_orders (SP3DBox *box)
 
     // Still not perfect, but only fails in some rather degenerate cases.
     // I suspect that there is a more elegant model, though. :)
-    new_z_orders[0] = Box3D::face_to_int (Box3D::XY ^ Box3D::FRONT);
+    new_z_orders[0] = Box3D::face_containing_corner (Box3D::XY, front_corner);
     if (normalized_angle (dir_1y - dir_1z) > 0) {
-        new_z_orders[1] = Box3D::face_to_int (Box3D::YZ ^ Box3D::REAR);
+        new_z_orders[1] = Box3D::face_containing_corner (Box3D::YZ, front_corner);
         if (normalized_angle (dir_1x - dir_1z) > 0) {
-            new_z_orders[2] = Box3D::face_to_int (Box3D::XZ ^ Box3D::REAR);
+            new_z_orders[2] = Box3D::face_containing_corner (Box3D::XZ, front_corner ^ Box3D::Y);
         } else {
-            new_z_orders[2] = Box3D::face_to_int (Box3D::XZ ^ Box3D::FRONT);
+            new_z_orders[2] = Box3D::face_containing_corner (Box3D::XZ, front_corner);
         }
     } else {
         if (normalized_angle (dir_3x - dir_3z) > 0) {
-            new_z_orders[1] = Box3D::face_to_int (Box3D::XZ ^ Box3D::REAR);
-            new_z_orders[2] = Box3D::face_to_int (Box3D::YZ ^ Box3D::FRONT);
+            new_z_orders[1] = Box3D::face_containing_corner (Box3D::XZ, front_corner ^ Box3D::Y);
+            new_z_orders[2] = Box3D::face_containing_corner (Box3D::YZ, front_corner ^ Box3D::X);
         } else {
             if (normalized_angle (dir_1x - dir_1z) > 0) {
-                new_z_orders[1] = Box3D::face_to_int (Box3D::YZ ^ Box3D::FRONT);
-                new_z_orders[2] = Box3D::face_to_int (Box3D::XZ ^ Box3D::FRONT);
+                new_z_orders[1] = Box3D::face_containing_corner (Box3D::YZ, front_corner ^ Box3D::X);
+                new_z_orders[2] = Box3D::face_containing_corner (Box3D::XZ, front_corner);
             } else {
-                new_z_orders[1] = Box3D::face_to_int (Box3D::XZ ^ Box3D::FRONT);
-                new_z_orders[2] = Box3D::face_to_int (Box3D::YZ ^ Box3D::FRONT);
+                new_z_orders[1] = Box3D::face_containing_corner (Box3D::XZ, front_corner);
+                new_z_orders[2] = Box3D::face_containing_corner (Box3D::YZ, front_corner ^ Box3D::X);
             }
         }
     }
@@ -448,8 +448,7 @@ bool sp_3dbox_recompute_z_orders (SP3DBox *box)
 
     /* We only need to look for changes among the topmost three faces because the order
        of the other ones is just inverted. */
-    // Currently we can even skip the first test since the front face is always in the XY plane.
-    if (// (box->z_orders[0] != new_z_orders[0]) ||
+    if ((box->z_orders[0] != new_z_orders[0]) ||
         (box->z_orders[1] != new_z_orders[1]) ||
         (box->z_orders[2] != new_z_orders[2]))
     {
@@ -761,6 +760,16 @@ NR::Point
 sp_3dbox_get_corner_along_edge (const SP3DBox *box, guint corner, Box3D::Axis axis, Box3D::FrontOrRear rel_pos)
 {
     return box->corners[sp_3dbox_get_corner_id_along_edge (box, corner, axis, rel_pos)];
+}
+
+guint
+sp_3dbox_get_front_corner_id (const SP3DBox *box)
+{
+    guint front_corner = 1; // this could in fact be any corner, but we choose the one that is normally in front
+    front_corner = sp_3dbox_get_corner_id_along_edge (box, front_corner, Box3D::X, Box3D::FRONT);
+    front_corner = sp_3dbox_get_corner_id_along_edge (box, front_corner, Box3D::Y, Box3D::FRONT);
+    front_corner = sp_3dbox_get_corner_id_along_edge (box, front_corner, Box3D::Z, Box3D::FRONT);
+    return front_corner;
 }
 
 // auxiliary functions

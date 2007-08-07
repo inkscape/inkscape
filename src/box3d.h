@@ -74,6 +74,8 @@ void sp_3dbox_update_perspective_lines();
 void sp_3dbox_corners_for_perspective_lines (const SP3DBox * box, Box3D::Axis axis, NR::Point &corner1, NR::Point &corner2, NR::Point &corner3, NR::Point &corner4);
 guint sp_3dbox_get_corner_id_along_edge (const SP3DBox *box, guint corner, Box3D::Axis axis, Box3D::FrontOrRear rel_pos);
 NR::Point sp_3dbox_get_corner_along_edge (const SP3DBox *box, guint corner, Box3D::Axis axis, Box3D::FrontOrRear rel_pos);
+guint sp_3dbox_get_front_corner_id (const SP3DBox *box);
+
 
 gchar * sp_3dbox_get_svg_descr_of_persp (Box3D::Perspective3D *persp);
 
