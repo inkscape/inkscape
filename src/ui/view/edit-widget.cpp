@@ -1488,6 +1488,12 @@ EditWidget::setToolboxAdjustmentValue (const gchar *, double)
     /// \todo not implemented
 }
 
+void
+EditWidget::setToolboxSelectOneValue (const gchar *, gint)
+{
+    /// \todo not implemented
+}
+
 bool
 EditWidget::isToolboxButtonActive (gchar const*)
 {

@@ -126,6 +126,7 @@ public:
     virtual void letZoomGrabFocus();
     virtual void setToolboxFocusTo (const gchar *);
     virtual void setToolboxAdjustmentValue (const gchar *, double);
+    virtual void setToolboxSelectOneValue (const gchar *, gint);
     virtual bool isToolboxButtonActive (gchar const*);
     virtual void setCoordinateStatus (NR::Point p);
     virtual void setMessage (Inkscape::MessageType type, gchar const* msg);

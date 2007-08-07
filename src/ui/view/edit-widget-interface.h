@@ -120,6 +120,9 @@ struct EditWidgetInterface
     
     /// In auxiliary toolbox, set value of adjustment with specific id
     virtual void setToolboxAdjustmentValue (const gchar *, double) = 0;
+
+    /// In auxiliary toolbox, select one of the "select one" options (usually radio toggles)
+    virtual void setToolboxSelectOneValue (const gchar *, gint) = 0;
     
     /// In auxiliary toolbox, return true if specific togglebutton is active
     virtual bool isToolboxButtonActive (gchar const*) = 0;

@@ -1119,6 +1119,12 @@ SPDesktop::setToolboxAdjustmentValue (gchar const* id, double val)
     _widget->setToolboxAdjustmentValue (id, val);
 }
 
+void
+SPDesktop::setToolboxSelectOneValue (gchar const* id, gint val)
+{
+    _widget->setToolboxSelectOneValue (id, val);
+}
+
 bool
 SPDesktop::isToolboxButtonActive (gchar const *id)
 {

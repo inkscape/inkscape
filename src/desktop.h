@@ -247,6 +247,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void destroyWidget();
     void setToolboxFocusTo (gchar const* label);
     void setToolboxAdjustmentValue (gchar const* id, double val);
+    void setToolboxSelectOneValue (gchar const* id, gint val);
     bool isToolboxButtonActive (gchar const *id);
     void updateNow();
     void updateCanvasNow();

@@ -172,6 +172,8 @@ struct SPDesktopWidget {
             { _dtw->setToolboxFocusTo (id); }
         virtual void setToolboxAdjustmentValue (const gchar *id, double val)
             { _dtw->setToolboxAdjustmentValue (id, val); }
+        virtual void setToolboxSelectOneValue (gchar const *id, int val)
+            { _dtw->setToolboxSelectOneValue (id, val); }
         virtual bool isToolboxButtonActive (gchar const* id)
             { return _dtw->isToolboxButtonActive (id); }
         virtual void setCoordinateStatus (NR::Point p)
@@ -197,6 +199,7 @@ struct SPDesktopWidget {
     bool warnDialog (gchar *text);
     void setToolboxFocusTo (gchar const *);
     void setToolboxAdjustmentValue (gchar const * id, double value);
+    void setToolboxSelectOneValue (gchar const * id, gint value);
     bool isToolboxButtonActive (gchar const *id);
     void setCoordinateStatus(NR::Point p);
     void requestCanvasUpdate();

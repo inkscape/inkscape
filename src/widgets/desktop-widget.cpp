@@ -52,6 +52,7 @@
 #include "sp-item.h"
 #include "dialogs/swatches.h"
 #include "conn-avoid-ref.h"
+#include "ege-select-one-action.h"
 
 #if defined (SOLARIS_2_8)
 #include "round.h"
@@ -1022,6 +1023,16 @@ SPDesktopWidget::setToolboxAdjustmentValue (gchar const *id, double value)
         gtk_adjustment_set_value (a, value);
     }
 }
+
+void
+SPDesktopWidget::setToolboxSelectOneValue (gchar const *id, int value)
+{
+    gpointer hb = sp_search_by_data_recursive(aux_toolbox, (gpointer) id);
+    if (hb) {
+        ege_select_one_action_set_active((EgeSelectOneAction*) hb, value);
+    }
+}
+
 
 bool
 SPDesktopWidget::isToolboxButtonActive (const gchar* id)
