@@ -296,18 +296,24 @@ Perspective3D::reshape_boxes (Box3D::Axis axes)
         SP3DBox *box = SP_3DBOX (i->data);
         if (axes & Box3D::X) {
             vp = this->get_vanishing_point (Box3D::X);
-            new_pt = vp->get_pos() + box->ratio_x * (box->corners[3] - vp->get_pos());
-            sp_3dbox_move_corner_in_XY_plane (box, 2, new_pt);
+            if (vp->is_finite()) {
+                new_pt = vp->get_pos() + box->ratio_x * (box->corners[3] - vp->get_pos());
+                sp_3dbox_move_corner_in_XY_plane (box, 2, new_pt);
+            }
         }
         if (axes & Box3D::Y) {
             vp = this->get_vanishing_point (Box3D::Y);
-            new_pt = vp->get_pos() + box->ratio_y * (box->corners[0] - vp->get_pos());
-            sp_3dbox_move_corner_in_XY_plane (box, 2, new_pt);
+            if (vp->is_finite()) {
+                new_pt = vp->get_pos() + box->ratio_y * (box->corners[0] - vp->get_pos());
+                sp_3dbox_move_corner_in_XY_plane (box, 2, new_pt);
+            }
         }
         if (axes & Box3D::Z) {
             vp = this->get_vanishing_point (Box3D::Z);
-            new_pt = vp->get_pos() + box->ratio_z * (box->corners[0] - vp->get_pos());
-            sp_3dbox_move_corner_in_Z_direction (box, 4, new_pt);
+            if (vp->is_finite()) {
+                new_pt = vp->get_pos() + box->ratio_z * (box->corners[0] - vp->get_pos());
+                sp_3dbox_move_corner_in_Z_direction (box, 4, new_pt);
+            }
         }                
 
         sp_3dbox_set_shape (box, true);
