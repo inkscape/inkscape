@@ -34,9 +34,10 @@
 #include "selection.h"
 #include "desktop-handles.h"
 
+#include "path-chemistry.h"
+
 /* Helper functions for sp_selected_path_to_curves */
 static void sp_selected_path_to_curves0(gboolean do_document_done, guint32 text_grouping_policy);
-static Inkscape::XML::Node *sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy);
 enum {
     /* Not used yet. This is the placeholder of Lauris's idea. */
     SP_TOCURVE_INTERACTIVE       = 1 << 0,
@@ -309,7 +310,7 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
     }
 }
 
-static Inkscape::XML::Node *
+Inkscape::XML::Node *
 sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy)
 {
     if (!item)
