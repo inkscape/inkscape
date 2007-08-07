@@ -27,6 +27,8 @@
 #include "marker.h"
 #include "enums.h"
 #include "sp-text.h"
+#include "sp-flowtext.h"
+#include "text-editing.h"
 #include "sp-item-group.h"
 #include "style.h"
 #include "inkscape.h"
@@ -1710,9 +1712,9 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
     {
         curve = sp_shape_get_curve(SP_SHAPE(item));
     }
-    else if (SP_IS_TEXT(item))
+    else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))
     {
-        curve = SP_TEXT(item)->getNormalizedBpath();
+        curve = te_get_layout(item)->convertToCurves();
     }
     else if (SP_IS_IMAGE(item))
     {
