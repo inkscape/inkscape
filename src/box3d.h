@@ -67,6 +67,7 @@ void sp_3dbox_set_ratios (SP3DBox *box, Box3D::Axis axes = Box3D::XYZ);
 void sp_3dbox_switch_front_face (SP3DBox *box, Box3D::Axis axis);
 void sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt, Box3D::Axis axes = Box3D::XY);
 void sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, bool constrained = true);
+void sp_3dbox_reshape_after_VP_toggling (SP3DBox *box, Box3D::Axis axis);
 NR::Maybe<NR::Point> sp_3dbox_get_center (SP3DBox *box);
 NR::Maybe<NR::Point> sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_corner2);
 

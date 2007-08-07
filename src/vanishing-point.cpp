@@ -749,7 +749,7 @@ VPDrag::drawLinesForFace (const SP3DBox *box, Box3D::Axis axis) //, guint corner
         }
     } else {
         // TODO: Draw infinite PLs
-        g_warning ("Perspective lines for infinite vanishing points are not supported yet.\n");
+        //g_warning ("Perspective lines for infinite vanishing points are not supported yet.\n");
     }
 
 }

@@ -40,6 +40,7 @@ public:
     bool has_box (const SP3DBox *box) const;
     inline guint number_of_boxes () { return g_slist_length (boxes); }
     void reshape_boxes (Box3D::Axis axes);
+    void toggle_boxes (Box3D::Axis axes); // update the shape of boxes after a VP's state was toggled
     void update_box_reprs ();
     void update_z_orders ();
 

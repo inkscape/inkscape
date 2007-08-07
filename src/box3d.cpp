@@ -581,12 +581,51 @@ sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, bool 
     box->corners[id ^ Box3D::Y] = pl_one.meet(pl_two);
 }
 
+static void
+sp_3dbox_reshape_edge_after_VP_toggling (SP3DBox *box, const guint corner, const Box3D::Axis axis, Box3D::Perspective3D *persp)
+{
+    /* Hmm, perhaps we should simply use one of the corners as the pivot point.
+       But this way we minimize the amount of reshaping.
+       On second thought, we need to find a way to ensure that all boxes sharing the same
+       perspective are updated consistently _as a group_. That is, they should also retain
+       their relative positions towards each other. */
+    NR::Maybe<NR::Point> pt = sp_3dbox_get_midpoint_between_corners (box, corner, corner ^ axis);
+    g_return_if_fail (pt);
+
+    Box3D::Axis axis2 = ((axis == Box3D::Y) ? Box3D::X : Box3D::Y);
+
+    Box3D::PerspectiveLine line1 (box->corners[corner], axis2, persp);
+    Box3D::PerspectiveLine line2 (box->corners[corner ^ axis], axis2, persp);
+
+    Box3D::PerspectiveLine line3 (*pt, axis, persp);
+
+    NR::Point new_corner1 = line1.meet (line3);
+    NR::Point new_corner2 = line2.meet (line3);
+
+    box->corners[corner] = new_corner1;
+    box->corners[corner ^ axis] = new_corner2;
+}
+
+void
+sp_3dbox_reshape_after_VP_toggling (SP3DBox *box, Box3D::Axis axis)
+{
+    Box3D::Perspective3D *persp = Box3D::get_persp_of_box (box);
+    std::pair<Box3D::Axis, Box3D::Axis> dirs = Box3D::get_remaining_axes (axis);
+
+    sp_3dbox_reshape_edge_after_VP_toggling (box, 0, axis, persp);
+    sp_3dbox_reshape_edge_after_VP_toggling (box, 0 ^ dirs.first, axis, persp);
+    sp_3dbox_reshape_edge_after_VP_toggling (box, 0 ^ dirs.first ^ dirs.second, axis, persp);
+    sp_3dbox_reshape_edge_after_VP_toggling (box, 0 ^ dirs.second, axis, persp);
+}
+
 NR::Maybe<NR::Point>
 sp_3dbox_get_center (SP3DBox *box)
 {
     return sp_3dbox_get_midpoint_between_corners (box, 0, 7);
 }
 
+// TODO: The following function can probably be rewritten in a much more elegant and robust way
+//        by using projective coordinates for all points and using the cross ratio.
 NR::Maybe<NR::Point>
 sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_corner2)
 {
