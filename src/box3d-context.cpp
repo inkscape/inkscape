@@ -327,7 +327,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
 
             /* Snap center */
             SnapManager const &m = desktop->namedview->snap_manager;
-            bc->center = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE | Inkscape::Snapper::SNAPPOINT_BBOX,
+            bc->center = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE,
                                     button_dt, bc->item).getPoint();
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -358,7 +358,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             NR::Point motion_dt(desktop->w2d(motion_w));
 
             SnapManager const &m = desktop->namedview->snap_manager;
-            motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_BBOX | Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, bc->item).getPoint();
+            motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, bc->item).getPoint();
 
             bc->ctrl_dragged  = event->motion.state & GDK_CONTROL_MASK;
 
@@ -379,7 +379,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
                 } else {
                     bc->drag_ptC = motion_dt;
                 }
-                bc->drag_ptC = m.freeSnap(Inkscape::Snapper::SNAPPOINT_BBOX | Inkscape::Snapper::SNAPPOINT_NODE, bc->drag_ptC, bc->item).getPoint();
+                bc->drag_ptC = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, bc->drag_ptC, bc->item).getPoint();
                 if (bc->ctrl_dragged) {
                 	Box3D::PerspectiveLine pl1 (NR::Point (event_context->xp, event_context->yp), Box3D::Y, Box3D::Perspective3D::current_perspective);
                 	Box3D::PerspectiveLine pl2 (bc->drag_ptB, Box3D::X, Box3D::Perspective3D::current_perspective);

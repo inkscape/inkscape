@@ -267,7 +267,7 @@ DocumentProperties::build_snap()
     _page_snap.show();
 	//General options
 	_rcbsnbb.init (_("Snap bounding _box corners"),
-                _("Snap bounding box corners to grid lines, to guides, and to other bounding boxes"),
+                _("Snap bounding box corners to grid lines, to guides, and to other bounding boxes (only applicable to the selector tool)"),
                 "inkscape:snap-bbox", _wr);
     _rcbsnn.init (_("Snap _nodes"),
                 _("Snap nodes to grid lines, to guides, to paths, and to other nodes"),

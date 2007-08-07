@@ -299,7 +299,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
 
             /* Snap center */
             SnapManager const &m = desktop->namedview->snap_manager;
-            rc->center = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE | Inkscape::Snapper::SNAPPOINT_BBOX,
+            rc->center = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE,
                                     button_dt, rc->item).getPoint();
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -330,7 +330,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             NR::Point motion_dt(desktop->w2d(motion_w));
             
             SnapManager const &m = desktop->namedview->snap_manager;
-            motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_BBOX | Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, rc->item).getPoint();
+            motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, rc->item).getPoint();
             
             sp_rect_drag(*rc, motion_dt, event->motion.state);
             
