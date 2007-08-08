@@ -23,6 +23,7 @@ RFE</a>).</p>
 <keys><key><misc-wide f="Space"/></key>   <action>Selector (temporary)</action></keys>
 <note>Space switches to the Selector tool temporarily; another Space switches back.</note>
 <keys><key><keyf f="F2"/></key><key>n</key>	<action>Node tool</action></keys>
+<keys><key><alt/><keyf f="F2"/></key><key>w</key>	<action>Tweak tool</action></keys>
 <keys><key><keyf f="F3"/></key><key>z</key>	 <action>Zoom tool</action></keys>
 <keys><key><keyf f="F4"/></key><key>r</key>	 <action>Rectangle tool</action></keys>
 <keys><key><shift/><keyf f="F4"/></key><key>x</key>	 <action>3D box tool</action></keys>
@@ -816,6 +817,32 @@ groups) with the same effect as Alt+click.)</note>
 <column>
 
 
+*<section title="Tweak tool" color="f2f1ea">
+<group>
+<title>Operation</title>
+<mouse><key><left-drag/></key> <action>act on selected paths in the current mode</action></mouse>
+<mouse><key><ctrl/><left-drag/></key> <action>act temporarily switching to melt mode</action></mouse>
+<mouse><key><ctrl/><shift/><left-drag/></key> <action>act temporarily switching to blow mode</action></mouse>
+<note>The amount of tweaking action is the greatest at the center of the circular area and drops off smoothly towards the edges.</note>
+</group>
+
+<group>
+<title>Modes</title>
+<keys><key><shift/>p</key> <action>push mode</action></keys>
+<keys><key><shift/>m</key> <action>melt (thin) mode</action></keys>
+<keys><key><shift/>b</key> <action>blow (thicken) mode</action></keys>
+<keys><key><shift/>r</key> <action>roughen mode</action></keys>
+</group>
+
+<group>
+<title>Parameters</title>
+<mouse><key><left-arrow/></key> <key><right-arrow/></key> <action>adjust brush width by 1</action></mouse>
+<mouse><key><misc f="Home"/></key> <key><misc f="End"/></key> <action>set brush width to 1 / 100</action></mouse>
+<mouse><key><up/></key> <key><down/></key> <action>adjust tweaking force</action></mouse>
+<note>Width and force can be adjusted while drawing. </note>
+</group>
+
+</section>
 
 
 *<section title="Rectangle tool" color="ebf1fd">
@@ -1047,17 +1074,13 @@ groups) with the same effect as Alt+click.)</note>
 </group>
 </section>
 
-*<section title="Calligraphy" color="e9dfef">
+*<section title="Calligraphy tool" color="e9dfef">
 <group>
 <mouse><key><left-drag/></key> <action>draw a calligraphic line</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>add to selected path</action></mouse>
 <note>Drawing with Shift unions the newly created stroke with the previous selection</note>
 <mouse><key><ctrl/><left-drag/></key> <action>track a guide path</action></mouse>
 <note>Drawing with Ctrl tracks a selected guide path at the constant distance</note>
-<mouse><key><alt/><left-drag/></key> <action>thin selected paths</action></mouse>
-<mouse><key><shift/><alt/><left-drag/></key> <action>thicken selected paths</action></mouse>
-<note>Dragging with Alt or Shift+Alt over selected paths makes them thinner/thicker where you drag</note>
-<note>The amount of thinning/thickening is the greatest at the center of the area and drops off smoothly towards the edges.</note>
 <mouse><key><left-arrow/></key> <key><right-arrow/></key> <action>adjust pen width by 1</action></mouse>
 <mouse><key><misc f="Home"/></key> <key><misc f="End"/></key> <action>set pen width to 1 or 100</action></mouse>
 <mouse><key><up/></key> <key><down/></key> <action>adjust pen angle</action></mouse>
