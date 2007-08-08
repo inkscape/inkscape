@@ -679,6 +679,277 @@ Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_p
   return (done_something? 0 : shape_nothing_to_do);
 }
 
+// pushing
+// modeled after MakeOffset black magic, the only difference being in the DoRight/LeftJoin parameters
+int
+Shape::MakePush (Shape * a, JoinType join, double miter, bool do_profile, NR::Point c, NR::Point vector, double radius, NR::Matrix *i2doc)
+{
+  Reset (0, 0);
+  MakeBackData(a->_has_back_data);
+
+	bool done_something = false;
+
+  if (NR::L2(vector) == 0)
+  {
+    _pts = a->_pts;
+    if (numberOfPoints() > maxPt)
+    {
+      maxPt = numberOfPoints();
+      if (_has_points_data) {
+        pData.resize(maxPt);
+        _point_data_initialised = false;
+        _bbox_up_to_date = false;
+        }
+    }
+    
+    _aretes = a->_aretes;
+    if (numberOfEdges() > maxAr)
+    {
+      maxAr = numberOfEdges();
+      if (_has_edges_data)
+	eData.resize(maxAr);
+      if (_has_sweep_src_data)
+        swsData.resize(maxAr);
+      if (_has_sweep_dest_data)
+        swdData.resize(maxAr);
+      if (_has_raster_data)
+        swrData.resize(maxAr);
+      if (_has_back_data)
+        ebData.resize(maxAr);
+    }
+    return 0;
+  }
+  if (a->numberOfPoints() <= 1 || a->numberOfEdges() <= 1 || a->type != shape_polygon)
+    return shape_input_err;
+  
+  a->SortEdges ();
+  
+  a->MakeSweepDestData (true);
+  a->MakeSweepSrcData (true);
+  
+  for (int i = 0; i < a->numberOfEdges(); i++)
+  {
+    int stB = -1, enB = -1;
+    stB = a->CyclePrevAt (a->getEdge(i).st, i);
+    enB = a->CycleNextAt (a->getEdge(i).en, i);
+    
+    NR::Point stD, seD, enD;
+    double stL, seL, enL;
+    stD = a->getEdge(stB).dx;
+    seD = a->getEdge(i).dx;
+    enD = a->getEdge(enB).dx;
+
+    stL = sqrt (dot(stD,stD));
+    seL = sqrt (dot(seD,seD));
+    enL = sqrt (dot(enD,enD));
+    MiscNormalize (stD);
+    MiscNormalize (enD);
+    MiscNormalize (seD);
+    
+    NR::Point ptP;
+    int stNo, enNo;
+    ptP = a->getPoint(a->getEdge(i).st).x;
+
+		NR::Point this_vec;
+		if (do_profile && i2doc) {
+			double alpha = 1;
+			double x = (NR::L2(ptP * (*i2doc) - c)/radius);
+			if (x > 1) {
+				this_vec = NR::Point(0,0);
+			} else if (x <= 0) {
+				this_vec = vector;
+			} else {
+				this_vec = (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5) * vector;
+			}
+		} else {
+			this_vec = vector;
+		}
+
+		if (NR::L2(this_vec) != 0)
+			done_something = true;
+
+    int   usePathID=-1;
+    int   usePieceID=0;
+    double useT=0.0;
+    if ( a->_has_back_data ) {
+      if ( a->ebData[i].pathID >= 0 && a->ebData[stB].pathID == a->ebData[i].pathID && a->ebData[stB].pieceID == a->ebData[i].pieceID
+           && a->ebData[stB].tEn == a->ebData[i].tSt ) {
+        usePathID=a->ebData[i].pathID;
+        usePieceID=a->ebData[i].pieceID;
+        useT=a->ebData[i].tSt;
+      } else {
+        usePathID=a->ebData[i].pathID;
+        usePieceID=0;
+        useT=0;
+      }
+    }
+    Path::DoLeftJoin (this, 0, join, ptP+this_vec, stD+this_vec, seD+this_vec, miter, stL, seL,
+                      stNo, enNo,usePathID,usePieceID,useT);
+    a->swsData[i].stPt = enNo;
+    a->swsData[stB].enPt = stNo;
+  }
+
+
+  for (int i = 0; i < numberOfEdges(); i++)
+      Inverse (i);
+
+  if ( _has_back_data ) {
+    for (int i = 0; i < a->numberOfEdges(); i++)
+    {
+      int nEd=AddEdge (a->swsData[i].stPt, a->swsData[i].enPt);
+      ebData[nEd]=a->ebData[i];
+    }
+  } else {
+    for (int i = 0; i < a->numberOfEdges(); i++)
+    {
+      AddEdge (a->swsData[i].stPt, a->swsData[i].enPt);
+    }
+  }
+
+  a->MakeSweepSrcData (false);
+  a->MakeSweepDestData (false);
+
+  return (done_something? 0 : shape_nothing_to_do);
+}
+
+// pushing
+// modeled after MakeOffset black magic, the only difference being in the DoRight/LeftJoin parameters
+int
+Shape::MakeJitter (Shape * a, JoinType join, double miter, bool do_profile, NR::Point c, double power, double radius, NR::Matrix *i2doc)
+{
+  Reset (0, 0);
+  MakeBackData(a->_has_back_data);
+
+	bool done_something = false;
+
+  if (power == 0)
+  {
+    _pts = a->_pts;
+    if (numberOfPoints() > maxPt)
+    {
+      maxPt = numberOfPoints();
+      if (_has_points_data) {
+        pData.resize(maxPt);
+        _point_data_initialised = false;
+        _bbox_up_to_date = false;
+        }
+    }
+    
+    _aretes = a->_aretes;
+    if (numberOfEdges() > maxAr)
+    {
+      maxAr = numberOfEdges();
+      if (_has_edges_data)
+	eData.resize(maxAr);
+      if (_has_sweep_src_data)
+        swsData.resize(maxAr);
+      if (_has_sweep_dest_data)
+        swdData.resize(maxAr);
+      if (_has_raster_data)
+        swrData.resize(maxAr);
+      if (_has_back_data)
+        ebData.resize(maxAr);
+    }
+
+    return 0;
+  }
+  if (a->numberOfPoints() <= 1 || a->numberOfEdges() <= 1 || a->type != shape_polygon)
+    return shape_input_err;
+  
+  a->SortEdges ();
+  
+  a->MakeSweepDestData (true);
+  a->MakeSweepSrcData (true);
+  
+  for (int i = 0; i < a->numberOfEdges(); i++)
+  {
+    int stB = -1, enB = -1;
+    stB = a->CyclePrevAt (a->getEdge(i).st, i);
+    enB = a->CycleNextAt (a->getEdge(i).en, i);
+    
+    NR::Point stD, seD, enD;
+    double stL, seL, enL;
+    stD = a->getEdge(stB).dx;
+    seD = a->getEdge(i).dx;
+    enD = a->getEdge(enB).dx;
+
+    stL = sqrt (dot(stD,stD));
+    seL = sqrt (dot(seD,seD));
+    enL = sqrt (dot(enD,enD));
+    MiscNormalize (stD);
+    MiscNormalize (enD);
+    MiscNormalize (seD);
+    
+    NR::Point ptP;
+    int stNo, enNo;
+    ptP = a->getPoint(a->getEdge(i).st).x;
+
+		double this_power;
+		if (do_profile && i2doc) {
+			double alpha = 1;
+			double x = (NR::L2(ptP * (*i2doc) - c)/radius);
+			if (x > 1) {
+				this_power = 0;
+			} else if (x <= 0) {
+				this_power = power;
+			} else {
+				this_power = (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5) * power;
+			}
+		} else {
+			this_power = power;
+		}
+
+		if (this_power != 0)
+			done_something = true;
+
+		double angle = g_random_double_range(0, 2*M_PI);
+		NR::Point this_vec = g_random_double_range(0, 1) * this_power * NR::Point(sin(angle), cos(angle));
+
+    int   usePathID=-1;
+    int   usePieceID=0;
+    double useT=0.0;
+    if ( a->_has_back_data ) {
+      if ( a->ebData[i].pathID >= 0 && a->ebData[stB].pathID == a->ebData[i].pathID && a->ebData[stB].pieceID == a->ebData[i].pieceID
+           && a->ebData[stB].tEn == a->ebData[i].tSt ) {
+        usePathID=a->ebData[i].pathID;
+        usePieceID=a->ebData[i].pieceID;
+        useT=a->ebData[i].tSt;
+      } else {
+        usePathID=a->ebData[i].pathID;
+        usePieceID=0;
+        useT=0;
+      }
+    }
+    Path::DoLeftJoin (this, 0, join, ptP+this_vec, stD+this_vec, seD+this_vec, miter, stL, seL,
+                      stNo, enNo,usePathID,usePieceID,useT);
+    a->swsData[i].stPt = enNo;
+    a->swsData[stB].enPt = stNo;
+  }
+
+
+  for (int i = 0; i < numberOfEdges(); i++)
+      Inverse (i);
+
+  if ( _has_back_data ) {
+    for (int i = 0; i < a->numberOfEdges(); i++)
+    {
+      int nEd=AddEdge (a->swsData[i].stPt, a->swsData[i].enPt);
+      ebData[nEd]=a->ebData[i];
+    }
+  } else {
+    for (int i = 0; i < a->numberOfEdges(); i++)
+    {
+      AddEdge (a->swsData[i].stPt, a->swsData[i].enPt);
+    }
+  }
+
+  a->MakeSweepSrcData (false);
+  a->MakeSweepDestData (false);
+
+  return (done_something? 0 : shape_nothing_to_do);
+}
+
+
 // we found a contour, now reassemble the edges on it, instead of dumping them in the Path "dest" as a
 // polyline. since it was a DFS, the precParc and suivParc make a nice doubly-linked list of the edges in
 // the contour. the first and last edges of the contour are startBord and curBord
