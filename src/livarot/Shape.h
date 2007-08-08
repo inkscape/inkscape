@@ -285,7 +285,7 @@ public:
 
     int MakePush (Shape * a, JoinType join, double miter, bool do_profile, NR::Point c, NR::Point vector, double radius, NR::Matrix *i2doc = NULL);
 
-    int Shape::MakeJitter (Shape * a, JoinType join, double miter, bool do_profile, NR::Point c, double power, double radius, NR::Matrix *i2doc = NULL);
+    int MakeJitter (Shape * a, JoinType join, double miter, bool do_profile, NR::Point c, double power, double radius, NR::Matrix *i2doc = NULL);
   
     int PtWinding(const NR::Point px) const; // plus rapide
     int Winding(const NR::Point px) const;
