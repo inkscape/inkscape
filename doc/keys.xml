@@ -22,6 +22,7 @@ RFE</a>).</p>
 <keys><key><keyf f="F1"/></key><key>s</key>    <action>Selector</action></keys>
 <keys><key><misc-wide f="Space"/></key>   <action>Selector (temporary)</action></keys>
 <note>Space switches to the Selector tool temporarily; another Space switches back.</note>
+<note>When the "Left mouse button pans when Space is pressed" option is on in Preferences, Space+mouse drag pans canvas instead of switching to Selector.</note>
 <keys><key><keyf f="F2"/></key><key>n</key>	<action>Node tool</action></keys>
 <keys><key><alt/><keyf f="F2"/></key><key>w</key>	<action>Tweak tool</action></keys>
 <keys><key><keyf f="F3"/></key><key>z</key>	 <action>Zoom tool</action></keys>
@@ -123,6 +124,7 @@ RFE</a>).</p>
 <mouse><key><mid-click/></key>  <key><ctrl/><right-click/></key>   <action>zoom in</action></mouse>
 <mouse><key><shift/><mid-click/></key>  <key><shift/><right-click/></key> <action>zoom out</action></mouse>
 <mouse><key><ctrl/><wheel/></key> <action>zoom in or out</action></mouse>
+<note>When the "Mouse wheel zooms by default" option is on in Preferences, Ctrl+wheel scrolls instead of zooming. To zoom, use wheel without Ctrl.</note>
 <mouse><key><shift/><mid-drag/></key> <action>zoom into the area</action></mouse>
 <keys><key><alt/>Z</key> <action>activate zoom field</action></keys>
 <note>The zoom field in the lower left corner of the window allows you to specify zoom level precisely.</note>
@@ -152,7 +154,9 @@ RFE</a>).</p>
 <mouse><key><mid-drag/></key>  <action>pan canvas</action></mouse>
 <mouse><key><shift/><right-drag/></key> <key><ctrl/><right-drag/></key> <action>pan canvas</action></mouse>
 <mouse><key><wheel/></key> <action>scroll canvas vertically</action></mouse>
+<note>When the "Mouse wheel zooms by default" option is on in Preferences, mouse wheel zooms instead of scrolling. To scroll, use Ctrl+wheel.</note>
 <mouse><key><shift/><wheel/></key> <action>scroll canvas horizontally</action></mouse>
+<note>When the "Left mouse button pans when Space is pressed" option is on in Preferences, Space+mouse drag also pans canvas.</note>
 </group>
 
 <group>
