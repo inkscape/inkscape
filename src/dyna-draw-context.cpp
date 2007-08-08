@@ -46,8 +46,6 @@
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-calligraphy.xpm"
-#include "pixmaps/cursor-thin.xpm"
-#include "pixmaps/cursor-thicken.xpm"
 #include "libnr/n-art-bpath.h"
 #include "libnr/nr-path.h"
 #include "libnr/nr-matrix-ops.h"
@@ -210,9 +208,6 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     ddc->hatch_livarot_path = NULL;
 
     ddc->trace_bg = false;
-
-    ddc->is_dilating = false;
-    ddc->has_dilated = false;
 }
 
 static void
@@ -223,11 +218,6 @@ sp_dyna_draw_context_dispose(GObject *object)
     if (ddc->hatch_area) {
         gtk_object_destroy(GTK_OBJECT(ddc->hatch_area));
         ddc->hatch_area = NULL;
-    }
-
-    if (ddc->dilate_area) {
-        gtk_object_destroy(GTK_OBJECT(ddc->dilate_area));
-        ddc->dilate_area = NULL;
     }
 
     if (ddc->accumulated) {
@@ -285,15 +275,6 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->hatch_area), 0x00000000,(SPWindRule)0);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(ddc->hatch_area), 0x0000007f, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
         sp_canvas_item_hide(ddc->hatch_area);
-    }
-
-    {
-        SPCurve *c = sp_curve_new_from_foreign_bpath(hatch_area_circle);
-        ddc->dilate_area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
-        sp_curve_unref(c);
-        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->dilate_area), 0x00000000,(SPWindRule)0);
-        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(ddc->dilate_area), 0xff9900ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-        sp_canvas_item_hide(ddc->dilate_area);
     }
 
     sp_event_context_read(ec, "mass");
@@ -592,172 +573,6 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
     dc->npoints++;
 }
 
-double
-get_dilate_radius (SPDynaDrawContext *dc)
-{
-    // 10 times the pen width:
-    return 500 * dc->width/SP_EVENT_CONTEXT(dc)->desktop->current_zoom(); 
-}
-
-double
-get_dilate_force (SPDynaDrawContext *dc)
-{
-    double force = 4 * dc->pressure/SP_EVENT_CONTEXT(dc)->desktop->current_zoom(); 
-    if (force > 3) {
-        force += 8 * (force - 3);
-    }
-    return force;
-}
-
-bool
-sp_ddc_dilate_recursive (SPItem *item, NR::Point p, bool expand, double radius, double offset)
-{
-    bool did = false;
-
-    if (SP_IS_GROUP(item)) {
-        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            if (SP_IS_ITEM(child)) {
-                if (sp_ddc_dilate_recursive (SP_ITEM(child), p, expand, radius, offset))
-                    did = true;
-            }
-        }
-
-    } else if (SP_IS_PATH(item)) {
-
-        SPCurve *curve = NULL;
-        curve = sp_shape_get_curve(SP_SHAPE(item));
-        if (curve == NULL)
-            return false;
-
-        // skip those paths whose bboxes are entirely out of reach with our radius
-        NR::Maybe<NR::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item));
-        if (bbox) {
-            bbox->growBy(radius);
-            if (!bbox->contains(p)) {
-                return false;
-            }
-        }
-
-        Path *orig = Path_for_item(item, false);
-        if (orig == NULL) {
-            sp_curve_unref(curve);
-            return false;
-        }
-        Path *res = new Path;
-        res->SetBackData(false);
-
-        Shape *theShape = new Shape;
-        Shape *theRes = new Shape;
-
-        orig->ConvertWithBackData(0.05);
-        orig->Fill(theShape, 0);
-
-        SPCSSAttr *css = sp_repr_css_attr(SP_OBJECT_REPR(item), "style");
-        gchar const *val = sp_repr_css_property(css, "fill-rule", NULL);
-        if (val && strcmp(val, "nonzero") == 0)
-        {
-            theRes->ConvertToShape(theShape, fill_nonZero);
-        }
-        else if (val && strcmp(val, "evenodd") == 0)
-        {
-            theRes->ConvertToShape(theShape, fill_oddEven);
-        }
-        else
-        {
-            theRes->ConvertToShape(theShape, fill_nonZero);
-        }
-
-        bool did_this = false;
-        NR::Matrix i2doc(sp_item_i2doc_affine(item));
-        if (theShape->MakeOffset(theRes, 
-                                 expand? offset : -offset,
-                                 join_straight, butt_straight,
-                                 true, p[NR::X], p[NR::Y], radius, &i2doc) == 0) // 0 means the shape was actually changed
-            did_this = true;
-
-        // the rest only makes sense if we actually changed the path
-        if (did_this) {
-            theRes->ConvertToShape(theShape, fill_positive);
-
-            res->Reset();
-            theRes->ConvertToForme(res);
-
-            if (offset >= 0.5)
-            {
-                res->ConvertEvenLines(0.5);
-                res->Simplify(0.5);
-            }
-            else
-            {
-                res->ConvertEvenLines(0.5*offset);
-                res->Simplify(0.5 * offset);
-            }
-
-            sp_curve_unref(curve);
-            if (res->descr_cmd.size() > 1) { 
-                gchar *str = res->svg_dump_path();
-                SP_OBJECT_REPR(item)->setAttribute("d", str);
-                g_free(str);
-            } else {
-                // TODO: if there's 0 or 1 node left, delete this path altogether
-            }
-        }
-
-        delete theShape;
-        delete theRes;
-        delete orig;
-        delete res;
-
-        if (did_this) 
-            did = true;
-    }
-
-    return did;
-}
-
-
-bool
-sp_ddc_dilate (SPDynaDrawContext *dc, NR::Point p, bool expand)
-{
-    Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(dc)->desktop);
-
-    if (selection->isEmpty()) {
-        return false;
-    }
-
-    bool did = false;
-    double radius = get_dilate_radius(dc); 
-    double offset = get_dilate_force(dc); 
-    if (radius == 0 || offset == 0) {
-        return false;
-    }
-
-    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
-         items != NULL;
-         items = items->next) {
-
-        SPItem *item = (SPItem *) items->data;
-
-        if (sp_ddc_dilate_recursive (item, p, expand, radius, offset))
-            did = true;
-
-    }
-
-    return did;
-}
-
-void
-sp_ddc_update_cursors (SPDynaDrawContext *dc)
-{
-    if (dc->is_dilating) {
-        double radius = get_dilate_radius(dc);
-        NR::Matrix const sm (NR::scale(radius, radius) * NR::translate(SP_EVENT_CONTEXT(dc)->desktop->point()));
-        sp_canvas_item_affine_absolute(dc->dilate_area, sm);
-        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0xff9900ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-        sp_canvas_item_show(dc->dilate_area);
-    }
-}
-
 void
 sp_ddc_update_toolbox (SPDesktop *desktop, const gchar *id, double value)
 {
@@ -830,10 +645,6 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
                 sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
                 dc->is_drawing = true;
-                if (event->button.state & GDK_MOD1_MASK) {
-                    dc->is_dilating = true;
-                    dc->has_dilated = false;
-                }
             }
             break;
         case GDK_MOTION_NOTIFY:
@@ -843,41 +654,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             NR::Point motion_dt(desktop->w2d(motion_w));
             sp_dyna_draw_extinput(dc, event);
 
-            // draw the dilating cursor
-            if (event->motion.state & GDK_MOD1_MASK) {
-                double radius = get_dilate_radius(dc);
-                NR::Matrix const sm (NR::scale(radius, radius) * NR::translate(desktop->w2d(motion_w)));
-                sp_canvas_item_affine_absolute(dc->dilate_area, sm);
-                sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0xff9900ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-                sp_canvas_item_show(dc->dilate_area);
-
-                guint num = 0;
-                if (!desktop->selection->isEmpty()) {
-                    num = g_slist_length((GSList *) desktop->selection->itemList());
-                }
-                if (num == 0) {
-                    dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Select paths</b> to thin or thicken"));
-                } else {
-                    dc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                           event->motion.state & GDK_SHIFT_MASK?
-                                           _("<b>Thickening %d</b> selected objects; without <b>Shift</b> to thin") :
-                                           _("<b>Thinning %d</b> selected objects; with <b>Shift</b> to thicken"), num);
-                }
-
-            } else {
-                dc->_message_context->clear();
-                sp_canvas_item_hide(dc->dilate_area);
-            }
-
-            // dilating:
-            if (dc->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK ) && event->motion.state & GDK_MOD1_MASK) {  
-                sp_ddc_dilate (dc, desktop->dt2doc(motion_dt), event->motion.state & GDK_SHIFT_MASK? true : false);
-                dc->has_dilated = true;
-                // it's slow, so prevent clogging up with events
-                gobble_motion_events(GDK_BUTTON1_MASK);
-                return TRUE;
-            }
-
+            dc->_message_context->clear();
 
             // for hatching:
             double hatch_dist = 0;
@@ -1091,20 +868,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
         sp_canvas_end_forced_full_redraws(desktop->canvas);
         dc->is_drawing = false;
 
-        if (dc->is_dilating && event->button.button == 1 && !event_context->space_panning) {
-            if (!dc->has_dilated) {
-                // if we did not rub, do a light tap
-                dc->pressure = 0.03;
-                sp_ddc_dilate (dc, desktop->dt2doc(motion_dt), event->button.state & GDK_SHIFT_MASK? true : false);
-            }
-            dc->is_dilating = false;
-            dc->has_dilated = false;
-            sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(dc)->desktop), 
-                         SP_VERB_CONTEXT_CALLIGRAPHIC,
-                         (event->button.state & GDK_SHIFT_MASK ? _("Thicken paths") : _("Thin paths")));
-            ret = TRUE;
-
-        } else if (dc->dragging && event->button.button == 1 && !event_context->space_panning) {
+        if (dc->dragging && event->button.button == 1 && !event_context->space_panning) {
             dc->dragging = FALSE;
 
             sp_dyna_draw_apply(dc, motion_dt);
@@ -1180,7 +944,6 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 if (dc->width > 1.0)
                     dc->width = 1.0;
                 sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100); // the same spinbutton is for alt+x
-                sp_ddc_update_cursors(dc);
                 ret = TRUE;
             }
             break;
@@ -1191,7 +954,6 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 if (dc->width < 0.01)
                     dc->width = 0.01;
                 sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
-                sp_ddc_update_cursors(dc);
                 ret = TRUE;
             }
             break;
@@ -1199,14 +961,12 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
         case GDK_KP_Home:
             dc->width = 0.01;
             sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
-            sp_ddc_update_cursors(dc);
             ret = TRUE;
             break;
         case GDK_End:
         case GDK_KP_End:
             dc->width = 1.0;
             sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
-            sp_ddc_update_cursors(dc);
             ret = TRUE;
             break;
         case GDK_x:
@@ -1231,28 +991,6 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 ret = TRUE;
             }
             break;
-        case GDK_Meta_L:
-        case GDK_Meta_R:
-            event_context->cursor_shape = cursor_thicken_xpm;
-            sp_event_context_update_cursor(event_context);
-            break;
-        case GDK_Alt_L:
-        case GDK_Alt_R:
-            if (MOD__SHIFT) {
-                event_context->cursor_shape = cursor_thicken_xpm;
-                sp_event_context_update_cursor(event_context);
-            } else {
-                event_context->cursor_shape = cursor_thin_xpm;
-                sp_event_context_update_cursor(event_context);
-            }
-            break;
-        case GDK_Shift_L:
-        case GDK_Shift_R:
-            if (MOD__ALT) {
-                event_context->cursor_shape = cursor_thicken_xpm;
-                sp_event_context_update_cursor(event_context);
-            }
-            break;
         default:
             break;
         }
@@ -1266,23 +1004,6 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 dc->hatch_spacing = 0;
                 dc->hatch_spacing_step = 0;
                 break;
-            case GDK_Alt_L:
-            case GDK_Alt_R:
-                event_context->cursor_shape = cursor_calligraphy_xpm;
-                sp_event_context_update_cursor(event_context);
-                break;
-            case GDK_Shift_L:
-            case GDK_Shift_R:
-                if (MOD__ALT) {
-                    event_context->cursor_shape = cursor_thin_xpm;
-                    sp_event_context_update_cursor(event_context);
-                }
-                break;
-            case GDK_Meta_L:
-            case GDK_Meta_R:
-                event_context->cursor_shape = cursor_calligraphy_xpm;
-                sp_event_context_update_cursor(event_context);
-            break;
             default:
                 break;
         }

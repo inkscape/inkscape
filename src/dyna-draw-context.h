@@ -119,10 +119,6 @@ struct SPDynaDrawContext
     SPCanvasItem *hatch_area;
 
     bool trace_bg;
-
-    bool is_dilating;
-    bool has_dilated;
-    SPCanvasItem *dilate_area;
 };
 
 struct SPDynaDrawContextClass
