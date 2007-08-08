@@ -16,67 +16,10 @@
 #include "document.h"
 #include "filter-effect-chooser.h"
 #include "inkscape.h"
-#include "ui/dialog/dialog-manager.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Widget {
-
-FilterEffectChooser::FilterEffectChooser()
-{
-    _model = Gtk::ListStore::create(_columns);
-
-    g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
-                     G_CALLBACK(&FilterEffectChooser::on_activate_desktop), this);
-
-
-    on_activate_desktop(INKSCAPE, SP_ACTIVE_DESKTOP, this);
-}
-
-FilterEffectChooser::~FilterEffectChooser()
-{
-   _resource_changed.disconnect();
-   _doc_replaced.disconnect();
-}
-
-void FilterEffectChooser::on_activate_desktop(Inkscape::Application*, SPDesktop* desktop, FilterEffectChooser* fec)
-{
-    fec->update_filters();
-
-    fec->_doc_replaced.disconnect();
-    fec->_doc_replaced = desktop->connectDocumentReplaced(
-        sigc::mem_fun(fec, &FilterEffectChooser::on_document_replaced));
-
-    fec->_resource_changed.disconnect();
-    fec->_resource_changed =
-        sp_document_resources_changed_connect(sp_desktop_document(desktop), "filter",
-                                              sigc::mem_fun(fec, &FilterEffectChooser::update_filters));
-}
-
-void FilterEffectChooser::on_document_replaced(SPDesktop* desktop, SPDocument* document)
-{
-    update_filters();
-}
-
-/* Add all filters in the document to the combobox.
-   Keeps the same selection if possible, otherwise selects the first element */
-void FilterEffectChooser::update_filters()
-{
-    SPDesktop* desktop = SP_ACTIVE_DESKTOP;
-    SPDocument* document = sp_desktop_document(desktop);
-    const GSList* filters = sp_document_get_resource_list(document, "filter");
-
-    _model->clear();
-
-    for(const GSList *l = filters; l; l = l->next) {
-        Gtk::TreeModel::Row row = *_model->append();
-        SPFilter* f = (SPFilter*)l->data;
-        row[_columns.filter] = f;
-        const gchar* lbl = f->label();
-        const gchar* id = SP_OBJECT_ID(f);
-        row[_columns.label] = lbl ? lbl : (id ? id : "filter");
-    }
-}
 
 SimpleFilterModifier::SimpleFilterModifier()
     : _lb_blend(_("_Blend mode:")),

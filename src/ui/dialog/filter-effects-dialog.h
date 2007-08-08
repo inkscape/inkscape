@@ -27,7 +27,7 @@
 #include "attributes.h"
 #include "dialog.h"
 #include "sp-filter.h"
-#include "ui/widget/filter-effect-chooser.h"
+#include "ui/widget/combo-enums.h"
 #include "ui/widget/spin-slider.h"
 
 using namespace Inkscape::UI::Widget;
@@ -48,20 +48,44 @@ public:
 private:
     class SignalObserver;
 
-    class FilterModifier : public Gtk::VBox, public FilterEffectChooser
+    class FilterModifier : public Gtk::VBox
     {
     public:
         FilterModifier(FilterEffectsDialog&);
+        ~FilterModifier();
 
-        virtual SPFilter* get_selected_filter();
-        virtual void select_filter(const SPFilter*);
-        sigc::signal<void>& signal_filter_changed();
+        SPFilter* get_selected_filter();
+        void select_filter(const SPFilter*);
+
+        sigc::signal<void>& signal_filter_changed()
+        {
+            return _signal_filter_changed;
+        }
     private:
+        class Columns : public Gtk::TreeModel::ColumnRecord
+        {
+        public:
+            Columns()
+            {
+                add(filter);
+                add(label);
+                add(sel);
+            }
+
+            Gtk::TreeModelColumn<SPFilter*> filter;
+            Gtk::TreeModelColumn<Glib::ustring> label;
+            Gtk::TreeModelColumn<int> sel;
+        };
+
         class CellRendererSel : public Gtk::CellRenderer
         {
         public:
             CellRendererSel();
-            Glib::PropertyProxy<int> property_sel();
+
+            Glib::PropertyProxy<int> property_sel()
+            {
+                return _sel.get_proxy();
+            }
         protected:
             virtual void get_size_vfunc(Gtk::Widget&, const Gdk::Rectangle*,
                                     int*, int*, int*, int*) const;
@@ -72,11 +96,19 @@ private:
             const int _size;
             Glib::Property<int> _sel;
         };
-        
+
+        static void on_activate_desktop(Application*, SPDesktop*, FilterModifier*);
+        void on_document_replaced(SPDesktop*, SPDocument*)
+        {
+            update_filters();
+        }
+       
         static void on_inkscape_change_selection(Application *, Selection *, FilterModifier*);
+        
         void update_selection(Selection *);
         void on_filter_selection_changed();
 
+        void update_filters();
         void filter_list_button_press(GdkEventButton*);
         void filter_list_button_release(GdkEventButton*);
         void add_filter();
@@ -84,8 +116,13 @@ private:
         void duplicate_filter();
         void rename_filter();
 
+        sigc::connection _doc_replaced;
+        sigc::connection _resource_changed;
+
         FilterEffectsDialog& _dialog;
         Gtk::TreeView _list;
+        Glib::RefPtr<Gtk::ListStore> _model;
+        Columns _columns;
         CellRendererSel _cell_sel;
         Gtk::Button _add;
         Glib::RefPtr<Gtk::Menu> _menu;

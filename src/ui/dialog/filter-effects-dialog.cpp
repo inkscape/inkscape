@@ -32,6 +32,7 @@
 #include "document.h"
 #include "filter-chemistry.h"
 #include "filter-effects-dialog.h"
+#include "filter-enums.h"
 #include "inkscape.h"
 #include "selection.h"
 #include "sp-feblend.h"
@@ -798,6 +799,7 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     pack_start(_add, false, false);
     sw->add(_list);
 
+    _model = Gtk::ListStore::create(_columns);
     _list.set_model(_model);
     const int selcol = _list.append_column("", _cell_sel);
     Gtk::TreeViewColumn* col = _list.get_column(selcol - 1);
@@ -824,7 +826,17 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     g_signal_connect(G_OBJECT(INKSCAPE), "change_selection",
                      G_CALLBACK(&FilterModifier::on_inkscape_change_selection), this);
 
+    g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
+                     G_CALLBACK(&FilterModifier::on_activate_desktop), this);
+
+    on_activate_desktop(INKSCAPE, SP_ACTIVE_DESKTOP, this);
     update_filters();
+}
+
+FilterEffectsDialog::FilterModifier::~FilterModifier()
+{
+   _resource_changed.disconnect();
+   _doc_replaced.disconnect();
 }
 
 FilterEffectsDialog::FilterModifier::CellRendererSel::CellRendererSel()
@@ -832,11 +844,6 @@ FilterEffectsDialog::FilterModifier::CellRendererSel::CellRendererSel()
       _size(10),
       _sel(*this, "sel", 0)
 {}
-
-Glib::PropertyProxy<int> FilterEffectsDialog::FilterModifier::CellRendererSel::property_sel()
-{
-    return _sel.get_proxy();
-}
 
 void FilterEffectsDialog::FilterModifier::CellRendererSel::get_size_vfunc(
     Gtk::Widget&, const Gdk::Rectangle*, int* x, int* y, int* w, int* h) const
@@ -867,6 +874,21 @@ void FilterEffectsDialog::FilterModifier::CellRendererSel::render_vfunc(
         win->draw_rectangle(widget.get_style()->get_text_gc(Gtk::STATE_NORMAL), (sel == 1), x, y, s, s);
     }
 }
+
+void FilterEffectsDialog::FilterModifier::on_activate_desktop(Application*, SPDesktop* desktop, FilterModifier* me)
+{
+    me->update_filters();
+
+    me->_doc_replaced.disconnect();
+    me->_doc_replaced = desktop->connectDocumentReplaced(
+        sigc::mem_fun(me, &FilterModifier::on_document_replaced));
+
+    me->_resource_changed.disconnect();
+    me->_resource_changed =
+        sp_document_resources_changed_connect(sp_desktop_document(desktop), "filter",
+                                              sigc::mem_fun(me, &FilterModifier::update_filters));
+}
+
 
 // When the selection changes, show the active filter(s) in the dialog
 void FilterEffectsDialog::FilterModifier::on_inkscape_change_selection(Application *inkscape,
@@ -913,9 +935,24 @@ void FilterEffectsDialog::FilterModifier::on_filter_selection_changed()
     signal_filter_changed()();
 }
 
-sigc::signal<void>& FilterEffectsDialog::FilterModifier::signal_filter_changed()
+/* Add all filters in the document to the combobox.
+   Keeps the same selection if possible, otherwise selects the first element */
+void FilterEffectsDialog::FilterModifier::update_filters()
 {
-    return _signal_filter_changed;
+    SPDesktop* desktop = SP_ACTIVE_DESKTOP;
+    SPDocument* document = sp_desktop_document(desktop);
+    const GSList* filters = sp_document_get_resource_list(document, "filter");
+
+    _model->clear();
+
+    for(const GSList *l = filters; l; l = l->next) {
+        Gtk::TreeModel::Row row = *_model->append();
+        SPFilter* f = (SPFilter*)l->data;
+        row[_columns.filter] = f;
+        const gchar* lbl = f->label();
+        const gchar* id = SP_OBJECT_ID(f);
+        row[_columns.label] = lbl ? lbl : (id ? id : "filter");
+    }
 }
 
 SPFilter* FilterEffectsDialog::FilterModifier::get_selected_filter()

@@ -27,43 +27,6 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-class FilterEffectChooser
-{
-public:
-    virtual ~FilterEffectChooser();
-
-protected:
-    FilterEffectChooser();
-
-    class Columns : public Gtk::TreeModel::ColumnRecord
-    {
-    public:
-        Columns()
-        {
-            add(filter);
-            add(label);
-            add(sel);
-        }
-
-        Gtk::TreeModelColumn<SPFilter*> filter;
-        Gtk::TreeModelColumn<Glib::ustring> label;
-        Gtk::TreeModelColumn<int> sel;
-    };
-
-    virtual void update_filters();
-
-    Glib::RefPtr<Gtk::ListStore> _model;
-    Columns _columns;
-private:
-    static void on_activate_desktop(Inkscape::Application*, SPDesktop*, FilterEffectChooser*);
-    void on_document_replaced(SPDesktop*, SPDocument*);
-
-    sigc::connection _doc_replaced;
-    sigc::connection _resource_changed;
-
-    Gtk::TreeView::Column _filter_column;
-};
-
 /* Allows basic control over feBlend and feGaussianBlur effects,
    with an option to use the full filter effect controls. */
 class SimpleFilterModifier : public Gtk::VBox
