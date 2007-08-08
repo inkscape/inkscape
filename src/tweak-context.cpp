@@ -368,7 +368,8 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
             if (newrepr) { // converting to path, need to replace the repr
                 bool is_selected = selection->includes(item);
-                selection->remove(item);
+                if (is_selected)
+                    selection->remove(item);
 
                 // It's going to resurrect, so we delete without notifying listeners.
                 SP_OBJECT(item)->deleteObject(false);
@@ -526,24 +527,24 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                     num = g_slist_length((GSList *) desktop->selection->itemList());
                 }
                 if (num == 0) {
-                    tc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Select paths</b> to tweak"));
+                    tc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Select objects</b> to tweak"));
                 } else {
                     switch (tc->mode) {
                         case TWEAK_MODE_PUSH:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Pushing %d</b> selected path(s)"), num);  
+                                                      _("<b>Pushing %d</b> selected object(s)"), num);  
                            break;
                         case TWEAK_MODE_SUCK:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Melting %d</b> selected path(s)"), num);
+                                                      _("<b>Melting %d</b> selected object(s)"), num);
                            break;
                         case TWEAK_MODE_BLOW:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Blowing %d</b> selected path(s)"), num);
+                                                      _("<b>Blowing %d</b> selected object(s)"), num);
                            break;
                         case TWEAK_MODE_ROUGHEN:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Roughening %d</b> selected path(s)"), num);
+                                                      _("<b>Roughening %d</b> selected object(s)"), num);
                            break;
                     }
                 }
