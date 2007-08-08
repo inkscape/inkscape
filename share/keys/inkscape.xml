@@ -91,6 +91,12 @@ override) the bindings in the main default.xml.
 
   <bind action="NodePrefs" />
 
+  <bind key="F2" modifiers="Alt" action="ToolTweak" display="true"/>
+  <bind key="w" action="ToolTweak" />
+  <bind key="W" action="ToolTweak" />
+
+  <bind action="TweakPrefs" />
+
   <bind key="F3" action="ToolZoom" display="true"/>
   <bind key="z" action="ToolZoom" />
   <bind key="Z" action="ToolZoom" />
