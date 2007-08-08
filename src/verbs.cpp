@@ -1398,6 +1398,9 @@ ContextVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_CONTEXT_NODE:
             tools_switch_current(TOOLS_NODES);
             break;
+        case SP_VERB_CONTEXT_TWEAK:
+            tools_switch_current(TOOLS_TWEAK);
+            break;
         case SP_VERB_CONTEXT_RECT:
             tools_switch_current(TOOLS_SHAPES_RECT);
             break;
@@ -1447,6 +1450,10 @@ ContextVerb::perform(SPAction *action, void *data, void *pdata)
             break;
         case SP_VERB_CONTEXT_NODE_PREFS:
             prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_NODE);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
+            break;
+        case SP_VERB_CONTEXT_TWEAK_PREFS:
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_TWEAK);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_RECT_PREFS:
@@ -2367,6 +2374,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Select and transform objects"), "draw_select"),
     new ContextVerb(SP_VERB_CONTEXT_NODE, "ToolNode", N_("Node Edit"),
                     N_("Edit path nodes or control handles"), "draw_node"),
+    new ContextVerb(SP_VERB_CONTEXT_TWEAK, "ToolTweak", N_("Tweak"),
+                    N_("Tweak paths by pushing, melting, blowing, or roughening"), "draw_tweak"),
     new ContextVerb(SP_VERB_CONTEXT_RECT, "ToolRect", N_("Rectangle"),
                     N_("Create rectangles and squares"), "draw_rect"),
     new ContextVerb(SP_VERB_CONTEXT_3DBOX, "Tool3DBox", N_("3D Box"),
@@ -2401,6 +2410,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Open Preferences for the Selector tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_NODE_PREFS, "NodePrefs", N_("Node Tool Preferences"),
                     N_("Open Preferences for the Node tool"), NULL),
+    new ContextVerb(SP_VERB_CONTEXT_TWEAK_PREFS, "TweakPrefs", N_("Tweak Tool Preferences"),
+                    N_("Open Preferences for the Tweak tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_RECT_PREFS, "RectPrefs", N_("Rectangle Preferences"),
                     N_("Open Preferences for the Rectangle tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_3DBOX_PREFS, "3DBoxPrefs", N_("3D Box Preferences"),

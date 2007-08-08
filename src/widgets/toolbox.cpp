@@ -105,6 +105,7 @@ typedef void (*SetupFunction)(GtkWidget *toolbox, SPDesktop *desktop);
 typedef void (*UpdateFunction)(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
 
 static void       sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
+static void       sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_zoom_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
@@ -130,6 +131,7 @@ static struct {
 } const tools[] = {
     { "SPSelectContext",   "select_tool",    SP_VERB_CONTEXT_SELECT,  SP_VERB_CONTEXT_SELECT_PREFS},
     { "SPNodeContext",     "node_tool",      SP_VERB_CONTEXT_NODE, SP_VERB_CONTEXT_NODE_PREFS },
+    { "SPTweakContext",    "tweak_tool",     SP_VERB_CONTEXT_TWEAK, SP_VERB_CONTEXT_TWEAK_PREFS },
     { "SPZoomContext",     "zoom_tool",      SP_VERB_CONTEXT_ZOOM, SP_VERB_CONTEXT_ZOOM_PREFS },
     { "SPRectContext",     "rect_tool",      SP_VERB_CONTEXT_RECT, SP_VERB_CONTEXT_RECT_PREFS },
 //    { "SP3DBoxContext",    "3dbox_tool",     SP_VERB_CONTEXT_3DBOX, SP_VERB_CONTEXT_3DBOX_PREFS },
@@ -160,6 +162,8 @@ static struct {
     { "SPSelectContext", "select_toolbox", 0, sp_select_toolbox_prep,            "SelectToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPNodeContext",   "node_toolbox",   0, sp_node_toolbox_prep,              "NodeToolbar",
+      SP_VERB_INVALID, 0, 0},
+    { "SPTweakContext",   "tweak_toolbox",   0, sp_tweak_toolbox_prep,              "TweakToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPZoomContext",   "zoom_toolbox",   0, sp_zoom_toolbox_prep,              "ZoomToolbar",
       SP_VERB_INVALID, 0, 0},
@@ -239,6 +243,16 @@ static gchar const * ui_descr =
         "    <toolitem action='StrokeToPath' />"
         "    <separator />"
         "    <toolitem action='NodesShowHandlesAction' />"
+        "  </toolbar>"
+
+        "  <toolbar name='TweakToolbar'>"
+        "    <toolitem action='TweakWidthAction' />"
+        "    <toolitem action='TweakForceAction' />"
+        "    <separator />"
+        "    <toolitem action='TweakModeAction' />"
+        "    <separator />"
+        "    <toolitem action='TweakFidelityAction' />"
+        "    <toolitem action='TweakPressureAction' />"
         "  </toolbar>"
 
         "  <toolbar name='ZoomToolbar'>"
@@ -2513,6 +2527,148 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
     // Put stuff here
 }
 
+//########################
+//##       Tweak        ##
+//########################
+
+static void sp_tweak_width_value_changed( GtkAdjustment *adj, GObject *tbl )
+{
+    prefs_set_double_attribute( "tools.tweak", "width", adj->value * 0.01 );
+}
+
+static void sp_tweak_force_value_changed( GtkAdjustment *adj, GObject *tbl )
+{
+    prefs_set_double_attribute( "tools.tweak", "force", adj->value * 0.01 );
+}
+
+static void sp_tweak_pressure_state_changed( GtkToggleAction *act, gpointer data )
+{
+    prefs_set_int_attribute( "tools.tweak", "usepressure", gtk_toggle_action_get_active( act ) ? 1 : 0);
+}
+
+static void sp_tweak_mode_changed( EgeSelectOneAction *act, GObject *tbl )
+{
+    prefs_set_int_attribute("tools.tweak", "mode", ege_select_one_action_get_active( act ));
+}
+
+static void sp_tweak_fidelity_value_changed( GtkAdjustment *adj, GObject *tbl )
+{
+    prefs_set_double_attribute( "tools.tweak", "fidelity", adj->value * 0.01 );
+}
+
+
+static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
+{
+    {
+        /* Width */
+        gchar const* labels[] = {_("(pinch tweak)"), 0, 0, 0, _("(default)"), 0, 0, 0, 0, _("(broad tweak)")};
+        gdouble values[] = {1, 3, 5, 10, 15, 20, 30, 50, 75, 100};
+        EgeAdjustmentAction *eact = create_adjustment_action( "TweakWidthAction",
+                                                              _("Width:"), _("The width of the tweak area (relative to the visible canvas area)"),
+                                                              "tools.tweak", "width", 15,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-tweak",
+                                                              1, 100, 1.0, 10.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_tweak_width_value_changed,  0.01, 0, 100 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+    }
+
+
+    {
+        /* Force */
+        gchar const* labels[] = {_("(minimum force)"), 0, 0, _("(default)"), 0, 0, 0, _("(maximum force)")};
+        gdouble values[] = {1, 5, 10, 20, 30, 50, 70, 100};
+        EgeAdjustmentAction *eact = create_adjustment_action( "TweakForceAction",
+                                                              _("Force:"), _("The force of the tweak action"),
+                                                              "tools.tweak", "force", 20,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "tweak-force",
+                                                              1, 100, 1.0, 10.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_tweak_force_value_changed,  0.01, 0, 100 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+    }
+
+    /* Mode */
+    {
+        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
+
+        GtkTreeIter iter;
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Push mode"),
+                            1, _("Switch to Push mode"),
+                            2, "tweak_push_mode",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Melt mode"),
+                            1, _("Switch to Melt mode"),
+                            2, "tweak_suck_mode",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Blow mode"),
+                            1, _("Switch to Blow mode"),
+                            2, "tweak_blow_mode",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Roughen mode"),
+                            1, _("Switch to Roughen mode"),
+                            2, "tweak_roughen_mode",
+                            -1 );
+
+        EgeSelectOneAction* act = ege_select_one_action_new( "TweakModeAction", _(""), _(""), NULL, GTK_TREE_MODEL(model) );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_object_set_data( holder, "mode_action", act );
+
+        ege_select_one_action_set_appearance( act, "full" );
+        ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+        g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+        ege_select_one_action_set_icon_column( act, 2 );
+        ege_select_one_action_set_tooltip_column( act, 1  );
+
+        gint mode = prefs_get_int_attribute("tools.tweak", "mode", 0);
+        ege_select_one_action_set_active( act, mode );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_tweak_mode_changed), holder );
+
+        g_object_set_data( G_OBJECT(holder), "tweak_tool_mode", act);
+    }
+
+    {   /* Fidelity */
+        gchar const* labels[] = {_("(rough, simplified)"), 0, 0, _("(default)"), 0, 0, _("(fine, but many nodes)")};
+        gdouble values[] = {10, 25, 35, 50, 60, 80, 100};
+        EgeAdjustmentAction *eact = create_adjustment_action( "TweakFidelityAction",
+                                                              _("Fidelity:"), _("Low fidelity simplifies paths; high fidelity preserves path features but may generate a lot of new nodes"),
+                                                              "tools.tweak", "fidelity", 50,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "tweak-fidelity",
+                                                              1, 100, 1.0, 10.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_tweak_fidelity_value_changed,  0.01, 0, 100 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+    }
+
+
+    /* Use Pressure button */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "TweakPressureAction",
+                                                      _("Pressure"),
+                                                      _("Use the pressure of the input device to alter the width of the area"),
+                                                      "use_pressure",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_tweak_pressure_state_changed), NULL);
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.tweak", "usepressure", 1 ) );
+    }
+
+}
+
 
 //########################
 //##     Calligraphy    ##
@@ -2772,7 +2928,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         {
             GtkAction* act = gtk_action_new( "CalligraphyResetAction",
                                              _("Defaults"),
-                                             _("Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
+                                             _("Reset all parameters to defaults"),
                                              GTK_STOCK_CLEAR );
             g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_ddc_defaults), holder );
             gtk_action_group_add_action( mainActions, act );

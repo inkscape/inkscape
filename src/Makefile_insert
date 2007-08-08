@@ -270,6 +270,7 @@ libinkpre_a_SOURCES =	\
 	text-editing.cpp text-editing.h	\
 	text-tag-attributes.h	\
 	tools-switch.cpp tools-switch.h\
+	tweak-context.h tweak-context.cpp \
 	uri-references.cpp uri-references.h	\
 	vanishing-point.cpp vanishing-point.h	\
 	verbs.cpp verbs.h	\

@@ -24,6 +24,7 @@
 
 #include "select-context.h"
 #include "node-context.h"
+#include "tweak-context.h"
 #include "sp-path.h"
 #include "rect-context.h"
 #include "sp-rect.h"
@@ -55,6 +56,7 @@ static char const *const tool_names[] = {
     NULL,
     "tools.select",
     "tools.nodes",
+    "tools.tweak",
     "tools.shapes.rect",
     "tools.shapes.3dbox",
     "tools.shapes.arc",
@@ -76,6 +78,7 @@ static char const *const tool_ids[] = {
     NULL,
     "select",
     "nodes",
+    "tweak",
     "rect",
     "3dbox",
     "arc",
@@ -140,6 +143,12 @@ tools_switch(SPDesktop *dt, int num)
             dt->activate_guides(true);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
             dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on an object to select."));
+            break;
+        case TOOLS_TWEAK:
+            dt->set_event_context(SP_TYPE_TWEAK_CONTEXT, tool_names[num]);
+            dt->activate_guides(true);
+            inkscape_eventcontext_set(sp_desktop_event_context(dt));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("To tweak a path by pushing, select it and drag over it."));
             break;
         case TOOLS_SHAPES_RECT:
             dt->set_event_context(SP_TYPE_RECT_CONTEXT, tool_names[num]);
