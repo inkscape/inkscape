@@ -197,8 +197,6 @@ sp_object_properties_dialog (void)
         gtk_alignment_set_padding(GTK_ALIGNMENT(al_fe), 0, 0, 4, 0);
         SimpleFilterModifier *cb_fe = Gtk::manage(new SimpleFilterModifier);
         g_object_set_data(G_OBJECT(dlg), "filter_modifier", cb_fe);
-        cb_fe->signal_selection_changed().connect(
-            sigc::bind(sigc::ptr_fun(sp_fillstroke_blend_blur_changed), cb_fe));
         cb_fe->signal_blend_blur_changed().connect(
             sigc::bind(sigc::ptr_fun(sp_fillstroke_blend_blur_changed), cb_fe));
         gtk_container_add(GTK_CONTAINER(al_fe), GTK_WIDGET(cb_fe->gobj()));
@@ -432,7 +430,7 @@ sp_fillstroke_blend_blur_changed (SimpleFilterModifier *m)
     const Glib::ustring blendmode = m->get_blend_mode();
     double radius = m->get_blur_value() * perimeter / 400;
 
-    SPFilter *filter = m->get_selected_filter();
+    SPFilter *filter = NULL;
     const bool remfilter = (blendmode == "normal" && radius == 0) || (blendmode == "filter" && !filter);
         
     if(blendmode != "filter" || filter) {

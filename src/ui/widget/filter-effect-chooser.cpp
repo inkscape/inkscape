@@ -81,72 +81,25 @@ void FilterEffectChooser::update_filters()
 SimpleFilterModifier::SimpleFilterModifier()
     : _lb_blend(_("_Blend mode:")),
       _lb_blur(_("B_lur:"), Gtk::ALIGN_LEFT),
-      _lb_filter(_("F_ilter:"), Gtk::ALIGN_LEFT),
       _blend(BlendModeConverter),
-      _blur(0, 0, 100, 1, 0.01, 1),
-      _edit_filters(_("_Edit"))
+      _blur(0, 0, 100, 1, 0.01, 1)
 {
     add(_hb_blend);
     add(_vb_blur);
-    add(_hb_filter);
     _hb_blend.pack_start(_lb_blend, false, false);
     _hb_blend.pack_start(_blend);
     _vb_blur.add(_lb_blur);
     _vb_blur.add(_blur);
-    _hb_filter.pack_start(_lb_filter, false, false);
-    _hb_filter.pack_start(_hb_filter_sub);
-    _hb_filter_sub.add(_filter);
-    _hb_filter_sub.add(_edit_filters);
 
     show_all_children();
 
-    signal_show().connect(sigc::mem_fun(*this, &SimpleFilterModifier::blend_mode_changed));
     _hb_blend.set_spacing(12);
-    _hb_filter.set_spacing(12);
     _lb_blend.set_use_underline();
     _lb_blend.set_mnemonic_widget(_blend);
     _lb_blur.set_use_underline();
     _lb_blur.set_mnemonic_widget(_blur.get_scale());
-    _lb_filter.set_use_underline();
-    _lb_filter.set_mnemonic_widget(_filter);
-    _blend.add_row("Filter");
-    _blend.signal_changed().connect(sigc::mem_fun(*this, &SimpleFilterModifier::blend_mode_changed));
     _blend.signal_changed().connect(signal_blend_blur_changed());
     _blur.signal_value_changed().connect(signal_blend_blur_changed());
-    _filter.set_model(_model);
-    _filter.pack_start(_columns.label);
-    _edit_filters.signal_clicked().connect(sigc::mem_fun(*this, &SimpleFilterModifier::show_filter_dialog));
-    _edit_filters.set_use_underline();
-
-    update_filters();
-}
-
-Glib::SignalProxy0<void> SimpleFilterModifier::signal_selection_changed()
-{
-    return _filter.signal_changed();
-}
-
-SPFilter* SimpleFilterModifier::get_selected_filter()
-{
-    Gtk::TreeModel::iterator i = _filter.get_active();
-
-    if(i)
-        return (*i)[_columns.filter];
-
-    return 0;
-}
-
-void SimpleFilterModifier::select_filter(const SPFilter* filter)
-{
-    if(filter) {
-        for(Gtk::TreeModel::iterator i = _model->children().begin();
-            i != _model->children().end(); ++i) {
-            if((*i)[_columns.filter] == filter) {
-                _filter.set_active(i);
-                break;
-            }
-        }
-    }
 }
 
 sigc::signal<void>& SimpleFilterModifier::signal_blend_blur_changed()
@@ -177,43 +130,6 @@ void SimpleFilterModifier::set_blur_value(const double val)
 void SimpleFilterModifier::set_blur_sensitive(const bool s)
 {
     _blur.set_sensitive(s);
-}
-
-void SimpleFilterModifier::update_filters()
-{
-    const SPFilter* active_filter = get_selected_filter();
-
-    FilterEffectChooser::update_filters();
-
-    if(_model->children().empty()) {
-        // Set state if no filters exist
-        Gtk::TreeModel::Row row = *_model->prepend();
-        row[_columns.filter] = 0;
-        row[_columns.label] = "None";
-        _filter.set_sensitive(false);
-        _filter.set_active(0);
-    }
-    else {
-        _filter.set_sensitive(true);
-        select_filter(active_filter);
-    }
-}
-
-void SimpleFilterModifier::show_filter_dialog()
-{
-    SP_ACTIVE_DESKTOP->_dlg_mgr->showDialog("FilterEffectsDialog");
-}
-
-void SimpleFilterModifier::blend_mode_changed()
-{
-    if(_blend.get_active_row_number() == 5) {
-        _vb_blur.hide();
-        _hb_filter.show();
-    }
-    else {
-        _hb_filter.hide();
-        _vb_blur.show();
-    }
 }
 
 }

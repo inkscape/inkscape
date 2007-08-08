@@ -89,7 +89,6 @@ FillAndStroke::FillAndStroke()
     _fe_alignment.add(_fe_cb);
     _fe_vbox.pack_start(_fe_alignment, false, false, 0);
 
-    _fe_cb.signal_selection_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::FillAndStroke::_blendBlurValueChanged));
     _fe_cb.signal_blend_blur_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::FillAndStroke::_blendBlurValueChanged));
     
     // Opacity
@@ -171,7 +170,7 @@ FillAndStroke::_blendBlurValueChanged()
     const Glib::ustring blendmode = _fe_cb.get_blend_mode();
     double radius = _fe_cb.get_blur_value() * perimeter / 400;
 
-    SPFilter *filter = _fe_cb.get_selected_filter();
+    SPFilter *filter = 0;
     const bool remfilter = (blendmode == "normal" && radius == 0) || (blendmode == "filter" && !filter);
         
     if(blendmode != "filter" || filter) {

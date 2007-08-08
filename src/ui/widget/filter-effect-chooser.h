@@ -32,8 +32,6 @@ class FilterEffectChooser
 public:
     virtual ~FilterEffectChooser();
 
-    virtual SPFilter* get_selected_filter() = 0;
-    virtual void select_filter(const SPFilter*) = 0;
 protected:
     FilterEffectChooser();
 
@@ -68,14 +66,10 @@ private:
 
 /* Allows basic control over feBlend and feGaussianBlur effects,
    with an option to use the full filter effect controls. */
-class SimpleFilterModifier : public Gtk::VBox, public FilterEffectChooser
+class SimpleFilterModifier : public Gtk::VBox
 {
 public:
     SimpleFilterModifier();
-
-    Glib::SignalProxy0<void> signal_selection_changed();
-    virtual SPFilter* get_selected_filter();
-    virtual void select_filter(const SPFilter*);
 
     sigc::signal<void>& signal_blend_blur_changed();
 
@@ -86,20 +80,12 @@ public:
     double get_blur_value() const;
     void set_blur_value(const double);
     void set_blur_sensitive(const bool);
-protected:
-    virtual void update_filters();
 private:
-    void show_filter_dialog();
-    void blend_mode_changed();
-
     Gtk::HBox _hb_blend;
     Gtk::VBox _vb_blur;
-    Gtk::HBox _hb_filter, _hb_filter_sub;
-    Gtk::Label _lb_blend, _lb_blur, _lb_filter;
+    Gtk::Label _lb_blend, _lb_blur;
     ComboBoxEnum<NR::FilterBlendMode> _blend;
     SpinSlider _blur;
-    Gtk::ComboBox _filter;
-    Gtk::Button _edit_filters;
 
     sigc::signal<void> _signal_blend_blur_changed;
 };
