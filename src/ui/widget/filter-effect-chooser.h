@@ -32,7 +32,6 @@ class FilterEffectChooser
 public:
     virtual ~FilterEffectChooser();
 
-    virtual Glib::SignalProxy0<void> signal_selection_changed() = 0;
     virtual SPFilter* get_selected_filter() = 0;
     virtual void select_filter(const SPFilter*) = 0;
 protected:
@@ -74,7 +73,7 @@ class SimpleFilterModifier : public Gtk::VBox, public FilterEffectChooser
 public:
     SimpleFilterModifier();
 
-    virtual Glib::SignalProxy0<void> signal_selection_changed();
+    Glib::SignalProxy0<void> signal_selection_changed();
     virtual SPFilter* get_selected_filter();
     virtual void select_filter(const SPFilter*);
 

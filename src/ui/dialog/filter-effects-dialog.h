@@ -46,6 +46,8 @@ public:
 
     static FilterEffectsDialog *create() { return new FilterEffectsDialog(); }
 private:
+    class SignalObserver;
+
     class FilterModifier : public Gtk::VBox, public FilterEffectChooser
     {
     public:
@@ -53,7 +55,7 @@ private:
 
         virtual SPFilter* get_selected_filter();
         virtual void select_filter(const SPFilter*);
-        virtual Glib::SignalProxy0<void> signal_selection_changed();
+        sigc::signal<void>& signal_filter_changed();
     private:
         class CellRendererSel : public Gtk::CellRenderer
         {
@@ -73,6 +75,7 @@ private:
         
         static void on_inkscape_change_selection(Application *, Selection *, FilterModifier*);
         void update_selection(Selection *);
+        void on_filter_selection_changed();
 
         void filter_list_button_press(GdkEventButton*);
         void filter_list_button_release(GdkEventButton*);
@@ -86,6 +89,8 @@ private:
         CellRendererSel _cell_sel;
         Gtk::Button _add;
         Glib::RefPtr<Gtk::Menu> _menu;
+        sigc::signal<void> _signal_filter_changed;
+        std::auto_ptr<SignalObserver> _observer;
     };
 
     class PrimitiveColumns : public Gtk::TreeModel::ColumnRecord
@@ -129,7 +134,7 @@ private:
     public:
         PrimitiveList(FilterEffectsDialog&);
 
-        Glib::SignalProxy0<void> signal_selection_changed();
+        sigc::signal<void>& signal_primitive_changed();
 
         void update();
         void set_menu(Glib::RefPtr<Gtk::Menu>);
@@ -154,6 +159,7 @@ private:
         void draw_connection(const Gtk::TreeIter&, const int attr, const int text_start_x,
                              const int x1, const int y1, const int row_count);
         void sanitize_connections(const Gtk::TreeIter& prim_iter);
+        void on_primitive_selection_changed();
 
         FilterEffectsDialog& _dialog;
         Glib::RefPtr<Gtk::ListStore> _model;
@@ -163,6 +169,8 @@ private:
         Glib::RefPtr<Pango::Layout> _vertical_layout;
         int _in_drag;
         SPFilterPrimitive* _drag_prim;
+        sigc::signal<void> _signal_primitive_changed;
+        std::auto_ptr<SignalObserver> _observer;
     };
 
     FilterEffectsDialog();

@@ -52,6 +52,7 @@
 #include "svg/svg-color.h"
 #include "verbs.h"
 #include "xml/node.h"
+#include "xml/node-observer.h"
 #include "xml/repr.h"
 #include <sstream>
 
@@ -79,6 +80,48 @@ int input_count(const SPFilterPrimitive* prim)
     else
         return 1;
 }
+
+// Very simple observer that just emits a signal if anything happens to a node
+class FilterEffectsDialog::SignalObserver : public XML::NodeObserver
+{
+public:
+    SignalObserver()
+        : _oldsel(0)
+    {}
+
+    // Add this observer to the SPObject and remove it from any previous object
+    void set(SPObject* o)
+    {
+        if(_oldsel && _oldsel->repr)
+            _oldsel->repr->removeObserver(*this);
+        if(o && o->repr)
+            o->repr->addObserver(*this);
+        _oldsel = o;
+    }
+
+    void notifyChildAdded(XML::Node&, XML::Node&, XML::Node*)
+    { signal_changed()(); }
+
+    void notifyChildRemoved(XML::Node&, XML::Node&, XML::Node*)
+    { signal_changed()(); }
+
+    void notifyChildOrderChanged(XML::Node&, XML::Node&, XML::Node*, XML::Node*)
+    { signal_changed()(); }
+
+    void notifyContentChanged(XML::Node&, Util::ptr_shared<char>, Util::ptr_shared<char>)
+    {}
+
+    void notifyAttributeChanged(XML::Node&, GQuark, Util::ptr_shared<char>, Util::ptr_shared<char>)
+    { signal_changed()(); }
+
+    sigc::signal<void>& signal_changed()
+    {
+        return _signal_changed;
+    }
+private:
+    sigc::signal<void> _signal_changed;
+    SPObject* _oldsel;
+};
 
 class CheckButtonAttr : public Gtk::CheckButton, public AttrWidget
 {
@@ -437,7 +480,7 @@ public:
     typedef sigc::slot<void, const AttrWidget*> SetAttrSlot;
 
     Settings(FilterEffectsDialog& d, SetAttrSlot slot, const int maxtypes)
-        : _dialog(d), _set_attr_slot(slot), _max_types(maxtypes)
+        : _dialog(d), _set_attr_slot(slot), _current_type(-1), _max_types(maxtypes)
     {
         _groups.resize(_max_types);
         _attrwidgets.resize(_max_types);
@@ -460,15 +503,22 @@ public:
     // Show the active settings group and update all the AttrWidgets with new values
     void show_and_update(const int t, SPObject* ob)
     {
-        type(t);
-        for(unsigned i = 0; i < _groups.size(); ++i)
-            _groups[i]->hide();
+        if(t != _current_type) {
+            type(t);
+            for(unsigned i = 0; i < _groups.size(); ++i)
+                _groups[i]->hide();
+        }
         _groups[t]->show_all();
 
         _dialog.set_attrs_locked(true);
         for(unsigned i = 0; i < _attrwidgets[_current_type].size(); ++i)
             _attrwidgets[_current_type][i]->set_from_attribute(ob);
         _dialog.set_attrs_locked(false);
+    }
+
+    int get_current_type() const
+    {
+        return _current_type;
     }
 
     void type(const int t)
@@ -741,7 +791,7 @@ Glib::RefPtr<Gtk::Menu> create_popup_menu(Gtk::Widget& parent, sigc::slot<void> 
 
 /*** FilterModifier ***/
 FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
-    : _dialog(d), _add(Gtk::Stock::ADD)
+    : _dialog(d), _add(Gtk::Stock::ADD), _observer(new SignalObserver)
 {
     Gtk::ScrolledWindow* sw = Gtk::manage(new Gtk::ScrolledWindow);
     pack_start(*sw);
@@ -769,6 +819,8 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
                                  _("R_ename"), sigc::mem_fun(*this, &FilterModifier::rename_filter)));
     _menu->accelerate(*this);
 
+    _list.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &FilterModifier::on_filter_selection_changed));
+    _observer->signal_changed().connect(signal_filter_changed().make_slot());
     g_signal_connect(G_OBJECT(INKSCAPE), "change_selection",
                      G_CALLBACK(&FilterModifier::on_inkscape_change_selection), this);
 
@@ -855,9 +907,15 @@ void FilterEffectsDialog::FilterModifier::update_selection(Selection *sel)
     }
 }
 
-Glib::SignalProxy0<void> FilterEffectsDialog::FilterModifier::signal_selection_changed()
+void FilterEffectsDialog::FilterModifier::on_filter_selection_changed()
 {
-    return _list.get_selection()->signal_changed();
+    _observer->set(get_selected_filter());
+    signal_filter_changed()();
+}
+
+sigc::signal<void>& FilterEffectsDialog::FilterModifier::signal_filter_changed()
+{
+    return _signal_filter_changed;
 }
 
 SPFilter* FilterEffectsDialog::FilterModifier::get_selected_filter()
@@ -1035,7 +1093,8 @@ void FilterEffectsDialog::CellRendererConnection::get_size_vfunc(
 /*** PrimitiveList ***/
 FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
     : _dialog(d),
-      _in_drag(0)
+      _in_drag(0),
+      _observer(new SignalObserver)
 {
     add_events(Gdk::POINTER_MOTION_MASK | Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
     signal_expose_event().connect(sigc::mem_fun(*this, &PrimitiveList::on_expose_signal));
@@ -1047,7 +1106,9 @@ FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
     set_model(_model);
     append_column(_("_Type"), _columns.type);
 
-    signal_selection_changed().connect(sigc::mem_fun(*this, &PrimitiveList::queue_draw));
+    _observer->signal_changed().connect(signal_primitive_changed().make_slot());
+    get_selection()->signal_changed().connect(sigc::mem_fun(*this, &PrimitiveList::on_primitive_selection_changed));
+    signal_primitive_changed().connect(sigc::mem_fun(*this, &PrimitiveList::queue_draw));
 
     _connection_cell.set_text_width(init_text());
 
@@ -1079,9 +1140,15 @@ int FilterEffectsDialog::PrimitiveList::init_text()
     return maxfont;
 }
 
-Glib::SignalProxy0<void> FilterEffectsDialog::PrimitiveList::signal_selection_changed()
+sigc::signal<void>& FilterEffectsDialog::PrimitiveList::signal_primitive_changed()
 {
-    return get_selection()->signal_changed();
+    return _signal_primitive_changed;
+}
+
+void FilterEffectsDialog::PrimitiveList::on_primitive_selection_changed()
+{
+    _observer->set(get_selected());
+    signal_primitive_changed()();
 }
 
 /* Add all filter primitives in the current to the list.
@@ -1610,9 +1677,9 @@ FilterEffectsDialog::FilterEffectsDialog()
     fr_settings->add(*al_settings);
     al_settings->add(_settings_box);
 
-    _primitive_list.signal_selection_changed().connect(
+    _primitive_list.signal_primitive_changed().connect(
         sigc::mem_fun(*this, &FilterEffectsDialog::update_settings_view));
-    _filter_modifier.signal_selection_changed().connect(
+    _filter_modifier.signal_filter_changed().connect(
         sigc::mem_fun(_primitive_list, &PrimitiveList::update));
 
     sw_prims->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
@@ -1790,14 +1857,15 @@ void FilterEffectsDialog::update_settings_view()
 {
     SPFilterPrimitive* prim = _primitive_list.get_selected();
 
-    // Hide all the settings
-    _settings_box.hide_all();
-    _settings_box.show();
-
-    if(prim)
+    if(prim) {
         _settings->show_and_update(FPConverter.get_id_from_key(prim->repr->name()), prim);
-    else
+        _empty_settings.hide();
+    }
+    else {
+        _settings_box.hide_all();
+        _settings_box.show();
         _empty_settings.show();
+    }
 
     update_settings_sensitivity();
 }
