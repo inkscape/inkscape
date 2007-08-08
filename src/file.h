@@ -168,6 +168,23 @@ void sp_file_export_to_ocal (Gtk::Window &parentWindow );
 bool sp_file_export_to_ocal_dialog (void *widget);
 
 
+/*######################
+## I M P O R T  F R O M  O C A L
+######################*/
+
+/**
+ * Import a document from OCAL
+ */
+void sp_file_import_from_ocal (Gtk::Window &parentWindow );
+
+
+/**
+ * Import a document from OCAL
+ */
+//bool sp_file_import_from_ocal_dialog (void *widget);
+
+
+
 
 /*######################
 ## P R I N T

@@ -499,6 +499,7 @@ sp_file_vacuum()
  * This 'save' function called by the others below
  * It was divided in file_save_local and file_save_remote
  * to support remote saving too.
+ * Now file_save is calling only local saving, but it will be solved.
  *
  * \param    official  whether to set :output_module and :modified in the
  *                     document; is true for normal save, false for temporary saves
@@ -512,18 +513,18 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
 
 #ifdef WITH_GNOME_VFS
     
-    if (gnome_vfs_initialized() && !gnome_vfs_uri_is_local(gnome_vfs_uri_new(uri.c_str()))) {
-        // Use VFS for this
-        bool success = file_save_remote(doc, uri, key, saveas, official);
-        if (!success) {
-            g_warning("Error:  Could not save file '%s' with VFS\n", uri.c_str());
-            return false;  
-        }    
-        else
-            return true;
-    }
-    else
-        return file_save_local(parentWindow, doc, uri, key, saveas, official);
+//    if (gnome_vfs_initialized() && !gnome_vfs_uri_is_local(gnome_vfs_uri_new(uri.c_str()))) {
+//        // Use VFS for this
+//        bool success = file_save_remote(doc, uri, key, saveas, official);
+//        if (!success) {
+//            g_warning("Error:  Could not save file '%s' with VFS\n", uri.c_str());
+//            return false;  
+//        }    
+//        else
+//            return true;
+//    }
+//    else
+    return file_save_local(parentWindow, doc, uri, key, saveas, official);
 #else
     
     return file_save_local(parentWindow, doc, uri, key, saveas, official);
@@ -567,7 +568,9 @@ file_save_local(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring 
 
 #ifdef WITH_GNOME_VFS
 
-
+/*
+ * Used only for remote saving using VFS and a specific uri. Gets the file at the /tmp.
+ */
 bool
 file_save_remote(SPDocument *doc, const Glib::ustring &uri,
                  Inkscape::Extension::Extension *key, bool saveas, bool official)
@@ -1316,9 +1319,9 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     } 
     uri.append(prefs_get_string_attribute("options.ocalurl", "str"));
     uri.append(Glib::path_get_basename(fileName));
-
-    success = file_save(parentWindow, doc, uri, selectionType, FALSE, FALSE);
-    remove(fileName.c_str());
+    // Save as a remote file using the dav protocol.
+    success = file_save_remote(doc, uri, selectionType, FALSE, FALSE);
+    //remove(fileName.c_str());
     if (!success)
         g_warning( "Error exporting the document." );
 
@@ -1336,9 +1339,27 @@ sp_file_export_to_ocal(Gtk::Window &parentWindow)
     bool success = sp_file_export_to_ocal_dialog(parentWindow);
     if (success)  
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Document exported..."));
-    
-
 }
+
+
+/*######################
+## I M P O R T  F R O M  O C A L
+######################*/
+
+/**
+ * Import a document from OCAL
+ */
+void
+sp_file_import_from_ocal(Gtk::Window &parentWindow)
+{
+    // Try to execute the new code and return;
+    if (!SP_ACTIVE_DOCUMENT)
+        return;
+    //bool success = sp_file_import_from_ocal_dialog(parentWindow);
+    //if (success)
+    //    SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Document imported..."));
+}
+
 
 /*######################
 ## P R I N T

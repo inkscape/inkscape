@@ -277,13 +277,12 @@ void PrefEntry::init(const std::string& prefs_path, const std::string& attr,
     this->set_text(prefs_get_string_attribute(_prefs_path.c_str(), _attr.c_str()));
 }
 
-void PrefEntry::on_activate()
+void PrefEntry::on_changed()
 {
     if (this->is_visible()) //only take action if user changed value
     {
         prefs_set_string_attribute(_prefs_path.c_str(), _attr.c_str(), this->get_text().c_str());
     }
-    return;
 }
 
 } // namespace Widget

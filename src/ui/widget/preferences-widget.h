@@ -97,7 +97,7 @@ public:
 protected:
     std::string _prefs_path;
     std::string _attr;
-    void on_activate();
+    void on_changed();
 };
 
 class DialogPage : public Gtk::Table

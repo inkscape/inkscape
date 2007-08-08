@@ -22,6 +22,7 @@ namespace Stock {
 extern Gtk::StockID const OPEN_RECENT;
 extern Gtk::StockID const IMPORT;
 extern Gtk::StockID const EXPORT;
+extern Gtk::StockID const IMPORTFROMOCAL;
 extern Gtk::StockID const EXPORTTOOCAL;
 extern Gtk::StockID const VACUUM_DEFS;
 // Edit menu

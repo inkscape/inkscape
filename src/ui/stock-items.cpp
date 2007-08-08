@@ -33,6 +33,7 @@ init()
     add(Gtk::StockItem(SAVE_AS, _("PLACEHOLDER, do not translate")));
     add(Gtk::StockItem(IMPORT, _("PLACEHOLDER, do not translate")));
     add(Gtk::StockItem(EXPORT, _("PLACEHOLDER, do not translate")));
+    add(Gtk::StockItem(IMPORTFROMOCAL, _("PLACEHOLDER, do not translate")));
     add(Gtk::StockItem(EXPORTTOOCAL, _("PLACEHOLDER, do not translate")));
     add(Gtk::StockItem(PRINT, _("PLACEHOLDER, do not translate")));
     add(Gtk::StockItem(PRINT_PREVIEW, _("PLACEHOLDER, do not translate")));
