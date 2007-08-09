@@ -401,6 +401,9 @@ void SvgBuilder::setClipPath(GfxState *state, bool even_odd) {
     gchar *pathtext = svgInterpretPath(state->getPath());
     path->setAttribute("d", pathtext);
     g_free(pathtext);
+    if (even_odd) {
+        path->setAttribute("clip-rule", "evenodd");
+    }
     clip_path->appendChild(path);
     Inkscape::GC::release(path);
     // Append clipPath to defs and get id
@@ -786,7 +789,6 @@ void SvgBuilder::updateFont(GfxState *state) {
 
     // Font family
     if (font->getFamily()) {
-        const gchar *family = font->getFamily()->getCString();
         sp_repr_css_set_property(_font_style, "font-family", font->getFamily()->getCString());
     } else {
         sp_repr_css_set_property(_font_style, "font-family", font_family);
@@ -1074,8 +1076,6 @@ void SvgBuilder::beginString(GfxState *state, GooString *s) {
     }
     IFTRACE(double *m = state->getTextMat());
     TRACE(("tm: %f %f %f %f %f %f\n",m[0], m[1],m[2], m[3], m[4], m[5]));
-    IFTRACE(m = _current_font->getFontMatrix());
-    TRACE(("fm: %f %f %f %f %f %f\n",m[0], m[1],m[2], m[3], m[4], m[5]));
     IFTRACE(m = state->getCTM());
     TRACE(("ctm: %f %f %f %f %f %f\n",m[0], m[1],m[2], m[3], m[4], m[5]));
 }
