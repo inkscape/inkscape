@@ -65,13 +65,32 @@ FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow,
 /**
  * Public factory method.  Used in file.cpp
  */
-FileExportDialog *FileExportDialog::create(Gtk::Window& parentWindow, 
+ FileExportDialog *FileExportDialog::create(Gtk::Window& parentWindow, 
 										   const Glib::ustring &path,
                                            FileDialogType fileTypes,
                                            const Glib::ustring &title,
                                            const Glib::ustring &default_key)
 {
     FileExportDialog *dialog = new FileExportDialogImpl(parentWindow, path, fileTypes, title, default_key);
+    return dialog;
+}
+
+
+//########################################################################
+//# F I L E    E X P O R T   T O   O C A L
+//########################################################################
+
+
+/**
+ * Public factory method.  Used in file.cpp
+ */
+
+ FileExportToOCALDialog *FileExportToOCALDialog::create(Gtk::Window& parentWindow, 
+                                           FileDialogType fileTypes,
+                                           const Glib::ustring &title,
+                                           const Glib::ustring &default_key)
+{
+    FileExportToOCALDialog *dialog = new FileExportToOCALDialogImpl(parentWindow, fileTypes, title, default_key);
     return dialog;
 }
 

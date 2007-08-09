@@ -1612,6 +1612,311 @@ FileExportDialogImpl::getFilename()
     return myFilename;
 }
 
+
+
+
+//########################################################################
+//# F I L E    E X P O R T   T O   O C A L
+//########################################################################
+
+
+
+/**
+ * Callback for fileNameEntry widget
+ */
+void FileExportToOCALDialogImpl::fileNameEntryChangedCallback()
+{
+    if (!fileNameEntry)
+        return;
+
+    Glib::ustring fileName = fileNameEntry->get_text();
+    if (!Glib::get_charset()) //If we are not utf8
+        fileName = Glib::filename_to_utf8(fileName);
+
+    //g_message("User hit return.  Text is '%s'\n", fileName.c_str());
+
+    myFilename = fileName;
+    response(Gtk::RESPONSE_OK);
+}
+
+
+
+/**
+ * Callback for fileNameEntry widget
+ */
+void FileExportToOCALDialogImpl::fileTypeChangedCallback()
+{
+    int sel = fileTypeComboBox.get_active_row_number();
+    if (sel<0 || sel >= (int)fileTypes.size())
+        return;
+    FileType type = fileTypes[sel];
+
+    extension = type.extension;
+    updateNameAndExtension();
+}
+
+
+
+void FileExportToOCALDialogImpl::createFileTypeMenu()
+{
+    Inkscape::Extension::DB::OutputList extension_list;
+    Inkscape::Extension::db.get_output_list(extension_list);
+    knownExtensions.clear();
+
+    for (Inkscape::Extension::DB::OutputList::iterator current_item = extension_list.begin();
+         current_item != extension_list.end(); current_item++)
+    {
+        Inkscape::Extension::Output * omod = *current_item;
+
+        // FIXME: would be nice to grey them out instead of not listing them
+        if (omod->deactivated()) continue;
+
+        FileType type;
+        type.name     = (_(omod->get_filetypename()));
+        type.pattern  = "*";
+        Glib::ustring extension = omod->get_extension();
+        knownExtensions.insert( extension.casefold() );
+        fileDialogExtensionToPattern (type.pattern, extension);
+        type.extension= omod;
+        fileTypeComboBox.append_text(type.name);
+        fileTypes.push_back(type);
+    }
+
+    //#Let user choose
+    FileType guessType;
+    guessType.name = _("Guess from extension");
+    guessType.pattern = "*";
+    guessType.extension = NULL;
+    fileTypeComboBox.append_text(guessType.name);
+    fileTypes.push_back(guessType);
+
+
+    fileTypeComboBox.set_active(0);
+    fileTypeChangedCallback(); //call at least once to set the filter
+}
+
+
+
+/**
+ * Constructor
+ */
+FileExportToOCALDialogImpl::FileExportToOCALDialogImpl(Gtk::Window &parentWindow,
+            FileDialogType fileTypes,
+            const Glib::ustring &title,
+            const Glib::ustring &default_key) :
+    FileDialogExportBase(title)
+{
+    /*
+     * Start Taking the vertical Box and putting a Label
+     * and a Entry to take the filename
+     * Later put the extension selection and checkbox (?)
+     */
+    /* Initalize to Autodetect */
+    extension = NULL;
+    /* No filename to start out with */
+    myFilename = "";
+
+    /* Set our dialog type (save, export, etc...)*/
+    dialogType = fileTypes;
+    Gtk::VBox *vbox = get_vbox();
+    //Gtk::HBox fileBox;
+
+    Gtk::Label *fileLabel = new Gtk::Label(_("File"));
+    
+    fileNameEntry = new Gtk::Entry();
+    fileNameEntry->set_text(myFilename);
+    fileNameEntry->set_max_length(252); // I am giving the extension approach.
+    fileBox.pack_start(*fileLabel);
+    fileBox.pack_start(*fileNameEntry, Gtk::PACK_EXPAND_WIDGET, 3);
+    vbox->pack_start(fileBox);
+
+    //###### Do we want the .xxx extension automatically added?
+    fileTypeCheckbox.set_label(Glib::ustring(_("Append filename extension automatically")));
+    fileTypeCheckbox.set_active( (bool)prefs_get_int_attribute("dialogs.export",
+                                                               "append_extension", 1) );
+
+    createFileTypeMenu();
+
+    fileTypeComboBox.set_size_request(200,40);
+    fileTypeComboBox.signal_changed().connect(
+        sigc::mem_fun(*this, &FileExportToOCALDialogImpl::fileTypeChangedCallback) );
+
+    checksBox.pack_start( fileTypeCheckbox );
+    vbox->pack_start( checksBox );
+    
+    vbox->pack_end( fileTypeComboBox );
+    
+    //Let's do some customization
+    fileNameEntry = NULL;
+    Gtk::Container *cont = get_toplevel();
+    std::vector<Gtk::Entry *> entries;
+    findEntryWidgets(cont, entries);
+    //g_message("Found %d entry widgets\n", entries.size());
+    if (entries.size() >=1 )
+        {
+        //Catch when user hits [return] on the text field
+        fileNameEntry = entries[0];
+        fileNameEntry->signal_activate().connect(
+             sigc::mem_fun(*this, &FileExportToOCALDialogImpl::fileNameEntryChangedCallback) );
+        }
+
+    //Let's do more customization
+    std::vector<Gtk::Expander *> expanders;
+    findExpanderWidgets(cont, expanders);
+    //g_message("Found %d expander widgets\n", expanders.size());
+    if (expanders.size() >=1 )
+        {
+        //Always show the file list
+        Gtk::Expander *expander = expanders[0];
+        expander->set_expanded(true);
+        }
+
+
+    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    set_default(*add_button(Gtk::Stock::SAVE,   Gtk::RESPONSE_OK));
+
+    show_all_children();
+}
+
+
+
+/**
+ * Destructor
+ */
+FileExportToOCALDialogImpl::~FileExportToOCALDialogImpl()
+{
+}
+
+
+
+/**
+ * Show this dialog modally.  Return true if user hits [OK]
+ */
+bool
+FileExportToOCALDialogImpl::show()
+{
+    set_modal (TRUE);                      //Window
+    sp_transientize((GtkWidget *)gobj());  //Make transient
+    gint b = run();                        //Dialog
+    hide();
+
+    if (b == Gtk::RESPONSE_OK)
+    {
+        updateNameAndExtension();
+
+        return TRUE;
+        }
+    else
+        {
+        return FALSE;
+        }
+}
+
+
+/**
+ * Get the file extension type that was selected by the user. Valid after an [OK]
+ */
+Inkscape::Extension::Extension *
+FileExportToOCALDialogImpl::getSelectionType()
+{
+    return extension;
+}
+
+void FileExportToOCALDialogImpl::setSelectionType( Inkscape::Extension::Extension * key )
+{
+    // If no pointer to extension is passed in, look up based on filename extension.
+    if ( !key ) {
+        // Not quite UTF-8 here.
+        gchar *filenameLower = g_ascii_strdown(myFilename.c_str(), -1);
+        for ( int i = 0; !key && (i < (int)fileTypes.size()); i++ ) {
+            Inkscape::Extension::Output *ext = dynamic_cast<Inkscape::Extension::Output*>(fileTypes[i].extension);
+            if ( ext && ext->get_extension() ) {
+                gchar *extensionLower = g_ascii_strdown( ext->get_extension(), -1 );
+                if ( g_str_has_suffix(filenameLower, extensionLower) ) {
+                    key = fileTypes[i].extension;
+                }
+                g_free(extensionLower);
+            }
+        }
+        g_free(filenameLower);
+    }
+
+    // Ensure the proper entry in the combo box is selected.
+    if ( key ) {
+        extension = key;
+        gchar const * extensionID = extension->get_id();
+        if ( extensionID ) {
+            for ( int i = 0; i < (int)fileTypes.size(); i++ ) {
+                Inkscape::Extension::Extension *ext = fileTypes[i].extension;
+                if ( ext ) {
+                    gchar const * id = ext->get_id();
+                    if ( id && ( strcmp(extensionID, id) == 0) ) {
+                        int oldSel = fileTypeComboBox.get_active_row_number();
+                        if ( i != oldSel ) {
+                            fileTypeComboBox.set_active(i);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/**
+ * Get the file name chosen by the user.   Valid after an [OK]
+ */
+Glib::ustring
+FileExportToOCALDialogImpl::getFilename()
+{
+    myFilename = fileNameEntry->get_text();
+    updateNameAndExtension();
+    return myFilename;
+}
+
+
+void 
+FileExportToOCALDialogImpl::change_title(const Glib::ustring& title)
+{
+    this->set_title(title);
+}
+
+void FileExportToOCALDialogImpl::updateNameAndExtension()
+{
+    // Pick up any changes the user has typed in.
+    Glib::ustring tmp = myFilename;   // get_filename();
+    
+    Inkscape::Extension::Output* newOut = extension ? dynamic_cast<Inkscape::Extension::Output*>(extension) : 0;
+    if ( fileTypeCheckbox.get_active() && newOut ) {
+        try {
+            bool appendExtension = true;
+            Glib::ustring utf8Name = Glib::filename_to_utf8( myFilename );
+            Glib::ustring::size_type pos = utf8Name.rfind('.');
+            if ( pos != Glib::ustring::npos ) {
+                Glib::ustring trail = utf8Name.substr( pos );
+                Glib::ustring foldedTrail = trail.casefold();
+                if ( (trail == ".") 
+                     | (foldedTrail != Glib::ustring( newOut->get_extension() ).casefold()
+                        && ( knownExtensions.find(foldedTrail) != knownExtensions.end() ) ) ) {
+                    utf8Name = utf8Name.erase( pos );
+                } else {
+                    appendExtension = false;
+                }
+            }
+
+            if (appendExtension) {
+                utf8Name = utf8Name + newOut->get_extension();
+                myFilename = Glib::filename_from_utf8( utf8Name );
+
+            }
+        } catch ( Glib::ConvertError& e ) {
+            // ignore
+        }
+    }
+}
+
+
 } //namespace Dialog
 } //namespace UI
 } //namespace Inkscape

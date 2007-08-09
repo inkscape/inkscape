@@ -35,6 +35,7 @@ namespace Dialog
 {
 
 
+
 /**
  * Used for setting filters and options, and
  * reading them back from user selections.
@@ -326,6 +327,69 @@ public:
     
 
 }; //FileExportDialog
+
+
+/**
+ * This class provides an implementation-independent API for
+ * file "ExportToOCAL" dialogs.
+ */
+class FileExportToOCALDialog
+{
+public:
+
+    /**
+     * Constructor.  Do not call directly .   Use the factory.
+     * @param fileTypes one of FileDialogTypes
+     * @param title the title of the dialog
+     * @param key a list of file types from which the user can select
+     */
+    FileExportToOCALDialog ()
+        {};
+
+    /**
+     * Factory.
+     * @param fileTypes one of FileDialogTypes
+     * @param title the title of the dialog
+     * @param key a list of file types from which the user can select
+     */
+    static FileExportToOCALDialog *create(Gtk::Window& parentWindow, 
+                                     FileDialogType fileTypes,
+                                     const Glib::ustring &title,
+                                     const Glib::ustring &default_key);
+
+
+    /**
+     * Destructor.
+     * Perform any necessary cleanups.
+     */
+    virtual ~FileExportToOCALDialog() {};
+
+
+    /**
+     * Show an SaveAs file selector.
+     * @return the selected path if user selected one, else NULL
+     */
+    virtual bool show() =0;
+
+    /**
+     * Return the 'key' (filetype) of the selection, if any
+     * @return a pointer to a string if successful (which must
+     * be later freed with g_free(), else NULL.
+     */
+    virtual Inkscape::Extension::Extension * getSelectionType() = 0;
+
+    virtual void setSelectionType( Inkscape::Extension::Extension * key ) = 0;
+
+    virtual Glib::ustring getFilename () =0;
+
+    /**
+     * Change the window title.
+     */
+    virtual void change_title(const Glib::ustring& title) =0;
+
+
+}; //FileExportToOCAL
+
 
 
 } //namespace Dialog

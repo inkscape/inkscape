@@ -562,6 +562,130 @@ private:
     Glib::ustring myFilename;
 };
 
+
+
+/*#########################################################################
+### F I L E     D I A L O G    E X P O R T    B A S E    C L A S S
+#########################################################################*/
+
+/**
+ * This class is the base implementation for export to OCAL.
+ */
+class FileDialogExportBase : public Gtk::Dialog
+{
+public:
+
+    /**
+     *
+     */
+    FileDialogExportBase(const Glib::ustring &title) : Gtk::Dialog(title,true)
+    {}
+    /*
+     *
+     */
+    virtual ~FileDialogExportBase()
+    {}
+
+protected:
+    void cleanup( bool showConfirmed );
+
+    //Glib::ustring preferenceBase;
+    /**
+     * What type of 'open' are we? (open, import, place, etc)
+     */
+    FileDialogType dialogType;
+};
+
+
+
+
+//########################################################################
+//# F I L E    E X P O R T   T O   O C A L
+//########################################################################
+
+
+
+/**
+ * Our implementation of the FileExportToOCALDialog interface.
+ */
+class FileExportToOCALDialogImpl : public FileExportToOCALDialog, public FileDialogExportBase
+{
+
+public:
+  FileExportToOCALDialogImpl(Gtk::Window& parentWindow, 
+                             FileDialogType fileTypes,
+			     const Glib::ustring &title,
+			     const Glib::ustring &default_key);
+    
+    virtual ~FileExportToOCALDialogImpl();
+
+    bool show();
+
+    Inkscape::Extension::Extension *getSelectionType();
+    virtual void setSelectionType( Inkscape::Extension::Extension * key );
+
+    Glib::ustring getFilename();
+
+    Glib::ustring myFilename;
+
+    void change_title(const Glib::ustring& title);
+    void updateNameAndExtension();
+
+private:
+
+    /**
+     * Fix to allow the user to type the file name
+     */
+    Gtk::Entry *fileNameEntry;
+    
+    
+    /**
+     * Allow the specification of the output file type
+     */
+    Gtk::ComboBoxText fileTypeComboBox;
+
+
+    /**
+     *  Data mirror of the combo box
+     */
+    std::vector<FileType> fileTypes;
+
+    //# Child widgets
+    Gtk::HBox childBox;
+    Gtk::VBox checksBox;
+    Gtk::HBox fileBox;
+
+    Gtk::CheckButton fileTypeCheckbox;
+
+    /**
+     * Callback for user input into fileNameEntry
+     */
+    void fileTypeChangedCallback();
+
+    /**
+     *  Create a filter menu for this type of dialog
+     */
+    void createFileTypeMenu();
+
+
+    /**
+     * The extension to use to write this file
+     */
+    Inkscape::Extension::Extension *extension;
+
+    /**
+     * Callback for user input into fileNameEntry
+     */
+    void fileNameEntryChangedCallback();
+
+    /**
+     * List of known file extensions.
+     */
+    std::set<Glib::ustring> knownExtensions;
+};
+
+
+
 }
 }
 }

@@ -1213,7 +1213,6 @@ sp_file_export_dialog(void *widget)
 bool
 sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
 {
-    //# temp hack for 'doc' until we can switch to this dialog
     
     if (!SP_ACTIVE_DOCUMENT)
         return false;
@@ -1227,7 +1226,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
 
     bool success = false;
     
-    static Inkscape::UI::Dialog::FileExportDialog *exportDialogInstance = NULL;
+    static Inkscape::UI::Dialog::FileExportToOCALDialog *exportDialogInstance = NULL;
     
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
     // Verify whether the document is saved, so save this as temporary
@@ -1270,11 +1269,9 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
         export_path = export_path_local;
         
     //# Show the Export To OCAL dialog
-    // MADE A CHANGE TO SUBMIT CHANGES. IN THE FUTURE WILL CALL FileExportToOCALDialog
     if (!exportDialogInstance)
-        exportDialogInstance = Inkscape::UI::Dialog::FileExportDialog::create(
+        exportDialogInstance = Inkscape::UI::Dialog::FileExportToOCALDialog::create(
                 parentWindow,
-                export_path,
                 Inkscape::UI::Dialog::EXPORT_TYPES,
                 (char const *) _("Select file to export to"),
                 default_extension
@@ -1325,7 +1322,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     uri.append(Glib::path_get_basename(fileName));
     // Save as a remote file using the dav protocol.
     success = file_save_remote(doc, uri, selectionType, FALSE, FALSE);
-    //remove(fileName.c_str());
+    remove(fileName.c_str());
     if (!success)
         g_warning( "Error exporting the document." );
 
