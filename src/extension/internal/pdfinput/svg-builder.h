@@ -32,7 +32,6 @@ namespace Inkscape {
 #include "CharTypes.h"
 class GooString;
 class Function;
-class SampledFunction;
 struct GfxState;
 class GfxPattern;
 class GfxShadingPattern;
@@ -147,8 +146,8 @@ private:
     gchar *_createPattern(GfxPattern *pattern, GfxState *state, bool is_stroke=false);
     gchar *_createGradient(GfxShadingPattern *shading_pattern);
     bool _addStopsToGradient(Inkscape::XML::Node *gradient, Function *func, double opacity);
-    bool _addSamplesToGradient(Inkscape::XML::Node *gradient, SampledFunction *func,
-                              double offset0, double offset1, double opacity);
+    bool _addSamplesToGradient(Inkscape::XML::Node *gradient, Function *func,
+                               double offset0, double offset1, double opacity);
     gchar *_createTilingPattern(GfxTilingPattern *tiling_pattern, GfxState *state,
                                 bool is_stroke=false);
     // Image/mask creation

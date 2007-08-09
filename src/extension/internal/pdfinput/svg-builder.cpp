@@ -625,18 +625,37 @@ gchar *SvgBuilder::_createGradient(GfxShadingPattern *shading_pattern) {
 
 #define EPSILON 0.0001
 bool SvgBuilder::_addSamplesToGradient(Inkscape::XML::Node *gradient,
-                                       SampledFunction *func, double offset0,
+                                       Function *func, double offset0,
                                        double offset1, double opacity) {
 
     // Check whether this sampled function can be converted to color stops
-    int sample_size = func->getSampleSize(0);
-    if ( sample_size != 2 )
-        return false;
+    int sample_size = 0;
     int num_comps = func->getOutputSize();
-    if ( num_comps != 3 )
-        return false;
+    double *samples = NULL;
+    if ( func->getType() == 0 ) {   // Sampled function
+        SampledFunction *sampled_func = (SampledFunction*)func;
+        sample_size = sampled_func->getSampleSize(0);
+        if ( sample_size != 2 || num_comps != 3 ) {
+            return false;
+        }
+        samples = sampled_func->getSamples();
+    } else if ( func->getType() == 2 ) {    // Exponential function
+        sample_size = 1;
+        if ( num_comps != 1 && num_comps != 3 ) {
+            return false;
+        }
+        double *exp_output = new double[2 * num_comps];
+        ExponentialFunction *exp_func = (ExponentialFunction*)func;
+        double x = 0.0;
+        for ( int i = 0 ; i < 2 * num_comps ; i += num_comps ) {
+            if ( i >= num_comps ) {
+                x = 1.0;
+            }
+            exp_func->transform(&x, &exp_output[i]);
+        }
+        samples = exp_output;
+    }
 
-    double *samples = func->getSamples();
     unsigned stop_count = gradient->childCount();
     bool is_continuation = false;
     // Check if this sampled function is the continuation of the previous one
@@ -662,23 +681,40 @@ bool SvgBuilder::_addSamplesToGradient(Inkscape::XML::Node *gradient,
         }
     }
 
-    int i = is_continuation ? num_comps : 0;
-    while (i < sample_size*num_comps) {
+    int num_stops_added;
+    int i;
+    if (is_continuation) {
+        num_stops_added = 1;
+        i = num_comps;
+    } else {
+        num_stops_added = i = 0;
+    }
+    while ( num_stops_added < 2 ) {
         Inkscape::XML::Node *stop = _xml_doc->createElement("svg:stop");
         SPCSSAttr *css = sp_repr_css_attr_new();
         Inkscape::CSSOStringStream os_opacity;
         os_opacity << opacity;
-        sp_repr_css_set_property(css, "stop-opacity", os_opacity.str().c_str());
         gchar c[64];
-        sp_svg_write_color (c, 64, SP_RGBA32_F_COMPOSE (samples[i], samples[i+1], samples[i+2], 1.0));
+        if ( num_comps == 1 ) {
+            sp_svg_write_color(c, 64, SP_RGBA32_F_COMPOSE (samples[i], samples[i], samples[i], 1.0));
+        } else {
+            sp_svg_write_color(c, 64, SP_RGBA32_F_COMPOSE (samples[i], samples[i+1], samples[i+2], 1.0));
+        }
+        sp_repr_css_set_property(css, "stop-opacity", os_opacity.str().c_str());
         sp_repr_css_set_property(css, "stop-color", c);
+
         sp_repr_css_change(stop, css, "style");
         sp_repr_css_attr_unref(css);
         sp_repr_set_css_double(stop, "offset", ( i < num_comps ) ? offset0 : offset1);
 
         gradient->appendChild(stop);
         Inkscape::GC::release(stop);
-        i += num_comps;
+        i += num_comps; // Advance to the next sample
+        num_stops_added++;
+    }
+    // Free the output of the exponential function
+    if ( func->getType() == 2 ) {
+        delete samples;
     }
   
     return true;
@@ -688,9 +724,8 @@ bool SvgBuilder::_addStopsToGradient(Inkscape::XML::Node *gradient, Function *fu
                                      double opacity) {
     
     int type = func->getType();
-    if ( type == 0 ) {  // Sampled
-        SampledFunction *sampledFunc = (SampledFunction*)func;
-        _addSamplesToGradient(gradient, sampledFunc, 0.0, 1.0, opacity);
+    if ( type == 0 || type == 2 ) {  // Sampled or exponential function
+        _addSamplesToGradient(gradient, func, 0.0, 1.0, opacity);
     } else if ( type == 3 ) { // Stitching
         StitchingFunction *stitchingFunc = (StitchingFunction*)func;
         double *bounds = stitchingFunc->getBounds();
@@ -698,12 +733,11 @@ bool SvgBuilder::_addStopsToGradient(Inkscape::XML::Node *gradient, Function *fu
         // Add samples from all the stitched functions
         for ( int i = 0 ; i < num_funcs ; i++ ) {
             Function *func = stitchingFunc->getFunc(i);
-            if ( func->getType() != 0 ) // Only sampled functions are supported
+            int func_type = func->getType();
+            if ( func_type != 0 && func_type != 2 ) // Only sampled and exponential functions are supported
                 continue;
-           
-            SampledFunction *sampledFunc = (SampledFunction*)func;
-            _addSamplesToGradient(gradient, sampledFunc, bounds[i],
-                                  bounds[i+1], opacity);
+
+            _addSamplesToGradient(gradient, func, bounds[i], bounds[i+1], opacity);
         }
     } else { // Unsupported function type
         return false;
