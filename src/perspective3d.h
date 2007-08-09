@@ -24,7 +24,7 @@ class PerspectiveLine;
 
 class Perspective3D {
 public:
-    Perspective3D(VanishingPoint const &pt_x, VanishingPoint const &pt_y, VanishingPoint const &pt_z);
+    Perspective3D(VanishingPoint const &pt_x, VanishingPoint const &pt_y, VanishingPoint const &pt_z, SPDocument *document);
     Perspective3D(Perspective3D &other);
     ~Perspective3D();
 
@@ -53,15 +53,6 @@ public:
     static gint counter; // for testing only
     gint my_counter; // for testing only
 
-    static GSList * perspectives; // All existing 3D perspectives
-    // FIXME: Perspectives should be linked to the list of existing ones automatically in the constructor
-    //        and removed in the destructor!
-    static void add_perspective (Box3D::Perspective3D * const persp);
-    static void remove_perspective (Box3D::Perspective3D * const persp);
-
-    /* find an existing perspective whose VPs are equal to those of persp */
-    static Box3D::Perspective3D * find_perspective (Box3D::Perspective3D * const persp);
-
     static void print_debugging_info();
     static Perspective3D * current_perspective;
 
@@ -70,10 +61,8 @@ private:
     VanishingPoint *vp_y;
     VanishingPoint *vp_z;
     GSList * boxes; // holds a list of boxes sharing this specific perspective
+    SPDocument * document;
 };
-
-Perspective3D * get_persp_of_box (const SP3DBox *box);
-Perspective3D * get_persp_of_VP (const VanishingPoint *vp);
 
 NR::Point perspective_intersection (NR::Point pt1, Box3D::Axis dir1, NR::Point pt2, Box3D::Axis dir2, Perspective3D *persp);
 NR::Point perspective_line_snap (NR::Point pt, Box3D::Axis dir, NR::Point ext_pt, Perspective3D *persp);

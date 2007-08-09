@@ -178,7 +178,7 @@ have_VPs_of_same_perspective (VPDragger *dr1, VPDragger *dr2)
 {
     Perspective3D *persp;
     for (GSList *i = dr1->vps; i != NULL; i = i->next) {
-        persp = get_persp_of_VP ((VanishingPoint *) i->data);
+        persp = dr1->parent->document->get_persp_of_VP ((VanishingPoint *) i->data);
         if (dr2->hasPerspective (persp)) {
             return true;
         }
@@ -195,7 +195,7 @@ vp_knot_moved_handler (SPKnot *knot, NR::Point const *ppointer, guint state, gpo
     NR::Point p = *ppointer;
 
     // FIXME: take from prefs
-    double snap_dist = SNAP_DIST / drag->desktop->current_zoom();
+    double snap_dist = SNAP_DIST / inkscape_active_desktop()->current_zoom();
 
     if (!(state & GDK_SHIFT_MASK)) {
         // without Shift; see if we need to snap to another dragger
@@ -302,7 +302,7 @@ vp_knot_grabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
 
             for (GSList *i = boxes_to_do; i != NULL; i = i->next) {
                 SP3DBox *box = SP_3DBOX (i->data);
-                Perspective3D *persp = get_persp_of_box (box);
+                Perspective3D *persp = drag->document->get_persp_of_box (box);
                 VanishingPoint *vp = dr_new->getVPofPerspective (persp);
                 if (vp == NULL) {
                     g_warning ("VP is NULL. We should be okay, though.\n");
@@ -318,7 +318,7 @@ vp_knot_grabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
                     /* otherwise the unselected boxes need to stay linked to dr_new; thus we
                        create a new perspective and link the VPs to the correct draggers */
                     Perspective3D *persp_new = new Perspective3D (*persp);
-                    Perspective3D::add_perspective (persp_new);
+                    drag->document->add_perspective (persp_new);
 
                     Axis vp_axis = persp->get_axis_of_VP (vp);
                     dragger->addVP (persp_new->get_vanishing_point (vp_axis));
@@ -382,7 +382,7 @@ VPDragger::VPDragger(VPDrag *parent, NR::Point p, VanishingPoint *vp)
     this->point_original = p;
 
     // create the knot
-    this->knot = sp_knot_new (parent->desktop, NULL);
+    this->knot = sp_knot_new (inkscape_active_desktop(), NULL);
     this->knot->setMode(SP_KNOT_MODE_XOR);
     this->knot->setFill(VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL);
     this->knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
@@ -523,7 +523,7 @@ bool
 VPDragger::hasBox(const SP3DBox *box)
 {
     for (GSList *i = this->vps; i != NULL; i = i->next) {
-        if (get_persp_of_VP ((VanishingPoint *) i->data)->has_box (box)) return true;
+        if (parent->document->get_persp_of_VP ((VanishingPoint *) i->data)->has_box (box)) return true;
     }
     return false;
 }
@@ -533,7 +533,7 @@ VPDragger::numberOfBoxes ()
 {
     guint num = 0;
     for (GSList *i = this->vps; i != NULL; i = i->next) {
-        num += get_persp_of_VP ((VanishingPoint *) i->data)->number_of_boxes ();
+        num += parent->document->get_persp_of_VP ((VanishingPoint *) i->data)->number_of_boxes ();
     }
     return num;
 }
@@ -542,7 +542,7 @@ bool
 VPDragger::hasPerspective (const Perspective3D *persp)
 {
     for (GSList *i = this->vps; i != NULL; i = i->next) {
-        if (*persp == *get_persp_of_VP ((VanishingPoint *) i->data)) {
+        if (*persp == *parent->document->get_persp_of_VP ((VanishingPoint *) i->data)) {
             return true;
         }        
     }
@@ -555,11 +555,11 @@ VPDragger::mergePerspectives ()
     Perspective3D *persp1, *persp2;
     GSList * successor = NULL;
     for (GSList *i = this->vps; i != NULL; i = i->next) {
-        persp1 = get_persp_of_VP ((VanishingPoint *) i->data);
+        persp1 = parent->document->get_persp_of_VP ((VanishingPoint *) i->data);
         for (GSList *j = i->next; j != NULL; j = successor) {
             // if the perspective is deleted, the VP is invalidated, too, so we must store its successor beforehand
             successor = j->next;
-            persp2 = get_persp_of_VP ((VanishingPoint *) j->data);
+            persp2 = parent->document->get_persp_of_VP ((VanishingPoint *) j->data);
             if (*persp1 == *persp2) {
                 persp1->absorb (persp2); // persp2 is deleted; hopefully this doesn't screw up the list of vanishing points and thus the loops
             }
@@ -576,9 +576,9 @@ VPDragger::reshapeBoxes (NR::Point const &p, Box3D::Axis axes)
         // TODO: We can extract the VP directly from the box's perspective. Is that vanishing point identical to 'vp'?
         //       Or is there duplicated information? If so, remove it and simplify the whole construction!
         vp->set_pos(p);
-        persp = get_persp_of_VP (vp);
+        persp = parent->document->get_persp_of_VP (vp);
         Box3D::Axis axis = persp->get_axis_of_VP (vp);
-        get_persp_of_VP (vp)->reshape_boxes (axis); // FIXME: we should only update the direction of the VP
+        parent->document->get_persp_of_VP (vp)->reshape_boxes (axis); // FIXME: we should only update the direction of the VP
     }
     parent->updateBoxHandles();
 }
@@ -587,7 +587,7 @@ void
 VPDragger::updateBoxReprs ()
 {
     for (GSList *i = this->vps; i != NULL; i = i->next) {
-        Box3D::get_persp_of_VP ((VanishingPoint *) i->data)->update_box_reprs ();
+        parent->document->get_persp_of_VP ((VanishingPoint *) i->data)->update_box_reprs ();
     }
 }
 
@@ -595,14 +595,14 @@ void
 VPDragger::updateZOrders ()
 {
     for (GSList *i = this->vps; i != NULL; i = i->next) {
-        Box3D::get_persp_of_VP ((VanishingPoint *) i->data)->update_z_orders ();
+        parent->document->get_persp_of_VP ((VanishingPoint *) i->data)->update_z_orders ();
     }
 }
 
-VPDrag::VPDrag (SPDesktop *desktop)
+VPDrag::VPDrag (SPDocument *document)
 {
-    this->desktop = desktop;
-    this->selection = sp_desktop_selection(desktop);
+    this->document = document;
+    this->selection = sp_desktop_selection(inkscape_active_desktop());
 
     this->draggers = NULL;
     this->lines = NULL;
@@ -695,13 +695,7 @@ VPDrag::updateDraggers ()
         if (!SP_IS_3DBOX (item)) continue;
         SP3DBox *box = SP_3DBOX (item);
 
-        // FIXME: Get the VPs from the selection!!!!
-        //addDragger (Box3D::Perspective3D::current_perspective->get_vanishing_point(Box3D::X));
-        //addDragger (Box3D::Perspective3D::current_perspective->get_vanishing_point(Box3D::Y));
-        //addDragger (Box3D::Perspective3D::current_perspective->get_vanishing_point(Box3D::Z));
-
-        //Box3D::Perspective3D *persp = box->perspective;
-        Box3D::Perspective3D *persp = Box3D::get_persp_of_box (box);
+        Box3D::Perspective3D *persp = document->get_persp_of_box (box);
         addDragger (persp->get_vanishing_point(Box3D::X));
         addDragger (persp->get_vanishing_point(Box3D::Y));
         addDragger (persp->get_vanishing_point(Box3D::Z));
@@ -777,8 +771,7 @@ VPDrag::drawLinesForFace (const SP3DBox *box, Box3D::Axis axis) //, guint corner
     NR::Point corner1, corner2, corner3, corner4;
     sp_3dbox_corners_for_perspective_lines (box, axis, corner1, corner2, corner3, corner4);
 
-    //VanishingPoint *vp = box->perspective->get_vanishing_point (axis);
-    VanishingPoint *vp = Box3D::get_persp_of_box (box)->get_vanishing_point (axis);
+    VanishingPoint *vp = document->get_persp_of_box (box)->get_vanishing_point (axis);
     if (vp->is_finite()) {
         NR::Point pt = vp->get_pos();
         if (this->front_or_rear_lines & 0x1) {
@@ -805,7 +798,7 @@ bool
 VPDrag::allBoxesAreSelected (VPDragger *dragger) {
     GSList *selected_boxes = (GSList *) dragger->parent->selection->itemList();
     for (GSList *i = dragger->vps; i != NULL; i = i->next) {
-        if (!get_persp_of_VP ((VanishingPoint *) i->data)->all_boxes_occur_in_list (selected_boxes)) {
+        if (!document->get_persp_of_VP ((VanishingPoint *) i->data)->all_boxes_occur_in_list (selected_boxes)) {
             return false;
         }
     }
@@ -860,7 +853,7 @@ Create a line from p1 to p2 and add it to the lines list
 void
 VPDrag::addLine (NR::Point p1, NR::Point p2, guint32 rgba)
 {
-    SPCanvasItem *line = sp_canvas_item_new(sp_desktop_controls(this->desktop), SP_TYPE_CTRLLINE, NULL);
+    SPCanvasItem *line = sp_canvas_item_new(sp_desktop_controls(inkscape_active_desktop()), SP_TYPE_CTRLLINE, NULL);
     sp_ctrlline_set_coords(SP_CTRLLINE(line), p1, p2);
     if (rgba != VP_LINE_COLOR_FILL) // fill is the default, so don't set color for it to speed up redraw
         sp_ctrlline_set_rgba32 (SP_CTRLLINE(line), rgba);

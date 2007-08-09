@@ -2129,10 +2129,11 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
 static void sp_3dbox_toggle_vp_changed( GtkToggleAction *act, gpointer data )
 {
+    SPDocument *document = sp_desktop_document (inkscape_active_desktop ());
     Box3D::Axis axis = (Box3D::Axis) GPOINTER_TO_INT(data);
 
-    if (Box3D::Perspective3D::current_perspective) {
-        Box3D::Perspective3D::current_perspective->toggle_boxes (axis);
+    if (document->current_perspective) {
+        document->current_perspective->toggle_boxes (axis);
     }
     
 }
@@ -2193,6 +2194,7 @@ static void sp_3dboxtb_handles_state_changed( EgeSelectOneAction *act, GObject *
 
 static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
+    SPDocument *document = sp_desktop_document (desktop);
     bool toggled = false;
     /* toggle VP in X direction */
     {
@@ -2202,8 +2204,8 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                   "toggle_vp_x",
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-    if (Box3D::Perspective3D::current_perspective) {
-        toggled = !Box3D::Perspective3D::current_perspective->get_vanishing_point(Box3D::X)->is_finite();
+    if (document->current_perspective) {
+        toggled = !document->current_perspective->get_vanishing_point(Box3D::X)->is_finite();
     }
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), toggled );
     /* we connect the signal after setting the state to avoid switching the state again */
@@ -2218,8 +2220,8 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                   "toggle_vp_y",
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-    if (Box3D::Perspective3D::current_perspective) {
-        toggled = !Box3D::Perspective3D::current_perspective->get_vanishing_point(Box3D::Y)->is_finite();
+    if (document->current_perspective) {
+        toggled = !document->current_perspective->get_vanishing_point(Box3D::Y)->is_finite();
     }
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), toggled );
     /* we connect the signal after setting the state to avoid switching the state again */
@@ -2234,8 +2236,8 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                   "toggle_vp_z",
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-    if (Box3D::Perspective3D::current_perspective) {
-        toggled = !Box3D::Perspective3D::current_perspective->get_vanishing_point(Box3D::Z)->is_finite();
+    if (document->current_perspective) {
+        toggled = !document->current_perspective->get_vanishing_point(Box3D::Z)->is_finite();
     }
     /* we connect the signal after setting the state to avoid switching the state again */
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), toggled );

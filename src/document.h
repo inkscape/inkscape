@@ -51,6 +51,13 @@ namespace Inkscape {
     }
 }
 
+class SP3DBox;
+
+namespace Box3D {
+  class Perspective3D;
+  class VanishingPoint;
+}
+
 class SPDocumentPrivate;
 
 /// Typed SVG document implementation.
@@ -91,6 +98,19 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 
 	// Instance of the connector router
 	Avoid::Router *router;
+
+        GSList *perspectives;
+        Box3D::Perspective3D *current_perspective;
+
+        // FIXME: Perspectives should be linked to the list of existing ones automatically in the constructor
+        //        and removed in the destructor!
+        void add_perspective (Box3D::Perspective3D * const persp);
+        void remove_perspective (Box3D::Perspective3D * const persp);
+        /* find an existing perspective whose VPs are equal to those of persp */
+        Box3D::Perspective3D * find_perspective (const Box3D::Perspective3D * persp);
+
+        Box3D::Perspective3D * get_persp_of_box (const SP3DBox *box);
+        Box3D::Perspective3D * get_persp_of_VP (const Box3D::VanishingPoint *vp);
 
 	sigc::connection connectModified(ModifiedSignal::slot_type slot);
 	sigc::connection connectURISet(URISetSignal::slot_type slot);

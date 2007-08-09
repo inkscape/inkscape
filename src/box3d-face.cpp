@@ -121,6 +121,7 @@ Box3DFace::Box3DFace(Box3DFace const &box3dface)
  * 
  * Note that several other functions rely on this precise order.
  */
+/***
 void
 Box3DFace::set_face (NR::Point const A, NR::Point const C, Box3D::Axis const axis1, Box3D::Axis const axis2)
 {
@@ -149,7 +150,7 @@ Box3DFace::set_face (NR::Point const A, NR::Point const C, Box3D::Axis const axi
     this->dir1 = axis1;
     this->dir2 = axis2;
 }
-
+***/
 
 NR::Point Box3DFace::operator[](unsigned int i)
 {

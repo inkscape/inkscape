@@ -192,7 +192,7 @@ void sp_3dbox_context_selection_changed(Inkscape::Selection *selection, gpointer
             sp_repr_add_listener(shape_repr, &ec_shape_repr_events, ec);
         }
         if (SP_IS_3DBOX (item)) {
-            Box3D::Perspective3D::current_perspective = Box3D::get_persp_of_box (SP_3DBOX (item));
+            bc->_vpdrag->document->current_perspective = bc->_vpdrag->document->get_persp_of_box (SP_3DBOX (item));
         }
     } else {
         /* If several boxes sharing the same perspective are selected,
@@ -200,11 +200,11 @@ void sp_3dbox_context_selection_changed(Inkscape::Selection *selection, gpointer
         std::set<Box3D::Perspective3D *> perspectives;
         for (GSList *i = (GSList *) selection->itemList(); i != NULL; i = i->next) {
             if (SP_IS_3DBOX (i->data)) {
-                perspectives.insert (Box3D::get_persp_of_box (SP_3DBOX (i->data)));
+                perspectives.insert (bc->_vpdrag->document->get_persp_of_box (SP_3DBOX (i->data)));
             }
         }
         if (perspectives.size() == 1) {
-            Box3D::Perspective3D::current_perspective = *(perspectives.begin());
+            bc->_vpdrag->document->current_perspective = *(perspectives.begin());
         }
         // TODO: What to do if several boxes with different perspectives are selected?
     }
@@ -234,7 +234,7 @@ static void sp_3dbox_context_setup(SPEventContext *ec)
         sigc::bind(sigc::ptr_fun(&sp_3dbox_context_selection_changed), (gpointer)bc)
     );
 
-    bc->_vpdrag = new Box3D::VPDrag(ec->desktop);
+    bc->_vpdrag = new Box3D::VPDrag(sp_desktop_document (ec->desktop));
 
     if (prefs_get_int_attribute("tools.shapes", "selcue", 0) != 0) {
         ec->enableSelectionCue();
@@ -375,18 +375,18 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
                 // Without Ctrl, motion of the extruded corner is constrained to the
                 // perspective line from drag_ptB to vanishing point Y.
                 if (!bc->ctrl_dragged) {
-                	bc->drag_ptC = Box3D::perspective_line_snap (bc->drag_ptB, Box3D::Z, motion_dt, Box3D::Perspective3D::current_perspective);
+                	bc->drag_ptC = Box3D::perspective_line_snap (bc->drag_ptB, Box3D::Z, motion_dt, bc->_vpdrag->document->current_perspective);
                 } else {
                     bc->drag_ptC = motion_dt;
                 }
                 bc->drag_ptC = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, bc->drag_ptC, bc->item).getPoint();
                 if (bc->ctrl_dragged) {
-                	Box3D::PerspectiveLine pl1 (NR::Point (event_context->xp, event_context->yp), Box3D::Y, Box3D::Perspective3D::current_perspective);
-                	Box3D::PerspectiveLine pl2 (bc->drag_ptB, Box3D::X, Box3D::Perspective3D::current_perspective);
+                	Box3D::PerspectiveLine pl1 (NR::Point (event_context->xp, event_context->yp), Box3D::Y, bc->_vpdrag->document->current_perspective);
+                	Box3D::PerspectiveLine pl2 (bc->drag_ptB, Box3D::X, bc->_vpdrag->document->current_perspective);
                 	NR::Point corner1 = pl1.meet(pl2);
                 	
-                	Box3D::PerspectiveLine pl3 (corner1, Box3D::X, Box3D::Perspective3D::current_perspective);
-                	Box3D::PerspectiveLine pl4 (bc->drag_ptC, Box3D::Z, Box3D::Perspective3D::current_perspective);
+                	Box3D::PerspectiveLine pl3 (corner1, Box3D::X, bc->_vpdrag->document->current_perspective);
+                	Box3D::PerspectiveLine pl4 (bc->drag_ptC, Box3D::Z, bc->_vpdrag->document->current_perspective);
                 	bc->drag_ptB = pl3.meet(pl4);
                 }
             }
@@ -477,8 +477,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_X:
         {
             if (MOD__CTRL) break; // Don't catch Ctrl+X ('cut') and Ctrl+Shift+X ('open XML editor')
-            // FIXME: Shouldn't we access _vpdrag->selection instead?
-            Inkscape::Selection *selection = sp_desktop_selection (bc->_vpdrag->desktop);
+            Inkscape::Selection *selection = sp_desktop_selection (inkscape_active_desktop());
             for (GSList const *i = selection->itemList(); i != NULL; i = i->next) {
                 if (!SP_IS_3DBOX (i->data)) continue;
                 sp_3dbox_switch_front_face (SP_3DBOX (i->data), Box3D::X);
@@ -492,8 +491,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_Y:
         {
             if (MOD__CTRL) break; // Don't catch Ctrl+Y ("redo")
-            // FIXME: Shouldn't we access _vpdrag->selection instead?
-            Inkscape::Selection *selection = sp_desktop_selection (bc->_vpdrag->desktop);
+            Inkscape::Selection *selection = sp_desktop_selection (inkscape_active_desktop());
             for (GSList const *i = selection->itemList(); i != NULL; i = i->next) {
                 if (!SP_IS_3DBOX (i->data)) continue;
                 sp_3dbox_switch_front_face (SP_3DBOX (i->data), Box3D::Y);
@@ -507,8 +505,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_Z:
         {
             if (MOD__CTRL) break; // Don't catch Ctrl+Z ("undo")
-            // FIXME: Shouldn't we access _vpdrag->selection instead?
-            Inkscape::Selection *selection = sp_desktop_selection (bc->_vpdrag->desktop);
+            Inkscape::Selection *selection = sp_desktop_selection (inkscape_active_desktop());
             for (GSList const *i = selection->itemList(); i != NULL; i = i->next) {
                 if (!SP_IS_3DBOX (i->data)) continue;
                 sp_3dbox_switch_front_face (SP_3DBOX (i->data), Box3D::Z);

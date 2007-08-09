@@ -16,6 +16,7 @@
 #include "perspective-line.h"
 #include <iostream>
 #include "perspective3d.h"
+#include "desktop-handles.h"
 
 // can probably be removed later
 #include "inkscape.h"
@@ -23,36 +24,6 @@
 namespace Box3D {
 
 gint Perspective3D::counter = 0;
-GSList * Perspective3D::perspectives = NULL;
-Perspective3D * Perspective3D::current_perspective = NULL;
-
-Perspective3D *
-get_persp_of_box (const SP3DBox *box)
-{
-    for (GSList *p = Perspective3D::perspectives; p != NULL; p = p->next) {
-        if (((Perspective3D *) p->data)->has_box (box))
-            return (Perspective3D *) p->data;
-    }
-    g_warning ("Stray 3D box!\n");
-    g_assert_not_reached();
-}
-
-Perspective3D *
-get_persp_of_VP (const VanishingPoint *vp)
-{
-    Perspective3D *persp;
-    for (GSList *p = Perspective3D::perspectives; p != NULL; p = p->next) {
-        persp = (Perspective3D *) p->data;
-        // we compare the pointers, not the position/state of the VPs; is this correct?
-        if (persp->get_vanishing_point (Box3D::X) == vp ||
-            persp->get_vanishing_point (Box3D::Y) == vp ||
-            persp->get_vanishing_point (Box3D::Z) == vp)
-            return persp;
-    }
-
-    g_warning ("Stray vanishing point!\n");
-    g_assert_not_reached();
-}
 
 /**
  * Computes the intersection of the two perspective lines from pt1 and pt2 to the respective
@@ -80,14 +51,19 @@ perspective_line_snap (NR::Point line_pt, Box3D::Axis dir, NR::Point ext_pt, Per
     return PerspectiveLine(line_pt, dir, persp).closest_to(ext_pt);
 }  
 
-Perspective3D::Perspective3D (VanishingPoint const &pt_x, VanishingPoint const &pt_y, VanishingPoint const &pt_z)
-    : boxes (NULL)
+Perspective3D::Perspective3D (VanishingPoint const &pt_x, VanishingPoint const &pt_y, VanishingPoint const &pt_z, SPDocument *doc)
+    : boxes (NULL),
+      document (doc)
 {
     vp_x = new VanishingPoint (pt_x);
     vp_y = new VanishingPoint (pt_y);
     vp_z = new VanishingPoint (pt_z);
 
     my_counter = Perspective3D::counter++;
+
+    if (document == NULL) {
+        g_warning ("What to do now?\n");
+    }
 }
 
 Perspective3D::Perspective3D (Perspective3D &other)
@@ -98,11 +74,17 @@ Perspective3D::Perspective3D (Perspective3D &other)
     vp_z = new VanishingPoint (*other.vp_z);
 
     my_counter = Perspective3D::counter++;
+
+    document = other.document;
 }
 
 Perspective3D::~Perspective3D ()
 {
-    Perspective3D::remove_perspective (this);
+    if (document) {
+        document->remove_perspective (this);
+    } else {
+        g_warning ("No document found!\n");
+    }
 
     // Remove the VPs from their draggers
     SPEventContext *ec = inkscape_active_event_context();
@@ -369,38 +351,10 @@ Perspective3D::svg_string ()
 ***/
 
 void
-Perspective3D::add_perspective (Box3D::Perspective3D * const persp)
-{
-    // FIXME: Should we handle the case that the perspectives have equal VPs but are not identical?
-    //        If so, we need to take care of relinking the boxes, etc.
-    if (persp == NULL || g_slist_find (Perspective3D::perspectives, persp)) return;
-    Perspective3D::perspectives = g_slist_prepend (Perspective3D::perspectives, persp);
-}
-
-void
-Perspective3D::remove_perspective (Box3D::Perspective3D * const persp)
-{
-    if (persp == NULL || !g_slist_find (Perspective3D::perspectives, persp)) return;
-    Perspective3D::perspectives = g_slist_remove (Perspective3D::perspectives, persp);
-}
-
-// find an existing perspective whose VPs are equal to those of persp
-Box3D::Perspective3D *
-Perspective3D::find_perspective (Box3D::Perspective3D * const persp)
-{
-    for (GSList *p = Perspective3D::perspectives; p != NULL; p = p->next) {
-        if (*((Box3D::Perspective3D *) p->data) == *persp) {
-            return ((Box3D::Perspective3D *) p->data);
-        }
-    }
-    return NULL; // perspective was not found
-}
-
-void
 Perspective3D::print_debugging_info ()
 {
     g_print ("====================================================\n");
-    for (GSList *i = Perspective3D::perspectives; i != NULL; i = i->next) {
+    for (GSList *i = sp_desktop_document (inkscape_active_desktop())->perspectives; i != NULL; i = i->next) {
         Perspective3D *persp = (Perspective3D *) i->data;
         g_print ("Perspective %d:\n", persp->my_counter);
 

@@ -40,7 +40,7 @@ public:
                    bool align_along_PL = false);
     ***/
     void set_corners (NR::Point &A, NR::Point &B, NR::Point &C, NR::Point &D);
-    void set_face (NR::Point const A, NR::Point const C, Box3D::Axis const dir1, Box3D::Axis const dir2);
+    //void set_face (NR::Point const A, NR::Point const C, Box3D::Axis const dir1, Box3D::Axis const dir2);
     
     void hook_path_to_3dbox(SPPath * existing_path = NULL);
     void set_path_repr();

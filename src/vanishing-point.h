@@ -110,7 +110,7 @@ public:
 
 struct VPDrag {
 public:
-    VPDrag(SPDesktop *desktop);
+    VPDrag(SPDocument *document);
     ~VPDrag();
 
     VPDragger *getDraggerFor (VanishingPoint const &vp);
@@ -119,7 +119,7 @@ public:
 
     bool local_change;
 
-    SPDesktop *desktop;
+    SPDocument *document;
     GList *draggers;
     GSList *lines;
 

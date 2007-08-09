@@ -110,19 +110,21 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
 
     box->front_bits = 0x0;
 
+    
     if (repr->attribute ("inkscape:perspective") == NULL) {
         // we are creating a new box; link it to the current perspective
-        Box3D::Perspective3D::current_perspective->add_box (box);
+        document->current_perspective->add_box (box);
     } else {
         // create a new perspective that we can compare with existing ones
         Box3D::Perspective3D *persp = new Box3D::Perspective3D (Box3D::VanishingPoint (0,0),
                                                                 Box3D::VanishingPoint (0,0),
-                                                                Box3D::VanishingPoint (0,0));
+                                                                Box3D::VanishingPoint (0,0),
+                                                                document);
         sp_3dbox_update_perspective (persp, repr->attribute ("inkscape:perspective"));
-        Box3D::Perspective3D *comp =  Box3D::Perspective3D::find_perspective (persp);
+        Box3D::Perspective3D *comp =  document->find_perspective (persp);
         if (comp == NULL) {
             // perspective doesn't exist yet
-            Box3D::Perspective3D::add_perspective (persp);
+            document->add_perspective (persp);
             persp->add_box (box);
         } else {
             // link the box to the existing perspective and delete the temporary one
@@ -166,7 +168,7 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
     // document (e.g., after a 'redo' operation or after opening a file) and do so if necessary.
     sp_3dbox_link_to_existing_paths (box, repr);
 
-    sp_3dbox_set_ratios (box);
+    sp_3dbox_set_ratios (box, Box3D::XYZ);
 }
 
 static void
@@ -181,7 +183,7 @@ sp_3dbox_release (SPObject *object)
 
         // FIXME: We do not duplicate perspectives if they are the same for several boxes.
         //        Thus, don't delete the perspective when deleting a box but rather unlink the box from it.
-        Box3D::get_persp_of_box (box)->remove_box (box);
+        SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box)->remove_box (box);
 
 	if (((SPObjectClass *) parent_class)->release) {
 	  ((SPObjectClass *) parent_class)->release (object);
@@ -201,8 +203,11 @@ static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value)
             sp_3dbox_update_corner_with_value_from_svg (object, 5, value);
             break;
         case SP_ATTR_INKSCAPE_3DBOX_PERSPECTIVE:
-            sp_3dbox_update_perspective (Box3D::get_persp_of_box (SP_3DBOX (object)), value);
+        {
+            SP3DBox *box = SP_3DBOX (object);
+            sp_3dbox_update_perspective (SP_OBJECT_DOCUMENT (object)->get_persp_of_box (box), value);
             break;
+        }
 	default:
             if (((SPObjectClass *) (parent_class))->set) {
                 ((SPObjectClass *) (parent_class))->set(object, key, value);
@@ -283,7 +288,7 @@ sp_3dbox_description(SPItem *item)
 
 void sp_3dbox_set_ratios (SP3DBox *box, Box3D::Axis axes)
 {
-    Box3D::Perspective3D *persp = Box3D::get_persp_of_box (box);
+    Box3D::Perspective3D *persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
     NR::Point pt;
 
     if (axes & Box3D::X) {
@@ -305,7 +310,7 @@ void sp_3dbox_set_ratios (SP3DBox *box, Box3D::Axis axes)
 void
 sp_3dbox_switch_front_face (SP3DBox *box, Box3D::Axis axis)
 {
-    if (Box3D::get_persp_of_box (box)->get_vanishing_point (axis)->is_finite()) {
+    if (SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box)->get_vanishing_point (axis)->is_finite()) {
         box->front_bits = box->front_bits ^ axis;
     }
 }
@@ -386,7 +391,7 @@ normalized_angle (double angle) {
 static gdouble
 sp_3dbox_corner_angle_to_VP (SP3DBox *box, Box3D::Axis axis, guint extreme_corner)
 {
-    Box3D::VanishingPoint *vp = Box3D::get_persp_of_box (box)->get_vanishing_point (axis);
+    Box3D::VanishingPoint *vp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box)->get_vanishing_point (axis);
     NR::Point dir;
 
     if (vp->is_finite()) {
@@ -403,7 +408,7 @@ bool sp_3dbox_recompute_z_orders (SP3DBox *box)
 {
     guint new_z_orders[6];
 
-    Box3D::Perspective3D *persp = Box3D::get_persp_of_box (box);
+    Box3D::Perspective3D *persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
 
     // TODO: Determine the front corner depending on the distance from VPs and/or the user presets
     guint front_corner = sp_3dbox_get_front_corner_id (box);
@@ -523,7 +528,7 @@ sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr) {
 void
 sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt, Box3D::Axis axes)
 {
-    Box3D::Perspective3D * persp = Box3D::get_persp_of_box (box);
+    Box3D::Perspective3D * persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
 
     NR::Point A (box->corners[id ^ Box3D::XY]);
     if (Box3D::is_single_axis_direction (axes)) {
@@ -563,7 +568,7 @@ sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, bool 
 {
     if (!constrained) sp_3dbox_move_corner_in_XY_plane (box, id, pt, Box3D::XY);
 
-    Box3D::Perspective3D * persp = Box3D::get_persp_of_box (box);
+    Box3D::Perspective3D * persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
 
     /* set the four corners of the face containing corners[id] */
     box->corners[id] = Box3D::PerspectiveLine (box->corners[id], Box3D::Z, persp).closest_to(pt);
@@ -609,7 +614,7 @@ sp_3dbox_reshape_edge_after_VP_toggling (SP3DBox *box, const guint corner, const
 void
 sp_3dbox_reshape_after_VP_toggling (SP3DBox *box, Box3D::Axis axis)
 {
-    Box3D::Perspective3D *persp = Box3D::get_persp_of_box (box);
+    Box3D::Perspective3D *persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
     std::pair<Box3D::Axis, Box3D::Axis> dirs = Box3D::get_remaining_axes (axis);
 
     sp_3dbox_reshape_edge_after_VP_toggling (box, 0, axis, persp);
@@ -641,7 +646,7 @@ sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_
 
         if (!adjacent_face_center) return NR::Nothing();
 
-        Box3D::Perspective3D * persp = Box3D::get_persp_of_box (box);
+        Box3D::Perspective3D * persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
 
         Box3D::PerspectiveLine pl (*adjacent_face_center, orth_dir, persp);
         return pl.intersect(Box3D::PerspectiveLine(box->corners[id_corner1], corner_axes, persp));
@@ -685,7 +690,7 @@ static gchar *
 sp_3dbox_get_perspective_string (SP3DBox *box)
 {
     
-    return sp_3dbox_get_svg_descr_of_persp (Box3D::get_persp_of_box (box));
+    return sp_3dbox_get_svg_descr_of_persp (SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box));
 }
   
 gchar *
@@ -779,7 +784,7 @@ sp_3dbox_get_corner_id_along_edge (const SP3DBox *box, guint corner, Box3D::Axis
 {
     guint result;
     guint other_corner = corner ^ axis;
-    Box3D::VanishingPoint *vp = Box3D::get_persp_of_box (box)->get_vanishing_point(axis);
+    Box3D::VanishingPoint *vp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box)->get_vanishing_point(axis);
     if (vp->is_finite()) {
         result = (  NR::L2 (vp->get_pos() - box->corners[corner])
                   < NR::L2 (vp->get_pos() - box->corners[other_corner]) ? other_corner : corner);

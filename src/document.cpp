@@ -53,6 +53,7 @@
 #include "libavoid/router.h"
 #include "libnr/nr-rect.h"
 #include "sp-item-group.h"
+#include "perspective3d.h"
 
 #include "display/nr-arena-item.h"
 
@@ -95,6 +96,23 @@ SPDocument::SPDocument() {
     router = new Avoid::Router();
     // Don't use the Consolidate moves optimisation.
     router->ConsolidateMoves = false;
+
+    perspectives = NULL;
+
+    /* Create an initial perspective, make it current and append it to the list of existing perspectives */
+    current_perspective = new Box3D::Perspective3D (
+                              // VP in x-direction
+                              Box3D::VanishingPoint( NR::Point(-50.0, 600.0),
+                                                     NR::Point( -1.0,   0.0), Box3D::VP_FINITE),
+                              // VP in y-direction
+                              Box3D::VanishingPoint( NR::Point(500.0,1000.0),
+                                                     NR::Point(  0.0,   1.0), Box3D::VP_INFINITE),
+                              // VP in z-direction
+                              Box3D::VanishingPoint( NR::Point(700.0, 600.0),
+                                                     NR::Point(sqrt(3.0),1.0), Box3D::VP_FINITE),
+                              this);
+
+    add_perspective (current_perspective);    
 
     p = new SPDocumentPrivate();
 
@@ -184,6 +202,66 @@ SPDocument::~SPDocument() {
     }
 
     //delete this->_whiteboard_session_manager;
+
+    current_perspective = NULL;
+    // TODO: Do we have to delete the perspectives?
+    /***
+    for (GSList *i = perspectives; i != NULL; ++i) {
+        delete ((Box3D::Perspective3D *) i->data);
+    }
+    g_slist_free (perspectives);
+    ***/
+}
+
+void SPDocument::add_perspective (Box3D::Perspective3D * const persp)
+{
+    // FIXME: Should we handle the case that the perspectives have equal VPs but are not identical?
+    //        If so, we need to take care of relinking the boxes, etc.
+    if (persp == NULL || g_slist_find (perspectives, persp)) return;
+    perspectives = g_slist_prepend (perspectives, persp);
+}
+
+void SPDocument::remove_perspective (Box3D::Perspective3D * const persp)
+{
+    if (persp == NULL || !g_slist_find (perspectives, persp)) return;
+    perspectives = g_slist_remove (perspectives, persp);
+}
+
+// find an existing perspective whose VPs are equal to those of persp
+Box3D::Perspective3D * SPDocument::find_perspective (const Box3D::Perspective3D * persp)
+{
+    for (GSList *p = perspectives; p != NULL; p = p->next) {
+        if (*((Box3D::Perspective3D *) p->data) == *persp) {
+            return ((Box3D::Perspective3D *) p->data);
+        }
+    }
+    return NULL; // perspective was not found
+}
+
+Box3D::Perspective3D * SPDocument::get_persp_of_box (const SP3DBox *box)
+{
+    for (GSList *p = perspectives; p != NULL; p = p->next) {
+        if (((Box3D::Perspective3D *) p->data)->has_box (box))
+            return (Box3D::Perspective3D *) p->data;
+    }
+    g_warning ("Stray 3D box!\n");
+    g_assert_not_reached();
+}
+
+Box3D::Perspective3D * SPDocument::get_persp_of_VP (const Box3D::VanishingPoint *vp)
+{
+    Box3D::Perspective3D *persp;
+    for (GSList *p = perspectives; p != NULL; p = p->next) {
+        persp = (Box3D::Perspective3D *) p->data;
+        // we compare the pointers, not the position/state of the VPs; is this correct?
+        if (persp->get_vanishing_point (Box3D::X) == vp ||
+            persp->get_vanishing_point (Box3D::Y) == vp ||
+            persp->get_vanishing_point (Box3D::Z) == vp)
+            return persp;
+    }
+
+    g_warning ("Stray vanishing point!\n");
+    g_assert_not_reached();
 }
 
 unsigned long SPDocument::serial() const {
