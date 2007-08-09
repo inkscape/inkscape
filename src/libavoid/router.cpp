@@ -59,6 +59,7 @@ class MoveInfo {
 
 Router::Router()
     : PartialTime(false)
+    , SimpleRouting(false)
     , segmt_penalty(0)
     , angle_penalty(0)
     , crossing_penalty(200)
@@ -113,6 +114,21 @@ void Router::delShape(ShapeRef *shape)
 {
     unsigned int pid = shape->id();
 
+    // Delete items that are queued in the movList.
+    for (MoveInfoList::iterator it = moveList.begin(); it != moveList.end(); )
+    {
+        if ((*it)->shape->id() == pid)
+        {
+            MoveInfoList::iterator doomed = it;
+            ++it;
+            moveList.erase(doomed);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+
     // o  Remove entries related to this shape's vertices
     shape->removeFromGraph();
     
@@ -154,9 +170,12 @@ void Router::moveShape(ShapeRef *shape, Polygn *newPoly, const bool first_move)
     {
         if ((*it)->shape->id() == id)
         {
-            fprintf(stderr,
-                    "warning: multiple moves requested for shape %d.\n",
-                    (int) id);
+            if (!SimpleRouting)
+            {
+                fprintf(stderr,
+                        "warning: multiple moves requested for shape %d.\n",
+                        (int) id);
+            }
             // Just update the MoveInfo with the second polygon, but
             // leave the firstMove setting alone.
             (*it)->newPoly = copyPoly(*newPoly);
@@ -179,7 +198,8 @@ void Router::moveShape(ShapeRef *shape, Polygn *newPoly, const bool first_move)
 
 void Router::processMoves(void)
 {
-    if (moveList.empty())
+    // If SimpleRouting, then don't update yet.
+    if (moveList.empty() || SimpleRouting)
     {
         return;
     }
@@ -505,9 +525,6 @@ void Router::adjustContainsWithDel(const int p_shape)
 }
 
 
-#define MIN(a, b) (((a) <= (b)) ? (a) : (b))
-#define MAX(a, b) (((a) >= (b)) ? (a) : (b))
-
 #ifdef SELECTIVE_DEBUG
 static double AngleAFromThreeSides(const double a, const double b,
         const double c)
@@ -570,8 +587,8 @@ void Router::markConnectors(ShapeRef *shape)
                 c = end.x;
                 d = end.y - offy;
 
-                min = MIN(p1.x, p2.x);
-                max = MAX(p1.x, p2.x);
+                min = std::min(p1.x, p2.x);
+                max = std::max(p1.x, p2.x);
             }
             else if (p1.x == p2.x)
             {
@@ -582,8 +599,8 @@ void Router::markConnectors(ShapeRef *shape)
                 c = end.y;
                 d = end.x - offy;
 
-                min = MIN(p1.y, p2.y);
-                max = MAX(p1.y, p2.y);
+                min = std::min(p1.y, p2.y);
+                max = std::max(p1.y, p2.y);
             }
             else
             {
@@ -630,8 +647,8 @@ void Router::markConnectors(ShapeRef *shape)
                 c = end.x;
                 d = end.y - offy;
 
-                min = MIN(r_p1.x, r_p2.x);
-                max = MAX(r_p1.x, r_p2.x);
+                min = std::min(r_p1.x, r_p2.x);
+                max = std::max(r_p1.x, r_p2.x);
 
             }
 
@@ -664,9 +681,8 @@ void Router::markConnectors(ShapeRef *shape)
             //printf("%.1f, %.1f, %.1f, %.1f\n", a, b, c, d);
             //printf("x = %.1f\n", x);
 
-            // XXX: Use MAX and MIN
-            x = (x < min) ? min : x;
-            x = (x > max) ? max : x;
+            x = std::max(min, x);
+            x = std::min(max, x);
 
             //printf("x = %.1f\n", x);
 

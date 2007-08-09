@@ -206,10 +206,10 @@ void ShapeRef::boundingBox(BBox& bbox)
     {
         const Point& p = _poly.ps[i];
 
-        a.x = (p.x < a.x) ? p.x : a.x;
-        a.y = (p.y < a.y) ? p.y : a.y;
-        b.x = (p.x > b.x) ? p.x : b.x;
-        b.y = (p.y > b.y) ? p.y : b.y;
+        a.x = std::min(p.x, a.x);
+        a.y = std::min(p.y, a.y);
+        b.x = std::max(p.x, b.x);
+        b.y = std::max(p.y, b.y);
     }
 }
 

@@ -203,27 +203,7 @@ static Avoid::Polygn avoid_item_poly(SPItem const *item)
     poly = Avoid::newPoly(4);
 
     for (unsigned n = 0; n < 4; ++n) {
-        // TODO: I think the winding order in libavoid or inkscape might
-        //       be backwards, probably due to the inverse y co-ordinates
-        //       used for the screen.  The '3 - n' reverses the order.
-        /* On "correct" winding order: Winding order of NR::Rect::corner is in a positive
-         * direction, like libart.  "Positive direction" means the same as in most of Inkscape and
-         * SVG: if you visualize y as increasing upwards, as is the convention in mathematics, then
-         * positive angle is visualized as anticlockwise, as in mathematics; so if you visualize y
-         * as increasing downwards, as is common outside of mathematics, then positive angle
-         * direction is visualized as clockwise, as is common outside of mathematics.  This
-         * convention makes it easier mix pure mathematics code with graphics code: the important
-         * thing when mixing code is that the number values stored in variables (representing y
-         * coordinate, angle) match up; variables store numbers, not visualized positions, and the
-         * programmer is free to switch between visualizations when thinking about a given piece of
-         * code.
-         *
-         * MathWorld, libart and NR::Rect::corner all seem to take positive winding (i.e. winding
-         * that yields +1 winding number inside a simple closed shape) to mean winding in a
-         * positive angle.  This, together with the observation that variables store numbers rather
-         * than positions, suggests that NR::Rect::corner uses the right direction.
-         */
-        NR::Point hullPoint = rExpandedHull.corner(3 - n);
+        NR::Point hullPoint = rExpandedHull.corner(n);
         poly.ps[n].x = hullPoint[NR::X];
         poly.ps[n].y = hullPoint[NR::Y];
     }

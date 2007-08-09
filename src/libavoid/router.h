@@ -62,6 +62,7 @@ class Router {
         VertInfList vertices;
         
         bool PartialTime;
+        bool SimpleRouting;
         double segmt_penalty;
         double angle_penalty;
         double crossing_penalty;

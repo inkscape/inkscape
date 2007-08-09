@@ -133,41 +133,25 @@ bool segmentIntersect(const Point& a, const Point& b, const Point& c,
 
 // Returns true iff the point p in a valid region that can contain
 // shortest paths.  a0, a1, a2 are ordered vertices of a shape.
-// This function may seem 'backwards' to the user due to some of
-// the code being reversed due to screen cooridinated being the
-// opposite of graph paper coords.
-// TODO: Rewrite this after checking whether it works for Inkscape.
 //
 // Based on the code of 'InCone'.
 //
 bool inValidRegion(bool IgnoreRegions, const Point& a0, const Point& a1,
         const Point& a2, const Point& b)
 {
+    // r is a0--a1
+    // s is a1--a2
+
     int rSide = vecDir(b, a0, a1);
     int sSide = vecDir(b, a1, a2);
 
-    bool rOutOn = (rSide >= 0);
-    bool sOutOn = (sSide >= 0);
+    bool rOutOn = (rSide <= 0);
+    bool sOutOn = (sSide <= 0);
 
-    bool rOut = (rSide > 0);
-    bool sOut = (sSide > 0);
+    bool rOut = (rSide < 0);
+    bool sOut = (sSide < 0);
 
     if (vecDir(a0, a1, a2) > 0)
-    {
-        // Concave at a1:
-        //
-        //   !rO      rO
-        //   !sO     !sO
-        //
-        //        +---s---
-        //        |
-        //   !rO  r   rO
-        //    sO  |   sO
-        //
-        //
-        return (IgnoreRegions ? false : (rOutOn && sOutOn));
-    }
-    else
     {
         // Convex at a1:
         //
@@ -186,18 +170,33 @@ bool inValidRegion(bool IgnoreRegions, const Point& a0, const Point& a1,
         }
         return (rOutOn || sOutOn);
     }
+    else
+    {
+        // Concave at a1:
+        //
+        //   !rO      rO
+        //   !sO     !sO
+        //
+        //        +---s---
+        //        |
+        //   !rO  r   rO
+        //    sO  |   sO
+        //
+        //
+        return (IgnoreRegions ? false : (rOutOn && sOutOn));
+    }
 }
 
 
 // Gives the side of a corner that a point lies on:
 //      1   anticlockwise
 //     -1   clockwise
-// e.g.                     /|
-//       /s2          -1   / |s1
+// e.g.                     /|s2
+//       /s3          -1   / |
 //      /                 /  |
-//  1  |s1  -1           / 1 |  -1
+//  1  |s2  -1           / 1 |  -1
 //     |                /    |
-//     |s0           s2/     |s0
+//     |s1           s3/     |s1
 //     
 int cornerSide(const Point &c1, const Point &c2, const Point &c3,
         const Point& p)
@@ -286,7 +285,7 @@ bool inPoly(const Polygn& poly, const Point& q)
     {
         // point index; i1 = i-1 mod n
         int prev = (i + n - 1) % n;
-        if (vecDir(P[prev], P[i], q) == 1)
+        if (vecDir(P[prev], P[i], q) == -1)
         {
             return false;
         }
