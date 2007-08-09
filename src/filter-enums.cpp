@@ -94,6 +94,13 @@ const EnumData<int> DisplacementMapChannelData[4] = {
 };
 const EnumDataConverter<int> DisplacementMapChannelConverter(DisplacementMapChannelData, 4);
 
+// feMorphology
+const EnumData<NR::FilterMorphologyOperator> MorphologyOperatorData[NR::MORPHOLOGY_OPERATOR_END] = {
+    {NR::MORPHOLOGY_OPERATOR_ERODE,  _("Erode"),   "erode"},
+    {NR::MORPHOLOGY_OPERATOR_DILATE, _("Dilate"),  "dilate"}
+};
+const EnumDataConverter<NR::FilterMorphologyOperator> MorphologyOperatorConverter(MorphologyOperatorData, NR::MORPHOLOGY_OPERATOR_END);
+
 // Light source
 const EnumData<LightSource> LightSourceData[LIGHT_ENDSOURCE] = {
     {LIGHT_DISTANT, _("Distance Light"), "svg:feDistanceLight"},

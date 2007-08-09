@@ -16,6 +16,7 @@
 #include "display/nr-filter-colormatrix.h"
 #include "display/nr-filter-composite.h"
 #include "display/nr-filter-convolve-matrix.h"
+#include "display/nr-filter-morphology.h"
 #include "display/nr-filter-types.h"
 #include "util/enums.h"
 
@@ -51,6 +52,9 @@ extern const Inkscape::Util::EnumDataConverter<NR::FilterConvolveMatrixEdgeMode>
 // DisplacementMap channel
 extern const Inkscape::Util::EnumData<int> DisplacementMapChannelData[4];
 extern const Inkscape::Util::EnumDataConverter<int> DisplacementMapChannelConverter;
+// Morphology operator
+extern const Inkscape::Util::EnumData<NR::FilterMorphologyOperator> MorphologyOperatorData[NR::MORPHOLOGY_OPERATOR_END];
+extern const Inkscape::Util::EnumDataConverter<NR::FilterMorphologyOperator> MorphologyOperatorConverter;
 // Lighting
 enum LightSource {
     LIGHT_DISTANT,

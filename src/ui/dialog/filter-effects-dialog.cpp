@@ -1791,6 +1791,10 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->type(NR_FILTER_GAUSSIANBLUR);
     _settings->add_dualspinslider(SP_ATTR_STDDEVIATION, _("Standard Deviation"), 0.01, 100, 1, 0.01, 1);
 
+    _settings->type(NR_FILTER_MORPHOLOGY);
+    _settings->add_combo(SP_ATTR_OPERATOR, _("Operator"), MorphologyOperatorConverter);
+    _settings->add_dualspinslider(SP_ATTR_RADIUS, _("Radius"), 0, 100, 1, 0.01, 1);
+
     _settings->type(NR_FILTER_OFFSET);
     _settings->add_spinslider(SP_ATTR_DX, _("Delta X"), -100, 100, 1, 0.01, 1);
     _settings->add_spinslider(SP_ATTR_DY, _("Delta Y"), -100, 100, 1, 0.01, 1);

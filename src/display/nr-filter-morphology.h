@@ -19,7 +19,8 @@ namespace NR {
 
 enum FilterMorphologyOperator {
     MORPHOLOGY_OPERATOR_ERODE,
-    MORPHOLOGY_OPERATOR_DILATE
+    MORPHOLOGY_OPERATOR_DILATE,
+    MORPHOLOGY_OPERATOR_END
 };
 
 class FilterMorphology : public FilterPrimitive {
