@@ -167,9 +167,9 @@ static gchar *svgConvertRGBToText(double r, double g, double b) {
 }
 
 static gchar *svgConvertGfxRGB(GfxRGB *color) {
-    double r = color->r / 65535.0;
-    double g = color->g / 65535.0;
-    double b = color->b / 65535.0;
+    double r = (double)color->r / 65535.0;
+    double g = (double)color->g / 65535.0;
+    double b = (double)color->b / 65535.0;
     return svgConvertRGBToText(r, g, b);
 }
 
@@ -396,7 +396,7 @@ void SvgBuilder::addShadedFill(GfxShading *shading, double *matrix, GfxPath *pat
 
     // Set style
     SPCSSAttr *css = sp_repr_css_attr_new();
-    gchar *id = _createGradient(shading, matrix);
+    gchar *id = _createGradient(shading, matrix, true);
     if (id) {
         gchar *urltext = g_strdup_printf ("url(#%s)", id);
         sp_repr_css_set_property(css, "fill", urltext);
@@ -594,9 +594,12 @@ gchar *SvgBuilder::_createTilingPattern(GfxTilingPattern *tiling_pattern,
 
 /**
  * \brief Creates a linear or radial gradient from poppler's data structure
+ * \param shading poppler's data structure for the shading
+ * \param matrix gradient transformation, can be null
+ * \param for_shading true if we're creating this for a shading operator; false otherwise
  * \return id of the created object
  */
-gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix) {
+gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix, bool for_shading) {
     Inkscape::XML::Node *gradient;
     Function *func;
     int num_funcs;
@@ -634,12 +637,14 @@ gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix) {
         return NULL;
     }
     gradient->setAttribute("gradientUnits", "userSpaceOnUse");
-    // Flip the gradient transform around the y axis
+    // If needed, flip the gradient transform around the y axis
     if (matrix) {
         NR::Matrix pat_matrix(matrix[0], matrix[1], matrix[2], matrix[3],
                               matrix[4], matrix[5]);
-        NR::Matrix flip(1.0, 0.0, 0.0, -1.0, 0.0, _height * PT_PER_PX);
-        pat_matrix *= flip;
+        if ( !for_shading && _is_top_level ) {
+            NR::Matrix flip(1.0, 0.0, 0.0, -1.0, 0.0, _height * PT_PER_PX);
+            pat_matrix *= flip;
+        }
         gchar *transform_text = sp_svg_transform_write(pat_matrix);
         gradient->setAttribute("gradientTransform", transform_text);
         g_free(transform_text);
@@ -649,7 +654,7 @@ gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix) {
         gradient->setAttribute("spreadMethod", "pad");
     }
 
-    if ( num_funcs > 1 || !_addStopsToGradient(gradient, func, 1.0) ) {
+    if ( num_funcs > 1 || !_addGradientStops(gradient, shading, func) ) {
         Inkscape::GC::release(gradient);
         return NULL;
     }
@@ -663,120 +668,83 @@ gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix) {
 }
 
 #define EPSILON 0.0001
-bool SvgBuilder::_addSamplesToGradient(Inkscape::XML::Node *gradient,
-                                       Function *func, double offset0,
-                                       double offset1, double opacity) {
+/**
+ * \brief Adds a stop with the given properties to the gradient's representation
+ */
+void SvgBuilder::_addStopToGradient(Inkscape::XML::Node *gradient, double offset,
+                                    GfxRGB *color, double opacity) {
+    Inkscape::XML::Node *stop = _xml_doc->createElement("svg:stop");
+    SPCSSAttr *css = sp_repr_css_attr_new();
+    Inkscape::CSSOStringStream os_opacity;
+    os_opacity << opacity;
+    sp_repr_css_set_property(css, "stop-opacity", os_opacity.str().c_str());
+    gchar *color_text = svgConvertGfxRGB(color);
+    sp_repr_css_set_property(css, "stop-color", color_text);
 
-    // Check whether this sampled function can be converted to color stops
-    int sample_size = 0;
-    int num_comps = func->getOutputSize();
-    double *samples = NULL;
-    if ( func->getType() == 0 ) {   // Sampled function
-        SampledFunction *sampled_func = (SampledFunction*)func;
-        sample_size = sampled_func->getSampleSize(0);
-        if ( sample_size != 2 || num_comps != 3 ) {
-            return false;
-        }
-        samples = sampled_func->getSamples();
-    } else if ( func->getType() == 2 ) {    // Exponential function
-        sample_size = 1;
-        if ( num_comps != 1 && num_comps != 3 ) {
-            return false;
-        }
-        double *exp_output = new double[2 * num_comps];
-        ExponentialFunction *exp_func = (ExponentialFunction*)func;
-        double x = 0.0;
-        for ( int i = 0 ; i < 2 * num_comps ; i += num_comps ) {
-            if ( i >= num_comps ) {
-                x = 1.0;
-            }
-            exp_func->transform(&x, &exp_output[i]);
-        }
-        samples = exp_output;
-    }
+    sp_repr_css_change(stop, css, "style");
+    sp_repr_css_attr_unref(css);
+    sp_repr_set_css_double(stop, "offset", offset);
 
-    unsigned stop_count = gradient->childCount();
-    bool is_continuation = false;
-    // Check if this sampled function is the continuation of the previous one
-    if ( stop_count > 0 ) {
-        // Get previous stop
-        Inkscape::XML::Node *prev_stop = gradient->nthChild(stop_count-1);
-        // Read its properties
-        double prev_offset;
-        sp_repr_get_double(prev_stop, "offset", &prev_offset);
-        SPCSSAttr *css = sp_repr_css_attr(prev_stop, "style");
-        guint32 prev_stop_color = sp_svg_read_color(sp_repr_css_property(css, "stop-color", NULL), 0);
-        sp_repr_css_attr_unref(css);
-        // Convert colors
-        double r = SP_RGBA32_R_F (prev_stop_color);
-        double g = SP_RGBA32_G_F (prev_stop_color);
-        double b = SP_RGBA32_B_F (prev_stop_color);
-        if ( fabs(prev_offset - offset0) < EPSILON &&
-             fabs(samples[0] - r) < EPSILON &&
-             fabs(samples[1] - g) < EPSILON &&
-             fabs(samples[2] - b) < EPSILON ) {
+    gradient->appendChild(stop);
+    Inkscape::GC::release(stop);
+}
 
-            is_continuation = true;
-        }
-    }
-
-    int num_stops_added;
-    int i;
-    if (is_continuation) {
-        num_stops_added = 1;
-        i = num_comps;
+static bool svgGetShadingColorRGB(GfxShading *shading, double offset, GfxRGB *result) {
+    GfxColorSpace *color_space = shading->getColorSpace();
+    GfxColor temp;
+    if ( shading->getType() == 2 ) {  // Axial shading
+        ((GfxAxialShading*)shading)->getColor(offset, &temp);
+    } else if ( shading->getType() == 3 ) { // Radial shading
+        ((GfxRadialShading*)shading)->getColor(offset, &temp);
     } else {
-        num_stops_added = i = 0;
+        return false;
     }
-    while ( num_stops_added < 2 ) {
-        Inkscape::XML::Node *stop = _xml_doc->createElement("svg:stop");
-        SPCSSAttr *css = sp_repr_css_attr_new();
-        Inkscape::CSSOStringStream os_opacity;
-        os_opacity << opacity;
-        gchar c[64];
-        if ( num_comps == 1 ) {
-            sp_svg_write_color(c, 64, SP_RGBA32_F_COMPOSE (samples[i], samples[i], samples[i], 1.0));
-        } else {
-            sp_svg_write_color(c, 64, SP_RGBA32_F_COMPOSE (samples[i], samples[i+1], samples[i+2], 1.0));
-        }
-        sp_repr_css_set_property(css, "stop-opacity", os_opacity.str().c_str());
-        sp_repr_css_set_property(css, "stop-color", c);
+    // Convert it to RGB
+    color_space->getRGB(&temp, result);
 
-        sp_repr_css_change(stop, css, "style");
-        sp_repr_css_attr_unref(css);
-        sp_repr_set_css_double(stop, "offset", ( i < num_comps ) ? offset0 : offset1);
-
-        gradient->appendChild(stop);
-        Inkscape::GC::release(stop);
-        i += num_comps; // Advance to the next sample
-        num_stops_added++;
-    }
-    // Free the output of the exponential function
-    if ( func->getType() == 2 ) {
-        delete samples;
-    }
-  
     return true;
 }
 
-bool SvgBuilder::_addStopsToGradient(Inkscape::XML::Node *gradient, Function *func,
-                                     double opacity) {
-    
+#define INT_EPSILON 8
+bool SvgBuilder::_addGradientStops(Inkscape::XML::Node *gradient, GfxShading *shading,
+                                   Function *func) {
     int type = func->getType();
     if ( type == 0 || type == 2 ) {  // Sampled or exponential function
-        _addSamplesToGradient(gradient, func, 0.0, 1.0, opacity);
+        GfxRGB stop1, stop2;
+        if ( !svgGetShadingColorRGB(shading, 0.0, &stop1) ||
+             !svgGetShadingColorRGB(shading, 1.0, &stop2) ) {
+            return false;
+        } else {
+            _addStopToGradient(gradient, 0.0, &stop1, 1.0);
+            _addStopToGradient(gradient, 1.0, &stop2, 1.0);
+        }
     } else if ( type == 3 ) { // Stitching
         StitchingFunction *stitchingFunc = (StitchingFunction*)func;
         double *bounds = stitchingFunc->getBounds();
         int num_funcs = stitchingFunc->getNumFuncs();
-        // Add samples from all the stitched functions
+        // Add stops from all the stitched functions
         for ( int i = 0 ; i < num_funcs ; i++ ) {
-            Function *func = stitchingFunc->getFunc(i);
-            int func_type = func->getType();
-            if ( func_type != 0 && func_type != 2 ) // Only sampled and exponential functions are supported
-                continue;
-
-            _addSamplesToGradient(gradient, func, bounds[i], bounds[i+1], opacity);
+            GfxRGB color;
+            svgGetShadingColorRGB(shading, bounds[i], &color);
+            bool is_continuation = false;
+            if ( i > 0 ) {  // Compare to previous stop
+                GfxRGB prev_color;
+                svgGetShadingColorRGB(shading, bounds[i-1], &prev_color);
+                if ( abs(color.r - prev_color.r) < INT_EPSILON &&
+                     abs(color.g - prev_color.g) < INT_EPSILON &&
+                     abs(color.b - prev_color.b) < INT_EPSILON ) {
+                    is_continuation = true;
+                }
+            }
+            // Add stops
+            if ( !is_continuation ) {
+                _addStopToGradient(gradient, bounds[i], &color, 1.0);
+            }
+            if ( is_continuation || ( i == num_funcs - 1 ) ) {
+                GfxRGB next_color;
+                svgGetShadingColorRGB(shading, bounds[i+1], &next_color);
+                _addStopToGradient(gradient, bounds[i+1], &next_color, 1.0);
+            }
         }
     } else { // Unsupported function type
         return false;
