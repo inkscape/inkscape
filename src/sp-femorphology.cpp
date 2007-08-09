@@ -6,7 +6,8 @@
  */
 /*
  * Authors:
- *   hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Felipe Sanches <felipe.sanches@gmail.com>
+ *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *
  * Copyright (C) 2006 Hugo Rodrigues
  *
@@ -21,7 +22,7 @@
 #include "svg/svg.h"
 #include "sp-femorphology.h"
 #include "xml/repr.h"
-
+#include "display/nr-filter-morphology.h"
 
 /* FeMorphology base class */
 
@@ -77,6 +78,8 @@ sp_feMorphology_class_init(SPFeMorphologyClass *klass)
 static void
 sp_feMorphology_init(SPFeMorphology *feMorphology)
 {
+    //Setting default values:
+    feMorphology->radius.set("0");
 }
 
 /**
@@ -92,6 +95,8 @@ sp_feMorphology_build(SPObject *object, SPDocument *document, Inkscape::XML::Nod
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
+    sp_object_read_attr(object, "operator");
+    sp_object_read_attr(object, "radius");
 }
 
 /**
@@ -104,6 +109,19 @@ sp_feMorphology_release(SPObject *object)
         ((SPObjectClass *) feMorphology_parent_class)->release(object);
 }
 
+static NR::FilterMorphologyOperator sp_feMorphology_read_operator(gchar const *value){
+    if (!value) return NR::MORPHOLOGY_OPERATOR_ERODE; //erode is default
+    switch(value[0]){
+        case 'e':
+            if (strncmp(value, "erode", 5) == 0) return NR::MORPHOLOGY_OPERATOR_ERODE;
+            break;
+        case 'd':
+            if (strncmp(value, "dilate", 6) == 0) return NR::MORPHOLOGY_OPERATOR_DILATE;
+            break;
+    }
+    return NR::MORPHOLOGY_OPERATOR_ERODE; //erode is default
+}
+
 /**
  * Sets a specific value in the SPFeMorphology.
  */
@@ -112,9 +130,24 @@ sp_feMorphology_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeMorphology *feMorphology = SP_FEMORPHOLOGY(object);
     (void)feMorphology;
-
+    
+    NR::FilterMorphologyOperator read_operator;
     switch(key) {
-	/*DEAL WITH SETTING ATTRIBUTES HERE*/
+    /*DEAL WITH SETTING ATTRIBUTES HERE*/
+        case SP_ATTR_OPERATOR:
+            read_operator = sp_feMorphology_read_operator(value);
+            if (read_operator != feMorphology->Operator){
+                feMorphology->Operator = read_operator;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+        case SP_ATTR_RADIUS:
+            feMorphology->radius.set(value);
+            //From SVG spec: If <y-radius> is not provided, it defaults to <x-radius>.
+            if (feMorphology->radius.optNumIsSet() == false)
+                feMorphology->radius.setOptNumber(feMorphology->radius.getNumber());
+            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
         default:
             if (((SPObjectClass *) feMorphology_parent_class)->set)
                 ((SPObjectClass *) feMorphology_parent_class)->set(object, key, value);
@@ -175,7 +208,11 @@ static void sp_feMorphology_build_renderer(SPFilterPrimitive *primitive, NR::Fil
     NR::FilterMorphology *nr_morphology = dynamic_cast<NR::FilterMorphology*>(nr_primitive);
     g_assert(nr_morphology != NULL);
 
-    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+    sp_filter_primitive_renderer_common(primitive, nr_primitive); 
+    
+    nr_morphology->set_operator(sp_morphology->Operator);
+    nr_morphology->set_xradius( (int)sp_morphology->radius.getNumber() );
+    nr_morphology->set_yradius( (int)sp_morphology->radius.getOptNumber() );
 }
 
 /*

@@ -14,7 +14,6 @@ namespace NR {
 
 FilterMorphology::FilterMorphology()
 {
-    g_warning("FilterMorphology::render not implemented.");
 }
 
 FilterPrimitive * FilterMorphology::create() {
@@ -28,15 +27,53 @@ int FilterMorphology::render(FilterSlot &slot, Matrix const &trans) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 
-    nr_pixblock_setup_fast(out, in->mode,
-                           in->area.x0, in->area.y0, in->area.x1, in->area.y1,
-                           true);
+    int x0=in->area.x0;
+    int y0=in->area.y0;
+    int x1=in->area.x1;
+    int y1=in->area.y1;            
+    int w=x1-x0, h=y1-y0;
+    int x,y,i,j;
+    int rmax,gmax,bmax,amax;
+    int rmin,gmin,bmin,amin;
+    
+    nr_pixblock_setup_fast(out, in->mode, x0, y0, x1, y1, true);
 
     unsigned char *in_data = NR_PIXBLOCK_PX(in);
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
 
-//IMPLEMENT ME!
-    
+    for(x=xradius; x<w-xradius; x++){
+        for(y=yradius; y<h-yradius; y++){
+            rmin=rmax=in_data[4*(x + w*y)];
+            gmin=gmax=in_data[4*(x + w*y)+1];
+            bmin=bmax=in_data[4*(x + w*y)+2];
+            amin=amax=in_data[4*(x + w*y)+3];
+            for(i=x-xradius;i<x+xradius;i++){
+                for(j=y-yradius;j<y+yradius;j++){
+                    if(in_data[4*(i + w*j)]>rmax) rmax = in_data[4*(i + w*j)];
+                    if(in_data[4*(i + w*j)+1]>gmax) gmax = in_data[4*(i + w*j)+1];
+                    if(in_data[4*(i + w*j)+2]>bmax) bmax = in_data[4*(i + w*j)+2];
+                    if(in_data[4*(i + w*j)+3]>amax) amax = in_data[4*(i + w*j)+3];
+                                                            
+                    if(in_data[4*(i + w*j)]<rmin) rmin = in_data[4*(i + w*j)];
+                    if(in_data[4*(i + w*j)+1]<gmin) gmin = in_data[4*(i + w*j)+1];
+                    if(in_data[4*(i + w*j)+2]<bmin) bmin = in_data[4*(i + w*j)+2];
+                    if(in_data[4*(i + w*j)+3]<amin) amin = in_data[4*(i + w*j)+3];                    
+                }
+            }
+            if (Operator==MORPHOLOGY_OPERATOR_ERODE){
+                out_data[4*(x + w*y)]=rmax;
+                out_data[4*(x + w*y)+1]=gmax;
+                out_data[4*(x + w*y)+2]=bmax;
+                out_data[4*(x + w*y)+3]=amax;
+            } else {
+                out_data[4*(x + w*y)]=rmin;
+                out_data[4*(x + w*y)+1]=gmin;
+                out_data[4*(x + w*y)+2]=bmin;
+                out_data[4*(x + w*y)+3]=amin;
+            }
+        }
+    }
+   
     out->empty = FALSE;
     slot.set(_output, out);
     return 0;
@@ -44,6 +81,22 @@ int FilterMorphology::render(FilterSlot &slot, Matrix const &trans) {
 
 void FilterMorphology::area_enlarge(NRRectL &area, Matrix const &trans)
 {
+    area.x0-=xradius;
+    area.x1+=xradius;
+    area.y0-=yradius;
+    area.y1+=yradius;            
+}
+
+void FilterMorphology::set_operator(FilterMorphologyOperator &o){
+    Operator = o;
+}
+
+void FilterMorphology::set_xradius(int x){
+    xradius = x;
+}
+
+void FilterMorphology::set_yradius(int y){
+    yradius = y;
 }
 
 } /* namespace NR */

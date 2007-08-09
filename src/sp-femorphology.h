@@ -15,7 +15,7 @@
 
 #include "sp-filter.h"
 #include "sp-femorphology-fns.h"
-
+#include "number-opt-number.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-morphology.h"
 
@@ -25,7 +25,8 @@ class SPFeMorphologyClass;
 
 struct SPFeMorphology : public SPFilterPrimitive {
     /** MORPHOLOGY ATTRIBUTES HERE */
-    
+    NR::FilterMorphologyOperator Operator;
+    NumberOptNumber radius;
 };
 
 struct SPFeMorphologyClass {

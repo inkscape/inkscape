@@ -17,6 +17,11 @@
 
 namespace NR {
 
+enum FilterMorphologyOperator {
+    MORPHOLOGY_OPERATOR_ERODE,
+    MORPHOLOGY_OPERATOR_DILATE
+};
+
 class FilterMorphology : public FilterPrimitive {
 public:
     FilterMorphology();
@@ -25,6 +30,14 @@ public:
 
     virtual int render(FilterSlot &slot, Matrix const &trans);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
+    void set_operator(FilterMorphologyOperator &o);
+    void set_xradius(int x);
+    void set_yradius(int y);
+
+private:
+    FilterMorphologyOperator Operator;
+    int xradius;
+    int yradius;
 };
 
 } /* namespace NR */
