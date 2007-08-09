@@ -4299,12 +4299,12 @@ msgstr "Изменить размер объекта по оси Z"
 #: ../src/object-edit.cpp:724 ../src/object-edit.cpp:726
 #: ../src/object-edit.cpp:728 ../src/object-edit.cpp:730
 msgid "Resize box in X/Y direction; with <b>Shift</b> along the Z axis"
-msgstr "Изменить размер объекта по осям X/Y; с b>Shift</b> — вдоль оси Z"
+msgstr "Изменить размер объекта по осям X/Y; с <b>Shift</b> — вдоль оси Z"
 
 #: ../src/object-edit.cpp:732 ../src/object-edit.cpp:734
 #: ../src/object-edit.cpp:736 ../src/object-edit.cpp:738
 msgid "Resize box along the Z axis; with <b>Shift</b> in X/Y direction"
-msgstr "Изменить размер вдоль оси Z; с b>Shift</b> — по осям X/Y"
+msgstr "Изменить размер вдоль оси Z; с <b>Shift</b> — по осям X/Y"
 
 #: ../src/object-edit.cpp:918
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
