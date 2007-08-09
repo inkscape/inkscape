@@ -95,6 +95,8 @@ public:
     /* returns the VP of the dragger that belongs to the given perspective */
     VanishingPoint *getVPofPerspective (Perspective3D *persp);
 
+    void updateTip();
+
     bool hasBox (const SP3DBox *box);
     guint numberOfBoxes(); // the number of boxes linked to all VPs of the dragger
 

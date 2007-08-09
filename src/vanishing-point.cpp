@@ -225,7 +225,7 @@ vp_knot_moved_handler (SPKnot *knot, NR::Point const *ppointer, guint state, gpo
                     
                 // TODO: Update the new merged dragger
                 //d_new->updateKnotShape ();
-                //d_new->updateTip ();
+                d_new->updateTip ();
 
                 d_new->reshapeBoxes (d_new->point, Box3D::XYZ);
                 d_new->updateBoxReprs ();
@@ -311,7 +311,7 @@ vp_knot_grabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
                     // if all boxes of persp are selected, we can simply move the VP from dr_new back to dragger
                     dr_new->removeVP (vp);
                     dragger->addVP (vp);
-                    
+
                     // some cleaning up for efficiency
                     boxes_to_do = eliminate_remaining_boxes_of_persp_starting_from_list_position (boxes_to_do, box, persp);
                 } else {
@@ -340,10 +340,11 @@ vp_knot_grabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
 
             // TODO: Something is still wrong with updating the boxes' representations after snapping
             //dr_new->updateBoxReprs ();
+
+            dragger->updateTip();
+            dr_new->updateTip();
         }
     }
-
-    // TODO: Update the tips
 }
 
 static void
@@ -431,6 +432,49 @@ VPDragger::~VPDragger()
 }
 
 /**
+Updates the statusbar tip of the dragger knot, based on its draggables
+ */
+void
+VPDragger::updateTip ()
+{
+    if (this->knot && this->knot->tip) {
+        g_free (this->knot->tip);
+        this->knot->tip = NULL;
+    }
+
+    guint num = this->numberOfBoxes();
+    if (g_slist_length (this->vps) == 1) {
+        VanishingPoint *vp = (VanishingPoint *) this->vps->data;
+        switch (vp->state) {
+            case VP_FINITE:
+                this->knot->tip = g_strdup_printf (ngettext("<b>Finite</b> vanishing point shared by <b>%d</b> box",
+                                                            "<b>Finite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)",
+                                                            num),
+                                                   num);
+                break;
+            case VP_INFINITE:
+                // This won't make sense any more when infinite VPs are not shown on the canvas,
+                // but currently we update the status message anyway
+                this->knot->tip = g_strdup_printf (ngettext("<b>Infinite</b> vanishing point shared by <b>%d</b> box",
+                                                            "<b>Infinite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)",
+                                                            num),
+                                                   num);
+                break;
+        }
+    } else {
+        int length = g_slist_length (this->vps);
+        char *desc1 = g_strdup_printf ("Collection of <b>%d</b> vanishing points ", length);
+        char *desc2 = g_strdup_printf (ngettext("shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)",
+                                                "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)",
+                                                num),
+                                       num);
+        this->knot->tip = g_strconcat(desc1, desc2, NULL);
+        g_free (desc1);
+        g_free (desc2);
+    }
+}
+
+/**
  * Adds a vanishing point to the dragger (also updates the position)
  */
 void
@@ -447,7 +491,7 @@ VPDragger::addVP (VanishingPoint *vp)
     vp->set_pos (this->point);
     this->vps = g_slist_prepend (this->vps, vp);
 
-    //this->updateTip();
+    this->updateTip();
 }
 
 void
@@ -460,7 +504,7 @@ VPDragger::removeVP (VanishingPoint *vp)
     g_assert (this->vps != NULL);
     this->vps = g_slist_remove (this->vps, vp);
 
-    //this->updateTip();
+    this->updateTip();
 }
 
 // returns the VP contained in the dragger that belongs to persp
