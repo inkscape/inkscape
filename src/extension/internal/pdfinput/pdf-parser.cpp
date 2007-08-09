@@ -64,33 +64,33 @@ extern "C" {
 #define functionMaxDepth 6
 
 // Max delta allowed in any color component for a function shading fill.
-#define functionColorDelta (dblToCol(1 / 256.0))
+#define functionColorDelta (dblToCol(1 / 2.0))
 
 // Max number of splits along the t axis for an axial shading fill.
 #define axialMaxSplits 256
 
 // Max delta allowed in any color component for an axial shading fill.
-#define axialColorDelta (dblToCol(1 / 256.0))
+#define axialColorDelta (dblToCol(1 / 2.0))
 
 // Max number of splits along the t axis for a radial shading fill.
 #define radialMaxSplits 256
 
 // Max delta allowed in any color component for a radial shading fill.
-#define radialColorDelta (dblToCol(1 / 256.0))
+#define radialColorDelta (dblToCol(1 / 2.0))
 
 // Max recursive depth for a Gouraud triangle shading fill.
 #define gouraudMaxDepth 6
 
 // Max delta allowed in any color component for a Gouraud triangle
 // shading fill.
-#define gouraudColorDelta (dblToCol(1 / 256.0))
+#define gouraudColorDelta (dblToCol(1 / 2.0))
 
 // Max recursive depth for a patch mesh shading fill.
 #define patchMaxDepth 6
 
 // Max delta allowed in any color component for a patch mesh shading
 // fill.
-#define patchColorDelta (dblToCol(1 / 256.0))
+#define patchColorDelta (dblToCol(1 / 2.0))
 
 // Max number of operators kept in the history list.
 #define maxOperatorHistoryDepth 16
