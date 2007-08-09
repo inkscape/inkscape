@@ -441,7 +441,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
             }
 
             /* Note it if it's the best so far */
-            if (metric < best_metric && metric != 0) {
+            if (metric < best_metric) {
                 best_transformation = result;
                 best_metric = metric;
             }
