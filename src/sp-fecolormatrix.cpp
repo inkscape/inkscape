@@ -6,8 +6,10 @@
  */
 /*
  * Authors:
+ *   Felipe Sanches <felipe.sanches@gmail.com>
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
  *
+ * Copyright (C) 2007 Felipe C. da S. Sanches
  * Copyright (C) 2006 Hugo Rodrigues
  *
  * Released under GNU GPL, read the file 'COPYING' for more information

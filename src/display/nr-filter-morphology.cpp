@@ -60,7 +60,7 @@ int FilterMorphology::render(FilterSlot &slot, Matrix const &trans) {
                     if(in_data[4*(i + w*j)+3]<amin) amin = in_data[4*(i + w*j)+3];                    
                 }
             }
-            if (Operator==MORPHOLOGY_OPERATOR_ERODE){
+            if (Operator==MORPHOLOGY_OPERATOR_DILATE){
                 out_data[4*(x + w*y)]=rmax;
                 out_data[4*(x + w*y)+1]=gmax;
                 out_data[4*(x + w*y)+2]=bmax;
