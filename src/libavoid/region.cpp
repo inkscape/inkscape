@@ -218,7 +218,7 @@ void Region::initialSplit(BBox& bbox, unsigned int pos, unsigned int& shapeId)
         newR = split(n1.y, R_HORI);
         newR = newR->split(n1.x, R_VERT);
         
-        printf("%X - list %d add %d\n", (int) newR,
+        printf("%p - list %d add %d\n", newR,
                 (int) newR->_blocks.size(), shapeId);
         newR->_blocks.push_back((int) shapeId);
         newR->_blocks.sort();
@@ -327,7 +327,7 @@ void Region::initialSplit(BBox& bbox, unsigned int pos, unsigned int& shapeId)
             cptr = curr;
             while (cptr->_bbox.b.x <= bottom->_bbox.b.x)
             {
-                printf("%X - list %d add %d\n", (int) cptr,
+                printf("%p - list %d add %d\n", cptr,
                         (int) cptr->_blocks.size(), shapeId);
                 cptr->_blocks.push_back((int) shapeId);
                 cptr->_blocks.sort();
@@ -467,7 +467,7 @@ void Region::mergeRegion(Region *src)
         abort();
     }
     mergeAttributes(src);
-    printf("DEL %X\n", (int) src);
+    printf("DEL %p\n", src);
     delete src;
 }
 
@@ -488,7 +488,7 @@ Region *Region::splitDir(double pos, unsigned int dir, bool first)
        
         // Create new block.
         Region *r  = new Region(pos, o1.y, o2.x, o2.y);
-        printf("NEW %X\n", (int) r);
+        printf("NEW %p\n", r);
         r->copyAttributes(this);
 
         Region *o_up    = _up;
@@ -520,7 +520,7 @@ Region *Region::splitDir(double pos, unsigned int dir, bool first)
 
         // Create new block.
         Region *b  = new Region(o1.x, pos, o2.x, o2.y);
-        printf("NEW %X\n", (int) b);
+        printf("NEW %p\n", b);
         b->copyAttributes(this);
 
         Region *o_left  = _left;
@@ -623,7 +623,7 @@ void Region::addShape(ShapeRef *shape)
     {
         // Add new default region.
         centerRegion = new Region();
-        printf("NEW %X\n", (int) centerRegion);
+        printf("NEW %p\n", centerRegion);
     }
     BBox bbox;
     // Get bounding box for added shape.
@@ -706,7 +706,7 @@ void Region::removeShape(ShapeRef *shape)
             
             assert(std::find(blocks.begin(), blocks.end(), (int) shapeId) !=
                     blocks.end());
-            printf("%X - list %d remove %d\n", (int) cptr,
+            printf("%p - list %d remove %d\n", cptr,
                     (int) blocks.size(), shapeId);
             cptr->_blocks.remove((int) shapeId);
 
