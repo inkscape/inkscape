@@ -298,6 +298,7 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   state = new GfxState(72.0, 72.0, cropBox, rotate, gTrue);
   fontChanged = gFalse;
   clip = clipNone;
+  lastClipPath = NULL;
   ignoreUndef = 0;
   operatorHistory = NULL;
   builder = builderA;
@@ -353,6 +354,7 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   state = new GfxState(72, 72, box, 0, gFalse);
   fontChanged = gFalse;
   clip = clipNone;
+  lastClipPath = NULL;
   ignoreUndef = 0;
   for (i = 0; i < 6; ++i) {
     baseMatrix[i] = state->getCTM()[i];
@@ -372,6 +374,9 @@ PdfParser::~PdfParser() {
   }
   if (state) {
     delete state;
+  }
+  if (lastClipPath) {
+    delete lastClipPath;
   }
 }
 
@@ -1554,14 +1559,52 @@ void PdfParser::opShFill(Object args[], int numArgs) {
   GfxShading *shading;
   GfxPath *savedPath;
   double xMin, yMin, xMax, yMax;
+  double gradientTransform[6];
+  double *matrix = NULL;
+  GBool savedState = gFalse;
 
   if (!(shading = res->lookupShading(args[0].getName()))) {
     return;
   }
 
   // save current graphics state
-  savedPath = state->getPath()->copy();
-  saveState();
+  if (shading->getType() != 2 && shading->getType() != 3) {
+    savedPath = state->getPath()->copy();
+    saveState();
+    savedState = gTrue;
+  } else {  // get gradient transform if possible
+      // check proper operator sequence
+      // first there should be one W(*) and then one 'cm' somewhere before 'sh'
+      GBool seenClip, seenConcat;
+      seenClip = gFalse;
+      seenConcat = gFalse;
+      int i = 1;
+      while (i <= maxOperatorHistoryDepth) {
+        const char *opName = getPreviousOperator(i);
+        if (!strcmp(opName, "cm")) {
+          if (seenConcat) {   // more than one 'cm'
+            break;
+          } else {
+            seenConcat = gTrue;
+          }
+        } else if (!strcmp(opName, "W") || !strcmp(opName, "W*")) {
+          if (seenConcat) { // good sequence
+            seenClip = gTrue;
+            break;
+          } else {  // no 'cm' so bail out
+            break;
+          }
+        }
+        i++;
+      }
+
+      if (seenConcat && seenClip) {
+        if (builder->getTransform((double*)&gradientTransform)) {
+          matrix = (double*)&gradientTransform;
+          builder->setTransform(1.0, 0.0, 0.0, 1.0, 0.0, 0.0);  // remove transform
+        }
+      }
+  }
 
   // clip to bbox
   if (shading->getHasBBox()) {
@@ -1572,12 +1615,16 @@ void PdfParser::opShFill(Object args[], int numArgs) {
     state->lineTo(xMin, yMax);
     state->closePath();
     state->clip();
-    builder->clip(state);
+    if (savedState)
+      builder->setClipPath(state);
+    else
+      builder->clip(state);
     state->clearPath();
   }
 
   // set the color space
-  state->setFillColorSpace(shading->getColorSpace()->copy());
+  if (savedState)
+    state->setFillColorSpace(shading->getColorSpace()->copy());
 
   // do shading type-specific operations
   switch (shading->getType()) {
@@ -1586,7 +1633,10 @@ void PdfParser::opShFill(Object args[], int numArgs) {
     break;
   case 2:
   case 3:
-    // no need to implement these
+    if (lastClipPath) {
+      builder->addShadedFill(shading, matrix, lastClipPath,
+                             lastClipType == clipEO ? true : false);
+    }
     break;
   case 4:
   case 5:
@@ -1599,8 +1649,10 @@ void PdfParser::opShFill(Object args[], int numArgs) {
   }
 
   // restore graphics state
-  restoreState();
-  state->setPath(savedPath);
+  if (savedState) {
+    restoreState();
+    state->setPath(savedPath);
+  }
 
   delete shading;
 }
@@ -1949,10 +2001,18 @@ void PdfParser::doEndPath() {
 
 void PdfParser::opClip(Object args[], int numArgs) {
   clip = clipNormal;
+  lastClipType = clipNormal;
+  if (lastClipPath)
+      delete lastClipPath;
+  lastClipPath = state->getPath()->copy();
 }
 
 void PdfParser::opEOClip(Object args[], int numArgs) {
   clip = clipEO;
+  lastClipType = clipEO;
+  if (lastClipPath)
+      delete lastClipPath;
+  lastClipPath = state->getPath()->copy();
 }
 
 //------------------------------------------------------------------------

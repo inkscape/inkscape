@@ -33,9 +33,10 @@ namespace Inkscape {
 class GooString;
 class Function;
 struct GfxState;
+class GfxPath;
 class GfxPattern;
-class GfxShadingPattern;
 class GfxTilingPattern;
+class GfxShading;
 class GfxFont;
 class GfxImageColorMap;
 class Stream;
@@ -93,6 +94,7 @@ public:
 
     // Path adding
     void addPath(GfxState *state, bool fill, bool stroke, bool even_odd=false);
+    void addShadedFill(GfxShading *shading, double *matrix, GfxPath *path, bool even_odd=false);
 
     // Image handling
     void addImage(GfxState *state, Stream *str, int width, int height,
@@ -144,7 +146,7 @@ private:
 
     // Pattern creation
     gchar *_createPattern(GfxPattern *pattern, GfxState *state, bool is_stroke=false);
-    gchar *_createGradient(GfxShadingPattern *shading_pattern);
+    gchar *_createGradient(GfxShading *shading, double *matrix);
     bool _addStopsToGradient(Inkscape::XML::Node *gradient, Function *func, double opacity);
     bool _addSamplesToGradient(Inkscape::XML::Node *gradient, Function *func,
                                double offset0, double offset1, double opacity);

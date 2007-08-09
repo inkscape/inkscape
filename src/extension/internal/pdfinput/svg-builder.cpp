@@ -383,6 +383,42 @@ void SvgBuilder::addPath(GfxState *state, bool fill, bool stroke, bool even_odd)
 }
 
 /**
+ * \brief Emits the current path in poppler's GfxState data structure
+ * The path is set to be filled with the given shading.
+ */
+void SvgBuilder::addShadedFill(GfxShading *shading, double *matrix, GfxPath *path,
+                               bool even_odd) {
+
+    Inkscape::XML::Node *path_node = _xml_doc->createElement("svg:path");
+    gchar *pathtext = svgInterpretPath(path);
+    path_node->setAttribute("d", pathtext);
+    g_free(pathtext);
+
+    // Set style
+    SPCSSAttr *css = sp_repr_css_attr_new();
+    gchar *id = _createGradient(shading, matrix);
+    if (id) {
+        gchar *urltext = g_strdup_printf ("url(#%s)", id);
+        sp_repr_css_set_property(css, "fill", urltext);
+        g_free(urltext);
+        g_free(id);
+    } else {
+        sp_repr_css_attr_unref(css);
+        Inkscape::GC::release(path_node);
+        return;
+    }
+    if (even_odd) {
+        sp_repr_css_set_property(css, "fill-rule", "evenodd");
+    }
+    sp_repr_css_set_property(css, "stroke", "none");
+    sp_repr_css_change(path_node, css, "style");
+    sp_repr_css_attr_unref(css);
+
+    _container->appendChild(path_node);
+    Inkscape::GC::release(path_node);
+}
+
+/**
  * \brief Clips to the current path set in GfxState
  * \param state poppler's data structure
  * \param even_odd whether the even-odd rule should be applied
@@ -480,7 +516,9 @@ gchar *SvgBuilder::_createPattern(GfxPattern *pattern, GfxState *state, bool is_
     gchar *id = NULL;
     if ( pattern != NULL ) {
         if ( pattern->getType() == 2 ) {  // Shading pattern
-            id = _createGradient((GfxShadingPattern*)pattern);
+            GfxShadingPattern *shading_pattern = (GfxShadingPattern*)pattern;
+            id = _createGradient(shading_pattern->getShading(),
+                                 shading_pattern->getMatrix());
         } else if ( pattern->getType() == 1 ) {   // Tiling pattern
             id = _createTilingPattern((GfxTilingPattern*)pattern, state, is_stroke);
         }
@@ -558,8 +596,7 @@ gchar *SvgBuilder::_createTilingPattern(GfxTilingPattern *tiling_pattern,
  * \brief Creates a linear or radial gradient from poppler's data structure
  * \return id of the created object
  */
-gchar *SvgBuilder::_createGradient(GfxShadingPattern *shading_pattern) {
-    GfxShading *shading = shading_pattern->getShading();
+gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix) {
     Inkscape::XML::Node *gradient;
     Function *func;
     int num_funcs;
@@ -598,13 +635,15 @@ gchar *SvgBuilder::_createGradient(GfxShadingPattern *shading_pattern) {
     }
     gradient->setAttribute("gradientUnits", "userSpaceOnUse");
     // Flip the gradient transform around the y axis
-    double *p2u = shading_pattern->getMatrix();
-    NR::Matrix pat_matrix(p2u[0], p2u[1], p2u[2], p2u[3], p2u[4], p2u[5]);
-    NR::Matrix flip(1.0, 0.0, 0.0, -1.0, 0.0, _height * PT_PER_PX);
-    pat_matrix *= flip;
-    gchar *transform_text = sp_svg_transform_write(pat_matrix);
-    gradient->setAttribute("gradientTransform", transform_text);
-    g_free(transform_text);
+    if (matrix) {
+        NR::Matrix pat_matrix(matrix[0], matrix[1], matrix[2], matrix[3],
+                              matrix[4], matrix[5]);
+        NR::Matrix flip(1.0, 0.0, 0.0, -1.0, 0.0, _height * PT_PER_PX);
+        pat_matrix *= flip;
+        gchar *transform_text = sp_svg_transform_write(pat_matrix);
+        gradient->setAttribute("gradientTransform", transform_text);
+        g_free(transform_text);
+    }
 
     if ( extend0 && extend1 ) {
         gradient->setAttribute("spreadMethod", "pad");

@@ -154,6 +154,8 @@ private:
   void pushOperator(const char *name);
   OpHistoryEntry *popOperator();
   const char *getPreviousOperator(unsigned int look_back=1);    // returns the nth previous operator's name
+  GfxPath *lastClipPath;        // Used as the path to be filled for an 'sh' operator
+  GfxClipType lastClipType;
 
   void go(GBool topLevel);
   void execOp(Object *cmd, Object args[], int numArgs);
