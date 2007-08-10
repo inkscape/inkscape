@@ -616,7 +616,7 @@ void FileDialogBaseGtk::internalSetup()
         (bool)prefs_get_int_attribute( preferenceBase.c_str(),
              "enable_preview", 1 );
 
-    previewCheckbox.set_label( Glib::ustring(_("Enable Preview")) );
+    previewCheckbox.set_label( Glib::ustring(_("Enable preview")) );
     previewCheckbox.set_active( enablePreview );
 
     previewCheckbox.signal_toggled().connect(
