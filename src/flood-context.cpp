@@ -526,6 +526,24 @@ inline static unsigned int paint_pixel(guchar *px, guchar *trace_px, unsigned ch
     }
 }
 
+static void push_point_onto_queue(std::deque<NR::Point> *fill_queue, unsigned int max_queue_size, unsigned char *trace_t, unsigned int x, unsigned int y) {
+    if (!is_pixel_queued(trace_t)) {
+        if ((fill_queue->size() < max_queue_size)) {
+            fill_queue->push_back(NR::Point(x, y));
+            mark_pixel_queued(trace_t);
+        }
+    }
+}
+
+static void shift_point_onto_queue(std::deque<NR::Point> *fill_queue, unsigned int max_queue_size, unsigned char *trace_t, unsigned int x, unsigned int y) {
+    if (!is_pixel_queued(trace_t)) {
+        if ((fill_queue->size() < max_queue_size)) {
+            fill_queue->push_front(NR::Point(x, y));
+            mark_pixel_queued(trace_t);
+        }
+    }
+}
+
 static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
     bool aborted = false;
     bool reached_screen_boundary = false;
@@ -573,10 +591,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
                             
                             if (ok_to_paint && (!currently_painting_top)) {
                                 currently_painting_top = true;
-                                if ((fill_queue->size() < bci.max_queue_size)) {
-                                    fill_queue->push_back(NR::Point(bci.x, top_ty));
-                                    mark_pixel_queued(trace_t);
-                                }
+                                push_point_onto_queue(fill_queue, bci.max_queue_size, trace_t, bci.x, top_ty);
                             }
                             if ((!ok_to_paint) && currently_painting_top) {
                                 currently_painting_top = false;
@@ -595,10 +610,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
                             
                             if (ok_to_paint && (!currently_painting_bottom)) {
                                 currently_painting_bottom = true;
-                                if ((fill_queue->size() < bci.max_queue_size)) {
-                                    fill_queue->push_back(NR::Point(bci.x, bottom_ty));
-                                    mark_pixel_queued(trace_t);
-                                }
+                                push_point_onto_queue(fill_queue, bci.max_queue_size, trace_t, bci.x, bottom_ty);
                             }
                             if ((!ok_to_paint) && currently_painting_bottom) {
                                 currently_painting_bottom = false;
@@ -727,30 +739,6 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
     std::vector<NR::Point> fill_points;
     
-    if (is_point_fill) {
-        fill_points.push_back(NR::Point(event->button.x, event->button.y));
-    } else {
-        Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
-        fill_points = r->getPoints();
-    }
-
-    for (unsigned int i = 0; i < fill_points.size(); i++) {
-        NR::Point pw = NR::Point(fill_points[i][NR::X] / zoom_scale, sp_document_height(document) + (fill_points[i][NR::Y] / zoom_scale)) * affine;
-        
-        pw[NR::X] = (int)MIN(width - 1, MAX(0, pw[NR::X]));
-        pw[NR::Y] = (int)MIN(height - 1, MAX(0, pw[NR::Y]));
-        
-        if (is_touch_fill) {
-            if (i == 0) {
-                color_queue.push(pw);
-            } else {
-                fill_queue.push_back(pw);
-            }
-        } else {
-            color_queue.push(pw);
-        }
-    }
-
     bool aborted = false;
     int y_limit = height - 1;
 
@@ -769,9 +757,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         case FLOOD_CHANNELS_S:
         case FLOOD_CHANNELS_L:
             break;
-      }
-
-    bool reached_screen_boundary = false;
+    }
 
     bitmap_coords_info bci;
     
@@ -784,8 +770,35 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     bci.screen = screen;
     bci.dtc = dtc;
     bci.radius = prefs_get_int_attribute_limited("tools.paintbucket", "autogap", 0, 0, 3);
-    bci.max_queue_size = width * height;
+    bci.max_queue_size = (width * height) / 16;
     bci.current_step = 0;
+
+    if (is_point_fill) {
+        fill_points.push_back(NR::Point(event->button.x, event->button.y));
+    } else {
+        Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+        fill_points = r->getPoints();
+    }
+
+    for (unsigned int i = 0; i < fill_points.size(); i++) {
+        NR::Point pw = NR::Point(fill_points[i][NR::X] / zoom_scale, sp_document_height(document) + (fill_points[i][NR::Y] / zoom_scale)) * affine;
+        
+        pw[NR::X] = (int)MIN(width - 1, MAX(0, pw[NR::X]));
+        pw[NR::Y] = (int)MIN(height - 1, MAX(0, pw[NR::Y]));
+        
+        if (is_touch_fill) {
+            if (i == 0) {
+                color_queue.push(pw);
+            } else {
+                unsigned char *trace_t = get_pixel(trace_px, (int)pw[NR::X], (int)pw[NR::Y], width);
+                push_point_onto_queue(&fill_queue, bci.max_queue_size, trace_t, (int)pw[NR::X], (int)pw[NR::Y]);
+            }
+        } else {
+            color_queue.push(pw);
+        }
+    }
+
+    bool reached_screen_boundary = false;
 
     bool first_run = true;
 
@@ -809,7 +822,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         unsigned char *trace_t = get_pixel(trace_px, cx, cy, width);
         if (!is_pixel_checked(trace_t) && !is_pixel_colored(trace_t)) {
             if (check_if_pixel_is_paintable(px, trace_px, cx, cy, orig_color, bci)) {
-                fill_queue.push_front(color_point);
+                shift_point_onto_queue(&fill_queue, bci.max_queue_size, trace_t, cx, cy);
 
                 if (!first_run) {
                     for (unsigned int y = 0; y < height; y++) {
