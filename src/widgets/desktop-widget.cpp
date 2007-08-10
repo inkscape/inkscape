@@ -561,33 +561,20 @@ SPDesktopWidget::shutdown()
         if (sp_document_repr_root(doc)->attribute("sodipodi:modified") != NULL) {
             GtkWidget *dialog;
 
-            dialog = gtk_message_dialog_new(
-                GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(this))),
-                GTK_DIALOG_DESTROY_WITH_PARENT,
-                GTK_MESSAGE_WARNING,
-                GTK_BUTTONS_NONE,
-                "Document modified");
-
-            gchar *markup;
             /** \todo
              * FIXME !!! obviously this will have problems if the document
              * name contains markup characters
              */
-            markup = g_strdup_printf(
+            dialog = gtk_message_dialog_new_with_markup(
+                GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(this))),
+                GTK_DIALOG_DESTROY_WITH_PARENT,
+                GTK_MESSAGE_WARNING,
+                GTK_BUTTONS_NONE,
                 _("<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n\n"
                   "If you close without saving, your changes will be discarded."),
                 SP_DOCUMENT_NAME(doc));
-
-            /** \todo
-             * FIXME !!! Gtk 2.3+ gives us gtk_message_dialog_set_markup()
-             * (and actually even
-             * gtk_message_dialog_new_with_markup(..., format, ...)!) --
-             * until then, we will have to be a little bit evil here and
-             * poke at GtkMessageDialog::label, which is private...
-             */
-
-            gtk_label_set_markup(GTK_LABEL(GTK_MESSAGE_DIALOG(dialog)->label), markup);
-            g_free(markup);
+            // fix for bug 1767940:             
+            GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), GTK_CAN_FOCUS);
 
             GtkWidget *close_button;
             close_button = gtk_button_new_with_mnemonic(_("Close _without saving"));
@@ -629,34 +616,21 @@ SPDesktopWidget::shutdown()
         while (sp_document_repr_root(doc)->attribute("inkscape:dataloss") != NULL && allow_data_loss == FALSE) {
             GtkWidget *dialog;
 
-            dialog = gtk_message_dialog_new(
-                GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(this))),
-                GTK_DIALOG_DESTROY_WITH_PARENT,
-                GTK_MESSAGE_WARNING,
-                GTK_BUTTONS_NONE,
-                "Document modified");
-
-            gchar *markup;
             /** \todo
              * FIXME !!! obviously this will have problems if the document
              * name contains markup characters
              */
-            markup = g_strdup_printf(
+            dialog = gtk_message_dialog_new_with_markup(
+                GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(this))),
+                GTK_DIALOG_DESTROY_WITH_PARENT,
+                GTK_MESSAGE_WARNING,
+                GTK_BUTTONS_NONE,
                 _("<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n\n"
                   "Do you want to save this file in another format?"),
                 SP_DOCUMENT_NAME(doc),
                 Inkscape::Extension::db.get(sp_document_repr_root(doc)->attribute("inkscape:output_extension"))->get_name());
-
-            /** \todo
-             * FIXME !!! Gtk 2.3+ gives us gtk_message_dialog_set_markup()
-             * (and actually even
-             * gtk_message_dialog_new_with_markup(..., format, ...)!) --
-             * until then, we will have to be a little bit evil here and
-             * poke at GtkMessageDialog::label, which is private...
-             */
-
-            gtk_label_set_markup(GTK_LABEL(GTK_MESSAGE_DIALOG(dialog)->label), markup);
-            g_free(markup);
+            // fix for bug 1767940:             
+            GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), GTK_CAN_FOCUS);
 
             GtkWidget *close_button;
             close_button = gtk_button_new_with_mnemonic(_("Close _without saving"));
