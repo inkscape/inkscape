@@ -561,6 +561,23 @@ AC_SUBST(INKBOARD_LIBS)
 AC_SUBST(INKBOARD_CFLAGS)
 
 dnl ******************************
+dnl Check for ImageMagick Magick++ 
+dnl ******************************
+
+AC_CHECK_LIB(Magick++, InitializeMagick, [AC_CHECK_HEADER(Magick++.h, magick_ok=yes, magick_ok=no)], magick_ok=no, -llcms -lfreetype -ljpeg -lfontconfig -lXext -lSM -lICE -lX11 -lz -lpthread -lm -lpthread)
+
+if test "x$magick_ok" = "xyes"; then
+	AC_CHECK_PROG(MAGICKPP_CONFIG, Magick++-config, yes, no)
+	if test "x$MAGICKPP_CONFIG" = "xyes"; then
+		IMAGEMAGICK_LIBS=`Magick++-config --libs`
+		AC_SUBST(IMAGEMAGICK_LIBS)
+		AC_DEFINE(WITH_IMAGE_MAGICK,1,[Image Magick++ support for bitmap effects])
+	fi
+fi
+
+AM_CONDITIONAL(USE_IMAGE_MAGICK, test "x$magick_ok" = "xyes")
+
+dnl ******************************
 dnl   Unconditional dependencies
 dnl ******************************
 
@@ -927,4 +944,5 @@ Configuration:
         Enable LittleCms:         ${enable_lcms}
         Enable Inkboard:          ${with_inkboard}
         Enable SSL in Inkboard:   ${with_inkboard_ssl}
+        ImageMagick Magick++:     ${magick_ok}
 "

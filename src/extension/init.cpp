@@ -62,6 +62,44 @@
 #include "prefs-utils.h"
 #include "io/sys.h"
 
+#ifdef WITH_IMAGE_MAGICK
+#include "internal/bitmap/adaptiveThreshold.h"
+#include "internal/bitmap/addNoise.h"
+#include "internal/bitmap/blur.h"
+#include "internal/bitmap/channel.h"
+#include "internal/bitmap/charcoal.h"
+#include "internal/bitmap/colorize.h"
+#include "internal/bitmap/contrast.h"
+#include "internal/bitmap/convolve.h"
+#include "internal/bitmap/cycleColormap.h"
+#include "internal/bitmap/despeckle.h"
+#include "internal/bitmap/edge.h"
+#include "internal/bitmap/emboss.h"
+#include "internal/bitmap/enhance.h"
+#include "internal/bitmap/equalize.h"
+#include "internal/bitmap/flop.h"
+#include "internal/bitmap/gaussianBlur.h"
+#include "internal/bitmap/implode.h"
+#include "internal/bitmap/level.h"
+#include "internal/bitmap/levelChannel.h"
+#include "internal/bitmap/medianFilter.h"
+#include "internal/bitmap/modulate.h"
+#include "internal/bitmap/negate.h"
+#include "internal/bitmap/normalize.h"
+#include "internal/bitmap/oilPaint.h"
+#include "internal/bitmap/opacity.h"
+#include "internal/bitmap/raise.h"
+#include "internal/bitmap/reduceNoise.h"
+#include "internal/bitmap/shade.h"
+#include "internal/bitmap/sharpen.h"
+#include "internal/bitmap/solarize.h"
+#include "internal/bitmap/spread.h"
+#include "internal/bitmap/swirl.h"
+#include "internal/bitmap/threshold.h"
+#include "internal/bitmap/unsharpmask.h"
+#include "internal/bitmap/wave.h"
+#endif /* WITH_IMAGE_MAGICK */
+
 extern gboolean inkscape_app_use_gui( Inkscape::Application const *app );
 
 namespace Inkscape {
@@ -156,6 +194,45 @@ init()
     Internal::BlurEdge::init();
     Internal::GimpGrad::init();
     Internal::Grid::init();
+	
+    /* Raster Effects */
+#ifdef WITH_IMAGE_MAGICK
+    Internal::Bitmap::AdaptiveThreshold::init();
+    Internal::Bitmap::AddNoise::init();
+    Internal::Bitmap::Blur::init();
+    Internal::Bitmap::Channel::init();
+    Internal::Bitmap::Charcoal::init();
+    Internal::Bitmap::Colorize::init();
+    Internal::Bitmap::Contrast::init();
+    Internal::Bitmap::Convolve::init();
+    Internal::Bitmap::CycleColormap::init();
+    Internal::Bitmap::Edge::init();
+    Internal::Bitmap::Despeckle::init();
+    Internal::Bitmap::Emboss::init();
+    Internal::Bitmap::Enhance::init();
+    Internal::Bitmap::Equalize::init();
+    Internal::Bitmap::Flop::init();
+    Internal::Bitmap::GaussianBlur::init();
+    Internal::Bitmap::Implode::init();
+    Internal::Bitmap::Level::init();
+    Internal::Bitmap::LevelChannel::init();
+    Internal::Bitmap::MedianFilter::init();
+    Internal::Bitmap::Modulate::init();
+    Internal::Bitmap::Negate::init();
+    Internal::Bitmap::Normalize::init();
+    Internal::Bitmap::OilPaint::init();
+    Internal::Bitmap::Opacity::init();
+    Internal::Bitmap::Raise::init();
+    Internal::Bitmap::ReduceNoise::init();
+    Internal::Bitmap::Shade::init();
+    Internal::Bitmap::Sharpen::init();
+    Internal::Bitmap::Solarize::init();
+    Internal::Bitmap::Spread::init();
+    Internal::Bitmap::Swirl::init();
+    Internal::Bitmap::Threshold::init();
+    Internal::Bitmap::Unsharpmask::init();
+    Internal::Bitmap::Wave::init();
+#endif /* WITH_IMAGE_MAGICK */
 
     /* Load search path for extensions */
     if (Inkscape::Extension::Extension::search_path.size() == 0)

@@ -44,6 +44,8 @@ public:
         
     const gchar * get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
     const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
+    
+    void changed (void);
 }; /* class ParamComboBox */
 
 

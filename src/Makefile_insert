@@ -365,7 +365,8 @@ all_libs =			\
 	$(win32ldflags)		\
 	$(PERL_LIBS)		\
 	$(PYTHON_LIBS)	\
-	$(INKBOARD_LIBS)
+	$(INKBOARD_LIBS) \
+	$(IMAGEMAGICK_LIBS)
 
 desktop.$(OBJEXT): helper/sp-marshal.h
 document.$(OBJEXT): helper/sp-marshal.h inkscape_version.h

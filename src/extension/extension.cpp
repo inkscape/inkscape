@@ -428,6 +428,13 @@ Extension::get_param_string (const gchar * name, const SPDocument * doc, const I
     return param->get_string(doc, node);
 }
 
+const gchar *
+Extension::get_param_enum (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
+{
+    Parameter* param = param_shared(name, parameters);
+    return param->get_enum(doc, node);
+}
+
 /**
     \return   The value of the parameter identified by the name
     \brief    Gets a parameter identified by name with the bool placed
@@ -485,6 +492,24 @@ Extension::get_param_float (const gchar * name, const SPDocument * doc, const In
     Parameter * param;
     param = param_shared(name, parameters);
     return param->get_float(doc, node);
+}
+
+/**
+    \return   The string value for the parameter specified
+    \brief    Gets a parameter identified by name with the float placed
+              in value.
+    \param    name    The name of the parameter to get
+    \param    doc    The document to look in for document specific parameters
+    \param    node   The node to look in for a specific parameter
+
+    Look up in the parameters list, then execute the function on that
+    found parameter.
+*/
+SPColor*
+Extension::get_param_color (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
+{
+    Parameter* param = param_shared(name, parameters);
+    return param->get_color(doc, node);
 }
 
 /**
@@ -565,6 +590,25 @@ Extension::set_param_string (const gchar * name, const gchar * value, SPDocument
     Parameter * param;
     param = param_shared(name, parameters);
     return param->set_string(value, doc, node);
+}
+
+/**
+    \return   The passed in value
+    \brief    Sets a parameter identified by name with the string
+              in the parameter value.
+    \param    name    The name of the parameter to set
+    \param    value   The value to set the parameter to
+    \param    doc    The document to look in for document specific parameters
+    \param    node   The node to look in for a specific parameter
+
+    Look up in the parameters list, then execute the function on that
+    found parameter.
+*/
+SPColor*
+Extension::set_param_color (const gchar * name, SPColor* color, SPDocument * doc, Inkscape::XML::Node * node)
+{
+    Parameter* param = param_shared(name, parameters);
+    return param->set_color(color, doc, node);
 }
 
 /** \brief A function to open the error log file. */

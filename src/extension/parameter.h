@@ -13,10 +13,21 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+/** \brief  The root directory in the preferences database for extension-related parameters. */
+#define PREF_DIR "extensions"
+
 #include <gtkmm/widget.h>
 
 #include "xml/document.h"
+#include "xml/node.h"
+#include "document.h"
 #include "extension-forward.h"
+#include "prefs-utils.h"
+
+#include <glibmm/i18n.h>
+
+#include "color.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -76,11 +87,16 @@ public:
                               const Inkscape::XML::Node * node);
     const gchar * get_string (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
+    SPColor* get_color 	     (const SPDocument * doc,
+                              const Inkscape::XML::Node * node);
+	const gchar * get_enum   (const SPDocument * doc,
+                              const Inkscape::XML::Node * node);
 
     bool          set_bool   (bool in,          SPDocument * doc, Inkscape::XML::Node * node);
     int           set_int    (int  in,          SPDocument * doc, Inkscape::XML::Node * node);
     float         set_float  (float in,         SPDocument * doc, Inkscape::XML::Node * node);
     const gchar * set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
+    SPColor* 	  set_color  (SPColor* in, SPDocument * doc, Inkscape::XML::Node * node);
 
     const gchar * name       (void) {return _name;}
 
@@ -89,7 +105,6 @@ public:
     virtual Glib::ustring * string (void);
     gchar const * get_tooltip (void) { return _desc; }
 };
-
 
 }  /* namespace Extension */
 }  /* namespace Inkscape */

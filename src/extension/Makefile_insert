@@ -23,10 +23,22 @@ extension_libextension_a_SOURCES =	\
 	extension/parameter.cpp \
 	extension/paramnotebook.h \
 	extension/paramnotebook.cpp \
+	extension/parambool.h \
+	extension/parambool.cpp \
+	extension/paramcolor.h \
+	extension/paramcolor.cpp \
+	extension/paramdescription.h \
+	extension/paramdescription.cpp \
 	extension/paramenum.h \
 	extension/paramenum.cpp \
+	extension/paramfloat.h \
+	extension/paramfloat.cpp \
+	extension/paramint.h \
+	extension/paramint.cpp \
 	extension/paramradiobutton.h \
 	extension/paramradiobutton.cpp \
+	extension/paramstring.h \
+	extension/paramstring.cpp \
 	extension/prefdialog.cpp \
 	extension/prefdialog.h \
 	extension/system.cpp	\

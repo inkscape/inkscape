@@ -155,6 +155,11 @@ ParamComboBox::set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * no
     return _value;
 }
 
+void
+ParamComboBox::changed (void) {
+    
+}
+
 
 /**
     \brief  A function to get the value of the parameter in string form
@@ -168,19 +173,23 @@ ParamComboBox::string (void)
     return param_string;
 }
 
+
+
+
 /** \brief  A special category of Gtk::Entry to handle string parameteres */
 class ParamComboBoxEntry : public Gtk::ComboBoxText {
 private:
     ParamComboBox * _pref;
     SPDocument * _doc;
     Inkscape::XML::Node * _node;
+    sigc::signal<void> * _changeSignal;
 public:
     /** \brief  Build a string preference for the given parameter
         \param  pref  Where to get the string from, and where to put it
                       when it changes.
     */
-    ParamComboBoxEntry (ParamComboBox * pref, SPDocument * doc, Inkscape::XML::Node * node) :
-        Gtk::ComboBoxText(), _pref(pref), _doc(doc), _node(node) {
+    ParamComboBoxEntry (ParamComboBox * pref, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+        Gtk::ComboBoxText(), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->signal_changed().connect(sigc::mem_fun(this, &ParamComboBoxEntry::changed));
     };
     void changed (void);
@@ -196,10 +205,10 @@ ParamComboBoxEntry::changed (void)
 {
     Glib::ustring data = this->get_active_text();
     _pref->set(data.c_str(), _doc, _node);
-    return;
+    if (_changeSignal != NULL) {
+        _changeSignal->emit();
+    }
 }
-
-
 
 /**
     \brief  Creates a combobox widget for an enumeration parameter
@@ -213,7 +222,7 @@ ParamComboBox::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::s
     label->show();
     hbox->pack_start(*label, false, false);
 
-    ParamComboBoxEntry * combo = Gtk::manage(new ParamComboBoxEntry(this, doc, node));
+    ParamComboBoxEntry * combo = Gtk::manage(new ParamComboBoxEntry(this, doc, node, changeSignal));
     // add choice strings:
     Glib::ustring * settext = 0;
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
@@ -237,4 +246,3 @@ ParamComboBox::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::s
 
 }  /* namespace Extension */
 }  /* namespace Inkscape */
-

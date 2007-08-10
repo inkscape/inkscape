@@ -131,6 +131,12 @@ private:
 public:
     /** An error class for when a parameter is called on a type it is not */
     class param_wrong_type {};
+	class param_not_color_param {};
+    class param_not_enum_param {};
+    class param_not_string_param {};
+    class param_not_float_param {};
+    class param_not_int_param {};
+    class param_not_bool_param {};
     
     /** An error class for when a parameter is looked for that just 
      * simply doesn't exist */
@@ -159,6 +165,12 @@ public:
     const gchar *    get_param_string (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
+	SPColor*        get_param_color   (const gchar * name,
+                                       const SPDocument *   doc = NULL,
+                                       const Inkscape::XML::Node * node = NULL);
+	const gchar *   get_param_enum    (const gchar * name,
+                                       const SPDocument *   doc = NULL,
+                                       const Inkscape::XML::Node * node = NULL);
     bool             set_param_bool   (const gchar * name,
                                        bool          value,
                                        SPDocument *   doc = NULL,
@@ -173,6 +185,10 @@ public:
                                        Inkscape::XML::Node *       node = NULL);
     const gchar *    set_param_string (const gchar * name,
                                        const gchar * value,
+                                       SPDocument *   doc = NULL,
+                                       Inkscape::XML::Node *       node = NULL);
+	SPColor*        set_param_color	  (const gchar * name,
+                                       SPColor* color,
                                        SPDocument *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
 
