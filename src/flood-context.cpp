@@ -770,7 +770,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     bci.screen = screen;
     bci.dtc = dtc;
     bci.radius = prefs_get_int_attribute_limited("tools.paintbucket", "autogap", 0, 0, 3);
-    bci.max_queue_size = (width * height) / 16;
+    bci.max_queue_size = (width * height) / 4;
     bci.current_step = 0;
 
     if (is_point_fill) {
