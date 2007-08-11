@@ -225,9 +225,9 @@ sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
     // off, but that's less noticeable).
     NRRectL bbox;
     bbox.x0 = 0;
-    bbox.y0 = 0;//row;
+    bbox.y0 = row;
     bbox.x1 = ebp->width;
-    bbox.y1 = ebp->height;//row + num_rows;
+    bbox.y1 = row + num_rows;
     /* Update to renderable state */
     NRGC gc(NULL);
     nr_matrix_set_identity(&gc.transform);
@@ -237,7 +237,7 @@ sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
 
     NRPixBlock pb;
     nr_pixblock_setup_extern(&pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
-                             bbox.x0, row/*bbox.y0*/, bbox.x1, row + num_rows/*bbox.y1*/,
+                             bbox.x0, bbox.y0, bbox.x1, bbox.y1,
                              ebp->px, 4 * ebp->width, FALSE, FALSE);
 
     for (int r = 0; r < num_rows; r++) {
@@ -370,14 +370,14 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     ebp.data   = data;
 
     bool write_status;
-    if (width * height < 65536 / 4) {
+    if ((width < 256) || ((width * height) < 32768)) {
         ebp.px = nr_pixelstore_64K_new(FALSE, 0);
-        ebp.sheight = height;
+        ebp.sheight = 65536 / (4 * width);
         write_status = sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         nr_pixelstore_64K_free(ebp.px);
     } else {
-        ebp.sheight = MAX(1,MIN(MAX_STRIPE_SIZE / (4 * width),height));
-        ebp.px = g_new(guchar, 4 * width * ebp.sheight);
+        ebp.px = g_new(guchar, 4 * 64 * width);
+        ebp.sheight = 64;
         write_status = sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         g_free(ebp.px);
     }

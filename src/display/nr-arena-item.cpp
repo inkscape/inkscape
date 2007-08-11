@@ -418,7 +418,12 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
             (item->parent && item->parent->background_pb)) {
             item->background_pb = &ipb;
         }
+
         ipb.visible_area = pb->visible_area;
+        if (item->filter) {
+              item->filter->area_enlarge (ipb.visible_area, item->ctm);
+        }
+
         unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, &ipb, flags);
         if (state & NR_ARENA_ITEM_STATE_INVALID) {
             /* Clean up and return error */
