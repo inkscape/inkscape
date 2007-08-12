@@ -1657,7 +1657,7 @@ void FilterEffectsDialog::PrimitiveList::sanitize_connections(const Gtk::TreeIte
 }
 
 // Reorder the filter primitives to match the list order
-void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::DragContext>&)
+void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::DragContext>& dc)
 {
     SPFilter* filter = _dialog._filter_modifier.get_selected_filter();
     int ndx = 0;
@@ -1665,12 +1665,19 @@ void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::Dra
     for(Gtk::TreeModel::iterator iter = _model->children().begin();
         iter != _model->children().end(); ++iter, ++ndx) {
         SPFilterPrimitive* prim = (*iter)[_columns.primitive];
-        if(prim) {
+        if(prim && prim == _drag_prim) {
             SP_OBJECT_REPR(prim)->setPosition(ndx);
-            if(_drag_prim == prim) {
-                sanitize_connections(iter);
-                get_selection()->select(iter);
-            }
+            break;
+        }
+    }
+
+    for(Gtk::TreeModel::iterator iter = _model->children().begin();
+        iter != _model->children().end(); ++iter, ++ndx) {
+        SPFilterPrimitive* prim = (*iter)[_columns.primitive];
+        if(prim && prim == _drag_prim) {
+            sanitize_connections(iter);
+            get_selection()->select(iter);
+            break;
         }
     }
 
