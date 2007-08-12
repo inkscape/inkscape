@@ -1629,6 +1629,10 @@ void check_single_connection(SPFilterPrimitive* prim, const int result)
             if(SP_FECOMPOSITE(prim)->in2 == result)
                 SP_OBJECT_REPR(prim)->setAttribute("in2", 0);
         }
+        else if(SP_IS_FEDISPLACEMENTMAP(prim)) {
+            if(SP_FEDISPLACEMENTMAP(prim)->in2 == result)
+                SP_OBJECT_REPR(prim)->setAttribute("in2", 0);
+        }
     }
 }
 

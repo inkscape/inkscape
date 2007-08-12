@@ -148,6 +148,8 @@ void DualSpinSlider::set_from_attribute(SPObject* o)
             if(toks[1])
                 v2 = Glib::Ascii::strtod(toks[1]);
 
+            _link.set_active(toks[1] == 0);
+
             _s1.get_adjustment().set_value(v1);
             _s2.get_adjustment().set_value(v2);
 
