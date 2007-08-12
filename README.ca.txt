@@ -42,3 +42,4 @@ d'Inkscape.
 
 La versió en català d'Inkscape ha estat desenvolupada per Softcatalà:
 http://www.softcatala.org/.
+
