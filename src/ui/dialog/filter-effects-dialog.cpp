@@ -1820,6 +1820,7 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_TURBULENCE);
     _settings->add_checkbutton(SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
+    _settings->add_combo(SP_ATTR_TYPE, _("Type"), TurbulenceTypeConverter);
     _settings->add_dualspinslider(SP_ATTR_BASEFREQUENCY, _("Base Frequency"), 0, 100, 1, 0.01, 1);
     _settings->add_spinslider(SP_ATTR_NUMOCTAVES, _("Octaves"), 1, 10, 1, 1, 0);
     _settings->add_spinslider(SP_ATTR_SEED, _("Seed"), 0, 1000, 1, 1, 0);

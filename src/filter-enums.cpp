@@ -101,6 +101,13 @@ const EnumData<NR::FilterMorphologyOperator> MorphologyOperatorData[NR::MORPHOLO
 };
 const EnumDataConverter<NR::FilterMorphologyOperator> MorphologyOperatorConverter(MorphologyOperatorData, NR::MORPHOLOGY_OPERATOR_END);
 
+// feTurbulence
+const EnumData<NR::FilterTurbulenceType> TurbulenceTypeData[NR::TURBULENCE_ENDTYPE] = {
+    {NR::TURBULENCE_FRACTALNOISE, _("Fractal Noise"), "fractalNoise"},
+    {NR::TURBULENCE_TURBULENCE,   _("Turbulence"),    "turbulence"}
+};
+const EnumDataConverter<NR::FilterTurbulenceType> TurbulenceTypeConverter(TurbulenceTypeData, NR::TURBULENCE_ENDTYPE);
+
 // Light source
 const EnumData<LightSource> LightSourceData[LIGHT_ENDSOURCE] = {
     {LIGHT_DISTANT, _("Distance Light"), "svg:feDistanceLight"},

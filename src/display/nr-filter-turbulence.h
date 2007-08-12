@@ -18,6 +18,12 @@
 
 namespace NR {
 
+enum FilterTurbulenceType {
+    TURBULENCE_FRACTALNOISE,
+    TURBULENCE_TURBULENCE,
+    TURBULENCE_ENDTYPE
+};
+
 class FilterTurbulence : public FilterPrimitive {
 public:
     FilterTurbulence();
@@ -29,13 +35,13 @@ public:
     virtual void set_numOctaves(int num);
     virtual void set_seed(double s);
     virtual void set_stitchTiles(bool st);
-    virtual void set_type(int t);
+    virtual void set_type(FilterTurbulenceType t);
 private:
     double XbaseFrequency, YbaseFrequency;
     int numOctaves;
     double seed;
     bool stitchTiles;
-    int type;    
+    FilterTurbulenceType type;    
 };
 
 } /* namespace NR */

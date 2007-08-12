@@ -46,7 +46,7 @@ void FilterTurbulence::set_stitchTiles(bool st){
     stitchTiles=st;
 }
 
-void FilterTurbulence::set_type(int t){
+void FilterTurbulence::set_type(FilterTurbulenceType t){
     type=t;
 }
 

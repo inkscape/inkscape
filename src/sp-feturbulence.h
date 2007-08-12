@@ -17,6 +17,7 @@
 #include "sp-filter.h"
 #include "sp-feturbulence-fns.h"
 #include "number-opt-number.h"
+#include "display/nr-filter-turbulence.h"
 
 /* FeTurbulence base class */
 class SPFeTurbulenceClass;
@@ -27,7 +28,7 @@ struct SPFeTurbulence : public SPFilterPrimitive {
     int numOctaves;
     double seed;
     bool stitchTiles;
-    int type;   
+    NR::FilterTurbulenceType type;   
 };
 
 struct SPFeTurbulenceClass {

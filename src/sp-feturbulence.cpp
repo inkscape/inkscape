@@ -129,17 +129,17 @@ static bool sp_feTurbulence_read_stitchTiles(gchar const *value){
     return false; // 'noStitch' is default
 }
 
-static int sp_feTurbulence_read_type(gchar const *value){
-    if (!value) return 1; // 'turbulence' is default
+static NR::FilterTurbulenceType sp_feTurbulence_read_type(gchar const *value){
+    if (!value) return NR::TURBULENCE_TURBULENCE; // 'turbulence' is default
     switch(value[0]){
         case 'f':
-            if (strncmp(value, "fractalNoise", 12) == 0) return 0;
+            if (strncmp(value, "fractalNoise", 12) == 0) return NR::TURBULENCE_FRACTALNOISE;
             break;
         case 't':
-            if (strncmp(value, "turbulence", 10) == 0) return 1;
+            if (strncmp(value, "turbulence", 10) == 0) return NR::TURBULENCE_TURBULENCE;
             break;
     }
-    return 1; // 'turbulence' is default
+    return NR::TURBULENCE_TURBULENCE; // 'turbulence' is default
 }
 
 /**
@@ -154,6 +154,7 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
     int read_int;
     double read_num;
     bool read_bool;
+    NR::FilterTurbulenceType read_type;
     
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
@@ -187,9 +188,9 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         case SP_ATTR_TYPE:
-            read_int = sp_feTurbulence_read_type(value);
-            if (read_int != feTurbulence->type){
-                feTurbulence->type = read_int;
+            read_type = sp_feTurbulence_read_type(value);
+            if (read_type != feTurbulence->type){
+                feTurbulence->type = read_type;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
