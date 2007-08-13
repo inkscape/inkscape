@@ -296,9 +296,9 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
 
   // initialize
   state = new GfxState(72.0, 72.0, cropBox, rotate, gTrue);
+  clipHistory = new ClipHistoryEntry();
   fontChanged = gFalse;
   clip = clipNone;
-  lastClipPath = NULL;
   ignoreUndef = 0;
   operatorHistory = NULL;
   builder = builderA;
@@ -329,6 +329,7 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
         state->lineTo(cropBox->x1, cropBox->y2);
         state->closePath();
         state->clip();
+        clipHistory->setClip(state->getPath(), clipNormal);
         builder->setClipPath(state);
         state->clearPath();
     }
@@ -352,9 +353,9 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   operatorHistory = NULL;
   builder = builderA;
   state = new GfxState(72, 72, box, 0, gFalse);
+  clipHistory = new ClipHistoryEntry();
   fontChanged = gFalse;
   clip = clipNone;
-  lastClipPath = NULL;
   ignoreUndef = 0;
   for (i = 0; i < 6; ++i) {
     baseMatrix[i] = state->getCTM()[i];
@@ -375,8 +376,8 @@ PdfParser::~PdfParser() {
   if (state) {
     delete state;
   }
-  if (lastClipPath) {
-    delete lastClipPath;
+  if (clipHistory) {
+    delete clipHistory;
   }
 }
 
@@ -1633,9 +1634,9 @@ void PdfParser::opShFill(Object args[], int numArgs) {
     break;
   case 2:
   case 3:
-    if (lastClipPath) {
-      builder->addShadedFill(shading, matrix, lastClipPath,
-                             lastClipType == clipEO ? true : false);
+    if (clipHistory->getClipPath()) {
+      builder->addShadedFill(shading, matrix, clipHistory->getClipPath(),
+                             clipHistory->getClipType() == clipEO ? true : false);
     }
     break;
   case 4:
@@ -1986,8 +1987,10 @@ void PdfParser::doEndPath() {
   if (state->isCurPt() && clip != clipNone) {
     state->clip();
     if (clip == clipNormal) {
+      clipHistory->setClip(state->getPath(), clipNormal);
       builder->clip(state);
     } else {
+      clipHistory->setClip(state->getPath(), clipEO);
       builder->clip(state, true);
     }
   }
@@ -2001,18 +2004,10 @@ void PdfParser::doEndPath() {
 
 void PdfParser::opClip(Object args[], int numArgs) {
   clip = clipNormal;
-  lastClipType = clipNormal;
-  if (lastClipPath)
-      delete lastClipPath;
-  lastClipPath = state->getPath()->copy();
 }
 
 void PdfParser::opEOClip(Object args[], int numArgs) {
   clip = clipEO;
-  lastClipType = clipEO;
-  if (lastClipPath)
-      delete lastClipPath;
-  lastClipPath = state->getPath()->copy();
 }
 
 //------------------------------------------------------------------------
@@ -2834,6 +2829,7 @@ void PdfParser::doForm1(Object *str, Dict *resDict, double *matrix, double *bbox
   state->lineTo(bbox[0], bbox[3]);
   state->closePath();
   state->clip();
+  clipHistory->setClip(state->getPath());
   builder->clip(state);
   state->clearPath();
 
@@ -3033,9 +3029,11 @@ void PdfParser::opMarkPoint(Object args[], int numArgs) {
 void PdfParser::saveState() {
   builder->saveState();
   state = state->save();
+  clipHistory = clipHistory->save();
 }
 
 void PdfParser::restoreState() {
+  clipHistory = clipHistory->restore();
   state = state->restore();
   builder->restoreState();
 }
@@ -3050,6 +3048,70 @@ void PdfParser::popResources() {
   resPtr = res->getNext();
   delete res;
   res = resPtr;
+}
+
+//------------------------------------------------------------------------
+// ClipHistoryEntry
+//------------------------------------------------------------------------
+
+ClipHistoryEntry::ClipHistoryEntry(GfxPath *clipPathA, GfxClipType clipTypeA) {
+    if (clipPathA) {
+        clipPath = clipPathA->copy();
+    } else {
+        clipPath = NULL;
+    }
+    clipType = clipTypeA;
+    saved = NULL;
+}
+
+ClipHistoryEntry::~ClipHistoryEntry() {
+    if (clipPath) {
+        delete clipPath;
+    }
+}
+
+void ClipHistoryEntry::setClip(GfxPath *clipPathA, GfxClipType clipTypeA) {
+    // Free previous clip path
+    if (clipPath) {
+        delete clipPath;
+    }
+    if (clipPathA) {
+        clipPath = clipPathA->copy();
+        clipType = clipTypeA;
+    } else {
+        clipPath = NULL;
+    }
+}
+
+ClipHistoryEntry *ClipHistoryEntry::save() {
+    ClipHistoryEntry *newEntry = new ClipHistoryEntry(this);
+    newEntry->saved = this;
+
+    return newEntry;
+}
+
+ClipHistoryEntry *ClipHistoryEntry::restore() {
+    ClipHistoryEntry *oldEntry;
+
+    if (saved) {
+        oldEntry = saved;
+        saved = NULL;
+        delete this;
+    } else {
+        oldEntry = this;
+    }
+
+    return oldEntry;
+}
+
+ClipHistoryEntry::ClipHistoryEntry(ClipHistoryEntry *other) {
+    if (other->clipPath) {
+        this->clipPath = other->clipPath->copy();
+        this->clipType = other->clipType;
+    } else {
+        this->clipPath = NULL;
+    }
+    saved = NULL;
 }
 
 #endif /* HAVE_POPPLER */

@@ -60,15 +60,6 @@ namespace Internal {
  * 
  */
 
-SvgBuilder::SvgBuilder() {
-    _in_text_object = false;
-    _need_font_update = true;
-    _invalidated_style = true;
-    _font_style = NULL;
-    _current_font = NULL;
-    _current_state = NULL;
-}
-
 SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref) {
     _is_top_level = true;
     _doc = document;
@@ -77,7 +68,7 @@ SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref) {
     _xml_doc = sp_document_repr_doc(_doc);
     _container = _root = _doc->rroot;
     _root->setAttribute("xml:space", "preserve");
-    SvgBuilder();
+    _init();
 }
 
 SvgBuilder::SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root) {
@@ -87,10 +78,21 @@ SvgBuilder::SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root) {
     _xref = parent->_xref;
     _xml_doc = parent->_xml_doc;
     _container = this->_root = root;
-    SvgBuilder();
+    _init();
 }
 
 SvgBuilder::~SvgBuilder() {
+}
+
+void SvgBuilder::_init() {
+    _in_text_object = false;
+    _need_font_update = true;
+    _invalidated_style = true;
+    _font_style = NULL;
+    _current_font = NULL;
+    _current_state = NULL;
+
+    _node_stack.push_back(_container);
 }
 
 void SvgBuilder::setDocumentSize(double width, double height) {
@@ -122,10 +124,30 @@ void SvgBuilder::restoreState() {
     _group_depth.pop_back();
 }
 
-Inkscape::XML::Node *SvgBuilder::pushGroup() {
-    Inkscape::XML::Node *node = _xml_doc->createElement("svg:g");
-    _container->appendChild(node);
+Inkscape::XML::Node *SvgBuilder::pushNode(const char *name) {
+    Inkscape::XML::Node *node = _xml_doc->createElement(name);
+    _node_stack.push_back(node);
     _container = node;
+    return node;
+}
+
+Inkscape::XML::Node *SvgBuilder::popNode() {
+    Inkscape::XML::Node *node = NULL;
+    if ( _node_stack.size() > 1 ) {
+        node = _node_stack.back();
+        _node_stack.pop_back();
+        _container = _node_stack.back();    // Re-set container
+    } else {
+        TRACE(("popNode() called when stack is empty\n"));
+        node = _root;
+    }
+    return node;
+}
+
+Inkscape::XML::Node *SvgBuilder::pushGroup() {
+    Inkscape::XML::Node *saved_container = _container;
+    Inkscape::XML::Node *node = pushNode("svg:g");
+    saved_container->appendChild(node);
     Inkscape::GC::release(node);
     _group_depth.back()++;
     // Set as a layer if this is a top-level group
@@ -145,7 +167,7 @@ Inkscape::XML::Node *SvgBuilder::pushGroup() {
 
 Inkscape::XML::Node *SvgBuilder::popGroup() {
     if (_container != _root) {  // Pop if the current container isn't root
-        _container = _container->parent();
+        popNode();
         _group_depth[_group_depth.size()-1] = --_group_depth.back();
     }
 

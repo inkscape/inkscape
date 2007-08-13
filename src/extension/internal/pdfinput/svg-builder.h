@@ -143,7 +143,7 @@ public:
     bool getTransform(double *transform);
 
 private:
-    SvgBuilder();
+    void _init();
 
     // Pattern creation
     gchar *_createPattern(GfxPattern *pattern, GfxState *state, bool is_stroke=false);
@@ -166,6 +166,10 @@ private:
 
     void _flushText();    // Write buffered text into doc
 
+    // Handling of node stack
+    Inkscape::XML::Node *pushNode(const char* name);
+    Inkscape::XML::Node *popNode();
+    std::vector<Inkscape::XML::Node *> _node_stack;
     std::vector<int> _group_depth;    // Depth of nesting groups
 
     SPCSSAttr *_font_style;          // Current font style

@@ -102,6 +102,34 @@ struct OpHistoryEntry {
 };
 
 //------------------------------------------------------------------------
+// ClipHistoryEntry
+//------------------------------------------------------------------------
+
+class ClipHistoryEntry {
+public:
+
+    ClipHistoryEntry(GfxPath *clipPath=NULL, GfxClipType clipType=clipNormal);
+    ~ClipHistoryEntry();
+
+    // Manipulate clip path stack
+    ClipHistoryEntry *save();
+    ClipHistoryEntry *restore();
+    GBool hasSaves() { return saved != NULL; }
+    void setClip(GfxPath *newClipPath, GfxClipType newClipType=clipNormal);
+    GfxPath *getClipPath() { return clipPath; }
+    GfxClipType getClipType() { return clipType; }
+
+private:
+
+    ClipHistoryEntry *saved;    // next clip path on stack
+        
+    GfxPath *clipPath;        // used as the path to be filled for an 'sh' operator
+    GfxClipType clipType;
+
+    ClipHistoryEntry(ClipHistoryEntry *other);
+};
+
+//------------------------------------------------------------------------
 // PdfParser
 //------------------------------------------------------------------------
 
@@ -150,12 +178,11 @@ private:
 
   static PdfOperator opTab[];	// table of operators
 
+  ClipHistoryEntry *clipHistory;    // clip path stack
   OpHistoryEntry *operatorHistory;  // list containing the last N operators
   void pushOperator(const char *name);
   OpHistoryEntry *popOperator();
   const char *getPreviousOperator(unsigned int look_back=1);    // returns the nth previous operator's name
-  GfxPath *lastClipPath;        // Used as the path to be filled for an 'sh' operator
-  GfxClipType lastClipType;
 
   void go(GBool topLevel);
   void execOp(Object *cmd, Object args[], int numArgs);
