@@ -315,7 +315,7 @@ class FilterEffectsDialog::MatrixAttr : public Gtk::Frame, public AttrWidget
 {
 public:
     MatrixAttr(const SPAttributeEnum a)
-        : AttrWidget(a)
+        : AttrWidget(a), _locked(false)
     {
         _model = Gtk::ListStore::create(_columns);
         _tree.set_model(_model);
@@ -370,6 +370,9 @@ private:
 
     void update(SPObject* o, const int rows, const int cols)
     {
+        if(_locked)
+            return;
+
         _model->clear();
 
         _tree.remove_all_columns();
@@ -388,7 +391,7 @@ private:
             for(int i = 0; i < cols; ++i) {
                 _tree.append_column_numeric_editable("", _columns.cols[i], "%.2f");
                 dynamic_cast<Gtk::CellRendererText*>(
-                    _tree.get_column(i)->get_first_cell_renderer())->signal_edited().connect(
+                    _tree.get_column_cell_renderer(i))->signal_edited().connect(
                         sigc::mem_fun(*this, &MatrixAttr::rebind));
             }
 
@@ -402,9 +405,12 @@ private:
 
     void rebind(const Glib::ustring&, const Glib::ustring&)
     {
+        _locked = true;
         signal_attr_changed()();
+        _locked = false;
     }
 
+    bool _locked;
     Gtk::TreeView _tree;
     Glib::RefPtr<Gtk::ListStore> _model;
     MatrixColumns _columns;
