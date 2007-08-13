@@ -16,10 +16,6 @@
 namespace NR {
 
 FilterDisplacementMap::FilterDisplacementMap()
-: scale(0),
-  _input2(NR_FILTER_SLOT_NOT_SET),
-   Xchannel(3),
-  Ychannel(3)
 {}
 
 FilterPrimitive * FilterDisplacementMap::create() {
@@ -30,66 +26,69 @@ FilterDisplacementMap::~FilterDisplacementMap()
 {}
 
 int FilterDisplacementMap::render(FilterSlot &slot, Matrix const &trans) {
-    g_warning("FIX-ME: FilterDisplacementMap::render method is still a bit buggy. Needs Love.");
-    
     NRPixBlock *texture = slot.get(_input);
     NRPixBlock *map = slot.get(_input2);
-    NRPixBlock *out = new NRPixBlock;
-    
+   
     // Bail out if either one of source images is missing
     if (!map || !texture) {
         g_warning("Missing source image for feDisplacementMap (map=%d texture=%d)", _input, _input2);
         return 1;
     }
     
-    nr_pixblock_setup_fast(out, map->mode,
-                           map->area.x0, map->area.y0, map->area.x1, map->area.y1,
-                           true);
+    //TODO: check whether do we really need this check:
+    if (map->area.x1 <= map->area.x0 || map->area.y1 <=  map->area.y0) return 0; //nothing to do!
+    
+    NRPixBlock *out = new NRPixBlock;    
 
+    //are these checks really necessary?
+    if (out_w > map->area.x1 - out_x0) out_w = map->area.x1 - out_x0;
+    if (out_h > map->area.y1 - out_y0) out_h = map->area.y1 - out_y0;    
+    if (out_x0 < map->area.x0){
+        out_x0 = map->area.x0;
+        out_w -= (map->area.x0 - out_x0);
+    }
+    if (out_y0 < map->area.y0){
+        out_y0 = map->area.y0;
+        out_h -= (map->area.y0 - out_y0);
+    }
+
+    out->area.x0 = out_x0;
+    out->area.y0 = out_y0;
+    out->area.x1 = out_x0 + out_w;
+    out->area.y1 = out_y0 + out_h;
+
+    nr_pixblock_setup_fast(out, map->mode, out->area.x0, out->area.y0, out->area.x1, out->area.y1, true);
+    
     unsigned char *map_data = NR_PIXBLOCK_PX(map);
     unsigned char *texture_data = NR_PIXBLOCK_PX(texture);
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
-    int x, y, x0, y0, x1, y1, width;
+    int x, y;
+    int in_w = map->area.x1 - map->area.x0;
+    int in_h = map->area.y1 - map->area.y0;
     double coordx, coordy;
-//    unsigned int alpha; //used for demultiplication
-    
-    x0 = out->area.x0;
-    y0 = out->area.y0;
-    x1 = out->area.x1;
-    y1 = out->area.y1;
-    width = x1 - x0;
-   
-    for (x=x0 + (int)(scale/2); x < x1 - (int)(scale/2); x++){
-        for (y=y0 + (int)(scale/2); y < y1 - (int)(scale/2); y++){
-/* SVG spec states that pixel values must be alpha-demultiplied before processing this filter operation.
-The following code does it, but when we DON'T do it, output is more similar to output from Batik.
 
-Batik output:
- http://bighead.poli.usp.br/~juca/code/inkscape/batik-fed02.png
-Inkscape output without demultiplication:
- http://bighead.poli.usp.br/~juca/code/inkscape/displacement-map-test.png
- 
- There is also this other bug that can be seen in the above screenshot: the lower and the right portions are not rendered, I dont know why.
+    for (x=0; x < out_w; x++){
+        for (y=0; y < out_h; y++){
+            if (x+out_x0-map->area.x0 >= 0 &&
+                x+out_x0-map->area.x0 < in_w &&
+                y+out_y0-map->area.y0 >= 0 &&
+                y+out_y0-map->area.y0 < in_h){
+                
+                    coordx = out_x0 - map->area.x0 + x + scale * ( double(map_data[4*((x+out_x0-map->area.x0) + in_w*(y+out_y0-map->area.y0)) + Xchannel])/255 - 0.5);
+                    coordy = out_y0 - map->area.y0 + y + scale * ( double(map_data[4*((x+out_x0-map->area.x0) + in_w*(y+out_y0-map->area.y0)) + Ychannel])/255 - 0.5);
 
- --JucaBlues
-  
-            if (map->mode == NR_PIXBLOCK_MODE_R8G8B8A8P){
-                alpha = (unsigned int) map_data[4*((x-x0) + width*(y-y0)) + 3];
-                if (alpha==0){
-                    coordx = x-x0;
-                    coordy = y-y0;
-                } else {
-                    coordx = x-x0 + scale * ( ((double)NR_DEMUL_111( (unsigned int)map_data[4*((x-x0) + width*(y-y0)) + Xchannel], alpha))/255 - 0.5 );
-                    coordy = y-y0 + scale * ( ((double)NR_DEMUL_111( (unsigned int)map_data[4*((x-x0) + width*(y-y0)) + Ychannel], alpha))/255 - 0.5 );
-                }
-            } else {*/
-            coordx = x-x0 + scale * ( ((double) map_data[4*((x-x0) + width*(y-y0)) + Xchannel])/255 - 0.5 );
-            coordy = y-y0 + scale * ( ((double) map_data[4*((x-x0) + width*(y-y0)) + Ychannel])/255 - 0.5 );
-
-            out_data[4*((x-x0) + width*(y-y0))] = texture_data[4*((int)coordx + ((int)coordy)*width)];
-            out_data[4*((x-x0) + width*(y-y0)) + 1] = texture_data[4*((int)coordx + ((int)coordy)*width) + 1];
-            out_data[4*((x-x0) + width*(y-y0)) + 2] = texture_data[4*((int)coordx + ((int)coordy)*width) + 2];
-            out_data[4*((x-x0) + width*(y-y0)) + 3] = texture_data[4*((int)coordx + ((int)coordy)*width) + 3];
+                    if (coordx>=0 && coordx<in_w && coordy>=0 && coordy<in_h){
+                            out_data[4*(x + out_w*y)] = texture_data[4*(int(coordx) + int(coordy)*in_w)];
+                            out_data[4*(x + out_w*y) + 1] = texture_data[4*(int(coordx) + int(coordy)*in_w) + 1];
+                            out_data[4*(x + out_w*y) + 2] = texture_data[4*(int(coordx) + int(coordy)*in_w) + 2];
+                            out_data[4*(x + out_w*y) + 3] = texture_data[4*(int(coordx) + int(coordy)*in_w) + 3];
+                    } else {
+                            out_data[4*(x + out_w*y)] = 255;
+                            out_data[4*(x + out_w*y) + 1] = 255;
+                            out_data[4*(x + out_w*y) + 2] = 255;
+                            out_data[4*(x + out_w*y) + 3] = 0;
+                    }
+            }
         }
     }
 
@@ -112,16 +111,24 @@ void FilterDisplacementMap::set_input(int input, int slot) {
 }
 
 void FilterDisplacementMap::set_channel_selector(int s, int channel) {
+    if (channel>3 || channel <0) {
+        g_warning("Selected an invalid channel value. (%d)", channel);
+        return;
+    }
+
     if (s == 0) Xchannel = channel;
     if (s == 1) Ychannel = channel;
 }
 
 void FilterDisplacementMap::area_enlarge(NRRectL &area, Matrix const &trans)
 {
-    //I'm in doubt whether this affects all input buffers or only 'in'
+    out_x0 = area.x0;
+    out_y0 = area.y0;
+    out_w = area.x1 - area.x0;
+    out_h = area.y1 - area.y0;
     area.x0 -= (int)(scale/2);
-    area.y0 -= (int)(scale/2);
     area.x1 += (int)(scale/2);
+    area.y0 -= (int)(scale/2);
     area.y1 += (int)(scale/2);
 }
 

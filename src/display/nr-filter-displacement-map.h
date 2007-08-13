@@ -37,6 +37,7 @@ private:
     int _input2;
     int Xchannel;
     int Ychannel;
+    int out_x0, out_y0, out_w, out_h;
 };
 
 } /* namespace NR */

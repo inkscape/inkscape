@@ -114,7 +114,7 @@ sp_feDisplacementMap_release(SPObject *object)
 
 static int sp_feDisplacementMap_readChannelSelector(gchar const *value)
 {
-    if (!value) return 0;
+    if (!value) return 3;
     switch (value[0]) {
         case 'R':
             return 0;
