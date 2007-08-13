@@ -26,6 +26,7 @@ extensions = \
 	color_morelight.py\
 	color_moresaturation.py\
 	color_negative.py\
+	color_randomize.py\
 	color_removeblue.py\
 	color_removegreen.py\
 	color_removered.py\
@@ -118,6 +119,7 @@ modules = \
 	color_morelight.inx\
 	color_moresaturation.inx\
 	color_negative.inx\
+	color_randomize.py\
 	color_removeblue.inx\
 	color_removegreen.inx\
 	color_removered.inx\
