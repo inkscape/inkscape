@@ -119,7 +119,7 @@ modules = \
 	color_morelight.inx\
 	color_moresaturation.inx\
 	color_negative.inx\
-	color_randomize.py\
+	color_randomize.inx\
 	color_removeblue.inx\
 	color_removegreen.inx\
 	color_removered.inx\
