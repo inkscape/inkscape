@@ -191,111 +191,8 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
 {
     gint ret = FALSE;
 
-    SPDesktop *desktop = event_context->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
-
-    SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
-
-    switch (event->type) {
-        case GDK_2BUTTON_PRESS:
-        case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1 && !event_context->space_panning) {
-                if (!nc->drag) {
-
-                    // find out clicked item, disregarding groups, honoring Alt
-                    SPItem *item_clicked = sp_event_context_find_item (desktop,
-                            NR::Point(event->button.x, event->button.y),
-                            (event->button.state & GDK_MOD1_MASK) && !(event->button.state & GDK_CONTROL_MASK), TRUE);
-                    // find out if we're over the selected item, disregarding groups
-                    SPItem *item_over = sp_event_context_over_item (desktop, selection->singleItem(),
-                                                                    NR::Point(event->button.x, event->button.y));
-
-                    bool over_stroke = false;
-                    if (item_over && nc->shape_editor->has_nodepath()) {
-                        over_stroke = nc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), false);
-                    }
-
-                    if (over_stroke || nc->added_node) {
-                        switch (event->type) {
-                            case GDK_BUTTON_RELEASE:
-                                if (event->button.state & GDK_CONTROL_MASK && event->button.state & GDK_MOD1_MASK) {
-                                    //add a node
-                                    nc->shape_editor->add_node_near_point();
-                                } else {
-                                    if (nc->added_node) { // we just received double click, ignore release
-                                        nc->added_node = false;
-                                        break;
-                                    }
-                                    //select the segment
-                                    if (event->button.state & GDK_SHIFT_MASK) {
-                                        nc->shape_editor->select_segment_near_point(true);
-                                    } else {
-                                        nc->shape_editor->select_segment_near_point(false);
-                                    }
-                                    desktop->updateNow();
-                                }
-                                break;
-                            case GDK_2BUTTON_PRESS:
-                                //add a node
-                                nc->shape_editor->add_node_near_point();
-                                nc->added_node = true;
-                                break;
-                            default:
-                                break;
-                        }
-                    } else if (event->button.state & GDK_SHIFT_MASK) {
-                        selection->toggle(item_clicked);
-                        desktop->updateNow();
-                    } else {
-                        selection->set(item_clicked);
-                        desktop->updateNow();
-                    }
-
-                    ret = TRUE;
-                }
-                break;
-            }
-            break;
-        case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !(event->button.state & GDK_SHIFT_MASK) && !event_context->space_panning) {
-                // save drag origin
-                event_context->xp = (gint) event->button.x;
-                event_context->yp = (gint) event->button.y;
-                event_context->within_tolerance = true;
-                nc->shape_editor->cancel_hit();
-
-                if (!nc->drag) {
-                    // find out if we're over the selected item, disregarding groups
-                    SPItem *item_over = sp_event_context_over_item (desktop, selection->singleItem(),
-                                                                    NR::Point(event->button.x, event->button.y));
-
-                    if (nc->shape_editor->has_nodepath() && selection->single() && item_over) {
-
-                            // save drag origin
-                            bool over_stroke = nc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), true);
-                            //only dragging curves
-                            if (over_stroke) {
-                                ret = TRUE;
-                            } else {
-                                break;
-                            }
-                        } else {
-                            break;
-                        }
-
-                    ret = TRUE;
-                }
-                break;
-            }
-            break;
-        default:
-            break;
-    }
-
-    if (!ret) {
-        if (((SPEventContextClass *) parent_class)->item_handler)
-            ret = ((SPEventContextClass *) parent_class)->item_handler(event_context, item, event);
-    }
+    if (((SPEventContextClass *) parent_class)->item_handler)
+        ret = ((SPEventContextClass *) parent_class)->item_handler(event_context, item, event);
 
     return ret;
 }
@@ -313,7 +210,6 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     double const offset = prefs_get_double_attribute_limited("options.defaultscale", "value", 2, 0, 1000);
 
     gint ret = FALSE;
-
     switch (event->type) {
         case GDK_BUTTON_PRESS:
             if (event->button.button == 1 && !event_context->space_panning) {
@@ -323,6 +219,19 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 event_context->within_tolerance = true;
                 nc->shape_editor->cancel_hit();
 
+                if (!(event->button.state & GDK_SHIFT_MASK)) {
+                    if (!nc->drag) {
+                        if (nc->shape_editor->has_nodepath() && selection->single() /* && item_over */) {
+                            // save drag origin
+                            bool over_stroke = nc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), true);
+                            //only dragging curves
+                            if (over_stroke) {
+                                ret = TRUE;
+                                break;
+                            }
+                        }
+                    }
+                }
                 NR::Point const button_w(event->button.x,
                                          event->button.y);
                 NR::Point const button_dt(desktop->w2d(button_w));
@@ -389,12 +298,8 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
                 }
 
-                SPItem *item_over = sp_event_context_over_item (desktop, selection->singleItem(),
-                                                                NR::Point(event->motion.x, event->motion.y));
                 bool over_stroke = false;
-                if (item_over && nc->shape_editor->has_nodepath()) {
-                    over_stroke = nc->shape_editor->is_over_stroke(NR::Point(event->motion.x, event->motion.y), false);
-                }
+                over_stroke = nc->shape_editor->is_over_stroke(NR::Point(event->motion.x, event->motion.y), false);
 
                 if (nc->cursor_drag && !over_stroke) {
                     event_context->cursor_shape = cursor_node_xpm;
@@ -411,32 +316,87 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 }
             }
             break;
+
+        case GDK_2BUTTON_PRESS:
         case GDK_BUTTON_RELEASE:
-            event_context->xp = event_context->yp = 0;
-            if (event->button.button == 1 && !event_context->space_panning) {
+            if ( (event->button.button == 1) && (!nc->drag) && !event_context->space_panning) {
+                // find out clicked item, disregarding groups, honoring Alt
+                SPItem *item_clicked = sp_event_context_find_item (desktop,
+                        NR::Point(event->button.x, event->button.y),
+                        (event->button.state & GDK_MOD1_MASK) && !(event->button.state & GDK_CONTROL_MASK), TRUE);
 
-                NR::Maybe<NR::Rect> b = Inkscape::Rubberband::get()->getRectangle();
+                event_context->xp = event_context->yp = 0;
 
-                if (nc->shape_editor->hits_curve() && !event_context->within_tolerance) { //drag curve
-                    nc->shape_editor->finish_drag();
-                } else if (b && !event_context->within_tolerance) { // drag to select
-                    nc->shape_editor->select_rect(*b, event->button.state & GDK_SHIFT_MASK);
-                } else {
-                    if (!(nc->rb_escaped)) { // unless something was cancelled
-                        if (nc->shape_editor->has_selection())
-                            nc->shape_editor->deselect();
-                        else
-                            sp_desktop_selection(desktop)->clear();
-                    }
+                bool over_stroke = false;
+                if (nc->shape_editor->has_nodepath()) {
+                    over_stroke = nc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), false);
                 }
-                ret = TRUE;
-                Inkscape::Rubberband::get()->stop();
-                desktop->updateNow();
-                nc->rb_escaped = false;
-                nc->drag = FALSE;
-                nc->shape_editor->cancel_hit();
-                nc->current_state = SP_NODE_CONTEXT_INACTIVE;
-                break;
+
+                if (item_clicked || over_stroke) {
+                    if (over_stroke || nc->added_node) {
+                        switch (event->type) {
+                            case GDK_BUTTON_RELEASE:
+                                if (event->button.state & GDK_CONTROL_MASK && event->button.state & GDK_MOD1_MASK) {
+                                    //add a node
+                                    nc->shape_editor->add_node_near_point();
+                                } else {
+                                    if (nc->added_node) { // we just received double click, ignore release
+                                        nc->added_node = false;
+                                        break;
+                                    }
+                                    //select the segment
+                                    if (event->button.state & GDK_SHIFT_MASK) {
+                                        nc->shape_editor->select_segment_near_point(true);
+                                    } else {
+                                        nc->shape_editor->select_segment_near_point(false);
+                                    }
+                                    desktop->updateNow();
+                                }
+                                break;
+                            case GDK_2BUTTON_PRESS:
+                                //add a node
+                                nc->shape_editor->add_node_near_point();
+                                nc->added_node = true;
+                                break;
+                            default:
+                                break;
+                        }
+                    } else if (event->button.state & GDK_SHIFT_MASK) {
+                        selection->toggle(item_clicked);
+                        desktop->updateNow();
+                    } else {
+                        selection->set(item_clicked);
+                        desktop->updateNow();
+                    }
+                    ret = TRUE;
+                    break;
+                }
+            } 
+            if (event->type == GDK_BUTTON_RELEASE) {
+                event_context->xp = event_context->yp = 0;
+                if (event->button.button == 1) {
+                    NR::Maybe<NR::Rect> b = Inkscape::Rubberband::get()->getRectangle();
+
+                    if (nc->shape_editor->hits_curve() && !event_context->within_tolerance) { //drag curve
+                        nc->shape_editor->finish_drag();
+                    } else if (b && !event_context->within_tolerance) { // drag to select
+                        nc->shape_editor->select_rect(*b, event->button.state & GDK_SHIFT_MASK);
+                    } else {
+                        if (!(nc->rb_escaped)) { // unless something was cancelled
+                            if (nc->shape_editor->has_selection())
+                                nc->shape_editor->deselect();
+                            else
+                                sp_desktop_selection(desktop)->clear();
+                        }
+                    }
+                    ret = TRUE;
+                    Inkscape::Rubberband::get()->stop();
+                    desktop->updateNow();
+                    nc->rb_escaped = false;
+                    nc->drag = FALSE;
+                    nc->shape_editor->cancel_hit();
+                    nc->current_state = SP_NODE_CONTEXT_INACTIVE;
+                }
             }
             break;
         case GDK_KEY_PRESS:

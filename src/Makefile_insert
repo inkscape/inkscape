@@ -334,6 +334,8 @@ inkscape_private_libs =	\
 	libnr/libnr.a		\
 	libavoid/libavoid.a	\
 	livarot/libvarot.a	\
+	live_effects/liblive_effects.a	\
+	live_effects/parameter/liblpeparam.a	\
 	ui/view/libuiview.a	\
 	ui/libui.a		\
 	ui/widget/libuiwidget.a	\
@@ -348,6 +350,7 @@ inkscape_private_libs =	\
 	extension/script/libscript.a	\
         dom/libdom.a            \
 	xml/libspxml.a		\
+	2geom/lib2geom.a	\
 	util/libinkutil.a	\
 	io/libio.a	        \
 	$(inkjar_libs)		\

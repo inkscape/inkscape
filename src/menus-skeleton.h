@@ -215,6 +215,8 @@ static char const menus_skeleton[] =
 "       <separator/>\n"
 "       <verb verb-id=\"SelectionSimplify\" />\n"
 "       <verb verb-id=\"SelectionReverse\" />\n"
+"       <separator/>\n"
+"       <verb verb-id=\"DialogLivePathEffect\" />\n"
 "   </submenu>\n"
 "   <submenu name=\"" N_("_Text") "\">\n"
 "       <verb verb-id=\"DialogText\" />\n"

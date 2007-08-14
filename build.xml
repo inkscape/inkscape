@@ -50,8 +50,7 @@
   <property name="lib"         location="lib"/>
   <property name="build"       location="build"/>
   <property name="dist"        location="inkscape"/>
-
-
+  <property name="boost"         location="c:/boost"/>
 
 
 
@@ -249,6 +248,7 @@
             <exclude name="removeoverlap/test.cpp"/>
             <exclude name="removeoverlap/remove_rectangle_overlap-test.cpp"/>
             <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
+            <exclude name="extension/internal/bitmap/.*"/>
         </fileset>
         <flags>
             -Wall -O3
@@ -291,6 +291,9 @@
             -Wno-comment -I${gtk}/perl/lib/CORE
             <!-- PYTHON -->
             -I${gtk}/python/include
+            <!-- 2geom -->
+            <!-- -I${gtk}/include/2geom -->
+            -I${boost}
         </includes>
     </cc>
   </target>
@@ -381,7 +384,9 @@
            -llcms.dll
            -lssl -lcrypto
            -lpng -ljpeg.dll -lpopt ${gtk}/lib/zdll.lib
-           -lgc -mwindows -lws2_32 -lintl -lm
+           -lgc -mconsole -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
+           <!-- 2geom -->
+           <!-- -l2geom -->
        </libs>
     </link>
   </target>

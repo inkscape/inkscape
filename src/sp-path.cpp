@@ -48,6 +48,7 @@ static NR::Matrix sp_path_set_transform(SPItem *item, NR::Matrix const &xform);
 static gchar * sp_path_description(SPItem *item);
 
 static void sp_path_update(SPObject *object, SPCtx *ctx, guint flags);
+static void sp_path_update_patheffect(SPShape *shape, bool write);
 
 static SPShapeClass *parent_class;
 
@@ -86,6 +87,7 @@ sp_path_class_init(SPPathClass * klass)
     GObjectClass *gobject_class = (GObjectClass *) klass;
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass *item_class = (SPItemClass *) klass;
+    SPShapeClass *shape_class = (SPShapeClass *) klass;
 
     parent_class = (SPShapeClass *)g_type_class_peek_parent(klass);
 
@@ -99,6 +101,8 @@ sp_path_class_init(SPPathClass * klass)
 
     item_class->description = sp_path_description;
     item_class->set_transform = sp_path_set_transform;
+
+    shape_class->update_patheffect = sp_path_update_patheffect;
 }
 
 
@@ -125,12 +129,14 @@ sp_path_description(SPItem * item)
 }
 
 /**
- * Initializes an SPPath.  Currently does nothing.
+ * Initializes an SPPath.
  */
 static void
 sp_path_init(SPPath *path)
 {
     new (&path->connEndPair) SPConnEndPair(path);
+
+    path->original_curve = NULL;
 }
 
 static void
@@ -148,14 +154,6 @@ sp_path_finalize(GObject *obj)
 static void
 sp_path_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    sp_object_read_attr(object, "d");
-
-    /* d is a required attribute */
-    gchar const *d = sp_object_getAttribute(object, "d", NULL);
-    if (d == NULL) {
-        sp_object_set(object, sp_attribute_lookup("d"), "");
-    }
-
     /* Are these calls actually necessary? */
     sp_object_read_attr(object, "marker");
     sp_object_read_attr(object, "marker-start");
@@ -167,6 +165,15 @@ sp_path_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
     if (((SPObjectClass *) parent_class)->build) {
         ((SPObjectClass *) parent_class)->build(object, document, repr);
     }
+
+    sp_object_read_attr(object, "inkscape:original-d");
+    sp_object_read_attr(object, "d");
+
+    /* d is a required attribute */
+    gchar const *d = sp_object_getAttribute(object, "d", NULL);
+    if (d == NULL) {
+        sp_object_set(object, sp_attribute_lookup("d"), "");
+    }
 }
 
 static void
@@ -175,6 +182,10 @@ sp_path_release(SPObject *object)
     SPPath *path = SP_PATH(object);
 
     path->connEndPair.release();
+
+    if (path->original_curve) {
+        path->original_curve = sp_curve_unref (path->original_curve);
+    }
 
     if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release(object);
@@ -191,18 +202,33 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
     SPPath *path = (SPPath *) object;
 
     switch (key) {
-        case SP_ATTR_D:
-            if (value) {
-                NArtBpath *bpath = sp_svg_read_path(value);
-                SPCurve *curve = sp_curve_new_from_bpath(bpath);
-                if (curve) {
-                    sp_shape_set_curve((SPShape *) path, curve, TRUE);
-                    sp_curve_unref(curve);
+        case SP_ATTR_INKSCAPE_ORIGINAL_D:
+                if (value) {
+                    NArtBpath *bpath = sp_svg_read_path(value);
+                    SPCurve *curve = sp_curve_new_from_bpath(bpath);
+                    if (curve) {
+                        sp_path_set_original_curve(path, curve, TRUE, true);
+                        sp_curve_unref(curve);
+                    }
+                } else {
+                    sp_path_set_original_curve(path, NULL, TRUE, true);
                 }
-            } else {
-                sp_shape_set_curve((SPShape *) path, NULL, TRUE);
+                object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            break;
+       case SP_ATTR_D:
+            if (!((SPShape *) path)->path_effect_href) {
+                if (value) {
+                    NArtBpath *bpath = sp_svg_read_path(value);
+                    SPCurve *curve = sp_curve_new_from_bpath(bpath);
+                    if (curve) {
+                        sp_shape_set_curve((SPShape *) path, curve, TRUE);
+                        sp_curve_unref(curve);
+                    }
+                } else {
+                    sp_shape_set_curve((SPShape *) path, NULL, TRUE);
+                }
+                object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             }
-            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_PROP_MARKER:
         case SP_PROP_MARKER_START:
@@ -251,6 +277,20 @@ sp_path_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         repr->setAttribute("d", NULL);
     }
 
+    SPPath *path = (SPPath *) object;
+    if ( path->original_curve != NULL ) {
+        NArtBpath *abp = sp_curve_first_bpath(path->original_curve);
+        if (abp) {
+            gchar *str = sp_svg_write_path(abp);
+            repr->setAttribute("inkscape:original-d", str);
+            g_free(str);
+        } else {
+            repr->setAttribute("inkscape:original-d", "");
+        }
+    } else {
+        repr->setAttribute("inkscape:original-d", NULL);
+    }
+
     SP_PATH(shape)->connEndPair.writeRepr(repr);
 
     if (((SPObjectClass *)(parent_class))->write) {
@@ -283,19 +323,30 @@ static NR::Matrix
 sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
 {
     SPShape *shape = (SPShape *) item;
+    SPPath *path = (SPPath *) item;
 
     if (!shape->curve) { // 0 nodes, nothing to transform
         return NR::identity();
     }
 
-    /* Transform the path */
-    NRBPath dpath, spath;
-    spath.path = SP_CURVE_BPATH(shape->curve);
-    nr_path_duplicate_transform(&dpath, &spath, xform);
-    SPCurve *curve = sp_curve_new_from_bpath(dpath.path);
-    if (curve) {
-        sp_shape_set_curve(shape, curve, TRUE);
-        sp_curve_unref(curve);
+    if (path->original_curve) { /* Transform the original-d path */
+        NRBPath dorigpath, sorigpath;
+        sorigpath.path = SP_CURVE_BPATH(path->original_curve);
+        nr_path_duplicate_transform(&dorigpath, &sorigpath, xform);
+        SPCurve *origcurve = sp_curve_new_from_bpath(dorigpath.path);
+        if (origcurve) {
+            sp_path_set_original_curve(path, origcurve, TRUE, true);
+            sp_curve_unref(origcurve);
+        }
+    } else {    /* Transform the path */
+        NRBPath dpath, spath;
+        spath.path = SP_CURVE_BPATH(shape->curve);
+        nr_path_duplicate_transform(&dpath, &spath, xform);
+        SPCurve *curve = sp_curve_new_from_bpath(dpath.path);
+        if (curve) {
+            sp_shape_set_curve(shape, curve, TRUE);
+            sp_curve_unref(curve);
+        }
     }
 
     // Adjust stroke
@@ -313,6 +364,88 @@ sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
     return NR::identity();
 }
 
+static void
+sp_path_update_patheffect(SPShape *shape, bool write)
+{
+    SPPath *path = (SPPath *) shape;
+    if (path->original_curve) {
+        SPCurve *curve = sp_curve_copy (path->original_curve);
+        sp_shape_perform_path_effect(curve, shape);
+        sp_shape_set_curve(shape, curve, TRUE);
+        sp_curve_unref(curve);
+
+        if (write) {
+            // could also do SP_OBJECT(shape)->updateRepr();  but only the d attribute needs updating.
+            Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
+            if ( shape->curve != NULL ) {
+                NArtBpath *abp = sp_curve_first_bpath(shape->curve);
+                if (abp) {
+                    gchar *str = sp_svg_write_path(abp);
+                    repr->setAttribute("d", str);
+                    g_free(str);
+                } else {
+                    repr->setAttribute("d", "");
+                }
+            } else {
+                repr->setAttribute("d", NULL);
+            }
+        }
+    } else {
+
+    }
+}
+
+
+/**
+ * Adds a original_curve to the path.  If owner is specified, a reference
+ * will be made, otherwise the curve will be copied into the path.
+ * Any existing curve in the path will be unreferenced first.
+ * This routine triggers reapplication of the an effect is present
+ * an also triggers a request to update the display. Does not write
+* result to XML when write=false.
+ */
+void
+sp_path_set_original_curve (SPPath *path, SPCurve *curve, unsigned int owner, bool write)
+{
+    if (path->original_curve) {
+        path->original_curve = sp_curve_unref (path->original_curve);
+    }
+    if (curve) {
+        if (owner) {
+            path->original_curve = sp_curve_ref (curve);
+        } else {
+            path->original_curve = sp_curve_copy (curve);
+        }
+    }
+    sp_path_update_patheffect(path, write);
+    SP_OBJECT(path)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+}
+
+/**
+ * Return duplicate of original_curve (if any exists) or NULL if there is no curve
+ */
+SPCurve *
+sp_path_get_original_curve (SPPath *path)
+{
+    if (path->original_curve) {
+        return sp_curve_copy (path->original_curve);
+    }
+    return NULL;
+}
+
+/**
+ * Return duplicate of edittable curve which is original_curve if it exists or
+ * shape->curve if not.
+ */
+SPCurve*
+sp_path_get_curve_for_edit (SPPath *path)
+{
+    if (path->original_curve) {
+        return sp_path_get_original_curve(path);
+    } else {
+        return sp_shape_get_curve( (SPShape *) path );
+    }
+}
 
 /*
   Local Variables:

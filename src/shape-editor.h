@@ -36,6 +36,7 @@ public:
     ~ShapeEditor();
 
     void set_item (SPItem *item);
+    void set_livepatheffect_parameter(SPObject *lpeobject, const char * key);
     void unset_item ();
 
     SPItem *get_item ();

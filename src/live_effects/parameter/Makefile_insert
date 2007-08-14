@@ -1,0 +1,18 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+live_effects/parameter/all: live_effects/parameter/liblpeparam.a
+
+live_effects/parameter/clean:
+	rm -f live_effects/parameter/liblpeparam.a $(live_effects_parameter_liblpeparam_a_OBJECTS)
+
+live_effects_parameter_liblpeparam_a_SOURCES = \
+	live_effects/parameter/parameter.cpp	\
+	live_effects/parameter/parameter.h	\
+	live_effects/parameter/point.cpp	\
+	live_effects/parameter/point.h	\
+	live_effects/parameter/enum.h	\
+	live_effects/parameter/path.cpp	\
+	live_effects/parameter/path.h	
+
+
+

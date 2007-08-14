@@ -17,6 +17,7 @@
 //#include "desktop-handles.h"
 #include "libnr/nr-path-code.h"
 #include "livarot/Path.h"
+#include <glibmm/ustring.h>
 
 #include <list>
 
@@ -111,7 +112,7 @@ class Path {
 /**  Pointer to the current desktop, for reporting purposes */
 	SPDesktop * desktop;
 /**  The parent path of this nodepath */
-	SPPath * path;
+	SPObject * object;
 /**  The context which created this nodepath.  Important if this nodepath is deleted */
 	ShapeEditor *shape_editor;
 /**  The subpaths which comprise this NodePath */
@@ -122,18 +123,28 @@ class Path {
 	 njh: I'd be guessing that these are item <-> desktop transforms.*/
 	NR::Matrix i2d, d2i;
 /**  The DOM node which describes this NodePath */
-	Inkscape::XML::Node *repr;
+    Inkscape::XML::Node *repr;
+    gchar *repr_key;
+    gchar *repr_nodetypes_key;
 	//STL compliant method to get the selected nodes
 	void selection(std::list<Node *> &l);
 
       /// livarot library is used for "point on path" and "nearest position on path", so we need to maintain its path representation as well
 	::Path *livarot_path;
+    
+    /// draw a "sketch" of the path by using these variables
+    SPCanvasItem *helper_path;
+    SPCurve *curve;
+    bool show_helperpath;
 
       /// true if we changed repr, to tell this change from an external one such as from undo, simplify, or another desktop
 	unsigned int local_change;
 
 	/// true if we're showing selected nodes' handles
 	bool show_handles;
+
+    /// true if the path cannot contain curves, just straight lines
+    bool straight_path;
 
 	/// active_node points to the node that is currently mouseovered (= NULL if
 	/// there isn't any); we also consider the node mouseovered if it is covered
@@ -246,7 +257,7 @@ enum {
 };
 
 // Do function documentation in nodepath.cpp
-Inkscape::NodePath::Path * sp_nodepath_new (SPDesktop * desktop, SPItem * item, bool show_handles);
+Inkscape::NodePath::Path * sp_nodepath_new (SPDesktop * desktop, SPObject *object, bool show_handles, const char * repr_key = NULL);
 void sp_nodepath_destroy (Inkscape::NodePath::Path * nodepath);
 void sp_nodepath_ensure_livarot_path(Inkscape::NodePath::Path *np);
 void sp_nodepath_deselect (Inkscape::NodePath::Path *nodepath);

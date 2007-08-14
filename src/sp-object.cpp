@@ -848,7 +848,6 @@ sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::No
     }
 
     /* Invoke derived methods, if any */
-
     if (((SPObjectClass *) G_OBJECT_GET_CLASS(object))->build) {
         (*((SPObjectClass *) G_OBJECT_GET_CLASS(object))->build)(object, document, repr);
     }

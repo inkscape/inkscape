@@ -589,6 +589,9 @@ else
 fi
 PKG_CHECK_MODULES(INKSCAPE, gdkmm-2.4  glibmm-2.4  gtkmm-2.4  gtk+-2.0 >= 2.8.0  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2)
 
+# Check for some boost header files
+AC_CHECK_HEADERS([boost/concept_check.hpp], [], AC_MSG_ERROR([You need the boost package (e.g. libboost-dev)]))
+
 PKG_CHECK_MODULES(CAIRO_PDF, cairo-pdf, cairo_pdf=yes, cairo_pdf=no)
 if test "x$cairo_pdf" = "xyes"; then
   AC_DEFINE(HAVE_CAIRO_PDF, 1, [Whether the Cairo PDF backend is available])
@@ -877,6 +880,8 @@ src/libnr/makefile
 src/libnrtype/makefile
 src/libavoid/makefile
 src/livarot/makefile
+src/live_effects/makefile
+src/live_effects/parameter/makefile
 src/pedro/makefile
 src/jabber_whiteboard/makefile
 src/removeoverlap/makefile
@@ -892,6 +897,7 @@ src/utest/makefile
 src/util/makefile
 src/widgets/makefile
 src/xml/makefile
+src/2geom/makefile
 doc/Makefile
 po/Makefile.in
 share/Makefile

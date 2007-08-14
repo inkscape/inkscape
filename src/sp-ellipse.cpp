@@ -76,6 +76,8 @@ static void sp_genericellipse_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p);
 
 static void sp_genericellipse_set_shape(SPShape *shape);
+static void sp_genericellipse_update_patheffect (SPShape *shape, bool write);
+
 static Inkscape::XML::Node *sp_genericellipse_write(SPObject *object, Inkscape::XML::Node *repr,
                                                     guint flags);
 
@@ -119,6 +121,7 @@ static void sp_genericellipse_class_init(SPGenericEllipseClass *klass)
     item_class->snappoints = sp_genericellipse_snappoints;
 
     shape_class->set_shape = sp_genericellipse_set_shape;
+    shape_class->update_patheffect = sp_genericellipse_update_patheffect;
 }
 
 static void
@@ -153,6 +156,31 @@ sp_genericellipse_update(SPObject *object, SPCtx *ctx, guint flags)
     if (((SPObjectClass *) ge_parent_class)->update)
         ((SPObjectClass *) ge_parent_class)->update(object, ctx, flags);
 }
+
+static void
+sp_genericellipse_update_patheffect(SPShape *shape, bool write)
+{
+    sp_genericellipse_set_shape(shape);
+
+    if (write) {
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
+        if ( shape->curve != NULL ) {
+            NArtBpath *abp = sp_curve_first_bpath(shape->curve);
+            if (abp) {
+                gchar *str = sp_svg_write_path(abp);
+                repr->setAttribute("d", str);
+                g_free(str);
+            } else {
+                repr->setAttribute("d", "");
+            }
+        } else {
+            repr->setAttribute("d", NULL);
+        }
+    }
+
+    ((SPObject *)shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+}
+
 
 #define C1 0.552
 
@@ -248,6 +276,7 @@ static void sp_genericellipse_set_shape(SPShape *shape)
     SPCurve *c = sp_curve_new_from_bpath(nr_artpath_affine(bpath, aff));
     g_assert(c != NULL);
 
+    sp_shape_perform_path_effect(c, SP_SHAPE (ellipse));
     sp_shape_set_curve_insync((SPShape *) ellipse, c, TRUE);
     sp_curve_unref(c);
 }

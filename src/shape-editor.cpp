@@ -113,7 +113,7 @@ void ShapeEditor::decrement_local_change () {
 SPItem *ShapeEditor::get_item () {
     SPItem *item = NULL;
     if (this->has_nodepath()) {
-        item = SP_ITEM(this->nodepath->path);
+        item = SP_ITEM(this->nodepath->object);
     } else if (this->has_knotholder()) {
         item = SP_ITEM(this->knotholder->item);
     }
@@ -205,6 +205,37 @@ void ShapeEditor::set_item(SPItem *item) {
     }
 }
 
+void ShapeEditor::set_livepatheffect_parameter(SPObject *lpeobject, const char * key) {
+
+    unset_item();
+
+    this->grab_node = -1;
+
+    if (lpeobject) {
+        this->nodepath = sp_nodepath_new( desktop, lpeobject, 
+                                          (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0),
+                                          key);
+        if (this->nodepath) {
+            this->nodepath->shape_editor = this; 
+        }
+        //this->knotholder = sp_item_knot_holder(item, desktop);
+        g_message("create knotholder?");
+
+        if (this->nodepath || this->knotholder) {
+            // setting new listener
+            Inkscape::XML::Node *repr;
+            if (this->knotholder)
+                repr = this->knotholder->repr;
+            else
+                repr = SP_OBJECT_REPR(lpeobject);
+            if (repr) {
+                Inkscape::GC::anchor(repr);
+                sp_repr_add_listener(repr, &shapeeditor_repr_events, this);
+            }
+        }
+    }
+}
+
 void ShapeEditor::nodepath_destroyed () {
     this->nodepath = NULL;
 }
@@ -224,7 +255,6 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
     //Translate click point into proper coord system
     this->curvepoint_doc = desktop->w2d(event_p);
     this->curvepoint_doc *= sp_item_dt2i_affine(item);
-    this->curvepoint_doc *= sp_item_i2doc_affine(item);
 
     sp_nodepath_ensure_livarot_path(this->nodepath);
 
@@ -285,7 +315,7 @@ bool ShapeEditor::hits_curve() {
 
 
 void ShapeEditor::curve_drag(gdouble eventx, gdouble eventy) {
-    if (this->nodepath) {
+    if (this->nodepath && !this->nodepath->straight_path) {
 
         if (this->grab_node == -1) // don't know which segment to drag
             return;

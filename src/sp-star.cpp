@@ -38,6 +38,7 @@ static gchar * sp_star_description (SPItem * item);
 static void sp_star_snappoints(SPItem const *item, SnapPointsIter p);
 
 static void sp_star_set_shape (SPShape *shape);
+static void sp_star_update_patheffect (SPShape *shape, bool write);
 
 static SPShapeClass *parent_class;
 
@@ -88,6 +89,7 @@ sp_star_class_init (SPStarClass *klass)
 	item_class->snappoints = sp_star_snappoints;
 
 	shape_class->set_shape = sp_star_set_shape;
+    shape_class->update_patheffect = sp_star_update_patheffect;
 }
 
 static void
@@ -267,6 +269,30 @@ sp_star_update (SPObject *object, SPCtx *ctx, guint flags)
 
 	if (((SPObjectClass *) parent_class)->update)
 		((SPObjectClass *) parent_class)->update (object, ctx, flags);
+}
+
+static void
+sp_star_update_patheffect(SPShape *shape, bool write)
+{
+    sp_star_set_shape(shape);
+
+    if (write) {
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
+        if ( shape->curve != NULL ) {
+            NArtBpath *abp = sp_curve_first_bpath(shape->curve);
+            if (abp) {
+                gchar *str = sp_svg_write_path(abp);
+                repr->setAttribute("d", str);
+                g_free(str);
+            } else {
+                repr->setAttribute("d", "");
+            }
+        } else {
+            repr->setAttribute("d", NULL);
+        }
+    }
+
+    ((SPObject *)shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 static gchar *
@@ -470,9 +496,10 @@ sp_star_set_shape (SPShape *shape)
 			}
 		}
 
-	sp_curve_closepath (c);
-	sp_shape_set_curve_insync (SP_SHAPE (star), c, TRUE);
-	sp_curve_unref (c);
+    sp_curve_closepath (c);
+    sp_shape_perform_path_effect(c, SP_SHAPE (star));
+    sp_shape_set_curve_insync (SP_SHAPE (star), c, TRUE);
+    sp_curve_unref (c);
 }
 
 void

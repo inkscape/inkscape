@@ -14,6 +14,9 @@
 
 #include <gtkmm/box.h>
 #include <gtkmm/adjustment.h>
+#include <gtkmm/tooltips.h>
+
+#include "xml/node.h"
 
 class SPUnit;
 class SPDocument;
@@ -31,10 +34,53 @@ namespace Widget {
 
 class ColorPicker;
 class Registry;
+class Scalar;
 class ScalarUnit;
 class UnitMenu;
+class Point;
 
-class RegisteredCheckButton {
+class RegisteredWidget {
+public:
+    void set_undo_parameters(const unsigned int _event_type, Glib::ustring _event_description)
+    {
+        event_type = _event_type;
+        event_description = _event_description;
+        write_undo = true;
+    }
+
+protected:
+    RegisteredWidget()
+    {
+        _wr = NULL;
+        repr = NULL;
+        doc = NULL;
+        write_undo = false;
+    }
+
+    void init_parent(const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+    {
+        _wr = &wr;
+        _key = key;
+        repr = repr_in;
+        doc = doc_in;
+        if (repr && !doc)  // doc cannot be NULL when repr is not NULL
+            g_warning("Initialization of registered widget using defined repr but with doc==NULL");
+    }
+
+    void write_to_xml(const char * svgstr);
+
+    Registry * _wr;
+    Glib::ustring _key;
+    Inkscape::XML::Node * repr;
+    SPDocument * doc;
+    unsigned int event_type;
+    Glib::ustring event_description;
+    bool write_undo;
+};
+
+//#######################################################
+
+class RegisteredCheckButton : public RegisteredWidget {
 public:
     RegisteredCheckButton();
     ~RegisteredCheckButton();
@@ -55,18 +101,23 @@ public:
 protected:
     Gtk::Tooltips     _tt;
     sigc::connection  _toggled_connection;
-    Registry    *_wr;
-    Glib::ustring      _key;
     void on_toggled();
-    Inkscape::XML::Node *repr;
-    SPDocument *doc;
 };
 
-class RegisteredUnitMenu {
+class RegisteredUnitMenu : public RegisteredWidget {
 public:
     RegisteredUnitMenu();
     ~RegisteredUnitMenu();
-    void init (const Glib::ustring& label, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in=NULL, SPDocument *doc_in=NULL);
+    void init ( const Glib::ustring& label,
+                const Glib::ustring& key,
+                Registry& wr,
+                Inkscape::XML::Node* repr_in,
+                SPDocument *doc_in);
+    inline void init ( const Glib::ustring& label, 
+                       const Glib::ustring& key, 
+                       Registry& wr)
+        { init(label, key, wr, NULL, NULL); };
+
     void setUnit (const SPUnit*);
     Gtk::Label   *_label;
     UnitMenu     *_sel;
@@ -74,13 +125,9 @@ public:
 
 protected:
     void on_changed();
-    Registry     *_wr;
-    Glib::ustring _key;
-    Inkscape::XML::Node *repr;
-    SPDocument *doc;
 };
 
-class RegisteredScalarUnit {
+class RegisteredScalarUnit : public RegisteredWidget {
 public:
     RegisteredScalarUnit();
     ~RegisteredScalarUnit();
@@ -89,8 +136,15 @@ public:
             const Glib::ustring& key, 
             const RegisteredUnitMenu &rum,
             Registry& wr,
-            Inkscape::XML::Node* repr_in=NULL,
-            SPDocument *doc_in=NULL);
+            Inkscape::XML::Node* repr_in,
+            SPDocument *doc_in);
+    inline void init ( const Glib::ustring& label, 
+                       const Glib::ustring& tip, 
+                       const Glib::ustring& key, 
+                       const RegisteredUnitMenu &rum,
+                       Registry& wr)
+        { init(label, tip, key, rum, wr, NULL, NULL); };
+
     ScalarUnit* getSU();
     void setValue (double);
 
@@ -98,14 +152,35 @@ protected:
     ScalarUnit   *_widget;
     sigc::connection  _value_changed_connection;
     UnitMenu         *_um;
-    Registry         *_wr;
-    Glib::ustring    _key;
     void on_value_changed();
-    Inkscape::XML::Node *repr;
-    SPDocument *doc;
 };
 
-class RegisteredColorPicker {
+class RegisteredScalar : public RegisteredWidget {
+public:
+    RegisteredScalar();
+    ~RegisteredScalar();
+    void init (const Glib::ustring& label, 
+            const Glib::ustring& tip, 
+            const Glib::ustring& key, 
+            Registry& wr,
+            Inkscape::XML::Node* repr_in,
+            SPDocument *doc_in);
+    inline void init ( const Glib::ustring& label, 
+                       const Glib::ustring& tip, 
+                       const Glib::ustring& key, 
+                       Registry& wr)
+        { init(label, tip, key, wr, NULL, NULL); };
+
+    Scalar* getS();
+    void setValue (double);
+
+protected:
+    Scalar   *_widget;
+    sigc::connection  _value_changed_connection;
+    void on_value_changed();
+};
+
+class RegisteredColorPicker : public RegisteredWidget {
 public:
     RegisteredColorPicker();
     ~RegisteredColorPicker();
@@ -115,8 +190,16 @@ public:
             const Glib::ustring& ckey, 
             const Glib::ustring& akey,
             Registry& wr,
-            Inkscape::XML::Node* repr_in=NULL,
-            SPDocument *doc_in=NULL);
+            Inkscape::XML::Node* repr_in,
+            SPDocument *doc_in);
+    inline void init ( const Glib::ustring& label, 
+                       const Glib::ustring& title, 
+                       const Glib::ustring& tip, 
+                       const Glib::ustring& ckey, 
+                       const Glib::ustring& akey, 
+                       Registry& wr)
+        { init(label, title, tip, ckey, akey, wr, NULL, NULL); };
+
     void setRgba32 (guint32);
     void closeWindow();
 
@@ -125,14 +208,11 @@ public:
 
 protected:
     Glib::ustring _ckey, _akey;
-    Registry      *_wr;
     void on_changed (guint32);
     sigc::connection _changed_connection;
-    Inkscape::XML::Node *repr;
-    SPDocument *doc;
 };
 
-class RegisteredSuffixedInteger {
+class RegisteredSuffixedInteger : public RegisteredWidget {
 public:
     RegisteredSuffixedInteger();
     ~RegisteredSuffixedInteger();
@@ -140,8 +220,14 @@ public:
                const Glib::ustring& label2, 
                const Glib::ustring& key,
                Registry& wr,
-               Inkscape::XML::Node* repr_in=NULL,
-               SPDocument *doc_in=NULL);
+               Inkscape::XML::Node* repr_in,
+               SPDocument *doc_in);
+    inline void init ( const Glib::ustring& label1, 
+                       const Glib::ustring& label2, 
+                       const Glib::ustring& key, 
+                       Registry& wr)
+        { init(label1, label2, key, wr, NULL, NULL); };
+
     void setValue (int);
     Gtk::Label *_label;
     Gtk::HBox _hbox;
@@ -150,15 +236,11 @@ protected:
     Gtk::SpinButton *_sb;
     Gtk::Adjustment _adj;
     Gtk::Label      *_suffix;
-    Glib::ustring   _key;
-    Registry        *_wr;
     sigc::connection _changed_connection;
     void on_value_changed();
-    Inkscape::XML::Node *repr;
-    SPDocument *doc;
 };
 
-class RegisteredRadioButtonPair {
+class RegisteredRadioButtonPair : public RegisteredWidget {
 public:
     RegisteredRadioButtonPair();
     ~RegisteredRadioButtonPair();
@@ -169,23 +251,52 @@ public:
                const Glib::ustring& tip2, 
                const Glib::ustring& key,
                Registry& wr,
-               Inkscape::XML::Node* repr_in=NULL,
-               SPDocument *doc_in=NULL);
+               Inkscape::XML::Node* repr_in,
+               SPDocument *doc_in);
+    inline void init ( const Glib::ustring& label, 
+                       const Glib::ustring& label1, 
+                       const Glib::ustring& label2, 
+                       const Glib::ustring& tip1, 
+                       const Glib::ustring& tip2, 
+                       const Glib::ustring& key, 
+                       Registry& wr)
+        { init(label, label1, label2, tip1, tip2, key, wr, NULL, NULL); };
+
     void setValue (bool second);
     Gtk::HBox *_hbox;
 
 protected:
     Gtk::RadioButton *_rb1, *_rb2;
     Gtk::Tooltips     _tt;
-    Glib::ustring   _key;
-    Registry        *_wr;
     sigc::connection _changed_connection;
     void on_value_changed();
-    Inkscape::XML::Node *repr;
-    SPDocument *doc;
 };
 
+class RegisteredPoint : public RegisteredWidget {
+public:
+    RegisteredPoint();
+    ~RegisteredPoint();
+    void init (const Glib::ustring& label, 
+               const Glib::ustring& tip, 
+               const Glib::ustring& key, 
+               Registry& wr,
+               Inkscape::XML::Node* repr_in,
+               SPDocument *doc_in);
+    inline void init ( const Glib::ustring& label, 
+                       const Glib::ustring& tip, 
+                       const Glib::ustring& key, 
+                       Registry& wr)
+        { init(label, tip, key, wr, NULL, NULL); };
 
+    Point* getPoint();
+    void setValue (double xval, double yval);
+
+protected:
+    Point   *_widget;
+    sigc::connection  _value_x_changed_connection;
+    sigc::connection  _value_y_changed_connection;
+    void on_value_changed();
+};
 
 } // namespace Widget
 } // namespace UI

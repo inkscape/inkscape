@@ -17,6 +17,7 @@
 #include <gtkmm/liststore.h>
 #include "attr-widget.h"
 #include "util/enums.h"
+#include "ui/widget/labelled.h"
 
 namespace Inkscape {
 namespace UI {
@@ -74,6 +75,23 @@ public:
         row[_columns.data] = 0;
         row[_columns.label] = s;
     }
+
+    void set_active_by_id(E id) {
+        for(Gtk::TreeModel::iterator i = _model->children().begin();
+            i != _model->children().end(); ++i) 
+        {
+            const Util::EnumData<E>* data = (*i)[_columns.data];
+            if(data->id == id) {
+                set_active(i);
+                break;
+            }
+        }
+    };
+
+    void set_active_by_key(const Glib::ustring& key) {
+        set_active_by_id( _converter.get_id_from_key(key) );
+    };
+
 private:
     class Columns : public Gtk::TreeModel::ColumnRecord
     {
@@ -91,6 +109,24 @@ private:
     Columns _columns;
     Glib::RefPtr<Gtk::ListStore> _model;
     const Util::EnumDataConverter<E>& _converter;
+};
+
+
+template<typename E> class LabelledComboBoxEnum : public Labelled
+{
+public:
+    LabelledComboBoxEnum( Glib::ustring const &label,
+                          Glib::ustring const &tooltip,
+                          const Util::EnumDataConverter<E>& c,
+                          Glib::ustring const &suffix = "",
+                          Glib::ustring const &icon = "",
+                          bool mnemonic = true)
+        : Labelled(label, tooltip, new ComboBoxEnum<E>(c), suffix, icon, mnemonic)
+    { }
+
+    ComboBoxEnum<E>* getCombobox() {
+        return static_cast< ComboBoxEnum<E>* > (_widget);
+    }
 };
 
 }

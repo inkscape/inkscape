@@ -39,6 +39,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_STYLE, "style"},
     {SP_ATTR_TRANSFORM_CENTER_X, "inkscape:transform-center-x"},
     {SP_ATTR_TRANSFORM_CENTER_Y, "inkscape:transform-center-y"},
+    {SP_ATTR_INKSCAPE_PATH_EFFECT, "inkscape:path-effect"},
     /* SPAnchor */
     {SP_ATTR_XLINK_HREF, "xlink:href"},
     {SP_ATTR_XLINK_TYPE, "xlink:type"},
@@ -102,6 +103,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_Y, "y"},
     /* SPPath */
     {SP_ATTR_D, "d"},
+    {SP_ATTR_INKSCAPE_ORIGINAL_D, "inkscape:original-d"},    
     /* (Note: XML representation of connectors may change in future.) */
     {SP_ATTR_CONNECTOR_TYPE, "inkscape:connector-type"},
     {SP_ATTR_CONNECTION_START, "inkscape:connection-start"},
@@ -385,6 +387,8 @@ static SPStyleProp const props[] = {
     {SP_PROP_SYSTEM_LANGUAGE, "systemLanguage"},
     {SP_PROP_REQUIRED_FEATURES, "requiredFeatures"},
     {SP_PROP_REQUIRED_EXTENSIONS, "requiredExtensions"},
+    /* LivePathEffect */
+    {SP_PROP_PATH_EFFECT, "effect"},
 };
 
 #define n_attrs (sizeof(props) / sizeof(props[0]))

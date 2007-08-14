@@ -66,6 +66,8 @@
 #include "sp-fetile.h"
 #include "sp-feturbulence.h"
 #include "sp-femergenode.h"
+#include "live_effects/lpeobject.h"
+
 
 enum NameType { REPR_NAME, SODIPODI_TYPE };
 static unsigned const N_NAME_TYPES = SODIPODI_TYPE + 1;
@@ -176,7 +178,8 @@ populate_dtables()
         { "svg:textPath", SP_TYPE_TEXTPATH },
         { "svg:tref", SP_TYPE_TREF },
         { "svg:tspan", SP_TYPE_TSPAN },
-        { "svg:use", SP_TYPE_USE }
+        { "svg:use", SP_TYPE_USE },
+        { "inkscape:path-effect", TYPE_LIVEPATHEFFECT }
     };
     NameTypeEntry const sodipodi_name_entries[] = {
         { "arc", SP_TYPE_ARC },

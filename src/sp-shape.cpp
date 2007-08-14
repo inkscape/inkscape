@@ -35,6 +35,16 @@
 #include "marker.h"
 #include "sp-path.h"
 #include "prefs-utils.h"
+#include "attributes.h"
+
+#include "live_effects/effect.h"
+#include "live_effects/lpeobject.h"
+#include "live_effects/lpeobject-reference.h"
+#include "uri.h"
+#include "extract-uri.h"
+#include "uri-references.h"
+#include "bad-uri-exception.h"
+#include "xml/repr.h"
 
 #define noSHAPE_VERBOSE
 
@@ -45,8 +55,10 @@ static void sp_shape_finalize (GObject *object);
 static void sp_shape_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static void sp_shape_release (SPObject *object);
 
+static void sp_shape_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags);
 static void sp_shape_modified (SPObject *object, unsigned int flags);
+static Inkscape::XML::Node *sp_shape_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
 static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
 void sp_shape_print (SPItem * item, SPPrintContext * ctx);
@@ -55,6 +67,9 @@ static void sp_shape_hide (SPItem *item, unsigned int key);
 static void sp_shape_snappoints (SPItem const *item, SnapPointsIter p);
 
 static void sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai);
+
+static void lpeobject_ref_changed(SPObject *old_ref, SPObject *ref, SPShape *shape);
+static void lpeobject_ref_modified(SPObject *href, guint flags, SPShape *shape);
 
 static SPItemClass *parent_class;
 
@@ -104,14 +119,19 @@ sp_shape_class_init (SPShapeClass *klass)
 
 	sp_object_class->build = sp_shape_build;
 	sp_object_class->release = sp_shape_release;
+    sp_object_class->set = sp_shape_set;
 	sp_object_class->update = sp_shape_update;
 	sp_object_class->modified = sp_shape_modified;
+    sp_object_class->write = sp_shape_write;
 
 	item_class->bbox = sp_shape_bbox;
 	item_class->print = sp_shape_print;
 	item_class->show = sp_shape_show;
 	item_class->hide = sp_shape_hide;
     item_class->snappoints = sp_shape_snappoints;
+
+    klass->set_shape = NULL;
+    klass->update_patheffect = NULL;
 }
 
 /**
@@ -120,6 +140,10 @@ sp_shape_class_init (SPShapeClass *klass)
 static void
 sp_shape_init (SPShape *shape)
 {
+    shape->path_effect_href = NULL;
+    shape->path_effect_ref  = new Inkscape::LivePathEffect::LPEObjectReference(SP_OBJECT(shape));
+    shape->path_effect_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(lpeobject_ref_changed), shape));
+
     for ( int i = 0 ; i < SP_MARKER_LOC_QTY ; i++ ) {
         new (&shape->release_connect[i]) sigc::connection();
         new (&shape->modified_connect[i]) sigc::connection();
@@ -146,17 +170,18 @@ sp_shape_finalize (GObject *object)
 /**
  * Virtual build callback for SPMarker.
  *
- * This is to be invoked immediately after creation of an SPShape.  This is 
- * just a stub.
+ * This is to be invoked immediately after creation of an SPShape.
  *
  * \see sp_object_build()
  */
 static void
 sp_shape_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-	if (((SPObjectClass *) (parent_class))->build) {
-	  (*((SPObjectClass *) (parent_class))->build) (object, document, repr);
-	}
+    sp_object_read_attr(object, "inkscape:path-effect");
+ 
+    if (((SPObjectClass *) (parent_class))->build) {
+       (*((SPObjectClass *) (parent_class))->build) (object, document, repr);
+    }
 }
 
 /**
@@ -193,9 +218,76 @@ sp_shape_release (SPObject *object)
 		shape->curve = sp_curve_unref (shape->curve);
 	}
 
+    if (shape->path_effect_href) {
+        g_free(shape->path_effect_href);
+    }
+    shape->path_effect_ref->detach();
+    
 	if (((SPObjectClass *) parent_class)->release) {
 	  ((SPObjectClass *) parent_class)->release (object);
 	}
+}
+
+
+
+static void
+sp_shape_set(SPObject *object, unsigned int key, gchar const *value)
+{
+    SPShape *shape = (SPShape *) object;
+    bool path_effect_changed = false;
+
+    switch (key) {
+        case SP_ATTR_INKSCAPE_PATH_EFFECT:
+            if ( value && shape->path_effect_href && ( strcmp(value, shape->path_effect_href) == 0 ) ) {
+                /* No change, do nothing. */
+            } else {
+                if (shape->path_effect_href) {
+                    g_free(shape->path_effect_href);
+                    shape->path_effect_href = NULL;
+                }
+                if (value) {
+                    shape->path_effect_href = g_strdup(value);
+
+                    // Now do the attaching, which emits the changed signal.
+                    try {
+                        shape->path_effect_ref->attach(Inkscape::URI(value));
+                    } catch (Inkscape::BadURIException &e) {
+                        g_warning("%s", e.what());
+                        shape->path_effect_ref->detach();
+                    }
+                } else {
+                    shape->path_effect_ref->detach();
+                }
+            }
+            path_effect_changed = true;  // updated twice now when connected to changed signal??
+            break;
+        default:
+            if (((SPObjectClass *) parent_class)->set) {
+                ((SPObjectClass *) parent_class)->set(object, key, value);
+            }
+            break;
+    }
+
+    if (path_effect_changed) 
+        sp_shape_update_patheffect ((SPShape *) object, false);
+}
+
+static Inkscape::XML::Node *
+sp_shape_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+{
+    SPShape *shape = (SPShape *) object;
+
+    if ( shape->path_effect_href ) {
+        repr->setAttribute("inkscape:path-effect", shape->path_effect_href);
+    } else {
+        repr->setAttribute("inkscape:path-effect", NULL);
+    }
+
+    if (((SPObjectClass *)(parent_class))->write) {
+        ((SPObjectClass *)(parent_class))->write(object, repr, flags);
+    }
+
+    return repr;
 }
 
 /** 
@@ -1029,6 +1121,83 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
     while (bp->code != NR_END) {
         *p = bp->c(3) * i2d;
         bp++;
+    }
+}
+
+
+LivePathEffectObject *
+sp_shape_get_livepatheffectobject(SPShape *shape) {
+    if (!shape) return NULL;
+
+    return shape->path_effect_ref->lpeobject;
+}
+
+/**
+ * Calls any registered handlers for the update_patheffect action
+ */
+void
+sp_shape_update_patheffect (SPShape *shape, bool write)
+{
+    g_return_if_fail (shape != NULL);
+    g_return_if_fail (SP_IS_SHAPE (shape));
+
+    if (SP_SHAPE_CLASS (G_OBJECT_GET_CLASS (shape))->update_patheffect) {
+        SP_SHAPE_CLASS (G_OBJECT_GET_CLASS (shape))->update_patheffect (shape, write);
+    }
+}
+
+void sp_shape_perform_path_effect(SPCurve *curve, SPShape *shape) {
+    if (!shape) return;
+    if (!curve) return;
+
+    LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(shape);
+    if (lpeobj && lpeobj->lpe) {
+        lpeobj->lpe->doEffect(curve);
+    }
+}
+
+/**
+ * Gets called when (re)attached to another lpeobject.
+ */
+static void
+lpeobject_ref_changed(SPObject *old_ref, SPObject *ref, SPShape *shape)
+{
+    if (old_ref) {
+        sp_signal_disconnect_by_data(old_ref, shape);
+    }
+    if ( IS_LIVEPATHEFFECT(ref) && ref != shape )
+    {
+        ref->connectModified(sigc::bind(sigc::ptr_fun(&lpeobject_ref_modified), shape));
+    }
+
+    lpeobject_ref_modified(ref, 0, shape);
+}
+
+/**
+ * Gets called when lpeobject repr contents change: i.e. parameter change.
+ */
+static void
+lpeobject_ref_modified(SPObject *href, guint flags, SPShape *shape)
+{
+    sp_shape_update_patheffect (shape, true);
+}
+
+void sp_shape_set_path_effect(SPShape *shape, gchar *value)
+{
+    if (!value) {
+        sp_shape_remove_path_effect(shape);
+    } else {
+        SP_OBJECT_REPR(shape)->setAttribute("inkscape:path-effect", value);
+    }
+}
+
+void sp_shape_remove_path_effect(SPShape *shape)
+{
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
+    repr->setAttribute("inkscape:path-effect", NULL);
+    if (SP_IS_PATH(shape)) {
+        repr->setAttribute("d", repr->attribute("inkscape:original-d"));
+        repr->setAttribute("inkscape:original-d", NULL);
     }
 }
 

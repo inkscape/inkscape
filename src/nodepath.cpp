@@ -15,11 +15,13 @@
 #endif
 
 #include <gdk/gdkkeysyms.h>
+#include "display/canvas-bpath.h"
 #include "display/curve.h"
 #include "display/sp-ctrlline.h"
 #include "display/sodipodi-ctrl.h"
 #include <glibmm/i18n.h>
 #include "libnr/n-art-bpath.h"
+#include "libnr/nr-path.h"
 #include "helper/units.h"
 #include "knot.h"
 #include "inkscape.h"
@@ -45,6 +47,7 @@
 #include "display/bezier-utils.h"
 #include <vector>
 #include <algorithm>
+#include "live_effects/lpeobject.h"
 
 class NR::Matrix;
 
@@ -135,71 +138,96 @@ static Inkscape::NodePath::NodeSide *sp_node_get_side(Inkscape::NodePath::Node *
 static Inkscape::NodePath::NodeSide *sp_node_opposite_side(Inkscape::NodePath::Node *node,Inkscape::NodePath::NodeSide *me);
 static NRPathcode sp_node_path_code_from_side(Inkscape::NodePath::Node *node,Inkscape::NodePath::NodeSide *me);
 
+static SPCurve* sp_nodepath_object_get_curve(SPObject *object, const gchar *key);
+static void sp_nodepath_object_set_curve (SPObject *object, SPCurve *curve);
+
 // active_node indicates mouseover node
 Inkscape::NodePath::Node * Inkscape::NodePath::Path::active_node = NULL;
 
 /**
  * \brief Creates new nodepath from item
+*   repr_key_in should be NULL,  unless you are called Johan or really know what you are doing! (See "if (repr_key_in)" below)
  */
-Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item, bool show_handles)
+Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, bool show_handles, const char * repr_key_in)
 {
-    Inkscape::XML::Node *repr = SP_OBJECT(item)->repr;
+    Inkscape::XML::Node *repr = object->repr;
 
     /** \todo
      * FIXME: remove this. We don't want to edit paths inside flowtext.
      * Instead we will build our flowtext with cloned paths, so that the
      * real paths are outside the flowtext and thus editable as usual.
      */
-    if (SP_IS_FLOWTEXT(item)) {
-        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+    if (SP_IS_FLOWTEXT(object)) {
+        for (SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             if SP_IS_FLOWREGION(child) {
                 SPObject *grandchild = sp_object_first_child(SP_OBJECT(child));
                 if (grandchild && SP_IS_PATH(grandchild)) {
-                    item = SP_ITEM(grandchild);
+                    object = SP_ITEM(grandchild);
                     break;
                 }
             }
         }
     }
 
-    if (!SP_IS_PATH(item))
-        return NULL;
-    SPPath *path = SP_PATH(item);
-    SPCurve *curve = sp_shape_get_curve(SP_SHAPE(path));
+    SPCurve *curve = sp_nodepath_object_get_curve(object, repr_key_in);
+
     if (curve == NULL)
         return NULL;
 
     NArtBpath *bpath = sp_curve_first_bpath(curve);
     gint length = curve->end;
-    if (length == 0)
+    if (length == 0) {
+        sp_curve_unref(curve);
         return NULL; // prevent crash for one-node paths
-
-    gchar const *nodetypes = repr->attribute("sodipodi:nodetypes");
-    gchar *typestr = parse_nodetypes(nodetypes, length);
+    }
 
     //Create new nodepath
     Inkscape::NodePath::Path *np = g_new(Inkscape::NodePath::Path, 1);
-    if (!np)
+    if (!np) {
+        sp_curve_unref(curve);
         return NULL;
+    }
 
     // Set defaults
     np->desktop     = desktop;
-    np->path        = path;
+    np->object      = object;
     np->subpaths    = NULL;
     np->selected    = NULL;
     np->shape_editor = NULL; //Let the shapeeditor that makes this set it
     np->livarot_path = NULL;
     np->local_change = 0;
     np->show_handles = show_handles;
+    np->helper_path = NULL;
+    np->curve = sp_curve_copy(curve);
+    np->show_helperpath = false;
+    np->straight_path = false;
+    
 
     // we need to update item's transform from the repr here,
     // because they may be out of sync when we respond
     // to a change in repr by regenerating nodepath     --bb
-    sp_object_read_attr(SP_OBJECT(item), "transform");
+    sp_object_read_attr(object, "transform");
 
-    np->i2d  = sp_item_i2d_affine(SP_ITEM(path));
+    np->i2d  = sp_item_i2d_affine(SP_ITEM(object));
     np->d2i  = np->i2d.inverse();
+
     np->repr = repr;
+    if (repr_key_in) {
+        np->repr_key = g_strdup(repr_key_in);
+        np->repr_nodetypes_key = g_strconcat(np->repr_key, "-nodetypes", NULL);
+        np->show_helperpath = true;
+    } else {
+        np->repr_nodetypes_key = g_strdup("sodipodi:nodetypes");
+        if ( SP_SHAPE(np->object)->path_effect_href ) {
+            np->repr_key = g_strdup("inkscape:original-d");
+            np->show_helperpath = true;
+        } else {
+            np->repr_key = g_strdup("d");
+        }
+    }
+
+    gchar const *nodetypes = np->repr->attribute(np->repr_nodetypes_key);
+    gchar *typestr = parse_nodetypes(nodetypes, length);
 
     // create the subpath(s) from the bpath
     NArtBpath *b = bpath;
@@ -215,6 +243,17 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item, bool
 
     // create the livarot representation from the same item
     sp_nodepath_ensure_livarot_path(np);
+
+    // Draw helper curve
+    if (np->show_helperpath) {
+        SPCurve *helper_curve = sp_curve_copy(np->curve);
+        sp_curve_transform(helper_curve, np->i2d );
+        np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(desktop), helper_curve);
+        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), 0xff0000ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(np->helper_path), 0, SP_WIND_RULE_NONZERO);
+        sp_canvas_item_show(np->helper_path);
+        sp_curve_unref(helper_curve);
+    }
 
     return np;
 }
@@ -241,6 +280,25 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
         delete np->livarot_path;
         np->livarot_path = NULL;
     }
+    
+    if (np->helper_path) {
+        GtkObject *temp = np->helper_path;
+        np->helper_path = NULL;
+        gtk_object_destroy(temp);
+    }
+    if (np->curve) {
+        sp_curve_unref(np->curve);
+        np->curve = NULL;
+    }
+
+    if (np->repr_key) {
+        g_free(np->repr_key);
+        np->repr_key = NULL;
+    }
+    if (np->repr_nodetypes_key) {
+        g_free(np->repr_nodetypes_key);
+        np->repr_nodetypes_key = NULL;
+    }
 
     np->desktop = NULL;
 
@@ -250,10 +308,15 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
 
 void sp_nodepath_ensure_livarot_path(Inkscape::NodePath::Path *np)
 {
-    if (np && np->livarot_path == NULL && np->path && SP_IS_ITEM(np->path)) {
-        np->livarot_path = Path_for_item (np->path, true, true);
+    if (np && np->livarot_path == NULL && np->object && SP_IS_ITEM(np->object)) {
+        SPCurve *curve = create_curve(np);
+        NArtBpath *bpath = SP_CURVE_BPATH(curve);
+        np->livarot_path = bpath_to_Path(bpath);
+
         if (np->livarot_path)
             np->livarot_path->ConvertWithBackData(0.01);
+
+        sp_curve_unref(curve);
     }
 }
 
@@ -450,11 +513,17 @@ static void update_object(Inkscape::NodePath::Path *np)
 {
     g_assert(np);
 
-    SPCurve *curve = create_curve(np);
+    sp_curve_unref(np->curve);
+    np->curve = create_curve(np);
 
-    sp_shape_set_curve(SP_SHAPE(np->path), curve, TRUE);
+    sp_nodepath_object_set_curve(np->object, np->curve);
 
-    sp_curve_unref(curve);
+    if (np->show_helperpath) {
+        SPCurve * helper_curve = sp_curve_copy(np->curve);
+        sp_curve_transform(helper_curve, np->i2d );
+        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(np->helper_path), helper_curve);
+        sp_curve_unref(helper_curve);
+    }
 }
 
 /**
@@ -464,26 +533,35 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
 {
     g_assert(np);
 
-    Inkscape::XML::Node *repr = SP_OBJECT(np->path)->repr;
+    Inkscape::XML::Node *repr = np->object->repr;
 
-    SPCurve *curve = create_curve(np);
+    sp_curve_unref(np->curve);
+    np->curve = create_curve(np);
+    
     gchar *typestr = create_typestr(np);
-    gchar *svgpath = sp_svg_write_path(SP_CURVE_BPATH(curve));
+    gchar *svgpath = sp_svg_write_path(SP_CURVE_BPATH(np->curve));
 
-    if (repr->attribute("d") == NULL || strcmp(svgpath, repr->attribute("d"))) { // d changed
+    // determine if path has an effect applied and write to correct "d" attribute.
+    if (repr->attribute(np->repr_key) == NULL || strcmp(svgpath, repr->attribute(np->repr_key))) { // d changed
         np->local_change++;
-        repr->setAttribute("d", svgpath);
+        repr->setAttribute(np->repr_key, svgpath);
     }
 
-    if (repr->attribute("sodipodi:nodetypes") == NULL || strcmp(typestr, repr->attribute("sodipodi:nodetypes"))) { // nodetypes changed
+    if (repr->attribute(np->repr_nodetypes_key) == NULL || strcmp(typestr, repr->attribute(np->repr_nodetypes_key))) { // nodetypes changed
         np->local_change++;
-        repr->setAttribute("sodipodi:nodetypes", typestr);
+        repr->setAttribute(np->repr_nodetypes_key, typestr);
     }
 
     g_free(svgpath);
     g_free(typestr);
-    sp_curve_unref(curve);
-}
+
+    if (np->show_helperpath) {
+        SPCurve * helper_curve = sp_curve_copy(np->curve);
+        sp_curve_transform(helper_curve, np->i2d );
+        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(np->helper_path), helper_curve);
+        sp_curve_unref(helper_curve);
+    }
+ }
 
 /**
  * Update XML path node with data from path object, commit changes forever.
@@ -527,7 +605,7 @@ static void stamp_repr(Inkscape::NodePath::Path *np)
 {
     g_assert(np);
 
-    Inkscape::XML::Node *old_repr = SP_OBJECT(np->path)->repr;
+    Inkscape::XML::Node *old_repr = np->object->repr;
     Inkscape::XML::Node *new_repr = old_repr->duplicate(old_repr->document());
 
     // remember the position of the item
@@ -540,8 +618,8 @@ static void stamp_repr(Inkscape::NodePath::Path *np)
 
     gchar *svgpath = sp_svg_write_path(SP_CURVE_BPATH(curve));
 
-    new_repr->setAttribute("d", svgpath);
-    new_repr->setAttribute("sodipodi:nodetypes", typestr);
+    new_repr->setAttribute(np->repr_key, svgpath);
+    new_repr->setAttribute(np->repr_nodetypes_key, typestr);
 
     // add the new repr to the parent
     parent->appendChild(new_repr);
@@ -999,7 +1077,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
         
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
-            Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, n->subpath->nodepath->path);
+            Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, SP_PATH(n->subpath->nodepath->object));
             if (s.getDistance() < best) {
                 best = s.getDistance();
                 best_pt = s.getPoint() - n->pos;
@@ -4336,6 +4414,60 @@ sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)//!!!move to Sha
                      selected_nodes, total_nodes, when_selected);
         }
     }
+}
+
+/*
+ * returns a *copy* of the curve of that object.
+ */
+SPCurve* sp_nodepath_object_get_curve(SPObject *object, const gchar *key) {
+    if (!object)
+        return NULL;
+
+    SPCurve *curve = NULL;
+    if (SP_IS_PATH(object)) {
+        SPCurve *curve_new = sp_path_get_curve_for_edit(SP_PATH(object));
+        curve = sp_curve_copy(curve_new);
+    } else if ( IS_LIVEPATHEFFECT(object) && key) {
+        const gchar *svgd = object->repr->attribute(key);
+        if (svgd) {
+            NArtBpath *bpath = sp_svg_read_path(svgd);
+            SPCurve *curve_new = sp_curve_new_from_bpath(bpath);
+            if (curve_new) {
+                curve = curve_new; // don't do curve_copy because curve_new is already only created for us!
+            } else {
+                g_free(bpath);
+            }
+        }
+    }
+
+    return curve;
+}
+
+void sp_nodepath_object_set_curve (SPObject *object, SPCurve *curve) {
+    if (!object || !curve)
+        return;
+
+    if (SP_IS_PATH(object)) {
+        if (SP_SHAPE(object)->path_effect_href) {
+            sp_path_set_original_curve(SP_PATH(object), curve, true, false);
+        } else {
+            sp_shape_set_curve(SP_SHAPE(object), curve, true);
+        }
+    } else if ( IS_LIVEPATHEFFECT(object) ) {
+        g_warning("sp_nodepath_set_curve not implemented yet for lpeobjects");
+    }
+}
+
+void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
+    np->show_helperpath = show;
+}
+
+void sp_nodepath_make_straight_path(Inkscape::NodePath::Path *np) {
+    np->straight_path = true;
+    np->show_handles = false;
+    g_message("add code to make the path straight.");
+    // do sp_nodepath_convert_node_type on all nodes?
+    // search for this text !!!   "Make selected segments lines"
 }
 
 

@@ -37,10 +37,13 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/page-sizer.h          \
 	ui/widget/panel.cpp		\
 	ui/widget/panel.h		\
+	ui/widget/point.cpp		\
+	ui/widget/point.h		\
 	ui/widget/preferences-widget.cpp \
 	ui/widget/preferences-widget.h   \
 	ui/widget/registered-widget.cpp \
 	ui/widget/registered-widget.h   \
+	ui/widget/registered-enums.h   \
 	ui/widget/registry.cpp          \
 	ui/widget/registry.h            \
 	ui/widget/ruler.cpp             \

@@ -105,6 +105,7 @@ void unlock_all_in_all_layers(SPDesktop *dt);
 void unhide_all(SPDesktop *dt);
 void unhide_all_in_all_layers(SPDesktop *dt);
 
+GSList * sp_selection_get_clipboard();
 
 /* selection cycling */
 

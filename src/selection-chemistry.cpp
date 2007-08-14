@@ -2962,6 +2962,11 @@ void unhide_all_in_all_layers(SPDesktop *dt) {
     process_all(&unhide, dt, false);
 }
 
+
+GSList * sp_selection_get_clipboard() {
+    return clipboard;
+}
+
 /*
   Local Variables:
   mode:c++

@@ -2,13 +2,14 @@
  *
  *
  * Authors:
+ *   Johan Engelen <j.b.c.engelen@utwente.nl>
  *   bulia byak <buliabyak@users.sf.net>
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
  *
- * Copyright (C) 2000 - 2005 Authors
+ * Copyright (C) 2000 - 2007 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information
  */
@@ -21,6 +22,8 @@
 #include "ui/widget/color-picker.h"
 #include "ui/widget/registry.h"
 #include "ui/widget/scalar-unit.h"
+#include "ui/widget/point.h"
+#include "widgets/spinbutton-events.h"
 
 #include "helper/units.h"
 #include "xml/repr.h"
@@ -35,6 +38,9 @@
 #include "registered-widget.h"
 #include "verbs.h"
 
+// for interruptability bug:
+#include "display/sp-canvas.h"
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {
@@ -43,6 +49,31 @@ namespace Widget {
 
 //---------------------------------------------------
 
+
+void
+RegisteredWidget::write_to_xml(const char * svgstr)
+{
+    // Use local repr here. When repr is specified, use that one, but
+    // if repr==NULL, get the repr of namedview of active desktop.
+    Inkscape::XML::Node *local_repr = repr;
+    SPDocument *local_doc = doc;
+    if (!local_repr) {
+        // no repr specified, use active desktop's namedview's repr
+        SPDesktop* dt = SP_ACTIVE_DESKTOP;
+        local_repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
+        local_doc = sp_desktop_document(dt);
+    }
+
+    bool saved = sp_document_get_undo_sensitive (local_doc);
+    sp_document_set_undo_sensitive (local_doc, false);
+    if (!write_undo) local_repr->setAttribute(_key.c_str(), svgstr);
+    local_doc->rroot->setAttribute("sodipodi:modified", "true");
+    sp_document_set_undo_sensitive (local_doc, saved);
+    if (write_undo) {
+        local_repr->setAttribute(_key.c_str(), svgstr);
+        sp_document_done (local_doc, event_type, event_description);
+    }
+}
 
 
 //====================================================
@@ -61,20 +92,15 @@ RegisteredCheckButton::~RegisteredCheckButton()
 void
 RegisteredCheckButton::init (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
 {
+    init_parent(key, wr, repr_in, doc_in);
+
     _button = new Gtk::CheckButton;
     _tt.set_tip (*_button, tip);
     Gtk::Label *l = new Gtk::Label (label);
     l->set_use_underline (true);
     _button->add (*manage (l));
     _button->set_alignment (right? 1.0 : 0.0, 0.5);
-    _key = key;
-    _wr = &wr;
     _toggled_connection = _button->signal_toggled().connect (sigc::mem_fun (*this, &RegisteredCheckButton::on_toggled));
-
-    repr = repr_in;
-    doc = doc_in;
-    if (repr && !doc)  // doc cannot be NULL when repr is not NULL
-        g_error("Initialization of registered widget using defined repr but with doc==NULL");
 }
 
 void
@@ -93,33 +119,15 @@ RegisteredCheckButton::on_toggled()
     if (_wr->isUpdating())
         return;
 
-    // Use local repr here. When repr is specified, use that one, but
-    // if repr==NULL, get the repr of namedview of active desktop.
-    Inkscape::XML::Node *local_repr = repr;
-    SPDocument *local_doc = doc;
-    if (!local_repr) {
-        // no repr specified, use active desktop's namedview's repr
-        SPDesktop *dt = SP_ACTIVE_DESKTOP;
-        if (!dt)
-            return;
-        local_repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
-        local_doc = sp_desktop_document(dt);
-    }
-
     _wr->setUpdating (true);
 
-	//The slave button is greyed out if the master button is unchecked
-	for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
-		(*i)->set_sensitive(_button->get_active());
-	}
-	
-    bool saved = sp_document_get_undo_sensitive (local_doc);
-    sp_document_set_undo_sensitive (local_doc, false);
-    sp_repr_set_boolean(local_repr, _key.c_str(), _button->get_active());
-    local_doc->rroot->setAttribute("sodipodi:modified", "true");
-    sp_document_set_undo_sensitive (local_doc, saved);
-    sp_document_done (local_doc, SP_VERB_NONE,
-                      /* TODO: annotate */ "registered-widget.cpp: RegisteredCheckButton::on_toggled");
+    write_to_xml(_button->get_active() ? "true" : "false");
+    //The slave button is greyed out if the master button is unchecked
+    for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
+        (*i)->set_sensitive(_button->get_active());
+    }
+
+    write_to_xml(_button->get_active() ? "true" : "false");
 
     _wr->setUpdating (false);
 }
@@ -139,19 +147,14 @@ RegisteredUnitMenu::~RegisteredUnitMenu()
 void
 RegisteredUnitMenu::init (const Glib::ustring& label, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
 {
+    init_parent(key, wr, repr_in, doc_in);
+
     _label = new Gtk::Label (label, 1.0, 0.5);
     _label->set_use_underline (true);
     _sel = new UnitMenu ();
     _label->set_mnemonic_widget (*_sel);
     _sel->setUnitType (UNIT_TYPE_LINEAR);
-    _wr = &wr;
-    _key = key;
     _changed_connection = _sel->signal_changed().connect (sigc::mem_fun (*this, &RegisteredUnitMenu::on_changed));
-
-    repr = repr_in;
-    doc = doc_in;
-    if (repr && !doc)  // doc cannot be NULL when repr is not NULL
-        g_warning("Initialization of registered widget using defined repr but with doc==NULL");
 }
 
 void
@@ -166,31 +169,12 @@ RegisteredUnitMenu::on_changed()
     if (_wr->isUpdating())
         return;
 
-    // Use local repr here. When repr is specified, use that one, but
-    // if repr==NULL, get the repr of namedview of active desktop.
-    Inkscape::XML::Node *local_repr = repr;
-    SPDocument *local_doc = doc;
-    if (!local_repr) {
-        // no repr specified, use active desktop's namedview's repr
-        SPDesktop *dt = SP_ACTIVE_DESKTOP;
-        if (!dt)
-            return;
-        local_repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
-        local_doc = sp_desktop_document(dt);
-    }
-
     Inkscape::SVGOStringStream os;
     os << _sel->getUnitAbbr();
 
     _wr->setUpdating (true);
 
-    bool saved = sp_document_get_undo_sensitive (local_doc);
-    sp_document_set_undo_sensitive (local_doc, false);
-    local_repr->setAttribute(_key.c_str(), os.str().c_str());
-    local_doc->rroot->setAttribute("sodipodi:modified", "true");
-    sp_document_set_undo_sensitive (local_doc, saved);
-    sp_document_done (local_doc, SP_VERB_NONE,
-                      /* TODO: annotate */ "registered-widget.cpp: RegisteredUnitMenu::on_changed");
+    write_to_xml(os.str().c_str());
 
     _wr->setUpdating (false);
 }
@@ -210,19 +194,14 @@ RegisteredScalarUnit::~RegisteredScalarUnit()
 void
 RegisteredScalarUnit::init (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, const RegisteredUnitMenu &rum, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
 {
+    init_parent(key, wr, repr_in, doc_in);
+
     _widget = new ScalarUnit (label, tip, UNIT_TYPE_LINEAR, "", "", rum._sel);
     _widget->initScalar (-1e6, 1e6);
     _widget->setUnit (rum._sel->getUnitAbbr());
     _widget->setDigits (2);
-    _key = key;
     _um = rum._sel;
     _value_changed_connection = _widget->signal_value_changed().connect (sigc::mem_fun (*this, &RegisteredScalarUnit::on_value_changed));
-    _wr = &wr;
-
-    repr = repr_in;
-    doc = doc_in;
-    if (repr && !doc)  // doc cannot be NULL when repr is not NULL
-        g_warning("Initialization of registered widget using defined repr but with doc==NULL");
 }
 
 ScalarUnit*
@@ -244,36 +223,82 @@ RegisteredScalarUnit::on_value_changed()
     if (_wr->isUpdating())
         return;
 
-    // Use local repr here. When repr is specified, use that one, but
-    // if repr==NULL, get the repr of namedview of active desktop.
-    Inkscape::XML::Node *local_repr = repr;
-    SPDocument *local_doc = doc;
-    if (!local_repr) {
-        // no repr specified, use active desktop's namedview's repr
-        SPDesktop *dt = SP_ACTIVE_DESKTOP;
-        if (!dt)
-            return;
-        local_repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
-        local_doc = sp_desktop_document(dt);
-    }
+    _wr->setUpdating (true);
 
     Inkscape::SVGOStringStream os;
     os << _widget->getValue("");
     if (_um)
         os << _um->getUnitAbbr();
 
-    _wr->setUpdating (true);
-
-    bool saved = sp_document_get_undo_sensitive (local_doc);
-    sp_document_set_undo_sensitive (local_doc, false);
-    local_repr->setAttribute(_key.c_str(), os.str().c_str());
-    local_doc->rroot->setAttribute("sodipodi:modified", "true");
-    sp_document_set_undo_sensitive (local_doc, saved);
-    sp_document_done (local_doc, SP_VERB_NONE,
-                      /* TODO: annotate */ "registered-widget.cpp: RegisteredScalarUnit::on_value_changed");
+    write_to_xml(os.str().c_str());
 
     _wr->setUpdating (false);
 }
+
+
+RegisteredScalar::RegisteredScalar()
+{
+    _widget = NULL;
+}
+
+RegisteredScalar::~RegisteredScalar()
+{
+    if (_widget) 
+        delete _widget;
+
+    _value_changed_connection.disconnect();
+}
+
+void
+RegisteredScalar::init ( const Glib::ustring& label, const Glib::ustring& tip, 
+                         const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
+                         SPDocument * doc_in )
+{
+    init_parent(key, wr, repr_in, doc_in);
+
+    _widget = new Scalar (label, tip);
+    _widget->setRange (-1e6, 1e6);
+    _widget->setDigits (2);
+    _widget->setIncrements(0.1, 1.0);
+    _value_changed_connection = _widget->signal_value_changed().connect (sigc::mem_fun (*this, &RegisteredScalar::on_value_changed));
+}
+
+Scalar*
+RegisteredScalar::getS()
+{
+    return _widget;
+}
+
+void
+RegisteredScalar::setValue (double val)
+{
+    _widget->setValue (val);
+    on_value_changed();
+}
+
+void
+RegisteredScalar::on_value_changed()
+{
+    if (_wr->isUpdating())
+        return;
+    _wr->setUpdating (true);
+
+    // FIXME:  gtk bug?
+    // disable interruptibility: see http://inkscape.svn.sourceforge.net/viewvc/inkscape/inkscape/trunk/src/ui/widget/selected-style.cpp?r1=13149&r2=13257&sortby=date
+    SPDesktop* dt = SP_ACTIVE_DESKTOP;
+    sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(dt), 0);
+
+    Inkscape::SVGOStringStream os;
+    os << _widget->getValue();
+
+    write_to_xml(os.str().c_str());
+
+    // resume interruptibility
+    sp_canvas_end_forced_full_redraws(sp_desktop_canvas(dt));
+
+    _wr->setUpdating (false);
+}
+
 
 RegisteredColorPicker::RegisteredColorPicker()
 : _label(0), _cp(0)
@@ -290,19 +315,15 @@ RegisteredColorPicker::~RegisteredColorPicker()
 void
 RegisteredColorPicker::init (const Glib::ustring& label, const Glib::ustring& title, const Glib::ustring& tip, const Glib::ustring& ckey, const Glib::ustring& akey, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
 {
+    init_parent("", wr, repr_in, doc_in);
+
     _label = new Gtk::Label (label, 1.0, 0.5);
     _label->set_use_underline (true);
     _cp = new ColorPicker (title,tip,0,true);
     _label->set_mnemonic_widget (*_cp);
     _ckey = ckey;
     _akey = akey;
-    _wr = &wr;
     _changed_connection = _cp->connectChanged (sigc::mem_fun (*this, &RegisteredColorPicker::on_changed));
-
-    repr = repr_in;
-    doc = doc_in;
-    if (repr && !doc)  // doc cannot be NULL when repr is not NULL
-        g_warning("Initialization of registered widget using defined repr but with doc==NULL");
 }
 
 void
@@ -370,7 +391,8 @@ RegisteredSuffixedInteger::~RegisteredSuffixedInteger()
 void
 RegisteredSuffixedInteger::init (const Glib::ustring& label, const Glib::ustring& suffix, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
 {
-    _key = key;
+    init_parent(key, wr, repr_in, doc_in);
+
     _label = new Gtk::Label (label);
     _label->set_alignment (1.0, 0.5);
     _label->set_use_underline();
@@ -381,12 +403,6 @@ RegisteredSuffixedInteger::init (const Glib::ustring& label, const Glib::ustring
     _hbox.pack_start (*_suffix, false, false, 0);
 
     _changed_connection = _adj.signal_value_changed().connect (sigc::mem_fun(*this, &RegisteredSuffixedInteger::on_value_changed));
-    _wr = &wr;
-
-    repr = repr_in;
-    doc = doc_in;
-    if (repr && !doc)  // doc cannot be NULL when repr is not NULL
-        g_warning("Initialization of registered widget using defined repr but with doc==NULL");
 }
 
 void
@@ -403,26 +419,11 @@ RegisteredSuffixedInteger::on_value_changed()
 
     _wr->setUpdating (true);
 
-    // Use local repr here. When repr is specified, use that one, but
-    // if repr==NULL, get the repr of namedview of active desktop.
-    Inkscape::XML::Node *local_repr = repr;
-    SPDocument *local_doc = doc;
-    if (!local_repr) {
-        // no repr specified, use active desktop's namedview's repr
-        SPDesktop *dt = SP_ACTIVE_DESKTOP;
-        if (!dt)
-            return;
-        local_repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
-        local_doc = sp_desktop_document(dt);
-    }
-
     Inkscape::SVGOStringStream os;
     int value = int(_adj.get_value());
     os << value;
 
-    local_repr->setAttribute(_key.c_str(), os.str().c_str());
-    sp_document_done(local_doc, SP_VERB_NONE,
-                     /* TODO: annotate */ "registered-widget.cpp: RegisteredSuffixedInteger::on_value_changed");
+    write_to_xml(os.str().c_str());
 
     _wr->setUpdating (false);
 }
@@ -443,6 +444,8 @@ const Glib::ustring& label1, const Glib::ustring& label2,
 const Glib::ustring& tip1, const Glib::ustring& tip2,
 const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
 {
+    init_parent(key, wr, repr_in, doc_in);
+
     _hbox = new Gtk::HBox;
     _hbox->add (*manage (new Gtk::Label (label)));
     _rb1 = manage (new Gtk::RadioButton (label1, true));
@@ -453,14 +456,7 @@ const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument
     _rb2->set_active();
     _tt.set_tip (*_rb1, tip1);
     _tt.set_tip (*_rb2, tip2);
-    _key = key;
-    _wr = &wr;
     _changed_connection = _rb1->signal_toggled().connect (sigc::mem_fun (*this, &RegisteredRadioButtonPair::on_value_changed));
-
-    repr = repr_in;
-    doc = doc_in;
-    if (repr && !doc)  // doc cannot be NULL when repr is not NULL
-        g_error("Initialization of registered widget using defined repr but with doc==NULL");
 }
 
 void
@@ -476,29 +472,72 @@ RegisteredRadioButtonPair::on_value_changed()
     if (_wr->isUpdating())
         return;
 
-    // Use local repr here. When repr is specified, use that one, but
-    // if repr==NULL, get the repr of namedview of active desktop.
-    Inkscape::XML::Node *local_repr = repr;
-    SPDocument *local_doc = doc;
-    if (!local_repr) {
-        // no repr specified, use active desktop's namedview's repr
-        SPDesktop *dt = SP_ACTIVE_DESKTOP;
-        if (!dt)
-            return;
-        local_repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
-        local_doc = sp_desktop_document(dt);
-    }
-
     _wr->setUpdating (true);
 
     bool second = _rb2->get_active();
-    bool saved = sp_document_get_undo_sensitive (local_doc);
-    sp_document_set_undo_sensitive (local_doc, false);
-    local_repr->setAttribute(_key.c_str(), second ? "true" : "false");
-    local_doc->rroot->setAttribute("sodipodi:modified", "true");
-    sp_document_set_undo_sensitive (local_doc, saved);
-    sp_document_done (local_doc, SP_VERB_NONE,
-                      /* TODO: annotate */ "registered-widget.cpp: RegisteredRadioButtonPair::on_value_changed");
+    write_to_xml(second ? "true" : "false");
+
+    _wr->setUpdating (false);
+}
+
+/*#########################################
+ * Registered POINT
+ */
+
+RegisteredPoint::RegisteredPoint()
+{
+    _widget = NULL;
+}
+
+RegisteredPoint::~RegisteredPoint()
+{
+    if (_widget) 
+        delete _widget;
+
+    _value_x_changed_connection.disconnect();
+    _value_y_changed_connection.disconnect();
+}
+
+void
+RegisteredPoint::init ( const Glib::ustring& label, const Glib::ustring& tip, 
+                        const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, 
+                        SPDocument* doc_in )
+{
+    init_parent(key, wr, repr_in, doc_in);
+
+    _widget = new Point (label, tip);
+    _widget->setRange (-1e6, 1e6);
+    _widget->setDigits (2);
+    _widget->setIncrements(0.1, 1.0);
+    _value_x_changed_connection = _widget->signal_x_value_changed().connect (sigc::mem_fun (*this, &RegisteredPoint::on_value_changed));
+    _value_y_changed_connection = _widget->signal_y_value_changed().connect (sigc::mem_fun (*this, &RegisteredPoint::on_value_changed));
+}
+
+Point*
+RegisteredPoint::getPoint()
+{
+    return _widget;
+}
+
+void
+RegisteredPoint::setValue (double xval, double yval)
+{
+    _widget->setValue(xval, yval);
+    on_value_changed();
+}
+
+void
+RegisteredPoint::on_value_changed()
+{
+    if (_wr->isUpdating())
+        return;
+
+    _wr->setUpdating (true);
+
+    Inkscape::SVGOStringStream os;
+    os << _widget->getXValue() << "," << _widget->getYValue();
+
+    write_to_xml(os.str().c_str());
 
     _wr->setUpdating (false);
 }

@@ -510,6 +510,10 @@ override) the bindings in the main default.xml.
   <bind key="w" modifiers="Ctrl,Shift" action="DialogSwatches" display="true"/>
   <bind key="W" modifiers="Ctrl,Shift" action="DialogSwatches" />
 
+  <bind key="ampersand" modifiers="Ctrl" action="DialogLivePathEffect" />  <!-- & -->
+  <bind key="ampersand" modifiers="Ctrl,Shift" action="DialogLivePathEffect" />
+  <bind key="7" modifiers="Ctrl,Shift" action="DialogLivePathEffect" display="true" />
+
   <bind action="DialogMetadata" />
   <bind action="DialogClonetiler" />
   <bind action="DialogGridArrange" />

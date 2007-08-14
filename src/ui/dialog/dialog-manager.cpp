@@ -27,6 +27,7 @@
 #include "ui/dialog/find.h"
 #include "ui/dialog/inkscape-preferences.h"
 #include "ui/dialog/layer-editor.h"
+#include "ui/dialog/livepatheffect-editor.h"
 #include "ui/dialog/memory.h"
 #include "ui/dialog/messages.h"
 #include "ui/dialog/scriptdialog.h"
@@ -80,6 +81,7 @@ DialogManager::DialogManager() {
     registerFactory("Find",                &create<Find>);
     registerFactory("InkscapePreferences", &create<InkscapePreferences>);
     registerFactory("LayerEditor",         &create<LayerEditor>);
+    registerFactory("LivePathEffect",      &create<LivePathEffectEditor>);
     registerFactory("Memory",              &create<Memory>);
     registerFactory("Messages",            &create<Messages>);
     registerFactory("Script",              &create<ScriptDialog>);

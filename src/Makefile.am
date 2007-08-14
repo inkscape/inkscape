@@ -47,6 +47,8 @@ include libnr/Makefile_insert
 include libnrtype/Makefile_insert
 include libavoid/Makefile_insert
 include livarot/Makefile_insert
+include live_effects/Makefile_insert
+include live_effects/parameter/Makefile_insert
 include libvpsc/Makefile_insert
 include libcola/Makefile_insert
 include removeoverlap/Makefile_insert
@@ -65,6 +67,7 @@ include ui/view/Makefile_insert
 include ui/widget/Makefile_insert
 include util/Makefile_insert
 include trace/Makefile_insert
+include 2geom/Makefile_insert
 
 bin_PROGRAMS = inkscape inkview
 
@@ -84,6 +87,8 @@ noinst_LIBRARIES =	\
 	helper/libspchelp.a	\
 	io/libio.a	\
 	libcroco/libcroco.a	\
+	live_effects/liblive_effects.a \
+	live_effects/parameter/liblpeparam.a \
 	ui/libui.a	\
 	ui/cache/libuicache.a	\
 	ui/dialog/libuidialog.a	\
@@ -104,6 +109,7 @@ noinst_LIBRARIES =	\
 	widgets/libspwidgets.a	\
 	trace/libtrace.a  \
 	xml/libspxml.a	\
+	2geom/lib2geom.a	\
 	libinkpost.a
 
 check_LIBRARIES =	\
@@ -143,6 +149,8 @@ EXTRA_DIST =	\
 	libnrtype/makefile.in	\
 	libavoid/makefile.in	\
 	livarot/makefile.in	\
+	live_effects/makefile.in	\
+	live_effects/parameter/makefile.in	\
 	removeoverlap/makefile.in	\
 	svg/makefile.in		\
 	trace/makefile.in	\
@@ -156,6 +164,7 @@ EXTRA_DIST =	\
 	util/makefile.in	\
 	widgets/makefile.in	\
 	xml/makefile.in		\
+	2geom/makefile.in	\
 	extension/internal/gnome.cpp	\
 	extension/internal/gnome.h	\
 	extension/internal/win32.cpp	\

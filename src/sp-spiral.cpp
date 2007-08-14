@@ -37,7 +37,9 @@ static void sp_spiral_update (SPObject *object, SPCtx *ctx, guint flags);
 
 static gchar * sp_spiral_description (SPItem * item);
 static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p);
+
 static void sp_spiral_set_shape (SPShape *shape);
+static void sp_spiral_update_patheffect (SPShape *shape, bool write);
 
 static NR::Point sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t);
 
@@ -95,7 +97,8 @@ sp_spiral_class_init (SPSpiralClass *klass)
 	item_class->description = sp_spiral_description;
 	item_class->snappoints = sp_spiral_snappoints;
 
-	shape_class->set_shape = sp_spiral_set_shape;
+    shape_class->set_shape = sp_spiral_set_shape;
+    shape_class->update_patheffect = sp_spiral_update_patheffect;
 }
 
 /**
@@ -293,6 +296,30 @@ sp_spiral_update (SPObject *object, SPCtx *ctx, guint flags)
 		((SPObjectClass *) parent_class)->update (object, ctx, flags);
 }
 
+static void
+sp_spiral_update_patheffect(SPShape *shape, bool write)
+{
+    sp_spiral_set_shape(shape);
+
+    if (write) {
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
+        if ( shape->curve != NULL ) {
+            NArtBpath *abp = sp_curve_first_bpath(shape->curve);
+            if (abp) {
+                gchar *str = sp_svg_write_path(abp);
+                repr->setAttribute("d", str);
+                g_free(str);
+            } else {
+                repr->setAttribute("d", "");
+            }
+        } else {
+            repr->setAttribute("d", NULL);
+        }
+    }
+
+    ((SPObject *)shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+}
+
 /**
  * Return textual description of spiral.
  */
@@ -436,8 +463,9 @@ sp_spiral_set_shape (SPShape *shape)
 		sp_spiral_fit_and_draw (spiral, c, (1.0 - t)/(SAMPLE_SIZE - 1.0),
 					darray, hat1, hat2, &t);
 
-	sp_shape_set_curve_insync ((SPShape *) spiral, c, TRUE);
-	sp_curve_unref (c);
+    sp_shape_perform_path_effect(c, SP_SHAPE (spiral));
+    sp_shape_set_curve_insync ((SPShape *) spiral, c, TRUE);
+    sp_curve_unref (c);
 }
 
 /**

@@ -1,0 +1,19 @@
+reminder list
+
+
+cleanup nodepath code that draws helper path
+
+implement effect application to shapes: sp_shape_apply_path_effect
+   (done: star, ellipse, spiral)
+ARCS !!!  see sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr)
+
+make sp_nodepath_is_over_stroke perhaps
+
+Parameters:
+- make robust  (?)
+- add range checking etc
+- add more types! (straightlinepath, enum, bool)
+- -->> add write to svg functionality (for lpeobject->write)
+
+
+find dir "fixme" and fix'em!

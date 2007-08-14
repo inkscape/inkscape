@@ -27,12 +27,23 @@
 
 #define SP_SHAPE_WRITE_PATH (1 << 2)
 
+struct LivePathEffectObject;
+namespace Inkscape{ 
+namespace LivePathEffect{
+    class LPEObjectReference;
+};
+};
+
+
 struct SPShape : public SPItem {
-	SPCurve *curve;
+    SPCurve *curve;
 
       SPObject *marker[SP_MARKER_LOC_QTY];
       sigc::connection release_connect [SP_MARKER_LOC_QTY];
       sigc::connection modified_connect [SP_MARKER_LOC_QTY];
+
+    gchar *path_effect_href;
+    Inkscape::LivePathEffect::LPEObjectReference *path_effect_ref;
 };
 
 struct SPShapeClass {
@@ -40,6 +51,8 @@ struct SPShapeClass {
 
 	/* Build bpath from extra shape attributes */
 	void (* set_shape) (SPShape *shape);
+
+    void (* update_patheffect) (SPShape *shape, bool write);
 };
 
 GType sp_shape_get_type (void);
@@ -61,5 +74,12 @@ int sp_shape_has_markers (SPShape const *shape);
 int sp_shape_number_of_markers (SPShape* Shape, int type);
 NR::Matrix sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp);
 bool sp_shape_marker_required(SPShape const *shape, int const m, NArtBpath *bp);
+
+LivePathEffectObject * sp_shape_get_livepatheffectobject(SPShape *shape);
+void sp_shape_update_patheffect (SPShape *shape, bool write);
+void sp_shape_perform_path_effect(SPCurve *curve, SPShape *shape);
+
+void sp_shape_set_path_effect(SPShape *shape, gchar *value);
+void sp_shape_remove_path_effect(SPShape *shape);
 
 #endif
