@@ -16,6 +16,7 @@
 
 #include "sp-filter.h"
 #include "sp-feimage-fns.h"
+#include "svg/svg-length.h"
 
 /* FeImage base class */
 class SPFeImageClass;
@@ -27,6 +28,7 @@ struct SPFeImage : public SPFilterPrimitive {
         since 'in' and 'xlink:href' are common filter attributes.
         --Juca
     */
+    SVGLength x, y, height, width;
 };
 
 struct SPFeImageClass {

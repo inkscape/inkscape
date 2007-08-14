@@ -133,6 +133,11 @@ int FilterSlot::get_slot_count()
     return seek + 1;
 }
 
+NRArenaItem const* FilterSlot::get_arenaitem()
+{
+        return _arena_item;
+}
+
 int FilterSlot::_get_index(int slot_nr)
 {
     assert(slot_nr >= 0 ||

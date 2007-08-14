@@ -25,11 +25,12 @@ public:
     virtual ~FilterImage();
 
     virtual int render(FilterSlot &slot, Matrix const &trans);
-
+    void set_region(SVGLength x, SVGLength y, SVGLength width, SVGLength height);
 private:
     guint8* image_pixbuf;
     Glib::RefPtr<Gdk::Pixbuf> image;
     int width, height;
+    float feImageX,feImageY,feImageWidth,feImageHeight;
 };
 
 } /* namespace NR */

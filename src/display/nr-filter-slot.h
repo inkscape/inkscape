@@ -57,6 +57,9 @@ public:
     /** Returns the number of slots in use. */
     int get_slot_count();
 
+    /** arenaitem getter method*/
+    NRArenaItem const* get_arenaitem();
+
 private:
     NRPixBlock **_slot;
     int *_slot_number;

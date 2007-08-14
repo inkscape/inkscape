@@ -102,6 +102,10 @@ sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 since 'in' and 'xlink:href' are common filter attributes.
 --Juca
 */
+    sp_object_read_attr(object, "x");
+    sp_object_read_attr(object, "y");
+    sp_object_read_attr(object, "width");
+    sp_object_read_attr(object, "height");            
 
 }
 
@@ -124,9 +128,25 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeImage *feImage = SP_FEIMAGE(object);
     (void)feImage;
-
+    
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
+        case SP_ATTR_X:
+            feImage->x.readOrUnset(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_Y:
+            feImage->y.readOrUnset(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_WIDTH:
+            feImage->width.readOrUnset(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_HEIGHT:
+            feImage->height.readOrUnset(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
         default:
             if (((SPObjectClass *) feImage_parent_class)->set)
                 ((SPObjectClass *) feImage_parent_class)->set(object, key, value);
@@ -141,11 +161,11 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags)
 {
+ 
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
         /* do something to trigger redisplay, updates? */
-
     }
 
     if (((SPObjectClass *) feImage_parent_class)->update) {
@@ -181,14 +201,14 @@ static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, NR::Filter *
     g_assert(filter != NULL);
 
     SPFeImage *sp_image = SP_FEIMAGE(primitive);
-
+    
     int primitive_n = filter->add_primitive(NR::NR_FILTER_IMAGE);
     NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
     NR::FilterImage *nr_image = dynamic_cast<NR::FilterImage*>(nr_primitive);
     g_assert(nr_image != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);
-
+    nr_image->set_region(sp_image->x, sp_image->y, sp_image->width, sp_image->height);
 }
 
 /*

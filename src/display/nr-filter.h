@@ -77,7 +77,7 @@ public:
      */
     void set_output(int slot);
 
-    void set_x(SVGLength const &lenght);
+    void set_x(SVGLength const &length);
     void set_y(SVGLength const &length);
     void set_width(SVGLength const &length);
     void set_height(SVGLength const &length);
