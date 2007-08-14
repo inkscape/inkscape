@@ -1804,6 +1804,10 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_spinslider(SP_ATTR_SCALE, _("Scale"), 0, 100, 1, 0.01, 1);
     _settings->add_combo(SP_ATTR_XCHANNELSELECTOR, _("X Channel"), DisplacementMapChannelConverter);
     _settings->add_combo(SP_ATTR_YCHANNELSELECTOR, _("Y Channel"), DisplacementMapChannelConverter);
+
+    _settings->type(NR_FILTER_FLOOD);
+    _settings->add_color(SP_PROP_FLOOD_COLOR, _("Flood Color"));
+    _settings->add_spinslider(SP_PROP_FLOOD_OPACITY, _("Opacity"), 0, 1, 0.1, 0.01, 2);
     
     _settings->type(NR_FILTER_GAUSSIANBLUR);
     _settings->add_dualspinslider(SP_ATTR_STDDEVIATION, _("Standard Deviation"), 0.01, 100, 1, 0.01, 1);
