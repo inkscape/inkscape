@@ -197,6 +197,7 @@ private:
                              const int x1, const int y1, const int row_count);
         void sanitize_connections(const Gtk::TreeIter& prim_iter);
         void on_primitive_selection_changed();
+        bool on_scroll_timeout();
 
         FilterEffectsDialog& _dialog;
         Glib::RefPtr<Gtk::ListStore> _model;
@@ -207,6 +208,8 @@ private:
         int _in_drag;
         SPFilterPrimitive* _drag_prim;
         sigc::signal<void> _signal_primitive_changed;
+        sigc::connection _scroll_connection;
+        int _autoscroll;
         std::auto_ptr<SignalObserver> _observer;
     };
 

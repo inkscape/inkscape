@@ -1502,6 +1502,8 @@ bool FilterEffectsDialog::PrimitiveList::on_button_press_event(GdkEventButton* e
     }
 
     if(_in_drag) {
+        _scroll_connection = Glib::signal_timeout().connect(sigc::mem_fun(*this, &PrimitiveList::on_scroll_timeout), 150);
+        _autoscroll = 0;
         get_selection()->select(path);
         return true;
     }
@@ -1511,6 +1513,28 @@ bool FilterEffectsDialog::PrimitiveList::on_button_press_event(GdkEventButton* e
 
 bool FilterEffectsDialog::PrimitiveList::on_motion_notify_event(GdkEventMotion* e)
 {
+    const int speed = 10;
+    const int limit = 15;
+
+    Gdk::Rectangle vis;
+    get_visible_rect(vis);
+    int vis_x, vis_y;
+    tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
+    const int top = vis_y + vis.get_height();
+
+    // When autoscrolling during a connection drag, set the speed based on
+    // where the mouse is in relation to the edges.
+    if(e->y < vis_y)
+        _autoscroll = -(int)(speed + (vis_y - e->y) / 5);
+    else if(e->y < vis_y + limit)
+        _autoscroll = -speed;
+    else if(e->y > top)
+        _autoscroll = (int)(speed + (e->y - top) / 5);
+    else if(e->y > top - limit)
+        _autoscroll = speed;
+    else
+        _autoscroll = 0;
+
     queue_draw();
 
     return Gtk::TreeView::on_motion_notify_event(e);
@@ -1519,6 +1543,8 @@ bool FilterEffectsDialog::PrimitiveList::on_motion_notify_event(GdkEventMotion* 
 bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton* e)
 {
     SPFilterPrimitive *prim = get_selected(), *target;
+
+    _scroll_connection.disconnect();
 
     if(_in_drag && prim) {
         Gtk::TreePath path;
@@ -1690,6 +1716,27 @@ void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::Dra
     filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
 
     sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Reorder filter primitive"));
+}
+
+// If a connection is dragged towards the top or bottom of the list, the list should scroll to follow.
+bool FilterEffectsDialog::PrimitiveList::on_scroll_timeout()
+{
+    if(_autoscroll) {
+        Gtk::Adjustment& a = *dynamic_cast<Gtk::ScrolledWindow*>(get_parent())->get_vadjustment();
+        double v;
+
+        v = a.get_value() + _autoscroll;
+        if(v < 0)
+            v = 0;
+        if(v > a.get_upper() - a.get_page_size())
+            v = a.get_upper() - a.get_page_size();
+
+        a.set_value(v);
+
+        queue_draw();
+    }
+
+    return true;
 }
 
 int FilterEffectsDialog::PrimitiveList::primitive_count() const
