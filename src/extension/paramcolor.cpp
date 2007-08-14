@@ -73,9 +73,9 @@ ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar *
 	if (strlen(defaulthex) == 6) {
 		int r = 0, g = 0, b = 0;	
 		std::stringstream ss;
-		ss << strndup(defaulthex, 2);
+		ss << g_strndup(defaulthex, 2);
 		ss >> std::hex >> r;
-		ss << strndup(defaulthex + 2, 2);
+		ss << g_strndup(defaulthex + 2, 2);
 		ss >> std::hex >> g;
 		ss << defaulthex + 4;
 		ss >> std::hex >> b;
