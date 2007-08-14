@@ -31,17 +31,23 @@ public:
     virtual ~FilterTurbulence();
 
     virtual int render(FilterSlot &slot, Matrix const &trans);
+    virtual void update_pixbuffer(FilterSlot &slot);
+    
     virtual void set_baseFrequency(int axis, double freq);
     virtual void set_numOctaves(int num);
     virtual void set_seed(double s);
     virtual void set_stitchTiles(bool st);
     virtual void set_type(FilterTurbulenceType t);
+    virtual void set_updated(bool u);
 private:
     double XbaseFrequency, YbaseFrequency;
     int numOctaves;
     double seed;
     bool stitchTiles;
-    FilterTurbulenceType type;    
+    FilterTurbulenceType type;
+    bool updated;
+    NRPixBlock *pix;
+    unsigned char *pix_data;
 };
 
 } /* namespace NR */

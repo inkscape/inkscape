@@ -84,6 +84,7 @@ sp_feTurbulence_class_init(SPFeTurbulenceClass *klass)
 static void
 sp_feTurbulence_init(SPFeTurbulence *feTurbulence)
 {
+    feTurbulence->updated=false;
 }
 
 /**
@@ -164,12 +165,14 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
                 //From SVG spec: If two <number>s are provided, the first number represents a base frequency in the X direction and the second value represents a base frequency in the Y direction. If one number is provided, then that value is used for both X and Y.
             if (feTurbulence->baseFrequency.optNumIsSet() == false)
                 feTurbulence->baseFrequency.setOptNumber(feTurbulence->baseFrequency.getNumber());
+            feTurbulence->updated = false;
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_NUMOCTAVES:
             read_int = (int) helperfns_read_number(value);
             if (read_int != feTurbulence->numOctaves){
                 feTurbulence->numOctaves = read_int;
+                feTurbulence->updated = false;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -177,6 +180,7 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
             read_num = helperfns_read_number(value);
             if (read_num != feTurbulence->seed){
                 feTurbulence->seed = read_num;
+                feTurbulence->updated = false;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -184,6 +188,7 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
             read_bool = sp_feTurbulence_read_stitchTiles(value);
             if (read_bool != feTurbulence->stitchTiles){
                 feTurbulence->stitchTiles = read_bool;
+                feTurbulence->updated = false;                
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -191,6 +196,7 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
             read_type = sp_feTurbulence_read_type(value);
             if (read_type != feTurbulence->type){
                 feTurbulence->type = read_type;
+                feTurbulence->updated = false;                
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -262,6 +268,7 @@ static void sp_feTurbulence_build_renderer(SPFilterPrimitive *primitive, NR::Fil
     nr_turbulence->set_seed(sp_turbulence->seed);
     nr_turbulence->set_stitchTiles(sp_turbulence->stitchTiles);
     nr_turbulence->set_type(sp_turbulence->type);
+    nr_turbulence->set_updated(sp_turbulence->updated);
 }
 
 /*

@@ -28,7 +28,9 @@ struct SPFeTurbulence : public SPFilterPrimitive {
     int numOctaves;
     double seed;
     bool stitchTiles;
-    NR::FilterTurbulenceType type;   
+    NR::FilterTurbulenceType type;
+    SVGLength x, y, height, width;
+    bool updated;
 };
 
 struct SPFeTurbulenceClass {
