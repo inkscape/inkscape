@@ -149,7 +149,7 @@ static SPXMLNs *namespaces=NULL;
 static void
 sp_xml_ns_register_defaults()
 {
-    static SPXMLNs defaults[9];
+    static SPXMLNs defaults[10];
 
     defaults[0].uri = g_quark_from_static_string(SP_SODIPODI_NS_URI);
     defaults[0].prefix = g_quark_from_static_string("sodipodi");
@@ -194,7 +194,13 @@ sp_xml_ns_register_defaults()
 
     defaults[8].uri = g_quark_from_static_string("http://inkscape.sourceforge.net/DTD/s odipodi-0.dtd");
     defaults[8].prefix = g_quark_from_static_string("sodipodi");
-    defaults[8].next = NULL;
+    defaults[8].next = &defaults[9];
+
+    // This namespace URI is being phased out by Creative Commons
+
+    defaults[9].uri = g_quark_from_static_string(SP_OLD_CC_NS_URI);
+    defaults[9].prefix = g_quark_from_static_string("cc");
+    defaults[9].next = NULL;
 
     namespaces = &defaults[0];
 }

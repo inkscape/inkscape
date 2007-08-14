@@ -23,12 +23,13 @@
 #include "xml/repr.h"
 #include "rdf.h"
 #include "sp-item-group.h"
+#include "prefs-utils.h"
 
 /*
 
    Example RDF XML from various places...
  
-<rdf:RDF xmlns="http://web.resource.org/cc/"
+<rdf:RDF xmlns="http://creativecommons.org/ns#"
     xmlns:dc="http://purl.org/dc/elements/1.1/"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 <Work rdf:about="">
@@ -48,7 +49,7 @@
 </Work>
 
 
-  <rdf:RDF xmlns="http://web.resource.org/cc/"
+  <rdf:RDF xmlns="http://creativecommons.org/ns#"
       xmlns:dc="http://purl.org/dc/elements/1.1/"
       xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <Work rdf:about="">
@@ -57,13 +58,13 @@
         <dc:title>John Cliff</dc:title>
      </Agent></dc:rights>
      <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-     <license rdf:resource="http://web.resource.org/cc/PublicDomain" />
+     <license rdf:resource="http://creativecommons.org/ns#PublicDomain" />
   </Work>
   
-  <License rdf:about="http://web.resource.org/cc/PublicDomain">
-     <permits rdf:resource="http://web.resource.org/cc/Reproduction" />
-     <permits rdf:resource="http://web.resource.org/cc/Distribution" />
-     <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+  <License rdf:about="http://creativecommons.org/ns#PublicDomain">
+     <permits rdf:resource="http://creativecommons.org/ns#Reproduction" />
+     <permits rdf:resource="http://creativecommons.org/ns#Distribution" />
+     <permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
   </License>
   
 </rdf:RDF>
@@ -91,76 +92,76 @@ struct rdf_double_t rdf_license_empty [] = {
 };
 
 struct rdf_double_t rdf_license_cc_a [] = {
-    { "cc:permits", "http://web.resource.org/cc/Reproduction", },
-    { "cc:permits", "http://web.resource.org/cc/Distribution", },
-    { "cc:requires", "http://web.resource.org/cc/Notice", },
-    { "cc:requires", "http://web.resource.org/cc/Attribution", },
-    { "cc:permits", "http://web.resource.org/cc/DerivativeWorks", },
+    { "cc:permits", "http://creativecommons.org/ns#Reproduction", },
+    { "cc:permits", "http://creativecommons.org/ns#Distribution", },
+    { "cc:requires", "http://creativecommons.org/ns#Notice", },
+    { "cc:requires", "http://creativecommons.org/ns#Attribution", },
+    { "cc:permits", "http://creativecommons.org/ns#DerivativeWorks", },
     { NULL, NULL }
 };
 
 struct rdf_double_t rdf_license_cc_a_sa [] = {
-    { "cc:permits", "http://web.resource.org/cc/Reproduction", },
-    { "cc:permits", "http://web.resource.org/cc/Distribution", },
-    { "cc:requires", "http://web.resource.org/cc/Notice", },
-    { "cc:requires", "http://web.resource.org/cc/Attribution", },
-    { "cc:permits", "http://web.resource.org/cc/DerivativeWorks", },
-    { "cc:requires", "http://web.resource.org/cc/ShareAlike", },
+    { "cc:permits", "http://creativecommons.org/ns#Reproduction", },
+    { "cc:permits", "http://creativecommons.org/ns#Distribution", },
+    { "cc:requires", "http://creativecommons.org/ns#Notice", },
+    { "cc:requires", "http://creativecommons.org/ns#Attribution", },
+    { "cc:permits", "http://creativecommons.org/ns#DerivativeWorks", },
+    { "cc:requires", "http://creativecommons.org/ns#ShareAlike", },
     { NULL, NULL }
 };
 
 struct rdf_double_t rdf_license_cc_a_nd [] = {
-    { "cc:permits", "http://web.resource.org/cc/Reproduction", },
-    { "cc:permits", "http://web.resource.org/cc/Distribution", },
-    { "cc:requires", "http://web.resource.org/cc/Notice", },
-    { "cc:requires", "http://web.resource.org/cc/Attribution", },
+    { "cc:permits", "http://creativecommons.org/ns#Reproduction", },
+    { "cc:permits", "http://creativecommons.org/ns#Distribution", },
+    { "cc:requires", "http://creativecommons.org/ns#Notice", },
+    { "cc:requires", "http://creativecommons.org/ns#Attribution", },
     { NULL, NULL }
 };
 
 struct rdf_double_t rdf_license_cc_a_nc [] = {
-    { "cc:permits", "http://web.resource.org/cc/Reproduction", },
-    { "cc:permits", "http://web.resource.org/cc/Distribution", },
-    { "cc:requires", "http://web.resource.org/cc/Notice", },
-    { "cc:requires", "http://web.resource.org/cc/Attribution", },
-    { "cc:prohibits", "http://web.resource.org/cc/CommercialUse", },
-    { "cc:permits", "http://web.resource.org/cc/DerivativeWorks", },
+    { "cc:permits", "http://creativecommons.org/ns#Reproduction", },
+    { "cc:permits", "http://creativecommons.org/ns#Distribution", },
+    { "cc:requires", "http://creativecommons.org/ns#Notice", },
+    { "cc:requires", "http://creativecommons.org/ns#Attribution", },
+    { "cc:prohibits", "http://creativecommons.org/ns#CommercialUse", },
+    { "cc:permits", "http://creativecommons.org/ns#DerivativeWorks", },
     { NULL, NULL }
 };
 
 struct rdf_double_t rdf_license_cc_a_nc_sa [] = {
-    { "cc:permits", "http://web.resource.org/cc/Reproduction", },
-    { "cc:permits", "http://web.resource.org/cc/Distribution", },
-    { "cc:requires", "http://web.resource.org/cc/Notice", },
-    { "cc:requires", "http://web.resource.org/cc/Attribution", },
-    { "cc:prohibits", "http://web.resource.org/cc/CommercialUse", },
-    { "cc:permits", "http://web.resource.org/cc/DerivativeWorks", },
-    { "cc:requires", "http://web.resource.org/cc/ShareAlike", },
+    { "cc:permits", "http://creativecommons.org/ns#Reproduction", },
+    { "cc:permits", "http://creativecommons.org/ns#Distribution", },
+    { "cc:requires", "http://creativecommons.org/ns#Notice", },
+    { "cc:requires", "http://creativecommons.org/ns#Attribution", },
+    { "cc:prohibits", "http://creativecommons.org/ns#CommercialUse", },
+    { "cc:permits", "http://creativecommons.org/ns#DerivativeWorks", },
+    { "cc:requires", "http://creativecommons.org/ns#ShareAlike", },
     { NULL, NULL }
 };
 
 struct rdf_double_t rdf_license_cc_a_nc_nd [] = {
-    { "cc:permits", "http://web.resource.org/cc/Reproduction", },
-    { "cc:permits", "http://web.resource.org/cc/Distribution", },
-    { "cc:requires", "http://web.resource.org/cc/Notice", },
-    { "cc:requires", "http://web.resource.org/cc/Attribution", },
-    { "cc:prohibits", "http://web.resource.org/cc/CommercialUse", },
+    { "cc:permits", "http://creativecommons.org/ns#Reproduction", },
+    { "cc:permits", "http://creativecommons.org/ns#Distribution", },
+    { "cc:requires", "http://creativecommons.org/ns#Notice", },
+    { "cc:requires", "http://creativecommons.org/ns#Attribution", },
+    { "cc:prohibits", "http://creativecommons.org/ns#CommercialUse", },
     { NULL, NULL }
 };
 
 struct rdf_double_t rdf_license_pd [] = {
-    { "cc:permits", "http://web.resource.org/cc/Reproduction", },
-    { "cc:permits", "http://web.resource.org/cc/Distribution", },
-    { "cc:permits", "http://web.resource.org/cc/DerivativeWorks", },
+    { "cc:permits", "http://creativecommons.org/ns#Reproduction", },
+    { "cc:permits", "http://creativecommons.org/ns#Distribution", },
+    { "cc:permits", "http://creativecommons.org/ns#DerivativeWorks", },
     { NULL, NULL }
 };
 
 struct rdf_double_t rdf_license_freeart [] = {
-    { "cc:permits", "http://web.resource.org/cc/Reproduction", },
-    { "cc:permits", "http://web.resource.org/cc/Distribution", },
-    { "cc:permits", "http://web.resource.org/cc/DerivativeWorks", },
-    { "cc:requires", "http://web.resource.org/cc/ShareAlike", },
-    { "cc:requires", "http://web.resource.org/cc/Notice", },
-    { "cc:requires", "http://web.resource.org/cc/Attribution", },
+    { "cc:permits", "http://creativecommons.org/ns#Reproduction", },
+    { "cc:permits", "http://creativecommons.org/ns#Distribution", },
+    { "cc:permits", "http://creativecommons.org/ns#DerivativeWorks", },
+    { "cc:requires", "http://creativecommons.org/ns#ShareAlike", },
+    { "cc:requires", "http://creativecommons.org/ns#Notice", },
+    { "cc:requires", "http://creativecommons.org/ns#Attribution", },
     { NULL, NULL }
 };
 
@@ -339,7 +340,7 @@ rdf_string(struct rdf_t * rdf)
     gchar *string=NULL;
 
     gchar *rdf_head="\
-<rdf:RDF xmlns=\"http://web.resource.org/cc/\"\
+<rdf:RDF xmlns=\"http://creativecommons.org/ns#\"\
     xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\
     xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\
 ";
@@ -976,6 +977,20 @@ struct rdf_entity_default_t {
 struct rdf_entity_default_t rdf_defaults[] = {
     { "format",      "image/svg+xml", },
     { "type",        "http://purl.org/dc/dcmitype/StillImage", },
+    { "title",       "", },
+    { "date",        "", },
+    { "creator",     "", },
+    { "rights",      "", },
+    { "publisher",   "", },
+    { "identifier",  "", },
+    { "source",      "", },
+    { "relation",    "", },
+    { "language",    "", },
+    { "subject",     "", },
+    { "coverage",    "", },
+    { "description", "", },
+    { "contributor", "", },
+    { "license_uri", "", },
     { NULL,          NULL, }
 };
 
@@ -1004,8 +1019,11 @@ rdf_set_defaults ( SPDocument * doc )
         struct rdf_work_entity_t * entity = rdf_find_entity ( rdf_default->name );
         g_assert ( entity != NULL );
 
+        //get default matedata defined by user preferences
+        const gchar * text = prefs_get_string_attribute ("options.defaultmetadata", rdf_default->name);
+
         if ( rdf_get_work_entity ( doc, entity ) == NULL ) {
-            rdf_set_work_entity ( doc, entity, rdf_default->text );
+            rdf_set_work_entity ( doc, entity, text ? text : rdf_default->text );
         }
     }
 }

@@ -208,6 +208,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"transform\" stroke=\"1\" rectcorners=\"1\" pattern=\"1\" gradient=\"1\" />\n"
 "    <group id=\"kbselection\" inlayer=\"1\" onlyvisible=\"1\" onlysensitive=\"1\" />\n"
 "    <group id=\"selection\" layerdeselect=\"1\" />\n"
+"    <group id=\"defaultmetadata\" title=\"\" date=\"\" format=\"\" type=\"\" creator=\"\" rights=\"\" publisher=\"\" identifier=\"\" source=\"\" relation=\"\" language=\"\" subject=\"\" coverage=\"\" description=\"\" contributor=\"\" license=\"0\" license_uri=\"\" inkscapedefaults=\"1\" />\n"
 "    <group id=\"createbitmap\"/>\n"
 "    <group id=\"compassangledisplay\" value=\"0\"/>\n"
 "    <group id=\"maskobject\" topmost=\"1\" remove=\"1\"/>\n"
