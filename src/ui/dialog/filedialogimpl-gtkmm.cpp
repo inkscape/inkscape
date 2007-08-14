@@ -161,7 +161,7 @@ bool SVGPreview::setFileName(Glib::ustring &theFileName)
     /**
      * I don't know why passing false to keepalive is bad.  But it
      * prevents the display of an svg with a non-ascii filename
-     */              
+     */
     SPDocument *doc = sp_document_new (fileName.c_str(), true);
     if (!doc) {
         g_warning("SVGView: error loading document '%s'\n", fileName.c_str());
@@ -386,8 +386,8 @@ void SVGPreview::showNoPreview()
 
 /**
  * Inform the user that the svg file is too large to be displayed.
- * This does not check for sizes of embedded images (yet) 
- */ 
+ * This does not check for sizes of embedded images (yet)
+ */
 void SVGPreview::showTooLarge(long fileLength)
 {
 
@@ -491,7 +491,7 @@ void SVGPreview::showTooLarge(long fileLength)
 
 /**
  * Return true if the string ends with the given suffix
- */ 
+ */
 static bool
 hasSuffix(Glib::ustring &str, Glib::ustring &ext)
 {
@@ -569,7 +569,7 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
             return FALSE;
             }
         }
-        
+
     Glib::ustring svg = ".svg";
     Glib::ustring svgz = ".svgz";
 
@@ -612,7 +612,7 @@ SVGPreview::~SVGPreview()
 
 void FileDialogBaseGtk::internalSetup()
 {
-    bool enablePreview = 
+    bool enablePreview =
         (bool)prefs_get_int_attribute( preferenceBase.c_str(),
              "enable_preview", 1 );
 
@@ -681,8 +681,8 @@ void FileDialogBaseGtk::_updatePreviewCallback()
 /**
  * Constructor.  Not called directly.  Use the factory.
  */
-FileOpenDialogImplGtk::FileOpenDialogImplGtk(Gtk::Window& parentWindow, 
-		                               const Glib::ustring &dir,
+FileOpenDialogImplGtk::FileOpenDialogImplGtk(Gtk::Window& parentWindow,
+                                       const Glib::ustring &dir,
                                        FileDialogType fileTypes,
                                        const Glib::ustring &title) :
     FileDialogBaseGtk(parentWindow, title, fileTypes, "dialogs.open")
@@ -796,7 +796,7 @@ bool
 FileOpenDialogImplGtk::show()
 {
     Glib::ustring s = Glib::filename_to_utf8 (get_current_folder());
-    if (s.length() == 0) 
+    if (s.length() == 0)
         s = getcwd (NULL, 0);
     set_current_folder(Glib::filename_from_utf8(s)); //hack to force initial dir listing
     set_modal (TRUE);                      //Window
@@ -859,7 +859,7 @@ FileOpenDialogImplGtk::getFilename (void)
  * To Get Multiple filenames selected at-once.
  */
 std::vector<Glib::ustring>FileOpenDialogImplGtk::getFilenames()
-{    
+{
     std::vector<Glib::ustring> result = get_filenames();
 #ifdef WITH_GNOME_VFS
     if (result.empty() && gnome_vfs_initialized())
@@ -880,8 +880,8 @@ std::vector<Glib::ustring>FileOpenDialogImplGtk::getFilenames()
 /**
  * Constructor
  */
-FileSaveDialogImplGtk::FileSaveDialogImplGtk(Gtk::Window &parentWindow, 
-			const Glib::ustring &dir,
+FileSaveDialogImplGtk::FileSaveDialogImplGtk(Gtk::Window &parentWindow,
+            const Glib::ustring &dir,
             FileDialogType fileTypes,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
@@ -1089,6 +1089,7 @@ FileSaveDialogImplGtk::show()
     sp_transientize((GtkWidget *)gobj());  //Make transient
     gint b = run();                        //Dialog
     svgPreview.showNoPreview();
+    set_preview_widget_active(false);
     hide();
 
     if (b == Gtk::RESPONSE_OK)
@@ -1176,7 +1177,7 @@ FileSaveDialogImplGtk::getFilename()
 }
 
 
-void 
+void
 FileSaveDialogImplGtk::change_title(const Glib::ustring& title)
 {
     this->set_title(title);
@@ -1185,7 +1186,7 @@ FileSaveDialogImplGtk::change_title(const Glib::ustring& title)
 /**
   * Change the default save path location.
   */
-void 
+void
 FileSaveDialogImplGtk::change_path(const Glib::ustring& path)
 {
     myFilename = path;
@@ -1236,7 +1237,7 @@ void FileSaveDialogImplGtk::updateNameAndExtension()
             if ( pos != Glib::ustring::npos ) {
                 Glib::ustring trail = utf8Name.substr( pos );
                 Glib::ustring foldedTrail = trail.casefold();
-                if ( (trail == ".") 
+                if ( (trail == ".")
                      | (foldedTrail != Glib::ustring( newOut->get_extension() ).casefold()
                         && ( knownExtensions.find(foldedTrail) != knownExtensions.end() ) ) ) {
                     utf8Name = utf8Name.erase( pos );
@@ -1356,7 +1357,7 @@ void FileExportDialogImpl::createFileTypeMenu()
  * Constructor
  */
 FileExportDialogImpl::FileExportDialogImpl(Gtk::Window& parentWindow,
-			const Glib::ustring &dir,
+            const Glib::ustring &dir,
             FileDialogType fileTypes,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
@@ -1491,7 +1492,7 @@ FileExportDialogImpl::FileExportDialogImpl(Gtk::Window& parentWindow,
     destFrame.add(destBox);
     exportOptionsBox.pack_start(destFrame);
 
-    //##### Put the two boxes and their parent onto the dialog    
+    //##### Put the two boxes and their parent onto the dialog
     exportOptionsBox.pack_start(sourceFrame);
     exportOptionsBox.pack_start(destFrame);
 
@@ -1551,7 +1552,7 @@ bool
 FileExportDialogImpl::show()
 {
     Glib::ustring s = Glib::filename_to_utf8 (get_current_folder());
-    if (s.length() == 0) 
+    if (s.length() == 0)
         s = getcwd (NULL, 0);
     set_current_folder(Glib::filename_from_utf8(s)); //hack to force initial dir listing
     set_modal (TRUE);                      //Window
@@ -1722,7 +1723,7 @@ FileExportToOCALDialogImpl::FileExportToOCALDialogImpl(Gtk::Window &parentWindow
     //Gtk::HBox fileBox;
 
     Gtk::Label *fileLabel = new Gtk::Label(_("File"));
-    
+
     fileNameEntry = new Gtk::Entry();
     fileNameEntry->set_text(myFilename);
     fileNameEntry->set_max_length(252); // I am giving the extension approach.
@@ -1743,9 +1744,9 @@ FileExportToOCALDialogImpl::FileExportToOCALDialogImpl(Gtk::Window &parentWindow
 
     checksBox.pack_start( fileTypeCheckbox );
     vbox->pack_start( checksBox );
-    
+
     vbox->pack_end( fileTypeComboBox );
-    
+
     //Let's do some customization
     fileNameEntry = NULL;
     Gtk::Container *cont = get_toplevel();
@@ -1876,7 +1877,7 @@ FileExportToOCALDialogImpl::getFilename()
 }
 
 
-void 
+void
 FileExportToOCALDialogImpl::change_title(const Glib::ustring& title)
 {
     this->set_title(title);
@@ -1886,7 +1887,7 @@ void FileExportToOCALDialogImpl::updateNameAndExtension()
 {
     // Pick up any changes the user has typed in.
     Glib::ustring tmp = myFilename;   // get_filename();
-    
+
     Inkscape::Extension::Output* newOut = extension ? dynamic_cast<Inkscape::Extension::Output*>(extension) : 0;
     if ( fileTypeCheckbox.get_active() && newOut ) {
         try {
@@ -1896,7 +1897,7 @@ void FileExportToOCALDialogImpl::updateNameAndExtension()
             if ( pos != Glib::ustring::npos ) {
                 Glib::ustring trail = utf8Name.substr( pos );
                 Glib::ustring foldedTrail = trail.casefold();
-                if ( (trail == ".") 
+                if ( (trail == ".")
                      | (foldedTrail != Glib::ustring( newOut->get_extension() ).casefold()
                         && ( knownExtensions.find(foldedTrail) != knownExtensions.end() ) ) ) {
                     utf8Name = utf8Name.erase( pos );
