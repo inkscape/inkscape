@@ -10,19 +10,12 @@
 # Jörg Müller <jfm@ram-brand.de>, 2005.
 # Wolfram Strempfer <wolfram@strempfer.de>, 2006.
 #
-#: ../src/widgets/select-toolbar.cpp:456 ../src/widgets/toolbox.cpp:1686
-#: ../src/widgets/toolbox.cpp:2085 ../src/widgets/toolbox.cpp:2267
-#: ../src/widgets/toolbox.cpp:3102 ../src/widgets/toolbox.cpp:4130
-#: ../src/widgets/toolbox.cpp:4151 ../src/widgets/toolbox.cpp:4180
-#: ../src/widgets/toolbox.cpp:4201 ../src/widgets/toolbox.cpp:4228
-#: ../src/widgets/toolbox.cpp:4579 ../src/widgets/toolbox.cpp:4605
-#: ../src/widgets/toolbox.cpp:4639
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-15 15:23+0200\n"
-"PO-Revision-Date: 2007-08-05 01:39+0200\n"
+"PO-Revision-Date: 2007-08-14 21:47+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -9779,7 +9772,7 @@ msgstr "Textobjekte erstellen und bearbeiten"
 
 #: ../src/verbs.cpp:2374
 msgid "Create and edit gradients"
-msgstr "Erstellen und Bearbeiten von Farbverläufen"
+msgstr "Farbverläufe erstellen und bearbeiten"
 
 #: ../src/verbs.cpp:2376
 msgid "Zoom in or out"
@@ -9795,7 +9788,7 @@ msgstr "Objektverbinder erzeugen"
 
 #: ../src/verbs.cpp:2382
 msgid "Fill bounded areas"
-msgstr "Fülle abgegrenzte Gebiete"
+msgstr "Abgegrenzte Gebiete füllen"
 
 #. Tool prefs
 #: ../src/verbs.cpp:2385
