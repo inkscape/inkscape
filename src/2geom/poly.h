@@ -95,7 +95,10 @@ public:
 // equivalent to multiply by x^terms, discard negative terms
     Poly shifted(unsigned terms) const { 
         Poly result;
-        const unsigned out_size = std::max(unsigned(0), size()+terms);
+        // This was a no-op and breaks the build on x86_64, as it's trying
+        // to take maximum of 32-bit and 64-bit integers
+        //const unsigned out_size = std::max(unsigned(0), size()+terms);
+        const size_type out_size = size() + terms;
         result.reserve(out_size);
         
         if(terms < 0) {
