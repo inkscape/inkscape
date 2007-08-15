@@ -138,10 +138,10 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     // If filter effects region is not paraller to viewport,
     // we must first undo the rotation / shear.
     // It will be redone after filtering.
-    // If there is only rotation and uniform scaling (zoom), let's skip this,
-    // as it will not make a difference with gaussian blur.
-    if ((fabs(trans[1]) > 1e-6 || fabs(trans[2]) > 1e-6) &&
-        !(fabs(trans[0] - trans[3]) < 1e-6 && fabs(trans[1] + trans[2]) < 1e-6)) {
+    // If there is only scaling, let's skip this, as it will not make
+    // a difference with gaussian blur.
+    // TODO: This should be done in FilterSlot and for all input images
+    if (fabs(trans[1]) > 1e-6 || fabs(trans[2]) > 1e-6) {
         notparaller = true;
 
         // TODO: if filter resolution is specified, scaling should be set

@@ -112,6 +112,8 @@ sp_filter_init(SPFilter *filter)
     
     filter->_image_name = map<gchar *, int, ltstr>();
 
+    filter->filterRes = NumberOptNumber();
+
     new (&filter->modified_connection) sigc::connection();
 }
 
