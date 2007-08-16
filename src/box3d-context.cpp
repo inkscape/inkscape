@@ -455,14 +455,12 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             break;
 
         case GDK_L:
-        case GDK_l:
             bc->_vpdrag->show_lines = !bc->_vpdrag->show_lines;
             bc->_vpdrag->updateLines();
             ret = true;
             break;
 
         case GDK_A:
-        case GDK_a:
             if (MOD__CTRL) break; // Don't catch Ctrl+A ("select all")
             if (bc->_vpdrag->show_lines) {
                 bc->_vpdrag->front_or_rear_lines = bc->_vpdrag->front_or_rear_lines ^ 0x2; // toggle rear PLs
@@ -471,7 +469,6 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             ret = true;
             break;
 
-        case GDK_x:
         case GDK_X:
         {
             if (MOD__CTRL) break; // Don't catch Ctrl+X ('cut') and Ctrl+Shift+X ('open XML editor')
@@ -485,7 +482,6 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             break;
         }
  
-        case GDK_y:
         case GDK_Y:
         {
             if (MOD__CTRL) break; // Don't catch Ctrl+Y ("redo")
@@ -499,7 +495,6 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             break;
         }
 
-        case GDK_z:
         case GDK_Z:
         {
             if (MOD__CTRL) break; // Don't catch Ctrl+Z ("undo")
