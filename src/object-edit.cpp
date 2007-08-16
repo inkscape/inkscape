@@ -737,21 +737,21 @@ sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop)
     SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
 
     sp_knot_holder_add(knot_holder, sp_3dbox_knot0_set, sp_3dbox_knot0_get, NULL,
-                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to prolongations of the edges"));
+                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
     sp_knot_holder_add(knot_holder, sp_3dbox_knot1_set, sp_3dbox_knot1_get, NULL,
-                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to prolongations of the edges"));
+                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
     sp_knot_holder_add(knot_holder, sp_3dbox_knot2_set, sp_3dbox_knot2_get, NULL,
-                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to prolongations of the edges"));
+                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
     sp_knot_holder_add(knot_holder, sp_3dbox_knot3_set, sp_3dbox_knot3_get, NULL,
-                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to prolongations of the edges"));
+                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
     sp_knot_holder_add(knot_holder, sp_3dbox_knot4_set, sp_3dbox_knot4_get, NULL,
-                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to prolongations of the edges"));
+                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
     sp_knot_holder_add(knot_holder, sp_3dbox_knot5_set, sp_3dbox_knot5_get, NULL,
-                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to prolongations of the edges"));
+                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
     sp_knot_holder_add(knot_holder, sp_3dbox_knot6_set, sp_3dbox_knot6_get, NULL,
-                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to prolongations of the edges"));
+                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
     sp_knot_holder_add(knot_holder, sp_3dbox_knot7_set, sp_3dbox_knot7_get, NULL,
-                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to prolongations of the edges"));
+                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
     sp_pat_knot_holder(item, knot_holder);
 
     return knot_holder;
