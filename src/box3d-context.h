@@ -50,9 +50,6 @@ struct SP3DBoxContext : public SPEventContext {
 
     Box3D::VPDrag * _vpdrag;
 
-    /* temporary member until the precise behaviour is sorted out */
-    static guint number_of_handles;
-
 	sigc::connection sel_changed_connection;
 
 	Inkscape::MessageContext *_message_context;

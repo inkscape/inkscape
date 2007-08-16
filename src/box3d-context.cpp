@@ -90,8 +90,6 @@ static void sp_3dbox_context_class_init(SP3DBoxContextClass *klass)
     event_context_class->item_handler  = sp_3dbox_context_item_handler;
 }
 
-guint SP3DBoxContext::number_of_handles = 3;
-
 static void sp_3dbox_context_init(SP3DBoxContext *box3d_context)
 {
     SPEventContext *event_context = SP_EVENT_CONTEXT(box3d_context);
