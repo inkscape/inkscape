@@ -94,11 +94,27 @@ FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow,
     return dialog;
 }
 
+//#########################################################################
+//### F I L E    I M P O R T  F R O M  O C A L
+//#########################################################################
+
+/**
+ * Public factory.  Called by file.cpp.
+ */
+FileImportFromOCALDialog *FileImportFromOCALDialog::create(Gtk::Window &parentWindow,
+		                       const Glib::ustring &path,
+                                       FileDialogType fileTypes,
+                                       const Glib::ustring &title)
+{
+    FileImportFromOCALDialog *dialog = new FileImportFromOCALDialogImplGtk(parentWindow, path, fileTypes, title);
+    return dialog;
+}
 
 
 } //namespace Dialog
 } //namespace UI
 } //namespace Inkscape
+
 
 
 /*

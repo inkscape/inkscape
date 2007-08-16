@@ -214,7 +214,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"blurquality\" value=\"0\"/>\n"
 "    <group id=\"startmode\" outline=\"0\"/>\n"
 "    <group id=\"outlinemode\" value=\"0\"/>\n"
-"    <group id=\"ocalurl\" str=\"test.webdav.org/dav/\"/>\n"
+"    <group id=\"ocalurl\" str=\"openclipart.org\"/>\n"
 "    <group id=\"ocalusername\" str=\"\"/>\n"
 "    <group id=\"ocalpassword\" str=\"\"/>\n"
 "    <group id=\"wireframecolors\" "

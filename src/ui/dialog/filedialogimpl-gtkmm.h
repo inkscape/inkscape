@@ -4,6 +4,7 @@
  * Authors:
  *   Bob Jamison
  *   Joel Holdsworth
+ *   Bruno Dilly
  *   Other dudes from The Inkscape Organization
  *
  * Copyright (C) 2004-2007 Bob Jamison
@@ -21,6 +22,9 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <set>
+#include <libxml/parser.h>
+#include <libxml/tree.h>
+
 
 //Gtk includes
 #include <glibmm/i18n.h>
@@ -565,25 +569,25 @@ private:
 
 
 /*#########################################################################
-### F I L E     D I A L O G    E X P O R T    B A S E    C L A S S
+### F I L E     D I A L O G    O C A L    B A S E    C L A S S
 #########################################################################*/
 
 /**
  * This class is the base implementation for export to OCAL.
  */
-class FileDialogExportBase : public Gtk::Dialog
+class FileDialogOCALBase : public Gtk::Dialog
 {
 public:
 
     /**
      *
      */
-    FileDialogExportBase(const Glib::ustring &title) : Gtk::Dialog(title,true)
+    FileDialogOCALBase(const Glib::ustring &title) : Gtk::Dialog(title,true)
     {}
     /*
      *
      */
-    virtual ~FileDialogExportBase()
+    virtual ~FileDialogOCALBase()
     {}
 
 protected:
@@ -608,7 +612,7 @@ protected:
 /**
  * Our implementation of the FileExportToOCALDialog interface.
  */
-class FileExportToOCALDialogImpl : public FileExportToOCALDialog, public FileDialogExportBase
+class FileExportToOCALDialogImpl : public FileExportToOCALDialog, public FileDialogOCALBase
 {
 
 public:
@@ -650,7 +654,7 @@ private:
      */
     std::vector<FileType> fileTypes;
 
-    //# Child widgets
+    // Child widgets
     Gtk::HBox childBox;
     Gtk::VBox checksBox;
     Gtk::HBox fileBox;
@@ -685,6 +689,82 @@ private:
 };
 
 
+//#########################################################################
+//### F I L E   I M P O R T   F R O M   O C A L
+//#########################################################################
+
+/**
+ * Our implementation class for filesListView
+ */
+class FileListViewText : public Gtk::ListViewText
+{
+public:
+    FileListViewText(guint columns_count, SVGPreview& filesPreview):ListViewText(columns_count)
+    {
+        myPreview = &filesPreview;
+    }
+    Glib::ustring getFilename();
+protected:
+    void on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
+private:
+    Glib::ustring myFilename;
+    SVGPreview *myPreview;
+};
+
+/**
+ * Our implementation class for the FileImportFromOCALDialog interface..
+ */
+class FileImportFromOCALDialogImplGtk : public FileImportFromOCALDialog, public FileDialogOCALBase
+{
+public:
+
+    FileImportFromOCALDialogImplGtk(Gtk::Window& parentWindow,
+    		       const Glib::ustring &dir,
+                       FileDialogType fileTypes,
+                       const Glib::ustring &title);
+
+    virtual ~FileImportFromOCALDialogImplGtk();
+
+    bool show();
+
+    Inkscape::Extension::Extension *getSelectionType();
+
+    Glib::ustring getFilename();
+
+private:
+
+    /**
+     * Allow the user to type the tag to be searched
+     */
+    Gtk::Entry *searchTagEntry;
+    FileListViewText *filesList;
+    SVGPreview *filesPreview;
+    Gtk::Label *notFoundLabel;
+
+    // Child widgets
+    Gtk::HBox tagBox;
+    Gtk::HBox filesBox;
+    Gtk::HBox messageBox;
+    Gtk::ScrolledWindow listScrolledWindow;
+    Glib::RefPtr<Gtk::TreeSelection> selection;
+
+    /**
+     * Callback for user input into searchTagEntry
+     */
+    void searchTagEntryChangedCallback();
+
+
+    /**
+     * Prints the names of the all the xml elements 
+     * that are siblings or children of a given xml node
+     */
+    void print_xml_element_names(xmlNode * a_node);
+
+    /**
+     * The extension to use to write this file
+     */
+    Inkscape::Extension::Extension *extension;
+};
 
 }
 }

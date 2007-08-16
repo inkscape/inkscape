@@ -4,6 +4,7 @@
  * Authors:
  *   Bob Jamison
  *   Joel Holdsworth
+ *   Bruno Dilly
  *   Other dudes from The Inkscape Organization
  *
  * Copyright (C) 2004-2007 Bob Jamison
@@ -20,6 +21,10 @@
 
 #include "filedialogimpl-gtkmm.h"
 #include "dialogs/dialog-events.h"
+
+#ifdef WITH_GNOME_VFS
+# include <libgnomevfs/gnome-vfs.h>
+#endif
 
 //Routines from file.cpp
 #undef INK_DUMP_FILENAME_CONV
@@ -1634,8 +1639,6 @@ void FileExportToOCALDialogImpl::fileNameEntryChangedCallback()
     if (!Glib::get_charset()) //If we are not utf8
         fileName = Glib::filename_to_utf8(fileName);
 
-    //g_message("User hit return.  Text is '%s'\n", fileName.c_str());
-
     myFilename = fileName;
     response(Gtk::RESPONSE_OK);
 }
@@ -1705,7 +1708,7 @@ FileExportToOCALDialogImpl::FileExportToOCALDialogImpl(Gtk::Window &parentWindow
             FileDialogType fileTypes,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
-    FileDialogExportBase(title)
+    FileDialogOCALBase(title)
 {
     /*
      * Start Taking the vertical Box and putting a Label
@@ -1720,7 +1723,6 @@ FileExportToOCALDialogImpl::FileExportToOCALDialogImpl(Gtk::Window &parentWindow
     /* Set our dialog type (save, export, etc...)*/
     dialogType = fileTypes;
     Gtk::VBox *vbox = get_vbox();
-    //Gtk::HBox fileBox;
 
     Gtk::Label *fileLabel = new Gtk::Label(_("File"));
 
@@ -1917,6 +1919,369 @@ void FileExportToOCALDialogImpl::updateNameAndExtension()
     }
 }
 
+//#########################################################################
+//### F I L E   I M P O R T   F R O M   O C A L
+//#########################################################################
+
+/*
+ * Callback for row activated
+ */
+void FileListViewText::on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column)
+{
+    // create file path
+    myFilename = Glib::get_tmp_dir();
+    myFilename.append(G_DIR_SEPARATOR_S);
+    std::vector<int> posArray(1);
+    posArray = path.get_indices();
+    myFilename.append(get_text(posArray[0], 2));
+    
+#ifdef WITH_GNOME_VFS
+    gnome_vfs_init();
+    GnomeVFSHandle    *from_handle = NULL;
+    GnomeVFSHandle    *to_handle = NULL;
+    GnomeVFSFileSize  bytes_read;
+    GnomeVFSFileSize  bytes_written;
+    GnomeVFSResult    result;
+    guint8 buffer[8192];
+
+    //get file url
+    Glib::ustring fileUrl = get_text(posArray[0], 1); //http url
+
+    //Glib::ustring fileUrl = "dav://"; //dav url
+    //fileUrl.append(prefs_get_string_attribute("options.ocalurl", "str"));
+    //fileUrl.append("/dav/");
+    //fileUrl.append(get_text(posArray[0], 3)); //author dir
+    //fileUrl.append("/");
+    //fileUrl.append(get_text(posArray[0], 2)); //filename
+
+    if (!Glib::get_charset()) //If we are not utf8
+        fileUrl = Glib::filename_to_utf8(fileUrl);
+
+    // verifies if the file wasn't previously downloaded
+    if(gnome_vfs_open(&to_handle, myFilename.c_str(), GNOME_VFS_OPEN_READ) == GNOME_VFS_ERROR_NOT_FOUND)
+    {
+        // open the temp file to receive
+        result = gnome_vfs_open (&to_handle, myFilename.c_str(), GNOME_VFS_OPEN_WRITE);
+        if (result == GNOME_VFS_ERROR_NOT_FOUND){
+            result = gnome_vfs_create (&to_handle, myFilename.c_str(), GNOME_VFS_OPEN_WRITE, FALSE, GNOME_VFS_PERM_USER_ALL);
+        }
+        if (result != GNOME_VFS_OK) {
+            g_warning("Error creating temp file: %s", gnome_vfs_result_to_string(result));
+            return;
+        }
+        result = gnome_vfs_open (&from_handle, fileUrl.c_str(), GNOME_VFS_OPEN_READ);
+        if (result != GNOME_VFS_OK) {
+            g_warning("Could not find the file in Open Clip Art Library.");
+            return;
+        }
+        // copy the file
+        while (1) {
+            result = gnome_vfs_read (from_handle, buffer, 8192, &bytes_read);
+            if ((result == GNOME_VFS_ERROR_EOF) &&(!bytes_read)){
+                result = gnome_vfs_close (from_handle);
+                result = gnome_vfs_close (to_handle);
+                break;
+            }
+            if (result != GNOME_VFS_OK) {
+                g_warning("%s", gnome_vfs_result_to_string(result));
+                return;
+            }
+            result = gnome_vfs_write (to_handle, buffer, bytes_read, &bytes_written);
+            if (result != GNOME_VFS_OK) {
+                g_warning("%s", gnome_vfs_result_to_string(result));
+                return;
+            }
+            if (bytes_read != bytes_written){
+                g_warning("Bytes read not equal to bytes written");
+                return;
+            }
+        }
+    }
+    else
+    {
+        gnome_vfs_close(to_handle);
+    }
+    myPreview->showImage(myFilename);
+#endif
+}
+
+
+/*
+ * Returns the selected filename
+ */
+Glib::ustring FileListViewText::getFilename()
+{
+    return myFilename;
+}
+
+/**
+ * Callback for user input into searchTagEntry
+ */
+void FileImportFromOCALDialogImplGtk::searchTagEntryChangedCallback()
+{
+    if (!searchTagEntry)
+        return;
+
+    notFoundLabel->hide();
+
+    Glib::ustring searchTag = searchTagEntry->get_text();
+    // create the ocal uri to get rss feed
+    Glib::ustring uri = "http://www.";
+    uri.append(prefs_get_string_attribute("options.ocalurl", "str"));
+    uri.append("/media/feed/rss/");
+    uri.append(searchTag);
+    if (!Glib::get_charset()) //If we are not utf8
+        uri = Glib::filename_to_utf8(uri);
+
+#ifdef WITH_GNOME_VFS
+
+    // get the rss feed
+    gnome_vfs_init();
+    GnomeVFSHandle    *from_handle = NULL;
+    GnomeVFSHandle    *to_handle = NULL;
+    GnomeVFSFileSize  bytes_read;
+    GnomeVFSFileSize  bytes_written;
+    GnomeVFSResult    result;
+    guint8 buffer[8192];
+
+    // create the temp file name
+    Glib::ustring fileName = Glib::get_tmp_dir ();
+    fileName.append(G_DIR_SEPARATOR_S);
+    fileName.append("ocalfeed.xml");
+
+    // open the temp file to receive
+    result = gnome_vfs_open (&to_handle, fileName.c_str(), GNOME_VFS_OPEN_WRITE);
+    if (result == GNOME_VFS_ERROR_NOT_FOUND){
+        result = gnome_vfs_create (&to_handle, fileName.c_str(), GNOME_VFS_OPEN_WRITE, FALSE, GNOME_VFS_PERM_USER_ALL);
+    }
+    if (result != GNOME_VFS_OK) {
+        g_warning("Error creating temp file: %s", gnome_vfs_result_to_string(result));
+        return;
+    }
+
+    // open the rss feed
+    result = gnome_vfs_open (&from_handle, uri.c_str(), GNOME_VFS_OPEN_READ);
+    if (result != GNOME_VFS_OK) {
+        g_warning("Could not find the Open Clip Art Library rss feed. Verify if the OCAL url is correct in Configuration");
+        return;
+    }
+
+    // copy the file
+    while (1) {
+
+        result = gnome_vfs_read (from_handle, buffer, 8192, &bytes_read);
+
+        if ((result == GNOME_VFS_ERROR_EOF) &&(!bytes_read)){
+            result = gnome_vfs_close (from_handle);
+            result = gnome_vfs_close (to_handle);
+            break;
+        }
+
+        if (result != GNOME_VFS_OK) {
+            g_warning("%s", gnome_vfs_result_to_string(result));
+            return;
+        }
+        result = gnome_vfs_write (to_handle, buffer, bytes_read, &bytes_written);
+        if (result != GNOME_VFS_OK) {
+            g_warning("%s", gnome_vfs_result_to_string(result));
+            return;
+        }
+
+        if (bytes_read != bytes_written){
+            g_warning("Bytes read not equal to bytes written");
+            return;
+        }
+
+    }
+
+    // create the resulting xml document tree
+    // this initialize the library and test mistakes between compiled and shared library used
+    LIBXML_TEST_VERSION 
+    xmlDoc *doc = NULL;
+    xmlNode *root_element = NULL;
+    doc = xmlReadFile(fileName.c_str(), NULL, 0);
+    if (doc == NULL) {
+        g_warning("Failed to parse %s\n", fileName.c_str());
+    return;
+    }
+    
+    // get the root element node
+    root_element = xmlDocGetRootElement(doc);
+
+    // clear the fileslist
+    filesList->clear_items();
+    filesList->set_sensitive(false);
+
+    // print all xml the element names
+    print_xml_element_names(root_element);
+
+    if (filesList->size() == 0)
+    {
+        notFoundLabel->show();
+        filesList->set_sensitive(false);
+    }
+    else
+        filesList->set_sensitive(true);
+
+    // free the document
+    xmlFreeDoc(doc);
+    // free the global variables that may have been allocated by the parser
+    xmlCleanupParser();
+    return;
+#endif    
+}
+
+/**
+ * Prints the names of the all the xml elements 
+ * that are siblings or children of a given xml node
+ */
+void FileImportFromOCALDialogImplGtk::print_xml_element_names(xmlNode * a_node)
+{
+    xmlNode *cur_node = NULL;
+    guint row_num = 0;
+    for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
+        // get itens information
+        if (strcmp((const char*)cur_node->name, "rss")) //avoid the root
+            if (cur_node->type == XML_ELEMENT_NODE && !strcmp((const char*)cur_node->parent->name, "item"))
+            {
+                if (!strcmp((const char*)cur_node->name, "title"))
+                {
+                    xmlChar *title = xmlNodeGetContent(cur_node);
+                    row_num = filesList->append_text((const char*)title);
+                    xmlFree(title);
+                }
+#ifdef WITH_GNOME_VFS
+                else if (!strcmp((const char*)cur_node->name, "enclosure"))
+                {
+                    xmlChar *urlattribute = xmlGetProp(cur_node, (xmlChar*)"url");
+                    filesList->set_text(row_num, 1, (const char*)urlattribute);
+                    gchar *tmp_file;
+                    tmp_file = gnome_vfs_uri_extract_short_path_name(gnome_vfs_uri_new((const char*)urlattribute));
+                    filesList->set_text(row_num, 2, (const char*)tmp_file);
+                    xmlFree(urlattribute);
+                }
+                else if (!strcmp((const char*)cur_node->name, "creator"))
+                {
+                    filesList->set_text(row_num, 3, (const char*)xmlNodeGetContent(cur_node));
+                }
+#endif
+            }
+        print_xml_element_names(cur_node->children);
+    }
+}
+
+/**
+ * Constructor.  Not called directly.  Use the factory.
+ */
+FileImportFromOCALDialogImplGtk::FileImportFromOCALDialogImplGtk(Gtk::Window& parentWindow, 
+		                       const Glib::ustring &dir,
+                                       FileDialogType fileTypes,
+                                       const Glib::ustring &title) :
+     FileDialogOCALBase(title)
+{
+
+    // Initalize to Autodetect
+    extension = NULL;
+    // No filename to start out with
+    Glib::ustring searchTag = "";
+
+    dialogType = fileTypes;
+    Gtk::VBox *vbox = get_vbox();
+    Gtk::Label *tagLabel = new Gtk::Label(_("Search Tag"));
+    notFoundLabel = new Gtk::Label(_("No files matched your search"));
+    messageBox.pack_start(*notFoundLabel);
+    searchTagEntry = new Gtk::Entry();
+    searchTagEntry->set_text(searchTag);
+    searchTagEntry->set_max_length(252); // I am giving the extension approach.
+    tagBox.pack_start(*tagLabel);
+    tagBox.pack_start(*searchTagEntry, Gtk::PACK_EXPAND_WIDGET, 3);
+    filesPreview = new SVGPreview();
+    filesPreview->showNoPreview();
+    filesList = new FileListViewText(4, *filesPreview);
+    filesList->set_sensitive(false);
+    // add the listview inside a ScrolledWindow
+    listScrolledWindow.add(*filesList);
+    // only show the scrollbars when they are necessary:
+    listScrolledWindow.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    filesList->set_column_title(0, _("Files Found"));
+    listScrolledWindow.set_size_request(200, 180);
+    filesList->get_column(1)->set_visible(false); // file url
+    filesList->get_column(2)->set_visible(false); // tmp file path
+    filesList->get_column(3)->set_visible(false); // author dir
+    filesBox.pack_start(listScrolledWindow);
+    filesBox.pack_start(*filesPreview);
+    vbox->pack_start(tagBox);
+    vbox->pack_start(messageBox);
+    vbox->pack_start(filesBox);
+
+    //Let's do some customization
+    searchTagEntry = NULL;
+    Gtk::Container *cont = get_toplevel();
+    std::vector<Gtk::Entry *> entries;
+    findEntryWidgets(cont, entries);
+    if (entries.size() >=1 )
+    {
+    //Catch when user hits [return] on the text field
+        searchTagEntry = entries[0];
+        searchTagEntry->signal_activate().connect(
+              sigc::mem_fun(*this, &FileImportFromOCALDialogImplGtk::searchTagEntryChangedCallback));
+    }
+
+    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    set_default(*add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK));
+
+    show_all_children();
+    notFoundLabel->hide();
+}
+
+/**
+ * Destructor
+ */
+FileImportFromOCALDialogImplGtk::~FileImportFromOCALDialogImplGtk()
+{
+
+}
+
+/**
+ * Show this dialog modally.  Return true if user hits [OK]
+ */
+bool
+FileImportFromOCALDialogImplGtk::show()
+{
+    set_modal (TRUE);                      //Window
+    sp_transientize((GtkWidget *)gobj());  //Make transient
+    gint b = run();                        //Dialog
+    hide();
+
+    if (b == Gtk::RESPONSE_OK)
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+
+/**
+ * Get the file extension type that was selected by the user. Valid after an [OK]
+ */
+Inkscape::Extension::Extension *
+FileImportFromOCALDialogImplGtk::getSelectionType()
+{
+    return extension;
+}
+
+
+/**
+ * Get the file name chosen by the user.   Valid after an [OK]
+ */
+Glib::ustring
+FileImportFromOCALDialogImplGtk::getFilename (void)
+{
+    return filesList->getFilename();
+}
 
 } //namespace Dialog
 } //namespace UI

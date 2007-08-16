@@ -391,6 +391,59 @@ public:
 }; //FileExportToOCAL
 
 
+/**
+ * This class provides an implementation-independent API for
+ * file "ImportFromOCAL" dialogs. 
+ */
+class FileImportFromOCALDialog
+{
+public:
+
+
+    /**
+     * Constructor ..  do not call directly
+     * @param path the directory where to start searching
+     * @param fileTypes one of FileDialogTypes
+     * @param title the title of the dialog
+     */
+    FileImportFromOCALDialog()
+        {};
+
+    /**
+     * Factory.
+     * @param path the directory where to start searching
+     * @param fileTypes one of FileDialogTypes
+     * @param title the title of the dialog
+     */
+    static FileImportFromOCALDialog *create(Gtk::Window& parentWindow, 
+                                  const Glib::ustring &path,
+                                  FileDialogType fileTypes,
+                                  const Glib::ustring &title);
+
+
+    /**
+     * Destructor.
+     * Perform any necessary cleanups.
+     */
+    virtual ~FileImportFromOCALDialog() {};
+
+    /**
+     * Show an OpenFile file selector.
+     * @return the selected path if user selected one, else NULL
+     */
+    virtual bool show() =0;
+
+    /**
+     * Return the 'key' (filetype) of the selection, if any
+     * @return a pointer to a string if successful (which must
+     * be later freed with g_free(), else NULL.
+     */
+    virtual Inkscape::Extension::Extension * getSelectionType() = 0;
+
+    virtual Glib::ustring getFilename () =0;
+
+}; //FileImportFromOCALDialog
+
 
 } //namespace Dialog
 } //namespace UI

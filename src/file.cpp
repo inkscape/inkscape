@@ -497,9 +497,6 @@ sp_file_vacuum()
 
 /**
  * This 'save' function called by the others below
- * It was divided in file_save_local and file_save_remote
- * to support remote saving too.
- * Now file_save is calling only local saving, but it will be solved.
  *
  * \param    official  whether to set :output_module and :modified in the
  *                     document; is true for normal save, false for temporary saves
@@ -511,31 +508,6 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
     if (!doc || uri.size()<1) //Safety check
         return false;
 
-#ifdef WITH_GNOME_VFS
-    
-//    if (gnome_vfs_initialized() && !gnome_vfs_uri_is_local(gnome_vfs_uri_new(uri.c_str()))) {
-//        // Use VFS for this
-//        bool success = file_save_remote(doc, uri, key, saveas, official);
-//        if (!success) {
-//            g_warning("Error:  Could not save file '%s' with VFS\n", uri.c_str());
-//            return false;  
-//        }    
-//        else
-//            return true;
-//    }
-//    else
-    return file_save_local(parentWindow, doc, uri, key, saveas, official);
-#else
-    
-    return file_save_local(parentWindow, doc, uri, key, saveas, official);
-    
-#endif
-}
-
-bool
-file_save_local(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
-          Inkscape::Extension::Extension *key, bool saveas, bool official)
-{
     try {
         Inkscape::Extension::save(key, doc, uri.c_str(),
                  false,
@@ -563,9 +535,6 @@ file_save_local(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring 
     SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Document saved."));
     return true;
 }
-
-
-
 
 /*
  * Used only for remote saving using VFS and a specific uri. Gets the file at the /tmp.
@@ -618,12 +587,9 @@ file_save_remote(SPDocument *doc, const Glib::ustring &uri,
         return false;
     }
 
-    ///g_warning("file_save_remote: temp dir: %s",fileName.c_str());
-
     while (1) {
         
         result = gnome_vfs_read (from_handle, buffer, 8192, &bytes_read);
-        //g_warning("bytes lidos: %d",bytes_read);
 
         if ((result == GNOME_VFS_ERROR_EOF) &&(!bytes_read)){
             result = gnome_vfs_close (from_handle);
@@ -631,15 +597,11 @@ file_save_remote(SPDocument *doc, const Glib::ustring &uri,
             return true;
         }
         
-        //g_warning("while: %s", gnome_vfs_result_to_string(result));
-
         if (result != GNOME_VFS_OK) {
             g_warning("%s", gnome_vfs_result_to_string(result));
             return false;
         }
-        //g_warning("%s",buffer);
         result = gnome_vfs_write (to_handle, buffer, bytes_read, &bytes_written);
-        //g_warning("escritos: %d",bytes_written);
         if (result != GNOME_VFS_OK) {
             g_warning("%s", gnome_vfs_result_to_string(result));
             return false;
@@ -1043,6 +1005,7 @@ sp_file_import(Gtk::Window &parentWindow)
         else
             g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
 
+
         import_path = fileName;
         if (import_path.size()>0)
             import_path.append(G_DIR_SEPARATOR_S);
@@ -1175,15 +1138,7 @@ sp_file_export_dialog(void *widget)
     return false;
 }
 
-
-
-
-
-
-
 #else
-
-
 
 /**
  *
@@ -1200,12 +1155,6 @@ sp_file_export_dialog(void *widget)
 /*######################
 ## E X P O R T  T O  O C A L
 ######################*/
-
-
-/**
- * Export the current document to OCAL
- */
-
 
 /**
  *  Display an Export dialog, export as the selected type if OK pressed
@@ -1238,7 +1187,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
 
     Inkscape::Extension::Output *extension;
         
-    //# Get the default extension name
+    // Get the default extension name
     Glib::ustring default_extension;
     char *attr = (char *)repr->attribute("inkscape:output_extension");
     if (!attr)
@@ -1268,7 +1217,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     if ( export_path_local.size() > 0) 
         export_path = export_path_local;
         
-    //# Show the Export To OCAL dialog
+    // Show the Export To OCAL dialog
     if (!exportDialogInstance)
         exportDialogInstance = Inkscape::UI::Dialog::FileExportToOCALDialog::create(
                 parentWindow,
@@ -1306,7 +1255,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
         return success;
     }
     
-    /* Start now the submition */
+    // Start now the submition
     
     // Create the uri
     Glib::ustring uri = "dav://";
@@ -1329,7 +1278,9 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     return success;
 }
 
-
+/**
+ * Export the current document to OCAL
+ */
 void
 sp_file_export_to_ocal(Gtk::Window &parentWindow)
 {
@@ -1348,19 +1299,55 @@ sp_file_export_to_ocal(Gtk::Window &parentWindow)
 ######################*/
 
 /**
- * Import a document from OCAL
+ * Display an ImportToOcal Dialog, and the selected document from OCAL
  */
 void
 sp_file_import_from_ocal(Gtk::Window &parentWindow)
 {
-    // Try to execute the new code and return;
-    if (!SP_ACTIVE_DOCUMENT)
-        return;
-    //bool success = sp_file_import_from_ocal_dialog(parentWindow);
-    //if (success)
-    //    SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Document imported..."));
-}
+    static Glib::ustring import_path;
 
+    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    if (!doc)
+        return;
+
+    static Inkscape::UI::Dialog::FileImportFromOCALDialog *importDialogInstance = NULL;
+
+    if (!importDialogInstance) {
+        importDialogInstance =
+             Inkscape::UI::Dialog::FileImportFromOCALDialog::create(
+                 parentWindow,
+                 import_path,
+                 Inkscape::UI::Dialog::IMPORT_TYPES,
+                 (char const *)_("Import From OCAL"));
+    }
+
+    bool success = importDialogInstance->show();
+    if (!success)
+        return;
+
+    // Get file name and extension type
+    Glib::ustring fileName = importDialogInstance->getFilename();
+    Inkscape::Extension::Extension *selection =
+        importDialogInstance->getSelectionType();
+
+    if (fileName.size() > 0) {
+
+        Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
+
+        if ( newFileName.size() > 0)
+            fileName = newFileName;
+        else
+            g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
+
+        import_path = fileName;
+        if (import_path.size()>0)
+            import_path.append(G_DIR_SEPARATOR_S);
+
+        file_import(doc, fileName, selection);
+    }
+
+    return;
+}
 
 /*######################
 ## P R I N T
