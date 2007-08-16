@@ -49,6 +49,7 @@ public:
     inline void raise_to_top() { SP_ITEM (path)->raiseToTop(); }
     gchar * axes_string();
     gchar * svg_repr_string();
+    static gint descr_to_id (gchar const *descr);
 
 private:
     NR::Point *corners[4];

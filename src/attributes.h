@@ -117,6 +117,7 @@ enum SPAttributeEnum {
     SP_ATTR_INKSCAPE_3DBOX_CORNER_B, // "lower right front" corner
     SP_ATTR_INKSCAPE_3DBOX_CORNER_C, // "lower right rear" corner
     SP_ATTR_INKSCAPE_3DBOX_PERSPECTIVE,
+    SP_ATTR_INKSCAPE_3DBOX_FACE,
     /* SPEllipse */
     SP_ATTR_R,
     SP_ATTR_CX,

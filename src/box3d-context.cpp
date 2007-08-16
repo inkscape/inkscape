@@ -581,7 +581,7 @@ static void sp_3dbox_drag(SP3DBoxContext &bc, guint state)
         Inkscape::GC::release(repr);
         bc.item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
 
-        /* Hook paths to the faces of the box */
+        /* Hook paths to the faces of the box (applies last used style if necessary) */
         for (int i = 0; i < 6; ++i) {
             SP_3DBOX(bc.item)->faces[i]->hook_path_to_3dbox();
         }

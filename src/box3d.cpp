@@ -514,7 +514,11 @@ sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr) {
             g_warning ("SVG representation of 3D boxes should only contain paths.\n");
             continue;
         }
-        box->faces[face_id]->hook_path_to_3dbox(SP_PATH(face_object));
+        // TODO: Currently we don't check whether all paths are being linked to different faces.
+        //       This is no problem with valid SVG files. It may lead to crashes, however,
+        //       in case a file is corrupt (e.g., two or more faces have identical descriptions).
+        gint id = Box3DFace::descr_to_id (i->attribute ("inkscape:box3dface"));
+        box->faces[id]->hook_path_to_3dbox(SP_PATH(face_object));
         ++face_id;
     }
     if (face_id < 6) {

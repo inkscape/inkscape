@@ -37,6 +37,7 @@
 #include "sp-tspan.h"
 #include "xml/repr.h"
 #include "libnrtype/font-style-to-pos.h"
+#include "sp-path.h"
 
 #include "desktop-style.h"
 
@@ -161,6 +162,17 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
         sp_repr_css_merge(css_write, css);
         sp_css_attr_unset_uris(css_write);
         sp_repr_css_change(inkscape_get_repr(INKSCAPE, "desktop"), css_write, "style");
+        for (const GSList *i = desktop->selection->itemList(); i != NULL; i = i->next) {
+            /* last used styles for 3D box faces are stored separately */
+            if (SP_IS_PATH (i->data)) {
+                const char * descr  = SP_OBJECT_REPR (G_OBJECT (i->data))->attribute ("inkscape:box3dface");
+                if (descr != NULL) {
+                    gchar *style_grp = g_strconcat ("desktop.", descr, NULL);
+                    sp_repr_css_change(inkscape_get_repr(INKSCAPE, style_grp), css_write, "style");
+                    g_free (style_grp);
+                }
+            }
+        }
         sp_repr_css_attr_unref(css_write);
     }
 

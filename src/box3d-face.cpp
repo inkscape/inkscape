@@ -13,6 +13,7 @@
 
 #include "svg/svg.h"
 #include "box3d-face.h"
+#include "prefs-utils.h"
 
 // FIXME: It's quite redundant to pass the box plus the corners plus the axes. At least the corners can
 //        theoretically be reconstructed from the box and the axes, but in order to do this we need
@@ -178,11 +179,24 @@ void Box3DFace::hook_path_to_3dbox(SPPath * existing_path)
 
     SPDesktop *desktop = inkscape_active_desktop();
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(SP_OBJECT(parent_box3d)));
-    GString *pstring = g_string_new("");
-    g_string_printf (pstring, "tools.shapes.3dbox.%s", axes_string());
 
+    /* apply style */
+    bool use_current = prefs_get_int_attribute("tools.shapes.3dbox", "usecurrent", 0);
     Inkscape::XML::Node *repr_face = xml_doc->createElement("svg:path");
-    sp_desktop_apply_style_tool (desktop, repr_face, pstring->str, false);
+    repr_face->setAttribute("inkscape:box3dface", this->axes_string());
+
+    gchar *descr = g_strconcat ("desktop.", axes_string(), NULL);
+    const gchar * cur_style = prefs_get_string_attribute(descr, "style");
+    if (use_current && cur_style !=NULL) {
+        /* use last used style */
+        repr_face->setAttribute("style", cur_style);
+    } else {
+        /* use default style */
+        GString *pstring = g_string_new("");
+        g_string_printf (pstring, "tools.shapes.3dbox.%s", axes_string());
+        sp_desktop_apply_style_tool (desktop, repr_face, pstring->str, false);
+    }
+    g_free (descr);
     this->path = SP_PATH(SP_OBJECT(parent_box3d)->appendChildRepr(repr_face));
     Inkscape::GC::release(repr_face);
 }
@@ -237,6 +251,19 @@ gchar * Box3DFace::axes_string()
             break;
     }
     return pstring->str;
+}
+
+gint Box3DFace::descr_to_id (gchar const *descr)
+{
+    if (!strcmp (descr, "XYrear")) { return 5; }
+    if (!strcmp (descr, "XYfront")) { return 4; }
+    if (!strcmp (descr, "XZbottom")) { return 3; }
+    if (!strcmp (descr, "XZtop")) { return 2; }
+    if (!strcmp (descr, "YZleft")) { return 1; }
+    if (!strcmp (descr, "YZright")) { return 0; }
+
+    g_warning ("Invalid description of 3D box face.\n");
+    return -1;
 }
 
 /*
