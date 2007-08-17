@@ -794,7 +794,7 @@ void PdfParser::opSetExtGState(Object args[], int numArgs) {
   // soft mask
   if (!obj1.dictLookup("SMask", &obj2)->isNull()) {
     if (obj2.isName("None")) {
-      //out->clearSoftMask(state);
+      builder->clearSoftMask(state);
     } else if (obj2.isDict()) {
       if (obj2.dictLookup("S", &obj3)->isName("Alpha")) {
 	alpha = gTrue;
@@ -1577,7 +1577,7 @@ void PdfParser::opShFill(Object args[], int numArgs) {
       // check proper operator sequence
       // first there should be one W(*) and then one 'cm' somewhere before 'sh'
       GBool seenClip, seenConcat;
-      seenClip = gFalse;
+      seenClip = (clipHistory->getClipPath() != NULL);
       seenConcat = gFalse;
       int i = 1;
       while (i <= maxOperatorHistoryDepth) {
@@ -1587,13 +1587,6 @@ void PdfParser::opShFill(Object args[], int numArgs) {
             break;
           } else {
             seenConcat = gTrue;
-          }
-        } else if (!strcmp(opName, "W") || !strcmp(opName, "W*")) {
-          if (seenConcat) { // good sequence
-            seenClip = gTrue;
-            break;
-          } else {  // no 'cm' so bail out
-            break;
           }
         }
         i++;
@@ -2813,6 +2806,12 @@ void PdfParser::doForm1(Object *str, Dict *resDict, double *matrix, double *bbox
   // kill any pre-existing path
   state->clearPath();
 
+  if (softMask || transpGroup) {
+    builder->clearSoftMask(state);
+    builder->pushTransparencyGroup(state, bbox, blendingColorSpace,
+                                   isolated, knockout, softMask);
+  }
+
   // save current parser
   oldParser = parser;
 
@@ -2838,14 +2837,12 @@ void PdfParser::doForm1(Object *str, Dict *resDict, double *matrix, double *bbox
       state->setBlendMode(gfxBlendNormal);
     }
     if (state->getFillOpacity() != 1) {
+      builder->setGroupOpacity(state->getFillOpacity());
       state->setFillOpacity(1);
     }
     if (state->getStrokeOpacity() != 1) {
       state->setStrokeOpacity(1);
     }
-    //out->clearSoftMask(state);
-    //out->beginTransparencyGroup(state, bbox, blendingColorSpace,
-    //				isolated, knockout, softMask);
   }
 
   // set new base matrix
@@ -2857,10 +2854,6 @@ void PdfParser::doForm1(Object *str, Dict *resDict, double *matrix, double *bbox
   // draw the form
   parse(str, gFalse);
 
-  if (softMask || transpGroup) {
-    //out->endTransparencyGroup(state);
-  }
-
   // restore base matrix
   for (i = 0; i < 6; ++i) {
     baseMatrix[i] = oldBaseMatrix[i];
@@ -2869,6 +2862,10 @@ void PdfParser::doForm1(Object *str, Dict *resDict, double *matrix, double *bbox
   // restore parser
   parser = oldParser;
 
+  if (softMask || transpGroup) {
+      builder->popTransparencyGroup(state);
+  }
+
   // restore graphics state
   restoreState();
 
@@ -2876,9 +2873,9 @@ void PdfParser::doForm1(Object *str, Dict *resDict, double *matrix, double *bbox
   popResources();
 
   if (softMask) {
-    //out->setSoftMask(state, bbox, alpha, transferFunc, backdropColor);
+    builder->setSoftMask(state, bbox, alpha, transferFunc, backdropColor);
   } else if (transpGroup) {
-    //out->paintTransparencyGroup(state, bbox);
+    builder->paintTransparencyGroup(state, bbox);
   }
 
   return;

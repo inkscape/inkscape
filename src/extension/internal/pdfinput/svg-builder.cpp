@@ -56,6 +56,21 @@ namespace Internal {
 
 
 /**
+ * \struct SvgTransparencyGroup
+ * \brief Holds information about a PDF transparency group
+ */
+struct SvgTransparencyGroup {
+    double bbox[6];
+    Inkscape::XML::Node *container;
+
+    bool isolated;
+    bool knockout;
+    bool for_softmask;
+
+    SvgTransparencyGroup *next;
+};
+
+/**
  * \class SvgBuilder
  * 
  */
@@ -92,6 +107,11 @@ void SvgBuilder::_init() {
     _current_font = NULL;
     _current_state = NULL;
 
+    _transp_group_stack = NULL;
+    SvgGraphicsState initial_state;
+    initial_state.softmask = NULL;
+    initial_state.group_depth = 0;
+    _state_stack.push_back(initial_state);
     _node_stack.push_back(_container);
 }
 
@@ -112,16 +132,26 @@ void SvgBuilder::setAsLayer(char *layer_name) {
     }
 }
 
+/**
+ * \brief Sets the current container's opacity
+ */
+void SvgBuilder::setGroupOpacity(double opacity) {
+    sp_repr_set_svg_double(_container, "opacity", CLAMP(opacity, 0.0, 1.0));
+}
+
 void SvgBuilder::saveState() {
-    _group_depth.push_back(0);
+    SvgGraphicsState new_state;
+    new_state.group_depth = 0;
+    new_state.softmask = _state_stack.back().softmask;
+    _state_stack.push_back(new_state);
     pushGroup();
 }
 
 void SvgBuilder::restoreState() {
-    while (_group_depth.back() > 0) {
+    while( _state_stack.back().group_depth > 0 ) {
         popGroup();
     }
-    _group_depth.pop_back();
+    _state_stack.pop_back();
 }
 
 Inkscape::XML::Node *SvgBuilder::pushNode(const char *name) {
@@ -149,7 +179,7 @@ Inkscape::XML::Node *SvgBuilder::pushGroup() {
     Inkscape::XML::Node *node = pushNode("svg:g");
     saved_container->appendChild(node);
     Inkscape::GC::release(node);
-    _group_depth.back()++;
+    _state_stack.back().group_depth++;
     // Set as a layer if this is a top-level group
     if ( _container->parent() == _root && _is_top_level ) {
         static int layer_count = 1;
@@ -168,7 +198,7 @@ Inkscape::XML::Node *SvgBuilder::pushGroup() {
 Inkscape::XML::Node *SvgBuilder::popGroup() {
     if (_container != _root) {  // Pop if the current container isn't root
         popNode();
-        _group_depth[_group_depth.size()-1] = --_group_depth.back();
+        _state_stack.back().group_depth--;
     }
 
     return _container;
@@ -698,9 +728,17 @@ void SvgBuilder::_addStopToGradient(Inkscape::XML::Node *gradient, double offset
     Inkscape::XML::Node *stop = _xml_doc->createElement("svg:stop");
     SPCSSAttr *css = sp_repr_css_attr_new();
     Inkscape::CSSOStringStream os_opacity;
-    os_opacity << opacity;
+    gchar *color_text = NULL;
+    if ( _transp_group_stack != NULL && _transp_group_stack->for_softmask ) {
+        double gray = (double)color->r / 65535.0;
+        gray = CLAMP(gray, 0.0, 1.0);
+        os_opacity << gray;
+        color_text = "#ffffff";
+    } else {
+        os_opacity << opacity;
+        color_text = svgConvertGfxRGB(color);
+    }
     sp_repr_css_set_property(css, "stop-opacity", os_opacity.str().c_str());
-    gchar *color_text = svgConvertGfxRGB(color);
     sp_repr_css_set_property(css, "stop-color", color_text);
 
     sp_repr_css_change(stop, css, "style");
@@ -1599,6 +1637,77 @@ void SvgBuilder::addSoftMaskedImage(GfxState *state, Stream *str, int width, int
     }
     if (image_node) {
         Inkscape::GC::release(image_node);
+    }
+}
+
+/**
+ * \brief Starts building a new transparency group
+ */
+void SvgBuilder::pushTransparencyGroup(GfxState *state, double *bbox,
+                                       GfxColorSpace *blending_color_space,
+                                       bool isolated, bool knockout,
+                                       bool for_softmask) {
+
+    // Push node stack
+    pushNode("svg:g");
+
+    // Setup new transparency group
+    SvgTransparencyGroup *transpGroup = new SvgTransparencyGroup;
+    memcpy(&transpGroup->bbox, bbox, sizeof(bbox));
+    transpGroup->isolated = isolated;
+    transpGroup->knockout = knockout;
+    transpGroup->for_softmask = for_softmask;
+    transpGroup->container = _container;
+
+    // Push onto the stack
+    transpGroup->next = _transp_group_stack;
+    _transp_group_stack = transpGroup;
+}
+
+void SvgBuilder::popTransparencyGroup(GfxState *state) {
+    // Restore node stack
+    popNode();
+}
+
+/**
+ * \brief Places the current transparency group into the current container
+ */
+void SvgBuilder::paintTransparencyGroup(GfxState *state, double *bbox) {
+    SvgTransparencyGroup *transpGroup = _transp_group_stack;
+    _container->appendChild(transpGroup->container);
+    Inkscape::GC::release(transpGroup->container);
+    // Pop the stack
+    _transp_group_stack = transpGroup->next;
+    delete transpGroup;
+}
+
+/**
+ * \brief Creates a mask using the current transparency group as its content
+ */
+void SvgBuilder::setSoftMask(GfxState *state, double *bbox, bool alpha,
+                             Function *transfer_func, GfxColor *backdrop_color) {
+
+    // Create mask
+    Inkscape::XML::Node *mask_node = _createMask(1.0, 1.0);
+    // Add the softmask content to it
+    SvgTransparencyGroup *transpGroup = _transp_group_stack;
+    mask_node->appendChild(transpGroup->container);
+    Inkscape::GC::release(transpGroup->container);
+    // Apply the mask
+    _state_stack.back().softmask = mask_node;
+    pushGroup();
+    gchar *mask_url = g_strdup_printf("url(#%s)", mask_node->attribute("id"));
+    _container->setAttribute("mask", mask_url);
+    g_free(mask_url);
+    // Pop the stack
+    _transp_group_stack = transpGroup->next;
+    delete transpGroup;
+}
+
+void SvgBuilder::clearSoftMask(GfxState *state) {
+    if (_state_stack.back().softmask) {
+        _state_stack.back().softmask = NULL;
+        popGroup();
     }
 }
 

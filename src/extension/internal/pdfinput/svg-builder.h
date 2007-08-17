@@ -33,6 +33,8 @@ namespace Inkscape {
 class GooString;
 class Function;
 struct GfxState;
+class GfxColor;
+class GfxColorSpace;
 class GfxRGB;
 class GfxPath;
 class GfxPattern;
@@ -51,6 +53,19 @@ class SPCSSAttr;
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
+
+struct SvgTransparencyGroup;
+
+/**
+ * \struct SvgGraphicsState
+ * Holds information about the current softmask and group depth.
+ * Could be later used to store other graphics state parameters so that we could
+ * emit only the differences in style settings from the parent state.
+ */
+struct SvgGraphicsState {
+    Inkscape::XML::Node *softmask; // Points to current softmask node
+    int group_depth;    // Depth of nesting groups at this level
+};
 
 /**
  * \struct SvgGlyph
@@ -87,6 +102,7 @@ public:
     // Property setting
     void setDocumentSize(double width, double height);  // Document size in px
     void setAsLayer(char *layer_name=NULL);
+    void setGroupOpacity(double opacity);
 
     // Handling the node stack
     Inkscape::XML::Node *pushGroup();
@@ -110,6 +126,17 @@ public:
                             GfxImageColorMap *color_map,
                             Stream *mask_str, int mask_width, int mask_height,
                             GfxImageColorMap *mask_color_map);
+
+    // Transparency group and soft mask handling
+    void pushTransparencyGroup(GfxState *state, double *bbox,
+                               GfxColorSpace *blending_color_space,
+                               bool isolated, bool knockout,
+                               bool for_softmask);
+    void popTransparencyGroup(GfxState *state);
+    void paintTransparencyGroup(GfxState *state, double *bbox);
+    void setSoftMask(GfxState *state, double *bbox, bool alpha,
+                     Function *transfer_func, GfxColor *backdrop_color);
+    void clearSoftMask(GfxState *state);
 
     // Text handling
     void beginString(GfxState *state, GooString *s);
@@ -171,6 +198,8 @@ private:
     Inkscape::XML::Node *popNode();
     std::vector<Inkscape::XML::Node *> _node_stack;
     std::vector<int> _group_depth;    // Depth of nesting groups
+    SvgTransparencyGroup *_transp_group_stack;  // Transparency group stack
+    std::vector<SvgGraphicsState> _state_stack;
 
     SPCSSAttr *_font_style;          // Current font style
     GfxFont *_current_font;
