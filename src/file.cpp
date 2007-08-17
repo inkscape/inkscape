@@ -1268,6 +1268,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
         uri.append("@");
     } 
     uri.append(prefs_get_string_attribute("options.ocalurl", "str"));
+    uri.append("/dav.php/");
     uri.append(Glib::path_get_basename(fileName));
     // Save as a remote file using the dav protocol.
     success = file_save_remote(doc, uri, selectionType, FALSE, FALSE);
