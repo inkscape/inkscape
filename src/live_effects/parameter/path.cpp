@@ -33,11 +33,12 @@ namespace LivePathEffect {
 
 PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
-                      Effect* effect )
+                      Effect* effect, const gchar * defvalue)
     : Parameter(label, tip, key, wr, effect)
 {
     _widget = NULL;
     _tooltips = NULL;
+    param_readSVGValue(defvalue);
 }
 
 PathParam::~PathParam()
@@ -150,9 +151,9 @@ PathParam::param_write_to_repr(const char * svgd)
 }
 
 
-}; /* namespace LivePathEffect */
+} /* namespace LivePathEffect */
 
-}; /* namespace Inkscape */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

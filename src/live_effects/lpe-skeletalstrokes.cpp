@@ -58,9 +58,9 @@ static const Util::EnumDataConverter<SkelCopyType> SkelCopyTypeConverter(SkelCop
 
 LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    pattern(_("Pattern"), _("Pattern to put along path"), "pattern", &wr, this),
-    origin(_("Origin"), _("Origin of ?"), "origin", &wr, this),
-    copytype(_("Copytype"), _("tooltip"), "copytype", SkelCopyTypeConverter, &wr, this)
+    pattern(_("Pattern"), _("Pattern to put along path"), "pattern", &wr, this, "M0,0 L1,1"),
+    origin(_("Origin"), _("Origin of ?"), "origin", &wr, this, Geom::Point(0,0)),
+    copytype(_("Copytype"), _("tooltip"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED)
 {
     registerParameter( dynamic_cast<Parameter *>(&origin) );
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
@@ -83,10 +83,7 @@ LPESkeletalStrokes::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in
 /* LOTS OF CODE COPIED FROM 2geom/src/toys/path-along-path.cpp
  * All credits should go to jfb and mgsloan of lib2geom development! */
 
-    const Util::EnumData<SkelCopyType> * data = copytype.get_selected_data();
-    if (!data)
-        return pwd2_in;
-    SkelCopyType type = data->id;
+    SkelCopyType type = copytype.get_value();
 
     Piecewise<D2<SBasis> > uskeleton = arc_length_parametrization(Piecewise<D2<SBasis> >(pwd2_in),2,.1);
     uskeleton = remove_short_cuts(uskeleton,.01);
@@ -146,8 +143,8 @@ LPESkeletalStrokes::on_pattern_pasted()
 
 
 
-}; // namespace LivePathEffect
-}; /* namespace Inkscape */
+} // namespace LivePathEffect
+} /* namespace Inkscape */
 
 /*
   Local Variables:

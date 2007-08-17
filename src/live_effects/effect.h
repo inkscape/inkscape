@@ -39,15 +39,14 @@ namespace XML {
 namespace LivePathEffect {
 
 enum EffectType {
-    INVALID_LPE = 0,
-    SKELETAL_STROKES,
+    SKELETAL_STROKES = 0,
     SLANT,
     DOEFFECTSTACK_TEST,
     GEARS,
-    ENDTYPE_LPE // This must be last
+    INVALID_LPE // This must be last
 };
 
-extern const Util::EnumData<EffectType> LPETypeData[ENDTYPE_LPE];
+extern const Util::EnumData<EffectType> LPETypeData[INVALID_LPE];
 extern const Util::EnumDataConverter<EffectType> LPETypeConverter;
 
 class Parameter;
@@ -102,7 +101,7 @@ private:
 };
 
 
-}; //namespace LivePathEffect
-}; //namespace Inkscape
+} //namespace LivePathEffect
+} //namespace Inkscape
 
 #endif

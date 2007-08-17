@@ -29,8 +29,8 @@ namespace LivePathEffect {
 
 PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
                         const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
-                        Effect* effect )
-    : Geom::Point(0,0), Parameter(label, tip, key, wr, effect)
+                        Effect* effect, Geom::Point defvalue )
+    : Geom::Point(defvalue), Parameter(label, tip, key, wr, effect)
 {
     _widget = NULL;
     pointwdg = NULL;
@@ -58,7 +58,7 @@ PointParam::param_readSVGValue(const gchar * strvalue)
     success += sp_svg_number_read_d(strarray[1], &newy);
     g_strfreev (strarray);
     if (success == 2) {
-        *dynamic_cast<Geom::Point *>( this ) = Geom::Point(newx, newy);
+        param_setValue( Geom::Point(newx, newy) );
         return true;
     }
     return false;
@@ -68,7 +68,7 @@ gchar *
 PointParam::param_writeSVGValue() const
 {
     Inkscape::SVGOStringStream os;
-    os << pointwdg->getPoint()->getXValue() << "," << pointwdg->getPoint()->getYValue();
+    os << (*this)[0] << "," << (*this)[1];
     gchar * str = g_strdup(os.str().c_str());
     return str;
 }
@@ -79,7 +79,7 @@ PointParam::param_getWidget()
     if (!_widget) {
         pointwdg = new Inkscape::UI::Widget::RegisteredPoint();
         pointwdg->init(param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());
-        pointwdg->setValue(0.1, 0.2);
+        pointwdg->setValue( (*this)[0], (*this)[1] );
         pointwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change point parameter"));
 
         Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "draw_node", Inkscape::ICON_SIZE_BUTTON) );
@@ -108,7 +108,8 @@ void
 PointParam::param_setValue(Geom::Point newpoint)
 {
     *dynamic_cast<Geom::Point *>( this ) = newpoint;
-    pointwdg->setValue(newpoint[0], newpoint[1]);
+    if (pointwdg)
+        pointwdg->setValue(newpoint[0], newpoint[1]);
 }
 
 
@@ -150,9 +151,9 @@ PointParam::on_button_click()
     }
 }
 
-}; /* namespace LivePathEffect */
+} /* namespace LivePathEffect */
 
-}; /* namespace Inkscape */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

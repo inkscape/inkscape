@@ -27,7 +27,12 @@ namespace LivePathEffect {
 
 class PointParam : public Geom::Point, public Parameter {
 public:
-    PointParam(const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr, Effect* effect);;
+    PointParam( const Glib::ustring& label,
+                const Glib::ustring& tip,
+                const Glib::ustring& key,
+                Inkscape::UI::Widget::Registry* wr,
+                Effect* effect,
+                Geom::Point defvalue = Geom::Point(0,0));
     ~PointParam();
 
     Gtk::Widget * param_getWidget();
@@ -50,8 +55,8 @@ private:
 };
 
 
-}; //namespace LivePathEffect
+} //namespace LivePathEffect
 
-}; //namespace Inkscape
+} //namespace Inkscape
 
 #endif

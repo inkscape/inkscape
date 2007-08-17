@@ -28,7 +28,11 @@ class Effect;
 
 class Parameter {
 public:
-    Parameter(const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr, Effect* effect);
+    Parameter(  const Glib::ustring& label,
+                const Glib::ustring& tip,
+                const Glib::ustring& key,
+                Inkscape::UI::Widget::Registry* wr,
+                Effect* effect);
     virtual ~Parameter() {};
 
     virtual bool param_readSVGValue(const gchar * strvalue) = 0;   // returns true if new value is valid / accepted.
@@ -56,8 +60,12 @@ private:
 
 class RealParam : public Parameter {
 public:
-    RealParam( const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, 
-               Inkscape::UI::Widget::Registry* wr, Effect* effect, gdouble initial_value = 1.0);
+    RealParam(  const Glib::ustring& label,
+                const Glib::ustring& tip,
+                const Glib::ustring& key, 
+                Inkscape::UI::Widget::Registry* wr,
+                Effect* effect,
+                gdouble initial_value = 1.0);
     ~RealParam();
 
     bool param_readSVGValue(const gchar * strvalue);
@@ -77,8 +85,8 @@ private:
 };
 
 
-}; //namespace LivePathEffect
+} //namespace LivePathEffect
 
-}; //namespace Inkscape
+} //namespace Inkscape
 
 #endif

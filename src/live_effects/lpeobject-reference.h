@@ -53,9 +53,9 @@ protected:
 
 };
 
-}; //namespace LivePathEffect
+} //namespace LivePathEffect
 
-}; // namespace inkscape
+} // namespace inkscape
 
 #endif /* !SEEN_LPEOBJECT_REFERENCE_H */
 

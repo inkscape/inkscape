@@ -145,9 +145,9 @@ lpeobjectreference_source_modified(SPObject *iSource, guint flags, LPEObjectRefe
     lpeobjref->owner->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-}; //namespace LivePathEffect
+} //namespace LivePathEffect
 
-}; // namespace inkscape
+} // namespace inkscape
 
 /*
   Local Variables:

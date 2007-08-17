@@ -81,8 +81,8 @@ LPEdoEffectStackTest::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_
 }
 
 
-}; // namespace LivePathEffect
-}; /* namespace Inkscape */
+} // namespace LivePathEffect
+} /* namespace Inkscape */
 
 /*
   Local Variables:

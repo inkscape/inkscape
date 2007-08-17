@@ -25,7 +25,12 @@ namespace LivePathEffect {
 
 class PathParam : public Geom::Piecewise<Geom::D2<Geom::SBasis> >, public Parameter {
 public:
-    PathParam(const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr, Effect* effect);;
+    PathParam ( const Glib::ustring& label,
+                const Glib::ustring& tip,
+                const Glib::ustring& key,
+                Inkscape::UI::Widget::Registry* wr,
+                Effect* effect,
+                const gchar * defvalue = "M0,0 L1,1");
     ~PathParam();
 
     Gtk::Widget * param_getWidget();
@@ -49,8 +54,8 @@ private:
 };
 
 
-}; //namespace LivePathEffect
+} //namespace LivePathEffect
 
-}; //namespace Inkscape
+} //namespace Inkscape
 
 #endif

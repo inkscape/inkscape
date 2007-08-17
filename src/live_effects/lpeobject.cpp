@@ -179,7 +179,6 @@ livepatheffect_set(SPObject *object, unsigned key, gchar const *value)
                 lpeobj->effecttype = Inkscape::LivePathEffect::LPETypeConverter.get_id_from_key(value);
                 if (lpeobj->effecttype != Inkscape::LivePathEffect::INVALID_LPE) {
                     lpeobj->lpe = Inkscape::LivePathEffect::Effect::New(lpeobj->effecttype, lpeobj);
-                    lpeobj->lpe->readallParameters(SP_OBJECT_REPR(object));
                 }
                 lpeobj->effecttype_set = true;
             } else {

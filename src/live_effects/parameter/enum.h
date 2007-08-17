@@ -28,11 +28,14 @@ public:
                 const Glib::ustring& tip,
                 const Glib::ustring& key,
                 const Util::EnumDataConverter<E>& c,
-                Inkscape::UI::Widget::Registry* wr, Effect* effect)
+                Inkscape::UI::Widget::Registry* wr,
+                Effect* effect,
+                E defvalue)
         : Parameter(label, tip, key, wr, effect)
     {
         regenum = NULL;
         enumdataconv = &c;
+        value = defvalue;
     };
     ~EnumParam() {
         if (regenum)
@@ -44,37 +47,36 @@ public:
             regenum = new Inkscape::UI::Widget::RegisteredEnum<E>();
             regenum->init(param_label, param_tooltip, param_key, *enumdataconv, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());
             regenum->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change enum parameter"));
+            regenum->combobox()->set_active_by_id(value);
         }
         return dynamic_cast<Gtk::Widget *> (regenum->labelled);
     };
 
     bool param_readSVGValue(const gchar * strvalue) {
+        if (!strvalue) return false;
+
+        value = enumdataconv->get_id_from_key(Glib::ustring(strvalue));
+
         if (regenum)
-            regenum->combobox()->set_active_by_key(Glib::ustring(strvalue));
+            regenum->combobox()->set_active_by_id(value);
+
         return true;
     };
     gchar * param_writeSVGValue() const {
-        if (regenum) {
-            gchar * str = g_strdup(regenum->combobox()->get_active_data()->key.c_str());
-            return str;
-        } else {
-            return NULL;
-        }
+        gchar * str = g_strdup( enumdataconv->get_key(value).c_str() );
+        return str;
     };
 
-    const Util::EnumData<E>* get_selected_data() {
-        if (regenum) {
-            return regenum->combobox()->get_active_data();
-        } else {
-            return NULL;
-        }
-    };
+    E get_value() const {
+        return value;
+    }
 
 private:
     EnumParam(const EnumParam&);
     EnumParam& operator=(const EnumParam&);
 
     UI::Widget::RegisteredEnum<E> * regenum;
+    E value;
 
     const Util::EnumDataConverter<E> * enumdataconv;
 };

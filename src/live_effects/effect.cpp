@@ -35,35 +35,42 @@ namespace Inkscape {
 
 namespace LivePathEffect {
 
-const Util::EnumData<EffectType> LPETypeData[ENDTYPE_LPE] = {
-    {INVALID_LPE,           _("Invalid effect"),        "invalid"},
+const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {SKELETAL_STROKES,      _("Skeletal Strokes"),      "skeletal"},
     {SLANT,                 _("Slant"),                 "slant"},
     {DOEFFECTSTACK_TEST,    _("doEffect stack test"),   "doeffectstacktest"},
     {GEARS,                 _("Gears"),                 "gears"}
 };
-const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, ENDTYPE_LPE);
+const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
 Effect*
 Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
 {
+    Effect* neweffect = NULL;
     switch (lpenr) {
-        case INVALID_LPE:
-            g_warning("LivePathEffect::Effect::New   called with invalid patheffect type");
-            return NULL;
         case SKELETAL_STROKES:
-            return (Effect*) new LPESkeletalStrokes(lpeobj);
+            neweffect = (Effect*) new LPESkeletalStrokes(lpeobj);
+            break;
         case SLANT:
-            return (Effect*) new LPESlant(lpeobj);
+            neweffect = (Effect*) new LPESlant(lpeobj);
+            break;
         case DOEFFECTSTACK_TEST:
-            return (Effect*) new LPEdoEffectStackTest(lpeobj);
+            neweffect = (Effect*) new LPEdoEffectStackTest(lpeobj);
+            break;
         case GEARS:
-            return (Effect*) new LPEGears(lpeobj);
-        case ENDTYPE_LPE:
-            return NULL;
+            neweffect = (Effect*) new LPEGears(lpeobj);
+            break;
+        default:
+            g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
+            neweffect = NULL;
+            break;
     }
 
-    return NULL;
+    if (neweffect) {
+        neweffect->readallParameters(SP_OBJECT_REPR(lpeobj));
+    }
+
+    return neweffect;
 }
 
 Effect::Effect(LivePathEffectObject *lpeobject)
@@ -83,7 +90,10 @@ Effect::~Effect()
 Glib::ustring 
 Effect::getName()
 {
-    return Glib::ustring( LPETypeConverter.get_label(lpeobj->effecttype) );
+    if (lpeobj->effecttype_set && lpeobj->effecttype < INVALID_LPE)
+        return Glib::ustring( LPETypeConverter.get_label(lpeobj->effecttype) );
+    else
+        return Glib::ustring( _("No effect") );
 }
 
 /*
@@ -211,14 +221,14 @@ Effect::getRepr()
 SPDocument * 
 Effect::getSPDoc()
 {
-    if (SP_OBJECT_DOCUMENT(lpeobj) == NULL) g_message("oh crap");
+    if (SP_OBJECT_DOCUMENT(lpeobj) == NULL) g_message("Effect::getSPDoc() returns NULL");
     return SP_OBJECT_DOCUMENT(lpeobj);
 }
 
 
-}; /* namespace LivePathEffect */
+} /* namespace LivePathEffect */
 
-}; /* namespace Inkscape */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

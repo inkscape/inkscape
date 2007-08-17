@@ -251,8 +251,8 @@ LPEGears::doEffect (std::vector<Geom::Path> & path_in)
 }
 
 
-}; // namespace LivePathEffect
-}; /* namespace Inkscape */
+} // namespace LivePathEffect
+} /* namespace Inkscape */
 
 /*
   Local Variables:

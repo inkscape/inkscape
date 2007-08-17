@@ -62,6 +62,8 @@ RealParam::param_readSVGValue(const gchar * strvalue)
     unsigned int success = sp_svg_number_read_d(strvalue, &newval);
     if (success == 1) {
         value = newval;
+        if (rsu)
+            rsu->setValue(value);
         return true;
     }
     return false;
@@ -71,7 +73,7 @@ gchar *
 RealParam::param_writeSVGValue() const
 {
     Inkscape::SVGOStringStream os;
-    os << rsu->getS()->getValue();
+    os << value;
     gchar * str = g_strdup(os.str().c_str());
     return str;
 }
@@ -89,9 +91,9 @@ RealParam::param_getWidget()
 }
 
 
-}; /* namespace LivePathEffect */
+} /* namespace LivePathEffect */
 
-}; /* namespace Inkscape */
+} /* namespace Inkscape */
 
 /*
   Local Variables:
