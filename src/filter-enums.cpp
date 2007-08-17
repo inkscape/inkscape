@@ -77,6 +77,16 @@ const EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR]
 };
 const EnumDataConverter<FeCompositeOperator> CompositeOperatorConverter(CompositeOperatorData, COMPOSITE_ENDOPERATOR);
 
+// feComponentTransfer
+const EnumData<NR::FilterComponentTransferType> ComponentTransferTypeData[NR::COMPONENTTRANSFER_TYPE_ERROR] = {
+    {NR::COMPONENTTRANSFER_TYPE_IDENTITY, _("Identity"), "identity"},
+    {NR::COMPONENTTRANSFER_TYPE_TABLE,    _("Table"),    "table"},
+    {NR::COMPONENTTRANSFER_TYPE_DISCRETE, _("Discrete"), "discrete"},
+    {NR::COMPONENTTRANSFER_TYPE_LINEAR,   _("Linear"),   "linear"},
+    {NR::COMPONENTTRANSFER_TYPE_GAMMA,    _("Gamma"),    "gamma"},
+};
+const EnumDataConverter<NR::FilterComponentTransferType> ComponentTransferTypeConverter(ComponentTransferTypeData, NR::COMPONENTTRANSFER_TYPE_ERROR);
+
 // feConvolveMatrix
 const EnumData<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeData[NR::CONVOLVEMATRIX_EDGEMODE_ENDTYPE] = {
     {NR::CONVOLVEMATRIX_EDGEMODE_DUPLICATE, _("Duplicate"), "duplicate"},

@@ -14,6 +14,7 @@
 
 #include "display/nr-filter-blend.h"
 #include "display/nr-filter-colormatrix.h"
+#include "display/nr-filter-component-transfer.h"
 #include "display/nr-filter-composite.h"
 #include "display/nr-filter-convolve-matrix.h"
 #include "display/nr-filter-morphology.h"
@@ -44,6 +45,9 @@ extern const Inkscape::Util::EnumDataConverter<NR::FilterBlendMode> BlendModeCon
 // ColorMatrix type
 extern const Inkscape::Util::EnumData<NR::FilterColorMatrixType> ColorMatrixTypeData[NR::COLORMATRIX_ENDTYPE];
 extern const Inkscape::Util::EnumDataConverter<NR::FilterColorMatrixType> ColorMatrixTypeConverter;
+// ComponentTransfer type
+extern const Inkscape::Util::EnumData<NR::FilterComponentTransferType> ComponentTransferTypeData[NR::COMPONENTTRANSFER_TYPE_ERROR];
+extern const Inkscape::Util::EnumDataConverter<NR::FilterComponentTransferType> ComponentTransferTypeConverter;
 // Composite operator
 extern const Inkscape::Util::EnumData<FeCompositeOperator> CompositeOperatorData[COMPOSITE_ENDOPERATOR];
 extern const Inkscape::Util::EnumDataConverter<FeCompositeOperator> CompositeOperatorConverter;

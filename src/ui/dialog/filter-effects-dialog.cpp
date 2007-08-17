@@ -37,6 +37,7 @@
 #include "selection.h"
 #include "sp-feblend.h"
 #include "sp-fecolormatrix.h"
+#include "sp-fecomponenttransfer.h"
 #include "sp-fecomposite.h"
 #include "sp-feconvolvematrix.h"
 #include "sp-fedisplacementmap.h"
@@ -1887,6 +1888,14 @@ void FilterEffectsDialog::init_settings_widgets()
     _color_matrix_values = _settings->add_colormatrixvalues(_("Value(s)"));
     colmat->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::update_color_matrix));
 
+    _settings->type(NR_FILTER_COMPONENTTRANSFER);
+    _settings->add_combo(SP_ATTR_TYPE, _("Type"), ComponentTransferTypeConverter);
+    _ct_slope = _settings->add_spinslider(SP_ATTR_SLOPE, _("Slope"), -100, 100, 1, 0.01, 1);
+    _ct_intercept = _settings->add_spinslider(SP_ATTR_INTERCEPT, _("Intercept"), -100, 100, 1, 0.01, 1);
+    _ct_amplitude = _settings->add_spinslider(SP_ATTR_AMPLITUDE, _("Amplitude"), 0, 100, 1, 0.01, 1);
+    _ct_exponent = _settings->add_spinslider(SP_ATTR_EXPONENT, _("Exponent"), 0, 100, 1, 0.01, 1);
+    _ct_offset = _settings->add_spinslider(SP_ATTR_OFFSET, _("Offset"), -100, 100, 1, 0.01, 1);
+
     _settings->type(NR_FILTER_COMPOSITE);
     _settings->add_combo(SP_ATTR_OPERATOR, _("Operator"), CompositeOperatorConverter);
     _k1 = _settings->add_spinslider(SP_ATTR_K1, _("K1"), -10, 10, 1, 0.01, 1);
@@ -2032,6 +2041,8 @@ void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, cons
 
 void FilterEffectsDialog::update_settings_view()
 {
+    update_settings_sensitivity();
+
     if(_attr_lock)
         return;
 
@@ -2046,8 +2057,6 @@ void FilterEffectsDialog::update_settings_view()
         _settings_box.show();
         _empty_settings.show();
     }
-
-    update_settings_sensitivity();
 }
 
 void FilterEffectsDialog::update_settings_sensitivity()
@@ -2058,6 +2067,18 @@ void FilterEffectsDialog::update_settings_sensitivity()
     _k2->set_sensitive(use_k);
     _k3->set_sensitive(use_k);
     _k4->set_sensitive(use_k);
+
+    if(SP_IS_FECOMPONENTTRANSFER(prim)) {
+        SPFeComponentTransfer* ct = SP_FECOMPONENTTRANSFER(prim);
+        const bool linear = ct->type == COMPONENTTRANSFER_TYPE_LINEAR;
+        const bool gamma = ct->type == COMPONENTTRANSFER_TYPE_GAMMA;
+        //_ct_table->set_sensitive(ct->type == COMPONENTTRANSFER_TYPE_TABLE || ct->type == COMPONENTTRANSFER_TYPE_DISCRETE);
+        _ct_slope->set_sensitive(linear);
+        _ct_intercept->set_sensitive(linear);
+        _ct_amplitude->set_sensitive(gamma);
+        _ct_exponent->set_sensitive(gamma);
+        _ct_offset->set_sensitive(gamma);
+    }
 }
 
 void FilterEffectsDialog::update_color_matrix()

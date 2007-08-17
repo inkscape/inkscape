@@ -147,7 +147,15 @@ sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *valu
     SPFeComponentTransfer *feComponentTransfer = SP_FECOMPONENTTRANSFER(object);
     (void)feComponentTransfer;
 
+    NR::FilterComponentTransferType type;
     switch(key) {
+        case SP_ATTR_TYPE:
+            type = sp_feComponenttransfer_read_type(value);
+            if(type != feComponentTransfer->type) {
+                feComponentTransfer->type = type;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         default:
             if (((SPObjectClass *) feComponentTransfer_parent_class)->set)

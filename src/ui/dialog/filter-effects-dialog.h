@@ -259,6 +259,7 @@ private:
 
     // For controlling setting sensitivity
     Gtk::Widget* _k1, *_k2, *_k3, *_k4;
+    Gtk::Widget* _ct_table, *_ct_slope, *_ct_intercept, *_ct_amplitude, *_ct_exponent, *_ct_offset;
 
     // To prevent unwanted signals
     bool _locked;
