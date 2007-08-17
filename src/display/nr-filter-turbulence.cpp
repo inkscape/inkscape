@@ -120,14 +120,16 @@ int FilterTurbulence::render(FilterSlot &slot, Matrix const &trans) {
 
     int bbox_x0 = (int) slot.get_arenaitem()->bbox.x0;
     int bbox_y0 = (int) slot.get_arenaitem()->bbox.y0;
-
+    int bbox_x1 = (int) slot.get_arenaitem()->bbox.x1;
+    int bbox_w = bbox_x1 - bbox_x0;
+    
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
     for (x=x0; x < x1; x++){
         for (y=y0; y < y1; y++){
-            out_data[4*((x - x0)+w*(y - y0))] = pix_data[4*(x - bbox_x0 + w*(y - bbox_y0)) ];
-            out_data[4*((x - x0)+w*(y - y0)) + 1] = pix_data[4*(x - bbox_x0 + w*(y - bbox_y0))+1];
-            out_data[4*((x - x0)+w*(y - y0)) + 2] = pix_data[4*(x - bbox_x0 + w*(y - bbox_y0))+2];
-            out_data[4*((x - x0)+w*(y - y0)) + 3] = pix_data[4*(x - bbox_x0 + w*(y - bbox_y0))+3];
+            out_data[4*((x - x0)+w*(y - y0))] = pix_data[4*(x - bbox_x0 + bbox_w*(y - bbox_y0)) ];
+            out_data[4*((x - x0)+w*(y - y0)) + 1] = pix_data[4*(x - bbox_x0 + bbox_w*(y - bbox_y0))+1];
+            out_data[4*((x - x0)+w*(y - y0)) + 2] = pix_data[4*(x - bbox_x0 + bbox_w*(y - bbox_y0))+2];
+            out_data[4*((x - x0)+w*(y - y0)) + 3] = pix_data[4*(x - bbox_x0 + bbox_w*(y - bbox_y0))+3];
         }
     }
     out->empty = FALSE;
