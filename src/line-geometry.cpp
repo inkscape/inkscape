@@ -75,6 +75,88 @@ NR::Point Line::closest_to(NR::Point const &pt)
     return *result;
 }
 
+inline static double determinant (NR::Point const &a, NR::Point const &b)
+{
+    return (a[NR::X] * b[NR::Y] - a[NR::Y] * b[NR::X]);
+}
+
+/* The coordinates of w with respect to the basis {v1, v2} */
+std::pair<double, double> coordinates (NR::Point const &v1, NR::Point const &v2, NR::Point const &w)
+{
+    double det = determinant (v1, v2);;
+    if (fabs (det) < epsilon) {
+        g_warning ("Vectors do not form a basis.\n");
+        return std::make_pair (0.0, 0.0);
+    }
+
+    double lambda1 = determinant (w, v2) / det;
+    double lambda2 = determinant (v1, w) / det;
+    return std::make_pair (lambda1, lambda2);
+}
+
+/* whether w lies inside the sector spanned by v1 and v2 */
+bool lies_in_sector (NR::Point const &v1, NR::Point const &v2, NR::Point const &w)
+{
+    std::pair<double, double> coords = coordinates (v1, v2, w);
+    return (coords.first >= 0 and coords.second >= 0);
+}
+
+static double pos_angle (NR::Point A, NR::Point B)
+{
+    return fabs (NR::atan2 (A) - NR::atan2 (B));
+}
+
+/*
+ * Returns the two corners of the quadrangle A, B, C, D spanning the edge that is hit by a semiline
+ * starting at pt and going into direction dir.
+ * If none of the sides is hit, it returns a pair containing two identical points.
+ */
+std::pair<NR::Point, NR::Point>
+side_of_intersection (NR::Point const &A, NR::Point const &B, NR::Point const &C, NR::Point const &D,
+                      NR::Point const &pt, NR::Point const &dir)
+{
+    NR::Point dir_A (A - pt);
+    NR::Point dir_B (B - pt);
+    NR::Point dir_C (C - pt);
+    NR::Point dir_D (D - pt);
+
+    std::pair<NR::Point, NR::Point> result;
+    double angle = -1;
+    double tmp_angle;
+
+    if (lies_in_sector (dir_A, dir_B, dir)) {
+        result = std::make_pair (A, B);
+        angle = pos_angle (dir_A, dir_B);
+    }
+    if (lies_in_sector (dir_B, dir_C, dir)) {
+        tmp_angle = pos_angle (dir_B, dir_C);
+        if (tmp_angle > angle) {
+            angle = tmp_angle;
+            result = std::make_pair (B, C);
+        }
+    }
+    if (lies_in_sector (dir_C, dir_D, dir)) {
+        tmp_angle = pos_angle (dir_C, dir_D);
+        if (tmp_angle > angle) {
+            angle = tmp_angle;
+            result = std::make_pair (C, D);
+        }
+    }
+    if (lies_in_sector (dir_D, dir_A, dir)) {
+        tmp_angle = pos_angle (dir_D, dir_A);
+        if (tmp_angle > angle) {
+            angle = tmp_angle;
+            result = std::make_pair (D, A);
+        }
+    }
+    if (angle == -1) {
+        // no intersection found; return a pair containing two identical points
+        return std::make_pair (A, A);
+    } else {
+        return result;
+    }
+}
+
 void create_canvas_point(NR::Point const &pos, double size, guint32 rgba)
 {
     SPDesktop *desktop = inkscape_active_desktop();

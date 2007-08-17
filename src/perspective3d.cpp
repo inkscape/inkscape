@@ -310,6 +310,9 @@ Perspective3D::toggle_boxes (Box3D::Axis axis)
         sp_3dbox_reshape_after_VP_toggling (SP_3DBOX (i->data), axis);
     }
     update_box_reprs();
+
+    SP3DBoxContext *bc = SP_3DBOX_CONTEXT (inkscape_active_event_context());
+    bc->_vpdrag->updateDraggers ();
 }
 
 void

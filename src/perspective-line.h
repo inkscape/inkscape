@@ -17,6 +17,8 @@
 #include "box3d-context.h" 
 #include <glib.h>
 
+class SPDesktop;
+
 namespace Box3D {
 
 class PerspectiveLine : public Box3D::Line {
@@ -30,7 +32,8 @@ public:
     PerspectiveLine (NR::Point const &pt, Box3D::Axis const axis, Perspective3D *perspective);
     NR::Maybe<NR::Point> intersect (Line const &line); // FIXME: Can we make this return only a NR::Point to remove the extra method meet()?
     NR::Point meet (Line const &line);
-	
+    NR::Maybe<NR::Point> intersection_with_viewbox (SPDesktop *desktop);
+
 private:
     Box3D::Axis vp_dir; // direction of the associated VP
     Perspective3D *persp;

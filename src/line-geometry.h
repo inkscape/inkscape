@@ -35,13 +35,18 @@ public:
     NR::Point closest_to(NR::Point const &pt); // returns the point on the line closest to pt 
 
     friend inline std::ostream &operator<< (std::ostream &out_file, const Line &in_line);
-	
-private:
+//private:
     NR::Point pt;
     NR::Point v_dir;
     NR::Point normal;
     NR::Coord d0;
 };
+
+std::pair<double, double> coordinates (NR::Point const &v1, NR::Point const &v2, NR::Point const &w);
+bool lies_in_sector (NR::Point const &v1, NR::Point const &v2, NR::Point const &w);
+std::pair<NR::Point, NR::Point> side_of_intersection (NR::Point const &A, NR::Point const &B,
+                                                      NR::Point const &C, NR::Point const &D,
+                                                      NR::Point const &pt, NR::Point const &dir);
 
 /*** For testing purposes: Draw a knot/node of specified size and color at the given position ***/
 void create_canvas_point(NR::Point const &pos, double size = 4.0, guint32 rgba = 0xff00007f);

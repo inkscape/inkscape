@@ -381,31 +381,33 @@ VPDragger::VPDragger(VPDrag *parent, NR::Point p, VanishingPoint *vp)
     this->point = p;
     this->point_original = p;
 
-    // create the knot
-    this->knot = sp_knot_new (inkscape_active_desktop(), NULL);
-    this->knot->setMode(SP_KNOT_MODE_XOR);
-    this->knot->setFill(VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL);
-    this->knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
-    sp_knot_update_ctrl(this->knot);
+    if (vp->is_finite()) {
+        // create the knot
+        this->knot = sp_knot_new (inkscape_active_desktop(), NULL);
+        this->knot->setMode(SP_KNOT_MODE_XOR);
+        this->knot->setFill(VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL);
+        this->knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
+        sp_knot_update_ctrl(this->knot);
 
-    // move knot to the given point
-    sp_knot_set_position (this->knot, &this->point, SP_KNOT_STATE_NORMAL);
-    sp_knot_show (this->knot);
+        // move knot to the given point
+        sp_knot_set_position (this->knot, &this->point, SP_KNOT_STATE_NORMAL);
+        sp_knot_show (this->knot);
 
-    // connect knot's signals
-    g_signal_connect (G_OBJECT (this->knot), "moved", G_CALLBACK (vp_knot_moved_handler), this);
-    /***
-    g_signal_connect (G_OBJECT (this->knot), "clicked", G_CALLBACK (vp_knot_clicked_handler), this);
-    ***/
-    g_signal_connect (G_OBJECT (this->knot), "grabbed", G_CALLBACK (vp_knot_grabbed_handler), this);
-    g_signal_connect (G_OBJECT (this->knot), "ungrabbed", G_CALLBACK (vp_knot_ungrabbed_handler), this);
-    /***
-    g_signal_connect (G_OBJECT (this->knot), "doubleclicked", G_CALLBACK (vp_knot_doubleclicked_handler), this);
-    ***/
+        // connect knot's signals
+        g_signal_connect (G_OBJECT (this->knot), "moved", G_CALLBACK (vp_knot_moved_handler), this);
+        /***
+        g_signal_connect (G_OBJECT (this->knot), "clicked", G_CALLBACK (vp_knot_clicked_handler), this);
+        ***/
+        g_signal_connect (G_OBJECT (this->knot), "grabbed", G_CALLBACK (vp_knot_grabbed_handler), this);
+        g_signal_connect (G_OBJECT (this->knot), "ungrabbed", G_CALLBACK (vp_knot_ungrabbed_handler), this);
+        /***
+        g_signal_connect (G_OBJECT (this->knot), "doubleclicked", G_CALLBACK (vp_knot_doubleclicked_handler), this);
+        ***/
 
-    // add the initial VP (which may be NULL!)
-    this->addVP (vp);
-    //updateKnotShape();
+        // add the initial VP (which may be NULL!)
+        this->addVP (vp);
+        //updateKnotShape();
+    }
 }
 
 VPDragger::~VPDragger()
@@ -483,8 +485,8 @@ VPDragger::addVP (VanishingPoint *vp)
     if (vp == NULL) {
         return;
     }
-    if (g_slist_find (this->vps, vp)) {
-        // don't add the same VP twice
+    if (!vp->is_finite() || g_slist_find (this->vps, vp)) {
+        // don't add infinite VPs, and don't add the same VP twice
         return;
     }
 
@@ -773,6 +775,7 @@ VPDrag::drawLinesForFace (const SP3DBox *box, Box3D::Axis axis) //, guint corner
 
     VanishingPoint *vp = document->get_persp_of_box (box)->get_vanishing_point (axis);
     if (vp->is_finite()) {
+        // draw perspective lines for finite VPs
         NR::Point pt = vp->get_pos();
         if (this->front_or_rear_lines & 0x1) {
             // draw 'front' perspective lines
@@ -785,8 +788,36 @@ VPDrag::drawLinesForFace (const SP3DBox *box, Box3D::Axis axis) //, guint corner
             this->addLine (corner4, pt, color);
         }
     } else {
-        // TODO: Draw infinite PLs
-        //g_warning ("Perspective lines for infinite vanishing points are not supported yet.\n");
+        // draw perspective lines for infinite VPs
+        NR::Maybe<NR::Point> pt1, pt2, pt3, pt4;
+        Box3D::Perspective3D *persp = this->document->get_persp_of_box (box);
+        SPDesktop *desktop = inkscape_active_desktop (); // FIXME: Store the desktop in VPDrag
+        Box3D::PerspectiveLine pl (corner1, axis, persp);
+        pt1 = pl.intersection_with_viewbox(desktop);
+
+        pl = Box3D::PerspectiveLine (corner2, axis, persp);
+        pt2 = pl.intersection_with_viewbox(desktop);
+
+        pl = Box3D::PerspectiveLine (corner3, axis, persp);
+        pt3 = pl.intersection_with_viewbox(desktop);
+
+        pl = Box3D::PerspectiveLine (corner4, axis, persp);
+        pt4 = pl.intersection_with_viewbox(desktop);
+
+        if (!pt1 || !pt2 || !pt3 || !pt4) {
+            // some perspective lines s are outside the canvas; currently we don't draw any of them
+            return;
+        }
+        if (this->front_or_rear_lines & 0x1) {
+            // draw 'front' perspective lines
+            this->addLine (corner1, *pt1, color);
+            this->addLine (corner2, *pt2, color);
+        }
+        if (this->front_or_rear_lines & 0x2) {
+            // draw 'rear' perspective lines
+            this->addLine (corner3, *pt3, color);
+            this->addLine (corner4, *pt4, color);
+        }
     }
 
 }
@@ -829,6 +860,10 @@ VPDrag::addDragger (VanishingPoint *vp)
     if (vp == NULL) {
         g_print ("Warning: The VP in addDragger is already NULL. Aborting.\n)");
         g_assert (vp != NULL);
+    }
+    if (!vp->is_finite()) {
+        // don't create draggers for infinite vanishing points
+        return;
     }
     NR::Point p = vp->get_pos();
 

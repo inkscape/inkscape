@@ -17,6 +17,8 @@
 
 namespace Box3D {
 
+const double epsilon = 1e-6;
+
 // The X-/Y-/Z-axis corresponds to the first/second/third digit
 // in binary representation, respectively.
 enum Axis {

@@ -12,6 +12,7 @@
  */
 
 #include "perspective-line.h"
+#include "desktop.h"
 
 namespace Box3D {
 
@@ -48,6 +49,23 @@ NR::Maybe<NR::Point> PerspectiveLine::intersect (Line const &line)
 NR::Point PerspectiveLine::meet(Line const &line)
 {
     return *intersect(line); // works since intersect() does not return NR::Nothing()
+}
+
+NR::Maybe<NR::Point> PerspectiveLine::intersection_with_viewbox (SPDesktop *desktop)
+{
+    NR::Rect vb = desktop->get_display_area();
+    /* remaining viewbox corners */
+    NR::Point ul (vb.min()[NR::X], vb.max()[NR::Y]);
+    NR::Point lr (vb.max()[NR::X], vb.min()[NR::Y]);
+
+    std::pair <NR::Point, NR::Point> e = side_of_intersection (vb.min(), lr, vb.max(), ul, this->pt, this->v_dir);
+    if (e.first == e.second) {
+        // perspective line lies outside the canvas
+        return NR::Nothing();
+    }
+
+    Line line (e.first, e.second);
+    return this->intersect (line);
 }
 
 } // namespace Box3D 
