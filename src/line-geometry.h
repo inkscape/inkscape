@@ -35,7 +35,18 @@ public:
     NR::Point closest_to(NR::Point const &pt); // returns the point on the line closest to pt 
 
     friend inline std::ostream &operator<< (std::ostream &out_file, const Line &in_line);
-//private:
+    friend NR::Point fourth_pt_with_given_cross_ratio (NR::Point const &A, NR::Point const &C, NR::Point const &D, double gamma);
+
+    double lambda (NR::Point const pt);
+    inline NR::Point point_from_lambda (double const lambda) { 
+        return (pt + lambda * NR::unit_vector (v_dir)); }
+
+protected:
+    inline static bool pts_coincide (NR::Point const pt1, NR::Point const pt2)
+    {
+        return (NR::L2 (pt2 - pt1) < epsilon);
+    }
+
     NR::Point pt;
     NR::Point v_dir;
     NR::Point normal;
@@ -47,6 +58,10 @@ bool lies_in_sector (NR::Point const &v1, NR::Point const &v2, NR::Point const &
 std::pair<NR::Point, NR::Point> side_of_intersection (NR::Point const &A, NR::Point const &B,
                                                       NR::Point const &C, NR::Point const &D,
                                                       NR::Point const &pt, NR::Point const &dir);
+
+double cross_ratio (NR::Point const &A, NR::Point const &B, NR::Point const &C, NR::Point const &D);
+double cross_ratio (VanishingPoint const &V, NR::Point const &B, NR::Point const &C, NR::Point const &D);
+NR::Point fourth_pt_with_given_cross_ratio (NR::Point const &A, NR::Point const &C, NR::Point const &D, double gamma);
 
 /*** For testing purposes: Draw a knot/node of specified size and color at the given position ***/
 void create_canvas_point(NR::Point const &pos, double size = 4.0, guint32 rgba = 0xff00007f);

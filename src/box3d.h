@@ -46,6 +46,15 @@ struct SP3DBox : public SPGroup {
 
     guint front_bits; /* used internally to determine which of two parallel faces is supposed to be the front face */
 
+    // FIXME: If we only allow a single box to be dragged at a time then we can save memory by storing
+    //        the old positions centrally in SP3DBoxContext (instead of in each box separately)
+    NR::Point old_center;
+    NR::Point old_corner2;
+    NR::Point old_corner1;
+    NR::Point old_corner0;
+    NR::Point old_corner3;
+    NR::Point old_corner5;
+
     gint my_counter; // for testing only
 };
 
@@ -70,6 +79,8 @@ void sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, 
 void sp_3dbox_reshape_after_VP_toggling (SP3DBox *box, Box3D::Axis axis);
 NR::Maybe<NR::Point> sp_3dbox_get_center (SP3DBox *box);
 NR::Maybe<NR::Point> sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_corner2);
+void sp_3dbox_recompute_XY_corners_from_new_center (SP3DBox *box, NR::Point const new_center);
+NR::Point sp_3dbox_get_midpoint_in_axis_direction (NR::Point const &C, NR::Point const &D, Box3D::Axis axis, Box3D::Perspective3D *persp);
 
 void sp_3dbox_update_perspective_lines();
 void sp_3dbox_corners_for_perspective_lines (const SP3DBox * box, Box3D::Axis axis, NR::Point &corner1, NR::Point &corner2, NR::Point &corner3, NR::Point &corner4);

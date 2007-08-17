@@ -51,6 +51,23 @@ NR::Point PerspectiveLine::meet(Line const &line)
     return *intersect(line); // works since intersect() does not return NR::Nothing()
 }
 
+NR::Point PerspectiveLine::pt_with_given_cross_ratio (NR::Point const &C, NR::Point const &D, double gamma)
+{
+    if (persp->get_vanishing_point (vp_dir)->is_finite()) {
+        NR::Point V (*persp->get_vanishing_point (vp_dir));
+        return fourth_pt_with_given_cross_ratio (V, C, D, gamma);
+    } else {
+        if (fabs (gamma - 1) < epsilon) {
+            g_warning ("Cannot compute point with given cross ratio.\n");
+            return NR::Point (0.0, 0.0);
+        }
+        Line line (C, D);
+        double lambda_C = line.lambda (C);
+        double lambda_D = line.lambda (D);
+        return line.point_from_lambda ((lambda_D - gamma * lambda_C) / (1 - gamma));
+    }
+}
+
 NR::Maybe<NR::Point> PerspectiveLine::intersection_with_viewbox (SPDesktop *desktop)
 {
     NR::Rect vb = desktop->get_display_area();

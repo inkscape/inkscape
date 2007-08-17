@@ -19,6 +19,7 @@
 #include "attributes.h"
 #include "svg/stringstream.h"
 #include "box3d.h"
+#include "desktop-handles.h"
 
 static void sp_3dbox_class_init(SP3DBoxClass *klass);
 static void sp_3dbox_init(SP3DBox *box3d);
@@ -169,6 +170,17 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
     sp_3dbox_link_to_existing_paths (box, repr);
 
     sp_3dbox_set_ratios (box, Box3D::XYZ);
+
+    // Store the center (if it already exists) and certain corners for later use during center-dragging
+    NR::Maybe<NR::Point> cen = sp_3dbox_get_center (box);
+    if (cen) {
+        box->old_center = *cen;
+    }
+    box->old_corner2 = box->corners[2];
+    box->old_corner1 = box->corners[1];
+    box->old_corner0 = box->corners[0];
+    box->old_corner3 = box->corners[3];
+    box->old_corner5 = box->corners[5];
 }
 
 static void
@@ -269,6 +281,17 @@ static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node
         sp_3dbox_set_ratios (box);
 
         g_free ((void *) str);
+
+        /* store center and construction-corners for later use during center-dragging */
+        NR::Maybe<NR::Point> cen = sp_3dbox_get_center (box);
+        if (cen) {
+            box->old_center = *cen;
+        }
+        box->old_corner2 = box->corners[2];
+        box->old_corner1 = box->corners[1];
+        box->old_corner0 = box->corners[0];
+        box->old_corner3 = box->corners[3];
+        box->old_corner5 = box->corners[5];
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
@@ -337,37 +360,45 @@ sp_3dbox_position_set (SP3DBoxContext &bc)
     ***/
 }
 
-//static
-void
-// FIXME: Note that this is _not_ the virtual set_shape() method inherited from SPShape,
-//        since SP3DBox is inherited from SPGroup. The following method is "artificially"
-//        called from sp_3dbox_update().
-//sp_3dbox_set_shape(SPShape *shape)
-sp_3dbox_set_shape(SP3DBox *box3d, bool use_previous_corners)
+static void
+sp_3dbox_set_shape_from_points (SP3DBox *box, NR::Point const &cornerA, NR::Point const &cornerB, NR::Point const &cornerC)
 {
+    sp_3dbox_recompute_corners (box, cornerA, cornerB, cornerC);
+
     // FIXME: How to handle other contexts???
     // FIXME: Is tools_isactive(..) more recommended to check for the current context/tool?
     if (!SP_IS_3DBOX_CONTEXT(inkscape_active_event_context()))
         return;
     SP3DBoxContext *bc = SP_3DBOX_CONTEXT(inkscape_active_event_context());
 
-    /* Only update the curves during dragging; setting the svg representations 
-       is expensive and only done once at the end */
-    if (!use_previous_corners) {
-        sp_3dbox_recompute_corners (box3d, bc->drag_origin, bc->drag_ptB, bc->drag_ptC);
-    } else {
-        sp_3dbox_recompute_corners (box3d, box3d->corners[2], box3d->corners[1], box3d->corners[5]);
-    }
     if (bc->extruded) {
-        box3d->faces[0]->set_corners (box3d->corners[0], box3d->corners[4], box3d->corners[6], box3d->corners[2]);
-        box3d->faces[1]->set_corners (box3d->corners[1], box3d->corners[5], box3d->corners[7], box3d->corners[3]);
-        box3d->faces[2]->set_corners (box3d->corners[0], box3d->corners[1], box3d->corners[5], box3d->corners[4]);
-        box3d->faces[3]->set_corners (box3d->corners[2], box3d->corners[3], box3d->corners[7], box3d->corners[6]);
-        box3d->faces[5]->set_corners (box3d->corners[4], box3d->corners[5], box3d->corners[7], box3d->corners[6]);
+        box->faces[0]->set_corners (box->corners[0], box->corners[4], box->corners[6], box->corners[2]);
+        box->faces[1]->set_corners (box->corners[1], box->corners[5], box->corners[7], box->corners[3]);
+        box->faces[2]->set_corners (box->corners[0], box->corners[1], box->corners[5], box->corners[4]);
+        box->faces[3]->set_corners (box->corners[2], box->corners[3], box->corners[7], box->corners[6]);
+        box->faces[5]->set_corners (box->corners[4], box->corners[5], box->corners[7], box->corners[6]);
     }
-    box3d->faces[4]->set_corners (box3d->corners[0], box3d->corners[1], box3d->corners[3], box3d->corners[2]);
+    box->faces[4]->set_corners (box->corners[0], box->corners[1], box->corners[3], box->corners[2]);
 
-    sp_3dbox_update_curves (box3d);
+    sp_3dbox_update_curves (box);
+}
+
+void
+// FIXME: Note that this is _not_ the virtual set_shape() method inherited from SPShape,
+//        since SP3DBox is inherited from SPGroup. The following method is "artificially"
+//        called from sp_3dbox_update().
+//sp_3dbox_set_shape(SPShape *shape)
+sp_3dbox_set_shape(SP3DBox *box, bool use_previous_corners)
+{
+    if (!SP_IS_3DBOX_CONTEXT(inkscape_active_event_context()))
+        return;
+    SP3DBoxContext *bc = SP_3DBOX_CONTEXT(inkscape_active_event_context());
+
+    if (!use_previous_corners) {
+        sp_3dbox_set_shape_from_points (box, bc->drag_origin, bc->drag_ptB, bc->drag_ptC);
+    } else {
+        sp_3dbox_set_shape_from_points (box, box->corners[2], box->corners[1], box->corners[5]);
+    }
 }
 
 
@@ -633,6 +664,13 @@ sp_3dbox_get_center (SP3DBox *box)
     return sp_3dbox_get_midpoint_between_corners (box, 0, 7);
 }
 
+NR::Point
+sp_3dbox_get_midpoint_in_axis_direction (NR::Point const &C, NR::Point const &D, Box3D::Axis axis, Box3D::Perspective3D *persp)
+{
+    Box3D::PerspectiveLine pl (D, axis, persp);
+    return pl.pt_with_given_cross_ratio (C, D, -1.0);
+}
+
 // TODO: The following function can probably be rewritten in a much more elegant and robust way
 //        by using projective coordinates for all points and using the cross ratio.
 NR::Maybe<NR::Point>
@@ -731,6 +769,82 @@ sp_3dbox_get_svg_descr_of_persp (Box3D::Perspective3D *persp)
     }
 
     return g_strdup(os.str().c_str());
+}
+
+// auxiliary function
+static std::pair<NR::Point, NR::Point>
+sp_3dbox_new_midpoints (Box3D::Perspective3D *persp, Box3D::Axis axis, NR::Point const &M0, NR::Point const &M, NR::Point const &A, NR::Point const &B)
+{
+    double cr1 = Box3D::cross_ratio (*persp->get_vanishing_point (axis), M0, M, A);
+    double cr2 = Box3D::cross_ratio (*persp->get_vanishing_point (axis), M, B, M0);
+    if (fabs (cr1 - 1) < Box3D::epsilon) {
+        // FIXME: cr == 1 is a degenerate case; how should we deal with it?
+        return std::make_pair (NR::Point (0,0), NR::Point (0,0));
+    }
+    Box3D::PerspectiveLine pl (M0, axis, persp);
+    NR::Point B_new = pl.pt_with_given_cross_ratio (M0, M, cr1 / (cr1 - 1));
+    NR::Point A_new = pl.pt_with_given_cross_ratio (M0, M, 1 - cr2);
+    return std::make_pair (A_new, B_new);
+}
+
+void sp_3dbox_recompute_XY_corners_from_new_center (SP3DBox *box, NR::Point const new_center)
+{
+    // TODO: Clean this function up
+
+    Box3D::Perspective3D *persp = sp_desktop_document (inkscape_active_desktop())->get_persp_of_box (box);
+    NR::Point old_center = box->old_center;
+
+    NR::Point A0 (sp_3dbox_get_midpoint_in_axis_direction (box->old_corner2, box->old_corner0, Box3D::Y, persp));
+    NR::Point B0 (sp_3dbox_get_midpoint_in_axis_direction (box->old_corner1, box->old_corner3, Box3D::Y, persp));
+
+    /* we first move the box along the X-axis ... */
+    Box3D::PerspectiveLine aux_line1 (old_center, Box3D::X, persp);
+    Box3D::PerspectiveLine aux_line2 (new_center, Box3D::Y, persp);
+    NR::Point Z1 = aux_line1.meet (aux_line2);
+
+    Box3D::PerspectiveLine ref_line (B0, Box3D::X, persp);
+    Box3D::PerspectiveLine pline2 (old_center, Box3D::Z, persp);
+    Box3D::PerspectiveLine pline3 (Z1, Box3D::Z, persp);
+    NR::Point M0 = ref_line.meet (pline2);
+    NR::Point M1 = ref_line.meet (pline3);
+
+    std::pair<NR::Point, NR::Point> new_midpts = sp_3dbox_new_midpoints (persp, Box3D::X, M0, M1, A0, B0);
+    NR::Point A1 (new_midpts.first);
+    NR::Point B1 (new_midpts.second);
+
+    /* ... and then along the Y-axis */
+    Box3D::PerspectiveLine pline4 (box->old_corner1, Box3D::X, persp);
+    Box3D::PerspectiveLine pline5 (box->old_corner3, Box3D::X, persp);
+    Box3D::PerspectiveLine aux_line3 (M1, Box3D::Y, persp);
+    NR::Point C1 = aux_line3.meet (pline4);
+    NR::Point D1 = aux_line3.meet (pline5);
+
+    Box3D::PerspectiveLine aux_line4 (new_center, Box3D::Z, persp);
+    NR::Point M2 = aux_line4.meet (aux_line3);
+
+    Box3D::VanishingPoint *vp_y = persp->get_vanishing_point (Box3D::Y);
+    std::pair<NR::Point, NR::Point> other_new_midpts = sp_3dbox_new_midpoints (persp, Box3D::Y, M1, M2, C1, D1);
+    NR::Point C2 (other_new_midpts.first);
+    NR::Point D2 (other_new_midpts.second);
+
+    Box3D::PerspectiveLine plXC (C2, Box3D::X, persp);
+    Box3D::PerspectiveLine plXD (D2, Box3D::X, persp);
+    Box3D::PerspectiveLine plYA (A1, Box3D::Y, persp);
+    Box3D::PerspectiveLine plYB (B1, Box3D::Y, persp);
+
+    NR::Point new_corner2 (plXD.meet (plYA));
+    NR::Point new_corner1 (plXC.meet (plYB));
+
+    NR::Point tmp_corner1 (pline4.meet (plYB));
+    Box3D::PerspectiveLine pline6 (box->old_corner5, Box3D::X, persp);
+    Box3D::PerspectiveLine pline7 (tmp_corner1, Box3D::Z, persp);
+    NR::Point tmp_corner5 (pline6.meet (pline7));
+
+    Box3D::PerspectiveLine pline8 (tmp_corner5, Box3D::Y, persp);
+    Box3D::PerspectiveLine pline9 (new_corner1, Box3D::Z, persp);
+    NR::Point new_corner5 (pline8.meet (pline9));
+
+    sp_3dbox_set_shape_from_points (box, new_corner2, new_corner1, new_corner5);
 }
 
 void sp_3dbox_update_perspective_lines()

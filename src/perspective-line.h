@@ -32,6 +32,7 @@ public:
     PerspectiveLine (NR::Point const &pt, Box3D::Axis const axis, Perspective3D *perspective);
     NR::Maybe<NR::Point> intersect (Line const &line); // FIXME: Can we make this return only a NR::Point to remove the extra method meet()?
     NR::Point meet (Line const &line);
+    NR::Point pt_with_given_cross_ratio (NR::Point const &C, NR::Point const &D, double gamma);
     NR::Maybe<NR::Point> intersection_with_viewbox (SPDesktop *desktop);
 
 private:

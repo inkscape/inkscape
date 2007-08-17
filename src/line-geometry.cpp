@@ -75,6 +75,20 @@ NR::Point Line::closest_to(NR::Point const &pt)
     return *result;
 }
 
+double Line::lambda (NR::Point const pt)
+{
+    double sign = (NR::dot (pt - this->pt, this->v_dir) > 0) ? 1.0 : -1.0;
+    double lambda = sign * NR::L2 (pt - this->pt);
+    // FIXME: It may speed things up (but how much?) if we assume that
+    //        pt lies on the line and thus skip the following test
+    NR::Point test = point_from_lambda (lambda);
+    if (!pts_coincide (pt, test)) {
+        g_warning ("Point does not lie on line.\n");
+        return 0;
+    }
+    return lambda;
+}
+
 inline static double determinant (NR::Point const &a, NR::Point const &b)
 {
     return (a[NR::X] * b[NR::Y] - a[NR::Y] * b[NR::X]);
@@ -155,6 +169,57 @@ side_of_intersection (NR::Point const &A, NR::Point const &B, NR::Point const &C
     } else {
         return result;
     }
+}
+
+double cross_ratio (NR::Point const &A, NR::Point const &B, NR::Point const &C, NR::Point const &D)
+{
+    Line line (A, D);
+    double lambda_A = line.lambda (A);
+    double lambda_B = line.lambda (B);
+    double lambda_C = line.lambda (C);
+    double lambda_D = line.lambda (D);
+
+    if (fabs (lambda_D - lambda_A) < epsilon || fabs (lambda_C - lambda_B) < epsilon) {
+        // FIXME: What should we return if the cross ratio can't be computed?
+        return 0;
+        //return NR_HUGE;
+    }
+    return (((lambda_C - lambda_A) / (lambda_D - lambda_A)) * ((lambda_D - lambda_B) / (lambda_C - lambda_B)));
+}
+
+double cross_ratio (VanishingPoint const &V, NR::Point const &B, NR::Point const &C, NR::Point const &D)
+{
+    if (V.is_finite()) {
+        return cross_ratio (V.get_pos(), B, C, D);
+    } else {
+        Line line (B, D);
+        double lambda_B = line.lambda (B);
+        double lambda_C = line.lambda (C);
+        double lambda_D = line.lambda (D);
+
+        if (fabs (lambda_C - lambda_B) < epsilon) {
+            // FIXME: What should we return if the cross ratio can't be computed?
+            return 0;
+            //return NR_HUGE;
+        }
+        return (lambda_D - lambda_B) / (lambda_C - lambda_B);
+    }
+}
+
+NR::Point fourth_pt_with_given_cross_ratio (NR::Point const &A, NR::Point const &C, NR::Point const &D, double gamma)
+{
+    Line line (A, D);
+    double lambda_A = line.lambda (A);
+    double lambda_C = line.lambda (C);
+    double lambda_D = line.lambda (D);
+
+    double beta = (lambda_C - lambda_A) / (lambda_D - lambda_A);
+    if (fabs (beta - gamma) < epsilon) {
+        // FIXME: How to handle the case when the point can't be computed?
+        // g_warning ("Cannot compute point with given cross ratio.\n");
+        return NR::Point (0.0, 0.0);
+    }
+    return line.point_from_lambda ((beta * lambda_D - gamma * lambda_C) / (beta - gamma));
 }
 
 void create_canvas_point(NR::Point const &pos, double size, guint32 rgba)

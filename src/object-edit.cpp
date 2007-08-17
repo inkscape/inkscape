@@ -648,6 +648,22 @@ static void sp_3dbox_knot_set(SPItem *item, guint knot_id, NR::Point const &new_
     sp_3dbox_set_z_orders (box);
 }
 
+static void sp_3dbox_knot_center_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+{
+    NR::Matrix const i2d (sp_item_i2d_affine (item));
+    sp_3dbox_recompute_XY_corners_from_new_center (SP_3DBOX (item), new_pos * i2d);
+
+    sp_3dbox_update_curves (SP_3DBOX(item));
+}
+
+static NR::Point sp_3dbox_knot_center_get(SPItem *item)
+{
+    NR::Maybe<NR::Point> center = sp_3dbox_get_center(SP_3DBOX(item));
+    if (!center) return NR::Point (0, 0);
+    NR::Matrix const i2d (sp_item_i2d_affine (item));
+    return (*center) * i2d;
+}
+
 static void sp_3dbox_knot0_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
     sp_3dbox_knot_set(item, 0, new_pos, origin, state);
@@ -752,6 +768,11 @@ sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop)
                        _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
     sp_knot_holder_add(knot_holder, sp_3dbox_knot7_set, sp_3dbox_knot7_get, NULL,
                        _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
+
+    // center dragging
+    sp_knot_holder_add_full(knot_holder, sp_3dbox_knot_center_set, sp_3dbox_knot_center_get, NULL,
+                            SP_KNOT_SHAPE_CROSS, SP_KNOT_MODE_XOR,_("Move the box in perspective."));
+
     sp_pat_knot_holder(item, knot_holder);
 
     return knot_holder;
