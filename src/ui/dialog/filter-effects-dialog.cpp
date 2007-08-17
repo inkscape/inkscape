@@ -325,6 +325,31 @@ public:
         set_shadow_type(Gtk::SHADOW_IN);
     }
 
+    std::vector<double> get_values() const
+    {
+        std::vector<double> vec;
+        for(Gtk::TreeIter iter = _model->children().begin();
+            iter != _model->children().end(); ++iter) {
+            for(unsigned c = 0; c < _tree.get_columns().size(); ++c)
+                vec.push_back((*iter)[_columns.cols[c]]);
+        }
+        return vec;
+    }
+
+    void set_values(const std::vector<double>& v)
+    {
+        unsigned i = 0;
+        for(Gtk::TreeIter iter = _model->children().begin();
+            iter != _model->children().end(); ++iter) {
+            for(unsigned c = 0; c < _tree.get_columns().size(); ++c) {
+                if(i >= v.size())
+                    return;
+                (*iter)[_columns.cols[c]] = v[i];
+                ++i;
+            }
+        }
+    }
+
     Glib::ustring get_as_attribute() const
     {
         std::ostringstream os;
@@ -425,11 +450,15 @@ public:
           _matrix(SP_ATTR_VALUES),
           _saturation(0, 0, 1, 0.1, 0.01, 2, SP_ATTR_VALUES),
           _angle(0, 0, 360, 0.1, 0.01, 1, SP_ATTR_VALUES),
-          _label(_("None"), Gtk::ALIGN_LEFT)
+          _label(_("None"), Gtk::ALIGN_LEFT),
+          _use_stored(false),
+          _saturation_store(0),
+          _angle_store(0)
     {
         _matrix.signal_attr_changed().connect(signal_attr_changed().make_slot());
         _saturation.signal_attr_changed().connect(signal_attr_changed().make_slot());
         _angle.signal_attr_changed().connect(signal_attr_changed().make_slot());
+        signal_attr_changed().connect(sigc::mem_fun(*this, &ColorMatrixValues::update_store));
 
         _matrix.show();
         _saturation.show();
@@ -448,11 +477,17 @@ public:
             switch(col->type) {
                 case COLORMATRIX_SATURATE:
                     add(_saturation);
-                    _saturation.set_from_attribute(o);
+                    if(_use_stored)
+                        _saturation.set_value(_saturation_store);
+                    else
+                        _saturation.set_from_attribute(o);
                     break;
                 case COLORMATRIX_HUEROTATE:
                     add(_angle);
-                    _angle.set_from_attribute(o);
+                    if(_use_stored)
+                        _angle.set_value(_angle_store);
+                    else
+                        _angle.set_from_attribute(o);
                     break;
                 case COLORMATRIX_LUMINANCETOALPHA:
                     add(_label);
@@ -460,9 +495,13 @@ public:
                 case COLORMATRIX_MATRIX:
                 default:
                     add(_matrix);
-                    _matrix.set_from_attribute(o);
+                    if(_use_stored)
+                        _matrix.set_values(_matrix_store);
+                    else
+                        _matrix.set_from_attribute(o);
                     break;
             }
+            _use_stored = true;
         }
     }
 
@@ -474,11 +513,33 @@ public:
         else
             return dynamic_cast<const AttrWidget*>(w)->get_as_attribute();
     }
+
+    void clear_store()
+    {
+        _use_stored = false;
+    }
 private:
+    void update_store()
+    {
+        const Widget* w = get_child();
+        if(w == &_matrix)
+            _matrix_store = _matrix.get_values();
+        else if(w == &_saturation)
+            _saturation_store = _saturation.get_value();
+        else if(w == &_angle)
+            _angle_store = _angle.get_value();
+    }
+
     MatrixAttr _matrix;
     SpinSlider _saturation;
     SpinSlider _angle;
     Gtk::Label _label;
+
+    // Store separate values for the different color modes
+    bool _use_stored;
+    std::vector<double> _matrix_store;
+    double _saturation_store;
+    double _angle_store;
 };
 
 class FilterEffectsDialog::Settings
@@ -1192,6 +1253,7 @@ void FilterEffectsDialog::PrimitiveList::on_primitive_selection_changed()
 {
     _observer->set(get_selected());
     signal_primitive_changed()();
+    _dialog._color_matrix_values->clear_store();
 }
 
 /* Add all filter primitives in the current to the list.
@@ -1753,7 +1815,8 @@ FilterEffectsDialog::FilterEffectsDialog()
       _add_primitive_type(FPConverter),
       _add_primitive(Gtk::Stock::ADD),
       _empty_settings(_("No primitive selected"), Gtk::ALIGN_LEFT),
-      _locked(false)
+      _locked(false),
+      _attr_lock(false)
 {
     _settings = new Settings(*this, sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_direct),
                              NR_FILTER_ENDPRIMITIVETYPE);
@@ -1947,6 +2010,8 @@ void FilterEffectsDialog::set_child_attr_direct(const AttrWidget* input)
 void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, const gchar* val)
 {
     if(!_locked) {
+        _attr_lock = true;
+
         SPFilter *filter = _filter_modifier.get_selected_filter();
         const gchar* name = (const gchar*)sp_attribute_name(attr);
         if(filter && name && o) {
@@ -1960,11 +2025,16 @@ void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, cons
             sp_document_maybe_done(filter->document, undokey.c_str(), SP_VERB_DIALOG_FILTER_EFFECTS,
                                    _("Set filter primitive attribute"));
         }
+
+        _attr_lock = false;
     }
 }
 
 void FilterEffectsDialog::update_settings_view()
 {
+    if(_attr_lock)
+        return;
+
     SPFilterPrimitive* prim = _primitive_list.get_selected();
 
     if(prim) {

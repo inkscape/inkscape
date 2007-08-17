@@ -262,6 +262,7 @@ private:
 
     // To prevent unwanted signals
     bool _locked;
+    bool _attr_lock;
 
     FilterEffectsDialog(FilterEffectsDialog const &d);
     FilterEffectsDialog& operator=(FilterEffectsDialog const &d);
