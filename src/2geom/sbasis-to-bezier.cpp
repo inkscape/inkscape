@@ -11,6 +11,7 @@ This is wrong, it should read
 */
 #include "sbasis-to-bezier.h"
 #include "choose.h"
+#include "svg-path.h"
 #include <iostream>
 
 namespace Geom{
@@ -20,8 +21,6 @@ double W(unsigned n, unsigned j, unsigned k) {
     if((n & 1) == 0 && j == q && k == q)
         return 1;
     if(k > n-k) return W(n, n-j, n-k);
-    assert(!(k < 0));
-    if(k < 0) return 0;
     assert((k <= q));
     if(k >= q) return 0;
     //assert(!(j >= n-k));
@@ -158,46 +157,56 @@ subpath_from_sbasis_incremental(Geom::OldPathSetBuilder &pb, D2<SBasis> B, doubl
 
 #endif
 
-void
-path_from_sbasis(Geom::Path &pb, D2<SBasis> const &B, double tol) {
+void build_from_sbasis(Geom::PathBuilder &pb, D2<SBasis> const &B, double tol) {
     assert(B.isFinite());
     if(tail_error(B, 2) < tol || sbasis_size(B) == 2) { // nearly cubic enough
-        if(B[0].size() == 0 && B[1].size() != 0) {
-            pb.append(Geom::LineSegment(Geom::Point(0, B[1][0][0]), Geom::Point(0, B[1][0][1])));
-        } else if(B[0].size() != 0 && B[1].size() == 0) {
-            pb.append(Geom::LineSegment(Geom::Point(B[0][0][0], 0), Geom::Point(B[0][0][1], 0)));
-        } else if(sbasis_size(B) == 1) {
-            pb.append(Geom::LineSegment(Geom::Point(B[0][0][0], B[1][0][0]),Geom::Point(B[0][0][1], B[1][0][1])));
+        if(sbasis_size(B) <= 1) {
+            pb.lineTo(B.at1());
         } else {
             std::vector<Geom::Point> bez = sbasis_to_bezier(B, 2);
-            pb.append(Geom::CubicBezier(bez[0], bez[1], bez[2], bez[3]));
+            pb.curveTo(bez[1], bez[2], bez[3]);
         }
     } else {
-        path_from_sbasis(pb, compose(B, Linear(0, 0.5)), tol);
-        path_from_sbasis(pb, compose(B, Linear(0.5, 1)), tol);
+        build_from_sbasis(pb, compose(B, Linear(0, 0.5)), tol);
+        build_from_sbasis(pb, compose(B, Linear(0.5, 1)), tol);
     }
 }
 
+void
+path_from_sbasis(Geom::Path &p, D2<SBasis> const &B, double tol) {
+    PathBuilder pb;
+    pb.moveTo(B.at0());
+    build_from_sbasis(pb, B, tol);
+    p = pb.peek().front();
+}
+
+//TODO: some of this logic should be lifted into svg-path
 std::vector<Geom::Path>
 path_from_piecewise(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double tol) {
-    std::vector<Geom::Path> ret;
-    if(B.size() == 0) return ret;
-    Geom::Path *cur = new Geom::Path();
-    unsigned i = 0;
-    while(true) {
-        path_from_sbasis(*cur, B[i], tol);
-        if(i >= B.size()-1) {
-            ret.push_back(*cur);
-            delete cur;
-            return ret;
+    Geom::PathBuilder pb;
+    if(B.size() == 0) return pb.peek();
+    Geom::Point start = B[0].at0();
+    pb.moveTo(start);
+    for(unsigned i = 0; ; i++) {
+        if(i+1 == B.size() || !near(B[i+1].at0(), B[i].at1(), tol)) {
+            //start of a new path
+            if(near(start, B[i].at1())) {
+                //it's closed
+                pb.closePath();
+                if(sbasis_size(B[i]) <= 1) {
+                    //last line seg already there
+                    goto no_add;
+                }
+            }
+            build_from_sbasis(pb, B[i], tol);
+          no_add:
+            if(i+1 >= B.size()) break;
+            start = B[i+1].at0();
+            pb.moveTo(start);
         }
-        i++;
-        if(B[i].at0() != B[i-1].at1()) {
-            ret.push_back(*cur);
-            delete cur;
-            cur = new Geom::Path();
-        }
+        build_from_sbasis(pb, B[i], tol);
     }
+    return pb.peek();
 }
 
 };
