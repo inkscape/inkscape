@@ -7118,12 +7118,12 @@ msgstr "缩放矩形时，缩放圆角半径"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:523
 #: ../src/widgets/select-toolbar.cpp:498
-msgid "Transform gradients (in fill or stroke) along with the objects"
+msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "随对象缩放渐变（填色或描边）"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:525
 #: ../src/widgets/select-toolbar.cpp:509
-msgid "Transform patterns (in fill or stroke) along with the objects"
+msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "随对象缩放图案（填色或描边）"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526

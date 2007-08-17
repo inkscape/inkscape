@@ -7385,13 +7385,13 @@ msgstr "Ao ampliar retângulos, ampliar o raio dos cantos arredondados"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:523
 #: ../src/widgets/select-toolbar.cpp:498
-msgid "Transform gradients (in fill or stroke) along with the objects"
+msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr ""
 "Transformar gradientes (em preenchimento ou traço) junto com os objetos"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:525
 #: ../src/widgets/select-toolbar.cpp:509
-msgid "Transform patterns (in fill or stroke) along with the objects"
+msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "Editar padrões (em preenchimento ou no traçado) ao longo dos objetos"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526

@@ -527,9 +527,9 @@ void InkscapePreferences::initPageTransforms()
     _page_transforms.add_line( false, "", _trans_scale_corner, "", 
                                _("When scaling rectangles, scale the radii of rounded corners"));
     _page_transforms.add_line( false, "", _trans_gradient, "", 
-                               _("Transform gradients (in fill or stroke) along with the objects"));
+                               _("Move gradients (in fill or stroke) along with the objects"));
     _page_transforms.add_line( false, "", _trans_pattern, "", 
-                               _("Transform patterns (in fill or stroke) along with the objects"));
+                               _("Move patterns (in fill or stroke) along with the objects"));
     _page_transforms.add_group_header( _("Store transformation:"));
     _page_transforms.add_line( true, "", _trans_optimized, "", 
                                _("If possible, apply transformation to objects without adding a transform= attribute"));

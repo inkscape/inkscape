@@ -7494,12 +7494,12 @@ msgstr "Al escalar rectángulos, escalar los radios de los ángulos redondeados"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:523
 #: ../src/widgets/select-toolbar.cpp:498
-msgid "Transform gradients (in fill or stroke) along with the objects"
+msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "Transformar los gradientes (en relleno o borde) junto con los objetos"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:525
 #: ../src/widgets/select-toolbar.cpp:509
-msgid "Transform patterns (in fill or stroke) along with the objects"
+msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "Transformar los patrones (en relleno o borde) junto con los objetos"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526

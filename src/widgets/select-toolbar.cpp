@@ -495,7 +495,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     {
     InkToggleAction* itact = ink_toggle_action_new( "transform_gradient",
                                                     _("Gradient"),
-                                                    _("Transform gradients (in fill or stroke) along with the objects"),
+                                                    _("Move gradients (in fill or stroke) along with the objects"),
                                                     "transform_gradient",
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs_get_int_attribute("options.transform", "gradient", 1) );
@@ -506,7 +506,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     {
     InkToggleAction* itact = ink_toggle_action_new( "transform_pattern",
                                                     _("Patterns"),
-                                                    _("Transform patterns (in fill or stroke) along with the objects"),
+                                                    _("Move patterns (in fill or stroke) along with the objects"),
                                                     "transform_pattern",
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs_get_int_attribute("options.transform", "pattern", 1) );

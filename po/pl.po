@@ -7602,12 +7602,12 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:523
 #: ../src/widgets/select-toolbar.cpp:498
-msgid "Transform gradients (in fill or stroke) along with the objects"
+msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "Przekształcenie gradientu (w wypełnieniu i konturze) wraz z obiektami"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:525
 #: ../src/widgets/select-toolbar.cpp:509
-msgid "Transform patterns (in fill or stroke) along with the objects"
+msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "Przekształcenie deseni (w wypełnieniu i konturze) wraz z obiektami"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526
@@ -14352,12 +14352,12 @@ msgstr "Źródło Metaplik Windows"
 #~ "odpowiednio zmieniany"
 
 #, fuzzy
-#~ msgid "Transform gradients (in fill or stroke) along with objects"
+#~ msgid "Move gradients (in fill or stroke) along with objects"
 #~ msgstr ""
 #~ "Przekształcenie gradientu (w wypełnieniu i konturze) wraz z obiektami"
 
 #, fuzzy
-#~ msgid "Transform patterns (in fill or stroke) along with objects"
+#~ msgid "Move patterns (in fill or stroke) along with objects"
 #~ msgstr "Przekształcenie deseni (w wypełnieniu i konturze) wraz z obiektami"
 
 #, fuzzy

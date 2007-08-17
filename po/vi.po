@@ -7460,12 +7460,12 @@ msgstr "Khi co dãn hình chữ nhật, co dãn những bán kính của góc tr
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:523
 #: ../src/widgets/select-toolbar.cpp:498
-msgid "Transform gradients (in fill or stroke) along with the objects"
+msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "Chuyển dạng dốc (trong vùng tô hay nét vẽ) cùng với đối tượng"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:525
 #: ../src/widgets/select-toolbar.cpp:509
-msgid "Transform patterns (in fill or stroke) along with the objects"
+msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "Chuyển dạng mẫu (trong vùng tô hay nét vẽ) cùng với đối tượng"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526

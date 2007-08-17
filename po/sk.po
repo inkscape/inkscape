@@ -6946,12 +6946,12 @@ msgstr "Keď sa mení mierka pravouholníkov, rovnakou mierou sa mení aj polome
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:523
 #: ../src/widgets/select-toolbar.cpp:498
-msgid "Transform gradients (in fill or stroke) along with the objects"
+msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "Trasformuje prechody (vo výplni a ťahu) spolu s objektami"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:525
 #: ../src/widgets/select-toolbar.cpp:509
-msgid "Transform patterns (in fill or stroke) along with the objects"
+msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "Trasformuje vzorky (vo výplni a ťahu) spolu s objektami"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526
@@ -12871,11 +12871,11 @@ msgstr "Vstup Windows Metasúbor"
 #~ "zaokrúhlenia rohov"
 
 #, fuzzy
-#~ msgid "Transform gradients (in fill or stroke) along with objects"
+#~ msgid "Move gradients (in fill or stroke) along with objects"
 #~ msgstr "Trasformuje prechody (vo výplni a ťahu) spolu s objektami"
 
 #, fuzzy
-#~ msgid "Transform patterns (in fill or stroke) along with objects"
+#~ msgid "Move patterns (in fill or stroke) along with objects"
 #~ msgstr "Trasformuje vzorky (vo výplni a ťahu) spolu s objektami"
 
 #, fuzzy

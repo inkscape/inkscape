@@ -7437,12 +7437,12 @@ msgstr "आयातहरू मापन गर्दा, घुमाउर�
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:523
 #: ../src/widgets/select-toolbar.cpp:498
-msgid "Transform gradients (in fill or stroke) along with the objects"
+msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "वस्तुहरू संग (भर्ने वा स्ट्रोकमा) ग्राडिएन्टहरू रुपान्तरण गर्नुहोस्"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:525
 #: ../src/widgets/select-toolbar.cpp:509
-msgid "Transform patterns (in fill or stroke) along with the objects"
+msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "वस्तुहरू संग (भर्ने वा स्ट्रोक मा) बान्कीहरू रुपान्तरण गर्नुहोस्"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526

@@ -7112,12 +7112,12 @@ msgstr "伸縮矩形時，同時伸縮圓角的半徑"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:523
 #: ../src/widgets/select-toolbar.cpp:498
-msgid "Transform gradients (in fill or stroke) along with the objects"
+msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "跟著物件轉換漸層(在填充與邊框部份)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:525
 #: ../src/widgets/select-toolbar.cpp:509
-msgid "Transform patterns (in fill or stroke) along with the objects"
+msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "跟著物件轉換圖樣(在填充或邊框部份)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526

@@ -6724,12 +6724,12 @@ msgstr "Wanneer rechthoeken worden vergroot of verkleind, de straal van de hoek 
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:486
 #: ../src/widgets/select-toolbar.cpp:528
-msgid "Transform gradients (in fill or stroke) along with the objects"
+msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "Kleurverlopen (op lijnen of vlakken) mee transformeren met de objecten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
 #: ../src/widgets/select-toolbar.cpp:540
-msgid "Transform patterns (in fill or stroke) along with the objects"
+msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "Patronen (op lijnen of vlakken) mee transformeren met de objecten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:489
