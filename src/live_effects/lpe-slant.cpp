@@ -7,15 +7,8 @@
  */
 
 #include "live_effects/lpe-slant.h"
-#include "sp-shape.h"
 #include "display/curve.h"
 #include <libnr/n-art-bpath.h>
-#include "live_effects/n-art-bpath-2geom.h"
-
-#include <2geom/path.h>
-#include <2geom/transforms.h>
-
-#include "svg/svg.h"
 
 namespace Inkscape {
 namespace LivePathEffect {

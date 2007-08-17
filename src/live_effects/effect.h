@@ -34,7 +34,7 @@ namespace Inkscape {
 
 namespace XML {
     class Node;
-};
+}
 
 namespace LivePathEffect {
 
