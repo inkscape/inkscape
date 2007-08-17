@@ -7531,14 +7531,14 @@ msgstr ""
 #: ../src/widgets/select-toolbar.cpp:498
 msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr ""
-"Ansformtray adientsgray (inway illfay orway okestray) alongway ithway ethay "
+"Ovemay adientsgray (inway illfay orway okestray) alongway ithway ethay "
 "objectsway"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:525
 #: ../src/widgets/select-toolbar.cpp:509
 msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr ""
-"Ansformtray atternspay (inway illfay orway okestray) alongway ithway ethay "
+"Ovemay atternspay (inway illfay orway okestray) alongway ithway ethay "
 "objectsway"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526
