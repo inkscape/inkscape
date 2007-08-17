@@ -1126,6 +1126,7 @@ void PdfParser::opSetFillColorN(Object args[], int numArgs) {
     if (args[numArgs-1].isName() &&
 	(pattern = res->lookupPattern(args[numArgs-1].getName()))) {
       state->setFillPattern(pattern);
+      builder->updateStyle(state);
     }
 
   } else {
@@ -1169,6 +1170,7 @@ void PdfParser::opSetStrokeColorN(Object args[], int numArgs) {
     if (args[numArgs-1].isName() &&
 	(pattern = res->lookupPattern(args[numArgs-1].getName()))) {
       state->setStrokePattern(pattern);
+      builder->updateStyle(state);
     }
 
   } else {
