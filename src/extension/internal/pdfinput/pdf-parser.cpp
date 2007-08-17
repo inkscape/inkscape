@@ -2065,6 +2065,7 @@ void PdfParser::opSetWordSpacing(Object args[], int numArgs) {
 
 void PdfParser::opSetHorizScaling(Object args[], int numArgs) {
   state->setHorizScaling(args[0].getNum());
+  builder->updateTextMatrix(state);
   fontChanged = gTrue;
 }
 

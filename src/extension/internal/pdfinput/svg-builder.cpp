@@ -853,6 +853,7 @@ void SvgBuilder::updateFont(GfxState *state) {
 
     TRACE(("updateFont()\n"));
     _need_font_update = false;
+    updateTextMatrix(state);    // Ensure that we have a text matrix built
 
     if (_font_style) {
         //sp_repr_css_attr_unref(_font_style);
@@ -982,23 +983,13 @@ void SvgBuilder::updateFont(GfxState *state) {
 
     // Font size
     Inkscape::CSSOStringStream os_font_size;
-    double *text_matrix = state->getTextMat();
-    double w_scale = sqrt( text_matrix[0] * text_matrix[0] + text_matrix[2] * text_matrix[2] );
-    double h_scale = sqrt( text_matrix[1] * text_matrix[1] + text_matrix[3] * text_matrix[3] );
-    double max_scale;
-    if ( w_scale > h_scale ) {
-        max_scale = w_scale;
-    } else {
-        max_scale = h_scale;
-    }
-    double css_font_size = max_scale * state->getFontSize();
+    double css_font_size = _font_scaling * state->getFontSize();
     if ( font->getType() == fontType3 ) {
         double *font_matrix = font->getFontMatrix();
         if ( font_matrix[0] != 0.0 ) {
             css_font_size *= font_matrix[3] / font_matrix[0];
         }
     }
-
     os_font_size << css_font_size;
     sp_repr_css_set_property(_font_style, "font-size", os_font_size.str().c_str());
 
@@ -1009,20 +1000,6 @@ void SvgBuilder::updateFont(GfxState *state) {
         sp_repr_css_set_property(_font_style, "writing-mode", "tb");
     }
 
-    // Calculate new text matrix
-    NR::Matrix new_text_matrix(text_matrix[0] * state->getHorizScaling(),
-                               text_matrix[1] * state->getHorizScaling(),
-                               -text_matrix[2], -text_matrix[3],
-                               0.0, 0.0);
-
-    if ( fabs( max_scale - 1.0 ) > EPSILON ) {
-        // Cancel out scaling by font size in text matrix
-        for ( int i = 0 ; i < 4 ; i++ ) {
-            new_text_matrix[i] /= max_scale;
-        }
-    }
-    _text_matrix = new_text_matrix;
-    _font_scaling = max_scale;
     _current_font = font;
     _invalidated_style = true;
 }
@@ -1052,7 +1029,30 @@ void SvgBuilder::updateTextPosition(double tx, double ty) {
  */
 void SvgBuilder::updateTextMatrix(GfxState *state) {
     _flushText();
-    updateFont(state);   // Update text matrix
+    // Update text matrix
+    double *text_matrix = state->getTextMat();
+    double w_scale = sqrt( text_matrix[0] * text_matrix[0] + text_matrix[2] * text_matrix[2] );
+    double h_scale = sqrt( text_matrix[1] * text_matrix[1] + text_matrix[3] * text_matrix[3] );
+    double max_scale;
+    if ( w_scale > h_scale ) {
+        max_scale = w_scale;
+    } else {
+        max_scale = h_scale;
+    }
+    // Calculate new text matrix
+    NR::Matrix new_text_matrix(text_matrix[0] * state->getHorizScaling(),
+                               text_matrix[1] * state->getHorizScaling(),
+                               -text_matrix[2], -text_matrix[3],
+                               0.0, 0.0);
+
+    if ( fabs( max_scale - 1.0 ) > EPSILON ) {
+        // Cancel out scaling by font size in text matrix
+        for ( int i = 0 ; i < 4 ; i++ ) {
+            new_text_matrix[i] /= max_scale;
+        }
+    }
+    _text_matrix = new_text_matrix;
+    _font_scaling = max_scale;
 }
 
 /**
