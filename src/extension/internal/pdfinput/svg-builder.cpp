@@ -1083,6 +1083,8 @@ void SvgBuilder::_flushText() {
     g_free(transform);
 
     bool new_tspan = true;
+    bool same_coords[2] = {true, true};
+    NR::Point last_delta_pos;
     unsigned int glyphs_in_a_row = 0;
     Inkscape::XML::Node *tspan_node = NULL;
     Glib::ustring x_coords;
@@ -1111,8 +1113,16 @@ void SvgBuilder::_flushText() {
         if ( new_tspan || i == _glyphs.end() ) {
             if (tspan_node) {
                 // Set the x and y coordinate arrays
-                tspan_node->setAttribute("x", x_coords.c_str());
-                tspan_node->setAttribute("y", y_coords.c_str());
+                if ( same_coords[0] ) {
+                    sp_repr_set_svg_double(tspan_node, "x", last_delta_pos[0]);
+                } else {
+                    tspan_node->setAttribute("x", x_coords.c_str());
+                }
+                if ( same_coords[1] ) {
+                    sp_repr_set_svg_double(tspan_node, "y", last_delta_pos[1]);
+                } else {
+                    tspan_node->setAttribute("y", y_coords.c_str());
+                }
                 TRACE(("tspan content: %s\n", text_buffer.c_str()));
                 if ( glyphs_in_a_row > 1 ) {
                     tspan_node->setAttribute("sodipodi:role", "line");
@@ -1146,6 +1156,13 @@ void SvgBuilder::_flushText() {
         if ( glyphs_in_a_row > 0 ) {
             x_coords.append(" ");
             y_coords.append(" ");
+            // Check if we have the same coordinates
+            const SvgGlyph& prev_glyph = (*prev_iterator);
+            for ( int p = 0 ; p < 2 ; p++ ) {
+                if ( glyph.text_position[p] != prev_glyph.text_position[p] ) {
+                    same_coords[p] = false;
+                }
+            }
         }
         // Append the coordinates to their respective strings
         NR::Point delta_pos( glyph.text_position - first_glyph.text_position );
@@ -1158,6 +1175,7 @@ void SvgBuilder::_flushText() {
         Inkscape::CSSOStringStream os_y;
         os_y << delta_pos[1];
         y_coords.append(os_y.str());
+        last_delta_pos = delta_pos;
 
         // Append the character to the text buffer
         text_buffer.append((char *)&glyph.code, 1);
