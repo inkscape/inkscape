@@ -426,26 +426,27 @@ static GtkWidget* ink_toggle_action_create_menu_item( GtkAction* action )
 
 static GtkWidget* ink_toggle_action_create_tool_item( GtkAction* action )
 {
-    InkToggleAction* act = INK_TOGGLE_ACTION( action );
-    GtkWidget* item = gInkToggleActionParentClass->parent_class.create_tool_item(action);
+	InkToggleAction* act = INK_TOGGLE_ACTION( action );
 
+	GtkWidget* item = gInkToggleActionParentClass->parent_class.create_tool_item(action);
+	if ( GTK_IS_TOOL_BUTTON(item) ) {
+		GtkToolButton* button = GTK_TOOL_BUTTON(item);
     if ( act->private_data->iconId ) {
-        if ( GTK_IS_TOOL_BUTTON(item) ) {
-            GtkToolButton* button = GTK_TOOL_BUTTON(item);
+			GtkWidget* child = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
+			gtk_tool_button_set_icon_widget( button, child );
+		} else {
+      gchar *label;
+      g_object_get (G_OBJECT(action), "label", &label, NULL);
+			gtk_tool_button_set_label( button, label );
+		}
+	} else {
+		// For now trigger a warning but don't do anything else
+		GtkToolButton* button = GTK_TOOL_BUTTON(item);
+		(void)button;
+	}
+	gtk_widget_show_all( item );
 
-            GtkWidget* child = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
-            gtk_tool_button_set_icon_widget( button, child );
-        } else {
-            // For now trigger a warning but don't do anything else
-            GtkToolButton* button = GTK_TOOL_BUTTON(item);
-            (void)button;
-        }
-    }
-
-    // TODO investigate if needed
-    gtk_widget_show_all( item );
-
-    return item;
+	return item;
 }
 
 
