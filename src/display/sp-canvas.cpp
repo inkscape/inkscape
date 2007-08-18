@@ -37,6 +37,9 @@
 #include "box3d-context.h"
 #include "inkscape.h"
 
+// Define this to visualize the regions to be redrawn
+//#define DEBUG_REDRAW 1;
+
 // Tiles are a way to minimize the number of redraws, eliminating too small redraws. 
 // The canvas stores a 2D array of ints, each representing a TILE_SIZExTILE_SIZE pixels tile.
 // If any part of it is dirtied, the entire tile is dirtied (its int is nonzero) and repainted.
@@ -1828,6 +1831,16 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
     rect.y0 = MAX (rect.y0, canvas->y0);
     rect.x1 = MIN (rect.x1, canvas->x0/*draw_x1*/ + GTK_WIDGET (canvas)->allocation.width);
     rect.y1 = MIN (rect.y1, canvas->y0/*draw_y1*/ + GTK_WIDGET (canvas)->allocation.height);
+
+#ifdef DEBUG_REDRAW
+    // paint the area to redraw yellow
+    gdk_rgb_gc_set_foreground (canvas->pixmap_gc, 0xFFFF00);
+    gdk_draw_rectangle (SP_CANVAS_WINDOW (canvas),
+                            canvas->pixmap_gc,
+                            TRUE,
+                            rect.x0 - canvas->x0, rect.y0 - canvas->y0,
+                            rect.x1 - rect.x0, rect.y1 - rect.y0);
+#endif			    
 
     // Clip rect-aborted-last-time by the current visible area
     canvas->redraw_aborted.x0 = MAX (canvas->redraw_aborted.x0, canvas->x0);
