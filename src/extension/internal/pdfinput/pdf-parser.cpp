@@ -60,37 +60,11 @@ extern "C" {
 // constants
 //------------------------------------------------------------------------
 
-// Max recursive depth for a function shading fill.
-#define functionMaxDepth 6
+// Default max delta allowed in any color component for a shading fill.
+#define defaultShadingColorDelta (dblToCol( 1 / 2.0 ))
 
-// Max delta allowed in any color component for a function shading fill.
-#define functionColorDelta (dblToCol(1 / 2.0))
-
-// Max number of splits along the t axis for an axial shading fill.
-#define axialMaxSplits 256
-
-// Max delta allowed in any color component for an axial shading fill.
-#define axialColorDelta (dblToCol(1 / 2.0))
-
-// Max number of splits along the t axis for a radial shading fill.
-#define radialMaxSplits 256
-
-// Max delta allowed in any color component for a radial shading fill.
-#define radialColorDelta (dblToCol(1 / 2.0))
-
-// Max recursive depth for a Gouraud triangle shading fill.
-#define gouraudMaxDepth 6
-
-// Max delta allowed in any color component for a Gouraud triangle
-// shading fill.
-#define gouraudColorDelta (dblToCol(1 / 2.0))
-
-// Max recursive depth for a patch mesh shading fill.
-#define patchMaxDepth 6
-
-// Max delta allowed in any color component for a patch mesh shading
-// fill.
-#define patchColorDelta (dblToCol(1 / 2.0))
+// Default max recursive depth for a shading fill.
+#define defaultShadingMaxDepth 6
 
 // Max number of operators kept in the history list.
 #define maxOperatorHistoryDepth 16
@@ -297,6 +271,7 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   // initialize
   state = new GfxState(72.0, 72.0, cropBox, rotate, gTrue);
   clipHistory = new ClipHistoryEntry();
+  setDefaultApproximationPrecision();
   fontChanged = gFalse;
   clip = clipNone;
   ignoreUndef = 0;
@@ -354,6 +329,8 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   builder = builderA;
   state = new GfxState(72, 72, box, 0, gFalse);
   clipHistory = new ClipHistoryEntry();
+  setDefaultApproximationPrecision();
+  
   fontChanged = gFalse;
   clip = clipNone;
   ignoreUndef = 0;
@@ -1672,6 +1649,7 @@ void PdfParser::doFunctionShFill1(GfxFunctionShading *shading,
   GfxColor fillColor;
   GfxColor color0M, color1M, colorM0, colorM1, colorMM;
   GfxColor colors2[4];
+  double functionColorDelta = colorDeltas[pdfFunctionShading-1];
   double *matrix;
   double xM, yM;
   int nComps, i, j;
@@ -1699,7 +1677,7 @@ void PdfParser::doFunctionShFill1(GfxFunctionShading *shading,
   // -- fill the rectangle; but require at least one subdivision
   // (depth==0) to avoid problems when the four outer corners of the
   // shaded region are the same color
-  if ((i == 4 && depth > 0) || depth == functionMaxDepth) {
+  if ((i == 4 && depth > 0) || depth == maxDepths[pdfFunctionShading-1]) {
 
     // use the center color
     shading->getColor(xM, yM, &fillColor);
@@ -1791,16 +1769,17 @@ void PdfParser::gouraudFillTriangle(double x0, double y0, GfxColor *color0,
 			      double x2, double y2, GfxColor *color2,
 			      int nComps, int depth) {
   double x01, y01, x12, y12, x20, y20;
+  double gouraudColorDelta = colorDeltas[pdfGouraudTriangleShading-1];
   GfxColor color01, color12, color20;
   int i;
 
   for (i = 0; i < nComps; ++i) {
     if (abs(color0->c[i] - color1->c[i]) > gouraudColorDelta ||
-	abs(color1->c[i] - color2->c[i]) > gouraudColorDelta) {
+       abs(color1->c[i] - color2->c[i]) > gouraudColorDelta) {
       break;
     }
   }
-  if (i == nComps || depth == gouraudMaxDepth) {
+  if (i == nComps || depth == maxDepths[pdfGouraudTriangleShading-1]) {
     state->setFillColor(color0);
     state->moveTo(x0, y0);
     state->lineTo(x1, y1);
@@ -1855,6 +1834,7 @@ void PdfParser::fillPatch(GfxPatch *patch, int nComps, int depth) {
   GfxPatch patch00, patch01, patch10, patch11;
   double xx[4][8], yy[4][8];
   double xxm, yym;
+  double patchColorDelta = colorDeltas[pdfPatchMeshShading-1];
   int i;
 
   for (i = 0; i < nComps; ++i) {
@@ -1869,7 +1849,7 @@ void PdfParser::fillPatch(GfxPatch *patch, int nComps, int depth) {
       break;
     }
   }
-  if (i == nComps || depth == patchMaxDepth) {
+  if (i == nComps || depth == maxDepths[pdfPatchMeshShading]-1) {
     state->setFillColor(&patch->color[0][0]);
     state->moveTo(patch->x[0][0], patch->y[0][0]);
     state->curveTo(patch->x[0][1], patch->y[0][1],
@@ -3048,6 +3028,24 @@ void PdfParser::popResources() {
   resPtr = res->getNext();
   delete res;
   res = resPtr;
+}
+
+void PdfParser::setDefaultApproximationPrecision() {
+  int i;
+
+  for (i = 0; i < pdfNumShadingTypes; ++i) {
+    setApproximationPrecision(i, defaultShadingColorDelta, defaultShadingMaxDepth);
+  }
+}
+
+void PdfParser::setApproximationPrecision(int shadingType, double colorDelta,
+                                          int maxDepth) {
+
+  if (shadingType > pdfNumShadingTypes || shadingType < 1) {
+    return;
+  }
+  colorDeltas[shadingType-1] = dblToCol(colorDelta);
+  maxDepths[shadingType-1] = maxDepth;
 }
 
 //------------------------------------------------------------------------

@@ -133,6 +133,18 @@ private:
 // PdfParser
 //------------------------------------------------------------------------
 
+//------------------------------------------------------------------------
+// constants
+//------------------------------------------------------------------------
+
+#define pdfFunctionShading  1
+#define pdfAxialShading     2
+#define pdfRadialShading    3
+#define pdfGouraudTriangleShading  4
+#define pdfPatchMeshShading 5
+#define pdfNumShadingTypes 5
+
+
 class PdfParser {
 public:
 
@@ -158,6 +170,9 @@ public:
   // Get the current graphics state object.
   GfxState *getState() { return state; }
 
+  // Set the precision of approximation for specific shading fills.
+  void setApproximationPrecision(int shadingType, double colorDelta, int maxDepth);
+
 private:
 
   XRef *xref;			// the xref table for this PDF file
@@ -178,8 +193,15 @@ private:
 
   static PdfOperator opTab[];	// table of operators
 
+  int colorDeltas[pdfNumShadingTypes];
+                                // max deltas allowed in any color component
+                                // for the approximation of shading fills
+  int maxDepths[pdfNumShadingTypes];             // max recursive depths
+
   ClipHistoryEntry *clipHistory;    // clip path stack
   OpHistoryEntry *operatorHistory;  // list containing the last N operators
+
+  void setDefaultApproximationPrecision();  // init color deltas
   void pushOperator(const char *name);
   OpHistoryEntry *popOperator();
   const char *getPreviousOperator(unsigned int look_back=1);    // returns the nth previous operator's name
