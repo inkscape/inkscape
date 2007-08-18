@@ -9,12 +9,13 @@
  * Author:
  *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006 Niko Kiirala
+ * Copyright (C) 2006,2007 Niko Kiirala
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
 #include "libnr/nr-pixblock.h"
+#include "display/nr-filter-units.h"
 
 struct NRArenaItem;
 
@@ -44,6 +45,14 @@ public:
      */
     NRPixBlock *get(int slot);
 
+    /** Gets the final result from this filter.
+     * The result is fetched from the specified slot, see description of
+     * method get for valid values. The pixblock 'result' will be modified
+     * to contain the result image, ready to be used in the rest of rendering
+     * pipeline
+     */
+    void get_final(int slot, NRPixBlock *result);
+
     /** Sets or re-sets the pixblock associated with given slot.
      * If there was a pixblock already assigned with this slot,
      * that pixblock is destroyed.
@@ -60,6 +69,9 @@ public:
     /** arenaitem getter method*/
     NRArenaItem const* get_arenaitem();
 
+    /** Sets the unit system to be used for the internal images. */
+    void set_units(FilterUnits const &units);
+
 private:
     NRPixBlock **_slot;
     int *_slot_number;
@@ -68,6 +80,8 @@ private:
     int _last_out;
 
     NRArenaItem const *_arena_item;
+
+    FilterUnits units;
 
     /** Returns the table index of given slot. If that slot does not exist,
      * it is created. Table index can be used to read the correct

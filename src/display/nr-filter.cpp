@@ -6,7 +6,7 @@
  * Author:
  *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006 Niko Kiirala
+ * Copyright (C) 2006,2007 Niko Kiirala
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -18,8 +18,7 @@
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-types.h"
-#include "display/pixblock-scaler.h"
-#include "display/pixblock-transform.h"
+#include "display/nr-filter-units.h"
 
 #include "display/nr-filter-blend.h"
 #include "display/nr-filter-composite.h"
@@ -49,26 +48,6 @@
 #include "round.h"
 using Inkscape::round;
 #endif 
-
-__attribute__ ((const))
-inline static int _max4(const double a, const double b,
-                        const double c, const double d) {
-    double ret = a;
-    if (b > ret) ret = b;
-    if (c > ret) ret = c;
-    if (d > ret) ret = d;
-    return (int)round(ret);
-}
-
-__attribute__ ((const))
-inline static int _min4(const double a, const double b,
-                        const double c, const double d) {
-    double ret = a;
-    if (b < ret) ret = b;
-    if (c < ret) ret = c;
-    if (d < ret) ret = d;
-    return (int)round(ret);
-}
 
 namespace NR {
 
@@ -125,130 +104,87 @@ Filter::~Filter()
 
 int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
 {
-    if(!_primitive[0]) { // if there are no primitives, do nothing
+    if(!_primitive[0]) {
+        // TODO: Should clear the input buffer instead of just returning
        return 0; 
     }
 
     Matrix trans = *item->ctm;
-    Matrix paraller_trans = trans;
-    bool notparaller = false;
     FilterSlot slot(_slot_count, item);
-    NRPixBlock *in = new NRPixBlock;
 
-    // If filter effects region is not paraller to viewport,
-    // we must first undo the rotation / shear.
-    // It will be redone after filtering.
-    // If there is only scaling, let's skip this, as it will not make
-    // a difference with gaussian blur.
-    // TODO: This should be done in FilterSlot and for all input images
-    if (fabs(trans[1]) > 1e-6 || fabs(trans[2]) > 1e-6) {
-        notparaller = true;
+    Rect item_bbox = *item->item_bbox;
+    Rect filter_area = filter_effect_area(item_bbox);
+    FilterUnits units(_filter_units, _primitive_units);
+    units.set_ctm(trans);
+    units.set_item_bbox(item_bbox);
+    units.set_filter_area(filter_area);
 
-        // TODO: if filter resolution is specified, scaling should be set
-        // according to that
-        double scaling_factor = sqrt(trans.expansionX() * trans.expansionX() +
-                                     trans.expansionY() * trans.expansionY());
-        scale scaling(scaling_factor, scaling_factor);
-        scale scaling_inv(1.0 / scaling_factor, 1.0 / scaling_factor);
-        trans *= scaling_inv;
-        paraller_trans.set_identity();
-        paraller_trans *= scaling;
-
-        Matrix itrans = trans.inverse();
-        int x0 = pb->area.x0;
-        int y0 = pb->area.y0;
-        int x1 = pb->area.x1;
-        int y1 = pb->area.y1;
-        int min_x = _min4(itrans[0] * x0 + itrans[2] * y0 + itrans[4],
-                          itrans[0] * x0 + itrans[2] * y1 + itrans[4],
-                          itrans[0] * x1 + itrans[2] * y0 + itrans[4],
-                          itrans[0] * x1 + itrans[2] * y1 + itrans[4]);
-        int max_x = _max4(itrans[0] * x0 + itrans[2] * y0 + itrans[4],
-                          itrans[0] * x0 + itrans[2] * y1 + itrans[4],
-                          itrans[0] * x1 + itrans[2] * y0 + itrans[4],
-                          itrans[0] * x1 + itrans[2] * y1 + itrans[4]);
-        int min_y = _min4(itrans[1] * x0 + itrans[3] * y0 + itrans[5],
-                          itrans[1] * x0 + itrans[3] * y1 + itrans[5],
-                          itrans[1] * x1 + itrans[3] * y0 + itrans[5],
-                          itrans[1] * x1 + itrans[3] * y1 + itrans[5]);
-        int max_y = _max4(itrans[1] * x0 + itrans[3] * y0 + itrans[5],
-                          itrans[1] * x0 + itrans[3] * y1 + itrans[5],
-                          itrans[1] * x1 + itrans[3] * y0 + itrans[5],
-                          itrans[1] * x1 + itrans[3] * y1 + itrans[5]);
-        
-        nr_pixblock_setup_fast(in, pb->mode,
-                               min_x, min_y,
-                               max_x, max_y, true);
-        if (in->size != NR_PIXBLOCK_SIZE_TINY && in->data.px == NULL) // memory allocation failed
-            return 0;
-        transform_nearest(in, pb, itrans);
-    } else if (_x_pixels >= 0) {
-        // If filter resolution is not set to automatic, we should
-        // scale the input image to correct resolution
-        /* If filter resolution is zero, the object should not be rendered */
-        if (_x_pixels == 0 || _y_pixels == 0) {
-            int size = (pb->area.x1 - pb->area.x0)
-                * (pb->area.y1 - pb->area.y0)
-                * NR_PIXBLOCK_BPP(pb);
-            memset(NR_PIXBLOCK_PX(pb), 0, size);
-            return 0;
-        }
-        // Resolution is specified as pixel length of our internal buffer.
-        // Though, we might not be rendering the whole object at time,
-        // so we need to calculate the correct pixel size
-        int x_len = (int)round(((pb->area.x1 - pb->area.x0) * _x_pixels) / (item->bbox.x1 - item->bbox.x0));
-        if (x_len < 1) x_len = 1;
-        // If y-resolution is also set, count y-area in the same way as x-area
-        // Otherwise, make y-area so, that aspect ratio of input pixblock and
-        // internal pixblock are the same.
-        int y_len;
+    // TODO: with filterRes of 0x0 should return an empty image
+    if (_x_pixels > 0) {
+        double y_len;
         if (_y_pixels > 0) {
-            y_len = (int)round(((pb->area.y1 - pb->area.y0) * _y_pixels) / (item->bbox.y1 - item->bbox.y0));
+            y_len = _y_pixels;
         } else {
-            y_len = (int)round((x_len * (pb->area.y1 - pb->area.y0)) / (double)(pb->area.x1 - pb->area.x0));
+            y_len = (_x_pixels * (filter_area.max()[Y] - filter_area.min()[Y]))
+                / (filter_area.max()[X] - filter_area.min()[X]);
         }
-        if (y_len < 1) y_len = 1;
-        nr_pixblock_setup_fast(in, pb->mode, 0, 0, x_len, y_len, true);
-        if (in->size != NR_PIXBLOCK_SIZE_TINY && in->data.px == NULL) // memory allocation failed
-            return 0;
-        scale_bicubic(in, pb);
-        scale res_scaling(x_len / (double)(pb->area.x1 - pb->area.x0),
-                          y_len / (double)(pb->area.y1 - pb->area.y0));
-        paraller_trans *= res_scaling;
+        units.set_automatic_resolution(false);
+        units.set_resolution(_x_pixels, y_len);
     } else {
-        // If filter resolution is automatic, just make copy of input image
-        nr_pixblock_setup_fast(in, pb->mode,
-                               pb->area.x0, pb->area.y0,
-                               pb->area.x1, pb->area.y1, true);
-        if (in->size != NR_PIXBLOCK_SIZE_TINY && in->data.px == NULL) // memory allocation failed
-            return 0;
-        nr_blit_pixblock_pixblock(in, pb);
+        Point origo = filter_area.min();
+        origo *= trans;
+        Point max_i(filter_area.max()[X], filter_area.min()[Y]);
+        max_i *= trans;
+        Point max_j(filter_area.min()[X], filter_area.max()[Y]);
+        max_j *= trans;
+        double i_len = sqrt((origo[X] - max_i[X]) * (origo[X] - max_i[X])
+                            + (origo[Y] - max_i[Y]) * (origo[Y] - max_i[Y]));
+        double j_len = sqrt((origo[X] - max_j[X]) * (origo[X] - max_j[X])
+                            + (origo[Y] - max_j[Y]) * (origo[Y] - max_j[Y]));
+        units.set_automatic_resolution(true);
+        units.set_resolution(i_len, j_len);
     }
+
+    units.set_paraller(false);
+    for (int i = 0 ; i < _primitive_count ; i++) {
+        if (_primitive[i]->get_input_traits() & TRAIT_PARALLER) {
+            units.set_paraller(true);
+            break;
+        }
+    }
+
+    slot.set_units(units);
+
+    NRPixBlock *in = new NRPixBlock;
+    nr_pixblock_setup_fast(in, pb->mode, pb->area.x0, pb->area.y0,
+                           pb->area.x1, pb->area.y1, false);
+    if (in->size != NR_PIXBLOCK_SIZE_TINY && in->data.px == NULL) {
+        g_warning("NR::Filter::render: failed to reserve temporary buffer");
+        return 0;
+    }
+    nr_blit_pixblock_pixblock(in, pb);
     in->empty = FALSE;
     slot.set(NR_FILTER_SOURCEGRAPHIC, in);
+
+    // Check that we are rendering a non-empty area
+    in = slot.get(NR_FILTER_SOURCEGRAPHIC);
+    if (in->area.x1 - in->area.x0 <= 0 || in->area.y1 - in->area.y0 <= 0) {
+        if (in->area.x1 - in->area.x0 < 0 || in->area.y1 - in->area.y0 < 0) {
+            g_warning("NR::Filter::render: negative area! (%d, %d) (%d, %d)",
+                      in->area.x0, in->area.y0, in->area.x1, in->area.y1);
+        }
+        return 0;
+    }
     in = NULL; // in is now handled by FilterSlot, we should not touch it
 
+    // TODO: filters may need both filterUnits and primitiveUnits,
+    // so we should pass FilterUnits to render method, not just one Matrix
+    Matrix primitiveunits2pixblock = units.get_matrix_primitiveunits2pb();
     for (int i = 0 ; i < _primitive_count ; i++) {
-        _primitive[i]->render(slot, paraller_trans);
+        _primitive[i]->render(slot, primitiveunits2pixblock);
     }
-    NRPixBlock *out = slot.get(_output_slot);
 
-    // Clear the pixblock, where the output will be put
-    // -> the original image does not show through
-    int size = (pb->area.x1 - pb->area.x0)
-        * (pb->area.y1 - pb->area.y0)
-        * NR_PIXBLOCK_BPP(pb);
-    memset(NR_PIXBLOCK_PX(pb), 0, size);
-
-    if (notparaller) {
-        transform_nearest(pb, out, trans);
-    } else if (_x_pixels < 0) {
-        // If the filter resolution is automatic, just copy our final image
-        // to output pixblock, otherwise use bicubic scaling
-        nr_blit_pixblock_pixblock(pb, out);
-    } else {
-        scale_bicubic(pb, out);
-    }
+    slot.get_final(_output_slot, pb);
 
     // Take note of the amount of used image slots
     // -> next time this filter is rendered, we can reserve enough slots
@@ -263,10 +199,26 @@ void Filter::area_enlarge(NRRectL &bbox, Matrix const &m) {
     }
 }
 
-void Filter::bbox_enlarge(NRRectL &bbox)
+void Filter::bbox_enlarge(NRRectL &bbox) {
+    /* TODO: this is wrong. Should use bounding box in user coordinates
+     * and find its extents in display coordinates. */
+    Point min(bbox.x0, bbox.y0);
+    Point max(bbox.x1, bbox.y1);
+    Rect tmp_bbox(min, max);
+
+    Rect enlarged = filter_effect_area(tmp_bbox);
+
+    bbox.x0 = (ICoord)enlarged.min()[X];
+    bbox.y0 = (ICoord)enlarged.min()[Y];
+    bbox.x1 = (ICoord)enlarged.max()[X];
+    bbox.y1 = (ICoord)enlarged.max()[Y];
+}
+
+Rect Filter::filter_effect_area(Rect const &bbox)
 {
-    int len_x = bbox.x1 - bbox.x0;
-    int len_y = bbox.y1 - bbox.y0;
+    Point minp, maxp;
+    double len_x = bbox.max()[X] - bbox.min()[X];
+    double len_y = bbox.max()[Y] - bbox.min()[Y];
     /* TODO: fetch somehow the object ex and em lengths */
     _region_x.update(12, 6, len_x);
     _region_y.update(12, 6, len_y);
@@ -274,35 +226,37 @@ void Filter::bbox_enlarge(NRRectL &bbox)
     _region_height.update(12, 6, len_y);
     if (_filter_units == SP_FILTER_UNITS_OBJECTBOUNDINGBOX) {
         if (_region_x.unit == SVGLength::PERCENT) {
-            bbox.x0 += (ICoord)_region_x.computed;
+            minp[X] = bbox.min()[X] + _region_x.computed;
         } else {
-            bbox.x0 += (ICoord)(_region_x.computed * len_x);
+            minp[X] = bbox.min()[X] + _region_x.computed * len_x;
         }
         if (_region_width.unit == SVGLength::PERCENT) {
-            bbox.x1 = bbox.x0 + (ICoord)_region_width.computed;
+            maxp[X] = minp[X] + _region_width.computed;
         } else {
-            bbox.x1 = bbox.x0 + (ICoord)(_region_width.computed * len_x);
+            maxp[X] = minp[X] + _region_width.computed * len_x;
         }
 
         if (_region_y.unit == SVGLength::PERCENT) {
-            bbox.y0 += (ICoord)_region_y.computed;
+            minp[Y] = bbox.min()[Y] + _region_y.computed;
         } else {
-            bbox.y0 += (ICoord)(_region_y.computed * len_y);
+            minp[Y] = bbox.min()[Y] + _region_y.computed * len_y;
         }
         if (_region_height.unit == SVGLength::PERCENT) {
-            bbox.y1 = bbox.y0 + (ICoord)_region_height.computed;
+            maxp[Y] = minp[Y] + _region_height.computed;
         } else {
-            bbox.y1 = bbox.y0 + (ICoord)(_region_height.computed * len_y);
+            maxp[Y] = minp[Y] + _region_height.computed * len_y;
         }
     } else if (_filter_units == SP_FILTER_UNITS_USERSPACEONUSE) {
         /* TODO: make sure bbox and fe region are in same coordinate system */
-        bbox.x0 = (ICoord) _region_x.computed;
-        bbox.x1 = bbox.x0 + (ICoord) _region_width.computed;
-        bbox.y0 = (ICoord) _region_y.computed;
-        bbox.y1 = bbox.y0 + (ICoord) _region_height.computed;
+        minp[X] = _region_x.computed;
+        maxp[X] = minp[X] + _region_width.computed;
+        minp[Y] = _region_y.computed;
+        maxp[Y] = minp[Y] + _region_height.computed;
     } else {
         g_warning("Error in NR::Filter::bbox_enlarge: unrecognized value of _filter_units");
     }
+    Rect area(minp, maxp);
+    return area;
 }
 
 /* Constructor table holds pointers to static methods returning filter

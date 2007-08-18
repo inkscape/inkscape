@@ -623,6 +623,13 @@ sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
         }
     }
 
+    if (item->display && item->display->arenaitem) {
+        NRRect item_bbox;
+        sp_item_invoke_bbox(item, &item_bbox, NR::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
+        NR::Maybe<NR::Rect> i_bbox = item_bbox;
+        nr_arena_item_set_item_bbox(item->display->arenaitem, i_bbox);
+    }
+
     // Update libavoid with item geometry (for connector routing).
     item->avoidRef->handleSettingChange();
 }
@@ -917,6 +924,10 @@ sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
             SP_OBJECT(mask)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
         NR_ARENA_ITEM_SET_DATA(ai, item);
+        NRRect item_bbox;
+        sp_item_invoke_bbox(item, &item_bbox, NR::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
+        NR::Maybe<NR::Rect> i_bbox = item_bbox;
+        nr_arena_item_set_item_bbox(ai, i_bbox);
     }
 
     return ai;

@@ -64,6 +64,10 @@ void FilterPrimitive::set_output(int slot) {
     if (slot >= 0) _output = slot;
 }
 
+FilterTraits FilterPrimitive::get_input_traits() {
+    return TRAIT_ANYTHING;
+}
+
 } /* namespace NR */
 
 /*

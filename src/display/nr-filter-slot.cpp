@@ -8,7 +8,7 @@
  * Author:
  *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006 Niko Kiirala
+ * Copyright (C) 2006,2007 Niko Kiirala
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -19,8 +19,47 @@
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-getalpha.h"
+#include "display/nr-filter-units.h"
+#include "display/pixblock-scaler.h"
+#include "display/pixblock-transform.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-blit.h"
+
+__attribute__ ((const))
+inline static int _max4(const double a, const double b,
+                        const double c, const double d) {
+    double ret = a;
+    if (b > ret) ret = b;
+    if (c > ret) ret = c;
+    if (d > ret) ret = d;
+    return (int)round(ret);
+}
+
+__attribute__ ((const))
+inline static int _min4(const double a, const double b,
+                        const double c, const double d) {
+    double ret = a;
+    if (b < ret) ret = b;
+    if (c < ret) ret = c;
+    if (d < ret) ret = d;
+    return (int)round(ret);
+}
+
+__attribute__ ((const))
+inline static int _max2(const double a, const double b) {
+    if (a > b)
+        return (int)round(a);
+    else
+        return (int)round(b);
+}
+
+__attribute__ ((const))
+inline static int _min2(const double a, const double b) {
+    if (a > b)
+        return (int)round(b);
+    else
+        return (int)round(a);
+}
 
 namespace NR {
 
@@ -105,8 +144,27 @@ NRPixBlock *FilterSlot::get(int slot_nr)
         }
     }
 
+    _slot[index]->empty = false;
     assert(slot_nr == NR_FILTER_SLOT_NOT_SET ||_slot_number[index] == slot_nr);
     return _slot[index];
+}
+
+void FilterSlot::get_final(int slot_nr, NRPixBlock *result) {
+    NRPixBlock *final_usr = get(slot_nr);
+    Matrix trans = units.get_matrix_pb2display();
+
+    int size = (result->area.x1 - result->area.x0)
+        * (result->area.y1 - result->area.y0)
+        * NR_PIXBLOCK_BPP(result);
+    memset(NR_PIXBLOCK_PX(result), 0, size);
+
+    if (fabs(trans[1]) > 1e-6 || fabs(trans[2]) > 1e-6) {
+        transform_nearest(result, final_usr, trans);
+    } else if (fabs(trans[0] - 1) > 1e-6 || fabs(trans[3] - 1) > 1e-6) {
+        scale_bicubic(result, final_usr);
+    } else {
+        nr_blit_pixblock_pixblock(result, final_usr);
+    }
 }
 
 void FilterSlot::set(int slot_nr, NRPixBlock *pb)
@@ -114,6 +172,71 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
     int index = _get_index(slot_nr);
     assert(index >= 0);
     assert(slot_nr == NR_FILTER_SLOT_NOT_SET ||_slot_number[index] == slot_nr);
+
+    if (slot_nr == NR_FILTER_SOURCEGRAPHIC || slot_nr == NR_FILTER_BACKGROUNDIMAGE) {
+        Matrix trans = units.get_matrix_display2pb();
+        if (fabs(trans[1]) > 1e-6 || fabs(trans[2]) > 1e-6) {
+            NRPixBlock *trans_pb = new NRPixBlock;
+            int x0 = pb->area.x0;
+            int y0 = pb->area.y0;
+            int x1 = pb->area.x1;
+            int y1 = pb->area.y1;
+            int min_x = _min4(trans[0] * x0 + trans[2] * y0 + trans[4],
+                              trans[0] * x0 + trans[2] * y1 + trans[4],
+                              trans[0] * x1 + trans[2] * y0 + trans[4],
+                              trans[0] * x1 + trans[2] * y1 + trans[4]);
+            int max_x = _max4(trans[0] * x0 + trans[2] * y0 + trans[4],
+                              trans[0] * x0 + trans[2] * y1 + trans[4],
+                              trans[0] * x1 + trans[2] * y0 + trans[4],
+                              trans[0] * x1 + trans[2] * y1 + trans[4]);
+            int min_y = _min4(trans[1] * x0 + trans[3] * y0 + trans[5],
+                              trans[1] * x0 + trans[3] * y1 + trans[5],
+                              trans[1] * x1 + trans[3] * y0 + trans[5],
+                              trans[1] * x1 + trans[3] * y1 + trans[5]);
+            int max_y = _max4(trans[1] * x0 + trans[3] * y0 + trans[5],
+                              trans[1] * x0 + trans[3] * y1 + trans[5],
+                              trans[1] * x1 + trans[3] * y0 + trans[5],
+                              trans[1] * x1 + trans[3] * y1 + trans[5]);
+            
+            nr_pixblock_setup_fast(trans_pb, pb->mode,
+                                   min_x, min_y,
+                                   max_x, max_y, true);
+            if (trans_pb->size != NR_PIXBLOCK_SIZE_TINY && trans_pb->data.px == NULL) {
+                // memory allocation failed
+                return;
+            }
+            transform_nearest(trans_pb, pb, trans);
+            nr_pixblock_release(pb);
+            delete pb;
+            pb = trans_pb;
+        } else if (fabs(trans[0] - 1) > 1e-6 || fabs(trans[3] - 1) > 1e-6) {
+            NRPixBlock *trans_pb = new NRPixBlock;
+
+            int x0 = pb->area.x0;
+            int y0 = pb->area.y0;
+            int x1 = pb->area.x1;
+            int y1 = pb->area.y1;
+            int min_x = _min2(trans[0] * x0 + trans[4],
+                              trans[0] * x1 + trans[4]);
+            int max_x = _max2(trans[0] * x0 + trans[4],
+                              trans[0] * x1 + trans[4]);
+            int min_y = _min2(trans[3] * y0 + trans[5],
+                              trans[3] * y1 + trans[5]);
+            int max_y = _max2(trans[3] * y0 + trans[5],
+                              trans[3] * y1 + trans[5]);
+
+            nr_pixblock_setup_fast(trans_pb, pb->mode,
+                                   min_x, min_y, max_x, max_y, true);
+            if (trans_pb->size != NR_PIXBLOCK_SIZE_TINY && trans_pb->data.px == NULL) {
+                //memory allocation failed
+                return;
+            }
+            scale_bicubic(trans_pb, pb);
+            nr_pixblock_release(pb);
+            delete pb;
+            pb = trans_pb;
+        }
+    }
 
     if(_slot[index]) {
         nr_pixblock_release(_slot[index]);
@@ -190,6 +313,10 @@ int FilterSlot::_get_index(int slot_nr)
         index = seek + 1;
     }
     return index;
+}
+
+void FilterSlot::set_units(FilterUnits const &units) {
+    this->units = units;
 }
 
 }

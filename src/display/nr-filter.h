@@ -131,7 +131,7 @@ public:
 
     /**
      * Set the primitiveUnits-properterty. If not set, the default value of
-     * userSpaceOnUseis used. If the parameter value is not a valid
+     * userSpaceOnUse is used. If the parameter value is not a valid
      * enumeration value from SPFilterUnits, no changes to filter state
      * are made.
      */
@@ -150,6 +150,12 @@ public:
      * it contains the filter effect area.
      */
     void bbox_enlarge(NRRectL &bbox);
+    /**
+     * Returns the filter effects area in user coordinate system.
+     * The given bounding box should be a bounding box as specified in
+     * SVG standard and in user coordinate system.
+     */
+    Rect filter_effect_area(Rect const &bbox);
 
     /** Creates a new filter with space for one filter element */
     Filter();

@@ -830,6 +830,15 @@ nr_arena_item_set_order (NRArenaItem *item, int order)
     nr_arena_item_set_child_position (item->parent, item, ref);
 }
 
+void
+nr_arena_item_set_item_bbox (NRArenaItem *item, NR::Maybe<NR::Rect> &bbox)
+{
+    nr_return_if_fail(item != NULL);
+    nr_return_if_fail(NR_IS_ARENA_ITEM(item));
+
+    item->item_bbox = bbox;
+}
+
 /** Returns a background image for use with filter effects. */
 NRPixBlock *
 nr_arena_item_get_background (NRArenaItem const *item, int depth)

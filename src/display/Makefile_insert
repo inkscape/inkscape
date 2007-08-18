@@ -107,6 +107,8 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-turbulence.h        \
 	display/nr-filter-pixops.h	\
 	display/nr-filter-types.h       \
+	display/nr-filter-units.h	\
+	display/nr-filter-units.cpp	\
 	display/nr-filter-utils.h       \
 	display/nr-filter-utils.cpp     \
 	display/pixblock-scaler.cpp     \

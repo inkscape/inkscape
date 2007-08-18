@@ -20,6 +20,24 @@
 
 namespace NR {
 
+/*
+ * Different filter effects need different types of inputs. This is what
+ * traits are used for: one can specify, what special restrictions
+ * there are for inputs.
+ *
+ * Example: gaussian blur requires that x- and y-axis of input image
+ * are paraller to blurred object's x- and y-axis, respectively.
+ * Otherwise blur wouldn't rotate with the object.
+ *
+ * Values here should be powers of two, so these can be used as bitfield.
+ * That is: any combination ef existing traits can be specified. (excluding
+ * TRAIT_ANYTHING, which is alias for no traits defined)
+ */
+enum FilterTraits {
+    TRAIT_ANYTHING = 0,
+    TRAIT_PARALLER = 1
+};
+
 class FilterPrimitive {
 public:
     FilterPrimitive();
@@ -82,6 +100,14 @@ public:
      * Resets the filter primitive subregion to its default value
      */
     void reset_region();
+
+    /**
+     * Queries the filter, which traits it needs from its input buffers.
+     * At the time of writing this, only one trait was needed, having
+     * user coordinate system and input pixelblock coordinates paraller to
+     * each other.
+     */
+    virtual FilterTraits get_input_traits();
 
 protected:
     int _input;

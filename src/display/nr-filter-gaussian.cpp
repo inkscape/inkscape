@@ -777,6 +777,10 @@ void FilterGaussian::area_enlarge(NRRectL &area, Matrix const &trans)
     area.y1 += area_max;
 }
 
+FilterTraits FilterGaussian::get_input_traits() {
+    return TRAIT_PARALLER;
+}
+
 void FilterGaussian::set_deviation(double deviation)
 {
     if(isFinite(deviation) && deviation >= 0) {
