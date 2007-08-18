@@ -1319,7 +1319,7 @@ sp_file_import_from_ocal(Gtk::Window &parentWindow)
                  parentWindow,
                  import_path,
                  Inkscape::UI::Dialog::IMPORT_TYPES,
-                 (char const *)_("Import From OCAL"));
+                 (char const *)_("Import From Open Clip Art Library"));
     }
 
     bool success = importDialogInstance->show();

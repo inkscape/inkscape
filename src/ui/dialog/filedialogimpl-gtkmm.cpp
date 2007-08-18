@@ -21,6 +21,7 @@
 
 #include "filedialogimpl-gtkmm.h"
 #include "dialogs/dialog-events.h"
+#include "interface.h"
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs.h>
@@ -2062,7 +2063,8 @@ void FileImportFromOCALDialogImplGtk::searchTagEntryChangedCallback()
     // open the rss feed
     result = gnome_vfs_open (&from_handle, uri.c_str(), GNOME_VFS_OPEN_READ);
     if (result != GNOME_VFS_OK) {
-        g_warning("Could not find the Open Clip Art Library rss feed. Verify if the OCAL url is correct in Configuration");
+        sp_ui_error_dialog(_("Failed to receive the Open Clip Art Library RSS feed. Verify if the URL is correct in Configuration->Misc (e.g.: openclipart.org)"));
+        //g_warning("Could not find the Open Clip Art Library rss feed. Verify if the OCAL url is correct in Configuration");
         return;
     }
 
