@@ -14,7 +14,7 @@ sbasis_to_bezier(D2<SBasis> const &B, unsigned q = 0);
 
 std::vector<Path> path_from_piecewise(Piecewise<D2<SBasis> > const &B, double tol);
 
-void path_from_sbasis(Path &pb, D2<SBasis> const &B, double tol);
+Path path_from_sbasis(D2<SBasis> const &B, double tol);
 
 };
 #endif
