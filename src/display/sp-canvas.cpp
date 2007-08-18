@@ -2046,13 +2046,7 @@ paint (SPCanvas *canvas)
     if (!canvas->need_redraw)
         return TRUE;
 
-    GtkWidget const *widget = GTK_WIDGET(canvas);
-    int const canvas_x1 = canvas->x0 + widget->allocation.width;
-    int const canvas_y1 = canvas->y0 + widget->allocation.height;
-
-    bool dirty = false;
-
-    int pl = canvas->tRight, pr = canvas->tLeft, pt = canvas->tBottom, pb = canvas->tTop; // start with "inverted" tile rect
+    Gdk::Region to_paint;
 
     for (int j=canvas->tTop; j<canvas->tBottom; j++) { 
         for (int i=canvas->tLeft; i<canvas->tRight; i++) { 
@@ -2060,12 +2054,9 @@ paint (SPCanvas *canvas)
             int tile_index = (i - canvas->tLeft) + (j - canvas->tTop)*canvas->tileH;
 
             if ( canvas->tiles[tile_index] ) { // if this tile is dirtied (nonzero)
-                dirty = true;
-                // make (pl..pr)x(pt..pb) the minimal rect covering all dirtied tiles
-                if ( i < pl ) pl = i;
-                if ( i+1 > pr ) pr = i+1;
-                if ( j < pt ) pt = j;
-                if ( j+1 > pb ) pb = j+1;
+                to_paint.union_with_rect(
+                    Gdk::Rectangle(i*TILE_SIZE, j*TILE_SIZE,
+                                     TILE_SIZE,   TILE_SIZE));
             }
 
             canvas->tiles[tile_index] = 0; // undirty this tile
@@ -2073,15 +2064,16 @@ paint (SPCanvas *canvas)
     }
 
     canvas->need_redraw = FALSE;
-      
-    if ( dirty ) {
-        NRRectL topaint;
-        topaint.x0 = MAX (pl*TILE_SIZE, canvas->x0);
-        topaint.y0 = MAX (pt*TILE_SIZE, canvas->y0);
-        topaint.x1 = MIN (pr*TILE_SIZE, canvas_x1);
-        topaint.y1 = MIN (pb*TILE_SIZE, canvas_y1);
-        if ((topaint.x0 < topaint.x1) && (topaint.y0 < topaint.y1)) {
-            sp_canvas_paint_rect (canvas, topaint.x0, topaint.y0, topaint.x1, topaint.y1);
+
+    if (~to_paint.empty()) {
+        Glib::ArrayHandle<Gdk::Rectangle> rect = to_paint.get_rectangles();
+        typedef Glib::ArrayHandle<Gdk::Rectangle>::const_iterator Iter;
+        for (Iter i=rect.begin(); i != rect.end(); ++i) {
+            int x0 = (*i).get_x();
+            int y0 = (*i).get_y();
+            int x1 = x0 + (*i).get_width();
+            int y1 = y0 + (*i).get_height();
+            sp_canvas_paint_rect (canvas, x0, y0, x1, y1);
         }
     }
 
