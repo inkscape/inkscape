@@ -103,6 +103,9 @@ public:
     void setDocumentSize(double width, double height);  // Document size in px
     void setAsLayer(char *layer_name=NULL);
     void setGroupOpacity(double opacity);
+    Inkscape::XML::Node *getPreferences() {
+        return _preferences;
+    }
 
     // Handling the node stack
     Inkscape::XML::Node *pushGroup();
@@ -220,6 +223,7 @@ private:
     Inkscape::XML::Document *_xml_doc;
     Inkscape::XML::Node *_root;  // Root node from the point of view of this SvgBuilder
     Inkscape::XML::Node *_container; // Current container (group/pattern/mask)
+    Inkscape::XML::Node *_preferences;  // Preferences container node
     double _width, _height;       // Document size in px
 };
 

@@ -84,6 +84,10 @@ SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref) {
     _container = _root = _doc->rroot;
     _root->setAttribute("xml:space", "preserve");
     _init();
+
+    // Set default preference settings
+    _preferences = _xml_doc->createElement("svgbuilder:prefs");
+    _preferences->setAttribute("embedImages", "1");
 }
 
 SvgBuilder::SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root) {
@@ -92,6 +96,7 @@ SvgBuilder::SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root) {
     _docname = parent->_docname;
     _xref = parent->_xref;
     _xml_doc = parent->_xml_doc;
+    _preferences = parent->_preferences;
     _container = this->_root = root;
     _init();
 }
@@ -1329,13 +1334,15 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
         png_destroy_write_struct(&png_ptr, &info_ptr);
         return NULL;
     }
-
+    // Decide whether we should embed this image
+    double attr_value = 1.0;
+    sp_repr_get_double(_preferences, "embedImages", &attr_value);
+    bool embed_image = ( attr_value != 0.0 );
     // Set read/write functions
     Inkscape::IO::StringOutputStream base64_string;
     Inkscape::IO::Base64OutputStream base64_stream(base64_string);
     FILE *fp;
     gchar *file_name;
-    bool embed_image = true;
     if (embed_image) {
         base64_stream.setColumnWidth(0);   // Disable line breaks
         png_set_write_fn(png_ptr, &base64_stream, png_write_base64stream, png_flush_base64stream);

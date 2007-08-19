@@ -20,10 +20,87 @@
 
 #include "../../implementation/implementation.h"
 
+#include <gtkmm/dialog.h>
+#include <gtkmm/button.h>
+#include <gtkmm/buttonbox.h>
+#include <gtkmm/label.h>
+#include <gtkmm/spinbutton.h>
+#include <gtkmm/box.h>
+#include <gtkmm/checkbutton.h>
+#include <gtkmm/comboboxtext.h>
+#include <gtkmm/drawingarea.h>
+#include <gtkmm/alignment.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/scale.h>
+#include <glibmm/i18n.h>
+#include <gdk/gdk.h>
+
+#include "PDFDoc.h"
+#include "CairoOutputDev.h"
+
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
+class PdfImportDialog : public Gtk::Dialog
+{
+public:
+    PdfImportDialog(PDFDoc *doc);
+    virtual ~PdfImportDialog();
+
+    bool showDialog();
+    int getSelectedPage();
+    void getImportSettings(Inkscape::XML::Node *prefs);
+
+private:
+    void _setPreviewPage(int page);
+
+    // Signal handlers
+    bool _onExposePreview(GdkEventExpose *event);
+    void _onPageNumberChanged();
+    void _onToggleCropping();
+    void _onPrecisionChanged();
+
+    class Gtk::Button * cancelbutton;
+    class Gtk::Button * okbutton;
+    class Gtk::Label * _labelSelect;
+    class Gtk::SpinButton * _pageNumberSpin;
+    class Gtk::HBox * hbox2;
+    class Gtk::CheckButton * _cropCheck;
+    class Gtk::ComboBoxText * _cropTypeCombo;
+    class Gtk::HBox * hbox3;
+    class Gtk::VBox * vbox2;
+    class Gtk::Alignment * alignment3;
+    class Gtk::Label * _labelPageSettings;
+    class Gtk::Frame * _pageSettingsFrame;
+    class Gtk::Label * _labelPrecision;
+    class Gtk::HScale * _fallbackPrecisionSlider;
+    class Gtk::Adjustment *_fallbackPrecisionSlider_adj;
+    class Gtk::Label * _labelPrecisionComment;
+    class Gtk::HBox * hbox6;
+    class Gtk::Label * _labelText;
+    class Gtk::ComboBoxText * _textHandlingCombo;
+    class Gtk::HBox * hbox5;
+    class Gtk::CheckButton * _embedImagesCheck;
+    class Gtk::VBox * vbox3;
+    class Gtk::Alignment * alignment4;
+    class Gtk::Label * _labelImportSettings;
+    class Gtk::Frame * _importSettingsFrame;
+    class Gtk::VBox * vbox1;
+    class Gtk::DrawingArea * _previewArea;
+    class Gtk::HBox * hbox1;
+
+    PDFDoc *_pdf_doc;   // Document to be imported
+    int _current_page;  // Current selected page
+    Page *_previewed_page;    // Currently previewed page
+    unsigned char *_thumb_data; // Thumbnail image data
+    int _thumb_width, _thumb_height;    // Thumbnail size
+    int _preview_width, _preview_height;    // Size of the preview area
+    cairo_surface_t *_cairo_surface;
+    CairoOutputDev *_preview_output_dev;
+};
+
+    
 class PdfInput: public Inkscape::Extension::Implementation::Implementation {
     PdfInput () { };
 public:
