@@ -234,7 +234,6 @@ static void
 sp_shape_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPShape *shape = (SPShape *) object;
-    bool path_effect_changed = false;
 
     switch (key) {
         case SP_ATTR_INKSCAPE_PATH_EFFECT:
@@ -256,10 +255,10 @@ sp_shape_set(SPObject *object, unsigned int key, gchar const *value)
                         shape->path_effect_ref->detach();
                     }
                 } else {
+                    // Detach, which emits the changed signal.
                     shape->path_effect_ref->detach();
                 }
             }
-            path_effect_changed = true;  // updated twice now when connected to changed signal??
             break;
         default:
             if (((SPObjectClass *) parent_class)->set) {
@@ -267,9 +266,6 @@ sp_shape_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
     }
-
-    if (path_effect_changed) 
-        sp_shape_update_patheffect ((SPShape *) object, false);
 }
 
 static Inkscape::XML::Node *
@@ -1138,6 +1134,9 @@ sp_shape_get_livepatheffectobject(SPShape *shape) {
 void
 sp_shape_update_patheffect (SPShape *shape, bool write)
 {
+#ifdef SHAPE_VERBOSE
+    g_message("sp_shape_update_patheffect");
+#endif
     g_return_if_fail (shape != NULL);
     g_return_if_fail (SP_IS_SHAPE (shape));
 
@@ -1168,9 +1167,8 @@ lpeobject_ref_changed(SPObject *old_ref, SPObject *ref, SPShape *shape)
     if ( IS_LIVEPATHEFFECT(ref) && ref != shape )
     {
         ref->connectModified(sigc::bind(sigc::ptr_fun(&lpeobject_ref_modified), shape));
+        lpeobject_ref_modified(ref, 0, shape);
     }
-
-    lpeobject_ref_modified(ref, 0, shape);
 }
 
 /**
