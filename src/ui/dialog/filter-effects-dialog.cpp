@@ -1053,6 +1053,8 @@ void FilterEffectsDialog::FilterModifier::update_filters()
         const gchar* id = SP_OBJECT_ID(f);
         row[_columns.label] = lbl ? lbl : (id ? id : "filter");
     }
+
+    update_selection(desktop->selection);
 }
 
 SPFilter* FilterEffectsDialog::FilterModifier::get_selected_filter()
