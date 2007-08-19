@@ -356,11 +356,11 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_OBJECT_PATHS:
-            nv->snap_manager.object.setSnapToItemPath(value ? sp_str_to_bool(value) : TRUE);
+            nv->snap_manager.object.setSnapToItemPath(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_OBJECT_NODES:
-            nv->snap_manager.object.setSnapToItemNode(value ? sp_str_to_bool(value) : TRUE);
+            nv->snap_manager.object.setSnapToItemNode(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_INKSCAPE_CURRENT_LAYER:
