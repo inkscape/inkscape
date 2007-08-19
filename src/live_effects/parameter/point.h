@@ -32,7 +32,7 @@ public:
                 const Glib::ustring& key,
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
-                Geom::Point defvalue = Geom::Point(0,0));
+                Geom::Point default_value = Geom::Point(0,0));
     ~PointParam();
 
     Gtk::Widget * param_getWidget();
@@ -41,6 +41,7 @@ public:
     gchar * param_writeSVGValue() const;
 
     void param_setValue(Geom::Point newpoint);
+    void param_set_default();
 
 private:
     PointParam(const PointParam&);
@@ -52,6 +53,8 @@ private:
     void on_button_click();
 
     SPKnot *knot;
+
+    Geom::Point defvalue;
 };
 
 

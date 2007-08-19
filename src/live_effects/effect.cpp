@@ -129,7 +129,7 @@ std::vector<Geom::Path>
 Effect::doEffect (std::vector<Geom::Path> & path_in)
 {
     Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_in;
-    // FIXME: find standard function to convert std::vector<Geom::Path> ==> Piecewise< D2<SBasis> >
+
     for (unsigned int i=0; i < path_in.size(); i++) {
         pwd2_in.concat( path_in[i].toPwSb() );
     }
@@ -169,11 +169,18 @@ Effect::setParameter(Inkscape::XML::Node * repr, const gchar * key, const gchar 
 
     param_map_type::iterator it = param_map.find(stringkey);
     if (it != param_map.end()) {
-        bool accepted = it->second->param_readSVGValue(new_value);
-        /* think: can this backfire and create infinite loop when started with unacceptable old_value?
-        if (!accepted) { // change was not accepted, so change it back.
-            repr->setAttribute(key, old_value);
-        } */
+        if (new_value) {
+            bool accepted = it->second->param_readSVGValue(new_value);
+            if (!accepted) { 
+                g_warning("Effect::setParameter - '%s' not accepted for %s", new_value, key);
+                // change was not accepted, so change it back.
+                // think: can this backfire and create infinite loop when started with unacceptable old_value?
+                // repr->setAttribute(key, old_value);
+            }
+        } else {
+            // set default value
+            it->second->param_set_default();
+        }
     }
 }
 

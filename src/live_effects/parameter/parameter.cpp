@@ -42,10 +42,11 @@ Parameter::Parameter( const Glib::ustring& label, const Glib::ustring& tip,
  */
 RealParam::RealParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
-                      Effect* effect, gdouble initial_value)
+                      Effect* effect, gdouble default_value)
     : Parameter(label, tip, key, wr, effect)
 {
-    value = initial_value;
+    defvalue = default_value;
+    value = defvalue;
     rsu = NULL;
 }
 
@@ -61,9 +62,7 @@ RealParam::param_readSVGValue(const gchar * strvalue)
     double newval;
     unsigned int success = sp_svg_number_read_d(strvalue, &newval);
     if (success == 1) {
-        value = newval;
-        if (rsu)
-            rsu->setValue(value);
+        param_set_value(newval);
         return true;
     }
     return false;
@@ -77,6 +76,21 @@ RealParam::param_writeSVGValue() const
     gchar * str = g_strdup(os.str().c_str());
     return str;
 }
+
+void
+RealParam::param_set_default() 
+{
+    param_set_value(defvalue);
+}
+
+void
+RealParam::param_set_value(gdouble val) 
+{
+    value = val;
+    if (rsu)
+        rsu->setValue(value);
+}
+
 
 Gtk::Widget *
 RealParam::param_getWidget()

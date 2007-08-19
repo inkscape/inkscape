@@ -30,11 +30,12 @@ public:
                 const Util::EnumDataConverter<E>& c,
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
-                E defvalue)
+                E default_value)
         : Parameter(label, tip, key, wr, effect)
     {
         regenum = NULL;
         enumdataconv = &c;
+        defvalue = default_value;
         value = defvalue;
     };
     ~EnumParam() {
@@ -53,12 +54,12 @@ public:
     };
 
     bool param_readSVGValue(const gchar * strvalue) {
-        if (!strvalue) return false;
+        if (!strvalue) {
+            param_set_default();
+            return true;
+        }
 
-        value = enumdataconv->get_id_from_key(Glib::ustring(strvalue));
-
-        if (regenum)
-            regenum->combobox()->set_active_by_id(value);
+        param_set_value( enumdataconv->get_id_from_key(Glib::ustring(strvalue)) );
 
         return true;
     };
@@ -71,12 +72,23 @@ public:
         return value;
     }
 
+    void param_set_default() {
+        param_set_value(defvalue);
+    }
+
+    void param_set_value(E val) {
+        value = val;
+        if (regenum)
+            regenum->combobox()->set_active_by_id(value);
+    }
+
 private:
     EnumParam(const EnumParam&);
     EnumParam& operator=(const EnumParam&);
 
     UI::Widget::RegisteredEnum<E> * regenum;
     E value;
+    E defvalue;
 
     const Util::EnumDataConverter<E> * enumdataconv;
 };

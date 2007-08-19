@@ -30,13 +30,15 @@ public:
                 const Glib::ustring& key,
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
-                const gchar * defvalue = "M0,0 L1,1");
+                const gchar * default_value = "M0,0 L1,1");
     ~PathParam();
 
     Gtk::Widget * param_getWidget();
 
     bool param_readSVGValue(const gchar * strvalue);
     gchar * param_writeSVGValue() const;
+
+    void param_set_default();
 
     sigc::signal <void> signal_path_pasted;
 
@@ -51,6 +53,8 @@ private:
 
     void on_edit_button_click();
     void on_paste_button_click();
+
+    gchar * defvalue;
 };
 
 

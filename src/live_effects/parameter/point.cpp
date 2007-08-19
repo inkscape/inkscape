@@ -29,8 +29,8 @@ namespace LivePathEffect {
 
 PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
                         const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
-                        Effect* effect, Geom::Point defvalue )
-    : Geom::Point(defvalue), Parameter(label, tip, key, wr, effect)
+                        Effect* effect, Geom::Point default_value )
+    : Geom::Point(default_value), Parameter(label, tip, key, wr, effect), defvalue(default_value)
 {
     _widget = NULL;
     pointwdg = NULL;
@@ -47,6 +47,12 @@ PointParam::~PointParam()
 
     if (knot)
         g_object_unref (G_OBJECT (knot));
+}
+
+void
+PointParam::param_set_default()
+{
+    param_setValue(defvalue);
 }
 
 bool

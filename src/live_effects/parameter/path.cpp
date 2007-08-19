@@ -33,11 +33,12 @@ namespace LivePathEffect {
 
 PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
-                      Effect* effect, const gchar * defvalue)
+                      Effect* effect, const gchar * default_value)
     : Parameter(label, tip, key, wr, effect)
 {
     _widget = NULL;
     _tooltips = NULL;
+    defvalue = g_strdup(default_value);
     param_readSVGValue(defvalue);
 }
 
@@ -46,6 +47,14 @@ PathParam::~PathParam()
     if (_tooltips)
         delete _tooltips;
     // _widget is managed by GTK so do not delete!
+
+    g_free(defvalue);
+}
+
+void
+PathParam::param_set_default()
+{
+    param_readSVGValue(defvalue);
 }
 
 bool

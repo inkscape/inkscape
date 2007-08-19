@@ -38,6 +38,8 @@ public:
     virtual bool param_readSVGValue(const gchar * strvalue) = 0;   // returns true if new value is valid / accepted.
     virtual gchar * param_writeSVGValue() const = 0;
 
+    virtual void param_set_default() = 0;
+
     // This returns pointer to the parameter's widget to be put in the live-effects dialog. Must also create the
     // necessary widget if it does not exist yet.
     virtual Gtk::Widget * param_getWidget() = 0;
@@ -65,11 +67,14 @@ public:
                 const Glib::ustring& key, 
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
-                gdouble initial_value = 1.0);
+                gdouble default_value = 1.0);
     ~RealParam();
 
     bool param_readSVGValue(const gchar * strvalue);
     gchar * param_writeSVGValue() const;
+
+    void param_set_default();
+    void param_set_value(gdouble val);
 
     Gtk::Widget * param_getWidget();
 
@@ -81,6 +86,7 @@ private:
     RealParam& operator=(const RealParam&);
 
     gdouble value;
+    gdouble defvalue;
     Inkscape::UI::Widget::RegisteredScalar * rsu;
 };
 
