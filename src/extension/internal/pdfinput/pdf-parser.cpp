@@ -1850,7 +1850,7 @@ void PdfParser::fillPatch(GfxPatch *patch, int nComps, int depth) {
       break;
     }
   }
-  if (i == nComps || depth == maxDepths[pdfPatchMeshShading]-1) {
+  if (i == nComps || depth == maxDepths[pdfPatchMeshShading-1]) {
     state->setFillColor(&patch->color[0][0]);
     state->moveTo(patch->x[0][0], patch->y[0][0]);
     state->curveTo(patch->x[0][1], patch->y[0][1],
@@ -3034,7 +3034,7 @@ void PdfParser::popResources() {
 void PdfParser::setDefaultApproximationPrecision() {
   int i;
 
-  for (i = 0; i < pdfNumShadingTypes; ++i) {
+  for (i = 1; i <= pdfNumShadingTypes; ++i) {
     setApproximationPrecision(i, defaultShadingColorDelta, defaultShadingMaxDepth);
   }
 }
