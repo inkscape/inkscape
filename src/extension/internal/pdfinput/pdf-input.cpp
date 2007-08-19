@@ -405,13 +405,18 @@ bool PdfImportDialog::_onExposePreview(GdkEventExpose *event) {
 #ifdef HAVE_POPPLER_CAIRO
     Glib::RefPtr<Gdk::Pixbuf> thumb = Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, true,
             8, _thumb_width, _thumb_height);
+    if (!thumb) {
+        return true;
+    }
     // Set background to white
     thumb->fill(0xffffffff);
     Glib::RefPtr<Gdk::Pixmap> back_pixmap = Gdk::Pixmap::create(_previewArea->get_window(),
             _thumb_width, _thumb_height, -1);
+    if (!back_pixmap) {
+        return true;
+    }
     back_pixmap->draw_pixbuf(Glib::RefPtr<Gdk::GC>(), thumb, 0, 0, 0, 0,
-                             static_cast<int>(_thumb_width),
-                             static_cast<int>(_thumb_height),
+                             _thumb_width, _thumb_height,
                              Gdk::RGB_DITHER_NONE, 0, 0);
     _previewArea->get_window()->set_back_pixmap(back_pixmap, false);
     _previewArea->get_window()->clear();
