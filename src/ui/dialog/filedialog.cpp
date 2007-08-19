@@ -76,41 +76,6 @@ FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow,
 }
 
 
-//########################################################################
-//# F I L E    E X P O R T   T O   O C A L
-//########################################################################
-
-
-/**
- * Public factory method.  Used in file.cpp
- */
-
- FileExportToOCALDialog *FileExportToOCALDialog::create(Gtk::Window& parentWindow, 
-                                           FileDialogType fileTypes,
-                                           const Glib::ustring &title,
-                                           const Glib::ustring &default_key)
-{
-    FileExportToOCALDialog *dialog = new FileExportToOCALDialogImpl(parentWindow, fileTypes, title, default_key);
-    return dialog;
-}
-
-//#########################################################################
-//### F I L E    I M P O R T  F R O M  O C A L
-//#########################################################################
-
-/**
- * Public factory.  Called by file.cpp.
- */
-FileImportFromOCALDialog *FileImportFromOCALDialog::create(Gtk::Window &parentWindow,
-		                       const Glib::ustring &path,
-                                       FileDialogType fileTypes,
-                                       const Glib::ustring &title)
-{
-    FileImportFromOCALDialog *dialog = new FileImportFromOCALDialogImplGtk(parentWindow, path, fileTypes, title);
-    return dialog;
-}
-
-
 } //namespace Dialog
 } //namespace UI
 } //namespace Inkscape
