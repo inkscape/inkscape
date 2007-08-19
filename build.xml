@@ -356,6 +356,7 @@
               objcopycommand="${archutil}objcopy"
               >
        <flags>
+           -mwindows
        </flags>
        <fileset dir="${build}">
            <include name="inkres.o"/>
@@ -370,7 +371,7 @@
            -lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0
            -lgdk_pixbuf-2.0
            -lpangocairo-1.0 -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0
-           -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0 -lcairo
+           -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0 -lcairo.dll
            <!-- PERL -->
            -L${gtk}/perl/lib/CORE -lperl58
            <!-- PYTHON -->
