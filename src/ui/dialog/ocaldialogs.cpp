@@ -1,12 +1,11 @@
 /**
- * Implementation of the OCAL import/export dialogs
+ * Implementation of the ocal dialog interfaces defined in ocaldialog.h
  *
  * Authors:
- *   Joel Holdsworth
  *   Bruno Dilly
  *   Other dudes from The Inkscape Organization
  *
- * Copyright (C) 2007 Bruno Dilly
+ * Copyright (C) 2007 Bruno Dilly <bruno.dilly@gmail.com>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -16,12 +15,10 @@
 #endif
 
 #include "ocaldialogs.h"
-#include "dialogs/dialog-events.h"
+#include "filedialogimpl-gtkmm.h"
 #include "interface.h"
-
-#ifdef WITH_GNOME_VFS
-# include <libgnomevfs/gnome-vfs.h>
-#endif
+#include "gc-core.h"
+#include <dialogs/dialog-events.h>
 
 namespace Inkscape
 {
@@ -35,11 +32,63 @@ namespace Dialog
 //########################################################################
 
 
+/**
+ * Public factory method.  Used in file.cpp
+ */
+
+ FileExportToOCALDialog *FileExportToOCALDialog::create(Gtk::Window& parentWindow, 
+                                           FileDialogType fileTypes,
+                                           const Glib::ustring &title,
+                                           const Glib::ustring &default_key)
+{
+    FileExportToOCALDialog *dialog = new FileExportToOCALDialogImpl(parentWindow, fileTypes, title, default_key);
+    return dialog;
+}
+
+//########################################################################
+//# F I L E    E X P O R T   T O   O C A L   P A S S W O R D
+//########################################################################
+
+
+/**
+ * Public factory method.  Used in file.cpp
+ */
+
+FileExportToOCALPasswordDialog *FileExportToOCALPasswordDialog::create(Gtk::Window& parentWindow,
+                                                        const Glib::ustring &title)
+{
+    FileExportToOCALPasswordDialog *dialog = new FileExportToOCALPasswordDialogImpl(parentWindow, title);
+    return dialog;
+}
+
+
+//#########################################################################
+//### F I L E    I M P O R T  F R O M  O C A L
+//#########################################################################
+
+/**
+ * Public factory.  Called by file.cpp.
+ */
+FileImportFromOCALDialog *FileImportFromOCALDialog::create(Gtk::Window &parentWindow,
+		                       const Glib::ustring &path,
+                                       FileDialogType fileTypes,
+                                       const Glib::ustring &title)
+{
+    FileImportFromOCALDialog *dialog = new FileImportFromOCALDialogImplGtk(parentWindow, path, fileTypes, title);
+    return dialog;
+}
+
+
+//########################################################################
+//# F I L E    E X P O R T   T O   O C A L
+//########################################################################
+
+
 
 /**
  * Callback for fileNameEntry widget
  */
-void FileExportToOCALDialog::fileNameEntryChangedCallback()
+void FileExportToOCALDialogImpl::fileNameEntryChangedCallback()
 {
     if (!fileNameEntry)
         return;
@@ -57,7 +106,7 @@ void FileExportToOCALDialog::fileNameEntryChangedCallback()
 /**
  * Callback for fileNameEntry widget
  */
-void FileExportToOCALDialog::fileTypeChangedCallback()
+void FileExportToOCALDialogImpl::fileTypeChangedCallback()
 {
     int sel = fileTypeComboBox.get_active_row_number();
     if (sel<0 || sel >= (int)fileTypes.size())
@@ -70,7 +119,7 @@ void FileExportToOCALDialog::fileTypeChangedCallback()
 
 
 
-void FileExportToOCALDialog::createFileTypeMenu()
+void FileExportToOCALDialogImpl::createFileTypeMenu()
 {
     Inkscape::Extension::DB::OutputList extension_list;
     Inkscape::Extension::db.get_output_list(extension_list);
@@ -113,7 +162,8 @@ void FileExportToOCALDialog::createFileTypeMenu()
 /**
  * Constructor
  */
-FileExportToOCALDialog::FileExportToOCALDialog(Gtk::Window &parentWindow,
+FileExportToOCALDialogImpl::FileExportToOCALDialogImpl(Gtk::Window &parentWindow,
+            FileDialogType fileTypes,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
     FileDialogOCALBase(title)
@@ -128,6 +178,8 @@ FileExportToOCALDialog::FileExportToOCALDialog(Gtk::Window &parentWindow,
     /* No filename to start out with */
     myFilename = "";
 
+    /* Set our dialog type (save, export, etc...)*/
+    dialogType = fileTypes;
     Gtk::VBox *vbox = get_vbox();
 
     Gtk::Label *fileLabel = new Gtk::Label(_("File"));
@@ -148,7 +200,7 @@ FileExportToOCALDialog::FileExportToOCALDialog(Gtk::Window &parentWindow,
 
     fileTypeComboBox.set_size_request(200,40);
     fileTypeComboBox.signal_changed().connect(
-        sigc::mem_fun(*this, &FileExportToOCALDialog::fileTypeChangedCallback) );
+        sigc::mem_fun(*this, &FileExportToOCALDialogImpl::fileTypeChangedCallback) );
 
     checksBox.pack_start( fileTypeCheckbox );
     vbox->pack_start( checksBox );
@@ -166,7 +218,7 @@ FileExportToOCALDialog::FileExportToOCALDialog(Gtk::Window &parentWindow,
         //Catch when user hits [return] on the text field
         fileNameEntry = entries[0];
         fileNameEntry->signal_activate().connect(
-             sigc::mem_fun(*this, &FileExportToOCALDialog::fileNameEntryChangedCallback) );
+             sigc::mem_fun(*this, &FileExportToOCALDialogImpl::fileNameEntryChangedCallback) );
         }
 
     //Let's do more customization
@@ -192,7 +244,7 @@ FileExportToOCALDialog::FileExportToOCALDialog(Gtk::Window &parentWindow,
 /**
  * Destructor
  */
-FileExportToOCALDialog::~FileExportToOCALDialog()
+FileExportToOCALDialogImpl::~FileExportToOCALDialogImpl()
 {
 }
 
@@ -202,7 +254,7 @@ FileExportToOCALDialog::~FileExportToOCALDialog()
  * Show this dialog modally.  Return true if user hits [OK]
  */
 bool
-FileExportToOCALDialog::show()
+FileExportToOCALDialogImpl::show()
 {
     set_modal (TRUE);                      //Window
     sp_transientize((GtkWidget *)gobj());  //Make transient
@@ -226,12 +278,12 @@ FileExportToOCALDialog::show()
  * Get the file extension type that was selected by the user. Valid after an [OK]
  */
 Inkscape::Extension::Extension *
-FileExportToOCALDialog::getSelectionType()
+FileExportToOCALDialogImpl::getSelectionType()
 {
     return extension;
 }
 
-void FileExportToOCALDialog::setSelectionType( Inkscape::Extension::Extension * key )
+void FileExportToOCALDialogImpl::setSelectionType( Inkscape::Extension::Extension * key )
 {
     // If no pointer to extension is passed in, look up based on filename extension.
     if ( !key ) {
@@ -277,7 +329,7 @@ void FileExportToOCALDialog::setSelectionType( Inkscape::Extension::Extension * 
  * Get the file name chosen by the user.   Valid after an [OK]
  */
 Glib::ustring
-FileExportToOCALDialog::getFilename()
+FileExportToOCALDialogImpl::getFilename()
 {
     myFilename = fileNameEntry->get_text();
     updateNameAndExtension();
@@ -286,12 +338,12 @@ FileExportToOCALDialog::getFilename()
 
 
 void
-FileExportToOCALDialog::change_title(const Glib::ustring& title)
+FileExportToOCALDialogImpl::change_title(const Glib::ustring& title)
 {
     this->set_title(title);
 }
 
-void FileExportToOCALDialog::updateNameAndExtension()
+void FileExportToOCALDialogImpl::updateNameAndExtension()
 {
     // Pick up any changes the user has typed in.
     Glib::ustring tmp = myFilename;   // get_filename();
@@ -324,6 +376,114 @@ void FileExportToOCALDialog::updateNameAndExtension()
         }
     }
 }
+
+
+//########################################################################
+//# F I L E    E X P O R T   T O   O C A L   P A S S W O R D
+//########################################################################
+
+
+/**
+ * Constructor
+ */
+FileExportToOCALPasswordDialogImpl::FileExportToOCALPasswordDialogImpl(Gtk::Window &parentWindow,
+                             const Glib::ustring &title) : FileDialogOCALBase(title)
+{
+    /*
+     * Start Taking the vertical Box and putting 2 Labels
+     * and 2 Entries to take the username and password
+     */
+    /* No username and password to start out with */
+    myUsername = "";
+    myPassword = "";
+
+    Gtk::VBox *vbox = get_vbox();
+
+    Gtk::Label *userLabel = new Gtk::Label(_("Username:"));
+    Gtk::Label *passLabel = new Gtk::Label(_("Password:"));
+
+    usernameEntry = new Gtk::Entry();
+    usernameEntry->set_text(myUsername);
+    usernameEntry->set_max_length(255);
+    //usernameEntry->set_alignment(1);
+
+    passwordEntry = new Gtk::Entry();
+    passwordEntry->set_text(myPassword);
+    passwordEntry->set_max_length(255);
+    passwordEntry->set_invisible_char('*');
+    passwordEntry->set_visibility(false);
+    //passwordEntry->set_alignment(1);
+    passwordEntry->set_activates_default(true);
+
+    userBox.pack_start(*userLabel);
+    userBox.pack_start(*usernameEntry, Gtk::PACK_EXPAND_WIDGET, 3);
+    vbox->pack_start(userBox);
+
+    passBox.pack_start(*passLabel);
+    passBox.pack_start(*passwordEntry, Gtk::PACK_EXPAND_WIDGET, 3);
+    vbox->pack_start(passBox);
+    
+    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    set_default(*add_button(Gtk::Stock::OK,   Gtk::RESPONSE_OK));
+
+    show_all_children();
+}
+
+
+/**
+ * Destructor
+ */
+FileExportToOCALPasswordDialogImpl::~FileExportToOCALPasswordDialogImpl()
+{
+}
+
+/**
+ * Show this dialog modally.  Return true if user hits [OK]
+ */
+bool
+FileExportToOCALPasswordDialogImpl::show()
+{
+    set_modal (TRUE);                      //Window
+    sp_transientize((GtkWidget *)gobj());  //Make transient
+    gint b = run();                        //Dialog
+    hide();
+
+    if (b == Gtk::RESPONSE_OK)
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+/**
+ * Get the username.   Valid after an [OK]
+ */
+Glib::ustring
+FileExportToOCALPasswordDialogImpl::getUsername()
+{
+    myUsername = usernameEntry->get_text();
+    return myUsername;
+}
+
+/**
+ * Get the password.   Valid after an [OK]
+ */
+Glib::ustring
+FileExportToOCALPasswordDialogImpl::getPassword()
+{
+    myPassword = passwordEntry->get_text();
+    return myPassword;
+}
+
+void
+FileExportToOCALPasswordDialogImpl::change_title(const Glib::ustring& title)
+{
+    this->set_title(title);
+}
+
 
 //#########################################################################
 //### F I L E   I M P O R T   F R O M   O C A L
@@ -423,7 +583,7 @@ Glib::ustring FileListViewText::getFilename()
 /**
  * Callback for user input into searchTagEntry
  */
-void FileImportFromOCALDialog::searchTagEntryChangedCallback()
+void FileImportFromOCALDialogImplGtk::searchTagEntryChangedCallback()
 {
     if (!searchTagEntry)
         return;
@@ -542,7 +702,7 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
  * Prints the names of the all the xml elements 
  * that are siblings or children of a given xml node
  */
-void FileImportFromOCALDialog::print_xml_element_names(xmlNode * a_node)
+void FileImportFromOCALDialogImplGtk::print_xml_element_names(xmlNode * a_node)
 {
     xmlNode *cur_node = NULL;
     guint row_num = 0;
@@ -580,8 +740,9 @@ void FileImportFromOCALDialog::print_xml_element_names(xmlNode * a_node)
 /**
  * Constructor.  Not called directly.  Use the factory.
  */
-FileImportFromOCALDialog::FileImportFromOCALDialog(Gtk::Window& parentWindow, 
+FileImportFromOCALDialogImplGtk::FileImportFromOCALDialogImplGtk(Gtk::Window& parentWindow, 
 		                       const Glib::ustring &dir,
+                                       FileDialogType fileTypes,
                                        const Glib::ustring &title) :
      FileDialogOCALBase(title)
 {
@@ -591,6 +752,7 @@ FileImportFromOCALDialog::FileImportFromOCALDialog(Gtk::Window& parentWindow,
     // No filename to start out with
     Glib::ustring searchTag = "";
 
+    dialogType = fileTypes;
     Gtk::VBox *vbox = get_vbox();
     Gtk::Label *tagLabel = new Gtk::Label(_("Search Tag"));
     notFoundLabel = new Gtk::Label(_("No files matched your search"));
@@ -629,7 +791,7 @@ FileImportFromOCALDialog::FileImportFromOCALDialog(Gtk::Window& parentWindow,
     //Catch when user hits [return] on the text field
         searchTagEntry = entries[0];
         searchTagEntry->signal_activate().connect(
-              sigc::mem_fun(*this, &FileImportFromOCALDialog::searchTagEntryChangedCallback));
+              sigc::mem_fun(*this, &FileImportFromOCALDialogImplGtk::searchTagEntryChangedCallback));
     }
 
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
@@ -642,7 +804,7 @@ FileImportFromOCALDialog::FileImportFromOCALDialog(Gtk::Window& parentWindow,
 /**
  * Destructor
  */
-FileImportFromOCALDialog::~FileImportFromOCALDialog()
+FileImportFromOCALDialogImplGtk::~FileImportFromOCALDialogImplGtk()
 {
 
 }
@@ -651,7 +813,7 @@ FileImportFromOCALDialog::~FileImportFromOCALDialog()
  * Show this dialog modally.  Return true if user hits [OK]
  */
 bool
-FileImportFromOCALDialog::show()
+FileImportFromOCALDialogImplGtk::show()
 {
     set_modal (TRUE);                      //Window
     sp_transientize((GtkWidget *)gobj());  //Make transient
@@ -673,7 +835,7 @@ FileImportFromOCALDialog::show()
  * Get the file extension type that was selected by the user. Valid after an [OK]
  */
 Inkscape::Extension::Extension *
-FileImportFromOCALDialog::getSelectionType()
+FileImportFromOCALDialogImplGtk::getSelectionType()
 {
     return extension;
 }
@@ -683,14 +845,17 @@ FileImportFromOCALDialog::getSelectionType()
  * Get the file name chosen by the user.   Valid after an [OK]
  */
 Glib::ustring
-FileImportFromOCALDialog::getFilename (void)
+FileImportFromOCALDialogImplGtk::getFilename (void)
 {
     return filesList->getFilename();
 }
 
+
 } //namespace Dialog
 } //namespace UI
 } //namespace Inkscape
+
+
 
 /*
   Local Variables:

@@ -1,3 +1,5 @@
+#ifndef __FILE_DIALOGIMPL_H__
+#define __FILE_DIALOGIMPL_H__
 /**
  * Implementation of the file dialog interfaces defined in filedialogimpl.h
  *
@@ -585,6 +587,8 @@ private:
 }
 }
 }
+
+#endif /*__FILE_DIALOGIMPL_H__*/
 
 /*
   Local Variables:

@@ -47,6 +47,7 @@
 #include "message.h"
 #include "message-stack.h"
 #include "ui/dialog/filedialog.h"
+#include "ui/dialog/ocaldialogs.h"
 #include "prefs-utils.h"
 #include "path-prefix.h"
 
@@ -1010,6 +1011,8 @@ sp_file_import(Gtk::Window &parentWindow)
         if (import_path.size()>0)
             import_path.append(G_DIR_SEPARATOR_S);
 
+        printf("vai importar %s %s\n", fileName.c_str(), selection->get_name());
+
         file_import(doc, fileName, selection);
     }
 
@@ -1163,7 +1166,7 @@ bool
 sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
 {
     
-    if (!SP_ACTIVE_DOCUMENT)
+   if (!SP_ACTIVE_DOCUMENT)
         return false;
 
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
@@ -1176,6 +1179,8 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     bool success = false;
     
     static Inkscape::UI::Dialog::FileExportToOCALDialog *exportDialogInstance = NULL;
+    static Inkscape::UI::Dialog::FileExportToOCALPasswordDialog *exportPasswordDialogInstance = NULL;
+    static bool gotSuccess = false;
     
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
     // Verify whether the document is saved, so save this as temporary
@@ -1260,21 +1265,37 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     // Create the uri
     Glib::ustring uri = "dav://";
     char *username = (char *)prefs_get_string_attribute("options.ocalusername", "str");
-    char *password = (char *)prefs_get_string_attribute("options.ocalpassword", "str"); 
-    if ((username != NULL) && (password != NULL)){
-        uri.append(username);
-        uri.append(":");
-        uri.append(password);
-        uri.append("@");
-    } 
+    char *password = (char *)prefs_get_string_attribute("options.ocalpassword", "str");
+    if ((username == NULL) || (!strcmp(username, "")) || (password == NULL) || (!strcmp(password, "")))
+    {
+        if(!gotSuccess)
+        {
+            if (!exportPasswordDialogInstance)
+                exportPasswordDialogInstance = Inkscape::UI::Dialog::FileExportToOCALPasswordDialog::create(
+                    parentWindow,
+                    (char const *) _("Open Clip Art Login"));
+            success = exportPasswordDialogInstance->show();
+            if (!success)
+                return success;
+        }
+        username = (char *)exportPasswordDialogInstance->getUsername().c_str();
+        password = (char *)exportPasswordDialogInstance->getPassword().c_str();
+    }
+    uri.append(username);
+    uri.append(":");
+    uri.append(password);
+    uri.append("@");
     uri.append(prefs_get_string_attribute("options.ocalurl", "str"));
     uri.append("/dav.php/");
     uri.append(Glib::path_get_basename(fileName));
+    printf("%s\n", uri.c_str());
     // Save as a remote file using the dav protocol.
     success = file_save_remote(doc, uri, selectionType, FALSE, FALSE);
     remove(fileName.c_str());
     if (!success)
         g_warning( "Error exporting the document." );
+    else
+        gotSuccess = true;
 
     return success;
 }
