@@ -170,10 +170,10 @@ sp_tweak_update_cursor (SPTweakContext *tc, gint mode)
        case TWEAK_MODE_PUSH:
            event_context->cursor_shape = cursor_push_xpm;
            break;
-       case TWEAK_MODE_SUCK:
+       case TWEAK_MODE_MELT:
            event_context->cursor_shape = cursor_thin_xpm;
            break;
-       case TWEAK_MODE_BLOW:
+       case TWEAK_MODE_INFLATE:
            event_context->cursor_shape = cursor_thicken_xpm;
            break;
        case TWEAK_MODE_ROUGHEN:
@@ -336,9 +336,9 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
         bool did_this = false;
         NR::Matrix i2doc(sp_item_i2doc_affine(item));
-        if (mode == TWEAK_MODE_SUCK || mode == TWEAK_MODE_BLOW) {
+        if (mode == TWEAK_MODE_MELT || mode == TWEAK_MODE_INFLATE) {
             if (theShape->MakeOffset(theRes, 
-                                 mode == TWEAK_MODE_BLOW? force : -force,
+                                 mode == TWEAK_MODE_INFLATE? force : -force,
                                  join_straight, 4.0,
                                  true, p[NR::X], p[NR::Y], radius, &i2doc) == 0) // 0 means the shape was actually changed
               did_this = true;
@@ -534,11 +534,11 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
                                                       _("<b>Pushing %d</b> selected object(s)"), num);  
                            break;
-                        case TWEAK_MODE_SUCK:
+                        case TWEAK_MODE_MELT:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
                                                       _("<b>Melting %d</b> selected object(s)"), num);
                            break;
-                        case TWEAK_MODE_BLOW:
+                        case TWEAK_MODE_INFLATE:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
                                                       _("<b>Blowing %d</b> selected object(s)"), num);
                            break;
@@ -582,7 +582,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
             tc->has_dilated = false;
             sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop), 
                          SP_VERB_CONTEXT_TWEAK,
-                             (tc->mode==TWEAK_MODE_BLOW ? _("Blow tweak") : (tc->mode==TWEAK_MODE_SUCK ? _("Melt tweak") : (tc->mode==TWEAK_MODE_PUSH ? _("Push tweak") : _("Roughen tweak")))));
+                             (tc->mode==TWEAK_MODE_INFLATE ? _("Blow tweak") : (tc->mode==TWEAK_MODE_MELT ? _("Melt tweak") : (tc->mode==TWEAK_MODE_PUSH ? _("Push tweak") : _("Roughen tweak")))));
             ret = TRUE;
 
         } 
@@ -603,7 +603,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
         case GDK_M:
         case GDK_2:
             if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_SUCK);
+                sp_tweak_switch_mode(tc, TWEAK_MODE_MELT);
                 ret = TRUE;
             }
             break;
@@ -611,7 +611,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
         case GDK_B:
         case GDK_3:
             if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_BLOW);
+                sp_tweak_switch_mode(tc, TWEAK_MODE_INFLATE);
                 ret = TRUE;
             }
             break;
@@ -691,15 +691,15 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
         case GDK_Control_L:
         case GDK_Control_R:
             if (MOD__SHIFT) {
-                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_BLOW);
+                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_INFLATE);
             } else {
-                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_SUCK);
+                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_MELT);
             }
             break;
         case GDK_Shift_L:
         case GDK_Shift_R:
             if (MOD__CTRL) {
-                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_BLOW);
+                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_INFLATE);
             }
             break;
         default:
@@ -717,7 +717,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
             case GDK_Shift_L:
             case GDK_Shift_R:
                 if (MOD__CTRL) {
-                    sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_SUCK);
+                    sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_MELT);
                 }
                 break;
             break;

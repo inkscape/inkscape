@@ -34,8 +34,8 @@ class SPTweakContextClass;
 
 enum {
     TWEAK_MODE_PUSH,
-    TWEAK_MODE_SUCK,
-    TWEAK_MODE_BLOW,
+    TWEAK_MODE_MELT,
+    TWEAK_MODE_INFLATE,
     TWEAK_MODE_ROUGHEN
 };
 
