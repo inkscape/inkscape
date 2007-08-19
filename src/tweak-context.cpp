@@ -540,7 +540,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                            break;
                         case TWEAK_MODE_INFLATE:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Blowing %d</b> selected object(s)"), num);
+                                                      _("<b>Inflating %d</b> selected object(s)"), num);
                            break;
                         case TWEAK_MODE_ROUGHEN:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
@@ -582,7 +582,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
             tc->has_dilated = false;
             sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop), 
                          SP_VERB_CONTEXT_TWEAK,
-                             (tc->mode==TWEAK_MODE_INFLATE ? _("Blow tweak") : (tc->mode==TWEAK_MODE_MELT ? _("Melt tweak") : (tc->mode==TWEAK_MODE_PUSH ? _("Push tweak") : _("Roughen tweak")))));
+                             (tc->mode==TWEAK_MODE_INFLATE ? _("Inflate tweak") : (tc->mode==TWEAK_MODE_MELT ? _("Melt tweak") : (tc->mode==TWEAK_MODE_PUSH ? _("Push tweak") : _("Roughen tweak")))));
             ret = TRUE;
 
         } 

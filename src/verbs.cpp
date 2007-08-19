@@ -2378,7 +2378,7 @@ Verb *Verb::_base_verbs[] = {
     new ContextVerb(SP_VERB_CONTEXT_NODE, "ToolNode", N_("Node Edit"),
                     N_("Edit path nodes or control handles"), "draw_node"),
     new ContextVerb(SP_VERB_CONTEXT_TWEAK, "ToolTweak", N_("Tweak"),
-                    N_("Tweak paths by pushing, melting, blowing, or roughening"), "draw_tweak"),
+                    N_("Tweak paths by pushing, melting, inflating, or roughening"), "draw_tweak"),
     new ContextVerb(SP_VERB_CONTEXT_RECT, "ToolRect", N_("Rectangle"),
                     N_("Create rectangles and squares"), "draw_rect"),
     new ContextVerb(SP_VERB_CONTEXT_3DBOX, "Tool3DBox", N_("3D Box"),

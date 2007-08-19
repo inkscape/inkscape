@@ -2516,9 +2516,9 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
-                            0, _("Blow mode"),
-                            1, _("Switch to Blow mode"),
-                            2, "tweak_blow_mode",
+                            0, _("Inflate mode"),
+                            1, _("Switch to Inflate mode"),
+                            2, "tweak_inflate_mode",
                             -1 );
 
         gtk_list_store_append( model, &iter );
