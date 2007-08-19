@@ -121,7 +121,6 @@ filter_add_primitive(SPFilter *filter, const NR::FilterPrimitiveType type)
     //create filter primitive node
     Inkscape::XML::Node *repr;
     repr = xml_doc->createElement(FPConverter.get_key(type).c_str());
-    repr->setAttribute("inkscape:collect", "always");
 
     // set default values
     switch(type) {

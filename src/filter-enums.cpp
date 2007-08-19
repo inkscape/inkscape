@@ -120,9 +120,9 @@ const EnumDataConverter<NR::FilterTurbulenceType> TurbulenceTypeConverter(Turbul
 
 // Light source
 const EnumData<LightSource> LightSourceData[LIGHT_ENDSOURCE] = {
-    {LIGHT_DISTANT, _("Distance Light"), "svg:feDistanceLight"},
-    {LIGHT_POINT,   _("Point Light"),    "svg:fePointLight"},
-    {LIGHT_SPOT,    _("Spot Light"),     "svg:feSpotLight"}
+    {LIGHT_DISTANT, _("Distant Light"), "svg:feDistantLight"},
+    {LIGHT_POINT,   _("Point Light"),   "svg:fePointLight"},
+    {LIGHT_SPOT,    _("Spot Light"),    "svg:feSpotLight"}
 };
 const EnumDataConverter<LightSource> LightSourceConverter(LightSourceData, LIGHT_ENDSOURCE);
 

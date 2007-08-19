@@ -548,7 +548,7 @@ class FilterEffectsDialog::Settings
 public:
     typedef sigc::slot<void, const AttrWidget*> SetAttrSlot;
 
-    Settings(FilterEffectsDialog& d, SetAttrSlot slot, const int maxtypes)
+    Settings(FilterEffectsDialog& d, Gtk::Box& b, SetAttrSlot slot, const int maxtypes)
         : _dialog(d), _set_attr_slot(slot), _current_type(-1), _max_types(maxtypes)
     {
         _groups.resize(_max_types);
@@ -556,7 +556,7 @@ public:
 
         for(int i = 0; i < _max_types; ++i) {
             _groups[i] = new Gtk::VBox;
-            d._settings_box.add(*_groups[i]);
+            b.add(*_groups[i]);
         }
     }
 
@@ -577,7 +577,8 @@ public:
             for(unsigned i = 0; i < _groups.size(); ++i)
                 _groups[i]->hide();
         }
-        _groups[t]->show_all();
+        if(t >= 0)
+            _groups[t]->show_all();
 
         _dialog.set_attrs_locked(true);
         for(unsigned i = 0; i < _attrwidgets[_current_type].size(); ++i)
@@ -596,7 +597,7 @@ public:
     }
 
     // LightSource
-    LightSourceControl* add_lightsource(const Glib::ustring& label);
+    LightSourceControl* add_lightsource();
 
     // CheckBox
     CheckButtonAttr* add_checkbutton(const SPAttributeEnum attr, const Glib::ustring& label,
@@ -717,18 +718,20 @@ private:
        and all widgets within the setting group are aligned automatically. */
     void add_widget(Gtk::Widget* w, const Glib::ustring& label)
     {
-        Gtk::Label *lbl = Gtk::manage(new Gtk::Label(label + (label == "" ? "" : ":"), Gtk::ALIGN_LEFT));
+        Gtk::Label *lbl = 0;
         Gtk::HBox *hb = Gtk::manage(new Gtk::HBox);
         hb->set_spacing(12);
-        hb->pack_start(*lbl, false, false);
+        
+        if(label != "") {
+            lbl = Gtk::manage(new Gtk::Label(label + (label == "" ? "" : ":"), Gtk::ALIGN_LEFT));
+            hb->pack_start(*lbl, false, false);
+            _dialog._sizegroup->add_widget(*lbl);
+            lbl->show();
+        }
+        
         hb->pack_start(*w);
         _groups[_current_type]->pack_start(*hb);
-
-        _dialog._sizegroup->add_widget(*lbl);
-
         hb->show();
-        lbl->show();
-
         w->show();
     }
 
@@ -747,18 +750,26 @@ public:
     LightSourceControl(FilterEffectsDialog& d)
         : AttrWidget(SP_ATTR_INVALID),
           _dialog(d),
-          _settings(d, sigc::mem_fun(_dialog, &FilterEffectsDialog::set_child_attr_direct), LIGHT_ENDSOURCE),
-          _light_source(LightSourceConverter)
+          _settings(d, _box, sigc::mem_fun(_dialog, &FilterEffectsDialog::set_child_attr_direct), LIGHT_ENDSOURCE),
+          _light_label("Light Source:", Gtk::ALIGN_LEFT),
+          _light_source(LightSourceConverter),
+          _locked(false)
     {
-        _box.add(_light_source);
-        _box.reorder_child(_light_source, 0);
+        _light_box.pack_start(_light_label, false, false);
+        _light_box.pack_start(_light_source);
+        _light_box.show_all();
+        _light_box.set_spacing(12);
+        _dialog._sizegroup->add_widget(_light_label);
+
+        _box.add(_light_box);
+        _box.reorder_child(_light_box, 0);
         _light_source.signal_changed().connect(sigc::mem_fun(*this, &LightSourceControl::on_source_changed));
 
         // FIXME: these range values are complete crap
 
         _settings.type(LIGHT_DISTANT);
         _settings.add_spinslider(SP_ATTR_AZIMUTH, _("Azimuth"), 0, 360, 1, 1, 0);
-        _settings.add_spinslider(SP_ATTR_AZIMUTH, _("Elevation"), 0, 360, 1, 1, 0);
+        _settings.add_spinslider(SP_ATTR_ELEVATION, _("Elevation"), 0, 360, 1, 1, 0);
 
         _settings.type(LIGHT_POINT);
         _settings.add_multispinbutton(SP_ATTR_X, SP_ATTR_Y, SP_ATTR_Z, _("Location"), -99999, 99999, 1, 100, 0);
@@ -782,6 +793,11 @@ protected:
     }
     void set_from_attribute(SPObject* o)
     {
+        if(_locked)
+            return;
+
+        _locked = true;
+
         SPObject* child = o->children;
         
         if(SP_IS_FEDISTANTLIGHT(child))
@@ -790,31 +806,44 @@ protected:
             _light_source.set_active(1);
         else if(SP_IS_FESPOTLIGHT(child))
             _light_source.set_active(2);
+        else
+            _light_source.set_active(-1);
 
         update();
+
+        _locked = false;
     }
 private:
     void on_source_changed()
     {
+        if(_locked)
+            return;
+
         SPFilterPrimitive* prim = _dialog._primitive_list.get_selected();
         if(prim) {
+            _locked = true;
+
             SPObject* child = prim->children;
             const int ls = _light_source.get_active_row_number();
             // Check if the light source type has changed
-            if(!(ls == 0 && SP_IS_FEDISTANTLIGHT(child)) &&
+            if(!(ls == -1 && !child) &&
+               !(ls == 0 && SP_IS_FEDISTANTLIGHT(child)) &&
                !(ls == 1 && SP_IS_FEPOINTLIGHT(child)) &&
                !(ls == 2 && SP_IS_FESPOTLIGHT(child))) {
                 if(child)
                     sp_repr_unparent(child->repr);
 
-                Inkscape::XML::Document *xml_doc = sp_document_repr_doc(prim->document);
-                Inkscape::XML::Node *repr = xml_doc->createElement(_light_source.get_active_data()->key.c_str());
-                repr->setAttribute("inkscape:collect", "always");
-                prim->repr->appendChild(repr);
-                Inkscape::GC::release(repr);
+                if(ls != -1) {
+                    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(prim->document);
+                    Inkscape::XML::Node *repr = xml_doc->createElement(_light_source.get_active_data()->key.c_str());
+                    prim->repr->appendChild(repr);
+                }
+
                 sp_document_done(prim->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("New light source"));
                 update();
             }
+
+            _locked = false;
         }
     }
 
@@ -822,7 +851,7 @@ private:
     {
         _box.hide_all();
         _box.show();
-        _light_source.show_all();
+        _light_box.show_all();
         
         SPFilterPrimitive* prim = _dialog._primitive_list.get_selected();
         if(prim && prim->children)
@@ -832,14 +861,17 @@ private:
     FilterEffectsDialog& _dialog;
     Gtk::VBox _box;
     Settings _settings;
+    Gtk::HBox _light_box;
+    Gtk::Label _light_label;
     ComboBoxEnum<LightSource> _light_source;
+    bool _locked;
 };
 
-FilterEffectsDialog::LightSourceControl* FilterEffectsDialog::Settings::add_lightsource(const Glib::ustring& label)
+FilterEffectsDialog::LightSourceControl* FilterEffectsDialog::Settings::add_lightsource()
 {
     LightSourceControl* ls = new LightSourceControl(_dialog);
     add_attr_widget(ls);
-    add_widget(&ls->get_box(), label);
+    add_widget(&ls->get_box(), "");
     return ls;
 }
 
@@ -1819,7 +1851,7 @@ FilterEffectsDialog::FilterEffectsDialog()
       _locked(false),
       _attr_lock(false)
 {
-    _settings = new Settings(*this, sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_direct),
+    _settings = new Settings(*this, _settings_box, sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_direct),
                              NR_FILTER_ENDPRIMITIVETYPE);
     _sizegroup = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
     _sizegroup->set_ignore_hidden();
@@ -1917,7 +1949,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_spinslider(SP_ATTR_SURFACESCALE, _("Surface Scale"), -10, 10, 1, 0.01, 1);
     _settings->add_spinslider(SP_ATTR_DIFFUSECONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
-    _settings->add_lightsource(_("Light Source"));
+    _settings->add_lightsource();
 
     _settings->type(NR_FILTER_DISPLACEMENTMAP);
     _settings->add_spinslider(SP_ATTR_SCALE, _("Scale"), 0, 100, 1, 0.01, 1);
@@ -1945,7 +1977,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_spinslider(SP_ATTR_SPECULARCONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
     _settings->add_spinslider(SP_ATTR_SPECULAREXPONENT, _("Exponent"), 1, 128, 1, 0.01, 1);
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
-    _settings->add_lightsource(_("Light Source"));
+    _settings->add_lightsource();
 
     _settings->type(NR_FILTER_TURBULENCE);
     _settings->add_checkbutton(SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
@@ -1962,7 +1994,6 @@ void FilterEffectsDialog::add_primitive()
     if(filter) {
         SPFilterPrimitive* prim = filter_add_primitive(filter, _add_primitive_type.get_active_data()->id);
 
-        _primitive_list.update();
         _primitive_list.select(prim);
 
         sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Add filter primitive"));
