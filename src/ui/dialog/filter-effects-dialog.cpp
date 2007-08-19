@@ -1703,7 +1703,7 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
                     }
                 }
                 // Add new input?
-                if(!handled && c == _in_drag) {
+                if(!handled && c == _in_drag && in_val) {
                     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(prim->document);
                     Inkscape::XML::Node *repr = xml_doc->createElement("svg:feMergeNode");
                     repr->setAttribute("inkscape:collect", "always");
