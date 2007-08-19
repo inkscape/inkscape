@@ -404,9 +404,10 @@ private:
 class FileListViewText : public Gtk::ListViewText
 {
 public:
-    FileListViewText(guint columns_count, SVGPreview& filesPreview):ListViewText(columns_count)
+    FileListViewText(guint columns_count, SVGPreview& filesPreview, Gtk::Label& description):ListViewText(columns_count)
     {
         myPreview = &filesPreview;
+        myLabel = &description;
     }
     Glib::ustring getFilename();
 protected:
@@ -414,6 +415,7 @@ protected:
 private:
     Glib::ustring myFilename;
     SVGPreview *myPreview;
+    Gtk::Label *myLabel;
 };
 
 /**
@@ -445,11 +447,14 @@ private:
     FileListViewText *filesList;
     SVGPreview *filesPreview;
     Gtk::Label *notFoundLabel;
+    Gtk::Label *descriptionLabel;
+    Gtk::Button *searchButton;
 
     // Child widgets
     Gtk::HBox tagBox;
     Gtk::HBox filesBox;
     Gtk::HBox messageBox;
+    Gtk::HBox descriptionBox;
     Gtk::ScrolledWindow listScrolledWindow;
     Glib::RefPtr<Gtk::TreeSelection> selection;
 

@@ -489,6 +489,7 @@ FileExportToOCALPasswordDialogImpl::change_title(const Glib::ustring& title)
 //### F I L E   I M P O R T   F R O M   O C A L
 //#########################################################################
 
+
 /*
  * Callback for row activated
  */
@@ -515,7 +516,7 @@ void FileListViewText::on_row_activated(const Gtk::TreeModel::Path& path, Gtk::T
 
     //Glib::ustring fileUrl = "dav://"; //dav url
     //fileUrl.append(prefs_get_string_attribute("options.ocalurl", "str"));
-    //fileUrl.append("/dav/");
+    //fileUrl.append("/dav.php/");
     //fileUrl.append(get_text(posArray[0], 3)); //author dir
     //fileUrl.append("/");
     //fileUrl.append(get_text(posArray[0], 2)); //filename
@@ -568,6 +569,7 @@ void FileListViewText::on_row_activated(const Gtk::TreeModel::Path& path, Gtk::T
         gnome_vfs_close(to_handle);
     }
     myPreview->showImage(myFilename);
+    myLabel->set_text(get_text(posArray[0], 4));
 #endif
 }
 
@@ -589,10 +591,11 @@ void FileImportFromOCALDialogImplGtk::searchTagEntryChangedCallback()
         return;
 
     notFoundLabel->hide();
+    descriptionLabel->set_text("");
 
     Glib::ustring searchTag = searchTagEntry->get_text();
     // create the ocal uri to get rss feed
-    Glib::ustring uri = "http://www.";
+    Glib::ustring uri = "http://";
     uri.append(prefs_get_string_attribute("options.ocalurl", "str"));
     uri.append("/media/feed/rss/");
     uri.append(searchTag);
@@ -628,8 +631,7 @@ void FileImportFromOCALDialogImplGtk::searchTagEntryChangedCallback()
     // open the rss feed
     result = gnome_vfs_open (&from_handle, uri.c_str(), GNOME_VFS_OPEN_READ);
     if (result != GNOME_VFS_OK) {
-        sp_ui_error_dialog(_("Failed to receive the Open Clip Art Library RSS feed. Verify if the URL is correct in Configuration->Misc (e.g.: openclipart.org)"));
-        //g_warning("Could not find the Open Clip Art Library rss feed. Verify if the OCAL url is correct in Configuration");
+        sp_ui_error_dialog(_("Failed to receive the Open Clip Art Library RSS feed. Verify if the server name is correct in Configuration->Misc (e.g.: openclipart.org)"));
         return;
     }
 
@@ -731,6 +733,10 @@ void FileImportFromOCALDialogImplGtk::print_xml_element_names(xmlNode * a_node)
                 {
                     filesList->set_text(row_num, 3, (const char*)xmlNodeGetContent(cur_node));
                 }
+                else if (!strcmp((const char*)cur_node->name, "description"))
+                {
+                    filesList->set_text(row_num, 4, (const char*)xmlNodeGetContent(cur_node));
+                }
 #endif
             }
         print_xml_element_names(cur_node->children);
@@ -746,7 +752,6 @@ FileImportFromOCALDialogImplGtk::FileImportFromOCALDialogImplGtk(Gtk::Window& pa
                                        const Glib::ustring &title) :
      FileDialogOCALBase(title)
 {
-
     // Initalize to Autodetect
     extension = NULL;
     // No filename to start out with
@@ -756,30 +761,36 @@ FileImportFromOCALDialogImplGtk::FileImportFromOCALDialogImplGtk(Gtk::Window& pa
     Gtk::VBox *vbox = get_vbox();
     Gtk::Label *tagLabel = new Gtk::Label(_("Search Tag"));
     notFoundLabel = new Gtk::Label(_("No files matched your search"));
+    descriptionLabel = new Gtk::Label();
     messageBox.pack_start(*notFoundLabel);
+    descriptionBox.pack_start(*descriptionLabel);
     searchTagEntry = new Gtk::Entry();
     searchTagEntry->set_text(searchTag);
-    searchTagEntry->set_max_length(252); // I am giving the extension approach.
+    searchTagEntry->set_max_length(255);
+    searchButton = new Gtk::Button(_("Search"));
     tagBox.pack_start(*tagLabel);
     tagBox.pack_start(*searchTagEntry, Gtk::PACK_EXPAND_WIDGET, 3);
+    tagBox.pack_start(*searchButton);
     filesPreview = new SVGPreview();
     filesPreview->showNoPreview();
-    filesList = new FileListViewText(4, *filesPreview);
+    filesList = new FileListViewText(5, *filesPreview, *descriptionLabel);
     filesList->set_sensitive(false);
     // add the listview inside a ScrolledWindow
     listScrolledWindow.add(*filesList);
     // only show the scrollbars when they are necessary:
     listScrolledWindow.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     filesList->set_column_title(0, _("Files Found"));
-    listScrolledWindow.set_size_request(200, 180);
+    listScrolledWindow.set_size_request(400, 180);
     filesList->get_column(1)->set_visible(false); // file url
     filesList->get_column(2)->set_visible(false); // tmp file path
     filesList->get_column(3)->set_visible(false); // author dir
+    filesList->get_column(4)->set_visible(false); // file description
     filesBox.pack_start(listScrolledWindow);
     filesBox.pack_start(*filesPreview);
     vbox->pack_start(tagBox);
     vbox->pack_start(messageBox);
     vbox->pack_start(filesBox);
+    vbox->pack_start(descriptionBox);
 
     //Let's do some customization
     searchTagEntry = NULL;
@@ -793,6 +804,9 @@ FileImportFromOCALDialogImplGtk::FileImportFromOCALDialogImplGtk(Gtk::Window& pa
         searchTagEntry->signal_activate().connect(
               sigc::mem_fun(*this, &FileImportFromOCALDialogImplGtk::searchTagEntryChangedCallback));
     }
+
+    searchButton->signal_clicked().connect(
+            sigc::mem_fun(*this, &FileImportFromOCALDialogImplGtk::searchTagEntryChangedCallback));
 
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
     set_default(*add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK));
