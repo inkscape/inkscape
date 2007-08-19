@@ -1007,8 +1007,6 @@ sp_file_import(Gtk::Window &parentWindow)
         if (import_path.size()>0)
             import_path.append(G_DIR_SEPARATOR_S);
 
-        printf("vai importar %s %s\n", fileName.c_str(), selection->get_name());
-
         file_import(doc, fileName, selection);
     }
 
@@ -1284,7 +1282,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     uri.append(prefs_get_string_attribute("options.ocalurl", "str"));
     uri.append("/dav.php/");
     uri.append(Glib::path_get_basename(fileName));
-    printf("%s\n", uri.c_str());
+
     // Save as a remote file using the dav protocol.
     success = file_save_remote(doc, uri, selectionType, FALSE, FALSE);
     remove(fileName.c_str());
