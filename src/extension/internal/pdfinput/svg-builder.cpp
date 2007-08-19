@@ -1408,39 +1408,25 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
         image_stream->reset();
 
         // Convert grayscale values
-        unsigned char *buffer = NULL;
-        if ( color_map || invert_alpha ) {
-            buffer = new unsigned char[width];
-        }
-        if ( color_map ) {
-            for ( int y = 0 ; y < height ; y++ ) {
-                unsigned char *row = image_stream->getLine();
+        unsigned char *buffer = new unsigned char[width];
+        int invert_bit = invert_alpha ? 1 : 0;
+        for ( int y = 0 ; y < height ; y++ ) {
+            unsigned char *row = image_stream->getLine();
+            if (color_map) {
                 color_map->getGrayLine(row, buffer, width);
-                if (invert_alpha) {
-                    unsigned char *buf_ptr = buffer;
-                    for ( int x = 0 ; x < width ; x++ ) {
-                        *buf_ptr++ = ~(*buf_ptr);
+            } else {
+                unsigned char *buf_ptr = buffer;
+                for ( int x = 0 ; x < width ; x++ ) {
+                    if ( row[x] ^ invert_bit ) {
+                        *buf_ptr++ = 0;
+                    } else {
+                        *buf_ptr++ = 255;
                     }
                 }
-                png_write_row(png_ptr, (png_bytep)buffer);
             }
-        } else {
-            for ( int y = 0 ; y < height ; y++ ) {
-                unsigned char *row = image_stream->getLine();
-                if (invert_alpha) {
-                    unsigned char *buf_ptr = buffer;
-                    for ( int x = 0 ; x < width ; x++ ) {
-                        *buf_ptr++ = ~row[x];
-                    }
-                    png_write_row(png_ptr, (png_bytep)buffer);
-                } else {
-                    png_write_row(png_ptr, (png_bytep)row);
-                }
-            }
+            png_write_row(png_ptr, (png_bytep)buffer);
         }
-        if (buffer) {
-            delete buffer;
-        }
+        delete buffer;
     } else if (color_map) {
         image_stream = new ImageStream(str, width,
                                        color_map->getNumPixelComps(),
