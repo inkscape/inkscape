@@ -55,7 +55,7 @@ void
 ImageMagick::readImage(const char *xlink, Magick::Image *image)
 {
 	// Find if the xlink:href is base64 data, i.e. if the image is embedded
-	char *search = strndup(xlink, 30);
+	char *search = (char *) g_strndup(xlink, 30);
 	if (strstr(search, "base64") != (char*)NULL) {
 		// 7 = strlen("base64") + strlen(",")
 		char* pureBase64 = strstr(xlink, "base64") + 7;		
@@ -116,11 +116,12 @@ ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::Vi
 			effectedImage.write(&blob);
 				
 				std::string raw_string = blob.base64();
-				const int raw_len = raw_string.length();
 				const char *raw = raw_string.c_str();
-				const char *raw_i = raw;	
-				
-				int formatted_len = (int)(raw_len / 76.0 * 78.0) + 100;
+
+				/*
+				const int raw_len = raw_string.length();
+				const char *raw_i = raw;
+                int formatted_len = (int)(raw_len / 76.0 * 78.0) + 100;
 				char *formatted = new char[formatted_len];
 				char *formatted_i = formatted;
 				// data:image/png;base64,
@@ -140,8 +141,27 @@ ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::Vi
 				}
 				
 				formatted_i = stpcpy(formatted_i, "\0");
-				
+
 				_nodes[i]->setAttribute("xlink:href", formatted, true);
+				*/
+				
+				Glib::ustring buf = "data:image/";
+				buf.append(effectedImage.magick());
+				buf.append(";base64, \n");
+				int col = 0;
+				while (*raw)
+                    {
+                    buf.push_back(*raw++);
+                    if (col>=76)
+                        {
+                        buf.push_back('\n');
+                        col = 0;
+                        }
+                    }
+                if (col)
+                    buf.push_back('\n');
+
+				_nodes[i]->setAttribute("xlink:href", buf.c_str(), true);
 		}
 		catch (Magick::Exception &error_) {
 			printf("Caught exception: %s \n", error_.what());

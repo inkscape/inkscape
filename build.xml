@@ -50,7 +50,6 @@
   <property name="lib"         location="lib"/>
   <property name="build"       location="build"/>
   <property name="dist"        location="inkscape"/>
-  <property name="boost"         location="c:/boost"/>
 
 
 
@@ -146,6 +145,9 @@
         
         /* use poppler for pdf import? */
         #define HAVE_POPPLER                  1
+        
+        /* do we want bitmap manipulation? */
+        #define WITH_IMAGE_MAGICK             1
 
         #endif /* _CONFIG_H_ */
     </makefile>
@@ -248,7 +250,6 @@
             <exclude name="removeoverlap/test.cpp"/>
             <exclude name="removeoverlap/remove_rectangle_overlap-test.cpp"/>
             <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
-            <exclude name="extension/internal/bitmap/.*"/>
         </fileset>
         <flags>
             -Wall -O3
@@ -291,9 +292,6 @@
             -Wno-comment -I${gtk}/perl/lib/CORE
             <!-- PYTHON -->
             -I${gtk}/python/include
-            <!-- 2geom -->
-            <!-- -I${gtk}/include/2geom -->
-            -I${boost}
         </includes>
     </cc>
   </target>
@@ -381,10 +379,11 @@
            -lpoppler
            ${gtk}/lib/iconv.lib
            -lfreetype.dll -lfontconfig.dll
-           -llcms.dll
            -lssl -lcrypto
-           -lpng -ljpeg.dll -lpopt ${gtk}/lib/zdll.lib
-           -lgc -mconsole -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
+           -lMagick++ -lWand -lMagick
+           -llcms.dll
+           -lpng -ljpeg.dll -ltiff.dll -lpopt ${gtk}/lib/zdll.lib
+           -lgc -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            <!-- 2geom -->
            <!-- -l2geom -->
        </libs>
