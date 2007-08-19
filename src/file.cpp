@@ -395,10 +395,6 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer object, gpointer data)
                  open_path,
                  Inkscape::UI::Dialog::SVG_TYPES,
                  (char const *)_("Select file to open"));
-        // allow easy access to our examples folder		 
-        if (Inkscape::IO::file_test(INKSCAPE_EXAMPLESDIR, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))) {
-            dynamic_cast<Gtk::FileChooser *>(openDialogInstance)->add_shortcut_folder(INKSCAPE_EXAMPLESDIR);
-        }
     }
 
 

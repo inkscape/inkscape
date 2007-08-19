@@ -22,6 +22,8 @@
 #include "filedialogimpl-gtkmm.h"
 #include "dialogs/dialog-events.h"
 #include "interface.h"
+#include "io/sys.h"
+#include "path-prefix.h"
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs.h>
@@ -73,7 +75,8 @@ fileDialogExtensionToPattern(Glib::ustring &pattern,
         }
 }
 
-void
+
+void
 findEntryWidgets(Gtk::Container *parent,
                  std::vector<Gtk::Entry *> &result)
 {
@@ -711,9 +714,15 @@ FileOpenDialogImplGtk::FileOpenDialogImplGtk(Gtk::Window& parentWindow,
     //###### Add the file types menu
     createFilterMenu();
 
-
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
     set_default(*add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK));
+	
+	//###### Allow easy access to our examples folder		 
+    if(Inkscape::IO::file_test(INKSCAPE_EXAMPLESDIR,
+		(GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
+	{
+        add_shortcut_folder(INKSCAPE_EXAMPLESDIR);
+    }
 }
 
 /**
@@ -1597,7 +1606,8 @@ FileExportDialogImpl::getFilename()
 {
     return myFilename;
 }
-
+
+
 } //namespace Dialog
 } //namespace UI
 } //namespace Inkscape
