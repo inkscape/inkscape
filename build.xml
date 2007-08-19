@@ -145,7 +145,8 @@
         
         /* use poppler for pdf import? */
         #define HAVE_POPPLER                  1
-        
+        #define HAVE_POPPLER_CAIRO            1
+
         /* do we want bitmap manipulation? */
         #define WITH_IMAGE_MAGICK             1
 
@@ -371,13 +372,14 @@
            -lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0
            -lgdk_pixbuf-2.0
            -lpangocairo-1.0 -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0
-           -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0 -lcairo.dll
+           -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0
            <!-- PERL -->
            -L${gtk}/perl/lib/CORE -lperl58
            <!-- PYTHON -->
            -L${gtk}/python/libs -lpython25
            ${gtk}/bin/libxml2.dll
-           -lpoppler
+           -lpoppler-cairo -lpoppler
+           -lcairo.dll
            ${gtk}/lib/iconv.lib
            -lfreetype.dll -lfontconfig.dll
            -lssl -lcrypto
