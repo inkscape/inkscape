@@ -243,9 +243,12 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     _cropCheck->signal_toggled().connect(sigc::mem_fun(*this, &PdfImportDialog::_onToggleCropping));
     _fallbackPrecisionSlider_adj->signal_value_changed().connect(sigc::mem_fun(*this, &PdfImportDialog::_onPrecisionChanged));
 
+#ifdef HAVE_POPPLER_CAIRO
     // Create an OutputDev
     _preview_output_dev = new CairoOutputDev();
     _preview_output_dev->startDoc(_pdf_doc->getXRef());
+    _cairo_surface = NULL;
+#endif
 
     // Set default preview size
     _preview_width = 200;
@@ -253,17 +256,18 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
 
     // Init preview
     _thumb_data = NULL;
-    _cairo_surface = NULL;
     _pageNumberSpin_adj->set_value(1.0);
 }
 
 PdfImportDialog::~PdfImportDialog() {
+#ifdef HAVE_POPPLER_CAIRO
     if (_preview_output_dev) {
         delete _preview_output_dev;
     }
     if (_cairo_surface) {
         cairo_surface_destroy(_cairo_surface);
     }
+#endif
     if (_thumb_data) {
         delete _thumb_data;
     }
@@ -344,6 +348,7 @@ void PdfImportDialog::_onPageNumberChanged() {
     _setPreviewPage(_current_page);
 }
 
+#ifdef HAVE_POPPLER_CAIRO
 /**
  * \brief Copies image data from a Cairo surface to a pixbuf
  *
@@ -390,12 +395,14 @@ static void copy_cairo_surface_to_pixbuf (cairo_surface_t *surface,
         }
     }
 }
+#endif
 
 /**
  * \brief Updates the preview area with the previously rendered thumbnail
  */
 bool PdfImportDialog::_onExposePreview(GdkEventExpose *event) {
 
+#ifdef HAVE_POPPLER_CAIRO
     Glib::RefPtr<Gdk::Pixbuf> thumb = Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, true,
             8, _thumb_width, _thumb_height);
     // Set background to white
@@ -413,6 +420,7 @@ bool PdfImportDialog::_onExposePreview(GdkEventExpose *event) {
     _previewArea->get_window()->draw_pixbuf(Glib::RefPtr<Gdk::GC>(), thumb,
                                             0, 0, 0, 0, -1, -1,
                                             Gdk::RGB_DITHER_NONE, 0, 0);
+#endif
 
     return true;
 }
@@ -422,6 +430,7 @@ bool PdfImportDialog::_onExposePreview(GdkEventExpose *event) {
  */
 void PdfImportDialog::_setPreviewPage(int page) {
 
+#ifdef HAVE_POPPLER_CAIRO
     _previewed_page = _pdf_doc->getCatalog()->getPage(page);
     // TODO: When available, obtain the thumbnail from the PDF document itself
     // Get page size by accounting for rotation
@@ -470,6 +479,7 @@ void PdfImportDialog::_setPreviewPage(int page) {
     // Redraw preview area
     _previewArea->set_size_request(_preview_width, _preview_height);
     _previewArea->queue_draw();
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -499,13 +499,13 @@ dnl Libpoppler checking
 dnl ******************************
 
 POPPLER_CFLAGS=""
-PKG_CHECK_MODULES(POPPLER, poppler >= 0.5.5, poppler=yes, poppler=no)
+PKG_CHECK_MODULES(POPPLER, poppler >= 0.5.9, poppler=yes, poppler=no)
 
 if test "x$poppler" = "xyes"; then
 	dnl Working libpoppler
 	POPPLER_LIBS="-lpoppler "
 	dnl Have to test libpoppler-glib presence
-	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.5.5, poppler_glib=yes, poppler_glib=no)
+	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.5.9, poppler_glib=yes, poppler_glib=no)
 	if test "x$poppler_glib" = "xyes"; then
 		dnl Working libpoppler-glib found
 		dnl Check whether the Cairo SVG backend is available
@@ -514,11 +514,21 @@ if test "x$poppler" = "xyes"; then
 			POPPLER_LIBS="$POPPLER_LIBS -lpoppler-glib "
 		fi
 	fi
+	dnl Have to test libpoppler-cairo presence for PDF preview
+	PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.5.9, poppler_cairo=yes, poppler_cairo=no)
+	if test "x$poppler_cairo" = "xyes"; then
+		dnl Working libpoppler-cairo found
+		dnl Check whether the Cairo FreeType backend is available
+		PKG_CHECK_MODULES(CAIRO_FT, cairo-ft, cairo_ft=yes, cairo_ft=no)
+	fi		                                                        	
 fi
 
 if test "x$poppler" = "xyes"; then
 	LIBS="$LIBS $POPPLER_LIBS"
 	AC_DEFINE(HAVE_POPPLER, 1, [Use libpoppler for direct PDF import])
+fi
+if test "x$cairo_ft" = "xyes"; then
+	AC_DEFINE(HAVE_POPPLER_CAIRO, 1, [Use libpoppler-cairo for rendering PDF preview])
 fi
 if test "x$poppler_glib" = "xyes" -a "x$cairo_svg" = "xyes"; then
 	AC_DEFINE(HAVE_POPPLER_GLIB, 1, [Use libpoppler-glib and Cairo-SVG for PDF import])

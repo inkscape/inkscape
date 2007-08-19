@@ -36,7 +36,9 @@
 #include <gdk/gdk.h>
 
 #include "PDFDoc.h"
-#include "CairoOutputDev.h"
+#ifdef HAVE_POPPLER_CAIRO
+#include <CairoOutputDev.h>
+#endif
 
 namespace Inkscape {
 namespace Extension {
@@ -96,8 +98,10 @@ private:
     unsigned char *_thumb_data; // Thumbnail image data
     int _thumb_width, _thumb_height;    // Thumbnail size
     int _preview_width, _preview_height;    // Size of the preview area
+#ifdef HAVE_POPPLER_CAIRO
     cairo_surface_t *_cairo_surface;
     CairoOutputDev *_preview_output_dev;
+#endif
 };
 
     
