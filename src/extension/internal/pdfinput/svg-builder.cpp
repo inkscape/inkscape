@@ -473,6 +473,27 @@ void SvgBuilder::addShadedFill(GfxShading *shading, double *matrix, GfxPath *pat
 
     _container->appendChild(path_node);
     Inkscape::GC::release(path_node);
+
+    // Remove the clipping path emitted before the 'sh' operator
+    int up_walk = 0;
+    Inkscape::XML::Node *node = _container->parent();
+    while( node && node->childCount() == 1 && up_walk < 3 ) {
+        gchar const *clip_path_url = node->attribute("clip-path");
+        if (clip_path_url) {
+            // Obtain clipping path's id from the URL
+            gchar clip_path_id[32];
+            strncpy(clip_path_id, clip_path_url + 5, strlen(clip_path_url) - 6);
+            SPObject *clip_obj = _doc->getObjectById(clip_path_id);
+            if (clip_obj) {
+                clip_obj->deleteObject();
+                node->setAttribute("clip-path", NULL);
+                TRACE(("removed clipping path: %s\n", clip_path_id));
+            }
+            break;
+        }
+        node = node->parent();
+        up_walk++;
+    }
 }
 
 /**
