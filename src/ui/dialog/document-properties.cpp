@@ -266,10 +266,10 @@ DocumentProperties::build_snap()
 {
     _page_snap.show();
 	//General options
-	_rcbsnbb.init (_("Snap bounding _box corners"),
+	_rcbsnbb.init (_("Bounding _box corners"),
                 _("Snap bounding box corners to grid lines, to guides, and to other bounding boxes (only applicable to the selector tool)"),
                 "inkscape:snap-bbox", _wr);
-    _rcbsnn.init (_("Snap _nodes"),
+    _rcbsnn.init (_("_Nodes"),
                 _("Snap nodes to grid lines, to guides, to paths, and to other nodes"),
                 "inkscape:snap-nodes", _wr);
     _rcbic.init (_("Include the object's center"),
@@ -308,13 +308,13 @@ DocumentProperties::build_snap()
     
                 
     Gtk::Label *label_g = manage (new Gtk::Label);
-    label_g->set_markup (_("<b>General</b>"));
+    label_g->set_markup (_("<b>Snapping from</b>"));
     Gtk::Label *label_o = manage (new Gtk::Label);
-    label_o->set_markup (_("<b>Object Snapping</b>"));
+    label_o->set_markup (_("<b>Snapping to objects</b>"));
     Gtk::Label *label_gr = manage (new Gtk::Label);
-    label_gr->set_markup (_("<b>Grid Snapping</b>"));
+    label_gr->set_markup (_("<b>Snapping to grids</b>"));
     Gtk::Label *label_gu = manage (new Gtk::Label);
-    label_gu->set_markup (_("<b>Guide Snapping</b>"));
+    label_gu->set_markup (_("<b>Snapping to guides</b>"));
 
     Gtk::Widget *const array[] =
     {
@@ -323,6 +323,8 @@ DocumentProperties::build_snap()
         0,					0,					//_rcbic._button will be inserted here
         0,                  _rcbsnbb._button,
         0, 					0,        
+        0, 					0,
+        0, 					0,
         label_o,            0,
         0, 					_rcbsnop._button,
         0, 					_rcbsnon._button,
