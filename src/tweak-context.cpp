@@ -607,8 +607,8 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                 ret = TRUE;
             }
             break;
-        case GDK_b:
-        case GDK_B:
+        case GDK_i:
+        case GDK_I:
         case GDK_3:
             if (MOD__SHIFT_ONLY) {
                 sp_tweak_switch_mode(tc, TWEAK_MODE_INFLATE);

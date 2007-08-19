@@ -834,7 +834,7 @@ groups) with the same effect as Alt+click.)</note>
 <title>Modes</title>
 <keys><key><shift/>p</key> <action>push mode</action></keys>
 <keys><key><shift/>m</key> <action>melt (thin) mode</action></keys>
-<keys><key><shift/>b</key> <action>inflate (thicken) mode</action></keys>
+<keys><key><shift/>i</key> <action>inflate (thicken) mode</action></keys>
 <keys><key><shift/>r</key> <action>roughen mode</action></keys>
 </group>
 
