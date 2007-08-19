@@ -33,6 +33,7 @@
 #include "unit-constants.h"
 #include "io/stringstream.h"
 #include "io/base64stream.h"
+#include "display/nr-filter-utils.h"
 #include "libnr/nr-matrix-ops.h"
 #include "libnr/nr-macros.h"
 #include "libnrtype/font-instance.h"
@@ -217,9 +218,9 @@ static gchar *svgConvertRGBToText(double r, double g, double b) {
     static gchar tmp[1023] = {0};
     snprintf(tmp, 1023,
              "#%02x%02x%02x",
-             CLAMP(SP_COLOR_F_TO_U(r), 0, 255),
-             CLAMP(SP_COLOR_F_TO_U(g), 0, 255),
-             CLAMP(SP_COLOR_F_TO_U(b), 0, 255));
+             NR::clamp(SP_COLOR_F_TO_U(r)),
+             NR::clamp(SP_COLOR_F_TO_U(g)),
+             NR::clamp(SP_COLOR_F_TO_U(b)));
     return (gchar *)&tmp;
 }
 
@@ -231,16 +232,11 @@ static gchar *svgConvertGfxRGB(GfxRGB *color) {
 }
 
 static void svgSetTransform(Inkscape::XML::Node *node, double c0, double c1,
-                              double c2, double c3, double c4, double c5) {
+                            double c2, double c3, double c4, double c5) {
     NR::Matrix matrix(c0, c1, c2, c3, c4, c5);
     gchar *transform_text = sp_svg_transform_write(matrix);
     node->setAttribute("transform", transform_text);
     g_free(transform_text);
-}
-
-static void svgSetTransform(Inkscape::XML::Node *node, double *transform) {
-    svgSetTransform(node, transform[0], transform[1], transform[2], transform[3],
-                    transform[4], transform[5]);
 }
 
 /**
@@ -1116,7 +1112,6 @@ void SvgBuilder::_flushText() {
     Glib::ustring x_coords;
     Glib::ustring y_coords;
     Glib::ustring text_buffer;
-    bool is_vertical = !strcmp(sp_repr_css_property(_font_style, "writing-mode", "lr"), "tb");  // FIXME
 
     // Output all buffered glyphs
     while (1) {
@@ -1362,8 +1357,8 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
     // Set read/write functions
     Inkscape::IO::StringOutputStream base64_string;
     Inkscape::IO::Base64OutputStream base64_stream(base64_string);
-    FILE *fp;
-    gchar *file_name;
+    FILE *fp = NULL;
+    gchar *file_name = NULL;
     if (embed_image) {
         base64_stream.setColumnWidth(0);   // Disable line breaks
         png_set_write_fn(png_ptr, &base64_stream, png_write_base64stream, png_flush_base64stream);
@@ -1547,7 +1542,6 @@ Inkscape::XML::Node *SvgBuilder::_createMask(double width, double height) {
     } else {    // Work around for renderer bug when mask isn't defined in pattern
         static int mask_count = 0;
         Inkscape::XML::Node *defs = _root->firstChild();
-        Inkscape::XML::Node *result = NULL;
         if ( !( defs && !strcmp(defs->name(), "svg:defs") ) ) {
             // Create <defs> node
             defs = _xml_doc->createElement("svg:defs");
