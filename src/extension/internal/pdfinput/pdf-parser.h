@@ -150,7 +150,7 @@ public:
 
   // Constructor for regular output.
   PdfParser(XRef *xrefA, SvgBuilder *builderA, int pageNum, int rotate,
-            Dict *resDict, PDFRectangle *cropBox);
+            Dict *resDict, PDFRectangle *box, PDFRectangle *cropBox);
 
   // Constructor for a sub-page object.
   PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *builderA,

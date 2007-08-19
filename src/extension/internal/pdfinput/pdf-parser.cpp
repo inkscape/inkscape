@@ -257,7 +257,8 @@ PdfOperator PdfParser::opTab[] = {
 //------------------------------------------------------------------------
 
 PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *builderA,
-                     int pageNum, int rotate, Dict *resDict, PDFRectangle *cropBox) {
+                     int pageNum, int rotate, Dict *resDict,
+                     PDFRectangle *box, PDFRectangle *cropBox) {
 
   int i;
 
@@ -269,7 +270,7 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   res = new GfxResources(xref, resDict, NULL);
 
   // initialize
-  state = new GfxState(72.0, 72.0, cropBox, rotate, gTrue);
+  state = new GfxState(72.0, 72.0, box, rotate, gTrue);
   clipHistory = new ClipHistoryEntry();
   setDefaultApproximationPrecision();
   fontChanged = gFalse;
