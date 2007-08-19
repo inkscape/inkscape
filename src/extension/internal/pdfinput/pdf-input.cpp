@@ -64,6 +64,10 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
             new class Gtk::Adjustment(1, 1, _pdf_doc->getNumPages(), 1, 10, 0));
     _pageNumberSpin = Gtk::manage(new class Gtk::SpinButton(*_pageNumberSpin_adj, 1, 1));
     hbox2 = Gtk::manage(new class Gtk::HBox(false, 0));
+    // Disable the page selector when there's only one page
+    if ( _pdf_doc->getCatalog()->getNumPages() == 1 ) {
+        _pageNumberSpin->set_sensitive(false);
+    }
 
     // Crop settings
     _cropCheck = Gtk::manage(new class Gtk::CheckButton(_("Crop to:")));
