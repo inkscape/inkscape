@@ -71,9 +71,9 @@ def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bott
 
     # functions specified by the user
     if fx != "":
-        f = eval('lambda x: ' + fx)
+        f = eval('lambda x: ' + fx.strip('"'))
     if fpx != "":
-        fp = eval('lambda x: ' + fpx)
+        fp = eval('lambda x: ' + fpx.strip('"'))
 
     # step is the distance between nodes on x
     step = (xend - xstart) / (samples-1)
