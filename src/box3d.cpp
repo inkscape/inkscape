@@ -181,6 +181,7 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
     box->old_corner0 = box->corners[0];
     box->old_corner3 = box->corners[3];
     box->old_corner5 = box->corners[5];
+    box->old_corner7 = box->corners[7];
 }
 
 static void
@@ -292,6 +293,7 @@ static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node
         box->old_corner0 = box->corners[0];
         box->old_corner3 = box->corners[3];
         box->old_corner5 = box->corners[5];
+        box->old_corner7 = box->corners[7];
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
@@ -781,6 +783,55 @@ sp_3dbox_new_midpoints (Box3D::Perspective3D *persp, Box3D::Axis axis, NR::Point
     NR::Point B_new = pl.pt_with_given_cross_ratio (M0, M, cr1 / (cr1 - 1));
     NR::Point A_new = pl.pt_with_given_cross_ratio (M0, M, 1 - cr2);
     return std::make_pair (A_new, B_new);
+}
+
+void sp_3dbox_recompute_Z_corners_from_new_center (SP3DBox *box, NR::Point const new_center)
+{
+    // TODO: Clean this function up
+
+    Box3D::Perspective3D *persp = sp_desktop_document (inkscape_active_desktop())->get_persp_of_box (box);
+    NR::Point old_center = box->old_center;
+
+    Box3D::PerspectiveLine aux_line1 (old_center, Box3D::Z, persp);
+    Box3D::PerspectiveLine aux_line2 (new_center, Box3D::Y, persp);
+    NR::Point Z1 = aux_line1.meet (aux_line2);
+
+    NR::Point A0 (sp_3dbox_get_midpoint_in_axis_direction (box->old_corner2, box->old_corner0, Box3D::Y, persp));
+    NR::Point B0 (sp_3dbox_get_midpoint_in_axis_direction (box->old_corner7, box->old_corner5, Box3D::Y, persp));
+    Box3D::PerspectiveLine aux_line3 (A0, Box3D::X, persp);
+    Box3D::PerspectiveLine aux_line4 (B0, Box3D::X, persp);
+
+    NR::Point C0 = aux_line3.meet (aux_line1);
+    NR::Point D0 = aux_line4.meet (aux_line1);
+
+    std::pair<NR::Point, NR::Point> new_midpts = sp_3dbox_new_midpoints (persp, Box3D::Z, old_center, Z1, C0, D0);
+    NR::Point C1 (new_midpts.first);
+    NR::Point D1 (new_midpts.second);
+    Box3D::PerspectiveLine aux_line5 (C1, Box3D::X, persp);
+    Box3D::PerspectiveLine aux_line6 (D1, Box3D::X, persp);
+
+    Box3D::PerspectiveLine aux_line7 (A0, Box3D::Z, persp);
+    Box3D::PerspectiveLine aux_line8 (B0, Box3D::Z, persp);
+
+    NR::Point A1 = aux_line5.meet (aux_line7);
+    NR::Point B1 = aux_line6.meet (aux_line8);
+
+    Box3D::PerspectiveLine aux_line9  (box->old_corner2, Box3D::Z, persp);
+    Box3D::PerspectiveLine aux_line10 (box->old_corner5, Box3D::Z, persp);
+
+    Box3D::PerspectiveLine aux_line11 (A1, Box3D::Y, persp);
+    Box3D::PerspectiveLine aux_line12 (B1, Box3D::Y, persp);
+
+    NR::Point new_corner2 = aux_line9.meet (aux_line11);
+    NR::Point new_corner5 = aux_line10.meet (aux_line12);
+
+    Box3D::PerspectiveLine aux_line13 (A1, Box3D::X, persp);
+    NR::Point E1 = aux_line13.meet (aux_line8);
+    Box3D::PerspectiveLine aux_line14 (E1, Box3D::Y, persp);
+
+    NR::Point new_corner1 = aux_line10.meet (aux_line14);
+
+    sp_3dbox_set_shape_from_points (box, new_corner2, new_corner1, new_corner5);
 }
 
 void sp_3dbox_recompute_XY_corners_from_new_center (SP3DBox *box, NR::Point const new_center)
