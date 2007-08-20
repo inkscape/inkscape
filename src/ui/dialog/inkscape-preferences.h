@@ -62,6 +62,7 @@ enum {
     PREFS_PAGE_FILTERS,
     PREFS_PAGE_TRANSFORMS,
     PREFS_PAGE_SELECTING,
+    PREFS_PAGE_IMPORTEXPORT,
     PREFS_PAGE_MISC
 };
 
@@ -100,7 +101,8 @@ protected:
     Gtk::TreeModel::Path _path_shapes;
 
     DialogPage _page_mouse, _page_scrolling, _page_steps, _page_tools, _page_windows,
-        _page_clones, _page_mask, _page_transforms, _page_filters, _page_select, _page_misc;
+        _page_clones, _page_mask, _page_transforms, _page_filters, _page_select, 
+        _page_importexport, _page_misc;
     DialogPage _page_selector, _page_node, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper;
     DialogPage _page_rectangle, _page_3dbox, _page_ellipse, _page_star, _page_spiral, _page_paintbucket;
@@ -152,13 +154,13 @@ protected:
     PrefCheckButton _sel_hidden, _sel_locked;
     PrefCheckButton _sel_layer_deselects;
 
-    PrefSpinButton  _misc_export, _misc_recent, _misc_simpl;
-    PrefCheckButton _misc_imp_bitmap, _misc_comment, _misc_scripts;
+    PrefSpinButton  _importexport_export, _misc_recent, _misc_simpl;
+    PrefCheckButton _importexport_imp_bitmap, _misc_comment, _misc_scripts;
     PrefCheckButton _misc_small_toolbar;
     PrefCombo       _misc_overs_bitmap;
-    PrefEntryButtonHBox _misc_ocal_url;
-    PrefEntry       _misc_ocal_username;
-    PrefEntry       _misc_ocal_password;
+    PrefEntryButtonHBox _importexport_ocal_url;
+    PrefEntry       _importexport_ocal_username;
+    PrefEntry       _importexport_ocal_password;
 
     int _max_dialog_width;
     int _max_dialog_height;
@@ -185,6 +187,7 @@ protected:
     void initPageTransforms();
     void initPageFilters();
     void initPageSelecting();
+    void initPageImportExport();
     void initPageMisc();
 
 private:

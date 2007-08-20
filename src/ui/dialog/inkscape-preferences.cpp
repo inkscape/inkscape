@@ -101,6 +101,7 @@ InkscapePreferences::InkscapePreferences()
     initPageTransforms();
     initPageFilters();
     initPageSelecting();
+    initPageImportExport();
     initPageMisc();
 
     //calculate the size request for this dialog
@@ -596,14 +597,29 @@ void InkscapePreferences::initPageSelecting()
 }
 
 
+void InkscapePreferences::initPageImportExport()
+{
+    _importexport_export.init("dialogs.export.defaultxdpi", "value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
+    _page_importexport.add_line( false, _("Default export resolution:"), _importexport_export, _("dpi"),
+                            _("Default bitmap resolution (in dots per inch) in the Export dialog"), false);
+    _importexport_imp_bitmap.init( _("Import bitmap as <image>"), "options.importbitmapsasimages", "value", true);
+    _page_importexport.add_line( false, "", _importexport_imp_bitmap, "", 
+         _("When on, an imported bitmap creates an <image> element; otherwise it is a rectangle with bitmap fill"), true);
+    _importexport_ocal_url.init("options.ocalurl", "str", true, g_strdup_printf("openclipart.org"));
+    _page_importexport.add_line( false, _("Open Clip Art Library Server Name:"), _importexport_ocal_url, "", 
+        _("The server name of the Open Clip Art Library webdav server. It's used by the Import and Export to OCAL function."), true);
+    _importexport_ocal_username.init("options.ocalusername", "str", true);
+    _page_importexport.add_line( false, _("Open Clip Art Library Username:"), _importexport_ocal_username, "", 
+            _("The username used to log into Open Clip Art Library."), true);
+    _importexport_ocal_password.init("options.ocalpassword", "str", false);
+    _page_importexport.add_line( false, _("Open Clip Art Library Password:"), _importexport_ocal_password, "", 
+            _("The password used to log into Open Clip Art Library."), true);
+
+    this->AddPage(_page_importexport, _("Import/Export"), PREFS_PAGE_IMPORTEXPORT);
+}
+
 void InkscapePreferences::initPageMisc()
 {
-    _misc_export.init("dialogs.export.defaultxdpi", "value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
-    _page_misc.add_line( false, _("Default export resolution:"), _misc_export, _("dpi"), 
-                           _("Default bitmap resolution (in dots per inch) in the Export dialog"), false);
-    _misc_imp_bitmap.init( _("Import bitmap as <image>"), "options.importbitmapsasimages", "value", true);
-    _page_misc.add_line( false, "", _misc_imp_bitmap, "", 
-                           _("When on, an imported bitmap creates an <image> element; otherwise it is a rectangle with bitmap fill"), true);
     _misc_comment.init( _("Add label comments to printing output"), "printing.debug", "show-label-comments", false);
     _page_misc.add_line( false, "", _misc_comment, "", 
                            _("When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"), true);
@@ -622,12 +638,6 @@ void InkscapePreferences::initPageMisc()
     _misc_overs_bitmap.set_size_request(_sb_width);
     _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, num_items, 1);
     _page_misc.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
-    _misc_ocal_url.init("options.ocalurl", "str", true, g_strdup_printf("openclipart.org"));
-    _page_misc.add_line( false, _("Open Clip Art Library Server Name:"), _misc_ocal_url, "", _("The server name of the Open Clip Art Library webdav server. It's used by the Import and Export to OCAL function."), true);
-    _misc_ocal_username.init("options.ocalusername", "str", true);
-    _page_misc.add_line( false, _("Open Clip Art Library Username:"), _misc_ocal_username, "", _("The username used to log into Open Clip Art Library."), true);
-    _misc_ocal_password.init("options.ocalpassword", "str", false);
-    _page_misc.add_line( false, _("Open Clip Art Library Password:"), _misc_ocal_password, "", _("The password used to log into Open Clip Art Library."), true);
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
