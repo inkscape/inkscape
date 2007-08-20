@@ -480,6 +480,13 @@ void SelectedStyle::on_fill_unset() {
 void SelectedStyle::on_stroke_unset() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     sp_repr_css_unset_property (css, "stroke");
+    sp_repr_css_unset_property (css, "stroke-opacity");
+    sp_repr_css_unset_property (css, "stroke-width");
+    sp_repr_css_unset_property (css, "stroke-miterlimit");
+    sp_repr_css_unset_property (css, "stroke-linejoin");
+    sp_repr_css_unset_property (css, "stroke-linecap");
+    sp_repr_css_unset_property (css, "stroke-dashoffset");
+    sp_repr_css_unset_property (css, "stroke-dasharray");
     sp_desktop_set_style (_desktop, css, true, true);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,

@@ -470,6 +470,13 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
             if (items) {
                     SPCSSAttr *css = sp_repr_css_attr_new ();
                     sp_repr_css_unset_property (css, "stroke");
+                    sp_repr_css_unset_property (css, "stroke-opacity");
+                    sp_repr_css_unset_property (css, "stroke-width");
+                    sp_repr_css_unset_property (css, "stroke-miterlimit");
+                    sp_repr_css_unset_property (css, "stroke-linejoin");
+                    sp_repr_css_unset_property (css, "stroke-linecap");
+                    sp_repr_css_unset_property (css, "stroke-dashoffset");
+                    sp_repr_css_unset_property (css, "stroke-dasharray");
 
                     sp_desktop_set_style (desktop, css);
                     sp_repr_css_attr_unref (css);
