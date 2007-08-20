@@ -292,7 +292,7 @@ public:
     {
         std::ostringstream os;
         const Gdk::Color c = get_color();
-        const int r = (c.get_red() + 1) / 256 - 1, g = (c.get_green() + 1) / 256 - 1, b = (c.get_blue() + 1) / 256 - 1;
+        const int r = c.get_red() / 257, g = c.get_green() / 257, b = c.get_blue() / 257;
         os << "rgb(" << r << "," << g << "," << b << ")";
         return os.str();
     }
@@ -303,9 +303,9 @@ public:
         const gchar* val = attribute_value(o);
         if(val) {
             const guint32 i = sp_svg_read_color(val, 0xFFFFFFFF);
-            const int r = SP_RGBA32_R_U(i) + 1, g = SP_RGBA32_G_U(i) + 1, b = SP_RGBA32_B_U(i) + 1;
+            const int r = SP_RGBA32_R_U(i), g = SP_RGBA32_G_U(i), b = SP_RGBA32_B_U(i);
             Gdk::Color col;
-            col.set_rgb(r * 256 - 1, g * 256 - 1, b * 256 - 1);
+            col.set_rgb(r * 257, g * 257, b * 257);
             set_color(col);
         }
     }
