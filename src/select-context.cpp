@@ -519,9 +519,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         }
                         if (!seltrans->isEmpty())
                             seltrans->moveTo(p, event->button.state);
-                        if (desktop->scroll_to_point(&p))
-                            // unfortunately in complex drawings, gobbling results in losing grab of the object, for some mysterious reason
-                            ; //gobble_motion_events(GDK_BUTTON1_MASK);
+                        desktop->scroll_to_point(&p);
+                        gobble_motion_events(GDK_BUTTON1_MASK);
                         ret = TRUE;
                     } else {
                         sc->dragging = FALSE;
