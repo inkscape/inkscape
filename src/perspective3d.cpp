@@ -174,7 +174,7 @@ Perspective3D::set_vanishing_point (Box3D::Axis const dir, VanishingPoint const 
         case Z:
             (*vp_z) = pt;
             break;
-        case NONE:
+        default:
             // no vanishing point to set
             break;
     }
@@ -205,7 +205,7 @@ Perspective3D::set_vanishing_point (Box3D::Axis const dir, gdouble pt_x, gdouble
         case Z:
             vp = vp_z;
             break;
-        case NONE:
+        default:
             // no vanishing point to set
             return;
     }

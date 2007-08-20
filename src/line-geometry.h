@@ -28,6 +28,7 @@ class Line {
 public:
     Line(NR::Point const &start, NR::Point const &vec, bool is_endpoint = true);
     Line(Line const &line);
+    virtual ~Line() {}
     Line &operator=(Line const &line);
     virtual NR::Maybe<NR::Point> intersect(Line const &line);
     void set_direction(NR::Point const &dir); // FIXME: Can we avoid this explicit assignment?

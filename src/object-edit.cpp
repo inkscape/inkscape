@@ -545,6 +545,7 @@ static inline Box3D::Axis movement_axis_of_3dbox_corner (guint corner, guint sta
         case 7:
             return ((state & GDK_SHIFT_MASK) ? Box3D::XY : Box3D::Z);
     }
+    return Box3D::NONE;
 }
 
 /* 

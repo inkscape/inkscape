@@ -439,8 +439,6 @@ bool sp_3dbox_recompute_z_orders (SP3DBox *box)
 {
     guint new_z_orders[6];
 
-    Box3D::Perspective3D *persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
-
     // TODO: Determine the front corner depending on the distance from VPs and/or the user presets
     guint front_corner = sp_3dbox_get_front_corner_id (box);
 
@@ -448,7 +446,7 @@ bool sp_3dbox_recompute_z_orders (SP3DBox *box)
     gdouble dir_3x = sp_3dbox_corner_angle_to_VP (box, Box3D::X, front_corner ^ Box3D::Y);
 
     gdouble dir_1y = sp_3dbox_corner_angle_to_VP (box, Box3D::Y, front_corner);
-    gdouble dir_0y = sp_3dbox_corner_angle_to_VP (box, Box3D::Y, front_corner ^ Box3D::X);
+    //gdouble dir_0y = sp_3dbox_corner_angle_to_VP (box, Box3D::Y, front_corner ^ Box3D::X);
 
     gdouble dir_1z = sp_3dbox_corner_angle_to_VP (box, Box3D::Z, front_corner);
     gdouble dir_3z = sp_3dbox_corner_angle_to_VP (box, Box3D::Z, front_corner ^ Box3D::Y);
@@ -499,8 +497,6 @@ bool sp_3dbox_recompute_z_orders (SP3DBox *box)
 
 void sp_3dbox_set_z_orders (SP3DBox *box)
 {
-    GSList *items = sp_item_group_item_list(SP_GROUP(box));
-
     // For efficiency reasons, we only set the new z-orders if something really changed
     if (sp_3dbox_recompute_z_orders (box)) {
         box->faces[box->z_orders[0]]->lower_to_bottom ();
@@ -822,7 +818,6 @@ void sp_3dbox_recompute_XY_corners_from_new_center (SP3DBox *box, NR::Point cons
     Box3D::PerspectiveLine aux_line4 (new_center, Box3D::Z, persp);
     NR::Point M2 = aux_line4.meet (aux_line3);
 
-    Box3D::VanishingPoint *vp_y = persp->get_vanishing_point (Box3D::Y);
     std::pair<NR::Point, NR::Point> other_new_midpts = sp_3dbox_new_midpoints (persp, Box3D::Y, M1, M2, C1, D1);
     NR::Point C2 (other_new_midpts.first);
     NR::Point D2 (other_new_midpts.second);
@@ -889,6 +884,9 @@ void sp_3dbox_corners_for_perspective_lines (const SP3DBox * box, Box3D::Axis ax
             corner2 = sp_3dbox_get_corner_along_edge (box, 3 ^ switch_axis, axis, Box3D::REAR);
             corner3 = sp_3dbox_get_corner_along_edge (box, 0 ^ switch_axis, axis, Box3D::REAR);
             corner4 = sp_3dbox_get_corner_along_edge (box, 2 ^ switch_axis, axis, Box3D::REAR);
+            break;
+        default:
+            // do nothing
             break;
     }            
 }
