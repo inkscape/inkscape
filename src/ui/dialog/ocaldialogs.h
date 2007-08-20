@@ -90,8 +90,7 @@ public:
      */
     static FileExportToOCALDialog *create(Gtk::Window& parentWindow, 
                                      FileDialogType fileTypes,
-                                     const Glib::ustring &title,
-                                     const Glib::ustring &default_key);
+                                     const Glib::ustring &title);
 
 
     /**
@@ -106,15 +105,6 @@ public:
      * @return the selected path if user selected one, else NULL
      */
     virtual bool show() =0;
-
-    /**
-     * Return the 'key' (filetype) of the selection, if any
-     * @return a pointer to a string if successful (which must
-     * be later freed with g_free(), else NULL.
-     */
-    virtual Inkscape::Extension::Extension * getSelectionType() = 0;
-
-    virtual void setSelectionType( Inkscape::Extension::Extension * key ) = 0;
 
     virtual Glib::ustring getFilename () =0;
 
@@ -278,22 +268,17 @@ class FileExportToOCALDialogImpl : public FileExportToOCALDialog, public FileDia
 public:
   FileExportToOCALDialogImpl(Gtk::Window& parentWindow, 
                              FileDialogType fileTypes,
-			     const Glib::ustring &title,
-			     const Glib::ustring &default_key);
+			     const Glib::ustring &title);
     
     virtual ~FileExportToOCALDialogImpl();
 
     bool show();
-
-    Inkscape::Extension::Extension *getSelectionType();
-    virtual void setSelectionType( Inkscape::Extension::Extension * key );
 
     Glib::ustring getFilename();
 
     Glib::ustring myFilename;
 
     void change_title(const Glib::ustring& title);
-    void updateNameAndExtension();
 
 private:
 
@@ -302,13 +287,6 @@ private:
      */
     Gtk::Entry *fileNameEntry;
     
-    
-    /**
-     * Allow the specification of the output file type
-     */
-    Gtk::ComboBoxText fileTypeComboBox;
-
-
     /**
      *  Data mirror of the combo box
      */
@@ -318,19 +296,6 @@ private:
     Gtk::HBox childBox;
     Gtk::VBox checksBox;
     Gtk::HBox fileBox;
-
-    Gtk::CheckButton fileTypeCheckbox;
-
-    /**
-     * Callback for user choose a fileType
-     */
-    void fileTypeChangedCallback();
-
-    /**
-     *  Create a filter menu for this type of dialog
-     */
-    void createFileTypeMenu();
-
 
     /**
      * The extension to use to write this file
@@ -404,18 +369,22 @@ private:
 class FileListViewText : public Gtk::ListViewText
 {
 public:
-    FileListViewText(guint columns_count, SVGPreview& filesPreview, Gtk::Label& description):ListViewText(columns_count)
+    FileListViewText(guint columns_count, SVGPreview& filesPreview, Gtk::Label& description, Gtk::Button& okButton)
+                :ListViewText(columns_count)
     {
         myPreview = &filesPreview;
         myLabel = &description;
+        myButton = &okButton;
     }
     Glib::ustring getFilename();
 protected:
     void on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
+    void on_cursor_changed();
 private:
     Glib::ustring myFilename;
     SVGPreview *myPreview;
     Gtk::Label *myLabel;
+    Gtk::Button *myButton;
 };
 
 /**
@@ -449,6 +418,7 @@ private:
     Gtk::Label *notFoundLabel;
     Gtk::Label *descriptionLabel;
     Gtk::Button *searchButton;
+    Gtk::Button *okButton;
 
     // Child widgets
     Gtk::HBox tagBox;

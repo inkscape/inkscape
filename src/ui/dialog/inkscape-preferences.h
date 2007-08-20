@@ -156,7 +156,7 @@ protected:
     PrefCheckButton _misc_imp_bitmap, _misc_comment, _misc_scripts;
     PrefCheckButton _misc_small_toolbar;
     PrefCombo       _misc_overs_bitmap;
-    PrefEntry       _misc_ocal_url;
+    PrefEntryButtonHBox _misc_ocal_url;
     PrefEntry       _misc_ocal_username;
     PrefEntry       _misc_ocal_password;
 

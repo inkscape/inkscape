@@ -1183,24 +1183,12 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     if ((!doc->uri) && (!str))
         return false;
 
-
-    Inkscape::Extension::Output *extension;
-        
-    // Get the default extension name
-    Glib::ustring default_extension;
-    char *attr = (char *)repr->attribute("inkscape:output_extension");
-    if (!attr)
-        attr = (char *)prefs_get_string_attribute("dialogs.save_as", "default");
-    if (attr)
-        default_extension = attr;
-    
+   //  Get the default extension name
+    Glib::ustring default_extension = "org.inkscape.output.svg.inkscape";
     char formatBuf[256];
     
     Glib::ustring filename_extension = ".svg";
-    extension = dynamic_cast<Inkscape::Extension::Output *>
-        (Inkscape::Extension::db.get(default_extension.c_str()));
-    if (extension)
-        filename_extension = extension->get_extension();
+    selectionType = Inkscape::Extension::db.get(default_extension.c_str());
         
     export_path = Glib::get_tmp_dir ();
         
@@ -1221,8 +1209,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
         exportDialogInstance = Inkscape::UI::Dialog::FileExportToOCALDialog::create(
                 parentWindow,
                 Inkscape::UI::Dialog::EXPORT_TYPES,
-                (char const *) _("Select file to export to"),
-                default_extension
+                (char const *) _("Select file to export to")
                 );
         
     success = exportDialogInstance->show();
@@ -1230,9 +1217,8 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
         return success;
     
     fileName = exportDialogInstance->getFilename();
-    
-    selectionType = exportDialogInstance->getSelectionType();
-        
+
+    fileName.append(filename_extension.c_str());    
     if (fileName.size() > 0) {
         Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
             
@@ -1250,7 +1236,9 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     success = file_save(parentWindow, doc, filePath, selectionType, FALSE, FALSE);
 
     if (!success){
-        g_warning( "Error saving a temporary copy." );
+        gchar *text = g_strdup_printf(_("Error saving a temporary copy"));
+        sp_ui_error_dialog(text);
+
         return success;
     }
     
@@ -1287,7 +1275,10 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     success = file_save_remote(doc, uri, selectionType, FALSE, FALSE);
     remove(fileName.c_str());
     if (!success)
-        g_warning( "Error exporting the document." );
+    {
+        gchar *text = g_strdup_printf(_("Error exporting the document. Verify if the server name, username and password are correct. If the server have support for webdav and verify if you didn't forget to choose a license too."));
+        sp_ui_error_dialog(text);
+    }
     else
         gotSuccess = true;
 

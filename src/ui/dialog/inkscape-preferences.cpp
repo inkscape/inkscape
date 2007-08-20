@@ -622,7 +622,7 @@ void InkscapePreferences::initPageMisc()
     _misc_overs_bitmap.set_size_request(_sb_width);
     _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, num_items, 1);
     _page_misc.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
-    _misc_ocal_url.init("options.ocalurl", "str", true);
+    _misc_ocal_url.init("options.ocalurl", "str", true, g_strdup_printf("openclipart.org"));
     _page_misc.add_line( false, _("Open Clip Art Library Server Name:"), _misc_ocal_url, "", _("The server name of the Open Clip Art Library webdav server. It's used by the Import and Export to OCAL function."), true);
     _misc_ocal_username.init("options.ocalusername", "str", true);
     _page_misc.add_line( false, _("Open Clip Art Library Username:"), _misc_ocal_username, "", _("The username used to log into Open Clip Art Library."), true);

@@ -267,6 +267,46 @@ void PrefCombo::on_changed()
     }
 }
 
+void PrefEntryButtonHBox::init(const std::string& prefs_path, const std::string& attr,
+            bool visibility, gchar* default_string)
+{
+    _prefs_path = prefs_path;
+    _attr = attr;
+    _default_string = default_string;
+    relatedEntry = new Gtk::Entry();
+    relatedButton = new Gtk::Button("Reset");
+    relatedEntry->set_invisible_char('*');
+    relatedEntry->set_visibility(visibility);
+    relatedEntry->set_text(prefs_get_string_attribute(_prefs_path.c_str(), _attr.c_str()));
+    this->pack_start(*relatedEntry);
+    this->pack_start(*relatedButton);
+    relatedButton->signal_clicked().connect(
+            sigc::mem_fun(*this, &PrefEntryButtonHBox::onRelatedButtonClickedCallback));
+    relatedEntry->signal_changed().connect(
+            sigc::mem_fun(*this, &PrefEntryButtonHBox::onRelatedEntryChangedCallback));
+}
+
+void PrefEntryButtonHBox::onRelatedEntryChangedCallback()
+{
+    if (this->is_visible()) //only take action if user changed value
+    {
+        prefs_set_string_attribute(_prefs_path.c_str(), _attr.c_str(),
+        relatedEntry->get_text().c_str());
+    }
+}
+
+void PrefEntryButtonHBox::onRelatedButtonClickedCallback()
+{
+    if (this->is_visible()) //only take action if user changed value
+    {
+        prefs_set_string_attribute(_prefs_path.c_str(), _attr.c_str(),
+        _default_string);
+        relatedEntry->set_text(_default_string);
+    }
+}
+
+
+
 void PrefEntry::init(const std::string& prefs_path, const std::string& attr,
             bool visibility)
 {

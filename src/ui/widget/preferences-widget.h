@@ -21,6 +21,7 @@
 #include <gtkmm/tooltips.h>
 #include <gtkmm/treeview.h>
 #include <gtkmm/radiobutton.h>
+#include <gtkmm/box.h>
 #include <gtkmm/frame.h>
 #include <sigc++/sigc++.h>
 //#include <glibmm/i18n.h>
@@ -98,6 +99,21 @@ protected:
     std::string _prefs_path;
     std::string _attr;
     void on_changed();
+};
+
+class PrefEntryButtonHBox : public Gtk::HBox
+{
+public:
+    void init(const std::string& prefs_path, const std::string& attr,
+            bool mask, gchar* default_string);
+protected:
+    std::string _prefs_path;
+    std::string _attr;
+    gchar* _default_string;
+    Gtk::Button *relatedButton;
+    Gtk::Entry *relatedEntry;
+    void onRelatedEntryChangedCallback();
+    void onRelatedButtonClickedCallback();
 };
 
 class DialogPage : public Gtk::Table
