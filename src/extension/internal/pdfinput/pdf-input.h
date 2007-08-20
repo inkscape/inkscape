@@ -97,7 +97,9 @@ private:
     Page *_previewed_page;    // Currently previewed page
     unsigned char *_thumb_data; // Thumbnail image data
     int _thumb_width, _thumb_height;    // Thumbnail size
+    int _thumb_rowstride;
     int _preview_width, _preview_height;    // Size of the preview area
+    bool _render_thumb;     // Whether we can/shall render thumbnails
 #ifdef HAVE_POPPLER_CAIRO
     cairo_surface_t *_cairo_surface;
     CairoOutputDev *_preview_output_dev;

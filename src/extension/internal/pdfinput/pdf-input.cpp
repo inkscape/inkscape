@@ -247,11 +247,13 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     _cropCheck->signal_toggled().connect(sigc::mem_fun(*this, &PdfImportDialog::_onToggleCropping));
     _fallbackPrecisionSlider_adj->signal_value_changed().connect(sigc::mem_fun(*this, &PdfImportDialog::_onPrecisionChanged));
 
+    _render_thumb = false;
 #ifdef HAVE_POPPLER_CAIRO
     // Create an OutputDev
     _preview_output_dev = new CairoOutputDev();
     _preview_output_dev->startDoc(_pdf_doc->getXRef());
     _cairo_surface = NULL;
+    _render_thumb = true;
 #endif
 
     // Set default preview size
@@ -273,7 +275,11 @@ PdfImportDialog::~PdfImportDialog() {
     }
 #endif
     if (_thumb_data) {
-        delete _thumb_data;
+        if (_render_thumb) {
+            delete _thumb_data;
+        } else {
+            gfree(_thumb_data);
+        }
     }
 }
 
@@ -406,30 +412,47 @@ static void copy_cairo_surface_to_pixbuf (cairo_surface_t *surface,
  */
 bool PdfImportDialog::_onExposePreview(GdkEventExpose *event) {
 
-#ifdef HAVE_POPPLER_CAIRO
-    Glib::RefPtr<Gdk::Pixbuf> thumb = Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, true,
-            8, _thumb_width, _thumb_height);
+    // Check if we have a thumbnail at all
+    if (!_thumb_data) {
+        return true;
+    }
+
+    // Create the pixbuf for the thumbnail
+    Glib::RefPtr<Gdk::Pixbuf> thumb;
+    if (_render_thumb) {
+        thumb = Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, true,
+                                    8, _thumb_width, _thumb_height);
+    } else {
+        thumb = Gdk::Pixbuf::create_from_data(_thumb_data, Gdk::COLORSPACE_RGB,
+            false, 8, _thumb_width, _thumb_height, _thumb_rowstride);
+    }
     if (!thumb) {
         return true;
     }
+
     // Set background to white
-    thumb->fill(0xffffffff);
-    Glib::RefPtr<Gdk::Pixmap> back_pixmap = Gdk::Pixmap::create(_previewArea->get_window(),
-            _thumb_width, _thumb_height, -1);
-    if (!back_pixmap) {
-        return true;
+    if (_render_thumb) {
+        thumb->fill(0xffffffff);
+        Glib::RefPtr<Gdk::Pixmap> back_pixmap = Gdk::Pixmap::create(
+                _previewArea->get_window(), _thumb_width, _thumb_height, -1);
+        if (!back_pixmap) {
+            return true;
+        }
+        back_pixmap->draw_pixbuf(Glib::RefPtr<Gdk::GC>(), thumb, 0, 0, 0, 0,
+                                 _thumb_width, _thumb_height,
+                                 Gdk::RGB_DITHER_NONE, 0, 0);
+        _previewArea->get_window()->set_back_pixmap(back_pixmap, false);
+        _previewArea->get_window()->clear();
     }
-    back_pixmap->draw_pixbuf(Glib::RefPtr<Gdk::GC>(), thumb, 0, 0, 0, 0,
-                             _thumb_width, _thumb_height,
-                             Gdk::RGB_DITHER_NONE, 0, 0);
-    _previewArea->get_window()->set_back_pixmap(back_pixmap, false);
-    _previewArea->get_window()->clear();
+#ifdef HAVE_POPPLER_CAIRO
     // Copy the thumbnail image from the Cairo surface
-    copy_cairo_surface_to_pixbuf(_cairo_surface, _thumb_data, thumb->gobj());
-    _previewArea->get_window()->draw_pixbuf(Glib::RefPtr<Gdk::GC>(), thumb,
-                                            0, 0, 0, 0, -1, -1,
-                                            Gdk::RGB_DITHER_NONE, 0, 0);
+    if (_render_thumb) {
+        copy_cairo_surface_to_pixbuf(_cairo_surface, _thumb_data, thumb->gobj());
+    }
 #endif
+    _previewArea->get_window()->draw_pixbuf(Glib::RefPtr<Gdk::GC>(), thumb,
+                                            0, 0, 0, _render_thumb ? 0 : 20,
+                                            -1, -1, Gdk::RGB_DITHER_NONE, 0, 0);
 
     return true;
 }
@@ -439,9 +462,23 @@ bool PdfImportDialog::_onExposePreview(GdkEventExpose *event) {
  */
 void PdfImportDialog::_setPreviewPage(int page) {
 
-#ifdef HAVE_POPPLER_CAIRO
     _previewed_page = _pdf_doc->getCatalog()->getPage(page);
-    // TODO: When available, obtain the thumbnail from the PDF document itself
+    // Try to get a thumbnail from the PDF if possible
+    if (!_render_thumb) {
+        if (_thumb_data) {
+            gfree(_thumb_data);
+            _thumb_data = NULL;
+        }
+        if (!_previewed_page->loadThumb(&_thumb_data,
+             &_thumb_width, &_thumb_height, &_thumb_rowstride)) {
+            return;
+        }
+        // Redraw preview area
+        _previewArea->set_size_request(_thumb_width, _thumb_height + 20);
+        _previewArea->queue_draw();
+        return;
+    }
+#ifdef HAVE_POPPLER_CAIRO
     // Get page size by accounting for rotation
     double width, height;
     int rotate = _previewed_page->getRotate();
@@ -459,16 +496,16 @@ void PdfImportDialog::_setPreviewPage(int page) {
     // Create new Cairo surface
     _thumb_width = (int)ceil( width * scale_factor );
     _thumb_height = (int)ceil( height * scale_factor );
-    int rowstride = _thumb_width * 4;
+    _thumb_rowstride = _thumb_width * 4;
     if (_thumb_data) {
         delete _thumb_data;
     }
-    _thumb_data = new unsigned char[ rowstride * _thumb_height ];
+    _thumb_data = new unsigned char[ _thumb_rowstride * _thumb_height ];
     if (_cairo_surface) {
         cairo_surface_destroy(_cairo_surface);
     }
     _cairo_surface = cairo_image_surface_create_for_data(_thumb_data,
-            CAIRO_FORMAT_ARGB32, _thumb_width, _thumb_height, rowstride);
+            CAIRO_FORMAT_ARGB32, _thumb_width, _thumb_height, _thumb_rowstride);
     cairo_t *cr = cairo_create(_cairo_surface);
     cairo_scale(cr, scale_factor, scale_factor);    // Use Cairo for resizing the image
     _preview_output_dev->setCairo(cr);
