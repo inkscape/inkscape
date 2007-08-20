@@ -1206,7 +1206,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
         
     // Show the Export To OCAL dialog
     if (!exportDialogInstance)
-        exportDialogInstance = Inkscape::UI::Dialog::FileExportToOCALDialog::create(
+        exportDialogInstance = new Inkscape::UI::Dialog::FileExportToOCALDialog(
                 parentWindow,
                 Inkscape::UI::Dialog::EXPORT_TYPES,
                 (char const *) _("Select file to export to")
@@ -1253,7 +1253,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
         if(!gotSuccess)
         {
             if (!exportPasswordDialogInstance)
-                exportPasswordDialogInstance = Inkscape::UI::Dialog::FileExportToOCALPasswordDialog::create(
+                exportPasswordDialogInstance = new Inkscape::UI::Dialog::FileExportToOCALPasswordDialog(
                     parentWindow,
                     (char const *) _("Open Clip Art Login"));
             success = exportPasswordDialogInstance->show();
@@ -1320,8 +1320,8 @@ sp_file_import_from_ocal(Gtk::Window &parentWindow)
     static Inkscape::UI::Dialog::FileImportFromOCALDialog *importDialogInstance = NULL;
 
     if (!importDialogInstance) {
-        importDialogInstance =
-             Inkscape::UI::Dialog::FileImportFromOCALDialog::create(
+        importDialogInstance = new
+             Inkscape::UI::Dialog::FileImportFromOCALDialog(
                  parentWindow,
                  import_path,
                  Inkscape::UI::Dialog::IMPORT_TYPES,
