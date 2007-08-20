@@ -570,14 +570,9 @@ file_save_remote(SPDocument *doc, const Glib::ustring &uri,
         g_warning("Could not find the temp saving.");
         return false;
     }
-
     
+    result = gnome_vfs_create (&to_handle, uri_local, GNOME_VFS_OPEN_WRITE, FALSE, GNOME_VFS_PERM_USER_ALL);
     result = gnome_vfs_open (&to_handle, uri_local, GNOME_VFS_OPEN_WRITE);
-    
-        
-    if (result == GNOME_VFS_ERROR_NOT_FOUND){
-        result = gnome_vfs_create (&to_handle, uri_local, GNOME_VFS_OPEN_WRITE, FALSE, GNOME_VFS_PERM_USER_ALL);
-    }
     
     if (result != GNOME_VFS_OK) {
         g_warning("file creating: %s", gnome_vfs_result_to_string(result));
