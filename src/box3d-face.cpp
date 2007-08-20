@@ -177,16 +177,36 @@ void Box3DFace::hook_path_to_3dbox(SPPath * existing_path)
         return;
     }
 
-    SPDesktop *desktop = inkscape_active_desktop();
+    /* create new path for face */
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(SP_OBJECT(parent_box3d)));
 
-    /* apply style */
-    bool use_current = prefs_get_int_attribute("tools.shapes.3dbox", "usecurrent", 0);
     Inkscape::XML::Node *repr_face = xml_doc->createElement("svg:path");
     repr_face->setAttribute("inkscape:box3dface", this->axes_string());
+    this->path = SP_PATH(SP_OBJECT(parent_box3d)->appendChildRepr(repr_face));
+    Inkscape::GC::release(repr_face);
 
-    gchar *descr = g_strconcat ("desktop.", axes_string(), NULL);
+    /* set the correct style */
+    this->set_style (repr_face);
+}
+
+void Box3DFace::set_style(Inkscape::XML::Node *repr_face, bool extruded)
+{
+    if (repr_face == NULL) {
+        repr_face = SP_OBJECT_REPR (this->path);
+    }
+
+    if (!extruded && !strcmp (axes_string (), "XYrear")) {
+        // to avoid "flashing" during the initial dragging process, we make the rear face invisible in this case
+        repr_face->setAttribute("style", "fill:none");
+        return;
+    }
+
+    gchar *descr = g_strconcat ("desktop.", axes_string (), NULL);
     const gchar * cur_style = prefs_get_string_attribute(descr, "style");
+    g_free (descr);    
+    
+    SPDesktop *desktop = inkscape_active_desktop();
+    bool use_current = prefs_get_int_attribute("tools.shapes.3dbox", "usecurrent", 0);
     if (use_current && cur_style !=NULL) {
         /* use last used style */
         repr_face->setAttribute("style", cur_style);
@@ -196,9 +216,6 @@ void Box3DFace::hook_path_to_3dbox(SPPath * existing_path)
         g_string_printf (pstring, "tools.shapes.3dbox.%s", axes_string());
         sp_desktop_apply_style_tool (desktop, repr_face, pstring->str, false);
     }
-    g_free (descr);
-    this->path = SP_PATH(SP_OBJECT(parent_box3d)->appendChildRepr(repr_face));
-    Inkscape::GC::release(repr_face);
 }
 
 /**

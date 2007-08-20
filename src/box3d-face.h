@@ -43,6 +43,7 @@ public:
     //void set_face (NR::Point const A, NR::Point const C, Box3D::Axis const dir1, Box3D::Axis const dir2);
     
     void hook_path_to_3dbox(SPPath * existing_path = NULL);
+    void set_style(Inkscape::XML::Node *repr_face = NULL, bool extruded = true);
     void set_path_repr();
     void set_curve();
     inline void lower_to_bottom() { SP_ITEM (path)->lowerToBottom(); }

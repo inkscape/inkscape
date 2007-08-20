@@ -362,8 +362,11 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
 
             if (event->motion.state & GDK_SHIFT_MASK && !bc->extruded) {
                 /* once shift is pressed, set bc->extruded (no need to create further faces;
-                   all of them are already created in sp_3dbox_init) */
+                   all of them are already created in sp_3dbox_init); since we made the rear face
+                   invisible in the beginning to avoid "flashing", we must set its correct style now */
                 bc->extruded = true;
+                g_assert (bc->item);
+                SP_3DBOX (bc->item)->faces[5]->set_style (NULL, true);
             }
 
             if (!bc->extruded) {
@@ -585,6 +588,8 @@ static void sp_3dbox_drag(SP3DBoxContext &bc, guint state)
         for (int i = 0; i < 6; ++i) {
             SP_3DBOX(bc.item)->faces[i]->hook_path_to_3dbox();
         }
+        // make rear face invisible in the beginning to avoid "flashing"
+        SP_3DBOX (bc.item)->faces[5]->set_style (NULL, false);
 
         bc.item->updateRepr();
         sp_3dbox_set_z_orders (SP_3DBOX (bc.item));
