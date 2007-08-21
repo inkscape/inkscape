@@ -20,6 +20,8 @@
 #include <libnr/nr-pixblock-pixel.h>
 #include <libnr/nr-blit.h>
 #include <libnr/nr-gradient.h>
+#include <glib/gtypes.h>
+#include <stdio.h>
 
 /* Common */
 
@@ -27,6 +29,15 @@
 
 #define NRG_MASK (NR_GRADIENT_VECTOR_LENGTH - 1)
 #define NRG_2MASK ((long long) ((NR_GRADIENT_VECTOR_LENGTH << 1) - 1))
+
+static guint32 msr_state=0xfefefefe;
+
+inline guint32 msr_next() {
+  guint32 lsb = msr_state & 1;
+  guint32 msb = ( lsb << 31 ) ^ ( ( msr_state & 2) << 30 );
+  msr_state = ( msr_state >> 1 ) | msb;
+  return lsb;
+}
 
 inline unsigned char const *index_to_pointer(int idx,
                                              unsigned char const *vector)
@@ -37,18 +48,21 @@ inline unsigned char const *index_to_pointer(int idx,
 inline unsigned char const *r_to_pointer_pad(NR::Coord r,
                                              unsigned char const *vector)
 {
+  r += msr_next();
   return index_to_pointer((int)CLAMP(r, 0, (double)(NR_GRADIENT_VECTOR_LENGTH - 1)), vector);
 }
 
 inline unsigned char const *r_to_pointer_repeat(NR::Coord r,
                                                 unsigned char const *vector)
 {
+  r += msr_next();
   return index_to_pointer((int)((long long)r & NRG_MASK), vector);
 }
 
 inline unsigned char const *r_to_pointer_reflect(NR::Coord r,
                                                  unsigned char const *vector)
 {
+  r += msr_next();
   int idx = (int) ((long long)r & NRG_2MASK);
   if (idx > NRG_MASK) idx = NRG_2MASK - idx;
   return index_to_pointer(idx, vector);
