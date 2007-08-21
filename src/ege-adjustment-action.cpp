@@ -538,7 +538,9 @@ static void create_single_menu_item( GCallback toggleCb, int val, GtkWidget* men
         cur = g_list_next( cur );
     }
 
-    str = g_strdup_printf( act->private_data->format, num, (marker?" ":""), ( (marker && marker->descr) ? marker->descr:"") );
+    str = g_strdup_printf( act->private_data->format, num, 
+                           ((marker && marker->descr) ? ": " : ""),
+                           ((marker && marker->descr) ? marker->descr : ""));
 
     *dst = gtk_radio_menu_item_new_with_label( *group, str );
     if ( !*group) {
