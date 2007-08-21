@@ -265,7 +265,7 @@ nr_lgradient_render_R8G8B8 (NRLGradientRenderer *lgr, unsigned char *px, int x0,
 			const unsigned char *s;
 			switch (lgr->spread) {
 			case NR_GRADIENT_SPREAD_PAD:
-                                s = r_to_pointer_reflect(pos, lgr->vector);
+                                s = r_to_pointer_pad(pos, lgr->vector);
 				break;
 			case NR_GRADIENT_SPREAD_REFLECT:
                                 s = r_to_pointer_reflect(pos, lgr->vector);
