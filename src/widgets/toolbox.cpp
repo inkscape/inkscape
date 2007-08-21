@@ -212,6 +212,7 @@ static gchar const * ui_descr =
         "    <toolitem action='HeightAction' />"
         "    <toolitem action='UnitsAction' />"
         "    <separator />"
+        "    <toolitem action='transform_affect_label' />"
         "    <toolitem action='transform_stroke' />"
         "    <toolitem action='transform_corners' />"
         "    <toolitem action='transform_gradient' />"
@@ -1705,22 +1706,25 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         }
 
         /* Magnitude */
-        //gchar const* labels[] = {_("tri (default)"), _("quad"), _("pent")};
-        //gdouble values[] = {3, 4, 5};
+        {
+        gchar const* labels[] = {_("triangle/tri-star"), _("square/quad-star"), _("pentagon/five-pointed star"), _("hexagon/six-pointed star"), 0, 0, 0, 0, 0};
+        gdouble values[] = {3, 4, 5, 6, 7, 8, 10, 12, 20};
         eact = create_adjustment_action( "MagnitudeAction",
                                          _("Corners:"), _("Number of corners of a polygon or star"),
                                          "tools.shapes.star", "magnitude", 3,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          3, 1024, 1, 5,
-                                         0, 0, 0, // labels, values, G_N_ELEMENTS(labels),
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_stb_magnitude_value_changed,
                                          1.0, 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        }
 
         /* Spoke ratio */
-        //gchar const* labels2[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
-        //gdouble values2[] = {-90, 0, 30, 90};
+        {
+        gchar const* labels[] = {_("thin-ray star"), 0, _("pentagram"), _("hexagram"), _("heptagram"), _("octagram"), _("regular polygon")};
+        gdouble values[] = {0.01, 0.2, 0.382, 0.577, 0.692, 0.765, 1};
         eact = create_adjustment_action( "SpokeAction",
                                          _("Spoke ratio:"),
                                          // TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
@@ -1729,10 +1733,11 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                          "tools.shapes.star", "proportion", 0.5,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.01, 1.0, 0.01, 0.1,
-                                         0, 0, 0, // labels2, values2, G_N_ELEMENTS(labels2),
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_stb_proportion_value_changed );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         g_object_set_data( holder, "prop_action", eact );
+        }
 
         if ( !isFlatSided ) {
             gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -1741,30 +1746,34 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         }
 
         /* Roundedness */
-        //gchar const* labels3[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
-        //gdouble values3[] = {-90, 0, 30, 90};
+        {
+        gchar const* labels[] = {_("stretched"), _("twisted"), _("slightly pinched"), _("NOT rounded"), _("slightly rounded"), _("visibly rounded"), _("well rounded"), _("amply rounded"), 0, _("stretched"), _("blown up")};
+        gdouble values[] = {-1, -0.2, -0.03, 0, 0.05, 0.1, 0.2, 0.3, 0.5, 1, 10};
         eact = create_adjustment_action( "RoundednessAction",
                                          _("Rounded:"), _("How much rounded are the corners (0 for sharp)"),
                                          "tools.shapes.star", "rounded", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                         -100.0, 100.0, 0.01, 0.1,
-                                         0, 0, 0, // labels3, values3, G_N_ELEMENTS(labels3),
+                                         -10.0, 10.0, 0.01, 0.1,
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_stb_rounded_value_changed );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        }
 
         /* Randomization */
-        //gchar const* labels4[] = {_("(left edge up)"), _("(horizontal)"), _("(default)"), _("(right edge up)")};
-        //gdouble values4[] = {-90, 0, 30, 90};
+        {
+        gchar const* labels[] = {_("NOT randomized"), _("slightly irregular"), _("visibly randomized"), _("strongly randomized"), _("blown up")};
+        gdouble values[] = {0, 0.01, 0.1, 0.5, 10};
         eact = create_adjustment_action( "RandomizationAction",
                                          _("Randomized:"), _("Scatter randomly the corners and angles"),
                                          "tools.shapes.star", "randomized", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          -10.0, 10.0, 0.001, 0.01,
-                                         0, 0, 0, // labels4, values4, G_N_ELEMENTS(labels4),
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_stb_randomized_value_changed, 0.1, 3 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        }
     }
 
     {
@@ -2033,12 +2042,14 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
     /* W */
     {
+        gchar const* labels[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gdouble values[] = {1, 2, 3, 5, 10, 20, 50, 100, 200, 500};
         eact = create_adjustment_action( "RectWidthAction",
                                          _("W:"), _("Width of rectangle"),
                                          "tools.shapes.rect", "width", 0,
                                          GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, TRUE, "altx-rect",
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
-                                         0, 0, 0,
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_rtb_width_value_changed );
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         g_object_set_data( holder, "width_action", eact );
@@ -2048,12 +2059,14 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
     /* H */
     {
+        gchar const* labels[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gdouble values[] = {1, 2, 3, 5, 10, 20, 50, 100, 200, 500};
         eact = create_adjustment_action( "RectHeightAction",
                                          _("H:"), _("Height of rectangle"),
                                          "tools.shapes.rect", "height", 0,
                                          GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
-                                         0, 0, 0,
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_rtb_height_value_changed );
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         g_object_set_data( holder, "height_action", eact );
@@ -2063,12 +2076,14 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
     /* rx */
     {
+        gchar const* labels[] = {_("not rounded"), 0, 0, 0, 0, 0, 0, 0, 0};
+        gdouble values[] = {0.5, 1, 2, 3, 5, 10, 20, 50, 100};
         eact = create_adjustment_action( "RadiusXAction",
                                          _("Rx:"), _("Horizontal radius of rounded corners"),
                                          "tools.shapes.rect", "rx", 0,
                                          GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
-                                         0, 0, 0,
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_rtb_rx_value_changed);
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
@@ -2076,12 +2091,14 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
     /* ry */
     {
+        gchar const* labels[] = {_("not rounded"), 0, 0, 0, 0, 0, 0, 0, 0};
+        gdouble values[] = {0.5, 1, 2, 3, 5, 10, 20, 50, 100};
         eact = create_adjustment_action( "RadiusYAction",
                                          _("Ry:"), _("Vertical radius of rounded corners"),
                                          "tools.shapes.rect", "ry", 0,
                                          GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
-                                         0, 0, 0,
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_rtb_ry_value_changed);
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
@@ -2364,36 +2381,42 @@ static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 
     /* Revolution */
     {
+        gchar const* labels[] = {_("just a curve"), 0, _("one full revolution"), 0, 0, 0, 0, 0, 0};
+        gdouble values[] = {0.01, 0.5, 1, 2, 3, 5, 10, 20, 50, 100};
         eact = create_adjustment_action( "SpiralRevolutionAction",
                                          _("Turns:"), _("Number of revolutions"),
                                          "tools.shapes.spiral", "revolution", 3.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-spiral",
                                          0.01, 1024.0, 0.1, 1.0,
-                                         0, 0, 0,
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_spl_tb_revolution_value_changed, 1, 2);
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
     /* Expansion */
     {
+        gchar const* labels[] = {_("circle"), _("edge is much denser"), _("edge is denser"), _("even"), _("center is denser"), _("center is much denser"), 0};
+        gdouble values[] = {0, 0.1, 0.5, 1, 1.5, 5, 20};
         eact = create_adjustment_action( "SpiralExpansionAction",
                                          _("Divergence:"), _("How much denser/sparser are outer revolutions; 1 = uniform"),
                                          "tools.shapes.spiral", "expansion", 1.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.0, 1000.0, 0.01, 1.0,
-                                         0, 0, 0,
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_spl_tb_expansion_value_changed);
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
     /* T0 */
     {
+        gchar const* labels[] = {_("starts from center"), _("starts mid-way"), _("starts near edge")};
+        gdouble values[] = {0, 0.5, 0.9};
         eact = create_adjustment_action( "SpiralT0Action",
                                          _("Inner radius:"), _("Radius of the innermost revolution (relative to the spiral size)"),
                                          "tools.shapes.spiral", "t0", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.0, 0.999, 0.01, 1.0,
-                                         0, 0, 0,
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_spl_tb_t0_value_changed);
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
