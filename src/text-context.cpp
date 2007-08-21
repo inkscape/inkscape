@@ -429,6 +429,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                     sp_text_context_update_cursor(tc);
                     sp_text_context_update_text_selection(tc);
                 }
+                gobble_motion_events(GDK_BUTTON1_MASK);
                 ret = TRUE;
                 break;
             }
@@ -655,7 +656,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                 // status text
                 GString *xs = SP_PX_TO_METRIC_STRING(fabs((p - tc->p0)[NR::X]), desktop->namedview->getDefaultMetric());
                 GString *ys = SP_PX_TO_METRIC_STRING(fabs((p - tc->p0)[NR::Y]), desktop->namedview->getDefaultMetric());
-                event_context->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>Flowed text frame</b>: %s &#215; %s"), xs->str, ys->str);
+                event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Flowed text frame</b>: %s &#215; %s"), xs->str, ys->str);
                 g_string_free(xs, FALSE);
                 g_string_free(ys, FALSE);
 

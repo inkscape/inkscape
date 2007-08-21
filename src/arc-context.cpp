@@ -291,9 +291,11 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 
                 SnapManager const &m = desktop->namedview->snap_manager;            
                 motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, ac->item).getPoint();
-            
                 
                 sp_arc_drag(ac, motion_dt, event->motion.state);
+
+                gobble_motion_events(GDK_BUTTON1_MASK);
+
                 ret = TRUE;
             }
             break;
@@ -439,7 +441,7 @@ static void sp_arc_drag(SPArcContext *ac, NR::Point pt, guint state)
 
     GString *xs = SP_PX_TO_METRIC_STRING(r.dimensions()[NR::X], desktop->namedview->getDefaultMetric());
     GString *ys = SP_PX_TO_METRIC_STRING(r.dimensions()[NR::Y], desktop->namedview->getDefaultMetric());
-    ac->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make circle or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+    ac->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make circle or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
     g_string_free(xs, FALSE);
     g_string_free(ys, FALSE);
 }

@@ -333,7 +333,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, rc->item).getPoint();
             
             sp_rect_drag(*rc, motion_dt, event->motion.state);
-            
+            gobble_motion_events(GDK_BUTTON1_MASK);
             ret = TRUE;
         }
         break;
@@ -489,7 +489,7 @@ static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
     // status text
     GString *xs = SP_PX_TO_METRIC_STRING(r.dimensions()[NR::X], desktop->namedview->getDefaultMetric());
     GString *ys = SP_PX_TO_METRIC_STRING(r.dimensions()[NR::Y], desktop->namedview->getDefaultMetric());
-    rc._message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+    rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
     g_string_free(xs, FALSE);
     g_string_free(ys, FALSE);
 }

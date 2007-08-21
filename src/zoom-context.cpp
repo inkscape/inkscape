@@ -165,6 +165,7 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
                 NR::Point const motion_w(event->motion.x, event->motion.y);
                 NR::Point const motion_dt(desktop->w2d(motion_w));
                 Inkscape::Rubberband::get()->move(motion_dt);
+                gobble_motion_events(GDK_BUTTON1_MASK);
             }
             break;
 
