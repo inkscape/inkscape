@@ -20,7 +20,8 @@
 #include <libnr/nr-matrix.h>
 #include <libnr/nr-render.h>
 
-#define NR_GRADIENT_VECTOR_LENGTH 1024
+#define NR_GRADIENT_VECTOR_BITS 10
+#define NR_GRADIENT_VECTOR_LENGTH (1<<NR_GRADIENT_VECTOR_BITS)
 
 enum {
 	NR_GRADIENT_SPREAD_PAD,
