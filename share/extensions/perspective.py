@@ -102,7 +102,7 @@ class Project(inkex.Effect):
         for node in group:
             if node.tag == inkex.addNS('path','svg'):
                 self.process_path(node,m)
-            if node.tagName == inkex.addNS('g','svg'):
+            if node.tag == inkex.addNS('g','svg'):
                 self.process_group(node,m)    
 
 
