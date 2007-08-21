@@ -1288,6 +1288,9 @@ sp_desktop_widget_update_zoom (SPDesktopWidget *dtw)
 {
     g_signal_handlers_block_by_func (G_OBJECT (dtw->zoom_status), (gpointer)G_CALLBACK (sp_dtw_zoom_value_changed), dtw);
     gtk_spin_button_set_value (GTK_SPIN_BUTTON (dtw->zoom_status), log(dtw->desktop->current_zoom()) / log(2));
+    gtk_widget_queue_draw(GTK_WIDGET(dtw->zoom_status));
+    if (GTK_WIDGET(dtw->zoom_status)->window)
+        gdk_window_process_updates(GTK_WIDGET(dtw->zoom_status)->window, TRUE);
     g_signal_handlers_unblock_by_func (G_OBJECT (dtw->zoom_status), (gpointer)G_CALLBACK (sp_dtw_zoom_value_changed), dtw);
 }
 
