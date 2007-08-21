@@ -30,13 +30,13 @@
 #define NRG_MASK (NR_GRADIENT_VECTOR_LENGTH - 1)
 #define NRG_2MASK ((long long) ((NR_GRADIENT_VECTOR_LENGTH << 1) - 1))
 
-static guint32 msr_state=0xfefefefe;
+static guint32 mls_state=0xa37e5375;
 
-inline guint32 msr_next() {
-  guint32 lsb = msr_state & 1;
-  guint32 msb = ( lsb << 31 ) ^ ( ( msr_state & 2) << 30 );
-  msr_state = ( msr_state >> 1 ) | msb;
-  return lsb;
+inline NR::Coord noise() {
+  guint32 lsb = mls_state & 1;
+  guint32 msb = ( lsb << 31 ) ^ ( ( mls_state & 2) << 30 );
+  mls_state = ( mls_state >> 1 ) | msb;
+  return lsb * 1.75;
 }
 
 inline unsigned char const *index_to_pointer(int idx,
@@ -48,21 +48,21 @@ inline unsigned char const *index_to_pointer(int idx,
 inline unsigned char const *r_to_pointer_pad(NR::Coord r,
                                              unsigned char const *vector)
 {
-  r += msr_next();
+  r += noise();
   return index_to_pointer((int)CLAMP(r, 0, (double)(NR_GRADIENT_VECTOR_LENGTH - 1)), vector);
 }
 
 inline unsigned char const *r_to_pointer_repeat(NR::Coord r,
                                                 unsigned char const *vector)
 {
-  r += msr_next();
+  r += noise();
   return index_to_pointer((int)((long long)r & NRG_MASK), vector);
 }
 
 inline unsigned char const *r_to_pointer_reflect(NR::Coord r,
                                                  unsigned char const *vector)
 {
-  r += msr_next();
+  r += noise();
   int idx = (int) ((long long)r & NRG_2MASK);
   if (idx > NRG_MASK) idx = NRG_2MASK - idx;
   return index_to_pointer(idx, vector);
