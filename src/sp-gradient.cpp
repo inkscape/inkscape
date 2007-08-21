@@ -29,7 +29,7 @@
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
 
-#include "display/nr-gradient-gpl.h"
+#include "libnr/nr-gradient.h"
 #include "svg/svg.h"
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
