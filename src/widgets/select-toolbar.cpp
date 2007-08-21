@@ -47,6 +47,7 @@
 #include "display/sp-canvas.h"
 #include "helper/unit-tracker.h"
 #include "ege-adjustment-action.h"
+#include "ege-output-action.h"
 #include "ink-action.h"
 
 using Inkscape::UnitTracker;
@@ -469,6 +470,12 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     gtk_box_pack_start(GTK_BOX(holder), spw, FALSE, FALSE, 0);
 
     // "Transform with object" buttons
+
+    {
+        EgeOutputAction* act = ege_output_action_new( "transform_affect_label", _("Affect:"), "", 0 );
+        ege_output_action_set_use_markup( act, TRUE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+    }
 
     {
     InkToggleAction* itact = ink_toggle_action_new( "transform_stroke",
