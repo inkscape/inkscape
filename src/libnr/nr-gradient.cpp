@@ -28,6 +28,32 @@
 #define NRG_MASK (NR_GRADIENT_VECTOR_LENGTH - 1)
 #define NRG_2MASK ((long long) ((NR_GRADIENT_VECTOR_LENGTH << 1) - 1))
 
+inline unsigned char const *index_to_pointer(int idx,
+                                             unsigned char const *vector)
+{
+  return vector + 4 * idx;
+}
+
+inline unsigned char const *r_to_pointer_pad(NR::Coord r,
+                                             unsigned char const *vector)
+{
+  return index_to_pointer((int)CLAMP(r, 0, (double)(NR_GRADIENT_VECTOR_LENGTH - 1)), vector);
+}
+
+inline unsigned char const *r_to_pointer_repeat(NR::Coord r,
+                                                unsigned char const *vector)
+{
+  return index_to_pointer((int)((long long)r & NRG_MASK), vector);
+}
+
+inline unsigned char const *r_to_pointer_reflect(NR::Coord r,
+                                                 unsigned char const *vector)
+{
+  int idx = (int) ((long long)r & NRG_2MASK);
+  if (idx > NRG_MASK) idx = NRG_2MASK - idx;
+  return index_to_pointer(idx, vector);
+}
+
 /* Linear */
 
 static void nr_lgradient_render_block (NRRenderer *r, NRPixBlock *pb, NRPixBlock *m);
@@ -130,13 +156,11 @@ nr_lgradient_render_R8G8B8A8N_EMPTY (NRLGradientRenderer *lgr, unsigned char *px
 	for (y = 0; y < height; y++) {
 		const unsigned char *s;
 		unsigned char *d;
-		int idx;
 		d = px + y * rs;
 		pos = (y + y0 - lgr->y0) * lgr->dy + (0 + x0 - lgr->x0) * lgr->dx;
 		if (lgr->spread == NR_GRADIENT_SPREAD_PAD) {
 			for (x = 0; x < width; x++) {
-				idx = (int) CLAMP (pos, 0, (double) NRG_MASK);
-				s = lgr->vector + 4 * idx;
+                                s = r_to_pointer_pad(pos, lgr->vector);
 				d[0] = s[0];
 				d[1] = s[1];
 				d[2] = s[2];
@@ -146,9 +170,7 @@ nr_lgradient_render_R8G8B8A8N_EMPTY (NRLGradientRenderer *lgr, unsigned char *px
 			}
 		} else if (lgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
 			for (x = 0; x < width; x++) {
-				idx = (int) ((long long) pos & NRG_2MASK);
-				if (idx > NRG_MASK) idx = NRG_2MASK - idx;
-				s = lgr->vector + 4 * idx;
+                                s = r_to_pointer_reflect(pos, lgr->vector);
 				d[0] = s[0];
 				d[1] = s[1];
 				d[2] = s[2];
@@ -158,8 +180,7 @@ nr_lgradient_render_R8G8B8A8N_EMPTY (NRLGradientRenderer *lgr, unsigned char *px
 			}
 		} else {
 			for (x = 0; x < width; x++) {
-				idx = (int) ((long long) pos & NRG_MASK);
-				s = lgr->vector + 4 * idx;
+                                s = r_to_pointer_repeat(pos, lgr->vector);
 				d[0] = s[0];
 				d[1] = s[1];
 				d[2] = s[2];
@@ -182,26 +203,22 @@ nr_lgradient_render_R8G8B8A8N (NRLGradientRenderer *lgr, unsigned char *px, int 
 		d = px + y * rs;
 		pos = (y + y0 - lgr->y0) * lgr->dy + (0 + x0 - lgr->x0) * lgr->dx;
 		for (x = 0; x < width; x++) {
-			int idx;
 			unsigned int ca;
 			const unsigned char *s;
 			switch (lgr->spread) {
 			case NR_GRADIENT_SPREAD_PAD:
-				idx = (int) CLAMP (pos, 0, (double) NRG_MASK);
+                                s = r_to_pointer_pad(pos, lgr->vector);
 				break;
 			case NR_GRADIENT_SPREAD_REFLECT:
-				idx = (int) ((long long) pos & NRG_2MASK);
-				if (idx > NRG_MASK) idx = NRG_2MASK - idx;
+                                s = r_to_pointer_reflect(pos, lgr->vector);
 				break;
 			case NR_GRADIENT_SPREAD_REPEAT:
-				idx = (int) ((long long) pos & NRG_MASK);
+                                s = r_to_pointer_repeat(pos, lgr->vector);
 				break;
 			default:
-				idx = 0;
+				s = lgr->vector;
 				break;
 			}
-			/* Full composition */
-			s = lgr->vector + 4 * idx;
 			if (s[3] == 255) {
 				d[0] = s[0];
 				d[1] = s[1];
@@ -231,25 +248,22 @@ nr_lgradient_render_R8G8B8 (NRLGradientRenderer *lgr, unsigned char *px, int x0,
 		d = px + y * rs;
 		pos = (y + y0 - lgr->y0) * lgr->dy + (0 + x0 - lgr->x0) * lgr->dx;
 		for (x = 0; x < width; x++) {
-			int idx;
 			const unsigned char *s;
 			switch (lgr->spread) {
 			case NR_GRADIENT_SPREAD_PAD:
-				idx = (int) CLAMP (pos, 0, (double) NRG_MASK);
+                                s = r_to_pointer_reflect(pos, lgr->vector);
 				break;
 			case NR_GRADIENT_SPREAD_REFLECT:
-				idx = (int) ((long long) pos & NRG_2MASK);
-				if (idx > NRG_MASK) idx = NRG_2MASK - idx;
+                                s = r_to_pointer_reflect(pos, lgr->vector);
 				break;
 			case NR_GRADIENT_SPREAD_REPEAT:
-				idx = (int) ((long long) pos & NRG_MASK);
+                                s = r_to_pointer_repeat(pos, lgr->vector);
 				break;
 			default:
-				idx = 0;
+                                s = lgr->vector;
 				break;
 			}
 			/* Full composition */
-			s = lgr->vector + 4 * idx;
 			d[0] = NR_COMPOSEN11_1111 (s[0], s[3], d[0]);
 			d[1] = NR_COMPOSEN11_1111 (s[1], s[3], d[1]);
 			d[2] = NR_COMPOSEN11_1111 (s[2], s[3], d[2]);
@@ -286,24 +300,21 @@ nr_lgradient_render_generic (NRLGradientRenderer *lgr, NRPixBlock *pb)
 		d = NR_PIXBLOCK_PX (pb) + y * rs;
 		pos = (y + y0 - lgr->y0) * lgr->dy + (0 + x0 - lgr->x0) * lgr->dx;
 		for (x = 0; x < width; x++) {
-			int idx;
 			const unsigned char *s;
 			switch (lgr->spread) {
 			case NR_GRADIENT_SPREAD_PAD:
-				idx = (int) CLAMP (pos, 0, (double) NRG_MASK);
+                                s = r_to_pointer_pad(pos, lgr->vector);
 				break;
 			case NR_GRADIENT_SPREAD_REFLECT:
-				idx = (int) ((long long) pos & NRG_2MASK);
-				if (idx > NRG_MASK) idx = NRG_2MASK - idx;
+                                s = r_to_pointer_reflect(pos, lgr->vector);
 				break;
 			case NR_GRADIENT_SPREAD_REPEAT:
-				idx = (int) ((long long) pos & NRG_MASK);
+                                s = r_to_pointer_repeat(pos, lgr->vector);
 				break;
 			default:
-				idx = 0;
+                                s = lgr->vector;
 				break;
 			}
-			s = lgr->vector + 4 * idx;
 			nr_compose_pixblock_pixblock_pixel (pb, d, &spb, s);
 			d += bpp;
 			pos += lgr->dx;
@@ -447,16 +458,14 @@ nr_rgradient_render_generic_symmetric(NRRGradientRenderer *rgr, NRPixBlock *pb)
             NR::Coord gy = rgr->px2gs.c[1] * pb->area.x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
             for (int x = pb->area.x0; x < pb->area.x1; x++) {
                 NR::Coord const pos = sqrt(((gx*gx) + (gy*gy)));
-                int idx;
+                unsigned char const *s;
                 if (rgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
-                    idx = (int) ((long long) pos & NRG_2MASK);
-                    if (idx > NRG_MASK) idx = NRG_2MASK - idx;
+                    s = r_to_pointer_reflect(pos, rgr->vector);
                 } else if (rgr->spread == NR_GRADIENT_SPREAD_REPEAT) {
-                    idx = (int) ((long long) pos & NRG_MASK);
+                    s = r_to_pointer_repeat(pos, rgr->vector);
                 } else {
-                    idx = (int) CLAMP(pos, 0, (double) NRG_MASK);
+                    s = r_to_pointer_pad(pos, rgr->vector);
                 }
-                unsigned char const *s = rgr->vector + 4 * idx;
                 d[0] = NR_COMPOSENPP_1111(s[0], s[3], d[0]);
                 d[1] = NR_COMPOSENPP_1111(s[1], s[3], d[1]);
                 d[2] = NR_COMPOSENPP_1111(s[2], s[3], d[2]);
@@ -473,16 +482,14 @@ nr_rgradient_render_generic_symmetric(NRRGradientRenderer *rgr, NRPixBlock *pb)
             NR::Coord gy = rgr->px2gs.c[1] * pb->area.x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
             for (int x = pb->area.x0; x < pb->area.x1; x++) {
                 NR::Coord const pos = sqrt(((gx*gx) + (gy*gy)));
-                int idx;
+                unsigned char const *s;
                 if (rgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
-                    idx = (int) ((long long) pos & NRG_2MASK);
-                    if (idx > NRG_MASK) idx = NRG_2MASK - idx;
+                    s = r_to_pointer_reflect(pos, rgr->vector);
                 } else if (rgr->spread == NR_GRADIENT_SPREAD_REPEAT) {
-                    idx = (int) ((long long) pos & NRG_MASK);
+                    s = r_to_pointer_repeat(pos, rgr->vector);
                 } else {
-                    idx = (int) CLAMP(pos, 0, (double) NRG_MASK);
+                    s = r_to_pointer_pad(pos, rgr->vector);
                 }
-                unsigned char const *s = rgr->vector + 4 * idx;
                 if (s[3] == 255) {
                     d[0] = s[0];
                     d[1] = s[1];
@@ -518,16 +525,14 @@ nr_rgradient_render_generic_symmetric(NRRGradientRenderer *rgr, NRPixBlock *pb)
             NR::Coord gy = rgr->px2gs.c[1] * pb->area.x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
             for (int x = pb->area.x0; x < pb->area.x1; x++) {
                 NR::Coord const pos = sqrt(((gx*gx) + (gy*gy)));
-                int idx;
+                unsigned char const *s;
                 if (rgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
-                    idx = (int) ((long long) pos & NRG_2MASK);
-                    if (idx > NRG_MASK) idx = NRG_2MASK - idx;
+                    s = r_to_pointer_reflect(pos, rgr->vector);
                 } else if (rgr->spread == NR_GRADIENT_SPREAD_REPEAT) {
-                    idx = (int) ((long long) pos & NRG_MASK);
+                    s = r_to_pointer_repeat(pos, rgr->vector);
                 } else {
-                    idx = (int) CLAMP(pos, 0, (double) NRG_MASK);
+                    s = r_to_pointer_pad(pos, rgr->vector);
                 }
-                unsigned char const *s = rgr->vector + 4 * idx;
                 nr_compose_pixblock_pixblock_pixel(pb, d, &spb, s);
                 d += bpp;
                 gx += dx;
@@ -575,20 +580,19 @@ nr_rgradient_render_generic_optimized(NRRGradientRenderer *rgr, NRPixBlock *pb)
             /* We can safely divide by 0 here */
             /* If we are sure pxgx cannot be -0 */
             NR::Coord const pos = gxy2 / pxgx * NR_GRADIENT_VECTOR_LENGTH;
-            int idx;
+
+            unsigned char const *s;
             if (pos < (1U << 31)) {
                 if (rgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
-                    idx = (int) ((long long) pos & NRG_2MASK);
-                    if (idx > NRG_MASK) idx = NRG_2MASK - idx;
+                    s = r_to_pointer_reflect(pos, rgr->vector);
                 } else if (rgr->spread == NR_GRADIENT_SPREAD_REPEAT) {
-                    idx = (int) ((long long) pos & NRG_MASK);
+                    s = r_to_pointer_repeat(pos, rgr->vector);
                 } else {
-                    idx = (int) CLAMP(pos, 0, (double) (NR_GRADIENT_VECTOR_LENGTH - 1));
+                    s = r_to_pointer_pad(pos, rgr->vector);
                 }
             } else {
-                idx = NR_GRADIENT_VECTOR_LENGTH - 1;
+                s = index_to_pointer(NR_GRADIENT_VECTOR_LENGTH - 1, rgr->vector);
             }
-            unsigned char const *s = rgr->vector + 4 * idx;
             nr_compose_pixblock_pixblock_pixel(pb, d, &spb, s);
             d += bpp;
 
