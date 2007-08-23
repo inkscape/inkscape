@@ -282,14 +282,6 @@ sp_toggle_selector(SPDesktop *dt)
 static gdouble accelerate_scroll(GdkEvent *event, gdouble acceleration, SPCanvas *canvas)
 {
     guint32 time_diff = ((GdkEventKey *) event)->time - scroll_event_time;
-    glong slowest_buffer = canvas->slowest_buffer / 1000; // the buffer time is in usec, but event time is in msec
-
-    // reduce time interval by the time it took to paint slowest buffer, 
-    // so that acceleration does not hiccup on complex slow-rendering drawings
-    if ((guint32) slowest_buffer <= time_diff)
-        time_diff -= slowest_buffer;
-    else
-        time_diff = 0;
 
     /* key pressed within 500ms ? (1/2 second) */
     if (time_diff > 500 || event->key.keyval != scroll_keyval) {
@@ -440,6 +432,8 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 } else {
                     Inkscape::Rubberband::get()->start(desktop, motion_dt);
                 } 
+                if (zoom_rb == 2)
+                    gobble_motion_events(GDK_BUTTON2_MASK);
             }
             break;
         case GDK_BUTTON_RELEASE:
