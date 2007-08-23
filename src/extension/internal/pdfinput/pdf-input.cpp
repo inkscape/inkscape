@@ -522,6 +522,8 @@ void PdfImportDialog::_setPreviewPage(int page) {
     _cairo_surface = cairo_image_surface_create_for_data(_thumb_data,
             CAIRO_FORMAT_ARGB32, _thumb_width, _thumb_height, _thumb_rowstride);
     cairo_t *cr = cairo_create(_cairo_surface);
+    cairo_set_source_rgba(cr, 1.0, 1.0, 1.0, 1.0);  // Set fill color to white
+    cairo_paint(cr);    // Clear it
     cairo_scale(cr, scale_factor, scale_factor);    // Use Cairo for resizing the image
     _preview_output_dev->setCairo(cr);
     // Render page
