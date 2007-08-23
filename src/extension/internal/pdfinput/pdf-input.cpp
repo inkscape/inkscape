@@ -63,10 +63,17 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     Gtk::Adjustment *_pageNumberSpin_adj = Gtk::manage(
             new class Gtk::Adjustment(1, 1, _pdf_doc->getNumPages(), 1, 10, 0));
     _pageNumberSpin = Gtk::manage(new class Gtk::SpinButton(*_pageNumberSpin_adj, 1, 1));
+    _labelTotalPages = Gtk::manage(new class Gtk::Label());
     hbox2 = Gtk::manage(new class Gtk::HBox(false, 0));
     // Disable the page selector when there's only one page
-    if ( _pdf_doc->getCatalog()->getNumPages() == 1 ) {
+    int num_pages = _pdf_doc->getCatalog()->getNumPages();
+    if ( num_pages == 1 ) {
         _pageNumberSpin->set_sensitive(false);
+    } else {
+        // Display total number of pages
+        gchar *label_text = g_strdup_printf("/ %i", num_pages);
+        _labelTotalPages->set_label(label_text);
+        g_free(label_text);
     }
 
     // Crop settings
@@ -125,8 +132,15 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     _pageNumberSpin->set_numeric(true);
     _pageNumberSpin->set_digits(0);
     _pageNumberSpin->set_wrap(false);
+    _labelTotalPages->set_alignment(0.5,0.5);
+    _labelTotalPages->set_padding(0,0);
+    _labelTotalPages->set_justify(Gtk::JUSTIFY_LEFT);
+    _labelTotalPages->set_line_wrap(false);
+    _labelTotalPages->set_use_markup(false);
+    _labelTotalPages->set_selectable(false);
     hbox2->pack_start(*_labelSelect, Gtk::PACK_SHRINK, 0);
     hbox2->pack_start(*_pageNumberSpin, Gtk::PACK_SHRINK, 4);
+    hbox2->pack_start(*_labelTotalPages, Gtk::PACK_SHRINK, 0);
     _cropCheck->set_flags(Gtk::CAN_FOCUS);
     _cropCheck->set_relief(Gtk::RELIEF_NORMAL);
     _cropCheck->set_mode(true);
@@ -217,6 +231,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     okbutton->show();
     _labelSelect->show();
     _pageNumberSpin->show();
+    _labelTotalPages->show();
     hbox2->show();
     _cropCheck->show();
     _cropTypeCombo->show();

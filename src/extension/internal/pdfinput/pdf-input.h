@@ -67,6 +67,7 @@ private:
     class Gtk::Button * okbutton;
     class Gtk::Label * _labelSelect;
     class Gtk::SpinButton * _pageNumberSpin;
+    class Gtk::Label * _labelTotalPages;
     class Gtk::HBox * hbox2;
     class Gtk::CheckButton * _cropCheck;
     class Gtk::ComboBoxText * _cropTypeCombo;
