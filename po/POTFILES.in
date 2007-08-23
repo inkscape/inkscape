@@ -50,7 +50,7 @@ src/display/nr-arena-image.cpp
 src/display/nr-arena-item.cpp
 src/display/nr-arena-shape.cpp
 src/display/nr-arena.cpp
-src/display/nr-gradient-gpl.cpp
+#src/display/nr-gradient-gpl.cpp
 src/display/nr-plain-stuff-gdk.cpp
 src/display/nr-plain-stuff.cpp
 src/display/sodipodi-ctrl.cpp
@@ -364,8 +364,10 @@ src/ui/dialog/fill-and-stroke.cpp
 src/ui/dialog/filter-effects-dialog.cpp
 src/ui/dialog/find.cpp
 src/ui/dialog/inkscape-preferences.cpp
+src/ui/dialog/livepatheffect-editor.cpp
 src/ui/dialog/memory.cpp
 src/ui/dialog/messages.cpp
+src/ui/dialog/ocaldialogs.cpp
 src/ui/dialog/scriptdialog.cpp
 src/ui/dialog/text-properties.cpp
 src/ui/dialog/tracedialog.cpp
