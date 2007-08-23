@@ -896,8 +896,9 @@ static gint sp_canvas_focus_out (GtkWidget *widget, GdkEventFocus *event);
 
 static GtkWidgetClass *canvas_parent_class;
 
-void sp_canvas_resize_tiles(SPCanvas* canvas,int nl,int nt,int nr,int nb);
-void sp_canvas_dirty_rect(SPCanvas* canvas,int nl,int nt,int nr,int nb);
+static void sp_canvas_resize_tiles(SPCanvas* canvas, int nl, int nt, int nr, int nb);
+static void sp_canvas_dirty_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb);
+static void sp_canvas_mark_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb, uint8_t val);
 static int do_update (SPCanvas *canvas);
 
 /**
@@ -987,17 +988,8 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->tLeft=canvas->tTop=canvas->tRight=canvas->tBottom=0;
     canvas->tileH=canvas->tileV=0;
 
-    canvas->redraw_aborted.x0 = NR_HUGE_L;
-    canvas->redraw_aborted.x1 = -NR_HUGE_L;
-    canvas->redraw_aborted.y0 = NR_HUGE_L;
-    canvas->redraw_aborted.y1 = -NR_HUGE_L;
-    
-    canvas->redraw_count = 0;
-    
     canvas->forced_redraw_count = 0;
     canvas->forced_redraw_limit = -1;
-
-    canvas->slowest_buffer = 0;
 
     canvas->is_scrolling = false;
 
@@ -1542,6 +1534,9 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
         buf.buf = nr_pixelstore_1M_new (FALSE, 0);
     }
 
+    // Mark the region clean
+    sp_canvas_mark_rect(canvas, x0, y0, x1, y1, 0);
+
     buf.buf_rowstride = sw * 3; // CAIRO FIXME: for cairo output, the buffer must be RGB unpacked, i.e. sw * 4
     buf.rect.x0 = x0;
     buf.rect.y0 = y0;
@@ -1608,218 +1603,135 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
     }
 }
 
-/* Paint the given rect, while updating canvas->redraw_aborted and running iterations after each
- * buffer; make sure canvas->redraw_aborted never goes past aborted_limit (used for 2-rect
- * optimized repaint)
+struct PaintRectSetup {
+    SPCanvas* canvas;
+    NRRectL big_rect;
+    GTimeVal start_time;
+    int max_pixels;
+    NR::Point mouse_loc;
+};
+
+/**
+ * Paint the given rect, recursively subdividing the region until it is the size of a single
+ * buffer.
+ *
+ * @return true if the drawing completes
  */
 static int
-sp_canvas_paint_rect_internal (SPCanvas *canvas, NRRectL *rect, NR::ICoord *x_aborted_limit, NR::ICoord *y_aborted_limit)
+sp_canvas_paint_rect_internal (PaintRectSetup const *setup, NRRectL this_rect)
 {
-    int draw_x1 = rect->x0;
-    int draw_x2 = rect->x1;
-    int draw_y1 = rect->y0;
-    int draw_y2 = rect->y1;
+    GTimeVal now;
+    g_get_current_time (&now);
 
-    // Here we'll store the time it took to draw the slowest buffer of this paint. 
-    glong slowest_buffer = 0;
+    glong elapsed = (now.tv_sec - setup->start_time.tv_sec) * 1000000
+        + (now.tv_usec - setup->start_time.tv_usec);
+
+    // Allow only very fast buffers to be run together;
+    // as soon as the total redraw time exceeds 1ms, cancel;
+    // this returns control to the idle loop and allows Inkscape to process user input
+    // (potentially interrupting the redraw); as soon as Inkscape has some more idle time,
+    // it will get back and finish painting what remains to paint.
+    if (elapsed > 1000) {
+
+        // Interrupting redraw isn't always good.
+        // For example, when you drag one node of a big path, only the buffer containing
+        // the mouse cursor will be redrawn again and again, and the rest of the path
+        // will remain stale because Inkscape never has enough idle time to redraw all 
+        // of the screen. To work around this, such operations set a forced_redraw_limit > 0. 
+        // If this limit is set, and if we have aborted redraw more times than is allowed,
+        // interrupting is blocked and we're forced to redraw full screen once 
+        // (after which we can again interrupt forced_redraw_limit times).
+        if (setup->canvas->forced_redraw_limit < 0 || 
+            setup->canvas->forced_redraw_count < setup->canvas->forced_redraw_limit) {
+
+            if (setup->canvas->forced_redraw_limit != -1) {
+                setup->canvas->forced_redraw_count++;
+            }
+
+            return false;
+        }
+    }
 
     // Find the optimal buffer dimensions
-    int bw = draw_x2 - draw_x1;
-    int bh = draw_y2 - draw_y1;
+    int bw = this_rect.x1 - this_rect.x0;
+    int bh = this_rect.y1 - this_rect.y0;
     if ((bw < 1) || (bh < 1))
         return 0;
 
-    int sw, sh;  // CAIRO FIXME: the sw/sh calculations below all assume 24bpp, need fixing for 32bpp
-    if (canvas->rendermode != RENDERMODE_OUTLINE) { // use 256K as a compromise to not slow down gradients
-        /* 256K is the cached buffer and we need 3 channels */
-        if (bw * bh <  87381) { // 256K/3
-            // We can go with single buffer 
-            sw = bw;
-            sh = bh;
-        } else if (bw <= (16 * 341)) {
-            // Go with row buffer 
-            sw = bw;
-            sh =  87381 / bw;
-        } else if (bh <= (16 * 256)) {
-            // Go with column buffer 
-            sw = 87381 / bh;
-            sh = bh;
+    if (bw * bh < setup->max_pixels) {
+        // We are small enough
+        sp_canvas_paint_single_buffer (setup->canvas,
+                                       this_rect.x0, this_rect.y0,
+                                       this_rect.x1, this_rect.y1,
+                                       setup->big_rect.x0, setup->big_rect.y0,
+                                       setup->big_rect.x1, setup->big_rect.y1, bw);
+        return 1;
+    }
+
+    NRRectL lo = this_rect;
+    NRRectL hi = this_rect;
+
+/* 
+This test determines the redraw strategy: 
+
+bw < bh (strips mode) splits across the smaller dimension of the rect and therefore (on
+horizontally-stretched windows) results in redrawing in horizontal strips (from cursor point, in
+both directions if the cursor is in the middle). This is traditional for Inkscape since old days,
+and seems to be faster for drawings with many smaller objects at zoom-out.
+
+bw > bh (chunks mode) splits across the larger dimension of the rect and therefore paints in
+almost-square chunks, again from the cursor point. It's sometimes faster for drawings with few slow
+(e.g. blurred) objects crossing the entire screen. It also appears to be somewhat psychologically
+faster.
+
+The default for now is the strips mode.
+*/
+    if (bw < bh) {
+        int mid = (this_rect.x0 + this_rect.x1) / 2;
+        // Make sure that mid lies on a tile boundary
+        mid = (mid / TILE_SIZE) * TILE_SIZE;
+
+        lo.x1 = mid;
+        hi.x0 = mid;
+
+        if (setup->mouse_loc[NR::X] < mid) {
+            // Always paint towards the mouse first
+            return sp_canvas_paint_rect_internal(setup, lo)
+                && sp_canvas_paint_rect_internal(setup, hi);
         } else {
-            sw = 341;
-            sh = 256;
+            return sp_canvas_paint_rect_internal(setup, hi)
+                && sp_canvas_paint_rect_internal(setup, lo);
         }
-    } else {  // paths only, so 1M works faster
-        /* 1M is the cached buffer and we need 3 channels */
-        if (bw * bh <  349525) { // 1M/3
-            // We can go with single buffer 
-            sw = bw;
-            sh = bh;
-        } else if (bw <= (16 * 682)) {
-            // Go with row buffer 
-            sw = bw;
-            sh =  349525 / bw;
-        } else if (bh <= (16 * 512)) {
-            // Go with column buffer 
-            sw = 349525 / bh;
-            sh = bh;
+    } else {
+        int mid = (this_rect.y0 + this_rect.y1) / 2;
+        // Make sure that mid lies on a tile boundary
+        mid = (mid / TILE_SIZE) * TILE_SIZE;
+
+        lo.y1 = mid;
+        hi.y0 = mid;
+
+        if (setup->mouse_loc[NR::Y] < mid) {
+            // Always paint towards the mouse first
+            return sp_canvas_paint_rect_internal(setup, lo)
+                && sp_canvas_paint_rect_internal(setup, hi);
         } else {
-            sw = 682;
-            sh = 512;
+            return sp_canvas_paint_rect_internal(setup, hi)
+                && sp_canvas_paint_rect_internal(setup, lo);
         }
     }
-    
-    // Will this paint require more than one buffer?
-    bool multiple_buffers = (((draw_y2 - draw_y1) > sh) || ((draw_x2 - draw_x1) > sw)); // or two_rects
-
-    // remember the counter during this paint
-    long this_count = canvas->redraw_count;
-
-    // Time values to measure each buffer's paint time
-    GTimeVal tstart, tfinish;
-
-    // paint from the corner nearest the mouse pointer
-
-    gint x, y;
-    gdk_window_get_pointer (GTK_WIDGET(canvas)->window, &x, &y, NULL);
-    NR::Point pw = sp_canvas_window_to_world (canvas, NR::Point(x,y));
-
-    bool reverse_x = (pw[NR::X] > ((draw_x2 + draw_x1) / 2));
-    bool reverse_y = (pw[NR::Y] > ((draw_y2 + draw_y1) / 2));
-
-    if ((bw > bh) && (sh > sw)) {
-      int t = sw; sw = sh; sh = t;
-    }
-
-    // This is the main loop which corresponds to the visible left-to-right, top-to-bottom drawing
-    // of screen blocks (buffers).
-    for (int y0 = draw_y1; y0 < draw_y2; y0 += sh) {
-        int y1 = MIN (y0 + sh, draw_y2);
-        for (int x0 = draw_x1; x0 < draw_x2; x0 += sw) {
-            int x1 = MIN (x0 + sw, draw_x2);
-
-            int dx0 = x0;
-            int dx1 = x1;
-            int dy0 = y0;
-            int dy1 = y1;
-
-            if (reverse_x) { 
-              dx0 = (draw_x2 - (x0 + sw)) + draw_x1;
-              dx0 = MAX (dx0, draw_x1);
-              dx1 = (draw_x2 - x0) + draw_x1;
-              dx1 = MIN (dx1, draw_x2);
-            }
-            if (reverse_y) { 
-              dy0 = (draw_y2 - (y0 + sh)) + draw_y1;
-              dy0 = MAX (dy0, draw_y1);
-              dy1 = (draw_y2 - y0) + draw_y1;
-              dy1 = MIN (dy1, draw_y2);
-            }
-
-            // SMOOTH SCROLLING: if we are scrolling, process pending events even before doing any rendering. 
-            // This allows for scrolling smoothly without hiccups. Any accumulated redraws will be made 
-            // when scrolling stops. The scrolling flag is set by sp_canvas_scroll_to for each scroll and zeroed
-            // here for each redraw, to ensure it never gets stuck. 
-
-            // OPTIMIZATION IDEA: if drawing is really slow (as measured by canvas->slowest
-            // buffer), do the same - process some events even before we paint any buffers
-
-            if (canvas->is_scrolling) {
-                while (Gtk::Main::events_pending()) { // process any events
-                    Gtk::Main::iteration(false);
-                }
-                canvas->is_scrolling = false;
-                if (this_count != canvas->redraw_count) { // if there was redraw,
-                    return 1; // interrupt this one
-                }
-            }
-	    
-            // Paint one buffer; measure how long it takes.
-            g_get_current_time (&tstart);
-            sp_canvas_paint_single_buffer (canvas, dx0, dy0, dx1, dy1, draw_x1, draw_y1, draw_x2, draw_y2, sw);
-            g_get_current_time (&tfinish);
-
-            // Remember the slowest_buffer of this paint.
-            glong this_buffer = (tfinish.tv_sec - tstart.tv_sec) * 1000000 + (tfinish.tv_usec - tstart.tv_usec);
-            if (this_buffer > slowest_buffer) 
-                slowest_buffer = this_buffer;
-
-            // After each successful buffer, reduce the rect remaining to redraw by what is already redrawn
-            if (x1 >= draw_x2) {
-              if (reverse_y) {
-                if (canvas->redraw_aborted.y1 > dy0) { canvas->redraw_aborted.y1 = dy0; }
-              } else {
-                if (canvas->redraw_aborted.y0 < y1)  { canvas->redraw_aborted.y0 = y1; }
-              }
-            }
-
-            if (y1 >= draw_y2) {
-              if (reverse_x) {
-                if (canvas->redraw_aborted.x1 > dx0) { canvas->redraw_aborted.x1 = dx0; }
-              } else {
-                if (canvas->redraw_aborted.x0 < x1)  { canvas->redraw_aborted.x0 = x1; }
-              }
-            }
-
-            // INTERRUPTIBLE DISPLAY:
-            // Process events that may have arrived while we were busy drawing;
-            // only if we're drawing multiple buffers, and only if this one was not very fast,
-            // and only if we're allowed to interrupt this redraw
-            bool ok_to_interrupt = (multiple_buffers && this_buffer > 25000);
-            if (ok_to_interrupt && (canvas->forced_redraw_limit != -1)) {
-                ok_to_interrupt = (canvas->forced_redraw_count < canvas->forced_redraw_limit);
-            }
-
-            if (ok_to_interrupt) {
-                // Run at most max_iterations of the main loop; we cannot process ALL events
-                // here because some things (e.g. rubberband) flood with dirtying events but will
-                // not redraw themselves
-                int max_iterations = 10;
-                int iterations = 0;
-                while (Gtk::Main::events_pending() && iterations++ < max_iterations) {
-                    Gtk::Main::iteration(false);
-                    // If one of the iterations has redrawn by itself, abort
-                    if (this_count != canvas->redraw_count) {
-                        canvas->slowest_buffer = slowest_buffer;
-                        if (canvas->forced_redraw_limit != -1) {
-                            canvas->forced_redraw_count++;
-                        }
-                        return 1; // interrupted
-                    }
-                }
-   
-                // If not aborted so far, check if the events set redraw or update flags; 
-                // if so, force update and abort
-                if (canvas->need_redraw || canvas->need_update) {
-                    canvas->slowest_buffer = slowest_buffer;
-                    if (canvas->forced_redraw_limit != -1) {
-                        canvas->forced_redraw_count++;
-                    }
-                    do_update (canvas);
-                    return 1; // interrupted
-                }
-            }
-        }
-    }
-
-    // Remember the slowest buffer of this paint in canvas
-    canvas->slowest_buffer = slowest_buffer;
-
-    return 0; // finished
 }
 
 
 /**
  * Helper that draws a specific rectangular part of the canvas.
+ *
+ * @return true if the rectangle painting succeeds.
  */
-static void
+static bool
 sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
 {
-    g_return_if_fail (!canvas->need_update);
+    g_return_val_if_fail (!canvas->need_update, false);
  
-    // Monotonously increment the canvas-global counter on each paint. This will let us find out
-    // when a new paint happened in event processing during this paint, so we can abort it.
-    canvas->redraw_count++;
-
     NRRectL rect;
     rect.x0 = xx0;
     rect.x1 = xx1;
@@ -1839,99 +1751,35 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
                             canvas->pixmap_gc,
                             TRUE,
                             rect.x0 - canvas->x0, rect.y0 - canvas->y0,
-                            rect.x1 - rect.x0, rect.y1 - rect.y0);
+			                      rect.x1 - rect.x0, rect.y1 - rect.y0);
 #endif			    
 
-    // Clip rect-aborted-last-time by the current visible area
-    canvas->redraw_aborted.x0 = MAX (canvas->redraw_aborted.x0, canvas->x0);
-    canvas->redraw_aborted.y0 = MAX (canvas->redraw_aborted.y0, canvas->y0);
-    canvas->redraw_aborted.x1 = MIN (canvas->redraw_aborted.x1, canvas->x0/*draw_x1*/ + GTK_WIDGET (canvas)->allocation.width);
-    canvas->redraw_aborted.y1 = MIN (canvas->redraw_aborted.y1, canvas->y0/*draw_y1*/ + GTK_WIDGET (canvas)->allocation.height);
+    PaintRectSetup setup;
 
-    if (canvas->redraw_aborted.x0 < canvas->redraw_aborted.x1 && canvas->redraw_aborted.y0 < canvas->redraw_aborted.y1) {
-        // There was an aborted redraw last time, now we need to redraw BOTH it and the new rect.
+    setup.canvas = canvas;
+    setup.big_rect = rect;
 
-        // save the old aborted rect in case we decide to paint it separately (see below)
-        NRRectL aborted = canvas->redraw_aborted;
+    // Save the mouse location
+    gint x, y;
+    gdk_window_get_pointer (GTK_WIDGET(canvas)->window, &x, &y, NULL);
+    setup.mouse_loc = sp_canvas_window_to_world (canvas, NR::Point(x,y));
 
-        // calculate the rectangle union of the both rects (the smallest rectangle which covers both) 
-        NRRectL nion;
-        nr_rect_l_union (&nion, &rect, &aborted);
-
-        // subtract one of the rects-to-draw from the other (the smallest rectangle which covers
-        // all of the first not covered by the second)
-        NRRectL rect_minus_aborted;
-        nr_rect_l_subtract (&rect_minus_aborted, &rect, &aborted);
-
-        // Initially, the rect to redraw later (in case we're aborted) is the same as the union of both rects
-        canvas->redraw_aborted = nion;
-
-        // calculate areas of the three rects
-        if ((nr_rect_l_area(&rect_minus_aborted) + nr_rect_l_area(&aborted)) * 1.2 < nr_rect_l_area(&nion)) {
-            // If the summary area of the two rects is significantly (at least by 20%) less than
-            // the area of their rectangular union, it makes sense to paint the two rects
-            // separately instead of painting their union. This gives a significant speedup when,
-            // for example, your current canvas is almost painted, with only a strip at bottom
-            // left, and at that moment you abort it by scrolling down which reveals a new strip at
-            // the top. Straightforward painting of the union of the aborted rect and the new rect
-            // will have to repaint the entire canvas! By contrast, the optimized approach below
-            // paints the two narrow strips in order which is much faster.
-
-            // find out which rect to draw first - compare them first by y then by x of the top left corners
-            NRRectL *first;
-            NRRectL *second;
-            if (rect.y0 == aborted.y0) {
-                if (rect.x0 < aborted.x0) {
-                    first = &rect;
-                    second = &aborted;
-                } else {
-                    second = &rect;
-                    first = &aborted;
-                }
-            } else if (rect.y0 < aborted.y0) {
-                first = &rect;
-                second = &aborted;
-            } else {
-                second = &rect;
-                first = &aborted;
-            }
-
-            NRRectL second_minus_first;
-            nr_rect_l_subtract (&second_minus_first, second, first);
-
-            // paint the first rect;
-            if (sp_canvas_paint_rect_internal (canvas, first, &(second_minus_first.x0), &(second_minus_first.y0))) {
-                // aborted!
-                return;
-            }
-
-            // if not aborted, assign (second rect minus first) as the new redraw_aborted and paint the same
-            canvas->redraw_aborted = second_minus_first;
-            if (sp_canvas_paint_rect_internal (canvas, &second_minus_first, NULL, NULL)) {
-                return; // aborted
-            }
-
-        } else {
-            // no need for separate drawing, just draw the union as one rect
-            if (sp_canvas_paint_rect_internal (canvas, &nion, NULL, NULL)) {
-                return; // aborted
-            }
-        }
+    // CAIRO FIXME: the sw/sh calculations below all assume 24bpp, need fixing for 32bpp
+    if (canvas->rendermode != RENDERMODE_OUTLINE) {
+        // use 256K as a compromise to not slow down gradients
+        // 256K is the cached buffer and we need 3 channels
+        setup.max_pixels = 87381; // 256K/3
     } else {
-        // Nothing was aborted last time, just draw the rect we're given
-
-        // Initially, the rect to redraw later (in case we're aborted) is the same as the one we're going to draw now.
-        canvas->redraw_aborted = rect;
-
-        if (sp_canvas_paint_rect_internal (canvas, &rect, NULL, NULL)) {
-            return; // aborted
-        }
+        // paths only, so 1M works faster
+        // 1M is the cached buffer and we need 3 channels
+        setup.max_pixels = 349525;
     }
 
-    // we've had a full unaborted redraw, reset the full redraw counter
-    if (canvas->forced_redraw_limit != -1) {
-        canvas->forced_redraw_count = 0;
-    }
+    // Start the clock
+    g_get_current_time(&(setup.start_time));
+
+    // Go
+    return sp_canvas_paint_rect_internal(&setup, rect);
 }
 
 /**
@@ -2047,6 +1895,8 @@ sp_canvas_focus_out (GtkWidget *widget, GdkEventFocus *event)
 
 /**
  * Helper that repaints the areas in the canvas that need it.
+ *
+ * @return true if all the dirty parts have been redrawn
  */
 static int
 paint (SPCanvas *canvas)
@@ -2063,22 +1913,17 @@ paint (SPCanvas *canvas)
 
     for (int j=canvas->tTop; j<canvas->tBottom; j++) { 
         for (int i=canvas->tLeft; i<canvas->tRight; i++) { 
-
             int tile_index = (i - canvas->tLeft) + (j - canvas->tTop)*canvas->tileH;
 
             if ( canvas->tiles[tile_index] ) { // if this tile is dirtied (nonzero)
-                to_paint.union_with_rect(
-                    Gdk::Rectangle(i*TILE_SIZE, j*TILE_SIZE,
-                                     TILE_SIZE,   TILE_SIZE));
+                to_paint.union_with_rect(Gdk::Rectangle(i*TILE_SIZE, j*TILE_SIZE,
+                                   TILE_SIZE, TILE_SIZE));
             }
 
-            canvas->tiles[tile_index] = 0; // undirty this tile
         }
     }
 
-    canvas->need_redraw = FALSE;
-
-    if (~to_paint.empty()) {
+    if (!to_paint.empty()) {
         Glib::ArrayHandle<Gdk::Rectangle> rect = to_paint.get_rectangles();
         typedef Glib::ArrayHandle<Gdk::Rectangle>::const_iterator Iter;
         for (Iter i=rect.begin(); i != rect.end(); ++i) {
@@ -2086,8 +1931,18 @@ paint (SPCanvas *canvas)
             int y0 = (*i).get_y();
             int x1 = x0 + (*i).get_width();
             int y1 = y0 + (*i).get_height();
-            sp_canvas_paint_rect (canvas, x0, y0, x1, y1);
+            if (!sp_canvas_paint_rect(canvas, x0, y0, x1, y1)) {
+                // Aborted
+                return FALSE;
+            };
         }
+    }
+
+    canvas->need_redraw = FALSE;
+
+    // we've had a full unaborted redraw, reset the full redraw counter
+    if (canvas->forced_redraw_limit != -1) {
+        canvas->forced_redraw_count = 0;
     }
 
     return TRUE;
@@ -2224,7 +2079,6 @@ sp_canvas_update_now (SPCanvas *canvas)
           canvas->need_redraw))
         return;
 
-    remove_idle (canvas);
     do_update (canvas);
 }
 
@@ -2357,7 +2211,7 @@ inline int sp_canvas_tile_ceil(int x)
 /**
  * Helper that allocates a new tile array for the canvas, copying overlapping tiles from the old array
  */
-void sp_canvas_resize_tiles(SPCanvas* canvas,int nl,int nt,int nr,int nb)
+static void sp_canvas_resize_tiles(SPCanvas* canvas, int nl, int nt, int nr, int nb)
 {
     if ( nl >= nr || nt >= nb ) {
         if ( canvas->tiles ) g_free(canvas->tiles);
@@ -2393,10 +2247,19 @@ void sp_canvas_resize_tiles(SPCanvas* canvas,int nl,int nt,int nr,int nb)
     canvas->tileV=nv;
 }
 
-/**
- * Helper that marks specific canvas rectangle for redraw by dirtying its tiles
+/*
+ * Helper that queues a canvas rectangle for redraw
  */
-void sp_canvas_dirty_rect(SPCanvas* canvas,int nl,int nt,int nr,int nb)
+static void sp_canvas_dirty_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb) {
+    canvas->need_redraw = TRUE;
+
+    sp_canvas_mark_rect(canvas, nl, nt, nr, nb, 1);
+}
+
+/**
+ * Helper that marks specific canvas rectangle for redraw
+ */
+void sp_canvas_mark_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb, uint8_t val)
 {
     if ( nl >= nr || nt >= nb ) {
         return;
@@ -2411,11 +2274,9 @@ void sp_canvas_dirty_rect(SPCanvas* canvas,int nl,int nt,int nr,int nb)
     if ( tt < canvas->tTop ) tt=canvas->tTop;
     if ( tb > canvas->tBottom ) tb=canvas->tBottom;
 
-    canvas->need_redraw = TRUE;
-
     for (int i=tl; i<tr; i++) {
         for (int j=tt; j<tb; j++) {
-            canvas->tiles[(i-canvas->tLeft)+(j-canvas->tTop)*canvas->tileH] = 1;
+            canvas->tiles[(i-canvas->tLeft)+(j-canvas->tTop)*canvas->tileH] = val;
         }
     }
 }
