@@ -31,6 +31,7 @@
 
 #include "document-private.h"
 
+#include "dialogs/dialog-events.h"
 #include <gtk/gtkdialog.h>
 
 namespace Inkscape {
@@ -71,13 +72,13 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
         _pageNumberSpin->set_sensitive(false);
     } else {
         // Display total number of pages
-        gchar *label_text = g_strdup_printf("/ %i", num_pages);
+        gchar *label_text = g_strdup_printf(_("out of %i"), num_pages);
         _labelTotalPages->set_label(label_text);
         g_free(label_text);
     }
 
     // Crop settings
-    _cropCheck = Gtk::manage(new class Gtk::CheckButton(_("Crop to:")));
+    _cropCheck = Gtk::manage(new class Gtk::CheckButton(_("Clip to:")));
     _cropTypeCombo = Gtk::manage(new class Gtk::ComboBoxText());
     int num_crop_choices = sizeof(crop_setting_choices) / sizeof(crop_setting_choices[0]);
     for ( int i = 0 ; i < num_crop_choices ; i++ ) {
@@ -86,34 +87,35 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     _cropTypeCombo->set_active_text(crop_setting_choices[0]);
     _cropTypeCombo->set_sensitive(false);
 
-    hbox3 = Gtk::manage(new class Gtk::HBox(false, 0));
-    vbox2 = Gtk::manage(new class Gtk::VBox(false, 0));
+    hbox3 = Gtk::manage(new class Gtk::HBox(false, 4));
+    vbox2 = Gtk::manage(new class Gtk::VBox(false, 4));
     alignment3 = Gtk::manage(new class Gtk::Alignment(0.5, 0.5, 1, 1));
-    _labelPageSettings = Gtk::manage(new class Gtk::Label(_("Page Settings")));
+    _labelPageSettings = Gtk::manage(new class Gtk::Label(_("Page settings")));
     _pageSettingsFrame = Gtk::manage(new class Gtk::Frame());
-    _labelPrecision = Gtk::manage(new class Gtk::Label(_("Precision of approximation for gradient meshes:")));
+    _labelPrecision = Gtk::manage(new class Gtk::Label(_("Precision of approximating gradient meshes:")));
+    _labelPrecisionWarning = Gtk::manage(new class Gtk::Label(_("<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance.")));
    
     _fallbackPrecisionSlider_adj = Gtk::manage(new class Gtk::Adjustment(2, 1, 256, 1, 10, 10));
     _fallbackPrecisionSlider = Gtk::manage(new class Gtk::HScale(*_fallbackPrecisionSlider_adj));
     _fallbackPrecisionSlider->set_value(2.0);
     _labelPrecisionComment = Gtk::manage(new class Gtk::Label(_("rough")));
-    hbox6 = Gtk::manage(new class Gtk::HBox(false, 0));
+    hbox6 = Gtk::manage(new class Gtk::HBox(false, 4));
 
     // Text options
     _labelText = Gtk::manage(new class Gtk::Label(_("Text handling:")));
     _textHandlingCombo = Gtk::manage(new class Gtk::ComboBoxText());
-    _textHandlingCombo->append_text(_("import text as text"));
-    _textHandlingCombo->set_active_text(_("import text as text"));
+    _textHandlingCombo->append_text(_("Import text as text"));
+    _textHandlingCombo->set_active_text(_("Import text as text"));
     
-    hbox5 = Gtk::manage(new class Gtk::HBox(false, 0));
+    hbox5 = Gtk::manage(new class Gtk::HBox(false, 4));
     _embedImagesCheck = Gtk::manage(new class Gtk::CheckButton(_("Embed images")));
-    vbox3 = Gtk::manage(new class Gtk::VBox(false, 0));
+    vbox3 = Gtk::manage(new class Gtk::VBox(false, 4));
     alignment4 = Gtk::manage(new class Gtk::Alignment(0.5, 0.5, 1, 1));
-    _labelImportSettings = Gtk::manage(new class Gtk::Label(_("Import Settings")));
+    _labelImportSettings = Gtk::manage(new class Gtk::Label(_("Import settings")));
     _importSettingsFrame = Gtk::manage(new class Gtk::Frame());
-    vbox1 = Gtk::manage(new class Gtk::VBox(false, 0));
+    vbox1 = Gtk::manage(new class Gtk::VBox(false, 4));
     _previewArea = Gtk::manage(new class Gtk::DrawingArea());
-    hbox1 = Gtk::manage(new class Gtk::HBox(false, 0));
+    hbox1 = Gtk::manage(new class Gtk::HBox(false, 4));
     cancelbutton->set_flags(Gtk::CAN_FOCUS);
     cancelbutton->set_flags(Gtk::CAN_DEFAULT);
     cancelbutton->set_relief(Gtk::RELIEF_NORMAL);
@@ -122,7 +124,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     okbutton->set_relief(Gtk::RELIEF_NORMAL);
     this->get_action_area()->property_layout_style().set_value(Gtk::BUTTONBOX_END);
     _labelSelect->set_alignment(0.5,0.5);
-    _labelSelect->set_padding(0,0);
+    _labelSelect->set_padding(4,0);
     _labelSelect->set_justify(Gtk::JUSTIFY_LEFT);
     _labelSelect->set_line_wrap(false);
     _labelSelect->set_use_markup(false);
@@ -133,26 +135,26 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     _pageNumberSpin->set_digits(0);
     _pageNumberSpin->set_wrap(false);
     _labelTotalPages->set_alignment(0.5,0.5);
-    _labelTotalPages->set_padding(0,0);
+    _labelTotalPages->set_padding(4,0);
     _labelTotalPages->set_justify(Gtk::JUSTIFY_LEFT);
     _labelTotalPages->set_line_wrap(false);
     _labelTotalPages->set_use_markup(false);
     _labelTotalPages->set_selectable(false);
-    hbox2->pack_start(*_labelSelect, Gtk::PACK_SHRINK, 0);
+    hbox2->pack_start(*_labelSelect, Gtk::PACK_SHRINK, 4);
     hbox2->pack_start(*_pageNumberSpin, Gtk::PACK_SHRINK, 4);
-    hbox2->pack_start(*_labelTotalPages, Gtk::PACK_SHRINK, 0);
+    hbox2->pack_start(*_labelTotalPages, Gtk::PACK_SHRINK, 4);
     _cropCheck->set_flags(Gtk::CAN_FOCUS);
     _cropCheck->set_relief(Gtk::RELIEF_NORMAL);
     _cropCheck->set_mode(true);
     _cropCheck->set_active(false);
     _cropTypeCombo->set_border_width(1);
-    hbox3->pack_start(*_cropCheck, Gtk::PACK_SHRINK, 0);
-    hbox3->pack_start(*_cropTypeCombo, Gtk::PACK_SHRINK, 4);
+    hbox3->pack_start(*_cropCheck, Gtk::PACK_SHRINK, 4);
+    hbox3->pack_start(*_cropTypeCombo, Gtk::PACK_SHRINK, 0);
     vbox2->pack_start(*hbox2);
     vbox2->pack_start(*hbox3);
     alignment3->add(*vbox2);
     _labelPageSettings->set_alignment(0.5,0.5);
-    _labelPageSettings->set_padding(0,0);
+    _labelPageSettings->set_padding(4,0);
     _labelPageSettings->set_justify(Gtk::JUSTIFY_LEFT);
     _labelPageSettings->set_line_wrap(false);
     _labelPageSettings->set_use_markup(true);
@@ -162,12 +164,18 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     _pageSettingsFrame->set_label_align(0,0.5);
     _pageSettingsFrame->add(*alignment3);
     _pageSettingsFrame->set_label_widget(*_labelPageSettings);
-    _labelPrecision->set_alignment(0.5,0.5);
-    _labelPrecision->set_padding(0,0);
+    _labelPrecision->set_alignment(0,0.5);
+    _labelPrecision->set_padding(4,0);
     _labelPrecision->set_justify(Gtk::JUSTIFY_LEFT);
-    _labelPrecision->set_line_wrap(false);
+    _labelPrecision->set_line_wrap(true);
     _labelPrecision->set_use_markup(false);
     _labelPrecision->set_selectable(false);
+    _labelPrecisionWarning->set_alignment(0,0.5);
+    _labelPrecisionWarning->set_padding(4,0);
+    _labelPrecisionWarning->set_justify(Gtk::JUSTIFY_LEFT);
+    _labelPrecisionWarning->set_line_wrap(true);
+    _labelPrecisionWarning->set_use_markup(true);
+    _labelPrecisionWarning->set_selectable(false);
     _fallbackPrecisionSlider->set_size_request(180,-1);
     _fallbackPrecisionSlider->set_flags(Gtk::CAN_FOCUS);
     _fallbackPrecisionSlider->set_update_policy(Gtk::UPDATE_CONTINUOUS);
@@ -177,15 +185,15 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     _fallbackPrecisionSlider->set_value_pos(Gtk::POS_TOP);
     _labelPrecisionComment->set_size_request(90,-1);
     _labelPrecisionComment->set_alignment(0.5,0.5);
-    _labelPrecisionComment->set_padding(0,0);
+    _labelPrecisionComment->set_padding(4,0);
     _labelPrecisionComment->set_justify(Gtk::JUSTIFY_LEFT);
     _labelPrecisionComment->set_line_wrap(false);
     _labelPrecisionComment->set_use_markup(false);
     _labelPrecisionComment->set_selectable(false);
     hbox6->pack_start(*_fallbackPrecisionSlider, Gtk::PACK_SHRINK, 4);
-    hbox6->pack_start(*_labelPrecisionComment, Gtk::PACK_SHRINK, 4);
+    hbox6->pack_start(*_labelPrecisionComment, Gtk::PACK_SHRINK, 0);
     _labelText->set_alignment(0.5,0.5);
-    _labelText->set_padding(0,0);
+    _labelText->set_padding(4,0);
     _labelText->set_justify(Gtk::JUSTIFY_LEFT);
     _labelText->set_line_wrap(false);
     _labelText->set_use_markup(false);
@@ -196,13 +204,14 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     _embedImagesCheck->set_relief(Gtk::RELIEF_NORMAL);
     _embedImagesCheck->set_mode(true);
     _embedImagesCheck->set_active(true);
-    vbox3->pack_start(*_labelPrecision, Gtk::PACK_SHRINK, 4);
+    vbox3->pack_start(*_labelPrecision, Gtk::PACK_SHRINK, 0);
     vbox3->pack_start(*hbox6, Gtk::PACK_SHRINK, 0);
-    vbox3->pack_start(*hbox5);
+    vbox3->pack_start(*_labelPrecisionWarning, Gtk::PACK_SHRINK, 0);
+    vbox3->pack_start(*hbox5, Gtk::PACK_SHRINK, 4);
     vbox3->pack_start(*_embedImagesCheck, Gtk::PACK_SHRINK, 0);
     alignment4->add(*vbox3);
     _labelImportSettings->set_alignment(0.5,0.5);
-    _labelImportSettings->set_padding(0,0);
+    _labelImportSettings->set_padding(4,0);
     _labelImportSettings->set_justify(Gtk::JUSTIFY_LEFT);
     _labelImportSettings->set_line_wrap(false);
     _labelImportSettings->set_use_markup(true);
@@ -221,6 +230,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     this->get_vbox()->pack_start(*hbox1);
     this->set_title(_("PDF Import Settings"));
     this->set_modal(true);
+    sp_transientize((GtkWidget *)this->gobj());  //Make transient
     this->property_window_position().set_value(Gtk::WIN_POS_NONE);
     this->set_resizable(true);
     this->property_destroy_with_parent().set_value(false);
@@ -241,6 +251,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     _labelPageSettings->show();
     _pageSettingsFrame->show();
     _labelPrecision->show();
+    _labelPrecisionWarning->show();
     _fallbackPrecisionSlider->show();
     _labelPrecisionComment->show();
     hbox6->show();
@@ -280,6 +291,9 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     _pageNumberSpin_adj->set_value(1.0);
     _current_page = 1;
     _setPreviewPage(_current_page);
+
+    set_default (*okbutton);
+    set_focus (*okbutton);
 }
 
 PdfImportDialog::~PdfImportDialog() {

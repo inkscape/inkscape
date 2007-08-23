@@ -77,6 +77,7 @@ private:
     class Gtk::Label * _labelPageSettings;
     class Gtk::Frame * _pageSettingsFrame;
     class Gtk::Label * _labelPrecision;
+    class Gtk::Label * _labelPrecisionWarning;
     class Gtk::HScale * _fallbackPrecisionSlider;
     class Gtk::Adjustment *_fallbackPrecisionSlider_adj;
     class Gtk::Label * _labelPrecisionComment;
