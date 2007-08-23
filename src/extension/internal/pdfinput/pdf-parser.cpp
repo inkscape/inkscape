@@ -1465,9 +1465,9 @@ void PdfParser::doShadingPatternFillFallback(GfxShadingPattern *sPat,
   } else {
     state->clip();
     if (eoFill) {
-      builder->clip(state, true);
+      builder->setClipPath(state, true);
     } else {
-      builder->clip(state);
+      builder->setClipPath(state);
     }
   }
 

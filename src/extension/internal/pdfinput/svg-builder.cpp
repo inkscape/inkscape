@@ -549,6 +549,10 @@ bool SvgBuilder::getTransform(double *transform) {
 void SvgBuilder::setTransform(double c0, double c1, double c2, double c3,
                               double c4, double c5) {
 
+    // Avoid transforming a group with an already set clip-path
+    if ( _container->attribute("clip-path") != NULL ) {
+        pushGroup();
+    }
     TRACE(("setTransform: %f %f %f %f %f %f\n", c0, c1, c2, c3, c4, c5));
     svgSetTransform(_container, c0, c1, c2, c3, c4, c5);
 }
