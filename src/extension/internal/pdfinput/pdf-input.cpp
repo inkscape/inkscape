@@ -278,6 +278,8 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
     // Init preview
     _thumb_data = NULL;
     _pageNumberSpin_adj->set_value(1.0);
+    _current_page = 1;
+    _setPreviewPage(_current_page);
 }
 
 PdfImportDialog::~PdfImportDialog() {
