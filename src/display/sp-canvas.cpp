@@ -36,6 +36,7 @@
 #include "prefs-utils.h"
 #include "box3d-context.h"
 #include "inkscape.h"
+#include "sodipodi-ctrlrect.h"
 
 // Define this to visualize the regions to be redrawn
 //#define DEBUG_REDRAW 1;
@@ -230,7 +231,15 @@ sp_canvas_item_dispose (GObject *object)
 {
     SPCanvasItem *item = SP_CANVAS_ITEM (object);
 
-    redraw_if_visible (item);
+    // Hack: if this is a ctrlrect, move it to 0,0;
+    // this redraws only the stroke of the rect to be deleted,
+    // avoiding redraw of the entire area
+    if (SP_IS_CTRLRECT(item)) {
+        SP_CTRLRECT(object)->setRectangle(NR::Rect(NR::Point(0,0),NR::Point(0,0)));
+        SP_CTRLRECT(object)->update(item->xform, 0);
+    } else {
+        redraw_if_visible (item);
+    }
     item->flags &= ~SP_CANVAS_ITEM_VISIBLE;
 
     if (item == item->canvas->current_item) {
@@ -2276,7 +2285,7 @@ static void sp_canvas_dirty_rect(SPCanvas* canvas, int nl, int nt, int nr, int n
 }
 
 /**
- * Helper that marks specific canvas rectangle for redraw
+ * Helper that marks specific canvas rectangle as clean (val == 0) or dirty (otherwise)
  */
 void sp_canvas_mark_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb, uint8_t val)
 {
