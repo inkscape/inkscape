@@ -202,8 +202,6 @@ sp_canvas_item_construct (SPCanvasItem *item, SPCanvasGroup *parent, const gchar
     group_add (SP_CANVAS_GROUP (item->parent), item);
 
     sp_canvas_item_request_update (item);
-    sp_canvas_request_redraw (item->canvas, (int)(item->x1), (int)(item->y1), (int)(item->x2 + 1), (int)(item->y2 + 1));
-    item->canvas->need_repick = TRUE;
 }
 
 /**
@@ -213,7 +211,14 @@ static void
 redraw_if_visible (SPCanvasItem *item)
 {
     if (item->flags & SP_CANVAS_ITEM_VISIBLE) {
-        sp_canvas_request_redraw (item->canvas, (int)(item->x1), (int)(item->y1), (int)(item->x2 + 1), (int)(item->y2 + 1));
+        int x0 = (int)(item->x1);
+        int x1 = (int)(item->x2);
+        int y0 = (int)(item->y1);
+        int y1 = (int)(item->y2);
+
+        if (x0 !=0 || x1 !=0 || y0 !=0 || y1 !=0) {
+            sp_canvas_request_redraw (item->canvas, (int)(item->x1), (int)(item->y1), (int)(item->x2 + 1), (int)(item->y2 + 1));
+        }
     }
 }
 
@@ -464,8 +469,15 @@ sp_canvas_item_show (SPCanvasItem *item)
 
     item->flags |= SP_CANVAS_ITEM_VISIBLE;
 
-    sp_canvas_request_redraw (item->canvas, (int)(item->x1), (int)(item->y1), (int)(item->x2 + 1), (int)(item->y2 + 1));
-    item->canvas->need_repick = TRUE;
+    int x0 = (int)(item->x1);
+    int x1 = (int)(item->x2);
+    int y0 = (int)(item->y1);
+    int y1 = (int)(item->y2);
+
+    if (x0 !=0 || x1 !=0 || y0 !=0 || y1 !=0) {
+        sp_canvas_request_redraw (item->canvas, (int)(item->x1), (int)(item->y1), (int)(item->x2 + 1), (int)(item->y2 + 1));
+        item->canvas->need_repick = TRUE;
+    }
 }
 
 /**
@@ -482,8 +494,15 @@ sp_canvas_item_hide (SPCanvasItem *item)
 
     item->flags &= ~SP_CANVAS_ITEM_VISIBLE;
 
-    sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)(item->x2 + 1), (int)(item->y2 + 1));
-    item->canvas->need_repick = TRUE;
+    int x0 = (int)(item->x1);
+    int x1 = (int)(item->x2);
+    int y0 = (int)(item->y1);
+    int y1 = (int)(item->y2);
+
+    if (x0 !=0 || x1 !=0 || y0 !=0 || y1 !=0) {
+        sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)(item->x2 + 1), (int)(item->y2 + 1));
+        item->canvas->need_repick = TRUE;
+    }
 }
 
 /**
