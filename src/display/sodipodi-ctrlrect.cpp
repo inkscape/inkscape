@@ -171,7 +171,9 @@ void CtrlRect::init()
     _shadow = 0;
 
     _area.x0 = _area.y0 = 0;
-    _area.x1 = _area.y1 = -1;
+    _area.x1 = _area.y1 = 0;
+
+    _rect = NR::Rect(NR::Point(0,0),NR::Point(0,0));
 
     _shadow_size = 0;
 
@@ -183,7 +185,8 @@ void CtrlRect::init()
 
 void CtrlRect::render(SPCanvasBuf *buf)
 {
-    if ((_area.x0 < buf->rect.x1) &&
+    if ((_area.x0 != 0 || _area.x1 != 0 || _area.y0 != 0 || _area.y1 != 0) &&
+        (_area.x0 < buf->rect.x1) &&
         (_area.y0 < buf->rect.y1) &&
         ((_area.x1 + _shadow_size) >= buf->rect.x0) &&
         ((_area.y1 + _shadow_size) >= buf->rect.y0)) {
@@ -222,28 +225,30 @@ void CtrlRect::update(NR::Matrix const &affine, unsigned int flags)
 
     sp_canvas_item_reset_bounds(this);
 
-    /* Request redraw old */
-    if (!_has_fill) {
-        /* Top */
-        sp_canvas_request_redraw(canvas,
-                                 _area.x0 - 1, _area.y0 - 1,
-                                 _area.x1 + 1, _area.y0 + 1);
-        /* Left */
-        sp_canvas_request_redraw(canvas,
-                                 _area.x0 - 1, _area.y0 - 1,
-                                 _area.x0 + 1, _area.y1 + 1);
-        /* Right */
-        sp_canvas_request_redraw(canvas,
-                                 _area.x1 - 1, _area.y0 - 1,
-                                 _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
-        /* Bottom */
-        sp_canvas_request_redraw(canvas,
-                                 _area.x0 - 1, _area.y1 - 1,
-                                 _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
-    } else {
-        sp_canvas_request_redraw(canvas,
-                                 _area.x0 - 1, _area.y0 - 1,
-                                 _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+    if (_area.x0 != 0 || _area.x1 != 0 || _area.y0 != 0 || _area.y1 != 0) {
+        /* Request redraw old */
+        if (!_has_fill) {
+            /* Top */
+            sp_canvas_request_redraw(canvas,
+                                     _area.x0 - 1, _area.y0 - 1,
+                                     _area.x1 + 1, _area.y0 + 1);
+            /* Left */
+            sp_canvas_request_redraw(canvas,
+                                     _area.x0 - 1, _area.y0 - 1,
+                                     _area.x0 + 1, _area.y1 + 1);
+            /* Right */
+            sp_canvas_request_redraw(canvas,
+                                     _area.x1 - 1, _area.y0 - 1,
+                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+            /* Bottom */
+            sp_canvas_request_redraw(canvas,
+                                     _area.x0 - 1, _area.y1 - 1,
+                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+        } else {
+            sp_canvas_request_redraw(canvas,
+                                     _area.x0 - 1, _area.y0 - 1,
+                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+        }
     }
 
     NR::Rect bbox(_rect.min() * affine, _rect.max() * affine);
@@ -254,35 +259,38 @@ void CtrlRect::update(NR::Matrix const &affine, unsigned int flags)
     _area.y1 = (int) floor(bbox.max()[NR::Y] + 0.5);
     
     _shadow_size = _shadow;
-    
-    /* Request redraw new */
-    if (!_has_fill) {
-        /* Top */
-        sp_canvas_request_redraw(canvas,
-                                 _area.x0 - 1, _area.y0 - 1,
-                                 _area.x1 + 1, _area.y0 + 1);
-        /* Left */
-        sp_canvas_request_redraw(canvas,
-                                 _area.x0 - 1, _area.y0 - 1,
-                                 _area.x0 + 1, _area.y1 + 1);
-        /* Right */
-        sp_canvas_request_redraw(canvas,
-                                 _area.x1 - 1, _area.y0 - 1,
-                                 _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
-        /* Bottom */
-        sp_canvas_request_redraw(canvas,
-                                 _area.x0 - 1, _area.y1 - 1,
-                                 _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
-    } else {
-        sp_canvas_request_redraw(canvas,
-                                 _area.x0 - 1, _area.y0 - 1,
-                                 _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+
+    if (_area.x0 != 0 || _area.x1 != 0 || _area.y0 != 0 || _area.y1 != 0) {
+        /* Request redraw new */
+        if (!_has_fill) {
+            /* Top */
+            sp_canvas_request_redraw(canvas,
+                                     _area.x0 - 1, _area.y0 - 1,
+                                     _area.x1 + 1, _area.y0 + 1);
+            /* Left */
+            sp_canvas_request_redraw(canvas,
+                                     _area.x0 - 1, _area.y0 - 1,
+                                     _area.x0 + 1, _area.y1 + 1);
+            /* Right */
+            sp_canvas_request_redraw(canvas,
+                                     _area.x1 - 1, _area.y0 - 1,
+                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+            /* Bottom */
+            sp_canvas_request_redraw(canvas,
+                                     _area.x0 - 1, _area.y1 - 1,
+                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+        } else {
+            sp_canvas_request_redraw(canvas,
+                                     _area.x0 - 1, _area.y0 - 1,
+                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+        }
+
+        x1 = _area.x0 - 1;
+        y1 = _area.y0 - 1;
+        x2 = _area.x1 + _shadow_size + 1;
+        y2 = _area.y1 + _shadow_size + 1;
     }
-    
-    x1 = _area.x0 - 1;
-    y1 = _area.y0 - 1;
-    x2 = _area.x1 + _shadow_size + 1;
-    y2 = _area.y1 + _shadow_size + 1;
+  
 }
 
 
