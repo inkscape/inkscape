@@ -104,6 +104,7 @@ sp_ctrl_init (SPCtrl *ctrl)
 	ctrl->stroked = 0;
 	ctrl->fill_color = 0x000000ff;
 	ctrl->stroke_color = 0x000000ff;
+	ctrl->_moved = false;
 
 	ctrl->box.x0 = ctrl->box.y0 = ctrl->box.x1 = ctrl->box.y1 = 0;
 	ctrl->cache = NULL;
@@ -203,6 +204,8 @@ sp_ctrl_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags
 		(* ((SPCanvasItemClass *) parent_class)->update) (item, affine, flags);
 
 	sp_canvas_item_reset_bounds (item);
+
+	if (!ctrl->_moved) return;
 
 	if (ctrl->shown) {
 		sp_canvas_request_redraw (item->canvas, ctrl->box.x0, ctrl->box.y0, ctrl->box.x1 + 1, ctrl->box.y1 + 1);
@@ -491,4 +494,5 @@ sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)
 
 void SPCtrl::moveto (NR::Point const p) {
 	sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (this), NR::Matrix(NR::translate (p)));
+  _moved = true;
 }

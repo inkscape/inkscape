@@ -47,6 +47,7 @@ struct SPCtrl : public SPCanvasItem{
 	guint stroked : 1;
 	guint32 fill_color;
 	guint32 stroke_color;
+  bool _moved;
 
 	NRRectL box;			/* NB! x1 & y1 are included */
 	guchar *cache;
