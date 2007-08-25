@@ -58,9 +58,9 @@ static const Util::EnumDataConverter<SkelCopyType> SkelCopyTypeConverter(SkelCop
 
 LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    pattern(_("Pattern"), _("Pattern to put along path"), "pattern", &wr, this, "M0,0 L1,1"),
-    origin(_("Origin"), _("Origin of ?"), "origin", &wr, this, Geom::Point(0,0)),
-    copytype(_("Copytype"), _("tooltip"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED)
+    pattern(_("Pattern"), _("Path to put along path"), "pattern", &wr, this, "M0,0 L1,1"),
+    origin(_("Origin"), _("Startpoint of the pattern path to put along path"), "origin", &wr, this, Geom::Point(0,0)),
+    copytype(_("Copytype"), _("How to shape the pattern path along the path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED)
 {
     registerParameter( dynamic_cast<Parameter *>(&origin) );
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
@@ -126,7 +126,7 @@ LPESkeletalStrokes::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in
         x*=scaling;
 
     double offs = 0;
-    Piecewise<D2<SBasis> >output;
+    Piecewise<D2<SBasis> > output;
     for (int i=0; i<nbCopies; i++){
         output.concat(compose(uskeleton,x+offs)+y*compose(n,x+offs));
         offs+=pattWidth;

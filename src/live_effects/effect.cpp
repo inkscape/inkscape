@@ -37,7 +37,7 @@ namespace LivePathEffect {
 
 const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     // {constant defined in effect.h, _("name of your effect"), "name of your effect in SVG"}
-    {SKELETAL_STROKES,      _("Skeletal Strokes"),      "skeletal"},
+    {SKELETAL_STROKES,      _("Path along path"),      "skeletal"},
 #ifdef LPE_ENABLE_TEST_EFFECTS
     {SLANT,                 _("Slant"),                 "slant"},
     {DOEFFECTSTACK_TEST,    _("doEffect stack test"),   "doeffectstacktest"},
