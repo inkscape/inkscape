@@ -38,8 +38,10 @@ namespace LivePathEffect {
 const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     // {constant defined in effect.h, _("name of your effect"), "name of your effect in SVG"}
     {SKELETAL_STROKES,      _("Skeletal Strokes"),      "skeletal"},
+#ifdef LPE_ENABLE_TEST_EFFECTS
     {SLANT,                 _("Slant"),                 "slant"},
     {DOEFFECTSTACK_TEST,    _("doEffect stack test"),   "doeffectstacktest"},
+#endif
     {GEARS,                 _("Gears"),                 "gears"}
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
@@ -52,12 +54,14 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
         case SKELETAL_STROKES:
             neweffect = (Effect*) new LPESkeletalStrokes(lpeobj);
             break;
-        case SLANT:
+#ifdef LPE_ENABLE_TEST_EFFECTS
+            case SLANT:
             neweffect = (Effect*) new LPESlant(lpeobj);
             break;
         case DOEFFECTSTACK_TEST:
             neweffect = (Effect*) new LPEdoEffectStackTest(lpeobj);
             break;
+#endif
         case GEARS:
             neweffect = (Effect*) new LPEGears(lpeobj);
             break;

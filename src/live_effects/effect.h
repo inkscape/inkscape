@@ -19,6 +19,8 @@
 
 #define  LPE_CONVERSION_TOLERANCE 0.01    // FIXME: find good solution for this.
 
+//#define LPE_ENABLE_TEST_EFFECTS
+
 struct SPShape;
 struct SPDocument;
 class NArtBpath;
@@ -40,8 +42,10 @@ namespace LivePathEffect {
 
 enum EffectType {
     SKELETAL_STROKES = 0,
+#ifdef LPE_ENABLE_TEST_EFFECTS
     SLANT,
     DOEFFECTSTACK_TEST,
+#endif
     GEARS,
     INVALID_LPE // This must be last
 };
