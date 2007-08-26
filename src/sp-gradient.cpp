@@ -208,6 +208,8 @@ sp_stop_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         repr = xml_doc->createElement("svg:stop");
     }
 
+    guint32 specifiedcolor = sp_color_get_rgba32_ualpha(&stop->specified_color, 255);
+
     if (((SPObjectClass *) stop_parent_class)->write)
         (* ((SPObjectClass *) stop_parent_class)->write)(object, repr, flags);
 
@@ -221,7 +223,7 @@ sp_stop_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         os << "currentColor";
     } else {
         gchar c[64];
-        sp_svg_write_color(c, 64, sp_color_get_rgba32_ualpha(&stop->specified_color, 255));
+        sp_svg_write_color(c, 64, specifiedcolor);
         os << c;
     }
     os << ";stop-opacity:" << stop->opacity;
