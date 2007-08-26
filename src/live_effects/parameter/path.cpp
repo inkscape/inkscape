@@ -67,6 +67,7 @@ PathParam::param_readSVGValue(const gchar * strvalue)
             newpath.concat( temppath[i].toPwSb() );
         }
         *( dynamic_cast<Geom::Piecewise<Geom::D2<Geom::SBasis> > *> (this) ) = newpath;
+        signal_path_changed.emit();
         return true;
     }
 

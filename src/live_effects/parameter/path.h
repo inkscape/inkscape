@@ -41,6 +41,7 @@ public:
     void param_set_default();
 
     sigc::signal <void> signal_path_pasted;
+    sigc::signal <void> signal_path_changed;
 
 private:
     PathParam(const PathParam&);

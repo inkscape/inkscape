@@ -59,14 +59,10 @@ static const Util::EnumDataConverter<SkelCopyType> SkelCopyTypeConverter(SkelCop
 LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     pattern(_("Pattern"), _("Path to put along path"), "pattern", &wr, this, "M0,0 L1,1"),
-    origin(_("Origin"), _("Startpoint of the pattern path to put along path"), "origin", &wr, this, Geom::Point(0,0)),
     copytype(_("Copytype"), _("How to shape the pattern path along the path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED)
 {
-    registerParameter( dynamic_cast<Parameter *>(&origin) );
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
     registerParameter( dynamic_cast<Parameter *>(&copytype) );
-
-    pattern.signal_path_pasted.connect(sigc::mem_fun(*this, &LPESkeletalStrokes::on_pattern_pasted));
 }
 
 LPESkeletalStrokes::~LPESkeletalStrokes()
@@ -91,9 +87,13 @@ LPESkeletalStrokes::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in
     n = force_continuity(remove_short_cuts(n,.1));
 
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independant(pattern);
-    Piecewise<SBasis> x=Piecewise<SBasis>(patternd2[0]-origin[0]);
-    Piecewise<SBasis> y=Piecewise<SBasis>(patternd2[1]-origin[1]);
+    Piecewise<SBasis> x=Piecewise<SBasis>(patternd2[0]);
+    Piecewise<SBasis> y=Piecewise<SBasis>(patternd2[1]);
     Interval pattBnds = bounds_exact(x);
+    x -= pattBnds.min();
+    Interval pattBndsY = bounds_exact(y);
+    y -= (pattBndsY.max()+pattBndsY.min())/2;
+
 
     int nbCopies = int(uskeleton.cuts.back()/pattBnds.extent());
     double scaling = 1;
@@ -121,7 +121,6 @@ LPESkeletalStrokes::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in
 
     double pattWidth = pattBnds.extent() * scaling;
 
-    x-=pattBnds.min();
     if (scaling != 1)
         x*=scaling;
 
@@ -133,14 +132,6 @@ LPESkeletalStrokes::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in
     }
     return output;
 }
-
-void
-LPESkeletalStrokes::on_pattern_pasted()
-{
-    // a new pattern was pasted through the dialog.  overwrite the origin thingie to the first point of the path
-    origin.param_setValue(pattern.valueAt(0));
-}
-
 
 
 } // namespace LivePathEffect

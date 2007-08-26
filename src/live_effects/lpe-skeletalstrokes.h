@@ -11,7 +11,6 @@
 
 #include "live_effects/effect.h"
 #include "live_effects/parameter/path.h"
-#include "live_effects/parameter/point.h"
 #include "live_effects/parameter/enum.h"
 
 namespace Inkscape {
@@ -34,7 +33,6 @@ public:
 
 private:
     PathParam  pattern;
-    PointParam origin;
     EnumParam<SkelCopyType> copytype;
 
     void on_pattern_pasted();
