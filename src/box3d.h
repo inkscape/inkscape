@@ -36,7 +36,7 @@
 struct SP3DBox : public SPGroup {
     NR::Point corners[8];
     Box3DFace *faces[6];
-    guint z_orders[6]; // z_orders[i] holds the ID of the face at position #i in the group (from top to bottom)
+    gint z_orders[6]; // z_orders[i] holds the ID of the face at position #i in the group (from top to bottom)
 
     std::vector<gint> currently_visible_faces;
 

@@ -31,7 +31,7 @@ public:
     virtual ~Line() {}
     Line &operator=(Line const &line);
     virtual NR::Maybe<NR::Point> intersect(Line const &line);
-    void set_direction(NR::Point const &dir); // FIXME: Can we avoid this explicit assignment?
+    inline NR::Point direction () { return v_dir; }
     
     NR::Point closest_to(NR::Point const &pt); // returns the point on the line closest to pt 
 
@@ -43,6 +43,7 @@ public:
         return (pt + lambda * NR::unit_vector (v_dir)); }
 
 protected:
+    void set_direction(NR::Point const &dir);
     inline static bool pts_coincide (NR::Point const pt1, NR::Point const pt2)
     {
         return (NR::L2 (pt2 - pt1) < epsilon);
@@ -56,6 +57,7 @@ protected:
 
 std::pair<double, double> coordinates (NR::Point const &v1, NR::Point const &v2, NR::Point const &w);
 bool lies_in_sector (NR::Point const &v1, NR::Point const &v2, NR::Point const &w);
+bool lies_in_quadrangle (NR::Point const &A, NR::Point const &B, NR::Point const &C, NR::Point const &D, NR::Point const &pt);
 std::pair<NR::Point, NR::Point> side_of_intersection (NR::Point const &A, NR::Point const &B,
                                                       NR::Point const &C, NR::Point const &D,
                                                       NR::Point const &pt, NR::Point const &dir);

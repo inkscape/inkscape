@@ -331,6 +331,17 @@ Perspective3D::update_z_orders ()
     }
 }
 
+/* the direction from a point pt towards the specified vanishing point of the perspective */
+NR::Point
+Perspective3D::direction (NR::Point pt, Box3D::Axis axis)
+{
+    Box3D::VanishingPoint *vp = this->get_vanishing_point (axis);
+    if (!vp->is_finite()) {
+        return vp->v_dir;
+    }
+    return (vp->get_pos() - pt);
+}
+
 // swallow the list of boxes from the other perspective and delete it
 void
 Perspective3D::absorb (Perspective3D *other)
@@ -385,9 +396,11 @@ Perspective3D::print_debugging_info ()
             if (j != NULL) {
                 g_print ("%d", SP_3DBOX (j->data)->my_counter);
             }
+            g_print ("\n");
         }
+        g_print ("\n");
     }
-    g_print ("\n====================================================\n");
+    g_print ("====================================================\n");
 }
 
 } // namespace Box3D 

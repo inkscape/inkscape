@@ -121,9 +121,14 @@ bool lies_in_sector (NR::Point const &v1, NR::Point const &v2, NR::Point const &
     return (coords.first >= 0 and coords.second >= 0);
 }
 
-static double pos_angle (NR::Point A, NR::Point B)
+bool lies_in_quadrangle (NR::Point const &A, NR::Point const &B, NR::Point const &C, NR::Point const &D, NR::Point const &pt)
 {
-    return fabs (NR::atan2 (A) - NR::atan2 (B));
+    return (lies_in_sector (D - A, B - A, pt - A) && lies_in_sector (D - C, B - C, pt - C));
+}
+
+static double pos_angle (NR::Point v, NR::Point w)
+{
+    return fabs (NR::atan2 (v) - NR::atan2 (w));
 }
 
 /*

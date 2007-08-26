@@ -44,6 +44,8 @@ public:
     void update_box_reprs ();
     void update_z_orders ();
 
+    NR::Point direction (NR::Point pt, Box3D::Axis axis);
+
     /* convenience functions for interaction with dragging machinery: */
     bool all_boxes_occur_in_list (GSList *boxes_to_do);
     GSList * boxes_occurring_in_list (GSList * list_of_boxes);

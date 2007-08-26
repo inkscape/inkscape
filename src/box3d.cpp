@@ -439,7 +439,7 @@ sp_3dbox_corner_angle_to_VP (SP3DBox *box, Box3D::Axis axis, guint extreme_corne
 
 bool sp_3dbox_recompute_z_orders (SP3DBox *box)
 {
-    guint new_z_orders[6];
+    gint new_z_orders[6];
 
     // TODO: Determine the front corner depending on the distance from VPs and/or the user presets
     guint front_corner = sp_3dbox_get_front_corner_id (box);
@@ -636,12 +636,8 @@ static void sp_3dbox_corner_configuration (SP3DBox *box, std::vector<gint> &on_h
 /* returns true if there was a change in the z-orders (which triggers an update of the repr) */
 static bool sp_3dbox_recompute_z_orders_by_corner_configuration (SP3DBox *box)
 {
-    guint new_z_orders[6];
+    gint new_z_orders[6];
     Box3D::Axis front_rear_axis = Box3D::Z;
-
-    Box3D::Axis axis1 = Box3D::get_remaining_axes (front_rear_axis).first;
-    Box3D::Axis axis2 = Box3D::get_remaining_axes (front_rear_axis).second;
-    Box3D::Axis front_plane = Box3D::orth_plane_or_axis (front_rear_axis);
 
     std::vector<gint> on_hull;
     std::vector<gint> inside_hull;

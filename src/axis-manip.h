@@ -68,7 +68,7 @@ inline gint face_to_int (guint face_id) {
     }
 }
 
-inline guint opposite_face (guint face_id) {
+inline gint opposite_face (guint face_id) {
     return face_id + ((face_id % 2 == 0) ? 1 : -1);
 }
 
@@ -92,7 +92,7 @@ inline bool is_single_axis_direction (Box3D::Axis dir) {
 
 // Warning: We don't check that axis really unambiguously specifies a plane.
 //          Make sure this is the case when calling this function.
-inline guint face_containing_corner (Box3D::Axis axis, guint corner) {
+inline gint face_containing_corner (Box3D::Axis axis, guint corner) {
     if (!is_single_axis_direction (axis)) {
         axis = (Box3D::Axis) (axis ^ Box3D::XYZ);
     }
