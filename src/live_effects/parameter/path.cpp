@@ -143,10 +143,15 @@ PathParam::on_paste_button_click()
     if (!strcmp (repr->name(), "svg:path")) {
         const char * svgd = repr->attribute("d");
         if (svgd) {
-            param_write_to_repr(svgd);
-            signal_path_pasted.emit();
-            sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
-                             _("Paste path parameter"));
+            if (strchr(svgd,'A')) { // FIXME: temporary hack until 2Geom supports arcs in SVGD
+                SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
+                            _("This effect does not support arcs yet, try to convert to path.") );
+            } else {
+                param_write_to_repr(svgd);
+                signal_path_pasted.emit();
+                sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+                                 _("Paste path parameter"));
+            }
         }
     } else {
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Clipboard does not contain a path."));
