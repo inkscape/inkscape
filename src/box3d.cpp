@@ -497,10 +497,257 @@ bool sp_3dbox_recompute_z_orders (SP3DBox *box)
     return false;
 }
 
-void sp_3dbox_set_z_orders (SP3DBox *box)
+// convenience
+static bool sp_3dbox_is_subset_or_superset (std::vector<gint> const &list1, std::vector<gint> const &list2)
+{
+    return (std::includes (list1.begin(), list1.end(), list2.begin(), list2.end()) ||
+            std::includes (list2.begin(), list2.end(), list1.begin(), list1.end()));
+}
+
+static bool sp_3dbox_differ_by_opposite_faces (std::vector<gint> const &list1, std::vector<gint> const &list2)
+{
+    std::vector<gint> diff1;
+    std::vector<gint> diff2;
+    std::set_difference (list1.begin(), list1.end(), list2.begin(), list2.end(),
+                         std::insert_iterator<std::vector<gint> >(diff1, diff1.begin()));
+    std::set_difference (list2.begin(), list2.end(), list1.begin(), list1.end(),
+                         std::insert_iterator<std::vector<gint> >(diff2, diff2.begin()));
+
+    if (diff1.size() == 3 || diff1.size() != diff2.size())
+        return false;
+
+    for (guint i = 0; i < diff1.size(); ++i) {
+        if (std::find (diff2.begin(), diff2.end(), Box3D::opposite_face (diff1[i])) == diff2.end()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+static gint
+sp_3dbox_face_containing_diagonal_corners (guint corner1, guint corner2)
+{
+    Box3D::Axis plane = (Box3D::Axis) (corner1 ^ corner2);
+    if (!Box3D::is_plane (plane)) {
+        g_warning ("Corners %d and %d should span a plane.\n", corner1, corner2);
+        return 0;
+    }
+
+    return Box3D::face_containing_corner (plane, corner1);
+}
+
+static std::vector<gint> sp_3dbox_adjacent_faces_of_edge (guint corner1, guint corner2) {
+    std::vector<gint> adj_faces;
+    Box3D::Axis edge = (Box3D::Axis) (corner1 ^ corner2);
+    if (!Box3D::is_single_axis_direction (edge)) {
+        return adj_faces;
+    }
+
+    Box3D::Axis plane = Box3D::orth_plane_or_axis (edge);
+    Box3D::Axis axis1 = Box3D::extract_first_axis_direction (plane);
+    Box3D::Axis axis2 = Box3D::extract_second_axis_direction (plane);
+    adj_faces.push_back (Box3D::face_containing_corner ((Box3D::Axis) (edge ^ axis1), corner1));
+    adj_faces.push_back (Box3D::face_containing_corner ((Box3D::Axis) (edge ^ axis2), corner1));
+    return adj_faces;
+}
+
+static std::vector<gint> sp_3dbox_faces_meeting_in_corner (guint corner) {
+    std::vector<gint> faces;
+    for (int i = 0; i < 3; ++i) {
+        faces.push_back (sp_3dbox_face_containing_diagonal_corners (corner, corner ^ Box3D::planes[i]));
+    }
+    return faces;
+}
+
+static void sp_3dbox_remaining_faces (std::vector<gint> const &faces, std::vector<gint> &rem_faces)
+{
+    rem_faces.clear();
+    for (gint i = 0; i < 6; ++i) {
+        if (std::find (faces.begin(), faces.end(), i) == faces.end()) {
+            rem_faces.push_back (i);
+        }
+    }
+}
+
+/*
+ * Given two adjacent edges (\a c2,\a c1) and (\a c2, \a c3) of \a box (with common corner \a c2),
+ * check whether both lie on the convex hull of the point configuration given by \a box's corners.
+ */
+static bool
+sp_3dbox_is_border_edge_pair (SP3DBox *box, guint const c1, guint const c2, guint const c3)
+{
+    Box3D::Axis edge21 = (Box3D::Axis) (c2 ^ c1);
+    Box3D::Axis edge23 = (Box3D::Axis) (c2 ^ c3);
+    Box3D::Axis rear_axis = Box3D::orth_plane_or_axis ((Box3D::Axis) (edge21 ^ edge23));
+ 
+    NR::Point corner2 = box->corners[c2];
+    NR::Point dir21 = box->corners[c1] - corner2;
+    NR::Point dir23 = box->corners[c3] - corner2;
+
+    if (!Box3D::lies_in_sector (dir21, dir23, box->corners[c2 ^ edge21 ^ edge23] - corner2) ||
+        !Box3D::lies_in_sector (dir21, dir23, box->corners[c2 ^ rear_axis] - corner2) ||
+        !Box3D::lies_in_sector (dir21, dir23, box->corners[c2 ^ rear_axis ^ edge21] - corner2) ||
+        !Box3D::lies_in_sector (dir21, dir23, box->corners[c2 ^ rear_axis ^ edge21 ^ edge23] - corner2) ||
+        !Box3D::lies_in_sector (dir21, dir23, box->corners[c2 ^ rear_axis ^ edge23] - corner2)) {
+        // corner triple c1, c2, c3 doesn't bound the convex hull
+        return false;
+    }
+    // corner triple c1, c2, c3 bounds the convex hull
+    return true;    
+}
+
+/*
+ * Test whether there are any adjacent corners of \a corner (i.e., connected with it along one of the axes)
+ * such that the corresponding edges bound the convex hull of the box (as a point configuration in the plane)
+ * If this is the case, return the corresponding two adjacent corners; otherwise return (-1, -1).
+ */
+static Box3D::Axis
+sp_3dbox_axis_pair_bounding_convex_hull (SP3DBox *box, guint corner)
+ {
+    guint adj1 = corner ^ Box3D::X;
+    guint adj2 = corner ^ Box3D::Y;
+    guint adj3 = corner ^ Box3D::Z;
+
+    if (sp_3dbox_is_border_edge_pair (box, adj1, corner, adj2)) {
+        return Box3D::XY;
+    }
+    if (sp_3dbox_is_border_edge_pair (box, adj1, corner, adj3)) {
+        return Box3D::XZ;
+    }
+    if (sp_3dbox_is_border_edge_pair (box, adj2, corner, adj3)) {
+        return Box3D::YZ;
+    }
+    return Box3D::NONE;
+}
+
+// inside_hull is modified 'in place' by the following function
+static void sp_3dbox_corner_configuration (SP3DBox *box, std::vector<gint> &on_hull, std::vector<gint> &inside_hull)
+{
+    for (int i = 0; i < 8; ++i) {
+        Box3D::Axis bounding_edges = sp_3dbox_axis_pair_bounding_convex_hull (box, i);
+        if (bounding_edges != Box3D::NONE) {
+            on_hull.push_back (i);
+        } else {
+            inside_hull.push_back (i);
+        }
+    }
+}
+
+/* returns true if there was a change in the z-orders (which triggers an update of the repr) */
+static bool sp_3dbox_recompute_z_orders_by_corner_configuration (SP3DBox *box)
+{
+    guint new_z_orders[6];
+    Box3D::Axis front_rear_axis = Box3D::Z;
+
+    Box3D::Axis axis1 = Box3D::get_remaining_axes (front_rear_axis).first;
+    Box3D::Axis axis2 = Box3D::get_remaining_axes (front_rear_axis).second;
+    Box3D::Axis front_plane = Box3D::orth_plane_or_axis (front_rear_axis);
+
+    std::vector<gint> on_hull;
+    std::vector<gint> inside_hull;
+    std::vector<gint> visible_faces;
+
+    sp_3dbox_corner_configuration (box, on_hull, inside_hull);
+
+    switch (on_hull.size()) {
+        case 4:
+            {
+                // the following works because on_hull is sorted
+                gint front_face = sp_3dbox_face_containing_diagonal_corners (on_hull[0], on_hull[3]);
+                visible_faces.push_back (front_face);
+            }
+            break;
+
+        case 6:
+        {
+            guint c1 = inside_hull[0] ^ Box3D::XYZ;
+            guint c2 = inside_hull[1] ^ Box3D::XYZ;
+            Box3D::Axis edge = (Box3D::Axis) (c1 ^ c2);
+            if (Box3D::is_single_axis_direction (edge)) {
+                visible_faces = sp_3dbox_adjacent_faces_of_edge (c1, c2);
+            } else if (c1 == c2 ^ Box3D::XYZ) {
+                guint c_cmp = sp_3dbox_get_corner_id_along_edge (box, 0, front_rear_axis, Box3D::FRONT);
+                guint visible_front_corner = (((c_cmp & front_rear_axis) == (c1 & front_rear_axis)) ? c1 : c2);
+                visible_faces = sp_3dbox_faces_meeting_in_corner (visible_front_corner);
+            } else {
+                g_print ("Warning: Unhandled case. Current z-orders remain unchanged.\n");
+                return false;
+            }
+            break;
+        }
+
+        default:
+            g_print ("Warning: Unhandled case. Current z-orders are not changed.\n");
+            return false;
+    }
+
+    // check for weird corner configurations that cannot be handled by the above code
+    if (std::find (visible_faces.begin(), visible_faces.end(), -1) != visible_faces.end()) {
+        g_warning ("Theoretically impossible corner configuration\n");
+        return false;
+    }
+
+    // sort the list of visible faces for later use (although it may be already sorted anyway)
+    std::sort (visible_faces.begin(), visible_faces.end());
+
+    std::vector<gint> invisible_faces;
+    sp_3dbox_remaining_faces (visible_faces, invisible_faces);
+
+
+    if (!sp_3dbox_is_subset_or_superset (visible_faces, box->currently_visible_faces) &&
+        !sp_3dbox_differ_by_opposite_faces (visible_faces, box->currently_visible_faces)) {
+        std::swap (visible_faces, invisible_faces);
+        if (!sp_3dbox_is_subset_or_superset (visible_faces, box->currently_visible_faces) &&
+            !sp_3dbox_differ_by_opposite_faces (visible_faces, box->currently_visible_faces)) {
+            // FIXME: Hopefully this case is only caused by rounding errors or something similar;
+            //        does it need further investigation?
+            g_warning ("Can't find out which faces are visible and which aren't ...\n");
+            return false;
+        }
+    }
+
+    box->currently_visible_faces = visible_faces;
+
+    // set new z-orders according to the visible/invisible faces
+    guint vis_size = visible_faces.size();
+    for (guint i = 0; i < vis_size; ++i) {
+        new_z_orders[i] = visible_faces[i];
+    }
+    for (guint i = 0; i < invisible_faces.size(); ++i) {
+        new_z_orders[vis_size + i] = invisible_faces[i];
+    }
+
+    // test whether any z-orders actually changed and indicate this in the return status
+    for (int i = 0; i < 6; ++i) {
+        if (box->z_orders[i] != new_z_orders[i]) {
+            // we update the z-orders starting from the index where the change occurs
+            for (int j = i; j < 6; ++j) {
+                box->z_orders[j] = new_z_orders[j];
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+// FIXME: Can we unify this and the next function for setting the z-orders?
+void sp_3dbox_set_z_orders_in_the_first_place (SP3DBox *box)
 {
     // For efficiency reasons, we only set the new z-orders if something really changed
     if (sp_3dbox_recompute_z_orders (box)) {
+        box->faces[box->z_orders[0]]->lower_to_bottom ();
+        box->faces[box->z_orders[1]]->lower_to_bottom ();
+        box->faces[box->z_orders[2]]->lower_to_bottom ();
+        box->faces[box->z_orders[3]]->lower_to_bottom ();
+        box->faces[box->z_orders[4]]->lower_to_bottom ();
+        box->faces[box->z_orders[5]]->lower_to_bottom ();
+    }
+}
+
+void sp_3dbox_set_z_orders_later_on (SP3DBox *box)
+{
+    // For efficiency reasons, we only set the new z-orders if something really changed
+    if (sp_3dbox_recompute_z_orders_by_corner_configuration (box)) {
         box->faces[box->z_orders[0]]->lower_to_bottom ();
         box->faces[box->z_orders[1]]->lower_to_bottom ();
         box->faces[box->z_orders[2]]->lower_to_bottom ();

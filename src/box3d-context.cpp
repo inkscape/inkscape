@@ -592,7 +592,7 @@ static void sp_3dbox_drag(SP3DBoxContext &bc, guint state)
         SP_3DBOX (bc.item)->faces[5]->set_style (NULL, false);
 
         bc.item->updateRepr();
-        sp_3dbox_set_z_orders (SP_3DBOX (bc.item));
+        sp_3dbox_set_z_orders_in_the_first_place (SP_3DBOX (bc.item));
 
         // TODO: It would be nice to show the VPs during dragging, but since there is no selection
         //       at this point (only after finishing the box), we must do this "manually"
@@ -616,7 +616,7 @@ static void sp_3dbox_drag(SP3DBoxContext &bc, guint state)
     NR::Point origin_w(ec->xp, ec->yp);
     NR::Point origin(desktop->w2d(origin_w));
     sp_3dbox_position_set(bc);
-    sp_3dbox_set_z_orders (SP_3DBOX (bc.item));
+    sp_3dbox_set_z_orders_in_the_first_place (SP_3DBOX (bc.item));
 
     // status text
     //GString *Ax = SP_PX_TO_METRIC_STRING(origin[NR::X], desktop->namedview->getDefaultMetric());

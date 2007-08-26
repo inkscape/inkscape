@@ -646,19 +646,22 @@ static void sp_3dbox_knot_set(SPItem *item, guint knot_id, NR::Point const &new_
     sp_3dbox_update_curves (box);
     sp_3dbox_set_ratios (box);
     sp_3dbox_update_perspective_lines ();
-    sp_3dbox_set_z_orders (box);
+    sp_3dbox_set_z_orders_later_on (box);
 }
 
 static void sp_3dbox_knot_center_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
+    SP3DBox *box = SP_3DBOX(item);
+
     NR::Matrix const i2d (sp_item_i2d_affine (item));
     if (state & GDK_SHIFT_MASK) {
-        sp_3dbox_recompute_Z_corners_from_new_center (SP_3DBOX (item), new_pos * i2d);
+        sp_3dbox_recompute_Z_corners_from_new_center (box, new_pos * i2d);
     } else {
-        sp_3dbox_recompute_XY_corners_from_new_center (SP_3DBOX (item), new_pos * i2d);
+        sp_3dbox_recompute_XY_corners_from_new_center (box, new_pos * i2d);
     }
 
-    sp_3dbox_update_curves (SP_3DBOX(item));
+    sp_3dbox_update_curves (box);
+    sp_3dbox_set_z_orders_later_on (box);
 }
 
 static NR::Point sp_3dbox_knot_center_get(SPItem *item)

@@ -100,8 +100,8 @@ std::pair<double, double> coordinates (NR::Point const &v1, NR::Point const &v2,
 {
     double det = determinant (v1, v2);;
     if (fabs (det) < epsilon) {
-        g_warning ("Vectors do not form a basis.\n");
-        return std::make_pair (0.0, 0.0);
+        // vectors are not linearly independent; we indicate this in the return value(s)
+        return std::make_pair (HUGE_VAL, HUGE_VAL);
     }
 
     double lambda1 = determinant (w, v2) / det;
@@ -113,6 +113,11 @@ std::pair<double, double> coordinates (NR::Point const &v1, NR::Point const &v2,
 bool lies_in_sector (NR::Point const &v1, NR::Point const &v2, NR::Point const &w)
 {
     std::pair<double, double> coords = coordinates (v1, v2, w);
+    if (coords.first == HUGE_VAL) {
+        // catch the case that the vectors are not linearly independent
+        // FIXME: Can we assume that it's safe to return true if the vectors point in different directions?
+        return (NR::dot (v1, v2) < 0);
+    }
     return (coords.first >= 0 and coords.second >= 0);
 }
 

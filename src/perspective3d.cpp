@@ -327,7 +327,7 @@ void
 Perspective3D::update_z_orders ()
 {
     for (GSList *i = this->boxes; i != NULL; i = i->next) {
-        sp_3dbox_set_z_orders (SP_3DBOX (i->data));
+        sp_3dbox_set_z_orders_later_on (SP_3DBOX (i->data));
     }
 }
 

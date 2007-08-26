@@ -72,12 +72,25 @@ inline guint opposite_face (guint face_id) {
     return face_id + ((face_id % 2 == 0) ? 1 : -1);
 }
 
+inline guint number_of_axis_directions (Box3D::Axis axis) {
+    guint num = 0;
+    if (axis & Box3D::X) num++;
+    if (axis & Box3D::Y) num++;
+    if (axis & Box3D::Z) num++;
+
+    return num;
+}
+
+inline bool is_plane (Box3D::Axis plane) {
+    return (number_of_axis_directions (plane) == 2);
+}
+
 inline bool is_single_axis_direction (Box3D::Axis dir) {
     // tests whether dir is nonzero and a power of 2
     return (!(dir & (dir - 1)) && dir);
 }
 
-// Warning: We don't check that axis really unamiguously specifies a plane.
+// Warning: We don't check that axis really unambiguously specifies a plane.
 //          Make sure this is the case when calling this function.
 inline guint face_containing_corner (Box3D::Axis axis, guint corner) {
     if (!is_single_axis_direction (axis)) {
@@ -109,7 +122,7 @@ inline Box3D::Axis extract_second_axis_direction (Box3D::Axis dirs) {
     return extract_first_axis_direction ((Box3D::Axis) (dirs ^ extract_first_axis_direction(dirs)));
 }
 
-inline Box3D::Axis orth_plane (Box3D::Axis axis) {
+inline Box3D::Axis orth_plane_or_axis (Box3D::Axis axis) {
     return (Box3D::Axis) (Box3D::XYZ ^ axis);
 }
 
