@@ -940,34 +940,42 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                     switch (tc->mode) {
                         case TWEAK_MODE_PUSH:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Pushing %d</b> selected object(s)"), num);  
+                                                      ngettext("<b>Pushing %d</b> selected object", 
+                                                      "<b>Pushing %d</b> selected objects", num), num);
                            break;
                         case TWEAK_MODE_SHRINK:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Shrinking %d</b> selected object(s)"), num);
+                                                      ngettext("<b>Shrinking %d</b> selected object", 
+                                                      "<b>Shrinking %d</b> selected objects", num), num);
                            break;
                         case TWEAK_MODE_GROW:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Growing %d</b> selected object(s)"), num);
+                                                      ngettext("<b>Growing %d</b> selected object", 
+                                                      "<b>Growing %d</b> selected objects", num), num);
                            break;
                         case TWEAK_MODE_ATTRACT:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Attracting %d</b> selected object(s)"), num);
+                                                      ngettext("<b>Attracting %d</b> selected object", 
+                                                      "<b>Attracting %d</b> selected objects", num), num);
                            break;
                         case TWEAK_MODE_REPEL:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Repelling %d</b> selected object(s)"), num);
+                                                      ngettext("<b>Repelling %d</b> selected object", 
+                                                      "<b>Repelling %d</b> selected objects", num), num);
                            break;
                         case TWEAK_MODE_ROUGHEN:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Roughening %d</b> selected object(s)"), num);
+                                                      ngettext("<b>Roughening %d</b> selected object", 
+                                                      "<b>Roughening %d</b> selected objects", num), num);
                         case TWEAK_MODE_COLORPAINT:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Painting %d</b> selected object(s)"), num);
+                                                      ngettext("<b>Painting %d</b> selected object", 
+                                                      "<b>Painting %d</b> selected objects", num), num);
                            break;
                         case TWEAK_MODE_COLORJITTER:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Jittering colors in %d</b> selected object(s)"), num);
+                                                      ngettext("<b>Jittering colors in %d</b> selected object", 
+                                                      "<b>Jittering colors in %d</b> selected objects", num), num);
                            break;
                     }
                 }

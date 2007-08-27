@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-27 23:52+0400\n"
-"PO-Revision-Date: 2007-08-28 00:14+0300\n"
+"POT-Creation-Date: 2007-08-28 02:32+0400\n"
+"PO-Revision-Date: 2007-08-28 02:47+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6297,7 +6297,7 @@ msgstr "Ввод текста"
 
 #: ../src/tools-switch.cpp:145
 msgid "To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on an object to select."
-msgstr "Для правки контура выделите узлы с помощью <b>щелчка</b>, <b>Shift+щелчка</b> или <b>обведения рамки</b>, затем <b>перетаскивайте</b> узлы и усы. <b>Щелчок</b> по объекту выделяет его."
+msgstr "Для правки контура выделите узлы с помощью <b>щелчка</b>, <b>Shift+щелчка</b> или <b>обведения рамки</b>, затем <b>перетаскивайте</b> узлы и рычаги. <b>Щелчок</b> по объекту выделяет его."
 
 #: ../src/tools-switch.cpp:151
 msgid "To tweak a path by pushing, select it and drag over it."
@@ -6409,73 +6409,97 @@ msgstr "<b>Выделите объект(ы)</b> для коррекции"
 
 #: ../src/tweak-context.cpp:943
 #, c-format
-msgid "<b>Pushing %d</b> selected object(s)"
-msgstr "<b>Pushing %d</b> selected object(s)"
+msgid "<b>Pushing %d</b> selected object"
+msgid_plural "<b>Pushing %d</b> selected objects"
+msgstr[0] "<b>Толкается %d</b> выбранный объект"
+msgstr[1] "<b>Толкается %d</b> выбранных объекта"
+msgstr[2] "<b>Толкается %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:947
-#, fuzzy, c-format
-msgid "<b>Shrinking %d</b> selected object(s)"
-msgstr "Расставить выделенные объекты"
+#: ../src/tweak-context.cpp:948
+#, c-format
+msgid "<b>Shrinking %d</b> selected object"
+msgid_plural "<b>Shrinking %d</b> selected objects"
+msgstr[0] "<b>Сокращается %d</b> выбранный объект"
+msgstr[1] "<b>Сокращаются %d</b> выбранных объекта"
+msgstr[2] "<b>Сокращается %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:951
-#, fuzzy, c-format
-msgid "<b>Growing %d</b> selected object(s)"
-msgstr "Сгруппировать выделенные объекты"
+#: ../src/tweak-context.cpp:953
+#, c-format
+msgid "<b>Growing %d</b> selected object"
+msgid_plural "<b>Growing %d</b> selected objects"
+msgstr[0] "<b>Наращивается %d</b> выбранный объект"
+msgstr[1] "<b>Наращиваются %d</b> выбранных объекта"
+msgstr[2] "<b>Наращивается %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:955
-#, fuzzy, c-format
-msgid "<b>Attracting %d</b> selected object(s)"
-msgstr "Расставить выделенные объекты"
-
-#: ../src/tweak-context.cpp:959
-#, fuzzy, c-format
-msgid "<b>Repelling %d</b> selected object(s)"
-msgstr "Пакетный экспорт %d выделенных объектов"
+#: ../src/tweak-context.cpp:958
+#, c-format
+msgid "<b>Attracting %d</b> selected object"
+msgid_plural "<b>Attracting %d</b> selected objects"
+msgstr[0] "<b>Притягивается %d</b> выбранный объект"
+msgstr[1] "<b>Притягиваются %d</b> выбранных объекта"
+msgstr[2] "<b>Притягивается %d</b> выбранных объектов"
 
 #: ../src/tweak-context.cpp:963
-#, fuzzy, c-format
-msgid "<b>Roughening %d</b> selected object(s)"
-msgstr "Сгруппировать выделенные объекты"
+#, c-format
+msgid "<b>Repelling %d</b> selected object"
+msgid_plural "<b>Repelling %d</b> selected objects"
+msgstr[0] "<b>Отталкивается %d</b> выбранный объект"
+msgstr[1] "<b>Отталкиваются %d</b> выбранных объекта"
+msgstr[2] "<b>Отталкивается %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:966
-#, fuzzy, c-format
-msgid "<b>Painting %d</b> selected object(s)"
-msgstr "Расставить выделенные объекты"
+#: ../src/tweak-context.cpp:968
+#, c-format
+msgid "<b>Roughening %d</b> selected object"
+msgid_plural "<b>Roughening %d</b> selected objects"
+msgstr[0] "<b>Огрубляется %d</b> выбранный объект"
+msgstr[1] "<b>Огрубляются %d</b> выбранных объекта"
+msgstr[2] "<b>Огрубляется %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:970
-#, fuzzy, c-format
-msgid "<b>Jittering colors in %d</b> selected object(s)"
-msgstr "Перебирать цвета выделенных объектов"
+#: ../src/tweak-context.cpp:972
+#, c-format
+msgid "<b>Painting %d</b> selected object"
+msgid_plural "<b>Painting %d</b> selected objects"
+msgstr[0] "<b>Корректируется цвет %d</b> выбранного объекта"
+msgstr[1] "<b>Корректируется цвет %d</b> выбранных объектов"
+msgstr[2] "<b>Корректируется цвет %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:1009
+#: ../src/tweak-context.cpp:977
+#, c-format
+msgid "<b>Jittering colors in %d</b> selected object"
+msgid_plural "<b>Jittering colors in %d</b> selected objects"
+msgstr[0] "<b>Перебираются цвета %d</b> выбранного объекта"
+msgstr[1] "<b>Перебираются цвета %d</b> выбранных объектов"
+msgstr[2] "<b>Перебираются цвета %d</b> выбранных объектов"
+
+#: ../src/tweak-context.cpp:1017
 msgid "Push tweak"
 msgstr "Коррекция толканием"
 
-#: ../src/tweak-context.cpp:1013
+#: ../src/tweak-context.cpp:1021
 msgid "Shrink tweak"
 msgstr "Коррекция сокращением"
 
-#: ../src/tweak-context.cpp:1017
+#: ../src/tweak-context.cpp:1025
 msgid "Grow tweak"
 msgstr "Коррекция наращиванием"
 
-#: ../src/tweak-context.cpp:1021
+#: ../src/tweak-context.cpp:1029
 msgid "Attract tweak"
 msgstr "Коррекция притяжением"
 
-#: ../src/tweak-context.cpp:1025
+#: ../src/tweak-context.cpp:1033
 msgid "Repel tweak"
 msgstr "Коррекция отталкиванием"
 
-#: ../src/tweak-context.cpp:1029
+#: ../src/tweak-context.cpp:1037
 msgid "Roughen tweak"
 msgstr "Коррекция огрублением"
 
-#: ../src/tweak-context.cpp:1033
+#: ../src/tweak-context.cpp:1041
 msgid "Color paint tweak"
 msgstr "Коррекция заливки цветом"
 
-#: ../src/tweak-context.cpp:1036
+#: ../src/tweak-context.cpp:1044
 msgid "Color jitter tweak"
 msgstr "Коррекция перебором цветов"
 
@@ -10281,7 +10305,7 @@ msgstr "Инструмент узлов"
 
 #: ../src/verbs.cpp:2379
 msgid "Edit path nodes or control handles"
-msgstr "Редактировать узлы контура или усы узлов"
+msgstr "Редактировать узлы контура или рычаги узлов"
 
 #: ../src/verbs.cpp:2380
 msgid "Tweak"
