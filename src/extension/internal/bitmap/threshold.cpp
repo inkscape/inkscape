@@ -33,6 +33,7 @@ Threshold::init(void)
 {
 	Inkscape::Extension::build_from_mem(
 		"<inkscape-extension>\n"
+// TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-threshold.html
 			"<name>" N_("Threshold") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.threshold</id>\n"
 			"<param name=\"threshold\" gui-text=\"" N_("Threshold") "\" type=\"float\" min=\"-100.0\" max=\"100.0\"></param>\n"
