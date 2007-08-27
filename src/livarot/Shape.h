@@ -283,6 +283,8 @@ public:
     // the result is NOT a polygon; you need a subsequent call to ConvertToShape to get a real polygon
     int MakeOffset(Shape *of, double dec, JoinType join, double miter, bool do_profile=false, double cx = 0, double cy = 0, double radius = 0, NR::Matrix *i2doc = NULL);
 
+    int MakeRepel(Shape *of, double dec, JoinType join, double miter, bool do_profile=false, double cx = 0, double cy = 0, double radius = 0, NR::Matrix *i2doc = NULL);
+
     int MakePush (Shape * a, JoinType join, double miter, bool do_profile, NR::Point c, NR::Point vector, double radius, NR::Matrix *i2doc = NULL);
 
     int MakeJitter (Shape * a, JoinType join, double miter, bool do_profile, NR::Point c, double power, double radius, NR::Matrix *i2doc = NULL);
