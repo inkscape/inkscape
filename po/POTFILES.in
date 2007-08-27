@@ -262,6 +262,15 @@ src/livarot/ShapeDraw.cpp
 src/livarot/ShapeMisc.cpp
 src/livarot/ShapeRaster.cpp
 src/livarot/ShapeSweep.cpp
+src/live_effects/effect.cpp
+src/live_effects/parameter/enum.h
+src/live_effects/lpe-gears.cpp
+src/live_effects/lpe-skeletalstrokes.cpp
+src/live_effects/lpe-skeleton.cpp
+src/live_effects/lpe-slant.cpp
+src/live_effects/lpe-test-doEffect-stack.cpp
+src/live_effects/parameter/parameter.cpp
+src/live_effects/parameter/path.cpp
 src/main.cpp
 src/main-cmdlineact.cpp
 src/menus-skeleton.h
@@ -352,6 +361,7 @@ src/text-context.cpp
 src/tools-switch.cpp
 src/trace/potrace/inkscape-potrace.cpp
 src/trace/trace.cpp
+src/tweak-context.cpp
 src/ui/context-menu.cpp
 src/ui/dialog/aboutbox.cpp
 src/ui/dialog/align-and-distribute.cpp
