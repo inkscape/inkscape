@@ -75,7 +75,7 @@ static char const preferences_skeleton[] =
 "                       font_sample=\"AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()\"\n"
 "                  style=\"fill:black;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:12px;\" selcue=\"1\"/>\n"
 "    <eventcontext id=\"nodes\" selcue=\"1\" gradientdrag=\"1\" show_handles=\"1\" sculpting_profile=\"1\" />\n"
-"    <eventcontext id=\"tweak\" selcue=\"0\" gradientdrag=\"0\" show_handles=\"0\" width=\"0.2\" force=\"0.2\" fidelity=\"0.5\" usepressure=\"1\" />\n"
+"    <eventcontext id=\"tweak\" selcue=\"0\" gradientdrag=\"0\" show_handles=\"0\" width=\"0.2\" force=\"0.2\" fidelity=\"0.5\" usepressure=\"1\" style=\"fill:red;stroke:none;\" usecurrent=\"0\"/>\n"
 "    <eventcontext id=\"gradient\" selcue=\"1\"/>\n"
 "    <eventcontext id=\"zoom\" selcue=\"1\" gradientdrag=\"0\"/>\n"
 "    <eventcontext id=\"dropper\" selcue=\"1\" gradientdrag=\"1\" pick=\"1\" setalpha=\"1\"/>\n"

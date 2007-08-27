@@ -11,8 +11,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#define noTWEAK_VERBOSE
-
 #include "config.h"
 
 #include <gtk/gtk.h>
@@ -37,10 +35,14 @@
 #include "message-context.h"
 #include "pixmaps/cursor-thin.xpm"
 #include "pixmaps/cursor-thicken.xpm"
+#include "pixmaps/cursor-attract.xpm"
+#include "pixmaps/cursor-repel.xpm"
 #include "pixmaps/cursor-push.xpm"
 #include "pixmaps/cursor-roughen.xpm"
+#include "pixmaps/cursor-color.xpm"
 #include "libnr/n-art-bpath.h"
 #include "libnr/nr-path.h"
+#include "libnr/nr-maybe.h"
 #include "libnr/nr-matrix-ops.h"
 #include "libnr/nr-scale-translate-ops.h"
 #include "xml/repr.h"
@@ -48,11 +50,19 @@
 #include "sp-item.h"
 #include "inkscape.h"
 #include "color.h"
+#include "svg/svg-color.h"
 #include "splivarot.h"
 #include "sp-item-group.h"
 #include "sp-shape.h"
 #include "sp-path.h"
 #include "path-chemistry.h"
+#include "sp-gradient.h"
+#include "sp-stop.h"
+#include "sp-stop-fns.h"
+#include "sp-gradient-reference.h"
+#include "sp-linear-gradient.h"
+#include "sp-radial-gradient.h"
+#include "gradient-chemistry.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "display/canvas-bpath.h"
@@ -60,6 +70,7 @@
 #include "livarot/Shape.h"
 #include "isnan.h"
 #include "prefs-utils.h"
+#include "style.h"
 
 #include "tweak-context.h"
 
@@ -143,12 +154,22 @@ sp_tweak_context_init(SPTweakContext *tc)
 
     tc->is_dilating = false;
     tc->has_dilated = false;
+
+    tc->do_h = true;
+    tc->do_s = true;
+    tc->do_l = true;
+    tc->do_o = false;
+
+    new (&tc->style_set_connection) sigc::connection();
 }
 
 static void
 sp_tweak_context_dispose(GObject *object)
 {
     SPTweakContext *tc = SP_TWEAK_CONTEXT(object);
+
+    tc->style_set_connection.disconnect();
+    tc->style_set_connection.~connection();
 
     if (tc->dilate_area) {
         gtk_object_destroy(GTK_OBJECT(tc->dilate_area));
@@ -170,18 +191,43 @@ sp_tweak_update_cursor (SPTweakContext *tc, gint mode)
        case TWEAK_MODE_PUSH:
            event_context->cursor_shape = cursor_push_xpm;
            break;
-       case TWEAK_MODE_MELT:
+       case TWEAK_MODE_SHRINK:
            event_context->cursor_shape = cursor_thin_xpm;
            break;
-       case TWEAK_MODE_INFLATE:
+       case TWEAK_MODE_GROW:
            event_context->cursor_shape = cursor_thicken_xpm;
+           break;
+       case TWEAK_MODE_ATTRACT:
+           event_context->cursor_shape = cursor_attract_xpm;
+           break;
+       case TWEAK_MODE_REPEL:
+           event_context->cursor_shape = cursor_repel_xpm;
            break;
        case TWEAK_MODE_ROUGHEN:
            event_context->cursor_shape = cursor_roughen_xpm;
            break;
+       case TWEAK_MODE_COLORPAINT:
+       case TWEAK_MODE_COLORJITTER:
+           event_context->cursor_shape = cursor_color_xpm;
+           break;
    }
    sp_event_context_update_cursor(event_context);
 }
+
+static bool
+sp_tweak_context_style_set(SPCSSAttr const *css, SPTweakContext *tc)
+{
+    if (tc->mode == TWEAK_MODE_COLORPAINT) { // intercept color setting only in this mode
+        // we cannot store properties with uris
+        css = sp_css_attr_unset_uris ((SPCSSAttr *) css);
+
+        sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.tweak"), (SPCSSAttr *) css, "style");
+
+        return true;
+    }
+    return false;
+}
+
 
 static void
 sp_tweak_context_setup(SPEventContext *ec)
@@ -205,10 +251,18 @@ sp_tweak_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "fidelity");
     sp_event_context_read(ec, "force");
     sp_event_context_read(ec, "usepressure");
+    sp_event_context_read(ec, "doh");
+    sp_event_context_read(ec, "dol");
+    sp_event_context_read(ec, "dos");
+    sp_event_context_read(ec, "doo");
 
     tc->is_drawing = false;
 
     tc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+
+    tc->style_set_connection = ec->desktop->connectSetStyle( // catch style-setting signal in this tool
+        sigc::bind(sigc::ptr_fun(&sp_tweak_context_style_set), tc)
+    );
 }
 
 static void
@@ -231,6 +285,14 @@ sp_tweak_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
         tc->force = CLAMP(dval, 0, 1.0);
     } else if (!strcmp(key, "usepressure")) {
         tc->usepressure = (val && strcmp(val, "0"));
+    } else if (!strcmp(key, "doh")) {
+        tc->do_h = (val && strcmp(val, "0"));
+    } else if (!strcmp(key, "dos")) {
+        tc->do_s = (val && strcmp(val, "0"));
+    } else if (!strcmp(key, "dol")) {
+        tc->do_l = (val && strcmp(val, "0"));
+    } else if (!strcmp(key, "doo")) {
+        tc->do_o = (val && strcmp(val, "0"));
     } 
 }
 
@@ -336,11 +398,17 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
         bool did_this = false;
         NR::Matrix i2doc(sp_item_i2doc_affine(item));
-        if (mode == TWEAK_MODE_MELT || mode == TWEAK_MODE_INFLATE) {
+        if (mode == TWEAK_MODE_SHRINK || mode == TWEAK_MODE_GROW) {
             if (theShape->MakeOffset(theRes, 
-                                 mode == TWEAK_MODE_INFLATE? force : -force,
+                                 mode == TWEAK_MODE_GROW? force : -force,
                                  join_straight, 4.0,
                                  true, p[NR::X], p[NR::Y], radius, &i2doc) == 0) // 0 means the shape was actually changed
+              did_this = true;
+        } else if (mode == TWEAK_MODE_ATTRACT || mode == TWEAK_MODE_REPEL) {
+            if (theShape->MakeRepel(theRes, 
+                                 mode == TWEAK_MODE_REPEL? force : -force,
+                                 join_straight, 4.0,
+                                 true, p[NR::X], p[NR::Y], radius, &i2doc) == 0) 
               did_this = true;
         } else if (mode == TWEAK_MODE_PUSH) {
             if (theShape->MakePush(theRes, 
@@ -414,9 +482,306 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
     return did;
 }
 
+void 
+tweak_colorpaint (float *color, guint32 goal, double force, bool do_h, bool do_s, bool do_l) 
+{
+    float rgb_g[3];
+
+    if (!do_h || !do_s || !do_l) {
+        float hsl_g[3];
+        sp_color_rgb_to_hsl_floatv (hsl_g, SP_RGBA32_R_F(goal), SP_RGBA32_G_F(goal), SP_RGBA32_B_F(goal));
+        float hsl_c[3];
+        sp_color_rgb_to_hsl_floatv (hsl_c, color[0], color[1], color[2]);
+        if (!do_h) 
+            hsl_g[0] = hsl_c[0];
+        if (!do_s) 
+            hsl_g[1] = hsl_c[1];
+        if (!do_l) 
+            hsl_g[2] = hsl_c[2];
+        sp_color_hsl_to_rgb_floatv (rgb_g, hsl_g[0], hsl_g[1], hsl_g[2]);
+    } else {
+        rgb_g[0] = SP_RGBA32_R_F(goal);
+        rgb_g[1] = SP_RGBA32_G_F(goal);
+        rgb_g[2] = SP_RGBA32_B_F(goal);
+    }
+
+    for (int i = 0; i < 3; i++) {
+        double d = rgb_g[i] - color[i];
+        color[i] += d * force;
+    }
+}
+
+void 
+tweak_colorjitter (float *color, double force, bool do_h, bool do_s, bool do_l) 
+{
+    force = force*force; // in [0..1], this makes finer adjustments easier
+
+    float hsl_c[3];
+    sp_color_rgb_to_hsl_floatv (hsl_c, color[0], color[1], color[2]);
+
+    if (do_h) {
+        hsl_c[0] += g_random_double_range(-0.5, 0.5) * force;
+        if (hsl_c[0] > 1)
+            hsl_c[0] -= 1;
+        if (hsl_c[0] < 0)
+            hsl_c[0] += 1;
+    }
+    if (do_s) {
+        hsl_c[1] += g_random_double_range(-hsl_c[1], 1 - hsl_c[1]) * force;
+    }
+    if (do_l) {
+        hsl_c[2] += g_random_double_range(-hsl_c[2], 1 - hsl_c[2]) * force;
+    }
+
+    sp_color_hsl_to_rgb_floatv (color, hsl_c[0], hsl_c[1], hsl_c[2]);
+}
+
+void 
+tweak_color (guint mode, float *color, guint32 goal, double force, bool do_h, bool do_s, bool do_l) 
+{
+    if (mode == TWEAK_MODE_COLORPAINT) {
+        tweak_colorpaint (color, goal, force, do_h, do_s, do_l);
+    } else if (mode == TWEAK_MODE_COLORJITTER) {
+        tweak_colorjitter (color, force, do_h, do_s, do_l);
+    }
+}
+
+void
+tweak_opacity (guint mode, SPIScale24 *style_opacity, double opacity_goal, double force)
+{
+    double opacity = SP_SCALE24_TO_FLOAT (style_opacity->value);
+
+    if (mode == TWEAK_MODE_COLORPAINT) {
+        double d = opacity_goal - opacity;
+        opacity += d * force;
+    } else if (mode == TWEAK_MODE_COLORJITTER) {
+        opacity += g_random_double_range(-opacity, 1 - opacity) * force;
+    }
+
+    style_opacity->value = SP_SCALE24_FROM_FLOAT(opacity);
+}
+
+
+double
+tweak_profile (double dist, double radius) 
+{
+    if (radius == 0)
+        return 0;
+    double x = dist / radius;
+    double alpha = 1;
+    if (x >= 1) {
+        return 0;
+    } else if (x <= 0) {
+        return 1;
+    } else {
+        return (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5);
+    }
+}
+
+void
+tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke, 
+    guint32 const rgb_goal, NR::Point p_w, double radius, double force, guint mode, 
+    bool do_h, bool do_s, bool do_l, bool do_o)
+{
+    SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
+
+    if (!gradient || !SP_IS_GRADIENT(gradient))
+        return;
+
+    NR::Matrix i2d = sp_item_i2doc_affine (item);
+    NR::Point p = p_w * i2d.inverse();
+    p *= (gradient->gradientTransform).inverse();
+    // now p is in gradient's original coordinates
+
+    double pos = 0;
+    double r = 0;
+    if (SP_IS_LINEARGRADIENT(gradient)) {
+        SPLinearGradient *lg = SP_LINEARGRADIENT(gradient);
+
+        NR::Point p1(lg->x1.computed, lg->y1.computed);
+        NR::Point p2(lg->x2.computed, lg->y2.computed);
+        NR::Point pdiff(p2 - p1);
+        double vl = NR::L2(pdiff);
+
+        // This is the matrix which moves and rotates the gradient line
+        // so it's oriented along the X axis:
+        NR::Matrix norm = NR::Matrix(NR::translate(-p1)) * NR::Matrix(NR::rotate(-atan2(pdiff[NR::Y], pdiff[NR::X])));
+
+        // Transform the mouse point by it to find out its projection onto the gradient line:
+        NR::Point pnorm = p * norm;
+
+        // Scale its X coordinate to match the length of the gradient line:
+        pos = pnorm[NR::X] / vl;
+        // Calculate radius in lenfth-of-gradient-line units
+        r = radius / vl;
+
+    } else if (SP_IS_RADIALGRADIENT(gradient)) {
+        SPRadialGradient *rg = SP_RADIALGRADIENT(gradient);
+        NR::Point c (rg->cx.computed, rg->cy.computed);
+        pos = NR::L2(p - c) / rg->r.computed;
+        r = radius / rg->r.computed;
+    }
+
+    // Normalize pos to 0..1, taking into accound gradient spread:
+    double pos_e = pos;
+    if (gradient->spread == SP_GRADIENT_SPREAD_PAD) {
+        if (pos > 1)
+            pos_e = 1;
+        if (pos < 0)
+            pos_e = 0;
+    } else if (gradient->spread == SP_GRADIENT_SPREAD_REPEAT) {
+        if (pos > 1 || pos < 0)
+            pos_e = pos - floor(pos);
+    } else if (gradient->spread == SP_GRADIENT_SPREAD_REFLECT) {
+        if (pos > 1 || pos < 0) {
+            bool odd = ((int)(floor(pos)) % 2 == 1);
+            pos_e = pos - floor(pos);
+            if (odd) 
+                pos_e = 1 - pos_e;
+        }
+    }
+
+    SPGradient *vector = sp_gradient_get_forked_vector_if_necessary(gradient, false);
+
+    double offset_l = 0;
+    double offset_h = 0;
+    SPObject *child_prev = NULL;
+    for (SPObject *child = sp_object_first_child(vector);
+         child != NULL; child = SP_OBJECT_NEXT(child)) {
+        if (!SP_IS_STOP(child))
+            continue;
+        SPStop *stop = SP_STOP (child);
+
+        offset_h = stop->offset;
+
+        if (child_prev) {
+
+            if (offset_h - offset_l > r && pos_e >= offset_l && pos_e <= offset_h) {
+                // the summit falls in this interstop, and the radius is small,
+                // so it only affects the ends of this interstop;
+                // distribute the force between the two endstops so that they
+                // get all the painting even if they are not touched by the brush
+                tweak_color (mode, stop->specified_color.v.c, rgb_goal, 
+                                  force * (pos_e - offset_l) / (offset_h - offset_l), 
+                                  do_h, do_s, do_l);
+                tweak_color (mode, SP_STOP(child_prev)->specified_color.v.c, rgb_goal, 
+                                  force * (offset_h - pos_e) / (offset_h - offset_l), 
+                                  do_h, do_s, do_l);
+                SP_OBJECT(stop)->updateRepr();
+                child_prev->updateRepr();
+                break;
+            } else {
+                // wide brush, may affect more than 2 stops, 
+                // paint each stop by the force from the profile curve
+                if (offset_l <= pos_e && offset_l > pos_e - r) { 
+                    tweak_color (mode, SP_STOP(child_prev)->specified_color.v.c, rgb_goal, 
+                                 force * tweak_profile (fabs (pos_e - offset_l), r),
+                                 do_h, do_s, do_l);
+                    child_prev->updateRepr();
+                } 
+
+                if (offset_h >= pos_e && offset_h < pos_e + r) { 
+                    tweak_color (mode, stop->specified_color.v.c, rgb_goal, 
+                                 force * tweak_profile (fabs (pos_e - offset_h), r),
+                                 do_h, do_s, do_l);
+                    SP_OBJECT(stop)->updateRepr();
+                }
+            }
+        }
+
+        offset_l = offset_h;
+        child_prev = child;
+    }
+}
 
 bool
-sp_tweak_dilate (SPTweakContext *tc, NR::Point p, NR::Point vector)
+sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point, 
+                          guint32 fill_goal, bool do_fill,
+                          guint32 stroke_goal, bool do_stroke,
+                          float opacity_goal, bool do_opacity,
+                          NR::Point p, double radius, double force, 
+                          bool do_h, bool do_s, bool do_l, bool do_o)
+{
+    bool did = false;
+
+    if (SP_IS_GROUP(item)) {
+        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            if (SP_IS_ITEM(child)) {
+                if (sp_tweak_color_recursive (mode, SP_ITEM(child), item_at_point, 
+                                          fill_goal, do_fill,
+                                          stroke_goal, do_stroke,
+                                          opacity_goal, do_opacity,
+                                          p, radius, force, do_h, do_s, do_l, do_o));
+                    did = true;
+            }
+        }
+
+    } else {
+        SPStyle *style = SP_OBJECT_STYLE(item);
+        if (!style) {
+            return false;
+        }
+        NR::Maybe<NR::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item),
+                                                        SPItem::GEOMETRIC_BBOX);
+        if (!bbox) {
+            return false;
+        }
+
+        NR::Rect brush(p - NR::Point(radius, radius), p + NR::Point(radius, radius));
+
+        NR::Point center = bbox->midpoint();
+        double this_force;
+
+// if item == item_at_point, use max force
+        if (item == item_at_point) {
+            this_force = force;
+// else if no overlap of bbox and brush box, skip:
+        } else if (!bbox->intersects(brush)) {
+            return false;
+//TODO:
+// else if object > 1.5 brush: test 4/8/16 points in the brush on hitting the object, choose max
+        //} else if (bbox->maxExtent() > 3 * radius) {
+        //}
+// else if object > 0.5 brush: test 4 corners of bbox and center on being in the brush, choose max
+// else if still smaller, then check only the object center:
+        } else {
+            this_force = force * tweak_profile (NR::L2 (p - center), radius);
+        }
+        
+        if (this_force > 0.002) {
+
+            if (do_fill) {
+                if (style->fill.type == SP_PAINT_TYPE_COLOR) {
+                    tweak_color (mode, style->fill.value.color.v.c, fill_goal, this_force, do_h, do_s, do_l);
+                    item->updateRepr();
+                    did = true;
+                } else if (style->fill.type == SP_PAINT_TYPE_PAINTSERVER) {
+                    tweak_colors_in_gradient (item, true, fill_goal, p, radius, this_force, mode, do_h, do_s, do_l, do_o);
+                    did = true;
+                }
+            }
+            if (do_stroke) {
+                if (style->stroke.type == SP_PAINT_TYPE_COLOR) {
+                    tweak_color (mode, style->stroke.value.color.v.c, stroke_goal, this_force, do_h, do_s, do_l);
+                    item->updateRepr();
+                    did = true;
+                } else if (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER) {
+                    tweak_colors_in_gradient (item, false, stroke_goal, p, radius, this_force, mode, do_h, do_s, do_l, do_o);
+                    did = true;
+                }
+            }
+            if (do_opacity && do_o) {
+                tweak_opacity (mode, &style->opacity, opacity_goal, this_force);
+            }
+        }
+    }
+
+    return did;
+}
+
+
+bool
+sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point vector)
 {
     Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(tc)->desktop);
 
@@ -430,6 +795,33 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point p, NR::Point vector)
     if (radius == 0 || force == 0) {
         return false;
     }
+    double color_force = MIN(sqrt(force)/4.0, 1);
+
+    SPItem *item_at_point = SP_EVENT_CONTEXT(tc)->desktop->item_at_point(event_p, TRUE);
+    Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, "tools.tweak");
+    SPCSSAttr *css = sp_repr_css_attr_inherited(tool_repr, "style");
+    if (tc->mode == TWEAK_MODE_COLORPAINT && !css) 
+        return false;
+
+    bool do_fill = false, do_stroke = false, do_opacity = false;
+    guint32 fill_goal = 0, stroke_goal = 0;
+    float opacity_goal = 1;
+
+    const gchar *fill_prop = sp_repr_css_property(css, "fill", NULL);
+    if (fill_prop && strcmp(fill_prop, "none")) {
+        do_fill = true;
+        fill_goal = sp_svg_read_color(fill_prop, 0);
+    }
+    const gchar *stroke_prop = sp_repr_css_property(css, "stroke", NULL);
+    if (stroke_prop && strcmp(stroke_prop, "none")) {
+        do_stroke = true;
+        stroke_goal = sp_svg_read_color(stroke_prop, 0);
+    }
+    const gchar *opacity_prop = sp_repr_css_property(css, "opacity", NULL);
+    if (opacity_prop) {
+        do_opacity = true;
+        sp_svg_number_read_f(opacity_prop, &opacity_goal);
+    }
 
     for (GSList *items = g_slist_copy((GSList *) selection->itemList());
          items != NULL;
@@ -437,9 +829,19 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point p, NR::Point vector)
 
         SPItem *item = (SPItem *) items->data;
 
-        if (sp_tweak_dilate_recursive (selection, item, p, vector, tc->mode, radius, force, tc->fidelity))
-            did = true;
-
+        if (tc->mode == TWEAK_MODE_COLORPAINT || tc->mode == TWEAK_MODE_COLORJITTER) {
+            if (do_fill || do_stroke || do_opacity) {
+                if (sp_tweak_color_recursive (tc->mode, item, item_at_point, 
+                                          fill_goal, do_fill,
+                                          stroke_goal, do_stroke,
+                                          opacity_goal, do_opacity,
+                                          p, radius, color_force, tc->do_h, tc->do_s, tc->do_l, tc->do_o))
+                did = true;
+            }
+        } else {
+            if (sp_tweak_dilate_recursive (selection, item, p, vector, tc->mode, radius, force, tc->fidelity))
+                did = true;
+        }
     }
 
     return did;
@@ -469,11 +871,11 @@ sp_tweak_switch_mode_temporarily (SPTweakContext *tc, gint mode)
    // Juggling about so that prefs have the old value but tc->mode and the button show new mode:
    gint now_mode = prefs_get_int_attribute("tools.tweak", "mode", 0);
    SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue ("tweak_tool_mode", mode);
-   sp_tweak_update_cursor (tc, mode);
    // button has changed prefs, restore
    prefs_set_int_attribute("tools.tweak", "mode", now_mode);
    // changing prefs changed tc->mode, restore back :)
    tc->mode = mode;
+   sp_tweak_update_cursor (tc, mode);
 }
 
 gint
@@ -486,6 +888,12 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
     gint ret = FALSE;
 
     switch (event->type) {
+        case GDK_ENTER_NOTIFY:
+            sp_canvas_item_show(tc->dilate_area);
+            break;
+        case GDK_LEAVE_NOTIFY:
+            sp_canvas_item_hide(tc->dilate_area);
+            break;
         case GDK_BUTTON_PRESS:
             if (event->button.button == 1 && !event_context->space_panning) {
 
@@ -534,17 +942,32 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
                                                       _("<b>Pushing %d</b> selected object(s)"), num);  
                            break;
-                        case TWEAK_MODE_MELT:
+                        case TWEAK_MODE_SHRINK:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Melting %d</b> selected object(s)"), num);
+                                                      _("<b>Shrinking %d</b> selected object(s)"), num);
                            break;
-                        case TWEAK_MODE_INFLATE:
+                        case TWEAK_MODE_GROW:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      _("<b>Inflating %d</b> selected object(s)"), num);
+                                                      _("<b>Growing %d</b> selected object(s)"), num);
+                           break;
+                        case TWEAK_MODE_ATTRACT:
+                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
+                                                      _("<b>Attracting %d</b> selected object(s)"), num);
+                           break;
+                        case TWEAK_MODE_REPEL:
+                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
+                                                      _("<b>Repelling %d</b> selected object(s)"), num);
                            break;
                         case TWEAK_MODE_ROUGHEN:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
                                                       _("<b>Roughening %d</b> selected object(s)"), num);
+                        case TWEAK_MODE_COLORPAINT:
+                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
+                                                      _("<b>Painting %d</b> selected object(s)"), num);
+                           break;
+                        case TWEAK_MODE_COLORJITTER:
+                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
+                                                      _("<b>Jittering colors in %d</b> selected object(s)"), num);
                            break;
                     }
                 }
@@ -552,7 +975,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
 
             // dilating:
             if (tc->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK )) {  
-                sp_tweak_dilate (tc, motion_doc, motion_doc - tc->last_push);
+                sp_tweak_dilate (tc, motion_w, motion_doc, motion_doc - tc->last_push);
                 //tc->last_push = motion_doc;
                 tc->has_dilated = true;
                 // it's slow, so prevent clogging up with events
@@ -576,15 +999,43 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
             if (!tc->has_dilated) {
                 // if we did not rub, do a light tap
                 tc->pressure = 0.03;
-                sp_tweak_dilate (tc, desktop->dt2doc(motion_dt), NR::Point(0,0));
+                sp_tweak_dilate (tc, motion_w, desktop->dt2doc(motion_dt), NR::Point(0,0));
             }
             tc->is_dilating = false;
             tc->has_dilated = false;
-            sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop), 
-                         SP_VERB_CONTEXT_TWEAK,
-                             (tc->mode==TWEAK_MODE_INFLATE ? _("Inflate tweak") : (tc->mode==TWEAK_MODE_MELT ? _("Melt tweak") : (tc->mode==TWEAK_MODE_PUSH ? _("Push tweak") : _("Roughen tweak")))));
-            ret = TRUE;
-
+            switch (tc->mode) {
+                case TWEAK_MODE_PUSH:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop), 
+                                     SP_VERB_CONTEXT_TWEAK, _("Push tweak"));
+                    break;
+                case TWEAK_MODE_SHRINK:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop), 
+                                     SP_VERB_CONTEXT_TWEAK, _("Shrink tweak"));
+                    break;
+                case TWEAK_MODE_GROW:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop), 
+                                     SP_VERB_CONTEXT_TWEAK, _("Grow tweak"));
+                    break;
+                case TWEAK_MODE_ATTRACT:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop), 
+                                     SP_VERB_CONTEXT_TWEAK, _("Attract tweak"));
+                    break;
+                case TWEAK_MODE_REPEL:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop), 
+                                     SP_VERB_CONTEXT_TWEAK, _("Repel tweak"));
+                    break;
+                case TWEAK_MODE_ROUGHEN:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop), 
+                                     SP_VERB_CONTEXT_TWEAK, _("Roughen tweak"));
+                    break;
+                case TWEAK_MODE_COLORPAINT:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop), 
+                                     SP_VERB_CONTEXT_TWEAK, _("Color paint tweak"));
+                case TWEAK_MODE_COLORJITTER:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop), 
+                                     SP_VERB_CONTEXT_TWEAK, _("Color jitter tweak"));
+                    break;
+            }
         } 
         break;
     }
@@ -599,27 +1050,59 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                 ret = TRUE;
             }
             break;
-        case GDK_m:
-        case GDK_M:
+        case GDK_s:
+        case GDK_S:
         case GDK_2:
             if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_MELT);
+                sp_tweak_switch_mode(tc, TWEAK_MODE_SHRINK);
                 ret = TRUE;
             }
             break;
-        case GDK_i:
-        case GDK_I:
+        case GDK_g:
+        case GDK_G:
         case GDK_3:
             if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_INFLATE);
+                sp_tweak_switch_mode(tc, TWEAK_MODE_GROW);
+                ret = TRUE;
+            }
+            break;
+        case GDK_a:
+        case GDK_A:
+        case GDK_4:
+            if (MOD__SHIFT_ONLY) {
+                sp_tweak_switch_mode(tc, TWEAK_MODE_ATTRACT);
+                ret = TRUE;
+            }
+            break;
+        case GDK_e:
+        case GDK_E:
+        case GDK_5:
+            if (MOD__SHIFT_ONLY) {
+                sp_tweak_switch_mode(tc, TWEAK_MODE_REPEL);
                 ret = TRUE;
             }
             break;
         case GDK_r:
         case GDK_R:
-        case GDK_4:
+        case GDK_6:
             if (MOD__SHIFT_ONLY) {
                 sp_tweak_switch_mode(tc, TWEAK_MODE_ROUGHEN);
+                ret = TRUE;
+            }
+            break;
+        case GDK_c:
+        case GDK_C:
+        case GDK_7:
+            if (MOD__SHIFT_ONLY) {
+                sp_tweak_switch_mode(tc, TWEAK_MODE_COLORPAINT);
+                ret = TRUE;
+            }
+            break;
+        case GDK_j:
+        case GDK_J:
+        case GDK_8:
+            if (MOD__SHIFT_ONLY) {
+                sp_tweak_switch_mode(tc, TWEAK_MODE_COLORJITTER);
                 ret = TRUE;
             }
             break;
@@ -691,15 +1174,15 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
         case GDK_Control_L:
         case GDK_Control_R:
             if (MOD__SHIFT) {
-                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_INFLATE);
+                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_GROW);
             } else {
-                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_MELT);
+                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_SHRINK);
             }
             break;
         case GDK_Shift_L:
         case GDK_Shift_R:
             if (MOD__CTRL) {
-                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_INFLATE);
+                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_GROW);
             }
             break;
         default:
@@ -717,7 +1200,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
             case GDK_Shift_L:
             case GDK_Shift_R:
                 if (MOD__CTRL) {
-                    sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_MELT);
+                    sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_SHRINK);
                 }
                 break;
             break;

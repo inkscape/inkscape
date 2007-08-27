@@ -34,9 +34,13 @@ class SPTweakContextClass;
 
 enum {
     TWEAK_MODE_PUSH,
-    TWEAK_MODE_MELT,
-    TWEAK_MODE_INFLATE,
-    TWEAK_MODE_ROUGHEN
+    TWEAK_MODE_SHRINK,
+    TWEAK_MODE_GROW,
+    TWEAK_MODE_ATTRACT,
+    TWEAK_MODE_REPEL,
+    TWEAK_MODE_ROUGHEN,
+    TWEAK_MODE_COLORPAINT,
+    TWEAK_MODE_COLORJITTER
 };
 
 struct SPTweakContext
@@ -65,6 +69,13 @@ struct SPTweakContext
     bool has_dilated;
     NR::Point last_push;
     SPCanvasItem *dilate_area;
+
+    bool do_h;
+    bool do_s;
+    bool do_l;
+    bool do_o;
+
+  	sigc::connection style_set_connection;
 };
 
 struct SPTweakContextClass

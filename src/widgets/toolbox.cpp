@@ -63,6 +63,7 @@
 #include "connector-context.h"
 #include "node-context.h"
 #include "shape-editor.h"
+#include "tweak-context.h"
 #include "sp-rect.h"
 #include "box3d.h"
 #include "box3d-context.h"
@@ -159,7 +160,7 @@ static struct {
     { "SPNodeContext",   "node_toolbox",   0, sp_node_toolbox_prep,              "NodeToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPTweakContext",   "tweak_toolbox",   0, sp_tweak_toolbox_prep,              "TweakToolbar",
-      SP_VERB_INVALID, 0, 0},
+      SP_VERB_CONTEXT_TWEAK_PREFS, "tools.tweak", _("Color/opacity used for color tweaking")},
     { "SPZoomContext",   "zoom_toolbox",   0, sp_zoom_toolbox_prep,              "ZoomToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPStarContext",   "star_toolbox",   0, sp_star_toolbox_prep,              "StarToolbar",
@@ -245,9 +246,17 @@ static gchar const * ui_descr =
         "    <toolitem action='TweakWidthAction' />"
         "    <toolitem action='TweakForceAction' />"
         "    <separator />"
+        "    <toolitem action='TweakModeLabel' />"
         "    <toolitem action='TweakModeAction' />"
         "    <separator />"
+        "    <toolitem action='TweakChannelsLabel' />"
+        "    <toolitem action='TweakDoH' />"
+        "    <toolitem action='TweakDoS' />"
+        "    <toolitem action='TweakDoL' />"
+        "    <toolitem action='TweakDoO' />"
+        "    <separator />"
         "    <toolitem action='TweakFidelityAction' />"
+        "    <separator />"	
         "    <toolitem action='TweakPressureAction' />"
         "  </toolbar>"
 
@@ -2476,7 +2485,27 @@ static void sp_tweak_pressure_state_changed( GtkToggleAction *act, gpointer data
 
 static void sp_tweak_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 {
-    prefs_set_int_attribute("tools.tweak", "mode", ege_select_one_action_get_active( act ));
+    int mode = ege_select_one_action_get_active( act );
+    prefs_set_int_attribute("tools.tweak", "mode", mode);
+
+    GtkAction *doh = GTK_ACTION(g_object_get_data( tbl, "tweak_doh"));
+    GtkAction *dos = GTK_ACTION(g_object_get_data( tbl, "tweak_dos"));
+    GtkAction *dol = GTK_ACTION(g_object_get_data( tbl, "tweak_dol"));
+    GtkAction *doo = GTK_ACTION(g_object_get_data( tbl, "tweak_doo"));
+    GtkAction *dolabel = GTK_ACTION(g_object_get_data( tbl, "tweak_channels_label"));
+    if (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER) {
+        if (doh) gtk_action_set_sensitive (doh, TRUE);
+        if (dos) gtk_action_set_sensitive (dos, TRUE);
+        if (dol) gtk_action_set_sensitive (dol, TRUE);
+        if (doo) gtk_action_set_sensitive (doo, TRUE);
+        if (dolabel) gtk_action_set_sensitive (dolabel, TRUE);
+    } else {
+        if (doh) gtk_action_set_sensitive (doh, FALSE);
+        if (dos) gtk_action_set_sensitive (dos, FALSE);
+        if (dol) gtk_action_set_sensitive (dol, FALSE);
+        if (doo) gtk_action_set_sensitive (doo, FALSE);
+        if (dolabel) gtk_action_set_sensitive (dolabel, FALSE);
+    }
 }
 
 static void sp_tweak_fidelity_value_changed( GtkAdjustment *adj, GObject *tbl )
@@ -2484,6 +2513,22 @@ static void sp_tweak_fidelity_value_changed( GtkAdjustment *adj, GObject *tbl )
     prefs_set_double_attribute( "tools.tweak", "fidelity", adj->value * 0.01 );
 }
 
+static void tweak_toggle_doh (GtkToggleAction *act, gpointer data) {
+    bool show = gtk_toggle_action_get_active( act );
+    prefs_set_int_attribute ("tools.tweak", "doh",  show ? 1 : 0);
+}
+static void tweak_toggle_dos (GtkToggleAction *act, gpointer data) {
+    bool show = gtk_toggle_action_get_active( act );
+    prefs_set_int_attribute ("tools.tweak", "dos",  show ? 1 : 0);
+}
+static void tweak_toggle_dol (GtkToggleAction *act, gpointer data) {
+    bool show = gtk_toggle_action_get_active( act );
+    prefs_set_int_attribute ("tools.tweak", "dol",  show ? 1 : 0);
+}
+static void tweak_toggle_doo (GtkToggleAction *act, gpointer data) {
+    bool show = gtk_toggle_action_get_active( act );
+    prefs_set_int_attribute ("tools.tweak", "doo",  show ? 1 : 0);
+}
 
 static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
@@ -2518,6 +2563,12 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     }
 
+    {
+        EgeOutputAction* act = ege_output_action_new( "TweakModeLabel", _("<b>Mode:</b>"), "", 0 );
+        ege_output_action_set_use_markup( act, TRUE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+    }
+
     /* Mode */
     {
         GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
@@ -2526,29 +2577,57 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Push mode"),
-                            1, _("Switch to Push mode"),
+                            1, _("Push parts of paths in any direction"),
                             2, "tweak_push_mode",
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
-                            0, _("Melt mode"),
-                            1, _("Switch to Melt mode"),
-                            2, "tweak_suck_mode",
+                            0, _("Shrink mode"),
+                            1, _("Shrink (inset) parts of paths"),
+                            2, "tweak_shrink_mode",
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
-                            0, _("Inflate mode"),
-                            1, _("Switch to Inflate mode"),
-                            2, "tweak_inflate_mode",
+                            0, _("Grow mode"),
+                            1, _("Grow (outset) parts of paths"),
+                            2, "tweak_grow_mode",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Attract mode"),
+                            1, _("Attract parts of paths towards cursor"),
+                            2, "tweak_attract_mode",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Repel mode"),
+                            1, _("Repel parts of paths from cursor"),
+                            2, "tweak_repel_mode",
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Roughen mode"),
-                            1, _("Switch to Roughen mode"),
+                            1, _("Roughen parts of paths"),
                             2, "tweak_roughen_mode",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Color paint mode"),
+                            1, _("Paint the tool's color upon selected objects"),
+                            2, "tweak_colorpaint_mode",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Color jitter mode"),
+                            1, _("Jitter the colors of selected objects"),
+                            2, "tweak_colorjitter_mode",
                             -1 );
 
         EgeSelectOneAction* act = ege_select_one_action_new( "TweakModeAction", _(""), _(""), NULL, GTK_TREE_MODEL(model) );
@@ -2566,6 +2645,70 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_tweak_mode_changed), holder );
 
         g_object_set_data( G_OBJECT(holder), "tweak_tool_mode", act);
+    }
+
+    guint mode = prefs_get_int_attribute("tools.tweak", "mode", 0);
+
+    {
+        EgeOutputAction* act = ege_output_action_new( "TweakChannelsLabel", _("Channels:"), "", 0 );
+        ege_output_action_set_use_markup( act, TRUE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) 
+            gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
+        g_object_set_data( holder, "tweak_channels_label", act);
+    }
+
+    {
+        InkToggleAction* act = ink_toggle_action_new( "TweakDoH",
+                                                      _("H"),
+                                                      _("In color mode, act on objects' hue"),
+                                                      NULL,
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_doh), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.tweak", "doh", 1 ) );
+        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) 
+            gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
+        g_object_set_data( holder, "tweak_doh", act);
+    }
+    {
+        InkToggleAction* act = ink_toggle_action_new( "TweakDoS",
+                                                      _("S"),
+                                                      _("In color mode, act on objects' saturation"),
+                                                      NULL,
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_dos), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.tweak", "dos", 1 ) );
+        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) 
+            gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
+        g_object_set_data( holder, "tweak_dos", act );
+    }
+    {
+        InkToggleAction* act = ink_toggle_action_new( "TweakDoL",
+                                                      _("L"),
+                                                      _("In color mode, act on objects' lightness"),
+                                                      NULL,
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_dol), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.tweak", "dol", 1 ) );
+        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) 
+            gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
+        g_object_set_data( holder, "tweak_dol", act );
+    }
+    {
+        InkToggleAction* act = ink_toggle_action_new( "TweakDoO",
+                                                      _("O"),
+                                                      _("In color mode, act on objects' opacity"),
+                                                      NULL,
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_doo), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.tweak", "doo", 1 ) );
+        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) 
+            gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
+        g_object_set_data( holder, "tweak_doo", act );
     }
 
     {   /* Fidelity */
@@ -2587,7 +2730,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
     {
         InkToggleAction* act = ink_toggle_action_new( "TweakPressureAction",
                                                       _("Pressure"),
-                                                      _("Use the pressure of the input device to alter the width of the area"),
+                                                      _("Use the pressure of the input device to alter the force of tweak action"),
                                                       "use_pressure",
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
