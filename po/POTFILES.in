@@ -266,9 +266,6 @@ src/live_effects/effect.cpp
 src/live_effects/parameter/enum.h
 src/live_effects/lpe-gears.cpp
 src/live_effects/lpe-skeletalstrokes.cpp
-src/live_effects/lpe-skeleton.cpp
-src/live_effects/lpe-slant.cpp
-src/live_effects/lpe-test-doEffect-stack.cpp
 src/live_effects/parameter/parameter.cpp
 src/live_effects/parameter/path.cpp
 src/main.cpp
