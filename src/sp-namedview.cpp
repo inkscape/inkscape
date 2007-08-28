@@ -155,6 +155,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:window-y");
     sp_object_read_attr(object, "inkscape:snap-bbox");
     sp_object_read_attr(object, "inkscape:snap-nodes");
+    sp_object_read_attr(object, "inkscape:snap-guide");
     sp_object_read_attr(object, "inkscape:snap-center");
     sp_object_read_attr(object, "inkscape:object-paths");
     sp_object_read_attr(object, "inkscape:object-nodes");
@@ -355,6 +356,10 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->snap_manager.setIncludeItemCenter(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
+    case SP_ATTR_INKSCAPE_SNAP_GUIDE:
+            nv->snap_manager.setSnapModeGuide(value ? sp_str_to_bool(value) : FALSE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;            
     case SP_ATTR_INKSCAPE_OBJECT_PATHS:
             nv->snap_manager.object.setSnapToItemPath(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);

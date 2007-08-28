@@ -28,7 +28,8 @@
 
 Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, NR::Coord const d)
     : Snapper(nv, d), _snap_to_itemnode(true), _snap_to_itempath(true), 
-    _snap_to_bboxnode(true), _snap_to_bboxpath(true), _strict_snapping(true)
+    _snap_to_bboxnode(true), _snap_to_bboxpath(true), _strict_snapping(true),
+    _include_item_center(false)
 {
 
 }
@@ -41,7 +42,8 @@ Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, NR::Coord const d)
 void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
                                               SPObject* r,
                                               std::list<SPItem const *> const &it,
-                                              NR::Point const &p) const
+                                              NR::Point const &p,
+                                              DimensionToSnap const snap_dim) const
 {
     if (ThisSnapperMightSnap()) {    
         SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
@@ -57,10 +59,15 @@ void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
                 if (i == it.end()) {
                     /* See if the item is within range */
                     if (SP_IS_GROUP(o)) {
-                        _findCandidates(c, o, it, p);
+                        _findCandidates(c, o, it, p, snap_dim);
                     } else {
                         NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(SP_ITEM(o));
-                        if ( b && NR::expand(*b, -getDistance()).contains(p) ) {
+                        NR::Point b_min = b->min();
+                        NR::Point b_max = b->max();
+                        double d = getDistance();
+                        bool withinX = (p[NR::X] >= b_min[NR::X] - d) && (p[NR::X] <= b_max[NR::X] + d); 
+                        bool withinY = (p[NR::Y] >= b_min[NR::Y] - d) && (p[NR::Y] <= b_max[NR::Y] + d);
+                        if (snap_dim == SNAP_X && withinX || snap_dim == SNAP_Y && withinY || snap_dim == SNAP_XY && withinX && withinY) {
                             c.push_back(SP_ITEM(o));
                         }
                     }
@@ -75,6 +82,7 @@ void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
 void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
 										 Inkscape::SnappedPoint &s,
                                          NR::Point const &p,
+                                         DimensionToSnap const snap_dim,
                                          std::list<SPItem*> const &cand) const
 {
     /* FIXME: this seems like a hack.  Perhaps Snappers should be
@@ -90,6 +98,11 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
 	}        
 	
 	bool p_is_a_node = t & Inkscape::Snapper::SNAPPOINT_NODE;        
+	bool p_is_a_bbox = t & Inkscape::Snapper::SNAPPOINT_BBOX; 
+	bool p_is_a_guide = t & Inkscape::Snapper::SNAPPOINT_GUIDE;
+	
+	// A point considered for snapping should be either a node, a bbox corner or a guide. Pick only ONE! 
+	g_assert(!(p_is_a_node && p_is_a_bbox || p_is_a_bbox && p_is_a_guide || p_is_a_node && p_is_a_guide));	
 
     for (std::list<SPItem*>::const_iterator i = cand.begin(); i != cand.end(); i++) {
         
@@ -117,7 +130,7 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
         
         //Collect all nodes so we can snap to them
         if (_snap_to_itemnode) {
-        	if (!(_strict_snapping && !p_is_a_node)) {
+        	if (!(_strict_snapping && !p_is_a_node) || p_is_a_guide) {
 		        if (curve) {
 		            int j = 0;
 		            while (SP_CURVE_BPATH(curve)[j].code != NR_END) {        
@@ -126,13 +139,16 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
 		                points_to_snap_to.push_back(desktop->doc2dt(bp.c(3) * i2doc));
 		                j++;
 		            }
+		            if (_include_item_center) {
+		            	points_to_snap_to.push_back(root_item->getCenter());	
+		            }		            
 		        }
         	}
         }
         
         //Collect the bounding box's corners so we can snap to them
         if (_snap_to_bboxnode) {
-        	if (!(_strict_snapping && p_is_a_node)) {
+        	if (!(_strict_snapping && !p_is_a_bbox) || p_is_a_guide) {
 		        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
 		        if (b) {
 			        for ( unsigned k = 0 ; k < 4 ; k++ ) {
@@ -145,9 +161,24 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
         //Do the snapping, using all the nodes and corners collected above
         for (std::list<NR::Point>::const_iterator k = points_to_snap_to.begin(); k != points_to_snap_to.end(); k++) {
     	    /* Try to snap to this node of the path */
-            NR::Coord const dist = NR::L2(*k - p);
+            NR::Coord dist = NR_HUGE;
+            NR::Point snapped_point;
+            switch (snap_dim) {
+            	case SNAP_X:
+            		dist = fabs((*k)[NR::X] - p[NR::X]);
+            		snapped_point = NR::Point((*k)[NR::X], p[NR::Y]); 
+            		break;
+            	case SNAP_Y:
+            		dist = fabs((*k)[NR::Y] - p[NR::Y]);
+            		snapped_point = NR::Point(p[NR::X], (*k)[NR::Y]);
+            		break;
+            	case SNAP_XY:
+            		dist = NR::L2(*k - p);
+            		snapped_point = *k;
+            		break;
+            }
             if (dist < getDistance() && dist < s.getDistance()) {
-                s = SnappedPoint(*k, dist);
+                s = SnappedPoint(snapped_point, dist);
             }       
         }
     }
@@ -251,12 +282,12 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doFreeSnap(Inkscape::Snapper::P
 
     /* Get a list of all the SPItems that we will try to snap to */
     std::list<SPItem*> cand;
-    _findCandidates(cand, sp_document_root(_named_view->document), it, p);
+    _findCandidates(cand, sp_document_root(_named_view->document), it, p, SNAP_XY);
 
     SnappedPoint s(p, NR_HUGE);
 
     if (_snap_to_itemnode || _snap_to_bboxnode) {
-        _snapNodes(t, s, p, cand);
+        _snapNodes(t, s, p, SNAP_XY, cand);
     }
     if (_snap_to_itempath || _snap_to_bboxpath) {
         _snapPaths(t, s, p, cand);
@@ -276,6 +307,26 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doConstrainedSnap(Inkscape::Sna
     ** intersection of c with the objects.
     */
     return _doFreeSnap(t, p, it);
+}
+
+
+
+Inkscape::SnappedPoint Inkscape::ObjectSnapper::guideSnap(NR::Point const &p,
+														  DimensionToSnap const snap_dim) const
+{
+    if ( NULL == _named_view ) {
+        return SnappedPoint(p, NR_HUGE);
+    }
+
+    /* Get a list of all the SPItems that we will try to snap to */
+    std::list<SPItem*> cand;
+    std::list<SPItem const *> const it; //just an empty list
+    _findCandidates(cand, sp_document_root(_named_view->document), it, p, snap_dim);
+
+    SnappedPoint s(p, NR_HUGE);
+    _snapNodes(Inkscape::Snapper::SNAPPOINT_GUIDE, s, p, snap_dim, cand);
+    
+    return s;
 }
 
 /**

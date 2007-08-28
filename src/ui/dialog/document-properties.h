@@ -73,7 +73,7 @@ protected:
     RegisteredUnitMenu    _rum_gusn;
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbsnbb, _rcbsnn, _rcbic, _rcbsnop, _rcbsnon;
+    RegisteredCheckButton _rcbsnbb, _rcbsng, _rcbsnn, _rcbic, _rcbsnop, _rcbsnon;
     RegisteredUnitMenu    _rumso;
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
     RegisteredRadioButtonPair _rrb_pix;

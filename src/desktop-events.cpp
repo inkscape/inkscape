@@ -30,6 +30,7 @@
 #include "message-context.h"
 #include "xml/repr.h"
 #include "dialogs/guidelinedialog.h"
+#include "snap.h"
 
 /* Root item handler */
 
@@ -165,7 +166,11 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             if (dragging) {
                 NR::Point const motion_w(event->motion.x,
                                          event->motion.y);
-                NR::Point const motion_dt(desktop->w2d(motion_w));
+                NR::Point motion_dt(desktop->w2d(motion_w));
+                
+                SnapManager const &m = desktop->namedview->snap_manager;
+                motion_dt = m.guideSnap(motion_dt, *guide).getPoint();
+                
                 sp_guide_moveto(*guide, sp_guide_position_from_pt(guide, motion_dt), false);
                 moved = true;
                 desktop->set_coordinate_status(motion_dt);
@@ -178,7 +183,14 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 if (moved) {
                     NR::Point const event_w(event->button.x,
                                             event->button.y);
-                    NR::Point const event_dt(desktop->w2d(event_w));
+                    NR::Point event_dt(desktop->w2d(event_w));
+                    
+                    //If we don't snap here again, it will end up at the current mouse position
+                    //whereas it might have been at a snapped position a millisecond before.
+                    //See GDK_MOTION_NOTIFY above. Why's that????
+                    SnapManager const &m = desktop->namedview->snap_manager;
+                	event_dt = m.guideSnap(event_dt, *guide).getPoint();
+                
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
                         sp_guide_moveto(*guide, sp_guide_position_from_pt(guide, event_dt), true);
                         sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,

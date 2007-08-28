@@ -291,7 +291,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 
                 SnapManager const &m = desktop->namedview->snap_manager;            
                 motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, ac->item).getPoint();
-                
+
                 sp_arc_drag(ac, motion_dt, event->motion.state);
 
                 gobble_motion_events(GDK_BUTTON1_MASK);

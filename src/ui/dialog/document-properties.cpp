@@ -272,16 +272,16 @@ DocumentProperties::build_snap()
     _rcbsnn.init (_("_Nodes"),
                 _("Snap nodes to grid lines, to guides, to paths, and to other nodes"),
                 "inkscape:snap-nodes", _wr);
-    _rcbic.init (_("Include the object's center"),
-                _("Also snap the rotation center of an object when snapping nodes"),
-                "inkscape:snap-center", _wr);
+    _rcbsng.init (_("_Guides"),
+                _("While dragging a guide, snap to object nodes. (In 'Snapping to objects', 'Snap to nodes' must also be enabled)"),
+                "inkscape:snap-guide", _wr);
     
     //Options for snapping to objects
-    _rcbsnop.init (_("Snap to _paths"),
+    _rcbsnop.init (_("Snap to p_aths"),
                 _("Snap nodes to object paths"),
                 "inkscape:object-paths", _wr);
     _rcbsnon.init (_("Snap to n_odes"),
-                _("Snap nodes to object nodes"),
+                _("Snap nodes or guides to object nodes"),
                 "inkscape:object-nodes", _wr);    
     _rsu_sno.init (_("Snap _distance"), _("Snap at any dist_ance"),
                   _("Snapping distance, in screen pixels, for snapping to objects"),
@@ -300,28 +300,31 @@ DocumentProperties::build_snap()
                 _("If set, objects snap to the nearest guide, regardless of distance"),
                 "guidetolerance", _wr);
                 
-    std::list<Gtk::ToggleButton*> list;
-    list.push_back(_rcbic._button);
-    list.push_back(_rcbsnop._button);
-    list.push_back(_rcbsnon._button);
-    _rcbsnn.setSlaveButton(list);
-    
+    //Some other options
+    _rcbic.init (_("_Include the object's center"),
+                _("Also snap the rotation center of an object when snapping nodes or guides"),
+                "inkscape:snap-center", _wr);
+                //Applies to both nodes and guides, but not to bboxes, that's why its located here
+    //Other options to locate here: e.g. visual snapping indicators on/off 
                 
     Gtk::Label *label_g = manage (new Gtk::Label);
-    label_g->set_markup (_("<b>Snapping from</b>"));
+    label_g->set_markup (_("<b>Snapping of</b>"));
     Gtk::Label *label_o = manage (new Gtk::Label);
     label_o->set_markup (_("<b>Snapping to objects</b>"));
     Gtk::Label *label_gr = manage (new Gtk::Label);
     label_gr->set_markup (_("<b>Snapping to grids</b>"));
     Gtk::Label *label_gu = manage (new Gtk::Label);
     label_gu->set_markup (_("<b>Snapping to guides</b>"));
+    Gtk::Label *label_m = manage (new Gtk::Label);
+    label_m->set_markup (_("<b>Miscellaneous</b>"));
 
     Gtk::Widget *const array[] =
     {
         label_g,            0,
         0,                  _rcbsnn._button,
-        0,					0,					//_rcbic._button will be inserted here
+        //0,					0,					//_rcbic._button will be inserted here
         0,                  _rcbsnbb._button,
+        0,					_rcbsng._button,
         0, 					0,        
         0, 					0,
         0, 					0,
@@ -335,12 +338,14 @@ DocumentProperties::build_snap()
         0, 					0,
         label_gu,         	0,
         0,                	_rsu_gusn._vbox,
+        0, 					0,        
+        0, 					0,
+        0, 					0,
+        label_m,			0,
+        0,					_rcbic._button        
     };
 
     attach_all(_page_snap.table(), array, G_N_ELEMENTS(array));
-    
-    // add _rcbic manually to get some additional indenting
-    _page_snap.table().attach(*_rcbic._button, 1, 3, 2, 3, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 18, 0);
  }
 
 /**
@@ -451,6 +456,7 @@ DocumentProperties::update()
     
     _rcbsnbb.setActive (nv->snap_manager.getSnapModeBBox());
     _rcbsnn.setActive (nv->snap_manager.getSnapModeNode());
+    _rcbsng.setActive (nv->snap_manager.getSnapModeGuide());
     _rcbic.setActive (nv->snap_manager.getIncludeItemCenter());
     _rcbsnop.setActive(nv->snap_manager.object.getSnapToItemPath());
     _rcbsnon.setActive(nv->snap_manager.object.getSnapToItemNode());

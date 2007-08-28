@@ -24,8 +24,11 @@ namespace Inkscape
 
 class ObjectSnapper : public Snapper
 {
+
 public:
   ObjectSnapper(SPNamedView const *nv, NR::Coord const d);
+
+  enum DimensionToSnap {SNAP_X, SNAP_Y, SNAP_XY};
 
   void setSnapToItemNode(bool s) {
     _snap_to_itemnode = s;
@@ -59,9 +62,20 @@ public:
     return _snap_to_bboxpath;
   }
   
+  void setIncludeItemCenter(bool s) {
+    _include_item_center = s;
+  }
+
+  bool getIncludeItemCenter() const {
+    return _include_item_center;
+  }
+  
   void setStrictSnapping(bool enabled) {
   	_strict_snapping = enabled;
   }
+  
+  SnappedPoint guideSnap(NR::Point const &p,
+						 DimensionToSnap const snap_dim) const;
   
   bool ThisSnapperMightSnap() const;
   
@@ -78,11 +92,13 @@ private:
   void _findCandidates(std::list<SPItem*>& c,
 		       		SPObject* r,
 		       		std::list<SPItem const *> const &it,
-		       		NR::Point const &p) const;
+		       		NR::Point const &p,
+		       		DimensionToSnap const snap_dim) const;
   
   void _snapNodes(Inkscape::Snapper::PointType const &t,
   					Inkscape::SnappedPoint &s, 
   					NR::Point const &p, 
+  					DimensionToSnap const snap_dim,
   					std::list<SPItem*> const &cand) const;
   					
   void _snapPaths(Inkscape::Snapper::PointType const &t, 
@@ -100,6 +116,7 @@ private:
   //snap bbox corners to nodes, or nodes to bboxes.
   //(snapping to grids and guides is not affected by this)
   bool _strict_snapping; 
+  bool _include_item_center;
 };
 
 }

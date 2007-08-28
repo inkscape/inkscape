@@ -35,6 +35,7 @@ public:
     typedef int PointType;
     static const PointType SNAPPOINT_NODE;
     static const PointType SNAPPOINT_BBOX;
+    static const PointType SNAPPOINT_GUIDE;
 
     void setSnapFrom(PointType t, bool s);
     void setDistance(::NR::Coord d);

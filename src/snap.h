@@ -76,6 +76,9 @@ public:
                                            NR::Point const &p,
                                            Inkscape::Snapper::ConstraintLine const &c,
                                            std::list<SPItem const *> const &it) const;
+                                           
+	Inkscape::SnappedPoint guideSnap(NR::Point const &p,
+									 SPGuide const &guide) const;
 
     std::pair<NR::Point, bool> freeSnapTranslation(Inkscape::Snapper::PointType t,
                                                    std::vector<NR::Point> const &p,
@@ -124,11 +127,15 @@ public:
     
     void setSnapModeBBox(bool enabled);
     void setSnapModeNode(bool enabled);
+    void setSnapModeGuide(bool enabled);
     bool getSnapModeBBox() const;
     bool getSnapModeNode() const;
+    bool getSnapModeGuide() const;
 
 	void setIncludeItemCenter(bool enabled)	{
 		_include_item_center = enabled;
+		object.setIncludeItemCenter(enabled); 	//store a local copy in the object-snapper
+												//instead of passing it through many functions 
 	}
 	
 	bool getIncludeItemCenter()	const {

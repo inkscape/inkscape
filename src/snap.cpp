@@ -26,6 +26,8 @@
 
 #include "inkscape.h"
 #include "desktop.h"
+#include "sp-guide.h"
+using std::vector;
 
 /**
  *  Construct a SnapManager for a SPNamedView.
@@ -143,6 +145,16 @@ void SnapManager::setSnapModeNode(bool enabled)
 bool SnapManager::getSnapModeNode() const
 {
 	return guide.getSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE);
+}
+
+void SnapManager::setSnapModeGuide(bool enabled)
+{
+	object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_GUIDE, enabled);
+}
+
+bool SnapManager::getSnapModeGuide() const
+{
+	return object.getSnapFrom(Inkscape::Snapper::SNAPPOINT_GUIDE);
 }
 
 /**
@@ -317,6 +329,21 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
     return r;
 }
 
+Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
+                             				SPGuide const &guide) const
+{
+	Inkscape::ObjectSnapper::DimensionToSnap snap_dim;
+	if (guide.normal == component_vectors[NR::Y]) {
+		snap_dim = Inkscape::ObjectSnapper::SNAP_Y;	
+	} else if (guide.normal == component_vectors[NR::X]) {
+		snap_dim = Inkscape::ObjectSnapper::SNAP_X;
+	} else {
+		g_warning("WARNING: snapping of angled guides is not supported yet!");
+		snap_dim = Inkscape::ObjectSnapper::SNAP_XY;
+	}
+	
+	return object.guideSnap(p, snap_dim);	
+}
 
 
 /**

@@ -85,6 +85,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_WINDOW_Y, "inkscape:window-y"},
     {SP_ATTR_INKSCAPE_SNAP_BBOX, "inkscape:snap-bbox"},
     {SP_ATTR_INKSCAPE_SNAP_NODES, "inkscape:snap-nodes"},
+    {SP_ATTR_INKSCAPE_SNAP_GUIDE, "inkscape:snap-guide"},
     {SP_ATTR_INKSCAPE_SNAP_CENTER, "inkscape:snap-center"},
     {SP_ATTR_INKSCAPE_OBJECT_PATHS, "inkscape:object-paths"},
     {SP_ATTR_INKSCAPE_OBJECT_NODES, "inkscape:object-nodes"},
