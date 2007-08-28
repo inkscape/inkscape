@@ -825,17 +825,21 @@ groups) with the same effect as Alt+click.)</note>
 <group>
 <title>Operation</title>
 <mouse><key><left-drag/></key> <action>act on selected paths in the current mode</action></mouse>
-<mouse><key><ctrl/><left-drag/></key> <action>act temporarily switching to melt mode</action></mouse>
-<mouse><key><ctrl/><shift/><left-drag/></key> <action>act temporarily switching to inflate mode</action></mouse>
+<mouse><key><ctrl/><left-drag/></key> <action>act temporarily switching to shrink mode</action></mouse>
+<mouse><key><ctrl/><shift/><left-drag/></key> <action>act temporarily switching to grow mode</action></mouse>
 <note>The amount of tweaking action is the greatest at the center of the circular area and drops off smoothly towards the edges.</note>
 </group>
 
 <group>
 <title>Modes</title>
 <keys><key><shift/>p</key> <action>push mode</action></keys>
-<keys><key><shift/>m</key> <action>melt (thin) mode</action></keys>
-<keys><key><shift/>i</key> <action>inflate (thicken) mode</action></keys>
+<keys><key><shift/>s</key> <action>shrink (inset) mode</action></keys>
+<keys><key><shift/>g</key> <action>grow (outset) mode</action></keys>
+<keys><key><shift/>a</key> <action>attract mode</action></keys>
+<keys><key><shift/>e</key> <action>repel mode</action></keys>
 <keys><key><shift/>r</key> <action>roughen mode</action></keys>
+<keys><key><shift/>c</key> <action>color paint mode</action></keys>
+<keys><key><shift/>j</key> <action>color jitter mode</action></keys>
 </group>
 
 <group>
@@ -843,7 +847,7 @@ groups) with the same effect as Alt+click.)</note>
 <mouse><key><left-arrow/></key> <key><right-arrow/></key> <action>adjust brush width by 1</action></mouse>
 <mouse><key><misc f="Home"/></key> <key><misc f="End"/></key> <action>set brush width to 1 / 100</action></mouse>
 <mouse><key><up/></key> <key><down/></key> <action>adjust tweaking force</action></mouse>
-<note>Width and force can be adjusted while drawing. </note>
+<note>Width and force can be adjusted while drawing. With a pressure-sensitive tablet, force also depends on pen pressure.</note>
 </group>
 
 </section>
