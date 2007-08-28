@@ -62,17 +62,18 @@ void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
                         _findCandidates(c, o, it, p, snap_dim);
                     } else {
                         NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(SP_ITEM(o));
-                        NR::Point b_min = b->min();
-                        NR::Point b_max = b->max();
-                        double d = getDistance();
-                        bool withinX = (p[NR::X] >= b_min[NR::X] - d) && (p[NR::X] <= b_max[NR::X] + d); 
-                        bool withinY = (p[NR::Y] >= b_min[NR::Y] - d) && (p[NR::Y] <= b_max[NR::Y] + d);
-                        if (snap_dim == SNAP_X && withinX || snap_dim == SNAP_Y && withinY || snap_dim == SNAP_XY && withinX && withinY) {
-                            c.push_back(SP_ITEM(o));
+                        if (b) {
+	                        NR::Point b_min = b->min();
+	                        NR::Point b_max = b->max();
+	                        double d = getDistance();
+	                        bool withinX = (p[NR::X] >= b_min[NR::X] - d) && (p[NR::X] <= b_max[NR::X] + d); 
+	                        bool withinY = (p[NR::Y] >= b_min[NR::Y] - d) && (p[NR::Y] <= b_max[NR::Y] + d);
+	                        if (snap_dim == SNAP_X && withinX || snap_dim == SNAP_Y && withinY || snap_dim == SNAP_XY && withinX && withinY) {
+	                            c.push_back(SP_ITEM(o));
+	                        }
                         }
                     }
-                }
-    
+                }    
             }
         }
     }
