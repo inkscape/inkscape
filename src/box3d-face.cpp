@@ -236,7 +236,6 @@ void Box3DFace::set_path_repr()
 void Box3DFace::set_curve()
 {
     if (this->path == NULL) {
-        g_warning("this->path is NULL! \n");
         return;
     }
     NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM (this->parent_box3d)));

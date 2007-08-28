@@ -242,8 +242,6 @@ sp_3dbox_update(SPObject *object, SPCtx *ctx, guint flags)
         ((SPObjectClass *) (parent_class))->update(object, ctx, flags);
 }
 
-
-
 static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     SP3DBox *box = SP_3DBOX(object);
@@ -666,24 +664,24 @@ static bool sp_3dbox_recompute_z_orders_by_corner_configuration (SP3DBox *box)
                 guint visible_front_corner = (((c_cmp & front_rear_axis) == (c1 & front_rear_axis)) ? c1 : c2);
                 visible_faces = sp_3dbox_faces_meeting_in_corner (visible_front_corner);
             } else {
-                g_print ("Warning: Unhandled case. Current z-orders remain unchanged.\n");
+                /* Under what conditions do we end up here? Can we safely ignore this case? */
                 return false;
             }
             break;
         }
 
         default:
-            g_print ("Warning: Unhandled case. Current z-orders are not changed.\n");
+            /* Under what conditions do we end up here? Can we safely ignore this case? */
             return false;
     }
 
-    // check for weird corner configurations that cannot be handled by the above code
+    /* catch weird corner configurations; these should be theoretically impossible, but maybe
+       occur in (almost) degenerate cases due to rounding errors, for example */
     if (std::find (visible_faces.begin(), visible_faces.end(), -1) != visible_faces.end()) {
-        g_warning ("Theoretically impossible corner configuration\n");
         return false;
     }
 
-    // sort the list of visible faces for later use (although it may be already sorted anyway)
+    /* sort the list of visible faces for later use (although it may be already sorted anyway) */
     std::sort (visible_faces.begin(), visible_faces.end());
 
     std::vector<gint> invisible_faces;
@@ -695,9 +693,8 @@ static bool sp_3dbox_recompute_z_orders_by_corner_configuration (SP3DBox *box)
         std::swap (visible_faces, invisible_faces);
         if (!sp_3dbox_is_subset_or_superset (visible_faces, box->currently_visible_faces) &&
             !sp_3dbox_differ_by_opposite_faces (visible_faces, box->currently_visible_faces)) {
-            // FIXME: Hopefully this case is only caused by rounding errors or something similar;
-            //        does it need further investigation?
-            g_warning ("Can't find out which faces are visible and which aren't ...\n");
+            /* Hopefully this case is only caused by rounding errors or something similar;
+               does it need further investigation? */
             return false;
         }
     }

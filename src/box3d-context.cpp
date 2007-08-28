@@ -360,12 +360,11 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
 
             bc->ctrl_dragged  = event->motion.state & GDK_CONTROL_MASK;
 
-            if (event->motion.state & GDK_SHIFT_MASK && !bc->extruded) {
+            if (event->motion.state & GDK_SHIFT_MASK && !bc->extruded && bc->item) {
                 /* once shift is pressed, set bc->extruded (no need to create further faces;
                    all of them are already created in sp_3dbox_init); since we made the rear face
                    invisible in the beginning to avoid "flashing", we must set its correct style now */
                 bc->extruded = true;
-                g_assert (bc->item);
                 SP_3DBOX (bc->item)->faces[5]->set_style (NULL, true);
             }
 

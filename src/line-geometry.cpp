@@ -55,7 +55,8 @@ Line &Line::operator=(Line const &line) {
 NR::Maybe<NR::Point> Line::intersect(Line const &line) {
     NR::Coord denom = NR::dot(v_dir, line.normal);
     NR::Maybe<NR::Point> no_point = NR::Nothing();
-    g_return_val_if_fail(fabs(denom) > 1e-6, no_point );
+    if (fabs(denom) < 1e-6)
+        return no_point;
 
     NR::Coord lambda = (line.d0 - NR::dot(pt, line.normal)) / denom;
     return pt + lambda * v_dir;
