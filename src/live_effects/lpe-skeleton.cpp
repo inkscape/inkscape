@@ -94,8 +94,8 @@ LPESkeleton::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 
 /* ######################## */
 
-}; //namespace LivePathEffect
-}; /* namespace Inkscape */
+} //namespace LivePathEffect
+} /* namespace Inkscape */
 
 /*
   Local Variables:
