@@ -18,6 +18,7 @@
  * Derived in part from public domain code by Lauris Kaplinski
  */
 
+#include <cstring>
 #include <libnr/nr-pixops.h>
 #include <libnr/nr-pixblock-pixel.h>
 #include <libnr/nr-blit.h>
@@ -68,8 +69,31 @@ static unsigned char const *color_at(NR::Coord r,
 }
 };
 
-template <NR_PIXBLOCK_MODE mode, bool empty=false>
+template <NR_PIXBLOCK_MODE mode> struct ModeTraits;
+
+template <>
+struct ModeTraits<NR_PIXBLOCK_MODE_R8G8B8A8N> {
+static const unsigned bpp=4;
+};
+
+template <>
+struct ModeTraits<NR_PIXBLOCK_MODE_R8G8B8A8P> {
+static const unsigned bpp=4;
+};
+
+template <>
+struct ModeTraits<NR_PIXBLOCK_MODE_R8G8B8> {
+static const unsigned bpp=3;
+};
+
+template <>
+struct ModeTraits<NR_PIXBLOCK_MODE_A8> {
+static const unsigned bpp=1;
+};
+
+template <NR_PIXBLOCK_MODE mode, bool empty>
 struct Compose {
+static const unsigned bpp=ModeTraits<mode>::bpp;
 static void compose(NRPixBlock *pb, unsigned char *dest,
                     NRPixBlock *spb, unsigned char const *src)
 {
@@ -77,20 +101,19 @@ static void compose(NRPixBlock *pb, unsigned char *dest,
 }
 };
 
-template <>
-struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8N, true> {
+template <NR_PIXBLOCK_MODE mode>
+struct Compose<mode, true> {
+static const unsigned bpp=ModeTraits<mode>::bpp;
 static void compose(NRPixBlock *pb, unsigned char *dest,
                     NRPixBlock *spb, unsigned char const *src)
 {
-    dest[0] = src[0];
-    dest[1] = src[1];
-    dest[2] = src[2];
-    dest[3] = src[3];
+    std::memcpy(dest, src, bpp);
 }
 };
 
 template <>
 struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8N, false> {
+static const unsigned bpp=4;
 static void compose(NRPixBlock *pb, unsigned char *dest,
                     NRPixBlock *spb, unsigned char const *src)
 {
@@ -105,6 +128,7 @@ static void compose(NRPixBlock *pb, unsigned char *dest,
 
 template <>
 struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8P, false> {
+static const unsigned bpp=4;
 static void compose(NRPixBlock *pb, unsigned char *dest,
                     NRPixBlock *spb, unsigned char const *src)
 {
@@ -117,6 +141,7 @@ static void compose(NRPixBlock *pb, unsigned char *dest,
 
 template <>
 struct Compose<NR_PIXBLOCK_MODE_R8G8B8, false> {
+static const unsigned bpp=3;
 static void compose(NRPixBlock *pb, unsigned char *dest,
                     NRPixBlock *spb, unsigned char const *src)
 {
@@ -134,37 +159,37 @@ render_spread(NRGradientRenderer *gr, NRPixBlock *pb)
     case NR_PIXBLOCK_MODE_R8G8B8A8N:
         if (pb->empty) {
             typedef Compose<NR_PIXBLOCK_MODE_R8G8B8A8N, true> compose;
-            Subtype::template render<compose, spread, 4>(gr, pb);
+            Subtype::template render<compose, spread>(gr, pb);
         } else {
             typedef Compose<NR_PIXBLOCK_MODE_R8G8B8A8N, false> compose;
-            Subtype::template render<compose, spread, 4>(gr, pb);
+            Subtype::template render<compose, spread>(gr, pb);
         }
         break;
     case NR_PIXBLOCK_MODE_R8G8B8A8P:
         if (pb->empty) {
             typedef Compose<NR_PIXBLOCK_MODE_R8G8B8A8P, true> compose;
-            Subtype::template render<compose, spread, 4>(gr, pb);
+            Subtype::template render<compose, spread>(gr, pb);
         } else {
             typedef Compose<NR_PIXBLOCK_MODE_R8G8B8A8P, false> compose;
-            Subtype::template render<compose, spread, 4>(gr, pb);
+            Subtype::template render<compose, spread>(gr, pb);
         }
         break;
     case NR_PIXBLOCK_MODE_R8G8B8:
         if (pb->empty) {
             typedef Compose<NR_PIXBLOCK_MODE_R8G8B8, true> compose;
-            Subtype::template render<compose, spread, 3>(gr, pb);
+            Subtype::template render<compose, spread>(gr, pb);
         } else {
             typedef Compose<NR_PIXBLOCK_MODE_R8G8B8, false> compose;
-            Subtype::template render<compose, spread, 3>(gr, pb);
+            Subtype::template render<compose, spread>(gr, pb);
         }
         break;
     case NR_PIXBLOCK_MODE_A8:
         if (pb->empty) {
             typedef Compose<NR_PIXBLOCK_MODE_A8, true> compose;
-            Subtype::template render<compose, spread, 1>(gr, pb);
+            Subtype::template render<compose, spread>(gr, pb);
         } else {
             typedef Compose<NR_PIXBLOCK_MODE_A8, false> compose;
-            Subtype::template render<compose, spread, 1>(gr, pb);
+            Subtype::template render<compose, spread>(gr, pb);
         }
         break;
     }
@@ -197,7 +222,7 @@ render(NRRenderer *r, NRPixBlock *pb, NRPixBlock *m)
 namespace {
 
 struct Linear {
-template <typename compose, typename spread, unsigned bpp>
+template <typename compose, typename spread>
 static void render(NRGradientRenderer *gr, NRPixBlock *pb) {
     NRLGradientRenderer *lgr = static_cast<NRLGradientRenderer *>(gr);
 
@@ -224,7 +249,7 @@ static void render(NRGradientRenderer *gr, NRPixBlock *pb) {
         for (x = 0; x < width; x++) {
             unsigned char const *s=spread::color_at(pos, lgr->vector);
             compose::compose(pb, d, &spb, s);
-            d += bpp;
+            d += compose::bpp;
             pos += lgr->dx;
         }
     }
@@ -297,7 +322,7 @@ nr_lgradient_renderer_setup (NRLGradientRenderer *lgr,
 namespace {
 
 struct SymmetricRadial {
-template <typename compose, typename spread, unsigned bpp>
+template <typename compose, typename spread>
 static void render(NRGradientRenderer *gr, NRPixBlock *pb)
 {
     NRRGradientRenderer *rgr = static_cast<NRRGradientRenderer *>(gr);
@@ -320,7 +345,7 @@ static void render(NRGradientRenderer *gr, NRPixBlock *pb)
             NR::Coord const pos = sqrt(((gx*gx) + (gy*gy)));
             unsigned char const *s=spread::color_at(pos, rgr->vector);
             compose::compose(pb, d, &spb, s);
-            d += bpp;
+            d += compose::bpp;
             gx += dx;
             gy += dy;
         }
@@ -331,7 +356,7 @@ static void render(NRGradientRenderer *gr, NRPixBlock *pb)
 };
 
 struct Radial {
-template <typename compose, typename spread, unsigned bpp>
+template <typename compose, typename spread>
 static void render(NRGradientRenderer *gr, NRPixBlock *pb)
 {
     NRRGradientRenderer *rgr = static_cast<NRRGradientRenderer *>(gr);
@@ -373,8 +398,7 @@ static void render(NRGradientRenderer *gr, NRPixBlock *pb)
             }
             
             compose::compose(pb, d, &spb, s);
-
-            d += bpp;
+            d += compose::bpp;
 
             gx += dx;
             gy += dy;
