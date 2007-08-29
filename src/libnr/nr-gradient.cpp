@@ -5,7 +5,9 @@
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   MenTaLguY <mental@rydia.net>
  *
+ * Copyright (C) 2007 MenTaLguY 
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
@@ -25,56 +27,213 @@
 
 /* Common */
 
-#define noNR_USE_GENERIC_RENDERER
-
 #define NRG_MASK (NR_GRADIENT_VECTOR_LENGTH - 1)
 #define NRG_2MASK ((long long) ((NR_GRADIENT_VECTOR_LENGTH << 1) - 1))
 
-static guint32 mls_state=0xa37e5375;
-
-inline NR::Coord noise() {
-  guint32 lsb = mls_state & 1;
-  guint32 msb = ( lsb << 31 ) ^ ( ( mls_state & 2) << 30 );
-  mls_state = ( mls_state >> 1 ) | msb;
-  return lsb * 1.75;
-}
-
-inline unsigned char const *index_to_pointer(int idx,
-                                             unsigned char const *vector)
+namespace {
+inline unsigned char const *vector_index(int idx,
+                                         unsigned char const *vector)
 {
   return vector + 4 * idx;
 }
 
-inline unsigned char const *r_to_pointer_pad(NR::Coord r,
-                                             unsigned char const *vector)
-{
-  r += noise();
-  return index_to_pointer((int)CLAMP(r, 0, (double)(NR_GRADIENT_VECTOR_LENGTH - 1)), vector);
-}
+template <NRGradientSpread spread> struct Spread;
 
-inline unsigned char const *r_to_pointer_repeat(NR::Coord r,
-                                                unsigned char const *vector)
+template <>
+struct Spread<NR_GRADIENT_SPREAD_PAD> {
+static unsigned char const *color_at(NR::Coord r,
+                                     unsigned char const *vector)
 {
-  r += noise();
-  return index_to_pointer((int)((long long)r & NRG_MASK), vector);
+  return vector_index((int)CLAMP(r, 0, (double)(NR_GRADIENT_VECTOR_LENGTH - 1)), vector);
 }
+};
 
-inline unsigned char const *r_to_pointer_reflect(NR::Coord r,
-                                                 unsigned char const *vector)
+template <>
+struct Spread<NR_GRADIENT_SPREAD_REPEAT> {
+static unsigned char const *color_at(NR::Coord r,
+                                     unsigned char const *vector)
 {
-  r += noise();
+  return vector_index((int)((long long)r & NRG_MASK), vector);
+}
+};
+
+template <>
+struct Spread<NR_GRADIENT_SPREAD_REFLECT> {
+static unsigned char const *color_at(NR::Coord r,
+                                     unsigned char const *vector)
+{
   int idx = (int) ((long long)r & NRG_2MASK);
   if (idx > NRG_MASK) idx = NRG_2MASK - idx;
-  return index_to_pointer(idx, vector);
+  return vector_index(idx, vector);
+}
+};
+
+template <NR_PIXBLOCK_MODE mode, bool empty=false>
+struct Compose {
+static void compose(NRPixBlock *pb, unsigned char *dest,
+                    NRPixBlock *spb, unsigned char const *src)
+{
+    nr_compose_pixblock_pixblock_pixel(pb, dest, spb, src);
+}
+};
+
+template <>
+struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8N, true> {
+static void compose(NRPixBlock *pb, unsigned char *dest,
+                    NRPixBlock *spb, unsigned char const *src)
+{
+    dest[0] = src[0];
+    dest[1] = src[1];
+    dest[2] = src[2];
+    dest[3] = src[3];
+}
+};
+
+template <>
+struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8N, false> {
+static void compose(NRPixBlock *pb, unsigned char *dest,
+                    NRPixBlock *spb, unsigned char const *src)
+{
+    unsigned int ca;
+    ca = NR_COMPOSEA_112(src[3], dest[3]);
+    dest[0] = NR_COMPOSENNN_111121(src[0], src[3], dest[0], dest[3], ca);
+    dest[1] = NR_COMPOSENNN_111121(src[1], src[3], dest[1], dest[3], ca);
+    dest[2] = NR_COMPOSENNN_111121(src[2], src[3], dest[2], dest[3], ca);
+    dest[3] = NR_NORMALIZE_21(ca);
+}
+};
+
+template <>
+struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8P, false> {
+static void compose(NRPixBlock *pb, unsigned char *dest,
+                    NRPixBlock *spb, unsigned char const *src)
+{
+    dest[0] = NR_COMPOSENPP_1111(src[0], src[3], dest[0]);
+    dest[1] = NR_COMPOSENPP_1111(src[1], src[3], dest[1]);
+    dest[2] = NR_COMPOSENPP_1111(src[2], src[3], dest[2]);
+    dest[3] = NR_COMPOSEA_111(src[3], dest[3]);
+}
+};
+
+template <>
+struct Compose<NR_PIXBLOCK_MODE_R8G8B8, false> {
+static void compose(NRPixBlock *pb, unsigned char *dest,
+                    NRPixBlock *spb, unsigned char const *src)
+{
+    dest[0] = NR_COMPOSEN11_1111(src[0], src[3], dest[0]);
+    dest[1] = NR_COMPOSEN11_1111(src[1], src[3], dest[1]);
+    dest[2] = NR_COMPOSEN11_1111(src[2], src[3], dest[2]);
+}
+};
+
+template <typename Subtype, typename spread>
+static void
+render_spread(NRGradientRenderer *gr, NRPixBlock *pb)
+{
+    switch (pb->mode) {
+    case NR_PIXBLOCK_MODE_R8G8B8A8N:
+        if (pb->empty) {
+            typedef Compose<NR_PIXBLOCK_MODE_R8G8B8A8N, true> compose;
+            Subtype::template render<compose, spread, 4>(gr, pb);
+        } else {
+            typedef Compose<NR_PIXBLOCK_MODE_R8G8B8A8N, false> compose;
+            Subtype::template render<compose, spread, 4>(gr, pb);
+        }
+        break;
+    case NR_PIXBLOCK_MODE_R8G8B8A8P:
+        if (pb->empty) {
+            typedef Compose<NR_PIXBLOCK_MODE_R8G8B8A8P, true> compose;
+            Subtype::template render<compose, spread, 4>(gr, pb);
+        } else {
+            typedef Compose<NR_PIXBLOCK_MODE_R8G8B8A8P, false> compose;
+            Subtype::template render<compose, spread, 4>(gr, pb);
+        }
+        break;
+    case NR_PIXBLOCK_MODE_R8G8B8:
+        if (pb->empty) {
+            typedef Compose<NR_PIXBLOCK_MODE_R8G8B8, true> compose;
+            Subtype::template render<compose, spread, 3>(gr, pb);
+        } else {
+            typedef Compose<NR_PIXBLOCK_MODE_R8G8B8, false> compose;
+            Subtype::template render<compose, spread, 3>(gr, pb);
+        }
+        break;
+    case NR_PIXBLOCK_MODE_A8:
+        if (pb->empty) {
+            typedef Compose<NR_PIXBLOCK_MODE_A8, true> compose;
+            Subtype::template render<compose, spread, 1>(gr, pb);
+        } else {
+            typedef Compose<NR_PIXBLOCK_MODE_A8, false> compose;
+            Subtype::template render<compose, spread, 1>(gr, pb);
+        }
+        break;
+    }
+}
+
+template <typename Subtype>
+static void
+render(NRRenderer *r, NRPixBlock *pb, NRPixBlock *m)
+{
+    NRGradientRenderer *gr;
+
+    gr = static_cast<NRGradientRenderer *>(r);
+
+    switch (gr->spread) {
+    case NR_GRADIENT_SPREAD_REPEAT:
+        render_spread<Subtype, Spread<NR_GRADIENT_SPREAD_REPEAT> >(gr, pb);
+        break;
+    case NR_GRADIENT_SPREAD_REFLECT:
+        render_spread<Subtype, Spread<NR_GRADIENT_SPREAD_REFLECT> >(gr, pb);
+        break;
+    case NR_GRADIENT_SPREAD_PAD:
+    default:
+        render_spread<Subtype, Spread<NR_GRADIENT_SPREAD_PAD> >(gr, pb);
+    }
+}
 }
 
 /* Linear */
 
-static void nr_lgradient_render_block (NRRenderer *r, NRPixBlock *pb, NRPixBlock *m);
-static void nr_lgradient_render_R8G8B8A8N_EMPTY (NRLGradientRenderer *lgr, unsigned char *px, int x0, int y0, int width, int height, int rs);
-static void nr_lgradient_render_R8G8B8A8N (NRLGradientRenderer *lgr, unsigned char *px, int x0, int y0, int width, int height, int rs);
-static void nr_lgradient_render_R8G8B8 (NRLGradientRenderer *lgr, unsigned char *px, int x0, int y0, int width, int height, int rs);
-static void nr_lgradient_render_generic (NRLGradientRenderer *lgr, NRPixBlock *pb);
+namespace {
+
+struct Linear {
+template <typename compose, typename spread, unsigned bpp>
+static void render(NRGradientRenderer *gr, NRPixBlock *pb) {
+    NRLGradientRenderer *lgr = static_cast<NRLGradientRenderer *>(gr);
+
+    int x, y;
+    unsigned char *d;
+    double pos;
+    NRPixBlock spb;
+    int x0, y0, width, height, rs;
+
+    x0 = pb->area.x0;
+    y0 = pb->area.y0;
+    width = pb->area.x1 - pb->area.x0;
+    height = pb->area.y1 - pb->area.y0;
+    rs = pb->rs;
+
+    nr_pixblock_setup_extern(&spb, NR_PIXBLOCK_MODE_R8G8B8A8N,
+                             0, 0, NR_GRADIENT_VECTOR_LENGTH, 1,
+                             (unsigned char *) lgr->vector,
+                             4 * NR_GRADIENT_VECTOR_LENGTH, 0, 0);
+
+    for (y = 0; y < height; y++) {
+        d = NR_PIXBLOCK_PX(pb) + y * rs;
+        pos = (y + y0 - lgr->y0) * lgr->dy + (0 + x0 - lgr->x0) * lgr->dx;
+        for (x = 0; x < width; x++) {
+            unsigned char const *s=spread::color_at(pos, lgr->vector);
+            compose::compose(pb, d, &spb, s);
+            d += bpp;
+            pos += lgr->dx;
+        }
+    }
+
+    nr_pixblock_release(&spb);
+}
+};
+
+}
 
 NRRenderer *
 nr_lgradient_renderer_setup (NRLGradientRenderer *lgr,
@@ -86,7 +245,7 @@ nr_lgradient_renderer_setup (NRLGradientRenderer *lgr,
 {
 	NRMatrix n2gs, n2px, px2n;
 
-	lgr->renderer.render = nr_lgradient_render_block;
+	lgr->render = &render<Linear>;
 
 	lgr->vector = cv;
 	lgr->spread = spread;
@@ -109,242 +268,126 @@ nr_lgradient_renderer_setup (NRLGradientRenderer *lgr,
 	return (NRRenderer *) lgr;
 }
 
-static void
-nr_lgradient_render_block (NRRenderer *r, NRPixBlock *pb, NRPixBlock *m)
-{
-	NRLGradientRenderer *lgr;
-	int width, height;
-
-	lgr = (NRLGradientRenderer *) r;
-
-	width = pb->area.x1 - pb->area.x0;
-	height = pb->area.y1 - pb->area.y0;
-
-#ifdef NR_USE_GENERIC_RENDERER
-	nr_lgradient_render_generic (lgr, pb);
-#else
-	if (pb->empty) {
-		switch (pb->mode) {
-		case NR_PIXBLOCK_MODE_A8:
-			nr_lgradient_render_generic (lgr, pb);
-			break;
-		case NR_PIXBLOCK_MODE_R8G8B8:
-			nr_lgradient_render_generic (lgr, pb);
-			break;
-		case NR_PIXBLOCK_MODE_R8G8B8A8N:
-			nr_lgradient_render_R8G8B8A8N_EMPTY (lgr, NR_PIXBLOCK_PX (pb), pb->area.x0, pb->area.y0, width, height, pb->rs);
-			break;
-		case NR_PIXBLOCK_MODE_R8G8B8A8P:
-			nr_lgradient_render_generic (lgr, pb);
-			break;
-		default:
-			break;
-		}
-	} else {
-		switch (pb->mode) {
-		case NR_PIXBLOCK_MODE_A8:
-			nr_lgradient_render_generic (lgr, pb);
-			break;
-		case NR_PIXBLOCK_MODE_R8G8B8:
-			nr_lgradient_render_R8G8B8 (lgr, NR_PIXBLOCK_PX (pb), pb->area.x0, pb->area.y0, width, height, pb->rs);
-			break;
-		case NR_PIXBLOCK_MODE_R8G8B8A8N:
-			nr_lgradient_render_R8G8B8A8N (lgr, NR_PIXBLOCK_PX (pb), pb->area.x0, pb->area.y0, width, height, pb->rs);
-			break;
-		case NR_PIXBLOCK_MODE_R8G8B8A8P:
-			nr_lgradient_render_generic (lgr, pb);
-			break;
-		default:
-			break;
-		}
-	}
-#endif
-}
-
-static void
-nr_lgradient_render_R8G8B8A8N_EMPTY (NRLGradientRenderer *lgr, unsigned char *px, int x0, int y0, int width, int height, int rs)
-{
-	int x, y;
-	double pos;
-
-	for (y = 0; y < height; y++) {
-		const unsigned char *s;
-		unsigned char *d;
-		d = px + y * rs;
-		pos = (y + y0 - lgr->y0) * lgr->dy + (0 + x0 - lgr->x0) * lgr->dx;
-		if (lgr->spread == NR_GRADIENT_SPREAD_PAD) {
-			for (x = 0; x < width; x++) {
-                                s = r_to_pointer_pad(pos, lgr->vector);
-				d[0] = s[0];
-				d[1] = s[1];
-				d[2] = s[2];
-				d[3] = s[3];
-				d += 4;
-				pos += lgr->dx;
-			}
-		} else if (lgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
-			for (x = 0; x < width; x++) {
-                                s = r_to_pointer_reflect(pos, lgr->vector);
-				d[0] = s[0];
-				d[1] = s[1];
-				d[2] = s[2];
-				d[3] = s[3];
-				d += 4;
-				pos += lgr->dx;
-			}
-		} else {
-			for (x = 0; x < width; x++) {
-                                s = r_to_pointer_repeat(pos, lgr->vector);
-				d[0] = s[0];
-				d[1] = s[1];
-				d[2] = s[2];
-				d[3] = s[3];
-				d += 4;
-				pos += lgr->dx;
-			}
-		}
-	}
-}
-
-static void
-nr_lgradient_render_R8G8B8A8N (NRLGradientRenderer *lgr, unsigned char *px, int x0, int y0, int width, int height, int rs)
-{
-	int x, y;
-	unsigned char *d;
-	double pos;
-
-	for (y = 0; y < height; y++) {
-		d = px + y * rs;
-		pos = (y + y0 - lgr->y0) * lgr->dy + (0 + x0 - lgr->x0) * lgr->dx;
-		for (x = 0; x < width; x++) {
-			unsigned int ca;
-			const unsigned char *s;
-			switch (lgr->spread) {
-			case NR_GRADIENT_SPREAD_PAD:
-                                s = r_to_pointer_pad(pos, lgr->vector);
-				break;
-			case NR_GRADIENT_SPREAD_REFLECT:
-                                s = r_to_pointer_reflect(pos, lgr->vector);
-				break;
-			case NR_GRADIENT_SPREAD_REPEAT:
-                                s = r_to_pointer_repeat(pos, lgr->vector);
-				break;
-			default:
-				s = lgr->vector;
-				break;
-			}
-			if (s[3] == 255) {
-				d[0] = s[0];
-				d[1] = s[1];
-				d[2] = s[2];
-				d[3] = 255;
-			} else if (s[3] != 0) {
-				ca = NR_COMPOSEA_112(s[3],d[3]);
-				d[0] = NR_COMPOSENNN_111121 (s[0], s[3], d[0], d[3], ca);
-				d[1] = NR_COMPOSENNN_111121 (s[1], s[3], d[1], d[3], ca);
-				d[2] = NR_COMPOSENNN_111121 (s[2], s[3], d[2], d[3], ca);
-				d[3] = NR_NORMALIZE_21(ca);
-			}
-			d += 4;
-			pos += lgr->dx;
-		}
-	}
-}
-
-static void
-nr_lgradient_render_R8G8B8 (NRLGradientRenderer *lgr, unsigned char *px, int x0, int y0, int width, int height, int rs)
-{
-	int x, y;
-	unsigned char *d;
-	double pos;
-
-	for (y = 0; y < height; y++) {
-		d = px + y * rs;
-		pos = (y + y0 - lgr->y0) * lgr->dy + (0 + x0 - lgr->x0) * lgr->dx;
-		for (x = 0; x < width; x++) {
-			const unsigned char *s;
-			switch (lgr->spread) {
-			case NR_GRADIENT_SPREAD_PAD:
-                                s = r_to_pointer_pad(pos, lgr->vector);
-				break;
-			case NR_GRADIENT_SPREAD_REFLECT:
-                                s = r_to_pointer_reflect(pos, lgr->vector);
-				break;
-			case NR_GRADIENT_SPREAD_REPEAT:
-                                s = r_to_pointer_repeat(pos, lgr->vector);
-				break;
-			default:
-                                s = lgr->vector;
-				break;
-			}
-			/* Full composition */
-			d[0] = NR_COMPOSEN11_1111 (s[0], s[3], d[0]);
-			d[1] = NR_COMPOSEN11_1111 (s[1], s[3], d[1]);
-			d[2] = NR_COMPOSEN11_1111 (s[2], s[3], d[2]);
-			d += 3;
-			pos += lgr->dx;
-		}
-	}
-}
-
-static void
-nr_lgradient_render_generic (NRLGradientRenderer *lgr, NRPixBlock *pb)
-{
-	int x, y;
-	unsigned char *d;
-	double pos;
-	int bpp;
-	NRPixBlock spb;
-	int x0, y0, width, height, rs;
-
-	x0 = pb->area.x0;
-	y0 = pb->area.y0;
-	width = pb->area.x1 - pb->area.x0;
-	height = pb->area.y1 - pb->area.y0;
-	rs = pb->rs;
-
-	nr_pixblock_setup_extern (&spb, NR_PIXBLOCK_MODE_R8G8B8A8N, 0, 0, NR_GRADIENT_VECTOR_LENGTH, 1,
-				  (unsigned char *) lgr->vector,
-				  4 * NR_GRADIENT_VECTOR_LENGTH,
-				  0, 0);
-    spb.visible_area = pb->visible_area; 
-	bpp = (pb->mode == NR_PIXBLOCK_MODE_A8) ? 1 : (pb->mode == NR_PIXBLOCK_MODE_R8G8B8) ? 3 : 4;
-
-	for (y = 0; y < height; y++) {
-		d = NR_PIXBLOCK_PX (pb) + y * rs;
-		pos = (y + y0 - lgr->y0) * lgr->dy + (0 + x0 - lgr->x0) * lgr->dx;
-		for (x = 0; x < width; x++) {
-			const unsigned char *s;
-			switch (lgr->spread) {
-			case NR_GRADIENT_SPREAD_PAD:
-                                s = r_to_pointer_pad(pos, lgr->vector);
-				break;
-			case NR_GRADIENT_SPREAD_REFLECT:
-                                s = r_to_pointer_reflect(pos, lgr->vector);
-				break;
-			case NR_GRADIENT_SPREAD_REPEAT:
-                                s = r_to_pointer_repeat(pos, lgr->vector);
-				break;
-			default:
-                                s = lgr->vector;
-				break;
-			}
-			nr_compose_pixblock_pixblock_pixel (pb, d, &spb, s);
-			d += bpp;
-			pos += lgr->dx;
-		}
-	}
-
-	nr_pixblock_release (&spb);
-}
-
 /* Radial */
 
-static void nr_rgradient_render_block_symmetric(NRRenderer *r, NRPixBlock *pb, NRPixBlock *m);
-static void nr_rgradient_render_block_optimized(NRRenderer *r, NRPixBlock *pb, NRPixBlock *m);
+/*
+ * The archetype is following
+ *
+ * gx gy - pixel coordinates
+ * Px Py - coordinates, where Fx Fy - gx gy line intersects with circle
+ *
+ * (1)  (gx - fx) * (Py - fy) = (gy - fy) * (Px - fx)
+ * (2)  (Px - cx) * (Px - cx) + (Py - cy) * (Py - cy) = r * r
+ *
+ * (3)   Py = (Px - fx) * (gy - fy) / (gx - fx) + fy
+ * (4)  (gy - fy) / (gx - fx) = D
+ * (5)   Py = D * Px - D * fx + fy
+ *
+ * (6)   D * fx - fy + cy = N
+ * (7)   Px * Px - 2 * Px * cx + cx * cx + (D * Px) * (D * Px) - 2 * (D * Px) * N + N * N = r * r
+ * (8)  (D * D + 1) * (Px * Px) - 2 * (cx + D * N) * Px + cx * cx + N * N = r * r
+ *
+ * (9)   A = D * D + 1
+ * (10)  B = -2 * (cx + D * N)
+ * (11)  C = cx * cx + N * N - r * r
+ *
+ * (12)  Px = (-B +- SQRT(B * B - 4 * A * C)) / 2 * A
+ */
+
+namespace {
+
+struct SymmetricRadial {
+template <typename compose, typename spread, unsigned bpp>
+static void render(NRGradientRenderer *gr, NRPixBlock *pb)
+{
+    NRRGradientRenderer *rgr = static_cast<NRRGradientRenderer *>(gr);
+
+    NR::Coord const dx = rgr->px2gs.c[0];
+    NR::Coord const dy = rgr->px2gs.c[1];
+
+    NRPixBlock spb;
+    nr_pixblock_setup_extern(&spb, NR_PIXBLOCK_MODE_R8G8B8A8N,
+                             0, 0, NR_GRADIENT_VECTOR_LENGTH, 1,
+                             (unsigned char *) rgr->vector,
+                             4 * NR_GRADIENT_VECTOR_LENGTH,
+                             0, 0);
+
+    for (int y = pb->area.y0; y < pb->area.y1; y++) {
+        unsigned char *d = NR_PIXBLOCK_PX(pb) + (y - pb->area.y0) * pb->rs;
+        NR::Coord gx = rgr->px2gs.c[0] * pb->area.x0 + rgr->px2gs.c[2] * y + rgr->px2gs.c[4];
+        NR::Coord gy = rgr->px2gs.c[1] * pb->area.x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
+        for (int x = pb->area.x0; x < pb->area.x1; x++) {
+            NR::Coord const pos = sqrt(((gx*gx) + (gy*gy)));
+            unsigned char const *s=spread::color_at(pos, rgr->vector);
+            compose::compose(pb, d, &spb, s);
+            d += bpp;
+            gx += dx;
+            gy += dy;
+        }
+    }
+
+    nr_pixblock_release(&spb);
+}
+};
+
+struct Radial {
+template <typename compose, typename spread, unsigned bpp>
+static void render(NRGradientRenderer *gr, NRPixBlock *pb)
+{
+    NRRGradientRenderer *rgr = static_cast<NRRGradientRenderer *>(gr);
+    int const x0 = pb->area.x0;
+    int const y0 = pb->area.y0;
+    int const x1 = pb->area.x1;
+    int const y1 = pb->area.y1;
+    int const rs = pb->rs;
+
+    NRPixBlock spb;
+    nr_pixblock_setup_extern(&spb, NR_PIXBLOCK_MODE_R8G8B8A8N,
+                             0, 0, NR_GRADIENT_VECTOR_LENGTH, 1,
+                             (unsigned char *) rgr->vector,
+                             4 * NR_GRADIENT_VECTOR_LENGTH,
+                             0, 0);
+
+    for (int y = y0; y < y1; y++) {
+        unsigned char *d = NR_PIXBLOCK_PX(pb) + (y - y0) * rs;
+        NR::Coord gx = rgr->px2gs.c[0] * x0 + rgr->px2gs.c[2] * y + rgr->px2gs.c[4];
+        NR::Coord gy = rgr->px2gs.c[1] * x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
+        NR::Coord const dx = rgr->px2gs.c[0];
+        NR::Coord const dy = rgr->px2gs.c[1];
+        for (int x = x0; x < x1; x++) {
+            NR::Coord const gx2 = gx * gx;
+            NR::Coord const gxy2 = gx2 + gy * gy;
+            NR::Coord const qgx2_4 = gx2 - rgr->C * gxy2;
+            /* INVARIANT: qgx2_4 >= 0.0 */
+            /* qgx2_4 = MAX(qgx2_4, 0.0); */
+            NR::Coord const pxgx = gx + sqrt(qgx2_4);
+            /* We can safely divide by 0 here */
+            /* If we are sure pxgx cannot be -0 */
+            NR::Coord const pos = gxy2 / pxgx * NR_GRADIENT_VECTOR_LENGTH;
+
+            unsigned char const *s;
+            if (pos < (1U << 31)) {
+                s = spread::color_at(pos, rgr->vector);
+            } else {
+                s = vector_index(NR_GRADIENT_VECTOR_LENGTH - 1, rgr->vector);
+            }
+            
+            compose::compose(pb, d, &spb, s);
+
+            d += bpp;
+
+            gx += dx;
+            gy += dy;
+        }
+    }
+
+    nr_pixblock_release(&spb);
+}
+};
+
+}
+
 static void nr_rgradient_render_block_end(NRRenderer *r, NRPixBlock *pb, NRPixBlock *m);
-static void nr_rgradient_render_generic_symmetric(NRRGradientRenderer *rgr, NRPixBlock *pb);
-static void nr_rgradient_render_generic_optimized(NRRGradientRenderer *rgr, NRPixBlock *pb);
 
 NRRenderer *
 nr_rgradient_renderer_setup(NRRGradientRenderer *rgr,
@@ -359,10 +402,10 @@ nr_rgradient_renderer_setup(NRRGradientRenderer *rgr,
     rgr->spread = spread;
 
     if (r < NR_EPSILON) {
-        rgr->renderer.render = nr_rgradient_render_block_end;
+        rgr->render = nr_rgradient_render_block_end;
     } else if (NR_DF_TEST_CLOSE(cx, fx, NR_EPSILON) &&
                NR_DF_TEST_CLOSE(cy, fy, NR_EPSILON)) {
-        rgr->renderer.render = nr_rgradient_render_block_symmetric;
+        rgr->render = render<SymmetricRadial>;
 
         nr_matrix_invert(&rgr->px2gs, gs2px);
         rgr->px2gs.c[0] *= (NR_GRADIENT_VECTOR_LENGTH / r);
@@ -380,7 +423,7 @@ nr_rgradient_renderer_setup(NRRGradientRenderer *rgr,
         rgr->fy = rgr->cy;
         rgr->r = 1.0;
     } else {
-        rgr->renderer.render = nr_rgradient_render_block_optimized;
+        rgr->render = render<Radial>;
 
         NR::Coord const df = hypot(fx - cx, fy - cy);
         if (df >= r) {
@@ -414,210 +457,12 @@ nr_rgradient_renderer_setup(NRRGradientRenderer *rgr,
 }
 
 static void
-nr_rgradient_render_block_symmetric(NRRenderer *r, NRPixBlock *pb, NRPixBlock *m)
-{
-    NRRGradientRenderer *rgr = (NRRGradientRenderer *) r;
-    nr_rgradient_render_generic_symmetric(rgr, pb);
-}
-
-static void
-nr_rgradient_render_block_optimized(NRRenderer *r, NRPixBlock *pb, NRPixBlock *m)
-{
-    NRRGradientRenderer *rgr = (NRRGradientRenderer *) r;
-    nr_rgradient_render_generic_optimized(rgr, pb);
-}
-
-static void
 nr_rgradient_render_block_end(NRRenderer *r, NRPixBlock *pb, NRPixBlock *m)
 {
     unsigned char const *c = ((NRRGradientRenderer *) r)->vector + 4 * (NR_GRADIENT_VECTOR_LENGTH - 1);
 
     nr_blit_pixblock_mask_rgba32(pb, m, (c[0] << 24) | (c[1] << 16) | (c[2] << 8) | c[3]);
 }
-
-/*
- * The archetype is following
- *
- * gx gy - pixel coordinates
- * Px Py - coordinates, where Fx Fy - gx gy line intersects with circle
- *
- * (1)  (gx - fx) * (Py - fy) = (gy - fy) * (Px - fx)
- * (2)  (Px - cx) * (Px - cx) + (Py - cy) * (Py - cy) = r * r
- *
- * (3)   Py = (Px - fx) * (gy - fy) / (gx - fx) + fy
- * (4)  (gy - fy) / (gx - fx) = D
- * (5)   Py = D * Px - D * fx + fy
- *
- * (6)   D * fx - fy + cy = N
- * (7)   Px * Px - 2 * Px * cx + cx * cx + (D * Px) * (D * Px) - 2 * (D * Px) * N + N * N = r * r
- * (8)  (D * D + 1) * (Px * Px) - 2 * (cx + D * N) * Px + cx * cx + N * N = r * r
- *
- * (9)   A = D * D + 1
- * (10)  B = -2 * (cx + D * N)
- * (11)  C = cx * cx + N * N - r * r
- *
- * (12)  Px = (-B +- SQRT(B * B - 4 * A * C)) / 2 * A
- */
-
-static void
-nr_rgradient_render_generic_symmetric(NRRGradientRenderer *rgr, NRPixBlock *pb)
-{
-    NR::Coord const dx = rgr->px2gs.c[0];
-    NR::Coord const dy = rgr->px2gs.c[1];
-
-    if (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8P) {
-        for (int y = pb->area.y0; y < pb->area.y1; y++) {
-            unsigned char *d = NR_PIXBLOCK_PX(pb) + (y - pb->area.y0) * pb->rs;
-            NR::Coord gx = rgr->px2gs.c[0] * pb->area.x0 + rgr->px2gs.c[2] * y + rgr->px2gs.c[4];
-            NR::Coord gy = rgr->px2gs.c[1] * pb->area.x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
-            for (int x = pb->area.x0; x < pb->area.x1; x++) {
-                NR::Coord const pos = sqrt(((gx*gx) + (gy*gy)));
-                unsigned char const *s;
-                if (rgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
-                    s = r_to_pointer_reflect(pos, rgr->vector);
-                } else if (rgr->spread == NR_GRADIENT_SPREAD_REPEAT) {
-                    s = r_to_pointer_repeat(pos, rgr->vector);
-                } else {
-                    s = r_to_pointer_pad(pos, rgr->vector);
-                }
-                d[0] = NR_COMPOSENPP_1111(s[0], s[3], d[0]);
-                d[1] = NR_COMPOSENPP_1111(s[1], s[3], d[1]);
-                d[2] = NR_COMPOSENPP_1111(s[2], s[3], d[2]);
-                d[3] = NR_COMPOSEA_111(s[3], d[3]);
-                d += 4;
-                gx += dx;
-                gy += dy;
-            }
-        }
-    } else if (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8N) {
-        for (int y = pb->area.y0; y < pb->area.y1; y++) {
-            unsigned char *d = NR_PIXBLOCK_PX(pb) + (y - pb->area.y0) * pb->rs;
-            NR::Coord gx = rgr->px2gs.c[0] * pb->area.x0 + rgr->px2gs.c[2] * y + rgr->px2gs.c[4];
-            NR::Coord gy = rgr->px2gs.c[1] * pb->area.x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
-            for (int x = pb->area.x0; x < pb->area.x1; x++) {
-                NR::Coord const pos = sqrt(((gx*gx) + (gy*gy)));
-                unsigned char const *s;
-                if (rgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
-                    s = r_to_pointer_reflect(pos, rgr->vector);
-                } else if (rgr->spread == NR_GRADIENT_SPREAD_REPEAT) {
-                    s = r_to_pointer_repeat(pos, rgr->vector);
-                } else {
-                    s = r_to_pointer_pad(pos, rgr->vector);
-                }
-                if (s[3] == 255) {
-                    d[0] = s[0];
-                    d[1] = s[1];
-                    d[2] = s[2];
-                    d[3] = 255;
-                } else if (s[3] != 0) {
-                    unsigned ca = NR_COMPOSEA_112(s[3], d[3]);
-                    d[0] = NR_COMPOSENNN_111121(s[0], s[3], d[0], d[3], ca);
-                    d[1] = NR_COMPOSENNN_111121(s[1], s[3], d[1], d[3], ca);
-                    d[2] = NR_COMPOSENNN_111121(s[2], s[3], d[2], d[3], ca);
-                    d[3] = NR_NORMALIZE_21(ca);
-                }
-                d += 4;
-                gx += dx;
-                gy += dy;
-            }
-        }
-    } else {
-        NRPixBlock spb;
-        nr_pixblock_setup_extern(&spb, NR_PIXBLOCK_MODE_R8G8B8A8N, 0, 0, NR_GRADIENT_VECTOR_LENGTH, 1,
-                                 (unsigned char *) rgr->vector,
-                                 4 * NR_GRADIENT_VECTOR_LENGTH,
-                                 0, 0);
-        int const bpp = ( pb->mode == NR_PIXBLOCK_MODE_A8
-                          ? 1
-                          : pb->mode == NR_PIXBLOCK_MODE_R8G8B8
-                          ? 3
-                          : 4 );
-
-        for (int y = pb->area.y0; y < pb->area.y1; y++) {
-            unsigned char *d = NR_PIXBLOCK_PX(pb) + (y - pb->area.y0) * pb->rs;
-            NR::Coord gx = rgr->px2gs.c[0] * pb->area.x0 + rgr->px2gs.c[2] * y + rgr->px2gs.c[4];
-            NR::Coord gy = rgr->px2gs.c[1] * pb->area.x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
-            for (int x = pb->area.x0; x < pb->area.x1; x++) {
-                NR::Coord const pos = sqrt(((gx*gx) + (gy*gy)));
-                unsigned char const *s;
-                if (rgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
-                    s = r_to_pointer_reflect(pos, rgr->vector);
-                } else if (rgr->spread == NR_GRADIENT_SPREAD_REPEAT) {
-                    s = r_to_pointer_repeat(pos, rgr->vector);
-                } else {
-                    s = r_to_pointer_pad(pos, rgr->vector);
-                }
-                nr_compose_pixblock_pixblock_pixel(pb, d, &spb, s);
-                d += bpp;
-                gx += dx;
-                gy += dy;
-            }
-        }
-
-        nr_pixblock_release(&spb);
-    }
-}
-
-static void
-nr_rgradient_render_generic_optimized(NRRGradientRenderer *rgr, NRPixBlock *pb)
-{
-    int const x0 = pb->area.x0;
-    int const y0 = pb->area.y0;
-    int const x1 = pb->area.x1;
-    int const y1 = pb->area.y1;
-    int const rs = pb->rs;
-
-    NRPixBlock spb;
-    nr_pixblock_setup_extern(&spb, NR_PIXBLOCK_MODE_R8G8B8A8N, 0, 0, NR_GRADIENT_VECTOR_LENGTH, 1,
-                             (unsigned char *) rgr->vector,
-                             4 * NR_GRADIENT_VECTOR_LENGTH,
-                             0, 0);
-    int const bpp = ( pb->mode == NR_PIXBLOCK_MODE_A8
-                      ? 1
-                      : pb->mode == NR_PIXBLOCK_MODE_R8G8B8
-                      ? 3
-                      : 4 );
-
-    for (int y = y0; y < y1; y++) {
-        unsigned char *d = NR_PIXBLOCK_PX(pb) + (y - y0) * rs;
-        NR::Coord gx = rgr->px2gs.c[0] * x0 + rgr->px2gs.c[2] * y + rgr->px2gs.c[4];
-        NR::Coord gy = rgr->px2gs.c[1] * x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
-        NR::Coord const dx = rgr->px2gs.c[0];
-        NR::Coord const dy = rgr->px2gs.c[1];
-        for (int x = x0; x < x1; x++) {
-            NR::Coord const gx2 = gx * gx;
-            NR::Coord const gxy2 = gx2 + gy * gy;
-            NR::Coord const qgx2_4 = gx2 - rgr->C * gxy2;
-            /* INVARIANT: qgx2_4 >= 0.0 */
-            /* qgx2_4 = MAX(qgx2_4, 0.0); */
-            NR::Coord const pxgx = gx + sqrt(qgx2_4);
-            /* We can safely divide by 0 here */
-            /* If we are sure pxgx cannot be -0 */
-            NR::Coord const pos = gxy2 / pxgx * NR_GRADIENT_VECTOR_LENGTH;
-
-            unsigned char const *s;
-            if (pos < (1U << 31)) {
-                if (rgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
-                    s = r_to_pointer_reflect(pos, rgr->vector);
-                } else if (rgr->spread == NR_GRADIENT_SPREAD_REPEAT) {
-                    s = r_to_pointer_repeat(pos, rgr->vector);
-                } else {
-                    s = r_to_pointer_pad(pos, rgr->vector);
-                }
-            } else {
-                s = index_to_pointer(NR_GRADIENT_VECTOR_LENGTH - 1, rgr->vector);
-            }
-            nr_compose_pixblock_pixblock_pixel(pb, d, &spb, s);
-            d += bpp;
-
-            gx += dx;
-            gy += dy;
-        }
-    }
-
-    nr_pixblock_release(&spb);
-}
-
 
 /*
   Local Variables:

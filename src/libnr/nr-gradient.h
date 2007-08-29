@@ -23,20 +23,22 @@
 #define NR_GRADIENT_VECTOR_BITS 10
 #define NR_GRADIENT_VECTOR_LENGTH (1<<NR_GRADIENT_VECTOR_BITS)
 
-enum {
-	NR_GRADIENT_SPREAD_PAD,
-	NR_GRADIENT_SPREAD_REFLECT,
-	NR_GRADIENT_SPREAD_REPEAT
+enum NRGradientSpread {
+    NR_GRADIENT_SPREAD_PAD,
+    NR_GRADIENT_SPREAD_REFLECT,
+    NR_GRADIENT_SPREAD_REPEAT
+};
+
+struct NRGradientRenderer : public NRRenderer {
+    const unsigned char *vector;
+    unsigned int spread;
 };
 
 /* Linear */
 
-struct NRLGradientRenderer {
-	NRRenderer renderer;
-	const unsigned char *vector;
-	unsigned int spread;
-	double x0, y0;
-	double dx, dy;
+struct NRLGradientRenderer : public NRGradientRenderer {
+    double x0, y0;
+    double dx, dy;
 };
 
 NRRenderer *nr_lgradient_renderer_setup (NRLGradientRenderer *lgr,
@@ -48,15 +50,12 @@ NRRenderer *nr_lgradient_renderer_setup (NRLGradientRenderer *lgr,
 
 /* Radial */
 
-struct NRRGradientRenderer {
-	NRRenderer renderer;
-	const unsigned char *vector;
-	unsigned int spread;
-	NRMatrix px2gs;
-	float cx, cy;
-	float fx, fy;
-	float r;
-	float C;
+struct NRRGradientRenderer : public NRGradientRenderer {
+    NRMatrix px2gs;
+    float cx, cy;
+    float fx, fy;
+    float r;
+    float C;
 };
 
 NRRenderer *nr_rgradient_renderer_setup (NRRGradientRenderer *rgr,
@@ -70,3 +69,13 @@ NRRenderer *nr_rgradient_renderer_setup (NRRGradientRenderer *rgr,
 
 
 #endif
+/*
+ * Local Variables:
+ * mode:c++
+ * c-file-style:"stroustrup"
+ * c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+ * indent-tabs-mode:nil
+ * fill-column:99
+ * End:
+ */
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
