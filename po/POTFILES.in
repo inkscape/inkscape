@@ -265,6 +265,7 @@ src/livarot/ShapeSweep.cpp
 src/live_effects/effect.cpp
 src/live_effects/parameter/enum.h
 src/live_effects/lpe-gears.cpp
+src/live_effects/lpe-curvestitch.cpp
 src/live_effects/lpe-skeletalstrokes.cpp
 src/live_effects/parameter/parameter.cpp
 src/live_effects/parameter/path.cpp

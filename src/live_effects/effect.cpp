@@ -30,6 +30,7 @@
 #include "live_effects/lpe-slant.h"
 #include "live_effects/lpe-test-doEffect-stack.h"
 #include "live_effects/lpe-gears.h"
+#include "live_effects/lpe-curvestitch.h"
 
 namespace Inkscape {
 
@@ -42,7 +43,8 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {SLANT,                 _("Slant"),                 "slant"},
     {DOEFFECTSTACK_TEST,    _("doEffect stack test"),   "doeffectstacktest"},
 #endif
-    {GEARS,                 _("Gears"),                 "gears"}
+    {GEARS,                 _("Gears"),                 "gears"},
+    {CURVE_STITCH,          _("Curve stitching"),       "curvestitching"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -64,6 +66,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
 #endif
         case GEARS:
             neweffect = (Effect*) new LPEGears(lpeobj);
+            break;
+        case CURVE_STITCH:
+            neweffect = (Effect*) new LPECurveStitch(lpeobj);
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);

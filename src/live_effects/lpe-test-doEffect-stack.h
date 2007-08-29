@@ -30,7 +30,7 @@ public:
     Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 
 private:
-    RealParam step;
+    ScalarParam step;
 
     LPEdoEffectStackTest(const LPEdoEffectStackTest&);
     LPEdoEffectStackTest& operator=(const LPEdoEffectStackTest&);

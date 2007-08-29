@@ -25,8 +25,8 @@ public:
     std::vector<Geom::Path> doEffect (std::vector<Geom::Path> & path_in);
 
 private:
-    RealParam teeth;
-    RealParam phi;
+    ScalarParam teeth;
+    ScalarParam phi;
 
     LPEGears(const LPEGears&);
     LPEGears& operator=(const LPEGears&);

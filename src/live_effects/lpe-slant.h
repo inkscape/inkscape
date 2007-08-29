@@ -27,7 +27,7 @@ public:
     void doEffect(SPCurve * curve);
     
 private:
-    RealParam factor;
+    ScalarParam factor;
     PointParam center;
 
     LPESlant(const LPESlant&);

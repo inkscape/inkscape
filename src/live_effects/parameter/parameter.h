@@ -60,21 +60,23 @@ private:
 };
 
 
-class RealParam : public Parameter {
+class ScalarParam : public Parameter {
 public:
-    RealParam(  const Glib::ustring& label,
+    ScalarParam(  const Glib::ustring& label,
                 const Glib::ustring& tip,
                 const Glib::ustring& key, 
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
                 gdouble default_value = 1.0);
-    ~RealParam();
+    ~ScalarParam();
 
     bool param_readSVGValue(const gchar * strvalue);
     gchar * param_writeSVGValue() const;
 
     void param_set_default();
     void param_set_value(gdouble val);
+    void param_make_integer(bool yes = true);
+    void param_set_range(gdouble min, gdouble max);
 
     Gtk::Widget * param_getWidget();
 
@@ -82,14 +84,16 @@ public:
         { return value; };
 
 private:
-    RealParam(const RealParam&);
-    RealParam& operator=(const RealParam&);
+    ScalarParam(const ScalarParam&);
+    ScalarParam& operator=(const ScalarParam&);
 
     gdouble value;
+    gdouble min;
+    gdouble max;
+    bool integer;
     gdouble defvalue;
     Inkscape::UI::Widget::RegisteredScalar * rsu;
 };
-
 
 } //namespace LivePathEffect
 

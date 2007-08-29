@@ -47,6 +47,7 @@ enum EffectType {
     DOEFFECTSTACK_TEST,
 #endif
     GEARS,
+    CURVE_STITCH,
     INVALID_LPE // This must be last
 };
 

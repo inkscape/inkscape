@@ -9,6 +9,7 @@
 #include "live_effects/parameter/parameter.h"
 #include "live_effects/effect.h"
 #include "svg/svg.h"
+#include "libnr/nr-values.h"
 
 #include <gtkmm.h>
 #include "ui/widget/scalar.h"
@@ -40,24 +41,27 @@ Parameter::Parameter( const Glib::ustring& label, const Glib::ustring& tip,
 /*###########################################
  *   REAL PARAM
  */
-RealParam::RealParam( const Glib::ustring& label, const Glib::ustring& tip,
+ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                       Effect* effect, gdouble default_value)
     : Parameter(label, tip, key, wr, effect)
 {
     defvalue = default_value;
     value = defvalue;
+    min = -NR_HUGE;
+    max = NR_HUGE;
+    integer = false;
     rsu = NULL;
 }
 
-RealParam::~RealParam()
+ScalarParam::~ScalarParam()
 {
     if (rsu)
         delete rsu;
 }
 
 bool
-RealParam::param_readSVGValue(const gchar * strvalue)
+ScalarParam::param_readSVGValue(const gchar * strvalue)
 {
     double newval;
     unsigned int success = sp_svg_number_read_d(strvalue, &newval);
@@ -69,7 +73,7 @@ RealParam::param_readSVGValue(const gchar * strvalue)
 }
 
 gchar *
-RealParam::param_writeSVGValue() const
+ScalarParam::param_writeSVGValue() const
 {
     Inkscape::SVGOStringStream os;
     os << value;
@@ -78,27 +82,57 @@ RealParam::param_writeSVGValue() const
 }
 
 void
-RealParam::param_set_default() 
+ScalarParam::param_set_default() 
 {
     param_set_value(defvalue);
 }
 
 void
-RealParam::param_set_value(gdouble val) 
+ScalarParam::param_set_value(gdouble val) 
 {
     value = val;
+    if (integer)
+        value = round(value);
+    if (value > max)
+        value = max;
+    if (value < min)
+        value = min;
+
     if (rsu)
         rsu->setValue(value);
 }
 
+void
+ScalarParam::param_set_range(gdouble min, gdouble max) 
+{
+    this->min = min;
+    this->max = max;
+    if (rsu)
+        rsu->getS()->setRange(min, max);
+
+    param_set_value(value);
+}
+
+void
+ScalarParam::param_make_integer(bool yes)
+{
+    integer = yes;
+    if (rsu) {
+        rsu->getS()->setDigits(0);
+        rsu->getS()->setIncrements(1, 10);
+    }
+}
 
 Gtk::Widget *
-RealParam::param_getWidget()
+ScalarParam::param_getWidget()
 {
     if (!rsu) {
         rsu = new Inkscape::UI::Widget::RegisteredScalar();
         rsu->init(param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());
         rsu->setValue(value);
+        if (integer)
+            param_make_integer();
+
         rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
     }
     return dynamic_cast<Gtk::Widget *> (rsu->getS());
@@ -106,7 +140,6 @@ RealParam::param_getWidget()
 
 
 } /* namespace LivePathEffect */
-
 } /* namespace Inkscape */
 
 /*

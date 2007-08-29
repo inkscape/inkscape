@@ -9,11 +9,5 @@ ARCS !!!  see sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::No
 
 make sp_nodepath_is_over_stroke perhaps
 
-Parameters:
-- make robust  (?)
-- add range checking etc
-- add more types! (straightlinepath, enum, bool)
-- -->> add write to svg functionality (for lpeobject->write)
-
 
 find dir "fixme" and fix'em!
