@@ -3455,9 +3455,9 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpo
             NR::Coord const scal = dot(delta, ndelta) / linelen;
             (*p) = n->pos + (scal / linelen) * ndelta;
         }
-        *p = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta), NULL).getPoint();
+        *p = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta), SP_ITEM(n->subpath->nodepath->object)).getPoint();
     } else {
-        *p = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, NULL).getPoint();
+        *p = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, SP_ITEM(n->subpath->nodepath->object)).getPoint();
     }
 
     sp_node_adjust_handle(n, -which);

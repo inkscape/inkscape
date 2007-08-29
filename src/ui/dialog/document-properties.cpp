@@ -301,7 +301,7 @@ DocumentProperties::build_snap()
                 "guidetolerance", _wr);
                 
     //Some other options
-    _rcbic.init (_("_Include the object's center"),
+    _rcbic.init (_("_Include the object's rotation center"),
                 _("Also snap the rotation center of an object when snapping nodes or guides"),
                 "inkscape:snap-center", _wr);
                 //Applies to both nodes and guides, but not to bboxes, that's why its located here
