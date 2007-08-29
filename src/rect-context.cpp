@@ -487,9 +487,23 @@ static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
     }
 
     // status text
-    GString *xs = SP_PX_TO_METRIC_STRING(r.dimensions()[NR::X], desktop->namedview->getDefaultMetric());
-    GString *ys = SP_PX_TO_METRIC_STRING(r.dimensions()[NR::Y], desktop->namedview->getDefaultMetric());
-    rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+    double rdimx = r.dimensions()[NR::X];
+    double rdimy = r.dimensions()[NR::Y];
+    GString *xs = SP_PX_TO_METRIC_STRING(rdimx, desktop->namedview->getDefaultMetric());
+    GString *ys = SP_PX_TO_METRIC_STRING(rdimy, desktop->namedview->getDefaultMetric());
+    if (state & GDK_CONTROL_MASK) {
+        int ratio_x, ratio_y;
+        if (fabs (rdimx) > fabs (rdimy)) {
+            ratio_x = (int) rint (rdimx / rdimy);
+            ratio_y = 1;
+        } else {
+            ratio_x = 1;
+            ratio_y = (int) rint (rdimy / rdimx);
+        }
+        rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str, ratio_x, ratio_y);
+    } else {
+        rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+    }
     g_string_free(xs, FALSE);
     g_string_free(ys, FALSE);
 }

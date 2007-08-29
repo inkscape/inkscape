@@ -439,9 +439,23 @@ static void sp_arc_drag(SPArcContext *ac, NR::Point pt, guint state)
                         r.midpoint()[NR::X], r.midpoint()[NR::Y],
                         r.dimensions()[NR::X] / 2, r.dimensions()[NR::Y] / 2);
 
-    GString *xs = SP_PX_TO_METRIC_STRING(r.dimensions()[NR::X], desktop->namedview->getDefaultMetric());
-    GString *ys = SP_PX_TO_METRIC_STRING(r.dimensions()[NR::Y], desktop->namedview->getDefaultMetric());
-    ac->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make circle or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+    double rdimx = r.dimensions()[NR::X];
+    double rdimy = r.dimensions()[NR::Y];
+    GString *xs = SP_PX_TO_METRIC_STRING(rdimx, desktop->namedview->getDefaultMetric());
+    GString *ys = SP_PX_TO_METRIC_STRING(rdimy, desktop->namedview->getDefaultMetric());
+    if (state & GDK_CONTROL_MASK) {
+        int ratio_x, ratio_y;
+        if (fabs (rdimx) > fabs (rdimy)) {
+            ratio_x = (int) rint (rdimx / rdimy);
+            ratio_y = 1;
+        } else {
+            ratio_x = 1;
+            ratio_y = (int) rint (rdimy / rdimx);
+        }
+        ac->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str, ratio_x, ratio_y);
+    } else {
+        ac->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+    }
     g_string_free(xs, FALSE);
     g_string_free(ys, FALSE);
 }
