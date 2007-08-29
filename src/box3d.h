@@ -50,6 +50,7 @@ struct SP3DBox : public SPGroup {
 
     // FIXME: If we only allow a single box to be dragged at a time then we can save memory by storing
     //        the old positions centrally in SP3DBoxContext (instead of in each box separately)
+    // Also, it may be better not to store the old corners but rather the old lines to which we want to snap
     NR::Point old_center;
     NR::Point old_corner2;
     NR::Point old_corner1;

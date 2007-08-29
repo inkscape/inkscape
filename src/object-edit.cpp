@@ -555,15 +555,16 @@ static inline Box3D::Axis movement_axis_of_3dbox_corner (guint corner, guint sta
  */
 
 // Should we make the threshold settable in the preferences?
-static double remember_snap_threshold = 20;
+static double remember_snap_threshold = 30;
 static guint remember_snap_index = 0;
+static guint remember_snap_index_center = 0;
 
 static NR::Point snap_knot_position_3dbox (SP3DBox *box, guint corner, Box3D::Axis direction, NR::Point const &origin, NR::Point const &p, guint state)
 {
     SPDesktop * desktop = inkscape_active_desktop();
     Box3D::Perspective3D *persp = sp_desktop_document (desktop)->get_persp_of_box (box);
 
-    g_return_val_if_fail (!is_single_axis_direction (direction), p);
+    if (is_single_axis_direction (direction)) return p;
 
     Box3D::Axis axis1 = Box3D::extract_first_axis_direction (direction);
     Box3D::Axis axis2 = Box3D::extract_second_axis_direction (direction);
@@ -616,6 +617,67 @@ static NR::Point snap_knot_position_3dbox (SP3DBox *box, guint corner, Box3D::Ax
     }
 }
 
+static NR::Point snap_center_position_3dbox (SP3DBox *box, NR::Point const &origin, NR::Point const &p)
+{
+    SPDesktop * desktop = inkscape_active_desktop();
+    Box3D::Perspective3D *persp = sp_desktop_document (desktop)->get_persp_of_box (box);
+
+    Box3D::Axis axis1 = Box3D::X;
+    Box3D::Axis axis2 = Box3D::Y;
+
+    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM (box)));
+    NR::Point origin_dt = origin * i2d;
+    NR::Point p_dt = p * i2d;
+
+    Box3D::PerspectiveLine pl1 (origin_dt, axis1, persp);
+    Box3D::PerspectiveLine pl2 (origin_dt, axis2, persp);
+    NR::Point midpt1 = sp_3dbox_get_midpoint_in_axis_direction (box->old_corner1, box->old_corner5, Box3D::Z, persp);
+    NR::Point midpt2 = sp_3dbox_get_midpoint_in_axis_direction (box->old_corner3, box->old_corner7, Box3D::Z, persp);
+    Box3D::Line diag1 (origin_dt, midpt1);
+    Box3D::Line diag2 (origin_dt, midpt2);
+
+    int num_snap_lines = 4;
+    NR::Point snap_pts[num_snap_lines];
+
+    // should we snap to the closest point or to the projection along perspective lines?
+    snap_pts[0] = pl1.closest_to (p_dt);
+    snap_pts[1] = pl2.closest_to (p_dt);
+    snap_pts[2] = diag1.closest_to (p_dt);
+    snap_pts[3] = diag2.closest_to (p_dt);
+
+    gdouble const zoom = desktop->current_zoom();
+
+    double snap_dists[num_snap_lines];
+
+    for (int i = 0; i < num_snap_lines; ++i) {
+        snap_dists[i] = NR::L2 (snap_pts[i] - p_dt) * zoom;
+    }
+
+    bool within_tolerance = true;
+    for (int i = 0; i < num_snap_lines; ++i) {
+        if (snap_dists[i] > remember_snap_threshold) {
+            within_tolerance = false;
+            break;
+        }
+    }
+
+    int snap_index = -1;
+    double snap_dist = NR_HUGE;
+    for (int i = 0; i < num_snap_lines; ++i) {
+        if (snap_dists[i] < snap_dist) {
+            snap_index = i;
+            snap_dist = snap_dists[i];
+        }
+    }
+
+    if (within_tolerance) {
+        return snap_pts[remember_snap_index_center] * i2d.inverse();
+    } else {
+        remember_snap_index_center = snap_index;
+        return snap_pts[snap_index] * i2d.inverse();
+    }
+}
+
 static NR::Point sp_3dbox_knot_get(SPItem *item, guint knot_id)
 {
     g_assert(item != NULL);
@@ -654,10 +716,17 @@ static void sp_3dbox_knot_center_set(SPItem *item, NR::Point const &new_pos, NR:
     SP3DBox *box = SP_3DBOX(item);
 
     NR::Matrix const i2d (sp_item_i2d_affine (item));
+    NR::Point new_pt (new_pos);
+
+    if ((state & GDK_CONTROL_MASK) && !(state & GDK_SHIFT_MASK)) {
+        // snap if Ctrl is pressed and movement isn't already constrained to a single axis
+        new_pt = snap_center_position_3dbox (box, origin, new_pos);
+    }
+
     if (state & GDK_SHIFT_MASK) {
-        sp_3dbox_recompute_Z_corners_from_new_center (box, new_pos * i2d);
+        sp_3dbox_recompute_Z_corners_from_new_center (box, new_pt * i2d);
     } else {
-        sp_3dbox_recompute_XY_corners_from_new_center (box, new_pos * i2d);
+        sp_3dbox_recompute_XY_corners_from_new_center (box, new_pt * i2d);
     }
 
     sp_3dbox_update_curves (box);

@@ -192,9 +192,8 @@ double cross_ratio (NR::Point const &A, NR::Point const &B, NR::Point const &C, 
     double lambda_D = line.lambda (D);
 
     if (fabs (lambda_D - lambda_A) < epsilon || fabs (lambda_C - lambda_B) < epsilon) {
-        // FIXME: What should we return if the cross ratio can't be computed?
-        return 0;
-        //return NR_HUGE;
+        // We return NR_HUGE so that we can catch this case in the calling functions
+        return NR_HUGE;
     }
     return (((lambda_C - lambda_A) / (lambda_D - lambda_A)) * ((lambda_D - lambda_B) / (lambda_C - lambda_B)));
 }
@@ -204,15 +203,18 @@ double cross_ratio (VanishingPoint const &V, NR::Point const &B, NR::Point const
     if (V.is_finite()) {
         return cross_ratio (V.get_pos(), B, C, D);
     } else {
+        if (B == D) {
+            // catch this case so that the line BD below is non-degenerate
+            return 0;
+        }
         Line line (B, D);
         double lambda_B = line.lambda (B);
         double lambda_C = line.lambda (C);
         double lambda_D = line.lambda (D);
 
         if (fabs (lambda_C - lambda_B) < epsilon) {
-            // FIXME: What should we return if the cross ratio can't be computed?
-            return 0;
-            //return NR_HUGE;
+            // We return NR_HUGE so that we can catch this case in the calling functions
+            return NR_HUGE;
         }
         return (lambda_D - lambda_B) / (lambda_C - lambda_B);
     }

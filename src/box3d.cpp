@@ -1019,6 +1019,9 @@ sp_3dbox_new_midpoints (Box3D::Perspective3D *persp, Box3D::Axis axis, NR::Point
         // FIXME: cr == 1 is a degenerate case; how should we deal with it?
         return std::make_pair (NR::Point (0,0), NR::Point (0,0));
     }
+    if (cr1 == NR_HUGE) {
+        return std::make_pair (A, B);
+    }
     Box3D::PerspectiveLine pl (M0, axis, persp);
     NR::Point B_new = pl.pt_with_given_cross_ratio (M0, M, cr1 / (cr1 - 1));
     NR::Point A_new = pl.pt_with_given_cross_ratio (M0, M, 1 - cr2);
