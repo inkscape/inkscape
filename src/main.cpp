@@ -620,6 +620,34 @@ int sp_common_main( int argc, char const **argv, GSList **flDest )
     return 0;
 }
 
+static void
+snooper(GdkEvent *event, gpointer data) { 
+    if(inkscape_mapalt())  /* returns the map of the keyboard modifier to map to Alt, zero if no mapping */
+    {
+        GdkModifierType mapping=(GdkModifierType)inkscape_mapalt();
+        switch (event->type) {
+            case GDK_MOTION_NOTIFY:
+                if(event->motion.state & mapping) {
+                    event->motion.state|=GDK_MOD1_MASK;
+                }
+                break;       
+            case GDK_BUTTON_PRESS:
+                if(event->button.state & mapping) {
+                    event->button.state|=GDK_MOD1_MASK;
+                }
+                break;       
+             case GDK_KEY_PRESS:
+                 if(event->key.state & mapping) {
+                     event->key.state|=GDK_MOD1_MASK;
+                 }
+                 break;                
+        default:
+            break;
+        }
+    }
+    gtk_main_do_event (event);
+}
+
 int
 sp_main_gui(int argc, char const **argv)
 {
@@ -630,6 +658,8 @@ sp_main_gui(int argc, char const **argv)
     g_return_val_if_fail(retVal == 0, 1);
 
     inkscape_gtk_stock_init();
+
+    gdk_event_handler_set((GdkEventFunc)snooper, NULL, NULL);
 
     Inkscape::Debug::log_display_config();
 

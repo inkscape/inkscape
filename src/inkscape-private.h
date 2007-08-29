@@ -29,6 +29,9 @@ GType inkscape_get_type (void);
 void inkscape_ref (void);
 void inkscape_unref (void);
 
+guint inkscape_mapalt();
+void inkscape_mapalt(guint);
+
 /*
  * These are meant solely for desktop, document etc. implementations
  */

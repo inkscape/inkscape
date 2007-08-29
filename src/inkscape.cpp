@@ -117,6 +117,7 @@ struct Inkscape::Application {
     gboolean dialogs_toggle;
     gboolean use_gui;         // may want to consider a virtual function
                               // for overriding things like the warning dlg's
+    guint mapalt;
 };
 
 struct Inkscape::ApplicationClass {
@@ -302,8 +303,9 @@ inkscape_init (SPObject * object)
     inkscape->desktops = NULL;
 
     inkscape->dialogs_toggle = TRUE;
-}
 
+    inkscape->mapalt=GDK_MOD1_MASK;    
+}
 
 static void
 inkscape_dispose (GObject *object)
@@ -348,6 +350,22 @@ inkscape_unref (void)
         g_object_unref (G_OBJECT (inkscape));
 }
 
+/* returns the mask of the keyboard modifier to map to Alt, zero if no mapping */
+/* Needs to be a guint because gdktypes.h does not define a 'no-modifier' value */
+guint
+inkscape_mapalt() {
+    return inkscape->mapalt;
+}
+
+/* Sets the keyboard modifer to map to Alt. Zero switches off mapping, as does '1', which is the default */
+void inkscape_mapalt(guint maskvalue)
+{
+    if(maskvalue<2 || maskvalue> 5 ){  /* MOD5 is the highest defined in gdktypes.h */
+        inkscape->mapalt=0;
+    }else{
+        inkscape->mapalt=(GDK_MOD1_MASK << (maskvalue-1));
+    }
+}
 
 static void
 inkscape_activate_desktop_private (Inkscape::Application *inkscape, SPDesktop *desktop)
@@ -592,6 +610,12 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     if (use_gui == TRUE && prefs_get_int_attribute("dialogs.debug", "redirect", DEFAULT_LOG_REDIRECT))
     {
 		Inkscape::UI::Dialogs::DebugDialog::getInstance()->captureLogMessages();
+    }
+
+    /* Check for global remapping of Alt key */
+    if(use_gui)
+    {
+        inkscape_mapalt(guint(prefs_get_int_attribute("options.mapalt","value",0)));
     }
 
     /* Initialize the extensions */
