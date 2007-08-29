@@ -27,6 +27,7 @@
 
 #include "ui/dialog/dialog-manager.h"
 #include "ui/view/edit-widget-interface.h"
+#include "ui/widget/dock.h"
 #include "ui/widget/selected-style.h"
 #include "ui/widget/ruler.h"
 #include "ui/widget/toolbox.h"
@@ -132,6 +133,8 @@ public:
     virtual void setMessage (Inkscape::MessageType type, gchar const* msg);
     virtual bool warnDialog (gchar*);
 
+    virtual Inkscape::UI::Widget::Dock* getDock ();
+
 protected:
     void _namedview_modified(SPObject *namedview, guint);
 
@@ -157,6 +160,7 @@ protected:
     Gtk::ToggleButton    _sticky_zoom;
     UI::Widget::SVGCanvas _svg_canvas;
     Gtk::HBox            _statusbar;
+    UI::Widget::Dock _dock;
     UI::Widget::SelectedStyle _selected_style_status;
     UI::Widget::ZoomStatus _zoom_status;
     Inkscape::Widgets::LayerSelector _layer_selector;

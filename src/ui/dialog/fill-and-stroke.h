@@ -33,10 +33,11 @@ namespace Dialog {
 
 class FillAndStroke : public Dialog {
 public:
-    FillAndStroke();
+    FillAndStroke(Behavior::BehaviorFactory behavior_factory);
     virtual ~FillAndStroke();
 
-    static FillAndStroke *create() { return new FillAndStroke(); }
+    static FillAndStroke *create(Behavior::BehaviorFactory behavior_factory)
+    { return new FillAndStroke(behavior_factory); }
 
     void selectionChanged(Inkscape::Application *inkscape,
                           Inkscape::Selection *selection);

@@ -774,8 +774,8 @@ void on_selection_changed(Inkscape::Application *inkscape, Inkscape::Selection *
 
 
 
-AlignAndDistribute::AlignAndDistribute() 
-    : Dialog ("dialogs.align", SP_VERB_DIALOG_ALIGN_DISTRIBUTE),
+AlignAndDistribute::AlignAndDistribute(Behavior::BehaviorFactory behavior_factory) 
+    : Dialog (behavior_factory, "dialogs.align", SP_VERB_DIALOG_ALIGN_DISTRIBUTE),
       randomize_bbox(NR::Nothing()),
       _alignFrame(_("Align")),
       _distributeFrame(_("Distribute")),

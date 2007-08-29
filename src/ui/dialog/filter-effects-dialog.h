@@ -40,11 +40,14 @@ class DualSpinButton;
 class MultiSpinButton;
 class FilterEffectsDialog : public Dialog {
 public:
+
+    FilterEffectsDialog(Behavior::BehaviorFactory behavior_factory);
     ~FilterEffectsDialog();
 
-    void set_attrs_locked(const bool);
+    static FilterEffectsDialog *create(Behavior::BehaviorFactory behavior_factory)
+    { return new FilterEffectsDialog(behavior_factory); }
 
-    static FilterEffectsDialog *create() { return new FilterEffectsDialog(); }
+    void set_attrs_locked(const bool);
 private:
     class SignalObserver;
 

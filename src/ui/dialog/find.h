@@ -59,10 +59,11 @@ namespace Dialog {
 
 class Find : public Dialog {
 public:
-    Find();
+    Find(Behavior::BehaviorFactory behavior_factory);
     virtual ~Find();
 
-    static Find *create() { return new Find(); }
+    static Find *create(Behavior::BehaviorFactory behavior_factory) 
+    { return new Find(behavior_factory); }
 
 protected:
     // Widgets:

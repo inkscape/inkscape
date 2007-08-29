@@ -1,0 +1,184 @@
+This file is meant to contain a little documentation about the GdlDock
+and related widgets.  It's incomplete and probably a bit out of date.
+And it probably belongs to a doc/ subdirectory.
+
+Please send comments to the devtools list (gnome-devtools@gnome.org)
+and report bugs to bugzilla (bugzilla.gnome.org).  Also check the todo
+list at the end of this document.
+
+Have fun,
+Gustavo
+
+
+Overview
+--------
+
+The GdlDock is a hierarchical based docking widget.  It is composed of
+widgets derived from the abstract class GdlDockObject which defines
+the basic interface for docking widgets on top of others.  
+
+The toplevel entries for docks are GdlDock widgets, which in turn hold
+a tree of GdlDockItem widgets.  For the toplevel docks to be able to
+interact with each other (when the user drags items from one place to
+another) they're all kept in a user-invisible and automatic object
+called the master.  To participate in docking operations every
+GdlDockObject must have the same master (the binding to the master is
+done automatically).  The master also keeps track of the manual items
+(mostly those created with gdl_dock_*_new functions) which are in the
+dock.
+
+Layout loading/saving service is provided by a separate object called
+GdlDockLayout.  Currently it stores information in XML format, but
+another backend could be easily written.  To keep the external XML
+file in sync with the dock, monitor the "dirty" property of the layout
+object and call gdl_dock_layout_save_to_file when this changes to
+TRUE.  No other action is required (the layout_changed is monitored by
+the layout object for you now).
+
+
+GdlDockObject
+=============
+
+A DockObject has:
+
+- a master, which manages all the objects in a dock ring ("master"
+  property, construct only).
+
+- a name.  If the object is manual the name can be used to recall the
+  object from any other object in the ring ("name" property).
+
+- a long, descriptive name ("long-name" property).
+
+A DockObject can be:
+
+- automatic or manual.  If it's automatic it means the lifecycle of
+  the object is entirely managed by the dock master.  If it's manual
+  in general means the user specified such object, and so it's not to
+  be destroyed automatically at any time.
+
+- frozen.  In this case any call to reduce on the object has no
+  immediate effect.  When the object is later thawn, any pending
+  reduce calls are made (maybe leading to the destruction of the
+  object).
+
+- attached or detached.  In general for dock items, being attached
+  will mean the item has its widget->parent set.  For docks it will
+  mean they belong to some dock master's ring.  In general, automatic
+  objects which are detached will be destroyed (unless frozen).
+
+- bound to a master or free.  In order to participate in dock
+  operations, each dock object must be bound to a dock master (which
+  is a separate, non-gui object).  In general, bindings are treated
+  automatically by the object, and this is entirely true for automatic
+  objects.  For manual objects, the master holds an additional
+  reference and has structures to store and recall them by nick names.
+  Normally, a manual object will only be destroyed when it's unbound
+  from the master.
+
+- simple or compound.  This actually depends on the subclass of the
+  dock object.  The difference is made so we can put restrictions in
+  how the objects are docked on top of another (e.g. you can't dock a
+  compound object inside a notebook).  If you look at the whole
+  docking layout as a tree, simple objects are the leaves, while all
+  the interior nodes are compound.
+
+- reduced.  This is only meaningful for compound objects.  If the
+  number of contained items has decreased to one the compound type
+  object is no longer necessary to hold the child.  In this case the
+  child is reattached to the object's parent.  If the number of
+  contained items has reached zero, the object is detached and reduce
+  is called on its parent.  For toplevel docks, the object is only
+  detached if it's automatic.  In any case, the future of the object
+  itself depends on whether it's automatic or manual.
+
+- requested to possibly dock another object.  Depending on the
+  type's behavior, the object can accept or reject this request.  If
+  it accepts it, it should fill in some additional information
+  regarding how it will host the peer object.
+
+- asked to dock another object.  Depending on the object's internal
+  structure and behavior two options can be taken: to dock the object
+  directly (e.g. a notebook docking another object); or to create an
+  automatic compound object which will be attached in place of the
+  actual object, and will host both the original object and the
+  requestor (e.g. a simple item docking another simple item, which
+  should create a paned/notebook).  The type of the new object will be
+  decided by the original objet based on the docking position.
+
+
+DETACHING: the action by which an object is unparented.  The object is
+then ready to be docked in some other place.  Newly created objects
+are always detached, except for toplevels (which are created attached
+by default).  An automatic object which is detached gets destroyed
+afterwards, since its ref count drops to zero.  Floating automatic
+toplevels never reach a zero ref count when detached, since the
+GtkWindow always keeps a reference to it (and the GtkWindow has a user
+reference).  That's why floating automatic toplevels are destroyed
+when reduced.
+
+REDUCING: for compound objects, when the number of contained children
+drops to one or zero, the container is no longer necessary.  In this
+case, the object is detached, and any remaining child is reattached to
+the object's former parent.  The limit for toplevels is one for
+automatic objects and zero for manual (i.e. they can even be empty).
+For simple (not compound) objects reducing doesn't make sense.
+
+UNBINDING: to participate in a dock ring, every object must be bound
+to a master.  The master connects to dock item signals and keeps a
+list of bound toplevels.  Additionally, a reference is kept for manual
+objects (this is so the user doesn't need to keep track of them, but
+can perform operations like hiding and such).
+
+
+
+GdlDock
+=======
+
+- Properties:
+
+  "floating" (gboolean, construct-only): whether the dock is floating in
+  its own window or not.
+
+  "default-title" (gchar, read-write): title for new floating docks.
+  This property is proxied to the master, which truly holds it.  
+
+The title for the floating docks is: the user supplied title
+(GdlDockObject's long_name property) if it's set, the default title
+(from the master) or an automatically generated title.
+
+
+- Signals:
+
+  "layout-changed": emitted when the user changed the layout of the
+  dock somehow.
+
+
+TODO LIST
+=========
+
+- Functionality for the item grip: provide a11y
+
+- Implement notebook tab reordering
+
+- Implement dock bands for toolbars and menus.
+
+- A dock-related thing is to build resizable toolbars (something like
+  the ones Windows have, where the buttons are reflowed according to
+  the space available).
+
+- Redesign paneds so they can hold more than two items and resize all
+  of them at once by using the handle (see if gimpdock does that).
+
+- Find a way to allow the merging of menu items to the item's popup
+  menu.  Also, there should be a way for the master to insert some
+  menu items.
+
+- Bonobo UI synchronizer.
+
+- Item behavoirs: implement the ones missing and maybe think more of
+  them (e.g. positions where it's possible to dock the item, etc.)
+
+- Make a nicer dragbar for the items, with buttons for undocking,
+  closing, hidding, etc. (See sodipodi, kdevelop)
+
+

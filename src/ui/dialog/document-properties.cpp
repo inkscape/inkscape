@@ -72,10 +72,10 @@ static Inkscape::XML::NodeEventVector const _repr_events = {
 
 
 DocumentProperties*
-DocumentProperties::create()
+DocumentProperties::create(Behavior::BehaviorFactory behavior_factory)
 {
     if (_instance) return _instance;
-    _instance = new DocumentProperties;
+    _instance = new DocumentProperties(behavior_factory);
     _instance->init();
     return _instance;
 }
@@ -90,8 +90,8 @@ DocumentProperties::destroy()
     }
 }
 
-DocumentProperties::DocumentProperties()
-    : Dialog ("dialogs.documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
+DocumentProperties::DocumentProperties(Behavior::BehaviorFactory behavior_factory) 
+    : Dialog (behavior_factory, "dialogs.documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
       _page_page(1, 1), _page_guides(1, 1),
       _page_snap(1, 1), _page_grids(1, 1),
       _grids_button_new(_("_New"), _("Create new grid.")),

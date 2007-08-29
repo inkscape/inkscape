@@ -49,16 +49,16 @@ namespace Dialogs {
 
 IconPreviewPanel* IconPreviewPanel::instance = 0;
 
-
-IconPreviewPanel& IconPreviewPanel::getInstance()
+IconPreviewPanel*
+IconPreviewPanel::create(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory)
 {
     if ( !instance ) {
-        instance = new IconPreviewPanel();
+        instance = new IconPreviewPanel(behavior_factory);
     }
 
     instance->refreshPreview();
 
-    return *instance;
+    return instance;
 }
 
 //#########################################################################
@@ -72,7 +72,7 @@ void IconPreviewPanel::on_button_clicked(int which)
 
         hot = which;
         updateMagnify();
-        queue_draw();
+        get_vbox()->queue_draw();
     }
 }
 
@@ -85,8 +85,8 @@ void IconPreviewPanel::on_button_clicked(int which)
 /**
  * Constructor
  */
-IconPreviewPanel::IconPreviewPanel() :
-    Panel(),
+IconPreviewPanel::IconPreviewPanel(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory) :
+    Inkscape::UI::Dialog::Dialog(behavior_factory, "dialogs.iconpreview", SP_VERB_VIEW_ICON_PREVIEW),
     hot(1),
     refreshButton(0),
     selectionButton(0)
@@ -186,7 +186,7 @@ IconPreviewPanel::IconPreviewPanel() :
 
 
     Gtk::HButtonBox* holder = new Gtk::HButtonBox( Gtk::BUTTONBOX_END );
-    _getContents()->pack_end( *holder, false, false );
+    get_vbox()->pack_end( *holder, false, false );
 
     selectionButton = new Gtk::ToggleButton(_("Selection")); // , GTK_RESPONSE_APPLY
     holder->pack_start( *selectionButton, false, false );
@@ -202,7 +202,7 @@ IconPreviewPanel::IconPreviewPanel() :
     refreshButton->signal_clicked().connect( sigc::mem_fun(*this, &IconPreviewPanel::refreshPreview) );
 
 
-    _getContents()->pack_start(iconBox, Gtk::PACK_EXPAND_WIDGET);
+    get_vbox()->pack_start(iconBox, Gtk::PACK_EXPAND_WIDGET);
 
     show_all_children();
 }

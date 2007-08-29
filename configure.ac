@@ -886,6 +886,7 @@ src/helper/makefile
 src/inkjar/makefile
 src/io/makefile
 src/libcroco/makefile
+src/libgdl/makefile
 src/libnr/makefile
 src/libnrtype/makefile
 src/libavoid/makefile

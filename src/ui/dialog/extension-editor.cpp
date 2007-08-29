@@ -42,8 +42,8 @@ namespace Dialog {
     about the selected extension.  A handler is set up so that when
     a new extension is selected, the notebooks are changed appropriately.
 */
-ExtensionEditor::ExtensionEditor()
-    : Dialog ("dialogs.extensioneditor", SP_VERB_DIALOG_EXTENSIONEDITOR)
+ExtensionEditor::ExtensionEditor(Behavior::BehaviorFactory behavior_factory)
+    : Dialog (behavior_factory, "dialogs.extensioneditor", SP_VERB_DIALOG_EXTENSIONEDITOR)
 {
     _notebook_info.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     _notebook_help.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);

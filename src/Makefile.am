@@ -43,6 +43,7 @@ include io/Makefile_insert
 include pedro/Makefile_insert
 include jabber_whiteboard/Makefile_insert
 include libcroco/Makefile_insert
+include libgdl/Makefile_insert
 include libnr/Makefile_insert
 include libnrtype/Makefile_insert
 include libavoid/Makefile_insert
@@ -87,6 +88,7 @@ noinst_LIBRARIES =	\
 	helper/libspchelp.a	\
 	io/libio.a	\
 	libcroco/libcroco.a	\
+	libgdl/libgdl.a		\
 	live_effects/liblive_effects.a \
 	live_effects/parameter/liblpeparam.a \
 	ui/libui.a	\
@@ -144,6 +146,7 @@ EXTRA_DIST =	\
 	io/doc2html.xsl 	\
 	pedro/makefile.in	\
 	jabber_whiteboard/makefile.in	\
+	libgdl/makefile.in	\
 	libcroco/makefile.in	\
 	libnr/makefile.in	\
 	libnrtype/makefile.in	\

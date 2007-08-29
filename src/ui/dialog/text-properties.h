@@ -26,10 +26,11 @@ namespace Dialog {
 
 class TextProperties : public Dialog {
 public:
-    TextProperties();
+    TextProperties(Behavior::BehaviorFactory behavior_factory);
     virtual ~TextProperties();
 
-    static TextProperties *create() { return new TextProperties(); }
+    static TextProperties *create(Behavior::BehaviorFactory behavior_factory) 
+    { return new TextProperties(behavior_factory); }
 
 protected:
     Gtk::Notebook  _notebook;

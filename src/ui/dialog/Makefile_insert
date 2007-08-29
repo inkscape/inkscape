@@ -10,12 +10,17 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/dialog-manager.h		\
 	ui/dialog/dialog.cpp			\
 	ui/dialog/dialog.h			\
+	ui/dialog/behavior.h			\
+	ui/dialog/dock-behavior.h		\
+	ui/dialog/dock-behavior.cpp		\
+	ui/dialog/floating-behavior.h		\
+	ui/dialog/floating-behavior.cpp		\
 	ui/dialog/align-and-distribute.cpp	\
 	ui/dialog/align-and-distribute.h	\
 	ui/dialog/document-metadata.cpp  	\
 	ui/dialog/document-metadata.h    	\
 	ui/dialog/document-properties.cpp	\
-	ui/dialog/document-properties.h	\
+	ui/dialog/document-properties.h		\
 	ui/dialog/export.cpp			\
 	ui/dialog/export.h			\
 	ui/dialog/extension-editor.cpp		\

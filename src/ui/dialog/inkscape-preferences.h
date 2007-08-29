@@ -76,7 +76,9 @@ class InkscapePreferences : public Dialog {
 public:
     virtual ~InkscapePreferences();
 
-    static InkscapePreferences *create() {return new InkscapePreferences(); }
+    static InkscapePreferences *create(Behavior::BehaviorFactory behavior_factory) 
+    { return new InkscapePreferences(behavior_factory); }
+
     void present();
 
 protected:
@@ -123,6 +125,7 @@ protected:
 
     PrefSpinButton  _t_pencil_tolerance;
 
+    PrefRadioButton _win_dockable, _win_floating;
     PrefRadioButton _win_ontop_none, _win_ontop_normal, _win_ontop_agressive;
     PrefRadioButton _win_save_geom_off, _win_save_geom, _win_save_geom_prefs;
     PrefCheckButton _win_hide_task, _win_zoom_resize , _win_show_close;
@@ -191,7 +194,7 @@ protected:
     void initPageMisc();
 
 private:
-    InkscapePreferences();
+    InkscapePreferences(Behavior::BehaviorFactory behavior_factory);
     InkscapePreferences(InkscapePreferences const &d);
     InkscapePreferences operator=(InkscapePreferences const &d);
 };

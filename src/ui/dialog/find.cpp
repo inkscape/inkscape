@@ -56,8 +56,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-Find::Find() 
-    : Dialog ("dialogs.find", SP_VERB_DIALOG_FIND),
+Find::Find(Behavior::BehaviorFactory behavior_factory)
+    : Dialog (behavior_factory, "dialogs.find", SP_VERB_DIALOG_FIND),
       _entry_text(_("_Text: "), _("Find objects by their text content (exact or partial match)")),
       _entry_id(_("_ID: "), _("Find objects by the value of the id attribute (exact or partial match)")),
       _entry_style(_("_Style: "), _("Find objects by the value of the style attribute (exact or partial match)")),

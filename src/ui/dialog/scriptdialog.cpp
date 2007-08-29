@@ -43,7 +43,7 @@ class ScriptDialogImpl : public ScriptDialog
     /**
      * Constructor
      */
-    ScriptDialogImpl();
+    ScriptDialogImpl(Behavior::BehaviorFactory behavior_factory);
 
     /**
      * Destructor
@@ -192,7 +192,8 @@ void ScriptDialogImpl::executePerl()
 /**
  * Constructor
  */
-ScriptDialogImpl::ScriptDialogImpl()
+ScriptDialogImpl::ScriptDialogImpl(Behavior::BehaviorFactory behavior_factory) :
+    ScriptDialog(behavior_factory)
 {
     Gtk::VBox *mainVBox = get_vbox();
 
@@ -249,9 +250,9 @@ ScriptDialogImpl::ScriptDialogImpl()
 /**
  * Factory method.  Use this to create a new ScriptDialog
  */
-ScriptDialog *ScriptDialog::create()
+ScriptDialog *ScriptDialog::create(Behavior::BehaviorFactory behavior_factory)
 {
-    ScriptDialog *dialog = new ScriptDialogImpl();
+    ScriptDialog *dialog = new ScriptDialogImpl(behavior_factory);
     return dialog;
 }
 

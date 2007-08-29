@@ -181,6 +181,8 @@ struct SPDesktop : public Inkscape::UI::View::View
     int displayMode;
     int getMode() const { return displayMode; }
 
+    Inkscape::UI::Widget::Dock* getDock() { return _widget->getDock(); }
+
     void set_active (bool new_active);
     SPObject *currentRoot() const;
     SPObject *currentLayer() const;

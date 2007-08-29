@@ -22,10 +22,11 @@ namespace Dialog {
 
 class LayerEditor : public Dialog {
 public:
-    LayerEditor();
+    LayerEditor(Behavior::BehaviorFactory behavior_factory);
     virtual ~LayerEditor();
 
-    static LayerEditor *create() { return new LayerEditor(); }
+    static LayerEditor *create(Behavior::BehaviorFactory behavior_factory)
+    { return new LayerEditor(behavior_factory); }
 
 protected:
 

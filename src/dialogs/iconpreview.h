@@ -18,9 +18,10 @@
 #include <gtkmm/label.h>
 #include <gtkmm/paned.h>
 #include <gtkmm/image.h>
+#include <gtkmm/togglebutton.h>
 #include <gtkmm/toggletoolbutton.h>
 
-#include "ui/widget/panel.h"
+#include "ui/dialog/dialog.h"
 
 struct SPObject;
 
@@ -32,13 +33,13 @@ namespace Dialogs {
 /**
  * A panel that displays an icon preview
  */
-class IconPreviewPanel : public Inkscape::UI::Widget::Panel
+class IconPreviewPanel : public Inkscape::UI::Dialog::Dialog
 {
 public:
-    IconPreviewPanel();
+    IconPreviewPanel(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory);
     //IconPreviewPanel(Glib::ustring const &label);
 
-    static IconPreviewPanel& getInstance();
+    static IconPreviewPanel *create(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory);
 
     void refreshPreview();
     void modeToggled();

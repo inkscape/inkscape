@@ -20,10 +20,11 @@ namespace Dialog {
 
 class Memory : public Dialog {
 public:
-    Memory();
+    Memory(Behavior::BehaviorFactory behavior_factory);
     ~Memory();
 
-    static Memory *create() { return new Memory(); }
+    static Memory *create(Behavior::BehaviorFactory behavior_factory) 
+    { return new Memory(behavior_factory); }
 
 protected:
     void _apply();

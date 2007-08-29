@@ -63,10 +63,10 @@ static Inkscape::XML::NodeEventVector const _repr_events = {
 
 
 DocumentMetadata*
-DocumentMetadata::create()
+DocumentMetadata::create(Behavior::BehaviorFactory behavior_factory)
 {
     if (_instance) return _instance;
-    _instance = new DocumentMetadata;
+    _instance = new DocumentMetadata(behavior_factory);
     _instance->init();
     return _instance;
 }
@@ -81,8 +81,8 @@ DocumentMetadata::destroy()
     }
 }
 
-DocumentMetadata::DocumentMetadata() 
-    : Dialog ("dialogs.documentmetadata", SP_VERB_DIALOG_METADATA),
+DocumentMetadata::DocumentMetadata(Behavior::BehaviorFactory behavior_factory) 
+    : Dialog (behavior_factory, "dialogs.documentmetadata", SP_VERB_DIALOG_METADATA),
       _page_metadata1(1, 1), _page_metadata2(1, 1),
       _prefs_path("dialogs.documentmetadata")
 {

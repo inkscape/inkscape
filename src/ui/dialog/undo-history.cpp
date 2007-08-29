@@ -103,10 +103,10 @@ static void on_activate_desktop(Inkscape::Application*, SPDesktop* desktop, void
 static void on_deactivate_desktop(Inkscape::Application*, SPDesktop* desktop, void*);
 
 UndoHistory*
-UndoHistory::create()
+UndoHistory::create(Behavior::BehaviorFactory behavior_factory)
 {
     if (_instance) return _instance;
-    _instance = new UndoHistory;
+    _instance = new UndoHistory(behavior_factory);
     return _instance;
 }
 
@@ -131,8 +131,8 @@ UndoHistory::setDesktop(SPDesktop* desktop)
     _callback_connections[EventLog::CALLB_SELECTION_CHANGE].block(false);
 }
 
-UndoHistory::UndoHistory()
-    : Dialog ("dialogs.undo-history", SP_VERB_DIALOG_UNDO_HISTORY),
+UndoHistory::UndoHistory(Behavior::BehaviorFactory behavior_factory)
+    : Dialog (behavior_factory, "dialogs.undo-history", SP_VERB_DIALOG_UNDO_HISTORY),
       _desktop (SP_ACTIVE_DESKTOP),
       _document (SP_ACTIVE_DOCUMENT),
       _event_log (_desktop ? _desktop->event_log : NULL),
@@ -141,7 +141,7 @@ UndoHistory::UndoHistory()
 { 
     if( !_document || !_event_log || !_columns ) return;
 
-    set_size_request(300, 400);
+    set_size_request(300, 200);
 
     get_vbox()->pack_start(_scrolled_window);
     _scrolled_window.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);

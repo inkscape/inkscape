@@ -30,10 +30,11 @@ namespace Dialog {
 
 class LivePathEffectEditor : public Dialog {
 public:
-    LivePathEffectEditor();
+    LivePathEffectEditor(Behavior::BehaviorFactory behavior_factory);
     virtual ~LivePathEffectEditor();
 
-    static LivePathEffectEditor *create() { return new LivePathEffectEditor(); }
+    static LivePathEffectEditor *create(Behavior::BehaviorFactory behavior_factory)
+    { return new LivePathEffectEditor(behavior_factory); }
 
     void onSelectionChanged(Inkscape::Selection *sel);
     void setDesktop(SPDesktop *desktop);

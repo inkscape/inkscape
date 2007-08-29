@@ -612,8 +612,8 @@ static void updateSelectionCallback(Inkscape::Application *inkscape, Inkscape::S
 /**
  * Constructor
  */
-TileDialog::TileDialog()
-    : Dialog ("dialogs.gridtiler", SP_VERB_SELECTION_GRIDTILE)
+TileDialog::TileDialog(Behavior::BehaviorFactory behavior_factory)
+    : Dialog (behavior_factory, "dialogs.gridtiler", SP_VERB_SELECTION_GRIDTILE)
 {
      // bool used by spin button callbacks to stop loops where they change each other.
     updating = false;

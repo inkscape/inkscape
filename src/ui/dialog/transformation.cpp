@@ -70,8 +70,8 @@ void on_selection_modified ( Inkscape::Application *inkscape,
  * we use the ScalarUnit class for this.
  *
  */
-Transformation::Transformation()
-    : Dialog ("dialogs.transformation", SP_VERB_DIALOG_TRANSFORM),
+Transformation::Transformation(Behavior::BehaviorFactory behavior_factory)
+    : Dialog (behavior_factory, "dialogs.transformation", SP_VERB_DIALOG_TRANSFORM),
       _page_move              (4, 2),
       _page_scale             (4, 2),
       _page_rotate            (4, 2),
@@ -181,8 +181,8 @@ void
 Transformation::presentPage(Transformation::PageType page)
 {
     _notebook.set_current_page(page);
-    Gtk::Dialog::show();
-    Gtk::Dialog::present();
+    show();
+    present();
 }
 
 

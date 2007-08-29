@@ -120,7 +120,7 @@ class UndoHistory : public Dialog {
 public:
     virtual ~UndoHistory();
 
-    static UndoHistory *create();
+    static UndoHistory *create(Behavior::BehaviorFactory behavior_factory);
     void setDesktop(SPDesktop* desktop);
 
     sigc::connection _document_replaced_connection;
@@ -146,9 +146,9 @@ protected:
     void _onCollapseEvent(const Gtk::TreeModel::iterator &iter, const Gtk::TreeModel::Path &path);
 
 private:
+    UndoHistory(Behavior::BehaviorFactory behavior_factory);
   
     // no default constructor, noncopyable, nonassignable
-    UndoHistory();
     UndoHistory(UndoHistory const &d);
     UndoHistory operator=(UndoHistory const &d);
 

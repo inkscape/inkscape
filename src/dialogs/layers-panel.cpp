@@ -46,13 +46,14 @@ namespace Dialogs {
 
 LayersPanel* LayersPanel::instance = 0;
 
-LayersPanel& LayersPanel::getInstance()
+LayersPanel*
+LayersPanel::create(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory)
 {
     if ( !instance ) {
-        instance = new LayersPanel();
+        instance = new LayersPanel(behavior_factory);
     }
 
-    return *instance;
+    return instance;
 }
 
 enum {
@@ -707,8 +708,8 @@ void LayersPanel::_opacityChanged()
 /**
  * Constructor
  */
-LayersPanel::LayersPanel() :
-    Inkscape::UI::Widget::Panel( Glib::ustring(), "dialogs.layers" ),
+LayersPanel::LayersPanel(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory) :
+    Inkscape::UI::Dialog::Dialog(behavior_factory, "dialogs.layers", SP_VERB_DIALOG_LAYERS),
     _maxNestDepth(20),
     _mgr(0),
     _desktop(0),
@@ -775,10 +776,10 @@ LayersPanel::LayersPanel() :
     _opacityBox.pack_end( _spinBtn, Gtk::PACK_SHRINK );
     _watching.push_back( &_opacityBox );
 
-    _getContents()->pack_start( _scroller, Gtk::PACK_EXPAND_WIDGET );
+    get_vbox()->pack_start( _scroller, Gtk::PACK_EXPAND_WIDGET );
 
-    _getContents()->pack_end(_opacityBox, Gtk::PACK_SHRINK);
-    _getContents()->pack_end(_buttonsRow, Gtk::PACK_SHRINK);
+    get_vbox()->pack_end(_opacityBox, Gtk::PACK_SHRINK);
+    get_vbox()->pack_end(_buttonsRow, Gtk::PACK_SHRINK);
 
     _opacityConnection = _opacity.get_adjustment()->signal_value_changed().connect( sigc::mem_fun(*this, &LayersPanel::_opacityChanged) );
 
@@ -859,7 +860,7 @@ LayersPanel::LayersPanel() :
 
     show_all_children();
 
-    restorePanelPrefs();
+    // restorePanelPrefs();
 }
 
 LayersPanel::~LayersPanel()
@@ -892,7 +893,7 @@ void LayersPanel::setDesktop( SPDesktop* desktop )
 
         _desktop = SP_ACTIVE_DESKTOP;
         if ( _desktop ) {
-            setLabel( _desktop->doc()->name );
+            //setLabel( _desktop->doc()->name );
 
             _mgr = _desktop->layer_manager;
             if ( _mgr ) {

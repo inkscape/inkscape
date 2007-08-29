@@ -45,8 +45,8 @@ void Messages::clear()
 /**
  * Constructor
  */
-Messages::Messages()
-	: Dialog ("dialogs.messages", SP_VERB_DIALOG_DEBUG)
+Messages::Messages(Behavior::BehaviorFactory behavior_factory)
+    : Dialog (behavior_factory, "dialogs.messages", SP_VERB_DIALOG_DEBUG)
 {
     Gtk::VBox *mainVBox = get_vbox();
 

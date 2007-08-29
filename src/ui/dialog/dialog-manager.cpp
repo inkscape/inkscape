@@ -2,11 +2,12 @@
  * \brief Object for managing a set of dialogs, including their signals and
  *        construction/caching/destruction of them.
  *
- * Author:
+ * Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Jon Phillips <jon@rejon.org>
+ *   Gustav Broberg <broberg@kth.se>
  *
- * Copyright (C) 2004, 2005 Authors
+ * Copyright (C) 2004--2007 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -37,7 +38,12 @@
 #include "ui/dialog/undo-history.h"
 #include "ui/dialog/xml-editor.h"
 
+#include "dialogs/layers-panel.h"
 #include "dialogs/tiledialog.h"
+#include "dialogs/iconpreview.h"
+
+#include "ui/dialog/floating-behavior.h"
+#include "ui/dialog/dock-behavior.h"
 
 namespace Inkscape {
 namespace UI {
@@ -45,8 +51,8 @@ namespace Dialog {
 
 namespace {
 
-template <typename T>
-Dialog *create() { return T::create(); }
+template <typename T, typename B>
+inline Dialog *create() { return T::create(&B::create); }
 
 }
 
@@ -71,26 +77,63 @@ Dialog *create() { return T::create(); }
  *
  */
 DialogManager::DialogManager() {
-    registerFactory("AlignAndDistribute",  &create<AlignAndDistribute>);
-    registerFactory("DocumentMetadata",    &create<DocumentMetadata>);
-    registerFactory("DocumentProperties",  &create<DocumentProperties>);
-    registerFactory("Export",              &create<Export>);
-    registerFactory("ExtensionEditor",     &create<ExtensionEditor>);
-    registerFactory("FillAndStroke",       &create<FillAndStroke>);
-    registerFactory("FilterEffectsDialog", &create<FilterEffectsDialog>);
-    registerFactory("Find",                &create<Find>);
-    registerFactory("InkscapePreferences", &create<InkscapePreferences>);
-    registerFactory("LayerEditor",         &create<LayerEditor>);
-    registerFactory("LivePathEffect",      &create<LivePathEffectEditor>);
-    registerFactory("Memory",              &create<Memory>);
-    registerFactory("Messages",            &create<Messages>);
-    registerFactory("Script",              &create<ScriptDialog>);
-    registerFactory("TextProperties",      &create<TextProperties>);
-    registerFactory("TileDialog",          &create<TileDialog>);
-    registerFactory("Trace",               &create<TraceDialog>);
-    registerFactory("Transformation",      &create<Transformation>);
-    registerFactory("UndoHistory",         &create<UndoHistory>);
-    registerFactory("XmlEditor",           &create<XmlEditor>);
+
+    using namespace Behavior;
+    using namespace Inkscape::UI::Dialogs; // temporary
+
+    int dialogs_type = prefs_get_int_attribute_limited ("options.dialogtype", "value", DOCK, 0, 1);
+
+    if (dialogs_type == FLOATING) {
+
+        registerFactory("AlignAndDistribute",  &create<AlignAndDistribute,   FloatingBehavior>);
+        registerFactory("DocumentMetadata",    &create<DocumentMetadata,     FloatingBehavior>);
+        registerFactory("DocumentProperties",  &create<DocumentProperties,   FloatingBehavior>);
+        registerFactory("Export",              &create<Export,               FloatingBehavior>);
+        registerFactory("ExtensionEditor",     &create<ExtensionEditor,      FloatingBehavior>);
+        registerFactory("FillAndStroke",       &create<FillAndStroke,        FloatingBehavior>);
+        registerFactory("FilterEffectsDialog", &create<FilterEffectsDialog,  FloatingBehavior>);
+        registerFactory("Find",                &create<Find,                 FloatingBehavior>);
+        registerFactory("IconPreviewPanel",    &create<IconPreviewPanel,     FloatingBehavior>);
+        registerFactory("InkscapePreferences", &create<InkscapePreferences,  FloatingBehavior>);
+        registerFactory("LayerEditor",         &create<LayerEditor,          FloatingBehavior>);
+        registerFactory("LayersPanel",         &create<LayersPanel,          FloatingBehavior>);
+        registerFactory("LivePathEffect",      &create<LivePathEffectEditor, FloatingBehavior>);
+        registerFactory("Memory",              &create<Memory,               FloatingBehavior>);
+        registerFactory("Messages",            &create<Messages,             FloatingBehavior>);
+        registerFactory("Script",              &create<ScriptDialog,         FloatingBehavior>);
+        registerFactory("TextProperties",      &create<TextProperties,       FloatingBehavior>);
+        registerFactory("TileDialog",          &create<TileDialog,           FloatingBehavior>);
+        registerFactory("Trace",               &create<TraceDialog,          FloatingBehavior>);
+        registerFactory("Transformation",      &create<Transformation,       FloatingBehavior>);
+        registerFactory("UndoHistory",         &create<UndoHistory,          FloatingBehavior>);
+        registerFactory("XmlEditor",           &create<XmlEditor,            FloatingBehavior>);
+
+    } else {
+
+        registerFactory("AlignAndDistribute",  &create<AlignAndDistribute,   DockBehavior>);
+        registerFactory("DocumentMetadata",    &create<DocumentMetadata,     DockBehavior>);
+        registerFactory("DocumentProperties",  &create<DocumentProperties,   DockBehavior>);
+        registerFactory("Export",              &create<Export,               DockBehavior>);
+        registerFactory("ExtensionEditor",     &create<ExtensionEditor,      DockBehavior>);
+        registerFactory("FillAndStroke",       &create<FillAndStroke,        DockBehavior>);
+        registerFactory("FilterEffectsDialog", &create<FilterEffectsDialog,  DockBehavior>);
+        registerFactory("Find",                &create<Find,                 DockBehavior>);
+        registerFactory("IconPreviewPanel",    &create<IconPreviewPanel,     DockBehavior>);
+        registerFactory("InkscapePreferences", &create<InkscapePreferences,  DockBehavior>);
+        registerFactory("LayerEditor",         &create<LayerEditor,          DockBehavior>);
+        registerFactory("LayersPanel",         &create<LayersPanel,          DockBehavior>);
+        registerFactory("LivePathEffect",      &create<LivePathEffectEditor, DockBehavior>);
+        registerFactory("Memory",              &create<Memory,               DockBehavior>);
+        registerFactory("Messages",            &create<Messages,             DockBehavior>);
+        registerFactory("Script",              &create<ScriptDialog,         DockBehavior>);
+        registerFactory("TextProperties",      &create<TextProperties,       DockBehavior>);
+        registerFactory("TileDialog",          &create<TileDialog,           DockBehavior>);
+        registerFactory("Trace",               &create<TraceDialog,          DockBehavior>);
+        registerFactory("Transformation",      &create<Transformation,       DockBehavior>);
+        registerFactory("UndoHistory",         &create<UndoHistory,          DockBehavior>);
+        registerFactory("XmlEditor",           &create<XmlEditor,            DockBehavior>);
+
+    }
 }
 
 DialogManager::~DialogManager() {
@@ -163,7 +206,6 @@ void DialogManager::showDialog(GQuark name) {
     Dialog *dialog=getDialog(name);
     if (dialog) {
         dialog->present();
-        dialog->read_geometry();
     }
 }
 

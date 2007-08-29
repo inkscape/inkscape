@@ -46,10 +46,11 @@ class Action;
 
 class AlignAndDistribute : public Dialog {
 public:
-    AlignAndDistribute();
+    AlignAndDistribute(Behavior::BehaviorFactory behavior_factory);
     virtual ~AlignAndDistribute();
 
-    static AlignAndDistribute *create() { return new AlignAndDistribute(); }
+    static AlignAndDistribute *create(Behavior::BehaviorFactory behavior_factory) 
+    { return new AlignAndDistribute(behavior_factory); }
 
     enum AlignTarget { LAST=0, FIRST, BIGGEST, SMALLEST, PAGE, DRAWING, SELECTION };
 

@@ -40,13 +40,13 @@ public:
     /**
      * Constructor
      */
-    TileDialog() ;
-
+    TileDialog(Behavior::BehaviorFactory behavior_factory) ;
 
     /**
      * Factory method
      */
-    static TileDialog *create() { return new TileDialog(); }
+    static TileDialog *create(Behavior::BehaviorFactory behavior_factory)
+    { return new TileDialog(behavior_factory); }
 
     /**
      * Destructor

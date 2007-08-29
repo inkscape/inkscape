@@ -107,7 +107,6 @@ sp_action_get_title(SPAction const *action)
 
 } // end of sp_action_get_title()
 
-
 namespace Inkscape {
 
 /// \todo !!!FIXME:: kill this, use DialogManager instead!!!
@@ -115,7 +114,12 @@ namespace Inkscape {
 class PanelDialog : public Inkscape::UI::Dialog::Dialog
 {
 public:
-    PanelDialog(char const *prefs_path, int const verb_num) : Dialog(prefs_path, verb_num) {}
+    PanelDialog(char const *prefs_path, int const verb_num) : 
+        Dialog(
+            (prefs_get_int_attribute_limited ("options.dialogtype", "value", UI::Dialog::DOCK, 0, 1) == UI::Dialog::FLOATING ?
+             &UI::Dialog::Behavior::FloatingBehavior::create :
+             &UI::Dialog::Behavior::DockBehavior::create),
+            prefs_path, verb_num) {}
 /*
     virtual Glib::ustring getName() const {return "foo";}
     virtual Glib::ustring getDesc() const {return "bar";}
@@ -145,6 +149,7 @@ static void show_panel( Inkscape::UI::Widget::Panel &panel, char const *prefs_pa
         }
     }
 }
+
 
 /** \brief A class to encompass all of the verbs which deal with
            file operations. */
@@ -1001,6 +1006,8 @@ SelectionVerb::perform(SPAction *action, void *data, void *pdata)
     if (!dt)
         return;
 
+    g_assert(dt->_dlg_mgr != NULL);
+
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_SELECTION_TO_FRONT:
             sp_selection_raise_to_top();
@@ -1088,6 +1095,7 @@ SelectionVerb::perform(SPAction *action, void *data, void *pdata)
             sp_selected_path_reverse();
             break;
         case SP_VERB_SELECTION_TRACE:
+            inkscape_dialogs_unhide();
             dt->_dlg_mgr->showDialog("Trace");
             break;
         case SP_VERB_SELECTION_CREATE_BITMAP:
@@ -1101,6 +1109,7 @@ SelectionVerb::perform(SPAction *action, void *data, void *pdata)
             sp_selected_path_break_apart();
             break;
         case SP_VERB_SELECTION_GRIDTILE:
+            inkscape_dialogs_unhide();
             dt->_dlg_mgr->showDialog("TileDialog");
             break;
         default:
@@ -1652,7 +1661,8 @@ ZoomVerb::perform(SPAction *action, void *data, void *pdata)
             dt->displayModeToggle();
             break;
         case SP_VERB_VIEW_ICON_PREVIEW:
-            show_panel( Inkscape::UI::Dialogs::IconPreviewPanel::getInstance(), "dialogs.iconpreview", SP_VERB_VIEW_ICON_PREVIEW );
+            inkscape_dialogs_unhide();
+            dt->_dlg_mgr->showDialog("IconPreviewPanel");
             break;
         default:
             break;
@@ -1688,12 +1698,12 @@ DialogVerb::perform(SPAction *action, void *data, void *pdata)
             dt->_dlg_mgr->showDialog("DocumentProperties");
             break;
         case SP_VERB_DIALOG_FILL_STROKE:
-            sp_object_properties_dialog();
-            // dt->_dlg_mgr->showDialog("FillAndStroke");
+            // sp_object_properties_dialog();
+            dt->_dlg_mgr->showDialog("FillAndStroke");
             break;
         case SP_VERB_DIALOG_SWATCHES:
             show_panel( Inkscape::UI::Dialogs::SwatchesPanel::getInstance(), "dialogs.swatches", SP_VERB_DIALOG_SWATCHES);
-            break;
+             break;
         case SP_VERB_DIALOG_TRANSFORM:
             dt->_dlg_mgr->showDialog("Transformation");
             break;
@@ -1743,7 +1753,7 @@ DialogVerb::perform(SPAction *action, void *data, void *pdata)
             dt->_dlg_mgr->showDialog("ExtensionEditor");
             break;
         case SP_VERB_DIALOG_LAYERS:
-            show_panel( Inkscape::UI::Dialogs::LayersPanel::getInstance(), "dialogs.layers", SP_VERB_DIALOG_LAYERS );
+            dt->_dlg_mgr->showDialog("LayersPanel");
             break;
         case SP_VERB_DIALOG_LIVE_PATH_EFFECT:
             dt->_dlg_mgr->showDialog("LivePathEffect");
@@ -1788,6 +1798,7 @@ HelpVerb::perform(SPAction *action, void *data, void *pdata)
         */
 
         case SP_VERB_HELP_MEMORY:
+            inkscape_dialogs_unhide();
             dt->_dlg_mgr->showDialog("Memory");
             break;
         default:

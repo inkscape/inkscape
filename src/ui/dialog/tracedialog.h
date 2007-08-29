@@ -34,14 +34,15 @@ public:
     /**
      * Constructor
      */
-    TraceDialog() : Dialog ("dialogs.trace", SP_VERB_SELECTION_TRACE)
+    TraceDialog(Behavior::BehaviorFactory behavior_factory) : 
+	Dialog (behavior_factory, "dialogs.trace", SP_VERB_SELECTION_TRACE)
         {}
 
 
     /**
      * Factory method
      */
-    static TraceDialog *create();
+    static TraceDialog *create(Behavior::BehaviorFactory behavior_factory);
 
     /**
      * Destructor

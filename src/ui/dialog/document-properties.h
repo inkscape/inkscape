@@ -38,7 +38,7 @@ namespace Inkscape {
 class DocumentProperties : public Inkscape::UI::Dialog::Dialog {
 public:
     void  update();
-    static DocumentProperties *create();
+    static DocumentProperties *create(Behavior::BehaviorFactory behavior_factory);
     static void destroy();
     sigc::connection _doc_replaced_connection;
 
@@ -88,7 +88,7 @@ protected:
     Registry _wr;
 
 private:
-    DocumentProperties();
+    DocumentProperties(Behavior::BehaviorFactory behavior_factory);
     virtual ~DocumentProperties();
 
     // callback methods for buttons on grids page.

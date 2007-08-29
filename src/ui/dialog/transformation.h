@@ -46,7 +46,7 @@ public:
     /**
      * Create a new transform
      */
-    Transformation();
+    Transformation(Behavior::BehaviorFactory behavior_factory);
 
     /**
      * Cleanup
@@ -57,8 +57,8 @@ public:
     /**
      * Factory method.  Create an instance of this class/interface
      */
-    static Transformation *create()
-        { return new Transformation(); }
+    static Transformation *create(Behavior::BehaviorFactory behavior_factory)
+        { return new Transformation(behavior_factory); }
 
 
     /**

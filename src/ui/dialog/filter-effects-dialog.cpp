@@ -1166,7 +1166,8 @@ void FilterEffectsDialog::FilterModifier::duplicate_filter()
 void FilterEffectsDialog::FilterModifier::rename_filter()
 {
     SPFilter* filter = get_selected_filter();
-    Gtk::Dialog m("", _dialog, true);
+    Gtk::Window *window = dynamic_cast<Gtk::Window *>(_dialog.get_vbox()->get_ancestor(GTK_TYPE_WINDOW));
+    Gtk::Dialog m("", *window, true);
     m.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
     m.add_button(_("_Rename"), Gtk::RESPONSE_OK);
     m.set_default_response(Gtk::RESPONSE_OK);
@@ -1843,8 +1844,8 @@ int FilterEffectsDialog::PrimitiveList::primitive_count() const
 
 /*** FilterEffectsDialog ***/
 
-FilterEffectsDialog::FilterEffectsDialog() 
-    : Dialog ("dialogs.filtereffects", SP_VERB_DIALOG_FILTER_EFFECTS),
+FilterEffectsDialog::FilterEffectsDialog(Behavior::BehaviorFactory behavior_factory) 
+    : Dialog (behavior_factory, "dialogs.filtereffects", SP_VERB_DIALOG_FILTER_EFFECTS),
       _filter_modifier(*this),
       _primitive_list(*this),
       _add_primitive_type(FPConverter),

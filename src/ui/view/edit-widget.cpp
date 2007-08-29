@@ -65,6 +65,8 @@
 #include "interface.h"
 #include "extension/db.h"
 
+#include "ui/dialog/dialog-manager.h"
+
 using namespace Inkscape::UI;
 using namespace Inkscape::UI::Widget;
 
@@ -151,7 +153,6 @@ EditWidget::initLayout()
     initRightScrollbar();
     _viewport_table.attach(_svg_canvas.widget(), 1, 2, 1, 2, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND);
     _svg_canvas.widget().show_all();
-
 
     // The statusbar comes last and appears at the bottom of _main_window_table
     initStatusbar();
@@ -1531,6 +1532,12 @@ EditWidget::warnDialog (gchar* msg)
     return r == Gtk::RESPONSE_YES;
 }
 
+
+Inkscape::UI::Widget::Dock*
+EditWidget::getDock ()
+{
+    return &_dock;
+}
 
 void EditWidget::_namedview_modified (SPObject *obj, guint flags) {
     SPNamedView *nv = static_cast<SPNamedView *>(obj);

@@ -31,10 +31,11 @@ namespace Dialog {
 
 class ExtensionEditor : public Dialog {
 public:
-    ExtensionEditor();
+    ExtensionEditor(Behavior::BehaviorFactory behavior_factory);
     virtual ~ExtensionEditor();
 
-    static ExtensionEditor *create() { return new ExtensionEditor(); }
+    static ExtensionEditor *create(Behavior::BehaviorFactory behavior_factory)
+    { return new ExtensionEditor(behavior_factory); }
 
     static void show_help (gchar const * extension_id);
 

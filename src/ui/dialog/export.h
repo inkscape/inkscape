@@ -26,10 +26,11 @@ namespace Dialog {
 
 class Export : public Dialog {
 public:
-    Export();
+    Export(Behavior::BehaviorFactory behavior_factory);
     virtual ~Export();
 
-    static Export *create() { return new Export(); }
+    static Export *create(Behavior::BehaviorFactory behavior_factory) 
+    { return new Export(behavior_factory); }
 
 protected:
     Gtk::Notebook  _notebook;

@@ -66,8 +66,8 @@ static void lpeeditor_desktop_change(Inkscape::Application*, SPDesktop* desktop,
 /*#######################
  * LivePathEffectEditor
  */
-LivePathEffectEditor::LivePathEffectEditor() 
-    : Dialog ("dialogs.livepatheffect", SP_VERB_DIALOG_LIVE_PATH_EFFECT),
+LivePathEffectEditor::LivePathEffectEditor(Behavior::BehaviorFactory behavior_factory) 
+    : Dialog (behavior_factory, "dialogs.livepatheffect", SP_VERB_DIALOG_LIVE_PATH_EFFECT),
       combo_effecttype(Inkscape::LivePathEffect::LPETypeConverter),
       button_apply(_("_Apply"), _("Apply chosen effect to selection")),
       button_remove(_("_Remove"), _("Remove effect from selection")),

@@ -48,6 +48,8 @@
 #include "widgets/spw-utilities.h"
 #include "widgets/spinbutton-events.h"
 #include "widgets/layer-selector.h"
+#include "ui/dialog/dialog-manager.h"
+#include "ui/widget/dock.h"
 #include "ui/widget/selected-style.h"
 #include "sp-item.h"
 #include "dialogs/swatches.h"
@@ -174,6 +176,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
 {
     GtkWidget *widget;
     GtkWidget *tbl;
+    GtkWidget *canvas_tbl;
 
     GtkWidget *hbox;
     GtkWidget *eventbox;
@@ -221,8 +224,10 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     dtw->tool_toolbox = sp_tool_toolbox_new ();
     gtk_box_pack_start (GTK_BOX (hbox), dtw->tool_toolbox, FALSE, TRUE, 0);
 
-    tbl = gtk_table_new (4, 3, FALSE);
+    tbl = gtk_table_new (2, 3, FALSE);
     gtk_box_pack_start (GTK_BOX (hbox), tbl, TRUE, TRUE, 1);
+
+    canvas_tbl = gtk_table_new (3, 3, FALSE);
 
     /* Horizontal ruler */
     eventbox = gtk_event_box_new ();
@@ -231,7 +236,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     sp_ruler_set_metric (GTK_RULER (dtw->hruler), SP_PT);
     gtk_tooltips_set_tip (dtw->tt, dtw->hruler_box, gettext(sp_unit_get_plural (&sp_unit_get_by_id(SP_UNIT_PT))), NULL);
     gtk_container_add (GTK_CONTAINER (eventbox), dtw->hruler);
-    gtk_table_attach (GTK_TABLE (tbl), eventbox, 1, 2, 0, 1, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_FILL), widget->style->xthickness, 0);
+    gtk_table_attach (GTK_TABLE (canvas_tbl), eventbox, 1, 2, 0, 1, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_FILL), widget->style->xthickness, 0);
     g_signal_connect (G_OBJECT (eventbox), "button_press_event", G_CALLBACK (sp_dt_hruler_event), dtw);
     g_signal_connect (G_OBJECT (eventbox), "button_release_event", G_CALLBACK (sp_dt_hruler_event), dtw);
     g_signal_connect (G_OBJECT (eventbox), "motion_notify_event", G_CALLBACK (sp_dt_hruler_event), dtw);
@@ -243,7 +248,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     sp_ruler_set_metric (GTK_RULER (dtw->vruler), SP_PT);
     gtk_tooltips_set_tip (dtw->tt, dtw->vruler_box, gettext(sp_unit_get_plural (&sp_unit_get_by_id(SP_UNIT_PT))), NULL);
     gtk_container_add (GTK_CONTAINER (eventbox), GTK_WIDGET (dtw->vruler));
-    gtk_table_attach (GTK_TABLE (tbl), eventbox, 0, 1, 1, 2, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_FILL), 0, widget->style->ythickness);
+    gtk_table_attach (GTK_TABLE (canvas_tbl), eventbox, 0, 1, 1, 2, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_FILL), 0, widget->style->ythickness);
     g_signal_connect (G_OBJECT (eventbox), "button_press_event", G_CALLBACK (sp_dt_vruler_event), dtw);
     g_signal_connect (G_OBJECT (eventbox), "button_release_event", G_CALLBACK (sp_dt_vruler_event), dtw);
     g_signal_connect (G_OBJECT (eventbox), "motion_notify_event", G_CALLBACK (sp_dt_vruler_event), dtw);
@@ -251,7 +256,8 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     /* Horizontal scrollbar */
     dtw->hadj = (GtkAdjustment *) gtk_adjustment_new (0.0, -4000.0, 4000.0, 10.0, 100.0, 4.0);
     dtw->hscrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (dtw->hadj));
-    gtk_table_attach (GTK_TABLE (tbl), dtw->hscrollbar, 1, 2, 2, 3, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_FILL), 0, 0);
+    gtk_table_attach (GTK_TABLE (canvas_tbl), dtw->hscrollbar, 1, 2, 2, 3, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_SHRINK), 0, 0);
+
     /* Vertical scrollbar and the sticky zoom button */
     dtw->vscrollbar_box = gtk_vbox_new (FALSE, 0);
     dtw->sticky_zoom = sp_button_new_from_data ( Inkscape::ICON_SIZE_DECORATION,
@@ -265,8 +271,8 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     dtw->vadj = (GtkAdjustment *) gtk_adjustment_new (0.0, -4000.0, 4000.0, 10.0, 100.0, 4.0);
     dtw->vscrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (dtw->vadj));
     gtk_box_pack_start (GTK_BOX (dtw->vscrollbar_box), dtw->vscrollbar, TRUE, TRUE, 0);
-    gtk_table_attach (GTK_TABLE (tbl), dtw->vscrollbar_box, 2, 3, 0, 2, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
-
+    gtk_table_attach (GTK_TABLE (canvas_tbl), dtw->vscrollbar_box, 2, 3, 0, 2, (GtkAttachOptions)(GTK_SHRINK), (GtkAttachOptions)(GTK_FILL), 0, 0);
+   
     /* Canvas */
     dtw->canvas = SP_CANVAS (sp_canvas_new_aa ());
     GTK_WIDGET_SET_FLAGS (GTK_WIDGET (dtw->canvas), GTK_CAN_FOCUS);
@@ -275,7 +281,27 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     gtk_widget_set_style (GTK_WIDGET (dtw->canvas), style);
     gtk_widget_set_extension_events(GTK_WIDGET (dtw->canvas) , GDK_EXTENSION_EVENTS_ALL);
     g_signal_connect (G_OBJECT (dtw->canvas), "event", G_CALLBACK (sp_desktop_widget_event), dtw);
-    gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (dtw->canvas), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
+    gtk_table_attach (GTK_TABLE (canvas_tbl), GTK_WIDGET(dtw->canvas), 1, 2, 1, 2, (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), 0, 0);
+
+    /* Dock */
+    bool create_dock = 
+        prefs_get_int_attribute_limited ("options.dialogtype", "value", Inkscape::UI::Dialog::FLOATING, 0, 1) == 
+        Inkscape::UI::Dialog::DOCK;
+    
+    if (create_dock)
+    {
+        dtw->dock = new Inkscape::UI::Widget::Dock();
+
+        Gtk::HPaned *paned = new Gtk::HPaned();
+        paned->pack1(*Glib::wrap(canvas_tbl));
+        paned->pack2(dtw->dock->getWidget(), Gtk::FILL);
+        gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (paned->gobj()), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+                          (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
+
+    } else {
+        gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (canvas_tbl), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+                          (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
+    }
 
     dtw->selected_style = new Inkscape::UI::Widget::SelectedStyle(true);
     GtkHBox *ss_ = dtw->selected_style->gobj();
@@ -419,6 +445,12 @@ SPDesktopWidget::updateTitle(gchar const* uri)
         window->set_title (name->str);
         g_string_free (name, TRUE);
     }
+}
+
+Inkscape::UI::Widget::Dock*
+SPDesktopWidget::getDock()
+{
+    return dock;
 }
 
 /**

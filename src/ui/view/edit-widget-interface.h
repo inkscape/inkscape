@@ -18,8 +18,9 @@
 
 #include "libnr/nr-point.h"
 #include "message.h"
-
 #include <gtkmm/window.h>
+
+namespace Inkscape { namespace UI { namespace Widget { class Dock; } } }
 
 namespace Inkscape {
 namespace UI {
@@ -135,6 +136,8 @@ struct EditWidgetInterface
     
     /// Open yes/no dialog with warning text and confirmation question.
     virtual bool warnDialog (gchar*) = 0;
+
+    virtual Inkscape::UI::Widget::Dock* getDock () = 0;
 };
 
 } // namespace View

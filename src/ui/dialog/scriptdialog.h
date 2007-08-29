@@ -34,14 +34,15 @@ class ScriptDialog : public Dialog
     /**
      * Constructor
      */
-    ScriptDialog() : Dialog ("dialogs.script", SP_VERB_DIALOG_SCRIPT)
+    ScriptDialog(Behavior::BehaviorFactory behavior_factory) : 
+     Dialog (behavior_factory, "dialogs.script", SP_VERB_DIALOG_SCRIPT)
     {}
 
 
     /**
      * Factory method
      */
-    static ScriptDialog *create();
+    static ScriptDialog *create(Behavior::BehaviorFactory behavior_factory);
 
     /**
      * Destructor

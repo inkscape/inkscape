@@ -22,10 +22,11 @@ namespace Dialog {
 
 class XmlEditor : public Dialog {
 public:
-    XmlEditor();
+    XmlEditor(Behavior::BehaviorFactory behavior_factory);
     virtual ~XmlEditor();
 
-    static XmlEditor *create() { return new XmlEditor(); }
+    static XmlEditor *create(Behavior::BehaviorFactory behavior_factory) 
+    { return new XmlEditor(behavior_factory); }
 
 protected:
 

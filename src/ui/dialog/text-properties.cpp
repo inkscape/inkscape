@@ -20,8 +20,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-TextProperties::TextProperties() 
-    : Dialog ("dialogs.textandfont", SP_VERB_DIALOG_TEXT),
+TextProperties::TextProperties(Behavior::BehaviorFactory behavior_factory) 
+    : Dialog (behavior_factory, "dialogs.textandfont", SP_VERB_DIALOG_TEXT),
       _page_font(1, 1),
       _page_text(1, 1)
 {

@@ -55,8 +55,8 @@ void on_selection_modified(Inkscape::Application *inkscape,
 }
 
 
-FillAndStroke::FillAndStroke() 
-    : Dialog ("dialogs.fillstroke", SP_VERB_DIALOG_FILL_STROKE),
+FillAndStroke::FillAndStroke(Behavior::BehaviorFactory behavior_factory) 
+    : Dialog (behavior_factory, "dialogs.fillstroke", SP_VERB_DIALOG_FILL_STROKE),
       _page_fill(1, 1, true, true),
       _page_stroke_paint(1, 1, true, true),
       _page_stroke_style(1, 1, true, true),

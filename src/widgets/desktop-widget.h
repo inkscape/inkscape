@@ -90,6 +90,8 @@ struct SPDesktopWidget {
     GtkWidget *zoom_status;
     gulong zoom_update;
 
+    Inkscape::UI::Widget::Dock *dock;
+
     Inkscape::UI::Widget::SelectedStyle *selected_style;
 
     gint coord_status_id, select_status_id;
@@ -182,6 +184,8 @@ struct SPDesktopWidget {
             { _dtw->setMessage (type, msg); }
         virtual bool warnDialog (gchar* text)
             { return _dtw->warnDialog (text); }
+        virtual Inkscape::UI::Widget::Dock* getDock ()
+            { return _dtw->getDock(); }
     };
 
     WidgetStub *stub;
@@ -207,8 +211,10 @@ struct SPDesktopWidget {
     void enableInteraction();
     void disableInteraction();
     void updateTitle(gchar const *uri);
-	
-	bool onFocusInEvent(GdkEventFocus*);
+    bool onFocusInEvent(GdkEventFocus*);
+
+    Inkscape::UI::Widget::Dock* getDock();
+
 };
 
 /// The SPDesktopWidget vtable

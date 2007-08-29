@@ -40,7 +40,7 @@ typedef std::list<EntityEntry*> RDElist;
 class DocumentMetadata : public Inkscape::UI::Dialog::Dialog {
 public:
     void  update();
-    static DocumentMetadata *create();
+    static DocumentMetadata *create(Behavior::BehaviorFactory behavior_factory);
     static void destroy();
     sigc::connection _doc_replaced_connection;
 
@@ -62,7 +62,7 @@ protected:
     Registry _wr;
 
 private:
-    DocumentMetadata();
+    DocumentMetadata(Behavior::BehaviorFactory behavior_factory);
     virtual ~DocumentMetadata();
 };
 

@@ -15,6 +15,10 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/combo-enums.h \
 	ui/widget/combo-text.cpp	\
 	ui/widget/combo-text.h		\
+	ui/widget/dock.h		\
+	ui/widget/dock.cpp		\
+	ui/widget/dock-item.h		\
+	ui/widget/dock-item.cpp		\
 	ui/widget/entity-entry.cpp      \
 	ui/widget/entity-entry.h        \
 	ui/widget/entry.cpp      \

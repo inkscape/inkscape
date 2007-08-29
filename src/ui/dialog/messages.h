@@ -35,10 +35,11 @@ namespace Dialog {
 
 class Messages : public Dialog {
 public:
-    Messages();
+    Messages(Behavior::BehaviorFactory behavior_factory);
     virtual ~Messages();
 
-    static Messages *create() { return new Messages(); }
+    static Messages *create(Behavior::BehaviorFactory behavior_factory) 
+    { return new Messages(behavior_factory); }
 
     /**
      * Clear all information from the dialog

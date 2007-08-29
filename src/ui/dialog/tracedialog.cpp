@@ -50,7 +50,7 @@ class TraceDialogImpl : public TraceDialog
     /**
      * Constructor
      */
-    TraceDialogImpl();
+    TraceDialogImpl(Behavior::BehaviorFactory behavior_factory);
 
     /**
      * Destructor
@@ -376,7 +376,8 @@ void TraceDialogImpl::responseCallback(int response_id)
 /**
  * Constructor
  */
-TraceDialogImpl::TraceDialogImpl()
+TraceDialogImpl::TraceDialogImpl(Behavior::BehaviorFactory behavior_factory) :
+    TraceDialog(behavior_factory)
 {
 
     Gtk::VBox *mainVBox = get_vbox();
@@ -685,9 +686,9 @@ TraceDialogImpl::TraceDialogImpl()
 /**
  * Factory method.  Use this to create a new TraceDialog
  */
-TraceDialog *TraceDialog::create()
+TraceDialog *TraceDialog::create(Behavior::BehaviorFactory behavior_factory)
 {
-    TraceDialog *dialog = new TraceDialogImpl();
+    TraceDialog *dialog = new TraceDialogImpl(behavior_factory);
     return dialog;
 }
 

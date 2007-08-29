@@ -42,8 +42,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-InkscapePreferences::InkscapePreferences()
-    : Dialog ("dialogs.preferences", SP_VERB_DIALOG_DISPLAY),
+InkscapePreferences::InkscapePreferences(Behavior::BehaviorFactory behavior_factory)
+    : Dialog (behavior_factory, "dialogs.preferences", SP_VERB_DIALOG_DISPLAY),
       _max_dialog_width(0), 
       _max_dialog_height(0),
       _current_page(0)
@@ -429,6 +429,9 @@ void InkscapePreferences::initPageWindows()
     _win_save_geom_prefs.init ( _("Remember and use last window's geometry"), "options.savewindowgeometry", "value", 2, false, &_win_save_geom);
     _win_save_geom_off.init ( _("Don't save window geometry"), "options.savewindowgeometry", "value", 0, false, &_win_save_geom);
 
+    _win_dockable.init ( _("Dockable"), "options.dialogtype", "value", 1, true, 0);
+    _win_floating.init ( _("Floating"), "options.dialogtype", "value", 0, false, &_win_dockable);
+
     _win_hide_task.init ( _("Dialogs are hidden in taskbar"), "options.dialogsskiptaskbar", "value", true);
     _win_zoom_resize.init ( _("Zoom when window is resized"), "options.stickyzoom", "value", false);
     _win_show_close.init ( _("Show close button on dialogs"), "dialogs", "showclose", false);
@@ -448,6 +451,12 @@ void InkscapePreferences::initPageWindows()
                             _("Remember and use the last window's geometry (saves geometry to user preferences)"));
     _page_windows.add_line( false, "", _win_save_geom, "", 
                             _("Save and restore window geometry for each document (saves geometry in the document)"));
+
+    _page_windows.add_group_header( _("Dialog behavior (requires restart):"));
+    _page_windows.add_line( true, "", _win_dockable, "", 
+                            _("Dockable"));
+    _page_windows.add_line( true, "", _win_floating, "", 
+                            _("Floating"));
 
     _page_windows.add_group_header( _("Dialogs on top:"));
 #ifndef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs

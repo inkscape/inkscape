@@ -21,8 +21,8 @@
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/spinbutton.h>
 
-#include "ui/widget/panel.h"
 //#include "ui/previewholder.h"
+#include "ui/dialog/dialog.h"
 
 class SPObject;
 
@@ -37,14 +37,14 @@ namespace Dialogs {
 /**
  * A panel that displays layers.
  */
-class LayersPanel : public Inkscape::UI::Widget::Panel
+class LayersPanel : public Inkscape::UI::Dialog::Dialog
 {
 public:
-    LayersPanel();
+    LayersPanel(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory);
     virtual ~LayersPanel();
 
-    static LayersPanel& getInstance();
     //virtual void setOrientation( Gtk::AnchorType how );
+    static LayersPanel *create(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory);
 
     void setDesktop( SPDesktop* desktop );
 

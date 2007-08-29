@@ -20,8 +20,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-Export::Export() 
-    : Dialog ("dialogs.export", SP_VERB_FILE_EXPORT),
+Export::Export(Behavior::BehaviorFactory behavior_factory) 
+    : Dialog (behavior_factory, "dialogs.export", SP_VERB_FILE_EXPORT),
       _page_export(1, 1)
 {
     // Top level vbox

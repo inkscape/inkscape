@@ -20,8 +20,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-LayerEditor::LayerEditor() 
-    : Dialog ("dialogs.layers", SP_VERB_NONE /*FIXME*/)
+LayerEditor::LayerEditor(Behavior::BehaviorFactory behavior_factory) 
+    : Dialog (behavior_factory, "dialogs.layers", SP_VERB_NONE /*FIXME*/)
 {
     // TODO:  Insert widgets
 
