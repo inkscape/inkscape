@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-15 15:23+0200\n"
-"PO-Revision-Date: 2007-08-30 03:20+0100\n"
+"PO-Revision-Date: 2007-08-30 04:28+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -2503,11 +2503,11 @@ msgstr "Zobrazovať úvodný dialóg"
 
 #: ../src/extension/implementation/script.cpp:953
 msgid "Inkscape has received additional data from the script executed.  The script did not return an error, but this may indicate the results will not be as expected."
-msgstr "Inkscape dostal dodatočné údaje od vykonaného skriptu. Skript nevrátil chybu, ale môže to znamenať že výsledky neboli také ako sa očakávali."
+msgstr "Inkscape dostal dodatočné údaje od vykonaného skriptu. Skript nevrátil chybu, ale môže to znamenať, že výsledky neboli také ako sa očakávali."
 
 #: ../src/extension/init.cpp:203
 msgid "Null external module directory name.  Modules will not be loaded."
-msgstr "Prázdny názov adresára externých modulov.  Moduly nebudú načítané."
+msgstr "Prázdny názov adresára externých modulov. Moduly nebudú načítané."
 
 #: ../src/extension/init.cpp:217
 #, c-format
@@ -2543,7 +2543,7 @@ msgstr "Vytvoriť z cesty"
 
 #: ../src/extension/internal/eps-out.cpp:89
 msgid "Encapsulated Postscript Output"
-msgstr "Výstup Zapúzdredný Postscript"
+msgstr "Výstup Zapúzdrený Postscript"
 
 #: ../src/extension/internal/eps-out.cpp:91
 msgid "Make bounding box around full page"
@@ -2562,11 +2562,11 @@ msgstr "Vložiť písma (iba Typ 1)"
 #: ../src/extension/internal/eps-out.cpp:97
 #: ../share/extensions/eps_input.inx.h:3
 msgid "Encapsulated Postscript (*.eps)"
-msgstr "Zapúzdredný Postscript (*.eps)"
+msgstr "Zapúzdrený Postscript (*.eps)"
 
 #: ../src/extension/internal/eps-out.cpp:98
 msgid "Encapsulated Postscript File"
-msgstr "Súbor Zapúzdredný Postscript"
+msgstr "Súbor Zapúzdrený Postscript"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1382
 msgid "EMF Input"
@@ -3587,7 +3587,7 @@ msgstr "Posunúť pačku"
 
 #: ../src/libnrtype/FontFactory.cpp:358
 msgid "Ignoring font without family that will crash Pango"
-msgstr "Ignorujen font bez rodiny, ktorý by spôsobil pád Panga"
+msgstr "Ignorujen písmo bez rodiny, ktoré by spôsobilo pád Panga"
 
 #: ../src/main.cpp:202
 msgid "Print the Inkscape version number"
@@ -3649,7 +3649,7 @@ msgstr "Exportovaná oblasť je celé plátno"
 
 #: ../src/main.cpp:252
 msgid "Snap the bitmap export area outwards to the nearest integer values (in SVG user units)"
-msgstr "Prichytiť oblasť exportu bitmapy smerom von k najbližšej celočíselnej hodnote (v užívateľom zvolených jednotkách SVG)"
+msgstr "Prichytiť oblasť exportu bitmapy smerom von k najbližšej celočíselnej hodnote (v používateľom zvolených jednotkách SVG)"
 
 #: ../src/main.cpp:257
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
@@ -3724,7 +3724,7 @@ msgstr "Konvertovať objekt na cesty pri exporte (EPS)"
 
 #: ../src/main.cpp:319
 msgid "Embed fonts on export (Type 1 only) (EPS)"
-msgstr "Pri exporte priložiť fonty (iba Type 1) (EPS)"
+msgstr "Pri exporte priložiť písma (iba Type 1) (EPS)"
 
 #: ../src/main.cpp:324
 msgid "Export files with the bounding box set to the page size (EPS)"
@@ -4207,7 +4207,7 @@ msgstr "Minimálne jeden z objektov <b>nie je cesta</b>, kombinácia nie je mož
 
 #: ../src/path-chemistry.cpp:72
 msgid "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
-msgstr "Nemôžeter skombinovať objekty z <b>rozličných skupín</b> alebo <b>vrstiev</b>."
+msgstr "Nemôžete skombinovať objekty z <b>rozličných skupín</b> alebo <b>vrstiev</b>."
 
 #: ../src/path-chemistry.cpp:141
 msgid "Combine"
@@ -5230,12 +5230,12 @@ msgstr "Vyberte <b>najmenej 1 cestu</b> na vykonanie booleovského zjednotenia."
 
 #: ../src/splivarot.cpp:128
 msgid "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path cut."
-msgstr "Zvoľte <b>práve 2 cesty</b> pre vykonanie operácie rozdiel, XOR, delenie, alebo orezanie cesty."
+msgstr "Zvoľte <b>práve 2 cesty</b> pre vykonanie operácie rozdiel, XOR, delenie alebo orezanie cesty."
 
 #: ../src/splivarot.cpp:145
 #: ../src/splivarot.cpp:160
 msgid "Unable to determine the <b>z-order</b> of the objects selected for difference, XOR, division, or path cut."
-msgstr "Nebolo možné určiť <b>vertikálne poradie</b> objektov zvolených pre operáciu rozdiel, XOR, delenie, alebo orezanie cesty."
+msgstr "Nebolo možné určiť <b>vertikálne poradie</b> objektov zvolených pre operáciu rozdiel, XOR, delenie alebo orezanie cesty."
 
 #: ../src/splivarot.cpp:190
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
@@ -10133,11 +10133,11 @@ msgstr "Bez objektov"
 
 #: ../src/widgets/paint-selector.cpp:527
 msgid "Multiple styles"
-msgstr "Viacnásobné štýly"
+msgstr "Viaceré štýly"
 
 #: ../src/widgets/paint-selector.cpp:538
 msgid "Paint is undefined"
-msgstr "Farba je nedefinované"
+msgstr "Farba je nedefinovaná"
 
 #: ../src/widgets/paint-selector.cpp:745
 msgid "No patterns in document"
@@ -10432,7 +10432,7 @@ msgstr "Zmazať segment"
 
 #: ../src/widgets/toolbox.cpp:822
 msgid "Split path between two non-endpoint nodes"
-msgstr "Rozdělit cestu medzi dvomi vnútornými bodmi"
+msgstr "Rozdeliť cestu medzi dvomi vnútornými uzlami"
 
 #: ../src/widgets/toolbox.cpp:831
 msgid "Node Break"
@@ -10643,7 +10643,7 @@ msgstr "Tri páčky"
 
 #: ../src/widgets/toolbox.cpp:2256
 msgid "Switch to three handles (arbitrary resizing in XY-direction)"
-msgstr "prepnúť na tri páčky (ľubovoľná zmena veľkosti v smere XY)"
+msgstr "Prepnúť na tri páčky (ľubovoľná zmena veľkosti v smere XY)"
 
 #: ../src/widgets/toolbox.cpp:2262
 msgid "Four Handles"
@@ -10651,7 +10651,7 @@ msgstr "Štyri páčky"
 
 #: ../src/widgets/toolbox.cpp:2263
 msgid "Switch to four handles (constrained resizing in XY-direction)"
-msgstr "prepnúť na štyri páčky (obmedzená zmena veľkosti v smere XY)"
+msgstr "Prepnúť na štyri páčky (obmedzená zmena veľkosti v smere XY)"
 
 #: ../src/widgets/toolbox.cpp:2324
 msgid "Change spiral"
@@ -10864,7 +10864,7 @@ msgstr "Hmota:"
 
 #: ../src/widgets/toolbox.cpp:2739
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
-msgstr "Zväčšite aby sa pero oneskorovalo akoby ho spomaľovala zotrvačnosť"
+msgstr "Zväčšite, aby sa pero oneskorovalo akoby ho spomaľovala zotrvačnosť"
 
 #: ../src/widgets/toolbox.cpp:2753
 msgid "Trace Background"
@@ -10976,7 +10976,7 @@ msgstr "Text: Zmeniť veľkosť písma"
 
 #: ../src/widgets/toolbox.cpp:3934
 msgid "This font is currently not installed on your system. Inkscape will use the default font instead."
-msgstr "Tento font momentálne nie je vo vašom systéme nainštalovaný. Inkscape namiesto toho použije štandardný font."
+msgstr "Toto písmo momentálne nie je vo vašom systéme nainštalované. Inkscape namiesto toho použije štandardné písmo."
 
 #: ../src/widgets/toolbox.cpp:3972
 msgid "Align left"
@@ -11052,7 +11052,7 @@ msgstr "Dĺžka:"
 
 #: ../src/widgets/toolbox.cpp:4455
 msgid "Ideal length for connectors when layout is applied"
-msgstr "ideálna dĺžka konektorov, keď je použité rozloženie"
+msgstr "Ideálna dĺžka konektorov, keď je použité rozloženie"
 
 #: ../src/widgets/toolbox.cpp:4467
 msgid "Downwards"
@@ -11080,7 +11080,7 @@ msgstr "Zväčšiť/zmenšiť o:"
 
 #: ../src/widgets/toolbox.cpp:4614
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
-msgstr "Okoľko zväčšiť (kladné číslo) alebo zmenšiť (záporné) vytvorenú cestu výplne"
+msgstr "O koľko zväčšiť (kladné číslo) alebo zmenšiť (záporné) vytvorenú cestu výplne"
 
 #: ../src/widgets/toolbox.cpp:4639
 msgid "Fill gaps:"
@@ -11227,7 +11227,7 @@ msgstr "Odstrániť červenú"
 
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
-msgstr "RGB Barrel"
+msgstr "RGB valec"
 
 #: ../share/extensions/color_replace.inx.h:1
 msgid "By color (RRGGBB hex):"
@@ -11255,7 +11255,7 @@ msgstr "Vstup Dia"
 
 #: ../share/extensions/dia.inx.h:4
 msgid "In order to import Dia files, Dia itself must be installed.  You can get Dia at http://www.gnome.org/projects/dia/"
-msgstr "Aby sa dali importovať Dia súbort, musí byť nainštalovaný samotný Dia.  Môžete ho stiahnuť na  http://www.gnome.org/projects/dia/"
+msgstr "Aby sa dali importovať Dia súbory, musí byť nainštalovaný samotný Dia.  Môžete ho stiahnuť na  http://www.gnome.org/projects/dia/"
 
 #: ../share/extensions/dia.inx.h:5
 msgid "The dia2svg.sh script should be installed with your Inkscape distribution.  If you do not have it, there is likely to be something wrong with your Inkscape installation."
@@ -11314,7 +11314,7 @@ msgstr "DXF súbor, ktorý zapísal pstoedit"
 
 #: ../share/extensions/dxf_output.inx.h:4
 msgid "pstoedit must be installed to run; see http://www.pstoedit.net/pstoedit"
-msgstr "pre spustenie je poterbné mať nainštalovaný pstoedit; see http://www.pstoedit.net/pstoedit"
+msgstr "Pre spustenie je potrebné mať nainštalovaný pstoedit; pozri http://www.pstoedit.net/pstoedit"
 
 #: ../share/extensions/embedimage.inx.h:1
 msgid "Embed All Images"
@@ -11330,7 +11330,7 @@ msgstr "Vstup EPS"
 
 #: ../share/extensions/eps_input.inx.h:2
 msgid "Encapsulated Postscript"
-msgstr "Zapúzdredný Postscript"
+msgstr "Zapúzdrený Postscript"
 
 #: ../share/extensions/epsi_output.inx.h:1
 msgid "EPSI Output"
@@ -11338,11 +11338,11 @@ msgstr "Výstup EPSI"
 
 #: ../share/extensions/epsi_output.inx.h:2
 msgid "Encapsulated Postscript Interchange (*.epsi)"
-msgstr "Zapúzdredný Postscript Interchange (*.epsi)"
+msgstr "Zapúzdrený Postscript Interchange (*.epsi)"
 
 #: ../share/extensions/epsi_output.inx.h:3
 msgid "Encapsulated Postscript with a thumbnail"
-msgstr "Zapúzdredný Postscript s náhľadom"
+msgstr "Zapúzdrený Postscript s náhľadom"
 
 #: ../share/extensions/eqtexsvg.inx.h:1
 msgid "LaTeX formula"
@@ -11442,7 +11442,7 @@ msgstr "Násobiť rozsah x hodnotou 2*pi"
 
 #: ../share/extensions/funcplot.inx.h:10
 msgid "Range and Sampling"
-msgstr "ROzsah a vzorkovanie"
+msgstr "Rozsah a vzorkovanie"
 
 #: ../share/extensions/funcplot.inx.h:11
 msgid "Remove rectangle"
