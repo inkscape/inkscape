@@ -479,7 +479,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
     {
     InkToggleAction* itact = ink_toggle_action_new( "transform_stroke",
-                                                    _("Stroke"),
+                                                    _("Stroke width"),
                                                     _("When scaling objects, scale the stroke width by the same proportion"),
                                                     "transform_stroke",
                                                     Inkscape::ICON_SIZE_DECORATION );
@@ -501,7 +501,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
     {
     InkToggleAction* itact = ink_toggle_action_new( "transform_gradient",
-                                                    _("Gradient"),
+                                                    _("Gradients"),
                                                     _("Move gradients (in fill or stroke) along with the objects"),
                                                     "transform_gradient",
                                                   Inkscape::ICON_SIZE_DECORATION );
