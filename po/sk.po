@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-15 15:23+0200\n"
-"PO-Revision-Date: 2007-08-30 04:28+0100\n"
+"PO-Revision-Date: 2007-08-30 15:45+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -368,12 +368,12 @@ msgstr "<b>Zmena mierky Y:</b>"
 #: ../src/dialogs/clonetiler.cpp:1941
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
-msgstr "Vodorovná hodnota mierky na riadok (v % výšky dlaždice)"
+msgstr "Zvislá hodnota mierky na riadok (v % výšky dlaždice)"
 
 #: ../src/dialogs/clonetiler.cpp:1949
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
-msgstr "Vodorovná hodnota mierky na stĺpec (v % výšky dlaždice)"
+msgstr "Zvislá hodnota mierky na stĺpec (v % výšky dlaždice)"
 
 #: ../src/dialogs/clonetiler.cpp:1956
 msgid "Randomize the vertical scale by this percentage"
@@ -475,7 +475,7 @@ msgstr "_Farba"
 
 #: ../src/dialogs/clonetiler.cpp:2153
 msgid "Initial color: "
-msgstr "Východzia farba:"
+msgstr "Počiatočná farba:"
 
 #: ../src/dialogs/clonetiler.cpp:2157
 msgid "Initial color of tiled clones"
@@ -736,7 +736,7 @@ msgstr "Vyplniť určenú šírku a výšku dlaždicami"
 
 #: ../src/dialogs/clonetiler.cpp:2619
 msgid "Use saved size and position of the tile"
-msgstr "Použiť uloženú veľkosť pozíciu dlaždice"
+msgstr "Použiť uloženú veľkosť a pozíciu dlaždice"
 
 #: ../src/dialogs/clonetiler.cpp:2622
 msgid "Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"
@@ -1308,7 +1308,7 @@ msgstr "Obnoviť ikony"
 #: ../src/dialogs/item-properties.cpp:392
 #: ../src/dialogs/item-properties.cpp:399
 msgid "_Id"
-msgstr "_Id"
+msgstr "_ID"
 
 #: ../src/dialogs/item-properties.cpp:129
 msgid "The id= attribute (only letters, digits, and the characters .-_: allowed)"
@@ -1385,7 +1385,7 @@ msgstr "Odkryť objekt"
 
 #: ../src/dialogs/item-properties.cpp:394
 msgid "Id invalid! "
-msgstr "ID neplatné!"
+msgstr "ID je neplatný!"
 
 #: ../src/dialogs/item-properties.cpp:396
 msgid "Id exists! "
@@ -1585,7 +1585,7 @@ msgstr "Štýl ť_ahu"
 #: ../src/dialogs/object-properties.cpp:220
 #: ../src/ui/dialog/fill-and-stroke.cpp:70
 msgid "Master _opacity, %"
-msgstr "Hlavná _nepriesvitnosť, %"
+msgstr "Hlavné _krytie, %"
 
 #: ../src/dialogs/object-properties.cpp:392
 #: ../src/ui/dialog/fill-and-stroke.cpp:225
@@ -2060,7 +2060,7 @@ msgstr "Nastaviť rozostup:"
 
 #: ../src/dialogs/tiledialog.cpp:819
 msgid "Vertical spacing between rows (px units)"
-msgstr "Vodorovné rozostupy medzi riadkami (jednotky px)"
+msgstr "Zvislé rozostupy medzi riadkami (jednotky px)"
 
 #: ../src/dialogs/tiledialog.cpp:844
 msgid "Horizontal spacing between columns (px units)"
@@ -3964,7 +3964,7 @@ msgstr "Uzavrieť podcestu segmentom"
 
 #: ../src/nodepath.cpp:1933
 msgid "Join nodes by segment"
-msgstr "Spojiť cesty s novým segmentom"
+msgstr "Spojiť cesty vo vybraných uzloch novým segmentom"
 
 #: ../src/nodepath.cpp:2061
 #: ../src/nodepath.cpp:2097
@@ -4469,7 +4469,7 @@ msgstr "Vyberte <b>objekty</b>, ktoré sa majú presunúť vyššie."
 #: ../src/selection-chemistry.cpp:740
 #: ../src/selection-chemistry.cpp:805
 msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
-msgstr "Nemožete zdvihnúť/znížiť objekty z <b>rozličných skupín</b> alebo <b>vrstiev</b>."
+msgstr "nNemôžete zdvihnúť/znížiť objekty z <b>rozličných skupín</b> alebo <b>vrstiev</b>."
 
 #: ../src/selection-chemistry.cpp:684
 msgid "Raise"
@@ -4713,7 +4713,7 @@ msgstr "Veľkosť strany podľa výberu"
 
 #: ../src/selection-describer.cpp:42
 msgid "Link"
-msgstr "Odkaz"
+msgstr "Spojenie"
 
 #: ../src/selection-describer.cpp:44
 msgid "Circle"
@@ -5815,7 +5815,7 @@ msgstr "Relatívne k: "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:795
 msgid "Align right sides of objects to left side of anchor"
-msgstr "Zarovnať praavé strany objektov k ľavej strane ukotvenia"
+msgstr "Zarovnať pravé strany objektov k ľavej strane ukotvenia"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:798
 msgid "Align left sides"
@@ -6984,11 +6984,11 @@ msgstr "Stredná kvalita"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:543
 msgid "Lower quality (faster)"
-msgstr "Nižšia kvalitu (rýchlejšie)"
+msgstr "Nižšia kvalita (rýchlejšie)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Lowest quality (fastest)"
-msgstr "Nižšia kvalita (rýchlejšie)"
+msgstr "Najnižšia kvalita (rýchlejšie)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:548
 msgid "Gaussian blur quality for display:"
@@ -8097,11 +8097,11 @@ msgstr "Použiť poslednú nastavenú farbu na ťah"
 
 #: ../src/ui/widget/selected-style.cpp:539
 msgid "Apply last selected color to fill"
-msgstr "Použiť poslednú zvoleenú farbu na výplň"
+msgstr "Použiť poslednú zvolenú farbu na výplň"
 
 #: ../src/ui/widget/selected-style.cpp:550
 msgid "Apply last selected color to stroke"
-msgstr "Použiť poslednú zvoleenú farbu na ťah"
+msgstr "Použiť poslednú zvolenú farbu na ťah"
 
 #: ../src/ui/widget/selected-style.cpp:570
 msgid "Invert fill"
@@ -8129,11 +8129,11 @@ msgstr "Čierny ťah"
 
 #: ../src/ui/widget/selected-style.cpp:681
 msgid "Paste fill"
-msgstr "Prilepiť výplň"
+msgstr "Vložiť výplň"
 
 #: ../src/ui/widget/selected-style.cpp:699
 msgid "Paste stroke"
-msgstr "Prilepiť ťah"
+msgstr "Vložiť ťah"
 
 #: ../src/ui/widget/selected-style.cpp:856
 msgid "Change stroke width"
@@ -8258,11 +8258,11 @@ msgstr "Presunúť do nasledujúcej vrstvy"
 
 #: ../src/verbs.cpp:1125
 msgid "Moved to next layer."
-msgstr "Presunúť do nasledujúúcej vrstvy."
+msgstr "Presunuté do nasledujúcej vrstvy."
 
 #: ../src/verbs.cpp:1127
 msgid "Cannot move past last layer."
-msgstr "Nie je možné posunúť za poslednú vrstvu"
+msgstr "Nie je možné posunúť za poslednú vrstvu."
 
 #: ../src/verbs.cpp:1136
 msgid "Move to previous layer"
@@ -8270,11 +8270,11 @@ msgstr "Presunúť do predchádzajúcej vrstvy"
 
 #: ../src/verbs.cpp:1137
 msgid "Moved to previous layer."
-msgstr "Presunuté do predchádzajúcej vrstvy"
+msgstr "Presunuté do predchádzajúcej vrstvy."
 
 #: ../src/verbs.cpp:1139
 msgid "Cannot move past first layer."
-msgstr "Nie je možné posunúť za prvú vrstvu"
+msgstr "Nie je možné posunúť pred prvú vrstvu."
 
 #: ../src/verbs.cpp:1156
 #: ../src/verbs.cpp:1240
@@ -10500,7 +10500,7 @@ msgstr "Hviezda: Zmeniť pomer lúčov"
 
 #: ../src/widgets/toolbox.cpp:1423
 msgid "Make polygon"
-msgstr "Vytvoriť polygón"
+msgstr "Vytvoriť mnohouholník"
 
 #: ../src/widgets/toolbox.cpp:1423
 msgid "Make star"
