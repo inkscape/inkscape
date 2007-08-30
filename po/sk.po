@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-15 15:23+0200\n"
-"PO-Revision-Date: 2007-08-18 00:20+0100\n"
+"PO-Revision-Date: 2007-08-30 03:20+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -1718,7 +1718,7 @@ msgstr "Jazyk"
 
 #: ../src/dialogs/rdf.cpp:271
 msgid "Two-letter language tag with optional subtags for the language of this document.  (e.g. 'en-GB')"
-msgstr "Dvojpísmenové označenie jazyka s voliteľným podoznačením jazyka tohto dokumentu (napr 'en-GB')."
+msgstr "Dvojpísmenové označenie jazyka s voliteľným podoznačením jazyka tohto dokumentu (napr „en-GB“)."
 
 #: ../src/dialogs/rdf.cpp:273
 msgid "Keywords"
@@ -1768,7 +1768,7 @@ msgstr "Fragment"
 
 #: ../src/dialogs/rdf.cpp:299
 msgid "XML fragment for the RDF 'License' section."
-msgstr "XML fragment časti 'License' v RDF."
+msgstr "XML fragment časti „License“ v RDF."
 
 #. TRANSLATORS: "Set" is a verb here
 #: ../src/dialogs/sp-attribute-widget.cpp:170
@@ -2419,7 +2419,7 @@ msgstr "(žiadne nastavenia)"
 #: ../src/extension/execution-env.cpp:109
 #, c-format
 msgid "'%s' working, please wait..."
-msgstr "'%s' pracuje, prosím čakajte..."
+msgstr "„%s“ pracuje, prosím čakajte..."
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
@@ -2450,16 +2450,16 @@ msgstr "nebola splnená závislosť."
 
 #: ../src/extension/extension.cpp:291
 msgid "Extension \""
-msgstr "Rozšírenie \""
+msgstr "Rozšírenie „"
 
 #: ../src/extension/extension.cpp:291
 msgid "\" failed to load because "
-msgstr "\" sa nepodarilo sa lebo"
+msgstr "“ sa nepodarilo načítať, lebo"
 
 #: ../src/extension/extension.cpp:578
 #, c-format
 msgid "Could not create extension error log file '%s'"
-msgstr "Nepodarilo sa vytvoriť súbor so záznamom  '%s' pre rozšírenie"
+msgstr "Nepodarilo sa vytvoriť súbor so záznamom  „%s“ pre rozšírenie"
 
 #: ../src/extension/extension.cpp:685
 msgid "Name:"
@@ -2494,7 +2494,7 @@ msgid ""
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">Jedno alebo viac rozšírení sa nepodarilo načítať</span>\n"
 "\n"
-"Rozšírenia, ktoré sa nepodarilo načítať boli vynechané. Inkscape bude pokračovať v normálnom behu ale tieto rozšírenia nebudú dostupné. Podrobnosti o riešení tohto problému zistíte pomocou chybového záznamu umiestneného tu: "
+"Rozšírenia, ktoré sa nepodarilo načítať boli vynechané. Inkscape bude pokračovať v normálnom behu ale tieto rozšírenia nebudú dostupné. Podrobnosti o riešení tohto problému zistíte pomocou chybového záznamu, ktorý nájdete tu: "
 
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:62
@@ -2756,9 +2756,9 @@ msgid ""
 "Use '| prog arg...' to pipe to a program."
 msgstr ""
 "Názov tlačiarne (ako vrátil príkaz lpstat -p);\n"
-"nechajte prázdne ak chcete použiť predvolenú tlačiaren systému.\n"
-"Použite '> súbor', ak chcete tlačiť do súboru.\n"
-"Použite '| program argument', ak chcete presmerovať výstup do programu."
+"nechajte prázdne ak chcete použiť predvolenú tlačiareň systému.\n"
+"Použite „> súbor“, ak chcete tlačiť do súboru.\n"
+"Použite „| program argument“, ak chcete presmerovať výstup do programu."
 
 #: ../src/extension/internal/pdf-cairo.cpp:1021
 msgid "PDF Print"
@@ -3418,7 +3418,7 @@ msgid ""
 "%s is not a regular file.\n"
 "%s"
 msgstr ""
-"'%s' nie je regulárny súbor.\n"
+"„%s“ nie je regulárny súbor.\n"
 "%s"
 
 #: ../src/inkscape.cpp:709
@@ -3439,7 +3439,7 @@ msgid ""
 "%s is not a valid menus file.\n"
 "%s"
 msgstr ""
-"'%s' nie je platný súbor ponuky.\n"
+"„%s“ nie je platný súbor ponuky.\n"
 "%s"
 
 #: ../src/inkscape.cpp:712
@@ -3495,7 +3495,7 @@ msgstr "Zobrazí alebo skryje stavový panel (naspodu okna)"
 #: ../src/interface.cpp:934
 #, c-format
 msgid "Verb \"%s\" Unknown"
-msgstr "Sloveso \"%s\" neznáme"
+msgstr "Sloveso „%s“ neznáme"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
 #: ../src/interface.cpp:1045
@@ -3532,9 +3532,9 @@ msgid ""
 "\n"
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Súbor s názvom \"%s\" už existuje. Želáte si ho nahradiť?</span>\n"
+"<span weight=\"bold\" size=\"larger\">Súbor s názvom „%s“ už existuje. Želáte si ho nahradiť?</span>\n"
 "\n"
-"Súbor už existuje v \"%s\". Jeho nahradením prepíšete jeho súčasný obsah."
+"Súbor už existuje v „%s“. Jeho nahradením prepíšete jeho súčasný obsah."
 
 #: ../src/interface.cpp:1377
 msgid "Replace"
@@ -3543,7 +3543,7 @@ msgstr "Nahradiť"
 #: ../src/jabber_whiteboard/invitation-confirm-dialog.cpp:26
 #: ../src/jabber_whiteboard/session-file-selector.cpp:24
 msgid "_Write session file:"
-msgstr "_Zapísať súbor so sedením:"
+msgstr "_Zapísať súbor s reláciou:"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
@@ -3555,11 +3555,11 @@ msgstr "Nastaviť názov súboru"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:308
 msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b>%1</b> vás pozval na sedenie so zdieľanou tabuľou."
+msgstr "<b>%1</b> vás pozval na reláciu so zdieľanou tabuľou."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:310
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "Chcete prijať pozvanie na sedenie so zdieľanou tabuľou od <b>%1</b>?"
+msgstr "Chcete prijať pozvanie na reláciu so zdieľanou tabuľou od <b>%1</b>?"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:314
 msgid "Accept invitation"
@@ -3571,7 +3571,7 @@ msgstr "Odmietnuť pozvanie"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:370
 msgid "Inkboard session (%1 to %2)"
-msgstr "Sedenie Inkboard (%1 k %2)"
+msgstr "Relácia Inkboard (%1 k %2)"
 
 #: ../src/knot.cpp:426
 msgid "Node or handle drag canceled."
@@ -3617,7 +3617,7 @@ msgstr "NÁZOV_SÚBORU"
 
 #: ../src/main.cpp:222
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
-msgstr "Vytlačiť súbor do určeného výstupného súboru (použite '| program' pre rúru)"
+msgstr "Vytlačiť súbor do určeného výstupného súboru (použite „| program“ pre rúru)"
 
 #: ../src/main.cpp:227
 msgid "Export document to a PNG file"
@@ -3796,12 +3796,12 @@ msgstr ""
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
 msgid "Unable to find verb ID '%s' specified on the command line.\n"
-msgstr "Nepodarilo sa nájsť ID slovesa '%s' zadaného na príkazovom riadku.\n"
+msgstr "Nepodarilo sa nájsť ID slovesa „%s“ zadaného na príkazovom riadku.\n"
 
 #: ../src/main-cmdlineact.cpp:61
 #, c-format
 msgid "Unable to find node ID: '%s'\n"
-msgstr "Nepodarilo sa nájsť ID uzla: '%s'\n"
+msgstr "Nepodarilo sa nájsť ID uzla: „%s“\n"
 
 #: ../src/menus-skeleton.h:17
 #: ../src/ui/dialog/document-properties.cpp:97
@@ -4319,7 +4319,7 @@ msgid ""
 "%s is not a valid preferences file.\n"
 "%s"
 msgstr ""
-"'%s' nie je platný súboru volieb.\n"
+"„%s“ nie je platný súbor s nastaveniami.\n"
 "%s"
 
 #: ../src/preferences.cpp:60
@@ -4347,7 +4347,7 @@ msgstr "neznáma chyba"
 #: ../src/print.cpp:194
 #, c-format
 msgid "Printer '%s' does not support PS output"
-msgstr "Tlačiareň '%s' nepodporuje PS výstup"
+msgstr "Tlačiareň „%s“ nepodporuje PS výstup"
 
 #. since we didn't include the Preview capability,
 #. this should never happen.
@@ -5576,7 +5576,7 @@ msgstr "<b>Ťahaním</b> vytvoríte čiaru voľnou rukou. Začnite kresliť so s
 
 #: ../src/tools-switch.cpp:184
 msgid "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path."
-msgstr "<b>Kliknutím</b> alebo <b>kliknutím</b> vytvoríte uzol. Kliknutím a ťahaním vytvoríte hladký uzol. Stlačením 'a' na prepnete medzi Pridať/Nový."
+msgstr "<b>Kliknutím</b> alebo <b>kliknutím</b> vytvoríte uzol. Kliknutím a ťahaním vytvoríte hladký uzol. Stlačením „a“ na prepnete medzi Pridať/Nový."
 
 #: ../src/tools-switch.cpp:190
 msgid "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide, with <b>Alt</b> to thin/thicken. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
@@ -6820,7 +6820,7 @@ msgstr "To isté ako Normálne, ale môže lepšie fungovať s niektorými sprá
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:454
 msgid "Whether dialogs should stay on top of document windows. Read the ReleaseNotes on this issue! (Rightclick the taskbar button and press 'Restore' to bring back a minimized document window)"
-msgstr "Či dialógy majú ostávať nad oknami dokumentov. Prečítajte si o tomto probléme v ReleaseNotes! (Minimalizované okno dokumentu obnovíte kliknutím pravým tlačidlom myši na panel úloh a stlačením 'Obnoviť')"
+msgstr "Či dialógy majú ostávať nad oknami dokumentov. Prečítajte si o tomto probléme v ReleaseNotes! (Minimalizované okno dokumentu obnovíte kliknutím pravým tlačidlom myši na panel úloh a stlačením „Obnoviť“)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:457
 msgid "Miscellaneous:"
@@ -6836,7 +6836,7 @@ msgstr "Zmeniť mierku zobrazenia kresby, keď sa zmení dokument okna, aby zost
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:465
 msgid "Whether dialog windows have a close button (requires restart)"
-msgstr "Či dialógové okná majú tlačidlo \"zatvoriť\" (vyžaduje reštart)"
+msgstr "Či dialógové okná majú tlačidlo „zatvoriť“ (vyžaduje reštart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:466
 msgid "Windows"
@@ -7104,7 +7104,7 @@ msgstr "Zmenšiť panel nástrojov príkazov "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:605
 msgid "Make the commands toolbar use the 'secondary' toolbar size (requires restart)"
-msgstr "Nech panel nástrojov príkazov používa 'sekundárnu' veľkosť panelu nástrojov (vyžaduje reštart)"
+msgstr "Nech panel nástrojov príkazov používa „sekundárnu“ veľkosť panelu nástrojov (vyžaduje reštart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:607
 msgid "Max recent documents:"
@@ -7185,7 +7185,7 @@ msgstr "Pripravený."
 
 #: ../src/ui/dialog/messages.cpp:76
 msgid "Enable log display by setting dialogs.debug 'redirect' attribute to 1 in preferences.xml"
-msgstr "Zapnúť zobrazovanie záznamu nastavením atribútu 'redirect' dialogs.debug na 1 v preferences.xml"
+msgstr "Zapnúť zobrazovanie záznamu nastavením atribútu „redirect“ dialogs.debug na 1 v preferences.xml"
 
 #: ../src/ui/dialog/scriptdialog.cpp:204
 msgid "_Execute Python"
@@ -7836,7 +7836,7 @@ msgid ""
 "\n"
 "If you close without saving, your changes will be discarded."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Uloženie zmien do dokumentu \"%s\" pred skončením?</span>\n"
+"<span weight=\"bold\" size=\"larger\">Uložiť zmeny do dokumentu „%s“ pred skončením?</span>\n"
 "\n"
 "Ak skončíte bez uloženia, vaše zmeny sa nezachovajú."
 
@@ -7855,7 +7855,7 @@ msgid ""
 "\n"
 "Do you want to save this file in another format?"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">The file \"%s\" bol uložený vo formáte (%s), ktorý môže spôsobiť stratu dát!</span>\n"
+"<span weight=\"bold\" size=\"larger\">Súbor „%s“ bol uložený vo formáte (%s), ktorý môže spôsobiť stratu dát!</span>\n"
 "\n"
 "Chcete uložiť tento súbor v inom formáte?"
 
@@ -8797,7 +8797,7 @@ msgstr "Odst_rániť z cesty"
 
 #: ../src/verbs.cpp:2226
 msgid "Remove Manual _Kerns"
-msgstr "Odstrániť manuálny \"kerning\""
+msgstr "Odstrániť manuálny „_kerning“"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
@@ -8835,7 +8835,7 @@ msgstr "_Vylúčenie"
 
 #: ../src/verbs.cpp:2238
 msgid "Create exclusive OR of selected paths (those parts that belong to only one path)"
-msgstr "Vytvorí \"zvláštne alebo\" (XOR) vybraných ciest (časti, ktoré patria iba jednej ceste)"
+msgstr "Vytvorí „zvláštne alebo“ (XOR) vybraných ciest (časti, ktoré patria iba jednej ceste)"
 
 #: ../src/verbs.cpp:2239
 msgid "Di_vision"
@@ -10619,7 +10619,7 @@ msgstr "Prepnúť spojnicu v smere X"
 
 #: ../src/widgets/toolbox.cpp:2206
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Prepnúť spojnicu v smere X medzi 'konečným' a 'nekonečným' (=rovnobežné)"
+msgstr "Prepnúť spojnicu v smere X medzi „konečným“ a „nekonečným“ (=rovnobežné)"
 
 #: ../src/widgets/toolbox.cpp:2220
 msgid "Toggle VP in Y direction"
@@ -10627,7 +10627,7 @@ msgstr "Prepnúť spojnicu v smere Y"
 
 #: ../src/widgets/toolbox.cpp:2221
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Prepnúť spojnicu v smere Y medzi 'konečným' a 'nekonečným' (=rovnobežné)"
+msgstr "Prepnúť spojnicu v smere Y medzi „konečným“ a „nekonečným“ (=rovnobežné)"
 
 #: ../src/widgets/toolbox.cpp:2235
 msgid "Toggle VP in Z direction"
@@ -10635,7 +10635,7 @@ msgstr "Prepnúť spojnicu v smere Z"
 
 #: ../src/widgets/toolbox.cpp:2236
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Prepnúť spojnicu v smere Z medzi 'konečným' a 'nekonečným' (=rovnobežné)"
+msgstr "Prepnúť spojnicu v smere Z medzi „konečným“ a „nekonečným“ (=rovnobežné)"
 
 #: ../src/widgets/toolbox.cpp:2255
 msgid "Three Handles"
@@ -10752,7 +10752,7 @@ msgstr "Uhol hrotu pera (v stupňoch; 0 = vodorovný; nemá účinok pri fixáci
 #. Fixation
 #: ../src/widgets/toolbox.cpp:2674
 msgid "(perpendicular to stroke, \"brush\")"
-msgstr "(kolmé na ťah, \"štetec\")"
+msgstr "(kolmé na ťah, „štetec“)"
 
 #: ../src/widgets/toolbox.cpp:2674
 msgid "(almost fixed, default)"
@@ -10760,7 +10760,7 @@ msgstr "(takmer pevné, štandardné)"
 
 #: ../src/widgets/toolbox.cpp:2674
 msgid "(fixed by Angle, \"pen\")"
-msgstr "(pevné podľa Uhla, \"pero\")"
+msgstr "(pevné podľa Uhla, „pero“)"
 
 #: ../src/widgets/toolbox.cpp:2677
 msgid "Fixation:"
@@ -11612,7 +11612,7 @@ msgstr "Viet na odstavec"
 
 #: ../share/extensions/lorem_ipsum.inx.h:6
 msgid "This effect creates the standard \"Lorem Ipsum\" pseudolatin placeholder text. If a flowed text is selected, Lorem Ipsum is added to it; otherwise a new flowed text object, the size of the page, is created in a new layer."
-msgstr "Tento efekt vytvorí štandardný pseudolatinský \"Lorem Ipsum\" text. Ak ste zvolili vytvorenie textového toku, Lorem Ipsum sa k nemu pridá; inak sa na novej vrstve vytvorí nový objekt textového toku vo veľkosti stránky."
+msgstr "Tento efekt vytvorí štandardný pseudolatinský text „Lorem Ipsum“. Ak ste zvolili vytvorenie textového toku, Lorem Ipsum sa k nemu pridá; inak sa na novej vrstve vytvorí nový objekt textového toku vo veľkosti stránky."
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
@@ -11926,3 +11926,4 @@ msgstr "Windows Metasúbor (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Vstup Windows Metasúbor"
+
