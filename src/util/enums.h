@@ -10,6 +10,12 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
+/* IMPORTANT
+ *  When initializing the EnumData struct, you cannot use _(...) to translate strings.
+  * Instead, one must use N_(...) and do the translation every time the string is retreived.
+ */
+
+
 #ifndef INKSCAPE_UTIL_ENUMS_H
 #define INKSCAPE_UTIL_ENUMS_H
 
