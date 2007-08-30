@@ -86,6 +86,16 @@ Piecewise<SBasis> cross(Piecewise<D2<SBasis> > const &a,
   return result;
 }
 
+Piecewise<D2<SBasis> > operator*(Piecewise<D2<SBasis> > const &a, Matrix const &m) {
+  Piecewise<D2<SBasis> > result;
+  if(a.empty()) return result;
+  result.push_cut(a.cuts[0]);
+  for (unsigned i = 0; i < a.size(); i++) {
+    result.push(a[i] * m, a.cuts[i+1]);
+  }
+  return result;
+}
+
 /* Replaced by remove_short_cuts in piecewise.h
 //this recursively removes the shortest cut interval until none is shorter than tol.
 //TODO: code this in a more efficient way!
@@ -144,5 +154,5 @@ Piecewise<D2<SBasis> > force_continuity(Piecewise<D2<SBasis> > const &f,
         prev = cur++;
     }
     return result;
-}
+}
 }

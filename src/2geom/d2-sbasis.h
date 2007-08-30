@@ -7,6 +7,7 @@
 #include "sbasis.h"
 #include "sbasis-2d.h"
 #include "piecewise.h"
+#include "matrix.h"
 
 //TODO: implement intersect
 
@@ -35,6 +36,8 @@ D2<Piecewise<SBasis> > make_cuts_independant(Piecewise<D2<SBasis> > const &a);
 Piecewise<D2<SBasis> > rot90(Piecewise<D2<SBasis> > const &a);
 Piecewise<SBasis> dot(Piecewise<D2<SBasis> > const &a, Piecewise<D2<SBasis> > const &b);
 Piecewise<SBasis> cross(Piecewise<D2<SBasis> > const &a, Piecewise<D2<SBasis> > const &b);
+
+Piecewise<D2<SBasis> > operator*(Piecewise<D2<SBasis> > const &a, Matrix const &m);
 
 Piecewise<D2<SBasis> > force_continuity(Piecewise<D2<SBasis> > const &f, 
                                         double tol=0,

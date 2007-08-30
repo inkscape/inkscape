@@ -24,7 +24,6 @@
 	2geom/crossing.cpp	\
 	2geom/d2-sbasis.cpp	\
 	2geom/d2-sbasis.h	\
-	2geom/d2.cpp	\
 	2geom/d2.h	\
 	2geom/geom.cpp	\
 	2geom/geom.h	\
