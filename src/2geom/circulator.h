@@ -38,18 +38,18 @@ namespace Geom {
 template <typename Iterator>
 class Circulator {
 public:
-    typedef std::random_access_iterator_tag std::iterator_category;
-    typedef std::iterator_traits<Iterator>::value_type value_type;
-    typedef std::iterator_traits<Iterator>::difference_type difference_type;
-    typedef std::iterator_traits<Iterator>::pointer pointer;
-    typedef std::iterator_traits<Iterator>::reference reference;
+    typedef std::random_access_iterator_tag iterator_category;
+    typedef typename std::iterator_traits<Iterator>::value_type value_type;
+    typedef typename std::iterator_traits<Iterator>::difference_type difference_type;
+    typedef typename std::iterator_traits<Iterator>::pointer pointer;
+    typedef typename std::iterator_traits<Iterator>::reference reference;
 
     Circulator(Iterator const &first,
                Iterator const &last,
                Iterator const &pos)
     : _first(first), _last(last), _pos(pos)
     {
-        match_random_access(std::iterator_category(first));
+        match_random_access(iterator_category(first));
     }
 
     reference operator*() const {
@@ -101,12 +101,12 @@ public:
         return _pos - other._pos;
     }
 
-    reference operator[n] const {
+    reference operator[](int n) const {
         return *_offset(n);
     }
 
 private:
-    void match_random_access(random_access_iterator_tag) {}
+    void match_random_access(iterator_category) {}
 
     Iterator _offset(int n) {
         difference_type range=( _last - _first );

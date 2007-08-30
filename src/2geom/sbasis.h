@@ -39,6 +39,7 @@
 
 #include "linear.h"
 #include "interval.h"
+#include "utils.h"
 
 namespace Geom {
 
@@ -88,6 +89,12 @@ public:
     double operator()(double t) const {
         return valueAt(t);
     }
+
+    std::vector<double> valueAndDerivatives(double t, unsigned n) const {
+        //TODO
+        throw NotImplemented();
+    }
+
     SBasis toSBasis() const { return SBasis(*this); }
 
     double tailError(unsigned tail) const;

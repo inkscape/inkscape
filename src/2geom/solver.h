@@ -5,6 +5,8 @@
 
 namespace Geom{
 
+	class Point;
+
 unsigned
 crossing_count(Geom::Point const *V,	/*  Control pts of Bezier curve	*/
 	       unsigned degree);	/*  Degree of Bezier curve */
@@ -21,14 +23,7 @@ crossing_count(double const *V,	/*  Control pts of Bezier curve	*/
 	       double left_t, double right_t);
 void
 find_bernstein_roots(
-    double *w, /* The control points  */
-    unsigned degree,	/* The degree of the polynomial */
-    std::vector<double> & solutions,	/* RETURN candidate t-values */
-    unsigned depth,	/* The depth of the recursion */
-    double left_t=0, double right_t=1);
-void
-find_bernstein_roots_buggy(
-    double *w, /* The control points  */
+    double const *w, /* The control points  */
     unsigned degree,	/* The degree of the polynomial */
     std::vector<double> & solutions,	/* RETURN candidate t-values */
     unsigned depth,	/* The depth of the recursion */

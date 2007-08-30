@@ -46,6 +46,7 @@ public:
                        bool large_arc, bool sweep, Point p) = 0;
     virtual void closePath() = 0;
     virtual void finish() = 0;
+    virtual ~SVGPathSink() {}
 };
 
 void output_svg_path(Path &path, SVGPathSink &sink);
@@ -66,12 +67,12 @@ public:
         _path.appendNew<LineSegment>(p);
     }
 
-    void curveTo(Point c0, Point c1, Point p) {
-        _path.appendNew<CubicBezier>(c0, c1, p);
-    }
-
     void quadTo(Point c, Point p) {
         _path.appendNew<QuadraticBezier>(c, p);
+    }
+
+    void curveTo(Point c0, Point c1, Point p) {
+        _path.appendNew<CubicBezier>(c0, c1, p);
     }
 
     void arcTo(double rx, double ry, double angle,

@@ -35,7 +35,7 @@ const double BEPSILON = ldexp(1.0,-MAXDEPTH-1); /*Flatness control value */
  *    of the roots in the open interval (0, 1).  Return the number of roots found.
  */
 void
-find_bernstein_roots(double *w, /* The control points  */
+find_bernstein_roots(double const *w, /* The control points  */
                      unsigned degree,	/* The degree of the polynomial */
                      std::vector<double> &solutions, /* RETURN candidate t-values */
                      unsigned depth,	/* The depth of the recursion */
@@ -43,13 +43,11 @@ find_bernstein_roots(double *w, /* The control points  */
 {  
     unsigned 	n_crossings = 0;	/*  Number of zero-crossings */
     
-    double split = 0.5;
     int old_sign = SGN(w[0]);
     for (unsigned i = 1; i <= degree; i++) {
         int sign = SGN(w[i]);
         if (sign) {
             if (sign != old_sign && old_sign) {
-                split = (i-0.5)/degree;
                n_crossings++;
             }
             old_sign = sign;
@@ -75,18 +73,16 @@ find_bernstein_roots(double *w, /* The control points  */
             const double Ax = right_t - left_t;
             const double Ay = w[degree] - w[0];
 
-            solutions.push_back(left_t + Ax*w[0] / Ay);
+            solutions.push_back(left_t - Ax*w[0] / Ay);
             return;
         }
         break;
     }
 
     /* Otherwise, solve recursively after subdividing control polygon  */
-    
-    
-    /* This bit is very clever (if I say so myself) - rather than arbitrarily subdividing at the t = 0.5 point, we subdivide at the most likely point of change of direction.  This buys us a factor of 10 speed up.  We also avoid lots of stack frames by avoiding tail recursion. */
     double Left[degree+1],	/* New left and right  */
            Right[degree+1];	/* control polygons  */
+    const double split = 0.5;
     Bernstein(w, degree, split, Left, Right);
     
     double mid_t = left_t*(1-split) + right_t*split;
@@ -98,73 +94,6 @@ find_bernstein_roots(double *w, /* The control points  */
         solutions.push_back(mid_t);
         
     find_bernstein_roots(Right, degree, solutions, depth+1, mid_t, right_t);
-}
-
-/*
- *  find_bernstein_roots : Given an equation in Bernstein-Bernstein form, find all 
- *    of the roots in the interval [0, 1].  Return the number of roots found.
- */
-void
-find_bernstein_roots_buggy(double *w, /* The control points  */
-                     unsigned degree,	/* The degree of the polynomial */
-                     std::vector<double> &solutions, /* RETURN candidate t-values */
-                     unsigned depth,	/* The depth of the recursion */
-                     double left_t, double right_t)
-{  
-    unsigned 	n_crossings = 0;	/*  Number of zero-crossings */
-    
-    int old_sign = SGN(w[0]);
-    for (unsigned i = 1; i <= degree; i++) {
-        int sign = SGN(w[i]);
-        if (sign) {
-            if (sign != old_sign && old_sign)
-               n_crossings++;
-            old_sign = sign;
-        }
-    }
-    
-    switch (n_crossings) {
-    case 0: 	/* No solutions here	*/
-        return;
-	
-    case 1:
- 	/* Unique solution	*/
-        /* Stop recursion when the tree is deep enough	*/
-        /* if deep enough, return 1 solution at midpoint  */
-        if (depth >= MAXDEPTH) {
-            solutions.push_back((left_t + right_t) / 2.0);
-            return;
-        }
-        
-        // I thought secant method would be faster here, but it'aint. -- njh
-
-        if (control_poly_flat_enough(w, degree, left_t, right_t)) {
-            const double Ax = right_t - left_t;
-            const double Ay = w[degree] - w[0];
-
-            solutions.push_back(left_t + Ax*w[0] / Ay);
-            return;
-        }
-        break;
-    }
-
-    /* Otherwise, solve recursively after subdividing control polygon  */
-    
-    double split = 0.5;
-    
-    double Left[degree+1],	/* New left and right  */
-           Right[degree+1];	/* control polygons  */
-    Bernstein(w, degree, split, Left, Right);
-    
-    double mid_t = left_t*(1-split) + right_t*split;
-    
-    find_bernstein_roots_buggy(Left,  degree, solutions, depth+1, left_t, mid_t);
-            
-    /* Solution is exactly on the subdivision point. */
-    if (Right[0] == 0)
-        solutions.push_back(mid_t);
-        
-    find_bernstein_roots_buggy(Right, degree, solutions, depth+1, mid_t, right_t);
 }
 
 /*

@@ -34,7 +34,7 @@
 #include "sbasis.h"
 #include "interval.h"
 #include "point.h"
-
+#include <vector>
 #include <boost/concept_check.hpp>
 
 namespace Geom {
@@ -66,6 +66,9 @@ struct FragmentConcept {
     bool b;
     BoundsType i;
     Interval dom;
+    std::vector<OutputType> v;
+    unsigned u;
+    SbType sb;
     void constraints() {
         t = T(o);
         b = t.isZero();
@@ -74,7 +77,10 @@ struct FragmentConcept {
         o = t.at1();
         o = t.valueAt(d);
         o = t(d);
-        SbType sb = t.toSBasis();
+        v = t.valueAndDerivatives(d, u);
+		//Is a pure derivative (ignoring others) accessor ever much faster?
+		//u = number of values returned. first val is value.
+        sb = t.toSBasis();
         t = reverse(t);
         i = bounds_fast(t);
         i = bounds_exact(t);

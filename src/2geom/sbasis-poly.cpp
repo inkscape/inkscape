@@ -15,6 +15,8 @@ SBasis poly_to_sbasis(Poly const & p) {
 }
 
 Poly sbasis_to_poly(SBasis const & sb) {
+    if(sb.isZero())
+        return Poly();
     Poly S; // (1-x)x = -1*x^2 + 1*x + 0
     Poly A, B;
     B.push_back(0);

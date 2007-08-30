@@ -184,34 +184,6 @@ path_from_sbasis(D2<SBasis> const &B, double tol) {
 //TODO: some of this logic should be lifted into svg-path
 std::vector<Geom::Path>
 path_from_piecewise(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double tol) {
-/*
-    Geom::PathBuilder pb;
-    if(B.size() == 0) return pb.peek();
-    Geom::Point start = B[0].at0();
-    pb.moveTo(start);
-    for(unsigned i = 0; ; i++) {
-        if(i+1 == B.size() || !near(B[i+1].at0(), B[i].at1(), tol)) {
-            //start of a new path
-            if(near(start, B[i].at1())) {
-                //it's closed
-                pb.closePath();
-                if(sbasis_size(B[i]) <= 1) {
-                    //last line seg already there
-                    goto no_add;
-                }
-            }
-            build_from_sbasis(pb, B[i], tol);
-          no_add:
-            if(i+1 >= B.size()) break;
-            start = B[i+1].at0();
-            pb.moveTo(start);
-            i++;
-        }
-        build_from_sbasis(pb, B[i], tol);
-    }
-    pb.finish();
-    return pb.peek();
-*/
     Geom::PathBuilder pb;
     if(B.size() == 0) return pb.peek();
     Geom::Point start = B[0].at0();

@@ -29,150 +29,49 @@
 
 #include "path.h"
 
+#include "ord.h"
+
 namespace Geom {
 
-namespace {
+int CurveHelpers::root_winding(Curve const &c, Point p) {
+    std::vector<double> ts = c.roots(p[Y], Y);
 
-enum Cmp {
-  LESS_THAN=-1,
-  GREATER_THAN=1,
-  EQUAL_TO=0
-};
+    if(ts.empty()) return 0;
 
-template <typename T1, typename T2>
-inline Cmp cmp(T1 const &a, T2 const &b) {
-  if ( a < b ) {
-    return LESS_THAN;
-  } else if ( b < a ) {
-    return GREATER_THAN;
-  } else {
-    return EQUAL_TO;
-  }
-}
+    double const fudge = 0.01; //fudge factor used on first and last
 
-}
+    std::sort(ts.begin(), ts.end());
 
-boost::optional<int> CurveHelpers::sbasis_winding(D2<SBasis> const &sb, Point p) {
-  Interval ix = bounds_fast(sb[X]);
-
-  if ( p[X] > ix.max() ) { /* ray does not intersect bbox */
-    return 0;
-  }
-
-  SBasis fy = sb[Y];
-  fy -= p[Y];
-
-  if (fy.empty()) { /* coincident horizontal segment */
-    return boost::optional<int>();
-  }
-
-  if ( p[X] < ix.min() ) { /* ray does not originate in bbox */
-    double y = p[Y];
-    /* winding determined by position of endpoints */
-    Cmp initial_to_ray = cmp(fy[0][0], y);
-    Cmp final_to_ray = cmp(fy[0][1], y);
-    switch (cmp(final_to_ray, initial_to_ray)) {
-    case GREATER_THAN:
-      /* exclude final endpoint */
-      return ( final_to_ray != EQUAL_TO );
-    case LESS_THAN:
-      /* exclude final endpoint */
-      return -( final_to_ray != EQUAL_TO );
-    default:
-      /* any intersections cancel out */
-      return 0;
-    }
-  } else { /* ray originates in bbox */
-    std::vector<double> ts = roots(fy);
-
-    static const unsigned MAX_DERIVATIVES=8;
-    boost::optional<SBasis> ds[MAX_DERIVATIVES];
-    ds[0] = derivative(fy);
-
-    /* winding determined by summing signs of derivatives at intersections */
-    int winding=0;
+    // winding determined by crossings at roots
+    int wind=0;
+    // previous time
+    double pt = ts.front() - fudge;
     for ( std::vector<double>::iterator ti = ts.begin()
         ; ti != ts.end()
         ; ++ti )
-    { 
-      double t = *ti;
-      if ( sb[X](t) >= p[X] ) { /* root is ray intersection */
-        for ( boost::optional<SBasis> *di = ds
-            ; di != ( ds + MAX_DERIVATIVES )
-            ; ++di )
-        {
-          if (!*di) {
-            *di = derivative(**(di-1));
-          }
-          switch (cmp((**di)(t), 0)) {
-          case GREATER_THAN:
-            if ( t < 1 ) { /* exclude final endpoint */
-              winding += 1;
-            }
-            goto next_root;
-          case LESS_THAN:
-            if ( t < 1 ) { /* exclude final endpoint */
-              winding -= 1;
-            }
-            goto next_root;
-          default: (void)0;
-            /* give up */
-          };
-        }
-      } 
-next_root: (void)0;
-    }
-    
-    return winding;
-  }
-}
-
-Rect BezierHelpers::bounds(unsigned degree, Point const *points) {
-  Point min=points[0];
-  Point max=points[0];
-  for ( unsigned i = 1 ; i <= degree ; ++i ) {
-    for ( unsigned axis = 0 ; axis < 2 ; ++axis ) {
-      min[axis] = std::min(min[axis], points[i][axis]);
-      max[axis] = std::max(max[axis], points[i][axis]);
-    }
-  }
-  return Rect(min, max);
-}
-
-Point BezierHelpers::point_and_derivatives_at(Coord t,
-                                              unsigned degree,
-                                              Point const *points,
-                                              unsigned n_derivs,
-                                              Point *derivs)
-{
-  return Point(0,0); // TODO
-}
-
-Geom::Point
-BezierHelpers::subdivideArr(Coord t,              // Parameter value
-                            unsigned degree,      // Degree of bezier curve
-                            Geom::Point const *V, // Control pts
-                            Geom::Point *Left,    // RETURN left half ctl pts
-                            Geom::Point *Right)   // RETURN right half ctl pts
-{
-    Geom::Point Vtemp[degree+1][degree+1];
-
-    /* Copy control points	*/
-    std::copy(V, V+degree+1, Vtemp[0]);
-
-    /* Triangle computation	*/
-    for (unsigned i = 1; i <= degree; i++) {	
-        for (unsigned j = 0; j <= degree - i; j++) {
-            Vtemp[i][j] = lerp(t, Vtemp[i-1][j], Vtemp[i-1][j+1]);
+    {
+        double t = *ti;
+        if ( t <= 0. || t >= 1. ) continue; //skip endpoint roots 
+        if ( c.valueAt(t, X) > p[X] ) { // root is ray intersection
+            // Get t of next:
+            std::vector<double>::iterator next = ti;
+            next++;
+            double nt;
+            if(next == ts.end()) nt = t + fudge; else nt = *next;
+            
+            // Check before in time and after in time for positions
+            // Currently we're using the average times between next and previous segs
+            Cmp after_to_ray =  cmp(c.valueAt((t + nt) / 2, Y), p[Y]);
+            Cmp before_to_ray = cmp(c.valueAt((t + pt) / 2, Y), p[Y]);
+            // if y is included, these will have opposite values, giving order.
+            Cmp dt = cmp(after_to_ray, before_to_ray);
+            if(dt != EQUAL_TO) //Should always be true, but yah never know..
+                wind += dt;
+            pt = t;
         }
     }
     
-    for (unsigned j = 0; j <= degree; j++)
-        Left[j]  = Vtemp[j][0];
-    for (unsigned j = 0; j <= degree; j++)
-        Right[j] = Vtemp[degree-j][j];
-
-    return (Vtemp[degree][0]);
+    return wind;
 }
 
 void Path::swap(Path &other) {
@@ -183,62 +82,69 @@ void Path::swap(Path &other) {
   other.curves_[other.curves_.size()-1] = other.final_;
 }
 
-Rect Path::bounds_fast() const {
-  Rect bounds=front().bounds_fast();
+Rect Path::boundsFast() const {
+  Rect bounds=front().boundsFast();
   for ( const_iterator iter=++begin(); iter != end() ; ++iter ) {
-    bounds.unionWith(iter->bounds_fast());
+    bounds.unionWith(iter->boundsFast());
   }
   return bounds;
 }
 
-Rect Path::bounds_exact() const {
-  Rect bounds=front().bounds_exact();
+Rect Path::boundsExact() const {
+  Rect bounds=front().boundsExact();
   for ( const_iterator iter=++begin(); iter != end() ; ++iter ) {
-    bounds.unionWith(iter->bounds_exact());
+    bounds.unionWith(iter->boundsExact());
   }
   return bounds;
 }
 
-int Path::winding(Point p) const {
-  int winding = 0;
-  boost::optional<Cmp> ignore = boost::optional<Cmp>();
-  for ( const_iterator iter = begin()
-      ; iter != end_closed()
-      ; ++iter )
-  {
-    boost::optional<int> w = iter->winding(p);
-    if (w) {
-      winding += *w;
-      ignore = boost::optional<Cmp>();
-    } else {
-      Point initial = iter->initialPoint();
-      Point final = iter->finalPoint();
-      switch (cmp(initial[X], final[X])) {
-      case GREATER_THAN:
-        if ( !ignore || *ignore != GREATER_THAN ) { /* ignore repeated */
-          winding += 1;
-          ignore = GREATER_THAN;
-        }
-        break;
-      case LESS_THAN:
-        if ( !ignore || *ignore != LESS_THAN ) { /* ignore repeated */
-          if ( p[X] < final[X] ) { /* ignore final point */
-            winding -= 1;
-            ignore = LESS_THAN;
-          }
-        }
-        break;
-      case EQUAL_TO:
-        /* always ignore null segments */
-        break;
-      }
-    }
-  }
-  return winding;
+template<typename iter>
+iter inc(iter const &x, unsigned n) {
+  iter ret = x;
+  for(unsigned i = 0; i < n; i++)
+    ret++;
+  return ret;
 }
+
+//This assumes that you can't be perfect in your t-vals, and as such, tweaks the start
+void Path::appendPortionTo(Path &ret, double from, double to) const {
+  assert(from >= 0 && to >= 0);
+  if(to == 0) to = size()+0.999999;
+  if(from == to) { return; }
+  double fi, ti;
+  double ff = modf(from, &fi), tf = modf(to, &ti);
+  if(tf == 0) { ti--; tf = 1; }
+  const_iterator fromi = inc(begin(), (unsigned)fi);
+  if(fi == ti && from < to) {
+    Curve *v = fromi->portion(ff, tf);
+    ret.append(*v);
+    delete v;
+    return;
+  }
+  const_iterator toi   = inc(begin(), (unsigned)ti);
+  if(ff != 1.) {
+    Curve *fromv = fromi->portion(ff, 1.);
+    //fromv->setInitial(ret.finalPoint());
+    ret.append(*fromv);
+    delete fromv;
+  }
+  if(from > to) {
+    const_iterator ender = end();
+    if(ender->initialPoint() == ender->finalPoint()) ender++;
+    ret.insert(ret.end(), ++fromi, ender);
+    ret.insert(ret.end(), begin(), toi);
+  } else {
+    ret.insert(ret.end(), ++fromi, toi);
+  }
+  Curve *tov = toi->portion(0., tf);
+  ret.append(*tov);
+  delete tov;
+}
+
+const double eps = .1;
 
 void Path::append(Curve const &curve) {
-  if ( curves_.front() != final_ && curve.initialPoint() != (*final_)[0] ) {
+  if ( curves_.front() != final_ && !near(curve.initialPoint(), (*final_)[0], eps) ) {
     throw ContinuityError();
   }
   do_append(curve.duplicate());
@@ -247,7 +153,7 @@ void Path::append(Curve const &curve) {
 void Path::append(D2<SBasis> const &curve) {
   if ( curves_.front() != final_ ) {
     for ( int i = 0 ; i < 2 ; ++i ) {
-      if ( curve[i][0][0] != (*final_)[0][i] ) {
+      if ( !near(curve[i][0][0], (*final_)[0][i], eps) ) {
         throw ContinuityError();
       }
     }
@@ -273,17 +179,17 @@ void Path::do_update(Sequence::iterator first_replaced,
   }
 
   if ( curves_.front() != final_ ) {
-    (*final_)[0] = back().finalPoint();
-    (*final_)[1] = front().initialPoint();
+    final_->setPoint(0, back().finalPoint());
+    final_->setPoint(1, front().initialPoint());
   }
 }
 
 void Path::do_append(Curve *curve) {
   if ( curves_.front() == final_ ) {
-    (*final_)[1] = curve->initialPoint();
+    final_->setPoint(1, curve->initialPoint());
   }
   curves_.insert(curves_.end()-1, curve);
-  (*final_)[0] = curve->finalPoint();
+  final_->setPoint(0, curve->finalPoint());
 }
 
 void Path::delete_range(Sequence::iterator first, Sequence::iterator last) {
@@ -299,56 +205,42 @@ void Path::check_continuity(Sequence::iterator first_replaced,
 {
   if ( first != last ) {
     if ( first_replaced != curves_.begin() ) {
-      if ( (*first_replaced)->initialPoint() != (*first)->initialPoint() ) {
+      if ( !near( (*first_replaced)->initialPoint(), (*first)->initialPoint(), eps ) ) {
         throw ContinuityError();
       }
     }
     if ( last_replaced != (curves_.end()-1) ) {
-      if ( (*(last_replaced-1))->finalPoint() != (*(last-1))->finalPoint() ) {
+      if ( !near( (*(last_replaced-1))->finalPoint(), (*(last-1))->finalPoint(), eps ) ) {
         throw ContinuityError();
       }
     }
   } else if ( first_replaced != last_replaced && first_replaced != curves_.begin() && last_replaced != curves_.end()-1) {
-    if ( (*first_replaced)->initialPoint() !=
-         (*(last_replaced-1))->finalPoint() )
-    {
+    if ( !near((*first_replaced)->initialPoint(), (*(last_replaced-1))->finalPoint(), eps ) ) {
       throw ContinuityError();
     }
   }
 }
 
-Rect SBasisCurve::bounds_fast() const {
-  throw NotImplemented();
-  return Rect(Point(0,0), Point(0,0));
-}
-
-Rect SBasisCurve::bounds_exact() const {
-  throw NotImplemented();
-  return Rect(Point(0,0), Point(0,0));
-}
-
-Point SBasisCurve::pointAndDerivativesAt(Coord t, unsigned n_derivs, Point *derivs) const {
-  throw NotImplemented();
-  return Point(0,0);
-}
-
-Path const &SBasisCurve::subdivide(Coord t, Path &out) const {
-  throw NotImplemented();
-}
-
-Rect SVGEllipticalArc::bounds_fast() const {
+Rect SVGEllipticalArc::boundsFast() const {
     throw NotImplemented();
 }
-Rect SVGEllipticalArc::bounds_exact() const {
+Rect SVGEllipticalArc::boundsExact() const {
+    throw NotImplemented();
+}
+Rect SVGEllipticalArc::boundsLocal(Interval i, unsigned deg) const {
+    //throw NotImplemented();
+}
+
+std::vector<Point> SVGEllipticalArc::pointAndDerivatives(Coord t, unsigned n) const {
     throw NotImplemented();
 }
 
-Point SVGEllipticalArc::pointAndDerivativesAt(Coord t, unsigned n_derivs, Point *derivs) const {
-    throw NotImplemented();
+std::vector<double> SVGEllipticalArc::roots(double v, Dim2 d) const {
+    //throw NotImplemented();
 }
 
-D2<SBasis> SVGEllipticalArc::sbasis() const {
-    throw NotImplemented();
+D2<SBasis> SVGEllipticalArc::toSBasis() const {
+    return D2<SBasis>(Linear(initial_[X], final_[X]), Linear(initial_[Y], final_[Y]));
 }
 
 }
@@ -364,4 +256,3 @@ D2<SBasis> SVGEllipticalArc::sbasis() const {
   End:
   vim: filetype=cpp:expandtab:shiftwidth=2:tabstop=8:softtabstop=2 :
 */
-

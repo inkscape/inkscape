@@ -159,7 +159,7 @@ void OldBezier::split(double t, OldBezier &left, OldBezier &right) const {
  *	the various edges of the bounding box of the first curve to test
  * 	for interference.
  *	Second, after a few subdivisions it is highly probable that two corners
- *	of the bounding box of a given OldBezier curve are the first and last 
+ *	of the bounding box of a given Bezier curve are the first and last 
  *	control point.  Once this happens once, it happens for all subsequent
  *	subcurves.  It might be worth putting in a test and then short-circuit
  *	code for further subdivision levels.

@@ -70,6 +70,9 @@ Piecewise<SBasis> cos(          SBasis  const &f, double tol=1e-3, int order=3);
 Piecewise<SBasis> cos(Piecewise<SBasis> const &f, double tol=1e-3, int order=3);
 Piecewise<SBasis> sin(          SBasis  const &f, double tol=1e-3, int order=3);
 Piecewise<SBasis> sin(Piecewise<SBasis> const &f, double tol=1e-3, int order=3);
+//-Log---------------------------------------------------------------
+Piecewise<SBasis> log(          SBasis const &f, double tol=1e-3, int order=3);
+Piecewise<SBasis> log(Piecewise<SBasis>const &f, double tol=1e-3, int order=3);
 
 //--1/x------------------------------------------------------------
 //TODO: change this...

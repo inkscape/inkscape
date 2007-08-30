@@ -112,8 +112,8 @@ Poly derivative(Poly const & p) {
 Poly compose(Poly const & a, Poly const & b) {
     Poly result;
     
-    for(unsigned i = a.size()-1; i >=0; i--) {
-        result = Poly(a[i]) + result * b;
+    for(unsigned i = a.size(); i > 0; i--) {
+        result = Poly(a[i-1]) + result * b;
     }
     return result;
     

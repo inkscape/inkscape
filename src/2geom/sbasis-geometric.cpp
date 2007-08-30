@@ -350,7 +350,7 @@ unsigned Geom::centroid(Piecewise<D2<SBasis> > const &p, Point& centroid, double
     }
 // join ends
     centroid_tmp *= 2;
-    Point final = p[p.size()].at1(), initial = p[0].at0();
+    Point final = p[p.size()-1].at1(), initial = p[0].at0();
     const double ai = cross(final, initial);
     atmp += ai;
     centroid_tmp += (final + initial)*ai; // first moment.

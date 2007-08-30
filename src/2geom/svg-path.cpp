@@ -34,7 +34,7 @@
 namespace Geom {
 
 void output(Curve const &curve, SVGPathSink &sink) {
-    std::vector<Point> pts = sbasis_to_bezier(curve.sbasis(), 2); //TODO: use something better!
+    std::vector<Point> pts = sbasis_to_bezier(curve.toSBasis(), 2); //TODO: use something better!
     sink.curveTo(pts[0], pts[1], pts[2]);
 }
 

@@ -68,7 +68,7 @@ Interval bounds_fast(const SBasis &sb, int order) {
         double a=sb[j][0];
         double b=sb[j][1];
 
-        double t, v;
+        double v, t = 0;
         v = res[0];
         if (v<0) t = ((b-a)/v+1)*0.5;
         if (v>=0 || t<0 || t>1) {
@@ -95,7 +95,7 @@ Interval bounds_local(const SBasis &sb, const Interval &i, int order) {
         double a=sb[j][0];
         double b=sb[j][1];
 
-        double t;
+        double t = 0;
         if (lo<0) t = ((b-a)/lo+1)*0.5;
         if (lo>=0 || t<t0 || t>t1) {
             lo = std::min(a*(1-t0)+b*t0+lo*t0*(1-t0),a*(1-t1)+b*t1+lo*t1*(1-t1));

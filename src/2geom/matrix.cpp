@@ -94,7 +94,7 @@ void Matrix::setExpansionY(double val) {
     double exp_y = expansionY();
     if(!near(exp_y, 0.0)) {  //TODO: best way to deal with it is to skip op?
         double coef = val / expansionY();
-        for(unsigned i=2;i<4;i++) _c[i] *= coef;
+        for(unsigned i=2; i<4; i++) _c[i] *= coef;
     }
 }
 
@@ -104,6 +104,8 @@ void Matrix::setIdentity() {
     _c[2] = 0.0; _c[3] = 1.0;
     _c[4] = 0.0; _c[5] = 0.0;
 }
+
+//TODO: use eps
 
 bool Matrix::isIdentity(Coord const eps) const {
     return near(_c[0], 1.0) && near(_c[1], 0.0) &&
@@ -149,6 +151,14 @@ bool Matrix::isRotation(Coord const eps) const {
     return !near(_c[0], _c[3]) && near(_c[1], -_c[2]) &&
            near(_c[4], 0.0) && near(_c[5], 0.0) &&
            near(_c[0]*_c[0] + _c[1]*_c[1], 1.0);
+}
+
+bool Matrix::onlyScaleAndTranslation(Coord const eps) const {
+    return near(_c[0], _c[3]) && near(_c[1], 0) && near(_c[2], 0);
+}
+
+bool Matrix::flips() const {
+    return cross(xAxis(), yAxis()) > 0;
 }
 
 /** Returns the Scale/Rotate/skew part of the matrix without the translation part. */

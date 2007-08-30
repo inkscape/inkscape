@@ -35,15 +35,21 @@
 #include <algorithm>
 #include <exception>
 #include <stdexcept>
-#include <boost/optional/optional.hpp>
 #include "d2.h"
-#include "bezier-to-sbasis.h"
+#include "matrix.h"
+#include "bezier.h"
+#include "crossing.h"
 
 namespace Geom {
 
-class Path;
+class Curve;
 
-class Curve {
+struct CurveHelpers {
+protected:
+  static int root_winding(Curve const &c, Point p);
+};
+
+class Curve : private CurveHelpers {
 public:
   virtual ~Curve() {}
 
@@ -52,112 +58,211 @@ public:
 
   virtual Curve *duplicate() const = 0;
 
-  virtual Rect bounds_fast() const = 0;
-  virtual Rect bounds_exact() const = 0;
+  virtual Rect boundsFast() const = 0;
+  virtual Rect boundsExact() const = 0;
+  virtual Rect boundsLocal(Interval i, unsigned deg) const = 0;
+  Rect boundsLocal(Interval i) const { return boundsLocal(i, 0); }
+  
+  virtual std::vector<double> roots(double v, Dim2 d) const = 0;
 
-  virtual boost::optional<int> winding(Point p) const = 0;
+  virtual int winding(Point p) const { return root_winding(*this, p); }
 
-  virtual Path const &subdivide(Coord t, Path &out) const = 0;
-
-  Point pointAt(Coord t) const { return pointAndDerivativesAt(t, 0, NULL); }
-  virtual Point pointAndDerivativesAt(Coord t, unsigned n, Point *ds) const = 0;
-  virtual D2<SBasis> sbasis() const = 0;
+  //mental: review these
+  virtual Curve *portion(double f, double t) const = 0;
+  virtual Curve *reverse() const { return portion(1, 0); }
+  virtual Curve *derivative() const = 0;
+  
+  virtual void setInitial(Point v) = 0;
+  virtual void setFinal(Point v) = 0;
+  
+  virtual Curve *transformed(Matrix const &m) const = 0;
+  
+  virtual Point pointAt(Coord t) const { return pointAndDerivatives(t, 1).front(); }
+  virtual Coord valueAt(Coord t, Dim2 d) const { return pointAt(t)[d]; }
+  virtual std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const = 0;
+  virtual D2<SBasis> toSBasis() const = 0;
 };
 
-struct CurveHelpers {
-protected:
-  static boost::optional<int> sbasis_winding(D2<SBasis> const &sbasis, Point p);
+class SBasisCurve : public Curve {
+private:
+  SBasisCurve();
+  D2<SBasis> inner;
+public:
+  explicit SBasisCurve(D2<SBasis> const &sb) : inner(sb) {}
+  explicit SBasisCurve(Curve const &other) : inner(other.toSBasis()) {}
+  Curve *duplicate() const { return new SBasisCurve(*this); }
+
+  Point initialPoint() const    { return inner.at0(); }
+  Point finalPoint() const      { return inner.at1(); }
+  Point pointAt(Coord t) const  { return inner.valueAt(t); }
+  std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const {
+      return inner.valueAndDerivatives(t, n);
+  }
+  double valueAt(Coord t, Dim2 d) const { return inner[d].valueAt(t); }
+  
+  void setInitial(Point v) { for(unsigned d = 0; d < 2; d++) { inner[d][0][0] = v[d]; } }
+  void setFinal(Point v)   { for(unsigned d = 0; d < 2; d++) { inner[d][0][1] = v[d]; } }
+
+  Rect boundsFast() const  { return bounds_fast(inner); }
+  Rect boundsExact() const { return bounds_exact(inner); }
+  Rect boundsLocal(Interval i, unsigned deg) const { return bounds_local(inner, i, deg); }
+
+  std::vector<double> roots(double v, Dim2 d) const { return Geom::roots(inner[d] - v); }
+
+  Curve *portion(double f, double t) const {
+    return new SBasisCurve(Geom::portion(inner, f, t));
+  }
+  
+  Curve *transformed(Matrix const &m) const {
+    return new SBasisCurve(inner * m);
+  }
+  
+  Curve *derivative() const {
+    return new SBasisCurve(Geom::derivative(inner));
+  }
+  
+  D2<SBasis> toSBasis() const { return inner; }
+
 };
 
-struct BezierHelpers {
-protected:
-  static Rect bounds(unsigned degree, Point const *points);
-  static Point point_and_derivatives_at(Coord t,
-                                        unsigned degree, Point const *points,
-                                        unsigned n_derivs, Point *derivs);
-  static Point subdivideArr(Coord t, unsigned degree, Point const *V,
-                         Point *Left, Point *Right);
-
-};
-
-template <unsigned bezier_degree>
-class Bezier : public Curve, private CurveHelpers, private BezierHelpers {
+template <unsigned order>
+class BezierCurve : public Curve {
+private:
+  D2<Bezier<order> > inner;
 public:
   template <unsigned required_degree>
-  static void assert_degree(Bezier<required_degree> const *) {}
+  static void assert_degree(BezierCurve<required_degree> const *) {}
 
-  Bezier() {}
+  BezierCurve() {}
+
+  explicit BezierCurve(D2<Bezier<order> > const &x) : inner(x) {}
+  
+  BezierCurve(Bezier<order> x, Bezier<order> y) : inner(x, y) {}
 
   // default copy
   // default assign
 
-  Bezier(Point c0, Point c1) {
+  BezierCurve(Point c0, Point c1) {
     assert_degree<1>(this);
-    c_[0] = c0;
-    c_[1] = c1;
+    for(unsigned d = 0; d < 2; d++)
+        inner[d] = Bezier<order>(c0[d], c1[d]);
   }
 
-  Bezier(Point c0, Point c1, Point c2) {
+  BezierCurve(Point c0, Point c1, Point c2) {
     assert_degree<2>(this);
-    c_[0] = c0;
-    c_[1] = c1;
-    c_[2] = c2;
+    for(unsigned d = 0; d < 2; d++)
+        inner[d] = Bezier<order>(c0[d], c1[d], c2[d]);
   }
 
-  Bezier(Point c0, Point c1, Point c2, Point c3) {
+  BezierCurve(Point c0, Point c1, Point c2, Point c3) {
     assert_degree<3>(this);
-    c_[0] = c0;
-    c_[1] = c1;
-    c_[2] = c2;
-    c_[3] = c3;
+    for(unsigned d = 0; d < 2; d++)
+        inner[d] = Bezier<order>(c0[d], c1[d], c2[d], c3[d]);
   }
 
-  unsigned degree() const { return bezier_degree; }
+  unsigned degree() const { return order; }
 
-  Curve *duplicate() const { return new Bezier(*this); }
+  Curve *duplicate() const { return new BezierCurve(*this); }
 
-  Point initialPoint() const { return c_[0]; }
-  Point finalPoint() const { return c_[bezier_degree]; }
+  Point initialPoint() const { return inner.at0(); }
+  Point finalPoint() const { return inner.at1(); }
 
-  Point &operator[](int index) { return c_[index]; }
-  Point const &operator[](int index) const { return c_[index]; }
+  void setInitial(Point v) { setPoint(0, v); }
+  void setFinal(Point v)   { setPoint(1, v); }
 
-  Rect bounds_fast() const { return bounds(bezier_degree, c_); }
-  Rect bounds_exact() const { return bounds(bezier_degree, c_); }
-
-  boost::optional<int> winding(Point p) const {
-    return sbasis_winding(sbasis(), p);
-  }
-
-  Path const &subdivide(Coord t, Path &out) const;
+  void setPoint(unsigned ix, Point v) { inner[X].setPoint(ix, v[X]); inner[Y].setPoint(ix, v[Y]); }
+  Point const operator[](unsigned ix) const { return Point(inner[X][ix], inner[Y][ix]); }
   
-  Point pointAndDerivativesAt(Coord t, unsigned n_derivs, Point *derivs)
-  const
-  {
-    return point_and_derivatives_at(t, bezier_degree, c_, n_derivs, derivs);
+  Rect boundsFast() const { return bounds_fast(inner); }
+  Rect boundsExact() const { return bounds_exact(inner); }
+  Rect boundsLocal(Interval i, unsigned deg) const {
+      if(i.min() == 0 && i.max() == 1) return boundsFast();
+      if(deg == 0) return bounds_local(inner, i);
+      // TODO: UUUUUUGGGLLY
+      if(deg == 1 && order > 1) return Rect(bounds_local(Geom::derivative(inner[X]), i),
+                                            bounds_local(Geom::derivative(inner[Y]), i));
+      return Rect(Interval(0,0), Interval(0,0));
+  }
+//TODO: local
+
+//TODO: implement next 3 natively
+  int winding(Point p) const {
+    return SBasisCurve(toSBasis()).winding(p);
   }
 
-  D2<SBasis> sbasis() const {
-    return handles_to_sbasis<bezier_degree>(c_);
+  std::vector<double>
+  roots(double v, Dim2 d) const {
+      return (inner[d] - v).roots();
   }
+  
+  void setPoints(std::vector<Point> ps) {
+    for(unsigned i = 0; i <= order; i++) {
+      setPoint(i, ps[i]);
+    }
+  }
+  std::vector<Point> points() const { return bezier_points(inner); }
+  
+  std::pair<BezierCurve<order>, BezierCurve<order> > subdivide(Coord t) const {
+    std::pair<Bezier<order>, Bezier<order> > sx = inner[X].subdivide(t), sy = inner[Y].subdivide(t);
+    return std::pair<BezierCurve<order>, BezierCurve<order> >(
+               BezierCurve<order>(sx.first, sy.first),
+               BezierCurve<order>(sx.second, sy.second));
+  }
+  
+  Curve *portion(double f, double t) const {
+    return new BezierCurve(Geom::portion(inner, f, t));
+  }
+
+  Curve *reverse() const {
+    return new BezierCurve(Geom::reverse(inner));
+  }
+
+  Curve *transformed(Matrix const &m) const {
+    BezierCurve *ret = new BezierCurve();
+    std::vector<Point> ps = points();
+    for(unsigned i = 0;  i <= order; i++) ps[i] = ps[i] * m;
+    ret->setPoints(ps);
+    return ret;
+  }
+
+  Curve *derivative() const {
+     if(order > 1)
+        return new BezierCurve<order-1>(Geom::derivative(inner[X]), Geom::derivative(inner[Y]));
+     else if (order == 1) {
+        double dx = inner[X][1] - inner[X][0], dy = inner[Y][1] - inner[Y][0];
+        if(dx == 0) return new BezierCurve<1>(Point(0,0), Point(0,0));
+        double slope = dy / dx;
+        Geom::Point pnt;
+        if(slope == 0) pnt = Geom::Point(0, 0); else pnt = Geom::Point(slope, 1./slope);
+        return new BezierCurve<1>(pnt, pnt);
+     }
+  }
+
+  Point pointAt(double t) const { return inner.valueAt(t); } 
+  std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const { return inner.valueAndDerivatives(t, n); }
+
+  double valueAt(double t, Dim2 d) const { return inner[d].valueAt(t); }
+  
+  D2<SBasis> toSBasis() const {return inner.toSBasis(); }
 
 protected:
-  Bezier(Point c[]) {
-    std::copy(c, c+bezier_degree+1, c_);
+  BezierCurve(Point c[]) {
+    Coord x[order+1], y[order+1];
+    for(unsigned i = 0; i <= order; i++) {
+        x[i] = c[i][X]; y[i] = c[i][Y];
+    }
+    inner = Bezier<order>(x, y);
   }
-
-private:
-  Point c_[bezier_degree+1];
 };
 
-// Bezier<0> is meaningless; specialize it out
-template<> class Bezier<0> { Bezier(); };
+// BezierCurve<0> is meaningless; specialize it out
+template<> class BezierCurve<0> : public BezierCurve<1> { public: BezierCurve(); BezierCurve(Bezier<0> x, Bezier<0> y); };
 
-typedef Bezier<1> LineSegment;
-typedef Bezier<2> QuadraticBezier;
-typedef Bezier<3> CubicBezier;
+typedef BezierCurve<1> LineSegment;
+typedef BezierCurve<2> QuadraticBezier;
+typedef BezierCurve<3> CubicBezier;
 
-class SVGEllipticalArc : public Curve, private CurveHelpers {
+class SVGEllipticalArc : public Curve {
 public:
   SVGEllipticalArc() {}
 
@@ -173,18 +278,55 @@ public:
   Point initialPoint() const { return initial_; }
   Point finalPoint() const { return final_; }
 
-  Rect bounds_fast() const;
-  Rect bounds_exact() const;
+  void setInitial(Point v) { initial_ = v; }
+  void setFinal(Point v) { final_ = v; }
 
-  boost::optional<int> winding(Point p) const {
-    return sbasis_winding(sbasis(), p);
+  //TODO: implement funcs
+
+  Rect boundsFast() const;
+  Rect boundsExact() const;
+  Rect boundsLocal(Interval i, unsigned deg) const;
+
+  int winding(Point p) const {
+    return SBasisCurve(toSBasis()).winding(p);
   }
-
-  Path const &subdivide(Coord t, Path &out) const;
   
-  Point pointAndDerivativesAt(Coord t, unsigned n_derivs, Point *derivs) const;
+  std::vector<double> roots(double v, Dim2 d) const;
 
-  D2<SBasis> sbasis() const;
+  inline std::pair<SVGEllipticalArc, SVGEllipticalArc>
+  subdivide(Coord t) {
+    SVGEllipticalArc a(*this), b(*this);
+    a.final_ = b.initial_ = pointAt(t);
+    return std::pair<SVGEllipticalArc, SVGEllipticalArc>(a, b);
+  }
+  
+  Curve *portion(double f, double t) const {
+    SVGEllipticalArc *ret = new SVGEllipticalArc (*this);
+    ret->initial_ = pointAt(f);
+    ret->final_ = pointAt(t);
+    return ret;
+  }
+  
+  Curve *reverse(double f, double t) const {
+    SVGEllipticalArc *ret = new SVGEllipticalArc (*this);
+    ret->initial_ = final_;
+    ret->final_ = initial_;
+    return ret;
+  }
+  
+  //TODO: this next def isn't right
+  Curve *transformed(Matrix const & m) const {
+    SVGEllipticalArc *ret = new SVGEllipticalArc (*this);
+    ret->initial_ = initial_ * m;
+    ret->final_ = final_ * m;
+    return ret;
+  }
+  
+  Curve *derivative() const { throw NotImplemented(); }
+  
+  std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const;
+
+  D2<SBasis> toSBasis() const;
 
 private:
   Point initial_;
@@ -194,39 +336,6 @@ private:
   bool large_arc_;
   bool sweep_;
   Point final_;
-};
-
-class SBasisCurve : public Curve, private CurveHelpers {
-private:
-  SBasisCurve();
-public:
-  explicit SBasisCurve(D2<SBasis> const &coeffs)
-  : coeffs_(coeffs) {}
-
-  Point initialPoint() const {
-    return Point(coeffs_[X][0][0], coeffs_[Y][0][0]);
-  }
-  Point finalPoint() const {
-    return Point(coeffs_[X][0][1], coeffs_[Y][0][1]);
-  }
-
-  Curve *duplicate() const { return new SBasisCurve(*this); }
-
-  Rect bounds_fast() const;
-  Rect bounds_exact() const;
-
-  boost::optional<int> winding(Point p) const {
-    return sbasis_winding(coeffs_, p);
-  }
-
-  Path const &subdivide(Coord t, Path &out) const;
-
-  Point pointAndDerivativesAt(Coord t, unsigned n_derivs, Point *derivs) const;
-
-  D2<SBasis> sbasis() const { return coeffs_; }
-  
-private:
-  D2<SBasis> coeffs_;
 };
 
 template <typename IteratorImpl>
@@ -253,6 +362,7 @@ public:
     ++impl_;
     return *this;
   }
+  
   BaseIterator operator++(int) {
     BaseIterator old=*this;
     ++(*this);
@@ -282,7 +392,7 @@ public:
   }
 
   Curve *operator*() const { return (*impl_)->duplicate(); }
-
+  
   DuplicatingIterator &operator++() {
     ++impl_;
     return *this;
@@ -378,20 +488,77 @@ public:
   bool closed() const { return closed_; }
   void close(bool closed=true) { closed_ = closed; }
 
-  int winding(Point p) const;
-
-  Rect bounds_fast() const;
-  Rect bounds_exact() const;
+  Rect boundsFast() const;
+  Rect boundsExact() const;
 
   Piecewise<D2<SBasis> > toPwSb() const {
     Piecewise<D2<SBasis> > ret;
     ret.push_cut(0);
-    for(unsigned i = 0; i < size() + (closed_ ? 1 : 0); i++) {
-      ret.push(curves_[i]->sbasis(), i+1);
+    unsigned i = 1;
+    for(const_iterator it = begin(); it != end_default(); ++it, i++) { 
+      ret.push(it->toSBasis(), i);
+    }
+    return ret;
+  }
+  
+  Path operator*(Matrix const &m) const {
+    Path ret;
+    for(const_iterator it = begin(); it != end(); ++it) {
+      Curve *temp = it->transformed(m);
+      //Possible point of discontinuity?
+      ret.append(*temp);
+      delete temp;
     }
     return ret;
   }
 
+  Point pointAt(double t) const {
+    if(empty()) return Point(0,0);
+    double i, f = modf(t, &i);
+    if(i == size() && f == 0) { i--; }
+    assert(i >= 0 && i <= size()); 
+    return (*this)[unsigned(i)].pointAt(f);
+  }
+
+  double valueAt(double t, Dim2 d) const {
+    if(empty()) return 0;
+    double i, f = modf(t, &i);
+    if(i == size() && f == 0) { i--; }
+    assert(i >= 0 && i <= size());
+    return (*this)[unsigned(i)].valueAt(f, d);
+  }
+
+  std::vector<double> roots(double v, Dim2 d) const {
+    std::vector<double> res;
+    for(const_iterator it = begin(); it != end_closed(); ++it) {
+      std::vector<double> temp = it->roots(v, d);
+      res.insert(res.end(), temp.begin(), temp.end());
+    }
+    return res;
+  }
+
+  void appendPortionTo(Path &p, double f, double t) const;
+  
+  Path portion(double f, double t) const {
+    Path ret;
+    ret.close(false);
+    appendPortionTo(ret, f, t);
+    return ret;
+  }
+  Path portion(Interval i) const { return portion(i.min(), i.max()); }
+  
+  Path reverse() const {
+    Path ret;
+    ret.close(closed_);
+    for(int i = size() - (closed_ ? 0 : 1); i >= 0; i--) {
+      //TODO: do we really delete?
+      Curve *temp = (*this)[i].reverse();
+      ret.append(*temp);
+      delete temp;
+    }
+    return ret;
+  } 
+  
   void insert(iterator pos, Curve const &curve) {
     Sequence source(1, curve.duplicate());
     try {
@@ -481,14 +648,14 @@ public:
 
   void start(Point p) {
     clear();
-    (*final_)[0] = (*final_)[1] = p;
+    final_->setPoint(0, p);
+    final_->setPoint(1, p);
   }
 
   Point initialPoint() const { return (*final_)[1]; }
   Point finalPoint() const { return (*final_)[0]; }
 
   void append(Curve const &curve);
-
   void append(D2<SBasis> const &curve);
 
   template <typename CurveType, typename A>
@@ -573,37 +740,52 @@ inline static Piecewise<D2<SBasis> > paths_to_pw(std::vector<Path> paths) {
     return ret;
 }
 
-template <unsigned bezier_degree>
-inline Path const &Bezier<bezier_degree>::subdivide(Coord t, Path &out) const {
-  Bezier a, b;
-  subdivideArr(t, bezier_degree, c_, a.c_, b.c_);
-  out.clear();
-  out.close(false);
-  out.append(a);
-  out.append(b);
-  return out;
-}
+/*
+class PathPortion : public Curve {
+  Path *source;
+  double f, t;
+  boost::optional<Path> result;
+  
+  public:
+  double from() const { return f; }
+  double to() const { return t; }
+    
+  explicit PathPortion(Path *s, double fp, double tp) : source(s), f(fp), t(tp) {}
+  Curve *duplicate() const { return new PathPortion(*this); }
+  
+  Point initialPoint() const { return source->pointAt(f); }
+  Point finalPoint() const { return source->pointAt(t); }
+  
+  Path actualPath() {
+    if(!result) *result = source->portion(f, t);
+    return *result;
+  }
+  
+  Rect boundsFast() const { return actualPath().boundsFast; }
+  Rect boundsExact() const { return actualPath().boundsFast; }
+  Rect boundsLocal(Interval i) const { throw NotImplemented(); }
 
-inline Path const &SVGEllipticalArc::subdivide(Coord t, Path &out) const {
-  SVGEllipticalArc a;
-  SVGEllipticalArc b;
-  a.rx_ = b.rx_ = rx_;
-  a.ry_ = b.ry_ = ry_;
-  a.x_axis_rotation_ = b.x_axis_rotation_ = x_axis_rotation_;
-  a.initial_ = initial_;
-  a.final_ = b.initial_ = pointAt(t);
-  b.final_ = final_;
-  out.clear();
-  out.close(false);
-  out.append(a);
-  out.append(b);
-  return out;
-}
+  std::vector<double> roots(double v, Dim2 d) const = 0;
 
-class Set {
-public:
-private:
+  virtual int winding(Point p) const { return root_winding(*this, p); }
+
+  virtual Curve *portion(double f, double t) const = 0;
+  virtual Curve *reverse() const { return portion(1, 0); }
+
+  virtual Crossings crossingsWith(Curve const & other) const;
+  
+  virtual void setInitial(Point v) = 0;
+  virtual void setFinal(Point v) = 0;
+  
+  virtual Curve *transformed(Matrix const &m) const = 0;
+  
+  virtual Point pointAt(Coord t) const { return pointAndDerivatives(t, 1).front(); }
+  virtual Coord valueAt(Coord t, Dim2 d) const { return pointAt(t)[d]; }
+  virtual std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const = 0;
+  virtual D2<SBasis> toSBasis() const = 0;
+    
 };
+*/
 
 }
 

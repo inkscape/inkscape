@@ -38,6 +38,9 @@ public:
   NotImplemented() : std::logic_error("method not implemented") {}
 };
 
+// proper logical xor
+inline bool logical_xor (bool a, bool b) { return (a || b) && !(a && b); }
+
 /** Sign function - indicates the sign of a numeric type.  -1 indicates negative, 1 indicates
  *  positive, and 0 indicates, well, 0.  Mathsy people will know this is basically the derivative
  *  of abs, except for the fact that it is defined on 0.

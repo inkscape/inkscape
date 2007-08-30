@@ -28,7 +28,7 @@ class Translate {
   public:
     explicit Translate(Point const &p) : vec(p) {}
     explicit Translate(Coord const x, Coord const y) : vec(x, y) {}
-    inline operator Matrix() const { return Matrix(0, 0, 0, 0, vec[X], vec[Y]); }
+    inline operator Matrix() const { return Matrix(1, 0, 0, 1, vec[X], vec[Y]); }
 
     inline Coord operator[](Dim2 const dim) const { return vec[dim]; }
     inline Coord operator[](unsigned const dim) const { return vec[dim]; }
