@@ -18,6 +18,7 @@
 #include "display-forward.h"
 #include "sp-canvas-util.h"
 #include "sodipodi-ctrlrect.h"
+#include "libnr/nr-pixops.h"
 
 /*
  * Currently we do not have point method, as it should always be painted
@@ -85,7 +86,6 @@ static void sp_ctrlrect_destroy(GtkObject *object)
 #define RGBA_G(v) (((v) >> 16) & 0xff)
 #define RGBA_B(v) (((v) >> 8) & 0xff)
 #define RGBA_A(v) ((v) & 0xff)
-#define COMPOSE(b,f,a) ( ( ((guchar) b) * ((guchar) (0xff - a)) + ((guchar) ((b ^ ~f) + b/4 - (b>127? 63 : 0))) * ((guchar) a) ) / 0xff )
 
 static void sp_ctrlrect_hline(SPCanvasBuf *buf, gint y, gint xs, gint xe, guint32 rgba, guint dashed)
 {
@@ -99,9 +99,9 @@ static void sp_ctrlrect_hline(SPCanvasBuf *buf, gint y, gint xs, gint xe, guint3
         guchar *p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 3;
         for (gint x = x0; x < x1; x++) {
             if (!dashed || ((x / DASH_LENGTH) % 2)) {
-                p[0] = COMPOSE(p[0], r, a);
-                p[1] = COMPOSE(p[1], g, a);
-                p[2] = COMPOSE(p[2], b, a);
+                p[0] = INK_COMPOSE(r, a, p[0]);
+                p[1] = INK_COMPOSE(g, a, p[1]);
+                p[2] = INK_COMPOSE(b, a, p[2]);
             }
             p += 3;
         }
@@ -120,9 +120,9 @@ static void sp_ctrlrect_vline(SPCanvasBuf *buf, gint x, gint ys, gint ye, guint3
         guchar *p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
         for (gint y = y0; y < y1; y++) {
             if (!dashed || ((y / DASH_LENGTH) % 2)) {
-                p[0] = COMPOSE(p[0], r, a);
-                p[1] = COMPOSE(p[1], g, a);
-                p[2] = COMPOSE(p[2], b, a);
+                p[0] = INK_COMPOSE(r, a, p[0]);
+                p[1] = INK_COMPOSE(g, a, p[1]);
+                p[2] = INK_COMPOSE(b, a, p[2]);
             }
             p += buf->buf_rowstride;
         }
@@ -143,9 +143,9 @@ static void sp_ctrlrect_area(SPCanvasBuf *buf, gint xs, gint ys, gint xe, gint y
     for (gint y = y0; y < y1; y++) {
         guchar *p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 3;
         for (gint x = x0; x < x1; x++) {
-            p[0] = COMPOSE(p[0], r, a);
-            p[1] = COMPOSE(p[1], g, a);
-            p[2] = COMPOSE(p[2], b, a);
+            p[0] = INK_COMPOSE(r, a, p[0]);
+            p[1] = INK_COMPOSE(g, a, p[1]);
+            p[2] = INK_COMPOSE(b, a, p[2]);
             p += 3;
         }
     }
