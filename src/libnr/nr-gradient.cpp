@@ -101,13 +101,48 @@ static void compose(NRPixBlock *pb, unsigned char *dest,
 }
 };
 
-template <NR_PIXBLOCK_MODE mode>
-struct Compose<mode, true> {
-static const unsigned bpp=ModeTraits<mode>::bpp;
+template <>
+struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8N, true> {
+static const unsigned bpp=4;
 static void compose(NRPixBlock *pb, unsigned char *dest,
                     NRPixBlock *spb, unsigned char const *src)
 {
-    std::memcpy(dest, src, bpp);
+    std::memcpy(dest, src, 4);
+}
+};
+
+template <>
+struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8P, true> {
+static const unsigned bpp=4;
+static void compose(NRPixBlock *pb, unsigned char *dest,
+                    NRPixBlock *spb, unsigned char const *src)
+{
+    dest[0] = NR_PREMUL_111(src[0], src[3]);
+    dest[1] = NR_PREMUL_111(src[1], src[3]);
+    dest[2] = NR_PREMUL_111(src[2], src[3]);
+    dest[3] = src[3];
+}
+};
+
+template <>
+struct Compose<NR_PIXBLOCK_MODE_R8G8B8, true> {
+static const unsigned bpp=3;
+static void compose(NRPixBlock *pb, unsigned char *dest,
+                    NRPixBlock *spb, unsigned char const *src)
+{
+    dest[0] = NR_COMPOSEN11_1111(src[0], src[3], 255);
+    dest[1] = NR_COMPOSEN11_1111(src[1], src[3], 255);
+    dest[2] = NR_COMPOSEN11_1111(src[2], src[3], 255);
+}
+};
+
+template <>
+struct Compose<NR_PIXBLOCK_MODE_A8, true> {
+static const unsigned bpp=1;
+static void compose(NRPixBlock *pb, unsigned char *dest,
+                    NRPixBlock *spb, unsigned char const *src)
+{
+    dest[0] = src[3];
 }
 };
 
