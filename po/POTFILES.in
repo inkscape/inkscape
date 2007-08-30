@@ -194,6 +194,7 @@ src/extension/timer.cpp
 src/extract-uri.cpp
 src/file.cpp
 src/fixes.cpp
+src/filter-enums.cpp
 src/flood-context.cpp
 src/geom.cpp
 src/gradient-chemistry.cpp
@@ -387,6 +388,7 @@ src/ui/view/edit.cpp
 src/ui/view/edit-widget.cpp
 src/ui/widget/panel.cpp
 src/ui/widget/color-picker.cpp
+src/ui/widget/filter-effect-chooser.cpp
 src/ui/widget/licensor.cpp
 src/ui/widget/selected-style.cpp
 src/ui/widget/page-sizer.cpp

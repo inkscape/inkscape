@@ -751,7 +751,7 @@ public:
         : AttrWidget(SP_ATTR_INVALID),
           _dialog(d),
           _settings(d, _box, sigc::mem_fun(_dialog, &FilterEffectsDialog::set_child_attr_direct), LIGHT_ENDSOURCE),
-          _light_label("Light Source:", Gtk::ALIGN_LEFT),
+          _light_label(_("Light Source:"), Gtk::ALIGN_LEFT),
           _light_source(LightSourceConverter),
           _locked(false)
     {
