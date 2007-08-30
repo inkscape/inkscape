@@ -41,7 +41,7 @@ public:
             Gtk::TreeModel::Row row = *_model->append();
             const Util::EnumData<E>* data = &_converter.data(i);
             row[_columns.data] = data;
-            row[_columns.label] = _converter.get_label(data->id);
+            row[_columns.label] = _( _converter.get_label(data->id).c_str() );
         }
 
         set_active(0);

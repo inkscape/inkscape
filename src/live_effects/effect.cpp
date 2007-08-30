@@ -37,14 +37,14 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
-    // {constant defined in effect.h, _("name of your effect"), "name of your effect in SVG"}
-    {SKELETAL_STROKES,      _("Path along path"),      "skeletal"},
+    // {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
+    {SKELETAL_STROKES,      N_("Path along path"),      "skeletal"},
 #ifdef LPE_ENABLE_TEST_EFFECTS
-    {SLANT,                 _("Slant"),                 "slant"},
-    {DOEFFECTSTACK_TEST,    _("doEffect stack test"),   "doeffectstacktest"},
+    {SLANT,                 N_("Slant"),                 "slant"},
+    {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),   "doeffectstacktest"},
 #endif
-    {GEARS,                 _("Gears"),                 "gears"},
-    {CURVE_STITCH,          _("Curve stitching"),       "curvestitching"},
+    {GEARS,                 N_("Gears"),                 "gears"},
+    {CURVE_STITCH,          N_("Curve stitching"),       "curvestitching"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -101,7 +101,7 @@ Glib::ustring
 Effect::getName()
 {
     if (lpeobj->effecttype_set && lpeobj->effecttype < INVALID_LPE)
-        return Glib::ustring( LPETypeConverter.get_label(lpeobj->effecttype) );
+        return Glib::ustring( _(LPETypeConverter.get_label(lpeobj->effecttype).c_str()) );
     else
         return Glib::ustring( _("No effect") );
 }
