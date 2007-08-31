@@ -182,6 +182,7 @@
              destdir="${build}/obj">
         <fileset dir="${src}">
             <!-- THINGS TO EXCLUDE -->
+            <exclude name="2geom/chebyshev.cpp"/>
             <exclude name="ast/.*"/>
             <exclude name="bonobo/.*"/>
             <exclude name="deptool.cpp"/>
