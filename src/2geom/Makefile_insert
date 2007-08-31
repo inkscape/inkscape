@@ -9,8 +9,6 @@
 	2geom/bezier-to-sbasis.h	\
 	2geom/bezier-utils.cpp	\
 	2geom/bezier-utils.h	\
-	2geom/chebyshev.cpp	\
-	2geom/chebyshev.h	\
 	2geom/choose.h	\
 	2geom/circle-circle.cpp	\
 	2geom/circulator.h	\
