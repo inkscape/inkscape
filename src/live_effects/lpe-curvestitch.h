@@ -17,6 +17,7 @@
 #include "live_effects/effect.h"
 #include "live_effects/parameter/path.h"
 #include "live_effects/parameter/parameter.h"
+#include "live_effects/parameter/bool.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -33,6 +34,7 @@ private:
     ScalarParam nrofpaths;
     ScalarParam startpoint_variation;
     ScalarParam endpoint_variation;
+    BoolParam scale_y;
 
     LPECurveStitch(const LPECurveStitch&);
     LPECurveStitch& operator=(const LPECurveStitch&);
