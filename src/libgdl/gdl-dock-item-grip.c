@@ -370,7 +370,7 @@ gdl_dock_item_grip_instance_init (GdlDockItemGrip *grip)
     gtk_button_set_relief (GTK_BUTTON (grip->_priv->iconify_button), GTK_RELIEF_NONE);
     gtk_widget_show (grip->_priv->iconify_button);
 
-    image = gtk_image_new_from_stock (GDL_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
+    image = gtk_image_new_from_stock (GDL_STOCK_MENU_RIGHT, GTK_ICON_SIZE_MENU);
     gtk_container_add (GTK_CONTAINER (grip->_priv->iconify_button), image);
     gtk_widget_show (image);
 
