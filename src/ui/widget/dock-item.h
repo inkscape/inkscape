@@ -118,8 +118,6 @@ private:
     void _onStateChanged(State prev_state, State new_state);
     bool _onDeleteEvent(GdkEventAny *event);
 
-    void _onFoo();
-
     sigc::connection _signal_key_press_event_connection;
 
     /** GdlDockItem signal proxy structures */

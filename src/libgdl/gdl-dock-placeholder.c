@@ -338,6 +338,9 @@ gdl_dock_placeholder_add (GtkContainer *container,
     g_return_if_fail (GDL_IS_DOCK_PLACEHOLDER (container));
     g_return_if_fail (GDL_IS_DOCK_ITEM (widget));
 
+    if (GDL_DOCK_ITEM (widget)->behavior & GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER)
+        pos = GDL_DOCK_TOP;
+
     ph = GDL_DOCK_PLACEHOLDER (container);
     if (ph->_priv->placement_stack)
         pos = (GdlDockPlacement) ph->_priv->placement_stack->data;
