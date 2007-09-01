@@ -39,6 +39,7 @@ private:
     std::list<Glib::ustring> _selected;
     sigc::connection _dialogsig;
     sigc::connection _changesig;
+    sigc::connection _timersig;
 
 public:
     Effect * _effect;
@@ -47,7 +48,6 @@ public:
     ~ExecutionEnv (void);
 
     void run (void);
-    void preferencesChange (void);
     void livePreview (bool state = true);
     void shutdown (bool del = false);
 
@@ -56,6 +56,8 @@ private:
     void createWorkingDialog (void);
     void workingCanceled (const int resp);
     void preferencesResponse (const int resp);
+    void preferencesChange (void);
+    bool preferencesTimer (void);
     void processingCancel (void);
     void processingComplete(void);
     void documentCancel (void);

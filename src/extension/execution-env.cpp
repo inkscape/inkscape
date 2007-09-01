@@ -30,7 +30,6 @@ namespace Extension {
 
 ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls, sigc::signal<void> * changeSignal, Gtk::Dialog * prefDialog) :
     _visibleDialog(NULL),
-    _effect(effect),
     _prefsVisible(false),
     _finished(false),
     _humanWait(false),
@@ -39,7 +38,8 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
     _livePreview(true),
     _selfdelete(false),
     _changeSignal(changeSignal),
-    _doc(doc) {
+    _doc(doc),
+    _effect(effect) {
 
     SPDesktop *desktop = (SPDesktop *)_doc;
     sp_namedview_document_from_window(desktop);
@@ -81,6 +81,7 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
 
 ExecutionEnv::~ExecutionEnv (void) {
     _dialogsig.disconnect();
+    _timersig.disconnect();
     if (_prefsVisible) {
         _changesig.disconnect();
     }
@@ -95,6 +96,13 @@ ExecutionEnv::~ExecutionEnv (void) {
 
 void
 ExecutionEnv::preferencesChange (void) {
+    _timersig.disconnect();
+    _timersig = Glib::signal_timeout().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesTimer), 100, Glib::PRIORITY_DEFAULT_IDLE);
+    return;
+}
+
+bool
+ExecutionEnv::preferencesTimer (void) {
     //std::cout << "Preferences are a changin'" << std::endl;
     _prefsChanged = true;
     if (_humanWait) {
@@ -105,7 +113,7 @@ ExecutionEnv::preferencesChange (void) {
         processingCancel();
         documentCancel();
     }
-    return;
+    return false;
 }
 
 void
