@@ -234,7 +234,13 @@ sp_3dbox_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
         SP3DBox *box = SP_3DBOX(object);
-        sp_3dbox_link_to_existing_paths (box, SP_OBJECT_REPR(object));
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR(object);
+        sp_3dbox_link_to_existing_paths (box, repr);
+        SP3DBoxContext *bc = SP_3DBOX_CONTEXT (inkscape_active_event_context());
+        bc->_vpdrag->updateDraggers();
+        // FIXME: Should we update the corners here, too? Maybe this is the reason why the handles
+        //        are off after an undo/redo! On the other hand, if we do so we get warnings about
+        //        updates occuring while other updats are in progress ...
     }
 
     /* Invoke parent method */

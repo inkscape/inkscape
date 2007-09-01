@@ -55,6 +55,7 @@ public:
     bool operator== (VanishingPoint const &other);
 
     inline NR::Point get_pos() const { return NR::Point ((*this)[NR::X], (*this)[NR::Y]); }
+    inline double get_angle() const { return NR::atan2 (this->v_dir) * 180/M_PI; } // return angle of infinite direction is in degrees
     inline void set_pos(NR::Point const &pt) { (*this)[NR::X] = pt[NR::X];
                                                (*this)[NR::Y] = pt[NR::Y]; }
     inline void set_pos(const double pt_x, const double pt_y) { (*this)[NR::X] = pt_x;
@@ -120,6 +121,7 @@ public:
     //void grabKnot (VanishingPoint const &vp, gint x, gint y, guint32 etime);
 
     bool local_change;
+    bool dragging;
 
     SPDocument *document;
     GList *draggers;

@@ -270,6 +270,8 @@ vp_knot_grabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
     VPDragger *dragger = (VPDragger *) data;
     VPDrag *drag = dragger->parent;
 
+    drag->dragging = true;
+
     //sp_canvas_force_full_redraw_after_interruptions(dragger->parent->desktop->canvas, 5);
 
     if ((state & GDK_SHIFT_MASK) && !drag->hasEmptySelection()) { // FIXME: Is the second check necessary?
@@ -369,7 +371,13 @@ vp_knot_ungrabbed_handler (SPKnot *knot, guint state, gpointer data)
 
     // TODO: Update box's paths and svg representation
 
+    dragger->parent->dragging = false;
+
     // TODO: Undo machinery!!
+    g_return_if_fail (dragger->parent);
+    g_return_if_fail (dragger->parent->document);
+    sp_document_done(dragger->parent->document, SP_VERB_CONTEXT_3DBOX,
+                     _("3D box: Move vanishing point"));
 }
 
 VPDragger::VPDragger(VPDrag *parent, NR::Point p, VanishingPoint *vp)
@@ -613,6 +621,7 @@ VPDrag::VPDrag (SPDocument *document)
 
     //this->selected = NULL;
     this->local_change = false;
+    this->dragging = false;
 
     this->sel_changed_connection = this->selection->connectChanged(
         sigc::bind (
@@ -676,6 +685,8 @@ VPDrag::getDraggerFor (VanishingPoint const &vp)
 void
 VPDrag::updateDraggers ()
 {
+    if (this->dragging)
+        return;
     /***
     while (selected) {
         selected = g_list_remove(selected, selected->data);

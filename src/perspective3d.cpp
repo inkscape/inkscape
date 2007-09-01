@@ -196,6 +196,11 @@ Perspective3D::set_infinite_direction (Box3D::Axis axis, NR::Point const dir)
     }
 
     get_vanishing_point (axis)->set_infinite_direction (dir);
+    for (GSList *i = this->boxes; i != NULL; i = i->next) {
+        sp_3dbox_reshape_after_VP_rotation (SP_3DBOX (i->data), axis);
+        sp_3dbox_set_z_orders_later_on (SP_3DBOX (i->data));
+    }
+    update_box_reprs();
 }
 
 void
@@ -207,11 +212,6 @@ Perspective3D::rotate (Box3D::Axis const axis, double const angle)
         a += angle;
         a *= M_PI/180;
         this->set_infinite_direction (axis, NR::Point (cos (a), sin (a)));
-        for (GSList *i = this->boxes; i != NULL; i = i->next) {
-            sp_3dbox_reshape_after_VP_rotation (SP_3DBOX (i->data), axis);
-            sp_3dbox_set_z_orders_later_on (SP_3DBOX (i->data));
-        }
-        update_box_reprs();
     }
 }
 
