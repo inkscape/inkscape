@@ -13,8 +13,13 @@
 #include <glibmm/i18n.h>
 
 #include "../dialogs/dialog-events.h"
+#include "xml/repr.h"
+
+#include "preferences.h"
+#include "effect.h"
 
 #include "prefdialog.h"
+
 
 namespace Inkscape {
 namespace Extension {
@@ -73,6 +78,18 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     
     GtkWidget *dlg = GTK_WIDGET(gobj());
     sp_transientize(dlg);
+
+    return;
+}
+
+PrefDialog::~PrefDialog ( )
+{
+    if (_param_preview != NULL) {
+        delete _param_preview;
+    }
+    if (_param_pinned != NULL) {
+        delete _param_pinned;
+    }
 
     return;
 }

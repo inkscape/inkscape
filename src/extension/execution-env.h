@@ -25,7 +25,6 @@ namespace Extension {
 
 class ExecutionEnv {
 private:
-    Effect * _effect;
     Gtk::Dialog * _visibleDialog;
     bool _prefsVisible;
     bool _finished;
@@ -37,6 +36,8 @@ private:
     std::list<Glib::ustring> _selected;
 
 public:
+    Effect * _effect;
+
     ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls = NULL);
     ~ExecutionEnv (void);
 
