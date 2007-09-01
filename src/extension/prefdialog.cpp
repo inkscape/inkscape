@@ -171,10 +171,7 @@ PrefDialog::pinned_toggle (void) {
         _button_cancel->set_label(Gtk::Stock::CLOSE.id);
 
         if (_exEnv != NULL) {
-            _exEnv->shutdown();
-            if (_createdExEnv) {
-                delete _exEnv;
-            }
+            _exEnv->shutdown(_createdExEnv);
             _exEnv = NULL;
         }
     } else {

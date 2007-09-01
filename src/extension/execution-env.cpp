@@ -29,14 +29,15 @@ namespace Extension {
 
 
 ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls, Gtk::Dialog * prefDialog) :
-    _effect(effect),
     _visibleDialog(NULL),
+    _effect(effect),
     _prefsVisible(false),
     _finished(false),
     _humanWait(false),
     _canceled(false),
     _prefsChanged(false),
     _livePreview(true),
+    _selfdelete(false),
     _doc(doc) {
 
     SPDesktop *desktop = (SPDesktop *)_doc;
@@ -49,7 +50,7 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
             Glib::ustring selected_id;
             selected_id = SP_OBJECT_ID(*selected);
             _selected.insert(_selected.end(), selected_id);
-            //std::cout << "Selected: " << selected_id << std::endl;
+            std::cout << "Selected: " << selected_id << std::endl;
             ++selected;
         }
     }
@@ -110,7 +111,7 @@ ExecutionEnv::createPrefsDialog (Gtk::Widget * controls) {
 
 void
 ExecutionEnv::createWorkingDialog (void) {
-    printf("Create working dialog\n");
+    printf("Create working dialog.  doc: %X\n", _doc);
     if (_visibleDialog != NULL) {
         delete _visibleDialog;
     }
@@ -193,17 +194,28 @@ ExecutionEnv::documentCommit (void) {
 
 void
 ExecutionEnv::reselect (void) {
+    printf("A  doc: %X\n", _doc);
+    if (_doc == NULL) { return; }
     SPDocument * doc = _doc->doc();
+    if (doc == NULL) { return; }
 
+    printf("B  doc: %X\n", _doc);
     SPDesktop *desktop = (SPDesktop *)_doc;
     sp_namedview_document_from_window(desktop);
 
     if (desktop == NULL) { return; }
 
+    printf("C  doc: %X\n", _doc);
     Inkscape::Selection * selection = sp_desktop_selection(desktop);
 
+    printf("D  doc: %X\n", _doc);
     for (std::list<Glib::ustring>::iterator i = _selected.begin(); i != _selected.end(); i++) {
-        selection->add(doc->getObjectById(i->c_str()));
+        printf("E %s  doc: %X\n", i->c_str(), _doc);
+        SPObject * obj = doc->getObjectById(i->c_str());
+        printf("F %s  doc: %X\n", i->c_str(), _doc);
+        if (obj != NULL) {
+            selection->add(obj);
+        }
     }
 
     return;
@@ -221,11 +233,16 @@ ExecutionEnv::run (void) {
             processingComplete();
         }
         if (_canceled) {
+            printf("Canceling the document  doc: %X\n", _doc);
             sp_document_cancel(_doc->doc());
+            printf("Reselecting  doc: %X\n", _doc);
             reselect();
         }
     }
     printf("Execution environment done running\n");
+    if (_selfdelete) {
+        delete this;
+    }
     return;
 }
 
@@ -243,13 +260,19 @@ ExecutionEnv::livePreview (bool state) {
 }
 
 void
-ExecutionEnv::shutdown (void) { 
-    _mainloop->quit();
-    processingCancel();
+ExecutionEnv::shutdown (bool del) { 
+    printf("Shutting down Execution Environment\n");
+    if (_humanWait) {
+        _mainloop->quit();
+    } else {
+        processingCancel();
+    }
     documentCancel();
+
     _finished = true;
     _visibleDialog = NULL;
 }
+    _selfdelete = del;
 
     return;
 }

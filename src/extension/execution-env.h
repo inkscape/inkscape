@@ -32,6 +32,7 @@ private:
     bool _canceled;
     bool _prefsChanged;
     bool _livePreview;
+    bool _selfdelete;
     Glib::RefPtr<Glib::MainLoop> _mainloop;
     Inkscape::UI::View::View * _doc;
     std::list<Glib::ustring> _selected;
@@ -46,7 +47,7 @@ public:
     void run (void);
     void preferencesChange (void);
     void livePreview (bool state = true);
-    void shutdown (void);
+    void shutdown (bool del = false);
 
 private:
     void createPrefsDialog (Gtk::Widget * controls);
