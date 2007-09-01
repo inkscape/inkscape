@@ -184,6 +184,7 @@ PrefDialog::pinned_toggle (void) {
         if (_exEnv == NULL) {
             _exEnv = new ExecutionEnv(_effect, SP_ACTIVE_DESKTOP, NULL, this);
             _createdExEnv = true;
+            preview_toggle();
             _exEnv->run();
         }
     }
