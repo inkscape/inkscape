@@ -238,6 +238,7 @@ Effect::prefs (Inkscape::UI::View::View * doc)
 void
 Effect::effect (Inkscape::UI::View::View * doc)
 {
+    printf("Execute effect\n");
     if (!loaded())
         set_state(Extension::STATE_LOADED);
     if (!loaded()) return;

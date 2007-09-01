@@ -71,7 +71,8 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
 }
 
 ExecutionEnv::~ExecutionEnv (void) {
-    if (_visibleDialog != NULL) {
+    _dialogsig.disconnect();
+    if (_visibleDialog != NULL && !_shutdown) {
         delete _visibleDialog;
     }
     return;
@@ -101,6 +102,7 @@ ExecutionEnv::createPrefsDialog (Gtk::Widget * controls) {
     _visibleDialog = new PrefDialog(_effect->get_name(), _effect->get_help(), controls, this, _effect);
     _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesResponse));
     _visibleDialog->show();
+    _dialogsig = _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesResponse));
 
     _prefsVisible = true;
     return;
@@ -108,6 +110,7 @@ ExecutionEnv::createPrefsDialog (Gtk::Widget * controls) {
 
 void
 ExecutionEnv::createWorkingDialog (void) {
+    printf("Create working dialog\n");
     if (_visibleDialog != NULL) {
         delete _visibleDialog;
     }
@@ -118,7 +121,7 @@ ExecutionEnv::createWorkingDialog (void) {
                                Gtk::MESSAGE_INFO,
                                Gtk::BUTTONS_CANCEL,
                                true); // modal
-    _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::workingCanceled));
+    _dialogsig = _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::workingCanceled));
     g_free(dlgmessage);
     _visibleDialog->show();
 
@@ -222,6 +225,7 @@ ExecutionEnv::run (void) {
             reselect();
         }
     }
+    printf("Execution environment done running\n");
     return;
 }
 
@@ -245,6 +249,9 @@ ExecutionEnv::shutdown (void) {
     documentCancel();
     _finished = true;
     _visibleDialog = NULL;
+}
+
+    return;
 }
 
 } }  /* namespace Inkscape, Extension */

@@ -35,6 +35,7 @@ private:
     Glib::RefPtr<Glib::MainLoop> _mainloop;
     Inkscape::UI::View::View * _doc;
     std::list<Glib::ustring> _selected;
+    sigc::connection _dialogsig;
 
 public:
     Effect * _effect;
