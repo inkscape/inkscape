@@ -192,6 +192,7 @@ PrefDialog::pinned_toggle (void) {
 
 void
 PrefDialog::on_response (int signal) {
+    //printf("Got signal %d\n", signal);
     if (!_param_pinned->get_bool(NULL, NULL)) {
         // Not my job if we're not pinned
         // It's the execution environment's job
