@@ -43,10 +43,10 @@
 
 /** Defines the key for Postscript printing */
 #define SP_MODULE_KEY_PRINT_PS    "org.inkscape.print.ps"
-#define SP_MODULE_KEY_PRINT_CAIRO_PS	"org.inkscape.print.ps.cairo"
+#define SP_MODULE_KEY_PRINT_CAIRO_PS    "org.inkscape.print.ps.cairo"
 /** Defines the key for PDF printing */
 #define SP_MODULE_KEY_PRINT_PDF    "org.inkscape.print.pdf"
-#define SP_MODULE_KEY_PRINT_CAIRO_PDF	"org.inkscape.print.pdf.cairo"
+#define SP_MODULE_KEY_PRINT_CAIRO_PDF    "org.inkscape.print.pdf.cairo"
 /** Defines the key for LaTeX printing */
 #define SP_MODULE_KEY_PRINT_LATEX    "org.inkscape.print.latex"
 /** Defines the key for printing with GNOME Print */
@@ -131,7 +131,7 @@ private:
 public:
     /** An error class for when a parameter is called on a type it is not */
     class param_wrong_type {};
-	class param_not_color_param {};
+    class param_not_color_param {};
     class param_not_enum_param {};
     class param_not_string_param {};
     class param_not_float_param {};
@@ -165,10 +165,10 @@ public:
     const gchar *    get_param_string (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
-	SPColor*        get_param_color   (const gchar * name,
+    SPColor*        get_param_color   (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
-	const gchar *   get_param_enum    (const gchar * name,
+    const gchar *   get_param_enum    (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
     bool             set_param_bool   (const gchar * name,
@@ -187,7 +187,7 @@ public:
                                        const gchar * value,
                                        SPDocument *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
-	SPColor*        set_param_color	  (const gchar * name,
+    SPColor*         set_param_color  (const gchar * name,
                                        SPColor* color,
                                        SPDocument *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
