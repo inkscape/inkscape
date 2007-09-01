@@ -75,7 +75,11 @@ namespace Inkscape {
 namespace Extension {
 namespace Implementation {
 
-
+void pump_events (void) {
+    while( Gtk::Main::events_pending() )
+        Gtk::Main::iteration();
+    return;
+}
 
 //Interpreter lookup table
 struct interpreter_t {
@@ -719,6 +723,8 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
               Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
               doc->doc(), tempfilename_in.c_str(), FALSE, FALSE, FALSE);
 
+    pump_events();
+
     if (desktop != NULL) {
         Inkscape::Util::GSListConstIterator<SPItem *> selected =
              sp_desktop_selection(desktop)->itemList();
@@ -735,12 +741,16 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
     int data_read = execute(command, params, tempfilename_in, fileout);
     fileout.toFile(tempfilename_out);
 
+    pump_events();
+
     SPDocument * mydoc = NULL;
     if (data_read > 10) {
         mydoc = Inkscape::Extension::open(
               Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG),
               tempfilename_out.c_str());
     } // data_read
+
+    pump_events();
 
     // make sure we don't leak file descriptors from g_file_open_tmp
     close(tempfd_in);
