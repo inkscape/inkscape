@@ -39,12 +39,13 @@ private:
 public:
     Effect * _effect;
 
-    ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls = NULL);
+    ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls = NULL, Gtk::Dialog * prefDialog = NULL);
     ~ExecutionEnv (void);
 
     void run (void);
     void preferencesChange (void);
     void livePreview (bool state = true);
+    void shutdown (void);
 
 private:
     void createPrefsDialog (Gtk::Widget * controls);

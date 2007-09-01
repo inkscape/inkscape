@@ -32,6 +32,8 @@ class PrefDialog : public Gtk::Dialog {
     Glib::ustring _name;
     /** \brief  An execution environment if there is one */
     ExecutionEnv * _exEnv;
+    /** \brief  Whether we created the \a _exEnv variable */
+    bool _createdExEnv;
 
     /** \brief  A pointer to the OK button */
     Gtk::Button * _button_ok;

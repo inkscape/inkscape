@@ -28,7 +28,7 @@ namespace Inkscape {
 namespace Extension {
 
 
-ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls) :
+ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls, Gtk::Dialog * prefDialog) :
     _effect(effect),
     _visibleDialog(NULL),
     _prefsVisible(false),
@@ -56,10 +56,15 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
 
     _mainloop = Glib::MainLoop::create(false);
 
-    if (controls != NULL) {
-        createPrefsDialog(controls);
+    if (prefDialog == NULL) {
+        if (controls != NULL) {
+            createPrefsDialog(controls);
+        } else {
+            createWorkingDialog();
+        }
     } else {
-        createWorkingDialog();
+        _visibleDialog = prefDialog;
+        _prefsVisible = true;
     }
 
     return;
@@ -224,7 +229,7 @@ void
 ExecutionEnv::livePreview (bool state) { 
     _mainloop->quit();
     if (_livePreview && !state) {
-        _canceled = true;
+        documentCancel();
     }
     if (!_livePreview && state) {
         _humanWait = false;
@@ -233,6 +238,14 @@ ExecutionEnv::livePreview (bool state) {
     return;
 }
 
+void
+ExecutionEnv::shutdown (void) { 
+    _mainloop->quit();
+    processingCancel();
+    documentCancel();
+    _finished = true;
+    _visibleDialog = NULL;
+}
 
 } }  /* namespace Inkscape, Extension */
 

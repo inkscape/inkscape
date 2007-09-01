@@ -43,6 +43,7 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     _help(help),
     _name(name),
     _exEnv(exEnv),
+    _createdExEnv(false),
     _button_ok(NULL),
     _button_cancel(NULL),
     _button_preview(NULL),
@@ -168,12 +169,26 @@ PrefDialog::pinned_toggle (void) {
 
         _button_ok->set_label(Gtk::Stock::EXECUTE.id);
         _button_cancel->set_label(Gtk::Stock::CLOSE.id);
+
+        if (_exEnv != NULL) {
+            _exEnv->shutdown();
+            if (_createdExEnv) {
+                delete _exEnv;
+            }
+            _exEnv = NULL;
+        }
     } else {
         _button_preview->set_sensitive(true);
         set_modal(true);
 
         _button_ok->set_label(Gtk::Stock::OK.id);
         _button_cancel->set_label(Gtk::Stock::CANCEL.id);
+
+        if (_exEnv == NULL) {
+            _exEnv = new ExecutionEnv(_effect, SP_ACTIVE_DESKTOP, NULL, this);
+            _createdExEnv = true;
+            _exEnv->run();
+        }
     }
 }
 
