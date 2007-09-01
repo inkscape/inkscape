@@ -33,11 +33,10 @@ bool ExpirationTimer::timer_started = false;
     the first timer extension, the timer is kicked off.  This function
     also sets up teh circularly linked list of all the timers.
 */
-ExpirationTimer::ExpirationTimer (Extension * in_extension)
+ExpirationTimer::ExpirationTimer (Extension * in_extension):
+    locked(0),
+    extension(in_extension)
 {
-    locked = false;
-    extension = in_extension;
-
     /* Fix Me! */
     if (timer_list == NULL) {
         next = this;
@@ -124,7 +123,7 @@ ExpirationTimer::touch (void)
 bool
 ExpirationTimer::expired (void) const
 {
-    if (locked) return false;
+    if (locked > 0) return false;
 
     Glib::TimeVal current;
     current.assign_current_time();

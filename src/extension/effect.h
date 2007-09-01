@@ -18,6 +18,7 @@
 #include <gtk/gtkdialog.h>
 #include "verbs.h"
 
+#include "prefdialog.h"
 #include "extension.h"
 
 struct SPDocument;
@@ -88,6 +89,9 @@ class Effect : public Extension {
     Inkscape::XML::Node * _menu_node;
     /** \brief  Whehter a working dialog should be shown */
     bool _workingDialog;
+
+    /** \brief  The preference dialog if it is shown */
+    PrefDialog * _prefDialog;
 public:
                  Effect  (Inkscape::XML::Node * in_repr,
                           Implementation::Implementation * in_imp);
@@ -109,6 +113,7 @@ public:
 
     bool no_doc; // if true, the effect does not process SVG document at all, so no need to save, read, and watch for errors
 
+    void        set_pref_dialog (PrefDialog * prefdialog);
 private:
     static gchar *   remove_ (gchar * instr);
 };

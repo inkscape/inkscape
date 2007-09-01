@@ -31,7 +31,7 @@ class ExpirationTimer {
     static bool timer_started;
 
     /** \brief Is this extension locked from being unloaded? */
-    bool locked;
+    int locked;
     /** \brief Next entry in the list */
     ExpirationTimer * next;
     /** \brief When this timer expires */
@@ -49,8 +49,8 @@ public:
     ~ExpirationTimer(void);
 
     void touch (void);
-    void lock (void)   { locked = true;  };
-    void unlock (void) { locked = false; };
+    void lock (void)   { locked++;  };
+    void unlock (void) { locked--; };
 
     /** \brief Set the timeout variable */
     static void set_timeout (long in_seconds) { timeout = in_seconds; };

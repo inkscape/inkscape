@@ -35,7 +35,8 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
       _name_noprefs(Glib::ustring(get_name()) + _(" (No preferences)")),
       _verb(get_id(), get_name(), NULL, NULL, this, true),
       _verb_nopref(_id_noprefs.c_str(), _name_noprefs.c_str(), NULL, NULL, this, false),
-      _menu_node(NULL), _workingDialog(true)
+      _menu_node(NULL), _workingDialog(true),
+      _prefDialog(NULL)
 {
     Inkscape::XML::Node * local_effects_menu = NULL;
 
@@ -206,6 +207,11 @@ Effect::check (void)
 bool
 Effect::prefs (Inkscape::UI::View::View * doc)
 {
+    if (_prefDialog != NULL) {
+        _prefDialog->raise();
+        return true;
+    }
+
     if (!loaded())
         set_state(Extension::STATE_LOADED);
     if (!loaded()) return false;
@@ -237,7 +243,7 @@ Effect::prefs (Inkscape::UI::View::View * doc)
 void
 Effect::effect (Inkscape::UI::View::View * doc)
 {
-    printf("Execute effect\n");
+    //printf("Execute effect\n");
     if (!loaded())
         set_state(Extension::STATE_LOADED);
     if (!loaded()) return;
@@ -298,6 +304,18 @@ Gtk::VBox *
 Effect::get_info_widget(void)
 {
     return Extension::get_info_widget();
+}
+
+void
+Effect::set_pref_dialog (PrefDialog * prefdialog)
+{
+    _prefDialog = prefdialog;
+    if (_prefDialog == NULL) {
+        timer->unlock();
+    } else {
+        timer->lock();
+    }
+    return;
 }
 
 /** \brief  Create an action for a \c EffectVerb

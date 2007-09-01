@@ -107,11 +107,18 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     GtkWidget *dlg = GTK_WIDGET(gobj());
     sp_transientize(dlg);
 
+    if (_effect != NULL) {
+        _effect->set_pref_dialog(this);
+    }
+
     return;
 }
 
 PrefDialog::~PrefDialog ( )
 {
+    if (_effect != NULL) {
+        _effect->set_pref_dialog(NULL);
+    }
     if (_param_preview != NULL) {
         delete _param_preview;
     }
