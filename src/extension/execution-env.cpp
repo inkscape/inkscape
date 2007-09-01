@@ -78,7 +78,9 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
 
 ExecutionEnv::~ExecutionEnv (void) {
     _dialogsig.disconnect();
-    _changesig.disconnect();
+    if (_prefsVisible) {
+        _changesig.disconnect();
+    }
     if (_visibleDialog != NULL && !_shutdown) {
         delete _visibleDialog;
     }
@@ -121,6 +123,7 @@ ExecutionEnv::createWorkingDialog (void) {
     }
     if (_changeSignal != NULL) {
         delete _changeSignal;
+        _changeSignal = NULL;
     }
 
     gchar * dlgmessage = g_strdup_printf(_("'%s' working, please wait..."), _effect->get_name());
@@ -148,12 +151,17 @@ ExecutionEnv::workingCanceled (const int resp) {
 void
 ExecutionEnv::preferencesResponse (const int resp) {
     if (resp == Gtk::RESPONSE_OK) {
-        if (_humanWait) {
+        if (_humanWait && _livePreview) {
             documentCommit();
             _mainloop->quit();
             _finished = true;
         } else {
             createWorkingDialog();
+            if (!_livePreview) {
+                _mainloop->quit();
+                _humanWait = false;
+                _livePreview = true; // this is counter intuitive
+            }
         }
     } else {
         if (_humanWait) {
