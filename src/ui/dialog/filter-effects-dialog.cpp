@@ -892,7 +892,7 @@ Glib::RefPtr<Gtk::Menu> create_popup_menu(Gtk::Widget& parent, sigc::slot<void> 
 
 /*** FilterModifier ***/
 FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
-    : _dialog(d), _add(Gtk::Stock::ADD), _observer(new SignalObserver)
+    : _dialog(d), _add(Gtk::Stock::NEW), _observer(new SignalObserver)
 {
     Gtk::ScrolledWindow* sw = Gtk::manage(new Gtk::ScrolledWindow);
     pack_start(*sw);
@@ -1244,7 +1244,7 @@ FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
     set_reorderable(true);
 
     set_model(_model);
-    append_column(_("_Type"), _columns.type);
+    append_column(_("_Effect"), _columns.type);
 
     _observer->signal_changed().connect(signal_primitive_changed().make_slot());
     get_selection()->signal_changed().connect(sigc::mem_fun(*this, &PrimitiveList::on_primitive_selection_changed));
@@ -1849,8 +1849,8 @@ FilterEffectsDialog::FilterEffectsDialog(Behavior::BehaviorFactory behavior_fact
       _filter_modifier(*this),
       _primitive_list(*this),
       _add_primitive_type(FPConverter),
-      _add_primitive(Gtk::Stock::ADD),
-      _empty_settings(_("No primitive selected"), Gtk::ALIGN_LEFT),
+      _add_primitive(_("Add Effect:")),
+      _empty_settings(_("No effect selected"), Gtk::ALIGN_LEFT),
       _locked(false),
       _attr_lock(false)
 {
@@ -1863,7 +1863,7 @@ FilterEffectsDialog::FilterEffectsDialog(Behavior::BehaviorFactory behavior_fact
     Gtk::HPaned* hpaned = Gtk::manage(new Gtk::HPaned);
     Gtk::ScrolledWindow* sw_prims = Gtk::manage(new Gtk::ScrolledWindow);
     Gtk::HBox* hb_prims = Gtk::manage(new Gtk::HBox);
-    Gtk::Frame* fr_settings = Gtk::manage(new Gtk::Frame(_("<b>Settings</b>")));
+    Gtk::Frame* fr_settings = Gtk::manage(new Gtk::Frame(_("<b>Effect parameters</b>")));
     Gtk::Alignment* al_settings = Gtk::manage(new Gtk::Alignment);
     get_vbox()->add(*hpaned);
     hpaned->pack1(_filter_modifier);
@@ -1871,8 +1871,8 @@ FilterEffectsDialog::FilterEffectsDialog(Behavior::BehaviorFactory behavior_fact
     _primitive_box.pack_start(*sw_prims);
     _primitive_box.pack_start(*hb_prims, false, false);
     sw_prims->add(_primitive_list);
-    hb_prims->pack_end(_add_primitive, false, false);
     hb_prims->pack_end(_add_primitive_type, false, false);
+    hb_prims->pack_end(_add_primitive, false, false);
     get_vbox()->pack_start(*fr_settings, false, false);
     fr_settings->add(*al_settings);
     al_settings->add(_settings_box);
