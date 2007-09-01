@@ -210,13 +210,12 @@ Effect::prefs (Inkscape::UI::View::View * doc)
         set_state(Extension::STATE_LOADED);
     if (!loaded()) return false;
 
-    sigc::signal<void> changeSignal;
+    sigc::signal<void> * changeSignal = new sigc::signal<void>;
 
     Gtk::Widget * controls;
-    controls = imp->prefs_effect(this, doc, &changeSignal);
+    controls = imp->prefs_effect(this, doc, changeSignal);
 
-    ExecutionEnv executionEnv(this, doc, controls);
-    changeSignal.connect(sigc::mem_fun(executionEnv, &ExecutionEnv::preferencesChange));
+    ExecutionEnv executionEnv(this, doc, controls, changeSignal);
 
     timer->lock();
     executionEnv.run();

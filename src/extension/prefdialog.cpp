@@ -38,7 +38,7 @@ namespace Extension {
     in the title.  It adds a few buttons and sets up handlers for
     them.  It also places the passed in widgets into the dialog.
 */
-PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls, ExecutionEnv * exEnv, Effect * effect) :
+PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls, ExecutionEnv * exEnv, Effect * effect, sigc::signal<void> * changeSignal) :
     Gtk::Dialog::Dialog(_(name.c_str()), true, true),
     _help(help),
     _name(name),
@@ -50,7 +50,8 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     _button_pinned(NULL),
     _param_preview(NULL),
     _param_pinned(NULL),
-    _effect(effect)
+    _effect(effect),
+    _signal_param_change(changeSignal)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
     hbox->pack_start(*controls, true, true, 6);
@@ -182,7 +183,7 @@ PrefDialog::pinned_toggle (void) {
         _button_cancel->set_label(Gtk::Stock::CANCEL.id);
 
         if (_exEnv == NULL) {
-            _exEnv = new ExecutionEnv(_effect, SP_ACTIVE_DESKTOP, NULL, this);
+            _exEnv = new ExecutionEnv(_effect, SP_ACTIVE_DESKTOP, NULL, _signal_param_change, this);
             _createdExEnv = true;
             preview_toggle();
             _exEnv->run();
@@ -201,6 +202,12 @@ PrefDialog::on_response (int signal) {
 
     if (signal == Gtk::RESPONSE_OK) {
         _effect->effect(SP_ACTIVE_DESKTOP);
+    } else {
+        this->hide();
+        delete _signal_param_change; // This is not in the destructor because
+                                     // it is the only situation that we need
+                                     // to delete it in
+        delete this;
     }
 
     this->hide();

@@ -59,6 +59,8 @@ class PrefDialog : public Gtk::Dialog {
     sigc::signal<void> _signal_preview;
     /** \brief Signal that the user is changing the pinned state */
     sigc::signal<void> _signal_pinned;
+    /** \brief Signal that one of the parameters change */
+    sigc::signal<void> * _signal_param_change;
 
     Effect * _effect;
 
@@ -72,7 +74,8 @@ public:
                 gchar const * help,
                 Gtk::Widget * controls,
                 ExecutionEnv * exEnv = NULL,
-                Effect * effect = NULL);
+                Effect * effect = NULL,
+                sigc::signal<void> * changeSignal = NULL);
     ~PrefDialog ();
     int run (void);
 

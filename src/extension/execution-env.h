@@ -33,15 +33,17 @@ private:
     bool _prefsChanged;
     bool _livePreview;
     bool _selfdelete;
+    sigc::signal<void> * _changeSignal;
     Glib::RefPtr<Glib::MainLoop> _mainloop;
     Inkscape::UI::View::View * _doc;
     std::list<Glib::ustring> _selected;
     sigc::connection _dialogsig;
+    sigc::connection _changesig;
 
 public:
     Effect * _effect;
 
-    ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls = NULL, Gtk::Dialog * prefDialog = NULL);
+    ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls = NULL, sigc::signal<void> * changeSignal = NULL, Gtk::Dialog * prefDialog = NULL);
     ~ExecutionEnv (void);
 
     void run (void);

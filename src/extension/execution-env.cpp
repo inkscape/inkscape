@@ -28,7 +28,7 @@ namespace Inkscape {
 namespace Extension {
 
 
-ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls, Gtk::Dialog * prefDialog) :
+ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls, sigc::signal<void> * changeSignal, Gtk::Dialog * prefDialog) :
     _visibleDialog(NULL),
     _effect(effect),
     _prefsVisible(false),
@@ -38,6 +38,7 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
     _prefsChanged(false),
     _livePreview(true),
     _selfdelete(false),
+    _changeSignal(changeSignal),
     _doc(doc) {
 
     SPDesktop *desktop = (SPDesktop *)_doc;
@@ -67,14 +68,22 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
         _visibleDialog = prefDialog;
         _prefsVisible = true;
     }
+    
+    if (_changeSignal != NULL) {
+        _changesig = _changeSignal->connect(sigc::mem_fun(this, &ExecutionEnv::preferencesChange));
+    }
 
     return;
 }
 
 ExecutionEnv::~ExecutionEnv (void) {
     _dialogsig.disconnect();
+    _changesig.disconnect();
     if (_visibleDialog != NULL && !_shutdown) {
         delete _visibleDialog;
+    }
+    if (_changeSignal != NULL && !_shutdown) {
+        delete _changeSignal;
     }
     return;
 }
@@ -96,11 +105,7 @@ ExecutionEnv::preferencesChange (void) {
 
 void
 ExecutionEnv::createPrefsDialog (Gtk::Widget * controls) {
-    if (_visibleDialog != NULL) {
-        delete _visibleDialog;
-    }
-
-    _visibleDialog = new PrefDialog(_effect->get_name(), _effect->get_help(), controls, this, _effect);
+    _visibleDialog = new PrefDialog(_effect->get_name(), _effect->get_help(), controls, this, _effect, _changeSignal);
     _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesResponse));
     _visibleDialog->show();
     _dialogsig = _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesResponse));
@@ -113,6 +118,9 @@ void
 ExecutionEnv::createWorkingDialog (void) {
     if (_visibleDialog != NULL) {
         delete _visibleDialog;
+    }
+    if (_changeSignal != NULL) {
+        delete _changeSignal;
     }
 
     gchar * dlgmessage = g_strdup_printf(_("'%s' working, please wait..."), _effect->get_name());
