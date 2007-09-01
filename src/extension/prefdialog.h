@@ -19,6 +19,7 @@
 #include <gtkmm/socket.h>
 
 #include "execution-env.h"
+#include "parameter.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -38,14 +39,24 @@ class PrefDialog : public Gtk::Dialog {
     Gtk::Button * _button_cancel;
 
     /** \brief  Button to control live preview */
-    Gtk::CheckButton * _button_preview;
+    Gtk::Widget * _button_preview;
     /** \brief  Button to control whether the dialog is pinned */
-    Gtk::CheckButton * _button_pinned;
+    Gtk::Widget * _button_pinned;
+
+    /** \brief  Parameter to control live preview */
+    Parameter * _param_preview;
+    /** \brief  Parameter to control pinning the dialog */
+    Parameter * _param_pinned;
 
     /** \brief  XML to define the pinned parameter on the dialog */
     static const char * pinned_param_xml;
     /** \brief  XML to define the live effects parameter on the dialog */
     static const char * live_param_xml;
+
+    /** \brief Signal that the user is changing the live effect state */
+    sigc::signal<void> _signal_preview;
+    /** \brief Signal that the user is changing the pinned state */
+    sigc::signal<void> _signal_pinned;
 
     Effect * _effect;
 
@@ -60,6 +71,7 @@ public:
                 Gtk::Widget * controls,
                 ExecutionEnv * exEnv = NULL,
                 Effect * effect = NULL);
+    ~PrefDialog ();
     int run (void);
 
     void setPreviewState (Glib::ustring state);

@@ -72,14 +72,23 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     // If we're working with an effect that can be live and 
     // the dialog can be pinned, put those options in too
     if (_exEnv != NULL) {
+        if (_param_preview == NULL) {
+            XML::Document * doc = sp_repr_read_mem(live_param_xml, strlen(live_param_xml), NULL);
+            _param_preview = Parameter::make(doc->root(), _exEnv->_effect);
+        }
+        if (_param_pinned == NULL) {
+            XML::Document * doc = sp_repr_read_mem(pinned_param_xml, strlen(pinned_param_xml), NULL);
+            _param_pinned = Parameter::make(doc->root(), _exEnv->_effect);
+        }
+
         Gtk::HSeparator * sep = Gtk::manage(new Gtk::HSeparator());
         sep->show();
         this->get_vbox()->pack_start(*sep, true, true, 4);
 
         hbox = Gtk::manage(new Gtk::HBox());
-        _button_preview = Gtk::manage(new Gtk::CheckButton(_("Live Preview")));
+        _button_preview = _param_preview->get_widget(NULL, NULL, &_signal_preview);
         _button_preview->show();
-        _button_pinned  = Gtk::manage(new Gtk::CheckButton(_("Pin Dialog")));
+        _button_pinned  = _param_pinned->get_widget(NULL, NULL, &_signal_pinned);
         _button_pinned->show();
         hbox->pack_start(*_button_preview, true, true,6);
         hbox->pack_start(*_button_pinned, true, true,6);
