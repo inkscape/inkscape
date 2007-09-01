@@ -47,15 +47,22 @@ class PrefDialog : public Gtk::Dialog {
     /** \brief  XML to define the live effects parameter on the dialog */
     static const char * live_param_xml;
 
+    Effect * _effect;
+
+    void preview_toggle(void);
+    void pinned_toggle(void);
+
+    void on_response (int signal);
+
 public:
     PrefDialog (Glib::ustring name,
                 gchar const * help,
                 Gtk::Widget * controls,
-                ExecutionEnv * exEnv = NULL);
+                ExecutionEnv * exEnv = NULL,
+                Effect * effect = NULL);
     int run (void);
 
     void setPreviewState (Glib::ustring state);
-    void setPinned (bool in_pin);
 };
 
 

@@ -15,6 +15,10 @@
 #include "../dialogs/dialog-events.h"
 #include "xml/repr.h"
 
+// Used to get SP_ACTIVE_DESKTOP
+#include "inkscape.h"
+#include "desktop.h"
+
 #include "preferences.h"
 #include "effect.h"
 
@@ -34,7 +38,7 @@ namespace Extension {
     in the title.  It adds a few buttons and sets up handlers for
     them.  It also places the passed in widgets into the dialog.
 */
-PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls, ExecutionEnv * exEnv) :
+PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls, ExecutionEnv * exEnv, Effect * effect) :
     Gtk::Dialog::Dialog(_(name.c_str()), true, true),
     _help(help),
     _name(name),
@@ -42,13 +46,31 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     _button_ok(NULL),
     _button_cancel(NULL),
     _button_preview(NULL),
-    _button_pinned(NULL)
+    _button_pinned(NULL),
+    _param_preview(NULL),
+    _param_pinned(NULL),
+    _effect(effect)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
     hbox->pack_start(*controls, true, true, 6);
     hbox->show();
     this->get_vbox()->pack_start(*hbox, true, true, 6);
 
+    /*
+    Gtk::Button * help_button = add_button(Gtk::Stock::HELP, Gtk::RESPONSE_HELP);
+    if (_help == NULL)
+        help_button->set_sensitive(false);
+    */
+    _button_cancel = add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    _button_cancel->set_use_stock(true);
+
+    _button_ok = add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
+    _button_ok->set_use_stock(true);
+    set_default_response(Gtk::RESPONSE_OK);
+    _button_ok->grab_focus();
+    
+    // If we're working with an effect that can be live and 
+    // the dialog can be pinned, put those options in too
     if (_exEnv != NULL) {
         Gtk::HSeparator * sep = Gtk::manage(new Gtk::HSeparator());
         sep->show();
@@ -63,19 +85,13 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
         hbox->pack_start(*_button_pinned, true, true,6);
         hbox->show();
         this->get_vbox()->pack_start(*hbox, true, true, 6);
+
+        preview_toggle();
+        pinned_toggle();
+        _signal_preview.connect(sigc::mem_fun(this, &PrefDialog::preview_toggle));
+        _signal_pinned.connect(sigc::mem_fun(this, &PrefDialog::pinned_toggle));
     }
 
-    /*
-    Gtk::Button * help_button = add_button(Gtk::Stock::HELP, Gtk::RESPONSE_HELP);
-    if (_help == NULL)
-        help_button->set_sensitive(false);
-    */
-    _button_cancel = add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-
-    _button_ok = add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
-    set_default_response(Gtk::RESPONSE_OK);
-    _button_ok->grab_focus();
-    
     GtkWidget *dlg = GTK_WIDGET(gobj());
     sp_transientize(dlg);
 
@@ -125,8 +141,46 @@ PrefDialog::setPreviewState (Glib::ustring state) {
 }
 
 void
-PrefDialog::setPinned (bool in_pin) {
-    set_modal(!in_pin);
+PrefDialog::preview_toggle (void) {
+    if(_param_preview->get_bool(NULL, NULL) && !_param_pinned->get_bool(NULL, NULL)) {
+        //std::cout << "Live Preview" << std::endl;
+    } else {
+        //std::cout << "No Preview" << std::endl;
+    }
+}
+
+void
+PrefDialog::pinned_toggle (void) {
+    if (_param_pinned->get_bool(NULL, NULL)) {
+        _button_preview->set_sensitive(false);
+        preview_toggle();
+        set_modal(false);
+
+        _button_ok->set_label(Gtk::Stock::EXECUTE.id);
+        _button_cancel->set_label(Gtk::Stock::CLOSE.id);
+    } else {
+        _button_preview->set_sensitive(true);
+        set_modal(true);
+
+        _button_ok->set_label(Gtk::Stock::OK.id);
+        _button_cancel->set_label(Gtk::Stock::CANCEL.id);
+    }
+}
+
+void
+PrefDialog::on_response (int signal) {
+    if (!_param_pinned->get_bool(NULL, NULL)) {
+        // Not my job if we're not pinned
+        // It's the execution environment's job
+        return;
+    }
+
+    if (signal == Gtk::RESPONSE_OK) {
+        _effect->effect(SP_ACTIVE_DESKTOP);
+    }
+
+    this->hide();
+    delete this;
 }
 
 #include "internal/clear-n_.h"
