@@ -67,6 +67,9 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
     } else {
         _visibleDialog = prefDialog;
         _prefsVisible = true;
+
+        // We came from a dialog, we'll need to die by ourselves.
+        _selfdelete = true;
     }
     
     if (_changeSignal != NULL) {
@@ -160,7 +163,6 @@ ExecutionEnv::preferencesResponse (const int resp) {
             if (!_livePreview) {
                 _mainloop->quit();
                 _humanWait = false;
-                _livePreview = true; // this is counter intuitive
             }
         }
     } else {
@@ -234,7 +236,7 @@ void
 ExecutionEnv::run (void) {
     while (!_finished) {
         _canceled = false;
-        if (_humanWait || !_livePreview) {
+        if (_humanWait) {
             _mainloop->run();
         } else {
             _prefsChanged = false;
@@ -257,6 +259,7 @@ ExecutionEnv::livePreview (bool state) {
     _mainloop->quit();
     if (_livePreview && !state) {
         documentCancel();
+        _humanWait = true;
     }
     if (!_livePreview && state) {
         _humanWait = false;
