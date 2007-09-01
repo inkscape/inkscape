@@ -92,7 +92,7 @@ ExecutionEnv::createPrefsDialog (Gtk::Widget * controls) {
         delete _visibleDialog;
     }
 
-    _visibleDialog = new PrefDialog(_effect->get_name(), _effect->get_help(), controls);
+    _visibleDialog = new PrefDialog(_effect->get_name(), _effect->get_help(), controls, this);
     _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesResponse));
     _visibleDialog->show();
 

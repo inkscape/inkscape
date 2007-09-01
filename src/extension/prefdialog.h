@@ -15,7 +15,10 @@
 #include <gdkmm/types.h>
 
 #include <gtkmm/dialog.h>
+#include <gtkmm/checkbutton.h>
 #include <gtkmm/socket.h>
+
+#include "execution-env.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -26,9 +29,29 @@ class PrefDialog : public Gtk::Dialog {
     gchar const * _help;
     /** \brief  Name of the extension */
     Glib::ustring _name;
+    /** \brief  An execution environment if there is one */
+    ExecutionEnv * _exEnv;
+
+    /** \brief  A pointer to the OK button */
+    Gtk::Button * _button_ok;
+    /** \brief  A pointer to the CANCEL button */
+    Gtk::Button * _button_cancel;
+
+    /** \brief  Button to control live preview */
+    Gtk::CheckButton * _button_preview;
+    /** \brief  Button to control whether the dialog is pinned */
+    Gtk::CheckButton * _button_pinned;
+
+    /** \brief  XML to define the pinned parameter on the dialog */
+    static const char * pinned_param_xml;
+    /** \brief  XML to define the live effects parameter on the dialog */
+    static const char * live_param_xml;
 
 public:
-    PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls);
+    PrefDialog (Glib::ustring name,
+                gchar const * help,
+                Gtk::Widget * controls,
+                ExecutionEnv * exEnv = NULL);
     int run (void);
 
     void setPreviewState (Glib::ustring state);
