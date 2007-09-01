@@ -35,6 +35,8 @@ public:
     Axis get_axis_of_VP (VanishingPoint *vp);
     void set_vanishing_point (Box3D::Axis const dir, VanishingPoint const &pt);
     void set_vanishing_point (Box3D::Axis const dir, gdouble pt_x, gdouble pt_y, gdouble dir_x, gdouble dir_y, VPState st);
+    void set_infinite_direction (Box3D::Axis axis, NR::Point const dir);
+    void rotate (Box3D::Axis const dir, double const angle);
     void add_box (SP3DBox *box);
     void remove_box (const SP3DBox *box);
     bool has_box (const SP3DBox *box) const;

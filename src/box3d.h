@@ -77,6 +77,7 @@ void sp_3dbox_update_curves (SP3DBox *box);
 void sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr);
 void sp_3dbox_set_ratios (SP3DBox *box, Box3D::Axis axes = Box3D::XYZ);
 void sp_3dbox_switch_front_face (SP3DBox *box, Box3D::Axis axis);
+void sp_3dbox_reshape_after_VP_rotation (SP3DBox *box, Box3D::Axis axis);
 void sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt, Box3D::Axis axes = Box3D::XY);
 void sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, bool constrained = true);
 void sp_3dbox_reshape_after_VP_toggling (SP3DBox *box, Box3D::Axis axis);

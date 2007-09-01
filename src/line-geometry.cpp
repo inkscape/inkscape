@@ -91,11 +91,6 @@ double Line::lambda (NR::Point const pt)
     return lambda;
 }
 
-inline static double determinant (NR::Point const &a, NR::Point const &b)
-{
-    return (a[NR::X] * b[NR::Y] - a[NR::Y] * b[NR::X]);
-}
-
 /* The coordinates of w with respect to the basis {v1, v2} */
 std::pair<double, double> coordinates (NR::Point const &v1, NR::Point const &v2, NR::Point const &w)
 {

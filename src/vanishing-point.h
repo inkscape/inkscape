@@ -59,6 +59,8 @@ public:
                                                (*this)[NR::Y] = pt[NR::Y]; }
     inline void set_pos(const double pt_x, const double pt_y) { (*this)[NR::X] = pt_x;
                                                                 (*this)[NR::Y] = pt_y; }
+    inline void set_infinite_direction (const NR::Point dir) { v_dir = dir; }
+    inline void set_infinite_direction (const double dir_x, const double dir_y) { v_dir = NR::Point (dir_x, dir_y); }
 
     bool is_finite() const;
     VPState toggle_parallel();

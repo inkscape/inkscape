@@ -799,6 +799,23 @@ sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr) {
 }
 
 void
+sp_3dbox_reshape_after_VP_rotation (SP3DBox *box, Box3D::Axis axis)
+{
+    Box3D::Perspective3D *persp = inkscape_active_document()->get_persp_of_box (box);
+    Box3D::VanishingPoint *vp = persp->get_vanishing_point (axis);
+
+    guint c1 = (axis == Box3D::Z) ? 1 : sp_3dbox_get_front_corner_id (box); // hack
+    guint c2 = c1 ^ axis;
+    NR::Point v = box->corners[c1] - box->corners[c2];
+    double dist = NR::L2 (v) * ((NR::dot (v, vp->v_dir) < 0) ? 1 : -1); // "directed" distance
+
+    Box3D::PerspectiveLine pline (box->corners[c1], axis, persp);
+    NR::Point pt = pline.point_from_lambda (dist);
+
+    sp_3dbox_move_corner_in_Z_direction (box, c2, pt, axis == Box3D::Z);
+}
+
+void
 sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt, Box3D::Axis axes)
 {
     Box3D::Perspective3D * persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);

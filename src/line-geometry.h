@@ -55,6 +55,10 @@ protected:
     NR::Coord d0;
 };
 
+inline double determinant (NR::Point const &a, NR::Point const &b)
+{
+    return (a[NR::X] * b[NR::Y] - a[NR::Y] * b[NR::X]);
+}
 std::pair<double, double> coordinates (NR::Point const &v1, NR::Point const &v2, NR::Point const &w);
 bool lies_in_sector (NR::Point const &v1, NR::Point const &v2, NR::Point const &w);
 bool lies_in_quadrangle (NR::Point const &A, NR::Point const &B, NR::Point const &C, NR::Point const &D, NR::Point const &pt);

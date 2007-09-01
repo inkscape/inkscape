@@ -180,6 +180,41 @@ Perspective3D::set_vanishing_point (Box3D::Axis const dir, VanishingPoint const 
     }
 }
 
+void
+Perspective3D::set_infinite_direction (Box3D::Axis axis, NR::Point const dir)
+{
+    Box3D::Axis axis1 = Box3D::get_remaining_axes (axis).first;
+    Box3D::Axis axis2 = Box3D::get_remaining_axes (axis).second;
+    Box3D::VanishingPoint *vp1 = get_vanishing_point (axis1);
+    Box3D::VanishingPoint *vp2 = get_vanishing_point (axis2);
+    if (fabs (Box3D::determinant (vp1->v_dir, dir)) < Box3D::epsilon ||
+        fabs (Box3D::determinant (vp2->v_dir, dir)) < Box3D::epsilon) {
+        // This is an ad-hoc correction; we should fix this more thoroughly
+        double a = NR::atan2 (dir) + 0.01;
+        this->set_infinite_direction (axis, NR::Point (cos (a), sin (a))); // we call this function again in case there is another conflict (which is unlikely, but possible)
+        return;
+    }
+
+    get_vanishing_point (axis)->set_infinite_direction (dir);
+}
+
+void
+Perspective3D::rotate (Box3D::Axis const axis, double const angle)
+{
+    Box3D::VanishingPoint *vp = get_vanishing_point (axis);
+    if (!vp->is_finite()) {
+        double a = NR::atan2 (vp->v_dir) * 180/M_PI;
+        a += angle;
+        a *= M_PI/180;
+        this->set_infinite_direction (axis, NR::Point (cos (a), sin (a)));
+        for (GSList *i = this->boxes; i != NULL; i = i->next) {
+            sp_3dbox_reshape_after_VP_rotation (SP_3DBOX (i->data), axis);
+            sp_3dbox_set_z_orders_later_on (SP_3DBOX (i->data));
+        }
+        update_box_reprs();
+    }
+}
+
 Axis
 Perspective3D::get_axis_of_VP (VanishingPoint *vp)
 {

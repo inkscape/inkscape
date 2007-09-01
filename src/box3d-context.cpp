@@ -451,6 +451,36 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
                 ret = TRUE;
             break;
 
+        case GDK_bracketright:
+            inkscape_active_document()->current_perspective->rotate (Box3D::X, -10);
+            ret = true;
+            break;
+
+        case GDK_bracketleft:
+            inkscape_active_document()->current_perspective->rotate (Box3D::X, 10);
+            ret = true;
+            break;
+
+        case GDK_parenright:
+            inkscape_active_document()->current_perspective->rotate (Box3D::Y, -10);
+            ret = true;
+            break;
+
+        case GDK_parenleft:
+            inkscape_active_document()->current_perspective->rotate (Box3D::Y, 10);
+            ret = true;
+            break;
+
+        case GDK_braceright:
+            inkscape_active_document()->current_perspective->rotate (Box3D::Z, -10);
+            ret = true;
+            break;
+
+        case GDK_braceleft:
+            inkscape_active_document()->current_perspective->rotate (Box3D::Z, 10);
+            ret = true;
+            break;
+
         case GDK_I:
             Box3D::Perspective3D::print_debugging_info();
             ret = true;
