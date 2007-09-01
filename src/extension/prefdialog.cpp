@@ -217,8 +217,7 @@ PrefDialog::on_response (int signal) {
         delete this;
     }
 
-    this->hide();
-    delete this;
+    return;
 }
 
 #include "internal/clear-n_.h"

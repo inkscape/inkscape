@@ -36,6 +36,7 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
     _canceled(false),
     _prefsChanged(false),
     _livePreview(true),
+    _shutdown(false),
     _selfdelete(false),
     _changeSignal(changeSignal),
     _doc(doc),
@@ -67,6 +68,7 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
     } else {
         _visibleDialog = prefDialog;
         _prefsVisible = true;
+        _dialogsig = _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesResponse));
 
         // We came from a dialog, we'll need to die by ourselves.
         _selfdelete = true;
@@ -119,7 +121,6 @@ ExecutionEnv::preferencesTimer (void) {
 void
 ExecutionEnv::createPrefsDialog (Gtk::Widget * controls) {
     _visibleDialog = new PrefDialog(_effect->get_name(), _effect->get_help(), controls, this, _effect, _changeSignal);
-    _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesResponse));
     _visibleDialog->show();
     _dialogsig = _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesResponse));
 
@@ -286,8 +287,7 @@ ExecutionEnv::shutdown (bool del) {
     documentCancel();
 
     _finished = true;
-    _visibleDialog = NULL;
-}
+    _shutdown = true;
     _selfdelete = del;
 
     return;

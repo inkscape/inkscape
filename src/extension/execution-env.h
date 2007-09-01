@@ -32,6 +32,7 @@ private:
     bool _canceled;
     bool _prefsChanged;
     bool _livePreview;
+    bool _shutdown;
     bool _selfdelete;
     sigc::signal<void> * _changeSignal;
     Glib::RefPtr<Glib::MainLoop> _mainloop;
