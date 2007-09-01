@@ -36,6 +36,7 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
     _humanWait(false),
     _canceled(false),
     _prefsChanged(false),
+    _livePreview(true),
     _doc(doc) {
 
     SPDesktop *desktop = (SPDesktop *)_doc;
@@ -204,7 +205,7 @@ void
 ExecutionEnv::run (void) {
     while (!_finished) {
         _canceled = false;
-        if (_humanWait) {
+        if (_humanWait || !_livePreview) {
             _mainloop->run();
         } else {
             _prefsChanged = false;
@@ -219,6 +220,18 @@ ExecutionEnv::run (void) {
     return;
 }
 
+void
+ExecutionEnv::livePreview (bool state) { 
+    _mainloop->quit();
+    if (_livePreview && !state) {
+        _canceled = true;
+    }
+    if (!_livePreview && state) {
+        _humanWait = false;
+    }
+    _livePreview = state;
+    return;
+}
 
 
 } }  /* namespace Inkscape, Extension */

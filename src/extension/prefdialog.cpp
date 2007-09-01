@@ -99,6 +99,7 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
         pinned_toggle();
         _signal_preview.connect(sigc::mem_fun(this, &PrefDialog::preview_toggle));
         _signal_pinned.connect(sigc::mem_fun(this, &PrefDialog::pinned_toggle));
+
     }
 
     GtkWidget *dlg = GTK_WIDGET(gobj());
@@ -152,9 +153,9 @@ PrefDialog::setPreviewState (Glib::ustring state) {
 void
 PrefDialog::preview_toggle (void) {
     if(_param_preview->get_bool(NULL, NULL) && !_param_pinned->get_bool(NULL, NULL)) {
-        //std::cout << "Live Preview" << std::endl;
+        _exEnv->livePreview(true);
     } else {
-        //std::cout << "No Preview" << std::endl;
+        _exEnv->livePreview(false);
     }
 }
 
