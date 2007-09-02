@@ -69,6 +69,8 @@ void UnitTracker::setBase( guint bases )
     gint count = gtk_tree_model_iter_n_children( GTK_TREE_MODEL(_store), 0 );
     if ( (count > 0) && (_active > count) ) {
         _setActive( count - 1 );
+    } else {
+        _setActive( _active );
     }
 }
 
@@ -186,7 +188,7 @@ void UnitTracker::_adjustmentFinalized( GObject *where_the_object_was )
 
 void UnitTracker::_setActive( gint active )
 {
-    if ( active != _active ) {
+    if ( active != _active || (_activeUnit == 0) ) {
         gint oldActive = _active;
 
         GtkTreeIter iter;
