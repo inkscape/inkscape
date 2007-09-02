@@ -91,8 +91,7 @@ private:
     void _onHide();
     bool _onDeleteEvent(GdkEventAny *event);
     void _onResponse(int response_id);
-    void _onDragBegin();
-    void _onDragEnd(bool cancelled);
+    void _onStateChanged(Widget::DockItem::State prev_state, Widget::DockItem::State new_state);
     bool _onKeyPress(GdkEventKey *event);
 
     sigc::connection _signal_hide_connection;

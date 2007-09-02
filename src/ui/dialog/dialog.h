@@ -21,14 +21,22 @@
 #include "dock-behavior.h"
 #include "floating-behavior.h"
 
-namespace Inkscape { class Selection; }
 class SPDesktop;
+
+namespace Inkscape { 
+class Selection; 
+class Application; 
+}
 
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
 enum BehaviorType { FLOATING, DOCK };
+
+void sp_retransientize(Inkscape::Application *inkscape, SPDesktop *desktop, gpointer dlgPtr);
+gboolean sp_retransientize_again(gpointer dlgPtr);
+void sp_dialog_shutdown(GtkObject *object, gpointer dlgPtr);
 
 class Dialog {
 public:

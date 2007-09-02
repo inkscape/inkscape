@@ -222,8 +222,8 @@ DockItem::present()
 void 
 DockItem::get_position(int& x, int& y)
 { 
-    if (_getWindow()) {
-        _getWindow()->get_position(x, y);
+    if (getWindow()) {
+        getWindow()->get_position(x, y);
     } else {
         x = _x;
         y = _y;
@@ -392,7 +392,7 @@ DockItem::_onKeyPress(GdkEventKey *event)
 void
 DockItem::_onStateChanged(State prev_state, State new_state)
 {
-    _window = _getWindow();
+    _window = getWindow();
 
     if (new_state == FLOATING_STATE) {
         _window->signal_hide().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onHideWindow));
@@ -411,7 +411,7 @@ DockItem::_onDeleteEvent(GdkEventAny *event)
 
 
 Gtk::Window *
-DockItem::_getWindow()
+DockItem::getWindow()
 {
     g_return_val_if_fail(_gdl_dock_item, 0);
     Gtk::Container *parent = getWidget().get_parent();

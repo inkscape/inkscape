@@ -70,6 +70,8 @@ public:
     State getPrevState() const;
     Placement getPlacement() const;
 
+    Gtk::Window *getWindow();   //< gives the parent window, if the dock item has one (i.e. it's floating)
+
     void addButton(Gtk::Button *button, int response_id);
 
     void hide();
@@ -130,9 +132,6 @@ private:
 
     static gboolean _signal_delete_event_callback(GtkWidget *self, GdkEventAny *event, void *data);
     static void _signal_drag_end_callback(GtkWidget* self, gboolean p0, void* data);
-
-    /** Internal helpers */
-    Gtk::Window *_getWindow();   //< gives the parent window, if the dock item has one (i.e. it's floating)
 
     /** In order to emulate a signal_response signal like the one for Gtk::Dialog we inject a new
      * signal into GdlDockItem. This signal will be emitted when a button in the dock item added

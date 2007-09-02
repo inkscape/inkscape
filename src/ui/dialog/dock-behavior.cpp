@@ -23,6 +23,7 @@
 #include "verbs.h"
 #include "dialog.h"
 #include "prefs-utils.h"
+#include "dialogs/dialog-events.h"
 
 #include <gtkmm/invisible.h>
 #include <gtkmm/label.h>
@@ -49,7 +50,12 @@ DockBehavior::DockBehavior(Dialog& dialog) :
     // Connect signals
     _signal_hide_connection = signal_hide().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::Behavior::DockBehavior::_onHide));
     signal_response().connect(sigc::mem_fun(_dialog, &Inkscape::UI::Dialog::Dialog::on_response));
-    signal_drag_end().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::Behavior::DockBehavior::_onDragEnd));
+    _dock_item.signal_state_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::Behavior::DockBehavior::_onStateChanged));
+
+    if (_dock_item.getState() == Widget::DockItem::FLOATING_STATE) {
+        if (Gtk::Window *floating_win = _dock_item.getWindow())
+            sp_transientize(GTK_WIDGET(floating_win->gobj()));
+    }
 }
 
 DockBehavior::~DockBehavior()
@@ -230,12 +236,14 @@ DockBehavior::_onHide()
 }
 
 void
-DockBehavior::_onDragEnd(bool)
+DockBehavior::_onStateChanged(Widget::DockItem::State prev_state, 
+                              Widget::DockItem::State new_state)
 {
-    Widget::DockItem::State prev_state = _dock_item.getPrevState(), state = _dock_item.getState();
-    
-    if (prev_state != state) {
-        prefs_set_int_attribute (_dialog._prefs_path, "state", state);
+    prefs_set_int_attribute (_dialog._prefs_path, "state", new_state);
+
+    if (new_state == Widget::DockItem::FLOATING_STATE) {
+        if (Gtk::Window *floating_win = _dock_item.getWindow())
+            sp_transientize(GTK_WIDGET(floating_win->gobj()));
     }
 }
 
@@ -267,6 +275,54 @@ DockBehavior::onShutdown()
 void
 DockBehavior::onDesktopActivated(SPDesktop *desktop)
 {
+    gint transient_policy = prefs_get_int_attribute_limited ( "options.transientpolicy", "value", 1, 0, 2);
+
+#ifdef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
+    if (prefs_get_int_attribute ( "options.dialogsontopwin32", "value", 0))
+        transient_policy = 2;
+    else    
+        return;
+#endif        
+
+    if (!transient_policy) 
+        return;
+
+    Gtk::Window *floating_win = _dock_item.getWindow();
+
+    if (floating_win) {
+
+        if (_dialog.retransientize_suppress) {
+            /* if retransientizing of this dialog is still forbidden after
+             * previous call warning turned off because it was confusingly fired
+             * when loading many files from command line
+             */
+
+            // g_warning("Retranzientize aborted! You're switching windows too fast!");
+            return;
+        }
+
+        if (GtkWindow *dialog_win = floating_win->gobj()) {
+
+            _dialog.retransientize_suppress = true; // disallow other attempts to retranzientize this dialog
+            
+            desktop->setWindowTransient (dialog_win);
+
+            /*
+             * This enables "aggressive" transientization,
+             * i.e. dialogs always emerging on top when you switch documents. Note
+             * however that this breaks "click to raise" policy of a window
+             * manager because the switched-to document will be raised at once
+             * (so that its transients also could raise)
+             */
+            if (transient_policy == 2 && ! _dialog._hiddenF12 && !_dialog._user_hidden) {
+                // without this, a transient window not always emerges on top
+                gtk_window_present (dialog_win);
+            }
+        }
+
+        // we're done, allow next retransientizing not sooner than after 120 msec
+        gtk_timeout_add (120, (GtkFunction) sp_retransientize_again, (gpointer) floating_win);
+    }
 }
 
 

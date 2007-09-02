@@ -29,15 +29,6 @@ namespace UI {
 namespace Dialog {
 namespace Behavior {
 
-static gboolean
-sp_retransientize_again (gpointer dlgPtr)
-{
-    Dialog *dlg = (Dialog *)dlgPtr;
-    dlg->retransientize_suppress = false;
-    return FALSE; // so that it is only called once
-}
-
-
 FloatingBehavior::FloatingBehavior(Dialog& dialog) :
     Behavior(dialog),
     _d (new Gtk::Dialog(_dialog._title))

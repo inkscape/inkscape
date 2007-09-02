@@ -40,14 +40,22 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-static void
+void
 sp_retransientize (Inkscape::Application *inkscape, SPDesktop *desktop, gpointer dlgPtr)
 {
     Dialog *dlg = (Dialog *)dlgPtr;
     dlg->onDesktopActivated (desktop);
 }
 
-static void
+gboolean
+sp_retransientize_again (gpointer dlgPtr)
+{
+    Dialog *dlg = (Dialog *)dlgPtr;
+    dlg->retransientize_suppress = false;
+    return FALSE; // so that it is only called once
+}
+
+void
 sp_dialog_shutdown (GtkObject *object, gpointer dlgPtr)
 {
     Dialog *dlg = (Dialog *)dlgPtr;
