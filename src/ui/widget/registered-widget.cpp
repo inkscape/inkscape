@@ -23,6 +23,7 @@
 #include "ui/widget/registry.h"
 #include "ui/widget/scalar-unit.h"
 #include "ui/widget/point.h"
+#include "ui/widget/random.h"
 #include "widgets/spinbutton-events.h"
 
 #include "helper/units.h"
@@ -541,6 +542,77 @@ RegisteredPoint::on_value_changed()
 
     _wr->setUpdating (false);
 }
+
+/*#########################################
+ * Registered RANDOM
+ */
+
+RegisteredRandom::RegisteredRandom()
+{
+    _widget = NULL;
+}
+
+RegisteredRandom::~RegisteredRandom()
+{
+    if (_widget) 
+        delete _widget;
+
+    _value_changed_connection.disconnect();
+    _reseeded_connection.disconnect();
+}
+
+void
+RegisteredRandom::init ( const Glib::ustring& label, const Glib::ustring& tip, 
+                         const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
+                         SPDocument * doc_in )
+{
+    init_parent(key, wr, repr_in, doc_in);
+
+    _widget = new Random (label, tip);
+    _widget->setRange (-1e6, 1e6);
+    _widget->setDigits (2);
+    _widget->setIncrements(0.1, 1.0);
+    _value_changed_connection = _widget->signal_value_changed().connect (sigc::mem_fun (*this, &RegisteredRandom::on_value_changed));
+    _reseeded_connection = _widget->signal_reseeded.connect(sigc::mem_fun(*this, &RegisteredRandom::on_value_changed));
+}
+
+Random*
+RegisteredRandom::getR()
+{
+    return _widget;
+}
+
+void
+RegisteredRandom::setValue (double val, long startseed)
+{
+    _widget->setValue (val);
+    _widget->setStartSeed(startseed);
+    on_value_changed();
+}
+
+void
+RegisteredRandom::on_value_changed()
+{
+    if (_wr->isUpdating())
+        return;
+    _wr->setUpdating (true);
+
+    // FIXME:  gtk bug?
+    // disable interruptibility: see http://inkscape.svn.sourceforge.net/viewvc/inkscape/inkscape/trunk/src/ui/widget/selected-style.cpp?r1=13149&r2=13257&sortby=date
+    SPDesktop* dt = SP_ACTIVE_DESKTOP;
+    sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(dt), 0);
+
+    Inkscape::SVGOStringStream os;
+    os << _widget->getValue() << ';' << _widget->getStartSeed();
+
+    write_to_xml(os.str().c_str());
+
+    // resume interruptibility
+    sp_canvas_end_forced_full_redraws(sp_desktop_canvas(dt));
+
+    _wr->setUpdating (false);
+}
+
 
 } // namespace Dialog
 } // namespace UI

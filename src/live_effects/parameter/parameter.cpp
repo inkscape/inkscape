@@ -110,7 +110,7 @@ ScalarParam::param_set_range(gdouble min, gdouble max)
     if (rsu)
         rsu->getS()->setRange(min, max);
 
-    param_set_value(value);
+    param_set_value(value); // reset value to see whether it is in ranges
 }
 
 void

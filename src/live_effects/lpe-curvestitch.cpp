@@ -65,6 +65,9 @@ std::vector<Geom::Path>
 LPECurveStitch::doEffect (std::vector<Geom::Path> & path_in)
 {
     if (path_in.size() >= 2) {
+        startpoint_variation.resetRandomizer();
+        endpoint_variation.resetRandomizer();
+
         D2<Piecewise<SBasis> > stroke = make_cuts_independant(strokepath);
         Interval bndsStroke = bounds_exact(stroke[0]);
         gdouble scaling = bndsStroke.max() - bndsStroke.min();
@@ -85,10 +88,10 @@ LPECurveStitch::doEffect (std::vector<Geom::Path> & path_in)
         for (int i = 0; i < nrofpaths; i++) {
             Point start = A(tA);
             Point end = B(tB);
-            if (startpoint_variation != 0)
-                start = start + g_random_double_range(0, startpoint_variation) * (end - start);
-            if (endpoint_variation != 0)
-                end = end + g_random_double_range(0, endpoint_variation) * (end - start);
+            if (startpoint_variation.get_value() != 0)
+                start = start + startpoint_variation * (end - start);
+            if (endpoint_variation.get_value() != 0)
+                end = end + endpoint_variation * (end - start);
     
             Matrix transform;
             transform.setXAxis( (end-start) / scaling );

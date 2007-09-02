@@ -68,31 +68,32 @@ public:
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
                 gdouble default_value = 1.0);
-    ~ScalarParam();
+    virtual ~ScalarParam();
 
-    bool param_readSVGValue(const gchar * strvalue);
-    gchar * param_writeSVGValue() const;
+    virtual bool param_readSVGValue(const gchar * strvalue);
+    virtual gchar * param_writeSVGValue() const;
 
-    void param_set_default();
+    virtual void param_set_default();
     void param_set_value(gdouble val);
     void param_make_integer(bool yes = true);
     void param_set_range(gdouble min, gdouble max);
 
-    Gtk::Widget * param_getWidget();
+    virtual Gtk::Widget * param_getWidget();
 
     inline operator gdouble()
         { return value; };
 
-private:
-    ScalarParam(const ScalarParam&);
-    ScalarParam& operator=(const ScalarParam&);
-
+protected:
     gdouble value;
     gdouble min;
     gdouble max;
     bool integer;
     gdouble defvalue;
     Inkscape::UI::Widget::RegisteredScalar * rsu;
+
+private:
+    ScalarParam(const ScalarParam&);
+    ScalarParam& operator=(const ScalarParam&);
 };
 
 } //namespace LivePathEffect
