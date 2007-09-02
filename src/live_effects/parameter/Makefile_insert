@@ -10,6 +10,8 @@ live_effects_parameter_liblpeparam_a_SOURCES = \
 	live_effects/parameter/parameter.h	\
 	live_effects/parameter/bool.cpp	\
 	live_effects/parameter/bool.h	\
+	live_effects/parameter/random.cpp	\
+	live_effects/parameter/random.h	\
 	live_effects/parameter/point.cpp	\
 	live_effects/parameter/point.h	\
 	live_effects/parameter/enum.h	\

@@ -45,6 +45,8 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/point.h		\
 	ui/widget/preferences-widget.cpp \
 	ui/widget/preferences-widget.h   \
+	ui/widget/random.cpp \
+	ui/widget/random.h   \
 	ui/widget/registered-widget.cpp \
 	ui/widget/registered-widget.h   \
 	ui/widget/registered-enums.h   \
