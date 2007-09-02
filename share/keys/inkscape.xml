@@ -91,7 +91,7 @@ override) the bindings in the main default.xml.
 
   <bind action="NodePrefs" />
 
-  <bind key="F2" modifiers="Alt" action="ToolTweak" display="true"/>
+  <bind key="F2" modifiers="Shift" action="ToolTweak" display="true"/>
   <bind key="w" action="ToolTweak" />
   <bind key="W" action="ToolTweak" />
 
