@@ -24,6 +24,9 @@ example_DATA = \
 	animated-clock.svg \
 	blend_modes.svg \
 	flow-go.svg \
-	lighting_effects.svg
+	lighting_effects.svg \
+	live-path-effects-curvestitch.svg \
+	live-path-effects-gears.svg \
+	live-path-effects-pathalongpath.svg
 
 EXTRA_DIST = $(example_DATA)
