@@ -24,7 +24,7 @@ RFE</a>).</p>
 <note>Space switches to the Selector tool temporarily; another Space switches back.</note>
 <note>When the "Left mouse button pans when Space is pressed" option is on in Preferences, Space+mouse drag pans canvas instead of switching to Selector.</note>
 <keys><key><keyf f="F2"/></key><key>n</key>	<action>Node tool</action></keys>
-<keys><key><alt/><keyf f="F2"/></key><key>w</key>	<action>Tweak tool</action></keys>
+<keys><key><shift/><keyf f="F2"/></key><key>w</key>	<action>Tweak tool</action></keys>
 <keys><key><keyf f="F3"/></key><key>z</key>	 <action>Zoom tool</action></keys>
 <keys><key><keyf f="F4"/></key><key>r</key>	 <action>Rectangle tool</action></keys>
 <keys><key><shift/><keyf f="F4"/></key><key>x</key>	 <action>3D box tool</action></keys>
