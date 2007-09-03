@@ -2756,7 +2756,7 @@ sp_style_read_iscale24(SPIScale24 *val, gchar const *str)
         if (sp_svg_number_read_f(str, &value)) {
             val->set = TRUE;
             val->inherit = FALSE;
-            value = CLAMP(value, 0.0f, (gfloat) SP_SCALE24_MAX);
+            value = CLAMP(value, 0.0, 1.0);
             val->value = SP_SCALE24_FROM_FLOAT(value);
         }
     }
