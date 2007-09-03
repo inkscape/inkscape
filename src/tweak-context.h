@@ -30,7 +30,7 @@ class SPTweakContextClass;
 
 #define TC_MIN_PRESSURE      0.0
 #define TC_MAX_PRESSURE      1.0
-#define TC_DEFAULT_PRESSURE  0.4
+#define TC_DEFAULT_PRESSURE  0.3
 
 enum {
     TWEAK_MODE_PUSH,

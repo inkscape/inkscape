@@ -795,7 +795,7 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point v
     if (radius == 0 || force == 0) {
         return false;
     }
-    double color_force = MIN(sqrt(force)/4.0, 1);
+    double color_force = MIN(sqrt(force)/20.0, 1);
 
     SPItem *item_at_point = SP_EVENT_CONTEXT(tc)->desktop->item_at_point(event_p, TRUE);
     Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, "tools.tweak");
