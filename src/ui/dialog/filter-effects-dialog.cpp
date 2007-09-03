@@ -1465,31 +1465,49 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& in
                                                          const int text_start_x, const int x1, const int y1,
                                                          const int row_count)
 {
-    int src_id;
-    const Gtk::TreeIter res = find_result(input, attr, src_id);
-    Glib::RefPtr<Gdk::GC> gc = get_style()->get_black_gc();
+    int src_id = 0;
+    Gtk::TreeIter res = find_result(input, attr, src_id);
+    Glib::RefPtr<Gdk::GC> darkgc = get_style()->get_black_gc();
+    Glib::RefPtr<Gdk::GC> lightgc = get_style()->get_dark_gc(Gtk::STATE_NORMAL);
+    Glib::RefPtr<Gdk::GC> gc;
+
+    const bool is_first = input == get_model()->children().begin();
+    const bool is_merge = SP_IS_FEMERGE((SPFilterPrimitive*)(*input)[_columns.primitive]);
+    const bool use_default = !res && !is_merge;
     
-    if(res == input) {
+    if(res == input || (use_default && is_first)) {
         // Draw straight connection to a standard input
+        // Draw a lighter line for an implicit connection to a standard input
         const int tw = _connection_cell.get_text_width();
         gint end_x = text_start_x + tw * (src_id + 1) + (int)(tw * 0.5f) + 1;
+        gc = (use_default && is_first) ? lightgc : darkgc;
         get_bin_window()->draw_rectangle(gc, true, end_x-2, y1-2, 5, 5);
         get_bin_window()->draw_line(gc, x1, y1, end_x, y1);
     }
-    else if(res != _model->children().end()) {
-        Gdk::Rectangle rct;
-
-        get_cell_area(get_model()->get_path(_model->children().begin()), *get_column(1), rct);
-        const int fheight = CellRendererConnection::size;
-
-        get_cell_area(get_model()->get_path(res), *get_column(1), rct);
-        const int row_index = find_index(res);
-        const int x2 = rct.get_x() + fheight * (row_count - row_index) - fheight / 2;
-        const int y2 = rct.get_y() + rct.get_height();
-
+    else {
         // Draw an 'L'-shaped connection to another filter primitive
-        get_bin_window()->draw_line(gc, x1, y1, x2, y1);
-        get_bin_window()->draw_line(gc, x2, y1, x2, y2);
+        // If no connection is specified, draw a light connection to the previous primitive
+        gc = use_default ? lightgc : darkgc;
+
+        if(use_default) {
+            res = input;
+            --res;
+        }
+
+        if(res) {
+            Gdk::Rectangle rct;
+            
+            get_cell_area(get_model()->get_path(_model->children().begin()), *get_column(1), rct);
+            const int fheight = CellRendererConnection::size;
+            
+            get_cell_area(get_model()->get_path(res), *get_column(1), rct);
+            const int row_index = find_index(res);
+            const int x2 = rct.get_x() + fheight * (row_count - row_index) - fheight / 2;
+            const int y2 = rct.get_y() + rct.get_height();
+            
+            get_bin_window()->draw_line(gc, x1, y1, x2, y1);
+            get_bin_window()->draw_line(gc, x2, y1, x2, y2);
+        }
     }
 }
 
@@ -1527,10 +1545,15 @@ const Gtk::TreeIter FilterEffectsDialog::PrimitiveList::find_result(const Gtk::T
 
     if(SP_IS_FEMERGE(prim)) {
         int c = 0;
+        bool found = false;
         for(const SPObject* o = prim->firstChild(); o; o = o->next, ++c) {
-            if(c == attr && SP_IS_FEMERGENODE(o))
+            if(c == attr && SP_IS_FEMERGENODE(o)) {
                 image = SP_FEMERGENODE(o)->input;
+                found = true;
+            }
         }
+        if(!found)
+            return target;
     }
     else {
         if(attr == SP_ATTR_IN)
