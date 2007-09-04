@@ -25,7 +25,15 @@ public:
             TestCase("fill:#ff00ff"),
 
             TestCase("fill:rgb(100%, 0%, 100%)", "fill:#ff00ff"),
+            // TODO - fix this to preserve the string
+//             TestCase("fill:url(#painter) rgb(100%, 0%, 100%)",
+//                      "fill:url(#painter) #ff00ff", "#painter"),
+
             TestCase("fill:rgb(255, 0, 255)", "fill:#ff00ff"),
+            // TODO - fix this to preserve the string
+//             TestCase("fill:url(#painter) rgb(255, 0, 255)",
+//                      "fill:url(#painter) #ff00ff", "#painter"),
+
 
 //             TestCase("fill:#ff00ff icc-color(colorChange, 0.1, 0.5, 0.1)"),
 
@@ -38,6 +46,7 @@ public:
 
 //             TestCase("fill:url(#painter) #ff00ff icc-color(colorChange, 0.1, 0.5, 0.1)",
 //             "fill:url(#painter) #ff00ff icc-color(colorChange, 0.10000000000000001, 0.50000000000000000, 0.10000000000000001)", "#painter"),
+//             TestCase("fill:url(#painter) #ff00ff icc-color(colorChange, 0.1, 0.5, 0.1)", 0, "#painter"),
 
 //             TestCase("fill:url(#painter) inherit", 0, "#painter"),
             TestCase("fill:inherit"),
@@ -45,18 +54,18 @@ public:
         };
 
         for ( gint i = 0; cases[i].src; i++ ) {
-            SPStyle *style = sp_style_new();
+            SPStyle *style = sp_style_new(NULL);
             TS_ASSERT(style);
             if ( style ) {
                 sp_style_merge_from_style_string( style, cases[i].src );
 
                 if ( cases[i].uri ) {
-                    TS_ASSERT( style->fill.value.paint.uri );
-                    if ( style->fill.value.paint.uri ) {
-                        TS_ASSERT_EQUALS( std::string(style->fill.value.paint.uri), std::string(cases[i].uri) );
+                    TS_ASSERT( style->fill.value.href );
+                    if ( style->fill.value.href ) {
+                        TS_ASSERT_EQUALS( style->fill.value.href->getURI()->toString(), std::string(cases[i].uri) );
                     }
                 } else {
-                    TS_ASSERT( !style->fill.value.paint.uri );
+                    TS_ASSERT( !style->fill.value.href );
                 }
 
                 gchar *str0_set = sp_style_write_string( style, SP_STYLE_FLAG_IFSET );
