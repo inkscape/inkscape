@@ -26,7 +26,7 @@ namespace LivePathEffect {
 BoolParam::BoolParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                       Effect* effect, bool default_value )
-    : Parameter(label, tip, key, wr, effect), defvalue(default_value)
+    : Parameter(label, tip, key, wr, effect), defvalue(default_value), value(default_value)
 {
     checkwdg = NULL;
 }

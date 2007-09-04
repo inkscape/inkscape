@@ -58,11 +58,15 @@ static const Util::EnumDataConverter<SkelCopyType> SkelCopyTypeConverter(SkelCop
 
 LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    pattern(_("Pattern"), _("Path to put along path"), "pattern", &wr, this, "M0,0 L1,1"),
-    copytype(_("Copytype"), _("How to shape the pattern path along the path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED)
+    pattern(_("Pattern"), _("Path to put along path"), "pattern", &wr, this, "M0,0 L1,0"),
+    copytype(_("Copytype"), _("How to shape the pattern path along the path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED),
+    prop_scale(_("Scale ratio"), _("Ratio between scaling in the x and y direction of the original path"), "prop_scale", &wr, this, 1),
+    scale_y(_("Scale pattern y"), _("Scale the height of the pattern path with its length"), "scale_stroke_y", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
     registerParameter( dynamic_cast<Parameter *>(&copytype) );
+    registerParameter( dynamic_cast<Parameter *>(&prop_scale) );
+    registerParameter( dynamic_cast<Parameter *>(&scale_y) );
 }
 
 LPESkeletalStrokes::~LPESkeletalStrokes()
@@ -76,8 +80,7 @@ LPESkeletalStrokes::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in
 {
     using namespace Geom;
 
-/* LOTS OF CODE COPIED FROM 2geom/src/toys/path-along-path.cpp
- * All credits should go to jfb and mgsloan of lib2geom development! */
+/* Much credit should go to jfb and mgsloan of lib2geom development for the code below! */
 
     SkelCopyType type = copytype.get_value();
 
@@ -93,7 +96,6 @@ LPESkeletalStrokes::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in
     x -= pattBnds.min();
     Interval pattBndsY = bounds_exact(y);
     y -= (pattBndsY.max()+pattBndsY.min())/2;
-
 
     int nbCopies = int(uskeleton.cuts.back()/pattBnds.extent());
     double scaling = 1;
@@ -121,8 +123,12 @@ LPESkeletalStrokes::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in
 
     double pattWidth = pattBnds.extent() * scaling;
 
-    if (scaling != 1)
+    if (scaling != 1.0) {
         x*=scaling;
+    }
+    if ( scale_y.get_value() && (scaling*prop_scale != 1.0) ) {
+        y*=(scaling*prop_scale);
+    }
 
     double offs = 0;
     Piecewise<D2<SBasis> > output;

@@ -41,12 +41,14 @@ LPECurveStitch::LPECurveStitch(LivePathEffectObject *lpeobject) :
     nrofpaths(_("Nr of paths"), _("The number of paths that will be generated."), "count", &wr, this, 5),
     startpoint_variation(_("Startpoint variation"), _("..."), "startpoint_variation", &wr, this, 0),
     endpoint_variation(_("Endpoint variation"), _("..."), "endpoint_variation", &wr, this, 0),
+    prop_scale(_("Scale ratio"), _("Ratio between scaling in the x and y direction of the original path"), "prop_scale", &wr, this, 1),
     scale_y(_("Scale stroke y"), _("Scale the height of the stroke path with its length"), "scale_stroke_y", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&nrofpaths) );
     registerParameter( dynamic_cast<Parameter *>(&startpoint_variation) );
     registerParameter( dynamic_cast<Parameter *>(&endpoint_variation) );
     registerParameter( dynamic_cast<Parameter *>(&strokepath) );
+    registerParameter( dynamic_cast<Parameter *>(&prop_scale) );
     registerParameter( dynamic_cast<Parameter *>(&scale_y) );
 
     nrofpaths.param_make_integer();
@@ -95,7 +97,7 @@ LPECurveStitch::doEffect (std::vector<Geom::Path> & path_in)
     
             Matrix transform;
             transform.setXAxis( (end-start) / scaling );
-            gdouble scaling_y = scale_y.get_value() ? L2(end-start)/scaling : 1.0;
+            gdouble scaling_y = scale_y.get_value() ? (L2(end-start)/scaling)*prop_scale : 1.0;
             transform.setYAxis( rot90(unit_vector(end-start)) * scaling_y);
             transform.setTranslation( start );
             Piecewise<D2<SBasis> > pwd2_out = (strokepath-stroke_origin) * transform;

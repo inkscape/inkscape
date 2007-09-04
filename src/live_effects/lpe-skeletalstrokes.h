@@ -12,6 +12,7 @@
 #include "live_effects/effect.h"
 #include "live_effects/parameter/path.h"
 #include "live_effects/parameter/enum.h"
+#include "live_effects/parameter/bool.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -34,6 +35,8 @@ public:
 private:
     PathParam  pattern;
     EnumParam<SkelCopyType> copytype;
+    ScalarParam  prop_scale;
+    BoolParam scale_y;
 
     void on_pattern_pasted();
 

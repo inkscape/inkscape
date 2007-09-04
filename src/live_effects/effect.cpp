@@ -25,6 +25,8 @@
 #include <2geom/sbasis-to-bezier.h>
 #include <gtkmm.h>
 
+#include <exception>
+
 // include effects:
 #include "live_effects/lpe-skeletalstrokes.h"
 #include "live_effects/lpe-slant.h"
@@ -114,7 +116,7 @@ Effect::doEffect (SPCurve * curve)
 {
     NArtBpath *new_bpath = doEffect(SP_CURVE_BPATH(curve));
 
-    if (new_bpath) {        // FIXME, add function to SPCurve to change bpath? or a copy function?
+    if (new_bpath && new_bpath != SP_CURVE_BPATH(curve)) {        // FIXME, add function to SPCurve to change bpath? or a copy function?
         if (curve->_bpath) {
             g_free(curve->_bpath); //delete old bpath
         }
@@ -125,13 +127,30 @@ Effect::doEffect (SPCurve * curve)
 NArtBpath *
 Effect::doEffect (NArtBpath * path_in)
 {
-    std::vector<Geom::Path> orig_pathv = BPath_to_2GeomPath(path_in);
+    try {
+        std::vector<Geom::Path> orig_pathv = BPath_to_2GeomPath(path_in);
 
-    std::vector<Geom::Path> result_pathv = doEffect(orig_pathv);
+        std::vector<Geom::Path> result_pathv = doEffect(orig_pathv);
 
-    NArtBpath *new_bpath = BPath_from_2GeomPath(result_pathv);
+        NArtBpath *new_bpath = BPath_from_2GeomPath(result_pathv);
 
-    return new_bpath;
+        return new_bpath;
+    }
+    catch (std::exception e) {
+        g_warning("An exception occurred during execution of an LPE - %s", e.what());
+        // return here
+        NArtBpath *path_out;
+
+        unsigned ret = 0;
+        while ( path_in[ret].code != NR_END ) {
+            ++ret;
+        }
+        unsigned len = ++ret;
+
+        path_out = g_new(NArtBpath, len);
+        memcpy(path_out, path_in, len * sizeof(NArtBpath));
+        return path_out;
+    }
 }
 
 std::vector<Geom::Path>

@@ -29,15 +29,15 @@ public:
                Inkscape::UI::Widget::Registry* wr,
                Effect* effect,
                bool default_value = false);
-    ~BoolParam();
+    virtual ~BoolParam();
 
-    Gtk::Widget * param_getWidget();
+    virtual Gtk::Widget * param_getWidget();
 
-    bool param_readSVGValue(const gchar * strvalue);
-    gchar * param_writeSVGValue() const;
+    virtual bool param_readSVGValue(const gchar * strvalue);
+    virtual gchar * param_writeSVGValue() const;
 
     void param_setValue(bool newvalue);
-    void param_set_default();
+    virtual void param_set_default();
 
     bool get_value() { return value; };
 

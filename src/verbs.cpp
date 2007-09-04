@@ -114,7 +114,7 @@ namespace Inkscape {
 class PanelDialog : public Inkscape::UI::Dialog::Dialog
 {
 public:
-    PanelDialog(char const *prefs_path, int const verb_num) : 
+    PanelDialog(char const *prefs_path, int const verb_num) :
         Dialog(
             (prefs_get_int_attribute_limited ("options.dialogtype", "value", UI::Dialog::DOCK, 0, 1) == UI::Dialog::FLOATING ?
              &UI::Dialog::Behavior::FloatingBehavior::create :
@@ -359,7 +359,7 @@ public:
               gchar const *image) :
         Verb(code, id, name, tip, image)
     { }
-}; //TextVerb : public Verb 
+}; //TextVerb : public Verb
 
 Verb::VerbTable Verb::_verbs;
 Verb::VerbIDTable Verb::_verb_ids;
@@ -795,12 +795,12 @@ FileVerb::perform(SPAction *action, void *data, void *pdata)
     Inkscape::UI::View::View *current_view = sp_action_get_view(action);
     SPDocument *current_document = current_view->doc();
 #endif
-    
+
     SPDesktop *desktop = dynamic_cast<SPDesktop*>(sp_action_get_view(action));
 	g_assert(desktop != NULL);
 	Gtk::Window *parent = desktop->getToplevel();
 	g_assert(parent != NULL);
-    
+
     switch ((long) data) {
         case SP_VERB_FILE_NEW:
             sp_file_new_default();
@@ -859,7 +859,7 @@ FileVerb::perform(SPAction *action, void *data, void *pdata)
         default:
             break;
     }
-   
+
 
 } // end of sp_verb_action_file_perform()
 
@@ -911,6 +911,9 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
             break;
         case SP_VERB_EDIT_PASTE_IN_PLACE:
             sp_selection_paste(true);
+            break;
+        case SP_VERB_EDIT_PASTE_LIVEPATHEFFECT:
+            sp_selection_paste_livepatheffect();
             break;
         case SP_VERB_EDIT_DELETE:
             sp_selection_delete();
@@ -965,7 +968,7 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
             }
             break;
 
-        case SP_VERB_EDIT_SELECT_NEXT: 
+        case SP_VERB_EDIT_SELECT_NEXT:
             if (tools_isactive(dt, TOOLS_NODES)) {
                 SP_NODE_CONTEXT(ec)->shape_editor->select_next();
             } else if (tools_isactive(dt, TOOLS_GRADIENT)) {
@@ -974,7 +977,7 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
                 sp_selection_item_next();
             }
             break;
-        case SP_VERB_EDIT_SELECT_PREV: 
+        case SP_VERB_EDIT_SELECT_PREV:
             if (tools_isactive(dt, TOOLS_NODES)) {
                 SP_NODE_CONTEXT(ec)->shape_editor->select_prev();
             } else if (tools_isactive(dt, TOOLS_GRADIENT)) {
@@ -1142,7 +1145,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
             SPObject *next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer());
             if (next) {
                 dt->setCurrentLayer(next);
-                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_NEXT, 
+                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_NEXT,
                                  _("Move to next layer"));
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Moved to next layer."));
             } else {
@@ -1154,7 +1157,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
             SPObject *prev=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer());
             if (prev) {
                 dt->setCurrentLayer(prev);
-                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_PREV, 
+                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_PREV,
                                  _("Move to previous layer"));
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Moved to previous layer."));
             } else {
@@ -1253,7 +1256,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
                     dt->setCurrentLayer(survivor);
                 }
 
-                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_DELETE, 
+                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_DELETE,
                                  _("Delete layer"));
 
                 // TRANSLATORS: this means "The layer has been deleted."
@@ -1333,7 +1336,7 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
                     SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::X);
                 }
 
-            // When working with the selector tool, flip the selection about its rotation center 
+            // When working with the selector tool, flip the selection about its rotation center
             // (if it is visible) or about the center of the bounding box.
             } else {
                 sp_selection_scale_relative(sel, center, NR::scale(-1.0, 1.0));
@@ -1541,7 +1544,7 @@ TextVerb::perform(SPAction *action, void *data, void *pdata)
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(dt->namedview);
     (void)repr;
 }
- 
+
 /** \brief  Decode the verb code and take appropriate action */
 void
 ZoomVerb::perform(SPAction *action, void *data, void *pdata)
@@ -1667,7 +1670,7 @@ ZoomVerb::perform(SPAction *action, void *data, void *pdata)
         default:
             break;
     }
-    
+
     dt->updateNow();
 
 } // end of sp_verb_action_zoom_perform()
@@ -2043,7 +2046,7 @@ FitCanvasVerb::perform(SPAction *action, void *data, void *pdata)
     if (!dt) return;
     SPDocument *doc = sp_desktop_document(dt);
     if (!doc) return;
-    
+
     switch ((long) data) {
         case SP_VERB_FIT_CANVAS_TO_SELECTION:
             fit_canvas_to_selection(dt);
@@ -2112,7 +2115,7 @@ LockAndHideVerb::perform(SPAction *action, void *data, void *pdata)
     if (!dt) return;
     SPDocument *doc = sp_desktop_document(dt);
     if (!doc) return;
-    
+
     switch ((long) data) {
         case SP_VERB_UNLOCK_ALL:
             unlock_all(dt);
@@ -2208,6 +2211,8 @@ Verb *Verb::_base_verbs[] = {
                  N_("Scale each selected object vertically to match the height of the copied object"), NULL),
     new EditVerb(SP_VERB_EDIT_PASTE_IN_PLACE, "EditPasteInPlace", N_("Paste _In Place"),
                  N_("Paste objects from clipboard to the original location"), "selection_paste_in_place"),
+    new EditVerb(SP_VERB_EDIT_PASTE_LIVEPATHEFFECT, "EditPasteLivePathEffect", N_("Paste Live Path _Effect"),
+                 N_("Apply the live path effect of the copied object to selection"), NULL),
     new EditVerb(SP_VERB_EDIT_DELETE, "EditDelete", N_("_Delete"),
                  N_("Delete selection"), GTK_STOCK_DELETE),
     new EditVerb(SP_VERB_EDIT_DUPLICATE, "EditDuplicate", N_("Duplic_ate"),

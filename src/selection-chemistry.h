@@ -52,6 +52,7 @@ void sp_selection_cut();
 void sp_selection_copy();
 void sp_selection_paste(bool in_place);
 void sp_selection_paste_style();
+void sp_selection_paste_livepatheffect();
 
 void sp_selection_paste_size(bool apply_x, bool apply_y);
 void sp_selection_paste_size_separately(bool apply_x, bool apply_y);

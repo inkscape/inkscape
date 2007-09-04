@@ -1184,6 +1184,54 @@ void sp_selection_paste_style()
                      _("Paste style"));
 }
 
+void sp_selection_paste_livepatheffect()
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop == NULL) return;
+
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+
+    // check if something is in the clipboard
+    if (clipboard == NULL) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the clipboard."));
+        return;
+    }
+
+    // check if something is selected
+    if (selection->isEmpty()) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to paste live path effect to."));
+        return;
+    }
+
+    paste_defs (&defs_clipboard, sp_desktop_document(desktop));
+
+    Inkscape::XML::Node *repr = (Inkscape::XML::Node *) clipboard->data;
+    const char * effectstr = repr->attribute("inkscape:path-effect");
+    if (!effectstr) {
+        SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Clipboard does not contain a live path effect."));
+        return;
+    }
+
+    for ( GSList const *itemlist = selection->itemList(); itemlist != NULL; itemlist = g_slist_next(itemlist) ) {
+        SPItem *item = reinterpret_cast<SPItem*>(itemlist->data);
+        if ( item && SP_IS_SHAPE(item) ) {
+            Inkscape::XML::Node *selrepr = (Inkscape::XML::Node *) SP_OBJECT_REPR(item);
+            selrepr->setAttribute("inkscape:path-effect", effectstr);
+
+            // set inkscape:original-d for paths. the other shapes don't need this.
+            if ( SP_IS_PATH(item) ) {
+                Inkscape::XML::Node *pathrepr = SP_OBJECT_REPR(item);
+                if ( ! pathrepr->attribute("inkscape:original-d") ) {
+                    pathrepr->setAttribute("inkscape:original-d", pathrepr->attribute("d"));
+                }
+            }
+        }
+    }
+
+    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_PASTE_LIVEPATHEFFECT,
+                     _("Paste live path effect"));
+}
+
 void sp_selection_paste_size (bool apply_x, bool apply_y)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;

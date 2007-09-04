@@ -66,6 +66,7 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"EditPaste\" />\n"
 "       <verb verb-id=\"EditPasteInPlace\" />\n"
 "       <verb verb-id=\"EditPasteStyle\" />\n"
+"       <verb verb-id=\"EditPasteLivePathEffect\" />\n"
 "       <submenu name=\"" N_("Paste Si_ze") "\">\n"
 "           <verb verb-id=\"EditPasteSize\" />\n"
 "           <verb verb-id=\"EditPasteWidth\" />\n"

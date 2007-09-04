@@ -230,6 +230,8 @@ LivePathEffectEditor::setDesktop(SPDesktop *desktop)
 # BUTTON CLICK HANDLERS    (callbacks)
 ########################################################################*/
 
+// TODO:  factor out the effect applying code which can be called from anywhere. (selection-chemistry.cpp also needs it)
+
 void
 LivePathEffectEditor::onApply()
 {
