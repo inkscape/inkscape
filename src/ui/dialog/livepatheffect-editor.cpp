@@ -90,7 +90,6 @@ LivePathEffectEditor::LivePathEffectEditor(Behavior::BehaviorFactory behavior_fa
 
     effectcontrol_vbox.pack_start(explain_label, true, true);
     effectcontrol_vbox.pack_end(button_remove, true, true);
-		button_remove.hide();
     effectcontrol_frame.add(effectcontrol_vbox);
 
     vbox->pack_start(effectapplication_frame, true, true);
@@ -109,6 +108,7 @@ LivePathEffectEditor::LivePathEffectEditor(Behavior::BehaviorFactory behavior_fa
 
     setDesktop(SP_ACTIVE_DESKTOP);
     show_all_children();
+		button_remove.hide();
 }
 
 LivePathEffectEditor::~LivePathEffectEditor() 
