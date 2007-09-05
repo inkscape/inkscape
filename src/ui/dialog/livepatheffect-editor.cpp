@@ -183,7 +183,7 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
                     button_remove.set_sensitive(false);
                 }
             } else {
-                showText(_("Item is not a shape"));
+                showText(_("Item is not a shape or path"));
                 set_sensitize_all(false);
             }
         } else {
@@ -265,7 +265,7 @@ LivePathEffectEditor::onApply()
             }
 
             sp_document_done(doc, SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
-                             _("Create and apply live effect"));
+                             _("Create and apply path effect"));
         }
     }
 }
@@ -279,7 +279,7 @@ LivePathEffectEditor::onRemove()
         if ( item && SP_IS_SHAPE(item) ) {
             sp_shape_remove_path_effect(SP_SHAPE(item));
             sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
-                               _("Remove live path effect") );
+                               _("Remove path effect") );
         }
     }
 }
