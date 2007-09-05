@@ -114,6 +114,24 @@ EXTRA_DIST = \
 	packaging/macosx/Resources/bin/getdisplay.sh	\
 	packaging/macosx/Resources/bin/inkscape	\
 	packaging/macosx/Resources/etc/fonts/fonts.conf	\
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/pre_gtkrc \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/sync_osx_look.sh \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars/stepper-down.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars/stepper-left.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars/stepper-right.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars/stepper-up.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars/trough-scrollbar-horiz.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars/trough-scrollbar-vert.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars_1/copy-slider.sh \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars_1/slider-horiz-prelight.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars_1/slider-horiz.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars_1/slider-vert-prelight.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars_1/slider-vert.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars_6/copy-slider.sh \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars_6/slider-horiz-prelight.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars_6/slider-horiz.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars_6/slider-vert-prelight.png \
+	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars_6/slider-vert.png \
 	packaging/macosx/ScriptExec/English.lproj/main.nib/classes.nib	\
 	packaging/macosx/ScriptExec/English.lproj/main.nib/info.nib	\
 	packaging/macosx/ScriptExec/English.lproj/main.nib/objects.xib	\
