@@ -67,8 +67,10 @@ RegisteredWidget::write_to_xml(const char * svgstr)
 
     bool saved = sp_document_get_undo_sensitive (local_doc);
     sp_document_set_undo_sensitive (local_doc, false);
+
     if (!write_undo) local_repr->setAttribute(_key.c_str(), svgstr);
     local_doc->rroot->setAttribute("sodipodi:modified", "true");
+
     sp_document_set_undo_sensitive (local_doc, saved);
     if (write_undo) {
         local_repr->setAttribute(_key.c_str(), svgstr);
@@ -127,8 +129,6 @@ RegisteredCheckButton::on_toggled()
     for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
         (*i)->set_sensitive(_button->get_active());
     }
-
-    write_to_xml(_button->get_active() ? "true" : "false");
 
     _wr->setUpdating (false);
 }

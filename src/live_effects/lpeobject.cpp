@@ -105,6 +105,8 @@ livepatheffect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node
 #ifdef LIVEPATHEFFECT_VERBOSE
     g_message("Build livepatheffect");
 #endif
+    g_assert(object != NULL);
+    g_assert(SP_IS_OBJECT(object));
 
     if (((SPObjectClass *) livepatheffect_parent_class)->build)
         (* ((SPObjectClass *) livepatheffect_parent_class)->build)(object, document, repr);
@@ -115,7 +117,7 @@ livepatheffect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node
         repr->addListener (&livepatheffect_repr_events, object);
     }
 
-    /* Register ourselves */
+    /* Register ourselves, is this necessary? */
 //    sp_document_add_resource(document, "path-effect", object);
 }
 
@@ -125,11 +127,14 @@ livepatheffect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node
 static void
 livepatheffect_release(SPObject *object)
 {
-    LivePathEffectObject *lpeobj = LIVEPATHEFFECT(object);
-
 #ifdef LIVEPATHEFFECT_VERBOSE
     g_print("Releasing livepatheffect");
 #endif
+
+    LivePathEffectObject *lpeobj = LIVEPATHEFFECT(object);
+
+    SP_OBJECT_REPR(object)->removeListenerByData(object);
+
 
 /*
     if (SP_OBJECT_DOCUMENT(object)) {

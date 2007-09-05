@@ -47,8 +47,8 @@ public:
         if (!regenum) {
             regenum = new Inkscape::UI::Widget::RegisteredEnum<E>();
             regenum->init(param_label, param_tooltip, param_key, *enumdataconv, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());
-            regenum->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change enum parameter"));
             regenum->combobox()->set_active_by_id(value);
+            regenum->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change enum parameter"));
         }
         return dynamic_cast<Gtk::Widget *> (regenum->labelled);
     };
