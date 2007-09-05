@@ -17,6 +17,7 @@
 #include <gtkmm/tooltips.h>
 
 #include "xml/node.h"
+#include "registry.h"
 
 class SPUnit;
 class SPDocument;
@@ -48,6 +49,8 @@ public:
         event_description = _event_description;
         write_undo = true;
     }
+
+    bool is_updating() {if (_wr) return _wr->isUpdating(); else return false;}
 
 protected:
     RegisteredWidget()
