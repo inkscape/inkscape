@@ -54,13 +54,14 @@ RFE</a>).</p>
 <keys><key><shift/><ctrl/>L</key> <action>Layers</action></keys>
 <keys><key><shift/><ctrl/>A</key> <action>Align and Distribute</action></keys>
 <keys><key><shift/><ctrl/>O</key> <action>Object Properties</action></keys>
-<keys><key><shift/><ctrl/>H</key> <action>Undo history</action></keys>
+<keys><key><shift/><ctrl/>H</key> <action>Undo History</action></keys>
 <keys><key><shift/><ctrl/>X</key> <action>XML Editor</action></keys>
 <keys><key><shift/><ctrl/>D</key> <action>Document Preferences</action></keys>
 <keys><key><shift/><ctrl/>P</key> <action>Inkscape Preferences</action></keys>
 <keys><key><shift/><ctrl/>E</key>	 <action>Export to PNG</action></keys>
 <keys><key><ctrl/>F</key>	 <action>Find</action></keys>
-<keys><key><shift/><alt/>B</key>	 <action>Trace bitmap</action></keys>
+<keys><key><shift/><alt/>B</key>	 <action>Trace Bitmap</action></keys>
+<keys><key><shift/><ctrl/>7</key>	 <action>Path Effects</action></keys>
 <note>These shortcuts open a new dialog window if it wasn't open yet, otherwise the corresponding dialog gets focus.</note>
 </group>
 
@@ -274,8 +275,10 @@ RFE</a>).</p>
 <keys><key><ctrl/><alt/>V</key>	 <action>paste in place</action></keys>
 <note>This places the clipboard objects to the original location from which they were copied.</note>
 <keys><key><shift/><ctrl/>V</key>  <action>paste style</action></keys> 
-<note>This applies the style of the (first of the) coped object(s) to the current selection.</note>
+<note>This applies the style of the (first of the) copied object(s) to the current selection.</note>
 <note>If a gradient handle (in Gradient tool) or a text span (in Text tool) are selected, they get the style instead of the entire object.</note>
+<keys><key><ctrl/>7</key>  <action>paste path effect</action></keys> 
+<note>This applies the path effect of the copied path to the paths/shapes in current selection.</note>
 </group>
 
 <group>
