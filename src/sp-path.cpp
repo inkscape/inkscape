@@ -124,8 +124,13 @@ static gchar *
 sp_path_description(SPItem * item)
 {
     int count = sp_nodes_in_path(SP_PATH(item));
-    return g_strdup_printf(ngettext("<b>Path</b> (%i node)",
-                                    "<b>Path</b> (%i nodes)",count), count);
+    if (SP_SHAPE(item)->path_effect_href) {
+        return g_strdup_printf(ngettext("<b>Path</b> (%i node, path effect)",
+                                        "<b>Path</b> (%i nodes, path effect)",count), count);
+    } else {
+        return g_strdup_printf(ngettext("<b>Path</b> (%i node)",
+                                        "<b>Path</b> (%i nodes)",count), count);
+    }
 }
 
 /**
