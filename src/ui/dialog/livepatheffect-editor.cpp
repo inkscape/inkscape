@@ -86,10 +86,11 @@ LivePathEffectEditor::LivePathEffectEditor(Behavior::BehaviorFactory behavior_fa
 
     effectapplication_vbox.pack_start(combo_effecttype, true, true);
     effectapplication_vbox.pack_start(button_apply, true, true);
-    effectapplication_vbox.pack_start(button_remove, true, true);
     effectapplication_frame.add(effectapplication_vbox);
 
     effectcontrol_vbox.pack_start(explain_label, true, true);
+    effectcontrol_vbox.pack_end(button_remove, true, true);
+		button_remove.hide();
     effectcontrol_frame.add(effectcontrol_vbox);
 
     vbox->pack_start(effectapplication_frame, true, true);
@@ -136,6 +137,7 @@ LivePathEffectEditor::showParams(LivePathEffect::Effect* effect)
     if (effectwidget) {
         effectcontrol_vbox.pack_start(*effectwidget, true, true);
     }
+    button_remove.show();
 
     effectcontrol_vbox.show_all_children();
     // fixme: do resizing of dialog 
@@ -150,6 +152,7 @@ LivePathEffectEditor::showText(Glib::ustring const &str)
     }
 
     explain_label.set_label(str);
+    button_remove.hide();
 
     // fixme: do resizing of dialog ?
 }
