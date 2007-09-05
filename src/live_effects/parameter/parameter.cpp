@@ -98,7 +98,7 @@ ScalarParam::param_set_value(gdouble val)
     if (value < min)
         value = min;
 
-    if (rsu)
+    if (rsu && !rsu->is_updating())
         rsu->setValue(value);
 }
 
