@@ -44,7 +44,7 @@
 // Tiles are a way to minimize the number of redraws, eliminating too small redraws. 
 // The canvas stores a 2D array of ints, each representing a TILE_SIZExTILE_SIZE pixels tile.
 // If any part of it is dirtied, the entire tile is dirtied (its int is nonzero) and repainted.
-#define TILE_SIZE 32
+#define TILE_SIZE 16
 
 enum {
 	RENDERMODE_NORMAL,
@@ -1714,7 +1714,7 @@ faster.
 
 The default for now is the strips mode.
 */
-    if (bw < bh) {
+    if (bw < bh || bh < 2 * TILE_SIZE) { 
         int mid = (this_rect.x0 + this_rect.x1) / 2;
         // Make sure that mid lies on a tile boundary
         mid = (mid / TILE_SIZE) * TILE_SIZE;
