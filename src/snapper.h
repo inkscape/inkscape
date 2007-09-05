@@ -48,15 +48,18 @@ public:
     */
     virtual bool ThisSnapperMightSnap() const {return (_enabled && _snap_from != 0);} // will likely be overridden by derived classes
 
-
     void setEnabled(bool s);
 
     SnappedPoint freeSnap(PointType const &t,
                           NR::Point const &p,
+                          bool const &first_point,                                             
+                          std::vector<NR::Point> &points_to_snap,						 
                           SPItem const *it) const;
 
     SnappedPoint freeSnap(PointType const &t,
                           NR::Point const &p,
+                          bool const &first_point,                                             
+                          std::vector<NR::Point> &points_to_snap,						 
                           std::list<SPItem const *> const &it) const;
 
     class ConstraintLine
@@ -86,11 +89,15 @@ public:
 
     SnappedPoint constrainedSnap(PointType const &t,
                                  NR::Point const &p,
+                                 bool const &first_point,
+                                 std::vector<NR::Point> &points_to_snap,       
                                  ConstraintLine const &c,
                                  SPItem const *it) const;
 
     SnappedPoint constrainedSnap(PointType const &t,
                                  NR::Point const &p,
+                                 bool const &first_point,
+                                 std::vector<NR::Point> &points_to_snap,						 
                                  ConstraintLine const &c,
                                  std::list<SPItem const *> const &it) const;
 protected:
@@ -111,6 +118,8 @@ private:
      */
     virtual SnappedPoint _doFreeSnap(PointType const &t,
     								 NR::Point const &p,
+    								 bool const &first_point,                                             
+    								 std::vector<NR::Point> &points_to_snap,
                                      std::list<SPItem const *> const &it) const = 0;
 
     /**
@@ -125,6 +134,8 @@ private:
      */    
     virtual SnappedPoint _doConstrainedSnap(PointType const &t,
     										NR::Point const &p,
+    										bool const &first_point,
+    										std::vector<NR::Point> &points_to_snap,
                                             ConstraintLine const &c,
                                             std::list<SPItem const *> const &it) const = 0;
     

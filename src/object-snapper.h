@@ -14,6 +14,9 @@
  */
 
 #include "snapper.h"
+#include "sp-path.h"
+#include "splivarot.h"
+
 
 struct SPNamedView;
 struct SPItem;
@@ -27,6 +30,7 @@ class ObjectSnapper : public Snapper
 
 public:
   ObjectSnapper(SPNamedView const *nv, NR::Coord const d);
+  ~ObjectSnapper();
 
   enum DimensionToSnap {SNAP_X, SNAP_Y, SNAP_XY};
 
@@ -75,36 +79,45 @@ public:
   }
   
   SnappedPoint guideSnap(NR::Point const &p,
-						 DimensionToSnap const snap_dim) const;
+  						 DimensionToSnap const snap_dim) const;
   
   bool ThisSnapperMightSnap() const;
   
 private:
+  //store some lists of candidates, points and paths, so we don't have to rebuild them for each point we want to snap
+  std::list<SPItem*> *_candidates; 
+  std::list<NR::Point> *_points_to_snap_to;
+  std::list<Path*> *_paths_to_snap_to;
+  
   SnappedPoint _doFreeSnap(Inkscape::Snapper::PointType const &t,
   					NR::Point const &p,
+  					bool const &first_point,
+                    std::vector<NR::Point> &points_to_snap,
 			   		std::list<SPItem const *> const &it) const;
 
   SnappedPoint _doConstrainedSnap(Inkscape::Snapper::PointType const &t,
   					NR::Point const &p,
+  					bool const &first_point,                                               					
+  					std::vector<NR::Point> &points_to_snap,
 				  	ConstraintLine const &c,
 				  	std::list<SPItem const *> const &it) const;
-  
-  void _findCandidates(std::list<SPItem*>& c,
-		       		SPObject* r,
+		       		
+  void _findCandidates(SPObject* r,
 		       		std::list<SPItem const *> const &it,
-		       		NR::Point const &p,
+		       		bool const &first_point,
+		       		std::vector<NR::Point> &points_to_snap,
 		       		DimensionToSnap const snap_dim) const;
   
   void _snapNodes(Inkscape::Snapper::PointType const &t,
   					Inkscape::SnappedPoint &s, 
   					NR::Point const &p, 
-  					DimensionToSnap const snap_dim,
-  					std::list<SPItem*> const &cand) const;
+  					bool const &first_point,
+  					DimensionToSnap const snap_dim) const;
   					
   void _snapPaths(Inkscape::Snapper::PointType const &t, 
   					Inkscape::SnappedPoint &s, 
-  					NR::Point const &p, 
-  					std::list<SPItem*> const &cand) const;
+  					NR::Point const &p,
+  					bool const &first_point) const;
   
   bool _snap_to_itemnode;
   bool _snap_to_itempath;

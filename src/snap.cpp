@@ -173,7 +173,11 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
 {
     std::list<SPItem const *> lit;
     lit.push_back(it);
-    return freeSnap(t, p, lit);
+    
+    std::vector<NR::Point> points_to_snap;
+    points_to_snap.push_back(p);
+    
+    return freeSnap(t, p, true, points_to_snap, lit);
 }
 
 
@@ -182,17 +186,21 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
  *
  *  \param t Type of point.
  *  \param p Point.
+ *  \param first_point If true then this point is the first one from a whole bunch of points 
+ *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation 
  *  \param it List of items to ignore when snapping.
  *  \return Snapped point.
  */
-
-Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
+ 
+ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
                                              NR::Point const &p,
+                                             bool const &first_point,
+                                             std::vector<NR::Point> &points_to_snap,
                                              std::list<SPItem const *> const &it) const
 {
     SnapperList const snappers = getSnappers();
 
-    return freeSnap(t, p, it, snappers);
+	return freeSnap(t, p, first_point, points_to_snap, it, snappers);
 }
 
 /**
@@ -200,6 +208,8 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
  *
  *  \param t Type of point.
  *  \param p Point.
+ *  \param first_point If true then this point is the first one from a whole bunch of points 
+ *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation 
  *  \param it List of items to ignore when snapping.
  * \param snappers  List of snappers to try to snap to
  *  \return Snapped point.
@@ -207,13 +217,15 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
 
 Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
                                              NR::Point const &p,
+                                             bool const &first_point,
+                                             std::vector<NR::Point> &points_to_snap,
                                              std::list<SPItem const *> const &it,
                                              SnapperList const &snappers) const
 {
     Inkscape::SnappedPoint r(p, NR_HUGE);
 
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        Inkscape::SnappedPoint const s = (*i)->freeSnap(t, p, it);
+        Inkscape::SnappedPoint const s = (*i)->freeSnap(t, p, first_point, points_to_snap, it);
         if (s.getDistance() < r.getDistance()) {
             r = s;
         }
@@ -228,7 +240,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
  *  \param t Type of point.
  *  \param p Point.
  *  \param it Item to ignore when snapping.
- * \param snappers  List of snappers to try to snap to
+ *  \param snappers  List of snappers to try to snap to
  *  \return Snapped point.
  */
 
@@ -249,7 +261,7 @@ SnapManager::freeSnapAlways( Inkscape::Snapper::PointType t,
  *  \param t Type of point.
  *  \param p Point.
  *  \param it List of items to ignore when snapping.
- * \param snappers  List of snappers to try to snap to
+ *  \param snappers  List of snappers to try to snap to
  *  \return Snapped point.
  */
 
@@ -264,7 +276,9 @@ SnapManager::freeSnapAlways( Inkscape::Snapper::PointType t,
     for (SnapperList::iterator i = snappers.begin(); i != snappers.end(); i++) {
         gdouble const curr_gridsnap = (*i)->getDistance();
         const_cast<Inkscape::Snapper*> (*i)->setDistance(NR_HUGE);
-        Inkscape::SnappedPoint const s = (*i)->freeSnap(t, p, it);
+        std::vector<NR::Point> points_to_snap;
+    	points_to_snap.push_back(p);    
+        Inkscape::SnappedPoint const s = (*i)->freeSnap(t, p, true, points_to_snap, it);
         const_cast<Inkscape::Snapper*> (*i)->setDistance(curr_gridsnap);
 
         if (s.getDistance() < r.getDistance()) {
@@ -295,7 +309,11 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
 {
     std::list<SPItem const *> lit;
     lit.push_back(it);
-    return constrainedSnap(t, p, c, lit);
+    
+    std::vector<NR::Point> points_to_snap;
+    points_to_snap.push_back(p);
+    
+    return constrainedSnap(t, p, true, points_to_snap, c, lit);
 }
 
 
@@ -306,6 +324,8 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
  *
  *  \param t Type of point.
  *  \param p Point.
+ *  \param first_point If true then this point is the first one from a whole bunch of points 
+ *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation 
  *  \param c Constraint line.
  *  \param it List of items to ignore when snapping.
  *  \return Snapped point.
@@ -313,6 +333,8 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
 
 Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType t,
                                                     NR::Point const &p,
+                                                    bool const &first_point,
+                                             		std::vector<NR::Point> &points_to_snap,
                                                     Inkscape::Snapper::ConstraintLine const &c,
                                                     std::list<SPItem const *> const &it) const
 {
@@ -320,7 +342,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
 
     SnapperList const snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        Inkscape::SnappedPoint const s = (*i)->constrainedSnap(t, p, c, it);
+        Inkscape::SnappedPoint const s = (*i)->constrainedSnap(t, p, first_point, points_to_snap, c, it);
         if (s.getDistance() < r.getDistance()) {
             r = s;
         }
@@ -334,7 +356,7 @@ Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
 {
 	Inkscape::ObjectSnapper::DimensionToSnap snap_dim;
 	if (guide.normal == component_vectors[NR::Y]) {
-		snap_dim = Inkscape::ObjectSnapper::SNAP_Y;	
+		snap_dim = Inkscape::ObjectSnapper::SNAP_Y;
 	} else if (guide.normal == component_vectors[NR::X]) {
 		snap_dim = Inkscape::ObjectSnapper::SNAP_X;
 	} else {
@@ -384,15 +406,9 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
     if (SomeSnapperMightSnap() == false) {
         return std::make_pair(transformation, false);
     }
-
-    /* The current best transformation */
-    NR::Point best_transformation = transformation;
-
-    /* The current best metric for the best transformation; lower is better, NR_HUGE
-    ** means that we haven't snapped anything.
-    */
-    double best_metric = NR_HUGE;
-
+    
+    std::vector<NR::Point> transformed_points;
+    
     for (std::vector<NR::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
 
         /* Work out the transformed version of this point */
@@ -423,10 +439,26 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
             default:
                 g_assert_not_reached();
         }
+        
+        // add the current transformed point to the box hulling all transformed points
+        transformed_points.push_back(transformed);
+    }    
+    
+    /* The current best transformation */
+    NR::Point best_transformation = transformation;
 
+    /* The current best metric for the best transformation; lower is better, NR_HUGE
+    ** means that we haven't snapped anything.
+    */
+    double best_metric = NR_HUGE;
+
+	std::vector<NR::Point>::const_iterator j = transformed_points.begin();
+
+    for (std::vector<NR::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
+        
         /* Snap it */
         Inkscape::SnappedPoint const snapped = constrained ?
-            constrainedSnap(type, transformed, constraint, ignore) : freeSnap(type, transformed, ignore);
+            constrainedSnap(type, *j, i == points.begin(), transformed_points, constraint, ignore) : freeSnap(type, *j, i == points.begin(), transformed_points, ignore);
 
         if (snapped.getDistance() < NR_HUGE) {
             /* We snapped.  Find the transformation that describes where the snapped point has
@@ -473,6 +505,8 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                 best_metric = metric;
             }
         }
+        
+        j++;
     }
 
     // Using " < 1e6" instead of " < NR::HUGE" for catching some rounding errors

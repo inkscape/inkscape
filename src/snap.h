@@ -50,10 +50,14 @@ public:
 
     Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,
                                     NR::Point const &p,
+                                    bool const &first_point,
+                                    std::vector<NR::Point> &points_to_snap,
                                     std::list<SPItem const *> const &it) const;
 
  	Inkscape::SnappedPoint freeSnap( Inkscape::Snapper::PointType t,
                                       NR::Point const &p,
+                                      bool const &first_point,
+                                      std::vector<NR::Point> &points_to_snap,
                                       std::list<SPItem const *> const &it,
                                       SnapperList const &snappers ) const;
 
@@ -74,6 +78,8 @@ public:
     
     Inkscape::SnappedPoint constrainedSnap(Inkscape::Snapper::PointType t,
                                            NR::Point const &p,
+                                           bool const &first_point,
+                                           std::vector<NR::Point> &points_to_snap,
                                            Inkscape::Snapper::ConstraintLine const &c,
                                            std::list<SPItem const *> const &it) const;
                                            

@@ -1522,8 +1522,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
         } else {
 
             /* Snap to things with no constraint */
-
-            s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX,
+			s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX,
                                               _bbox_points, it, dxy));
             s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_NODE,
                                               _snap_points, it, dxy));
