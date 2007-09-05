@@ -44,9 +44,10 @@ export INKSCAPE_LOCALEDIR="$TOP/locale"
 # Set GTK theme (only if there is no .gtkrc-2.0 in the user's home)
 if [[ ! -e $HOME/.gtkrc-2.0 ]]; then
 	# prepare the theme depending on OS X appearance settings
+	HERE=`pwd`
 	cd "$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/"
 	./sync_osx_look.sh
-	cd "$CWD"
+	cd "$HERE"
 	export GTK2_RC_FILES="$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/gtkrc"
 fi
 
