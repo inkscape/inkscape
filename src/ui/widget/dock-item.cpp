@@ -49,7 +49,7 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
 
 
     GdlDockItemBehavior gdl_dock_behavior = 
-        (prefs_get_int_attribute_limited ("options.dialogscancenterdock", "value", 1, 0, 1) == 0 ?
+        (prefs_get_int_attribute_limited ("options.dock", "cancenterdock", 1, 0, 1) == 0 ?
          GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER
          : GDL_DOCK_ITEM_BEH_NORMAL);
 
