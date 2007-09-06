@@ -44,6 +44,7 @@ struct SPShape : public SPItem {
 
     gchar *path_effect_href;
     Inkscape::LivePathEffect::LPEObjectReference *path_effect_ref;
+  	sigc::connection lpe_modified_connection;
 };
 
 struct SPShapeClass {

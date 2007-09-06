@@ -142,7 +142,7 @@ sp_shape_init (SPShape *shape)
 {
     shape->path_effect_href = NULL;
     shape->path_effect_ref  = new Inkscape::LivePathEffect::LPEObjectReference(SP_OBJECT(shape));
-    shape->path_effect_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(lpeobject_ref_changed), shape));
+  	new (&shape->lpe_modified_connection) sigc::connection();
 
     for ( int i = 0 ; i < SP_MARKER_LOC_QTY ; i++ ) {
         new (&shape->release_connect[i]) sigc::connection();
@@ -177,6 +177,8 @@ sp_shape_finalize (GObject *object)
 static void
 sp_shape_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
+    SP_SHAPE(object)->path_effect_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(lpeobject_ref_changed), SP_SHAPE(object)));
+
     sp_object_read_attr(object, "inkscape:path-effect");
  
     if (((SPObjectClass *) (parent_class))->build) {
@@ -222,6 +224,9 @@ sp_shape_release (SPObject *object)
         g_free(shape->path_effect_href);
     }
     shape->path_effect_ref->detach();
+
+    shape->lpe_modified_connection.disconnect();
+    shape->lpe_modified_connection.~connection();
     
 	if (((SPObjectClass *) parent_class)->release) {
 	  ((SPObjectClass *) parent_class)->release (object);
@@ -1135,7 +1140,7 @@ void
 sp_shape_update_patheffect (SPShape *shape, bool write)
 {
 #ifdef SHAPE_VERBOSE
-    g_message("sp_shape_update_patheffect");
+    g_message("sp_shape_update_patheffect: %p\n", shape);
 #endif
     g_return_if_fail (shape != NULL);
     g_return_if_fail (SP_IS_SHAPE (shape));
@@ -1166,7 +1171,8 @@ lpeobject_ref_changed(SPObject *old_ref, SPObject *ref, SPShape *shape)
     }
     if ( IS_LIVEPATHEFFECT(ref) && ref != shape )
     {
-        ref->connectModified(sigc::bind(sigc::ptr_fun(&lpeobject_ref_modified), shape));
+        shape->lpe_modified_connection.disconnect();
+        shape->lpe_modified_connection = ref->connectModified(sigc::bind(sigc::ptr_fun(&lpeobject_ref_modified), shape));
         lpeobject_ref_modified(ref, 0, shape);
     }
 }
