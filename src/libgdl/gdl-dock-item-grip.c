@@ -138,6 +138,14 @@ gdl_dock_item_grip_expose (GtkWidget      *widget,
     grip = GDL_DOCK_ITEM_GRIP (widget);
     gdl_dock_item_grip_get_title_area (grip, &title_area);
 
+    /* draw darker a background */
+    gdk_draw_rectangle (GDK_DRAWABLE (widget->window),
+                        gtk_widget_get_style (widget)->mid_gc[widget->state],
+                        TRUE,
+                        1, 0,
+                        widget->allocation.width - 1,
+                        widget->allocation.height);
+
     if (grip->_priv->icon_pixbuf) {
         GdkRectangle pixbuf_rect;
         
