@@ -1077,17 +1077,11 @@ gdl_dock_refine_placement (GdlDock *dock, GdlDockItem *dock_item,
 
     if (placement == GDL_DOCK_LEFT || placement == GDL_DOCK_RIGHT) {
         /* Check if dock_object touches center in terms of width */
-        if (GTK_WIDGET (dock)->allocation.width/2 > object_size.width &&
-            !(dock_item->behavior & GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER)) {
-            return GDL_DOCK_CENTER;
+        if (GTK_WIDGET (dock)->allocation.width/2 > object_size.width) {
+            return GDL_DOCK_TOP;
         }
-    } else if (placement == GDL_DOCK_TOP || placement == GDL_DOCK_BOTTOM) {
-        /* Check if dock_object touches center in terms of height */
-        if (GTK_WIDGET (dock)->allocation.height/2 > object_size.height  && 
-            !(dock_item->behavior & GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER)) {
-            return GDL_DOCK_CENTER;
-        }
-    }
+    } 
+
     return placement;
 }
 

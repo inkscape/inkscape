@@ -12,6 +12,7 @@
 #include "dock-item.h"
 #include "desktop.h"
 #include "inkscape.h"
+#include "prefs-utils.h"
 #include "ui/widget/dock.h"
 #include "widgets/icon.h"
 
@@ -47,6 +48,11 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
     }
 
 
+    GdlDockItemBehavior gdl_dock_behavior = 
+        (prefs_get_int_attribute_limited ("options.dialogscancenterdock", "value", 1, 0, 1) == 0 ?
+         GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER
+         : GDL_DOCK_ITEM_BEH_NORMAL);
+
     if (!icon_name.empty()) {
         Gtk::Widget *icon = sp_icon_get_icon(icon_name, Inkscape::ICON_SIZE_MENU);
         if (icon) {
@@ -62,12 +68,12 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
             delete icon;
 
             _gdl_dock_item = 
-                gdl_dock_item_new_with_pixbuf_icon(name.c_str(), long_name.c_str(), _icon_pixbuf->gobj(),
-                                                   GDL_DOCK_ITEM_BEH_NORMAL);
+                gdl_dock_item_new_with_pixbuf_icon(name.c_str(), long_name.c_str(), 
+                                                   _icon_pixbuf->gobj(), gdl_dock_behavior);
         }
     } else {
         _gdl_dock_item = 
-            gdl_dock_item_new(name.c_str(), long_name.c_str(), GDL_DOCK_ITEM_BEH_NORMAL);
+            gdl_dock_item_new(name.c_str(), long_name.c_str(), gdl_dock_behavior);
     }
 
     _frame.set_shadow_type(Gtk::SHADOW_IN);

@@ -196,6 +196,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"autoscrolldistance\" value=\"-10\"/>\n"
 "    <group id=\"simplifythreshold\" value=\"0.002\"/>\n"
 "    <group id=\"dialogtype\" value=\"1\"/>\n"
+"    <group id=\"dialogscancenterdock\" value=\"1\"/>\n"
 "    <group id=\"dialogsskiptaskbar\" value=\"1\"/>\n"
 #ifdef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
 "    <group id=\"dialogsontopwin32\" value=\"0\"/>\n"
