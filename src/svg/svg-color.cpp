@@ -481,11 +481,13 @@ bool sp_svg_read_icc_color( gchar const *str, gchar const **end_ptr, SVGICCColor
                 // Name must start with a certain type of character
                 good = false;
             } else {
-                while ( g_ascii_isdigit(*str) || g_ascii_islower(*str) || (*str == '-') ) {
+                while ( g_ascii_isdigit(*str) || g_ascii_isalpha(*str) || (*str == '-') ) {
                     if ( dest ) {
                         dest->colorProfile += *str;
                     }
                     str++;
+                    gboolean aa = g_ascii_isalpha(*str);
+                    gboolean bb = aa;
                 }
                 while ( g_ascii_isspace(*str) || *str == ',' ) {
                     str++;
