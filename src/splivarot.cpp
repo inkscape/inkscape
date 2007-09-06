@@ -1484,6 +1484,8 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
     Inkscape::XML::Node *parent = SP_OBJECT_REPR(item)->parent();
     // remember id
     char const *id = SP_OBJECT_REPR(item)->attribute("id");
+    // remember path effect
+    char const *patheffect = SP_OBJECT_REPR(item)->attribute("inkscape:path-effect");
 
     //If a group was selected, to not change the selection list
     if (modifySelection)
@@ -1517,7 +1519,10 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
 
     // path
     gchar *str = orig->svg_dump_path();
-    repr->setAttribute("d", str);
+    if (patheffect)
+        repr->setAttribute("inkscape:original-d", str);
+    else 
+        repr->setAttribute("d", str);
     g_free(str);
 
     // restore id
@@ -1533,6 +1538,9 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
 
     // reapply the transform
     sp_item_write_transform(newitem, repr, transform);
+
+    // restore path effect
+    repr->setAttribute("inkscape:path-effect", patheffect);
 
     //If we are not in a selected group
     if (modifySelection)
@@ -1703,14 +1711,27 @@ Ancetre(Inkscape::XML::Node *a, Inkscape::XML::Node *who)
 Path *
 Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
 {
-    SPCurve *curve;
+    SPCurve *curve = NULL;
 
     if (!item)
         return NULL;
 
     if (SP_IS_SHAPE(item))
     {
-        curve = sp_shape_get_curve(SP_SHAPE(item));
+        if (SP_SHAPE(item)->path_effect_href) {
+            const gchar *svgd = SP_OBJECT(item)->repr->attribute("inkscape:original-d");
+            if (svgd) {
+                NArtBpath *bpath = sp_svg_read_path(svgd);
+                SPCurve *curve_new = sp_curve_new_from_bpath(bpath);
+                if (curve_new) {
+                    curve = curve_new; // don't do curve_copy because curve_new is already only created for us!
+                } else {
+                    g_free(bpath);
+                }
+            }
+        } else {
+            curve = sp_shape_get_curve(SP_SHAPE(item));
+        }
     }
     else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))
     {
@@ -1720,13 +1741,10 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
     {
         curve = sp_image_get_curve(SP_IMAGE(item));
     }
-    else
-    {
-        curve = NULL;
-    }
 
     if (!curve)
         return NULL;
+
     NArtBpath *bpath = SP_CURVE_BPATH(curve);
     if (bpath == NULL)
         return NULL;
