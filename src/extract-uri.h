@@ -3,7 +3,7 @@
 
 #include <glib/gtypes.h>
 
-gchar *extract_uri(gchar const *s);
+gchar *extract_uri(gchar const *s, gchar const** endptr = 0);
 
 
 #endif /* !SEEN_EXTRACT_URI_H */

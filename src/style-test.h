@@ -4,11 +4,50 @@
 
 #include <cxxtest/TestSuite.h>
 
+#include "test-helpers.h"
+
 #include "style.h"
 
 class StyleTest : public CxxTest::TestSuite
 {
 public:
+    SPDocument* _doc;
+
+    StyleTest() :
+        _doc(0)
+    {
+    }
+
+    virtual ~StyleTest()
+    {
+        if ( _doc )
+        {
+            sp_document_unref( _doc );
+            _doc = 0;
+        }
+    }
+
+    static void createSuiteSubclass( StyleTest*& dst )
+    {
+        dst = new StyleTest();
+    }
+
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static StyleTest *createSuite()
+    {
+        StyleTest* suite = Inkscape::createSuiteAndDocument<StyleTest>( createSuiteSubclass );
+        return suite;
+    }
+
+    static void destroySuite( StyleTest *suite )
+    {
+        delete suite;
+    }
+
+    // ---------------------------------------------------------------
+    // ---------------------------------------------------------------
+    // ---------------------------------------------------------------
 
     void testOne()
     {
@@ -26,27 +65,25 @@ public:
 
             TestCase("fill:rgb(100%, 0%, 100%)", "fill:#ff00ff"),
             // TODO - fix this to preserve the string
-//             TestCase("fill:url(#painter) rgb(100%, 0%, 100%)",
-//                      "fill:url(#painter) #ff00ff", "#painter"),
+            TestCase("fill:url(#painter) rgb(100%, 0%, 100%)",
+                     "fill:url(#painter) #ff00ff", "#painter"),
 
             TestCase("fill:rgb(255, 0, 255)", "fill:#ff00ff"),
             // TODO - fix this to preserve the string
-//             TestCase("fill:url(#painter) rgb(255, 0, 255)",
-//                      "fill:url(#painter) #ff00ff", "#painter"),
+            TestCase("fill:url(#painter) rgb(255, 0, 255)",
+                     "fill:url(#painter) #ff00ff", "#painter"),
 
 
 //             TestCase("fill:#ff00ff icc-color(colorChange, 0.1, 0.5, 0.1)"),
 
             TestCase("fill:url(#painter)", 0, "#painter"),
-//             TestCase("fill:url(#painter) none", 0, "#painter"),
-//             TestCase("fill:url(#painter) currentColor", 0, "#painter"),
-//             TestCase("fill:url(#painter) #ff00ff", 0, "#painter"),
+            TestCase("fill:url(#painter) none", 0, "#painter"),
+            TestCase("fill:url(#painter) currentColor", 0, "#painter"),
+            TestCase("fill:url(#painter) #ff00ff", 0, "#painter"),
 //             TestCase("fill:url(#painter) rgb(100%, 0%, 100%)", 0, "#painter"),
 //             TestCase("fill:url(#painter) rgb(255, 0, 255)", 0, "#painter"),
 
-//             TestCase("fill:url(#painter) #ff00ff icc-color(colorChange, 0.1, 0.5, 0.1)",
-//             "fill:url(#painter) #ff00ff icc-color(colorChange, 0.10000000000000001, 0.50000000000000000, 0.10000000000000001)", "#painter"),
-//             TestCase("fill:url(#painter) #ff00ff icc-color(colorChange, 0.1, 0.5, 0.1)", 0, "#painter"),
+            TestCase("fill:url(#painter) #ff00ff icc-color(colorChange, 0.1, 0.5, 0.1)", 0, "#painter"),
 
 //             TestCase("fill:url(#painter) inherit", 0, "#painter"),
             TestCase("fill:inherit"),
@@ -54,18 +91,18 @@ public:
         };
 
         for ( gint i = 0; cases[i].src; i++ ) {
-            SPStyle *style = sp_style_new(NULL);
+            SPStyle *style = sp_style_new(_doc);
             TS_ASSERT(style);
             if ( style ) {
                 sp_style_merge_from_style_string( style, cases[i].src );
 
                 if ( cases[i].uri ) {
-                    TS_ASSERT( style->fill.value.href );
+                    TSM_ASSERT( cases[i].src, style->fill.value.href );
                     if ( style->fill.value.href ) {
                         TS_ASSERT_EQUALS( style->fill.value.href->getURI()->toString(), std::string(cases[i].uri) );
                     }
                 } else {
-                    TS_ASSERT( !style->fill.value.href );
+                    TS_ASSERT( !style->fill.value.href || !style->fill.value.href->getObject() );
                 }
 
                 gchar *str0_set = sp_style_write_string( style, SP_STYLE_FLAG_IFSET );

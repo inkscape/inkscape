@@ -1001,7 +1001,7 @@ sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value)
         return;
     }
 
-    SPObject *mrk = sp_uri_reference_resolve (SP_OBJECT_DOCUMENT (object), value);
+    SPObject *mrk = sp_css_uri_reference_resolve (SP_OBJECT_DOCUMENT (object), value);
     if (mrk != shape->marker[key]) {
         if (shape->marker[key]) {
             SPItemView *v;

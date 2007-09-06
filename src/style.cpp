@@ -2982,64 +2982,73 @@ sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
 static void
 sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document)
 {
-    while (isspace(*str)) {
+    while (g_ascii_isspace(*str)) {
         ++str;
     }
+
+    if (paint->value.href && paint->value.href->getObject()) {
+        paint->value.href->detach();
+    }
+    paint->colorSet = FALSE;
+    paint->currentcolor = FALSE;
+    paint->noneSet = FALSE;
 
     if (streq(str, "inherit")) {
         paint->set = TRUE;
         paint->inherit = TRUE;
-        paint->currentcolor = FALSE;
-    } else if (streq(str, "currentColor") && paint != &style->color) {
-        paint->set = TRUE;
-        paint->inherit = FALSE;
-        paint->currentcolor = TRUE;
-    } else if (streq(str, "none") && paint != &style->color) {
-        paint->type = SP_PAINT_TYPE_NONE;
-        paint->set = TRUE;
-        paint->inherit = FALSE;
-        paint->currentcolor = FALSE;
-    } else if (strneq(str, "url", 3) && paint != &style->color) {
-        gchar *uri = extract_uri(str);
-        if(uri == NULL || uri[0] == '\0') {
-            paint->type = SP_PAINT_TYPE_NONE;
-            return;
-        }
-        paint->type = SP_PAINT_TYPE_PAINTSERVER;
-        paint->set = TRUE;
-        paint->inherit = FALSE;
-        paint->currentcolor = FALSE;
-
-        // it may be that this style's SPIPaint has not yet created its URIReference;
-        // now that we have a document, we can create it here
-        if (!paint->value.href && document) {
-            paint->value.href = new SPPaintServerReference(document);
-            paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun((paint == &style->fill)? sp_style_fill_paint_server_ref_changed : sp_style_stroke_paint_server_ref_changed), style));
-        }
-
-        sp_style_set_ipaint_to_uri_string (style, paint, uri);
-
-        g_free (uri);
-        
     } else {
-        guint32 const rgb0 = sp_svg_read_color(str, &str, 0xff);
-        if (rgb0 != 0xff) {
-            paint->type = SP_PAINT_TYPE_COLOR;
-            sp_color_set_rgb_rgba32(&paint->value.color, rgb0);
-            paint->set = TRUE;
-            paint->inherit = FALSE;
-            paint->currentcolor = FALSE;
-
-            while (g_ascii_isspace(*str)) {
+        paint->type = SP_PAINT_TYPE_NONE;
+        paint->inherit = FALSE;
+        if ( strneq(str, "url", 3) ) {
+            gchar *uri = extract_uri( str, &str );
+            while ( g_ascii_isspace(*str) ) {
                 ++str;
             }
-            if (strneq(str, "icc-color(", 10)) {
-                SVGICCColor* tmp = new SVGICCColor();
-                if ( ! sp_svg_read_icc_color( str, &str, tmp ) ) {
-                    delete tmp;
-                    tmp = 0;
+            // TODO check on and comment the comparrison "paint != &style->color".
+            if ( uri && *uri && (paint != &style->color) ) {
+                paint->type = SP_PAINT_TYPE_PAINTSERVER;
+                paint->set = TRUE;
+
+                // it may be that this style's SPIPaint has not yet created its URIReference;
+                // now that we have a document, we can create it here
+                if (!paint->value.href && document) {
+                    paint->value.href = new SPPaintServerReference(document);
+                    paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun((paint == &style->fill)? sp_style_fill_paint_server_ref_changed : sp_style_stroke_paint_server_ref_changed), style));
                 }
-                paint->value.iccColor = tmp;
+
+                // TODO check what this does in light of move away from union
+                sp_style_set_ipaint_to_uri_string (style, paint, uri);
+            }
+            g_free( uri );
+        }
+
+        if (streq(str, "currentColor") && paint != &style->color) {
+            paint->set = TRUE;
+            paint->currentcolor = TRUE;
+        } else if (streq(str, "none") && paint != &style->color) {
+            paint->set = TRUE;
+            paint->noneSet = TRUE;
+        } else {
+            guint32 const rgb0 = sp_svg_read_color(str, &str, 0xff);
+            if (rgb0 != 0xff) {
+                if ( paint->type != SP_PAINT_TYPE_PAINTSERVER ) {
+                    paint->type = SP_PAINT_TYPE_COLOR;
+                }
+                sp_color_set_rgb_rgba32(&paint->value.color, rgb0);
+                paint->set = TRUE;
+                paint->colorSet = true;
+
+                while (g_ascii_isspace(*str)) {
+                    ++str;
+                }
+                if (strneq(str, "icc-color(", 10)) {
+                    SVGICCColor* tmp = new SVGICCColor();
+                    if ( ! sp_svg_read_icc_color( str, &str, tmp ) ) {
+                        delete tmp;
+                        tmp = 0;
+                    }
+                    paint->value.iccColor = tmp;
+                }
             }
         }
     }
@@ -3538,43 +3547,66 @@ static gint
 sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
                       SPIPaint const *const paint, SPIPaint const *const base, guint const flags)
 {
+    int retval = 0;
+
     if ((flags & SP_STYLE_FLAG_ALWAYS)
         || ((flags & SP_STYLE_FLAG_IFSET) && paint->set)
         || ((flags & SP_STYLE_FLAG_IFDIFF) && paint->set
             && (!base->set || sp_paint_differ(paint, base))))
     {
+        CSSOStringStream css;
+
         if (paint->inherit) {
-            return g_snprintf(b, len, "%s:inherit;", key);
-        } else if (paint->currentcolor) {
-            return g_snprintf(b, len, "%s:currentColor;", key);
+            css << "inherit";
         } else {
-            switch (paint->type) {
-                case SP_PAINT_TYPE_COLOR: {
-                    char color_buf[8];
-                    sp_svg_write_color(color_buf, sizeof(color_buf), sp_color_get_rgba32_ualpha(&paint->value.color, 0));
-                    if (paint->value.iccColor) {
-                        CSSOStringStream css;
-                        css << color_buf << " icc-color(" << paint->value.iccColor->colorProfile;
-                        for (vector<double>::const_iterator i(paint->value.iccColor->colors.begin()),
-                                 iEnd(paint->value.iccColor->colors.end());
-                             i != iEnd; ++i) {
-                            css << ", " << *i;
-                        }
-                        css << ')';
-                        return g_snprintf(b, len, "%s:%s;", key, css.gcharp());
-                    } else {
-                        return g_snprintf(b, len, "%s:%s;", key, color_buf);
-                    }
-                }
-                case SP_PAINT_TYPE_PAINTSERVER:
-                    return g_snprintf(b, len, "%s:url(%s);", key, paint->value.href? paint->value.href->getURI()->toString() : "");
-                default:
-                    break;
+            if ( paint->value.href && paint->value.href->getURI() ) {
+                const gchar* uri = paint->value.href->getURI()->toString();
+                css << "url(" << uri << ")";
             }
-            return g_snprintf(b, len, "%s:none;", key);
+
+            if ( paint->noneSet ) {
+                if ( !css.str().empty() ) {
+                    css << " ";
+                }
+                css << "none";
+            }
+
+            if ( paint->currentcolor ) {
+                if ( !css.str().empty() ) {
+                    css << " ";
+                }
+                css << "currentColor";
+            }
+
+            if ( paint->colorSet ) {
+                if ( !css.str().empty() ) {
+                    css << " ";
+                }
+                char color_buf[8];
+                sp_svg_write_color(color_buf, sizeof(color_buf), sp_color_get_rgba32_ualpha(&paint->value.color, 0));
+                css << color_buf;
+            }
+
+            if (paint->value.iccColor) {
+                if ( !css.str().empty() ) {
+                    css << " ";
+                }
+                css << "icc-color(" << paint->value.iccColor->colorProfile;
+                for (vector<double>::const_iterator i(paint->value.iccColor->colors.begin()),
+                         iEnd(paint->value.iccColor->colors.end());
+                     i != iEnd; ++i) {
+                    css << ", " << *i;
+                }
+                css << ')';
+            }
+        }
+
+        if ( !css.str().empty() ) {
+            retval = g_snprintf( b, len, "%s:%s;", key, css.gcharp() );
         }
     }
-    return 0;
+
+    return retval;
 }
 
 

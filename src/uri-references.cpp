@@ -16,10 +16,9 @@
 #include "sp-object.h"
 #include "uri.h"
 #include "uri-references.h"
+#include "extract-uri.h"
 
 #include <sigc++/functors/mem_fun.h>
-
-static gchar *uri_to_id(SPDocument *document, const gchar *uri);
 
 namespace Inkscape {
 
@@ -133,48 +132,29 @@ void URIReference::_release(SPObject *obj) {
 
 } /* namespace Inkscape */
 
-static gchar *
-uri_to_id(SPDocument *document, const gchar *uri)
+SPObject* sp_css_uri_reference_resolve( SPDocument *document, const gchar *uri )
 {
-	const gchar *e;
-	gchar *id;
-	gint len;
+    SPObject* ref = 0;
 
-	g_return_val_if_fail (document != NULL, NULL);
+    if ( document && uri && ( strncmp(uri, "url(", 4) == 0 )) {
+        gchar *trimmed = extract_uri( uri );
+        if ( trimmed ) {
+            ref = sp_uri_reference_resolve( document, trimmed );
+            g_free( trimmed );
+        }
+    }
 
-	if (!uri) return NULL;
-	/* fixme: xpointer, everything */
-	if (strncmp (uri, "url(#", 5)) return NULL;
-
-	e = uri + 5;
-	while (*e) {
-		if (*e == ')') break;
-		if (!isalnum (*e) && (*e != '_') && (*e != '-') && (*e != ':') && (*e != '.')) return NULL;
-		e += 1;
-		if (!*e) return NULL;
-	}
-
-	len = e - uri - 5;
-	if (len < 1) return NULL;
-
-	id = (gchar*)g_new(gchar, len + 1);
-	memcpy (id, uri + 5, len);
-	id[len] = '\0';
-
-	return id;
+    return ref;
 }
 
 SPObject *
 sp_uri_reference_resolve (SPDocument *document, const gchar *uri)
 {
-	gchar *id;
+    SPObject* ref = 0;
 
-	id = uri_to_id(document, uri);
-	if (!id) return NULL;
+    if ( uri && (*uri == '#') ) {
+        ref = document->getObjectById( uri + 1 );
+    }
 
-	SPObject *ref;
-	ref = document->getObjectById(id);
-	g_free(id);
-	return ref;
+    return ref;
 }
-

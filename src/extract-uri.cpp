@@ -5,7 +5,7 @@
 
 // Functions as per 4.3.4 of CSS 2.1
 // http://www.w3.org/TR/CSS21/syndata.html#uri
-gchar *extract_uri(gchar const *s)
+gchar *extract_uri( gchar const *s, gchar const** endptr )
 {
     if (!s)
         return NULL;
@@ -17,6 +17,10 @@ gchar *extract_uri(gchar const *s)
     }
 
     sb += 3;
+
+    if ( endptr ) {
+        *endptr = 0;
+    }
 
     // This first whitespace technically is not allowed.
     // Just left in for now for legacy behavior.
@@ -47,6 +51,10 @@ gchar *extract_uri(gchar const *s)
         // we found the delimiter
         if ( *se ) {
             if ( delim == ')' ) {
+                if ( endptr ) {
+                    *endptr = se + 1;
+                }
+
                 // back up for any trailing whitespace
                 se--;
                 while ( ( se[-1] == ' ' ) ||
@@ -54,6 +62,7 @@ gchar *extract_uri(gchar const *s)
                 {
                     se--;
                 }
+
                 result = g_strndup(sb, se - sb + 1);
             } else {
                 gchar const* tail = se + 1;
@@ -63,6 +72,9 @@ gchar *extract_uri(gchar const *s)
                     tail++;
                 }
                 if ( *tail == ')' ) {
+                    if ( endptr ) {
+                        *endptr = tail + 1;
+                    }
                     result = g_strndup(sb, se - sb);
                 }
             }

@@ -159,6 +159,8 @@ struct SPIPaint {
     unsigned inherit : 1;
     unsigned currentcolor : 1;
     unsigned type : 2;
+    unsigned int colorSet : 1;
+    unsigned int noneSet : 1;
     struct {
         SPPaintServerReference *href; 
         SPColor color;
