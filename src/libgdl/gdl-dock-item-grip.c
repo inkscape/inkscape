@@ -140,7 +140,7 @@ gdl_dock_item_grip_expose (GtkWidget      *widget,
 
     /* draw darker a background */
     gdk_draw_rectangle (GDK_DRAWABLE (widget->window),
-                        gtk_widget_get_style (widget)->mid_gc[widget->state],
+                        gtk_widget_get_style (widget)->dark_gc[widget->state],
                         TRUE,
                         1, 0,
                         widget->allocation.width - 1,
