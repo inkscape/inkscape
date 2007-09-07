@@ -352,12 +352,12 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
 }
 
 Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
-                             				SPGuide const &guide) const
+                             				NR::Point const &guide_normal) const
 {
 	Inkscape::ObjectSnapper::DimensionToSnap snap_dim;
-	if (guide.normal == component_vectors[NR::Y]) {
+	if (guide_normal == component_vectors[NR::Y]) {
 		snap_dim = Inkscape::ObjectSnapper::SNAP_Y;
-	} else if (guide.normal == component_vectors[NR::X]) {
+	} else if (guide_normal == component_vectors[NR::X]) {
 		snap_dim = Inkscape::ObjectSnapper::SNAP_X;
 	} else {
 		g_warning("WARNING: snapping of angled guides is not supported yet!");

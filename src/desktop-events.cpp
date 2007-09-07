@@ -77,10 +77,15 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
 	case GDK_MOTION_NOTIFY:
             if (dragging) {
                 NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
-                NR::Point const event_dt(desktop->w2d(event_w));
+                NR::Point event_dt(desktop->w2d(event_w));
+                
+                SnapManager const &m = desktop->namedview->snap_manager;
+                event_dt = m.guideSnap(event_dt, component_vectors[horiz ? NR::Y : NR::X]).getPoint();
+                
                 double const guide_pos_dt = event_dt[ horiz
                                                       ? NR::Y
                                                       : NR::X ];
+                
                 sp_guideline_set_position(SP_GUIDELINE(guide), guide_pos_dt);
                 desktop->set_coordinate_status(event_dt);
                 desktop->setPosition (event_dt);
@@ -141,7 +146,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
     SPGuide *guide = SP_GUIDE(data);
     SPDesktop *desktop = static_cast<SPDesktop*>(gtk_object_get_data(GTK_OBJECT(item->canvas), "SPDesktop"));
 
-    switch (event->type) {
+	switch (event->type) {
 	case GDK_2BUTTON_PRESS:
             if (event->button.button == 1) {
                 dragging = false;
@@ -168,8 +173,10 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                          event->motion.y);
                 NR::Point motion_dt(desktop->w2d(motion_w));
                 
+                // This is for snapping while dragging existing guidelines. New guidelines, 
+                // which are dragged off the ruler, are being snapped in sp_dt_ruler_event
                 SnapManager const &m = desktop->namedview->snap_manager;
-                motion_dt = m.guideSnap(motion_dt, *guide).getPoint();
+                motion_dt = m.guideSnap(motion_dt, guide->normal).getPoint();
                 
                 sp_guide_moveto(*guide, sp_guide_position_from_pt(guide, motion_dt), false);
                 moved = true;
@@ -189,7 +196,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     //whereas it might have been at a snapped position a millisecond before.
                     //See GDK_MOTION_NOTIFY above. Why's that????
                     SnapManager const &m = desktop->namedview->snap_manager;
-                	event_dt = m.guideSnap(event_dt, *guide).getPoint();
+                	event_dt = m.guideSnap(event_dt, guide->normal).getPoint();
                 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
                         sp_guide_moveto(*guide, sp_guide_position_from_pt(guide, event_dt), true);

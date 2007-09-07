@@ -84,7 +84,7 @@ public:
                                            std::list<SPItem const *> const &it) const;
                                            
 	Inkscape::SnappedPoint guideSnap(NR::Point const &p,
-									 SPGuide const &guide) const;
+									 NR::Point const &guide_normal) const;
 
     std::pair<NR::Point, bool> freeSnapTranslation(Inkscape::Snapper::PointType t,
                                                    std::vector<NR::Point> const &p,
