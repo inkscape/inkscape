@@ -187,9 +187,13 @@ override) the bindings in the main default.xml.
   <bind key="plus" action="ZoomIn" display="true"/>
   <bind key="plus" modifiers="Shift" action="ZoomIn" />
   <bind key="equal" action="ZoomIn" />
+  <bind key="equal" modifiers="Shift" action="ZoomIn" />
   <bind key="KP_Add" action="ZoomIn" />
 
   <bind key="minus" action="ZoomOut" display="true"/>
+  <bind key="minus" modifiers="Shift" action="ZoomOut"/>
+  <bind key="underscore" action="ZoomOut" />
+  <bind key="underscore" modifiers="Shift" action="ZoomOut" />  
   <bind key="KP_Subtract" action="ZoomOut" />
 
   <bind key="1" action="Zoom1:0" display="true"/>
