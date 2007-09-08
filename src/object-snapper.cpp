@@ -68,45 +68,45 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
         SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
         
         if (first_point) { 
-    		_candidates->clear();    
+			_candidates->clear();
+        }	    
                 
-	        for (SPObject* o = sp_object_first_child(r); o != NULL; o = SP_OBJECT_NEXT(o)) {
-	            if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !desktop->itemIsHidden(SP_ITEM(o))) {
-	    
-	                /* See if this item is on the ignore list */
-	                std::list<SPItem const *>::const_iterator i = it.begin();
-	                while (i != it.end() && *i != o) {
-	                    i++;
-	                }
-	    
-	                if (i == it.end()) {
-	                    /* See if the item is within range */
-	                    if (SP_IS_GROUP(o)) {
-	                        _findCandidates(o, it, false, points_to_snap, snap_dim);
-	                    } else {
-	                        // Now let's see if any of the snapping points is within
-	                        // snapping range of this object  
-	                        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(SP_ITEM(o));
-	                        if (b) {
-		                        for (std::vector<NR::Point>::const_iterator i = points_to_snap.begin(); i != points_to_snap.end(); i++) {
-			                    	NR::Point b_min = b->min();
-		                        	NR::Point b_max = b->max();		                        
-			                        double d = getDistance();
-			                        bool withinX = ((*i)[NR::X] >= b_min[NR::X] - d) && ((*i)[NR::X] <= b_max[NR::X] + d); 
-			                        bool withinY = ((*i)[NR::Y] >= b_min[NR::Y] - d) && ((*i)[NR::Y] <= b_max[NR::Y] + d);
-		                        	if (snap_dim == SNAP_X && withinX || snap_dim == SNAP_Y && withinY || snap_dim == SNAP_XY && withinX && withinY) {
-		                         	   //We've found a point that is within snapping range 
-		                         	   //of this object, so record it as a candidate
-		                         	   _candidates->push_back(SP_ITEM(o));
-		                         	   break;
-		                        	}	
-		                        }	
-	                        }
-	                    }
-	                }    
-	            }
-	        }
-        }        
+        for (SPObject* o = sp_object_first_child(r); o != NULL; o = SP_OBJECT_NEXT(o)) {
+            if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !desktop->itemIsHidden(SP_ITEM(o))) {
+    
+                /* See if this item is on the ignore list */
+                std::list<SPItem const *>::const_iterator i = it.begin();
+                while (i != it.end() && *i != o) {
+                    i++;
+                }
+    
+                if (i == it.end()) {
+                    /* See if the item is within range */
+                    if (SP_IS_GROUP(o)) {
+                        _findCandidates(o, it, false, points_to_snap, snap_dim);
+                    } else {
+                        // Now let's see if any of the snapping points is within
+                        // snapping range of this object  
+                        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(SP_ITEM(o));
+                        if (b) {
+	                        for (std::vector<NR::Point>::const_iterator i = points_to_snap.begin(); i != points_to_snap.end(); i++) {
+		                    	NR::Point b_min = b->min();
+	                        	NR::Point b_max = b->max();		                        
+		                        double d = getDistance();
+		                        bool withinX = ((*i)[NR::X] >= b_min[NR::X] - d) && ((*i)[NR::X] <= b_max[NR::X] + d); 
+		                        bool withinY = ((*i)[NR::Y] >= b_min[NR::Y] - d) && ((*i)[NR::Y] <= b_max[NR::Y] + d);
+	                        	if (snap_dim == SNAP_X && withinX || snap_dim == SNAP_Y && withinY || snap_dim == SNAP_XY && withinX && withinY) {
+	                         	   //We've found a point that is within snapping range 
+	                         	   //of this object, so record it as a candidate
+	                         	   _candidates->push_back(SP_ITEM(o));
+	                         	   break;
+	                        	}	
+	                        }	
+                        }
+                    }
+                }    
+            }
+        }
     }
 }
 
@@ -332,8 +332,10 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doFreeSnap(Inkscape::Snapper::P
         return SnappedPoint(p, NR_HUGE);
     }
 
-	    /* Get a list of all the SPItems that we will try to snap to */
-    _findCandidates(sp_document_root(_named_view->document), it, first_point, points_to_snap, SNAP_XY);
+    /* Get a list of all the SPItems that we will try to snap to */
+	if (first_point) {
+		_findCandidates(sp_document_root(_named_view->document), it, first_point, points_to_snap, SNAP_XY);
+	}
 
 	SnappedPoint s(p, NR_HUGE);
 
