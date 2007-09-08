@@ -81,12 +81,12 @@ LivePathEffectEditor::LivePathEffectEditor(Behavior::BehaviorFactory behavior_fa
     Gtk::VBox *vbox = get_vbox();
     vbox->set_spacing(4);
 
-    effectapplication_vbox.set_spacing(4);
+    effectapplication_hbox.set_spacing(4);
     effectcontrol_vbox.set_spacing(4);
 
-    effectapplication_vbox.pack_start(combo_effecttype, true, true);
-    effectapplication_vbox.pack_start(button_apply, true, true);
-    effectapplication_frame.add(effectapplication_vbox);
+    effectapplication_hbox.pack_start(combo_effecttype, true, true);
+    effectapplication_hbox.pack_start(button_apply, true, true);
+    effectapplication_frame.add(effectapplication_hbox);
 
     effectcontrol_vbox.pack_start(explain_label, true, true);
     effectcontrol_vbox.pack_end(button_remove, true, true);

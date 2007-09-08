@@ -59,7 +59,7 @@ private:
     Gtk::Label explain_label;
     Gtk::Frame effectapplication_frame;
     Gtk::Frame effectcontrol_frame;
-    Gtk::VBox effectapplication_vbox;
+    Gtk::HBox effectapplication_hbox;
     Gtk::VBox effectcontrol_vbox;
 
     SPDesktop * current_desktop;
