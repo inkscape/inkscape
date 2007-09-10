@@ -130,6 +130,7 @@ gdl_dock_item_grip_expose (GtkWidget      *widget,
     GdlDockItemGrip *grip;
     GdkRectangle     title_area;
     GdkRectangle     expose_area;
+    GtkStyle        *bg_style;
     gint             layout_width;
     gint             layout_height;
     gint             text_x;
@@ -138,13 +139,12 @@ gdl_dock_item_grip_expose (GtkWidget      *widget,
     grip = GDL_DOCK_ITEM_GRIP (widget);
     gdl_dock_item_grip_get_title_area (grip, &title_area);
 
-    /* draw darker a background */
-    gdk_draw_rectangle (GDK_DRAWABLE (widget->window),
-                        gtk_widget_get_style (widget)->dark_gc[widget->state],
-                        TRUE,
-                        1, 0,
-                        widget->allocation.width - 1,
-                        widget->allocation.height);
+    /* draw background, highlight it if the dock item has focus */
+    bg_style = (GTK_WIDGET_HAS_FOCUS (GTK_WIDGET (grip->item)) ? 
+                gtk_widget_get_style (widget)->mid_gc[widget->state] :
+                gtk_widget_get_style (widget)->dark_gc[widget->state]);
+    gdk_draw_rectangle (GDK_DRAWABLE (widget->window), bg_style, TRUE,
+                        1, 0, widget->allocation.width - 1, widget->allocation.height);
 
     if (grip->_priv->icon_pixbuf) {
         GdkRectangle pixbuf_rect;

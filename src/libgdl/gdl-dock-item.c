@@ -355,6 +355,7 @@ static void
 gdl_dock_item_instance_init (GdlDockItem *item)
 {
     GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (item), GTK_NO_WINDOW);
+    GTK_WIDGET_SET_FLAGS (GTK_WIDGET (item), GTK_CAN_FOCUS);
 
     item->child = NULL;
     

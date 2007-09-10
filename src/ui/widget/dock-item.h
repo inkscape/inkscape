@@ -80,12 +80,15 @@ public:
 
     void present();
 
+    void grab_focus();
+
     Glib::SignalProxy0<void> signal_show();
     Glib::SignalProxy0<void> signal_hide();
     Glib::SignalProxy1<bool, GdkEventAny *> signal_delete_event();
     Glib::SignalProxy1<void, int> signal_response();
     Glib::SignalProxy0<void> signal_drag_begin();
     Glib::SignalProxy1<void, bool> signal_drag_end();
+    Glib::SignalProxy0<void> signal_realize();
 
     sigc::signal<void, State, State> signal_state_changed();
 
@@ -98,6 +101,8 @@ private:
 
     Gtk::Window *_window;     //< reference to floating window, if any 
     int _x, _y;               //< last known position of window, if floating
+
+    bool _grab_focus_on_realize;   //< if the dock item should grab focus on the next realize
 
     GtkWidget *_gdl_dock_item;
     Glib::RefPtr<Gdk::Pixbuf> _icon_pixbuf;
@@ -116,6 +121,8 @@ private:
     void _onResponse(int response_id);
     void _onDragBegin();
     void _onDragEnd(bool cancelled);
+    void _onRealize();
+
     bool _onKeyPress(GdkEventKey *event);
     void _onStateChanged(State prev_state, State new_state);
     bool _onDeleteEvent(GdkEventAny *event);
@@ -129,6 +136,7 @@ private:
     static const Glib::SignalProxyInfo _signal_response_proxy;
     static const Glib::SignalProxyInfo _signal_drag_begin_proxy;
     static const Glib::SignalProxyInfo _signal_drag_end_proxy;
+    static const Glib::SignalProxyInfo _signal_realize_proxy;
 
     static gboolean _signal_delete_event_callback(GtkWidget *self, GdkEventAny *event, void *data);
     static void _signal_drag_end_callback(GtkWidget* self, gboolean p0, void* data);

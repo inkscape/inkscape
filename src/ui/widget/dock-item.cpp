@@ -87,6 +87,7 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
     signal_show().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onShow), false);
     signal_state_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onStateChanged));
     signal_delete_event().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onDeleteEvent));
+    signal_realize().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onRealize));
 
     _dock.addItem(*this, (_prev_state == FLOATING_STATE ? FLOATING : TOP));
 
@@ -116,6 +117,74 @@ DockItem::get_vbox()
     return &_dock_item_box;
 }
 
+
+void 
+DockItem::get_position(int& x, int& y)
+{ 
+    if (getWindow()) {
+        getWindow()->get_position(x, y);
+    } else {
+        x = _x;
+        y = _y;
+    }
+}
+
+void 
+DockItem::get_size(int& width, int& height)
+{ 
+    if (_window) {
+        _window->get_size(width, height);
+    } else {
+        width = get_vbox()->get_width();
+        height = get_vbox()->get_height();
+    }
+}
+
+
+void
+DockItem::resize(int width, int height) 
+{
+    if (_window)
+        _window->resize(width, height);
+}
+
+
+void
+DockItem::move(int x, int y)
+{
+    if (_window)
+        _window->move(x, y);
+}
+
+void
+DockItem::set_position(Gtk::WindowPosition position)
+{
+    if (_window)
+        _window->set_position(position);
+}
+
+void
+DockItem::set_size_request(int width, int height)
+{
+    getWidget().set_size_request(width, height);
+}
+
+void 
+DockItem::size_request(Gtk::Requisition& requisition)
+{ 
+    getWidget().size_request(requisition);
+}
+
+void
+DockItem::set_title(Glib::ustring title)
+{
+    g_object_set (_gdl_dock_item,
+                  "long-name", title.c_str(),
+                  NULL);
+
+    gdl_dock_item_set_tablabel(GDL_DOCK_ITEM(_gdl_dock_item),
+                               gtk_label_new (title.c_str()));
+}
 
 bool
 DockItem::isAttached() const
@@ -200,20 +269,13 @@ DockItem::show_all()
 void
 DockItem::present()
 {
-    // iconified
-    if (isIconified()) {
+    // iconified or unattached
+    if (isIconified() || !isAttached()) {
         show();
-        return;
-    }
-    
-    // unattached
-    if (!isAttached()) {
-        gdl_dock_item_show_item (GDL_DOCK_ITEM(_gdl_dock_item));
-        return;
-    }
+    }        
 
     // tabbed
-    if (getPlacement() == CENTER) {
+    else if (getPlacement() == CENTER) {
         int i = gtk_notebook_page_num (GTK_NOTEBOOK (_gdl_dock_item->parent),
                                        GTK_WIDGET (_gdl_dock_item));
         if (i >= 0)
@@ -221,78 +283,20 @@ DockItem::present()
         return;
     }
 
-    // we're already present, do nothing
-}
-
-
-void 
-DockItem::get_position(int& x, int& y)
-{ 
-    if (getWindow()) {
-        getWindow()->get_position(x, y);
-    } else {
-        x = _x;
-        y = _y;
-    }
-}
-
-void 
-DockItem::get_size(int& width, int& height)
-{ 
-    if (_window) {
-        _window->get_size(width, height);
-    } else {
-        width = get_vbox()->get_width();
-        height = get_vbox()->get_height();
-    }
+    // always grab focus, even if we're already present
+    grab_focus();
 }
 
 
 void
-DockItem::resize(int width, int height) 
+DockItem::grab_focus()
 {
-    if (_window)
-        _window->resize(width, height);
+    if (GTK_WIDGET_REALIZED (_gdl_dock_item))
+        gtk_widget_grab_focus (_gdl_dock_item);
+    else
+        _grab_focus_on_realize = true;
 }
 
-
-void
-DockItem::move(int x, int y)
-{
-    if (_window)
-        _window->move(x, y);
-}
-
-void
-DockItem::set_position(Gtk::WindowPosition position)
-{
-    if (_window)
-        _window->set_position(position);
-}
-
-void
-DockItem::set_size_request(int width, int height)
-{
-    getWidget().set_size_request(width, height);
-}
-
-void 
-DockItem::size_request(Gtk::Requisition& requisition)
-{ 
-    getWidget().size_request(requisition);
-}
-
-
-void
-DockItem::set_title(Glib::ustring title)
-{
-    g_object_set (_gdl_dock_item,
-                  "long-name", title.c_str(),
-                  NULL);
-
-    gdl_dock_item_set_tablabel(GDL_DOCK_ITEM(_gdl_dock_item),
-                               gtk_label_new (title.c_str()));
-}
 
 /* Signal wrappers */
 
@@ -336,6 +340,13 @@ DockItem::signal_drag_end()
 {
     return Glib::SignalProxy1<void, bool>(Glib::wrap(GTK_WIDGET(_gdl_dock_item)),
                                           &_signal_drag_end_proxy);
+}
+
+Glib::SignalProxy0<void>
+DockItem::signal_realize()
+{
+    return Glib::SignalProxy0<void>(Glib::wrap(GTK_WIDGET(_gdl_dock_item)),
+                                    &_signal_realize_proxy);
 }
 
 sigc::signal<void, DockItem::State, DockItem::State>
@@ -385,6 +396,15 @@ DockItem::_onDragEnd(bool)
     }
 
     _prev_state = state;
+}
+
+void
+DockItem::_onRealize()
+{
+    if (_grab_focus_on_realize) {
+        _grab_focus_on_realize = false;
+        grab_focus();
+    }
 }
 
 bool
@@ -474,6 +494,15 @@ DockItem::_signal_drag_end_proxy =
     "dock_drag_end",
     (GCallback) &_signal_drag_end_callback,
     (GCallback) &_signal_drag_end_callback
+};
+
+
+const Glib::SignalProxyInfo
+DockItem::_signal_realize_proxy = 
+{
+    "realize",
+    (GCallback) &Glib::SignalProxyNormal::slot0_void_callback,
+    (GCallback) &Glib::SignalProxyNormal::slot0_void_callback
 };
 
 

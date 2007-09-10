@@ -68,8 +68,6 @@ protected:
     /** Internal signal handlers */
     void _onLayoutChanged();
 
-    void _onFoo();
-
     /** GdlDock signal proxy structures */
     static const Glib::SignalProxyInfo _signal_layout_changed_proxy;
 
