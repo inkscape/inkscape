@@ -232,6 +232,7 @@ void
 DockBehavior::_onHide()
 {
     _dialog.save_geometry();
+    _dialog._user_hidden = true;
     prefs_set_int_attribute (_dialog._prefs_path, "state", _dock_item.getPrevState());
 }
 

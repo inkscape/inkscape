@@ -227,7 +227,6 @@ Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_pat
     }
 
     read_geometry();
-    present();
 }
 
 Dialog::~Dialog()
