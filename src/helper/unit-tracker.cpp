@@ -133,6 +133,7 @@ GtkAction* UnitTracker::createAction( gchar const* name, gchar const* label, gch
         ege_select_one_action_set_active( act1, _active );
     }
 
+    ege_select_one_action_set_appearance( act1, "minimal" );
     g_object_weak_ref( G_OBJECT(act1), _actionFinalizedCB, this );
     g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK( _unitChangedCB ), this );
     _actionList = g_slist_append( _actionList, act1 );
