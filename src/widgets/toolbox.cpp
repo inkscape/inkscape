@@ -248,7 +248,6 @@ static gchar const * ui_descr =
         "    <toolitem action='TweakForceAction' />"
         "    <toolitem action='TweakPressureAction' />"
         "    <separator />"
-        "    <toolitem action='TweakModeLabel' />"
         "    <toolitem action='TweakModeAction' />"
         "    <separator />"
         "    <toolitem action='TweakFidelityAction' />"
@@ -2784,12 +2783,6 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     }
 
-    {
-        EgeOutputAction* act = ege_output_action_new( "TweakModeLabel", _("<b>Mode:</b>"), "", 0 );
-        ege_output_action_set_use_markup( act, TRUE );
-        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-    }
-
     /* Mode */
     {
         GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
@@ -2851,7 +2844,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                             2, "tweak_colorjitter_mode",
                             -1 );
 
-        EgeSelectOneAction* act = ege_select_one_action_new( "TweakModeAction", _(""), _(""), NULL, GTK_TREE_MODEL(model) );
+        EgeSelectOneAction* act = ege_select_one_action_new( "TweakModeAction", _("Mode:"), _(""), NULL, GTK_TREE_MODEL(model) );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
         g_object_set_data( holder, "mode_action", act );
 
@@ -4697,7 +4690,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
 
 
 //#########################
-//##  Connector Toolbox  ##
+//##      Connector      ##
 //#########################
 
 static void sp_connector_path_set_avoid(void)
@@ -4943,6 +4936,11 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
     }
 } // end of sp_connector_toolbox_prep()
 
+
+//#########################
+//##     Paintbucket     ##
+//#########################
+
 static void paintbucket_channels_changed(EgeSelectOneAction* act, GObject* tbl)
 {
     gint channels = ege_select_one_action_get_active( act );
@@ -5012,6 +5010,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         g_list_free( items );
         items = 0;
         EgeSelectOneAction* act1 = ege_select_one_action_new( "ChannelsAction", _("Fill by:"), _(""), NULL, GTK_TREE_MODEL(model) );
+        ege_select_one_action_set_appearance( act1, "compact" );
         ege_select_one_action_set_active( act1, prefs_get_int_attribute("tools.paintbucket", "channels", 0) );
         g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(paintbucket_channels_changed), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
@@ -5071,7 +5070,8 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         }
         g_list_free( items );
         items = 0;
-        EgeSelectOneAction* act2 = ege_select_one_action_new( "AutoGapAction", _("Fill gaps:"), _(""), NULL, GTK_TREE_MODEL(model) );
+        EgeSelectOneAction* act2 = ege_select_one_action_new( "AutoGapAction", _("Close gaps:"), _(""), NULL, GTK_TREE_MODEL(model) );
+        ege_select_one_action_set_appearance( act2, "compact" );
         ege_select_one_action_set_active( act2, prefs_get_int_attribute("tools.paintbucket", "autogap", 0) );
         g_signal_connect( G_OBJECT(act2), "changed", G_CALLBACK(paintbucket_autogap_changed), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act2) );
