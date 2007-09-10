@@ -82,9 +82,9 @@ static GQuark gDataName = 0;
 enum {
     APPEARANCE_UNKNOWN = -1,
     APPEARANCE_NONE = 0,
-    APPEARANCE_FULL,
-    APPEARANCE_COMPACT,
-    APPEARANCE_MINIMAL,
+    APPEARANCE_FULL,    // label, then all choices represented by separate buttons
+    APPEARANCE_COMPACT, // label, then choices in a drop-down menu
+    APPEARANCE_MINIMAL, // no label, just choices in a drop-down menu
 };
 
 struct _EgeSelectOneActionPrivate
@@ -495,6 +495,14 @@ GtkWidget* create_tool_item( GtkAction* action )
             gint index = 0;
             GtkTooltips* tooltips = gtk_tooltips_new();
 
+            gchar*  sss = 0;
+            g_object_get( G_OBJECT(action), "label", &sss, NULL );
+            if (sss) {
+                GtkWidget* lbl;
+                lbl = gtk_label_new(sss);
+                gtk_box_pack_start( GTK_BOX(holder), lbl, FALSE, FALSE, 4 );
+            }
+
             valid = gtk_tree_model_get_iter_first( act->private_data->model, &iter );
             while ( valid ) {
                 gchar* str = 0;
@@ -564,7 +572,7 @@ GtkWidget* create_tool_item( GtkAction* action )
 
             gtk_container_add( GTK_CONTAINER(item), holder );
         } else {
-            GtkWidget* holder = gtk_table_new( 1, 3, FALSE );
+            GtkWidget* holder = gtk_hbox_new( FALSE, 4 );
             GtkWidget* normal = gtk_combo_box_new_with_model( act->private_data->model );
 
             GtkCellRenderer * renderer = 0;
@@ -587,11 +595,18 @@ GtkWidget* create_tool_item( GtkAction* action )
 
             g_object_set_data( G_OBJECT(holder), "ege-combo-box", normal );
 
-            GtkWidget* lbl = gtk_label_new(" ");
-            gtk_table_attach( GTK_TABLE(holder), lbl, 0, 1, 0, 1, GTK_SHRINK, GTK_SHRINK, 0, 0 );
-            gtk_table_attach( GTK_TABLE(holder), normal, 1, 2, 0, 1, GTK_FILL, GTK_EXPAND, 0, 0 );
-            lbl = gtk_label_new(" ");
-            gtk_table_attach( GTK_TABLE(holder), lbl, 2, 3, 0, 1, GTK_SHRINK, GTK_SHRINK, 0, 0 );
+            if (act->private_data->appearanceMode == APPEARANCE_COMPACT) {
+                gchar*  sss = 0;
+                g_object_get( G_OBJECT(action), "label", &sss, NULL );
+                if (sss) {
+                    GtkWidget* lbl;
+                    lbl = gtk_label_new(sss);
+                    gtk_box_pack_start( GTK_BOX(holder), lbl, FALSE, FALSE, 4 );
+                }
+            } 
+
+            gtk_box_pack_start( GTK_BOX(holder), normal, FALSE, FALSE, 0 );
+
             gtk_container_add( GTK_CONTAINER(item), holder );
         }
 
