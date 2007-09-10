@@ -236,11 +236,13 @@ sp_3dbox_update(SPObject *object, SPCtx *ctx, guint flags)
         SP3DBox *box = SP_3DBOX(object);
         Inkscape::XML::Node *repr = SP_OBJECT_REPR(object);
         sp_3dbox_link_to_existing_paths (box, repr);
-        SP3DBoxContext *bc = SP_3DBOX_CONTEXT (inkscape_active_event_context());
-        bc->_vpdrag->updateDraggers();
-        // FIXME: Should we update the corners here, too? Maybe this is the reason why the handles
-        //        are off after an undo/redo! On the other hand, if we do so we get warnings about
-        //        updates occuring while other updats are in progress ...
+        SPEventContext *ec = inkscape_active_event_context();
+        if (SP_IS_3DBOX_CONTEXT (ec)) {
+            SP_3DBOX_CONTEXT (ec)->_vpdrag->updateDraggers();
+            // FIXME: Should we update the corners here, too? Maybe this is the reason why the handles
+            //        are off after an undo/redo! On the other hand, if we do so we get warnings about
+            //        updates occuring while other updats are in progress ...
+        }
     }
 
     /* Invoke parent method */
