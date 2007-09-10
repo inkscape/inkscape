@@ -22,7 +22,9 @@
 #include "desktop.h"
 #include "inkscape.h"
 #include "prefs-utils.h"
-
+#include "sp-text.h"
+#include "sp-flowtext.h"
+#include "text-editing.h"
 
 Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, NR::Coord const d)
     : Snapper(nv, d), _snap_to_itemnode(true), _snap_to_itempath(true), 
@@ -80,7 +82,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
                     i++;
                 }
     
-                if (i == it.end()) {
+    			if (i == it.end()) {
                     /* See if the item is within range */
                     if (SP_IS_GROUP(o)) {
                         _findCandidates(o, it, false, points_to_snap, snap_dim);
@@ -269,7 +271,29 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
 	        //Add the item's path to snap to
 	        if (_snap_to_itempath) {
 	        	if (!(_strict_snapping && !p_is_a_node)) {
-	        		_paths_to_snap_to->push_back(Path_for_item(root_item, true, true));
+	        		// Snapping to the path of characters is very cool, but for a large
+					// chunk of text this will take ages! So limit snapping to text paths
+					// containing max. 240 characters. Snapping the bbox will not be affected
+					bool very_lenghty_prose = false;
+					if (SP_IS_TEXT(root_item) || SP_IS_FLOWTEXT(root_item)) {
+						very_lenghty_prose =  sp_text_get_length(SP_TEXT(root_item)) > 240; 
+					}	
+					
+					// On my AMD 3000+, the snapping lag becomes annoying at approx. 240 chars
+					// which corresponds to a lag of 500 msec. This is for snapping a rect
+					// to a single line of text. 
+					
+					// Snapping for example to a traced bitmap is also very stressing for 
+					// the CPU, so we'll only snap to paths having no more than 500 nodes
+					// This also leads to a lag of approx. 500 msec (in my lousy test set-up). 
+					bool very_complex_path = false;
+					if (SP_IS_PATH(root_item)) {
+						very_complex_path = sp_nodes_in_path(SP_PATH(root_item)) > 500; 
+					}								 		 
+					
+				 	if (!very_lenghty_prose && !very_complex_path) {
+        				_paths_to_snap_to->push_back(Path_for_item(root_item, true, true));
+				 	}
 	        	}
 	        }
 	                

@@ -1521,11 +1521,20 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
 
         } else {
 
+            // Let's leave this timer code here for a while. I'll probably need it in the near future (Diederik van Lierop)
+            /* GTimeVal starttime;
+            GTimeVal endtime;
+    		g_get_current_time(&starttime); */
+            
             /* Snap to things with no constraint */
 			s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX,
                                               _bbox_points, it, dxy));
             s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_NODE,
                                               _snap_points, it, dxy));
+          	
+          	/*g_get_current_time(&endtime);
+          	double elapsed = ((((double)endtime.tv_sec - starttime.tv_sec) * G_USEC_PER_SEC + (endtime.tv_usec - starttime.tv_usec))) / 1000.0;
+          	std::cout << "Time spent snapping: " << elapsed << std::endl; */
         }
 
         /* Pick one */
