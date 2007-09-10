@@ -369,6 +369,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
         if (orig == NULL) {
             return false;
         }
+
         Path *res = new Path;
         res->SetBackData(false);
 
@@ -455,10 +456,15 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
             if (res->descr_cmd.size() > 1) { 
                 gchar *str = res->svg_dump_path();
-                if (newrepr)
+                if (newrepr) {
                     newrepr->setAttribute("d", str);
-                else
-                    SP_OBJECT_REPR(item)->setAttribute("d", str);
+                } else {
+                    if (SP_IS_SHAPE(item) && SP_SHAPE(item)->path_effect_href) {
+                        SP_OBJECT_REPR(item)->setAttribute("inkscape:original-d", str);
+                    } else {
+                        SP_OBJECT_REPR(item)->setAttribute("d", str);
+                    }
+                }
                 g_free(str);
             } else {
                 // TODO: if there's 0 or 1 node left, delete this path altogether
@@ -935,7 +941,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                     num = g_slist_length((GSList *) desktop->selection->itemList());
                 }
                 if (num == 0) {
-                    tc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Select objects</b> to tweak"));
+                    tc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Nothing selected!</b> Select objects to tweak."));
                 } else {
                     switch (tc->mode) {
                         case TWEAK_MODE_PUSH:
