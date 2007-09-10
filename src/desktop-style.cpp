@@ -515,7 +515,9 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
             num ++;
         }
 
-        paintImpossible = false;
+       paintImpossible = false;
+       paint_res->colorSet = paint->colorSet;
+       paint_res->currentcolor = paint->currentcolor;
        if (paint_res->set && paint_effectively_set && paint->isPaintserver()) { // copy the server
            if (isfill) {
                sp_style_set_to_uri_string (style_res, true, style->getFillURI());
