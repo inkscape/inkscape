@@ -76,7 +76,7 @@ gr_apply_gradient_to_item (SPItem *item, SPGradient *gr, SPGradientType new_type
     SPStyle *style = SP_OBJECT_STYLE (item);
 
     if (do_fill) {
-        if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER) && 
+        if (style && (style->fill.isPaintserver()) && 
             SP_IS_GRADIENT (SP_OBJECT_STYLE_FILL_SERVER (item))) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
@@ -90,7 +90,7 @@ gr_apply_gradient_to_item (SPItem *item, SPGradient *gr, SPGradientType new_type
     } 
 
     if (do_stroke) {
-        if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER) && 
+        if (style && (style->stroke.isPaintserver()) && 
             SP_IS_GRADIENT (SP_OBJECT_STYLE_STROKE_SERVER (item))) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
@@ -298,7 +298,7 @@ gr_read_selection (Inkscape::Selection *selection, GrDrag *drag, SPGradient **gr
         SPItem *item = SP_ITEM(i->data);
         SPStyle *style = SP_OBJECT_STYLE (item);
 
-        if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) { 
+        if (style && (style->fill.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
             if (SP_IS_GRADIENT (server)) {
                 SPGradient *gradient = sp_gradient_get_vector (SP_GRADIENT (server), false);
@@ -319,7 +319,7 @@ gr_read_selection (Inkscape::Selection *selection, GrDrag *drag, SPGradient **gr
                 }
             }
         }
-        if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) { 
+        if (style && (style->stroke.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
             if (SP_IS_GRADIENT (server)) {
                 SPGradient *gradient = sp_gradient_get_vector (SP_GRADIENT (server), false);

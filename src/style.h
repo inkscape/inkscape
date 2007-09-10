@@ -144,13 +144,6 @@ struct SPILength {
 #define SP_OBJECT_STYLE_FILL_SERVER(o) (SP_OBJECT (o)->style->getFillPaintServer())
 #define SP_OBJECT_STYLE_STROKE_SERVER(o) (SP_OBJECT (o)->style->getStrokePaintServer())
 
-enum {
-    SP_PAINT_TYPE_NONE,
-    SP_PAINT_TYPE_COLOR,
-    SP_PAINT_TYPE_PAINTSERVER,
-    SP_PAINT_TYPE_IMPOSSIBLE
-};
-
 class SVGICCColor;
 
 /// Paint type internal to SPStyle.
@@ -158,14 +151,29 @@ struct SPIPaint {
     unsigned set : 1;
     unsigned inherit : 1;
     unsigned currentcolor : 1;
-    unsigned type : 2;
     unsigned int colorSet : 1;
     unsigned int noneSet : 1;
     struct {
-        SPPaintServerReference *href; 
-        SPColor color;
-        SVGICCColor *iccColor;
+         SPPaintServerReference *href;
+         SPColor color;
+         SVGICCColor *iccColor;
     } value;
+
+
+    bool isSet() const { return true; /* set || colorSet*/}
+    bool isSameType( SPIPaint const & other ) const {return (isPaintserver() == other.isPaintserver()) && (colorSet == other.colorSet) && (currentcolor == other.currentcolor);}
+
+    bool isNoneSet() const {return noneSet;}
+
+    bool isNone() const {return !currentcolor && !colorSet && !isPaintserver();} // TODO refine
+    bool isColor() const {return colorSet && !isPaintserver();}
+    bool isPaintserver() const {return value.href && value.href->getObject();}
+
+    void clear();
+
+    void setColor( float r, float g, float b ) {sp_color_set_rgb_float(&value.color, r, g, b); colorSet = true;}
+    void setColor( guint32 val ) {sp_color_set_rgb_rgba32(&value.color, val); colorSet = true;}
+    void setColor( SPColor const& color ) {value.color = color; colorSet = true;}
 };
 
 /// Filter type internal to SPStyle

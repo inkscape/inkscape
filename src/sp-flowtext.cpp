@@ -329,7 +329,7 @@ sp_flowtext_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, 
 
     // Add stroke width
     SPStyle* style=SP_OBJECT_STYLE (item);
-    if (style->stroke.type != SP_PAINT_TYPE_NONE) {
+    if ( !style->stroke.isNone() ) {
         double const scale = expansion(transform);
         if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
             double const width = MAX(0.125, style->stroke_width.computed * scale);

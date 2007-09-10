@@ -714,7 +714,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
         if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX) {
             
             SPStyle* style=SP_OBJECT_STYLE (item);
-            if (style->stroke.type != SP_PAINT_TYPE_NONE) {
+            if (!style->stroke.isNone()) {
                 double const scale = expansion(transform);
                 if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
                     double const width = MAX(0.125, style->stroke_width.computed * scale);
@@ -795,13 +795,13 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 
         SPStyle* style = SP_OBJECT_STYLE (item);
 
-	if (style->fill.type != SP_PAINT_TYPE_NONE) {
+	if (!style->fill.isNone()) {
 		NRBPath bp;
 		bp.path = SP_CURVE_BPATH(shape->curve);
 		sp_print_fill (ctx, &bp, i2d, style, &pbox, &dbox, &bbox);
 	}
 
-	if (style->stroke.type != SP_PAINT_TYPE_NONE) {
+	if (!style->stroke.isNone()) {
 		NRBPath bp;
 		bp.path = SP_CURVE_BPATH(shape->curve);
 		sp_print_stroke (ctx, &bp, i2d, style, &pbox, &dbox, &bbox);

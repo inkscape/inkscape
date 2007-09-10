@@ -207,14 +207,14 @@ sp_fill_style_widget_update (SPWidget *spw)
             sp_paint_selector_set_fillrule (psel, query->fill_rule.computed == ART_WIND_RULE_NONZERO? 
                                      SP_PAINT_SELECTOR_FILLRULE_NONZERO : SP_PAINT_SELECTOR_FILLRULE_EVENODD);
 
-            if (query->fill.set && query->fill.type == SP_PAINT_TYPE_COLOR) {
+            if (query->fill.set && query->fill.isColor()) {
                 gfloat d[3];
                 sp_color_get_rgb_floatv (&query->fill.value.color, d);
                 SPColor color;
                 sp_color_set_rgb_float (&color, d[0], d[1], d[2]);
                 sp_paint_selector_set_color_alpha (psel, &color, SP_SCALE24_TO_FLOAT (query->fill_opacity.value));
 
-            } else if (query->fill.set && query->fill.type == SP_PAINT_TYPE_PAINTSERVER) {
+            } else if (query->fill.set && query->fill.isPaintserver()) {
 
                 SPPaintServer *server = SP_STYLE_FILL_SERVER (query);
 
@@ -434,7 +434,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                     int result = objects_query_fillstroke ((GSList *) items, query, true); 
                     guint32 common_rgb = 0;
                     if (result == QUERY_STYLE_MULTIPLE_SAME) {
-                        if (query->fill.type != SP_PAINT_TYPE_COLOR) {
+                        if (!query->fill.isColor()) {
                             common_rgb = sp_desktop_get_color(desktop, true);
                         } else {
                             common_rgb = sp_color_get_rgba32_ualpha(&query->fill.value.color, 0xff);
@@ -502,7 +502,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                          SPObject *selobj = SP_OBJECT (i->data);
 
                          SPStyle *style = SP_OBJECT_STYLE (selobj);
-                         if (style && style->fill.type == SP_PAINT_TYPE_PAINTSERVER) {
+                         if (style && style->fill.isPaintserver()) {
                              SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (selobj);
                              if (SP_IS_PATTERN (server) && pattern_getroot (SP_PATTERN(server)) == pattern)
                                 // only if this object's pattern is not rooted in our selected pattern, apply

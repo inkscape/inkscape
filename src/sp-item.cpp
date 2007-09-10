@@ -978,7 +978,7 @@ sp_item_adjust_pattern (SPItem *item, NR::Matrix const &postmul, bool set)
 {
     SPStyle *style = SP_OBJECT_STYLE (item);
 
-    if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) {
+    if (style && (style->fill.isPaintserver())) {
         SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
         if (SP_IS_PATTERN (server)) {
             SPPattern *pattern = sp_pattern_clone_if_necessary (item, SP_PATTERN (server), "fill");
@@ -986,7 +986,7 @@ sp_item_adjust_pattern (SPItem *item, NR::Matrix const &postmul, bool set)
         }
     }
 
-    if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) {
+    if (style && (style->stroke.isPaintserver())) {
         SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
         if (SP_IS_PATTERN (server)) {
             SPPattern *pattern = sp_pattern_clone_if_necessary (item, SP_PATTERN (server), "stroke");
@@ -1001,7 +1001,7 @@ sp_item_adjust_gradient (SPItem *item, NR::Matrix const &postmul, bool set)
 {
     SPStyle *style = SP_OBJECT_STYLE (item);
 
-    if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) {
+    if (style && (style->fill.isPaintserver())) {
         SPObject *server = SP_OBJECT_STYLE_FILL_SERVER(item);
         if (SP_IS_GRADIENT (server)) {
 
@@ -1020,7 +1020,7 @@ sp_item_adjust_gradient (SPItem *item, NR::Matrix const &postmul, bool set)
         }
     }
 
-    if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) {
+    if (style && (style->stroke.isPaintserver())) {
         SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER(item);
         if (SP_IS_GRADIENT (server)) {
             SPGradient *gradient = sp_gradient_convert_to_userspace (SP_GRADIENT (server), item, "stroke");
@@ -1034,7 +1034,7 @@ sp_item_adjust_stroke (SPItem *item, gdouble ex)
 {
     SPStyle *style = SP_OBJECT_STYLE (item);
 
-    if (style && style->stroke.type != SP_PAINT_TYPE_NONE && !NR_DF_TEST_CLOSE (ex, 1.0, NR_EPSILON)) {
+    if (style && !style->stroke.isNone() && !NR_DF_TEST_CLOSE (ex, 1.0, NR_EPSILON)) {
 
         style->stroke_width.computed *= ex;
         style->stroke_width.set = TRUE;

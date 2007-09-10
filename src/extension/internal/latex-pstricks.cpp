@@ -206,7 +206,7 @@ PrintLatex::fill(Inkscape::Extension::Print *mod,
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
 
-    if (style->fill.type == SP_PAINT_TYPE_COLOR) {
+    if (style->fill.isColor()) {
         Inkscape::SVGOStringStream os;
         float rgb[3];
 
@@ -233,7 +233,7 @@ PrintLatex::stroke (Inkscape::Extension::Print *mod, const NRBPath *bpath, const
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
 
-    if (style->stroke.type == SP_PAINT_TYPE_COLOR) {
+    if (style->stroke.isColor()) {
         Inkscape::SVGOStringStream os;
         float rgb[3];
         NR::Matrix tr_stack = m_tr_stack.top();

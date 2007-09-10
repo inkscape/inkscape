@@ -1359,7 +1359,7 @@ sp_offset_knot_holder(SPItem *item, SPDesktop *desktop)
 static SPKnotHolder *
 sp_misc_knot_holder(SPItem *item, SPDesktop *desktop) // FIXME: eliminate, instead make a pattern-drag similar to gradient-drag
 {
-    if ((SP_OBJECT(item)->style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
+    if ((SP_OBJECT(item)->style->fill.isPaintserver())
         && SP_IS_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style)))
     {
         SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
@@ -1374,7 +1374,7 @@ sp_misc_knot_holder(SPItem *item, SPDesktop *desktop) // FIXME: eliminate, inste
 static void
 sp_pat_knot_holder(SPItem *item, SPKnotHolder *knot_holder)
 {
-    if ((SP_OBJECT(item)->style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
+    if ((SP_OBJECT(item)->style->fill.isPaintserver())
         && SP_IS_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style)))
     {
         sp_knot_holder_add_full(knot_holder, sp_pattern_xy_set, sp_pattern_xy_get, NULL, SP_KNOT_SHAPE_CROSS, SP_KNOT_MODE_XOR,

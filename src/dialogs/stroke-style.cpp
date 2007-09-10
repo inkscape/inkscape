@@ -219,14 +219,7 @@ sp_stroke_style_paint_update (SPWidget *spw)
             SPPaintSelectorMode pselmode = sp_style_determine_paint_selector_mode (query, false);
             sp_paint_selector_set_mode (psel, pselmode);
 
-            if (query->stroke.set && query->stroke.type == SP_PAINT_TYPE_COLOR) {
-                gfloat d[3];
-                sp_color_get_rgb_floatv (&query->stroke.value.color, d);
-                SPColor color;
-                sp_color_set_rgb_float (&color, d[0], d[1], d[2]);
-                sp_paint_selector_set_color_alpha (psel, &color, SP_SCALE24_TO_FLOAT (query->stroke_opacity.value));
-
-            } else if (query->stroke.set && query->stroke.type == SP_PAINT_TYPE_PAINTSERVER) {
+            if (query->stroke.set && query->stroke.isPaintserver()) {
 
                 SPPaintServer *server = SP_STYLE_STROKE_SERVER (query);
 
@@ -250,6 +243,13 @@ sp_stroke_style_paint_update (SPWidget *spw)
                     SPPattern *pat = pattern_getroot (SP_PATTERN (server));
                     sp_update_pattern_list (psel, pat);
                 }
+            } else if (query->stroke.set && query->stroke.isColor()) {
+                gfloat d[3];
+                sp_color_get_rgb_floatv (&query->stroke.value.color, d);
+                SPColor color;
+                sp_color_set_rgb_float (&color, d[0], d[1], d[2]);
+                sp_paint_selector_set_color_alpha (psel, &color, SP_SCALE24_TO_FLOAT (query->stroke_opacity.value));
+
             }
             break;
         }
@@ -390,7 +390,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
                     int result = objects_query_fillstroke ((GSList *) items, query, false); 
                     guint32 common_rgb = 0;
                     if (result == QUERY_STYLE_MULTIPLE_SAME) {
-                        if (query->fill.type != SP_PAINT_TYPE_COLOR) {
+                        if (!query->fill.isColor()) {
                             common_rgb = sp_desktop_get_color(desktop, false);
                         } else {
                             common_rgb = sp_color_get_rgba32_ualpha(&query->stroke.value.color, 0xff);
@@ -445,7 +445,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
                              continue;
 
                          SPStyle *style = SP_OBJECT_STYLE (selobj);
-                         if (style && style->stroke.type == SP_PAINT_TYPE_PAINTSERVER) {
+                         if (style && style->stroke.isPaintserver()) {
                              SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (selobj);
                              if (SP_IS_PATTERN (server) && pattern_getroot (SP_PATTERN(server)) == pattern)
                                  // only if this object's pattern is not rooted in our selected pattern, apply

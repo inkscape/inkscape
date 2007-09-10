@@ -910,7 +910,7 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList 
 {
     SPStyle *style = SP_OBJECT_STYLE (item);
 
-    if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) {
+    if (style && (style->fill.isPaintserver())) {
         SPObject *server = SP_OBJECT_STYLE_FILL_SERVER(item);
         if (SP_IS_LINEARGRADIENT (server) || SP_IS_RADIALGRADIENT (server))
             sp_copy_gradient (defs_clip, SP_GRADIENT(server), xml_doc);
@@ -918,7 +918,7 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList 
             sp_copy_pattern (defs_clip, SP_PATTERN(server), xml_doc);
     }
 
-    if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) {
+    if (style && (style->stroke.isPaintserver())) {
         SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER(item);
         if (SP_IS_LINEARGRADIENT (server) || SP_IS_RADIALGRADIENT (server))
             sp_copy_gradient (defs_clip, SP_GRADIENT(server), xml_doc);
@@ -2396,7 +2396,7 @@ sp_selection_untile()
 
         SPStyle *style = SP_OBJECT_STYLE (item);
 
-        if (!style || style->fill.type != SP_PAINT_TYPE_PAINTSERVER)
+        if (!style || !style->fill.isPaintserver())
             continue;
 
         SPObject *server = SP_OBJECT_STYLE_FILL_SERVER(item);

@@ -1557,7 +1557,7 @@ bool OdfOutput::processStyle(Writer &outs, SPItem *item,
     StyleInfo si;
 
     //## FILL
-    if (style->fill.type == SP_PAINT_TYPE_COLOR)
+    if (style->fill.isColor())
         {
         guint32 fillCol =
             sp_color_get_rgba32_ualpha(&style->fill.value.color, 0);
@@ -1576,7 +1576,7 @@ bool OdfOutput::processStyle(Writer &outs, SPItem *item,
         }
 
     //## STROKE
-    if (style->stroke.type == SP_PAINT_TYPE_COLOR)
+    if (style->stroke.isColor())
         {
         guint32 strokeCol =
             sp_color_get_rgba32_ualpha(&style->stroke.value.color, 0);
@@ -1658,7 +1658,7 @@ bool OdfOutput::processGradient(Writer &outs, SPItem *item,
     if (!style)
         return false;
 
-    if (style->fill.type != SP_PAINT_TYPE_PAINTSERVER)
+    if (!style->fill.isPaintserver())
         return false;
 
     //## Gradient.  Look in writeStyle() below to see what info

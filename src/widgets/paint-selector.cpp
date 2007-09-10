@@ -920,47 +920,34 @@ sp_paint_selector_set_flat_color(SPPaintSelector *psel, SPDesktop *desktop, gcha
 SPPaintSelectorMode
 sp_style_determine_paint_selector_mode(SPStyle *style, bool isfill)
 {
-    unsigned set = isfill? style->fill.set : style->stroke.set;
-    if (!set)
-        return SP_PAINT_SELECTOR_MODE_UNSET;
+    SPPaintSelectorMode mode = SP_PAINT_SELECTOR_MODE_UNSET;
+    SPIPaint& target = isfill ? style->fill : style->stroke;
 
-    unsigned type = isfill? style->fill.type : style->stroke.type;
-    switch (type) {
+    if ( !target.set ) {
+        SPPaintSelectorMode mode = SP_PAINT_SELECTOR_MODE_UNSET;
+    } else if ( target.isPaintserver() ) {
+        SPPaintServer *server = isfill? SP_STYLE_FILL_SERVER(style) : SP_STYLE_STROKE_SERVER(style);
 
-        case SP_PAINT_TYPE_NONE:
-        {
-            return SP_PAINT_SELECTOR_MODE_NONE;
+        if (SP_IS_LINEARGRADIENT(server)) {
+            mode = SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR;
+        } else if (SP_IS_RADIALGRADIENT(server)) {
+            mode = SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL;
+        } else if (SP_IS_PATTERN(server)) {
+            mode = SP_PAINT_SELECTOR_MODE_PATTERN;
+        } else {
+            g_warning( "file %s: line %d: Unknown paintserver", __FILE__, __LINE__ );
+            mode = SP_PAINT_SELECTOR_MODE_NONE;
         }
-
-        case SP_PAINT_TYPE_COLOR:
-        {
-            return SP_PAINT_SELECTOR_MODE_COLOR_RGB; // so far only rgb can be read from svg
-        }
-
-        case SP_PAINT_TYPE_PAINTSERVER:
-        {
-            SPPaintServer *server = isfill? SP_STYLE_FILL_SERVER(style) : SP_STYLE_STROKE_SERVER(style);
-
-            if (SP_IS_LINEARGRADIENT(server)) {
-                return SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR;
-            } else if (SP_IS_RADIALGRADIENT(server)) {
-                return SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL;
-            } else if (SP_IS_PATTERN(server)) {
-                return SP_PAINT_SELECTOR_MODE_PATTERN;
-            }
-
-            g_warning( "file %s: line %d: Unknown paintserver",
-                       __FILE__, __LINE__ );
-            return SP_PAINT_SELECTOR_MODE_NONE;
-        }
-
-        default:
-            g_warning( "file %s: line %d: Unknown paint type %d",
-                       __FILE__, __LINE__, type );
-            break;
+    } else if ( target.isColor() ) {
+        mode = SP_PAINT_SELECTOR_MODE_COLOR_RGB; // so far only rgb can be read from svg
+    } else if ( target.isNone() ) {
+        mode = SP_PAINT_SELECTOR_MODE_NONE;
+    } else {
+        g_warning( "file %s: line %d: Unknown paint type", __FILE__, __LINE__ );
+        mode = SP_PAINT_SELECTOR_MODE_NONE;
     }
 
-    return SP_PAINT_SELECTOR_MODE_NONE;
+    return mode;
 }
 
 /*

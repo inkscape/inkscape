@@ -533,11 +533,11 @@ PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, 
 void
 PrintCairoPDF::print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect const *pbox)
 {
-    g_return_if_fail( style->fill.type == SP_PAINT_TYPE_COLOR
-                      || ( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
+    g_return_if_fail( style->fill.isColor()
+                      || ( style->fill.isPaintserver()
                            && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) ) );
     
-    if (style->fill.type == SP_PAINT_TYPE_COLOR) {
+    if (style->fill.isColor()) {
         float rgb[3];
         sp_color_get_rgb_floatv(&style->fill.value.color, rgb);
 
@@ -545,7 +545,7 @@ PrintCairoPDF::print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect 
 
         cairo_set_source_rgba(cr, rgb[0], rgb[1], rgb[2], alpha);
     } else {
-        g_assert( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
+        g_assert( style->fill.isPaintserver()
                   && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) );
 
         cairo_pattern_t *pattern = create_pattern_for_paint(SP_STYLE_FILL_SERVER(style), pbox, 1.0);
@@ -564,14 +564,14 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMat
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
 
-    if ( style->fill.type == SP_PAINT_TYPE_COLOR
-        || ( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
-             && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) ) ) {
-        
+    if ( style->fill.isColor()
+         || ( style->fill.isPaintserver()
+              && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) ) ) {
+
         float alpha = SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
-             	
+
         cairo_save(cr);
-        
+
         print_fill_style(cr, style, pbox);
         print_bpath(cr, bpath->path);
         if (style->fill_rule.value == SP_WIND_RULE_EVENODD) {
@@ -580,7 +580,7 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMat
             cairo_set_fill_rule(cr, CAIRO_FILL_RULE_WINDING);
         }
         if (alpha != 1.0 &&
-            style->fill.type != SP_PAINT_TYPE_COLOR) {
+            !style->fill.isColor()) {
 
             cairo_clip (cr);
             cairo_paint_with_alpha (cr, alpha);
@@ -599,12 +599,12 @@ PrintCairoPDF::print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect cons
 {
     float alpha = SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
 
-    if ( style->stroke.type == SP_PAINT_TYPE_COLOR ) {
+    if ( style->stroke.isColor() ) {
         float rgb[3];
         sp_color_get_rgb_floatv(&style->stroke.value.color, rgb);
       
         cairo_set_source_rgba(cr, rgb[0], rgb[1], rgb[2], alpha);
-    } else if ( style->stroke.type == SP_PAINT_TYPE_PAINTSERVER
+    } else if ( style->stroke.isPaintserver()
                   && SP_IS_GRADIENT(SP_STYLE_STROKE_SERVER(style)) ) {
 
         cairo_pattern_t *pattern = create_pattern_for_paint(SP_STYLE_STROKE_SERVER(style), pbox, alpha);
@@ -664,16 +664,16 @@ PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRM
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
 
-    if ( style->stroke.type == SP_PAINT_TYPE_COLOR ||
-        ( style->stroke.type == SP_PAINT_TYPE_PAINTSERVER
+    if ( style->stroke.isColor() ||
+         ( style->stroke.isPaintserver()
               && SP_IS_GRADIENT(SP_STYLE_STROKE_SERVER(style)) ) ) {
 
-    	cairo_save(cr);
-   	
-    	print_stroke_style(cr, style, pbox);
+        cairo_save(cr);
+
+        print_stroke_style(cr, style, pbox);
         print_bpath(cr, bpath->path);
         cairo_stroke(cr);
-		
+
         cairo_restore(cr);
     }
 
@@ -884,8 +884,8 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
     cairo_set_font_matrix(cr, &matrix);
 #endif
     
-    if ( style->fill.type == SP_PAINT_TYPE_COLOR
-         || ( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
+    if ( style->fill.isColor()
+         || ( style->fill.isPaintserver()
               && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) ) )
     {
         // set fill style
@@ -904,8 +904,8 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
 #endif
     }
 
-    if (style->stroke.type == SP_PAINT_TYPE_COLOR
-         || ( style->stroke.type == SP_PAINT_TYPE_PAINTSERVER
+    if (style->stroke.isColor()
+        || ( style->stroke.isPaintserver()
               && SP_IS_GRADIENT(SP_STYLE_STROKE_SERVER(style)) ) )
     {
         // set stroke style

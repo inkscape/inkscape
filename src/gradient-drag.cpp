@@ -153,12 +153,12 @@ gr_drag_style_query (SPStyle *style, int property, gpointer data)
             cf[3] /= count;
 
             // set both fill and stroke with our stop-color and stop-opacity
-            sp_color_set_rgb_float((SPColor *) &style->fill.value.color, cf[0], cf[1], cf[2]);
+            style->fill.clear();
+            style->fill.setColor( cf[0], cf[1], cf[2] );
             style->fill.set = TRUE;
-            style->fill.type = SP_PAINT_TYPE_COLOR;
-            sp_color_set_rgb_float((SPColor *) &style->stroke.value.color, cf[0], cf[1], cf[2]);
+            style->stroke.clear();
+            style->stroke.setColor( cf[0], cf[1], cf[2] );
             style->stroke.set = TRUE;
-            style->stroke.type = SP_PAINT_TYPE_COLOR;
 
             style->fill_opacity.value = SP_SCALE24_FROM_FLOAT (1.0);
             style->fill_opacity.set = TRUE;
@@ -1377,7 +1377,7 @@ GrDrag::updateDraggers ()
         SPItem *item = SP_ITEM(i->data);
         SPStyle *style = SP_OBJECT_STYLE (item);
 
-        if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) {
+        if (style && (style->fill.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
                 addDraggersLinear (SP_LINEARGRADIENT (server), item, true);
@@ -1386,7 +1386,7 @@ GrDrag::updateDraggers ()
             }
         }
 
-        if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) {
+        if (style && (style->stroke.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
                 addDraggersLinear (SP_LINEARGRADIENT (server), item, false);
@@ -1419,7 +1419,7 @@ GrDrag::updateLines ()
 
         SPStyle *style = SP_OBJECT_STYLE (item);
 
-        if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) {
+        if (style && (style->fill.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
                 this->addLine (sp_item_gradient_get_coords (item, POINT_LG_BEGIN, 0, true), sp_item_gradient_get_coords (item, POINT_LG_END, 0, true), GR_LINE_COLOR_FILL);
@@ -1430,7 +1430,7 @@ GrDrag::updateLines ()
             }
         }
 
-        if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) {
+        if (style && (style->stroke.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
                 this->addLine (sp_item_gradient_get_coords (item, POINT_LG_BEGIN, 0, false), sp_item_gradient_get_coords (item, POINT_LG_END, 0, false), GR_LINE_COLOR_STROKE);

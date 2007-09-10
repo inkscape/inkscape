@@ -328,7 +328,7 @@ void PovOutput::doCurves(SPDocument *doc)
         SPStyle *style = SP_OBJECT_STYLE(shape);
         /* fixme: Handle other fill types, even if this means translating gradients to a single
            flat colour. */
-        if (style && (style->fill.type == SP_PAINT_TYPE_COLOR))
+        if (style && (style->fill.isColor()))
             {
             // see color.h for how to parse SPColor
             float rgb[3];

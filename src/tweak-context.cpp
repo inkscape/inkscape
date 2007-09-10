@@ -747,26 +747,26 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         } else {
             this_force = force * tweak_profile (NR::L2 (p - center), radius);
         }
-        
+
         if (this_force > 0.002) {
 
             if (do_fill) {
-                if (style->fill.type == SP_PAINT_TYPE_COLOR) {
+                if (style->fill.isPaintserver()) {
+                    tweak_colors_in_gradient (item, true, fill_goal, p, radius, this_force, mode, do_h, do_s, do_l, do_o);
+                    did = true;
+                } else if (style->fill.isColor()) {
                     tweak_color (mode, style->fill.value.color.v.c, fill_goal, this_force, do_h, do_s, do_l);
                     item->updateRepr();
-                    did = true;
-                } else if (style->fill.type == SP_PAINT_TYPE_PAINTSERVER) {
-                    tweak_colors_in_gradient (item, true, fill_goal, p, radius, this_force, mode, do_h, do_s, do_l, do_o);
                     did = true;
                 }
             }
             if (do_stroke) {
-                if (style->stroke.type == SP_PAINT_TYPE_COLOR) {
+                if (style->stroke.isPaintserver()) {
+                    tweak_colors_in_gradient (item, false, stroke_goal, p, radius, this_force, mode, do_h, do_s, do_l, do_o);
+                    did = true;
+                } else if (style->stroke.isColor()) {
                     tweak_color (mode, style->stroke.value.color.v.c, stroke_goal, this_force, do_h, do_s, do_l);
                     item->updateRepr();
-                    did = true;
-                } else if (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER) {
-                    tweak_colors_in_gradient (item, false, stroke_goal, p, radius, this_force, mode, do_h, do_s, do_l, do_o);
                     did = true;
                 }
             }

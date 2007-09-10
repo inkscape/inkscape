@@ -100,8 +100,6 @@ static gint sp_style_write_ilengthornormal(gchar *p, gint const len, gchar const
 static gint sp_style_write_itextdecoration(gchar *p, gint const len, gchar const *const key, SPITextDecoration const *const val, SPITextDecoration const *const base, guint const flags);
 static gint sp_style_write_ifilter(gchar *b, gint len, gchar const *key, SPIFilter const *filter, SPIFilter const *base, guint flags);
 
-static void sp_style_paint_clear(SPStyle *style, SPIPaint *paint);
-
 static void sp_style_filter_clear(SPStyle *style);
 
 #define SPS_READ_IENUM_IF_UNSET(v,s,d,i) if (!(v)->set) {sp_style_read_ienum((v), (s), (d), (i));}
@@ -328,6 +326,7 @@ static SPStyleEnum const enum_enable_background[] = {
 static void
 sp_style_object_release(SPObject *object, SPStyle *style)
 {
+    (void)object; // TODO
     style->object = NULL;
 }
 
@@ -337,6 +336,7 @@ sp_style_object_release(SPObject *object, SPStyle *style)
 static void
 sp_style_filter_ref_modified(SPObject *obj, guint flags, SPStyle *style)
 {
+    (void)flags; // TODO
     SPFilter *filter=static_cast<SPFilter *>(obj);
     if (style->getFilter() == filter)
     {
@@ -371,9 +371,10 @@ sp_style_filter_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle *style)
 static void
 sp_style_paint_server_ref_modified(SPObject *obj, guint flags, SPStyle *style)
 {
+    (void)flags; // TODO
     SPPaintServer *server = static_cast<SPPaintServer *>(obj);
 
-    if ((style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
+    if ((style->fill.isPaintserver())
         && style->getFillPaintServer() == server)
     {
         if (style->object) {
@@ -387,14 +388,14 @@ sp_style_paint_server_ref_modified(SPObject *obj, guint flags, SPStyle *style)
              */
             style->object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
         }
-    } else if ((style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)
+    } else if ((style->stroke.isPaintserver())
         && style->getStrokePaintServer() == server)
     {
         if (style->object) {
             /// \todo fixme:
             style->object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
         }
-    } else {
+    } else if (server) {
         g_assert_not_reached();
     }
 }
@@ -532,8 +533,8 @@ sp_style_unref(SPStyle *style)
         style->fill_ps_modified_connection.~connection();
         style->stroke_ps_modified_connection.~connection();
 
-        sp_style_paint_clear(style, &style->fill);
-        sp_style_paint_clear(style, &style->stroke);
+        style->fill.clear();
+        style->stroke.clear();
         sp_style_filter_clear(style);
 
         g_free(style->stroke_dash.dash);
@@ -2090,30 +2091,26 @@ sp_style_set_to_uri_string (SPStyle *style, bool isfill, const gchar *uri)
 static void
 sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
 {
-    sp_style_paint_clear(style, paint);
-
     if ((paint->set && paint->currentcolor) || parent->currentcolor) {
+        paint->clear();
         paint->currentcolor = TRUE;
-        paint->type = SP_PAINT_TYPE_COLOR;
-        sp_color_copy(&paint->value.color, &style->color.value.color);
+        paint->setColor(style->color.value.color);
         return;
     }
 
-    paint->type = parent->type;
-    switch (paint->type) {
-        case SP_PAINT_TYPE_COLOR:
-            sp_color_copy(&paint->value.color, &parent->value.color);
-            break;
-        case SP_PAINT_TYPE_PAINTSERVER:
-            if (parent->value.href) {
-                sp_style_set_ipaint_to_uri(style, paint, parent->value.href->getURI(), parent->value.href->getOwnerDocument());
-            }
-            break;
-        case SP_PAINT_TYPE_NONE:
-            break;
-        default:
-            g_assert_not_reached();
-            break;
+    paint->clear();
+    if ( parent->isPaintserver() ) {
+        if (parent->value.href) {
+            sp_style_set_ipaint_to_uri(style, paint, parent->value.href->getURI(), parent->value.href->getOwnerDocument());
+        } else {
+            g_warning("Expected paint server not found.");
+        }
+    } else if ( parent->isColor() ) {
+        paint->setColor( parent->value.color );
+    } else if ( parent->isNone() ) {
+        //
+    } else {
+        g_assert_not_reached();
     }
 }
 
@@ -2414,11 +2411,11 @@ sp_style_clear(SPStyle *style)
 {
     g_return_if_fail(style != NULL);
 
-    sp_style_paint_clear(style, &style->fill);
-    sp_style_paint_clear(style, &style->stroke);
+    style->fill.clear();
+    style->stroke.clear();
     sp_style_filter_clear(style);
 
-    if (style->fill.value.href) 
+    if (style->fill.value.href)
         delete style->fill.value.href;
     if (style->stroke.value.href)
         delete style->stroke.value.href;
@@ -2528,17 +2525,15 @@ sp_style_clear(SPStyle *style)
     style->overflow.set = FALSE;
     style->overflow.value = style->overflow.computed = SP_CSS_OVERFLOW_VISIBLE;
 
-    style->color.type = SP_PAINT_TYPE_COLOR;
-    sp_color_set_rgb_float(&style->color.value.color, 0.0, 0.0, 0.0);
+    style->color.clear();
+    style->color.setColor(0.0, 0.0, 0.0);
 
-    style->fill.type = SP_PAINT_TYPE_COLOR;
-    sp_color_set_rgb_float(&style->fill.value.color, 0.0, 0.0, 0.0);
+    style->fill.clear();
+    style->fill.setColor(0.0, 0.0, 0.0);
     style->fill_opacity.value = SP_SCALE24_MAX;
     style->fill_rule.value = style->fill_rule.computed = SP_WIND_RULE_NONZERO;
 
-    style->stroke.type = SP_PAINT_TYPE_NONE;
-    style->stroke.set = FALSE;
-    sp_color_set_rgb_float(&style->stroke.value.color, 0.0, 0.0, 0.0);
+    style->stroke.clear();
     style->stroke_opacity.value = SP_SCALE24_MAX;
 
     style->stroke_width.set = FALSE;
@@ -2958,6 +2953,8 @@ sp_style_read_itextdecoration(SPITextDecoration *val, gchar const *str)
 static void
 sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document)
 {
+    (void)style; // TODO
+    (void)document; // TODO
     paint->currentcolor = FALSE;  /* currentColor not a valid <color>. */
     if (!strcmp(str, "inherit")) {
         paint->set = TRUE;
@@ -2965,9 +2962,7 @@ sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
     } else {
         guint32 const rgb0 = sp_svg_read_color(str, 0xff);
         if (rgb0 != 0xff) {
-            paint->type = SP_PAINT_TYPE_COLOR;
-            sp_color_set_rgb_rgba32(&paint->value.color, rgb0);
-            paint->set = TRUE;
+            paint->setColor(rgb0);
             paint->inherit = FALSE;
         }
     }
@@ -2986,19 +2981,12 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
         ++str;
     }
 
-    if (paint->value.href && paint->value.href->getObject()) {
-        paint->value.href->detach();
-    }
-    paint->colorSet = FALSE;
-    paint->currentcolor = FALSE;
-    paint->noneSet = FALSE;
+    paint->clear();
 
     if (streq(str, "inherit")) {
         paint->set = TRUE;
         paint->inherit = TRUE;
     } else {
-        paint->type = SP_PAINT_TYPE_NONE;
-        paint->inherit = FALSE;
         if ( strneq(str, "url", 3) ) {
             gchar *uri = extract_uri( str, &str );
             while ( g_ascii_isspace(*str) ) {
@@ -3006,7 +2994,6 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
             }
             // TODO check on and comment the comparrison "paint != &style->color".
             if ( uri && *uri && (paint != &style->color) ) {
-                paint->type = SP_PAINT_TYPE_PAINTSERVER;
                 paint->set = TRUE;
 
                 // it may be that this style's SPIPaint has not yet created its URIReference;
@@ -3031,12 +3018,8 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
         } else {
             guint32 const rgb0 = sp_svg_read_color(str, &str, 0xff);
             if (rgb0 != 0xff) {
-                if ( paint->type != SP_PAINT_TYPE_PAINTSERVER ) {
-                    paint->type = SP_PAINT_TYPE_COLOR;
-                }
-                sp_color_set_rgb_rgba32(&paint->value.color, rgb0);
+                paint->setColor( rgb0 );
                 paint->set = TRUE;
-                paint->colorSet = true;
 
                 while (g_ascii_isspace(*str)) {
                     ++str;
@@ -3523,9 +3506,21 @@ sp_style_write_itextdecoration(gchar *p, gint const len, gchar const *const key,
 static bool
 sp_paint_differ(SPIPaint const *const a, SPIPaint const *const b)
 {
-    if (a->type != b->type)
+    if ( (a->isColor() != b->isColor())
+         || (a->isPaintserver() != b->isPaintserver())
+         || (a->set != b->set)
+         || (a->currentcolor != b->currentcolor)
+         || (a->inherit!= b->inherit) ) {
         return true;
-    if (a->type == SP_PAINT_TYPE_COLOR)
+    }
+
+    // TODO refactor to allow for mixed paints (rgb() *and* url(), etc)
+
+    if ( a->isPaintserver() ) {
+        return (a->value.href == NULL || b->value.href == NULL || a->value.href->getObject() != b->value.href->getObject());
+    }
+
+    if ( a->isColor() ) {
         return !(sp_color_is_equal(&a->value.color, &b->value.color)
                  && ((a->value.iccColor == b->value.iccColor)
                      || (a->value.iccColor && b->value.iccColor
@@ -3533,8 +3528,8 @@ sp_paint_differ(SPIPaint const *const a, SPIPaint const *const b)
                          && (a->value.iccColor->colors == b->value.iccColor->colors))));
     /* todo: Allow for epsilon differences in iccColor->colors, e.g. changes small enough not to show up
      * in the string representation. */
-    if (a->type == SP_PAINT_TYPE_PAINTSERVER)
-        return (a->value.href == NULL || b->value.href == NULL || a->value.href->getObject() != b->value.href->getObject());
+    }
+
     return false;
 }
 
@@ -3672,6 +3667,7 @@ sp_style_write_ifilter(gchar *p, gint const len, gchar const *key,
                          SPIFilter const *const val, SPIFilter const *const base,
                          guint const flags)
 {
+    (void)base; // TODO
     if ((flags & SP_STYLE_FLAG_ALWAYS)
         || ((flags & SP_STYLE_FLAG_IFSET) && val->set)
         || ((flags & SP_STYLE_FLAG_IFDIFF) && val->set))
@@ -3688,18 +3684,21 @@ sp_style_write_ifilter(gchar *p, gint const len, gchar const *key,
 }
 
 
-/**
- * Clear paint object, and disconnect style from paintserver (if present).
- */
-static void
-sp_style_paint_clear(SPStyle *style, SPIPaint *paint)
+void SPIPaint::clear()
 {
-    if (paint->value.href && paint->value.href->getObject())
-        paint->value.href->detach(); 
+    set = false;
+    inherit = false;
+    currentcolor = false;
+    colorSet = false;
+    noneSet = false;
+    sp_color_set_rgb_rgba32( &value.color, 0 );
+    if ( value.href && value.href->getObject() )
+    {
+        value.href->detach();
+    }
 
-    paint->type = SP_PAINT_TYPE_NONE;
-    delete paint->value.iccColor;
-    paint->value.iccColor = NULL;
+    delete value.iccColor;
+    value.iccColor = 0;
 }
 
 
@@ -3710,7 +3709,7 @@ static void
 sp_style_filter_clear(SPStyle *style)
 {
     if (style->filter.href && style->filter.href->getObject())
-        style->filter.href->detach(); 
+        style->filter.href->detach();
 }
 
 

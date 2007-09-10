@@ -1272,22 +1272,14 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
     if (shape->style) sp_style_unref(shape->style);
     shape->style = style;
 
-    switch (style->fill.type) {
-        case SP_PAINT_TYPE_NONE: {
-            shape->setFill(NULL);
-            break;
-        }
-        case SP_PAINT_TYPE_COLOR: {
-            shape->setFill(style->fill.value.color);
-            break;
-        }
-        case SP_PAINT_TYPE_PAINTSERVER: {
-            shape->setFill(style->getFillPaintServer());
-            break;
-        }
-        default: {
-            g_assert_not_reached();
-        }
+    if ( style->fill.isPaintserver() ) {
+        shape->setFill(style->getFillPaintServer());
+    } else if ( style->fill.isColor() ) {
+        shape->setFill(style->fill.value.color);
+    } else if ( style->fill.isNone() ) {
+        shape->setFill(NULL);
+    } else {
+        g_assert_not_reached();
     }
     shape->setFillOpacity(SP_SCALE24_TO_FLOAT(style->fill_opacity.value));
     switch (style->fill_rule.computed) {
@@ -1304,22 +1296,14 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
         }
     }
 
-    switch (style->stroke.type) {
-        case SP_PAINT_TYPE_NONE: {
-            shape->setStroke(NULL);
-            break;
-        }
-        case SP_PAINT_TYPE_COLOR: {
-            shape->setStroke(style->stroke.value.color);
-            break;
-        }
-        case SP_PAINT_TYPE_PAINTSERVER: {
-            shape->setStroke(style->getStrokePaintServer());
-            break;
-        }
-        default: {
-            g_assert_not_reached();
-        }
+    if ( style->stroke.isPaintserver() ) {
+        shape->setStroke(style->getStrokePaintServer());
+    } else if ( style->stroke.isColor() ) {
+        shape->setStroke(style->stroke.value.color);
+    } else if ( style->stroke.isNone() ) {
+        shape->setStroke(NULL);
+    } else {
+        g_assert_not_reached();
     }
     shape->setStrokeWidth(style->stroke_width.computed);
     shape->setStrokeOpacity(SP_SCALE24_TO_FLOAT(style->stroke_opacity.value));

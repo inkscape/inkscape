@@ -158,9 +158,9 @@ void Layout::print(SPPrintContext *ctx,
                 NRBPath abp;
                 _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
                 abp.path = nr_artpath_affine(bpath.path, glyph_matrix);
-                if (text_source->style->fill.type != SP_PAINT_TYPE_NONE)
+                if (!text_source->style->fill.isNone())
                     sp_print_fill(ctx, &abp, &ctm, text_source->style, pbox, dbox, bbox);
-                if (text_source->style->stroke.type != SP_PAINT_TYPE_NONE)
+                if (!text_source->style->stroke.isNone())
                     sp_print_stroke(ctx, &abp, &ctm, text_source->style, pbox, dbox, bbox);
                 g_free(abp.path);
             }

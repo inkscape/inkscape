@@ -289,21 +289,7 @@ StyleSwatch::setStyle(SPStyle *query)
             paint = &(query->stroke);
         }
 
-        if (paint->set && paint->type == SP_PAINT_TYPE_COLOR) {
-            guint32 color = sp_color_get_rgba32_falpha (&(paint->value.color), 
-                                                        SP_SCALE24_TO_FLOAT ((i == SS_FILL)? query->fill_opacity.value : query->stroke_opacity.value));
-            ((Inkscape::UI::Widget::ColorPreview*)_color_preview[i])->setRgba32 (color);
-            _color_preview[i]->show_all();
-            place->add(*_color_preview[i]);
-            gchar *tip;
-            if (i == SS_FILL) {
-                tip = g_strdup_printf (_("Fill: %06x/%.3g"), color >> 8, SP_RGBA32_A_F(color));
-            } else {
-                tip = g_strdup_printf (_("Stroke: %06x/%.3g"), color >> 8, SP_RGBA32_A_F(color));
-            }
-            _tooltips.set_tip(*place, tip);
-            g_free (tip);
-        } else if (paint->set && paint->type == SP_PAINT_TYPE_PAINTSERVER) {
+        if (paint->set && paint->isPaintserver()) {
             SPPaintServer *server = (i == SS_FILL)? SP_STYLE_FILL_SERVER (query) : SP_STYLE_STROKE_SERVER (query);
 
             if (SP_IS_LINEARGRADIENT (server)) {
@@ -320,7 +306,21 @@ StyleSwatch::setStyle(SPStyle *query)
                 _tooltips.set_tip(*place, (i == SS_FILL)? (_("Pattern fill")) : (_("Pattern stroke")));
             }
 
-        } else if (paint->set && paint->type == SP_PAINT_TYPE_NONE) {
+        } else if (paint->set && paint->isColor()) {
+            guint32 color = sp_color_get_rgba32_falpha (&(paint->value.color),
+                                                        SP_SCALE24_TO_FLOAT ((i == SS_FILL)? query->fill_opacity.value : query->stroke_opacity.value));
+            ((Inkscape::UI::Widget::ColorPreview*)_color_preview[i])->setRgba32 (color);
+            _color_preview[i]->show_all();
+            place->add(*_color_preview[i]);
+            gchar *tip;
+            if (i == SS_FILL) {
+                tip = g_strdup_printf (_("Fill: %06x/%.3g"), color >> 8, SP_RGBA32_A_F(color));
+            } else {
+                tip = g_strdup_printf (_("Stroke: %06x/%.3g"), color >> 8, SP_RGBA32_A_F(color));
+            }
+            _tooltips.set_tip(*place, tip);
+            g_free (tip);
+        } else if (paint->set && paint->isNone()) {
             _value[i].set_markup(_("<i>None</i>"));
             place->add(_value[i]);
             _tooltips.set_tip(*place, (i == SS_FILL)? (_("No fill")) : (_("No stroke")));

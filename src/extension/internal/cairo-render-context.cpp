@@ -157,13 +157,13 @@ CairoRenderContext::setStateForStyle(SPStyle const *style)
     _state->opacity = SP_SCALE24_TO_FLOAT(style->opacity.value);
     _state->has_overflow = (style->overflow.set && style->overflow.value != SP_CSS_OVERFLOW_VISIBLE);
 
-    if (style->fill.type == SP_PAINT_TYPE_PAINTSERVER || style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)
+    if (style->fill.isPaintserver() || style->stroke.isPaintserver())
         _state->merge_opacity = FALSE;
 
     // disable rendering of opacity if there's a stroke on the fill
     if (_state->merge_opacity
-        && style->fill.type != SP_PAINT_TYPE_NONE
-        && style->stroke.type != SP_PAINT_TYPE_NONE)
+        && !style->fill.isNone()
+        && !style->stroke.isNone())
         _state->merge_opacity = FALSE;
 }
 
@@ -1059,8 +1059,8 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
 void
 CairoRenderContext::_setFillStyle(SPStyle const *const style, NRRect const *pbox)
 {
-    g_return_if_fail( style->fill.type == SP_PAINT_TYPE_COLOR
-                      || style->fill.type == SP_PAINT_TYPE_PAINTSERVER );
+    g_return_if_fail( style->fill.isColor()
+                      || style->fill.isPaintserver() );
 
     float alpha = SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
     if (_state->merge_opacity) {
@@ -1068,13 +1068,13 @@ CairoRenderContext::_setFillStyle(SPStyle const *const style, NRRect const *pbox
         TRACE(("merged op=%f\n", alpha));
     }
 
-    if (style->fill.type == SP_PAINT_TYPE_COLOR) {
+    if (style->fill.isColor()) {
         float rgb[3];
         sp_color_get_rgb_floatv(&style->fill.value.color, rgb);
 
         cairo_set_source_rgba(_cr, rgb[0], rgb[1], rgb[2], alpha);
     } else {
-        g_assert( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
+        g_assert( style->fill.isPaintserver()
                   || SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style))
                   || SP_IS_PATTERN(SP_STYLE_FILL_SERVER(style)) );
 
@@ -1094,13 +1094,13 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, NRRect const *pbox)
     if (_state->merge_opacity)
         alpha *= _state->opacity;
 
-    if (style->stroke.type == SP_PAINT_TYPE_COLOR) {
+    if (style->stroke.isColor()) {
         float rgb[3];
         sp_color_get_rgb_floatv(&style->stroke.value.color, rgb);
 
         cairo_set_source_rgba(_cr, rgb[0], rgb[1], rgb[2], alpha);
     } else {
-        g_assert( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
+        g_assert( style->fill.isPaintserver()
                   || SP_IS_GRADIENT(SP_STYLE_STROKE_SERVER(style))
                   || SP_IS_PATTERN(SP_STYLE_STROKE_SERVER(style)) );
 
@@ -1175,7 +1175,7 @@ CairoRenderContext::renderPath(NRBPath const *bpath, SPStyle const *style, NRRec
         return true;
     }
 
-    if (style->fill.type == SP_PAINT_TYPE_NONE && style->stroke.type == SP_PAINT_TYPE_NONE)
+    if (style->fill.isNone() && style->stroke.isNone())
         return true;
 
     bool need_layer = ( !_state->merge_opacity && !_state->need_layer &&
@@ -1186,7 +1186,7 @@ CairoRenderContext::renderPath(NRBPath const *bpath, SPStyle const *style, NRRec
     else
         pushLayer();
 
-    if (style->fill.type != SP_PAINT_TYPE_NONE) {
+    if (!style->fill.isNone()) {
         _setFillStyle(style, pbox);
         setBpath(bpath->path);
 
@@ -1196,15 +1196,15 @@ CairoRenderContext::renderPath(NRBPath const *bpath, SPStyle const *style, NRRec
             cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_WINDING);
         }
 
-        if (style->stroke.type == SP_PAINT_TYPE_NONE)
+        if (style->stroke.isNone())
             cairo_fill(_cr);
         else
             cairo_fill_preserve(_cr);
     }
 
-    if (style->stroke.type != SP_PAINT_TYPE_NONE) {
+    if (!style->stroke.isNone()) {
         _setStrokeStyle(style, pbox);
-        if (style->fill.type == SP_PAINT_TYPE_NONE)
+        if (style->fill.isNone())
             setBpath(bpath->path);
 
         cairo_stroke(_cr);

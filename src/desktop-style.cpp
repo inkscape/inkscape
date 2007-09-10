@@ -351,6 +351,7 @@ sp_desktop_apply_style_tool(SPDesktop *desktop, Inkscape::XML::Node *repr, char 
 double
 sp_desktop_get_font_size_tool(SPDesktop *desktop)
 {
+    (void)desktop; // TODO cleanup
     gchar const *desktop_style = inkscape_get_repr(INKSCAPE, "desktop")->attribute("style");
     gchar const *style_str = NULL;
     if ((prefs_get_int_attribute("tools.text", "usecurrent", 0) != 0) && desktop_style) {
@@ -392,7 +393,7 @@ stroke_average_width (GSList const *objects)
 
         SPObject *object = SP_OBJECT(l->data);
 
-        if ( object->style->stroke.type == SP_PAINT_TYPE_NONE ) {
+        if ( object->style->stroke.isNone() ) {
             ++n_notstroked;   // do not count nonstroked objects
             continue;
         } else {
@@ -420,7 +421,7 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
     }
 
     SPIPaint *paint_res = isfill? &style_res->fill : &style_res->stroke;
-    paint_res->type = SP_PAINT_TYPE_IMPOSSIBLE;
+    bool paintImpossible = true;
     paint_res->set = TRUE;
 
     gfloat c[4];
@@ -440,18 +441,18 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
 
         // We consider paint "effectively set" for anything within text hierarchy
         SPObject *parent = SP_OBJECT_PARENT (obj);
-        bool paint_effectively_set = 
+        bool paint_effectively_set =
             paint->set || (SP_IS_TEXT(parent) || SP_IS_TEXTPATH(parent) || SP_IS_TSPAN(parent)
-            || SP_IS_FLOWTEXT(parent) || SP_IS_FLOWDIV(parent) || SP_IS_FLOWPARA(parent) 
+            || SP_IS_FLOWTEXT(parent) || SP_IS_FLOWDIV(parent) || SP_IS_FLOWPARA(parent)
             || SP_IS_FLOWTSPAN(parent) || SP_IS_FLOWLINE(parent));
 
         // 1. Bail out with QUERY_STYLE_MULTIPLE_DIFFERENT if necessary
 
-        if ((paint_res->type != SP_PAINT_TYPE_IMPOSSIBLE) && (paint->type != paint_res->type || (paint_res->set != paint_effectively_set))) {
+        if ((!paintImpossible) && (!paint->isSameType(*paint_res) || (paint_res->set != paint_effectively_set))) {
             return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different types of paint
         }
 
-        if (paint_res->set && paint->set && paint_res->type == SP_PAINT_TYPE_PAINTSERVER) {
+        if (paint_res->set && paint->set && paint_res->isPaintserver()) {
             // both previous paint and this paint were a server, see if the servers are compatible
 
             SPPaintServer *server_res = isfill? SP_STYLE_FILL_SERVER (style_res) : SP_STYLE_STROKE_SERVER (style_res);
@@ -491,16 +492,16 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
 
         // 2. Sum color, copy server from paint to paint_res
 
-        if (paint_res->set && paint_effectively_set && paint->type == SP_PAINT_TYPE_COLOR) {
-
+        if (paint_res->set && paint_effectively_set && paint->isColor()) {
             gfloat d[3];
             sp_color_get_rgb_floatv (&paint->value.color, d);
 
             // Check if this color is the same as previous
-            if (paint_res->type == SP_PAINT_TYPE_IMPOSSIBLE) {
+            if (paintImpossible) {
                 prev[0] = d[0];
                 prev[1] = d[1];
                 prev[2] = d[2];
+                paint_res->setColor(d[0], d[1], d[2]);
             } else {
                 if (same_color && (prev[0] != d[0] || prev[1] != d[1] || prev[2] != d[2]))
                     same_color = false;
@@ -514,8 +515,8 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
             num ++;
         }
 
-       paint_res->type = paint->type;
-       if (paint_res->set && paint_effectively_set && paint->type == SP_PAINT_TYPE_PAINTSERVER) { // copy the server
+        paintImpossible = false;
+       if (paint_res->set && paint_effectively_set && paint->isPaintserver()) { // copy the server
            if (isfill) {
                sp_style_set_to_uri_string (style_res, true, style->getFillURI());
            } else {
@@ -527,14 +528,14 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
     }
 
     // After all objects processed, divide the color if necessary and return
-    if (paint_res->set && paint_res->type == SP_PAINT_TYPE_COLOR) { // set the color
+    if (paint_res->set && paint_res->isColor()) { // set the color
         g_assert (num >= 1);
 
         c[0] /= num;
         c[1] /= num;
         c[2] /= num;
         c[3] /= num;
-        sp_color_set_rgb_float(&paint_res->value.color, c[0], c[1], c[2]);
+        paint_res->setColor(c[0], c[1], c[2]);
         if (isfill) {
             style_res->fill_opacity.value = SP_SCALE24_FROM_FLOAT (c[3]);
         } else {
@@ -628,7 +629,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
         SPStyle *style = SP_OBJECT_STYLE (obj);
         if (!style) continue;
 
-        if ( style->stroke.type == SP_PAINT_TYPE_NONE ) {
+        if ( style->stroke.isNone() ) {
             continue;
         }
 
@@ -685,7 +686,7 @@ objects_query_miterlimit (GSList *objects, SPStyle *style_res)
         SPStyle *style = SP_OBJECT_STYLE (obj);
         if (!style) continue;
 
-        if ( style->stroke.type == SP_PAINT_TYPE_NONE ) {
+        if ( style->stroke.isNone() ) {
             continue;
         }
 
@@ -738,7 +739,7 @@ objects_query_strokecap (GSList *objects, SPStyle *style_res)
         SPStyle *style = SP_OBJECT_STYLE (obj);
         if (!style) continue;
 
-        if ( style->stroke.type == SP_PAINT_TYPE_NONE ) {
+        if ( style->stroke.isNone() ) {
             continue;
         }
 
@@ -788,7 +789,7 @@ objects_query_strokejoin (GSList *objects, SPStyle *style_res)
         SPStyle *style = SP_OBJECT_STYLE (obj);
         if (!style) continue;
 
-        if ( style->stroke.type == SP_PAINT_TYPE_NONE ) {
+        if ( style->stroke.isNone() ) {
             continue;
         }
 

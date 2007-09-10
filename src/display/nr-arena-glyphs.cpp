@@ -129,8 +129,10 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, 
 
     glyphs = NR_ARENA_GLYPHS(item);
 
-    if (!glyphs->font || !glyphs->style) return NR_ARENA_ITEM_STATE_ALL;
-    if ((glyphs->style->fill.type == SP_PAINT_TYPE_NONE) && (glyphs->style->stroke.type == SP_PAINT_TYPE_NONE)) return NR_ARENA_ITEM_STATE_ALL;
+    if (!glyphs->font || !glyphs->style)
+        return NR_ARENA_ITEM_STATE_ALL;
+    if ((glyphs->style->fill.isNone()) && (glyphs->style->stroke.isNone()))
+        return NR_ARENA_ITEM_STATE_ALL;
 
     NRRect bbox;
     bbox.x0 = bbox.y0 = NR_HUGE;
@@ -138,7 +140,7 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, 
 
     float const scale = NR_MATRIX_DF_EXPANSION(&gc->transform);
 
-    if (glyphs->style->fill.type != SP_PAINT_TYPE_NONE) {
+    if (!glyphs->style->fill.isNone()) {
         NRMatrix t;
         nr_matrix_multiply(&t, &glyphs->g_transform, &gc->transform);
         glyphs->x = t.c[4];
@@ -149,7 +151,7 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, 
         if (glyphs->rfont) glyphs->rfont->Unref();
         glyphs->rfont = rfont;
 
-        if (glyphs->style->stroke.type == SP_PAINT_TYPE_NONE || fabs(glyphs->style->stroke_width.computed * scale) <= 0.01) { // Optimization: do fill bbox only if there's no stroke
+        if (glyphs->style->stroke.isNone() || fabs(glyphs->style->stroke_width.computed * scale) <= 0.01) { // Optimization: do fill bbox only if there's no stroke
             NRRect narea;
             if ( glyphs->rfont ) glyphs->rfont->BBox(glyphs->glyph, &narea);
             bbox.x0 = narea.x0 + glyphs->x;
@@ -157,9 +159,9 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, 
             bbox.x1 = narea.x1 + glyphs->x;
             bbox.y1 = narea.y1 + glyphs->y;
         }
-    }                               
+    }
 
-    if (glyphs->style->stroke.type != SP_PAINT_TYPE_NONE) {
+    if (!glyphs->style->stroke.isNone()) {
         /* Build state data */
         NRMatrix t;
         nr_matrix_multiply(&t, &glyphs->g_transform, &gc->transform);
@@ -404,21 +406,21 @@ nr_arena_glyphs_group_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint s
     }
 
     item->render_opacity = TRUE;
-    if (group->style->fill.type == SP_PAINT_TYPE_PAINTSERVER) {
+    if (group->style->fill.isPaintserver()) {
         group->fill_painter = sp_paint_server_painter_new(SP_STYLE_FILL_SERVER(group->style),
                                                           NR::Matrix(&gc->transform), NR::Matrix(&gc->parent->transform),
                                                           &group->paintbox);
         item->render_opacity = FALSE;
     }
 
-    if (group->style->stroke.type == SP_PAINT_TYPE_PAINTSERVER) {
+    if (group->style->stroke.isPaintserver()) {
         group->stroke_painter = sp_paint_server_painter_new(SP_STYLE_STROKE_SERVER(group->style),
                                                             NR::Matrix(&gc->transform), NR::Matrix(&gc->parent->transform),
                                                             &group->paintbox);
         item->render_opacity = FALSE;
     }
 
-    if ( item->render_opacity == TRUE && group->style->stroke.type != SP_PAINT_TYPE_NONE && group->style->fill.type != SP_PAINT_TYPE_NONE ) {
+    if ( item->render_opacity == TRUE && !group->style->stroke.isNone() && !group->style->fill.isNone() ) {
         item->render_opacity=FALSE;
     }
 
@@ -469,7 +471,7 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
 
 
     /* Fill */
-    if (style->fill.type != SP_PAINT_TYPE_NONE || item->arena->rendermode == RENDERMODE_OUTLINE) {
+    if (!style->fill.isNone() || item->arena->rendermode == RENDERMODE_OUTLINE) {
         NRPixBlock m;
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
 
@@ -491,7 +493,11 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
         }
 
         /* Composite into buffer */
-        if (style->fill.type == SP_PAINT_TYPE_COLOR || item->arena->rendermode == RENDERMODE_OUTLINE) {
+        if (style->fill.isPaintserver()) {
+            if (ggroup->fill_painter) {
+                nr_arena_render_paintserver_fill(pb, area, ggroup->fill_painter, SP_SCALE24_TO_FLOAT(style->fill_opacity.value), &m);
+            }
+        } else if (style->fill.isColor() || item->arena->rendermode == RENDERMODE_OUTLINE) {
             guint32 rgba;
             if (item->arena->rendermode == RENDERMODE_OUTLINE) {
                 // In outline mode, render fill only, using outlinecolor
@@ -505,17 +511,13 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
             }
             nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
             pb->empty = FALSE;
-        } else if (style->fill.type == SP_PAINT_TYPE_PAINTSERVER) {
-            if (ggroup->fill_painter) {
-                nr_arena_render_paintserver_fill(pb, area, ggroup->fill_painter, SP_SCALE24_TO_FLOAT(style->fill_opacity.value), &m);
-            }
         }
 
         nr_pixblock_release(&m);
     }
 
     /* Stroke */
-    if (style->stroke.type != SP_PAINT_TYPE_NONE && !(item->arena->rendermode == RENDERMODE_OUTLINE)) {
+    if (!style->stroke.isNone() && !(item->arena->rendermode == RENDERMODE_OUTLINE)) {
         NRPixBlock m;
         guint32 rgba;
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
@@ -536,26 +538,23 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
             }
         }
         /* Composite into buffer */
-        switch (style->stroke.type) {
-            case SP_PAINT_TYPE_COLOR:
-                if ( item->render_opacity ) {
-                    rgba = sp_color_get_rgba32_falpha(&style->stroke.value.color,
-                                                      SP_SCALE24_TO_FLOAT(style->stroke_opacity.value) *
-                                                      SP_SCALE24_TO_FLOAT(style->opacity.value));
-                } else {
-                    rgba = sp_color_get_rgba32_falpha(&style->stroke.value.color,
-                                                      SP_SCALE24_TO_FLOAT(style->stroke_opacity.value));
-                }
-                nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
-                pb->empty = FALSE;
-                break;
-            case SP_PAINT_TYPE_PAINTSERVER:
-                if (ggroup->stroke_painter) {
-                    nr_arena_render_paintserver_fill(pb, area, ggroup->stroke_painter, SP_SCALE24_TO_FLOAT(style->stroke_opacity.value), &m);
-                }
-                break;
-            default:
-                break;
+        if (style->stroke.isPaintserver()) {
+            if (ggroup->stroke_painter) {
+                nr_arena_render_paintserver_fill(pb, area, ggroup->stroke_painter, SP_SCALE24_TO_FLOAT(style->stroke_opacity.value), &m);
+            }
+        } else if (style->stroke.isColor()) {
+            if ( item->render_opacity ) {
+                rgba = sp_color_get_rgba32_falpha(&style->stroke.value.color,
+                                                  SP_SCALE24_TO_FLOAT(style->stroke_opacity.value) *
+                                                  SP_SCALE24_TO_FLOAT(style->opacity.value));
+            } else {
+                rgba = sp_color_get_rgba32_falpha(&style->stroke.value.color,
+                                                  SP_SCALE24_TO_FLOAT(style->stroke_opacity.value));
+            }
+            nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
+            pb->empty = FALSE;
+        } else {
+            // nothing
         }
         nr_pixblock_release(&m);
     }

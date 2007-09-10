@@ -917,21 +917,7 @@ SelectedStyle::update()
             } else {
                 paint = &(query->stroke);
             }
-            if (paint->set && paint->type == SP_PAINT_TYPE_COLOR) {
-                guint32 color = sp_color_get_rgba32_falpha (&(paint->value.color), 
-                                     SP_SCALE24_TO_FLOAT ((i == SS_FILL)? query->fill_opacity.value : query->stroke_opacity.value));
-                _lastselected[i] = _thisselected[i];
-                _thisselected[i] = color | 0xff; // only color, opacity === 1
-                ((Inkscape::UI::Widget::ColorPreview*)_color_preview[i])->setRgba32 (color);
-                _color_preview[i]->show_all();
-                place->add(*_color_preview[i]);
-                gchar c_string[64];
-                g_snprintf (c_string, 64, "%06x/%.3g", color >> 8, SP_RGBA32_A_F(color));
-                _tooltips.set_tip(*place, __color[i] + ": " + c_string);
-                _mode[i] = SS_COLOR;
-                _popup_copy[i].set_sensitive(true);
-
-            } else if (paint->set && paint->type == SP_PAINT_TYPE_PAINTSERVER) {
+            if (paint->set && paint->isPaintserver()) {
                 SPPaintServer *server = (i == SS_FILL)? SP_STYLE_FILL_SERVER (query) : SP_STYLE_STROKE_SERVER (query);
                 if ( server ) {
                     Inkscape::XML::Node *srepr = SP_OBJECT_REPR(server);
@@ -959,8 +945,21 @@ SelectedStyle::update()
                 } else {
                     g_warning ("file %s: line %d: Unknown paint server", __FILE__, __LINE__);
                 }
+            } else if (paint->set && paint->isColor()) {
+                guint32 color = sp_color_get_rgba32_falpha (&(paint->value.color),
+                                     SP_SCALE24_TO_FLOAT ((i == SS_FILL)? query->fill_opacity.value : query->stroke_opacity.value));
+                _lastselected[i] = _thisselected[i];
+                _thisselected[i] = color | 0xff; // only color, opacity === 1
+                ((Inkscape::UI::Widget::ColorPreview*)_color_preview[i])->setRgba32 (color);
+                _color_preview[i]->show_all();
+                place->add(*_color_preview[i]);
+                gchar c_string[64];
+                g_snprintf (c_string, 64, "%06x/%.3g", color >> 8, SP_RGBA32_A_F(color));
+                _tooltips.set_tip(*place, __color[i] + ": " + c_string);
+                _mode[i] = SS_COLOR;
+                _popup_copy[i].set_sensitive(true);
 
-            } else if (paint->set && paint->type == SP_PAINT_TYPE_NONE) {
+            } else if (paint->set && paint->isNone()) {
                 place->add(_none[i]);
                 _tooltips.set_tip(*place, __none[i]);
                 _mode[i] = SS_NONE;

@@ -135,14 +135,14 @@ count_gradient_hrefs(SPObject *o, SPGradient *gr)
 
     SPStyle *style = SP_OBJECT_STYLE(o);
     if (style
-        && style->fill.type == SP_PAINT_TYPE_PAINTSERVER
+        && style->fill.isPaintserver()
         && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style))
         && SP_GRADIENT(SP_STYLE_FILL_SERVER(style)) == gr)
     {
         i ++;
     }
     if (style
-        && style->stroke.type == SP_PAINT_TYPE_PAINTSERVER
+        && style->stroke.isPaintserver()
         && SP_IS_GRADIENT(SP_STYLE_STROKE_SERVER(style))
         && SP_GRADIENT(SP_STYLE_STROKE_SERVER(style)) == gr)
     {
@@ -453,14 +453,14 @@ sp_item_gradient (SPItem *item, bool fill_or_stroke)
     SPGradient *gradient = NULL;
 
     if (fill_or_stroke) {
-        if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) {
+        if (style && (style->fill.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER(item);
             if (SP_IS_GRADIENT (server)) {
                 gradient = SP_GRADIENT (server);
             }
         }
     } else {
-        if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) {
+        if (style && (style->stroke.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER(item);
             if (SP_IS_GRADIENT (server)) {
                 gradient = SP_GRADIENT (server);
@@ -1067,9 +1067,8 @@ sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType type, bool is_
     SPStyle *style = SP_OBJECT_STYLE(item);
     g_assert(style != NULL);
 
-    guint style_type = is_fill? style->fill.type : style->stroke.type;
     SPPaintServer *ps = NULL;
-    if (style_type == SP_PAINT_TYPE_PAINTSERVER)
+    if (is_fill? style->fill.isPaintserver() : style->stroke.isPaintserver())
         ps = is_fill? SP_STYLE_FILL_SERVER(style) : SP_STYLE_STROKE_SERVER(style);
 
     if (ps
@@ -1223,15 +1222,15 @@ sp_gradient_vector_for_object(SPDocument *const doc, SPDesktop *const desktop,
         SPIPaint const &paint = ( is_fill
                                   ? style.fill
                                   : style.stroke );
-        if (paint.type == SP_PAINT_TYPE_COLOR) {
-            rgba = sp_color_get_rgba32_ualpha(&paint.value.color, 0xff);
-        } else if (paint.type == SP_PAINT_TYPE_PAINTSERVER) {
+        if (paint.isPaintserver()) {
             SPObject *server = is_fill? SP_OBJECT_STYLE_FILL_SERVER(o) : SP_OBJECT_STYLE_STROKE_SERVER(o);
             if (SP_IS_GRADIENT (server)) {
                 return sp_gradient_get_vector(SP_GRADIENT (server), TRUE);
             } else {
                 rgba = sp_desktop_get_color(desktop, is_fill);
             }
+        } else if (paint.isColor()) {
+            rgba = sp_color_get_rgba32_ualpha(&paint.value.color, 0xff);
         } else {
             // if o doesn't use flat color, then take current color of the desktop.
             rgba = sp_desktop_get_color(desktop, is_fill);
