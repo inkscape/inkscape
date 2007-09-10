@@ -251,13 +251,13 @@ static gchar const * ui_descr =
         "    <toolitem action='TweakModeLabel' />"
         "    <toolitem action='TweakModeAction' />"
         "    <separator />"
+        "    <toolitem action='TweakFidelityAction' />"
+        "    <separator />"
         "    <toolitem action='TweakChannelsLabel' />"
         "    <toolitem action='TweakDoH' />"
         "    <toolitem action='TweakDoS' />"
         "    <toolitem action='TweakDoL' />"
         "    <toolitem action='TweakDoO' />"
-        "    <separator />"
-        "    <toolitem action='TweakFidelityAction' />"
         "  </toolbar>"
 
         "  <toolbar name='ZoomToolbar'>"
@@ -2710,6 +2710,7 @@ static void sp_tweak_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     GtkAction *dos = GTK_ACTION(g_object_get_data( tbl, "tweak_dos"));
     GtkAction *dol = GTK_ACTION(g_object_get_data( tbl, "tweak_dol"));
     GtkAction *doo = GTK_ACTION(g_object_get_data( tbl, "tweak_doo"));
+    GtkAction *fid = GTK_ACTION(g_object_get_data( tbl, "tweak_fidelity"));
     GtkAction *dolabel = GTK_ACTION(g_object_get_data( tbl, "tweak_channels_label"));
     if (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER) {
         if (doh) gtk_action_set_sensitive (doh, TRUE);
@@ -2717,12 +2718,14 @@ static void sp_tweak_mode_changed( EgeSelectOneAction *act, GObject *tbl )
         if (dol) gtk_action_set_sensitive (dol, TRUE);
         if (doo) gtk_action_set_sensitive (doo, TRUE);
         if (dolabel) gtk_action_set_sensitive (dolabel, TRUE);
+        if (fid) gtk_action_set_sensitive (fid, FALSE);
     } else {
         if (doh) gtk_action_set_sensitive (doh, FALSE);
         if (dos) gtk_action_set_sensitive (dos, FALSE);
         if (dol) gtk_action_set_sensitive (dol, FALSE);
         if (doo) gtk_action_set_sensitive (doo, FALSE);
         if (dolabel) gtk_action_set_sensitive (dolabel, FALSE);
+        if (fid) gtk_action_set_sensitive (fid, TRUE);
     }
 }
 
@@ -2941,6 +2944,9 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               sp_tweak_fidelity_value_changed,  0.01, 0, 100 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        if (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER) 
+            gtk_action_set_sensitive (GTK_ACTION(eact), FALSE);
+        g_object_set_data( holder, "tweak_fidelity", eact );
     }
 
 
