@@ -487,6 +487,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             break;
 
         case GDK_L:
+            if (MOD__CTRL) break; // Don't catch Shift+Ctrl+L (Layers dialog)
             bc->_vpdrag->show_lines = !bc->_vpdrag->show_lines;
             bc->_vpdrag->updateLines();
             ret = true;
