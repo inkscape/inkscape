@@ -455,7 +455,7 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
 
     flush_fill(); // flush any pending fills
 
-    if (style->fill.type == SP_PAINT_TYPE_COLOR) {
+    if (style->fill.isColor()) {
         create_brush(style);
     } else {
         // create_brush(NULL);
@@ -485,7 +485,7 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
         flush_fill(); // flush any pending fills
     }
 
-    if (style->stroke.type == SP_PAINT_TYPE_COLOR) {
+    if (style->stroke.isColor()) {
         create_pen(style);
     } else {
         // create_pen(NULL);
