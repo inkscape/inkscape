@@ -204,12 +204,13 @@ Perspective3D::set_infinite_direction (Box3D::Axis axis, NR::Point const dir)
 }
 
 void
-Perspective3D::rotate (Box3D::Axis const axis, double const angle)
+Perspective3D::rotate (Box3D::Axis const axis, double const angle, bool const alt_pressed)
 {
     Box3D::VanishingPoint *vp = get_vanishing_point (axis);
     if (!vp->is_finite()) {
+        double add_value = angle;
         double a = NR::atan2 (vp->v_dir) * 180/M_PI;
-        a += angle;
+        a += alt_pressed ? 0.5 * ((angle > 0 ) - (angle < 0)) : angle; // the r.h.s. yields +/-0.5 or angle
         a *= M_PI/180;
         this->set_infinite_direction (axis, NR::Point (cos (a), sin (a)));
     }

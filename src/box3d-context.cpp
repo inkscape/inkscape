@@ -295,6 +295,7 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
 
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
     SP3DBoxContext *bc = SP_3DBOX_CONTEXT(event_context);
 
@@ -452,32 +453,32 @@ static gint sp_3dbox_context_root_handler(SPEventContext *event_context, GdkEven
             break;
 
         case GDK_bracketright:
-            inkscape_active_document()->current_perspective->rotate (Box3D::X, -10);
+            inkscape_active_document()->current_perspective->rotate (Box3D::X, -180/snaps, MOD__ALT);
             ret = true;
             break;
 
         case GDK_bracketleft:
-            inkscape_active_document()->current_perspective->rotate (Box3D::X, 10);
+            inkscape_active_document()->current_perspective->rotate (Box3D::X, 180/snaps, MOD__ALT);
             ret = true;
             break;
 
         case GDK_parenright:
-            inkscape_active_document()->current_perspective->rotate (Box3D::Y, -10);
+            inkscape_active_document()->current_perspective->rotate (Box3D::Y, -180/snaps, MOD__ALT);
             ret = true;
             break;
 
         case GDK_parenleft:
-            inkscape_active_document()->current_perspective->rotate (Box3D::Y, 10);
+            inkscape_active_document()->current_perspective->rotate (Box3D::Y, 180/snaps, MOD__ALT);
             ret = true;
             break;
 
         case GDK_braceright:
-            inkscape_active_document()->current_perspective->rotate (Box3D::Z, -10);
+            inkscape_active_document()->current_perspective->rotate (Box3D::Z, -180/snaps, MOD__ALT);
             ret = true;
             break;
 
         case GDK_braceleft:
-            inkscape_active_document()->current_perspective->rotate (Box3D::Z, 10);
+            inkscape_active_document()->current_perspective->rotate (Box3D::Z, 180/snaps, MOD__ALT);
             ret = true;
             break;
 
