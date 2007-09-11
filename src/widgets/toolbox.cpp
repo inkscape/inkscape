@@ -196,6 +196,10 @@ static struct {
 static gchar const * ui_descr =
         "<ui>"
         "  <toolbar name='SelectToolbar'>"
+        "    <toolitem action='EditSelectAll' />"
+        "    <toolitem action='EditSelectAllInAllLayers' />"
+        "    <toolitem action='EditDeselect' />"
+        "    <separator />"
         "    <toolitem action='ObjectRotate90CCW' />"
         "    <toolitem action='ObjectRotate90' />"
         "    <toolitem action='ObjectFlipHorizontally' />"

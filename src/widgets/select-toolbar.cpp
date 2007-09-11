@@ -372,6 +372,13 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
     GtkActionGroup* selectionActions = mainActions; // temporary
 
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_EDIT_SELECT_ALL), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    gtk_action_group_add_action( selectionActions, act );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    gtk_action_group_add_action( selectionActions, act );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_EDIT_DESELECT), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    gtk_action_group_add_action( selectionActions, act );
+
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CCW), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CW), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
