@@ -264,7 +264,16 @@ sp_file_revert_dialog()
     if (do_revert) {
         // Allow overwriting of current document.
         doc->virgin = TRUE;
+
+        // remember current zoom and view
+        double zoom = desktop->current_zoom();
+        NR::Point c = desktop->get_display_area().midpoint();
+
         reverted = sp_file_open(uri,NULL);
+        if (reverted) {
+            // restore zoom and view
+            desktop->zoom_absolute(c[NR::X], c[NR::Y], zoom);
+        }
     } else {
         reverted = false;
     }
