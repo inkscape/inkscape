@@ -898,7 +898,7 @@ groups) with the same effect as Alt+click.)</note>
 *<section title="3D box tool" color="cff4e2">
 <group>
 <title>Draw</title>
-<mouse><key><left-drag/></key> <action>draw a 3D box</action></mouse>
+<mouse><key><left-drag/></key> <action>draw a 3D box (use shift to extrude in Z direction)</action></mouse>
 </group>
 
 <group>
@@ -907,6 +907,34 @@ groups) with the same effect as Alt+click.)</note>
 <mouse><key><alt/><left-click/></key> <key><ctrl/><alt/><left-click/></key> <action>select under</action></mouse>
 <mouse><key><shift/><left-click/></key> <action>toggle selection</action></mouse>
 <keys><key><misc f="Esc"/></key> <action>deselect</action></keys>
+</group>
+
+<group>
+<title>Edit by handles</title>
+<note>All editing operations occur "in perspective", i.e., either along PLs or within planes spanned by these.</note>
+<mouse><key><left-drag/></key> <action>resize/move box</action></mouse>
+<note>The four front handles and the center normally move withing the XY-plane, the four rear handles along the Z-axis.</note>
+<mouse><key><shift/><left-drag/></key> <action>resize/move (with handle behaviour swapped)</action></mouse>
+<mouse><key><ctrl/><left-drag/></key> <action>resize/move (handles snap to axes or diagonals)</action></mouse>
+</group>
+
+<group>
+<title>Edit perspectives</title>
+<note>In what follows, we use the abbreviations VP = vanishing point, PL = perspective line.</note>
+<mouse><key><left-drag/></key> <action>drag square handles to move the VPs</action></mouse>
+<keys><key>[</key> <key>]</key> <action>rotate X-PLs (if parallel) by the angle step</action></keys> 
+<note>The default angle step is 15 degrees. ],),} rotate clockwise, [,(,{ rotate counterclockwise.</note>
+<keys><key><alt/>[</key> <key><alt/>]</key> <action>rotate X-PLs (if parallel) by 1 pixel</action></keys> 
+<keys><key>(</key> <key>)</key> <action>rotate Y-PLs (if parallel) by the angle step</action></keys> 
+<keys><key><alt/>(</key> <key><alt/>)</key> <action>rotate Y-PLs (if parallel) by 1 pixel</action></keys> 
+<keys><key>{</key> <key>}</key> <action>rotate Z-PLs (if parallel) by the angle step</action></keys> 
+<keys><key><alt/>{</key> <key><alt/>}</key> <action>rotate Z-PLs (if parallel) by 1 pixel</action></keys> 
+</group>
+
+<group>
+<title>Visual appearance</title>
+<keys><key>L</key> <action>toggle visibility of PLs</action></keys>
+<keys><key>A</key> <action>toggle PLs to all corners/only front corners</action></keys>
 </group>
 
 </section>
