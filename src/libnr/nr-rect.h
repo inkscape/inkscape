@@ -53,6 +53,8 @@ public:
     /** returns the midpoint of this rect. */
     Point midpoint() const;
 
+    Point cornerFarthestFrom(Point const &p) const;
+
     /** True iff either width or height is less than \a epsilon. */
     bool isEmpty(double epsilon=1e-6) const {
         return isEmpty<X>(epsilon) || isEmpty<Y>(epsilon);

@@ -1759,7 +1759,7 @@ sp_selection_rotate_screen(Inkscape::Selection *selection, gdouble angle)
 
     gdouble const zoom = selection->desktop()->current_zoom();
     gdouble const zmove = angle / zoom;
-    gdouble const r = NR::L2(bbox->max() - *center);
+    gdouble const r = NR::L2(bbox->cornerFarthestFrom(*center) - *center);
 
     gdouble const zangle = 180 * atan2(zmove, r) / M_PI;
 

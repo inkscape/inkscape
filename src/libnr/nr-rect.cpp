@@ -266,6 +266,18 @@ Point Rect::midpoint() const {
 	return ( _min + _max ) / 2;
 }
 
+Point Rect::cornerFarthestFrom(Point const &p) const {
+    Point m = midpoint();
+    unsigned i = 0;
+    if (p[X] < m[X]) {
+        i = 1;
+    }
+    if (p[Y] < m[Y]) {
+        i = 3 - i;
+    }
+    return corner(i);
+}
+
 /** returns a vector from topleft to bottom right. */
 Point Rect::dimensions() const {
 	return _max - _min;
