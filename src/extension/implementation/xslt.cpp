@@ -21,7 +21,7 @@
 #include "xml/repr.h"
 #include "io/sys.h"
 #include "file.h"
-#include <io.h>
+#include <unistd.h>
 
 #include <libxml/parser.h>
 #include <libxslt/transform.h>
