@@ -2,16 +2,16 @@
 
 @SET_MAKE@
 
+OBJEXT = @OBJEXT@
+
 # Explicit so that it's the default rule.
 all:
 	cd ../.. && $(MAKE) live_effects/parameter/all
 
-clean %.a %.o:
+clean %.a %.$(OBJEXT):
 	cd ../.. && $(MAKE) live_effects/parameter/$@
 
 .PHONY: all clean
-
-OBJEXT = @OBJEXT@
 
 .SUFFIXES:
 .SUFFIXES: .a .$(OBJEXT)

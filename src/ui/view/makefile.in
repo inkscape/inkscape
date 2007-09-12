@@ -2,16 +2,16 @@
 
 @SET_MAKE@
 
+OBJEXT = @OBJEXT@
+
 # Explicit so that it's the default rule.
 all:
 	cd ../.. && $(MAKE) ui/view/all
 
-clean %.a %.o:
+clean %.a %.$(OBJEXT):
 	cd ../.. && $(MAKE) ui/view/$@
 
 .PHONY: all clean
-
-OBJEXT = @OBJEXT@
 
 .SUFFIXES:
 .SUFFIXES: .a .$(OBJEXT)

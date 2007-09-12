@@ -2,16 +2,16 @@
 
 @SET_MAKE@
 
+OBJEXT = @OBJEXT@
+
 # Explicit so that it's the default rule.
 all:
 	cd .. && $(MAKE) svg/all
 
-clean %.a %.o:
+clean %.a %.$(OBJEXT):
 	cd .. && $(MAKE) svg/$@
 
 .PHONY: all clean
-
-OBJEXT = @OBJEXT@
 
 .SUFFIXES:
 .SUFFIXES: .a .$(OBJEXT)
