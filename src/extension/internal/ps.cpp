@@ -34,6 +34,7 @@
 #include <libnr/n-art-bpath.h>
 
 #include <glib/gmem.h>
+#include <glib/gstrfuncs.h>
 #include <gtk/gtkstock.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkframe.h>
@@ -69,12 +70,26 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-
-#ifdef SOLARIS_2_8
-#include <unistd.h>
-#endif
-
-using namespace std;
+#include <cstring>
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
+using std::atof;
+using std::ceil;
+using std::fclose;
+using std::ferror;
+using std::fflush;
+using std::fgetc;
+using std::fprintf;
+using std::fputc;
+using std::fseek;
+using std::ifstream;
+using std::ios;
+using std::memset;
+using std::strchr;
+using std::strcmp;
+using std::strerror;
+using std::tmpfile;
 
 namespace Inkscape {
 namespace Extension {
@@ -277,7 +292,7 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     if (fn != NULL) {
         if (*fn == '|') {
             fn += 1;
-            while (isspace(*fn)) fn += 1;
+            while (g_ascii_isspace(*fn)) fn += 1;
 #ifndef WIN32
             osp = popen(fn, "w");
 #else

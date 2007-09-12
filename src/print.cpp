@@ -22,13 +22,12 @@
 #include "print.h"
 
 #ifdef HAVE_GTK_UNIX_PRINT
-#include <gtk/gtk.h>
-#include <glibmm/i18n.h>
-#include <gtk/gtkprintunixdialog.h>
-#endif
-
-#ifdef SOLARIS_2_8
-#include <unistd.h>
+# include <gtk/gtk.h>
+# include <glibmm/i18n.h>
+# include <gtk/gtkprintunixdialog.h>
+# include <unistd.h>   // close, unlink
+# include <cstdio>
+using std::fprintf;
 #endif
 
 #if 0
