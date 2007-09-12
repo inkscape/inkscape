@@ -74,13 +74,15 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
+
+/*
 using std::atof;
 using std::ceil;
 using std::fclose;
 using std::ferror;
 using std::fflush;
 using std::fgetc;
-using std::fprintf;
+using std::fprintf;  --> this line will result  'std::libintl_fprintf' has not been declared
 using std::fputc;
 using std::fseek;
 using std::ifstream;
@@ -90,6 +92,8 @@ using std::strchr;
 using std::strcmp;
 using std::strerror;
 using std::tmpfile;
+*/
+using namespace std;
 
 namespace Inkscape {
 namespace Extension {
