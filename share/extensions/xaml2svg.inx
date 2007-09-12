@@ -1,0 +1,13 @@
+<inkscape-extension>
+    <_name>XAML Input</_name>
+    <id>org.inkscape.input.xaml</id>
+    <input>
+        <extension>.xaml</extension>
+        <mimetype>text/xml+xaml</mimetype>
+        <_filetypename>Microsoft XAML (*.xaml)</_filetypename>
+        <_filetypetooltip>Microsoft's GUI definition format</_filetypetooltip>
+    </input>
+    <xslt>
+        <file reldir="extensions">xaml2svg.xsl</file>
+    </xslt>
+</inkscape-extension>

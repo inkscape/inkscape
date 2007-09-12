@@ -1,5 +1,7 @@
 
-SUBDIRS = Barcode
+SUBDIRS = \
+	Barcode \
+	xaml2svg
 
 extensiondir = $(datadir)/inkscape/extensions
 
@@ -100,7 +102,10 @@ extensions = \
 	whirl.py
 
 otherstuff = \
-    aisvg.xslt
+    aisvg.xslt \
+	colors.xml \
+	svg2xaml.xsl \
+	xaml2svg.xsl
 
 modules = \
 	addnodes.inx \
@@ -169,6 +174,7 @@ modules = \
 	sk_input.inx \
 	straightseg.inx \
 	summersnight.inx \
+	svg2xaml.inx \
 	svg_and_media_zip_output.inx \
 	svgz_input.inx \
 	svgz_output.inx \
@@ -181,7 +187,8 @@ modules = \
 	text_replace.inx \
 	txt2svg.inx \
 	whirl.inx \
-	wmf_input.inx
+	wmf_input.inx \
+	xaml2svg.inx
 
 
 extension_SCRIPTS = \
