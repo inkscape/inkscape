@@ -6,6 +6,7 @@
         <mimetype>text/xml+xaml</mimetype>
         <_filetypename>Microsoft XAML (*.xaml)</_filetypename>
         <_filetypetooltip>Microsoft's GUI definition format</_filetypetooltip>
+        <output_extension>org.inkscape.output.xaml</output_extension>
     </input>
     <xslt>
         <file reldir="extensions">xaml2svg.xsl</file>
