@@ -87,7 +87,6 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt">
 <xsl:template mode="svg" match="*">
   <xsl:choose>
     <xsl:when test="false() and name(.) != 'Canvas' and name(.) != 'Image' and name(.) != 'Rect' and name(.) != 'Ellipse' and name(.) != 'Text' and name(.) != 'TextBlock' and (@Canvas.Left or @Canvas.Top)">
-      <xsl:text>&#13;</xsl:text>
       <svg>
         <xsl:if test="@Canvas.Left and @Canvas.Top and @Width and @Height">
           <xsl:attribute name="viewBox">
@@ -102,7 +101,7 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt">
         <xsl:if test="@Width"><xsl:attribute name="width"><xsl:value-of select="@Width" /></xsl:attribute></xsl:if>
         <xsl:if test="@Height"><xsl:attribute name="height"><xsl:value-of select="@Height" /></xsl:attribute></xsl:if>
         <xsl:apply-templates mode="g" select="." />
-      </svg><xsl:text>&#13;</xsl:text>
+      </svg>
     </xsl:when>
     <xsl:otherwise><xsl:apply-templates mode="g" select="." /></xsl:otherwise>
   </xsl:choose>
@@ -187,27 +186,25 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt">
       <xsl:when test="contains(@Clip, '{')"><xsl:attribute name="fill"><xsl:value-of select="concat('url(#', substring-before(substring-after(@Clip, '{'), '}'), ')')" /></xsl:attribute></xsl:when>
       <xsl:otherwise>
         <xsl:attribute name="clip-path"><xsl:value-of select="concat('url(#clippath_', generate-id(.),')')" /></xsl:attribute>
-	<defs><xsl:text>&#13;</xsl:text>
+	<defs>
 	  <clipPath>
 	    <xsl:attribute name="id"><xsl:value-of select="concat('clippath_', generate-id(.))" /></xsl:attribute>
-	    <xsl:text>&#13;</xsl:text>
 	    <path>
 	      <xsl:attribute name="d">
                 <xsl:choose>
                   <xsl:when test="contains(@Clip, 'F1')"><xsl:value-of select="substring-after(@Clip, 'F1')" /></xsl:when>
                   <xsl:otherwise><xsl:value-of select="@Clip" /></xsl:otherwise>
                 </xsl:choose>	
-	      </xsl:attribute></path><xsl:text>&#13;</xsl:text>
-	  </clipPath><xsl:text>&#13;</xsl:text>
-        </defs><xsl:text>&#13;</xsl:text>
+	      </xsl:attribute></path>
+	  </clipPath>
+        </defs>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:if>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = concat(name(..), '.Resources')]">
-  <xsl:text>&#13;</xsl:text>
-  <defs><xsl:apply-templates mode="forward" /></defs><xsl:text>&#13;</xsl:text>
+  <defs><xsl:apply-templates mode="forward" /></defs>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = concat(name(..), '.Children')]">
@@ -253,17 +250,16 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt">
 </xsl:template>
 
 <xsl:template mode="defs" match="*[name(.) = 'UIElement.Clip' or name(.) = concat(name(..), '.Clip')]">
-  <defs><xsl:text>&#13;</xsl:text>
+  <defs>
     <clipPath>
       <xsl:attribute name="id"><xsl:value-of select="concat('clippath_', generate-id(.))" /></xsl:attribute>
-      <xsl:text>&#13;</xsl:text>
       <path>
         <xsl:attribute name="d">
           <xsl:apply-templates mode="forward" />
         </xsl:attribute>
-      </path><xsl:text>&#13;</xsl:text>
-    </clipPath><xsl:text>&#13;</xsl:text>
-  </defs><xsl:text>&#13;</xsl:text>
+      </path>
+    </clipPath>
+  </defs>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'UIElement.OpacityMask' or name(.) = concat(name(..), '.OpacityMask')]">
@@ -271,12 +267,12 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt">
 </xsl:template>
 
 <xsl:template mode="defs" match="*[name(.) = 'UIElement.OpacityMask' or name(.) = concat(name(..), '.OpacityMask')]">
-  <defs><xsl:text>&#13;</xsl:text>
+  <defs>
     <mask>
       <xsl:attribute name="id"><xsl:value-of select="concat('mask_', generate-id(.))" /></xsl:attribute>
       <xsl:apply-templates mode="svg" />
-    </mask><xsl:text>&#13;</xsl:text>
-  </defs><xsl:text>&#13;</xsl:text>
+    </mask>
+  </defs>
 </xsl:template>
 
 

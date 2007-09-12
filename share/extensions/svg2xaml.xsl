@@ -543,7 +543,6 @@ exclude-result-prefixes="rdf xlink msxsl">
 </xsl:template>
 
 <xsl:template match="/">
-  <xsl:text>&#13;</xsl:text>
   <xsl:choose>
     <xsl:when test="$silverlight_compatible = 1">
       <xsl:apply-templates mode="forward" />
@@ -581,7 +580,7 @@ exclude-result-prefixes="rdf xlink msxsl">
               <xsl:attribute name="X"><xsl:value-of select="-number(substring-before($viewBox, ' '))" /></xsl:attribute>
               <xsl:attribute name="Y"><xsl:value-of select="-number(substring-before(substring-after($viewBox, ' '), ' '))" /></xsl:attribute>
             </TranslateTransform>
-          </Canvas.RenderTransform><xsl:text>&#13;</xsl:text>
+          </Canvas.RenderTransform>
         </xsl:if>
     <xsl:if test="@transform">
       <Canvas>
@@ -589,11 +588,10 @@ exclude-result-prefixes="rdf xlink msxsl">
           <TransformGroup><xsl:apply-templates mode="transform" select="." /></TransformGroup>
         </Canvas.RenderTransform>
         <xsl:apply-templates mode="forward" select="*" />
-      </Canvas><xsl:text>&#13;</xsl:text>
+      </Canvas>
     </xsl:if>
 
         <xsl:if test="*[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']">
-          <xsl:text>&#13;</xsl:text>
           <Canvas.Resources>
             <xsl:apply-templates mode="forward" select="*[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']" />
           </Canvas.Resources>
@@ -601,7 +599,7 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:if test="not(@transform)">
           <xsl:apply-templates mode="forward" select="*[name(.) != 'linearGradient' and name(.) != 'radialGradient' and name(.) != 'defs' and name(.) != 'clipPath']" />
         </xsl:if>  
-      </Canvas><xsl:text>&#13;</xsl:text>
+      </Canvas>
     </xsl:when>
     <xsl:when test="not(@transform)">
       <xsl:apply-templates mode="forward" select="*" />
@@ -617,7 +615,7 @@ exclude-result-prefixes="rdf xlink msxsl">
           <TransformGroup><xsl:apply-templates mode="transform" select="." /></TransformGroup>
         </Canvas.RenderTransform>
         <xsl:apply-templates mode="forward" select="." />
-      </Canvas><xsl:text>&#13;</xsl:text>
+      </Canvas>
     </xsl:when>
     <xsl:otherwise>
       <xsl:apply-templates mode="forward" select="." />
@@ -626,7 +624,6 @@ exclude-result-prefixes="rdf xlink msxsl">
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'image']">
-  <xsl:text>&#13;</xsl:text>
   <Image>
     <xsl:apply-templates mode="id" select="." />
     <xsl:apply-templates mode="clip" select="." />
@@ -635,11 +632,10 @@ exclude-result-prefixes="rdf xlink msxsl">
     <xsl:if test="@height"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>
     <!--xsl:apply-templates mode="transform" /-->
     <xsl:apply-templates mode="forward" />
-  </Image><xsl:text>&#13;</xsl:text>
+  </Image>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'text']">
-  <xsl:text>&#13;</xsl:text>
   <TextBlock>
     <xsl:if test="@font-size"><xsl:attribute name="FontSize"><xsl:value-of select="@font-size" /></xsl:attribute></xsl:if>
     <xsl:if test="@style and contains(@style, 'font-size:')">
@@ -720,7 +716,7 @@ exclude-result-prefixes="rdf xlink msxsl">
     <!--xsl:apply-templates mode="forward" /-->
     <xsl:if test="text()"><xsl:value-of select="text()" /></xsl:if>
     <xsl:if test="*[name(.) = 'tspan']/text()"><xsl:value-of select="*[name(.) = 'tspan']/text()" /></xsl:if>
-  </TextBlock><xsl:text>&#13;</xsl:text>
+  </TextBlock>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'title' or name(.) = 'desc']">
@@ -732,23 +728,20 @@ exclude-result-prefixes="rdf xlink msxsl">
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'symbol']">
-  <xsl:text>&#13;</xsl:text>
   <Style>
     <xsl:if test="@id"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
-    <xsl:text>&#13;</xsl:text>
     <Canvas>
       <xsl:apply-templates mode="forward" />
-    </Canvas><xsl:text>&#13;</xsl:text>
-  </Style><xsl:text>&#13;</xsl:text>
+    </Canvas>
+  </Style>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'use']">
-  <xsl:text>&#13;</xsl:text>
   <Canvas>
     <xsl:if test="@xlink:href"><xsl:attribute name="Style"><xsl:value-of select="@xlink:href" /></xsl:attribute></xsl:if>
     <!--xsl:apply-templates mode="transform" select="." /-->
     <xsl:apply-templates mode="forward" />
-  </Canvas><xsl:text>&#13;</xsl:text>
+  </Canvas>
 </xsl:template>
 
 <xsl:template mode="forward" match="rdf:RDF | *[name(.) = 'foreignObject']">
@@ -762,7 +755,6 @@ exclude-result-prefixes="rdf xlink msxsl">
 <!-- BRUSHES -->
 
 <xsl:template mode="forward" match="*[name(.) = 'linearGradient']">
-  <xsl:text>&#13;</xsl:text>
   <LinearGradientBrush>
     <xsl:if test="@id"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
     <xsl:attribute name="MappingMode">
@@ -805,7 +797,6 @@ exclude-result-prefixes="rdf xlink msxsl">
       </xsl:otherwise>
     </xsl:choose>
     <LinearGradientBrush.GradientStops>
-      <xsl:text>&#13;</xsl:text>
       <GradientStopCollection>
         <xsl:choose>
           <xsl:when test="@xlink:href">
@@ -815,17 +806,16 @@ exclude-result-prefixes="rdf xlink msxsl">
           <xsl:otherwise><xsl:apply-templates mode="forward" /></xsl:otherwise>  
         </xsl:choose>  
       </GradientStopCollection>
-    </LinearGradientBrush.GradientStops><xsl:text>&#13;</xsl:text>
+    </LinearGradientBrush.GradientStops>
     <xsl:if test="@gradientTransform">
     <LinearGradientBrush.Transform>
       <xsl:apply-templates mode="transform" select="." />
     </LinearGradientBrush.Transform>
   </xsl:if>  
-  </LinearGradientBrush><xsl:text>&#13;</xsl:text>
+  </LinearGradientBrush>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'radialGradient']">
-  <xsl:text>&#13;</xsl:text>
   <RadialGradientBrush>
     <xsl:if test="@id"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
     <xsl:attribute name="MappingMode">
@@ -888,14 +878,14 @@ exclude-result-prefixes="rdf xlink msxsl">
           </xsl:when>
           <xsl:otherwise><xsl:apply-templates mode="forward" /></xsl:otherwise>
         </xsl:choose>
-      </GradientStopCollection><xsl:text>&#13;</xsl:text>
-    </RadialGradientBrush.GradientStops><xsl:text>&#13;</xsl:text>
+      </GradientStopCollection>
+    </RadialGradientBrush.GradientStops>
     <xsl:if test="@gradientTransform">
     <RadialGradientBrush.Transform>
       <xsl:apply-templates mode="transform" select="." />
     </RadialGradientBrush.Transform>
     </xsl:if>  
-  </RadialGradientBrush><xsl:text>&#13;</xsl:text>
+  </RadialGradientBrush>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'stop']">
@@ -904,13 +894,12 @@ exclude-result-prefixes="rdf xlink msxsl">
     <xsl:apply-templates mode="stop_color" select="." />
     <xsl:apply-templates mode="offset" select="." />
     <xsl:apply-templates mode="forward" />
-  </GradientStop><xsl:text>&#13;</xsl:text>
+  </GradientStop>
 </xsl:template>
 
 <!-- SHAPES -->
 
 <xsl:template mode="forward" match="*[name(.) = 'line']">
-  <xsl:text>&#13;</xsl:text>
   <Line>
     <xsl:if test="@x1"><xsl:attribute name="X1"><xsl:value-of select="@x1" /></xsl:attribute></xsl:if> 
     <xsl:if test="@y1"><xsl:attribute name="Y1"><xsl:value-of select="@y1" /></xsl:attribute></xsl:if> 
@@ -931,11 +920,10 @@ exclude-result-prefixes="rdf xlink msxsl">
     </xsl:apply-templates>    
     
     <xsl:apply-templates mode="forward" />
-  </Line><xsl:text>&#13;</xsl:text>
+  </Line>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'rect']">
-  <xsl:text>&#13;</xsl:text>
   <Rectangle>
     <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>  
     <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>  
@@ -962,11 +950,10 @@ exclude-result-prefixes="rdf xlink msxsl">
     </xsl:apply-templates>    
     
     <xsl:apply-templates mode="forward" />
-  </Rectangle><xsl:text>&#13;</xsl:text>
+  </Rectangle>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'polygon']">
-  <xsl:text>&#13;</xsl:text>
   <Polygon>
     <xsl:if test="@points"><xsl:attribute name="Points"><xsl:value-of select="@points" /></xsl:attribute></xsl:if>
     <xsl:apply-templates mode="id" select="." />
@@ -985,11 +972,10 @@ exclude-result-prefixes="rdf xlink msxsl">
     </xsl:apply-templates>    
     
     <xsl:apply-templates mode="forward" />
-  </Polygon><xsl:text>&#13;</xsl:text>
+  </Polygon>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'polyline']">
-  <xsl:text>&#13;</xsl:text>
   <Polyline>
     <xsl:if test="@points"><xsl:attribute name="Points"><xsl:value-of select="@points" /></xsl:attribute></xsl:if>
     <xsl:apply-templates mode="id" select="." />
@@ -1008,7 +994,7 @@ exclude-result-prefixes="rdf xlink msxsl">
     </xsl:apply-templates>    
     
     <xsl:apply-templates mode="forward" />
-  </Polyline><xsl:text>&#13;</xsl:text>
+  </Polyline>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'path']">
@@ -1047,11 +1033,10 @@ exclude-result-prefixes="rdf xlink msxsl">
     </xsl:apply-templates>
     
     <xsl:apply-templates mode="forward" />
-  </Path><xsl:text>&#13;</xsl:text>
+  </Path>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'ellipse']">
-  <xsl:text>&#13;</xsl:text>
   <Ellipse>
     <xsl:variable name="cx">
       <xsl:choose>
@@ -1090,11 +1075,10 @@ exclude-result-prefixes="rdf xlink msxsl">
     </xsl:apply-templates>
     
     <xsl:apply-templates mode="forward" />
-  </Ellipse><xsl:text>&#13;</xsl:text>
+  </Ellipse>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'circle']">
-  <xsl:text>&#13;</xsl:text>
   <Ellipse>
     <xsl:variable name="cx">
       <xsl:choose>
@@ -1131,7 +1115,7 @@ exclude-result-prefixes="rdf xlink msxsl">
     </xsl:apply-templates>
     
     <xsl:apply-templates mode="forward" />
-  </Ellipse><xsl:text>&#13;</xsl:text>
+  </Ellipse>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'clipPath']">

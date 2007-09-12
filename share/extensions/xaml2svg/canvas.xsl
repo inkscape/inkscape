@@ -31,7 +31,6 @@ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 <xsl:output method="xml" encoding="ISO-8859-1"/>
 
 <xsl:template mode="forward" match="*[name(.) = 'Canvas' or name(.) = 'Window' or name(.) = 'StackPanel']">
-  <xsl:text>&#13;</xsl:text>
   <svg>
     <xsl:choose>
     <!--
@@ -47,7 +46,6 @@ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <xsl:call-template name="template_properties" />
     <xsl:choose>
       <xsl:when test="@Transform or *[name(.) = 'UIElement.RenderTransform' or name(.) = 'Shape.RenderTransform' or name(.) = concat(name(..), '.RenderTransform')]">
-        <xsl:text>&#13;</xsl:text>
         <g>
           <xsl:call-template name="template_transform" />
           <xsl:apply-templates select="*[name(.) = 'UIElement.RenderTransform' or name(.) = 'Shape.RenderTransform' or name(.) = concat(name(..), '.RenderTransform')]" />
@@ -56,7 +54,7 @@ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
       </xsl:when>
       <xsl:otherwise><xsl:apply-templates mode="svg" /></xsl:otherwise>
     </xsl:choose>
-  </svg><xsl:text>&#13;</xsl:text>
+  </svg>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'Border']">

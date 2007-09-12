@@ -80,7 +80,7 @@ exclude-result-prefixes="def">
     </xsl:attribute>
   <xsl:apply-templates select="*[name(.) = 'TransformDecorator.Transform']/*/*" />  
   <xsl:apply-templates mode="forward" select="*[name(.) != 'TransformDecorator.Transform']" />
-  </g><xsl:text>&#13;</xsl:text>
+  </g>
 </xsl:template>
 -->
 

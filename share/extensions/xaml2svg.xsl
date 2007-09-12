@@ -39,7 +39,6 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt">
 <xsl:include href="xaml2svg/transform.xsl" />
 
 <xsl:template match="/">
-  <xsl:text>&#13;</xsl:text>
   <svg>
     <xsl:attribute name="overflow">visible</xsl:attribute>
     <xsl:variable name="viewBox"><xsl:apply-templates mode="boundingbox" /></xsl:variable>
@@ -52,11 +51,10 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt">
       </xsl:attribute>
     </xsl:if>  
     <xsl:apply-templates mode="svg" />
-  </svg><xsl:text>&#13;</xsl:text>
+  </svg>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'Image']">
-  <xsl:text>&#13;</xsl:text>
   <xsl:if test="@Canvas.Left or @Canvas.Top"><xsl:value-of disable-output-escaping="yes" select="concat('&lt;svg x=&quot;', @Canvas.Left, '&quot; y=&quot;', @Canvas.Top, '&quot;&gt;')" /></xsl:if>
   <image>
     <xsl:if test="@Source"><xsl:attribute name="xlink:href"><xsl:value-of select="@Source" /></xsl:attribute></xsl:if>
@@ -65,12 +63,11 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt">
     <xsl:call-template name="template_properties" />
     <xsl:call-template name="template_transform" />
     <xsl:apply-templates mode="forward" />
-  </image><xsl:text>&#13;</xsl:text>
+  </image>
   <xsl:if test="@Canvas.Left or @Canvas.Top"><xsl:value-of disable-output-escaping="yes" select="'&lt;/svg&gt;&#13;'" /></xsl:if>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'TextBlock']">
-  <xsl:text>&#13;</xsl:text>
   <xsl:if test="@Canvas.Left or @Canvas.Top"><xsl:value-of disable-output-escaping="yes" select="concat('&lt;svg x=&quot;', @Canvas.Left, '&quot; y=&quot;', @Canvas.Top, '&quot;&gt;')" /></xsl:if>
   <text>
     <xsl:if test="@FontSize"><xsl:attribute name="font-size"><xsl:value-of select="@FontSize" /></xsl:attribute></xsl:if>
@@ -93,7 +90,7 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt">
     <xsl:call-template name="template_properties" />
     <xsl:call-template name="template_transform" />
     <xsl:apply-templates />
-  </text><xsl:text>&#13;</xsl:text>
+  </text>
   <xsl:if test="@Canvas.Left or @Canvas.Top"><xsl:value-of disable-output-escaping="yes" select="'&lt;/svg&gt;&#13;'" /></xsl:if>
 </xsl:template>
 

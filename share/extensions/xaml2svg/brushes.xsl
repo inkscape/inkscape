@@ -32,7 +32,6 @@ exclude-result-prefixes="x">
 <xsl:output method="xml" encoding="ISO-8859-1"/>
 
 <xsl:template mode="forward" match="*[name(.) = 'LinearGradientBrush']">
-  <xsl:text>&#13;</xsl:text>
   <linearGradient>
     <xsl:attribute name="id">
       <xsl:choose>
@@ -74,12 +73,10 @@ exclude-result-prefixes="x">
     </xsl:choose>
     <xsl:call-template name="template_gradienttransform" />
     <xsl:apply-templates select="*[name(.) != 'Brush.Transform' and name(.) != concat(name(..), '.Transform') and name(.) != 'Brush.RelativeTransform' and name(.) != concat(name(..), '.RelativeTransform')]" />
-    <xsl:text>&#13;</xsl:text>
-  </linearGradient><xsl:text>&#13;</xsl:text>
+  </linearGradient>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'RadialGradientBrush']">
-  <xsl:text>&#13;</xsl:text>
   <radialGradient>
     <xsl:attribute name="id">
       <xsl:choose>
@@ -114,7 +111,7 @@ exclude-result-prefixes="x">
     <xsl:attribute name="r"><xsl:value-of select="@RadiusX" /></xsl:attribute>
     <xsl:call-template name="template_gradienttransform" />
     <xsl:apply-templates select="*[name(.) != 'Brush.Transform' and name(.) != concat(name(..), '.Transform') and name(.) != 'Brush.RelativeTransform' and name(.) != concat(name(..), '.RelativeTransform')]" />
-  </radialGradient><xsl:text>&#13;</xsl:text>
+  </radialGradient>
 </xsl:template>
 
 <xsl:template match="*[name(.) = 'GradientStopCollection' or name(.) = 'GradientBrush.GradientStops' or name(.) = concat(name(..), '.GradientStops')]">
@@ -122,7 +119,6 @@ exclude-result-prefixes="x">
 </xsl:template>
 
 <xsl:template match="*[name(.) = 'GradientStop']">
-  <xsl:text>&#13;</xsl:text>
   <stop>
     <xsl:if test="@Offset"><xsl:attribute name="offset"><xsl:value-of select="@Offset" /></xsl:attribute></xsl:if>
     <xsl:if test="@Color">
@@ -139,9 +135,7 @@ exclude-result-prefixes="x">
 </xsl:template>
 
 <xsl:template match="*[name(.) = 'ImageBrush']">
-  <xsl:text>&#13;</xsl:text>
   <defs>
-    <xsl:text>&#13;</xsl:text>
     <pattern>
       <xsl:choose>
         <xsl:when test="@TileMode != 'none' and @Viewport and @ViewportUnits = 'Absolute'">
@@ -174,7 +168,6 @@ exclude-result-prefixes="x">
         </xsl:otherwise>
       </xsl:choose>
       <xsl:attribute name="id"><xsl:value-of select="concat('id_', generate-id(..))" /></xsl:attribute>
-      <xsl:text>&#13;</xsl:text>
       <image>
         <xsl:attribute name="xlink:href"><xsl:value-of select="@ImageSource" /></xsl:attribute>
         <xsl:choose>
@@ -202,9 +195,9 @@ exclude-result-prefixes="x">
         </xsl:choose>
         <xsl:attribute name="style">opacity:1</xsl:attribute>
         <xsl:attribute name="image-rendering">optimizeSpeed</xsl:attribute>
-      </image><xsl:text>&#13;</xsl:text>
-    </pattern><xsl:text>&#13;</xsl:text>
-  </defs><xsl:text>&#13;</xsl:text>
+      </image>
+    </pattern>
+  </defs>
 </xsl:template>
 
 <xsl:template match="*[name(.) = 'DrawingBrush']">

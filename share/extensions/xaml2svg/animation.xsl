@@ -78,24 +78,23 @@ exclude-result-prefixes="def">
 </xsl:template>
 
 <xsl:template match="*[name(.) = 'ByteAnimation' or name(.) = 'DecimalAnimation' or name(.) = 'DoubleAnimation' or name(.) = 'Int16Animation' or name(.) = 'Int32Animation' or name(.) = 'Int64Animation' or name(.) = 'LengthAnimation' or name(.) = 'SingleAnimation' or name(.) = 'SizeAnimation' or name(.) = 'ThicknessAnimation']">
-  <xsl:text>&#13;</xsl:text>
   <xsl:choose>
     <xsl:when test="../@Path">
       <animate>
         <xsl:attribute name="attributeName"><xsl:call-template name="template_animation_path"><xsl:with-param name="target" select="../@Path" /></xsl:call-template></xsl:attribute>
         <xsl:call-template name="template_animation" />
-      </animate><xsl:text>&#13;</xsl:text>  
+      </animate>
     </xsl:when>
     <xsl:when test="name(..) = concat(name(.), 'Collection')">
       <animate>
         <xsl:attribute name="attributeName"><xsl:value-of select="translate(substring-after(name(../..), concat(name(../../..), '.')), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')" /></xsl:attribute>
         <xsl:call-template name="template_animation" />
-      </animate><xsl:text>&#13;</xsl:text>
+      </animate>
     </xsl:when>
     <xsl:when test="name(..) = concat(name(../..), '.AngleAnimations')">
       <animateTransform attributeName="transform" type="rotate">
         <xsl:call-template name="template_animation" />
-      </animateTransform><xsl:text>&#13;</xsl:text>
+      </animateTransform>
     </xsl:when>
   </xsl:choose>  
 </xsl:template>
@@ -109,7 +108,6 @@ exclude-result-prefixes="def">
 </xsl:template>
 
 <xsl:template match="*[name(.) = 'ColorAnimation']">
-  <xsl:text>&#13;</xsl:text>
   <animateColor>
     <xsl:if test="../@Path">
       <xsl:attribute name="attributeName"><xsl:call-template name="template_animation_path"><xsl:with-param name="target" select="../@Path" /></xsl:call-template></xsl:attribute>
@@ -124,7 +122,7 @@ exclude-result-prefixes="def">
       </xsl:choose>  
     </xsl:if>    
     <xsl:call-template name="template_animation" />
-  </animateColor><xsl:text>&#13;</xsl:text>
+  </animateColor>
 </xsl:template>
 
 <xsl:template match="*[name(.) = 'PointAnimation']">

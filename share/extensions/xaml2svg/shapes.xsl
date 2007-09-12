@@ -32,7 +32,6 @@ exclude-result-prefixes="def">
 <xsl:output method="xml" encoding="ISO-8859-1"/>
 
 <xsl:template mode="forward" match="*[name(.) = 'Path']">
-  <xsl:text>&#13;</xsl:text>
   <path>
     <xsl:if test="@Data">
       <xsl:attribute name="d">
@@ -49,7 +48,7 @@ exclude-result-prefixes="def">
     <xsl:call-template name="template_properties" />  
     <xsl:call-template name="template_transform" />  
     <xsl:apply-templates mode="forward" />
-  </path><xsl:text>&#13;</xsl:text>
+  </path>
 </xsl:template>    
 
 <xsl:template mode="forward" match="*[name(.) = 'Path.Data']">
@@ -67,7 +66,6 @@ exclude-result-prefixes="def">
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'Line']">
-  <xsl:text>&#13;</xsl:text>
   <line>
     <xsl:if test="@X1"><xsl:attribute name="x1"><xsl:value-of select="@X1" /></xsl:attribute></xsl:if> 
     <xsl:if test="@Y1"><xsl:attribute name="y1"><xsl:value-of select="@Y1" /></xsl:attribute></xsl:if> 
@@ -76,11 +74,10 @@ exclude-result-prefixes="def">
     <xsl:call-template name="template_properties" />  
     <xsl:call-template name="template_transform" />  
     <xsl:apply-templates mode="forward" />
-  </line><xsl:text>&#13;</xsl:text>
+  </line>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'Ellipse']">
-  <xsl:text>&#13;</xsl:text>
   <ellipse>
     <xsl:if test="@Width">
       <xsl:attribute name="rx"><xsl:value-of select="@Width div 2" /></xsl:attribute>
@@ -97,11 +94,10 @@ exclude-result-prefixes="def">
     <xsl:call-template name="template_properties" />  
     <xsl:call-template name="template_transform" />  
     <xsl:apply-templates mode="forward" />
-  </ellipse><xsl:text>&#13;</xsl:text>
+  </ellipse>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'Rectangle']">
-  <xsl:text>&#13;</xsl:text>
   <rect>
     <xsl:if test="@Canvas.Left"><xsl:attribute name="x"><xsl:value-of select="@Canvas.Left" /></xsl:attribute></xsl:if>  
     <xsl:if test="@Canvas.Top"><xsl:attribute name="y"><xsl:value-of select="@Canvas.Top" /></xsl:attribute></xsl:if>  
@@ -113,11 +109,10 @@ exclude-result-prefixes="def">
     <xsl:call-template name="template_transform" />
     <xsl:call-template name="template_timeline_animations" />
     <xsl:apply-templates mode="forward" />
-  </rect><xsl:text>&#13;</xsl:text>
+  </rect>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'Polyline']">
-  <xsl:text>&#13;</xsl:text>
   <polyline>
     <xsl:if test="@Points"><xsl:attribute name="points"><xsl:value-of select="@Points" /></xsl:attribute></xsl:if>
     <xsl:attribute name="fill-rule">
@@ -129,11 +124,10 @@ exclude-result-prefixes="def">
     <xsl:call-template name="template_properties" />  
     <xsl:call-template name="template_transform" />  
     <xsl:apply-templates mode="forward" />
-  </polyline><xsl:text>&#13;</xsl:text>
+  </polyline>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'Polygon']">
-  <xsl:text>&#13;</xsl:text>
   <polygon>
     <xsl:if test="@Points"><xsl:attribute name="points"><xsl:value-of select="@Points" /></xsl:attribute></xsl:if>
     <xsl:attribute name="fill-rule">
@@ -145,11 +139,10 @@ exclude-result-prefixes="def">
     <xsl:call-template name="template_properties" />  
     <xsl:call-template name="template_transform" />  
     <xsl:apply-templates mode="forward" />
-  </polygon><xsl:text>&#13;</xsl:text>
+  </polygon>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'Glyphs']">
-  <xsl:text>&#13;</xsl:text>
   <defs>
     <font-face>
       <xsl:attribute name="font-family"><xsl:value-of select="concat('TrueType ', generate-id(.))" /></xsl:attribute>
@@ -164,7 +157,7 @@ exclude-result-prefixes="def">
     <xsl:call-template name="template_properties" />  
     <xsl:call-template name="template_transform" />  
     <xsl:if test="@UnicodeString"><xsl:value-of select="@UnicodeString" /></xsl:if>
-  </text><xsl:text>&#13;</xsl:text>
+  </text>
 </xsl:template>
 
 </xsl:stylesheet>

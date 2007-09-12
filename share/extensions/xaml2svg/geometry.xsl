@@ -40,7 +40,6 @@ exclude-result-prefixes="def">
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'ImageDrawing']">
-  <xsl:text>&#13;</xsl:text>
   <image>
     <xsl:if test="@ImageSource"><xsl:attribute name="xlink:href"><xsl:value-of select="@ImageSource" /></xsl:attribute></xsl:if>
     <xsl:if test="@Rect">
