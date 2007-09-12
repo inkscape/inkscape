@@ -500,6 +500,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/straightseg.inx
 [type: gettext/xml] share/extensions/summersnight.inx
 [type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
+[type: gettext/xml] share/extensions/svg2xaml.inx
 [type: gettext/xml] share/extensions/svgz_input.inx
 [type: gettext/xml] share/extensions/svgz_output.inx
 [type: gettext/xml] share/extensions/text_flipcase.inx
@@ -513,3 +514,4 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/txt2svg.inx
 [type: gettext/xml] share/extensions/whirl.inx
 [type: gettext/xml] share/extensions/wmf_input.inx
+[type: gettext/xml] share/extensions/xaml2svg.inx
