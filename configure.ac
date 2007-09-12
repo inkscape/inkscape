@@ -916,6 +916,7 @@ share/clipart/Makefile
 share/examples/Makefile
 share/extensions/Makefile
 share/extensions/Barcode/Makefile
+share/extensions/xaml2svg/Makefile
 share/fonts/Makefile
 share/gradients/Makefile
 share/icons/Makefile
