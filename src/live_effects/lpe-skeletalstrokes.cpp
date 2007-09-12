@@ -58,10 +58,10 @@ static const Util::EnumDataConverter<SkelCopyType> SkelCopyTypeConverter(SkelCop
 
 LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    pattern(_("Pattern"), _("Path to put along path"), "pattern", &wr, this, "M0,0 L1,0"),
-    copytype(_("Copytype"), _("How to shape the pattern path along the path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED),
-    prop_scale(_("Scale ratio"), _("Ratio between scaling in the x and y direction of the original path"), "prop_scale", &wr, this, 1),
-    scale_y(_("Scale pattern y"), _("Scale the height of the pattern path with its length"), "scale_stroke_y", &wr, this, false)
+    pattern(_("Pattern source:"), _("Path to put along the skeleton path"), "pattern", &wr, this, "M0,0 L1,0"),
+    copytype(_("Pattern copies:"), _("How many pattern copies to place along the skeleton path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED),
+    prop_scale(_("Scale ratio:"), _("Ratio between scaling the length and width of the pattern"), "prop_scale", &wr, this, 1),
+    scale_y(_("Scale pattern width"), _("Scale the width of the pattern (perpendicular to skeleton) with its length"), "scale_stroke_y", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
     registerParameter( dynamic_cast<Parameter *>(&copytype) );
