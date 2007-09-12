@@ -119,6 +119,7 @@
         #define HAVE_MALLOC_H                 1
         #define HAVE_STDLIB_H                 1
         #define HAVE_SYS_STAT_H               1
+        #define HAVE_INTTYPES_H               1
 
         #define ENABLE_LCMS                   1
 
@@ -379,6 +380,7 @@
            <!-- PYTHON -->
            -L${gtk}/python/libs -lpython25
            ${gtk}/bin/libxml2.dll
+           ${gtk}/bin/libxslt.dll
            -lpoppler-cairo -lpoppler
            -lcairo.dll
            ${gtk}/lib/iconv.lib
@@ -438,6 +440,7 @@
            <!-- PYTHON -->
            -L${gtk}/python/libs -lpython24
            ${gtk}/bin/libxml2.dll
+           ${gtk}/bin/libxslt.dll
            ${gtk}/lib/iconv.lib
            -lfreetype.dll -lfontconfig.dll
            -llcms.dll
@@ -491,6 +494,7 @@
     <copy file="${gtk}/bin/freetype6.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libfontconfig-1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libxml2.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libxslt.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/xmlparse.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/xmlparse.dll" tofile="${dist}/libexpat.dll"/>
     <copy file="${gtk}/bin/jpeg62.dll" todir="${dist}"/>
