@@ -20,6 +20,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+Version history:
+
+20070907 Initial release
+20070912 TemplateBinding in template_color
+
 -->
 
 <xsl:stylesheet version="1.0"
@@ -129,6 +135,7 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt">
       <xsl:value-of select="concat('#', substring($colorspec, string-length($colorspec) - 5, 3))" />
     </xsl:when>
     <xsl:when test="contains($colorspec, '{StaticResource ')"><xsl:value-of select="concat('url(#', substring-before(substring-after($colorspec, '{StaticResource '), '}'), ')')" /></xsl:when>
+    <xsl:when test="contains($colorspec, '{TemplateBinding ')"><xsl:value-of select="concat('url(#', substring-before(substring-after($colorspec, '{TemplateBinding '), '}'), ')')" /></xsl:when>
     <xsl:otherwise><xsl:value-of select="$colorspec" /></xsl:otherwise>
   </xsl:choose>
 </xsl:template>

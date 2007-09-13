@@ -20,6 +20,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+Version history:
+
+20070907 Initial release
+20070912 starts-with(@Data, 'F0 ') to strip of F0 from path data
+20070912 nonzero and evenodd were outside xsl:attribute (reported by bulia byak and Ted Gould)
+
 -->
 
 <xsl:stylesheet version="1.0" 
@@ -36,14 +43,15 @@ exclude-result-prefixes="def">
     <xsl:if test="@Data">
       <xsl:attribute name="d">
         <xsl:choose>
+          <xsl:when test="starts-with(@Data, 'F0 ')"><xsl:value-of select="substring-after(@Data, 'F0 ')" /></xsl:when>
           <xsl:when test="starts-with(@Data, 'F1 ')"><xsl:value-of select="substring-after(@Data, 'F1 ')" /></xsl:when>
           <xsl:otherwise><xsl:value-of select="@Data" /></xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
     </xsl:if>
     <xsl:choose>
-      <xsl:when test="@FillRule = 'nonzero' or starts-with(@Data, 'F1 ')"><xsl:attribute name="fill-rule"></xsl:attribute>nonzero</xsl:when>
-      <xsl:when test="@FillRule = 'evenodd' or starts-with(@Data, 'F0 ')"><xsl:attribute name="fill-rule"></xsl:attribute>evenodd</xsl:when>
+      <xsl:when test="@FillRule = 'nonzero' or starts-with(@Data, 'F1 ')"><xsl:attribute name="fill-rule">nonzero</xsl:attribute></xsl:when>
+      <xsl:when test="@FillRule = 'evenodd' or starts-with(@Data, 'F0 ')"><xsl:attribute name="fill-rule">evenodd</xsl:attribute></xsl:when>
     </xsl:choose>
     <xsl:call-template name="template_properties" />  
     <xsl:call-template name="template_transform" />  

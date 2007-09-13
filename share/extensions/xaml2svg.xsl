@@ -20,6 +20,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+Version history:
+
+20070907 Initial release
+20070912 Removed NaN as viewBox values
+
 -->
 
 <xsl:stylesheet version="1.0"
@@ -42,7 +48,7 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt">
   <svg>
     <xsl:attribute name="overflow">visible</xsl:attribute>
     <xsl:variable name="viewBox"><xsl:apply-templates mode="boundingbox" /></xsl:variable>
-    <xsl:if test="system-property('xsl:vendor') = 'Microsoft'">
+    <xsl:if test="system-property('xsl:vendor') = 'Microsoft' and (msxsl:node-set($viewBox)/boundingbox/@x1 != '') and (msxsl:node-set($viewBox)/boundingbox/@x2 != '') and (msxsl:node-set($viewBox)/boundingbox/@y1 != '') and (msxsl:node-set($viewBox)/boundingbox/@y2 != '')">
       <xsl:attribute name="viewBox">
         <xsl:value-of select="concat(msxsl:node-set($viewBox)/boundingbox/@x1, ' ')" />
         <xsl:value-of select="concat(msxsl:node-set($viewBox)/boundingbox/@y1, ' ')" />
