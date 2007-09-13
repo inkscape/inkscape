@@ -461,7 +461,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
 
     // Add the units menu.
-    act = tracker->createAction( "UnitsAction", _("Units"), _("") );
+    act = tracker->createAction( "UnitsAction", _("Units"), ("") );
     gtk_action_group_add_action( selectionActions, act );
 
     g_object_set_data( G_OBJECT(spw), "selectionActions", selectionActions );

@@ -1709,7 +1709,7 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                 2, "star_angled",
                                 -1 );
 
-            EgeSelectOneAction* act = ege_select_one_action_new( "FlatAction", _(""), _(""), NULL, GTK_TREE_MODEL(model) );
+            EgeSelectOneAction* act = ege_select_one_action_new( "FlatAction", (""), (""), NULL, GTK_TREE_MODEL(model) );
             gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
             g_object_set_data( holder, "flat_action", act );
 
@@ -2124,7 +2124,7 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
     // add the units menu
     {
-        GtkAction* act = tracker->createAction( "RectUnitsAction", _("Units"), _("") );
+        GtkAction* act = tracker->createAction( "RectUnitsAction", _("Units"), ("") );
         gtk_action_group_add_action( mainActions, act );
     }
 
@@ -2848,7 +2848,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                             2, "tweak_colorjitter_mode",
                             -1 );
 
-        EgeSelectOneAction* act = ege_select_one_action_new( "TweakModeAction", _("Mode:"), _(""), NULL, GTK_TREE_MODEL(model) );
+        EgeSelectOneAction* act = ege_select_one_action_new( "TweakModeAction", _("Mode:"), (""), NULL, GTK_TREE_MODEL(model) );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
         g_object_set_data( holder, "mode_action", act );
 
@@ -3531,7 +3531,7 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
                             2, "circle_open_arc",
                             -1 );
 
-        EgeSelectOneAction* act = ege_select_one_action_new( "ArcOpenAction", _(""), _(""), NULL, GTK_TREE_MODEL(model) );
+        EgeSelectOneAction* act = ege_select_one_action_new( "ArcOpenAction", (""), (""), NULL, GTK_TREE_MODEL(model) );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
         g_object_set_data( holder, "open_action", act );
 
@@ -4559,7 +4559,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
         }
 
         {
-            GtkWidget *hb = sp_tb_spinbutton(_(""), _("Spacing between letters"),
+            GtkWidget *hb = sp_tb_spinbutton((""), _("Spacing between letters"),
                                              "tools.text", "letter_spacing", 0.0,
                                              us, tbl, FALSE, NULL,
                                              -1000.0, 1000.0, 0.1, 0.1,
@@ -4580,7 +4580,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
         }
 
         {
-            GtkWidget *hb = sp_tb_spinbutton(_(""), _("Spacing between lines"),
+            GtkWidget *hb = sp_tb_spinbutton((""), _("Spacing between lines"),
                                              "tools.text", "line_spacing", 0,
                                              us, tbl, FALSE, NULL,
                                              -1000.0, 1000.0, 0.1, 0.1,
@@ -4609,7 +4609,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
             }
 
             {
-                GtkWidget *hb = sp_tb_spinbutton(_(""), _("Horizontal kerning"),
+                GtkWidget *hb = sp_tb_spinbutton((""), _("Horizontal kerning"),
                                                  "tools.text", "horizontal_kerning", 0,
                                                  us, tbl, FALSE, NULL,
                                                  -100.00, 100.00, 0.01, 0.1,
@@ -4630,7 +4630,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
             }
 
             {
-                GtkWidget *hb = sp_tb_spinbutton(_(""), _("Vertical kerning"),
+                GtkWidget *hb = sp_tb_spinbutton((""), _("Vertical kerning"),
                                                  "tools.text", "vertical_kerning", 0,
                                                  us, tbl, FALSE, NULL,
                                                  -100.00, 100.00, 0.01, 0.1,
@@ -4657,7 +4657,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
             gtk_box_pack_start (GTK_BOX (tbl), hb, FALSE, FALSE, 0);
         }
         {
-            GtkWidget *hb = sp_tb_spinbutton(_(""), _("Letter rotation"),
+            GtkWidget *hb = sp_tb_spinbutton((""), _("Letter rotation"),
                                              "tools.text", "letter_rotation", 0,
                                              us, tbl, FALSE, NULL,
                                              -180.0, 180.0, 0.1, 0.1,
@@ -5013,7 +5013,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         }
         g_list_free( items );
         items = 0;
-        EgeSelectOneAction* act1 = ege_select_one_action_new( "ChannelsAction", _("Fill by:"), _(""), NULL, GTK_TREE_MODEL(model) );
+        EgeSelectOneAction* act1 = ege_select_one_action_new( "ChannelsAction", _("Fill by:"), (""), NULL, GTK_TREE_MODEL(model) );
         ege_select_one_action_set_appearance( act1, "compact" );
         ege_select_one_action_set_active( act1, prefs_get_int_attribute("tools.paintbucket", "channels", 0) );
         g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(paintbucket_channels_changed), holder );
@@ -5040,7 +5040,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
     tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
     g_object_set_data( holder, "tracker", tracker );
     {
-        GtkAction* act = tracker->createAction( "PaintbucketUnitsAction", _("Units"), _("") );
+        GtkAction* act = tracker->createAction( "PaintbucketUnitsAction", _("Units"), ("") );
         gtk_action_group_add_action( mainActions, act );
     }
 
@@ -5074,7 +5074,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         }
         g_list_free( items );
         items = 0;
-        EgeSelectOneAction* act2 = ege_select_one_action_new( "AutoGapAction", _("Close gaps:"), _(""), NULL, GTK_TREE_MODEL(model) );
+        EgeSelectOneAction* act2 = ege_select_one_action_new( "AutoGapAction", _("Close gaps:"), (""), NULL, GTK_TREE_MODEL(model) );
         ege_select_one_action_set_appearance( act2, "compact" );
         ege_select_one_action_set_active( act2, prefs_get_int_attribute("tools.paintbucket", "autogap", 0) );
         g_signal_connect( G_OBJECT(act2), "changed", G_CALLBACK(paintbucket_autogap_changed), holder );

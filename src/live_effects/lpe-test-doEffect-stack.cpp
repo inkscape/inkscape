@@ -18,7 +18,7 @@ namespace LivePathEffect {
 
 LPEdoEffectStackTest::LPEdoEffectStackTest(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    step(_("Stack step"), _(""), "step", &wr, this)
+    step(_("Stack step"), (""), "step", &wr, this)
 {
     registerParameter( dynamic_cast<Parameter *>(&step) );
 }
