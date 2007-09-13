@@ -35,13 +35,13 @@ Implode::init(void)
 		"<inkscape-extension>\n"
 			"<name>" N_("Implode") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.implode</id>\n"
-			"<param name=\"factor\" gui-text=\"" N_("Factor") "\" type=\"float\" min=\"0.1\" max=\"50\">5.0</param>\n"
+			"<param name=\"factor\" gui-text=\"" N_("Factor") "\" type=\"float\" min=\"0\" max=\"100\">10</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Implode Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Implode selected bitmap(s).") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Implode());
 }

@@ -16,11 +16,11 @@ namespace Bitmap {
 class Swirl : public ImageMagick
 {
 private:
-	double _degrees;
+	float _degrees;
 public:
-  void applyEffect(Magick::Image *image);
-  void refreshParameters(Inkscape::Extension::Effect *module);
-  static void init(void);
+	void applyEffect(Magick::Image *image);
+	void refreshParameters(Inkscape::Extension::Effect *module);
+	static void init(void);
 };
 
 }; /* namespace Bitmap */

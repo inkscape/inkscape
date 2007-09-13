@@ -44,7 +44,7 @@ ReduceNoise::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply ReduceNoise Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Reduce noise in selected bitmap(s) using a noise peak elimination filter.") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new ReduceNoise());
 }

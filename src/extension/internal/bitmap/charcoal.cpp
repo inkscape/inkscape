@@ -36,14 +36,14 @@ Charcoal::init(void)
 		"<inkscape-extension>\n"
 			"<name>" N_("Charcoal") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.charcoal</id>\n"
-			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"float\" min=\"0.1\" max=\"20\">5.0</param>\n"
-			"<param name=\"sigma\" gui-text=\"" N_("Sigma") "\" type=\"float\" min=\"0.1\" max=\"5\">1.0</param>\n"
+			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"float\" min=\"0\" max=\"100\">1</param>\n"
+			"<param name=\"sigma\" gui-text=\"" N_("Sigma") "\" type=\"float\" min=\"0\" max=\"100\">0.5</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Charcoal Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Apply charcoal stylization to selected bitmap(s).") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Charcoal());
 }

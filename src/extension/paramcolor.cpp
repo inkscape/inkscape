@@ -36,11 +36,11 @@ void sp_color_param_changed(SPColorSelector *csel, GObject *cp);
 /** \brief  Free the allocated data. */
 ParamColor::~ParamColor(void)
 {
-    g_free(_value);
+    
 }
      
-SPColor* 
-ParamColor::set (SPColor* in, SPDocument * doc, Inkscape::XML::Node * node)
+guint32 
+ParamColor::set (guint32 in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     _value = in;
 
@@ -53,7 +53,7 @@ ParamColor::set (SPColor* in, SPDocument * doc, Inkscape::XML::Node * node)
 
 /** \brief  Initialize the object, to do that, copy the data. */
 ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, desc, scope, ext), _value(NULL)
+    Parameter(name, guitext, desc, scope, ext)
 {
     const char * defaulthex = NULL;
     if (sp_repr_children(xml) != NULL)
@@ -65,26 +65,8 @@ ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar *
 
     if (paramval != NULL)
         defaulthex = paramval;
-    
-	const char* hexMark = strchr(defaulthex, '#');
-	if (hexMark != NULL)
-	    defaulthex++;// = hexMark;
-	
-	if (strlen(defaulthex) == 6) {
-		int r = 0, g = 0, b = 0;	
-		std::stringstream ss;
-		ss << g_strndup(defaulthex, 2);
-		ss >> std::hex >> r;
-		ss << g_strndup(defaulthex + 2, 2);
-		ss >> std::hex >> g;
-		ss << defaulthex + 4;
-		ss >> std::hex >> b;
-		g_free(ss);
-			
-		SPColor defaultColor;
-		sp_color_set_rgb_float(&defaultColor, r / 255.0, g / 255.0, b / 255.0);
-		_value = &defaultColor;
-	}
+		
+	_value = atoi(defaulthex);
 
     return;
 }
@@ -93,16 +75,10 @@ ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar *
 Glib::ustring *
 ParamColor::string (void)
 {
-    float rgb[3];
-    sp_color_get_rgb_floatv(_value, rgb);
-    char hex[8];
-	snprintf(hex, 8, "#%02X%02X%02X", (int)(rgb[0] * 255), (int)(rgb[1] * 255), (int)(rgb[2] * 255));
+    char str[16];
+	sprintf(str, "%i", _value);
 	
-	Glib::ustring* ret = new Glib::ustring(hex);
-	
-	printf("ParamColor::string = '%s'\n", hex);
-	
-    return ret;
+	return new Glib::ustring(str);
 }
 
 Gtk::Widget *
@@ -113,15 +89,15 @@ ParamColor::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::sign
 	SPColorSelector* spColorSelector = (SPColorSelector*)sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK, SP_COLORSPACE_TYPE_RGB);
 	
 	ColorSelector* colorSelector = spColorSelector->base;
-	if (_value == NULL) {
-		_value = new SPColor();
-		sp_color_set_rgb_float(_value, 1.0, 0.0, 0.0);
+	if (_value < 1) {
+		_value = 0xFF000000;
 	}
-    colorSelector->setColor(*_value);
+	SPColor *color = new SPColor();
+	sp_color_set_rgb_rgba32(color, _value);
+	float alpha = (_value & 0xff) / 255.0F;
+    colorSelector->setColorAlpha(*color, alpha);
 
 	hbox->pack_start (*Glib::wrap(&spColorSelector->vbox), true, true, 0);
-	g_signal_connect(G_OBJECT(spColorSelector), "dragged",  G_CALLBACK(sp_color_param_changed), (void*)this);
-	g_signal_connect(G_OBJECT(spColorSelector), "released", G_CALLBACK(sp_color_param_changed), (void*)this);
 	g_signal_connect(G_OBJECT(spColorSelector), "changed",  G_CALLBACK(sp_color_param_changed), (void*)this);
 
 	gtk_widget_show(GTK_WIDGET(spColorSelector));
@@ -133,14 +109,11 @@ ParamColor::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::sign
 void
 sp_color_param_changed(SPColorSelector *csel, GObject *obj)
 {
-	SPColor color;
-    float alpha;
-    csel->base->getColorAlpha(color, &alpha);
-    guint32 rgba = sp_color_get_rgba32_falpha(&color, alpha);
-	
+	const SPColor color = csel->base->getColor();
+	float alpha = csel->base->getAlpha();
 
-    ParamColor* ptr = (ParamColor* )obj;
-	ptr->set(&color, NULL, NULL); 
+    ParamColor* ptr = (ParamColor*)obj;
+	ptr->set(sp_color_get_rgba32_falpha(&color, alpha), NULL, NULL);
 	
 	ptr->_changeSignal->emit();
 }

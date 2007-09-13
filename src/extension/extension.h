@@ -165,10 +165,10 @@ public:
     const gchar *    get_param_string (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
-    SPColor*        get_param_color   (const gchar * name,
+    guint32          get_param_color  (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
-    const gchar *   get_param_enum    (const gchar * name,
+    const gchar *    get_param_enum   (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
     bool             set_param_bool   (const gchar * name,
@@ -187,8 +187,8 @@ public:
                                        const gchar * value,
                                        SPDocument *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
-    SPColor*         set_param_color  (const gchar * name,
-                                       SPColor* color,
+    guint32          set_param_color  (const gchar * name,
+                                       guint32 color,
                                        SPDocument *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
 

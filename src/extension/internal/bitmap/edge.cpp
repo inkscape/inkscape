@@ -35,13 +35,13 @@ Edge::init(void)
 		"<inkscape-extension>\n"
 			"<name>" N_("Edge") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.edge</id>\n"
-			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"int\" min=\"0\" max=\"100\">5</param>\n"
+			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"int\" min=\"0\" max=\"100\">0</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Edge Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Hilight edges of selected bitmap(s).") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Edge());
 }

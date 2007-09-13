@@ -35,13 +35,13 @@ CycleColormap::init(void)
 		"<inkscape-extension>\n"
 			"<name>" N_("Cycle Colormap") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.cycleColormap</id>\n"
-			"<param name=\"amount\" gui-text=\"" N_("Amount") "\" type=\"int\" min=\"0\" max=\"255\">1</param>\n"
+			"<param name=\"amount\" gui-text=\"" N_("Amount") "\" type=\"int\" min=\"0\" max=\"360\">180</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Cycle Colormap Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Cycle colormap(s) of selected bitmap(s).") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new CycleColormap());
 }

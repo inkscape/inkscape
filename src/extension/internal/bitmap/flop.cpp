@@ -22,9 +22,7 @@ Flop::applyEffect(Magick::Image *image) {
 }
 
 void
-Flop::refreshParameters(Inkscape::Extension::Effect *module) {	
-	
-}
+Flop::refreshParameters(Inkscape::Extension::Effect *module) { }
 
 #include "../clear-n_.h"
 
@@ -40,7 +38,7 @@ Flop::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Flop Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Flop selected bitmap(s) -- reflect each scanline in the horizontal direction.") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Flop());
 }

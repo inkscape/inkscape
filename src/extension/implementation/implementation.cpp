@@ -49,6 +49,11 @@ Implementation::cancelProcessing (void) {
     return true;
 }
 
+void
+Implementation::commitDocument (void) {
+    return;
+}
+
 Gtk::Widget *
 Implementation::prefs_input(Inkscape::Extension::Input *module, gchar const *filename) {
     return module->autogui(NULL, NULL);

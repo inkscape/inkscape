@@ -15,7 +15,7 @@ namespace Bitmap {
 
 class Edge : public ImageMagick {
 private:
-	int _radius;
+	unsigned int _radius;
 public:
     void applyEffect(Magick::Image *image);
 	void refreshParameters(Inkscape::Extension::Effect *module);

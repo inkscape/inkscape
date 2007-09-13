@@ -23,19 +23,21 @@ class ImageMagick : public Inkscape::Extension::Implementation::Implementation {
 private:
 	bool _loaded;
 
-	Inkscape::XML::Node **_nodes;	
+	Inkscape::XML::Node** _nodes;	
 	
-	Magick::Image *_images;
+	Magick::Image** _images;
 	int _imageCount;
+	char** _caches;
+	unsigned* _cacheLengths;
 	
-	const char **_originals;
+	const char** _originals;
 public:
 	virtual void applyEffect(Magick::Image *image) { };
 	virtual void refreshParameters(Inkscape::Extension::Effect *module) { };
 	bool load(Inkscape::Extension::Extension *module);
     
 	void commitDocument(void);
-	void cancelDocument(void);
+	/*void cancelDocument(void);*/
 
 	void readImage(char const *xlink, Magick::Image *image);
 	void effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document);

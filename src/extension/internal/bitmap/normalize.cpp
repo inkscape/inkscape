@@ -39,7 +39,7 @@ Normalize::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Normalize Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Normalize selected bitmap(s), expanding color range to the full possible range of color.") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Normalize());
 }

@@ -16,8 +16,9 @@ namespace Bitmap {
 class AdaptiveThreshold : public ImageMagick
 {
 private:
-	int _width;
-	int _height;
+	unsigned int _width;
+	unsigned int _height;
+	unsigned _offset;
 public:
     void applyEffect(Magick::Image *image);
 	void refreshParameters(Inkscape::Extension::Effect *module);

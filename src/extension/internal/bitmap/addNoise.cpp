@@ -56,7 +56,7 @@ AddNoise::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Add Noise Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Add random noise to selected bitmap(s).") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new AddNoise());
 }

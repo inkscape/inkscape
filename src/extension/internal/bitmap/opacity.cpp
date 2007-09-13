@@ -18,7 +18,7 @@ namespace Bitmap {
 	
 void
 Opacity::applyEffect(Magick::Image* image) {
-	Magick::Quantum opacity = Magick::Color::scaleDoubleToQuantum(_opacity / 100.0);
+	Magick::Quantum opacity = Magick::Color::scaleDoubleToQuantum((100 - _opacity) / 100.0);
 	image->opacity(opacity);
 }
 
@@ -42,7 +42,7 @@ Opacity::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Opacity Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Modify opacity channel(s) of selected bitmap(s).") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Opacity());
 }

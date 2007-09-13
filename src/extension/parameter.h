@@ -87,7 +87,7 @@ public:
                               const Inkscape::XML::Node * node);
     const gchar * get_string (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
-    SPColor* get_color 	     (const SPDocument * doc,
+    guint32       get_color  (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
 	const gchar * get_enum   (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
@@ -96,7 +96,7 @@ public:
     int           set_int    (int  in,          SPDocument * doc, Inkscape::XML::Node * node);
     float         set_float  (float in,         SPDocument * doc, Inkscape::XML::Node * node);
     const gchar * set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
-    SPColor* 	  set_color  (SPColor* in, SPDocument * doc, Inkscape::XML::Node * node);
+    guint32 	  set_color  (guint32 in, SPDocument * doc, Inkscape::XML::Node * node);
 
     const gchar * name       (void) {return _name;}
 

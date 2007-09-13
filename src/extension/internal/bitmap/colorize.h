@@ -17,8 +17,8 @@ namespace Bitmap {
 
 class Colorize : public ImageMagick {
 private:
-	SPColor* _color;
-	int _opacity;
+	unsigned int _opacity;
+	guint32 _color;	
 
 public:
     void applyEffect(Magick::Image *image);

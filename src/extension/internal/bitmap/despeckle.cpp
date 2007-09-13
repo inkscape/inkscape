@@ -23,7 +23,6 @@ Despeckle::applyEffect(Magick::Image *image) {
 
 void
 Despeckle::refreshParameters(Inkscape::Extension::Effect *module) {	
-	
 }
 
 #include "../clear-n_.h"
@@ -40,7 +39,7 @@ Despeckle::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Despeckle Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Reduce speckle noise of selected bitmap(s).") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Despeckle());
 }

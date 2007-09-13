@@ -36,14 +36,14 @@ Emboss::init(void)
 		"<inkscape-extension>\n"
 			"<name>" N_("Emboss") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.emboss</id>\n"
-			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"float\" min=\"0.1\" max=\"50\">5.0</param>\n"
-			"<param name=\"sigma\" gui-text=\"" N_("Sigma") "\" type=\"float\" min=\"0.1\" max=\"10\">1.0</param>\n"
+			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"float\" min=\"0\" max=\"100\">1.0</param>\n"
+			"<param name=\"sigma\" gui-text=\"" N_("Sigma") "\" type=\"float\" min=\"-50\" max=\"50\">0.5</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Emboss Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Emboss selected bitmap(s) -- hilight edges with 3D effect.") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Emboss());
 }

@@ -25,6 +25,7 @@ void
 AdaptiveThreshold::refreshParameters(Inkscape::Extension::Effect *module) {	
 	_width = module->get_param_int("width");
 	_height = module->get_param_int("height");
+	_offset = module->get_param_int("offset");
 }
 
 #include "../clear-n_.h"
@@ -36,14 +37,15 @@ AdaptiveThreshold::init(void)
 		"<inkscape-extension>\n"
 			"<name>" N_("Adaptive Threshold") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.adaptiveThreshold</id>\n"
-			"<param name=\"width\" gui-text=\"" N_("Width") "\" type=\"int\" min=\"0\" max=\"100\">5</param>\n"
-			"<param name=\"height\" gui-text=\"" N_("Height") "\" type=\"int\" min=\"0\" max=\"100\">1</param>\n"
+			"<param name=\"width\" gui-text=\"" N_("Width") "\" type=\"int\" min=\"-100\" max=\"100\">5</param>\n"
+			"<param name=\"height\" gui-text=\"" N_("Height") "\" type=\"int\" min=\"-100\" max=\"100\">5</param>\n"
+			"<param name=\"offset\" gui-text=\"" N_("Offset") "\" type=\"int\" min=\"0\" max=\"100\">0</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Adaptive Threshold Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Apply adaptive thresholding to selected bitmap(s).") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new AdaptiveThreshold());
 }

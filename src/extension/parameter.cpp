@@ -215,7 +215,7 @@ Parameter::get_enum (const SPDocument * doc, const Inkscape::XML::Node * node)
     return param->get(doc, node);
 }
 
-SPColor*
+guint32
 Parameter::get_color(const SPDocument* doc, const Inkscape::XML::Node* node)
 {
     ParamColor* param = dynamic_cast<ParamColor *>(this);
@@ -265,8 +265,8 @@ Parameter::set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node *
     return stringpntr->set(in, doc, node);
 }
 /** \brief  Wrapper to cast to the object and use it's function.  */
-SPColor*
-Parameter::set_color (SPColor* in, SPDocument * doc, Inkscape::XML::Node * node)
+guint32
+Parameter::set_color (guint32 in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     ParamColor* param = dynamic_cast<ParamColor *>(this);
     if (param == NULL)

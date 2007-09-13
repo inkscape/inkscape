@@ -48,7 +48,7 @@ Unsharpmask::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Unsharp Mask Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Sharpen selected bitmap(s) using unsharp mask algorithms.") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Unsharpmask());
 }

@@ -16,7 +16,7 @@ namespace Bitmap {
 class Contrast : public ImageMagick
 {
 private:
-	bool _sharpen;
+	unsigned int _sharpen;
 public:
     void applyEffect(Magick::Image *image);
 	void refreshParameters(Inkscape::Extension::Effect *module);

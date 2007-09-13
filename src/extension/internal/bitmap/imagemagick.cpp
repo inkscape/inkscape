@@ -8,9 +8,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <libintl.h>
+
 #include <gtkmm/box.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/spinbutton.h>
+#include <gtkmm.h>
 
 #include <glib/gstdio.h>
 
@@ -34,6 +37,7 @@ bool
 ImageMagick::load(Inkscape::Extension::Extension *module)
 {
 	_loaded = FALSE;
+	
 	return TRUE;
 }
 
@@ -42,19 +46,22 @@ ImageMagick::commitDocument(void) {
 	_loaded = FALSE;
 }
 
-void
+/*void
 ImageMagick::cancelDocument(void) {	
 	for (int i = 0; i < _imageCount; i++) {
 		_nodes[i]->setAttribute("xlink:href", _originals[i], true);
+		
+		if (strlen(_originals[i]) < 256)
+			_nodes[i]->setAttribute("sodipodi:absref", _originals[i], true);
 	}
 	
 	_loaded = FALSE;
-}
+}*/
 
 void
 ImageMagick::readImage(const char *xlink, Magick::Image *image)
 {
-	// Find if the xlink:href is base64 data, i.e. if the image is embedded
+	// Find if the xlink:href is base64 data, i.e. if the image is embedded 
 	char *search = (char *) g_strndup(xlink, 30);
 	if (strstr(search, "base64") != (char*)NULL) {
 		// 7 = strlen("base64") + strlen(",")
@@ -74,17 +81,19 @@ ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::Vi
 	refreshParameters(module);
 	
 	if (!_loaded)
-	{		
+	{
 		SPDesktop *desktop = (SPDesktop*)document;
 		const GSList *selectedReprList = desktop->selection->reprList();
 		int selectCount = g_slist_length((GSList *)selectedReprList);
-		
+
 		// Init the data-holders
 		_nodes = new Inkscape::XML::Node*[selectCount];
 		_originals = new const char*[selectCount];
-		_images = new Magick::Image[selectCount];
+		_caches = new char*[selectCount];
+		_cacheLengths = new unsigned[selectCount];
+		_images = new Magick::Image*[selectCount];
 		_imageCount = 0;
-		
+
 		// Loop through selected nodes
 		for (; selectedReprList != NULL; selectedReprList = g_slist_next(selectedReprList))
 		{
@@ -93,79 +102,71 @@ ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::Vi
 			{
 				_nodes[_imageCount] = node;	
 				char const *xlink = node->attribute("xlink:href");
-				
+
 				_originals[_imageCount] = xlink;
-				
-				readImage(xlink, &_images[_imageCount]);
-				
+				_caches[_imageCount] = "";
+				_cacheLengths[_imageCount] = 0;
+				_images[_imageCount] = new Magick::Image();
+				readImage(xlink, _images[_imageCount]);			
+
 				_imageCount++;
 			}			
 		}
-		
+
 		_loaded = 1;
 	}
-	
+
 	for (int i = 0; i < _imageCount; i++)
 	{
 		try
 		{
-			Magick::Image effectedImage = _images[i];
+			Magick::Image effectedImage = *_images[i]; // make a copy
 			applyEffect(&effectedImage);
 
-			Magick::Blob blob;
-			effectedImage.write(&blob);
-				
-				std::string raw_string = blob.base64();
-				const char *raw = raw_string.c_str();
+			Magick::Blob *blob = new Magick::Blob();
+			effectedImage.write(blob);
 
-				/*
-				const int raw_len = raw_string.length();
-				const char *raw_i = raw;
-                int formatted_len = (int)(raw_len / 76.0 * 78.0) + 100;
-				char *formatted = new char[formatted_len];
-				char *formatted_i = formatted;
-				// data:image/png;base64,
-				formatted_i = stpcpy(formatted_i, "data:image/");
-				formatted_i = stpcpy(formatted_i, effectedImage.magick().c_str());
-				formatted_i = stpcpy(formatted_i, ";base64, \n");
-				while (strnlen(raw_i, 80) > 76)
-				{
-					formatted_i = stpncpy(formatted_i, raw_i, 76);
-					formatted_i = stpcpy(formatted_i, "\n");					
-					raw_i += 76;		
-				}
-				if (strlen(raw_i) > 0)
-				{
-					formatted_i = stpcpy(formatted_i, raw_i);
-					formatted_i = stpcpy(formatted_i, "\n");
-				}
-				
-				formatted_i = stpcpy(formatted_i, "\0");
+			std::string raw_string = blob->base64();
+			const int raw_len = raw_string.length();
+			const char *raw_i = raw_string.c_str();
 
-				_nodes[i]->setAttribute("xlink:href", formatted, true);
-				*/
-				
-				Glib::ustring buf = "data:image/";
-				buf.append(effectedImage.magick());
-				buf.append(";base64, \n");
-				int col = 0;
-				while (*raw)
-                    {
-                    buf.push_back(*raw++);
-                    if (col>=76)
-                        {
-                        buf.push_back('\n');
-                        col = 0;
-                        }
-                    }
-                if (col)
-                    buf.push_back('\n');
+			unsigned new_len = (int)(raw_len * (77.0 / 76.0) + 100);
+			if (new_len > _cacheLengths[i]) {
+				_cacheLengths[i] = (int)(new_len * 1.2);
+				_caches[i] = new char[_cacheLengths[i]];
+			}
+			char *formatted_i = _caches[i];
+			const char *src;
 
-				_nodes[i]->setAttribute("xlink:href", buf.c_str(), true);
+			for (src = "data:image/"; *src; )
+				*formatted_i++ = *src++;
+			for (src = effectedImage.magick().c_str(); *src ; )
+				*formatted_i++ = *src++;
+			for (src = ";base64, \n" ; *src; )
+				*formatted_i++ = *src++;
+
+			int col = 0;
+			while (*raw_i) {
+			   *formatted_i++ = *raw_i++;
+			   if (col++ > 76) {
+				   *formatted_i++ = '\n';
+				   col = 0;
+			   }
+			}			
+			if (col) {
+			   *formatted_i++ = '\n';
+			}
+			*formatted_i = '\0';
+
+			_nodes[i]->setAttribute("xlink:href", _caches[i], true);			
+			_nodes[i]->setAttribute("sodipodi:absref", NULL, true);
 		}
 		catch (Magick::Exception &error_) {
 			printf("Caught exception: %s \n", error_.what());
 		}
+
+		while(Gtk::Main::events_pending())
+			Gtk::Main::iteration();
 	}
 }
 

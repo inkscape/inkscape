@@ -17,7 +17,7 @@ class Wave : public ImageMagick
 {
 private:
 	float _amplitude;
-	int _wavelength;
+	float _wavelength;
 public:
 	void applyEffect(Magick::Image *image);
 	void refreshParameters(Inkscape::Extension::Effect *module);

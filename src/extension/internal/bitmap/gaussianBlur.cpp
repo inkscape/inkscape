@@ -36,14 +36,14 @@ GaussianBlur::init(void)
 		"<inkscape-extension>\n"
 			"<name>" N_("Gaussian Blur") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.gaussianBlur</id>\n"
-			"<param name=\"width\" gui-text=\"" N_("Factor") "\" type=\"float\" min=\"0\" max=\"50\">5.0</param>\n"
-			"<param name=\"sigma\" gui-text=\"" N_("Sigma") "\" type=\"float\" min=\"0\" max=\"50\">5.0</param>\n"
+			"<param name=\"width\" gui-text=\"" N_("Factor") "\" type=\"float\" min=\"0\" max=\"100\">5.0</param>\n"
+			"<param name=\"sigma\" gui-text=\"" N_("Sigma") "\" type=\"float\" min=\"0\" max=\"100\">5.0</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Gaussian Blur Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Gaussian blur selected bitmap(s).") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new GaussianBlur());
 }

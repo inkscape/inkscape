@@ -70,7 +70,7 @@
 #include "internal/bitmap/charcoal.h"
 #include "internal/bitmap/colorize.h"
 #include "internal/bitmap/contrast.h"
-#include "internal/bitmap/convolve.h"
+//#include "internal/bitmap/convolve.h"
 #include "internal/bitmap/cycleColormap.h"
 #include "internal/bitmap/despeckle.h"
 #include "internal/bitmap/edge.h"
@@ -95,7 +95,7 @@
 #include "internal/bitmap/solarize.h"
 #include "internal/bitmap/spread.h"
 #include "internal/bitmap/swirl.h"
-#include "internal/bitmap/threshold.h"
+//#include "internal/bitmap/threshold.h"
 #include "internal/bitmap/unsharpmask.h"
 #include "internal/bitmap/wave.h"
 #endif /* WITH_IMAGE_MAGICK */
@@ -204,7 +204,7 @@ init()
     Internal::Bitmap::Charcoal::init();
     Internal::Bitmap::Colorize::init();
     Internal::Bitmap::Contrast::init();
-    Internal::Bitmap::Convolve::init();
+    //Internal::Bitmap::Convolve::init();
     Internal::Bitmap::CycleColormap::init();
     Internal::Bitmap::Edge::init();
     Internal::Bitmap::Despeckle::init();
@@ -229,7 +229,7 @@ init()
     Internal::Bitmap::Solarize::init();
     Internal::Bitmap::Spread::init();
     Internal::Bitmap::Swirl::init();
-    Internal::Bitmap::Threshold::init();
+    //Internal::Bitmap::Threshold::init();
     Internal::Bitmap::Unsharpmask::init();
     Internal::Bitmap::Wave::init();
 #endif /* WITH_IMAGE_MAGICK */

@@ -47,6 +47,7 @@ public:
     virtual bool check(Inkscape::Extension::Extension *module);
 
     virtual bool cancelProcessing (void);
+	virtual void commitDocument (void);
 
     /* ----- Input functions ----- */
     /** Find out information about the file. */

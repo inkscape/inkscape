@@ -23,7 +23,7 @@ Swirl::applyEffect(Magick::Image* image) {
 
 void
 Swirl::refreshParameters(Inkscape::Extension::Effect* module) {
-	_degrees = module->get_param_float("degrees");
+	_degrees = module->get_param_int("degrees");
 }
 
 #include "../clear-n_.h"
@@ -35,13 +35,13 @@ Swirl::init(void)
 		"<inkscape-extension>\n"
 			"<name>" N_("Swirl") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.swirl</id>\n"
-			"<param name=\"degrees\" gui-text=\"" N_("Degrees") "\" type=\"float\" min=\"0\" max=\"360\">30</param>\n"
+			"<param name=\"degrees\" gui-text=\"" N_("Degrees") "\" type=\"int\" min=\"-360\" max=\"360\">30</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Swirl Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Swirl selected bitmap(s) around center point.") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Swirl());
 }

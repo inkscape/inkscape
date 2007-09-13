@@ -35,13 +35,13 @@ Solarize::init(void)
 		"<inkscape-extension>\n"
 			"<name>" N_("Solarize") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.solarize</id>\n"
-			"<param name=\"factor\" gui-text=\"" N_("Factor") "\" type=\"float\" min=\"-100.0\" max=\"100.0\">50.0</param>\n"
+			"<param name=\"factor\" gui-text=\"" N_("Factor") "\" type=\"float\" min=\"0\" max=\"100\">50</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Solarize Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Solarize selected bitmap(s), like overexposing photographic film.") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Solarize());
 }

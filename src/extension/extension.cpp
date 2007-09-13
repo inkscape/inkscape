@@ -505,7 +505,7 @@ Extension::get_param_float (const gchar * name, const SPDocument * doc, const In
     Look up in the parameters list, then execute the function on that
     found parameter.
 */
-SPColor*
+guint32
 Extension::get_param_color (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     Parameter* param = param_shared(name, parameters);
@@ -604,8 +604,8 @@ Extension::set_param_string (const gchar * name, const gchar * value, SPDocument
     Look up in the parameters list, then execute the function on that
     found parameter.
 */
-SPColor*
-Extension::set_param_color (const gchar * name, SPColor* color, SPDocument * doc, Inkscape::XML::Node * node)
+guint32
+Extension::set_param_color (const gchar * name, guint32 color, SPDocument * doc, Inkscape::XML::Node * node)
 {
     Parameter* param = param_shared(name, parameters);
     return param->set_color(color, doc, node);

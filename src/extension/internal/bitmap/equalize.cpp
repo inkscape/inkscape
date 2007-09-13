@@ -22,9 +22,7 @@ Equalize::applyEffect(Magick::Image *image) {
 }
 
 void
-Equalize::refreshParameters(Inkscape::Extension::Effect *module) {	
-	
-}
+Equalize::refreshParameters(Inkscape::Extension::Effect *module) { }
 
 #include "../clear-n_.h"
 
@@ -40,7 +38,7 @@ Equalize::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Equalize Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Equalize selected bitmap(s) -- histogram equalization.") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Equalize());
 }

@@ -215,6 +215,7 @@ void
 ExecutionEnv::documentCommit (void) {
     sp_document_done(_doc->doc(), SP_VERB_NONE, _(_effect->get_name()));
     Effect::set_last_effect(_effect);
+    _effect->get_imp()->commitDocument();
     return;
 }
 

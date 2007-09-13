@@ -24,7 +24,19 @@ Convolve::applyEffect(Magick::Image *image) {
 void
 Convolve::refreshParameters(Inkscape::Extension::Effect *module) {
 	_order = module->get_param_int("order");
-	*_kernel = 0;
+	if (_order % 2 == 0) _order--;
+	_kernel = new double[_order];
+	int i = 0;
+	
+	char *arrayStr = g_strdup(module->get_param_string("kernel"));
+	
+	char *num = strtok(arrayStr, ",");
+	while (num != NULL)
+	{
+		_kernel[i++] = atof(num);
+		
+		num = strtok(NULL, ",");
+	}
 }
 
 #include "../clear-n_.h"
@@ -37,8 +49,8 @@ Convolve::init(void)
 // TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-convolve.html
 			"<name>" N_("Convolve") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.convolve</id>\n"
-			"<param name=\"order\" gui-text=\"" N_("Order") "\" type=\"int\" >1</param>\n"
-			"<param name=\"kernel\" gui-text=\"" N_("Kernel") "\" type=\"string\" >1,1,1,0,0,0</param>\n"
+			"<param name=\"order\" gui-text=\"" N_("Order") "\" type=\"int\" min=\"0\" max=\"64\">4</param>\n"
+			"<param name=\"kernel\" gui-text=\"" N_("Kernal Array") "\" type=\"string\" >1,1,0,0</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"

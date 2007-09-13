@@ -18,13 +18,12 @@ namespace Bitmap {
 	
 void
 Contrast::applyEffect(Magick::Image *image) {
-	printf("(o0x) Sharpening at: %i\n", _sharpen);
 	image->contrast(_sharpen);
 }
 
 void
 Contrast::refreshParameters(Inkscape::Extension::Effect *module) {	
-	_sharpen = module->get_param_bool("sharpen");
+	_sharpen = module->get_param_int("sharpen");
 }
 
 #include "../clear-n_.h"
@@ -36,13 +35,13 @@ Contrast::init(void)
 		"<inkscape-extension>\n"
 			"<name>" N_("Contrast") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.contrast</id>\n"
-			"<param name=\"sharpen\" gui-text=\"" N_("Sharpen") "\" type=\"boolean\" >1</param>\n"
+			"<param name=\"sharpen\" gui-text=\"" N_("Sharpen") "\" type=\"int\" min=\"0\" max=\"100\">1</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Contrast Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Enhance intensity differences in selected bitmap(s).") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Contrast());
 }

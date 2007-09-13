@@ -62,7 +62,7 @@ Channel::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Channel Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Extract specific channel from image.") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Channel());
 }

@@ -43,7 +43,7 @@ Sharpen::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Sharpen Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Sharpen selected bitmap(s).") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Sharpen());
 }

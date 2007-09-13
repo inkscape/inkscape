@@ -41,7 +41,7 @@ Spread::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Apply Spread Effect") "</menu-tip>\n"
+				"<menu-tip>" N_("Randomly spread pixels in selected bitmap(s), within the radius of 'amount.'") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Spread());
 }
