@@ -36,7 +36,7 @@ private:
     PathParam  pattern;
     EnumParam<SkelCopyType> copytype;
     ScalarParam  prop_scale;
-    BoolParam scale_y;
+    BoolParam scale_y_rel;
 
     void on_pattern_pasted();
 

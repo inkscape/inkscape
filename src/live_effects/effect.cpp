@@ -10,9 +10,9 @@
 #include "xml/node-event-vector.h"
 #include "sp-object.h"
 #include "attributes.h"
-
+#include "message-stack.h"
 #include "desktop.h"
-
+#include "inkscape.h"
 #include "document.h"
 #include <glibmm/i18n.h>
 
@@ -138,7 +138,9 @@ Effect::doEffect (NArtBpath * path_in)
     }
     catch (std::exception e) {
         g_warning("An exception occurred during execution of an LPE - %s", e.what());
-        // return here
+        SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
+            _("An exception occurred during execution of a Path Effect.") );
+
         NArtBpath *path_out;
 
         unsigned ret = 0;

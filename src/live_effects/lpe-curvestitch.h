@@ -36,7 +36,7 @@ private:
     RandomParam startpoint_variation;
     RandomParam endpoint_variation;
     ScalarParam prop_scale;
-    BoolParam scale_y;
+    BoolParam scale_y_rel;
 
     LPECurveStitch(const LPECurveStitch&);
     LPECurveStitch& operator=(const LPECurveStitch&);

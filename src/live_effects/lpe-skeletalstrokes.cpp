@@ -12,6 +12,7 @@
 #include <libnr/n-art-bpath.h>
 #include "live_effects/n-art-bpath-2geom.h"
 #include "svg/svg.h"
+#include "ui/widget/scalar.h"
 
 #include <2geom/sbasis.h>
 #include <2geom/sbasis-geometric.h>
@@ -58,15 +59,18 @@ static const Util::EnumDataConverter<SkelCopyType> SkelCopyTypeConverter(SkelCop
 
 LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    pattern(_("Pattern source:"), _("Path to put along the skeleton path"), "pattern", &wr, this, "M0,0 L1,0"),
-    copytype(_("Pattern copies:"), _("How many pattern copies to place along the skeleton path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED),
-    prop_scale(_("Scale ratio:"), _("Ratio between scaling the length and width of the pattern"), "prop_scale", &wr, this, 1),
-    scale_y(_("Scale pattern width"), _("Scale the width of the pattern (perpendicular to skeleton) with its length"), "scale_stroke_y", &wr, this, false)
+    pattern(_("Pattern source"), _("Path to put along the skeleton path"), "pattern", &wr, this, "M0,0 L1,0"),
+    copytype(_("Pattern copies"), _("How many pattern copies to place along the skeleton path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED),
+    prop_scale(_("Y scaling"), _("Scaling of the width of the pattern"), "prop_scale", &wr, this, 1),
+    scale_y_rel(_("Scale Y relative to X"), _("Scale the width of the pattern relative to its length"), "scale_y_rel", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
     registerParameter( dynamic_cast<Parameter *>(&copytype) );
     registerParameter( dynamic_cast<Parameter *>(&prop_scale) );
-    registerParameter( dynamic_cast<Parameter *>(&scale_y) );
+    registerParameter( dynamic_cast<Parameter *>(&scale_y_rel) );
+
+    prop_scale.param_set_digits(3);
+    prop_scale.param_set_increments(0.01, 0.10);
 }
 
 LPESkeletalStrokes::~LPESkeletalStrokes()
@@ -126,8 +130,10 @@ LPESkeletalStrokes::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in
     if (scaling != 1.0) {
         x*=scaling;
     }
-    if ( scale_y.get_value() && (scaling*prop_scale != 1.0) ) {
+    if ( scale_y_rel.get_value() ) {
         y*=(scaling*prop_scale);
+    } else {
+        if (prop_scale != 1.0) y *= prop_scale;
     }
 
     double offs = 0;

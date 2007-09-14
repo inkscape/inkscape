@@ -77,6 +77,8 @@ public:
     void param_set_value(gdouble val);
     void param_make_integer(bool yes = true);
     void param_set_range(gdouble min, gdouble max);
+    void param_set_digits(unsigned digits);
+    void param_set_increments(double step, double page);
 
     virtual Gtk::Widget * param_getWidget();
 
@@ -90,6 +92,9 @@ protected:
     bool integer;
     gdouble defvalue;
     Inkscape::UI::Widget::RegisteredScalar * rsu;
+    unsigned digits;
+    double inc_step;
+    double inc_page;
 
 private:
     ScalarParam(const ScalarParam&);

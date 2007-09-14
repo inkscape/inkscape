@@ -52,6 +52,9 @@ ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
     max = NR_HUGE;
     integer = false;
     rsu = NULL;
+    inc_step = 0.1;
+    inc_page = 1;
+    digits = 2;
 }
 
 ScalarParam::~ScalarParam()
@@ -132,11 +135,34 @@ ScalarParam::param_getWidget()
         rsu->setValue(value);
         if (integer)
             param_make_integer();
+        rsu->getS()->setDigits(digits);
+        rsu->getS()->setIncrements(inc_step, inc_page);
 
         rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
     }
     return dynamic_cast<Gtk::Widget *> (rsu->getS());
 }
+
+void
+ScalarParam::param_set_digits(unsigned digits)
+{
+    this->digits = digits;
+    if (rsu) {
+        rsu->getS()->setDigits(digits);
+    }
+}
+
+void
+ScalarParam::param_set_increments(double step, double page)
+{
+    inc_step = step;
+    inc_page = page;
+    if (rsu) {
+        rsu->getS()->setIncrements(inc_step, inc_page);
+    }
+}
+
+
 
 
 } /* namespace LivePathEffect */
