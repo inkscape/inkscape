@@ -1718,17 +1718,8 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
 
     if (SP_IS_SHAPE(item))
     {
-        if (SP_SHAPE(item)->path_effect_href) {
-            const gchar *svgd = SP_OBJECT(item)->repr->attribute("inkscape:original-d");
-            if (svgd) {
-                NArtBpath *bpath = sp_svg_read_path(svgd);
-                SPCurve *curve_new = sp_curve_new_from_bpath(bpath);
-                if (curve_new) {
-                    curve = curve_new; // don't do curve_copy because curve_new is already only created for us!
-                } else {
-                    g_free(bpath);
-                }
-            }
+        if (SP_IS_PATH(item)) {
+            curve = sp_path_get_curve_for_edit(SP_PATH(item));
         } else {
             curve = sp_shape_get_curve(SP_SHAPE(item));
         }
