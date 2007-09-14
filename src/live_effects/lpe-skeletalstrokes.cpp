@@ -61,8 +61,8 @@ LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     pattern(_("Pattern source"), _("Path to put along the skeleton path"), "pattern", &wr, this, "M0,0 L1,0"),
     copytype(_("Pattern copies"), _("How many pattern copies to place along the skeleton path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED),
-    prop_scale(_("Y scaling"), _("Scaling of the width of the pattern"), "prop_scale", &wr, this, 1),
-    scale_y_rel(_("Scale Y relative to X"), _("Scale the width of the pattern relative to its length"), "scale_y_rel", &wr, this, false)
+    prop_scale(_("Scale width"), _("Scaling of the width of the pattern"), "prop_scale", &wr, this, 1),
+    scale_y_rel(_("Scale width relative"), _("Scale the width of the pattern relative to its length"), "scale_y_rel", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
     registerParameter( dynamic_cast<Parameter *>(&copytype) );
