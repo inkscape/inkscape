@@ -934,6 +934,12 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList 
                 sp_copy_single (defs_clip, SP_OBJECT (shape->marker[i]), xml_doc);
             }
         }
+
+        // For shapes, also copy liveeffect if applicable
+        if (sp_shape_has_path_effect(shape)) {
+            g_message("copy to clip");
+            sp_copy_single (defs_clip, SP_OBJECT(sp_shape_get_livepatheffectobject(shape)), xml_doc);
+        }
     }
 
     if (SP_IS_TEXT_TEXTPATH (item)) {

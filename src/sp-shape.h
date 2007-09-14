@@ -44,7 +44,7 @@ struct SPShape : public SPItem {
 
     gchar *path_effect_href;
     Inkscape::LivePathEffect::LPEObjectReference *path_effect_ref;
-  	sigc::connection lpe_modified_connection;
+    sigc::connection lpe_modified_connection;
 };
 
 struct SPShapeClass {
@@ -82,5 +82,6 @@ void sp_shape_perform_path_effect(SPCurve *curve, SPShape *shape);
 
 void sp_shape_set_path_effect(SPShape *shape, gchar *value);
 void sp_shape_remove_path_effect(SPShape *shape);
+bool sp_shape_has_path_effect(SPShape *shape);
 
 #endif

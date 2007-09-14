@@ -272,6 +272,7 @@ src/live_effects/parameter/parameter.cpp
 src/live_effects/parameter/path.cpp
 src/live_effects/parameter/point.cpp
 src/live_effects/parameter/bool.cpp
+src/live_effects/parameter/random.cpp
 src/main.cpp
 src/main-cmdlineact.cpp
 src/menus-skeleton.h

@@ -1130,7 +1130,11 @@ LivePathEffectObject *
 sp_shape_get_livepatheffectobject(SPShape *shape) {
     if (!shape) return NULL;
 
-    return shape->path_effect_ref->lpeobject;
+    if (sp_shape_has_path_effect(shape)) {
+        return shape->path_effect_ref->lpeobject;
+    } else {
+        return NULL;
+    }
 }
 
 /**
@@ -1205,6 +1209,10 @@ void sp_shape_remove_path_effect(SPShape *shape)
     }
 }
 
+bool sp_shape_has_path_effect(SPShape *shape)
+{
+    return (shape->path_effect_href != NULL);
+}
 
 /*
   Local Variables:

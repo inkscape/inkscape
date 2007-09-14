@@ -1,8 +1,5 @@
 reminder list
 
-- make robust
-For example, the spinbuttons for scalarparam can "hang" which is very very very annoying.
-
 - add more types! 
 straightlinepaths: for example for the gears effect. (curves are not important there)
 
