@@ -254,7 +254,7 @@ struct NRMatrix;
 struct NRRect {
     NRRect() {}
     NRRect(NR::Coord xmin, NR::Coord ymin, NR::Coord xmax, NR::Coord ymax)
-    : x0(xmin), y0(ymin), x1(xmin), y1(ymin)
+    : x0(xmin), y0(ymin), x1(xmax), y1(ymax)
     {}
     explicit NRRect(NR::Rect const &rect);
     explicit NRRect(NR::Maybe<NR::Rect> const &rect);

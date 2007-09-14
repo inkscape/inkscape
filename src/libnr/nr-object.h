@@ -91,7 +91,7 @@ private:
 	NRObject(NRObject const &); // no copy
 	void operator=(NRObject const &); // no assign
 
-	void *operator new(size_t size, void *placement) { return placement; }
+	void *operator new(size_t size, void *placement) { (void)size; return placement; }
 };
 
 struct NRObjectClass {
