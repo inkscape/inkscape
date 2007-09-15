@@ -785,7 +785,7 @@ static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
     }
 }
 
-void sp_item_snappoints(SPItem const *item, SnapPointsIter p)
+void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIter p)
 {
     g_assert (item != NULL);
     g_assert (SP_IS_ITEM(item));
@@ -793,6 +793,10 @@ void sp_item_snappoints(SPItem const *item, SnapPointsIter p)
     SPItemClass const &item_class = *(SPItemClass const *) G_OBJECT_GET_CLASS(item);
     if (item_class.snappoints) {
         item_class.snappoints(item, p);
+    }
+    
+    if (includeItemCenter) {
+    	*p = item->getCenter();
     }
 }
 

@@ -12,7 +12,7 @@ void sp_item_rm_unsatisfied_cns(SPItem &item)
         return;
     }
     vector<NR::Point> snappoints;
-    sp_item_snappoints(&item, SnapPointsIter(snappoints));
+    sp_item_snappoints(&item, true, SnapPointsIter(snappoints));
     for (unsigned i = item.constraints.size(); i--;) {
         g_assert( i < item.constraints.size() );
         SPGuideConstraint const &cn = item.constraints[i];

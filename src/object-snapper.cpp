@@ -31,9 +31,9 @@ Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, NR::Coord const d)
     _snap_to_bboxnode(true), _snap_to_bboxpath(true), _strict_snapping(true),
     _include_item_center(false)
 {
-	_candidates = new std::list<SPItem*>;
-	_points_to_snap_to = new std::list<NR::Point>;
-	_paths_to_snap_to = new std::list<Path*>;
+	_candidates = new std::vector<SPItem*>;
+	_points_to_snap_to = new std::vector<NR::Point>;
+	_paths_to_snap_to = new std::vector<Path*>;
 }
 
 Inkscape::ObjectSnapper::~ObjectSnapper() 
@@ -44,7 +44,7 @@ Inkscape::ObjectSnapper::~ObjectSnapper()
 	_points_to_snap_to->clear();
 	delete _points_to_snap_to;
 	
-	for (std::list<Path*>::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
+	for (std::vector<Path*>::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
 		delete *k;
     }
     _paths_to_snap_to->clear();
@@ -143,44 +143,19 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
     // first point and store the collection for later use. This dramatically improves the performance
 	if (first_point) {
 		_points_to_snap_to->clear();
-	    for (std::list<SPItem*>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
+	    for (std::vector<SPItem*>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
 	        
-	        NR::Matrix i2doc(NR::identity());
-	        SPItem *root_item = NULL;
+	        //NR::Matrix i2doc(NR::identity());
+	        SPItem *root_item = *i;
 	        if (SP_IS_USE(*i)) {
-	            i2doc = sp_use_get_root_transform(SP_USE(*i));
 	            root_item = sp_use_root(SP_USE(*i));
-	        } else { 
-	            i2doc = sp_item_i2doc_affine(*i);
-	            root_item = *i;
 	        }
-	        
-	        SPCurve *curve = NULL;
-	        
-	        if (SP_IS_SHAPE(root_item)) {
-	            SPShape const *sh = SP_SHAPE(root_item);
-	            curve = sh->curve;
-	        } else if (SP_IS_IMAGE(root_item)) {
-	            SPImage const *im = SP_IMAGE(root_item);
-	            curve = im->curve;
-	        }
-	            
+	          
 			//Collect all nodes so we can snap to them
 	        if (_snap_to_itemnode) {
 	        	if (!(_strict_snapping && !p_is_a_node) || p_is_a_guide) {
-			        if (curve) {
-			            int j = 0;
-			            while (SP_CURVE_BPATH(curve)[j].code != NR_END) {        
-			                /* Get this node in desktop coordinates */
-			                NArtBpath const &bp = SP_CURVE_BPATH(curve)[j];
-			                _points_to_snap_to->push_back(desktop->doc2dt(bp.c(3) * i2doc));
-			                j++;
-			            }
-			            if (_include_item_center) {
-			            	_points_to_snap_to->push_back(root_item->getCenter());	
-			            }		            
-			        }
-	        	}
+			        sp_item_snappoints(root_item, _include_item_center, SnapPointsIter(*_points_to_snap_to));
+				}
 	        }
 	        
 	        //Collect the bounding box's corners so we can snap to them
@@ -198,7 +173,7 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
 	}
     
     //Do the snapping, using all the nodes and corners collected above
-    for (std::list<NR::Point>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
+    for (std::vector<NR::Point>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
 	    /* Try to snap to this node of the path */
         NR::Coord dist = NR_HUGE;
         NR::Point snapped_point;
@@ -216,6 +191,7 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
         		snapped_point = *k;
         		break;
         }
+        
         if (dist < getDistance() && dist < s.getDistance()) {
             s = SnappedPoint(snapped_point, dist);
         }       
@@ -248,11 +224,11 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
     // e.g. when translating an item using the selector tool, then we will only do this for the
     // first point and store the collection for later use. This dramatically improves the performance
     if (first_point) {	    
-	    for (std::list<Path*>::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
+	    for (std::vector<Path*>::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
     		delete *k;
 	    }
 	    _paths_to_snap_to->clear();
-	    for (std::list<SPItem*>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
+	    for (std::vector<SPItem*>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
 	
 	        /* Transform the requested snap point to this item's coordinates */
 	        NR::Matrix i2doc(NR::identity());
@@ -277,8 +253,7 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
 					bool very_lenghty_prose = false;
 					if (SP_IS_TEXT(root_item) || SP_IS_FLOWTEXT(root_item)) {
 						very_lenghty_prose =  sp_text_get_length(SP_TEXT(root_item)) > 240; 
-					}	
-					
+					}
 					// On my AMD 3000+, the snapping lag becomes annoying at approx. 240 chars
 					// which corresponds to a lag of 500 msec. This is for snapping a rect
 					// to a single line of text. 
@@ -320,9 +295,9 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
 	        }
 	    }
     }
-        
+
     //Now we can finally do the real snapping, using the paths collected above        
-    for (std::list<Path*>::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
+    for (std::vector<Path*>::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
         if (*k) {
             if (first_point) {
             	(*k)->ConvertWithBackData(0.01); //This is extremely time consuming!
@@ -398,7 +373,7 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::guideSnap(NR::Point const &p,
     }
 
     /* Get a list of all the SPItems that we will try to snap to */
-    std::list<SPItem*> cand;
+    std::vector<SPItem*> cand;
     std::list<SPItem const *> const it; //just an empty list
     
     std::vector<NR::Point> points_to_snap;

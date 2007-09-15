@@ -85,10 +85,9 @@ public:
   
 private:
   //store some lists of candidates, points and paths, so we don't have to rebuild them for each point we want to snap
-  std::list<SPItem*> *_candidates; 
-  std::list<NR::Point> *_points_to_snap_to;
-  std::list<Path*> *_paths_to_snap_to;
-  
+  std::vector<SPItem*> *_candidates; 
+  std::vector<NR::Point> *_points_to_snap_to;
+  std::vector<Path*> *_paths_to_snap_to;
   SnappedPoint _doFreeSnap(Inkscape::Snapper::PointType const &t,
   					NR::Point const &p,
   					bool const &first_point,

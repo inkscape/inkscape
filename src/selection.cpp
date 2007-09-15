@@ -381,7 +381,7 @@ std::vector<NR::Point> Selection::getSnapPoints(bool includeItemCenter) const {
         if (!SP_IS_PATH(this_item)) {
             // Only snap if we don't have a path at hand
             // (Same check occurs in sp-item-group)
-            sp_item_snappoints(this_item, SnapPointsIter(p));
+            sp_item_snappoints(this_item, false, SnapPointsIter(p));
         }
         //Include the transformation origin for snapping
         //For a group only the group's origin is considered
@@ -398,7 +398,7 @@ std::vector<NR::Point> Selection::getSnapPointsConvexHull() const {
 
     std::vector<NR::Point> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-	sp_item_snappoints(SP_ITEM(iter->data), SnapPointsIter(p));
+		sp_item_snappoints(SP_ITEM(iter->data), false, SnapPointsIter(p));
     }
 
     std::vector<NR::Point> pHull;

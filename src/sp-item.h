@@ -221,7 +221,7 @@ unsigned int sp_item_display_key_new(unsigned int numkeys);
 NRArenaItem *sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 void sp_item_invoke_hide(SPItem *item, unsigned int key);
 
-void sp_item_snappoints(SPItem const *item, SnapPointsIter p);
+void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIter p);
 
 void sp_item_adjust_pattern(SPItem *item, /* NR::Matrix const &premul, */ NR::Matrix const &postmul, bool set = false);
 void sp_item_adjust_gradient(SPItem *item, /* NR::Matrix const &premul, */ NR::Matrix const &postmul, bool set = false);
