@@ -113,6 +113,9 @@ void ColorItem::_dragGetColorData( GtkWidget *widget,
                                    guint time,
                                    gpointer user_data)
 {
+    (void)widget;
+    (void)drag_context;
+    (void)time;
     static GdkAtom typeXColor = gdk_atom_intern("application/x-color", FALSE);
     static GdkAtom typeText = gdk_atom_intern("text/plain", FALSE);
 
@@ -188,6 +191,7 @@ void ColorItem::_dragGetColorData( GtkWidget *widget,
 
 static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
 {
+    (void)widget;
     ColorItem* item = reinterpret_cast<ColorItem*>(data);
     if ( item )
     {
@@ -216,6 +220,7 @@ static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
 
 static gboolean onButtonPressed (GtkWidget *widget, GdkEventButton *event, gpointer userdata)
 {
+    (void)widget;
     /* single click with the right mouse button? */
     if(event->type == GDK_BUTTON_RELEASE)
     {
@@ -263,6 +268,11 @@ void ColorItem::_dropDataIn( GtkWidget *widget,
                              guint event_time,
                              gpointer user_data)
 {
+    (void)widget;
+    (void)drag_context;
+    (void)x;
+    (void)y;
+    (void)event_time;
 //     g_message("    droppy droppy   %d", info);
      switch (info) {
          case APP_X_INKY_COLOR:

@@ -1559,8 +1559,7 @@ bool OdfOutput::processStyle(Writer &outs, SPItem *item,
     //## FILL
     if (style->fill.isColor())
         {
-        guint32 fillCol =
-            sp_color_get_rgba32_ualpha(&style->fill.value.color, 0);
+        guint32 fillCol = style->fill.value.color.toRGBA32( 0 );
         char buf[16];
         int r = (fillCol >> 24) & 0xff;
         int g = (fillCol >> 16) & 0xff;
@@ -1578,8 +1577,7 @@ bool OdfOutput::processStyle(Writer &outs, SPItem *item,
     //## STROKE
     if (style->stroke.isColor())
         {
-        guint32 strokeCol =
-            sp_color_get_rgba32_ualpha(&style->stroke.value.color, 0);
+        guint32 strokeCol = style->stroke.value.color.toRGBA32( 0 );
         char buf[16];
         int r = (strokeCol >> 24) & 0xff;
         int g = (strokeCol >> 16) & 0xff;

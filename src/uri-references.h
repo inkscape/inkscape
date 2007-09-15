@@ -118,7 +118,7 @@ public:
   SPObject *getOwnerObject() {return _owner;}
 
 protected:
-	virtual bool _acceptObject(SPObject *obj) const { return true; }
+	virtual bool _acceptObject(SPObject *obj) const { (void)obj; return true; }
 
 private:
 	SPObject *_owner;

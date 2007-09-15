@@ -73,7 +73,7 @@ static void sp_stroke_style_paint_dragged(SPPaintSelector *psel, SPWidget *spw);
 static void sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw);
 
 static void sp_stroke_style_widget_change_subselection ( Inkscape::Application *inkscape, SPDesktop *desktop, SPWidget *spw );
-static void sp_stroke_style_widget_transientize_callback(Inkscape::Application *inkscape, 
+static void sp_stroke_style_widget_transientize_callback(Inkscape::Application *inkscape,
                                                          SPDesktop *desktop,
                                                          SPWidget *spw );
 
@@ -136,13 +136,14 @@ sp_stroke_style_paint_widget_new(void)
 static void
 sp_stroke_style_paint_construct(SPWidget *spw, SPPaintSelector *psel)
 {
+    (void)psel;
 #ifdef SP_SS_VERBOSE
     g_print( "Stroke style widget constructed: inkscape %p repr %p\n",
              spw->inkscape, spw->repr );
 #endif
     if (spw->inkscape) {
         sp_stroke_style_paint_update (spw);
-    } 
+    }
 }
 
 /**
@@ -154,6 +155,7 @@ sp_stroke_style_paint_selection_modified ( SPWidget *spw,
                                         guint flags,
                                         SPPaintSelector *psel)
 {
+    (void)selection;
     if (flags & ( SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG |
                   SP_OBJECT_STYLE_MODIFIED_FLAG) ) {
         sp_stroke_style_paint_update(spw);
@@ -169,6 +171,7 @@ sp_stroke_style_paint_selection_changed ( SPWidget *spw,
                                         Inkscape::Selection *selection,
                                         SPPaintSelector *psel )
 {
+    (void)selection;
     sp_stroke_style_paint_update (spw);
 }
 
@@ -177,10 +180,11 @@ sp_stroke_style_paint_selection_changed ( SPWidget *spw,
  * On signal change subselection, invoke an update of the stroke style widget.
  */
 static void
-sp_stroke_style_widget_change_subselection ( Inkscape::Application *inkscape, 
+sp_stroke_style_widget_change_subselection ( Inkscape::Application *inkscape,
                                         SPDesktop *desktop,
                                         SPWidget *spw )
 {
+    (void)inkscape;
     sp_stroke_style_paint_update (spw);
 }
 
@@ -202,7 +206,7 @@ sp_stroke_style_paint_update (SPWidget *spw)
     // create temporary style
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     // query into it
-    int result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKE); 
+    int result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKE);
 
     switch (result) {
         case QUERY_STYLE_NOTHING:
@@ -246,8 +250,7 @@ sp_stroke_style_paint_update (SPWidget *spw)
             } else if (query->stroke.set && query->stroke.isColor()) {
                 gfloat d[3];
                 sp_color_get_rgb_floatv (&query->stroke.value.color, d);
-                SPColor color;
-                sp_color_set_rgb_float (&color, d[0], d[1], d[2]);
+                SPColor color( d[0], d[1], d[2] );
                 sp_paint_selector_set_color_alpha (psel, &color, SP_SCALE24_TO_FLOAT (query->stroke_opacity.value));
 
             }
@@ -274,6 +277,7 @@ sp_stroke_style_paint_mode_changed( SPPaintSelector *psel,
                                     SPPaintSelectorMode mode,
                                     SPWidget *spw )
 {
+    (void)mode;
     if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
         return;
     }
@@ -290,7 +294,7 @@ static gchar *undo_label_2 = "stroke:flatcolor:2";
 static gchar *undo_label = undo_label_1;
 
 /**
- * When a drag callback occurs on a paint selector object, if it is a RGB or CMYK 
+ * When a drag callback occurs on a paint selector object, if it is a RGB or CMYK
  * color mode, then set the stroke opacity to psel's flat color.
  */
 static void
@@ -305,7 +309,7 @@ sp_stroke_style_paint_dragged(SPPaintSelector *psel, SPWidget *spw)
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
             sp_paint_selector_set_flat_color (psel, SP_ACTIVE_DESKTOP, "stroke", "stroke-opacity");
-            sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label, SP_VERB_DIALOG_FILL_STROKE, 
+            sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label, SP_VERB_DIALOG_FILL_STROKE,
                                     _("Set stroke color"));
             break;
         }
@@ -355,7 +359,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
 
             sp_repr_css_attr_unref(css);
 
-            sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE, 
+            sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE,
                              _("Remove stroke"));
             break;
         }
@@ -364,13 +368,13 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
             sp_paint_selector_set_flat_color (psel, desktop, "stroke", "stroke-opacity");
-            sp_document_maybe_done (sp_desktop_document(desktop), undo_label, SP_VERB_DIALOG_FILL_STROKE, 
+            sp_document_maybe_done (sp_desktop_document(desktop), undo_label, SP_VERB_DIALOG_FILL_STROKE,
                                     _("Set stroke color"));
 
             // on release, toggle undo_label so that the next drag will not be lumped with this one
             if (undo_label == undo_label_1)
                 undo_label = undo_label_2;
-            else 
+            else
                 undo_label = undo_label_1;
 
             break;
@@ -387,13 +391,13 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
                     /* No vector in paint selector should mean that we just changed mode */
 
                     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
-                    int result = objects_query_fillstroke ((GSList *) items, query, false); 
+                    int result = objects_query_fillstroke ((GSList *) items, query, false);
                     guint32 common_rgb = 0;
                     if (result == QUERY_STYLE_MULTIPLE_SAME) {
                         if (!query->fill.isColor()) {
                             common_rgb = sp_desktop_get_color(desktop, false);
                         } else {
-                            common_rgb = sp_color_get_rgba32_ualpha(&query->stroke.value.color, 0xff);
+                            common_rgb = query->stroke.value.color.toRGBA32( 0xff );
                         }
                         vector = sp_document_default_gradient_vector(document, common_rgb);
                     }
@@ -401,7 +405,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
 
                     for (GSList const *i = items; i != NULL; i = i->next) {
                         if (!vector) {
-                            sp_item_set_gradient(SP_ITEM(i->data), 
+                            sp_item_set_gradient(SP_ITEM(i->data),
                                                  sp_gradient_vector_for_object(document, desktop, SP_OBJECT(i->data), false),
                                                  gradient_type, false);
                         } else {
@@ -416,7 +420,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
                     }
                 }
 
-                sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE, 
+                sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE,
                                  _("Set gradient on stroke"));
             }
             break;
@@ -460,7 +464,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
 
                 } // end if
 
-                sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
+                sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE,
                                   _("Set pattern on stroke"));
             } // end if
 
@@ -481,7 +485,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
                     sp_desktop_set_style (desktop, css);
                     sp_repr_css_attr_unref (css);
 
-                    sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
+                    sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE,
                                       _("Unset stroke"));
             }
             break;
@@ -567,10 +571,13 @@ sp_stroke_radio_button(GtkWidget *tb, char const *icon,
 }
 
 static void
-sp_stroke_style_widget_transientize_callback(Inkscape::Application *inkscape, 
+sp_stroke_style_widget_transientize_callback(Inkscape::Application *inkscape,
                                         SPDesktop *desktop,
                                         SPWidget *spw )
 {
+    (void)inkscape;
+    (void)desktop;
+    (void)spw;
 // TODO:  Either of these will cause crashes sometimes
 //    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? sp_desktop_selection(desktop) : NULL);
 //    ink_markers_menu_update(spw);
@@ -586,6 +593,8 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
                    SPDocument *source, SPDocument *sandbox,
                    gchar *menu_id, NRArena const *arena, unsigned visionkey, NRArenaItem *root)
 {
+    (void)arena;
+    (void)visionkey;
     // Retrieve the marker named 'mname' from the source SVG document
     SPObject const *marker = source->getObjectById(mname);
     if (marker == NULL)
@@ -726,6 +735,8 @@ sp_marker_menu_build (GtkWidget *m, GSList *marker_list, SPDocument *source, SPD
 static void
 sp_marker_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *source, SPDocument *markers_doc, SPDocument *sandbox, gchar *menu_id)
 {
+    (void)current_doc;
+    (void)markers_doc;
     GSList *ml = ink_marker_list_get(source);
     GSList *clean_ml = NULL;
 
@@ -813,7 +824,7 @@ ink_marker_menu_create_menu(GtkWidget *m, gchar *menu_id, SPDocument *doc, SPDoc
 
     // suck in from current doc
     sp_marker_list_from_doc ( m, NULL, doc, markers_doc, sandbox, menu_id );
-    
+
     // add separator
     {
         GtkWidget *i = gtk_separator_menu_item_new();
@@ -836,6 +847,7 @@ ink_marker_menu_create_menu(GtkWidget *m, gchar *menu_id, SPDocument *doc, SPDoc
 static GtkWidget *
 ink_marker_menu( GtkWidget *tbl, gchar *menu_id, SPDocument *sandbox)
 {
+    (void)tbl;
     SPDesktop *desktop = inkscape_active_desktop();
     SPDocument *doc = sp_desktop_document(desktop);
     GtkWidget *mnu = gtk_option_menu_new();
@@ -935,14 +947,14 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
 
     sp_repr_css_attr_unref(css);
 
-    sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE, 
+    sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE,
                      _("Set markers"));
 
 };
 
 static int
 ink_marker_menu_get_pos(GtkMenu* mnu, gchar* markname) {
-    
+
     if (markname == NULL)
         markname = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(mnu)), "marker");
 
@@ -1292,7 +1304,7 @@ sp_stroke_style_line_widget_new(void)
 static void
 sp_stroke_style_line_construct(SPWidget *spw, gpointer data)
 {
-
+    (void)data;
 #ifdef SP_SS_VERBOSE
     g_print( "Stroke style widget constructed: inkscape %p repr %p\n",
              spw->inkscape, spw->repr );
@@ -1302,11 +1314,11 @@ sp_stroke_style_line_construct(SPWidget *spw, gpointer data)
                                     ( SP_ACTIVE_DESKTOP
                                       ? sp_desktop_selection(SP_ACTIVE_DESKTOP)
                                       : NULL ));
-    } 
+    }
 }
 
 /**
- * Callback for when stroke style widget is modified.  
+ * Callback for when stroke style widget is modified.
  * Triggers update action.
  */
 static void
@@ -1315,6 +1327,7 @@ sp_stroke_style_line_selection_modified ( SPWidget *spw,
                                        guint flags,
                                        gpointer data )
 {
+    (void)data;
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG)) {
         sp_stroke_style_line_update (spw, selection);
     }
@@ -1330,6 +1343,7 @@ sp_stroke_style_line_selection_changed ( SPWidget *spw,
                                        Inkscape::Selection *selection,
                                        gpointer data )
 {
+    (void)data;
     sp_stroke_style_line_update (spw, selection);
 }
 
@@ -1426,10 +1440,10 @@ sp_stroke_style_line_update(SPWidget *spw, Inkscape::Selection *sel)
     // create temporary style
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     // query into it
-    int result_sw = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKEWIDTH); 
-    int result_ml = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKEMITERLIMIT); 
-    int result_cap = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKECAP); 
-    int result_join = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKEJOIN); 
+    int result_sw = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKEWIDTH);
+    int result_ml = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKEMITERLIMIT);
+    int result_cap = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKECAP);
+    int result_join = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKEJOIN);
 
     if (result_sw == QUERY_STYLE_NOTHING) {
         /* No objects stroked, set insensitive */
@@ -1604,7 +1618,7 @@ sp_stroke_style_scale_line(SPWidget *spw)
 
     sp_repr_css_attr_unref(css);
 
-    sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE, 
+    sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE,
                      _("Set stroke style"));
 
     gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
@@ -1612,12 +1626,13 @@ sp_stroke_style_scale_line(SPWidget *spw)
 
 
 /**
- * Callback for when the stroke style's width changes.  
+ * Callback for when the stroke style's width changes.
  * Causes all line styles to be applied to all selected items.
  */
 static void
 sp_stroke_style_width_changed(GtkAdjustment *adj, SPWidget *spw)
 {
+    (void)adj;
     if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
         return;
     }
@@ -1626,12 +1641,13 @@ sp_stroke_style_width_changed(GtkAdjustment *adj, SPWidget *spw)
 }
 
 /**
- * Callback for when the stroke style's miterlimit changes.  
+ * Callback for when the stroke style's miterlimit changes.
  * Causes all line styles to be applied to all selected items.
  */
 static void
 sp_stroke_style_miterlimit_changed(GtkAdjustment *adj, SPWidget *spw)
 {
+    (void)adj;
     if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
         return;
     }
@@ -1640,12 +1656,13 @@ sp_stroke_style_miterlimit_changed(GtkAdjustment *adj, SPWidget *spw)
 }
 
 /**
- * Callback for when the stroke style's dash changes.  
+ * Callback for when the stroke style's dash changes.
  * Causes all line styles to be applied to all selected items.
  */
 static void
 sp_stroke_style_line_dash_changed(SPDashSelector *dsel, SPWidget *spw)
 {
+    (void)dsel;
     if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
         return;
     }
@@ -1784,7 +1801,7 @@ ink_marker_menu_set_current(SPObject *marker, GtkOptionMenu *mnu)
 }
 
 /**
- * Updates the marker menus to highlight the appropriate marker and scroll to 
+ * Updates the marker menus to highlight the appropriate marker and scroll to
  * that marker.
  */
 static void

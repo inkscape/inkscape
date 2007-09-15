@@ -104,7 +104,7 @@ sp_stop_init(SPStop *stop)
 {
     stop->offset = 0.0;
     stop->currentColor = false;
-    sp_color_set_rgb_rgba32(&stop->specified_color, 0x000000ff);
+    stop->specified_color.set( 0x000000ff );
     stop->opacity = 1.0;
 }
 
@@ -148,7 +148,7 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
                     stop->currentColor = true;
                 } else {
                     guint32 const color = sp_svg_read_color(p, 0);
-                    sp_color_set_rgb_rgba32(&stop->specified_color, color);
+                    stop->specified_color.set( color );
                 }
             }
             {
@@ -167,7 +167,7 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
                 } else {
                     stop->currentColor = false;
                     guint32 const color = sp_svg_read_color(p, 0);
-                    sp_color_set_rgb_rgba32(&stop->specified_color, color);
+                    stop->specified_color.set( color );
                 }
             }
             object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
@@ -208,7 +208,7 @@ sp_stop_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         repr = xml_doc->createElement("svg:stop");
     }
 
-    guint32 specifiedcolor = sp_color_get_rgba32_ualpha(&stop->specified_color, 255);
+    guint32 specifiedcolor = stop->specified_color.toRGBA32( 255 );
     gfloat opacity = stop->opacity;
 
     if (((SPObjectClass *) stop_parent_class)->write)
@@ -258,7 +258,7 @@ sp_stop_get_rgba32(SPStop const *const stop)
                              rgb0 | 0xff);
         return rgb0 | alpha;
     } else {
-        return sp_color_get_rgba32_falpha(&stop->specified_color, stop->opacity);
+        return stop->specified_color.toRGBA32( stop->opacity );
     }
 }
 
@@ -278,8 +278,7 @@ sp_stop_get_color(SPStop const *const stop)
         if (str) {
             color = sp_svg_read_color(str, dfl);
         }
-        SPColor ret;
-        sp_color_set_rgb_rgba32(&ret, color);
+        SPColor ret( color );
         return ret;
     } else {
         return stop->specified_color;
@@ -918,7 +917,7 @@ sp_gradient_repr_write_vector(SPGradient *gr)
         /* strictly speaking, offset an SVG <number> rather than a CSS one, but exponents make no
          * sense for offset proportions. */
         gchar c[64];
-        sp_svg_write_color(c, 64, sp_color_get_rgba32_ualpha(&gr->vector.stops[i].color, 0x00));
+        sp_svg_write_color(c, 64, gr->vector.stops[i].color.toRGBA32( 0x00 ));
         os << "stop-color:" << c << ";stop-opacity:" << gr->vector.stops[i].opacity;
         child->setAttribute("style", os.str().c_str());
         /* Order will be reversed here */
@@ -1034,14 +1033,14 @@ sp_gradient_rebuild_vector(SPGradient *gr)
         {
             SPGradientStop gstop;
             gstop.offset = 0.0;
-            sp_color_set_rgb_rgba32(&gstop.color, 0x00000000);
+            gstop.color.set( 0x00000000 );
             gstop.opacity = 0.0;
             gr->vector.stops.push_back(gstop);
         }
         {
             SPGradientStop gstop;
             gstop.offset = 1.0;
-            sp_color_set_rgb_rgba32(&gstop.color, 0x00000000);
+            gstop.color.set( 0x00000000 );
             gstop.opacity = 0.0;
             gr->vector.stops.push_back(gstop);
         }
@@ -1053,7 +1052,7 @@ sp_gradient_rebuild_vector(SPGradient *gr)
             // If the first one is not at 0, then insert a copy of the first at 0.
             SPGradientStop gstop;
             gstop.offset = 0.0;
-            sp_color_copy(&gstop.color, &gr->vector.stops.front().color);
+            gstop.color = gr->vector.stops.front().color;
             gstop.opacity = gr->vector.stops.front().opacity;
             gr->vector.stops.insert(gr->vector.stops.begin(), gstop);
         }
@@ -1061,7 +1060,7 @@ sp_gradient_rebuild_vector(SPGradient *gr)
             // If the last one is not at 1, then insert a copy of the last at 1.
             SPGradientStop gstop;
             gstop.offset = 1.0;
-            sp_color_copy(&gstop.color, &gr->vector.stops.back().color);
+            gstop.color = gr->vector.stops.back().color;
             gstop.opacity = gr->vector.stops.back().opacity;
             gr->vector.stops.push_back(gstop);
         }
@@ -1087,14 +1086,12 @@ sp_gradient_ensure_colors(SPGradient *gr)
     }
 
     for (guint i = 0; i < gr->vector.stops.size() - 1; i++) {
-        guint32 color = sp_color_get_rgba32_falpha(&gr->vector.stops[i].color,
-                                                   gr->vector.stops[i].opacity);
+        guint32 color = gr->vector.stops[i].color.toRGBA32( gr->vector.stops[i].opacity );
         gint r0 = (color >> 24) & 0xff;
         gint g0 = (color >> 16) & 0xff;
         gint b0 = (color >> 8) & 0xff;
         gint a0 = color & 0xff;
-        color = sp_color_get_rgba32_falpha(&gr->vector.stops[i + 1].color,
-                                           gr->vector.stops[i + 1].opacity);
+        color = gr->vector.stops[i + 1].color.toRGBA32( gr->vector.stops[i + 1].opacity );
         gint r1 = (color >> 24) & 0xff;
         gint g1 = (color >> 16) & 0xff;
         gint b1 = (color >> 8) & 0xff;

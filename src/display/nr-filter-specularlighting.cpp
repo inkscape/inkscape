@@ -47,7 +47,7 @@ FilterSpecularLighting::~FilterSpecularLighting()
 //Investigating Phong Lighting model we should not take N.H but
 //R.E which equals to 2*N.H^2 - 1
 //replace the second line by 
-//gdouble scal = scalar_product((N), (H)); scal = 2 * scal * scal - 1;\
+//gdouble scal = scalar_product((N), (H)); scal = 2 * scal * scal - 1;
 //to get the expected formula
 #define COMPUTE_INTER(inter, H, N, ks, speculaExponent) \
 do {\

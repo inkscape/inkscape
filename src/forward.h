@@ -157,7 +157,6 @@ class SPAnchorClass;
 
 class ColorRGBA;
 
-class SPColorSpace;
 class SPColor;
 
 class SPStyle;

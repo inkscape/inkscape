@@ -50,8 +50,8 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     _button_pinned(NULL),
     _param_preview(NULL),
     _param_pinned(NULL),
-    _effect(effect),
-    _signal_param_change(changeSignal)
+    _signal_param_change(changeSignal),
+    _effect(effect)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
     hbox->pack_start(*controls, true, true, 6);
@@ -156,7 +156,7 @@ PrefDialog::run (void) {
 
 void
 PrefDialog::setPreviewState (Glib::ustring state) {
-
+    (void)state;
 }
 
 void

@@ -101,9 +101,7 @@ ColorScales::ColorScales( SPColorSelector* csel )
       _updating( FALSE ),
       _dragging( FALSE )
 {
-    gint i = 0;
-
-    for (i = 0; i < 5; i++) {
+    for (gint i = 0; i < 5; i++) {
         _l[i] = 0;
         _a[i] = 0;
         _s[i] = 0;
@@ -113,9 +111,7 @@ ColorScales::ColorScales( SPColorSelector* csel )
 
 ColorScales::~ColorScales()
 {
-    gint i = 0;
-
-    for (i = 0; i < 5; i++) {
+    for (gint i = 0; i < 5; i++) {
         _l[i] = 0;
         _a[i] = 0;
         _s[i] = 0;
@@ -226,14 +222,19 @@ void ColorScales::_recalcColor( gboolean changing )
         case SP_COLOR_SCALES_MODE_RGB:
         case SP_COLOR_SCALES_MODE_HSV:
             _getRgbaFloatv(c);
-            sp_color_set_rgb_float (&color, c[0], c[1], c[2]);
+            color.set( c[0], c[1], c[2] );
             alpha = c[3];
             break;
         case SP_COLOR_SCALES_MODE_CMYK:
+        {
             _getCmykaFloatv( c );
-            sp_color_set_cmyk_float (&color, c[0], c[1], c[2], c[3]);
+
+            float rgb[3];
+            sp_color_cmyk_to_rgb_floatv( rgb, c[0], c[1], c[2], c[3] );
+            color.set( rgb[0], rgb[1], rgb[2] );
             alpha = c[4];
             break;
+        }
         default:
             g_warning ("file %s: line %d: Illegal color selector mode %d", __FILE__, __LINE__, _mode);
             break;
@@ -270,6 +271,9 @@ void ColorScales::_setRangeLimit( gdouble upper )
 
 void ColorScales::_colorChanged( const SPColor& color, gfloat alpha )
 {
+#ifdef DUMP_CHANGE_INFO
+    g_message("ColorScales::_colorChanged( this=%p, %f, %f, %f,   %f)", this, color.v.c[0], color.v.c[1], color.v.c[2], alpha );
+#endif
 	gfloat tmp[3];
 	gfloat c[5] = {0.0, 0.0, 0.0, 0.0};
 
@@ -541,6 +545,7 @@ void ColorScales::_adjustmentAnyChanged( GtkAdjustment *adjustment, SPColorScale
 
 void ColorScales::_sliderAnyGrabbed( SPColorSlider *slider, SPColorScales *cs )
 {
+    (void)slider;
     ColorScales* scales = (ColorScales*)(SP_COLOR_SELECTOR(cs)->base);
 	if (!scales->_dragging) {
 		scales->_dragging = TRUE;
@@ -551,6 +556,7 @@ void ColorScales::_sliderAnyGrabbed( SPColorSlider *slider, SPColorScales *cs )
 
 void ColorScales::_sliderAnyReleased( SPColorSlider *slider, SPColorScales *cs )
 {
+    (void)slider;
     ColorScales* scales = (ColorScales*)(SP_COLOR_SELECTOR(cs)->base);
 	if (scales->_dragging) {
 		scales->_dragging = FALSE;
@@ -561,6 +567,7 @@ void ColorScales::_sliderAnyReleased( SPColorSlider *slider, SPColorScales *cs )
 
 void ColorScales::_sliderAnyChanged( SPColorSlider *slider, SPColorScales *cs )
 {
+    (void)slider;
     ColorScales* scales = (ColorScales*)(SP_COLOR_SELECTOR(cs)->base);
 
     scales->_recalcColor( TRUE );

@@ -3521,7 +3521,7 @@ sp_paint_differ(SPIPaint const *const a, SPIPaint const *const b)
     }
 
     if ( a->isColor() ) {
-        return !(sp_color_is_equal(&a->value.color, &b->value.color)
+        return !( (a->value.color == b->value.color)
                  && ((a->value.iccColor == b->value.iccColor)
                      || (a->value.iccColor && b->value.iccColor
                          && (a->value.iccColor->colorProfile == b->value.iccColor->colorProfile)
@@ -3578,7 +3578,7 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
                     css << " ";
                 }
                 char color_buf[8];
-                sp_svg_write_color(color_buf, sizeof(color_buf), sp_color_get_rgba32_ualpha(&paint->value.color, 0));
+                sp_svg_write_color(color_buf, sizeof(color_buf), paint->value.color.toRGBA32( 0 ));
                 css << color_buf;
             }
 
@@ -3691,7 +3691,7 @@ void SPIPaint::clear()
     currentcolor = false;
     colorSet = false;
     noneSet = false;
-    sp_color_set_rgb_rgba32( &value.color, 0 );
+    value.color.set( 0 );
     if ( value.href && value.href->getObject() )
     {
         value.href->detach();

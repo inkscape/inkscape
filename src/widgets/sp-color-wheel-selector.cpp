@@ -207,12 +207,15 @@ sp_color_wheel_selector_new (void)
 
 void ColorWheelSelector::_colorChanged( const SPColor& color, gfloat alpha )
 {
+#ifdef DUMP_CHANGE_INFO
+    g_message("ColorWheelSelector::_colorChanged( this=%p, %f, %f, %f,   %f)", this, color.v.c[0], color.v.c[1], color.v.c[2], alpha );
+#endif
     _updating = TRUE;
     sp_color_wheel_set_color( SP_COLOR_WHEEL( _wheel ), &color );
 
-    guint32 start = sp_color_get_rgba32_ualpha( &color, 0x00 );
-    guint32 mid = sp_color_get_rgba32_ualpha( &color, 0x7f );
-    guint32 end = sp_color_get_rgba32_ualpha( &color, 0xff );
+    guint32 start = color.toRGBA32( 0x00 );
+    guint32 mid = color.toRGBA32( 0x7f );
+    guint32 end = color.toRGBA32( 0xff );
 
     sp_color_slider_set_colors (SP_COLOR_SLIDER(_slider), start, mid, end);
 
@@ -241,6 +244,7 @@ void ColorWheelSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorW
 
 void ColorWheelSelector::_sliderGrabbed( SPColorSlider *slider, SPColorWheelSelector *cs )
 {
+    (void)slider;
     ColorWheelSelector* wheelSelector = (ColorWheelSelector*)(SP_COLOR_SELECTOR(cs)->base);
     if (!wheelSelector->_dragging) {
         wheelSelector->_dragging = TRUE;
@@ -251,6 +255,7 @@ void ColorWheelSelector::_sliderGrabbed( SPColorSlider *slider, SPColorWheelSele
 
 void ColorWheelSelector::_sliderReleased( SPColorSlider *slider, SPColorWheelSelector *cs )
 {
+    (void)slider;
     ColorWheelSelector* wheelSelector = (ColorWheelSelector*)(SP_COLOR_SELECTOR(cs)->base);
     if (wheelSelector->_dragging) {
         wheelSelector->_dragging = FALSE;
@@ -261,6 +266,7 @@ void ColorWheelSelector::_sliderReleased( SPColorSlider *slider, SPColorWheelSel
 
 void ColorWheelSelector::_sliderChanged( SPColorSlider *slider, SPColorWheelSelector *cs )
 {
+    (void)slider;
     ColorWheelSelector* wheelSelector = (ColorWheelSelector*)(SP_COLOR_SELECTOR(cs)->base);
 
     wheelSelector->_updateInternals( wheelSelector->_color, ColorScales::getScaled( wheelSelector->_adj ), wheelSelector->_dragging );
@@ -273,9 +279,9 @@ void ColorWheelSelector::_wheelChanged( SPColorWheel *wheel, SPColorWheelSelecto
 
     sp_color_wheel_get_color( wheel, &color );
 
-    guint32 start = sp_color_get_rgba32_ualpha( &color, 0x00 );
-    guint32 mid = sp_color_get_rgba32_ualpha( &color, 0x7f );
-    guint32 end = sp_color_get_rgba32_ualpha( &color, 0xff );
+    guint32 start = color.toRGBA32( 0x00 );
+    guint32 mid = color.toRGBA32( 0x7f );
+    guint32 end = color.toRGBA32( 0xff );
 
     sp_color_slider_set_colors (SP_COLOR_SLIDER(wheelSelector->_slider), start, mid, end);
 

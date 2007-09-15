@@ -171,8 +171,8 @@ struct SPIPaint {
 
     void clear();
 
-    void setColor( float r, float g, float b ) {sp_color_set_rgb_float(&value.color, r, g, b); colorSet = true;}
-    void setColor( guint32 val ) {sp_color_set_rgb_rgba32(&value.color, val); colorSet = true;}
+    void setColor( float r, float g, float b ) {value.color.set( r, g, b ); colorSet = true;}
+    void setColor( guint32 val ) {value.color.set( val ); colorSet = true;}
     void setColor( SPColor const& color ) {value.color = color; colorSet = true;}
 };
 

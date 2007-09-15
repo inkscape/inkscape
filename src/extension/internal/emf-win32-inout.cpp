@@ -332,7 +332,7 @@ select_pen(PEMF_CALLBACK_DATA d, int index)
     r = SP_COLOR_U_TO_F( GetRValue(pEmr->lopn.lopnColor) );
     g = SP_COLOR_U_TO_F( GetGValue(pEmr->lopn.lopnColor) );
     b = SP_COLOR_U_TO_F( GetBValue(pEmr->lopn.lopnColor) );
-    sp_color_set_rgb_float( &(d->style.stroke.value.color), r,g,b );
+    d->style.stroke.value.color.set( r, g, b );
 
     d->style.stroke_linejoin.computed = 1;
 
@@ -420,7 +420,7 @@ select_extpen(PEMF_CALLBACK_DATA d, int index)
     g = SP_COLOR_U_TO_F( GetGValue(pEmr->elp.elpColor) );
     b = SP_COLOR_U_TO_F( GetBValue(pEmr->elp.elpColor) );
 
-    sp_color_set_rgb_float( &(d->style.stroke.value.color), r,g,b );
+    d->style.stroke.value.color.( r, g, b );
 
     d->stroke_set = true;
 }
@@ -442,7 +442,7 @@ select_brush(PEMF_CALLBACK_DATA d, int index)
         r = SP_COLOR_U_TO_F( GetRValue(pEmr->lb.lbColor) );
         g = SP_COLOR_U_TO_F( GetGValue(pEmr->lb.lbColor) );
         b = SP_COLOR_U_TO_F( GetBValue(pEmr->lb.lbColor) );
-        sp_color_set_rgb_float( &(d->style.fill.value.color), r,g,b );
+        d->style.fill.value.color.( r, g, b );
     }
 
     d->fill_set = true;
@@ -803,7 +803,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                                 val = 255.0 / 255.0;
                                 break;
                         }
-                        sp_color_set_rgb_float( &(d->style.fill.value.color), val,val,val );
+                        d->style.fill.value.color.set( val, val, val );
 
                         d->fill_set = true;
                         break;
@@ -817,7 +817,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                         float val = index == BLACK_PEN ? 0 : 1;
                         d->style.stroke_dasharray_set = 0;
                         d->style.stroke_width.value = 1.0;
-                        sp_color_set_rgb_float( &(d->style.stroke.value.color), val,val,val );
+                        d->style.stroke.value.color.set( val, val, val );
 
                         d->stroke_set = true;
 

@@ -86,14 +86,13 @@ ParamColor::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::sign
 {
 	_changeSignal = new sigc::signal<void>(*changeSignal);
 	Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
-	SPColorSelector* spColorSelector = (SPColorSelector*)sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK, SP_COLORSPACE_TYPE_RGB);
+	SPColorSelector* spColorSelector = (SPColorSelector*)sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK);
 	
 	ColorSelector* colorSelector = spColorSelector->base;
 	if (_value < 1) {
 		_value = 0xFF000000;
 	}
-	SPColor *color = new SPColor();
-	sp_color_set_rgb_rgba32(color, _value);
+	SPColor *color = new SPColor( _value );
 	float alpha = (_value & 0xff) / 255.0F;
     colorSelector->setColorAlpha(*color, alpha);
 
@@ -113,7 +112,7 @@ sp_color_param_changed(SPColorSelector *csel, GObject *obj)
 	float alpha = csel->base->getAlpha();
 
     ParamColor* ptr = (ParamColor*)obj;
-	ptr->set(sp_color_get_rgba32_falpha(&color, alpha), NULL, NULL);
+	ptr->set(color.toRGBA32( alpha ), NULL, NULL);
 	
 	ptr->_changeSignal->emit();
 }

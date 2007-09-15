@@ -242,12 +242,12 @@ struct SPObject : public GObject {
     /** Retrieves the title of this object */
     gchar const *title() const { return NULL; /* TODO */ }
     /** Sets the title of this object */
-    void setTitle(gchar const *title) { /* TODO */ }
+    void setTitle(gchar const *title) { (void)title; /* TODO */ }
 
     /** Retrieves the description of this object */
     gchar const *desc() const { return NULL; /* TODO */ }
     /** Sets the description of this object */
-    void setDesc(gchar const *desc) { /* TODO */ }
+    void setDesc(gchar const *desc) { (void)desc; /* TODO */ }
 
     /** @brief Set the policy under which this object will be
      *         orphan-collected.

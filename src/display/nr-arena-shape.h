@@ -38,9 +38,7 @@ struct NRArenaShape : public NRArenaItem {
 			SERVER
 		};
 
-		Paint() : _type(NONE), _server(NULL) {
-			sp_color_set_rgb_rgba32(&_color, 0);
-		}
+		Paint() : _type(NONE), _color(0), _server(NULL) {}
 		Paint(Paint const &p) { _assign(p); }
 		~Paint() { clear(); }
 
@@ -60,7 +58,7 @@ struct NRArenaShape : public NRArenaItem {
 		void set(SPColor const &color) {
 			clear();
 			_type = COLOR;
-			sp_color_copy(&_color, &color);
+			_color = color;
 		}
 		void set(SPPaintServer *server) {
 			clear();
@@ -86,7 +84,7 @@ struct NRArenaShape : public NRArenaItem {
 		void _assign(Paint const &p) {
 			_type = p._type;
 			_server = p._server;
-			sp_color_copy(&_color, &p._color);
+			_color = p._color;
 			if (_server) {
 				sp_object_ref(_server, NULL);
 			}

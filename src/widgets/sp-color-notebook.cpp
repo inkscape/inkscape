@@ -437,29 +437,25 @@ void ColorNotebook::_rgbaEntryChangedHook(GtkEntry *entry, SPColorNotebook *colo
 
 void ColorNotebook::_rgbaEntryChanged(GtkEntry* entry)
 {
-	const gchar *t;
-	gchar *e;
-	SPColor color;
-	guint rgba;
+    if (_updating) return;
+    if (_updatingrgba) return;
 
-	if (_updating) return;
-	if (_updatingrgba) return;
+    const gchar *t = gtk_entry_get_text( entry );
 
-	t = gtk_entry_get_text (entry);
-
-	if (t) {
-		rgba = strtoul (t, &e, 16);
-		if ( e != t ) {
-			ptrdiff_t len=e-t;
-			if ( len < 8 ) {
-				rgba = rgba << ( 4 * ( 8 - len ) );
-			}
-			_updatingrgba = TRUE;
-			sp_color_set_rgb_rgba32 (&color, rgba);
-			setColorAlpha( color, SP_RGBA32_A_F(rgba), true);
-			_updatingrgba = FALSE;
-		}
-	}
+    if (t) {
+        gchar *e = 0;
+        guint rgba = strtoul (t, &e, 16);
+        if ( e != t ) {
+            ptrdiff_t len=e-t;
+            if ( len < 8 ) {
+                rgba = rgba << ( 4 * ( 8 - len ) );
+            }
+            _updatingrgba = TRUE;
+            SPColor color( rgba );
+            setColorAlpha( color, SP_RGBA32_A_F(rgba), true );
+            _updatingrgba = FALSE;
+        }
+    }
 }
 
 void ColorNotebook::_updateRgbaEntry( const SPColor& color, gfloat alpha )
@@ -472,7 +468,7 @@ void ColorNotebook::_updateRgbaEntry( const SPColor& color, gfloat alpha )
         guint32 rgba;
 
         /* Update RGBA entry */
-        rgba = sp_color_get_rgba32_falpha (&color, alpha);
+        rgba = color.toRGBA32( alpha );
 
         g_snprintf (s, 32, "%08x", rgba);
         const gchar* oldText = gtk_entry_get_text( GTK_ENTRY( _rgbae ) );
@@ -543,7 +539,7 @@ GtkWidget* ColorNotebook::addPage(GType page_type, guint submode)
 {
 	GtkWidget *page;
 
-	page = sp_color_selector_new ( page_type, SP_COLORSPACE_TYPE_NONE);
+	page = sp_color_selector_new( page_type );
 	if ( page )
 	{
 		GtkWidget* tab_label = 0;

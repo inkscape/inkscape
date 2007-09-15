@@ -1,11 +1,12 @@
 #define __SP_COLOR_C__
 
 /** \file
- * Colors and colorspaces.
+ * Colors.
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -15,103 +16,115 @@
 
 #include <math.h>
 #include "color.h"
+#include "svg/svg-icc-color.h"
 
-/// A color space is just a name.
-struct SPColorSpace {
-    gchar const *name;
-};
+static bool profileMatches( SVGICCColor const* first, SVGICCColor const* second );
 
-static SPColorSpace const RGB = {"RGB"};
-static SPColorSpace const CMYK = {"CMYK"};
+#define PROFILE_EPSILON 0.00000001
+
+SPColor::SPColor() :
+    icc(0)
+{
+    v.c[0] = 0;
+    v.c[1] = 0;
+    v.c[2] = 0;
+}
+
+SPColor::SPColor( SPColor const& other ) :
+    icc(0)
+{
+    *this = other;
+}
+
+SPColor::SPColor( float r, float g, float b ) :
+    icc(0)
+{
+    set( r, g, b );
+}
+
+SPColor::SPColor( guint32 value ) :
+    icc(0)
+{
+    set( value );
+}
+
+SPColor::~SPColor()
+{
+    delete icc;
+    icc = 0;
+}
+
+
+SPColor& SPColor::operator= (SPColor const& other)
+{
+    SVGICCColor* tmp = other.icc ? new SVGICCColor(*other.icc) : 0;
+    v.c[0] = other.v.c[0];
+    v.c[1] = other.v.c[1];
+    v.c[2] = other.v.c[2];
+    if ( icc ) {
+        delete icc;
+    }
+    icc = tmp;
+
+    return *this;
+}
+
 
 /**
- * Returns one of three values depending on if color is valid and if it
- * has a valid color space. Likely redundant as soon as this is C++.
+ * Returns true if colors match.
  */
-SPColorSpaceClass
-sp_color_get_colorspace_class(SPColor const *color)
+bool SPColor::operator == (SPColor const& other) const
 {
-    g_return_val_if_fail (color != NULL, SP_COLORSPACE_CLASS_INVALID);
+    bool match = (v.c[0] != other.v.c[0])
+        && (v.c[1] != other.v.c[1])
+        && (v.c[2] != other.v.c[2]);
 
-    if (color->colorspace == &RGB) return SP_COLORSPACE_CLASS_PROCESS;
-    if (color->colorspace == &CMYK) return SP_COLORSPACE_CLASS_PROCESS;
+    match &= profileMatches( icc, other.icc );
 
-    return SP_COLORSPACE_CLASS_UNKNOWN;
+    return match;
 }
 
 /**
- * Returns the SPColorSpaceType corresponding to color's color space.
- * \todo color->colorspace should simply be a named enum.
+ * Returns true if no RGB value differs epsilon or more in both colors,
+ * false otherwise.
  */
-SPColorSpaceType
-sp_color_get_colorspace_type(SPColor const *color)
+bool SPColor::isClose( SPColor const& other, float epsilon ) const
 {
-    g_return_val_if_fail (color != NULL, SP_COLORSPACE_TYPE_INVALID);
+    bool match = false;
 
-    if (color->colorspace == &RGB) return SP_COLORSPACE_TYPE_RGB;
-    if (color->colorspace == &CMYK) return SP_COLORSPACE_TYPE_CMYK;
+    match = (fabs((v.c[0]) - (other.v.c[0])) < epsilon)
+        && (fabs((v.c[1]) - (other.v.c[1])) < epsilon)
+        && (fabs((v.c[2]) - (other.v.c[2])) < epsilon);
 
-    return SP_COLORSPACE_TYPE_UNKNOWN;
+    // TODO uncomment once we start using that profile.  Will be RSN
+    //match &= profileMatches( icc, other.icc );
+
+    return match;
 }
 
-/**
- * Shallow copy of color struct with NULL check.
- */
-void
-sp_color_copy(SPColor *dst, SPColor const *src)
-{
-    g_return_if_fail (dst != NULL);
-    g_return_if_fail (src != NULL);
-
-    *dst = *src;
-}
-
-/**
- * Returns TRUE if c0 or c1 is NULL, or if colors/opacities differ.
- */
-gboolean
-sp_color_is_equal (SPColor const *c0, SPColor const *c1)
-{
-    g_return_val_if_fail (c0 != NULL, TRUE);
-    g_return_val_if_fail (c1 != NULL, TRUE);
-
-    if (c0->colorspace != c1->colorspace) return FALSE;
-    if (c0->v.c[0] != c1->v.c[0]) return FALSE;
-    if (c0->v.c[1] != c1->v.c[1]) return FALSE;
-    if (c0->v.c[2] != c1->v.c[2]) return FALSE;
-    if ((c0->colorspace == &CMYK) && (c0->v.c[3] != c1->v.c[3])) return FALSE;
-
-    return TRUE;
-}
-
-/**
- * Returns TRUE if no RGB value differs epsilon or more in both colors,
- * with CMYK aditionally comparing opacity, or if c0 or c1 is NULL.
- * \note Do we want the latter?
- */
-gboolean
-sp_color_is_close (SPColor const *c0, SPColor const *c1, float epsilon)
-{
-    g_return_val_if_fail (c0 != NULL, TRUE);
-    g_return_val_if_fail (c1 != NULL, TRUE);
-
-    if (c0->colorspace != c1->colorspace) return FALSE;
-    if (fabs ((c0->v.c[0]) - (c1->v.c[0])) >= epsilon) return FALSE;
-    if (fabs ((c0->v.c[1]) - (c1->v.c[1])) >= epsilon) return FALSE;
-    if (fabs ((c0->v.c[2]) - (c1->v.c[2])) >= epsilon) return FALSE;
-    if ((c0->colorspace == &CMYK) && (fabs ((c0->v.c[3]) - (c1->v.c[3])) >= epsilon)) return FALSE;
-
-    return TRUE;
+static bool profileMatches( SVGICCColor const* first, SVGICCColor const* second ) {
+    bool match = false;
+    if ( !first && !second ) {
+        match = true;
+    } else {
+        match = first && second
+            && (first->colorProfile == second->colorProfile)
+            && (first->colors.size() == second->colors.size());
+        if ( match ) {
+            for ( guint i = 0; i < first->colors.size(); i++ ) {
+                match &= (fabs(first->colors[i] - second->colors[i]) < PROFILE_EPSILON);
+            }
+        }
+    }
+    return match;
 }
 
 /**
  * Sets RGB values and colorspace in color.
- * \pre color != NULL && 0 <={r,g,b}<=1
+ * \pre 0 <={r,g,b}<=1
  */
-void
-sp_color_set_rgb_float(SPColor *color, float r, float g, float b)
+void SPColor::set( float r, float g, float b )
 {
-    g_return_if_fail(color != NULL);
     g_return_if_fail(r >= 0.0);
     g_return_if_fail(r <= 1.0);
     g_return_if_fail(g >= 0.0);
@@ -119,80 +132,35 @@ sp_color_set_rgb_float(SPColor *color, float r, float g, float b)
     g_return_if_fail(b >= 0.0);
     g_return_if_fail(b <= 1.0);
 
-    color->colorspace = &RGB;
-    color->v.c[0] = r;
-    color->v.c[1] = g;
-    color->v.c[2] = b;
-    color->v.c[3] = 0;
+    // TODO clear icc if set?
+    v.c[0] = r;
+    v.c[1] = g;
+    v.c[2] = b;
 }
 
 /**
  * Converts 32bit value to RGB floats and sets color.
- * \pre color != NULL
  */
-void
-sp_color_set_rgb_rgba32(SPColor *color, guint32 value)
+void SPColor::set( guint32 value )
 {
-    g_return_if_fail (color != NULL);
-
-    color->colorspace = &RGB;
-    color->v.c[0] = (value >> 24) / 255.0F;
-    color->v.c[1] = ((value >> 16) & 0xff) / 255.0F;
-    color->v.c[2] = ((value >> 8) & 0xff) / 255.0F;
-    color->v.c[3] = 0;
-}
-
-/**
- * Sets CMYK values and colorspace in color.
- * \pre color != NULL && 0 <={c,m,y,k}<=1
- */
-void
-sp_color_set_cmyk_float(SPColor *color, float c, float m, float y, float k)
-{
-    g_return_if_fail(color != NULL);
-    g_return_if_fail(c >= 0.0);
-    g_return_if_fail(c <= 1.0);
-    g_return_if_fail(m >= 0.0);
-    g_return_if_fail(m <= 1.0);
-    g_return_if_fail(y >= 0.0);
-    g_return_if_fail(y <= 1.0);
-    g_return_if_fail(k >= 0.0);
-    g_return_if_fail(k <= 1.0);
-
-    color->colorspace = &CMYK;
-    color->v.c[0] = c;
-    color->v.c[1] = m;
-    color->v.c[2] = y;
-    color->v.c[3] = k;
+    // TODO clear icc if set?
+    v.c[0] = (value >> 24) / 255.0F;
+    v.c[1] = ((value >> 16) & 0xff) / 255.0F;
+    v.c[2] = ((value >> 8) & 0xff) / 255.0F;
 }
 
 /**
  * Convert SPColor with integer alpha value to 32bit RGBA value.
- * \pre color != NULL && alpha < 256
+ * \pre alpha < 256
  */
-guint32
-sp_color_get_rgba32_ualpha(SPColor const *color, guint32 alpha)
+guint32 SPColor::toRGBA32( gint alpha ) const
 {
-    guint32 rgba;
-
-    g_return_val_if_fail (color != NULL, 0x0);
     g_return_val_if_fail (alpha <= 0xff, 0x0);
 
-    if (color->colorspace == &RGB) {
-        rgba = SP_RGBA32_U_COMPOSE(SP_COLOR_F_TO_U(color->v.c[0]),
-                                   SP_COLOR_F_TO_U(color->v.c[1]),
-                                   SP_COLOR_F_TO_U(color->v.c[2]),
-                                   alpha);
-    } else {
-        float rgb[3];
-        rgb[0] = rgb[1] = rgb[2] = 0.0;
-        sp_color_get_rgb_floatv (color, rgb);
-        rgba = SP_RGBA32_U_COMPOSE(SP_COLOR_F_TO_U(rgb[0]),
-                                   SP_COLOR_F_TO_U(rgb[1]),
-                                   SP_COLOR_F_TO_U(rgb[2]),
-                                   alpha);
-    }
-
+    guint32 rgba = SP_RGBA32_U_COMPOSE( SP_COLOR_F_TO_U(v.c[0]),
+                                        SP_COLOR_F_TO_U(v.c[1]),
+                                        SP_COLOR_F_TO_U(v.c[2]),
+                                        alpha );
     return rgba;
 }
 
@@ -200,14 +168,12 @@ sp_color_get_rgba32_ualpha(SPColor const *color, guint32 alpha)
  * Convert SPColor with float alpha value to 32bit RGBA value.
  * \pre color != NULL && 0 <= alpha <= 1
  */
-guint32
-sp_color_get_rgba32_falpha(SPColor const *color, float alpha)
+guint32 SPColor::toRGBA32( gdouble alpha ) const
 {
-    g_return_val_if_fail(color != NULL, 0x0);
     g_return_val_if_fail(alpha >= 0.0, 0x0);
     g_return_val_if_fail(alpha <= 1.0, 0x0);
 
-    return sp_color_get_rgba32_ualpha(color, SP_COLOR_F_TO_U(alpha));
+    return toRGBA32( static_cast<gint>(SP_COLOR_F_TO_U(alpha)) );
 }
 
 /**
@@ -220,17 +186,9 @@ sp_color_get_rgb_floatv(SPColor const *color, float *rgb)
     g_return_if_fail (color != NULL);
     g_return_if_fail (rgb != NULL);
 
-    if (color->colorspace == &RGB) {
-        rgb[0] = color->v.c[0];
-        rgb[1] = color->v.c[1];
-        rgb[2] = color->v.c[2];
-    } else if (color->colorspace == &CMYK) {
-        sp_color_cmyk_to_rgb_floatv(rgb,
-                                    color->v.c[0],
-                                    color->v.c[1],
-                                    color->v.c[2],
-                                    color->v.c[3]);
-    }
+    rgb[0] = color->v.c[0];
+    rgb[1] = color->v.c[1];
+    rgb[2] = color->v.c[2];
 }
 
 /**
@@ -243,17 +201,10 @@ sp_color_get_cmyk_floatv(SPColor const *color, float *cmyk)
     g_return_if_fail (color != NULL);
     g_return_if_fail (cmyk != NULL);
 
-    if (color->colorspace == &CMYK) {
-        cmyk[0] = color->v.c[0];
-        cmyk[1] = color->v.c[1];
-        cmyk[2] = color->v.c[2];
-        cmyk[3] = color->v.c[3];
-    } else if (color->colorspace == &RGB) {
-        sp_color_rgb_to_cmyk_floatv(cmyk,
-                                    color->v.c[0],
-                                    color->v.c[1],
-                                    color->v.c[2]);
-    }
+    sp_color_rgb_to_cmyk_floatv( cmyk,
+                                 color->v.c[0],
+                                 color->v.c[1],
+                                 color->v.c[2] );
 }
 
 /* Plain mode helpers */
@@ -291,7 +242,7 @@ sp_color_rgb_to_hsv_floatv (float *hsv, float r, float g, float b)
 
         if (hsv[0] < 0) hsv[0] += 1.0;
     }
-    else 
+    else
         hsv[0] = 0.0;
 }
 

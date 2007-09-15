@@ -142,7 +142,7 @@ sp_color_selector_hide_all (GtkWidget *widget)
 }
 
 GtkWidget *
-sp_color_selector_new (GType selector_type, SPColorSpaceType colorspace)
+sp_color_selector_new( GType selector_type )
 {
 	SPColorSelector *csel;
 	g_return_val_if_fail (g_type_is_a (selector_type, SP_TYPE_COLOR_SELECTOR), NULL);
@@ -156,6 +156,7 @@ double ColorSelector::_epsilon = 1e-4;
 
 void ColorSelector::setSubmode( guint submode )
 {
+    (void)submode;
 }
 
 guint ColorSelector::getSubmode() const
@@ -164,26 +165,13 @@ guint ColorSelector::getSubmode() const
     return mode;
 }
 
-SPColorSpaceType ColorSelector::getColorspace() const
-{
-    SPColorSpaceType type = SP_COLORSPACE_TYPE_UNKNOWN;
-
-    return type;
-}
-
-gboolean ColorSelector::setColorspace( SPColorSpaceType colorspace )
-{
-    return false;
-}
-
 ColorSelector::ColorSelector( SPColorSelector* csel )
     : _csel(csel),
+      _color( 0 ),
       _alpha(1.0),
-      _held(FALSE)
+      _held(FALSE),
+      virgin(true)
 {
-    sp_color_set_rgb_rgba32( &_color, 0 );
-
-    virgin = true;
 }
 
 ColorSelector::~ColorSelector()
@@ -222,19 +210,35 @@ downstream, e.g. the RGBA value field, but not from the rest of the program)
 */
 void ColorSelector::setColorAlpha( const SPColor& color, gfloat alpha, bool emit )
 {
+#ifdef DUMP_CHANGE_INFO
+    g_message("ColorSelector::setColorAlpha( this=%p, %f, %f, %f,   %f,   %s)", this, color.v.c[0], color.v.c[1], color.v.c[2], alpha, (emit?"YES":"no"));
+#endif
     g_return_if_fail( ( 0.0 <= alpha ) && ( alpha <= 1.0 ) );
 
-    if ( virgin || !sp_color_is_close( &color, &_color, _epsilon ) ||
+#ifdef DUMP_CHANGE_INFO
+    g_message("---- ColorSelector::setColorAlpha    virgin:%s   !close:%s    alpha is:%s",
+              (virgin?"YES":"no"),
+              (!color.isClose( _color, _epsilon )?"YES":"no"),
+                  ((fabs ((_alpha) - (alpha)) >= _epsilon )?"YES":"no")
+              );
+#endif
+
+    if ( virgin || !color.isClose( _color, _epsilon ) ||
          (fabs ((_alpha) - (alpha)) >= _epsilon )) {
 
         virgin = false;
 
-        sp_color_copy (&_color, &color);
+        _color = color;
         _alpha = alpha;
         _colorChanged( color, alpha );
 
         if (emit)
 		gtk_signal_emit (GTK_OBJECT (_csel), csel_signals[CHANGED]);
+#ifdef DUMP_CHANGE_INFO
+    } else {
+        g_message("++++ ColorSelector::setColorAlpha   color:%08x  ==>  _color:%08X   isClose", color.toRGBA32(alpha), _color.toRGBA32(_alpha),
+                  (color.isClose( _color, _epsilon )?"YES":"no"));
+#endif
     }
 }
 
@@ -265,7 +269,7 @@ void ColorSelector::_released()
 void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboolean held )
 {
     g_return_if_fail( ( 0.0 <= alpha ) && ( alpha <= 1.0 ) );
-    gboolean colorDifferent = ( !sp_color_is_close( &color, &_color, _epsilon )
+    gboolean colorDifferent = ( !color.isClose( _color, _epsilon )
                                 || ( fabs((_alpha) - (alpha)) >= _epsilon ) );
 
     gboolean grabbed = held && !_held;
@@ -275,7 +279,7 @@ void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboole
     _held = held;
     if ( colorDifferent )
     {
-        sp_color_copy (&_color, &color);
+        _color = color;
         _alpha = alpha;
     }
 
@@ -284,7 +288,7 @@ void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboole
 #ifdef DUMP_CHANGE_INFO
         g_message ("%s:%d: About to signal %s to color %08x in %s", __FILE__, __LINE__,
                    "GRABBED",
-                   sp_color_get_rgba32_falpha(&color,alpha), FOO_NAME(_csel));
+                   color.toRGBA32( alpha ), FOO_NAME(_csel));
 #endif
         gtk_signal_emit (GTK_OBJECT (_csel), csel_signals[GRABBED]);
     }
@@ -293,7 +297,7 @@ void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboole
 #ifdef DUMP_CHANGE_INFO
         g_message ("%s:%d: About to signal %s to color %08x in %s", __FILE__, __LINE__,
                    "RELEASED",
-                   sp_color_get_rgba32_falpha(&color,alpha), FOO_NAME(_csel));
+                   color.toRGBA32( alpha ), FOO_NAME(_csel));
 #endif
         gtk_signal_emit (GTK_OBJECT (_csel), csel_signals[RELEASED]);
     }
@@ -303,7 +307,7 @@ void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboole
 #ifdef DUMP_CHANGE_INFO
         g_message ("%s:%d: About to signal %s to color %08x in %s", __FILE__, __LINE__,
                    (_held ? "CHANGED" : "DRAGGED" ),
-                   sp_color_get_rgba32_falpha(&color,alpha), FOO_NAME(_csel));
+                   color.toRGBA32( alpha ), FOO_NAME(_csel));
 #endif
         gtk_signal_emit (GTK_OBJECT (_csel), csel_signals[_held ? CHANGED : DRAGGED]);
     }
@@ -311,23 +315,21 @@ void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboole
 
 void ColorSelector::_colorChanged( const SPColor& color, gfloat alpha )
 {
+    (void)color;
+    (void)alpha;
 }
 
 void ColorSelector::getColorAlpha( SPColor& color, gfloat* alpha ) const
 {
     gint i = 0;
 
-    sp_color_copy (&color, &_color);
+    color = _color;
     if ( alpha )
     {
         *alpha = _alpha;
     }
 
     // Try to catch uninitialized value usage
-    if ( color.colorspace )
-    {
-        i++;
-    }
     if ( color.v.c[0] )
     {
         i++;

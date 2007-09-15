@@ -770,17 +770,15 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
 
     cairo_t *ct = nr_create_cairo_context (area, pb);
 
-    if (!ct) 
+    if (!ct)
         return;
 
     guint32 rgba;
     if ( item->render_opacity ) {
-        rgba = sp_color_get_rgba32_falpha(&shape->_stroke.paint.color(),
-                                          shape->_stroke.opacity *
-                                          SP_SCALE24_TO_FLOAT(style->opacity.value));
+        rgba = shape->_stroke.paint.color().toRGBA32( shape->_stroke.opacity *
+                                                      SP_SCALE24_TO_FLOAT(style->opacity.value) );
     } else {
-        rgba = sp_color_get_rgba32_falpha(&shape->_stroke.paint.color(),
-                                          shape->_stroke.opacity);
+        rgba = shape->_stroke.paint.color().toRGBA32( shape->_stroke.opacity );
     }
 
     // FIXME: we use RGBA buffers but cairo writes BGRA (on i386), so we must cheat 
@@ -897,7 +895,7 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
             return (item->state);
         }
 
-        m.visible_area = pb->visible_area; 
+        m.visible_area = pb->visible_area;
         nr_pixblock_render_shape_mask_or(m,shape->fill_shp);
         m.empty = FALSE;
 
@@ -905,12 +903,10 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
             // do not render fill in any way
         } else if (shape->_fill.paint.type() == NRArenaShape::Paint::COLOR) {
             if ( item->render_opacity ) {
-                rgba = sp_color_get_rgba32_falpha(&shape->_fill.paint.color(),
-                                                  shape->_fill.opacity *
-                                                  SP_SCALE24_TO_FLOAT(style->opacity.value));
+                rgba = shape->_fill.paint.color().toRGBA32( shape->_fill.opacity *
+                                                            SP_SCALE24_TO_FLOAT(style->opacity.value) );
             } else {
-                rgba = sp_color_get_rgba32_falpha(&shape->_fill.paint.color(),
-                                                  shape->_fill.opacity);
+                rgba = shape->_fill.paint.color().toRGBA32( shape->_fill.opacity );
             }
             nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
             pb->empty = FALSE;
@@ -938,17 +934,15 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
             return (item->state);
         }
 
-        m.visible_area = pb->visible_area; 
+        m.visible_area = pb->visible_area;
         nr_pixblock_render_shape_mask_or(m, shape->stroke_shp);
         m.empty = FALSE;
 
             if ( item->render_opacity ) {
-                rgba = sp_color_get_rgba32_falpha(&shape->_stroke.paint.color(),
-                                                  shape->_stroke.opacity *
-                                                  SP_SCALE24_TO_FLOAT(style->opacity.value));
+                rgba = shape->_stroke.paint.color().toRGBA32( shape->_stroke.opacity *
+                                                              SP_SCALE24_TO_FLOAT(style->opacity.value) );
             } else {
-                rgba = sp_color_get_rgba32_falpha(&shape->_stroke.paint.color(),
-                                                  shape->_stroke.opacity);
+                rgba = shape->_stroke.paint.color().toRGBA32( shape->_stroke.opacity );
             }
             nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
             pb->empty = FALSE;
@@ -992,6 +986,8 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
 
 // cairo clipping: this basically works except for the stride-must-be-divisible-by-4 cairo bug;
 // reenable this when the bug is fixed and remove the rest of this function
+// TODO
+#if defined(DEADCODE) && !defined(DEADCODE)
 static guint
 cairo_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 {
@@ -1000,7 +996,7 @@ cairo_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 
         cairo_t *ct = nr_create_cairo_context (area, pb);
 
-        if (!ct) 
+        if (!ct)
             return item->state;
 
         cairo_set_source_rgba(ct, 0, 0, 0, 1);
@@ -1020,6 +1016,7 @@ cairo_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 
         return item->state;
 }
+#endif //defined(DEADCODE) && !defined(DEADCODE)
 
 
 static guint

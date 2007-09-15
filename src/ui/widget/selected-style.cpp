@@ -946,7 +946,7 @@ SelectedStyle::update()
                     g_warning ("file %s: line %d: Unknown paint server", __FILE__, __LINE__);
                 }
             } else if (paint->set && paint->isColor()) {
-                guint32 color = sp_color_get_rgba32_falpha (&(paint->value.color),
+                guint32 color = paint->value.color.toRGBA32(
                                      SP_SCALE24_TO_FLOAT ((i == SS_FILL)? query->fill_opacity.value : query->stroke_opacity.value));
                 _lastselected[i] = _thisselected[i];
                 _thisselected[i] = color | 0xff; // only color, opacity === 1

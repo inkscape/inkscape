@@ -1846,7 +1846,7 @@ public:
     virtual bool isDerivedFrom(const DOMString &typeNamespaceArg,
                                const DOMString &typeNameArg,
                                DerivationMethod derivationMethod)
-        { return false; }
+        { (void)typeNamespaceArg; (void)typeNameArg; (void)derivationMethod; return false; }
 
     //##################
     //# Non-API methods

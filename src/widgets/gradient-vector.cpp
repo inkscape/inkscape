@@ -595,8 +595,7 @@ sp_grad_edit_select (GtkOptionMenu *mnu,  GtkWidget *tbl)
 	SPColorSelector *csel = (SPColorSelector*)g_object_get_data (G_OBJECT (tbl), "cselector");
 	guint32 const c = sp_stop_get_rgba32(stop);
 	csel->base->setAlpha(SP_RGBA32_A_F (c));
-	SPColor color;
-	sp_color_set_rgb_float (&color, SP_RGBA32_R_F (c), SP_RGBA32_G_F (c), SP_RGBA32_B_F (c));
+	SPColor color( SP_RGBA32_R_F (c), SP_RGBA32_G_F (c), SP_RGBA32_B_F (c) );
 	// set its color, from the stored array
 	csel->base->setColor( color );
 	GtkWidget *offspin = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "offspn"));
@@ -868,7 +867,7 @@ sp_gradient_vector_widget_new (SPGradient *gradient, SPStop *select_stop)
 	f = gtk_frame_new (_("Stop Color"));
 	gtk_widget_show (f);
 	gtk_box_pack_start (GTK_BOX (vb), f, TRUE, TRUE, PAD);
-	csel = (GtkWidget*)sp_color_selector_new (SP_TYPE_COLOR_NOTEBOOK, SP_COLORSPACE_TYPE_NONE);
+	csel = (GtkWidget*)sp_color_selector_new (SP_TYPE_COLOR_NOTEBOOK);
 	g_object_set_data (G_OBJECT (vb), "cselector", csel);
 	gtk_widget_show (csel);
 	gtk_container_add (GTK_CONTAINER (f), csel);
@@ -1014,8 +1013,7 @@ sp_gradient_vector_widget_load_gradient (GtkWidget *widget, SPGradient *gradient
 		SPColorSelector *csel = SP_COLOR_SELECTOR(g_object_get_data (G_OBJECT (widget), "cselector"));
 		// set alpha
 		csel->base->setAlpha(SP_RGBA32_A_F (c));
-		SPColor color;
-		sp_color_set_rgb_float (&color, SP_RGBA32_R_F (c), SP_RGBA32_G_F (c), SP_RGBA32_B_F (c));
+		SPColor color( SP_RGBA32_R_F (c), SP_RGBA32_G_F (c), SP_RGBA32_B_F (c) );
 		// set color
 		csel->base->setColor( color );
 	}
@@ -1158,7 +1156,7 @@ sp_gradient_vector_color_changed (SPColorSelector *csel, GtkObject *object)
 
 	csel = (SPColorSelector*)g_object_get_data (G_OBJECT (object), "cselector");
 	csel->base->getColorAlpha( color, &alpha );
-	rgb = sp_color_get_rgba32_ualpha (&color, 0x00);
+	rgb = color.toRGBA32( 0x00 );
 
 	sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", stop->offset);
 	Inkscape::CSSOStringStream os;

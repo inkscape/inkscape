@@ -48,7 +48,7 @@ struct SPColorGtkselectorClass {
 
 GType sp_color_gtkselector_get_type (void);
 
-GtkWidget *sp_color_gtkselector_new (GType selector_type, SPColorSpaceType colorspace);
+GtkWidget *sp_color_gtkselector_new( GType selector_type );
 
 
 

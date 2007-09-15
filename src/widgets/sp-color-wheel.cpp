@@ -25,6 +25,9 @@ enum {
     LAST_SIGNAL
 };
 
+#define noDUMP_CHANGE_INFO
+#define FOO_NAME(x) g_type_name( G_TYPE_FROM_INSTANCE(x) )
+
 static void sp_color_wheel_class_init (SPColorWheelClass *klass);
 static void sp_color_wheel_init (SPColorWheel *wheel);
 static void sp_color_wheel_destroy (GtkObject *object);
@@ -185,11 +188,14 @@ void sp_color_wheel_get_color( SPColorWheel *wheel, SPColor* color )
         rgb[i] = (rgb[i] * wheel->_sat) + (wheel->_value * (1.0 - wheel->_sat));
     }
 
-    sp_color_set_rgb_float (color, rgb[0], rgb[1], rgb[2]);
+    color->set( rgb[0], rgb[1], rgb[2] );
 }
 
 void sp_color_wheel_set_color( SPColorWheel *wheel, const SPColor* color )
 {
+#ifdef DUMP_CHANGE_INFO
+    g_message("sp_color_wheel_set_color( wheel=%p, %f, %f, %f)", wheel, color->v.c[0], color->v.c[1], color->v.c[2] );
+#endif
     g_return_if_fail (SP_IS_COLOR_WHEEL (wheel));
     g_return_if_fail (wheel != NULL);
     g_return_if_fail (color != NULL);
@@ -366,6 +372,15 @@ sp_color_wheel_button_press (GtkWidget *widget, GdkEventButton *event)
             gtk_widget_grab_focus( widget );
 
             wheel->dragging = TRUE;
+#ifdef DUMP_CHANGE_INFO
+            {
+                SPColor color;
+                sp_color_wheel_get_color( wheel, &color );
+                g_message( "%s:%d: About to signal %s to color %08x in %s", __FILE__, __LINE__,
+                           "CHANGED",
+                           color.toRGBA32( 0 ), FOO_NAME(wheel));
+            }
+#endif
             gtk_signal_emit (GTK_OBJECT (wheel), wheel_signals[CHANGED]);
             gdk_pointer_grab (widget->window, FALSE,
                               (GdkEventMask)(GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK),
@@ -387,6 +402,15 @@ sp_color_wheel_button_release (GtkWidget *widget, GdkEventButton *event)
         gdk_pointer_ungrab (event->time);
         wheel->dragging = FALSE;
 
+#ifdef DUMP_CHANGE_INFO
+        {
+            SPColor color;
+            sp_color_wheel_get_color( wheel, &color );
+            g_message( "%s:%d: About to signal %s to color %08x in %s", __FILE__, __LINE__,
+                       "CHANGED",
+                       color.toRGBA32( 0 ), FOO_NAME(wheel));
+        }
+#endif
         gtk_signal_emit (GTK_OBJECT (wheel), wheel_signals[CHANGED]);
     }
 
@@ -413,6 +437,15 @@ sp_color_wheel_motion_notify (GtkWidget *widget, GdkEventMotion *event)
             sp_color_wheel_process_in_triangle( wheel, event->x, event->y );
         }
 
+#ifdef DUMP_CHANGE_INFO
+        {
+            SPColor color;
+            sp_color_wheel_get_color( wheel, &color );
+            g_message( "%s:%d: About to signal %s to color %08x in %s", __FILE__, __LINE__,
+                       "CHANGED",
+                       color.toRGBA32( 0 ), FOO_NAME(wheel));
+        }
+#endif
         gtk_signal_emit (GTK_OBJECT (wheel), wheel_signals[CHANGED]);
     }
 
@@ -476,6 +509,15 @@ static void sp_color_wheel_set_sv( SPColorWheel *wheel, gdouble sat, gdouble val
 
         wheel->_spotValue = ( (0.299 * rgb[0]) + (0.587 * rgb[1]) + (0.114 * rgb[2]) );
 
+#ifdef DUMP_CHANGE_INFO
+        {
+            SPColor color;
+            sp_color_wheel_get_color( wheel, &color );
+            g_message( "%s:%d: About to signal %s to color %08x in %s", __FILE__, __LINE__,
+                       "CHANGED",
+                       color.toRGBA32( 0 ), FOO_NAME(wheel));
+        }
+#endif
         gtk_signal_emit (GTK_OBJECT (wheel), wheel_signals[CHANGED]);
     }
     gtk_widget_queue_draw (GTK_WIDGET (wheel));

@@ -57,8 +57,7 @@ ColorPicker::setupDialog(const Glib::ustring &title)
     _colorSelectorDialog.hide();
     _colorSelectorDialog.set_title (title);
     _colorSelectorDialog.set_border_width (4);
-    _colorSelector = (SPColorSelector*)sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK,
-                                  SP_COLORSPACE_TYPE_UNKNOWN);
+    _colorSelector = (SPColorSelector*)sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK);
     _colorSelectorDialog.get_vbox()->pack_start (
               *Glib::wrap(&_colorSelector->vbox), true, true, 0);
 
@@ -86,7 +85,7 @@ ColorPicker::setRgba32 (guint32 rgba)
     if (_colorSelector)
     {
         SPColor color;
-        sp_color_set_rgb_rgba32(&color, rgba);
+        color.set( rgba );
         _colorSelector->base->setColorAlpha(color, SP_RGBA32_A_F(rgba));
     }
 }
@@ -103,7 +102,7 @@ ColorPicker::on_clicked()
     if (_colorSelector)
     {
         SPColor color;
-        sp_color_set_rgb_rgba32(&color, _rgba);
+        color.set( _rgba );
         _colorSelector->base->setColorAlpha(color, SP_RGBA32_A_F(_rgba));
     }
     _colorSelectorDialog.show();
@@ -119,18 +118,18 @@ sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp)
 {
     if (_in_use) return;
     else _in_use = true;
-    
+
     SPColor color;
     float alpha;
     csel->base->getColorAlpha(color, &alpha);
-    guint32 rgba = sp_color_get_rgba32_falpha(&color, alpha);
+    guint32 rgba = color.toRGBA32( alpha );
 
     ColorPicker *ptr = (ColorPicker *)(cp);
 
     (ptr->_preview).setRgba32 (rgba);
 
     if (ptr->_undo && SP_ACTIVE_DESKTOP)
-        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_NONE, 
+        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_NONE,
                          /* TODO: annotate */ "color-picker.cpp:130");
 
     ptr->on_changed (rgba);

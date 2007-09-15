@@ -123,15 +123,14 @@ sp_fill_style_widget_new (void)
 static void
 sp_fill_style_widget_construct ( SPWidget *spw, SPPaintSelector *psel )
 {
+    (void)psel;
 
 #ifdef SP_FS_VERBOSE
     g_print ( "Fill style widget constructed: inkscape %p repr %p\n",
               spw->inkscape, spw->repr );
 #endif
     if (spw->inkscape) {
-
         sp_fill_style_widget_update (spw);
-
     }
 
 } // end of sp_fill_style_widget_construct()
@@ -142,6 +141,8 @@ sp_fill_style_widget_modify_selection ( SPWidget *spw,
                                         guint flags,
                                         SPPaintSelector *psel )
 {
+    (void)selection;
+    (void)psel;
     if (flags & ( SP_OBJECT_MODIFIED_FLAG |
                   SP_OBJECT_PARENT_MODIFIED_FLAG |
                   SP_OBJECT_STYLE_MODIFIED_FLAG) )
@@ -155,6 +156,7 @@ sp_fill_style_widget_change_subselection ( Inkscape::Application *inkscape,
                                         SPDesktop *desktop,
                                         SPWidget *spw )
 {
+    (void)inkscape;
     sp_fill_style_widget_update (spw);
 }
 
@@ -163,6 +165,7 @@ sp_fill_style_widget_change_selection ( SPWidget *spw,
                                         Inkscape::Selection *selection,
                                         SPPaintSelector *psel )
 {
+    (void)selection;
     sp_fill_style_widget_update (spw);
 }
 
@@ -210,8 +213,7 @@ sp_fill_style_widget_update (SPWidget *spw)
             if (query->fill.set && query->fill.isColor()) {
                 gfloat d[3];
                 sp_color_get_rgb_floatv (&query->fill.value.color, d);
-                SPColor color;
-                sp_color_set_rgb_float (&color, d[0], d[1], d[2]);
+                SPColor color( d[0], d[1], d[2] );
                 sp_paint_selector_set_color_alpha (psel, &color, SP_SCALE24_TO_FLOAT (query->fill_opacity.value));
 
             } else if (query->fill.set && query->fill.isPaintserver()) {
@@ -261,6 +263,7 @@ sp_fill_style_widget_paint_mode_changed ( SPPaintSelector *psel,
                                           SPPaintSelectorMode mode,
                                           SPWidget *spw )
 {
+    (void)mode;
     if (g_object_get_data (G_OBJECT (spw), "update"))
         return;
 
@@ -275,6 +278,7 @@ sp_fill_style_widget_fillrule_changed ( SPPaintSelector *psel,
                                           SPPaintSelectorFillRule mode,
                                           SPWidget *spw )
 {
+    (void)psel;
     if (g_object_get_data (G_OBJECT (spw), "update"))
         return;
 
@@ -431,13 +435,13 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                     /* No vector in paint selector should mean that we just changed mode */
 
                     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
-                    int result = objects_query_fillstroke ((GSList *) items, query, true); 
+                    int result = objects_query_fillstroke ((GSList *) items, query, true);
                     guint32 common_rgb = 0;
                     if (result == QUERY_STYLE_MULTIPLE_SAME) {
                         if (!query->fill.isColor()) {
                             common_rgb = sp_desktop_get_color(desktop, true);
                         } else {
-                            common_rgb = sp_color_get_rgba32_ualpha(&query->fill.value.color, 0xff);
+                            common_rgb = query->fill.value.color.toRGBA32( 0xff );
                         }
                         vector = sp_document_default_gradient_vector(document, common_rgb);
                     }
@@ -448,7 +452,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                         sp_repr_css_change_recursive(SP_OBJECT_REPR(i->data), css, "style");
 
                         if (!vector) {
-                            sp_item_set_gradient(SP_ITEM(i->data), 
+                            sp_item_set_gradient(SP_ITEM(i->data),
                                                  sp_gradient_vector_for_object(document, desktop, SP_OBJECT(i->data), true),
                                                  gradient_type, true);
                         } else {

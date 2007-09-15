@@ -307,8 +307,7 @@ StyleSwatch::setStyle(SPStyle *query)
             }
 
         } else if (paint->set && paint->isColor()) {
-            guint32 color = sp_color_get_rgba32_falpha (&(paint->value.color),
-                                                        SP_SCALE24_TO_FLOAT ((i == SS_FILL)? query->fill_opacity.value : query->stroke_opacity.value));
+            guint32 color = paint->value.color.toRGBA32( SP_SCALE24_TO_FLOAT ((i == SS_FILL)? query->fill_opacity.value : query->stroke_opacity.value) );
             ((Inkscape::UI::Widget::ColorPreview*)_color_preview[i])->setRgba32 (color);
             _color_preview[i]->show_all();
             place->add(*_color_preview[i]);

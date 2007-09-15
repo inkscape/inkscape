@@ -109,7 +109,7 @@ sp_color_gtkselector_hide_all (GtkWidget *widget)
 }
 
 GtkWidget *
-sp_color_gtkselector_new (GType, SPColorSpaceType colorspace)
+sp_color_gtkselector_new( GType )
 {
 	SPColorGtkselector *csel;
 
@@ -136,7 +136,7 @@ void ColorGtkselector::_colorChanged( const SPColor& color, gfloat alpha )
     g_return_if_fail (SP_IS_COLOR_GTKSELECTOR (_csel));
     g_return_if_fail( ( 0.0 <= alpha ) && ( alpha <= 1.0 ) );
 
-    sp_color_copy (&_color, &color);
+    _color = color;
     _alpha = alpha;
 
     sp_color_get_rgb_floatv( &color, rgb );
@@ -154,17 +154,15 @@ void ColorGtkselector::_colorChanged( const SPColor& color, gfloat alpha )
 
 void ColorGtkselector::_gtkChanged( GtkColorSelection *colorselection, SPColorGtkselector *gtksel )
 {
-    ColorGtkselector* gtkInst = (ColorGtkselector*)(SP_COLOR_SELECTOR(gtksel)->base);
-    SPColor ourColor;
     GdkColor color;
-    guint16 alpha;
-
     gtk_color_selection_get_current_color (colorselection, &color);
-    alpha = gtk_color_selection_get_current_alpha (colorselection);
 
-    sp_color_set_rgb_float (&ourColor, (color.red / 65535.0), (color.green / 65535.0), (color.blue / 65535.0));
+    guint16 alpha = gtk_color_selection_get_current_alpha (colorselection);
+
+    SPColor ourColor( (color.red / 65535.0), (color.green / 65535.0), (color.blue / 65535.0) );
 
 //     g_message( "*****  _gtkChanged   %04x %04x %04x", color.red, color.green, color.blue );
 
+    ColorGtkselector* gtkInst = (ColorGtkselector*)(SP_COLOR_SELECTOR(gtksel)->base);
     gtkInst->_updateInternals( ourColor, static_cast< gfloat > (alpha) / 65535.0, gtk_color_selection_is_adjusting(colorselection) );
 }

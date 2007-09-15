@@ -15,8 +15,7 @@
 
 #include <sstream>
 
-static double
-helperfns_read_number(gchar const *value) {
+inline double helperfns_read_number(gchar const *value) {
     if (!value) return 0;
     char *end;
     double ret = g_ascii_strtod(value, &end);
@@ -29,7 +28,7 @@ helperfns_read_number(gchar const *value) {
     return ret;
 }
 
-static bool helperfns_read_bool(gchar const *value, bool default_value){
+inline bool helperfns_read_bool(gchar const *value, bool default_value){
     if (!value) return default_value;
     switch(value[0]){
         case 't':
@@ -42,7 +41,7 @@ static bool helperfns_read_bool(gchar const *value, bool default_value){
     return default_value;
 }
 
-static std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
+inline std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
         std::vector<gdouble> v(size, (gdouble) 0);
         std::istringstream is(value);
         for(int i = 0; i < size && (is >> v[i]); i++);

@@ -1230,7 +1230,7 @@ sp_gradient_vector_for_object(SPDocument *const doc, SPDesktop *const desktop,
                 rgba = sp_desktop_get_color(desktop, is_fill);
             }
         } else if (paint.isColor()) {
-            rgba = sp_color_get_rgba32_ualpha(&paint.value.color, 0xff);
+            rgba = paint.value.color.toRGBA32( 0xff );
         } else {
             // if o doesn't use flat color, then take current color of the desktop.
             rgba = sp_desktop_get_color(desktop, is_fill);

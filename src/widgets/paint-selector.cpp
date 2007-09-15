@@ -213,7 +213,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
     gtk_box_pack_start(GTK_BOX(psel), psel->frame, TRUE, TRUE, 0);
 
     /* Last used color */
-    sp_color_set_rgb_float(&psel->color, 0.0, 0.0, 0.0);
+    psel->color.set( 0.0, 0.0, 0.0 );
     psel->alpha = 1.0;
 }
 
@@ -363,6 +363,7 @@ sp_paint_selector_set_color_alpha(SPPaintSelector *psel, SPColor const *color, f
     SPColorSelector *csel;
     guint32 rgba;
 
+/*
     if ( sp_color_get_colorspace_type(color) == SP_COLORSPACE_TYPE_CMYK )
     {
 #ifdef SP_PS_VERBOSE
@@ -371,6 +372,7 @@ sp_paint_selector_set_color_alpha(SPPaintSelector *psel, SPColor const *color, f
         sp_paint_selector_set_mode(psel, SP_PAINT_SELECTOR_MODE_COLOR_CMYK);
     }
     else
+*/
     {
 #ifdef SP_PS_VERBOSE
         g_print("PaintSelector set RGBA\n");
@@ -379,7 +381,7 @@ sp_paint_selector_set_color_alpha(SPPaintSelector *psel, SPColor const *color, f
     }
 
     csel = (SPColorSelector*)gtk_object_get_data(GTK_OBJECT(psel->selector), "color-selector");
-    rgba = sp_color_get_rgba32_falpha( &*color, alpha );
+    rgba = color->toRGBA32( alpha );
     csel->base->setColorAlpha( *color, alpha );
 }
 
@@ -597,7 +599,7 @@ sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelectorMode mode
         gtk_widget_show(vb);
 
         /* Color selector */
-        csel = sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK, SP_COLORSPACE_TYPE_NONE);
+        csel = sp_color_selector_new( SP_TYPE_COLOR_NOTEBOOK );
         gtk_widget_show(csel);
         gtk_object_set_data(GTK_OBJECT(vb), "color-selector", csel);
         gtk_box_pack_start(GTK_BOX(vb), csel, TRUE, TRUE, 0);
@@ -902,7 +904,7 @@ sp_paint_selector_set_flat_color(SPPaintSelector *psel, SPDesktop *desktop, gcha
     SPColor color;
     gfloat alpha;
     sp_paint_selector_get_color_alpha(psel, &color, &alpha);
-    guint32 rgba = sp_color_get_rgba32_falpha(&color, alpha);
+    guint32 rgba = color.toRGBA32( alpha );
 
     gchar b[64];
     sp_svg_write_color(b, 64, rgba);

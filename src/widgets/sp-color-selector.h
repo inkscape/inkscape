@@ -31,9 +31,6 @@ public:
     virtual void setSubmode( guint submode );
     virtual guint getSubmode() const;
 
-    virtual SPColorSpaceType getColorspace() const;
-    virtual gboolean setColorspace( SPColorSpaceType colorspace );
-
 protected:
     void _grabbed();
     void _released();
@@ -88,7 +85,7 @@ struct SPColorSelectorClass {
 
 GType sp_color_selector_get_type (void);
 
-GtkWidget *sp_color_selector_new (GType selector_type, SPColorSpaceType colorspace);
+GtkWidget *sp_color_selector_new( GType selector_type );
 
 
 
