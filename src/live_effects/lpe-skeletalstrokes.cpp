@@ -62,12 +62,20 @@ LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     pattern(_("Pattern source"), _("Path to put along the skeleton path"), "pattern", &wr, this, "M0,0 L1,0"),
     copytype(_("Pattern copies"), _("How many pattern copies to place along the skeleton path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED),
     prop_scale(_("Width"), _("Width of the pattern"), "prop_scale", &wr, this, 1),
-    scale_y_rel(_("Width in units of length"), _("Scale the width of the pattern in units of its length"), "scale_y_rel", &wr, this, false)
+    scale_y_rel(_("Width in units of length"), _("Scale the width of the pattern in units of its length"), "scale_y_rel", &wr, this, false),
+    spacing(_("Spacing"), _("Space between copies of the pattern"), "spacing", &wr, this, 0),
+    normal_offset(_("Normal offset"), "", "normal_offset", &wr, this, 0),
+    tang_offset(_("Tangential offset"), "", "tang_offset", &wr, this, 0),
+    vertical_pattern(_("Pattern is vertical"), "", "vertical_pattern", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
     registerParameter( dynamic_cast<Parameter *>(&copytype) );
     registerParameter( dynamic_cast<Parameter *>(&prop_scale) );
     registerParameter( dynamic_cast<Parameter *>(&scale_y_rel) );
+//    registerParameter( dynamic_cast<Parameter *>(&spacing) );
+//    registerParameter( dynamic_cast<Parameter *>(&normal_offset) );
+//    registerParameter( dynamic_cast<Parameter *>(&tang_offset) );
+    registerParameter( dynamic_cast<Parameter *>(&vertical_pattern) );
 
     prop_scale.param_set_digits(3);
     prop_scale.param_set_increments(0.01, 0.10);
@@ -94,8 +102,8 @@ LPESkeletalStrokes::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in
     n = force_continuity(remove_short_cuts(n,.1));
 
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independant(pattern);
-    Piecewise<SBasis> x=Piecewise<SBasis>(patternd2[0]);
-    Piecewise<SBasis> y=Piecewise<SBasis>(patternd2[1]);
+    Piecewise<SBasis> x = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
+    Piecewise<SBasis> y = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[0]) : Piecewise<SBasis>(patternd2[1]);
     Interval pattBnds = bounds_exact(x);
     x -= pattBnds.min();
     Interval pattBndsY = bounds_exact(y);

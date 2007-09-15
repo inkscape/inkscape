@@ -37,6 +37,10 @@ private:
     EnumParam<SkelCopyType> copytype;
     ScalarParam  prop_scale;
     BoolParam scale_y_rel;
+    ScalarParam  spacing;
+    ScalarParam  normal_offset;
+    ScalarParam  tang_offset;
+    BoolParam    vertical_pattern;
 
     void on_pattern_pasted();
 

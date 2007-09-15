@@ -120,9 +120,12 @@ void
 ScalarParam::param_make_integer(bool yes)
 {
     integer = yes;
+    digits = 0;
+    inc_step = 1;
+    inc_page = 10;
     if (rsu) {
-        rsu->getS()->setDigits(0);
-        rsu->getS()->setIncrements(1, 10);
+        rsu->getS()->setDigits(digits);
+        rsu->getS()->setIncrements(inc_step, inc_page);
     }
 }
 
@@ -133,8 +136,6 @@ ScalarParam::param_getWidget()
         rsu = new Inkscape::UI::Widget::RegisteredScalar();
         rsu->init(param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());
         rsu->setValue(value);
-        if (integer)
-            param_make_integer();
         rsu->getS()->setDigits(digits);
         rsu->getS()->setIncrements(inc_step, inc_page);
 
