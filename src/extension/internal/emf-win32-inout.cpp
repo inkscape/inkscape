@@ -420,7 +420,7 @@ select_extpen(PEMF_CALLBACK_DATA d, int index)
     g = SP_COLOR_U_TO_F( GetGValue(pEmr->elp.elpColor) );
     b = SP_COLOR_U_TO_F( GetBValue(pEmr->elp.elpColor) );
 
-    d->style.stroke.value.color.( r, g, b );
+    d->style.stroke.value.color.set( r, g, b );
 
     d->stroke_set = true;
 }
@@ -442,7 +442,7 @@ select_brush(PEMF_CALLBACK_DATA d, int index)
         r = SP_COLOR_U_TO_F( GetRValue(pEmr->lb.lbColor) );
         g = SP_COLOR_U_TO_F( GetGValue(pEmr->lb.lbColor) );
         b = SP_COLOR_U_TO_F( GetBValue(pEmr->lb.lbColor) );
-        d->style.fill.value.color.( r, g, b );
+        d->style.fill.value.color.set( r, g, b );
     }
 
     d->fill_set = true;
