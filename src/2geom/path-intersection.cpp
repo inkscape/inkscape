@@ -105,6 +105,7 @@ int winding(Path const &path, Point p) {
  * hole.  Defaults to using the sign of area when it reaches funny cases.
  */
 bool path_direction(Path const &p) {
+    if(p.empty()) return false;
     //could probably be more efficient, but this is a quick job
     double y = p.initialPoint()[Y];
     double x = p.initialPoint()[X];
@@ -187,8 +188,8 @@ void pair_intersect(Curve const & A, double Al, double Ah,
     if(!Ar.intersects(Br)) return;
     
     //Checks the general linearity of the function
-    if((depth > 12) || (A.boundsLocal(Interval(Al, Ah), 1).maxExtent() < 0.1 
-                    &&  B.boundsLocal(Interval(Bl, Bh), 1).maxExtent() < 0.1)) {
+    if((depth > 12)) { // || (A.boundsLocal(Interval(Al, Ah), 1).maxExtent() < 0.1 
+                    //&&  B.boundsLocal(Interval(Bl, Bh), 1).maxExtent() < 0.1)) {
         double tA, tB, c;
         if(linear_intersect(A.pointAt(Al), A.pointAt(Ah), 
                             B.pointAt(Bl), B.pointAt(Bh), 
@@ -425,6 +426,7 @@ CrossingSet crossings_among(std::vector<Path> const &p) {
 }
 */
 
+
 Crossings curve_self_crossings(Curve const &a) {
     Crossings res;
     std::vector<double> spl;
@@ -493,7 +495,6 @@ std::vector<std::vector<Rect> > curves_split_bounds(Path const &p, std::vector<s
     return ret;
 }
 
-
 Crossings path_self_crossings(Path const &p) {
     Crossings ret;
     std::vector<std::vector<unsigned> > cull = sweep_bounds(bounds(p));
@@ -535,7 +536,7 @@ Crossings path_self_crossings(Path const &p) {
 }
 */
 
-Crossings path_self_crossings(Path const &p) {
+Crossings self_crossings(Path const &p) {
     Crossings ret;
     std::vector<std::vector<unsigned> > cull = sweep_bounds(bounds(p));
     for(unsigned i = 0; i < cull.size(); i++) {
@@ -551,7 +552,7 @@ Crossings path_self_crossings(Path const &p) {
                 Crossings res2;
                 for(unsigned k = 0; k < res.size(); k++) {
                     if(res[k].ta != 0 && res[k].ta != 1 && res[k].tb != 0 && res[k].tb != 1) {
-                        res.push_back(res[k]);
+                        res2.push_back(res[k]);
                     }
                 }
                 res = res2;
@@ -563,6 +564,11 @@ Crossings path_self_crossings(Path const &p) {
     return ret;
 }
 
+void flip_crossings(Crossings &crs) {
+    for(unsigned i = 0; i < crs.size(); i++)
+        crs[i] = Crossing(crs[i].tb, crs[i].ta, crs[i].b, crs[i].a, !crs[i].dir);
+}
+
 CrossingSet crossings_among(std::vector<Path> const &p) {
     CrossingSet results(p.size(), Crossings());
     if(p.empty()) return results;
@@ -571,8 +577,10 @@ CrossingSet crossings_among(std::vector<Path> const &p) {
     
     std::vector<std::vector<unsigned> > cull = sweep_bounds(bounds(p));
     for(unsigned i = 0; i < cull.size(); i++) {
-        Crossings res = path_self_crossings(p[i]);
+        Crossings res = self_crossings(p[i]);
         for(unsigned k = 0; k < res.size(); k++) { res[k].a = res[k].b = i; }
+        merge_crossings(results[i], res, i);
+        flip_crossings(res);
         merge_crossings(results[i], res, i);
         for(unsigned jx = 0; jx < cull[i].size(); jx++) {
             unsigned j = cull[i][jx];
@@ -583,6 +591,7 @@ CrossingSet crossings_among(std::vector<Path> const &p) {
             merge_crossings(results[j], res, j);
         }
     }
+    return results;
 }
 
 }

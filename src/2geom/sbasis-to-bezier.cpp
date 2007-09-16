@@ -32,9 +32,8 @@ double W(unsigned n, unsigned j, unsigned k) {
 }
 
 // this produces a degree 2q bezier from a degree k sbasis
-std::vector<double>
+Bezier
 sbasis_to_bezier(SBasis const &B, unsigned q) {
-    std::vector<double> result;
     if(q == 0) {
         q = B.size();
         /*if(B.back()[0] == B.back()[1]) {
@@ -42,7 +41,7 @@ sbasis_to_bezier(SBasis const &B, unsigned q) {
             }*/
     }
     unsigned n = q*2;
-    result.resize(n, 0);
+    Bezier result = Bezier(Bezier::Order(n-1));
     if(q > B.size())
         q = B.size();
     n--;

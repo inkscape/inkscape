@@ -100,7 +100,7 @@ class D2{
 
     Point operator()(double t) const;
     Point operator()(double x, double y) const;
-};
+};
 template <typename T>
 inline D2<T> reverse(const D2<T> &a) {
     boost::function_requires<FragmentConcept<T> >();
@@ -361,7 +361,7 @@ D2<T>::operator()(double x, double y) const {
 template<typename T>
 D2<T> derivative(D2<T> const & a) {
     return D2<T>(derivative(a[X]), derivative(a[Y]));
-}
+}
 template<typename T>
 D2<T> integral(D2<T> const & a) {
     return D2<T>(integral(a[X]), integral(a[Y]));
@@ -389,7 +389,7 @@ template <typename T>
 Rect bounds_local(const D2<T> &a, const Interval &t) {
     boost::function_requires<FragmentConcept<T> >();        
     return Rect(bounds_local(a[X], t), bounds_local(a[Y], t));
-}
+}
 };
 
 /*

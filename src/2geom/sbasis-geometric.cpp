@@ -10,7 +10,7 @@
  *
  * The functions defined in this header related to 2d geometric operations such as arc length,
  * unit_vector, curvature, and centroid.  Most are built on top of unit_vector, which takes an
- * arbitrary D2 and returns an D2 with unit length with the same direction.
+ * arbitrary D2 and returns a D2 with unit length with the same direction.
  *
  * Todo/think about:
  *  arclength D2 -> sbasis (giving arclength function)
@@ -198,13 +198,13 @@ Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
         r_eqn2 = Linear(1)-(a*a+b*b);
     }
     
-    //our candidat is:
+    //our candidate is:
     D2<SBasis> unitV;
     unitV[0] =  b;
     unitV[1] = -a;
 
     //is it good?
-    double rel_tol = max(1.,max(V_in[0].tailError(0),V_in[1].tailError(0)))*tol;
+    double rel_tol = std::max(1.,std::max(V_in[0].tailError(0),V_in[1].tailError(0)))*tol;
 
     if (r_eqn1.tailError(order)>rel_tol || r_eqn2.tailError(order)>tol){
         //if not: subdivide and concat results.

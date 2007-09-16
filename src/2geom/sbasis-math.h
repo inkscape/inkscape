@@ -48,14 +48,14 @@ Piecewise<SBasis> abs(          SBasis const &f);
 Piecewise<SBasis> abs(Piecewise<SBasis>const &f);
 
 //- max(f,g), min(f,g) ----------------------------------------------
-Piecewise<SBasis> maxSb(          SBasis  const &f,           SBasis  const &g);
-Piecewise<SBasis> maxSb(Piecewise<SBasis> const &f,           SBasis  const &g);
-Piecewise<SBasis> maxSb(          SBasis  const &f, Piecewise<SBasis> const &g);
-Piecewise<SBasis> maxSb(Piecewise<SBasis> const &f, Piecewise<SBasis> const &g);
-Piecewise<SBasis> minSb(          SBasis  const &f,           SBasis  const &g);
-Piecewise<SBasis> minSb(Piecewise<SBasis> const &f,           SBasis  const &g);
-Piecewise<SBasis> minSb(          SBasis  const &f, Piecewise<SBasis> const &g);
-Piecewise<SBasis> minSb(Piecewise<SBasis> const &f, Piecewise<SBasis> const &g);
+Piecewise<SBasis> max(          SBasis  const &f,           SBasis  const &g);
+Piecewise<SBasis> max(Piecewise<SBasis> const &f,           SBasis  const &g);
+Piecewise<SBasis> max(          SBasis  const &f, Piecewise<SBasis> const &g);
+Piecewise<SBasis> max(Piecewise<SBasis> const &f, Piecewise<SBasis> const &g);
+Piecewise<SBasis> min(          SBasis  const &f,           SBasis  const &g);
+Piecewise<SBasis> min(Piecewise<SBasis> const &f,           SBasis  const &g);
+Piecewise<SBasis> min(          SBasis  const &f, Piecewise<SBasis> const &g);
+Piecewise<SBasis> min(Piecewise<SBasis> const &f, Piecewise<SBasis> const &g);
 
 //-sign(x)---------------------------------------------------------------
 Piecewise<SBasis> signSb(          SBasis const &f);

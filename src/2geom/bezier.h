@@ -1,4 +1,4 @@
-/*
+ /*
  * bezier.h
  *
  * Copyright 2007  MenTaLguY <mental@rydia.net>
@@ -34,6 +34,7 @@
 #define SEEN_BEZIER_H
 
 #include "coord.h"
+#include <valarray>
 #include "isnan.h"
 #include "bezier-to-sbasis.h"
 #include "d2.h"
@@ -42,8 +43,7 @@
 
 namespace Geom {
 
-template<unsigned order>
-Coord subdivideArr(Coord t, Coord const *v, Coord *left, Coord *right) {
+inline Coord subdivideArr(Coord t, Coord const *v, Coord *left, Coord *right, unsigned order) {
     Coord vtemp[order+1][order+1];
 
     /* Copy control points	*/
@@ -66,80 +66,93 @@ Coord subdivideArr(Coord t, Coord const *v, Coord *left, Coord *right) {
 }
 
 
-template <unsigned order>
 class Bezier {
 private:
-    Coord c_[order+1];
+    std::valarray<Coord> c_;
 
-    template<unsigned ord>
-    friend Bezier<ord> portion(const Bezier<ord> & a, Coord from, Coord to);
+    friend Bezier portion(const Bezier & a, Coord from, Coord to);
 
-    template<unsigned ord>
-    friend Interval bounds_fast(Bezier<ord> const & b);
+    friend Interval bounds_fast(Bezier const & b);
 
-    template<unsigned ord>
-    friend Bezier<ord-1> derivative(const Bezier<ord> & a);
+    friend Bezier derivative(const Bezier & a);
 
 protected:
-    Bezier(Coord const c[]) {
-        std::copy(c, c+order+1, c_);
+    Bezier(Coord const c[], unsigned ord) : c_(c, ord+1){
+        //std::copy(c, c+order()+1, &c_[0]);
     }
 
 public:
+    unsigned int order() const { return c_.size()-1;}
+    unsigned int size() const { return c_.size();}
+    
+    Bezier() :c_(0., 32) {}
+    Bezier(const Bezier& b) :c_(b.c_) {}
+    Bezier &operator=(Bezier const &other) {
+        if ( c_.size() != other.c_.size() ) {
+            c_.resize(other.c_.size());
+        }
+        c_ = other.c_;
+        return *this;
+    }
 
-    //TODO: fix this assert - get it compiling!
-    //template <unsigned required_order>
-    //static void assert_order(Bezier<required_order> const *) {}
+    struct Order {
+        unsigned order;
+        explicit Order(Bezier const &b) : order(b.order()) {}
+        explicit Order(unsigned o) : order(o) {}
+        operator unsigned() const { return order; }
+    };
 
-    Bezier() {}
+    //Construct an arbitrary order bezier
+    Bezier(Order ord) : c_(0., ord.order+1) {
+        assert(ord.order ==  order());
+    }
 
-    //Construct an order-0 bezier (constant Bézier)
-    explicit Bezier(Coord c0) {
-        //assert_order<0>(this);
+    explicit Bezier(Coord c0) : c_(0., 1) {
         c_[0] = c0;
     }
 
     //Construct an order-1 bezier (linear Bézier)
-    Bezier(Coord c0, Coord c1) {
-        //assert_order<1>(this);
+    Bezier(Coord c0, Coord c1) : c_(0., 2) {
         c_[0] = c0; c_[1] = c1;
     }
 
     //Construct an order-2 bezier (quadratic Bézier)
-    Bezier(Coord c0, Coord c1, Coord c2) {
-        //assert_order<2>(this);
+    Bezier(Coord c0, Coord c1, Coord c2) : c_(0., 3) {
         c_[0] = c0; c_[1] = c1; c_[2] = c2;
     }
 
     //Construct an order-3 bezier (cubic Bézier)
-    Bezier(Coord c0, Coord c1, Coord c2, Coord c3) {
-        //assert_order<3>(this);
+    Bezier(Coord c0, Coord c1, Coord c2, Coord c3) : c_(0., 4) {
         c_[0] = c0; c_[1] = c1; c_[2] = c2; c_[3] = c3;
     }
 
-    inline unsigned degree() const { return order; }
+    inline unsigned degree() const { return order(); }
 
     //IMPL: FragmentConcept
     typedef Coord output_type;
     inline bool isZero() const { 
-        for(unsigned i = 0; i <= order; i++) {
+        for(unsigned i = 0; i <= order(); i++) {
             if(c_[i] != 0) return false;
         }
         return true;
     }
     inline bool isFinite() const {
-        for(unsigned i = 0; i <= order; i++) {
+        for(unsigned i = 0; i <= order(); i++) {
             if(!is_finite(c_[i])) return false;
         }
         return true;
     }
     inline Coord at0() const { return c_[0]; }
-    inline Coord at1() const { return c_[order]; }
+    inline Coord at1() const { return c_[order()]; }
 
-    inline Coord valueAt(double t) const { return subdivideArr<order>(t, c_, NULL, NULL); }
+    inline Coord valueAt(double t) const { 
+        return subdivideArr(t, &c_[0], NULL, NULL, order()); 
+    }
     inline Coord operator()(double t) const { return valueAt(t); }
 
-    inline SBasis toSBasis() const { return bezier_to_sbasis<order>(c_); }
+    inline SBasis toSBasis() const { 
+        return bezier_to_sbasis(&c_[0], order());
+    }
 
     //Only mutator
     inline Coord &operator[](unsigned ix) { return c_[ix]; }
@@ -150,89 +163,91 @@ public:
      * evaluate roughly in situ. */
     
     std::vector<Coord> valueAndDerivatives(Coord t, unsigned n_derivs) const {
-        throw NotImplemented();
-        // Can't be implemented without a dynamic version of subdivide.
-        /*std::vector<Coord> val_n_der;
-        Coord d_[order+1];
-        for(int di = n_derivs; di > 0; di--) {
-            val_n_der.push_back(subdivideArr<di>(t, d_, NULL, NULL));
-            for(unsigned i = 0; i < di; i++) {
-                d[i] = order*(a._c[i+1] - a._c[i]);
+        std::vector<Coord> val_n_der;
+        Coord d_[order()+1];
+        unsigned nn = n_derivs;
+        if(nn > order())
+            nn = order();
+        for(unsigned i = 0; i < size(); i++)
+            d_[i] = c_[i];
+        for(unsigned di = 0; di < nn; di++) {
+            val_n_der.push_back(subdivideArr(t, d_, NULL, NULL, order() - di));
+            for(unsigned i = 0; i < order() - di; i++) {
+                d_[i] = (order()-di)*(d_[i+1] - d_[i]);
             }
-            }*/
+        }
+        val_n_der.resize(n_derivs);
+        return val_n_der;
     }
   
-    std::pair<Bezier<order>, Bezier<order> > subdivide(Coord t) const {
-        Bezier<order> a, b;
-        subdivideArr(t, order, c_, a.c_, b.c_);
-        return std::pair<Bezier<order>, Bezier<order> >(a, b);
+    std::pair<Bezier, Bezier > subdivide(Coord t) const {
+        Bezier a(Bezier::Order(*this)), b(Bezier::Order(*this));
+        subdivideArr(t, &c_[0], &a.c_[0], &b.c_[0], order());
+        return std::pair<Bezier, Bezier >(a, b);
     }
 
     std::vector<double> roots() const {
         std::vector<double> solutions;
-        find_bernstein_roots(c_, order, solutions, 0, 0.0, 1.0);
+        find_bernstein_roots(&c_[0], order(), solutions, 0, 0.0, 1.0);
         return solutions;
     }
 };
 
 //TODO: implement others
-template<unsigned order>
-Bezier<order> operator+(const Bezier<order> & a, double v) {
-    Bezier<order> result;
-    for(unsigned i = 0; i <= order; i++)
+inline Bezier operator+(const Bezier & a, double v) {
+    Bezier result = Bezier(Bezier::Order(a));
+    for(unsigned i = 0; i <= a.order(); i++)
         result[i] = a[i] + v;
     return result;
 }
-template<unsigned order>
-Bezier<order> operator-(const Bezier<order> & a, double v) {
-    Bezier<order> result;
-    for(unsigned i = 0; i <= order; i++)
+
+inline Bezier operator-(const Bezier & a, double v) {
+    Bezier result = Bezier(Bezier::Order(a));
+    for(unsigned i = 0; i <= a.order(); i++)
         result[i] = a[i] - v;
     return result;
 }
-template<unsigned order>
-Bezier<order> operator*(const Bezier<order> & a, double v) {
-    Bezier<order> result;
-    for(unsigned i = 0; i <= order; i++)
+
+inline Bezier operator*(const Bezier & a, double v) {
+    Bezier result = Bezier(Bezier::Order(a));
+    for(unsigned i = 0; i <= a.order(); i++)
         result[i] = a[i] * v;
     return result;
 }
-template<unsigned order>
-Bezier<order> operator/(const Bezier<order> & a, double v) {
-    Bezier<order> result;
-    for(unsigned i = 0; i <= order; i++)
+
+inline Bezier operator/(const Bezier & a, double v) {
+    Bezier result = Bezier(Bezier::Order(a));
+    for(unsigned i = 0; i <= a.order(); i++)
         result[i] = a[i] / v;
     return result;
 }
 
-template<unsigned order>
-Bezier<order> reverse(const Bezier<order> & a) {
-    Bezier<order> result;
-    for(unsigned i = 0; i <= order; i++)
-        result[i] = a[order - i];
+inline Bezier reverse(const Bezier & a) {
+    Bezier result = Bezier(Bezier::Order(a));
+    for(unsigned i = 0; i <= a.order(); i++)
+        result[i] = a[a.order() - i];
     return result;
 }
 
-template<unsigned order>
-Bezier<order> portion(const Bezier<order> & a, double from, double to) {
+inline Bezier portion(const Bezier & a, double from, double to) {
     //TODO: implement better?
-    Coord res[order+1];
+    Coord res[a.order()+1];
     if(from == 0) {
-        if(to == 1) { return Bezier<order>(a); }
-        subdivideArr<order>(to, a.c_, res, NULL);
-        return Bezier<order>(res);
+        if(to == 1) { return Bezier(a); }
+        subdivideArr(to, &a.c_[0], res, NULL, a.order());
+        return Bezier(res, a.order());
     }
-    subdivideArr<order>(from, a.c_, NULL, res);
-    if(to == 1) return Bezier<order>(res);
-    Coord res2[order+1];
-    subdivideArr<order>((to - from)/(1 - from), res, res2, NULL);
-    return Bezier<order>(res2);
+    subdivideArr(from, &a.c_[0], NULL, res, a.order());
+    if(to == 1) return Bezier(res, a.order());
+    Coord res2[a.order()+1];
+    subdivideArr((to - from)/(1 - from), res, res2, NULL, a.order());
+    return Bezier(res2, a.order());
 }
 
-template<unsigned order>
-std::vector<Point> bezier_points(const D2<Bezier<order> > & a) {
+// XXX Todo: how to handle differing orders
+inline std::vector<Point> bezier_points(const D2<Bezier > & a) {
     std::vector<Point> result;
-    for(unsigned i = 0; i <= order; i++) {
+    for(unsigned i = 0; i <= a[0].order(); i++) {
         Point p;
         for(unsigned d = 0; d < 2; d++) p[d] = a[d][i];
         result.push_back(p);
@@ -240,31 +255,45 @@ std::vector<Point> bezier_points(const D2<Bezier<order> > & a) {
     return result;
 }
 
-template<unsigned order>
-Bezier<order-1> derivative(const Bezier<order> & a) {
-    Bezier<order-1> der;
+inline Bezier derivative(const Bezier & a) {
+    if(a.order() == 1) return Bezier(0.0);
+    Bezier der(Bezier::Order(a.order()-1));
     
-    for(unsigned i = 0; i < order; i++) {
-        der.c_[i] = order*(a.c_[i+1] - a.c_[i]);
+    for(unsigned i = 0; i < a.order(); i++) {
+        der.c_[i] = a.order()*(a.c_[i+1] - a.c_[i]);
     }
     return der;
 }
 
-template<unsigned order>
-inline Interval bounds_fast(Bezier<order> const & b) {
-    return Interval::fromArray(b.c_, order+1);
+inline Bezier integral(const Bezier & a) {
+    Bezier inte(Bezier::Order(a.order()+1));
+    
+    inte[0] = 0;
+    for(unsigned i = 0; i < inte.order(); i++) {
+        inte[i+1] = inte[i] + a[i]/(inte.order());
+    }
+    return inte;
+}
+
+inline Interval bounds_fast(Bezier const & b) {
+    return Interval::fromArray(&b.c_[0], b.size());
 }
 
 //TODO: better bounds exact
-template<unsigned order>
-inline Interval bounds_exact(Bezier<order> const & b) {
+inline Interval bounds_exact(Bezier const & b) {
     return bounds_exact(b.toSBasis());
 }
 
-template<unsigned order>
-inline Interval bounds_local(Bezier<order> const & b, Interval i) {
+inline Interval bounds_local(Bezier const & b, Interval i) {
     return bounds_fast(portion(b, i.min(), i.max()));
     //return bounds_local(b.toSBasis(), i);
+}
+
+inline std::ostream &operator<< (std::ostream &out_file, const Bezier & b) {
+    for(unsigned i = 0; i < b.size(); i++) {
+        out_file << b[i] << ", ";
+    }
+    return out_file;
 }
 
 }

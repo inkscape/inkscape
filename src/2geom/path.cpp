@@ -121,14 +121,14 @@ void Path::appendPortionTo(Path &ret, double from, double to) const {
     delete v;
     return;
   }
-  const_iterator toi   = inc(begin(), (unsigned)ti);
+  const_iterator toi = inc(begin(), (unsigned)ti);
   if(ff != 1.) {
     Curve *fromv = fromi->portion(ff, 1.);
     //fromv->setInitial(ret.finalPoint());
     ret.append(*fromv);
     delete fromv;
   }
-  if(from > to) {
+  if(from >= to) {
     const_iterator ender = end();
     if(ender->initialPoint() == ender->finalPoint()) ender++;
     ret.insert(ret.end(), ++fromi, ender);

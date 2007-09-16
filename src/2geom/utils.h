@@ -1,5 +1,5 @@
-#ifndef MATH_UTILS_HEADER
-#define MATH_UTILS_HEADER
+#ifndef UTILS_HEADER
+#define UTILS_HEADER
 
 /** Various utility functions.
  *

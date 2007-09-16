@@ -77,10 +77,10 @@ class D2<Interval> {
      *  (clockwise if +Y is up, anticlockwise if +Y is down) */
     Point corner(unsigned i) const {
         switch(i % 4) {
-            case 0: return Point(f[X].min(), f[Y].min());
-            case 1: return Point(f[X].max(), f[Y].min());
-            case 2: return Point(f[X].max(), f[Y].max());
-            case 3: return Point(f[X].min(), f[Y].max());
+            case 0:  return Point(f[X].min(), f[Y].min());
+            case 1:  return Point(f[X].max(), f[Y].min());
+            case 2:  return Point(f[X].max(), f[Y].max());
+            default: return Point(f[X].min(), f[Y].max());
         }
     }
         

@@ -5,14 +5,6 @@
 
 namespace Geom {
 
-Regions sanitize_path(Path const &p) {
-    Regions results;
-    Crossings crs = self_crossings(p);
-    for(unsigned i = 0; i < crs.size(); i++) {
-        
-    }
-}
-
 Region Region::operator*(Matrix const &m) const {
     Region r((m.flips() ? boundary.reverse() : boundary) * m, fill);
     if(box && m.onlyScaleAndTranslation()) r.box = (*box) * m;

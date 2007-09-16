@@ -34,11 +34,16 @@ class Region {
         if(!box) box = boost::optional<Rect>(boundary.boundsFast());
         return *box;
     }
+    
     bool contains(Point const &p) const {
         if(box && !box->contains(p)) return false;
         return Geom::contains(boundary, p);
     }
     bool contains(Region const &other) const { return contains(other.boundary.initialPoint()); }
+    
+    bool includes(Point const &p) const {
+        return logical_xor(!fill, contains(p));
+    }
     
     Region inverse() const { return Region(boundary.reverse(), box, !fill); }
     

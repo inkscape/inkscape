@@ -48,7 +48,7 @@ typedef SimpleCrosser DefaultCrosser;
 std::vector<double> path_mono_splits(Path const &p);
 
 CrossingSet crossings_among(std::vector<Path> const & p);
-inline Crossings self_crossings(Path const & a) { return crossings_among(std::vector<Path>(1, a))[0]; }
+Crossings self_crossings(Path const & a);
 
 inline Crossings crossings(Path const & a, Path const & b) {
     DefaultCrosser c = DefaultCrosser();

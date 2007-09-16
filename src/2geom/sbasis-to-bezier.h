@@ -6,7 +6,7 @@
 
 namespace Geom{
 // this produces a degree k bezier from a degree k sbasis
-std::vector<double>
+Bezier
 sbasis_to_bezier(SBasis const &B, unsigned q = 0);
 
 std::vector<Geom::Point>

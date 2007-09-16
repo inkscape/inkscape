@@ -36,7 +36,7 @@ class Shape {
     friend Shape shape_boolean(bool rev, Shape const &, Shape const &, CrossingSet const &);
     friend Shape boolop(Shape const &a, Shape const &b, unsigned);
     friend Shape boolop(Shape const &a, Shape const &b, unsigned, CrossingSet const &);
-
+    friend void add_to_shape(Shape &s, Path const &p, bool);
   public:
     Shape() : fill(true) {}
     explicit Shape(Region const & r) {
@@ -61,9 +61,10 @@ class Shape {
     bool inside_invariants() const;  //semi-slow & easy to violate : checks that the insides are inside, the outsides are outside
     bool region_invariants() const; //semi-slow                    : checks for self crossing
     bool cross_invariants() const; //slow                          : checks that everything is disjoint
-    bool invariants() const;      //vera slow (combo rombo, checks the above)
+    bool invariants() const;      //vera slow (combo, checks the above)
 
-  private:     
+  private:
+    std::vector<unsigned> containment_list(Point p) const;
     void update_fill() const {
         unsigned ix = outer_index(content);
         if(ix < size())
@@ -80,10 +81,21 @@ inline CrossingSet crossings_between(Shape const &a, Shape const &b) { return cr
 Shape shape_boolean(bool rev, Shape const &, Shape const &, CrossingSet const &);
 Shape shape_boolean(bool rev, Shape const &, Shape const &);
 
+//unsigned pick_coincident(unsigned ix, unsigned jx, bool &rev, std::vector<Path> const &ps, CrossingSet const &crs);
+//void outer_crossing(unsigned &ix, unsigned &jx, bool & dir, std::vector<Path> const & ps, CrossingSet const & crs);
+void crossing_dual(unsigned &i, unsigned &j, CrossingSet const & crs);
+unsigned crossing_along(double t, unsigned ix, unsigned jx, bool dir, Crossings const & crs);
+
 Shape boolop(Shape const &, Shape const &, unsigned flags);
 Shape boolop(Shape const &, Shape const &, unsigned flags, CrossingSet &);
 
-Regions regionize_paths(std::vector<Path> const &ps, bool evenodd=true);
+Shape sanitize(std::vector<Path> const &ps);
+
+Shape stopgap_cleaner(std::vector<Path> const &ps);
+
+inline std::vector<Path> desanitize(Shape const & s) {
+    return paths_from_regions(s.getContent());
+}
 
 }
 

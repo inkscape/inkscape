@@ -56,34 +56,34 @@ Piecewise<SBasis> abs(Piecewise<SBasis> const &f){
     return absf;
 }
 
-//-maxSb(x,y), minSb(x,y)--------------------------------------------------------
-Piecewise<SBasis> maxSb(          SBasis  const &f,           SBasis  const &g){
-    return maxSb(Piecewise<SBasis>(f),Piecewise<SBasis>(g));
+//-max(x,y), min(x,y)--------------------------------------------------------
+Piecewise<SBasis> max(          SBasis  const &f,           SBasis  const &g){
+    return max(Piecewise<SBasis>(f),Piecewise<SBasis>(g));
 }
-Piecewise<SBasis> maxSb(Piecewise<SBasis> const &f,           SBasis  const &g){
-    return maxSb(f,Piecewise<SBasis>(g));
+Piecewise<SBasis> max(Piecewise<SBasis> const &f,           SBasis  const &g){
+    return max(f,Piecewise<SBasis>(g));
 }
-Piecewise<SBasis> maxSb(          SBasis  const &f, Piecewise<SBasis> const &g){
-    return maxSb(Piecewise<SBasis>(f),g);
+Piecewise<SBasis> max(          SBasis  const &f, Piecewise<SBasis> const &g){
+    return max(Piecewise<SBasis>(f),g);
 }
-Piecewise<SBasis> maxSb(Piecewise<SBasis> const &f, Piecewise<SBasis> const &g){
-    Piecewise<SBasis> maxSb=partition(f,roots(f-g));
-    Piecewise<SBasis> gg =partition(g,maxSb.cuts);
-    maxSb = partition(maxSb,gg.cuts);
-    for (unsigned i=0; i<maxSb.size(); i++){
-        if (maxSb.segs[i](.5)<gg.segs[i](.5)) maxSb.segs[i]=gg.segs[i];
+Piecewise<SBasis> max(Piecewise<SBasis> const &f, Piecewise<SBasis> const &g){
+    Piecewise<SBasis> max=partition(f,roots(f-g));
+    Piecewise<SBasis> gg =partition(g,max.cuts);
+    max = partition(max,gg.cuts);
+    for (unsigned i=0; i<max.size(); i++){
+        if (max.segs[i](.5)<gg.segs[i](.5)) max.segs[i]=gg.segs[i];
     }
-    return maxSb;
+    return max;
 }
 
 Piecewise<SBasis> 
-minSb(          SBasis  const &f,           SBasis  const &g){ return -maxSb(-f,-g); }
+min(          SBasis  const &f,           SBasis  const &g){ return -max(-f,-g); }
 Piecewise<SBasis> 
-minSb(Piecewise<SBasis> const &f,           SBasis  const &g){ return -maxSb(-f,-g); }
+min(Piecewise<SBasis> const &f,           SBasis  const &g){ return -max(-f,-g); }
 Piecewise<SBasis> 
-minSb(          SBasis  const &f, Piecewise<SBasis> const &g){ return -maxSb(-f,-g); }
+min(          SBasis  const &f, Piecewise<SBasis> const &g){ return -max(-f,-g); }
 Piecewise<SBasis> 
-minSb(Piecewise<SBasis> const &f, Piecewise<SBasis> const &g){ return -maxSb(-f,-g); }
+min(Piecewise<SBasis> const &f, Piecewise<SBasis> const &g){ return -max(-f,-g); }
 
 
 //-sign(x)---------------------------------------------------------------
@@ -140,12 +140,12 @@ static Piecewise<SBasis> sqrt_internal(SBasis const &f,
 }
 
 Piecewise<SBasis> sqrt(SBasis const &f, double tol, int order){
-    return sqrt(maxSb(f,Linear(tol*tol)),tol,order);
+    return sqrt(max(f,Linear(tol*tol)),tol,order);
 }
 
 Piecewise<SBasis> sqrt(Piecewise<SBasis> const &f, double tol, int order){
     Piecewise<SBasis> result;
-    Piecewise<SBasis> ff=maxSb(f,Linear(tol*tol));
+    Piecewise<SBasis> ff=max(f,Linear(tol*tol));
 
     for (unsigned i=0; i<ff.size(); i++){
         Piecewise<SBasis> sqrtfi = sqrt_internal(ff.segs[i],tol,order);

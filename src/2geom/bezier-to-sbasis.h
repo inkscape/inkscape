@@ -38,41 +38,25 @@
 
 namespace Geom{
 
-template <unsigned order>
-struct bezier_to_sbasis_impl {
-    static inline SBasis compute(Coord const *handles) {
-        return multiply(Linear(1, 0), bezier_to_sbasis_impl<order-1>::compute(handles)) +
-               multiply(Linear(0, 1), bezier_to_sbasis_impl<order-1>::compute(handles+1));
-    }
-};
-
-template <>
-struct bezier_to_sbasis_impl<1> {
-    static inline SBasis compute(Coord const *handles) {
+inline SBasis bezier_to_sbasis(Coord const *handles, unsigned order) {
+    if(order == 0)
+        return Linear(handles[0]);
+    else if(order == 1)
         return Linear(handles[0], handles[1]);
-    }
-};
-
-template <>
-struct bezier_to_sbasis_impl<0> {
-    static inline SBasis compute(Coord const *handles) {
-        return Linear(handles[0], handles[0]);
-    }
-};
-
-template <unsigned order>
-inline SBasis bezier_to_sbasis(Coord const *handles) {
-    return bezier_to_sbasis_impl<order>::compute(handles);
+    else
+        return multiply(Linear(1, 0), bezier_to_sbasis(handles, order-1)) +
+            multiply(Linear(0, 1), bezier_to_sbasis(handles+1, order-1));
 }
 
-template <unsigned order, typename T>
-inline D2<SBasis> handles_to_sbasis(T const &handles) {
+
+template <typename T>
+inline D2<SBasis> handles_to_sbasis(T const &handles, unsigned order) {
     double v[2][order+1];
     for(unsigned i = 0; i <= order; i++)
         for(unsigned j = 0; j < 2; j++)
              v[j][i] = handles[i][j];
-    return D2<SBasis>(bezier_to_sbasis<order>(v[0]),
-                      bezier_to_sbasis<order>(v[1]));
+    return D2<SBasis>(bezier_to_sbasis(v[0], order),
+                      bezier_to_sbasis(v[1], order));
 }
 
 };

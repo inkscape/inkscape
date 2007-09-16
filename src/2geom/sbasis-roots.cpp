@@ -332,10 +332,8 @@ void subdiv_sbasis(SBasis const & s,
 
 std::vector<double> roots(SBasis const & s) {
     if(s.size() == 0) return std::vector<double>();
-    std::vector<double> b = sbasis_to_bezier(s), r;
     
-    find_bernstein_roots(&b[0], b.size()-1, r, 0, 0., 1.);
-    return r;
+    return sbasis_to_bezier(s).roots();
 }
 
 };

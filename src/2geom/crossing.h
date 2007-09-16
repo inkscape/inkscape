@@ -16,7 +16,10 @@ struct Crossing {
     Crossing(double t_a, double t_b, unsigned ai, unsigned bi, bool direction) : dir(direction), ta(t_a), tb(t_b), a(ai), b(bi) {}
     bool operator==(const Crossing & other) const { return a == other.a && b == other.b && dir == other.dir && ta == other.ta && tb == other.tb; }
     bool operator!=(const Crossing & other) const { return !(*this == other); }
-    unsigned getOther(unsigned cur) { return a == cur ? b : a; }
+    unsigned getOther(unsigned cur) const { return a == cur ? b : a; }
+    double getTime(unsigned cur) const { return a == cur ? ta : tb; }
+    double getOtherTime(unsigned cur) const { return a == cur ? tb : ta; }
+    bool onIx(unsigned ix) const { return a == ix || b == ix; }
 };
 
 
@@ -50,6 +53,7 @@ inline void sort_crossings(Crossings &cr, unsigned ix) { std::sort(cr.begin(), c
 
 template<typename T>
 struct Crosser {
+    virtual ~Crosser() {}
     virtual Crossings crossings(T const &a, T const &b) { return crossings(std::vector<T>(1,a), std::vector<T>(1,b))[0]; }
     virtual CrossingSet crossings(std::vector<T> const &a, std::vector<T> const &b) {
         CrossingSet results(a.size() + b.size(), Crossings());
