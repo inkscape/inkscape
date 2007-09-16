@@ -95,15 +95,15 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
             if (dragging && event->button.button == 1) {
                 gdk_pointer_ungrab(event->button.time);
                 NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
-                NR::Point const event_dt(desktop->w2d(event_w));
+                NR::Point event_dt(desktop->w2d(event_w));
+                
+                SnapManager const &m = desktop->namedview->snap_manager;
+                event_dt = m.guideSnap(event_dt, component_vectors[horiz ? NR::Y : NR::X]).getPoint();
+                                
                 dragging = false;
                 gtk_object_destroy(GTK_OBJECT(guide));
                 guide = NULL;
-                if ( ( horiz
-                       ? wy
-                       : wx )
-                     >= 0 )
-                {
+                if ((horiz ? wy : wx) >= 0) {
                     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
                     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
                     repr->setAttribute("orientation", (horiz) ? "horizontal" : "vertical");
@@ -192,9 +192,6 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                             event->button.y);
                     NR::Point event_dt(desktop->w2d(event_w));
                     
-                    //If we don't snap here again, it will end up at the current mouse position
-                    //whereas it might have been at a snapped position a millisecond before.
-                    //See GDK_MOTION_NOTIFY above. Why's that????
                     SnapManager const &m = desktop->namedview->snap_manager;
                 	event_dt = m.guideSnap(event_dt, guide->normal).getPoint();
                 
