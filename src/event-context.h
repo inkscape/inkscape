@@ -50,7 +50,7 @@ struct SPEventContext : public GObject {
     unsigned key;
     SPDesktop *desktop;
     Inkscape::XML::Node *prefs_repr;
-    gchar **cursor_shape;
+    gchar const *const *cursor_shape;
     gint hot_x, hot_y;
     GdkCursor *cursor;
 

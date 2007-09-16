@@ -17,7 +17,8 @@
 #include <ctype.h>
 #include "sp-cursor.h"
 
-void sp_cursor_bitmap_and_mask_from_xpm (GdkBitmap **bitmap, GdkBitmap **mask, gchar **xpm)
+void
+sp_cursor_bitmap_and_mask_from_xpm(GdkBitmap **bitmap, GdkBitmap **mask, gchar const *const *xpm)
 {
     int height;
     int width;
@@ -65,10 +66,10 @@ void sp_cursor_bitmap_and_mask_from_xpm (GdkBitmap **bitmap, GdkBitmap **mask, g
             char maskv = 0;
 			
             for (int pix = 0; pix < 8; pix++, x++){
-                if (xpm [4+y][x] != transparent_color) {
+                if (xpm[4+y][x] != transparent_color) {
                     maskv |= 1 << pix;
 
-                    if (xpm [4+y][x] == black_color) {
+                    if (xpm[4+y][x] == black_color) {
                         value |= 1 << pix;
                     }
                 }
@@ -83,7 +84,8 @@ void sp_cursor_bitmap_and_mask_from_xpm (GdkBitmap **bitmap, GdkBitmap **mask, g
     *mask   = gdk_bitmap_create_from_data(NULL, mask_buffer, 32, 32);
 }
 
-GdkCursor *sp_cursor_new_from_xpm (gchar **xpm, gint hot_x, gint hot_y)
+GdkCursor *
+sp_cursor_new_from_xpm(gchar const *const *xpm, gint hot_x, gint hot_y)
 {
     GdkColor const fg = { 0, 0, 0, 0 };
     GdkColor const bg = { 0, 65535, 65535, 65535 };
