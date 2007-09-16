@@ -611,7 +611,7 @@ void PdfParser::opConcat(Object args[], int numArgs) {
   } else if (!strcmp(prevOp, "cm") || !strcmp(prevOp, "startPage")) {
       // multiply it with the previous transform
       double otherMatrix[6];
-      if (!builder->getTransform((double*)&otherMatrix)) { // invalid transform
+      if (!builder->getTransform(otherMatrix)) { // invalid transform
           // construct identity matrix
           otherMatrix[0] = otherMatrix[3] = 1.0;
           otherMatrix[1] = otherMatrix[2] = otherMatrix[4] = otherMatrix[5] = 0.0;
@@ -1573,7 +1573,7 @@ void PdfParser::opShFill(Object args[], int numArgs) {
       }
 
       if (seenConcat && seenClip) {
-        if (builder->getTransform((double*)&gradientTransform)) {
+        if (builder->getTransform(gradientTransform)) {
           matrix = (double*)&gradientTransform;
           builder->setTransform(1.0, 0.0, 0.0, 1.0, 0.0, 0.0);  // remove transform
         }
