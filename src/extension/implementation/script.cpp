@@ -83,9 +83,9 @@ void pump_events (void) {
 
 //Interpreter lookup table
 struct interpreter_t {
-        gchar * identity;
-        gchar * prefstring;
-        gchar * defaultval;
+        gchar const *identity;
+        gchar const *prefstring;
+        gchar const *defaultval;
 };
 
 
@@ -95,7 +95,7 @@ struct interpreter_t {
     given script.  It also tracks the preference to use to overwrite
     the given interpreter to a custom one per user.
 */
-static interpreter_t interpreterTab[] = {
+static interpreter_t const interpreterTab[] = {
         {"perl",   "perl-interpreter",   "perl"   },
         {"python", "python-interpreter", "python" },
         {"ruby",   "ruby-interpreter",   "ruby"   },
@@ -115,7 +115,7 @@ resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
 
     Glib::ustring interpName = interpNameArg;
 
-    interpreter_t *interp;
+    interpreter_t const *interp;
     bool foundInterp = false;
     for (interp =  interpreterTab ; interp->identity ; interp++ ){
         if (interpName == interp->identity) {
@@ -130,8 +130,7 @@ resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
     interpName = interp->defaultval;
 
     // 1.  Check preferences
-    gchar *prefInterp = (gchar *)prefs_get_string_attribute(
-                                "extensions", interp->prefstring);
+    gchar const *prefInterp = prefs_get_string_attribute("extensions", interp->prefstring);
 
     if (prefInterp) {
         interpName = prefInterp;
