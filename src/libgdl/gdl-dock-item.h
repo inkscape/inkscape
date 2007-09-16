@@ -93,15 +93,17 @@ struct _GdlDockItemClass {
     gboolean            has_grip;
     
     /* virtuals */
-    void     (* dock_drag_begin)  (GdlDockItem    *item);
-    void     (* dock_drag_motion) (GdlDockItem    *item,
-                                   gint            x,
-                                   gint            y);
-    void     (* dock_drag_end)    (GdlDockItem    *item,
-                                   gboolean        cancelled);
+    void     (* dock_drag_begin)  (GdlDockItem      *item);
+    void     (* dock_drag_motion) (GdlDockItem      *item,
+                                   gint              x,
+                                   gint              y);
+    void     (* dock_drag_end)    (GdlDockItem      *item,
+                                   gboolean          cancelled);
+    void     (* move_focus_child) (GdlDockItem      *item,
+                                   GtkDirectionType  direction);
                                    
-    void     (* set_orientation)  (GdlDockItem    *item,
-                                   GtkOrientation  orientation);
+    void     (* set_orientation)  (GdlDockItem      *item,
+                                   GtkOrientation    orientation);
 };
 
 /* additional macros */
@@ -185,6 +187,8 @@ void        gdl_dock_item_set_default_position (GdlDockItem      *item,
 
 void        gdl_dock_item_preferred_size       (GdlDockItem      *item,
                                                 GtkRequisition   *req);
+
+gboolean    gdl_dock_item_or_child_has_focus  (GdlDockItem      *item);
 
 G_END_DECLS
 

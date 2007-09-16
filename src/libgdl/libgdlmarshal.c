@@ -1,4 +1,3 @@
-#include "libgdlmarshal.h"
 
 #include	<glib-object.h>
 
@@ -50,7 +49,9 @@
 
 /* VOID:VOID (./libgdlmarshal.list:1) */
 
-/* VOID:INT,INT (./libgdlmarshal.list:2) */
+/* VOID:ENUM (./libgdlmarshal.list:2) */
+
+/* VOID:INT,INT (./libgdlmarshal.list:3) */
 void
 gdl_marshal_VOID__INT_INT (GClosure     *closure,
                            GValue       *return_value,
@@ -87,7 +88,7 @@ gdl_marshal_VOID__INT_INT (GClosure     *closure,
             data2);
 }
 
-/* VOID:UINT,UINT (./libgdlmarshal.list:3) */
+/* VOID:UINT,UINT (./libgdlmarshal.list:4) */
 void
 gdl_marshal_VOID__UINT_UINT (GClosure     *closure,
                              GValue       *return_value,
@@ -124,9 +125,9 @@ gdl_marshal_VOID__UINT_UINT (GClosure     *closure,
             data2);
 }
 
-/* VOID:BOOLEAN (./libgdlmarshal.list:4) */
+/* VOID:BOOLEAN (./libgdlmarshal.list:5) */
 
-/* VOID:OBJECT,ENUM,BOXED (./libgdlmarshal.list:5) */
+/* VOID:OBJECT,ENUM,BOXED (./libgdlmarshal.list:6) */
 void
 gdl_marshal_VOID__OBJECT_ENUM_BOXED (GClosure     *closure,
                                      GValue       *return_value,
@@ -165,5 +166,5 @@ gdl_marshal_VOID__OBJECT_ENUM_BOXED (GClosure     *closure,
             data2);
 }
 
-/* VOID:BOXED (./libgdlmarshal.list:6) */
+/* VOID:BOXED (./libgdlmarshal.list:7) */
 

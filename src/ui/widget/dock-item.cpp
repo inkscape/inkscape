@@ -291,10 +291,19 @@ DockItem::present()
 void
 DockItem::grab_focus()
 {
-    if (GTK_WIDGET_REALIZED (_gdl_dock_item))
+    if (GTK_WIDGET_REALIZED (_gdl_dock_item)) {
+
+        // make sure the window we're in is present
+        Gtk::Widget *toplevel = getWidget().get_toplevel();
+        if (Gtk::Window *window = dynamic_cast<Gtk::Window *>(toplevel)) {
+            window->present();
+        }
+
         gtk_widget_grab_focus (_gdl_dock_item);
-    else
+
+    } else {
         _grab_focus_on_realize = true;
+    }
 }
 
 
