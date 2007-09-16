@@ -120,7 +120,7 @@ static const char *dstr(double d)
 /**
  *  Output data to the buffer, printf()-style
  */
-void PovOutput::out(char *fmt, ...)
+void PovOutput::out(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);

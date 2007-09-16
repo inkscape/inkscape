@@ -72,7 +72,7 @@ private:
 	/**
 	 * Format text to our output buffer
 	 */     	
-	void out(char *fmt, ...) G_GNUC_PRINTF(2,3);
+	void out(char const *fmt, ...) G_GNUC_PRINTF(2,3);
 
     /**
      * Output a 2d vector

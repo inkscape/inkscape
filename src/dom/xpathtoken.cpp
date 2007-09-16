@@ -522,7 +522,7 @@ static bool tokFuncRound(Token &tok, Stack &stack)
 typedef struct
 {
     int ival;
-    char *sval;
+    char const *sval;
     TokenFunc tokenFunc;
 } TokenTableEntry;
 

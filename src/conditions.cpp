@@ -149,7 +149,7 @@ static std::vector<Glib::ustring> splitByWhitespace(gchar const *value) {
 #define SVG10FEATURE    "org.w3c."
 
 static bool evaluateSVG11Feature(gchar const *feature) {
-    static gchar *_supported_features[] = {
+    static gchar const *_supported_features[] = {
         "SVG", // incomplete "SVG-static" - missing support for "Filter"
            /* SVG - user agent supports at least one of the following:
                 "SVG-static", "SVG-animation", "SVG-dynamic" or "SVGDOM" */
@@ -228,7 +228,7 @@ static bool evaluateSVG11Feature(gchar const *feature) {
 }
 
 static bool evaluateSVG10Feature(gchar const *feature) {
-    static gchar *_supported_features[] = {
+    static gchar const *_supported_features[] = {
         "svg.static", // incomplete - no filter effects
         "dom.svg.static", // not sure
         // "svg.animation",

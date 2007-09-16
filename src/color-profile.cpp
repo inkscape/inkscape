@@ -197,7 +197,7 @@ static void Inkscape::colorprofile_set( SPObject *object, unsigned key, gchar co
                         g_warning("object has no document.  using active");
                     }
                     //# 1.  Get complete URI of document
-                    gchar* docbase = SP_DOCUMENT_URI( doc );
+                    gchar const *docbase = SP_DOCUMENT_URI( doc );
                     if (!docbase)
                         {
                         g_warning("null docbase");
