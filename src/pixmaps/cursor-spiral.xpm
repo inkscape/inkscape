@@ -1,5 +1,5 @@
 /* XPM */
-static char * cursor_spiral_xpm[] = {
+static char const *cursor_spiral_xpm[] = {
 "32 32 3 1",
 " 	c None",
 ".	c #FFFFFF",

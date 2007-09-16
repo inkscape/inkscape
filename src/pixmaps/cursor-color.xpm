@@ -1,5 +1,5 @@
 /* XPM */
-static char * cursor_color_xpm[] = {
+static char const *cursor_color_xpm[] = {
 "32 32 3 1",
 " 	c None",
 ".	c #FFFFFF",

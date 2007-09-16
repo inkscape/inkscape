@@ -1,5 +1,5 @@
 /* XPM */
-static char * cursor_thicken_xpm[] = {
+static char const *cursor_thicken_xpm[] = {
 "32 32 3 1",
 " 	c None",
 ".	c #FFFFFF",

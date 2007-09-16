@@ -1,5 +1,5 @@
 /* XPM */
-static char * brokenimage_xpm[] = {
+static char const *brokenimage_xpm[] = {
 "64 64 551 2",
 "  	c #FFFFFF",
 ". 	c #FFF7F7",

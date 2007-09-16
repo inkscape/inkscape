@@ -1,5 +1,5 @@
 /* XPM */
-static char * cursor_zoom_out_xpm[] = {
+static char const *cursor_zoom_out_xpm[] = {
 "32 32 3 1",
 " 	c None",
 ".	c #FFFFFF",

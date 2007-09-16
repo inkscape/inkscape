@@ -1,5 +1,5 @@
 /* XPM */
-static char * cursor_node_m_xpm[] = {
+static char const *cursor_node_m_xpm[] = {
 "32 32 3 1",
 " 	g None",
 ".	g #FFFFFF",
