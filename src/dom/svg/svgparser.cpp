@@ -89,7 +89,7 @@ XMLCh SvgParser::get(int p)
  *  Test if the given substring exists at the given position
  *  in parsebuf.  Use get() in case of out-of-bounds
  */
-bool SvgParser::match(int pos, char *str)
+bool SvgParser::match(int pos, char const *str)
 {
     while (*str)
        {

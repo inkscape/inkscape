@@ -4013,7 +4013,7 @@ protected:
 ###########################################################################
 #########################################################################*/
 
-static char *pathSegLetters[] =
+static char const *const pathSegLetters[] =
 {
     "@", // PATHSEG_UNKNOWN,
     "z", // PATHSEG_CLOSEPATH
@@ -4091,7 +4091,7 @@ public:
         int typ = type;
         if (typ<0 || typ>PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL)
             typ = PATHSEG_UNKNOWN;
-        char *ch = pathSegLetters[typ];
+        char const *ch = pathSegLetters[typ];
         DOMString letter = ch;
         return letter;
         }

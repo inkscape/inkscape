@@ -236,7 +236,7 @@ private:
 
     void spaces();
 
-    void po(char *fmt, ...)
+    void po(char const *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif

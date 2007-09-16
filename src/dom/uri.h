@@ -70,23 +70,23 @@ public:
     /**
      *
      */
-    URI(const DOMString &str);
+    URI(DOMString const &str);
 
 
     /**
      *
      */
-    URI(const char *str);
+    URI(char const *str);
 
     /**
      * Copy constructor
      */
-    URI(const URI &other);
+    URI(URI const &other);
 
     /**
      *  Assignment
      */
-    URI &operator=(const URI &other);
+    URI &operator=(URI const &other);
 
     /**
      *
@@ -96,7 +96,7 @@ public:
     /**
      *
      */
-    virtual bool parse(const DOMString &str);
+    virtual bool parse(DOMString const &str);
 
     /**
      *
@@ -162,7 +162,7 @@ public:
     /**
      *
      */
-    virtual URI resolve(const URI &other) const;
+    virtual URI resolve(URI const &other) const;
 
     /**
      *
@@ -174,7 +174,7 @@ private:
     void init();
 
     //assign values of other to this. used by copy constructor
-    void assign(const URI &other);
+    void assign(URI const &other);
 
     int scheme;
 
@@ -196,13 +196,13 @@ private:
 
     std::vector<int> fragment;
 
-    void error(const char *fmt, ...)
+    void error(char const *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
     ;
 
-    void trace(const char *fmt, ...)
+    void trace(char const *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
@@ -210,7 +210,7 @@ private:
 
     int peek(int p);
 
-    int match(int p, char *key);
+    int match(int p, char const *key);
 
     int parseHex(int p, int &result);
 

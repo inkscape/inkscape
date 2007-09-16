@@ -49,7 +49,7 @@ namespace dom
 typedef struct
 {
     int  ival;
-    char *sval;
+    char const *sval;
     int  port;
 } LookupEntry;
 
@@ -572,7 +572,7 @@ int URI::peek(int p)
 
 
 
-int URI::match(int p0, char *key)
+int URI::match(int p0, char const *key)
 {
     int p = p0;
     while (p < parselen)

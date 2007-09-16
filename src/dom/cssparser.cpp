@@ -76,7 +76,7 @@ void CssParser::getColumnAndRow(int p, int &colResult, int &rowResult, int &last
 /**
  *
  */
-void CssParser::error(char *fmt, ...)
+void CssParser::error(char const *fmt, ...)
 {
     int lineNr;
     int colNr;

@@ -272,7 +272,7 @@ void LSSerializerImpl::spaces()
 /**
  *
  */
-void LSSerializerImpl::po(char *fmt, ...)
+void LSSerializerImpl::po(char const *fmt, ...)
 {
     char str[257];
     va_list args;
