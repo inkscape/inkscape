@@ -169,7 +169,7 @@ public:
     // Transforming
     void setTransform(double c0, double c1, double c2, double c3, double c4,
                       double c5);
-    void setTransform(double *transform);
+    void setTransform(double const *transform);
     bool getTransform(double *transform);
 
 private:

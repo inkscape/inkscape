@@ -557,7 +557,7 @@ void SvgBuilder::setTransform(double c0, double c1, double c2, double c3,
     svgSetTransform(_container, c0, c1, c2, c3, c4, c5);
 }
 
-void SvgBuilder::setTransform(double *transform) {
+void SvgBuilder::setTransform(double const *transform) {
     setTransform(transform[0], transform[1], transform[2], transform[3],
                  transform[4], transform[5]);
 }
