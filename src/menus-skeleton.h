@@ -38,9 +38,6 @@ static char const menus_skeleton[] =
    to use the native PS support if they are using another print driver.
    This is done through the "Print Direct" command.  Which is inserted
    here based on if those other drivers are being built. */
-#ifdef WITH_GNOME_PRINT
-"       <verb verb-id=\"FilePrintDirect\" />\n"
-#endif
 #ifdef WIN32
 "       <verb verb-id=\"FilePrintDirect\" />\n"
 #endif

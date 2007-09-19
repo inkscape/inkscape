@@ -361,7 +361,6 @@ inkscape_private_libs =	\
 all_libs =			\
 	$(inkscape_private_libs)	\
 	$(INKSCAPE_LIBS)	\
-	$(GNOME_PRINT_LIBS)	\
 	$(GNOME_VFS_LIBS)	\
 	$(XFT_LIBS)		\
 	$(FREETYPE_LIBS)	\

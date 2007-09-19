@@ -36,10 +36,6 @@ using std::fprintf;
 # ifdef WIN32
 #  include <extension/internal/win32.h>
 # endif
-
-# ifdef WITH_GNOME_PRINT
-#  include <extension/internal/gnome.h>
-# endif
 #endif
 
 /* Identity typedef */

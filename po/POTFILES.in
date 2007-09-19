@@ -134,7 +134,6 @@ src/extension/internal/emf-win32-print.cpp
 src/extension/internal/eps-out.cpp
 src/extension/internal/gdkpixbuf-input.cpp
 src/extension/internal/gimpgrad.cpp
-src/extension/internal/gnome.cpp
 src/extension/internal/grid.cpp
 src/extension/internal/latex-pstricks.cpp
 src/extension/internal/latex-pstricks-out.cpp
