@@ -21,8 +21,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-TreeEditor::TreeEditor()
-    : Dialog ("dialogs.treeeditor", SP_VERB_NONE /*FIXME*/)
+TreeEditor::TreeEditor(Behavior::BehaviorFactory behavior_factory)
+    : Dialog (behavior_factory, "dialogs.treeeditor", SP_VERB_NONE /*FIXME*/)
 {
     get_vbox()->pack_start(_hbox);
 

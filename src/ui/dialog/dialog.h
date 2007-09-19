@@ -39,9 +39,8 @@ gboolean sp_retransientize_again(gpointer dlgPtr);
 void sp_dialog_shutdown(GtkObject *object, gpointer dlgPtr);
 
 class Dialog {
-public:
 
-    Dialog(const char *prefs_path = NULL, int verb_num = 0, const char *apply_label = NULL);
+public:
 
     Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_path = NULL, 
            int verb_num = 0, const char *apply_label = NULL);
@@ -51,14 +50,13 @@ public:
     virtual void onDesktopActivated (SPDesktop*);
     virtual void onShutdown();
 
-    virtual void present();
-
     /** Hide and show dialogs */
     virtual void onHideF12();
     virtual void onShowF12();
 
     virtual operator Gtk::Widget&();
     virtual GtkWidget *gobj();
+    virtual void present();
     virtual Gtk::VBox *get_vbox();
     virtual void show();
     virtual void hide();
@@ -104,8 +102,9 @@ protected:
      */
     Gtk::Tooltips tooltips;
 
-    virtual void   on_response(int response_id);
-    virtual bool   on_delete_event (GdkEventAny*);
+    virtual void   _onResponse(int response_id);
+    virtual bool   _onDeleteEvent (GdkEventAny*);
+
     virtual void   _apply();
     virtual void   _close();
 

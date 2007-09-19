@@ -26,7 +26,7 @@ namespace Dialog {
 
 class TreeEditor : public Dialog {
 public:
-    TreeEditor();
+    TreeEditor(Behavior::BehaviorFactory behavior_factory);
     virtual ~TreeEditor();
 
 protected:

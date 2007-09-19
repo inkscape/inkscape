@@ -49,7 +49,7 @@ DockBehavior::DockBehavior(Dialog& dialog) :
 {
     // Connect signals
     _signal_hide_connection = signal_hide().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::Behavior::DockBehavior::_onHide));
-    signal_response().connect(sigc::mem_fun(_dialog, &Inkscape::UI::Dialog::Dialog::on_response));
+    signal_response().connect(sigc::mem_fun(_dialog, &Inkscape::UI::Dialog::Dialog::_onResponse));
     _dock_item.signal_state_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::Behavior::DockBehavior::_onStateChanged));
 
     if (_dock_item.getState() == Widget::DockItem::FLOATING_STATE) {

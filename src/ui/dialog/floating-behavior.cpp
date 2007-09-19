@@ -36,8 +36,8 @@ FloatingBehavior::FloatingBehavior(Dialog& dialog) :
     hide();
     _d->set_has_separator(false);
 
-    signal_response().connect(sigc::mem_fun(_dialog, &Inkscape::UI::Dialog::Dialog::on_response));
-    signal_delete_event().connect(sigc::mem_fun(_dialog, &Inkscape::UI::Dialog::Dialog::on_delete_event));
+    signal_response().connect(sigc::mem_fun(_dialog, &Inkscape::UI::Dialog::Dialog::_onResponse));
+    signal_delete_event().connect(sigc::mem_fun(_dialog, &Inkscape::UI::Dialog::Dialog::_onDeleteEvent));
 
     sp_transientize(GTK_WIDGET(_d->gobj()));
     _dialog.retransientize_suppress = false;
