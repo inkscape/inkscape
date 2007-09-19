@@ -70,14 +70,12 @@
 #include "internal/bitmap/charcoal.h"
 #include "internal/bitmap/colorize.h"
 #include "internal/bitmap/contrast.h"
-//#include "internal/bitmap/convolve.h"
 #include "internal/bitmap/cycleColormap.h"
 #include "internal/bitmap/despeckle.h"
 #include "internal/bitmap/edge.h"
 #include "internal/bitmap/emboss.h"
 #include "internal/bitmap/enhance.h"
 #include "internal/bitmap/equalize.h"
-#include "internal/bitmap/flop.h"
 #include "internal/bitmap/gaussianBlur.h"
 #include "internal/bitmap/implode.h"
 #include "internal/bitmap/level.h"
@@ -204,14 +202,12 @@ init()
     Internal::Bitmap::Charcoal::init();
     Internal::Bitmap::Colorize::init();
     Internal::Bitmap::Contrast::init();
-    //Internal::Bitmap::Convolve::init();
     Internal::Bitmap::CycleColormap::init();
     Internal::Bitmap::Edge::init();
     Internal::Bitmap::Despeckle::init();
     Internal::Bitmap::Emboss::init();
     Internal::Bitmap::Enhance::init();
     Internal::Bitmap::Equalize::init();
-    Internal::Bitmap::Flop::init();
     Internal::Bitmap::GaussianBlur::init();
     Internal::Bitmap::Implode::init();
     Internal::Bitmap::Level::init();

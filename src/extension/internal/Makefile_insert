@@ -29,8 +29,6 @@ extension_internal_image_magick_sources =	\
 	extension/internal/bitmap/colorize.h			\
 	extension/internal/bitmap/contrast.cpp			\
 	extension/internal/bitmap/contrast.h			\
-	extension/internal/bitmap/convolve.cpp			\
-	extension/internal/bitmap/convolve.h			\
 	extension/internal/bitmap/cycleColormap.cpp		\
 	extension/internal/bitmap/cycleColormap.h		\
 	extension/internal/bitmap/despeckle.cpp			\
@@ -43,8 +41,6 @@ extension_internal_image_magick_sources =	\
 	extension/internal/bitmap/enhance.h				\
 	extension/internal/bitmap/equalize.cpp			\
 	extension/internal/bitmap/equalize.h			\
-	extension/internal/bitmap/flop.cpp				\
-	extension/internal/bitmap/flop.h				\
 	extension/internal/bitmap/gaussianBlur.cpp		\
 	extension/internal/bitmap/gaussianBlur.h		\
 	extension/internal/bitmap/implode.cpp			\

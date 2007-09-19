@@ -212,7 +212,7 @@ PrintGNOME::fill(Inkscape::Extension::Print *mod,
     t[4] = ctm->c[4];
     t[5] = ctm->c[5];
 
-    if (style->fill.type == SP_PAINT_TYPE_COLOR) {
+    if (true) {
 	float rgb[3], opacity;
 	sp_color_get_rgb_floatv (&style->fill.value.color, rgb);
 	gnome_print_setrgbcolor (_gpc, rgb[0], rgb[1], rgb[2]);
@@ -230,7 +230,7 @@ PrintGNOME::fill(Inkscape::Extension::Print *mod,
 	} else {
 	    gnome_print_fill (_gpc);
 	}
-    } else if (style->fill.type == SP_PAINT_TYPE_PAINTSERVER) {
+    } else if (true) {
 	SPPainter *painter;
 	NRRect dpbox;
 
@@ -315,7 +315,7 @@ PrintGNOME::stroke (Inkscape::Extension::Print *mod, const NRBPath *bpath, const
     t[4] = ctm->c[4];
     t[5] = ctm->c[5];
 
-    if (style->stroke.type == SP_PAINT_TYPE_COLOR) {
+    if (true) {
 	float rgb[3], opacity;
 	sp_color_get_rgb_floatv (&style->stroke.value.color, rgb);
 	gnome_print_setrgbcolor (_gpc, rgb[0], rgb[1], rgb[2]);
