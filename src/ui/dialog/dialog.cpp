@@ -308,8 +308,25 @@ Dialog::_onEvent(GdkEvent *event)
 
     switch (event->type) {
         case GDK_KEY_PRESS: {
-            ret = _onKeyPress(&event->key);
-            break;
+            switch (get_group0_keyval (&event->key)) {
+                case GDK_Escape: {
+                    _defocus();
+                    ret = true;
+                    break;
+                }
+                case GDK_F4:
+                case GDK_w:
+                case GDK_W: {
+                    if (mod_ctrl_only(event->key.state)) {
+                        _close();
+                        ret = true;
+                    }
+                    break;
+                }
+                default: { // pass keypress to the canvas
+                    break;
+                }
+            }
         }
         default:
             ;
@@ -321,37 +338,15 @@ Dialog::_onEvent(GdkEvent *event)
 bool
 Dialog::_onKeyPress(GdkEventKey *event)
 {
-    bool ret = false;
-    switch (get_group0_keyval (event)) {
-        case GDK_Escape: {
-            _defocus();
-            ret = true;
-            break;
-        }
-        case GDK_F4:
-        case GDK_w:
-        case GDK_W: {
-            if (mod_ctrl_only(event->state)) {
-                _close();
-                ret = true;
-            }
-            break;
-        }
-        default: { // pass keypress to the canvas
-            unsigned int shortcut;
-            shortcut = get_group0_keyval (event) |
-                ( event->state & GDK_SHIFT_MASK ?
-                  SP_SHORTCUT_SHIFT_MASK : 0 ) |
-                ( event->state & GDK_CONTROL_MASK ?
-                  SP_SHORTCUT_CONTROL_MASK : 0 ) |
-                ( event->state & GDK_MOD1_MASK ?
-                  SP_SHORTCUT_ALT_MASK : 0 );
-            sp_shortcut_invoke( shortcut, SP_ACTIVE_DESKTOP );
-            break;
-        }
-    }
- 
-    return ret;
+    unsigned int shortcut;
+    shortcut = get_group0_keyval(event) |
+        ( event->state & GDK_SHIFT_MASK ?
+          SP_SHORTCUT_SHIFT_MASK : 0 ) |
+        ( event->state & GDK_CONTROL_MASK ?
+          SP_SHORTCUT_CONTROL_MASK : 0 ) |
+        ( event->state & GDK_MOD1_MASK ?
+          SP_SHORTCUT_ALT_MASK : 0 );
+    return sp_shortcut_invoke(shortcut, SP_ACTIVE_DESKTOP);
 }
 
 void
