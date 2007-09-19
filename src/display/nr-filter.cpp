@@ -104,16 +104,35 @@ Filter::~Filter()
 
 int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
 {
-    if(!_primitive[0]) {
+    if (!_primitive[0]) {
         // TODO: Should clear the input buffer instead of just returning
-       return 0; 
+       return 1; 
     }
 
     Matrix trans = *item->ctm;
     FilterSlot slot(_slot_count, item);
 
-    Rect item_bbox = *item->item_bbox;
+    Rect item_bbox;
+    try {
+        item_bbox = *item->item_bbox;
+    } catch (NR::IsNothing) {
+        // Bounding box might not exist, so create a dummy one.
+        Point zero(0, 0);
+        item_bbox = Rect(zero, zero);
+    }
+    if (item_bbox.min()[X] > item_bbox.max()[X]
+        || item_bbox.min()[Y] > item_bbox.max()[Y])
+    {
+        // Code below assumes non-negative size.
+        return 1;
+    }
+
     Rect filter_area = filter_effect_area(item_bbox);
+    if (item_bbox.isEmpty()) {
+        // It's no use to try and filter an empty object.
+        return 1;
+    }
+        
     FilterUnits units(_filter_units, _primitive_units);
     units.set_ctm(trans);
     units.set_item_bbox(item_bbox);
@@ -200,6 +219,10 @@ void Filter::area_enlarge(NRRectL &bbox, Matrix const &m) {
 }
 
 void Filter::bbox_enlarge(NRRectL &bbox) {
+    // Modifying empty bounding boxes confuses rest of the renderer, so
+    // let's not do that.
+    if (bbox.x0 > bbox.x1 || bbox.y0 > bbox.y1) return;
+
     /* TODO: this is wrong. Should use bounding box in user coordinates
      * and find its extents in display coordinates. */
     Point min(bbox.x0, bbox.y0);
