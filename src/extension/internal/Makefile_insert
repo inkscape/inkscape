@@ -5,12 +5,6 @@ extension/internal/all: extension/internal/libinternal.a
 extension/internal/clean:
 	rm -f extension/internal/libinternal.a $(extension_internal_libinternal_OBJECTS)
 
-if USE_GNOME_PRINT
-extension_internal_gnome_print_sources =	\
-	extension/internal/gnome.cpp	\
-	extension/internal/gnome.h
-endif
-
 if USE_IMAGE_MAGICK
 extension_internal_image_magick_sources =	\
 	extension/internal/bitmap/imagemagick.cpp		\
@@ -135,6 +129,5 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/latex-pstricks-out.h	\
 	extension/internal/wpg-input.cpp	\
 	extension/internal/wpg-input.h	\
-	$(extension_internal_gnome_print_sources) \
 	$(extension_internal_image_magick_sources)
 

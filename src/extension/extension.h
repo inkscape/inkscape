@@ -57,13 +57,8 @@
 /** Defines the default printing to use */
 #define SP_MODULE_KEY_PRINT_DEFAULT  SP_MODULE_KEY_PRINT_WIN32
 #else
-#ifdef WITH_GNOME_PRINT
-/** Defines the default printing to use */
-#define SP_MODULE_KEY_PRINT_DEFAULT  SP_MODULE_KEY_PRINT_GNOME
-#else
 /** Defines the default printing to use */
 #define SP_MODULE_KEY_PRINT_DEFAULT  SP_MODULE_KEY_PRINT_PS
-#endif
 #endif
 
 /** Mime type for SVG */

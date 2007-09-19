@@ -28,9 +28,6 @@
 #ifdef HAVE_CAIRO_PDF
 # include "internal/pdf-cairo.h"
 #endif
-#ifdef WITH_GNOME_PRINT
-# include "internal/gnome.h"
-#endif
 #ifdef WIN32
 # include "internal/win32.h"
 # include "internal/emf-win32-inout.h"
@@ -173,9 +170,6 @@ init()
     if (1) {
     Internal::PdfInputCairo::init();
     }
-#endif
-#ifdef WITH_GNOME_PRINT
-    Internal::PrintGNOME::init();
 #endif
 #ifdef WIN32
     Internal::PrintWin32::init();
