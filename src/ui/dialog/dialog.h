@@ -104,11 +104,12 @@ protected:
 
     virtual void   _onResponse(int response_id);
     virtual bool   _onDeleteEvent (GdkEventAny*);
+    virtual bool   _onEvent(GdkEvent *event);
+    virtual bool   _onKeyPress(GdkEventKey *event);
 
     virtual void   _apply();
     virtual void   _close();
-
-    static bool windowKeyPress(GdkEventKey *event);
+    virtual void   _defocus();
 
     Inkscape::Selection*   _getSelection();
 

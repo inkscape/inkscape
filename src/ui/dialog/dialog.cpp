@@ -19,6 +19,7 @@
 
 #include <gtkmm/stock.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "application/application.h"
 #include "application/editor.h"
@@ -27,7 +28,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "dialog-manager.h"
-#include "dialogs/dialog-events.h"
+#include "modifier-fns.h"
 #include "shortcuts.h"
 #include "prefs-utils.h"
 #include "interface.h"
@@ -109,8 +110,6 @@ Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_pat
 
     _behavior = behavior_factory(*this);
     
-    gtk_signal_connect( GTK_OBJECT (gobj()), "event", GTK_SIGNAL_FUNC(sp_dialog_event_handler), gobj() );
-
     if (Inkscape::NSApplication::Application::getNewGui()) {
         _desktop_activated_connection = Inkscape::NSApplication::Editor::connectDesktopActivated (sigc::mem_fun (*this, &Dialog::onDesktopActivated));
         _dialogs_hidden_connection = Inkscape::NSApplication::Editor::connectDialogsHidden (sigc::mem_fun (*this, &Dialog::onHideF12));
@@ -123,7 +122,8 @@ Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_pat
         g_signal_connect(G_OBJECT(INKSCAPE), "shut_down", G_CALLBACK(sp_dialog_shutdown), (void *)this);
     }
 
-    Glib::wrap(gobj())->signal_key_press_event().connect(sigc::ptr_fun(&windowKeyPress));
+    Glib::wrap(gobj())->signal_event().connect(sigc::mem_fun(*this, &Dialog::_onEvent));
+    Glib::wrap(gobj())->signal_key_press_event().connect(sigc::mem_fun(*this, &Dialog::_onKeyPress));
 
     if (prefs_get_int_attribute ("dialogs", "showclose", 0) || apply_label) {
         // TODO: make the order of buttons obey the global preference
@@ -154,20 +154,6 @@ Dialog::~Dialog()
 
 //---------------------------------------------------------------------
 
-
-bool Dialog::windowKeyPress(GdkEventKey *event)
-{
-    unsigned int shortcut = 0;
-    shortcut = get_group0_keyval (event) |
-        ( event->state & GDK_SHIFT_MASK ?
-          SP_SHORTCUT_SHIFT_MASK : 0 ) |
-        ( event->state & GDK_CONTROL_MASK ?
-          SP_SHORTCUT_CONTROL_MASK : 0 ) |
-        ( event->state & GDK_MOD1_MASK ?
-          SP_SHORTCUT_ALT_MASK : 0 );
-    return sp_shortcut_invoke( shortcut, SP_ACTIVE_DESKTOP );
-
-}
 
 void
 Dialog::onDesktopActivated(SPDesktop *desktop)
@@ -315,6 +301,59 @@ Dialog::_onDeleteEvent(GdkEventAny *event)
     return false;
 }
 
+bool
+Dialog::_onEvent(GdkEvent *event)
+{
+    bool ret = false;
+
+    switch (event->type) {
+        case GDK_KEY_PRESS: {
+            ret = _onKeyPress(&event->key);
+            break;
+        }
+        default:
+            ;
+    }
+
+    return ret;
+}
+
+bool
+Dialog::_onKeyPress(GdkEventKey *event)
+{
+    bool ret = false;
+    switch (get_group0_keyval (event)) {
+        case GDK_Escape: {
+            _defocus();
+            ret = true;
+            break;
+        }
+        case GDK_F4:
+        case GDK_w:
+        case GDK_W: {
+            if (mod_ctrl_only(event->state)) {
+                _close();
+                ret = true;
+            }
+            break;
+        }
+        default: { // pass keypress to the canvas
+            unsigned int shortcut;
+            shortcut = get_group0_keyval (event) |
+                ( event->state & GDK_SHIFT_MASK ?
+                  SP_SHORTCUT_SHIFT_MASK : 0 ) |
+                ( event->state & GDK_CONTROL_MASK ?
+                  SP_SHORTCUT_CONTROL_MASK : 0 ) |
+                ( event->state & GDK_MOD1_MASK ?
+                  SP_SHORTCUT_ALT_MASK : 0 );
+            sp_shortcut_invoke( shortcut, SP_ACTIVE_DESKTOP );
+            break;
+        }
+    }
+ 
+    return ret;
+}
+
 void
 Dialog::_apply()
 {
@@ -344,6 +383,23 @@ Dialog::_close()
 
     if (event.window) 
         g_object_unref(G_OBJECT(event.window));
+}
+
+void
+Dialog::_defocus()
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
+    if (desktop) {
+        Gtk::Widget *canvas = Glib::wrap(GTK_WIDGET(desktop->canvas));
+
+        // make sure the canvas window is present before giving it focus
+        Gtk::Window *toplevel_window = dynamic_cast<Gtk::Window *>(canvas->get_toplevel());
+        if (toplevel_window)
+            toplevel_window->present();
+
+        canvas->grab_focus();
+    }
 }
 
 Inkscape::Selection*
