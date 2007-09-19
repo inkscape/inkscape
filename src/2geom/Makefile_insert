@@ -6,9 +6,12 @@
 	rm -f 2geom/lib2geom.a $(2geom_lib2geom_a_OBJECTS)
 
 2geom_lib2geom_a_SOURCES = \
+	2geom/basic-intersection.cpp	\
+	2geom/basic-intersection.h	\
 	2geom/bezier-to-sbasis.h	\
 	2geom/bezier-utils.cpp	\
 	2geom/bezier-utils.h	\
+	2geom/bezier.h	\
 	2geom/choose.h	\
 	2geom/circle-circle.cpp	\
 	2geom/circulator.h	\
@@ -19,7 +22,7 @@
 	2geom/convex-cover.h	\
 	2geom/coord.h	\
 	2geom/crossing.cpp	\
-	2geom/crossing.cpp	\
+	2geom/crossing.h	\
 	2geom/d2-sbasis.cpp	\
 	2geom/d2-sbasis.h	\
 	2geom/d2.h	\
@@ -37,10 +40,10 @@
 	2geom/path.h	\
 	2geom/piecewise.cpp	\
 	2geom/piecewise.h	\
-	2geom/point.cpp	\
-	2geom/point.h	\
 	2geom/point-l.h	\
 	2geom/point-ops.h	\
+	2geom/point.cpp	\
+	2geom/point.h	\
 	2geom/poly.cpp	\
 	2geom/poly.h	\
 	2geom/poly-dk-solve.cpp	\
@@ -54,8 +57,6 @@
 	2geom/region.h	\
 	2geom/sbasis-2d.cpp	\
 	2geom/sbasis-2d.h	\
-	2geom/sbasis.cpp	\
-	2geom/sbasis.h	\
 	2geom/sbasis-geometric.cpp	\
 	2geom/sbasis-geometric.h	\
 	2geom/sbasis-math.cpp	\
@@ -65,6 +66,8 @@
 	2geom/sbasis-roots.cpp	\
 	2geom/sbasis-to-bezier.cpp	\
 	2geom/sbasis-to-bezier.h	\
+	2geom/sbasis.cpp	\
+	2geom/sbasis.h	\
 	2geom/shape.cpp	\
 	2geom/shape.h	\
 	2geom/solve-bezier-one-d.cpp	\
@@ -79,10 +82,7 @@
 	2geom/sweep.h	\
 	2geom/transforms.cpp	\
 	2geom/transforms.h	\
-	2geom/utils.h	\
-	2geom/basic-intersection.cpp	\
-	2geom/basic-intersection.h	\
-	2geom/bezier.h
+	2geom/utils.h
 
 
 
