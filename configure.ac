@@ -280,39 +280,6 @@ if test "x$xft_ok" = "xyes"; then
 	fi
 fi
 
-dnl ******************************
-dnl GnomePrint checking
-dnl ******************************
-
-AC_ARG_WITH(gnome-print,
-            AC_HELP_STRING([--with-gnome-print], [use gnome print font database and spooler frontend]),
-            [with_gp=$withval], [with_gp=auto])
-
-if test "x$with_gp" = "xyes"; then
-	dnl Have to test gnome-print presence
-	PKG_CHECK_MODULES(GNOME_PRINT, libgnomeprint-2.2 >= 1.116.0  libgnomeprintui-2.2 >= 1.116.0, gp=yes, gp=no)
-	if test "x$gp" != "xyes"; then
-		dnl No gnome-print found
-		if test "x$with_gp" = "xyes"; then
-			dnl Gnome-print was explicitly asked, so stop
-			AC_MSG_ERROR([--with-gnome-print was specified, but appropriate libgnomeprint development packages could not be found])
-		else 
-			# gp is no, tell us for the log file 
-			AC_MSG_RESULT($gp)
-		fi
-	fi
-else
-	dnl Asked to ignore gnome-print
-	gp=no
-fi
-
-AC_SUBST(GNOME_PRINT_CFLAGS)
-AC_SUBST(GNOME_PRINT_LIBS)
-
-AM_CONDITIONAL(USE_GNOME_PRINT, test "x$gp" = "xyes")
-if test "x$gp" = "xyes"; then
-	AC_DEFINE(WITH_GNOME_PRINT, 1, [Use gnome print font database and spooler frontend])
-fi
 
 dnl ******************************
 dnl gnome vfs checking
