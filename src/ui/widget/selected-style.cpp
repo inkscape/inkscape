@@ -27,7 +27,8 @@
 #include "sp-linear-gradient-fns.h"
 #include "sp-radial-gradient-fns.h"
 #include "sp-pattern.h"
-#include "dialogs/object-properties.h"
+#include "ui/dialog/dialog-manager.h"
+#include "ui/dialog/fill-and-stroke.h"
 #include "xml/repr.h"
 #include "document.h"
 #include "widgets/widget-sizes.h"
@@ -761,18 +762,26 @@ void SelectedStyle::on_fillstroke_swap() {
 }
 
 void SelectedStyle::on_fill_edit() {
-    sp_object_properties_fill();
+    if (Dialog::FillAndStroke *dialog = dynamic_cast<Dialog::FillAndStroke *>(
+            _desktop->_dlg_mgr->getDialog("FillAndStroke")))
+        dialog->showPageFill();
 }
 
 void SelectedStyle::on_stroke_edit() {
-    sp_object_properties_stroke();
+    if (Dialog::FillAndStroke *dialog = dynamic_cast<Dialog::FillAndStroke *>(
+            _desktop->_dlg_mgr->getDialog("FillAndStroke")))
+        dialog->showPageStrokePaint();
 }
 
 bool 
 SelectedStyle::on_fill_click(GdkEventButton *event)
 {
     if (event->button == 1) { // click, open fill&stroke
-        sp_object_properties_fill();
+
+        if (Dialog::FillAndStroke *dialog = dynamic_cast<Dialog::FillAndStroke *>(
+                _desktop->_dlg_mgr->getDialog("FillAndStroke")))
+            dialog->showPageFill();
+
     } else if (event->button == 3) { // right-click, popup menu
         _popup[SS_FILL].popup(event->button, event->time);
     } else if (event->button == 2) { // middle click, toggle none/lastcolor
@@ -789,7 +798,9 @@ bool
 SelectedStyle::on_stroke_click(GdkEventButton *event)
 {
     if (event->button == 1) { // click, open fill&stroke
-        sp_object_properties_stroke();
+        if (Dialog::FillAndStroke *dialog = dynamic_cast<Dialog::FillAndStroke *>(
+                _desktop->_dlg_mgr->getDialog("FillAndStroke")))
+            dialog->showPageStrokePaint();
     } else if (event->button == 3) { // right-click, popup menu
         _popup[SS_STROKE].popup(event->button, event->time);
     } else if (event->button == 2) { // middle click, toggle none/lastcolor
@@ -806,7 +817,9 @@ bool
 SelectedStyle::on_sw_click(GdkEventButton *event)
 {
     if (event->button == 1) { // click, open fill&stroke
-        sp_object_properties_stroke_style ();
+        if (Dialog::FillAndStroke *dialog = dynamic_cast<Dialog::FillAndStroke *>(
+                _desktop->_dlg_mgr->getDialog("FillAndStroke")))
+            dialog->showPageStrokeStyle();
     } else if (event->button == 3) { // right-click, popup menu
         _popup_sw.popup(event->button, event->time);
     } else if (event->button == 2) { // middle click, toggle none/lastwidth?

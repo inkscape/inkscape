@@ -17,6 +17,7 @@
 #include "../xml/repr.h"
 #include "desktop.h"
 #include "document.h"
+#include "ui/dialog/dialog-manager.h"
 
 static void sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop, GtkMenu *menu);
 
@@ -50,7 +51,6 @@ sp_object_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
 
 #include "dialogs/item-properties.h"
 #include "dialogs/object-attributes.h"
-#include "dialogs/object-properties.h"
 
 #include "sp-path.h"
 
@@ -319,7 +319,7 @@ sp_shape_fill_settings(GtkMenuItem *menuitem, SPItem *item)
         sp_desktop_selection(desktop)->set(item);
     }
 
-    sp_object_properties_dialog();
+    desktop->_dlg_mgr->showDialog("FillAndStroke");
 }
 
 static void

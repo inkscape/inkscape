@@ -42,6 +42,10 @@ public:
     void selectionChanged(Inkscape::Application *inkscape,
                           Inkscape::Selection *selection);
 
+    void showPageFill();
+    void showPageStrokePaint();
+    void showPageStrokeStyle();
+
 protected:
     Gtk::Notebook   _notebook;
 

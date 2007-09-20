@@ -138,6 +138,28 @@ FillAndStroke::_layoutPageStrokeStyle()
 }
 
 void
+FillAndStroke::showPageFill()
+{
+    present();
+    _notebook.set_current_page(0);
+}
+
+void
+FillAndStroke::showPageStrokePaint()
+{
+    present();
+    _notebook.set_current_page(1);
+}
+
+void
+FillAndStroke::showPageStrokeStyle()
+{
+    present();
+    _notebook.set_current_page(2);
+}
+
+
+void
 FillAndStroke::_blendBlurValueChanged()
 {
     if (_blocked)
