@@ -39,7 +39,6 @@
 
 #include "dialogs/text-edit.h"
 #include "dialogs/xml-tree.h"
-#include "dialogs/object-properties.h"
 #include "dialogs/item-properties.h"
 #include "dialogs/find.h"
 #include "dialogs/layer-properties.h"
@@ -1701,7 +1700,6 @@ DialogVerb::perform(SPAction *action, void *data, void *pdata)
             dt->_dlg_mgr->showDialog("DocumentProperties");
             break;
         case SP_VERB_DIALOG_FILL_STROKE:
-            // sp_object_properties_dialog();
             dt->_dlg_mgr->showDialog("FillAndStroke");
             break;
         case SP_VERB_DIALOG_SWATCHES:

@@ -42,8 +42,6 @@ dialogs_libspdialogs_a_SOURCES = \
 	dialogs/layers-panel.h	\
 	dialogs/object-attributes.cpp	\
 	dialogs/object-attributes.h	\
-	dialogs/object-properties.cpp	\
-	dialogs/object-properties.h	\
 	dialogs/sp-attribute-widget.cpp	\
 	dialogs/sp-attribute-widget.h	\
 	dialogs/stroke-style.cpp	\
