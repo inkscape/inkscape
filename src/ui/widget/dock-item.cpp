@@ -269,7 +269,7 @@ DockItem::show_all()
 void
 DockItem::present()
 {
-    // iconified or unattached
+
     if (isIconified() || !isAttached()) {
         show();
     }        
@@ -280,11 +280,13 @@ DockItem::present()
                                        GTK_WIDGET (_gdl_dock_item));
         if (i >= 0)
             gtk_notebook_set_current_page (GTK_NOTEBOOK (_gdl_dock_item->parent), i);
-        return;
-    }
+    } 
 
     // always grab focus, even if we're already present
     grab_focus();
+
+    if (!isFloating() && getWidget().is_realized())
+        _dock.scrollToItem(*this);
 }
 
 

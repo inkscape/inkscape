@@ -51,6 +51,9 @@ public:
     /** Toggle size of dock between the previous dimensions and the ones sent as parameters */
     void toggleDockable(int width=0, int height=0);
 
+    /** Scrolls the scrolled window container to make the provided dock item visible, if needed */
+    void scrollToItem(DockItem& item);
+
 protected:
 
     std::list<const DockItem *> _dock_items;   //< added dock items

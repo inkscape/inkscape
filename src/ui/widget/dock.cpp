@@ -15,6 +15,8 @@
 
 #include "dock.h"
 
+#include <gtkmm/adjustment.h>
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {
@@ -194,6 +196,22 @@ Dock::toggleDockable(int width, int height)
 	_paned->set_position(prev_vertical_position);
     }
 
+}
+
+void
+Dock::scrollToItem(DockItem& item)
+{
+    int item_x, item_y;
+    item.getWidget().translate_coordinates(getWidget(), 0, 0, item_x, item_y);
+
+    int dock_height = getWidget().get_height(), item_height = item.getWidget().get_height();
+    double vadjustment = _scrolled_window->get_vadjustment()->get_value();
+
+    if (item_y < 0)
+        _scrolled_window->get_vadjustment()->set_value(vadjustment + item_y);
+    else if (item_y + item_height > dock_height)
+        _scrolled_window->get_vadjustment()->set_value(
+            vadjustment + ((item_y + item_height) - dock_height));
 }
 
 Glib::SignalProxy0<void>
