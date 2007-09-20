@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-15 15:23+0200\n"
-"PO-Revision-Date: 2007-08-14 21:47+0200\n"
+"PO-Revision-Date: 2007-09-20 21:12+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12239,7 +12239,7 @@ msgstr "Linker Winkel"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
-msgstr "Reihenfolge"
+msgstr "Ordnung"
 
 #: ../share/extensions/lindenmayer.inx.h:6
 #, no-c-format
