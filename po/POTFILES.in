@@ -28,7 +28,6 @@ src/dialogs/item-properties.cpp
 src/dialogs/layers-panel.cpp
 src/dialogs/layer-properties.cpp
 src/dialogs/object-attributes.cpp
-src/dialogs/object-properties.cpp
 src/dialogs/rdf.cpp
 src/dialogs/sp-attribute-widget.cpp
 src/dialogs/stroke-style.cpp
