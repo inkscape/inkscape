@@ -152,7 +152,7 @@ void GuidelinePropertiesDialog::_setup() {
 
     // spinbutton
     sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(unit_selector), GTK_ADJUSTMENT(_adjustment.gobj()));
-    _spin_button.configure(_adjustment, 1.0 , 2);
+    _spin_button.configure(_adjustment, 1.0 , 3);
     _spin_button.set_numeric(TRUE);
     _layout_table.attach(_spin_button,
                          1, 2, 2, 3, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
