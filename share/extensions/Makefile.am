@@ -99,6 +99,7 @@ extensions = \
 	webbrowser_relnotes.py \
 	webbrowser_reportabug.py \
 	webbrowser_svgspec.py \
+	webbrowser_keys.py \
 	whirl.py
 
 otherstuff = \
@@ -154,6 +155,7 @@ modules = \
 	inkscape_help_relnotes.inx \
 	inkscape_help_reportabug.inx \
 	inkscape_help_svgspec.inx \
+	inkscape_help_keys.inx \
 	interp.inx \
 	lindenmayer.inx \
 	lorem_ipsum.inx \
