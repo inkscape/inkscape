@@ -368,6 +368,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         selection->set(item_clicked);
                         desktop->updateNow();
                     }
+                    Inkscape::Rubberband::get()->stop();
                     ret = TRUE;
                     break;
                 }
