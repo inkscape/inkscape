@@ -31,7 +31,7 @@ class Project(inkex.Effect):
         #obj is selected second
         obj = self.selected[self.options.ids[0]]
         trafo = self.selected[self.options.ids[1]]
-        if obj.tag == inkex.addNS('path','svg) and trafo.tag == inkex.addNS('path','svg'):
+        if obj.tag == inkex.addNS('path','svg') and trafo.tag == inkex.addNS('path','svg'):
             #distil trafo into four node points
             trafo = cubicsuperpath.parsePath(trafo.get('d'))
             trafo = [[Point(csp[1][0],csp[1][1]) for csp in subs] for subs in trafo][0][:4]
