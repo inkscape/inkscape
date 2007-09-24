@@ -224,7 +224,7 @@ sp_stop_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         os << "currentColor";
     } else {
         gchar c[64];
-        sp_svg_write_color(c, 64, specifiedcolor);
+        sp_svg_write_color(c, sizeof(c), specifiedcolor);
         os << c;
     }
     os << ";stop-opacity:" << opacity;
@@ -917,7 +917,7 @@ sp_gradient_repr_write_vector(SPGradient *gr)
         /* strictly speaking, offset an SVG <number> rather than a CSS one, but exponents make no
          * sense for offset proportions. */
         gchar c[64];
-        sp_svg_write_color(c, 64, gr->vector.stops[i].color.toRGBA32( 0x00 ));
+        sp_svg_write_color(c, sizeof(c), gr->vector.stops[i].color.toRGBA32( 0x00 ));
         os << "stop-color:" << c << ";stop-opacity:" << gr->vector.stops[i].opacity;
         child->setAttribute("style", os.str().c_str());
         /* Order will be reversed here */

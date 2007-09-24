@@ -1037,7 +1037,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     gchar c[64] = {0};
                     // Careful about endian issues.
                     guint16* dataVals = (guint16*)data->data;
-                    sp_svg_write_color( c, 64,
+                    sp_svg_write_color( c, sizeof(c),
                                         SP_RGBA32_U_COMPOSE(
                                             0x0ff & (dataVals[0] >> 8),
                                             0x0ff & (dataVals[1] >> 8),

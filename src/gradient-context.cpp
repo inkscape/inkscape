@@ -297,7 +297,7 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
         guint32 cnew = average_color (c1, c2, (offset - prev_stop->offset) / (next_stop->offset - prev_stop->offset));
         Inkscape::CSSOStringStream os;
         gchar c[64];
-        sp_svg_write_color (c, 64, cnew);
+        sp_svg_write_color (c, sizeof(c), cnew);
         gdouble opacity = (gdouble) SP_RGBA32_A_F (cnew);
         os << "stop-color:" << c << ";stop-opacity:" << opacity <<";";
         SP_OBJECT_REPR (newstop)->setAttribute("style", os.str().c_str());

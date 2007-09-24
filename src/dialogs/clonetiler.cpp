@@ -149,7 +149,7 @@ on_picker_color_changed (guint rgba)
 
     Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, prefs_path);
     gchar c[32];
-    sp_svg_write_color(c, 32, rgba);
+    sp_svg_write_color(c, sizeof(c), rgba);
     repr->setAttribute("initial_color", c);
 
     is_updating = false;
@@ -1167,7 +1167,7 @@ clonetiler_apply (GtkWidget *widget, void *)
 
                 float rgb[3];
                 sp_color_hsl_to_rgb_floatv (rgb, hsl[0], hsl[1], hsl[2]);
-                sp_svg_write_color(color_string, 32, SP_RGBA32_F_COMPOSE(rgb[0], rgb[1], rgb[2], 1.0));
+                sp_svg_write_color(color_string, sizeof(color_string), SP_RGBA32_F_COMPOSE(rgb[0], rgb[1], rgb[2], 1.0));
             }
 
             // Blur
@@ -1278,7 +1278,7 @@ clonetiler_apply (GtkWidget *widget, void *)
                     opacity *= val;
                 }
                 if (pick_to_color) {
-                    sp_svg_write_color(color_string, 32, rgba);
+                    sp_svg_write_color(color_string, sizeof(color_string), rgba);
                 }
             }
 

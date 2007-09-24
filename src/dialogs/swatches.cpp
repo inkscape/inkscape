@@ -332,7 +332,7 @@ static bool bruteForce( SPDocument* document, Inkscape::XML::Node* node, Glib::u
             SPObject *obj = document->getObjectByRepr( node );
 
             gchar c[64] = {0};
-            sp_svg_write_color( c, 64, SP_RGBA32_U_COMPOSE( r, g, b, 0xff ) );
+            sp_svg_write_color( c, sizeof(c), SP_RGBA32_U_COMPOSE( r, g, b, 0xff ) );
             SPCSSAttr *css = sp_repr_css_attr_new();
             sp_repr_css_set_property( css, "fill", c );
 
@@ -347,7 +347,7 @@ static bool bruteForce( SPDocument* document, Inkscape::XML::Node* node, Glib::u
             SPObject *obj = document->getObjectByRepr( node );
 
             gchar c[64] = {0};
-            sp_svg_write_color( c, 64, SP_RGBA32_U_COMPOSE( r, g, b, 0xff ) );
+            sp_svg_write_color( c, sizoef(c), SP_RGBA32_U_COMPOSE( r, g, b, 0xff ) );
             SPCSSAttr *css = sp_repr_css_attr_new();
             sp_repr_css_set_property( css, "stroke", c );
 
@@ -562,7 +562,7 @@ void ColorItem::buttonClicked(bool secondary)
         char const * attrName = secondary ? "stroke" : "fill";
         guint32 rgba = (def.getR() << 24) | (def.getG() << 16) | (def.getB() << 8) | 0xff;
         gchar c[64];
-        sp_svg_write_color(c, 64, rgba);
+        sp_svg_write_color(c, sizeof(c), rgba);
 
         SPCSSAttr *css = sp_repr_css_attr_new();
         sp_repr_css_set_property( css, attrName, c );

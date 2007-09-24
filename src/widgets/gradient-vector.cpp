@@ -469,7 +469,7 @@ verify_grad(SPGradient *gradient)
 
 	if (i < 1) {
 		gchar c[64];
-		sp_svg_write_color (c, 64, 0x00000000);
+		sp_svg_write_color (c, sizeof(c), 0x00000000);
 
 		Inkscape::CSSOStringStream os;
 		os << "stop-color:" << c << ";stop-opacity:" << 1.0 << ";";
@@ -718,7 +718,7 @@ sp_grd_ed_add_stop (GtkWidget *widget,  GtkWidget *vb)
 
 	Inkscape::CSSOStringStream os;
 	gchar c[64];
-	sp_svg_write_color (c, 64, cnew);
+	sp_svg_write_color (c, sizeof(c), cnew);
 	gdouble opacity = (gdouble) SP_RGBA32_A_F (cnew);
 	os << "stop-color:" << c << ";stop-opacity:" << opacity <<";";
 	SP_OBJECT_REPR (newstop)->setAttribute("style", os.str().c_str());
@@ -1161,7 +1161,7 @@ sp_gradient_vector_color_changed (SPColorSelector *csel, GtkObject *object)
 	sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", stop->offset);
 	Inkscape::CSSOStringStream os;
 	gchar c[64];
-	sp_svg_write_color (c, 64, rgb);
+	sp_svg_write_color (c, sizeof(c), rgb);
 	os << "stop-color:" << c << ";stop-opacity:" << (gdouble) alpha <<";";
 	SP_OBJECT_REPR (stop)->setAttribute("style", os.str().c_str());
 		//	g_snprintf (c, 256, "stop-color:#%06x;stop-opacity:%g;", rgb >> 8, (gdouble) alpha);

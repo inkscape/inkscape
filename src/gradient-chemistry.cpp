@@ -1165,7 +1165,7 @@ sp_document_default_gradient_vector(SPDocument *document, guint32 color)
     Inkscape::XML::Node *stop = xml_doc->createElement("svg:stop");
 
     gchar b[64];
-    sp_svg_write_color(b, 64, color);
+    sp_svg_write_color(b, sizeof(b), color);
 
     {
         gchar *t = g_strdup_printf("stop-color:%s;stop-opacity:1;", b);

@@ -431,7 +431,7 @@ void SelectedStyle::dragDataReceived( GtkWidget *widget,
                 gchar c[64];
                 // Careful about endian issues.
                 guint16* dataVals = (guint16*)data->data;
-                sp_svg_write_color( c, 64,
+                sp_svg_write_color( c, sizeof(c),
                                     SP_RGBA32_U_COMPOSE(
                                         0x0ff & (dataVals[0] >> 8),
                                         0x0ff & (dataVals[1] >> 8),
@@ -516,7 +516,7 @@ void SelectedStyle::on_fill_lastused() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     guint32 color = sp_desktop_get_color(_desktop, true);
     gchar c[64];
-    sp_svg_write_color (c, 64, color);
+    sp_svg_write_color (c, sizeof(c), color);
     sp_repr_css_set_property (css, "fill", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
@@ -528,7 +528,7 @@ void SelectedStyle::on_stroke_lastused() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     guint32 color = sp_desktop_get_color(_desktop, false);
     gchar c[64];
-    sp_svg_write_color (c, 64, color);
+    sp_svg_write_color (c, sizeof(c), color);
     sp_repr_css_set_property (css, "stroke", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
@@ -539,7 +539,7 @@ void SelectedStyle::on_stroke_lastused() {
 void SelectedStyle::on_fill_lastselected() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     gchar c[64];
-    sp_svg_write_color (c, 64, _lastselected[SS_FILL]);
+    sp_svg_write_color (c, sizeof(c), _lastselected[SS_FILL]);
     sp_repr_css_set_property (css, "fill", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
@@ -550,7 +550,7 @@ void SelectedStyle::on_fill_lastselected() {
 void SelectedStyle::on_stroke_lastselected() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     gchar c[64];
-    sp_svg_write_color (c, 64, _lastselected[SS_STROKE]);
+    sp_svg_write_color (c, sizeof(c), _lastselected[SS_STROKE]);
     sp_repr_css_set_property (css, "stroke", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
@@ -563,7 +563,7 @@ void SelectedStyle::on_fill_invert() {
     guint32 color = _thisselected[SS_FILL];
     gchar c[64];
     if (_mode[SS_FILL] != SS_COLOR) return;
-    sp_svg_write_color (c, 64,
+    sp_svg_write_color (c, sizeof(c),
         SP_RGBA32_U_COMPOSE(
                 (255 - SP_RGBA32_R_U(color)),
                 (255 - SP_RGBA32_G_U(color)),
@@ -583,7 +583,7 @@ void SelectedStyle::on_stroke_invert() {
     guint32 color = _thisselected[SS_STROKE];
     gchar c[64];
     if (_mode[SS_STROKE] != SS_COLOR) return;
-    sp_svg_write_color (c, 64,
+    sp_svg_write_color (c, sizeof(c),
         SP_RGBA32_U_COMPOSE(
                 (255 - SP_RGBA32_R_U(color)),
                 (255 - SP_RGBA32_G_U(color)),
@@ -601,7 +601,7 @@ void SelectedStyle::on_stroke_invert() {
 void SelectedStyle::on_fill_white() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     gchar c[64];
-    sp_svg_write_color (c, 64, 0xffffffff);
+    sp_svg_write_color (c, sizeof(c), 0xffffffff);
     sp_repr_css_set_property (css, "fill", c);
     sp_repr_css_set_property (css, "fill-opacity", "1");
     sp_desktop_set_style (_desktop, css);
@@ -613,7 +613,7 @@ void SelectedStyle::on_fill_white() {
 void SelectedStyle::on_stroke_white() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     gchar c[64];
-    sp_svg_write_color (c, 64, 0xffffffff);
+    sp_svg_write_color (c, sizeof(c), 0xffffffff);
     sp_repr_css_set_property (css, "stroke", c);
     sp_repr_css_set_property (css, "stroke-opacity", "1");
     sp_desktop_set_style (_desktop, css);
@@ -625,7 +625,7 @@ void SelectedStyle::on_stroke_white() {
 void SelectedStyle::on_fill_black() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     gchar c[64];
-    sp_svg_write_color (c, 64, 0x000000ff);
+    sp_svg_write_color (c, sizeof(c), 0x000000ff);
     sp_repr_css_set_property (css, "fill", c);
     sp_repr_css_set_property (css, "fill-opacity", "1.0");
     sp_desktop_set_style (_desktop, css);
@@ -637,7 +637,7 @@ void SelectedStyle::on_fill_black() {
 void SelectedStyle::on_stroke_black() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     gchar c[64];
-    sp_svg_write_color (c, 64, 0x000000ff);
+    sp_svg_write_color (c, sizeof(c), 0x000000ff);
     sp_repr_css_set_property (css, "stroke", c);
     sp_repr_css_set_property (css, "stroke-opacity", "1.0");
     sp_desktop_set_style (_desktop, css);
@@ -649,7 +649,7 @@ void SelectedStyle::on_stroke_black() {
 void SelectedStyle::on_fill_copy() {
     if (_mode[SS_FILL] == SS_COLOR) {
         gchar c[64];
-        sp_svg_write_color (c, 64, _thisselected[SS_FILL]);
+        sp_svg_write_color (c, sizeof(c), _thisselected[SS_FILL]);
         Glib::ustring text;
         text += c;
         if (!text.empty()) {
@@ -662,7 +662,7 @@ void SelectedStyle::on_fill_copy() {
 void SelectedStyle::on_stroke_copy() {
     if (_mode[SS_STROKE] == SS_COLOR) {
         gchar c[64];
-        sp_svg_write_color (c, 64, _thisselected[SS_STROKE]);
+        sp_svg_write_color (c, sizeof(c), _thisselected[SS_STROKE]);
         Glib::ustring text;
         text += c;
         if (!text.empty()) {
@@ -723,7 +723,7 @@ void SelectedStyle::on_fillstroke_swap() {
         break;
     case SS_COLOR:
         gchar c[64];
-        sp_svg_write_color (c, 64, _thisselected[SS_FILL]);
+        sp_svg_write_color (c, sizeof(c), _thisselected[SS_FILL]);
         sp_repr_css_set_property (css, "stroke", c);
         break;
     case SS_LGRADIENT:
@@ -745,7 +745,7 @@ void SelectedStyle::on_fillstroke_swap() {
         break;
     case SS_COLOR:
         gchar c[64];
-        sp_svg_write_color (c, 64, _thisselected[SS_STROKE]);
+        sp_svg_write_color (c, sizeof(c), _thisselected[SS_STROKE]);
         sp_repr_css_set_property (css, "fill", c);
         break;
     case SS_LGRADIENT:

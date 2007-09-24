@@ -288,7 +288,7 @@ sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint f
    /*TODO kernelUnits */ 
     if (fespecularlighting->lighting_color_set) {
         gchar c[64];
-        sp_svg_write_color(c, 64, fespecularlighting->lighting_color);
+        sp_svg_write_color(c, sizeof(c), fespecularlighting->lighting_color);
         repr->setAttribute("lighting-color", c);
     }
     if (((SPObjectClass *) feSpecularLighting_parent_class)->write) {

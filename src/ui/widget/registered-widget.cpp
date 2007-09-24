@@ -356,7 +356,7 @@ RegisteredColorPicker::on_changed (guint32 rgba)
     }
 
     gchar c[32];
-    sp_svg_write_color(c, 32, rgba);
+    sp_svg_write_color(c, sizeof(c), rgba);
     bool saved = sp_document_get_undo_sensitive (local_doc);
     sp_document_set_undo_sensitive (local_doc, false);
     local_repr->setAttribute(_ckey.c_str(), c);

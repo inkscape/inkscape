@@ -346,7 +346,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                 guint32 c32 = SP_RGBA32_F_COMPOSE(R, G, B, alpha_to_set);
 
                 gchar c[64];
-                sp_svg_write_color(c, 64, c32);
+                sp_svg_write_color(c, sizeof(c), c32);
 
                 // alpha of color under cursor, to show in the statusbar
                 // locale-sensitive printf is OK, since this goes to the UI, not into SVG

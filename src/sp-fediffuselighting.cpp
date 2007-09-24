@@ -264,7 +264,7 @@ sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint fl
    /*TODO kernelUnits */ 
     if (fediffuselighting->lighting_color_set) {
         gchar c[64];
-        sp_svg_write_color(c, 64, fediffuselighting->lighting_color);
+        sp_svg_write_color(c, sizeof(c), fediffuselighting->lighting_color);
         repr->setAttribute("lighting-color", c);
     } else
         repr->setAttribute("lighting-color", NULL);
