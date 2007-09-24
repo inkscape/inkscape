@@ -88,7 +88,7 @@ ShowUninstDetails hide
 
 ; Language files
 !include "english.nsh" 
-; !include "catalan.nsh" the catalan support has been abandoned by NSIS as of version 2.28
+!include "catalan.nsh"
 !include "czech.nsh" 
 !include "finnish.nsh" 
 !include "french.nsh" 
@@ -102,6 +102,8 @@ ShowUninstDetails hide
 !include "spanish.nsh" 
 
 ReserveFile "inkscape.nsi.uninstall"
+ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
+!insertmacro MUI_RESERVEFILE_INSTALLOPTIONS ;InstallOptions
 
 
 ; #######################################
