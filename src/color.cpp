@@ -191,16 +191,18 @@ std::string SPColor::toString() const
     sp_svg_write_color(tmp, sizeof(tmp), toRGBA32(0x0ff));
     css << tmp;
 
-    if ( !css.str().empty() ) {
-        css << " ";
+    if ( icc ) {
+        if ( !css.str().empty() ) {
+            css << " ";
+        }
+        css << "icc-color(" << icc->colorProfile;
+        for (vector<double>::const_iterator i(icc->colors.begin()),
+                 iEnd(icc->colors.end());
+             i != iEnd; ++i) {
+            css << ", " << *i;
+        }
+        css << ')';
     }
-    css << "icc-color(" << icc->colorProfile;
-    for (vector<double>::const_iterator i(icc->colors.begin()),
-             iEnd(icc->colors.end());
-         i != iEnd; ++i) {
-        css << ", " << *i;
-    }
-    css << ')';
 
     return css.str();
 }
