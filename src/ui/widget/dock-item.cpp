@@ -196,14 +196,8 @@ DockItem::isAttached() const
 bool
 DockItem::isFloating() const
 {
-    gboolean floating = FALSE;
-    if (GDL_IS_DOCK (gdl_dock_object_get_parent_object (GDL_DOCK_OBJECT (_gdl_dock_item)))) {
-        GdlDock* dock = GDL_DOCK (gdl_dock_object_get_parent_object (GDL_DOCK_OBJECT (_gdl_dock_item)));
-        g_object_get (dock,
-                      "floating", &floating,
-                      NULL);
-    }
-    return floating;
+    return (GTK_WIDGET(gdl_dock_object_get_toplevel(GDL_DOCK_OBJECT (_gdl_dock_item))) != 
+            _dock.getGdlWidget());
 }
 
 bool
@@ -431,7 +425,7 @@ DockItem::_onStateChanged(State prev_state, State new_state)
 {
     _window = getWindow();
 
-    if (new_state == FLOATING_STATE) {
+    if (new_state == FLOATING_STATE && _window) {
         _window->signal_hide().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onHideWindow));
         _signal_key_press_event_connection = 
             _window->signal_key_press_event().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onKeyPress));

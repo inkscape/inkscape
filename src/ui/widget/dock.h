@@ -37,10 +37,11 @@ public:
 
     Gtk::Widget& getWidget();     //< return the top widget
     Gtk::Paned *getParentPaned();
-
     Gtk::Paned *getPaned();
 
-    bool isEmpty() const;     //< true iff none of the dock's items are in state != UNATTACHED
+    GtkWidget* getGdlWidget();    //< return the top gdl widget
+
+    bool isEmpty() const;         //< true iff none of the dock's items are in a docked state
     bool hasIconifiedItems() const;
 
     Glib::SignalProxy0<void> signal_layout_changed();

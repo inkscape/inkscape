@@ -31,7 +31,10 @@ class DockItem {
 
 public:
 
-    enum State { UNATTACHED, FLOATING_STATE, DOCKED_STATE };
+    enum State { UNATTACHED,     // item not bound to the dock (a temporary state)
+                 FLOATING_STATE, // item not in its dock (but can be docked in other,
+                                 // e.g. floating, docks)
+                 DOCKED_STATE }; // item in its assigned dock
 
     enum Placement { 
         NONE     = GDL_DOCK_NONE,

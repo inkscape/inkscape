@@ -133,6 +133,11 @@ Dock::getPaned()
     return _paned;
 }
 
+GtkWidget *
+Dock::getGdlWidget()
+{
+    return GTK_WIDGET(_gdl_dock);
+}
 
 bool
 Dock::isEmpty() const
