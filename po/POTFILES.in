@@ -99,7 +99,6 @@ src/extension/internal/bitmap/edge.cpp
 src/extension/internal/bitmap/emboss.cpp
 src/extension/internal/bitmap/enhance.cpp
 src/extension/internal/bitmap/equalize.cpp
-src/extension/internal/bitmap/flop.cpp
 src/extension/internal/bitmap/gaussianBlur.cpp
 src/extension/internal/bitmap/imagemagick.cpp
 src/extension/internal/bitmap/implode.cpp
