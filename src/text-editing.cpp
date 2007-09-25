@@ -153,6 +153,7 @@ static bool is_line_break_object(SPObject const *object)
     
     if (object) {
         if (SP_IS_TEXT(object)
+                || (SP_IS_TSPAN(object) && SP_TSPAN(object)->role != SP_TSPAN_ROLE_UNSPECIFIED)
                 || SP_IS_TEXTPATH(object)
                 || SP_IS_FLOWDIV(object)
                 || SP_IS_FLOWPARA(object)
@@ -160,13 +161,6 @@ static bool is_line_break_object(SPObject const *object)
                 || SP_IS_FLOWREGIONBREAK(object)) {
                     
             is_line_break = true;
-        }
-        
-        if (SP_IS_TSPAN(object) && SP_TSPAN(object)->role != SP_TSPAN_ROLE_UNSPECIFIED) {            
-            SPObject *prev_object = SP_OBJECT_PREV(object);
-            if (prev_object && SP_IS_TSPAN(prev_object)) {
-                is_line_break = true;
-            }
         }
     }
     
