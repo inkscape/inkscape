@@ -319,7 +319,7 @@ static Inkscape::XML::Node* Inkscape::colorprofile_write( SPObject *object, Inks
 #if ENABLE_LCMS
 
 
-static SPObject* bruteFind( SPObject* curr, gchar* const name )
+static SPObject* bruteFind( SPObject* curr, gchar const* name )
 {
     SPObject* result = 0;
 
@@ -347,7 +347,7 @@ static SPObject* bruteFind( SPObject* curr, gchar* const name )
     return result;
 }
 
-cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, guint* intent, gchar* const name )
+cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, guint* intent, gchar const* name )
 {
     cmsHPROFILE prof = 0;
 
