@@ -632,6 +632,13 @@ void ColorICCSelector::_updateSliders()
                 }
             }
         }
+    } else {
+        for ( guint i = 0; i < _fooCount; i++ ) {
+            gtk_widget_hide( _fooLabel[i] );
+            gtk_widget_hide( _fooSlider[i] );
+            gtk_widget_hide( _fooBtn[i] );
+            gtk_adjustment_set_value( _fooAdj[i], 0.0 );
+        }
     }
 #endif // ENABLE_LCMS
 
