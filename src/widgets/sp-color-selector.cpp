@@ -204,6 +204,8 @@ gfloat ColorSelector::getAlpha() const
     return _alpha;
 }
 
+#include "svg/svg-icc-color.h"
+
 /**
 Called from the outside to set the color; optionally emits signal (only when called from
 downstream, e.g. the RGBA value field, but not from the rest of the program)
@@ -211,15 +213,16 @@ downstream, e.g. the RGBA value field, but not from the rest of the program)
 void ColorSelector::setColorAlpha( const SPColor& color, gfloat alpha, bool emit )
 {
 #ifdef DUMP_CHANGE_INFO
-    g_message("ColorSelector::setColorAlpha( this=%p, %f, %f, %f,   %f,   %s)", this, color.v.c[0], color.v.c[1], color.v.c[2], alpha, (emit?"YES":"no"));
+    g_message("ColorSelector::setColorAlpha( this=%p, %f, %f, %f, %s,   %f,   %s) in %s", this, color.v.c[0], color.v.c[1], color.v.c[2], (color.icc?color.icc->colorProfile.c_str():"<null>"), alpha, (emit?"YES":"no"), FOO_NAME(_csel));
 #endif
     g_return_if_fail( ( 0.0 <= alpha ) && ( alpha <= 1.0 ) );
 
 #ifdef DUMP_CHANGE_INFO
-    g_message("---- ColorSelector::setColorAlpha    virgin:%s   !close:%s    alpha is:%s",
+    g_message("---- ColorSelector::setColorAlpha    virgin:%s   !close:%s    alpha is:%s in %s",
               (virgin?"YES":"no"),
               (!color.isClose( _color, _epsilon )?"YES":"no"),
-                  ((fabs ((_alpha) - (alpha)) >= _epsilon )?"YES":"no")
+              ((fabs ((_alpha) - (alpha)) >= _epsilon )?"YES":"no"),
+              FOO_NAME(_csel)
               );
 #endif
 
@@ -236,8 +239,8 @@ void ColorSelector::setColorAlpha( const SPColor& color, gfloat alpha, bool emit
 		gtk_signal_emit (GTK_OBJECT (_csel), csel_signals[CHANGED]);
 #ifdef DUMP_CHANGE_INFO
     } else {
-        g_message("++++ ColorSelector::setColorAlpha   color:%08x  ==>  _color:%08X   isClose", color.toRGBA32(alpha), _color.toRGBA32(_alpha),
-                  (color.isClose( _color, _epsilon )?"YES":"no"));
+        g_message("++++ ColorSelector::setColorAlpha   color:%08x  ==>  _color:%08X   isClose:%s   in %s", color.toRGBA32(alpha), _color.toRGBA32(_alpha),
+                  (color.isClose( _color, _epsilon )?"YES":"no"), FOO_NAME(_csel));
 #endif
     }
 }
@@ -286,18 +289,18 @@ void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboole
     if ( grabbed )
     {
 #ifdef DUMP_CHANGE_INFO
-        g_message ("%s:%d: About to signal %s to color %08x in %s", __FILE__, __LINE__,
+        g_message ("%s:%d: About to signal %s to color %08x::%s in %s", __FILE__, __LINE__,
                    "GRABBED",
-                   color.toRGBA32( alpha ), FOO_NAME(_csel));
+                   color.toRGBA32( alpha ), (color.icc?color.icc->colorProfile.c_str():"<null>"), FOO_NAME(_csel));
 #endif
         gtk_signal_emit (GTK_OBJECT (_csel), csel_signals[GRABBED]);
     }
     else if ( released )
     {
 #ifdef DUMP_CHANGE_INFO
-        g_message ("%s:%d: About to signal %s to color %08x in %s", __FILE__, __LINE__,
+        g_message ("%s:%d: About to signal %s to color %08x::%s in %s", __FILE__, __LINE__,
                    "RELEASED",
-                   color.toRGBA32( alpha ), FOO_NAME(_csel));
+                   color.toRGBA32( alpha ), (color.icc?color.icc->colorProfile.c_str():"<null>"), FOO_NAME(_csel));
 #endif
         gtk_signal_emit (GTK_OBJECT (_csel), csel_signals[RELEASED]);
     }
@@ -305,9 +308,9 @@ void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboole
     if ( colorDifferent || released )
     {
 #ifdef DUMP_CHANGE_INFO
-        g_message ("%s:%d: About to signal %s to color %08x in %s", __FILE__, __LINE__,
+        g_message ("%s:%d: About to signal %s to color %08x::%s in %s", __FILE__, __LINE__,
                    (_held ? "CHANGED" : "DRAGGED" ),
-                   color.toRGBA32( alpha ), FOO_NAME(_csel));
+                   color.toRGBA32( alpha ), (color.icc?color.icc->colorProfile.c_str():"<null>"), FOO_NAME(_csel));
 #endif
         gtk_signal_emit (GTK_OBJECT (_csel), csel_signals[_held ? CHANGED : DRAGGED]);
     }

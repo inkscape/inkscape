@@ -17,6 +17,12 @@
 #include <math.h>
 #include "color.h"
 #include "svg/svg-icc-color.h"
+#include "svg/svg-color.h"
+
+#include "svg/css-ostringstream.h"
+
+using Inkscape::CSSOStringStream;
+using std::vector;
 
 static bool profileMatches( SVGICCColor const* first, SVGICCColor const* second );
 
@@ -96,8 +102,7 @@ bool SPColor::isClose( SPColor const& other, float epsilon ) const
         && (fabs((v.c[1]) - (other.v.c[1])) < epsilon)
         && (fabs((v.c[2]) - (other.v.c[2])) < epsilon);
 
-    // TODO uncomment once we start using that profile.  Will be RSN
-    //match &= profileMatches( icc, other.icc );
+    match &= profileMatches( icc, other.icc );
 
     return match;
 }
@@ -175,6 +180,31 @@ guint32 SPColor::toRGBA32( gdouble alpha ) const
 
     return toRGBA32( static_cast<gint>(SP_COLOR_F_TO_U(alpha)) );
 }
+
+std::string SPColor::toString() const
+{
+    CSSOStringStream css;
+
+    std::string result;
+    char tmp[64] = {0};
+
+    sp_svg_write_color(tmp, sizeof(tmp), toRGBA32(0x0ff));
+    css << tmp;
+
+    if ( !css.str().empty() ) {
+        css << " ";
+    }
+    css << "icc-color(" << icc->colorProfile;
+    for (vector<double>::const_iterator i(icc->colors.begin()),
+             iEnd(icc->colors.end());
+         i != iEnd; ++i) {
+        css << ", " << *i;
+    }
+    css << ')';
+
+    return css.str();
+}
+
 
 /**
  * Fill rgb float array with values from SPColor.

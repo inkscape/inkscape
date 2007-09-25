@@ -41,6 +41,8 @@ widgets_libspwidgets_a_SOURCES =	\
 	widgets/shrink-wrap-button.h	\
 	widgets/sp-color-gtkselector.cpp	\
 	widgets/sp-color-gtkselector.h	\
+	widgets/sp-color-icc-selector.cpp	\
+	widgets/sp-color-icc-selector.h	\
 	widgets/sp-color-notebook.cpp	\
 	widgets/sp-color-notebook.h	\
 	widgets/sp-color-preview.cpp	\

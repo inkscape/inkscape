@@ -211,11 +211,7 @@ sp_fill_style_widget_update (SPWidget *spw)
                                      SP_PAINT_SELECTOR_FILLRULE_NONZERO : SP_PAINT_SELECTOR_FILLRULE_EVENODD);
 
             if (query->fill.set && query->fill.isColor()) {
-                gfloat d[3];
-                sp_color_get_rgb_floatv (&query->fill.value.color, d);
-                SPColor color( d[0], d[1], d[2] );
-                sp_paint_selector_set_color_alpha (psel, &color, SP_SCALE24_TO_FLOAT (query->fill_opacity.value));
-
+                sp_paint_selector_set_color_alpha (psel, &query->fill.value.color, SP_SCALE24_TO_FLOAT (query->fill_opacity.value));
             } else if (query->fill.set && query->fill.isPaintserver()) {
 
                 SPPaintServer *server = SP_STYLE_FILL_SERVER (query);

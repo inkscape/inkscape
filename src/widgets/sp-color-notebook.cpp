@@ -13,6 +13,7 @@
  */
 
 #undef SPCS_PREVIEW
+#define noDUMP_CHANGE_INFO
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -28,6 +29,7 @@
 
 #include "sp-color-scales.h"
 #include "sp-color-wheel-selector.h"
+#include "sp-color-icc-selector.h"
 
 struct SPColorNotebookTracker {
 	const gchar* name;
@@ -40,7 +42,7 @@ struct SPColorNotebookTracker {
 };
 
 static void sp_color_notebook_class_init (SPColorNotebookClass *klass);
-static void sp_color_notebook_init (SPColorNotebook *slider);
+static void sp_color_notebook_init (SPColorNotebook *colorbook);
 static void sp_color_notebook_destroy (GtkObject *object);
 
 static void sp_color_notebook_show_all (GtkWidget *widget);
@@ -196,6 +198,9 @@ void ColorNotebook::init()
 	/* tempory hardcoding to get types loaded */
 	SP_TYPE_COLOR_SCALES;
 	SP_TYPE_COLOR_WHEEL_SELECTOR;
+#if ENABLE_LCMS
+	SP_TYPE_COLOR_ICC_SELECTOR;
+#endif // ENABLE_LCMS
 
 	/* REJON: Comment out the next line to not use the normal GTK Color
            wheel. */

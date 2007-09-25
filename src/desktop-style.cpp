@@ -40,6 +40,7 @@
 #include "sp-path.h"
 
 #include "desktop-style.h"
+#include "svg/svg-icc-color.h"
 
 /**
  * Set color on selection on desktop.
@@ -55,7 +56,7 @@ sp_desktop_set_color(SPDesktop *desktop, ColorRGBA const &color, bool is_relativ
 
     guint32 rgba = SP_RGBA32_F_COMPOSE(color[0], color[1], color[2], color[3]);
     gchar b[64];
-    sp_svg_write_color(b, 64, rgba);
+    sp_svg_write_color(b, sizeof(b), rgba);
     SPCSSAttr *css = sp_repr_css_attr_new();
     if (fill) {
         sp_repr_css_set_property(css, "fill", b);
@@ -424,6 +425,8 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
     bool paintImpossible = true;
     paint_res->set = TRUE;
 
+    SVGICCColor* iccColor = 0;
+    bool iccSeen = false;
     gfloat c[4];
     c[0] = c[1] = c[2] = c[3] = 0.0;
     gint num = 0;
@@ -502,9 +505,17 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
                 prev[1] = d[1];
                 prev[2] = d[2];
                 paint_res->setColor(d[0], d[1], d[2]);
+                iccColor = paint->value.color.icc;
+                iccSeen = true;
             } else {
                 if (same_color && (prev[0] != d[0] || prev[1] != d[1] || prev[2] != d[2]))
                     same_color = false;
+                if ( iccSeen ) {
+                    if(paint->value.color.icc) {
+                        // TODO fix this
+                        iccColor = 0;
+                    }
+                }
             }
 
             // average color
@@ -543,6 +554,14 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
         } else {
             style_res->stroke_opacity.value = SP_SCALE24_FROM_FLOAT (c[3]);
         }
+
+
+        if ( iccSeen && iccColor ) {
+            // TODO check for existing
+            SVGICCColor* tmp = new SVGICCColor(*iccColor);
+            paint_res->value.color.icc = tmp;
+        }
+
         if (num > 1) {
             if (same_color)
                 return QUERY_STYLE_MULTIPLE_SAME;

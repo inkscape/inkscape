@@ -3030,7 +3030,7 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
                         delete tmp;
                         tmp = 0;
                     }
-                    paint->value.iccColor = tmp;
+                    paint->value.color.icc = tmp;
                 }
             }
         }
@@ -3522,10 +3522,10 @@ sp_paint_differ(SPIPaint const *const a, SPIPaint const *const b)
 
     if ( a->isColor() ) {
         return !( (a->value.color == b->value.color)
-                 && ((a->value.iccColor == b->value.iccColor)
-                     || (a->value.iccColor && b->value.iccColor
-                         && (a->value.iccColor->colorProfile == b->value.iccColor->colorProfile)
-                         && (a->value.iccColor->colors == b->value.iccColor->colors))));
+                 && ((a->value.color.icc == b->value.color.icc)
+                     || (a->value.color.icc && b->value.color.icc
+                         && (a->value.color.icc->colorProfile == b->value.color.icc->colorProfile)
+                         && (a->value.color.icc->colors == b->value.color.icc->colors))));
     /* todo: Allow for epsilon differences in iccColor->colors, e.g. changes small enough not to show up
      * in the string representation. */
     }
@@ -3582,13 +3582,13 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
                 css << color_buf;
             }
 
-            if (paint->value.iccColor) {
+            if (paint->value.color.icc) {
                 if ( !css.str().empty() ) {
                     css << " ";
                 }
-                css << "icc-color(" << paint->value.iccColor->colorProfile;
-                for (vector<double>::const_iterator i(paint->value.iccColor->colors.begin()),
-                         iEnd(paint->value.iccColor->colors.end());
+                css << "icc-color(" << paint->value.color.icc->colorProfile;
+                for (vector<double>::const_iterator i(paint->value.color.icc->colors.begin()),
+                         iEnd(paint->value.color.icc->colors.end());
                      i != iEnd; ++i) {
                     css << ", " << *i;
                 }
@@ -3696,9 +3696,6 @@ void SPIPaint::clear()
     {
         value.href->detach();
     }
-
-    delete value.iccColor;
-    value.iccColor = 0;
 }
 
 

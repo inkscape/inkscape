@@ -131,7 +131,6 @@ ColorGtkselector::~ColorGtkselector()
 void ColorGtkselector::_colorChanged( const SPColor& color, gfloat alpha )
 {
     GdkColor gcolor;
-    float rgb[3];
     g_return_if_fail (_csel != NULL);
     g_return_if_fail (SP_IS_COLOR_GTKSELECTOR (_csel));
     g_return_if_fail( ( 0.0 <= alpha ) && ( alpha <= 1.0 ) );
@@ -139,11 +138,10 @@ void ColorGtkselector::_colorChanged( const SPColor& color, gfloat alpha )
     _color = color;
     _alpha = alpha;
 
-    sp_color_get_rgb_floatv( &color, rgb );
     gcolor.pixel = 0;
-    gcolor.red   = static_cast< guint16 > (rgb[0] * 65535);
-    gcolor.green = static_cast< guint16 > (rgb[1] * 65535);
-    gcolor.blue  = static_cast< guint16 > (rgb[2] * 65535);
+    gcolor.red   = static_cast< guint16 > (color.v.c[0] * 65535);
+    gcolor.green = static_cast< guint16 > (color.v.c[1] * 65535);
+    gcolor.blue  = static_cast< guint16 > (color.v.c[2] * 65535);
 
 //     g_message( "*****  _colorChanged %04x %04x %04x", gcolor.red, gcolor.green, gcolor.blue );
     g_signal_handler_block( _gtkThing, _sigId );

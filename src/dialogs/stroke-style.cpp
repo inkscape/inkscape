@@ -248,10 +248,7 @@ sp_stroke_style_paint_update (SPWidget *spw)
                     sp_update_pattern_list (psel, pat);
                 }
             } else if (query->stroke.set && query->stroke.isColor()) {
-                gfloat d[3];
-                sp_color_get_rgb_floatv (&query->stroke.value.color, d);
-                SPColor color( d[0], d[1], d[2] );
-                sp_paint_selector_set_color_alpha (psel, &color, SP_SCALE24_TO_FLOAT (query->stroke_opacity.value));
+                sp_paint_selector_set_color_alpha (psel, &query->stroke.value.color, SP_SCALE24_TO_FLOAT (query->stroke_opacity.value));
 
             }
             break;

@@ -156,7 +156,6 @@ struct SPIPaint {
     struct {
          SPPaintServerReference *href;
          SPColor color;
-         SVGICCColor *iccColor;
     } value;
 
 

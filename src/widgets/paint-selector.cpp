@@ -46,6 +46,10 @@
 
 #include "paint-selector.h"
 
+#ifdef SP_PS_VERBOSE
+#include "svg/svg-icc-color.h"
+#endif // SP_PS_VERBOSE
+
 enum {
     MODE_CHANGED,
     GRABBED,
@@ -556,18 +560,21 @@ sp_paint_selector_set_mode_none(SPPaintSelector *psel)
 static void
 sp_paint_selector_color_grabbed(SPColorSelector *csel, SPPaintSelector *psel)
 {
+    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[GRABBED]);
 }
 
 static void
 sp_paint_selector_color_dragged(SPColorSelector *csel, SPPaintSelector *psel)
 {
+    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[DRAGGED]);
 }
 
 static void
 sp_paint_selector_color_released(SPColorSelector *csel, SPPaintSelector *psel)
 {
+    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[RELEASED]);
 }
 
@@ -582,6 +589,7 @@ sp_paint_selector_color_changed(SPColorSelector *csel, SPPaintSelector *psel)
 static void
 sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelectorMode mode)
 {
+    (void)mode;
     GtkWidget *csel;
 
     sp_paint_selector_set_style_buttons(psel, psel->solid);
@@ -627,24 +635,28 @@ sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelectorMode mode
 static void
 sp_paint_selector_gradient_grabbed(SPColorSelector *csel, SPPaintSelector *psel)
 {
+    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[GRABBED]);
 }
 
 static void
 sp_paint_selector_gradient_dragged(SPColorSelector *csel, SPPaintSelector *psel)
 {
+    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[DRAGGED]);
 }
 
 static void
 sp_paint_selector_gradient_released(SPColorSelector *csel, SPPaintSelector *psel)
 {
+    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[RELEASED]);
 }
 
 static void
 sp_paint_selector_gradient_changed(SPColorSelector *csel, SPPaintSelector *psel)
 {
+    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[CHANGED]);
 }
 
@@ -707,6 +719,7 @@ sp_paint_selector_set_style_buttons(SPPaintSelector *psel, GtkWidget *active)
 static void
 sp_psel_pattern_destroy(GtkWidget *widget,  SPPaintSelector *psel)
 {
+    (void)psel;
     // drop our reference to the pattern menu widget
     g_object_unref( G_OBJECT(widget) );
 }
@@ -714,6 +727,7 @@ sp_psel_pattern_destroy(GtkWidget *widget,  SPPaintSelector *psel)
 static void
 sp_psel_pattern_change(GtkWidget *widget,  SPPaintSelector *psel)
 {
+    (void)widget;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[CHANGED]);
 }
 
@@ -904,12 +918,18 @@ sp_paint_selector_set_flat_color(SPPaintSelector *psel, SPDesktop *desktop, gcha
     SPColor color;
     gfloat alpha;
     sp_paint_selector_get_color_alpha(psel, &color, &alpha);
+
+    std::string colorStr = color.toString();
+
+#ifdef SP_PS_VERBOSE
     guint32 rgba = color.toRGBA32( alpha );
+    g_message("sp_paint_selector_set_flat_color() to '%s' from 0x%08x::%s",
+              colorStr.c_str(),
+              rgba,
+              (color.icc?color.icc->colorProfile.c_str():"<null>") );
+#endif // SP_PS_VERBOSE
 
-    gchar b[64];
-    sp_svg_write_color(b, 64, rgba);
-
-    sp_repr_css_set_property(css, color_property, b);
+    sp_repr_css_set_property(css, color_property, colorStr.c_str());
     Inkscape::CSSOStringStream osalpha;
     osalpha << alpha;
     sp_repr_css_set_property(css, opacity_property, osalpha.str().c_str());
@@ -926,7 +946,7 @@ sp_style_determine_paint_selector_mode(SPStyle *style, bool isfill)
     SPIPaint& target = isfill ? style->fill : style->stroke;
 
     if ( !target.set ) {
-        SPPaintSelectorMode mode = SP_PAINT_SELECTOR_MODE_UNSET;
+        mode = SP_PAINT_SELECTOR_MODE_UNSET;
     } else if ( target.isPaintserver() ) {
         SPPaintServer *server = isfill? SP_STYLE_FILL_SERVER(style) : SP_STYLE_STROKE_SERVER(style);
 

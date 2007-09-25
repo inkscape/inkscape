@@ -360,6 +360,9 @@ sp_color_slider_set_colors (SPColorSlider *slider, guint32 start, guint32 mid, g
 	g_return_if_fail (slider != NULL);
 	g_return_if_fail (SP_IS_COLOR_SLIDER (slider));
 
+        // Remove any map, if set
+        slider->map = 0;
+
 	slider->c0[0] = start >> 24;
 	slider->c0[1] = (start >> 16) & 0xff;
 	slider->c0[2] = (start >> 8) & 0xff;

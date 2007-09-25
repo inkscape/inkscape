@@ -16,6 +16,7 @@
  */
 
 #include <gdk/gdktypes.h>
+#include <string>
 
 /* Useful composition macros */
 
@@ -54,6 +55,8 @@ struct SPColor {
 
     guint32 toRGBA32( gint alpha ) const;
     guint32 toRGBA32( gdouble alpha ) const;
+
+    std::string toString() const;
 
     SVGICCColor* icc;
     union {
