@@ -81,9 +81,9 @@ Transformation::Transformation(Behavior::BehaviorFactory behavior_factory)
                                "", "arrows_hor", &_units_move),
       _scalar_move_vertical   (_("_Vertical"),  _("Vertical displacement (relative) or position (absolute)"), UNIT_TYPE_LINEAR, 
                                "", "arrows_ver", &_units_move),
-      _scalar_scale_horizontal(_("_Width"), _("Horizontal size increment (absolute or percentage)"), UNIT_TYPE_DIMENSIONLESS, 
+      _scalar_scale_horizontal(_("_Width"), _("Horizontal size (absolute or percentage of current)"), UNIT_TYPE_DIMENSIONLESS, 
                                "", "transform_scale_hor", &_units_scale),
-      _scalar_scale_vertical  (_("_Height"),  _("Vertical size increment (absolute or percentage)"), UNIT_TYPE_DIMENSIONLESS, 
+      _scalar_scale_vertical  (_("_Height"),  _("Vertical size (absolute or percentage of current)"), UNIT_TYPE_DIMENSIONLESS, 
                                "", "transform_scale_ver", &_units_scale),
       _scalar_rotate          (_("A_ngle"), _("Rotation angle (positive = counterclockwise)"), UNIT_TYPE_RADIAL, 
                                "", "transform_rotate", &_units_rotate),
@@ -237,14 +237,14 @@ Transformation::layoutPageScale()
     _units_scale.setUnitType(UNIT_TYPE_LINEAR);
 
     _scalar_scale_horizontal.initScalar(-1e6, 1e6);
-    _scalar_scale_horizontal.setValue(0.0, "%");
+    _scalar_scale_horizontal.setValue(100.0, "%");
     _scalar_scale_horizontal.setDigits(3);
     _scalar_scale_horizontal.setIncrements(0.1, 1.0);
     _scalar_scale_horizontal.setAbsoluteIsIncrement(true);
     _scalar_scale_horizontal.setPercentageIsIncrement(true);
 
     _scalar_scale_vertical.initScalar(-1e6, 1e6);
-    _scalar_scale_vertical.setValue(0.0, "%");
+    _scalar_scale_vertical.setValue(100.0, "%");
     _scalar_scale_vertical.setDigits(3);
     _scalar_scale_vertical.setIncrements(0.1, 1.0);
     _scalar_scale_vertical.setAbsoluteIsIncrement(true);
@@ -616,16 +616,16 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
             if (_units_scale.isAbsolute()) {
                 NR::Maybe<NR::Rect> bbox(sp_item_bbox_desktop(item));
                 if (bbox) {
-                    double new_width = bbox->extent(NR::X) + scaleX;
+                    double new_width = scaleX;
                     if (new_width < 1e-6) new_width = 1e-6; // not 0, as this would result in a nasty no-bbox object
-                    double new_height = bbox->extent(NR::Y) + scaleY;
+                    double new_height = scaleY;
                     if (new_height < 1e-6) new_height = 1e-6;
                     scale = NR::scale(new_width / bbox->extent(NR::X), new_height / bbox->extent(NR::Y));
                 }
             } else {
-                double new_width = 100 + scaleX;
+                double new_width = scaleX;
                 if (new_width < 1e-6) new_width = 1e-6;
-                double new_height = 100 + scaleY;
+                double new_height = scaleY;
                 if (new_height < 1e-6) new_height = 1e-6;
                 scale = NR::scale(new_width / 100.0, new_height / 100.0);
             }
@@ -638,15 +638,15 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
             NR::scale scale (0,0);
             // the values are increments!
             if (_units_scale.isAbsolute()) {
-                double new_width = bbox->extent(NR::X) + scaleX;
+                double new_width = scaleX;
                 if (new_width < 1e-6) new_width = 1e-6;
-                double new_height = bbox->extent(NR::Y) + scaleY;
+                double new_height = scaleY;
                 if (new_height < 1e-6) new_height = 1e-6;
                 scale = NR::scale(new_width / bbox->extent(NR::X), new_height / bbox->extent(NR::Y));
             } else {
-                double new_width = 100 + scaleX;
+                double new_width = scaleX;
                 if (new_width < 1e-6) new_width = 1e-6;
-                double new_height = 100 + scaleY;
+                double new_height = scaleY;
                 if (new_height < 1e-6) new_height = 1e-6;
                 scale = NR::scale(new_width / 100.0, new_height / 100.0);
             }
