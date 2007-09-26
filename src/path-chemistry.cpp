@@ -75,13 +75,15 @@ sp_selected_path_combine(void)
         }
     }
 
+    desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Combining paths..."));
+    // set "busy" cursor
+    desktop->setWaitingCursor();
+
     sp_selected_path_to_curves0(FALSE, 0);
 
-    items = (GSList *) selection->itemList();
-
-    items = g_slist_copy(items);
-
+    items = g_slist_copy((GSList *) selection->itemList());
     items = g_slist_sort(items, (GCompareFunc) sp_item_repr_compare_position);
+    selection->clear();
 
     // remember the position of the topmost object
     gint topmost = (SP_OBJECT_REPR((SPItem *) g_slist_last(items)->data))->position();
@@ -138,6 +140,8 @@ sp_selected_path_combine(void)
     // move to the position of the topmost, reduced by the number of deleted items
     repr->setPosition(topmost > 0 ? topmost + 1 : 0);
 
+    desktop->clearWaitingCursor();
+
     sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_COMBINE, 
                          _("Combine"));
 
@@ -157,6 +161,10 @@ sp_selected_path_break_apart(void)
         sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to break apart."));
         return;
     }
+
+    desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Breaking apart paths..."));
+    // set "busy" cursor
+    desktop->setWaitingCursor();
 
     bool did = false;
 
@@ -231,6 +239,8 @@ sp_selected_path_break_apart(void)
 
     }
 
+    desktop->clearWaitingCursor();
+
     if (did) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_BREAK_APART, 
                          _("Break apart"));
@@ -261,18 +271,33 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
     }
 
     bool did = false;
+    if (interactive) {
+        desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Converting objects to paths..."));
+        // set "busy" cursor
+        desktop->setWaitingCursor();
+    }
 
-    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
+    GSList *selected = g_slist_copy((GSList *) selection->itemList());
+    GSList *to_select = NULL;
+    selection->clear();
+    GSList *items = g_slist_copy(selected);
+
+    for (;
          items != NULL;
          items = items->next) {
 
         SPItem *item = SP_ITEM(items->data);
+
+        if (SP_IS_PATH(item) && !SP_PATH(item)->original_curve) {
+            continue; // already a path, and no path effect
+        }
 
         Inkscape::XML::Node *repr = sp_selected_item_to_curved_repr(item, 0);
         if (!repr)
             continue;
 
         did = true;
+        selected = g_slist_remove (selected, item);
 
         // remember the position of the item
         gint pos = SP_OBJECT_REPR(item)->position();
@@ -280,8 +305,6 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
         Inkscape::XML::Node *parent = SP_OBJECT_REPR(item)->parent();
         // remember id
         char const *id = SP_OBJECT_REPR(item)->attribute("id");
-
-        selection->remove(item);
 
         // It's going to resurrect, so we delete without notifying listeners.
         SP_OBJECT(item)->deleteObject(false);
@@ -295,11 +318,18 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
 
         /* Buglet: We don't re-add the (new version of the) object to the selection of any other
          * desktops where it was previously selected. */
-        selection->add(repr);
+        to_select = g_slist_prepend (to_select, repr);
         Inkscape::GC::release(repr);
     }
 
+    g_slist_free (items);
+    selection->setReprList(to_select);
+    selection->addList(selected);
+    g_slist_free (to_select);
+    g_slist_free (selected);
+
     if (interactive) {
+        desktop->clearWaitingCursor();
         if (did) {
             sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_TO_CURVE, 
                              _("Object to path"));
@@ -372,7 +402,12 @@ sp_selected_path_reverse()
     }
 
 
+    // set "busy" cursor
+    desktop->setWaitingCursor();
+
     bool did = false;
+    desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Reversing paths..."));
+
     for (GSList *i = items; i != NULL; i = i->next) {
 
         if (!SP_IS_SHAPE(i->data))
@@ -389,6 +424,8 @@ sp_selected_path_reverse()
 
         sp_curve_unref(rcurve);
     }
+
+    desktop->clearWaitingCursor();
 
     if (did) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_REVERSE,
