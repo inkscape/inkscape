@@ -158,7 +158,7 @@ protected:
     PrefCheckButton _sel_layer_deselects;
 
     PrefSpinButton  _importexport_export, _misc_recent, _misc_simpl;
-    PrefCheckButton _importexport_imp_bitmap, _misc_comment, _misc_scripts;
+    PrefCheckButton _misc_comment, _misc_scripts;
     PrefCheckButton _misc_small_toolbar;
     PrefCombo       _misc_overs_bitmap;
 

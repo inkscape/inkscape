@@ -52,39 +52,14 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         }
 
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
-        if (prefs_get_int_attribute("options.importbitmapsasimages", "value", 1) == 1) {
-            // import as <image>
-            repr = xml_doc->createElement("svg:image");
-            // both are the same, as we don't know our base dir here and cannot relativate href (importer will fixupHrefs):
-            repr->setAttribute("xlink:href", uri); 
-            repr->setAttribute("sodipodi:absref", uri); 
+        // import as <image>
+        repr = xml_doc->createElement("svg:image");
+        // both are the same, as we don't know our base dir here and cannot relativate href (importer will fixupHrefs):
+        repr->setAttribute("xlink:href", uri); 
+        repr->setAttribute("sodipodi:absref", uri); 
 
-            sp_repr_set_svg_double(repr, "width", width);
-            sp_repr_set_svg_double(repr, "height", height);
-
-        } else {
-            // import as pattern-filled rect
-            Inkscape::XML::Node *pat = xml_doc->createElement("svg:pattern");
-            pat->setAttribute("inkscape:collect", "always");
-            pat->setAttribute("patternUnits", "userSpaceOnUse");
-            sp_repr_set_svg_double(pat, "width", width);
-            sp_repr_set_svg_double(pat, "height", height);
-            SP_OBJECT_REPR(SP_DOCUMENT_DEFS(doc))->appendChild(pat);
-            gchar const *pat_id = pat->attribute("id");
-            SPObject *pat_object = doc->getObjectById(pat_id);
-
-            Inkscape::XML::Node *im = xml_doc->createElement("svg:image");
-            im->setAttribute("xlink:href", uri);
-            im->setAttribute("sodipodi:absref", uri);
-            sp_repr_set_svg_double(im, "width", width);
-            sp_repr_set_svg_double(im, "height", height);
-            SP_OBJECT_REPR(pat_object)->addChild(im, NULL);
-
-            repr = xml_doc->createElement("svg:rect");
-            repr->setAttribute("style", g_strdup_printf("stroke:none;fill:url(#%s)", pat_id));
-            sp_repr_set_svg_double(repr, "width", width);
-            sp_repr_set_svg_double(repr, "height", height);
-        }
+        sp_repr_set_svg_double(repr, "width", width);
+        sp_repr_set_svg_double(repr, "height", height);
 
         SP_DOCUMENT_ROOT(doc)->appendChildRepr(repr);
         Inkscape::GC::release(repr);

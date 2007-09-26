@@ -611,9 +611,6 @@ void InkscapePreferences::initPageImportExport()
     _importexport_export.init("dialogs.export.defaultxdpi", "value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
     _page_importexport.add_line( false, _("Default export resolution:"), _importexport_export, _("dpi"),
                             _("Default bitmap resolution (in dots per inch) in the Export dialog"), false);
-    _importexport_imp_bitmap.init( _("Import bitmap as <image>"), "options.importbitmapsasimages", "value", true);
-    _page_importexport.add_line( false, "", _importexport_imp_bitmap, "", 
-         _("When on, an imported bitmap creates an <image> element; otherwise it is a rectangle with bitmap fill"), true);
     _importexport_ocal_url.init("options.ocalurl", "str", true, g_strdup_printf("openclipart.org"));
     _page_importexport.add_line( false, _("Open Clip Art Library Server Name:"), _importexport_ocal_url, "", 
         _("The server name of the Open Clip Art Library webdav server. It's used by the Import and Export to OCAL function."), true);
