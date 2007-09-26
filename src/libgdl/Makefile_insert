@@ -16,7 +16,6 @@ libgdl_libgdl_a_SOURCES =	\
 	libgdl/gdl-dock-tablabel.h	\
 	libgdl/gdl-dock-placeholder.h	\
 	libgdl/gdl-dock-bar.h		\
-	libgdl/gdl-combo-button.h	\
 	libgdl/gdl-stock.h		\
 	libgdl/gdl-stock-icons.h	\
 	libgdl/gdl-i18n.h		\
@@ -32,7 +31,6 @@ libgdl_libgdl_a_SOURCES =	\
 	libgdl/gdl-dock-tablabel.c	\
 	libgdl/gdl-dock-placeholder.c	\
 	libgdl/gdl-dock-bar.c		\
-	libgdl/gdl-combo-button.c	\
 	libgdl/gdl-stock.c		\
 	libgdl/gdl-switcher.h		\
 	libgdl/gdl-switcher.c		\

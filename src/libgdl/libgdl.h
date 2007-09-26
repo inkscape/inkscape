@@ -32,7 +32,6 @@
 #include "libgdl/gdl-dock-notebook.h"
 #include "libgdl/gdl-dock-tablabel.h"
 #include "libgdl/gdl-dock-bar.h"
-#include "libgdl/gdl-combo-button.h"
 #include "libgdl/gdl-switcher.h"
 
 #endif
