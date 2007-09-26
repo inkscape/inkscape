@@ -27,6 +27,8 @@ GType colorprofile_get_type();
 
 cmsHPROFILE colorprofile_get_handle( SPDocument* document, guint* intent, gchar const* name );
 
+cmsHPROFILE colorprofile_get_system_profile_handle();
+
 #endif
 
 } // namespace Inkscape

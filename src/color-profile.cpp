@@ -6,13 +6,13 @@
 #include "attributes.h"
 #include "inkscape.h"
 #include "document.h"
+#include "prefs-utils.h"
 
 #include "dom/uri.h"
 
 //#define DEBUG_LCMS
 
 #ifdef DEBUG_LCMS
-#include "prefs-utils.h"
 #include <gtk/gtkmessagedialog.h>
 #endif // DEBUG_LCMS
 
@@ -367,6 +367,36 @@ cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, guint* inte
 
     return prof;
 }
+
+
+
+cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
+{
+    static cmsHPROFILE theOne = 0;
+    static std::string lastURI;
+
+    long long int which = prefs_get_int_attribute_limited( "options.displayprofile", "enable", 0, 0, 1 );
+    gchar const * uri = prefs_get_string_attribute("options.displayprofile", "uri");
+
+    if ( which && uri ) {
+        if ( lastURI != std::string(uri) ) {
+            if ( theOne ) {
+                cmsCloseProfile( theOne );
+            }
+            theOne = cmsOpenProfileFromFile( uri, "r" );
+            if ( theOne ) {
+                lastURI = uri;
+            }
+        }
+    } else if ( theOne ) {
+        cmsCloseProfile( theOne );
+        theOne = 0;
+        lastURI.clear();
+    }
+
+    return theOne;
+}
+
 #endif // ENABLE_LCMS
 
 /*

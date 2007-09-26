@@ -37,6 +37,9 @@
 #include "box3d-context.h"
 #include "inkscape.h"
 #include "sodipodi-ctrlrect.h"
+#if ENABLE_LCMS
+#include "color-profile-fns.h"
+#endif // ENABLE_LCMS
 
 // Define this to visualize the regions to be redrawn
 //#define DEBUG_REDRAW 1;
@@ -1579,12 +1582,23 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
                     | (color->green & 0xff00)
                     | (color->blue >> 8));
     buf.is_empty = true;
-      
+
     if (canvas->root->flags & SP_CANVAS_ITEM_VISIBLE) {
         SP_CANVAS_ITEM_GET_CLASS (canvas->root)->render (canvas->root, &buf);
     }
-      
+
+#if ENABLE_LCMS
+        cmsHPROFILE hprof = Inkscape::colorprofile_get_system_profile_handle();
+        cmsHPROFILE srcprof = hprof ? cmsCreate_sRGBProfile() : 0;
+        cmsHTRANSFORM transf = hprof ? cmsCreateTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, INTENT_PERCEPTUAL, 0 ) : 0;
+#endif // ENABLE_LCMS
+
     if (buf.is_empty) {
+#if ENABLE_LCMS
+        if ( transf ) {
+            cmsDoTransform( transf, &buf.bg_color, &buf.bg_color, 1 );
+        }
+#endif // ENABLE_LCMS
         gdk_rgb_gc_set_foreground (canvas->pixmap_gc, buf.bg_color);
         gdk_draw_rectangle (SP_CANVAS_WINDOW (canvas),
                             canvas->pixmap_gc,
@@ -1614,6 +1628,15 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
     cairo_surface_destroy (cst);
 */
 
+#if ENABLE_LCMS
+        if ( transf ) {
+            for ( gint yy = 0; yy < (y1 - y0); yy++ ) {
+                guchar* p = buf.buf + (sw * 3) * yy;
+                cmsDoTransform( transf, p, p, (x1 - x0) );
+            }
+        }
+#endif // ENABLE_LCMS
+
         gdk_draw_rgb_image_dithalign (SP_CANVAS_WINDOW (canvas),
                                       canvas->pixmap_gc,
                                       x0 - canvas->x0, y0 - canvas->y0,
@@ -1623,6 +1646,14 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
                                       sw * 3,
                                       x0 - canvas->x0, y0 - canvas->y0);
     }
+
+#if ENABLE_LCMS
+    if ( transf ) {
+        cmsDeleteTransform( transf );
+        transf = 0;
+    }
+#endif // ENABLE_LCMS
+
 
     if (canvas->rendermode != RENDERMODE_OUTLINE) {
         nr_pixelstore_256K_free (buf.buf);

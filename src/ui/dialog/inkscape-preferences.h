@@ -161,6 +161,10 @@ protected:
     PrefCheckButton _importexport_imp_bitmap, _misc_comment, _misc_scripts;
     PrefCheckButton _misc_small_toolbar;
     PrefCombo       _misc_overs_bitmap;
+
+    PrefCheckButton _misc_cms_display;
+    PrefEntry       _misc_cms_display_profile;
+
     PrefEntryButtonHBox _importexport_ocal_url;
     PrefEntry       _importexport_ocal_username;
     PrefEntry       _importexport_ocal_password;

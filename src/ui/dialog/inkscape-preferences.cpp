@@ -627,14 +627,40 @@ void InkscapePreferences::initPageImportExport()
     this->AddPage(_page_importexport, _("Import/Export"), PREFS_PAGE_IMPORTEXPORT);
 }
 
+#if ENABLE_LCMS
+static void forceUpdates() {
+    std::list<SPDesktop*> tops;
+    inkscape_get_all_desktops( tops );
+    for ( std::list<SPDesktop*>::iterator it = tops.begin(); it != tops.end(); ++it ) {
+        (*it)->requestRedraw();
+    }
+}
+#endif // ENABLE_LCMS
+
 void InkscapePreferences::initPageMisc()
 {
     _misc_comment.init( _("Add label comments to printing output"), "printing.debug", "show-label-comments", false);
     _page_misc.add_line( false, "", _misc_comment, "", 
                            _("When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"), true);
+
     _misc_small_toolbar.init( _("Make commands toolbar smaller"), "toolbox", "small", true);
     _page_misc.add_line( false, "", _misc_small_toolbar, "",
                            _("Make the commands toolbar use the 'secondary' toolbar size (requires restart)"), true);
+
+    _misc_cms_display.init( _("Enable display calibration"), "options.displayprofile", "enable", false);
+    _page_misc.add_line( false, "", _misc_cms_display, "",
+                           _("Enables application of the display using an ICC profile."), true);
+    _misc_cms_display_profile.init("options.displayprofile", "uri", true);
+    _page_misc.add_line( false, _("Display profile:"), _misc_cms_display_profile, "",
+            _("The ICC profile to use to calibrate display output."), true);
+#if ENABLE_LCMS
+    _misc_cms_display.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
+#else
+    // disable it, but leave it visible
+    _misc_cms_display.set_sensitive( false );
+    _misc_cms_display_profile.set_sensitive( false );
+#endif // ENABLE_LCMS
+
     _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
     _page_misc.add_line( false, _("Max recent documents:"), _misc_recent, "", 
                            _("The maximum length of the Open Recent list in the File menu"), false);
