@@ -163,7 +163,7 @@ protected:
     PrefCombo       _misc_overs_bitmap;
 
     PrefCheckButton _misc_cms_display;
-    PrefEntry       _misc_cms_display_profile;
+    PrefFileButton  _misc_cms_display_profile;
 
     PrefEntryButtonHBox _importexport_ocal_url;
     PrefEntry       _importexport_ocal_username;

@@ -378,7 +378,7 @@ cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
     long long int which = prefs_get_int_attribute_limited( "options.displayprofile", "enable", 0, 0, 1 );
     gchar const * uri = prefs_get_string_attribute("options.displayprofile", "uri");
 
-    if ( which && uri ) {
+    if ( which && uri && *uri ) {
         if ( lastURI != std::string(uri) ) {
             if ( theOne ) {
                 cmsCloseProfile( theOne );

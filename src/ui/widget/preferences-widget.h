@@ -23,6 +23,7 @@
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/box.h>
 #include <gtkmm/frame.h>
+#include <gtkmm/filechooserbutton.h>
 #include <sigc++/sigc++.h>
 //#include <glibmm/i18n.h>
 
@@ -33,7 +34,7 @@ namespace Widget {
 class PrefCheckButton : public Gtk::CheckButton
 {
 public:
-    void init(const Glib::ustring& label, const std::string& prefs_path, const std::string& attr, 
+    void init(const Glib::ustring& label, const std::string& prefs_path, const std::string& attr,
               bool default_value);
 protected:
     std::string _prefs_path;
@@ -45,9 +46,9 @@ protected:
 class PrefRadioButton : public Gtk::RadioButton
 {
 public:
-    void init(const Glib::ustring& label, const std::string& prefs_path, const std::string& attr, 
+    void init(const Glib::ustring& label, const std::string& prefs_path, const std::string& attr,
               int int_value, bool default_value, PrefRadioButton* group_member);
-    void init(const Glib::ustring& label, const std::string& prefs_path, const std::string& attr, 
+    void init(const Glib::ustring& label, const std::string& prefs_path, const std::string& attr,
               const std::string& string_value, bool default_value, PrefRadioButton* group_member);
     sigc::signal<void, bool> changed_signal;
 protected:
@@ -68,7 +69,7 @@ class PrefSpinButton : public Gtk::SpinButton
 {
 public:
     void init(const std::string& prefs_path, const std::string& attr,
-              double lower, double upper, double step_increment, double page_increment, 
+              double lower, double upper, double step_increment, double page_increment,
               double default_value, bool is_int, bool is_percent);
 protected:
     std::string _prefs_path;
@@ -116,6 +117,17 @@ protected:
     void onRelatedButtonClickedCallback();
 };
 
+class PrefFileButton : public Gtk::FileChooserButton
+{
+public:
+    void init(const std::string& prefs_path, const std::string& attr);
+
+protected:
+    std::string _prefs_path;
+    std::string _attr;
+    void onFileChanged();
+};
+
 class DialogPage : public Gtk::Table
 {
 public:
@@ -134,7 +146,7 @@ protected:
 
 #endif //INKSCAPE_UI_WIDGET_INKSCAPE_PREFERENCES_H
 
-/* 
+/*
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"

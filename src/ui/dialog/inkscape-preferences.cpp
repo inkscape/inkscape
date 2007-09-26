@@ -650,11 +650,14 @@ void InkscapePreferences::initPageMisc()
     _misc_cms_display.init( _("Enable display calibration"), "options.displayprofile", "enable", false);
     _page_misc.add_line( false, "", _misc_cms_display, "",
                            _("Enables application of the display using an ICC profile."), true);
-    _misc_cms_display_profile.init("options.displayprofile", "uri", true);
+    _misc_cms_display_profile.init("options.displayprofile", "uri");
     _page_misc.add_line( false, _("Display profile:"), _misc_cms_display_profile, "",
             _("The ICC profile to use to calibrate display output."), true);
 #if ENABLE_LCMS
     _misc_cms_display.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
+
+    _misc_cms_display_profile.signal_selection_changed().connect( sigc::ptr_fun(forceUpdates) );
+
 #else
     // disable it, but leave it visible
     _misc_cms_display.set_sensitive( false );
