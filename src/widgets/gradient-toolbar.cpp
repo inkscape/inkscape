@@ -404,32 +404,6 @@ gr_defs_modified (SPObject *defs, guint flags, GtkWidget *widget)
     gr_tb_selection_changed (NULL, (gpointer) widget);
 }
 
-static void
-gr_fork (GtkWidget *button, GtkWidget *widget)
-{
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data (G_OBJECT(widget), "desktop");
-    SPDocument *document = sp_desktop_document (desktop);
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
-    SPEventContext *ev = sp_desktop_event_context (desktop);
-    GtkWidget *om = (GtkWidget *) g_object_get_data (G_OBJECT(widget), "menu");
-
-    if (om && document) {
-        GtkWidget *i = gtk_menu_get_active (GTK_MENU (gtk_option_menu_get_menu (GTK_OPTION_MENU (om))));
-        SPGradient *gr = (SPGradient *) g_object_get_data (G_OBJECT(i), "gradient");
-
-        if (gr) {
-            SPGradient *gr_new = sp_gradient_fork_vector_if_necessary (gr);
-            if (gr_new != gr) {
-                gr_apply_gradient (selection, ev? ev->get_drag() : NULL, gr_new);
-                sp_document_done (document, SP_VERB_CONTEXT_GRADIENT,
-                                  _("Duplicate gradient"));
-            }
-        }
-    }
-
-    spinbutton_defocus(GTK_OBJECT(widget));
-}
-
 static void gr_disconnect_sigc (GObject *obj, sigc::connection *connection) {
     connection->disconnect();
     delete connection;
@@ -481,17 +455,6 @@ gr_change_widget (SPDesktop *desktop)
 
     {
     GtkWidget *buttons = gtk_hbox_new(FALSE, 1);
-
-    /* Fork */
-    {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-        GtkWidget *b = gtk_button_new_with_label(_("Duplicate"));
-        gtk_tooltips_set_tip(tt, b, _("If the gradient is used by more than one object, create a copy of it for the selected object(s)"), NULL);
-        gtk_widget_show(b);
-        gtk_container_add(GTK_CONTAINER(hb), b);
-        gtk_signal_connect(GTK_OBJECT(b), "clicked", GTK_SIGNAL_FUNC(gr_fork), widget);
-        gtk_box_pack_start (GTK_BOX(buttons), hb, FALSE, FALSE, 0);
-    }
 
     /* Edit... */
     {
