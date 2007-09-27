@@ -380,12 +380,27 @@ cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
 
     if ( which && uri && *uri ) {
         if ( lastURI != std::string(uri) ) {
+            lastURI.clear();
             if ( theOne ) {
                 cmsCloseProfile( theOne );
             }
             theOne = cmsOpenProfileFromFile( uri, "r" );
             if ( theOne ) {
-                lastURI = uri;
+                // a display profile must have the proper stuff
+                icColorSpaceSignature space = cmsGetColorSpace(theOne);
+                icProfileClassSignature profClass = cmsGetDeviceClass(theOne);
+
+                if ( profClass != icSigDisplayClass ) {
+                    g_warning("Not a display profile");
+                    cmsCloseProfile( theOne );
+                    theOne = 0;
+                } else if ( space != icSigRgbData ) {
+                    g_warning("Not an RGB profile");
+                    cmsCloseProfile( theOne );
+                    theOne = 0;
+                } else {
+                    lastURI = uri;
+                }
             }
         }
     } else if ( theOne ) {
