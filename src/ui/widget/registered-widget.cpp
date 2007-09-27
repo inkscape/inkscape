@@ -82,7 +82,8 @@ RegisteredWidget::write_to_xml(const char * svgstr)
 //====================================================
 
 RegisteredCheckButton::RegisteredCheckButton()
-: _button(0)
+: _button(0),
+   setProgrammatically(false)
 {
 }
 
@@ -109,16 +110,23 @@ RegisteredCheckButton::init (const Glib::ustring& label, const Glib::ustring& ti
 void
 RegisteredCheckButton::setActive (bool b)
 {
+// FIXME: for some reason, this function is also called when user clicks. then setProgrammatically should not be set!
+    setProgrammatically = true;
     _button->set_active (b);
-	//The slave button is greyed out if the master button is unchecked
-	for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
-		(*i)->set_sensitive(b);
-	}
+    //The slave button is greyed out if the master button is unchecked
+    for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
+        (*i)->set_sensitive(b);
+    }
 }
 
 void
 RegisteredCheckButton::on_toggled()
 {
+    if (setProgrammatically) {
+        setProgrammatically = false;
+        return;
+    }
+
     if (_wr->isUpdating())
         return;
 
@@ -215,12 +223,16 @@ void
 RegisteredScalarUnit::setValue (double val)
 {
     _widget->setValue (val);
-    on_value_changed();
 }
 
 void
 RegisteredScalarUnit::on_value_changed()
 {
+    if (_widget->setProgrammatically) {
+        _widget->setProgrammatically = false;
+        return;
+    }
+
     if (_wr->isUpdating())
         return;
 
@@ -274,12 +286,16 @@ void
 RegisteredScalar::setValue (double val)
 {
     _widget->setValue (val);
-    on_value_changed();
 }
 
 void
 RegisteredScalar::on_value_changed()
 {
+    if (_widget->setProgrammatically) {
+        _widget->setProgrammatically = false;
+        return;
+    }
+
     if (_wr->isUpdating()) {
         return;
     }
@@ -370,7 +386,9 @@ RegisteredColorPicker::on_changed (guint32 rgba)
 }
 
 RegisteredSuffixedInteger::RegisteredSuffixedInteger()
-: _label(0), _sb(0),
+: _label(0),
+  setProgrammatically(false),
+  _sb(0),
   _adj(0.0,0.0,100.0,1.0,1.0,1.0),
   _suffix(0)
 {
@@ -404,12 +422,18 @@ RegisteredSuffixedInteger::init (const Glib::ustring& label, const Glib::ustring
 void
 RegisteredSuffixedInteger::setValue (int i)
 {
+    setProgrammatically = true;
     _adj.set_value (i);
 }
 
 void
 RegisteredSuffixedInteger::on_value_changed()
 {
+    if (setProgrammatically) {
+        setProgrammatically = false;
+        return;
+    }
+
     if (_wr->isUpdating())
         return;
 
@@ -425,7 +449,8 @@ RegisteredSuffixedInteger::on_value_changed()
 }
 
 RegisteredRadioButtonPair::RegisteredRadioButtonPair()
-: _hbox(0)
+: _hbox(0),
+   setProgrammatically(false)
 {
 }
 
@@ -458,6 +483,7 @@ const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument
 void
 RegisteredRadioButtonPair::setValue (bool second)
 {
+    setProgrammatically = true;
     if (second) _rb2->set_active();
     else        _rb1->set_active();
 }
@@ -465,6 +491,11 @@ RegisteredRadioButtonPair::setValue (bool second)
 void
 RegisteredRadioButtonPair::on_value_changed()
 {
+    if (setProgrammatically) {
+        setProgrammatically = false;
+        return;
+    }
+
     if (_wr->isUpdating())
         return;
 
@@ -519,12 +550,16 @@ void
 RegisteredPoint::setValue (double xval, double yval)
 {
     _widget->setValue(xval, yval);
-    on_value_changed();
 }
 
 void
 RegisteredPoint::on_value_changed()
 {
+    if (_widget->setProgrammatically()) {
+        _widget->clearProgrammatically();
+        return;
+    }
+
     if (_wr->isUpdating())
         return;
 
@@ -582,12 +617,16 @@ RegisteredRandom::setValue (double val, long startseed)
 {
     _widget->setValue (val);
     _widget->setStartSeed(startseed);
-    on_value_changed();
 }
 
 void
 RegisteredRandom::on_value_changed()
 {
+    if (_widget->setProgrammatically) {
+        _widget->setProgrammatically = false;
+        return;
+    }
+
     if (_wr->isUpdating())
         return;
     _wr->setUpdating (true);

@@ -70,8 +70,9 @@ public:
     Glib::SignalProxy0<void> signal_x_value_changed();
     Glib::SignalProxy0<void> signal_y_value_changed();
 
-    bool setProgrammatically; // true if the value was set by setValue, not changed by the user; 
-                              // if a callback checks it, it must reset it back to false
+    bool setProgrammatically(); // true if the value was set by setValue, not changed by the user; 
+                                // if a callback checks it, it must reset it back to false
+    void clearProgrammatically();
 
 protected:
     Scalar xwidget, ywidget;

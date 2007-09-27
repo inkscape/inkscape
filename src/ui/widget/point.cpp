@@ -43,7 +43,6 @@ Point::Point(Glib::ustring const &label, Glib::ustring const &tooltip,
                Glib::ustring const &icon,
                bool mnemonic)
     : Labelled(label, tooltip, new Gtk::VBox(), suffix, icon, mnemonic),
-      setProgrammatically(false),
       xwidget("X:",""),
       ywidget("Y:","")
 {
@@ -69,7 +68,6 @@ Point::Point(Glib::ustring const &label, Glib::ustring const &tooltip,
                Glib::ustring const &icon,
                bool mnemonic)
     : Labelled(label, tooltip, new Gtk::VBox(), suffix, icon, mnemonic),
-      setProgrammatically(false),
       xwidget("X:","", digits),
       ywidget("Y:","", digits)
 {
@@ -97,7 +95,6 @@ Point::Point(Glib::ustring const &label, Glib::ustring const &tooltip,
                Glib::ustring const &icon,
                bool mnemonic)
     : Labelled(label, tooltip, new Gtk::VBox(), suffix, icon, mnemonic),
-      setProgrammatically(false),
       xwidget("X:","", adjust, digits),
       ywidget("Y:","", adjust, digits)
 {
@@ -194,7 +191,6 @@ Point::setRange(double min, double max)
 void
 Point::setValue(double xvalue, double yvalue)
 {
-    setProgrammatically = true; // callback is supposed to reset back, if it cares
     xwidget.setValue(xvalue);
     ywidget.setValue(yvalue);
 }
@@ -206,6 +202,17 @@ Point::update() {
     ywidget.update();
 }
 
+/** Check 'setProgrammatically' of both scalar widgets.   False if value is changed by user by clicking the widget. */
+bool
+Point::setProgrammatically() {
+    return (xwidget.setProgrammatically || ywidget.setProgrammatically);
+}
+
+void
+Point::clearProgrammatically() {
+    xwidget.setProgrammatically = false;
+    ywidget.setProgrammatically = false;
+}
 
 
 /** Signal raised when the spin button's value changes */

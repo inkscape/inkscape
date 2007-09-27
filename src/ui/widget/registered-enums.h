@@ -79,6 +79,11 @@ public:
 
 protected:
     void on_changed() {
+        if (combobox()->setProgrammatically) {
+            combobox()->setProgrammatically = false;
+            return;
+        }
+
         if (_wr->isUpdating())
             return;
         _wr->setUpdating (true);

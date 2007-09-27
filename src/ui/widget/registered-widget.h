@@ -100,7 +100,10 @@ public:
     void setSlaveButton(std::list<Gtk::ToggleButton*> btns) {
     	_slavebuttons = btns;
     }
-    
+
+    bool setProgrammatically; // true if the value was set by setValue, not changed by the user; 
+                                // if a callback checks it, it must reset it back to false
+
 
 protected:
     Gtk::Tooltips     _tt;
@@ -235,6 +238,8 @@ public:
     void setValue (int);
     Gtk::Label *_label;
     Gtk::HBox _hbox;
+    bool setProgrammatically; // true if the value was set by setValue, not changed by the user; 
+                                // if a callback checks it, it must reset it back to false
 
 protected:
     Gtk::SpinButton *_sb;
@@ -269,6 +274,8 @@ public:
     void setValue (bool second);
     Gtk::HBox *_hbox;
 
+    bool setProgrammatically; // true if the value was set by setValue, not changed by the user; 
+                                    // if a callback checks it, it must reset it back to false
 protected:
     Gtk::RadioButton *_rb1, *_rb2;
     Gtk::Tooltips     _tt;

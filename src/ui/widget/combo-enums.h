@@ -27,7 +27,7 @@ template<typename E> class ComboBoxEnum : public Gtk::ComboBox, public AttrWidge
 {
 public:
     ComboBoxEnum(const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID)
-        : AttrWidget(a), _converter(c)
+        : AttrWidget(a), setProgrammatically(false), _converter(c)
     {
         signal_changed().connect(signal_attr_changed().make_slot());
 
@@ -54,6 +54,7 @@ public:
 
     virtual void set_from_attribute(SPObject* o)
     {
+        setProgrammatically = true;
         const gchar* val = attribute_value(o);
         if(val)
             set_active(_converter.get_id_from_key(val));
@@ -77,6 +78,7 @@ public:
     }
 
     void set_active_by_id(E id) {
+        setProgrammatically = true;
         for(Gtk::TreeModel::iterator i = _model->children().begin();
             i != _model->children().end(); ++i) 
         {
@@ -89,8 +91,11 @@ public:
     };
 
     void set_active_by_key(const Glib::ustring& key) {
+        setProgrammatically = true;
         set_active_by_id( _converter.get_id_from_key(key) );
     };
+
+    bool setProgrammatically;
 
 private:
     class Columns : public Gtk::TreeModel::ColumnRecord
