@@ -36,16 +36,19 @@ protected:
     static void _sliderReleased( SPColorSlider *slider, SPColorICCSelector *cs );
     static void _sliderChanged( SPColorSlider *slider, SPColorICCSelector *cs );
 
-    static void _fooChanged( GtkWidget foo, SPColorICCSelector *cs );
+    static void _fixupHit( GtkWidget* src, gpointer data );
 
     void _recalcColor( gboolean changing );
 #if ENABLE_LCMS
     void _setProfile( SVGICCColor* profile );
 #endif // ENABLE_LCMS
-    void _updateSliders();
+    void _updateSliders( gint ignore );
 
     gboolean _updating : 1;
     gboolean _dragging : 1;
+
+    guint32 _fixupNeeded;
+    GtkWidget* _fixupBtn;
 
     guint _fooCount;
     guint const* _fooScales;

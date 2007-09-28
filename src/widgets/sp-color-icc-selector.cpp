@@ -2,6 +2,7 @@
 # include "config.h"
 #endif
 #include <math.h>
+#include <gtk/gtkbutton.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtktable.h>
@@ -127,6 +128,7 @@ ColorICCSelector::ColorICCSelector( SPColorSelector* csel )
     : ColorSelector( csel ),
       _updating( FALSE ),
       _dragging( FALSE ),
+      _fixupNeeded(0),
       _fooCount(0),
       _fooScales(0),
       _fooAdj(0),
@@ -290,6 +292,16 @@ void ColorICCSelector::init()
     row = 0;
 
 
+    _fixupBtn = gtk_button_new_with_label(_("Fix"));
+    g_signal_connect( G_OBJECT(_fixupBtn), "clicked", G_CALLBACK(_fixupHit), (gpointer)this );
+    gtk_widget_set_sensitive( _fixupBtn, FALSE );
+    gtk_tooltips_set_tip( _tt, _fixupBtn, _("Fix RGB fallback to match icc-color() value."), NULL );
+    //gtk_misc_set_alignment( GTK_MISC (_fixupBtn), 1.0, 0.5 );
+    gtk_widget_show( _fixupBtn );
+    gtk_table_attach( GTK_TABLE (t), _fixupBtn, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD );
+
+    row++;
+
     _fooCount = 4;
     _fooAdj = new GtkAdjustment*[_fooCount];
     _fooSlider = new GtkWidget*[_fooCount];
@@ -407,6 +419,15 @@ sp_color_icc_selector_new (void)
     return GTK_WIDGET (csel);
 }
 
+
+void ColorICCSelector::_fixupHit( GtkWidget* src, gpointer data )
+{
+    (void)src;
+    ColorICCSelector* self = reinterpret_cast<ColorICCSelector*>(data);
+    gtk_widget_set_sensitive( self->_fixupBtn, FALSE );
+    self->_adjustmentChanged( self->_fooAdj[0], SP_COLOR_ICC_SELECTOR(self->_csel) );
+}
+
 /* Helpers for setting color value */
 
 void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
@@ -428,6 +449,8 @@ void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
 
 #if ENABLE_LCMS
     _setProfile( color.icc );
+    _fixupNeeded = 0;
+    gtk_widget_set_sensitive( _fixupBtn, FALSE );
 
     if ( _transf ) {
         icUInt16Number tmp[4];
@@ -446,12 +469,14 @@ void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
         cmsDoTransform( _transf, tmp, post, 1 );
         guint32 other = SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255 );
         if ( other != color.toRGBA32(255) ) {
+            _fixupNeeded = other;
+            gtk_widget_set_sensitive( _fixupBtn, TRUE );
             //g_message("Color needs to change 0x%06x to 0x%06x", color.toRGBA32(255) >> 8, other >> 8 );
         }
     }
 
 #endif // ENABLE_LCMS
-    _updateSliders();
+    _updateSliders( -1 );
 
 
     _updating = FALSE;
@@ -468,8 +493,10 @@ void ColorICCSelector::_setProfile( SVGICCColor* profile )
                ( (profile) ? profile->colorProfile.c_str() : "<null>")
                );
 #endif // DEBUG_LCMS
+    bool profChanged = false;
     if ( _prof && (!profile || (_profileName != profile->colorProfile) ) ) {
         // Need to clear out the prior one
+        profChanged = true;
         _profileName.clear();
         _profIntent = Inkscape::RENDERING_INTENT_UNKNOWN;
         _profileSpace = icSigRgbData;
@@ -484,6 +511,15 @@ void ColorICCSelector::_setProfile( SVGICCColor* profile )
             _destProf = 0;
         }
         _profChannelCount = 0;
+    } else if ( profile && !_prof ) {
+        profChanged = true;
+    }
+
+    for ( guint i = 0; i < _fooCount; i++ ) {
+        gtk_widget_hide( _fooLabel[i] );
+        gtk_widget_hide( _fooSlider[i] );
+        gtk_widget_hide( _fooBtn[i] );
+        gtk_adjustment_set_value( _fooAdj[i], 0.0 );
     }
 
     if ( profile ) {
@@ -521,106 +557,92 @@ void ColorICCSelector::_setProfile( SVGICCColor* profile )
                 getThings( _profileSpace, names, tips, _fooScales, inputFormat );
 
                 _transf = cmsCreateTransform( _prof, inputFormat, _destProf, TYPE_RGBA_8, intent, 0 );
-                (void)names;
-                (void)tips;
+                if ( profChanged ) {
+                    for ( guint i = 0; i < _profChannelCount; i++ ) {
+                        gtk_label_set_text_with_mnemonic( GTK_LABEL(_fooLabel[i]), names[i]);
+
+                        gtk_tooltips_set_tip( _tt, _fooSlider[i], tips[i], NULL );
+                        gtk_tooltips_set_tip( _tt, _fooBtn[i], tips[i], NULL );
+
+                        sp_color_slider_set_colors( SP_COLOR_SLIDER(_fooSlider[i]),
+                                                    SPColor(0.0, 0.0, 0.0).toRGBA32(0xff),
+                                                    SPColor(0.5, 0.5, 0.5).toRGBA32(0xff),
+                                                    SPColor(1.0, 1.0, 1.0).toRGBA32(0xff) );
+/*
+                        _fooAdj[i] = GTK_ADJUSTMENT( gtk_adjustment_new( val, 0.0, _fooScales[i],  step, page, page ) );
+                        gtk_signal_connect( GTK_OBJECT( _fooAdj[i] ), "value_changed", GTK_SIGNAL_FUNC( _adjustmentChanged ), _csel );
+
+                        sp_color_slider_set_adjustment( SP_COLOR_SLIDER(_fooSlider[i]), _fooAdj[i] );
+                        gtk_spin_button_set_adjustment( GTK_SPIN_BUTTON(_fooBtn[i]), _fooAdj[i] );
+                        gtk_spin_button_set_digits( GTK_SPIN_BUTTON(_fooBtn[i]), digits );
+*/
+                        gtk_widget_show( _fooLabel[i] );
+                        gtk_widget_show( _fooSlider[i] );
+                        gtk_widget_show( _fooBtn[i] );
+                        gtk_adjustment_set_value( _fooAdj[i], 0.0 );
+                        //gtk_adjustment_set_value( _fooAdj[i], val );
+                    }
+                    for ( guint i = _profChannelCount; i < _fooCount; i++ ) {
+                        gtk_widget_hide( _fooLabel[i] );
+                        gtk_widget_hide( _fooSlider[i] );
+                        gtk_widget_hide( _fooBtn[i] );
+                        gtk_adjustment_set_value( _fooAdj[i], 0.0 );
+                    }
+                }
             } else {
                 // Give up for now on named colors
                 _prof = 0;
             }
         }
     }
+
 #ifdef DEBUG_LCMS
     g_message( "\\_________  %p::_setProfile()", this );
 #endif // DEBUG_LCMS
 }
 #endif // ENABLE_LCMS
 
-void ColorICCSelector::_updateSliders()
+void ColorICCSelector::_updateSliders( gint ignore )
 {
 #ifdef ENABLE_LCMS
     if ( _color.icc )
     {
-        DWORD inputFormat = TYPE_RGB_16;
-        gchar const** names = 0;
-        gchar const** tips = 0;
-        getThings( _profileSpace, names, tips, _fooScales, inputFormat );
-
-        for ( guint i = 0; i < _fooCount; i++ ) {
-            gtk_label_set_text_with_mnemonic( GTK_LABEL(_fooLabel[i]), names[i]);
-
-            gtk_tooltips_set_tip( _tt, _fooSlider[i], tips[i], NULL );
-            gtk_tooltips_set_tip( _tt, _fooBtn[i], tips[i], NULL );
-
-            sp_color_slider_set_colors( SP_COLOR_SLIDER(_fooSlider[i]),
-                                        SPColor(0.0, 0.0, 0.0).toRGBA32(0xff),
-                                        SPColor(0.5, 0.5, 0.5).toRGBA32(0xff),
-                                        SPColor(1.0, 1.0, 1.0).toRGBA32(0xff) );
-
-            if ( i < _profChannelCount ) {
-/*
-                gdouble step = static_cast<gdouble>(_fooScales[i]) / 100.0;
-                gdouble page = static_cast<gdouble>(_fooScales[i]) / 10.0;
-                gint digits = (step > 0.9) ? 0 : 2;
-*/
-                gdouble val = 0.0;
-                if ( _color.icc->colors.size() > i ) {
-                    if ( _fooScales[i] == 256 ) {
-                        val = (_color.icc->colors[i] + 128.0) / static_cast<gdouble>(_fooScales[i]);
-                    } else {
-                        val = _color.icc->colors[i] / static_cast<gdouble>(_fooScales[i]);
-                    }
+        for ( guint i = 0; i < _profChannelCount; i++ ) {
+            gdouble val = 0.0;
+            if ( _color.icc->colors.size() > i ) {
+                if ( _fooScales[i] == 256 ) {
+                    val = (_color.icc->colors[i] + 128.0) / static_cast<gdouble>(_fooScales[i]);
+                } else {
+                    val = _color.icc->colors[i] / static_cast<gdouble>(_fooScales[i]);
                 }
-
-/*
-                _fooAdj[i] = GTK_ADJUSTMENT( gtk_adjustment_new( val, 0.0, _fooScales[i],  step, page, page ) );
-                gtk_signal_connect( GTK_OBJECT( _fooAdj[i] ), "value_changed", GTK_SIGNAL_FUNC( _adjustmentChanged ), _csel );
-
-                sp_color_slider_set_adjustment( SP_COLOR_SLIDER(_fooSlider[i]), _fooAdj[i] );
-                gtk_spin_button_set_adjustment( GTK_SPIN_BUTTON(_fooBtn[i]), _fooAdj[i] );
-                gtk_spin_button_set_digits( GTK_SPIN_BUTTON(_fooBtn[i]), digits );
-*/
-                gtk_widget_show( _fooLabel[i] );
-                gtk_widget_show( _fooSlider[i] );
-                gtk_widget_show( _fooBtn[i] );
-                gtk_adjustment_set_value( _fooAdj[i], val );
-            } else {
-                gtk_widget_hide( _fooLabel[i] );
-                gtk_widget_hide( _fooSlider[i] );
-                gtk_widget_hide( _fooBtn[i] );
-                gtk_adjustment_set_value( _fooAdj[i], 0.0 );
             }
-
+            gtk_adjustment_set_value( _fooAdj[i], val );
         }
 
         if ( _transf ) {
             for ( guint i = 0; i < _profChannelCount; i++ ) {
-                icUInt16Number* scratch = getScratch();
-                icUInt16Number filler[4] = {0, 0, 0, 0};
-                for ( guint j = 0; j < _profChannelCount; j++ ) {
-                    filler[j] = 0x0ffff * ColorScales::getScaled( _fooAdj[j] );
-                }
-
-                icUInt16Number* p = scratch;
-                for ( guint x = 0; x < 1024; x++ ) {
+                if ( static_cast<gint>(i) != ignore ) {
+                    icUInt16Number* scratch = getScratch();
+                    icUInt16Number filler[4] = {0, 0, 0, 0};
                     for ( guint j = 0; j < _profChannelCount; j++ ) {
-                        if ( j == i ) {
-                            *p++ = x * 0x0ffff / 1024;
-                        } else {
-                            *p++ = filler[j];
+                        filler[j] = 0x0ffff * ColorScales::getScaled( _fooAdj[j] );
+                    }
+
+                    icUInt16Number* p = scratch;
+                    for ( guint x = 0; x < 1024; x++ ) {
+                        for ( guint j = 0; j < _profChannelCount; j++ ) {
+                            if ( j == i ) {
+                                *p++ = x * 0x0ffff / 1024;
+                            } else {
+                                *p++ = filler[j];
+                            }
                         }
                     }
-                }
 
-                cmsDoTransform( _transf, scratch, _fooMap[i], 1024 );
-                sp_color_slider_set_map( SP_COLOR_SLIDER(_fooSlider[i]), _fooMap[i] );
+                    cmsDoTransform( _transf, scratch, _fooMap[i], 1024 );
+                    sp_color_slider_set_map( SP_COLOR_SLIDER(_fooSlider[i]), _fooMap[i] );
+                }
             }
-        }
-    } else {
-        for ( guint i = 0; i < _fooCount; i++ ) {
-            gtk_widget_hide( _fooLabel[i] );
-            gtk_widget_hide( _fooSlider[i] );
-            gtk_widget_hide( _fooBtn[i] );
-            gtk_adjustment_set_value( _fooAdj[i], 0.0 );
         }
     }
 #endif // ENABLE_LCMS
@@ -653,6 +675,8 @@ void ColorICCSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorICC
 
      iccSelector->_updating = TRUE;
 
+     gint match = -1;
+
      SPColor newColor( iccSelector->_color );
      gfloat scaled = ColorScales::getScaled( iccSelector->_adj );
      if ( iccSelector->_adj == adjustment ) {
@@ -660,7 +684,6 @@ void ColorICCSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorICC
          g_message("ALPHA");
 #endif // DEBUG_LCMS
      } else {
-         gint match = -1;
          for ( guint i = 0; i < iccSelector->_fooCount; i++ ) {
              if ( iccSelector->_fooAdj[i] == adjustment ) {
                  match = i;
@@ -712,7 +735,7 @@ void ColorICCSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorICC
 
      }
      iccSelector->_updateInternals( newColor, scaled, iccSelector->_dragging );
-     iccSelector->_updateSliders();
+     iccSelector->_updateSliders( match );
 
      iccSelector->_updating = FALSE;
 #ifdef DEBUG_LCMS
