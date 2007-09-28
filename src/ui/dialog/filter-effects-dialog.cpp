@@ -423,8 +423,9 @@ private:
 
             for(int r = 0; r < rows; ++r) {
                 Gtk::TreeRow row = *(_model->append());
+                // Default to identity matrix
                 for(int c = 0; c < cols; ++c, ++ndx)
-                    row[_columns.cols[c]] = ndx < (int)values->size() ? (*values)[ndx] : 0;
+                    row[_columns.cols[c]] = ndx < (int)values->size() ? (*values)[ndx] : (r == c ? 1 : 0);
             }
         }
     }

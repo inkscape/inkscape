@@ -47,7 +47,7 @@ int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
     switch(type){
         case COLORMATRIX_MATRIX:
             if (values.size()!=20) {
-                g_warning("ColorMatrix: values parameter error. Wrong size.");
+                g_warning("ColorMatrix: values parameter error. Wrong size: %i.", values.size());
                 return -1;
             }
             for (x=x0;x<x1;x++){
@@ -57,10 +57,10 @@ int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
                     g = in_data[i+1];
                     b = in_data[i+2];
                     a = in_data[i+3];
-                    out_data[i] = CLAMP_D_TO_U8( r*values[0] + g*values[1] + b*values[2] + a*values[3] + values[4] );
-                    out_data[i+1] = CLAMP_D_TO_U8( r*values[5] + g*values[6] + b*values[7] + a*values[8] + values[9] );
-                    out_data[i+2] = CLAMP_D_TO_U8( r*values[10] + g*values[11] + b*values[12] + a*values[13] + values[14] );
-                    out_data[i+3] = CLAMP_D_TO_U8( r*values[15] + g*values[16] + b*values[17] + a*values[18] + values[19] );
+                    out_data[i] = CLAMP_D_TO_U8( r*values[0] + g*values[1] + b*values[2] + a*values[3] + 255*values[4] );
+                    out_data[i+1] = CLAMP_D_TO_U8( r*values[5] + g*values[6] + b*values[7] + a*values[8] + 255*values[9] );
+                    out_data[i+2] = CLAMP_D_TO_U8( r*values[10] + g*values[11] + b*values[12] + a*values[13] + 255*values[14] );
+                    out_data[i+3] = CLAMP_D_TO_U8( r*values[15] + g*values[16] + b*values[17] + a*values[18] + 255*values[19] );
                 }
             }
             break;
@@ -80,8 +80,8 @@ int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
             }
             break;
         case COLORMATRIX_HUEROTATE:
-            coshue = cos(value);
-            sinhue = sin(value);
+            coshue = cos(value * M_PI/180.0);
+            sinhue = sin(value * M_PI/180.0);
             a00 = 0.213 + coshue*( 0.787) + sinhue*(-0.213);
             a01 = 0.715 + coshue*(-0.715) + sinhue*(-0.715);
             a02 = 0.072 + coshue*(-0.072) + sinhue*( 0.928);
