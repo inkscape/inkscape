@@ -192,7 +192,7 @@ struct MapMap {
     DWORD inForm;
 };
 
-void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, bool const*& trickies, guint const*& scalies, DWORD& inputFormat ) {
+void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, guint const*& scalies, DWORD& inputFormat ) {
 
     MapMap possible[] = {
         {icSigXYZData,   TYPE_XYZ_16},
@@ -236,20 +236,6 @@ void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, bool
         {_("Cyan"), _("Magenta"), _("Yellow"), "", "", ""},
     };
 
-    static bool tricksies[][6] = {
-        {false, false, false, false, false, false}, // XYZ       0~2, 0~1, 0~2
-        {false, true,  true,  false, false, false}, // Lab       0~100, -128~128, -128~128
-        // Luv 0~100, -128~128, -128~128
-        {false, true,  true,  false, false, false}, // YCbCr     ?
-        {false, true,  true,  false, false, false}, // Yxy       0~1, 0~1, 0~1
-        {false, false, false, false, false, false}, // RGB       0~1, 0~1, 0~1
-        {false, false, false, false, false, false}, // Gray      0~1
-        {true,  false, false, false, false, false}, // HSV       0~360, 0~1, 0~1
-        {true,  false, false, false, false, false}, // HLS       0~360, 0~1, 0~1
-        {false, false, false, false, false, false}, // CMYK      0~1, 0~1, 0~1, 0~1
-        {false, false, false, false, false, false}, // CMY
-    };
-
     static guint scales[][6] = {
         {2, 1, 2, 1, 1, 1},
         {100, 256, 256, 1, 1, 1},
@@ -275,7 +261,6 @@ void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, bool
     inputFormat = possible[index].inForm;
     namers = names[index];
     tippies = tips[index];
-    trickies = tricksies[index];
     scalies = scales[index];
 }
 
@@ -298,8 +283,7 @@ void ColorICCSelector::init()
     //guint partCount = _cmsChannelsOf( icSigRgbData );
     gchar const** names = 0;
     gchar const** tips = 0;
-    bool const* tricky = 0;
-    getThings( icSigRgbData, names, tips, tricky, _fooScales, inputFormat );
+    getThings( icSigRgbData, names, tips, _fooScales, inputFormat );
 
 
     /* Create components */
@@ -445,6 +429,27 @@ void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
 #if ENABLE_LCMS
     _setProfile( color.icc );
 
+    if ( _transf ) {
+        icUInt16Number tmp[4];
+        for ( guint i = 0; i < _profChannelCount; i++ ) {
+            gdouble val = 0.0;
+            if ( _color.icc->colors.size() > i ) {
+                if ( _fooScales[i] == 256 ) {
+                    val = (_color.icc->colors[i] + 128.0) / static_cast<gdouble>(_fooScales[i]);
+                } else {
+                    val = _color.icc->colors[i] / static_cast<gdouble>(_fooScales[i]);
+                }
+            }
+            tmp[i] = val * 0x0ffff;
+        }
+        guchar post[4] = {0,0,0,0};
+        cmsDoTransform( _transf, tmp, post, 1 );
+        guint32 other = SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255 );
+        if ( other != color.toRGBA32(255) ) {
+            //g_message("Color needs to change 0x%06x to 0x%06x", color.toRGBA32(255) >> 8, other >> 8 );
+        }
+    }
+
 #endif // ENABLE_LCMS
     _updateSliders();
 
@@ -513,15 +518,11 @@ void ColorICCSelector::_setProfile( SVGICCColor* profile )
                 DWORD inputFormat = TYPE_RGB_16;
                 gchar const** names = 0;
                 gchar const** tips = 0;
-                bool const* tricky = 0;
-                getThings( _profileSpace, names, tips, tricky, _fooScales, inputFormat );
+                getThings( _profileSpace, names, tips, _fooScales, inputFormat );
 
                 _transf = cmsCreateTransform( _prof, inputFormat, _destProf, TYPE_RGBA_8, intent, 0 );
                 (void)names;
                 (void)tips;
-                (void)tricky;
-
-
             } else {
                 // Give up for now on named colors
                 _prof = 0;
@@ -542,8 +543,7 @@ void ColorICCSelector::_updateSliders()
         DWORD inputFormat = TYPE_RGB_16;
         gchar const** names = 0;
         gchar const** tips = 0;
-        bool const* tricky = 0;
-        getThings( _profileSpace, names, tips, tricky, _fooScales, inputFormat );
+        getThings( _profileSpace, names, tips, _fooScales, inputFormat );
 
         for ( guint i = 0; i < _fooCount; i++ ) {
             gtk_label_set_text_with_mnemonic( GTK_LABEL(_fooLabel[i]), names[i]);
@@ -562,7 +562,14 @@ void ColorICCSelector::_updateSliders()
                 gdouble page = static_cast<gdouble>(_fooScales[i]) / 10.0;
                 gint digits = (step > 0.9) ? 0 : 2;
 */
-                gdouble val = (_color.icc->colors.size() > i) ? (_color.icc->colors[i] / static_cast<gdouble>(_fooScales[i])) : 0.0;
+                gdouble val = 0.0;
+                if ( _color.icc->colors.size() > i ) {
+                    if ( _fooScales[i] == 256 ) {
+                        val = (_color.icc->colors[i] + 128.0) / static_cast<gdouble>(_fooScales[i]);
+                    } else {
+                        val = _color.icc->colors[i] / static_cast<gdouble>(_fooScales[i]);
+                    }
+                }
 
 /*
                 _fooAdj[i] = GTK_ADJUSTMENT( gtk_adjustment_new( val, 0.0, _fooScales[i],  step, page, page ) );
@@ -587,49 +594,25 @@ void ColorICCSelector::_updateSliders()
 
         if ( _transf ) {
             for ( guint i = 0; i < _profChannelCount; i++ ) {
-                if ( tricky[i] ) {
-                    icUInt16Number* scratch = getScratch();
-                    icUInt16Number filler[4] = {0, 0, 0, 0};
-                    for ( guint j = 0; j < _profChannelCount; j++ ) {
-                        filler[j] = 0x0ffff * ColorScales::getScaled( _fooAdj[i] );
-                    }
-
-                    icUInt16Number* p = scratch;
-                    for ( guint x = 0; x < 1024; x++ ) {
-                        if ( _profileSpace == icSigLabData && (i == 1 || i == 2) ) {
-                            p = scratch + 3 * ( (x + 512) % 1024);
-                        }
-                        for ( guint j = 0; j < _profChannelCount; j++ ) {
-                            if ( j == i ) {
-                                *p++ = x * 0x0ffff / 1024;
-                            } else {
-                                *p++ = filler[j];
-                            }
-                        }
-                    }
-
-                    cmsDoTransform( _transf, scratch, _fooMap[i], 1024 );
-                    sp_color_slider_set_map( SP_COLOR_SLIDER(_fooSlider[i]), _fooMap[i] );
-                } else {
-                    icUInt16Number tmp[4];
-                    for ( guint j = 0; j < _profChannelCount; j++ ) {
-                        tmp[j] = ColorScales::getScaled( _fooAdj[j] ) * 0x0ffff;
-                    }
-                    tmp[i] = 0;
-                    guchar post[4] = {0,0,0,0};
-                    cmsDoTransform( _transf, tmp, post, 1 );
-                    guint32 lowColor = SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255);
-
-                    tmp[i] = 0x0ffff/2;
-                    cmsDoTransform( _transf, tmp, post, 1 );
-                    guint32 midColor = SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255);
-
-                    tmp[i] = 0x0ffff;
-                    cmsDoTransform( _transf, tmp, post, 1 );
-                    guint32 highColor = SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255);
-
-                    sp_color_slider_set_colors( SP_COLOR_SLIDER(_fooSlider[i]), lowColor, midColor, highColor );
+                icUInt16Number* scratch = getScratch();
+                icUInt16Number filler[4] = {0, 0, 0, 0};
+                for ( guint j = 0; j < _profChannelCount; j++ ) {
+                    filler[j] = 0x0ffff * ColorScales::getScaled( _fooAdj[j] );
                 }
+
+                icUInt16Number* p = scratch;
+                for ( guint x = 0; x < 1024; x++ ) {
+                    for ( guint j = 0; j < _profChannelCount; j++ ) {
+                        if ( j == i ) {
+                            *p++ = x * 0x0ffff / 1024;
+                        } else {
+                            *p++ = filler[j];
+                        }
+                    }
+                }
+
+                cmsDoTransform( _transf, scratch, _fooMap[i], 1024 );
+                sp_color_slider_set_map( SP_COLOR_SLIDER(_fooSlider[i]), _fooMap[i] );
             }
         }
     } else {
@@ -719,6 +702,9 @@ void ColorICCSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorICC
                  gdouble val = ColorScales::getScaled( iccSelector->_fooAdj[i] );
                  if ( iccSelector->_fooScales ) {
                      val *= iccSelector->_fooScales[i];
+                     if ( iccSelector->_fooScales[i] == 256 ) {
+                         val -= 128;
+                     }
                  }
                  newColor.icc->colors.push_back( val );
              }
