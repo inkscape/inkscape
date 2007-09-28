@@ -1775,12 +1775,6 @@ HelpVerb::perform(SPAction *action, void *data, void *pdata)
     g_assert(dt->_dlg_mgr != NULL);
 
     switch (reinterpret_cast<std::size_t>(data)) {
-        case SP_VERB_HELP_KEYS:
-            /* TRANSLATORS: If you have translated the keys.svg file to your language, then
-               translate this string as "keys.LANG.svg" (where LANG is your language code);
-               otherwise leave as "keys.svg". */
-            sp_help_open_screen(_("keys.svg"));
-            break;
         case SP_VERB_HELP_ABOUT:
             sp_help_about();
             break;
@@ -2552,8 +2546,6 @@ Verb *Verb::_base_verbs[] = {
                    N_("Manage SVG filter effects"), NULL),
 
     /* Help */
-    new HelpVerb(SP_VERB_HELP_KEYS, "HelpKeys", N_("_Keys and Mouse"),
-                 N_("Keys and mouse shortcuts reference"), "help_keys"),
     new HelpVerb(SP_VERB_HELP_ABOUT_EXTENSIONS, "HelpAboutExtensions", N_("About E_xtensions"),
                  N_("Information on Inkscape extensions"), NULL),
     new HelpVerb(SP_VERB_HELP_MEMORY, "HelpAboutMemory", N_("About _Memory"),

@@ -531,11 +531,11 @@ override) the bindings in the main default.xml.
 
 <!-- Help -->
 
-  <bind action="HelpKeys" />
   <bind action="HelpAboutExtensions" />
   <bind action="HelpAboutMemory" />
   <bind action="HelpAbout" />
   <!-- There are also verbs for tutorials, if you really need them -->
+  <!-- Other commands in Help are implemented as extensions, with ids of org.inkscape.help.* -->
 
 <!-- Effects -->
 

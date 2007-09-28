@@ -18,7 +18,6 @@
 
 void sp_help_about(void);
 void sp_help_open_tutorial(GtkMenuItem *menuitem, gpointer data);
-void sp_help_open_screen(gchar const *name);
 
 
 #endif /* !SEEN_HELP_H */

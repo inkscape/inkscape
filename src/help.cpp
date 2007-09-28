@@ -38,15 +38,6 @@ sp_help_open_tutorial(GtkMenuItem *, gpointer data)
     g_free(c);
 }
 
-void
-sp_help_open_screen(gchar const *name)
-{
-    gchar *c = g_build_filename(INKSCAPE_SCREENSDIR, name, NULL);
-    sp_file_open(c, NULL, false, false);
-    g_free(c);
-}
-
-
 /*
   Local Variables:
   mode:c++
