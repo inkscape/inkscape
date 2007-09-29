@@ -50,7 +50,7 @@ struct NRArenaImageClass {
 	NRArenaItemClass parent_class;
 };
 
-void nr_arena_image_set_pixels (NRArenaImage *image, const unsigned char *px, unsigned int pxw, unsigned int pxh, unsigned int pxrs);
+void nr_arena_image_set_pixels (NRArenaImage *image, unsigned char const *px, unsigned int pxw, unsigned int pxh, unsigned int pxrs);
 void nr_arena_image_set_geometry (NRArenaImage *image, double x, double y, double width, double height);
 void nr_arena_image_set_style (NRArenaImage *image, SPStyle *style);
 

@@ -44,7 +44,7 @@ sp_ctrl_get_type (void)
 {
 	static GtkType ctrl_type = 0;
 	if (!ctrl_type) {
-		static const GTypeInfo ctrl_info = {
+		static GTypeInfo const ctrl_info = {
 			sizeof (SPCtrlClass),
 			NULL,	/* base_init */
 			NULL,	/* base_finalize */
@@ -266,8 +266,8 @@ sp_ctrl_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item)
 
 	*actual_item = item;
 	
-	const double x = p[NR::X];
-	const double y = p[NR::Y];
+	double const x = p[NR::X];
+	double const y = p[NR::Y];
 	
 	if ((x >= ctrl->box.x0) && (x <= ctrl->box.x1) && (y >= ctrl->box.y0) && (y <= ctrl->box.y1)) return 0.0;
 

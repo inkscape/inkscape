@@ -31,11 +31,11 @@ namespace Inkscape {
 #define DEFAULTGRIDCOLOR    0x0000FF20
 #define DEFAULTGRIDEMPCOLOR 0x0000FF40
 
-const gchar *grid_name [] = {
+static gchar const *const grid_name[] = {
     N_("Rectangular grid"),
     N_("Axonometric grid")
 };
-const gchar *grid_svgname [] = {
+static gchar const *const grid_svgname[] = {
     "xygrid",
     "axonomgrid"
 };
@@ -176,20 +176,20 @@ CanvasGrid::~CanvasGrid()
 
 
 
-const char * 
+char const * 
 CanvasGrid::getName(GridType type)
 {
     return _(grid_name[type]);
 }
 
-const char * 
+char const * 
 CanvasGrid::getSVGName(GridType type)
 {
     return grid_svgname[type];
 }
 
 GridType
-CanvasGrid::getGridTypeFromSVGName(const char * typestr)
+CanvasGrid::getGridTypeFromSVGName(char const *typestr)
 {
     if (!typestr) return GRID_RECTANGULAR;
 
@@ -201,7 +201,7 @@ CanvasGrid::getGridTypeFromSVGName(const char * typestr)
 }
 
 GridType
-CanvasGrid::getGridTypeFromName(const char * typestr)
+CanvasGrid::getGridTypeFromName(char const *typestr)
 {
     if (!typestr) return GRID_RECTANGULAR;
 
@@ -285,7 +285,7 @@ CanvasGrid::createCanvasItem(SPDesktop * desktop)
 }
 
 void
-CanvasGrid::on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data)
+CanvasGrid::on_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gchar const *oldval, gchar const *newval, bool is_interactive, void *data)
 {
     if (!data)
         return;
@@ -312,7 +312,7 @@ CanvasGrid::on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, 
 #define SPACE_SIZE_X 15
 #define SPACE_SIZE_Y 10
 static inline void
-attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int start = 0)
+attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int start = 0)
 {
     for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2)
     {
@@ -384,8 +384,7 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
                        _("If set, displays dots at gridpoints instead of gridlines"),
                         "dotted", _wr, false, repr, doc);
 
-    const Gtk::Widget* widget_array[] =
-    {
+    Gtk::Widget const *const widget_array[] = {
         _rumg._label,       _rumg._sel,
         0,                  _rsu_ox.getSU(),
         0,                  _rsu_oy.getSU(),
@@ -414,7 +413,8 @@ CanvasXYGrid::~CanvasXYGrid ()
 
 /* fixme: Collect all these length parsing methods and think common sane API */
 
-static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, const SPUnit **unit)
+static gboolean
+sp_nv_read_length(gchar const *str, guint base, gdouble *val, SPUnit const **unit)
 {
     if (!str) {
         return FALSE;
@@ -464,7 +464,7 @@ static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, co
     return FALSE;
 }
 
-static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color)
+static gboolean sp_nv_read_opacity(gchar const *str, guint32 *color)
 {
     if (!str) {
         return FALSE;
@@ -543,7 +543,7 @@ void
 CanvasXYGrid::readRepr()
 {
 	char buff[100];
-    gchar const* value;
+    gchar const *value;
     if ( (value = repr->attribute("originx")) ) {
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::X], &gridunit);
         origin[NR::X] = sp_units_get_pixels(origin[NR::X], *(gridunit));
@@ -605,7 +605,7 @@ CanvasXYGrid::readRepr()
  * Called when XML node attribute changed; updates dialog widgets if change was not done by widgets themselves.
  */
 void
-CanvasXYGrid::onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive)
+CanvasXYGrid::onReprAttrChanged(Inkscape::XML::Node *repr, gchar const *key, gchar const *oldval, gchar const *newval, bool is_interactive)
 {
     readRepr();
 
@@ -753,16 +753,16 @@ grid_dot (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
 void
 CanvasXYGrid::Render (SPCanvasBuf *buf)
 {
-    const gdouble sxg = floor ((buf->rect.x0 - ow[NR::X]) / sw[NR::X]) * sw[NR::X] + ow[NR::X];
-    const gint  xlinestart = (gint) Inkscape::round((sxg - ow[NR::X]) / sw[NR::X]);
-    const gdouble syg = floor ((buf->rect.y0 - ow[NR::Y]) / sw[NR::Y]) * sw[NR::Y] + ow[NR::Y];
-    const gint  ylinestart = (gint) Inkscape::round((syg - ow[NR::Y]) / sw[NR::Y]);
+    gdouble const sxg = floor ((buf->rect.x0 - ow[NR::X]) / sw[NR::X]) * sw[NR::X] + ow[NR::X];
+    gint const  xlinestart = (gint) Inkscape::round((sxg - ow[NR::X]) / sw[NR::X]);
+    gdouble const syg = floor ((buf->rect.y0 - ow[NR::Y]) / sw[NR::Y]) * sw[NR::Y] + ow[NR::Y];
+    gint const  ylinestart = (gint) Inkscape::round((syg - ow[NR::Y]) / sw[NR::Y]);
 
     if (!render_dotted) {
         gint ylinenum;
         gdouble y;
         for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[NR::Y], ylinenum++) {
-            const gint y0 = (gint) Inkscape::round(y);
+            gint const y0 = (gint) Inkscape::round(y);
     
             if (!scaled[NR::Y] && (ylinenum % empspacing) == 0) {
                 grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, empcolor);
@@ -774,7 +774,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
         gint xlinenum;
         gdouble x;
         for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
-            const gint ix = (gint) Inkscape::round(x);
+            gint const ix = (gint) Inkscape::round(x);
             if (!scaled[NR::X] && (xlinenum % empspacing) == 0) {
                 grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, empcolor);
             } else {
@@ -785,12 +785,12 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
         gint ylinenum;
         gdouble y;
         for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[NR::Y], ylinenum++) {
-            const gint iy = (gint) Inkscape::round(y);
+            gint const iy = (gint) Inkscape::round(y);
 
             gint xlinenum;
             gdouble x;
             for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
-                const gint ix = (gint) Inkscape::round(x);
+                gint const ix = (gint) Inkscape::round(x);
                 if ( (!scaled[NR::X] && (xlinenum % empspacing) == 0) 
                      || (!scaled[NR::Y] && (ylinenum % empspacing) == 0) ) 
                 {

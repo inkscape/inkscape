@@ -123,8 +123,8 @@ void sp_canvas_item_move_to_z (SPCanvasItem * item, gint z)
 gint
 sp_canvas_item_compare_z (SPCanvasItem * a, SPCanvasItem * b)
 {
-	const gint o_a = sp_canvas_item_order (a);
-	const gint o_b = sp_canvas_item_order (b);
+	gint const o_a = sp_canvas_item_order (a);
+	gint const o_b = sp_canvas_item_order (b);
 
 	if (o_a > o_b) return -1;
 	if (o_a < o_b) return 1;

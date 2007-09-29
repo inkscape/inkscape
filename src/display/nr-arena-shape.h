@@ -212,7 +212,7 @@ struct NRArenaShapeClass {
 };
 
 void nr_arena_shape_set_path(NRArenaShape *shape, SPCurve *curve, bool justTrans);
-void nr_arena_shape_set_style (NRArenaShape *shape, SPStyle *style);
-void nr_arena_shape_set_paintbox (NRArenaShape *shape, const NRRect *pbox);
+void nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style);
+void nr_arena_shape_set_paintbox(NRArenaShape *shape, NRRect const *pbox);
 
 #endif

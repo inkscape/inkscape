@@ -201,14 +201,14 @@ nr_arena_image_render (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock
 		if (Falpha < 1) return item->state;
 
 		unsigned char * dpx = NR_PIXBLOCK_PX (pb);
-		const int drs = pb->rs;
-		const int dw = pb->area.x1 - pb->area.x0;
-		const int dh = pb->area.y1 - pb->area.y0;
+		int const drs = pb->rs;
+		int const dw = pb->area.x1 - pb->area.x0;
+		int const dh = pb->area.y1 - pb->area.y0;
 
 		unsigned char * spx = image->px;
-		const int srs = image->pxrs;
-		const int sw = image->pxw;
-		const int sh = image->pxh;
+		int const srs = image->pxrs;
+		int const sw = image->pxw;
+		int const sh = image->pxh;
 
 		if (pb->mode == NR_PIXBLOCK_MODE_R8G8B8) {
 			/* fixme: This is not implemented yet (Lauris) */
@@ -312,13 +312,13 @@ nr_arena_image_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int 
 
 	} else {
 
-		unsigned char * const pixels = image->px;
-		const int width = image->pxw;
-		const int height = image->pxh;
-		const int rowstride = image->pxrs;
+		unsigned char *const pixels = image->px;
+		int const width = image->pxw;
+		int const height = image->pxh;
+		int const rowstride = image->pxrs;
 		NR::Point tp = p * image->grid2px;
-		const int ix = (int)(tp[NR::X]);
-		const int iy = (int)(tp[NR::Y]);
+		int const ix = (int)(tp[NR::X]);
+		int const iy = (int)(tp[NR::Y]);
 
 		if ((ix < 0) || (iy < 0) || (ix >= width) || (iy >= height))
 			return NULL;
@@ -332,7 +332,7 @@ nr_arena_image_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int 
 /* Utility */
 
 void
-nr_arena_image_set_pixels (NRArenaImage *image, const unsigned char *px, unsigned int pxw, unsigned int pxh, unsigned int pxrs)
+nr_arena_image_set_pixels (NRArenaImage *image, unsigned char const *px, unsigned int pxw, unsigned int pxh, unsigned int pxrs)
 {
 	nr_return_if_fail (image != NULL);
 	nr_return_if_fail (NR_IS_ARENA_IMAGE (image));

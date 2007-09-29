@@ -55,7 +55,7 @@ enum {
 	RENDERMODE_OUTLINE
 };
 
-const gint sp_canvas_update_priority = G_PRIORITY_HIGH_IDLE;
+static gint const sp_canvas_update_priority = G_PRIORITY_HIGH_IDLE;
 
 #define SP_CANVAS_WINDOW(c) (((GtkWidget *) (c))->window)
 
@@ -101,7 +101,7 @@ static void sp_canvas_request_update (SPCanvas *canvas);
 static void sp_canvas_item_class_init (SPCanvasItemClass *klass);
 static void sp_canvas_item_init (SPCanvasItem *item);
 static void sp_canvas_item_dispose (GObject *object);
-static void sp_canvas_item_construct (SPCanvasItem *item, SPCanvasGroup *parent, const gchar *first_arg_name, va_list args);
+static void sp_canvas_item_construct (SPCanvasItem *item, SPCanvasGroup *parent, gchar const *first_arg_name, va_list args);
 
 static int emit_event (SPCanvas *canvas, GdkEvent *event);
 
@@ -117,7 +117,7 @@ sp_canvas_item_get_type (void)
 {
     static GType type = 0;
     if (!type) {
-        static const GTypeInfo info = {
+        static GTypeInfo const info = {
             sizeof (SPCanvasItemClass),
             NULL, NULL,
             (GClassInitFunc) sp_canvas_item_class_init,
@@ -170,7 +170,7 @@ sp_canvas_item_init (SPCanvasItem *item)
  * Constructs new SPCanvasItem on SPCanvasGroup.
  */
 SPCanvasItem *
-sp_canvas_item_new (SPCanvasGroup *parent, GtkType type, const gchar *first_arg_name, ...)
+sp_canvas_item_new (SPCanvasGroup *parent, GtkType type, gchar const *first_arg_name, ...)
 {
     va_list args;
 
@@ -193,7 +193,7 @@ sp_canvas_item_new (SPCanvasGroup *parent, GtkType type, const gchar *first_arg_
  * We make it static for encapsulation reasons since it was nowhere used.
  */
 static void
-sp_canvas_item_construct (SPCanvasItem *item, SPCanvasGroup *parent, const gchar *first_arg_name, va_list args)
+sp_canvas_item_construct (SPCanvasItem *item, SPCanvasGroup *parent, gchar const *first_arg_name, va_list args)
 {
     g_return_if_fail (SP_IS_CANVAS_GROUP (parent));
     g_return_if_fail (SP_IS_CANVAS_ITEM (item));
@@ -323,7 +323,7 @@ sp_canvas_item_invoke_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **act
  * @affine: An affine transformation matrix.
  */
 void
-sp_canvas_item_affine_absolute (SPCanvasItem *item, NR::Matrix const& affine)
+sp_canvas_item_affine_absolute (SPCanvasItem *item, NR::Matrix const &affine)
 {
     item->xform = affine;
 
@@ -688,7 +688,7 @@ sp_canvas_group_get_type (void)
     static GtkType group_type = 0;
 
     if (!group_type) {
-        static const GtkTypeInfo group_info = {
+        static GtkTypeInfo const group_info = {
             "SPCanvasGroup",
             sizeof (SPCanvasGroup),
             sizeof (SPCanvasGroupClass),
@@ -740,7 +740,7 @@ sp_canvas_group_destroy (GtkObject *object)
     g_return_if_fail (object != NULL);
     g_return_if_fail (SP_IS_CANVAS_GROUP (object));
 
-    const SPCanvasGroup *group = SP_CANVAS_GROUP (object);
+    SPCanvasGroup const *group = SP_CANVAS_GROUP (object);
 
     GList *list = group->items;
     while (list) {
@@ -760,7 +760,7 @@ sp_canvas_group_destroy (GtkObject *object)
 static void
 sp_canvas_group_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
 {
-    const SPCanvasGroup *group = SP_CANVAS_GROUP (item);
+    SPCanvasGroup const *group = SP_CANVAS_GROUP (item);
     NR::ConvexHull corners(NR::Point(0, 0));
     bool empty=true;
 
@@ -798,9 +798,9 @@ sp_canvas_group_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 static double
 sp_canvas_group_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item)
 {
-    const SPCanvasGroup *group = SP_CANVAS_GROUP (item);
-    const double x = p[NR::X];
-    const double y = p[NR::Y];
+    SPCanvasGroup const *group = SP_CANVAS_GROUP (item);
+    double const x = p[NR::X];
+    double const y = p[NR::Y];
     int x1 = (int)(x - item->canvas->close_enough);
     int y1 = (int)(y - item->canvas->close_enough);
     int x2 = (int)(x + item->canvas->close_enough);
@@ -840,7 +840,7 @@ sp_canvas_group_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_it
 static void
 sp_canvas_group_render (SPCanvasItem *item, SPCanvasBuf *buf)
 {
-    const SPCanvasGroup *group = SP_CANVAS_GROUP (item);
+    SPCanvasGroup const *group = SP_CANVAS_GROUP (item);
 
     for (GList *list = group->items; list; list = list->next) {
         SPCanvasItem *child = (SPCanvasItem *)list->data;
@@ -944,7 +944,7 @@ sp_canvas_get_type (void)
     static GtkType canvas_type = 0;
 
     if (!canvas_type) {
-        static const GtkTypeInfo canvas_info = {
+        static GtkTypeInfo const canvas_info = {
             "SPCanvas",
             sizeof (SPCanvas),
             sizeof (SPCanvasClass),
@@ -2046,7 +2046,7 @@ idle_handler (gpointer data)
 
     SPCanvas *canvas = SP_CANVAS (data);
 
-    const int ret = do_update (canvas);
+    int const ret = do_update (canvas);
 
     if (ret) {
         /* Reset idle id */

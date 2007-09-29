@@ -160,7 +160,7 @@ namespace Inkscape {
 #define SPACE_SIZE_X 15
 #define SPACE_SIZE_Y 10
 static inline void
-attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int start = 0)
+attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int start = 0)
 {
     for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2)
     {
@@ -241,8 +241,7 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
                      "empcolor", "empopacity", _wr, repr, doc);
     _rsi.init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
 
-    const Gtk::Widget* widget_array[] =
-    {
+    Gtk::Widget const *const widget_array[] = {
         0,                  _rcbgrid._button,
         _rumg._label,       _rumg._sel,
         0,                  _rsu_ox.getSU(),
@@ -272,7 +271,7 @@ CanvasAxonomGrid::~CanvasAxonomGrid ()
 
 /* fixme: Collect all these length parsing methods and think common sane API */
 
-static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, const SPUnit **unit)
+static gboolean sp_nv_read_length(gchar const *str, guint base, gdouble *val, SPUnit const **unit)
 {
     if (!str) {
         return FALSE;
@@ -322,7 +321,7 @@ static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, co
     return FALSE;
 }
 
-static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color)
+static gboolean sp_nv_read_opacity(gchar const *str, guint32 *color)
 {
     if (!str) {
         return FALSE;
@@ -345,7 +344,7 @@ static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color)
 void
 CanvasAxonomGrid::readRepr()
 {
-    gchar const* value;
+    gchar const *value;
     if ( (value = repr->attribute("originx")) ) {
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::X], &gridunit);
         origin[NR::X] = sp_units_get_pixels(origin[NR::X], *(gridunit));
@@ -406,7 +405,7 @@ CanvasAxonomGrid::readRepr()
  * Called when XML node attribute changed; updates dialog widgets if change was not done by widgets themselves.
  */
 void
-CanvasAxonomGrid::onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive)
+CanvasAxonomGrid::onReprAttrChanged(Inkscape::XML::Node *repr, gchar const *key, gchar const *oldval, gchar const *newval, bool is_interactive)
 {
     readRepr();
 
@@ -518,16 +517,16 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
 
     // render the three separate line groups representing the main-axes:
     // x-axis always goes from topleft to bottomright. (0,0) - (1,1)
-    const gdouble xintercept_y_bc = (buf_tl_gc[NR::X] * tan_angle[X]) - buf_tl_gc[NR::Y] ;
-    const gdouble xstart_y_sc = ( xintercept_y_bc - floor(xintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
-    const gint  xlinestart = (gint) Inkscape::round( (xstart_y_sc - ow[NR::Y]) / lyw );
+    gdouble const xintercept_y_bc = (buf_tl_gc[NR::X] * tan_angle[X]) - buf_tl_gc[NR::Y] ;
+    gdouble const xstart_y_sc = ( xintercept_y_bc - floor(xintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
+    gint const  xlinestart = (gint) Inkscape::round( (xstart_y_sc - ow[NR::Y]) / lyw );
     gint xlinenum;
     // lijnen vanaf linker zijkant.
     for (y = xstart_y_sc, xlinenum = xlinestart; y < buf->rect.y1; y += lyw, xlinenum++) {
-        const gint x0 = buf->rect.x0;
-        const gint y0 = (gint) Inkscape::round(y);
-        const gint x1 = x0 + (gint) Inkscape::round( (buf->rect.y1 - y) / tan_angle[X] );
-        const gint y1 = buf->rect.y1;
+        gint const x0 = buf->rect.x0;
+        gint const y0 = (gint) Inkscape::round(y);
+        gint const x1 = x0 + (gint) Inkscape::round( (buf->rect.y1 - y) / tan_angle[X] );
+        gint const y1 = buf->rect.y1;
 
         if (!scaled && (xlinenum % empspacing) == 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
@@ -536,12 +535,12 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         }
     }
     // lijnen vanaf bovenkant.
-    const gdouble xstart_x_sc = buf->rect.x0 + (lxw_x - (xstart_y_sc - buf->rect.y0) / tan_angle[X]) ;
+    gdouble const xstart_x_sc = buf->rect.x0 + (lxw_x - (xstart_y_sc - buf->rect.y0) / tan_angle[X]) ;
     for (x = xstart_x_sc, xlinenum = xlinestart; x < buf->rect.x1; x += lxw_x, xlinenum--) {
-        const gint y0 = buf->rect.y0;
-        const gint y1 = buf->rect.y1;
-        const gint x0 = (gint) Inkscape::round(x);
-        const gint x1 = x0 + (gint) Inkscape::round( (y1 - y0) / tan_angle[X] );
+        gint const y0 = buf->rect.y0;
+        gint const y1 = buf->rect.y1;
+        gint const x0 = (gint) Inkscape::round(x);
+        gint const x1 = x0 + (gint) Inkscape::round( (y1 - y0) / tan_angle[X] );
 
         if (!scaled && (xlinenum % empspacing) == 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
@@ -552,11 +551,11 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
 
 
     // y-axis lines (vertical)
-    const gdouble ystart_x_sc = floor (buf_tl_gc[NR::X] / spacing_ylines) * spacing_ylines + ow[NR::X];
-    const gint  ylinestart = (gint) Inkscape::round((ystart_x_sc - ow[NR::X]) / spacing_ylines);
+    gdouble const ystart_x_sc = floor (buf_tl_gc[NR::X] / spacing_ylines) * spacing_ylines + ow[NR::X];
+    gint const  ylinestart = (gint) Inkscape::round((ystart_x_sc - ow[NR::X]) / spacing_ylines);
     gint ylinenum;
     for (x = ystart_x_sc, ylinenum = ylinestart; x < buf->rect.x1; x += spacing_ylines, ylinenum++) {
-        const gint x0 = (gint) Inkscape::round(x);
+        gint const x0 = (gint) Inkscape::round(x);
 
         if (!scaled && (ylinenum % empspacing) == 0) {
             sp_grid_vline (buf, x0, buf->rect.y0, buf->rect.y1 - 1, empcolor);
@@ -566,16 +565,16 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     }
 
     // z-axis always goes from bottomleft to topright. (0,1) - (1,0)
-    const gdouble zintercept_y_bc = (buf_tl_gc[NR::X] * -tan_angle[Z]) - buf_tl_gc[NR::Y] ;
-    const gdouble zstart_y_sc = ( zintercept_y_bc - floor(zintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
-    const gint  zlinestart = (gint) Inkscape::round( (zstart_y_sc - ow[NR::Y]) / lyw );
+    gdouble const zintercept_y_bc = (buf_tl_gc[NR::X] * -tan_angle[Z]) - buf_tl_gc[NR::Y] ;
+    gdouble const zstart_y_sc = ( zintercept_y_bc - floor(zintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
+    gint const  zlinestart = (gint) Inkscape::round( (zstart_y_sc - ow[NR::Y]) / lyw );
     gint zlinenum;
     // lijnen vanaf linker zijkant.
     for (y = zstart_y_sc, zlinenum = zlinestart; y < buf->rect.y1; y += lyw, zlinenum++) {
-        const gint x0 = buf->rect.x0;
-        const gint y0 = (gint) Inkscape::round(y);
-        const gint x1 = x0 + (gint) Inkscape::round( (y - buf->rect.y0 ) / tan_angle[Z] );
-        const gint y1 = buf->rect.y0;
+        gint const x0 = buf->rect.x0;
+        gint const y0 = (gint) Inkscape::round(y);
+        gint const x1 = x0 + (gint) Inkscape::round( (y - buf->rect.y0 ) / tan_angle[Z] );
+        gint const y1 = buf->rect.y0;
 
         if (!scaled && (zlinenum % empspacing) == 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
@@ -584,12 +583,12 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         }
     }
     // draw lines from bottom-up
-    const gdouble zstart_x_sc = buf->rect.x0 + (y - buf->rect.y1) / tan_angle[Z] ;
+    gdouble const zstart_x_sc = buf->rect.x0 + (y - buf->rect.y1) / tan_angle[Z] ;
     for (x = zstart_x_sc; x < buf->rect.x1; x += lxw_z, zlinenum--) {
-        const gint y0 = buf->rect.y1;
-        const gint y1 = buf->rect.y0;
-        const gint x0 = (gint) Inkscape::round(x);
-        const gint x1 = x0 + (gint) Inkscape::round( (buf->rect.y1 - buf->rect.y0) / tan_angle[Z] );
+        gint const y0 = buf->rect.y1;
+        gint const y1 = buf->rect.y0;
+        gint const x0 = (gint) Inkscape::round(x);
+        gint const x1 = x0 + (gint) Inkscape::round( (buf->rect.y1 - buf->rect.y0) / tan_angle[Z] );
 
         if (!scaled && (zlinenum % empspacing) == 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
