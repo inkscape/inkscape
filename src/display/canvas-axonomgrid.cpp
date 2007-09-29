@@ -14,9 +14,9 @@
   */
 
  /*
-  *  TODO:  LOTS LOTS LOTS. Clean up code. dirty as hell
+  * TODO:  LOTS LOTS LOTS. Clean up code. dirty as hell
   * THIS FILE AND THE HEADER FILE NEED HUGE CLEANING UP. PLEASE DO NOT HESISTATE TO DO SO.
-*  For example: the line drawing code should not be here. There _must_ be a function somewhere else that can provide this functionality...
+  * For example: the line drawing code should not be here. There _must_ be a function somewhere else that can provide this functionality...
   */
 
 #include "sp-canvas-util.h"
@@ -36,14 +36,14 @@
 #include "inkscape.h"
 #include "desktop.h"
 
-#include "../document.h"
+#include "document.h"
 
 #define SAFE_SETPIXEL   //undefine this when it is certain that setpixel is never called with invalid params
 
 enum Dim3 { X=0, Y, Z };
 
 #ifndef M_PI
-#define M_PI 3.14159265358979323846
+# define M_PI 3.14159265358979323846
 #endif
 
 static double deg_to_rad(double deg) { return deg*M_PI/180.0;}
@@ -60,7 +60,8 @@ static double deg_to_rad(double deg) { return deg*M_PI/180.0;}
                         ( rect.x1 - rect.x0 , rect.y1 - rect.y0 )  in setpixel coordinates
 */
 static void
-sp_caxonomgrid_setpixel (SPCanvasBuf *buf, gint x, gint y, guint32 rgba) {
+sp_caxonomgrid_setpixel (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
+{
 #ifdef SAFE_SETPIXEL
     if ( (x >= buf->rect.x0) && (x < buf->rect.x1) && (y >= buf->rect.y0) && (y < buf->rect.y1) ) {
 #endif
@@ -85,7 +86,8 @@ sp_caxonomgrid_setpixel (SPCanvasBuf *buf, gint x, gint y, guint32 rgba) {
             Coordinates are interpreted as SCREENcoordinates
 */
 static void
-sp_caxonomgrid_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, guint32 rgba) {
+sp_caxonomgrid_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, guint32 rgba)
+{
     int dy = y1 - y0;
     int dx = x1 - x0;
     int stepx, stepy;
@@ -162,33 +164,26 @@ namespace Inkscape {
 static inline void
 attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int start = 0)
 {
-    for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2)
-    {
-        if (arr[i] && arr[i+1])
-        {
+    for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2) {
+        if (arr[i] && arr[i+1]) {
             table.attach (const_cast<Gtk::Widget&>(*arr[i]),   1, 2, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+                          Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
             table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 2, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-        }
-        else
-        {
-            if (arr[i+1])
+                          Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+        } else {
+            if (arr[i+1]) {
                 table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 1, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            else if (arr[i])
-            {
+                              Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+            } else if (arr[i]) {
                 Gtk::Label& label = reinterpret_cast<Gtk::Label&> (const_cast<Gtk::Widget&>(*arr[i]));
                 label.set_alignment (0.0);
                 table.attach (label, 0, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            }
-            else
-            {
+                              Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+            } else {
                 Gtk::HBox *space = manage (new Gtk::HBox);
                 space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
                 table.attach (*space, 0, 1, r, r+1,
-                      (Gtk::AttachOptions)0, (Gtk::AttachOptions)0,0,0);
+                              (Gtk::AttachOptions)0, (Gtk::AttachOptions)0,0,0);
             }
         }
         ++r;
@@ -198,11 +193,7 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
 CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
     : CanvasGrid(nv, in_repr, in_doc), table(1, 1)
 {
-
     origin[NR::X] = origin[NR::Y] = 0.0;
-//            nv->gridcolor = (nv->gridcolor & 0xff) | (DEFAULTGRIDCOLOR & 0xffffff00);
-//	case SP_ATTR_GRIDOPACITY:
-//            nv->gridcolor = (nv->gridcolor & 0xffffff00) | (DEFAULTGRIDCOLOR & 0xff);
     color = 0xff3f3f20;
     empcolor = 0xFF3F3F40;
     empspacing = 5;
@@ -265,7 +256,7 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
 
 CanvasAxonomGrid::~CanvasAxonomGrid ()
 {
-   if (snapper) delete snapper;
+    if (snapper) delete snapper;
 }
 
 
@@ -433,7 +424,7 @@ CanvasAxonomGrid::updateWidgets()
 
     _wr.setUpdating (true);
 
-//    _rrb_gridtype.setValue (nv->gridtype);
+    //_rrb_gridtype.setValue (nv->gridtype);
     _rumg.setUnit (gridunit);
 
     gdouble val;
@@ -466,7 +457,7 @@ CanvasAxonomGrid::Update (NR::Matrix const &affine, unsigned int flags)
 {
     ow = origin * affine;
     sw = NR::Point(fabs(affine[0]),fabs(affine[3]));
-    
+
     for(int dim = 0; dim < 2; dim++) {
         gint scaling_factor = empspacing;
 
@@ -500,11 +491,11 @@ CanvasAxonomGrid::Update (NR::Matrix const &affine, unsigned int flags)
 void
 CanvasAxonomGrid::Render (SPCanvasBuf *buf)
 {
-     // gc = gridcoordinates (the coordinates calculated from the grids origin 'grid->ow'.
-     // sc = screencoordinates ( for example "buf->rect.x0" is in screencoordinates )
-     // bc = buffer patch coordinates
+    // gc = gridcoordinates (the coordinates calculated from the grids origin 'grid->ow'.
+    // sc = screencoordinates ( for example "buf->rect.x0" is in screencoordinates )
+    // bc = buffer patch coordinates
 
-     // tl = topleft ; br = bottomright
+    // tl = topleft ; br = bottomright
     NR::Point buf_tl_gc;
     NR::Point buf_br_gc;
     buf_tl_gc[NR::X] = buf->rect.x0 - ow[NR::X];
@@ -672,4 +663,4 @@ CanvasAxonomGridSnapper::_getSnapLines(NR::Point const &p) const
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

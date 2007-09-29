@@ -124,21 +124,21 @@ SPCurve *sp_curve_new_from_foreign_bpath(NArtBpath const bpath[])
     return curve;
 }
 
-SPCurve *sp_curve_new_from_rect(NR::Maybe<NR::Rect> const &rect) 
+SPCurve *sp_curve_new_from_rect(NR::Maybe<NR::Rect> const &rect)
 {
-	g_return_val_if_fail(rect, NULL);
-	
-	SPCurve *c = sp_curve_new();
+    g_return_val_if_fail(rect, NULL);
 
-    NR::Point p = rect->corner(0);    
+    SPCurve *c = sp_curve_new();
+
+    NR::Point p = rect->corner(0);
     sp_curve_moveto(c, p);
-    
+
     for (int i=3; i>=0; i--) {
-    	sp_curve_lineto(c, rect->corner(i));
+        sp_curve_lineto(c, rect->corner(i));
     }
     sp_curve_closepath_current(c);
-    
-    return c;	
+
+    return c;
 }
 
 /**
@@ -158,7 +158,7 @@ sp_curve_ref(SPCurve *curve)
 
 /**
  * Decrease refcount of curve, with possible destruction.
- * 
+ *
  * \todo should this be shared with other refcounting code?
  */
 SPCurve *
@@ -249,7 +249,7 @@ sp_curve_concat(GSList const *list)
     return new_curve;
 }
 
-/** 
+/**
  * Returns a list of new curves corresponding to the subpaths in \a curve.
  */
 GSList *
@@ -576,8 +576,8 @@ sp_curve_closepath(SPCurve *curve)
     curve->closed = true;
 
     for (NArtBpath const *bp = curve->_bpath; bp->code != NR_END; bp++) {
-        /** \todo 
-         * effic: Maintain a count of NR_MOVETO_OPEN's (e.g. instead of 
+        /** \todo
+         * effic: Maintain a count of NR_MOVETO_OPEN's (e.g. instead of
          * the closed boolean).
          */
         if (bp->code == NR_MOVETO_OPEN) {
@@ -616,8 +616,8 @@ sp_curve_closepath_current(SPCurve *curve)
     curve->closed = true;
 
     for (NArtBpath const *bp = curve->_bpath; bp->code != NR_END; bp++) {
-        /** \todo 
-         * effic: Maintain a count of NR_MOVETO_OPEN's (e.g. instead of 
+        /** \todo
+         * effic: Maintain a count of NR_MOVETO_OPEN's (e.g. instead of
          * the closed boolean).
          */
         if (bp->code == NR_MOVETO_OPEN) {
@@ -738,8 +738,8 @@ is_moveto(NRPathcode const c)
     return c == NR_MOVETO || c == NR_MOVETO_OPEN;
 }
 
-/** 
- * Returns \a curve but drawn in the opposite direction.  
+/**
+ * Returns \a curve but drawn in the opposite direction.
  * Should result in the same shape, but
  * with all its markers drawn facing the other direction.
  **/
@@ -868,8 +868,8 @@ sp_curve_append_continuous(SPCurve *c0, SPCurve const *c1, gdouble tolerance)
              && ( fabs( bs->y3 - be->y3 ) <= tolerance ) )
         {
             /** \todo
-             * fixme: Strictly we mess in case of multisegment mixed 
-             * open/close curves 
+             * fixme: Strictly we mess in case of multisegment mixed
+             * open/close curves
              */
             bool closed = false;
             for (bs = bs + 1; bs->code != NR_END; bs++) {
@@ -1053,10 +1053,10 @@ static unsigned sp_bpath_length(NArtBpath const bpath[])
  * \brief
  *
  * \todo
- * fixme: this is bogus -- it doesn't check for nr_moveto, which will indicate 
- * a closing of the subpath it's nonsense to talk about a path as a whole 
- * being closed, although maybe someone would want that for some other reason?  
- * Oh, also, if the bpath just ends, then it's *open*.  I hope nobody is using 
+ * fixme: this is bogus -- it doesn't check for nr_moveto, which will indicate
+ * a closing of the subpath it's nonsense to talk about a path as a whole
+ * being closed, although maybe someone would want that for some other reason?
+ * Oh, also, if the bpath just ends, then it's *open*.  I hope nobody is using
  * this code for anything.
  */
 static bool sp_bpath_closed(NArtBpath const bpath[])
@@ -1083,7 +1083,7 @@ bezier_len(NR::Point const &c0,
            double const threshold)
 {
     /** \todo
-     * The SVG spec claims that a closed form exists, but for the moment I'll 
+     * The SVG spec claims that a closed form exists, but for the moment I'll
      * use a stupid algorithm.
      */
     double const lbound = L2( c3 - c0 );
@@ -1149,8 +1149,8 @@ sp_curve_distance_including_space(SPCurve const *const curve, double seg2len[])
     return ret;
 }
 
-/** 
- * Like sp_curve_distance_including_space(), but ensures that the 
+/**
+ * Like sp_curve_distance_including_space(), but ensures that the
  * result >= 1e-18:  uses 1 per segment if necessary.
  */
 static double
@@ -1235,4 +1235,4 @@ sp_curve_move_endpoints(SPCurve *curve, NR::Point const &new_p0,
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

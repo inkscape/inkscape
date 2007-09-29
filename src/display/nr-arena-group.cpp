@@ -42,148 +42,148 @@ static NRArenaItemClass *parent_class;
 NRType
 nr_arena_group_get_type (void)
 {
-	static NRType type = 0;
-	if (!type) {
-		type = nr_object_register_type (NR_TYPE_ARENA_ITEM,
-						"NRArenaGroup",
-						sizeof (NRArenaGroupClass),
-						sizeof (NRArenaGroup),
-						(void (*) (NRObjectClass *)) nr_arena_group_class_init,
-						(void (*) (NRObject *)) nr_arena_group_init);
-	}
-	return type;
+    static NRType type = 0;
+    if (!type) {
+        type = nr_object_register_type (NR_TYPE_ARENA_ITEM,
+                                        "NRArenaGroup",
+                                        sizeof (NRArenaGroupClass),
+                                        sizeof (NRArenaGroup),
+                                        (void (*) (NRObjectClass *)) nr_arena_group_class_init,
+                                        (void (*) (NRObject *)) nr_arena_group_init);
+    }
+    return type;
 }
 
 static void
 nr_arena_group_class_init (NRArenaGroupClass *klass)
 {
-	NRObjectClass *object_class;
-	NRArenaItemClass *item_class;
+    NRObjectClass *object_class;
+    NRArenaItemClass *item_class;
 
-	object_class = (NRObjectClass *) klass;
-	item_class = (NRArenaItemClass *) klass;
+    object_class = (NRObjectClass *) klass;
+    item_class = (NRArenaItemClass *) klass;
 
-	parent_class = (NRArenaItemClass *) ((NRObjectClass *) klass)->parent;
+    parent_class = (NRArenaItemClass *) ((NRObjectClass *) klass)->parent;
 
-	object_class->cpp_ctor = NRObject::invoke_ctor<NRArenaGroup>;
+    object_class->cpp_ctor = NRObject::invoke_ctor<NRArenaGroup>;
 
-	item_class->children = nr_arena_group_children;
-	item_class->last_child = nr_arena_group_last_child;
-	item_class->add_child = nr_arena_group_add_child;
-	item_class->set_child_position = nr_arena_group_set_child_position;
-	item_class->remove_child = nr_arena_group_remove_child;
-	item_class->update = nr_arena_group_update;
-	item_class->render = nr_arena_group_render;
-	item_class->clip = nr_arena_group_clip;
-	item_class->pick = nr_arena_group_pick;
+    item_class->children = nr_arena_group_children;
+    item_class->last_child = nr_arena_group_last_child;
+    item_class->add_child = nr_arena_group_add_child;
+    item_class->set_child_position = nr_arena_group_set_child_position;
+    item_class->remove_child = nr_arena_group_remove_child;
+    item_class->update = nr_arena_group_update;
+    item_class->render = nr_arena_group_render;
+    item_class->clip = nr_arena_group_clip;
+    item_class->pick = nr_arena_group_pick;
 }
 
 static void
 nr_arena_group_init (NRArenaGroup *group)
 {
-	group->transparent = FALSE;
-	group->children = NULL;
-	group->last = NULL;
-	group->style = NULL;
-	nr_matrix_set_identity (&group->child_transform);
+    group->transparent = FALSE;
+    group->children = NULL;
+    group->last = NULL;
+    group->style = NULL;
+    nr_matrix_set_identity (&group->child_transform);
 }
 
 static NRArenaItem *
 nr_arena_group_children (NRArenaItem *item)
 {
-	NRArenaGroup *group = NR_ARENA_GROUP (item);
+    NRArenaGroup *group = NR_ARENA_GROUP (item);
 
-	return group->children;
+    return group->children;
 }
 
 static NRArenaItem *
 nr_arena_group_last_child (NRArenaItem *item)
 {
-	NRArenaGroup *group = NR_ARENA_GROUP (item);
+    NRArenaGroup *group = NR_ARENA_GROUP (item);
 
-	return group->last;
+    return group->last;
 }
 
 static void
 nr_arena_group_add_child (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref)
 {
-	NRArenaGroup *group = NR_ARENA_GROUP (item);
+    NRArenaGroup *group = NR_ARENA_GROUP (item);
 
-	if (!ref) {
-		group->children = nr_arena_item_attach (item, child, NULL, group->children);
-	} else {
-		ref->next = nr_arena_item_attach (item, child, ref, ref->next);
-	}
+    if (!ref) {
+        group->children = nr_arena_item_attach (item, child, NULL, group->children);
+    } else {
+        ref->next = nr_arena_item_attach (item, child, ref, ref->next);
+    }
 
-	if (ref == group->last) group->last = child;
+    if (ref == group->last) group->last = child;
 
-	nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, FALSE);
+    nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
 static void
 nr_arena_group_remove_child (NRArenaItem *item, NRArenaItem *child)
 {
-	NRArenaGroup *group = NR_ARENA_GROUP (item);
+    NRArenaGroup *group = NR_ARENA_GROUP (item);
 
-	if (child == group->last) group->last = child->prev;
+    if (child == group->last) group->last = child->prev;
 
-	if (child->prev) {
-		nr_arena_item_detach (item, child);
-	} else {
-		group->children = nr_arena_item_detach (item, child);
-	}
+    if (child->prev) {
+        nr_arena_item_detach (item, child);
+    } else {
+        group->children = nr_arena_item_detach (item, child);
+    }
 
-	nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, FALSE);
+    nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
 static void
 nr_arena_group_set_child_position (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref)
 {
-	NRArenaGroup *group = NR_ARENA_GROUP (item);
+    NRArenaGroup *group = NR_ARENA_GROUP (item);
 
-	if (child == group->last) group->last = child->prev;
+    if (child == group->last) group->last = child->prev;
 
-	if (child->prev) {
-		nr_arena_item_detach (item, child);
-	} else {
-		group->children = nr_arena_item_detach (item, child);
-	}
+    if (child->prev) {
+        nr_arena_item_detach (item, child);
+    } else {
+        group->children = nr_arena_item_detach (item, child);
+    }
 
-	if (!ref) {
-		group->children = nr_arena_item_attach (item, child, NULL, group->children);
-	} else {
-		ref->next = nr_arena_item_attach (item, child, ref, ref->next);
-	}
+    if (!ref) {
+        group->children = nr_arena_item_attach (item, child, NULL, group->children);
+    } else {
+        ref->next = nr_arena_item_attach (item, child, ref, ref->next);
+    }
 
-	if (ref == group->last) group->last = child;
+    if (ref == group->last) group->last = child;
 
-	nr_arena_item_request_render (child);
+    nr_arena_item_request_render (child);
 }
 
 static unsigned int
 nr_arena_group_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int state, unsigned int reset)
 {
-	unsigned int newstate;
+    unsigned int newstate;
 
-	NRArenaGroup *group = NR_ARENA_GROUP (item);
+    NRArenaGroup *group = NR_ARENA_GROUP (item);
 
-	unsigned int beststate = NR_ARENA_ITEM_STATE_ALL;
+    unsigned int beststate = NR_ARENA_ITEM_STATE_ALL;
 
-	for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
-		NRGC cgc(gc);
-		nr_matrix_multiply (&cgc.transform, &group->child_transform, &gc->transform);
-		newstate = nr_arena_item_invoke_update (child, area, &cgc, state, reset);
-		beststate = beststate & newstate;
-	}
+    for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
+        NRGC cgc(gc);
+        nr_matrix_multiply (&cgc.transform, &group->child_transform, &gc->transform);
+        newstate = nr_arena_item_invoke_update (child, area, &cgc, state, reset);
+        beststate = beststate & newstate;
+    }
 
-	if (beststate & NR_ARENA_ITEM_STATE_BBOX) {
-		nr_rect_l_set_empty (&item->bbox);
-		for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
-			nr_rect_l_union (&item->bbox, &item->bbox, &child->bbox);
-		}
-	}
+    if (beststate & NR_ARENA_ITEM_STATE_BBOX) {
+        nr_rect_l_set_empty (&item->bbox);
+        for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
+            nr_rect_l_union (&item->bbox, &item->bbox, &child->bbox);
+        }
+    }
 
-	return beststate;
+    return beststate;
 }
 
 void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
@@ -207,7 +207,7 @@ void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
         delete group->filter;
         group->filter = NULL;
     }
-  
+
     if (style && style->enable_background.set
         && style->enable_background.value == SP_CSS_BACKGROUND_NEW) {
         group->background_new = true;
@@ -217,74 +217,75 @@ void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
 static unsigned int
 nr_arena_group_render (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
 {
-	NRArenaGroup *group = NR_ARENA_GROUP (item);
+    NRArenaGroup *group = NR_ARENA_GROUP (item);
 
-	unsigned int ret = item->state;
+    unsigned int ret = item->state;
 
-	/* Just compose children into parent buffer */
-	for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
-		ret = nr_arena_item_invoke_render (ct, child, area, pb, flags);
-		if (ret & NR_ARENA_ITEM_STATE_INVALID) break;
-	}
+    /* Just compose children into parent buffer */
+    for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
+        ret = nr_arena_item_invoke_render (ct, child, area, pb, flags);
+        if (ret & NR_ARENA_ITEM_STATE_INVALID) break;
+    }
 
-	return ret;
+    return ret;
 }
 
 static unsigned int
 nr_arena_group_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 {
-	NRArenaGroup *group = NR_ARENA_GROUP (item);
+    NRArenaGroup *group = NR_ARENA_GROUP (item);
 
-	unsigned int ret = item->state;
+    unsigned int ret = item->state;
 
-	/* Just compose children into parent buffer */
-	for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
-		ret = nr_arena_item_invoke_clip (child, area, pb);
-		if (ret & NR_ARENA_ITEM_STATE_INVALID) break;
-	}
+    /* Just compose children into parent buffer */
+    for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
+        ret = nr_arena_item_invoke_clip (child, area, pb);
+        if (ret & NR_ARENA_ITEM_STATE_INVALID) break;
+    }
 
-	return ret;
+    return ret;
 }
 
 static NRArenaItem *
 nr_arena_group_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky)
 {
-	NRArenaGroup *group = NR_ARENA_GROUP (item);
+    NRArenaGroup *group = NR_ARENA_GROUP (item);
 
-	for (NRArenaItem *child = group->last; child != NULL; child = child->prev) {
-		NRArenaItem *picked = nr_arena_item_invoke_pick (child, p, delta, sticky);
-		if (picked)
-			return (group->transparent) ? picked : item;
-	}
+    for (NRArenaItem *child = group->last; child != NULL; child = child->prev) {
+        NRArenaItem *picked = nr_arena_item_invoke_pick (child, p, delta, sticky);
+        if (picked)
+            return (group->transparent) ? picked : item;
+    }
 
-	return NULL;
+    return NULL;
 }
 
 void
 nr_arena_group_set_transparent (NRArenaGroup *group, unsigned int transparent)
 {
-	nr_return_if_fail (group != NULL);
-	nr_return_if_fail (NR_IS_ARENA_GROUP (group));
+    nr_return_if_fail (group != NULL);
+    nr_return_if_fail (NR_IS_ARENA_GROUP (group));
 
-	group->transparent = transparent;
+    group->transparent = transparent;
 }
 
 void nr_arena_group_set_child_transform(NRArenaGroup *group, NR::Matrix const &t)
 {
-	NRMatrix nt(t);
-	nr_arena_group_set_child_transform(group, &nt);
+    NRMatrix nt(t);
+    nr_arena_group_set_child_transform(group, &nt);
 }
 
 void nr_arena_group_set_child_transform(NRArenaGroup *group, NRMatrix const *t)
 {
-	if (!t) t = &NR_MATRIX_IDENTITY;
+    if (!t) t = &NR_MATRIX_IDENTITY;
 
-	if (!NR_MATRIX_DF_TEST_CLOSE (t, &group->child_transform, NR_EPSILON)) {
-		nr_arena_item_request_render (NR_ARENA_ITEM (group));
-		group->child_transform = *t;
-		nr_arena_item_request_update (NR_ARENA_ITEM (group), NR_ARENA_ITEM_STATE_ALL, TRUE);
-	}
+    if (!NR_MATRIX_DF_TEST_CLOSE (t, &group->child_transform, NR_EPSILON)) {
+        nr_arena_item_request_render (NR_ARENA_ITEM (group));
+        group->child_transform = *t;
+        nr_arena_item_request_update (NR_ARENA_ITEM (group), NR_ARENA_ITEM_STATE_ALL, TRUE);
+    }
 }
+
 
 /*
   Local Variables:

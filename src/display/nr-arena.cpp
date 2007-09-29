@@ -25,116 +25,128 @@ static NRActiveObjectClass *parent_class;
 NRType
 nr_arena_get_type (void)
 {
-	static NRType type = 0;
-	if (!type) {
-		type = nr_object_register_type (NR_TYPE_ACTIVE_OBJECT,
-						"NRArena",
-						sizeof (NRArenaClass),
-						sizeof (NRArena),
-						(void (*) (NRObjectClass *)) nr_arena_class_init,
-						(void (*) (NRObject *)) nr_arena_init);
-	}
-	return type;
+    static NRType type = 0;
+    if (!type) {
+        type = nr_object_register_type (NR_TYPE_ACTIVE_OBJECT,
+                                        "NRArena",
+                                        sizeof (NRArenaClass),
+                                        sizeof (NRArena),
+                                        (void (*) (NRObjectClass *)) nr_arena_class_init,
+                                        (void (*) (NRObject *)) nr_arena_init);
+    }
+    return type;
 }
 
 static void
 nr_arena_class_init (NRArenaClass *klass)
 {
-	NRObjectClass *object_class = (NRObjectClass *) klass;
+    NRObjectClass *object_class = (NRObjectClass *) klass;
 
-	parent_class = (NRActiveObjectClass *) (((NRObjectClass *) klass)->parent);
+    parent_class = (NRActiveObjectClass *) (((NRObjectClass *) klass)->parent);
 
-	object_class->finalize = nr_arena_finalize;
-	object_class->cpp_ctor = NRObject::invoke_ctor<NRArena>;
+    object_class->finalize = nr_arena_finalize;
+    object_class->cpp_ctor = NRObject::invoke_ctor<NRArena>;
 }
 
 static void
 nr_arena_init (NRArena *arena)
 {
-	arena->delta = 0; // to be set by desktop from prefs
-	arena->rendermode = RENDERMODE_NORMAL; // default is normal render
-	arena->outlinecolor = 0xff; // black; to be set by desktop from bg color
-	arena->canvasarena = NULL; 
+    arena->delta = 0; // to be set by desktop from prefs
+    arena->rendermode = RENDERMODE_NORMAL; // default is normal render
+    arena->outlinecolor = 0xff; // black; to be set by desktop from bg color
+    arena->canvasarena = NULL;
 }
 
 static void
 nr_arena_finalize (NRObject *object)
 {
-	((NRObjectClass *) (parent_class))->finalize (object);
+    ((NRObjectClass *) (parent_class))->finalize (object);
 }
 
 void
 nr_arena_request_update (NRArena *arena, NRArenaItem *item)
 {
-	NRActiveObject *aobject = (NRActiveObject *) arena;
+    NRActiveObject *aobject = (NRActiveObject *) arena;
 
-	nr_return_if_fail (arena != NULL);
-	nr_return_if_fail (NR_IS_ARENA (arena));
-	nr_return_if_fail (item != NULL);
-	nr_return_if_fail (NR_IS_ARENA_ITEM (item));
+    nr_return_if_fail (arena != NULL);
+    nr_return_if_fail (NR_IS_ARENA (arena));
+    nr_return_if_fail (item != NULL);
+    nr_return_if_fail (NR_IS_ARENA_ITEM (item));
 
-	if (aobject->callbacks) {
-		for (unsigned int i = 0; i < aobject->callbacks->length; i++) {
-			NRObjectListener *listener = aobject->callbacks->listeners + i;
-			NRArenaEventVector *avector = (NRArenaEventVector *) listener->vector;
-			if ((listener->size >= sizeof (NRArenaEventVector)) && avector->request_update) {
-				avector->request_update (arena, item, listener->data);
-			}
-		}
-	}
+    if (aobject->callbacks) {
+        for (unsigned int i = 0; i < aobject->callbacks->length; i++) {
+            NRObjectListener *listener = aobject->callbacks->listeners + i;
+            NRArenaEventVector *avector = (NRArenaEventVector *) listener->vector;
+            if ((listener->size >= sizeof (NRArenaEventVector)) && avector->request_update) {
+                avector->request_update (arena, item, listener->data);
+            }
+        }
+    }
 }
 
 void
 nr_arena_request_render_rect (NRArena *arena, NRRectL *area)
 {
-	NRActiveObject *aobject = (NRActiveObject *) arena;
+    NRActiveObject *aobject = (NRActiveObject *) arena;
 
-	nr_return_if_fail (arena != NULL);
-	nr_return_if_fail (NR_IS_ARENA (arena));
-	nr_return_if_fail (area != NULL);
+    nr_return_if_fail (arena != NULL);
+    nr_return_if_fail (NR_IS_ARENA (arena));
+    nr_return_if_fail (area != NULL);
 
-	if (aobject->callbacks && area && !nr_rect_l_test_empty (area)) {
-		for (unsigned int i = 0; i < aobject->callbacks->length; i++) {
-			NRObjectListener *listener = aobject->callbacks->listeners + i;
-			NRArenaEventVector *avector = (NRArenaEventVector *) listener->vector;
-			if ((listener->size >= sizeof (NRArenaEventVector)) && avector->request_render) {
-				avector->request_render (arena, area, listener->data);
-			}
-		}
-	}
+    if (aobject->callbacks && area && !nr_rect_l_test_empty (area)) {
+        for (unsigned int i = 0; i < aobject->callbacks->length; i++) {
+            NRObjectListener *listener = aobject->callbacks->listeners + i;
+            NRArenaEventVector *avector = (NRArenaEventVector *) listener->vector;
+            if ((listener->size >= sizeof (NRArenaEventVector)) && avector->request_render) {
+                avector->request_render (arena, area, listener->data);
+            }
+        }
+    }
 }
 
-void 
+void
 nr_arena_render_paintserver_fill (NRPixBlock *pb, NRRectL *area, SPPainter *painter, float opacity, NRPixBlock *mask)
 {
-	NRPixBlock cb, cb_opa;
-	nr_pixblock_setup_fast (&cb, NR_PIXBLOCK_MODE_R8G8B8A8N, area->x0, area->y0, area->x1, area->y1, TRUE);
-	nr_pixblock_setup_fast (&cb_opa, NR_PIXBLOCK_MODE_R8G8B8A8N, area->x0, area->y0, area->x1, area->y1, TRUE);
+    NRPixBlock cb, cb_opa;
+    nr_pixblock_setup_fast (&cb, NR_PIXBLOCK_MODE_R8G8B8A8N, area->x0, area->y0, area->x1, area->y1, TRUE);
+    nr_pixblock_setup_fast (&cb_opa, NR_PIXBLOCK_MODE_R8G8B8A8N, area->x0, area->y0, area->x1, area->y1, TRUE);
 
-        // if memory allocation failed, abort 
-	if ((cb.size != NR_PIXBLOCK_SIZE_TINY && cb.data.px == NULL) || (cb_opa.size != NR_PIXBLOCK_SIZE_TINY && cb_opa.data.px == NULL)) {
-            return;
-        }
+    // if memory allocation failed, abort
+    if ((cb.size != NR_PIXBLOCK_SIZE_TINY && cb.data.px == NULL) || (cb_opa.size != NR_PIXBLOCK_SIZE_TINY && cb_opa.data.px == NULL)) {
+        return;
+    }
 
-    cb.visible_area = pb->visible_area; 
-    cb_opa.visible_area = pb->visible_area; 
+    cb.visible_area = pb->visible_area;
+    cb_opa.visible_area = pb->visible_area;
 
-	/* Need separate gradient buffer (lauris)*/
-	// do the filling
-	painter->fill (painter, &cb);
-	cb.empty = FALSE;
+    /* Need separate gradient buffer (lauris)*/
+    // do the filling
+    painter->fill (painter, &cb);
+    cb.empty = FALSE;
 
-	// do the fill-opacity and mask composite 
-	if (opacity < 1.0) {
-		nr_blit_pixblock_pixblock_alpha (&cb_opa, &cb, (int) floor (255 * opacity));
-		cb_opa.empty = FALSE;
-		nr_blit_pixblock_pixblock_mask (pb, &cb_opa, mask);
-	} else {
-		nr_blit_pixblock_pixblock_mask (pb, &cb, mask);
-	}
+    // do the fill-opacity and mask composite
+    if (opacity < 1.0) {
+        nr_blit_pixblock_pixblock_alpha (&cb_opa, &cb, (int) floor (255 * opacity));
+        cb_opa.empty = FALSE;
+        nr_blit_pixblock_pixblock_mask (pb, &cb_opa, mask);
+    } else {
+        nr_blit_pixblock_pixblock_mask (pb, &cb, mask);
+    }
 
-	pb->empty = FALSE;
+    pb->empty = FALSE;
 
-	nr_pixblock_release (&cb);
-	nr_pixblock_release (&cb_opa);
+    nr_pixblock_release (&cb);
+    nr_pixblock_release (&cb_opa);
 }
+
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

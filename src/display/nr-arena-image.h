@@ -24,34 +24,46 @@
 NRType nr_arena_image_get_type (void);
 
 struct NRArenaImage : public NRArenaItem {
-	unsigned char *px;
-	unsigned int pxw;
-	unsigned int pxh;
-	unsigned int pxrs;
+    unsigned char *px;
+    unsigned int pxw;
+    unsigned int pxh;
+    unsigned int pxrs;
 
-	double x, y;
-	double width, height;
+    double x, y;
+    double width, height;
 
-	NR::Point c00, c01, c11, c10; // all 4 corners of the image, for outline mode rect
+    NR::Point c00, c01, c11, c10; // all 4 corners of the image, for outline mode rect
 
-	/* From GRID to PIXELS */
-	NR::Matrix grid2px;
+    /* From GRID to PIXELS */
+    NR::Matrix grid2px;
 
-        SPStyle *style;
+    SPStyle *style;
 
-	static NRArenaImage *create(NRArena *arena) {
-		NRArenaImage *obj=reinterpret_cast<NRArenaImage *>(nr_object_new(NR_TYPE_ARENA_IMAGE));
-		obj->init(arena);
-		return obj;
-	}
+    static NRArenaImage *create(NRArena *arena) {
+        NRArenaImage *obj=reinterpret_cast<NRArenaImage *>(nr_object_new(NR_TYPE_ARENA_IMAGE));
+        obj->init(arena);
+        return obj;
+    }
 };
 
 struct NRArenaImageClass {
-	NRArenaItemClass parent_class;
+    NRArenaItemClass parent_class;
 };
 
 void nr_arena_image_set_pixels (NRArenaImage *image, unsigned char const *px, unsigned int pxw, unsigned int pxh, unsigned int pxrs);
 void nr_arena_image_set_geometry (NRArenaImage *image, double x, double y, double width, double height);
 void nr_arena_image_set_style (NRArenaImage *image, SPStyle *style);
 
+
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

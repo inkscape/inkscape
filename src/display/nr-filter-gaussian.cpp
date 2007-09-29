@@ -38,7 +38,7 @@
 // Using the backwards-pass initialization procedure from:
 // Boundary Conditions for Young - van Vliet Recursive Filtering
 // Bill Triggs, Michael Sdika
-// IEEE Transactions on Signal Processing, Volume 54, Number 5 - may 2006 
+// IEEE Transactions on Signal Processing, Volume 54, Number 5 - may 2006
 
 // Number of IIR filter coefficients used. Currently only 3 is supported.
 // "Recursive Gaussian Derivative Filters" says this is enough though (and
@@ -52,7 +52,7 @@ void copy_n(InIt beg_in, Size N, OutIt beg_out) {
 }
 
 // Type used for IIR filter coefficients (can be 10.21 signed fixed point, see Anisotropic Gaussian Filtering Using Fixed Point Arithmetic, Christoph H. Lampert & Oliver Wirjadi, 2006)
-typedef double IIRValue; 
+typedef double IIRValue;
 
 // Type used for FIR filter coefficients (can be 16.16 unsigned fixed point, should have 8 or more bits in the fractional part, the integer part should be capable of storing approximately 20*255)
 typedef Inkscape::Util::FixedPoint<unsigned int,16> FIRValue;
@@ -67,15 +67,15 @@ template<typename T> static inline T clip(T const& v, T const& a, T const& b) {
 
 template<typename Tt, typename Ts>
 static inline Tt round_cast(Ts const& v) {
-	static Ts const rndoffset(.5);
-	return static_cast<Tt>(v+rndoffset);
+    static Ts const rndoffset(.5);
+    return static_cast<Tt>(v+rndoffset);
 }
 
 template<typename Tt, typename Ts>
 static inline Tt clip_round_cast(Ts const& v, Tt const minval=std::numeric_limits<Tt>::min(), Tt const maxval=std::numeric_limits<Tt>::max()) {
     if ( v < minval ) return minval;
     if ( v > maxval ) return maxval;
-	return round_cast<Tt>(v);
+    return round_cast<Tt>(v);
 }
 
 namespace NR {
@@ -398,8 +398,8 @@ filter2D_FIR(PT *const dst, int const dstr1, int const dstr2,
                 // store the result in bufx
                 dst[dst_disp + byte] = round_cast<PT>(sum);
 
-                // optimization: if there was no variation within this point's neighborhood, 
-                // skip ahead while we keep seeing the same last_in byte: 
+                // optimization: if there was no variation within this point's neighborhood,
+                // skip ahead while we keep seeing the same last_in byte:
                 // blurring flat color would not change it anyway
                 if (different_count <= 1) {
                     int pos = c1 + 1;

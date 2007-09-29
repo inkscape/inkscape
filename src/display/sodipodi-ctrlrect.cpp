@@ -41,7 +41,7 @@ static const guint DASH_LENGTH = 4;
 GtkType sp_ctrlrect_get_type()
 {
     static GtkType ctrlrect_type = 0;
-    
+
     if (!ctrlrect_type) {
         GtkTypeInfo ctrlrect_info = {
             "SPCtrlRect",
@@ -95,7 +95,7 @@ static void sp_ctrlrect_hline(SPCanvasBuf *buf, gint y, gint xs, gint xe, guint3
         guint const b = RGBA_B(rgba);
         guint const a = RGBA_A(rgba);
         gint const x0 = MAX(buf->rect.x0, xs);
-	gint const x1 = MIN(buf->rect.x1, xe + 1);
+        gint const x1 = MIN(buf->rect.x1, xe + 1);
         guchar *p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 3;
         for (gint x = x0; x < x1; x++) {
             if (!dashed || ((x / DASH_LENGTH) % 2)) {
@@ -252,12 +252,12 @@ void CtrlRect::update(NR::Matrix const &affine, unsigned int flags)
     }
 
     NR::Rect bbox(_rect.min() * affine, _rect.max() * affine);
-    
+
     _area.x0 = (int) floor(bbox.min()[NR::X] + 0.5);
     _area.y0 = (int) floor(bbox.min()[NR::Y] + 0.5);
     _area.x1 = (int) floor(bbox.max()[NR::X] + 0.5);
     _area.y1 = (int) floor(bbox.max()[NR::Y] + 0.5);
-    
+
     _shadow_size = _shadow;
 
     if (_area.x0 != 0 || _area.x1 != 0 || _area.y0 != 0 || _area.y1 != 0) {
@@ -290,7 +290,6 @@ void CtrlRect::update(NR::Matrix const &affine, unsigned int flags)
         x2 = _area.x1 + _shadow_size + 1;
         y2 = _area.y1 + _shadow_size + 1;
     }
-  
 }
 
 

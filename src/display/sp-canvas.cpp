@@ -44,15 +44,15 @@
 // Define this to visualize the regions to be redrawn
 //#define DEBUG_REDRAW 1;
 
-// Tiles are a way to minimize the number of redraws, eliminating too small redraws. 
+// Tiles are a way to minimize the number of redraws, eliminating too small redraws.
 // The canvas stores a 2D array of ints, each representing a TILE_SIZExTILE_SIZE pixels tile.
 // If any part of it is dirtied, the entire tile is dirtied (its int is nonzero) and repainted.
 #define TILE_SIZE 16
 
 enum {
-	RENDERMODE_NORMAL,
-	RENDERMODE_NOAA,
-	RENDERMODE_OUTLINE
+    RENDERMODE_NORMAL,
+    RENDERMODE_NOAA,
+    RENDERMODE_OUTLINE
 };
 
 static gint const sp_canvas_update_priority = G_PRIORITY_HIGH_IDLE;
@@ -299,11 +299,11 @@ sp_canvas_item_invoke_update (SPCanvasItem *item, NR::Matrix const &affine, unsi
     GTK_OBJECT_UNSET_FLAGS (item, SP_CANVAS_ITEM_NEED_AFFINE);
 }
 
-/** 
- * Helper function to invoke the point method of the item.  
+/**
+ * Helper function to invoke the point method of the item.
  *
- * The argument x, y should be in the parent's item-relative coordinate 
- * system.  This routine applies the inverse of the item's transform, 
+ * The argument x, y should be in the parent's item-relative coordinate
+ * system.  This routine applies the inverse of the item's transform,
  * maintaining the affine invariant.
  */
 static double
@@ -318,7 +318,7 @@ sp_canvas_item_invoke_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **act
 /**
  * Makes the item's affine transformation matrix be equal to the specified
  * matrix.
- * 
+ *
  * @item: A canvas item.
  * @affine: An affine transformation matrix.
  */
@@ -340,7 +340,7 @@ sp_canvas_item_affine_absolute (SPCanvasItem *item, NR::Matrix const &affine)
 }
 
 /**
- * Convenience function to reorder items in a group's child list.  
+ * Convenience function to reorder items in a group's child list.
  *
  * This puts the specified link after the "before" link.
  */
@@ -396,7 +396,7 @@ put_item_after (GList *link, GList *before)
 
 /**
  * Raises the item in its parent's stack by the specified number of positions.
- * 
+ *
  * \param item A canvas item.
  * \param positions Number of steps to raise the item.
  *
@@ -519,7 +519,7 @@ sp_canvas_item_hide (SPCanvasItem *item)
 
 /**
  * Grab item under cursor.
- * 
+ *
  * \pre !canvas->grabbed_item && item->flags & SP_CANVAS_ITEM_VISIBLE
  */
 int
@@ -552,7 +552,7 @@ sp_canvas_item_grab (SPCanvasItem *item, guint event_mask, GdkCursor *cursor, gu
 /**
  * Ungrabs the item, which must have been grabbed in the canvas, and ungrabs the
  * mouse.
- * 
+ *
  * \param item A canvas item that holds a grab.
  * \param etime The timestamp for ungrabbing the mouse.
  */
@@ -639,7 +639,7 @@ sp_canvas_item_grab_focus (SPCanvasItem *item)
 
 /**
  * Requests that the canvas queue an update for the specified item.
- * 
+ *
  * To be used only by item implementations.
  */
 void
@@ -731,7 +731,7 @@ sp_canvas_group_init (SPCanvasGroup */*group*/)
 }
 
 /**
- * Callback that destroys all items in group and calls group's virtual 
+ * Callback that destroys all items in group and calls group's virtual
  * destroy() function.
  */
 static void
@@ -875,7 +875,7 @@ group_add (SPCanvasGroup *group, SPCanvasItem *item)
     sp_canvas_item_request_update (item);
 }
 
-/** 
+/**
  * Removes an item from a canvas group
  */
 static void
@@ -989,7 +989,7 @@ sp_canvas_class_init (SPCanvasClass *klass)
     widget_class->focus_out_event = sp_canvas_focus_out;
 }
 
-/** 
+/**
  * Callback: object initialization for SPCanvas.
  */
 static void
@@ -1203,7 +1203,7 @@ sp_canvas_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 }
 
 /**
- * Helper that emits an event for an item in the canvas, be it the current 
+ * Helper that emits an event for an item in the canvas, be it the current
  * item, grabbed item, or focused item, as appropriate.
  */
 static int
@@ -1310,7 +1310,7 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
 }
 
 /**
- * Helper that re-picks the current item in the canvas, based on the event's 
+ * Helper that re-picks the current item in the canvas, based on the event's
  * coordinates and emits enter/leave events for items as appropriate.
  */
 static int
@@ -1461,7 +1461,7 @@ sp_canvas_button (GtkWidget *widget, GdkEventButton *event)
 
     /* dispatch normally regardless of the event's window if an item has
        has a pointer grab in effect */
-    if (!canvas->grabbed_item && 
+    if (!canvas->grabbed_item &&
         event->window != SP_CANVAS_WINDOW (canvas))
         return retval;
 
@@ -1610,8 +1610,8 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
 // CAIRO FIXME: after SPCanvasBuf is made 32bpp throughout, this rgb_draw below can be replaced with the below.
 // Why this must not be done currently:
 // - all canvas items (handles, nodes etc) paint themselves assuming 24bpp
-// - cairo assumes bgra, but we have rgba, so r and b get swapped (until we paint all with cairo too)  
-// - it does not seem to be any faster; in fact since with 32bpp, buf contains less pixels, 
+// - cairo assumes bgra, but we have rgba, so r and b get swapped (until we paint all with cairo too)
+// - it does not seem to be any faster; in fact since with 32bpp, buf contains less pixels,
 // we need more bufs to paint a given area and as a result it's even a bit slower
 
     cairo_surface_t* cst = cairo_image_surface_create_for_data (
@@ -1695,12 +1695,12 @@ sp_canvas_paint_rect_internal (PaintRectSetup const *setup, NRRectL this_rect)
         // Interrupting redraw isn't always good.
         // For example, when you drag one node of a big path, only the buffer containing
         // the mouse cursor will be redrawn again and again, and the rest of the path
-        // will remain stale because Inkscape never has enough idle time to redraw all 
-        // of the screen. To work around this, such operations set a forced_redraw_limit > 0. 
+        // will remain stale because Inkscape never has enough idle time to redraw all
+        // of the screen. To work around this, such operations set a forced_redraw_limit > 0.
         // If this limit is set, and if we have aborted redraw more times than is allowed,
-        // interrupting is blocked and we're forced to redraw full screen once 
+        // interrupting is blocked and we're forced to redraw full screen once
         // (after which we can again interrupt forced_redraw_limit times).
-        if (setup->canvas->forced_redraw_limit < 0 || 
+        if (setup->canvas->forced_redraw_limit < 0 ||
             setup->canvas->forced_redraw_count < setup->canvas->forced_redraw_limit) {
 
             if (setup->canvas->forced_redraw_limit != -1) {
@@ -1730,8 +1730,8 @@ sp_canvas_paint_rect_internal (PaintRectSetup const *setup, NRRectL this_rect)
     NRRectL lo = this_rect;
     NRRectL hi = this_rect;
 
-/* 
-This test determines the redraw strategy: 
+/*
+This test determines the redraw strategy:
 
 bw < bh (strips mode) splits across the smaller dimension of the rect and therefore (on
 horizontally-stretched windows) results in redrawing in horizontal strips (from cursor point, in
@@ -1745,7 +1745,7 @@ faster.
 
 The default for now is the strips mode.
 */
-    if (bw < bh || bh < 2 * TILE_SIZE) { 
+    if (bw < bh || bh < 2 * TILE_SIZE) {
         int mid = (this_rect.x0 + this_rect.x1) / 2;
         // Make sure that mid lies on a tile boundary
         mid = (mid / TILE_SIZE) * TILE_SIZE;
@@ -1790,7 +1790,7 @@ static bool
 sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
 {
     g_return_val_if_fail (!canvas->need_update, false);
- 
+
     NRRectL rect;
     rect.x0 = xx0;
     rect.x1 = xx1;
@@ -1807,11 +1807,11 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
     // paint the area to redraw yellow
     gdk_rgb_gc_set_foreground (canvas->pixmap_gc, 0xFFFF00);
     gdk_draw_rectangle (SP_CANVAS_WINDOW (canvas),
-                            canvas->pixmap_gc,
-                            TRUE,
-                            rect.x0 - canvas->x0, rect.y0 - canvas->y0,
-			                      rect.x1 - rect.x0, rect.y1 - rect.y0);
-#endif			    
+                        canvas->pixmap_gc,
+                        TRUE,
+                        rect.x0 - canvas->x0, rect.y0 - canvas->y0,
+                        rect.x1 - rect.x0, rect.y1 - rect.y0);
+#endif
 
     PaintRectSetup setup;
 
@@ -1847,7 +1847,7 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
 void
 sp_canvas_force_full_redraw_after_interruptions(SPCanvas *canvas, unsigned int count) {
   g_return_if_fail(canvas != NULL);
-  
+
   canvas->forced_redraw_limit = count;
   canvas->forced_redraw_count = 0;
 }
@@ -1870,7 +1870,7 @@ sp_canvas_expose (GtkWidget *widget, GdkEventExpose *event)
 {
     SPCanvas *canvas = SP_CANVAS (widget);
 
-    if (!GTK_WIDGET_DRAWABLE (widget) || 
+    if (!GTK_WIDGET_DRAWABLE (widget) ||
         (event->window != SP_CANVAS_WINDOW (canvas)))
         return FALSE;
 
@@ -1880,7 +1880,7 @@ sp_canvas_expose (GtkWidget *widget, GdkEventExpose *event)
 
     for (int i = 0; i < n_rects; i++) {
         NRRectL rect;
-		
+
         rect.x0 = rects[i].x + canvas->x0;
         rect.y0 = rects[i].y + canvas->y0;
         rect.x1 = rect.x0 + rects[i].width;
@@ -1970,8 +1970,8 @@ paint (SPCanvas *canvas)
 
     Gdk::Region to_paint;
 
-    for (int j=canvas->tTop; j<canvas->tBottom; j++) { 
-        for (int i=canvas->tLeft; i<canvas->tRight; i++) { 
+    for (int j=canvas->tTop; j<canvas->tBottom; j++) {
+        for (int i=canvas->tLeft; i<canvas->tRight; i++) {
             int tile_index = (i - canvas->tLeft) + (j - canvas->tTop)*canvas->tileH;
 
             if ( canvas->tiles[tile_index] ) { // if this tile is dirtied (nonzero)
@@ -2125,7 +2125,7 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear,
     }
 }
 
-/** 
+/**
  * Updates canvas if necessary.
  */
 void
@@ -2350,4 +2350,4 @@ void sp_canvas_mark_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb, uint8
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

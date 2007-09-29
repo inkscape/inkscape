@@ -42,15 +42,15 @@ sp_canvas_bpath_get_type (void)
 {
     static GtkType type = 0;
     if (!type) {
-	GtkTypeInfo info = {
-	    "SPCanvasBPath",
-	    sizeof (SPCanvasBPath),
-	    sizeof (SPCanvasBPathClass),
-	    (GtkClassInitFunc) sp_canvas_bpath_class_init,
-	    (GtkObjectInitFunc) sp_canvas_bpath_init,
-	    NULL, NULL, NULL
-	};
-	type = gtk_type_unique (SP_TYPE_CANVAS_ITEM, &info);
+        GtkTypeInfo info = {
+            "SPCanvasBPath",
+            sizeof (SPCanvasBPath),
+            sizeof (SPCanvasBPathClass),
+            (GtkClassInitFunc) sp_canvas_bpath_class_init,
+            (GtkObjectInitFunc) sp_canvas_bpath_init,
+            NULL, NULL, NULL
+        };
+        type = gtk_type_unique (SP_TYPE_CANVAS_ITEM, &info);
     }
     return type;
 }
@@ -94,20 +94,20 @@ sp_canvas_bpath_destroy (GtkObject *object)
 {
     SPCanvasBPath *cbp = SP_CANVAS_BPATH (object);
     if (cbp->fill_shp) {
-	delete cbp->fill_shp;
-	cbp->fill_shp = NULL;
+        delete cbp->fill_shp;
+        cbp->fill_shp = NULL;
     }
 
     if (cbp->stroke_shp) {
-	delete cbp->stroke_shp;
-	cbp->stroke_shp = NULL;
+        delete cbp->stroke_shp;
+        cbp->stroke_shp = NULL;
     }
     if (cbp->curve) {
-	cbp->curve = sp_curve_unref (cbp->curve);
+        cbp->curve = sp_curve_unref (cbp->curve);
     }
 
     if (GTK_OBJECT_CLASS (parent_class)->destroy)
-	(* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
 
 static void
@@ -118,18 +118,18 @@ sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
     sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 
     if (((SPCanvasItemClass *) parent_class)->update)
-	((SPCanvasItemClass *) parent_class)->update (item, affine, flags);
+        ((SPCanvasItemClass *) parent_class)->update (item, affine, flags);
 
     sp_canvas_item_reset_bounds (item);
 
     if (cbp->fill_shp) {
-	delete cbp->fill_shp;
-	cbp->fill_shp = NULL;
+        delete cbp->fill_shp;
+        cbp->fill_shp = NULL;
     }
 
     if (cbp->stroke_shp) {
-	delete cbp->stroke_shp;
-	cbp->stroke_shp = NULL;
+        delete cbp->stroke_shp;
+        cbp->stroke_shp = NULL;
     }
     if (!cbp->curve) return;
 
@@ -139,62 +139,62 @@ sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
     dbox.x1 = dbox.y1 = -1.0;
 
     if ((cbp->fill_rgba & 0xff) || (cbp->stroke_rgba & 0xff)) {
-	Path*  thePath=new Path;
-	thePath->LoadArtBPath(SP_CURVE_BPATH(cbp->curve), affine, true);
-	thePath->Convert(0.25);
-	if ((cbp->fill_rgba & 0xff) && (cbp->curve->end > 2)) {
-	    Shape* theShape=new Shape;
-	    thePath->Fill(theShape,0);
-	    if ( cbp->fill_shp == NULL ) cbp->fill_shp=new Shape;
-	    if ( cbp->fill_rule == SP_WIND_RULE_EVENODD ) {
-		cbp->fill_shp->ConvertToShape(theShape,fill_oddEven);
-	    } else {
-		cbp->fill_shp->ConvertToShape(theShape,fill_nonZero);
-	    }
-	    delete theShape;
-	    cbp->fill_shp->CalcBBox();
-	    if ( cbp->fill_shp->leftX < cbp->fill_shp->rightX ) {
-		if ( dbox.x0 >= dbox.x1 ) {
-		    dbox.x0 = cbp->fill_shp->leftX; dbox.x1 = cbp->fill_shp->rightX;
-		    dbox.y0 = cbp->fill_shp->topY; dbox.y1 = cbp->fill_shp->bottomY;
-		} else {
-		    if ( cbp->fill_shp->leftX < dbox.x0 ) dbox.x0=cbp->fill_shp->leftX;
-		    if ( cbp->fill_shp->rightX > dbox.x1 ) dbox.x1=cbp->fill_shp->rightX;
-		    if ( cbp->fill_shp->topY < dbox.y0 ) dbox.y0=cbp->fill_shp->topY;
-		    if ( cbp->fill_shp->bottomY > dbox.y1 ) dbox.y1=cbp->fill_shp->bottomY;
-		}
-	    }
-	}
-	if ((cbp->stroke_rgba & 0xff) && (cbp->curve->end > 1)) {
-	    JoinType join=join_straight;
+        Path*  thePath=new Path;
+        thePath->LoadArtBPath(SP_CURVE_BPATH(cbp->curve), affine, true);
+        thePath->Convert(0.25);
+        if ((cbp->fill_rgba & 0xff) && (cbp->curve->end > 2)) {
+            Shape* theShape=new Shape;
+            thePath->Fill(theShape,0);
+            if ( cbp->fill_shp == NULL ) cbp->fill_shp=new Shape;
+            if ( cbp->fill_rule == SP_WIND_RULE_EVENODD ) {
+                cbp->fill_shp->ConvertToShape(theShape,fill_oddEven);
+            } else {
+                cbp->fill_shp->ConvertToShape(theShape,fill_nonZero);
+            }
+            delete theShape;
+            cbp->fill_shp->CalcBBox();
+            if ( cbp->fill_shp->leftX < cbp->fill_shp->rightX ) {
+                if ( dbox.x0 >= dbox.x1 ) {
+                    dbox.x0 = cbp->fill_shp->leftX; dbox.x1 = cbp->fill_shp->rightX;
+                    dbox.y0 = cbp->fill_shp->topY; dbox.y1 = cbp->fill_shp->bottomY;
+                } else {
+                    if ( cbp->fill_shp->leftX < dbox.x0 ) dbox.x0=cbp->fill_shp->leftX;
+                    if ( cbp->fill_shp->rightX > dbox.x1 ) dbox.x1=cbp->fill_shp->rightX;
+                    if ( cbp->fill_shp->topY < dbox.y0 ) dbox.y0=cbp->fill_shp->topY;
+                    if ( cbp->fill_shp->bottomY > dbox.y1 ) dbox.y1=cbp->fill_shp->bottomY;
+                }
+            }
+        }
+        if ((cbp->stroke_rgba & 0xff) && (cbp->curve->end > 1)) {
+            JoinType join=join_straight;
 //      Shape* theShape=new Shape;
-	    ButtType butt=butt_straight;
-	    if ( cbp->stroke_shp == NULL ) cbp->stroke_shp=new Shape;
-	    if ( cbp->stroke_linecap == SP_STROKE_LINECAP_BUTT ) butt=butt_straight;
-	    if ( cbp->stroke_linecap == SP_STROKE_LINECAP_ROUND ) butt=butt_round;
-	    if ( cbp->stroke_linecap == SP_STROKE_LINECAP_SQUARE ) butt=butt_square;
-	    if ( cbp->stroke_linejoin == SP_STROKE_LINEJOIN_MITER ) join=join_pointy;
-	    if ( cbp->stroke_linejoin == SP_STROKE_LINEJOIN_ROUND ) join=join_round;
-	    if ( cbp->stroke_linejoin == SP_STROKE_LINEJOIN_BEVEL ) join=join_straight;
-	    thePath->Stroke(cbp->stroke_shp,false,0.5*cbp->stroke_width, join,butt,cbp->stroke_width*cbp->stroke_miterlimit );
-	    //     thePath->Stroke(theShape,false,0.5*cbp->stroke_width, join,butt,cbp->stroke_width*cbp->stroke_miterlimit );
-	    //     cbp->stroke_shp->ConvertToShape(theShape,fill_nonZero);
+            ButtType butt=butt_straight;
+            if ( cbp->stroke_shp == NULL ) cbp->stroke_shp=new Shape;
+            if ( cbp->stroke_linecap == SP_STROKE_LINECAP_BUTT ) butt=butt_straight;
+            if ( cbp->stroke_linecap == SP_STROKE_LINECAP_ROUND ) butt=butt_round;
+            if ( cbp->stroke_linecap == SP_STROKE_LINECAP_SQUARE ) butt=butt_square;
+            if ( cbp->stroke_linejoin == SP_STROKE_LINEJOIN_MITER ) join=join_pointy;
+            if ( cbp->stroke_linejoin == SP_STROKE_LINEJOIN_ROUND ) join=join_round;
+            if ( cbp->stroke_linejoin == SP_STROKE_LINEJOIN_BEVEL ) join=join_straight;
+            thePath->Stroke(cbp->stroke_shp,false,0.5*cbp->stroke_width, join,butt,cbp->stroke_width*cbp->stroke_miterlimit );
+            //     thePath->Stroke(theShape,false,0.5*cbp->stroke_width, join,butt,cbp->stroke_width*cbp->stroke_miterlimit );
+            //     cbp->stroke_shp->ConvertToShape(theShape,fill_nonZero);
 
-	    cbp->stroke_shp->CalcBBox();
-	    if ( cbp->stroke_shp->leftX < cbp->stroke_shp->rightX ) {
-		if ( dbox.x0 >= dbox.x1 ) {
-		    dbox.x0 = cbp->stroke_shp->leftX;dbox.x1 = cbp->stroke_shp->rightX;
-		    dbox.y0 = cbp->stroke_shp->topY;dbox.y1 = cbp->stroke_shp->bottomY;
-		} else {
-		    if ( cbp->stroke_shp->leftX < dbox.x0 ) dbox.x0 = cbp->stroke_shp->leftX;
-		    if ( cbp->stroke_shp->rightX > dbox.x1 ) dbox.x1 = cbp->stroke_shp->rightX;
-		    if ( cbp->stroke_shp->topY < dbox.y0 ) dbox.y0 = cbp->stroke_shp->topY;
-		    if ( cbp->stroke_shp->bottomY > dbox.y1 ) dbox.y1 = cbp->stroke_shp->bottomY;
-		}
-	    }
+            cbp->stroke_shp->CalcBBox();
+            if ( cbp->stroke_shp->leftX < cbp->stroke_shp->rightX ) {
+                if ( dbox.x0 >= dbox.x1 ) {
+                    dbox.x0 = cbp->stroke_shp->leftX;dbox.x1 = cbp->stroke_shp->rightX;
+                    dbox.y0 = cbp->stroke_shp->topY;dbox.y1 = cbp->stroke_shp->bottomY;
+                } else {
+                    if ( cbp->stroke_shp->leftX < dbox.x0 ) dbox.x0 = cbp->stroke_shp->leftX;
+                    if ( cbp->stroke_shp->rightX > dbox.x1 ) dbox.x1 = cbp->stroke_shp->rightX;
+                    if ( cbp->stroke_shp->topY < dbox.y0 ) dbox.y0 = cbp->stroke_shp->topY;
+                    if ( cbp->stroke_shp->bottomY > dbox.y1 ) dbox.y1 = cbp->stroke_shp->bottomY;
+                }
+            }
 //      delete theShape;
-	}
-	delete thePath;
+        }
+        delete thePath;
     }
 
 
@@ -219,10 +219,10 @@ sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf)
     area.y0=buf->rect.y0;
     area.y1=buf->rect.y1;
     if ( cbp->fill_shp ) {
-	nr_pixblock_render_bpath_rgba (cbp->fill_shp,cbp->fill_rgba,area,(char*)buf->buf, buf->buf_rowstride);
+        nr_pixblock_render_bpath_rgba (cbp->fill_shp,cbp->fill_rgba,area,(char*)buf->buf, buf->buf_rowstride);
     }
     if ( cbp->stroke_shp ) {
-	nr_pixblock_render_bpath_rgba (cbp->stroke_shp,cbp->stroke_rgba,area,(char*)buf->buf, buf->buf_rowstride);
+        nr_pixblock_render_bpath_rgba (cbp->stroke_shp,cbp->stroke_rgba,area,(char*)buf->buf, buf->buf_rowstride);
     }
 
 }
@@ -235,15 +235,15 @@ sp_canvas_bpath_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_it
     SPCanvasBPath *cbp = SP_CANVAS_BPATH (item);
 
     if (cbp->fill_shp && (cbp->fill_shp->PtWinding(p) > 0 )) {
-	*actual_item = item;
-	return 0.0;
+        *actual_item = item;
+        return 0.0;
     }
     if (cbp->stroke_shp ) {
-	if (cbp->stroke_shp->PtWinding(p) > 0 ) {
-	    *actual_item = item;
-	    return 0.0;
-	}
-	return distance(cbp->stroke_shp, p);
+        if (cbp->stroke_shp->PtWinding(p) > 0 ) {
+            *actual_item = item;
+            return 0.0;
+        }
+        return distance(cbp->stroke_shp, p);
     }
     if (cbp->fill_shp) {
         return distance(cbp->fill_shp, p);
@@ -272,11 +272,11 @@ sp_canvas_bpath_set_bpath (SPCanvasBPath *cbp, SPCurve *curve)
     g_return_if_fail (SP_IS_CANVAS_BPATH (cbp));
 
     if (cbp->curve) {
-	cbp->curve = sp_curve_unref (cbp->curve);
+        cbp->curve = sp_curve_unref (cbp->curve);
     }
 
     if (curve) {
-	cbp->curve = sp_curve_ref (curve);
+        cbp->curve = sp_curve_ref (curve);
     }
 
     sp_canvas_item_request_update (SP_CANVAS_ITEM (cbp));
@@ -314,8 +314,8 @@ static void
 bpath_run_A8_OR (raster_info &dest,void *data,int st,float vst,int en,float ven)
 {
     union {
-	uint8_t  comp[4];
-	uint32_t col;
+        uint8_t  comp[4];
+        uint32_t col;
     } tempCol;
     if ( st >= en ) return;
     tempCol.col=*(uint32_t*)data;
@@ -341,55 +341,55 @@ bpath_run_A8_OR (raster_info &dest,void *data,int st,float vst,int en,float ven)
 
     d+=3*(st-dest.startPix);
     if ( fabs(dv) < 0.001 ) {
-	if ( sv > 249.999 ) {
-	    /* Simple copy */
-	    while (len > 0) {
-		d[0] = NR_COMPOSEN11_1111 (r, 255, d[0]);
-		d[1] = NR_COMPOSEN11_1111 (g, 255, d[1]);
-		d[2] = NR_COMPOSEN11_1111 (b, 255, d[2]);
-		d += 3;
-		len -= 1;
-	    }
-	} else {
-	    unsigned int c0_24=(int)sv;
-	    c0_24&=0xFF;
-	    while (len > 0) {
-		d[0] = NR_COMPOSEN11_1111 (r, c0_24, d[0]);
-		d[1] = NR_COMPOSEN11_1111 (g, c0_24, d[1]);
-		d[2] = NR_COMPOSEN11_1111 (b, c0_24, d[2]);
-		d += 3;
-		len -= 1;
-	    }
-	}
+        if ( sv > 249.999 ) {
+            /* Simple copy */
+            while (len > 0) {
+                d[0] = NR_COMPOSEN11_1111 (r, 255, d[0]);
+                d[1] = NR_COMPOSEN11_1111 (g, 255, d[1]);
+                d[2] = NR_COMPOSEN11_1111 (b, 255, d[2]);
+                d += 3;
+                len -= 1;
+            }
+        } else {
+            unsigned int c0_24=(int)sv;
+            c0_24&=0xFF;
+            while (len > 0) {
+                d[0] = NR_COMPOSEN11_1111 (r, c0_24, d[0]);
+                d[1] = NR_COMPOSEN11_1111 (g, c0_24, d[1]);
+                d[2] = NR_COMPOSEN11_1111 (b, c0_24, d[2]);
+                d += 3;
+                len -= 1;
+            }
+        }
     } else {
-	if ( en <= st+1 ) {
-	    sv=0.5*(vst+ven);
-	    unsigned int c0_24=(int)sv;
-	    c0_24&=0xFF;
-	    d[0] = NR_COMPOSEN11_1111 (r, c0_24, d[0]);
-	    d[1] = NR_COMPOSEN11_1111 (g, c0_24, d[1]);
-	    d[2] = NR_COMPOSEN11_1111 (b, c0_24, d[2]);
-	} else {
-	    dv/=len;
-	    sv+=0.5*dv; // correction trapezoidale
-	    sv*=65536;
-	    dv*=65536;
-	    int c0_24 = static_cast<int>(CLAMP(sv, 0, 16777216));
-	    int s0_24 = static_cast<int>(dv);
-	    while (len > 0) {
-		unsigned int ca;
-		/* Draw */
-		ca = c0_24 >> 16;
-		if ( ca > 255 ) ca=255;
-		d[0] = NR_COMPOSEN11_1111 (r, ca, d[0]);
-		d[1] = NR_COMPOSEN11_1111 (g, ca, d[1]);
-		d[2] = NR_COMPOSEN11_1111 (b, ca, d[2]);
-		d += 3;
-		c0_24 += s0_24;
-		c0_24 = CLAMP (c0_24, 0, 16777216);
-		len -= 1;
-	    }
-	}
+        if ( en <= st+1 ) {
+            sv=0.5*(vst+ven);
+            unsigned int c0_24=(int)sv;
+            c0_24&=0xFF;
+            d[0] = NR_COMPOSEN11_1111 (r, c0_24, d[0]);
+            d[1] = NR_COMPOSEN11_1111 (g, c0_24, d[1]);
+            d[2] = NR_COMPOSEN11_1111 (b, c0_24, d[2]);
+        } else {
+            dv/=len;
+            sv+=0.5*dv; // correction trapezoidale
+            sv*=65536;
+            dv*=65536;
+            int c0_24 = static_cast<int>(CLAMP(sv, 0, 16777216));
+            int s0_24 = static_cast<int>(dv);
+            while (len > 0) {
+                unsigned int ca;
+                /* Draw */
+                ca = c0_24 >> 16;
+                if ( ca > 255 ) ca=255;
+                d[0] = NR_COMPOSEN11_1111 (r, ca, d[0]);
+                d[1] = NR_COMPOSEN11_1111 (g, ca, d[1]);
+                d[2] = NR_COMPOSEN11_1111 (b, ca, d[2]);
+                d += 3;
+                c0_24 += s0_24;
+                c0_24 = CLAMP (c0_24, 0, 16777216);
+                len -= 1;
+            }
+        }
     }
 }
 
@@ -459,27 +459,39 @@ void nr_pixblock_render_bpath_rgba (Shape* theS,uint32_t color,NRRectL &area,cha
     char* mdata=(char*)destBuf;
     uint32_t* ligStart=((uint32_t*)(mdata+(3*(il-area.x0)+stride*(it-area.y0))));
     for (int y=it;y<ib;y++) {
-	for (int i = 0; i < 4; i++)
-	    theI[i]->Reset();
+        for (int i = 0; i < 4; i++)
+            theI[i]->Reset();
 
-	for (int i = 0; i < 4; i++)
-	    theS->QuickScan(curY, curPt, ((float)(y+0.25*(i+1))),
-			    fill_oddEven, theI[i], 0.25);
+        for (int i = 0; i < 4; i++)
+            theS->QuickScan(curY, curPt, ((float)(y+0.25*(i+1))),
+                            fill_oddEven, theI[i], 0.25);
 
-	theIL->Copy(4,theI);
-	//   theI[0]->Affiche();
-	//   theIL->Affiche();
+        theIL->Copy(4,theI);
+        //   theI[0]->Affiche();
+        //   theIL->Affiche();
 
-	raster_info  dest;
-	dest.startPix=il;
-	dest.endPix=ir;
-	dest.sth=il;
-	dest.stv=y;
-	dest.buffer=ligStart;
-	theIL->Raster(dest,&color,bpath_run_A8_OR);
-	ligStart=((uint32_t*)(((char*)ligStart)+stride));
+        raster_info  dest;
+        dest.startPix=il;
+        dest.endPix=ir;
+        dest.sth=il;
+        dest.stv=y;
+        dest.buffer=ligStart;
+        theIL->Raster(dest,&color,bpath_run_A8_OR);
+        ligStart=((uint32_t*)(((char*)ligStart)+stride));
     }
     theS->EndQuickRaster();
     for (int i=0;i<4;i++) delete theI[i];
     delete theIL;
 }
+
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

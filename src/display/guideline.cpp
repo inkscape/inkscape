@@ -33,41 +33,40 @@ GType sp_guideline_get_type()
     static GType guideline_type = 0;
 
     if (!guideline_type) {
-        static const GTypeInfo guideline_info =
-            {
-                sizeof (SPGuideLineClass),
-                NULL, NULL,
-                (GClassInitFunc) sp_guideline_class_init,
-                NULL, NULL,
-                sizeof (SPGuideLine),
-                16,
-                (GInstanceInitFunc) sp_guideline_init,
-			NULL,
-            };
-        
+        static GTypeInfo const guideline_info = {
+            sizeof (SPGuideLineClass),
+            NULL, NULL,
+            (GClassInitFunc) sp_guideline_class_init,
+            NULL, NULL,
+            sizeof (SPGuideLine),
+            16,
+            (GInstanceInitFunc) sp_guideline_init,
+            NULL,
+        };
+
         guideline_type = g_type_register_static(SP_TYPE_CANVAS_ITEM, "SPGuideLine", &guideline_info, (GTypeFlags) 0);
     }
-    
+
     return guideline_type;
 }
 
 static void sp_guideline_class_init(SPGuideLineClass *c)
 {
-	parent_class = (SPCanvasItemClass*) g_type_class_peek_parent(c);
+    parent_class = (SPCanvasItemClass*) g_type_class_peek_parent(c);
 
-	GtkObjectClass *object_class = (GtkObjectClass *) c;
-	object_class->destroy = sp_guideline_destroy;
+    GtkObjectClass *object_class = (GtkObjectClass *) c;
+    object_class->destroy = sp_guideline_destroy;
 
-	SPCanvasItemClass *item_class = (SPCanvasItemClass *) c;
-	item_class->update = sp_guideline_update;
-	item_class->render = sp_guideline_render;
-	item_class->point = sp_guideline_point;
+    SPCanvasItemClass *item_class = (SPCanvasItemClass *) c;
+    item_class->update = sp_guideline_update;
+    item_class->render = sp_guideline_render;
+    item_class->point = sp_guideline_point;
 }
 
 static void sp_guideline_init(SPGuideLine *gl)
 {
     gl->rgba = 0x0000ff7f;
-    
+
     gl->vertical = 0;
     gl->sensitive = 0;
 }
@@ -80,14 +79,14 @@ static void sp_guideline_destroy(GtkObject *object)
 static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
 {
     SPGuideLine const *gl = SP_GUIDELINE (item);
-    
+
     sp_canvas_prepare_buffer(buf);
-    
+
     unsigned int const r = NR_RGBA32_R (gl->rgba);
     unsigned int const g = NR_RGBA32_G (gl->rgba);
     unsigned int const b = NR_RGBA32_B (gl->rgba);
     unsigned int const a = NR_RGBA32_A (gl->rgba);
-    
+
     int p0, p1, step;
     unsigned char *d;
 
@@ -101,13 +100,13 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
         p1 = buf->rect.y1;
         step = buf->buf_rowstride;
         d = buf->buf + 3 * (gl->position - buf->rect.x0);
-        
+
     } else {
 
-	if (gl->position < buf->rect.y0 || gl->position >= buf->rect.y1) {
+        if (gl->position < buf->rect.y0 || gl->position >= buf->rect.y1) {
             return;
         }
-        
+
         p0 = buf->rect.x0;
         p1 = buf->rect.x1;
         step = 3;
@@ -170,7 +169,7 @@ SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, double position, unsigned 
 
 void sp_guideline_set_position(SPGuideLine *gl, double position)
 {
-    sp_canvas_item_affine_absolute(SP_CANVAS_ITEM (gl), 
+    sp_canvas_item_affine_absolute(SP_CANVAS_ITEM (gl),
                                    NR::Matrix(NR::translate(position, position)));
 }
 
@@ -186,6 +185,7 @@ void sp_guideline_set_sensitive(SPGuideLine *gl, int sensitive)
     gl->sensitive = sensitive;
 }
 
+
 /*
   Local Variables:
   mode:c++
@@ -195,4 +195,4 @@ void sp_guideline_set_sensitive(SPGuideLine *gl, int sensitive)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

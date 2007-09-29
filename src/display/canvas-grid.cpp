@@ -176,13 +176,13 @@ CanvasGrid::~CanvasGrid()
 
 
 
-char const * 
+char const *
 CanvasGrid::getName(GridType type)
 {
     return _(grid_name[type]);
 }
 
-char const * 
+char const *
 CanvasGrid::getSVGName(GridType type)
 {
     return grid_svgname[type];
@@ -314,33 +314,26 @@ CanvasGrid::on_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gc
 static inline void
 attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int start = 0)
 {
-    for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2)
-    {
-        if (arr[i] && arr[i+1])
-        {
+    for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2) {
+        if (arr[i] && arr[i+1]) {
             table.attach (const_cast<Gtk::Widget&>(*arr[i]),   1, 2, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+                          Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
             table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 2, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-        }
-        else
-        {
-            if (arr[i+1])
+                          Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+        } else {
+            if (arr[i+1]) {
                 table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 1, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            else if (arr[i])
-            {
+                              Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+            } else if (arr[i]) {
                 Gtk::Label& label = reinterpret_cast<Gtk::Label&> (const_cast<Gtk::Widget&>(*arr[i]));
                 label.set_alignment (0.0);
                 table.attach (label, 0, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            }
-            else
-            {
+                              Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+            } else {
                 Gtk::HBox *space = manage (new Gtk::HBox);
                 space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
                 table.attach (*space, 0, 1, r, r+1,
-                      (Gtk::AttachOptions)0, (Gtk::AttachOptions)0,0,0);
+                              (Gtk::AttachOptions)0, (Gtk::AttachOptions)0,0,0);
             }
         }
         ++r;
@@ -380,7 +373,7 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
                      _("Color of the major (highlighted) grid lines"),
                      "empcolor", "empopacity", _wr, repr, doc);
     _rsi.init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
-    _rcb_dotted.init ( _("_Show dots instead of lines"), 
+    _rcb_dotted.init ( _("_Show dots instead of lines"),
                        _("If set, displays dots at gridpoints instead of gridlines"),
                         "dotted", _wr, false, repr, doc);
 
@@ -484,65 +477,65 @@ static gboolean sp_nv_read_opacity(gchar const *str, guint32 *color)
 
 /** If the passed scalar is invalid (<=0), then set the widget and the scalar
     to use the given old value.
-    @param oldVal		old value to use if the new one is invalid
-    @param pTarget		the scalar to validate
-    @param widget		widget associated with the scalar
+
+    @param oldVal Old value to use if the new one is invalid.
+    @param pTarget The scalar to validate.
+    @param widget Widget associated with the scalar.
 */
 static void validateScalar(double oldVal,
-						   double* pTarget,
-						   Inkscape::UI::Widget::RegisteredScalarUnit& widget)
+                           double* pTarget,
+                           Inkscape::UI::Widget::RegisteredScalarUnit& widget)
 {
-	// Avoid nullness.
-	if ( pTarget == NULL )
-		return;
+    // Avoid nullness.
+    if ( pTarget == NULL )
+        return;
 
-	// Invalid new value?
-	if ( *pTarget <= 0 )
-	{
-		// If the old value is somehow invalid as well, then default to 1.
-		if ( oldVal <= 0 )
-			oldVal = 1;
+    // Invalid new value?
+    if ( *pTarget <= 0 ) {
+        // If the old value is somehow invalid as well, then default to 1.
+        if ( oldVal <= 0 )
+            oldVal = 1;
 
-		// Reset the scalar and associated widget to the old value.
-		*pTarget = oldVal;
-		widget.setValue( *pTarget);
-	} //if
+        // Reset the scalar and associated widget to the old value.
+        *pTarget = oldVal;
+        widget.setValue( *pTarget);
+    } //if
 
 } //validateScalar
 
 
 /** If the passed int is invalid (<=0), then set the widget and the int
     to use the given old value.
-    @param oldVal		old value to use if the new one is invalid
-    @param pTarget		the int to validate
-    @param widget		widget associated with the int
+
+    @param oldVal Old value to use if the new one is invalid.
+    @param pTarget The int to validate.
+    @param widget Widget associated with the int.
 */
 static void validateInt(gint oldVal,
-						gint* pTarget,
-						Inkscape::UI::Widget::RegisteredSuffixedInteger& widget)
+                        gint* pTarget,
+                        Inkscape::UI::Widget::RegisteredSuffixedInteger& widget)
 {
-	// Avoid nullness.
-	if ( pTarget == NULL )
-		return;
+    // Avoid nullness.
+    if ( pTarget == NULL )
+        return;
 
-	// Invalid new value?
-	if ( *pTarget <= 0 )
-	{
-		// If the old value is somehow invalid as well, then default to 1.
-		if ( oldVal <= 0 )
-			oldVal = 1;
+    // Invalid new value?
+    if ( *pTarget <= 0 ) {
+        // If the old value is somehow invalid as well, then default to 1.
+        if ( oldVal <= 0 )
+            oldVal = 1;
 
-		// Reset the int and associated widget to the old value.
-		*pTarget = oldVal;
-		widget.setValue( *pTarget);
-	} //if
+        // Reset the int and associated widget to the old value.
+        *pTarget = oldVal;
+        widget.setValue( *pTarget);
+    } //if
 
 } //validateInt
 
 void
 CanvasXYGrid::readRepr()
 {
-	char buff[100];
+    char buff[100];
     gchar const *value;
     if ( (value = repr->attribute("originx")) ) {
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::X], &gridunit);
@@ -555,16 +548,16 @@ CanvasXYGrid::readRepr()
     }
 
     if ( (value = repr->attribute("spacingx")) ) {
-		double oldVal = spacing[NR::X];
+        double oldVal = spacing[NR::X];
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[NR::X], &gridunit);
         validateScalar( oldVal, &spacing[NR::X], _rsu_sx );
         spacing[NR::X] = sp_units_get_pixels(spacing[NR::X], *(gridunit));
 
     }
     if ( (value = repr->attribute("spacingy")) ) {
-		double oldVal = spacing[NR::Y];
+        double oldVal = spacing[NR::Y];
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[NR::Y], &gridunit);
-		validateScalar( oldVal, &spacing[NR::Y], _rsu_sy );
+        validateScalar( oldVal, &spacing[NR::Y], _rsu_sy );
         spacing[NR::Y] = sp_units_get_pixels(spacing[NR::Y], *(gridunit));
 
     }
@@ -585,7 +578,7 @@ CanvasXYGrid::readRepr()
     }
 
     if ( (value = repr->attribute("empspacing")) ) {
-		gint oldVal = empspacing;
+        gint oldVal = empspacing;
         empspacing = atoi(value);
         validateInt( oldVal, &empspacing, _rsi );
     }
@@ -735,7 +728,7 @@ grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
 static void
 grid_dot (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
 {
-    if ( (y >= buf->rect.y0) && (y < buf->rect.y1) 
+    if ( (y >= buf->rect.y0) && (y < buf->rect.y1)
          && (x >= buf->rect.x0) && (x < buf->rect.x1) ) {
         guint r, g, b, a;
         guchar *p;
@@ -746,7 +739,7 @@ grid_dot (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
         p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
         p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
         p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
-        p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);   
+        p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
     }
 }
 
@@ -763,14 +756,14 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
         gdouble y;
         for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[NR::Y], ylinenum++) {
             gint const y0 = (gint) Inkscape::round(y);
-    
+
             if (!scaled[NR::Y] && (ylinenum % empspacing) == 0) {
                 grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, empcolor);
             } else {
                 grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, color);
             }
         }
-    
+
         gint xlinenum;
         gdouble x;
         for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
@@ -791,13 +784,11 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
             gdouble x;
             for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
                 gint const ix = (gint) Inkscape::round(x);
-                if ( (!scaled[NR::X] && (xlinenum % empspacing) == 0) 
-                     || (!scaled[NR::Y] && (ylinenum % empspacing) == 0) ) 
+                if ( (!scaled[NR::X] && (xlinenum % empspacing) == 0)
+                     || (!scaled[NR::Y] && (ylinenum % empspacing) == 0) )
                 {
                     grid_dot (buf, ix, iy, empcolor | (guint32)0x000000FF); // put alpha to max value
-                } 
-                else 
-                {
+                } else {
                     grid_dot (buf, ix, iy, color | (guint32)0x000000FF);  // put alpha to max value
                 }
             }
@@ -865,6 +856,7 @@ CanvasXYGridSnapper::_getSnapLines(NR::Point const &p) const
 
 }; /* namespace Inkscape */
 
+
 /*
   Local Variables:
   mode:c++
@@ -874,4 +866,4 @@ CanvasXYGridSnapper::_getSnapLines(NR::Point const &p) const
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

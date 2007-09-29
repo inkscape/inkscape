@@ -23,27 +23,39 @@
 NRType nr_arena_group_get_type (void);
 
 struct NRArenaGroup : public NRArenaItem{
-	unsigned int transparent : 1;
-	NRArenaItem *children;
-	NRArenaItem *last;
-	NRMatrix child_transform;
-        SPStyle *style;
+    unsigned int transparent : 1;
+    NRArenaItem *children;
+    NRArenaItem *last;
+    NRMatrix child_transform;
+    SPStyle *style;
 
-	static NRArenaGroup *create(NRArena *arena) {
-		NRArenaGroup *obj=reinterpret_cast<NRArenaGroup *>(nr_object_new(NR_TYPE_ARENA_GROUP));
-		obj->init(arena);
-		return obj;
-	}
+    static NRArenaGroup *create(NRArena *arena) {
+        NRArenaGroup *obj = reinterpret_cast<NRArenaGroup *>(nr_object_new(NR_TYPE_ARENA_GROUP));
+        obj->init(arena);
+        return obj;
+    }
 };
 
 struct NRArenaGroupClass {
-	NRArenaItemClass parent_class;
+    NRArenaItemClass parent_class;
 };
 
-void nr_arena_group_set_transparent (NRArenaGroup *group, unsigned int transparent);
+void nr_arena_group_set_transparent(NRArenaGroup *group, unsigned int transparent);
 
 void nr_arena_group_set_child_transform(NRArenaGroup *group, NR::Matrix const &t);
 void nr_arena_group_set_child_transform(NRArenaGroup *group, NRMatrix const *t);
 void nr_arena_group_set_style(NRArenaGroup *group, SPStyle *style);
 
 #endif
+
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

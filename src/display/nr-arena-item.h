@@ -62,73 +62,73 @@
 #include <cairo.h>
 
 struct NRGC {
-	NRGC(NRGC const *p) : parent(p) {}
-	NRGC const *parent;
-	NRMatrix transform;
+    NRGC(NRGC const *p) : parent(p) {}
+    NRGC const *parent;
+    NRMatrix transform;
 };
 
 struct NRArenaItem : public NRObject {
 
-	NRArena *arena;
-	Inkscape::GC::soft_ptr<NRArenaItem> parent;
-	NRArenaItem *next;
-	Inkscape::GC::soft_ptr<NRArenaItem> prev;
+    NRArena *arena;
+    Inkscape::GC::soft_ptr<NRArenaItem> parent;
+    NRArenaItem *next;
+    Inkscape::GC::soft_ptr<NRArenaItem> prev;
 
-	/* Item state */
-	unsigned int state : 16;
-	unsigned int propagate : 1;
-	unsigned int sensitive : 1;
-	unsigned int visible : 1;
-	/* Whether items renders opacity itself */
-	unsigned int render_opacity : 1;
-	/* Opacity itself */
-	unsigned int opacity : 8;
+    /* Item state */
+    unsigned int state : 16;
+    unsigned int propagate : 1;
+    unsigned int sensitive : 1;
+    unsigned int visible : 1;
+    /* Whether items renders opacity itself */
+    unsigned int render_opacity : 1;
+    /* Opacity itself */
+    unsigned int opacity : 8;
 
-	/* Key for secondary rendering */
-	unsigned int key;
-  
-	/* BBox in grid coordinates */
-	NRRectL bbox;
-	/* BBox in item coordinates - this should be a bounding box as
-	 * specified in SVG standard. Required by filters. */
-	NR::Maybe<NR::Rect> item_bbox;
-	/* Our affine */
-	NRMatrix *transform;
-	/* Clip item */
-	NRArenaItem *clip;
-	/* Mask item */
-	NRArenaItem *mask;
-        /* Filter to be applied after rendering this object, NULL if none */
-        NR::Filter *filter;
-	/* Rendered buffer */
-	unsigned char *px;
+    /* Key for secondary rendering */
+    unsigned int key;
 
-	/* Single data member */
-	void *data;
+    /* BBox in grid coordinates */
+    NRRectL bbox;
+    /* BBox in item coordinates - this should be a bounding box as
+     * specified in SVG standard. Required by filters. */
+    NR::Maybe<NR::Rect> item_bbox;
+    /* Our affine */
+    NRMatrix *transform;
+    /* Clip item */
+    NRArenaItem *clip;
+    /* Mask item */
+    NRArenaItem *mask;
+    /* Filter to be applied after rendering this object, NULL if none */
+    NR::Filter *filter;
+    /* Rendered buffer */
+    unsigned char *px;
 
-        /* Current Transformation Matrix */
-        NR::Matrix ctm;
+    /* Single data member */
+    void *data;
 
-        /* These hold background buffer state for filter rendering */
-        NRPixBlock *background_pb;
-        bool background_new;
+    /* Current Transformation Matrix */
+    NR::Matrix ctm;
 
-	void init(NRArena *arena) {
-		this->arena = arena;
-	}
+    /* These hold background buffer state for filter rendering */
+    NRPixBlock *background_pb;
+    bool background_new;
+
+    void init(NRArena *arena) {
+        this->arena = arena;
+    }
 };
 
 struct NRArenaItemClass : public NRObjectClass {
-	NRArenaItem * (* children) (NRArenaItem *item);
-	NRArenaItem * (* last_child) (NRArenaItem *item);
-	void (* add_child) (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref);
-	void (* remove_child) (NRArenaItem *item, NRArenaItem *child);
-	void (* set_child_position) (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref);
+    NRArenaItem * (* children) (NRArenaItem *item);
+    NRArenaItem * (* last_child) (NRArenaItem *item);
+    void (* add_child) (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref);
+    void (* remove_child) (NRArenaItem *item, NRArenaItem *child);
+    void (* set_child_position) (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref);
 
-	unsigned int (* update) (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int state, unsigned int reset);
-	unsigned int (* render) (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
-	unsigned int (* clip) (NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
-	NRArenaItem * (* pick) (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
+    unsigned int (* update) (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int state, unsigned int reset);
+    unsigned int (* render) (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
+    unsigned int (* clip) (NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
+    NRArenaItem * (* pick) (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
 };
 
 #define NR_ARENA_ITEM_ARENA(ai) (((NRArenaItem *) (ai))->arena)
@@ -192,4 +192,16 @@ NRArenaItem *nr_arena_item_detach (NRArenaItem *parent, NRArenaItem *child);
 #define NR_ARENA_ITEM_SET_KEY(i,k) (((NRArenaItem *) (i))->key = (k))
 #define NR_ARENA_ITEM_GET_KEY(i) (((NRArenaItem *) (i))->key)
 
-#endif
+
+#endif /* !__NR_ARENA_ITEM_H__ */
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

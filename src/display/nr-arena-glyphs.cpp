@@ -239,7 +239,7 @@ nr_arena_glyphs_pick(NRArenaItem *item, NR::Point p, gdouble delta, unsigned int
 
     if (!glyphs->font ) return NULL;
     if (!glyphs->style) return NULL;
-	
+
     double const x = p[NR::X];
     double const y = p[NR::Y];
     /* With text we take a simple approach: pick if the point is in a characher bbox */
@@ -255,13 +255,13 @@ nr_arena_glyphs_set_path(NRArenaGlyphs *glyphs, SPCurve *curve, unsigned int lie
     nr_return_if_fail(NR_IS_ARENA_GLYPHS(glyphs));
 
     nr_arena_item_request_render(NR_ARENA_ITEM(glyphs));
-  
+
     if (transform) {
         glyphs->g_transform = *transform;
     } else {
         nr_matrix_set_identity(&glyphs->g_transform);
     }
-		
+
     if (font) font->Ref();
     if (glyphs->font) glyphs->font->Unref();
     glyphs->font=font;
@@ -444,11 +444,11 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
 
     if (item->arena->rendermode == RENDERMODE_OUTLINE) {
 
-        if (!ct) 
+        if (!ct)
             return item->state;
 
         guint32 rgba = item->arena->outlinecolor;
-        // FIXME: we use RGBA buffers but cairo writes BGRA (on i386), so we must cheat 
+        // FIXME: we use RGBA buffers but cairo writes BGRA (on i386), so we must cheat
         // by setting color channels in the "wrong" order
         cairo_set_source_rgba(ct, SP_RGBA32_B_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_R_F(rgba), SP_RGBA32_A_F(rgba));
         cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
@@ -475,13 +475,13 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
         NRPixBlock m;
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
 
-        // if memory allocation failed, abort 
+        // if memory allocation failed, abort
         if (m.size != NR_PIXBLOCK_SIZE_TINY && m.data.px == NULL) {
             nr_pixblock_release (&m);
             return (item->state);
         }
 
-        m.visible_area = pb->visible_area; 
+        m.visible_area = pb->visible_area;
 
         /* Render children fill mask */
         for (child = group->children; child != NULL; child = child->next) {
@@ -521,7 +521,7 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
         guint32 rgba;
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
 
-        // if memory allocation failed, abort 
+        // if memory allocation failed, abort
         if (m.size != NR_PIXBLOCK_SIZE_TINY && m.data.px == NULL) {
             nr_pixblock_release (&m);
             return (item->state);

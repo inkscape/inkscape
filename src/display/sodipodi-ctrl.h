@@ -21,39 +21,39 @@
 #define SP_IS_CTRL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_CTRL))
 
 typedef enum {
-	SP_CTRL_SHAPE_SQUARE,
-	SP_CTRL_SHAPE_DIAMOND,
-	SP_CTRL_SHAPE_CIRCLE,
-	SP_CTRL_SHAPE_CROSS,
-	SP_CTRL_SHAPE_BITMAP,
-	SP_CTRL_SHAPE_IMAGE
+    SP_CTRL_SHAPE_SQUARE,
+    SP_CTRL_SHAPE_DIAMOND,
+    SP_CTRL_SHAPE_CIRCLE,
+    SP_CTRL_SHAPE_CROSS,
+    SP_CTRL_SHAPE_BITMAP,
+    SP_CTRL_SHAPE_IMAGE
 } SPCtrlShapeType;
 
 
 typedef enum {
-	SP_CTRL_MODE_COLOR,
-	SP_CTRL_MODE_XOR
+    SP_CTRL_MODE_COLOR,
+    SP_CTRL_MODE_XOR
 } SPCtrlModeType;
 
 struct SPCtrl : public SPCanvasItem{
-	SPCtrlShapeType shape;
-	SPCtrlModeType mode;
-	GtkAnchorType anchor;
-	gint span;
-	guint defined : 1;
-	guint shown   : 1;
-        guint build   : 1;
-	guint filled  : 1;
-	guint stroked : 1;
-	guint32 fill_color;
-	guint32 stroke_color;
-  bool _moved;
+    SPCtrlShapeType shape;
+    SPCtrlModeType mode;
+    GtkAnchorType anchor;
+    gint span;
+    guint defined : 1;
+    guint shown   : 1;
+    guint build   : 1;
+    guint filled  : 1;
+    guint stroked : 1;
+    guint32 fill_color;
+    guint32 stroke_color;
+    bool _moved;
 
-	NRRectL box;			/* NB! x1 & y1 are included */
-	guchar *cache;
-	GdkPixbuf * pixbuf;
-	
-	void moveto(NR::Point const p);
+    NRRectL box;   /* NB! x1 & y1 are included */
+    guchar *cache;
+    GdkPixbuf * pixbuf;
+
+    void moveto(NR::Point const p);
 };
 
 struct SPCtrlClass : public SPCanvasItemClass{
@@ -63,4 +63,17 @@ struct SPCtrlClass : public SPCanvasItemClass{
 
 /* Standard Gtk function */
 GtkType sp_ctrl_get_type (void);
-#endif
+
+
+#endif /* !INKSCAPE_CTRL_H */
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

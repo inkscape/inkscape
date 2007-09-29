@@ -23,12 +23,12 @@ d H / d b[2].z = sum_i B2(u[i]) * (bez_pt(b, u[i]) - d[i]).z
 
 Solve for dH/db[2].z==0:
 
--sum_i B2(u[i]) B2(u[i]) * b[2].z = sum_i B2(u[i]) * (B0(u[i]) * b[0] +	  
-                                                      B1(u[i]) * b[1] +	  
-                                                      B3(u[i]) * b[3]	  
+-sum_i B2(u[i]) B2(u[i]) * b[2].z = sum_i B2(u[i]) * (B0(u[i]) * b[0] +
+                                                      B1(u[i]) * b[1] +
+                                                      B3(u[i]) * b[3]
                                                       - d[i]           ).z
-b[2].z = ((sum_i B2(u[i]) * (B0(u[i]) * b[0] +	  
-			     B1(u[i]) * b[1] +	  
-			     B3(u[i]) * b[3]	  
+b[2].z = ((sum_i B2(u[i]) * (B0(u[i]) * b[0] +
+			     B1(u[i]) * b[1] +
+			     B3(u[i]) * b[3]
 			     - d[i]           ).z)
           / -sum_i (B2(u[i]))^2)
