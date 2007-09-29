@@ -14,6 +14,7 @@ moduledir = $(datadir)/inkscape/extensions
 extensions = \
 	addnodes.py \
 	bezmisc.py \
+	cdr2svg.sh\
 	chardataeffect.py\
 	color_brighter.py\
 	color_custom.py\
@@ -113,6 +114,7 @@ modules = \
 	ai_input.inx \
 	ai_output.inx \
 	aisvg.inx \
+	cdr_input.inx\
 	color_brighter.inx\
 	color_custom.inx \
 	color_darker.inx\
