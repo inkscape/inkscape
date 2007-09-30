@@ -36,7 +36,7 @@ SetCompressor /SOLID lzma
 ;Enter the windows uninstall reg sub key to add uninstall information to Add/Remove Programs also.
 
 !define INSTDIR_REG_ROOT "HKLM"
-!define INSTDIR_REG_KEY PRODUCT_UNINST_KEY
+!define INSTDIR_REG_KEY ${PRODUCT_UNINST_KEY}
 
 ;include the Uninstall log header
 !include AdvUninstLog.nsh
