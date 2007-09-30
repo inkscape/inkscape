@@ -321,6 +321,7 @@ static void sp_feConvolveMatrix_build_renderer(SPFilterPrimitive *primitive, NR:
     nr_convolve->set_kernelMatrix(sp_convolve->kernelMatrix);
     nr_convolve->set_divisor(sp_convolve->divisor);
     nr_convolve->set_bias(sp_convolve->bias);
+    nr_convolve->set_preserveAlpha(sp_convolve->preserveAlpha);
 
 }
 /*

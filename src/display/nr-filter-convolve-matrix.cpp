@@ -69,6 +69,9 @@ int FilterConvolveMatrix::render(FilterSlot &slot, Matrix const &trans) {
             out_data[4*( x + width*y )+1] = CLAMP_D_TO_U8(result_G / divisor + bias);
             out_data[4*( x + width*y )+2] = CLAMP_D_TO_U8(result_B / divisor + bias);
             out_data[4*( x + width*y )+3] = CLAMP_D_TO_U8(result_A / divisor + bias);
+            if( preserveAlpha ) {
+                out_data[4*( x + width*y )+3] = in_data[4*( x + width*y )+3];
+            }
         }
     }
 
