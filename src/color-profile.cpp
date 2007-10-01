@@ -483,6 +483,11 @@ static void findThings() {
     }
 }
 
+int errorHandlerCB(int ErrorCode, const char *ErrorText)
+{
+    g_message("lcms: Error %d; %s", ErrorCode, ErrorText);
+}
+
 
 cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
 {
@@ -491,6 +496,8 @@ cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
 
     static bool init = false;
     if ( !init ) {
+        cmsSetErrorHandler(errorHandlerCB);
+
         findThings();
         init = true;
     }
