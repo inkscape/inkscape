@@ -369,11 +369,131 @@ cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, guint* inte
 }
 
 
+#include <io/sys.h>
+
+class ProfileInfo
+{
+public:
+    ProfileInfo( cmsHPROFILE, Glib::ustring const & path );
+
+    Glib::ustring const& getName() {return _name;}
+    Glib::ustring const& getPath() {return _path;}
+    icColorSpaceSignature getSpace() {return _profileSpace;}
+    icProfileClassSignature getClass() {return _profileClass;}
+
+private:
+    Glib::ustring _path;
+    Glib::ustring _name;
+    icColorSpaceSignature _profileSpace;
+    icProfileClassSignature _profileClass;
+};
+
+
+ProfileInfo::ProfileInfo( cmsHPROFILE prof, Glib::ustring const & path )
+{
+    _path = path;
+    _name = cmsTakeProductName(prof);
+    _profileSpace = cmsGetColorSpace( prof );
+    _profileClass = cmsGetDeviceClass( prof );
+}
+
+
+
+static std::vector<ProfileInfo> knownProfiles;
+
+std::vector<Glib::ustring> Inkscape::colorprofile_get_display_names()
+{
+    std::vector<Glib::ustring> result;
+
+    for ( std::vector<ProfileInfo>::iterator it = knownProfiles.begin(); it != knownProfiles.end(); ++it ) {
+        if ( it->getClass() == icSigDisplayClass && it->getSpace() == icSigRgbData ) {
+            result.push_back( it->getName() );
+        }
+    }
+
+    return result;
+}
+
+Glib::ustring Inkscape::get_path_for_profile(Glib::ustring const& name)
+{
+    Glib::ustring result;
+
+    for ( std::vector<ProfileInfo>::iterator it = knownProfiles.begin(); it != knownProfiles.end(); ++it ) {
+        if ( name == it->getName() ) {
+            result = it->getPath();
+            break;
+        }
+    }
+
+    return result;
+}
+
+static void findThings() {
+    std::list<gchar *> sources;
+
+    gchar* base = profile_path("XXX");
+    {
+        gchar* base2 = g_path_get_dirname(base);
+        g_free(base);
+        base = base2;
+        base2 = g_path_get_dirname(base);
+        g_free(base);
+        base = base2;
+    }
+
+    sources.push_back(g_build_filename( base, ".color", "icc", NULL )); // first try user's local dir
+    sources.push_back(g_strdup("/usr/local/share/color/icc"));
+    sources.push_back(g_strdup("/usr/share/color/icc"));
+
+    while (!sources.empty()) {
+        gchar *dirname = sources.front();
+        if ( Inkscape::IO::file_test( dirname, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR) ) ) {
+            GError *err = 0;
+            GDir *dir = g_dir_open(dirname, 0, &err);
+
+            if (dir) {
+                for (gchar const *file = g_dir_read_name(dir); file != NULL; file = g_dir_read_name(dir)) {
+                    gchar *filepath = g_build_filename(dirname, file, NULL);
+                    cmsHPROFILE prof = cmsOpenProfileFromFile( filepath, "r" );
+                    if ( prof ) {
+                        ProfileInfo info( prof, Glib::filename_to_utf8( filepath ) );
+                        cmsCloseProfile( prof );
+
+                        bool sameName = false;
+                        for ( std::vector<ProfileInfo>::iterator it = knownProfiles.begin(); it != knownProfiles.end(); ++it ) {
+                            if ( it->getName() == info.getName() ) {
+                                sameName = true;
+                                break;
+                            }
+                        }
+
+                        if ( !sameName ) {
+                            knownProfiles.push_back(info);
+                        }
+                    }
+
+                    g_free(filepath);
+                }
+            }
+        }
+
+        // toss the dirname
+        g_free(dirname);
+        sources.pop_front();
+    }
+}
+
 
 cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
 {
     static cmsHPROFILE theOne = 0;
     static std::string lastURI;
+
+    static bool init = false;
+    if ( !init ) {
+        findThings();
+        init = true;
+    }
 
     long long int which = prefs_get_int_attribute_limited( "options.displayprofile", "enable", 0, 0, 1 );
     gchar const * uri = prefs_get_string_attribute("options.displayprofile", "uri");

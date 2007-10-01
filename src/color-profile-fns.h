@@ -8,6 +8,8 @@
 #include <glib-object.h>
 #include <glib/gtypes.h>
 #if ENABLE_LCMS
+#include <vector>
+#include <glibmm/ustring.h>
 #include <lcms.h>
 #endif // ENABLE_LCMS
 
@@ -28,6 +30,10 @@ GType colorprofile_get_type();
 cmsHPROFILE colorprofile_get_handle( SPDocument* document, guint* intent, gchar const* name );
 
 cmsHPROFILE colorprofile_get_system_profile_handle();
+
+std::vector<Glib::ustring> colorprofile_get_display_names();
+
+Glib::ustring get_path_for_profile(Glib::ustring const& name);
 
 #endif
 

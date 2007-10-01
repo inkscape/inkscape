@@ -37,6 +37,7 @@
 #include "xml/repr.h"
 #include "ui/widget/style-swatch.h"
 #include "display/nr-filter-gaussian.h"
+#include "color-profile-fns.h"
 
 namespace Inkscape {
 namespace UI {
@@ -632,7 +633,19 @@ static void forceUpdates() {
         (*it)->requestRedraw();
     }
 }
+
+static void profileComboChanged( Gtk::ComboBoxText* combo )
+{
+    Glib::ustring active = combo->get_active_text();
+
+    Glib::ustring path = get_path_for_profile(active);
+    if ( !path.empty() ) {
+        prefs_set_string_attribute( "options.displayprofile", "uri", path.c_str() );
+        forceUpdates();
+    }
+}
 #endif // ENABLE_LCMS
+
 
 void InkscapePreferences::initPageMisc()
 {
@@ -647,14 +660,28 @@ void InkscapePreferences::initPageMisc()
     _misc_cms_display.init( _("Enable display calibration"), "options.displayprofile", "enable", false);
     _page_misc.add_line( false, "", _misc_cms_display, "",
                            _("Enables application of the display using an ICC profile."), true);
-    _misc_cms_display_profile.init("options.displayprofile", "uri");
+
     _page_misc.add_line( false, _("Display profile:"), _misc_cms_display_profile, "",
-            _("The ICC profile to use to calibrate display output."), true);
+                         _("The ICC profile to use to calibrate display output."), true);
 #if ENABLE_LCMS
+    {
+        std::vector<Glib::ustring> names = ::Inkscape::colorprofile_get_display_names();
+        Glib::ustring current = prefs_get_string_attribute( "options.displayprofile", "uri" );
+
+        gint index = 0;
+        for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
+            _misc_cms_display_profile.append_text( *it );
+            Glib::ustring path = get_path_for_profile(*it);
+            if ( !path.empty() && path == current ) {
+                _misc_cms_display_profile.set_active(index);
+            }
+            index++;
+        }
+    }
+
     _misc_cms_display.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
 
-    _misc_cms_display_profile.signal_selection_changed().connect( sigc::ptr_fun(forceUpdates) );
-
+    _misc_cms_display_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(profileComboChanged), &_misc_cms_display_profile) );
 #else
     // disable it, but leave it visible
     _misc_cms_display.set_sensitive( false );

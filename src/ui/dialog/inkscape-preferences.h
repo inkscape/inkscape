@@ -162,8 +162,8 @@ protected:
     PrefCheckButton _misc_small_toolbar;
     PrefCombo       _misc_overs_bitmap;
 
-    PrefCheckButton _misc_cms_display;
-    PrefFileButton  _misc_cms_display_profile;
+    PrefCheckButton     _misc_cms_display;
+    Gtk::ComboBoxText   _misc_cms_display_profile;
 
     PrefEntryButtonHBox _importexport_ocal_url;
     PrefEntry       _importexport_ocal_username;
