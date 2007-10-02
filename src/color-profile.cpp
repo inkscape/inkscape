@@ -12,6 +12,9 @@
 
 //#define DEBUG_LCMS
 
+#include <glib/gstdio.h>
+#include <sys/fcntl.h>
+
 #ifdef DEBUG_LCMS
 #include <gtk/gtkmessagedialog.h>
 #endif // DEBUG_LCMS
@@ -441,34 +444,70 @@ static void findThings() {
         base = base2;
     }
 
-    sources.push_back(g_build_filename( base, ".color", "icc", NULL )); // first try user's local dir
-    sources.push_back(g_strdup("/usr/local/share/color/icc"));
-    sources.push_back(g_strdup("/usr/share/color/icc"));
+    // first try user's local dir
+    sources.push_back( g_build_filename(g_get_user_data_dir(), "color", "icc", NULL) );
+    sources.push_back( g_build_filename(base, ".color", "icc", NULL) ); // OpenICC recommends to deprecate this
+
+    const gchar* const * dataDirs = g_get_system_data_dirs();
+    for ( int i = 0; dataDirs[i]; i++ ) {
+        sources.push_back(g_build_filename(dataDirs[i], "color", "icc", NULL));
+    }
 
     while (!sources.empty()) {
         gchar *dirname = sources.front();
-        if ( Inkscape::IO::file_test( dirname, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR) ) ) {
+        if ( g_file_test( dirname, G_FILE_TEST_EXISTS ) && g_file_test( dirname, G_FILE_TEST_IS_DIR ) ) {
             GError *err = 0;
             GDir *dir = g_dir_open(dirname, 0, &err);
 
             if (dir) {
                 for (gchar const *file = g_dir_read_name(dir); file != NULL; file = g_dir_read_name(dir)) {
                     gchar *filepath = g_build_filename(dirname, file, NULL);
-                    cmsHPROFILE prof = cmsOpenProfileFromFile( filepath, "r" );
-                    if ( prof ) {
-                        ProfileInfo info( prof, Glib::filename_to_utf8( filepath ) );
-                        cmsCloseProfile( prof );
 
-                        bool sameName = false;
-                        for ( std::vector<ProfileInfo>::iterator it = knownProfiles.begin(); it != knownProfiles.end(); ++it ) {
-                            if ( it->getName() == info.getName() ) {
-                                sameName = true;
-                                break;
+
+                    if ( g_file_test( filepath, G_FILE_TEST_IS_DIR ) ) {
+                        sources.push_back(g_strdup(filepath));
+                    } else {
+                        bool isIccFile = false;
+                        struct stat st;
+                        if ( g_stat(filepath, &st) == 0 && (st.st_size > 128) ) {
+                            //0-3 == size
+                            //36-39 == 'acsp' 0x61637370
+                            int fd = g_open( filepath, O_RDONLY, S_IRWXU);
+                            if ( fd != -1 ) {
+                                guchar scratch[40] = {0};
+                                size_t len = sizeof(scratch);
+
+                                //size_t left = 40;
+                                ssize_t got = read(fd, scratch, len);
+                                if ( got != -1 ) {
+                                    size_t calcSize = (scratch[0] << 24) | (scratch[1] << 16) | (scratch[2] << 8) | scratch[3];
+                                    if ( calcSize > 128 && calcSize <= st.st_size ) {
+                                        isIccFile = (scratch[36] == 'a') && (scratch[37] == 'c') && (scratch[38] == 's') && (scratch[39] == 'p');
+                                    }
+                                }
+
+                                close(fd);
                             }
                         }
 
-                        if ( !sameName ) {
-                            knownProfiles.push_back(info);
+                        if ( isIccFile ) {
+                            cmsHPROFILE prof = cmsOpenProfileFromFile( filepath, "r" );
+                            if ( prof ) {
+                                ProfileInfo info( prof, Glib::filename_to_utf8( filepath ) );
+                                cmsCloseProfile( prof );
+
+                                bool sameName = false;
+                                for ( std::vector<ProfileInfo>::iterator it = knownProfiles.begin(); it != knownProfiles.end(); ++it ) {
+                                    if ( it->getName() == info.getName() ) {
+                                        sameName = true;
+                                        break;
+                                    }
+                                }
+
+                                if ( !sameName ) {
+                                    knownProfiles.push_back(info);
+                                }
+                            }
                         }
                     }
 
@@ -486,6 +525,8 @@ static void findThings() {
 int errorHandlerCB(int ErrorCode, const char *ErrorText)
 {
     g_message("lcms: Error %d; %s", ErrorCode, ErrorText);
+
+    return 1;
 }
 
 
