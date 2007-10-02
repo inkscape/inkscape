@@ -29,7 +29,7 @@
 #include "display/curve.h"
 #include "desktop.h"
 #include "message-context.h"
-#include "pixmaps/cursor-rect.xpm"
+#include "pixmaps/cursor-3dbox.xpm"
 #include "box3d.h"
 #include "box3d-context.h"
 #include "sp-metrics.h"
@@ -94,7 +94,7 @@ static void sp_3dbox_context_init(SP3DBoxContext *box3d_context)
 {
     SPEventContext *event_context = SP_EVENT_CONTEXT(box3d_context);
 
-    event_context->cursor_shape = cursor_rect_xpm;
+    event_context->cursor_shape = cursor_3dbox_xpm;
     event_context->hot_x = 4;
     event_context->hot_y = 4;
     event_context->xp = 0;
