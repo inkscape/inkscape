@@ -103,6 +103,7 @@ InkscapePreferences::InkscapePreferences(Behavior::BehaviorFactory behavior_fact
     initPageFilters();
     initPageSelecting();
     initPageImportExport();
+    initPageCMS();
     initPageMisc();
 
     //calculate the size request for this dialog
@@ -657,19 +658,10 @@ static void proofComboChanged( Gtk::ComboBoxText* combo )
 }
 #endif // ENABLE_LCMS
 
-
-void InkscapePreferences::initPageMisc()
+void InkscapePreferences::initPageCMS()
 {
-    _misc_comment.init( _("Add label comments to printing output"), "printing.debug", "show-label-comments", false);
-    _page_misc.add_line( false, "", _misc_comment, "", 
-                           _("When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"), true);
-
-    _misc_small_toolbar.init( _("Make commands toolbar smaller"), "toolbox", "small", true);
-    _page_misc.add_line( false, "", _misc_small_toolbar, "",
-                           _("Make the commands toolbar use the 'secondary' toolbar size (requires restart)"), true);
-
     _misc_cms_display.init( _("Enable display calibration"), "options.displayprofile", "enable", false);
-    _page_misc.add_line( false, "", _misc_cms_display, "",
+    _page_cms.add_line( false, "", _misc_cms_display, "",
                            _("Enables application of the display using an ICC profile."), true);
 
     int const numIntents = 4;
@@ -677,26 +669,26 @@ void InkscapePreferences::initPageMisc()
     int intentValues[numIntents] = {0, 1, 2, 3};
 
     _misc_cms_intent.init("options.displayprofile", "intent", intentLabels, intentValues, numIntents, 0);
-    _page_misc.add_line( false, _("Display intent:"), _misc_cms_intent, "",
+    _page_cms.add_line( false, _("Display intent:"), _misc_cms_intent, "",
                          _("The rendering intent to use to calibrate display output."), true);
 
-    _page_misc.add_line( false, _("Display profile:"), _misc_cms_display_profile, "",
+    _page_cms.add_line( false, _("Display profile:"), _misc_cms_display_profile, "",
                          _("The ICC profile to use to calibrate display output."), true);
 
 
     _misc_cms_softproof.init( _("Simulate output on screen."), "options.softproof", "enable", false);
-    _page_misc.add_line( false, "", _misc_cms_softproof, "",
+    _page_cms.add_line( false, "", _misc_cms_softproof, "",
                            _("Simulates output of target device."), true);
 
     _misc_cms_gamutwarn.init( _("Mark out of gamut colors."), "options.softproof", "gamutwarn", false);
-    _page_misc.add_line( false, "", _misc_cms_gamutwarn, "",
+    _page_cms.add_line( false, "", _misc_cms_gamutwarn, "",
                            _("Highlights colors that are out of gamut for the target device."), true);
 
     _misc_cms_proof_intent.init("options.softproof", "intent", intentLabels, intentValues, numIntents, 0);
-    _page_misc.add_line( false, _("Device intent:"), _misc_cms_proof_intent, "",
+    _page_cms.add_line( false, _("Device intent:"), _misc_cms_proof_intent, "",
                          _("The rendering intent to use to calibrate display output."), true);
 
-    _page_misc.add_line( false, _("Device profile:"), _misc_cms_proof_profile, "",
+    _page_cms.add_line( false, _("Device profile:"), _misc_cms_proof_profile, "",
                          _("The ICC profile to use to simulate device output."), true);
 
 #if ENABLE_LCMS
@@ -745,6 +737,19 @@ void InkscapePreferences::initPageMisc()
     _misc_cms_gamutwarn.set_sensitive( false );
     _misc_cms_proof_profile.set_sensitive( false );
 #endif // ENABLE_LCMS
+
+    this->AddPage(_page_cms, _("Color Management"), PREFS_PAGE_CMS);
+}
+
+void InkscapePreferences::initPageMisc()
+{
+    _misc_comment.init( _("Add label comments to printing output"), "printing.debug", "show-label-comments", false);
+    _page_misc.add_line( false, "", _misc_comment, "", 
+                           _("When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"), true);
+
+    _misc_small_toolbar.init( _("Make commands toolbar smaller"), "toolbox", "small", true);
+    _page_misc.add_line( false, "", _misc_small_toolbar, "",
+                           _("Make the commands toolbar use the 'secondary' toolbar size (requires restart)"), true);
 
     _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
     _page_misc.add_line( false, _("Max recent documents:"), _misc_recent, "", 
