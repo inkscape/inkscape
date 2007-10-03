@@ -165,6 +165,10 @@ protected:
     PrefCheckButton     _misc_cms_display;
     Gtk::ComboBoxText   _misc_cms_display_profile;
 
+    PrefCheckButton     _misc_cms_softproof;
+    PrefCheckButton     _misc_cms_gamutwarn;
+    Gtk::ComboBoxText   _misc_cms_proof_profile;
+
     PrefEntryButtonHBox _importexport_ocal_url;
     PrefEntry       _importexport_ocal_username;
     PrefEntry       _importexport_ocal_password;

@@ -644,6 +644,17 @@ static void profileComboChanged( Gtk::ComboBoxText* combo )
         forceUpdates();
     }
 }
+
+static void proofComboChanged( Gtk::ComboBoxText* combo )
+{
+    Glib::ustring active = combo->get_active_text();
+
+    Glib::ustring path = get_path_for_profile(active);
+    if ( !path.empty() ) {
+        prefs_set_string_attribute( "options.softproof", "uri", path.c_str() );
+        forceUpdates();
+    }
+}
 #endif // ENABLE_LCMS
 
 
@@ -663,6 +674,19 @@ void InkscapePreferences::initPageMisc()
 
     _page_misc.add_line( false, _("Display profile:"), _misc_cms_display_profile, "",
                          _("The ICC profile to use to calibrate display output."), true);
+
+
+    _misc_cms_softproof.init( _("Simulate output on screen."), "options.softproof", "enable", false);
+    _page_misc.add_line( false, "", _misc_cms_softproof, "",
+                           _("Simulates output of target device."), true);
+
+    _misc_cms_gamutwarn.init( _("Mark out of gamut colors."), "options.softproof", "gamutwarn", false);
+    _page_misc.add_line( false, "", _misc_cms_gamutwarn, "",
+                           _("Highlights colors that are out of gamut for the target device."), true);
+
+    _page_misc.add_line( false, _("Device profile:"), _misc_cms_proof_profile, "",
+                         _("The ICC profile to use to simulate device output."), true);
+
 #if ENABLE_LCMS
     {
         std::vector<Glib::ustring> names = ::Inkscape::colorprofile_get_display_names();
@@ -677,15 +701,34 @@ void InkscapePreferences::initPageMisc()
             }
             index++;
         }
+
+        names = ::Inkscape::colorprofile_get_softproof_names();
+        const gchar * tmp = prefs_get_string_attribute( "options.softproof", "uri" );
+        current = tmp ? tmp : "";
+        index = 0;
+        for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
+            _misc_cms_proof_profile.append_text( *it );
+            Glib::ustring path = get_path_for_profile(*it);
+            if ( !path.empty() && path == current ) {
+                _misc_cms_proof_profile.set_active(index);
+            }
+            index++;
+        }
     }
 
     _misc_cms_display.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
+    _misc_cms_softproof.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
+    _misc_cms_gamutwarn.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
 
     _misc_cms_display_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(profileComboChanged), &_misc_cms_display_profile) );
+    _misc_cms_proof_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(proofComboChanged), &_misc_cms_proof_profile) );
 #else
     // disable it, but leave it visible
     _misc_cms_display.set_sensitive( false );
     _misc_cms_display_profile.set_sensitive( false );
+    _misc_cms_softproof.set_sensitive( false );
+    _misc_cms_gamutwarn.set_sensitive( false );
+    _misc_cms_proof_profile.set_sensitive( false );
 #endif // ENABLE_LCMS
 
     _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);

@@ -28,10 +28,10 @@ GType colorprofile_get_type();
 #if ENABLE_LCMS
 
 cmsHPROFILE colorprofile_get_handle( SPDocument* document, guint* intent, gchar const* name );
-
-cmsHPROFILE colorprofile_get_system_profile_handle();
+cmsHTRANSFORM colorprofile_get_display_transform();
 
 std::vector<Glib::ustring> colorprofile_get_display_names();
+std::vector<Glib::ustring> colorprofile_get_softproof_names();
 
 Glib::ustring get_path_for_profile(Glib::ustring const& name);
 

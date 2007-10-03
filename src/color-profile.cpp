@@ -31,6 +31,9 @@ static void colorprofile_release( SPObject *object );
 static void colorprofile_build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr );
 static void colorprofile_set( SPObject *object, unsigned key, gchar const *value );
 static Inkscape::XML::Node *colorprofile_write( SPObject *object, Inkscape::XML::Node *repr, guint flags );
+
+static cmsHPROFILE colorprofile_get_system_profile_handle();
+static cmsHPROFILE colorprofile_get_proof_profile_handle();
 }
 
 #ifdef DEBUG_LCMS
@@ -417,6 +420,19 @@ std::vector<Glib::ustring> Inkscape::colorprofile_get_display_names()
     return result;
 }
 
+std::vector<Glib::ustring> Inkscape::colorprofile_get_softproof_names()
+{
+    std::vector<Glib::ustring> result;
+
+    for ( std::vector<ProfileInfo>::iterator it = knownProfiles.begin(); it != knownProfiles.end(); ++it ) {
+        if ( it->getClass() == icSigOutputClass ) {
+            result.push_back( it->getName() );
+        }
+    }
+
+    return result;
+}
+
 Glib::ustring Inkscape::get_path_for_profile(Glib::ustring const& name)
 {
     Glib::ustring result;
@@ -529,6 +545,9 @@ int errorHandlerCB(int ErrorCode, const char *ErrorText)
     return 1;
 }
 
+static bool gamutWarn = false;
+static cmsHTRANSFORM transf = 0;
+static cmsHPROFILE srcprof = 0;
 
 cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
 {
@@ -551,6 +570,10 @@ cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
             lastURI.clear();
             if ( theOne ) {
                 cmsCloseProfile( theOne );
+            }
+            if ( transf ) {
+                cmsDeleteTransform( transf );
+                transf = 0;
             }
             theOne = cmsOpenProfileFromFile( uri, "r" );
             if ( theOne ) {
@@ -575,9 +598,110 @@ cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
         cmsCloseProfile( theOne );
         theOne = 0;
         lastURI.clear();
+        if ( transf ) {
+            cmsDeleteTransform( transf );
+            transf = 0;
+        }
     }
 
     return theOne;
+}
+
+
+cmsHPROFILE Inkscape::colorprofile_get_proof_profile_handle()
+{
+    static cmsHPROFILE theOne = 0;
+    static std::string lastURI;
+
+    static bool init = false;
+    if ( !init ) {
+        cmsSetErrorHandler(errorHandlerCB);
+
+        findThings();
+        init = true;
+    }
+
+    long long int which = prefs_get_int_attribute_limited( "options.softproof", "enable", 0, 0, 1 );
+    gchar const * uri = prefs_get_string_attribute("options.softproof", "uri");
+
+    if ( which && uri && *uri ) {
+        if ( lastURI != std::string(uri) ) {
+            lastURI.clear();
+            if ( theOne ) {
+                cmsCloseProfile( theOne );
+            }
+            if ( transf ) {
+                cmsDeleteTransform( transf );
+                transf = 0;
+            }
+            theOne = cmsOpenProfileFromFile( uri, "r" );
+            if ( theOne ) {
+                // a display profile must have the proper stuff
+                icColorSpaceSignature space = cmsGetColorSpace(theOne);
+                icProfileClassSignature profClass = cmsGetDeviceClass(theOne);
+
+/*
+                if ( profClass != icSigDisplayClass ) {
+                    g_warning("Not a display profile");
+                    cmsCloseProfile( theOne );
+                    theOne = 0;
+                } else if ( space != icSigRgbData ) {
+                    g_warning("Not an RGB profile");
+                    cmsCloseProfile( theOne );
+                    theOne = 0;
+                } else {
+*/
+                    lastURI = uri;
+/*
+                }
+*/
+            }
+        }
+    } else if ( theOne ) {
+        cmsCloseProfile( theOne );
+        theOne = 0;
+        lastURI.clear();
+        if ( transf ) {
+            cmsDeleteTransform( transf );
+            transf = 0;
+        }
+    }
+
+    return theOne;
+}
+
+cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
+{
+    bool warn = prefs_get_int_attribute_limited( "options.softproof", "gamutwarn", 0, 0, 1 );
+    if ( (warn != gamutWarn) ) {
+        gamutWarn = warn;
+        if ( transf ) {
+            cmsDeleteTransform(transf);
+            transf = 0;
+        }
+    }
+
+    // Fecth these now, as they might clear the transform as a side effect.
+    cmsHPROFILE hprof = Inkscape::colorprofile_get_system_profile_handle();
+    cmsHPROFILE proofProf = hprof ? Inkscape::colorprofile_get_proof_profile_handle() : 0;
+
+    if ( !transf ) {
+        if ( !srcprof ) {
+            srcprof = cmsCreate_sRGBProfile();
+        }
+        if ( hprof && proofProf ) {
+            DWORD dwFlags = cmsFLAGS_SOFTPROOFING;
+            if ( gamutWarn ) {
+                dwFlags |= cmsFLAGS_GAMUTCHECK;
+            }
+            cmsSetAlarmCodes(0, 255, 0);
+            transf = cmsCreateProofingTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, proofProf, INTENT_PERCEPTUAL, INTENT_PERCEPTUAL, dwFlags );
+        } else if ( hprof ) {
+            transf = cmsCreateTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, INTENT_PERCEPTUAL, 0 );
+        }
+    }
+
+    return transf;
 }
 
 #endif // ENABLE_LCMS

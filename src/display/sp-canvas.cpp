@@ -1588,9 +1588,7 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
     }
 
 #if ENABLE_LCMS
-        cmsHPROFILE hprof = Inkscape::colorprofile_get_system_profile_handle();
-        cmsHPROFILE srcprof = hprof ? cmsCreate_sRGBProfile() : 0;
-        cmsHTRANSFORM transf = hprof ? cmsCreateTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, INTENT_PERCEPTUAL, 0 ) : 0;
+    cmsHTRANSFORM transf = Inkscape::colorprofile_get_display_transform();
 #endif // ENABLE_LCMS
 
     if (buf.is_empty) {
@@ -1646,14 +1644,6 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
                                       sw * 3,
                                       x0 - canvas->x0, y0 - canvas->y0);
     }
-
-#if ENABLE_LCMS
-    if ( transf ) {
-        cmsDeleteTransform( transf );
-        transf = 0;
-    }
-#endif // ENABLE_LCMS
-
 
     if (canvas->rendermode != RENDERMODE_OUTLINE) {
         nr_pixelstore_256K_free (buf.buf);
