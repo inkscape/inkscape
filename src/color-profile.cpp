@@ -32,8 +32,10 @@ static void colorprofile_build( SPObject *object, SPDocument *document, Inkscape
 static void colorprofile_set( SPObject *object, unsigned key, gchar const *value );
 static Inkscape::XML::Node *colorprofile_write( SPObject *object, Inkscape::XML::Node *repr, guint flags );
 
+#if ENABLE_LCMS
 static cmsHPROFILE colorprofile_get_system_profile_handle();
 static cmsHPROFILE colorprofile_get_proof_profile_handle();
+#endif // ENABLE_LCMS
 }
 
 #ifdef DEBUG_LCMS

@@ -732,9 +732,11 @@ void InkscapePreferences::initPageCMS()
 #else
     // disable it, but leave it visible
     _misc_cms_display.set_sensitive( false );
+    _misc_cms_intent.set_sensitive( false );
     _misc_cms_display_profile.set_sensitive( false );
     _misc_cms_softproof.set_sensitive( false );
     _misc_cms_gamutwarn.set_sensitive( false );
+    _misc_cms_proof_intent.set_sensitive( false );
     _misc_cms_proof_profile.set_sensitive( false );
 #endif // ENABLE_LCMS
 

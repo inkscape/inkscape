@@ -488,7 +488,8 @@ void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
             //g_message("Color needs to change 0x%06x to 0x%06x", color.toRGBA32(255) >> 8, other >> 8 );
         }
     }
-
+#else
+    (void)color;
 #endif // ENABLE_LCMS
     _updateSliders( -1 );
 
@@ -659,6 +660,8 @@ void ColorICCSelector::_updateSliders( gint ignore )
             }
         }
     }
+#else
+    (void)ignore;
 #endif // ENABLE_LCMS
 
     guint32 start = _color.toRGBA32( 0x00 );
@@ -698,6 +701,7 @@ void ColorICCSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorICC
          g_message("ALPHA");
 #endif // DEBUG_LCMS
      } else {
+#if ENABLE_LCMS
          for ( guint i = 0; i < iccSelector->_fooCount; i++ ) {
              if ( iccSelector->_fooAdj[i] == adjustment ) {
                  match = i;
@@ -746,7 +750,7 @@ void ColorICCSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorICC
                  newColor.icc->colors.push_back( val );
              }
          }
-
+#endif // ENABLE_LCMS
      }
      iccSelector->_updateInternals( newColor, scaled, iccSelector->_dragging );
      iccSelector->_updateSliders( match );
