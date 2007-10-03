@@ -546,6 +546,8 @@ int errorHandlerCB(int ErrorCode, const char *ErrorText)
 }
 
 static bool gamutWarn = false;
+static int lastIntent = INTENT_PERCEPTUAL;
+static int lastProofIntent = INTENT_PERCEPTUAL;
 static cmsHTRANSFORM transf = 0;
 static cmsHPROFILE srcprof = 0;
 
@@ -673,12 +675,17 @@ cmsHPROFILE Inkscape::colorprofile_get_proof_profile_handle()
 cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
 {
     bool warn = prefs_get_int_attribute_limited( "options.softproof", "gamutwarn", 0, 0, 1 );
-    if ( (warn != gamutWarn) ) {
+    int intent = prefs_get_int_attribute_limited( "options.displayprofile", "intent", 0, 0, 3 );
+    int proofIntent = prefs_get_int_attribute_limited( "options.softproof", "intent", 0, 0, 3 );
+
+    if ( (warn != gamutWarn) || (lastIntent != intent) || (lastProofIntent != proofIntent)) {
         gamutWarn = warn;
         if ( transf ) {
             cmsDeleteTransform(transf);
             transf = 0;
         }
+        lastIntent = intent;
+        lastProofIntent = proofIntent;
     }
 
     // Fecth these now, as they might clear the transform as a side effect.
@@ -695,9 +702,9 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
                 dwFlags |= cmsFLAGS_GAMUTCHECK;
             }
             cmsSetAlarmCodes(0, 255, 0);
-            transf = cmsCreateProofingTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, proofProf, INTENT_PERCEPTUAL, INTENT_PERCEPTUAL, dwFlags );
+            transf = cmsCreateProofingTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, proofProf, intent, proofIntent, dwFlags );
         } else if ( hprof ) {
-            transf = cmsCreateTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, INTENT_PERCEPTUAL, 0 );
+            transf = cmsCreateTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, intent, 0 );
         }
     }
 

@@ -163,10 +163,12 @@ protected:
     PrefCombo       _misc_overs_bitmap;
 
     PrefCheckButton     _misc_cms_display;
+    PrefCombo           _misc_cms_intent;
     Gtk::ComboBoxText   _misc_cms_display_profile;
 
     PrefCheckButton     _misc_cms_softproof;
     PrefCheckButton     _misc_cms_gamutwarn;
+    PrefCombo           _misc_cms_proof_intent;
     Gtk::ComboBoxText   _misc_cms_proof_profile;
 
     PrefEntryButtonHBox _importexport_ocal_url;

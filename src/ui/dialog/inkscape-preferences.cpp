@@ -672,6 +672,14 @@ void InkscapePreferences::initPageMisc()
     _page_misc.add_line( false, "", _misc_cms_display, "",
                            _("Enables application of the display using an ICC profile."), true);
 
+    int const numIntents = 4;
+    Glib::ustring intentLabels[numIntents] = {_("Perceptual"), _("Relative Colorimetric"), _("Saturation"), _("Absolute Colorimetric")};
+    int intentValues[numIntents] = {0, 1, 2, 3};
+
+    _misc_cms_intent.init("options.displayprofile", "intent", intentLabels, intentValues, numIntents, 0);
+    _page_misc.add_line( false, _("Display intent:"), _misc_cms_intent, "",
+                         _("The rendering intent to use to calibrate display output."), true);
+
     _page_misc.add_line( false, _("Display profile:"), _misc_cms_display_profile, "",
                          _("The ICC profile to use to calibrate display output."), true);
 
@@ -683,6 +691,10 @@ void InkscapePreferences::initPageMisc()
     _misc_cms_gamutwarn.init( _("Mark out of gamut colors."), "options.softproof", "gamutwarn", false);
     _page_misc.add_line( false, "", _misc_cms_gamutwarn, "",
                            _("Highlights colors that are out of gamut for the target device."), true);
+
+    _misc_cms_proof_intent.init("options.softproof", "intent", intentLabels, intentValues, numIntents, 0);
+    _page_misc.add_line( false, _("Device intent:"), _misc_cms_proof_intent, "",
+                         _("The rendering intent to use to calibrate display output."), true);
 
     _page_misc.add_line( false, _("Device profile:"), _misc_cms_proof_profile, "",
                          _("The ICC profile to use to simulate device output."), true);
@@ -719,6 +731,9 @@ void InkscapePreferences::initPageMisc()
     _misc_cms_display.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
     _misc_cms_softproof.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
     _misc_cms_gamutwarn.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
+
+    _misc_cms_intent.signal_changed().connect( sigc::ptr_fun(forceUpdates) );
+    _misc_cms_proof_intent.signal_changed().connect( sigc::ptr_fun(forceUpdates) );
 
     _misc_cms_display_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(profileComboChanged), &_misc_cms_display_profile) );
     _misc_cms_proof_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(proofComboChanged), &_misc_cms_proof_profile) );
