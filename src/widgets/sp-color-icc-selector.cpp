@@ -182,6 +182,7 @@ icSigCmyData
 #define SPACE_ID_CMYK 2
 
 
+#if ENABLE_LCMS
 static icUInt16Number* getScratch() {
     // bytes per pixel * input channels * width
     static icUInt16Number* scritch = static_cast<icUInt16Number*>(g_new(icUInt16Number, 4 * 1024));
@@ -195,7 +196,6 @@ struct MapMap {
 };
 
 void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, guint const*& scalies, DWORD& inputFormat ) {
-
     MapMap possible[] = {
         {icSigXYZData,   TYPE_XYZ_16},
         {icSigLabData,   TYPE_Lab_16},
@@ -265,6 +265,7 @@ void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, guin
     tippies = tips[index];
     scalies = scales[index];
 }
+#endif // ENABLE_LCMS
 
 
 void ColorICCSelector::init()
@@ -281,12 +282,13 @@ void ColorICCSelector::init()
     gtk_widget_show (t);
     gtk_box_pack_start (GTK_BOX (_csel), t, TRUE, TRUE, 0);
 
+#if ENABLE_LCMS
     DWORD inputFormat = TYPE_RGB_16;
     //guint partCount = _cmsChannelsOf( icSigRgbData );
     gchar const** names = 0;
     gchar const** tips = 0;
     getThings( icSigRgbData, names, tips, _fooScales, inputFormat );
-
+#endif // ENABLE_LCMS
 
     /* Create components */
     row = 0;
@@ -311,7 +313,11 @@ void ColorICCSelector::init()
 
     for ( guint i = 0; i < _fooCount; i++ ) {
         /* Label */
+#if ENABLE_LCMS
         _fooLabel[i] = gtk_label_new_with_mnemonic( names[i] );
+#else
+        _fooLabel[i] = gtk_label_new_with_mnemonic( "." );
+#endif // ENABLE_LCMS
         gtk_misc_set_alignment( GTK_MISC (_fooLabel[i]), 1.0, 0.5 );
         gtk_widget_show( _fooLabel[i] );
         gtk_table_attach( GTK_TABLE (t), _fooLabel[i], 0, 1, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD );
@@ -324,12 +330,20 @@ void ColorICCSelector::init()
 
         /* Slider */
         _fooSlider[i] = sp_color_slider_new( _fooAdj[i] );
+#if ENABLE_LCMS
         gtk_tooltips_set_tip( _tt, _fooSlider[i], tips[i], NULL );
+#else
+        gtk_tooltips_set_tip( _tt, _fooSlider[i], ".", NULL );
+#endif // ENABLE_LCMS
         gtk_widget_show( _fooSlider[i] );
         gtk_table_attach( GTK_TABLE (t), _fooSlider[i], 1, 2, row, row + 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)GTK_FILL, XPAD, YPAD );
 
         _fooBtn[i] = gtk_spin_button_new( _fooAdj[i], step, digits );
+#if ENABLE_LCMS
         gtk_tooltips_set_tip( _tt, _fooBtn[i], tips[i], NULL );
+#else
+        gtk_tooltips_set_tip( _tt, _fooBtn[i], ".", NULL );
+#endif // ENABLE_LCMS
         sp_dialog_defocus_on_enter( _fooBtn[i] );
         gtk_label_set_mnemonic_widget( GTK_LABEL(_fooLabel[i]), _fooBtn[i] );
         gtk_widget_show( _fooBtn[i] );
