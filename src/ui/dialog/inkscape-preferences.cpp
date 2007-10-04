@@ -664,6 +664,11 @@ void InkscapePreferences::initPageCMS()
     Glib::ustring intentLabels[numIntents] = {_("Perceptual"), _("Relative Colorimetric"), _("Saturation"), _("Absolute Colorimetric")};
     int intentValues[numIntents] = {0, 1, 2, 3};
 
+#if !ENABLE_LCMS
+    Gtk::Label* lbl = new Gtk::Label(_("(Note: Color Management has been disabled in this build)"));
+    _page_cms.add_line( false, "", *lbl, "", "", true);
+#endif // !ENABLE_LCMS
+
     _page_cms.add_group_header( _("Disply Calibration"));
 
     _cms_display.init( _("Enable display calibration"), "options.displayprofile", "enable", false);
@@ -759,7 +764,7 @@ void InkscapePreferences::initPageCMS()
     _cms_proof_intent.set_sensitive( false );
     _cms_proof_profile.set_sensitive( false );
     _cms_proof_blackpoint.set_sensitive( false );
-    _cms_proof_preserveblack_sensitive( false );
+    _cms_proof_preserveblack.set_sensitive( false );
 #endif // ENABLE_LCMS
 
     this->AddPage(_page_cms, _("Color Management"), PREFS_PAGE_CMS);
