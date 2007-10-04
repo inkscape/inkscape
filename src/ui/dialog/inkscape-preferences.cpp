@@ -662,7 +662,7 @@ void InkscapePreferences::initPageCMS()
 {
     _misc_cms_display.init( _("Enable display calibration"), "options.displayprofile", "enable", false);
     _page_cms.add_line( false, "", _misc_cms_display, "",
-                           _("Enables application of the display using an ICC profile."), true);
+                           _("Enables application of the display using an ICC profile."), false);
 
     int const numIntents = 4;
     Glib::ustring intentLabels[numIntents] = {_("Perceptual"), _("Relative Colorimetric"), _("Saturation"), _("Absolute Colorimetric")};
@@ -670,26 +670,26 @@ void InkscapePreferences::initPageCMS()
 
     _misc_cms_intent.init("options.displayprofile", "intent", intentLabels, intentValues, numIntents, 0);
     _page_cms.add_line( false, _("Display intent:"), _misc_cms_intent, "",
-                         _("The rendering intent to use to calibrate display output."), true);
+                         _("The rendering intent to use to calibrate display output."), false);
 
     _page_cms.add_line( false, _("Display profile:"), _misc_cms_display_profile, "",
-                         _("The ICC profile to use to calibrate display output."), true);
+                         _("The ICC profile to use to calibrate display output."), false);
 
 
     _misc_cms_softproof.init( _("Simulate output on screen."), "options.softproof", "enable", false);
     _page_cms.add_line( false, "", _misc_cms_softproof, "",
-                           _("Simulates output of target device."), true);
+                           _("Simulates output of target device."), false);
 
     _misc_cms_gamutwarn.init( _("Mark out of gamut colors."), "options.softproof", "gamutwarn", false);
     _page_cms.add_line( false, "", _misc_cms_gamutwarn, "",
-                           _("Highlights colors that are out of gamut for the target device."), true);
+                           _("Highlights colors that are out of gamut for the target device."), false);
 
     _misc_cms_proof_intent.init("options.softproof", "intent", intentLabels, intentValues, numIntents, 0);
     _page_cms.add_line( false, _("Device intent:"), _misc_cms_proof_intent, "",
-                         _("The rendering intent to use to calibrate display output."), true);
+                         _("The rendering intent to use to calibrate display output."), false);
 
     _page_cms.add_line( false, _("Device profile:"), _misc_cms_proof_profile, "",
-                         _("The ICC profile to use to simulate device output."), true);
+                         _("The ICC profile to use to simulate device output."), false);
 
 #if ENABLE_LCMS
     {
