@@ -548,6 +548,8 @@ int errorHandlerCB(int ErrorCode, const char *ErrorText)
 }
 
 static bool gamutWarn = false;
+static bool lastBPC = false;
+static bool lastPreserveBlack = false;
 static int lastIntent = INTENT_PERCEPTUAL;
 static int lastProofIntent = INTENT_PERCEPTUAL;
 static cmsHTRANSFORM transf = 0;
@@ -679,8 +681,15 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
     bool warn = prefs_get_int_attribute_limited( "options.softproof", "gamutwarn", 0, 0, 1 );
     int intent = prefs_get_int_attribute_limited( "options.displayprofile", "intent", 0, 0, 3 );
     int proofIntent = prefs_get_int_attribute_limited( "options.softproof", "intent", 0, 0, 3 );
+    bool bpc = prefs_get_int_attribute_limited( "options.softproof", "bpc", 0, 0, 1 );
+    bool preserveBlack = prefs_get_int_attribute_limited( "options.softproof", "preserveblack", 0, 0, 1 );
 
-    if ( (warn != gamutWarn) || (lastIntent != intent) || (lastProofIntent != proofIntent)) {
+    if ( (warn != gamutWarn)
+         || (lastIntent != intent)
+         || (lastProofIntent != proofIntent)
+         || (bpc != lastBPC)
+         || (preserveBlack != lastPreserveBlack)
+        ) {
         gamutWarn = warn;
         if ( transf ) {
             cmsDeleteTransform(transf);
@@ -688,6 +697,8 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
         }
         lastIntent = intent;
         lastProofIntent = proofIntent;
+        lastBPC = bpc;
+        lastPreserveBlack = preserveBlack;
     }
 
     // Fecth these now, as they might clear the transform as a side effect.
@@ -702,8 +713,14 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
             DWORD dwFlags = cmsFLAGS_SOFTPROOFING;
             if ( gamutWarn ) {
                 dwFlags |= cmsFLAGS_GAMUTCHECK;
+                cmsSetAlarmCodes(0, 255, 0);
             }
-            cmsSetAlarmCodes(0, 255, 0);
+            if ( bpc ) {
+                dwFlags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+            }
+            if ( preserveBlack ) {
+                dwFlags |= cmsFLAGS_PRESERVEBLACK;
+            }
             transf = cmsCreateProofingTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, proofProf, intent, proofIntent, dwFlags );
         } else if ( hprof ) {
             transf = cmsCreateTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, intent, 0 );

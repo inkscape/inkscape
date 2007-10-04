@@ -18,6 +18,7 @@
 #include <iostream>
 #include <vector>
 #include <gtkmm/table.h>
+#include <gtkmm/colorbutton.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/spinbutton.h>
 #include <gtkmm/treestore.h>
@@ -164,13 +165,16 @@ protected:
     PrefCombo       _misc_overs_bitmap;
 
     PrefCheckButton     _cms_display;
-    PrefCombo           _cms_intent;
     Gtk::ComboBoxText   _cms_display_profile;
+    PrefCombo           _cms_intent;
 
     PrefCheckButton     _cms_softproof;
     PrefCheckButton     _cms_gamutwarn;
-    PrefCombo           _cms_proof_intent;
+    Gtk::ColorButton    _cms_gamutcolor;
     Gtk::ComboBoxText   _cms_proof_profile;
+    PrefCombo           _cms_proof_intent;
+    PrefCheckButton     _cms_proof_blackpoint;
+    PrefCheckButton     _cms_proof_preserveblack;
 
     PrefEntryButtonHBox _importexport_ocal_url;
     PrefEntry       _importexport_ocal_username;

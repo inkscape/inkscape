@@ -660,21 +660,24 @@ static void proofComboChanged( Gtk::ComboBoxText* combo )
 
 void InkscapePreferences::initPageCMS()
 {
+    int const numIntents = 4;
+    Glib::ustring intentLabels[numIntents] = {_("Perceptual"), _("Relative Colorimetric"), _("Saturation"), _("Absolute Colorimetric")};
+    int intentValues[numIntents] = {0, 1, 2, 3};
+
+    _page_cms.add_group_header( _("Disply Calibration"));
+
     _cms_display.init( _("Enable display calibration"), "options.displayprofile", "enable", false);
     _page_cms.add_line( false, "", _cms_display, "",
                         _("Enables application of the display using an ICC profile."), false);
 
-    int const numIntents = 4;
-    Glib::ustring intentLabels[numIntents] = {_("Perceptual"), _("Relative Colorimetric"), _("Saturation"), _("Absolute Colorimetric")};
-    int intentValues[numIntents] = {0, 1, 2, 3};
+    _page_cms.add_line( false, _("Display profile:"), _cms_display_profile, "",
+                        _("The ICC profile to use to calibrate display output."), false);
 
     _cms_intent.init("options.displayprofile", "intent", intentLabels, intentValues, numIntents, 0);
     _page_cms.add_line( false, _("Display intent:"), _cms_intent, "",
                         _("The rendering intent to use to calibrate display output."), false);
 
-    _page_cms.add_line( false, _("Display profile:"), _cms_display_profile, "",
-                        _("The ICC profile to use to calibrate display output."), false);
-
+    _page_cms.add_group_header( _("Proofing"));
 
     _cms_softproof.init( _("Simulate output on screen."), "options.softproof", "enable", false);
     _page_cms.add_line( false, "", _cms_softproof, "",
@@ -684,12 +687,26 @@ void InkscapePreferences::initPageCMS()
     _page_cms.add_line( false, "", _cms_gamutwarn, "",
                         _("Highlights colors that are out of gamut for the target device."), false);
 
+    Gdk::Color tmpColor("#00ff00");
+    _cms_gamutcolor.set_color( tmpColor );
+    _cms_gamutcolor.set_sensitive( false );
+    _page_cms.add_line( true, "Out of gamut warning color:", _cms_gamutcolor, "",
+                        _("Selects the color used for out of gamut warning."), false);
+
+    _page_cms.add_line( false, _("Device profile:"), _cms_proof_profile, "",
+                        _("The ICC profile to use to simulate device output."), false);
+
     _cms_proof_intent.init("options.softproof", "intent", intentLabels, intentValues, numIntents, 0);
     _page_cms.add_line( false, _("Device intent:"), _cms_proof_intent, "",
                         _("The rendering intent to use to calibrate display output."), false);
 
-    _page_cms.add_line( false, _("Device profile:"), _cms_proof_profile, "",
-                        _("The ICC profile to use to simulate device output."), false);
+    _cms_proof_blackpoint.init( _("Black Point Compensation."), "options.softproof", "bpc", false);
+    _page_cms.add_line( false, "", _cms_proof_blackpoint, "",
+                        _("Enables black point compensation."), false);
+
+    _cms_proof_preserveblack.init( _("Preserve black."), "options.softproof", "preserveblack", false);
+    _page_cms.add_line( false, "", _cms_proof_preserveblack, "",
+                        "", false);
 
 #if ENABLE_LCMS
     {
@@ -723,6 +740,8 @@ void InkscapePreferences::initPageCMS()
     _cms_display.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
     _cms_softproof.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
     _cms_gamutwarn.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
+    _cms_proof_blackpoint.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
+    _cms_proof_preserveblack.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
 
     _cms_intent.signal_changed().connect( sigc::ptr_fun(forceUpdates) );
     _cms_proof_intent.signal_changed().connect( sigc::ptr_fun(forceUpdates) );
@@ -736,8 +755,11 @@ void InkscapePreferences::initPageCMS()
     _cms_display_profile.set_sensitive( false );
     _cms_softproof.set_sensitive( false );
     _cms_gamutwarn.set_sensitive( false );
+    _cms_gamutcolor.set_sensitive( false );
     _cms_proof_intent.set_sensitive( false );
     _cms_proof_profile.set_sensitive( false );
+    _cms_proof_blackpoint.set_sensitive( false );
+    _cms_proof_preserveblack_sensitive( false );
 #endif // ENABLE_LCMS
 
     this->AddPage(_page_cms, _("Color Management"), PREFS_PAGE_CMS);

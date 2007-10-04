@@ -191,6 +191,8 @@ static char const preferences_skeleton[] =
 "       enable=\"0\"\n"
 "       intent=\"0\"\n"
 "       gamutwarn=\"0\"\n"
+"       bpc=\"0\"\n"
+"       preserveblack=\"0\"\n"
 "       uri=\"\" />\n"
 "    <group id=\"savewindowgeometry\" value=\"1\"/>\n"
 "    <group id=\"defaultoffsetwidth\" value=\"2\"/>\n"
