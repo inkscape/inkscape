@@ -163,14 +163,14 @@ protected:
     PrefCheckButton _misc_small_toolbar;
     PrefCombo       _misc_overs_bitmap;
 
-    PrefCheckButton     _misc_cms_display;
-    PrefCombo           _misc_cms_intent;
-    Gtk::ComboBoxText   _misc_cms_display_profile;
+    PrefCheckButton     _cms_display;
+    PrefCombo           _cms_intent;
+    Gtk::ComboBoxText   _cms_display_profile;
 
-    PrefCheckButton     _misc_cms_softproof;
-    PrefCheckButton     _misc_cms_gamutwarn;
-    PrefCombo           _misc_cms_proof_intent;
-    Gtk::ComboBoxText   _misc_cms_proof_profile;
+    PrefCheckButton     _cms_softproof;
+    PrefCheckButton     _cms_gamutwarn;
+    PrefCombo           _cms_proof_intent;
+    Gtk::ComboBoxText   _cms_proof_profile;
 
     PrefEntryButtonHBox _importexport_ocal_url;
     PrefEntry       _importexport_ocal_username;

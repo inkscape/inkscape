@@ -660,36 +660,36 @@ static void proofComboChanged( Gtk::ComboBoxText* combo )
 
 void InkscapePreferences::initPageCMS()
 {
-    _misc_cms_display.init( _("Enable display calibration"), "options.displayprofile", "enable", false);
-    _page_cms.add_line( false, "", _misc_cms_display, "",
-                           _("Enables application of the display using an ICC profile."), false);
+    _cms_display.init( _("Enable display calibration"), "options.displayprofile", "enable", false);
+    _page_cms.add_line( false, "", _cms_display, "",
+                        _("Enables application of the display using an ICC profile."), false);
 
     int const numIntents = 4;
     Glib::ustring intentLabels[numIntents] = {_("Perceptual"), _("Relative Colorimetric"), _("Saturation"), _("Absolute Colorimetric")};
     int intentValues[numIntents] = {0, 1, 2, 3};
 
-    _misc_cms_intent.init("options.displayprofile", "intent", intentLabels, intentValues, numIntents, 0);
-    _page_cms.add_line( false, _("Display intent:"), _misc_cms_intent, "",
-                         _("The rendering intent to use to calibrate display output."), false);
+    _cms_intent.init("options.displayprofile", "intent", intentLabels, intentValues, numIntents, 0);
+    _page_cms.add_line( false, _("Display intent:"), _cms_intent, "",
+                        _("The rendering intent to use to calibrate display output."), false);
 
-    _page_cms.add_line( false, _("Display profile:"), _misc_cms_display_profile, "",
-                         _("The ICC profile to use to calibrate display output."), false);
+    _page_cms.add_line( false, _("Display profile:"), _cms_display_profile, "",
+                        _("The ICC profile to use to calibrate display output."), false);
 
 
-    _misc_cms_softproof.init( _("Simulate output on screen."), "options.softproof", "enable", false);
-    _page_cms.add_line( false, "", _misc_cms_softproof, "",
-                           _("Simulates output of target device."), false);
+    _cms_softproof.init( _("Simulate output on screen."), "options.softproof", "enable", false);
+    _page_cms.add_line( false, "", _cms_softproof, "",
+                        _("Simulates output of target device."), false);
 
-    _misc_cms_gamutwarn.init( _("Mark out of gamut colors."), "options.softproof", "gamutwarn", false);
-    _page_cms.add_line( false, "", _misc_cms_gamutwarn, "",
-                           _("Highlights colors that are out of gamut for the target device."), false);
+    _cms_gamutwarn.init( _("Mark out of gamut colors."), "options.softproof", "gamutwarn", false);
+    _page_cms.add_line( false, "", _cms_gamutwarn, "",
+                        _("Highlights colors that are out of gamut for the target device."), false);
 
-    _misc_cms_proof_intent.init("options.softproof", "intent", intentLabels, intentValues, numIntents, 0);
-    _page_cms.add_line( false, _("Device intent:"), _misc_cms_proof_intent, "",
-                         _("The rendering intent to use to calibrate display output."), false);
+    _cms_proof_intent.init("options.softproof", "intent", intentLabels, intentValues, numIntents, 0);
+    _page_cms.add_line( false, _("Device intent:"), _cms_proof_intent, "",
+                        _("The rendering intent to use to calibrate display output."), false);
 
-    _page_cms.add_line( false, _("Device profile:"), _misc_cms_proof_profile, "",
-                         _("The ICC profile to use to simulate device output."), false);
+    _page_cms.add_line( false, _("Device profile:"), _cms_proof_profile, "",
+                        _("The ICC profile to use to simulate device output."), false);
 
 #if ENABLE_LCMS
     {
@@ -698,10 +698,10 @@ void InkscapePreferences::initPageCMS()
 
         gint index = 0;
         for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
-            _misc_cms_display_profile.append_text( *it );
+            _cms_display_profile.append_text( *it );
             Glib::ustring path = get_path_for_profile(*it);
             if ( !path.empty() && path == current ) {
-                _misc_cms_display_profile.set_active(index);
+                _cms_display_profile.set_active(index);
             }
             index++;
         }
@@ -711,33 +711,33 @@ void InkscapePreferences::initPageCMS()
         current = tmp ? tmp : "";
         index = 0;
         for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
-            _misc_cms_proof_profile.append_text( *it );
+            _cms_proof_profile.append_text( *it );
             Glib::ustring path = get_path_for_profile(*it);
             if ( !path.empty() && path == current ) {
-                _misc_cms_proof_profile.set_active(index);
+                _cms_proof_profile.set_active(index);
             }
             index++;
         }
     }
 
-    _misc_cms_display.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
-    _misc_cms_softproof.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
-    _misc_cms_gamutwarn.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
+    _cms_display.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
+    _cms_softproof.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
+    _cms_gamutwarn.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
 
-    _misc_cms_intent.signal_changed().connect( sigc::ptr_fun(forceUpdates) );
-    _misc_cms_proof_intent.signal_changed().connect( sigc::ptr_fun(forceUpdates) );
+    _cms_intent.signal_changed().connect( sigc::ptr_fun(forceUpdates) );
+    _cms_proof_intent.signal_changed().connect( sigc::ptr_fun(forceUpdates) );
 
-    _misc_cms_display_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(profileComboChanged), &_misc_cms_display_profile) );
-    _misc_cms_proof_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(proofComboChanged), &_misc_cms_proof_profile) );
+    _cms_display_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(profileComboChanged), &_cms_display_profile) );
+    _cms_proof_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(proofComboChanged), &_cms_proof_profile) );
 #else
     // disable it, but leave it visible
-    _misc_cms_display.set_sensitive( false );
-    _misc_cms_intent.set_sensitive( false );
-    _misc_cms_display_profile.set_sensitive( false );
-    _misc_cms_softproof.set_sensitive( false );
-    _misc_cms_gamutwarn.set_sensitive( false );
-    _misc_cms_proof_intent.set_sensitive( false );
-    _misc_cms_proof_profile.set_sensitive( false );
+    _cms_display.set_sensitive( false );
+    _cms_intent.set_sensitive( false );
+    _cms_display_profile.set_sensitive( false );
+    _cms_softproof.set_sensitive( false );
+    _cms_gamutwarn.set_sensitive( false );
+    _cms_proof_intent.set_sensitive( false );
+    _cms_proof_profile.set_sensitive( false );
 #endif // ENABLE_LCMS
 
     this->AddPage(_page_cms, _("Color Management"), PREFS_PAGE_CMS);
