@@ -551,7 +551,9 @@ int errorHandlerCB(int ErrorCode, const char *ErrorText)
 static bool gamutWarn = false;
 static Gdk::Color lastGamutColor("#00ff00");
 static bool lastBPC = false;
+#if defined(cmsFLAGS_PRESERVEBLACK)
 static bool lastPreserveBlack = false;
+#endif // defined(cmsFLAGS_PRESERVEBLACK)
 static int lastIntent = INTENT_PERCEPTUAL;
 static int lastProofIntent = INTENT_PERCEPTUAL;
 static cmsHTRANSFORM transf = 0;
@@ -686,7 +688,9 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
     int intent = prefs_get_int_attribute_limited( "options.displayprofile", "intent", 0, 0, 3 );
     int proofIntent = prefs_get_int_attribute_limited( "options.softproof", "intent", 0, 0, 3 );
     bool bpc = prefs_get_int_attribute_limited( "options.softproof", "bpc", 0, 0, 1 );
+#if defined(cmsFLAGS_PRESERVEBLACK)
     bool preserveBlack = prefs_get_int_attribute_limited( "options.softproof", "preserveblack", 0, 0, 1 );
+#endif //defined(cmsFLAGS_PRESERVEBLACK)
     gchar const* colorStr = prefs_get_string_attribute("options.softproof", "gamutcolor");
     Gdk::Color gamutColor( (colorStr && colorStr[0]) ? colorStr : "#00ff00");
 
@@ -694,7 +698,9 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
          || (lastIntent != intent)
          || (lastProofIntent != proofIntent)
          || (bpc != lastBPC)
+#if defined(cmsFLAGS_PRESERVEBLACK)
          || (preserveBlack != lastPreserveBlack)
+#endif // defined(cmsFLAGS_PRESERVEBLACK)
          || (gamutColor != lastGamutColor)
         ) {
         gamutWarn = warn;
@@ -705,7 +711,9 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
         lastIntent = intent;
         lastProofIntent = proofIntent;
         lastBPC = bpc;
+#if defined(cmsFLAGS_PRESERVEBLACK)
         lastPreserveBlack = preserveBlack;
+#endif // defined(cmsFLAGS_PRESERVEBLACK)
         lastGamutColor = gamutColor;
     }
 
@@ -726,9 +734,11 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
             if ( bpc ) {
                 dwFlags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
             }
+#if defined(cmsFLAGS_PRESERVEBLACK)
             if ( preserveBlack ) {
                 dwFlags |= cmsFLAGS_PRESERVEBLACK;
             }
+#endif // defined(cmsFLAGS_PRESERVEBLACK)
             transf = cmsCreateProofingTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, proofProf, intent, proofIntent, dwFlags );
         } else if ( hprof ) {
             transf = cmsCreateTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, intent, 0 );

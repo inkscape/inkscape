@@ -723,8 +723,18 @@ void InkscapePreferences::initPageCMS()
                         _("Enables black point compensation."), false);
 
     _cms_proof_preserveblack.init( _("Preserve black."), "options.softproof", "preserveblack", false);
-    _page_cms.add_line( false, "", _cms_proof_preserveblack, "",
-                        "", false);
+    _page_cms.add_line( false, "", _cms_proof_preserveblack,
+#if defined(cmsFLAGS_PRESERVEBLACK)
+                        "",
+#else
+                        _("(LittleCMS 1.15 or later required)"),
+#endif // defined(cmsFLAGS_PRESERVEBLACK)
+                        _("Preserve K channel on CMYK -> CMYK transforms"), false);
+
+#if !defined(cmsFLAGS_PRESERVEBLACK)
+    _cms_proof_preserveblack.set_sensitive( false );
+#endif // !defined(cmsFLAGS_PRESERVEBLACK)
+
 
 #if ENABLE_LCMS
     {
