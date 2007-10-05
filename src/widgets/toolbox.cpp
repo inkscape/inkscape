@@ -3874,9 +3874,6 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
         return;
     }
 
-    gtk_widget_hide (popdown);
-    visible = false;
-
     gtk_entry_set_text (GTK_ENTRY (entry), family);
 
     SPStyle *query =
@@ -4131,6 +4128,8 @@ sp_text_toolbox_family_list_keypress (GtkWidget *w, GdkEventKey *event, GObject 
     if (!desktop) return FALSE;
 
     switch (get_group0_keyval (event)) {
+        case GDK_KP_Enter:
+        case GDK_Return:
         case GDK_Escape: // defocus
             gtk_widget_hide (w);
             visible = false;
