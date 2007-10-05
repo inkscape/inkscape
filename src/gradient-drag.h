@@ -110,6 +110,7 @@ public: // FIXME: make more of this private!
     void setSelected (GrDragger *dragger, bool add_to_selection = false, bool override = true);
     void setDeselected (GrDragger *dragger);
     void deselectAll();
+		void selectAll();
     
     void deleteSelected (bool just_one = false);
     
@@ -134,7 +135,8 @@ public: // FIXME: make more of this private!
     void updateLines ();
     void updateLevels ();
 
-    void selected_move (double x, double y);
+    void selected_move_nowrite (double x, double y, bool scale_radial);
+    void selected_move (double x, double y, bool write_repr = true, bool scale_radial = false);
     void selected_move_screen (double x, double y);
 
     void select_next ();

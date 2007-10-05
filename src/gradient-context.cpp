@@ -530,6 +530,14 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             }
             break;
 
+        case GDK_A:
+        case GDK_a:
+            if (MOD__CTRL_ONLY) {
+                drag->selectAll();
+            }
+            ret = TRUE;
+            break;
+
         case GDK_Escape:
             if (drag->selected) {
                 drag->deselectAll();

@@ -537,17 +537,18 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
         g_slist_free(snap_vectors);
     }
 
-    dragger->point = p;
+    drag->keep_selection = (bool) g_list_find(drag->selected, dragger);
+    bool scale_radial = (state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK);
 
-    if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK)) {
-        dragger->fireDraggables (false, true);
+    if (drag->keep_selection) {
+        NR::Point diff = p - dragger->point;
+        drag->selected_move_nowrite (diff[NR::X], diff[NR::Y], scale_radial);
     } else {
-        dragger->fireDraggables (false);
+        dragger->point = p;
+        dragger->fireDraggables (false, scale_radial);
+        dragger->updateDependencies(false);
     }
 
-    dragger->updateDependencies(false);
-
-    drag->keep_selection = (bool) g_list_find(drag->selected, dragger);
 }
 
 
@@ -1201,6 +1202,18 @@ GrDrag::deselectAll()
     this->desktop->emitToolSubselectionChanged(NULL);
 }
 
+/**
+\brief Select all stops/draggers (public; emits signal)
+*/
+void
+GrDrag::selectAll()
+{
+    for (GList *l = this->draggers; l != NULL; l = l->next) {
+        GrDragger *d = ((GrDragger *) l->data);
+        setSelected (d, true, true);
+    }
+}
+
 
 /**
 \brief Select a dragger
@@ -1483,25 +1496,70 @@ GrDrag::selected_reverse_vector ()
 }
 
 void
-GrDrag::selected_move (double x, double y)
+GrDrag::selected_move_nowrite (double x, double y, bool scale_radial)
 {
-/*
+    selected_move (x, y, false, scale_radial);
+}
+
+void
+GrDrag::selected_move (double x, double y, bool write_repr, bool scale_radial)
+{
     if (selected == NULL)
         return;
 
-    if ( (g_list_length(selected) == 1) )
-    selected->point += NR::Point (x, y);
-    selected->point_original = selected->point;
-    sp_knot_moveto (selected->knot, &(selected->point));
+    bool did = false; 
 
-    selected->fireDraggables (true);
+    for (GList *i = selected; i != NULL; i = i->next) {
+        GrDragger *d = (GrDragger *) i->data;
 
-    selected->updateDependencies(true);
+        if (!d->isA(POINT_LG_MID) && !d->isA(POINT_RG_MID1) && !d->isA(POINT_RG_MID2)) {
+            // if this is a an endpoint,
 
-    // we did an undoable action
-    sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
-                      _("Move gradient handle"));
-*/
+            // Moving an rg center moves its focus and radii as well.
+            // therefore, if this is a focus or radius and if selection
+            // contains the center as well, do not move this one
+            bool skip_radius_with_center = false;
+            if (d->isA(POINT_RG_R1) || d->isA(POINT_RG_R2) || 
+                (d->isA(POINT_RG_FOCUS) && !d->isA(POINT_RG_CENTER))) {
+                for (GList *di = selected; di != NULL; di = di->next) {
+                    GrDragger *d_new = (GrDragger *) di->data;
+                    if (d_new->isA (((GrDraggable *) d->draggables->data)->item,
+                                    POINT_RG_CENTER,
+                                    ((GrDraggable *) d->draggables->data)->point_i,
+                                    ((GrDraggable *) d->draggables->data)->fill_or_stroke)) {
+                        // FIXME: here we take into account only the first draggable!
+                        skip_radius_with_center = true;
+                    }
+                }
+                if (skip_radius_with_center)
+                    continue;
+            }
+
+            did = true;
+            d->point += NR::Point (x, y);
+            d->point_original = d->point;
+            sp_knot_moveto (d->knot, &(d->point));
+
+            d->fireDraggables (write_repr, scale_radial);
+
+            d->updateDependencies(write_repr);
+        }
+    }
+
+    if (!did) { // none of the end draggers are selected, so let's try to move the mids
+        for (GList *i = selected; i != NULL; i = i->next) {
+            GrDragger *d = (GrDragger *) i->data;
+
+            if (d->isA(POINT_LG_MID) || !d->isA(POINT_RG_MID1) || !d->isA(POINT_RG_MID2)) {
+            }
+        }
+    }
+
+    if (write_repr && did) {
+        // we did an undoable action
+        sp_document_maybe_done (sp_desktop_document (desktop), "grmove", SP_VERB_CONTEXT_GRADIENT,
+                          _("Move gradient handle"));
+    }
 }
 
 void
