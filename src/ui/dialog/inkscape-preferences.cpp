@@ -656,6 +656,19 @@ static void proofComboChanged( Gtk::ComboBoxText* combo )
         forceUpdates();
     }
 }
+
+static void gamutColorChanged( Gtk::ColorButton* btn ) {
+    Gdk::Color color = btn->get_color();
+    gushort r = color.get_red();
+    gushort g = color.get_green();
+    gushort b = color.get_blue();
+
+    gchar* tmp = g_strdup_printf("#%02x%02x%02x", (r >> 8), (g >> 8), (b >> 8) );
+
+    prefs_set_string_attribute( "options.softproof", "gamutcolor", tmp );
+    g_free(tmp);
+    forceUpdates();
+}
 #endif // ENABLE_LCMS
 
 void InkscapePreferences::initPageCMS()
@@ -692,9 +705,9 @@ void InkscapePreferences::initPageCMS()
     _page_cms.add_line( false, "", _cms_gamutwarn, "",
                         _("Highlights colors that are out of gamut for the target device."), false);
 
-    Gdk::Color tmpColor("#00ff00");
+    gchar const* colorStr = prefs_get_string_attribute("options.softproof", "gamutcolor");
+    Gdk::Color tmpColor( (colorStr && colorStr[0]) ? colorStr : "#00ff00");
     _cms_gamutcolor.set_color( tmpColor );
-    _cms_gamutcolor.set_sensitive( false );
     _page_cms.add_line( true, "Out of gamut warning color:", _cms_gamutcolor, "",
                         _("Selects the color used for out of gamut warning."), false);
 
@@ -745,6 +758,7 @@ void InkscapePreferences::initPageCMS()
     _cms_display.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
     _cms_softproof.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
     _cms_gamutwarn.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
+    _cms_gamutcolor.signal_color_set().connect( sigc::bind( sigc::ptr_fun(gamutColorChanged), &_cms_gamutcolor) );
     _cms_proof_blackpoint.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
     _cms_proof_preserveblack.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
 

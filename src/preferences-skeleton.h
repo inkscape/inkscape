@@ -190,6 +190,7 @@ static char const preferences_skeleton[] =
 "       id=\"softproof\"\n"
 "       enable=\"0\"\n"
 "       intent=\"0\"\n"
+"       gamutcolor=\"#00FF00\"\n"
 "       gamutwarn=\"0\"\n"
 "       bpc=\"0\"\n"
 "       preserveblack=\"0\"\n"

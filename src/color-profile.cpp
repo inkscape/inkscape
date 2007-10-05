@@ -14,6 +14,7 @@
 
 #include <glib/gstdio.h>
 #include <sys/fcntl.h>
+#include <gdkmm/color.h>
 
 #ifdef DEBUG_LCMS
 #include <gtk/gtkmessagedialog.h>
@@ -548,6 +549,7 @@ int errorHandlerCB(int ErrorCode, const char *ErrorText)
 }
 
 static bool gamutWarn = false;
+static Gdk::Color lastGamutColor("#00ff00");
 static bool lastBPC = false;
 static bool lastPreserveBlack = false;
 static int lastIntent = INTENT_PERCEPTUAL;
@@ -646,6 +648,8 @@ cmsHPROFILE Inkscape::colorprofile_get_proof_profile_handle()
                 icColorSpaceSignature space = cmsGetColorSpace(theOne);
                 icProfileClassSignature profClass = cmsGetDeviceClass(theOne);
 
+                (void)space;
+                (void)profClass;
 /*
                 if ( profClass != icSigDisplayClass ) {
                     g_warning("Not a display profile");
@@ -683,12 +687,15 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
     int proofIntent = prefs_get_int_attribute_limited( "options.softproof", "intent", 0, 0, 3 );
     bool bpc = prefs_get_int_attribute_limited( "options.softproof", "bpc", 0, 0, 1 );
     bool preserveBlack = prefs_get_int_attribute_limited( "options.softproof", "preserveblack", 0, 0, 1 );
+    gchar const* colorStr = prefs_get_string_attribute("options.softproof", "gamutcolor");
+    Gdk::Color gamutColor( (colorStr && colorStr[0]) ? colorStr : "#00ff00");
 
     if ( (warn != gamutWarn)
          || (lastIntent != intent)
          || (lastProofIntent != proofIntent)
          || (bpc != lastBPC)
          || (preserveBlack != lastPreserveBlack)
+         || (gamutColor != lastGamutColor)
         ) {
         gamutWarn = warn;
         if ( transf ) {
@@ -699,6 +706,7 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
         lastProofIntent = proofIntent;
         lastBPC = bpc;
         lastPreserveBlack = preserveBlack;
+        lastGamutColor = gamutColor;
     }
 
     // Fecth these now, as they might clear the transform as a side effect.
@@ -713,7 +721,7 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
             DWORD dwFlags = cmsFLAGS_SOFTPROOFING;
             if ( gamutWarn ) {
                 dwFlags |= cmsFLAGS_GAMUTCHECK;
-                cmsSetAlarmCodes(0, 255, 0);
+                cmsSetAlarmCodes(gamutColor.get_red() >> 8, gamutColor.get_green() >> 8, gamutColor.get_blue() >> 8);
             }
             if ( bpc ) {
                 dwFlags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
