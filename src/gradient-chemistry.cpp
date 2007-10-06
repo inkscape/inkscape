@@ -33,6 +33,7 @@
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "svg/svg-color.h"
+#include "svg/css-ostringstream.h"
 
 
 // Terminology:
@@ -502,11 +503,11 @@ sp_prev_stop(SPStop *stop, SPGradient *gradient)
 SPStop*
 sp_next_stop(SPStop *stop)
 {
-  for (SPObject *ochild = SP_OBJECT_NEXT(stop); ochild != NULL; ochild = SP_OBJECT_NEXT(ochild)) {
-	if (SP_IS_STOP (ochild))
-		return SP_STOP(ochild);
-  }
-  return NULL;
+    for (SPObject *ochild = SP_OBJECT_NEXT(stop); ochild != NULL; ochild = SP_OBJECT_NEXT(ochild)) {
+        if (SP_IS_STOP (ochild))
+            return SP_STOP(ochild);
+    }
+    return NULL;
 }
 
 SPStop*
@@ -514,24 +515,83 @@ sp_last_stop(SPGradient *gradient)
 {
     for (SPStop *stop = sp_first_stop (gradient); stop != NULL; stop = sp_next_stop (stop)) {
         if (sp_next_stop (stop) == NULL)
-		return stop;
-  }
-  return NULL;
+            return stop;
+    }
+    return NULL;
 } 
+
+guint
+sp_number_of_stops(SPGradient *gradient)
+{
+    guint n = 0;
+    for (SPStop *stop = sp_first_stop (gradient); stop != NULL; stop = sp_next_stop (stop)) {
+        if (sp_next_stop (stop) == NULL)
+            return n;
+        n ++;
+    }
+    return n;
+} 
+
+guint
+sp_number_of_stops_before_stop(SPGradient *gradient, SPStop *target)
+{
+    guint n = 0;
+    for (SPStop *stop = sp_first_stop (gradient); stop != NULL; stop = sp_next_stop (stop)) {
+        if (stop == target)
+            return n;
+        n ++;
+    }
+    return n;
+} 
+
 
 SPStop*
 sp_get_stop_i(SPGradient *gradient, guint stop_i)
 {            
-  SPStop *stop = sp_first_stop (gradient);
+    SPStop *stop = sp_first_stop (gradient);
   
-  for (guint i=0; i < stop_i; i++) {
-    if (!stop) return NULL;  
-    stop = sp_next_stop (stop);    
-  }  
+    for (guint i=0; i < stop_i; i++) {
+        if (!stop) return NULL;  
+        stop = sp_next_stop (stop);    
+    }  
     
-  return stop;
+    return stop;
 }
 
+static guint32
+average_color (guint32 c1, guint32 c2, gdouble p = 0.5)
+{
+	guint32 r = (guint32) (SP_RGBA32_R_U (c1) * (1 - p) + SP_RGBA32_R_U (c2) * p);
+	guint32 g = (guint32) (SP_RGBA32_G_U (c1) * (1 - p) + SP_RGBA32_G_U (c2) * p);
+	guint32 b = (guint32) (SP_RGBA32_B_U (c1) * (1 - p) + SP_RGBA32_B_U (c2) * p);
+	guint32 a = (guint32) (SP_RGBA32_A_U (c1) * (1 - p) + SP_RGBA32_A_U (c2) * p);
+
+	return SP_RGBA32_U_COMPOSE (r, g, b, a);
+}
+
+SPStop *
+sp_vector_add_stop (SPGradient *vector, SPStop* prev_stop, SPStop* next_stop, gfloat offset)
+{
+    Inkscape::XML::Node *new_stop_repr = NULL;
+    new_stop_repr = SP_OBJECT_REPR(prev_stop)->duplicate(SP_OBJECT_REPR(vector)->document());
+    SP_OBJECT_REPR(vector)->addChild(new_stop_repr, SP_OBJECT_REPR(prev_stop));
+
+    SPStop *newstop = (SPStop *) SP_OBJECT_DOCUMENT(vector)->getObjectByRepr(new_stop_repr);
+    newstop->offset = offset;
+    sp_repr_set_css_double( SP_OBJECT_REPR(newstop), "offset", (double)offset);
+    guint32 const c1 = sp_stop_get_rgba32(prev_stop);
+    guint32 const c2 = sp_stop_get_rgba32(next_stop);
+    guint32 cnew = average_color (c1, c2, (offset - prev_stop->offset) / (next_stop->offset - prev_stop->offset));
+    Inkscape::CSSOStringStream os;
+    gchar c[64];
+    sp_svg_write_color (c, sizeof(c), cnew);
+    gdouble opacity = (gdouble) SP_RGBA32_A_F (cnew);
+    os << "stop-color:" << c << ";stop-opacity:" << opacity <<";";
+    SP_OBJECT_REPR (newstop)->setAttribute("style", os.str().c_str());
+    Inkscape::GC::release(new_stop_repr);
+
+    return newstop;
+}
 
 void
 sp_item_gradient_edit_stop (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke)

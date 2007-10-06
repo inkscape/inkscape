@@ -59,6 +59,10 @@ SPStop* sp_last_stop(SPGradient *gradient);
 SPStop* sp_prev_stop(SPStop *stop, SPGradient *gradient);
 SPStop* sp_next_stop(SPStop *stop);
 SPStop* sp_get_stop_i(SPGradient *gradient, guint i);
+guint sp_number_of_stops(SPGradient *gradient);
+guint sp_number_of_stops_before_stop(SPGradient *gradient, SPStop *target);
+
+SPStop *sp_vector_add_stop (SPGradient *vector, SPStop* prev_stop, SPStop* next_stop, gfloat offset);
 
 void sp_gradient_transform_multiply (SPGradient *gradient, NR::Matrix postmul, bool set);
 
