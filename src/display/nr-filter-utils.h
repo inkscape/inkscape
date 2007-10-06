@@ -14,6 +14,7 @@
 
 #include "round.h"
 
+/* Shouldn't these be inlined? */
 namespace NR {
 
 /**
@@ -24,6 +25,14 @@ namespace NR {
  * \param v the value to clamp
  */
 int clamp(int const val);
+
+/**
+ * Clamps an integer value to a value between 0 and 255^3.
+ *
+ * \return 0 if the value is smaller than 0, 255^3 (16581375) if it is greater than 255^3, else v
+ * \param v the value to clamp
+ */
+int clamp3(int const val);
 
 /**
  * Macro to use the clamp function with double inputs and unsigned char output

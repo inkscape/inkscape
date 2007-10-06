@@ -8,6 +8,12 @@ int clamp(int const val) {
     return val;
 }
 
+int clamp3(int const val) {
+    if (val < 0) return 0;
+    if (val > 16581375) return 16581375;
+    return val;
+}
+
 int clamp_alpha(int const val, int const alpha) {
     if (val < 0) return 0;
     if (val > alpha) return alpha;

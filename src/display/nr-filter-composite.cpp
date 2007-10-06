@@ -73,13 +73,13 @@ static int arith_k1, arith_k2, arith_k3, arith_k4;
 inline void
 composite_arithmetic(unsigned char *r, unsigned char const *a, unsigned char const *b)
 {
-    r[0] = NR::clamp(NR_NORMALIZE_31(arith_k1 * a[0] * b[0]
+    r[0] = NR_NORMALIZE_31(NR::clamp3(arith_k1 * a[0] * b[0]
                  + arith_k2 * a[0] + arith_k3 * b[0] + arith_k4));
-    r[1] = NR::clamp(NR_NORMALIZE_31(arith_k1 * a[1] * b[1]
+    r[1] = NR_NORMALIZE_31(NR::clamp3(arith_k1 * a[1] * b[1]
                  + arith_k2 * a[1] + arith_k3 * b[1] + arith_k4));
-    r[2] = NR::clamp(NR_NORMALIZE_31(arith_k1 * a[2] * b[2]
+    r[2] = NR_NORMALIZE_31(NR::clamp3(arith_k1 * a[2] * b[2]
                  + arith_k2 * a[2] + arith_k3 * b[2] + arith_k4));
-    r[3] = NR::clamp(NR_NORMALIZE_31(arith_k1 * a[3] * b[3]
+    r[3] = NR_NORMALIZE_31(NR::clamp3(arith_k1 * a[3] * b[3]
                  + arith_k2 * a[3] + arith_k3 * b[3] + arith_k4));
 }
 
