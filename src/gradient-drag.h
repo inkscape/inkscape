@@ -37,8 +37,8 @@ struct GrDraggable {
 	~GrDraggable();
 
 	SPItem *item;
-	guint point_type;
-	guint point_i;  // the stop number of this point ( = 0 for all types except POINT_LG_MID)
+	gint point_type;
+	gint point_i;  // the stop number of this point ( = 0 POINT_LG_BEGIN and POINT_RG_CENTER)
 	bool fill_or_stroke;
 
 	bool mayMerge (GrDraggable *da2);
@@ -80,17 +80,18 @@ struct GrDragger {
 	
 	void select();
 	void deselect();
+	bool isSelected();
 
-	void moveThisToDraggable (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, bool write_repr);
-	void moveOtherToDraggable (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, bool write_repr);
+	void moveThisToDraggable (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, bool write_repr);
+	void moveOtherToDraggable (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, bool write_repr);
     void updateMidstopDependencies (GrDraggable *draggable, bool write_repr);
     void updateDependencies (bool write_repr);
 
 	bool mayMerge (GrDragger *other);
 	bool mayMerge (GrDraggable *da2);
 
-	bool isA (guint point_type);
-	bool isA (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
+	bool isA (gint point_type);
+	bool isA (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke);
 
 	void fireDraggables (bool write_repr, bool scale_radial = false, bool merging_focus = false);
 };
@@ -105,20 +106,23 @@ public: // FIXME: make more of this private!
     GrDrag(SPDesktop *desktop);
     ~GrDrag();
 
+		bool isNonEmpty() {return (draggers != NULL);}
+
     // especially the selection must be private, fix gradient-context to remove direct access to it
     GList *selected; // list of GrDragger*
     void setSelected (GrDragger *dragger, bool add_to_selection = false, bool override = true);
     void setDeselected (GrDragger *dragger);
     void deselectAll();
 		void selectAll();
+		void selectByCoords(std::vector<NR::Point> coords);
     
     void deleteSelected (bool just_one = false);
     
     bool keep_selection;    
     
-    GrDragger *getDraggerFor (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
+    GrDragger *getDraggerFor (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke);
 
-    void grabKnot (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, gint x, gint y, guint32 etime);
+    void grabKnot (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, gint x, gint y, guint32 etime);
 
     bool local_change;
 
