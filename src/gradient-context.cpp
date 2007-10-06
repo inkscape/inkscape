@@ -192,18 +192,6 @@ sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, NR::Point
     return close;
 }
 
-// Fixme : must be able to put this in a general file.
-static guint32
-average_color (guint32 c1, guint32 c2, gdouble p = 0.5)
-{
-	guint32 r = (guint32) (SP_RGBA32_R_U (c1) * (1 - p) + SP_RGBA32_R_U (c2) * p);
-	guint32 g = (guint32) (SP_RGBA32_G_U (c1) * (1 - p) + SP_RGBA32_G_U (c2) * p);
-	guint32 b = (guint32) (SP_RGBA32_B_U (c1) * (1 - p) + SP_RGBA32_B_U (c2) * p);
-	guint32 a = (guint32) (SP_RGBA32_A_U (c1) * (1 - p) + SP_RGBA32_A_U (c2) * p);
-
-	return SP_RGBA32_U_COMPOSE (r, g, b, a);
-}
-
 static double
 get_offset_between_points (NR::Point p, NR::Point begin, NR::Point end)
 {
@@ -216,6 +204,120 @@ get_offset_between_points (NR::Point p, NR::Point begin, NR::Point end)
 
     return (r / length);
 }
+
+static void
+sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
+{
+    bool added = false;
+    SPDocument *doc = NULL;
+    GrDrag *drag = rc->_grdrag;
+
+    GSList *these_stops = NULL;
+    GSList *next_stops = NULL;
+
+    std::vector<NR::Point> coords;
+
+    // for all selected draggers
+    for (GList *i = drag->selected; i != NULL; i = i->next) {
+        GrDragger *dragger = (GrDragger *) i->data;
+        // remember the coord of the dragger to reselect it later
+        coords.push_back(dragger->point);
+        // for all draggables of dragger
+        for (GSList const* j = dragger->draggables; j != NULL; j = j->next) { 
+            GrDraggable *d = (GrDraggable *) j->data;
+
+            // find the gradient
+            SPGradient *gradient = sp_item_gradient (d->item, d->fill_or_stroke);
+            SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
+            doc = SP_OBJECT_DOCUMENT (vector);
+
+            // these draggable types cannot have a next draggabe to insert a stop between them
+            if (d->point_type == POINT_LG_END || 
+                d->point_type == POINT_RG_FOCUS || 
+                d->point_type == POINT_RG_R1 || 
+                d->point_type == POINT_RG_R2) {
+                continue;
+            }
+
+            // from draggables to stops
+            SPStop *this_stop = sp_get_stop_i (vector, d->point_i);
+            SPStop *next_stop = sp_next_stop (this_stop);
+            SPStop *last_stop = sp_last_stop (vector);
+
+            gint fs = d->fill_or_stroke;
+            SPItem *item = d->item;
+            gint type = d->point_type;
+            gint p_i = d->point_i;
+
+            // if there's a next stop,
+            if (next_stop) {
+                GrDragger *dnext = NULL;
+                // find its dragger 
+                // (complex because it may have different types, and because in radial,
+                // more than one dragger may correspond to a stop, so we must distinguish)
+                if (type == POINT_LG_BEGIN || type == POINT_LG_MID) {
+                    if (next_stop == last_stop)
+                        dnext = drag->getDraggerFor (item, POINT_LG_END, p_i+1, fs);
+                    else
+                        dnext = drag->getDraggerFor (item, POINT_LG_MID, p_i+1, fs);
+                } else { // radial
+                    if (type == POINT_RG_CENTER || type == POINT_RG_MID1) {
+                        if (next_stop == last_stop)
+                            dnext = drag->getDraggerFor (item, POINT_RG_R1, p_i+1, fs);
+                        else 
+                            dnext = drag->getDraggerFor (item, POINT_RG_MID1, p_i+1, fs);
+                    } 
+                    if ((type == POINT_RG_MID2) || 
+                        (type == POINT_RG_CENTER && dnext && !dnext->isSelected())) {
+                        if (next_stop == last_stop)
+                            dnext = drag->getDraggerFor (item, POINT_RG_R2, p_i+1, fs);
+                        else 
+                            dnext = drag->getDraggerFor (item, POINT_RG_MID2, p_i+1, fs);
+                    }
+                }
+
+                // remember the coords of the future dragger to select it
+                coords.push_back(0.5*(dragger->point + dnext->point));
+
+                // if both adjacent draggers selected,
+                if (!g_slist_find(these_stops, this_stop) && dnext && dnext->isSelected()) {
+                    added = true;
+                    // do not insert a stop now, it will confuse the loop;
+                    // just remember the stops
+                    these_stops = g_slist_prepend (these_stops, this_stop);
+                    next_stops = g_slist_prepend (next_stops, next_stop);
+                }
+            }
+        }
+    }
+
+    // now actually create the new stops
+    GSList *i = these_stops;
+    GSList *j = next_stops;
+    for (; i != NULL && j != NULL; i = i->next, j = j->next) {
+        SPStop *this_stop = (SPStop *) i->data;
+        SPStop *next_stop = (SPStop *) j->data;
+        gfloat offset = 0.5*(this_stop->offset + next_stop->offset);
+        SPObject *parent = SP_OBJECT_PARENT(this_stop);
+        if (SP_IS_GRADIENT (parent)) {
+            sp_vector_add_stop (SP_GRADIENT (parent), this_stop, next_stop, offset);
+            sp_gradient_ensure_vector (SP_GRADIENT (parent));
+        }
+    }
+
+    g_slist_free (these_stops);
+    g_slist_free (next_stops);
+
+    if (added && doc) {
+        sp_document_done (doc, SP_VERB_CONTEXT_GRADIENT, _("Add gradient stop"));
+        drag->updateDraggers();
+        // so that it does not automatically update draggers in idle loop, as this would deselect
+        drag->local_change = true;
+        // select all the old selected and new created draggers
+        drag->selectByCoords(coords);
+    }
+}
+
 
 static void
 sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  NR::Point mouse_p, guint32 etime)
@@ -285,25 +387,9 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
             return;
         }
 
-        Inkscape::XML::Node *new_stop_repr = NULL;
-        new_stop_repr = SP_OBJECT_REPR(prev_stop)->duplicate(SP_OBJECT_REPR(vector)->document());
-        SP_OBJECT_REPR(vector)->addChild(new_stop_repr, SP_OBJECT_REPR(prev_stop));
 
-        SPStop *newstop = (SPStop *) SP_OBJECT_DOCUMENT(vector)->getObjectByRepr(new_stop_repr);
-        newstop->offset = offset;
-        sp_repr_set_css_double( SP_OBJECT_REPR(newstop), "offset", (double)offset);
-        guint32 const c1 = sp_stop_get_rgba32(prev_stop);
-        guint32 const c2 = sp_stop_get_rgba32(next_stop);
-        guint32 cnew = average_color (c1, c2, (offset - prev_stop->offset) / (next_stop->offset - prev_stop->offset));
-        Inkscape::CSSOStringStream os;
-        gchar c[64];
-        sp_svg_write_color (c, sizeof(c), cnew);
-        gdouble opacity = (gdouble) SP_RGBA32_A_F (cnew);
-        os << "stop-color:" << c << ";stop-opacity:" << opacity <<";";
-        SP_OBJECT_REPR (newstop)->setAttribute("style", os.str().c_str());
+        SPStop *newstop = sp_vector_add_stop (vector, prev_stop, next_stop, offset);
 
-
-        Inkscape::GC::release(new_stop_repr);
         sp_document_done (SP_OBJECT_DOCUMENT (vector), SP_VERB_CONTEXT_GRADIENT,
                   _("Add gradient stop"));
 
@@ -311,16 +397,7 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
         sp_gradient_ensure_vector (gradient);
 
         if (vector->has_stops) {
-            int i = 0;
-            for ( SPObject *ochild = sp_object_first_child (SP_OBJECT(vector)) ; ochild != NULL ; ochild = SP_OBJECT_NEXT(ochild) ) {
-                if (SP_IS_STOP (ochild)) {
-                    if ( SP_STOP(ochild) == newstop ) {
-                        break;
-                    } else {
-                        i++;
-                    }
-                }
-            }
+            guint i = sp_number_of_stops_before_stop(vector, newstop);
 
             gradient = sp_item_gradient (item, fill_or_stroke);
             GrPointType pointtype = POINT_G_INVALID;
@@ -532,10 +609,10 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_A:
         case GDK_a:
-            if (MOD__CTRL_ONLY) {
+            if (MOD__CTRL_ONLY && drag->isNonEmpty()) {
                 drag->selectAll();
+                ret = TRUE;
             }
-            ret = TRUE;
             break;
 
         case GDK_Escape:
@@ -626,14 +703,14 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 ret = TRUE;
             }
             break;
-/*
+
         case GDK_Insert:
         case GDK_KP_Insert:
             // with any modifiers:
-            // insert mid-stops between selected stops in gradient, or between all stops if none or only one selected
+            sp_gradient_context_add_stops_between_selected_stops (rc);
             ret = TRUE;
             break;
-*/
+
         case GDK_Delete:
         case GDK_KP_Delete:
         case GDK_BackSpace:
@@ -722,7 +799,7 @@ static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint st
             // and therefore are already out of tolerance
             ec->_grdrag->grabKnot (SP_ITEM(selection->itemList()->data),
                                    type == SP_GRADIENT_TYPE_LINEAR? POINT_LG_END : POINT_RG_R1,
-                                   0, //point_i
+                                   -1, // ignore number (though it is always 1)
                                    fill_or_stroke, 99999, 99999, etime);
         }
         // We did an undoable action, but sp_document_done will be called by the knot when released
