@@ -1545,14 +1545,14 @@ GrDrag::selected_move (double x, double y, bool write_repr, bool scale_radial)
             // Moving an rg center moves its focus and radii as well.
             // therefore, if this is a focus or radius and if selection
             // contains the center as well, do not move this one
-            bool skip_radius_with_center = false;
             if (d->isA(POINT_RG_R1) || d->isA(POINT_RG_R2) || 
                 (d->isA(POINT_RG_FOCUS) && !d->isA(POINT_RG_CENTER))) {
+                bool skip_radius_with_center = false;
                 for (GList *di = selected; di != NULL; di = di->next) {
                     GrDragger *d_new = (GrDragger *) di->data;
                     if (d_new->isA (((GrDraggable *) d->draggables->data)->item,
                                     POINT_RG_CENTER,
-                                    ((GrDraggable *) d->draggables->data)->point_i,
+                                    0,
                                     ((GrDraggable *) d->draggables->data)->fill_or_stroke)) {
                         // FIXME: here we take into account only the first draggable!
                         skip_radius_with_center = true;
