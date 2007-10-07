@@ -108,6 +108,10 @@ public: // FIXME: make more of this private!
 
 		bool isNonEmpty() {return (draggers != NULL);}
 		bool hasSelection() {return (selected != NULL);}
+		guint numSelected() {return (selected? g_list_length(selected) : 0);}
+		guint numDraggers() {return (draggers? g_list_length(draggers) : 0);}
+		guint singleSelectedDraggerNumDraggables() {return (selected? g_slist_length(((GrDragger *) selected->data)->draggables) : 0);}
+		guint singleSelectedDraggerSingleDraggableType() {return (selected? ((GrDraggable *) ((GrDragger *) selected->data)->draggables->data)->point_type : 0);}
 
     // especially the selection must be private, fix gradient-context to remove direct access to it
     GList *selected; // list of GrDragger*
