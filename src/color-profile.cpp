@@ -549,7 +549,7 @@ int errorHandlerCB(int ErrorCode, const char *ErrorText)
 }
 
 static bool gamutWarn = false;
-static Gdk::Color lastGamutColor("#00ff00");
+static Gdk::Color lastGamutColor("#808080");
 static bool lastBPC = false;
 #if defined(cmsFLAGS_PRESERVEBLACK)
 static bool lastPreserveBlack = false;
@@ -692,7 +692,7 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
     bool preserveBlack = prefs_get_int_attribute_limited( "options.softproof", "preserveblack", 0, 0, 1 );
 #endif //defined(cmsFLAGS_PRESERVEBLACK)
     gchar const* colorStr = prefs_get_string_attribute("options.softproof", "gamutcolor");
-    Gdk::Color gamutColor( (colorStr && colorStr[0]) ? colorStr : "#00ff00");
+    Gdk::Color gamutColor( (colorStr && colorStr[0]) ? colorStr : "#808080");
 
     if ( (warn != gamutWarn)
          || (lastIntent != intent)
