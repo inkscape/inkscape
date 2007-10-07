@@ -645,7 +645,7 @@ groups) with the same effect as Alt+click.)</note>
 <mouse><key><left-drag/><misc-wide f="Space"/></key> <action>drop a copy</action></mouse>
 <note>When dragging nodes with mouse, each Space leaves a copy of the selected object.</note> 
 <note>You can press and hold Space while dragging for a nice "trail."</note>
-<mouse><key><alt/><left-drag/></key>  <action>sculpt nodes</action></mouse>
+<mouse><key><alt/><left-drag/></key>  <action>sculpt selected nodes</action></mouse>
 <note>Sculpting moves the selected nodes so that the dragged node moves all the way, the farthest selected nodes stay put;</note>
 <note>all intermediate selected nodes move intermediate distances, governed by a bell-like curve.</note>
 <note>Sculpting is pressure-sensitive with a tablet; press harder for a blunter drag profile, press lightly for a sharper profile.</note>
@@ -1168,24 +1168,30 @@ groups) with the same effect as Alt+click.)</note>
 <mouse><key><shift/><left-click/></key> <action>add handle to selection</action></mouse>
 <keys><key><misc f="Tab"/></key>  <action>select next handle</action></keys> 
 <keys><key><shift/><misc f="Tab"/></key> <action>select previous handle</action></keys>
+<keys><key><ctrl/>A</key>	 <action>select all handles</action></keys>
 <keys><key><misc f="Esc"/></key> <action>deselect all handles</action></keys>
+<note>Single click outside all handles also deselects all handles.</note>
 </group>
 
 <group>
-<title>Create/delete stops</title>
+<title>Create/delete intermediate stops</title>
 <mouse><key><ctrl/><alt/><left-click/></key> <action>create a stop</action></mouse>
 <mouse><key><left-click/><left-click/></key> <action>create a stop</action></mouse>
 <note>Ctrl+Alt+click or double click on a gradient line creates a new intermediate stop</note>
 <mouse><key><ctrl/><alt/><left-click/></key> <action>delete stop</action></mouse>
-<note>Ctrl+Alt+click on a stop's handle deletes the stop;</note>
-<note>if it was an end stop, gradient shortens or disappears</note>
+<note>Ctrl+Alt+click on a stop's handle deletes the stop; if it was an end stop, gradient shortens or disappears</note>
+<keys><key><misc f="Ins"/></key> <action>insert new stop(s)</action></keys>
+<note>This adds new stop(s) in the middle(s) of selected segment(s), so it requires that more than two adjacent handles be selected.</note>
 <keys><key><misc f="Del"/></key> <action>delete selected stops</action></keys>
 </group>
 
 <group>
 <title>Move handles</title>
-<!-- TODO: restore! -->
 <mouse><key><left-drag/></key>  <action>move selected handle(s)</action></mouse>
+<mouse><key><ctrl/><left-drag/></key>  <action>move stops in 1/10 range increments</action></mouse>
+<note>Ctrl+dragging selected intermediate stops moves them snapping to 1/10 steps of the available range</note>
+<mouse><key><alt/><left-drag/></key>  <action>sculpt selected stops</action></mouse>
+<note>Sculpting moves the selected intermediate stops depending on how close each one is to the stop being dragged, using a smooth bell-like curve similar to the node sculpting feature in Node tool.</note>
 <mouse><key><arrows/></key>  <action>move selected handle by the nudge distance</action></mouse>
 <mouse><key><shift/><arrows/></key>  <action>move selected handle by 10x nudge distance</action></mouse>
 <note>The default nudge distance is 2 px (SVG pixel units, not screen pixels).</note>
