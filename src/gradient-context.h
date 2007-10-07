@@ -39,6 +39,9 @@ struct SPGradientContext : public SPEventContext {
     NR::Point mousepoint_doc; // stores mousepoint when over_line in doc coords
         
     Inkscape::MessageContext *_message_context;
+
+    sigc::connection *selcon;
+    sigc::connection *subselcon;
 };
 
 struct SPGradientContextClass {

@@ -120,8 +120,63 @@ static void sp_gradient_context_dispose(GObject *object)
         delete rc->_message_context;
     }
 
+    rc->selcon->disconnect();
+    delete rc->selcon;
+    rc->subselcon->disconnect();
+    delete rc->subselcon;
+
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
+
+const gchar *gr_handle_descr [] = {
+    N_("Linear gradient <b>start</b>"), //POINT_LG_BEGIN
+    N_("Linear gradient <b>end</b>"),
+    N_("Linear gradient <b>mid stop</b>"),
+    N_("Radial gradient <b>center</b>"),
+    N_("Radial gradient <b>radius</b>"),
+    N_("Radial gradient <b>radius</b>"),
+    N_("Radial gradient <b>focus</b>"), // POINT_RG_FOCUS
+    N_("Radial gradient <b>mid stop</b>"),
+    N_("Radial gradient <b>mid stop</b>")
+};
+
+static void 
+gradient_selection_changed (Inkscape::Selection *, gpointer data)
+{
+    SPGradientContext *rc = (SPGradientContext *) data;
+
+    GrDrag *drag = rc->_grdrag;
+    Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(rc)->desktop);
+    guint n_obj = g_slist_length((GSList *) selection->itemList());
+
+    if (!drag->isNonEmpty() || selection->isEmpty())
+        return;
+    guint n_tot = drag->numDraggers();
+    guint n_sel = drag->numSelected();
+
+    if (n_sel == 1) {
+        if (drag->singleSelectedDraggerNumDraggables() == 1) {
+            rc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
+                    _("%s selected out of %d gradient handles on %d selected object(s)"), gr_handle_descr[drag->singleSelectedDraggerSingleDraggableType()], n_tot, n_obj);
+        } else {
+            rc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
+                    _("One handle merging %d stops (drag with <b>Shift</b> to separate) selected out of %d gradient handles on %d selected object(s)"), drag->singleSelectedDraggerNumDraggables(), n_tot, n_obj);
+        }
+    } else if (n_sel > 1) {
+        rc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
+                                   _("<b>%d</b> gradient handles selected out of %d on %d selected object(s)"), n_sel, n_tot, n_obj);
+    } else if (n_sel == 0) {
+        rc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
+                                   _("<b>No</b> gradient handles selected out of %d on %d selected object(s)"), n_tot, n_obj);
+    }
+}
+
+static void
+gradient_subselection_changed (gpointer, gpointer data)
+{
+    gradient_selection_changed (NULL, data);
+}
+
 
 static void sp_gradient_context_setup(SPEventContext *ec)
 {
@@ -136,8 +191,13 @@ static void sp_gradient_context_setup(SPEventContext *ec)
     }
 
     ec->enableGrDrag();
+    Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
 
     rc->_message_context = new Inkscape::MessageContext(sp_desktop_message_stack(ec->desktop));
+
+    rc->selcon = new sigc::connection (selection->connectChanged( sigc::bind (sigc::ptr_fun(&gradient_selection_changed), rc)));
+    rc->subselcon = new sigc::connection (ec->desktop->connectToolSubselectionChanged(sigc::bind (sigc::ptr_fun(&gradient_subselection_changed), rc)));
+    gradient_selection_changed(selection, rc);
 }
 
 void
