@@ -585,7 +585,7 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
     guint highest_i = draggable->point_i;
     GrDragger *lowest_dragger = dragger;
     GrDragger *highest_dragger = dragger;
-    bool is_selected = g_list_find(drag->selected, dragger);
+    bool is_selected = dragger->isSelected();
     if (is_selected) {
         GrDragger* d_add;
         while ( true )
@@ -658,11 +658,25 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
     for (GSList const* i = moving; i != NULL; i = i->next) {
         GrDragger *drg = (GrDragger*) i->data;
         SPKnot *drgknot = drg->knot;
-        drg->point += displacement;
+        NR::Point this_move = displacement;
+        if (state & GDK_MOD1_MASK) {
+            // FIXME: unify all these profiles (here, in nodepath, in tweak) in one place
+            double alpha = 1.5;
+            if (NR::L2(drg->point - dragger->point) + NR::L2(drg->point - begin) - 1e-3 > NR::L2(dragger->point - begin)) { // drg is on the end side from dragger
+                double x = NR::L2(drg->point - dragger->point)/NR::L2(end - dragger->point);
+                this_move = (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5) * this_move;
+            } else { // drg is on the begin side from dragger
+                double x = NR::L2(drg->point - dragger->point)/NR::L2(begin - dragger->point);
+                this_move = (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5) * this_move;
+            }
+        }
+        drg->point += this_move;
         sp_knot_moveto (drgknot, & drg->point);
         drg->fireDraggables (false);
         drg->updateDependencies(false);
     }
+
+    g_slist_free(moving);
 
     drag->keep_selection = is_selected;
 }
@@ -693,6 +707,13 @@ gr_knot_ungrabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
         dragger->fireDraggables (true, true);
     } else {
         dragger->fireDraggables (true);
+    }
+
+    for (GList *i = dragger->parent->selected; i != NULL; i = i->next) {
+        GrDragger *d = (GrDragger *) i->data;
+        if (d == dragger)
+            continue;
+        d->fireDraggables (true);
     }
 
     // make this dragger selected
