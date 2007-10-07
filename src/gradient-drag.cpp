@@ -73,13 +73,13 @@ SPKnotShapeType gr_knot_shapes [] = {
 const gchar *gr_knot_descr [] = {
     N_("Linear gradient <b>start</b>"), //POINT_LG_BEGIN
     N_("Linear gradient <b>end</b>"),
-    N_("Linear gradient <b>midstop</b>"),
+    N_("Linear gradient <b>mid stop</b>"),
     N_("Radial gradient <b>center</b>"),
     N_("Radial gradient <b>radius</b>"),
     N_("Radial gradient <b>radius</b>"),
     N_("Radial gradient <b>focus</b>"), // POINT_RG_FOCUS
-    N_("Linear gradient <b>midstop</b>"),
-    N_("Linear gradient <b>midstop</b>")
+    N_("Radial gradient <b>mid stop</b>"),
+    N_("Radial gradient <b>mid stop</b>")
 };
 
 static void
