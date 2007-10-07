@@ -107,6 +107,7 @@ public: // FIXME: make more of this private!
     ~GrDrag();
 
 		bool isNonEmpty() {return (draggers != NULL);}
+		bool hasSelection() {return (selected != NULL);}
 
     // especially the selection must be private, fix gradient-context to remove direct access to it
     GList *selected; // list of GrDragger*
