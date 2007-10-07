@@ -804,6 +804,10 @@ void InkscapePreferences::initPageMisc()
     _page_misc.add_line( false, "", _misc_small_toolbar, "",
                            _("Make the commands toolbar use the 'secondary' toolbar size (requires restart)"), true);
 
+    _misc_small_tools.init( _("Make main tools smaller"), "toolbox.tools", "small", true);
+    _page_misc.add_line( false, "", _misc_small_tools, "",
+                           _("Make the main tools use the 'secondary' toolbar size (requires restart)"), true);
+
     _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
     _page_misc.add_line( false, _("Max recent documents:"), _misc_recent, "", 
                            _("The maximum length of the Open Recent list in the File menu"), false);
