@@ -682,7 +682,7 @@ void InkscapePreferences::initPageCMS()
     _page_cms.add_line( false, "", *lbl, "", "", true);
 #endif // !ENABLE_LCMS
 
-    _page_cms.add_group_header( _("Disply Calibration"));
+    _page_cms.add_group_header( _("Display Calibration"));
 
     _cms_display.init( _("Enable display calibration"), "options.displayprofile", "enable", false);
     _page_cms.add_line( false, "", _cms_display, "",
@@ -697,18 +697,18 @@ void InkscapePreferences::initPageCMS()
 
     _page_cms.add_group_header( _("Proofing"));
 
-    _cms_softproof.init( _("Simulate output on screen."), "options.softproof", "enable", false);
+    _cms_softproof.init( _("Simulate output on screen"), "options.softproof", "enable", false);
     _page_cms.add_line( false, "", _cms_softproof, "",
                         _("Simulates output of target device."), false);
 
-    _cms_gamutwarn.init( _("Mark out of gamut colors."), "options.softproof", "gamutwarn", false);
+    _cms_gamutwarn.init( _("Mark out of gamut colors"), "options.softproof", "gamutwarn", false);
     _page_cms.add_line( false, "", _cms_gamutwarn, "",
                         _("Highlights colors that are out of gamut for the target device."), false);
 
     gchar const* colorStr = prefs_get_string_attribute("options.softproof", "gamutcolor");
     Gdk::Color tmpColor( (colorStr && colorStr[0]) ? colorStr : "#00ff00");
     _cms_gamutcolor.set_color( tmpColor );
-    _page_cms.add_line( true, "Out of gamut warning color:", _cms_gamutcolor, "",
+    _page_cms.add_line( true, _("Out of gamut warning color:"), _cms_gamutcolor, "",
                         _("Selects the color used for out of gamut warning."), false);
 
     _page_cms.add_line( false, _("Device profile:"), _cms_proof_profile, "",
@@ -718,11 +718,11 @@ void InkscapePreferences::initPageCMS()
     _page_cms.add_line( false, _("Device intent:"), _cms_proof_intent, "",
                         _("The rendering intent to use to calibrate display output."), false);
 
-    _cms_proof_blackpoint.init( _("Black Point Compensation."), "options.softproof", "bpc", false);
+    _cms_proof_blackpoint.init( _("Black Point Compensation"), "options.softproof", "bpc", false);
     _page_cms.add_line( false, "", _cms_proof_blackpoint, "",
                         _("Enables black point compensation."), false);
 
-    _cms_proof_preserveblack.init( _("Preserve black."), "options.softproof", "preserveblack", false);
+    _cms_proof_preserveblack.init( _("Preserve black"), "options.softproof", "preserveblack", false);
     _page_cms.add_line( false, "", _cms_proof_preserveblack,
 #if defined(cmsFLAGS_PRESERVEBLACK)
                         "",
