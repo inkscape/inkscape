@@ -22,15 +22,15 @@ It is generated automatically from doc/keys.xml by doc/keys-html.xsl.
 <style type="text/css">
 .key {font-weight: bold}
 .action {}
-.note {padding-left: 100px; font-size: 70%}
-.contents {padding: 1em; padding-left: 50px; background-color: #eeeeee; font-size: small; line-height: 1.7em;}
+.note {padding-left: 10em; font-size: 70%}
+.contents {padding: 1em; padding-left: 5em; background-color: #eeeeee; font-size: small; line-height: 1.7em;}
 .contents-title {font-size: large; font-weight: bold; letter-spacing: 0.4em;}
 .contents-section {font-size: large; font-weight: bold;}
 .contents-group {font-size: small; }
 body {margin: 1em; background-color: #ffffff;}
-h1 {margin-top: 0.5em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em; letter-spacing: -0.02em}
-h2 {margin-top: 0.0em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em; font-size: small;}
-h4 {font-weight: bold; font-style: italic; margin-top: 1em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em}
+h1 {margin-top: 0.5em; padding-left: 2em; padding-bottom: 0em; margin-bottom: 0em; letter-spacing: -0.02em}
+h2 {margin-top: 0.0em; padding-left: 6em; padding-bottom: 0em; margin-bottom: 0em; font-size: small;}
+h4 {font-weight: bold; font-style: italic; margin-top: 1em; padding-left: 5em; padding-bottom: 0em; margin-bottom: 0em}
 </style>
 </head>
 <body>
