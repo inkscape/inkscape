@@ -558,8 +558,8 @@ sp_get_stop_i(SPGradient *gradient, guint stop_i)
     return stop;
 }
 
-static guint32
-average_color (guint32 c1, guint32 c2, gdouble p = 0.5)
+guint32
+average_color (guint32 c1, guint32 c2, gdouble p)
 {
 	guint32 r = (guint32) (SP_RGBA32_R_U (c1) * (1 - p) + SP_RGBA32_R_U (c2) * p);
 	guint32 g = (guint32) (SP_RGBA32_G_U (c1) * (1 - p) + SP_RGBA32_G_U (c2) * p);
