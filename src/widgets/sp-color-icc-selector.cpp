@@ -3,6 +3,7 @@
 #endif
 #include <math.h>
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkcombobox.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtktable.h>
@@ -12,6 +13,7 @@
 #include "sp-color-icc-selector.h"
 #include "sp-color-scales.h"
 #include "svg/svg-icc-color.h"
+#include "document.h"
 #include "inkscape.h"
 
 #define noDEBUG_LCMS
@@ -302,6 +304,15 @@ void ColorICCSelector::init()
     gtk_widget_show( _fixupBtn );
     gtk_table_attach( GTK_TABLE (t), _fixupBtn, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD );
 
+
+    _profileSel = gtk_combo_box_new_text();
+    gtk_combo_box_append_text( GTK_COMBO_BOX(_profileSel), "<none>" );
+    gtk_widget_show( _profileSel );
+    gtk_combo_box_set_active( GTK_COMBO_BOX(_profileSel), 0 );
+    gtk_table_attach( GTK_TABLE(t), _profileSel, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD );
+
+    gtk_widget_set_sensitive( _profileSel, false );
+
     row++;
 
     _fooCount = 4;
@@ -442,6 +453,36 @@ void ColorICCSelector::_fixupHit( GtkWidget* src, gpointer data )
     self->_adjustmentChanged( self->_fooAdj[0], SP_COLOR_ICC_SELECTOR(self->_csel) );
 }
 
+void ColorICCSelector::_profilesChanged( std::string const & name )
+{
+    GtkComboBox* combo = GTK_COMBO_BOX(_profileSel);
+    GtkTreeModel* model = gtk_combo_box_get_model( combo );
+    GtkTreeIter iter;
+    while ( gtk_tree_model_get_iter_first( model, &iter ) ) {
+        gtk_combo_box_remove_text( combo, 0 );
+    }
+
+    gtk_combo_box_append_text( combo, "<none>");
+
+    // TODO supress signal emit
+    gtk_combo_box_set_active( combo, 0 );
+
+    int index = 1;
+    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "iccprofile" );
+    while ( current ) {
+        SPObject* obj = SP_OBJECT(current->data);
+        Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
+        gtk_combo_box_append_text( combo, prof->name );
+        if ( name == prof->name ) {
+            gtk_combo_box_set_active( combo, index );
+        }
+
+        index++;
+        current = g_slist_next(current);
+    }
+
+}
+
 /* Helpers for setting color value */
 
 void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
@@ -459,6 +500,7 @@ void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
     g_message("FLIPPIES!!!!     %p   '%s'", color.icc, (color.icc?color.icc->colorProfile.c_str():"<null>"));
 #endif // DEBUG_LCMS
 
+    _profilesChanged( (color.icc) ? color.icc->colorProfile : std::string("") );
     ColorScales::setScaled( _adj, alpha );
 
 #if ENABLE_LCMS

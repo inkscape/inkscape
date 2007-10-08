@@ -54,6 +54,7 @@
 #include "libnr/nr-rect.h"
 #include "sp-item-group.h"
 #include "perspective3d.h"
+#include "profile-manager.h"
 
 #include "display/nr-arena-item.h"
 
@@ -132,12 +133,21 @@ SPDocument::SPDocument() {
 
     priv = p;
 
+    // Once things are set, hook in the manager
+    profileManager = new Inkscape::ProfileManager(this);
+
     // XXX only for testing!
     priv->undoStackObservers.add(p->console_output_undo_observer);
 }
 
 SPDocument::~SPDocument() {
     collectOrphans();
+
+    // kill/unhook this first
+    if ( profileManager ) {
+        delete profileManager;
+        profileManager = 0;
+    }
 
     if (priv) {
         if (priv->partial) {

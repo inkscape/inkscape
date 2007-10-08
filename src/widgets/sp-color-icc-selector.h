@@ -43,12 +43,14 @@ protected:
     void _setProfile( SVGICCColor* profile );
 #endif // ENABLE_LCMS
     void _updateSliders( gint ignore );
+    void _profilesChanged( std::string const & name );
 
     gboolean _updating : 1;
     gboolean _dragging : 1;
 
     guint32 _fixupNeeded;
     GtkWidget* _fixupBtn;
+    GtkWidget* _profileSel;
 
     guint _fooCount;
     guint const* _fooScales;

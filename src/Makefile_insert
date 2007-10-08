@@ -126,6 +126,8 @@ libinkpre_a_SOURCES =	\
 	prefs-utils.cpp	\
 	prefs-utils.h	\
 	print.cpp print.h	\
+	profile-manager.cpp	\
+	profile-manager.h	\
 	rect-context.cpp rect-context.h	\
 	require-config.h \
 	rubberband.cpp rubberband.h	\

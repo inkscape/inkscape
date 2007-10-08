@@ -127,6 +127,12 @@ static void Inkscape::colorprofile_init( ColorProfile *cprof )
  */
 static void Inkscape::colorprofile_release( SPObject *object )
 {
+    // Unregister ourselves
+    SPDocument* document = SP_OBJECT_DOCUMENT(object);
+    if ( document ) {
+        sp_document_remove_resource (SP_OBJECT_DOCUMENT (object), "iccprofile", SP_OBJECT (object));
+    }
+
     ColorProfile *cprof = COLORPROFILE(object);
     if ( cprof->href ) {
         g_free( cprof->href );
@@ -174,6 +180,11 @@ static void Inkscape::colorprofile_build( SPObject *object, SPDocument *document
     sp_object_read_attr( object, "local" );
     sp_object_read_attr( object, "name" );
     sp_object_read_attr( object, "rendering-intent" );
+
+    // Register
+    if ( document ) {
+        sp_document_add_resource( document, "iccprofile", object );
+    }
 }
 
 /**
@@ -328,29 +339,21 @@ static Inkscape::XML::Node* Inkscape::colorprofile_write( SPObject *object, Inks
 #if ENABLE_LCMS
 
 
-static SPObject* bruteFind( SPObject* curr, gchar const* name )
+static SPObject* bruteFind( SPDocument* document, gchar const* name )
 {
     SPObject* result = 0;
-
-    if ( curr ) {
-        if ( IS_COLORPROFILE(curr) ) {
-            ColorProfile* prof = COLORPROFILE(curr);
+    const GSList * current = sp_document_get_resource_list(document, "iccprofile");
+    while ( current && !result ) {
+        if ( IS_COLORPROFILE(current->data) ) {
+            ColorProfile* prof = COLORPROFILE(current->data);
             if ( prof ) {
                 if ( prof->name && (strcmp(prof->name, name) == 0) ) {
-                    result = curr;
+                    result = SP_OBJECT(current->data);
+                    break;
                 }
             }
-        } else {
-            if ( curr->hasChildren() ) {
-                SPObject* child = curr->firstChild();
-                while ( child && !result ) {
-                    result = bruteFind( child, name );
-                    if ( !result ) {
-                        child = child->next;
-                    }
-                };
-            }
         }
+        current = g_slist_next(current);
     }
 
     return result;
@@ -360,8 +363,7 @@ cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, guint* inte
 {
     cmsHPROFILE prof = 0;
 
-    SPObject* root = SP_DOCUMENT_ROOT(document);
-    SPObject* thing = bruteFind( root, name );
+    SPObject* thing = bruteFind( document, name );
     if ( thing ) {
         prof = COLORPROFILE(thing)->profHandle;
     }
@@ -401,7 +403,7 @@ private:
 ProfileInfo::ProfileInfo( cmsHPROFILE prof, Glib::ustring const & path )
 {
     _path = path;
-    _name = cmsTakeProductName(prof);
+    _name = cmsTakeProductDesc(prof);
     _profileSpace = cmsGetColorSpace( prof );
     _profileClass = cmsGetDeviceClass( prof );
 }

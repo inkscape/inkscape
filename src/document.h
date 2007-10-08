@@ -45,6 +45,7 @@ namespace Inkscape {
     class Selection; 
     class UndoStackObserver;
     class EventLog;
+    class ProfileManager;
     namespace XML {
         class Document;
         class Node;
@@ -95,6 +96,8 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 	const gchar *actionkey;
 	/// Handler ID
 	guint modified_id;
+
+    Inkscape::ProfileManager* profileManager;
 
 	// Instance of the connector router
 	Avoid::Router *router;
