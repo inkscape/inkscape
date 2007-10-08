@@ -623,11 +623,17 @@ sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
         }
     }
 
-    if (item->display && item->display->arenaitem) {
+    /* Update bounding box data used by filters */
+    if (item->style->filter.set && item->display) {
         NRRect item_bbox;
         sp_item_invoke_bbox(item, &item_bbox, NR::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
         NR::Maybe<NR::Rect> i_bbox = item_bbox;
-        nr_arena_item_set_item_bbox(item->display->arenaitem, i_bbox);
+        
+        SPItemView *itemview = item->display;
+        do {
+            if (itemview->arenaitem)
+                nr_arena_item_set_item_bbox(itemview->arenaitem, i_bbox);
+        } while ( (itemview = itemview->next) );
     }
 
     // Update libavoid with item geometry (for connector routing).
