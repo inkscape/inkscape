@@ -90,6 +90,8 @@ private:
         
         void update_selection(Selection *);
         void on_filter_selection_changed();
+
+        void on_name_edited(const Glib::ustring&, const Glib::ustring&);
         void on_selection_toggled(const Glib::ustring&);
 
         void update_filters();
@@ -97,7 +99,6 @@ private:
         void add_filter();
         void remove_filter();
         void duplicate_filter();
-        void rename_filter();
 
         sigc::connection _doc_replaced;
         sigc::connection _resource_changed;

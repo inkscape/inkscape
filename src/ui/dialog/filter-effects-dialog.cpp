@@ -907,21 +907,19 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     Gtk::TreeViewColumn* col = _list.get_column(selcol - 1);
     if(col)
        col->add_attribute(_cell_toggle.property_active(), _columns.sel);
-    _list.append_column(_("_Filter"), _columns.label);
+    _list.append_column_editable(_("_Filter"), _columns.label);
+    ((Gtk::CellRendererText*)_list.get_column(1)->get_first_cell_renderer())->
+        signal_edited().connect(sigc::mem_fun(*this, &FilterEffectsDialog::FilterModifier::on_name_edited));
 
     sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
     sw->set_shadow_type(Gtk::SHADOW_IN);
     show_all_children();
     _add.signal_clicked().connect(sigc::mem_fun(*this, &FilterModifier::add_filter));
     _cell_toggle.signal_toggled().connect(sigc::mem_fun(*this, &FilterModifier::on_selection_toggled));
-    //_list.signal_button_press_event().connect_notify(
-    //    sigc::mem_fun(*this, &FilterModifier::filter_list_button_press));
     _list.signal_button_release_event().connect_notify(
         sigc::mem_fun(*this, &FilterModifier::filter_list_button_release));
     _menu = create_popup_menu(*this, sigc::mem_fun(*this, &FilterModifier::duplicate_filter),
                               sigc::mem_fun(*this, &FilterModifier::remove_filter));
-    _menu->items().push_back(Gtk::Menu_Helpers::MenuElem(
-                                 _("R_ename"), sigc::mem_fun(*this, &FilterModifier::rename_filter)));
     _menu->accelerate(*this);
 
     _list.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &FilterModifier::on_filter_selection_changed));
@@ -1004,6 +1002,19 @@ void FilterEffectsDialog::FilterModifier::on_filter_selection_changed()
 {
     _observer->set(get_selected_filter());
     signal_filter_changed()();
+}
+
+void FilterEffectsDialog::FilterModifier::on_name_edited(const Glib::ustring& path, const Glib::ustring& text)
+{
+    Gtk::TreeModel::iterator iter = _model->get_iter(path);
+    
+    if(iter) {
+        SPFilter* filter = (*iter)[_columns.filter];
+        filter->setLabel(text.c_str());
+        sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Rename filter"));
+        if(iter)
+            (*iter)[_columns.label] = text;
+    }
 }
 
 void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustring& path)
@@ -1140,33 +1151,6 @@ void FilterEffectsDialog::FilterModifier::duplicate_filter()
         sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Duplicate filter"));
 
         update_filters();
-    }
-}
-
-void FilterEffectsDialog::FilterModifier::rename_filter()
-{
-    SPFilter* filter = get_selected_filter();
-    Gtk::Window *window = dynamic_cast<Gtk::Window *>(_dialog.get_vbox()->get_ancestor(GTK_TYPE_WINDOW));
-    Gtk::Dialog m("", *window, true);
-    m.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-    m.add_button(_("_Rename"), Gtk::RESPONSE_OK);
-    m.set_default_response(Gtk::RESPONSE_OK);
-    Gtk::Label lbl(_("Filter name:"));
-    Gtk::Entry entry;
-    entry.set_text(filter->label() ? filter->label() : "");
-    Gtk::HBox hb;
-    hb.add(lbl);
-    hb.add(entry);
-    hb.set_spacing(12);
-    hb.show_all();
-    m.get_vbox()->add(hb);
-    const int res = m.run();
-    if(res == Gtk::RESPONSE_OK) {
-        filter->setLabel(entry.get_text().c_str());
-        sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Rename filter"));
-        Gtk::TreeIter iter = _list.get_selection()->get_selected();
-        if(iter)
-            (*iter)[_columns.label] = entry.get_text();
     }
 }
 
