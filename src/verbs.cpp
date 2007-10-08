@@ -80,6 +80,7 @@
 #include "gradient-context.h"
 #include "shape-editor.h"
 #include "draw-context.h"
+#include "gradient-drag.h"
 
 
 /**
@@ -970,7 +971,8 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_EDIT_SELECT_NEXT:
             if (tools_isactive(dt, TOOLS_NODES)) {
                 SP_NODE_CONTEXT(ec)->shape_editor->select_next();
-            } else if (tools_isactive(dt, TOOLS_GRADIENT)) {
+            } else if (tools_isactive(dt, TOOLS_GRADIENT) 
+                       && ec->_grdrag->isNonEmpty()) {
                 sp_gradient_context_select_next (ec);
             } else {
                 sp_selection_item_next();
@@ -979,7 +981,8 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_EDIT_SELECT_PREV:
             if (tools_isactive(dt, TOOLS_NODES)) {
                 SP_NODE_CONTEXT(ec)->shape_editor->select_prev();
-            } else if (tools_isactive(dt, TOOLS_GRADIENT)) {
+            } else if (tools_isactive(dt, TOOLS_GRADIENT)
+                       && ec->_grdrag->isNonEmpty()) {
                 sp_gradient_context_select_prev (ec);
             } else {
                 sp_selection_item_prev();
