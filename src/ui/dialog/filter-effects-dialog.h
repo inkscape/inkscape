@@ -80,26 +80,6 @@ private:
             Gtk::TreeModelColumn<int> sel;
         };
 
-        class CellRendererSel : public Gtk::CellRenderer
-        {
-        public:
-            CellRendererSel();
-
-            Glib::PropertyProxy<int> property_sel()
-            {
-                return _sel.get_proxy();
-            }
-        protected:
-            virtual void get_size_vfunc(Gtk::Widget&, const Gdk::Rectangle*,
-                                    int*, int*, int*, int*) const;
-            virtual void render_vfunc(const Glib::RefPtr<Gdk::Drawable>& win, Gtk::Widget& w,
-                                      const Gdk::Rectangle& bg_area, const Gdk::Rectangle& cell_area,
-                                      const Gdk::Rectangle& expose_area, Gtk::CellRendererState flags);
-        private:
-            const int _size;
-            Glib::Property<int> _sel;
-        };
-
         static void on_activate_desktop(Application*, SPDesktop*, FilterModifier*);
         void on_document_replaced(SPDesktop*, SPDocument*)
         {
@@ -110,9 +90,9 @@ private:
         
         void update_selection(Selection *);
         void on_filter_selection_changed();
+        void on_selection_toggled(const Glib::ustring&);
 
         void update_filters();
-        void filter_list_button_press(GdkEventButton*);
         void filter_list_button_release(GdkEventButton*);
         void add_filter();
         void remove_filter();
@@ -126,7 +106,7 @@ private:
         Gtk::TreeView _list;
         Glib::RefPtr<Gtk::ListStore> _model;
         Columns _columns;
-        CellRendererSel _cell_sel;
+        Gtk::CellRendererToggle _cell_toggle;
         Gtk::Button _add;
         Glib::RefPtr<Gtk::Menu> _menu;
         sigc::signal<void> _signal_filter_changed;

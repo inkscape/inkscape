@@ -902,18 +902,20 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
 
     _model = Gtk::ListStore::create(_columns);
     _list.set_model(_model);
-    const int selcol = _list.append_column("", _cell_sel);
+    _cell_toggle.set_active(true);
+    const int selcol = _list.append_column("", _cell_toggle);
     Gtk::TreeViewColumn* col = _list.get_column(selcol - 1);
     if(col)
-       col->add_attribute(_cell_sel.property_sel(), _columns.sel);
+       col->add_attribute(_cell_toggle.property_active(), _columns.sel);
     _list.append_column(_("_Filter"), _columns.label);
 
     sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
     sw->set_shadow_type(Gtk::SHADOW_IN);
     show_all_children();
     _add.signal_clicked().connect(sigc::mem_fun(*this, &FilterModifier::add_filter));
-    _list.signal_button_press_event().connect_notify(
-        sigc::mem_fun(*this, &FilterModifier::filter_list_button_press));
+    _cell_toggle.signal_toggled().connect(sigc::mem_fun(*this, &FilterModifier::on_selection_toggled));
+    //_list.signal_button_press_event().connect_notify(
+    //    sigc::mem_fun(*this, &FilterModifier::filter_list_button_press));
     _list.signal_button_release_event().connect_notify(
         sigc::mem_fun(*this, &FilterModifier::filter_list_button_release));
     _menu = create_popup_menu(*this, sigc::mem_fun(*this, &FilterModifier::duplicate_filter),
@@ -940,42 +942,6 @@ FilterEffectsDialog::FilterModifier::~FilterModifier()
    _doc_replaced.disconnect();
 }
 
-FilterEffectsDialog::FilterModifier::CellRendererSel::CellRendererSel()
-    : Glib::ObjectBase(typeid(CellRendererSel)),
-      _size(10),
-      _sel(*this, "sel", 0)
-{}
-
-void FilterEffectsDialog::FilterModifier::CellRendererSel::get_size_vfunc(
-    Gtk::Widget&, const Gdk::Rectangle*, int* x, int* y, int* w, int* h) const
-{
-    if(x)
-        (*x) = 0;
-    if(y)
-        (*y) = 0;
-    if(w)
-        (*w) = _size;
-    if(h)
-        (*h) = _size;
-}
-
-void FilterEffectsDialog::FilterModifier::CellRendererSel::render_vfunc(
-    const Glib::RefPtr<Gdk::Drawable>& win, Gtk::Widget& widget, const Gdk::Rectangle& bg_area,
-    const Gdk::Rectangle& cell_area, const Gdk::Rectangle& expose_area, Gtk::CellRendererState flags)
-{
-    const int sel = _sel.get_value();
-
-    if(sel > 0) {
-        const int s = _size - 2;
-        const int w = cell_area.get_width();
-        const int h = cell_area.get_height();
-        const int x = cell_area.get_x() + w / 2 - s / 2;
-        const int y = cell_area.get_y() + h / 2 - s / 2;
-
-        win->draw_rectangle(widget.get_style()->get_text_gc(Gtk::STATE_NORMAL), (sel == 1), x, y, s, s);
-    }
-}
-
 void FilterEffectsDialog::FilterModifier::on_activate_desktop(Application*, SPDesktop* desktop, FilterModifier* me)
 {
     me->update_filters();
@@ -1000,6 +966,10 @@ void FilterEffectsDialog::FilterModifier::on_inkscape_change_selection(Applicati
         fm->update_selection(sel);
 }
 
+// Update each filter's sel property based on the current object selection;
+//  If the filter is not used by any selected object, sel = 0,
+//  otherwise sel is set to the total number of filters in use by selected objects
+//  If only one filter is in use, it is selected
 void FilterEffectsDialog::FilterModifier::update_selection(Selection *sel)
 {
     std::set<SPObject*> used;
@@ -1034,6 +1004,40 @@ void FilterEffectsDialog::FilterModifier::on_filter_selection_changed()
 {
     _observer->set(get_selected_filter());
     signal_filter_changed()();
+}
+
+void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustring& path)
+{
+    Gtk::TreeIter iter = _model->get_iter(path);
+
+    if(iter) {
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPDocument *doc = sp_desktop_document(desktop);
+        SPFilter* filter = (*iter)[_columns.filter];
+        Inkscape::Selection *sel = sp_desktop_selection(desktop);
+
+        /* If this filter is the only one used in the selection, unset it */
+        if((*iter)[_columns.sel] == 1)
+            filter = 0;
+
+        GSList const *items = sel->itemList();
+            
+        for (GSList const *i = items; i != NULL; i = i->next) {
+            SPItem * item = SP_ITEM(i->data);
+            SPStyle *style = SP_OBJECT_STYLE(item);
+            g_assert(style != NULL);
+                
+            if(filter)
+                sp_style_set_property_url(SP_OBJECT(item), "filter", SP_OBJECT(filter), false);
+            else
+                ::remove_filter(item, false);
+
+            SP_OBJECT(item)->requestDisplayUpdate((SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG ));
+        }
+    
+        update_selection(sel);
+        sp_document_done(doc, SP_VERB_DIALOG_FILTER_EFFECTS,  _("Apply filter"));
+    }
 }
 
 /* Add all filters in the document to the combobox.
@@ -1080,31 +1084,6 @@ void FilterEffectsDialog::FilterModifier::select_filter(const SPFilter* filter)
                 break;
             }
         }
-    }
-}
-
-void FilterEffectsDialog::FilterModifier::filter_list_button_press(GdkEventButton* e)
-{
-    // Double-click
-    if(e->type == GDK_2BUTTON_PRESS) {
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-        SPDocument *doc = sp_desktop_document(desktop);
-        SPFilter* filter = get_selected_filter();
-        Inkscape::Selection *sel = sp_desktop_selection(desktop);
-
-        GSList const *items = sel->itemList();
-
-        for (GSList const *i = items; i != NULL; i = i->next) {
-            SPItem * item = SP_ITEM(i->data);
-            SPStyle *style = SP_OBJECT_STYLE(item);
-            g_assert(style != NULL);
-            
-            sp_style_set_property_url(SP_OBJECT(item), "filter", SP_OBJECT(filter), false);
-            SP_OBJECT(item)->requestDisplayUpdate((SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG ));
-        }
-
-        update_selection(sel);
-        sp_document_done(doc, SP_VERB_DIALOG_FILTER_EFFECTS,  _("Apply filter"));
     }
 }
 
