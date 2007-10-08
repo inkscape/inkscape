@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import random, inkex, simplestyle
+import random, inkex, simplestyle, copy
 
 class MyEffect(inkex.Effect):
     def __init__(self):
@@ -47,7 +47,7 @@ class MyEffect(inkex.Effect):
                     try:
                         old_mnode = self.xpathSingle('/svg:svg//svg:marker[@id="%s"]' % marker_id)
                         if not self.options.modify:
-                            mnode = inkex.etree.fromstring(inkex.etree.tostring(old_mnode))
+                            mnode = copy.deepcopy(old_mnode)
                         else:
                             mnode = old_mnode
                     except:

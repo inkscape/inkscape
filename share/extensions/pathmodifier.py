@@ -148,7 +148,7 @@ class PathModifier(inkex.Effect):
     def duplicateNodes(self, aList):
         clones={}
         for id,node in aList.iteritems():
-            clone=inkex.etree.fromstring(inkex.etree.tostring(node))
+            clone=copy.deepcopy(node)
             #!!!--> should it be given an id?
             #seems to work without this!?!
             myid = node.tag.split('}')[-1]
@@ -187,7 +187,7 @@ class PathModifier(inkex.Effect):
                 refid=node.get(inkex.addNS('href','xlink'))
                 path = '//*[@id="%s"]' % refid[1:]
                 refnode = self.document.getroot().xpath(path,inkex.NSS)
-                newnode=inkex.etree.fromstring(inkex.etree.tostring(refnode))
+                newnode=copy.deepcopy(refnode)
                 self.recursNewIds(newnode)
 
                 s = node.get('style')

@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, simplepath, sys
+import inkex, simplepath, sys, copy
 from math import degrees, atan2
 
 class Edge3d(inkex.Effect):
@@ -103,7 +103,7 @@ class Edge3d(inkex.Effect):
                     if result:
                         if not g:
                             g = self.getGroup(node)
-                        nn = inkex.etree.fromstring(inkex.etree.tostring(node))
+                        nn = copy.deepcopy(node)
                         nn.set('d',simplepath.formatPath(result))
                         
                         col = 255 - int(255. * level)
@@ -118,7 +118,7 @@ class Edge3d(inkex.Effect):
             # make a clipped group, clip with clone of original, clipped group
             # include original and group of paths
             clip = inkex.etree.SubElement(defs,inkex.addNS('clipPath','svg'))
-            clip.append(inkex.etree.fromstring(inkex.etree.tostring(node)))
+            clip.append(copy.deepcopy(node))
             clipId = self.uniqueId('clipPath')
             clip.set('id', clipId)
             clipG = inkex.etree.SubElement(node.getparent(),inkex.addNS('g','svg'))

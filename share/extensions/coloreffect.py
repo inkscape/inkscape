@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import sys, copy, optparse, simplestyle, inkex
+import sys, copy, optparse, simplestyle, inkex, copy
 
 import random
 
@@ -81,7 +81,7 @@ class ColorEffect(inkex.Effect):
          #return
        #self.visited.append(this_id)
        #inkex.debug("visited: " + str(self.visited))
-    newnode = inkex.etree.fromstring(inkex.etree.tostring(node))
+    newnode = copy.deepcopy(node)
     newnode.set('id', newid)
     node.getparent().append(newnode)
     self.changeStyle(newnode)
