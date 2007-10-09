@@ -930,6 +930,9 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_EDIT_CLONE_ORIGINAL:
             sp_select_clone_original();
             break;
+        case SP_VERB_EDIT_SELECTION_2_MARKER:
+            sp_selection_to_marker();
+            break;
         case SP_VERB_EDIT_TILE:
             sp_selection_tile();
             break;
@@ -2218,6 +2221,9 @@ Verb *Verb::_base_verbs[] = {
                  N_("Cut the selected clone's link to its original, turning it into a standalone object"), "edit_unlink_clone"),
     new EditVerb(SP_VERB_EDIT_CLONE_ORIGINAL, "EditCloneOriginal", N_("Select _Original"),
                  N_("Select the object to which the selected clone is linked"), "edit_select_original"),
+    // TRANSLATORS: Convert selection to a line marker
+    new EditVerb(SP_VERB_EDIT_SELECTION_2_MARKER, "ObjectsToMarker", N_("Objects to _Marker"),
+                 N_("Convert selection to a line marker"), NULL),
     // TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
     new EditVerb(SP_VERB_EDIT_TILE, "ObjectsToPattern", N_("Objects to Patter_n"),
                  N_("Convert selection to a rectangle with tiled pattern fill"), NULL),

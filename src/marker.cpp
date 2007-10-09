@@ -26,6 +26,7 @@
 #include "attributes.h"
 #include "marker.h"
 #include "document.h"
+#include "document-private.h"
 
 struct SPMarkerView {
 	SPMarkerView *next;
@@ -712,4 +713,38 @@ sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destro
 		}
 	}
 	g_free (view);
+}
+
+const gchar *
+generate_marker (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matrix transform, NR::Matrix move)
+{
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
+
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:marker");
+    repr->setAttribute("markerUnits", "userSpaceOnUse");
+    sp_repr_set_svg_double(repr, "markerWidth", bounds.extent(NR::X));
+    sp_repr_set_svg_double(repr, "markerHeight", bounds.extent(NR::Y));
+
+    repr->setAttribute("orient", "auto");
+
+
+    defsrepr->appendChild(repr);
+    const gchar *mark_id = repr->attribute("id");
+    SPObject *mark_object = document->getObjectById(mark_id);
+
+    for (GSList *i = reprs; i != NULL; i = i->next) {
+            Inkscape::XML::Node *node = (Inkscape::XML::Node *)(i->data);
+        SPItem *copy = SP_ITEM(mark_object->appendChildRepr(node));
+
+        NR::Matrix dup_transform;
+        if (!sp_svg_transform_read (node->attribute("transform"), &dup_transform))
+            dup_transform = NR::identity();
+        dup_transform *= move;
+
+        sp_item_write_transform(copy, SP_OBJECT_REPR(copy), dup_transform);
+    }
+
+    Inkscape::GC::release(repr);
+    return mark_id;
 }

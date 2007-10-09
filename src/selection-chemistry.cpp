@@ -2272,6 +2272,83 @@ sp_select_clone_original()
     }
 }
 
+
+void sp_selection_to_marker(bool apply)
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop == NULL)
+        return;
+
+    SPDocument *doc = sp_desktop_document(desktop);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+
+    // check if something is selected
+    if (selection->isEmpty()) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to marker."));
+        return;
+    }
+
+    sp_document_ensure_up_to_date(doc);
+    NR::Maybe<NR::Rect> r = selection->bounds();
+    if ( !r || r->isEmpty() ) {
+        return;
+    }
+
+    // calculate the transform to be applied to objects to move them to 0,0
+    NR::Point move_p = NR::Point(0, sp_document_height(doc)) - (r->min() + NR::Point ((r->extent(NR::X))/2, (r->extent(NR::Y))/2));
+    move_p[NR::Y] = -move_p[NR::Y];
+    NR::Matrix move = NR::Matrix (NR::translate (move_p));
+
+    GSList *items = g_slist_copy((GSList *) selection->itemList());
+
+    items = g_slist_sort (items, (GCompareFunc) sp_object_compare_position);
+
+    // bottommost object, after sorting
+    SPObject *parent = SP_OBJECT_PARENT (items->data);
+
+    NR::Matrix parent_transform = sp_item_i2root_affine(SP_ITEM(parent));
+
+    // remember the position of the first item
+    gint pos = SP_OBJECT_REPR (items->data)->position();
+
+    // create a list of duplicates
+    GSList *repr_copies = NULL;
+    for (GSList *i = items; i != NULL; i = i->next) {
+        Inkscape::XML::Node *dup = (SP_OBJECT_REPR (i->data))->duplicate(xml_doc);
+        repr_copies = g_slist_prepend (repr_copies, dup);
+    }
+
+    NR::Rect bounds(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
+
+    if (apply) {
+        // delete objects so that their clones don't get alerted; this object will be restored shortly
+        for (GSList *i = items; i != NULL; i = i->next) {
+            SPObject *item = SP_OBJECT (i->data);
+            item->deleteObject (false);
+        }
+    }
+
+    // Hack: Temporarily set clone compensation to unmoved, so that we can move clone-originals
+    // without disturbing clones.
+    // See ActorAlign::on_button_click() in src/ui/dialog/align-and-distribute.cpp
+    int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+    prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+
+    const gchar *mark_id = generate_marker (repr_copies, bounds, doc,
+                                        NR::Matrix(NR::translate(desktop->dt2doc(NR::Point(r->min()[NR::X], r->max()[NR::Y])))) * parent_transform.inverse(), parent_transform * move);
+
+    // restore compensation setting
+    prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
+
+
+    g_slist_free (items);
+
+    sp_document_done (doc, SP_VERB_EDIT_SELECTION_2_MARKER,
+                      _("Objects to marker"));
+}
+
 void
 sp_selection_tile(bool apply)
 {
