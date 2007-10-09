@@ -295,6 +295,13 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
         Gtk::HPaned *paned = new Gtk::HPaned();
         paned->pack1(*Glib::wrap(canvas_tbl));
         paned->pack2(dtw->dock->getWidget(), Gtk::FILL);
+
+        /* Prevent the paned from catching F6 and F8 by unsetting the default callbacks */ 
+        if (GtkPanedClass *paned_class = GTK_PANED_CLASS (G_OBJECT_GET_CLASS (paned->gobj()))) {
+            paned_class->cycle_child_focus = NULL;
+            paned_class->cycle_handle_focus = NULL;
+        }
+
         gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (paned->gobj()), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
                           (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
 
