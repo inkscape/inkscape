@@ -533,6 +533,10 @@
     <mkdir dir="${dist}/plugins"/>
     <copy file="${gtk}/bin/gdb.exe" todir="${dist}"/>
 
+    <!-- Necessary to run extensions on windows if it is not in the path -->
+    <copy file="${gtk}/bin/gspawn-win32-helper.exe" todir="${dist}"/>
+    <copy file="${gtk}/bin/gspawn-win32-helper-console.exe" todir="${dist}"/>
+
     <!-- PERL -->
     <copy file="${gtk}/perl/bin/perl58.dll" todir="${dist}"/>
 
