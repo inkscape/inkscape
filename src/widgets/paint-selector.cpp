@@ -7,6 +7,7 @@
 /*
  * Copyright (C) Lauris Kaplinski 2002
  *   bulia byak <buliabyak@users.sf.net>
+ *   John Cliff <simarilius@yahoo.com>
 */
 
 #define noSP_PS_VERBOSE
@@ -24,6 +25,7 @@
 #include <gtk/gtkoptionmenu.h>
 #include <gtk/gtktooltips.h>
 #include <gtk/gtkmenuitem.h>
+#include <gtk/gtkseparatormenuitem.h>
 
 #include "../sp-pattern.h"
 #include <glibmm/i18n.h>
@@ -43,6 +45,9 @@
 #include <style.h>
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
+#include "path-prefix.h"
+#include "io/sys.h"
+#include "helper/stock-items.h"
 
 #include "paint-selector.h"
 
@@ -692,7 +697,7 @@ sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSelectorMode m
         gtk_object_set_data(GTK_OBJECT(psel->selector), "gradient-selector", gsel);
     }
 
-    /* Actually we have to set optiomenu history here */
+    /* Actually we have to set option menu history here */
     if (mode == SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR) {
         sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
         gtk_frame_set_label(GTK_FRAME(psel->frame), _("Linear gradient"));
@@ -731,17 +736,20 @@ sp_psel_pattern_change(GtkWidget *widget,  SPPaintSelector *psel)
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[CHANGED]);
 }
 
-static GtkWidget*
-ink_pattern_menu(GtkWidget *mnu)
-{
-    /* Create new menu widget */
-    GtkWidget *m = gtk_menu_new();
-    gtk_widget_show(m);
 
-    /* Pick up all patterns  */
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+
+/**
+ *  Returns a list of patterns in the defs of the given source document as a GSList object
+ *  Returns NULL if there are no patterns in the document.
+ */
+GSList *
+ink_pattern_list_get (SPDocument *source)
+{
+    if (source == NULL)
+        return NULL;
+
     GSList *pl = NULL;
-    GSList const *patterns = sp_document_get_resource_list(doc, "pattern");
+    GSList const *patterns = sp_document_get_resource_list(source, "pattern");
     for (GSList *l = (GSList *) patterns; l != NULL; l = l->next) {
         if (SP_PATTERN(l->data) == pattern_getroot(SP_PATTERN(l->data))) {  // only if this is a root pattern
             pl = g_slist_prepend(pl, l->data);
@@ -749,6 +757,120 @@ ink_pattern_menu(GtkWidget *mnu)
     }
 
     pl = g_slist_reverse(pl);
+    return pl;
+}
+
+/**
+ * Adds menu items for pattern list - derived from marker code, left hb etc in to make addition of previews easier at some point.
+ */
+static void
+sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument *source)
+{
+
+    for (; pattern_list != NULL; pattern_list = pattern_list->next) {
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) pattern_list->data);
+                GtkWidget *i = gtk_menu_item_new();
+                gtk_widget_show(i);
+
+        if (repr->attribute("inkscape:stockid"))
+            g_object_set_data (G_OBJECT(i), "stockid", (void *) "true");
+        else
+            g_object_set_data (G_OBJECT(i), "stockid", (void *) "false");
+
+        gchar const *patid = repr->attribute("id");
+        g_object_set_data (G_OBJECT(i), "pattern", (void *) patid);
+
+                GtkWidget *hb = gtk_hbox_new(FALSE, 4);
+                gtk_widget_show(hb);
+
+        // create label
+                GtkWidget *l = gtk_label_new(repr->attribute("id"));
+                gtk_widget_show(l);
+        gtk_misc_set_alignment(GTK_MISC(l), 0.0, 0.5);
+
+                gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, 0);
+
+                gtk_widget_show(hb);
+                gtk_container_add(GTK_CONTAINER(i), hb);
+
+                gtk_menu_append(GTK_MENU(m), i);
+            }
+        }
+
+/**
+ * sp_pattern_list_from_doc()
+ *
+ * \brief Pick up all patterns from source, except those that are in
+ * current_doc (if non-NULL), and add items to the pattern menu
+ *
+ */
+static void
+sp_pattern_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *source, SPDocument *pattern_doc)
+{
+    (void)current_doc;
+    (void)pattern_doc;
+    GSList *pl = ink_pattern_list_get(source);
+    GSList *clean_pl = NULL;
+
+    for (; pl != NULL; pl = pl->next) {
+        if (!SP_IS_PATTERN(pl->data))
+            continue;
+
+        // Add to the list of patterns we really do wish to show
+        clean_pl = g_slist_prepend (clean_pl, pl->data);
+    }
+
+    sp_pattern_menu_build (m, clean_pl, source);
+
+    g_slist_free (pl);
+    g_slist_free (clean_pl);
+}
+
+
+
+
+static void
+ink_pattern_menu_populate_menu(GtkWidget *m, SPDocument *doc)
+{
+    static SPDocument *patterns_doc = NULL;
+
+    // find and load patterns.svg
+    if (patterns_doc == NULL) {
+        char *patterns_source = g_build_filename(INKSCAPE_PATTERNSDIR, "patterns.svg", NULL);
+        if (Inkscape::IO::file_test(patterns_source, G_FILE_TEST_IS_REGULAR)) {
+            patterns_doc = sp_document_new(patterns_source, FALSE);
+        }
+        g_free(patterns_source);
+    }
+
+    // suck in from current doc
+    sp_pattern_list_from_doc ( m, NULL, doc, patterns_doc );
+
+    // add separator
+    {
+        GtkWidget *i = gtk_separator_menu_item_new();
+        gchar const *patid = "None as I'm not a pattern I'm a sperator";
+        g_object_set_data (G_OBJECT(i), "pattern", (void *) patid);
+        gtk_widget_show(i);
+        gtk_menu_append(GTK_MENU(m), i);
+    }
+
+    // suck in from patterns.svg
+    if (patterns_doc) {
+        sp_document_ensure_up_to_date(doc);
+        sp_pattern_list_from_doc ( m, doc, patterns_doc, NULL );
+    }
+
+}
+
+
+static GtkWidget*
+ink_pattern_menu(GtkWidget *mnu)
+{
+   /* Create new menu widget */
+    GtkWidget *m = gtk_menu_new();
+    gtk_widget_show(m);
+    SPDocument *doc = SP_ACTIVE_DOCUMENT;
 
     if (!doc) {
         GtkWidget *i;
@@ -756,40 +878,16 @@ ink_pattern_menu(GtkWidget *mnu)
         gtk_widget_show(i);
         gtk_menu_append(GTK_MENU(m), i);
         gtk_widget_set_sensitive(mnu, FALSE);
-    } else if (!pl) {
-        GtkWidget *i;
-        i = gtk_menu_item_new_with_label(_("No patterns in document"));
-        gtk_widget_show(i);
-        gtk_menu_append(GTK_MENU(m), i);
-        gtk_widget_set_sensitive(mnu, FALSE);
     } else {
-        for (; pl != NULL; pl = pl->next){
-            if (SP_IS_PATTERN(pl->data)){
-                SPPattern *pat = SP_PATTERN(pl->data);
-                GtkWidget *i = gtk_menu_item_new();
-                gtk_widget_show(i);
-                g_object_set_data(G_OBJECT(i), "pattern", pat);
-                GtkWidget *hb = gtk_hbox_new(FALSE, 4);
-                gtk_widget_show(hb);
-                Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) pl->data);
-                GtkWidget *l = gtk_label_new(repr->attribute("id"));
-                gtk_widget_show(l);
-                gtk_misc_set_alignment(GTK_MISC(l), 1.0, 0.5);
-                gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, 0);
-                gtk_widget_show(hb);
-                gtk_container_add(GTK_CONTAINER(i), hb);
-                gtk_menu_append(GTK_MENU(m), i);
-            }
-        }
 
+       ink_pattern_menu_populate_menu(m, doc);
         gtk_widget_set_sensitive(mnu, TRUE);
+
     }
     gtk_option_menu_set_menu(GTK_OPTION_MENU(mnu), m);
 
     /* Set history */
-    //gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), 0);
-
-    g_slist_free(pl);
+    gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), 0);
     return mnu;
 }
 
@@ -816,18 +914,21 @@ sp_update_pattern_list( SPPaintSelector *psel,  SPPattern *pattern)
         gchar *patname = (gchar *) SP_OBJECT_REPR(pattern)->attribute("id");
 
         GtkMenu *m = GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(mnu)));
+
         GList *kids = GTK_MENU_SHELL(m)->children;
 
         int patpos = 0;
         int i = 0;
 
         for (; kids != NULL; kids = kids->next) {
-            gchar *men_pat = (gchar *) SP_OBJECT_REPR(g_object_get_data(G_OBJECT(kids->data), "pattern"))->attribute("id");
+
+            gchar *men_pat = (gchar *) g_object_get_data(G_OBJECT(kids->data), "pattern");
             if ( strcmp(men_pat, patname) == 0 ) {
                 patpos = i;
             }
             i++;
         }
+
 
         gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), patpos);
         gtk_object_set_data(GTK_OBJECT(mnu), "update", GINT_TO_POINTER(FALSE));
@@ -896,7 +997,6 @@ SPPattern *
 sp_paint_selector_get_pattern(SPPaintSelector *psel)
 {
     SPPattern *pat;
-
     g_return_val_if_fail((psel->mode == SP_PAINT_SELECTOR_MODE_PATTERN) , NULL);
 
     GtkWidget *patmnu = (GtkWidget *) g_object_get_data(G_OBJECT(psel), "patternmenu");
@@ -905,9 +1005,30 @@ sp_paint_selector_get_pattern(SPPaintSelector *psel)
 
     GtkMenu *m = GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(patmnu)));
 
-    pat = pattern_getroot(SP_PATTERN(g_object_get_data(G_OBJECT(gtk_menu_get_active(m)), "pattern")));
+    /* Get Pattern */
+    if (!g_object_get_data(G_OBJECT(gtk_menu_get_active(m)), "pattern"))
+    {
+        return NULL;
+    }
+    gchar *patid = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(m)),
+                                                "pattern");
+    gchar *pattern = "";
+    if (strcmp(patid, "none")){
 
-    return pat;
+       gchar *stockid = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(m)),
+                                                "stockid");
+       gchar *paturn = patid;
+       if (!strcmp(stockid,"true")) paturn = g_strconcat("urn:inkscape:pattern:",patid,NULL);
+       SPObject *pat_obj = get_stock_item(paturn);
+       if (pat_obj) {
+            pat = SP_PATTERN(pat_obj);
+        }
+    } else {
+    pat = pattern_getroot(SP_PATTERN(g_object_get_data(G_OBJECT(gtk_menu_get_active(m)), "pattern")));
+    }
+
+    if SP_IS_PATTERN(pat) return pat;
+    return NULL;
 }
 
 void
