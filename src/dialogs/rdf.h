@@ -23,18 +23,18 @@
  * \brief Holds license name/resource doubles for rdf_license_t entries
  */
 struct rdf_double_t {
-    gchar *name;
-    gchar *resource;
+    gchar const *name;
+    gchar const *resource;
 };
 
 /**
  * \brief Holds license name and RDF information
  */
 struct rdf_license_t {
-    gchar *name;        /* localized name of this license */
-    gchar *uri;         /* URL for the RDF/Work/license element */
+    gchar const *name;        /* localized name of this license */
+    gchar const *uri;         /* URL for the RDF/Work/license element */
     struct rdf_double_t *details; /* the license details */
-//    gchar *fragment;    /* XML contents for the RDF/License tag */
+//    gchar const *fragment;    /* XML contents for the RDF/License tag */
 };
 
 extern rdf_license_t rdf_licenses [];
@@ -69,11 +69,11 @@ enum RDF_Editable {
  * \brief Holds known RDF/Work tags
  */
 struct rdf_work_entity_t {
-    char   *name;       /* unique name of this entity for internal reference */
-    gchar  *title;      /* localized title of this entity for data entry */
-    gchar  *tag;        /* namespace tag for the RDF/Work element */
+    char const *name;       /* unique name of this entity for internal reference */
+    gchar const *title;      /* localized title of this entity for data entry */
+    gchar const *tag;        /* namespace tag for the RDF/Work element */
     RDFType datatype;   /* how to extract/inject the RDF information */
-    gchar  *tip;        /* tool tip to explain the meaning of the entity */
+    gchar const *tip;        /* tool tip to explain the meaning of the entity */
     RDF_Format format;  /* in what format is this data edited? */
     RDF_Editable editable;/* in what way is the data editable? */
 };
