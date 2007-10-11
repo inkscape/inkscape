@@ -1186,7 +1186,7 @@ groups) with the same effect as Alt+click.)</note>
 </group>
 
 <group>
-<title>Move handles</title>
+<title>Move handles/stops</title>
 <mouse><key><left-drag/></key>  <action>move selected handle(s)</action></mouse>
 <mouse><key><ctrl/><left-drag/></key>  <action>move stops in 1/10 range increments</action></mouse>
 <note>Ctrl+dragging selected intermediate stops moves them snapping to 1/10 steps of the available range</note>
@@ -1197,11 +1197,9 @@ groups) with the same effect as Alt+click.)</note>
 <note>The default nudge distance is 2 px (SVG pixel units, not screen pixels).</note>
 <mouse><key><alt/><arrows/></key>  <action>move selected handle by 1 pixel</action></mouse>
 <mouse><key><alt/><shift/><arrows/></key>  <action>move selected handle by 10 pixels</action></mouse>
+<note>If at least one end handle is selected, arrow keys move the end handle to move or resize the gradient line.</note>
+<note>If only mid stops are selected, arrow keys move the selected stops along the gradient line.</note>
 <note>The actual distance for pixel movements depends on zoom level. Zoom in for finer movement.</note>
-<!-- TODO: 
-<mouse><key><alt/><left-drag/></key>  <action>sculpt handles</action></mouse>
-<note>Sculpting moves the selected handles so that the dragged handle moves all the way, the farthest handles stay put, and the intermediate handles move intermediate distances, governed by a bell-like curve</note>
- -->
 </group>
 
 <group>
