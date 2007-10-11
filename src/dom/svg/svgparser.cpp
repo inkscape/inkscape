@@ -54,7 +54,7 @@ namespace svg
 /**
  *
  */
-void SvgParser::error(char *fmt, ...)
+void SvgParser::error(char const *fmt, ...)
 {
     va_list args;
     fprintf(stderr, "SvgParser:error:");

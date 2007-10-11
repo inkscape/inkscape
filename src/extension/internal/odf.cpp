@@ -884,12 +884,12 @@ int SingularValueDecomposition::rank()
 /**
  * Get the value of a node/attribute pair
  */
-static Glib::ustring getAttribute( Inkscape::XML::Node *node, char *attrName)
+static Glib::ustring getAttribute( Inkscape::XML::Node *node, char const *attrName)
 {
     Glib::ustring val;
-    char *valstr = (char *)node->attribute(attrName);
+    char const *valstr = node->attribute(attrName);
     if (valstr)
-        val = (const char *)valstr;
+        val = valstr;
     return val;
 }
 
@@ -1175,7 +1175,7 @@ bool OdfOutput::writeManifest(ZipFile &zf)
         else if (ext == ".jpg")
             outs.printf("image/jpeg");
         outs.printf("\" manifest:full-path=\"");
-        outs.printf((char *)newName.c_str());
+        outs.printf(newName.c_str());
         outs.printf("\"/>\n");
         }
     outs.printf("</manifest:manifest>\n");

@@ -203,13 +203,13 @@ private:
     std::string fileName;
 
     //debug messages
-    void error(char *fmt, ...)
+    void error(char const *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
     ;
 
-    void trace(char *fmt, ...)
+    void trace(char const *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
@@ -478,12 +478,12 @@ public:
 private:
 
     //debug messages
-    void error(char *fmt, ...)
+    void error(char const *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
     ;
-    void trace(char *fmt, ...)
+    void trace(char const *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif

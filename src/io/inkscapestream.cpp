@@ -509,7 +509,7 @@ void BasicWriter::put(gunichar ch)
 /**
  * Provide printf()-like formatting
  */ 
-Writer &BasicWriter::printf(char *fmt, ...)
+Writer &BasicWriter::printf(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
@@ -708,7 +708,7 @@ Writer& operator<< (Writer &writer, Glib::ustring &val)
 Writer& operator<< (Writer &writer, std::string &val)
     { return writer.writeStdString(val); }
 
-Writer& operator<< (Writer &writer, char *val)
+Writer& operator<< (Writer &writer, char const *val)
     { return writer.writeString(val); }
 
 Writer& operator<< (Writer &writer, bool val)

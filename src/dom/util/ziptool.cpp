@@ -231,7 +231,7 @@ private:
     /**
      *
      */
-    void error(char *fmt, ...)
+    void error(char const *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
@@ -240,7 +240,7 @@ private:
     /**
      *
      */
-    void trace(char *fmt, ...)
+    void trace(char const *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
@@ -314,7 +314,7 @@ Inflater::~Inflater()
 /**
  *
  */
-void Inflater::error(char *fmt, ...)
+void Inflater::error(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
@@ -327,7 +327,7 @@ void Inflater::error(char *fmt, ...)
 /**
  *
  */
-void Inflater::trace(char *fmt, ...)
+void Inflater::trace(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
@@ -844,13 +844,13 @@ public:
 private:
 
     //debug messages
-    void error(char *fmt, ...)
+    void error(char const *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
     ;
 
-    void trace(char *fmt, ...)
+    void trace(char const *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
@@ -982,7 +982,7 @@ bool Deflater::deflate(std::vector<unsigned char> &dest,
 /**
  *  Print error messages
  */
-void Deflater::error(char *fmt, ...)
+void Deflater::error(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
@@ -995,7 +995,7 @@ void Deflater::error(char *fmt, ...)
 /**
  *  Print trace messages
  */
-void Deflater::trace(char *fmt, ...)
+void Deflater::trace(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
@@ -1427,7 +1427,7 @@ GzipFile::~GzipFile()
 /**
  *  Print error messages
  */
-void GzipFile::error(char *fmt, ...)
+void GzipFile::error(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
@@ -1440,7 +1440,7 @@ void GzipFile::error(char *fmt, ...)
 /**
  *  Print trace messages
  */
-void GzipFile::trace(char *fmt, ...)
+void GzipFile::trace(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
@@ -2172,7 +2172,7 @@ std::vector<ZipEntry *> &ZipFile::getEntries()
 //# M E S S A G E S
 //#####################################
 
-void ZipFile::error(char *fmt, ...)
+void ZipFile::error(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
@@ -2182,7 +2182,7 @@ void ZipFile::error(char *fmt, ...)
     va_end(args);
 }
 
-void ZipFile::trace(char *fmt, ...)
+void ZipFile::trace(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);

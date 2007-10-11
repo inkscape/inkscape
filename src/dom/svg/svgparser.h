@@ -122,7 +122,7 @@ private:
     /**
      *
      */
-    void error(char *format, ...)
+    void error(char const *format, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif

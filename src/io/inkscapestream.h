@@ -475,7 +475,7 @@ public:
     virtual void put(gunichar ch) = 0;
     
     /* Formatted output */
-    virtual Writer& printf(char *fmt, ...) G_GNUC_PRINTF(2,3) = 0;
+    virtual Writer& printf(char const *fmt, ...) G_GNUC_PRINTF(2,3) = 0;
 
     virtual Writer& writeChar(char val) = 0;
 
@@ -531,7 +531,7 @@ public:
     
     
     /* Formatted output */
-    virtual Writer &printf(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    virtual Writer &printf(char const *fmt, ...) G_GNUC_PRINTF(2,3);
 
     virtual Writer& writeChar(char val);
 
@@ -579,7 +579,7 @@ Writer& operator<< (Writer &writer, Glib::ustring &val);
 
 Writer& operator<< (Writer &writer, std::string &val);
 
-Writer& operator<< (Writer &writer, char *val);
+Writer& operator<< (Writer &writer, char const *val);
 
 Writer& operator<< (Writer &writer, bool val);
 

@@ -896,7 +896,7 @@ int BasicWriter::put(XMLCh ch)
  * Provide printf()-like formatting
  */
 /*
-Writer &BasicWriter::printf(char *fmt, ...)
+Writer &BasicWriter::printf(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
