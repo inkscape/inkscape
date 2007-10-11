@@ -7,9 +7,11 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
+ *   Nathan Hurst <njh@njhurst.com>
  *   Carl Hetherington <inkscape@carlh.net>
  *
- * Copyright (C) 2006-2007      Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
+ * Copyrigth (C) 2004      Nathan Hurst
  * Copyright (C) 1999-2002 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
