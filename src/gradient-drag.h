@@ -41,6 +41,8 @@ struct GrDraggable {
 	gint point_i;  // the stop number of this point ( = 0 POINT_LG_BEGIN and POINT_RG_CENTER)
 	bool fill_or_stroke;
 
+	SPObject *getServer();
+
 	bool mayMerge (GrDraggable *da2);
 
     inline int equals (GrDraggable *other) {

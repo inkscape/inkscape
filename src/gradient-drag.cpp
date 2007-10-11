@@ -342,6 +342,23 @@ GrDraggable::~GrDraggable ()
     g_object_unref (G_OBJECT (this->item));
 }
 
+
+SPObject *
+GrDraggable::getServer ()
+{
+    if (!item)
+        return NULL;
+
+    SPObject *server = NULL;
+    if (fill_or_stroke)
+        server = SP_OBJECT_STYLE_FILL_SERVER (item);
+    else
+        server = SP_OBJECT_STYLE_STROKE_SERVER (item);
+
+    return server;
+}
+
+
 // FIXME: make global function in libnr or somewhere.
 static NR::Point *
 get_snap_vector (NR::Point p, NR::Point o, double snap, double initial)
@@ -552,6 +569,91 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
 }
 
 
+static void
+gr_midpoint_limits(GrDragger *dragger, SPObject *server, NR::Point *begin, NR::Point *end, NR::Point *low_lim, NR::Point *high_lim, GSList **moving)
+{
+
+    GrDrag *drag = dragger->parent;
+    // a midpoint dragger can (logically) only contain one GrDraggable
+    GrDraggable *draggable = (GrDraggable *) dragger->draggables->data;
+
+    // get begin and end points between which dragging is allowed:
+    // the draglimits are between knot(lowest_i - 1) and knot(highest_i + 1)
+    *moving = g_slist_append(*moving, dragger);
+
+    guint lowest_i = draggable->point_i;
+    guint highest_i = draggable->point_i;
+    GrDragger *lowest_dragger = dragger;
+    GrDragger *highest_dragger = dragger;
+    if (dragger->isSelected()) {
+        GrDragger* d_add;
+        while ( true )
+        {
+            d_add = drag->getDraggerFor(draggable->item, draggable->point_type, lowest_i - 1, draggable->fill_or_stroke);
+            if ( d_add && g_list_find(drag->selected, d_add) ) {
+                lowest_i = lowest_i - 1;
+                *moving = g_slist_prepend(*moving, d_add);
+                lowest_dragger = d_add;
+            } else {
+                break;
+            }
+        }
+
+        while ( true )
+        {
+            d_add = drag->getDraggerFor(draggable->item, draggable->point_type, highest_i + 1, draggable->fill_or_stroke);
+            if ( d_add && g_list_find(drag->selected, d_add) ) {
+                highest_i = highest_i + 1;
+                *moving = g_slist_append(*moving, d_add);
+                highest_dragger = d_add;
+            } else {
+                break;
+            }
+        }
+    }
+
+    if ( SP_IS_LINEARGRADIENT(server) ) {
+        guint num = SP_LINEARGRADIENT(server)->vector.stops.size();
+        GrDragger *d_temp;
+        if (lowest_i == 1) {
+            d_temp = drag->getDraggerFor (draggable->item, POINT_LG_BEGIN, 0, draggable->fill_or_stroke);
+        } else {
+            d_temp = drag->getDraggerFor (draggable->item, POINT_LG_MID, lowest_i - 1, draggable->fill_or_stroke);
+        }
+        if (d_temp) 
+            *begin = d_temp->point;
+
+        d_temp = drag->getDraggerFor (draggable->item, POINT_LG_MID, highest_i + 1, draggable->fill_or_stroke);
+        if (d_temp == NULL) {
+            d_temp = drag->getDraggerFor (draggable->item, POINT_LG_END, num-1, draggable->fill_or_stroke);
+        }
+        if (d_temp) 
+            *end = d_temp->point;
+    } else if ( SP_IS_RADIALGRADIENT(server) ) {
+        guint num = SP_RADIALGRADIENT(server)->vector.stops.size();
+        GrDragger *d_temp;
+        if (lowest_i == 1) {
+            d_temp = drag->getDraggerFor (draggable->item, POINT_RG_CENTER, 0, draggable->fill_or_stroke);
+        } else {
+            d_temp = drag->getDraggerFor (draggable->item, draggable->point_type, lowest_i - 1, draggable->fill_or_stroke);
+        }
+        if (d_temp) 
+            *begin = d_temp->point;
+
+        d_temp = drag->getDraggerFor (draggable->item, draggable->point_type, highest_i + 1, draggable->fill_or_stroke);
+        if (d_temp == NULL) {
+            d_temp = drag->getDraggerFor (draggable->item, (draggable->point_type==POINT_RG_MID1) ? POINT_RG_R1 : POINT_RG_R2, num-1, draggable->fill_or_stroke);
+        }
+        if (d_temp) 
+            *end = d_temp->point;
+    }
+
+    *low_lim  = dragger->point - (lowest_dragger->point - *begin);
+    *high_lim = dragger->point - (highest_dragger->point - *end);
+}
+
+
+
 /**
 Called when a midpoint knot is dragged.
 */
@@ -568,85 +670,12 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
 
     NR::Point p = *ppointer;
     NR::Point begin(0,0), end(0,0);
+    NR::Point low_lim(0,0), high_lim(0,0);
 
-    SPObject *server;
-    if (draggable->fill_or_stroke)
-        server = SP_OBJECT_STYLE_FILL_SERVER (draggable->item);
-    else
-        server = SP_OBJECT_STYLE_STROKE_SERVER (draggable->item);
+    SPObject *server = draggable->getServer();
 
-
-    // get begin and end points between which dragging is allowed:
-    // the draglimits are between knot(lowest_i - 1) and knot(highest_i + 1)
     GSList *moving = NULL;
-    moving = g_slist_append(moving, dragger);
-
-    guint lowest_i = draggable->point_i;
-    guint highest_i = draggable->point_i;
-    GrDragger *lowest_dragger = dragger;
-    GrDragger *highest_dragger = dragger;
-    bool is_selected = dragger->isSelected();
-    if (is_selected) {
-        GrDragger* d_add;
-        while ( true )
-        {
-            d_add = drag->getDraggerFor(draggable->item, draggable->point_type, lowest_i - 1, draggable->fill_or_stroke);
-            if ( d_add && g_list_find(drag->selected, d_add) ) {
-                lowest_i = lowest_i - 1;
-                moving = g_slist_prepend(moving, d_add);
-                lowest_dragger = d_add;
-            } else {
-                break;
-            }
-        }
-
-        while ( true )
-        {
-            d_add = drag->getDraggerFor(draggable->item, draggable->point_type, highest_i + 1, draggable->fill_or_stroke);
-            if ( d_add && g_list_find(drag->selected, d_add) ) {
-                highest_i = highest_i + 1;
-                moving = g_slist_append(moving, d_add);
-                highest_dragger = d_add;
-            } else {
-                break;
-            }
-        }
-    }
-
-    if ( SP_IS_LINEARGRADIENT(server) ) {
-        guint num = SP_LINEARGRADIENT(server)->vector.stops.size();
-        GrDragger *d_temp;
-        if (lowest_i == 1) {
-            d_temp = drag->getDraggerFor (draggable->item, POINT_LG_BEGIN, 0, draggable->fill_or_stroke);
-        } else {
-            d_temp = drag->getDraggerFor (draggable->item, POINT_LG_MID, lowest_i - 1, draggable->fill_or_stroke);
-        }
-        if (d_temp) begin = d_temp->point;
-
-        d_temp = drag->getDraggerFor (draggable->item, POINT_LG_MID, highest_i + 1, draggable->fill_or_stroke);
-        if (d_temp == NULL) {
-            d_temp = drag->getDraggerFor (draggable->item, POINT_LG_END, num-1, draggable->fill_or_stroke);
-        }
-        if (d_temp) end = d_temp->point;
-    } else if ( SP_IS_RADIALGRADIENT(server) ) {
-        guint num = SP_RADIALGRADIENT(server)->vector.stops.size();
-        GrDragger *d_temp;
-        if (lowest_i == 1) {
-            d_temp = drag->getDraggerFor (draggable->item, POINT_RG_CENTER, 0, draggable->fill_or_stroke);
-        } else {
-            d_temp = drag->getDraggerFor (draggable->item, draggable->point_type, lowest_i - 1, draggable->fill_or_stroke);
-        }
-        if (d_temp) begin = d_temp->point;
-
-        d_temp = drag->getDraggerFor (draggable->item, draggable->point_type, highest_i + 1, draggable->fill_or_stroke);
-        if (d_temp == NULL) {
-            d_temp = drag->getDraggerFor (draggable->item, (draggable->point_type==POINT_RG_MID1) ? POINT_RG_R1 : POINT_RG_R2, num-1, draggable->fill_or_stroke);
-        }
-        if (d_temp) end = d_temp->point;
-    }
-
-    NR::Point low_lim  = dragger->point - (lowest_dragger->point - begin);
-    NR::Point high_lim = dragger->point - (highest_dragger->point - end);
+    gr_midpoint_limits(dragger, server, &begin, &end, &low_lim, &high_lim, &moving);
 
     if (state & GDK_CONTROL_MASK) {
         p = snap_vector_midpoint (p, low_lim, high_lim, snap_fraction);
@@ -678,7 +707,7 @@ gr_knot_moved_midpoint_handler(SPKnot *knot, NR::Point const *ppointer, guint st
 
     g_slist_free(moving);
 
-    drag->keep_selection = is_selected;
+    drag->keep_selection = dragger->isSelected();
 }
 
 
@@ -1008,11 +1037,9 @@ Moves all midstop draggables that depend on this one
  */
 void
 GrDragger::updateMidstopDependencies (GrDraggable *draggable, bool write_repr) {
-    SPObject *server;
-    if (draggable->fill_or_stroke)
-        server = SP_OBJECT_STYLE_FILL_SERVER (draggable->item);
-    else
-        server = SP_OBJECT_STYLE_STROKE_SERVER (draggable->item);
+    SPObject *server = draggable->getServer();
+    if (!server) 
+        return;
     guint num = SP_GRADIENT(server)->vector.stops.size();
     if (num <= 2) return;
 
@@ -1592,21 +1619,50 @@ GrDrag::selected_move (double x, double y, bool write_repr, bool scale_radial)
 
             d->updateDependencies(write_repr);
         }
+
+        if (write_repr && did) {
+            // we did an undoable action
+            sp_document_maybe_done (sp_desktop_document (desktop), "grmoveh", SP_VERB_CONTEXT_GRADIENT,
+                                    _("Move gradient handle(s)"));
+            return;
+        }
+
     }
 
     if (!did) { // none of the end draggers are selected, so let's try to move the mids
-        for (GList *i = selected; i != NULL; i = i->next) {
-            GrDragger *d = (GrDragger *) i->data;
 
-            if (d->isA(POINT_LG_MID) || !d->isA(POINT_RG_MID1) || !d->isA(POINT_RG_MID2)) {
-            }
+        GrDragger *dragger = (GrDragger *) selected->data;
+        // a midpoint dragger can (logically) only contain one GrDraggable
+        GrDraggable *draggable = (GrDraggable *) dragger->draggables->data;
+
+        NR::Point begin(0,0), end(0,0);
+        NR::Point low_lim(0,0), high_lim(0,0);
+
+        SPObject *server = draggable->getServer();
+        GSList *moving = NULL;
+        gr_midpoint_limits(dragger, server, &begin, &end, &low_lim, &high_lim, &moving);
+
+        NR::Point p(x, y);
+        p = snap_vector_midpoint (dragger->point + p, low_lim, high_lim, 0);
+        NR::Point displacement = p - dragger->point;
+
+        for (GSList const* i = moving; i != NULL; i = i->next) {
+            GrDragger *drg = (GrDragger*) i->data;
+            SPKnot *drgknot = drg->knot;
+            drg->point += displacement;
+            sp_knot_moveto (drgknot, & drg->point);
+            drg->fireDraggables (true);
+            drg->updateDependencies(true);
+            did = true;
         }
-    }
 
-    if (write_repr && did) {
-        // we did an undoable action
-        sp_document_maybe_done (sp_desktop_document (desktop), "grmove", SP_VERB_CONTEXT_GRADIENT,
-                          _("Move gradient handle"));
+        g_slist_free(moving);
+
+        if (write_repr && did) {
+            // we did an undoable action
+            sp_document_maybe_done (sp_desktop_document (desktop), "grmovem", SP_VERB_CONTEXT_GRADIENT,
+                                    _("Move gradient mid stop(s)"));
+        }
     }
 }
 
