@@ -148,8 +148,18 @@ inline Inkscape::XML::Node *sp_repr_parent(Inkscape::XML::Node const *repr) {
 }
 
 /// Returns first child of node, resets iterator.
+inline Inkscape::XML::Node const *sp_repr_children(Inkscape::XML::Node const *repr) {
+    return ( repr ? repr->firstChild() : NULL );
+}
+
+/// Returns first child of node, resets iterator.
 inline Inkscape::XML::Node *sp_repr_children(Inkscape::XML::Node *repr) {
     return ( repr ? repr->firstChild() : NULL );
+}
+
+/// Returns next child of node or NULL.
+inline Inkscape::XML::Node const *sp_repr_next(Inkscape::XML::Node const *repr) {
+    return ( repr ? repr->next() : NULL );
 }
 
 /// Returns next child of node or NULL.
