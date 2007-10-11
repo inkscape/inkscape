@@ -27,18 +27,18 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 #include <stdio.h>
-
+#include <stdlib.h>
 
 
 struct SvgProp_def
 {
-    char *name;
-    char *values;
-    char *defaultValue;
-    char *appliesTo;
+    char const *name;
+    char const *values;
+    char const *defaultValue;
+    char const *appliesTo;
     bool inherited;
-    char *percentages;
-    char *mediaGroups;
+    char const *percentages;
+    char const *mediaGroups;
     bool animatable;
 };
 
@@ -710,10 +710,10 @@ false
 };
 
 
-bool printTable()
+static void
+printTable()
 {
-    for (SvgProp *prop=svgProps; prop->name ; prop++)
-        {
+    for (SvgProp const *prop = svgProps; prop->name; prop++) {
         printf("#### Prop: %s ####\n", prop->name);
         printf("values      : %s\n", prop->values);
         printf("defaultValue: %s\n", prop->defaultValue);
@@ -723,13 +723,24 @@ bool printTable()
         printf("groups      : %s\n", prop->mediaGroups);
         printf("animatable  : %s\n", ( prop->animatable ? "true" : "false" ));
         printf("\n");
-        }
-    return true;
+    }
 }
 
 
 int main(int argc, char **argv)
 {
     printTable();
-    return 0;
+    return ( ferror(stdout) ? EXIT_FAILURE : EXIT_SUCCESS );
 }
+
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
