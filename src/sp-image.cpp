@@ -361,12 +361,64 @@ GdkPixbuf*  pixbuf_new_from_file( const char *filename, GError **error )
                                 }
 */
 
+#if defined(PNG_sRGB_SUPPORTED)
+                                {
+                                    int intent = 0;
+                                    if ( png_get_sRGB(pngPtr, infoPtr, &intent) ) {
+//                                         g_message("Found an sRGB png chunk");
+                                    }
+                                }
+#endif // defined(PNG_sRGB_SUPPORTED)
+
+#if defined(PNG_cHRM_SUPPORTED)
+                                {
+                                    double white_x = 0;
+                                    double white_y = 0;
+                                    double red_x = 0;
+                                    double red_y = 0;
+                                    double green_x = 0;
+                                    double green_y = 0;
+                                    double blue_x = 0;
+                                    double blue_y = 0;
+
+                                    if ( png_get_cHRM(pngPtr, infoPtr,
+                                                      &white_x, &white_y,
+                                                      &red_x, &red_y,
+                                                      &green_x, &green_y,
+                                                      &blue_x, &blue_y) ) {
+//                                         g_message("Found a cHRM png chunk");
+                                    }
+                                }
+#endif // defined(PNG_cHRM_SUPPORTED)
+
+#if defined(PNG_gAMA_SUPPORTED)
+                                {
+                                    double file_gamma = 0;
+                                    if ( png_get_gAMA(pngPtr, infoPtr, &file_gamma) ) {
+//                                         g_message("Found a gAMA png chunk");
+                                    }
+                                }
+#endif // defined(PNG_gAMA_SUPPORTED)
+
+#if defined(PNG_iCCP_SUPPORTED)
+                                {
+                                    char* name = 0;
+                                    int compression_type = 0;
+                                    char* profile = 0;
+                                    png_uint_32 proflen = 0;
+                                    if ( png_get_iCCP(pngPtr, infoPtr, &name, &compression_type, &profile, &proflen) ) {
+//                                         g_message("Found an iCCP chunk named [%s] with %d bytes and comp %d", name, proflen, compression_type);
+                                    }
+                                }
+#endif // defined(PNG_iCCP_SUPPORTED)
+
+
                                 // now clean it up.
                                 png_destroy_read_struct( &pngPtr, &infoPtr, NULL );//&endPtr );
                             }
                             else
                             {
-                                g_message("Error when creating PNG read struct");
+//                                 g_message("Error when creating PNG read struct");
                             }
                         }
                     }
@@ -394,6 +446,7 @@ GdkPixbuf*  pixbuf_new_from_file( const char *filename, GError **error )
                         gchar *tmp = g_strdup_printf( "%d", dpiX );
                         if ( tmp )
                         {
+//                             g_message("Need to set DpiX: %s", tmp);
                             //gdk_pixbuf_set_option( buf, "Inkscape::DpiX", tmp );
                             g_free( tmp );
                         }
@@ -403,6 +456,7 @@ GdkPixbuf*  pixbuf_new_from_file( const char *filename, GError **error )
                         gchar *tmp = g_strdup_printf( "%d", dpiY );
                         if ( tmp )
                         {
+//                             g_message("Need to set DpiY: %s", tmp);
                             //gdk_pixbuf_set_option( buf, "Inkscape::DpiY", tmp );
                             g_free( tmp );
                         }
