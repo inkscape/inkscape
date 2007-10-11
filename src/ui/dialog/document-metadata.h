@@ -58,7 +58,7 @@ protected:
     RDElist _rdflist;
     Licensor _licensor;
 
-    gchar * _prefs_path;
+    gchar const *_prefs_path;
     Registry _wr;
 
 private:

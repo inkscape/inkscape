@@ -84,7 +84,7 @@ protected:
     Gtk::ComboBoxText _grids_combo_gridtype;
     //---------------------------------------------------------------
 
-    gchar * _prefs_path;
+    gchar const *_prefs_path;
     Registry _wr;
 
 private:
