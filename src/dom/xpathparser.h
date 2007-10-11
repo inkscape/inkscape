@@ -63,7 +63,7 @@ typedef dom::NodeList  NodeList;
 typedef struct
 {
    int   ival;
-   char *sval;
+   char const *sval;
 } LookupEntry;
 
 
@@ -260,8 +260,8 @@ public:
         {
         if (type == OPERATOR)
             {
-            char *tokenStr = "unknown";
-            for (LookupEntry *entry = operatorTable; entry->sval ; entry++)
+            char const *tokenStr = "unknown";
+            for (LookupEntry const *entry = operatorTable; entry->sval ; entry++)
                 {
                 if (entry->ival == ival)
                     {
@@ -273,7 +273,7 @@ public:
             }
         else if (type == NODE_TYPE)
             {
-            char *tokenStr = "unknown";
+            char const *tokenStr = "unknown";
             for (LookupEntry *entry = nodeTypeTable; entry->sval ; entry++)
                 {
                 if (entry->ival == ival)
@@ -286,7 +286,7 @@ public:
             }
         else if (type == AXIS_NAME)
             {
-            char *tokenStr = "unknown";
+            char const *tokenStr = "unknown";
             for (LookupEntry *entry = axisNameTable; entry->sval ; entry++)
                 {
                 if (entry->ival == ival)
@@ -309,7 +309,7 @@ public:
             printf("#%f\n", dval);
         else
             {
-            char *tokenStr = "unknown";
+            char const *tokenStr = "unknown";
             for (LookupEntry *entry = exprTokenTable; entry->sval ; entry++)
                 {
                 if (entry->ival == type)
