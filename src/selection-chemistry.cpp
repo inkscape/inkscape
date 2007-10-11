@@ -3002,8 +3002,11 @@ void fit_canvas_to_selection(SPDesktop *desktop) {
 
     g_return_if_fail(doc != NULL);
     g_return_if_fail(desktop->selection != NULL);
-    g_return_if_fail(!desktop->selection->isEmpty());
 
+    if (desktop->selection->isEmpty()) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to fit canvas to."));
+        return;
+    }
     NR::Maybe<NR::Rect> const bbox(desktop->selection->bounds());
     if (bbox && !bbox->isEmpty()) {
         doc->fitToRect(*bbox);
