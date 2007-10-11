@@ -825,8 +825,8 @@ rdf_set_work_entity(SPDocument * doc, struct rdf_work_entity_t * entity,
 
 #undef DEBUG_MATCH
 
-bool
-rdf_match_license ( Inkscape::XML::Node * repr, struct rdf_license_t * license )
+static bool
+rdf_match_license(Inkscape::XML::Node const *repr, struct rdf_license_t const *license)
 {
     g_assert ( repr != NULL );
     g_assert ( license != NULL );
@@ -837,13 +837,13 @@ rdf_match_license ( Inkscape::XML::Node * repr, struct rdf_license_t * license )
 #endif
 
     int count = 0;
-    for (struct rdf_double_t * details = license->details;
+    for (struct rdf_double_t const *details = license->details;
          details->name; details++ ) {
         count++;
     }
     bool * matched = (bool*)calloc(count,sizeof(bool));
 
-    for (Inkscape::XML::Node * current = sp_repr_children ( repr );
+    for (Inkscape::XML::Node const *current = sp_repr_children(repr);
          current;
          current = sp_repr_next ( current ) ) {
 
@@ -919,7 +919,7 @@ rdf_match_license ( Inkscape::XML::Node * repr, struct rdf_license_t * license )
 struct rdf_license_t *
 rdf_get_license(SPDocument * document)
 {
-    Inkscape::XML::Node * repr = rdf_get_xml_repr ( document, XML_TAG_NAME_LICENSE, FALSE );
+    Inkscape::XML::Node const *repr = rdf_get_xml_repr ( document, XML_TAG_NAME_LICENSE, FALSE );
     if (repr) {
         for (struct rdf_license_t * license = rdf_licenses;
              license->name; license++ ) {
@@ -958,7 +958,7 @@ rdf_set_license(SPDocument * doc, struct rdf_license_t const * license)
     Inkscape::XML::Document * xmldoc = sp_document_repr_doc(doc);
     g_return_if_fail (xmldoc != NULL);
 
-    for (struct rdf_double_t * detail = license->details;
+    for (struct rdf_double_t const * detail = license->details;
          detail->name; detail++) {
         Inkscape::XML::Node * child = xmldoc->createElement( detail->name );
         g_assert ( child != NULL );
