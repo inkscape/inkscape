@@ -160,7 +160,7 @@ protected:
     PrefCheckButton _sel_layer_deselects;
 
     PrefSpinButton  _importexport_export, _misc_recent, _misc_simpl;
-    PrefCheckButton _misc_comment, _misc_scripts;
+    PrefCheckButton _misc_comment, _misc_forkvectors, _misc_scripts;
     PrefCheckButton _misc_small_toolbar;
     PrefCheckButton _misc_small_tools;
     PrefCombo       _misc_overs_bitmap;

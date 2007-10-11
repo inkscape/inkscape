@@ -34,6 +34,7 @@
 #include "svg/svg.h"
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
+#include "prefs-utils.h"
 
 
 // Terminology:
@@ -234,6 +235,10 @@ sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *vector,
 SPGradient *
 sp_gradient_fork_vector_if_necessary (SPGradient *gr)
 {
+    // Some people actually prefer their gradient vectors to be shared...
+    if (prefs_get_int_attribute("options.forkgradientvectors", "value", 1) == 0)
+        return gr;
+
     if (SP_OBJECT_HREFCOUNT(gr) > 1) {
         SPDocument *doc = SP_OBJECT_DOCUMENT(gr);
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);

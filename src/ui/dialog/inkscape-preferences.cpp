@@ -800,6 +800,21 @@ void InkscapePreferences::initPageMisc()
     _page_misc.add_line( false, "", _misc_comment, "", 
                            _("When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"), true);
 
+    _misc_forkvectors.init( _("Prevent sharing of gradient definitions"), "options.forkgradientvectors", "value", true);
+    _page_misc.add_line( false, "", _misc_forkvectors, "", 
+                           _("When on, shared gradient definitions are automatically forked on change; uncheck to allow sharing of gradient definitions so that editing one object may affect other objects using the same gradient"), true);
+
+    _page_misc.add_line( false, _("Simplification threshold:"), _misc_simpl, "", 
+                           _("How strong is the Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
+    int const num_items = 5;
+    Glib::ustring labels[num_items] = {_("None"), _("2x2"), _("4x4"), _("8x8"), _("16x16")};
+    int values[num_items] = {0, 1, 2, 3, 4};
+    _misc_overs_bitmap.set_size_request(_sb_width);
+    _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, num_items, 1);
+    _page_misc.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
+
+
+    // consider moving this to an UI tab:
     _misc_small_toolbar.init( _("Make commands toolbar smaller"), "toolbox", "small", true);
     _page_misc.add_line( false, "", _misc_small_toolbar, "",
                            _("Make the commands toolbar use the 'secondary' toolbar size (requires restart)"), true);
@@ -812,14 +827,6 @@ void InkscapePreferences::initPageMisc()
     _page_misc.add_line( false, _("Max recent documents:"), _misc_recent, "", 
                            _("The maximum length of the Open Recent list in the File menu"), false);
     _misc_simpl.init("options.simplifythreshold", "value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
-    _page_misc.add_line( false, _("Simplification threshold:"), _misc_simpl, "", 
-                           _("How strong is the Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
-    int const num_items = 5;
-    Glib::ustring labels[num_items] = {_("None"), _("2x2"), _("4x4"), _("8x8"), _("16x16")};
-    int values[num_items] = {0, 1, 2, 3, 4};
-    _misc_overs_bitmap.set_size_request(_sb_width);
-    _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, num_items, 1);
-    _page_misc.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
