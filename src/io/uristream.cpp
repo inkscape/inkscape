@@ -105,19 +105,19 @@ UriInputStream::UriInputStream(Inkscape::URI &source)
                     throw (StreamException): uri(source)
 {
     //get information from uri
-    char *schemestr = (char *) uri.getScheme();
+    char const *schemestr = uri.getScheme();
     scheme = SCHEME_FILE;
     if (!schemestr || strncmp("file", schemestr, 4)==0)
         scheme = SCHEME_FILE;
     else if (strncmp("data", schemestr, 4)==0)
         scheme = SCHEME_DATA;
     //printf("in schemestr:'%s' scheme:'%d'\n", schemestr, scheme);
-    char *cpath = NULL;
+    gchar *cpath = NULL;
 
     switch (scheme) {
 
         case SCHEME_FILE:
-            cpath     = (char *) uri.toNativeFilename();
+            cpath = uri.toNativeFilename();
             //printf("in cpath:'%s'\n", cpath);
             inf = fopen_utf8name(cpath, FILE_READ);
             //inf = fopen(cpath, "rb");
@@ -317,18 +317,18 @@ UriOutputStream::UriOutputStream(Inkscape::URI &destination)
                                              scheme(SCHEME_FILE)
 {
     //get information from uri
-    char *schemestr = (char *) uri.getScheme();
+    char const *schemestr = uri.getScheme();
     if (!schemestr || strncmp("file", schemestr, 4)==0)
         scheme = SCHEME_FILE;
     else if (strncmp("data", schemestr, 4)==0)
         scheme = SCHEME_DATA;
     //printf("out schemestr:'%s' scheme:'%d'\n", schemestr, scheme);
-    char *cpath = NULL;
+    gchar *cpath = NULL;
 
     switch (scheme) {
 
         case SCHEME_FILE:
-            cpath     = (char *) uri.toNativeFilename();
+            cpath = uri.toNativeFilename();
             //printf("out path:'%s'\n", cpath);
             outf = fopen_utf8name(cpath, FILE_WRITE);
             //outf = fopen(cpath, "wb");
