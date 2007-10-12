@@ -1289,6 +1289,8 @@ void FilterEffectsDialog::PrimitiveList::update()
 
         if(!active_found && _model->children().begin())
             get_selection()->select(_model->children().begin());
+
+        columns_autosize();
     }
     else {
         _dialog._primitive_box.set_sensitive(false);
