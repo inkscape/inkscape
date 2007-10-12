@@ -206,7 +206,9 @@ sp_gradient_context_select_next (SPEventContext *event_context)
     GrDrag *drag = event_context->_grdrag;
     g_assert (drag);
 
-    drag->select_next();
+    GrDragger *d = drag->select_next();
+
+    event_context->desktop->scroll_to_point(&(d->point), 1.0);
 }
 
 void
@@ -215,7 +217,9 @@ sp_gradient_context_select_prev (SPEventContext *event_context)
     GrDrag *drag = event_context->_grdrag;
     g_assert (drag);
 
-    drag->select_prev();
+    GrDragger *d = drag->select_prev();
+
+    event_context->desktop->scroll_to_point(&(d->point), 1.0);
 }
 
 // FIXME: make global function in libnr or somewhere.
@@ -354,6 +358,22 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
     GSList *next_stops = NULL;
 
     std::vector<NR::Point> coords = sp_gradient_context_get_stop_intervals (drag, &these_stops, &next_stops);
+
+    if (g_slist_length(these_stops) == 0 && drag->numSelected() == 1) {
+        // if a single stop is selected, add between that stop and the next one
+        GrDragger *dragger = (GrDragger *) drag->selected->data;
+        for (GSList const* j = dragger->draggables; j != NULL; j = j->next) { 
+            GrDraggable *d = (GrDraggable *) j->data;
+            SPGradient *gradient = sp_item_gradient (d->item, d->fill_or_stroke);
+            SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
+            SPStop *this_stop = sp_get_stop_i (vector, d->point_i);
+            SPStop *next_stop = sp_next_stop (this_stop);
+            if (this_stop && next_stop) {
+                these_stops = g_slist_prepend (these_stops, this_stop);
+                next_stops = g_slist_prepend (next_stops, next_stop);
+            }
+        }
+    }
 
     // now actually create the new stops
     GSList *i = these_stops;
