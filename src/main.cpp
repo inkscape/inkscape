@@ -133,6 +133,9 @@ enum {
     SP_ARG_EXPORT_PS,
     SP_ARG_EXPORT_EPS,
     SP_ARG_EXPORT_PDF,
+#ifdef WIN32
+    SP_ARG_EXPORT_EMF,
+#endif //WIN32
     SP_ARG_EXPORT_TEXT_TO_PATH,
     SP_ARG_EXPORT_FONT,
     SP_ARG_EXPORT_BBOX_PAGE,
@@ -156,6 +159,9 @@ int sp_main_console(int argc, char const **argv);
 static void sp_do_export_png(SPDocument *doc);
 static void do_export_ps(SPDocument* doc, gchar const* uri, char const *mime);
 static void do_export_pdf(SPDocument* doc, gchar const* uri, char const *mime);
+#ifdef WIN32
+static void do_export_emf(SPDocument* doc, gchar const* uri, char const *mime);
+#endif //WIN32
 static void do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gchar *id);
 
 
@@ -177,6 +183,9 @@ static gchar *sp_export_svg = NULL;
 static gchar *sp_export_ps = NULL;
 static gchar *sp_export_eps = NULL;
 static gchar *sp_export_pdf = NULL;
+#ifdef WIN32
+static gchar *sp_export_emf = NULL;
+#endif //WIN32
 static gboolean sp_export_text_to_path = FALSE;
 static gboolean sp_export_font = FALSE;
 static gboolean sp_export_bbox_page = FALSE;
@@ -308,6 +317,13 @@ struct poptOption options[] = {
      POPT_ARG_STRING, &sp_export_pdf, SP_ARG_EXPORT_PDF,
      N_("Export document to a PDF file"),
      N_("FILENAME")},
+
+#ifdef WIN32
+    {"export-emf", 'M',
+     POPT_ARG_STRING, &sp_export_emf, SP_ARG_EXPORT_EMF,
+     N_("Export document to an Enhanced Metafile (EMF) File"),
+     N_("FILENAME")},
+#endif //WIN32
 
     {"export-text-to-path", 'T',
      POPT_ARG_NONE, &sp_export_text_to_path, SP_ARG_EXPORT_TEXT_TO_PATH,
@@ -469,6 +485,10 @@ main(int argc, char **argv)
             || !strncmp(argv[i], "--export-eps", 12)
             || !strcmp(argv[i], "-A")
             || !strncmp(argv[i], "--export-pdf", 12)
+#ifdef WIN32
+            || !strcmp(argv[i], "-M")
+            || !strncmp(argv[i], "--export-emf", 12)
+#endif //WIN32
             || !strcmp(argv[i], "-W")
             || !strncmp(argv[i], "--query-width", 13)
             || !strcmp(argv[i], "-H")
@@ -763,6 +783,11 @@ sp_main_console(int argc, char const **argv)
             if (sp_export_pdf) {
                 do_export_pdf(doc, sp_export_pdf, "application/pdf");
             }
+#ifdef WIN32
+            if (sp_export_emf) {
+                do_export_emf(doc, sp_export_emf, "image/x-emf");
+            }
+#endif //WIN32
             if (sp_query_width || sp_query_height) {
                 do_query_dimension (doc, true, sp_query_width? NR::X : NR::Y, sp_query_id);
             } else if (sp_query_x || sp_query_y) {
@@ -1109,6 +1134,34 @@ static void do_export_pdf(SPDocument* doc, gchar const* uri, char const* mime)
 
     (*i)->save(doc, uri);
 }
+
+#ifdef WIN32
+/**
+ *  Export a document to EMF
+ *
+ *  \param doc Document to export.
+ *  \param uri URI to export to.
+ *  \param mime MIME type to export as (should be "image/x-emf")
+ */
+
+static void do_export_emf(SPDocument* doc, gchar const* uri, char const* mime)
+{
+    Inkscape::Extension::DB::OutputList o;
+    Inkscape::Extension::db.get_output_list(o);
+    Inkscape::Extension::DB::OutputList::const_iterator i = o.begin();
+    while (i != o.end() && strcmp( (*i)->get_mimetype(), mime ) != 0) {
+        i++;
+    }
+
+    if (i == o.end())
+    {
+        g_warning ("Could not find an extension to export this file.");
+        return;
+    }
+
+    (*i)->save(doc, uri);
+}
+#endif //WIN32
 
 #ifdef WIN32
 bool replaceArgs( int& argc, char**& argv )
