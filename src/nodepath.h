@@ -96,62 +96,6 @@ class NodeSide;
  */
 class Node;
 
-/**
- *  This is a collection of subpaths which contain nodes
- *
- * In the following data model.   Nodepaths are made up of subpaths which
- * are comprised of nodes.
- *
- * Nodes are linked thus:
- * \verbatim
-           n              other
-    node -----> nodeside ------> node            \endverbatim
- */
-class Path {
- public:
-/**  Pointer to the current desktop, for reporting purposes */
-	SPDesktop * desktop;
-/**  The parent path of this nodepath */
-	SPObject * object;
-/**  The context which created this nodepath.  Important if this nodepath is deleted */
-	ShapeEditor *shape_editor;
-/**  The subpaths which comprise this NodePath */
-	GList * subpaths;
-/**  A list of nodes which are currently selected */
-	GList * selected;
-/**  Transforms (userspace <---> virtual space?   someone please describe )
-	 njh: I'd be guessing that these are item <-> desktop transforms.*/
-	NR::Matrix i2d, d2i;
-/**  The DOM node which describes this NodePath */
-    Inkscape::XML::Node *repr;
-    gchar *repr_key;
-    gchar *repr_nodetypes_key;
-	//STL compliant method to get the selected nodes
-	void selection(std::list<Node *> &l);
-
-      /// livarot library is used for "point on path" and "nearest position on path", so we need to maintain its path representation as well
-	::Path *livarot_path;
-    
-    /// draw a "sketch" of the path by using these variables
-    SPCanvasItem *helper_path;
-    SPCurve *curve;
-    bool show_helperpath;
-
-      /// true if we changed repr, to tell this change from an external one such as from undo, simplify, or another desktop
-	unsigned int local_change;
-
-	/// true if we're showing selected nodes' handles
-	bool show_handles;
-
-    /// true if the path cannot contain curves, just straight lines
-    bool straight_path;
-
-	/// active_node points to the node that is currently mouseovered (= NULL if
-	/// there isn't any); we also consider the node mouseovered if it is covered
-	/// by one of its handles and the latter is mouseovered
-	static Node *active_node;
-};
-
 
 /**
  *  This is the lowest list item, a simple list of nodes.
@@ -245,6 +189,65 @@ class Node {
   
   /** Boolean.  Am I being dragged? */
   guint is_dragging : 1;
+};
+
+/**
+ *  This is a collection of subpaths which contain nodes
+ *
+ * In the following data model.   Nodepaths are made up of subpaths which
+ * are comprised of nodes.
+ *
+ * Nodes are linked thus:
+ * \verbatim
+           n              other
+    node -----> nodeside ------> node            \endverbatim
+ */
+class Path {
+ public:
+/**  Pointer to the current desktop, for reporting purposes */
+	SPDesktop * desktop;
+/**  The parent path of this nodepath */
+	SPObject * object;
+/**  The context which created this nodepath.  Important if this nodepath is deleted */
+	ShapeEditor *shape_editor;
+/**  The subpaths which comprise this NodePath */
+	GList * subpaths;
+/**  A list of nodes which are currently selected */
+	GList * selected;
+/**  Transforms (userspace <---> virtual space?   someone please describe )
+	 njh: I'd be guessing that these are item <-> desktop transforms.*/
+	NR::Matrix i2d, d2i;
+/**  The DOM node which describes this NodePath */
+    Inkscape::XML::Node *repr;
+    gchar *repr_key;
+    gchar *repr_nodetypes_key;
+	//STL compliant method to get the selected nodes
+	void selection(std::list<Node *> &l);
+
+	guint numSelected() {return (selected? g_list_length(selected) : 0);}
+	NR::Point& singleSelectedCoords() {return (((Node *) selected->data)->pos);}
+
+      /// livarot library is used for "point on path" and "nearest position on path", so we need to maintain its path representation as well
+	::Path *livarot_path;
+    
+    /// draw a "sketch" of the path by using these variables
+    SPCanvasItem *helper_path;
+    SPCurve *curve;
+    bool show_helperpath;
+
+      /// true if we changed repr, to tell this change from an external one such as from undo, simplify, or another desktop
+	unsigned int local_change;
+
+	/// true if we're showing selected nodes' handles
+	bool show_handles;
+
+    /// true if the path cannot contain curves, just straight lines
+    bool straight_path;
+
+	/// active_node points to the node that is currently mouseovered (= NULL if
+	/// there isn't any); we also consider the node mouseovered if it is covered
+	/// by one of its handles and the latter is mouseovered
+	static Node *active_node;
 };
 
 }  // namespace NodePath
