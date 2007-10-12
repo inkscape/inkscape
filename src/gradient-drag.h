@@ -150,8 +150,8 @@ public: // FIXME: make more of this private!
     void selected_move (double x, double y, bool write_repr = true, bool scale_radial = false);
     void selected_move_screen (double x, double y);
 
-    void select_next ();
-    void select_prev ();
+    GrDragger *select_next ();
+    GrDragger *select_prev ();
 
     void selected_reverse_vector ();
 

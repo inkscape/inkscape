@@ -128,22 +128,25 @@ gr_drag_style_query (SPStyle *style, int property, gpointer data)
 
         int count = 0;
 
-        for (GSList const* i = ((GrDragger*)drag->selected->data)->draggables; i != NULL; i = i->next) { // for all draggables of dragger
-            GrDraggable *draggable = (GrDraggable *) i->data;
+        for (GList *i = drag->selected; i != NULL; i = i->next) { // for all selected draggers
+            GrDragger *d = (GrDragger *) i->data;
+            for (GSList const* j = d->draggables; j != NULL; j = j->next) { // for all draggables of dragger
+                GrDraggable *draggable = (GrDraggable *) j->data;
 
-            if (ret == QUERY_STYLE_NOTHING) {
-                ret = QUERY_STYLE_SINGLE;
-            } else if (ret == QUERY_STYLE_SINGLE) {
-                ret = QUERY_STYLE_MULTIPLE_AVERAGED;
+                if (ret == QUERY_STYLE_NOTHING) {
+                    ret = QUERY_STYLE_SINGLE;
+                } else if (ret == QUERY_STYLE_SINGLE) {
+                    ret = QUERY_STYLE_MULTIPLE_AVERAGED;
+                }
+
+                guint32 c = sp_item_gradient_stop_query_style (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
+                cf[0] += SP_RGBA32_R_F (c);
+                cf[1] += SP_RGBA32_G_F (c);
+                cf[2] += SP_RGBA32_B_F (c);
+                cf[3] += SP_RGBA32_A_F (c);
+
+                count ++;
             }
-
-            guint32 c = sp_item_gradient_stop_query_style (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
-            cf[0] += SP_RGBA32_R_F (c);
-            cf[1] += SP_RGBA32_G_F (c);
-            cf[2] += SP_RGBA32_B_F (c);
-            cf[3] += SP_RGBA32_A_F (c);
-
-            count ++;
         }
 
         if (count) {
@@ -1679,29 +1682,37 @@ GrDrag::selected_move_screen (double x, double y)
 /**
 Select the knot next to the last selected one and deselect all other selected.
 */
-void
+GrDragger *
 GrDrag::select_next ()
 {
+    GrDragger *d = NULL;
     if (selected == NULL || g_list_find(draggers, selected->data)->next == NULL) {
-        if (draggers)
-            setSelected ((GrDragger *) draggers->data);
+        if (draggers) 
+            d = (GrDragger *) draggers->data;
     } else {
-        setSelected ((GrDragger *) g_list_find(draggers, selected->data)->next->data);
+        d = (GrDragger *) g_list_find(draggers, selected->data)->next->data;
     }
+    if (d)
+        setSelected (d);
+    return d;
 }
 
 /**
 Select the knot previous from the last selected one and deselect all other selected.
 */
-void
+GrDragger *
 GrDrag::select_prev ()
 {
+    GrDragger *d = NULL;
     if (selected == NULL || g_list_find(draggers, selected->data)->prev == NULL) {
         if (draggers)
-            setSelected ((GrDragger *) g_list_last (draggers)->data);
+            d = (GrDragger *) g_list_last (draggers)->data;
     } else {
-        setSelected ((GrDragger *) g_list_find(draggers, selected->data)->prev->data);
+        d = (GrDragger *) g_list_find(draggers, selected->data)->prev->data;
     }
+    if (d)
+        setSelected (d);
+    return d;
 }
 
 
