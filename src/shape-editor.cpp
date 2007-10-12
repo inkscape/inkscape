@@ -442,12 +442,20 @@ void ShapeEditor::select_all_from_subpath (bool invert) {
         sp_nodepath_select_all_from_subpath (this->nodepath, invert);
 }
 void ShapeEditor::select_next () {
-    if (this->nodepath) 
+    if (this->nodepath) {
         sp_nodepath_select_next (this->nodepath);
+        if (this->nodepath->numSelected() >= 1) {
+            this->desktop->scroll_to_point(&(this->nodepath->singleSelectedCoords()), 1.0);
+        }
+    }
 }
 void ShapeEditor::select_prev () {
-    if (this->nodepath) 
+    if (this->nodepath) {
         sp_nodepath_select_prev (this->nodepath);
+        if (this->nodepath->numSelected() >= 1) {
+            this->desktop->scroll_to_point(&(this->nodepath->singleSelectedCoords()), 1.0);
+        }
+    }
 }
 
 void ShapeEditor::show_handles (bool show) {
