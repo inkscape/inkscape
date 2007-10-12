@@ -46,6 +46,7 @@
 #include "svg/svg-color.h"
 #include "snap.h"
 #include "sp-namedview.h"
+#include "rubberband.h"
 
 
 
@@ -632,18 +633,21 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             event_context->yp = (gint) button_w[NR::Y];
             event_context->within_tolerance = true;
 
-            // remember clicked item, disregarding groups, honoring Alt; do nothing with Crtl to
-            // enable Ctrl+doubleclick of exactly the selected item(s)
-            if (!(event->button.state & GDK_CONTROL_MASK))
-                event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
-
             dragging = true;
-            /* Position center */
+
             NR::Point const button_dt = desktop->w2d(button_w);
-            /* Snap center to nearest magnetic point */
-            
-            SnapManager const &m = desktop->namedview->snap_manager;
-            rc->origin = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, button_dt, NULL).getPoint();
+            if (event->button.state & GDK_SHIFT_MASK) {
+                Inkscape::Rubberband::get()->start(desktop, button_dt);
+            } else {
+                // remember clicked item, disregarding groups, honoring Alt; do nothing with Crtl to
+                // enable Ctrl+doubleclick of exactly the selected item(s)
+                if (!(event->button.state & GDK_CONTROL_MASK))
+                    event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
+
+                /* Snap center to nearest magnetic point */
+                SnapManager const &m = desktop->namedview->snap_manager;
+                rc->origin = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, button_dt, NULL).getPoint();
+            }
 
             ret = TRUE;
         }
@@ -666,7 +670,13 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                      event->motion.y);
             NR::Point const motion_dt = event_context->desktop->w2d(motion_w);
 
-            sp_gradient_drag(*rc, motion_dt, event->motion.state, event->motion.time);
+            if (Inkscape::Rubberband::get()->is_started()) {
+                Inkscape::Rubberband::get()->move(motion_dt);
+                event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw around</b> handles to select them"));
+            } else {
+                sp_gradient_drag(*rc, motion_dt, event->motion.state, event->motion.time);
+            }
+            gobble_motion_events(GDK_BUTTON1_MASK);
 
             ret = TRUE;
         } else {
@@ -707,14 +717,24 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             } else {
                 dragging = false;
 
-                // unless clicked with Ctrl (to enable Ctrl+doubleclick).  (don't what this is for (johan))
+                // unless clicked with Ctrl (to enable Ctrl+doubleclick).  
                 if (event->button.state & GDK_CONTROL_MASK) {
                     ret = TRUE;
                     break;
                 }
 
                 if (!event_context->within_tolerance) {
-                    // we've been dragging, do nothing (grdrag handles that)
+                    // we've been dragging, either do nothing (grdrag handles that),
+                    // or rubberband-select if we have rubberband
+                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+                    if (r->is_started() && !event_context->within_tolerance) {
+                        // this was a rubberband drag
+                        if (r->getMode() == RUBBERBAND_MODE_RECT) {
+                            NR::Maybe<NR::Rect> const b = r->getRectangle();
+                            drag->selectRect(*b);
+                        }
+                    }
+
                 } else if (event_context->item_to_select) {
                     // no dragging, select clicked item if any
                     if (event->button.state & GDK_SHIFT_MASK) {
@@ -734,6 +754,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 event_context->item_to_select = NULL;
                 ret = TRUE;
             }
+            Inkscape::Rubberband::get()->stop(); 
         }
         break;
     case GDK_KEY_PRESS:
