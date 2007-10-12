@@ -1606,7 +1606,7 @@ GrDrag::selected_move (double x, double y, bool write_repr, bool scale_radial)
         GrDragger *d = (GrDragger *) i->data;
 
         if (!d->isA(POINT_LG_MID) && !d->isA(POINT_RG_MID1) && !d->isA(POINT_RG_MID2)) {
-            // if this is a an endpoint,
+            // if this is an endpoint,
 
             // Moving an rg center moves its focus and radii as well.
             // therefore, if this is a focus or radius and if selection
@@ -1637,14 +1637,13 @@ GrDrag::selected_move (double x, double y, bool write_repr, bool scale_radial)
 
             d->updateDependencies(write_repr);
         }
+    }
 
-        if (write_repr && did) {
-            // we did an undoable action
-            sp_document_maybe_done (sp_desktop_document (desktop), "grmoveh", SP_VERB_CONTEXT_GRADIENT,
-                                    _("Move gradient handle(s)"));
-            return;
-        }
-
+    if (write_repr && did) {
+        // we did an undoable action
+        sp_document_maybe_done (sp_desktop_document (desktop), "grmoveh", SP_VERB_CONTEXT_GRADIENT,
+                                _("Move gradient handle(s)"));
+        return;
     }
 
     if (!did) { // none of the end draggers are selected, so let's try to move the mids
