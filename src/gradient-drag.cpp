@@ -1293,6 +1293,21 @@ GrDrag::selectByCoords(std::vector<NR::Point> coords)
     }
 }
 
+
+/**
+\brief Select all stops/draggers that fall within the rect
+*/
+void 
+GrDrag::selectRect(NR::Rect const &r)
+{
+    for (GList *l = this->draggers; l != NULL; l = l->next) {
+        GrDragger *d = ((GrDragger *) l->data);
+        if (r.contains(d->point)) {
+           setSelected (d, true, true);
+        }
+    }
+}
+
 /**
 \brief Select a dragger
 \param dragger       The dragger to select

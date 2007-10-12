@@ -122,6 +122,7 @@ public: // FIXME: make more of this private!
     void deselectAll();
 		void selectAll();
 		void selectByCoords(std::vector<NR::Point> coords);
+    void selectRect(NR::Rect const &r);
     
     void deleteSelected (bool just_one = false);
     
