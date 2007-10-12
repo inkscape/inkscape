@@ -218,31 +218,18 @@ static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
 //     return TRUE;
 // }
 
-static gboolean onButtonPressed (GtkWidget *widget, GdkEventButton *event, gpointer userdata)
-{
-    (void)widget;
-    /* single click with the right mouse button? */
-    if(event->type == GDK_BUTTON_RELEASE)
-    {
-        ColorItem* item = reinterpret_cast<ColorItem*>(userdata);
-        if(item)
-        {
-            if (event->button == 1)
-            { 
-				if(event->state & GDK_SHIFT_MASK)
-					item->buttonClicked(true);	/* the button was pressed with shift held down. set the stroke */
-                else item->buttonClicked(false);
-                return TRUE; /* we handled this */    
-            }
-            else if (event->button == 3)
-            {
-                item->buttonClicked(true);
-                return TRUE; /* we handled this */
-            }
-        }
+static void handleClick( GtkWidget* widget, gpointer callback_data ) {
+    ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
+    if ( item ) {
+        item->buttonClicked(false);
     }
+}
 
-    return FALSE; /* we did not handle this */
+static void handleSecondaryClick( GtkWidget* widget, gint arg1, gpointer callback_data ) {
+    ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
+    if ( item ) {
+        item->buttonClicked(true);
+    }
 }
 
 static void dieDieDie( GtkObject *obj, gpointer user_data )
@@ -500,11 +487,17 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Inkscape::
 
         sigc::signal<void> type_signal_something;
 */
+
         g_signal_connect( G_OBJECT(newBlot->gobj()),
-                          "button-release-event",
-                          G_CALLBACK(onButtonPressed),
+                          "clicked",
+                          G_CALLBACK(handleClick),
                           this);
-                          
+
+        g_signal_connect( G_OBJECT(newBlot->gobj()),
+                          "alt-clicked",
+                          G_CALLBACK(handleSecondaryClick),
+                          this);
+
         gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
                              GDK_BUTTON1_MASK,
                              sourceColorEntries,
