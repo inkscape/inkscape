@@ -1166,6 +1166,7 @@ groups) with the same effect as Alt+click.)</note>
 <title>Select handles</title>
 <mouse><key><left-click/></key> <action>select a handle</action></mouse>
 <mouse><key><shift/><left-click/></key> <action>add handle to selection</action></mouse>
+<mouse><key><left-drag/></key> <action>select by rubberband</action></mouse>
 <keys><key><misc f="Tab"/></key>  <action>select next handle</action></keys> 
 <keys><key><shift/><misc f="Tab"/></key> <action>select previous handle</action></keys>
 <keys><key><ctrl/>A</key>	 <action>select all handles</action></keys>
