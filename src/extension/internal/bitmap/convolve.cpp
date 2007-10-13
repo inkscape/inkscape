@@ -50,7 +50,7 @@ Convolve::init(void)
 			"<name>" N_("Convolve") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.convolve</id>\n"
 			"<param name=\"order\" gui-text=\"" N_("Order") "\" type=\"int\" min=\"0\" max=\"64\">4</param>\n"
-			"<param name=\"kernel\" gui-text=\"" N_("Kernal Array") "\" type=\"string\" >1,1,0,0</param>\n"
+			"<param name=\"kernel\" gui-text=\"" N_("Kernel Array") "\" type=\"string\" >1,1,0,0</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
