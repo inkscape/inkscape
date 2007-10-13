@@ -39,6 +39,8 @@
 #include "svg-view-widget.h"
 #include "widgets/desktop-widget.h"
 #include "sp-item-group.h"
+#include "sp-text.h"
+#include "sp-flowtext.h"
 #include "sp-namedview.h"
 #include "ui/view/view.h"
 
@@ -1031,6 +1033,8 @@ sp_ui_drag_data_received(GtkWidget *widget,
             SPItem *item = desktop->item_at_point( where, true );
             if ( item )
             {
+                bool fillnotstroke = (drag_context->action != GDK_ACTION_MOVE);
+
                 if ( data->length >= 8 ) {
                     cmsHPROFILE srgbProf = cmsCreate_sRGBProfile();
 
@@ -1066,18 +1070,18 @@ sp_ui_drag_data_received(GtkWidget *widget,
                             str = 0;
 
                             sp_object_setAttribute( SP_OBJECT(item),
-                                                    (drag_context->action != GDK_ACTION_MOVE) ? "inkscape:x-fill-tag":"inkscape:x-stroke-tag",
+                                                    fillnotstroke ? "inkscape:x-fill-tag":"inkscape:x-stroke-tag",
                                                     palName.c_str(),
                                                     false );
                             item->updateRepr();
 
-                            sp_repr_css_set_property( css, (drag_context->action != GDK_ACTION_MOVE) ? "fill":"stroke", c );
+                            sp_repr_css_set_property( css, fillnotstroke ? "fill":"stroke", c );
                             updatePerformed = true;
                         }
                     }
 
                     if ( !updatePerformed ) {
-                        sp_repr_css_set_property( css, (drag_context->action != GDK_ACTION_MOVE) ? "fill":"stroke", c );
+                        sp_repr_css_set_property( css, fillnotstroke ? "fill":"stroke", c );
                     }
 
                     sp_desktop_apply_css_recursive( item, css, true );
@@ -1101,10 +1105,36 @@ sp_ui_drag_data_received(GtkWidget *widget,
             int destY = 0;
             gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
             NR::Point where( sp_canvas_window_to_world( desktop->canvas, NR::Point( destX, destY ) ) );
+            NR::Point const button_dt(desktop->dt2doc(desktop->w2d(where)));
 
             SPItem *item = desktop->item_at_point( where, true );
             if ( item )
             {
+                bool fillnotstroke = (drag_context->action != GDK_ACTION_MOVE);
+                if (SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+                    Path *livarot_path = Path_for_item(item, true, true);
+                    livarot_path->ConvertWithBackData(0.04);
+
+                    NR::Maybe<Path::cut_position> position = get_nearest_position_on_Path(livarot_path, button_dt);
+                    if (position) {
+                        NR::Point nearest = get_point_on_Path(livarot_path, position->piece, position->t);
+                        NR::Point delta = nearest - button_dt;
+                        delta = desktop->d2w(delta);
+                        double stroke_tolerance =
+                            ( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
+                              desktop->current_zoom() *
+                              SP_OBJECT_STYLE (item)->stroke_width.computed *
+                              sp_item_i2d_affine (item).expansion() * 0.5
+                              : 0.0)
+                            + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100); 
+
+                        if (NR::L2 (delta) < stroke_tolerance) {
+                            fillnotstroke = false;
+                        }
+                    }
+                    delete livarot_path;
+                }
+
                 if ( data->length == 8 ) {
                     gchar c[64] = {0};
                     // Careful about endian issues.
@@ -1118,7 +1148,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                                             //0x0ff & (data->data[3] >> 8),
                                             ));
                     SPCSSAttr *css = sp_repr_css_attr_new();
-                    sp_repr_css_set_property( css, (drag_context->action != GDK_ACTION_MOVE) ? "fill":"stroke", c );
+                    sp_repr_css_set_property( css, fillnotstroke ? "fill":"stroke", c );
 
                     sp_desktop_apply_css_recursive( item, css, true );
                     item->updateRepr();
