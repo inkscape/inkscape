@@ -16,6 +16,9 @@
 
 #include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
 #include <gtk/gtkdnd.h>
+#include <gtk/gtkmenu.h>
+#include <gtk/gtkmenuitem.h>
+#include <gtk/gtkseparatormenuitem.h>
 
 #include <glibmm/i18n.h>
 #include <gdkmm/pixbuf.h>
@@ -219,6 +222,7 @@ static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
 // }
 
 static void handleClick( GtkWidget* widget, gpointer callback_data ) {
+    (void)widget;
     ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
     if ( item ) {
         item->buttonClicked(false);
@@ -226,10 +230,72 @@ static void handleClick( GtkWidget* widget, gpointer callback_data ) {
 }
 
 static void handleSecondaryClick( GtkWidget* widget, gint arg1, gpointer callback_data ) {
+    (void)widget;
+    (void)arg1;
     ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
     if ( item ) {
         item->buttonClicked(true);
     }
+}
+
+static GtkWidget* popupMenu = 0;
+static ColorItem* bounceTarget = 0;
+
+static void redirClick( GtkMenuItem *menuitem, gpointer user_data )
+{
+    (void)user_data;
+    if ( bounceTarget ) {
+        handleClick( GTK_WIDGET(menuitem), bounceTarget );
+    }
+}
+
+static void redirSecondaryClick( GtkMenuItem *menuitem, gpointer user_data )
+{
+    (void)user_data;
+    if ( bounceTarget ) {
+        handleSecondaryClick( GTK_WIDGET(menuitem), 0, bounceTarget );
+    }
+}
+
+static gboolean handleButtonPress( GtkWidget* widget, GdkEventButton* event, gpointer user_data)
+{
+    (void)widget;
+    gboolean handled = FALSE;
+
+    if ( (event->button == 3) && (event->type == GDK_BUTTON_PRESS) ) {
+        if ( !popupMenu ) {
+            popupMenu = gtk_menu_new();
+            GtkWidget* child = 0;
+
+            child = gtk_menu_item_new_with_label("Set fill");
+            g_signal_connect( G_OBJECT(child),
+                              "activate",
+                              G_CALLBACK(redirClick),
+                              user_data);
+            gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
+
+            child = gtk_menu_item_new_with_label("Set stroke");
+
+            g_signal_connect( G_OBJECT(child),
+                              "activate",
+                              G_CALLBACK(redirSecondaryClick),
+                              user_data);
+            gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
+
+            gtk_widget_show_all(popupMenu);
+        }
+
+        ColorItem* item = reinterpret_cast<ColorItem*>(user_data);
+        if ( item ) {
+            bounceTarget = item;
+            if ( popupMenu ) {
+                gtk_menu_popup(GTK_MENU(popupMenu), NULL, NULL, NULL, NULL, event->button, event->time);
+                handled = TRUE;
+            }
+        }
+    }
+
+    return handled;
 }
 
 static void dieDieDie( GtkObject *obj, gpointer user_data )
@@ -496,6 +562,11 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Inkscape::
         g_signal_connect( G_OBJECT(newBlot->gobj()),
                           "alt-clicked",
                           G_CALLBACK(handleSecondaryClick),
+                          this);
+
+        g_signal_connect( G_OBJECT(newBlot->gobj()),
+                          "button-press-event",
+                          G_CALLBACK(handleButtonPress),
                           this);
 
         gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
