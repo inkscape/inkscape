@@ -473,6 +473,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/handles.inx
 [type: gettext/xml] share/extensions/inkscape_help_commandline.inx
 [type: gettext/xml] share/extensions/inkscape_help_faq.inx
+[type: gettext/xml] share/extensions/inkscape_help_keys.inx
 [type: gettext/xml] share/extensions/inkscape_help_manual.inx
 [type: gettext/xml] share/extensions/inkscape_help_relnotes.inx
 [type: gettext/xml] share/extensions/inkscape_help_reportabug.inx
