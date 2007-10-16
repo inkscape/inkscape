@@ -123,6 +123,10 @@ public: // FIXME: make more of this private!
 		void selectAll();
 		void selectByCoords(std::vector<NR::Point> coords);
     void selectRect(NR::Rect const &r);
+
+    bool dropColor(SPItem *item, gchar *c, NR::Point p);
+
+		SPStop *addStopNearPoint (SPItem *item, NR::Point mouse_p, double tolerance);
     
     void deleteSelected (bool just_one = false);
     
@@ -130,6 +134,7 @@ public: // FIXME: make more of this private!
     
     GrDragger *getDraggerFor (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke);
 
+    void grabKnot (GrDragger *dragger, gint x, gint y, guint32 etime);
     void grabKnot (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, gint x, gint y, guint32 etime);
 
     bool local_change;
@@ -159,7 +164,7 @@ public: // FIXME: make more of this private!
 private: 
     void deselect_all();
 
-    void addLine (NR::Point p1, NR::Point p2, guint32 rgba);
+    void addLine (SPItem *item, NR::Point p1, NR::Point p2, guint32 rgba);
 
     void addDragger (GrDraggable *draggable);
 

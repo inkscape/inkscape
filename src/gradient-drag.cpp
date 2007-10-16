@@ -30,6 +30,7 @@
 #include "svg/css-ostringstream.h"
 
 #include "svg/svg.h"
+#include "libnr/nr-point-fns.h"
 
 #include "prefs-utils.h"
 #include "sp-item.h"
@@ -46,6 +47,7 @@
 
 
 #define GR_KNOT_COLOR_NORMAL 0xffffff00
+#define GR_KNOT_COLOR_MOUSEOVER 0xff000000
 #define GR_KNOT_COLOR_SELECTED 0x0000ff00
 
 #define GR_LINE_COLOR_FILL 0x0000ff7f
@@ -247,6 +249,127 @@ gr_drag_style_set (const SPCSSAttr *css, gpointer data)
     return true;
 }
 
+SPStop *
+GrDrag::addStopNearPoint (SPItem *item, NR::Point mouse_p, double tolerance)
+{
+    gfloat offset; // type of SPStop.offset = gfloat
+    SPGradient *gradient;
+    bool fill_or_stroke = true;
+    bool r1_knot = false;
+
+    bool addknot = false;
+    do {
+        gradient = sp_item_gradient (item, fill_or_stroke);
+        if (SP_IS_LINEARGRADIENT(gradient)) {
+            NR::Point begin   = sp_item_gradient_get_coords(item, POINT_LG_BEGIN, 0, fill_or_stroke);
+            NR::Point end     = sp_item_gradient_get_coords(item, POINT_LG_END, 0, fill_or_stroke);
+
+            NR::Point nearest = snap_vector_midpoint (mouse_p, begin, end, 0);
+            double dist_screen = NR::L2 (mouse_p - nearest);
+            if ( dist_screen < tolerance ) {
+                // add the knot
+                offset = get_offset_between_points(nearest, begin, end);
+                addknot = true;
+                break; // break out of the while loop: add only one knot
+            }
+        } else if (SP_IS_RADIALGRADIENT(gradient)) {
+            NR::Point begin = sp_item_gradient_get_coords(item, POINT_RG_CENTER, 0, fill_or_stroke);
+            NR::Point end   = sp_item_gradient_get_coords(item, POINT_RG_R1, 0, fill_or_stroke);
+            NR::Point nearest = snap_vector_midpoint (mouse_p, begin, end, 0);
+            double dist_screen = NR::L2 (mouse_p - nearest);
+            if ( dist_screen < tolerance ) {
+                offset = get_offset_between_points(nearest, begin, end);
+                addknot = true;
+                r1_knot = true;
+                break; // break out of the while loop: add only one knot
+            }
+
+            end    = sp_item_gradient_get_coords(item, POINT_RG_R2, 0, fill_or_stroke);
+            nearest = snap_vector_midpoint (mouse_p, begin, end, 0);
+            dist_screen = NR::L2 (mouse_p - nearest);
+            if ( dist_screen < tolerance ) {
+                offset = get_offset_between_points(nearest, begin, end);
+                addknot = true;
+                r1_knot = false;
+                break; // break out of the while loop: add only one knot
+            }
+        }
+        fill_or_stroke = !fill_or_stroke;
+    } while (!fill_or_stroke && !addknot) ;
+
+    if (addknot) {
+        SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
+        SPStop* prev_stop = sp_first_stop(vector);
+        SPStop* next_stop = sp_next_stop(prev_stop);
+        guint i = 1;
+        while ( (next_stop) && (next_stop->offset < offset) ) {
+            prev_stop = next_stop;
+            next_stop = sp_next_stop(next_stop);
+            i++;
+        }
+        if (!next_stop) {
+            // logical error: the endstop should have offset 1 and should always be more than this offset here
+            return NULL;
+        }
+
+
+        SPStop *newstop = sp_vector_add_stop (vector, prev_stop, next_stop, offset);
+        sp_gradient_ensure_vector (gradient);
+        updateDraggers();
+
+        return newstop;
+    } 
+
+    return NULL;
+}
+
+
+bool 
+GrDrag::dropColor(SPItem *item, gchar *c, NR::Point p) 
+{
+    // first, see if we can drop onto one of the existing draggers
+    for (GList *i = draggers; i != NULL; i = i->next) { // for all draggables of dragger
+        GrDragger *d = (GrDragger *) i->data;
+
+        if (NR::L2(p - d->point)*desktop->current_zoom() < 5) {
+           SPCSSAttr *stop = sp_repr_css_attr_new ();
+           sp_repr_css_set_property (stop, "stop-color", c);
+           sp_repr_css_set_property (stop, "stop-opacity", "1");
+           for (GSList *j = d->draggables; j != NULL; j = j->next) { // for all draggables of dragger
+               GrDraggable *draggable = (GrDraggable *) j->data;
+               local_change = true;
+               sp_item_gradient_stop_set_style (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke, stop);
+           }
+           sp_repr_css_attr_unref(stop);
+           return true;
+        }
+    }
+
+    // now see if we're over line and create a new stop
+    bool over_line = false;
+    SPCtrlLine *line = NULL;
+    if (lines) {
+        for (GSList *l = lines; (l != NULL) && (!over_line); l = l->next) {
+            line = (SPCtrlLine*) l->data;
+            NR::Point nearest = snap_vector_midpoint (p, line->s, line->e, 0);
+            double dist_screen = NR::L2 (p - nearest) * desktop->current_zoom();
+            if (line->item && dist_screen < 5) {
+                SPStop *stop = addStopNearPoint (line->item, p, 5/desktop->current_zoom());
+                if (stop) {
+                    SPCSSAttr *css = sp_repr_css_attr_new ();
+                    sp_repr_css_set_property (css, "stop-color", c);
+                    sp_repr_css_set_property (css, "stop-opacity", "1");
+                    sp_repr_css_change (SP_OBJECT_REPR (stop), css, "style");
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+
 GrDrag::GrDrag(SPDesktop *desktop) {
 
     this->desktop = desktop;
@@ -359,38 +482,6 @@ GrDraggable::getServer ()
         server = SP_OBJECT_STYLE_STROKE_SERVER (item);
 
     return server;
-}
-
-
-// FIXME: make global function in libnr or somewhere.
-static NR::Point *
-get_snap_vector (NR::Point p, NR::Point o, double snap, double initial)
-{
-    double r = NR::L2 (p - o);
-    if (r < 1e-3)
-        return NULL;
-    double angle = NR::atan2 (p - o);
-    // snap angle to snaps increments, starting from initial:
-    double a_snapped = initial + floor((angle - initial)/snap + 0.5) * snap;
-    // calculate the new position and subtract p to get the vector:
-    return new NR::Point (o + r * NR::Point(cos(a_snapped), sin(a_snapped)) - p);
-}
-
-// FIXME: make global function in libnr or somewhere.
-static NR::Point
-snap_vector_midpoint (NR::Point p, NR::Point begin, NR::Point end, double snap)
-{
-    double length = NR::L2(end - begin);
-    NR::Point be = (end - begin) / length;
-    double r = NR::dot(p - begin, be);
-
-    if (r < 0.0) return begin;
-    if (r > length) return end;
-
-    double snapdist = length * snap;
-    double r_snapped = (snap==0) ? r : floor(r/(snapdist + 0.5)) * snapdist;
-
-    return (begin + r_snapped * be);
 }
 
 static void
@@ -1132,7 +1223,7 @@ GrDragger::GrDragger (GrDrag *parent, NR::Point p, GrDraggable *draggable)
     // create the knot
     this->knot = sp_knot_new (parent->desktop, NULL);
     this->knot->setMode(SP_KNOT_MODE_XOR);
-    this->knot->setFill(GR_KNOT_COLOR_NORMAL, GR_KNOT_COLOR_NORMAL, GR_KNOT_COLOR_NORMAL);
+    this->knot->setFill(GR_KNOT_COLOR_NORMAL, GR_KNOT_COLOR_MOUSEOVER, GR_KNOT_COLOR_MOUSEOVER);
     this->knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
     sp_knot_update_ctrl(this->knot);
 
@@ -1373,10 +1464,11 @@ GrDrag::setDeselected (GrDragger *dragger)
 Create a line from p1 to p2 and add it to the lines list
  */
 void
-GrDrag::addLine (NR::Point p1, NR::Point p2, guint32 rgba)
+GrDrag::addLine (SPItem *item, NR::Point p1, NR::Point p2, guint32 rgba)
 {
     SPCanvasItem *line = sp_canvas_item_new(sp_desktop_controls(this->desktop),
                                                             SP_TYPE_CTRLLINE, NULL);
+    SP_CTRLLINE(line)->item = item;
     sp_ctrlline_set_coords(SP_CTRLLINE(line), p1, p2);
     if (rgba != GR_LINE_COLOR_FILL) // fill is the default, so don't set color for it to speed up redraw
         sp_ctrlline_set_rgba32 (SP_CTRLLINE(line), rgba);
@@ -1445,6 +1537,17 @@ GrDrag::addDraggersLinear (SPLinearGradient *lg, SPItem *item, bool fill_or_stro
         }
     }
     addDragger (new GrDraggable (item, POINT_LG_END, num-1, fill_or_stroke));
+}
+
+/**
+Artificially grab the knot of this dragger; used by the gradient context
+*/
+void
+GrDrag::grabKnot (GrDragger *dragger, gint x, gint y, guint32 etime)
+{
+    if (dragger) {
+        sp_knot_start_dragging (dragger->knot, dragger->point, x, y, etime);
+    }
 }
 
 /**
@@ -1528,22 +1631,22 @@ GrDrag::updateLines ()
         if (style && (style->fill.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
-                this->addLine (sp_item_gradient_get_coords (item, POINT_LG_BEGIN, 0, true), sp_item_gradient_get_coords (item, POINT_LG_END, 0, true), GR_LINE_COLOR_FILL);
+                this->addLine (item, sp_item_gradient_get_coords (item, POINT_LG_BEGIN, 0, true), sp_item_gradient_get_coords (item, POINT_LG_END, 0, true), GR_LINE_COLOR_FILL);
             } else if (SP_IS_RADIALGRADIENT (server)) {
                 NR::Point center = sp_item_gradient_get_coords (item, POINT_RG_CENTER, 0, true);
-                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R1, 0, true), GR_LINE_COLOR_FILL);
-                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R2, 0, true), GR_LINE_COLOR_FILL);
+                this->addLine (item, center, sp_item_gradient_get_coords (item, POINT_RG_R1, 0, true), GR_LINE_COLOR_FILL);
+                this->addLine (item, center, sp_item_gradient_get_coords (item, POINT_RG_R2, 0, true), GR_LINE_COLOR_FILL);
             }
         }
 
         if (style && (style->stroke.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
-                this->addLine (sp_item_gradient_get_coords (item, POINT_LG_BEGIN, 0, false), sp_item_gradient_get_coords (item, POINT_LG_END, 0, false), GR_LINE_COLOR_STROKE);
+                this->addLine (item, sp_item_gradient_get_coords (item, POINT_LG_BEGIN, 0, false), sp_item_gradient_get_coords (item, POINT_LG_END, 0, false), GR_LINE_COLOR_STROKE);
             } else if (SP_IS_RADIALGRADIENT (server)) {
                 NR::Point center = sp_item_gradient_get_coords (item, POINT_RG_CENTER, 0, false);
-                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R1, 0, false), GR_LINE_COLOR_STROKE);
-                this->addLine (center, sp_item_gradient_get_coords (item, POINT_RG_R2, 0, false), GR_LINE_COLOR_STROKE);
+                this->addLine (item, center, sp_item_gradient_get_coords (item, POINT_RG_R1, 0, false), GR_LINE_COLOR_STROKE);
+                this->addLine (item, center, sp_item_gradient_get_coords (item, POINT_RG_R2, 0, false), GR_LINE_COLOR_STROKE);
             }
         }
     }
