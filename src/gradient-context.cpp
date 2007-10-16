@@ -223,20 +223,6 @@ sp_gradient_context_select_prev (SPEventContext *event_context)
     event_context->desktop->scroll_to_point(&(d->point), 1.0);
 }
 
-// FIXME: make global function in libnr or somewhere.
-static NR::Point
-snap_vector_midpoint (NR::Point p, NR::Point begin, NR::Point end)
-{
-    double length = NR::L2(end - begin);
-    NR::Point be = (end - begin) / length;
-    double r = NR::dot(p - begin, be);
-
-    if (r < 0.0) return begin;
-    if (r > length) return end;
-
-    return (begin + r * be);
-}
-
 static bool
 sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, NR::Point event_p)
 {
@@ -247,7 +233,7 @@ sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, NR::Point
 
     SPCtrlLine* line = SP_CTRLLINE(item);
 
-    NR::Point nearest = snap_vector_midpoint (rc->mousepoint_doc, line->s, line->e);
+    NR::Point nearest = snap_vector_midpoint (rc->mousepoint_doc, line->s, line->e, 0);
     double dist_screen = NR::L2 (rc->mousepoint_doc - nearest) * desktop->current_zoom();
 
     double tolerance = (double) SP_EVENT_CONTEXT(rc)->tolerance;
@@ -255,19 +241,6 @@ sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, NR::Point
     bool close = (dist_screen < tolerance);
 
     return close;
-}
-
-static double
-get_offset_between_points (NR::Point p, NR::Point begin, NR::Point end)
-{
-    double length = NR::L2(end - begin);
-    NR::Point be = (end - begin) / length;
-    double r = NR::dot(p - begin, be);
-
-    if (r < 0.0) return 0.0;
-    if (r > length) return 1.0;
-
-    return (r / length);
 }
 
 std::vector<NR::Point>
@@ -333,11 +306,12 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
                     }
                 }
 
-                // remember the coords of the future dragger to select it
-                coords.push_back(0.5*(dragger->point + dnext->point));
-
                 // if both adjacent draggers selected,
                 if (!g_slist_find(*these_stops, this_stop) && dnext && dnext->isSelected()) {
+
+                    // remember the coords of the future dragger to select it
+                    coords.push_back(0.5*(dragger->point + dnext->point));
+
                     // do not insert a stop now, it will confuse the loop;
                     // just remember the stops
                     *these_stops = g_slist_prepend (*these_stops, this_stop);
@@ -472,7 +446,6 @@ sp_gradient_simplify(SPGradientContext *rc, double tolerance)
 }
 
 
-
 static void
 sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  NR::Point mouse_p, guint32 etime)
 {
@@ -483,96 +456,12 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  N
 
     double tolerance = (double) ec->tolerance;
 
-    gfloat offset; // type of SPStop.offset = gfloat
-    SPGradient *gradient;
-    bool fill_or_stroke = true;
-    bool r1_knot = false;
+    ec->get_drag()->addStopNearPoint (item, mouse_p, tolerance/desktop->current_zoom());
 
-    bool addknot = false;
-    do {
-        gradient = sp_item_gradient (item, fill_or_stroke);
-        if (SP_IS_LINEARGRADIENT(gradient)) {
-            NR::Point begin   = sp_item_gradient_get_coords(item, POINT_LG_BEGIN, 0, fill_or_stroke);
-            NR::Point end     = sp_item_gradient_get_coords(item, POINT_LG_END, 0, fill_or_stroke);
+    sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
+                      _("Add gradient stop"));
 
-            NR::Point nearest = snap_vector_midpoint (mouse_p, begin, end);
-            double dist_screen = NR::L2 (mouse_p - nearest) * desktop->current_zoom();
-            if ( dist_screen < tolerance ) {
-                // add the knot
-                offset = get_offset_between_points(nearest, begin, end);
-                addknot = true;
-                break; // break out of the while loop: add only one knot
-            }
-        } else if (SP_IS_RADIALGRADIENT(gradient)) {
-            NR::Point begin = sp_item_gradient_get_coords(item, POINT_RG_CENTER, 0, fill_or_stroke);
-            NR::Point end   = sp_item_gradient_get_coords(item, POINT_RG_R1, 0, fill_or_stroke);
-            NR::Point nearest = snap_vector_midpoint (mouse_p, begin, end);
-            double dist_screen = NR::L2 (mouse_p - nearest) * desktop->current_zoom();
-            if ( dist_screen < tolerance ) {
-                offset = get_offset_between_points(nearest, begin, end);
-                addknot = true;
-                r1_knot = true;
-                break; // break out of the while loop: add only one knot
-            }
-
-            end    = sp_item_gradient_get_coords(item, POINT_RG_R2, 0, fill_or_stroke);
-            nearest = snap_vector_midpoint (mouse_p, begin, end);
-            dist_screen = NR::L2 (mouse_p - nearest) * desktop->current_zoom();
-            if ( dist_screen < tolerance ) {
-                offset = get_offset_between_points(nearest, begin, end);
-                addknot = true;
-                r1_knot = false;
-                break; // break out of the while loop: add only one knot
-            }
-        }
-        fill_or_stroke = !fill_or_stroke;
-    } while (!fill_or_stroke && !addknot) ;
-
-    if (addknot) {
-        SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
-        SPStop* prev_stop = sp_first_stop(vector);
-        SPStop* next_stop = sp_next_stop(prev_stop);
-        while ( (next_stop) && (next_stop->offset < offset) ) {
-            prev_stop = next_stop;
-            next_stop = sp_next_stop(next_stop);
-        }
-        if (!next_stop) {
-            // logical error: the endstop should have offset 1 and should always be more than this offset here
-            return;
-        }
-
-
-        SPStop *newstop = sp_vector_add_stop (vector, prev_stop, next_stop, offset);
-
-        sp_document_done (SP_OBJECT_DOCUMENT (vector), SP_VERB_CONTEXT_GRADIENT,
-                  _("Add gradient stop"));
-
-        ec->_grdrag->updateDraggers();
-        sp_gradient_ensure_vector (gradient);
-
-        if (vector->has_stops) {
-            guint i = sp_number_of_stops_before_stop(vector, newstop);
-
-            gradient = sp_item_gradient (item, fill_or_stroke);
-            GrPointType pointtype = POINT_G_INVALID;
-            if (SP_IS_LINEARGRADIENT(gradient)) {
-                pointtype = POINT_LG_MID;
-            } else if (SP_IS_RADIALGRADIENT(gradient)) {
-                pointtype = r1_knot ? POINT_RG_MID1 : POINT_RG_MID2;
-            }
-            GrDragger *dragger = SP_EVENT_CONTEXT(rc)->_grdrag->getDraggerFor (item, pointtype, i, fill_or_stroke);
-            if (dragger && (etime == 0) ) {
-                ec->_grdrag->setSelected (dragger);
-            } else {
-                ec->_grdrag->grabKnot (item,
-                                   pointtype,
-                                   i,
-                                   fill_or_stroke, 99999, 99999, etime);
-            }
-            ec->_grdrag->local_change = true;
-
-        }
-    }
+    ec->get_drag()->updateDraggers();
 }
 
 
@@ -605,6 +494,8 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 }
             }
             if (over_line) {
+                // we take the first item in selection, because with doubleclick, the first click
+                // always resets selection to the single object under cursor
                 sp_gradient_context_add_stop_near_point(rc, SP_ITEM(selection->itemList()->data), rc->mousepoint_doc, event->button.time);
             } else {
                 for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
