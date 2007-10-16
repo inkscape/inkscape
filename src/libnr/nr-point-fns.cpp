@@ -61,6 +61,48 @@ NR::Point abs(NR::Point const &b)
     return ret;
 }
 
+NR::Point *
+get_snap_vector (NR::Point p, NR::Point o, double snap, double initial)
+{
+    double r = NR::L2 (p - o);
+    if (r < 1e-3)
+        return NULL;
+    double angle = NR::atan2 (p - o);
+    // snap angle to snaps increments, starting from initial:
+    double a_snapped = initial + floor((angle - initial)/snap + 0.5) * snap;
+    // calculate the new position and subtract p to get the vector:
+    return new NR::Point (o + r * NR::Point(cos(a_snapped), sin(a_snapped)) - p);
+}
+
+NR::Point
+snap_vector_midpoint (NR::Point p, NR::Point begin, NR::Point end, double snap)
+{
+    double length = NR::L2(end - begin);
+    NR::Point be = (end - begin) / length;
+    double r = NR::dot(p - begin, be);
+
+    if (r < 0.0) return begin;
+    if (r > length) return end;
+
+    double snapdist = length * snap;
+    double r_snapped = (snap==0) ? r : floor(r/(snapdist + 0.5)) * snapdist;
+
+    return (begin + r_snapped * be);
+}
+
+double
+get_offset_between_points (NR::Point p, NR::Point begin, NR::Point end)
+{
+    double length = NR::L2(end - begin);
+    NR::Point be = (end - begin) / length;
+    double r = NR::dot(p - begin, be);
+
+    if (r < 0.0) return 0.0;
+    if (r > length) return 1.0;
+
+    return (r / length);
+}
+
 
 /*
   Local Variables:
