@@ -110,13 +110,16 @@ RegisteredCheckButton::init (const Glib::ustring& label, const Glib::ustring& ti
 void
 RegisteredCheckButton::setActive (bool b)
 {
-// FIXME: for some reason, this function is also called when user clicks. then setProgrammatically should not be set!
+    if (_wr->isUpdating())
+        return;
+
     setProgrammatically = true;
     _button->set_active (b);
     //The slave button is greyed out if the master button is unchecked
     for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
         (*i)->set_sensitive(b);
     }
+    setProgrammatically = false;
 }
 
 void
@@ -129,7 +132,6 @@ RegisteredCheckButton::on_toggled()
 
     if (_wr->isUpdating())
         return;
-
     _wr->setUpdating (true);
 
     write_to_xml(_button->get_active() ? "true" : "false");
@@ -222,6 +224,9 @@ RegisteredScalarUnit::getSU()
 void
 RegisteredScalarUnit::setValue (double val)
 {
+    if (_wr->isUpdating())
+        return;
+
     _widget->setValue (val);
 }
 
@@ -285,6 +290,9 @@ RegisteredScalar::getS()
 void
 RegisteredScalar::setValue (double val)
 {
+    if (_wr->isUpdating())
+        return;
+
     _widget->setValue (val);
 }
 
@@ -341,6 +349,9 @@ RegisteredColorPicker::init (const Glib::ustring& label, const Glib::ustring& ti
 void
 RegisteredColorPicker::setRgba32 (guint32 rgba)
 {
+    if (_wr->isUpdating())
+        return;
+
     _cp->setRgba32 (rgba);
 }
 
@@ -422,6 +433,9 @@ RegisteredSuffixedInteger::init (const Glib::ustring& label, const Glib::ustring
 void
 RegisteredSuffixedInteger::setValue (int i)
 {
+    if (_wr->isUpdating())
+        return;
+
     setProgrammatically = true;
     _adj.set_value (i);
 }
@@ -483,6 +497,9 @@ const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument
 void
 RegisteredRadioButtonPair::setValue (bool second)
 {
+    if (_wr->isUpdating())
+        return;
+
     setProgrammatically = true;
     if (second) _rb2->set_active();
     else        _rb1->set_active();
@@ -549,6 +566,9 @@ RegisteredPoint::getPoint()
 void
 RegisteredPoint::setValue (double xval, double yval)
 {
+    if (_wr->isUpdating())
+        return;
+
     _widget->setValue(xval, yval);
 }
 
@@ -615,6 +635,9 @@ RegisteredRandom::getR()
 void
 RegisteredRandom::setValue (double val, long startseed)
 {
+    if (_wr->isUpdating())
+        return;
+
     _widget->setValue (val);
     _widget->setStartSeed(startseed);
 }
