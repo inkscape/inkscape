@@ -650,22 +650,17 @@ RegisteredRandom::on_value_changed()
         return;
     }
 
-    if (_wr->isUpdating())
+    if (_wr->isUpdating()) {
         return;
+    }
     _wr->setUpdating (true);
-
-    // FIXME:  gtk bug?
-    // disable interruptibility: see http://inkscape.svn.sourceforge.net/viewvc/inkscape/inkscape/trunk/src/ui/widget/selected-style.cpp?r1=13149&r2=13257&sortby=date
-    SPDesktop* dt = SP_ACTIVE_DESKTOP;
-    sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(dt), 0);
 
     Inkscape::SVGOStringStream os;
     os << _widget->getValue() << ';' << _widget->getStartSeed();
 
+    _widget->set_sensitive(false);
     write_to_xml(os.str().c_str());
-
-    // resume interruptibility
-    sp_canvas_end_forced_full_redraws(sp_desktop_canvas(dt));
+    _widget->set_sensitive(true);
 
     _wr->setUpdating (false);
 }
