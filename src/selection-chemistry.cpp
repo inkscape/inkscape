@@ -201,14 +201,14 @@ GSList *sp_selection_paste_impl (SPDocument *doc, SPObject *parent, GSList **cli
     return copied;
 }
 
-void sp_selection_delete_impl(const GSList *items)
+void sp_selection_delete_impl(const GSList *items, bool propagate=true, bool propagate_descendants=true)
 {
     for (const GSList *i = items ; i ; i = i->next ) {
         sp_object_ref((SPObject *)i->data, NULL);
     }
     for (const GSList *i = items; i != NULL; i = i->next) {
         SPItem *item = (SPItem *) i->data;
-        SP_OBJECT(item)->deleteObject();
+        SP_OBJECT(item)->deleteObject(propagate, propagate_descendants);
         sp_object_unref((SPObject *)item, NULL);
     }
 }
@@ -1333,7 +1333,7 @@ void sp_selection_to_next_layer ()
     if (next) {
         GSList *temp_clip = NULL;
         sp_selection_copy_impl (items, &temp_clip, NULL, NULL, sp_document_repr_doc(dt->doc())); // we're in the same doc, so no need to copy defs
-        sp_selection_delete_impl (items);
+        sp_selection_delete_impl (items, false, false);
         next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer()); // Fixes bug 1482973: crash while moving layers
         GSList *copied;
         if(next) {
@@ -1378,7 +1378,7 @@ void sp_selection_to_prev_layer ()
     if (next) {
         GSList *temp_clip = NULL;
         sp_selection_copy_impl (items, &temp_clip, NULL, NULL, sp_document_repr_doc(dt->doc())); // we're in the same doc, so no need to copy defs
-        sp_selection_delete_impl (items);
+        sp_selection_delete_impl (items, false, false);
         next=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer()); // Fixes bug 1482973: crash while moving layers
         GSList *copied;
         if(next) {
