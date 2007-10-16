@@ -78,6 +78,7 @@ sp_ctrlline_init (SPCtrlLine *ctrlline)
     ctrlline->rgba = 0x0000ff7f;
     ctrlline->s.x = ctrlline->s.y = ctrlline->e.x = ctrlline->e.y = 0.0;
     ctrlline->shp=NULL;
+    ctrlline->item=NULL;
 }
 
 static void
@@ -92,6 +93,8 @@ sp_ctrlline_destroy (GtkObject *object)
         delete ctrlline->shp;
         ctrlline->shp = NULL;
     }
+
+    ctrlline->item=NULL;
 
     if (GTK_OBJECT_CLASS (parent_class)->destroy)
         (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);

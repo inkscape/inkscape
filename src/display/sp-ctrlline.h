@@ -18,12 +18,14 @@
 #include <livarot/Shape.h>
 
 
+struct SPItem;
 
 #define SP_TYPE_CTRLLINE (sp_ctrlline_get_type ())
 #define SP_CTRLLINE(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_CTRLLINE, SPCtrlLine))
 #define SP_IS_CTRLLINE(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_CTRLLINE))
 
 struct SPCtrlLine : public SPCanvasItem{
+    SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users
     guint32 rgba;
     NRPoint s, e;
     Shape* shp;
