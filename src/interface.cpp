@@ -65,6 +65,8 @@
 #include "svg/svg-color.h"
 #include "desktop-style.h"
 #include "style.h"
+#include "event-context.h"
+#include "gradient-drag.h"
 
 using Inkscape::IO::StringOutputStream;
 using Inkscape::IO::Base64OutputStream;
@@ -1105,48 +1107,67 @@ sp_ui_drag_data_received(GtkWidget *widget,
             int destY = 0;
             gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
             NR::Point where( sp_canvas_window_to_world( desktop->canvas, NR::Point( destX, destY ) ) );
-            NR::Point const button_dt(desktop->dt2doc(desktop->w2d(where)));
+            NR::Point const button_dt(desktop->w2d(where));
+            NR::Point const button_doc(desktop->dt2doc(button_dt));
 
-            SPItem *item = desktop->item_at_point( where, true );
-            if ( item )
-            {
-                bool fillnotstroke = (drag_context->action != GDK_ACTION_MOVE);
-                if (SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
-                    Path *livarot_path = Path_for_item(item, true, true);
-                    livarot_path->ConvertWithBackData(0.04);
+            if ( data->length == 8 ) {
+                gchar c[64] = {0};
+                // Careful about endian issues.
+                guint16* dataVals = (guint16*)data->data;
+                sp_svg_write_color( c, 64,
+                                    SP_RGBA32_U_COMPOSE(
+                                        0x0ff & (dataVals[0] >> 8),
+                                        0x0ff & (dataVals[1] >> 8),
+                                        0x0ff & (dataVals[2] >> 8),
+                                        0xff // can't have transparency in the color itself
+                                        //0x0ff & (data->data[3] >> 8),
+                                        ));
 
-                    NR::Maybe<Path::cut_position> position = get_nearest_position_on_Path(livarot_path, button_dt);
-                    if (position) {
-                        NR::Point nearest = get_point_on_Path(livarot_path, position->piece, position->t);
-                        NR::Point delta = nearest - button_dt;
-                        delta = desktop->d2w(delta);
-                        double stroke_tolerance =
-                            ( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
-                              desktop->current_zoom() *
-                              SP_OBJECT_STYLE (item)->stroke_width.computed *
-                              sp_item_i2d_affine (item).expansion() * 0.5
-                              : 0.0)
-                            + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100); 
+                SPItem *item = desktop->item_at_point( where, true );
 
-                        if (NR::L2 (delta) < stroke_tolerance) {
-                            fillnotstroke = false;
-                        }
+                bool consumed = false;
+                if (desktop->event_context && desktop->event_context->get_drag()) {
+                    consumed = desktop->event_context->get_drag()->dropColor(item, c, button_dt);
+                    if (consumed) {
+                        sp_document_done( doc , SP_VERB_NONE, _("Drop color on gradient"));
+                        desktop->event_context->get_drag()->updateDraggers();
                     }
-                    delete livarot_path;
                 }
 
-                if ( data->length == 8 ) {
-                    gchar c[64] = {0};
-                    // Careful about endian issues.
-                    guint16* dataVals = (guint16*)data->data;
-                    sp_svg_write_color( c, 64,
-                                        SP_RGBA32_U_COMPOSE(
-                                            0x0ff & (dataVals[0] >> 8),
-                                            0x0ff & (dataVals[1] >> 8),
-                                            0x0ff & (dataVals[2] >> 8),
-                                            0xff // can't have transparency in the color itself
-                                            //0x0ff & (data->data[3] >> 8),
-                                            ));
+                //if (!consumed && tools_active(desktop, TOOLS_TEXT)) {
+                //    consumed = sp_text_context_drop_color(c, button_doc);
+                //    if (consumed) {
+                //        sp_document_done( doc , SP_VERB_NONE, _("Drop color on gradient stop"));
+                //    }
+                //}
+
+                if (!consumed && item) {
+                    bool fillnotstroke = (drag_context->action != GDK_ACTION_MOVE);
+                    if (fillnotstroke && 
+                        (SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))) {
+                        Path *livarot_path = Path_for_item(item, true, true);
+                        livarot_path->ConvertWithBackData(0.04);
+
+                        NR::Maybe<Path::cut_position> position = get_nearest_position_on_Path(livarot_path, button_doc);
+                        if (position) {
+                            NR::Point nearest = get_point_on_Path(livarot_path, position->piece, position->t);
+                            NR::Point delta = nearest - button_doc;
+                            delta = desktop->d2w(delta);
+                            double stroke_tolerance =
+                                ( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
+                                  desktop->current_zoom() *
+                                  SP_OBJECT_STYLE (item)->stroke_width.computed *
+                                  sp_item_i2d_affine (item).expansion() * 0.5
+                                  : 0.0)
+                                + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100); 
+
+                            if (NR::L2 (delta) < stroke_tolerance) {
+                                fillnotstroke = false;
+                            }
+                        }
+                        delete livarot_path;
+                    }
+
                     SPCSSAttr *css = sp_repr_css_attr_new();
                     sp_repr_css_set_property( css, fillnotstroke ? "fill":"stroke", c );
 
