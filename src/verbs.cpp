@@ -1151,10 +1151,10 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
             if (next) {
                 dt->setCurrentLayer(next);
                 sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_NEXT,
-                                 _("Move to next layer"));
-                dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Moved to next layer."));
+                                 _("Switch to next layer"));
+                dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Switched to next layer."));
             } else {
-                dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot move past last layer."));
+                dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot go past last layer."));
             }
             break;
         }
@@ -1163,10 +1163,10 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
             if (prev) {
                 dt->setCurrentLayer(prev);
                 sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_PREV,
-                                 _("Move to previous layer"));
-                dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Moved to previous layer."));
+                                 _("Switch to previous layer"));
+                dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Switched to previous layer."));
             } else {
-                dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot move past first layer."));
+                dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot go before first layer."));
             }
             break;
         }
