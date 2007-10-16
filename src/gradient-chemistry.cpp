@@ -30,6 +30,7 @@
 #include "sp-text.h"
 #include "sp-tspan.h"
 #include <libnr/nr-matrix-fns.h>
+#include <libnr/nr-point-fns.h>
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "svg/svg-color.h"
@@ -800,21 +801,6 @@ sp_item_gradient_reverse_vector (SPItem *item, bool fill_or_stroke)
     g_slist_free (child_reprs);
     g_slist_free (child_copies);
     g_slist_free (child_objects);
-}
-
-
-// FIXME: make general global function
-static double
-get_offset_between_points (NR::Point p, NR::Point begin, NR::Point end)
-{
-    double length = NR::L2(end - begin);
-    NR::Point be = (end - begin) / length;
-    double r = NR::dot(p - begin, be);
-        
-    if (r < 0.0) return 0.0;
-    if (r > length) return 1.0;    
-    
-    return (r / length);
 }
 
 
