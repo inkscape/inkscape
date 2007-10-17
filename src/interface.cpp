@@ -110,6 +110,17 @@ static void sp_ui_drag_data_received(GtkWidget *widget,
                                      guint info,
                                      guint event_time,
                                      gpointer user_data);
+static void sp_ui_drag_motion( GtkWidget *widget,
+                               GdkDragContext *drag_context,
+                               gint x, gint y,
+                               GtkSelectionData *data,
+                               guint info,
+                               guint event_time,
+                               gpointer user_data );
+static void sp_ui_drag_leave( GtkWidget *widget,
+                              GdkDragContext *drag_context,
+                              guint event_time,
+                              gpointer user_data );
 static void sp_ui_menu_item_set_sensitive(SPAction *action,
                                           unsigned int sensitive,
                                           void *data);
@@ -240,9 +251,19 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
                       completeDropTargets,
                       completeDropTargetsCount,
                       GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE));
+
+
     g_signal_connect(G_OBJECT(win->gobj()),
                      "drag_data_received",
                      G_CALLBACK(sp_ui_drag_data_received),
+                     NULL);
+    g_signal_connect(G_OBJECT(win->gobj()),
+                     "drag_motion",
+                     G_CALLBACK(sp_ui_drag_motion),
+                     NULL);
+    g_signal_connect(G_OBJECT(win->gobj()),
+                     "drag_leave",
+                     G_CALLBACK(sp_ui_drag_leave),
                      NULL);
     win->show();
 
@@ -1292,6 +1313,31 @@ sp_ui_drag_data_received(GtkWidget *widget,
             break;
         }
     }
+}
+
+#include "gradient-context.h"
+
+void sp_ui_drag_motion( GtkWidget *widget,
+                        GdkDragContext *drag_context,
+                        gint x, gint y,
+                        GtkSelectionData *data,
+                        guint info,
+                        guint event_time,
+                        gpointer user_data)
+{
+    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
+
+//     g_message("drag-n-drop motion (%4d, %4d)  at %d", x, y, event_time);
+}
+
+static void sp_ui_drag_leave( GtkWidget *widget,
+                              GdkDragContext *drag_context,
+                              guint event_time,
+                              gpointer user_data )
+{
+//     g_message("drag-n-drop leave                at %d", event_time);
 }
 
 static void
