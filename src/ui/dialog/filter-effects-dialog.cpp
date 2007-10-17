@@ -920,6 +920,8 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
         sigc::mem_fun(*this, &FilterModifier::filter_list_button_release));
     _menu = create_popup_menu(*this, sigc::mem_fun(*this, &FilterModifier::duplicate_filter),
                               sigc::mem_fun(*this, &FilterModifier::remove_filter));
+    _menu->items().push_back(Gtk::Menu_Helpers::MenuElem(
+                                 _("R_ename"), sigc::mem_fun(*this, &FilterModifier::rename_filter))); 	 
     _menu->accelerate(*this);
 
     _list.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &FilterModifier::on_filter_selection_changed));
@@ -1152,6 +1154,11 @@ void FilterEffectsDialog::FilterModifier::duplicate_filter()
 
         update_filters();
     }
+}
+
+void FilterEffectsDialog::FilterModifier::rename_filter()
+{
+    _list.set_cursor(_model->get_path(_list.get_selection()->get_selected()), *_list.get_column(1), true);
 }
 
 FilterEffectsDialog::CellRendererConnection::CellRendererConnection()

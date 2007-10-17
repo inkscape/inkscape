@@ -99,6 +99,7 @@ private:
         void add_filter();
         void remove_filter();
         void duplicate_filter();
+        void rename_filter();
 
         sigc::connection _doc_replaced;
         sigc::connection _resource_changed;
