@@ -1277,7 +1277,7 @@ void FilterEffectsDialog::PrimitiveList::update()
                 Gtk::TreeModel::Row row = *_model->append();
                 row[_columns.primitive] = prim;
                 row[_columns.type_id] = FPConverter.get_id_from_key(prim->repr->name());
-                row[_columns.type] = FPConverter.get_label(row[_columns.type_id]);
+                row[_columns.type] = _(FPConverter.get_label(row[_columns.type_id]).c_str());
                 row[_columns.id] = SP_OBJECT_ID(prim);
 
                 if(prim == active_prim) {
