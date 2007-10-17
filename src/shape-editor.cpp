@@ -144,9 +144,12 @@ static void shapeeditor_event_attr_changed(Inkscape::XML::Node *repr, gchar cons
 
     item = sh->get_item();
 
-    if (
-        ((sh->has_nodepath()) && (!strcmp(name, "d") || !strcmp(name, "sodipodi:nodetypes")))  // With paths, we only need to act if one of the path-affecting attributes has changed.
-        || sh->has_knotholder()) {
+    if ( ( (sh->has_nodepath())
+           && (  !strcmp(name, "d") // With paths, we only need to act if one of the path-affecting attributes has changed.
+                 || !strcmp(name, "sodipodi:nodetypes")
+                 || !strcmp(name, "inkscape:original-d") ) )
+          || sh->has_knotholder() )
+    {
         changed = !sh->has_local_change(); 
         sh->decrement_local_change();
     }
