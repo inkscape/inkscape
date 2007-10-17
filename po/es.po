@@ -14,16 +14,14 @@
 # Agradecimientos: zert, softcatala, 2002-2003.
 # Jose Antonio Salgueiro Aquino <developer@telefonica.net>, 2003.
 # Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
-# Lucas Vieites Fariña <lucas@asixinformatica.com>, 2003-2005, 2006, 2007.
-# Lucas Vieites <Lucas@codexion.com>, 2007.
-# Lucas 'Basurero' Vieites <lucas@codexion.com>, 2007.
+# Lucas Vieites Fariña <lucas@codexion.com>, 2003-2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-15 15:23+0200\n"
-"PO-Revision-Date: 2007-09-22 18:29+0200\n"
-"Last-Translator: Lucas 'Basurero' Vieites <lucas@codexion.com>\n"
+"PO-Revision-Date: 2007-10-16 20:39+0200\n"
+"Last-Translator: Lucas Vieites <lucas@codexion.com>\n"
 "Language-Team: Español <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4516,13 +4514,12 @@ msgstr "La vista preliminar no está disponible"
 #: ../src/print.cpp:232
 #, c-format
 msgid "Failed to create tempfile for printing: %s"
-msgstr ""
+msgstr "No se ha podido crear un archivo temporal para la impresión: %s"
 
 #. redirect output to new print dialog
 #: ../src/print.cpp:272
-#, fuzzy
 msgid "SVG Document"
-msgstr "Documento"
+msgstr "Documento SVG"
 
 #: ../src/rect-context.cpp:378
 msgid ""
@@ -4568,19 +4565,16 @@ msgid ""
 msgstr ""
 
 #: ../src/select-context.cpp:697
-#, fuzzy
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
-msgstr "<b>Ctrl</b>: seleccionar en grupos, mover hor/vert"
+msgstr "<b>Ctrl</b>: pulse para seleccionar en grupos, arrastre para mover hor/vert"
 
 #: ../src/select-context.cpp:698
-#, fuzzy
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
-msgstr "<b>Mayús</b>: intercambiar selección, forzar elástico, desactivar ajuste"
+msgstr "<b>Mayús</b>: pulse para intercambiar selección, arrastre para selección elástica"
 
 #: ../src/select-context.cpp:699
-#, fuzzy
 msgid "<b>Alt</b>: click to select under; drag to move selected or select by touch"
-msgstr "<b>Alt</b>: seleccionar debajo, mover selección"
+msgstr "<b>Alt</b>: pulse para seleccionar debajo, arrastre para mover la selección o seleccionar por contacto"
 
 #: ../src/select-context.cpp:849
 msgid "Selected object is not a group. Cannot enter."
@@ -4613,9 +4607,8 @@ msgid "Delete all"
 msgstr "Borrar todo"
 
 #: ../src/selection-chemistry.cpp:442
-#, fuzzy
 msgid "Select <b>some objects</b> to group."
-msgstr "Seleccione <b>dos o más objetos</b> para agrupar."
+msgstr "Seleccione <b>varios objetos</b> para agrupar."
 
 #: ../src/selection-chemistry.cpp:515 ../src/selection-describer.cpp:50
 msgid "Group"
@@ -4779,18 +4772,16 @@ msgid "Move"
 msgstr "Mover"
 
 #: ../src/selection-chemistry.cpp:1824
-#, fuzzy
 msgid "Move vertically by pixels"
-msgstr "Impulsar verticalmente por píxeles"
+msgstr "Mover verticalmente por píxeles"
 
 #: ../src/selection-chemistry.cpp:1827
-#, fuzzy
 msgid "Move horizontally by pixels"
-msgstr "Impulsar horizontalmente por píxeles"
+msgstr "Mover horizontalmente por píxeles"
 
 #: ../src/selection-chemistry.cpp:2095
 msgid "action|Clone"
-msgstr ""
+msgstr "Clonar"
 
 #: ../src/selection-chemistry.cpp:2112
 msgid "Select a <b>clone</b> to unlink."
@@ -4947,13 +4938,12 @@ msgstr "Rectángulo"
 #. 3D box
 #: ../src/selection-describer.cpp:64
 #: ../src/ui/dialog/inkscape-preferences.cpp:366 ../src/verbs.cpp:2357
-#, fuzzy
 msgid "3D Box"
-msgstr "Caja"
+msgstr "Caja 3D"
 
 #: ../src/selection-describer.cpp:70
 msgid "object|Clone"
-msgstr ""
+msgstr "Clon"
 
 #: ../src/selection-describer.cpp:74
 msgid "Offset path"
@@ -5266,12 +5256,12 @@ msgstr "Objeto"
 #: ../src/sp-item.cpp:832
 #, c-format
 msgid "%s; <i>clipped</i>"
-msgstr ""
+msgstr "%s; <i>recortado</i>"
 
 #: ../src/sp-item.cpp:837
-#, fuzzy, c-format
+#, c-format
 msgid "%s; <i>masked</i>"
-msgstr "<i>%s</i>"
+msgstr "%s; <i>enmascarado</i>"
 
 #: ../src/sp-line.cpp:189
 msgid "<b>Line</b>"
@@ -5496,22 +5486,21 @@ msgstr "<b>No hay trazos</b> para reducir/ampliar en la selección."
 
 #: ../src/splivarot.cpp:1560
 msgid "Simplifying paths (separately):"
-msgstr ""
+msgstr "Simplificando trazos (por separado):"
 
 #: ../src/splivarot.cpp:1562
-#, fuzzy
 msgid "Simplifying paths:"
-msgstr "Umbral de simplificación:"
+msgstr "Simplificando trazos:"
 
 #: ../src/splivarot.cpp:1599
-#, fuzzy, c-format
+#, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
-msgstr "Simplificando %s - <b>%d</b> de <b>%d</b> trazos simplificados..."
+msgstr "%s <b>%d</b> de <b>%d</b> trazos simplificados..."
 
 #: ../src/splivarot.cpp:1610
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%d</b> paths simplified."
-msgstr "Terminado - <b>%d</b> trazos simplificados."
+msgstr "<b>%d</b> trazos simplificados."
 
 #: ../src/splivarot.cpp:1626
 msgid "Select <b>path(s)</b> to simplify."
@@ -5570,7 +5559,7 @@ msgstr ""
 
 #: ../src/text-chemistry.cpp:120
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
-msgstr ""
+msgstr "El texto fluido debe ser <b>visible</b> para que se pueda poner en un trazo."
 
 #: ../src/text-chemistry.cpp:187 ../src/verbs.cpp:2223
 msgid "Put text on path"
@@ -5590,7 +5579,7 @@ msgstr "Retirar texto de trayecto"
 
 #: ../src/text-chemistry.cpp:250 ../src/text-chemistry.cpp:270
 msgid "Select <b>text(s)</b> to remove kerns from."
-msgstr "Seleccione los <b>textos</b> de los que desea eliminar los kerns."
+msgstr "Seleccione los <b>textos</b> de los que desea eliminar el espaciado."
 
 #: ../src/text-chemistry.cpp:273 ../src/widgets/toolbox.cpp:4249
 msgid "Remove manual kerns"
@@ -5622,7 +5611,7 @@ msgstr "Seleccione <b>textos fluidos</b> para convertir."
 
 #: ../src/text-chemistry.cpp:480
 msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
-msgstr ""
+msgstr "El texto fluido debe ser <b>visible</b> para que se pueda convertir."
 
 #: ../src/text-chemistry.cpp:508
 msgid "Convert flowed text to text"
@@ -5771,9 +5760,8 @@ msgstr ""
 "crear un texto fluido; luego escriba."
 
 #: ../src/text-context.cpp:1550
-#, fuzzy
 msgid "Remove empty text"
-msgstr "Eliminar verde"
+msgstr "Eliminar texto vacío"
 
 #: ../src/text-context.cpp:1582
 msgid "Type text"
@@ -5798,13 +5786,10 @@ msgstr ""
 "redondear las esquinas y redimensionar. <b>Haga clic</b> para seleccionar."
 
 #: ../src/tools-switch.cpp:154
-#, fuzzy
 msgid ""
 "<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in "
 "perspective. <b>Click</b> to select (with <b>Ctrl+Alt</b> for single faces)."
-msgstr ""
-"<b>Arrastre</b> para crear una estrella. <b>Arrastre los controles</b> para "
-"editar la forma de la estrella. <b>Haga clic</b> para seleccionar."
+msgstr "<b>Arrastre</b> para crear una caja 3D. <b>Arrastre los controles</b> para redimensionaren perspectiva. <b>Pulse</b> para seleccionar (con <b>Ctrl+Alt</b> para una sola cara)."
 
 #: ../src/tools-switch.cpp:160
 msgid ""
@@ -5847,15 +5832,11 @@ msgstr ""
 "b> pulsado para añadir al trazo seleccionado."
 
 #: ../src/tools-switch.cpp:190
-#, fuzzy
 msgid ""
 "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a "
 "guide, with <b>Alt</b> to thin/thicken. <b>Arrow keys</b> adjust width (left/"
 "right) and angle (up/down)."
-msgstr ""
-"<b>Arrastre</b> para dibujar un trazo caligráfico. Las flechas <b>izquierda</"
-"b>/<b>derecha</b> ajustan el ancho, <b>arriba</b>/<b>abajo</b> ajustan el "
-"ángulo."
+msgstr "<b>Arrastre</b> para dibujar un trazo caligráfico, con <b>Ctrl</b> para seguir una guía, con <b>Alt</b> para engrosar/afinar. <b>Las flechas</b> ajustan el ancho (izquierda/derecha) y el ángulo (arriba/abajo)."
 
 #: ../src/tools-switch.cpp:202
 msgid ""
@@ -5883,7 +5864,7 @@ msgid ""
 "<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new "
 "fill with the current selection, <b>Ctrl+click</b> to change the clicked "
 "object's fill and stroke to the current setting."
-msgstr ""
+msgstr "<b>Pulse</b> para dibujar un área delimitada, <b>Mayús+clic</b> para unir el nuevo relleno con la selección actual, <b>Ctrl+clic</b> para cambiar el relleno y trazo del objeto pulsado al ajuste actual."
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:500
 #: ../src/trace/potrace/inkscape-potrace.cpp:574
@@ -6268,32 +6249,26 @@ msgid "<b>License</b>"
 msgstr "<b>Licencia</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:97
-#, fuzzy
 msgid "Create new grid."
-msgstr "Crear guía"
+msgstr "Crear rejilla nueva"
 
 #: ../src/ui/dialog/document-properties.cpp:98
-#, fuzzy
 msgid "_Remove"
-msgstr "Eliminar"
+msgstr "Elimina_r"
 
 #: ../src/ui/dialog/document-properties.cpp:98
-#, fuzzy
 msgid "Remove selected grid."
-msgstr "Mantener seleccionado"
+msgstr "Eliminar rejilla seleccionada"
 
 #: ../src/ui/dialog/document-properties.cpp:107
-#, fuzzy
 msgid "Guides"
-msgstr "G_uías"
+msgstr "Guías"
 
 #: ../src/ui/dialog/document-properties.cpp:108
-#, fuzzy
 msgid "Grids"
-msgstr "Rejilla"
+msgstr "Rejillas"
 
 #: ../src/ui/dialog/document-properties.cpp:109
-#, fuzzy
 msgid "Snapping"
 msgstr "Ajuste"
 
@@ -6427,7 +6402,7 @@ msgstr "Ajustar siempre"
 
 #: ../src/ui/dialog/document-properties.cpp:276
 msgid "Snapping distance, in screen pixels, for snapping to objects"
-msgstr ""
+msgstr "Distancia de ajuste, en píxeles de pantalla, para ajustarse a objetos"
 
 #: ../src/ui/dialog/document-properties.cpp:277
 #, fuzzy
