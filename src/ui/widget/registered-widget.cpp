@@ -110,9 +110,6 @@ RegisteredCheckButton::init (const Glib::ustring& label, const Glib::ustring& ti
 void
 RegisteredCheckButton::setActive (bool b)
 {
-    if (_wr->isUpdating())
-        return;
-
     setProgrammatically = true;
     _button->set_active (b);
     //The slave button is greyed out if the master button is unchecked
@@ -224,9 +221,6 @@ RegisteredScalarUnit::getSU()
 void
 RegisteredScalarUnit::setValue (double val)
 {
-    if (_wr->isUpdating())
-        return;
-
     _widget->setValue (val);
 }
 
@@ -290,9 +284,6 @@ RegisteredScalar::getS()
 void
 RegisteredScalar::setValue (double val)
 {
-    if (_wr->isUpdating())
-        return;
-
     _widget->setValue (val);
 }
 
@@ -349,9 +340,6 @@ RegisteredColorPicker::init (const Glib::ustring& label, const Glib::ustring& ti
 void
 RegisteredColorPicker::setRgba32 (guint32 rgba)
 {
-    if (_wr->isUpdating())
-        return;
-
     _cp->setRgba32 (rgba);
 }
 
@@ -433,9 +421,6 @@ RegisteredSuffixedInteger::init (const Glib::ustring& label, const Glib::ustring
 void
 RegisteredSuffixedInteger::setValue (int i)
 {
-    if (_wr->isUpdating())
-        return;
-
     setProgrammatically = true;
     _adj.set_value (i);
 }
@@ -497,9 +482,6 @@ const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument
 void
 RegisteredRadioButtonPair::setValue (bool second)
 {
-    if (_wr->isUpdating())
-        return;
-
     setProgrammatically = true;
     if (second) _rb2->set_active();
     else        _rb1->set_active();
@@ -566,9 +548,6 @@ RegisteredPoint::getPoint()
 void
 RegisteredPoint::setValue (double xval, double yval)
 {
-    if (_wr->isUpdating())
-        return;
-
     _widget->setValue(xval, yval);
 }
 
@@ -635,9 +614,6 @@ RegisteredRandom::getR()
 void
 RegisteredRandom::setValue (double val, long startseed)
 {
-    if (_wr->isUpdating())
-        return;
-
     _widget->setValue (val);
     _widget->setStartSeed(startseed);
 }
