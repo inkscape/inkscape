@@ -792,12 +792,21 @@ void
 Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
 {
     std::vector<Inkscape::XML::Node *> delete_list;
+    Inkscape::XML::Node * oldroot_namedview = NULL;
+
     for (Inkscape::XML::Node * child = oldroot->firstChild();
             child != NULL;
             child = child->next()) {
-        if (!strcmp("sodipodi:namedview", child->name()))
-            continue;
-        delete_list.push_back(child);
+        if (!strcmp("sodipodi:namedview", child->name())) {
+            oldroot_namedview = child;
+            for (Inkscape::XML::Node * oldroot_namedview_child = child->firstChild();
+                    oldroot_namedview_child != NULL;
+                    oldroot_namedview_child = oldroot_namedview_child->next()) {
+                delete_list.push_back(oldroot_namedview_child);
+            }
+        } else {
+            delete_list.push_back(child);
+        }
     }
     for (unsigned int i = 0; i < delete_list.size(); i++)
         sp_repr_unparent(delete_list[i]);
@@ -805,10 +814,21 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
     for (Inkscape::XML::Node * child = newroot->firstChild();
             child != NULL;
             child = child->next()) {
-        if (!strcmp("sodipodi:namedview", child->name()))
-            continue;
-        oldroot->appendChild(child->duplicate(newroot->document()));
+        if (!strcmp("sodipodi:namedview", child->name())) {
+            if (oldroot_namedview != NULL) {
+                for (Inkscape::XML::Node * newroot_namedview_child = child->firstChild();
+                        newroot_namedview_child != NULL;
+                        newroot_namedview_child = newroot_namedview_child->next()) {
+                    oldroot_namedview->appendChild(newroot_namedview_child->duplicate(child->document()));
+                }
+            }
+        } else {
+            oldroot->appendChild(child->duplicate(newroot->document()));
+        }
     }
+
+    oldroot->setAttribute("width", newroot->attribute("width"));
+    oldroot->setAttribute("height", newroot->attribute("height"));
 
     /** \todo  Restore correct layer */
     /** \todo  Restore correct selection */
