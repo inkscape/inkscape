@@ -37,6 +37,7 @@ public:
 
     void set_item (SPItem *item);
     void set_item_livepatheffect_parameter(SPItem *item, SPObject *lpeobject, const char * key);
+    void reset_item ();
     void unset_item ();
 
     SPItem *get_item ();

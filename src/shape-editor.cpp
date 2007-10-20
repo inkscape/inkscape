@@ -137,19 +137,12 @@ static void shapeeditor_event_attr_changed(Inkscape::XML::Node *repr, gchar cons
                                            gchar const *old_value, gchar const *new_value,
                                            bool is_interactive, gpointer data)
 {
-    SPItem *item = NULL;
     gboolean changed = FALSE;
 
     g_assert(data);
     ShapeEditor *sh = ((ShapeEditor *) data);
 
-    item = sh->get_item();
-
-    if ( ( (sh->has_nodepath())
-           && (  !strcmp(name, "d") // With paths, we only need to act if one of the path-affecting attributes has changed.
-                 || !strcmp(name, "sodipodi:nodetypes")
-                 || !strcmp(name, "inkscape:original-d") ) )
-          || sh->has_knotholder() )
+    if ( sh->has_nodepath() || sh->has_knotholder() )
     {
         changed = !sh->has_local_change(); 
         sh->decrement_local_change();
@@ -161,7 +154,7 @@ static void shapeeditor_event_attr_changed(Inkscape::XML::Node *repr, gchar cons
             saved = sh->save_nodepath_selection();
         }
 
-        sh->set_item (item);
+        sh->reset_item ();
 
         if (sh->has_nodepath() && saved) {
             sh->restore_nodepath_selection(saved);
@@ -234,6 +227,22 @@ void ShapeEditor::set_item_livepatheffect_parameter(SPItem *item, SPObject *lpeo
                 sp_repr_add_listener(repr, &shapeeditor_repr_events, this);
             }
         }
+    }
+}
+
+/** FIXME: think about this. Is this thing only called when the item needs to be updated?
+   Why not make a reload function in NodePath and in KnotHolder? */
+void ShapeEditor::reset_item ()
+{
+    if ( (this->nodepath) && (IS_LIVEPATHEFFECT(this->nodepath->object)) ) {
+        SPItem * item = this->nodepath->item;
+        SPObject *obj = this->nodepath->object;
+        char * key = g_strdup(this->nodepath->repr_key);
+        set_item_livepatheffect_parameter(item, obj, key);
+        g_free(key);
+    } else {
+        SPItem * item = get_item();
+        set_item(item);
     }
 }
 
