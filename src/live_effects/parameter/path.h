@@ -19,6 +19,10 @@
 
 #include <sigc++/sigc++.h>
 
+namespace Gtk {
+    class Button;
+}
+
 namespace Inkscape {
 
 namespace LivePathEffect {
@@ -56,6 +60,8 @@ private:
     void on_paste_button_click();
 
     gchar * defvalue;
+
+    Gtk::Button * edit_button;
 };
 
 

@@ -25,7 +25,12 @@
 #include "verbs.h"
 #include "document.h"
 
-#define noLPEPATHPARAM_DEBUG
+#define LPEPATHPARAM_DEBUG
+#include "tools-switch.h"
+#include "shape-editor.h"
+#include "node-context.h"
+#include "desktop-handles.h"
+#include "selection.h"
 
 namespace Inkscape {
 
@@ -38,6 +43,7 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
 {
     _widget = NULL;
     _tooltips = NULL;
+    edit_button = NULL;
     defvalue = g_strdup(default_value);
     param_readSVGValue(defvalue);
 }
@@ -103,8 +109,9 @@ PathParam::param_getWidget()
         pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_edit_button_click));
         static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
         _tooltips->set_tip(*pButton, _("Edit on-canvas"));
+        edit_button = pButton;
 #ifndef LPEPATHPARAM_DEBUG
-        pButton->set_sensitive(false);
+        edit_button->set_sensitive(false);
 #endif
 
         pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_PASTE, Inkscape::ICON_SIZE_BUTTON) );
@@ -126,7 +133,13 @@ PathParam::param_getWidget()
 void
 PathParam::on_edit_button_click()
 {
-    g_message("give this path to edit on canvas!");
+    // Switch to node edit tool:
+    tools_switch_current(TOOLS_NODES);
+
+    // set this parameter to edit:
+    ShapeEditor * shape_editor = SP_NODE_CONTEXT( SP_ACTIVE_DESKTOP->event_context )->shape_editor;
+    SPItem * item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+    shape_editor->set_item_livepatheffect_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
 }
 
 void
@@ -146,6 +159,7 @@ PathParam::on_paste_button_click()
             if (strchr(svgd,'A')) { // FIXME: temporary hack until 2Geom supports arcs in SVGD
                 SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
                             _("This effect does not support arcs yet, try to convert to path.") );
+                return;
             } else {
                 param_write_to_repr(svgd);
                 signal_path_pasted.emit();
@@ -155,8 +169,8 @@ PathParam::on_paste_button_click()
         }
     } else {
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Clipboard does not contain a path."));
+        return;
     }
-
 }
 
 void

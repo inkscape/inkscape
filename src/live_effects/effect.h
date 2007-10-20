@@ -70,9 +70,10 @@ public:
 
     Inkscape::XML::Node * getRepr();
     SPDocument * getSPDoc();
+    LivePathEffectObject * getLPEObj() {return lpeobj;};
 
     void readallParameters(Inkscape::XML::Node * repr);
-    void setParameter(Inkscape::XML::Node * repr, const gchar * key, const gchar * old_value, const gchar * new_value);
+    void setParameter(const gchar * key, const gchar * new_value);
 
 protected:
     Effect(LivePathEffectObject *lpeobject);

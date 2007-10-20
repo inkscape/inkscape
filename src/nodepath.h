@@ -24,6 +24,7 @@
 class SPDesktop;
 class SPPath;
 class SPKnot;
+class LivePathEffectObject;
 
 namespace Inkscape {
 namespace XML {
@@ -208,6 +209,8 @@ class Path {
 	SPDesktop * desktop;
 /**  The parent path of this nodepath */
 	SPObject * object;
+/**  The parent livepatheffect of this nodepath, if applicable */
+    SPItem * item;
 /**  The context which created this nodepath.  Important if this nodepath is deleted */
 	ShapeEditor *shape_editor;
 /**  The subpaths which comprise this NodePath */
@@ -242,6 +245,7 @@ class Path {
 	bool show_handles;
 
     /// true if the path cannot contain curves, just straight lines
+    // FIXME: NOT IMPLEMENTED YET
     bool straight_path;
 
 	/// active_node points to the node that is currently mouseovered (= NULL if
@@ -260,7 +264,7 @@ enum {
 };
 
 // Do function documentation in nodepath.cpp
-Inkscape::NodePath::Path * sp_nodepath_new (SPDesktop * desktop, SPObject *object, bool show_handles, const char * repr_key = NULL);
+Inkscape::NodePath::Path * sp_nodepath_new (SPDesktop * desktop, SPObject *object, bool show_handles, const char * repr_key = NULL, SPItem *item = NULL);
 void sp_nodepath_destroy (Inkscape::NodePath::Path * nodepath);
 void sp_nodepath_ensure_livarot_path(Inkscape::NodePath::Path *np);
 void sp_nodepath_deselect (Inkscape::NodePath::Path *nodepath);

@@ -16,6 +16,7 @@
 
 #include "sp-object.h"
 #include "sp-item.h"
+#include "live_effects/lpeobject.h"
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-handles.h"
@@ -113,7 +114,7 @@ void ShapeEditor::decrement_local_change () {
 SPItem *ShapeEditor::get_item () {
     SPItem *item = NULL;
     if (this->has_nodepath()) {
-        item = SP_ITEM(this->nodepath->object);
+        item = this->nodepath->item;
     } else if (this->has_knotholder()) {
         item = SP_ITEM(this->knotholder->item);
     }
@@ -208,29 +209,26 @@ void ShapeEditor::set_item(SPItem *item) {
     }
 }
 
-void ShapeEditor::set_livepatheffect_parameter(SPObject *lpeobject, const char * key) {
+/** Please note that this function only works for path parameters.
+*  All other parameters probably will crash Inkscape!
+*  Fortunately, there are no other on-canvas edittable objects at this moment :)
+*/
+void ShapeEditor::set_item_livepatheffect_parameter(SPItem *item, SPObject *lpeobject, const char * key) {
 
     unset_item();
 
     this->grab_node = -1;
 
     if (lpeobject) {
+        this->knotholder = NULL; // it's a path, no special knotholder needed.
         this->nodepath = sp_nodepath_new( desktop, lpeobject, 
                                           (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0),
-                                          key);
+                                          key, item);
         if (this->nodepath) {
             this->nodepath->shape_editor = this; 
-        }
-        //this->knotholder = sp_item_knot_holder(item, desktop);
-        g_message("create knotholder?");
 
-        if (this->nodepath || this->knotholder) {
             // setting new listener
-            Inkscape::XML::Node *repr;
-            if (this->knotholder)
-                repr = this->knotholder->repr;
-            else
-                repr = SP_OBJECT_REPR(lpeobject);
+            Inkscape::XML::Node *repr = SP_OBJECT_REPR(lpeobject);
             if (repr) {
                 Inkscape::GC::anchor(repr);
                 sp_repr_add_listener(repr, &shapeeditor_repr_events, this);

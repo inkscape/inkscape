@@ -186,14 +186,15 @@ Effect::readallParameters(Inkscape::XML::Node * repr)
         const gchar * key = (*it).first.c_str();
         const gchar * value = repr->attribute(key);
         if(value) {
-            setParameter(repr, key, NULL, value);
+            setParameter(key, value);
         }
         it++;
     }
 }
 
+/* This function does not and SHOULD NOT write to XML */
 void
-Effect::setParameter(Inkscape::XML::Node * repr, const gchar * key, const gchar * old_value, const gchar * new_value)
+Effect::setParameter(const gchar * key, const gchar * new_value)
 {
     Glib::ustring stringkey(key);
 
@@ -203,9 +204,6 @@ Effect::setParameter(Inkscape::XML::Node * repr, const gchar * key, const gchar 
             bool accepted = it->second->param_readSVGValue(new_value);
             if (!accepted) { 
                 g_warning("Effect::setParameter - '%s' not accepted for %s", new_value, key);
-                // change was not accepted, so change it back.
-                // think: can this backfire and create infinite loop when started with unacceptable old_value?
-                // repr->setAttribute(key, old_value);
             }
         } else {
             // set default value

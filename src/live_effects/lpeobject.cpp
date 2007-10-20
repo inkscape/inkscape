@@ -246,7 +246,7 @@ livepatheffect_on_repr_attr_changed ( Inkscape::XML::Node * repr,
     if (!lpeobj->lpe) 
         return;
 
-    lpeobj->lpe->setParameter(repr, key, oldval, newval);
+    lpeobj->lpe->setParameter(key, newval);
 
     lpeobj->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }

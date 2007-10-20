@@ -139,16 +139,15 @@ static Inkscape::NodePath::NodeSide *sp_node_opposite_side(Inkscape::NodePath::N
 static NRPathcode sp_node_path_code_from_side(Inkscape::NodePath::Node *node,Inkscape::NodePath::NodeSide *me);
 
 static SPCurve* sp_nodepath_object_get_curve(SPObject *object, const gchar *key);
-static void sp_nodepath_object_set_curve (SPObject *object, SPCurve *curve);
+static void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve);
 
 // active_node indicates mouseover node
 Inkscape::NodePath::Node * Inkscape::NodePath::Path::active_node = NULL;
 
 /**
  * \brief Creates new nodepath from item
-*   repr_key_in should be NULL,  unless you are called Johan or really know what you are doing! (See "if (repr_key_in)" below)
  */
-Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, bool show_handles, const char * repr_key_in)
+Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, bool show_handles, const char * repr_key_in, SPItem *item)
 {
     Inkscape::XML::Node *repr = object->repr;
 
@@ -201,18 +200,22 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->curve = sp_curve_copy(curve);
     np->show_helperpath = false;
     np->straight_path = false;
-    
+    if (IS_LIVEPATHEFFECT(object) && item) {
+        np->item = item;
+    } else {
+        np->item = SP_ITEM(object);
+    }
 
     // we need to update item's transform from the repr here,
     // because they may be out of sync when we respond
     // to a change in repr by regenerating nodepath     --bb
-    sp_object_read_attr(object, "transform");
+    sp_object_read_attr(SP_OBJECT(np->item), "transform");
 
-    np->i2d  = sp_item_i2d_affine(SP_ITEM(object));
+    np->i2d  = sp_item_i2d_affine(np->item);
     np->d2i  = np->i2d.inverse();
 
     np->repr = repr;
-    if (repr_key_in) {
+    if (repr_key_in) { // apparantly the object is an LPEObject
         np->repr_key = g_strdup(repr_key_in);
         np->repr_nodetypes_key = g_strconcat(np->repr_key, "-nodetypes", NULL);
         np->show_helperpath = true;
@@ -308,7 +311,7 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
 
 void sp_nodepath_ensure_livarot_path(Inkscape::NodePath::Path *np)
 {
-    if (np && np->livarot_path == NULL && np->object && SP_IS_ITEM(np->object)) {
+    if (np && np->livarot_path == NULL) {
         SPCurve *curve = create_curve(np);
         NArtBpath *bpath = SP_CURVE_BPATH(curve);
         np->livarot_path = bpath_to_Path(bpath);
@@ -516,7 +519,7 @@ static void update_object(Inkscape::NodePath::Path *np)
     sp_curve_unref(np->curve);
     np->curve = create_curve(np);
 
-    sp_nodepath_object_set_curve(np->object, np->curve);
+    sp_nodepath_set_curve(np, np->curve);
 
     if (np->show_helperpath) {
         SPCurve * helper_curve = sp_curve_copy(np->curve);
@@ -1077,7 +1080,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
         
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
-            Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, SP_PATH(n->subpath->nodepath->object));
+            Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, SP_PATH(n->subpath->nodepath->item));
             if (s.getDistance() < best) {
                 best = s.getDistance();
                 best_pt = s.getPoint() - n->pos;
@@ -3455,9 +3458,9 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpo
             NR::Coord const scal = dot(delta, ndelta) / linelen;
             (*p) = n->pos + (scal / linelen) * ndelta;
         }
-        *p = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta), SP_ITEM(n->subpath->nodepath->object)).getPoint();
+        *p = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta), n->subpath->nodepath->item).getPoint();
     } else {
-        *p = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, SP_ITEM(n->subpath->nodepath->object)).getPoint();
+        *p = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, n->subpath->nodepath->item).getPoint();
     }
 
     sp_node_adjust_handle(n, -which);
@@ -4443,18 +4446,24 @@ SPCurve* sp_nodepath_object_get_curve(SPObject *object, const gchar *key) {
     return curve;
 }
 
-void sp_nodepath_object_set_curve (SPObject *object, SPCurve *curve) {
-    if (!object || !curve)
+void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve) {
+    if (!np || !np->object || !curve)
         return;
 
-    if (SP_IS_PATH(object)) {
-        if (SP_SHAPE(object)->path_effect_href) {
-            sp_path_set_original_curve(SP_PATH(object), curve, true, false);
+    if (SP_IS_PATH(np->object)) {
+        if (SP_SHAPE(np->object)->path_effect_href) {
+            sp_path_set_original_curve(SP_PATH(np->object), curve, true, false);
         } else {
-            sp_shape_set_curve(SP_SHAPE(object), curve, true);
+            sp_shape_set_curve(SP_SHAPE(np->object), curve, true);
         }
-    } else if ( IS_LIVEPATHEFFECT(object) ) {
-        g_warning("sp_nodepath_set_curve not implemented yet for lpeobjects");
+    } else if ( IS_LIVEPATHEFFECT(np->object) ) {
+        // FIXME: this writing to string and then reading from string is bound to be slow.
+        // create a method to convert from curve directly to 2geom...
+        gchar *svgpath = sp_svg_write_path(SP_CURVE_BPATH(np->curve));
+        LIVEPATHEFFECT(np->object)->lpe->setParameter(np->repr_key, svgpath);
+        g_free(svgpath);
+
+        np->object->requestModified(SP_OBJECT_MODIFIED_FLAG);
     }
 }
 
