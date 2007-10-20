@@ -465,6 +465,10 @@ dnl ******************************
 dnl Libpoppler checking
 dnl ******************************
 
+AC_ARG_ENABLE(poppler-cairo,
+	AC_HELP_STRING([--enable-poppler-cairo], [Enable libpoppler-cairo for rendering PDF preview]),
+	[enable_poppler_cairo=$enableval], [enable_poppler_cairo=yes])
+
 POPPLER_CFLAGS=""
 PKG_CHECK_MODULES(POPPLER, poppler >= 0.5.9, poppler=yes, poppler=no)
 
@@ -481,13 +485,16 @@ if test "x$poppler" = "xyes"; then
 			POPPLER_LIBS="$POPPLER_LIBS -lpoppler-glib "
 		fi
 	fi
-	dnl Have to test libpoppler-cairo presence for PDF preview
-	PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.5.9, poppler_cairo=yes, poppler_cairo=no)
-	if test "x$poppler_cairo" = "xyes"; then
-		dnl Working libpoppler-cairo found
-		dnl Check whether the Cairo FreeType backend is available
-		PKG_CHECK_MODULES(CAIRO_FT, cairo-ft, cairo_ft=yes, cairo_ft=no)
-	fi		                                                        	
+	if test "x$enable_poppler_cairo" = "xyes"; then
+		dnl Have to test libpoppler-cairo presence for PDF preview
+		dnl AC_CHECK_HEADER(Magick++.h, magick_ok=yes, magick_ok=no)
+		PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.5.9, poppler_cairo=yes, poppler_cairo=no)
+		if test "x$poppler_cairo" = "xyes"; then
+			dnl Working libpoppler-cairo found
+			dnl Check whether the Cairo FreeType backend is available
+			PKG_CHECK_MODULES(CAIRO_FT, cairo-ft, cairo_ft=yes, cairo_ft=no)
+		fi		                                                        	
+	fi
 fi
 
 if test "x$poppler" = "xyes"; then
@@ -929,5 +936,6 @@ Configuration:
         Enable LittleCms:         ${enable_lcms}
         Enable Inkboard:          ${with_inkboard}
         Enable SSL in Inkboard:   ${with_inkboard_ssl}
+        Enable Poppler-Cairo:     ${enable_poppler_cairo}
         ImageMagick Magick++:     ${magick_ok}
 "
