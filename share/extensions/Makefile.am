@@ -66,6 +66,7 @@ extensions = \
 	outline2svg.pl	\
 	pathalongpath.py\
 	pathmodifier.py\
+	perfectboundcover.py \
 	perspective.py \
 	ps2dxf.sh \
 	ps2epsi.sh \
@@ -168,6 +169,7 @@ modules = \
 	pathalongpath.inx\
 	pdf_output.inx.txt \
 	pdf_output_via_gs_on_win32.inx.txt \
+	perfectboundcover.inx \
 	perspective.inx	\
 	ps_input.inx \
 	radiusrand.inx \
