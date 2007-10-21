@@ -187,7 +187,7 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
     for (GSList *l = il; l != NULL; l = l->next)
     {
         SPItem *item = SP_ITEM(l->data);
-        if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item))
+        if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item) && !SP_IS_FLOWTEXT(item))
         {
             desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("One of the objects is <b>not a path</b>, cannot perform boolean operation."));
             g_slist_free(il);
