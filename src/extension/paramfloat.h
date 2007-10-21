@@ -22,6 +22,7 @@ private:
     float _value;
     float _min;
     float _max;
+    int _precision;
 public:
     ParamFloat (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
@@ -29,6 +30,7 @@ public:
     float set (float in, SPDocument * doc, Inkscape::XML::Node * node);
     float max (void) { return _max; }
     float min (void) { return _min; }
+    float precision (void) { return _precision; }
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);
 };

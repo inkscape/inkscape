@@ -41,6 +41,11 @@ ParamFloat::ParamFloat (const gchar * name, const gchar * guitext, const gchar *
     if (minval != NULL)
         _min = atof(minval);
 
+    _precision = 1;
+    const char * precision = xml->attribute("precision");
+    if (precision != NULL)
+        _precision = atoi(precision);
+
     /* We're handling this by just killing both values */
     if (_max < _min) {
         _max = 10.0;
@@ -144,7 +149,7 @@ ParamFloat::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::sign
     hbox->pack_start(*label, true, true);
 
     ParamFloatAdjustment * fadjust = Gtk::manage(new ParamFloatAdjustment(this, doc, node, changeSignal));
-    Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 0.1, 1));
+    Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 0.1, _precision));
     spin->show();
     hbox->pack_start(*spin, false, false);
 
