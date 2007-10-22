@@ -75,6 +75,7 @@
 #include "unit-constants.h"
 #include "xml/simple-document.h"
 #include "sp-filter-reference.h"
+#include "gradient-drag.h"
 
 using NR::X;
 using NR::Y;
@@ -973,6 +974,20 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList 
     }
 }
 
+void
+sp_set_style_clipboard (SPCSSAttr *css)
+{
+    if (css != NULL) {
+        // clear style clipboard
+        if (style_clipboard) {
+            sp_repr_css_attr_unref (style_clipboard);
+            style_clipboard = NULL;
+        }
+        //sp_repr_css_print (css);
+        style_clipboard = css;
+    }
+}
+
 /**
  * \pre item != NULL
  */
@@ -1029,6 +1044,10 @@ void sp_selection_copy()
     if (tools_isactive (desktop, TOOLS_DROPPER)) {
         sp_dropper_context_copy(desktop->event_context);
         return; // copied color under cursor, nothing else to do
+    }
+
+    if (desktop->event_context->get_drag() && desktop->event_context->get_drag()->copy()) {
+        return; // copied selected stop(s), nothing else to do
     }
 
     // check if something is selected
@@ -1092,15 +1111,7 @@ void sp_selection_copy()
         SPStyle *const query = sp_style_new(SP_ACTIVE_DOCUMENT);
         if (sp_desktop_query_style_all (desktop, query)) {
             SPCSSAttr *css = sp_css_attr_from_style (query, SP_STYLE_FLAG_ALWAYS);
-            if (css != NULL) {
-                // clear style clipboard
-                if (style_clipboard) {
-                    sp_repr_css_attr_unref (style_clipboard);
-                    style_clipboard = NULL;
-                }
-                //sp_repr_css_print (css);
-                style_clipboard = css;
-            }
+            sp_set_style_clipboard (css);
         }
         sp_style_unref(query);
     }
@@ -1170,8 +1181,8 @@ void sp_selection_paste_style()
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     // check if something is in the clipboard
-    if (clipboard == NULL) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the clipboard."));
+    if (style_clipboard == NULL) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the style clipboard."));
         return;
     }
 
