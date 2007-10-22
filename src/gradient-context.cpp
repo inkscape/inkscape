@@ -598,11 +598,13 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (drag->lines) {
                     for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
                         line = (SPCtrlLine*) l->data;
-                        over_line |= sp_gradient_context_is_over_line (rc, (SPItem*) line, NR::Point(event->motion.x, event->motion.y));
+                        over_line = sp_gradient_context_is_over_line (rc, (SPItem*) line, NR::Point(event->motion.x, event->motion.y));
+                        if (over_line)
+                            break;
                     }
                 }
-                if (over_line) {
-                    sp_gradient_context_add_stop_near_point(rc, SP_ITEM(selection->itemList()->data), rc->mousepoint_doc, 0);
+                if (over_line && line) {
+                    sp_gradient_context_add_stop_near_point(rc, line->item, rc->mousepoint_doc, 0);
                     ret = TRUE;
                 }
             } else {
