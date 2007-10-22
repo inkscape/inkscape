@@ -129,6 +129,8 @@ public: // FIXME: make more of this private!
 		SPStop *addStopNearPoint (SPItem *item, NR::Point mouse_p, double tolerance);
     
     void deleteSelected (bool just_one = false);
+
+    bool copy ();
     
     bool keep_selection;    
     

@@ -25,13 +25,10 @@
 #include "desktop-style.h"
 #include "document.h"
 #include "display/sp-ctrlline.h"
-
 #include "xml/repr.h"
 #include "svg/css-ostringstream.h"
-
 #include "svg/svg.h"
 #include "libnr/nr-point-fns.h"
-
 #include "prefs-utils.h"
 #include "sp-item.h"
 #include "style.h"
@@ -41,9 +38,9 @@
 #include "gradient-chemistry.h"
 #include "gradient-drag.h"
 #include "sp-stop.h"
-
 #include "snap.h"
 #include "sp-namedview.h"
+#include "selection-chemistry.h"
 
 
 #define GR_KNOT_COLOR_NORMAL 0xffffff00
@@ -246,6 +243,63 @@ gr_drag_style_set (const SPCSSAttr *css, gpointer data)
 
     //sp_repr_css_print(stop);
     sp_repr_css_attr_unref(stop);
+    return true;
+}
+
+bool
+GrDrag::copy()
+{
+    if (!selected)
+        return false;
+
+    float cf[4];
+    cf[0] = cf[1] = cf[2] = cf[3] = 0;
+
+    int count = 0;
+
+    for (GList *i = selected; i != NULL; i = i->next) { // for all selected draggers
+        GrDragger *d = (GrDragger *) i->data;
+        for (GSList const* j = d->draggables; j != NULL; j = j->next) { // for all draggables of dragger
+            GrDraggable *draggable = (GrDraggable *) j->data;
+
+            guint32 c = sp_item_gradient_stop_query_style (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
+            cf[0] += SP_RGBA32_R_F (c);
+            cf[1] += SP_RGBA32_G_F (c);
+            cf[2] += SP_RGBA32_B_F (c);
+            cf[3] += SP_RGBA32_A_F (c);
+
+            count ++;
+        }
+    }
+
+    if (count) {
+        cf[0] /= count;
+        cf[1] /= count;
+        cf[2] /= count;
+        cf[3] /= count;
+    }
+
+    guint32 const c32 = SP_RGBA32_F_COMPOSE(cf[0], cf[1], cf[2], cf[3]);
+    gchar c[64];
+
+    SPCSSAttr *css = sp_repr_css_attr_new ();
+    g_snprintf(c, 64, "#%06x", c32 >> 8);
+    sp_repr_css_set_property (css, "fill", c);
+    Inkscape::CSSOStringStream os;
+    os << cf[3];
+    sp_repr_css_set_property (css, "opacity", os.str().c_str());
+    sp_set_style_clipboard (css);
+
+    g_snprintf(c, 64, "%06x%02x", c32 >> 8, c32 & 0x000000ff);
+    Glib::ustring text;
+    text += c;
+    if (!text.empty())
+    {
+        Glib::RefPtr<Gtk::Clipboard> refClipboard =
+            Gtk::Clipboard::get();
+        refClipboard->set_text(text);
+    }
+
     return true;
 }
 
