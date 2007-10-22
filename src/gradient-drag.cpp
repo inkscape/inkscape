@@ -224,9 +224,9 @@ gr_drag_style_set (const SPCSSAttr *css, gpointer data)
         os << accumulated;
         sp_repr_css_set_property (stop, "stop-opacity", os.str().c_str());
 
-        if ((css->attribute("fill") && !strcmp(css->attribute("fill"), "none")) ||
-            (css->attribute("stroke") && !strcmp(css->attribute("stroke"), "none")))
-            sp_repr_css_set_property (stop, "stop-opacity", "0"); // if set to none, don't change color, set opacity to 0
+        if ((css->attribute("fill") && !css->attribute("stroke") && !strcmp(css->attribute("fill"), "none")) ||
+            (css->attribute("stroke") && !css->attribute("fill") && !strcmp(css->attribute("stroke"), "none")))
+            sp_repr_css_set_property (stop, "stop-opacity", "0"); // if a single fill/stroke property is set to none, don't change color, set opacity to 0
     }
 
     if (!stop->attributeList()) { // nothing for us here, pass it on
