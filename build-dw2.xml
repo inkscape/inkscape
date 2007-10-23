@@ -380,7 +380,7 @@
            -L${gtk}/perl/lib/CORE -lperl58
            <!-- PYTHON -->
            -L${gtk}/python/libs -lpython25
-           ${gtk}/bin/libxml2-2.dll
+           ${gtk}/bin/libxml2.dll
            ${gtk}/bin/libxslt.dll
            -lpoppler-cairo -lpoppler
            -lcairo.dll
@@ -441,7 +441,7 @@
            -L${gtk}/perl/lib/CORE -lperl58
            <!-- PYTHON -->
            -L${gtk}/python/libs -lpython24
-           ${gtk}/bin/libxml2-2.dll
+           ${gtk}/bin/libxml2.dll
            ${gtk}/bin/libxslt.dll
            ${gtk}/lib/iconv.lib
            -lfreetype.dll -lfontconfig.dll
@@ -496,7 +496,7 @@
     <copy file="${gtk}/bin/libpangowin32-1.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/freetype6.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libfontconfig-1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libxml2-2.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libxml2.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libxslt.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libexpat.dll" todir="${dist}"/>
     <!--<copy file="${gtk}/bin/libexpat.dll" tofile="${dist}/xmlparse.dll"/>-->
