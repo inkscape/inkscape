@@ -132,6 +132,13 @@ void ShapeEditor::restore_nodepath_selection (GList *saved) {
         ::restore_nodepath_selection (this->nodepath, saved);
 }
 
+bool ShapeEditor::nodepath_edits_repr_key(gchar const *name) {
+    if (nodepath && name) {
+        return ( !strcmp(name, nodepath->repr_key) || !strcmp(name, nodepath->repr_nodetypes_key) );
+    }
+
+    return false;
+}
 
 static void shapeeditor_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
                                            gchar const *old_value, gchar const *new_value,
@@ -142,9 +149,7 @@ static void shapeeditor_event_attr_changed(Inkscape::XML::Node *repr, gchar cons
     g_assert(data);
     ShapeEditor *sh = ((ShapeEditor *) data);
 
-    if ( ((sh->has_nodepath()) 
-         && (!strcmp(name, "d") || !strcmp(name, "sodipodi:nodetypes")))  // With paths, we only need to act if one of the path-affecting attributes has changed.
-         || sh->has_knotholder())
+    if ( sh->has_knotholder() || ( sh->has_nodepath() && sh->nodepath_edits_repr_key(name) ) )
     {
         changed = !sh->has_local_change(); 
         sh->decrement_local_change();

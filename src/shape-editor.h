@@ -113,6 +113,8 @@ public:
     void distribute (NR::Dim2 axis);
     void align (NR::Dim2 axis);
 
+    bool nodepath_edits_repr_key(gchar const *name);
+
 private:
     SPDesktop *desktop;
 
