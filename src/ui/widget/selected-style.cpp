@@ -38,7 +38,10 @@
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
 #include "helper/units.h"
+#include "event-context.h"
+#include "message-context.h"
 #include "verbs.h"
+#include "color.h"
 #include <display/sp-canvas.h>
 
 static gdouble const _sw_presets[]     = { 32 ,  16 ,  10 ,  8 ,  6 ,  4 ,  3 ,  2 ,  1.5 ,  1 ,  0.75 ,  0.5 ,  0.25 ,  0.1 };
@@ -93,8 +96,9 @@ SelectedStyle::SelectedStyle(bool layout)
       _fill_label (_("Fill:")),
       _stroke_label (_("Stroke:")),
       _opacity_label (_("O:")),
-      _fill_place (),
-      _stroke_place (),
+
+      _fill_place (SS_FILL),
+      _stroke_place (SS_STROKE),
 
       _fill_flag_place (),
       _stroke_flag_place (),
@@ -119,7 +123,7 @@ SelectedStyle::SelectedStyle(bool layout)
 {
     _drop[0] = _drop[1] = 0;
     _dropEnabled[0] = _dropEnabled[1] = false;
-    
+
     _fill_label.set_alignment(0.0, 0.5);
     _fill_label.set_padding(0, 0);
     _stroke_label.set_alignment(0.0, 0.5);
@@ -297,8 +301,8 @@ SelectedStyle::SelectedStyle(bool layout)
         _popup_sw.show_all();
     }
 
-    _fill_place.signal_button_press_event().connect(sigc::mem_fun(*this, &SelectedStyle::on_fill_click));
-    _stroke_place.signal_button_press_event().connect(sigc::mem_fun(*this, &SelectedStyle::on_stroke_click));
+    _fill_place.signal_button_release_event().connect(sigc::mem_fun(*this, &SelectedStyle::on_fill_click));
+    _stroke_place.signal_button_release_event().connect(sigc::mem_fun(*this, &SelectedStyle::on_stroke_click));
     _opacity_place.signal_button_press_event().connect(sigc::mem_fun(*this, &SelectedStyle::on_opacity_click));
     _stroke_width_place.signal_button_press_event().connect(sigc::mem_fun(*this, &SelectedStyle::on_sw_click));
 
@@ -364,6 +368,9 @@ SelectedStyle::SelectedStyle(bool layout)
                      "drag_data_received",
                      G_CALLBACK(dragDataReceived),
                      _drop[SS_FILL]);
+
+    _fill_place.parent = this;
+    _stroke_place.parent = this;
 }
 
 SelectedStyle::~SelectedStyle()
@@ -968,7 +975,7 @@ SelectedStyle::update()
                 place->add(*_color_preview[i]);
                 gchar c_string[64];
                 g_snprintf (c_string, 64, "%06x/%.3g", color >> 8, SP_RGBA32_A_F(color));
-                _tooltips.set_tip(*place, __color[i] + ": " + c_string);
+                _tooltips.set_tip(*place, __color[i] + ": " + c_string + _(", drag to adjust"));
                 _mode[i] = SS_COLOR;
                 _popup_copy[i].set_sensitive(true);
 
@@ -1014,8 +1021,8 @@ SelectedStyle::update()
     case QUERY_STYLE_SINGLE:
     case QUERY_STYLE_MULTIPLE_AVERAGED:
     case QUERY_STYLE_MULTIPLE_SAME:
-        _tooltips.set_tip(_opacity_place, _("Master opacity, %"));
-        _tooltips.set_tip(_opacity_sb, _("Master opacity, %"));
+        _tooltips.set_tip(_opacity_place, _("Opacity, %"));
+        _tooltips.set_tip(_opacity_sb, _("Opacity, %"));
         if (_opacity_blocked) break;
         _opacity_blocked = true;
         _opacity_sb.set_sensitive(true);
@@ -1135,6 +1142,138 @@ void SelectedStyle::on_opacity_changed () {
     spinbutton_defocus(GTK_OBJECT(_opacity_sb.gobj()));
     _opacity_blocked = false;
 }
+
+RotateableSwatch::RotateableSwatch(guint mode) {
+    fillstroke = mode;
+    startcolor_set = false;
+    undokey = "ssrot1";
+}
+
+RotateableSwatch::~RotateableSwatch() {
+}
+
+double
+RotateableSwatch::color_adjust(float *hsl, double by, guint32 cc, guint modifier)
+{
+    sp_color_rgb_to_hsl_floatv (hsl, SP_RGBA32_R_F(cc), SP_RGBA32_G_F(cc), SP_RGBA32_B_F(cc));
+
+    double diff = 0;
+    if (modifier == 2) { // saturation
+        double old = hsl[1];
+        if (by > 0) {
+            hsl[1] += by * (1 - hsl[1]);
+        } else {
+            hsl[1] += by * (hsl[1]);
+        }
+        diff = hsl[1] - old;
+    } else if (modifier == 1) { // lightness
+        double old = hsl[2];
+        if (by > 0) {
+            hsl[2] += by * (1 - hsl[2]);
+        } else {
+            hsl[2] += by * (hsl[2]);
+        }
+        diff = hsl[2] - old;
+    } else { // hue
+        double old = hsl[0];
+        hsl[0] += by/2;
+        while (hsl[0] < 0) 
+            hsl[0] += 1;
+        while (hsl[0] > 1) 
+            hsl[0] -= 1;
+        diff = hsl[0] - old;
+    }
+
+    float rgb[3];
+    sp_color_hsl_to_rgb_floatv (rgb, hsl[0], hsl[1], hsl[2]);
+
+    gchar c[64];
+    sp_svg_write_color (c, sizeof(c),
+        SP_RGBA32_U_COMPOSE(
+                (SP_COLOR_F_TO_U(rgb[0])),
+                (SP_COLOR_F_TO_U(rgb[1])),
+                (SP_COLOR_F_TO_U(rgb[2])),
+                0xff
+        )
+    );
+
+    SPCSSAttr *css = sp_repr_css_attr_new ();
+    if (fillstroke == SS_FILL)
+        sp_repr_css_set_property (css, "fill", c);
+    else 
+        sp_repr_css_set_property (css, "stroke", c);
+    sp_desktop_set_style (parent->getDesktop(), css);
+    sp_repr_css_attr_unref (css);
+    return diff;
+}
+
+void
+RotateableSwatch::do_motion(double by, guint modifier) {
+    if (parent->_mode[fillstroke] != SS_COLOR) 
+        return;
+
+    guint32 cc;
+    if (!startcolor_set) {
+        cc = startcolor = parent->_thisselected[fillstroke];
+        startcolor_set = true;
+    } else {
+        cc = startcolor;
+    }
+
+    float hsl[3];
+    double diff = color_adjust(hsl, by, cc, modifier);
+
+    if (modifier == 2) { // saturation
+        sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey, 
+                                SP_VERB_DIALOG_FILL_STROKE, ("Adjust saturation"));
+        double ch = hsl[1];
+        parent->getDesktop()->event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("Adusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); without modifiers to adjust hue, with <b>Ctrl</b> to adjust lightness"), ch - diff, ch, diff);
+
+    } else if (modifier == 1) { // lightness
+        sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey, 
+                                SP_VERB_DIALOG_FILL_STROKE, ("Adjust lightness"));
+        double ch = hsl[2];
+        parent->getDesktop()->event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("Adusting <b>lightness</b> was %.3g, now <b>%.3g</b> (diff %.3g); without modifiers to adjust hue, with <b>Shift</b> to adjust saturation"), ch - diff, ch, diff);
+
+    } else { // hue
+        sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey, 
+                                SP_VERB_DIALOG_FILL_STROKE, ("Adjust hue"));
+        double ch = hsl[0];
+        parent->getDesktop()->event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("Adusting <b>hue</b> was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"), ch - diff, ch, diff);
+    }
+}
+
+void
+RotateableSwatch::do_release(double by, guint modifier) {
+    if (parent->_mode[fillstroke] != SS_COLOR) 
+        return;
+
+    float hsl[3];
+    color_adjust(hsl, by, startcolor, modifier);
+
+    if (modifier == 2) { // saturation
+        sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey, 
+                                SP_VERB_DIALOG_FILL_STROKE, ("Adjust saturation"));
+
+    } else if (modifier == 1) { // lightness
+        sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey, 
+                                SP_VERB_DIALOG_FILL_STROKE, ("Adjust lightness"));
+
+    } else { // hue
+        sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey, 
+                                SP_VERB_DIALOG_FILL_STROKE, ("Adjust hue"));
+    }
+
+    if (!strcmp(undokey, "ssrot1")) {
+        undokey = "ssrot2";
+    } else {
+        undokey = "ssrot1";
+    }
+
+    parent->getDesktop()->event_context->_message_context->clear();
+    startcolor_set = false;
+}
+
 
 } // namespace Widget
 } // namespace UI

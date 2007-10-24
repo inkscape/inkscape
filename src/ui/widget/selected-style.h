@@ -30,6 +30,7 @@
 #include <desktop.h>
 
 #include "button.h"
+#include "rotateable.h"
 
 class SPUnit;
 
@@ -53,6 +54,25 @@ enum {
     SS_STROKE
 };
 
+class SelectedStyle;
+
+class RotateableSwatch: public Rotateable 
+{
+public:
+    RotateableSwatch(guint mode);
+    ~RotateableSwatch();
+
+    guint fillstroke;
+    SelectedStyle *parent;
+    guint32 startcolor;
+    bool startcolor_set;
+    gchar *undokey;
+
+    double color_adjust (float *hsl, double by, guint32 cc, guint state);
+    virtual void do_motion (double by, guint state);
+    virtual void do_release (double by, guint state);
+};
+
 class SelectedStyle : public Gtk::HBox
 {
 public:
@@ -61,7 +81,13 @@ public:
     ~SelectedStyle();
 
     void setDesktop(SPDesktop *desktop);
+    SPDesktop *getDesktop() {return _desktop;}
     void update();
+
+    guint32 _lastselected[2];
+    guint32 _thisselected[2];
+
+    guint _mode[2];
 
 protected:
     SPDesktop *_desktop;
@@ -72,8 +98,8 @@ protected:
     Gtk::Label _stroke_label;
     Gtk::Label _opacity_label;
 
-    Gtk::EventBox _fill_place;
-    Gtk::EventBox _stroke_place;
+    RotateableSwatch _fill_place;
+    RotateableSwatch _stroke_place;
 
     Gtk::EventBox _fill_flag_place;
     Gtk::EventBox _stroke_flag_place;
@@ -121,11 +147,7 @@ protected:
     Gtk::EventBox _stroke_width_place;
     Gtk::Label _stroke_width;
 
-    guint32 _lastselected[2];
-    guint32 _thisselected[2];
     Glib::ustring _paintserver_id[2];
-
-    guint _mode[2];
 
     sigc::connection *selection_changed_connection;
     sigc::connection *selection_modified_connection;
