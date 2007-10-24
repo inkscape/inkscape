@@ -25,6 +25,7 @@ public:
     virtual ~FilterImage();
 
     virtual int render(FilterSlot &slot, Matrix const &trans);
+    virtual FilterTraits get_input_traits();
     void set_region(SVGLength x, SVGLength y, SVGLength width, SVGLength height);
 private:
     guint8* image_pixbuf;

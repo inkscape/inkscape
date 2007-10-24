@@ -35,6 +35,7 @@ public:
 
     virtual int render(FilterSlot &slot, Matrix const &trans);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
+    virtual FilterTraits get_input_traits();
 
     void set_targetY(int coord);
     void set_targetX(int coord);

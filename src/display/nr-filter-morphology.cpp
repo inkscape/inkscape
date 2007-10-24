@@ -99,6 +99,10 @@ void FilterMorphology::set_yradius(int y){
     yradius = y;
 }
 
+FilterTraits FilterMorphology::get_input_traits() {
+    return TRAIT_PARALLER;
+}
+
 } /* namespace NR */
 
 /*

@@ -132,6 +132,10 @@ void FilterDisplacementMap::area_enlarge(NRRectL &area, Matrix const &trans)
     area.y1 += (int)(scale/2);
 }
 
+FilterTraits FilterDisplacementMap::get_input_traits() {
+    return TRAIT_PARALLER;
+}
+
 } /* namespace NR */
 
 /*

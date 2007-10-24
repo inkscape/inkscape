@@ -169,6 +169,10 @@ int FilterDiffuseLighting::render(FilterSlot &slot, Matrix const &trans) {
     return 0;
 }
 
+FilterTraits FilterDiffuseLighting::get_input_traits() {
+    return TRAIT_PARALLER;
+}
+
 } /* namespace NR */
 
 /*

@@ -42,6 +42,7 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterSpecularLighting();
     virtual int render(FilterSlot &slot, Matrix const &trans);
+    virtual FilterTraits get_input_traits();
 
 private:
 };

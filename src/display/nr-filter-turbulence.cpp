@@ -295,6 +295,10 @@ double FilterTurbulence::turbulence(int nColorChannel, double *point)
   return fSum;
 }
 
+FilterTraits FilterTurbulence::get_input_traits() {
+    return TRAIT_PARALLER;
+}
+
 } /* namespace NR */
 
 /*

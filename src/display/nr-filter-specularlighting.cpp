@@ -179,6 +179,10 @@ int FilterSpecularLighting::render(FilterSlot &slot, Matrix const &trans) {
     return 0;
 }
 
+FilterTraits FilterSpecularLighting::get_input_traits() {
+    return TRAIT_PARALLER;
+}
+
 } /* namespace NR */
 
 /*

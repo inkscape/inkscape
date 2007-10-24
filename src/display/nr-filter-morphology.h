@@ -31,6 +31,7 @@ public:
 
     virtual int render(FilterSlot &slot, Matrix const &trans);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
+    virtual FilterTraits get_input_traits();
     void set_operator(FilterMorphologyOperator &o);
     void set_xradius(int x);
     void set_yradius(int y);

@@ -66,6 +66,7 @@ public:
     virtual void set_stitchTiles(bool st);
     virtual void set_type(FilterTurbulenceType t);
     virtual void set_updated(bool u);
+    virtual FilterTraits get_input_traits();
 private:
 
     long Turbulence_setup_seed(long lSeed);

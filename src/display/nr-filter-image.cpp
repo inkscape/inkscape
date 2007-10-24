@@ -73,6 +73,10 @@ void FilterImage::set_region(SVGLength x, SVGLength y, SVGLength width, SVGLengt
         feImageWidth=width.computed;
         feImageHeight=height.computed;
 }
+
+FilterTraits FilterImage::get_input_traits() {
+    return TRAIT_PARALLER;
+}
     
 } /* namespace NR */
 

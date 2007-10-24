@@ -46,6 +46,10 @@ void FilterTile::area_enlarge(NRRectL &area, Matrix const &trans)
 {
 }
 
+FilterTraits FilterTile::get_input_traits() {
+    return TRAIT_PARALLER;
+}
+
 } /* namespace NR */
 
 /*

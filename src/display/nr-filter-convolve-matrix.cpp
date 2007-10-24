@@ -126,6 +126,10 @@ void FilterConvolveMatrix::area_enlarge(NRRectL &area, Matrix const &trans)
     area.y1 += orderY - targetY;
 }
 
+FilterTraits FilterConvolveMatrix::get_input_traits() {
+    return TRAIT_PARALLER;
+}
+
 } /* namespace NR */
 
 /*

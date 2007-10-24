@@ -31,6 +31,7 @@ public:
     virtual void set_channel_selector(int channel, int s);
     virtual int render(FilterSlot &slot, Matrix const &trans);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
+    virtual FilterTraits get_input_traits();
 
 private:
     double scale;
