@@ -25,7 +25,7 @@
 #include "verbs.h"
 #include "document.h"
 
-#define LPEPATHPARAM_DEBUG
+// needed for on-canvas editting:
 #include "tools-switch.h"
 #include "shape-editor.h"
 #include "node-context.h"
@@ -110,9 +110,6 @@ PathParam::param_getWidget()
         static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
         _tooltips->set_tip(*pButton, _("Edit on-canvas"));
         edit_button = pButton;
-#ifndef LPEPATHPARAM_DEBUG
-        edit_button->set_sensitive(false);
-#endif
 
         pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_PASTE, Inkscape::ICON_SIZE_BUTTON) );
         pButton = Gtk::manage(new Gtk::Button());

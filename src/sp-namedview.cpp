@@ -127,10 +127,11 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     if (((SPObjectClass *) (parent_class))->build) {
         (* ((SPObjectClass *) (parent_class))->build)(object, document, repr);
     }
-
+g_message("tijdens laden %d", nv->viewcount);
     sp_object_read_attr(object, "inkscape:document-units");
     sp_object_read_attr(object, "viewonly");
     sp_object_read_attr(object, "showguides");
+    sp_object_read_attr(object, "showgrid");
     sp_object_read_attr(object, "gridtolerance");
     sp_object_read_attr(object, "guidetolerance");
     sp_object_read_attr(object, "objecttolerance");
@@ -206,7 +207,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->editable = (!value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-	case SP_ATTR_SHOWGUIDES:
+    case SP_ATTR_SHOWGUIDES:
             if (!value) { // show guides if not specified, for backwards compatibility
                 nv->showguides = TRUE;
             } else {
@@ -215,7 +216,17 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             sp_namedview_setup_guides(nv);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-	case SP_ATTR_GRIDTOLERANCE:
+    case SP_ATTR_SHOWGRIDS:
+            if (!value) { // show grids if not specified, for backwards compatibility
+                nv->grids_visible = false;
+            } else {
+                nv->grids_visible = sp_str_to_bool(value);
+                g_message("set attr : %s", value);
+            }
+            g_message("set attr %s", nv->grids_visible ? "true":"false");
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    case SP_ATTR_GRIDTOLERANCE:
             nv->gridtoleranceunit = &px;
             nv->gridtolerance = DEFAULTTOLERANCE;
             if (value) {
@@ -441,7 +452,7 @@ sp_namedview_add_grid(SPNamedView *nv, Inkscape::XML::Node *repr, SPDesktop *des
             break;
         }
     }
-    
+
     if (!grid) {
         //create grid object
         Inkscape::GridType gridtype = Inkscape::CanvasGrid::getGridTypeFromSVGName(repr->attribute("type"));
@@ -590,6 +601,8 @@ void SPNamedView::show(SPDesktop *desktop)
             }
         }
     }
+
+    desktop->showGrids(grids_visible);
 }
 
 #define MIN_ONSCREEN_DISTANCE 50
@@ -756,6 +769,22 @@ void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
     sp_document_set_undo_sensitive(doc, false);
 
     sp_repr_set_boolean(repr, "showguides", v);
+
+    doc->rroot->setAttribute("sodipodi:modified", "true");
+    sp_document_set_undo_sensitive(doc, saved);
+}
+
+void sp_namedview_show_grids(SPNamedView * namedview, bool show)
+{
+    namedview->grids_visible = show;
+
+    SPDocument *doc = SP_OBJECT_DOCUMENT (namedview);
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(namedview);
+
+    bool saved = sp_document_get_undo_sensitive(doc);
+    sp_document_set_undo_sensitive(doc, false);
+
+    sp_repr_set_boolean(repr, "showgrid", namedview->grids_visible);
 
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive(doc, saved);

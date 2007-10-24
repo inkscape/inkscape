@@ -999,6 +999,19 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
                 sp_desktop_selection(dt)->clear();
             }
             break;
+
+        case SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER:
+          //FACTOR OUT THIS CODE TO SOMEWHERE ELSE!
+            // if(selection has LPE) {
+                // If not already in nodecontext, goto it!
+          //      if (!tools_isactive(dt, TOOLS_NODES)) {
+           //         tools_switch_current(TOOLS_NODES);
+            //    }
+                // add goto next code here:
+            //} else {
+            // statusbar message: selection has no path effect applied.
+            //}
+            break;
         default:
             break;
     }
@@ -1646,7 +1659,7 @@ ZoomVerb::perform(SPAction *action, void *data, void *pdata)
             sp_namedview_toggle_guides(doc, repr);
             break;
         case SP_VERB_TOGGLE_GRID:
-            dt->toggleGrid();
+            dt->toggleGrids();
             break;
 #ifdef HAVE_GTK_WINDOW_FULLSCREEN
         case SP_VERB_FULLSCREEN:
@@ -2246,6 +2259,8 @@ Verb *Verb::_base_verbs[] = {
                  N_("Select previous object or node"), NULL),
     new EditVerb(SP_VERB_EDIT_DESELECT, "EditDeselect", N_("D_eselect"),
                  N_("Deselect any selected objects or nodes"), "selection_deselect"),
+    new EditVerb(SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER, "EditNextPathEffectParameter", N_("Next Path Effect Parameter"),
+                 N_("Show next Path Effect parameter for editting"), NULL),
 
     /* Selection */
     new SelectionVerb(SP_VERB_SELECTION_TO_FRONT, "SelectionToFront", N_("Raise to _Top"),

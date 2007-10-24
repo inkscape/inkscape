@@ -61,6 +61,7 @@ static SPStyleProp const props[] = {
     /* SPNamedView */
     {SP_ATTR_VIEWONLY, "viewonly"},
     {SP_ATTR_SHOWGUIDES, "showguides"},
+    {SP_ATTR_SHOWGRIDS, "showgrid"},
     {SP_ATTR_GRIDTOLERANCE, "gridtolerance"},
     {SP_ATTR_GUIDETOLERANCE, "guidetolerance"},
     {SP_ATTR_OBJECTTOLERANCE, "objecttolerance"},

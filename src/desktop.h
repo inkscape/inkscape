@@ -260,9 +260,10 @@ struct SPDesktop : public Inkscape::UI::View::View
     void setWaitingCursor();
     void clearWaitingCursor();
     
-    void toggleGrid();
+    void toggleGrids();
     bool gridsEnabled() { return grids_visible; }
-    
+    void showGrids(bool show);
+
     bool is_iconified();
     bool is_maximized();
     bool is_fullscreen();
@@ -286,8 +287,8 @@ struct SPDesktop : public Inkscape::UI::View::View
     virtual void mouseover() {}
     virtual void mouseout() {}
 
-	virtual bool onDeleteUI (GdkEventAny*);
-	virtual bool onWindowStateEvent (GdkEventWindowState* event);
+    virtual bool onDeleteUI (GdkEventAny*);
+    virtual bool onWindowStateEvent (GdkEventWindowState* event);
 
 private:
     Inkscape::UI::View::EditWidgetInterface       *_widget;
@@ -297,9 +298,10 @@ private:
     NR::Matrix _w2d;
     NR::Matrix _d2w;
     NR::Matrix _doc2dt;
-    
-    bool grids_visible;
-    
+
+    bool grids_visible; /* don't set this variable directly, use the method below */
+    void set_grids_visible(bool visible);
+
     void push_current_zoom (GList**);
 
     sigc::signal<void,SPDesktop*,SPDocument*>     _document_replaced_signal;
@@ -307,7 +309,7 @@ private:
     sigc::signal<void>                 _deactivate_signal;
     sigc::signal<void,SPDesktop*,SPEventContext*> _event_context_changed_signal;
     sigc::signal<void, gpointer>       _tool_subselection_changed;
-  
+
     sigc::connection _activate_connection;
     sigc::connection _deactivate_connection;
     sigc::connection _sel_modified_connection;
@@ -316,7 +318,7 @@ private:
     sigc::connection _reconstruction_finish_connection;
     sigc::connection _commit_connection;
     sigc::connection _modified_connection;
-    
+
     virtual void onPositionSet (double, double);
     virtual void onResized (double, double);
     virtual void onRedrawRequested();

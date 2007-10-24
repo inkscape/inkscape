@@ -265,7 +265,8 @@ GridCanvasItem *
 CanvasGrid::createCanvasItem(SPDesktop * desktop)
 {
     if (!desktop) return NULL;
-    //Johan: I think for multiple desktops it is best if each has their own canvasitem, but share the same CanvasGrid object; that is what this function is for.
+//    Johan: I think for multiple desktops it is best if each has their own canvasitem,
+//           but share the same CanvasGrid object; that is what this function is for.
 
     // check if there is already a canvasitem on this desktop linking to this grid
     for (GSList *l = canvasitems; l != NULL; l = l->next) {

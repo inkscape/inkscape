@@ -146,7 +146,7 @@ SPDesktop::SPDesktop() :
     _w2d(),
     _d2w(),
     _doc2dt( NR::Matrix(NR::scale(1, -1)) ),
-    grids_visible( true )
+    grids_visible( false )
 {
     _d2w.set_identity();
     _w2d.set_identity();
@@ -308,7 +308,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     //   (Setting up after the connections are all in place, as it may use some of them)
     layer_manager = new Inkscape::LayerManager( this );
 
-    grids_visible = true;
+    showGrids(namedview->grids_visible);
 }
 
 
@@ -1176,23 +1176,29 @@ void SPDesktop::clearWaitingCursor()
       sp_event_context_update_cursor(sp_desktop_event_context(this));
 }
 
-void SPDesktop::toggleGrid()
+void SPDesktop::toggleGrids()
 {
     if (namedview->grids) {
         if(gridgroup) {
-            grids_visible = !grids_visible;
-            if (grids_visible) {
-                sp_canvas_item_show(SP_CANVAS_ITEM(gridgroup));
-            } else {
-                sp_canvas_item_hide(SP_CANVAS_ITEM(gridgroup));
-            }
+            showGrids(!grids_visible);
         }
     } else {
         //there is no grid present at the moment. add a rectangular grid and make it visible
         Inkscape::XML::Node *repr = SP_OBJECT_REPR(namedview);
         Inkscape::CanvasGrid::writeNewGridToRepr(repr, sp_desktop_document(this), Inkscape::GRID_RECTANGULAR);
-        grids_visible = true;
+        showGrids(true);
+    }
+}
+
+void SPDesktop::showGrids(bool show)
+{
+    grids_visible = show;
+    g_message(show?"show":"hide");
+    sp_namedview_show_grids(namedview, grids_visible);
+    if (show) {
         sp_canvas_item_show(SP_CANVAS_ITEM(gridgroup));
+    } else {
+        sp_canvas_item_hide(SP_CANVAS_ITEM(gridgroup));
     }
 }
 
