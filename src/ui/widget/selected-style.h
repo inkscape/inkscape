@@ -63,10 +63,16 @@ public:
     ~RotateableSwatch();
 
     guint fillstroke;
+
     SelectedStyle *parent;
+
     guint32 startcolor;
     bool startcolor_set;
+
     gchar *undokey;
+
+    GdkCursor *cr;
+    bool cr_set;
 
     double color_adjust (float *hsl, double by, guint32 cc, guint state);
     virtual void do_motion (double by, guint state);

@@ -43,6 +43,10 @@
 #include "verbs.h"
 #include "color.h"
 #include <display/sp-canvas.h>
+#include "pixmaps/cursor-adj-h.xpm"
+#include "pixmaps/cursor-adj-s.xpm"
+#include "pixmaps/cursor-adj-l.xpm"
+#include "sp-cursor.h"
 
 static gdouble const _sw_presets[]     = { 32 ,  16 ,  10 ,  8 ,  6 ,  4 ,  3 ,  2 ,  1.5 ,  1 ,  0.75 ,  0.5 ,  0.25 ,  0.1 };
 static gchar const *const _sw_presets_str[] = {"32", "16", "10", "8", "6", "4", "3", "2", "1.5", "1", "0.75", "0.5", "0.25", "0.1"};
@@ -1147,6 +1151,8 @@ RotateableSwatch::RotateableSwatch(guint mode) {
     fillstroke = mode;
     startcolor_set = false;
     undokey = "ssrot1";
+    cr = NULL;
+    cr_set = false;
 }
 
 RotateableSwatch::~RotateableSwatch() {
@@ -1212,6 +1218,30 @@ RotateableSwatch::do_motion(double by, guint modifier) {
     if (parent->_mode[fillstroke] != SS_COLOR) 
         return;
 
+    if (!cr_set) {
+        GtkWidget *w = GTK_WIDGET(gobj());
+
+        GdkBitmap *bitmap = NULL;
+        GdkBitmap *mask = NULL;
+        if (modifier == 2) { // saturation
+            sp_cursor_bitmap_and_mask_from_xpm(&bitmap, &mask, cursor_adj_s_xpm);
+        } else if (modifier == 1) { // lightness
+            sp_cursor_bitmap_and_mask_from_xpm(&bitmap, &mask, cursor_adj_l_xpm);
+        } else { // hue
+            sp_cursor_bitmap_and_mask_from_xpm(&bitmap, &mask, cursor_adj_h_xpm);
+        }
+        if ((bitmap != NULL) && (mask != NULL)) {
+            cr = gdk_cursor_new_from_pixmap(bitmap, mask,
+                                            &w->style->black,
+                                            &w->style->white,
+                                            16, 16);
+            g_object_unref (bitmap);
+            g_object_unref (mask);
+            gdk_window_set_cursor(w->window, cr);
+            cr_set = true;
+        }
+    }
+
     guint32 cc;
     if (!startcolor_set) {
         cc = startcolor = parent->_thisselected[fillstroke];
@@ -1250,6 +1280,16 @@ RotateableSwatch::do_release(double by, guint modifier) {
 
     float hsl[3];
     color_adjust(hsl, by, startcolor, modifier);
+
+    if (cr_set) {
+        GtkWidget *w = GTK_WIDGET(gobj());
+        gdk_window_set_cursor(w->window, NULL);
+        if (cr) {
+           gdk_cursor_unref (cr);
+           cr = NULL;
+        }
+        cr_set = false;
+    }
 
     if (modifier == 2) { // saturation
         sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey, 
