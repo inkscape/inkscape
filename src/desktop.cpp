@@ -1193,7 +1193,6 @@ void SPDesktop::toggleGrids()
 void SPDesktop::showGrids(bool show)
 {
     grids_visible = show;
-    g_message(show?"show":"hide");
     sp_namedview_show_grids(namedview, grids_visible);
     if (show) {
         sp_canvas_item_show(SP_CANVAS_ITEM(gridgroup));
