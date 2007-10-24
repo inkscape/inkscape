@@ -830,7 +830,7 @@ PrintPS::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMatrix co
 
         print_bpath(os, bpath->path);
 
-        if (style->fill_rule.value == SP_WIND_RULE_EVENODD) {
+        if (style->fill_rule.computed == SP_WIND_RULE_EVENODD) {
             if (style->fill.isColor()) {
                 os << "eofill\n";
             } else {

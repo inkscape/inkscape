@@ -574,7 +574,7 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMat
 
         print_fill_style(cr, style, pbox);
         print_bpath(cr, bpath->path);
-        if (style->fill_rule.value == SP_WIND_RULE_EVENODD) {
+        if (style->fill_rule.computed == SP_WIND_RULE_EVENODD) {
             cairo_set_fill_rule(cr, CAIRO_FILL_RULE_EVEN_ODD);
         } else {
             cairo_set_fill_rule(cr, CAIRO_FILL_RULE_WINDING);
