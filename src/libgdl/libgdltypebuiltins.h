@@ -16,6 +16,8 @@ GType gdl_dock_param_flags_get_type (void);
 GType gdl_dock_object_flags_get_type (void);
 #define GDL_TYPE_DOCK_PLACEMENT gdl_dock_placement_get_type()
 GType gdl_dock_placement_get_type (void);
+#define GDL_TYPE_EXPANSION_DIRECTION gdl_dock_expansion_direction_get_type()
+GType gdl_dock_expansion_direction_get_type (void);
 
 /* --- gdl-dock-item.h --- */
 #define GDL_TYPE_DOCK_ITEM_BEHAVIOR gdl_dock_item_behavior_get_type()

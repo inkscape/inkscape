@@ -71,6 +71,10 @@ protected:
 
     /** Internal signal handlers */
     void _onLayoutChanged();
+    void _onPanedButtonEvent(GdkEventButton *event);
+
+    static gboolean _on_paned_button_event(GtkWidget *widget, GdkEventButton *event, 
+                                           gpointer user_data);
 
     /** GdlDock signal proxy structures */
     static const Glib::SignalProxyInfo _signal_layout_changed_proxy;

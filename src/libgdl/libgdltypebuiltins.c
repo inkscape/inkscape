@@ -65,6 +65,28 @@ gdl_dock_placement_get_type (void)
 }
 
 
+
+static const GEnumValue _gdl_dock_expansion_direction_values[] = {
+  { GDL_DOCK_EXPANSION_DIRECTION_NONE, "GDL_DOCK_EXPANSION_DIRECTION_NONE", "none" },
+  { GDL_DOCK_EXPANSION_DIRECTION_UP, "GDL_DOCK_EXPANSION_DIRECTION_UP", "up" },
+  { GDL_DOCK_EXPANSION_DIRECTION_DOWN, "GDL_DOCK_EXPANSION_DIRECTION_DOWN", "down" },
+  { GDL_DOCK_EXPANSION_DIRECTION_LEFT, "GDL_DOCK_EXPANSION_DIRECTION_LEFT", "left" },
+  { GDL_DOCK_EXPANSION_DIRECTION_RIGHT, "GDL_DOCK_EXPANSION_DIRECTION_RIGHT", "right" },
+  { 0, NULL, NULL }
+};
+
+GType
+gdl_dock_expansion_direction_get_type (void)
+{
+  static GType type = 0;
+
+  if (!type)
+    type = g_enum_register_static ("GdlDockExpansionDirection", _gdl_dock_expansion_direction_values);
+
+  return type;
+}
+
+
 /* enumerations from "gdl-dock-item.h" */
 static const GFlagsValue _gdl_dock_item_behavior_values[] = {
   { GDL_DOCK_ITEM_BEH_NORMAL, "GDL_DOCK_ITEM_BEH_NORMAL", "normal" },

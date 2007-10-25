@@ -80,6 +80,7 @@ Dock::Dock(Gtk::Orientation orientation)
 
     g_object_set (GDL_DOCK_OBJECT(_gdl_dock)->master,
                   "switcher-style", gdl_switcher_style,
+                  "expand-direction", GDL_DOCK_EXPANSION_DIRECTION_DOWN,
                   NULL);
 
     GdlDockBarStyle gdl_dock_bar_style = 
@@ -90,6 +91,9 @@ Dock::Dock(Gtk::Orientation orientation)
 
     g_signal_connect(G_OBJECT(INKSCAPE), "dialogs_hide", G_CALLBACK(hideCallback), (void *)this);
     g_signal_connect(G_OBJECT(INKSCAPE), "dialogs_unhide", G_CALLBACK(unhideCallback), (void *)this);
+
+    g_signal_connect(_paned->gobj(), "button-press-event", G_CALLBACK(_on_paned_button_event), (void *)this);
+    g_signal_connect(_paned->gobj(), "button-release-event", G_CALLBACK(_on_paned_button_event), (void *)this);
 
     signal_layout_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::Dock::_onLayoutChanged));
 }    
@@ -230,7 +234,6 @@ void
 Dock::_onLayoutChanged()
 {
     if (isEmpty()) {
-
 	if (hasIconifiedItems())
 	    _scrolled_window->set_size_request(_default_dock_bar_width);
 	else
@@ -238,10 +241,28 @@ Dock::_onLayoutChanged()
 
         getParentPaned()->set_position(INT_MAX);
     } else {
+        // unset any forced size requests
+        _paned->get_child1()->set_size_request(-1, -1);
  	_scrolled_window->set_size_request(-1);
     }
 }
 
+void
+Dock::_onPanedButtonEvent(GdkEventButton *event)
+{
+    if (event->button == 1 && event->type == GDK_BUTTON_PRESS)
+        /* unset size request when starting a drag */
+        _paned->get_child1()->set_size_request(-1, -1);
+}
+
+gboolean
+Dock::_on_paned_button_event(GtkWidget *widget, GdkEventButton *event, gpointer user_data)
+{
+    if (Dock *dock = static_cast<Dock *>(user_data))
+        dock->_onPanedButtonEvent(event);
+
+    return FALSE;
+}
 
 const Glib::SignalProxyInfo
 Dock::_signal_layout_changed_proxy = 

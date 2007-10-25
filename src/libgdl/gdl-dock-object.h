@@ -66,6 +66,14 @@ typedef enum {
     GDL_DOCK_FLOATING
 } GdlDockPlacement;
 
+typedef enum {
+    GDL_DOCK_EXPANSION_DIRECTION_NONE = 0,
+    GDL_DOCK_EXPANSION_DIRECTION_UP,
+    GDL_DOCK_EXPANSION_DIRECTION_DOWN,
+    GDL_DOCK_EXPANSION_DIRECTION_LEFT,
+    GDL_DOCK_EXPANSION_DIRECTION_RIGHT
+} GdlDockExpansionDirection;
+
 typedef struct _GdlDockObject      GdlDockObject;
 typedef struct _GdlDockObjectClass GdlDockObjectClass;
 typedef struct _GdlDockRequest     GdlDockRequest;
