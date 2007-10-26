@@ -1,5 +1,5 @@
-/* Copyright (C) 2001-2005 Peter Selinger.
-   This file is part of potrace. It is free software and it is covered
+/* Copyright (C) 2001-2007 Peter Selinger.
+   This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
 /* $Id$ */
@@ -442,7 +442,7 @@ static int bmp_readint(FILE *f, int n, unsigned int *p) {
 }
 
 /* reset padding boundary */
-static void bmp_pad_reset() {
+static void bmp_pad_reset(void) {
   bmp_count = 0;
 }
 
@@ -488,7 +488,7 @@ static int bmp_forward(FILE *f, int pos) {
    although most specifications only allow 1,4,8,24,32. We can also
    read both the old and new OS/2 BMP formats in addition to the
    Windows BMP format. */
-int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
+static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
   bmp_info_t bmpinfo;
   int *coltable;
   unsigned int b, c;

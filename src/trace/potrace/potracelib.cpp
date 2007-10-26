@@ -1,12 +1,15 @@
-/* Copyright (C) 2001-2005 Peter Selinger.
-   This file is part of potrace. It is free software and it is covered
+/* Copyright (C) 2001-2007 Peter Selinger.
+   This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
 #include <stdlib.h>
 #include <string.h>
 
+#include "potracelib.h"
+#include "curve.h"
 #include "decompose.h"
 #include "trace.h"
+#include "progress.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -29,7 +32,7 @@ static const potrace_param_t param_default = {
 
 /* Return a fresh copy of the set of default parameters, or NULL on
    failure with errno set. */
-potrace_param_t *potrace_param_default() {
+potrace_param_t *potrace_param_default(void) {
   potrace_param_t *p;
 
   p = (potrace_param_t *) malloc(sizeof(potrace_param_t));
@@ -40,18 +43,18 @@ potrace_param_t *potrace_param_default() {
   return p;
 }
 
-/* On success, returns a potrace state st with st->status ==
-   POTRACE_STATUS_OK. On failure, returns NULL if no potrace state
-   could be created (with errno set), or returns an incomplete potrace
+/* On success, returns a Potrace state st with st->status ==
+   POTRACE_STATUS_OK. On failure, returns NULL if no Potrace state
+   could be created (with errno set), or returns an incomplete Potrace
    state (with st->status == POTRACE_STATUS_INCOMPLETE). Complete or
-   incomplete potrace state can be freed with potrace_state_free(). */
+   incomplete Potrace state can be freed with potrace_state_free(). */
 potrace_state_t *potrace_trace(const potrace_param_t *param, const potrace_bitmap_t *bm) {
   int r;
   path_t *plist = NULL;
   potrace_state_t *st;
   progress_t prog;
   progress_t subprog;
-
+  
   /* prepare private progress bar state */
   prog.callback = param->progress.callback;
   prog.data = param->progress.data;
@@ -77,7 +80,7 @@ potrace_state_t *potrace_trace(const potrace_param_t *param, const potrace_bitma
 
   st->status = POTRACE_STATUS_OK;
   st->plist = plist;
-  st->priv  = NULL;
+  st->priv = NULL;  /* private state currently unused */
 
   progress_subrange_end(&prog, &subprog);
 
@@ -94,7 +97,7 @@ potrace_state_t *potrace_trace(const potrace_param_t *param, const potrace_bitma
   return st;
 }
 
-/* free a potrace state, without disturbing errno. */
+/* free a Potrace state, without disturbing errno. */
 void potrace_state_free(potrace_state_t *st) {
   pathlist_free(st->plist);
   free(st);
@@ -105,6 +108,6 @@ void potrace_param_free(potrace_param_t *p) {
   free(p);
 }
 
-char *potrace_version() {
+char *potrace_version(void) {
   return "potracelib "VERSION"";
 }

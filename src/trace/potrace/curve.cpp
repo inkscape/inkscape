@@ -1,13 +1,15 @@
-/* Copyright (C) 2001-2005 Peter Selinger.
-   This file is part of potrace. It is free software and it is covered
+/* Copyright (C) 2001-2007 Peter Selinger.
+   This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
 /* $Id$ */
 /* private part of the path and curve data structures */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "potracelib.h"
 #include "lists.h"
 #include "curve.h"
 
@@ -32,6 +34,16 @@ path_t *path_new(void) {
   free(p);
   free(priv);
   return NULL;
+}
+
+/* free the members of the given curve structure. Leave errno unchanged. */
+static void privcurve_free_members(privcurve_t *curve) {
+  free(curve->tag);
+  free(curve->c);
+  free(curve->vertex);
+  free(curve->alpha);
+  free(curve->alpha0);
+  free(curve->beta);
 }
 
 /* free a path. Leave errno untouched. */
@@ -86,16 +98,6 @@ int privcurve_init(privcurve_t *curve, int n) {
   free(curve->alpha0);
   free(curve->beta);
   return 1;
-}
-
-/* free the members of the given curve structure */
-void privcurve_free_members(privcurve_t *curve) {
-  free(curve->tag);
-  free(curve->c);
-  free(curve->vertex);
-  free(curve->alpha);
-  free(curve->alpha0);
-  free(curve->beta);
 }
 
 /* copy private to public curve structure */

@@ -1,15 +1,21 @@
-/* Copyright (C) 2001-2005 Peter Selinger.
-   This file is part of potrace. It is free software and it is covered
+/* Copyright (C) 2001-2007 Peter Selinger.
+   This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
 /* $Id$ */
 
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <limits.h>
 
+#include "potracelib.h"
+#include "curve.h"
 #include "lists.h"
+#include "auxiliary.h"
 #include "bitmap.h"
 #include "decompose.h"
+#include "progress.h"
 
 /* ---------------------------------------------------------------------- */
 /* auxiliary bitmap manipulations */
@@ -49,10 +55,30 @@ static void clear_bm_with_bbox(potrace_bitmap_t *bm, bbox_t *bbox) {
 /* ---------------------------------------------------------------------- */
 /* auxiliary functions */
 
-/* return a "random" value which deterministically depends on x,y */
+/* deterministically and efficiently hash (x,y) into a pseudo-random bit */
 static inline int detrand(int x, int y) {
-  srand(x+123456789*y);
-  return rand();
+  unsigned int z;
+  static const unsigned char t[256] = { 
+    /* non-linear sequence: constant term of inverse in GF(8), 
+       mod x^8+x^4+x^3+x+1 */
+    0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 
+    0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 
+    0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 
+    1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 
+    0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 
+    0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 
+    0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 
+    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 
+    1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 
+    0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 
+    1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 
+  };
+
+  /* 0x04b3e375 and 0x05a8ef93 are chosen to contain every possible
+     5-bit sequence */
+  z = ((0x04b3e375 * x) ^ y) * 0x05a8ef93;
+  z = t[z & 0xff] ^ t[(z>>8) & 0xff] ^ t[(z>>16) & 0xff] ^ t[(z>>24) & 0xff];
+  return z & 1;
 }
 
 /* return the "majority" value of bitmap bm at intersection (x,y). We
@@ -86,7 +112,7 @@ static void xor_to_ref(potrace_bitmap_t *bm, int x, int y, int xa) {
   int xhi = x & -BM_WORDBITS;
   int xlo = x & (BM_WORDBITS-1);  /* = x % BM_WORDBITS */
   int i;
-
+  
   if (xhi<xa) {
     for (i = xhi; i < xa; i+=BM_WORDBITS) {
       *bm_index(bm, i, y) ^= BM_ALLBITS;
@@ -183,13 +209,12 @@ static path_t *findpath(potrace_bitmap_t *bm, int x0, int y0, int sign, int turn
   len = size = 0;
   pt = NULL;
   area = 0;
-
+  
   while (1) {
     /* add point to path */
     if (len>=size) {
-      size+=100;
-      //size*=1.3;
-      size = size * 13 / 10;
+      size += 100;
+      size = (int)(1.3 * size);
       pt1 = (point_t *)realloc(pt, size * sizeof(point_t));
       if (!pt1) {
 	goto error;
@@ -199,26 +224,26 @@ static path_t *findpath(potrace_bitmap_t *bm, int x0, int y0, int sign, int turn
     pt[len].x = x;
     pt[len].y = y;
     len++;
-
+    
     /* move to next point */
     x += dirx;
     y += diry;
     area += x*diry;
-
+    
     /* path complete? */
     if (x==x0 && y==y0) {
       break;
     }
-
+    
     /* determine next direction */
     c = BM_GET(bm, x + (dirx+diry-1)/2, y + (diry-dirx-1)/2);
     d = BM_GET(bm, x + (dirx-diry-1)/2, y + (diry+dirx-1)/2);
-
+    
     if (c && !d) {               /* ambiguous turn */
       if (turnpolicy == POTRACE_TURNPOLICY_RIGHT
 	  || (turnpolicy == POTRACE_TURNPOLICY_BLACK && sign == '+')
 	  || (turnpolicy == POTRACE_TURNPOLICY_WHITE && sign == '-')
-	  || (turnpolicy == POTRACE_TURNPOLICY_RANDOM && (detrand(x,y) & 1))
+	  || (turnpolicy == POTRACE_TURNPOLICY_RANDOM && detrand(x,y))
 	  || (turnpolicy == POTRACE_TURNPOLICY_MAJORITY && majority(bm, x, y))
 	  || (turnpolicy == POTRACE_TURNPOLICY_MINORITY && !majority(bm, x, y))) {
 	tmp = dirx;              /* right turn */
@@ -252,10 +277,10 @@ static path_t *findpath(potrace_bitmap_t *bm, int x0, int y0, int sign, int turn
   p->sign = sign;
 
   return p;
-
+ 
  error:
    free(pt);
-   return NULL;
+   return NULL; 
 }
 
 /* Give a tree structure to the given path list, based on "insideness"
@@ -281,7 +306,7 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
   path_t *head;
   path_t **hook, **hook_in, **hook_out; /* for fast appending to linked list */
   bbox_t bbox;
-
+  
   bm_clear(bm, 0);
 
   /* save original "next" pointers */
@@ -289,7 +314,7 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
     p->sibling = p->next;
     p->childlist = NULL;
   }
-
+  
   heap = plist;
 
   /* the heap holds a list of lists of paths. Use "childlist" field
@@ -304,7 +329,7 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
     cur = heap;
     heap = heap->childlist;
     cur->childlist = NULL;
-
+  
     /* unlink first path */
     head = cur;
     cur = cur->next;
@@ -347,7 +372,7 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
       heap = head->childlist;
     }
   }
-
+  
   /* copy sibling structure from "next" to "sibling" component */
   p = plist;
   while (p) {
@@ -373,7 +398,7 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
       /* p is a positive path */
       /* append to linked list */
       list_insert_beforehook(p, hook);
-
+      
       /* go through its children */
       for (p1=p->childlist; p1; p1=p1->sibling) {
 	/* append to linked list */
@@ -441,7 +466,7 @@ int bm_to_pathlist(const potrace_bitmap_t *bm, path_t **plistp, const potrace_pa
 
   /* iterate through components */
   y = bm1->h - 1;
-  while (findnext(bm1, &x, &y) == 0) {
+  while (findnext(bm1, &x, &y) == 0) { 
     /* calculate the sign by looking at the original */
     sign = BM_GET(bm, x, y) ? '+' : '-';
 

@@ -1,15 +1,20 @@
-/* Copyright (C) 2001-2005 Peter Selinger.
-   This file is part of potrace. It is free software and it is covered
+/* Copyright (C) 2001-2007 Peter Selinger.
+   This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
 /* $Id$ */
 /* transform jaggy paths into smooth curves */
 
+#include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
+#include "potracelib.h"
 #include "curve.h"
 #include "lists.h"
+#include "auxiliary.h"
+#include "trace.h"
 #include "progress.h"
 
 #define INFTY 10000000	/* it suffices that this is longer than any
@@ -17,16 +22,8 @@
 #define COS179 -0.999847695156	 /* the cosine of 179 degrees */
 
 /* ---------------------------------------------------------------------- */
-/* some useful macros. Note: the "mod" macro works correctly for
-   negative a. Also note that the test for a>=n, while redundant,
-   speeds up the mod function by 70% in the average case (significant
-   since the program spends about 16% of its time here - or 40%
-   without the test). The "floordiv" macro returns the largest integer
-   <= a/n, and again this works correctly for negative a, as long as
-   a,n are integers and n>0. */
-
 #define SAFE_MALLOC(var, n, typ) \
-  if ((var = (typ *)malloc((n)*sizeof(typ))) == NULL) goto malloc_error
+  if ((var = (typ *)malloc((n)*sizeof(typ))) == NULL) goto malloc_error 
 
 /* ---------------------------------------------------------------------- */
 /* auxiliary functions */
@@ -35,7 +32,7 @@
    but then restricted to one of the major wind directions (n, nw, w, etc) */
 static inline point_t dorth_infty(dpoint_t p0, dpoint_t p2) {
   point_t r;
-
+  
   r.y = sign(p2.x-p0.x);
   r.x = -sign(p2.y-p0.y);
 
@@ -100,21 +97,21 @@ static void pointslope(privpath_t *pp, int i, int j, dpoint_t *ctr, dpoint_t *di
     i+=n;
     r+=1;
   }
-
+  
   x = sums[j+1].x-sums[i].x+r*sums[n].x;
   y = sums[j+1].y-sums[i].y+r*sums[n].y;
   x2 = sums[j+1].x2-sums[i].x2+r*sums[n].x2;
   xy = sums[j+1].xy-sums[i].xy+r*sums[n].xy;
   y2 = sums[j+1].y2-sums[i].y2+r*sums[n].y2;
   k = j+1-i+r*n;
-
+  
   ctr->x = x/k;
   ctr->y = y/k;
 
   a = (x2-(double)x*x/k)/k;
   b = (xy-(double)x*y/k)/k;
   c = (y2-(double)y*y/k)/k;
-
+  
   lambda2 = (a+c+sqrt((a-c)*(a-c)+4*b*b))/2; /* larger e.value */
 
   /* now find e.vector for lambda2 */
@@ -240,7 +237,7 @@ static double tangent(dpoint_t p0, dpoint_t p1, dpoint_t p2, dpoint_t p3, dpoint
   a = A - 2*B + C;
   b = -2*A + 2*B;
   c = A;
-
+  
   d = b*b - 4*a*c;
 
   if (a==0 || d<0) {
@@ -286,7 +283,7 @@ static int calc_sums(privpath_t *pp) {
     pp->sums[i+1].xy = pp->sums[i].xy + x*y;
     pp->sums[i+1].y2 = pp->sums[i].y2 + y*y;
   }
-  return 0;
+  return 0;  
 
  malloc_error:
   return 1;
@@ -308,13 +305,13 @@ static int calc_sums(privpath_t *pp) {
    satisfy xprod(constraint[0], cur) >= 0 and xprod(constraint[1],
    cur) <= 0. */
 
-/* Remark for potrace 1.1: the current implementation of calc_lon is
-   more complex than the implementation found in potrace 1.0, but it
+/* Remark for Potrace 1.1: the current implementation of calc_lon is
+   more complex than the implementation found in Potrace 1.0, but it
    is considerably faster. The introduction of the "nc" data structure
    means that we only have to test the constraints for "corner"
    points. On a typical input file, this speeds up the calc_lon
    function by a factor of 31.2, thereby decreasing its time share
-   within the overall potrace algorithm from 72.6% to 7.82%, and
+   within the overall Potrace algorithm from 72.6% to 7.82%, and
    speeding up the overall algorithm by a factor of 3.36. On another
    input file, calc_lon was sped up by a factor of 6.7, decreasing its
    time share from 51.4% to 13.61%, and speeding up the overall
@@ -357,7 +354,7 @@ static int calc_lon(privpath_t *pp) {
 
   /* determine pivot points: for each i, let pivk[i] be the furthest k
      such that all j with i<j<k lie on a line connecting i,k. */
-
+  
   for (i=n-1; i>=0; i--) {
     ct[0] = ct[1] = ct[2] = ct[3] = 0;
 
@@ -374,7 +371,7 @@ static int calc_lon(privpath_t *pp) {
     k = nc[i];
     k1 = i;
     while (1) {
-
+      
       dir = (3+3*sign(pt[k].x-pt[k1].x)+sign(pt[k].y-pt[k1].y))/2;
       ct[dir]++;
 
@@ -406,7 +403,7 @@ static int calc_lon(privpath_t *pp) {
 	if (xprod(constraint[1], off) <= 0) {
 	  constraint[1] = off;
 	}
-      }
+      }	
       k1 = k;
       k = nc[k1];
       if (!cyclic(k,i,k1)) {
@@ -470,7 +467,7 @@ static int calc_lon(privpath_t *pp) {
 
 
 /* ---------------------------------------------------------------------- */
-/* Stage 2: calculate the optimal polygon (Sec. 2.2.2-2.2.4). */
+/* Stage 2: calculate the optimal polygon (Sec. 2.2.2-2.2.4). */ 
 
 /* Auxiliary function: calculate the penalty of an edge from i to j in
    the given path. This needs the "lon" and "sum*" data. */
@@ -492,14 +489,14 @@ static double penalty3(privpath_t *pp, int i, int j) {
     j-=n;
     r+=1;
   }
-
+  
   x = sums[j+1].x-sums[i].x+r*sums[n].x;
   y = sums[j+1].y-sums[i].y+r*sums[n].y;
   x2 = sums[j+1].x2-sums[i].x2+r*sums[n].x2;
   xy = sums[j+1].xy-sums[i].xy+r*sums[n].xy;
   y2 = sums[j+1].y2-sums[i].y2+r*sums[n].y2;
   k = j+1-i+r*n;
-
+  
   px = (pt[i].x+pt[j].x)/2.0-pt[0].x;
   py = (pt[i].y+pt[j].y)/2.0-pt[0].y;
   ey = (pt[j].x-pt[i].x);
@@ -508,7 +505,7 @@ static double penalty3(privpath_t *pp, int i, int j) {
   a = ((x2-2*x*px)/k+px*px);
   b = ((xy-x*py-y*px)/k+px*py);
   c = ((y2-2*y*py)/k+py*py);
-
+  
   s = ex*ex*a + 2*ex*ey*b + ey*ey*c;
 
   return sqrt(s);
@@ -519,7 +516,7 @@ static double penalty3(privpath_t *pp, int i, int j) {
    is in the polygon. Fixme: ### implement cyclic version. */
 static int bestpolygon(privpath_t *pp)
 {
-  int i, j, m, k;
+  int i, j, m, k;     
   int n = pp->len;
   double *pen = NULL; /* pen[n+1]: penalty vector */
   int *prev = NULL;   /* prev[n+1]: best path pointer vector */
@@ -613,7 +610,7 @@ static int bestpolygon(privpath_t *pp)
   free(seg0);
   free(seg1);
   return 0;
-
+  
  malloc_error:
   free(pen);
   free(prev);
@@ -657,7 +654,7 @@ static int adjust_vertices(privpath_t *pp) {
   if (r) {
     goto malloc_error;
   }
-
+  
   /* calculate "optimal" point-slope representation for each line
      segment */
   for (i=0; i<m; i++) {
@@ -716,7 +713,7 @@ static int adjust_vertices(privpath_t *pp) {
 	Q[l][k] = q[j][l][k] + q[i][l][k];
       }
     }
-
+    
     while(1) {
       /* minimize the quadratic form Q on the unit square */
       /* find intersection */
@@ -725,7 +722,7 @@ static int adjust_vertices(privpath_t *pp) {
       /* work around gcc bug #12243 */
       free(NULL);
 #endif
-
+      
       det = Q[0][0]*Q[1][1] - Q[0][1]*Q[1][0];
       if (det != 0.0) {
 	w.x = (-Q[0][2]*Q[1][1] + Q[1][2]*Q[0][1]) / det;
@@ -887,6 +884,7 @@ static int smooth(privcurve_t *curve, int sign, double alphamax) {
     curve->beta[j] = 0.5;
   }
   curve->alphacurve = 1;
+
   return 0;
 }
 
@@ -962,8 +960,8 @@ static int opti_penalty(privpath_t *pp, int i, int j, opti_t *res, double opttol
   A2 = dpara(p0, p1, p3);
   A3 = dpara(p0, p2, p3);
   /* A4 = dpara(p1, p2, p3); */
-  A4 = A1+A3-A2;
-
+  A4 = A1+A3-A2;    
+  
   if (A2 == A1) {  /* this should never happen */
     return 1;
   }
@@ -971,7 +969,7 @@ static int opti_penalty(privpath_t *pp, int i, int j, opti_t *res, double opttol
   t = A3/(A3-A4);
   s = A2/(A2-A1);
   A = A2 * t / 2.0;
-
+  
   if (A == 0.0) {  /* this should never happen */
     return 1;
   }
@@ -1132,14 +1130,14 @@ static int opticurve(privpath_t *pp, double opttolerance) {
   j = m;
   for (i=om-1; i>=0; i--) {
     if (pt[j]==j-1) {
-      pp->ocurve.tag[i]    = pp->curve.tag[mod(j,m)];
-      pp->ocurve.c[i][0]   = pp->curve.c[mod(j,m)][0];
-      pp->ocurve.c[i][1]   = pp->curve.c[mod(j,m)][1];
-      pp->ocurve.c[i][2]   = pp->curve.c[mod(j,m)][2];
-      pp->ocurve.vertex[i] = pp->curve.vertex[mod(j,m)];
-      pp->ocurve.alpha[i]  = pp->curve.alpha[mod(j,m)];
-      pp->ocurve.alpha0[i] = pp->curve.alpha0[mod(j,m)];
-      pp->ocurve.beta[i]   = pp->curve.beta[mod(j,m)];
+      pp->ocurve.tag[i]     = pp->curve.tag[mod(j,m)];
+      pp->ocurve.c[i][0]    = pp->curve.c[mod(j,m)][0];
+      pp->ocurve.c[i][1]    = pp->curve.c[mod(j,m)][1];
+      pp->ocurve.c[i][2]    = pp->curve.c[mod(j,m)][2];
+      pp->ocurve.vertex[i]  = pp->curve.vertex[mod(j,m)];
+      pp->ocurve.alpha[i]   = pp->curve.alpha[mod(j,m)];
+      pp->ocurve.alpha0[i]  = pp->curve.alpha0[mod(j,m)];
+      pp->ocurve.beta[i]    = pp->curve.beta[mod(j,m)];
       s[i] = t[i] = 1.0;
     } else {
       pp->ocurve.tag[i] = POTRACE_CURVETO;
@@ -1201,7 +1199,7 @@ int process_path(path_t *plist, const potrace_param_t *param, progress_t *progre
     }
     cn = 0;
   }
-
+  
   /* call downstream function with each path */
   list_forall (p, plist) {
     TRY(calc_sums(p->priv));

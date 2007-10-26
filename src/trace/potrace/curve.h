@@ -1,5 +1,5 @@
-/* Copyright (C) 2001-2005 Peter Selinger.
-   This file is part of potrace. It is free software and it is covered
+/* Copyright (C) 2001-2007 Peter Selinger.
+   This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
 #ifndef CURVE_H
@@ -18,7 +18,7 @@
 struct privcurve_s {
   int n;            /* number of segments */
   int *tag;         /* tag[n]: POTRACE_CORNER or POTRACE_CURVETO */
-  dpoint_t (*c)[3]; /* c[n][i]: control points.
+  dpoint_t (*c)[3]; /* c[n][i]: control points. 
 		       c[n][0] is unused for tag[n]=POTRACE_CORNER */
   /* the remainder of this structure is special to privcurve, and is
      used in EPS debug output and special EPS "short coding". These
@@ -42,7 +42,7 @@ typedef struct sums_s sums_t;
 
 /* the path structure is filled in with information about a given path
    as it is accumulated and passed through the different stages of the
-   potrace algorithm. Backends only need to read the fcurve and fm
+   Potrace algorithm. Backends only need to read the fcurve and fm
    fields of this data structure, but debugging backends may read
    other fields. */
 struct potrace_privpath_s {
@@ -71,7 +71,6 @@ path_t *path_new(void);
 void path_free(path_t *p);
 void pathlist_free(path_t *plist);
 int privcurve_init(privcurve_t *curve, int n);
-void privcurve_free_members(privcurve_t *curve);
 void privcurve_to_curve(privcurve_t *pc, potrace_curve_t *c);
 
 #endif /* CURVE_H */

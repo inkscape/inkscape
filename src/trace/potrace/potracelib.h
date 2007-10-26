@@ -1,11 +1,11 @@
-/* Copyright (C) 2001-2005 Peter Selinger.
-   This file is part of potrace. It is free software and it is covered
+/* Copyright (C) 2001-2007 Peter Selinger.
+   This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
 #ifndef POTRACELIB_H
 #define POTRACELIB_H
 
-/* this file defines the API for the core potrace library. For a more
+/* this file defines the API for the core Potrace library. For a more
    detailed description of the API, see doc/potracelib.txt */
 
 /* ---------------------------------------------------------------------- */
@@ -112,7 +112,7 @@ typedef struct potrace_state_s potrace_state_t;
 /* API functions */
 
 /* get default parameters */
-potrace_param_t *potrace_param_default();
+potrace_param_t *potrace_param_default(void);
 
 /* free parameter set */
 void potrace_param_free(potrace_param_t *p);
@@ -121,11 +121,11 @@ void potrace_param_free(potrace_param_t *p);
 potrace_state_t *potrace_trace(const potrace_param_t *param, 
 			       const potrace_bitmap_t *bm);
 
-/* free a potrace state */
+/* free a Potrace state */
 void potrace_state_free(potrace_state_t *st);
 
 /* return a static plain text version string identifying this version
    of potracelib */
-char *potrace_version();
+char *potrace_version(void);
 
 #endif /* POTRACELIB_H */

@@ -1,5 +1,5 @@
-/* Copyright (C) 2001-2005 Peter Selinger.
-   This file is part of potrace. It is free software and it is covered
+/* Copyright (C) 2001-2007 Peter Selinger.
+   This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
 /* This header file collects some general-purpose macros (and static
@@ -7,6 +7,10 @@
 
 #ifndef AUXILIARY_H
 #define AUXILIARY_H
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 /* ---------------------------------------------------------------------- */
 /* point arithmetic */
@@ -39,6 +43,14 @@ static inline dpoint_t interval(double lambda, dpoint_t a, dpoint_t b) {
 }
 
 /* ---------------------------------------------------------------------- */
+/* some useful macros. Note: the "mod" macro works correctly for
+   negative a. Also note that the test for a>=n, while redundant,
+   speeds up the mod function by 70% in the average case (significant
+   since the program spends about 16% of its time here - or 40%
+   without the test). The "floordiv" macro returns the largest integer
+   <= a/n, and again this works correctly for negative a, as long as
+   a,n are integers and n>0. */
+
 /* integer arithmetic */
 
 static inline int mod(int a, int n) {
@@ -50,6 +62,12 @@ static inline int floordiv(int a, int n) {
 }
 
 /* Note: the following work for integers and other numeric types. */
+#undef sign
+#undef abs
+#undef min
+#undef max
+#undef sq
+#undef cu
 #define sign(x) ((x)>0 ? 1 : (x)<0 ? -1 : 0)
 #define abs(a) ((a)>0 ? (a) : -(a))
 #define min(a,b) ((a)<(b) ? (a) : (b))

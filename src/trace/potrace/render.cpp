@@ -1,14 +1,16 @@
-/* Copyright (C) 2001-2005 Peter Selinger.
-   This file is part of potrace. It is free software and it is covered
+/* Copyright (C) 2001-2007 Peter Selinger.
+   This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
 /* $Id$ */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
 
 #include "render.h"
+#include "greymap.h"
 #include "auxiliary.h"
 
 /* ---------------------------------------------------------------------- */
