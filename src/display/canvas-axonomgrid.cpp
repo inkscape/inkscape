@@ -396,7 +396,7 @@ CanvasAxonomGrid::readRepr()
  * Called when XML node attribute changed; updates dialog widgets if change was not done by widgets themselves.
  */
 void
-CanvasAxonomGrid::onReprAttrChanged(Inkscape::XML::Node *repr, gchar const *key, gchar const *oldval, gchar const *newval, bool is_interactive)
+CanvasAxonomGrid::onReprAttrChanged(Inkscape::XML::Node */*repr*/, gchar const */*key*/, gchar const */*oldval*/, gchar const */*newval*/, bool /*is_interactive*/)
 {
     readRepr();
 
@@ -453,7 +453,7 @@ CanvasAxonomGrid::updateWidgets()
 
 
 void
-CanvasAxonomGrid::Update (NR::Matrix const &affine, unsigned int flags)
+CanvasAxonomGrid::Update (NR::Matrix const &affine, unsigned int /*flags*/)
 {
     ow = origin * affine;
     sw = NR::Point(fabs(affine[0]),fabs(affine[3]));

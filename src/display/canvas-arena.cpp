@@ -450,13 +450,13 @@ sp_canvas_arena_send_event (SPCanvasArena *arena, GdkEvent *event)
 }
 
 static void
-sp_canvas_arena_request_update (NRArena *arena, NRArenaItem *item, void *data)
+sp_canvas_arena_request_update (NRArena */*arena*/, NRArenaItem */*item*/, void *data)
 {
     sp_canvas_item_request_update (SP_CANVAS_ITEM (data));
 }
 
 static void
-sp_canvas_arena_request_render (NRArena *arena, NRRectL *area, void *data)
+sp_canvas_arena_request_render (NRArena */*arena*/, NRRectL *area, void *data)
 {
     sp_canvas_request_redraw (SP_CANVAS_ITEM (data)->canvas, area->x0, area->y0, area->x1, area->y1);
 }

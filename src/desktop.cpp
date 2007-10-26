@@ -1212,7 +1212,7 @@ SPDesktop::onPositionSet (double x, double y)
 }
 
 void
-SPDesktop::onResized (double x, double y)
+SPDesktop::onResized (double /*x*/, double /*y*/)
 {
    // Nothing called here
 }
@@ -1338,7 +1338,7 @@ SPDesktop::_onDeactivate (SPDesktop* dt)
 
 void
 SPDesktop::_onSelectionModified
-(Inkscape::Selection *selection, guint flags, SPDesktop *dt)
+(Inkscape::Selection */*selection*/, guint /*flags*/, SPDesktop *dt)
 {
     if (!dt->_widget) return;
     dt->_widget->updateScrollbars (expansion(dt->_d2w));
@@ -1368,7 +1368,7 @@ _onSelectionChanged
  * \todo fixme
  */
 static gint
-_arena_handler (SPCanvasArena *arena, NRArenaItem *ai, GdkEvent *event, SPDesktop *desktop)
+_arena_handler (SPCanvasArena */*arena*/, NRArenaItem *ai, GdkEvent *event, SPDesktop *desktop)
 {
     if (ai) {
         SPItem *spi = (SPItem*)NR_ARENA_ITEM_GET_DATA (ai);
@@ -1393,7 +1393,7 @@ _layer_deactivated(SPObject *layer, SPDesktop *desktop) {
 
 /// Callback
 static void
-_layer_hierarchy_changed(SPObject *top, SPObject *bottom,
+_layer_hierarchy_changed(SPObject */*top*/, SPObject *bottom,
                                          SPDesktop *desktop)
 {
     desktop->_layer_changed_signal.emit (bottom);

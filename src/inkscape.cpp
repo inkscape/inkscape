@@ -368,14 +368,14 @@ void inkscape_mapalt(guint maskvalue)
 }
 
 static void
-inkscape_activate_desktop_private (Inkscape::Application *inkscape, SPDesktop *desktop)
+inkscape_activate_desktop_private (Inkscape::Application */*inkscape*/, SPDesktop *desktop)
 {
     desktop->set_active (true);
 }
 
 
 static void
-inkscape_deactivate_desktop_private (Inkscape::Application *inkscape, SPDesktop *desktop)
+inkscape_deactivate_desktop_private (Inkscape::Application */*inkscape*/, SPDesktop *desktop)
 {
     desktop->set_active (false);
 }
@@ -387,7 +387,7 @@ inkscape_deactivate_desktop_private (Inkscape::Application *inkscape, SPDesktop 
 
 
 static void
-inkscape_crash_handler (int signum)
+inkscape_crash_handler (int /*signum*/)
 {
     using Inkscape::Debug::SimpleEvent;
     using Inkscape::Debug::EventTracker;
@@ -1239,7 +1239,7 @@ inkscape_active_event_context (void)
 #####################*/
 
 static bool
-inkscape_init_config (Inkscape::XML::Document *doc, const gchar *config_name, const gchar *skeleton,
+inkscape_init_config (Inkscape::XML::Document */*doc*/, const gchar *config_name, const gchar *skeleton,
 		      unsigned int skel_size,
 		      const gchar *e_mkdir,
 		      const gchar *e_notdir,
@@ -1366,7 +1366,7 @@ inkscape_refresh_display (Inkscape::Application *inkscape)
  *  saves the preferences if appropriate, and quits.
  */
 void
-inkscape_exit (Inkscape::Application *inkscape)
+inkscape_exit (Inkscape::Application */*inkscape*/)
 {
     g_assert (INKSCAPE);
 

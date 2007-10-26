@@ -536,7 +536,6 @@ static void validateInt(gint oldVal,
 void
 CanvasXYGrid::readRepr()
 {
-    char buff[100];
     gchar const *value;
     if ( (value = repr->attribute("originx")) ) {
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::X], &gridunit);
@@ -599,7 +598,7 @@ CanvasXYGrid::readRepr()
  * Called when XML node attribute changed; updates dialog widgets if change was not done by widgets themselves.
  */
 void
-CanvasXYGrid::onReprAttrChanged(Inkscape::XML::Node *repr, gchar const *key, gchar const *oldval, gchar const *newval, bool is_interactive)
+CanvasXYGrid::onReprAttrChanged(Inkscape::XML::Node */*repr*/, gchar const */*key*/, gchar const */*oldval*/, gchar const */*newval*/, bool /*is_interactive*/)
 {
     readRepr();
 
@@ -655,7 +654,7 @@ CanvasXYGrid::updateWidgets()
 
 
 void
-CanvasXYGrid::Update (NR::Matrix const &affine, unsigned int flags)
+CanvasXYGrid::Update (NR::Matrix const &affine, unsigned int /*flags*/)
 {
     ow = origin * affine;
     sw = spacing * affine;

@@ -282,7 +282,7 @@ void sp_knot_start_dragging(SPKnot *knot, NR::Point p, gint x, gint y, guint32 e
 /**
  * Called to handle events on knots.
  */
-static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
+static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot)
 {
     g_assert(knot != NULL);
     g_assert(SP_IS_KNOT(knot));

@@ -58,7 +58,7 @@ Selection::~Selection() {
 
 /* Handler for selected objects "modified" signal */
 
-void Selection::_schedule_modified(SPObject *obj, guint flags) {
+void Selection::_schedule_modified(SPObject */*obj*/, guint flags) {
     if (!this->_idle) {
         /* Request handling to be run in _idle loop */
         this->_idle = g_idle_add_full(SP_SELECTION_UPDATE_PRIORITY, GSourceFunc(&Selection::_emit_modified), this, NULL);

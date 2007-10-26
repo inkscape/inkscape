@@ -299,7 +299,7 @@ void SPDocument::collectOrphans() {
     }
 }
 
-void SPDocument::reset_key (void *dummy)
+void SPDocument::reset_key (void */*dummy*/)
 {
     actionkey = NULL;
 }
@@ -1208,7 +1208,7 @@ sigc::connection sp_document_resources_changed_connect(SPDocument *document,
 /* Helpers */
 
 gboolean
-sp_document_resource_list_free(gpointer key, gpointer value, gpointer data)
+sp_document_resource_list_free(gpointer /*key*/, gpointer value, gpointer /*data*/)
 {
     g_slist_free((GSList *) value);
     return TRUE;

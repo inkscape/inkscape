@@ -69,43 +69,43 @@ class CanvasGrid {
 public:
     CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc);
     virtual ~CanvasGrid();
-    
+
     static const char * getName(GridType type);
     static const char * getSVGName(GridType type);
     static GridType     getGridTypeFromSVGName(const char * typestr);
     static GridType     getGridTypeFromName(const char * typestr);
-    
+
     static CanvasGrid* NewGrid(SPNamedView * nv, Inkscape::XML::Node * repr, SPDocument *doc, GridType gridtype);
     static void writeNewGridToRepr(Inkscape::XML::Node * repr, SPDocument * doc, GridType gridtype);
 
     GridCanvasItem * createCanvasItem(SPDesktop * desktop);
-    
+
     virtual void Update (NR::Matrix const &affine, unsigned int flags) = 0;
     virtual void Render (SPCanvasBuf *buf) = 0;
-    
+
     virtual void readRepr() {};
-    virtual void onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive) {};
-    
+    virtual void onReprAttrChanged (Inkscape::XML::Node * /*repr*/, const gchar */*key*/, const gchar */*oldval*/, const gchar */*newval*/, bool /*is_interactive*/) {};
+
     virtual Gtk::Widget & getWidget() = 0;
 
     Inkscape::XML::Node * repr;
     SPDocument *doc;
-    
+
     Inkscape::Snapper* snapper;
 
     static void on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
-    
+
 protected:
     GSList * canvasitems;  // list of created canvasitems
 
     SPNamedView * namedview;
-    
+
     Gtk::VBox vbox;
 
 private:
     CanvasGrid(const CanvasGrid&);
     CanvasGrid& operator=(const CanvasGrid&);
- 
+
 };
 
 
@@ -116,10 +116,10 @@ public:
 
     void Update (NR::Matrix const &affine, unsigned int flags);
     void Render (SPCanvasBuf *buf);
-    
+
     void readRepr();
     void onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive);
-    
+
     Gtk::Widget & getWidget();
 
     NR::Point origin;
@@ -137,19 +137,19 @@ public:
 private:
     CanvasXYGrid(const CanvasXYGrid&);
     CanvasXYGrid& operator=(const CanvasXYGrid&);
-    
+
     void updateWidgets();
 
     Gtk::Table table;
-    
+
     Inkscape::UI::Widget::RegisteredUnitMenu    _rumg, _rums;
     Inkscape::UI::Widget::RegisteredScalarUnit  _rsu_ox, _rsu_oy, _rsu_sx, _rsu_sy;
     Inkscape::UI::Widget::RegisteredColorPicker _rcp_gcol, _rcp_gmcol;
     Inkscape::UI::Widget::RegisteredSuffixedInteger _rsi;
     Inkscape::UI::Widget::RegisteredCheckButton _rcb_dotted;
-    
-    Inkscape::UI::Widget::Registry _wr; 
-        
+
+    Inkscape::UI::Widget::Registry _wr;
+
     bool render_dotted;
 };
 
@@ -160,11 +160,11 @@ class CanvasXYGridSnapper : public LineSnapper
 public:
     CanvasXYGridSnapper(CanvasXYGrid *grid, SPNamedView const *nv, NR::Coord const d);
 
-private:    
+private:
     LineList _getSnapLines(NR::Point const &p) const;
-    
+
     CanvasXYGrid *grid;
-}; 
+};
 
 }; /* namespace Inkscape */
 

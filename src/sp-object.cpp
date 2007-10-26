@@ -304,7 +304,7 @@ sp_object_unref(SPObject *object, SPObject *owner)
  * \pre object points to real object
  */
 SPObject *
-sp_object_href(SPObject *object, gpointer owner)
+sp_object_href(SPObject *object, gpointer /*owner*/)
 {
     g_return_val_if_fail(object != NULL, NULL);
     g_return_val_if_fail(SP_IS_OBJECT(object), NULL);
@@ -325,7 +325,7 @@ sp_object_href(SPObject *object, gpointer owner)
  * \pre object points to real object and hrefcount>0
  */
 SPObject *
-sp_object_hunref(SPObject *object, gpointer owner)
+sp_object_hunref(SPObject *object, gpointer /*owner*/)
 {
     g_return_val_if_fail(object != NULL, NULL);
     g_return_val_if_fail(SP_IS_OBJECT(object), NULL);
@@ -753,7 +753,7 @@ sp_object_remove_child(SPObject *object, Inkscape::XML::Node *child)
  * Invoked whenever the given mutation event happens in the XML tree.
  * \param old_ref Ignored
  */
-static void sp_object_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref,
+static void sp_object_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node */*old_ref*/,
                                     Inkscape::XML::Node *new_ref)
 {
     SPObject *ochild = sp_object_get_child_by_repr(object, child);
@@ -900,7 +900,7 @@ void SPObject::releaseReferences() {
  * Callback for child_added node event.
  */
 static void
-sp_object_repr_child_added(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, gpointer data)
+sp_object_repr_child_added(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, gpointer data)
 {
     SPObject *object = SP_OBJECT(data);
 
@@ -912,7 +912,7 @@ sp_object_repr_child_added(Inkscape::XML::Node *repr, Inkscape::XML::Node *child
  * Callback for remove_child node event.
  */
 static void
-sp_object_repr_child_removed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, gpointer data)
+sp_object_repr_child_removed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node *child, Inkscape::XML::Node */*ref*/, gpointer data)
 {
     SPObject *object = SP_OBJECT(data);
 
@@ -927,7 +927,7 @@ sp_object_repr_child_removed(Inkscape::XML::Node *repr, Inkscape::XML::Node *chi
  * \todo fixme:
  */
 static void
-sp_object_repr_order_changed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *old, Inkscape::XML::Node *newer, gpointer data)
+sp_object_repr_order_changed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node *child, Inkscape::XML::Node *old, Inkscape::XML::Node *newer, gpointer data)
 {
     SPObject *object = SP_OBJECT(data);
 
@@ -1064,7 +1064,7 @@ sp_object_read_attr(SPObject *object, gchar const *key)
  * Callback for attr_changed node event.
  */
 static void
-sp_object_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gchar const *oldval, gchar const *newval, bool is_interactive, gpointer data)
+sp_object_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gchar const */*oldval*/, gchar const */*newval*/, bool is_interactive, gpointer data)
 {
     SPObject *object = SP_OBJECT(data);
 
@@ -1081,7 +1081,7 @@ sp_object_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gchar c
  * Callback for content_changed node event.
  */
 static void
-sp_object_repr_content_changed(Inkscape::XML::Node *repr, gchar const *oldcontent, gchar const *newcontent, gpointer data)
+sp_object_repr_content_changed(Inkscape::XML::Node */*repr*/, gchar const */*oldcontent*/, gchar const */*newcontent*/, gpointer data)
 {
     SPObject *object = SP_OBJECT(data);
 
@@ -1367,25 +1367,25 @@ SPObject::emitModified(unsigned int flags)
  */
 
 gchar const *
-sp_object_title_get(SPObject *object)
+sp_object_title_get(SPObject */*object*/)
 {
     return NULL;
 }
 
 gchar const *
-sp_object_description_get(SPObject *object)
+sp_object_description_get(SPObject */*object*/)
 {
     return NULL;
 }
 
 unsigned int
-sp_object_title_set(SPObject *object, gchar const *title)
+sp_object_title_set(SPObject */*object*/, gchar const */*title*/)
 {
     return FALSE;
 }
 
 unsigned int
-sp_object_description_set(SPObject *object, gchar const *desc)
+sp_object_description_set(SPObject */*object*/, gchar const */*desc*/)
 {
     return FALSE;
 }
