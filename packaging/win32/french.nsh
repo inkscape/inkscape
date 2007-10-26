@@ -13,6 +13,7 @@
 ; 14th December 2006 new lng_DeletePrefs, lng_DeletePrefsDesc, lng_WANT_UNINSTALL_BEFORE and lng_OK_CANCEL_DESC
 ; february 15 2007 new language bn, en_AU, eo, id, ro
 ; april 11 2007 new language he
+; october 2007 new language ca@valencian
 
 !insertmacro MUI_LANGUAGE "French"
 
@@ -141,6 +142,7 @@ LangString lng_be $(LANG_FRENCH) "be  Biélorusse"
 LangString lng_bg $(LANG_FRENCH) "bg  Bulgare"
 LangString lng_bn $(LANG_FRENCH) "bn  Bengali"
 LangString lng_ca $(LANG_FRENCH) "ca  Catalan"
+LangString lng_ca@valencia $(LANG_FRENCH) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_FRENCH) "cs  Tchèque"
 LangString lng_da $(LANG_FRENCH) "da  Danois"
 LangString lng_de $(LANG_FRENCH) "de  Allemand"

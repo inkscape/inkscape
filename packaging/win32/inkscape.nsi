@@ -752,6 +752,10 @@ Section $(lng_ca) SecCatalan
   !insertmacro Language ca ca
 SectionEnd
 
+Section $(lng_ca@valencia) SecCatalanValencia
+  !insertmacro Language ca@valencia ca@valencia
+SectionEnd
+
 Section $(lng_cs) SecCzech
   !insertmacro Language cs cs
 SectionEnd
@@ -1140,6 +1144,7 @@ Function .onInit
   !insertmacro Parameter "bg" ${SecBulgarian}
   !insertmacro Parameter "bn" ${SecBengali}
   !insertmacro Parameter "ca" ${SecCatalan}
+  !insertmacro Parameter "ca@valencia" ${SecCatalanValencia}
   !insertmacro Parameter "cs" ${SecCzech}
   !insertmacro Parameter "da" ${SecDanish}
   !insertmacro Parameter "de" ${SecGerman}

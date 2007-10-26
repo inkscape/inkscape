@@ -1,6 +1,6 @@
 ; #######################################
-; english.nsh
-; english language strings for inkscape installer
+; slovenian.nsh
+; slovenian language strings for inkscape installer
 ; windows code page: 1250
 ; Authors:
 ; Martin Srebotnjak
@@ -12,6 +12,7 @@
 ; 14th December 2006 new lng_DeletePrefs, lng_DeletePrefsDesc, lng_WANT_UNINSTALL_BEFORE and lng_OK_CANCEL_DESC
 ; february 15 2007 new language bn, en_AU, eo, id, ro
 ; april 11 2007 new language he
+; october 2007 new language ca@valencian
 
 ; !insertmacro MUI_LANGUAGE "Slovenšèina"
 !insertmacro MUI_LANGUAGE "Slovenian"
@@ -141,6 +142,7 @@ LangString lng_be $(LANG_SLOVENIAN) "beloruski (be)"
 LangString lng_bg $(LANG_SLOVENIAN) "bolgarski (bg)"
 LangString lng_bn $(LANG_SLOVENIAN) "bengalski (bn)"
 LangString lng_ca $(LANG_SLOVENIAN) "katalonski (ca)"
+LangString lng_ca@valencia $(LANG_SLOVENIAN) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_SLOVENIAN) "èeški (cs)"
 LangString lng_da $(LANG_SLOVENIAN) "danski (da)"
 LangString lng_de $(LANG_SLOVENIAN) "nemški (de)"

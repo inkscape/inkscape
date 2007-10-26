@@ -12,6 +12,7 @@
 ; 14th December 2006 new lng_DeletePrefs, lng_DeletePrefsDesc, lng_WANT_UNINSTALL_BEFORE and lng_OK_CANCEL_DESC; 2nd February 2007 new language ru
 ; february 15 2007 new language bn, en_AU, eo, id, ro
 ; april 11 2007 new language he
+; october 2007 new language ca@valencian
 
 !insertmacro MUI_LANGUAGE "Russian"
 
@@ -140,6 +141,7 @@ LangString lng_be $(LANG_RUSSIAN) "be  Белорусский"
 LangString lng_bg $(LANG_RUSSIAN) "bg  Болгарский"
 LangString lng_bn $(LANG_RUSSIAN) "bn  Bengali"
 LangString lng_ca $(LANG_RUSSIAN) "ca  Каталанский"
+LangString lng_ca@valencia $(LANG_RUSSIAN) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_RUSSIAN) "cs  Чешский"
 LangString lng_da $(LANG_RUSSIAN) "da  Датский"
 LangString lng_de $(LANG_RUSSIAN) "de  Немецкий"

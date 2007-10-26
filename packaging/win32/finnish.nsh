@@ -12,6 +12,7 @@
 ; 14th December 2006 new lng_DeletePrefs, lng_DeletePrefsDesc, lng_WANT_UNINSTALL_BEFORE and lng_OK_CANCEL_DESC
 ; february 15 2007 new language bn, en_AU, eo, id, ro
 ; april 11 2007 new language he
+; october 2007 new language ca@valencian
 
 !insertmacro MUI_LANGUAGE "Finnish"
 
@@ -140,6 +141,7 @@ LangString lng_be $(LANG_FINNISH) "be  valkovenäjä"
 LangString lng_bg $(LANG_FINNISH) "bg  bulgaria"
 LangString lng_bn $(LANG_FINNISH) "bn  Bengali"
 LangString lng_ca $(LANG_FINNISH) "ca  katalaani"
+LangString lng_ca@valencia $(LANG_FINNISH) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_FINNISH) "cs  tšekki"
 LangString lng_da $(LANG_FINNISH) "da  tanska"
 LangString lng_de $(LANG_FINNISH) "de  saksa"

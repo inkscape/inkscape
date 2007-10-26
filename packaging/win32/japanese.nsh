@@ -7,6 +7,7 @@
 ;
 ; february 15 2007 new language bn, en_AU, eo, id, ro
 ; april 11 2007 new language he
+; october 2007 new language ca@valencian
 
 !insertmacro MUI_LANGUAGE "Japanese"
 
@@ -135,6 +136,7 @@ LangString lng_be $(LANG_JAPANESE) "be  ベラルーシ語"
 LangString lng_bg $(LANG_JAPANESE) "bg  ブルガリア語"
 LangString lng_bn $(LANG_JAPANESE) "bn  Bengali"
 LangString lng_ca $(LANG_JAPANESE) "ca  カタロニア語"
+LangString lng_ca@valencia $(LANG_JAPANESE) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_JAPANESE) "cs  チェコ語"
 LangString lng_da $(LANG_JAPANESE) "da  デンマーク語"
 LangString lng_de $(LANG_JAPANESE) "de  ドイツ語"
