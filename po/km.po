@@ -1,21 +1,20 @@
-#  translation of km.po to Khmer
+# translation of km.po to Khmer
 # Poch Sokun  <sokun_poch@khmeros.info>, 2006.
 # Auk Piseth <piseth_dv@khmeros.info>, 2006.
 # Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007.
-# Khoem Sokhem<khoemsokhem@khmeros.info>,2007-10-23 13:57+0700
 msgid ""
 msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-10-17 23:52+0200\n"
-"PO-Revision-Date: 2007-10-25 16:51+0700\n"
-"Last-Translator: Khoem Sokhem<khoemsokhem@khmeros.info>\n"
-"Language-Team: Khmer<support@khmeros.info>\n"
+"PO-Revision-Date: 2007-10-26 15:34+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: WordForge 0.2\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
@@ -381,8 +380,7 @@ msgstr ""
 #: ../src/dialogs/clonetiler.cpp:1949
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
-msgstr ""
-"ធ្វើមាត្រដ្ឋាន​ផ្តេក​ក្នុង​មួយ​​ជួរ​ឈរ (គិត​ជា​ % នៃ​​កម្ពស់​​ក្រឡា​ក្បឿង​)"
+msgstr "ធ្វើមាត្រដ្ឋាន​ផ្តេក​ក្នុង​មួយ​​ជួរ​ឈរ (គិត​ជា​ % នៃ​​កម្ពស់​​ក្រឡា​ក្បឿង​)"
 
 #: ../src/dialogs/clonetiler.cpp:1956
 msgid "Randomize the vertical scale by this percentage"
@@ -506,8 +504,7 @@ msgstr "ផ្លាស់ប្តូរ​ភាពលាំៗ​នៃ​ក
 
 #: ../src/dialogs/clonetiler.cpp:2186
 msgid "Change the tile hue by this percentage for each column"
-msgstr ""
-"ផ្លាស់ប្តូរ​ភាពលាំៗ​នៃ​ក្រឡា​​ក្បឿង​​តាម​ភាគរយ​នេះ​ សម្រាប់​ជួរឈរ​នីមួយៗ ។"
+msgstr "ផ្លាស់ប្តូរ​ភាពលាំៗ​នៃ​ក្រឡា​​ក្បឿង​​តាម​ភាគរយ​នេះ​ សម្រាប់​ជួរឈរ​នីមួយៗ ។"
 
 #: ../src/dialogs/clonetiler.cpp:2193
 msgid "Randomize the tile hue by this percentage"
@@ -995,7 +992,7 @@ msgstr "ផ្ទៃ​ដែល​បាន​ជ្រើស​​ត្រូ
 #: ../src/dialogs/export.cpp:1165
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
-msgstr "មិន​ទាន់​មាន​ថត %s ឬ %s មិន​មែន​ជាថត ។\n"
+msgstr "មិន​ទាន់​មាន​ថត %s នៅ​ឡើយ​ទេ ឬ​វា​មិន​មែន​ជាថត ។\n"
 
 #: ../src/dialogs/export.cpp:1181
 #, c-format
@@ -1198,8 +1195,7 @@ msgstr "គុណលក្ខណៈ ៖"
 
 #: ../src/dialogs/find.cpp:695 ../src/ui/dialog/find.cpp:64
 msgid "Find objects by the name of an attribute (exact or partial match)"
-msgstr ""
-"រក​​វត្ថុ​​តាម​​ឈ្មោះ​​នៃ​​គុណលក្ខណៈ​ (ផ្គួរផ្គង​ភាព​​ត្រឹមត្រូវ ឬ​លំអៀង​)"
+msgstr "រក​​វត្ថុ​​តាម​​ឈ្មោះ​​នៃ​​គុណលក្ខណៈ​ (ផ្គួរផ្គង​ភាព​​ត្រឹមត្រូវ ឬ​លំអៀង​)"
 
 #: ../src/dialogs/find.cpp:709 ../src/ui/dialog/find.cpp:65
 msgid "Search in s_election"
@@ -1304,10 +1300,7 @@ msgid "_Id"
 msgstr "លេខសម្គាល់​"
 
 #: ../src/dialogs/item-properties.cpp:129
-msgid ""
-""
-"_:The id= attribute (only letters, digits, and the characters .-_: allowed)"
-""
+msgid "_:The id= attribute (only letters, digits, and the characters .-_: allowed)"
 msgstr ""
 
 #. Button for setting the object's id, label, title and description.
@@ -2319,13 +2312,11 @@ msgstr ""
 
 #: ../src/dyna-draw-context.cpp:697
 msgid "<b>Select a guide path</b> to track with <b>Ctrl</b>"
-msgstr ""
-"<b>កំណត់​ផ្លូវ​បន្ទាត់នាំ​ផ្លូវ</b> ដើម្បីតាមដាន​ដោយ​ប្រើ<b>បញ្ជា(Ctrl)</b>"
+msgstr "<b>កំណត់​ផ្លូវ​បន្ទាត់នាំ​ផ្លូវ</b> ដើម្បីតាមដាន​ដោយ​ប្រើ<b>បញ្ជា(Ctrl)</b>"
 
 #: ../src/dyna-draw-context.cpp:802
 msgid "Tracking: <b>connection to guide path lost!</b>"
-msgstr ""
-"ការ​តាមដាន ៖ <b>បាន​បាត់​ការ​តភ្ជាប់ទៅ​កាន់​ផ្លូវ​បន្ទាត់​នាំផ្លូវ !</b>"
+msgstr "ការ​តាមដាន ៖ <b>បាន​បាត់​ការ​តភ្ជាប់ទៅ​កាន់​ផ្លូវ​បន្ទាត់​នាំផ្លូវ !</b>"
 
 #: ../src/dyna-draw-context.cpp:802
 msgid "<b>Tracking</b> a guide path"
@@ -2766,8 +2757,7 @@ msgstr "ក្រឡោត"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
 msgid "Emboss selected bitmap(s) -- hilight edges with 3D effect."
-msgstr ""
-"ធ្វើ​ឲ្យ​រូបភាព​ដែល​បាន​ជ្រើស​ក្រឡោត -- បន្លិច​គែម​ដោយ​បែបផែន​ត្រីមាត្រ ។"
+msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដែល​បាន​ជ្រើស​ក្រឡោត -- បន្លិច​គែម​ដោយ​បែបផែន​ត្រីមាត្រ ។"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
 msgid "Enhance"
@@ -2868,7 +2858,6 @@ msgid "Modulate"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/modulate.cpp:41
-#, fuzzy
 msgid "Brightness"
 msgstr "ពន្លឺ"
 
@@ -2890,37 +2879,38 @@ msgid "Modulate percent hue, saturation, and brightness of selected bitmap(s)."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
-#, fuzzy
 msgid "Negate"
-msgstr "អសកម្ម"
+msgstr "បដិសេធ"
 
 #: ../src/extension/internal/bitmap/negate.cpp:42
 msgid "Negate (take inverse) selected bitmap(s)."
-msgstr ""
+msgstr "បដិសេធ (ដាក់​បញ្ច្រាស) រូបភាព​ដែល​បាន​ជ្រើស ។"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:35
-#, fuzzy
 msgid "Normalize"
-msgstr "ធម្មតា"
+msgstr "ធ្វើ​ឲ្យ​ធម្មតា"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:42
 msgid ""
 "Normalize selected bitmap(s), expanding color range to the full possible "
 "range of color."
 msgstr ""
+"ធ្វើ​ឲ្យ​រូបភាព​ដែលបានជ្រើស​ធម្មតា "
+"ពង្រីក​ជួរពណ៌ទៅ​ជួរ​ពណ៌​ដែលអាច​ប្រើ​បាន​ពេញ​លេញ ។"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:36
-#, fuzzy
 msgid "Oil Paint"
-msgstr "បោះពុម្ព​ GNOME "
+msgstr "គំនូ​ប្រេង"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:44
 msgid "Stylize selected bitmap(s) so that they appear to be painted with oils."
 msgstr ""
+"ធ្វើ​រចនាប័ទ្ម​រូបភាព​ដែល​បានជ្រើស "
+"ដូច្នេះ​ពួក​វា​បង្ហាញ​ថា​ត្រូវ​បានគូរ​ដោយ​ប្រេង ។"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:45
 msgid "Modify opacity channel(s) of selected bitmap(s)."
-msgstr ""
+msgstr "កែប្រែ​ឆានែល​ស្រអាប់​របស់​រូបភាព​ដែល​បាន​ជ្រើស ។"
 
 #: ../src/extension/internal/bitmap/raise.cpp:39
 #: ../src/selection-chemistry.cpp:684
@@ -2936,11 +2926,11 @@ msgstr "លើកឡើង"
 msgid ""
 "Alter lightness the edges of selected bitmap(s) to create a raised "
 "appearance."
-msgstr ""
+msgstr "ត្រង​ពន្លឺ​គែម​របស់​រូបភាព​ដែល​បាន​ជ្រើស ដើម្បី​បង្កើត​រូបរាង​ដែល​បាន​លើកឡើង ។"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:39
 msgid "Reduce Noise"
-msgstr ""
+msgstr "កាត់​បន្ថយ​ការ​រំខាន"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:47
 msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter."
@@ -12363,9 +12353,7 @@ msgid "System"
 msgstr "ប្រព័ន្ធ"
 
 #: ../src/widgets/sp-color-notebook.cpp:324
-msgid ""
-"_:RGBA_:"
-""
+msgid "_:RGBA_:"
 msgstr "RGBA_ ៖"
 
 #: ../src/widgets/sp-color-notebook.cpp:332
@@ -14560,3 +14548,4 @@ msgstr "បញ្ចូល​ឯកសារ​មេតា​របស់​វ
 #, fuzzy
 msgid "XAML Input"
 msgstr "ការ​បញ្ចូល DXF"
+
