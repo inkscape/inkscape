@@ -21,11 +21,11 @@ export APBUILD_PROJECTNAME=inkscape
 
 PATH=/usr/local/src/inkscape/extra/static/bin:$PATH
 PKG_CONFIG_PATH=/usr/local/src/inkscape/extra/static/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-CPPFLAGS="-I/usr/local/src/inkscape/extra/static/include"
+CPPFLAGS="-fno-stack-protector -I/usr/local/src/inkscape/extra/static/include"
 LDFLAGS="-L/usr/local/src/inkscape/extra/static/lib"
 CXX="ccache apg++" 
 export PATH PKG_CONFIG_PATH CPPFLAGS LDFLAGS CXX
-prepareBuild --enable-binreloc --with-gnome-vfs=no --enable-lcms --enable-inkboard
+prepareBuild --enable-binreloc --with-gnome-vfs=no --enable-lcms
 
 [BuildUnprepare]
 unprepareBuild
