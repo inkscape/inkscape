@@ -27,6 +27,7 @@
 
 #define SP_SHAPE_WRITE_PATH (1 << 2)
 
+struct SPDesktop;
 struct LivePathEffectObject;
 namespace Inkscape{ 
 namespace LivePathEffect{
@@ -83,5 +84,7 @@ void sp_shape_perform_path_effect(SPCurve *curve, SPShape *shape);
 void sp_shape_set_path_effect(SPShape *shape, gchar *value);
 void sp_shape_remove_path_effect(SPShape *shape);
 bool sp_shape_has_path_effect(SPShape *shape);
+
+void sp_shape_edit_next_param_oncanvas(SPShape *shape, SPDesktop *dt);
 
 #endif

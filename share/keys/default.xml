@@ -320,7 +320,9 @@ override) the bindings in the main default.xml.
 
   <bind key="Escape" action="EditDeselect" /> 
 
-<!-- Objects/selection -->
+  <bind key="7" action="EditNextPathEffectParameter" display="true"/>
+
+  <!-- Objects/selection -->
 
   <bind key="h" action="ObjectFlipHorizontally" display="true"/>
   <bind key="H" action="ObjectFlipHorizontally" />

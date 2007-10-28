@@ -88,6 +88,8 @@ void sp_selection_move_screen (gdouble dx, gdouble dy);
 void sp_selection_item_next (void);
 void sp_selection_item_prev (void);
 
+void sp_selection_next_patheffect_param(SPDesktop * dt);
+
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item);
 
 void sp_undo (SPDesktop *desktop, SPDocument *doc);

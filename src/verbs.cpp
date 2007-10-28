@@ -1001,16 +1001,7 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
             break;
 
         case SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER:
-          //FACTOR OUT THIS CODE TO SOMEWHERE ELSE!
-            // if(selection has LPE) {
-                // If not already in nodecontext, goto it!
-          //      if (!tools_isactive(dt, TOOLS_NODES)) {
-           //         tools_switch_current(TOOLS_NODES);
-            //    }
-                // add goto next code here:
-            //} else {
-            // statusbar message: selection has no path effect applied.
-            //}
+            sp_selection_next_patheffect_param(dt);
             break;
         default:
             break;

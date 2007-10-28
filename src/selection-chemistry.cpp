@@ -2005,6 +2005,24 @@ sp_selection_item_prev(void)
     }
 }
 
+void sp_selection_next_patheffect_param(SPDesktop * dt)
+{
+    if (!dt) return;
+
+    Inkscape::Selection *selection = sp_desktop_selection(dt);
+    if ( selection && !selection->isEmpty() ) {
+        SPItem *item = selection->singleItem();
+        if ( item && SP_IS_SHAPE(item)) {
+            SPShape *shape = SP_SHAPE(item);
+            if (sp_shape_has_path_effect(shape)) {
+                sp_shape_edit_next_param_oncanvas(shape, dt);
+            } else {
+                dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("The selection has no applied path effect."));
+            }
+        }
+    }
+}
+
 namespace {
 
 template <typename D>

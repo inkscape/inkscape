@@ -46,6 +46,7 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
     edit_button = NULL;
     defvalue = g_strdup(default_value);
     param_readSVGValue(defvalue);
+    oncanvas_editable = true;
 }
 
 PathParam::~PathParam()
@@ -128,15 +129,32 @@ PathParam::param_getWidget()
 }
 
 void
+PathParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
+{
+    // If not already in nodecontext, goto it!
+    if (!tools_isactive(dt, TOOLS_NODES)) {
+        tools_switch_current(TOOLS_NODES);
+    }
+
+    ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
+    shape_editor->set_item_livepatheffect_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
+}
+
+void
+PathParam::param_write_to_repr(const char * svgd)
+{
+    param_effect->getRepr()->setAttribute(param_key.c_str(), svgd);
+}
+
+
+/* CALLBACK FUNCTIONS FOR THE BUTTONS */
+void
 PathParam::on_edit_button_click()
 {
-    // Switch to node edit tool:
-    tools_switch_current(TOOLS_NODES);
-
-    // set this parameter to edit:
-    ShapeEditor * shape_editor = SP_NODE_CONTEXT( SP_ACTIVE_DESKTOP->event_context )->shape_editor;
     SPItem * item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
-    shape_editor->set_item_livepatheffect_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
+    if (item != NULL) {
+        param_editOncanvas(item, SP_ACTIVE_DESKTOP);
+    }
 }
 
 void
@@ -168,12 +186,6 @@ PathParam::on_paste_button_click()
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Clipboard does not contain a path."));
         return;
     }
-}
-
-void
-PathParam::param_write_to_repr(const char * svgd)
-{
-    param_effect->getRepr()->setAttribute(param_key.c_str(), svgd);
 }
 
 

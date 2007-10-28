@@ -28,6 +28,7 @@ namespace LivePathEffect {
 Parameter::Parameter( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                       Effect* effect )
+    : oncanvas_editable(false)
 {
     param_label = label;
     param_tooltip = tip;

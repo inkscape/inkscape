@@ -90,6 +90,7 @@ Effect::Effect(LivePathEffectObject *lpeobject)
     vbox = NULL;
     tooltips = NULL;
     lpeobj = lpeobject;
+    oncanvasedit_it = param_map.begin();
 }
 
 Effect::~Effect()
@@ -261,6 +262,46 @@ Effect::getSPDoc()
     return SP_OBJECT_DOCUMENT(lpeobj);
 }
 
+Parameter *
+Effect::getNextOncanvasEditableParam()
+{
+    oncanvasedit_it++;
+    if (oncanvasedit_it == param_map.end()) {
+        oncanvasedit_it = param_map.begin();
+    }
+    param_map_type::iterator old_it = oncanvasedit_it;
+
+    do {
+        Parameter * param = oncanvasedit_it->second;
+        if(param->oncanvas_editable) {
+            return param;
+        } else {
+            oncanvasedit_it++;
+            if (oncanvasedit_it == param_map.end()) {  // loop round the map
+                oncanvasedit_it = param_map.begin();
+            }
+        }
+    } while (oncanvasedit_it != old_it); // iterate until complete loop through map has been made
+
+    return NULL;
+}
+
+void
+Effect::editNextParamOncanvas(SPItem * item, SPDesktop * desktop)
+{
+    if (!desktop) return;
+
+    Parameter * param = getNextOncanvasEditableParam();
+    if (param) {
+        param->param_editOncanvas(item, desktop);
+        gchar *message = g_strdup_printf(_("Editing parameter <b>%s</b>."), param->param_label.c_str());
+        desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, message);
+        g_free(message);
+    } else {
+        desktop->messageStack()->flash( Inkscape::WARNING_MESSAGE,
+                                        _("None of the applied path effect's parameters can be edited on-canvas.") );
+    }
+}
 
 } /* namespace LivePathEffect */
 

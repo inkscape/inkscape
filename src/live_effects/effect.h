@@ -21,8 +21,9 @@
 
 //#define LPE_ENABLE_TEST_EFFECTS
 
-struct SPShape;
 struct SPDocument;
+struct SPDesktop;
+struct SPItem;
 class NArtBpath;
 struct LivePathEffectObject;
 
@@ -75,6 +76,8 @@ public:
     void readallParameters(Inkscape::XML::Node * repr);
     void setParameter(const gchar * key, const gchar * new_value);
 
+    void editNextParamOncanvas(SPItem * item, SPDesktop * desktop);
+
 protected:
     Effect(LivePathEffectObject *lpeobject);
 
@@ -91,6 +94,7 @@ protected:
             doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 
     void registerParameter(Parameter * param);
+    Parameter * getNextOncanvasEditableParam();
 
     typedef std::map<Glib::ustring, Parameter *> param_map_type;
     param_map_type param_map;
@@ -100,6 +104,8 @@ protected:
     Gtk::Tooltips * tooltips;
 
     LivePathEffectObject *lpeobj;
+
+    param_map_type::iterator oncanvasedit_it;
 
 private:
     Effect(const Effect&);

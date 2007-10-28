@@ -44,6 +44,8 @@ public:
 
     void param_set_default();
 
+    void param_editOncanvas(SPItem * item, SPDesktop * dt);
+
     sigc::signal <void> signal_path_pasted;
     sigc::signal <void> signal_path_changed;
 

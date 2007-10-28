@@ -16,6 +16,9 @@
 #include "ui/widget/registry.h"
 #include "ui/widget/registered-widget.h"
 
+struct SPDesktop;
+struct SPItem;
+
 namespace Gtk {
     class Widget;
 }
@@ -45,9 +48,13 @@ public:
     virtual Gtk::Widget * param_getWidget() = 0;
     virtual Glib::ustring * param_getTooltip() { return &param_tooltip; };
 
+    virtual void param_editOncanvas(SPItem * item, SPDesktop * dt) { return; };
+
     Glib::ustring param_key;
     Inkscape::UI::Widget::Registry * param_wr;
     Glib::ustring param_label;
+
+    bool oncanvas_editable;
 
 protected:
     Glib::ustring param_tooltip;

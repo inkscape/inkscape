@@ -1214,6 +1214,14 @@ bool sp_shape_has_path_effect(SPShape *shape)
     return (shape->path_effect_href != NULL);
 }
 
+void sp_shape_edit_next_param_oncanvas(SPShape *shape, SPDesktop *dt)
+{
+    LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(shape);
+    if (lpeobj && lpeobj->lpe) {
+        lpeobj->lpe->editNextParamOncanvas(SP_ITEM(shape), dt);
+    }
+}
+
 /*
   Local Variables:
   mode:c++
