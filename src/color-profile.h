@@ -22,8 +22,25 @@ enum {
     RENDERING_INTENT_ABSOLUTE_COLORIMETRIC = 5
 };
 
+/// The SPColorProfile vtable.
+struct ColorProfileClass {
+    SPObjectClass parent_class;
+};
+
 /** Color Profile. */
 struct ColorProfile : public SPObject {
+    static GType getType();
+    static void classInit( ColorProfileClass *klass );
+
+#if ENABLE_LCMS
+    static cmsHPROFILE getSRGBProfile();
+
+    icColorSpaceSignature getColorSpace() const {return _profileSpace;}
+    icProfileClassSignature getProfileClass() const {return _profileClass;}
+    cmsHTRANSFORM getTransfToSRGB8();
+    cmsHTRANSFORM getTransfFromSRGB8();
+#endif // ENABLE_LCMS
+
     gchar* href;
     gchar* local;
     gchar* name;
@@ -32,11 +49,25 @@ struct ColorProfile : public SPObject {
 #if ENABLE_LCMS
     cmsHPROFILE profHandle;
 #endif // ENABLE_LCMS
-};
 
-/// The SPColorProfile vtable.
-struct ColorProfileClass {
-    SPObjectClass parent_class;
+private:
+    static void init( ColorProfile *cprof );
+
+    static void release( SPObject *object );
+    static void build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr );
+    static void set( SPObject *object, unsigned key, gchar const *value );
+    static Inkscape::XML::Node *write( SPObject *object, Inkscape::XML::Node *repr, guint flags );
+#if ENABLE_LCMS
+    static DWORD _getInputFormat( icColorSpaceSignature space );
+    void _clearProfile();
+
+    static cmsHPROFILE _sRGBProf;
+
+    icProfileClassSignature _profileClass;
+    icColorSpaceSignature _profileSpace;
+    cmsHTRANSFORM _transf;
+    cmsHTRANSFORM _revTransf;
+#endif // ENABLE_LCMS
 };
 
 } // namespace Inkscape

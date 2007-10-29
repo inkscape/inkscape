@@ -37,10 +37,12 @@ protected:
     static void _sliderChanged( SPColorSlider *slider, SPColorICCSelector *cs );
 
     static void _fixupHit( GtkWidget* src, gpointer data );
+    static void _profileSelected( GtkWidget* src, gpointer data );
 
     void _recalcColor( gboolean changing );
 #if ENABLE_LCMS
     void _setProfile( SVGICCColor* profile );
+    void _switchToProfile( gchar const* name );
 #endif // ENABLE_LCMS
     void _updateSliders( gint ignore );
     void _profilesChanged( std::string const & name );
@@ -69,13 +71,9 @@ protected:
 
 #if ENABLE_LCMS
     std::string _profileName;
-    guint _profIntent;
-    icColorSpaceSignature _profileSpace;
-    icProfileClassSignature _profileClass;
-    cmsHPROFILE _prof;
-    cmsHPROFILE _destProf;
-    cmsHTRANSFORM _transf;
+    Inkscape::ColorProfile* _prof;
     guint _profChannelCount;
+    gulong _profChangedID;
 #endif // ENABLE_LCMS
 
 private:

@@ -15,6 +15,7 @@
 #include "svg/svg-icc-color.h"
 #include "document.h"
 #include "inkscape.h"
+#include "profile-manager.h"
 
 #define noDEBUG_LCMS
 
@@ -126,6 +127,7 @@ sp_color_icc_selector_class_init (SPColorICCSelectorClass *klass)
     widget_class->hide_all = sp_color_icc_selector_hide_all;
 }
 
+
 ColorICCSelector::ColorICCSelector( SPColorSelector* csel )
     : ColorSelector( csel ),
       _updating( FALSE ),
@@ -145,13 +147,9 @@ ColorICCSelector::ColorICCSelector( SPColorSelector* csel )
 #if ENABLE_LCMS
     ,
       _profileName(""),
-      _profIntent(Inkscape::RENDERING_INTENT_UNKNOWN),
-      _profileSpace(icSigRgbData),
-      _profileClass(icSigInputClass),
-      _prof(0),
-      _destProf(0),
-      _transf(0),
-      _profChannelCount(0)
+      _prof(),
+      _profChannelCount(0),
+      _profChangedID(0)
 #endif // ENABLE_LCMS
 {
 }
@@ -197,7 +195,7 @@ struct MapMap {
     DWORD inForm;
 };
 
-void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, guint const*& scalies, DWORD& inputFormat ) {
+void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, guint const*& scalies ) {
     MapMap possible[] = {
         {icSigXYZData,   TYPE_XYZ_16},
         {icSigLabData,   TYPE_Lab_16},
@@ -262,7 +260,6 @@ void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, guin
         }
     }
 
-    inputFormat = possible[index].inForm;
     namers = names[index];
     tippies = tips[index];
     scalies = scales[index];
@@ -285,11 +282,10 @@ void ColorICCSelector::init()
     gtk_box_pack_start (GTK_BOX (_csel), t, TRUE, TRUE, 0);
 
 #if ENABLE_LCMS
-    DWORD inputFormat = TYPE_RGB_16;
     //guint partCount = _cmsChannelsOf( icSigRgbData );
     gchar const** names = 0;
     gchar const** tips = 0;
-    getThings( icSigRgbData, names, tips, _fooScales, inputFormat );
+    getThings( icSigRgbData, names, tips, _fooScales );
 #endif // ENABLE_LCMS
 
     /* Create components */
@@ -311,7 +307,13 @@ void ColorICCSelector::init()
     gtk_combo_box_set_active( GTK_COMBO_BOX(_profileSel), 0 );
     gtk_table_attach( GTK_TABLE(t), _profileSel, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD );
 
+#if ENABLE_LCMS
+    _profChangedID = g_signal_connect( G_OBJECT(_profileSel), "changed", G_CALLBACK(_profileSelected), (gpointer)this );
+    gtk_widget_set_sensitive( _profileSel, false ); // temporary
+#else
     gtk_widget_set_sensitive( _profileSel, false );
+#endif // ENABLE_LCMS
+
 
     row++;
 
@@ -453,9 +455,62 @@ void ColorICCSelector::_fixupHit( GtkWidget* src, gpointer data )
     self->_adjustmentChanged( self->_fooAdj[0], SP_COLOR_ICC_SELECTOR(self->_csel) );
 }
 
+#if ENABLE_LCMS
+void ColorICCSelector::_profileSelected( GtkWidget* src, gpointer data )
+{
+    (void)src;
+    ColorICCSelector* self = reinterpret_cast<ColorICCSelector*>(data);
+    gint activeIndex = gtk_combo_box_get_active( GTK_COMBO_BOX(self->_profileSel) );
+    gchar* name = (activeIndex != 0) ? gtk_combo_box_get_active_text( GTK_COMBO_BOX(self->_profileSel) ) : 0;
+    //self->_switchToProfile( name );
+    if ( name ) {
+        g_free( name );
+    }
+}
+#endif // ENABLE_LCMS
+
+void ColorICCSelector::_switchToProfile( gchar const* name )
+{
+    bool dirty = false;
+    SPColor tmp( _color );
+
+    if ( name ) {
+        if ( tmp.icc && tmp.icc->colorProfile == name ) {
+            g_message("Already at name [%s]", name );
+        } else {
+            g_message("Need to switch to profile [%s]", name );
+            if ( tmp.icc ) {
+                tmp.icc->colors.clear();
+            } else {
+                tmp.icc = new SVGICCColor();
+            }
+            tmp.icc->colorProfile = name;
+            dirty = true;
+        }
+    } else {
+        g_message("NUKE THE ICC");
+        if ( tmp.icc ) {
+            delete tmp.icc;
+            tmp.icc = 0;
+            dirty = true;
+        } else {
+            g_message("No icc to nuke");
+        }
+    }
+
+    if ( dirty ) {
+        _setProfile( tmp.icc );
+        // Set the color now.
+
+    }
+}
+
 void ColorICCSelector::_profilesChanged( std::string const & name )
 {
     GtkComboBox* combo = GTK_COMBO_BOX(_profileSel);
+
+    g_signal_handler_block( G_OBJECT(_profileSel), _profChangedID );
+
     GtkTreeModel* model = gtk_combo_box_get_model( combo );
     GtkTreeIter iter;
     while ( gtk_tree_model_get_iter_first( model, &iter ) ) {
@@ -464,7 +519,6 @@ void ColorICCSelector::_profilesChanged( std::string const & name )
 
     gtk_combo_box_append_text( combo, "<none>");
 
-    // TODO supress signal emit
     gtk_combo_box_set_active( combo, 0 );
 
     int index = 1;
@@ -481,6 +535,7 @@ void ColorICCSelector::_profilesChanged( std::string const & name )
         current = g_slist_next(current);
     }
 
+    g_signal_handler_unblock( G_OBJECT(_profileSel), _profChangedID );
 }
 
 /* Helpers for setting color value */
@@ -508,7 +563,7 @@ void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
     _fixupNeeded = 0;
     gtk_widget_set_sensitive( _fixupBtn, FALSE );
 
-    if ( _transf ) {
+    if ( _prof && _prof->getTransfToSRGB8() ) {
         icUInt16Number tmp[4];
         for ( guint i = 0; i < _profChannelCount; i++ ) {
             gdouble val = 0.0;
@@ -522,7 +577,7 @@ void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
             tmp[i] = val * 0x0ffff;
         }
         guchar post[4] = {0,0,0,0};
-        cmsDoTransform( _transf, tmp, post, 1 );
+        cmsDoTransform( _prof->getTransfToSRGB8(), tmp, post, 1 );
         guint32 other = SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255 );
         if ( other != color.toRGBA32(255) ) {
             _fixupNeeded = other;
@@ -555,18 +610,7 @@ void ColorICCSelector::_setProfile( SVGICCColor* profile )
         // Need to clear out the prior one
         profChanged = true;
         _profileName.clear();
-        _profIntent = Inkscape::RENDERING_INTENT_UNKNOWN;
-        _profileSpace = icSigRgbData;
-        _profileClass = icSigInputClass;
         _prof = 0;
-        if ( _transf ) {
-            cmsDeleteTransform( _transf );
-            _transf = 0;
-        }
-        if ( _destProf ) {
-            cmsCloseProfile( _destProf );
-            _destProf = 0;
-        }
         _profChannelCount = 0;
     } else if ( profile && !_prof ) {
         profChanged = true;
@@ -576,80 +620,51 @@ void ColorICCSelector::_setProfile( SVGICCColor* profile )
         gtk_widget_hide( _fooLabel[i] );
         gtk_widget_hide( _fooSlider[i] );
         gtk_widget_hide( _fooBtn[i] );
-        gtk_adjustment_set_value( _fooAdj[i], 0.0 );
     }
 
     if ( profile ) {
-        _prof = Inkscape::colorprofile_get_handle( inkscape_active_document(),//SP_OBJECT_DOCUMENT( object ),
-                                                   &_profIntent,
-                                                   profile->colorProfile.c_str() );
-        if ( _prof ) {
-            _profileSpace = cmsGetColorSpace( _prof );
-            _profileClass = cmsGetDeviceClass( _prof );
-            if ( _profileClass != icSigNamedColorClass ) {
-                int intent = INTENT_PERCEPTUAL;
-                switch ( _profIntent ) {
-                    case Inkscape::RENDERING_INTENT_RELATIVE_COLORIMETRIC:
-                        intent = INTENT_RELATIVE_COLORIMETRIC;
-                        break;
-                    case Inkscape::RENDERING_INTENT_SATURATION:
-                        intent = INTENT_SATURATION;
-                        break;
-                    case Inkscape::RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
-                        intent = INTENT_ABSOLUTE_COLORIMETRIC;
-                        break;
-                    case Inkscape::RENDERING_INTENT_PERCEPTUAL:
-                    case Inkscape::RENDERING_INTENT_UNKNOWN:
-                    case Inkscape::RENDERING_INTENT_AUTO:
-                    default:
-                        intent = INTENT_PERCEPTUAL;
-                }
-                _destProf = cmsCreate_sRGBProfile();
+        _prof = SP_ACTIVE_DOCUMENT->profileManager->find(profile->colorProfile.c_str());
+        if ( _prof && _prof->getProfileClass() != icSigNamedColorClass ) {
+            _profChannelCount = _cmsChannelsOf( _prof->getColorSpace() );
 
-                _profChannelCount = _cmsChannelsOf( _profileSpace );
+            gchar const** names = 0;
+            gchar const** tips = 0;
+            getThings( _prof->getColorSpace(), names, tips, _fooScales );
 
-                DWORD inputFormat = TYPE_RGB_16;
-                gchar const** names = 0;
-                gchar const** tips = 0;
-                getThings( _profileSpace, names, tips, _fooScales, inputFormat );
+            if ( profChanged ) {
+                for ( guint i = 0; i < _profChannelCount; i++ ) {
+                    gtk_label_set_text_with_mnemonic( GTK_LABEL(_fooLabel[i]), names[i]);
 
-                _transf = cmsCreateTransform( _prof, inputFormat, _destProf, TYPE_RGBA_8, intent, 0 );
-                if ( profChanged ) {
-                    for ( guint i = 0; i < _profChannelCount; i++ ) {
-                        gtk_label_set_text_with_mnemonic( GTK_LABEL(_fooLabel[i]), names[i]);
+                    gtk_tooltips_set_tip( _tt, _fooSlider[i], tips[i], NULL );
+                    gtk_tooltips_set_tip( _tt, _fooBtn[i], tips[i], NULL );
 
-                        gtk_tooltips_set_tip( _tt, _fooSlider[i], tips[i], NULL );
-                        gtk_tooltips_set_tip( _tt, _fooBtn[i], tips[i], NULL );
-
-                        sp_color_slider_set_colors( SP_COLOR_SLIDER(_fooSlider[i]),
-                                                    SPColor(0.0, 0.0, 0.0).toRGBA32(0xff),
-                                                    SPColor(0.5, 0.5, 0.5).toRGBA32(0xff),
-                                                    SPColor(1.0, 1.0, 1.0).toRGBA32(0xff) );
+                    sp_color_slider_set_colors( SP_COLOR_SLIDER(_fooSlider[i]),
+                                                SPColor(0.0, 0.0, 0.0).toRGBA32(0xff),
+                                                SPColor(0.5, 0.5, 0.5).toRGBA32(0xff),
+                                                SPColor(1.0, 1.0, 1.0).toRGBA32(0xff) );
 /*
-                        _fooAdj[i] = GTK_ADJUSTMENT( gtk_adjustment_new( val, 0.0, _fooScales[i],  step, page, page ) );
-                        gtk_signal_connect( GTK_OBJECT( _fooAdj[i] ), "value_changed", GTK_SIGNAL_FUNC( _adjustmentChanged ), _csel );
+                    _fooAdj[i] = GTK_ADJUSTMENT( gtk_adjustment_new( val, 0.0, _fooScales[i],  step, page, page ) );
+                    gtk_signal_connect( GTK_OBJECT( _fooAdj[i] ), "value_changed", GTK_SIGNAL_FUNC( _adjustmentChanged ), _csel );
 
-                        sp_color_slider_set_adjustment( SP_COLOR_SLIDER(_fooSlider[i]), _fooAdj[i] );
-                        gtk_spin_button_set_adjustment( GTK_SPIN_BUTTON(_fooBtn[i]), _fooAdj[i] );
-                        gtk_spin_button_set_digits( GTK_SPIN_BUTTON(_fooBtn[i]), digits );
+                    sp_color_slider_set_adjustment( SP_COLOR_SLIDER(_fooSlider[i]), _fooAdj[i] );
+                    gtk_spin_button_set_adjustment( GTK_SPIN_BUTTON(_fooBtn[i]), _fooAdj[i] );
+                    gtk_spin_button_set_digits( GTK_SPIN_BUTTON(_fooBtn[i]), digits );
 */
-                        gtk_widget_show( _fooLabel[i] );
-                        gtk_widget_show( _fooSlider[i] );
-                        gtk_widget_show( _fooBtn[i] );
-                        gtk_adjustment_set_value( _fooAdj[i], 0.0 );
-                        //gtk_adjustment_set_value( _fooAdj[i], val );
-                    }
-                    for ( guint i = _profChannelCount; i < _fooCount; i++ ) {
-                        gtk_widget_hide( _fooLabel[i] );
-                        gtk_widget_hide( _fooSlider[i] );
-                        gtk_widget_hide( _fooBtn[i] );
-                        gtk_adjustment_set_value( _fooAdj[i], 0.0 );
-                    }
+                    gtk_widget_show( _fooLabel[i] );
+                    gtk_widget_show( _fooSlider[i] );
+                    gtk_widget_show( _fooBtn[i] );
+                    //gtk_adjustment_set_value( _fooAdj[i], 0.0 );
+                    //gtk_adjustment_set_value( _fooAdj[i], val );
                 }
-            } else {
-                // Give up for now on named colors
-                _prof = 0;
+                for ( guint i = _profChannelCount; i < _fooCount; i++ ) {
+                    gtk_widget_hide( _fooLabel[i] );
+                    gtk_widget_hide( _fooSlider[i] );
+                    gtk_widget_hide( _fooBtn[i] );
+                }
             }
+        } else {
+            // Give up for now on named colors
+            _prof = 0;
         }
     }
 
@@ -676,7 +691,7 @@ void ColorICCSelector::_updateSliders( gint ignore )
             gtk_adjustment_set_value( _fooAdj[i], val );
         }
 
-        if ( _transf ) {
+        if ( _prof->getTransfToSRGB8() ) {
             for ( guint i = 0; i < _profChannelCount; i++ ) {
                 if ( static_cast<gint>(i) != ignore ) {
                     icUInt16Number* scratch = getScratch();
@@ -696,7 +711,7 @@ void ColorICCSelector::_updateSliders( gint ignore )
                         }
                     }
 
-                    cmsDoTransform( _transf, scratch, _fooMap[i], 1024 );
+                    cmsDoTransform( _prof->getTransfToSRGB8(), scratch, _fooMap[i], 1024 );
                     sp_color_slider_set_map( SP_COLOR_SLIDER(_fooSlider[i]), _fooMap[i] );
                 }
             }
@@ -763,7 +778,7 @@ void ColorICCSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorICC
          }
          guchar post[4] = {0,0,0,0};
 
-         cmsDoTransform( iccSelector->_transf, tmp, post, 1 );
+         cmsDoTransform( iccSelector->_prof->getTransfToSRGB8(), tmp, post, 1 );
 
          SPColor other( SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255) );
          other.icc = new SVGICCColor();

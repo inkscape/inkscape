@@ -25,14 +25,6 @@ using Inkscape::ColorProfileClass;
 
 namespace Inkscape
 {
-static void colorprofile_class_init( ColorProfileClass *klass );
-static void colorprofile_init( ColorProfile *cprof );
-
-static void colorprofile_release( SPObject *object );
-static void colorprofile_build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr );
-static void colorprofile_set( SPObject *object, unsigned key, gchar const *value );
-static Inkscape::XML::Node *colorprofile_write( SPObject *object, Inkscape::XML::Node *repr, guint flags );
-
 #if ENABLE_LCMS
 static cmsHPROFILE colorprofile_get_system_profile_handle();
 static cmsHPROFILE colorprofile_get_proof_profile_handle();
@@ -68,23 +60,41 @@ extern guint update_in_progress;
 }
 #endif // DEBUG_LCMS
 
-static SPObject *cprof_parent_class;
+static SPObjectClass *cprof_parent_class;
+
+#if ENABLE_LCMS
+
+cmsHPROFILE ColorProfile::_sRGBProf = 0;
+
+cmsHPROFILE ColorProfile::getSRGBProfile() {
+    if ( !_sRGBProf ) {
+        _sRGBProf = cmsCreate_sRGBProfile();
+    }
+    return _sRGBProf;
+}
+
+#endif // ENABLE_LCMS
 
 /**
  * Register ColorProfile class and return its type.
  */
 GType Inkscape::colorprofile_get_type()
 {
+    return ColorProfile::getType();
+}
+
+GType ColorProfile::getType()
+{
     static GType type = 0;
     if (!type) {
         GTypeInfo info = {
             sizeof(ColorProfileClass),
             NULL, NULL,
-            (GClassInitFunc) colorprofile_class_init,
+            (GClassInitFunc) ColorProfile::classInit,
             NULL, NULL,
             sizeof(ColorProfile),
             16,
-            (GInstanceInitFunc) colorprofile_init,
+            (GInstanceInitFunc) ColorProfile::init,
             NULL,   /* value_table */
         };
         type = g_type_register_static( SP_TYPE_OBJECT, "ColorProfile", &info, static_cast<GTypeFlags>(0) );
@@ -95,22 +105,22 @@ GType Inkscape::colorprofile_get_type()
 /**
  * ColorProfile vtable initialization.
  */
-static void Inkscape::colorprofile_class_init( ColorProfileClass *klass )
+void ColorProfile::classInit( ColorProfileClass *klass )
 {
     SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
 
-    cprof_parent_class = static_cast<SPObject*>(g_type_class_ref(SP_TYPE_OBJECT));
+    cprof_parent_class = static_cast<SPObjectClass*>(g_type_class_ref(SP_TYPE_OBJECT));
 
-    sp_object_class->release = colorprofile_release;
-    sp_object_class->build = colorprofile_build;
-    sp_object_class->set = colorprofile_set;
-    sp_object_class->write = colorprofile_write;
+    sp_object_class->release = ColorProfile::release;
+    sp_object_class->build = ColorProfile::build;
+    sp_object_class->set = ColorProfile::set;
+    sp_object_class->write = ColorProfile::write;
 }
 
 /**
  * Callback for ColorProfile object initialization.
  */
-static void Inkscape::colorprofile_init( ColorProfile *cprof )
+void ColorProfile::init( ColorProfile *cprof )
 {
     cprof->href = 0;
     cprof->local = 0;
@@ -119,13 +129,17 @@ static void Inkscape::colorprofile_init( ColorProfile *cprof )
     cprof->rendering_intent = Inkscape::RENDERING_INTENT_UNKNOWN;
 #if ENABLE_LCMS
     cprof->profHandle = 0;
+    cprof->_profileClass = icSigInputClass;
+    cprof->_profileSpace = icSigRgbData;
+    cprof->_transf = 0;
+    cprof->_revTransf = 0;
 #endif // ENABLE_LCMS
 }
 
 /**
  * Callback: free object
  */
-static void Inkscape::colorprofile_release( SPObject *object )
+void ColorProfile::release( SPObject *object )
 {
     // Unregister ourselves
     SPDocument* document = SP_OBJECT_DOCUMENT(object);
@@ -155,17 +169,34 @@ static void Inkscape::colorprofile_release( SPObject *object )
     }
 
 #if ENABLE_LCMS
-    if ( cprof->profHandle ) {
-        cmsCloseProfile( cprof->profHandle );
-        cprof->profHandle = 0;
-    }
+    cprof->_clearProfile();
 #endif // ENABLE_LCMS
 }
+
+#if ENABLE_LCMS
+void ColorProfile::_clearProfile()
+{
+    _profileSpace = icSigRgbData;
+
+    if ( _transf ) {
+        cmsDeleteTransform( _transf );
+        _transf = 0;
+    }
+    if ( _revTransf ) {
+        cmsDeleteTransform( _revTransf );
+        _revTransf = 0;
+    }
+    if ( profHandle ) {
+        cmsCloseProfile( profHandle );
+        profHandle = 0;
+    }
+}
+#endif // ENABLE_LCMS
 
 /**
  * Callback: set attributes from associated repr.
  */
-static void Inkscape::colorprofile_build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr )
+void ColorProfile::build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr )
 {
     ColorProfile *cprof = COLORPROFILE(object);
     g_assert(cprof->href == 0);
@@ -173,8 +204,8 @@ static void Inkscape::colorprofile_build( SPObject *object, SPDocument *document
     g_assert(cprof->name == 0);
     g_assert(cprof->intentStr == 0);
 
-    if (((SPObjectClass *) cprof_parent_class)->build) {
-        (* ((SPObjectClass *) cprof_parent_class)->build)(object, document, repr);
+    if (cprof_parent_class->build) {
+        (* cprof_parent_class->build)(object, document, repr);
     }
     sp_object_read_attr( object, "xlink:href" );
     sp_object_read_attr( object, "local" );
@@ -190,7 +221,7 @@ static void Inkscape::colorprofile_build( SPObject *object, SPDocument *document
 /**
  * Callback: set attribute.
  */
-static void Inkscape::colorprofile_set( SPObject *object, unsigned key, gchar const *value )
+void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
 {
     ColorProfile *cprof = COLORPROFILE(object);
 
@@ -231,7 +262,12 @@ static void Inkscape::colorprofile_set( SPObject *object, unsigned key, gchar co
                     //      the w3c specs.  All absolute and relative issues are considered
                     org::w3c::dom::URI cprofUri = docUri.resolve(hrefUri);
                     gchar* fullname = (gchar *)cprofUri.getNativePath().c_str();
+                    cprof->_clearProfile();
                     cprof->profHandle = cmsOpenProfileFromFile( fullname, "r" );
+                    if ( cprof->profHandle ) {
+                        cprof->_profileSpace = cmsGetColorSpace( cprof->profHandle );
+                        cprof->_profileClass = cmsGetDeviceClass( cprof->profHandle );
+                    }
 #ifdef DEBUG_LCMS
                     DEBUG_MESSAGE( lcmsOne, "cmsOpenProfileFromFile( '%s'...) = %p", fullname, (void*)cprof->profHandle );
 #endif // DEBUG_LCMS
@@ -292,8 +328,8 @@ static void Inkscape::colorprofile_set( SPObject *object, unsigned key, gchar co
             break;
 
         default:
-            if (((SPObjectClass *) cprof_parent_class)->set) {
-                (* ((SPObjectClass *) cprof_parent_class)->set)(object, key, value);
+            if (cprof_parent_class->set) {
+                (* cprof_parent_class->set)(object, key, value);
             }
             break;
     }
@@ -303,7 +339,7 @@ static void Inkscape::colorprofile_set( SPObject *object, unsigned key, gchar co
 /**
  * Callback: write attributes to associated repr.
  */
-static Inkscape::XML::Node* Inkscape::colorprofile_write( SPObject *object, Inkscape::XML::Node *repr, guint flags )
+Inkscape::XML::Node* ColorProfile::write( SPObject *object, Inkscape::XML::Node *repr, guint flags )
 {
     ColorProfile *cprof = COLORPROFILE(object);
 
@@ -328,8 +364,8 @@ static Inkscape::XML::Node* Inkscape::colorprofile_write( SPObject *object, Inks
         repr->setAttribute( "rendering-intent", cprof->intentStr );
     }
 
-    if (((SPObjectClass *) cprof_parent_class)->write) {
-        (* ((SPObjectClass *) cprof_parent_class)->write)(object, repr, flags);
+    if (cprof_parent_class->write) {
+        (* cprof_parent_class->write)(object, repr, flags);
     }
 
     return repr;
@@ -338,6 +374,59 @@ static Inkscape::XML::Node* Inkscape::colorprofile_write( SPObject *object, Inks
 
 #if ENABLE_LCMS
 
+struct MapMap {
+    icColorSpaceSignature space;
+    DWORD inForm;
+};
+
+DWORD ColorProfile::_getInputFormat( icColorSpaceSignature space )
+{
+    MapMap possible[] = {
+        {icSigXYZData,   TYPE_XYZ_16},
+        {icSigLabData,   TYPE_Lab_16},
+        //icSigLuvData
+        {icSigYCbCrData, TYPE_YCbCr_16},
+        {icSigYxyData,   TYPE_Yxy_16},
+        {icSigRgbData,   TYPE_RGB_16},
+        {icSigGrayData,  TYPE_GRAY_16},
+        {icSigHsvData,   TYPE_HSV_16},
+        {icSigHlsData,   TYPE_HLS_16},
+        {icSigCmykData,  TYPE_CMYK_16},
+        {icSigCmyData,   TYPE_CMY_16},
+    };
+
+    int index = 0;
+    for ( guint i = 0; i < G_N_ELEMENTS(possible); i++ ) {
+        if ( possible[i].space == space ) {
+            index = i;
+            break;
+        }
+    }
+
+    return possible[index].inForm;
+}
+
+static int getLcmsIntent( guint svgIntent )
+{
+    int intent = INTENT_PERCEPTUAL;
+    switch ( svgIntent ) {
+        case Inkscape::RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+            intent = INTENT_RELATIVE_COLORIMETRIC;
+            break;
+        case Inkscape::RENDERING_INTENT_SATURATION:
+            intent = INTENT_SATURATION;
+            break;
+        case Inkscape::RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+            intent = INTENT_ABSOLUTE_COLORIMETRIC;
+            break;
+        case Inkscape::RENDERING_INTENT_PERCEPTUAL:
+        case Inkscape::RENDERING_INTENT_UNKNOWN:
+        case Inkscape::RENDERING_INTENT_AUTO:
+        default:
+            intent = INTENT_PERCEPTUAL;
+    }
+    return intent;
+}
 
 static SPObject* bruteFind( SPDocument* document, gchar const* name )
 {
@@ -377,6 +466,24 @@ cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, guint* inte
 #endif // DEBUG_LCMS
 
     return prof;
+}
+
+cmsHTRANSFORM ColorProfile::getTransfToSRGB8()
+{
+    if ( !_transf ) {
+        int intent = getLcmsIntent(rendering_intent);
+        _transf = cmsCreateTransform( profHandle, _getInputFormat(_profileSpace), getSRGBProfile(), TYPE_RGBA_8, intent, 0 );
+    }
+    return _transf;
+}
+
+cmsHTRANSFORM ColorProfile::getTransfFromSRGB8()
+{
+    if ( !_revTransf ) {
+        int intent = getLcmsIntent(rendering_intent);
+        _revTransf = cmsCreateTransform( getSRGBProfile(), TYPE_RGBA_8, profHandle, _getInputFormat(_profileSpace), intent, 0 );
+    }
+    return _revTransf;
 }
 
 
@@ -559,7 +666,6 @@ static bool lastPreserveBlack = false;
 static int lastIntent = INTENT_PERCEPTUAL;
 static int lastProofIntent = INTENT_PERCEPTUAL;
 static cmsHTRANSFORM transf = 0;
-static cmsHPROFILE srcprof = 0;
 
 cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
 {
@@ -724,9 +830,6 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
     cmsHPROFILE proofProf = hprof ? Inkscape::colorprofile_get_proof_profile_handle() : 0;
 
     if ( !transf ) {
-        if ( !srcprof ) {
-            srcprof = cmsCreate_sRGBProfile();
-        }
         if ( hprof && proofProf ) {
             DWORD dwFlags = cmsFLAGS_SOFTPROOFING;
             if ( gamutWarn ) {
@@ -741,9 +844,9 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
                 dwFlags |= cmsFLAGS_PRESERVEBLACK;
             }
 #endif // defined(cmsFLAGS_PRESERVEBLACK)
-            transf = cmsCreateProofingTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, proofProf, intent, proofIntent, dwFlags );
+            transf = cmsCreateProofingTransform( ColorProfile::getSRGBProfile(), TYPE_RGB_8, hprof, TYPE_RGB_8, proofProf, intent, proofIntent, dwFlags );
         } else if ( hprof ) {
-            transf = cmsCreateTransform( srcprof, TYPE_RGB_8, hprof, TYPE_RGB_8, intent, 0 );
+            transf = cmsCreateTransform( ColorProfile::getSRGBProfile(), TYPE_RGB_8, hprof, TYPE_RGB_8, intent, 0 );
         }
     }
 
