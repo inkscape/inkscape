@@ -231,17 +231,17 @@ void user_read_data( png_structp png_ptr, png_bytep data, png_size_t length )
 //    g_message("things out");
 }
 
-void user_write_data( png_structp png_ptr, png_bytep data, png_size_t length )
+void user_write_data( png_structp /*png_ptr*/, png_bytep /*data*/, png_size_t /*length*/ )
 {
     //g_message( "user_write_data(%d)", length );
 }
 
-void user_flush_data( png_structp png_ptr )
+void user_flush_data( png_structp /*png_ptr*/ )
 {
     //g_message( "user_flush_data" );
 }
 
-GdkPixbuf*  pixbuf_new_from_file( const char *filename, GError **error )
+GdkPixbuf*  pixbuf_new_from_file( const char *filename, GError **/*error*/ )
 {
     GdkPixbuf* buf = NULL;
     PushPull youme;
@@ -973,7 +973,7 @@ sp_image_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 }
 
 static void
-sp_image_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
+sp_image_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const /*flags*/)
 {
 	SPImage const &image = *SP_IMAGE(item);
 
@@ -1054,7 +1054,7 @@ sp_image_description(SPItem *item)
 }
 
 static NRArenaItem *
-sp_image_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags)
+sp_image_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int /*flags*/)
 {
 	int pixskip, rs;
 	SPImage * image;
