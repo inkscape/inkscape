@@ -10,6 +10,7 @@
 
 #include "profile-manager.h"
 #include "document.h"
+#include "color-profile.h"
 
 namespace Inkscape {
 
@@ -62,6 +63,22 @@ void ProfileManager::_resourcesChanged()
     }
 }
 
+ColorProfile* ProfileManager::find(gchar const* name)
+{
+    ColorProfile* match = 0;
+    if ( name ) {
+        unsigned int howMany = childCount(NULL);
+        for ( unsigned int index = 0; index < howMany; index++ ) {
+            SPObject *obj = nthChildOf(NULL, index);
+            ColorProfile* prof = reinterpret_cast<ColorProfile*>(obj);
+            if ( prof && prof->name && !strcmp(name, prof->name) ) {
+                match = prof;
+                break;
+            }
+        }
+    }
+    return match;
+}
 
 }
 

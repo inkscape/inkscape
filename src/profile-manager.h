@@ -15,8 +15,9 @@
 
 class SPDocument;
 
-
 namespace Inkscape {
+
+class ColorProfile;
 
 class ProfileManager : public DocumentSubset,
                        public GC::Finalized
@@ -24,6 +25,8 @@ class ProfileManager : public DocumentSubset,
 public:
     ProfileManager(SPDocument *document);
     ~ProfileManager();
+
+    ColorProfile* find(gchar const* name);
 
 private:
     ProfileManager(ProfileManager const &); // no copy
