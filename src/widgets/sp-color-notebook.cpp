@@ -418,21 +418,15 @@ SPColorSelector* ColorNotebook::getCurrentSelector()
     return csel;
 }
 
-void ColorNotebook::_colorChanged(const SPColor& color, gfloat alpha)
+void ColorNotebook::_colorChanged()
 {
-	SPColorSelector* cselPage = 0;
+    SPColorSelector* cselPage = getCurrentSelector();
+    if ( cselPage )
+    {
+        cselPage->base->setColorAlpha( _color, _alpha );
+    }
 
-	g_return_if_fail (_csel != NULL);
-	g_return_if_fail (SP_IS_COLOR_NOTEBOOK (_csel));
-	g_return_if_fail( ( 0.0 <= alpha ) && ( alpha <= 1.0 ) );
-
-	cselPage = getCurrentSelector();
-	if ( cselPage )
-	{
-		cselPage->base->setColorAlpha( color, alpha );
-	}
-
-    _updateRgbaEntry( color, alpha );
+    _updateRgbaEntry( _color, _alpha );
 }
 
 void ColorNotebook::_rgbaEntryChangedHook(GtkEntry *entry, SPColorNotebook *colorbook)
@@ -624,3 +618,14 @@ void ColorNotebook::removePage( GType page_type, guint submode )
 		}
 	}
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

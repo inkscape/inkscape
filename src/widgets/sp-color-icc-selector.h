@@ -1,5 +1,5 @@
-#ifndef __SP_COLOR_ICC_SELECTOR_H__
-#define __SP_COLOR_ICC_SELECTOR_H__
+#ifndef SEEN_SP_COLOR_ICC_SELECTOR_H
+#define SEEN_SP_COLOR_ICC_SELECTOR_H
 
 #include <glib/gtypes.h>
 #include <gtk/gtktooltips.h>
@@ -28,7 +28,7 @@ public:
     virtual void init();
 
 protected:
-    virtual void _colorChanged( const SPColor& color, gfloat alpha );
+    virtual void _colorChanged();
 
     static void _adjustmentChanged ( GtkAdjustment *adjustment, SPColorICCSelector *cs );
 
@@ -104,7 +104,7 @@ GtkWidget *sp_color_icc_selector_new (void);
 
 
 
-#endif
+#endif // SEEN_SP_COLOR_ICC_SELECTOR_H
 
 /*
   Local Variables:

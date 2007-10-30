@@ -41,7 +41,7 @@ public:
 
 
 protected:
-    virtual void _colorChanged(SPColor const &color, gfloat alpha);
+    virtual void _colorChanged();
 
     static void _adjustmentAnyChanged(GtkAdjustment *adjustment, SPColorScales *cs);
     static void _sliderAnyGrabbed(SPColorSlider *slider, SPColorScales *cs);

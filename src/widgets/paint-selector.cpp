@@ -764,7 +764,7 @@ ink_pattern_list_get (SPDocument *source)
  * Adds menu items for pattern list - derived from marker code, left hb etc in to make addition of previews easier at some point.
  */
 static void
-sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument *source)
+sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument */*source*/)
 {
 
     for (; pattern_list != NULL; pattern_list = pattern_list->next) {
@@ -1012,7 +1012,7 @@ sp_paint_selector_get_pattern(SPPaintSelector *psel)
     }
     gchar *patid = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(m)),
                                                 "pattern");
-    gchar *pattern = "";
+    //gchar *pattern = "";
     if (strcmp(patid, "none")){
 
        gchar *stockid = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(m)),

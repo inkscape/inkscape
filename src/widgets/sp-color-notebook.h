@@ -1,5 +1,5 @@
-#ifndef __SP_COLOR_NOTEBOOK_H__
-#define __SP_COLOR_NOTEBOOK_H__
+#ifndef SEEN_SP_COLOR_NOTEBOOK_H
+#define SEEN_SP_COLOR_NOTEBOOK_H
 
 /*
  * A block of 3 color sliders plus spinbuttons
@@ -49,7 +49,7 @@ protected:
     static void _entryChanged( SPColorSelector *csel, SPColorNotebook *colorbook );
     static void _entryModified( SPColorSelector *csel, SPColorNotebook *colorbook );
 
-    virtual void _colorChanged( const SPColor& color, gfloat alpha );
+    virtual void _colorChanged();
 
     void _rgbaEntryChanged( GtkEntry* entry );
     void _updateRgbaEntry( const SPColor& color, gfloat alpha );
@@ -81,16 +81,16 @@ private:
 #define SP_IS_COLOR_NOTEBOOK_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), SP_TYPE_COLOR_NOTEBOOK))
 
 struct SPColorNotebook {
-	SPColorSelector parent;    /* Parent */
+    SPColorSelector parent;    /* Parent */
 };
 
 struct SPColorNotebookClass {
-	SPColorSelectorClass parent_class;
+    SPColorSelectorClass parent_class;
 
-	void (* grabbed) (SPColorNotebook *rgbsel);
-	void (* dragged) (SPColorNotebook *rgbsel);
-	void (* released) (SPColorNotebook *rgbsel);
-	void (* changed) (SPColorNotebook *rgbsel);
+    void (* grabbed) (SPColorNotebook *rgbsel);
+    void (* dragged) (SPColorNotebook *rgbsel);
+    void (* released) (SPColorNotebook *rgbsel);
+    void (* changed) (SPColorNotebook *rgbsel);
 };
 
 GtkType sp_color_notebook_get_type (void);
@@ -102,4 +102,16 @@ GtkWidget *sp_color_notebook_new (void);
 
 
 
-#endif
+#endif // SEEN_SP_COLOR_NOTEBOOK_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+

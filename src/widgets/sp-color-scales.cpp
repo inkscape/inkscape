@@ -269,44 +269,44 @@ void ColorScales::_setRangeLimit( gdouble upper )
     }
 }
 
-void ColorScales::_colorChanged( const SPColor& color, gfloat alpha )
+void ColorScales::_colorChanged()
 {
 #ifdef DUMP_CHANGE_INFO
     g_message("ColorScales::_colorChanged( this=%p, %f, %f, %f,   %f)", this, color.v.c[0], color.v.c[1], color.v.c[2], alpha );
 #endif
-	gfloat tmp[3];
-	gfloat c[5] = {0.0, 0.0, 0.0, 0.0};
+    gfloat tmp[3];
+    gfloat c[5] = {0.0, 0.0, 0.0, 0.0};
 
-	switch (_mode) {
-	case SP_COLOR_SCALES_MODE_RGB:
-		sp_color_get_rgb_floatv (&color, c);
-		c[3] = alpha;
-		c[4] = 0.0;
-		break;
-	case SP_COLOR_SCALES_MODE_HSV:
-		sp_color_get_rgb_floatv (&color, tmp);
-		c[0] = getScaled( _a[0] );
-		sp_color_rgb_to_hsl_floatv (c, tmp[0], tmp[1], tmp[2]);
-		c[3] = alpha;
-		c[4] = 0.0;
-		break;
-	case SP_COLOR_SCALES_MODE_CMYK:
-		sp_color_get_cmyk_floatv (&color, c);
-		c[4] = alpha;
-		break;
-	default:
-		g_warning ("file %s: line %d: Illegal color selector mode %d", __FILE__, __LINE__, _mode);
-		break;
-	}
+    switch (_mode) {
+    case SP_COLOR_SCALES_MODE_RGB:
+        sp_color_get_rgb_floatv( &_color, c );
+        c[3] = _alpha;
+        c[4] = 0.0;
+        break;
+    case SP_COLOR_SCALES_MODE_HSV:
+        sp_color_get_rgb_floatv( &_color, tmp );
+        c[0] = getScaled( _a[0] );
+        sp_color_rgb_to_hsl_floatv (c, tmp[0], tmp[1], tmp[2]);
+        c[3] = _alpha;
+        c[4] = 0.0;
+        break;
+    case SP_COLOR_SCALES_MODE_CMYK:
+        sp_color_get_cmyk_floatv( &_color, c );
+        c[4] = _alpha;
+        break;
+    default:
+        g_warning ("file %s: line %d: Illegal color selector mode %d", __FILE__, __LINE__, _mode);
+        break;
+    }
 
-	_updating = TRUE;
-	setScaled( _a[0], c[0] );
-	setScaled( _a[1], c[1] );
-	setScaled( _a[2], c[2] );
-	setScaled( _a[3], c[3] );
-	setScaled( _a[4], c[4] );
-	_updateSliders( CSC_CHANNELS_ALL );
-	_updating = FALSE;
+    _updating = TRUE;
+    setScaled( _a[0], c[0] );
+    setScaled( _a[1], c[1] );
+    setScaled( _a[2], c[2] );
+    setScaled( _a[3], c[3] );
+    setScaled( _a[4], c[4] );
+    _updateSliders( CSC_CHANNELS_ALL );
+    _updating = FALSE;
 }
 
 void ColorScales::_getRgbaFloatv( gfloat *rgba )

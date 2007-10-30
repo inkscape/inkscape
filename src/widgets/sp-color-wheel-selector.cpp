@@ -205,21 +205,21 @@ sp_color_wheel_selector_new (void)
 
 /* Helpers for setting color value */
 
-void ColorWheelSelector::_colorChanged( const SPColor& color, gfloat alpha )
+void ColorWheelSelector::_colorChanged()
 {
 #ifdef DUMP_CHANGE_INFO
     g_message("ColorWheelSelector::_colorChanged( this=%p, %f, %f, %f,   %f)", this, color.v.c[0], color.v.c[1], color.v.c[2], alpha );
 #endif
     _updating = TRUE;
-    sp_color_wheel_set_color( SP_COLOR_WHEEL( _wheel ), &color );
+    sp_color_wheel_set_color( SP_COLOR_WHEEL( _wheel ), &_color );
 
-    guint32 start = color.toRGBA32( 0x00 );
-    guint32 mid = color.toRGBA32( 0x7f );
-    guint32 end = color.toRGBA32( 0xff );
+    guint32 start = _color.toRGBA32( 0x00 );
+    guint32 mid = _color.toRGBA32( 0x7f );
+    guint32 end = _color.toRGBA32( 0xff );
 
-    sp_color_slider_set_colors (SP_COLOR_SLIDER(_slider), start, mid, end);
+    sp_color_slider_set_colors(SP_COLOR_SLIDER(_slider), start, mid, end);
 
-    ColorScales::setScaled(_adj, alpha);
+    ColorScales::setScaled(_adj, _alpha);
 
     _updating = FALSE;
 }

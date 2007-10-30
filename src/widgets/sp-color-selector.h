@@ -1,5 +1,5 @@
-#ifndef __SP_COLOR_SELECTOR_H__
-#define __SP_COLOR_SELECTOR_H__
+#ifndef SEEN_SP_COLOR_SELECTOR_H
+#define SEEN_SP_COLOR_SELECTOR_H
 
 #include <gtk/gtkvbox.h>
 #include "../color.h"
@@ -37,13 +37,13 @@ protected:
     void _updateInternals( const SPColor& color, gfloat alpha, gboolean held );
     gboolean _isHeld() const { return _held; }
 
-    virtual void _colorChanged( const SPColor& color, gfloat alpha );
+    virtual void _colorChanged();
 
     static double _epsilon;
 
     SPColorSelector* _csel;
     SPColor _color;
-    gfloat _alpha;	/* guaranteed to be in [0, 1]. */
+    gfloat _alpha;      // guaranteed to be in [0, 1].
 
 private:
     // By default, disallow copy constructor and assignment operator
@@ -71,22 +71,32 @@ struct SPColorSelector {
 };
 
 struct SPColorSelectorClass {
-	GtkVBoxClass parent_class;
+    GtkVBoxClass parent_class;
 
-	const gchar **name;
-	guint submode_count;
+    const gchar **name;
+    guint submode_count;
 
-	void (* grabbed) (SPColorSelector *rgbsel);
-	void (* dragged) (SPColorSelector *rgbsel);
-	void (* released) (SPColorSelector *rgbsel);
-	void (* changed) (SPColorSelector *rgbsel);
-
+    void (* grabbed) (SPColorSelector *rgbsel);
+    void (* dragged) (SPColorSelector *rgbsel);
+    void (* released) (SPColorSelector *rgbsel);
+    void (* changed) (SPColorSelector *rgbsel);
 };
 
-GType sp_color_selector_get_type (void);
+GType sp_color_selector_get_type(void);
 
 GtkWidget *sp_color_selector_new( GType selector_type );
 
 
 
-#endif
+#endif // SEEN_SP_COLOR_SELECTOR_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

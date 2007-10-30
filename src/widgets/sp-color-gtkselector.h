@@ -1,5 +1,5 @@
-#ifndef __SP_COLOR_GTKSELECTOR_H__
-#define __SP_COLOR_GTKSELECTOR_H__
+#ifndef SEEN_SP_COLOR_GTKSELECTOR_H
+#define SEEN_SP_COLOR_GTKSELECTOR_H
 
 #include <gtk/gtkcolorsel.h>
 #include "../color.h"
@@ -24,7 +24,7 @@ public:
 protected:
     static void _gtkChanged( GtkColorSelection *colorselection, SPColorGtkselector *gtksel );
 
-    virtual void _colorChanged( const SPColor& color, gfloat alpha );
+    virtual void _colorChanged();
 
     GtkColorSelection* _gtkThing;
     gulong _sigId;
@@ -39,11 +39,11 @@ protected:
 #define SP_IS_COLOR_GTKSELECTOR_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), SP_TYPE_COLOR_GTKSELECTOR))
 
 struct SPColorGtkselector {
-	SPColorSelector base;
+    SPColorSelector base;
 };
 
 struct SPColorGtkselectorClass {
-	SPColorSelectorClass parent_class;
+    SPColorSelectorClass parent_class;
 };
 
 GType sp_color_gtkselector_get_type (void);
@@ -52,4 +52,4 @@ GtkWidget *sp_color_gtkselector_new( GType selector_type );
 
 
 
-#endif
+#endif // SEEN_SP_COLOR_GTKSELECTOR_H

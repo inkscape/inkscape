@@ -406,7 +406,7 @@ sp_color_slider_set_background (SPColorSlider *slider, guint dark, guint light, 
 }
 
 static void
-sp_color_slider_adjustment_changed (GtkAdjustment *adjustment, SPColorSlider *slider)
+sp_color_slider_adjustment_changed (GtkAdjustment */*adjustment*/, SPColorSlider *slider)
 {
 	gtk_widget_queue_draw (GTK_WIDGET (slider));
 }

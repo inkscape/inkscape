@@ -540,7 +540,7 @@ void ColorICCSelector::_profilesChanged( std::string const & name )
 
 /* Helpers for setting color value */
 
-void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
+void ColorICCSelector::_colorChanged()
 {
     _updating = TRUE;
 //     sp_color_icc_set_color( SP_COLOR_ICC( _icc ), &color );
@@ -555,11 +555,11 @@ void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
     g_message("FLIPPIES!!!!     %p   '%s'", color.icc, (color.icc?color.icc->colorProfile.c_str():"<null>"));
 #endif // DEBUG_LCMS
 
-    _profilesChanged( (color.icc) ? color.icc->colorProfile : std::string("") );
-    ColorScales::setScaled( _adj, alpha );
+    _profilesChanged( (_color.icc) ? _color.icc->colorProfile : std::string("") );
+    ColorScales::setScaled( _adj, _alpha );
 
 #if ENABLE_LCMS
-    _setProfile( color.icc );
+    _setProfile( _color.icc );
     _fixupNeeded = 0;
     gtk_widget_set_sensitive( _fixupBtn, FALSE );
 
@@ -579,7 +579,7 @@ void ColorICCSelector::_colorChanged( const SPColor& color, gfloat alpha )
         guchar post[4] = {0,0,0,0};
         cmsDoTransform( _prof->getTransfToSRGB8(), tmp, post, 1 );
         guint32 other = SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255 );
-        if ( other != color.toRGBA32(255) ) {
+        if ( other != _color.toRGBA32(255) ) {
             _fixupNeeded = other;
             gtk_widget_set_sensitive( _fixupBtn, TRUE );
             //g_message("Color needs to change 0x%06x to 0x%06x", color.toRGBA32(255) >> 8, other >> 8 );
