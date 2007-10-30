@@ -18,6 +18,7 @@
 #include "selection.h"
 #include "effect.h"
 #include "document.h"
+#include "desktop.h"
 #include "ui/view/view.h"
 #include "sp-namedview.h"
 #include "desktop-handles.h"
@@ -28,7 +29,7 @@ namespace Inkscape {
 namespace Extension {
 
 
-ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls, sigc::signal<void> * changeSignal, Gtk::Dialog * prefDialog) :
+ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls, sigc::signal<void> * changeSignal, Gtk::Dialog * prefDialog, Implementation::ImplementationDocumentCache * docCache) :
     _visibleDialog(NULL),
     _prefsVisible(false),
     _finished(false),
@@ -40,7 +41,8 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
     _selfdelete(false),
     _changeSignal(changeSignal),
     _doc(doc),
-    _effect(effect) {
+    _effect(effect),
+	_docCache(docCache) {
 
     SPDesktop *desktop = (SPDesktop *)_doc;
     sp_namedview_document_from_window(desktop);
@@ -93,7 +95,28 @@ ExecutionEnv::~ExecutionEnv (void) {
     if (_changeSignal != NULL && !_shutdown) {
         delete _changeSignal;
     }
+	killDocCache();
     return;
+}
+
+void
+ExecutionEnv::genDocCache (void) {
+	if (_docCache == NULL) {
+		printf("Gen Doc Cache\n");
+		SPDesktop * spdesktop = (SPDesktop *)_doc;
+		Implementation::ImplementationDocumentCache * _docCache = _effect->get_imp()->newDocCache(_effect, spdesktop->doc());
+	}
+	return;
+}
+
+void
+ExecutionEnv::killDocCache (void) {
+	if (_docCache != NULL) {
+		printf("Killed Doc Cache\n");
+		delete _docCache;
+		_docCache = NULL;
+	}
+	return;
 }
 
 void
@@ -250,7 +273,8 @@ ExecutionEnv::run (void) {
             _mainloop->run();
         } else {
             _prefsChanged = false;
-            _effect->get_imp()->effect(_effect, _doc, NULL);
+			genDocCache();
+            _effect->get_imp()->effect(_effect, _doc, _docCache);
             processingComplete();
         }
         if (_canceled) {
@@ -275,6 +299,9 @@ ExecutionEnv::livePreview (bool state) {
         _humanWait = false;
     }
     _livePreview = state;
+	if (!_livePreview) {
+		killDocCache();
+	}
     return;
 }
 

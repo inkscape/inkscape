@@ -19,6 +19,7 @@
 
 #include "forward.h"
 #include "extension-forward.h"
+#include "extension.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -41,11 +42,17 @@ private:
     sigc::connection _dialogsig;
     sigc::connection _changesig;
     sigc::connection _timersig;
+	Implementation::ImplementationDocumentCache * _docCache;
 
 public:
     Effect * _effect;
 
-    ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls = NULL, sigc::signal<void> * changeSignal = NULL, Gtk::Dialog * prefDialog = NULL);
+    ExecutionEnv (Effect * effect,
+	              Inkscape::UI::View::View * doc,
+				  Gtk::Widget * controls = NULL,
+				  sigc::signal<void> * changeSignal = NULL,
+				  Gtk::Dialog * prefDialog = NULL,
+				  Implementation::ImplementationDocumentCache * docCache = NULL);
     ~ExecutionEnv (void);
 
     void run (void);
@@ -64,6 +71,8 @@ private:
     void documentCancel (void);
     void documentCommit (void);
     void reselect (void);
+	void genDocCache (void);
+	void killDocCache (void);
 };
 
 } }  /* namespace Inkscape, Extension */

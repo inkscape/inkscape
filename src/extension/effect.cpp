@@ -13,7 +13,7 @@
 #include "desktop-handles.h"
 #include "selection.h"
 #include "sp-namedview.h"
-#include "document.h"
+#include "desktop.h"
 #include "implementation/implementation.h"
 #include "effect.h"
 #include "execution-env.h"
@@ -219,9 +219,11 @@ Effect::prefs (Inkscape::UI::View::View * doc)
     sigc::signal<void> * changeSignal = new sigc::signal<void>;
 
     Gtk::Widget * controls;
-    controls = imp->prefs_effect(this, doc, changeSignal, NULL);
+	SPDesktop * spdesktop = (SPDesktop *)doc;
+	Implementation::ImplementationDocumentCache * docCache = imp->newDocCache(this, spdesktop->doc());
+    controls = imp->prefs_effect(this, doc, changeSignal, docCache);
 
-    ExecutionEnv executionEnv(this, doc, controls, changeSignal);
+    ExecutionEnv executionEnv(this, doc, controls, changeSignal, NULL, docCache);
 
     timer->lock();
     executionEnv.run();

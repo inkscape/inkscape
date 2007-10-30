@@ -16,6 +16,7 @@ class ExpirationTimer;
 
 namespace Implementation {
 class Implementation;
+class ImplementationDocumentCache;
 }
 
 } }
