@@ -9,6 +9,7 @@
 #include "live_effects/lpe-pathalongpath.h"
 #include "sp-shape.h"
 #include "sp-item.h"
+#include "sp-path.h"
 #include "display/curve.h"
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-matrix-fns.h>
@@ -159,6 +160,8 @@ LPEPathAlongPath::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 void
 LPEPathAlongPath::resetDefaults(SPItem * item)
 {
+    if (!SP_IS_PATH(item)) return;
+
     using namespace Geom;
 
     // set the bend path to run horizontally in the middle of the bounding box of the original path
