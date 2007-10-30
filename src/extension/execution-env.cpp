@@ -103,8 +103,7 @@ void
 ExecutionEnv::genDocCache (void) {
 	if (_docCache == NULL) {
 		printf("Gen Doc Cache\n");
-		SPDesktop * spdesktop = (SPDesktop *)_doc;
-		Implementation::ImplementationDocumentCache * _docCache = _effect->get_imp()->newDocCache(_effect, spdesktop->doc());
+		Implementation::ImplementationDocumentCache * _docCache = _effect->get_imp()->newDocCache(_effect, _doc);
 	}
 	return;
 }

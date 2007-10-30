@@ -20,7 +20,7 @@ namespace Bitmap {
 
 class ImageMagickDocCache: public Inkscape::Extension::Implementation::ImplementationDocumentCache {
 public:
-	ImageMagickDocCache(SPDocument * doc) : Inkscape::Extension::Implementation::ImplementationDocumentCache(doc) { };
+	ImageMagickDocCache(Inkscape::UI::View::View * view) : Inkscape::Extension::Implementation::ImplementationDocumentCache(view) { };
 	~ImageMagickDocCache ( ) { };
 };
 

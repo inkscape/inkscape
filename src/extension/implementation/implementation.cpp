@@ -1,6 +1,6 @@
 /*
     Author:  Ted Gould <ted@gould.cx>
-    Copyright (c) 2003-2005
+    Copyright (c) 2003-2005,2007
 
     This code is licensed under the GNU GPL.  See COPYING for details.
 
@@ -48,7 +48,7 @@ Implementation::unload(Inkscape::Extension::Extension *module) {
 	to reimplement it to do something useful.
 */
 ImplementationDocumentCache *
-Implementation::newDocCache (Inkscape::Extension::Extension * ext, SPDocument * doc) {
+Implementation::newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * view) {
 	return NULL;
 }
 

@@ -219,8 +219,7 @@ Effect::prefs (Inkscape::UI::View::View * doc)
     sigc::signal<void> * changeSignal = new sigc::signal<void>;
 
     Gtk::Widget * controls;
-	SPDesktop * spdesktop = (SPDesktop *)doc;
-	Implementation::ImplementationDocumentCache * docCache = imp->newDocCache(this, spdesktop->doc());
+	Implementation::ImplementationDocumentCache * docCache = imp->newDocCache(this, doc);
     controls = imp->prefs_effect(this, doc, changeSignal, docCache);
 
     ExecutionEnv executionEnv(this, doc, controls, changeSignal, NULL, docCache);

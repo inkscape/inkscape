@@ -1,6 +1,6 @@
 /*
     Author:  Ted Gould <ted@gould.cx>
-    Copyright (c) 2003-2005
+    Copyright (c) 2003-2005,2007
 
     This code is licensed under the GNU GPL.  See COPYING for details.
  
@@ -29,15 +29,15 @@ namespace Implementation {
 /** \brief  A cache for the document and this implementation */
 class ImplementationDocumentCache {
 	/** \brief  The document that this instance is working on */
-	SPDocument * _doc;
+	Inkscape::UI::View::View * _view;
 public:
-	ImplementationDocumentCache (SPDocument * doc) :
-			_doc(doc)
+	ImplementationDocumentCache (Inkscape::UI::View::View * view) :
+			_view(view)
 	{
 		return;
 	};
 	virtual ~ImplementationDocumentCache ( ) { return; };
-	SPDocument const * doc ( ) { return _doc; };
+	Inkscape::UI::View::View const * view ( ) { return _view; };
 };
 
 /**
@@ -56,7 +56,7 @@ public:
     virtual bool load(Inkscape::Extension::Extension *module);
 
     virtual void unload(Inkscape::Extension::Extension *module);
-	ImplementationDocumentCache * newDocCache (Inkscape::Extension::Extension * ext, SPDocument * doc);
+	ImplementationDocumentCache * newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * doc);
 
     /** Verify any dependencies. */
     virtual bool check(Inkscape::Extension::Extension *module);
