@@ -63,29 +63,7 @@ ParamString::string (void)
 {
     if (_value == NULL)
         return new Glib::ustring("");
-
-    // FIXME: I think the string should NOT be escaped. Just put between "..."
-    // Otherwise \frac{1}{2} will become \\frac{1}{2} and then the LaTeX effect won't work....
-    //gchar * esc = g_strescape(_value, NULL);
-    Glib::ustring escaped(_value);
-    //g_free(esc);
-    
-#ifdef ESCAPE_DOLLAR_COMMANDLINE // escape the dollar sign 
-    Glib::ustring::iterator i;
-    for (i = escaped.begin(); i != escaped.end(); ++i) {
-        if ( *i == '$') {
-            i = escaped.insert(i, '\\');
-            i++;
-        }
-    }
-#endif
-
-    Glib::ustring * mystring = new Glib::ustring("");
-    *mystring += "\"";
-    *mystring += escaped;
-    *mystring += "\"";
-    
-    return mystring;
+	return new Glib::ustring(_value);
 }
 
 /** \brief  Initialize the object, to do that, copy the data. */
