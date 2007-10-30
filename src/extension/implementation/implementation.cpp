@@ -38,8 +38,17 @@ Implementation::unload(Inkscape::Extension::Extension *module) {
     return;
 } /* Implementation::unload */
 
+/** \brief  Create a new document cache object
+    \param  ext  The extension that is referencing us
+	\param  doc  The document to create the cache of
+	\return A new document cache that is valid as long as the document
+	        is not changed.
+
+	This function just returns \c NULL.  Subclasses are likely
+	to reimplement it to do something useful.
+*/
 ImplementationDocumentCache *
-Implementation::newDocCache (SPDocument * doc) {
+Implementation::newDocCache (Inkscape::Extension::Extension * ext, SPDocument * doc) {
 	return NULL;
 }
 
@@ -71,12 +80,12 @@ Implementation::open(Inkscape::Extension::Input *module, gchar const *filename) 
 } /* Implementation::open */
 
 Gtk::Widget *
-Implementation::prefs_output(Inkscape::Extension::Output *module, ImplementationDocumentCache * docCache) {
+Implementation::prefs_output(Inkscape::Extension::Output *module) {
     return module->autogui(NULL, NULL);
 } /* Implementation::prefs_output */
 
 void
-Implementation::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename, ImplementationDocumentCache * docCache) {
+Implementation::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename) {
     /* throw save_fail */
     return;
 } /* Implementation::save */

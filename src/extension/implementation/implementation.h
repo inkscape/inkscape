@@ -37,6 +37,7 @@ public:
 		return;
 	};
 	virtual ~ImplementationDocumentCache ( ) { return; };
+	SPDocument const * doc ( ) { return _doc; };
 };
 
 /**
@@ -55,7 +56,7 @@ public:
     virtual bool load(Inkscape::Extension::Extension *module);
 
     virtual void unload(Inkscape::Extension::Extension *module);
-	ImplementationDocumentCache * newDocCache (SPDocument * doc);
+	ImplementationDocumentCache * newDocCache (Inkscape::Extension::Extension * ext, SPDocument * doc);
 
     /** Verify any dependencies. */
     virtual bool check(Inkscape::Extension::Extension *module);
@@ -73,8 +74,8 @@ public:
 
     /* ----- Output functions ----- */
     /** Find out information about the file. */
-    virtual Gtk::Widget *prefs_output(Inkscape::Extension::Output *module, ImplementationDocumentCache * docCache);
-    virtual void save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename, ImplementationDocumentCache * docCache);
+    virtual Gtk::Widget *prefs_output(Inkscape::Extension::Output *module);
+    virtual void save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename);
 
     /* ----- Effect functions ----- */
     /** Find out information about the file. */

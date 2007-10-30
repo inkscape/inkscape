@@ -41,12 +41,13 @@ ImageMagick::load(Inkscape::Extension::Extension *module)
 	return TRUE;
 }
 
+/*
 void
 ImageMagick::commitDocument(void) {
 	_loaded = FALSE;
 }
 
-/*void
+void
 ImageMagick::cancelDocument(void) {	
 	for (int i = 0; i < _imageCount; i++) {
 		_nodes[i]->setAttribute("xlink:href", _originals[i], true);
@@ -76,9 +77,10 @@ ImageMagick::readImage(const char *xlink, Magick::Image *image)
 }
 
 void
-ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document)
+ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
 {
 	refreshParameters(module);
+	_loaded = FALSE;
 	
 	if (!_loaded)
 	{
@@ -177,7 +179,7 @@ ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::Vi
     Uses AutoGUI for creating the GUI.
 */
 Gtk::Widget *
-ImageMagick::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal)
+ImageMagick::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
 {
     SPDocument * current_document = view->doc();
 

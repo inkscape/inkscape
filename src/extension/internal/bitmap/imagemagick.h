@@ -18,6 +18,12 @@ namespace Extension {
 namespace Internal {
 namespace Bitmap {
 
+class ImageMagickDocCache: public Inkscape::Extension::Implementation::ImplementationDocumentCache {
+public:
+	ImageMagickDocCache(SPDocument * doc) : Inkscape::Extension::Implementation::ImplementationDocumentCache(doc) { };
+	~ImageMagickDocCache ( ) { };
+};
+
 class ImageMagick : public Inkscape::Extension::Implementation::Implementation {
 
 private:
@@ -36,13 +42,13 @@ public:
 	virtual void refreshParameters(Inkscape::Extension::Effect *module) { };
 	bool load(Inkscape::Extension::Extension *module);
     
-	void commitDocument(void);
+	/*void commitDocument(void);*/
 	/*void cancelDocument(void);*/
 
 	void readImage(char const *xlink, Magick::Image *image);
-	void effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document);
+	void effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache);
 	
-	Gtk::Widget* prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal);
+	Gtk::Widget* prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache);
 };
 
 }; /* namespace Bitmap */

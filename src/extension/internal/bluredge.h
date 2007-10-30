@@ -21,8 +21,8 @@ class BlurEdge : public Inkscape::Extension::Implementation::Implementation {
 
 public:
     bool load(Inkscape::Extension::Extension *module);
-    void effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document);
-    Gtk::Widget * prefs_effect(Inkscape::Extension::Effect * module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal);
+    void effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache);
+    Gtk::Widget * prefs_effect(Inkscape::Extension::Effect * module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache);
 
     static void init (void);
 };

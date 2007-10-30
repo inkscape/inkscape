@@ -74,7 +74,7 @@ Glib::ustring build_lines(int axis, NR::Rect bounding_area,
     \param  document What should be edited.
 */
 void
-Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document)
+Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
 {
     Inkscape::Selection * selection     = ((SPDesktop *)document)->selection;
 
@@ -169,7 +169,7 @@ PrefAdjustment::val_changed (void)
     Uses AutoGUI for creating the GUI.
 */
 Gtk::Widget *
-Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal)
+Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
 {
     SPDocument * current_document = view->doc();
 

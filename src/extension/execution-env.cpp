@@ -250,7 +250,7 @@ ExecutionEnv::run (void) {
             _mainloop->run();
         } else {
             _prefsChanged = false;
-            _effect->get_imp()->effect(_effect, _doc);
+            _effect->get_imp()->effect(_effect, _doc, NULL);
             processingComplete();
         }
         if (_canceled) {

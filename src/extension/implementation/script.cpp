@@ -495,7 +495,8 @@ Script::prefs_output(Inkscape::Extension::Output *module)
 Gtk::Widget *
 Script::prefs_effect(Inkscape::Extension::Effect *module,
                      Inkscape::UI::View::View *view,
-                     sigc::signal<void> * changeSignal)
+				     sigc::signal<void> * changeSignal,
+			         ImplementationDocumentCache * docCache)
 {
     SPDocument * current_document = view->doc();
 
@@ -681,7 +682,9 @@ Script::save(Inkscape::Extension::Output *module,
     point both should be full, and the second one is loaded.
 */
 void
-Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc)
+Script::effect(Inkscape::Extension::Effect *module,
+               Inkscape::UI::View::View *doc,
+			   ImplementationDocumentCache * docCache)
 {
     std::list<std::string> params;
     module->paramListString(params);

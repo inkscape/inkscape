@@ -219,7 +219,7 @@ Effect::prefs (Inkscape::UI::View::View * doc)
     sigc::signal<void> * changeSignal = new sigc::signal<void>;
 
     Gtk::Widget * controls;
-    controls = imp->prefs_effect(this, doc, changeSignal);
+    controls = imp->prefs_effect(this, doc, changeSignal, NULL);
 
     ExecutionEnv executionEnv(this, doc, controls, changeSignal);
 
