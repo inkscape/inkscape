@@ -33,34 +33,82 @@ namespace Extension {
 namespace Internal {
 namespace Bitmap {
 
-bool
-ImageMagick::load(Inkscape::Extension::Extension *module)
+class ImageMagickDocCache: public Inkscape::Extension::Implementation::ImplementationDocumentCache {
+	friend class ImageMagick;
+private:
+	void readImage(char const *xlink, Magick::Image *image);
+protected:
+	Inkscape::XML::Node** _nodes;	
+	
+	Magick::Image** _images;
+	int _imageCount;
+	char** _caches;
+	unsigned* _cacheLengths;
+	
+	const char** _originals;
+public:
+	ImageMagickDocCache(Inkscape::UI::View::View * view);
+	~ImageMagickDocCache ( );
+};
+
+ImageMagickDocCache::ImageMagickDocCache(Inkscape::UI::View::View * view) :
+	Inkscape::Extension::Implementation::ImplementationDocumentCache(view),
+	_nodes(NULL),
+	_images(NULL),
+	_imageCount(0),
+	_caches(NULL),
+	_cacheLengths(NULL),
+	_originals(NULL)
 {
-	_loaded = FALSE;
-	
-	return TRUE;
-}
+	SPDesktop *desktop = (SPDesktop*)view;
+	const GSList *selectedReprList = desktop->selection->reprList();
+	int selectCount = g_slist_length((GSList *)selectedReprList);
 
-/*
-void
-ImageMagick::commitDocument(void) {
-	_loaded = FALSE;
-}
+	// Init the data-holders
+	_nodes = new Inkscape::XML::Node*[selectCount];
+	_originals = new const char*[selectCount];
+	_caches = new char*[selectCount];
+	_cacheLengths = new unsigned int[selectCount];
+	_images = new Magick::Image*[selectCount];
+	_imageCount = 0;
 
-void
-ImageMagick::cancelDocument(void) {	
-	for (int i = 0; i < _imageCount; i++) {
-		_nodes[i]->setAttribute("xlink:href", _originals[i], true);
-		
-		if (strlen(_originals[i]) < 256)
-			_nodes[i]->setAttribute("sodipodi:absref", _originals[i], true);
+	// Loop through selected nodes
+	for (; selectedReprList != NULL; selectedReprList = g_slist_next(selectedReprList))
+	{
+		Inkscape::XML::Node *node = reinterpret_cast<Inkscape::XML::Node *>(selectedReprList->data);
+		if (!strcmp(node->name(), "image") || !strcmp(node->name(), "svg:image"))
+		{
+			_nodes[_imageCount] = node;	
+			char const *xlink = node->attribute("xlink:href");
+
+			_originals[_imageCount] = xlink;
+			_caches[_imageCount] = "";
+			_cacheLengths[_imageCount] = 0;
+			_images[_imageCount] = new Magick::Image();
+			readImage(xlink, _images[_imageCount]);			
+
+			_imageCount++;
+		}			
 	}
-	
-	_loaded = FALSE;
-}*/
+}
+
+ImageMagickDocCache::~ImageMagickDocCache ( ) {
+	if (_nodes)
+		delete _nodes;
+	if (_originals)
+		delete _originals;
+	if (_caches)
+		delete _caches;
+	if (_cacheLengths)
+		delete _cacheLengths;
+	if (_images)
+		delete _images;
+
+	return;
+}
 
 void
-ImageMagick::readImage(const char *xlink, Magick::Image *image)
+ImageMagickDocCache::readImage(const char *xlink, Magick::Image *image)
 {
 	// Find if the xlink:href is base64 data, i.e. if the image is embedded 
 	char *search = (char *) g_strndup(xlink, 30);
@@ -76,53 +124,36 @@ ImageMagick::readImage(const char *xlink, Magick::Image *image)
 	}
 }
 
+bool
+ImageMagick::load(Inkscape::Extension::Extension *module)
+{
+	return true;
+}
+
+Inkscape::Extension::Implementation::ImplementationDocumentCache *
+ImageMagick::newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * view) {
+	return new ImageMagickDocCache(view);
+}
+
 void
 ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
 {
 	refreshParameters(module);
-	_loaded = FALSE;
-	
-	if (!_loaded)
-	{
-		SPDesktop *desktop = (SPDesktop*)document;
-		const GSList *selectedReprList = desktop->selection->reprList();
-		int selectCount = g_slist_length((GSList *)selectedReprList);
 
-		// Init the data-holders
-		_nodes = new Inkscape::XML::Node*[selectCount];
-		_originals = new const char*[selectCount];
-		_caches = new char*[selectCount];
-		_cacheLengths = new unsigned[selectCount];
-		_images = new Magick::Image*[selectCount];
-		_imageCount = 0;
-
-		// Loop through selected nodes
-		for (; selectedReprList != NULL; selectedReprList = g_slist_next(selectedReprList))
-		{
-			Inkscape::XML::Node *node = reinterpret_cast<Inkscape::XML::Node *>(selectedReprList->data);
-			if (!strcmp(node->name(), "image") || !strcmp(node->name(), "svg:image"))
-			{
-				_nodes[_imageCount] = node;	
-				char const *xlink = node->attribute("xlink:href");
-
-				_originals[_imageCount] = xlink;
-				_caches[_imageCount] = "";
-				_cacheLengths[_imageCount] = 0;
-				_images[_imageCount] = new Magick::Image();
-				readImage(xlink, _images[_imageCount]);			
-
-				_imageCount++;
-			}			
-		}
-
-		_loaded = 1;
+	if (docCache == NULL) { // should never happen
+		docCache = newDocCache(module, document);
 	}
-
-	for (int i = 0; i < _imageCount; i++)
+	ImageMagickDocCache * dc = dynamic_cast<ImageMagickDocCache *>(docCache);
+	if (dc == NULL) { // should really never happen
+		printf("AHHHHHHHHH!!!!!");
+		exit(1);
+	}
+	
+	for (int i = 0; i < dc->_imageCount; i++)
 	{
 		try
 		{
-			Magick::Image effectedImage = *_images[i]; // make a copy
+			Magick::Image effectedImage = *dc->_images[i]; // make a copy
 			applyEffect(&effectedImage);
 
 			Magick::Blob *blob = new Magick::Blob();
@@ -133,11 +164,11 @@ ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::Vi
 			const char *raw_i = raw_string.c_str();
 
 			unsigned new_len = (int)(raw_len * (77.0 / 76.0) + 100);
-			if (new_len > _cacheLengths[i]) {
-				_cacheLengths[i] = (int)(new_len * 1.2);
-				_caches[i] = new char[_cacheLengths[i]];
+			if (new_len > dc->_cacheLengths[i]) {
+				dc->_cacheLengths[i] = (int)(new_len * 1.2);
+				dc->_caches[i] = new char[dc->_cacheLengths[i]];
 			}
-			char *formatted_i = _caches[i];
+			char *formatted_i = dc->_caches[i];
 			const char *src;
 
 			for (src = "data:image/"; *src; )
@@ -160,15 +191,16 @@ ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::Vi
 			}
 			*formatted_i = '\0';
 
-			_nodes[i]->setAttribute("xlink:href", _caches[i], true);			
-			_nodes[i]->setAttribute("sodipodi:absref", NULL, true);
+			dc->_nodes[i]->setAttribute("xlink:href", dc->_caches[i], true);			
+			dc->_nodes[i]->setAttribute("sodipodi:absref", NULL, true);
 		}
 		catch (Magick::Exception &error_) {
 			printf("Caught exception: %s \n", error_.what());
 		}
 
-		while(Gtk::Main::events_pending())
+		while(Gtk::Main::events_pending()) {
 			Gtk::Main::iteration();
+		}
 	}
 }
 

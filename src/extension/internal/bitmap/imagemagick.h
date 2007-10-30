@@ -18,36 +18,16 @@ namespace Extension {
 namespace Internal {
 namespace Bitmap {
 
-class ImageMagickDocCache: public Inkscape::Extension::Implementation::ImplementationDocumentCache {
-public:
-	ImageMagickDocCache(Inkscape::UI::View::View * view) : Inkscape::Extension::Implementation::ImplementationDocumentCache(view) { };
-	~ImageMagickDocCache ( ) { };
-};
-
 class ImageMagick : public Inkscape::Extension::Implementation::Implementation {
-
-private:
-	bool _loaded;
-
-	Inkscape::XML::Node** _nodes;	
-	
-	Magick::Image** _images;
-	int _imageCount;
-	char** _caches;
-	unsigned* _cacheLengths;
-	
-	const char** _originals;
 public:
+	/* Functions to be implemented by subclasses */
 	virtual void applyEffect(Magick::Image *image) { };
 	virtual void refreshParameters(Inkscape::Extension::Effect *module) { };
-	bool load(Inkscape::Extension::Extension *module);
-    
-	/*void commitDocument(void);*/
-	/*void cancelDocument(void);*/
 
-	void readImage(char const *xlink, Magick::Image *image);
+	/* Functions implemented from ::Implementation */
+	bool load(Inkscape::Extension::Extension *module);
+	Inkscape::Extension::Implementation::ImplementationDocumentCache * newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * doc);
 	void effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache);
-	
 	Gtk::Widget* prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache);
 };
 

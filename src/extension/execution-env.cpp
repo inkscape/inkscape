@@ -102,8 +102,8 @@ ExecutionEnv::~ExecutionEnv (void) {
 void
 ExecutionEnv::genDocCache (void) {
 	if (_docCache == NULL) {
-		printf("Gen Doc Cache\n");
-		Implementation::ImplementationDocumentCache * _docCache = _effect->get_imp()->newDocCache(_effect, _doc);
+		// printf("Gen Doc Cache\n");
+		_docCache = _effect->get_imp()->newDocCache(_effect, _doc);
 	}
 	return;
 }
@@ -111,7 +111,7 @@ ExecutionEnv::genDocCache (void) {
 void
 ExecutionEnv::killDocCache (void) {
 	if (_docCache != NULL) {
-		printf("Killed Doc Cache\n");
+		// printf("Killed Doc Cache\n");
 		delete _docCache;
 		_docCache = NULL;
 	}
@@ -287,6 +287,13 @@ ExecutionEnv::run (void) {
     return;
 }
 
+/** \brief  Set the state of live preview
+    \param state  The current state
+	
+	This will cancel the document preview and and configure
+	whether we should be waiting on the human.  It will also
+	clear the document cache.
+*/
 void
 ExecutionEnv::livePreview (bool state) { 
     _mainloop->quit();

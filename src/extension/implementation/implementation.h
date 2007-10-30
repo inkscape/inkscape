@@ -56,7 +56,7 @@ public:
     virtual bool load(Inkscape::Extension::Extension *module);
 
     virtual void unload(Inkscape::Extension::Extension *module);
-	ImplementationDocumentCache * newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * doc);
+	virtual ImplementationDocumentCache * newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * doc);
 
     /** Verify any dependencies. */
     virtual bool check(Inkscape::Extension::Extension *module);
