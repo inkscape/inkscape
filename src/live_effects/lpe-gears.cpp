@@ -212,6 +212,8 @@ LPEGears::LPEGears(LivePathEffectObject *lpeobject) :
 {
     registerParameter( dynamic_cast<Parameter *>(&teeth) );
     registerParameter( dynamic_cast<Parameter *>(&phi) );
+
+    straight_original_path = true;
 }
 
 LPEGears::~LPEGears()

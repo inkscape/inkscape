@@ -42,7 +42,8 @@ namespace XML {
 namespace LivePathEffect {
 
 enum EffectType {
-    SKELETAL_STROKES = 0,
+    PATH_ALONG_PATH = 0,
+    SKELETAL_STROKES,
 #ifdef LPE_ENABLE_TEST_EFFECTS
     SLANT,
     DOEFFECTSTACK_TEST,
@@ -59,24 +60,27 @@ class Parameter;
 
 class Effect {
 public:
-    virtual ~Effect();
+    static Effect* New(EffectType lpenr, LivePathEffectObject *lpeobj);
 
-    Glib::ustring getName();
+    virtual ~Effect();
 
     virtual void doEffect (SPCurve * curve);
 
-    static Effect* New(EffectType lpenr, LivePathEffectObject *lpeobj);
-
     virtual Gtk::Widget * getWidget();
 
-    Inkscape::XML::Node * getRepr();
-    SPDocument * getSPDoc();
+    virtual void resetDefaults(SPItem * item);
+
+    Glib::ustring          getName();
+    Inkscape::XML::Node *  getRepr();
+    SPDocument *           getSPDoc();
     LivePathEffectObject * getLPEObj() {return lpeobj;};
 
     void readallParameters(Inkscape::XML::Node * repr);
     void setParameter(const gchar * key, const gchar * new_value);
 
     void editNextParamOncanvas(SPItem * item, SPDesktop * desktop);
+
+    bool straight_original_path;
 
 protected:
     Effect(LivePathEffectObject *lpeobject);

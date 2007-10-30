@@ -29,6 +29,7 @@
 
 // include effects:
 #include "live_effects/lpe-skeletalstrokes.h"
+#include "live_effects/lpe-pathalongpath.h"
 #include "live_effects/lpe-slant.h"
 #include "live_effects/lpe-test-doEffect-stack.h"
 #include "live_effects/lpe-gears.h"
@@ -40,7 +41,8 @@ namespace LivePathEffect {
 
 const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     // {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
-    {SKELETAL_STROKES,      N_("Path along path"),      "skeletal"},
+    {PATH_ALONG_PATH,       N_("Path along path"),      "path_along_path"},
+    {SKELETAL_STROKES,      N_("[obsolete?] Pattern along path"),      "skeletal"},
 #ifdef LPE_ENABLE_TEST_EFFECTS
     {SLANT,                 N_("Slant"),                 "slant"},
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),   "doeffectstacktest"},
@@ -57,6 +59,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
     switch (lpenr) {
         case SKELETAL_STROKES:
             neweffect = (Effect*) new LPESkeletalStrokes(lpeobj);
+            break;
+        case PATH_ALONG_PATH:
+            neweffect = (Effect*) new LPEPathAlongPath(lpeobj);
             break;
 #ifdef LPE_ENABLE_TEST_EFFECTS
             case SLANT:
@@ -91,6 +96,7 @@ Effect::Effect(LivePathEffectObject *lpeobject)
     tooltips = NULL;
     lpeobj = lpeobject;
     oncanvasedit_it = param_map.begin();
+    straight_original_path = false;
 }
 
 Effect::~Effect()
@@ -302,6 +308,16 @@ Effect::editNextParamOncanvas(SPItem * item, SPDesktop * desktop)
                                         _("None of the applied path effect's parameters can be edited on-canvas.") );
     }
 }
+
+/* This function should reset the defaults and is used for example to initialize an effect right after it has been applied to a path
+* The nice thing about this is that this function can use knowledge of the original path and set things accordingly for example to the size or origin of the original path!
+*/
+void
+Effect::resetDefaults(SPItem * /*item*/)
+{
+    // do nothing for simple effects
+}
+
 
 } /* namespace LivePathEffect */
 

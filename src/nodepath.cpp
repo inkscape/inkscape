@@ -224,6 +224,12 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
         if ( SP_SHAPE(np->object)->path_effect_href ) {
             np->repr_key = g_strdup("inkscape:original-d");
             np->show_helperpath = true;
+            LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(SP_SHAPE(np->object));
+            // ENHANCE THIS. Probably it is much nicer to have a virtual method in Effect class that modifies nodepath to its likings.
+            // so something like: "lpe->adjust_nodepath(np);"
+            if (lpeobj && lpeobj->lpe) {
+                np->straight_path = lpeobj->lpe->straight_original_path;
+            }
         } else {
             np->repr_key = g_strdup("d");
         }
@@ -2372,6 +2378,8 @@ sp_node_selected_set_type(Inkscape::NodePath::Path *nodepath, Inkscape::NodePath
 {
     if (nodepath == NULL) return;
 
+    if (nodepath->straight_path) return; // don't change type when it is a straight path!
+
     for (GList *l = nodepath->selected; l != NULL; l = l->next) {
         sp_nodepath_convert_node_type((Inkscape::NodePath::Node *) l->data, type);
     }
@@ -3184,8 +3192,10 @@ node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
    // If either (Shift and some handle retracted), or (we're already dragging out a handle)
-   if (((state & GDK_SHIFT_MASK) && ((n->n.other && n->n.pos == n->pos) || (n->p.other && n->p.pos == n->pos))) || n->dragging_out) {
-
+    if ( (!n->subpath->nodepath->straight_path) &&
+         ( ((state & GDK_SHIFT_MASK) && ((n->n.other && n->n.pos == n->pos) || (n->p.other && n->p.pos == n->pos)))
+           || n->dragging_out ) )
+    {
        NR::Point mouse = (*p);
 
        if (!n->dragging_out) {
@@ -4471,6 +4481,7 @@ void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
     np->show_helperpath = show;
 }
 
+/* this function does not work yet */
 void sp_nodepath_make_straight_path(Inkscape::NodePath::Path *np) {
     np->straight_path = true;
     np->show_handles = false;

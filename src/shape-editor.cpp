@@ -476,7 +476,7 @@ void ShapeEditor::select_prev () {
 }
 
 void ShapeEditor::show_handles (bool show) {
-    if (this->nodepath) 
+    if (this->nodepath && !this->nodepath->straight_path)
         sp_nodepath_show_handles (this->nodepath, show);
 }
 

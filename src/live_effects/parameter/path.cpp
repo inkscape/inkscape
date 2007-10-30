@@ -147,6 +147,15 @@ PathParam::param_write_to_repr(const char * svgd)
 }
 
 
+void
+PathParam::param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > newpath)
+{
+    const std::vector<Geom::Path> temppath = Geom::path_from_piecewise(newpath, LPE_CONVERSION_TOLERANCE);
+    gchar * svgd = SVGD_from_2GeomPath( temppath );
+    param_write_to_repr(svgd);
+    g_free(svgd);
+}
+
 /* CALLBACK FUNCTIONS FOR THE BUTTONS */
 void
 PathParam::on_edit_button_click()

@@ -108,7 +108,8 @@ LivePathEffectEditor::LivePathEffectEditor(Behavior::BehaviorFactory behavior_fa
 
     setDesktop(SP_ACTIVE_DESKTOP);
     show_all_children();
-		button_remove.hide();
+
+    button_remove.hide();
 }
 
 LivePathEffectEditor::~LivePathEffectEditor() 
@@ -265,6 +266,11 @@ LivePathEffectEditor::onApply()
                 if ( ! pathrepr->attribute("inkscape:original-d") ) {
                     pathrepr->setAttribute("inkscape:original-d", pathrepr->attribute("d"));
                 }
+            }
+
+            LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(SP_SHAPE(item));
+            if (lpeobj && lpeobj->lpe) {
+                lpeobj->lpe->resetDefaults(item);
             }
 
             sp_document_done(doc, SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
