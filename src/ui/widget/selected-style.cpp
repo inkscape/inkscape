@@ -1218,7 +1218,7 @@ RotateableSwatch::do_motion(double by, guint modifier) {
     if (parent->_mode[fillstroke] != SS_COLOR) 
         return;
 
-    if (!cr_set) {
+    if (!cr_set && modifier != 3) {
         GtkWidget *w = GTK_WIDGET(gobj());
 
         GdkBitmap *bitmap = NULL;
@@ -1251,9 +1251,14 @@ RotateableSwatch::do_motion(double by, guint modifier) {
     }
 
     float hsl[3];
-    double diff = color_adjust(hsl, by, cc, modifier);
+    double diff = 0;
+    if (modifier != 3) {
+        diff = color_adjust(hsl, by, cc, modifier);
+    }
 
-    if (modifier == 2) { // saturation
+    if (modifier == 3) { // do nothing
+
+    } else if (modifier == 2) { // saturation
         sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey, 
                                 SP_VERB_DIALOG_FILL_STROKE, ("Adjust saturation"));
         double ch = hsl[1];
@@ -1279,7 +1284,9 @@ RotateableSwatch::do_release(double by, guint modifier) {
         return;
 
     float hsl[3];
-    color_adjust(hsl, by, startcolor, modifier);
+    if (modifier != 3) {
+        color_adjust(hsl, by, startcolor, modifier);
+    }
 
     if (cr_set) {
         GtkWidget *w = GTK_WIDGET(gobj());
@@ -1291,7 +1298,8 @@ RotateableSwatch::do_release(double by, guint modifier) {
         cr_set = false;
     }
 
-    if (modifier == 2) { // saturation
+    if (modifier == 3) { // nothing
+    } else if (modifier == 2) { // saturation
         sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey, 
                                 SP_VERB_DIALOG_FILL_STROKE, ("Adjust saturation"));
 

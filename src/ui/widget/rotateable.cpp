@@ -50,25 +50,35 @@ bool Rotateable::on_click(GdkEventButton *event) {
 
 guint Rotateable::get_single_modifier(guint old, guint state) {
 
-		if (old == 0) {
+		if (old == 0 || old == 3) {
         if (state & GDK_CONTROL_MASK)
             return 1; // ctrl
         if (state & GDK_SHIFT_MASK)
             return 2; // shift
+        if (state & GDK_MOD1_MASK)
+            return 3; // alt
         return 0;
 		} else {
-        if (!(state & GDK_CONTROL_MASK) && !(state & GDK_SHIFT_MASK))
-            return 0; // none
-        if (old == 1) 
+        if (!(state & GDK_CONTROL_MASK) && !(state & GDK_SHIFT_MASK)) {
+            if (state & GDK_MOD1_MASK)
+                return 3; // alt
+            else
+                return 0; // none
+        }
+        if (old == 1) {
             if (state & GDK_SHIFT_MASK && !(state & GDK_CONTROL_MASK))
                 return 2; // shift
-            else 
-                return 1;
-        if (old == 2) 
+            if (state & GDK_MOD1_MASK && !(state & GDK_CONTROL_MASK))
+               return 3; // alt
+            return 1;
+        }
+        if (old == 2) {
             if (state & GDK_CONTROL_MASK && !(state & GDK_SHIFT_MASK))
                 return 1; // ctrl
-            else 
-                return 2;
+            if (state & GDK_MOD1_MASK && !(state & GDK_SHIFT_MASK))
+               return 3; // alt
+            return 2;
+        }
         return old;
 		}
 }
