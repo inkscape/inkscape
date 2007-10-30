@@ -85,6 +85,7 @@
 #include "internal/bitmap/opacity.h"
 #include "internal/bitmap/raise.h"
 #include "internal/bitmap/reduceNoise.h"
+#include "internal/bitmap/sample.h"
 #include "internal/bitmap/shade.h"
 #include "internal/bitmap/sharpen.h"
 #include "internal/bitmap/solarize.h"
@@ -214,6 +215,7 @@ init()
     Internal::Bitmap::Opacity::init();
     Internal::Bitmap::Raise::init();
     Internal::Bitmap::ReduceNoise::init();
+    Internal::Bitmap::Sample::init();
     Internal::Bitmap::Shade::init();
     Internal::Bitmap::Sharpen::init();
     Internal::Bitmap::Solarize::init();
