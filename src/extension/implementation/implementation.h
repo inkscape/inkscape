@@ -26,6 +26,19 @@ namespace Inkscape {
 namespace Extension {
 namespace Implementation {
 
+/** \brief  A cache for the document and this implementation */
+class ImplementationDocumentCache {
+	/** \brief  The document that this instance is working on */
+	SPDocument * _doc;
+public:
+	ImplementationDocumentCache (SPDocument * doc) :
+			_doc(doc)
+	{
+		return;
+	};
+	virtual ~ImplementationDocumentCache ( ) { return; };
+};
+
 /**
  * Base class for all implementations of modules.  This is whether they are done systematically by
  * having something like the scripting system, or they are implemented internally they all derive
@@ -42,6 +55,7 @@ public:
     virtual bool load(Inkscape::Extension::Extension *module);
 
     virtual void unload(Inkscape::Extension::Extension *module);
+	ImplementationDocumentCache * newDocCache (SPDocument * doc);
 
     /** Verify any dependencies. */
     virtual bool check(Inkscape::Extension::Extension *module);
@@ -59,16 +73,18 @@ public:
 
     /* ----- Output functions ----- */
     /** Find out information about the file. */
-    virtual Gtk::Widget *prefs_output(Inkscape::Extension::Output *module);
-    virtual void save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename);
+    virtual Gtk::Widget *prefs_output(Inkscape::Extension::Output *module, ImplementationDocumentCache * docCache);
+    virtual void save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename, ImplementationDocumentCache * docCache);
 
     /* ----- Effect functions ----- */
     /** Find out information about the file. */
-    virtual Gtk::Widget * prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal);
-    /* TODO: need to figure out what we need here */
-
+    virtual Gtk::Widget * prefs_effect(Inkscape::Extension::Effect *module,
+	                                   Inkscape::UI::View::View * view,
+									   sigc::signal<void> * changeSignal,
+									   ImplementationDocumentCache * docCache);
     virtual void effect(Inkscape::Extension::Effect *module,
-                        Inkscape::UI::View::View *document);
+                        Inkscape::UI::View::View *document,
+						ImplementationDocumentCache * docCache);
 
     /* ----- Print functions ----- */
     virtual unsigned setup(Inkscape::Extension::Print *module);
@@ -113,6 +129,7 @@ public:
                           SPStyle const *style);
     virtual void     processPath(Inkscape::XML::Node * node);
 };
+
 
 }  /* namespace Implementation */
 }  /* namespace Extension */

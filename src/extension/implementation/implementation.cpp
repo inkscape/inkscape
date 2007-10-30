@@ -38,6 +38,11 @@ Implementation::unload(Inkscape::Extension::Extension *module) {
     return;
 } /* Implementation::unload */
 
+ImplementationDocumentCache *
+Implementation::newDocCache (SPDocument * doc) {
+	return NULL;
+}
+
 bool
 Implementation::check(Inkscape::Extension::Extension *module) {
     /* If there are no checks, they all pass */
@@ -66,23 +71,23 @@ Implementation::open(Inkscape::Extension::Input *module, gchar const *filename) 
 } /* Implementation::open */
 
 Gtk::Widget *
-Implementation::prefs_output(Inkscape::Extension::Output *module) {
+Implementation::prefs_output(Inkscape::Extension::Output *module, ImplementationDocumentCache * docCache) {
     return module->autogui(NULL, NULL);
 } /* Implementation::prefs_output */
 
 void
-Implementation::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename) {
+Implementation::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename, ImplementationDocumentCache * docCache) {
     /* throw save_fail */
     return;
 } /* Implementation::save */
 
 Gtk::Widget *
-Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *view, sigc::signal<void> * changeSignal) {
+Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *view, sigc::signal<void> * changeSignal, ImplementationDocumentCache * docCache) {
     return module->autogui(NULL, NULL);
 } /* Implementation::prefs_effect */
 
 void
-Implementation::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document) {
+Implementation::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, ImplementationDocumentCache * docCache) {
     /* throw filter_fail */
     return;
 } /* Implementation::filter */
