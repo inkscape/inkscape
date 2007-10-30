@@ -451,6 +451,48 @@ Script::check(Inkscape::Extension::Extension *module)
     return true;
 }
 
+class ScriptDocCache : public ImplementationDocumentCache {
+	friend class Script;
+protected:
+	std::string _filename;
+    int _tempfd; 
+public:
+	ScriptDocCache (Inkscape::UI::View::View * view);
+	~ScriptDocCache ( );
+};
+
+ScriptDocCache::ScriptDocCache (Inkscape::UI::View::View * view) :
+	ImplementationDocumentCache(view),
+	_filename(""),
+	_tempfd(0)
+{
+    try {
+        _tempfd = Glib::file_open_tmp(_filename, "ink_ext_XXXXXX.svg");
+    } catch (...) {
+        /// \todo Popup dialog here
+        return;
+    }
+
+    SPDesktop *desktop = (SPDesktop *) view;
+    sp_namedview_document_from_window(desktop);
+
+    Inkscape::Extension::save(
+              Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
+              view->doc(), _filename.c_str(), FALSE, FALSE, FALSE);
+
+	return;
+}
+	
+ScriptDocCache::~ScriptDocCache ( )
+{
+    close(_tempfd);
+    unlink(_filename.c_str());
+}
+
+ImplementationDocumentCache *
+Script::newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * view) {
+	return new ScriptDocCache(view);
+}
 
 
 /**
@@ -686,6 +728,15 @@ Script::effect(Inkscape::Extension::Effect *module,
                Inkscape::UI::View::View *doc,
 			   ImplementationDocumentCache * docCache)
 {
+	if (docCache == NULL) {
+		docCache = newDocCache(module, doc);
+	}
+	ScriptDocCache * dc = dynamic_cast<ScriptDocCache *>(docCache);
+	if (dc == NULL) {
+		printf("TOO BAD TO LIVE!!!");
+		exit(1);
+	}
+
     std::list<std::string> params;
     module->paramListString(params);
 
@@ -697,15 +748,6 @@ Script::effect(Inkscape::Extension::Effect *module,
         file_listener outfile;
         execute(command, params, empty, outfile);
 
-        return;
-    }
-
-    std::string tempfilename_in;
-    int tempfd_in = 0;
-    try {
-        tempfd_in = Glib::file_open_tmp(tempfilename_in, "ink_ext_XXXXXX.svg");
-    } catch (...) {
-        /// \todo Popup dialog here
         return;
     }
 
@@ -721,12 +763,6 @@ Script::effect(Inkscape::Extension::Effect *module,
     SPDesktop *desktop = (SPDesktop *) doc;
     sp_namedview_document_from_window(desktop);
 
-    Inkscape::Extension::save(
-              Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
-              doc->doc(), tempfilename_in.c_str(), FALSE, FALSE, FALSE);
-
-    pump_events();
-
     if (desktop != NULL) {
         Inkscape::Util::GSListConstIterator<SPItem *> selected =
              sp_desktop_selection(desktop)->itemList();
@@ -740,7 +776,7 @@ Script::effect(Inkscape::Extension::Effect *module,
     }
 
     file_listener fileout;
-    int data_read = execute(command, params, tempfilename_in, fileout);
+    int data_read = execute(command, params, dc->_filename, fileout);
     fileout.toFile(tempfilename_out);
 
     pump_events();
@@ -755,11 +791,9 @@ Script::effect(Inkscape::Extension::Effect *module,
     pump_events();
 
     // make sure we don't leak file descriptors from g_file_open_tmp
-    close(tempfd_in);
     close(tempfd_out);
 
     // FIXME: convert to utf8 (from "filename encoding") and unlink_utf8name
-    unlink(tempfilename_in.c_str());
     unlink(tempfilename_out.c_str());
 
     /* Do something with mydoc.... */

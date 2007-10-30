@@ -62,6 +62,8 @@ public:
      */
     virtual bool check(Inkscape::Extension::Extension *module);
 
+	ImplementationDocumentCache * newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * view);
+
     /**
      *
      */
