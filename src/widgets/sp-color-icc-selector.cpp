@@ -309,7 +309,6 @@ void ColorICCSelector::init()
 
 #if ENABLE_LCMS
     _profChangedID = g_signal_connect( G_OBJECT(_profileSel), "changed", G_CALLBACK(_profileSelected), (gpointer)this );
-    gtk_widget_set_sensitive( _profileSel, false ); // temporary
 #else
     gtk_widget_set_sensitive( _profileSel, false );
 #endif // ENABLE_LCMS
@@ -447,22 +446,20 @@ sp_color_icc_selector_new (void)
 }
 
 
-void ColorICCSelector::_fixupHit( GtkWidget* src, gpointer data )
+void ColorICCSelector::_fixupHit( GtkWidget* /*src*/, gpointer data )
 {
-    (void)src;
     ColorICCSelector* self = reinterpret_cast<ColorICCSelector*>(data);
     gtk_widget_set_sensitive( self->_fixupBtn, FALSE );
     self->_adjustmentChanged( self->_fooAdj[0], SP_COLOR_ICC_SELECTOR(self->_csel) );
 }
 
 #if ENABLE_LCMS
-void ColorICCSelector::_profileSelected( GtkWidget* src, gpointer data )
+void ColorICCSelector::_profileSelected( GtkWidget* /*src*/, gpointer data )
 {
-    (void)src;
     ColorICCSelector* self = reinterpret_cast<ColorICCSelector*>(data);
     gint activeIndex = gtk_combo_box_get_active( GTK_COMBO_BOX(self->_profileSel) );
     gchar* name = (activeIndex != 0) ? gtk_combo_box_get_active_text( GTK_COMBO_BOX(self->_profileSel) ) : 0;
-    //self->_switchToProfile( name );
+    self->_switchToProfile( name );
     if ( name ) {
         g_free( name );
     }
@@ -476,32 +473,60 @@ void ColorICCSelector::_switchToProfile( gchar const* name )
 
     if ( name ) {
         if ( tmp.icc && tmp.icc->colorProfile == name ) {
-            g_message("Already at name [%s]", name );
+//             g_message("Already at name [%s]", name );
         } else {
-            g_message("Need to switch to profile [%s]", name );
+//             g_message("Need to switch to profile [%s]", name );
             if ( tmp.icc ) {
                 tmp.icc->colors.clear();
             } else {
                 tmp.icc = new SVGICCColor();
             }
             tmp.icc->colorProfile = name;
+#if ENABLE_LCMS
+            Inkscape::ColorProfile* newProf = SP_ACTIVE_DOCUMENT->profileManager->find(name);
+            if ( newProf ) {
+                cmsHTRANSFORM trans = newProf->getTransfFromSRGB8();
+                if ( trans ) {
+                    guint32 val = _color.toRGBA32(0);
+                    guchar pre[4] = {
+                        SP_RGBA32_R_U(val),
+                        SP_RGBA32_G_U(val),
+                        SP_RGBA32_B_U(val),
+                        255};
+                    icUInt16Number post[4] = {0,0,0,0};
+                    cmsDoTransform( trans, pre, post, 1 );
+                    guint count = _cmsChannelsOf( newProf->getColorSpace() );
+
+                    gchar const** names = 0;
+                    gchar const** tips = 0;
+                    guint const* scales = 0;
+                    getThings( newProf->getColorSpace(), names, tips, scales );
+
+                    for ( guint i = 0; i < count; i++ ) {
+                        gdouble val = (((gdouble)post[i])/65535.0) * (gdouble)scales[i];
+                        tmp.icc->colors.push_back(val);
+                    }
+                }
+            }
+#endif // ENABLE_LCMS
             dirty = true;
         }
     } else {
-        g_message("NUKE THE ICC");
+//         g_message("NUKE THE ICC");
         if ( tmp.icc ) {
             delete tmp.icc;
             tmp.icc = 0;
             dirty = true;
+            _fixupHit( 0, this );
         } else {
-            g_message("No icc to nuke");
+//             g_message("No icc to nuke");
         }
     }
 
     if ( dirty ) {
         _setProfile( tmp.icc );
-        // Set the color now.
-
+        //_adjustmentChanged( _fooAdj[0], SP_COLOR_ICC_SELECTOR(_csel) );
+        setColor( tmp );
     }
 }
 
@@ -818,10 +843,8 @@ void ColorICCSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorICC
 #endif // DEBUG_LCMS
 }
 
-void ColorICCSelector::_sliderGrabbed( SPColorSlider *slider, SPColorICCSelector *cs )
+void ColorICCSelector::_sliderGrabbed( SPColorSlider */*slider*/, SPColorICCSelector */*cs*/ )
 {
-    (void)slider;
-    (void)cs;
 //    ColorICCSelector* iccSelector = (ColorICCSelector*)(SP_COLOR_SELECTOR(cs)->base);
 //     if (!iccSelector->_dragging) {
 //         iccSelector->_dragging = TRUE;
@@ -830,10 +853,8 @@ void ColorICCSelector::_sliderGrabbed( SPColorSlider *slider, SPColorICCSelector
 //     }
 }
 
-void ColorICCSelector::_sliderReleased( SPColorSlider *slider, SPColorICCSelector *cs )
+void ColorICCSelector::_sliderReleased( SPColorSlider */*slider*/, SPColorICCSelector */*cs*/ )
 {
-    (void)slider;
-    (void)cs;
 //     ColorICCSelector* iccSelector = (ColorICCSelector*)(SP_COLOR_SELECTOR(cs)->base);
 //     if (iccSelector->_dragging) {
 //         iccSelector->_dragging = FALSE;
@@ -842,10 +863,8 @@ void ColorICCSelector::_sliderReleased( SPColorSlider *slider, SPColorICCSelecto
 //     }
 }
 
-void ColorICCSelector::_sliderChanged( SPColorSlider *slider, SPColorICCSelector *cs )
+void ColorICCSelector::_sliderChanged( SPColorSlider */*slider*/, SPColorICCSelector */*cs*/ )
 {
-    (void)slider;
-    (void)cs;
 #ifdef DEBUG_LCMS
     g_message("Changed  %p and %p", slider, cs );
 #endif // DEBUG_LCMS
