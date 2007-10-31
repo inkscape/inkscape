@@ -1946,8 +1946,8 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_DIFFUSELIGHTING);
     _settings->add_color(SP_PROP_LIGHTING_COLOR, _("Diffuse Color"));
-    _settings->add_spinslider(SP_ATTR_SURFACESCALE, _("Surface Scale"), -10, 10, 1, 0.01, 1);
-    _settings->add_spinslider(SP_ATTR_DIFFUSECONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_SURFACESCALE, _("Surface Scale"), -1000, 1000, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_DIFFUSECONSTANT, _("Constant"), 0, 100, 0.1, 0.01, 2);
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
     _settings->add_lightsource();
 
@@ -1973,8 +1973,8 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_SPECULARLIGHTING);
     _settings->add_color(SP_PROP_LIGHTING_COLOR, _("Specular Color"));
-    _settings->add_spinslider(SP_ATTR_SURFACESCALE, _("Surface Scale"), -10, 10, 1, 0.01, 1);
-    _settings->add_spinslider(SP_ATTR_SPECULARCONSTANT, _("Constant"), 0, 100, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_SURFACESCALE, _("Surface Scale"), -1000, 1000, 1, 0.01, 1);
+    _settings->add_spinslider(SP_ATTR_SPECULARCONSTANT, _("Constant"), 0, 100, 0.1, 0.01, 2);
     _settings->add_spinslider(SP_ATTR_SPECULAREXPONENT, _("Exponent"), 1, 128, 1, 0.01, 1);
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
     _settings->add_lightsource();
