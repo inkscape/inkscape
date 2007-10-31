@@ -2251,7 +2251,7 @@ Verb *Verb::_base_verbs[] = {
     new EditVerb(SP_VERB_EDIT_DESELECT, "EditDeselect", N_("D_eselect"),
                  N_("Deselect any selected objects or nodes"), "selection_deselect"),
     new EditVerb(SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER, "EditNextPathEffectParameter", N_("Next Path Effect Parameter"),
-                 N_("Show next Path Effect parameter for editting"), NULL),
+                 N_("Show next Path Effect parameter for editing"), NULL),
 
     /* Selection */
     new SelectionVerb(SP_VERB_SELECTION_TO_FRONT, "SelectionToFront", N_("Raise to _Top"),
