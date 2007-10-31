@@ -89,7 +89,7 @@ GSList *defs_clipboard = NULL;
 SPCSSAttr *style_clipboard = NULL;
 NR::Maybe<NR::Rect> size_clipboard;
 
-static void sp_copy_stuff_used_by_item(GSList **defs_clip, SPItem *item, const GSList *items, Inkscape::XML::Document* xml_doc);
+static void sp_copy_stuff_used_by_item(GSList **defs_clip, SPItem *item, GSList const *items, Inkscape::XML::Document* xml_doc);
 
 /**
  * Copies repr and its inherited css style elements, along with the accumulated transform 'full_t',
@@ -114,7 +114,7 @@ void sp_selection_copy_one (Inkscape::XML::Node *repr, NR::Matrix full_t, GSList
     *clip = g_slist_prepend(*clip, copy);
 }
 
-void sp_selection_copy_impl (const GSList *items, GSList **clip, GSList **defs_clip, SPCSSAttr **style_clip, Inkscape::XML::Document* xml_doc)
+void sp_selection_copy_impl (GSList const *items, GSList **clip, GSList **defs_clip, SPCSSAttr **style_clip, Inkscape::XML::Document* xml_doc)
 {
 
     // Copy stuff referenced by all items to defs_clip:
@@ -202,12 +202,12 @@ GSList *sp_selection_paste_impl (SPDocument *doc, SPObject *parent, GSList **cli
     return copied;
 }
 
-void sp_selection_delete_impl(const GSList *items, bool propagate=true, bool propagate_descendants=true)
+void sp_selection_delete_impl(GSList const *items, bool propagate = true, bool propagate_descendants = true)
 {
-    for (const GSList *i = items ; i ; i = i->next ) {
+    for (GSList const *i = items ; i ; i = i->next ) {
         sp_object_ref((SPObject *)i->data, NULL);
     }
-    for (const GSList *i = items; i != NULL; i = i->next) {
+    for (GSList const *i = items; i != NULL; i = i->next) {
         SPItem *item = (SPItem *) i->data;
         SP_OBJECT(item)->deleteObject(propagate, propagate_descendants);
         sp_object_unref((SPObject *)item, NULL);
@@ -237,7 +237,7 @@ void sp_selection_delete()
         return;
     }
 
-    const GSList *selected = g_slist_copy(const_cast<GSList *>(selection->itemList()));
+    GSList const *selected = g_slist_copy(const_cast<GSList *>(selection->itemList()));
     selection->clear();
     sp_selection_delete_impl (selected);
     g_slist_free ((GSList *) selected);
@@ -320,7 +320,7 @@ void sp_edit_clear_all()
 }
 
 GSList *
-get_all_items (GSList *list, SPObject *from, SPDesktop *desktop, bool onlyvisible, bool onlysensitive, const GSList *exclude)
+get_all_items (GSList *list, SPObject *from, SPDesktop *desktop, bool onlyvisible, bool onlysensitive, GSList const *exclude)
 {
     for (SPObject *child = sp_object_first_child(SP_OBJECT(from)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
         if (SP_IS_ITEM(child) &&
@@ -357,7 +357,7 @@ void sp_edit_select_all_full (bool force_all_layers, bool invert)
 
     GSList *items = NULL;
 
-    const GSList *exclude = NULL;
+    GSList const *exclude = NULL;
     if (invert) {
         exclude = selection->itemList();
     }
@@ -579,7 +579,7 @@ void sp_selection_ungroup()
 }
 
 static SPGroup *
-sp_item_list_common_parent_group(const GSList *items)
+sp_item_list_common_parent_group(GSList const *items)
 {
     if (!items) {
         return NULL;
@@ -601,7 +601,7 @@ sp_item_list_common_parent_group(const GSList *items)
 /** Finds out the minimum common bbox of the selected items
  */
 static NR::Maybe<NR::Rect>
-enclose_items(const GSList *items)
+enclose_items(GSList const *items)
 {
     g_assert(items != NULL);
 
@@ -893,7 +893,7 @@ void sp_copy_single (GSList **defs_clip, SPObject *thing, Inkscape::XML::Documen
 }
 
 
-void sp_copy_textpath_path (GSList **defs_clip, SPTextPath *tp, const GSList *items, Inkscape::XML::Document* xml_doc)
+void sp_copy_textpath_path (GSList **defs_clip, SPTextPath *tp, GSList const *items, Inkscape::XML::Document* xml_doc)
 {
     SPItem *path = sp_textpath_get_path_item (tp);
     if (!path)
@@ -907,7 +907,7 @@ void sp_copy_textpath_path (GSList **defs_clip, SPTextPath *tp, const GSList *it
 /**
  * Copies things like patterns, markers, gradients, etc.
  */
-void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList *items, Inkscape::XML::Document* xml_doc)
+void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, GSList const *items, Inkscape::XML::Document* xml_doc)
 {
     SPStyle *style = SP_OBJECT_STYLE (item);
 
@@ -1056,7 +1056,7 @@ void sp_selection_copy()
         return;
     }
 
-    const GSList *items = g_slist_copy ((GSList *) selection->itemList());
+    GSList const *items = g_slist_copy ((GSList *) selection->itemList());
 
     // 0. Copy text to system clipboard
     // FIXME: for non-texts, put serialized Inkscape::XML as text to the clipboard;
@@ -1222,7 +1222,7 @@ void sp_selection_paste_livepatheffect()
     paste_defs (&defs_clipboard, sp_desktop_document(desktop));
 
     Inkscape::XML::Node *repr = (Inkscape::XML::Node *) clipboard->data;
-    const char * effectstr = repr->attribute("inkscape:path-effect");
+    char const *effectstr = repr->attribute("inkscape:path-effect");
     if (!effectstr) {
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Clipboard does not contain a live path effect."));
         return;
@@ -1337,7 +1337,7 @@ void sp_selection_to_next_layer ()
         return;
     }
 
-    const GSList *items = g_slist_copy ((GSList *) selection->itemList());
+    GSList const *items = g_slist_copy ((GSList *) selection->itemList());
 
     bool no_more = false; // Set to true, if no more layers above
     SPObject *next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer());
@@ -1382,7 +1382,7 @@ void sp_selection_to_prev_layer ()
         return;
     }
 
-    const GSList *items = g_slist_copy ((GSList *) selection->itemList());
+    GSList const *items = g_slist_copy ((GSList *) selection->itemList());
 
     bool no_more = false; // Set to true, if no more layers below
     SPObject *next=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer());
@@ -2258,7 +2258,7 @@ sp_select_clone_original()
 
     SPItem *item = selection->singleItem();
 
-    const gchar *error = _("Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> to go to its source. Select a <b>text on path</b> to go to the path. Select a <b>flowed text</b> to go to its frame.");
+    gchar const *error = _("Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> to go to its source. Select a <b>text on path</b> to go to the path. Select a <b>flowed text</b> to go to its frame.");
 
     // Check if other than two objects are selected
     if (g_slist_length((GSList *) selection->itemList()) != 1 || !item) {
@@ -2365,8 +2365,11 @@ void sp_selection_to_marker(bool apply)
     int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
     prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
-    const gchar *mark_id = generate_marker (repr_copies, bounds, doc,
-                                        NR::Matrix(NR::translate(desktop->dt2doc(NR::Point(r->min()[NR::X], r->max()[NR::Y])))) * parent_transform.inverse(), parent_transform * move);
+    gchar const *mark_id = generate_marker(repr_copies, bounds, doc,
+                                           ( NR::Matrix(NR::translate(desktop->dt2doc(NR::Point(r->min()[NR::X],
+                                                                                                r->max()[NR::Y]))))
+                                             * parent_transform.inverse() ),
+                                           parent_transform * move);
 
     // restore compensation setting
     prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
@@ -2442,8 +2445,11 @@ sp_selection_tile(bool apply)
     int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
     prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
-    const gchar *pat_id = pattern_tile (repr_copies, bounds, doc,
-                                        NR::Matrix(NR::translate(desktop->dt2doc(NR::Point(r->min()[NR::X], r->max()[NR::Y])))) * parent_transform.inverse(), parent_transform * move);
+    gchar const *pat_id = pattern_tile(repr_copies, bounds, doc,
+                                       ( NR::Matrix(NR::translate(desktop->dt2doc(NR::Point(r->min()[NR::X],
+                                                                                            r->max()[NR::Y]))))
+                                         * parent_transform.inverse() ),
+                                       parent_transform * move);
 
     // restore compensation setting
     prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
@@ -2553,13 +2559,13 @@ sp_selection_untile()
 }
 
 void
-sp_selection_get_export_hints (Inkscape::Selection *selection, const char **filename, float *xdpi, float *ydpi) 
+sp_selection_get_export_hints (Inkscape::Selection *selection, char const **filename, float *xdpi, float *ydpi) 
 {
     if (selection->isEmpty()) {
         return;
     }
 
-    const GSList * reprlst = selection->reprList();
+    GSList const *reprlst = selection->reprList();
     bool filename_search = TRUE;
     bool xdpi_search = TRUE;
     bool ydpi_search = TRUE;
@@ -2569,7 +2575,7 @@ sp_selection_get_export_hints (Inkscape::Selection *selection, const char **file
             xdpi_search &&
             ydpi_search;
         reprlst = reprlst->next) {
-        const gchar * dpi_string;
+        gchar const *dpi_string;
         Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
 
         if (filename_search) {
@@ -2599,10 +2605,10 @@ sp_selection_get_export_hints (Inkscape::Selection *selection, const char **file
 }
 
 void
-sp_document_get_export_hints (SPDocument * doc, const char **filename, float *xdpi, float *ydpi) 
+sp_document_get_export_hints (SPDocument *doc, char const **filename, float *xdpi, float *ydpi)
 {
     Inkscape::XML::Node * repr = sp_document_repr_root(doc);
-    const gchar * dpi_string;
+    gchar const *dpi_string;
 
     *filename = repr->attribute("inkscape:export-filename");
 
@@ -2684,7 +2690,7 @@ sp_selection_create_bitmap_copy ()
         res = PX_PER_IN * prefs_min / MIN ((bbox.x1 - bbox.x0), (bbox.y1 - bbox.y0));
     } else {
         float hint_xdpi = 0, hint_ydpi = 0;
-        const char *hint_filename;
+        char const *hint_filename;
         // take resolution hint from the selected objects
         sp_selection_get_export_hints (selection, &hint_filename, &hint_xdpi, &hint_ydpi);
         if (hint_xdpi != 0) {
@@ -2706,12 +2712,12 @@ sp_selection_create_bitmap_copy ()
     unsigned height =(unsigned) floor ((bbox.y1 - bbox.y0) * res / PX_PER_IN);
 
     // Find out if we have to run a filter
-    const gchar *run = NULL;
-    const gchar *filter = prefs_get_string_attribute ("options.createbitmap", "filter");
+    gchar const *run = NULL;
+    gchar const *filter = prefs_get_string_attribute ("options.createbitmap", "filter");
     if (filter) {
         // filter command is given;
         // see if we have a parameter to pass to it
-        const gchar *param1 = prefs_get_string_attribute ("options.createbitmap", "filter_param1");
+        gchar const *param1 = prefs_get_string_attribute ("options.createbitmap", "filter_param1");
         if (param1) {
             if (param1[strlen(param1) - 1] == '%') {
                 // if the param string ends with %, interpret it as a percentage of the image's max dimension
@@ -2900,7 +2906,7 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
     g_slist_free (items);
     items = NULL;
             
-    gchar const* attributeName = apply_clip_path ? "clip-path" : "mask";
+    gchar const *attributeName = apply_clip_path ? "clip-path" : "mask";
     for (GSList *i = apply_to_items; NULL != i; i = i->next) {
         SPItem *item = reinterpret_cast<SPItem *>(i->data);
         // inverted object transform should be applied to a mask object,
@@ -2913,7 +2919,7 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
             mask_items_dup = g_slist_prepend (mask_items_dup, dup);
         }
 
-        const gchar *mask_id = NULL;
+        gchar const *mask_id = NULL;
         if (apply_clip_path) {
             mask_id = sp_clippath_create(mask_items_dup, doc, &maskTransform);
         } else {
@@ -2959,9 +2965,9 @@ void sp_selection_unset_mask(bool apply_clip_path) {
     bool remove_original = prefs_get_int_attribute ("options.maskobject", "remove", 1);
     sp_document_ensure_up_to_date(doc);
 
-    gchar const* attributeName = apply_clip_path ? "clip-path" : "mask";
+    gchar const *attributeName = apply_clip_path ? "clip-path" : "mask";
     std::map<SPObject*,SPItem*> referenced_objects;
-    for (GSList const*i = selection->itemList(); NULL != i; i = i->next) {
+    for (GSList const *i = selection->itemList(); NULL != i; i = i->next) {
         if (remove_original) {
             // remember referenced mask/clippath, so orphaned masks can be moved back to document
             SPItem *item = reinterpret_cast<SPItem *>(i->data);
@@ -3129,6 +3135,7 @@ GSList * sp_selection_get_clipboard() {
     return clipboard;
 }
 
+
 /*
   Local Variables:
   mode:c++
@@ -3138,4 +3145,4 @@ GSList * sp_selection_get_clipboard() {
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
