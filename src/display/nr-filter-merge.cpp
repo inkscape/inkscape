@@ -17,6 +17,7 @@
 #include "display/nr-filter-merge.h"
 #include "display/nr-filter-pixops.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixblock.h"
@@ -45,7 +46,7 @@ FilterPrimitive * FilterMerge::create() {
 FilterMerge::~FilterMerge()
 {}
 
-int FilterMerge::render(FilterSlot &slot, Matrix const &trans) {
+int FilterMerge::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in[_input_image.size()];
     NRPixBlock *original_in[_input_image.size()];
 

@@ -15,6 +15,7 @@
 
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 
 namespace NR {
 
@@ -57,7 +58,7 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterTurbulence();
 
-    virtual int render(FilterSlot &slot, Matrix const &trans);
+    virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual void update_pixbuffer(FilterSlot &slot);
     
     virtual void set_baseFrequency(int axis, double freq);

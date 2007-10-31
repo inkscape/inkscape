@@ -36,17 +36,6 @@ FilterPrimitive::~FilterPrimitive()
     // Nothing to do here
 }
 
-/** Wrapper function for rendering with C-style matrices. */
-int FilterPrimitive::render(FilterSlot &slot, NRMatrix const *trans) {
-    if(trans) {
-        return this->render(slot, *trans);
-    } else {
-        Matrix tmp;
-        tmp.set_identity();
-        return this->render(slot, tmp);
-    }
-}
-
 void FilterPrimitive::area_enlarge(NRRectL &area, Matrix const &m)
 {
     // This doesn't need to do anything by default

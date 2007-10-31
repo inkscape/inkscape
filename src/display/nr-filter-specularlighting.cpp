@@ -18,6 +18,7 @@
 #include "display/nr-filter-specularlighting.h"
 #include "display/nr-filter-getalpha.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
 #include "display/nr-light.h"
 #include "libnr/nr-blit.h"
@@ -58,7 +59,7 @@ do {\
         (inter) = (ks) * std::pow(scal, (specularExponent));\
 }while(0)
 
-int FilterSpecularLighting::render(FilterSlot &slot, Matrix const &trans) {
+int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = filter_get_alpha(slot.get(_input));
     NRPixBlock *out = new NRPixBlock;
 
@@ -74,7 +75,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, Matrix const &trans) {
     int dx = 1; //TODO setup
     int dy = 1; //TODO setup
     //surface scale
-    //TODO for the time being, assumes userSpaceOnUse
+    Matrix trans = units.get_matrix_primitiveunits2pb();
     gdouble ss = surfaceScale * trans[0];
     gdouble ks = specularConstant; //diffuse lighting constant
     Fvector L, N, LC, H;
@@ -113,9 +114,9 @@ int FilterSpecularLighting::render(FilterSlot &slot, Matrix const &trans) {
             PointLight *pl = new PointLight(light.point, lighting_color, trans);
             pl->light_components(LC);
         //TODO we need a reference to the filter to determine primitiveUnits
-        //slot._arena_item->filter seems to be ok on simple examples
-        //for now assume userSpaceOnUse
         //if objectBoundingBox is used, use a different matrix for light_vector
+        // UPDATE: trans is now correct matrix from primitiveUnits to
+        // pixblock coordinates
             //finish the work
             for (i = 0, j = 0; i < w*h; i++) {
                 compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
@@ -139,9 +140,9 @@ int FilterSpecularLighting::render(FilterSlot &slot, Matrix const &trans) {
             {
             SpotLight *sl = new SpotLight(light.spot, lighting_color, trans);
         //TODO we need a reference to the filter to determine primitiveUnits
-        //slot._arena_item->filter seems to be ok on simple examples
-        //for now assume userSpaceOnUse
         //if objectBoundingBox is used, use a different matrix for light_vector
+        // UPDATE: trans is now correct matrix from primitiveUnits to
+        // pixblock coordinates
             //finish the work
             for (i = 0, j = 0; i < w*h; i++) {
                 compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);

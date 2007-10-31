@@ -24,6 +24,7 @@
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-types.h"
+#include "display/nr-filter-units.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
 #include "util/fixed_point.h"
@@ -505,8 +506,9 @@ upsample(PT *const dst, int const dstr1, int const dstr2, unsigned int const dn1
     }
 }
 
-int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
+int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
 {
+    Matrix trans = units.get_matrix_primitiveunits2pb();
     /* in holds the input pixblock */
     NRPixBlock *in = slot.get(_input);
 

@@ -10,6 +10,8 @@
  */
 
 #include "display/nr-filter-flood.h"
+#include "display/nr-filter-units.h"
+
 namespace NR {
 
 FilterFlood::FilterFlood()
@@ -24,7 +26,7 @@ FilterPrimitive * FilterFlood::create() {
 FilterFlood::~FilterFlood()
 {}
 
-int FilterFlood::render(FilterSlot &slot, Matrix const &trans) {
+int FilterFlood::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 

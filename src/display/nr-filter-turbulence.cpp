@@ -12,6 +12,7 @@
 #include "display/nr-arena-item.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-turbulence.h"
+#include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
 #include <math.h>
 
@@ -106,7 +107,7 @@ void FilterTurbulence::update_pixbuffer(FilterSlot &slot) {
     updated=true;
 }
 
-int FilterTurbulence::render(FilterSlot &slot, Matrix const &trans) {
+int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &units) {
 //g_warning("render");
     if (!updated) update_pixbuffer(slot);
     

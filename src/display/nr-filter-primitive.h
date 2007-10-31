@@ -7,7 +7,7 @@
  * Author:
  *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006 Niko Kiirala
+ * Copyright (C) 2006-2007 Niko Kiirala
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -43,8 +43,7 @@ public:
     FilterPrimitive();
     virtual ~FilterPrimitive();
 
-    int render(FilterSlot &slot, NRMatrix const *trans);
-    virtual int render(FilterSlot &slot, Matrix const &trans) = 0;
+    virtual int render(FilterSlot &slot, FilterUnits const &units) = 0;
     virtual void area_enlarge(NRRectL &area, Matrix const &m);
 
     /**

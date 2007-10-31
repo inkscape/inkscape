@@ -14,6 +14,7 @@
 
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 #include <gtkmm.h>
 
 namespace NR {
@@ -24,7 +25,7 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterImage();
 
-    virtual int render(FilterSlot &slot, Matrix const &trans);
+    virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual FilterTraits get_input_traits();
     void set_region(SVGLength x, SVGLength y, SVGLength width, SVGLength height);
 private:

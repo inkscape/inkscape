@@ -23,6 +23,7 @@
 
 #include "display/nr-filter-skeleton.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
 
@@ -38,7 +39,7 @@ FilterPrimitive * FilterSkeleton::create() {
 FilterSkeleton::~FilterSkeleton()
 {}
 
-int FilterSkeleton::render(FilterSlot &slot, Matrix const &trans) {
+int FilterSkeleton::render(FilterSlot &slot, FitlerUnits const &units) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out;
 

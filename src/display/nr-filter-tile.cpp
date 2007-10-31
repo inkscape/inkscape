@@ -10,6 +10,8 @@
  */
 
 #include "display/nr-filter-tile.h"
+#include "display/nr-filter-units.h"
+
 namespace NR {
 
 FilterTile::FilterTile()
@@ -24,7 +26,7 @@ FilterPrimitive * FilterTile::create() {
 FilterTile::~FilterTile()
 {}
 
-int FilterTile::render(FilterSlot &slot, Matrix const &trans) {
+int FilterTile::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 

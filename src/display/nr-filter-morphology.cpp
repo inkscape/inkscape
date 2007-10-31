@@ -10,6 +10,8 @@
  */
 
 #include "display/nr-filter-morphology.h"
+#include "display/nr-filter-units.h"
+
 namespace NR {
 
 FilterMorphology::FilterMorphology()
@@ -23,7 +25,7 @@ FilterPrimitive * FilterMorphology::create() {
 FilterMorphology::~FilterMorphology()
 {}
 
-int FilterMorphology::render(FilterSlot &slot, Matrix const &trans) {
+int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 

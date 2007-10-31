@@ -17,6 +17,7 @@
 #include "sp-femerge.h"
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 #include "libnr/nr-matrix.h"
 
 namespace NR {
@@ -27,7 +28,7 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterMerge();
 
-    virtual int render(FilterSlot &slot, Matrix const &trans);
+    virtual int render(FilterSlot &slot, FilterUnits const &units);
 
     virtual void set_input(int input);
     virtual void set_input(int input, int slot);

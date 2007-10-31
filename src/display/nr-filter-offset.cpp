@@ -11,6 +11,7 @@
 
 #include "display/nr-filter-offset.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 #include "libnr/nr-blit.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-pixblock.h"
@@ -31,7 +32,7 @@ FilterPrimitive * FilterOffset::create() {
 FilterOffset::~FilterOffset()
 {}
 
-int FilterOffset::render(FilterSlot &slot, Matrix const &trans) {
+int FilterOffset::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 
@@ -41,6 +42,7 @@ int FilterOffset::render(FilterSlot &slot, Matrix const &trans) {
         return 1;
     }
 
+    Matrix trans = units.get_matrix_primitiveunits2pb();
     Point offset(dx, dy);
     offset *= trans;
     offset[X] -= trans[4];

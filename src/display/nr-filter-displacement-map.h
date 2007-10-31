@@ -14,6 +14,7 @@
 
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-rect-l.h"
 
@@ -29,7 +30,7 @@ public:
     virtual void set_input(int input, int slot);
     virtual void set_scale(double s);
     virtual void set_channel_selector(int channel, int s);
-    virtual int render(FilterSlot &slot, Matrix const &trans);
+    virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
     virtual FilterTraits get_input_traits();
 

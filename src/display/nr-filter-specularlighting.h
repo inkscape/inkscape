@@ -17,6 +17,7 @@
 #include "display/nr-light-types.h"
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 #include "libnr/nr-matrix.h"
 #include "sp-fedistantlight.h"
 #include "sp-fepointlight.h"
@@ -41,7 +42,7 @@ public:
     FilterSpecularLighting();
     static FilterPrimitive *create();
     virtual ~FilterSpecularLighting();
-    virtual int render(FilterSlot &slot, Matrix const &trans);
+    virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual FilterTraits get_input_traits();
 
 private:

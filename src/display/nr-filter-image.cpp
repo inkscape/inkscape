@@ -11,6 +11,7 @@
 #include "display/nr-arena-item.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-image.h"
+#include "display/nr-filter-units.h"
 
 namespace NR {
 
@@ -31,7 +32,7 @@ FilterPrimitive * FilterImage::create() {
 FilterImage::~FilterImage()
 {}
 
-int FilterImage::render(FilterSlot &slot, Matrix const &trans) {
+int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
     int w,x,y;
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;

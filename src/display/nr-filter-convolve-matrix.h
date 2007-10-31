@@ -14,6 +14,7 @@
 
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-rect-l.h"
 #include <vector>
@@ -33,7 +34,7 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterConvolveMatrix();
 
-    virtual int render(FilterSlot &slot, Matrix const &trans);
+    virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
     virtual FilterTraits get_input_traits();
 

@@ -10,8 +10,9 @@
  */
 
 #include "display/nr-filter-colormatrix.h"
+#include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
-#include<math.h>
+#include <math.h>
 
 namespace NR {
 
@@ -26,7 +27,7 @@ FilterPrimitive * FilterColorMatrix::create() {
 FilterColorMatrix::~FilterColorMatrix()
 {}
 
-int FilterColorMatrix::render(FilterSlot &slot, Matrix const &trans) {
+int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 

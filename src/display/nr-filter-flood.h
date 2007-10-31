@@ -14,6 +14,7 @@
 
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 
 namespace NR {
 
@@ -23,7 +24,7 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterFlood();
 
-    virtual int render(FilterSlot &slot, Matrix const &trans);
+    virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
 };
 

@@ -196,11 +196,8 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     }
     in = NULL; // in is now handled by FilterSlot, we should not touch it
 
-    // TODO: filters may need both filterUnits and primitiveUnits,
-    // so we should pass FilterUnits to render method, not just one Matrix
-    Matrix primitiveunits2pixblock = units.get_matrix_primitiveunits2pb();
     for (int i = 0 ; i < _primitive_count ; i++) {
-        _primitive[i]->render(slot, primitiveunits2pixblock);
+        _primitive[i]->render(slot, units);
     }
 
     slot.get_final(_output_slot, pb);

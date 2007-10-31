@@ -10,8 +10,10 @@
  */
 
 #include "display/nr-filter-convolve-matrix.h"
+#include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
 #include <vector>
+
 namespace NR {
 
 FilterConvolveMatrix::FilterConvolveMatrix()
@@ -32,7 +34,7 @@ static bool inside_area(int px, int py, int w, int h){
         return true;
 }
 
-int FilterConvolveMatrix::render(FilterSlot &slot, Matrix const &trans) {
+int FilterConvolveMatrix::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 

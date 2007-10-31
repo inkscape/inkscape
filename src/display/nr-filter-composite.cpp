@@ -16,6 +16,7 @@
 #include "display/nr-filter-composite.h"
 #include "display/nr-filter-pixops.h"
 #include "display/nr-filter-slot.h"
+#include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixblock.h"
@@ -97,7 +98,7 @@ FilterPrimitive * FilterComposite::create() {
 FilterComposite::~FilterComposite()
 {}
 
-int FilterComposite::render(FilterSlot &slot, Matrix const &trans) {
+int FilterComposite::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in1 = slot.get(_input);
     NRPixBlock *in2 = slot.get(_input2);
     NRPixBlock *original_in1 = in1;

@@ -19,6 +19,7 @@
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-types.h"
+#include "display/nr-filter-units.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-blit.h"
@@ -123,7 +124,7 @@ FilterPrimitive * FilterBlend::create() {
 FilterBlend::~FilterBlend()
 {}
 
-int FilterBlend::render(FilterSlot &slot, Matrix const &trans) {
+int FilterBlend::render(FilterSlot &slot, FilterUnits const & /*units*/) {
     NRPixBlock *in1 = slot.get(_input);
     NRPixBlock *in2 = slot.get(_input2);
     NRPixBlock *original_in1 = in1;

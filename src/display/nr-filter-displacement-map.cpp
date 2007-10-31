@@ -11,6 +11,7 @@
 
 #include "display/nr-filter-displacement-map.h"
 #include "display/nr-filter-types.h"
+#include "display/nr-filter-units.h"
 #include "libnr/nr-pixops.h"
 
 namespace NR {
@@ -25,7 +26,7 @@ FilterPrimitive * FilterDisplacementMap::create() {
 FilterDisplacementMap::~FilterDisplacementMap()
 {}
 
-int FilterDisplacementMap::render(FilterSlot &slot, Matrix const &trans) {
+int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *texture = slot.get(_input);
     NRPixBlock *map = slot.get(_input2);
    

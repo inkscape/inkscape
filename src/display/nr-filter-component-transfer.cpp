@@ -10,6 +10,7 @@
  */
 
 #include "display/nr-filter-component-transfer.h"
+#include "display/nr-filter-units.h"
 
 namespace NR {
 
@@ -25,7 +26,7 @@ FilterPrimitive * FilterComponentTransfer::create() {
 FilterComponentTransfer::~FilterComponentTransfer()
 {}
 
-int FilterComponentTransfer::render(FilterSlot &slot, Matrix const &trans) {
+int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 
