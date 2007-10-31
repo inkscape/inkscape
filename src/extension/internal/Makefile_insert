@@ -5,6 +5,13 @@ extension/internal/all: extension/internal/libinternal.a
 extension/internal/clean:
 	rm -f extension/internal/libinternal.a $(extension_internal_libinternal_OBJECTS)
 
+if WITH_LIBWPG
+extension_internal_libwpg = \
+	extension/internal/wpg-input.cpp	\
+	extension/internal/wpg-input.h
+
+endif
+
 if USE_IMAGE_MAGICK
 extension_internal_image_magick_sources =			\
 	extension/internal/bitmap/imagemagick.cpp		\
@@ -129,7 +136,6 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/latex-pstricks.h	\
 	extension/internal/latex-pstricks-out.cpp	\
 	extension/internal/latex-pstricks-out.h	\
-	extension/internal/wpg-input.cpp	\
-	extension/internal/wpg-input.h	\
+	$(extension_internal_libwpg) \
 	$(extension_internal_image_magick_sources)
 
