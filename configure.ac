@@ -548,11 +548,14 @@ dnl ******************************
 dnl Check for libwpg for extension
 dnl ******************************
 
-PKG_CHECK_MODULES(LIBWPG, libwpg-0.1, with_libwpg=yes, with_libwpg=no)
+PKG_CHECK_MODULES(LIBWPG, libwpg-0.1 libwpg-stream-0.1, with_libwpg=yes, with_libwpg=no)
 if test "x$with_libwpg" = "xyes"; then
 	AC_DEFINE(WITH_LIBWPG,1,[Build in libwpg])
 fi
 AM_CONDITIONAL(WITH_LIBWPG, test "x$with_libwpg" = "xyes")
+
+AC_SUBST(LIBWPG_LIBS)
+AC_SUBST(LIBWPG_CFLAGS)
 
 dnl ******************************
 dnl Check for ImageMagick Magick++ 
