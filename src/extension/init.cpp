@@ -55,7 +55,9 @@
 #include "internal/bluredge.h"
 #include "internal/gimpgrad.h"
 #include "internal/grid.h"
+#ifdef WITH_LIBWPG
 #include "internal/wpg-input.h"
+#endif
 #include "prefs-utils.h"
 #include "io/sys.h"
 
@@ -181,7 +183,9 @@ init()
     Internal::OdfOutput::init();
     Internal::PrintLatex::init();
     Internal::LatexOutput::init();
+#ifdef WITH_LIBWPG
     Internal::WpgInput::init();
+#endif
 
     /* Effects */
     Internal::BlurEdge::init();

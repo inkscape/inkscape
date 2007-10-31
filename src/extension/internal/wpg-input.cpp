@@ -46,7 +46,7 @@
 #include "document.h"
 
 #include "libwpg/libwpg.h"
-#include "libwpg/WPGSVGGenerator.h"
+#include "libwpg/WPGStreamImplementation.h"
 
 using namespace libwpg;
 
@@ -57,9 +57,9 @@ namespace Internal {
 
 SPDocument *
 WpgInput::open(Inkscape::Extension::Input * mod, const gchar * uri) {
-    WPGInputStream* input = new WPGFileStream(uri);
-    if (input->isOle()) {
-        WPGInputStream* olestream = input->getWPGOleStream();
+    WPXInputStream* input = new libwpg::WPGFileStream(uri);
+    if (input->isOLEStream()) {
+        WPXInputStream* olestream = input->getDocumentOLEStream();
         if (olestream) {
             delete input;
             input = olestream;

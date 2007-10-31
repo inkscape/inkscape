@@ -36,7 +36,6 @@ include dom/Makefile_insert
 include extension/Makefile_insert
 include extension/implementation/Makefile_insert
 include extension/internal/Makefile_insert
-include extension/internal/libwpg/Makefile_insert
 include extension/script/Makefile_insert
 include helper/Makefile_insert
 include inkjar/Makefile_insert
@@ -83,7 +82,6 @@ noinst_LIBRARIES =	\
 	dom/libdom.a	\
 	extension/implementation/libimplementation.a	\
 	extension/internal/libinternal.a	\
-	extension/internal/libwpg/libwpg.a	\
 	extension/libextension.a	\
 	extension/script/libscript.a	\
 	helper/libspchelp.a	\

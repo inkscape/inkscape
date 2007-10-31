@@ -1,8 +1,0 @@
-.deps
-.libs
-libwpg.h
-Makefile
-Makefile.in
-*.lo
-*.rc
-*.la
