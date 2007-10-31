@@ -598,8 +598,7 @@ sp_item_list_common_parent_group(GSList const *items)
     return SP_GROUP(parent);
 }
 
-/** Finds out the minimum common bbox of the selected items
- */
+/** Finds out the minimum common bbox of the selected items. */
 static NR::Maybe<NR::Rect>
 enclose_items(GSList const *items)
 {
@@ -649,14 +648,14 @@ sp_selection_raise()
 
     Inkscape::XML::Node *grepr = SP_OBJECT_REPR(group);
 
-    /* construct reverse-ordered list of selected children */
+    /* Construct reverse-ordered list of selected children. */
     GSList *rev = g_slist_copy((GSList *) items);
     rev = g_slist_sort(rev, (GCompareFunc) sp_item_repr_compare_position);
 
-    // find out the common bbox of the selected items
+    // Determine the common bbox of the selected items.
     NR::Maybe<NR::Rect> selected = enclose_items(items);
 
-    // for all objects in the selection (starting from top)
+    // Iterate over all objects in the selection (starting from top).
     if (selected) {
         while (rev) {
             SPObject *child = SP_OBJECT(rev->data);
@@ -744,15 +743,15 @@ sp_selection_lower()
 
     Inkscape::XML::Node *grepr = SP_OBJECT_REPR(group);
 
-    // find out the common bbox of the selected items
+    // Determine the common bbox of the selected items.
     NR::Maybe<NR::Rect> selected = enclose_items(items);
 
-    /* construct direct-ordered list of selected children */
+    /* Construct direct-ordered list of selected children. */
     GSList *rev = g_slist_copy((GSList *) items);
     rev = g_slist_sort(rev, (GCompareFunc) sp_item_repr_compare_position);
     rev = g_slist_reverse(rev);
 
-    // for all objects in the selection (starting from top)
+    // Iterate over all objects in the selection (starting from top).
     if (selected) {
         while (rev) {
             SPObject *child = SP_OBJECT(rev->data);
