@@ -944,8 +944,8 @@ Transformation::onClear()
         break;
     }
     case PAGE_SCALE: {
-        _scalar_scale_horizontal.setValue(0);
-        _scalar_scale_vertical.setValue(0);
+        _scalar_scale_horizontal.setValue(100);
+        _scalar_scale_vertical.setValue(100);
         break;
     }
     case PAGE_SKEW: {
