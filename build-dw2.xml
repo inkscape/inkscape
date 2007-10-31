@@ -198,6 +198,7 @@
             <exclude name="extension/dxf2svg/.*"/>
             <exclude name="extension/implementation/plugin.cpp"/>
             <exclude name="extension/internal/gnome.cpp"/>
+            <exclude name="extension/internal/wpg-input.cpp"/>
             <exclude name="extension/script/bindtest.cpp"/>
             <exclude name="extension/script/cpptest.cpp"/>
             <exclude name="extension/plugin/.*"/>
