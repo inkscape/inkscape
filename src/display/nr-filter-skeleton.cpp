@@ -39,7 +39,7 @@ FilterPrimitive * FilterSkeleton::create() {
 FilterSkeleton::~FilterSkeleton()
 {}
 
-int FilterSkeleton::render(FilterSlot &slot, FitlerUnits const &units) {
+int FilterSkeleton::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out;
 
