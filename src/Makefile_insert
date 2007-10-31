@@ -371,6 +371,7 @@ all_libs =			\
 	$(PERL_LIBS)		\
 	$(PYTHON_LIBS)	\
 	$(INKBOARD_LIBS) \
+	$(LIBWPG_LIBS) \
 	$(IMAGEMAGICK_LIBS)
 
 desktop.$(OBJEXT): helper/sp-marshal.h
