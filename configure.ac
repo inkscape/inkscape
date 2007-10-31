@@ -545,6 +545,16 @@ AC_SUBST(INKBOARD_LIBS)
 AC_SUBST(INKBOARD_CFLAGS)
 
 dnl ******************************
+dnl Check for libwpg for extension
+dnl ******************************
+
+PKG_CHECK_MODULES(LIBWPG, libwpg-0.1, with_libwpg=yes, with_libwpg=no)
+if test "x$with_libwpg" = "xyes"; then
+	AC_DEFINE(WITH_LIBWPG,1,[Build in libwpg])
+fi
+AM_CONDITIONAL(WITH_LIBWPG, test "x$with_libwpg" = "xyes")
+
+dnl ******************************
 dnl Check for ImageMagick Magick++ 
 dnl ******************************
 
@@ -938,4 +948,5 @@ Configuration:
         Enable SSL in Inkboard:   ${with_inkboard_ssl}
         Enable Poppler-Cairo:     ${enable_poppler_cairo}
         ImageMagick Magick++:     ${magick_ok}
+        Libwpg:                   ${with_libwpg}
 "
