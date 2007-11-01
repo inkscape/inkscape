@@ -46,7 +46,7 @@
   <!--<property name="archutil"    value="${arch}"/>-->
   <property name="archutil"    value=""/>
   <property name="src"         location="src"/>
-  <property name="gtk"         location="c:/gtk210"/>
+  <property name="gtk"         location="c:/devlibs"/>
   <property name="lib"         location="lib"/>
   <property name="build"       location="build"/>
   <property name="dist"        location="inkscape"/>
@@ -151,6 +151,12 @@
         /* do we want bitmap manipulation? */
         #define WITH_IMAGE_MAGICK             1
 
+        /* Allow reading WordPerfect? */
+        #define WITH_LIBWPG                   1
+
+        /* Allow reading WordPerfect? */
+        #define WITH_LIBWPG                   1
+
         #endif /* _CONFIG_H_ */
     </makefile>
   </target>
@@ -198,7 +204,6 @@
             <exclude name="extension/dxf2svg/.*"/>
             <exclude name="extension/implementation/plugin.cpp"/>
             <exclude name="extension/internal/gnome.cpp"/>
-            <exclude name="extension/internal/wpg-input.cpp"/>
             <exclude name="extension/script/bindtest.cpp"/>
             <exclude name="extension/script/cpptest.cpp"/>
             <exclude name="extension/plugin/.*"/>
@@ -248,7 +253,7 @@
             <exclude name="dialogs/whiteboard-sharewithuser-dialog.cpp"/>
             <exclude name="jabber_whiteboard/node-tracker.cpp"/>
             <exclude name="jabber_whiteboard/node-utilities.cpp"/>
-            <!--WHITEBOARD-->
+            <!--OVERLAP-->
             <exclude name="removeoverlap/placement_SolveVPSC.cpp"/>
             <exclude name="removeoverlap/placement_SolveVPSC.h"/>
             <exclude name="removeoverlap/test.cpp"/>
@@ -293,6 +298,8 @@
             -I${gtk}/include/cairo
             -I${gtk}/include/poppler
             -I${gtk}/include/gc
+            -I${gtk}/include/libwpg-0.1
+            -I${gtk}/include/libwpd-0.8
             <!-- PERL -->
             -Wno-comment -I${gtk}/perl/lib/CORE
             <!-- PYTHON -->
@@ -385,6 +392,7 @@
            ${gtk}/bin/libxslt.dll
            -lpoppler-cairo -lpoppler
            -lcairo.dll
+           -lwpg-0.1.dll -lwpd-0.8.dll
            ${gtk}/lib/iconv.lib
            -lMagick++ -lWand -lMagick
            -lfreetype.dll -lfontconfig.dll
@@ -501,6 +509,8 @@
     <copy file="${gtk}/bin/libxslt.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libexpat.dll" todir="${dist}"/>
     <!--<copy file="${gtk}/bin/libexpat.dll" tofile="${dist}/xmlparse.dll"/>-->
+    <copy file="${gtk}/bin/libwpg-0.1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libwpd-0.8.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/jpeg62.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpng13.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libtiff3.dll" todir="${dist}"/>
