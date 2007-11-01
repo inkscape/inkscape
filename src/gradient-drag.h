@@ -92,8 +92,9 @@ struct GrDragger {
 	bool mayMerge (GrDragger *other);
 	bool mayMerge (GrDraggable *da2);
 
-	bool isA (gint point_type);
-	bool isA (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke);
+    bool isA (gint point_type);
+    bool isA (SPItem *item, gint point_type, bool fill_or_stroke);
+    bool isA (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke);
 
 	void fireDraggables (bool write_repr, bool scale_radial = false, bool merging_focus = false);
 };

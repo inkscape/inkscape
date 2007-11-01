@@ -641,7 +641,6 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                         continue;
                     if (d_new->isA (draggable->item,
                                     draggable->point_type == POINT_LG_BEGIN? POINT_LG_END : POINT_LG_BEGIN,
-                                    draggable->point_i,
                                     draggable->fill_or_stroke)) {
                         // found the other end of the linear gradient;
                         if (state & GDK_SHIFT_MASK) {
@@ -661,7 +660,6 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                         continue;
                     if (d_new->isA (draggable->item,
                                     POINT_RG_CENTER,
-                                    draggable->point_i,
                                     draggable->fill_or_stroke)) {
                         // found the center of the radial gradient;
                         dr_snap = &(d_new->point);
@@ -1025,7 +1023,7 @@ GrDragger::isA (gint point_type)
 }
 
 /**
-Checks if the dragger has a draggable with this item, point_type, fill_or_stroke
+Checks if the dragger has a draggable with this item, point_type + point_i (number), fill_or_stroke
  */
 bool
 GrDragger::isA (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke)
@@ -1033,6 +1031,21 @@ GrDragger::isA (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke
     for (GSList const* i = this->draggables; i != NULL; i = i->next) {
         GrDraggable *draggable = (GrDraggable *) i->data;
         if ( (draggable->point_type == point_type) && (draggable->point_i == point_i) && (draggable->item == item) && (draggable->fill_or_stroke == fill_or_stroke) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+Checks if the dragger has a draggable with this item, point_type, fill_or_stroke
+ */
+bool
+GrDragger::isA (SPItem *item, gint point_type, bool fill_or_stroke)
+{
+    for (GSList const* i = this->draggables; i != NULL; i = i->next) {
+        GrDraggable *draggable = (GrDraggable *) i->data;
+        if ( (draggable->point_type == point_type) && (draggable->item == item) && (draggable->fill_or_stroke == fill_or_stroke) ) {
             return true;
         }
     }
