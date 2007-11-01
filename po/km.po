@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-10-17 23:52+0200\n"
-"PO-Revision-Date: 2007-10-26 15:34+0700\n"
+"PO-Revision-Date: 2007-11-01 16:21+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
-"Language-Team: Khmer <support@khmeros.info>\n"
+"Language-Team: Khmer <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2934,214 +2934,191 @@ msgstr "កាត់​បន្ថយ​ការ​រំខាន"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:47
 msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter."
-msgstr ""
+msgstr "កាត់​បន្ថយ​ភាព​រំខាន​នៅក្នុង​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ប្រើតម្រង​​លុប​ការ​រំខាន ។"
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
-#, fuzzy
 msgid "Shade"
-msgstr "រូបរាង​"
+msgstr "ស្រមោល​"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
 #: ../src/ui/dialog/filter-effects-dialog.cpp:772
 msgid "Azimuth"
-msgstr ""
+msgstr "Azimuth"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
 #: ../src/ui/dialog/filter-effects-dialog.cpp:773
-#, fuzzy
 msgid "Elevation"
-msgstr "ទំនាក់ទំនង​"
+msgstr "ការ​លើកឡើង​"
 
 #: ../src/extension/internal/bitmap/shade.cpp:43
-#, fuzzy
 msgid "Colored Shading"
-msgstr "​​ពណ៌​ស្រមោល"
+msgstr "ការ​ដាក់ពណ៌​មាន​ស្រមោល"
 
 #: ../src/extension/internal/bitmap/shade.cpp:49
 msgid "Shade selected bitmap(s) simulating distant light source."
-msgstr ""
+msgstr "ដាក់​ស្រមោល​រូបភាព​ដែល​បានជ្រើស ក្លែង​ធ្វើ​ប្រភព​ពន្លឺ​ពី​ចម្ងាយ ។"
 
 #: ../src/extension/internal/bitmap/sharpen.cpp:46
-#, fuzzy
 msgid "Sharpen selected bitmap(s)."
-msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​ជាក្រុម​"
+msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដែល​បាន​ជ្រើស​ច្បាស់ ។​"
 
 #: ../src/extension/internal/bitmap/solarize.cpp:36
-#, fuzzy
 msgid "Solarize"
-msgstr "ទំហំ"
+msgstr "ធ្វើដូច​ពន្លឺ​ព្រះអាទិត្យ"
 
 #: ../src/extension/internal/bitmap/solarize.cpp:44
 msgid "Solarize selected bitmap(s), like overexposing photographic film."
-msgstr ""
+msgstr "ធ្វើ​រូបភាព​ដែល​បាន​ជ្រើស​ដូច​ពន្លឺ​ព្រះអាទិត្យ ដូច​ជាការ​ធ្វើ​ឲ្យ​ហ្វីល​រូបថត​ត្រូវ​ពន្លឺ​យូរពេក ។​"
 
 #: ../src/extension/internal/bitmap/spread.cpp:36
-#, fuzzy
 msgid "Spread"
-msgstr "គួច"
+msgstr "លាត​ត្រដាង"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
 msgid "Randomly spread pixels in selected bitmap(s), within the radius of 'amount.'"
-msgstr ""
+msgstr "លាត​ត្រដាង​​ភីកសែល​ក្នុង​រូបភាព​ដែល​បាន​ជ្រើស​ដោយ​ចៃដន្យ នៅ​ក្នុង​កាំ​នៃ '​ចំនួន​សរុប' ។"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
-#, fuzzy
 msgid "Swirl"
 msgstr "គួច"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:38
-#, fuzzy
 msgid "Degrees"
 msgstr "ដឺក្រេ"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:44
 msgid "Swirl selected bitmap(s) around center point."
-msgstr ""
+msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដែល​បាន​ជ្រើស​គួច​ជុំវិញ​ចំណុច​កណ្ដាល ។"
 
 #. TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-threshold.html
 #: ../src/extension/internal/bitmap/threshold.cpp:37
 #: ../src/extension/internal/bitmap/threshold.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:45
-#, fuzzy
 msgid "Threshold"
-msgstr "កម្រិត​ពន្លឺ​ ៖"
+msgstr "កម្រិត​ពន្លឺ​"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:45
-#, fuzzy
 msgid "Threshold selected bitmap(s)."
-msgstr "រូបភាពទាំង​អស់​បាន​បង្កប់​"
+msgstr "កម្រិតកម្រិត​ពន្លឺ​​នៃ​រូបភាព​ដែល​បាន​ជ្រើស ។​"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:40
 msgid "Unsharp Mask"
-msgstr ""
+msgstr "របាំង​គ្មាន​រូបរាង"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:51
 msgid "Sharpen selected bitmap(s) using unsharp mask algorithms."
-msgstr ""
+msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដែល​បាន​ជ្រើស​ច្បាស់ ដោយ​ប្រើ​លោការីត​របាំង​ដែល​គ្មាន​រូបរាង ។"
 
 #: ../src/extension/internal/bitmap/wave.cpp:37
-#, fuzzy
 msgid "Wave"
-msgstr "​រក្សា​ទុក"
+msgstr "រលក"
 
 #: ../src/extension/internal/bitmap/wave.cpp:39
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1926
 msgid "Amplitude"
-msgstr ""
+msgstr "ទំហំ​វិសេសវិសាល"
 
 #: ../src/extension/internal/bitmap/wave.cpp:40
 msgid "Wavelength"
-msgstr ""
+msgstr "ប្រវែង​រលក"
 
 #: ../src/extension/internal/bitmap/wave.cpp:46
 msgid "Alter selected bitmap(s) along sine wave."
-msgstr ""
+msgstr "បន្ទាប់​ពី​រូបភាព​ដែល​បាន​ជ្រើស រលក​ស៊ីនុស​វែង ។"
 
 #: ../src/extension/internal/bluredge.cpp:132
-#, fuzzy
 msgid "Inset/Outset Halo"
-msgstr "ភ្ជាប់​ឬ ដំបូង​តាម​ ៖"
+msgstr "ភ្ជាប់/មិន​ភ្ជាប់​ព្រះអាទិត្យ"
 
 #: ../src/extension/internal/bluredge.cpp:134
-#, fuzzy
 msgid "Width in px of the halo"
-msgstr "ទទឹង​គិតជា​ភីចសែល​សម្រាប់​តំបន់​ដែល​បានដាក់​ឲ្យ​ព្រិល"
+msgstr "ទទឹង​គិត​ជា​ភីកសែល​របស់​ព្រះអាទិត្យ"
 
 #: ../src/extension/internal/bluredge.cpp:135
-#, fuzzy
 msgid "Number of steps"
 msgstr "​ចំនួន​ជំហាន​"
 
 #: ../src/extension/internal/bluredge.cpp:135
-#, fuzzy
 msgid "Number of inset/outset copies of the object to make"
-msgstr "ចំនួន​ចម្លង​នៃ​វត្ថុ​ដើម្បីបង្កើតចម្លង​បែប​ព្រិល​"
+msgstr "ចំនួន​ច្បាប់​ចម្លង​ភ្ជាប់/មិនភ្ជាប់​របស់​វត្ថុ​ត្រូវ​បង្កើត"
 
 #: ../src/extension/internal/bluredge.cpp:139
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
 #: ../share/extensions/pathalongpath.inx.h:4
 msgid "Generate from Path"
-msgstr "បង្កើត​ពី ផ្លូវ​"
+msgstr "បង្កើត​ពី​ផ្លូវ​"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1382
-#, fuzzy
 msgid "EMF Input"
-msgstr "ការ​បញ្ចូល DXF"
+msgstr "ការ​បញ្ចូល EMF"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1387
-#, fuzzy
 msgid "Enhanced Metafiles (*.emf)"
-msgstr "ឯកសារ​មេតា​របស់​វីនដូ (*.wmf)"
+msgstr "ឯកសារ​មេតា​ដែល​បាន​ធ្វើ​ឲ្យ​ប្រសើរ (*.emf)"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1388
 msgid "Enhanced Metafiles"
-msgstr ""
+msgstr "ឯកសារ​មេតា​ដែល​បាន​ធ្វើ​ឲ្យ​ប្រសើរ"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1396
-#, fuzzy
 msgid "WMF Input"
-msgstr "ការ​បញ្ចូល DXF"
+msgstr "ការ​បញ្ចូល WMF"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1401
-#, fuzzy
 msgid "Windows Metafiles (*.wmf)"
 msgstr "ឯកសារ​មេតា​របស់​វីនដូ (*.wmf)"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1402
-#, fuzzy
 msgid "Windows Metafiles"
-msgstr "បញ្ចូល​ឯកសារ​មេតា​របស់​វីនដូ"
+msgstr "ឯកសារ​មេតា​របស់​វីនដូ"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1410
-#, fuzzy
 msgid "EMF Output"
-msgstr "លទ្ធផល DXF"
+msgstr "លទ្ធផល EMF"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1415
-#, fuzzy
 msgid "Enhanced Metafile (*.emf)"
-msgstr "ឯកសារ​មេតា​របស់​វីនដូ (*.wmf)"
+msgstr "ឯកសារ​មេតា​ដែល​បាន​ធ្វើ​ឲ្យ​ប្រសើរ (*.emf)"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1416
 msgid "Enhanced Metafile"
-msgstr ""
+msgstr "ឯកសារ​មេតា​ដែល​បាន​ធ្វើ​ឲ្យ​ប្រសើរ"
 
 #: ../src/extension/internal/eps-out.cpp:89
 msgid "Encapsulated Postscript Output"
-msgstr "ទិន្នផល Postscript ដែល​បានស្រោប​"
+msgstr "លទ្ធផល​ Postscript ដែល​បាន​ស្រោប"
 
 #: ../src/extension/internal/eps-out.cpp:91
 msgid "Make bounding box around full page"
-msgstr "បង្កើត​ប្រអប់​ព្រំដែន​ពេញ​ទំព័រ​"
+msgstr "បង្កើត​​ប្រអប់​ព្រំដែន​ជុំវិញ​ទំព័រ​ទាំង​មូល"
 
 #: ../src/extension/internal/eps-out.cpp:92
 #: ../src/extension/internal/ps-out.cpp:84
-#, fuzzy
 msgid "Convert texts to paths"
-msgstr "បម្លែង​អត្ថបទ​ទៅ​ជា​ផ្លូវ​"
+msgstr "បម្លែង​អត្ថបទ​ទៅ​ផ្លូវ​"
 
 #: ../src/extension/internal/eps-out.cpp:93
 #: ../src/extension/internal/ps-out.cpp:85
 msgid "Embed fonts (Type 1 only)"
-msgstr ""
+msgstr "បង្កប់​ពុម្ពអក្សរ (សម្រាប់​តែ Type 1)"
 
 #: ../src/extension/internal/eps-out.cpp:97
 #: ../share/extensions/eps_input.inx.h:3
 msgid "Encapsulated Postscript (*.eps)"
-msgstr " Postscript (*.eps) ត្រូវបាន​ដាក់​ក្នុង​ស្រោម​"
+msgstr "Postscript ដែល​បាន​ស្រោប(*.eps)"
 
 #: ../src/extension/internal/eps-out.cpp:98
 msgid "Encapsulated Postscript File"
-msgstr "ឯកសារ​ Postscript ត្រូវបានដាក់​ក្នុង​ស្រោម​"
+msgstr "ឯកសារ​ Postscript ត្រូវបានស្រោប"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:113
 #, c-format
 msgid "%s GDK pixbuf Input"
-msgstr "បញ្ចូល %s GDK pixbuf "
+msgstr "ការ​បញ្ចូល %s GDK pixbuf"
 
 #: ../src/extension/internal/gimpgrad.cpp:274
 msgid "GIMP Gradients"
-msgstr "ជម្រាលរបស់​ GIMP "
+msgstr "ជម្រាលរបស់​ GIMP"
 
 #: ../src/extension/internal/gimpgrad.cpp:279
 msgid "GIMP Gradient (*.ggr)"
@@ -3149,7 +3126,7 @@ msgstr "ជម្រាលរបស់ GIMP (*.ggr)"
 
 #: ../src/extension/internal/gimpgrad.cpp:280
 msgid "Gradients used in GIMP"
-msgstr "ជម្រាល​ត្រូវ​បាន​ប្រើក្នុង​ GIMP"
+msgstr "ជម្រាល​បាន​ប្រើ​នៅ​ក្នុង​ GIMP"
 
 #: ../src/extension/internal/grid.cpp:192 ../src/ui/widget/panel.cpp:118
 msgid "Grid"
@@ -3161,11 +3138,11 @@ msgstr "ទទឹង​បន្ទាត់"
 
 #: ../src/extension/internal/grid.cpp:195
 msgid "Horizontal Spacing"
-msgstr "ដក​ឃ្លា​ផ្តេក​"
+msgstr "ចន្លោះ​ផ្ដេក​"
 
 #: ../src/extension/internal/grid.cpp:196
 msgid "Vertical Spacing"
-msgstr "ដក​ឃ្លា​បញ្ឈរ​"
+msgstr "ចន្លោះ​បញ្ឈរ​"
 
 #: ../src/extension/internal/grid.cpp:197
 msgid "Horizontal Offset"
@@ -3186,19 +3163,19 @@ msgstr "បង្ហាញ​"
 
 #: ../src/extension/internal/grid.cpp:204
 msgid "Draw a path which is a grid"
-msgstr "គូរ​ផ្លូវ​ជា​ក្រឡាចក្រត្រង់​"
+msgstr "គូរ​ផ្លូវ​ជា​ក្រឡា​ចក្រត្រង្គ"
 
 #: ../src/extension/internal/latex-pstricks.cpp:347
 msgid "LaTeX Print"
-msgstr "បោះពុម្ព​ LaTeX "
+msgstr "បោះពុម្ព​ LaTeX"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:106
 msgid "LaTeX Output"
-msgstr "ទិន្នផល​ LaTeX "
+msgstr "លទ្ធផល​ LaTeX"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:111
 msgid "LaTeX With PSTricks macros (*.tex)"
-msgstr "LaTeX ជាមួយ PSTricks macros (*.tex)"
+msgstr "LaTeX ជាមួយ​ម៉ាក្រូ PSTricks (*.tex)"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:112
 msgid "LaTeX PSTricks File"
@@ -3206,15 +3183,15 @@ msgstr "ឯកសារ LaTeX PSTricks"
 
 #: ../src/extension/internal/odf.cpp:2424
 msgid "OpenDocument Drawing Output"
-msgstr "បើកឯកសារ​បង្ហាញ​ទិន្នផល​ការគូរ​"
+msgstr "លទ្ធផល​គំនូរ​របស់ OpenDocument"
 
 #: ../src/extension/internal/odf.cpp:2429
 msgid "OpenDocument drawing (*.odg)"
-msgstr "បើក​ឯកសារ​គូរ (*.odg)"
+msgstr "គំនូរ​របស់ OpenDocument (*.odg)"
 
 #: ../src/extension/internal/odf.cpp:2430
 msgid "OpenDocument drawing file"
-msgstr "បើក​ឯកសារ​សម្រាប់​ឯកសារ​គូរ​"
+msgstr "ឯកសារ​គំនូរ​របស់ OpenDocument"
 
 #: ../src/extension/internal/pdf-cairo.cpp:123
 #: ../src/extension/internal/ps.cpp:146
@@ -3225,24 +3202,22 @@ msgstr "ទិសដៅ​បោះពុម្ព"
 #: ../src/extension/internal/pdf-cairo.cpp:138
 #: ../src/extension/internal/ps.cpp:161
 msgid "Print properties"
-msgstr "លក្ខណៈសម្បត្តិ​បោះពុម្ព​"
+msgstr "លក្ខណៈសម្បត្តិ​​បោះពុម្ព​"
 
 #: ../src/extension/internal/pdf-cairo.cpp:145
 msgid "Print using PDF operators"
-msgstr "បោះពុម្ព​ដោយប្រើ​ប្រតិបត្តិ​ PDF "
+msgstr "បោះពុម្ព​ដោយ​ប្រើ​ប្រតិបត្តិ​ PDF"
 
 #: ../src/extension/internal/pdf-cairo.cpp:147
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
 "size and can be arbitrarily scaled, but patterns will be lost."
-msgstr ""
-"ប្រើសញ្ញាប្រតិបត្តិ​វ៉ិចទ័រ  PDF  ។ លទ្ធផល​រូបភាព​ជាធម្មតា​តូចជាង​ទំហំ​  ឯកសារ​ហើយ​ អាច​ធ្វើមាត្រដ្ឋាន​"
-"តាម​ចិត្ត​ ប៉ុន្តែ​លំនាំ​នឹង​ត្រូវ​បានបាត់​បង់​ ។"
+msgstr "ប្រើ​សញ្ញា​ប្រតិបត្តិ​វ៉ិចទ័រ​របស់ PDF ។ លទ្ធផល​រូបភាព​ធម្មតាតូច​ជាង​នៅ​ក្នុង​ទំហំ​ឯកសារ និង​អាច​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន​ដោយ​បង្ខំ ប៉ុន្តែ​លំនាំ​នឹង​បាត់បង់ ។"
 
 #: ../src/extension/internal/pdf-cairo.cpp:152
 #: ../src/extension/internal/ps.cpp:175
 msgid "Print as bitmap"
-msgstr "បោះពុម្ព​រូបភាព "
+msgstr "បោះពុម្ពជា​​រូបភាព"
 
 #: ../src/extension/internal/pdf-cairo.cpp:154
 #: ../src/extension/internal/ps.cpp:177
@@ -3250,14 +3225,12 @@ msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
 "will be rendered exactly as displayed."
-msgstr ""
-"បោះពុម្ព​ជា​រូបភាព​ ។ លទ្ធផល​រូបភាព​ជា​ធម្មតា​ធំ​ជា​ទំហំ​​ឯកសារ​មិន​អាច​ធ្វើ​មាត្រដ្ឋាន​តាមចិត្ត​បានឡើយ​ដោយ​"
-"មិនបាត់​បង់​គុណភាព​ ប៉ុន្តែ​គ្រប់​វត្ថុ​ទាំងអស់​នឹង ត្រូវ​បាន​បង្ហាញ ដែល​ដកស្រង់​មក​បង្ហាញ​ ។"
+msgstr "បោះពុម្ព​អ្វីៗ​ទាំង​អស់​ជា​រូបភាប ។​ លទ្ធផល​របស់​រូបភាព​តាម​ធម្មតា​ធំជាង​នៅ​ក្នុង​ទំហំ​ឯកសារ និង​មិន​អាច​ធ្វើ​មាត្រដ្ឋាន​ដោយ​បង្ខំ​​ដោយ​មិន​បាត់បង់​គុណភាព​បាន​ទេ ប៉ុន្តែ​វត្ថុ​ទាំង​អស់​នឹង​ត្រូវ​បាន​បង្ហាញ​ជាក់លាក់​ដូច​នឹង​អ្វី​ដែល​បាន​បង្ហាញ ។"
 
 #: ../src/extension/internal/pdf-cairo.cpp:168
 #: ../src/extension/internal/ps.cpp:191
 msgid "Preferred resolution (dots per inch) of bitmap"
-msgstr "គុណភាព​បង្ហាញ​ (dots per inch) នៃ​រូបភាព​"
+msgstr "គុណភាព​បង្ហាញ​​ដែល​ពេញចិត្ត (dots per inch) របស់​​រូបភាព​"
 
 #: ../src/extension/internal/pdf-cairo.cpp:182
 #: ../src/extension/internal/ps.cpp:205
