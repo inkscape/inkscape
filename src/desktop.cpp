@@ -336,6 +336,12 @@ void SPDesktop::destroy()
 
     if (_layer_hierarchy) {
         delete _layer_hierarchy;
+//        _layer_hierarchy = NULL; //this should be here, but commented to find other bug somewhere else.
+    }
+
+    if (layer_manager) {
+        delete layer_manager;
+        layer_manager = NULL;
     }
 
     if (_inkscape) {
