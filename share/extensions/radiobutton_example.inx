@@ -12,12 +12,9 @@
         <option>test3!</option>
     </param>
     <effect>
-		<object-type>all</object-type>
+        <object-type>all</object-type>
                 <effects-menu>
                       <submenu _name="Developer Examples"/>
-	        </effects-menu>
+            </effects-menu>
     </effect>
-    <script>
-        <command reldir="extensions" interpreter="python">eqtexsvg.py</command>
-    </script>
 </inkscape-extension>
