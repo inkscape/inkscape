@@ -154,9 +154,6 @@
         /* Allow reading WordPerfect? */
         #define WITH_LIBWPG                   1
 
-        /* Allow reading WordPerfect? */
-        #define WITH_LIBWPG                   1
-
         #endif /* _CONFIG_H_ */
     </makefile>
   </target>
