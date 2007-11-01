@@ -4962,11 +4962,12 @@ static void paintbucket_autogap_changed(EgeSelectOneAction* act, GObject *tbl)
 
 static void paintbucket_offset_changed(GtkAdjustment *adj, GObject *tbl)
 {
-    UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data( tbl, "tracker" ));
+    UnitTracker* tracker = static_cast<UnitTracker*>(g_object_get_data( tbl, "tracker" ));
     SPUnit const *unit = tracker->getActiveUnit();
 
-
     prefs_set_double_attribute("tools.paintbucket", "offset", (gdouble)sp_units_get_pixels(adj->value, *unit));
+
+    prefs_set_string_attribute("tools.paintbucket", "offsetunits", sp_unit_get_abbreviation(unit));
 }
 
 static void paintbucket_defaults(GtkWidget *, GObject *dataKludge)
@@ -5036,7 +5037,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
 
     // Create the units menu.
     UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
-    tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
+    tracker->setActiveUnit(sp_unit_get_by_abbreviation(prefs_get_string_attribute("tools.paintbucket", "offsetunits")));
     g_object_set_data( holder, "tracker", tracker );
     {
         GtkAction* act = tracker->createAction( "PaintbucketUnitsAction", _("Units"), ("") );
