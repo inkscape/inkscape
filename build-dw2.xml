@@ -42,11 +42,12 @@
 
   <!-- set global properties for this build -->
   <property name="version"     value="0.46dev"/>
-  <property name="arch"        value="mingw32-"/>
-  <!--<property name="archutil"    value="${arch}"/>-->
-  <property name="archutil"    value=""/>
+  <property name="arch"        value="i686-pc-mingw32-"/>
+  <property name="archutil"    value="${arch}"/>
+  <!--<property name="archutil"    value=""/>-->
   <property name="src"         location="src"/>
   <property name="gtk"         location="c:/devlibs"/>
+  <!--<property name="gtk"         location="/target"/>-->
   <property name="lib"         location="lib"/>
   <property name="build"       location="build"/>
   <property name="dist"        location="inkscape"/>
@@ -389,7 +390,8 @@
            ${gtk}/bin/libxslt.dll
            -lpoppler-cairo -lpoppler
            -lcairo.dll
-           -lwpg-0.1.dll -lwpd-0.8.dll
+           -lwpg-0.1.dll -lwpg-stream-0.1.dll
+           -lwpd-0.8.dll -lwpd-stream-0.8.dll
            ${gtk}/lib/iconv.lib
            -lMagick++ -lWand -lMagick
            -lfreetype.dll -lfontconfig.dll
@@ -507,7 +509,9 @@
     <copy file="${gtk}/bin/libexpat.dll" todir="${dist}"/>
     <!--<copy file="${gtk}/bin/libexpat.dll" tofile="${dist}/xmlparse.dll"/>-->
     <copy file="${gtk}/bin/libwpg-0.1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libwpg-stream-0.1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libwpd-0.8.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libwpd-stream-0.8.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/jpeg62.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpng13.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libtiff3.dll" todir="${dist}"/>

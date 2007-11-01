@@ -36,18 +36,17 @@
 <project name="Inkscape" default="dist" basedir=".">
     <description>
         Build file for the Inkscape SVG editor.  This file
-        was written for GTK-2.10 on Win32, but it should work
-        well for other types of builds with only minor adjustments.
+        is for older compilers and libs with the "setjump/longjump"
+        (sjlj) form of event handling.
     </description>
 
   <!-- set global properties for this build -->
   <property name="version"     value="0.46dev"/>
   <property name="arch"        value="i686-pc-mingw32-"/>
-  <property name="archutil"    value="${arch}"/>
-  <!--<property name="archutil"    value=""/>-->
+  <!--<property name="archutil"    value="${arch}"/>-->
+  <property name="archutil"    value=""/>
   <property name="src"         location="src"/>
-  <property name="gtk"         location="c:/devlibs"/>
-  <!--<property name="gtk"         location="/target"/>-->
+  <property name="gtk"         location="c:/gtk210"/>
   <property name="lib"         location="lib"/>
   <property name="build"       location="build"/>
   <property name="dist"        location="inkscape"/>
@@ -152,12 +151,6 @@
         /* do we want bitmap manipulation? */
         #define WITH_IMAGE_MAGICK             1
 
-        /* Allow reading WordPerfect? */
-        #define WITH_LIBWPG                   1
-
-        /* Allow reading WordPerfect? */
-        #define WITH_LIBWPG                   1
-
         #endif /* _CONFIG_H_ */
     </makefile>
   </target>
@@ -254,7 +247,7 @@
             <exclude name="dialogs/whiteboard-sharewithuser-dialog.cpp"/>
             <exclude name="jabber_whiteboard/node-tracker.cpp"/>
             <exclude name="jabber_whiteboard/node-utilities.cpp"/>
-            <!--OVERLAP-->
+            <!--WHITEBOARD-->
             <exclude name="removeoverlap/placement_SolveVPSC.cpp"/>
             <exclude name="removeoverlap/placement_SolveVPSC.h"/>
             <exclude name="removeoverlap/test.cpp"/>
@@ -298,9 +291,6 @@
             -I${gtk}/include/freetype2
             -I${gtk}/include/cairo
             -I${gtk}/include/poppler
-            -I${gtk}/include/gc
-            -I${gtk}/include/libwpg-0.1
-            -I${gtk}/include/libwpd-0.8
             <!-- PERL -->
             -Wno-comment -I${gtk}/perl/lib/CORE
             <!-- PYTHON -->
@@ -393,16 +383,13 @@
            ${gtk}/bin/libxslt.dll
            -lpoppler-cairo -lpoppler
            -lcairo.dll
-           -lwpg-0.1.dll -lwpg-stream-0.1.dll
-           -lwpd-0.8.dll -lwpd-stream-0.8.dll
            ${gtk}/lib/iconv.lib
-           -lMagick++ -lWand -lMagick
            -lfreetype.dll -lfontconfig.dll
            -lssl -lcrypto
+           -lMagick++ -lWand -lMagick
            -llcms.dll
            -lpng -ljpeg.dll -ltiff.dll -lpopt ${gtk}/lib/zdll.lib
-           -lgc
-		   -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
+           -lgc -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            <!-- 2geom -->
            <!-- -l2geom -->
        </libs>
@@ -500,7 +487,6 @@
     <copy file="${gtk}/bin/libgtk-win32-2.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libgthread-2.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libcairo-2.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libpoppler-2.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpangocairo-1.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpango-1.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpangoft2-1.0-0.dll" todir="${dist}"/>
@@ -509,12 +495,8 @@
     <copy file="${gtk}/bin/libfontconfig-1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libxml2.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libxslt.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libexpat.dll" todir="${dist}"/>
-    <!--<copy file="${gtk}/bin/libexpat.dll" tofile="${dist}/xmlparse.dll"/>-->
-    <copy file="${gtk}/bin/libwpg-0.1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libwpg-stream-0.1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libwpd-0.8.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libwpd-stream-0.8.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/xmlparse.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/xmlparse.dll" tofile="${dist}/libexpat.dll"/>
     <copy file="${gtk}/bin/jpeg62.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpng13.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libtiff3.dll" todir="${dist}"/>
@@ -522,7 +504,7 @@
     <copy file="${gtk}/bin/msvcr71.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/zlib1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/iconv.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libpopt-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/popt1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/liblcms-1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/intl.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/intl.dll" tofile="${dist}/libintl-2.dll"/>
