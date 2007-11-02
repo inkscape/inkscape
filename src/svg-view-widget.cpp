@@ -188,7 +188,7 @@ sp_svg_view_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
  * Callback connected with view_resized signal.
  */
 static void
-sp_svg_view_widget_view_resized (SPViewWidget *vw, Inkscape::UI::View::View *view, gdouble width, gdouble height)
+sp_svg_view_widget_view_resized (SPViewWidget *vw, Inkscape::UI::View::View */*view*/, gdouble width, gdouble height)
 {
 	SPSVGSPViewWidget *svgvw = SP_SVG_VIEW_WIDGET (vw);
 

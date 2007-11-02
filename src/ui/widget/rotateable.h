@@ -23,29 +23,29 @@ namespace Widget {
 class Rotateable: public Gtk::EventBox
 {
 public:
-	Rotateable();
+    Rotateable();
 
-	~Rotateable();
+    ~Rotateable();
 
-  bool on_click(GdkEventButton *event);
-  bool on_motion(GdkEventMotion *event);
-  bool on_release(GdkEventButton *event);
+    bool on_click(GdkEventButton *event);
+    bool on_motion(GdkEventMotion *event);
+    bool on_release(GdkEventButton *event);
 
-	double axis; 
-	double current_axis; 
-  double maxdecl; 
+    double axis;
+    double current_axis;
+    double maxdecl;
 
 private:
-  double drag_started_x;
-  double drag_started_y;
-	guint modifier;
-	bool dragging;
-	bool working;
+    double drag_started_x;
+    double drag_started_y;
+    guint modifier;
+    bool dragging;
+    bool working;
 
   guint get_single_modifier(guint old, guint state);
 
-	virtual void do_motion (double by, guint state) {}
-	virtual void do_release (double by, guint state) {}
+    virtual void do_motion (double /*by*/, guint /*state*/) {}
+    virtual void do_release (double /*by*/, guint /*state*/) {}
 };
 
 } // namespace Widget
@@ -54,7 +54,7 @@ private:
 
 #endif // INKSCAPE_UI_ROTATEABLE_H
 
-/* 
+/*
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"

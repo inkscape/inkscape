@@ -202,7 +202,7 @@ sp_draw_context_finish(SPEventContext *ec)
 }
 
 static void
-sp_draw_context_set(SPEventContext *ec, const gchar *key, const gchar *value)
+sp_draw_context_set(SPEventContext */*ec*/, const gchar */*key*/, const gchar */*value*/)
 {
 }
 
@@ -256,7 +256,7 @@ spdc_selection_changed(Inkscape::Selection *sel, SPDrawContext *dc)
 /* fixme: We have to ensure this is not delayed (Lauris) */
 
 static void
-spdc_selection_modified(Inkscape::Selection *sel, guint flags, SPDrawContext *dc)
+spdc_selection_modified(Inkscape::Selection *sel, guint /*flags*/, SPDrawContext *dc)
 {
     if (dc->attach) {
         spdc_attach_selection(dc, sel);
@@ -264,7 +264,7 @@ spdc_selection_modified(Inkscape::Selection *sel, guint flags, SPDrawContext *dc
 }
 
 static void
-spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection *sel)
+spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
 {
     /* We reset white and forget white/start/end anchors */
     spdc_reset_white(dc);

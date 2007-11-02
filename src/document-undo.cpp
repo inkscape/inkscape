@@ -124,7 +124,7 @@ sp_document_done (SPDocument *doc, const unsigned int event_type, Glib::ustring 
 }
 
 void
-sp_document_reset_key (Inkscape::Application *inkscape, SPDesktop *desktop, GtkObject *base)
+sp_document_reset_key (Inkscape::Application */*inkscape*/, SPDesktop *desktop, GtkObject *base)
 {
 	SPDocument *doc = (SPDocument *) base;
 	doc->actionkey = NULL;

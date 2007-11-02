@@ -374,7 +374,7 @@ static Inkscape::UI::Dialog::FileOpenDialog *openDialogInstance = NULL;
  *  Can select single or multiple files for opening.
  */
 void
-sp_file_open_dialog(Gtk::Window &parentWindow, gpointer object, gpointer data)
+sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*data*/)
 {
 
     //# Get the current directory for finding files
@@ -546,8 +546,8 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
  * Used only for remote saving using VFS and a specific uri. Gets the file at the /tmp.
  */
 bool
-file_save_remote(SPDocument *doc, const Glib::ustring &uri,
-                 Inkscape::Extension::Extension *key, bool saveas, bool official)
+file_save_remote(SPDocument */*doc*/, const Glib::ustring &uri,
+                 Inkscape::Extension::Extension */*key*/, bool /*saveas*/, bool official)
 {
 #ifdef WITH_GNOME_VFS
 
@@ -792,7 +792,7 @@ sp_file_save_document(Gtk::Window &parentWindow, SPDocument *doc)
  * Save a document.
  */
 bool
-sp_file_save(Gtk::Window &parentWindow, gpointer object, gpointer data)
+sp_file_save(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*data*/)
 {
     if (!SP_ACTIVE_DOCUMENT)
         return false;
@@ -808,7 +808,7 @@ sp_file_save(Gtk::Window &parentWindow, gpointer object, gpointer data)
  *  Save a document, always displaying the SaveAs dialog.
  */
 bool
-sp_file_save_as(Gtk::Window &parentWindow, gpointer object, gpointer data)
+sp_file_save_as(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*data*/)
 {
     if (!SP_ACTIVE_DOCUMENT)
         return false;
@@ -822,7 +822,7 @@ sp_file_save_as(Gtk::Window &parentWindow, gpointer object, gpointer data)
  *  Save a copy of a document, always displaying a sort of SaveAs dialog.
  */
 bool
-sp_file_save_a_copy(Gtk::Window &parentWindow, gpointer object, gpointer data)
+sp_file_save_a_copy(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*data*/)
 {
     if (!SP_ACTIVE_DOCUMENT)
         return false;
@@ -1145,7 +1145,7 @@ sp_file_export_dialog(void *widget)
  *
  */
 bool
-sp_file_export_dialog(void *widget)
+sp_file_export_dialog(void */*widget*/)
 {
     sp_export_dialog();
     return true;
@@ -1395,7 +1395,7 @@ sp_file_print_direct()
  * printed.
  */
 void
-sp_file_print_preview(gpointer object, gpointer data)
+sp_file_print_preview(gpointer /*object*/, gpointer /*data*/)
 {
 
     SPDocument *doc = SP_ACTIVE_DOCUMENT;

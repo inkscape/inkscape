@@ -1461,12 +1461,12 @@ FlatSaxHandler::~FlatSaxHandler()
 {
 }
 
-void FlatSaxHandler::_startElement(const xmlChar *name, const xmlChar **attrs)
+void FlatSaxHandler::_startElement(const xmlChar */*name*/, const xmlChar **/*attrs*/)
 {
     data.clear();
 }
 
-void FlatSaxHandler::_endElement(const xmlChar *name)
+void FlatSaxHandler::_endElement(const xmlChar */*name*/)
 {
     //g_message("<%s>%s</%s>", name, data.c_str(), name);
     data.clear();

@@ -33,9 +33,9 @@ public:
 protected:
     virtual void _startDocument() {}
     virtual void _endDocument() {}
-    virtual void _startElement(const xmlChar *name, const xmlChar **attrs) {}
-    virtual void _endElement(const xmlChar *name) {}
-    virtual void _characters(const xmlChar *ch, int len) {}
+    virtual void _startElement(const xmlChar */*name*/, const xmlChar **/*attrs*/) {}
+    virtual void _endElement(const xmlChar */*name*/) {}
+    virtual void _characters(const xmlChar */*ch*/, int /*len*/) {}
 
 private:
     static void startDocument(void *user_data);

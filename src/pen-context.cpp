@@ -1162,7 +1162,7 @@ spdc_pen_set_ctrl(SPPenContext *const pc, NR::Point const p, guint const state)
 }
 
 static void
-spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const p, guint const state)
+spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const /*p*/, guint const /*state*/)
 {
     if (!sp_curve_empty(pc->red_curve)) {
         sp_curve_append_continuous(pc->green_curve, pc->red_curve, 0.0625);

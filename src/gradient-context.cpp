@@ -447,7 +447,7 @@ sp_gradient_simplify(SPGradientContext *rc, double tolerance)
 
 
 static void
-sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  NR::Point mouse_p, guint32 etime)
+sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  NR::Point mouse_p, guint32 /*etime*/)
 {
     // item is the selected item. mouse_p the location in doc coordinates of where to add the stop
 
@@ -827,7 +827,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     return ret;
 }
 
-static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint state, guint32 etime)
+static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint /*state*/, guint32 etime)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);

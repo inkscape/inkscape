@@ -310,7 +310,7 @@ sp_ui_new_view_preview()
  * \param widget unused
  */
 void
-sp_ui_close_view(GtkWidget *widget)
+sp_ui_close_view(GtkWidget */*widget*/)
 {
     if (SP_ACTIVE_DESKTOP == NULL) {
         return;
@@ -357,19 +357,19 @@ sp_ui_close_all(void)
  * investigate when they're called.
  */
 static void
-sp_ui_menu_activate(void *object, SPAction *action)
+sp_ui_menu_activate(void */*object*/, SPAction *action)
 {
     sp_action_perform(action, NULL);
 }
 
 static void
-sp_ui_menu_select_action(void *object, SPAction *action)
+sp_ui_menu_select_action(void */*object*/, SPAction *action)
 {
     action->view->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, action->tip);
 }
 
 static void
-sp_ui_menu_deselect_action(void *object, SPAction *action)
+sp_ui_menu_deselect_action(void */*object*/, SPAction *action)
 {
     action->view->tipsMessageContext()->clear();
 }
@@ -643,7 +643,7 @@ checkitem_toggled(GtkCheckMenuItem *menuitem, gpointer user_data)
 }
 
 static gboolean
-checkitem_update(GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
+checkitem_update(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_data)
 {
     GtkCheckMenuItem *menuitem=GTK_CHECK_MENU_ITEM(widget);
 
@@ -730,13 +730,13 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
 }
 
 static void
-sp_recent_open(GtkWidget *widget, gchar const *uri)
+sp_recent_open(GtkWidget */*widget*/, gchar const *uri)
 {
     sp_file_open(uri, NULL);
 }
 
 static void
-sp_file_new_from_template(GtkWidget *widget, gchar const *uri)
+sp_file_new_from_template(GtkWidget */*widget*/, gchar const *uri)
 {
     sp_file_new(uri);
 }
@@ -1038,8 +1038,8 @@ sp_ui_drag_data_received(GtkWidget *widget,
                          gint x, gint y,
                          GtkSelectionData *data,
                          guint info,
-                         guint event_time,
-                         gpointer user_data)
+                         guint /*event_time*/,
+                         gpointer /*user_data*/)
 {
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -1317,25 +1317,25 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
 #include "gradient-context.h"
 
-void sp_ui_drag_motion( GtkWidget *widget,
-                        GdkDragContext *drag_context,
-                        gint x, gint y,
-                        GtkSelectionData *data,
-                        guint info,
-                        guint event_time,
-                        gpointer user_data)
+void sp_ui_drag_motion( GtkWidget */*widget*/,
+                        GdkDragContext */*drag_context*/,
+                        gint /*x*/, gint /*y*/,
+                        GtkSelectionData */*data*/,
+                        guint /*info*/,
+                        guint /*event_time*/,
+                        gpointer /*user_data*/)
 {
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+//     SPDocument *doc = SP_ACTIVE_DOCUMENT;
+//     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
 
 //     g_message("drag-n-drop motion (%4d, %4d)  at %d", x, y, event_time);
 }
 
-static void sp_ui_drag_leave( GtkWidget *widget,
-                              GdkDragContext *drag_context,
-                              guint event_time,
-                              gpointer user_data )
+static void sp_ui_drag_leave( GtkWidget */*widget*/,
+                              GdkDragContext */*drag_context*/,
+                              guint /*event_time*/,
+                              gpointer /*user_data*/ )
 {
 //     g_message("drag-n-drop leave                at %d", event_time);
 }
@@ -1352,7 +1352,7 @@ sp_ui_import_files(gchar *buffer)
 }
 
 static void
-sp_ui_import_one_file_with_check(gpointer filename, gpointer unused)
+sp_ui_import_one_file_with_check(gpointer filename, gpointer /*unused*/)
 {
     if (filename) {
         if (strlen((char const *)filename) > 2)
@@ -1428,13 +1428,13 @@ sp_ui_overwrite_file(gchar const *filename)
 }
 
 static void
-sp_ui_menu_item_set_sensitive(SPAction *action, unsigned int sensitive, void *data)
+sp_ui_menu_item_set_sensitive(SPAction */*action*/, unsigned int sensitive, void *data)
 {
     return gtk_widget_set_sensitive(GTK_WIDGET(data), sensitive);
 }
 
 static void
-sp_ui_menu_item_set_name(SPAction *action, Glib::ustring name, void *data)
+sp_ui_menu_item_set_name(SPAction */*action*/, Glib::ustring name, void *data)
 {
     void *child = GTK_BIN (data)->child;
     //child is either

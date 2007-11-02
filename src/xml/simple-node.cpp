@@ -304,7 +304,7 @@ void SimpleNode::setContent(gchar const *content) {
 }
 
 void
-SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const is_interactive)
+SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_interactive*/)
 {
     g_return_if_fail(name && *name);
 
@@ -523,7 +523,7 @@ void content_changed(Node *node, gchar const *old_content, gchar const *new_cont
     reinterpret_cast<NodeObserver *>(data)->notifyContentChanged(*node, Util::share_unsafe((const char *)old_content), Util::share_unsafe((const char *)new_content));
 }
 
-void attr_changed(Node *node, gchar const *name, gchar const *old_value, gchar const *new_value, bool is_interactive, void *data) {
+void attr_changed(Node *node, gchar const *name, gchar const *old_value, gchar const *new_value, bool /*is_interactive*/, void *data) {
     reinterpret_cast<NodeObserver *>(data)->notifyAttributeChanged(*node, g_quark_from_string(name), Util::share_unsafe((const char *)old_value), Util::share_unsafe((const char *)new_value));
 }
 

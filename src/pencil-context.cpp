@@ -556,7 +556,7 @@ spdc_finish_endpoint(SPPencilContext *const pc)
 }
 
 static void
-spdc_add_freehand_point(SPPencilContext *pc, NR::Point p, guint state)
+spdc_add_freehand_point(SPPencilContext *pc, NR::Point p, guint /*state*/)
 {
     g_assert( pc->npoints > 0 );
     g_return_if_fail(unsigned(pc->npoints) < G_N_ELEMENTS(pc->p));

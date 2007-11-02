@@ -281,7 +281,7 @@ static void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, gp
     knotholder_update_knots(knot_holder, item);
 }
 
-static void knot_ungrabbed_handler(SPKnot *knot, unsigned int state, SPKnotHolder *kh)
+static void knot_ungrabbed_handler(SPKnot */*knot*/, unsigned int /*state*/, SPKnotHolder *kh)
 {
     if (kh->released) {
         kh->released(kh->item);

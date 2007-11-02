@@ -236,7 +236,7 @@ GSList *get_avoided_items(GSList *list, SPObject *from, SPDesktop *desktop,
 }
 
 
-void avoid_item_move(NR::Matrix const *mp, SPItem *moved_item)
+void avoid_item_move(NR::Matrix const */*mp*/, SPItem *moved_item)
 {
     Avoid::ShapeRef *shapeRef = moved_item->avoidRef->shapeRef;
     g_assert(shapeRef);

@@ -55,7 +55,7 @@ Editor::create (gint argc, char **argv)
     return _instance;
 }
 
-Editor::Editor (gint argc, char **argv)
+Editor::Editor (gint /*argc*/, char **argv)
 :   _documents (0),
     _desktops (0),
     _argv0 (argv[0]),

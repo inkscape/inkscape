@@ -937,7 +937,7 @@ EditWidget::initAccelMap()
 }
 
 bool
-EditWidget::onEntryFocusIn (GdkEventFocus* ev)
+EditWidget::onEntryFocusIn (GdkEventFocus* /*ev*/)
 {
     Gdk::ModifierType m = static_cast<Gdk::ModifierType>(0);
     Gtk::AccelMap::change_entry ("<Actions>//Zoom100", 0, m, false);
@@ -950,7 +950,7 @@ EditWidget::onEntryFocusIn (GdkEventFocus* ev)
 }
 
 bool
-EditWidget::onEntryFocusOut (GdkEventFocus* ev)
+EditWidget::onEntryFocusOut (GdkEventFocus* /*ev*/)
 {
     Gdk::ModifierType m = static_cast<Gdk::ModifierType>(0);
     Gtk::AccelMap::change_entry ("<Actions>//Zoom100", '1', m, false);
@@ -1514,7 +1514,7 @@ EditWidget::setCoordinateStatus (NR::Point p)
 }
 
 void
-EditWidget::setMessage (Inkscape::MessageType type, gchar const* msg)
+EditWidget::setMessage (Inkscape::MessageType /*type*/, gchar const* msg)
 {
     _select_status.set_markup (msg? msg : "");
 }

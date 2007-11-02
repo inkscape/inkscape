@@ -17,19 +17,19 @@
 namespace Inkscape {
 
 void
-ConsoleOutputUndoObserver::notifyUndoEvent(Event* log)
+ConsoleOutputUndoObserver::notifyUndoEvent(Event* /*log*/)
 {
     // g_message("notifyUndoEvent (sp_document_undo) called; log=%p\n", log->event);
 }
 
 void
-ConsoleOutputUndoObserver::notifyRedoEvent(Event* log)
+ConsoleOutputUndoObserver::notifyRedoEvent(Event* /*log*/)
 {
     // g_message("notifyRedoEvent (sp_document_redo) called; log=%p\n", log->event);
 }
 
 void
-ConsoleOutputUndoObserver::notifyUndoCommitEvent(Event* log)
+ConsoleOutputUndoObserver::notifyUndoCommitEvent(Event* /*log*/)
 {
     //g_message("notifyUndoCommitEvent (sp_document_maybe_done) called; log=%p\n", log->event);
 }

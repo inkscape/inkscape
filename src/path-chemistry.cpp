@@ -258,7 +258,7 @@ sp_selected_path_to_curves(void)
 }
 
 static void
-sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
+sp_selected_path_to_curves0(gboolean interactive, guint32 /*text_grouping_policy*/)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
@@ -341,7 +341,7 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
 }
 
 Inkscape::XML::Node *
-sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy)
+sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 {
     if (!item)
         return NULL;

@@ -129,7 +129,7 @@ SPSVGView::mouseout()
  */
 /// \todo fixme.
 static gint
-arena_handler (SPCanvasArena *arena, NRArenaItem *ai, GdkEvent *event, SPSVGView *svgview)
+arena_handler (SPCanvasArena */*arena*/, NRArenaItem *ai, GdkEvent *event, SPSVGView *svgview)
 {
 	static gdouble x, y;
 	static gboolean active = FALSE;

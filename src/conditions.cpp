@@ -258,7 +258,7 @@ static bool evaluateSingleFeature(gchar const *value) {
     return false;
 }
 
-static bool evaluateRequiredFeatures(SPItem const *item, gchar const *value) {
+static bool evaluateRequiredFeatures(SPItem const */*item*/, gchar const *value) {
     if ( NULL == value )
         return true;
 
@@ -275,7 +275,7 @@ static bool evaluateRequiredFeatures(SPItem const *item, gchar const *value) {
     return true;
 }
 
-static bool evaluateRequiredExtensions(SPItem const *item, gchar const *value) {
+static bool evaluateRequiredExtensions(SPItem const */*item*/, gchar const *value) {
     if ( NULL == value )
         return true;
     return false;

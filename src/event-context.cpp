@@ -279,7 +279,7 @@ sp_toggle_selector(SPDesktop *dt)
  * Calculates and keeps track of scroll acceleration.
  * Subroutine of sp_event_context_private_root_handler().
  */
-static gdouble accelerate_scroll(GdkEvent *event, gdouble acceleration, SPCanvas *canvas)
+static gdouble accelerate_scroll(GdkEvent *event, gdouble acceleration, SPCanvas */*canvas*/)
 {
     guint32 time_diff = ((GdkEventKey *) event)->time - scroll_event_time;
 
@@ -685,8 +685,8 @@ sp_event_context_private_item_handler(SPEventContext *ec, SPItem *item, GdkEvent
  * Gets called when attribute changes value.
  */
 static void
-sp_ec_repr_attr_changed(Inkscape::XML::Node *prefs_repr, gchar const *key, gchar const *oldval, gchar const *newval,
-                        bool is_interactive, gpointer data)
+sp_ec_repr_attr_changed(Inkscape::XML::Node */*prefs_repr*/, gchar const *key, gchar const */*oldval*/, gchar const *newval,
+                        bool /*is_interactive*/, gpointer data)
 {
     SPEventContext *ec;
 
@@ -1003,9 +1003,9 @@ sp_event_context_over_item (SPDesktop *desktop, SPItem *item, NR::Point const p)
  * Called when SPEventContext subclass node attribute changed.
  */
 void
-ec_shape_event_attr_changed(Inkscape::XML::Node *shape_repr, gchar const *name,
-        gchar const *old_value, gchar const *new_value,
-        bool const is_interactive, gpointer const data)
+ec_shape_event_attr_changed(Inkscape::XML::Node */*shape_repr*/, gchar const *name,
+                            gchar const */*old_value*/, gchar const */*new_value*/,
+                            bool const /*is_interactive*/, gpointer const data)
 {
     if (!name
             || !strcmp(name, "style")

@@ -245,7 +245,7 @@ static void sp_3dbox_context_setup(SPEventContext *ec)
     bc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 }
 
-static void sp_3dbox_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
+static void sp_3dbox_context_set(SPEventContext */*ec*/, gchar const */*key*/, gchar const */*val*/)
 {
     //SP3DBoxContext *bc = SP_3DBOX_CONTEXT(ec);
 

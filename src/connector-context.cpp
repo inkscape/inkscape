@@ -965,7 +965,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
 
 
 static void
-spcc_connector_finish_segment(SPConnectorContext *const cc, NR::Point const p)
+spcc_connector_finish_segment(SPConnectorContext *const cc, NR::Point const /*p*/)
 {
     if (!sp_curve_empty(cc->red_curve)) {
         sp_curve_append_continuous(cc->green_curve, cc->red_curve, 0.0625);
@@ -1047,7 +1047,7 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
 
 
 static gboolean
-endpt_handler(SPKnot *knot, GdkEvent *event, SPConnectorContext *cc)
+endpt_handler(SPKnot */*knot*/, GdkEvent *event, SPConnectorContext *cc)
 {
     g_assert( SP_IS_CONNECTOR_CONTEXT(cc) );
 
@@ -1348,8 +1348,8 @@ cc_selection_changed(Inkscape::Selection *selection, gpointer data)
 
 
 static void
-shape_event_attr_deleted(Inkscape::XML::Node *repr, Inkscape::XML::Node *child,
-        Inkscape::XML::Node *ref, gpointer data)
+shape_event_attr_deleted(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node *child,
+                         Inkscape::XML::Node */*ref*/, gpointer data)
 {
     g_assert(data);
     SPConnectorContext *cc = SP_CONNECTOR_CONTEXT(data);
@@ -1363,8 +1363,8 @@ shape_event_attr_deleted(Inkscape::XML::Node *repr, Inkscape::XML::Node *child,
 
 static void
 shape_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
-                            gchar const *old_value, gchar const *new_value,
-                            bool is_interactive, gpointer data)
+                         gchar const */*old_value*/, gchar const */*new_value*/,
+                         bool /*is_interactive*/, gpointer data)
 {
     g_assert(data);
     SPConnectorContext *cc = SP_CONNECTOR_CONTEXT(data);

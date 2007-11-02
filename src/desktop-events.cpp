@@ -34,7 +34,7 @@
 
 /* Root item handler */
 
-int sp_desktop_root_handler(SPCanvasItem *item, GdkEvent *event, SPDesktop *desktop)
+int sp_desktop_root_handler(SPCanvasItem */*item*/, GdkEvent *event, SPDesktop *desktop)
 {
     return sp_event_context_root_handler(desktop->event_context, event);
 }

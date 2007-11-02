@@ -56,8 +56,8 @@ private:
     virtual void onPositionSet (double, double) {}
     virtual void onResized (double, double) {}
     virtual void onRedrawRequested() {}
-    virtual void onStatusMessage (Inkscape::MessageType type, gchar const *message) {}
-    virtual void onDocumentURISet (gchar const* uri) {}
+    virtual void onStatusMessage (Inkscape::MessageType /*type*/, gchar const */*message*/) {}
+    virtual void onDocumentURISet (gchar const* /*uri*/) {}
     virtual void onDocumentResized (double, double);
 };
 
