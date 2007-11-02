@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-10-17 23:52+0200\n"
-"PO-Revision-Date: 2007-11-01 16:21+0700\n"
+"PO-Revision-Date: 2007-11-02 16:35+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3251,10 +3251,10 @@ msgid ""
 "Use '> filename' to print to file.\n"
 "Use '| prog arg...' to pipe to a program."
 msgstr ""
-"ឈ្មោះ​ម៉ាស៊ីន​បោះពុម្ព​ (ផ្តល់​ឲ្យដោយម​ lpstat -p);\n"
-"ទុក​ឲ្យ​វា​ទទេ​ដើម្បី​ប្រើ​ប្រព័ន្ធ​បោះពុម្ព​លំនាំដើម​\n"
-"ប្រើ​ '> filename'ដើម្បី​បោះពុម្ព​ជា​ឯកសារ​ ។\n"
-"ប្រើ​ '| prog arg...' សម្រាប់បំពង់​ទៅ​កាន់​កម្មវិធី​ ។"
+"ឈ្មោះ​ម៉ាស៊ីន​បោះពុម្ព (ដូច​ដែល​បាន​ផ្ដល់​ដោយ lpstat -p);\n"
+"ទុក​ទទេ​ដើម្បី​ប្រើ​ម៉ាស៊ីន​បោះពុម្ព​លំនាំ​ដើម​របស់​ប្រព័ន្ធ ។\n"
+"ប្រើ '> filename' ត្រូវ​បោះពុម្ព​ទៅ​ឯកសារ ។\n"
+"ប្រើ '| prog arg...' ដើម្បីកម្មវិធី​ជាជួរ ។"
 
 #: ../src/extension/internal/pdf-cairo.cpp:1021
 msgid "PDF Print"
@@ -3262,45 +3262,42 @@ msgstr "បោះពុម្ពជា​ឯកសារ​ PDF"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:47
 msgid "media box"
-msgstr ""
+msgstr "ប្រអប់​មេឌៀ"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:48
 msgid "crop box"
-msgstr ""
+msgstr "ប្រអប់​ច្រឹប"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:49
 msgid "trim box"
-msgstr ""
+msgstr "ប្រអប់​កាត់​តម្រឹម"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:50
 msgid "bleed box"
-msgstr ""
+msgstr "ប្រអប់​ចេញ"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:51
 msgid "art box"
-msgstr ""
+msgstr "ប្រអប់​សិល្បៈ"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:61
-#, fuzzy
 msgid "Select page:"
-msgstr "លុប​អត្ថបទ​"
+msgstr "ជ្រើស​ទំព័រ ៖"
 
 #. Display total number of pages
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:75
-#, fuzzy, c-format
+#, c-format
 msgid "out of %i"
-msgstr "ចំនួន​គួច​"
+msgstr "នៃ %i"
 
 #. Crop settings
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:81
-#, fuzzy
 msgid "Clip to:"
-msgstr "តម្បៀត​ខ្ទាស់​"
+msgstr "ក្ដារតម្បៀត​ខ្ទាស់​ទៅ ៖"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:93
-#, fuzzy
 msgid "Page settings"
-msgstr "ទិសទំព័រ​ ៖"
+msgstr "ការ​កំណត់​ទំព័រ"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:95
 msgid "Precision of approximating gradient meshes:"
@@ -3314,34 +3311,30 @@ msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:101
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:367
-#, fuzzy
 msgid "rough"
-msgstr "ក្រុម"
+msgstr "គគ្រើម"
 
 #. Text options
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:105
-#, fuzzy
 msgid "Text handling:"
-msgstr "កំណត់​ដកឃ្លា ៖"
+msgstr "ការគ្រប់គ្រង​អត្ថបទ ៖"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:107
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:108
-#, fuzzy
 msgid "Import text as text"
-msgstr "បម្លែង​អត្ថបទ​ទៅ​ជា​ផ្លូវ​"
+msgstr "នាំចូល​អត្ថបទ​ជា​អត្ថបទ​"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:111
-#, fuzzy
 msgid "Embed images"
-msgstr "រូបភាពទាំង​អស់​បាន​បង្កប់​"
+msgstr "រូបភាព​ដែល​បាន​បង្កប់"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:114
 msgid "Import settings"
-msgstr ""
+msgstr "កំណត់​ការ​នាំចូល"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:231
 msgid "PDF Import Settings"
-msgstr ""
+msgstr "កំណត់​ការ​នាំចូល PDF"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:368
 #: ../src/ui/widget/panel.cpp:100
@@ -3349,44 +3342,39 @@ msgid "medium"
 msgstr "មធ្យម"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:369
-#, fuzzy
 msgid "fine"
-msgstr "បន្ទាត់"
+msgstr "ល្អ"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:370
-#, fuzzy
 msgid "very fine"
-msgstr "មិនបាន​កំណត់​បំពេញ "
+msgstr "ល្អ​បំផុត"
 
 #: ../src/extension/internal/pov-out.cpp:683
 msgid "PovRay Output"
-msgstr "ទិន្នផល​ PovRay "
+msgstr "លទ្ធផល PovRay"
 
 #: ../src/extension/internal/pov-out.cpp:688
 msgid "PovRay (*.pov) (export splines)"
-msgstr "PovRay (*.pov) (នាំចេញ​ splines)"
+msgstr "PovRay (*.pov) (export splines)"
 
 #: ../src/extension/internal/pov-out.cpp:689
 msgid "PovRay Raytracer File"
-msgstr "ឯកសារ PovRay Raytracer "
+msgstr "ឯកសារ PovRay Raytracer"
 
 #: ../src/extension/internal/ps.cpp:146
-#, fuzzy
 msgid "Print Configuration"
-msgstr "ទិសដៅ​បោះពុម្ព"
+msgstr "ការកំណត់​រចនាសម្ព័ន្ធ​បោះពុម្ព"
 
 #: ../src/extension/internal/ps.cpp:168
 msgid "Print using PostScript operators"
-msgstr "បោះពុម្ព​ការប្រើ​សញ្ញាប្រតិបត្តិ​"
+msgstr "បោះពុម្ព​ដោយ​ប្រើ​ប្រតិបត្តិការ​របស់ PostScript"
 
 #: ../src/extension/internal/ps.cpp:170
 msgid ""
 "Use PostScript vector operators. The resulting image is usually smaller in "
 "file size and can be arbitrarily scaled, but alpha transparency and patterns "
 "will be lost."
-msgstr ""
-"ប្រើវ៉ិចទ័រប្រតិបត្តិ​ PostScript លិខិត​ ។​ទិន្នផល​ជា​រូ​ាព​ជា​ធម្មតា​មាន​ទំហំ​តូច​ជា​ហើយ អ​្វើ​តាម​មាត្រដ្ឋាន​"
-"តាមចិត្ត ប៉ុន្តែ​ភាពថ្លា​នៃ​អាល់ហ្វា​និង លំនាំ​ត្រូវ​បាន​បាត់បង់​ ។"
+msgstr "ប្រើ​ប្រតិបត្តិការ​វ៉ិចទ័រ PostScript ។ លទ្ធផល​ជា​រូបភាព​តាម​ធម្មតា​តូច​ជាង​ទំហំ​ឯកសារ និង​អាច​ត្រូវ​បាន​ធ្វើមាត្រដ្ឋាន​ដោយបង្ខំ ប៉ុន្តែ​ភាព​ថ្លា​របស់​អាល់ហ្វា និង​លំនាំ​នឹង​បាត់បង់ ។"
 
 #: ../src/extension/internal/ps.cpp:1751
 msgid "Postscript Print"
@@ -3394,7 +3382,7 @@ msgstr "បោះពុម្ព​ Postscript"
 
 #: ../src/extension/internal/ps-out.cpp:82
 msgid "Postscript Output"
-msgstr "ទិន្នផល Postscript"
+msgstr "លទ្ធផល Postscript"
 
 #: ../src/extension/internal/ps-out.cpp:89
 #: ../share/extensions/ps_input.inx.h:2
@@ -3403,23 +3391,23 @@ msgstr "Postscript (*.ps)"
 
 #: ../src/extension/internal/ps-out.cpp:90
 msgid "Postscript File"
-msgstr "ឯកសារ​ Postscript "
+msgstr "ឯកសារ Postscript"
 
 #: ../src/extension/internal/svg.cpp:55
 msgid "SVG Input"
-msgstr "បញ្ចូល SVG "
+msgstr "ការ​បញ្ចូល SVG"
 
 #: ../src/extension/internal/svg.cpp:60
 msgid "Scalable Vector Graphic (*.svg)"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ាហ្វិក​វក្រាហ្វិក​៉ិចទ័រ​ (*.svg)"
+msgstr "Scalable Vector Graphic (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:61
 msgid "Inkscape native file format and W3C standard"
-msgstr "ទ្រង់ទ្រាយ​ឯកសារ​ដើម​របស់ Inkscape និង ឯកសារ​គំរូ W3C "
+msgstr "ទ្រង់ទ្រាយ​ឯការ​ដើម​របស់ Inkscape និង​ស្តង់ដារ W3C"
 
 #: ../src/extension/internal/svg.cpp:69
 msgid "SVG Output Inkscape"
-msgstr "SVG ទិន្នផល​ Inkscape"
+msgstr "លទ្ធផល Inkscape SVG"
 
 #: ../src/extension/internal/svg.cpp:74
 msgid "Inkscape SVG (*.svg)"
@@ -3427,76 +3415,73 @@ msgstr "Inkscape SVG (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:75
 msgid "SVG format with Inkscape extensions"
-msgstr "ទ្រង់ទ្រាយ​ SVG និង ផ្នែក​បន្ថែម​របស់​ Inkscape "
+msgstr "ទ្រង់ទ្រាយ SVG ជា​មួយ​នឹង​ផ្នែក​បន្ថែម​របស់ Inkscape"
 
 #: ../src/extension/internal/svg.cpp:83
 msgid "SVG Output"
-msgstr "ទិន្នផល SVG "
+msgstr "លទ្ធផល SVG"
 
 #: ../src/extension/internal/svg.cpp:88
 msgid "Plain SVG (*.svg)"
-msgstr "ឯកសារ​ SVG (*.svg) ​ធម្មតា​"
+msgstr "SVG (*.svg) ធម្មតា"
 
 #: ../src/extension/internal/svg.cpp:89
 msgid "Scalable Vector Graphics format as defined by the W3C"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ទ្រង់ទ្រាយ​ក្រាហ្វិក​វ៉ិចទ័រ​ដែល​បាន​កំណត់​ដោយ​ម​  W3C"
+msgstr "ទ្រង់ទ្រាយ​ក្រាហ្វិក​វ៉ិចទ័រ​ដែល​អាច​ធ្វើ​មាត្រដ្ឋាន​បាន ដូច​បាន​កំណត់​ដោយ W3C"
 
 #: ../src/extension/internal/svgz.cpp:47
 #: ../share/extensions/svgz_input.inx.h:3
 msgid "SVGZ Input"
-msgstr "បញ្ចូល SVGZ "
+msgstr "លទ្ធផល SVGZ"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
 #: ../share/extensions/svgz_input.inx.h:1
 #: ../share/extensions/svgz_output.inx.h:1
 msgid "Compressed Inkscape SVG (*.svgz)"
-msgstr "បានបង្ហាត់​់​ Inkscape SVG (*.svgz)"
+msgstr "Inkscape SVG (*.svgz) បាន​បង្ហាប់"
 
 #: ../src/extension/internal/svgz.cpp:54
 msgid "SVG file format compressed with GZip"
-msgstr "សង្កត់​ទ្រង់ទ្រាយ​ឯកសារ​ SVG ប្រភេទ​ឯកសារ​ GZip"
+msgstr "ទ្រង់ទ្រាយ​ឯកសារ SVG បាន​បង្ហាប់​ជា​មួយ GZip"
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
 #: ../share/extensions/svgz_output.inx.h:3
 msgid "SVGZ Output"
-msgstr "ទិន្នផល SVGZ "
+msgstr "លទ្ធផល SVGZ"
 
 #: ../src/extension/internal/svgz.cpp:68
 #: ../share/extensions/svgz_input.inx.h:2
 #: ../share/extensions/svgz_output.inx.h:2
 msgid "Inkscape's native file format compressed with GZip"
-msgstr "ទ្រង់ទ្រាយ​ដើម​របស់ Inkscape បាន​បង្ហាប់​ជាមួយ​ឯកសារ​ GZip"
+msgstr "ទ្រង់ទ្រាយ​ឯកសារ​ដើម​របស់ Inkscape ជា​មួយ GZip"
 
 #: ../src/extension/internal/svgz.cpp:81
 msgid "Compressed plain SVG (*.svgz)"
-msgstr "បង្ហាប់​ឯកសារ SVG (*.svgz) ធម្មតា​"
+msgstr "SVG (*.svgz) ធម្មតា​ដែល​បាន​បង្ហាប់"
 
 #: ../src/extension/internal/svgz.cpp:82
 msgid "Scalable Vector Graphics format compressed with GZip"
-msgstr "ធ្វើ​មាត្រដ្ឋានទ្រង់ទ្រាយ​​ក្រាហ្វិក​វ៉ិចទ័រដែល​បាន​បង្ហាញ​ជា​មួយ​ឯកសារ​ GZip"
+msgstr "ទ្រង់ទ្រាយ​ក្រាហ្វិក​វ៉ិចទ័រ​ដែលអាច​ធ្វើ​មាត្រដ្ឋាន​បាន បាន​បង្ហាប់​ជា​មួយ GZip"
 
 #: ../src/extension/internal/win32.cpp:491
 msgid "Windows 32-bit Print"
-msgstr "បោះពុម្ព​ Windows ៣២ ប៊ីត​"
+msgstr "បោះពុម្ព​វីនដូ ៣២ ប៊ីត"
 
 #: ../src/extension/internal/wpg-input.cpp:98
-#, fuzzy
 msgid "WPG Input"
-msgstr "បញ្ចូល SVG "
+msgstr "ការ​បញ្ចូល​របស់ WPG"
 
 #: ../src/extension/internal/wpg-input.cpp:103
-#, fuzzy
 msgid "WordPerfect Graphics (*.wpg)"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ាហ្វិក​វក្រាហ្វិក​៉ិចទ័រ​ (*.svg)"
+msgstr "WordPerfect Graphics (*.wpg)"
 
 #: ../src/extension/internal/wpg-input.cpp:104
-#, fuzzy
 msgid "Vector graphics format used by Corel WordPerfect"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ទ្រង់ទ្រាយ​ក្រាហ្វិក​វ៉ិចទ័រ​ដែល​បាន​កំណត់​ដោយ​ម​  W3C"
+msgstr "ទ្រង់ទ្រាយ​ក្រាហ្វិក​វ៉ិចទ័រ​បានប្រើ​ដោយ Corel WordPerfect"
 
 #: ../src/extension/prefdialog.cpp:225
 msgid "Pin Dialog"
-msgstr ""
+msgstr "ប្រអប់​ម្ជុល"
 
 #: ../src/extension/prefdialog.cpp:225
 msgid ""
@@ -3505,9 +3490,8 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/prefdialog.cpp:226
-#, fuzzy
 msgid "Live Preview"
-msgstr "មើល​ជា​មុន"
+msgstr "មើល​ជា​មុន​បន្តផ្ទាល់"
 
 #: ../src/extension/prefdialog.cpp:226
 msgid "Controls whether the effect settings are rendered live on canvas"
@@ -3519,7 +3503,7 @@ msgstr ""
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
 #: ../src/extension/system.cpp:102
 msgid "Format autodetect failed. The file is being opened as SVG."
-msgstr "រកឃើញ​ទ្រង់ទ្រាយ​បានបរាជ័យ​ស្វ័យប្រវត្តិ​ ។ ឯកសារ ត្រូវ​បាន​​ចាប់​ផ្តើម​បើក​ជា​ឯកសារ​ SVG ។"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រកឃើញទ្រង់ទ្រាយ​ដោយ​ស្វ័យ​ប្រវត្តិ ។ ឯកសារ​កំពុង​ត្រូវ​បានបើក​ដោយ SVG ។"
 
 #. TRANSLATORS: default.svg is localizable - this is the name of the default document
 #. template. This way you can localize the default pagesize, translate the name of
@@ -3527,120 +3511,113 @@ msgstr "រកឃើញ​ទ្រង់ទ្រាយ​បានបរាជ
 #. localized share/templates/default.xx.svg file, where xx is your language code.
 #: ../src/file.cpp:136
 msgid "default.svg"
-msgstr "svg លំនាំ​ដើម"
+msgstr "default.svg"
 
 #: ../src/file.cpp:222 ../src/file.cpp:958
 #, c-format
 msgid "Failed to load the requested file %s"
-msgstr "ផ្ទុក​ឯកសាររ​ %s ដែល​បានស្នើ​បានបរាជ័យ​"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ផ្ទុក​ឯកសារ​ដែល​បាន​ស្នើ %s"
 
 #: ../src/file.cpp:247
 msgid "Document not saved yet.  Cannot revert."
-msgstr "ឯកសារ​មិន​ទាន់​បាន​រក្សា​ទុក​នូវ​ឡើយ​ទេ​ ។   មិន​អាច​ត្រឡប់​ទៅ​ដើម​"
+msgstr "ឯកសារ​មិន​ទាន់​បាន​រក្សាទុកនៅ​ឡើយ​ទេ ។  មិន​អាចត្រឡប់ ។"
 
 #: ../src/file.cpp:253
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
-msgstr "ការផ្លាស់ប្តូរ​នឹង ត្រូវ​បានបាត់បង់ តើ​អ្នក​ពិតជា​ចង់​ផ្ទុក​ឯកសារ   %s ឡើង​វិញ​ឬ?"
+msgstr "ការ​ផ្លាស់ប្ដូរ​នឹង​បាត់បង់! តើ​អ្នក​ប្រាកដ​ជា​ចង់​ផ្ទុក​ឯកសារ %s ឡើងវិញ​ឬ ?"
 
 #: ../src/file.cpp:282
 msgid "Document reverted."
-msgstr "ឯកសារ​ដែល​បាន​ត្រឡប់​ទៅ​ដើម​ ។"
+msgstr "បាន​ត្រឡប់​ឯកសារ ។"
 
 #: ../src/file.cpp:284
 msgid "Document not reverted."
-msgstr "ឯកសារ​ដែល​មិន​អាច​ត្រឡប់ទៅ​ដើម​បាន​ឡើយ​ ។"
+msgstr "មិន​បានត្រឡប់​ឯកសារ ។"
 
 #: ../src/file.cpp:406
 msgid "Select file to open"
-msgstr "ជ្រើស​ឯកសារ​សម្រាប់​បើក​"
+msgstr "ជ្រើស​ឯកសារ​ត្រូវ​បើក​"
 
 #: ../src/file.cpp:484
-#, fuzzy
 msgid "Vacuum &lt;defs&gt;"
-msgstr "Vac_uum Defs"
+msgstr "សុញ្ញាកាស &lt;defs&gt;"
 
 #: ../src/file.cpp:489
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
-msgstr "បានយក <b>%i</b> ចេញ ការកំណត់ដែលមិនប្រើនៅក្នុង &lt;defs&gt; ។"
+msgstr "បាន​យក <b>%i</b> ចេញ មិន​បាន​ប្រើការ​កំណត់​នៅ​ក្នុង &lt;defs&gt; ។"
 
 #: ../src/file.cpp:494
 msgid "No unused definitions in &lt;defs&gt;."
-msgstr "កុំប្រើ​និយមន័យ​ក្នុង​&lt;defs&gt;."
+msgstr "គ្មាន​កា​រកំណត់​បាន​ប្រើ​នៅ​ក្នុង &lt;defs&gt; ។"
 
 #: ../src/file.cpp:523
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
-msgstr ""
-"រក​មិន​ឃើញ​ផ្នែកបន្ថែម​របស់ Inkscape ដើម្បីរក្សាទុក​ជា​ឯកសារ​ (%s) ។ ផ្នែក​បន្ថែមនេះ​បណ្តាល​មក​ពី​"
-"មិនស្គាល់​ផ្នែក​បន្ថែម​នៃ​ឈ្មោះ​ឯកសារ​ ។"
+msgstr "រក​មិន​ឃើញ​ផ្នែក​បន្ថែម​របស់ Inkscape ដើម្បី​រក្សាទុក​ឯកសារ (%s) ។  វា​អាច​បណ្ដាល​​មក​ពី​មិន​ស្គាល់​​ផ្នែក​បន្ថែម​ឈ្មោះ​ឯកសារ​ ។"
 
 #: ../src/file.cpp:524 ../src/file.cpp:532
 msgid "Document not saved."
-msgstr "ឯកសារ​មិន​ទាន់​រក្សាទុក​ ។"
+msgstr "មិន​បាន​រក្សាទុក​ឯកសារ​ទេ ។"
 
 #: ../src/file.cpp:531
 #, c-format
 msgid "File %s could not be saved."
-msgstr "ឯកសារ​ %s មិន​អាច​រក្សាទុក​បានឡើយ​ ។"
+msgstr "ឯកសារ %s មិន​អាច​ត្រូវ​បាន​រក្សាទុក​ទេ ។"
 
 #: ../src/file.cpp:541
 msgid "Document saved."
-msgstr "ឯកសារ​បាន​រក្សាទុក​ ។"
+msgstr "បាន​រក្សាទុក​ឯកសារ ។ុក​ ។"
 
 #: ../src/file.cpp:675 ../src/file.cpp:1083 ../src/file.cpp:1201
 #, c-format
 msgid "drawing%s"
-msgstr "គំ​នូរ​រ​%s"
+msgstr "គំនូរ %s"
 
 #: ../src/file.cpp:681
 #, c-format
 msgid "drawing-%d%s"
-msgstr "គំនូរ​-%d%s"
+msgstr "គំនូរ-%d%s"
 
 #: ../src/file.cpp:700
-#, fuzzy
 msgid "Select file to save a copy to"
-msgstr "ជ្រើស​ឯកសារ​ដើម្បី​រក្សាទុក​ជា​"
+msgstr "ជ្រើស​ឯកសារ​ត្រូវ​រក្សាទុក​ជា​ច្បាប់​ចម្លង​ទៅ"
 
 #: ../src/file.cpp:702 ../src/file.cpp:709
 msgid "Select file to save to"
-msgstr "ជ្រើស​ឯកសារ​ដើម្បី​រក្សាទុក​ជា​"
+msgstr "ជ្រើស​ឯកសារ​ត្រូវ​រក្សាទុក​ទៅ​"
 
 #: ../src/file.cpp:783
 msgid "No changes need to be saved."
-msgstr "ការផ្លាស់ប្តូរ​មិន​ត្រូវ​បាន​រក្សាទុក​ ។"
+msgstr "គ្មាន​ការ​ផ្លាស់ប្ដូរ​តម្រូវ​ឲ្យ​រក្សាទុក ។"
 
 #: ../src/file.cpp:800
-#, fuzzy
 msgid "Saving document..."
-msgstr "រក្សាទុក​​ឯកសារ"
+msgstr "កំពុង​រក្សាទុក​ឯកសារ..."
 
 #: ../src/file.cpp:955
-#, fuzzy
 msgid "Import"
-msgstr "នាំចូល​..."
+msgstr "នាំចូល"
 
 #: ../src/file.cpp:987
 msgid "Select file to import"
-msgstr "ជ្រើស​ឯកសារ​ដើម្បី នាំចូល​"
+msgstr "ជ្រើស​ឯកសារ​ត្រូវ​​នាំចូល​"
 
 #: ../src/file.cpp:1105 ../src/file.cpp:1216
-#, fuzzy
 msgid "Select file to export to"
-msgstr "ជ្រើស​ឯកសារ​ដើម្បី នាំចូល​"
+msgstr "ជ្រើស​ឯកសារ​ត្រូ​វនាំចេញ​ទៅ​"
 
 #: ../src/file.cpp:1243
 #, c-format
 msgid "Error saving a temporary copy"
-msgstr ""
+msgstr "កំហុស​ក្នុង​ការ​រក្សាទុក​ច្បាប់​ចម្លង​បណ្ដោះអាសន្ន"
 
 #: ../src/file.cpp:1262
 msgid "Open Clip Art Login"
-msgstr ""
+msgstr "បើក​ការ​ចូល​ប្រអប់​រូបភាព"
 
 #: ../src/file.cpp:1283
 #, c-format
@@ -3648,151 +3625,131 @@ msgid ""
 "Error exporting the document. Verify if the server name, username and "
 "password are correct. If the server have support for webdav and verify if "
 "you didn't forget to choose a license too."
-msgstr ""
+msgstr "កំហុស​ក្នុង​ការ​នាំឯកសារ​ចេញ ។ ផ្ទៀងផ្ទាត់​ប្រសិន​បើ​ឈ្មោះ​ម៉ាស៊ីន​បម្រើ ឈ្មោះ​អ្នក​ប្រើ និង​ពាក្យ​សម្ងាត់​ត្រឹមត្រូវ ។ ប្រសិន​បើ​ម៉ាស៊ី​ន​បម្រើ​គាំទ្រ webdav និង​ផ្ទៀងផ្ទាត់ ប្រសិន​បើ​អ្នក​មិន​បានភ្លេច​ ជ្រើស​អាជ្ញាបណ្ណ​ដែរ ។"
 
 #: ../src/file.cpp:1304
-#, fuzzy
 msgid "Document exported..."
-msgstr "ឯកសារ​ដែល​បាន​ត្រឡប់​ទៅ​ដើម​ ។"
+msgstr "បាន​នាំចេញ​ឯកសារ..."
 
 #: ../src/file.cpp:1332 ../src/verbs.cpp:2175
 msgid "Import From Open Clip Art Library"
-msgstr ""
+msgstr "នាំចូល​ពី​បណ្ណាល័យ​បន្ទប់​រូបភាព​ដែល​បាន​បើក"
 
 #: ../src/filter-enums.cpp:20
-#, fuzzy
 msgid "Blend"
-msgstr "ពណ៌​​ខៀវ"
+msgstr "ល្បាយ"
 
 #: ../src/filter-enums.cpp:21
-#, fuzzy
 msgid "Color Matrix"
-msgstr "ម៉ាទ្រីស​"
+msgstr "ម៉ាទ្រីស​ពណ៌​"
 
 #: ../src/filter-enums.cpp:22
 msgid "Component Transfer"
-msgstr ""
+msgstr "ការ​ផ្ទេរ​សមាសភាគ"
 
 #: ../src/filter-enums.cpp:23
-#, fuzzy
 msgid "Composite"
 msgstr "ផ្សំ"
 
 #: ../src/filter-enums.cpp:24
 msgid "Convolve Matrix"
-msgstr ""
+msgstr "ម៉ាទ្រីសអ​ង្កាញ់"
 
 #: ../src/filter-enums.cpp:25
 msgid "Diffuse Lighting"
-msgstr ""
+msgstr "សាយ​ពន្លឺ"
 
 #: ../src/filter-enums.cpp:26
-#, fuzzy
 msgid "Displacement Map"
-msgstr "ប្រវែង​ចម្រៀក​អតិបរមា"
+msgstr "ផ្លាស់កន្លែង​ផែនទី"
 
 #: ../src/filter-enums.cpp:27
 msgid "Flood"
-msgstr ""
+msgstr "ឈាម"
 
 #: ../src/filter-enums.cpp:29 ../src/selection-describer.cpp:52
 msgid "Image"
 msgstr "រូបភាព"
 
 #: ../src/filter-enums.cpp:30
-#, fuzzy
 msgid "Merge"
-msgstr "ផ្លូវ​​រង្វាស់​"
+msgstr "បញ្ចូល​គ្នា​"
 
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
-msgstr ""
+msgstr "រូបវិទូ"
 
 #: ../src/filter-enums.cpp:33
 msgid "Specular Lighting"
-msgstr ""
+msgstr "ឆ្លុះពន្លឺ"
 
 #: ../src/filter-enums.cpp:34
-#, fuzzy
 msgid "Tile"
-msgstr "ចំណងជើង"
+msgstr "ក្រឡា​ក្បឿង"
 
 #: ../src/filter-enums.cpp:35 ../src/filter-enums.cpp:117
-#, fuzzy
 msgid "Turbulence"
-msgstr "ភាពស្រដៀង​គ្នា​ ៖"
+msgstr "គួច"
 
 #: ../src/filter-enums.cpp:40
-#, fuzzy
 msgid "Source Graphic"
-msgstr "ស្មើ​និង កម្ពស់​"
+msgstr "ក្រាហ្វិក​ប្រភព​"
 
 #: ../src/filter-enums.cpp:41
-#, fuzzy
 msgid "Source Alpha"
-msgstr "ប្រភព"
+msgstr "អាល់ហ្វា​ប្រភព"
 
 #: ../src/filter-enums.cpp:42
-#, fuzzy
 msgid "Background Image"
-msgstr "ផ្ទៃខាងក្រោយ​ ៖"
+msgstr "រូបភាព​ផ្ទៃ​ខាង​ក្រោយ"
 
 #: ../src/filter-enums.cpp:43
-#, fuzzy
 msgid "Background Alpha"
-msgstr "ផ្ទៃខាងក្រោយ​ ៖"
+msgstr "អាល់ហ្វា​ផ្ទៃ​ខាង​ក្រោយ"
 
 #: ../src/filter-enums.cpp:44
-#, fuzzy
 msgid "Fill Paint"
-msgstr "បោះពុម្ពជា​ឯកសារ​ PDF"
+msgstr "បំពេញ​គំនូរ"
 
 #: ../src/filter-enums.cpp:45
 msgid "Stroke Paint"
-msgstr "គូរ​ខ្វាច់​"
+msgstr "ខ្វាច់​គំនូរ​"
 
 #: ../src/filter-enums.cpp:51 ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid "Normal"
 msgstr "ធម្មតា"
 
 #: ../src/filter-enums.cpp:52
-#, fuzzy
 msgid "Multiply"
-msgstr "រចនាប័ទ្ម​ច្រើន​"
+msgstr "គុណ​"
 
 #: ../src/filter-enums.cpp:53
-#, fuzzy
 msgid "Screen"
-msgstr "ពណ៌​​បៃតង"
+msgstr "អេក្រង់"
 
 #: ../src/filter-enums.cpp:54
-#, fuzzy
 msgid "Darken"
-msgstr "បំពង់​បន្តក់​"
+msgstr "ធ្វើ​ឲ្យ​ងងឹត"
 
 #: ../src/filter-enums.cpp:55
-#, fuzzy
 msgid "Lighten"
-msgstr "ពន្លឺ"
+msgstr "ធ្វើ​ឲ្យ​ភ្លឺ្លឺ"
 
 #: ../src/filter-enums.cpp:61
-#, fuzzy
 msgid "Matrix"
 msgstr "ម៉ាទ្រីស​"
 
 #: ../src/filter-enums.cpp:62
-#, fuzzy
 msgid "Saturate"
 msgstr "តិត្ថិភាព"
 
 #: ../src/filter-enums.cpp:63
-#, fuzzy
 msgid "Hue Rotate"
-msgstr "បង្វិល"
+msgstr "បង្វិល​ភាព​លាំៗ"
 
 #: ../src/filter-enums.cpp:64
 msgid "Luminance to Alpha"
-msgstr ""
+msgstr "ពន្លឺ​ទៅ​អាល់ហ្វា"
 
 #. File
 #: ../src/filter-enums.cpp:70 ../src/verbs.cpp:2150
@@ -3800,56 +3757,48 @@ msgid "Default"
 msgstr "លំនាំដើម"
 
 #: ../src/filter-enums.cpp:71
-#, fuzzy
 msgid "Over"
-msgstr "ម៉ែត្រ"
+msgstr "លើ"
 
 #: ../src/filter-enums.cpp:72
-#, fuzzy
 msgid "In"
-msgstr "អ៊ិន្ឈ៍"
+msgstr "ក្នុង"
 
 #: ../src/filter-enums.cpp:73
-#, fuzzy
 msgid "Out"
-msgstr "លទ្ធផល"
+msgstr "ចេញ"
 
 #: ../src/filter-enums.cpp:74
-#, fuzzy
 msgid "Atop"
-msgstr "បន្ថែម​ការ​ឈប់"
+msgstr "នៅ​កំពូល"
 
 #: ../src/filter-enums.cpp:75
 msgid "XOR"
-msgstr ""
+msgstr "XOR"
 
 #: ../src/filter-enums.cpp:76
 msgid "Arithmetic"
-msgstr ""
+msgstr "គណិត"
 
 #: ../src/filter-enums.cpp:82
-#, fuzzy
 msgid "Identity"
-msgstr "អ្នក​ចង្អុល​បង្ហាញ"
+msgstr "អត្តសញ្ញាណ"
 
 #: ../src/filter-enums.cpp:83
-#, fuzzy
 msgid "Table"
-msgstr "ចំណងជើង"
+msgstr "តារាង"
 
 #: ../src/filter-enums.cpp:84
-#, fuzzy
 msgid "Discrete"
-msgstr "ចែកចាយ"
+msgstr "ដាច់ៗគ្នា"
 
 #: ../src/filter-enums.cpp:85
-#, fuzzy
 msgid "Linear"
-msgstr "បន្ទាត់"
+msgstr "លីនេអ៊ែរ"
 
 #: ../src/filter-enums.cpp:86
 msgid "Gamma"
-msgstr ""
+msgstr "ហ្គាំម៉ា"
 
 #: ../src/filter-enums.cpp:92 ../src/selection-chemistry.cpp:293
 #: ../src/widgets/gradient-selector.cpp:134
@@ -3864,57 +3813,51 @@ msgstr "រុំ"
 #: ../src/widgets/sp-color-scales.cpp:399
 #: ../src/widgets/sp-color-scales.cpp:400
 msgid "Red"
-msgstr "ពណ៌​​ក្រហម"
+msgstr "ក្រហម"
 
 #: ../src/filter-enums.cpp:101 ../src/flood-context.cpp:247
 #: ../src/widgets/sp-color-scales.cpp:402
 #: ../src/widgets/sp-color-scales.cpp:403
 msgid "Green"
-msgstr "ពណ៌​​បៃតង"
+msgstr "​​បៃតង"
 
 #: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:248
 #: ../src/widgets/sp-color-scales.cpp:405
 #: ../src/widgets/sp-color-scales.cpp:406
 msgid "Blue"
-msgstr "ពណ៌​​ខៀវ"
+msgstr "​​ខៀវ"
 
 #: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:252
 msgid "Alpha"
-msgstr ""
+msgstr "អាល់ហ្វា"
 
 #: ../src/filter-enums.cpp:109
-#, fuzzy
 msgid "Erode"
-msgstr "ថ្នាំង​"
+msgstr "ច្រោះ"
 
 #: ../src/filter-enums.cpp:110
-#, fuzzy
 msgid "Dilate"
-msgstr "កាលបរិច្ឆេទ"
+msgstr "ពង្រីក"
 
 #: ../src/filter-enums.cpp:116
-#, fuzzy
 msgid "Fractal Noise"
-msgstr "ប្រភាគ (Koch)"
+msgstr "ការរំខាន​ប្រភាគ"
 
 #: ../src/filter-enums.cpp:123
-#, fuzzy
 msgid "Distant Light"
-msgstr "ទិសដៅ​បោះពុម្ព"
+msgstr "ពន្លឺ​ឆ្ងាយ"
 
 #: ../src/filter-enums.cpp:124
-#, fuzzy
 msgid "Point Light"
-msgstr "តម្រឹម​ស្តាំ"
+msgstr "ពន្លឺ​ចំណុច"
 
 #: ../src/filter-enums.cpp:125
-#, fuzzy
 msgid "Spot Light"
-msgstr "ស្មើ​និង កម្ពស់​"
+msgstr "ពន្លឺអុចៗ​​"
 
 #: ../src/flood-context.cpp:245
 msgid "Visible Colors"
-msgstr ""
+msgstr "ពណ៌​ដែល​មើល​ឃើញ"
 
 #: ../src/flood-context.cpp:251 ../src/widgets/sp-color-scales.cpp:431
 #: ../src/widgets/sp-color-scales.cpp:432
@@ -3922,96 +3865,89 @@ msgid "Lightness"
 msgstr "ពន្លឺ"
 
 #: ../src/flood-context.cpp:261
-#, fuzzy
 msgid "Small"
 msgstr "តូច​"
 
 #: ../src/flood-context.cpp:262
-#, fuzzy
 msgid "Medium"
 msgstr "មធ្យម"
 
 #: ../src/flood-context.cpp:263
-#, fuzzy
 msgid "Large"
 msgstr "ធំ​"
 
 #: ../src/flood-context.cpp:417
 msgid "<b>Too much inset</b>, the result is empty."
-msgstr ""
+msgstr "<b>ភ្ជាប់​ច្រើន​ពេក</b> លទ្ធផល​ទទេ ។"
 
 #: ../src/flood-context.cpp:457
 #, c-format
 msgid "Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr ""
+msgstr "បានបំពេញ​ផ្ទៃ ផ្លូវ​ដែល​មាន​ថ្នាំង <b>%d</b> បានបង្កើត និង​មិនបាន​ភ្ជាប់​ជាមួយ​ជម្រើស ។"
 
 #: ../src/flood-context.cpp:461
 #, c-format
 msgid "Area filled, path with <b>%d</b> nodes created."
-msgstr ""
+msgstr "បានបំពេញ​ផ្ទៃ បាន​បង្កើត​ផ្លូវ​ដែល​មាន​ថ្នាំង <b>%d</b> ។"
 
 #: ../src/flood-context.cpp:664 ../src/flood-context.cpp:919
 msgid "<b>Area is not bounded</b>, cannot fill."
-msgstr ""
+msgstr "<b>ផ្ទៃ​មិន​បាន​ធ្វើឲ្យ​រលាស់</b> មិន​អាច​បំពេញ ។"
 
 #: ../src/flood-context.cpp:924
 msgid ""
 "<b>Only the visible part of the bounded area was filled.</b> If you want to "
 "fill all of the area, undo, zoom out, and fill again."
-msgstr ""
+msgstr "<b>មាន​តែ​ផ្នែក​ដែល​មើលឃើញ​ប៉ុណ្ណោះ​នៃ​ផ្ទៃដែល​រលាស់​ត្រូវ​បានបំពេញ ។</b> ប្រសិន​បើ​អ្នក​ចង់​បំបេញ​ផ្ទៃ មិន​ធ្វើ​វិញ​ ពង្រីក និង​បំពេញ​ម្ដង​ទៀត ។"
 
 #: ../src/flood-context.cpp:940 ../src/flood-context.cpp:1097
-#, fuzzy
 msgid "Fill bounded area"
-msgstr "បំពេញ និង​ ខ្វាច់​"
+msgstr "បំពេញ​ផ្ទៃ​ដែល​រលាស់​"
 
 #: ../src/flood-context.cpp:960
-#, fuzzy
 msgid "Set style on object"
-msgstr "លំនាំ​ទៅ​វត្ថុ​"
+msgstr "កំណត់​រចនាប័ទ្ម​លើ​វត្ថុ​"
 
 #: ../src/flood-context.cpp:1019
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
-msgstr ""
+msgstr "<b>គូរ​លើ</b> ផ្ទៃ​ដើម្បី​បន្ថែម​ត្រូវ​បំពេញ ចុចគ្រាប់​ចុច <b>ជំនួស(Alt)</b> ដើម្បី​បំពេញ​ការ​ប៉ះ"
 
 #: ../src/gradient-context.cpp:133 ../src/gradient-drag.cpp:76
 msgid "Linear gradient <b>start</b>"
-msgstr "ជម្រាល​លីនេអ៊ែរ <b>ចាប់ផ្តើម​</b>"
+msgstr "ជម្រាល​លីនេអ៊ែរ <b>ចាប់ផ្ដើម</b>"
 
 #. POINT_LG_BEGIN
 #: ../src/gradient-context.cpp:134 ../src/gradient-drag.cpp:77
 msgid "Linear gradient <b>end</b>"
-msgstr "ជម្រាល​លីនេអ៊ែរ<b>ចុងក្រោយ​​</b>"
+msgstr "ជម្រាល​លីនេអ៊ែរ <b>បញ្ចប់</b>"
 
 #: ../src/gradient-context.cpp:135 ../src/gradient-drag.cpp:78
-#, fuzzy
 msgid "Linear gradient <b>mid stop</b>"
-msgstr "ជម្រាល​លីនេអ៊ែរ <b>ចាប់ផ្តើម​</b>"
+msgstr "ជម្រាល​លីនេអ៊ែរ<b>ពាក់កណ្ដាល​បញ្ឈប់</b>"
 
 #: ../src/gradient-context.cpp:136 ../src/gradient-drag.cpp:79
 msgid "Radial gradient <b>center</b>"
-msgstr "ជម្រាល​ដែល​រៀប​តាម​កាំមូល <b>កណ្ដាល</b>"
+msgstr "ជម្រាលជា​កាំ<b>កណ្ដាល</b>"
 
 #: ../src/gradient-context.cpp:137 ../src/gradient-context.cpp:138
 #: ../src/gradient-drag.cpp:80 ../src/gradient-drag.cpp:81
 msgid "Radial gradient <b>radius</b>"
-msgstr "ជម្រាល​ដែល​រៀប​តាម​កាំ​ាំ​ល​ <b>កាំ​</b>"
+msgstr "ជម្រាល​ជា​កាំ <b>កាំ</b>"
 
 #: ../src/gradient-context.cpp:139 ../src/gradient-drag.cpp:82
 msgid "Radial gradient <b>focus</b>"
-msgstr "ជម្រាល​ដែល​រៀប​តាម​កម្ម​​មូល​ <b>ផ្តោត​</b>"
+msgstr "ជម្រាល​ជាកាំ <b>ផ្ដោត</b>"
 
 #. POINT_RG_FOCUS
 #: ../src/gradient-context.cpp:140 ../src/gradient-context.cpp:141
 #: ../src/gradient-drag.cpp:83 ../src/gradient-drag.cpp:84
-#, fuzzy
 msgid "Radial gradient <b>mid stop</b>"
-msgstr "ជម្រាល​លីនេអ៊ែរ <b>ចាប់ផ្តើម​</b>"
+msgstr "ជម្រាល​ជា​កាំ <b>ពាក់​កណ្ដាល​បញ្ឈប់</b>"
 
 #: ../src/gradient-context.cpp:161
 #, c-format
 msgid "%s selected out of %d gradient handles on %d selected object(s)"
-msgstr ""
+msgstr "%s បាន​ជ្រើស​នៃ​ជម្រាល %d គ្រប់គ្រង​លើ​វត្ថុ​ដែល​បាន​ជ្រើស %d"
 
 #: ../src/gradient-context.cpp:164
 #, c-format
@@ -4032,70 +3968,62 @@ msgstr ""
 
 #: ../src/gradient-context.cpp:369 ../src/gradient-context.cpp:462
 #: ../src/widgets/gradient-vector.cpp:735
-#, fuzzy
 msgid "Add gradient stop"
-msgstr "ជម្រាល​ខ្វាច់​តម្រៀប​តាម​កាំ​"
+msgstr "បន្ថែម​ការ​បញ្ឈប់​ជម្រាល​"
 
 #: ../src/gradient-context.cpp:437
-#, fuzzy
 msgid "Simplify gradient"
-msgstr "ជម្រាល​មូល​"
+msgstr "ធ្វើ​ឲ្យ​ជម្រាល​ធម្មតា"
 
 #: ../src/gradient-context.cpp:513
-#, fuzzy
 msgid "Create default gradient"
-msgstr "បង្កើត​ជម្រាល​លីនែអ៊ែ​"
+msgstr "បង្កើត​ជម្រាល​លំនាំដើម​"
 
 #: ../src/gradient-context.cpp:566
 msgid "<b>Draw around</b> handles to select them"
-msgstr ""
+msgstr "<b>គូរជុំវិញ</b>ចំណុច​ទាញ​ដើម្បីជ្រើស​ពួក​វា"
 
 #: ../src/gradient-context.cpp:662
 msgid "<b>Ctrl</b>: snap gradient angle"
-msgstr "<b>បញ្ជា​(Ctrl)</b> ៖ ខ្ទាស់​ជម្រាល​មុំ​"
+msgstr "<b>បញ្ជា(Ctrl)</b> ៖ ខ្ទាស់​មុំ​ជម្រាល"
 
 #: ../src/gradient-context.cpp:663
 msgid "<b>Shift</b>: draw gradient around the starting point"
-msgstr "<b>ប្តូរ​</b> ៖ គូស​ជម្រាល​ជុំវិញ​ចំណុ​ច​ចាប់​ផ្តើម​"
+msgstr "<b>ប្ដូរ(Shift)</b> ៖ គូរ​ជម្រាល​ជុំវិញ​ចំណុច​ចាប់ផ្ដើម"
 
 #: ../src/gradient-context.cpp:775
-#, fuzzy
 msgid "Invert gradient"
-msgstr "ជម្រាល​លីនែអ៊ែរ​"
+msgstr "ត្រឡប់​ជម្រាល​"
 
 #: ../src/gradient-context.cpp:884
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
-msgstr "<b>ពណ៌​ជម្រាល</b> សម្រាប់​វត្ថុ %d; ដោយ <b>បញ្ជា​(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ"
+msgstr "<b>ជម្រាល</b> សម្រាប់​វត្ថុ %d ជា​មួយ<b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ"
 
 #: ../src/gradient-context.cpp:888
 msgid "Select <b>objects</b> on which to create gradient."
-msgstr "ជ្រើស​ <b>វត្ថុ​</b> ណាមួយ​ដើម្បី​បង្កើត​ជម្រាល​ ។"
+msgstr "ជ្រើស <b>វត្ថុ</b> ដែល​ត្រូវ​បង្កើត​ជម្រាល ។"
 
 #: ../src/gradient-drag.cpp:541
-#, fuzzy
 msgid "Merge gradient handles"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr "បញ្ចូល​ចំណុច​ទាញ​ជម្រាល​ចូលគ្នា"
 
 #: ../src/gradient-drag.cpp:852
-#, fuzzy
 msgid "Move gradient handle"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ជម្រាល​"
 
 #: ../src/gradient-drag.cpp:905 ../src/widgets/gradient-vector.cpp:767
-#, fuzzy
 msgid "Delete gradient stop"
-msgstr "លុប​ការ​បញ្ឈប់​"
+msgstr "លុប​ការ​បញ្ឈប់​ជម្រាល​"
 
 #: ../src/gradient-drag.cpp:1054
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
 "+Alt</b> to delete stop"
 msgstr ""
-"%s សម្រាប់ ៖  %s%s; អូស​ដោយ​ប្រើ​ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ​ជាមួយ​ <b>បញ្ជា​(Ctrl)+ជំនួស"
-"(Alt)​</b> សម្រាប់ការពារ​មុំ​ដោយ​ប្រើ​ <b>បញ្ជា(Ctrl)​​+ប្តូរ(Shift)​</b> ដើម្បី​រាប់​ធ្វើ​មាត្រដ្ឋាន​ជុំ​"
-"វិញ​ចំណុច​កណ្តាល​"
+"%s %d សម្រាប់ ៖ %s%s; គូរ​ដោយ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​អុហ្វសិត ចុច​ដោយ​ប្រើ <b>បញ្ជា(Ctrl)"
+"+ជំនួស(Alt)</b> ដើម្បី​លុប​កា​របញ្ឈប់"
 
 #: ../src/gradient-drag.cpp:1058 ../src/gradient-drag.cpp:1065
 msgid " (stroke)"
@@ -4106,41 +4034,33 @@ msgstr " (ខ្វាច់)"
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
 "preserve angle, with <b>Ctrl+Shift</b> to scale around center"
-msgstr ""
-"%s សម្រាប់ ៖  %s%s; អូស​ដោយ​ប្រើ​ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ​ជាមួយ​ <b>បញ្ជា​(Ctrl)+ជំនួស"
-"(Alt)​</b> សម្រាប់ការពារ​មុំ​ដោយ​ប្រើ​ <b>បញ្ជា(Ctrl)​​+ប្តូរ(Shift)​</b> ដើម្បី​រាប់​ធ្វើ​មាត្រដ្ឋាន​ជុំ​"
-"វិញ​ចំណុច​កណ្តាល​"
+msgstr "%s សម្រាប់ ៖ %s%s; អូស​ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​ប្រើ <b>បញ្ជា(Ctrl)+ជំនួស(Alt)</b>ដើម្បី​បម្រុង​ទុក​មុំ ដោយ​ប្រើ <b>បញ្ជា(Ctrl)+ប្ដូរ(Shift)</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន​ជុំវិញ​ចំណុច​កណ្ដាល"
 
 #: ../src/gradient-drag.cpp:1070
 #, c-format
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
-msgstr ""
-"ជម្រាល​រៀប​តាម​កម្ម​ល​កាំ​ <b>ចំណុច​កណ្តាល​</b> ហើយ​ <b>ផ្តោត</b>;ដោយ​ប្រើ​ជាមួយ​ <b>ប្តូរ​</b> ដើម្បី​"
-"បំបែក​ផ្តោត​"
+msgstr "ជម្រាល​ជា​កាំ <b>កណ្ដាល</b> និង​<b>ផ្ដោត</b> អូ​សដោយ​ប្រើ<b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក​កា​រផ្ដោត"
 
 #: ../src/gradient-drag.cpp:1073
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
 "separate"
-msgstr "ចំណុច​ពណ៌​ជម្រាល​បាន​ចែក​រំលែក​ដោយ​ពណ៌​ជម្រាល <b>%d</b> អូស​ដោយ <b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក"
+msgstr "ចំណុច​ជម្រាល​ដែល​បាន​ចែករំលែក​ដោយជម្រាល <b>%d</b> អូស​ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក"
 
 #: ../src/gradient-drag.cpp:1748
-#, fuzzy
 msgid "Move gradient handle(s)"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr "ផ្លាស់ទី​ចំណុចទាញ​ជម្រាល​"
 
 #: ../src/gradient-drag.cpp:1784
-#, fuzzy
 msgid "Move gradient mid stop(s)"
-msgstr "លុប​ការ​បញ្ឈប់​"
+msgstr "ផ្លាស់ទី​ការ​បញ្ឈប់​ពាក់កណ្ដាល​ជម្រាល"
 
 #: ../src/gradient-drag.cpp:2072
-#, fuzzy
 msgid "Delete gradient stop(s)"
-msgstr "លុប​ការ​បញ្ឈប់​"
+msgstr "លុប​កា​របញ្ឈប់​ជម្រាល"
 
 #: ../src/helper/units.cpp:36
 msgid "Unit"
@@ -4158,7 +4078,7 @@ msgstr "ចំណុច"
 
 #: ../src/helper/units.cpp:37 ../src/ui/widget/selected-style.cpp:272
 msgid "pt"
-msgstr "pt"
+msgstr "ចំណុច"
 
 #: ../src/helper/units.cpp:37
 msgid "Points"
@@ -4166,7 +4086,7 @@ msgstr "ចំណុច"
 
 #: ../src/helper/units.cpp:37
 msgid "Pt"
-msgstr "Pt"
+msgstr "ចំណុច"
 
 #: ../src/helper/units.cpp:38
 msgid "Pixel"
@@ -4177,7 +4097,7 @@ msgstr "ភីកសែល​"
 #: ../src/ui/dialog/inkscape-preferences.cpp:203
 #: ../src/ui/widget/selected-style.cpp:268
 msgid "px"
-msgstr "px"
+msgstr "ភីកសែល"
 
 #: ../src/helper/units.cpp:38
 msgid "Pixels"
@@ -4185,7 +4105,7 @@ msgstr "ភីកសែល​"
 
 #: ../src/helper/units.cpp:38
 msgid "Px"
-msgstr "ភីចសែល​"
+msgstr "ភីកសែល​"
 
 #. You can add new elements from this point forward
 #: ../src/helper/units.cpp:40 ../share/extensions/straightseg.inx.h:3
@@ -4253,7 +4173,7 @@ msgstr "អ៊ិន្ឈ៍"
 #. TRANSLATORS: for info, see http://www.w3.org/TR/REC-CSS2/syndata.html#length-units
 #: ../src/helper/units.cpp:47
 msgid "Em square"
-msgstr "ការេ Em "
+msgstr "ការេ Em"
 
 #: ../src/helper/units.cpp:47
 msgid "em"
@@ -4261,12 +4181,12 @@ msgstr "em"
 
 #: ../src/helper/units.cpp:47
 msgid "Em squares"
-msgstr "ការេ Em "
+msgstr "ការេ Em"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/REC-CSS2/syndata.html#length-units
 #: ../src/helper/units.cpp:49
 msgid "Ex square"
-msgstr "ការេ Ex "
+msgstr "ការេ Ex"
 
 #: ../src/helper/units.cpp:49
 msgid "ex"
@@ -4274,26 +4194,26 @@ msgstr "ex"
 
 #: ../src/helper/units.cpp:49
 msgid "Ex squares"
-msgstr "ការេ Ex "
+msgstr "ការេ Ex"
 
 #: ../src/inkscape.cpp:484
 msgid "Untitled document"
-msgstr "ឯកសារ​ដែល​មិនទាន់​មានចំណង​ជើង​"
+msgstr "ឯកសារ​គ្មាន​ចំណង​​ជើង​"
 
 #. Show nice dialog box
 #: ../src/inkscape.cpp:513
 msgid "Inkscape encountered an internal error and will close now.\n"
-msgstr "Inkscape បានជួបប្រទះ​កំហុស​ខាងក្រៅ​ហើយ បិទ​វា​ឥឡូវ​នេះ ។\n"
+msgstr "Inkscape បានជួបប្រទះ​កំហុស​ខាង​ក្នុង ហើយ​​បិទ​វា​ឥឡូវ​នេះ ។\n"
 
 #: ../src/inkscape.cpp:514
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
-msgstr "ឯកសារ​បម្រុង​ទុក​មិន​បាន​រក្សាទុក​ដោយ​ស្វ័យប្រវត្តិ​ត្រូវ​បាន​ធ្វើ​រួច​ទៅកាន់​ទីតាំង​ដូចខាងក្រោម​ ៖\n"
+msgstr "បម្រុង​ទុក​ឯកសារ​ដែល​មិន​បាន​រក្សាទុក​ដោយ​ស្វ័យ​ប្រវត្តិ​ត្រូវ​បាន​ធ្វើ​ទៅទីតាំង​ដូច​ខាង​ក្រោម ៖\n"
 
 #: ../src/inkscape.cpp:515
 msgid "Automatic backup of the following documents failed:\n"
-msgstr "ឯកសារ​បម្រុង​ទុក​ខាង​ក្រោម​បាន​បរាជ័យ​ដោយស្វ័យប្រវត្តិ​ ៖\n"
+msgstr "បម្រុង​ទុក​ដោយស្វ័យ​ប្រវត្តិ​នូវ​ឯកសារ​ដូច​ខា​ក្រោម​បាន​បរាជ័យ ៖\n"
 
 #: ../src/inkscape.cpp:658
 #, c-format
@@ -4301,8 +4221,8 @@ msgid ""
 "Cannot create directory %s.\n"
 "%s"
 msgstr ""
-"មិន​អាច​បង្កើត​ឯកសារ​ %s.\n"
-"%s បានឡើយ​"
+"មិន​អាច​បង្កើត​ថត %s ។\n"
+"%s"
 
 #: ../src/inkscape.cpp:659
 #, c-format
@@ -4310,7 +4230,7 @@ msgid ""
 "%s is not a valid directory.\n"
 "%s"
 msgstr ""
-"​%s ជា​ថត​ដែល​មិន​ត្រឹមត្រូវ​  ។\n"
+"%s មិន​មែន​ជា​ថត​ត្រឹមត្រូវ​ទេ ។\n"
 "%s"
 
 #: ../src/inkscape.cpp:660
@@ -4319,8 +4239,8 @@ msgid ""
 "Cannot create file %s.\n"
 "%s"
 msgstr ""
-"មិន​អាច​បង្កើត​ឯកសារ​ %s.\n"
-"%s បាន​ឡើយ​"
+"មិន​អាច​បង្កើត​ឯកសារ %s ។\n"
+"%s"
 
 #: ../src/inkscape.cpp:661
 #, c-format
@@ -4328,16 +4248,16 @@ msgid ""
 "Cannot write file %s.\n"
 "%s"
 msgstr ""
-"មិន​អាច​សរសេរឯកសារ​ %s.\n"
-"%s បានឡើយ​"
+"មិន​អាច​សរសេរ​ឯកសារ %s ។\n"
+"%s"
 
 #: ../src/inkscape.cpp:662
 msgid ""
 "Although Inkscape will run, it will use default settings,\n"
 "and any changes made in preferences will not be saved."
 msgstr ""
-" Inkscape វា​នឹង​ ប្រើ​ការកំណត់​លំនាំដើម​ទោះបីជា​វា​កំពុង​រត់​ក៏​ដោយ​\n"
-"ហើយ មានការផ្លាស់ប្តូរ​ក្នុង​ប្ក្នុង​ចំណូល​ចិត្ត​នឹង មិន​ត្រូវ​បាន​រក្ឡើយ​ ។​ទុក​ ។"
+"ទោះ​បីជា Inkscape នឹង​រត់​ដ៏​ដោយ វា​នឹង​ប្រើ​ការ​កំណត់​លំនាំ​ដើម\n"
+"និង​កា​រផ្លាស់ប្ដូរ​មួយ​ចំនួន​បាន​ធ្វើនៅ​ក្នុង​ចំណូលចិត្ត នឹង​មិន​ត្រូវ​បាន​រក្សាទុក​ទេ ។"
 
 #: ../src/inkscape.cpp:732 ../src/preferences.cpp:56
 #, c-format
@@ -4345,7 +4265,7 @@ msgid ""
 "%s is not a regular file.\n"
 "%s"
 msgstr ""
-"%s មិនមែន​ជា​ឯកសារ​ត្រឹមត្រូវ​ ។\n"
+"%s មិន​មែន​ជា​ឯកសារ​ធម្មតា ។\n"
 "%s"
 
 #: ../src/inkscape.cpp:733 ../src/preferences.cpp:57
@@ -4355,8 +4275,8 @@ msgid ""
 "you don't have read permissions on it.\n"
 "%s"
 msgstr ""
-"%s ឯកសារ​ XML មិន​ត្រឹមត្រូវ​ ឬ \n"
-"អ្នក​គ្មាន​សិទ្ធអាន​វា​ទេ ។​\n"
+"%s មិនមែន​ជា​ឯការ XML ត្រឹមត្រូវ ឬ\n"
+"អ្នក​គ្មាន​សិទ្ធិអាន​វា​ទេ ។\n"
 "%s"
 
 #: ../src/inkscape.cpp:735
@@ -4365,7 +4285,7 @@ msgid ""
 "%s is not a valid menus file.\n"
 "%s"
 msgstr ""
-"ឯកសារ %s ​ជា​ឯកសារ​ម៉ឺនុយ​ដែល​មិន​ត្រឹមត្រូវ​ ។\n"
+"%s មិន​មែន​ជា​ឯកសារ​ម៉ឺនុយ​ត្រឹមត្រូវ​ទេ ។\n"
 "%s"
 
 #: ../src/inkscape.cpp:736
@@ -4373,8 +4293,8 @@ msgid ""
 "Inkscape will run with default menus.\n"
 "New menus will not be saved."
 msgstr ""
-"Inkscape នឹងរត់​ជា​មួយ​ម៉ឺនុយ​លំនាំដើម​ ។\n"
-"ម៉ឺនុយ​ថ្មី​នឹង ត្រូវ​បាន​រក្សាទុក​ ។"
+"Inkscape នឹង​រត់​ជា​មួយ​ម៉ឺនុយ​លំនាំដើម ។\n"
+"ម៉ឺនុយថ្មី​នឹង​មិន​ត្រូវ​បាន​រក្សា​ទុក​ទេ ។"
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
@@ -4384,23 +4304,23 @@ msgstr "របារ​ពាក្យ​បញ្ជា​"
 
 #: ../src/interface.cpp:835
 msgid "Show or hide the Commands bar (under the menu)"
-msgstr "បង្ហាញ​ឬ លាក់​របារ​ពាក្យ​បញ្ជា​(ម៉ឺនុយ​)"
+msgstr "បង្ហាញ ឬលាក់​របារ​ពាក្យ​បញ្ជា (ក្រោម​ម៉ឺនុយ)"
 
 #: ../src/interface.cpp:837
 msgid "Tool Controls Bar"
-msgstr "ឧបករណ៍​របារ​វត្ថុបញ្ជា​"
+msgstr "របារ​វត្ថុ​បញ្ជា​ឧបករណ៍"
 
 #: ../src/interface.cpp:837
 msgid "Show or hide the Tool Controls bar"
-msgstr "បង្ហាញ​ឬ លាក់របា​​ឧបករណ៍​វត្ថុបញ្ជា​"
+msgstr "បង្ហាញ ឬ​លាក់​របារ​វត្ថុ​បញ្ជា​ឧបករណ៍"
 
 #: ../src/interface.cpp:839
 msgid "_Toolbox"
-msgstr "ប្រអប់​ឧបករណ៍​"
+msgstr "ប្រអប់​ឧបករណ៍"
 
 #: ../src/interface.cpp:839
 msgid "Show or hide the main toolbox (on the left)"
-msgstr "បង្ហាញ​ឬ លាក់​ប្រអប់​ឧបករណ៍​មេ​(នៅ​ខាង​ឆ្វេង​)"
+msgstr "បង្ហាញ ឬ​លាក់​ប្រអប់​ឧបករណ៍​ចម្បង (នៅ​ខាង​ឆ្វេង)"
 
 #: ../src/interface.cpp:845
 msgid "_Palette"
@@ -4408,54 +4328,51 @@ msgstr "ក្ដារលាយ"
 
 #: ../src/interface.cpp:845
 msgid "Show or hide the color palette"
-msgstr "បង្ហាញ​ឬ លាក់​ក្តារលាយ​ពណ៌​"
+msgstr "បង្ហាញ ឬ​លាក់​ក្ដារលាយ​ពណ៌"
 
 #: ../src/interface.cpp:847
 msgid "_Statusbar"
-msgstr "របារស្ថានភាព "
+msgstr "របារ​ស្ថានភាព"
 
 #: ../src/interface.cpp:847
 msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr "បង្ហាញ​ឬ លាក់​របារស្ថានភាព​ (ស្ថិត​នៅ​ក្រោមបាត​រោម​នៃ​បង្អួច​)"
+msgstr "បង្ហាញ ឬ​លាក់​របារ​ស្ថានភាព (នៅ​បាត​របស់​វីនដូ)"
 
 #: ../src/interface.cpp:901
 #, c-format
 msgid "Verb \"%s\" Unknown"
-msgstr "មិន​ស្គាល់​កិរិយាស័ព្ទ  \"%s\""
+msgstr "មិន​ស្គាល់​កិរិយាស័ព្ទ \"%s\""
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
 #: ../src/interface.cpp:1012
 #, c-format
 msgid "Enter group #%s"
-msgstr "បញ្ចូល​ក្រុម​ #%s"
+msgstr "បញ្ចូល​ក្រុម #%s"
 
 #: ../src/interface.cpp:1023
 msgid "Go to parent"
-msgstr "ត្រឡប់​ទៅ​មេ​"
+msgstr "ទៅ​កាន់​មេ​"
 
 #: ../src/interface.cpp:1114 ../src/interface.cpp:1199
 #: ../src/ui/widget/selected-style.cpp:447
-#, fuzzy
 msgid "Drop color"
-msgstr "ចម្លង​ពណ៌​"
+msgstr "ទម្លាក់​ពណ៌​"
 
 #: ../src/interface.cpp:1153
-#, fuzzy
 msgid "Drop color on gradient"
-msgstr "គ្មាន​ការ​បញ្ឈប់​នៅ​ក្នុង​ជម្រាល​​"
+msgstr "ទម្លាក់​ពណ៌​នៅ​លើ​ជម្រាល"
 
 #: ../src/interface.cpp:1212
 msgid "Could not parse SVG data"
-msgstr "មិន​អាច​ញែក​ទិន្នន័យ SVG  បានឡើយ​"
+msgstr "មិន​អាច​ញែក​ទិន្នន័យ SVG"
 
 #: ../src/interface.cpp:1254
 msgid "Drop SVG"
-msgstr ""
+msgstr "ទម្លាក់ SVG"
 
 #: ../src/interface.cpp:1312
-#, fuzzy
 msgid "Drop bitmap image"
-msgstr "នាំរូបភាព​ចូល​ជា <image>"
+msgstr "ទម្លាក់​រូបភាព"
 
 #: ../src/interface.cpp:1404
 #, c-format
@@ -4465,58 +4382,58 @@ msgid ""
 "\n"
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">មាន​ឯកសារ​​ដែល​មាន​ឈ្មោះ \"%s\" រួច​ហើយ ។ តើ​អ្នក​ពីត​ជា​ចង់​ជំនួស​វា​ឬ ?</span>\n"
+"\n"
+"ឯកសារ​មាន​នៅ​ក្នុង \"%s\" រួច​ហើយ ។ ការ​ជំនួស​វា​នឹង​សរសរ​ជាន់​លើ​មាតិកា​របស់​វា ។"
 
 #: ../src/interface.cpp:1411
-#, fuzzy
 msgid "Replace"
-msgstr "ចេញ​ផ្សាយ​"
+msgstr "ជំនួស"
 
 #: ../src/jabber_whiteboard/invitation-confirm-dialog.cpp:26
 #: ../src/jabber_whiteboard/session-file-selector.cpp:24
 msgid "_Write session file:"
-msgstr "សរសេរ​ឯកសារ​សម័យ​ ៖"
+msgstr "សរសេរ​ឯកសារ​សម័យ ៖"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
-msgstr "ជ្រើស​ទីតាំង​និង ឈ្មោះ​ឯកសារ​"
+msgstr "ជ្រើស​ទីតាំង និង​ឈ្មោះ​ឯកសារ"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:62
 msgid "Set filename"
-msgstr "កំណត់​ឈ្មោះ​ឯកសារ​"
+msgstr "កំណត់​ឈ្មោះ​ឯកសារ"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:308
 msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b>%1</b> បាន​អញ្ជើញ អ្នក​ទៅ​កាន់​សម័យក្តា​រខៀន​ ។"
+msgstr "<b>%1</b> បាន​អញ្ជើញ​អ្នក​ទៅ​សម័យ​ក្ដារខៀន ។"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:310
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "តើ​អ្នកប្រាថ្នា​យល់​ព្រម​ <b>%1</b>ការអញ្ជើញ​តាម​សម័យ​ក្តារ​ខៀន​ឬ ?"
+msgstr "តើ​អ្នក​ចង់​ទទួលការអញ្ជើញ​សម័យ​ក្ដារខៀន​របស់ <b>%1</b> ឬ​ទេ ?"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:314
 msgid "Accept invitation"
-msgstr "យល់​ព្រម​ការអញ្ជើញ​"
+msgstr "ទទួល​ការ​អញ្ជើញ"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:315
 msgid "Decline invitation"
-msgstr "បដិសេធ​ការអញ្ជើញ "
+msgstr "បដិសេធ​ការ​អញ្ជើញ"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:370
 msgid "Inkboard session (%1 to %2)"
-msgstr "សម័យ​ Inkboard (%1 ទៅ​ %2)"
+msgstr "សម័យ Inkboard (%1 ទៅ %2)"
 
 #: ../src/knot.cpp:428
 msgid "Node or handle drag canceled."
-msgstr "អូស​ថ្នាំង​ឬ ដំណោះស្រាយ​ត្រូវ​បាន​បោះបង់​ ។"
+msgstr "បាន​បោះបង់​ថ្នាំង​ ឬ​ចំណុច​ទាញ ។"
 
 #: ../src/knotholder.cpp:258
-#, fuzzy
 msgid "Change handle"
-msgstr "ផ្លាស់ប្តូរ​ប្រភេទ​ថ្នាំង​"
+msgstr "ផ្លាស់ប្ដូរ​ចំណុច​ទាញ​"
 
 #: ../src/knotholder.cpp:312
-#, fuzzy
 msgid "Move handle"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr "ផ្លាស់ទី​ចំណុច​ទាញ"
 
 #: ../src/libnrtype/FontFactory.cpp:358
 msgid "Ignoring font without family that will crash Pango"
@@ -4524,82 +4441,72 @@ msgstr "មិន​អើពើ​ពុម្ពអក្សរ​ដោយ​
 
 #. {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
 #: ../src/live_effects/effect.cpp:43
-#, fuzzy
 msgid "Path along path"
-msgstr "ដាក់​លើ​ផ្លូវ​"
+msgstr "ផ្លូវ​តាម​ផ្លូវ"
 
 #: ../src/live_effects/effect.cpp:45
-#, fuzzy
 msgid "Slant"
-msgstr "ចន្លោះ "
+msgstr "ភាព​ទេរ"
 
 #: ../src/live_effects/effect.cpp:46
 msgid "doEffect stack test"
-msgstr ""
+msgstr "សាកល្បង​ជង់ doEffect"
 
 #: ../src/live_effects/effect.cpp:48
-#, fuzzy
 msgid "Gears"
-msgstr "ជម្រះ "
+msgstr "ស្ពឺ"
 
 #: ../src/live_effects/effect.cpp:49
 msgid "Curve stitching"
-msgstr ""
+msgstr "ការ​ដេរ​ខ្សែកោង"
 
 #: ../src/live_effects/effect.cpp:108
-#, fuzzy
 msgid "No effect"
-msgstr "អុហ្វសិត​ផ្តេក​"
+msgstr "គ្មាន​បែបផែន​"
 
 #: ../src/live_effects/effect.cpp:142
 msgid "An exception occurred during execution of a Path Effect."
-msgstr ""
+msgstr "ករណីលើកលែង​បាន​កើត​ឡើង​កំឡុង​ពេល​ប្រតិបត្តិ​បែបផែន​ផ្លូវ ។"
 
 #: ../src/live_effects/parameter/enum.h:51
-#, fuzzy
 msgid "Change enum parameter"
-msgstr "ផ្លាស់ប្តូរ​ប្រភេទ​ចម្រៀក​"
+msgstr "ផ្លាស់ប្ដូរ​ប៉ារ៉ាម៉ែត្រ enum​"
 
 #: ../src/live_effects/lpe-gears.cpp:210
-#, fuzzy
 msgid "Teeth"
-msgstr "អត្ថបទ"
+msgstr "ធ្មេញ"
 
 #: ../src/live_effects/lpe-gears.cpp:210
-#, fuzzy
 msgid "The number of teeth"
-msgstr "​ចំនួន​ជំហាន​"
+msgstr "ចំនួន​ធ្មេញ"
 
 #: ../src/live_effects/lpe-gears.cpp:211
 msgid "Phi"
-msgstr ""
+msgstr "Phi"
 
 #: ../src/live_effects/lpe-gears.cpp:211
 msgid "???"
-msgstr ""
+msgstr "???"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:40
-#, fuzzy
 msgid "Stroke path"
-msgstr "គូរ​ខ្វាច់​"
+msgstr "ផ្លូវ​ខ្វាច់"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:40
 msgid "The path that will be stroked, whatever, think of good text here."
-msgstr ""
+msgstr "ផ្លូវ​​ដែល​នឹង​ត្រូវ​បាន​ខ្វាច់ អ្វី​ក៏​ដោយ គិត​អត្ថបទដ៏​ល្អនៅ​ទីនេះ ។"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:41
-#, fuzzy
 msgid "Nr of paths"
-msgstr "ចំនួ​ន​ជួរ​ដេក​"
+msgstr "ចំនួន​ផ្លូវ​"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:41
 msgid "The number of paths that will be generated."
-msgstr ""
+msgstr "ចំនួន​ផ្លូវ​ដែលនឹង​ត្រូវ​បានបង្កើត ។"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
-#, fuzzy
 msgid "Startpoint variation"
-msgstr "តិត្ថិភាព"
+msgstr "វ៉ារ្យង់​ចំណុច​ចាប់ផ្ដើម"
 
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
@@ -4610,108 +4517,94 @@ msgstr "..."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "Endpoint variation"
-msgstr ""
+msgstr "វ៉ារ្យង់​ចំណុច​បញ្ចប់"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-#, fuzzy
 msgid "Scale width"
-msgstr "វាច់​ទខ្វាច់​ទឹង​"
+msgstr "ទទឹង​មាត្រដ្ឋាន"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "Scaling of the width of the stroke path"
-msgstr ""
+msgstr "កា​ធ្វើមាត្រដ្ឋាន​របស់​ទទឹង​នៃ​ផ្លូវ​ខ្វាច់"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "Scale width relative"
-msgstr ""
+msgstr "ធ្វើមាត្រដ្ឋាន​ទទឹង​ទំនាក់ទំនង"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "Scale the width of the stroke path relative to its length"
-msgstr ""
+msgstr "ធ្វើមាត្រដ្ឋាន​នៃ​ផ្លូវ​ខ្វាច់​ទាក់ទង​ទៅ​នឹង​ប្រវែង​របស់​វា"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:53
-#, fuzzy
 msgid "Single"
-msgstr "មុំ"
+msgstr "តែ​មួយ​គត់"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:54
 msgid "Single, stretched"
-msgstr ""
+msgstr "តែ​មួយ​គត់ ទាញ​ឲ្យ​វែង"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:55
-#, fuzzy
 msgid "Repeated"
-msgstr "ធ្វើម្តង​ទៀត​ ៖"
+msgstr "បាន​ធ្វើម្តង​ទៀត"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:56
 msgid "Repeated, stretched"
-msgstr ""
+msgstr "បាន​ធ្វើ​ម្ដង​ទៀត បាន​ទាញ​ឲ្យ​វែង"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:62
-#, fuzzy
 msgid "Pattern source"
-msgstr "លំនាំ​ខ្វាច់"
+msgstr "ប្រភព​លំនាំ"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:62
 msgid "Path to put along the skeleton path"
-msgstr ""
+msgstr "ផ្លូវ​ត្រូវ​ដាក់​តាម​ផ្លូវ​គ្រោង​"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:63
-#, fuzzy
 msgid "Pattern copies"
-msgstr "លំនាំ"
+msgstr "ច្បាប់​ចម្លង​លំនាំ"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:63
 msgid "How many pattern copies to place along the skeleton path"
-msgstr ""
+msgstr "តើ​មាន​ប៉ុន្មាន​ច្បាប់ចម្លង​ត្រូវ​ដាក់​តាម​ផ្លូវ​គ្រោង"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:64
-#, fuzzy
 msgid "Width of the pattern"
-msgstr "ទទឹង​ក្រដាស​"
+msgstr "ទទឹង​លំនាំ​"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:65
-#, fuzzy
 msgid "Width in units of length"
-msgstr "ទទឹង​គិតជា​ភីចសែល​សម្រាប់​តំបន់​ដែល​បានដាក់​ឲ្យ​ព្រិល"
+msgstr "ទទឹង​ក្នុង​ឯកតា​របស់​ប្រវែង"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:65
-#, fuzzy
 msgid "Scale the width of the pattern in units of its length"
-msgstr "ប្រវែង​អតិបរមា​នៃ​ជ្រុង​កែង​ (ក្នុង​ក្រុម​ទទឹង​ខ្វាច់​)"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​ទទឹង​របស់​លំនាំ​ក្នុង​ឯកតា​នៃ​ប្រវែង​របស់​វា"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:66
-#, fuzzy
 msgid "Spacing"
-msgstr "គម្លាត ៖"
+msgstr "ការ​ដាក់​ចន្លោះ"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:66
-#, fuzzy
 msgid "Space between copies of the pattern"
-msgstr "គម្លាត​រវាង​បន្ទាត់​"
+msgstr "ចន្លោះ​រវាង​ច្បាប់​ចម្លង​របស់​លំនាំ"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:67
 #: ../share/extensions/pathalongpath.inx.h:5
-#, fuzzy
 msgid "Normal offset"
-msgstr "អុហ្វសិត​ផ្តេក​"
+msgstr "អុហ្វសិត​​ធម្មតា​"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:68
 #: ../share/extensions/pathalongpath.inx.h:9
-#, fuzzy
 msgid "Tangential offset"
-msgstr "អុហ្វសិត​បញ្ឈរ​"
+msgstr "អុហ្វសិត​តង់សង់​"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:69
 #: ../share/extensions/pathalongpath.inx.h:7
-#, fuzzy
 msgid "Pattern is vertical"
-msgstr "អុហ្វសិត​លំនាំ​​"
+msgstr "លំនាំ​គឺ​បញ្ឈរ​​"
 
 #: ../src/live_effects/parameter/parameter.cpp:142
-#, fuzzy
 msgid "Change scalar parameter"
-msgstr "ជំនាញ​ស្រអាប់"
+msgstr "ផ្លាស់ប្ដូរ​ប៉ារ៉ាម៉ែត្រ​មាត្រដ្ឋាន"
 
 #: ../src/live_effects/parameter/path.cpp:105
 #: ../src/live_effects/parameter/point.cpp:108
@@ -4719,78 +4612,73 @@ msgid "Edit on-canvas"
 msgstr ""
 
 #: ../src/live_effects/parameter/path.cpp:118
-#, fuzzy
 msgid "Paste path"
-msgstr "បិទភ្ជាប់​ទទឹង​"
+msgstr "បិទភ្ជាប់​ផ្លូវ​"
 
 #: ../src/live_effects/parameter/path.cpp:138
 #: ../src/selection-chemistry.cpp:1136 ../src/selection-chemistry.cpp:1174
 #: ../src/selection-chemistry.cpp:1201 ../src/selection-chemistry.cpp:1249
 #: ../src/selection-chemistry.cpp:1285
 msgid "Nothing on the clipboard."
-msgstr "គ្មាន​អ្វី​មួយ​ស្ថិតលើ​ក្ដារ​តម្បៀត​ខ្ទាស់"
+msgstr "គ្មាន​អ្វី​នៅ​លើ​ក្ដារ​តម្បៀតខ្ទាស់"
 
 #: ../src/live_effects/parameter/path.cpp:148
 msgid "This effect does not support arcs yet, try to convert to path."
-msgstr ""
+msgstr "បែបផែន​នេះ​មិនគាំទ្រ​ធ្នូរ​នៅ​ឡើយ​ទេ ព្យាយាម​បម្លែង​​ទៅ​ផ្លូវ ។"
 
 #: ../src/live_effects/parameter/path.cpp:153
-#, fuzzy
 msgid "Paste path parameter"
-msgstr "បិទភ្ជាប់​ទទឹង​ដែល​បំបែក​"
+msgstr "បិទ​ភ្ជាប់​ប៉ារ៉ាម៉ែត្រ​ផ្លូវ"
 
 #: ../src/live_effects/parameter/path.cpp:157
 msgid "Clipboard does not contain a path."
-msgstr ""
+msgstr "ក្ដារ​តម្បៀតខ្ទាស់​មិន​មាន​ផ្លូវ​ឡើយ ។"
 
 #: ../src/live_effects/parameter/point.cpp:89
-#, fuzzy
 msgid "Change point parameter"
-msgstr "បង្កើត​គួច​"
+msgstr "ផ្លាស់ប្ដូរ​ប៉ារ៉ាម៉ែត្រ​ចំណុច"
 
 #: ../src/live_effects/parameter/bool.cpp:67
-#, fuzzy
 msgid "Change bool parameter"
-msgstr "ជំនាញ​ស្រអាប់"
+msgstr ""
 
 #: ../src/live_effects/parameter/random.cpp:143
-#, fuzzy
 msgid "Change random parameter"
-msgstr "ផ្លាស់ប្តូរ​ប្រភេទ​ថ្នាំង​"
+msgstr "ផ្លាស់ប្ដូរ​ប៉ារ៉ាម៉ែត្រ​​ចៃដន្យ​"
 
 #: ../src/main.cpp:211
 msgid "Print the Inkscape version number"
-msgstr "បោះពុម្ព​លេខ​កំណែ​របស់​ Inkscape "
+msgstr "បោះពុម្ព​លេខ​កំណែ​របស់ Inkscape"
 
 #: ../src/main.cpp:216
 msgid "Do not use X server (only process files from console)"
-msgstr "កុំ​ប្រើ​ម៉ាស៊ីន​បម្រើ​ X  (បាន​តែ​ឯកសារ​ដែល​ដំណើរការ​ពី​កុងសូល)"
+msgstr "កុំប្រើ​ម៉ាស៊ីន​បម្រើ X (អាច​ចូល​ដំណើរការ​ឯកសារ​តែ​ពី​កុងសូល​ប៉ុណ្ណោះ)"
 
 #: ../src/main.cpp:221
 msgid "Try to use X server (even if $DISPLAY is not set)"
-msgstr "ព្យាយាម​ប្រើ​ម៉ាស៊ីន​បម្រើ​ X  (បើពុំ​នោះ​ទេ​ $DISPLAY មិន​បាន​កំណត់​)"
+msgstr "ព្យាយាម​ប្រើ​ម៉ាស៊ីន​បម្រើ X (ទោះបី​ជា $DISPLAY មិន​បាន​កំណត់​ក៏ដោយ)"
 
 #: ../src/main.cpp:226
 msgid "Open specified document(s) (option string may be excluded)"
-msgstr "បើក​ឯកសារ​ជាក់លាក់​​ជាច្រើន​ (ជម្រើស​ខ្សែអក្សរ​ត្រូវ​បានបដិសេធ)"
+msgstr "បើក​ឯកសារ​ដែល​បានបញ្ជាក់ (ខ្សែអក្សរ​ជម្រើស​អាច​យក​ចេញ)"
 
 #: ../src/main.cpp:227 ../src/main.cpp:232 ../src/main.cpp:237
 #: ../src/main.cpp:304 ../src/main.cpp:309 ../src/main.cpp:314
 #: ../src/main.cpp:319 ../src/main.cpp:325
 msgid "FILENAME"
-msgstr "ឈ្មោះ​ឯកសារ​"
+msgstr "ឈ្មោះ​ឯកសារ"
 
 #: ../src/main.cpp:231
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
-msgstr "បោះពុម្ព​ឯកសារ​ដើម្បី​បញ្ជាក់​ទិន្នផលឯកសា​រ (ប្រើ​ '| program' សម្រាប់បំពុង​)"
+msgstr "បោះពុម្ព​ឯកសារ​ទៅ​ឯកសារ​លទ្ធផល​ដែល​បានបញ្ជាក់ (ប្រើ '| program' សម្រាប់បំពង់)"
 
 #: ../src/main.cpp:236
 msgid "Export document to a PNG file"
-msgstr "នាំចេញ​ឯកសារ​ជា​ឯកសារ​ PNG "
+msgstr "នាំចេញ​ឯកសារ​ទៅ​ជាឯកសារ PNG"
 
 #: ../src/main.cpp:241
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
-msgstr "គុណភាព​បង្ហាញត្រូវ​បាន​ប្រើ​សម្រាប់​នាំចេញ​SVG ទៅ​ជា​រូបភាព (លំនាំដើម 90)"
+msgstr "គុណភាព​បង្ហាញ​បានប្រើ​សម្រាប់​នាំចេញ SVG ទៅ​ជា​រូបភាព (លំនាំដើម ៩០)"
 
 #: ../src/main.cpp:242
 msgid "DPI"
