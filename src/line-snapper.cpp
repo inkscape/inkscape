@@ -10,10 +10,10 @@ Inkscape::LineSnapper::LineSnapper(SPNamedView const *nv, NR::Coord const d) : S
 }
 
 void Inkscape::LineSnapper::_doFreeSnap(SnappedConstraints &sc,
-													Inkscape::Snapper::PointType const &t,
-													NR::Point const &p,
-													bool const &f,
-                                             		std::vector<NR::Point> &points_to_snap,
+                                                    Inkscape::Snapper::PointType const &t,
+                                                    NR::Point const &p,
+                                                    bool const &f,
+                                                     std::vector<NR::Point> &points_to_snap,
                                                     std::list<SPItem const *> const &it) const
 {
     /* Snap along x (i.e. to vertical lines) */
@@ -24,11 +24,11 @@ void Inkscape::LineSnapper::_doFreeSnap(SnappedConstraints &sc,
 }
 
 void Inkscape::LineSnapper::_doConstrainedSnap(SnappedConstraints &sc,
-													Inkscape::Snapper::PointType const &t, 
-													NR::Point const &p,
+                                                    Inkscape::Snapper::PointType const &t, 
+                                                    NR::Point const &p,
                                                     bool const &f,
-                                             		std::vector<NR::Point> &points_to_snap,
-                                     				ConstraintLine const &c,
+                                                     std::vector<NR::Point> &points_to_snap,
+                                                     ConstraintLine const &c,
                                                     std::list<SPItem const *> const &it) const
 
 {
@@ -50,7 +50,7 @@ void Inkscape::LineSnapper::_doConstrainedSnap(SnappedConstraints &sc,
         /* Try to intersect this line with the target line */
         NR::Point t = NR::Point(NR_HUGE, NR_HUGE);
         IntersectorKind const k = intersector_line_intersection(n, q, component_vectors[i->first], i->second, t);
-		
+        
         if (k == INTERSECTS) {
             const NR::Coord dist = L2(t - p);
             //Store any line that's within snapping range

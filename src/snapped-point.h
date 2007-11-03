@@ -18,7 +18,7 @@
 
 namespace Inkscape
 {
-	
+    
 /// Class describing the result of an attempt to snap.
 class SnappedPoint
 {

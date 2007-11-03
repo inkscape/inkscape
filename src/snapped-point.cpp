@@ -18,9 +18,9 @@ Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, bool at_intersect
 
 Inkscape::SnappedPoint::SnappedPoint()
 {
-	_distance = NR_HUGE;
-	_point = NR::Point(0,0);
-	_at_intersection = false;
+    _distance = NR_HUGE;
+    _point = NR::Point(0,0);
+    _at_intersection = false;
 }
 
 
@@ -42,16 +42,16 @@ NR::Point Inkscape::SnappedPoint::getPoint() const
 // search for the closest snapped point
 bool getClosestSP(std::list<Inkscape::SnappedPoint> &list, Inkscape::SnappedPoint &result) 
 {
-	bool success = false;
-	
-	for (std::list<Inkscape::SnappedPoint>::const_iterator i = list.begin(); i != list.end(); i++) {
-		if ((i == list.begin()) || (*i).getDistance() < result.getDistance()) {
-			result = *i;
-			success = true;
-		}	
-	}
-	
-	return success;
+    bool success = false;
+    
+    for (std::list<Inkscape::SnappedPoint>::const_iterator i = list.begin(); i != list.end(); i++) {
+        if ((i == list.begin()) || (*i).getDistance() < result.getDistance()) {
+            result = *i;
+            success = true;
+        }    
+    }
+    
+    return success;
 }
 
 /*

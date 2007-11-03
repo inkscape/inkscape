@@ -92,11 +92,11 @@ void Inkscape::Snapper::setEnabled(bool s)
  */
 
 void Inkscape::Snapper::freeSnap(SnappedConstraints &sc,
-												   
-												   PointType const &t,
+                                                   
+                                                   PointType const &t,
                                                    NR::Point const &p,
                                                    bool const &first_point,
-                                             	   std::vector<NR::Point> &points_to_snap,						 
+                                                    std::vector<NR::Point> &points_to_snap,                         
                                                    SPItem const *it) const
 {
     std::list<SPItem const *> lit;
@@ -117,11 +117,11 @@ void Inkscape::Snapper::freeSnap(SnappedConstraints &sc,
  */
 
 void Inkscape::Snapper::freeSnap(SnappedConstraints &sc, 
-												   
-												   PointType const &t,
+                                                   
+                                                   PointType const &t,
                                                    NR::Point const &p,
                                                    bool const &first_point,
-                                             	   std::vector<NR::Point> &points_to_snap,					 
+                                                    std::vector<NR::Point> &points_to_snap,                     
                                                    std::list<SPItem const *> const &it) const
 {
     if (_enabled == false || getSnapFrom(t) == false) {
@@ -146,11 +146,11 @@ void Inkscape::Snapper::freeSnap(SnappedConstraints &sc,
  */
 
 void Inkscape::Snapper::constrainedSnap(SnappedConstraints &sc, 
-														  
-														  PointType const &t,
+                                                          
+                                                          PointType const &t,
                                                           NR::Point const &p,
                                                           bool const &first_point,
-                                             			  std::vector<NR::Point> &points_to_snap,
+                                                           std::vector<NR::Point> &points_to_snap,
                                                           ConstraintLine const &c,
                                                           SPItem const *it) const
 {
@@ -172,11 +172,11 @@ void Inkscape::Snapper::constrainedSnap(SnappedConstraints &sc,
  */
 
 void Inkscape::Snapper::constrainedSnap(SnappedConstraints &sc, 
-														  
-														  PointType const &t,
+                                                          
+                                                          PointType const &t,
                                                           NR::Point const &p,
                                                           bool const &first_point,
-                                             			  std::vector<NR::Point> &points_to_snap,						 
+                                                           std::vector<NR::Point> &points_to_snap,                         
                                                           ConstraintLine const &c,
                                                           std::list<SPItem const *> const &it) const
 {

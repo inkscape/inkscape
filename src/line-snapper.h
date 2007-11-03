@@ -26,19 +26,19 @@ protected:
 
 private:
   void _doFreeSnap(SnappedConstraints &sc,
-  					Inkscape::Snapper::PointType const &t,
-  					NR::Point const &p,
-			   		bool const &first_point,
+                      Inkscape::Snapper::PointType const &t,
+                      NR::Point const &p,
+                       bool const &first_point,
                     std::vector<NR::Point> &points_to_snap,
                     std::list<SPItem const *> const &it) const;
   
   void _doConstrainedSnap(SnappedConstraints &sc,
-  					Inkscape::Snapper::PointType const &t,
-  					NR::Point const &p,
-				  	bool const &first_point,
+                      Inkscape::Snapper::PointType const &t,
+                      NR::Point const &p,
+                      bool const &first_point,
                     std::vector<NR::Point> &points_to_snap,
                     ConstraintLine const &c,
-				  	std::list<SPItem const *> const &it) const;
+                      std::list<SPItem const *> const &it) const;
   
   /**
    *  \param p Point that we are trying to snap.

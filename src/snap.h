@@ -77,8 +77,8 @@ public:
                                            Inkscape::Snapper::ConstraintLine const &c,
                                            std::list<SPItem const *> const &it) const;
                                            
-	Inkscape::SnappedPoint guideSnap(NR::Point const &p,
-									 NR::Point const &guide_normal) const;
+    Inkscape::SnappedPoint guideSnap(NR::Point const &p,
+                                     NR::Point const &guide_normal) const;
 
     std::pair<NR::Point, bool> freeSnapTranslation(Inkscape::Snapper::PointType t,
                                                    std::vector<NR::Point> const &p,
@@ -132,16 +132,16 @@ public:
     bool getSnapModeNode() const;
     bool getSnapModeGuide() const;
 
-	void setIncludeItemCenter(bool enabled)	{
-		_include_item_center = enabled;
-		object.setIncludeItemCenter(enabled); 	//store a local copy in the object-snapper
-												//instead of passing it through many functions 
-	}
-	
-	bool getIncludeItemCenter()	const {
-		return _include_item_center;
-	}
-		
+    void setIncludeItemCenter(bool enabled)    {
+        _include_item_center = enabled;
+        object.setIncludeItemCenter(enabled);     //store a local copy in the object-snapper
+                                                //instead of passing it through many functions 
+    }
+    
+    bool getIncludeItemCenter() const {
+        return _include_item_center;
+    }
+        
 protected:
     SPNamedView const *_named_view;
 
@@ -167,7 +167,7 @@ private:
                                                 NR::Dim2 dim,
                                                 bool uniform) const;
                                                 
-	Inkscape::SnappedPoint findBestSnap(NR::Point const &p, SnappedConstraints &sc) const;
+    Inkscape::SnappedPoint findBestSnap(NR::Point const &p, SnappedConstraints &sc) const;
 };
 
 #endif /* !SEEN_SNAP_H */

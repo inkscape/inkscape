@@ -46,7 +46,7 @@ SnapManager::SnapManager(SPNamedView const *v) :
     _named_view(v),
     _include_item_center(false)
 {
-	
+    
 }
 
 
@@ -104,7 +104,7 @@ bool SnapManager::SomeSnapperMightSnap() const
 /*
  *  The snappers have too many parameters to adjust individually. Therefore only
  *  two snapping modes are presented to the user: snapping bounding box corners (to 
- * 	other bounding boxes, grids or guides), and/or snapping nodes (to other nodes,
+ *     other bounding boxes, grids or guides), and/or snapping nodes (to other nodes,
  *  paths, grids or guides). To select either of these modes (or both), use the 
  *  methods defined below: setSnapModeBBox() and setSnapModeNode().
  * 
@@ -113,53 +113,53 @@ bool SnapManager::SomeSnapperMightSnap() const
 
 void SnapManager::setSnapModeBBox(bool enabled)
 {
-	//The default values are being set in sp_namedview_set() (in sp-namedview.cpp)
-	guide.setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
-	
-	for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
+    //The default values are being set in sp_namedview_set() (in sp-namedview.cpp)
+    guide.setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
+    
+    for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
         Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
         grid->snapper->setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
     }
-	
-	object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
-	object.setSnapToBBoxNode(enabled);
-	object.setSnapToBBoxPath(enabled);
-	object.setStrictSnapping(true); //don't snap bboxes to nodes/paths and vice versa	
+    
+    object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
+    object.setSnapToBBoxNode(enabled);
+    object.setSnapToBBoxPath(enabled);
+    object.setStrictSnapping(true); //don't snap bboxes to nodes/paths and vice versa    
 }
 
 bool SnapManager::getSnapModeBBox() const
 {
-	return guide.getSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX);
+    return guide.getSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX);
 }
 
 void SnapManager::setSnapModeNode(bool enabled)
 {
-	guide.setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
-	
-	for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
+    guide.setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
+    
+    for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
         Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
         grid->snapper->setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
     }
-    	
-	object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
-	//object.setSnapToItemNode(enabled); // On second thought, these should be controlled
-	//object.setSnapToItemPath(enabled); // separately by the snapping prefs dialog 
-	object.setStrictSnapping(true);
+        
+    object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
+    //object.setSnapToItemNode(enabled); // On second thought, these should be controlled
+    //object.setSnapToItemPath(enabled); // separately by the snapping prefs dialog 
+    object.setStrictSnapping(true);
 }
 
 bool SnapManager::getSnapModeNode() const
 {
-	return guide.getSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE);
+    return guide.getSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE);
 }
 
 void SnapManager::setSnapModeGuide(bool enabled)
 {
-	object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_GUIDE, enabled);
+    object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_GUIDE, enabled);
 }
 
 bool SnapManager::getSnapModeGuide() const
 {
-	return object.getSnapFrom(Inkscape::Snapper::SNAPPOINT_GUIDE);
+    return object.getSnapFrom(Inkscape::Snapper::SNAPPOINT_GUIDE);
 }
 
 /**
@@ -259,7 +259,7 @@ SnapManager::freeSnapAlways( Inkscape::Snapper::PointType t,
         gdouble const curr_gridsnap = (*i)->getDistance();
         const_cast<Inkscape::Snapper*> (*i)->setDistance(NR_HUGE);
         std::vector<NR::Point> points_to_snap;
-    	points_to_snap.push_back(p);    
+        points_to_snap.push_back(p);    
         (*i)->freeSnap(sc, t, p, true, points_to_snap, it);
         const_cast<Inkscape::Snapper*> (*i)->setDistance(curr_gridsnap);
     }
@@ -312,12 +312,12 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
 Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType t,
                                                     NR::Point const &p,
                                                     bool const &first_point,
-                                             		std::vector<NR::Point> &points_to_snap,
+                                                     std::vector<NR::Point> &points_to_snap,
                                                     Inkscape::Snapper::ConstraintLine const &c,
                                                     std::list<SPItem const *> const &it) const
 {
     
-	SnappedConstraints sc;
+    SnappedConstraints sc;
         
     SnapperList const snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
@@ -328,19 +328,19 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
 }
 
 Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
-                             				NR::Point const &guide_normal) const
+                                             NR::Point const &guide_normal) const
 {
-	Inkscape::ObjectSnapper::DimensionToSnap snap_dim;
-	if (guide_normal == component_vectors[NR::Y]) {
-		snap_dim = Inkscape::ObjectSnapper::SNAP_Y;
-	} else if (guide_normal == component_vectors[NR::X]) {
-		snap_dim = Inkscape::ObjectSnapper::SNAP_X;
-	} else {
-		g_warning("WARNING: snapping of angled guides is not supported yet!");
-		snap_dim = Inkscape::ObjectSnapper::SNAP_XY;
-	}
-	
-	return object.guideSnap(p, snap_dim);	
+    Inkscape::ObjectSnapper::DimensionToSnap snap_dim;
+    if (guide_normal == component_vectors[NR::Y]) {
+        snap_dim = Inkscape::ObjectSnapper::SNAP_Y;
+    } else if (guide_normal == component_vectors[NR::X]) {
+        snap_dim = Inkscape::ObjectSnapper::SNAP_X;
+    } else {
+        g_warning("WARNING: snapping of angled guides is not supported yet!");
+        snap_dim = Inkscape::ObjectSnapper::SNAP_XY;
+    }
+    
+    return object.guideSnap(p, snap_dim);    
 }
 
 
@@ -428,9 +428,9 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
     */
     double best_metric = NR_HUGE;
 
-	std::vector<NR::Point>::const_iterator j = transformed_points.begin();
+    std::vector<NR::Point>::const_iterator j = transformed_points.begin();
 
-	for (std::vector<NR::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
+    for (std::vector<NR::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
         
         /* Snap it */
         Inkscape::SnappedPoint const snapped = constrained ?
@@ -656,78 +656,78 @@ std::pair<NR::Coord, bool> SnapManager::freeSnapSkew(Inkscape::Snapper::PointTyp
 
 Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedConstraints &sc) const
 {
-	NR::Coord const guide_sens = guide.getDistance();
-	NR::Coord grid_sens = 0;
-	
-	SnapManager::SnapperList const gs = getGridSnappers();
-	SnapperList::const_iterator i = gs.begin();
-	if (i != gs.end()) {		
-		grid_sens = (*i)->getDistance();
-	}
-	
-	// Store all snappoints, optionally together with their specific snapping range
-	std::list<std::pair<Inkscape::SnappedPoint, NR::Coord> > sp_list;
-	// Most of these snapped points are already within the snapping range, because
-	// they have already been filtered by their respective snappers. In that case
-	// we can set the snapping range to NR_HUGE here. If however we're looking at
-	// intersections of e.g. a grid and guide line, then we'll have to determine 
-	// once again whether we're within snapping range. In this case we will set
-	// the snapping range to e.g. min(guide_sens, grid_sens)
-	
-	// search for the closest snapped point
-	Inkscape::SnappedPoint closestPoint;
-	if (getClosestSP(sc.points, closestPoint)) {
-		sp_list.push_back(std::make_pair(closestPoint, NR_HUGE));
-	} 
-	
-	// search for the closest snapped grid line
-	Inkscape::SnappedInfiniteLine closestGridLine;
-	if (getClosestSIL(sc.grid_lines, closestGridLine)) {	
-		sp_list.push_back(std::make_pair(Inkscape::SnappedPoint(closestGridLine), NR_HUGE));
-	}
-	
-	// search for the closest snapped guide line
-	Inkscape::SnappedInfiniteLine closestGuideLine;
-	if (getClosestSIL(sc.guide_lines, closestGuideLine)) {
-		sp_list.push_back(std::make_pair(Inkscape::SnappedPoint(closestGuideLine), NR_HUGE));
-	}
-	
-	// search for the closest snapped intersection of grid lines
-	Inkscape::SnappedPoint closestGridPoint;
-	if (getClosestIntersectionSIL(sc.grid_lines, closestGridPoint)) {
-		sp_list.push_back(std::make_pair(closestGridPoint, NR_HUGE));
-	}
-	
-	// search for the closest snapped intersection of guide lines
-	Inkscape::SnappedPoint closestGuidePoint;
-	if (getClosestIntersectionSIL(sc.guide_lines, closestGuidePoint)) {
-		sp_list.push_back(std::make_pair(closestGuidePoint, NR_HUGE));
-	}
-	
-	// search for the closest snapped intersection of grid with guide lines
-	Inkscape::SnappedPoint closestGridGuidePoint;
-	if (getClosestIntersectionSIL(sc.grid_lines, sc.guide_lines, closestGridGuidePoint)) {
-		sp_list.push_back(std::make_pair(closestGridGuidePoint, std::min(guide_sens, grid_sens)));
-	}
-	
-	// now let's see which snapped point gets a thumbs up
- 	Inkscape::SnappedPoint bestPoint(p, NR_HUGE);
-	for (std::list<std::pair<Inkscape::SnappedPoint, NR::Coord> >::const_iterator i = sp_list.begin(); i != sp_list.end(); i++) {
- 		// first find out if this snapped point is within snapping range
- 		if ((*i).first.getDistance() <= (*i).second) {
- 			// if it's the first point
- 			bool c1 = (i == sp_list.begin());  
- 			// or, if it's closer
- 			bool c2 = (*i).first.getDistance() < bestPoint.getDistance(); 
- 			// or, if it's just as close but at an intersection
- 			bool c3 = ((*i).first.getDistance() == bestPoint.getDistance()) && (*i).first.getAtIntersection(); 
- 			// then prefer this point over the previous one
- 			if (c1 || c2 || c3) {
- 				bestPoint = (*i).first;
- 			}
- 		}
- 	}
- 	return bestPoint;		 
+    NR::Coord const guide_sens = guide.getDistance();
+    NR::Coord grid_sens = 0;
+    
+    SnapManager::SnapperList const gs = getGridSnappers();
+    SnapperList::const_iterator i = gs.begin();
+    if (i != gs.end()) {        
+        grid_sens = (*i)->getDistance();
+    }
+    
+    // Store all snappoints, optionally together with their specific snapping range
+    std::list<std::pair<Inkscape::SnappedPoint, NR::Coord> > sp_list;
+    // Most of these snapped points are already within the snapping range, because
+    // they have already been filtered by their respective snappers. In that case
+    // we can set the snapping range to NR_HUGE here. If however we're looking at
+    // intersections of e.g. a grid and guide line, then we'll have to determine 
+    // once again whether we're within snapping range. In this case we will set
+    // the snapping range to e.g. min(guide_sens, grid_sens)
+    
+    // search for the closest snapped point
+    Inkscape::SnappedPoint closestPoint;
+    if (getClosestSP(sc.points, closestPoint)) {
+        sp_list.push_back(std::make_pair(closestPoint, NR_HUGE));
+    } 
+    
+    // search for the closest snapped grid line
+    Inkscape::SnappedInfiniteLine closestGridLine;
+    if (getClosestSIL(sc.grid_lines, closestGridLine)) {    
+        sp_list.push_back(std::make_pair(Inkscape::SnappedPoint(closestGridLine), NR_HUGE));
+    }
+    
+    // search for the closest snapped guide line
+    Inkscape::SnappedInfiniteLine closestGuideLine;
+    if (getClosestSIL(sc.guide_lines, closestGuideLine)) {
+        sp_list.push_back(std::make_pair(Inkscape::SnappedPoint(closestGuideLine), NR_HUGE));
+    }
+    
+    // search for the closest snapped intersection of grid lines
+    Inkscape::SnappedPoint closestGridPoint;
+    if (getClosestIntersectionSIL(sc.grid_lines, closestGridPoint)) {
+        sp_list.push_back(std::make_pair(closestGridPoint, NR_HUGE));
+    }
+    
+    // search for the closest snapped intersection of guide lines
+    Inkscape::SnappedPoint closestGuidePoint;
+    if (getClosestIntersectionSIL(sc.guide_lines, closestGuidePoint)) {
+        sp_list.push_back(std::make_pair(closestGuidePoint, NR_HUGE));
+    }
+    
+    // search for the closest snapped intersection of grid with guide lines
+    Inkscape::SnappedPoint closestGridGuidePoint;
+    if (getClosestIntersectionSIL(sc.grid_lines, sc.guide_lines, closestGridGuidePoint)) {
+        sp_list.push_back(std::make_pair(closestGridGuidePoint, std::min(guide_sens, grid_sens)));
+    }
+    
+    // now let's see which snapped point gets a thumbs up
+     Inkscape::SnappedPoint bestPoint(p, NR_HUGE);
+    for (std::list<std::pair<Inkscape::SnappedPoint, NR::Coord> >::const_iterator i = sp_list.begin(); i != sp_list.end(); i++) {
+         // first find out if this snapped point is within snapping range
+         if ((*i).first.getDistance() <= (*i).second) {
+             // if it's the first point
+             bool c1 = (i == sp_list.begin());  
+             // or, if it's closer
+             bool c2 = (*i).first.getDistance() < bestPoint.getDistance(); 
+             // or, if it's just as close but at an intersection
+             bool c3 = ((*i).first.getDistance() == bestPoint.getDistance()) && (*i).first.getAtIntersection(); 
+             // then prefer this point over the previous one
+             if (c1 || c2 || c3) {
+                 bestPoint = (*i).first;
+             }
+         }
+     }
+     return bestPoint;         
 }
 /*
   Local Variables:

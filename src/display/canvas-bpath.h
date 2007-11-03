@@ -34,17 +34,17 @@ class Shape;
 /* stroke-linejoin */
 
 typedef enum {
-	SP_STROKE_LINEJOIN_MITER,
-	SP_STROKE_LINEJOIN_ROUND,
-	SP_STROKE_LINEJOIN_BEVEL
+    SP_STROKE_LINEJOIN_MITER,
+    SP_STROKE_LINEJOIN_ROUND,
+    SP_STROKE_LINEJOIN_BEVEL
 } SPStrokeJoinType;
 
 /* stroke-linecap */
 
 typedef enum {
-	SP_STROKE_LINECAP_BUTT,
-	SP_STROKE_LINECAP_ROUND,
-	SP_STROKE_LINECAP_SQUARE
+    SP_STROKE_LINECAP_BUTT,
+    SP_STROKE_LINECAP_ROUND,
+    SP_STROKE_LINECAP_SQUARE
 } SPStrokeCapType;
 
 
@@ -52,37 +52,37 @@ typedef enum {
 /* clip-rule */
 
 typedef enum {
-	SP_WIND_RULE_NONZERO,
-	SP_WIND_RULE_INTERSECT,
-	SP_WIND_RULE_EVENODD,
-	SP_WIND_RULE_POSITIVE
+    SP_WIND_RULE_NONZERO,
+    SP_WIND_RULE_INTERSECT,
+    SP_WIND_RULE_EVENODD,
+    SP_WIND_RULE_POSITIVE
 } SPWindRule;
 
 
 struct SPCanvasBPath {
-	SPCanvasItem item;
+    SPCanvasItem item;
 
-	/* Line def */
-	SPCurve *curve;
+    /* Line def */
+    SPCurve *curve;
 
-	/* Fill attributes */
-	guint32 fill_rgba;
-	SPWindRule fill_rule;
+    /* Fill attributes */
+    guint32 fill_rgba;
+    SPWindRule fill_rule;
 
-	/* Line attributes */
-	guint32 stroke_rgba;
-	gdouble stroke_width;
-	SPStrokeJoinType stroke_linejoin;
-	SPStrokeCapType stroke_linecap;
-	gdouble stroke_miterlimit;
+    /* Line attributes */
+    guint32 stroke_rgba;
+    gdouble stroke_width;
+    SPStrokeJoinType stroke_linejoin;
+    SPStrokeCapType stroke_linecap;
+    gdouble stroke_miterlimit;
 
-	/* State */
-	Shape  *fill_shp;
-	Shape  *stroke_shp;
+    /* State */
+    Shape  *fill_shp;
+    Shape  *stroke_shp;
 };
 
 struct SPCanvasBPathClass {
-	SPCanvasItemClass parent_class;
+    SPCanvasItemClass parent_class;
 };
 
 GtkType sp_canvas_bpath_get_type (void);

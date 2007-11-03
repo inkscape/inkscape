@@ -74,11 +74,11 @@ public:
   }
   
   void setStrictSnapping(bool enabled) {
-  	_strict_snapping = enabled;
+      _strict_snapping = enabled;
   }
   
   SnappedPoint guideSnap(NR::Point const &p,
-  						 DimensionToSnap const snap_dim) const;
+                           DimensionToSnap const snap_dim) const;
   
   bool ThisSnapperMightSnap() const;
   
@@ -88,36 +88,36 @@ private:
   std::vector<NR::Point> *_points_to_snap_to;
   std::vector<Path*> *_paths_to_snap_to;
   void _doFreeSnap(SnappedConstraints &sc,
-  					Inkscape::Snapper::PointType const &t,
-  					NR::Point const &p,
-  					bool const &first_point,
+                      Inkscape::Snapper::PointType const &t,
+                      NR::Point const &p,
+                      bool const &first_point,
                     std::vector<NR::Point> &points_to_snap,
-			   		std::list<SPItem const *> const &it) const;
+                       std::list<SPItem const *> const &it) const;
 
   void _doConstrainedSnap(SnappedConstraints &sc,
-  					Inkscape::Snapper::PointType const &t,
-  					NR::Point const &p,
-  					bool const &first_point,                                               					
-  					std::vector<NR::Point> &points_to_snap,
-				  	ConstraintLine const &c,
-				  	std::list<SPItem const *> const &it) const;
-		       		
+                      Inkscape::Snapper::PointType const &t,
+                      NR::Point const &p,
+                      bool const &first_point,                                                                   
+                      std::vector<NR::Point> &points_to_snap,
+                      ConstraintLine const &c,
+                      std::list<SPItem const *> const &it) const;
+                       
   void _findCandidates(SPObject* r,
-		       		std::list<SPItem const *> const &it,
-		       		bool const &first_point,
-		       		std::vector<NR::Point> &points_to_snap,
-		       		DimensionToSnap const snap_dim) const;
+                       std::list<SPItem const *> const &it,
+                       bool const &first_point,
+                       std::vector<NR::Point> &points_to_snap,
+                       DimensionToSnap const snap_dim) const;
   
   bool _snapNodes(Inkscape::Snapper::PointType const &t,
-  					Inkscape::SnappedPoint &s, 
-  					NR::Point const &p, 
-  					bool const &first_point,
-  					DimensionToSnap const snap_dim) const;
-  					
+                      Inkscape::SnappedPoint &s, 
+                      NR::Point const &p, 
+                      bool const &first_point,
+                      DimensionToSnap const snap_dim) const;
+                      
   bool _snapPaths(Inkscape::Snapper::PointType const &t, 
-  					Inkscape::SnappedPoint &s, 
-  					NR::Point const &p,
-  					bool const &first_point) const;
+                      Inkscape::SnappedPoint &s, 
+                      NR::Point const &p,
+                      bool const &first_point) const;
   
   bool _snap_to_itemnode;
   bool _snap_to_itempath;

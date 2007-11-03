@@ -20,10 +20,10 @@
 #include "snapped-line.h"
 
 struct SnappedConstraints {
-	std::list<Inkscape::SnappedPoint> points; 
-	std::list<Inkscape::SnappedLine> lines;
-	std::list<Inkscape::SnappedInfiniteLine> grid_lines;
-	std::list<Inkscape::SnappedInfiniteLine> guide_lines;
+    std::list<Inkscape::SnappedPoint> points; 
+    std::list<Inkscape::SnappedLine> lines;
+    std::list<Inkscape::SnappedInfiniteLine> grid_lines;
+    std::list<Inkscape::SnappedInfiniteLine> guide_lines;
 };
 
 struct SPNamedView;
@@ -60,17 +60,17 @@ public:
     void setEnabled(bool s);
 
     void freeSnap(SnappedConstraints &sc,
-    					  PointType const &t,
+                          PointType const &t,
                           NR::Point const &p,
                           bool const &first_point,                                             
-                          std::vector<NR::Point> &points_to_snap,						 
+                          std::vector<NR::Point> &points_to_snap,                         
                           SPItem const *it) const;
 
     void freeSnap(SnappedConstraints &sc,
-    					  PointType const &t,
+                          PointType const &t,
                           NR::Point const &p,
                           bool const &first_point,                                             
-                          std::vector<NR::Point> &points_to_snap,						 
+                          std::vector<NR::Point> &points_to_snap,                         
                           std::list<SPItem const *> const &it) const;
 
     class ConstraintLine
@@ -99,7 +99,7 @@ public:
     };
 
     void constrainedSnap(SnappedConstraints &sc,
-    							 PointType const &t,
+                                 PointType const &t,
                                  NR::Point const &p,
                                  bool const &first_point,
                                  std::vector<NR::Point> &points_to_snap,       
@@ -107,10 +107,10 @@ public:
                                  SPItem const *it) const;
 
     void constrainedSnap(SnappedConstraints &sc,
-    							 PointType const &t,
+                                 PointType const &t,
                                  NR::Point const &p,
                                  bool const &first_point,
-                                 std::vector<NR::Point> &points_to_snap,						 
+                                 std::vector<NR::Point> &points_to_snap,                         
                                  ConstraintLine const &c,
                                  std::list<SPItem const *> const &it) const;
                                  
@@ -131,10 +131,10 @@ private:
      *  \return Snapped point.
      */
     virtual void _doFreeSnap(SnappedConstraints &sc,
-    								 PointType const &t,
-    								 NR::Point const &p,
-    								 bool const &first_point,                                             
-    								 std::vector<NR::Point> &points_to_snap,
+                                     PointType const &t,
+                                     NR::Point const &p,
+                                     bool const &first_point,                                             
+                                     std::vector<NR::Point> &points_to_snap,
                                      std::list<SPItem const *> const &it) const = 0;
 
     /**
@@ -148,10 +148,10 @@ private:
      *  \return Snapped point.
      */    
     virtual void _doConstrainedSnap(SnappedConstraints &sc,
-    										PointType const &t,
-    										NR::Point const &p,
-    										bool const &first_point,
-    										std::vector<NR::Point> &points_to_snap,
+                                            PointType const &t,
+                                            NR::Point const &p,
+                                            bool const &first_point,
+                                            std::vector<NR::Point> &points_to_snap,
                                             ConstraintLine const &c,
                                             std::list<SPItem const *> const &it) const = 0;
     
