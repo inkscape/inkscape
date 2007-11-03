@@ -47,6 +47,7 @@ public:
     void param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > newpath);
 
     void param_editOncanvas(SPItem * item, SPDesktop * dt);
+    void param_setup_notepath(Inkscape::NodePath::Path *np);
 
     sigc::signal <void> signal_path_pasted;
     sigc::signal <void> signal_path_changed;

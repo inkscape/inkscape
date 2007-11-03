@@ -39,6 +39,10 @@ namespace XML {
     class Node;
 }
 
+namespace NodePath {
+    class Path ;
+}
+
 namespace LivePathEffect {
 
 enum EffectType {
@@ -74,13 +78,14 @@ public:
     Inkscape::XML::Node *  getRepr();
     SPDocument *           getSPDoc();
     LivePathEffectObject * getLPEObj() {return lpeobj;};
+    Parameter *            getParameter(const char * key);
 
     void readallParameters(Inkscape::XML::Node * repr);
     void setParameter(const gchar * key, const gchar * new_value);
 
     void editNextParamOncanvas(SPItem * item, SPDesktop * desktop);
 
-    bool straight_original_path;
+    virtual void setup_notepath(Inkscape::NodePath::Path *np);
 
 protected:
     Effect(LivePathEffectObject *lpeobject);

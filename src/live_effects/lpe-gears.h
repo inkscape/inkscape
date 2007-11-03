@@ -24,6 +24,8 @@ public:
 
     std::vector<Geom::Path> doEffect (std::vector<Geom::Path> & path_in);
 
+    void setup_notepath(Inkscape::NodePath::Path *np);
+
 private:
     ScalarParam teeth;
     ScalarParam phi;

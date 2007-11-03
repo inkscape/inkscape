@@ -48,6 +48,7 @@
 #include <vector>
 #include <algorithm>
 #include "live_effects/lpeobject.h"
+#include "live_effects/parameter/parameter.h"
 
 class NR::Matrix;
 
@@ -218,17 +219,18 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     if (repr_key_in) { // apparantly the object is an LPEObject
         np->repr_key = g_strdup(repr_key_in);
         np->repr_nodetypes_key = g_strconcat(np->repr_key, "-nodetypes", NULL);
-        np->show_helperpath = true;
+        Inkscape::LivePathEffect::Parameter *lpeparam = LIVEPATHEFFECT(object)->lpe->getParameter(repr_key_in);
+        if (lpeparam) {
+            lpeparam->param_setup_notepath(np);
+        }
     } else {
         np->repr_nodetypes_key = g_strdup("sodipodi:nodetypes");
         if ( SP_SHAPE(np->object)->path_effect_href ) {
             np->repr_key = g_strdup("inkscape:original-d");
-            np->show_helperpath = true;
+
             LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(SP_SHAPE(np->object));
-            // ENHANCE THIS. Probably it is much nicer to have a virtual method in Effect class that modifies nodepath to its likings.
-            // so something like: "lpe->adjust_nodepath(np);"
             if (lpeobj && lpeobj->lpe) {
-                np->straight_path = lpeobj->lpe->straight_original_path;
+                lpeobj->lpe->setup_notepath(np);
             }
         } else {
             np->repr_key = g_strdup("d");
@@ -258,7 +260,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
         SPCurve *helper_curve = sp_curve_copy(np->curve);
         sp_curve_transform(helper_curve, np->i2d );
         np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(desktop), helper_curve);
-        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), 0xff0000ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(np->helper_path), 0, SP_WIND_RULE_NONZERO);
         sp_canvas_item_show(np->helper_path);
         sp_curve_unref(helper_curve);

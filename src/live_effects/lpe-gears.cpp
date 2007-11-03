@@ -14,6 +14,8 @@
 #include <2geom/bezier-to-sbasis.h>
 #include <2geom/path.h>
 
+#include "nodepath.h"
+
 using std::vector;
 using namespace Geom;
 
@@ -212,8 +214,6 @@ LPEGears::LPEGears(LivePathEffectObject *lpeobject) :
 {
     registerParameter( dynamic_cast<Parameter *>(&teeth) );
     registerParameter( dynamic_cast<Parameter *>(&phi) );
-
-    straight_original_path = true;
 }
 
 LPEGears::~LPEGears()
@@ -252,6 +252,12 @@ LPEGears::doEffect (std::vector<Geom::Path> & path_in)
     return path_out;
 }
 
+void
+LPEGears::setup_notepath(Inkscape::NodePath::Path *np)
+{
+    Effect::setup_notepath(np);
+    np->straight_path = true;
+}
 
 } // namespace LivePathEffect
 } /* namespace Inkscape */

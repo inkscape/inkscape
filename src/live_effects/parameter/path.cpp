@@ -31,6 +31,7 @@
 #include "node-context.h"
 #include "desktop-handles.h"
 #include "selection.h"
+#include "nodepath.h"
 
 namespace Inkscape {
 
@@ -138,6 +139,14 @@ PathParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
 
     ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
     shape_editor->set_item_livepatheffect_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
+}
+
+void
+PathParam::param_setup_notepath(Inkscape::NodePath::Path *np)
+{
+    np->show_helperpath = true;
+    np->helperpath_rgba = 0x009000ff;
+    np->helperpath_width = 1.0;
 }
 
 void

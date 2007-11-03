@@ -21,6 +21,7 @@
 
 #include <list>
 
+class SPObject;
 class SPDesktop;
 class SPPath;
 class SPKnot;
@@ -237,6 +238,8 @@ class Path {
     SPCanvasItem *helper_path;
     SPCurve *curve;
     bool show_helperpath;
+    guint32 helperpath_rgba;
+    gdouble helperpath_width;
 
       /// true if we changed repr, to tell this change from an external one such as from undo, simplify, or another desktop
 	unsigned int local_change;
@@ -245,7 +248,6 @@ class Path {
 	bool show_handles;
 
     /// true if the path cannot contain curves, just straight lines
-    // FIXME: NOT IMPLEMENTED YET
     bool straight_path;
 
 	/// active_node points to the node that is currently mouseovered (= NULL if

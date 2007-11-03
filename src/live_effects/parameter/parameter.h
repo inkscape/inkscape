@@ -25,6 +25,10 @@ namespace Gtk {
 
 namespace Inkscape {
 
+namespace NodePath {
+    class Path ;
+}
+
 namespace LivePathEffect {
 
 class Effect;
@@ -49,6 +53,7 @@ public:
     virtual Glib::ustring * param_getTooltip() { return &param_tooltip; };
 
     virtual void param_editOncanvas(SPItem * item, SPDesktop * dt) { return; };
+    virtual void param_setup_notepath(Inkscape::NodePath::Path *np) { return; };
 
     Glib::ustring param_key;
     Inkscape::UI::Widget::Registry * param_wr;

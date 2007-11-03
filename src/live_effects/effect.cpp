@@ -35,6 +35,8 @@
 #include "live_effects/lpe-gears.h"
 #include "live_effects/lpe-curvestitch.h"
 
+#include "nodepath.h"
+
 namespace Inkscape {
 
 namespace LivePathEffect {
@@ -96,7 +98,6 @@ Effect::Effect(LivePathEffectObject *lpeobject)
     tooltips = NULL;
     lpeobj = lpeobject;
     oncanvasedit_it = param_map.begin();
-    straight_original_path = false;
 }
 
 Effect::~Effect()
@@ -255,17 +256,30 @@ Effect::getWidget()
 }
 
 
-Inkscape::XML::Node * 
+Inkscape::XML::Node *
 Effect::getRepr()
 {
     return SP_OBJECT_REPR(lpeobj);
 }
 
-SPDocument * 
+SPDocument *
 Effect::getSPDoc()
 {
     if (SP_OBJECT_DOCUMENT(lpeobj) == NULL) g_message("Effect::getSPDoc() returns NULL");
     return SP_OBJECT_DOCUMENT(lpeobj);
+}
+
+Parameter *
+Effect::getParameter(const char * key)
+{
+    Glib::ustring stringkey(key);
+
+    param_map_type::iterator it = param_map.find(stringkey);
+    if (it != param_map.end()) {
+        return it->second;
+    } else {
+        return NULL;
+    }
 }
 
 Parameter *
@@ -316,6 +330,14 @@ void
 Effect::resetDefaults(SPItem * /*item*/)
 {
     // do nothing for simple effects
+}
+
+void
+Effect::setup_notepath(Inkscape::NodePath::Path *np)
+{
+    np->show_helperpath = true;
+    np->helperpath_rgba = 0xff0000ff;
+    np->helperpath_width = 1.0;
 }
 
 
