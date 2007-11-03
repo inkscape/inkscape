@@ -74,6 +74,12 @@ LayerManager::LayerManager(SPDesktop *desktop)
     _setDocument(desktop->doc());
 }
 
+LayerManager::~LayerManager()
+{
+    _layer_connection.disconnect();
+    _document_connection.disconnect();
+    _resource_connection.disconnect();
+}
 
 void LayerManager::setCurrentLayer( SPObject* obj )
 {

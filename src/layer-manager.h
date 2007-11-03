@@ -26,6 +26,7 @@ class LayerManager : public DocumentSubset,
 {
 public:
     LayerManager(SPDesktop *desktop);
+    ~LayerManager();
 
     void setCurrentLayer( SPObject* obj );
     void renameLayer( SPObject* obj, gchar const *label );
