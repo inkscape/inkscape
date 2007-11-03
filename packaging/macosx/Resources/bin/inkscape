@@ -7,27 +7,30 @@
 #
 
 CWD="`(cd \"\`dirname \\\"$0\\\"\`\"; echo $PWD)`"
+# e.g. /Applications/Inkscape.app/Contents/Resources/bin
 TOP="`dirname \"$CWD\"`"
+# e.g. /Applications/Inkscape.app/Contents/Resources
+
+
+# Brutally add many things to the PATH. If the directories do not exist, they won't be used anyway. 
+# People should really use ~/.macosx/environment.plist to set environment variables as explained by Apple:
+#	http://developer.apple.com/qa/qa2001/qa1067.html
+# but since no one does, we correct this by making the 'classic' PATH additions here:
+#	/usr/local/bin which, though standard, doesn't seem to be in the PATH
+# 	newer python as recommended by MacPython http://www.python.org/download/mac/
+#	Fink
+#	MacPorts (former DarwinPorts)
+export PATH="/opt/local/bin:/sw/bin/:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/bin:$CWD:$PATH"
+
+# Test wether we are using the stock python install
+# In which case we can use the python modules shipped alongside Inkscape, in the app bundle
+if [ `which python` = "/usr/bin/python" ]; then
+	export PYTHONPATH="$TOP/python/site-packages"
+	# NB: we are only preprending some stuff to the default python path so if the directory does not exist it should not harm the rest
+fi
 
 export DYLD_LIBRARY_PATH="$TOP/lib"
-# add /usr/local/bin which, though standard, don't seem to be in the PATH
-PATH="/usr/local/bin:$PATH"
-# add python from MacPython http://homepages.cwi.nl/~jack/macpython/macpython-osx.html
-if [ -d /Library/Frameworks/Python.framework/Versions/Current/bin ]
-then
-	export PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH"
-fi
-# add Fink
-if [ -d /sw/bin ]
-then
-	export PATH="/sw/bin/:$PATH"
-fi
-# add MacPorts (former DarwinPorts)
-if [ -d /opt/local/bin ]
-then
-	export PATH="/opt/local/bin:$PATH"
-fi
-export PATH="$CWD:$PATH"
+
 export PANGO_RC_FILE="$HOME/.inkscape-etc/pangorc"
 export FONTCONFIG_PATH="$TOP/etc/fonts"
 export GTK_IM_MODULE_FILE="$HOME/.inkscape-etc/gtk.immodules"
@@ -38,16 +41,18 @@ export GNOME_VFS_MODULE_CONFIG_PATH="$TOP/etc/gnome-vfs-2.0/modules"
 export GNOME_VFS_MODULE_PATH="$TOP/lib/gnome-vfs-2.0/modules"
 
 export INKSCAPE_SHAREDIR="$TOP"
+# TODO: move the share directory to a its own folder to make things a bit cleaner in the app bundle
 export INKSCAPE_PLUGINDIR="$TOP/lib/inkscape"
 export INKSCAPE_LOCALEDIR="$TOP/locale"
 
 # Set GTK theme (only if there is no .gtkrc-2.0 in the user's home)
 if [[ ! -e $HOME/.gtkrc-2.0 ]]; then
 	# prepare the theme depending on OS X appearance settings
-	HERE=`pwd`
-	cd "$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/"
-	./sync_osx_look.sh
-	cd "$HERE"
+	(
+		cd "$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/"
+		./sync_osx_look.sh
+		# TODO: make this more robust, probably by integrating this script directly inline here
+	)
 	export GTK2_RC_FILES="$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/gtkrc"
 fi
 
