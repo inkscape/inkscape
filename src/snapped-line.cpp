@@ -10,6 +10,7 @@
 
 #include "snapped-line.h"
 #include "geom.h"
+#include "libnr/nr-values.h"
 
 Inkscape::SnappedLine::SnappedLine(NR::Point snapped_point, NR::Coord snapped_distance, NR::Point start_point_of_line, NR::Point end_point_of_line)
     : _start_point_of_line(start_point_of_line), _end_point_of_line(end_point_of_line) 
