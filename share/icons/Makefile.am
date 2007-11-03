@@ -9,6 +9,7 @@ icons_DATA = \
 	\
 	icons.svg \
 	legacy_icons.svg \
+	tango_icons.svg \
 	\
 	inkscape.file.svg \
 	inkscape.file.png \
