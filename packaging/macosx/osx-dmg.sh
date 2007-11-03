@@ -1,19 +1,19 @@
 #!/bin/sh
 #
-# Inkscape packaging script for Mac OS X
+# USAGE
+# osx-dmg [-s] -p /path/to/Inkscape.app
 #
 # The script creates a read-write disk image, 
-# copies Inkscape in it, copies additional python packages
-# if needed, customizes its appearance using a 
-# previously created .DS_Store file (inkscape*.ds_store),
+# copies Inkscape in it, customizes its appearance using a 
+# previously created .DS_Store file (inkscape.ds_store),
 # and then compresses the disk image for distribution.
 #
-# Authors:
+# AUTHORS
 #	Jean-Olivier Irisson <jo.irisson@gmail.com>
 #	Michael Wybrow <mjwybrow@users.sourceforge.net>
 #
-# Copyright 2006
-# Licensed under GNU General Public License
+# Copyright (C) 2006-2007
+# Released under GNU GPL, read the file 'COPYING' for more information
 #
 #
 # How to update the disk image layout:
@@ -34,63 +34,75 @@
 
 # Defaults
 set_ds_store=false
-add_python=false
 ds_store_file="inkscape.ds_store"
-package="Inkscape.app"
-RWNAME="RWinkscape.dmg"
-VOLNAME="Inkscape"
-TMPDIR="/tmp/dmg-$$"
-AUTOOPENOPT=
+package=""
+rw_name="RWinkscape.dmg"
+volume_name="Inkscape"
+tmp_dir="/tmp/dmg-$$"
+auto_open_opt=
+
+# Help message
+#----------------------------------------------------------
+help()
+{
+echo -e "
+Create a custom dmg file to distribute Inkscape
+
+\033[1mUSAGE\033[0m
+	$0 [-s] -p /path/to/Inkscape.app
+
+\033[1mOPTIONS\033[0m
+	\033[1m-h,--help\033[0m 
+		display this help message
+	\033[1m-s\033[0m
+		set a new apperance (do not actually creates a bundle)
+	\033[1m-p,--package\033[0m
+		set the path to the Inkscape.app that should be copie
+		in the dmg
+"
+}
 
 # Parse command line arguments
 while [ "$1" != "" ]
 do
 	case $1 in
+	  	-h|--help)
+			help
+			exit 0 ;;
 	  	-s)
 			set_ds_store=true ;;
-		-py|--with-python)
-			add_python=true
-			python_dir="$2"
-			ds_store_file="inkscape_python.ds_store"
+	  	-p|--package)
+			package="$2"
 			shift 1 ;;
+		*)
+			echo "Invalid command line option" 
+			exit 2 ;;
 	esac
 	shift 1
 done
-# some checks
+
+# Safety checks
 if [ ! -e "$package" ]; then
-	echo "Cannot find $package"
+	echo "Cannot find package: $package"
 	exit 1
 fi
-if [ ${add_python} = "true" ]; then
-	if [ ! -e "$python_dir" ]; then
-		echo "Cannot find your python packages directory"
-		exit 1
-	fi
-fi
+
+echo -e "\n\033[1mCREATE INKSCAPE DISK IMAGE\033[0m\n"
 
 # Create temp directory with desired contents of the release volume.
-rm -rf "$TMPDIR"
-mkdir "$TMPDIR"
+rm -rf "$tmp_dir"
+mkdir "$tmp_dir"
 
-echo "Copying files to temp directory..."
+echo -e "\033[1mCopying files to temp directory\033[0m"
 # Inkscape itself
 # copy Inkscape.app
-cp -rf "$package" "$TMPDIR"/
-# link to Applications in order to drag and drop inkscape onto it.
-ln -sf /Applications "$TMPDIR"/
+cp -rf "$package" "$tmp_dir"/
+# link to Applications in order to drag and drop inkscape onto it
+ln -sf /Applications "$tmp_dir"/
 
-# Python
-if [ ${add_python} = "true" ]; then
-	# copy python libraries
-	cp -rf "$python_dir"/* "$TMPDIR"/
-	# link python environment in order to drag and drop inkscape onto it
-	ln -sf /System/Library/Frameworks/Python.framework/Versions/2.3/lib/python2.3/site-packages "$TMPDIR"/Python\ site-packages
-fi
-
-# Copy a background image inside a hidden directory so the image
-# file itself won't be shown.
-mkdir "$TMPDIR/.background"
-cp dmg_background.png "$TMPDIR/.background/background.png"
+# Copy a background image inside a hidden directory so the image file itself won't be shown.
+mkdir "$tmp_dir/.background"
+cp dmg_background.png "$tmp_dir/.background/background.png"
 
 # If the appearance settings are not to be modified we just copy them
 if [ ${set_ds_store} = "false" ]; then
@@ -98,31 +110,30 @@ if [ ${set_ds_store} = "false" ]; then
 	# window size, appearance, etc.  Most of this can be set
 	# with Apple script but involves user intervention so we
 	# just keep a copy of the correct settings and use that instead.
-	cp $ds_store_file "$TMPDIR/.DS_Store"
-	AUTOOPENOPT=-noautoopen
+	cp $ds_store_file "$tmp_dir/.DS_Store"
+	auto_open_opt=-noautoopen
 fi
 
 # Create a new RW image from the temp directory.
-echo "Creating a new RW disk image..."
-rm -f "$RWNAME"
-/usr/bin/hdiutil create -srcfolder "$TMPDIR" -volname "$VOLNAME" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW "$RWNAME"
+echo -e "\033[1mCreating a temporary disk image\033[0m"
+rm -f "$rw_name"
+/usr/bin/hdiutil create -srcfolder "$tmp_dir" -volname "$volume_name" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW "$rw_name"
 
 # We're finished with the temp directory, remove it.
-rm -rf "$TMPDIR"
+rm -rf "$tmp_dir"
 
 # Mount the created image.
-echo "Mounting the disk image..."
-MOUNT_DIR="/Volumes/$VOLNAME"
-DEV_NAME=`/usr/bin/hdiutil attach -readwrite -noverify $AUTOOPENOPT  "$RWNAME" | egrep '^/dev/' | sed 1q | awk '{print $1}'`
+MOUNT_DIR="/Volumes/$volume_name"
+DEV_NAME=`/usr/bin/hdiutil attach -readwrite -noverify $auto_open_opt  "$rw_name" | egrep '^/dev/' | sed 1q | awk '{print $1}'`
 
 # Have the disk image window open automatically when mounted.
-bless -openfolder /Volumes/$VOLNAME
+bless -openfolder /Volumes/$volume_name
 
 # In case the apperance has to be modified, mount the image and apply the base settings to it via Applescript
 if [ ${set_ds_store} = "true" ]; then
 	/usr/bin/osascript dmg_set_style.scpt
 
-	open "/Volumes/$VOLNAME"
+	open "/Volumes/$volume_name"
 	# BUG: one needs to move and close the window manually for the
 	# changes in appearance to be retained... 
         echo " 
@@ -134,19 +145,18 @@ if [ ${set_ds_store} = "true" ]; then
         " 
         read -e DUMB
 
-	# .DS_Store files aren't written till the disk is unmounted, 
-	# or finder is restarted.
+	# .DS_Store files aren't written till the disk is unmounted, or finder is restarted.
 	hdiutil detach "$DEV_NAME"
-	AUTOOPENOPT=-noautoopen
-	DEV_NAME=`/usr/bin/hdiutil attach -readwrite -noverify $AUTOOPENOPT  "$RWNAME" | egrep '^/dev/' | sed 1q | awk '{print $1}'`
+	auto_open_opt=-noautoopen
+	DEV_NAME=`/usr/bin/hdiutil attach -readwrite -noverify $auto_open_opt  "$rw_name" | egrep '^/dev/' | sed 1q | awk '{print $1}'`
 	echo
 	echo "New $ds_store_file file written. Re-run $0 without the -s option to use it"
-	cp /Volumes/$VOLNAME/.DS_Store ./$ds_store_file
+	cp /Volumes/$volume_name/.DS_Store ./$ds_store_file
 	SetFile -a v ./$ds_store_file
 
 	# Unmount the disk image.
 	hdiutil detach "$DEV_NAME"
-	rm -f "$RWNAME"
+	rm -f "$rw_name"
 
 	exit 0
 fi
@@ -155,7 +165,14 @@ fi
 hdiutil detach "$DEV_NAME"
 
 # Create the offical release image by compressing the RW one.
-/usr/bin/hdiutil convert "$RWNAME" -format UDZO -imagekey zlib-level=9 -o "Inkscape.dmg"
-rm -f "$RWNAME"
+echo -e "\033[1mCompressing the final disk image\033[0m"
+img_name="Inkscape.dmg"
+# TODO make this a command line option
+if [ -e "$img_name" ]; then
+	echo "$img_name already exists."
+	rm -i "$img_name"
+fi
+/usr/bin/hdiutil convert "$rw_name" -format UDZO -imagekey zlib-level=9 -o "$img_name"
+rm -f "$rw_name"
 
 exit 0

@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
@@ -13,15 +13,12 @@
    height="350"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.45"
+   inkscape:version="0.45+devel"
    sodipodi:docname="dmg_background.svg"
-   sodipodi:docbase="/Volumes/files/softwares/inkscape/trunk_devel/packaging/macosx"
    version="1.0"
-   inkscape:export-filename="/Volumes/files/softwares/inkscape/trunk_devel/packaging/macosx/dmg_background.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   sodipodi:modified="TRUE">
   <defs
      id="defs4">
     <linearGradient
@@ -117,13 +114,21 @@
          stdDeviation="0.79584663"
          id="feGaussianBlur6550" />
     </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath8875">
+      <path
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.81105022pt;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         d="M 251.4419,206.10491 C 247.44915,206.10491 244.22315,209.33092 244.22315,213.32366 L 244.22315,312.47991 C 244.22315,316.47265 247.44915,319.69867 251.4419,319.69866 L 472.16065,319.69866 C 476.1534,319.69866 479.34815,316.47264 479.34815,312.47991 L 479.34815,213.32366 C 479.34815,209.33092 476.1534,206.10491 472.16065,206.10491 L 251.4419,206.10491 z M 321.1294,233.57366 L 321.1294,244.94866 L 321.16065,244.94866 L 440.0669,244.94866 L 440.0669,277.26116 L 321.1919,277.26116 L 321.2544,288.63616 L 282.1294,261.26116 L 321.1294,233.57366 z"
+         id="path8877" />
+    </clipPath>
     <filter
        inkscape:collect="always"
-       id="filter6556">
+       id="filter9015">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="0.64344392"
-         id="feGaussianBlur6558" />
+         stdDeviation="1.755523"
+         id="feGaussianBlur9017" />
     </filter>
   </defs>
   <sodipodi:namedview
@@ -133,11 +138,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.041626"
-     inkscape:cx="302.42894"
-     inkscape:cy="159.47539"
+     inkscape:zoom="1"
+     inkscape:cx="302.3841"
+     inkscape:cy="179.85093"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g3978"
      showgrid="false"
      gridspacingx="2mm"
      gridspacingy="2mm"
@@ -148,9 +153,9 @@
      inkscape:object-paths="false"
      guidetolerance="10000"
      inkscape:guide-bbox="false"
-     inkscape:window-width="988"
-     inkscape:window-height="724"
-     inkscape:window-x="18"
+     inkscape:window-width="1244"
+     inkscape:window-height="756"
+     inkscape:window-x="36"
      inkscape:window-y="22"
      height="350px"
      width="624.54108px"
@@ -287,34 +292,19 @@
          id="flowDiv4803">This tutorial covers copy/paste, node editing, freehand and bezier  drawing, path manipulation, booleans, offsets, simplification, and text tool.  </flowDiv>    </flowRoot>
     <g
        id="g3978"
-       transform="translate(0,-6.7202624)">
+       transform="translate(0,-6.7202624)"
+       style="opacity:0.8258427">
+      <path
+         id="path6911"
+         d="M 321.13418,233.56827 L 282.14069,261.2464 L 321.2391,288.63935 L 321.20413,277.27453 L 440.07307,277.27453 L 440.07307,244.93309 L 321.16916,244.93309 L 321.13418,244.93309 L 321.13418,233.56827 z "
+         style="color:#000000;fill:#96db5b;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.48407646999999998;visibility:visible;display:inline;overflow:visible;filter:url(#filter9015)"
+         sodipodi:nodetypes="ccccccccc"
+         clip-path="url(#clipPath8875)" />
       <path
          sodipodi:nodetypes="ccccccccc"
-         style="color:#000000;fill:#949494;fill-opacity:0.62420379;fill-rule:nonzero;stroke:#f5f5f5;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.48407647;visibility:visible;display:inline;overflow:visible"
+         style="color:#000000;fill:#a4a4a4;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.48407646999999998;visibility:visible;display:inline;overflow:visible;opacity:1"
          d="M 321.13418,233.56827 L 282.14069,261.2464 L 321.2391,288.63935 L 321.20413,277.27453 L 440.07307,277.27453 L 440.07307,244.93309 L 321.16916,244.93309 L 321.13418,244.93309 L 321.13418,233.56827 z "
          id="path4008" />
-      <text
-         xml:space="preserve"
-         style="font-size:15.74776745px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ededed;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter6548);font-family:Lucida Sans"
-         x="346.12503"
-         y="265.71155"
-         id="text6544"
-         sodipodi:linespacing="100%"><tspan
-           sodipodi:role="line"
-           id="tspan6546"
-           x="346.12503"
-           y="265.71155">Inkscape</tspan></text>
-      <text
-         sodipodi:linespacing="100%"
-         id="text3962"
-         y="265.71155"
-         x="346.12503"
-         style="font-size:15.74776745px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#666666;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Lucida Sans"
-         xml:space="preserve"><tspan
-           y="265.71155"
-           x="346.12503"
-           id="tspan3964"
-           sodipodi:role="line">Inkscape</tspan></text>
       <rect
          y="245.66743"
          x="320.60944"
@@ -322,44 +312,6 @@
          width="118.35905"
          id="rect4939"
          style="opacity:1;color:#000000;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-    </g>
-    <g
-       id="g3986"
-       transform="translate(0,-2.8801124)">
-      <path
-         id="path4941"
-         d="M 321.13418,369.69575 L 282.14069,397.37388 L 321.2391,424.76683 L 321.20413,413.40201 L 440.07307,413.40201 L 440.07307,381.06057 L 321.16916,381.06057 L 321.13418,381.06057 L 321.13418,369.69575 z "
-         style="opacity:1;color:#000000;fill:#949494;fill-opacity:0.62420379;fill-rule:nonzero;stroke:#f5f5f5;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.48407647;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         sodipodi:nodetypes="ccccccccc" />
-      <text
-         sodipodi:linespacing="100%"
-         id="text6552"
-         y="401.83905"
-         x="346.12503"
-         style="font-size:15.74776745px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter6556);font-family:Lucida Sans"
-         xml:space="preserve"><tspan
-           y="401.83905"
-           x="346.12503"
-           id="tspan6554"
-           sodipodi:role="line">Python</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-size:15.74776745px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#666666;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Lucida Sans"
-         x="346.12503"
-         y="401.83905"
-         id="text4943"
-         sodipodi:linespacing="100%"><tspan
-           sodipodi:role="line"
-           id="tspan4945"
-           x="346.12503"
-           y="401.83905">Python</tspan></text>
-      <rect
-         style="opacity:1;color:#000000;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         id="rect4947"
-         width="118.35905"
-         height="30.984045"
-         x="320.60944"
-         y="381.79492" />
     </g>
   </g>
 </svg>

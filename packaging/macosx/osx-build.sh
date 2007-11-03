@@ -12,18 +12,20 @@
 #	Kees Cook
 #	Michael Wybrow
 #
-# Copyright 2006
-# Licensed under GNU General Public License
+# Copyright (C) 2006-2007
+# Released under GNU GPL, read the file 'COPYING' for more information
 #
 
 ############################################################
 
 # User modifiable parameters
 #----------------------------------------------------------
-#	Configure flags
+# Configure flags
 CONFFLAGS="--disable-static --enable-shared --enable-osxapp"
-# Libraries prefix
+# Libraries prefix (Warning: NO trailing slash)
 LIBPREFIX="/opt/local"
+# User name on Modevia
+MODEVIA_USER=""
 
 ############################################################
 
@@ -58,9 +60,11 @@ Compilation script for Inkscape on Mac OS X.
   \033[1mp,pack,package\033[0m
     package Inkscape in a double clickable .app bundle 
     \033[1m-s,--strip\033[0m	remove debugging information in Inkscape package
+    \033[1m-py,--with-python\033[0m	specify python modules path for inclusion into the app bundle
   \033[1md,dist,distrib\033[0m
     store Inkscape.app in a disk image (dmg) for distribution
-    \033[1m-py,--with-python\033[0m	specify python packages path for inclusion into the dmg image
+  \033[1mput,upload\033[0m
+    upload the dmg and the associate info file on Modevia server
   \033[1mall\033[0m
     do everything (update, configure, build, install, package, distribute)
 
@@ -68,12 +72,12 @@ Compilation script for Inkscape on Mac OS X.
   \033[1m$0 conf build install\033[0m
     configure, build and install a dowloaded version of Inkscape in the default
     directory, keeping debugging information.	
-  \033[1m$0 u a c b -p ~ i -s p -py ~/pyxml/ d\033[0m
+  \033[1m$0 u a c b -p ~ i -s -py ~/site-packages/ p d\033[0m
     update an svn checkout, prepare configure script, configure,
     build and install Inkscape in the user home directory (~). 	
-    Then package Inkscape withouth debugging information,
-    with python packages from ~/pyxml/ and prepare a dmg for   
-    distribution."
+    Then package Inkscape without debugging information,
+    with python packages from ~/site-packages/ and prepare 
+    a dmg for distribution."
 }
 
 # Parameters
@@ -94,9 +98,10 @@ BUILD="f"
 INSTALL="f"
 PACKAGE="f"
 DISTRIB="f"
+UPLOAD="f"
 
-STRIP="f"
-PYTHON="f"
+STRIP=""
+PYTHON_MODULES=""
 
 # Parse command line options
 #----------------------------------------------------------
@@ -108,7 +113,6 @@ do
 		exit 1 ;;
 	all)            
 		SVNUPDATE="t"
-		AUTOGEN="t"
 		CONFIGURE="t"
 		BUILD="t" 
 		INSTALL="t"
@@ -128,15 +132,19 @@ do
 		PACKAGE="t" ;;
 	d|dist|distrib)
 		DISTRIB="t" ;;
+	put|upload)
+		UPLOAD="t" ;;
 	-p|--prefix)
 	  	INSTALLPREFIX=$2
 	  	shift 1 ;;
 	-s|-strip)
-	     	STRIP="t" ;;
+	     	STRIP="-s" ;;
 	-py|--with-python)
-		PYTHON="t" 
-		PYTHONDIR="$2"
+		PYTHON_MODULES="$2"
 		shift 1 ;;
+	*)
+		echo "Invalid command line option" 
+		exit 2 ;;
 	esac
 	shift 1
 done
@@ -151,15 +159,11 @@ export LIBPREFIX
 export CPATH="$LIBPREFIX/include"
 #  configure search path
 export CPPFLAGS="-I$LIBPREFIX/include"
+# export CPPFLAGS="-I$LIBPREFIX/include -I /System/Library/Frameworks/Carbon.framework/Versions/Current/Headers"
 export LDFLAGS="-L$LIBPREFIX/lib"
 #  compiler arguments
 export CFLAGS="-O3 -Wall"
 export CXXFLAGS="$CFLAGS"
-# add X11 executables and libraries [does not seem to be required now]
-# export PATH="/usr/X11R6/bin:$PATH"
-# export LIBRARY_PATH="/usr/X11R6/lib:$LIBPREFIX/lib"
-# pkgconfig path [does not seem to be required either]
-# export PKG_CONFIG_PATH="$LIBPREFIX/lib/pkgconfig"
 
 
 # Actions
@@ -194,7 +198,7 @@ then
 	cd $SRCROOT
 	if [ ! -f configure ]
 	then
-		echo "Configure script not found in $SRCROOT. Run autogen.sh first"
+		echo "Configure script not found in $SRCROOT. Run '$0 autogen' first"
 		exit 1
 	fi
 	./configure $ALLCONFFLAGS
@@ -233,13 +237,6 @@ fi
 if [[ "$PACKAGE" == "t" ]]
 then
 	
-	# Detect strip parameter
-	if [[ "$STRIP" == "t" ]]; then
-		STRIPPARAM="-s"
-	else
-		STRIPPARAM=""
-	fi
-	
 	# Test the existence of required files
 	if [ ! -e $INSTALLPREFIX/bin/inkscape ]
 	then
@@ -252,8 +249,13 @@ then
 		exit 1
 	fi
 	
+	# Set python command line option (if PYTHON_MODULES location is not empty, then add the python call to the command line, otherwise, stay empty)
+	if [[ "$PYTHON_MODULES" != "" ]]; then
+		PYTHON_MODULES="-py '$PYTHON_MODULES'"
+	fi
+
 	# Create app bundle
-	./osx-app.sh $STRIPPARAM $INSTALLPREFIX/bin/inkscape $SRCROOT/Info.plist
+	./osx-app.sh $STRIP -b $INSTALLPREFIX/bin/inkscape -p $SRCROOT/Info.plist "$PYTHON_MODULES"
 	status=$?
 	if [[ $status -ne 0 ]]; then
 		echo -e "\nApplication bundle creation failed"
@@ -261,20 +263,17 @@ then
 	fi
 fi
 
-if [[ "$DISTRIB" == "t" ]]
-then	
-	REVISION=`head -n 4 ../../.svn/entries | tail -n 1`
-	ARCH=`arch | tr [p,c] [P,C]`
-	NEWNAME="Inkscape-$REVISION-$ARCH"
-	DMGFILE="$NEWNAME.dmg"
-	INFOFILE="$NEWNAME-info.txt"
+# Fetch some information
+REVISION=`head -n 4 ../../.svn/entries | tail -n 1`
+ARCH=`arch | tr [p,c] [P,C]`
+NEWNAME="Inkscape-$REVISION-$ARCH"
+DMGFILE="$NEWNAME.dmg"
+INFOFILE="$NEWNAME-info.txt"
 
+if [[ "$DISTRIB" == "t" ]]
+then
 	# Create dmg bundle
-	if [[ "$PYTHON" == "t" ]]; then
-		./osx-dmg.sh -py "$PYTHONDIR"
-	else
-		./osx-dmg.sh
-	fi
+	./osx-dmg.sh -p "Inkscape.app"
 	status=$?
 	if [[ $status -ne 0 ]]; then
 		echo -e "\nDisk image creation failed"
@@ -303,9 +302,21 @@ Configure options:
 	else
 		echo "Debug info
 	yes" >> $INFOFILE
+	fi	
+fi
+
+if [[ "$UPLOAD" == "t" ]]
+then
+	scp $DMGFILE $INFOFILE "$MODEVIA_NAME"@inkscape.modevia.com:inkscape/docs/macosx-snap/
+	status=$?
+	if [[ $status -ne 0 ]]; then
+		echo -e "\nUpload failed"
+		exit $status
 	fi
-	
-	# open a Finder window here
+fi
+
+if [[ "$PACKAGE" == "t" ]] | [[ "$DISTRIB" == "t" ]]; then
+	# open a Finder window here to admire what we just produced
 	open .
 fi
 
