@@ -22,6 +22,7 @@
 #include <libnr/nr-dim2.h>
 #include <libnr/nr-forward.h>
 #include <libnr/nr-scale.h>
+
 #include "guide-snapper.h"
 #include "object-snapper.h"
 
@@ -48,18 +49,11 @@ public:
                                     NR::Point const &p,
                                     SPItem const *it) const;
 
-    Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,
-                                    NR::Point const &p,
-                                    bool const &first_point,
-                                    std::vector<NR::Point> &points_to_snap,
-                                    std::list<SPItem const *> const &it) const;
-
- 	Inkscape::SnappedPoint freeSnap( Inkscape::Snapper::PointType t,
+    Inkscape::SnappedPoint freeSnap( Inkscape::Snapper::PointType t,
                                       NR::Point const &p,
                                       bool const &first_point,
                                       std::vector<NR::Point> &points_to_snap,
-                                      std::list<SPItem const *> const &it,
-                                      SnapperList const &snappers ) const;
+                                      std::list<SPItem const *> const &it) const;
 
     Inkscape::SnappedPoint freeSnapAlways( Inkscape::Snapper::PointType t,
                                            NR::Point const &p,
@@ -172,6 +166,8 @@ private:
                                                 NR::Point const &origin,
                                                 NR::Dim2 dim,
                                                 bool uniform) const;
+                                                
+	Inkscape::SnappedPoint findBestSnap(NR::Point const &p, SnappedConstraints &sc) const;
 };
 
 #endif /* !SEEN_SNAP_H */

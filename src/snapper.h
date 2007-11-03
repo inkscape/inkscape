@@ -15,7 +15,16 @@
 #include <list>
 #include "libnr/nr-coord.h"
 #include "libnr/nr-point.h"
+
 #include "snapped-point.h"
+#include "snapped-line.h"
+
+struct SnappedConstraints {
+	std::list<Inkscape::SnappedPoint> points; 
+	std::list<Inkscape::SnappedLine> lines;
+	std::list<Inkscape::SnappedInfiniteLine> grid_lines;
+	std::list<Inkscape::SnappedInfiniteLine> guide_lines;
+};
 
 struct SPNamedView;
 struct SPItem;
@@ -50,13 +59,15 @@ public:
 
     void setEnabled(bool s);
 
-    SnappedPoint freeSnap(PointType const &t,
+    void freeSnap(SnappedConstraints &sc,
+    					  PointType const &t,
                           NR::Point const &p,
                           bool const &first_point,                                             
                           std::vector<NR::Point> &points_to_snap,						 
                           SPItem const *it) const;
 
-    SnappedPoint freeSnap(PointType const &t,
+    void freeSnap(SnappedConstraints &sc,
+    					  PointType const &t,
                           NR::Point const &p,
                           bool const &first_point,                                             
                           std::vector<NR::Point> &points_to_snap,						 
@@ -87,19 +98,22 @@ public:
         NR::Point _direction;
     };
 
-    SnappedPoint constrainedSnap(PointType const &t,
+    void constrainedSnap(SnappedConstraints &sc,
+    							 PointType const &t,
                                  NR::Point const &p,
                                  bool const &first_point,
                                  std::vector<NR::Point> &points_to_snap,       
                                  ConstraintLine const &c,
                                  SPItem const *it) const;
 
-    SnappedPoint constrainedSnap(PointType const &t,
+    void constrainedSnap(SnappedConstraints &sc,
+    							 PointType const &t,
                                  NR::Point const &p,
                                  bool const &first_point,
                                  std::vector<NR::Point> &points_to_snap,						 
                                  ConstraintLine const &c,
                                  std::list<SPItem const *> const &it) const;
+                                 
 protected:
     SPNamedView const *_named_view;
     int _snap_from; ///< bitmap of point types that we will snap from
@@ -116,7 +130,8 @@ private:
      *  \param it Items that should not be snapped to.
      *  \return Snapped point.
      */
-    virtual SnappedPoint _doFreeSnap(PointType const &t,
+    virtual void _doFreeSnap(SnappedConstraints &sc,
+    								 PointType const &t,
     								 NR::Point const &p,
     								 bool const &first_point,                                             
     								 std::vector<NR::Point> &points_to_snap,
@@ -132,14 +147,15 @@ private:
      *  \param it Items that should not be snapped to.
      *  \return Snapped point.
      */    
-    virtual SnappedPoint _doConstrainedSnap(PointType const &t,
+    virtual void _doConstrainedSnap(SnappedConstraints &sc,
+    										PointType const &t,
     										NR::Point const &p,
     										bool const &first_point,
     										std::vector<NR::Point> &points_to_snap,
                                             ConstraintLine const &c,
                                             std::list<SPItem const *> const &it) const = 0;
     
-    ::NR::Coord _distance; ///< snap distance (desktop coordinates)
+    NR::Coord _distance; ///< snap distance (desktop coordinates)
 };
 
 }

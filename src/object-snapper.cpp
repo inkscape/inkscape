@@ -113,16 +113,13 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
 }
 
 
-void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
+bool Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
 										 Inkscape::SnappedPoint &s,
                                          NR::Point const &p,
                                          bool const &first_point,
                                          DimensionToSnap const snap_dim) const
 {
-    /* FIXME: this seems like a hack.  Perhaps Snappers should be
-    ** in SPDesktop rather than SPNamedView?
-    */
-    SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
+    bool success = false;
     
     // Determine the type of bounding box we should snap to
     SPItem::BBoxType bbox_type = SPItem::GEOMETRIC_BBOX; 
@@ -194,16 +191,20 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
         
         if (dist < getDistance() && dist < s.getDistance()) {
             s = SnappedPoint(snapped_point, dist);
+            success = true;
         }       
     }
+    
+    return success;
 }
 
 
-void Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
+bool Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
 										 Inkscape::SnappedPoint &s,
                                          NR::Point const &p,
                                          bool const &first_point) const
 {
+    bool success = false;
     /* FIXME: this seems like a hack.  Perhaps Snappers should be
     ** in SPDesktop rather than SPNamedView?
     */
@@ -314,21 +315,25 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
 	            NR::Coord const dist = NR::L2(o_dt - p);
 	            if (dist < getDistance() && dist < s.getDistance()) {
 	                s = SnappedPoint(o_dt, dist);
+	                success = true;
 	            }
 	        }
         }        
     }
+    
+    return success;
 }
 
 
-Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doFreeSnap(Inkscape::Snapper::PointType const &t,
-															NR::Point const &p,
-															bool const &first_point,
-                                             				std::vector<NR::Point> &points_to_snap,
-                                                            std::list<SPItem const *> const &it) const
+void Inkscape::ObjectSnapper::_doFreeSnap(SnappedConstraints &sc,
+											Inkscape::Snapper::PointType const &t,
+											NR::Point const &p,
+											bool const &first_point,
+	                         				std::vector<NR::Point> &points_to_snap,
+	                                        std::list<SPItem const *> const &it) const
 {
     if ( NULL == _named_view ) {
-        return SnappedPoint(p, NR_HUGE);
+        return;
     }
 
     /* Get a list of all the SPItems that we will try to snap to */
@@ -337,30 +342,35 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doFreeSnap(Inkscape::Snapper::P
 	}
 
 	SnappedPoint s(p, NR_HUGE);
+	bool snapped_to_node = false;
+	bool snapped_to_path = false;
 
     if (_snap_to_itemnode || _snap_to_bboxnode) {
-        _snapNodes(t, s, p, first_point, SNAP_XY);
+        snapped_to_node = _snapNodes(t, s, p, first_point, SNAP_XY);
     }
     if (_snap_to_itempath || _snap_to_bboxpath) {
-        _snapPaths(t, s, p, first_point);
+        snapped_to_path = _snapPaths(t, s, p, first_point);
     }
 
-    return s;
+    if (snapped_to_node || snapped_to_path) {
+    	sc.points.push_back(s);
+    }
 }
 
 
 
-Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doConstrainedSnap(Inkscape::Snapper::PointType const &t,
-																   NR::Point const &p,
-																   bool const &first_point,
-                                             					   std::vector<NR::Point> &points_to_snap,
-                                                                   ConstraintLine const &c,
-                                                                   std::list<SPItem const *> const &it) const
+void Inkscape::ObjectSnapper::_doConstrainedSnap(SnappedConstraints &sc,
+												   Inkscape::Snapper::PointType const &t,
+												   NR::Point const &p,
+												   bool const &first_point,
+				             					   std::vector<NR::Point> &points_to_snap,
+				                                   ConstraintLine const &c,
+				                                   std::list<SPItem const *> const &it) const
 {
     /* FIXME: this needs implementing properly; I think we have to do the
     ** intersection of c with the objects.
     */
-    return _doFreeSnap(t, p, first_point, points_to_snap, it);
+    _doFreeSnap(sc, t, p, first_point, points_to_snap, it);
 }
 
 

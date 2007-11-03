@@ -17,7 +17,7 @@
  * intersection; otherwise, \a result remains unchanged.
  *
  * This function finds the intersection of the two lines (infinite)
- * defined by n0.X = d0 and x1.X = d1.  The algorithm is as follows:
+ * defined by n0.X = d0 and n1.X = d1.  The algorithm is as follows:
  * To compute the intersection point use Cramer's rule:
  * (see http://en.wikipedia.org/wiki/Cramer%27s_rule)
  * \verbatim

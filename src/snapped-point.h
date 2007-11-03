@@ -12,36 +12,36 @@
  */
 
 #include <vector>
+#include <list>
 #include "libnr/nr-coord.h"
 #include "libnr/nr-point.h"
 
 namespace Inkscape
 {
-
-class HighlightGroup;
-
+	
 /// Class describing the result of an attempt to snap.
 class SnappedPoint
 {
 public:
-    SnappedPoint() {}
-    SnappedPoint(::NR::Point p, ::NR::Coord d);
+    SnappedPoint();
+    SnappedPoint(::NR::Point p, ::NR::Coord d, bool at_intersection = false);
     ~SnappedPoint();
 
-    void addHighlightGroup(HighlightGroup *group);
-    void addHighlightGroups(std::vector<HighlightGroup*> *groups);
-
-    ::NR::Coord getDistance() const;
+    NR::Coord getDistance() const;
     NR::Point getPoint() const;
-    std::vector<HighlightGroup*> getHighlightGroups() const;
-
-private:
-    ::NR::Coord _distance;
-    ::NR::Point _point;
-    std::vector<HighlightGroup*> _hightlight_groups;
-};
+    bool getAtIntersection() const {return _at_intersection;}
+    
+protected:
+    NR::Coord _distance;
+    NR::Point _point;
+    bool _at_intersection;
+};    
 
 }
+
+bool getClosestSP(std::list<Inkscape::SnappedPoint> &list, Inkscape::SnappedPoint &result);
+
+
 #endif /* !SEEN_SNAPPEDPOINT_H */
 
 /*

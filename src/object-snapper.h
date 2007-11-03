@@ -17,7 +17,6 @@
 #include "sp-path.h"
 #include "splivarot.h"
 
-
 struct SPNamedView;
 struct SPItem;
 struct SPObject;
@@ -88,13 +87,15 @@ private:
   std::vector<SPItem*> *_candidates; 
   std::vector<NR::Point> *_points_to_snap_to;
   std::vector<Path*> *_paths_to_snap_to;
-  SnappedPoint _doFreeSnap(Inkscape::Snapper::PointType const &t,
+  void _doFreeSnap(SnappedConstraints &sc,
+  					Inkscape::Snapper::PointType const &t,
   					NR::Point const &p,
   					bool const &first_point,
                     std::vector<NR::Point> &points_to_snap,
 			   		std::list<SPItem const *> const &it) const;
 
-  SnappedPoint _doConstrainedSnap(Inkscape::Snapper::PointType const &t,
+  void _doConstrainedSnap(SnappedConstraints &sc,
+  					Inkscape::Snapper::PointType const &t,
   					NR::Point const &p,
   					bool const &first_point,                                               					
   					std::vector<NR::Point> &points_to_snap,
@@ -107,13 +108,13 @@ private:
 		       		std::vector<NR::Point> &points_to_snap,
 		       		DimensionToSnap const snap_dim) const;
   
-  void _snapNodes(Inkscape::Snapper::PointType const &t,
+  bool _snapNodes(Inkscape::Snapper::PointType const &t,
   					Inkscape::SnappedPoint &s, 
   					NR::Point const &p, 
   					bool const &first_point,
   					DimensionToSnap const snap_dim) const;
   					
-  void _snapPaths(Inkscape::Snapper::PointType const &t, 
+  bool _snapPaths(Inkscape::Snapper::PointType const &t, 
   					Inkscape::SnappedPoint &s, 
   					NR::Point const &p,
   					bool const &first_point) const;

@@ -162,7 +162,7 @@ public:
 
 private:
     LineList _getSnapLines(NR::Point const &p) const;
-
+    void _addSnappedLine(SnappedConstraints &sc, NR::Point const snapped_point, NR::Coord const snapped_distance, NR::Point const normal_to_line, const NR::Point point_on_line) const;
     CanvasXYGrid *grid;
 };
 

@@ -1,3 +1,6 @@
+#ifndef SEEN_GEOM_H
+#define SEEN_GEOM_H
+
 /**
  *  \file geom.h
  *  \brief Various geometrical calculations
@@ -28,3 +31,5 @@ enum IntersectorKind {
 IntersectorKind intersector_line_intersection(NR::Point const &n0, double const d0,
 					      NR::Point const &n1, double const d1,
 					      NR::Point &result);
+					     
+#endif /* !SEEN_GEOM_H */

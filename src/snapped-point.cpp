@@ -9,28 +9,24 @@
  */
 
 #include "snapped-point.h"
+#include <libnr/nr-values.h>
 
-Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d)
-    : _distance(d), _point(p)
+Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, bool at_intersection)
+    : _distance(d), _point(p), _at_intersection(at_intersection)
 {
-
 }
+
+Inkscape::SnappedPoint::SnappedPoint()
+{
+	_distance = NR_HUGE;
+	_point = NR::Point(0,0);
+	_at_intersection = false;
+}
+
+
 
 Inkscape::SnappedPoint::~SnappedPoint()
 {
-    /// TODO : empty the _hightlight_groups vector and destroy the
-    ///                 HighlightGroup items it holds
-}
-
-
-void Inkscape::SnappedPoint::addHighlightGroup(HighlightGroup *group)
-{
-    /// TODO
-}
-
-void Inkscape::SnappedPoint::addHighlightGroups(std::vector<HighlightGroup*> *groups)
-{
-    /// TODO
 }
 
 NR::Coord Inkscape::SnappedPoint::getDistance() const
@@ -43,11 +39,20 @@ NR::Point Inkscape::SnappedPoint::getPoint() const
     return _point;
 }
 
-std::vector<Inkscape::HighlightGroup*> Inkscape::SnappedPoint::getHighlightGroups() const
+// search for the closest snapped point
+bool getClosestSP(std::list<Inkscape::SnappedPoint> &list, Inkscape::SnappedPoint &result) 
 {
-    return _hightlight_groups;
+	bool success = false;
+	
+	for (std::list<Inkscape::SnappedPoint>::const_iterator i = list.begin(); i != list.end(); i++) {
+		if ((i == list.begin()) || (*i).getDistance() < result.getDistance()) {
+			result = *i;
+			success = true;
+		}	
+	}
+	
+	return success;
 }
-
 
 /*
   Local Variables:

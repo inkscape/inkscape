@@ -28,12 +28,12 @@ namespace Inkscape
 class GuideSnapper : public LineSnapper
 {
 public:
-    GuideSnapper(SPNamedView const *nv, NR::Coord const d);
-    
+    GuideSnapper(SPNamedView const *nv, NR::Coord const d);    
     bool ThisSnapperMightSnap() const;
 
 private:
-    LineList _getSnapLines(NR::Point const &p) const;
+    LineList _getSnapLines(NR::Point const &p) const;    
+    void _addSnappedLine(SnappedConstraints &sc, NR::Point const snapped_point, NR::Coord const snapped_distance, NR::Point const normal_to_line, NR::Point const point_on_line) const;
 };
 
 }
