@@ -200,9 +200,14 @@ PrefDialog::pinned_toggle (void) {
 
 void
 PrefDialog::on_response (int signal) {
+    if (!_exEnv) {
+        // apparantly this effect does not use the new ExecutionEnv stuff. 
+        // _param_pinned  and _effect will be null, and the code below will crash: return here!
+        return;
+    }
     //printf("Got signal %d\n", signal);
     if (!_param_pinned->get_bool(NULL, NULL)) {
-        // Not my job if we're not pinned
+        // Not my job if we're not pinned (either not pinned, or not even a pinned checkbox)
         // It's the execution environment's job
         return;
     }
