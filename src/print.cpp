@@ -139,8 +139,8 @@ sp_print_preview_document(SPDocument *doc)
 
 #ifdef HAVE_GTK_UNIX_PRINT
 static void
-unix_print_complete (GtkPrintJob *print_job,
-                     gpointer user_data,
+unix_print_complete (GtkPrintJob */*print_job*/,
+                     gpointer /*user_data*/,
                      GError *error)
 {
     fprintf(stderr,"print job finished: %s\n",error ? error->message : "no error");
@@ -161,7 +161,7 @@ unix_print_dialog (const gchar * ps_file, const gchar * jobname, gdouble doc_wid
 /*
  * It would be nice to merge the PrintPS::setup routine with a custom
  * configuration dialog:
-   
+
     gtk_print_unix_dialog_add_custom_tab (GtkPrintUnixDialog *dialog,
                                           GtkWidget *child,
                                           GtkWidget *tab_label);
@@ -173,27 +173,28 @@ unix_print_dialog (const gchar * ps_file, const gchar * jobname, gdouble doc_wid
         GtkPrinter* printer = gtk_print_unix_dialog_get_selected_printer(GTK_PRINT_UNIX_DIALOG(dlg));
 
         if (gtk_printer_accepts_ps (printer)) {
-			GtkPageSetup *page_setup = gtk_print_unix_dialog_get_page_setup(GTK_PRINT_UNIX_DIALOG(dlg));
+            GtkPageSetup *page_setup = gtk_print_unix_dialog_get_page_setup(GTK_PRINT_UNIX_DIALOG(dlg));
 
-			//It's important to set the right paper size here, otherwise it will 
-			//default to letter; if for example an A4 is printed as a letter, then
-			//part of it will be truncated even when printing on A4 paper
-			
-			//TODO: let the user decide upon the paper size, by enabling
-			//the drop down widget in the printing dialog. For now, we'll simply
-			//take the document's dimensions and communicate these to the printer
-			//driver 
-			
-			GtkPaperSize *page_size = gtk_paper_size_new_custom("custom", "custom", doc_width, doc_height, GTK_UNIT_POINTS);
+            //It's important to set the right paper size here, otherwise it will
+            //default to letter; if for example an A4 is printed as a letter, then
+            //part of it will be truncated even when printing on A4 paper
 
-			gtk_page_setup_set_paper_size (page_setup, page_size);								   
-			
+            //TODO: let the user decide upon the paper size, by enabling
+            //the drop down widget in the printing dialog. For now, we'll simply
+            //take the document's dimensions and communicate these to the printer
+            //driver
+
+            GtkPaperSize *page_size = gtk_paper_size_new_custom("custom", "custom", doc_width, doc_height, GTK_UNIT_POINTS);
+
+            gtk_page_setup_set_paper_size (page_setup, page_size);
+
             GtkPrintJob* job = gtk_print_job_new  (jobname, printer,
-              gtk_print_unix_dialog_get_settings(GTK_PRINT_UNIX_DIALOG(dlg)),
-              page_setup);
-			
-			GtkPaperSize* tmp = gtk_page_setup_get_paper_size(gtk_print_unix_dialog_get_page_setup(GTK_PRINT_UNIX_DIALOG(dlg)));
-			
+                                                   gtk_print_unix_dialog_get_settings(GTK_PRINT_UNIX_DIALOG(dlg)),
+                                                   page_setup);
+
+            GtkPaperSize* tmp = gtk_page_setup_get_paper_size(gtk_print_unix_dialog_get_page_setup(GTK_PRINT_UNIX_DIALOG(dlg)));
+            (void)tmp;
+
             GError * error = NULL;
             if ( gtk_print_job_set_source_file (job, ps_file, &error)) {
                 gtk_print_job_send (job, unix_print_complete, NULL, NULL);
@@ -282,11 +283,11 @@ sp_print_document(SPDocument *doc, unsigned int direct)
 
 #ifdef HAVE_GTK_UNIX_PRINT
         // redirect output to new print dialog
-        
+
         // width and height in pt
     	gdouble width = sp_document_width(doc) * PT_PER_PX;
     	gdouble height = sp_document_height(doc) * PT_PER_PX;
-        
+
         unix_print_dialog(tmpfile.c_str(),doc->name ? doc->name : _("SVG Document"), width, height);
         unlink(tmpfile.c_str());
         // end redirected new print dialog

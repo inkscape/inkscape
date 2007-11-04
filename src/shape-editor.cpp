@@ -31,7 +31,7 @@
 #include "shape-editor.h"
 
 
-ShapeEditorsCollective::ShapeEditorsCollective(SPDesktop *dt) {
+ShapeEditorsCollective::ShapeEditorsCollective(SPDesktop */*dt*/) {
 }
 
 ShapeEditorsCollective::~ShapeEditorsCollective() {
@@ -94,9 +94,9 @@ bool ShapeEditor::has_knotholder () {
 }
 
 bool ShapeEditor::has_local_change () {
-    if (this->nodepath) 
+    if (this->nodepath)
         return (this->nodepath->local_change != 0);
-    else if (this->knotholder) 
+    else if (this->knotholder)
         return (this->knotholder->local_change != 0);
     else
         return false;
@@ -140,9 +140,9 @@ bool ShapeEditor::nodepath_edits_repr_key(gchar const *name) {
     return false;
 }
 
-static void shapeeditor_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
-                                           gchar const *old_value, gchar const *new_value,
-                                           bool is_interactive, gpointer data)
+static void shapeeditor_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar const *name,
+                                           gchar const */*old_value*/, gchar const */*new_value*/,
+                                           bool /*is_interactive*/, gpointer data)
 {
     gboolean changed = FALSE;
 
@@ -151,7 +151,7 @@ static void shapeeditor_event_attr_changed(Inkscape::XML::Node *repr, gchar cons
 
     if ( sh->has_knotholder() || ( sh->has_nodepath() && sh->nodepath_edits_repr_key(name) ) )
     {
-        changed = !sh->has_local_change(); 
+        changed = !sh->has_local_change();
         sh->decrement_local_change();
     }
 
@@ -190,7 +190,7 @@ void ShapeEditor::set_item(SPItem *item) {
     if (item) {
         this->nodepath = sp_nodepath_new(desktop, item, (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
         if (this->nodepath) {
-            this->nodepath->shape_editor = this; 
+            this->nodepath->shape_editor = this;
         }
         this->knotholder = sp_item_knot_holder(item, desktop);
 
@@ -221,11 +221,11 @@ void ShapeEditor::set_item_livepatheffect_parameter(SPItem *item, SPObject *lpeo
 
     if (lpeobject) {
         this->knotholder = NULL; // it's a path, no special knotholder needed.
-        this->nodepath = sp_nodepath_new( desktop, lpeobject, 
+        this->nodepath = sp_nodepath_new( desktop, lpeobject,
                                           (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0),
                                           key, item);
         if (this->nodepath) {
-            this->nodepath->shape_editor = this; 
+            this->nodepath->shape_editor = this;
 
             // setting new listener
             Inkscape::XML::Node *repr = SP_OBJECT_REPR(lpeobject);
@@ -264,7 +264,7 @@ void ShapeEditor::update_statusbar () {
 
 bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
 
-    if (!this->nodepath) 
+    if (!this->nodepath)
         return false; // no stroke in knotholder
 
     SPItem *item = get_item();
@@ -451,11 +451,11 @@ void ShapeEditor::scale_nodes_screen(gdouble const grow, int const which) {
 }
 
 void ShapeEditor::select_all (bool invert) {
-    if (this->nodepath) 
+    if (this->nodepath)
         sp_nodepath_select_all (this->nodepath, invert);
 }
 void ShapeEditor::select_all_from_subpath (bool invert) {
-    if (this->nodepath) 
+    if (this->nodepath)
         sp_nodepath_select_all_from_subpath (this->nodepath, invert);
 }
 void ShapeEditor::select_next () {
@@ -482,16 +482,16 @@ void ShapeEditor::show_handles (bool show) {
 
 
 void ShapeEditor::flip (NR::Dim2 axis, NR::Maybe<NR::Point> center) {
-    if (this->nodepath) 
+    if (this->nodepath)
         sp_nodepath_flip (this->nodepath, axis, center);
 }
 
 void ShapeEditor::distribute (NR::Dim2 axis) {
-    if (this->nodepath) 
+    if (this->nodepath)
         sp_nodepath_selected_distribute (this->nodepath, axis);
 }
 void ShapeEditor::align (NR::Dim2 axis) {
-    if (this->nodepath) 
+    if (this->nodepath)
         sp_nodepath_selected_align (this->nodepath, axis);
 }
 

@@ -75,7 +75,7 @@ sp_feTile_class_init(SPFeTileClass *klass)
 }
 
 static void
-sp_feTile_init(SPFeTile *feTile)
+sp_feTile_init(SPFeTile */*feTile*/)
 {
 }
 
@@ -169,6 +169,7 @@ static void sp_feTile_build_renderer(SPFilterPrimitive *primitive, NR::Filter *f
     g_assert(filter != NULL);
 
     SPFeTile *sp_tile = SP_FETILE(primitive);
+    (void)sp_tile;
 
     int primitive_n = filter->add_primitive(NR::NR_FILTER_TILE);
     NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);

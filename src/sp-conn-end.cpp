@@ -34,7 +34,7 @@ get_nearest_common_ancestor(SPObject const *const obj, SPItem const *const objs[
 }
 
 static void
-sp_conn_end_move_compensate(NR::Matrix const *mp, SPItem *moved_item,
+sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
                             SPPath *const path,
                             bool const updatePathRepr = true)
 {
@@ -277,7 +277,7 @@ SPConnEnd::setAttacherHref(gchar const *value)
 }
 
 void
-sp_conn_end_href_changed(SPObject *old_ref, SPObject *ref,
+sp_conn_end_href_changed(SPObject */*old_ref*/, SPObject */*ref*/,
                          SPConnEnd *connEndPtr, SPPath *const path, unsigned const handle_ix)
 {
     g_return_if_fail(connEndPtr != NULL);

@@ -85,7 +85,7 @@ sp_fepointlight_init(SPFePointLight *fepointlight)
     fepointlight->x = 0;
     fepointlight->y = 0;
     fepointlight->z = 0;
-    
+
     fepointlight->x_set = FALSE;
     fepointlight->y_set = FALSE;
     fepointlight->z_set = FALSE;
@@ -192,7 +192,7 @@ sp_fepointlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     default:
-        // See if any parents need this value. 
+        // See if any parents need this value.
         if (((SPObjectClass *) fePointLight_parent_class)->set) {
             ((SPObjectClass *) fePointLight_parent_class)->set(object, key, value);
         }
@@ -207,6 +207,7 @@ static void
 sp_fepointlight_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     SPFePointLight *fePointLight = SP_FEPOINTLIGHT(object);
+    (void)fePointLight;
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         /* do something to trigger redisplay, updates? */
@@ -214,7 +215,7 @@ sp_fepointlight_update(SPObject *object, SPCtx *ctx, guint flags)
         sp_object_read_attr(object, "y");
         sp_object_read_attr(object, "z");
     }
-    
+
     if (((SPObjectClass *) fePointLight_parent_class)->update) {
         ((SPObjectClass *) fePointLight_parent_class)->update(object, ctx, flags);
     }
@@ -231,14 +232,14 @@ sp_fepointlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     if (!repr) {
         repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
     }
-    
+
     if (fepointlight->x_set)
         sp_repr_set_css_double(repr, "x", fepointlight->x);
     if (fepointlight->y_set)
         sp_repr_set_css_double(repr, "y", fepointlight->y);
     if (fepointlight->z_set)
         sp_repr_set_css_double(repr, "z", fepointlight->z);
-    
+
     if (((SPObjectClass *) fePointLight_parent_class)->write) {
         ((SPObjectClass *) fePointLight_parent_class)->write(object, repr, flags);
     }

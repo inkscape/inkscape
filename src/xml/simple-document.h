@@ -73,9 +73,9 @@ protected:
         _initBindings();
     }
 
-    SimpleNode *_duplicate(Document* doc) const 
-    { 
-        return new SimpleDocument(*this); 
+    SimpleNode *_duplicate(Document* /*doc*/) const
+    {
+        return new SimpleDocument(*this);
     }
 
 private:

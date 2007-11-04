@@ -259,12 +259,12 @@ sp_flowregion_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 
 	if (((SPObjectClass *) (flowregion_parent_class))->write)
 		((SPObjectClass *) (flowregion_parent_class))->write (object, repr, flags);
-	
+
 	return repr;
 }
 
 
-static gchar *sp_flowregion_description(SPItem *item)
+static gchar *sp_flowregion_description(SPItem */*item*/)
 {
 	// TRANSLATORS: "Flow region" is an area where text is allowed to flow
 	return g_strdup_printf(_("Flow region"));
@@ -476,12 +476,12 @@ sp_flowregionexclude_write (SPObject *object, Inkscape::XML::Node *repr, guint f
 
 	if (((SPObjectClass *) (flowregionexclude_parent_class))->write)
 		((SPObjectClass *) (flowregionexclude_parent_class))->write (object, repr, flags);
-	
+
 	return repr;
 }
 
 
-static gchar *sp_flowregionexclude_description(SPItem *item)
+static gchar *sp_flowregionexclude_description(SPItem */*item*/)
 {
 	/* TRANSLATORS: A region "cut out of" a flow region; text is not allowed to flow inside the
 	 * flow excluded region.  flowRegionExclude in SVG 1.2: see

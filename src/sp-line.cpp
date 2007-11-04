@@ -184,9 +184,9 @@ sp_line_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 }
 
 static gchar *
-sp_line_description(SPItem *item)
+sp_line_description(SPItem */*item*/)
 {
-	return g_strdup(_("<b>Line</b>"));
+    return g_strdup(_("<b>Line</b>"));
 }
 
 static NR::Matrix

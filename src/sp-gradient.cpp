@@ -539,9 +539,9 @@ gradient_ref_changed(SPObject *old_ref, SPObject *ref, SPGradient *gr)
         gr->modified_connection = ref->connectModified(sigc::bind<2>(sigc::ptr_fun(&gradient_ref_modified), gr));
     }
 
-    // Per SVG, all unset attributes must be inherited from linked gradient. 
+    // Per SVG, all unset attributes must be inherited from linked gradient.
     // So, as we're now (re)linked, we assign linkee's values to this gradient if they are not yet set -
-    // but without setting the _set flags. 
+    // but without setting the _set flags.
     // FIXME: do the same for gradientTransform too
     if (!gr->units_set)
         gr->units = sp_gradient_get_units (gr);
@@ -615,7 +615,7 @@ sp_gradient_modified(SPObject *object, guint flags)
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
         sp_gradient_ensure_colors(gr);
     }
-    
+
     if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
@@ -937,7 +937,7 @@ sp_gradient_repr_write_vector(SPGradient *gr)
 
 
 static void
-gradient_ref_modified(SPObject *href, guint flags, SPGradient *gradient)
+gradient_ref_modified(SPObject */*href*/, guint /*flags*/, SPGradient *gradient)
 {
     if (sp_gradient_invalidate_vector(gradient)) {
         SP_OBJECT(gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -1202,7 +1202,7 @@ sp_gradient_render_vector_block_rgba(SPGradient *const gradient, guchar *buf,
  */
 void
 sp_gradient_render_vector_block_rgb(SPGradient *gradient, guchar *buf,
-                                    gint const width, gint const height, gint const rowstride,
+                                    gint const width, gint const height, gint const /*rowstride*/,
                                     gint const pos, gint const span, bool const horizontal)
 {
     g_return_if_fail(gradient != NULL);
@@ -1470,7 +1470,7 @@ sp_lineargradient_write(SPObject *object, Inkscape::XML::Node *repr, guint flags
 static SPPainter *
 sp_lineargradient_painter_new(SPPaintServer *ps,
                               NR::Matrix const &full_transform,
-                              NR::Matrix const &parent_transform,
+                              NR::Matrix const &/*parent_transform*/,
                               NRRect const *bbox)
 {
     SPLinearGradient *lg = SP_LINEARGRADIENT(ps);
@@ -1527,7 +1527,7 @@ sp_lineargradient_painter_new(SPPaintServer *ps,
 }
 
 static void
-sp_lineargradient_painter_free(SPPaintServer *ps, SPPainter *painter)
+sp_lineargradient_painter_free(SPPaintServer */*ps*/, SPPainter *painter)
 {
     g_free(painter);
 }
@@ -1756,7 +1756,7 @@ sp_radialgradient_write(SPObject *object, Inkscape::XML::Node *repr, guint flags
 static SPPainter *
 sp_radialgradient_painter_new(SPPaintServer *ps,
                               NR::Matrix const &full_transform,
-                              NR::Matrix const &parent_transform,
+                              NR::Matrix const &/*parent_transform*/,
                               NRRect const *bbox)
 {
     SPRadialGradient *rg = SP_RADIALGRADIENT(ps);
@@ -1808,7 +1808,7 @@ sp_radialgradient_painter_new(SPPaintServer *ps,
 }
 
 static void
-sp_radialgradient_painter_free(SPPaintServer *ps, SPPainter *painter)
+sp_radialgradient_painter_free(SPPaintServer */*ps*/, SPPainter *painter)
 {
     g_free(painter);
 }

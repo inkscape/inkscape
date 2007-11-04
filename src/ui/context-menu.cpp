@@ -171,7 +171,7 @@ sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
     SP_OBJECT(item)->deleteObject(false);
     repr->addChild(child, NULL);
     child->setAttribute("id", id);
-    sp_document_done(SP_OBJECT_DOCUMENT(object), SP_VERB_NONE, 
+    sp_document_done(SP_OBJECT_DOCUMENT(object), SP_VERB_NONE,
                      _("Create link"));
 
     sp_object_attributes_dialog(object, "SPAnchor");
@@ -249,13 +249,13 @@ sp_anchor_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 }
 
 static void
-sp_anchor_link_properties(GtkMenuItem *menuitem, SPAnchor *anchor)
+sp_anchor_link_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 {
     sp_object_attributes_dialog(SP_OBJECT(anchor), "Link");
 }
 
 static void
-sp_anchor_link_follow(GtkMenuItem *menuitem, SPAnchor *anchor)
+sp_anchor_link_follow(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 {
     g_return_if_fail(anchor != NULL);
     g_return_if_fail(SP_IS_ANCHOR(anchor));
@@ -264,7 +264,7 @@ sp_anchor_link_follow(GtkMenuItem *menuitem, SPAnchor *anchor)
 }
 
 static void
-sp_anchor_link_remove(GtkMenuItem *menuitem, SPAnchor *anchor)
+sp_anchor_link_remove(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 {
     GSList *children;
 
@@ -298,7 +298,7 @@ sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 }
 
 static void
-sp_image_image_properties(GtkMenuItem *menuitem, SPAnchor *anchor)
+sp_image_image_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 {
     sp_object_attributes_dialog(SP_OBJECT(anchor), "Image");
 }

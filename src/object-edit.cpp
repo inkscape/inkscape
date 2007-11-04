@@ -50,7 +50,7 @@
 #define sp_round(v,m) (((v) < 0.0) ? ((ceil((v) / (m) - 0.5)) * (m)) : ((floor((v) / (m) + 0.5)) * (m)))
 
 static SPKnotHolder *sp_rect_knot_holder(SPItem *item, SPDesktop *desktop);
-//static 
+//static
 SPKnotHolder *sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_arc_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_star_knot_holder(SPItem *item, SPDesktop *desktop);
@@ -152,7 +152,7 @@ static NR::Point sp_pattern_angle_get(SPItem *item)
 }
 
 static void
-sp_pattern_angle_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+sp_pattern_angle_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -177,7 +177,7 @@ sp_pattern_angle_set(SPItem *item, NR::Point const &p, NR::Point const &origin, 
 }
 
 static void
-sp_pattern_scale_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+sp_pattern_scale_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
 {
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
@@ -223,7 +223,7 @@ static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
 {
     SPDesktop const *desktop = inkscape_active_desktop();
     NR::Matrix const i2d (sp_item_i2d_affine (item));
-    NR::Point s = p * i2d;    
+    NR::Point s = p * i2d;
     SnapManager const &m = desktop->namedview->snap_manager;
     s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, s, item).getPoint();
     return s * i2d.inverse();
@@ -236,10 +236,10 @@ static NR::Point sp_rect_rx_get(SPItem *item)
     return NR::Point(rect->x.computed + rect->width.computed - rect->rx.computed, rect->y.computed);
 }
 
-static void sp_rect_rx_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+static void sp_rect_rx_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPRect *rect = SP_RECT(item);
-    
+
     //In general we cannot just snap this radius to an arbitrary point, as we have only a single
     //degree of freedom. For snapping to an arbitrary point we need two DOF. If we're going to snap
     //the radius then we should have a constrained snap. snap_knot_position() is unconstrained
@@ -265,10 +265,10 @@ static NR::Point sp_rect_ry_get(SPItem *item)
     return NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->ry.computed);
 }
 
-static void sp_rect_ry_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+static void sp_rect_ry_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPRect *rect = SP_RECT(item);
-    
+
     //In general we cannot just snap this radius to an arbitrary point, as we have only a single
     //degree of freedom. For snapping to an arbitrary point we need two DOF. If we're going to snap
     //the radius then we should have a constrained snap. snap_knot_position() is unconstrained
@@ -548,7 +548,7 @@ static inline Box3D::Axis movement_axis_of_3dbox_corner (guint corner, guint sta
     return Box3D::NONE;
 }
 
-/* 
+/*
  * To keep the snappoint from jumping randomly between the two lines when the mouse pointer is close to
  * their intersection, we remember the last snapped line and keep snapping to this specific line as long
  * as the distance from the intersection to the mouse pointer is less than remember_snap_threshold.
@@ -559,7 +559,7 @@ static double remember_snap_threshold = 30;
 static guint remember_snap_index = 0;
 static guint remember_snap_index_center = 0;
 
-static NR::Point snap_knot_position_3dbox (SP3DBox *box, guint corner, Box3D::Axis direction, NR::Point const &origin, NR::Point const &p, guint state)
+static NR::Point snap_knot_position_3dbox (SP3DBox *box, guint corner, Box3D::Axis direction, NR::Point const &origin, NR::Point const &p, guint /*state*/)
 {
     SPDesktop * desktop = inkscape_active_desktop();
     Box3D::Perspective3D *persp = sp_desktop_document (desktop)->get_persp_of_box (box);
@@ -876,7 +876,7 @@ sp_genericellipse_side(SPGenericEllipse *ellipse, NR::Point const &p)
 }
 
 static void
-sp_arc_start_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+sp_arc_start_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -906,7 +906,7 @@ static NR::Point sp_arc_start_get(SPItem *item)
 }
 
 static void
-sp_arc_end_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+sp_arc_end_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -948,11 +948,11 @@ sp_arc_startend_click(SPItem *item, guint state)
 
 
 static void
-sp_arc_rx_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+sp_arc_rx_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
-    
+
     NR::Point const s = snap_knot_position(arc, p);
 
     ge->rx.computed = fabs( ge->cx.computed - s[NR::X] );
@@ -972,11 +972,11 @@ static NR::Point sp_arc_rx_get(SPItem *item)
 }
 
 static void
-sp_arc_ry_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+sp_arc_ry_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
-    
+
     NR::Point const s = snap_knot_position(arc, p);
 
     ge->ry.computed = fabs( ge->cy.computed - s[NR::Y] );
@@ -1043,10 +1043,10 @@ sp_arc_knot_holder(SPItem *item, SPDesktop *desktop)
 /* SPStar */
 
 static void
-sp_star_knot1_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+sp_star_knot1_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPStar *star = SP_STAR(item);
-    
+
     NR::Point const s = snap_knot_position(star, p);
 
     NR::Point d = s - star->center;
@@ -1069,12 +1069,12 @@ sp_star_knot1_set(SPItem *item, NR::Point const &p, NR::Point const &origin, gui
 }
 
 static void
-sp_star_knot2_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+sp_star_knot2_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPStar *star = SP_STAR(item);
-    
+
     NR::Point const s = snap_knot_position(star, p);
-    
+
     if (star->flatsided == false) {
         NR::Point d = s - star->center;
 
@@ -1162,7 +1162,7 @@ sp_star_knot_holder(SPItem *item, SPDesktop *desktop)
  *   [control] constrain inner arg to round per PI/4
  */
 static void
-sp_spiral_inner_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+sp_spiral_inner_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -1204,7 +1204,7 @@ sp_spiral_inner_set(SPItem *item, NR::Point const &p, NR::Point const &origin, g
  *   [control] constrain inner arg to round per PI/4
  */
 static void
-sp_spiral_outer_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+sp_spiral_outer_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -1322,7 +1322,7 @@ sp_spiral_knot_holder(SPItem *item, SPDesktop *desktop)
 /* SPOffset */
 
 static void
-sp_offset_offset_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+sp_offset_offset_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
 {
     SPOffset *offset = SP_OFFSET(item);
 

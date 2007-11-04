@@ -170,7 +170,7 @@ sp_fedistantlight_set(SPObject *object, unsigned int key, gchar const *value)
         }
         break;
     default:
-        // See if any parents need this value. 
+        // See if any parents need this value.
         if (((SPObjectClass *) feDistantLight_parent_class)->set) {
             ((SPObjectClass *) feDistantLight_parent_class)->set(object, key, value);
         }
@@ -185,13 +185,14 @@ static void
 sp_fedistantlight_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     SPFeDistantLight *feDistantLight = SP_FEDISTANTLIGHT(object);
+    (void)feDistantLight;
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         /* do something to trigger redisplay, updates? */
         sp_object_read_attr(object, "azimuth");
         sp_object_read_attr(object, "elevation");
     }
-    
+
     if (((SPObjectClass *) feDistantLight_parent_class)->update) {
         ((SPObjectClass *) feDistantLight_parent_class)->update(object, ctx, flags);
     }
@@ -208,12 +209,12 @@ sp_fedistantlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags
     if (!repr) {
         repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
     }
-    
+
     if (fedistantlight->azimuth_set)
         sp_repr_set_css_double(repr, "azimuth", fedistantlight->azimuth);
     if (fedistantlight->elevation_set)
         sp_repr_set_css_double(repr, "elevation", fedistantlight->elevation);
-    
+
     if (((SPObjectClass *) feDistantLight_parent_class)->write) {
         ((SPObjectClass *) feDistantLight_parent_class)->write(object, repr, flags);
     }

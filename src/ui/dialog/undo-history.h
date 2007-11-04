@@ -108,7 +108,7 @@ private:
     Glib::Property<int> _property_number;
     const Filter& _filter;
 
-    struct NoFilter : Filter { bool operator() (const int& x) const { return true; } };
+    struct NoFilter : Filter { bool operator() (const int& /*x*/) const { return true; } };
 };
 
 

@@ -84,7 +84,7 @@ sp_gaussianBlur_class_init(SPGaussianBlurClass *klass)
 }
 
 static void
-sp_gaussianBlur_init(SPGaussianBlur *gaussianBlur)
+sp_gaussianBlur_init(SPGaussianBlur */*gaussianBlur*/)
 {
 }
 
@@ -122,7 +122,7 @@ static void
 sp_gaussianBlur_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPGaussianBlur *gaussianBlur = SP_GAUSSIANBLUR(object);
-    
+
     switch(key) {
         case SP_ATTR_STDDEVIATION:
             gaussianBlur->stdDeviation.set(value);

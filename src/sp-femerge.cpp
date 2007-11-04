@@ -78,7 +78,7 @@ sp_feMerge_class_init(SPFeMergeClass *klass)
 }
 
 static void
-sp_feMerge_init(SPFeMerge *feMerge)
+sp_feMerge_init(SPFeMerge */*feMerge*/)
 {
 }
 
@@ -169,6 +169,7 @@ static void sp_feMerge_build_renderer(SPFilterPrimitive *primitive, NR::Filter *
     g_assert(filter != NULL);
 
     SPFeMerge *sp_merge = SP_FEMERGE(primitive);
+    (void)sp_merge;
 
     int primitive_n = filter->add_primitive(NR::NR_FILTER_MERGE);
     NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);

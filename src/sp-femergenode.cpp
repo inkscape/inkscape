@@ -82,7 +82,7 @@ sp_feMergeNode_init(SPFeMergeNode *feMergeNode)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feMergeNode_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_feMergeNode_build(SPObject *object, SPDocument */*document*/, Inkscape::XML::Node */*repr*/)
 {
     sp_object_read_attr(object, "in");
 }

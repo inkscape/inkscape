@@ -67,7 +67,7 @@ sp_feColorMatrix_class_init(SPFeColorMatrixClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-    
+
     feColorMatrix_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feColorMatrix_build;
@@ -79,7 +79,7 @@ sp_feColorMatrix_class_init(SPFeColorMatrixClass *klass)
 }
 
 static void
-sp_feColorMatrix_init(SPFeColorMatrix *feColorMatrix)
+sp_feColorMatrix_init(SPFeColorMatrix */*feColorMatrix*/)
 {
 }
 
@@ -124,7 +124,7 @@ static NR::FilterColorMatrixType sp_feColorMatrix_read_type(gchar const *value){
             break;
         case 'l':
             if (strcmp(value, "luminanceToAlpha") == 0) return NR::COLORMATRIX_LUMINANCETOALPHA;
-            break;                        
+            break;
     }
     return NR::COLORMATRIX_MATRIX; //matrix is default
 }
@@ -149,7 +149,7 @@ sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *str)
             }
             break;
         case SP_ATTR_VALUES:
-            if (str){     
+            if (str){
                 feColorMatrix->values = helperfns_read_vector(str, 20);
                 feColorMatrix->value = helperfns_read_number(str);
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);

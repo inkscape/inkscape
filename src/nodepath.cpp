@@ -291,7 +291,7 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
         delete np->livarot_path;
         np->livarot_path = NULL;
     }
-    
+
     if (np->helper_path) {
         GtkObject *temp = np->helper_path;
         np->helper_path = NULL;
@@ -402,7 +402,7 @@ static gint sp_nodepath_selection_get_subpath_count(Inkscape::NodePath::Path *np
     }
     return count;
 }
- 
+
 /**
  * Clean up a nodepath after editing.
  *
@@ -548,7 +548,7 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
 
     sp_curve_unref(np->curve);
     np->curve = create_curve(np);
-    
+
     gchar *typestr = create_typestr(np);
     gchar *svgpath = sp_svg_write_path(SP_CURVE_BPATH(np->curve));
 
@@ -589,8 +589,8 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotati
 
     update_repr_internal(np);
     sp_canvas_end_forced_full_redraws(np->desktop->canvas);
-    
-    sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE, 
+
+    sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE,
                      annotation);
 }
 
@@ -605,7 +605,7 @@ static void sp_nodepath_update_repr_keyed(Inkscape::NodePath::Path *np, gchar co
     }
 
     update_repr_internal(np);
-    sp_document_maybe_done(sp_desktop_document(np->desktop), key, SP_VERB_CONTEXT_NODE, 
+    sp_document_maybe_done(sp_desktop_document(np->desktop), key, SP_VERB_CONTEXT_NODE,
                            annotation);
 }
 
@@ -828,7 +828,7 @@ static Inkscape::NodePath::Node *sp_nodepath_line_add_node(Inkscape::NodePath::N
     g_assert( start->n.other == end );
    Inkscape::NodePath::Node *newnode = sp_nodepath_node_new(end->subpath,
                                                end,
-                                               (NRPathcode)end->code == NR_LINETO? 
+                                               (NRPathcode)end->code == NR_LINETO?
                                                   Inkscape::NodePath::NODE_CUSP : Inkscape::NodePath::NODE_SMOOTH,
                                                (NRPathcode)end->code,
                                                &start->pos, &start->pos, &start->n.pos);
@@ -1009,7 +1009,7 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
 
     if (type == Inkscape::NodePath::NODE_SYMM || type == Inkscape::NodePath::NODE_SMOOTH) {
         if (p_line && n_line) {
-            // only if both adjacent segments are lines, 
+            // only if both adjacent segments are lines,
             // convert both to curves:
 
             // BEFORE:
@@ -1085,7 +1085,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
 
     if (snap) {
         SnapManager const &m = nodepath->desktop->namedview->snap_manager;
-        
+
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, SP_PATH(n->subpath->nodepath->item));
@@ -1153,7 +1153,7 @@ sp_nodepath_move_node_and_handles (Inkscape::NodePath::Node *n, NR::Point delta,
  * Displace selected nodes and their handles by fractions of delta (from their origins), depending
  * on how far they are from the dragged node n.
  */
-static void 
+static void
 sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::NodePath::Node *n, NR::Point delta)
 {
     g_assert (n);
@@ -1239,7 +1239,7 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
                 } else {
                     n_range += bezier_length (n_node->p.other->origin, n_node->p.other->n.origin, n_node->p.origin, n_node->origin);
                     if (n_node->selected) {
-                        sp_nodepath_move_node_and_handles (n_node, 
+                        sp_nodepath_move_node_and_handles (n_node,
                                                            sculpt_profile (n_range / n_sel_range, alpha, profile) * delta,
                                                            sculpt_profile ((n_range + NR::L2(n_node->n.origin - n_node->origin)) / n_sel_range, alpha, profile) * delta,
                                                            sculpt_profile ((n_range - NR::L2(n_node->p.origin - n_node->origin)) / n_sel_range, alpha, profile) * delta);
@@ -1256,7 +1256,7 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
                 } else {
                     p_range += bezier_length (p_node->n.other->origin, p_node->n.other->p.origin, p_node->n.origin, p_node->origin);
                     if (p_node->selected) {
-                        sp_nodepath_move_node_and_handles (p_node, 
+                        sp_nodepath_move_node_and_handles (p_node,
                                                            sculpt_profile (p_range / p_sel_range, alpha, profile) * delta,
                                                            sculpt_profile ((p_range - NR::L2(p_node->n.origin - p_node->origin)) / p_sel_range, alpha, profile) * delta,
                                                            sculpt_profile ((p_range + NR::L2(p_node->p.origin - p_node->origin)) / p_sel_range, alpha, profile) * delta);
@@ -1272,7 +1272,7 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
     } else {
         // Multiple subpaths have selected nodes:
         // use spatial mode, where the distance from n to node being dragged is measured directly as NR::L2.
-        // TODO: correct these distances taking into account their angle relative to the bisector, so as to 
+        // TODO: correct these distances taking into account their angle relative to the bisector, so as to
         // fix the pear-like shape when sculpting e.g. a ring
 
         // First pass: calculate range
@@ -1403,7 +1403,7 @@ static void sp_node_update_handle(Inkscape::NodePath::Node *node, gint which, gb
             sp_node_ensure_knot_exists(node->subpath->nodepath->desktop, node, side);
             // Just created, so we shouldn't fire the node_moved callback - instead set the knot position directly
             side->knot->pos = side->pos;
-            if (side->knot->item) 
+            if (side->knot->item)
                 SP_CTRL(side->knot->item)->moveto(side->pos);
             sp_ctrlline_set_coords(SP_CTRLLINE(side->line), node->pos, side->pos);
             sp_knot_show(side->knot);
@@ -1450,7 +1450,7 @@ static void sp_node_update_handles(Inkscape::NodePath::Node *node, bool fire_mov
     if (node->knot->pos != node->pos) { // visible knot is in a different position, need to update
         if (fire_move_signals)
             sp_knot_set_position(node->knot, &node->pos, 0);
-        else 
+        else
             sp_knot_moveto(node->knot, &node->pos);
     }
 
@@ -1663,7 +1663,7 @@ sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Po
 
     //fixme: this can return NULL, so check before proceeding.
     g_return_if_fail(e != NULL);
-    
+
     gboolean force = FALSE;
     if (!(e->selected && (!e->p.other || e->p.other->selected))) {
         force = TRUE;
@@ -1727,7 +1727,7 @@ sp_nodepath_curve_drag(int node, double t, NR::Point delta)
     //fixme: e and e->p can be NULL, so check for those before proceeding
     g_return_if_fail(e != NULL);
     g_return_if_fail(&e->p != NULL);
-    
+
     /* feel good is an arbitrary parameter that distributes the delta between handles
      * if t of the drag point is less than 1/6 distance form the endpoint only
      * the corresponding hadle is adjusted. This matches the behavior in GIMP
@@ -1836,7 +1836,7 @@ void sp_node_selected_join(Inkscape::NodePath::Path *nodepath)
    Inkscape::NodePath::Node *b = (Inkscape::NodePath::Node *) nodepath->selected->next->data;
 
     g_assert(a != b);
-    if (!(a->p.other || a->n.other) || !(b->p.other || b->n.other)) { 
+    if (!(a->p.other || a->n.other) || !(b->p.other || b->n.other)) {
         // someone tried to join an orphan node (i.e. a single-node subpath).
         // this is not worth an error message, just fail silently.
         return;
@@ -1937,7 +1937,7 @@ void sp_node_selected_join_segment(Inkscape::NodePath::Path *nodepath)
    Inkscape::NodePath::Node *b = (Inkscape::NodePath::Node *) nodepath->selected->next->data;
 
     g_assert(a != b);
-    if (!(a->p.other || a->n.other) || !(b->p.other || b->n.other)) { 
+    if (!(a->p.other || a->n.other) || !(b->p.other || b->n.other)) {
         // someone tried to join an orphan node (i.e. a single-node subpath).
         // this is not worth an error message, just fail silently.
         return;
@@ -2028,7 +2028,7 @@ void sp_node_selected_join_segment(Inkscape::NodePath::Path *nodepath)
 void sp_node_delete_preserve(GList *nodes_to_delete)
 {
     GSList *nodepaths = NULL;
-    
+
     while (nodes_to_delete) {
         Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node*) g_list_first(nodes_to_delete)->data;
         Inkscape::NodePath::SubPath *sp = node->subpath;
@@ -2037,7 +2037,7 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
         Inkscape::NodePath::Node *sample_end = NULL;
         Inkscape::NodePath::Node *delete_cursor = node;
         bool just_delete = false;
-        
+
         //find the start of this contiguous selection
         //move left to the first node that is not selected
         //or the start of the non-closed path
@@ -2052,7 +2052,7 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
         } else {
             sample_cursor = delete_cursor->p.other;
         }
-        
+
         //calculate points for each segment
         int rate = 5;
         float period = 1.0 / rate;
@@ -2065,7 +2065,7 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
                     just_delete = true;
                     break;
                 }
-                
+
                 //sample points on the contiguous selected segment
                 NR::Point *bez;
                 bez = new NR::Point [4];
@@ -2093,7 +2093,7 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
             NR::Point *adata;
             adata = new NR::Point [data.size()];
             copy(data.begin(), data.end(), adata);
-            
+
             NR::Point *bez;
             bez = new NR::Point [4];
             //would decreasing error create a better fitting approximation?
@@ -2106,18 +2106,18 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
             //the resulting nodes behave as expected.
             sp_nodepath_convert_node_type(sample_cursor, Inkscape::NodePath::NODE_CUSP);
             sp_nodepath_convert_node_type(sample_end, Inkscape::NodePath::NODE_CUSP);
-            
+
             //adjust endpoints
             sample_cursor->n.pos = bez[1];
             sample_end->p.pos = bez[2];
         }
-       
+
         //destroy this contiguous selection
         while (delete_cursor && g_list_find(nodes_to_delete, delete_cursor)) {
             Inkscape::NodePath::Node *temp = delete_cursor;
             if (delete_cursor->n.other == delete_cursor) {
                 // delete_cursor->n points to itself, which means this is the last node on a closed subpath
-                delete_cursor = NULL; 
+                delete_cursor = NULL;
             } else {
                 delete_cursor = delete_cursor->n.other;
             }
@@ -2182,7 +2182,7 @@ void sp_node_selected_delete(Inkscape::NodePath::Path *nodepath)
         sp_nodepath_get_node_count(nodepath) < 2) {
         SPDocument *document = sp_desktop_document (nodepath->desktop);
         sp_selection_delete();
-        sp_document_done (document, SP_VERB_CONTEXT_NODE, 
+        sp_document_done (document, SP_VERB_CONTEXT_NODE,
                           _("Delete nodes"));
         return;
     }
@@ -2810,7 +2810,7 @@ sp_nodepath_remember_origins(Inkscape::NodePath::Path *nodepath)
            n->n.origin = n->n.pos;
         }
     }
-} 
+}
 
 /**
 \brief  Saves selected nodes in a nodepath into a list containing integer positions of all selected nodes
@@ -2901,7 +2901,7 @@ static void sp_node_adjust_handle(Inkscape::NodePath::Node *node, gint which_adj
         len = NR::L2(me->pos - node->pos);
         delta = node->pos - othernode->pos;
         linelen = NR::L2(delta);
-        if (linelen < 1e-18) 
+        if (linelen < 1e-18)
             return;
         me->pos = node->pos + (len / linelen)*delta;
         return;
@@ -2971,7 +2971,7 @@ static void sp_node_adjust_handles(Inkscape::NodePath::Node *node)
 /**
  * Node event callback.
  */
-static gboolean node_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::Node *n)
+static gboolean node_event(SPKnot */*knot*/, GdkEvent *event, Inkscape::NodePath::Node *n)
 {
     gboolean ret = FALSE;
     switch (event->type) {
@@ -3088,7 +3088,7 @@ gboolean node_key(GdkEvent *event)
 /**
  * Mouseclick on node callback.
  */
-static void node_clicked(SPKnot *knot, guint state, gpointer data)
+static void node_clicked(SPKnot */*knot*/, guint state, gpointer data)
 {
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
@@ -3120,7 +3120,7 @@ static void node_clicked(SPKnot *knot, guint state, gpointer data)
 /**
  * Mouse grabbed node callback.
  */
-static void node_grabbed(SPKnot *knot, guint state, gpointer data)
+static void node_grabbed(SPKnot */*knot*/, guint state, gpointer data)
 {
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
@@ -3137,7 +3137,7 @@ static void node_grabbed(SPKnot *knot, guint state, gpointer data)
 /**
  * Mouse ungrabbed node callback.
  */
-static void node_ungrabbed(SPKnot *knot, guint state, gpointer data)
+static void node_ungrabbed(SPKnot */*knot*/, guint /*state*/, gpointer data)
 {
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
@@ -3182,7 +3182,7 @@ static double point_line_distance(NR::Point *p, double a)
  * \todo fixme: This goes to "moved" event? (lauris)
  */
 static gboolean
-node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
+node_request(SPKnot */*knot*/, NR::Point *p, guint state, gpointer data)
 {
     double yn, xn, yp, xp;
     double an, ap, na, pa;
@@ -3435,7 +3435,7 @@ static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data)
 /**
  * Node handle "request" signal callback.
  */
-static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
+static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/, gpointer data)
 {
     Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 

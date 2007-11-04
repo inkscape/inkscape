@@ -104,7 +104,7 @@ sp_flowdiv_class_init (SPFlowdivClass *klass)
 }
 
 static void
-sp_flowdiv_init (SPFlowdiv *group)
+sp_flowdiv_init (SPFlowdiv */*group*/)
 {
 }
 
@@ -282,7 +282,7 @@ sp_flowtspan_class_init (SPFlowtspanClass *klass)
 }
 
 static void
-sp_flowtspan_init (SPFlowtspan *group)
+sp_flowtspan_init (SPFlowtspan */*group*/)
 {
 }
 
@@ -455,7 +455,7 @@ sp_flowpara_class_init (SPFlowparaClass *klass)
 }
 
 static void
-sp_flowpara_init (SPFlowpara *group)
+sp_flowpara_init (SPFlowpara */*group*/)
 {
 }
 static void
@@ -624,7 +624,7 @@ sp_flowline_class_init (SPFlowlineClass *klass)
 }
 
 static void
-sp_flowline_init (SPFlowline *group)
+sp_flowline_init (SPFlowline */*group*/)
 {
 }
 static void
@@ -701,7 +701,7 @@ sp_flowregionbreak_class_init (SPFlowregionbreakClass *klass)
 }
 
 static void
-sp_flowregionbreak_init (SPFlowregionbreak *group)
+sp_flowregionbreak_init (SPFlowregionbreak */*group*/)
 {
 }
 static void

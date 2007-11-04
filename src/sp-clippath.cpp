@@ -164,9 +164,9 @@ sp_clippath_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::
     if (SP_IS_ITEM(ochild)) {
         SPClipPath *cp = SP_CLIPPATH(object);
         for (SPClipPathView *v = cp->display; v != NULL; v = v->next) {
-            NRArenaItem *ac = sp_item_invoke_show(SP_ITEM(ochild), 
-                                                  NR_ARENA_ITEM_ARENA(v->arenaitem), 
-                                                  v->key, 
+            NRArenaItem *ac = sp_item_invoke_show(SP_ITEM(ochild),
+                                                  NR_ARENA_ITEM_ARENA(v->arenaitem),
+                                                  v->key,
                                                   SP_ITEM_REFERENCE_FLAGS);
             if (ac) {
                 nr_arena_item_add_child(v->arenaitem, ac, NULL);
@@ -328,14 +328,14 @@ sp_clippath_set_bbox(SPClipPath *cp, unsigned int key, NRRect *bbox)
 }
 
 void
-sp_clippath_get_bbox(SPClipPath *cp, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
+sp_clippath_get_bbox(SPClipPath *cp, NRRect *bbox, NR::Matrix const &transform, unsigned const /*flags*/)
 {
-    SPObject *i; 
+    SPObject *i;
     for (i = sp_object_first_child(SP_OBJECT(cp)); i && !SP_IS_ITEM(i); i = SP_OBJECT_NEXT(i));
     if (!i) return;
 
     sp_item_invoke_bbox_full(SP_ITEM(i), bbox, NR::Matrix(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
-    SPObject *i_start = i; 
+    SPObject *i_start = i;
 
     while (i != NULL) {
         if (i != i_start) {
@@ -391,22 +391,22 @@ sp_clippath_create (GSList *reprs, SPDocument *document, NR::Matrix const* apply
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:clipPath");
     repr->setAttribute("clipPathUnits", "userSpaceOnUse");
-    
+
     defsrepr->appendChild(repr);
     const gchar *id = repr->attribute("id");
     SPObject *clip_path_object = document->getObjectById(id);
-    
+
     for (GSList *it = reprs; it != NULL; it = it->next) {
         Inkscape::XML::Node *node = (Inkscape::XML::Node *)(it->data);
         SPItem *item = SP_ITEM(clip_path_object->appendChildRepr(node));
-        
+
         if (NULL != applyTransform) {
             NR::Matrix transform (item->transform);
             transform *= (*applyTransform);
             sp_item_write_transform(item, SP_OBJECT_REPR(item), transform);
         }
     }
-    
+
     Inkscape::GC::release(repr);
     return id;
 }

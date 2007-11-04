@@ -64,7 +64,7 @@ static void sp_defs_class_init(SPDefsClass *dc)
     sp_object_class->write = sp_defs_write;
 }
 
-static void sp_defs_init(SPDefs *defs)
+static void sp_defs_init(SPDefs */*defs*/)
 {
 
 }

@@ -105,7 +105,7 @@ void sp_selection_copy_one (Inkscape::XML::Node *repr, NR::Matrix full_t, GSList
     sp_repr_css_attr_unref(css);
 
     // write the complete accumulated transform passed to us
-    // (we're dealing with unattached repr, so we write to its attr 
+    // (we're dealing with unattached repr, so we write to its attr
     // instead of using sp_item_set_transform)
     gchar *affinestr=sp_svg_transform_write(full_t);
     copy->setAttribute("transform", affinestr);
@@ -250,7 +250,7 @@ void sp_selection_delete()
      */
     tools_switch ( desktop, tools_active ( desktop ) );
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_DELETE, 
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_DELETE,
                      _("Delete"));
 }
 
@@ -290,7 +290,7 @@ void sp_selection_duplicate()
         Inkscape::GC::release(copy);
     }
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_DUPLICATE, 
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_DUPLICATE,
                      _("Duplicate"));
 
     selection->setReprList(newsel);
@@ -512,7 +512,7 @@ void sp_selection_group()
     // Move to the position of the topmost, reduced by the number of items deleted from topmost_parent
     group->setPosition(topmost + 1);
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_GROUP, 
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_GROUP,
                      _("Group"));
 
     selection->set(group);
@@ -574,7 +574,7 @@ void sp_selection_ungroup()
 
     g_slist_free(items);
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_UNGROUP, 
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_UNGROUP,
                      _("Ungroup"));
 }
 
@@ -716,7 +716,7 @@ void sp_selection_raise_to_top()
 
     g_slist_free(rl);
 
-    sp_document_done(document, SP_VERB_SELECTION_TO_FRONT, 
+    sp_document_done(document, SP_VERB_SELECTION_TO_FRONT,
                      _("Raise to top"));
 }
 
@@ -780,7 +780,7 @@ sp_selection_lower()
         g_slist_free(rev);
     }
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_LOWER, 
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_LOWER,
                      _("Lower"));
 }
 
@@ -828,7 +828,7 @@ void sp_selection_lower_to_bottom()
 
     g_slist_free(rl);
 
-    sp_document_done(document, SP_VERB_SELECTION_TO_BACK, 
+    sp_document_done(document, SP_VERB_SELECTION_TO_BACK,
                      _("Lower to bottom"));
 }
 
@@ -1168,7 +1168,7 @@ void sp_selection_paste(bool in_place)
         sp_selection_move_relative(selection, m);
     }
 
-    sp_document_done(document, SP_VERB_EDIT_PASTE, 
+    sp_document_done(document, SP_VERB_EDIT_PASTE,
                      _("Paste"));
 }
 
@@ -1356,7 +1356,7 @@ void sp_selection_to_next_layer ()
         g_slist_free (copied);
         if (temp_clip) g_slist_free (temp_clip);
         if (next) dt->setCurrentLayer(next);
-        sp_document_done(sp_desktop_document (dt), SP_VERB_LAYER_MOVE_TO_NEXT, 
+        sp_document_done(sp_desktop_document (dt), SP_VERB_LAYER_MOVE_TO_NEXT,
                          _("Raise to next layer"));
     } else {
         no_more = true;
@@ -1418,7 +1418,7 @@ bool
 selection_contains_original (SPItem *item, Inkscape::Selection *selection)
 {
     bool contains_original = false;
-    
+
     bool is_use = SP_IS_USE(item);
     SPItem *item_use = item;
     SPItem *item_use_first = item;
@@ -1430,13 +1430,13 @@ selection_contains_original (SPItem *item, Inkscape::Selection *selection)
             break;
         is_use = SP_IS_USE(item_use);
     }
-    
+
     // If it's a tref, check whether the object containing the character
     // data is part of the selection
     if (!contains_original && SP_IS_TREF(item)) {
         contains_original = selection->includes(SP_TREF(item)->getObjectReferredTo());
     }
-       
+
     return contains_original;
 }
 
@@ -1448,7 +1448,7 @@ selection_contains_both_clone_and_original (Inkscape::Selection *selection)
     for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = SP_ITEM(l->data);
         clone_with_original |= selection_contains_original(item, selection);
-        if (clone_with_original) 
+        if (clone_with_original)
             break;
     }
     return clone_with_original;
@@ -1486,21 +1486,21 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
         bool transform_flowtext_with_frame = (SP_IS_FLOWTEXT(item) && selection->includes( SP_FLOWTEXT(item)->get_frame (NULL))); // (only the first frame is checked so far)
         // ...both an offset and its source?
         bool transform_offset_with_source = (SP_IS_OFFSET(item) && SP_OFFSET (item)->sourceHref) && selection->includes( sp_offset_get_source (SP_OFFSET(item)) );
-       
+
         // If we're moving a connector, we want to detach it
         // from shapes that aren't part of the selection, but
         // leave it attached if they are
         if (cc_item_is_connector(item)) {
             SPItem *attItem[2];
             SP_PATH(item)->connEndPair.getAttachedItems(attItem);
-            
+
             for (int n = 0; n < 2; ++n) {
                 if (!selection->includes(attItem[n])) {
                     sp_conn_end_detach(item, n);
                 }
             }
         }
-        
+
         // "clones are unmoved when original is moved" preference
         int compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
         bool prefs_unmoved = (compensation == SP_CLONE_COMPENSATION_UNMOVED);
@@ -1594,7 +1594,7 @@ void sp_selection_remove_transform()
         l = l->next;
     }
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_FLATTEN, 
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_FLATTEN,
                      _("Remove transform"));
 }
 
@@ -1703,7 +1703,7 @@ void sp_selection_rotate_90_cw()
         sp_item_rotate_rel(item, rot_neg_90);
     }
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_ROTATE_90_CCW, 
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_ROTATE_90_CCW,
                      _("Rotate 90&#176; CW"));
 }
 
@@ -1751,8 +1751,8 @@ sp_selection_rotate(Inkscape::Selection *selection, gdouble const angle_degrees)
     sp_document_maybe_done(sp_desktop_document(selection->desktop()),
                            ( ( angle_degrees > 0 )
                              ? "selector:rotate:ccw"
-                             : "selector:rotate:cw" ), 
-                           SP_VERB_CONTEXT_SELECT, 
+                             : "selector:rotate:cw" ),
+                           SP_VERB_CONTEXT_SELECT,
                            _("Rotate"));
 }
 
@@ -1784,7 +1784,7 @@ sp_selection_rotate_screen(Inkscape::Selection *selection, gdouble angle)
                            ( (angle > 0)
                              ? "selector:rotate:ccw"
                              : "selector:rotate:cw" ),
-                           SP_VERB_CONTEXT_SELECT, 
+                           SP_VERB_CONTEXT_SELECT,
                            _("Rotate by pixels"));
 }
 
@@ -1839,7 +1839,7 @@ sp_selection_scale_times(Inkscape::Selection *selection, gdouble times)
 
     NR::Point const center(sel_bbox->midpoint());
     sp_selection_scale_relative(selection, center, NR::scale(times, times));
-    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_CONTEXT_SELECT, 
+    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_CONTEXT_SELECT,
                      _("Scale by whole factor"));
 }
 
@@ -1855,13 +1855,13 @@ sp_selection_move(gdouble dx, gdouble dy)
     sp_selection_move_relative(selection, dx, dy);
 
     if (dx == 0) {
-        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:vertical", SP_VERB_CONTEXT_SELECT, 
+        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:vertical", SP_VERB_CONTEXT_SELECT,
                                _("Move vertically"));
     } else if (dy == 0) {
-        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:horizontal", SP_VERB_CONTEXT_SELECT, 
+        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:horizontal", SP_VERB_CONTEXT_SELECT,
                                _("Move horizontally"));
     } else {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SELECT, 
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SELECT,
                          _("Move"));
     }
 }
@@ -1883,13 +1883,13 @@ sp_selection_move_screen(gdouble dx, gdouble dy)
     sp_selection_move_relative(selection, zdx, zdy);
 
     if (dx == 0) {
-        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:vertical", SP_VERB_CONTEXT_SELECT, 
+        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:vertical", SP_VERB_CONTEXT_SELECT,
                                _("Move vertically by pixels"));
     } else if (dy == 0) {
-        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:horizontal", SP_VERB_CONTEXT_SELECT, 
+        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:horizontal", SP_VERB_CONTEXT_SELECT,
                                _("Move horizontally by pixels"));
     } else {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SELECT, 
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SELECT,
                          _("Move"));
     }
 }
@@ -1909,7 +1909,7 @@ struct Forward {
 
     static Iterator children(SPObject *o) { return sp_object_first_child(o); }
     static Iterator siblings_after(SPObject *o) { return SP_OBJECT_NEXT(o); }
-    static void dispose(Iterator i) {}
+    static void dispose(Iterator /*i*/) {}
 
     static SPObject *object(Iterator i) { return i; }
     static Iterator next(Iterator i) { return SP_OBJECT_NEXT(i); }
@@ -2142,14 +2142,14 @@ sp_selection_clone()
     }
 
     GSList *reprs = g_slist_copy((GSList *) selection->reprList());
-  
+
     selection->clear();
-  
+
     // sorting items from different parents sorts each parent's subset without possibly mixing them, just what we need
     reprs = g_slist_sort(reprs, (GCompareFunc) sp_repr_compare_position);
 
     GSList *newsel = NULL;
- 
+
     while (reprs) {
         Inkscape::XML::Node *sel_repr = (Inkscape::XML::Node *) reprs->data;
         Inkscape::XML::Node *parent = sp_repr_parent(sel_repr);
@@ -2161,7 +2161,7 @@ sp_selection_clone()
 
         sp_repr_set_attr(clone, "inkscape:transform-center-x", sel_repr->attribute("inkscape:transform-center-x"));
         sp_repr_set_attr(clone, "inkscape:transform-center-y", sel_repr->attribute("inkscape:transform-center-y"));
-        
+
         // add the new clone to the top of the original's parent
         parent->appendChild(clone);
 
@@ -2169,14 +2169,14 @@ sp_selection_clone()
         reprs = g_slist_remove(reprs, sel_repr);
         Inkscape::GC::release(clone);
     }
-    
+
     // TRANSLATORS: only translate "string" in "context|string".
     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_CLONE, 
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_CLONE,
                      Q_("action|Clone"));
 
     selection->setReprList(newsel);
- 
+
     g_slist_free(newsel);
 }
 
@@ -2205,11 +2205,11 @@ sp_selection_unlink()
 
         if (SP_IS_TEXT(item)) {
             SPObject *tspan = sp_tref_convert_to_tspan(SP_OBJECT(item));
-            
-            if (tspan) {            
+
+            if (tspan) {
                 SP_OBJECT(item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             }
-            
+
             // Set unlink to true, and fall into the next if which
             // will include this text item in the new selection
             unlinked = true;
@@ -2222,12 +2222,12 @@ sp_selection_unlink()
         }
 
         SPItem *unlink;
-        if (SP_IS_USE(item)) { 
+        if (SP_IS_USE(item)) {
             unlink = sp_use_unlink(SP_USE(item));
         } else /*if (SP_IS_TREF(use))*/ {
             unlink = SP_ITEM(sp_tref_convert_to_tspan(SP_OBJECT(item)));
         }
-        
+
         unlinked = true;
         // Add ungrouped items to the new selection.
         new_select = g_slist_prepend(new_select, unlink);
@@ -2340,6 +2340,7 @@ void sp_selection_to_marker(bool apply)
 
     // remember the position of the first item
     gint pos = SP_OBJECT_REPR (items->data)->position();
+    (void)pos; // TODO check why this was remembered
 
     // create a list of duplicates
     GSList *repr_copies = NULL;
@@ -2369,6 +2370,7 @@ void sp_selection_to_marker(bool apply)
                                                                                                 r->max()[NR::Y]))))
                                              * parent_transform.inverse() ),
                                            parent_transform * move);
+    (void)mark_id;
 
     // restore compensation setting
     prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
@@ -2478,7 +2480,7 @@ sp_selection_tile(bool apply)
 
     g_slist_free (items);
 
-    sp_document_done (doc, SP_VERB_EDIT_TILE, 
+    sp_document_done (doc, SP_VERB_EDIT_TILE,
                       _("Objects to pattern"));
 }
 
@@ -2551,14 +2553,14 @@ sp_selection_untile()
     if (!did) {
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No pattern fills</b> in the selection."));
     } else {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_UNTILE, 
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_UNTILE,
                          _("Pattern to objects"));
         selection->setList(new_select);
     }
 }
 
 void
-sp_selection_get_export_hints (Inkscape::Selection *selection, char const **filename, float *xdpi, float *ydpi) 
+sp_selection_get_export_hints (Inkscape::Selection *selection, char const **filename, float *xdpi, float *ydpi)
 {
     if (selection->isEmpty()) {
         return;
@@ -2739,7 +2741,7 @@ sp_selection_create_bitmap_copy ()
     NR::Matrix t;
 
     double shift_x = bbox.x0;
-    double shift_y = bbox.y1; 
+    double shift_y = bbox.y1;
     if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
         shift_x = round (shift_x);
         shift_y = -round (-shift_y); // this gets correct rounding despite coordinate inversion, remove the negations when the inversion is gone
@@ -2815,7 +2817,7 @@ sp_selection_create_bitmap_copy ()
  *       and is applied to current layer
  *  otherwise, topmost object is used as mask for other objects
  * If \a apply_clip_path parameter is true, clipPath is created, otherwise mask
- * 
+ *
  */
 void
 sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
@@ -2826,7 +2828,7 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
 
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
-    
+
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     // check if something is selected
@@ -2839,18 +2841,18 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
         return;
     }
 
-    // FIXME: temporary patch to prevent crash! 
+    // FIXME: temporary patch to prevent crash!
     // Remove this when bboxes are fixed to not blow up on an item clipped/masked with its own clone
     bool clone_with_original = selection_contains_both_clone_and_original (selection);
     if (clone_with_original) {
         return; // in this version, you cannot clip/mask an object with its own clone
     }
     // /END FIXME
-    
+
     sp_document_ensure_up_to_date(doc);
 
     GSList *items = g_slist_copy((GSList *) selection->itemList());
-    
+
     items = g_slist_sort (items, (GCompareFunc) sp_object_compare_position);
 
     // create a list of duplicates
@@ -2859,7 +2861,7 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
     GSList *items_to_delete = NULL;
     bool topmost = prefs_get_int_attribute ("options.maskobject", "topmost", 1);
     bool remove_original = prefs_get_int_attribute ("options.maskobject", "remove", 1);
-    
+
     if (apply_to_layer) {
         // all selected items are used for mask, which is applied to a layer
         apply_to_items = g_slist_prepend (apply_to_items, desktop->currentLayer());
@@ -2883,7 +2885,7 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
             SPObject *item = SP_OBJECT (i->data);
             items_to_delete = g_slist_prepend (items_to_delete, item);
         }
-        
+
         for (i = i->next; i != NULL; i = i->next) {
             apply_to_items = g_slist_prepend (apply_to_items, i->data);
         }
@@ -2901,10 +2903,10 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
             items_to_delete = g_slist_prepend (items_to_delete, item);
         }
     }
-    
+
     g_slist_free (items);
     items = NULL;
-            
+
     gchar const *attributeName = apply_clip_path ? "clip-path" : "mask";
     for (GSList *i = apply_to_items; NULL != i; i = i->next) {
         SPItem *item = reinterpret_cast<SPItem *>(i->data);
@@ -2940,9 +2942,9 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
     }
     g_slist_free (items_to_delete);
 
-    if (apply_clip_path) 
+    if (apply_clip_path)
         sp_document_done (doc, SP_VERB_OBJECT_SET_CLIPPATH, _("Set clipping path"));
-    else 
+    else
         sp_document_done (doc, SP_VERB_OBJECT_SET_MASK, _("Set mask"));
 }
 
@@ -2950,8 +2952,8 @@ void sp_selection_unset_mask(bool apply_clip_path) {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
-    
-    SPDocument *doc = sp_desktop_document(desktop);    
+
+    SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -2960,7 +2962,7 @@ void sp_selection_unset_mask(bool apply_clip_path) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to remove clippath or mask from."));
         return;
     }
-    
+
     bool remove_original = prefs_get_int_attribute ("options.maskobject", "remove", 1);
     sp_document_ensure_up_to_date(doc);
 
@@ -2971,7 +2973,7 @@ void sp_selection_unset_mask(bool apply_clip_path) {
             // remember referenced mask/clippath, so orphaned masks can be moved back to document
             SPItem *item = reinterpret_cast<SPItem *>(i->data);
             Inkscape::URIReference *uri_ref = NULL;
-        
+
             if (apply_clip_path) {
                 uri_ref = item->clip_ref;
             } else {
@@ -3024,9 +3026,9 @@ void sp_selection_unset_mask(bool apply_clip_path) {
         g_slist_free (items_to_move);
     }
 
-    if (apply_clip_path) 
+    if (apply_clip_path)
         sp_document_done (doc, SP_VERB_OBJECT_UNSET_CLIPPATH, _("Release clipping path"));
-    else 
+    else
         sp_document_done (doc, SP_VERB_OBJECT_UNSET_MASK, _("Release mask"));
 }
 
@@ -3071,7 +3073,7 @@ void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
         fit_canvas_to_selection(desktop);
     }
 
-    sp_document_done(doc, SP_VERB_FIT_CANVAS_TO_DRAWING, 
+    sp_document_done(doc, SP_VERB_FIT_CANVAS_TO_DRAWING,
                      _("Fit page to selection"));
 };
 
@@ -3088,7 +3090,7 @@ static void itemtree_map(void (*f)(SPItem *, SPDesktop *), SPObject *root, SPDes
     }
 }
 
-static void unlock(SPItem *item, SPDesktop *desktop) {
+static void unlock(SPItem *item, SPDesktop */*desktop*/) {
     if (item->isLocked()) {
         item->setLocked(FALSE);
     }
@@ -3102,14 +3104,14 @@ static void unhide(SPItem *item, SPDesktop *desktop) {
 
 static void process_all(void (*f)(SPItem *, SPDesktop *), SPDesktop *dt, bool layer_only) {
     if (!dt) return;
-        
+
     SPObject *root;
     if (layer_only) {
         root = dt->currentLayer();
     } else {
         root = dt->currentRoot();
     }
-    
+
     itemtree_map(f, root, dt);
 }
 

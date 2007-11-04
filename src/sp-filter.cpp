@@ -109,7 +109,7 @@ sp_filter_init(SPFilter *filter)
     filter->primitiveUnits_set = FALSE;
 
     filter->_renderer = NULL;
-    
+
     filter->_image_name = map<gchar *, int, ltstr>();
 
     filter->filterRes = NumberOptNumber();
@@ -242,7 +242,7 @@ sp_filter_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         default:
-            // See if any parents need this value. 
+            // See if any parents need this value.
             if (((SPObjectClass *) filter_parent_class)->set) {
                 ((SPObjectClass *) filter_parent_class)->set(object, key, value);
             }
@@ -362,7 +362,7 @@ filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter)
     if ( SP_IS_FILTER(ref)
          && ref != filter )
     {
-        filter->modified_connection = 
+        filter->modified_connection =
             ref->connectModified(sigc::bind(sigc::ptr_fun(&filter_ref_modified), filter));
     }
 
@@ -370,7 +370,7 @@ filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter)
 }
 
 static void
-filter_ref_modified(SPObject *href, guint flags, SPFilter *filter)
+filter_ref_modified(SPObject */*href*/, guint /*flags*/, SPFilter *filter)
 {
     SP_OBJECT(filter)->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }

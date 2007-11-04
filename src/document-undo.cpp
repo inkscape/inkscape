@@ -124,10 +124,10 @@ sp_document_done (SPDocument *doc, const unsigned int event_type, Glib::ustring 
 }
 
 void
-sp_document_reset_key (Inkscape::Application */*inkscape*/, SPDesktop *desktop, GtkObject *base)
+sp_document_reset_key (Inkscape::Application */*inkscape*/, SPDesktop */*desktop*/, GtkObject *base)
 {
-	SPDocument *doc = (SPDocument *) base;
-	doc->actionkey = NULL;
+    SPDocument *doc = (SPDocument *) base;
+    doc->actionkey = NULL;
 }
 
 namespace {
@@ -146,7 +146,7 @@ public:
     CommitEvent(SPDocument *doc, const gchar *key, const unsigned int type)
     : InteractionEvent(share_static_string("commit"))
     {
-        _addProperty(share_static_string("timestamp"), timestamp()); 
+        _addProperty(share_static_string("timestamp"), timestamp());
         gchar *serial = g_strdup_printf("%lu", doc->serial());
         _addProperty(share_static_string("document"), serial);
         g_free(serial);

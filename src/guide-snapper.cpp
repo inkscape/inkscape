@@ -22,7 +22,7 @@ Inkscape::GuideSnapper::GuideSnapper(SPNamedView const *nv, NR::Coord const d) :
 
 }
 
-Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(NR::Point const &p) const
+Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(NR::Point const &/*p*/) const
 {
     LineList s;
 

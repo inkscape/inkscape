@@ -49,7 +49,7 @@ NR::Point
 perspective_line_snap (NR::Point line_pt, Box3D::Axis dir, NR::Point ext_pt, Perspective3D *persp)
 {
     return PerspectiveLine(line_pt, dir, persp).closest_to(ext_pt);
-}  
+}
 
 Perspective3D::Perspective3D (VanishingPoint const &pt_x, VanishingPoint const &pt_y, VanishingPoint const &pt_z, SPDocument *doc)
     : boxes (NULL),
@@ -208,7 +208,7 @@ Perspective3D::rotate (Box3D::Axis const axis, double const angle, bool const al
 {
     Box3D::VanishingPoint *vp = get_vanishing_point (axis);
     if (!vp->is_finite()) {
-        double add_value = angle;
+        //double add_value = angle;
         double a = NR::atan2 (vp->v_dir) * 180/M_PI;
         a += alt_pressed ? 0.5 * ((angle > 0 ) - (angle < 0)) : angle; // the r.h.s. yields +/-0.5 or angle
         a *= M_PI/180;
@@ -332,7 +332,7 @@ Perspective3D::reshape_boxes (Box3D::Axis axes)
                 new_pt = vp->get_pos() + box->ratio_z * (box->corners[0] - vp->get_pos());
                 sp_3dbox_move_corner_in_Z_direction (box, 4, new_pt);
             }
-        }                
+        }
 
         sp_3dbox_set_shape (box, true);
     }
@@ -439,8 +439,8 @@ Perspective3D::print_debugging_info ()
     g_print ("====================================================\n");
 }
 
-} // namespace Box3D 
- 
+} // namespace Box3D
+
 /*
   Local Variables:
   mode:c++

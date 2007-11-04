@@ -77,7 +77,7 @@ sp_conn_end_pair_build(SPObject *object)
 
 
 static void
-avoid_conn_move(NR::Matrix const *mp, SPItem *moved_item)
+avoid_conn_move(NR::Matrix const */*mp*/, SPItem *moved_item)
 {
     // Reroute connector
     SPPath *path = SP_PATH(moved_item);
@@ -141,7 +141,7 @@ SPConnEndPair::getAttachedItems(SPItem *h2attItem[2]) const {
         h2attItem[h] = this->_connEnd[h]->ref.getObject();
 
         // Deal with the case of the attached object being an empty group.
-        // A group containing no items does not have a valid bbox, so 
+        // A group containing no items does not have a valid bbox, so
         // causes problems for the auto-routing code.  Also, since such a
         // group no longer has an onscreen representation and can only be
         // selected through the XML editor, it makes sense just to detach

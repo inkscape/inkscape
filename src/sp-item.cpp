@@ -628,7 +628,7 @@ sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
         NRRect item_bbox;
         sp_item_invoke_bbox(item, &item_bbox, NR::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
         NR::Maybe<NR::Rect> i_bbox = item_bbox;
-        
+
         SPItemView *itemview = item->display;
         do {
             if (itemview->arenaitem)
@@ -681,7 +681,7 @@ sp_item_write(SPObject *const object, Inkscape::XML::Node *repr, guint flags)
 
 NR::Maybe<NR::Rect> SPItem::getBounds(NR::Matrix const &transform,
                                       SPItem::BBoxType type,
-                                      unsigned int dkey) const
+                                      unsigned int /*dkey*/) const
 {
     NRRect r;
     sp_item_invoke_bbox_full(this, &r, transform, type, TRUE);
@@ -800,7 +800,7 @@ void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIt
     if (item_class.snappoints) {
         item_class.snappoints(item, p);
     }
-    
+
     if (includeItemCenter) {
     	*p = item->getCenter();
     }
@@ -825,7 +825,7 @@ sp_item_invoke_print(SPItem *item, SPPrintContext *ctx)
 }
 
 static gchar *
-sp_item_private_description(SPItem *item)
+sp_item_private_description(SPItem */*item*/)
 {
     return g_strdup(_("Object"));
 }
@@ -1127,7 +1127,7 @@ sp_item_adjust_paint_recursive (SPItem *item, NR::Matrix advertized_transform, N
     NR::Matrix paint_delta = t_item * t_ancestors * advertized_transform * t_ancestors.inverse() * t_item.inverse();
 
 // Within text, we do not fork gradients, and so must not recurse to avoid double compensation;
-// also we do not recurse into clones, because a clone's child is the ghost of its original - 
+// also we do not recurse into clones, because a clone's child is the ghost of its original -
 // we must not touch it
     if (!(item && (SP_IS_TEXT(item) || SP_IS_USE(item)))) {
         for (SPObject *o = SP_OBJECT(item)->children; o != NULL; o = o->next) {
@@ -1186,20 +1186,20 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix cons
     } else {
         advertized_transform = sp_item_transform_repr (item).inverse() * transform;
     }
-    
+
     if (compensate) {
-        
+
          // recursively compensate for stroke scaling, depending on user preference
         if (prefs_get_int_attribute("options.transform", "stroke", 1) == 0) {
             double const expansion = 1. / NR::expansion(advertized_transform);
             sp_item_adjust_stroke_width_recursive(item, expansion);
         }
-    
+
         // recursively compensate rx/ry of a rect if requested
         if (prefs_get_int_attribute("options.transform", "rectcorners", 1) == 0) {
             sp_item_adjust_rects_recursive(item, advertized_transform);
         }
-    
+
         // recursively compensate pattern fill if it's not to be transformed
         if (prefs_get_int_attribute("options.transform", "pattern", 1) == 0) {
             sp_item_adjust_paint_recursive (item, advertized_transform.inverse(), NR::identity(), true);
@@ -1212,8 +1212,8 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix cons
             // this converts the gradient/pattern fill/stroke, if any, to userSpaceOnUse; we need to do
             // it here _before_ the new transform is set, so as to use the pre-transform bbox
             sp_item_adjust_paint_recursive (item, NR::identity(), NR::identity(), false);
-        }          
-        
+        }
+
     } // endif(compensate)
 
     gint preserve = prefs_get_int_attribute("options.preservetransform", "value", 0);
@@ -1223,7 +1223,7 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix cons
              !preserve && // user did not chose to preserve all transforms
              !item->clip_ref->getObject() && // the object does not have a clippath
              !item->mask_ref->getObject() && // the object does not have a mask
-         !(!transform.is_translation() && SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->getFilter()) 
+         !(!transform.is_translation() && SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->getFilter())
              // the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
         ) {
         transform_attr = ((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform(item, transform);

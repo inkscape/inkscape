@@ -31,7 +31,7 @@ namespace Dialog {
 
 /* Rendering functions for custom cell renderers */
 
-void 
+void
 CellRendererSPIcon::render_vfunc(const Glib::RefPtr<Gdk::Drawable>& window,
                                  Gtk::Widget& widget,
                                  const Gdk::Rectangle& background_area,
@@ -50,13 +50,13 @@ CellRendererSPIcon::render_vfunc(const Glib::RefPtr<Gdk::Drawable>& window,
 
         if (icon) {
 
-            // check icon type (inkscape, gtk, none) 
-            if ( SP_IS_ICON(icon->gobj()) ) { 
+            // check icon type (inkscape, gtk, none)
+            if ( SP_IS_ICON(icon->gobj()) ) {
                 SPIcon* sp_icon = SP_ICON(icon->gobj());
                 sp_icon_fetch_pixbuf(sp_icon);
                 _property_icon = Glib::wrap(sp_icon->pb, true);
             } else if ( GTK_IS_IMAGE(icon->gobj()) ) {
-                _property_icon = Gtk::Invisible().render_icon(Gtk::StockID(image), 
+                _property_icon = Gtk::Invisible().render_icon(Gtk::StockID(image),
                                                               Gtk::ICON_SIZE_MENU);
             } else {
                 delete icon;
@@ -71,7 +71,7 @@ CellRendererSPIcon::render_vfunc(const Glib::RefPtr<Gdk::Drawable>& window,
         property_pixbuf() = _icon_cache[_property_event_type];
     }
 
-    Gtk::CellRendererPixbuf::render_vfunc(window, widget, background_area, 
+    Gtk::CellRendererPixbuf::render_vfunc(window, widget, background_area,
                                           cell_area, expose_area, flags);
 }
 
@@ -88,7 +88,7 @@ CellRendererInt::render_vfunc(const Glib::RefPtr<Gdk::Drawable>& window,
         std::ostringstream s;
         s << _property_number << std::flush;
         property_text() = s.str();
-        Gtk::CellRendererText::render_vfunc(window, widget, background_area, 
+        Gtk::CellRendererText::render_vfunc(window, widget, background_area,
                                             cell_area, expose_area, flags);
     }
 }
@@ -138,7 +138,7 @@ UndoHistory::UndoHistory(Behavior::BehaviorFactory behavior_factory)
       _event_log (_desktop ? _desktop->event_log : NULL),
       _columns (_event_log ? &_event_log->getColumns() : NULL),
       _event_list_selection (_event_list_view.get_selection())
-{ 
+{
     if( !_document || !_event_log || !_columns ) return;
 
     set_size_request(300, 200);
@@ -209,7 +209,7 @@ UndoHistory::~UndoHistory()
 {
 }
 
-void 
+void
 UndoHistory::_onListSelectionChange()
 {
 
@@ -239,7 +239,7 @@ UndoHistory::_onListSelectionChange()
         } else {  // this should not happen
             _event_list_selection->select(curr_event);
         }
-        
+
     } else {
 
         EventLog::const_iterator last_selected = _event_log->getCurrEvent();
@@ -248,7 +248,7 @@ UndoHistory::_onListSelectionChange()
          * of that parent's branch.
          */
 
-        if ( !selected->children().empty() && 
+        if ( !selected->children().empty() &&
              !_event_list_view.row_expanded(_event_list_store->get_path(selected)) )
         {
             selected = selected->children().end();
@@ -256,13 +256,13 @@ UndoHistory::_onListSelectionChange()
         }
 
         // An event before the current one has been selected. Undo to the selected event.
-        if ( _event_list_store->get_path(selected) < 
-             _event_list_store->get_path(last_selected) ) 
+        if ( _event_list_store->get_path(selected) <
+             _event_list_store->get_path(last_selected) )
         {
             _event_log->blockNotifications();
 
             while ( selected != last_selected ) {
-                
+
                 sp_document_undo(_document);
 
                 if ( last_selected->parent() &&
@@ -279,7 +279,7 @@ UndoHistory::_onListSelectionChange()
                     }
                 }
             }
-            _event_log->blockNotifications(false);        
+            _event_log->blockNotifications(false);
             _event_log->updateUndoVerbs();
 
         } else { // An event after the current one has been selected. Redo to the selected event.
@@ -304,8 +304,8 @@ UndoHistory::_onListSelectionChange()
                     }
                 }
             }
-            _event_log->blockNotifications(false);        
-        
+            _event_log->blockNotifications(false);
+
         }
 
         _event_log->setCurrEvent(selected);
@@ -315,7 +315,7 @@ UndoHistory::_onListSelectionChange()
 }
 
 void
-UndoHistory::_onExpandEvent(const Gtk::TreeModel::iterator &iter, const Gtk::TreeModel::Path &path)
+UndoHistory::_onExpandEvent(const Gtk::TreeModel::iterator &iter, const Gtk::TreeModel::Path &/*path*/)
 {
     if ( iter == _event_list_selection->get_selected() )
     {
@@ -324,7 +324,7 @@ UndoHistory::_onExpandEvent(const Gtk::TreeModel::iterator &iter, const Gtk::Tre
 }
 
 void
-UndoHistory::_onCollapseEvent(const Gtk::TreeModel::iterator &iter, const Gtk::TreeModel::Path &path)
+UndoHistory::_onCollapseEvent(const Gtk::TreeModel::iterator &iter, const Gtk::TreeModel::Path &/*path*/)
 {
     // Collapsing a branch we're currently in is equal to stepping to the last event in that branch
     if ( iter == _event_log->getCurrEvent() )
@@ -349,26 +349,26 @@ UndoHistory::_onCollapseEvent(const Gtk::TreeModel::iterator &iter, const Gtk::T
 
 const CellRendererInt::Filter& UndoHistory::greater_than_1 = UndoHistory::GreaterThan(1);
 
-static void 
+static void
 on_activate_desktop(Inkscape::Application*, SPDesktop* desktop, void*)
 {
     if (!_instance) return;
 
-    _instance->_document_replaced_connection = 
+    _instance->_document_replaced_connection =
         SP_ACTIVE_DESKTOP->connectDocumentReplaced(sigc::ptr_fun(on_document_replaced));
 
     _instance->setDesktop(desktop);
 }
 
-static void 
-on_deactivate_desktop(Inkscape::Application*, SPDesktop* desktop, void*)
+static void
+on_deactivate_desktop(Inkscape::Application*, SPDesktop* /*desktop*/, void*)
 {
     if (!_instance) return;
 
     _instance->_document_replaced_connection.disconnect();
 }
 
-static void 
+static void
 on_document_replaced(SPDesktop* desktop, SPDocument*)
 {
     if (!_instance) return;

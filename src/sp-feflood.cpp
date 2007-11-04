@@ -63,7 +63,7 @@ sp_feFlood_class_init(SPFeFloodClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-    
+
     feFlood_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feFlood_build;
@@ -75,7 +75,7 @@ sp_feFlood_class_init(SPFeFloodClass *klass)
 }
 
 static void
-sp_feFlood_init(SPFeFlood *feFlood)
+sp_feFlood_init(SPFeFlood */*feFlood*/)
 {
 }
 
@@ -169,6 +169,7 @@ static void sp_feFlood_build_renderer(SPFilterPrimitive *primitive, NR::Filter *
     g_assert(filter != NULL);
 
     SPFeFlood *sp_flood = SP_FEFLOOD(primitive);
+    (void)sp_flood;
 
     int primitive_n = filter->add_primitive(NR::NR_FILTER_FLOOD);
     NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);

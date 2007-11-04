@@ -109,7 +109,7 @@ public:
     /**
      *
      */
-    Match(const Match &other)
+    Match(const Match &/*other*/)
         {
         }
 
@@ -727,9 +727,9 @@ public:
     /**
      *
      */
-    virtual MatchString createMatchString(unsigned short test,
-                                         const DOMString &name,
-                                         const DOMString &value)
+    virtual MatchString createMatchString(unsigned short /*test*/,
+                                          const DOMString &/*name*/,
+                                          const DOMString &/*value*/)
         {
         MatchString ret;
         return ret;
@@ -738,9 +738,9 @@ public:
     /**
      *
      */
-    virtual MatchInteger createMatchInteger(unsigned short test,
-                                          const DOMString &name,
-                                          long value)
+    virtual MatchInteger createMatchInteger(unsigned short /*test*/,
+                                            const DOMString &/*name*/,
+                                            long /*value*/)
         {
         MatchInteger ret;
         return ret;
@@ -749,9 +749,9 @@ public:
     /**
      *
      */
-    virtual MatchBoolean createMatchBoolean(unsigned short test,
-                                          const DOMString &name,
-                                          bool value)
+    virtual MatchBoolean createMatchBoolean(unsigned short /*test*/,
+                                            const DOMString &/*name*/,
+                                            bool /*value*/)
         {
         MatchBoolean ret;
         return ret;
@@ -760,10 +760,10 @@ public:
     /**
      *
      */
-    virtual MatchContent createMatchContent(unsigned short test,
-                                          const DOMString &name,
-                                          unsigned long offset,
-                                          const NodePtr nodeArg)
+    virtual MatchContent createMatchContent(unsigned short /*test*/,
+                                            const DOMString &/*name*/,
+                                            unsigned long /*offset*/,
+                                            const NodePtr /*nodeArg*/)
         {
         MatchContent ret;
         return ret;
@@ -772,7 +772,7 @@ public:
     /**
      *
      */
-    virtual MatchSet createMatchSet(unsigned short test)
+    virtual MatchSet createMatchSet(unsigned short /*test*/)
         {
         MatchSet ret;
         return ret;
@@ -781,7 +781,7 @@ public:
     /**
      *
      */
-    virtual StringItem createStringItem(const DOMString &name)
+    virtual StringItem createStringItem(const DOMString &/*name*/)
         {
         StringItem ret;
         return ret;
@@ -790,7 +790,7 @@ public:
     /**
      *
      */
-    virtual IntegerItem createIntegerItem(const DOMString &name)
+    virtual IntegerItem createIntegerItem(const DOMString &/*name*/)
         {
         IntegerItem ret;
         return ret;
@@ -799,7 +799,7 @@ public:
     /**
      *
      */
-    virtual BooleanItem createBooleanItem(const DOMString &name)
+    virtual BooleanItem createBooleanItem(const DOMString &/*name*/)
         {
         BooleanItem ret;
         return ret;
@@ -808,7 +808,7 @@ public:
     /**
      *
      */
-    virtual ContentItem createContentItem(const DOMString &name)
+    virtual ContentItem createContentItem(const DOMString &/*name*/)
         {
         ContentItem ret;
         return ret;
@@ -902,10 +902,10 @@ public:
     /**
      *
      */
-    virtual void select(const NodePtr boundary,
-                        unsigned long offset,
-                        bool extend,
-                        bool add)
+    virtual void select(const NodePtr /*boundary*/,
+                        unsigned long /*offset*/,
+                        bool /*extend*/,
+                        bool /*add*/)
         {
         }
 
@@ -921,7 +921,7 @@ public:
     /**
      *
      */
-    virtual bool matchFirstSegment(Segment &todo) //inout parm, not const
+    virtual bool matchFirstSegment(Segment &/*todo*/) //inout parm, not const
                                         throw(dom::DOMException)
         {
         return false;
@@ -930,7 +930,7 @@ public:
     /**
      *
      */
-    virtual long getIntegerProperty(const DOMString &name)
+    virtual long getIntegerProperty(const DOMString &/*name*/)
                                         throw(dom::DOMException)
         {
         long val=0;
@@ -940,7 +940,7 @@ public:
     /**
      *
      */
-    virtual DOMString getStringProperty(const DOMString &name)
+    virtual DOMString getStringProperty(const DOMString &/*name*/)
                                         throw(dom::DOMException)
         {
         DOMString val;
@@ -950,7 +950,7 @@ public:
     /**
      *
      */
-    virtual bool getBooleanProperty(bool name)
+    virtual bool getBooleanProperty(bool /*name*/)
                                         throw(dom::DOMException)
         {
         bool val=false;
@@ -960,7 +960,7 @@ public:
     /**
      *
      */
-    virtual NodePtr getContentPropertyNode(const DOMString &name)
+    virtual NodePtr getContentPropertyNode(const DOMString &/*name*/)
                                         throw(dom::DOMException)
         {
         NodePtr val = NULL;
@@ -970,7 +970,7 @@ public:
     /**
      *
      */
-    virtual unsigned long getContentPropertyOffset(const DOMString &name)
+    virtual unsigned long getContentPropertyOffset(const DOMString &/*name*/)
                                         throw(dom::DOMException)
         {
         long val=0;
@@ -989,7 +989,7 @@ public:
     /**
      *
      */
-    View(const View &other)
+    View(const View &/*other*/)
         {
         }
 
@@ -1024,7 +1024,7 @@ public:
     /**
      *
      */
-    VisualResource(const VisualResource &other)
+    VisualResource(const VisualResource &/*other*/)
         {
         }
 
@@ -1890,17 +1890,17 @@ public:
     /**
      *
      */
-    virtual void select(const NodePtr boundary,
-                        unsigned long offset,
-                        bool extend,
-                        bool add)
+    virtual void select(const NodePtr /*boundary*/,
+                        unsigned long /*offset*/,
+                        bool /*extend*/,
+                        bool /*add*/)
         {
         }
 
     /**
      *
      */
-    virtual void matchSegment(const VisualResource *segment)
+    virtual void matchSegment(const VisualResource */*segment*/)
         {
         }
 

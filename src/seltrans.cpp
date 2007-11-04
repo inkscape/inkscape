@@ -96,7 +96,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
 {
     gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
     _snap_bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
-    
+
     g_return_if_fail(desktop != NULL);
 
     for (int i = 0; i < 8; i++) {
@@ -258,12 +258,12 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     _current.set_identity();
 
     _point = p;
-    
+
     // The selector tool should snap the bbox and the special snappoints, but not path nodes
     // (The special points are the handles, center, rotation axis, font baseline, ends of spiral, etc.)
 
     // First, determine the bounding box for snapping ...
-    _bbox = selection->bounds(_snap_bbox_type);    
+    _bbox = selection->bounds(_snap_bbox_type);
     _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX); // Used for correctly scaling the strokewidth
 
 
@@ -273,14 +273,14 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     std::vector<NR::Point> snap_points_hull = selection->getSnapPointsConvexHull(); // Includes path nodes
     if (_snap_points.size() > 100) {
         /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
-        An average user would rarely ever try to snap such a large number of nodes anyway, because 
+        An average user would rarely ever try to snap such a large number of nodes anyway, because
         (s)he could hardly discern which node would be snapping */
         _snap_points = snap_points_hull;
         // Unfortunately, by now we will have lost the font-baseline snappoints :-(
     }
-    
+
     // Find bbox hulling all special points, which excludes stroke width. Here we need to include the
-    // path nodes, for example because a rectangle which has been converted to a path doesn't have 
+    // path nodes, for example because a rectangle which has been converted to a path doesn't have
     // any other special points
     NR::Rect snap_points_bbox;
     if ( snap_points_hull.empty() == false ) {
@@ -292,7 +292,7 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
             i++;
         }
     }
-    
+
     _bbox_points.clear();
     if (_bbox) {
         // ... and add the bbox corners to _bbox_points
@@ -303,28 +303,28 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
         //  - one for snapping the boundingbox, which can be either visual or geometric
         //  - one for snapping the special points
         // The "opposite" in case of a geometric boundingbox always coincides with the "opposite" for the special points
-        // These distinct "opposites" are needed in the snapmanager to avoid bugs such as #1540195 (in which 
+        // These distinct "opposites" are needed in the snapmanager to avoid bugs such as #1540195 (in which
         // a box is caught between to guides)
         _opposite_for_bboxpoints = _bbox->min() + _bbox->dimensions() * NR::scale(1-x, 1-y);
         _opposite_for_specpoints = (snap_points_bbox.min() + (snap_points_bbox.dimensions() * NR::scale(1-x, 1-y) ) );
         // Only a single "opposite" can be used in calculating transformations.
         _opposite = _opposite_for_bboxpoints;
     }
-    
+
     // The lines below are usefull for debugging any snapping issues, as they'll spit out all points that are considered for snapping
-    
+
     /*std::cout << "Number of snap points:  " << _snap_points.size() << std::endl;
     for (std::vector<NR::Point>::const_iterator i = _snap_points.begin(); i != _snap_points.end(); i++)
     {
         std::cout << "    " << *i << std::endl;
     }
-    
+
     std::cout << "Number of bbox points:  " << _bbox_points.size() << std::endl;
     for (std::vector<NR::Point>::const_iterator i = _bbox_points.begin(); i != _bbox_points.end(); i++)
     {
         std::cout << "    " << *i << std::endl;
     }*/
-    
+
     if ((x != -1) && (y != -1)) {
         sp_canvas_item_show(_norm);
         sp_canvas_item_show(_grip);
@@ -601,7 +601,7 @@ void Inkscape::SelTrans::_updateVolatileState()
     //Update the bboxes
     _bbox = selection->bounds(_snap_bbox_type);
     _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX);
-    
+
     if (!_bbox) {
         _empty = true;
         return;
@@ -667,7 +667,7 @@ static void sp_sel_trans_handle_grab(SPKnot *knot, guint state, gpointer data)
         );
 }
 
-static void sp_sel_trans_handle_ungrab(SPKnot *knot, guint state, gpointer data)
+static void sp_sel_trans_handle_ungrab(SPKnot *knot, guint /*state*/, gpointer /*data*/)
 {
     SP_SELECT_CONTEXT(knot->desktop->event_context)->_seltrans->ungrab();
 }
@@ -693,7 +693,7 @@ static void sp_sel_trans_handle_click(SPKnot *knot, guint state, gpointer data)
         );
 }
 
-void Inkscape::SelTrans::handleClick(SPKnot *knot, guint state, SPSelTransHandle const &handle)
+void Inkscape::SelTrans::handleClick(SPKnot */*knot*/, guint state, SPSelTransHandle const &handle)
 {
     switch (handle.anchor) {
         case GTK_ANCHOR_CENTER:
@@ -706,7 +706,7 @@ void Inkscape::SelTrans::handleClick(SPKnot *knot, guint state, SPSelTransHandle
                     _center_is_set = false;  // center has changed
                     _updateHandles();
                 }
-                sp_document_done (sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT, 
+                sp_document_done (sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                                         _("Reset center"));
             }
             break;
@@ -715,7 +715,7 @@ void Inkscape::SelTrans::handleClick(SPKnot *knot, guint state, SPSelTransHandle
     }
 }
 
-void Inkscape::SelTrans::handleGrab(SPKnot *knot, guint state, SPSelTransHandle const &handle)
+void Inkscape::SelTrans::handleGrab(SPKnot *knot, guint /*state*/, SPSelTransHandle const &handle)
 {
     switch (handle.anchor) {
         case GTK_ANCHOR_CENTER:
@@ -788,14 +788,14 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
 }
 
 
-void Inkscape::SelTrans::_selChanged(Inkscape::Selection *selection)
+void Inkscape::SelTrans::_selChanged(Inkscape::Selection */*selection*/)
 {
     if (!_grabbed) {
         // reread in case it changed on the fly:
         gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
         _snap_bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
         //SPItem::APPROXIMATE_BBOX will be replaced by SPItem::VISUAL_BBOX, as soon as the latter is implemented properly
-    
+
         _updateVolatileState();
         _current.set_identity();
         _center_is_set = false; // center(s) may have changed
@@ -803,7 +803,7 @@ void Inkscape::SelTrans::_selChanged(Inkscape::Selection *selection)
     }
 }
 
-void Inkscape::SelTrans::_selModified(Inkscape::Selection *selection, guint flags)
+void Inkscape::SelTrans::_selModified(Inkscape::Selection */*selection*/, guint /*flags*/)
 {
     if (!_grabbed) {
         _updateVolatileState();
@@ -880,9 +880,9 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
 
     if (state & GDK_MOD1_MASK) { // scale by an integer multiplier/divider
         for ( unsigned int i = 0 ; i < 2 ; i++ ) {
-            if (fabs(s[i]) > 1) 
+            if (fabs(s[i]) > 1)
                 s[i] = round(s[i]);
-            else 
+            else
                 s[i] = 1/round(1/(MIN(s[i], 10)));
         }
     }
@@ -906,7 +906,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
             } else {
                 s[NR::Y] = fabs(s[NR::X]) * sign(s[NR::Y]);
             }
-            
+
         // Snap along a suitable constraint vector from the origin.
 
         // The inclination of the constraint vector is calculated from the aspect ratio
@@ -946,7 +946,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
 
     } else {
         /* Scale aspect ratio is unlocked */
-        
+
         std::pair<NR::scale, bool> bb = m.freeSnapScale(Snapper::SNAPPOINT_BBOX,
                                                         _bbox_points,
                                                         it,
@@ -1016,9 +1016,9 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
     }
 
     if (state & GDK_MOD1_MASK) { // scale by an integer multiplier/divider
-        if (fabs(s[axis]) > 1) 
+        if (fabs(s[axis]) > 1)
             s[axis] = round(s[axis]);
-        else 
+        else
             s[axis] = 1/round(1/(MIN(s[axis], 10)));
     }
 
@@ -1061,7 +1061,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
         s[axis] = fabs(ratio) * sign(s[axis]);
         s[perp] = fabs(s[axis]);
     } else {
-        
+
         std::pair<NR::Coord, bool> const bb = m.freeSnapStretch(
             Snapper::SNAPPOINT_BBOX,
             _bbox_points,
@@ -1165,7 +1165,7 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
                                                        skew[dim_a],
                                                        _origin_for_specpoints,
                                                        dim_b);
-        
+
         if (bb.second || sn.second) {
             /* We snapped something, so change the skew to reflect it */
             NR::Coord const bd = bb.second ? bb.first : NR_HUGE;
@@ -1370,7 +1370,7 @@ void Inkscape::SelTrans::stretch(SPSelTransHandle const &handle, NR::Point &pt, 
     transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
 }
 
-void Inkscape::SelTrans::scale(NR::Point &pt, guint state)
+void Inkscape::SelTrans::scale(NR::Point &pt, guint /*state*/)
 {
     if (!_bbox) {
         return;
@@ -1385,10 +1385,10 @@ void Inkscape::SelTrans::scale(NR::Point &pt, guint state)
         if (fabs(s[i]) < 1e-9)
             s[i] = 1e-9;
     }
-    
+
     NR::Point new_bbox_min = _approximate_bbox->min() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
     NR::Point new_bbox_max = _approximate_bbox->max() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
-    
+
     int transform_stroke = false;
     gdouble strokewidth = 0;
 
@@ -1396,14 +1396,14 @@ void Inkscape::SelTrans::scale(NR::Point &pt, guint state)
         transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
         strokewidth = _strokewidth;
     }
-        
+
     NR::Matrix scaler = get_scale_transform_with_stroke (*_approximate_bbox, strokewidth, transform_stroke,
                     new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
-    
+
     transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
 }
 
-void Inkscape::SelTrans::skew(SPSelTransHandle const &handle, NR::Point &pt, guint state)
+void Inkscape::SelTrans::skew(SPSelTransHandle const &handle, NR::Point &pt, guint /*state*/)
 {
     NR::Point const offset = _point - _origin;
 
@@ -1437,7 +1437,7 @@ void Inkscape::SelTrans::skew(SPSelTransHandle const &handle, NR::Point &pt, gui
     transform(skew, _origin);
 }
 
-void Inkscape::SelTrans::rotate(NR::Point &pt, guint state)
+void Inkscape::SelTrans::rotate(NR::Point &pt, guint /*state*/)
 {
     NR::Point const offset = _point - _origin;
 
@@ -1458,7 +1458,7 @@ void Inkscape::SelTrans::rotate(NR::Point &pt, guint state)
     transform(rotate, _origin);
 }
 
-void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &, NR::Point &pt, guint state)
+void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &, NR::Point &pt, guint /*state*/)
 {
     seltrans->setCenter(pt);
 }
@@ -1511,7 +1511,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
                                                          it,
                                                          Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
                                                          dxy));
-                            
+
                 s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::SNAPPOINT_NODE,
                                                          _snap_points,
                                                          it,
@@ -1525,13 +1525,13 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
             /* GTimeVal starttime;
             GTimeVal endtime;
     		g_get_current_time(&starttime); */
-            
+
             /* Snap to things with no constraint */
 			s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX,
                                               _bbox_points, it, dxy));
             s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_NODE,
                                               _snap_points, it, dxy));
-          	
+
           	/*g_get_current_time(&endtime);
           	double elapsed = ((((double)endtime.tv_sec - starttime.tv_sec) * G_USEC_PER_SEC + (endtime.tv_usec - starttime.tv_usec))) / 1000.0;
           	std::cout << "Time spent snapping: " << elapsed << std::endl; */

@@ -52,8 +52,8 @@ public:
     virtual Gtk::Widget * param_getWidget() = 0;
     virtual Glib::ustring * param_getTooltip() { return &param_tooltip; };
 
-    virtual void param_editOncanvas(SPItem * item, SPDesktop * dt) { return; };
-    virtual void param_setup_notepath(Inkscape::NodePath::Path *np) { return; };
+    virtual void param_editOncanvas(SPItem * /*item*/, SPDesktop * /*dt*/) {};
+    virtual void param_setup_notepath(Inkscape::NodePath::Path */*np*/) {};
 
     Glib::ustring param_key;
     Inkscape::UI::Widget::Registry * param_wr;
@@ -76,7 +76,7 @@ class ScalarParam : public Parameter {
 public:
     ScalarParam(  const Glib::ustring& label,
                 const Glib::ustring& tip,
-                const Glib::ustring& key, 
+                const Glib::ustring& key,
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
                 gdouble default_value = 1.0);
@@ -118,3 +118,14 @@ private:
 } //namespace Inkscape
 
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

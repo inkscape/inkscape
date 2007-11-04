@@ -19,7 +19,7 @@ enum
   descr_interm_bezier = 6,  // control point of the bezier spline
   descr_forced = 7,
 
-  descr_type_mask = 15      // the command no will be stored in a "flags" field, potentially with other info, so we need 
+  descr_type_mask = 15      // the command no will be stored in a "flags" field, potentially with other info, so we need
                             // a mask to AND the field and extract the command
 };
 
@@ -34,14 +34,14 @@ struct PathDescr
     flags &= ~descr_type_mask;
     flags |= t;
   }
-  
-  virtual void dumpSVG(Inkscape::SVGOStringStream &s, NR::Point const &last) const {}
-  virtual PathDescr *clone() const = 0;
-  virtual void transform(NR::Matrix const &t) {}
-  virtual void dump(std::ostream &s) const {}
-  
+
+    virtual void dumpSVG(Inkscape::SVGOStringStream &/*s*/, NR::Point const &/*last*/) const {}
+    virtual PathDescr *clone() const = 0;
+    virtual void transform(NR::Matrix const &/*t*/) {}
+    virtual void dump(std::ostream &/*s*/) const {}
+
   int    flags;         // most notably contains the path command no
-  int    associated;		// index in the polyline of the point that ends the path portion of this command
+  int    associated;    // index in the polyline of the point that ends the path portion of this command
   double tSt;
   double tEn;
 };
@@ -50,7 +50,7 @@ struct PathDescrMoveTo : public PathDescr
 {
   PathDescrMoveTo(NR::Point const &pp)
       : PathDescr(descr_moveto), p(pp) {}
-  
+
   void dumpSVG(Inkscape::SVGOStringStream &s, NR::Point const &last) const;
   PathDescr *clone() const;
   void transform(NR::Matrix const &t);
@@ -63,12 +63,12 @@ struct PathDescrLineTo : public PathDescr
 {
   PathDescrLineTo(NR::Point const &pp)
     : PathDescr(descr_lineto), p(pp) {}
-  
+
   void dumpSVG(Inkscape::SVGOStringStream &s, NR::Point const &last) const;
   PathDescr *clone() const;
   void transform(NR::Matrix const &t);
   void dump(std::ostream &s) const;
-  
+
   NR::Point p;
 };
 
@@ -77,12 +77,12 @@ struct PathDescrBezierTo : public PathDescr
 {
   PathDescrBezierTo(NR::Point const &pp, int n)
     : PathDescr(descr_bezierto), p(pp), nb(n) {}
-  
+
   PathDescr *clone() const;
   void transform(NR::Matrix const &t);
   void dump(std::ostream &s) const;
-  
-  NR::Point p;	      // the endpoint's coordinates
+
+  NR::Point p;        // the endpoint's coordinates
   int nb;             // number of control points, stored in the next path description commands
 };
 
@@ -97,8 +97,8 @@ struct PathDescrIntermBezierTo : public PathDescr
   PathDescr *clone() const;
   void transform(NR::Matrix const &t);
   void dump(std::ostream &s) const;
-  
-  NR::Point p;			// control point coordinates
+
+  NR::Point p;                  // control point coordinates
 };
 
 // cubic spline curve: 2 tangents and one endpoint
@@ -106,12 +106,12 @@ struct PathDescrCubicTo : public PathDescr
 {
   PathDescrCubicTo(NR::Point const &pp, NR::Point const &s, NR::Point const& e)
     : PathDescr(descr_cubicto), p(pp), start(s), end(e) {}
-  
+
   void dumpSVG(Inkscape::SVGOStringStream &s, NR::Point const &last) const;
   PathDescr *clone() const;
   void transform(NR::Matrix const &t);
   void dump(std::ostream &s) const;
-  
+
   NR::Point p;
   NR::Point start;
   NR::Point end;
@@ -122,12 +122,12 @@ struct PathDescrArcTo : public PathDescr
 {
   PathDescrArcTo(NR::Point const &pp, double x, double y, double a, bool l, bool c)
     : PathDescr(descr_arcto), p(pp), rx(x), ry(y), angle(a), large(l), clockwise(c) {}
-  
+
   void dumpSVG(Inkscape::SVGOStringStream &s, NR::Point const &last) const;
   PathDescr *clone() const;
   void transform(NR::Matrix const &t);
   void dump(std::ostream &s) const;
-  
+
   NR::Point p;
   double rx;
   double ry;
@@ -139,9 +139,9 @@ struct PathDescrArcTo : public PathDescr
 struct PathDescrForced : public PathDescr
 {
   PathDescrForced() : PathDescr(descr_forced), p(0, 0) {}
-  
+
   PathDescr *clone() const;
-  
+
   /* FIXME: not sure whether _forced should have a point associated with it;
   ** Path::ConvertForcedToMoveTo suggests that maybe it should.
   */
@@ -151,10 +151,10 @@ struct PathDescrForced : public PathDescr
 struct PathDescrClose : public PathDescr
 {
   PathDescrClose() : PathDescr(descr_close) {}
-  
+
   void dumpSVG(Inkscape::SVGOStringStream &s, NR::Point const &last) const;
   PathDescr *clone() const;
-  
+
   /* FIXME: not sure whether _forced should have a point associated with it;
   ** Path::ConvertForcedToMoveTo suggests that maybe it should.
   */
@@ -163,3 +163,14 @@ struct PathDescrClose : public PathDescr
 
 #endif
 
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

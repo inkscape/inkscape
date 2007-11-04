@@ -382,7 +382,7 @@ static void sp_ellipse_class_init(SPEllipseClass *klass)
 }
 
 static void
-sp_ellipse_init(SPEllipse *ellipse)
+sp_ellipse_init(SPEllipse */*ellipse*/)
 {
     /* Nothing special */
 }
@@ -457,7 +457,7 @@ sp_ellipse_set(SPObject *object, unsigned int key, gchar const *value)
     }
 }
 
-static gchar *sp_ellipse_description(SPItem *item)
+static gchar *sp_ellipse_description(SPItem */*item*/)
 {
     return g_strdup(_("<b>Ellipse</b>"));
 }
@@ -531,7 +531,7 @@ sp_circle_class_init(SPCircleClass *klass)
 }
 
 static void
-sp_circle_init(SPCircle *circle)
+sp_circle_init(SPCircle */*circle*/)
 {
     /* Nothing special */
 }
@@ -599,7 +599,7 @@ sp_circle_set(SPObject *object, unsigned int key, gchar const *value)
     }
 }
 
-static gchar *sp_circle_description(SPItem *item)
+static gchar *sp_circle_description(SPItem */*item*/)
 {
     return g_strdup(_("<b>Circle</b>"));
 }
@@ -657,7 +657,7 @@ sp_arc_class_init(SPArcClass *klass)
 }
 
 static void
-sp_arc_init(SPArc *arc)
+sp_arc_init(SPArc */*arc*/)
 {
     /* Nothing special */
 }
