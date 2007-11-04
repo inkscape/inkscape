@@ -50,7 +50,7 @@ public:
 
     StreamException(const DOMString &theReason) throw()
         { reason = theReason; }
-    ~StreamException() throw()
+    virtual ~StreamException() throw()
         {  }
     char const *what()
         { return reason.c_str(); }
@@ -441,7 +441,7 @@ public:
 
     StdReader();
 
-    ~StdReader();
+    virtual ~StdReader();
 
     /*Overload these 3 for your implementation*/
     virtual int available();
@@ -645,7 +645,7 @@ class StdWriter : public BasicWriter
 public:
     StdWriter();
 
-    ~StdWriter();
+    virtual ~StdWriter();
 
 
     virtual void close();

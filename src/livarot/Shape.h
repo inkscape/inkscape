@@ -105,7 +105,7 @@ public:
     };
     
     Shape();
-    ~Shape();
+    virtual ~Shape();
 
     void MakeBackData(bool nVal);
     void MakeVoronoiData(bool nVal);

@@ -35,7 +35,7 @@ public:
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
                 const gchar * default_value = "M0,0 L1,1");
-    ~PathParam();
+    virtual ~PathParam();
 
     Gtk::Widget * param_getWidget();
 

@@ -22,7 +22,7 @@ namespace Whiteboard {
 class SessionFileSelectorBox : public Gtk::HBox {
 public:
 	SessionFileSelectorBox();
-	~SessionFileSelectorBox();
+    virtual ~SessionFileSelectorBox();
 
 	bool isSelected();
 	Glib::ustring const& getFilename();

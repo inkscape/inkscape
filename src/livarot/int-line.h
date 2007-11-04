@@ -47,7 +47,7 @@ public:
     int lastAc;
 
     IntLigne();
-    ~IntLigne();
+    virtual ~IntLigne();
 
     void Reset();
     int AddBord(int spos, float sval, int epos, float eval);

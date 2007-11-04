@@ -24,13 +24,13 @@ namespace LivePathEffect {
 class LPESkeleton : public Effect {
 public:
     LPESkeleton(LivePathEffectObject *lpeobject);
-    ~LPESkeleton();
+    virtual ~LPESkeleton();
 
 //  Choose to implement one of the doEffect functions. You can delete or comment out the others.
-//    void doEffect (SPCurve * curve);
-//    NArtBpath * doEffect (NArtBpath * path_in);
-//    std::vector<Geom::Path> doEffect (std::vector<Geom::Path> & path_in);
-    Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
+//    virtual void doEffect (SPCurve * curve);
+//    virtual NArtBpath * doEffect (NArtBpath * path_in);
+//    virtual std::vector<Geom::Path> doEffect (std::vector<Geom::Path> & path_in);
+    virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 
 private:
     // add the parameters for your effect here:

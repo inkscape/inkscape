@@ -20,7 +20,7 @@ public:
     int ind;                ///< Index in the binary heap.
 
     SweepEvent();   // not used.
-    ~SweepEvent();  // not used.
+    virtual ~SweepEvent();  // not used.
 
     /// Initialize a SweepEvent structure.
     void MakeNew (SweepTree * iLeft, SweepTree * iRight, NR::Point const &iPt,

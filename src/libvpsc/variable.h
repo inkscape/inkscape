@@ -44,7 +44,7 @@ public:
 		return block->posn+offset;
 	}
 	//double position() const;
-	~Variable(void){
+    virtual ~Variable(void){
 		in.clear();
 		out.clear();
 	}

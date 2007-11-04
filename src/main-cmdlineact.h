@@ -26,7 +26,7 @@ class CmdLineAction {
 
 public:
     CmdLineAction (bool isVerb, gchar const * arg);
-    ~CmdLineAction ();
+    virtual ~CmdLineAction ();
 
     void doIt (Inkscape::UI::View::View * view);
     static void doList (Inkscape::UI::View::View * view);

@@ -40,7 +40,7 @@ struct NRArenaShape : public NRArenaItem {
 
         Paint() : _type(NONE), _color(0), _server(NULL) {}
         Paint(Paint const &p) { _assign(p); }
-        ~Paint() { clear(); }
+        virtual ~Paint() { clear(); }
 
         Type type() const { return _type; }
         SPPaintServer *server() const { return _server; }

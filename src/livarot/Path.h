@@ -89,7 +89,7 @@ public:
   bool back;
 
   Path();
-  ~Path();
+  virtual ~Path();
 
   // creation of the path description
   void Reset();		// reset to the empty description

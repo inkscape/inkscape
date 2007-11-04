@@ -42,7 +42,7 @@ public:
     /**
      *  Destructor
      */
-    ~InkscapeScript();
+    virtual ~InkscapeScript();
 
     /**
      * Interprets the script in the 'script' buffer,

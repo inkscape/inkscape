@@ -28,7 +28,7 @@ public:
     Box3DFace(SP3DBox *box, NR::Point &A, NR::Point &B, NR::Point &C, NR::Point &D,
 	                    Box3D::Axis plane, Box3D::FrontOrRear rel_pos);
     Box3DFace(Box3DFace const &box3dface);
-    ~Box3DFace();
+    virtual ~Box3DFace();
 
     NR::Point operator[](unsigned int i);
     void draw(SP3DBox *box3d, SPCurve *c);

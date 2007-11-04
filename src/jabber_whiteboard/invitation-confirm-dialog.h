@@ -25,7 +25,7 @@ namespace Whiteboard {
 class InvitationConfirmDialog : public Gtk::MessageDialog {
 public:
 	InvitationConfirmDialog(Glib::ustring const& msg);
-	~InvitationConfirmDialog();
+    virtual ~InvitationConfirmDialog();
 
 	Glib::ustring const& getSessionFilePath();
 	bool useSessionFile();

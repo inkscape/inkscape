@@ -20,7 +20,7 @@ namespace LivePathEffect {
 class LPEGears : public Effect {
 public:
     LPEGears(LivePathEffectObject *lpeobject);
-    ~LPEGears();
+    virtual ~LPEGears();
 
     std::vector<Geom::Path> doEffect (std::vector<Geom::Path> & path_in);
 

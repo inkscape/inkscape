@@ -38,7 +38,7 @@ public:
         defvalue = default_value;
         value = defvalue;
     };
-    ~EnumParam() {
+    virtual ~EnumParam() {
         if (regenum)
             delete regenum;
     };

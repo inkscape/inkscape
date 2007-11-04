@@ -19,7 +19,7 @@ class SweepEventQueue
 {
 public:
     SweepEventQueue(int s);
-    ~SweepEventQueue();
+    virtual ~SweepEventQueue();
 
     int size() const { return nbEvt; }
 

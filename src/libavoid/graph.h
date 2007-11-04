@@ -43,7 +43,7 @@ class EdgeInf
 {
     public:
         EdgeInf(VertInf *v1, VertInf *v2);
-        ~EdgeInf();
+        virtual ~EdgeInf();
         inline double getDist(void)
         {
             return _dist;

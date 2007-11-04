@@ -64,7 +64,7 @@ public:
     one_para *paras;
 
     text_wrapper(void);
-    ~text_wrapper(void);
+    virtual ~text_wrapper(void);
 
     // filling the structure with input data
     void SetDefaultFont(font_instance *iFont);

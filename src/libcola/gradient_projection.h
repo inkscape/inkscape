@@ -223,7 +223,7 @@ public:
             constrained=true;
         }
 	}
-    ~GradientProjection() {
+    virtual ~GradientProjection() {
         delete [] g;
         delete [] d;
         delete [] old_place;

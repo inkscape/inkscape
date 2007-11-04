@@ -524,18 +524,19 @@ protected:
         UserDataEntry(const DOMString       &theKey,
                       const DOMUserData     *theData,
                       const UserDataHandler *theHandler)
-            {
+        {
             next    = NULL;
             key     = theKey;
             data    = (DOMUserData *)theData;
             handler = (UserDataHandler *)theHandler;
-            }
-        ~UserDataEntry()
-            {
+        }
+
+        virtual ~UserDataEntry()
+        {
             //delete anything after me, too
             if (next)
                 delete next;
-            }
+        }
 
         UserDataEntry   *next;
         DOMString       key;

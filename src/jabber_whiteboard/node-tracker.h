@@ -79,7 +79,7 @@ public:
 	 */
 	XMLNodeTracker(SessionManager* sm);
 
-	~XMLNodeTracker();
+    virtual ~XMLNodeTracker();
 
         void setSessionManager(const SessionManager *val);
 

@@ -25,7 +25,7 @@ class UnitTracker
 {
 public:
     UnitTracker( guint bases = (SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE) );
-    ~UnitTracker();
+    virtual ~UnitTracker();
 
     void setBase( guint bases ); // SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE
     void addUnit( SPUnitId id, gint index );

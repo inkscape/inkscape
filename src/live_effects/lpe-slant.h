@@ -22,7 +22,7 @@ namespace LivePathEffect {
 class LPESlant : public Effect {
 public:
     LPESlant(LivePathEffectObject *lpeobject);
-    ~LPESlant();
+    virtual ~LPESlant();
 
     void doEffect(SPCurve * curve);
     

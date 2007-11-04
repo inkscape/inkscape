@@ -168,7 +168,7 @@ struct SPDesktop : public Inkscape::UI::View::View
    
     SPDesktop();
     void init (SPNamedView* nv, SPCanvas* canvas);
-    ~SPDesktop();
+    virtual ~SPDesktop();
     void destroy();
 
     Inkscape::MessageContext *guidesMessageContext() const {

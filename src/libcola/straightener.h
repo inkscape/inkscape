@@ -10,7 +10,7 @@
 namespace straightener {
     struct Route {
         Route(unsigned n) : n(n), xs(new double[n]), ys(new double[n]) {}
-        ~Route() {
+        virtual ~Route() {
             delete [] xs;
             delete [] ys;
         }
@@ -42,7 +42,7 @@ namespace straightener {
         {
             route->boundingBox(xmin,ymin,xmax,ymax);
         }
-        ~Edge() {
+        virtual ~Edge() {
             delete route;
         }
         void setRoute(Route* r) {

@@ -156,7 +156,7 @@ private:
         
     public:
         file_listener () : _dead(false) { };
-        ~file_listener () {
+        virtual ~file_listener () {
             _conn.disconnect();
         };
 

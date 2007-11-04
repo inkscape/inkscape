@@ -43,7 +43,7 @@ struct SPColor {
     SPColor( SPColor const& other );
     SPColor( float r, float g, float b );
     SPColor( guint32 value );
-    ~SPColor();
+    virtual ~SPColor();
 
     SPColor& operator= (SPColor const& other);
 

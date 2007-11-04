@@ -70,7 +70,7 @@ public:
     int s_last;
 
     FloatLigne();
-    ~FloatLigne();
+    virtual ~FloatLigne();
 
     void Reset();
     

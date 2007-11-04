@@ -135,7 +135,7 @@ public:
 
 protected:
     CairoRenderContext(CairoRenderer *renderer);
-    ~CairoRenderContext(void);
+    virtual ~CairoRenderContext(void);
     
     float _width;
     float _height;

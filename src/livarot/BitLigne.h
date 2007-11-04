@@ -40,7 +40,7 @@ public:
   float         scale,invScale;
 
 	BitLigne(int ist,int ien,float iScale=0.25);  // default scale is 1/4 for 4x4 supersampling
-	~BitLigne(void);
+    virtual ~BitLigne(void);
 
   // reset the line to full empty
 	void             Reset(void);

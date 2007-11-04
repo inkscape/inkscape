@@ -132,10 +132,10 @@ public:
     /**
      * Destructor
      */ 
-    ~Ptr()
-        {
-	    decrementRefCount(_ref);
-        }
+    virtual ~Ptr()
+    {
+        decrementRefCount(_ref);
+    }
 
 
     /**

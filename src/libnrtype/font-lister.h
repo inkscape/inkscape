@@ -35,7 +35,7 @@ namespace Inkscape
                         };
 
 
-                        ~FontLister ();
+                        virtual ~FontLister ();
 
                         /** GtkTreeModelColumnRecord for the font list Gtk::ListStore
                          */

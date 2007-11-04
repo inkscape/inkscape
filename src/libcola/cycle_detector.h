@@ -21,13 +21,13 @@ class Node  {
     StatusType status;
 
     Node(unsigned id)  { this->id = id; cyclicAncestor = NULL; status = NotVisited; }
-    ~Node()  {}
+    virtual ~Node()  {}
 };
 
 class CycleDetector  {
   public:
     CycleDetector(unsigned numVertices, Edges *edges);
-    ~CycleDetector();
+    virtual ~CycleDetector();
     std::vector<bool> *detect_cycles();
     void mod_graph(unsigned numVertices, Edges *edges);
     unsigned getV()  { return this->V; }

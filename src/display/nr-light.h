@@ -35,7 +35,7 @@ class DistantLight {
          * \param lighting_color the lighting_color used
          */
         DistantLight(SPFeDistantLight *light, guint32 lighting_color);
-        ~DistantLight();
+        virtual ~DistantLight();
         
         /**
          * Computes the light vector of the distant light
@@ -69,7 +69,7 @@ class PointLight {
          * employed in the rendering)
          */
         PointLight(SPFePointLight *light, guint32 lighting_color, const Matrix &trans);
-        ~PointLight();
+        virtual ~PointLight();
         /**
          * Computes the light vector of the distant light at point (x,y,z).
          * x, y and z are given in the arena_item coordinate, they are used as
@@ -109,7 +109,7 @@ class SpotLight {
          * employed in the rendering)
          */
         SpotLight(SPFeSpotLight *light, guint32 lighting_color, const Matrix &trans);
-        ~SpotLight();
+        virtual ~SpotLight();
 
         /**
          * Computes the light vector of the distant light at point (x,y,z).

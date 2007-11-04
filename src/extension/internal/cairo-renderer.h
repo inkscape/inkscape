@@ -42,7 +42,7 @@ class CairoRenderContext;
 class CairoRenderer {
 public:
     CairoRenderer(void);
-    ~CairoRenderer(void);
+    virtual ~CairoRenderer(void);
     
     CairoRenderContext *createContext(void);
     void destroyContext(CairoRenderContext *ctx);

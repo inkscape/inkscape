@@ -24,7 +24,7 @@ template <typename Event=NoInitialEvent> class EventTracker;
 
 class EventTrackerBase {
 public:
-    ~EventTrackerBase() {
+    virtual ~EventTrackerBase() {
         if (_active) {
             Logger::finish();
         }

@@ -19,21 +19,20 @@ class ConnectionPool
 
     typedef std::map<std::string, sigc::connection*> ConnectionMap;
 
-    ~ConnectionPool ()
+    virtual ~ConnectionPool ()
     {
-      for (ConnectionMap::iterator iter = map.begin (), end = map.end (); iter != end; ++iter)
-      {
-	sigc::connection* connection = (*iter).second;
-	connection->disconnect ();
-	delete connection;
-      }
+        for (ConnectionMap::iterator iter = map.begin (), end = map.end (); iter != end; ++iter) {
+            sigc::connection* connection = (*iter).second;
+            connection->disconnect ();
+            delete connection;
+        }
     }
 
     void
     add_connection (std::string name, sigc::connection* connection)
     {
-      if (map.find (name) != map.end ()) throw NAME_EXISTS;
-      map.insert (std::make_pair (name, connection)); 
+        if (map.find (name) != map.end ()) throw NAME_EXISTS;
+        map.insert (std::make_pair (name, connection)); 
     }
 
     void

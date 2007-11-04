@@ -74,7 +74,7 @@ class PairingHeap
 public:
 	PairingHeap( bool (*lessThan)(T const &lhs, T const &rhs) );
 	PairingHeap( const PairingHeap & rhs );
-	~PairingHeap( );
+    virtual ~PairingHeap( );
 
 	bool isEmpty( ) const;
 	bool isFull( ) const;

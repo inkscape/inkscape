@@ -50,7 +50,7 @@ public:
     font_glyph*           glyphs;
 
     font_instance(void);
-    ~font_instance(void);
+    virtual ~font_instance(void);
 
     void                 Ref(void);
     void                 Unref(void);

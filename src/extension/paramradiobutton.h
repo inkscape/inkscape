@@ -38,7 +38,7 @@ private:
     
 public:
     ParamRadioButton(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
-    ~ParamRadioButton(void);
+    virtual ~ParamRadioButton(void);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);
         

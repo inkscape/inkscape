@@ -28,7 +28,7 @@ enum PAPCopyType {
 class LPEPathAlongPath : public Effect {
 public:
     LPEPathAlongPath(LivePathEffectObject *lpeobject);
-    ~LPEPathAlongPath();
+    virtual ~LPEPathAlongPath();
 
     Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 

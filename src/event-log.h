@@ -45,7 +45,7 @@ public:
     typedef Gtk::TreeModel::const_iterator const_iterator;
 
     EventLog(SPDocument* document);
-    ~EventLog();
+    virtual ~EventLog();
 
     /**
      * Event datatype

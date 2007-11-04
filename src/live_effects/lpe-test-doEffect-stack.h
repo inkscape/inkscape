@@ -22,12 +22,12 @@ namespace LivePathEffect {
 class LPEdoEffectStackTest : public Effect {
 public:
     LPEdoEffectStackTest(LivePathEffectObject *lpeobject);
-    ~LPEdoEffectStackTest();
+    virtual ~LPEdoEffectStackTest();
 
-    void                                     doEffect (SPCurve * curve);
-    NArtBpath *                              doEffect (NArtBpath * path_in);
-    std::vector<Geom::Path>                  doEffect (std::vector<Geom::Path> & path_in);
-    Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
+    virtual void                                     doEffect (SPCurve * curve);
+    virtual NArtBpath *                              doEffect (NArtBpath * path_in);
+    virtual std::vector<Geom::Path>                  doEffect (std::vector<Geom::Path> & path_in);
+    virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 
 private:
     ScalarParam step;

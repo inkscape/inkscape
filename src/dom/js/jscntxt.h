@@ -609,7 +609,7 @@ class JSAutoTempValueRooter
         JS_PUSH_SINGLE_TEMP_ROOT(mContext, v, &mTvr);
     }
 
-    ~JSAutoTempValueRooter() {
+    virtual ~JSAutoTempValueRooter() {
         JS_POP_TEMP_ROOT(mContext, &mTvr);
     }
 

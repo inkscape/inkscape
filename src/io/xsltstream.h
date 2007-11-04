@@ -37,7 +37,7 @@ public:
 
     XsltStyleSheet(InputStream &source)  throw (StreamException);
     
-    ~XsltStyleSheet();
+    virtual ~XsltStyleSheet();
     
     xsltStylesheetPtr stylesheet;
 

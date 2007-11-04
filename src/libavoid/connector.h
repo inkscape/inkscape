@@ -42,7 +42,7 @@ class ConnRef
         ConnRef(Router *router, const unsigned int id);
         ConnRef(Router *router, const unsigned int id,
                 const Point& src, const Point& dst);
-        ~ConnRef();
+        virtual ~ConnRef();
         
         void setType(unsigned int type);
         PolyLine& route(void);

@@ -112,7 +112,7 @@ private:
 class CanvasXYGrid : public CanvasGrid {
 public:
     CanvasXYGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc);
-    ~CanvasXYGrid();
+    virtual ~CanvasXYGrid();
 
     void Update (NR::Matrix const &affine, unsigned int flags);
     void Render (SPCanvasBuf *buf);

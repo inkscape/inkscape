@@ -430,12 +430,12 @@ public:
     CSSStyleDeclarationEntry(const DOMString &nameArg, 
                              const DOMString &valueArg, 
                              const DOMString &prioArg)
-        {
+    {
         name  = nameArg;
         value = valueArg;
         prio  = prioArg;
-        }
-    ~CSSStyleDeclarationEntry(){}
+    }
+    virtual ~CSSStyleDeclarationEntry(){}
     DOMString name;
     DOMString value;
     DOMString prio;

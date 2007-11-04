@@ -71,7 +71,7 @@ public:
     __gnu_cxx::hash_map<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> loadedFaces;
 
     font_factory();
-    ~font_factory();
+    virtual ~font_factory();
 
     /// Returns the default font_factory.
     static font_factory*  Default();

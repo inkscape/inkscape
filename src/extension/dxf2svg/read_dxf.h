@@ -8,15 +8,16 @@
 
 
 
-class dxfpair{	
-	public:
-	dxfpair(int gcode, char val[10000]);
-	~dxfpair();
-	char * value_char(char *string);
-	
-	// Leave this data public	
-	int group_code;
-	std::vector< char > value;
+class dxfpair{
+public:
+    dxfpair(int gcode, char val[10000]);
+    virtual ~dxfpair();
+
+    char * value_char(char *string);
+
+    // Leave this data public
+    int group_code;
+    std::vector< char > value;
 };
 
 

@@ -36,7 +36,7 @@ class Blocks : public std::set<Block*>
 {
 public:
 	Blocks(const int n, Variable* const vs[]);
-	~Blocks(void);
+    virtual ~Blocks(void);
 	void mergeLeft(Block *r);
 	void mergeRight(Block *l);
 	void split(Block *b, Block *&l, Block *&r, Constraint *c);

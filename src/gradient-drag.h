@@ -34,7 +34,7 @@ GrPointType enum), and the point number (needed if more than 2 stops are present
 */
 struct GrDraggable {
 	GrDraggable(SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
-	~GrDraggable();
+    virtual ~GrDraggable();
 
 	SPItem *item;
 	gint point_type;
@@ -59,7 +59,7 @@ be more when draggers are snapped together.
 */
 struct GrDragger {
 	GrDragger (GrDrag *parent, NR::Point p, GrDraggable *draggable);
-	~GrDragger();
+    virtual ~GrDragger();
 
 	GrDrag *parent;
 
@@ -107,7 +107,7 @@ class GrDrag {
 public: // FIXME: make more of this private!
 
     GrDrag(SPDesktop *desktop);
-    ~GrDrag();
+    virtual ~GrDrag();
 
 		bool isNonEmpty() {return (draggers != NULL);}
 		bool hasSelection() {return (selected != NULL);}

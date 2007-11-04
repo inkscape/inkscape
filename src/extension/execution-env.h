@@ -53,7 +53,7 @@ public:
 				  sigc::signal<void> * changeSignal = NULL,
 				  Gtk::Dialog * prefDialog = NULL,
 				  Implementation::ImplementationDocumentCache * docCache = NULL);
-    ~ExecutionEnv (void);
+    virtual ~ExecutionEnv (void);
 
     void run (void);
     void livePreview (bool state = true);

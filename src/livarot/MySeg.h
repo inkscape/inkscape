@@ -73,7 +73,7 @@ public:
   L_SEG (void)
   {
   };
-  ~L_SEG (void)
+  virtual ~L_SEG (void)
   {
   };
 

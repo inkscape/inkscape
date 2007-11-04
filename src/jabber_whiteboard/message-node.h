@@ -61,7 +61,7 @@ public:
 		this->_recipient = recip;
 	}
 
-	~MessageNode() 
+    virtual ~MessageNode() 
 	{
 //		g_log(NULL, G_LOG_LEVEL_DEBUG, "MessageNode destructor");
 		/*

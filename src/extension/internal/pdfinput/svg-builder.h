@@ -97,7 +97,7 @@ class SvgBuilder {
 public:
     SvgBuilder(SPDocument *document, gchar *docname, XRef *xref);
     SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root);
-    ~SvgBuilder();
+    virtual ~SvgBuilder();
 
     // Property setting
     void setDocumentSize(double width, double height);  // Document size in px

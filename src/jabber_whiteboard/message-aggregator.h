@@ -32,7 +32,7 @@ public:
 	static unsigned int const MAX_SIZE = 16384;
 
 	MessageAggregator() { }
-	~MessageAggregator() { }
+    virtual ~MessageAggregator() { }
 
 	/**
 	 * Return the instance of this class.

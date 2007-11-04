@@ -23,7 +23,7 @@ namespace Avoid {
 class SPAvoidRef {
 public:
     SPAvoidRef(SPItem *spitem);
-    ~SPAvoidRef();
+    virtual ~SPAvoidRef();
 
     // libavoid's internal representation of the item.
     Avoid::ShapeRef *shapeRef;

@@ -26,7 +26,7 @@ namespace LivePathEffect {
 class LPECurveStitch : public Effect {
 public:
     LPECurveStitch(LivePathEffectObject *lpeobject);
-    ~LPECurveStitch();
+    virtual ~LPECurveStitch();
 
     std::vector<Geom::Path> doEffect (std::vector<Geom::Path> & path_in);
 

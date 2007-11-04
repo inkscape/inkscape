@@ -76,7 +76,7 @@ public:
                 ExecutionEnv * exEnv = NULL,
                 Effect * effect = NULL,
                 sigc::signal<void> * changeSignal = NULL);
-    ~PrefDialog ();
+    virtual ~PrefDialog ();
     int run (void);
 
     void setPreviewState (Glib::ustring state);

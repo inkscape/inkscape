@@ -87,7 +87,7 @@ class Layout::InfiniteScanlineMaker : public Layout::ScanlineMaker
 {
 public:
     InfiniteScanlineMaker(double initial_x, double initial_y, Layout::Direction block_progression);
-    ~InfiniteScanlineMaker();
+    virtual ~InfiniteScanlineMaker();
 
     /** Returns a single infinite run at the current location */
     virtual std::vector<ScanRun> makeScanline(Layout::LineHeight const &line_height);
@@ -120,7 +120,7 @@ class Layout::ShapeScanlineMaker : public Layout::ScanlineMaker
 {
 public:
     ShapeScanlineMaker(Shape const *shape, Layout::Direction block_progression);
-    ~ShapeScanlineMaker();
+    virtual ~ShapeScanlineMaker();
 
     virtual std::vector<ScanRun> makeScanline(Layout::LineHeight const &line_height);
 

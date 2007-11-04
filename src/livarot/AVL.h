@@ -33,7 +33,7 @@ protected:
     AVLTree *son[2];
 
     AVLTree();
-    ~AVLTree();
+    virtual ~AVLTree();
     
     // constructor/destructor meant to be called for an array of AVLTree created by malloc
     void MakeNew();

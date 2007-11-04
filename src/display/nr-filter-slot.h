@@ -32,7 +32,7 @@ public:
      */
     FilterSlot(int slots, NRArenaItem const *item);
     /** Destroys the FilterSlot object and all its contents */
-    ~FilterSlot();
+    virtual ~FilterSlot();
 
     /** Returns the pixblock in specified slot.
      * Parameter 'slot' may be either an positive integer or one of

@@ -21,13 +21,13 @@ private:
     guint32 _value;
 public:
     ParamColor(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
-    ~ParamColor(void);
+    virtual ~ParamColor(void);
     /** \brief  Returns \c _value, with a \i const to protect it. */
     guint32 get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
     guint32 set (guint32 in, SPDocument * doc, Inkscape::XML::Node * node);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);
-	sigc::signal<void> * _changeSignal;
+    sigc::signal<void> * _changeSignal;
 }; /* class ParamColor */
 
 }  /* namespace Extension */

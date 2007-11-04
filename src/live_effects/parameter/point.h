@@ -33,7 +33,7 @@ public:
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
                 Geom::Point default_value = Geom::Point(0,0));
-    ~PointParam();
+    virtual ~PointParam();
 
     Gtk::Widget * param_getWidget();
 

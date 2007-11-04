@@ -41,7 +41,7 @@ public:
 	{
 	}
 
-	~TrackerNode()
+    virtual ~TrackerNode()
 	{
 	}
 	

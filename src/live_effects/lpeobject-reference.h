@@ -28,7 +28,7 @@ namespace LivePathEffect {
 class LPEObjectReference : public Inkscape::URIReference {
 public:
     LPEObjectReference(SPObject *owner);
-    ~LPEObjectReference();
+    virtual ~LPEObjectReference();
 
     SPObject       *owner;
 

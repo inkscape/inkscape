@@ -28,7 +28,7 @@ namespace cola {
         vector<Rectangle*> rects;
         vector<Edge> edges;
         SimpleConstraints scx, scy;
-        ~Component();
+        virtual ~Component();
         void moveRectangles(double x, double y);
         Rectangle* getBoundingBox();
     };
@@ -174,7 +174,7 @@ namespace cola {
 
         void setupDummyVars();
 
-        ~ConstrainedMajorizationLayout() {
+        virtual ~ConstrainedMajorizationLayout() {
             if(boundingBoxes) {
                 delete [] boundingBoxes;
             }

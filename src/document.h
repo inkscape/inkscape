@@ -64,7 +64,7 @@ class SPDocumentPrivate;
 /// Typed SVG document implementation.
 struct SPDocument : public Inkscape::GC::Managed<>,
                     public Inkscape::GC::Finalized,
-		    public Inkscape::GC::Anchored
+                    public Inkscape::GC::Anchored
 {
 	typedef sigc::signal<void, SPObject *> IDChangedSignal;
 	typedef sigc::signal<void> ResourcesChangedSignal;
@@ -73,10 +73,10 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 	typedef sigc::signal<void, double, double> ResizedSignal;
 	typedef sigc::signal<void> ReconstructionStart;
 	typedef sigc::signal<void> ReconstructionFinish;
-  typedef sigc::signal<void> CommitSignal;
+    typedef sigc::signal<void> CommitSignal;
 
 	SPDocument();
-	~SPDocument();
+    virtual ~SPDocument();
 
 	unsigned int keepalive : 1;
 	unsigned int virgin    : 1; ///< Has the document never been touched?

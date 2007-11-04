@@ -28,7 +28,7 @@ enum SkelCopyType {
 class LPESkeletalStrokes : public Effect {
 public:
     LPESkeletalStrokes(LivePathEffectObject *lpeobject);
-    ~LPESkeletalStrokes();
+    virtual ~LPESkeletalStrokes();
 
     Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 

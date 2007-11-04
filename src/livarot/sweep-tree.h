@@ -27,7 +27,7 @@ public:
     int startPoint;   ///< point index in the result Shape associated with the upper end of the edge
 
     SweepTree();
-    ~SweepTree();
+    virtual ~SweepTree();
 
     // Inits a brand new node.
     void MakeNew(Shape *iSrc, int iBord, int iWeight, int iStartPoint);

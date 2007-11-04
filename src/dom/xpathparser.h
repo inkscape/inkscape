@@ -371,13 +371,13 @@ public:
      */
     XPathParser()
         {
-        debug = false;
+            debug = false;
         }
 
     /**
      *
      */
-    ~XPathParser() {}
+    virtual ~XPathParser() {}
 
     /**
      *

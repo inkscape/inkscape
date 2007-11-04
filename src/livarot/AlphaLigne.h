@@ -45,7 +45,7 @@ public:
 
   // iMin and iMax are the bounds of the visible portion of the line
 	AlphaLigne(int iMin,int iMax);
-	~AlphaLigne(void);
+    virtual ~AlphaLigne(void);
 
   // empties the line
 	void             Reset(void);

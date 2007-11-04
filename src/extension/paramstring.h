@@ -23,7 +23,7 @@ private:
     gchar * _value;
 public:
     ParamString(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
-    ~ParamString(void);
+    virtual ~ParamString(void);
     /** \brief  Returns \c _value, with a \i const to protect it. */
     const gchar * get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
     const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);

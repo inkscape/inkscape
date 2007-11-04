@@ -81,10 +81,10 @@ public:
 
     EventException(short theCode)
         {
-        code = theCode;
+            code = theCode;
         }
 
-    ~EventException() throw()
+    virtual ~EventException() throw()
        {}
 
     unsigned short code;

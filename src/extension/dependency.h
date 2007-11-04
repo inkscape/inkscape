@@ -57,7 +57,7 @@ class Dependency {
 
 public:
     Dependency  (Inkscape::XML::Node * in_repr);
-    ~Dependency (void);
+    virtual ~Dependency (void);
     bool check  (void) const;
     Glib::ustring &get_help (void) const;
     Glib::ustring &get_link (void) const;

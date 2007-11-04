@@ -30,7 +30,7 @@ public:
     raster_glyph**                bases;
 
     explicit raster_font(font_style const &fstyle);
-    ~raster_font(void);
+    virtual ~raster_font(void);
    
     void                          Unref(void);
     void                          Ref(void);

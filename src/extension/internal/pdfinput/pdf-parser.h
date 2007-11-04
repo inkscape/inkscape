@@ -109,7 +109,7 @@ class ClipHistoryEntry {
 public:
 
     ClipHistoryEntry(GfxPath *clipPath=NULL, GfxClipType clipType=clipNormal);
-    ~ClipHistoryEntry();
+    virtual ~ClipHistoryEntry();
 
     // Manipulate clip path stack
     ClipHistoryEntry *save();
@@ -156,7 +156,7 @@ public:
   PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *builderA,
             Dict *resDict, PDFRectangle *box);
 
-  ~PdfParser();
+  virtual ~PdfParser();
 
   // Interpret a stream or array of streams.
   void parse(Object *obj, GBool topLevel = gTrue);

@@ -451,7 +451,7 @@ public:
     insert(begin(), first, last);
   }
 
-  ~Path() {
+  virtual ~Path() {
       delete_range(curves_.begin(), curves_.end()-1);
       delete final_;
   }

@@ -23,7 +23,7 @@ public:
     raster_position*  sub_pixel;
 
     raster_glyph(void);
-    ~raster_glyph(void);
+    virtual ~raster_glyph(void);
 
 		// utility
     void      SetSubPixelPositionning(int nb_pos);

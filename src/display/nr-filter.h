@@ -166,7 +166,7 @@ public:
      */
     Filter(int n);
     /** Destroys the filter and all its primitives */
-    ~Filter();
+    virtual ~Filter();
 
 private:
     int _primitive_count;

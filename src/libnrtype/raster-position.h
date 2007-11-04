@@ -23,7 +23,7 @@ public:
 
 public:
     raster_position();
-    ~raster_position();
+    virtual ~raster_position();
 
 		// stuff runs into the structure
     void AppendRuns(std::vector<float_ligne_run> const &r, int y);

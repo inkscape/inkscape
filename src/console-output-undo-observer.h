@@ -20,7 +20,7 @@ namespace Inkscape {
 class ConsoleOutputUndoObserver : public UndoStackObserver {
 public:
     ConsoleOutputUndoObserver() : UndoStackObserver() { }
-    ~ConsoleOutputUndoObserver() { }
+    virtual ~ConsoleOutputUndoObserver() { }
 
     void notifyUndoEvent(Event* log);
     void notifyRedoEvent(Event* log);

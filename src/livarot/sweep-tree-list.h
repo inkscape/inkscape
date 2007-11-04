@@ -17,7 +17,7 @@ public:
     SweepTree *racine;   ///< Root of the tree.
 
     SweepTreeList(int s);
-    ~SweepTreeList();
+    virtual ~SweepTreeList();
 
     SweepTree *add(Shape *iSrc, int iBord, int iWeight, int iStartPoint, Shape *iDst);
 };

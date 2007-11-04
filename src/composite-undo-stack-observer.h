@@ -117,7 +117,7 @@ public:
 	 */
 	CompositeUndoStackObserver();
 
-	~CompositeUndoStackObserver();
+    virtual ~CompositeUndoStackObserver();
 
 	/**
 	 * Add an UndoStackObserver.

@@ -46,7 +46,7 @@ class ExpirationTimer {
 
 public:
     ExpirationTimer(Extension * in_extension);
-    ~ExpirationTimer(void);
+    virtual ~ExpirationTimer(void);
 
     void touch (void);
     void lock (void)   { locked++;  };

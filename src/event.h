@@ -32,7 +32,7 @@ struct Event {
     Event(XML::Event *_event, unsigned int _type=SP_VERB_NONE, Glib::ustring _description="")
         : event (_event), type (_type), description (_description)  { }
 
-    ~Event() { sp_repr_free_log (event); }
+    virtual ~Event() { sp_repr_free_log (event); }
 
     XML::Event *event;
     const unsigned int type;
