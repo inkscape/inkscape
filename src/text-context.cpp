@@ -1598,6 +1598,11 @@ sp_text_context_forget_text(SPTextContext *tc)
     /* We have to set it to zero,
      * or selection changed signal messes everything up */
     tc->text = NULL;
+
+/* FIXME: this automatic deletion when nothing is inputted crashes the XML edittor and also crashes when duplicating an empty flowtext.
+    So don't create an empty flowtext in the first place? Create it when first character is typed.
+    */
+/*
     if ((SP_IS_TEXT(ti) || SP_IS_FLOWTEXT(ti)) && sp_te_input_is_empty(ti)) {
         Inkscape::XML::Node *text_repr=SP_OBJECT_REPR(ti);
         // the repr may already have been unparented
@@ -1610,6 +1615,7 @@ sp_text_context_forget_text(SPTextContext *tc)
                      _("Remove empty text"));
         }
     }
+*/
 }
 
 gint
