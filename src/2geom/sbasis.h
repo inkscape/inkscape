@@ -90,7 +90,7 @@ public:
         return valueAt(t);
     }
 
-    std::vector<double> valueAndDerivatives(double t, unsigned n) const {
+    std::vector<double> valueAndDerivatives(double /*t*/, unsigned /*n*/) const {
         //TODO
         throw NotImplemented();
     }
