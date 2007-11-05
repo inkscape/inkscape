@@ -1057,7 +1057,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
         NR::Coord const bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
         NR::Coord const sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
         NR::Coord const ratio = (bd < sd) ? bb.first : sn.first;
-
+        
         s[axis] = fabs(ratio) * sign(s[axis]);
         s[perp] = fabs(s[axis]);
     } else {
@@ -1084,6 +1084,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
         NR::Coord const bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
         NR::Coord const sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
         s[axis] = (bd < sd) ? bb.first : sn.first;
+        
         s[perp] = 1;
     }
 

@@ -49,6 +49,7 @@ protected:
     void  build_grid();
     void  build_guides();
     void  build_snap();
+    void  build_snap_dtls();
     void  build_gridspage();
     void  init();
     virtual void  on_response (int);
@@ -57,7 +58,7 @@ protected:
     Gtk::Notebook  _notebook;
 
     NotebookPage   _page_page, _page_guides;
-    NotebookPage   _page_snap;
+    NotebookPage   _page_snap, _page_snap_dtls;
     NotebookPage   _page_grids;
 
     //---------------------------------------------------------------
@@ -73,7 +74,8 @@ protected:
     RegisteredUnitMenu    _rum_gusn;
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbsnbb, _rcbsng, _rcbsnn, _rcbic, _rcbsnop, _rcbsnon;
+    RegisteredCheckButton _rcbsnbb, _rcbsng, _rcbsnn, _rcbic, _rcbsnop;
+    RegisteredCheckButton _rcbsnon, _rcbsnbbp, _rcbsnbbn;
     RegisteredUnitMenu    _rumso;
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
     RegisteredRadioButtonPair _rrb_pix;

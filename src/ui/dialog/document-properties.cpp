@@ -93,7 +93,7 @@ DocumentProperties::destroy()
 DocumentProperties::DocumentProperties(Behavior::BehaviorFactory behavior_factory) 
     : Dialog (behavior_factory, "dialogs.documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
       _page_page(1, 1), _page_guides(1, 1),
-      _page_snap(1, 1), _page_grids(1, 1),
+      _page_snap(1, 1), _page_grids(1, 1), _page_snap_dtls(1, 1),
       _grids_button_new(_("_New"), _("Create new grid.")),
       _grids_button_remove(_("_Remove"), _("Remove selected grid.")),
       _prefs_path("dialogs.documentoptions")
@@ -106,12 +106,14 @@ DocumentProperties::DocumentProperties(Behavior::BehaviorFactory behavior_factor
     _notebook.append_page(_page_page,      _("Page"));
     _notebook.append_page(_page_guides,    _("Guides"));
     _notebook.append_page(_page_grids,     _("Grids"));
-    _notebook.append_page(_page_snap,      _("Snapping"));
+    _notebook.append_page(_page_snap,      _("Snap"));
+    _notebook.append_page(_page_snap_dtls, _("Snap details"));
 
     build_page();
     build_guides();
     build_gridspage();
     build_snap();
+    build_snap_dtls();
 
     _grids_button_new.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onNewGrid));
     _grids_button_remove.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onRemoveGrid));
@@ -266,46 +268,55 @@ DocumentProperties::build_snap()
 {
     _page_snap.show();
 	//General options
-	_rcbsnbb.init (_("Bounding _box corners"),
-                _("Snap bounding box corners to grid lines, to guides, and to other bounding boxes (only applicable to the selector tool)"),
+	_rcbsnbb.init (_("_Bounding box corners"),
+                _("Snap bounding box corners to grid lines, to guides, and to other bounding boxes (Snapping of bounding boxes is only available in the selector tool)"),
                 "inkscape:snap-bbox", _wr);
     _rcbsnn.init (_("_Nodes"),
                 _("Snap nodes to grid lines, to guides, to paths, and to other nodes"),
                 "inkscape:snap-nodes", _wr);
-    _rcbsng.init (_("_Guides"),
-                _("While dragging a guide, snap to object nodes. (In 'Snapping to objects', 'Snap to nodes' must also be enabled)"),
-                "inkscape:snap-guide", _wr);
     
     //Options for snapping to objects
-    _rcbsnop.init (_("Snap to p_aths"),
+    _rcbsnop.init (_("Snap to pat_hs"),
                 _("Snap nodes to object paths"),
                 "inkscape:object-paths", _wr);
     _rcbsnon.init (_("Snap to n_odes"),
-                _("Snap nodes or guides to object nodes"),
-                "inkscape:object-nodes", _wr);    
-    _rsu_sno.init (_("Snap _distance"), _("Snap at any dist_ance"),
+                _("Snap nodes and guides to object nodes"),
+                "inkscape:object-nodes", _wr); 
+    _rcbsnbbn.init (_("Snap to bounding box co_rners"),
+                _("Snap bounding box corners to other bounding box corners"),
+                "inkscape:bbox-nodes", _wr);
+    _rcbsnbbp.init (_("Snap to bounding box _edges"),
+                _("Snap bounding box corners and guides to bounding box edges"),
+                "inkscape:bbox-paths", _wr);    
+       
+    _rsu_sno.init (_("Snap _distance"), _("Snap at any d_istance"),
                   _("Snapping distance, in screen pixels, for snapping to objects"),
                   _("If set, objects snap to the nearest object, regardless of distance"),
                   "objecttolerance", _wr);
     
     //Options for snapping to grids
-    _rsu_sn.init (_("Snap d_istance"), _("Snap at any distan_ce"),
+    _rsu_sn.init (_("Snap di_stance"), _("Snap at any dis_tance"),
                   _("Snapping distance, in screen pixels, for snapping to grid"),
                   _("If set, objects snap to the nearest grid line, regardless of distance"),
                   "gridtolerance", _wr);
                   
 	//Options for snapping to guides                  
-    _rsu_gusn.init (_("Snap di_stance"), _("Snap at any distanc_e"),
+    _rsu_gusn.init (_("Snap dist_ance"), _("Snap at any distan_ce"),
                 _("Snapping distance, in screen pixels, for snapping to guides"),
                 _("If set, objects snap to the nearest guide, regardless of distance"),
                 "guidetolerance", _wr);
                 
-    //Some other options
-    _rcbic.init (_("_Include the object's rotation center"),
-                _("Also snap the rotation center of an object when snapping nodes or guides"),
-                "inkscape:snap-center", _wr);
-                //Applies to both nodes and guides, but not to bboxes, that's why its located here
     //Other options to locate here: e.g. visual snapping indicators on/off 
+                
+    std::list<Gtk::ToggleButton*> slaves;
+    slaves.push_back(_rcbsnop._button);
+    slaves.push_back(_rcbsnon._button);
+    _rcbsnn.setSlaveButton(slaves);
+    
+    slaves.clear();
+    slaves.push_back(_rcbsnbbp._button);
+    slaves.push_back(_rcbsnbbn._button);
+    _rcbsnbb.setSlaveButton(slaves);
                 
     Gtk::Label *label_g = manage (new Gtk::Label);
     label_g->set_markup (_("<b>Snapping of</b>"));
@@ -322,31 +333,61 @@ DocumentProperties::build_snap()
     {
         label_g,            0,
         0,                  _rcbsnn._button,
-        //0,					0,					//_rcbic._button will be inserted here
         0,                  _rcbsnbb._button,
-        0,					_rcbsng._button,
-        0, 					0,        
+        0, 					0,
+        0,                  0,
         0, 					0,
         0, 					0,
         label_o,            0,
         0, 					_rcbsnop._button,
         0, 					_rcbsnon._button,
+        0,                  _rcbsnbbp._button,
+        0,                  _rcbsnbbn._button,
         0,                  _rsu_sno._vbox,
         0, 					0,
         label_gr,           0,
         0,                  _rsu_sn._vbox,
         0, 					0,
         label_gu,         	0,
-        0,                	_rsu_gusn._vbox,
-        0, 					0,        
-        0, 					0,
-        0, 					0,
-        label_m,			0,
-        0,					_rcbic._button        
+        0,                	_rsu_gusn._vbox        
     };
 
     attach_all(_page_snap.table(), array, G_N_ELEMENTS(array));
  }
+ 
+void
+DocumentProperties::build_snap_dtls()
+{
+    _page_snap_dtls.show();
+    
+    _rcbsng.init (_("_Snap guides while dragging"),
+                _("While dragging a guide, snap to object nodes or bounding box corners ('snap to nodes' or 'snap to bounding box corners', both on the previous tab, must be enabled)"),
+                "inkscape:snap-guide", _wr);
+    
+    _rcbic.init (_("_Include the object's rotation center"),
+                _("Also snap the rotation center of an object when snapping nodes or guides"),
+                "inkscape:snap-center", _wr);
+    //Applies to both nodes and guides, but not to bboxes, that's why its located here
+    
+    //Other options to locate here: e.g. visual snapping indicators on/off 
+                
+    Gtk::Label *label_i= manage (new Gtk::Label);
+    label_i->set_markup (_("<b>Snapping to intersections</b>"));
+    Gtk::Label *label_m = manage (new Gtk::Label);
+    label_m->set_markup (_("<b>Miscellaneous</b>"));
+    
+    Gtk::Widget *const array[] =
+    {
+        label_i,            0,
+        0,                  0,
+        0,                  0,        
+        label_m,            0,
+        0,                  _rcbsng._button,
+        0,                  _rcbic._button,                
+    };
+
+    attach_all(_page_snap_dtls.table(), array, G_N_ELEMENTS(array));
+}
 
 /**
 * Called for _updating_ the dialog (e.g. when a new grid was manually added in XML)
@@ -460,6 +501,8 @@ DocumentProperties::update()
     _rcbic.setActive (nv->snap_manager.getIncludeItemCenter());
     _rcbsnop.setActive(nv->snap_manager.object.getSnapToItemPath());
     _rcbsnon.setActive(nv->snap_manager.object.getSnapToItemNode());
+    _rcbsnbbp.setActive(nv->snap_manager.object.getSnapToBBoxPath());
+    _rcbsnbbn.setActive(nv->snap_manager.object.getSnapToBBoxNode());    
     _rsu_sno.setValue (nv->objecttolerance);
 
     _rsu_sn.setValue (nv->gridtolerance);

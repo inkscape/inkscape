@@ -90,6 +90,8 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_SNAP_CENTER, "inkscape:snap-center"},
     {SP_ATTR_INKSCAPE_OBJECT_PATHS, "inkscape:object-paths"},
     {SP_ATTR_INKSCAPE_OBJECT_NODES, "inkscape:object-nodes"},
+    {SP_ATTR_INKSCAPE_BBOX_PATHS, "inkscape:bbox-paths"},
+    {SP_ATTR_INKSCAPE_BBOX_NODES, "inkscape:bbox-nodes"},
     {SP_ATTR_INKSCAPE_CURRENT_LAYER, "inkscape:current-layer"},
     {SP_ATTR_INKSCAPE_DOCUMENT_UNITS, "inkscape:document-units"},
     {SP_ATTR_INKSCAPE_CONNECTOR_SPACING, "inkscape:connector-spacing"},

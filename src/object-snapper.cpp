@@ -141,7 +141,6 @@ bool Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
     if (first_point) {
         _points_to_snap_to->clear();
         for (std::vector<SPItem*>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
-
             //NR::Matrix i2doc(NR::identity());
             SPItem *root_item = *i;
             if (SP_IS_USE(*i)) {

@@ -122,8 +122,8 @@ void SnapManager::setSnapModeBBox(bool enabled)
     }
     
     object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
-    object.setSnapToBBoxNode(enabled);
-    object.setSnapToBBoxPath(enabled);
+    //object.setSnapToBBoxNode(enabled); // On second thought, these should be controlled
+    //object.setSnapToBBoxPath(enabled); // separately by the snapping prefs dialog
     object.setStrictSnapping(true); //don't snap bboxes to nodes/paths and vice versa    
 }
 
@@ -430,18 +430,21 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
 
     std::vector<NR::Point>::const_iterator j = transformed_points.begin();
 
+    // std::cout << std::endl;
+
     for (std::vector<NR::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
         
         /* Snap it */
         Inkscape::SnappedPoint const snapped = constrained ?
             constrainedSnap(type, *j, i == points.begin(), transformed_points, constraint, ignore) : freeSnap(type, *j, i == points.begin(), transformed_points, ignore);
 
+        NR::Point result;
+        NR::Coord metric;
+        
         if (snapped.getDistance() < NR_HUGE) {
             /* We snapped.  Find the transformation that describes where the snapped point has
             ** ended up, and also the metric for this transformation.
             */
-            NR::Point result;
-            NR::Coord metric;
             switch (transformation_type) {
                 case TRANSLATION:
                     result = snapped.getPoint() - *i;
@@ -488,9 +491,11 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
             if ((metric < best_metric) || ((metric == best_metric) && snapped.getAtIntersection() == true)) {
                 best_transformation = result;
                 best_metric = metric;
-            }
+                // std::cout << "SEL ";;
+            } //else { std::cout << "    ";}
         }
         
+        // std::cout << "P_orig = " << (*i) << " | metric = " << metric << " | distance = " << snapped.getDistance() << " | P_snap = " << snapped.getPoint() << std::endl;
         j++;
     }
     
