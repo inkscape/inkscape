@@ -23,11 +23,7 @@ class SPFeImageClass;
 
 struct SPFeImage : public SPFilterPrimitive {
     /** IMAGE ATTRIBUTES HERE */
-    /*
-        Apparently there's no attribute to keep here 
-        since 'in' and 'xlink:href' are common filter attributes.
-        --Juca
-    */
+    gchar *href;
     SVGLength x, y, height, width;
 };
 

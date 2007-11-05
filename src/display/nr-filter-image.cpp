@@ -17,12 +17,8 @@ namespace NR {
 
 FilterImage::FilterImage()
 {
-// Testing with hardcoded xlink:href :  
-    image = Gdk::Pixbuf::create_from_file("../images/image1.jpg");
-    //TODO: handle errors
-    width = image->get_width()+1;
-    height = image->get_height()+1;
-    image_pixbuf = image->get_pixels();
+    feImageHref=NULL;
+    image_pixbuf=NULL;
 }
 
 FilterPrimitive * FilterImage::create() {
@@ -30,9 +26,21 @@ FilterPrimitive * FilterImage::create() {
 }
 
 FilterImage::~FilterImage()
-{}
+{
+        if (feImageHref) g_free(feImageHref);
+        if (image_pixbuf) g_free(image_pixbuf);
+}
 
 int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
+    if  (!feImageHref) return 0;
+    
+    if (!image_pixbuf){
+            if ( (image = Gdk::Pixbuf::create_from_file(feImageHref)) < 0 ) return 0;
+            width = image->get_width();
+            height = image->get_height();
+            rowstride = image->get_rowstride();
+            image_pixbuf = image->get_pixels();
+    }
     int w,x,y;
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
@@ -56,9 +64,9 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
             coordy = int((y - feImageY - bbox_y0)*scaleY);
 
             if (coordx > 0 && coordx < width && coordy > 0 && coordy < height){
-                out_data[4*((x - x0)+w*(y - y0))] = (unsigned char) image_pixbuf[3*(coordx + width*coordy)]; //Red
-                out_data[4*((x - x0)+w*(y - y0)) + 1] = (unsigned char) image_pixbuf[3*(coordx + width*coordy) + 1]; //Green
-                out_data[4*((x - x0)+w*(y - y0)) + 2] = (unsigned char) image_pixbuf[3*(coordx + width*coordy) + 2]; //Blue
+                out_data[4*((x - x0)+w*(y - y0))] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy]; //Red
+                out_data[4*((x - x0)+w*(y - y0)) + 1] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy + 1]; //Green
+                out_data[4*((x - x0)+w*(y - y0)) + 2] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy + 2]; //Blue
                 out_data[4*((x - x0)+w*(y - y0)) + 3] = 255; //Alpha
             }
         }
@@ -68,6 +76,12 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
     slot.set(_output, out);
     return 0;
 }
+
+void FilterImage::set_href(const gchar *href){
+    if (feImageHref) g_free (feImageHref);
+    feImageHref = (href) ? g_strdup (href) : NULL;
+}
+
 void FilterImage::set_region(SVGLength x, SVGLength y, SVGLength width, SVGLength height){
         feImageX=x.computed;
         feImageY=y.computed;

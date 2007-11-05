@@ -27,11 +27,13 @@ public:
 
     virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual FilterTraits get_input_traits();
+    void set_href(const gchar *href);
     void set_region(SVGLength x, SVGLength y, SVGLength width, SVGLength height);
 private:
+    gchar *feImageHref;
     guint8* image_pixbuf;
     Glib::RefPtr<Gdk::Pixbuf> image;
-    int width, height;
+    int width, height, rowstride;
     float feImageX,feImageY,feImageWidth,feImageHeight;
 };
 

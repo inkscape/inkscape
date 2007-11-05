@@ -98,14 +98,12 @@ sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
-/* apparently there's no attribute to load here
-since 'in' and 'xlink:href' are common filter attributes.
---Juca
-*/
+
     sp_object_read_attr(object, "x");
     sp_object_read_attr(object, "y");
     sp_object_read_attr(object, "width");
     sp_object_read_attr(object, "height");
+    sp_object_read_attr(object, "xlink:href");
 
 }
 
@@ -131,6 +129,11 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
+	case SP_ATTR_XLINK_HREF:
+	    if (feImage->href) g_free(feImage->href);
+	    feImage->href = (value) ? g_strdup (value) : NULL;
+	    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
         case SP_ATTR_X:
             feImage->x.readOrUnset(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -209,6 +212,7 @@ static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, NR::Filter *
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);
     nr_image->set_region(sp_image->x, sp_image->y, sp_image->width, sp_image->height);
+    nr_image->set_href(sp_image->href);
 }
 
 /*
