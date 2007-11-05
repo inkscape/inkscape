@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-10-17 23:52+0200\n"
-"PO-Revision-Date: 2007-11-02 16:35+0700\n"
+"PO-Revision-Date: 2007-11-05 16:29+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
-"Language-Team: Khmer <en@li.org>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: 0\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../inkscape.desktop.in.h:1
@@ -4682,13 +4682,15 @@ msgstr "គុណភាព​បង្ហាញ​បានប្រើ​សម
 
 #: ../src/main.cpp:242
 msgid "DPI"
-msgstr "DPI"
+msgstr ""
+""
+"DPI"
 
 #: ../src/main.cpp:246
 msgid ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
 "corner)"
-msgstr "ឯកត្តា​អ្នកប្រើ SVG ត្រូវ​បាន​នាំចេញ​ (លំនាំ​ដើម​ជា​ ផ្ទាំងកំណាត់​ ; 0,0 ជ្រុង​ខាងឆ្វេង​ទាបជាង​)"
+msgstr "ផ្ទៃ​ដែល​បាននាំចេញ​នៅ​ក្នុង​ឯកតា​អ្នក​ប្រើ SVG (លំនាំ​ដើម​គឺផ្ទាំង​កំណាត់ ០,០ នៅ​ជ្រុង​ខាង​ឆ្វេង​ផ្នែក​ខាង​ក្រោម)"
 
 #: ../src/main.cpp:247
 msgid "x0:y0:x1:y1"
@@ -4700,17 +4702,17 @@ msgstr "តំបន់​ដែល​បាន​នាំចេញ​ជា​
 
 #: ../src/main.cpp:256
 msgid "Exported area is the entire canvas"
-msgstr "តំបន់​ដែល​បាននាំចេញជាតំបន់ត្រួតគ្នាទាំងមូល"
+msgstr "តំបន់​ដែល​បាន​នាំចេញគឺ​ជា​ផ្ទាំង​ក្រណាត់​ទាំងមូល"
 
 #: ../src/main.cpp:261
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
-msgstr "នាំចេញ​រូបភាព​ខ្ទាស់​ឆ្ពោះ​ទៅ​កាន់​តម្លៃ​ចំនួន​គត់​ដែល​ជិត​បំផុត​ (ក្នុង​ឯកត្តា​អ្នក​ប្រើ SVG )"
+msgstr "ខ្ទាស់​ផ្ទៃ​នាំចេញ​ទៅ​ក្រៅ​ទៅ​តម្លៃ​ចំនួន​គត់​ដែល​នៅ​ជិត​បំផុត (នៅ​ក្នុង​ឯកតា​អ្នក​ប្រើ SVG)"
 
 #: ../src/main.cpp:266
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
-msgstr "ទទឹង​រូបភាព​ត្រូវ​បាន​នាំចេញ ជា​ភីចសែល​ (បដិសេធ​នាំចេញ​ជា​-dpi)"
+msgstr "ទទឹង​រូបភាព​ដែល​បាន​នាំចេញ​គិត​ជា​ភីកសែល (បដិសេធ​ការ​នាំចេញ -dpi)"
 
 #: ../src/main.cpp:267
 msgid "WIDTH"
@@ -4718,7 +4720,7 @@ msgstr "ទទឹង​"
 
 #: ../src/main.cpp:271
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
-msgstr "កម្ពស់​រូបភាព​ត្រូវ​បាន​នាំចេញជា​ភីចសែល​ (នាំចេញ​ចេញ​ជា​- ត្រូវ​បានបដិសេធ​dpi)"
+msgstr "កម្ពស់​របស់​រូបភាព​ដែលបាន​នាំចេញ​គិត​ជា​ភីកសែល (បដិសេធការនាំចេញ-dpi)"
 
 #: ../src/main.cpp:272
 msgid "HEIGHT"
@@ -4726,7 +4728,7 @@ msgstr "កម្ពស់​"
 
 #: ../src/main.cpp:276
 msgid "The ID of the object to export"
-msgstr "នាំចេញ​លេខសម្គាល់​វត្ថុ​"
+msgstr "លេខសម្គាល់​របស់​វត្ថុ​ត្រូវ​នាំចេញ"
 
 #: ../src/main.cpp:277 ../src/main.cpp:370
 msgid "ID"
@@ -4736,25 +4738,23 @@ msgstr "លេខ​សម្គាល់"
 #. See "man inkscape" for details.
 #: ../src/main.cpp:283
 msgid "Export just the object with export-id, hide all others (only with export-id)"
-msgstr "នាំវត្ថុ​ចេញ​តាម​លេខសម្គាល់​ លាក់​វត្ថុ​ផ្សេងទៀត​ទាំងអស់​  (បាន​តែ​នាំចេញ​តាម​លេខសម្គាល់​)"
+msgstr "នាំចេញ​តែ​វត្ថុ​ដែល​មាន​លេខសម្គាល់​នាំចេញ លាក់​វត្ថុផ្សេងៗ​ទាំង​អស់ (តែ​ជា​មួយ​លេខសម្គាល់​នាំចេញ​ប៉ុណ្ណោះ)"
 
 #: ../src/main.cpp:288
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
-msgstr "រើ​ឈ្មោះ​អ្នកប្រើ​ត្រូវ​បាន​ទុកនិង ណែនាំពី​  DP ពេល​កំពុង​នាំ (ចេញបានតែ​នាំចេញ​តាម​លេខសមល់​់​d)"
+msgstr "ប្រើ​ឈ្មោះ​ឯកសារ​ដែល​បានផ្ទុក និង​ជំនួយ DPI នៅ​ពេល​នាំចេញ (តែ​ជា​មួយ​លេខសម្គាល់​នាំចេញ​ប៉ុណ្ណោះ)"
 
 #: ../src/main.cpp:293
 msgid "Background color of exported bitmap (any SVG-supported color string)"
-msgstr "ពណ៌​ផ្ទៃ​ខាងក្រោម​បាននាំចេញ​ជា​រូបភាព​ ( SVG-បាន​គាំទ្រ​នឹង ខ្សែអក្សរ​ពណ៌​នេះ )"
+msgstr "ពណ៌​ផ្ទៃ​ខាង​ក្រោយ​របស់​រូបភាព​ដែល​បាននាំចេញ (ខ្សែ​អក្សរ​ពណ៌​ដែល​បានគាំទ្រ​ដោយ ​SVG​)"
 
 #: ../src/main.cpp:294
 msgid "COLOR"
-msgstr "ពណ៌ "
+msgstr "ពណ៌"
 
 #: ../src/main.cpp:298
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
-msgstr ""
-"រូបភាព​ត្រូវ​បាននាំចេញ​ដែល​មាន​ផ្ទៃខាងក្រោយ​ស្រអាប់​ន​នាំចេញ​ជា​រូបភាព​ (either 0.0 to 1.0, or 1 "
-"to 255)"
+msgstr "ភាព​ស្រអាប់​ផ្ទៃ​ខាង​ក្រោយ​របស់​រូបភាព​ដែល​បាន​នាំចេញ (​០.០ ទៅ ១.០ ឬ ១​ ទៅ ២៥៥)"
 
 #: ../src/main.cpp:299
 msgid "VALUE"
@@ -4762,97 +4762,96 @@ msgstr "តម្លៃ​"
 
 #: ../src/main.cpp:303
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
-msgstr "នាំចេញ​ឯកសារ​ទៅ​ជា​ឯកសារ​ SVG ធម្មតា​ (គ្មាន sodipodi ឬ​ inkscape namespaces)"
+msgstr "នាំចេញ​ឯកសារ​ទៅ​ជា​ឯកសារ SVG ធម្មតា (sodipodi ឬ inkscape)"
 
 #: ../src/main.cpp:308
 msgid "Export document to a PS file"
-msgstr "នាំចេញឯកសារ​ជា​ឯកសារ​ PS "
+msgstr "នាំចេញ​ឯកសារ​ទៅ​ជា​ឯកសារ PS"
 
 #: ../src/main.cpp:313
 msgid "Export document to an EPS file"
-msgstr "នាំចេញ​ឯកសារ​ជាឯកសារ​ EPS"
+msgstr "នាំចេញ​ឯកសារ​ទៅ​ជា​ឯកសារ EPS"
 
 #: ../src/main.cpp:318
 msgid "Export document to a PDF file"
-msgstr "នាំចេញ​ឯកសារ​ជា​ឯកសារ​ PDF "
+msgstr "នាំចេញ​ឯកសារ​ទៅ​ជា​ឯកសារ PDF"
 
 #: ../src/main.cpp:324
-#, fuzzy
 msgid "Export document to an Enhanced Metafile (EMF) File"
-msgstr "នាំចេញ​ឯកសារ​ជាឯកសារ​ EPS"
+msgstr "នាំចេញ​ឯកសារ​ទៅ​ជា​ឯកសារ​មេតា​ដែល​បានធ្វើ​ឲ្យ​ប្រសើរ (EMF)"
 
 #: ../src/main.cpp:330
 msgid "Convert text object to paths on export (EPS)"
-msgstr "បម្លែង​វត្ថុ​អត្ថបទ​ទៅ​ផ្លូវនៅ​ពេល​នាំចេញ (EPS)"
+msgstr "បម្លែង​វត្ថុ​អត្ថបទ​ទៅជា​ផ្លូវ​នៅ​ពេល​នាំចេញ (EPS)"
 
 #: ../src/main.cpp:335
 msgid "Embed fonts on export (Type 1 only) (EPS)"
-msgstr ""
+msgstr "បានបង្កប់​ពុម្ពអក្សរ​នៅ​ពេល​នាំចេញ (តែ​សម្រាប់ Type 1) (EPS)"
 
 #: ../src/main.cpp:340
 msgid "Export files with the bounding box set to the page size (EPS)"
-msgstr "នាំចេញ​ឯកសារ​ ជាមួយ​ប្រអប់​ព្រំដែន​កំណត់​ទំហំទំ​ព័រ​  (EPS)"
+msgstr "នាំចេញ​ឯកសារ​ដែល​មាន​សំណុំ​ប្រអប់​ព្រំដែនទៅ​ទំហំ​​ទំព័រ (EPS)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:346
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
-msgstr "សម្របសម្រួល​សំណួរ​ X នៃ​ការគូរ​ឬ  បើ​វត្ថុ​បាន​បញ្ជាក់​ជាមួយ​លេខសម្គាល់​សំណួរ​"
+msgstr "កូអដោនេ X របស់​គំនូរ ប្រសិន​បើ​បានបញ្ជាក់ វត្ថុ​ដោយមាន --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:352
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
-msgstr "សម្របសម្រួល​សំណួរ​ Y នៃ​ការគូរ​ឬ  បើ​វត្ថុ​បាន​បញ្ជាក់​ជាមួយ​លេខសម្គាល់​សំណួរ​"
+msgstr "កូអដោនេ X របស់​គំនូរ ប្រសិន​បើ​បាន​បញ្ជាក់ វត្ថុ​ដោយមាន --query-id​"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:358
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
-msgstr "ទទឹង​នៃការគូរ​ ឬ បើ​វត្ថុ​ដែល​បាន​បញ្ជាក់​ជាមួយ​លេខសម្គាល់​"
+msgstr "ទទឹង​របស់​គំនូរ ប្រសិន​បើ​បាន​បញ្ជាក់ វត្ថុ​ដោយ​មាន --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:364
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
-msgstr "កម្ពស់​នៃការគូរ​ ឬ បើ​វត្ថុ​ដែល​បាន​បញ្ជាក់​ជាមួយ​លេខសម្គាល់​"
+msgstr "កម្ពស់​របស់គំនូរ ប្រសិន​បើ​បានបញ្ជាក់ វត្ថុ​ដោយ​មាន --query-id"
 
 #: ../src/main.cpp:369
 msgid "The ID of the object whose dimensions are queried"
-msgstr "លេខសម្គាល់​នៃ​វត្ថុ​ជា​វិមាត្រ​ដែល​ត្រូវ​បាន​សួរ​"
+msgstr "លេខសម្គាល់​របស់​វត្ថុ​ដែល​វិមាត្រ​របស់​វា​ត្រូវ​បាន​រក"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
 #: ../src/main.cpp:375
 msgid "Print out the extension directory and exit"
-msgstr "បោះពុម្ព​ផ្នែក​បន្ថែម​នៃ​ថត​ហើយ ចេញ "
+msgstr "បោះពុម្ព​ថត​ផ្នែក​បន្ថែម ហើយ​ចេញ"
 
 #: ../src/main.cpp:380
 msgid "Remove unused definitions from the defs section(s) of the document"
-msgstr "យក​និយមន័យ​ដែល​មិន​ប្រើ​ចេញ ពី សម័យ defs ​នៃ​ឯកសារ​"
+msgstr "យក​កា​រកំណត់​ដែលមិន​ប្រើ​ចេញ​ពី​ផ្នែក defs របស់​ឯកសារ"
 
 #: ../src/main.cpp:385
 msgid "List the IDs of all the verbs in Inkscape"
-msgstr ""
+msgstr "រាយ​លេខសម្គាល់​របស់​កិរិយា​នៅ​ក្នុង Inkscape"
 
 #: ../src/main.cpp:390
 msgid "Verb to call when Inkscape opens."
-msgstr ""
+msgstr "កិរិយាស័ព្ទ​ត្រូវ​ហៅ​នៅ​ពេល​បើក Inkscape ។"
 
 #: ../src/main.cpp:391
 msgid "VERB-ID"
-msgstr ""
+msgstr "លេខ​សម្គាល់​កិរិយា"
 
 #: ../src/main.cpp:395
 msgid "Object ID to select when Inkscape opens."
-msgstr ""
+msgstr "លេខ​សម្គាល់​វត្ថុ​ត្រូវ​ជ្រើស នៅ​ពេល​បើក Inkscape ។"
 
 #: ../src/main.cpp:396
 msgid "OBJECT-ID"
-msgstr ""
+msgstr "លេខសម្គាល់​វត្ថុ"
 
 #: ../src/main.cpp:597
 msgid ""
@@ -4862,25 +4861,25 @@ msgid ""
 msgstr ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
-"ជម្រើស​ដែល​អាច​រក​បាន​ ៖"
+"ជម្រើស​ដែល​មាន ៖"
 
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
 msgid "Unable to find verb ID '%s' specified on the command line.\n"
-msgstr ""
+msgstr "មិន​រក​​​លេខ​សម្គាល់​កិរិយា '%s' បាន​បញ្ជាក់​នៅ​លើ​បន្ទាត់​ពាក្យ​បញ្ជា ។\n"
 
 #: ../src/main-cmdlineact.cpp:61
 #, c-format
 msgid "Unable to find node ID: '%s'\n"
-msgstr ""
+msgstr "មិន​អាច​រក​លេខសម្គាល់​ថ្នាំង ៖ '%s'\n"
 
 #: ../src/menus-skeleton.h:17 ../src/ui/dialog/document-properties.cpp:97
 msgid "_New"
-msgstr "ថ្មី​"
+msgstr "ថ្មី"
 
 #: ../src/menus-skeleton.h:22
 msgid "Open _Recent"
-msgstr "បើក​ថ្មីៗ"
+msgstr "អ្វី​បាន​បើក​ថ្មីៗ"
 
 #: ../src/menus-skeleton.h:56
 msgid "_Edit"
@@ -4900,15 +4899,15 @@ msgstr "មើល"
 
 #: ../src/menus-skeleton.h:97
 msgid "_Zoom"
-msgstr "_ពង្រីក"
+msgstr "ពង្រីក"
 
 #: ../src/menus-skeleton.h:113
 msgid "_Display mode"
-msgstr "ប​បង្ហញ​របៀប​ "
+msgstr "បង្ហាញ​របៀប"
 
 #: ../src/menus-skeleton.h:122
 msgid "Show/Hide"
-msgstr "លាក់ ឬ ​បង្ហាញ​"
+msgstr "បង្ហាញ/លាក់"
 
 #: ../src/menus-skeleton.h:139
 msgid "_Layer"
@@ -4920,7 +4919,7 @@ msgstr "វត្ថុ"
 
 #: ../src/menus-skeleton.h:166
 msgid "Cli_p"
-msgstr "តម្បៀត​ខ្ទាស់​"
+msgstr "តម្បៀតខ្ទាស់"
 
 #: ../src/menus-skeleton.h:170
 msgid "Mas_k"
@@ -4959,16 +4958,16 @@ msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
 msgstr ""
-"<b>បញ្ជា(Ctrl)​</b> ៖ ប្រភេទ​ថ្នាំង​បិទ​បើក​ ខ្ទាស់​ចំណុច​ទាញ​របស់​មុំ​ ផ្លាស់ទី​ផ្តេក​ ឬ បញ្ឈរ​ដោយ​ប្រើ​ <b> "
-"បញ្ជា(Ctrl)​+ជំនួស​(Alt)</b>​៖ ទៅ​កាន់​ចំណុច​ទាញ​​យក​"
+"<b>បញ្ជា(Ctrl)</b> ៖ បិទ/បើក​ប្រភេទ​ថ្នាំង ខ្ទាស់​មុំ​ចំណុច​ទាញ ផ្លាស់ទី <b>បញ្ជា(Ctrl)"
+"+ជំនួស(Alt)</b> ៖ ផ្លាស់ទី​តាម​ចំណុច​ទាញ"
 
 #: ../src/node-context.cpp:184
 msgid "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
-msgstr "<b>ប្តូរ​</b> ៖ ការ​ជ្រើស​ថ្នាំង​បិទបើក​មិនកំពុង​ច​ខ្ទាស់ឡើយ​ន​ បង្វិ​ចំណុច​ទាញ​ទាំងពី​ីរ"
+msgstr "<b>ប្ដូរ(Shift)</b>​ ៖ បិទ/បើក​ការ​ជ្រើស​ថ្នាំង បិទ​ការ​ខ្ទាស់ បង្វិល​ចំណុច​ទាញ​ទាំង​ពីរ"
 
 #: ../src/node-context.cpp:185
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
-msgstr "<b>ជំនួស​</b> ៖ ចាក់​សោ​ប្រវែង​ចំណុច​ទាញ​​ដោយ​ប្រើ​ <b>បញ្ជា​(Ctrl)+ជំនួស​(Alt)</b> ៖ ទៅ​កាន់​ចំណុច​ទាញ​"
+msgstr "<b>ជំនួស(Alt)</b> ៖ ចាក់សោ​​ប្រវែង​ចំណុច​ទាញ <b>បញ្ជា(Ctrl)+ជំនួស(Alt)</b> ៖ ផ្លាស់ទី​តាម​ចំណុច​ទាញ"
 
 #: ../src/nodepath.cpp:630 ../src/seltrans.cpp:521
 msgid "Stamp"
@@ -4990,10 +4989,7 @@ msgstr "ផ្លាស់ទី​ថ្នាំង​"
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
-msgstr ""
-"<b>ចំណុច​ទាញ​ថ្នាំ​រាយ​ថ្នាំង​</b> ៖ អូស​រូប​ជា​ខ្សែកោង​ដោយ​ប្រើ​<b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទា់​មុំប្រើ "
-"<b>ជំនួស(Alt)​</b> ដើម្បី​ចាក់​សោ​ប្រវែង​ដោយ​ប្រើ​ <b>ប្តូរ(Shift)​</b> ដើម្ចំណុច​ទាញ​ទាំងពី​ ។ណោះស្រាយ​"
-"ទាំងពីរ​ ។"
+msgstr "<b>ចំណុច​ទាញ​ថ្នាំង</b> ៖ អូស​ដើម្បី​ធ្វើ​រូបរាង​ខ្សែកោង ដោយ​ប្រើយ<bបញ្ជា(>Ctr)l</b>ដើម្បី​ខ្ទាស់​មុំ​ដោយ​ប្រើh <bជំនួស(Alt)t</b>ដើម្បី​ចាក់សោ​ប្រវែង ដោយ​ប្រើ​h <bប្ដូរt</b>ដើម្បី​បង្វិល​ចំណុច​ទាញ​ទាំង​ពីរs"
 
 #: ../src/nodepath.cpp:1525
 msgid "Align nodes"
@@ -5013,12 +5009,12 @@ msgstr "បន្ថែម​ថ្នាំង​"
 
 #: ../src/nodepath.cpp:1780
 msgid "Break path"
-msgstr "ផ្លូវ​មិន​ត្រឹមត្រូវ​"
+msgstr "បំបែក​ផ្លូវ​"
 
 #: ../src/nodepath.cpp:1820 ../src/nodepath.cpp:1835 ../src/nodepath.cpp:1921
 #: ../src/nodepath.cpp:1936
 msgid "To join, you must have <b>two endnodes</b> selected."
-msgstr "ដើម្បីត​ភ្ជាប់​​ អ្នក​ត្រូវ​មាន​ <b>ចុង​ថ្នាំង​ពីរ​</b> ដែល​បានជ្រើសរួច​ ។"
+msgstr "ដើម្បី​ភ្ជាប់ អ្នក​ត្រូវ​តែ​ជ្រើស <b>ថ្នាំង​បញ្ចប់​ទាំង​ពីរ</b> ។"
 
 #: ../src/nodepath.cpp:1856
 msgid "Close subpath"
@@ -5026,7 +5022,7 @@ msgstr "បិទ​ផ្លូវ​រង​"
 
 #: ../src/nodepath.cpp:1908
 msgid "Join nodes"
-msgstr "តភ្ជាប់​ថ្នាំង​"
+msgstr "ភ្ជាប់​ថ្នាំង​"
 
 #: ../src/nodepath.cpp:1957
 msgid "Close subpath by segment"
@@ -5034,7 +5030,7 @@ msgstr "បិទ​ផ្លូវ​រង​តាម​ចម្រៀក​
 
 #: ../src/nodepath.cpp:2011
 msgid "Join nodes by segment"
-msgstr "តភ្ជាប់​ថ្នាំង​តាម​ចម្រៀក​"
+msgstr "ភ្ជាប់​ថ្នាំង​ដោយ​ចម្រៀក​"
 
 #: ../src/nodepath.cpp:2139 ../src/nodepath.cpp:2175 ../src/nodepath.cpp:2179
 msgid "Delete nodes"
@@ -5042,17 +5038,17 @@ msgstr "លុប​ថ្នាំង"
 
 #: ../src/nodepath.cpp:2141
 msgid "Delete nodes preserving shape"
-msgstr "លុប​ថ្នាំងការពារ​រូបរាង​"
+msgstr "លុប​ថ្នាំង​ការពារ​រូបរាង​"
 
 #: ../src/nodepath.cpp:2198 ../src/nodepath.cpp:2212
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
-msgstr "ជ្រើស​ <b>ថ្នាំង​ពី​ដែល​គ្មាន​ចុង​ចំណុច​</b> រវាង​ផ្លូវ​ដែល​បាន​លុប​ចម្រៀក​ ។"
+msgstr "ជ្រើស​ <b>ថ្នាំង​ពី​ដែល​គ្មាន​ចុង​ចំណុច​</b> នៅ​លើ​ផ្លូវ​​ដែល​បាន​លុប​ចម្រៀក​ ។"
 
 #: ../src/nodepath.cpp:2308
 msgid "Cannot find path between nodes."
-msgstr "មិនអាច​រក​ផ្លូវ​និង ថ្នាំង​បានឡើយ​​។"
+msgstr "មិនអាច​រក​ផ្លូវ ​និង​ថ្នាំង​រវាង​ថ្នាំង​បានឡើយ ​​។"
 
 #: ../src/nodepath.cpp:2340
 msgid "Delete segment"
@@ -5068,7 +5064,7 @@ msgstr "ផ្លាស់ប្តូរ​ប្រភេទ​ថ្នាំ
 
 #: ../src/nodepath.cpp:3368
 msgid "Retract handle"
-msgstr "ត្រឡប់​ចំណុច​ទាញ​ប់​"
+msgstr "ត្រឡប់​ចំណុចទាញ​"
 
 #: ../src/nodepath.cpp:3417
 msgid "Move node handle"
@@ -5080,10 +5076,7 @@ msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both "
 "handles"
-msgstr ""
-"<b>ចំណុច​ទាញ​ថ្នាំង​​ថ្នាំង​</b> ៖ មុំ​ %0.2f&#176;, មានប្រវែង​ %s; ប្រើ​ <b>បញ្ជា(Ctrl)</b> "
-"ដើម្បី​ខ្ទាស់​មុះ​ ប្រើ​ <b>ជំនួស​</b> ដើម្បី​ចាក់សោ​ប្រវែង​ ប្រើ <b>ប្តូរ(Shift)​</b> ដើម្បី​ចំណុច​ទាញ​"
-"ទាំងពីរ​ ។"
+msgstr "<b>ចំណុច​ទាញ​ថ្នាំង</b> ៖ មុំ %0.2f&#176;, ប្រវែង %s​ ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​ប្រើ​ <b>ជំនួស(Alt)</b> ដើម្បី​ចាក់សោ​ប្រវែង ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​បង្វិល​ចំណុច​ទាញ​ទាំង​ពីរ"
 
 #: ../src/nodepath.cpp:3751
 msgid "Rotate nodes"
@@ -5101,14 +5094,12 @@ msgstr "ត្រឡប់​ថ្នាំង​"
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
-msgstr ""
-"<b>ថ្នាំង​</b> ៖ ទាញ​ដើម្បី​កែសម្រូល​ផ្លូវ​ ប្រើ​ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់​ផ្តេក​ឬ បញ្ឈរ​ ប្រើ "
-"<b>បញ្ជា(Ctrl)​+ជំនួស​(Alt)</b> ដើម្បី​ខ្ទាស់​ទិស​ដៅ​របស់​ចំណុច​ទាញ​ ។"
+msgstr "<b>ថ្នាំង</b> ៖ អូស​ដើម្បី​កែសម្រួល​ផ្លូវ ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​ផ្ដេក/បញ្ឈរ ដោយ​ប្រើ <b>បញ្ជា(Ctrl)+ជំនួស(Alt)</b> ដើម្បី​ខ្ទាស់​ទិស​ចំណុច​ទាញ"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4323
 msgid "end node"
-msgstr "ចុង​ថ្នាំង​"
+msgstr "ថ្នាំង​ចុង​"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
 #: ../src/nodepath.cpp:4328
@@ -5127,15 +5118,15 @@ msgstr "មាន​សមប្បមាណ"
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4339
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
-msgstr "ចុង​ថ្នាំង​ត្រូវ​បាន​បព្រួញ​ចំណុច​ទាញ​ ( អូស​ដោយ​ប្រើ​ <b>ប្តូរ​</b> ដើម្បី​ពង្រីក​)"
+msgstr "ថ្នាំង​ចុង ចំណុច​ទាញ​បាន​ត្រឡប់ (អូស​ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បីពង្រីក)"
 
 #: ../src/nodepath.cpp:4341
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
-msgstr "ចំណុច​ទាញ មួយ​ត្រូវ​បាន​បព្រួញ​ (អូស​ដោយ​ប្រើ​ <b>ប្តូរ</b>ដើម្បី​ពង្រីក​)"
+msgstr "បាន​ត្រឡប់​ចំណុច​ទាញ​មួយ (ដោយ​ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​ពង្រីក)"
 
 #: ../src/nodepath.cpp:4344
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
-msgstr "ចំណុច​ទាញ​ទាំងពីរ​ត្រូវ​បាន​បព្រួញ​​ត្រូវ​បាន​​​ត្រឡប់​(អូសដោយ​ប្រើ​ <b>ប្តូរ​</b> ដើម្បីពង្រីក​)"
+msgstr "បាន​ត្រឡប់​ចំណុច​ទាញ​ទាំង​ពីរ (អូស​ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​ពង្រិក)"
 
 #: ../src/nodepath.cpp:4356
 msgid ""
@@ -5143,16 +5134,16 @@ msgid ""
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
 "rotate"
 msgstr ""
-"<b>អូស</b> ថ្នាំង ឬ​ចំណុច​ទាញ​ថ្នាំង <b>ជំនួស(Alt) + អូស</b> ដើម្បី​ឆ្លាក់ គ្រាប់​ចុច<b>ព្រួញ</b> "
-"ដើម្បី​ផ្លាស់ទី​ថ្នាំង <b>&lt; &gt;</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន <b>[ ]</b> ដើម្បី​បង្វិល"
+"<b>អូស</b> ថ្នាំង ឬ​ចំណុច​ទាញ​ថ្នាំ <b>ជំនួស(Alt)+អូស</b> ថ្នាំង​ទៅ​ចម្លាក់ "
+"គ្រាប់​ចុច​ <b>ព្រួញ</b> ដើម្បី​ផ្លាស់ទី​ថ្នាំង <b>&lt; &gt;</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន <b>[ ]</b> ដើម្បី​បង្វិល"
 
 #: ../src/nodepath.cpp:4357
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
-msgstr "<b>អូស​</b> ថ្នាំង​ឬ ចំណុច​ទាញ​ថ្នាំង​​របស់ប្រើ​គ្រាប់​<b>គ្រាប់​ចុច​ព្រួញ​</b> ដើម្បី​ផ្លាស់ទី​ថ្នាំង​"
+msgstr "<b>អូស</b> ថ្នាំង ឬ​ចំណុច​ទាញ​របស់​វា គ្រាប់​ចុច​<b>ព្រួញ</b> ដើម្បី​ផ្លាស់ទី​ថ្នាំង"
 
 #: ../src/nodepath.cpp:4380 ../src/nodepath.cpp:4392
 msgid "Select a single object to edit its nodes or handles."
-msgstr "ជ្រើស​វត្ថុ​មួយ​ដើម្បី​កែសម្រួល​ថ្នាំង​ឬ ចំណុច​ទាញ​ថ្នាំង​​របស់​វា​ ។"
+msgstr "ជ្រើស​វត្ថុ​មុំ​ដើម្បី​កែសម្រួល​ថ្នាំង ឬ​ចំណុច​ទាញ​របស់​វា ។"
 
 #: ../src/nodepath.cpp:4384
 #, c-format
@@ -5160,49 +5151,45 @@ msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
 msgstr ""
-"<b>0</b> អស់ <b>%i</b> ថ្នាំង​ដែល​បាន​ជ្រើស ។ <b>ចុច</b> <b>ប្ដូរ(Shift)+ ចុច</b> ឬ "
+"<b>០</b> អស់ <b>%i</b> ថ្នាំង​ដែល​បាន​ជ្រើស ។ <b>ចុច</b> <b>ប្ដូរ(Shift)+ចុច</b> ឬ "
 "<b>អូស​ជុំវិញ</b> ថ្នាំង​ដើម្បី​ជ្រើស ។"
 
 #: ../src/nodepath.cpp:4390
 msgid "Drag the handles of the object to modify it."
-msgstr "អូស​ដំណោះស្រាយ​នៃ​វត្ថុ​ដើម្បី​កែប្រែ​វា​ ។"
+msgstr "អូស​ចំណុច​ទាញ​របស់​វត្ថុ​ដើម្បី​កែសម្រួល​វា ។"
 
 #: ../src/nodepath.cpp:4398
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
-msgstr "<b>%i</b> នៃ <b>%i</b> ថ្នាំងបានជ្រើស %s. %s."
+msgstr "<b>%i</b> នៃ <b>%i</b> ថ្នាំង​បាន​ជ្រើស %s. %s."
 
 #: ../src/nodepath.cpp:4405
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr "<b>%i</b>  <b>%i</b>ថ្នាំង​ដែល​បានជ្រើស​ក្នុង​<b>%i</b>នៃ<b>%i</b>ផ្លូវ​រង​ %s ។"
+msgstr "<b>%i</b> នៃ <b>%i</b> ថ្នាំង​បាន​ជ្រើស​ក្នុង <b>%i</b> នៃ <b>%i</b> ផ្លូវ​រង ។ %s."
 
 #: ../src/nodepath.cpp:4411
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
-msgstr "<b>%i</b>នៃ<b>%i</b>ថ្នាំង​ដែលបានជ្រើស ​%s ​។"
+msgstr "<b>%i</b> នៃ <b>%i</b> ថ្នាំង​បាន​ជ្រើស​ ។ %s."
 
 #: ../src/object-edit.cpp:503
 msgid ""
 "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the "
 "vertical radius the same"
-msgstr ""
-"លៃតម្រូវ​<b>កាំផ្តេក​ធ្វើ​ឲ្យ​មាន​រាង​មូល​</b>ប្រើ<b>បញ្ជា(Ctrl)​</b>ដើម្បី​បង្កើត​កាំ​បញ្ឈរ​ដែល​មាន​"
-"លក្ខណៈស្រដៀង​គ្នា​"
+msgstr "លៃតម្រូវកាំ <b>ជ្រុង​មូល​ផ្ដេក</b> ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ធ្វើ​កាំបញ្ឈរ​ដូច​គ្នា"
 
 #: ../src/object-edit.cpp:509
 msgid ""
 "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the "
 "horizontal radius the same"
-msgstr "លៃ​តម្រូវ​កាំ <b>មូល​បញ្ឈរ</b> ដោយ​ប្រើ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ធ្វើ​កាំផ្ដេក​ឲ្យ​ដូចគ្នា"
+msgstr "លៃតម្រូវ <b>ជ្រុង​មូល​បញ្ឈរ</b> ដោយ​ប្រើ<b>បញ្ជា(Ctrl)</b> ដើម្បី​ធ្វើ​កាំ​ផ្ដេក​ដូច​គ្នា"
 
 #: ../src/object-edit.cpp:516 ../src/object-edit.cpp:523
 msgid ""
 "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to "
 "lock ratio or stretch in one dimension only"
-msgstr ""
-"លៃតម្រូវ​ <b>ទទឹង ​និង​កម្ពស់​​</b>ចតុកោណកែង​ ប្រើ​ <b>បញ្ជា(Ctrl)​</b> សម្រាប់​ចាក់សោ​សមាមាត្រ​ ឬ "
-"បាន​តែ​បង្ហាញ​ជា​វិមាត្រ​"
+msgstr "លៃតម្រូវ <b>ទទឹង និង​កម្ពស់</b> របស់​ចតុកោណ ដោយប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ចាក់សោ​កាំ ឬ​ពង្រីក​ក្នុង​មួយ​វិមាត្រ​ប៉ុណ្ណោះ"
 
 #: ../src/object-edit.cpp:833 ../src/object-edit.cpp:835
 #: ../src/object-edit.cpp:837 ../src/object-edit.cpp:839
@@ -5210,6 +5197,8 @@ msgid ""
 "Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with "
 "<b>Ctrl</b> to constrain to the directions of edges or diagonals"
 msgstr ""
+"ប្រអប់​ផ្លាស់ប្ដូរ​ទំហំ ក្នុង​ទិសដៅ X/Y ដោយ​ប្រើ <b>ប្ដូរ (Shift)</b> តាម​អ័ក្ស Z  ដោយ​ប្រើ"
+"​<b>បញ្ជា(Ctrl)</b> ដើម្បី​បង្ខំ​ទិស​ដៅ​របស់​គែម ឬអង្កត់​ទ្រូវ"
 
 #: ../src/object-edit.cpp:841 ../src/object-edit.cpp:843
 #: ../src/object-edit.cpp:845 ../src/object-edit.cpp:847
@@ -5217,69 +5206,59 @@ msgid ""
 "Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with "
 "<b>Ctrl</b> to constrain to the directions of edges or diagonals"
 msgstr ""
+"ប្រអប់ផ្លាស់ប្ដូរ​ទំហំតាម​អ័ក្ស Z ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> នៅ​ក្នុង​ទិស X/Y ដោយ​ប្រើ "
+"<b>បញ្ជា(Ctrl)</b> ដើម្បី​បង្ខំ​ទិស​ទៅ​ទិស​របស់គែម ឬ​អង្កត់​ទ្រូវ"
 
 #: ../src/object-edit.cpp:851
 msgid "Move the box in perspective."
-msgstr ""
+msgstr "ផ្លាស់ទី​ប្រអប់​ជា​យថាទស្សន៍ ។"
 
 #: ../src/object-edit.cpp:1027
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
-msgstr "លៃតម្រូវ <b>ទទឹង</b> រាង​ពង​ក្រពើ ដោយ​ប្រើ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​បង្កើត​រង្វង់"
+msgstr "លៃតម្រូវ​រាង​ពងក្រពើ <b>ទទឹង</b>​ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​បង្កើត​រង្វង់"
 
 #: ../src/object-edit.cpp:1030
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
-msgstr "លៃតម្រូវ​ <b>កម្ពស់​រាង​ពងក្រពើ​</b> ប្រើ <b>បញ្ជា​(Ctrl)​</b> ដើម្បី​បង្កើត​ជា​រង្វង់​"
+msgstr "លៃតម្រូវ​រាង​ពងក្រពើ <b>កម្ពស់</b> ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​បង្កើត​រង្វង់"
 
 #: ../src/object-edit.cpp:1033
 msgid ""
 "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
-msgstr ""
-"ទីតាំង​ <b>ចំណុច​ចាប់​ផ្តើម​</b> នៃធ្នូរ​ឬ ចម្រៀក​ ប្រើ​<b>បញ្ជា​(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ​ អូស​ "
-"<b>ខាងក្នុង</b> សម្រាប់​ធ្នូង​រាង​ពង​ក្រពើ​ ខាង​ក្រៅ​សម្រាប់​ចម្រៀក"
+msgstr "ទីតាំង<b>ចំណុច​ចាប់ផ្ដើម</b> របស់​ធ្នូ ឬ​ចម្រៀក ដោយ​ប្រើ<b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ អូស <b>ខាងក្នុង</b> រាង​ពងក្រពើ សម្រាប់​ធ្នូ <b>ខាង​ក្រៅ</b> សម្រាប់​ចម្រៀក"
 
 #: ../src/object-edit.cpp:1036
 msgid ""
 "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
-msgstr ""
-"ទីតាំង <b>ចំណុច​បញ្ចប់</b> របស់​ធ្នូ ឬ​ចម្រៀក ដោយ​ប្រើ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ អូស <b>ខាង​"
-"ក្នុង</b> រាង​ពង​ក្រពើ​សម្រាប់​ធ្នូ <b>ខាង​ក្រៅ​សម្រាប់</b> សម្រាប់​ចម្រៀក"
+msgstr "ទីតាំង <b>ចំណុច​ចុង</b> របស់​ធ្នូ ឬ​ចម្រៀក ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ អូស <b>ខាង​ក្នុង</b> រាង​ពងក្រពើ សម្រាប់​ធ្នូ <b>ខាង​ក្រៅ</b> សម្រាប់​ចម្រៀក"
 
 #: ../src/object-edit.cpp:1146
 msgid ""
 "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to "
 "round; with <b>Alt</b> to randomize"
-msgstr ""
-"លៃតម្រូវ <b>កាំ​ព័ត៌មាន​ជំនួយ</b> របស់​ផ្កាយ ឬ​ពហុកោណ ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​ធ្វើ​ឲ្យ​មូល "
-"ដោយ​ប្រើ <b>ជំនួស(Alt)</b> ដើម្បី​ធ្វើ​ដោយ​ចៃដន្យ"
+msgstr "លៃតម្រូវ <b>ជំនួយ​កាំ</b> របស់​រាង​ផ្កាយ ឬ​ពហុកោណ ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​ធ្វើ​ឲ្យ​មូល ដោយ​ប្រើ<b>ជំនួស(Alt)</b> ដើម្បី​ដោយ​ចៃដន្យ"
 
 #: ../src/object-edit.cpp:1149
 msgid ""
 "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star "
 "rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to "
 "randomize"
-msgstr ""
-"លៃតម្រូវ​ <b>មូលដ្ឋាន​កាំ​</b> នៃ​ផ្កាយ​ប្រើ <b>បញ្ជា​(Ctrl)​</b> ដើម្បី​រក្សា​កាំ​ (ដោយ​គ្មាន​ភាព វៀច​"
-"); ប្រើ​ <b>ប្តូរ​(Shift)</b> នៅ​ចំកណ្តាល​ប្រើ​ <b>ជំនួស​(Alt)​</b> ដើម្បី​ឲ្យ​បាន​ចៃ​ដន្យ​"
+msgstr "លៃតម្រូវ <b>កាំមូលដ្ឋាន</b> របស់​ផ្កាយ ដោយ​ប្រើ<b>បញ្ជា(Ctrl)</b> ដើម្បី​រក្សា​កាំផ្កាយ (គ្មានឆៀង) ដោយ​ប្រើ<b>ប្ដូរ​ដើម្បីធ្វើ​ឲ្យ​មូល</b> ដោយ​ប្រើ <b>ជំនួស(Alt)</b> ដើម្បីធ្វើ​ចៃដន្យ"
 
 #: ../src/object-edit.cpp:1313
 msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
-msgstr ""
-"រមូរ/មិន​រមូរ​គួច​ពី <b>ខាង​ក្នុង</b> ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ <b>ជំនួស(Alt)"
-"</b> ដើម្បី​ប្រសព្វគ្នា/មិន​ប្រសព្វគ្នា"
+msgstr "រមូរ/មិនរមូរ​គួច​ពី <b>ខាង​ក្នុង</b> ដោយ​ប្រើ<b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​ប្រើ <b>ជំនួស(Alt)</b> ដើម្បីធ្វើ​ឲ្យ​ជួបគ្នា/ឃ្លា​ពី​គ្នា"
 
 #: ../src/object-edit.cpp:1315
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate"
-msgstr ""
-"រមូរ/មិន​រមូរ​គួច​ពី <b>ខាងក្រៅ</b> ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​ប្រើ <b>ប្ដូរ"
-"(Shift)</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន/បង្វិល"
+msgstr "រមូរ/មិន​រមូរ​គួច​ពី <b>ខាងក្រៅ</b> ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​ធ្វើ​មាត្រដ្ឋាន/បង្វិល"
 
 #: ../src/object-edit.cpp:1352
 msgid "Adjust the <b>offset distance</b>"
@@ -5288,7 +5267,7 @@ msgstr "លៃតម្រូវ​<b>ចម្ងាយ​អុហ្វសិ
 #. TRANSLATORS: This refers to the pattern that's inside the object
 #: ../src/object-edit.cpp:1382
 msgid "<b>Move</b> the pattern fill inside the object"
-msgstr "<b>ផ្លាស់ទី​</b>បំពេញ​លំនាំ​ក្នុង​វត្ថុ​"
+msgstr "<b>ផ្លាស់ទី​</b>បំពេញ​លំនាំខាង​​ក្នុង​វត្ថុ​"
 
 #: ../src/object-edit.cpp:1384
 msgid "<b>Scale</b> the pattern fill uniformly"
@@ -5296,28 +5275,27 @@ msgstr "<b>ធ្វើមាត្រដ្ឋាន​</b> បំពេញ​�
 
 #: ../src/object-edit.cpp:1386
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr "<b>បង្វិល​</b>បំពេញ លំនាំ​ប្រើ​<b>បញ្ជា(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ​"
+msgstr "<b>បង្វិល​</b>បំពេញ​លំនាំ​ ដោយ​ប្រើ​<b>បញ្ជា(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ​"
 
 #: ../src/object-edit.cpp:1411
 msgid "Drag to resize the <b>flowed text frame</b>"
-msgstr "អូស​ដើម្បី​ប្តូរ​ទំហំ  <b>ឆ្លង​កាត់​ស៊ុម​អត្ថបទ​</b>"
+msgstr "អូស​ដើម្បី​ផ្លាស់ប្ដូរ​​ទំហំ  <b>ឆ្លង​កាត់​ស៊ុម​អត្ថបទ​</b>"
 
 #: ../src/path-chemistry.cpp:58
 msgid "Select <b>at least two objects</b> to combine."
-msgstr "ជ្រើស​ <b>វត្ថុ​យ៉ាង​ហោច​មួយ​</b> ដើម្បី​រាប់​ផ្សំ​ចូ​លគ្នា​។"
+msgstr "ជ្រើស<b>វត្ថុ​យ៉ាង​ហោច​ពីរ​​</b> ដើម្បី​រាប់​ផ្សំ​ចូ​លគ្នា  ។"
 
 #: ../src/path-chemistry.cpp:65
 msgid "At least one of the objects is <b>not a path</b>, cannot combine."
-msgstr "យ៉ាងហោច​ក៏មាន​វត្ថុ​មួយ​ <b>ដែល​មិន​មែន​ជា​ផ្លូវ​</b>មិន​អាច​ផ្សំ​ចូល​គ្នា​បាន​ទេ​ ។"
+msgstr "យ៉ាង​ហោច​ក៏មាន​វត្ថុ​មួយក្នុង​ចំណោម​វត្ថុ​ <b>ដែល​មិន​មែន​ជា​ផ្លូវ​</b>មិន​អាច​ផ្សំ​ចូល​គ្នា​បាន​ទេ ។"
 
 #: ../src/path-chemistry.cpp:73
 msgid "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
-msgstr "អ្នក​មិន​អាច​ផ្សំ​វត្ថុ​ចូលគ្នា​ <b>ដែល​បាន​មកពី​ក្រុម​ផ្សេង​គ្នា​នោះ​ទេ​</b> ឬ <b>ស្រទាប់</b> ។"
+msgstr "អ្នក​មិន​អាច​ផ្សំ​វត្ថុ​ពី<b>ក្រុម</b> ឬ <b>ស្រទាប់</b> ផ្សេង ។"
 
 #: ../src/path-chemistry.cpp:78
-#, fuzzy
 msgid "Combining paths..."
-msgstr "កំពុង​បិទ​ផ្លូវ​ ។"
+msgstr "កំពុង​ផ្សំ​ផ្លូវ​ចូល​គ្នា..."
 
 #: ../src/path-chemistry.cpp:146
 msgid "Combine"
@@ -5325,90 +5303,82 @@ msgstr "ផ្សំ"
 
 #: ../src/path-chemistry.cpp:161
 msgid "Select <b>path(s)</b> to break apart."
-msgstr "ជ្រើស​ <b>ផ្លូវ​</b> ដើម្បី​បំបែក​ជា​ផ្នែក​"
+msgstr "ជ្រើស<b>ផ្លូវ</b> ត្រូវ​បំបែកជា​​ផ្នែក ។"
 
 #: ../src/path-chemistry.cpp:165
-#, fuzzy
 msgid "Breaking apart paths..."
-msgstr "បំបែក​ជា​ផ្នែក​"
+msgstr "កំពុង​បំបែក​ផ្លូវជា​​ផ្នែក..."
 
 #: ../src/path-chemistry.cpp:246
-#, fuzzy
 msgid "Break apart"
-msgstr "បំបែក​ជា​ផ្នែក​"
+msgstr "បំបែកជា​​ផ្នែក​"
 
 #: ../src/path-chemistry.cpp:248
 msgid "<b>No path(s)</b> to break apart in the selection."
-msgstr "<b>គ្មានផ្លូវ​​​</b> ដើម្បី​បំបែក​​ជា​ផ្នែក​ក្នុង​ជម្រើស ។"
+msgstr "<b>គ្មាន​ផ្លូវ</b> ត្រូវ​បំបែក​ជា​ផ្នែក​នៅ​ក្នុង​ជម្រើស ។"
 
 #: ../src/path-chemistry.cpp:269
 msgid "Select <b>object(s)</b> to convert to path."
-msgstr "ជ្រើស​ <b>វត្ថុ​</b>ដើម្បី​បម្លែង​ទៅ​ជា​ផ្លូវ​ ។"
+msgstr "ជ្រើស <b>វត្ថុ</b> ដើម្បី​បម្លែង​ទៅ​ជា​ផ្លូវ ។"
 
 #: ../src/path-chemistry.cpp:275
-#, fuzzy
 msgid "Converting objects to paths..."
-msgstr "បម្លែង​អត្ថបទ​ទៅ​ជា​ផ្លូវ​"
+msgstr "កំពុង​បម្លែង​វត្ថុ​ទៅជា​ផ្លូវ..."
 
 #: ../src/path-chemistry.cpp:335
-#, fuzzy
 msgid "Object to path"
-msgstr "វត្ថុ​សម្រាប់​ផ្លូវ​"
+msgstr "វត្ថុ​ទៅ​ផ្លូវ​"
 
 #: ../src/path-chemistry.cpp:337
 msgid "<b>No objects</b> to convert to path in the selection."
-msgstr "<b>គ្មាន​វត្ថុ​</b> សម្រាប់​បម្លែង​ទៅ​ជា​ផ្លូវ​ក្នុង​ការជ្រើស​ឡើយ​េ​ ។"
+msgstr "<b>គ្មាន​វត្ថុ</b> ដើម្បី​បម្លែង​ទៅ​ផ្លូវ​នៅ​ក្នុ​ងជម្រើស ។"
 
 #: ../src/path-chemistry.cpp:400
 msgid "Select <b>path(s)</b> to reverse."
-msgstr "ជ្រើស​ <b>ផ្លូវ​(s)</b> ដាក់បញ្ច្រាស់​"
+msgstr "ជ្រើស<b>ផ្លូវ</b> ត្រូវ​ត្រឡប់ ។"
 
 #: ../src/path-chemistry.cpp:409
-#, fuzzy
 msgid "Reversing paths..."
-msgstr "ដាក់​បញ្ច្រាស់​"
+msgstr "កំពុង​ដាក់​បញ្ច្រាស​ផ្លូវ..."
 
 #: ../src/path-chemistry.cpp:432
-#, fuzzy
 msgid "Reverse path"
-msgstr "ដាក់​បញ្ច្រាស់​"
+msgstr "ដាក់​បញ្ច្រាស់​​ផ្លូវ"
 
 #: ../src/path-chemistry.cpp:434
 msgid "<b>No paths</b> to reverse in the selection."
-msgstr "<b>គ្មាន​ផ្លូវ​</b> ដើម្បី​បញ្ច្រាស់​ជម្រើស​ឡើយ​ ។"
+msgstr "<b>គ្មាន​ផ្លូវ</b> ត្រូវ​ដាក់​បញ្ច្រាស​ក្នុង​​ជម្រើស ។"
 
 #: ../src/pen-context.cpp:224 ../src/pencil-context.cpp:438
 msgid "Drawing cancelled"
-msgstr "ការគូរ​បាន​បោះបង់​ចោល​"
+msgstr "បាន​បោះបង់​គំនូរ"
 
 #: ../src/pen-context.cpp:417 ../src/pencil-context.cpp:228
 msgid "Continuing selected path"
-msgstr "កំពុង​បន្ត​ផ្លូវ​ដែល​បាន​ជ្រើស​"
+msgstr "បន្តផ្លូវ​ដែល​បាន​ជ្រើស"
 
 #: ../src/pen-context.cpp:428 ../src/pencil-context.cpp:237
 msgid "Creating new path"
-msgstr "បង្កើត​ផ្លូវ​ថ្មី "
+msgstr "បង្កើត​ផ្លូវ​ថ្មី"
 
 #: ../src/pen-context.cpp:432 ../src/pencil-context.cpp:241
 msgid "Appending to selected path"
-msgstr "បន្ថែម​ផ្លូវ​ដែល​បាន​ជ្រើស​"
+msgstr "បន្ថែម​ទៅ​ផ្លូវ​ដែល​បាន​ជ្រើស"
 
 #: ../src/pen-context.cpp:592
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
-msgstr "<b>ចុច​</b> ឬ <b>ចុច​ហើយ​អូស​</b>ដើម្បី​បិទ​ហើយ​បញ្ចប់​ផ្លូវ​ ។"
+msgstr "<b>ចុច</b> ឬ <b>ចុច និង​អូស</b> ដើម្បី​បិទ​ និង​បញ្ចប់​ផ្លូវ ។"
 
 #: ../src/pen-context.cpp:602
 msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr "<b>ចុច</b> ឬ <b>ចុច​ហើយ​អូស​</b> ដើម្បី​បន្ត​ផ្លូវ​ពី​ចំណុច​នេះ​ ​។"
+msgstr "<b>ចុច</b> ឬ <b>ចុច និង​អូស</b> ដើម្បី​បន្ត​ផ្លូវ​ពី​ចំណុច​នេះ ។"
 
 #: ../src/pen-context.cpp:1101
 #, c-format
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, "
 "<b>Enter</b> to finish the path"
-msgstr ""
-"<b>%s</b> ៖ មុំ​ %3.2f&#176;, ចម្ងាយ %s; ជាមួយ​ <b>បញ្ជា(Ctrl)​</b>ដើម្បី​ខ្ទាស់​មុំ​<b>បញ្ចូល​ "
-"(Enter)</b> ដើម្បី​បញ្ចប់​ផ្លូវ​"
+msgstr "<b>%s</b> ៖ មុំ %3.2f&#176;, ចម្ងាយ %s; ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ គ្រាប់ចុច​ <b>បញ្ចូល</b> ដើម្បី​បញ្ចប់​ផ្លូវ"
 
 #: ../src/pen-context.cpp:1126
 #, c-format
@@ -5422,30 +5392,28 @@ msgstr "<b>គ្រប់គ្រង​ខ្សែ​កោង​</b> ៖ �
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, "
 "with <b>Shift</b> to move this handle only"
-msgstr ""
-"<b>%s</b> ៖ មុំ %3.2f&#176;, ប្រវែង %s; ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​"
-"ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​ផ្លាស់ទី​តែ​ចំណុចទាញ​នេះ​ប៉ុណ្ណោះ"
+msgstr "<b>%s</b> ៖ មុំ %3.2f&#176;, ប្រវែង %s ដោយ​ប្រើ <b>បញ្ជា​(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​ប្រើ​ <b>ប្ដូរ(Shift)</b> ដើម្បីផ្លាស់ប្ដូ​ចំណុច​ទាញ​នេះ"
 
 #: ../src/pen-context.cpp:1192
 msgid "Drawing finished"
-msgstr "ការគូរ​បានបញ្ចប់​"
+msgstr "បាន​បញ្ចប់​ការ​គូរ​"
 
 #: ../src/pencil-context.cpp:317
 msgid "<b>Release</b> here to close and finish the path."
-msgstr "<b>ចេញ​ផ្សាយ​</b> ទីនេះ​ដើម្បី​បិទ​ហើយ​ បញ្ចប់​ផ្លូវ​ ។"
+msgstr "<b>លែង</b> កន្លែង​ដើម្បី​បិទ និង​បញ្ចប់​ផ្លូវ ។"
 
 #: ../src/pencil-context.cpp:323
 msgid "Drawing a freehand path"
-msgstr "ការគូរ​ផ្លូវ​តាម​ចិត្ត"
+msgstr "គូរ​ផ្លូវ​ដោយ​សេរី"
 
 #: ../src/pencil-context.cpp:328
 msgid "<b>Drag</b> to continue the path from this point."
-msgstr "<b>អូស​</b> ដើម្បី​បន្ត​ផ្លូវ​ពី​ចំណុច​នេះ  ។"
+msgstr "<b>អូស</b> ដើម្បី​បន្ត​ផ្លូវ​ពី​ចំណុច​នេះ ។"
 
 #. Write curves to object
 #: ../src/pencil-context.cpp:387
 msgid "Finishing freehand"
-msgstr "កំពុង​បញ្ចប់​ដោយ​ស៊េរី​"
+msgstr "បញ្ចប់​ដោយ​សេរី"
 
 #: ../src/preferences.cpp:59
 #, c-format
@@ -5453,7 +5421,7 @@ msgid ""
 "%s is not a valid preferences file.\n"
 "%s"
 msgstr ""
-"%s ជាឯកសារ​ចំណូល​ចិត្ត​ដែល​មិន​ត្រឹមត្រូវ​ ។\n"
+"%s មិន​មែន​ជា​ឯកសារ​ចំណូច​ចិត្ត​ត្រឹមត្រូវ ។\n"
 "%s"
 
 #: ../src/preferences.cpp:60
@@ -5461,69 +5429,63 @@ msgid ""
 "Inkscape will run with default settings.\n"
 "New settings will not be saved."
 msgstr ""
-"Inkscape នឹងរត់​ការកំណត់​លំនាំដើម ។​\n"
-"ការកំណត់​ថ្មី​នឹង មិន​ត្រូវ​បានរក្សាទុក​ ។"
+"Inkscape នឹង​រត់​ដោយ​ប្រើការ​កំណត់​លំនាំដើម ។\n"
+"ការ​កំណត់​ថ្មី​នឹង​មិន​ត្រូវ​បាន​រក្សាទុកទេ ។"
 
 #: ../src/print.cpp:152
-#, fuzzy
 msgid "Print"
-msgstr "ចំណុច"
+msgstr "បោះពុម្ពុច"
 
 #: ../src/print.cpp:202
-#, fuzzy, c-format
+#, c-format
 msgid "Could not set print source: %s"
-msgstr "មិន​អាច​នាំចេញ​ជា​ឈ្មោះ​ឯកសារ​ %s បាន​ឡើយ​ ។\n"
+msgstr "មិន​អាច​កំណត់​ប្រភព​បោះពុម្ព ៖ %s"
 
 #: ../src/print.cpp:202 ../src/print.cpp:246
-#, fuzzy
 msgid "unknown error"
-msgstr "មិន​ស្គាល់"
+msgstr "មិន​ស្គាល់​កំហុស"
 
 #: ../src/print.cpp:207
 #, c-format
 msgid "Printer '%s' does not support PS output"
-msgstr ""
+msgstr "ម៉ាស៊ីន​បោះពុម្ព '%s' មិនគាំទ្រ​លទ្ធផល PS ទេ"
 
 #. since we didn't include the Preview capability,
 #. this should never happen.
 #: ../src/print.cpp:213
-#, fuzzy
 msgid "Print Preview not available"
-msgstr "មើល​មុន​បោះពុម្ព"
+msgstr "មិន​អាច​មើល​កា​របោះពុម្ព​​ជា​មុន"
 
 #: ../src/print.cpp:245
 #, c-format
 msgid "Failed to create tempfile for printing: %s"
-msgstr ""
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ឯកសារ​បណ្ដោះ​អាសន្ន​ដើម្បី​បោះពុម្ព ៖ %s"
 
 #: ../src/print.cpp:290
-#, fuzzy
 msgid "SVG Document"
-msgstr "រក្សាទុក​​ឯកសារ"
+msgstr "ឯកសារ SVG"
 
 #: ../src/rect-context.cpp:378
 msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
-msgstr "<b>បញ្ជា​(Ctrl)</b> ៖ បង្កើត​ការេ​ឬ សមាមាត្រ​ចំនួន​គត់ ចាក់សោ​ជ្រុងមូល"
+msgstr "<b>បញ្ជា(Ctrl)</b> ៖ បង្កើត​ការ៉េ ឬ​ចតុកោណកែង​កាំ​ចំនួន​គត់ ចាក់សោ​រង្វង់​ជ្រុង​មូល"
 
 #: ../src/rect-context.cpp:503
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</"
 "b> to draw around the starting point"
 msgstr ""
-"<b>ចតុកោណកែង</b>: %s &#215; %s;ប្រើ​ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​បង្កើត​ការេឬ សមាមាត្រ​"
-"ចតុកោណកែង​ចំនួនគត់ប្រើ <b>ប្តូរ(Shift)​</b> ដើម្បីគូរ​ជុំវិញ​ចំណុច​ចាប់ផ្តើម​"
+"<b>ចំតុកោណកែង</b> ៖ %s &#215; %s (បាន​បង្ខំ​ទៅ​កាំ %d:%d) ដោយ​ប្រើ<b>ប្ដូរ(Shift)</"
+"b> ដើម្បីគូរ​ជុំវិញ​ចំណុច​ចាប់ផ្ដើម"
 
 #: ../src/rect-context.cpp:505
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio rectangle; with <b>Shift</b> to draw around the starting point"
-msgstr ""
-"<b>ចតុកោណកែង</b>: %s &#215; %s;ប្រើ​ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​បង្កើត​ការេឬ សមាមាត្រ​"
-"ចតុកោណកែង​ចំនួនគត់ប្រើ <b>ប្តូរ(Shift)​</b> ដើម្បីគូរ​ជុំវិញ​ចំណុច​ចាប់ផ្តើម​"
+msgstr "<b>ចតុកោណកែង</b> ៖ %s &#215; %s ដោយ​ប្រើ <b>បញ្ជា(Ctrl)​</b> ដើម្បី​បង្កើត​ការ៉េ ឬ​ចតុកោណកែង​កាំ​ចំនួន​គត់ ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​៿គូរ​ជុំវិញ​ចំណុច​ចាប់ផ្ដើម"
 
 #: ../src/rect-context.cpp:526
 msgid "Create rectangle"
@@ -5531,50 +5493,47 @@ msgstr "បង្កើត​ចតុកោណកែង​"
 
 #: ../src/select-context.cpp:227
 msgid "Move canceled."
-msgstr "ផ្លាស់ទី​ត្រូវ​បានបោះបង់​ ។"
+msgstr "បាន​បោះបង់​ការ​ផ្លាស់ទី ។"
 
 #: ../src/select-context.cpp:235
 msgid "Selection canceled."
-msgstr "ការជ្រើស​ត្រូវ​បានបោះបង់​​។"
+msgstr "បាន​បោះបង់​ការ​ជ្រើស ។"
 
 #: ../src/select-context.cpp:534
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
-msgstr ""
+msgstr "<b>គូរ​លើ</b> វត្ថុ​ដើម្បីជ្រើសពួកវា លែង <b>ជំនួស(Alt)</b> ដើម្បី​ប្ដូរ​ទៅ​ជា​ជម្រើស​ជ័រលុប"
 
 #: ../src/select-context.cpp:536
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
-msgstr ""
+msgstr "<b>អូស​ជុំវិញ</b> វត្ថុ ដើម្បីជ្រើស​ពួកវា ចុច <b>ជំនួស(Alt)</b> ដើម្បី​ប្ដូរ​ទៅ​ជម្រើស​ប៉ះ"
 
 #: ../src/select-context.cpp:696
-#, fuzzy
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
-msgstr "<b>បញ្ជា​(Ctrl)</b> ៖ ជ្រើស​ក្នុង​ក្រុម​ ផ្លាស់ទី​ផ្តេក​ឬ បញ្ឈរ​"
+msgstr "<b>បញ្ជា(Ctrl)</b> ៖ ចុច​ដើម្បី​ជ្រើស​ក្នុង​ក្រុម អូស​ដើម្បី​ផ្លាស់ទី"
 
 #: ../src/select-context.cpp:697
-#, fuzzy
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
-msgstr "<b>ប្តូរ​</b> ៖ ជ្រើស​បិទបើក​ បង្ខំ​កៅស៊ូកង់ បិទការខ្ទាស់"
+msgstr "<b>ប្ដូរ(Shift)</b> ៖ ចុច​ដើម្បីបិទបើក​ការ​ជ្រើស អូស​សម្រាប់​ជម្រើស​ជ័រលុប"
 
 #: ../src/select-context.cpp:698
-#, fuzzy
 msgid "<b>Alt</b>: click to select under; drag to move selected or select by touch"
-msgstr "<b>ជំនួស</b> ៖ ជ្រើស​ក្រោម​ ផ្លាស់ទីអ្វី​​ដែល​បាន​ជ្រើ​ស"
+msgstr "<b>ជំនួស(Alt)</b> ៖ ចុច​ដើម្បីជ្រើស​​ខាង​ក្រោម អូដ​ដើម្បី​ផ្លាស់ទី​អ្វី​ដែល​បាន​ជ្រើស ឬ​ជ្រើស​ដោយ​ប៉ះ"
 
 #: ../src/select-context.cpp:848
 msgid "Selected object is not a group. Cannot enter."
-msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​មិននៅ​​ជា​ក្រុម​ទេ​ មិន​អាច​បញ្ចូលបានឡើយ​ ។"
+msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​មិនមែន​ជា​ក្រុមទេ ។ មិន​អាច​ដាក់​កណ្ដាល ។"
 
 #: ../src/selection-chemistry.cpp:227
 msgid "Delete text"
-msgstr "លុប​អត្ថបទ​"
+msgstr "លុប​អត្ថបទ"
 
 #: ../src/selection-chemistry.cpp:235
 msgid "<b>Nothing</b> was deleted."
-msgstr "<b>លុប​ទទេ​</b>   ។"
+msgstr "<b>គ្មាន​អ្វី</b> ត្រូវ​បានលុប ។"
 
 #: ../src/selection-chemistry.cpp:253 ../src/text-context.cpp:994
 #: ../src/widgets/toolbox.cpp:817
@@ -5583,16 +5542,15 @@ msgstr "លុប​"
 
 #: ../src/selection-chemistry.cpp:268
 msgid "Select <b>object(s)</b> to duplicate."
-msgstr "ជ្រើស​ <b>វត្ថុ</b> ដែល​ស្ទួន​"
+msgstr "ជ្រើស​ <b>វត្ថុ</b> ត្រូ​វដាក់​​ស្ទួន​"
 
 #: ../src/selection-chemistry.cpp:318
 msgid "Delete all"
-msgstr "លុបទាំងអស់"
+msgstr "លុប​ទាំងអស់"
 
 #: ../src/selection-chemistry.cpp:442
-#, fuzzy
 msgid "Select <b>some objects</b> to group."
-msgstr "ជ្រើស​ <b>វត្ថុ​ពីរ ឬ ច្រើន​</b> ដើម្បីបង្កើត​ជា​ក្រុម​ ។"
+msgstr "ជ្រើស<b>វត្ថុ​មួយ​ចំនួន</b> ដើម្បី​ដាក់​ជា​ក្រុម ។"
 
 #: ../src/selection-chemistry.cpp:515 ../src/selection-describer.cpp:50
 msgid "Group"
@@ -5600,11 +5558,11 @@ msgstr "ក្រុម"
 
 #: ../src/selection-chemistry.cpp:530
 msgid "Select a <b>group</b> to ungroup."
-msgstr "ជ្រើស​ <b>ជា​​ក្រុម​</b>បំបែក​ក្រុម."
+msgstr "ជ្រើស<b>ក្រុម</b> ដើម្បី​បំបែក​ក្រុម ។"
 
 #: ../src/selection-chemistry.cpp:571
 msgid "<b>No groups</b> to ungroup in the selection."
-msgstr "<b>គ្មាន​ក្រុម​</b> ក្នុង​ការជ្រើស​បំបែក​ក្រុម​ ។"
+msgstr "<b>គ្មាន​ក្រុម</b> ត្រូវ​បំបែក​នៅ​ក្នុង​ជម្រើស ។"
 
 #: ../src/selection-chemistry.cpp:577 ../src/sp-item-group.cpp:444
 msgid "Ungroup"
@@ -5612,16 +5570,16 @@ msgstr "បំបែក​ក្រុម​"
 
 #: ../src/selection-chemistry.cpp:639
 msgid "Select <b>object(s)</b> to raise."
-msgstr "ជ្រើស​ <b>វត្ថុ​</b> ដែល​លើក​ឡើង​ ។"
+msgstr "ជ្រើស <b>វត្ថុ</b> ដើម្បី​លើកឡើង​លើ ។"
 
 #: ../src/selection-chemistry.cpp:645 ../src/selection-chemistry.cpp:705
 #: ../src/selection-chemistry.cpp:740 ../src/selection-chemistry.cpp:805
 msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
-msgstr "អ្នកមិន​អាច​លើ្ថុ​ ឬ ធ្វើ​វត្ថុ​ឲ្យ​ទាបជាង​ពី<b> ក្ផ្សេង​គ្នា​រុម</b> ឬ  <b>ស្រទាប់</b>ខុសគ្នា​ឡើយ​ ។"
+msgstr "អ្នក​មិន​អាច​លើក​វត្ថុ​ឡើង​លើ/ដាក់​ចុះ​ពី​<b>ក្រុម</b> ឬ <b>ស្រទាប់</b>ផ្សេង ​​។"
 
 #: ../src/selection-chemistry.cpp:697
 msgid "Select <b>object(s)</b> to raise to top."
-msgstr "ជ្រើស​ <b>វត្ថុ​</b> ដើម្បី​លើក​ឡើង​ទៅ​កំពូល​ ។"
+msgstr "ជ្រើស <b>វត្ថុ</b> ត្រូវ​លើកឡើង​ទៅ​កំពូល ។"
 
 #: ../src/selection-chemistry.cpp:720
 msgid "Raise to top"
@@ -5629,7 +5587,7 @@ msgstr "លើក​ឡើង​ទៅ​កំពូល​"
 
 #: ../src/selection-chemistry.cpp:734
 msgid "Select <b>object(s)</b> to lower."
-msgstr "ជ្រើស​ <b>វត្ថុ​</b> ដែល​ទាបជាង​"
+msgstr "ជ្រើស<b>វត្ថុ</b> ត្រូវ​ដាក់​ចុះ ។"
 
 #: ../src/selection-chemistry.cpp:784
 msgid "Lower"
@@ -5637,23 +5595,23 @@ msgstr "ទាប​ជាង"
 
 #: ../src/selection-chemistry.cpp:797
 msgid "Select <b>object(s)</b> to lower to bottom."
-msgstr "ជ្រើស​ <b>វត្ថុ​</b> ដែល​ទាប​ជាង​នៅ​បាត ។"
+msgstr "ជ្រើស​ <b>វត្ថុ​</b> ត្រូវ​ដាក់​ទៅ​បាត ។"
 
 #: ../src/selection-chemistry.cpp:832
 msgid "Lower to bottom"
-msgstr "ទាបជាង​បាត​"
+msgstr "ទាប​ជាង​ទៅ​បាត​"
 
 #: ../src/selection-chemistry.cpp:839
 msgid "Nothing to undo."
-msgstr "គ្មាន​អ្វី ដែល​មិនធ្វើ​ឡើង​វិញ"
+msgstr "គ្មាន​អ្វី​មិន​ធ្វើ​វិញ ។"
 
 #: ../src/selection-chemistry.cpp:846
 msgid "Nothing to redo."
-msgstr "គ្មាន​អ្វី​ធ្វើ​វិញ​"
+msgstr "គ្មាន​អ្វី​ធ្វើ​វិញ ។​"
 
 #: ../src/selection-chemistry.cpp:1036
 msgid "Nothing was copied."
-msgstr "គ្មាន​អ្វី​មួយ​ដែល​ត្រូវ​បាន​ចម្លង​ ។"
+msgstr "គ្មាន​អ្វី​មួយ​​​ត្រូវ​បាន​ចម្លង​ ។"
 
 #: ../src/selection-chemistry.cpp:1162
 msgid "Paste"
@@ -5661,69 +5619,67 @@ msgstr "បិទភ្ជាប់​"
 
 #: ../src/selection-chemistry.cpp:1180
 msgid "Select <b>object(s)</b> to paste style to."
-msgstr "ជ្រើស​ <b>វត្ថុ​</b> ដើម្បី​បិទភ្ជាប់​រចនាប័ទ្ម​ទៅ​កាន់​ ។"
+msgstr "ជ្រើស <b>វត្ថុ</b> ដើម្បី​បិទភ្ជាប់​រចនាប័ទ្ម ។"
 
 #: ../src/selection-chemistry.cpp:1189
 msgid "Paste style"
 msgstr "បិទភ្ជាប់​រចនាប័ទ្ម​"
 
 #: ../src/selection-chemistry.cpp:1207
-#, fuzzy
 msgid "Select <b>object(s)</b> to paste live path effect to."
-msgstr "ជ្រើស​ <b>វត្ថុ</b> ដើម្បី​បិទភ្ជាប់​ទំហំ ទៅ​កាន់​ ។"
+msgstr "ជ្រើស<b>វត្ថុ</b> ដើម្បី​បិទភ្ជាប់បែបផែន​ផ្លូវ​បន្តផ្ទាល់ ។"
 
 #: ../src/selection-chemistry.cpp:1216
 msgid "Clipboard does not contain a live path effect."
-msgstr ""
+msgstr "ក្ដារតម្បៀតខ្ទាស់​មិន​មាន​បែបផែន​ផ្លូវ​បន្តផ្ទាល់ ។"
 
 #: ../src/selection-chemistry.cpp:1237
-#, fuzzy
 msgid "Paste live path effect"
-msgstr "បិទភ្ជាប់​ទំហំ ដែល​បាន​បែងចែក​"
+msgstr "បិទភ្ជាប់​បែបផែន​ផ្លូវ​បន្តផ្ទាល់​"
 
 #: ../src/selection-chemistry.cpp:1255 ../src/selection-chemistry.cpp:1291
 msgid "Select <b>object(s)</b> to paste size to."
-msgstr "ជ្រើស​ <b>វត្ថុ</b> ដើម្បី​បិទភ្ជាប់​ទំហំ ទៅ​កាន់​ ។"
+msgstr "ជ្រើស <b>វត្ថុ</b> ដើម្បីបិទភ្ជាប់​ទំហំ ។"
 
 #: ../src/selection-chemistry.cpp:1273
 msgid "Paste size"
-msgstr "បិទភ្ជាប់​ទំហំ​"
+msgstr "ទំហំ​បិទភ្ជាប់​"
 
 #: ../src/selection-chemistry.cpp:1314
 msgid "Paste size separately"
-msgstr "បិទភ្ជាប់​ទំហំ ដែល​បាន​បែងចែក​"
+msgstr "ទំហំ​បិទភ្ជាប់​ដោយឡែកៗ"
 
 #: ../src/selection-chemistry.cpp:1325
 msgid "Select <b>object(s)</b> to move to the layer above."
-msgstr "ជ្រើស <b>វត្ថុ</b>ដើម្បី​ផ្លាស់ទី​ទៅ​កាន់​ស្រទាប់​ខាងលើ ។"
+msgstr "ជ្រើស<b>វត្ថុ</b> ដើម្បី​ផ្ទាស់ទី​ទៅ​ស្រទាប់​ខាង​លើ ។"
 
 #: ../src/selection-chemistry.cpp:1350
 msgid "Raise to next layer"
-msgstr "លើក​ស្រទាប់​បន្ទាប់​ឡើង​លើ​"
+msgstr "លើកឡើង​ទៅ​ស្រទាប់​បន្ទាប់"
 
 #: ../src/selection-chemistry.cpp:1356
 msgid "No more layers above."
-msgstr "គ្មាន​ស្រទាប់​ច្រើន​នៅ​ខាង​លើ​ ។"
+msgstr "គ្មាន​ស្រទាប់​​​​​ខាង​លើ​ ។"
 
 #: ../src/selection-chemistry.cpp:1370
 msgid "Select <b>object(s)</b> to move to the layer below."
-msgstr "ជ្រើស​ <b>វត្ថុ</b>ដើម្បី​ផ្លាស់ទី​ទៅ​កាន់​ស្រទាប់​ខាងក្រោម​ ។"
+msgstr "ជ្រើស<b>វត្ថុ</b> ដើម្បី​ផ្លាស់ទី​ទៅ​ស្រទាប់​ខាង​ក្រោម ។"
 
 #: ../src/selection-chemistry.cpp:1395
 msgid "Lower to previous layer"
-msgstr "ស្រទាប់​មុន​ទាបជាង​"
+msgstr "ទាប​ជាង​ស្រទាប់​មុន"
 
 #: ../src/selection-chemistry.cpp:1401
 msgid "No more layers below."
-msgstr "គ្មាន​ស្រទាប់​ច្រើន​នៅ​ខាងក្រោម​"
+msgstr "គ្មាន​ស្រទាប់​ផ្សេង​ទៀត​នៅ​ខាង​ក្រោម ។​"
 
 #: ../src/selection-chemistry.cpp:1588
 msgid "Remove transform"
-msgstr "យក​ប្លែង​ចេញ​"
+msgstr "យក​ការ​ប្លែង​ចេញ"
 
 #: ../src/selection-chemistry.cpp:1697
 msgid "Rotate 90&#176; CW"
-msgstr "បង្វិល​ 90&#176; CW"
+msgstr "បង្វិល 90&#176; CW"
 
 #: ../src/selection-chemistry.cpp:1725
 msgid "Rotate 90&#176; CCW"
@@ -5736,7 +5692,7 @@ msgstr "បង្វិល"
 
 #: ../src/selection-chemistry.cpp:1778
 msgid "Rotate by pixels"
-msgstr "បង្វិល​តាម​ភីចសែល​"
+msgstr "បង្វិល​តាម​ភីកសែល​"
 
 #: ../src/selection-chemistry.cpp:1808 ../src/seltrans.cpp:430
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1955
@@ -5746,15 +5702,15 @@ msgstr "មាត្រដ្ឋាន"
 
 #: ../src/selection-chemistry.cpp:1833
 msgid "Scale by whole factor"
-msgstr "មាត្រដ្ឋាន​រោង​ចក្រ​ទាំងមូល​"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​តាមកតាទាំង​មូល​"
 
 #: ../src/selection-chemistry.cpp:1849
 msgid "Move vertically"
-msgstr "ផ្លាស់​ទី​ោយ​បញ្ឈរ"
+msgstr "ផ្លាស់ទី​ដោយ​បញ្ឈរ"
 
 #: ../src/selection-chemistry.cpp:1852
 msgid "Move horizontally"
-msgstr "ផ្លាស់​ទី​ផ្តេក​"
+msgstr "ផ្លាស់​ទី​​ដោយ​ផ្តេក​"
 
 #: ../src/selection-chemistry.cpp:1855 ../src/selection-chemistry.cpp:1883
 #: ../src/seltrans.cpp:427 ../src/ui/dialog/transformation.cpp:602
@@ -5762,30 +5718,28 @@ msgid "Move"
 msgstr "ផ្លាស់ទី​"
 
 #: ../src/selection-chemistry.cpp:1877
-#, fuzzy
 msgid "Move vertically by pixels"
-msgstr "កេះបញ្ឈរតាមភីកសែល"
+msgstr "ផ្លាស់ទីដោយ​បញ្ឈរ​តាម​ភីកសែល"
 
 #: ../src/selection-chemistry.cpp:1880
-#, fuzzy
 msgid "Move horizontally by pixels"
-msgstr "កេះ​ផ្តេក​តាម​ភីកសែល"
+msgstr "ផ្លាស់ទី​ដោយ​ផ្ដេក​តាម​ភីកសែល"
 
 #: ../src/selection-chemistry.cpp:2148
 msgid "action|Clone"
-msgstr ""
+msgstr "សកម្មភាព|ក្លូន"
 
 #: ../src/selection-chemistry.cpp:2165
 msgid "Select a <b>clone</b> to unlink."
-msgstr "ជ្រើស​​ <b>ក្លូន​</b> ដើម្បី​រាប់​មិន​តភ្ជាប់​​។"
+msgstr "ជ្រើស<b>ក្លូន</b> ដើម្បី​​មិន​តភ្ជាប់ ។"
 
 #: ../src/selection-chemistry.cpp:2214
 msgid "<b>No clones to unlink</b> in the selection."
-msgstr "<b>គ្មាន​ក្លូន​ដែល​មិន​ត​ភ្ជាប់​​</b> ក្នុង​ការជ្រើស​"
+msgstr "<b>គ្មាន​ក្លូន​ត្រូវមិន​តភ្ជាប់</b> នៅ​ក្នុង​ជម្រើស ។"
 
 #: ../src/selection-chemistry.cpp:2218
 msgid "Unlink clone"
-msgstr "មិន​តភ្ជាប់​ក្លូន​"
+msgstr "មិនតភ្ជាប់​ក្លូន​"
 
 #: ../src/selection-chemistry.cpp:2232
 msgid ""
@@ -5793,34 +5747,34 @@ msgid ""
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
 "a <b>flowed text</b> to go to its frame."
 msgstr ""
-"ជ្រើស <b>ក្លូន</b> ដើម្បី​ទៅ​ក្លូន​ដើម​របស់​វា ។ ជ្រើស <b>អុហ្វសិត​ដែល​បាន​ភ្ជាប់</b> ដើម្បី​ទៅ​ប្រភព​របស់​"
-"វា ។ ជ្រើស <b>អត្ថបទ​នៅ​លើ​ផ្លូវ</b> ដើម្បី​ទៅ​ផ្លូវ ។ ជ្រើស <b>អត្ថបទ​លំហូរ</b> ដើម្បី​ទៅ​ស៊ុម ។"
+"ជ្រើស<b>ក្លូន</b> ដើម្បី​ទៅ​ធាតុ​ដើម​របស់​វា ។ ជ្រើស <b>អុហ្វសិត​ដែល​បាន​តភ្ជាប់</b> "
+"ដើម្បី​ប្រភព​របស់​វា ។ ជ្រើស <b>អត្ថបទ​នៅ​លើ​ផ្លូវ</b> ដើម្បីទៅ​ផ្លូវ ។ ជ្រើស<b>អត្ថបទ​ដែល​មាន​ផ្កា</b> ដើម្បី​ទៅ​ស៊ុម​របស់​វា ។"
 
 #: ../src/selection-chemistry.cpp:2255
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
-msgstr "<b>មិន​អាច​រក​</b> វត្ថុ​ដែល​ជ្រើស​ (ក្លូន​បន្ទាត់​កំព្រា​អុហ្វសិត លូវ​អត្ផ្លូវ​ថបទ​ លំហូរ​អត្ថបទ​ឬ ?)"
+msgstr "<b>មិន​អាច​រក</b> វត្ថុ​ត្រូវ​ជ្រើស (ក្លូន​កំព្រា អុហ្វសិត ផ្លូវ​អត្ថបទ អត្ថបទ​ដែល​មាន​ផ្កា ?)"
 
 #: ../src/selection-chemistry.cpp:2261
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
-msgstr "វត្ថុ​ដែល​អ្នកព្យាយាម​ជ្រើស​ <b> មិន​អាច​មើល​ឃើញ​ទេ​</b> (វា​នៅ​ក្នុង​ &lt;defs&gt;)"
+msgstr ""
+"វត្ថុ​ដែល​អ្នក​កំពុង​ព្យាយាម​ជ្រើសគឺ <b>មើល​មិ​ន​ឃើញ</b> (វា​នៅ​ក្នុង &lt;"
+"defs&gt;)"
 
 #: ../src/selection-chemistry.cpp:2289
-#, fuzzy
 msgid "Select <b>object(s)</b> to convert to marker."
-msgstr "ជ្រើស​ <b>វត្ថុ</b> ដើម្បី​បម្លែង​ទៅ​ជា​លំនាំ​ ។"
+msgstr "ជ្រើស <b>វត្ថុ</b> ដើម្បី​បម្លែង​ទៅ​ជា​ឧបករណ៍​សម្គាល់ ។"
 
 #: ../src/selection-chemistry.cpp:2349
-#, fuzzy
 msgid "Objects to marker"
-msgstr "វត្ថុ​ទៅ​លំនាំ​"
+msgstr "វត្ថុ​ទៅ​ឧបករណ៍​សម្គាល់"
 
 #: ../src/selection-chemistry.cpp:2366
 msgid "Select <b>object(s)</b> to convert to pattern."
-msgstr "ជ្រើស​ <b>វត្ថុ</b> ដើម្បី​បម្លែង​ទៅ​ជា​លំនាំ​ ។"
+msgstr "ជ្រើស<b>វត្ថុ</b> ដើម្បី​បម្លែង​ទៅ​ជា​លំនាំ ។"
 
 #: ../src/selection-chemistry.cpp:2448
 msgid "Objects to pattern"
@@ -5828,11 +5782,11 @@ msgstr "វត្ថុ​ទៅ​លំនាំ​"
 
 #: ../src/selection-chemistry.cpp:2465
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
-msgstr "ជ្រើស​ <b>វត្ថុ​ជាមួយ​លំនាំពេញ​​ </b> ដើម្បី​ដក​ស្រង់​វត្ថុ​ពី  ។"
+msgstr "ជ្រើស<b>វត្ថុ​ដែល​មាន​ការបំពេញ​លំនាំ</b> ដើម្បី​ស្រង់​​វត្ថុ​ចេញ ។"
 
 #: ../src/selection-chemistry.cpp:2518
 msgid "<b>No pattern fills</b> in the selection."
-msgstr "<b>គ្មាន​លំនាំ​ពេញ​</b> ក្នុង​ការជ្រើស​ ​។"
+msgstr "<b>គ្មាន​ការ​បំពេញ​លំនាំ</b> នៅ​ក្នុង​ជម្រើស ។"
 
 #: ../src/selection-chemistry.cpp:2521
 msgid "Pattern to objects"
@@ -5840,23 +5794,23 @@ msgstr "លំនាំ​ទៅ​វត្ថុ​"
 
 #: ../src/selection-chemistry.cpp:2607
 msgid "Select <b>object(s)</b> to make a bitmap copy."
-msgstr "ជ្រើស​ <b>វត្ថុ​</b> ដើម្បីចម្លង​រូបភាព​ ។"
+msgstr "ជ្រើស<b>វត្ថុ</b> ដើម្បី​បង្កើត​ច្បាប់ចម្លង​រូបភាព ។"
 
 #: ../src/selection-chemistry.cpp:2768
 msgid "Create bitmap"
-msgstr "បង្កើត​រូបភាព "
+msgstr "បង្កើត​រូបភាព"
 
 #: ../src/selection-chemistry.cpp:2801
 msgid "Select <b>object(s)</b> to create clippath or mask from."
-msgstr "ជ្រើស​ <b>វត្ថុ</b> ដើម្បី​បង្កើតតម្បៀត​ខ្ទាស់​រឹបផ្លូវ​ឬ របាំង​ពី  ។"
+msgstr "ជ្រើស<b>វត្ថុ</b> ដើម្បី​បង្កើត​ផ្លូវ​តម្បៀតខ្ទាស់ ឬ​របាំង ។"
 
 #: ../src/selection-chemistry.cpp:2804
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
-msgstr "ជ្រើស​វត្ថុ​របាំង​និង  <b>វត្ថុ​ជាច្រើន​</b> ដើម្បី​អនុវត្ត​តម្បៀត​ខ្ទាស់​ឬ របាំង​ទៅ​កាន់​ ។"
+msgstr "ជ្រើស​វត្ថុ​របាំង​និង <b>វត្ថុ​ជាច្រើនទៀត​​</b> ដើម្បី​អនុវត្ត​ផ្លូវ​តម្បៀត​​ខ្ទាស់​ ឬ​របាំង ។"
 
 #: ../src/selection-chemistry.cpp:2910
 msgid "Set clipping path"
-msgstr "កំណត់​ផ្លូវ​តម្រៀត​ខ្ទាស់​"
+msgstr "កំណត់​ផ្លូវ​តម្បៀតខ្ទាស់"
 
 #: ../src/selection-chemistry.cpp:2912
 msgid "Set mask"
@@ -5864,20 +5818,19 @@ msgstr "កំណត់​របាំង​"
 
 #: ../src/selection-chemistry.cpp:2926
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr "ជ្រើស​ <b>វត្ថុ</b> ដើម្បីយកតម្រៀត​ខ្ទាស់​ផ្លូវ ឬ របាំងចេញ​ពី  ។"
+msgstr "ជ្រើស​ <b>វត្ថុ</b> ដើម្បី​យក​ផ្លូវ​​តម្រៀត​ខ្ទាស់ ឬ​ ឬ របាំងច ។  ។"
 
 #: ../src/selection-chemistry.cpp:2994
 msgid "Release clipping path"
-msgstr "បញ្ចេញ​តម្បៀត​ខ្ទាស់​ផ្លូវ​"
+msgstr "លែង​ផ្លូវ​តម្បៀត​ខ្ទាស់​"
 
 #: ../src/selection-chemistry.cpp:2996
 msgid "Release mask"
-msgstr "បញ្ចេញ របាំង​"
+msgstr "លែង​របាំង​"
 
 #: ../src/selection-chemistry.cpp:3007
-#, fuzzy
 msgid "Select <b>object(s)</b> to fit canvas to."
-msgstr "ជ្រើស​ <b>វត្ថុ</b> ដើម្បី​បិទភ្ជាប់​ទំហំ ទៅ​កាន់​ ។"
+msgstr "ជ្រើស<b>វត្ថុ</b> ដើម្បីធ្វើ​ឲ្យ​សម​នឹង​ផ្ទាំង​ក្រណាត់ ។"
 
 #: ../src/selection-chemistry.cpp:3041
 msgid "Fit page to selection"
