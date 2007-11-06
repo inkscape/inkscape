@@ -301,6 +301,7 @@ public:
     return std::pair<SVGEllipticalArc, SVGEllipticalArc>(a, b);
   }
 
+// TODO: how are the flags affected by reducing an arc from more than 180deg to less than 180deg?
   Curve *portion(double f, double t) const {
     SVGEllipticalArc *ret = new SVGEllipticalArc (*this);
     ret->initial_ = pointAt(f);
@@ -308,6 +309,7 @@ public:
     return ret;
   }
 
+// TODO: incomplete/buggy
   Curve *reverse(double /*f*/, double /*t*/) const {
     SVGEllipticalArc *ret = new SVGEllipticalArc (*this);
     ret->initial_ = final_;

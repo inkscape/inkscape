@@ -214,40 +214,40 @@ class Piecewise {
 };
 
 template<typename T>
-inline Interval bounds_fast(const Piecewise<T> &f) {
+inline typename FragmentConcept<T>::BoundsType bounds_fast(const Piecewise<T> &f) {
     boost::function_requires<FragmentConcept<T> >();
 
-    if(f.empty()) return Interval(0);
-    Interval ret(bounds_fast(f[0]));
+    if(f.empty()) return typename FragmentConcept<T>::BoundsType();
+    typename FragmentConcept<T>::BoundsType ret(bounds_fast(f[0]));
     for(unsigned i = 1; i < f.size(); i++)
         ret.unionWith(bounds_fast(f[i])); 
     return ret;
 }
 
 template<typename T>
-inline Interval bounds_exact(const Piecewise<T> &f) {
+inline typename FragmentConcept<T>::BoundsType bounds_exact(const Piecewise<T> &f) {
     boost::function_requires<FragmentConcept<T> >();
 
-    if(f.empty()) return Interval(0);
-    Interval ret(bounds_exact(f[0]));
+    if(f.empty()) return typename FragmentConcept<T>::BoundsType();
+    typename FragmentConcept<T>::BoundsType ret(bounds_exact(f[0]));
     for(unsigned i = 1; i < f.size(); i++)
         ret.unionWith(bounds_exact(f[i])); 
     return ret;
 }
 
 template<typename T>
-inline Interval bounds_local(const Piecewise<T> &f, const Interval &m) {
+inline typename FragmentConcept<T>::BoundsType bounds_local(const Piecewise<T> &f, const Interval &m) {
     boost::function_requires<FragmentConcept<T> >();
 
-    if(f.empty()) return Interval(0);
-    if(m.isEmpty()) return Interval(f(m.min()));
+    if(f.empty()) return typename FragmentConcept<T>::BoundsType();
+    if(m.isEmpty()) return typename FragmentConcept<T>::BoundsType(f(m.min()));
 
     unsigned fi = f.segN(m.min()), ti = f.segN(m.max());
     double ft = f.segT(m.min(), fi), tt = f.segT(m.max(), ti);
 
     if(fi == ti) return bounds_local(f[fi], Interval(ft, tt));
 
-    Interval ret(bounds_local(f[fi], Interval(ft, 1.)));
+    typename FragmentConcept<T>::BoundsType ret(bounds_local(f[fi], Interval(ft, 1.)));
     for(unsigned i = fi + 1; i < ti; i++)
         ret.unionWith(bounds_exact(f[i]));
     if(tt != 0.) ret.unionWith(bounds_local(f[ti], Interval(0., tt)));
