@@ -50,7 +50,7 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),   "doeffectstacktest"},
 #endif
     {GEARS,                 N_("Gears"),                 "gears"},
-    {CURVE_STITCH,          N_("Curve stitching"),       "curvestitching"},
+    {CURVE_STITCH,          N_("Stitch subcurves"),      "curvestitching"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 

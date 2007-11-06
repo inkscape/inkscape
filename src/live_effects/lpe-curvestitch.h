@@ -1,5 +1,5 @@
-#ifndef INKSCAPE_LPE_EXPRESSION_H
-#define INKSCAPE_LPE_EXPRESSION_H
+#ifndef INKSCAPE_LPE_CURVESTITCH_H
+#define INKSCAPE_LPE_CURVESTITCH_H
 
 /** \file
  * Implementation of an effect similar to Expression, see lpe-expression.cpp
@@ -28,7 +28,9 @@ public:
     LPECurveStitch(LivePathEffectObject *lpeobject);
     virtual ~LPECurveStitch();
 
-    std::vector<Geom::Path> doEffect (std::vector<Geom::Path> & path_in);
+    virtual std::vector<Geom::Path> doEffect (std::vector<Geom::Path> & path_in);
+
+    virtual void resetDefaults(SPItem * item);
 
 private:
     PathParam strokepath;

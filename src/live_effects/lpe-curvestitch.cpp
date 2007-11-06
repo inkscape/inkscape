@@ -1,4 +1,4 @@
-#define INKSCAPE_LPE_EXPRESSION_CPP
+#define INKSCAPE_LPE_CURVESTITCH_CPP
 /** \file
  * SVG <skeleton> implementation, used as an example for a base starting class
  * when implementing new LivePathEffects.
@@ -16,6 +16,9 @@
 #include "live_effects/lpe-curvestitch.h"
 #include "display/curve.h"
 #include <libnr/n-art-bpath.h>
+#include "sp-item.h"
+#include "sp-path.h"
+#include "live_effects/n-art-bpath-2geom.h"
 
 #include <2geom/path.h>
 #include <2geom/piecewise.h>
@@ -37,7 +40,7 @@ using namespace Geom;
 
 LPECurveStitch::LPECurveStitch(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    strokepath(_("Stroke path"), _("The path that will be stroked, whatever, think of good text here."), "strokepath", &wr, this, "M0,0 L1,0"),
+    strokepath(_("Stroke path"), _("The path that will be used as stitch."), "strokepath", &wr, this, "M0,0 L1,0"),
     nrofpaths(_("Nr of paths"), _("The number of paths that will be generated."), "count", &wr, this, 5),
     startpoint_variation(_("Startpoint variation"), _("..."), "startpoint_variation", &wr, this, 0),
     endpoint_variation(_("Endpoint variation"), _("..."), "endpoint_variation", &wr, this, 0),
@@ -118,6 +121,32 @@ LPECurveStitch::doEffect (std::vector<Geom::Path> & path_in)
     } else {
         return path_in;
     }
+}
+
+void
+LPECurveStitch::resetDefaults(SPItem * item)
+{
+    if (!SP_IS_PATH(item)) return;
+
+    using namespace Geom;
+
+    // set the stroke path to run horizontally in the middle of the bounding box of the original path
+    Piecewise<D2<SBasis> > pwd2;
+    std::vector<Path> temppath = SVGD_to_2GeomPath( SP_OBJECT_REPR(item)->attribute("inkscape:original-d"));
+    for (unsigned int i=0; i < temppath.size(); i++) {
+        pwd2.concat( temppath[i].toPwSb() );
+    }
+
+    D2<Piecewise<SBasis> > d2pw = make_cuts_independant(pwd2);
+    Interval bndsX = bounds_exact(d2pw[0]);
+    Interval bndsY = bounds_exact(d2pw[1]);
+    Point start(bndsX.min(), (bndsY.max()+bndsY.min())/2);
+    Point end(bndsX.max(), (bndsY.max()+bndsY.min())/2);
+
+    Geom::Path path;
+    path.start( start );
+    path.appendNew<Geom::LineSegment>( end );
+    strokepath.param_set_and_write_new_value( path.toPwSb() );
 }
 
 } //namespace LivePathEffect
