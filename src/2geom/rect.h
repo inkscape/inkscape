@@ -54,9 +54,9 @@ template<>
 class D2<Interval> {
   private:
     Interval f[2];
-    D2<Interval>();// { f[X] = f[Y] = Interval(0, 0); }
-
   public:
+    D2<Interval>() { f[X] = f[Y] = Interval(0, 0); }
+    
     D2<Interval>(Interval const &a, Interval const &b) {
         f[X] = a;
         f[Y] = b;
