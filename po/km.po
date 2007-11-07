@@ -9,7 +9,7 @@ msgstr ""
 "POT-Creation-Date: 2007-10-17 23:52+0200\n"
 "PO-Revision-Date: 2007-11-06 22:32+0100\n"
 "Last-Translator: Adib Taraben <theAdib@yahoo.com>\n"
-"Language-Team: Khmer <support@khmeros.info>\n"
+"Language-Team: Khmer <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5660,7 +5660,7 @@ msgstr "មាត្រដ្ឋាន"
 
 #: ../src/selection-chemistry.cpp:1833
 msgid "Scale by whole factor"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​តាមកតាទាំង​មូល​"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​តាម​កត្តា​ទាំង​មូល​"
 
 #: ../src/selection-chemistry.cpp:1849
 msgid "Move vertically"
@@ -5767,7 +5767,7 @@ msgstr "កំណត់​របាំង​"
 
 #: ../src/selection-chemistry.cpp:2926
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr "ជ្រើស​ <b>វត្ថុ</b> ដើម្បី​យក​ផ្លូវ​​តម្រៀត​ខ្ទាស់ ឬ​ ឬ របាំងច ។  ។"
+msgstr "ជ្រើស <b>វត្ថុ</b> ដើម្បី​យក​ផ្លូវ​តម្បៀតខ្ទាស់​ ឬ របាំង​ចេញ ។"
 
 #: ../src/selection-chemistry.cpp:2994
 msgid "Release clipping path"
@@ -5783,7 +5783,7 @@ msgstr "ជ្រើស<b>វត្ថុ</b> ដើម្បីធ្វើ​�
 
 #: ../src/selection-chemistry.cpp:3041
 msgid "Fit page to selection"
-msgstr "ទំព័រ​សម​នឹង​ជម្រើស"
+msgstr "ធ្វើ​ទំព័រ​ឲ្យ​សម​នឹង​ជម្រើស"
 
 #: ../src/selection-describer.cpp:42
 msgid "Link"
@@ -5791,7 +5791,7 @@ msgstr "តំណ"
 
 #: ../src/selection-describer.cpp:44
 msgid "Circle"
-msgstr "រង្វង់មូល​"
+msgstr "រង្វង់"
 
 #. ellipse
 #: ../src/selection-describer.cpp:46
@@ -5820,7 +5820,7 @@ msgstr "ពហុកោណ"
 
 #: ../src/selection-describer.cpp:60
 msgid "Polyline"
-msgstr "ពហុ​បន្ទាត់​"
+msgstr "បន្ទាត់​ច្រើន​"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:62
@@ -5833,13 +5833,12 @@ msgstr "ចតុកោណកែង"
 #: ../src/selection-describer.cpp:64
 #: ../src/ui/dialog/inkscape-preferences.cpp:376
 #: ../src/verbs.cpp:2401
-#, fuzzy
 msgid "3D Box"
-msgstr "ប្រអប់​"
+msgstr "ប្រអប់​ត្រីមាត្រ​"
 
 #: ../src/selection-describer.cpp:70
 msgid "object|Clone"
-msgstr ""
+msgstr "វត្ថុ|ក្លូន"
 
 #: ../src/selection-describer.cpp:74
 msgid "Offset path"
@@ -5862,16 +5861,16 @@ msgstr "ផ្កាយ​"
 
 #: ../src/selection-describer.cpp:106
 msgid "Click selection to toggle scale/rotation handles"
-msgstr "ចុច​ជម្រើស​បិទបើក​ ការបង្វិល​ ឬ ធ្វើ​មាត្រដ្ឋាន​ចំណុច​ទាញ​"
+msgstr "ចុច​ជម្រើស​ដើម្បី​បិទ/បើក​ការ​ធ្វើ​មាត្រដ្ឋាន/បង្វិល​ចំណុច​ទាញ​"
 
 #. no items
 #: ../src/selection-describer.cpp:108
 msgid "No objects selected. Click, Shift+click, or drag around objects to select."
-msgstr "គ្មាន​វត្ថុ​ដែល​ត្រូវ​ជ្រើស​ ចុច ប្តូរ​+ចុច​ ឬ អូស​ជុំវិញ វត្ថុ​ដែលបាន​ជ្រើស​ ។"
+msgstr "គ្មាន​វត្ថុ​បាន​ជ្រើស ។ ចុច ប្ដូរ(Shift)+ចុច ឬ​អូស​ជុំវិញ​វត្ថុ​ដើម្បី​ជ្រើស ។"
 
 #: ../src/selection-describer.cpp:117
 msgid "root"
-msgstr "រ៉ូត"
+msgstr "root"
 
 #: ../src/selection-describer.cpp:129
 #, c-format
@@ -5891,64 +5890,64 @@ msgstr "<i>%s</i>"
 #: ../src/selection-describer.cpp:149
 #, c-format
 msgid " in %s"
-msgstr "ក្នុង​ %s"
+msgstr " នៅ​ក្នុង %s"
 
 #: ../src/selection-describer.cpp:151
 #, c-format
 msgid " in group %s (%s)"
-msgstr "ក្នុង​ក្រុម​ %s (%s)"
+msgstr " នៅ​ក្នុង​ក្រុម %s (%s)"
 
 #: ../src/selection-describer.cpp:153
 #, c-format
 msgid " in <b>%i</b> parents (%s)"
-msgstr "ក្នុង​ <b>%i</b>មេ​ (%s)"
+msgstr " នៅ​ក្នុង <b>%i</b> មេ (%s)"
 
 #: ../src/selection-describer.cpp:156
 #, c-format
 msgid " in <b>%i</b> layers"
-msgstr "ក្នុងស្រទាប់​​<b>%i</b> "
+msgstr " នៅ​ក្នុង​ស្រទាប់ <b>%i</b>"
 
 #: ../src/selection-describer.cpp:166
 msgid "Use <b>Shift+D</b> to look up original"
-msgstr "ប្រើ <b>ប្តូរ​+D</b> ដើម្បី​ទៅ​ដើម​"
+msgstr "ប្រើ<b>ប្ដូរ(Shift)+D</b> ដើម្បី​រក​ធាតុ​ដើម"
 
 #: ../src/selection-describer.cpp:170
 msgid "Use <b>Shift+D</b> to look up path"
-msgstr "ប្រើ​<b>ប្តូរ​+D</b> ដើម្បី​រក​ផ្លូវ​"
+msgstr "ប្រើ <b>ប្ដូរ(Shift)+D</b> ដើម្បី​រក​ផ្លូវ"
 
 #: ../src/selection-describer.cpp:174
 msgid "Use <b>Shift+D</b> to look up frame"
-msgstr "ប្រើ​ <b>ប្តូរ​+D</b> ដើម្បី​រក​ស៊ុម​"
+msgstr "ប្រើ<b>ប្ដូរ(Shift)+D</b> ដើម្បី​រក​ស៊ុម"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:189
 #, c-format
 msgid "<b>%i</b> object selected"
-msgstr "<b>%i</b>វត្ថុ​ដែល​បាន​ជ្រើស​"
+msgstr "បាន​ជ្រើស​វត្ថុ<b>%i</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:194
 #, c-format
 msgid "<b>%i</b> object of type <b>%s</b>"
-msgstr "<b>%i</b> ប្រភេទ​នៃ​វត្ថុ​ <b>%s</b>"
+msgstr "វត្ថុ<b>%i</b> នៃ​ប្រភេទ <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:199
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
-msgstr "<b>%i</b> ប្រភេទ​វត្ថុ <b>%s</b>, <b>%s</b>"
+msgstr "វត្ថុ<b>%i</b> នៃ​ប្រភេទ <b>%s</b>,<b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:204
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
-msgstr "<b>%i</b> ប្រភេទ​វត្ថុ​ <b>%s</b>, <b>%s</b>, <b>%s</b>"
+msgstr "វត្ថុ<b>%i</b> នៃ​ប្រភេទ <b>%s</b>, <b>%s</b>, <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:209
 #, c-format
 msgid "<b>%i</b> object of <b>%i</b> types"
-msgstr "<b>%i</b> ប្រភេទ​វត្ថុ​ <b>%i</b> "
+msgstr "វត្ថុ<b>%i</b> នៃ​ប្រភេទ <b>%i</b>"
 
 #: ../src/selection-describer.cpp:214
 #, c-format
@@ -5962,7 +5961,7 @@ msgstr "ឆៀង"
 
 #: ../src/seltrans.cpp:448
 msgid "Set center"
-msgstr "កំណត់ចំណុច​កណ្តាល​"
+msgstr "កំណត់កណ្ដាល"
 
 #: ../src/seltrans.cpp:543
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
@@ -5986,32 +5985,32 @@ msgstr "<b>បង្វិល​</b> ការជ្រើស​ប្រើ​ 
 
 #: ../src/seltrans.cpp:710
 msgid "Reset center"
-msgstr "កំណត់​ចំណុច​កណ្តាល​ឡើង​វិញ "
+msgstr "កំណត់​ចំណុច​កណ្តាល​ឡើង​វិញ"
 
 #: ../src/seltrans.cpp:978
 #: ../src/seltrans.cpp:1098
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr "<b>មាត្រដ្ឋាន​</b>: %0.2f%% x %0.2f%%; ដោយ​ប្រើ <b>បញ្ជា​(Ctrl)</b> ដើម្បី​ចាក់សោ​សមាមាត្រ​"
+msgstr "<b>មាត្រដ្ឋាន</b> ៖ %0.2f%% x %0.2f%%; ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ចាក់សោ​កាំ"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1188
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>ឆៀង​</b>: %0.2f&#176;;ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បីខ្ទាស់​មុំ​"
+msgstr "<b>ឆៀង</b> ៖ %0.2f&#176;; ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1237
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>បង្វិល​</b>: %0.2f&#176;;ប្រើ​ <b>បញ្ជា(Ctrl)​</b>ដើម្បី​ខ្ទាស់​មុំ​"
+msgstr "<b>បង្វិល</b> ៖ %0.2f&#176;; ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ"
 
 #: ../src/seltrans.cpp:1280
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
-msgstr "ផ្លាស់ទី  <b>ចំណុច​កណ្តាល​</b> ទៅ​កាន់​%s, %s"
+msgstr "ផ្លាស់ទី<b>ចំណុច​កណ្ដាល</b> ទៅ %s, %s"
 
 #: ../src/seltrans.cpp:1569
 #, c-format
@@ -6025,11 +6024,11 @@ msgstr "អូស​ខ្សែកោង​"
 #: ../src/sp-anchor.cpp:179
 #, c-format
 msgid "<b>Link</b> to %s"
-msgstr "<b>ភ្ជាប់​</b> ទៅកាន់​ %s"
+msgstr "<b>តំណ</b> ទៅ %s"
 
 #: ../src/sp-anchor.cpp:183
 msgid "<b>Link</b> without URI"
-msgstr "<b>តំណរ​ទៅ​កាន់​</b> ដោយ​គ្មាន​ URI"
+msgstr "<b>តំណ</b> ដោយ​គ្មាន URI"
 
 #: ../src/sp-ellipse.cpp:462
 #: ../src/sp-ellipse.cpp:843
@@ -6061,25 +6060,25 @@ msgstr "លំហូរ​តំបន់​"
 #: ../src/sp-flowregion.cpp:490
 #, c-format
 msgid "Flow excluded region"
-msgstr "ប្រតិបត្តិ​លំហូរ​តំបន់​"
+msgstr "លំហូរ​តំបន់​ដែល​មិន​រាប់​បញ្ចូល​"
 
 #: ../src/sp-flowtext.cpp:371
 #, c-format
 msgid "<b>Flowed text</b> (%d character)"
-msgstr "<b>លំហូរ​អត្ថបទ​</b> (%d តួអក្សរ)"
+msgstr "<b>​អត្ថបទ​លំហូរ</b> (តួអក្សរ %d)"
 
 #: ../src/sp-flowtext.cpp:373
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
-msgstr "<b>លំហូរ​អត្ថបទ​បាន​តភ្ជាប់</b> (%d តួអក្សរ​)"
+msgstr "<b>អត្ថបទ​លំហូរ​ដែល​បាន​តភ្ជាប់</b> (តួអក្សរ %d)"
 
 #: ../src/sp-guide.cpp:287
 msgid "vertical guideline"
-msgstr "បញ្ឈរ​បន្ទាត់​នាំផ្លូវ"
+msgstr "បន្ទាត់​នាំផ្លូវ​បញ្ឈរ"
 
 #: ../src/sp-guide.cpp:289
 msgid "horizontal guideline"
-msgstr "ផ្តេក​បន្ទាត់​នាំផ្លូវ​"
+msgstr "បន្ទាត់​នាំផ្លូវ​ផ្ដេក"
 
 #: ../src/sp-image.cpp:1039
 msgid "embedded"
@@ -6088,17 +6087,17 @@ msgstr "បាន​បង្កប់​"
 #: ../src/sp-image.cpp:1047
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
-msgstr "<b>ឯកសារ​យោង​រូបភាព​មិនត្រឹមត្រូវ​</b> ៖ %s"
+msgstr "<b>រូបភាព​ដែល​មាន​សេចក្ដី​យោង​មិនល្អ</b> ៖ %s"
 
 #: ../src/sp-image.cpp:1048
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
-msgstr "<b>រូបភាព​</b> %d &#215; %d: %s"
+msgstr "<b>រូបភាព</b> %d &#215; %d ៖ %s"
 
 #: ../src/sp-item-group.cpp:689
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
-msgstr "<b>ក្រុម​</b> នៃ​វត្ថុ <b>%d</b>"
+msgstr "<b>ក្រុម</b> នៃវត្ថុ <b>%d</b>"
 
 #: ../src/sp-item.cpp:830
 msgid "Object"
@@ -6107,22 +6106,22 @@ msgstr "វត្ថុ"
 #: ../src/sp-item.cpp:847
 #, c-format
 msgid "%s; <i>clipped</i>"
-msgstr ""
+msgstr "%s; <i>បាន​ច្រឹប</i>"
 
 #: ../src/sp-item.cpp:852
-#, fuzzy, c-format
+#, c-format
 msgid "%s; <i>masked</i>"
-msgstr "<i>%s</i>"
+msgstr "%s; <i>បាន​ដាក់​របាំង</i>"
 
 #: ../src/sp-line.cpp:189
 msgid "<b>Line</b>"
-msgstr "<b>បន្ទាប់​</b>"
+msgstr "<b>បន្ទាត់</b>"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
 #: ../src/sp-offset.cpp:431
 #, c-format
 msgid "<b>Linked offset</b>, %s by %f pt"
-msgstr "<b>អុហ្វសិត ត្រូវ​បាន​ន​តភ្ជាប់​</b>, %s តាម​%f pt"
+msgstr "<b>អុហ្វសិត​បាន​តភ្ជាប់</b> %s ដោយ %f pt"
 
 #: ../src/sp-offset.cpp:432
 #: ../src/sp-offset.cpp:436
@@ -6138,26 +6137,25 @@ msgstr "ភ្ជាប់​"
 #: ../src/sp-offset.cpp:435
 #, c-format
 msgid "<b>Dynamic offset</b>, %s by %f pt"
-msgstr "<b>ថាមវន្តអុហ្វសិត</b>, %s តាម​ %f pt"
+msgstr "<b>អុហ្វសិត​ឋាមវន្ត</b> %s ដោយ %f pt"
 
 #: ../src/sp-path.cpp:128
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node, path effect)"
-msgid_plural "<b>Path</b> (%i nodes, path effect)"
-msgstr[0] "<b>ផ្លូវ​</b> ( ថ្នាំង %i )"
+msgstr "<b>ផ្លូវ</b> (ថ្នាំង %i បែបផែន​ផ្លូវ)​"
 
 #: ../src/sp-path.cpp:131
 #, c-format
 msgid "<b>Path</b> (%i node)"
-msgstr "<b>ផ្លូវ​</b> ( ថ្នាំង %i )"
+msgstr "<b>ផ្លូវ</b> (ថ្នាំង %i)"
 
 #: ../src/sp-polygon.cpp:235
 msgid "<b>Polygon</b>"
-msgstr "<b>ពហុកោណ​</b>"
+msgstr "<b>ពហុកោណ</b>"
 
 #: ../src/sp-polyline.cpp:178
 msgid "<b>Polyline</b>"
-msgstr "<b>ពហុ​បន្ទាត់</b>"
+msgstr "<b>បន្ទាត់​ច្រើន</b>"
 
 #: ../src/sp-rect.cpp:238
 msgid "<b>Rectangle</b>"
@@ -6168,47 +6166,46 @@ msgstr "<b>ចតុកោណកែង​</b>"
 #: ../src/sp-spiral.cpp:331
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
-msgstr "<b>គួច​</b> បង្វិល​ %3f "
+msgstr "<b>គួច</b> ដោយការ​បង្វិល %3f"
 
 #: ../src/sp-star.cpp:307
 #, c-format
 msgid "<b>Star</b> with %d vertex"
-msgstr "<b>ផ្កាយ​</b> កំពូល​ %d "
+msgstr "<b>ផ្កាយ​</b> ដោយ​កំពូល​ %d"
 
 #: ../src/sp-star.cpp:311
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
-msgstr "<b>ពហុកោណ​</b> កំពូល​ %d "
+msgstr "<b>ពហុកោណ</b> ដោយ​កំពូល %d"
 
 #: ../src/sp-switch.cpp:100
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
-msgstr "<b>ក្រុម​ប្រកប​ដោយ​ល័ក្ខខ័ណ្ឌ</b> នៃវត្ថុ<b>%d</b> "
+msgstr "<b>ក្រុម​មាន​លក្ខខណ្ឌ</b> របស់​វត្ថុ<b>%d</b>"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:415
 msgid "&lt;no name found&gt;"
-msgstr "&lt;រក​មិន​ឃើញ​ឈ្មោះ &gt;"
+msgstr "&lt;រក​មិន​ឃើញឈ្មោះ&gt;"
 
 #: ../src/sp-text.cpp:421
 #, c-format
 msgid "<b>Text on path</b> (%s, %s)"
-msgstr "<b>អត្ថបទ​លើ​ផ្លូវ</b> (%s, %s)"
+msgstr "<b>អត្ថបទ​នៅ​លើ​ផ្លូវ</b> (%s, %s)"
 
 #: ../src/sp-text.cpp:422
 #, c-format
 msgid "<b>Text</b> (%s, %s)"
-msgstr "<b>អត្ថបទ​</b> (%s, %s)"
+msgstr "<b>អត្ថបទ</b> (%s, %s)"
 
 #: ../src/sp-tspan.cpp:283
-#, fuzzy
 msgid "<b>Text span</b>"
-msgstr "<b>ចតុកោណកែង​</b>"
+msgstr "<b>វិសាលភាព​អត្ថបទ</b>"
 
 #: ../src/sp-use.cpp:324
 #, c-format
 msgid "<b>Clone</b> of: %s"
-msgstr "<b>ក្លូន​នៃ​</b> ៖ %s"
+msgstr "<b>ក្លូន</b> នៃ ៖ %s"
 
 #: ../src/sp-use.cpp:328
 msgid "<b>Orphaned clone</b>"
@@ -6216,19 +6213,18 @@ msgstr "<b>ក្លូន​កំព្រា</b>"
 
 #: ../src/spiral-context.cpp:337
 msgid "<b>Ctrl</b>: snap angle"
-msgstr "<b>បញ្ជា(Ctrl)</b>  ៖ ខ្ទាស់​មុំ​"
+msgstr "<b>បញ្ជា(Ctrl)</b> ៖ ខ្ទាស់​មុំ"
 
 #: ../src/spiral-context.cpp:339
 msgid "<b>Alt</b>: lock spiral radius"
-msgstr "<b>ជំនួស</b> ៖ ចាក់សោ​កាំ​គួច"
+msgstr "<b>ជំនួស(Alt)</b> ៖ ចាក់សោ​កាំគួច"
 
 #: ../src/spiral-context.cpp:461
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>គួច​</b> ៖ កាំ​ %s, មុំ​ %5g&#176;; ប្រើ <b>បញ្ជា(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ​"
+msgstr "<b>គួច</b> ៖ កាំ %s, មុំ %5g&#176;; ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ"
 
 #: ../src/spiral-context.cpp:482
-#, fuzzy
 msgid "Create spiral"
 msgstr "បង្កើត​គួច​"
 
@@ -6251,25 +6247,23 @@ msgstr "បដិសេធ"
 
 #: ../src/splivarot.cpp:98
 msgid "Division"
-msgstr "វិធី​ចែក"
+msgstr "ការ​ចែក"
 
 #: ../src/splivarot.cpp:103
-#, fuzzy
 msgid "Cut path"
-msgstr "ផ្លូវ​កាត់​"
+msgstr "កាត់​ផ្លូវ​"
 
 #: ../src/splivarot.cpp:120
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
-msgstr "ជ្រើស​ <b>ផ្លូវ​យ៉ាង​ហោច​ពីរ</b> សម្រាប់​បង្ហាញប្រតិបត្តិ​ប៊ូលីន​ ។"
+msgstr "ជ្រើស<b>យ៉ាងហោចណាស់​ផ្លូវ​ពីរ</b> ដើម្បី​អនុវត្ត​ប្រតិបត្តិការ​ប៊ូលីន ។"
 
 #: ../src/splivarot.cpp:124
-#, fuzzy
 msgid "Select <b>at least 1 path</b> to perform a boolean union."
-msgstr "ជ្រើស​ <b>ផ្លូវ​យ៉ាង​ហោច​ពីរ</b> សម្រាប់​បង្ហាញប្រតិបត្តិ​ប៊ូលីន​ ។"
+msgstr "ជ្រើស <b>យ៉ាង​ហោចណាស់​ផ្លូវ ១</b> ដើម្បីអនុវត្ត​សហភាព​ប៊ូលីន ។"
 
 #: ../src/splivarot.cpp:130
 msgid "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path cut."
-msgstr "ជ្រើស​ <b>ដក​យក​ផ្លូវ​ពីរ​</b> ដើម្បី​បង្ហាញ​ពី​ភាព​ខុសគ្នា​រវាង​ XOR និង ការរបែងចែក​ ឬ កាត់ផ្លូវ​ ។"
+msgstr "ជ្រើស<b>ផ្លូវ​ជាក់លាក់ ២</b> ដើម្បីអនុវត្ត​ភាព​ផ្សេង​គ្នា XOR, ការ​ចែក ឬ​ការ​កាត់ផ្លូវ ។"
 
 #: ../src/splivarot.cpp:147
 #: ../src/splivarot.cpp:162
@@ -6278,97 +6272,89 @@ msgstr "មិនអាច​កំណត់​ <b>តាម​លំដាប�
 
 #: ../src/splivarot.cpp:192
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
-msgstr "វត្ថុ​មួយ​ក្នុង​ចំណោម​វត្ថុគឺ <b>មិន​មែន​ជាផ្លូវ</b> មិន​អាច​អនុវត្ត​ប្រតិបត្តិការ​ប៊ូលីន ។"
+msgstr "វត្ថុ​មួយ​ក្នុ​ងចំណោម​វត្ថុមិន​មែន <b>ជា​ផ្លូវ</b>មិន​អាច​ប្រតិបត្តិ​ប្រតិបត្តិការ​ប៊ូលីន​បានទេ ។"
 
 #: ../src/splivarot.cpp:601
-#, fuzzy
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
-msgstr "ជ្រើស​ <b>វត្ថុ​</b>ដើម្បី​បម្លែង​ទៅ​ជា​ផ្លូវ​ ។"
+msgstr "ជ្រើស <b>ផ្លូវ​ខ្វាច់</b> ដើម្បី​បម្លែង​ខ្វាច់ទៅ​ជា​ផ្លូវ ។"
 
 #: ../src/splivarot.cpp:885
-#, fuzzy
 msgid "Convert stroke to path"
-msgstr "បម្លែង​អត្ថបទ​ទៅ​ជា​ផ្លូវ​"
+msgstr "បម្លែង​ខ្វាច់​ទៅជា​ផ្លូវ​"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:888
-#, fuzzy
 msgid "<b>No stroked paths</b> in the selection."
-msgstr "<b>ផ្លូវ​ដែល​គ្មាន​ខ្វាច់</b> សម្រាប់​គ្រោង​ក្នុង​ការជ្រើស​ ។"
+msgstr "<b>គ្មាន​ផ្លូវ​ខ្វាច់</b> នៅ​ក្នុង​ជម្រើស ។"
 
 #: ../src/splivarot.cpp:972
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
-msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​ <b>មិន​មែន​ជា​ផ្លូវ</b>មិន​អាច​, មិន​អាច​ភ្ជាប់​ដើមដំបូង​បានឡើយ ។"
+msgstr "វត្ថុ​ដែល​បានជ្រើសមិន​មែន <b>ជា​ផ្លូវ​ទេ</b> មិន​អាចភ្ជាប់/ដើម​ដំបូង ។"
 
 #: ../src/splivarot.cpp:1092
 #: ../src/splivarot.cpp:1161
-#, fuzzy
 msgid "Create linked offset"
-msgstr "បង្កើត​ជម្រាល​លីនែអ៊ែ​"
+msgstr "បង្កើត​អុហ្វសិត​ដែល​បាន​តភ្ជាប់​"
 
 #: ../src/splivarot.cpp:1093
 #: ../src/splivarot.cpp:1162
-#, fuzzy
 msgid "Create dynamic offset"
-msgstr "បង្កើត​វត្ថុ​ឋាមវន្ត​អុហ្វសិត​"
+msgstr "បង្កើត​អុហ្វសិត​ថាមវន្ត"
 
 #: ../src/splivarot.cpp:1189
 msgid "Select <b>path(s)</b> to inset/outset."
-msgstr "ជ្រើស​ <b>ផ្លូវ​</b>ដើម្បី​ភ្ជាប់​ដើមដំបូង​ ។"
+msgstr "ជ្រើស <b>ផ្លូវ</b> ត្រូវ​ភ្ជាប់/ដើម​ដំបូង ។"
 
 #: ../src/splivarot.cpp:1407
-#, fuzzy
 msgid "Outset path"
-msgstr "ផ្លូវ​អុហ្វសិត​"
+msgstr "ផ្លូវ​ដើម​ដំបូង​"
 
 #: ../src/splivarot.cpp:1407
-#, fuzzy
 msgid "Inset path"
-msgstr "ផ្លូវ​អុហ្វសិត​"
+msgstr "ភ្ជាប់​ផ្លូវ​"
 
 #: ../src/splivarot.cpp:1409
 msgid "<b>No paths</b> to inset/outset in the selection."
-msgstr "<b>គ្មាន​ផ្លូវ​</b> ដើម្បី​ភ្ជាប់​ដើមដំបូង​ក្នុង​ការជ្រើស ។"
+msgstr "<b>គ្មាន​ផ្លូវ</b> ត្រូវ​ភ្ជាប់/ដើមដំបូង​នៅ​ក្នុង​ជម្រើស ។"
 
 #: ../src/splivarot.cpp:1570
 msgid "Simplifying paths (separately):"
-msgstr ""
+msgstr "ធ្វើ​ផ្លូវ​ឲ្យ​សាមញ្ញា (ដោយ​ឡែក) ៖"
 
 #: ../src/splivarot.cpp:1572
-#, fuzzy
 msgid "Simplifying paths:"
-msgstr "ការធ្វើ​កម្រិត​ពន្លឺ​ឲ្យ​ងាយ​"
+msgstr "ធ្វើ​ផ្លូវ​ឲ្យ​សាមញ្ញ ៖"
 
 #: ../src/splivarot.cpp:1609
-#, fuzzy, c-format
+#, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
-msgstr "<b>%i</b>នៃ<b>%i</b>ថ្នាំង​ដែលបានជ្រើស ​%s ​។"
+msgstr "%s <b>%d</b> នៃ <b>%d</b> បាន​ធ្វើ​ឲ្យ​ផ្លូវ​សាមញ្ញ..."
 
 #: ../src/splivarot.cpp:1620
 #, c-format
 msgid "<b>%d</b> paths simplified."
-msgstr ""
+msgstr "<b>%d</b> បានធ្វើ​ឲ្យ​ផ្លូវ​សាមញ្ញ ។"
 
 #: ../src/splivarot.cpp:1636
 msgid "Select <b>path(s)</b> to simplify."
-msgstr "ជ្រើស​ <b>ផ្លូវ​</b> ដែល​ងាយស្រួល​ ។"
+msgstr "ជ្រើស <b>ផ្លូវ</b> ដើម្បី​ធ្វើ​ឲ្យ​សាមញ្ញ ។"
 
 #: ../src/splivarot.cpp:1650
 msgid "Simplify"
-msgstr "ធ្វើ​ឲ្យ​ងាយ​ស្រួល​"
+msgstr "ធ្វើ​ឲ្យសាមញ្ញ​"
 
 #: ../src/splivarot.cpp:1652
 msgid "<b>No paths</b> to simplify in the selection."
-msgstr "<b>គ្មាន​ផ្លូវ</b> ងាយ​ស្រួល​ក្នុង​ការជ្រើស​ ។"
+msgstr "<b>គ្មាន​ផ្លូវ</b> ត្រូវ​ធ្វើ​ឲ្យ​សាមញ្ញ​នៅ​ក្នុង​ជ្រើស ។"
 
 #: ../src/star-context.cpp:348
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
-msgstr "<b>បញ្ជា(Ctrl)​</b> ៖ ខ្ទាស់​មុំ ដែល​រៀបតាម​កាំ​"
+msgstr "<b>បញ្ជា(Ctrl)</b> ៖ ខ្ទាស់​មុំ រក្សាកាំ"
 
 #: ../src/star-context.cpp:471
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>ពហុកោណ​</b> ៖ កាំ​ %s, មុំ%5g&#176;; ប្រើ​<b>បញ្ជា(Ctrl)​</b> ដើម្បី​ខ្ទាស់​មុំ​"
+msgstr "<b>ពហុកោណ</b> ៖ កាំ %s, មុំ %5g&#176;; ដោយប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ"
 
 #: ../src/star-context.cpp:472
 #, c-format
@@ -6376,13 +6362,12 @@ msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>ផ្កាយ​</b> ៖ កាំ​ %s, មុំ %5g&#176;; ប្រើ​ <b>បញ្ជា​(Ctrl)</b>ដើម្បី​ខ្ទាស់​មុំ​"
 
 #: ../src/star-context.cpp:495
-#, fuzzy
 msgid "Create star"
-msgstr "បង្កើត​រូបភាព "
+msgstr "បង្កើត​ផ្កាយ"
 
 #: ../src/text-chemistry.cpp:100
 msgid "Select <b>a text and a path</b> to put text on path."
-msgstr "ជ្រើស​ <b>អត្ថបទ​និង ផ្លូវ​</b> ដើម្បីដាក់​អត្ថបទ​លើ​ផ្លូវ​"
+msgstr "ជ្រើស <b>អត្ថបទ និង​ផ្លូវ</b> ដើម្បី​ដាក់​អត្ថបទ​លើ​ផ្លូវ ។"
 
 #: ../src/text-chemistry.cpp:105
 msgid "This text object is <b>already put on a path</b>. Remove it from the path first. Use <b>Shift+D</b> to look up its path."
@@ -6391,127 +6376,119 @@ msgstr "វត្ថុ​អត្ថបទ​នេះ​ <b>បាន​ប�
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
 #: ../src/text-chemistry.cpp:111
 msgid "You cannot put text on a rectangle in this version. Convert rectangle to path first."
-msgstr "អត្ថបទ​ចតុកោណកែង​មិនអាច​ដាក់​នៅ​ក្នុង​ុង​កំណែរនេះ​បាឡើយ​េ ជាដំបូង​ត្រូវ​។ បម្លែង​ចតុកោណកែង​ទៅ​កាត់​ផ្វ ។ ។"
+msgstr "អ្នក​មិន​អាច​ដាក់​អត្ថបទ​លើ​ចតុកោណកែង​នៅ​ក្នុង​កំណែ​នេះ ។ បម្លែង​ចតុកោណកែង​ទៅ​ផ្លូវ​សិន ។"
 
 #: ../src/text-chemistry.cpp:121
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
-msgstr ""
+msgstr "អត្ថបទ​លំហូត្រូវ​តែ <b>មើល​ឃើញ</b> ដើម្បី​ដាក់​លើ​ផ្លូវ ។"
 
 #: ../src/text-chemistry.cpp:188
 #: ../src/verbs.cpp:2265
 msgid "Put text on path"
-msgstr "ដាក់អត្ថបទ​លើ​ផ្លូវ​"
+msgstr "ដាក់​អត្ថបទ​លើ​ផ្លូវ"
 
 #: ../src/text-chemistry.cpp:200
 msgid "Select <b>a text on path</b> to remove it from path."
-msgstr "ជ្រើស​ <b>អត្ថបទ​ផ្លូវ​</b> ដើម្បី​យក​វា​ចេញ​ពី​ផ្លូវ​ ។"
+msgstr "ជ្រើស <b>អត្ថបទ​នៅ​លើ​ផ្លូវ</b> ដើម្បី​យក​ចេញ​ពី​ផ្លូវ ។"
 
 #: ../src/text-chemistry.cpp:222
 msgid "<b>No texts-on-paths</b> in the selection."
-msgstr "<b>គ្មានអត្ថបទ​ផ្លូវ​</b> ក្នុង​ការជ្រើស​ ។"
+msgstr "<b>គ្មាន​អត្ថបទ​នៅ​លើ​ផ្លូវ</b> នៅ​ក្នុង​ជម្រើស ។"
 
 #: ../src/text-chemistry.cpp:226
 #: ../src/verbs.cpp:2267
 msgid "Remove text from path"
-msgstr "យក​អត្ថបទ​ចេញ ពី ផ្លូវ​"
+msgstr "យក​អត្ថបទ​ចេញ​ពី​ផ្លូវ"
 
 #: ../src/text-chemistry.cpp:265
 #: ../src/text-chemistry.cpp:286
 msgid "Select <b>text(s)</b> to remove kerns from."
-msgstr "ជ្រើស​ <b>អត្ថបទ​</b> ដើម្បី​យក​ kerns ចេញ​ពី​ ។"
+msgstr "ជ្រើស <b>អត្ថបទ</b> ដើម្បី​យកការ​សម្រួលតួអក្សរ​ចេញ​ចេញ ។"
 
 #: ../src/text-chemistry.cpp:289
 #: ../src/widgets/toolbox.cpp:4680
 msgid "Remove manual kerns"
-msgstr "យកញ​ kerns ចេញ​ដោយ​ដៃ​"
+msgstr "យក​ការ​សម្រួល​ចន្លោះ​តួអក្សរ​ចេញ​ដោយ​ដៃ"
 
 #: ../src/text-chemistry.cpp:309
 msgid "Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text into frame."
-msgstr "ជ្រើស​ <b>អត្ថបទ​</b>និង យ​ផ្លូវ​ឬ រូបរាង​  <b>មួយ​ឬ ច្រើន​</b> សម្រាប់​លំហូរ​អត្ថបៅ​ក្នុង​ស៊ុម​ ។"
+msgstr "ជ្រើស<b>អត្ថបទ</b> និង​ <b>ផ្លូវ ឬ​រាង</b> មួយ ឬ​ច្រើន​ទៅ​លំហូរ​អត្ថបទ ។"
 
 #: ../src/text-chemistry.cpp:377
-#, fuzzy
 msgid "Flow text into shape"
-msgstr "លំហូរ​ទៅ​ក្នុង​ស៊ុម​"
+msgstr "អត្ថបទ​លំហូរ​នៅ​ក្នុង​រាង"
 
 #: ../src/text-chemistry.cpp:399
 msgid "Select <b>a flowed text</b> to unflow it."
-msgstr "ជ្រើស​ <b>លំហូរ​អត្ថបទ​</b> ដើម្បី​កុំ​ឲ្យ​ហូរ​"
+msgstr "ជ្រើស<b>លំហូរអត្ថបទ</b> ដើម្បីដាក់លំហូរវា ។"
 
 #: ../src/text-chemistry.cpp:466
-#, fuzzy
 msgid "Unflow flowed text"
-msgstr "លំហូរ​អត្ថបទ​"
+msgstr "មិនដាក់លំហូរ​អត្ថបទ​លំហូរ​"
 
 #: ../src/text-chemistry.cpp:478
-#, fuzzy
 msgid "Select <b>flowed text(s)</b> to convert."
-msgstr "ជ្រើស​ <b>លំហូរ​អត្ថបទ​</b> ដើម្បី​កុំ​ឲ្យ​ហូរ​"
+msgstr "ជ្រើស <b>អត្ថបទ​លំហូរ</b> ដើម្បី​បម្លែង ។"
 
 #: ../src/text-chemistry.cpp:496
 msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
-msgstr ""
+msgstr "អត្ថបទ​លំហូរ​ត្រូវ​តែ <b>មើលឃើញ</b> ដើម្បី​បម្លែង ។"
 
 #: ../src/text-chemistry.cpp:524
-#, fuzzy
 msgid "Convert flowed text to text"
-msgstr "បម្លែង​អត្ថបទ​ទៅ​ជា​ផ្លូវ​"
+msgstr "បម្លែង​អត្ថបទ​លំហូរ​ទៅ​ជា​អត្ថបទ"
 
 #: ../src/text-chemistry.cpp:529
-#, fuzzy
 msgid "<b>No flowed text(s)</b> to convert in the selection."
-msgstr "<b>គ្មាន​វត្ថុ​</b> សម្រាប់​បម្លែង​ទៅ​ជា​ផ្លូវ​ក្នុង​ការជ្រើស​ឡើយ​េ​ ។"
+msgstr "<b>គ្មាន​អត្ថបទ​លំហូ</b> ត្រូវ​បម្លែង​នៅ​ក្នុង​ជម្រើស ។"
 
 #: ../src/text-context.cpp:452
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
-msgstr "<b>ចុច</b> ដើម្បី​កែសម្រួល​អត្ថបទ <b>អូស</b> ដើម្បី​ជ្រើស​ផ្នែក​របស់​អត្ថបទ ។"
+msgstr "<b>ចុច</b> ដើម្បី​កែសម្រួល​អត្ថបទ <b>អូស</b> ដើម្បី​ជ្រើស​ផ្លូវ​អត្ថបទ ។"
 
 #: ../src/text-context.cpp:454
 msgid "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
-msgstr "<b>ចុច​</b> ដើម្បី​កែសម្រួល​លំហូរ​អត្ថបទ​ <b>អូស​</b> ដើម្បី​ជ្រើស​ផ្នែក​មួយ​នៃ​អត្ថបទ ។"
+msgstr "<b>ចុច</b> ដើម្បី​កែសម្រួល​អត្ថបទ​លំហូរ <b>អូស</b> ដើម្បី​ជ្រើស​ផ្លូវ​របស់​អត្ថបទ ។"
 
 #: ../src/text-context.cpp:508
-#, fuzzy
 msgid "Create text"
-msgstr "លុប​អត្ថបទ​"
+msgstr "បង្កើត​អត្ថបទ"
 
 #: ../src/text-context.cpp:532
 msgid "Non-printable character"
-msgstr "តួអក្សរ​មិន​អាច​បោះពុម្ព​បានឡើយ​​។"
+msgstr "តួអក្សរ​មិន​អាច​បោះពុម្ព​បាន"
 
 #: ../src/text-context.cpp:547
 msgid "Insert Unicode character"
-msgstr ""
+msgstr "បញ្ចូល​តួអក្សរ​យូនីកូដ"
 
 #: ../src/text-context.cpp:582
-#, fuzzy, c-format
+#, c-format
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
-msgstr "ផ្លាស់ទី  <b>ចំណុច​កណ្តាល​</b> ទៅ​កាន់​%s, %s"
+msgstr "យូនីកូដ (<b>បញ្ជា(Enter)</b> ដើម្បី​បញ្ចប់) ៖ %s: %s"
 
 #: ../src/text-context.cpp:584
 #: ../src/text-context.cpp:849
-#, fuzzy
 msgid "Unicode (<b>Enter</b> to finish): "
-msgstr "ផ្លាស់ទី  <b>ចំណុច​កណ្តាល​</b> ទៅ​កាន់​%s, %s"
+msgstr "យូនីកូដ (<b>បញ្ចូល(Enter)</b> ដើម្បីបញ្ចប់) ៖ "
 
 #: ../src/text-context.cpp:659
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
-msgstr "<b>លំហូរ​ស៊ុម​អត្ថបទ​</b>: %s &#215; %s"
+msgstr "<b>ស៊ុម​អត្ថបទ​លំហូរ</b> ៖ %s &#215; %s"
 
 #: ../src/text-context.cpp:691
 #: ../src/text-context.cpp:1534
 msgid "Type text; <b>Enter</b> to start new line."
-msgstr "ប្រភេទ​អត្ថបទ​ <b>បញ្ចូល</b> ដើម្បី​ចាប់​ផ្តើម​បន្ទាត់​ថ្មី  ។"
+msgstr "វាយ​អត្ថបទ <b>បញ្ចូល(Enter)</b> ដើម្បី​ចាប់ផ្ដើម​បន្ទាត់​ថ្មី ។"
 
 #: ../src/text-context.cpp:704
 msgid "Flowed text is created."
-msgstr "បាន​បង្កើត​លំហូរ​អត្ថបទ​ ។"
+msgstr "អត្ថបទ​លំហូរ​ត្រូវ​បានបង្កើត ។"
 
 #: ../src/text-context.cpp:706
-#, fuzzy
 msgid "Create flowed text"
-msgstr "លំហូរ​អត្ថបទ​"
+msgstr "បង្កើត​អត្ថបទ​លំហូរ"
 
 #: ../src/text-context.cpp:708
 msgid "The frame is <b>too small</b> for the current font size. Flowed text not created."
@@ -6732,50 +6709,42 @@ msgstr ""
 #: ../src/tweak-context.cpp:949
 #, fuzzy, c-format
 msgid "<b>Pushing %d</b> selected object"
-msgid_plural "<b>Pushing %d</b> selected objects"
-msgstr[0] "<b>លុប​ទទេ​</b>   ។"
+msgstr "<b>លុប​ទទេ​</b>   ។"
 
 #: ../src/tweak-context.cpp:954
 #, fuzzy, c-format
 msgid "<b>Shrinking %d</b> selected object"
-msgid_plural "<b>Shrinking %d</b> selected objects"
-msgstr[0] "រៀបចំវត្ថុ​ដែ​ល​បានជ្រើស​"
+msgstr "រៀបចំវត្ថុ​ដែ​ល​បានជ្រើស​"
 
 #: ../src/tweak-context.cpp:959
 #, fuzzy, c-format
 msgid "<b>Growing %d</b> selected object"
-msgid_plural "<b>Growing %d</b> selected objects"
-msgstr[0] "វត្ថុ​ដែល​បាន​ជ្រើស​ជាក្រុម​"
+msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​ជាក្រុម​"
 
 #: ../src/tweak-context.cpp:964
 #, fuzzy, c-format
 msgid "<b>Attracting %d</b> selected object"
-msgid_plural "<b>Attracting %d</b> selected objects"
-msgstr[0] "រៀបចំវត្ថុ​ដែ​ល​បានជ្រើស​"
+msgstr "រៀបចំវត្ថុ​ដែ​ល​បានជ្រើស​"
 
 #: ../src/tweak-context.cpp:969
 #, fuzzy, c-format
 msgid "<b>Repelling %d</b> selected object"
-msgid_plural "<b>Repelling %d</b> selected objects"
-msgstr[0] "វត្ថុ​ដែល​បាន​ជ្រើស​ស្ទួន​"
+msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​ស្ទួន​"
 
 #: ../src/tweak-context.cpp:974
 #, fuzzy, c-format
 msgid "<b>Roughening %d</b> selected object"
-msgid_plural "<b>Roughening %d</b> selected objects"
-msgstr[0] "<b>លុប​ទទេ​</b>   ។"
+msgstr "<b>លុប​ទទេ​</b>   ។"
 
 #: ../src/tweak-context.cpp:978
 #, fuzzy, c-format
 msgid "<b>Painting %d</b> selected object"
-msgid_plural "<b>Painting %d</b> selected objects"
-msgstr[0] "រៀបចំវត្ថុ​ដែ​ល​បានជ្រើស​"
+msgstr "រៀបចំវត្ថុ​ដែ​ល​បានជ្រើស​"
 
 #: ../src/tweak-context.cpp:983
 #, fuzzy, c-format
 msgid "<b>Jittering colors in %d</b> selected object"
-msgid_plural "<b>Jittering colors in %d</b> selected objects"
-msgstr[0] "បង្កើត​បន្ទាត់​តភ្ជាប់​ជៀសវាង​វត្ថុ​ដែល​មាន​ជ្រើស​"
+msgstr "បង្កើត​បន្ទាត់​តភ្ជាប់​ជៀសវាង​វត្ថុ​ដែល​មាន​ជ្រើស​"
 
 #: ../src/tweak-context.cpp:1023
 msgid "Push tweak"
