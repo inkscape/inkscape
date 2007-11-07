@@ -43,33 +43,31 @@ def create_equation_tex(filename, equation):
     tex.close()
 
 def svg_open(self,filename):
-    doc_width = inkex.unittouu(self.document.documentElement.getAttribute('width'))
-    doc_height = inkex.unittouu(self.document.documentElement.getAttribute('height'))
+    doc_width = inkex.unittouu(self.document.getroot().get('width'))
+    doc_height = inkex.unittouu(self.document.getroot().get('height'))
     doc_sizeH = min(doc_width,doc_height)
     doc_sizeW = max(doc_width,doc_height)
 
     def clone_and_rewrite(self, node_in):
-        if node_in.localName != 'svg':
-            node_out = self.document.createElement('svg:' + node_in.localName)
-            for i in range(0, node_in.attributes.length):
-                name = node_in.attributes.item(i).name
-                value = node_in.attributes.item(i).value
-                node_out.setAttribute(name, value)
+        if node_in.tag != 'svg':
+            node_out = inkex.etree.Element(inkex.addNS(node_in.tag,'svg'))
+            for name in node_in.attrib:
+                node_out.set(name, node_in.attrib[name])
         else:
-            node_out = self.document.createElement('svg:g')
-        for c in node_in.childNodes:
-            if c.localName in ('g', 'path', 'polyline', 'polygon'):
+            node_out = inkex.etree.Element(inkex.addNS('g','svg'))
+        for c in node_in.iterchildren():
+            if c.tag in ('g', 'path', 'polyline', 'polygon'):
                 child = clone_and_rewrite(self, c)
-                if c.localName == 'g':
-                    child.setAttribute('transform','matrix('+str(doc_sizeH/700.)+',0,0,'+str(-doc_sizeH/700.)+','+str(-doc_sizeH*0.25)+','+str(doc_sizeW*0.75)+')')
-                node_out.appendChild(child)
+                if c.tag == 'g':
+                    child.set('transform','matrix('+str(doc_sizeH/700.)+',0,0,'+str(-doc_sizeH/700.)+','+str(-doc_sizeH*0.25)+','+str(doc_sizeW*0.75)+')')
+                node_out.append(child)
 
         return node_out
 
-    doc = xml.dom.minidom.parse(filename)
-    svg = doc.getElementsByTagName('svg')[0]
+    doc = inkex.etree.parse(filename)
+    svg = doc.getroot()
     group = clone_and_rewrite(self, svg)
-    self.current_layer.appendChild(group)
+    self.current_layer.append(group)
 
 class EQTEXSVG(inkex.Effect):
     def __init__(self):
