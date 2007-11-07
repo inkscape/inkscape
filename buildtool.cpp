@@ -38,7 +38,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.7.1, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.7.2, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -8871,7 +8871,7 @@ static bool parseOptions(int argc, char **argv)
                 }
             else if (arg.size()>2 && sequ(arg, "-D"))
                 {
-                String s = arg.substr(2, s.size());
+                String s = arg.substr(2, arg.size());
                 String name, value;
                 if (!parseProperty(s, name, value))
                    {
