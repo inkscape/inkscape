@@ -1410,7 +1410,7 @@ sp_text_context_selection_changed(Inkscape::Selection *selection, SPTextContext 
 }
 
 static void
-sp_text_context_selection_modified(Inkscape::Selection *selection, guint flags, SPTextContext *tc)
+sp_text_context_selection_modified(Inkscape::Selection */*selection*/, guint /*flags*/, SPTextContext *tc)
 {
     sp_text_context_update_cursor(tc);
     sp_text_context_update_text_selection(tc);
@@ -1619,21 +1619,21 @@ sp_text_context_forget_text(SPTextContext *tc)
 }
 
 gint
-sptc_focus_in(GtkWidget *widget, GdkEventFocus *event, SPTextContext *tc)
+sptc_focus_in(GtkWidget */*widget*/, GdkEventFocus */*event*/, SPTextContext *tc)
 {
     gtk_im_context_focus_in(tc->imc);
     return FALSE;
 }
 
 gint
-sptc_focus_out(GtkWidget *widget, GdkEventFocus *event, SPTextContext *tc)
+sptc_focus_out(GtkWidget */*widget*/, GdkEventFocus */*event*/, SPTextContext *tc)
 {
     gtk_im_context_focus_out(tc->imc);
     return FALSE;
 }
 
 static void
-sptc_commit(GtkIMContext *imc, gchar *string, SPTextContext *tc)
+sptc_commit(GtkIMContext */*imc*/, gchar *string, SPTextContext *tc)
 {
     if (!tc->text) {
         sp_text_context_setup_text(tc);

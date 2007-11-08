@@ -201,7 +201,7 @@ sp_tspan_modified(SPObject *object, unsigned flags)
     }
 }
 
-static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
+static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const /*flags*/)
 {
     // find out the ancestor text which holds our layout
     SPObject *parent_text = SP_OBJECT(item);

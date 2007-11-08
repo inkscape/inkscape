@@ -4,7 +4,7 @@
  * Clone tiling dialog
  *
  * Authors:
- *   bulia byak <buliabyak@users.sf.net> 
+ *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *
  * Copyright (C) 2004-2006 Authors
@@ -95,7 +95,7 @@ static sigc::connection _color_changed_connection;
 static Inkscape::UI::Widget::ColorPicker *color_picker;
 
 static void
-clonetiler_dialog_destroy (GtkObject *object, gpointer data)
+clonetiler_dialog_destroy( GtkObject */*object*/, gpointer /*data*/ )
 {
     if (Inkscape::NSApplication::Application::getNewGui())
     {
@@ -109,14 +109,14 @@ clonetiler_dialog_destroy (GtkObject *object, gpointer data)
     _color_changed_connection.disconnect();
 
     delete color_picker;
-    
+
     wd.win = dlg = NULL;
     wd.stop = 0;
 
 }
 
 static gboolean
-clonetiler_dialog_delete (GtkObject *object, GdkEvent * /*event*/, gpointer data)
+clonetiler_dialog_delete (GtkObject */*object*/, GdkEvent * /*event*/, gpointer /*data*/)
 {
     gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
     gtk_window_get_size ((GtkWindow *) dlg, &w, &h);
@@ -221,7 +221,7 @@ enum {
 
 
 static NR::Matrix
-clonetiler_get_transform ( 
+clonetiler_get_transform (
     // symmetry group
     int type,
     // row, column
@@ -742,11 +742,11 @@ clonetiler_trace_setup (SPDocument *doc, gdouble zoom, SPItem *original)
     trace_arena = NRArena::create();
     /* Create ArenaItem and set transform */
     trace_visionkey = sp_item_display_key_new(1);
-    trace_root = sp_item_invoke_show( SP_ITEM(SP_DOCUMENT_ROOT (doc)), 
+    trace_root = sp_item_invoke_show( SP_ITEM(SP_DOCUMENT_ROOT (doc)),
                                       (NRArena *) trace_arena, trace_visionkey, SP_ITEM_SHOW_DISPLAY);
 
     // hide the (current) original and any tiled clones, we only want to pick the background
-    sp_item_invoke_hide(original, trace_visionkey); 
+    sp_item_invoke_hide(original, trace_visionkey);
     clonetiler_trace_hide_tiled_clones_recursively (SP_OBJECT(SP_DOCUMENT_ROOT (doc)));
 
     sp_document_root (doc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -840,7 +840,7 @@ clonetiler_trace_finish ()
 }
 
 static void
-clonetiler_unclump (GtkWidget *widget, void *)
+clonetiler_unclump( GtkWidget */*widget*/, void * )
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
@@ -871,7 +871,7 @@ clonetiler_unclump (GtkWidget *widget, void *)
 
     g_slist_free (to_unclump);
 
-    sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_CLONETILER, 
+    sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_CLONETILER,
                       _("Unclump tiled clones"));
 }
 
@@ -892,7 +892,7 @@ clonetiler_number_of_clones (SPObject *obj)
 }
 
 static void
-clonetiler_remove (GtkWidget *widget, void *, bool do_undo = true)
+clonetiler_remove( GtkWidget */*widget*/, void *, bool do_undo = true )
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
@@ -924,7 +924,7 @@ clonetiler_remove (GtkWidget *widget, void *, bool do_undo = true)
     clonetiler_change_selection (NULL, selection, dlg);
 
     if (do_undo)
-        sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_CLONETILER, 
+        sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_CLONETILER,
                           _("Delete tiled clones"));
 }
 
@@ -939,10 +939,10 @@ transform_rect(NR::Rect const &r, NR::Matrix const &m)
     NR::Point const p4 = r.corner(4) * m;
     return NR::Rect(
         NR::Point(
-            std::min(std::min(p1[X], p2[X]), std::min(p3[X], p4[X])), 
-            std::min(std::min(p1[Y], p2[Y]), std::min(p3[Y], p4[Y]))), 
+            std::min(std::min(p1[X], p2[X]), std::min(p3[X], p4[X])),
+            std::min(std::min(p1[Y], p2[Y]), std::min(p3[Y], p4[Y]))),
         NR::Point(
-            std::max(std::max(p1[X], p2[X]), std::max(p3[X], p4[X])), 
+            std::max(std::max(p1[X], p2[X]), std::max(p3[X], p4[X])),
             std::max(std::max(p1[Y], p2[Y]), std::max(p3[Y], p4[Y]))));
 }
 
@@ -961,7 +961,7 @@ randomize01 (double val, double rand)
 
 
 static void
-clonetiler_apply (GtkWidget *widget, void *)
+clonetiler_apply( GtkWidget */*widget*/, void * )
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
@@ -1351,7 +1351,7 @@ clonetiler_apply (GtkWidget *widget, void *)
 
     clonetiler_change_selection (NULL, selection, dlg);
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_DIALOG_CLONETILER, 
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_DIALOG_CLONETILER,
                      _("Create tiled clones"));
 }
 
@@ -1444,7 +1444,7 @@ clonetiler_spinbox (GtkTooltips *tt, const char *tip, const char *attr, double l
 }
 
 static void
-clonetiler_symgroup_changed (GtkMenuItem *item, gpointer data)
+clonetiler_symgroup_changed( GtkMenuItem */*item*/, gpointer data )
 {
     gint group_new = GPOINTER_TO_INT (data);
     prefs_set_int_attribute ( prefs_path, "symmetrygroup", group_new );
@@ -1458,7 +1458,7 @@ clonetiler_xy_changed (GtkAdjustment *adj, gpointer data)
 }
 
 static void
-clonetiler_keep_bbox_toggled (GtkToggleButton *tb, gpointer data)
+clonetiler_keep_bbox_toggled( GtkToggleButton *tb, gpointer /*data*/ )
 {
     prefs_set_int_attribute (prefs_path, "keepbbox", gtk_toggle_button_get_active (tb));
 }
@@ -1507,7 +1507,7 @@ clonetiler_reset_recursive (GtkWidget *w)
 }
 
 static void
-clonetiler_reset (GtkWidget *widget, void *)
+clonetiler_reset( GtkWidget */*widget*/, void * )
 {
     clonetiler_reset_recursive (dlg);
 }
@@ -1564,7 +1564,7 @@ clonetiler_table_x_y_rand (int values)
 }
 
 static void
-clonetiler_pick_switched (GtkToggleButton *tb, gpointer data)
+clonetiler_pick_switched( GtkToggleButton */*tb*/, gpointer data )
 {
     guint v = GPOINTER_TO_INT (data);
     prefs_set_int_attribute (prefs_path, "pick", v);
@@ -1572,7 +1572,7 @@ clonetiler_pick_switched (GtkToggleButton *tb, gpointer data)
 
 
 static void
-clonetiler_switch_to_create (GtkToggleButton *tb, GtkWidget *dlg)
+clonetiler_switch_to_create( GtkToggleButton */*tb*/, GtkWidget *dlg )
 {
     GtkWidget *rowscols = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "rowscols");
     GtkWidget *widthheight = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "widthheight");
@@ -1589,7 +1589,7 @@ clonetiler_switch_to_create (GtkToggleButton *tb, GtkWidget *dlg)
 
 
 static void
-clonetiler_switch_to_fill (GtkToggleButton *tb, GtkWidget *dlg)
+clonetiler_switch_to_fill( GtkToggleButton */*tb*/, GtkWidget *dlg )
 {
     GtkWidget *rowscols = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "rowscols");
     GtkWidget *widthheight = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "widthheight");
@@ -1629,7 +1629,7 @@ clonetiler_fill_height_changed (GtkAdjustment *adj, GtkWidget *u)
 
 
 static void
-clonetiler_do_pick_toggled (GtkToggleButton *tb, gpointer data)
+clonetiler_do_pick_toggled( GtkToggleButton *tb, gpointer /*data*/ )
 {
     GtkWidget *vvb = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "dotrace");
 
@@ -1655,12 +1655,12 @@ clonetiler_dialog (void)
             x = prefs_get_int_attribute (prefs_path, "x", -1000);
             y = prefs_get_int_attribute (prefs_path, "y", -1000);
         }
-        
+
         if (w ==0 || h == 0) {
             w = prefs_get_int_attribute (prefs_path, "w", 0);
             h = prefs_get_int_attribute (prefs_path, "h", 0);
         }
-        
+
 //        if (x<0) x=0;
 //        if (y<0) y=0;
 
@@ -1669,19 +1669,19 @@ clonetiler_dialog (void)
         }
         if (x >= 0 && y >= 0 && (x < (gdk_screen_width()-MIN_ONSCREEN_DISTANCE)) && (y < (gdk_screen_height()-MIN_ONSCREEN_DISTANCE))) {
             gtk_window_move ((GtkWindow *) dlg, x, y);
-        
+
         } else {
             gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
         }
-        
-        
+
+
         sp_transientize (dlg);
         wd.win = dlg;
         wd.stop = 0;
-        
-                             
+
+
         gtk_signal_connect ( GTK_OBJECT (dlg), "event", GTK_SIGNAL_FUNC (sp_dialog_event_handler), dlg);
-        
+
         gtk_signal_connect ( GTK_OBJECT (dlg), "destroy", G_CALLBACK (clonetiler_dialog_destroy), dlg);
         gtk_signal_connect ( GTK_OBJECT (dlg), "delete_event", G_CALLBACK (clonetiler_dialog_delete), dlg);
 
@@ -1691,7 +1691,7 @@ clonetiler_dialog (void)
             _dialogs_hidden_connection = Inkscape::NSApplication::Editor::connectDialogsHidden (sigc::bind (&on_dialog_hide, dlg));
             _dialogs_unhidden_connection = Inkscape::NSApplication::Editor::connectDialogsUnhidden (sigc::bind (&on_dialog_unhide, dlg));
             _desktop_activated_connection = Inkscape::NSApplication::Editor::connectDesktopActivated (sigc::bind (&on_transientize, &wd));
-        } else {            
+        } else {
             g_signal_connect   ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (clonetiler_dialog_delete), dlg);
             g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);
             g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg);
@@ -2352,7 +2352,7 @@ clonetiler_dialog (void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs_get_int_attribute(prefs_path, "pick", 0) == PICK_B);
                 }
                 {
-                    //TRANSLATORS: only translate "string" in "context|string". 
+                    //TRANSLATORS: only translate "string" in "context|string".
                     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), Q_("clonetiler|H"));
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the hue of the color"), NULL);
@@ -2362,7 +2362,7 @@ clonetiler_dialog (void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs_get_int_attribute(prefs_path, "pick", 0) == PICK_H);
                 }
                 {
-                    //TRANSLATORS: only translate "string" in "context|string". 
+                    //TRANSLATORS: only translate "string" in "context|string".
                     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), Q_("clonetiler|S"));
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the saturation of the color"), NULL);
@@ -2372,7 +2372,7 @@ clonetiler_dialog (void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs_get_int_attribute(prefs_path, "pick", 0) == PICK_S);
                 }
                 {
-                    //TRANSLATORS: only translate "string" in "context|string". 
+                    //TRANSLATORS: only translate "string" in "context|string".
                     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), Q_("clonetiler|L"));
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the lightness of the color"), NULL);
@@ -2537,9 +2537,9 @@ clonetiler_dialog (void)
                 // unitmenu
                 GtkWidget *u = sp_unit_selector_new (SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
                 sp_unit_selector_set_unit (SP_UNIT_SELECTOR(u), sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units);
-    
+
                 {
-                    // Width spinbutton 
+                    // Width spinbutton
                     GtkObject *a = gtk_adjustment_new (0.0, -1e6, 1e6, 1.0, 10.0, 10.0);
                     sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a));
 

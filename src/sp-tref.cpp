@@ -321,7 +321,7 @@ sp_tref_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
  *  The code for this function is swiped from the tspan bbox code, since tref should work pretty much the same way
  */
 static void
-sp_tref_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
+sp_tref_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const /*flags*/)
 {
     // find out the ancestor text which holds our layout
     SPObject *parent_text = SP_OBJECT(item);
@@ -367,7 +367,7 @@ sp_tref_description(SPItem *item)
 
 /* For the sigc::connection changes (i.e. when the object being refered to changes) */
 static void
-sp_tref_href_changed(SPObject *old_ref, SPObject *ref, SPTRef *tref)
+sp_tref_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPTRef *tref)
 {
     if (tref)
     {
@@ -399,7 +399,7 @@ sp_tref_href_changed(SPObject *old_ref, SPObject *ref, SPTRef *tref)
  * Delete the tref object
  */
 static void
-sp_tref_delete_self(SPObject *deleted, SPTRef *self)
+sp_tref_delete_self(SPObject */*deleted*/, SPTRef *self)
 {
     SP_OBJECT(self)->deleteObject();
 }

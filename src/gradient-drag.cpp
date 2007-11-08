@@ -91,7 +91,7 @@ gr_drag_sel_changed(Inkscape::Selection */*selection*/, gpointer data)
 }
 
 static void
-gr_drag_sel_modified (Inkscape::Selection */*selection*/, guint flags, gpointer data)
+gr_drag_sel_modified (Inkscape::Selection */*selection*/, guint /*flags*/, gpointer data)
 {
     GrDrag *drag = (GrDrag *) data;
     if (drag->local_change) {
@@ -859,7 +859,7 @@ gr_knot_moved_midpoint_handler(SPKnot */*knot*/, NR::Point const *ppointer, guin
 
 
 static void
-gr_knot_grabbed_handler (SPKnot */*knot*/, unsigned int state, gpointer data)
+gr_knot_grabbed_handler (SPKnot */*knot*/, unsigned int /*state*/, gpointer data)
 {
     GrDragger *dragger = (GrDragger *) data;
 
@@ -972,7 +972,7 @@ gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data)
 Called when a dragger knot is doubleclicked; opens gradient editor with the stop from the first draggable
 */
 static void
-gr_knot_doubleclicked_handler (SPKnot */*knot*/, guint state, gpointer data)
+gr_knot_doubleclicked_handler (SPKnot */*knot*/, guint /*state*/, gpointer data)
 {
     GrDragger *dragger = (GrDragger *) data;
 

@@ -1,5 +1,5 @@
 /**
- * \brief Fill and Stroke dialog, 
+ * \brief Fill and Stroke dialog,
  * based on sp_object_properties_dialog
  *
  * Authors:
@@ -39,23 +39,23 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-void on_selection_changed(Inkscape::Application *inkscape, 
+void on_selection_changed(Inkscape::Application *inkscape,
                           Inkscape::Selection *selection,
                           FillAndStroke *dlg)
 {
     dlg->selectionChanged(inkscape, selection);
 }
 
-void on_selection_modified(Inkscape::Application *inkscape, 
-                           Inkscape::Selection *selection, 
-                           guint flags,
+void on_selection_modified(Inkscape::Application *inkscape,
+                           Inkscape::Selection *selection,
+                           guint /*flags*/,
                            FillAndStroke *dlg)
 {
     dlg->selectionChanged(inkscape, selection);
 }
 
 
-FillAndStroke::FillAndStroke(Behavior::BehaviorFactory behavior_factory) 
+FillAndStroke::FillAndStroke(Behavior::BehaviorFactory behavior_factory)
     : Dialog (behavior_factory, "dialogs.fillstroke", SP_VERB_DIALOG_FILL_STROKE),
       _page_fill(1, 1, true, true),
       _page_stroke_paint(1, 1, true, true),
@@ -90,7 +90,7 @@ FillAndStroke::FillAndStroke(Behavior::BehaviorFactory behavior_factory)
     _fe_vbox.pack_start(_fe_alignment, false, false, 0);
 
     _fe_cb.signal_blend_blur_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::FillAndStroke::_blendBlurValueChanged));
-    
+
     // Opacity
     vbox->pack_start(_opacity_vbox, false, false, 2);
     _opacity_label_box.pack_start(_opacity_label, false, false, 4);
@@ -112,7 +112,7 @@ FillAndStroke::FillAndStroke(Behavior::BehaviorFactory behavior_factory)
     show_all_children();
 }
 
-FillAndStroke::~FillAndStroke() 
+FillAndStroke::~FillAndStroke()
 {
 }
 
@@ -174,7 +174,7 @@ FillAndStroke::_blendBlurValueChanged()
 
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
     sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
-    
+
     //get current selection
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
@@ -194,14 +194,14 @@ FillAndStroke::_blendBlurValueChanged()
 
     SPFilter *filter = 0;
     const bool remfilter = (blendmode == "normal" && radius == 0) || (blendmode == "filter" && !filter);
-        
+
     if(blendmode != "filter" || filter) {
         //apply created filter to every selected item
         for (GSList const *i = items; i != NULL; i = i->next) {
             SPItem * item = SP_ITEM(i->data);
             SPStyle *style = SP_OBJECT_STYLE(item);
             g_assert(style != NULL);
-            
+
             if(remfilter) {
                 remove_filter (item, false);
             }
@@ -210,7 +210,7 @@ FillAndStroke::_blendBlurValueChanged()
                     filter = new_filter_simple_from_item(document, item, blendmode.c_str(), radius);
                 sp_style_set_property_url (SP_OBJECT(item), "filter", SP_OBJECT(filter), false);
             }
-            
+
             //request update
             SP_OBJECT(item)->requestDisplayUpdate(( SP_OBJECT_MODIFIED_FLAG |
                                                     SP_OBJECT_STYLE_MODIFIED_FLAG ));
@@ -247,7 +247,7 @@ FillAndStroke::_opacityValueChanged()
 
     sp_repr_css_attr_unref (css);
 
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:opacity", SP_VERB_DIALOG_FILL_STROKE, 
+    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:opacity", SP_VERB_DIALOG_FILL_STROKE,
                             _("Change opacity"));
 
     // resume interruptibility
@@ -257,8 +257,8 @@ FillAndStroke::_opacityValueChanged()
 }
 
 void
-FillAndStroke::selectionChanged(Inkscape::Application *inkscape,
-                                Inkscape::Selection *selection)
+FillAndStroke::selectionChanged(Inkscape::Application */*inkscape*/,
+                                Inkscape::Selection */*selection*/)
 {
     if (_blocked)
         return;
@@ -276,7 +276,7 @@ FillAndStroke::selectionChanged(Inkscape::Application *inkscape,
             break;
         case QUERY_STYLE_SINGLE:
         case QUERY_STYLE_MULTIPLE_AVERAGED: // TODO: treat this slightly differently
-        case QUERY_STYLE_MULTIPLE_SAME: 
+        case QUERY_STYLE_MULTIPLE_SAME:
             _opacity_hbox.set_sensitive(true);
             _opacity_adjustment.set_value(100 * SP_SCALE24_TO_FLOAT(query->opacity.value));
             break;
@@ -307,7 +307,7 @@ FillAndStroke::selectionChanged(Inkscape::Application *inkscape,
                 break;
             case QUERY_STYLE_SINGLE:
             case QUERY_STYLE_MULTIPLE_AVERAGED:
-            case QUERY_STYLE_MULTIPLE_SAME: 
+            case QUERY_STYLE_MULTIPLE_SAME:
                 NR::Maybe<NR::Rect> bbox = sp_desktop_selection(SP_ACTIVE_DESKTOP)->bounds();
                 if (bbox) {
                     double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
@@ -320,7 +320,7 @@ FillAndStroke::selectionChanged(Inkscape::Application *inkscape,
                 break;
         }
     }
-    
+
     sp_style_unref(query);
 
     _blocked = false;

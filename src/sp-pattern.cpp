@@ -422,7 +422,7 @@ pattern_ref_changed(SPObject *old_ref, SPObject *ref, SPPattern *pat)
 Gets called when the referenced <pattern> is changed
 */
 static void
-pattern_ref_modified (SPObject *ref, guint flags, SPPattern *pattern)
+pattern_ref_modified (SPObject */*ref*/, guint /*flags*/, SPPattern *pattern)
 {
 	if (SP_IS_OBJECT (pattern))
 		SP_OBJECT (pattern)->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -633,7 +633,7 @@ Creates a painter (i.e. the thing that does actual filling at the given zoom).
 See (*) below for why the parent_transform may be necessary.
 */
 static SPPainter *
-sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR::Matrix const &parent_transform, const NRRect *bbox)
+sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR::Matrix const &/*parent_transform*/, const NRRect *bbox)
 {
 	SPPattern *pat = SP_PATTERN (ps);
 	SPPatPainter *pp = g_new (SPPatPainter, 1);
@@ -794,7 +794,7 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 }
 
 static void
-sp_pattern_painter_free (SPPaintServer *ps, SPPainter *painter)
+sp_pattern_painter_free (SPPaintServer */*ps*/, SPPainter *painter)
 {
 	SPPatPainter *pp = (SPPatPainter *) painter;
 	SPPattern *pat = pp->pat;

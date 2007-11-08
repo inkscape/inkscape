@@ -958,7 +958,7 @@ void FilterEffectsDialog::FilterModifier::on_activate_desktop(Application*, SPDe
 
 
 // When the selection changes, show the active filter(s) in the dialog
-void FilterEffectsDialog::FilterModifier::on_inkscape_change_selection(Application *inkscape,
+void FilterEffectsDialog::FilterModifier::on_inkscape_change_selection(Application */*inkscape*/,
                                                                        Selection *sel,
                                                                        FilterModifier* fm)
 {
@@ -1182,7 +1182,7 @@ int FilterEffectsDialog::CellRendererConnection::get_text_width() const
 }
 
 void FilterEffectsDialog::CellRendererConnection::get_size_vfunc(
-    Gtk::Widget& widget, const Gdk::Rectangle* cell_area,
+    Gtk::Widget& widget, const Gdk::Rectangle* /*cell_area*/,
     int* x_offset, int* y_offset, int* width, int* height) const
 {
     PrimitiveList& primlist = dynamic_cast<PrimitiveList&>(widget);
@@ -1783,7 +1783,7 @@ void FilterEffectsDialog::PrimitiveList::sanitize_connections(const Gtk::TreeIte
 }
 
 // Reorder the filter primitives to match the list order
-void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::DragContext>& dc)
+void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::DragContext>& /*dc*/)
 {
     SPFilter* filter = _dialog._filter_modifier.get_selected_filter();
     int ndx = 0;

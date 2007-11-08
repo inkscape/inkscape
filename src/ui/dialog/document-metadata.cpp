@@ -81,7 +81,7 @@ DocumentMetadata::destroy()
     }
 }
 
-DocumentMetadata::DocumentMetadata(Behavior::BehaviorFactory behavior_factory) 
+DocumentMetadata::DocumentMetadata(Behavior::BehaviorFactory behavior_factory)
     : Dialog (behavior_factory, "dialogs.documentmetadata", SP_VERB_DIALOG_METADATA),
       _page_metadata1(1, 1), _page_metadata2(1, 1),
       _prefs_path("dialogs.documentmetadata")
@@ -110,15 +110,15 @@ DocumentMetadata::init()
 
     g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
                      G_CALLBACK(on_activate_desktop), 0);
-    
+
     g_signal_connect(G_OBJECT(INKSCAPE), "deactivate_desktop",
                      G_CALLBACK(on_deactivate_desktop), 0);
-    
+
     show_all_children();
     present();
 }
 
-DocumentMetadata::~DocumentMetadata() 
+DocumentMetadata::~DocumentMetadata()
 {
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
     repr->removeListenerByData (this);
@@ -144,28 +144,28 @@ attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int star
     {
         if (arr[i] && arr[i+1])
         {
-            table.attach (const_cast<Gtk::Widget&>(*arr[i]),   1, 2, r, r+1, 
+            table.attach (const_cast<Gtk::Widget&>(*arr[i]),   1, 2, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 2, 3, r, r+1, 
+            table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 2, 3, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
         }
         else
         {
             if (arr[i+1])
-                table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 1, 3, r, r+1, 
+                table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 1, 3, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
             else if (arr[i])
             {
                 Gtk::Label& label = static_cast<Gtk::Label&> (const_cast<Gtk::Widget&>(*arr[i]));
                 label.set_alignment (0.0);
-                table.attach (label, 0, 3, r, r+1, 
+                table.attach (label, 0, 3, r, r+1,
                       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
             }
             else
             {
                 Gtk::HBox *space = manage (new Gtk::HBox);
                 space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
-                table.attach (*space, 0, 1, r, r+1, 
+                table.attach (*space, 0, 1, r, r+1,
                       (Gtk::AttachOptions)0, (Gtk::AttachOptions)0,0,0);
             }
         }
@@ -220,7 +220,7 @@ void
 DocumentMetadata::update()
 {
     if (_wr.isUpdating()) return;
-    
+
     _wr.setUpdating (true);
     set_sensitive (true);
 
@@ -228,7 +228,7 @@ DocumentMetadata::update()
     /* update the RDF entities */
     for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); it++)
         (*it)->update (SP_ACTIVE_DOCUMENT);
-        
+
     _licensor.update (SP_ACTIVE_DOCUMENT);
 
     _wr.setUpdating (false);
@@ -255,8 +255,8 @@ on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar
     _instance->update();
 }
 
-static void 
-on_activate_desktop (Inkscape::Application *, SPDesktop* dt, void*)
+static void
+on_activate_desktop (Inkscape::Application *, SPDesktop* /*dt*/, void*)
 {
     if (!_instance)
         return;
@@ -267,8 +267,8 @@ on_activate_desktop (Inkscape::Application *, SPDesktop* dt, void*)
     _instance->update();
 }
 
-static void 
-on_deactivate_desktop (Inkscape::Application *, SPDesktop* dt, void*)
+static void
+on_deactivate_desktop (Inkscape::Application *, SPDesktop* /*dt*/, void*)
 {
     if (!_instance)
         return;
@@ -278,8 +278,8 @@ on_deactivate_desktop (Inkscape::Application *, SPDesktop* dt, void*)
     _instance->_doc_replaced_connection.disconnect();
 }
 
-static void 
-on_doc_replaced (SPDesktop* dt, SPDocument* doc)
+static void
+on_doc_replaced (SPDesktop* dt, SPDocument* /*doc*/)
 {
     if (!_instance)
         return;

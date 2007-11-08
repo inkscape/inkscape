@@ -425,7 +425,7 @@ main(int argc, char **argv)
     bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 #endif
 #endif
-    // Allow the user to override the locale directory by setting 
+    // Allow the user to override the locale directory by setting
     // the environment variable INKSCAPE_LOCALEDIR.
     char *inkscape_localedir = getenv("INKSCAPE_LOCALEDIR");
     if (inkscape_localedir != NULL) {
@@ -641,7 +641,7 @@ int sp_common_main( int argc, char const **argv, GSList **flDest )
 }
 
 static void
-snooper(GdkEvent *event, gpointer data) { 
+snooper(GdkEvent *event, gpointer /*data*/) {
     if(inkscape_mapalt())  /* returns the map of the keyboard modifier to map to Alt, zero if no mapping */
     {
         GdkModifierType mapping=(GdkModifierType)inkscape_mapalt();
@@ -650,17 +650,17 @@ snooper(GdkEvent *event, gpointer data) {
                 if(event->motion.state & mapping) {
                     event->motion.state|=GDK_MOD1_MASK;
                 }
-                break;       
+                break;
             case GDK_BUTTON_PRESS:
                 if(event->button.state & mapping) {
                     event->button.state|=GDK_MOD1_MASK;
                 }
-                break;       
+                break;
              case GDK_KEY_PRESS:
                  if(event->key.state & mapping) {
                      event->key.state|=GDK_MOD1_MASK;
                  }
-                 break;                
+                 break;
         default:
             break;
         }
@@ -870,7 +870,7 @@ sp_do_export_png(SPDocument *doc)
         } else if (sp_export_area_drawing) {
             o = SP_DOCUMENT_ROOT (doc);
             o_area = o;
-        } 
+        }
 
         if (o) {
             if (!SP_IS_ITEM (o)) {
@@ -922,7 +922,7 @@ sp_do_export_png(SPDocument *doc)
             return;
         }
     }
-    
+
     if (sp_export_area) {
         /* Try to parse area (given in SVG pixels) */
         if (!sscanf(sp_export_area, "%lg:%lg:%lg:%lg", &area.x0, &area.y0, &area.x1, &area.y1) == 4) {

@@ -66,7 +66,7 @@
 
 #define DPI_BASE PX_PER_IN
 
-#define EXPORT_COORD_PRECISION 3    
+#define EXPORT_COORD_PRECISION 3
 
 #define MIN_ONSCREEN_DISTANCE 50
 
@@ -74,32 +74,32 @@ static void sp_export_area_toggled   ( GtkToggleButton *tb, GtkObject *base );
 static void sp_export_export_clicked ( GtkButton *button, GtkObject *base );
 static void sp_export_browse_clicked ( GtkButton *button, gpointer userdata );
 
-static void sp_export_area_x_value_changed       ( GtkAdjustment *adj, 
+static void sp_export_area_x_value_changed       ( GtkAdjustment *adj,
                                                    GtkObject *base);
-                                             
-static void sp_export_area_y_value_changed       ( GtkAdjustment *adj, 
+
+static void sp_export_area_y_value_changed       ( GtkAdjustment *adj,
                                                    GtkObject *base);
-                                             
-static void sp_export_area_width_value_changed   ( GtkAdjustment *adj, 
+
+static void sp_export_area_width_value_changed   ( GtkAdjustment *adj,
                                                    GtkObject *base);
-                                                 
-static void sp_export_area_height_value_changed  ( GtkAdjustment *adj, 
+
+static void sp_export_area_height_value_changed  ( GtkAdjustment *adj,
                                                    GtkObject *base);
-                                                  
-static void sp_export_bitmap_width_value_changed ( GtkAdjustment *adj, 
+
+static void sp_export_bitmap_width_value_changed ( GtkAdjustment *adj,
                                                    GtkObject *base);
-                                                   
-static void sp_export_bitmap_height_value_changed ( GtkAdjustment *adj, 
+
+static void sp_export_bitmap_height_value_changed ( GtkAdjustment *adj,
                                                    GtkObject *base);
-                                                   
-static void sp_export_xdpi_value_changed         ( GtkAdjustment *adj, 
+
+static void sp_export_xdpi_value_changed         ( GtkAdjustment *adj,
                                                    GtkObject *base);
-                                           
-static void sp_export_selection_changed ( Inkscape::Application *inkscape, 
-                                          Inkscape::Selection *selection, 
+
+static void sp_export_selection_changed ( Inkscape::Application *inkscape,
+                                          Inkscape::Selection *selection,
                                           GtkObject *base);
-static void sp_export_selection_modified ( Inkscape::Application *inkscape, 
-                                           Inkscape::Selection *selection, 
+static void sp_export_selection_modified ( Inkscape::Application *inkscape,
+                                           Inkscape::Selection *selection,
                                            guint flags,
                                            GtkObject *base );
 
@@ -142,7 +142,7 @@ static const char * selection_labels[SELECTION_NUMBER_OF] = {
     N_("_Page"), N_("_Drawing"), N_("_Selection"), N_("_Custom")};
 
 static void
-sp_export_dialog_destroy ( GtkObject *object, gpointer data )
+sp_export_dialog_destroy ( GtkObject */*object*/, gpointer /*data*/ )
 {
     sp_signal_disconnect_by_data (INKSCAPE, dlg);
 
@@ -160,7 +160,7 @@ sp_export_dialog_destroy ( GtkObject *object, gpointer data )
 
 /// Called when dialog is closed or inkscape is shut down.
 static bool
-sp_export_dialog_delete ( GtkObject *object, GdkEvent *event, gpointer data )
+sp_export_dialog_delete ( GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/ )
 {
 
     gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
@@ -289,50 +289,50 @@ sp_export_dialog_area_box (GtkWidget * dlg)
         b->set_data("key", GINT_TO_POINTER(i));
         gtk_object_set_data (GTK_OBJECT (dlg), selection_names[i], b->gobj());
         togglebox->pack_start(*b, false, true, 0);
-        gtk_signal_connect ( GTK_OBJECT (b->gobj()), "clicked", 
+        gtk_signal_connect ( GTK_OBJECT (b->gobj()), "clicked",
                              GTK_SIGNAL_FUNC (sp_export_area_toggled), dlg );
     }
 
-    g_signal_connect ( G_OBJECT (INKSCAPE), "change_selection", 
+    g_signal_connect ( G_OBJECT (INKSCAPE), "change_selection",
                        G_CALLBACK (sp_export_selection_changed), dlg );
-    g_signal_connect ( G_OBJECT (INKSCAPE), "modify_selection", 
+    g_signal_connect ( G_OBJECT (INKSCAPE), "modify_selection",
                        G_CALLBACK (sp_export_selection_modified), dlg );
-    g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", 
+    g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop",
                        G_CALLBACK (sp_export_selection_changed), dlg );
-    
+
     Gtk::Table* t = new Gtk::Table(2, 6, FALSE);
     t->set_row_spacings (4);
     t->set_col_spacings (4);
 
-    sp_export_spinbutton_new ( "x0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(), 
+    sp_export_spinbutton_new ( "x0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(),
                                GTK_WIDGET(t->gobj()), 0, 0, _("_x0:"), NULL, EXPORT_COORD_PRECISION, 1,
-                               G_CALLBACK ( sp_export_area_x_value_changed), 
+                               G_CALLBACK ( sp_export_area_x_value_changed),
                                dlg );
 
-    sp_export_spinbutton_new ( "x1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(), 
+    sp_export_spinbutton_new ( "x1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(),
                                GTK_WIDGET(t->gobj()), 2, 0, _("x_1:"), NULL, EXPORT_COORD_PRECISION, 1,
-                               G_CALLBACK (sp_export_area_x_value_changed), 
+                               G_CALLBACK (sp_export_area_x_value_changed),
                                dlg );
 
-    sp_export_spinbutton_new ( "width", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, 
+    sp_export_spinbutton_new ( "width", 0.0, -1000000.0, 1000000.0, 0.1, 1.0,
                                us->gobj(), GTK_WIDGET(t->gobj()), 4, 0, _("Width:"), NULL, EXPORT_COORD_PRECISION, 1,
-                               G_CALLBACK 
-                                   (sp_export_area_width_value_changed), 
+                               G_CALLBACK
+                                   (sp_export_area_width_value_changed),
                                dlg );
 
-    sp_export_spinbutton_new ( "y0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(), 
+    sp_export_spinbutton_new ( "y0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(),
                                GTK_WIDGET(t->gobj()), 0, 1, _("_y0:"), NULL, EXPORT_COORD_PRECISION, 1,
-                               G_CALLBACK (sp_export_area_y_value_changed), 
+                               G_CALLBACK (sp_export_area_y_value_changed),
                                dlg );
 
-    sp_export_spinbutton_new ( "y1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(), 
+    sp_export_spinbutton_new ( "y1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(),
                                GTK_WIDGET(t->gobj()), 2, 1, _("y_1:"), NULL, EXPORT_COORD_PRECISION, 1,
-                               G_CALLBACK (sp_export_area_y_value_changed), 
+                               G_CALLBACK (sp_export_area_y_value_changed),
                                dlg );
 
-    sp_export_spinbutton_new ( "height", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, 
+    sp_export_spinbutton_new ( "height", 0.0, -1000000.0, 1000000.0, 0.1, 1.0,
                                us->gobj(), GTK_WIDGET(t->gobj()), 4, 1, _("Height:"), NULL, EXPORT_COORD_PRECISION, 1,
-                               G_CALLBACK (sp_export_area_height_value_changed), 
+                               G_CALLBACK (sp_export_area_height_value_changed),
                                dlg );
 
     vb->pack_start(*togglebox, false, false, 3);
@@ -473,36 +473,36 @@ sp_export_dialog (void)
             t->set_col_spacings (4);
             size_box->pack_start(*t);
 
-            sp_export_spinbutton_new ( "bmwidth", 16.0, 1.0, 1000000.0, 1.0, 10.0, 
+            sp_export_spinbutton_new ( "bmwidth", 16.0, 1.0, 1000000.0, 1.0, 10.0,
                                        NULL, GTK_WIDGET(t->gobj()), 0, 0,
                                        _("_Width:"), _("pixels at"), 0, 1,
-                                       G_CALLBACK 
-                                       (sp_export_bitmap_width_value_changed), 
+                                       G_CALLBACK
+                                       (sp_export_bitmap_width_value_changed),
                                        dlg );
 
-            sp_export_spinbutton_new ( "xdpi", 
-                                       prefs_get_double_attribute 
-                                       ( "dialogs.export.defaultxdpi", 
-                                         "value", DPI_BASE), 
+            sp_export_spinbutton_new ( "xdpi",
+                                       prefs_get_double_attribute
+                                       ( "dialogs.export.defaultxdpi",
+                                         "value", DPI_BASE),
                                        0.01, 100000.0, 0.1, 1.0, NULL, GTK_WIDGET(t->gobj()), 3, 0,
                                        NULL, _("dp_i"), 2, 1,
-                                       G_CALLBACK (sp_export_xdpi_value_changed), 
+                                       G_CALLBACK (sp_export_xdpi_value_changed),
                                        dlg );
 
-            sp_export_spinbutton_new ( "bmheight", 16.0, 1.0, 1000000.0, 1.0, 10.0, 
-                                       NULL, GTK_WIDGET(t->gobj()), 0, 1, 
-                                       _("Height:"), _("pixels at"), 0, 1, 
+            sp_export_spinbutton_new ( "bmheight", 16.0, 1.0, 1000000.0, 1.0, 10.0,
+                                       NULL, GTK_WIDGET(t->gobj()), 0, 1,
+                                       _("Height:"), _("pixels at"), 0, 1,
                                        G_CALLBACK
-                                       (sp_export_bitmap_height_value_changed), 
+                                       (sp_export_bitmap_height_value_changed),
                                        dlg );
 
             /** \todo
-             * Needs fixing: there's no way to set ydpi currently, so we use  
+             * Needs fixing: there's no way to set ydpi currently, so we use
              *       the defaultxdpi value here, too...
              */
-            sp_export_spinbutton_new ( "ydpi", prefs_get_double_attribute 
-                                       ( "dialogs.export.defaultxdpi", 
-                                         "value", DPI_BASE), 
+            sp_export_spinbutton_new ( "ydpi", prefs_get_double_attribute
+                                       ( "dialogs.export.defaultxdpi",
+                                         "value", DPI_BASE),
                                        0.01, 100000.0, 0.1, 1.0, NULL, GTK_WIDGET(t->gobj()), 3, 1,
                                        NULL, _("dpi"), 2, 0, NULL, dlg );
 
@@ -730,13 +730,13 @@ sp_export_find_default_selection(GtkWidget * dlg)
 
 
 /**
- * \brief  If selection changed or a different document activated, we must 
+ * \brief  If selection changed or a different document activated, we must
  * recalculate any chosen areas
  *
  */
 static void
-sp_export_selection_changed ( Inkscape::Application *inkscape, 
-                              Inkscape::Selection *selection, 
+sp_export_selection_changed ( Inkscape::Application *inkscape,
+                              Inkscape::Selection *selection,
                               GtkObject *base )
 {
     selection_type current_key;
@@ -760,15 +760,15 @@ sp_export_selection_changed ( Inkscape::Application *inkscape,
         GtkToggleButton * button;
         button = (GtkToggleButton *)gtk_object_get_data(base, selection_names[current_key]);
         sp_export_area_toggled(button, base);
-    } 
+    }
 
     sp_export_update_checkbuttons (base);
-} 
+}
 
 static void
-sp_export_selection_modified ( Inkscape::Application *inkscape, 
-                               Inkscape::Selection *selection, 
-                               guint flags,
+sp_export_selection_modified ( Inkscape::Application */*inkscape*/,
+                               Inkscape::Selection */*selection*/,
+                               guint /*flags*/,
                                GtkObject *base )
 {
     selection_type current_key;
@@ -857,7 +857,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                     break;
                 }
             case SELECTION_DRAWING:
-                /** \todo 
+                /** \todo
                  * This returns wrong values if the document has a viewBox.
                  */
                 bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
@@ -869,7 +869,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                     break;
                 }
             case SELECTION_PAGE:
-                bbox = NR::Rect(NR::Point(0.0, 0.0), 
+                bbox = NR::Rect(NR::Point(0.0, 0.0),
                                 NR::Point(sp_document_width(doc), sp_document_height(doc))
                                 );
 
@@ -880,9 +880,9 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
             default:
                 break;
         } // switch
-        
+
         // remember area setting
-        prefs_set_string_attribute ( "dialogs.export.exportarea", 
+        prefs_set_string_attribute ( "dialogs.export.exportarea",
                                      "value", selection_names[key]);
 
         if ( key != SELECTION_CUSTOM && bbox ) {
@@ -891,7 +891,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                                       bbox->max()[NR::X],
                                       bbox->max()[NR::Y]);
         }
-    
+
     } // end of if ( SP_ACTIVE_DESKTOP )
 
 
@@ -967,7 +967,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
 
 /// Called when dialog is deleted
 static gint
-sp_export_progress_delete ( GtkWidget *widget, GdkEvent *event, GObject *base )
+sp_export_progress_delete ( GtkWidget */*widget*/, GdkEvent */*event*/, GObject *base )
 {
     g_object_set_data (base, "cancel", (gpointer) 1);
     return TRUE;
@@ -975,7 +975,7 @@ sp_export_progress_delete ( GtkWidget *widget, GdkEvent *event, GObject *base )
 
 /// Called when progress is cancelled
 static void
-sp_export_progress_cancel ( GtkWidget *widget, GObject *base )
+sp_export_progress_cancel ( GtkWidget */*widget*/, GObject *base )
 {
     g_object_set_data (base, "cancel", (gpointer) 1);
 } // end of sp_export_progress_cancel()
@@ -1008,7 +1008,7 @@ sp_export_progress_callback (float value, void *data)
 GtkWidget *
 create_progress_dialog (GtkObject *base, gchar *progress_text) {
     GtkWidget *dlg, *prg, *btn; /* progressbar-stuff */
-    
+
     dlg = gtk_dialog_new ();
     gtk_window_set_title (GTK_WINDOW (dlg), _("Export in progress"));
     prg = gtk_progress_bar_new ();
@@ -1018,17 +1018,17 @@ create_progress_dialog (GtkObject *base, gchar *progress_text) {
 
     gtk_progress_bar_set_text ((GtkProgressBar *) prg, progress_text);
 
-    gtk_progress_bar_set_orientation ( (GtkProgressBar *) prg, 
+    gtk_progress_bar_set_orientation ( (GtkProgressBar *) prg,
                                        GTK_PROGRESS_LEFT_TO_RIGHT);
-    gtk_box_pack_start ((GtkBox *) ((GtkDialog *) dlg)->vbox, 
+    gtk_box_pack_start ((GtkBox *) ((GtkDialog *) dlg)->vbox,
                         prg, FALSE, FALSE, 4 );
-    btn = gtk_dialog_add_button ( GTK_DIALOG (dlg), 
-                                  GTK_STOCK_CANCEL, 
+    btn = gtk_dialog_add_button ( GTK_DIALOG (dlg),
+                                  GTK_STOCK_CANCEL,
                                   GTK_RESPONSE_CANCEL );
-                                  
-    g_signal_connect ( (GObject *) dlg, "delete_event", 
+
+    g_signal_connect ( (GObject *) dlg, "delete_event",
                        (GCallback) sp_export_progress_delete, base);
-    g_signal_connect ( (GObject *) btn, "clicked", 
+    g_signal_connect ( (GObject *) btn, "clicked",
                        (GCallback) sp_export_progress_cancel, base);
     gtk_window_set_modal ((GtkWindow *) dlg, TRUE);
     gtk_widget_show_all (dlg);
@@ -1062,7 +1062,7 @@ filename_add_extension (const gchar *filename, const gchar *extension)
 
 /// Called when export button is clicked
 static void
-sp_export_export_clicked (GtkButton *button, GtkObject *base)
+sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
 {
     if (!SP_ACTIVE_DESKTOP) return;
 
@@ -1077,7 +1077,7 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
         gint num = g_slist_length((GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
         gint n = 0;
 
-        if (num < 1) 
+        if (num < 1)
             return;
 
         gchar *progress_text = g_strdup_printf (_("Exporting %d files"), num);
@@ -1112,10 +1112,10 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
 
             if (width > 1 && height > 1) {
                 /* Do export */
-                if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), fn, 
-                                         area.x0, area.y0, area.x1, area.y1, width, height, dpi, dpi, 
-                                         nv->pagecolor, 
-                                         NULL, NULL, TRUE,  // overwrite without asking 
+                if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), fn,
+                                         area.x0, area.y0, area.x1, area.y1, width, height, dpi, dpi,
+                                         nv->pagecolor,
+                                         NULL, NULL, TRUE,  // overwrite without asking
                                          hide ? (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList() : NULL
                         )) {
                     gchar * error;
@@ -1182,11 +1182,11 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
     g_free (fn);
     GtkWidget *prog_dlg = create_progress_dialog (base, progress_text);
     g_free (progress_text);
-    
+
     /* Do export */
-    if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), filename_ext, 
-                             x0, y0, x1, y1, width, height, xdpi, ydpi, 
-                             nv->pagecolor, 
+    if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), filename_ext,
+                             x0, y0, x1, y1, width, height, xdpi, ydpi,
+                             nv->pagecolor,
                              sp_export_progress_callback, base, FALSE,
                              hide ? (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList() : NULL
             )) {
@@ -1295,7 +1295,7 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
 
 /// Called when Browse button is clicked
 static void
-sp_export_browse_clicked (GtkButton *button, gpointer userdata)
+sp_export_browse_clicked (GtkButton */*button*/, gpointer /*userdata*/)
 {
     GtkWidget *fs, *fe;
     const gchar *filename;
@@ -1350,7 +1350,7 @@ sp_export_browse_clicked (GtkButton *button, gpointer userdata)
 // TODO: Move this to nr-rect-fns.h.
 static bool
 sp_export_bbox_equal(NR::Rect const &one, NR::Rect const &two)
-{ 
+{
     double const epsilon = pow(10.0, -EXPORT_COORD_PRECISION);
     return (
         (fabs(one.min()[NR::X] - two.min()[NR::X]) < epsilon) &&
@@ -1562,7 +1562,7 @@ sp_export_area_y_value_changed (GtkAdjustment *adj, GtkObject *base)
 
 /// Called when x1-x0 or area width is changed
 static void
-sp_export_area_width_value_changed (GtkAdjustment *adj, GtkObject *base)
+sp_export_area_width_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
 {
     float x0, x1, xdpi, width, bmwidth;
 
@@ -1599,7 +1599,7 @@ sp_export_area_width_value_changed (GtkAdjustment *adj, GtkObject *base)
 
 /// Called when y1-y0 or area height is changed.
 static void
-sp_export_area_height_value_changed (GtkAdjustment *adj, GtkObject *base)
+sp_export_area_height_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
 {
 
     float y0, y1, ydpi, height, bmheight;
@@ -1682,7 +1682,7 @@ sp_export_set_image_x (GtkObject *base)
 
 /// Called when pixel width is changed
 static void
-sp_export_bitmap_width_value_changed (GtkAdjustment *adj, GtkObject *base)
+sp_export_bitmap_width_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
 {
     float x0, x1, bmwidth, xdpi;
 
@@ -1717,7 +1717,7 @@ sp_export_bitmap_width_value_changed (GtkAdjustment *adj, GtkObject *base)
 
 /// Called when pixel height is changed
 static void
-sp_export_bitmap_height_value_changed (GtkAdjustment *adj, GtkObject *base)
+sp_export_bitmap_height_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
 {
     float y0, y1, bmheight, xdpi;
 
@@ -1779,7 +1779,7 @@ sp_export_bitmap_height_value_changed (GtkAdjustment *adj, GtkObject *base)
     currently be independent.  This is likely to change in the future.
 */
 void
-sp_export_xdpi_value_changed (GtkAdjustment *adj, GtkObject *base)
+sp_export_xdpi_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
 {
     float x0, x1, xdpi, bmwidth;
 

@@ -67,7 +67,7 @@ static Inkscape::XML::NodeEventVector const livepatheffect_repr_events = {
 /**
  * Callback to initialize livepatheffect vtable.
  */
-static void 
+static void
 livepatheffect_class_init(LivePathEffectObjectClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
@@ -99,7 +99,7 @@ livepatheffect_init(LivePathEffectObject *lpeobj)
 /**
  * Virtual build: set livepatheffect attributes from its associated XML node.
  */
-static void 
+static void
 livepatheffect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
 #ifdef LIVEPATHEFFECT_VERBOSE
@@ -227,12 +227,12 @@ livepatheffect_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     return repr;
 }
 
-static void 
-livepatheffect_on_repr_attr_changed ( Inkscape::XML::Node * repr, 
-                                      const gchar *key, 
-                                      const gchar *oldval, 
-                                      const gchar *newval, 
-                                      bool is_interactive, 
+static void
+livepatheffect_on_repr_attr_changed ( Inkscape::XML::Node * /*repr*/,
+                                      const gchar *key,
+                                      const gchar */*oldval*/,
+                                      const gchar *newval,
+                                      bool /*is_interactive*/,
                                       void * data )
 {
 #ifdef LIVEPATHEFFECT_VERBOSE
@@ -243,7 +243,7 @@ livepatheffect_on_repr_attr_changed ( Inkscape::XML::Node * repr,
         return;
 
     LivePathEffectObject *lpeobj = (LivePathEffectObject*) data;
-    if (!lpeobj->lpe) 
+    if (!lpeobj->lpe)
         return;
 
     lpeobj->lpe->setParameter(key, newval);

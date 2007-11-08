@@ -18,14 +18,14 @@ FIXME:
   replace all the instances of ink_ext_XXXXXX in this file that represent
   svg files with ink_ext_XXXXXX.svg . Doing so will prevent errors in extensions
   that call inkscape to manipulate the file.
-  
+
   "** (inkscape:5848): WARNING **: Format autodetect failed. The file is being opened as SVG."
-  
+
   references:
   http://www.gtk.org/api/2.6/glib/glib-File-Utilities.html#g-mkstemp
   http://ftp.gnome.org/pub/gnome/sources/glib/2.11/glib-2.11.4.changes
   http://developer.gnome.org/doc/API/2.0/glib/glib-File-Utilities.html#g-mkstemp
-  
+
   --Aaron Spike
 */
 #define __INKSCAPE_EXTENSION_IMPLEMENTATION_SCRIPT_C__
@@ -157,7 +157,7 @@ resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
                       interpPath .c_str(),
                       (int)finfo.st_size);
             return interpPath;
-        }                       
+        }
     }
 
     // 3. Try searching the path
@@ -290,7 +290,7 @@ Script::check_existance(const Glib::ustring &command)
     }
 
 
-    Glib::ustring path; 
+    Glib::ustring path;
     gchar *s = (gchar *) g_getenv("PATH");
     if (s)
         path = s;
@@ -313,9 +313,9 @@ Script::check_existance(const Glib::ustring &command)
             localPath = path.substr(pos, pos2-pos);
             pos = pos2+1;
         }
-        
+
         //printf("### %s\n", localPath.c_str());
-        Glib::ustring candidatePath = 
+        Glib::ustring candidatePath =
                       Glib::build_filename(localPath, command);
 
         if (Inkscape::IO::file_test(candidatePath .c_str(),
@@ -400,7 +400,7 @@ Script::load(Inkscape::Extension::Extension *module)
     command if it has been allocated.
 */
 void
-Script::unload(Inkscape::Extension::Extension *module)
+Script::unload(Inkscape::Extension::Extension */*module*/)
 {
     command.clear();
     helper_extension = "";
@@ -455,7 +455,7 @@ class ScriptDocCache : public ImplementationDocumentCache {
 	friend class Script;
 protected:
 	std::string _filename;
-    int _tempfd; 
+    int _tempfd;
 public:
 	ScriptDocCache (Inkscape::UI::View::View * view);
 	~ScriptDocCache ( );
@@ -482,7 +482,7 @@ ScriptDocCache::ScriptDocCache (Inkscape::UI::View::View * view) :
 
 	return;
 }
-	
+
 ScriptDocCache::~ScriptDocCache ( )
 {
     close(_tempfd);
@@ -490,8 +490,8 @@ ScriptDocCache::~ScriptDocCache ( )
 }
 
 ImplementationDocumentCache *
-Script::newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * view) {
-	return new ScriptDocCache(view);
+Script::newDocCache( Inkscape::Extension::Extension * /*ext*/, Inkscape::UI::View::View * view ) {
+    return new ScriptDocCache(view);
 }
 
 
@@ -505,7 +505,7 @@ Script::newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::V
 */
 Gtk::Widget *
 Script::prefs_input(Inkscape::Extension::Input *module,
-                    const gchar *filename)
+                    const gchar */*filename*/)
 {
     return module->autogui(NULL, NULL);
 }
@@ -522,7 +522,7 @@ Script::prefs_input(Inkscape::Extension::Input *module,
 Gtk::Widget *
 Script::prefs_output(Inkscape::Extension::Output *module)
 {
-    return module->autogui(NULL, NULL); 
+    return module->autogui(NULL, NULL);
 }
 
 
@@ -535,10 +535,10 @@ Script::prefs_output(Inkscape::Extension::Output *module)
     This function should really do something, right now it doesn't.
 */
 Gtk::Widget *
-Script::prefs_effect(Inkscape::Extension::Effect *module,
-                     Inkscape::UI::View::View *view,
-				     sigc::signal<void> * changeSignal,
-			         ImplementationDocumentCache * docCache)
+Script::prefs_effect( Inkscape::Extension::Effect *module,
+                      Inkscape::UI::View::View *view,
+                      sigc::signal<void> * changeSignal,
+                      ImplementationDocumentCache * /*docCache*/ )
 {
     SPDocument * current_document = view->doc();
 
@@ -740,8 +740,8 @@ Script::effect(Inkscape::Extension::Effect *module,
     std::list<std::string> params;
     module->paramListString(params);
 
-    if (module->no_doc) { 
-        // this is a no-doc extension, e.g. a Help menu command; 
+    if (module->no_doc) {
+        // this is a no-doc extension, e.g. a Help menu command;
         // just run the command without any files, ignoring errors
 
         Glib::ustring empty;

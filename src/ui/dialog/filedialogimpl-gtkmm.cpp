@@ -888,11 +888,11 @@ std::vector<Glib::ustring>FileOpenDialogImplGtk::getFilenames()
 /**
  * Constructor
  */
-FileSaveDialogImplGtk::FileSaveDialogImplGtk(Gtk::Window &parentWindow,
-            const Glib::ustring &dir,
-            FileDialogType fileTypes,
-            const Glib::ustring &title,
-            const Glib::ustring &default_key) :
+FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
+                                              const Glib::ustring &dir,
+                                              FileDialogType fileTypes,
+                                              const Glib::ustring &title,
+                                              const Glib::ustring &/*default_key*/ ) :
     FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.save_as")
 {
     /* One file at a time */
@@ -1364,11 +1364,11 @@ void FileExportDialogImpl::createFileTypeMenu()
 /**
  * Constructor
  */
-FileExportDialogImpl::FileExportDialogImpl(Gtk::Window& parentWindow,
-            const Glib::ustring &dir,
-            FileDialogType fileTypes,
-            const Glib::ustring &title,
-            const Glib::ustring &default_key) :
+FileExportDialogImpl::FileExportDialogImpl( Gtk::Window& parentWindow,
+                                            const Glib::ustring &dir,
+                                            FileDialogType fileTypes,
+                                            const Glib::ustring &title,
+                                            const Glib::ustring &/*default_key*/ ) :
             FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.export"),
             sourceX0Spinner("X0",         _("Left edge of source")),
             sourceY0Spinner("Y0",         _("Top edge of source")),

@@ -41,9 +41,9 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
     _selfdelete(false),
     _changeSignal(changeSignal),
     _doc(doc),
-    _effect(effect),
-	_docCache(docCache) {
-
+    _docCache(docCache),
+    _effect(effect)
+{
     SPDesktop *desktop = (SPDesktop *)_doc;
     sp_namedview_document_from_window(desktop);
 
@@ -175,7 +175,7 @@ ExecutionEnv::createWorkingDialog (void) {
 }
 
 void
-ExecutionEnv::workingCanceled (const int resp) {
+ExecutionEnv::workingCanceled( const int /*resp*/ ) {
     processingCancel();
     documentCancel();
     _finished = true;

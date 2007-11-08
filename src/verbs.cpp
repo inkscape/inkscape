@@ -408,7 +408,7 @@ Verb::~Verb(void)
     \return NULL to represent error (this function shouldn't ever be called)
 */
 SPAction *
-Verb::make_action(Inkscape::UI::View::View *view)
+Verb::make_action(Inkscape::UI::View::View */*view*/)
 {
     //std::cout << "make_action" << std::endl;
     return NULL;
@@ -654,7 +654,7 @@ Verb::sensitive(SPDocument *in_doc, bool in_sensitive)
         for (ActionTable::iterator cur_action = _actions->begin();
              cur_action != _actions->end();
              cur_action++) {
-			if (in_doc == NULL || (cur_action->first != NULL && cur_action->first->doc() == in_doc)) {
+            if (in_doc == NULL || (cur_action->first != NULL && cur_action->first->doc() == in_doc)) {
                 sp_action_set_sensitive(cur_action->second, in_sensitive ? 1 : 0);
             }
         }
@@ -675,8 +675,8 @@ Verb::name(SPDocument *in_doc, Glib::ustring in_name)
         for (ActionTable::iterator cur_action = _actions->begin();
              cur_action != _actions->end();
              cur_action++) {
-			if (in_doc == NULL || (cur_action->first != NULL && cur_action->first->doc() == in_doc)) {
-                            sp_action_set_name(cur_action->second, in_name);
+            if (in_doc == NULL || (cur_action->first != NULL && cur_action->first->doc() == in_doc)) {
+                sp_action_set_name(cur_action->second, in_name);
             }
         }
     }
@@ -787,7 +787,7 @@ Verb::getbyid(gchar const *id)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-FileVerb::perform(SPAction *action, void *data, void *pdata)
+FileVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
 #if 0
     /* These aren't used, but are here to remind people not to use
@@ -797,9 +797,9 @@ FileVerb::perform(SPAction *action, void *data, void *pdata)
 #endif
 
     SPDesktop *desktop = dynamic_cast<SPDesktop*>(sp_action_get_view(action));
-	g_assert(desktop != NULL);
-	Gtk::Window *parent = desktop->getToplevel();
-	g_assert(parent != NULL);
+    g_assert(desktop != NULL);
+    Gtk::Window *parent = desktop->getToplevel();
+    g_assert(parent != NULL);
 
     switch ((long) data) {
         case SP_VERB_FILE_NEW:
@@ -865,7 +865,7 @@ FileVerb::perform(SPAction *action, void *data, void *pdata)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-EditVerb::perform(SPAction *action, void *data, void *pdata)
+EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -974,7 +974,7 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_EDIT_SELECT_NEXT:
             if (tools_isactive(dt, TOOLS_NODES)) {
                 SP_NODE_CONTEXT(ec)->shape_editor->select_next();
-            } else if (tools_isactive(dt, TOOLS_GRADIENT) 
+            } else if (tools_isactive(dt, TOOLS_GRADIENT)
                        && ec->_grdrag->isNonEmpty()) {
                 sp_gradient_context_select_next (ec);
             } else {
@@ -1011,7 +1011,7 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-SelectionVerb::perform(SPAction *action, void *data, void *pdata)
+SelectionVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
 
@@ -1132,7 +1132,7 @@ SelectionVerb::perform(SPAction *action, void *data, void *pdata)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-LayerVerb::perform(SPAction *action, void *data, void *pdata)
+LayerVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     unsigned int verb = reinterpret_cast<std::size_t>(data);
@@ -1282,7 +1282,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-ObjectVerb::perform( SPAction *action, void *data, void *pdata )
+ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -1339,7 +1339,7 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
 
                     // ... flip the selected nodes about that node
                     SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::X, active_node->pos);
-            	} else {
+                } else {
 
                     // ... or else about the center of their bounding box.
                     SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::X);
@@ -1388,7 +1388,7 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-ContextVerb::perform(SPAction *action, void *data, void *pdata)
+ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     SPDesktop *dt;
     sp_verb_t verb;
@@ -1542,7 +1542,7 @@ ContextVerb::perform(SPAction *action, void *data, void *pdata)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-TextVerb::perform(SPAction *action, void *data, void *pdata)
+TextVerb::perform(SPAction *action, void */*data*/, void */*pdata*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -1556,7 +1556,7 @@ TextVerb::perform(SPAction *action, void *data, void *pdata)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-ZoomVerb::perform(SPAction *action, void *data, void *pdata)
+ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -1686,7 +1686,7 @@ ZoomVerb::perform(SPAction *action, void *data, void *pdata)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-DialogVerb::perform(SPAction *action, void *data, void *pdata)
+DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     if (reinterpret_cast<std::size_t>(data) != SP_VERB_DIALOG_TOGGLE) {
         // unhide all when opening a new dialog
@@ -1752,10 +1752,10 @@ DialogVerb::perform(SPAction *action, void *data, void *pdata)
             break;
 #ifdef WITH_INKBOARD
         case SP_VERB_XMPP_CLIENT:
-		{
+        {
             Inkscape::Whiteboard::SessionManager::showClient();
-			break;
-		}
+            break;
+        }
 #endif
         case SP_VERB_DIALOG_INPUT:
             sp_input_dialog();
@@ -1779,7 +1779,7 @@ DialogVerb::perform(SPAction *action, void *data, void *pdata)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-HelpVerb::perform(SPAction *action, void *data, void *pdata)
+HelpVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     g_assert(dt->_dlg_mgr != NULL);
@@ -1813,7 +1813,7 @@ HelpVerb::perform(SPAction *action, void *data, void *pdata)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-TutorialVerb::perform(SPAction *action, void *data, void *pdata)
+TutorialVerb::perform(SPAction */*action*/, void *data, void */*pdata*/)
 {
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_TUTORIAL_BASIC:
@@ -1972,7 +1972,7 @@ EffectLastVerb::make_action(Inkscape::UI::View::View *view)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-EffectLastVerb::perform(SPAction *action, void *data, void *pdata)
+EffectLastVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     /* These aren't used, but are here to remind people not to use
        the CURRENT_DOCUMENT macros unless they really have to. */
@@ -2042,7 +2042,7 @@ FitCanvasVerb::make_action(Inkscape::UI::View::View *view)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-FitCanvasVerb::perform(SPAction *action, void *data, void *pdata)
+FitCanvasVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt) return;
@@ -2111,7 +2111,7 @@ LockAndHideVerb::make_action(Inkscape::UI::View::View *view)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-LockAndHideVerb::perform(SPAction *action, void *data, void *pdata)
+LockAndHideVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt) return;

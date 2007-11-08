@@ -842,7 +842,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
  * Sets style, path, and paintbox.  Updates marker views, including dimensions.
  */
 static NRArenaItem *
-sp_shape_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags)
+sp_shape_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int /*flags*/)
 {
 	SPObject *object = SP_OBJECT(item);
 	SPShape *shape = SP_SHAPE(item);
@@ -978,7 +978,7 @@ sp_shape_marker_release (SPObject *marker, SPShape *shape)
  * No-op.  Exists for handling 'modified' messages
  */
 static void
-sp_shape_marker_modified (SPObject *marker, guint flags, SPItem *item)
+sp_shape_marker_modified (SPObject */*marker*/, guint /*flags*/, SPItem */*item*/)
 {
 	/* I think mask does update automagically */
 	/* g_warning ("Item %s mask %s modified", SP_OBJECT_ID (item), SP_OBJECT_ID (mask)); */
@@ -1185,7 +1185,7 @@ lpeobject_ref_changed(SPObject *old_ref, SPObject *ref, SPShape *shape)
  * Gets called when lpeobject repr contents change: i.e. parameter change.
  */
 static void
-lpeobject_ref_modified(SPObject *href, guint flags, SPShape *shape)
+lpeobject_ref_modified(SPObject */*href*/, guint /*flags*/, SPShape *shape)
 {
     sp_shape_update_patheffect (shape, true);
 }

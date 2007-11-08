@@ -1094,7 +1094,7 @@ sp_offset_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPOffset *offse
 }
 
 static void
-sp_offset_move_compensate(NR::Matrix const *mp, SPItem *original, SPOffset *self)
+sp_offset_move_compensate(NR::Matrix const *mp, SPItem */*original*/, SPOffset *self)
 {
     guint mode = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_PARALLEL);
     if (mode == SP_CLONE_COMPENSATION_NONE) return;
@@ -1142,7 +1142,7 @@ sp_offset_delete_self(SPObject */*deleted*/, SPOffset *offset)
 }
 
 static void
-sp_offset_source_modified (SPObject *iSource, guint flags, SPItem *item)
+sp_offset_source_modified (SPObject */*iSource*/, guint /*flags*/, SPItem *item)
 {
     SPOffset *offset = SP_OFFSET(item);
     offset->sourceDirty=true;

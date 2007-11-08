@@ -131,12 +131,12 @@ void SvgPreview::set_preview_in_cache(const Glib::ustring& key, GdkPixbuf* px) {
     _pixmap_cache[key] = px;
 }
 
-GdkPixbuf* SvgPreview::get_preview(const gchar* uri, const gchar* id, NRArenaItem *root, 
-                                   double scale_factor, unsigned int psize) {
+GdkPixbuf* SvgPreview::get_preview(const gchar* uri, const gchar* id, NRArenaItem */*root*/,
+                                   double /*scale_factor*/, unsigned int psize) {
     // First try looking up the cached preview in the cache map
     Glib::ustring key = cache_key(uri, id, psize);
     GdkPixbuf* px = get_preview_from_cache(key);
-    
+
     if (px == NULL) {
         /*
             px = render_pixbuf(root, scale_factor, dbox, psize);

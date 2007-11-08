@@ -107,33 +107,33 @@ static void sp_guide_init(SPGuide *guide)
     guide->hicolor = 0xff00007f;
 }
 
-static void sp_guide_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
+static void sp_guide_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec */*pspec*/)
 {
     SPGuide &guide = *SP_GUIDE(object);
 
     switch (prop_id) {
-	case PROP_COLOR:
+        case PROP_COLOR:
             guide.color = g_value_get_uint(value);
             for (GSList *l = guide.views; l != NULL; l = l->next) {
                 sp_guideline_set_color(SP_GUIDELINE(l->data), guide.color);
             }
             break;
 
-	case PROP_HICOLOR:
+        case PROP_HICOLOR:
             guide.hicolor = g_value_get_uint(value);
             break;
     }
 }
 
-static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
+static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec */*pspec*/)
 {
     SPGuide const &guide = *SP_GUIDE(object);
 
     switch (prop_id) {
-	case PROP_COLOR:
+        case PROP_COLOR:
             g_value_set_uint(value, guide.color);
             break;
-	case PROP_HICOLOR:
+        case PROP_HICOLOR:
             g_value_set_uint(value, guide.hicolor);
             break;
     }

@@ -69,7 +69,7 @@ static void sp_polygon_class_init(SPPolygonClass *pc)
     item_class->description = sp_polygon_description;
 }
 
-static void sp_polygon_init(SPPolygon *polygon)
+static void sp_polygon_init(SPPolygon */*polygon*/)
 {
     /* Nothing here */
 }
@@ -230,7 +230,7 @@ static void sp_polygon_set(SPObject *object, unsigned int key, const gchar *valu
     }
 }
 
-static gchar *sp_polygon_description(SPItem *item)
+static gchar *sp_polygon_description(SPItem */*item*/)
 {
     return g_strdup(_("<b>Polygon</b>"));
 }

@@ -46,7 +46,7 @@ static void lpeeditor_selection_changed (Inkscape::Selection * selection, gpoint
     lpeeditor->onSelectionChanged(selection);
 }
 
-static void lpeeditor_selection_modified (Inkscape::Selection *selection, guint flags, gpointer data)
+static void lpeeditor_selection_modified( Inkscape::Selection *selection, guint /*flags*/, gpointer data )
 {
     lpeeditor_selection_changed (selection, data);
 }

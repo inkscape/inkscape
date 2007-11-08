@@ -92,7 +92,7 @@ sp_rect_class_init(SPRectClass *klass)
 }
 
 static void
-sp_rect_init(SPRect *rect)
+sp_rect_init(SPRect */*rect*/)
 {
     /* Initializing to zero is automatic */
     /* sp_svg_length_unset(&rect->x, SP_SVG_UNIT_NONE, 0.0, 0.0); */

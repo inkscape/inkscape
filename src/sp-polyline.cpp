@@ -75,9 +75,9 @@ sp_polyline_class_init (SPPolyLineClass *klass)
 }
 
 static void
-sp_polyline_init (SPPolyLine * polyline)
+sp_polyline_init (SPPolyLine * /*polyline*/)
 {
-	/* Nothing here */
+    /* Nothing here */
 }
 
 static void
@@ -173,7 +173,7 @@ sp_polyline_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 }
 
 static gchar *
-sp_polyline_description(SPItem *item)
+sp_polyline_description(SPItem */*item*/)
 {
-	return g_strdup(_("<b>Polyline</b>"));
+    return g_strdup(_("<b>Polyline</b>"));
 }

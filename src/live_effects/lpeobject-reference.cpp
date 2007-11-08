@@ -140,7 +140,7 @@ lpeobjectreference_delete_self(SPObject */*deleted*/, LPEObjectReference *lpeobj
 }
 
 static void
-lpeobjectreference_source_modified(SPObject *iSource, guint flags, LPEObjectReference *lpeobjref)
+lpeobjectreference_source_modified(SPObject */*iSource*/, guint /*flags*/, LPEObjectReference *lpeobjref)
 {
     lpeobjref->owner->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }

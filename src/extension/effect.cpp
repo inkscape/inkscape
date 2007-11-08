@@ -333,7 +333,7 @@ Effect::EffectVerb::make_action (Inkscape::UI::View::View * view)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-Effect::EffectVerb::perform (SPAction *action, void * data, void *pdata)
+Effect::EffectVerb::perform( SPAction *action, void * data, void */*pdata*/ )
 {
     Inkscape::UI::View::View * current_view = sp_action_get_view(action);
 //  SPDocument * current_document = current_view->doc;

@@ -134,9 +134,8 @@ sp_stroke_style_paint_widget_new(void)
  * On construction, simply does an update of the stroke style paint object.
  */
 static void
-sp_stroke_style_paint_construct(SPWidget *spw, SPPaintSelector *psel)
+sp_stroke_style_paint_construct(SPWidget *spw, SPPaintSelector */*psel*/)
 {
-    (void)psel;
 #ifdef SP_SS_VERBOSE
     g_print( "Stroke style widget constructed: inkscape %p repr %p\n",
              spw->inkscape, spw->repr );
@@ -150,12 +149,11 @@ sp_stroke_style_paint_construct(SPWidget *spw, SPPaintSelector *psel)
  * On signal modified, invokes an update of the stroke style paint object.
  */
 static void
-sp_stroke_style_paint_selection_modified ( SPWidget *spw,
-                                        Inkscape::Selection *selection,
-                                        guint flags,
-                                        SPPaintSelector *psel)
+sp_stroke_style_paint_selection_modified( SPWidget *spw,
+                                          Inkscape::Selection */*selection*/,
+                                          guint flags,
+                                          SPPaintSelector */*psel*/ )
 {
-    (void)selection;
     if (flags & ( SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG |
                   SP_OBJECT_STYLE_MODIFIED_FLAG) ) {
         sp_stroke_style_paint_update(spw);
@@ -167,11 +165,10 @@ sp_stroke_style_paint_selection_modified ( SPWidget *spw,
  * On signal selection changed, invokes an update of the stroke style paint object.
  */
 static void
-sp_stroke_style_paint_selection_changed ( SPWidget *spw,
-                                        Inkscape::Selection *selection,
-                                        SPPaintSelector *psel )
+sp_stroke_style_paint_selection_changed( SPWidget *spw,
+                                         Inkscape::Selection */*selection*/,
+                                         SPPaintSelector */*psel*/ )
 {
-    (void)selection;
     sp_stroke_style_paint_update (spw);
 }
 
@@ -180,11 +177,10 @@ sp_stroke_style_paint_selection_changed ( SPWidget *spw,
  * On signal change subselection, invoke an update of the stroke style widget.
  */
 static void
-sp_stroke_style_widget_change_subselection ( Inkscape::Application *inkscape,
-                                        SPDesktop *desktop,
-                                        SPWidget *spw )
+sp_stroke_style_widget_change_subselection( Inkscape::Application */*inkscape*/,
+                                            SPDesktop */*desktop*/,
+                                            SPWidget *spw )
 {
-    (void)inkscape;
     sp_stroke_style_paint_update (spw);
 }
 
@@ -271,10 +267,9 @@ sp_stroke_style_paint_update (SPWidget *spw)
  */
 static void
 sp_stroke_style_paint_mode_changed( SPPaintSelector *psel,
-                                    SPPaintSelectorMode mode,
+                                    SPPaintSelectorMode /*mode*/,
                                     SPWidget *spw )
 {
-    (void)mode;
     if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
         return;
     }
@@ -568,13 +563,10 @@ sp_stroke_radio_button(GtkWidget *tb, char const *icon,
 }
 
 static void
-sp_stroke_style_widget_transientize_callback(Inkscape::Application *inkscape,
-                                        SPDesktop *desktop,
-                                        SPWidget *spw )
+sp_stroke_style_widget_transientize_callback(Inkscape::Application */*inkscape*/,
+                                             SPDesktop */*desktop*/,
+                                             SPWidget */*spw*/ )
 {
-    (void)inkscape;
-    (void)desktop;
-    (void)spw;
 // TODO:  Either of these will cause crashes sometimes
 //    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? sp_desktop_selection(desktop) : NULL);
 //    ink_markers_menu_update(spw);
@@ -588,10 +580,8 @@ sp_stroke_style_widget_transientize_callback(Inkscape::Application *inkscape,
 static GtkWidget *
 sp_marker_prev_new(unsigned psize, gchar const *mname,
                    SPDocument *source, SPDocument *sandbox,
-                   gchar *menu_id, NRArena const *arena, unsigned visionkey, NRArenaItem *root)
+                   gchar *menu_id, NRArena const */*arena*/, unsigned /*visionkey*/, NRArenaItem *root)
 {
-    (void)arena;
-    (void)visionkey;
     // Retrieve the marker named 'mname' from the source SVG document
     SPObject const *marker = source->getObjectById(mname);
     if (marker == NULL)
@@ -730,10 +720,8 @@ sp_marker_menu_build (GtkWidget *m, GSList *marker_list, SPDocument *source, SPD
  *
  */
 static void
-sp_marker_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *source, SPDocument *markers_doc, SPDocument *sandbox, gchar *menu_id)
+sp_marker_list_from_doc (GtkWidget *m, SPDocument */*current_doc*/, SPDocument *source, SPDocument */*markers_doc*/, SPDocument *sandbox, gchar *menu_id)
 {
-    (void)current_doc;
-    (void)markers_doc;
     GSList *ml = ink_marker_list_get(source);
     GSList *clean_ml = NULL;
 
@@ -842,9 +830,8 @@ ink_marker_menu_create_menu(GtkWidget *m, gchar *menu_id, SPDocument *doc, SPDoc
  * Creates a menu widget to display markers from markers.svg
  */
 static GtkWidget *
-ink_marker_menu( GtkWidget *tbl, gchar *menu_id, SPDocument *sandbox)
+ink_marker_menu( GtkWidget */*tbl*/, gchar *menu_id, SPDocument *sandbox)
 {
-    (void)tbl;
     SPDesktop *desktop = inkscape_active_desktop();
     SPDocument *doc = sp_desktop_document(desktop);
     GtkWidget *mnu = gtk_option_menu_new();
@@ -1299,9 +1286,8 @@ sp_stroke_style_line_widget_new(void)
  * the stroke line style to be updated.
  */
 static void
-sp_stroke_style_line_construct(SPWidget *spw, gpointer data)
+sp_stroke_style_line_construct(SPWidget *spw, gpointer /*data*/)
 {
-    (void)data;
 #ifdef SP_SS_VERBOSE
     g_print( "Stroke style widget constructed: inkscape %p repr %p\n",
              spw->inkscape, spw->repr );
@@ -1319,12 +1305,11 @@ sp_stroke_style_line_construct(SPWidget *spw, gpointer data)
  * Triggers update action.
  */
 static void
-sp_stroke_style_line_selection_modified ( SPWidget *spw,
-                                       Inkscape::Selection *selection,
-                                       guint flags,
-                                       gpointer data )
+sp_stroke_style_line_selection_modified( SPWidget *spw,
+                                         Inkscape::Selection *selection,
+                                         guint flags,
+                                         gpointer /*data*/ )
 {
-    (void)data;
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG)) {
         sp_stroke_style_line_update (spw, selection);
     }
@@ -1336,11 +1321,10 @@ sp_stroke_style_line_selection_modified ( SPWidget *spw,
  * Triggers update action.
  */
 static void
-sp_stroke_style_line_selection_changed ( SPWidget *spw,
-                                       Inkscape::Selection *selection,
-                                       gpointer data )
+sp_stroke_style_line_selection_changed( SPWidget *spw,
+                                        Inkscape::Selection *selection,
+                                        gpointer /*data*/ )
 {
-    (void)data;
     sp_stroke_style_line_update (spw, selection);
 }
 
@@ -1627,9 +1611,8 @@ sp_stroke_style_scale_line(SPWidget *spw)
  * Causes all line styles to be applied to all selected items.
  */
 static void
-sp_stroke_style_width_changed(GtkAdjustment *adj, SPWidget *spw)
+sp_stroke_style_width_changed(GtkAdjustment */*adj*/, SPWidget *spw)
 {
-    (void)adj;
     if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
         return;
     }
@@ -1642,9 +1625,8 @@ sp_stroke_style_width_changed(GtkAdjustment *adj, SPWidget *spw)
  * Causes all line styles to be applied to all selected items.
  */
 static void
-sp_stroke_style_miterlimit_changed(GtkAdjustment *adj, SPWidget *spw)
+sp_stroke_style_miterlimit_changed(GtkAdjustment */*adj*/, SPWidget *spw)
 {
-    (void)adj;
     if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
         return;
     }
@@ -1657,9 +1639,8 @@ sp_stroke_style_miterlimit_changed(GtkAdjustment *adj, SPWidget *spw)
  * Causes all line styles to be applied to all selected items.
  */
 static void
-sp_stroke_style_line_dash_changed(SPDashSelector *dsel, SPWidget *spw)
+sp_stroke_style_line_dash_changed(SPDashSelector */*dsel*/, SPWidget *spw)
 {
-    (void)dsel;
     if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
         return;
     }

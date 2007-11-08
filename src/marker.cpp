@@ -77,7 +77,7 @@ sp_marker_get_type (void)
 }
 
 /**
- * Initializes a SPMarkerClass object.  Establishes the function pointers to the class' 
+ * Initializes a SPMarkerClass object.  Establishes the function pointers to the class'
  * member routines in the class vtable, and sets pointers to parent classes.
  */
 static void
@@ -122,7 +122,7 @@ sp_marker_init (SPMarker *marker)
  *
  * This is to be invoked immediately after creation of an SPMarker.  This
  * method fills an SPMarker object with its SVG attributes, and calls the
- * parent class' build routine to attach the object to its document and 
+ * parent class' build routine to attach the object to its document and
  * repr.  The result will be creation of the whole document tree.
  *
  * \see sp_object_build()
@@ -480,7 +480,7 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	}
 }
 
-/** 
+/**
  * Writes the object's properties into its repr object.
  */
 static Inkscape::XML::Node *
@@ -547,19 +547,19 @@ sp_marker_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
  * This routine is disabled to break propagation.
  */
 static NRArenaItem *
-sp_marker_private_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags)
+sp_marker_private_show (SPItem */*item*/, NRArena */*arena*/, unsigned int /*key*/, unsigned int /*flags*/)
 {
-	/* Break propagation */
-	return NULL;
+    /* Break propagation */
+    return NULL;
 }
 
 /**
  * This routine is disabled to break propagation.
  */
 static void
-sp_marker_private_hide (SPItem *item, unsigned int key)
+sp_marker_private_hide (SPItem */*item*/, unsigned int /*key*/)
 {
-	/* Break propagation */
+    /* Break propagation */
 }
 
 /**
@@ -575,9 +575,9 @@ sp_marker_bbox(SPItem const *, NRRect *, NR::Matrix const &, unsigned const)
  * This routine is disabled to break propagation.
  */
 static void
-sp_marker_print (SPItem *item, SPPrintContext *ctx)
+sp_marker_print (SPItem */*item*/, SPPrintContext */*ctx*/)
 {
-	/* Break propagation */
+    /* Break propagation */
 }
 
 /* fixme: Remove link if zero-sized (Lauris) */
@@ -588,7 +588,7 @@ sp_marker_print (SPItem *item, SPPrintContext *ctx)
  * This is called from sp_shape_update() for shapes that have markers.  It
  * removes the old view of the marker and establishes a new one, registering
  * it with the marker's list of views for future updates.
- * 
+ *
  * \param marker Marker to create views in.
  * \param key Key to give each SPMarkerView.
  * \param size Number of NRArenaItems to put in the SPMarkerView.
@@ -619,7 +619,7 @@ sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
 	}
 }
 
-/** 
+/**
  * Shows an instance of a marker.  This is called during sp_shape_update_marker_view()
  * show and transform a child item in the arena for all views with the given key.
  */
@@ -692,7 +692,7 @@ sp_marker_hide (SPMarker *marker, unsigned int key)
 }
 
 /**
- * Removes a given view.  Also will destroy sub-items in the view if destroyitems 
+ * Removes a given view.  Also will destroy sub-items in the view if destroyitems
  * is set to a non-zero value.
  */
 static void
@@ -716,7 +716,7 @@ sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destro
 }
 
 const gchar *
-generate_marker (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matrix transform, NR::Matrix move)
+generate_marker (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matrix /*transform*/, NR::Matrix move)
 {
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));

@@ -447,7 +447,7 @@ sp_use_get_parent_transform(SPUse *use)
  * clone's transform.
  */
 static void
-sp_use_move_compensate(NR::Matrix const *mp, SPItem *original, SPUse *self)
+sp_use_move_compensate(NR::Matrix const *mp, SPItem */*original*/, SPUse *self)
 {
     // the clone is orphaned; or this is not a real use, but a clone of another use;
     // we skip it, otherwise duplicate compensation will occur
@@ -497,7 +497,7 @@ sp_use_move_compensate(NR::Matrix const *mp, SPItem *original, SPUse *self)
 }
 
 static void
-sp_use_href_changed(SPObject *old_ref, SPObject *ref, SPUse *use)
+sp_use_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUse *use)
 {
     SPItem *item = SP_ITEM(use);
 
@@ -538,7 +538,7 @@ sp_use_href_changed(SPObject *old_ref, SPObject *ref, SPUse *use)
 }
 
 static void
-sp_use_delete_self(SPObject *deleted, SPUse *self)
+sp_use_delete_self(SPObject */*deleted*/, SPUse *self)
 {
     // always delete uses which are used in flowtext
     if (SP_OBJECT_PARENT(self) && SP_IS_FLOWREGION(SP_OBJECT_PARENT(self))) {
