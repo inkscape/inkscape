@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-10-17 23:52+0200\n"
-"PO-Revision-Date: 2007-10-19 13:29+0100\n"
+"PO-Revision-Date: 2007-11-08 10:44+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -2482,9 +2482,8 @@ msgid "Modules directory (%s) is unavailable.  External modules in that director
 msgstr "Adresár modulov (%s) nie je dostupný.  Externé moduly z tohto adresára nebudú načítané."
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:38
-#, fuzzy
 msgid "Adaptive Threshold"
-msgstr "Prah:"
+msgstr "Adaptívny prah:"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:40
 #: ../src/extension/internal/bitmap/raise.cpp:41
@@ -2495,16 +2494,14 @@ msgstr "Šírka"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:41
 #: ../src/extension/internal/bitmap/raise.cpp:42
-#, fuzzy
 msgid "Height"
-msgstr "Výška:"
+msgstr "Výška"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1928
-#, fuzzy
 msgid "Offset"
-msgstr "Posuny"
+msgstr "Posun"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:46
 #: ../src/extension/internal/bitmap/addNoise.cpp:57
@@ -2540,18 +2537,16 @@ msgstr "Posuny"
 #: ../src/extension/internal/bitmap/threshold.cpp:43
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:49
 #: ../src/extension/internal/bitmap/wave.cpp:44
-#, fuzzy
 msgid "Raster"
-msgstr "Presunúť vyššie"
+msgstr "Raster"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:48
 msgid "Apply adaptive thresholding to selected bitmap(s)."
 msgstr "Použíť na vybrané bitmapy adaptívny prah."
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:44
-#, fuzzy
 msgid "Add Noise"
-msgstr "Pridať uzly"
+msgstr "Pridať šum"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:47
 msgid "Uniform Noise"
@@ -2570,9 +2565,8 @@ msgid "Impulse Noise"
 msgstr "Impulzný šum"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:51
-#, fuzzy
 msgid "Laplacian Noise"
-msgstr "Fraktálový šum"
+msgstr "Laplaceovský šum"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:52
 msgid "Poisson Noise"
@@ -2583,9 +2577,8 @@ msgid "Add random noise to selected bitmap(s)."
 msgstr "Pridať náhodný šum na zvolené bitmapy."
 
 #: ../src/extension/internal/bitmap/blur.cpp:37
-#, fuzzy
 msgid "Blur"
-msgstr "Modrá"
+msgstr "Rozostrenie"
 
 #: ../src/extension/internal/bitmap/blur.cpp:39
 #: ../src/extension/internal/bitmap/charcoal.cpp:39
@@ -2596,9 +2589,8 @@ msgstr "Modrá"
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1968
-#, fuzzy
 msgid "Radius"
-msgstr "Presunúť vyššie"
+msgstr "Polomer"
 
 #: ../src/extension/internal/bitmap/blur.cpp:40
 #: ../src/extension/internal/bitmap/charcoal.cpp:40
@@ -2606,25 +2598,21 @@ msgstr "Presunúť vyššie"
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:40
 #: ../src/extension/internal/bitmap/sharpen.cpp:40
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:43
-#, fuzzy
 msgid "Sigma"
-msgstr "malý"
+msgstr "Sigma"
 
 #: ../src/extension/internal/bitmap/blur.cpp:46
-#, fuzzy
 msgid "Blur selected bitmap(s)"
-msgstr "Zoskupí zvolené objekty"
+msgstr "Rozostriť zvolené bitmapy"
 
 #: ../src/extension/internal/bitmap/channel.cpp:47
 #: ../src/extension/internal/bitmap/levelChannel.cpp:53
-#, fuzzy
 msgid "Channel"
-msgstr "Zrušiť"
+msgstr "Kanál"
 
 #: ../src/extension/internal/bitmap/channel.cpp:49
-#, fuzzy
 msgid "Layer"
-msgstr "_Vrstva"
+msgstr "Vrstva"
 
 #: ../src/extension/internal/bitmap/channel.cpp:50
 #: ../src/extension/internal/bitmap/levelChannel.cpp:54
@@ -2655,21 +2643,18 @@ msgstr "Fialová"
 
 #: ../src/extension/internal/bitmap/channel.cpp:55
 #: ../src/extension/internal/bitmap/levelChannel.cpp:59
-#, fuzzy
 msgid "Yellow Channel"
-msgstr "Žltá"
+msgstr "Žltý kanál"
 
 #: ../src/extension/internal/bitmap/channel.cpp:56
 #: ../src/extension/internal/bitmap/levelChannel.cpp:60
-#, fuzzy
 msgid "Black Channel"
-msgstr "Čierna výplň"
+msgstr "Čierny kanál"
 
 #: ../src/extension/internal/bitmap/channel.cpp:57
 #: ../src/extension/internal/bitmap/levelChannel.cpp:61
-#, fuzzy
 msgid "Opacity Channel"
-msgstr "Krytie"
+msgstr "Kanál krytia"
 
 #: ../src/extension/internal/bitmap/channel.cpp:58
 #: ../src/extension/internal/bitmap/levelChannel.cpp:62
@@ -2681,34 +2666,29 @@ msgid "Extract specific channel from image."
 msgstr "Extrahovať určený kanál z obrázka."
 
 #: ../src/extension/internal/bitmap/charcoal.cpp:37
-#, fuzzy
 msgid "Charcoal"
-msgstr "Cairo"
+msgstr "Uhlík"
 
 #: ../src/extension/internal/bitmap/charcoal.cpp:46
-#, fuzzy
 msgid "Apply charcoal stylization to selected bitmap(s)."
-msgstr "Použiť transformáciu na výber"
+msgstr "Použiť na zvolené bitmapy štylizáciu uhlíkom"
 
 #: ../src/extension/internal/bitmap/colorize.cpp:49
-#, fuzzy
 msgid "Colorize"
-msgstr "Farba"
+msgstr "Vyfarbiť"
 
 #: ../src/extension/internal/bitmap/colorize.cpp:57
 msgid "Colorize selected bitmap(s) with specified color, using given opacity."
 msgstr "Vyfarbiť zvolené bitmapy určenou farbou, s použítím danej priesvitnosti."
 
 #: ../src/extension/internal/bitmap/contrast.cpp:36
-#, fuzzy
 msgid "Contrast"
-msgstr "Rohy"
+msgstr "Kontrast"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:37
-#, fuzzy
 msgid "Sharpen"
-msgstr "Tvary"
+msgstr "Zaostriť"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:44
 msgid "Enhance intensity differences in selected bitmap(s)."
@@ -2740,18 +2720,16 @@ msgstr ""
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:38
 #: ../src/extension/internal/bitmap/spread.cpp:38
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:44
-#, fuzzy
 msgid "Amount"
-msgstr "Písmo"
+msgstr "Množstvo"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:44
 msgid "Cycle colormap(s) of selected bitmap(s)."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:35
-#, fuzzy
 msgid "Despeckle"
-msgstr "Odzn_ačiť"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:42
 msgid "Reduce speckle noise of selected bitmap(s)."
@@ -2774,18 +2752,16 @@ msgid "Emboss selected bitmap(s) -- hilight edges with 3D effect."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
-#, fuzzy
 msgid "Enhance"
-msgstr "Zrušiť"
+msgstr "Rozšíriť"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:41
 msgid "Enhance selected bitmap(s) -- minimize noise."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/equalize.cpp:34
-#, fuzzy
 msgid "Equalize"
-msgstr "Rovnaká šírka:"
+msgstr "Ekvalizovať"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:41
 msgid "Equalize selected bitmap(s) -- histogram equalization."
@@ -2796,26 +2772,24 @@ msgstr ""
 msgid "Gaussian Blur"
 msgstr "Gausovské rozostrenie"
 
+# TODO: check
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:39
 #: ../src/extension/internal/bitmap/implode.cpp:38
 #: ../src/extension/internal/bitmap/solarize.cpp:38
-#, fuzzy
 msgid "Factor"
-msgstr "Jednoduchá farba:"
+msgstr "Pomer"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:46
 msgid "Gaussian blur selected bitmap(s)."
 msgstr "Použiť gausovské rozostrenie na zvolené bitmapy."
 
 #: ../src/extension/internal/bitmap/implode.cpp:36
-#, fuzzy
 msgid "Implode"
-msgstr "Importovať"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/implode.cpp:44
-#, fuzzy
 msgid "Implode selected bitmap(s)."
-msgstr "odstrániť vybranú mriežku"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:51
 msgid "Level (with Channel)"
@@ -2823,51 +2797,44 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:64
 #: ../src/extension/internal/bitmap/level.cpp:42
-#, fuzzy
 msgid "Black Point"
-msgstr "Čierna výplň"
+msgstr "Čierny bod"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:65
 #: ../src/extension/internal/bitmap/level.cpp:43
-#, fuzzy
 msgid "White Point"
-msgstr "Ostrý spoj"
+msgstr "Biely bod"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:66
 #: ../src/extension/internal/bitmap/level.cpp:44
-#, fuzzy
 msgid "Gamma Correction"
-msgstr "Korekcia gama:"
+msgstr "Korekcia gama"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:72
 msgid "Level the specified channel of selected bitmap(s) by scaling values falling between the given ranges to the full color range."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/level.cpp:40
-#, fuzzy
 msgid "Level"
-msgstr "Koleso"
+msgstr "Úroveň"
 
 #: ../src/extension/internal/bitmap/level.cpp:50
 msgid "Level selected bitmap(s) by scaling values falling between the given ranges to the full color range."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
-#, fuzzy
 msgid "Median Filter"
-msgstr "Pridať filter"
+msgstr "Mediánový filter"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
 msgid "Filter selected bitmap(s) by replacing each pixel component with the median color in a circular neighborhood."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
-#, fuzzy
 msgid "Modulate"
-msgstr "Režim"
+msgstr "Modulovať"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:41
-#, fuzzy
 msgid "Brightness"
 msgstr "Jas"
 
@@ -2891,7 +2858,6 @@ msgid "Modulate percent hue, saturation, and brightness of selected bitmap(s)."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
-#, fuzzy
 msgid "Negate"
 msgstr "Negatív"
 
@@ -2900,18 +2866,16 @@ msgid "Negate (take inverse) selected bitmap(s)."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/normalize.cpp:35
-#, fuzzy
 msgid "Normalize"
-msgstr "Normálne"
+msgstr "Normálizácia"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:42
 msgid "Normalize selected bitmap(s), expanding color range to the full possible range of color."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:36
-#, fuzzy
 msgid "Oil Paint"
-msgstr "Tlač GNOME"
+msgstr "Olejomaľba"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:44
 msgid "Stylize selected bitmap(s) so that they appear to be painted with oils."
@@ -2927,9 +2891,8 @@ msgid "Raise"
 msgstr "Presunúť vyššie"
 
 #: ../src/extension/internal/bitmap/raise.cpp:43
-#, fuzzy
 msgid "Raised"
-msgstr "Presunúť vyššie"
+msgstr "Zvýšený"
 
 #: ../src/extension/internal/bitmap/raise.cpp:49
 msgid "Alter lightness the edges of selected bitmap(s) to create a raised appearance."
@@ -2944,9 +2907,8 @@ msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter.
 msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
-#, fuzzy
 msgid "Shade"
-msgstr "Tvary"
+msgstr "Tieň"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
 #: ../src/ui/dialog/filter-effects-dialog.cpp:772
@@ -2955,9 +2917,8 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
 #: ../src/ui/dialog/filter-effects-dialog.cpp:773
-#, fuzzy
 msgid "Elevation"
-msgstr "vzťah"
+msgstr "Vyvýšenie"
 
 #: ../src/extension/internal/bitmap/shade.cpp:43
 msgid "Colored Shading"
@@ -2968,37 +2929,32 @@ msgid "Shade selected bitmap(s) simulating distant light source."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/sharpen.cpp:46
-#, fuzzy
 msgid "Sharpen selected bitmap(s)."
-msgstr "Zoskupí zvolené objekty"
+msgstr "Zaostrí zvolené objekty."
 
 #: ../src/extension/internal/bitmap/solarize.cpp:36
-#, fuzzy
 msgid "Solarize"
-msgstr "Veľkosť"
+msgstr "Solarizovať"
 
 #: ../src/extension/internal/bitmap/solarize.cpp:44
 msgid "Solarize selected bitmap(s), like overexposing photographic film."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/spread.cpp:36
-#, fuzzy
 msgid "Spread"
-msgstr "Špirála"
+msgstr "Rozostúpiť"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
 msgid "Randomly spread pixels in selected bitmap(s), within the radius of 'amount.'"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
-#, fuzzy
 msgid "Swirl"
-msgstr "Špirála"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/swirl.cpp:38
-#, fuzzy
 msgid "Degrees"
-msgstr "stup."
+msgstr "Stupňov"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:44
 msgid "Swirl selected bitmap(s) around center point."
@@ -3008,14 +2964,12 @@ msgstr ""
 #: ../src/extension/internal/bitmap/threshold.cpp:37
 #: ../src/extension/internal/bitmap/threshold.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:45
-#, fuzzy
 msgid "Threshold"
-msgstr "Prah:"
+msgstr "Prah"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:45
-#, fuzzy
 msgid "Threshold selected bitmap(s)."
-msgstr "Vkladať iba vybrané obrázky"
+msgstr "Použiť prah na iba vybrané bitmapy."
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:40
 msgid "Unsharp Mask"
@@ -3026,9 +2980,8 @@ msgid "Sharpen selected bitmap(s) using unsharp mask algorithms."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/wave.cpp:37
-#, fuzzy
 msgid "Wave"
-msgstr "_Uložiť"
+msgstr "Vlna"
 
 #: ../src/extension/internal/bitmap/wave.cpp:39
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1926
@@ -3298,26 +3251,23 @@ msgid "art box"
 msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:61
-#, fuzzy
 msgid "Select page:"
-msgstr "Vybrať nasledovný"
+msgstr "Zvoľte stránku:"
 
 #. Display total number of pages
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:75
-#, fuzzy, c-format
+#, c-format
 msgid "out of %i"
-msgstr "Množstvo zvírenia"
+msgstr "z %i"
 
 #. Crop settings
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:81
-#, fuzzy
 msgid "Clip to:"
-msgstr "_Orezať"
+msgstr "Orezať na:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:93
-#, fuzzy
 msgid "Page settings"
-msgstr "Orientácia stránky:"
+msgstr "Nastavenia stránky:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:95
 msgid "Precision of approximating gradient meshes:"
@@ -3327,28 +3277,25 @@ msgstr ""
 msgid "<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance."
 msgstr ""
 
+# TODO: check
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:101
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:367
-#, fuzzy
 msgid "rough"
-msgstr "Zoskupiť"
+msgstr "drsný"
 
 #. Text options
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:105
-#, fuzzy
 msgid "Text handling:"
-msgstr "Nastaviť rozostup:"
+msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:107
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:108
-#, fuzzy
 msgid "Import text as text"
-msgstr "Konvertovať textový tok na text"
+msgstr "Importovať text ako text"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:111
-#, fuzzy
 msgid "Embed images"
-msgstr "Vkladať všetky vybrané obrázky"
+msgstr "Vkladať obrázky"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:114
 msgid "Import settings"
@@ -3364,14 +3311,12 @@ msgid "medium"
 msgstr "stredný"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:369
-#, fuzzy
 msgid "fine"
-msgstr "Úsečka"
+msgstr "jemný"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:370
-#, fuzzy
 msgid "very fine"
-msgstr "Invertovať výplň"
+msgstr "veľmi jemný"
 
 #: ../src/extension/internal/pov-out.cpp:683
 msgid "PovRay Output"
@@ -3511,9 +3456,8 @@ msgid "Toggles whether the dialog stays for multiple executions or disappears af
 msgstr ""
 
 #: ../src/extension/prefdialog.cpp:226
-#, fuzzy
 msgid "Live Preview"
-msgstr "Náhľad"
+msgstr "Živý náhľad"
 
 #: ../src/extension/prefdialog.cpp:226
 msgid "Controls whether the effect settings are rendered live on canvas"
@@ -3654,9 +3598,8 @@ msgid "Error exporting the document. Verify if the server name, username and pas
 msgstr ""
 
 #: ../src/file.cpp:1304
-#, fuzzy
 msgid "Document exported..."
-msgstr "Dokument bol obnovený z uloženej verzie."
+msgstr "Dokument bol exporotvaný."
 
 #: ../src/file.cpp:1332
 #: ../src/verbs.cpp:2175
@@ -3664,14 +3607,12 @@ msgid "Import From Open Clip Art Library"
 msgstr ""
 
 #: ../src/filter-enums.cpp:20
-#, fuzzy
 msgid "Blend"
-msgstr "Modrá"
+msgstr "Zmiešať"
 
 #: ../src/filter-enums.cpp:21
-#, fuzzy
 msgid "Color Matrix"
-msgstr "_Matica"
+msgstr "Matica farieb"
 
 #: ../src/filter-enums.cpp:22
 msgid "Component Transfer"
@@ -3691,9 +3632,8 @@ msgid "Diffuse Lighting"
 msgstr ""
 
 #: ../src/filter-enums.cpp:26
-#, fuzzy
 msgid "Displacement Map"
-msgstr "Maximálne posunutie (v px)"
+msgstr "Mapa posunutia"
 
 #: ../src/filter-enums.cpp:27
 msgid "Flood"
@@ -3705,9 +3645,8 @@ msgid "Image"
 msgstr "Obrázok"
 
 #: ../src/filter-enums.cpp:30
-#, fuzzy
 msgid "Merge"
-msgstr "Mierka"
+msgstr "Zlúčiť"
 
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
@@ -3718,9 +3657,8 @@ msgid "Specular Lighting"
 msgstr ""
 
 #: ../src/filter-enums.cpp:34
-#, fuzzy
 msgid "Tile"
-msgstr "Titulok"
+msgstr "Dláždiť"
 
 #: ../src/filter-enums.cpp:35
 #: ../src/filter-enums.cpp:117
@@ -3728,34 +3666,28 @@ msgid "Turbulence"
 msgstr "Turbulencia"
 
 #: ../src/filter-enums.cpp:40
-#, fuzzy
 msgid "Source Graphic"
-msgstr "Počiatočná výška"
+msgstr "Zdrojová grafika"
 
 #: ../src/filter-enums.cpp:41
-#, fuzzy
 msgid "Source Alpha"
-msgstr "Zdroj"
+msgstr "Zdrojová alfa"
 
 #: ../src/filter-enums.cpp:42
-#, fuzzy
 msgid "Background Image"
-msgstr "Farba pozadia"
+msgstr "Obrázok na pozadí"
 
 #: ../src/filter-enums.cpp:43
-#, fuzzy
 msgid "Background Alpha"
-msgstr "Farba pozadia"
+msgstr "Alfa pozadia"
 
 #: ../src/filter-enums.cpp:44
-#, fuzzy
 msgid "Fill Paint"
-msgstr "Tlač PDF"
+msgstr "Farba výplne"
 
 #: ../src/filter-enums.cpp:45
-#, fuzzy
 msgid "Stroke Paint"
-msgstr "_Farba ťahu"
+msgstr "Farba ťahu"
 
 #: ../src/filter-enums.cpp:51
 #: ../src/ui/dialog/inkscape-preferences.cpp:441
@@ -4568,12 +4500,10 @@ msgid "Change enum parameter"
 msgstr "Zmeniť typ segmentu"
 
 #: ../src/live_effects/lpe-gears.cpp:210
-#, fuzzy
 msgid "Teeth"
-msgstr "Text"
+msgstr "Zuby"
 
 #: ../src/live_effects/lpe-gears.cpp:210
-#, fuzzy
 msgid "The number of teeth"
 msgstr "Počet zubov"
 
@@ -4586,27 +4516,24 @@ msgid "???"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:40
-#, fuzzy
 msgid "Stroke path"
-msgstr "_Farba ťahu"
+msgstr "Cesta ťahu"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:40
 msgid "The path that will be stroked, whatever, think of good text here."
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:41
-#, fuzzy
 msgid "Nr of paths"
-msgstr "Počet odstavcov"
+msgstr "Počet ciest"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:41
 msgid "The number of paths that will be generated."
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
-#, fuzzy
 msgid "Startpoint variation"
-msgstr "Sýtosť"
+msgstr "Variácia počiatočného bodu"
 
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
@@ -4620,10 +4547,10 @@ msgstr "..."
 msgid "Endpoint variation"
 msgstr ""
 
+# TODO: check
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-#, fuzzy
 msgid "Scale width"
-msgstr "Počiatočná šírka"
+msgstr "Šírka mierky"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "Scaling of the width of the stroke path"
@@ -4638,65 +4565,56 @@ msgid "Scale the width of the stroke path relative to its length"
 msgstr ""
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:53
-#, fuzzy
 msgid "Single"
-msgstr "Uhol"
+msgstr "Jednotlivý"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:54
 msgid "Single, stretched"
 msgstr ""
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:55
-#, fuzzy
 msgid "Repeated"
-msgstr "Opakovať:"
+msgstr "Opakovaný"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:56
 msgid "Repeated, stretched"
 msgstr ""
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:62
-#, fuzzy
 msgid "Pattern source"
-msgstr "Ťah vzorky"
+msgstr "Zdroj vzorky"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:62
 msgid "Path to put along the skeleton path"
 msgstr ""
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:63
-#, fuzzy
 msgid "Pattern copies"
-msgstr "Vzorky"
+msgstr "Kópie vzorky"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:63
 msgid "How many pattern copies to place along the skeleton path"
 msgstr ""
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:64
-#, fuzzy
 msgid "Width of the pattern"
-msgstr "Šírka papiera"
+msgstr "Šírka vzorky"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:65
-#, fuzzy
 msgid "Width in units of length"
-msgstr "Šírka hala v pixeloch"
+msgstr "Šírka v jednotkách dĺžky"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:65
-#, fuzzy
 msgid "Scale the width of the pattern in units of its length"
-msgstr "Maximálna dĺžka ostrosti rohu (v jednotkách šírky ťahu)"
+msgstr "Zmeniť mierku šírky vzorky v jednotkách jej šírky ťahu"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:66
-#, fuzzy
 msgid "Spacing"
-msgstr "Rozostup:"
+msgstr "Rozostup"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:66
-#, fuzzy
 msgid "Space between copies of the pattern"
-msgstr "Rozostup medzi kópiami:"
+msgstr "Rozostup medzi kópiami vzorky"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:67
 #: ../share/extensions/pathalongpath.inx.h:5
@@ -4714,9 +4632,8 @@ msgid "Pattern is vertical"
 msgstr "Vzorka je vertikálne"
 
 #: ../src/live_effects/parameter/parameter.cpp:142
-#, fuzzy
 msgid "Change scalar parameter"
-msgstr "Zmeniť krytie vrstvy"
+msgstr "Zmeniť skalárny parameter"
 
 #: ../src/live_effects/parameter/path.cpp:105
 #: ../src/live_effects/parameter/point.cpp:108
@@ -4724,9 +4641,8 @@ msgid "Edit on-canvas"
 msgstr ""
 
 #: ../src/live_effects/parameter/path.cpp:118
-#, fuzzy
 msgid "Paste path"
-msgstr "Prilepiť _šírku"
+msgstr "Prilepiť cestu"
 
 #: ../src/live_effects/parameter/path.cpp:138
 #: ../src/selection-chemistry.cpp:1136
@@ -4742,18 +4658,16 @@ msgid "This effect does not support arcs yet, try to convert to path."
 msgstr ""
 
 #: ../src/live_effects/parameter/path.cpp:153
-#, fuzzy
 msgid "Paste path parameter"
-msgstr "Prilepiť šírku zvlášť"
+msgstr "Prilepiť parameter cesty"
 
 #: ../src/live_effects/parameter/path.cpp:157
 msgid "Clipboard does not contain a path."
 msgstr ""
 
 #: ../src/live_effects/parameter/point.cpp:89
-#, fuzzy
 msgid "Change point parameter"
-msgstr "Zmena špirály"
+msgstr "Zmeniť parameter bodu"
 
 #: ../src/live_effects/parameter/bool.cpp:67
 #, fuzzy
@@ -7430,27 +7344,24 @@ msgstr "<b>Vodidlá:</b>"
 
 #. General options
 #: ../src/ui/dialog/document-properties.cpp:269
-#, fuzzy
 msgid "Bounding _box corners"
-msgstr "Použiť ohraničenie:"
+msgstr "Rohy _ohraničenia:"
 
 #: ../src/ui/dialog/document-properties.cpp:270
 msgid "Snap bounding box corners to grid lines, to guides, and to other bounding boxes (only applicable to the selector tool)"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:272
-#, fuzzy
 msgid "_Nodes"
-msgstr "Uzly"
+msgstr "_Uzly"
 
 #: ../src/ui/dialog/document-properties.cpp:273
 msgid "Snap nodes to grid lines, to guides, to paths, and to other nodes"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:275
-#, fuzzy
 msgid "_Guides"
-msgstr "Vodidlá"
+msgstr "_Vodidlá"
 
 #: ../src/ui/dialog/document-properties.cpp:276
 msgid "While dragging a guide, snap to object nodes. (In 'Snapping to objects', 'Snap to nodes' must also be enabled)"
@@ -7458,29 +7369,24 @@ msgstr ""
 
 #. Options for snapping to objects
 #: ../src/ui/dialog/document-properties.cpp:280
-#, fuzzy
 msgid "Snap to p_aths"
-msgstr "Prichytávať k _cestám objektov"
+msgstr "Prichytávať k _cestám"
 
 #: ../src/ui/dialog/document-properties.cpp:281
-#, fuzzy
 msgid "Snap nodes to object paths"
-msgstr "Prichytávať k _cestám objektov"
+msgstr "Prichytávať uzly k _cestám objektov"
 
 #: ../src/ui/dialog/document-properties.cpp:283
-#, fuzzy
 msgid "Snap to n_odes"
-msgstr "Prichytávať k _uzlom objektov"
+msgstr "Prichytávať k uzl_om"
 
 #: ../src/ui/dialog/document-properties.cpp:284
-#, fuzzy
 msgid "Snap nodes or guides to object nodes"
-msgstr "Prichytávať k uzlom iných objektov"
+msgstr "Prichytávať uzly alebo vodidlá k uzlom objektov"
 
 #: ../src/ui/dialog/document-properties.cpp:286
-#, fuzzy
 msgid "Snap _distance"
-msgstr "Inkscape: _Pokročilé"
+msgstr "Vzdialenosť _prichytávania"
 
 #: ../src/ui/dialog/document-properties.cpp:286
 msgid "Snap at any dist_ance"
@@ -7530,38 +7436,32 @@ msgstr "Ak je voľba nastavená, objekty sa prichytávajú k najbližšiemu vodi
 
 #. Some other options
 #: ../src/ui/dialog/document-properties.cpp:304
-#, fuzzy
 msgid "_Include the object's rotation center"
-msgstr "Zahrnúť do vyhľadávania skryté objekty"
+msgstr "_Zahrnúť stred otáčania objektu"
 
 #: ../src/ui/dialog/document-properties.cpp:305
 msgid "Also snap the rotation center of an object when snapping nodes or guides"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:311
-#, fuzzy
 msgid "<b>Snapping of</b>"
-msgstr "<b>Prichytávanie k mriežke</b>"
+msgstr "<b>Prichytávanie</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:313
-#, fuzzy
 msgid "<b>Snapping to objects</b>"
-msgstr "<b>Prichytávanie k mriežke</b>"
+msgstr "<b>Prichytávanie k objektom</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:315
-#, fuzzy
 msgid "<b>Snapping to grids</b>"
-msgstr "<b>Prichytávanie k mriežke</b>"
+msgstr "<b>Prichytávanie k mriežkam</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:317
-#, fuzzy
 msgid "<b>Snapping to guides</b>"
-msgstr "<b>Prichytávanie k mriežke</b>"
+msgstr "<b>Prichytávanie k vodidlám</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:319
-#, fuzzy
 msgid "<b>Miscellaneous</b>"
-msgstr "Rôzne:"
+msgstr "<b>Rôzne</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:391
 msgid "<b>Creation</b>"
@@ -7623,15 +7523,13 @@ msgid "Change opacity"
 msgstr "Zmeniť krytie"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:755
-#, fuzzy
 msgid "Light Source:"
-msgstr "Zdroj"
+msgstr "Zdroj svetla:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:776
 #: ../src/ui/dialog/filter-effects-dialog.cpp:779
-#, fuzzy
 msgid "Location"
-msgstr "_Rotácia"
+msgstr "Umiestnenie"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:781
 #, fuzzy
@@ -7649,9 +7547,8 @@ msgid "Cone Angle"
 msgstr "Uhol"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:843
-#, fuzzy
 msgid "New light source"
-msgstr "Pravý okraj zdroja"
+msgstr "Nový zdroj svetla"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:884
 msgid "_Duplicate"
@@ -7662,19 +7559,16 @@ msgid "_Filter"
 msgstr "_Filter"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:924
-#, fuzzy
 msgid "R_ename"
-msgstr "Pre_menovať"
+msgstr "Pr_emenovať"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1016
-#, fuzzy
 msgid "Rename filter"
-msgstr "Odstrániť filter"
+msgstr "Premenovať filter"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1052
-#, fuzzy
 msgid "Apply filter"
-msgstr "Pridať filter"
+msgstr "Použiť filter"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1127
 msgid "Add filter"
@@ -7689,38 +7583,32 @@ msgid "Duplicate filter"
 msgstr "Duplikovať filter"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1218
-#, fuzzy
 msgid "_Effect"
-msgstr "_Efekty"
+msgstr "_Efekt"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1226
-#, fuzzy
 msgid "Connections"
-msgstr "Konektor"
+msgstr "Konektory"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1696
-#, fuzzy
 msgid "Remove merge node"
-msgstr "Odstrániť zelenú"
+msgstr "Odstrániť uzol zlúčenia"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1812
 msgid "Reorder filter primitive"
 msgstr "Zmeniť poradie primitív filtra"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1848
-#, fuzzy
 msgid "Add Effect:"
-msgstr "_Efekty"
+msgstr "Pridať efekt:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1849
-#, fuzzy
 msgid "No effect selected"
-msgstr "Žiadny dokument nebol zvolený"
+msgstr "Žiadny efekt nebol zvolený"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1862
-#, fuzzy
 msgid "<b>Effect parameters</b>"
-msgstr "<b>Obdĺžnik</b>"
+msgstr "<b>Parametre efektu</b>"
 
 #. # end multiple scan
 #. ## end mode page
@@ -7730,19 +7618,16 @@ msgid "Mode"
 msgstr "Režim"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1919
-#, fuzzy
 msgid "Value(s)"
-msgstr "Hodnota"
+msgstr "Hodnoty"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1924
-#, fuzzy
 msgid "Slope"
-msgstr "Obálka"
+msgstr "Sklon"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1925
-#, fuzzy
 msgid "Intercept"
-msgstr "Interpolácia"
+msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1927
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1978
@@ -7752,9 +7637,8 @@ msgstr "Exponent"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1931
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1967
-#, fuzzy
 msgid "Operator"
-msgstr "Tvorca"
+msgstr "Operátor"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1932
 msgid "K1"
@@ -7773,33 +7657,28 @@ msgid "K4"
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1939
-#, fuzzy
 msgid "Target"
-msgstr "Cieľ:"
+msgstr "Cieľ"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1940
-#, fuzzy
 msgid "Kernel"
-msgstr "Kerning nahor"
+msgstr "Jadro"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1942
-#, fuzzy
 msgid "Divisor"
-msgstr "Rozdelenie"
+msgstr "Deliteľ"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1943
 msgid "Bias"
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1944
-#, fuzzy
 msgid "Edge Mode"
-msgstr "Režim"
+msgstr "Režim hrany"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1945
-#, fuzzy
 msgid "Preserve Alpha"
-msgstr "Zachované"
+msgstr "Zachovávať alfa"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1948
 #, fuzzy
@@ -7823,33 +7702,28 @@ msgid "Kernel Unit Length"
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1956
-#, fuzzy
 msgid "X Channel"
-msgstr "Zrušiť"
+msgstr "Kanál X"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1957
-#, fuzzy
 msgid "Y Channel"
-msgstr "Zrušiť"
+msgstr "Kanál Y"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1960
-#, fuzzy
 msgid "Flood Color"
-msgstr "Farba priehradky"
+msgstr "Farba výplne"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1964
 msgid "Standard Deviation"
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1971
-#, fuzzy
 msgid "Delta X"
-msgstr "Zmazať"
+msgstr "Delta X"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1972
-#, fuzzy
 msgid "Delta Y"
-msgstr "Zmazať"
+msgstr "Delta Y"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1975
 #, fuzzy
@@ -7869,9 +7743,8 @@ msgid "Octaves"
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1987
-#, fuzzy
 msgid "Seed"
-msgstr "Rýchlosť:"
+msgstr "Seed"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1999
 msgid "Add filter primitive"
@@ -7990,9 +7863,8 @@ msgid "When on, pressing and holding Space and dragging with left mouse button p
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:185
-#, fuzzy
 msgid "Mouse wheel zooms by default"
-msgstr "Koliesko myši posúva o:"
+msgstr "Koliesko myši štandardne mení mierku"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:187
 msgid "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when off, it zooms with Ctrl and scrolls without Ctrl."
@@ -8292,15 +8164,13 @@ msgstr "Neukladať geometriu okien"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:434
 #: ../src/ui/dialog/inkscape-preferences.cpp:459
-#, fuzzy
 msgid "Dockable"
-msgstr "Zmena mierky"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:435
 #: ../src/ui/dialog/inkscape-preferences.cpp:461
-#, fuzzy
 msgid "Floating"
-msgstr "vzťah"
+msgstr "Plávajúci"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:437
 msgid "Dialogs are hidden in taskbar"
@@ -8339,9 +8209,8 @@ msgid "Save and restore window geometry for each document (saves geometry in the
 msgstr "Uložiť a obnoviť geometriu okna pre každý dokument (ukladá geometriu v dokumente)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:457
-#, fuzzy
 msgid "Dialog behavior (requires restart):"
-msgstr "Či dialógové okná majú tlačidlo „zatvoriť“ (vyžaduje reštart)"
+msgstr "Správanie dialógov (vyžaduje reštart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:463
 msgid "Dialogs on top:"
@@ -8648,19 +8517,17 @@ msgid "The password used to log into Open Clip Art Library."
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:626
-#, fuzzy
 msgid "Import/Export"
-msgstr "Importovať"
+msgstr "Import/export"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:677
-#, fuzzy
 msgid "Perceptual"
-msgstr "Percento"
+msgstr "Perceptuálny"
 
+# TODO: check
 #: ../src/ui/dialog/inkscape-preferences.cpp:677
-#, fuzzy
 msgid "Relative Colorimetric"
-msgstr "Rela_tívny posun"
+msgstr "Relatívny kolorimetrický"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:677
 msgid "Absolute Colorimetric"
@@ -8683,28 +8550,26 @@ msgid "Enables application of the display using an ICC profile."
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:691
-#, fuzzy
 msgid "Display profile:"
-msgstr "_Zobrazovací režim"
+msgstr "Zobrazovací profil:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:692
 msgid "The ICC profile to use to calibrate display output."
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:695
-#, fuzzy
 msgid "Display intent:"
-msgstr "_Zobrazovací režim"
+msgstr "Zobrazovací zámer:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:696
 #: ../src/ui/dialog/inkscape-preferences.cpp:719
 msgid "The rendering intent to use to calibrate display output."
 msgstr ""
 
+# TODO: check
 #: ../src/ui/dialog/inkscape-preferences.cpp:698
-#, fuzzy
 msgid "Proofing"
-msgstr "Bod"
+msgstr "Kontrola"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:700
 msgid "Simulate output on screen"
@@ -8743,18 +8608,16 @@ msgid "Device intent:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:721
-#, fuzzy
 msgid "Black Point Compensation"
-msgstr "Nastavenie tlače"
+msgstr "Kompenzácia čierneho bodu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:723
 msgid "Enables black point compensation."
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:725
-#, fuzzy
 msgid "Preserve black"
-msgstr "Zachované"
+msgstr "Zachovaať čiernu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:730
 msgid "(LittleCMS 1.15 or later required)"
@@ -8822,14 +8685,12 @@ msgid "Make the commands toolbar use the 'secondary' toolbar size (requires rest
 msgstr "Nech panel nástrojov príkazov používa „sekundárnu“ veľkosť panelu nástrojov (vyžaduje reštart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:822
-#, fuzzy
 msgid "Make main tools smaller"
-msgstr "Zmenšiť panel nástrojov príkazov "
+msgstr "Zmenšiť hlavný panel nástrojov"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:824
-#, fuzzy
 msgid "Make the main tools use the 'secondary' toolbar size (requires restart)"
-msgstr "Nech panel nástrojov príkazov používa „sekundárnu“ veľkosť panelu nástrojov (vyžaduje reštart)"
+msgstr "Nech hlavný panel nástrojov používa „sekundárnu“ veľkosť panelu nástrojov (vyžaduje reštart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:827
 msgid "Max recent documents:"
@@ -8848,23 +8709,20 @@ msgid "_Apply"
 msgstr ""
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:72
-#, fuzzy
 msgid "Apply chosen effect to selection"
-msgstr "Použiť transformáciu na výber"
+msgstr "Použiť zvolený efekt na výber"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:73
-#, fuzzy
 msgid "Remove effect from selection"
-msgstr "Odstráni masku z výberu"
+msgstr "Odstrániť efekt z výberu"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:76
 msgid "Apply new effect"
 msgstr ""
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:77
-#, fuzzy
 msgid "Current effect"
-msgstr "Aktuálna vrstva"
+msgstr "Aktuálny výber"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:182
 msgid "Unknown effect is applied"
@@ -8883,19 +8741,16 @@ msgid "Only one item can be selected"
 msgstr ""
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:197
-#, fuzzy
 msgid "Empty selection"
-msgstr "Zmaže výber"
+msgstr "Prázdny výber"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:271
-#, fuzzy
 msgid "Create and apply path effect"
-msgstr "Vytvoriť dynamický posun"
+msgstr "Vytvoriť a použiť efekt cesty"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:285
-#, fuzzy
 msgid "Remove path effect"
-msgstr "Odstrániť prázdny text"
+msgstr "Odstrániť efekt cesty"
 
 #: ../src/ui/dialog/memory.cpp:94
 msgid "Heap"
@@ -8939,14 +8794,12 @@ msgid "Enable log display by setting dialogs.debug 'redirect' attribute to 1 in 
 msgstr "Zapnúť zobrazovanie záznamu nastavením atribútu „redirect“ dialogs.debug na 1 v preferences.xml"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:71
-#, fuzzy
 msgid "File"
-msgstr "_Súbor"
+msgstr "Súbor"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:169
-#, fuzzy
 msgid "Username:"
-msgstr "Názov vrstvy:"
+msgstr "Meno používateľa:"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:170
 msgid "Password:"
@@ -8957,18 +8810,16 @@ msgid "Failed to receive the Open Clip Art Library RSS feed. Verify if the serve
 msgstr ""
 
 #: ../src/ui/dialog/ocaldialogs.cpp:538
-#, fuzzy
 msgid "Search Tag"
-msgstr "Hľadať obrázky"
+msgstr "Vyhľadávací štítok"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:539
 msgid "No files matched your search"
 msgstr ""
 
 #: ../src/ui/dialog/ocaldialogs.cpp:548
-#, fuzzy
 msgid "Search"
-msgstr "Hľadať skupiny"
+msgstr "Hľadanie"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:565
 msgid "Files Found"
@@ -9233,18 +9084,16 @@ msgid "_Width"
 msgstr "_Šírka"
 
 #: ../src/ui/dialog/transformation.cpp:84
-#, fuzzy
 msgid "Horizontal size (absolute or percentage of current)"
-msgstr "Vodorovný prírastok veľkosti (absolútny alebo percentuálny)"
+msgstr "Vodorovná veľkosť (absolútna alebo percentuálna oproti súčasnej)"
 
 #: ../src/ui/dialog/transformation.cpp:86
 msgid "_Height"
 msgstr "_Výška"
 
 #: ../src/ui/dialog/transformation.cpp:86
-#, fuzzy
 msgid "Vertical size (absolute or percentage of current)"
-msgstr "Zvislý prírastok veľkosti (absolútny alebo percentuálny)"
+msgstr "Zvislá veľkosť (absolútna alebo percentuálna oproti súčasnej)"
 
 #: ../src/ui/dialog/transformation.cpp:88
 msgid "A_ngle"
@@ -10038,34 +9887,28 @@ msgid "Opacity: %.3g"
 msgstr "Krytie: %.3g"
 
 #: ../src/verbs.cpp:1154
-#, fuzzy
 msgid "Switch to next layer"
-msgstr "Presunúť do nasledujúcej vrstvy."
+msgstr "Prepnúť do nasledujúcej vrstvy."
 
 #: ../src/verbs.cpp:1155
-#, fuzzy
 msgid "Switched to next layer."
-msgstr "Presunuté do nasledujúcej vrstvy."
+msgstr "Prepnuté do nasledujúcej vrstvy."
 
 #: ../src/verbs.cpp:1157
-#, fuzzy
 msgid "Cannot go past last layer."
-msgstr "Nie je možné posunúť za poslednú vrstvu."
+msgstr "Nie je možné prejsť za poslednú vrstvu."
 
 #: ../src/verbs.cpp:1166
-#, fuzzy
 msgid "Switch to previous layer"
-msgstr "Presunúť do predchádzajúcej vrstvy"
+msgstr "Prepnúť do predchádzajúcej vrstvy"
 
 #: ../src/verbs.cpp:1167
-#, fuzzy
 msgid "Switched to previous layer."
-msgstr "Presunuté do predchádzajúcej vrstvy."
+msgstr "Prepnuté do predchádzajúcej vrstvy."
 
 #: ../src/verbs.cpp:1169
-#, fuzzy
 msgid "Cannot go before first layer."
-msgstr "Nie je možné posunúť pred prvú vrstvu."
+msgstr "Nie je možné prejsť pred prvú vrstvu."
 
 #: ../src/verbs.cpp:1186
 #: ../src/verbs.cpp:1270
@@ -12758,14 +12601,12 @@ msgid "Paint the tool's color upon selected objects"
 msgstr "Na zvolené objekty maľovať farbou pera"
 
 #: ../src/widgets/toolbox.cpp:2846
-#, fuzzy
 msgid "Color jitter mode"
-msgstr "Chvenie uzlov"
+msgstr "Režim chvenia farieb"
 
 #: ../src/widgets/toolbox.cpp:2847
-#, fuzzy
 msgid "Jitter the colors of selected objects"
-msgstr "Nech sa konektory vyhnú zvoleným objektom"
+msgstr "Nech sa farby vybraných objektov chvejú"
 
 #: ../src/widgets/toolbox.cpp:2851
 msgid "Mode:"
