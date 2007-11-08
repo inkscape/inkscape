@@ -205,7 +205,21 @@ void SVGPreview::showImage(Glib::ustring &theFileName)
     gint previewHeight = 600;
 
     //Get some image info. Smart pointer does not need to be deleted
-    Glib::RefPtr<Gdk::Pixbuf> img = Gdk::Pixbuf::create_from_file(fileName);
+    Glib::RefPtr<Gdk::Pixbuf> img(NULL);
+    try {
+        img = Gdk::Pixbuf::create_from_file(fileName);
+    }
+    catch (Glib::FileError e)
+    {
+        g_message("caught Glib::FileError in SVGPreview::showImage");
+        return;
+    }
+    catch (Gdk::PixbufError e)
+    {
+        g_message("Gdk::PixbufError in SVGPreview::showImage");
+        return;
+    }
+
     gint imgWidth  = img->get_width();
     gint imgHeight = img->get_height();
 
