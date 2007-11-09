@@ -21,9 +21,9 @@
 
 struct SnappedConstraints {
     std::list<Inkscape::SnappedPoint> points; 
-    std::list<Inkscape::SnappedLine> lines;
-    std::list<Inkscape::SnappedInfiniteLine> grid_lines;
-    std::list<Inkscape::SnappedInfiniteLine> guide_lines;
+    std::list<Inkscape::SnappedLineSegment> lines;
+    std::list<Inkscape::SnappedLine> grid_lines;
+    std::list<Inkscape::SnappedLine> guide_lines;
 };
 
 struct SPNamedView;

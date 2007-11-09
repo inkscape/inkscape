@@ -652,7 +652,7 @@ CanvasAxonomGridSnapper::_getSnapLines(NR::Point const &p) const
 
 void CanvasAxonomGridSnapper::_addSnappedLine(SnappedConstraints &sc, NR::Point const snapped_point, NR::Coord const snapped_distance, NR::Point const normal_to_line, NR::Point const point_on_line) const 
 {
-    SnappedInfiniteLine dummy = SnappedInfiniteLine(snapped_point, snapped_distance, normal_to_line, point_on_line);
+    SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, normal_to_line, point_on_line);
     sc.grid_lines.push_back(dummy);
 }
 

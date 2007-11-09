@@ -56,7 +56,7 @@ void Inkscape::LineSnapper::_doConstrainedSnap(SnappedConstraints &sc,
             //Store any line that's within snapping range
             if (dist < getDistance()) {                
                 _addSnappedLine(sc, t, dist, c.getDirection(), t);
-                //SnappedInfiniteLine dummy = SnappedInfiniteLine(t, dist, c.getDirection(), t);
+                //SnappedLine dummy = SnappedLine(t, dist, c.getDirection(), t);
                 //sc.infinite_lines.push_back(dummy);
             }
         }

@@ -686,32 +686,32 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedCons
     } 
     
     // search for the closest snapped grid line
-    Inkscape::SnappedInfiniteLine closestGridLine;
-    if (getClosestSIL(sc.grid_lines, closestGridLine)) {    
+    Inkscape::SnappedLine closestGridLine;
+    if (getClosestSL(sc.grid_lines, closestGridLine)) {    
         sp_list.push_back(std::make_pair(Inkscape::SnappedPoint(closestGridLine), NR_HUGE));
     }
     
     // search for the closest snapped guide line
-    Inkscape::SnappedInfiniteLine closestGuideLine;
-    if (getClosestSIL(sc.guide_lines, closestGuideLine)) {
+    Inkscape::SnappedLine closestGuideLine;
+    if (getClosestSL(sc.guide_lines, closestGuideLine)) {
         sp_list.push_back(std::make_pair(Inkscape::SnappedPoint(closestGuideLine), NR_HUGE));
     }
     
     // search for the closest snapped intersection of grid lines
     Inkscape::SnappedPoint closestGridPoint;
-    if (getClosestIntersectionSIL(sc.grid_lines, closestGridPoint)) {
+    if (getClosestIntersectionSL(sc.grid_lines, closestGridPoint)) {
         sp_list.push_back(std::make_pair(closestGridPoint, NR_HUGE));
     }
     
     // search for the closest snapped intersection of guide lines
     Inkscape::SnappedPoint closestGuidePoint;
-    if (getClosestIntersectionSIL(sc.guide_lines, closestGuidePoint)) {
+    if (getClosestIntersectionSL(sc.guide_lines, closestGuidePoint)) {
         sp_list.push_back(std::make_pair(closestGuidePoint, NR_HUGE));
     }
     
     // search for the closest snapped intersection of grid with guide lines
     Inkscape::SnappedPoint closestGridGuidePoint;
-    if (getClosestIntersectionSIL(sc.grid_lines, sc.guide_lines, closestGridGuidePoint)) {
+    if (getClosestIntersectionSL(sc.grid_lines, sc.guide_lines, closestGridGuidePoint)) {
         sp_list.push_back(std::make_pair(closestGridGuidePoint, std::min(guide_sens, grid_sens)));
     }
     
