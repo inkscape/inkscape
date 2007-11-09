@@ -6855,9 +6855,9 @@ msgstr "អំពី .svg"
 #: ../src/ui/dialog/aboutbox.cpp:336
 msgid "translator-credits"
 msgstr ""
-"Khoem Sokhem <khoemsokhem@khmeros.info> "
-"Auk Piseth <piseth_dv@khmeros.info> "
-"Eng Vannak <evannak@khmeros.info)​"
+"Khoem Sokhem (khoemsokhem@khmeros.info)\n"
+"Auk Piseth (piseth_dv@khmeros.info)\n"
+"Eng Vannak (evannak@khmeros.info)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:234
 #: ../src/ui/dialog/align-and-distribute.cpp:780
