@@ -400,26 +400,28 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
         bool did_this = false;
         NR::Matrix i2doc(sp_item_i2doc_affine(item));
         if (mode == TWEAK_MODE_SHRINK || mode == TWEAK_MODE_GROW) {
-            if (theShape->MakeOffset(theRes, 
+            if (theShape->MakeTweak(tweak_mode_grow, theRes, 
                                  mode == TWEAK_MODE_GROW? force : -force,
                                  join_straight, 4.0,
-                                 true, p[NR::X], p[NR::Y], radius, &i2doc) == 0) // 0 means the shape was actually changed
+                                 true, p, NR::Point(0,0), radius, &i2doc) == 0) // 0 means the shape was actually changed
               did_this = true;
         } else if (mode == TWEAK_MODE_ATTRACT || mode == TWEAK_MODE_REPEL) {
-            if (theShape->MakeRepel(theRes, 
+            if (theShape->MakeTweak(tweak_mode_repel, theRes, 
                                  mode == TWEAK_MODE_REPEL? force : -force,
                                  join_straight, 4.0,
-                                 true, p[NR::X], p[NR::Y], radius, &i2doc) == 0) 
+                                 true, p, NR::Point(0,0), radius, &i2doc) == 0) 
               did_this = true;
         } else if (mode == TWEAK_MODE_PUSH) {
-            if (theShape->MakePush(theRes, 
+            if (theShape->MakeTweak(tweak_mode_push, theRes, 
+                                 0,
                                  join_straight, 4.0,
                                  true, p, force*2*vector, radius, &i2doc) == 0)
               did_this = true;
         } else if (mode == TWEAK_MODE_ROUGHEN) {
-            if (theShape->MakeJitter(theRes, 
+            if (theShape->MakeTweak(tweak_mode_roughen, theRes, 
+                                 force,
                                  join_straight, 4.0,
-                                 true, p, force, radius, &i2doc) == 0)
+                                 true, p, NR::Point(0,0), radius, &i2doc) == 0)
               did_this = true;
         }
 
