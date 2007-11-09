@@ -174,10 +174,21 @@ extern double atan2(Point const p);
 /** compute the angle turning from a to b (signed). */
 extern double angle_between(Point const a, Point const b);
 
+
+#ifdef near
+#define lib2geom_near_save near
+#undef near
+#endif
+
 //IMPL: NearConcept
 inline bool near(Point const &a, Point const &b, double const eps=EPSILON) {
     return ( near(a[X],b[X],eps) && near(a[Y],b[Y],eps) );
 }
+
+#ifdef lib2geom_near_save
+#define near lib2geom_near_save
+#undef lib2geom_near_save
+#endif
 
 /** Returns p * Geom::rotate_degrees(90), but more efficient.
  *

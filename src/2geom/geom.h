@@ -31,11 +31,15 @@
  * the specific language governing rights and limitations.
  *
  */
+#ifndef SEEN_2Geom_GEOM_H
+#define SEEN_2Geom_GEOM_H
 
 //TODO: move somewhere else
 
 #include <vector>
 #include "point.h"
+
+namespace Geom {
 
 enum IntersectorKind {
     intersects = 0,
@@ -66,3 +70,7 @@ line_twopoint_intersect(Geom::Point const &p00, Geom::Point const &p01,
 			Geom::Point &result);
 
 int centroid(std::vector<Geom::Point> p, Geom::Point& centroid, double &area);
+
+}
+
+#endif

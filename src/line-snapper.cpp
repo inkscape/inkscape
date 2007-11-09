@@ -1,6 +1,6 @@
 #include "libnr/nr-values.h"
 #include "libnr/nr-point-fns.h"
-#include "geom.h"
+#include <2geom/geom.h>
 #include "line-snapper.h"
 #include "snapped-line.cpp"
 
@@ -48,10 +48,11 @@ void Inkscape::LineSnapper::_doConstrainedSnap(SnappedConstraints &sc,
         NR::Coord const q = dot(n, point_on_line);
 
         /* Try to intersect this line with the target line */
-        NR::Point t = NR::Point(NR_HUGE, NR_HUGE);
-        IntersectorKind const k = intersector_line_intersection(n, q, component_vectors[i->first], i->second, t);
-        
-        if (k == INTERSECTS) {
+        Geom::Point t_2geom(NR_HUGE, NR_HUGE);
+        Geom::IntersectorKind const k = Geom::line_intersection(n.to_2geom(), q, component_vectors[i->first].to_2geom(), i->second, t_2geom);
+        NR::Point t(t_2geom);
+
+        if (k == Geom::intersects) {
             const NR::Coord dist = L2(t - p);
             //Store any line that's within snapping range
             if (dist < getDistance()) {                

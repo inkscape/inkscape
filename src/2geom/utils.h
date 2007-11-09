@@ -33,6 +33,8 @@
 #include <cmath>
 #include <stdexcept>
 
+namespace Geom {
+
 class NotImplemented : public std::logic_error {
 public:
   NotImplemented() : std::logic_error("method not implemented") {}
@@ -77,6 +79,8 @@ inline double decimal_round(double const x, int const places) {
     //TODO: possibly implement with modulus instead?
     double const multiplier = std::pow(10.0, places);
     return round( x * multiplier ) / multiplier;
+}
+
 }
 
 #endif

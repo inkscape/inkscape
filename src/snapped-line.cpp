@@ -9,7 +9,7 @@
  */
 
 #include "snapped-line.h"
-#include "geom.h"
+#include <2geom/geom.h>
 #include "libnr/nr-values.h"
 
 Inkscape::SnappedLineSegment::SnappedLineSegment(NR::Point snapped_point, NR::Coord snapped_distance, NR::Point start_point_of_line, NR::Point end_point_of_line)
@@ -81,13 +81,14 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
 	// Calculate the intersection of to lines, which are both within snapping range
 	// The point of intersection should be considered for snapping, but might be outside the snapping range
 	
-	NR::Point intersection = NR::Point(NR_HUGE, NR_HUGE);
+	Geom::Point intersection_2geom(NR_HUGE, NR_HUGE);
 	NR::Coord distance = NR_HUGE;
 	
-	IntersectorKind result = intersector_line_intersection(getNormal(), getConstTerm(), 
-						line.getNormal(), line.getConstTerm(), intersection);
+    Geom::IntersectorKind result = Geom::line_intersection(getNormal().to_2geom(), getConstTerm(), 
+                                   line.getNormal().to_2geom(), line.getConstTerm(), intersection_2geom);
+	NR::Point intersection(intersection_2geom);
 	 
-	if (result == INTERSECTS) {
+	if (result == Geom::intersects) {
 		/* The relevant snapped distance is the distance to the closest snapped line, not the
 		distance to the intersection. For example, when a box is almost aligned with a grid
 		in both horizontal and vertical directions, the distance to the intersection of the
@@ -99,8 +100,8 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
 		distance = std::min(_distance, line.getDistance());
 		//std::cout << "Intersected nicely, now getSIL distance = " << distance << std::endl;
 	}
-	
-	return SnappedPoint(intersection, distance, result == INTERSECTS);	
+
+    return SnappedPoint(intersection, distance, result == Geom::intersects);
 }
 
 // search for the closest snapped line

@@ -16,6 +16,8 @@
 //#include "round.h"
 #include "decimal-round.h"
 
+#include <2geom/point.h>
+
 /// A NRPoint consists of x and y coodinates.
 /// \todo
 /// This class appears to be obsoleted out in favour of NR::Point.
@@ -47,6 +49,11 @@ public:
         for (unsigned i = 0; i < 2; ++i) {
             _pt[i] = p._pt[i];
         }
+    }
+
+    inline Point(Geom::Point const &p) {
+        _pt[X] = p[Geom::X];
+        _pt[Y] = p[Geom::Y];
     }
 
     inline Point &operator=(Point const &p) {
@@ -131,6 +138,10 @@ public:
     }
 
     friend inline std::ostream &operator<< (std::ostream &out_file, const NR::Point &in_pnt);
+
+    inline Geom::Point to_2geom() const {
+        return Geom::Point(_pt[X], _pt[Y]);
+    }
 
 private:
     Coord _pt[2];
