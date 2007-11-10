@@ -522,8 +522,6 @@ tweak_colorpaint (float *color, guint32 goal, double force, bool do_h, bool do_s
 void
 tweak_colorjitter (float *color, double force, bool do_h, bool do_s, bool do_l)
 {
-    force = force*force; // in [0..1], this makes finer adjustments easier
-
     float hsl_c[3];
     sp_color_rgb_to_hsl_floatv (hsl_c, color[0], color[1], color[2]);
 
