@@ -473,9 +473,13 @@ void ColorICCSelector::_switchToProfile( gchar const* name )
 
     if ( name ) {
         if ( tmp.icc && tmp.icc->colorProfile == name ) {
-//             g_message("Already at name [%s]", name );
+#ifdef DEBUG_LCMS
+             g_message("Already at name [%s]", name );
+#endif // DEBUG_LCMS
         } else {
-//             g_message("Need to switch to profile [%s]", name );
+#ifdef DEBUG_LCMS
+             g_message("Need to switch to profile [%s]", name );
+#endif // DEBUG_LCMS
             if ( tmp.icc ) {
                 tmp.icc->colors.clear();
             } else {
@@ -493,8 +497,14 @@ void ColorICCSelector::_switchToProfile( gchar const* name )
                         SP_RGBA32_G_U(val),
                         SP_RGBA32_B_U(val),
                         255};
+#ifdef DEBUG_LCMS
+                    g_message("Shoving in [%02x] [%02x] [%02x]", pre[0], pre[1], pre[2]);
+#endif // DEBUG_LCMS
                     icUInt16Number post[4] = {0,0,0,0};
                     cmsDoTransform( trans, pre, post, 1 );
+#ifdef DEBUG_LCMS
+                    g_message("got on out [%04x] [%04x] [%04x] [%04x]", post[0], post[1], post[2], post[3]);
+#endif // DEBUG_LCMS
                     guint count = _cmsChannelsOf( newProf->getColorSpace() );
 
                     gchar const** names = 0;
@@ -504,7 +514,18 @@ void ColorICCSelector::_switchToProfile( gchar const* name )
 
                     for ( guint i = 0; i < count; i++ ) {
                         gdouble val = (((gdouble)post[i])/65535.0) * (gdouble)scales[i];
+#ifdef DEBUG_LCMS
+                        g_message("     scaled %d by %d to be %f", i, scales[i], val);
+#endif // DEBUG_LCMS
                         tmp.icc->colors.push_back(val);
+                    }
+                    cmsHTRANSFORM retrans = newProf->getTransfToSRGB8();
+                    if ( retrans ) {
+                        cmsDoTransform( retrans, post, pre, 1 );
+#ifdef DEBUG_LCMS
+                        g_message("  back out [%02x] [%02x] [%02x]", pre[0], pre[1], pre[2]);
+#endif // DEBUG_LCMS
+                        tmp.set(SP_RGBA32_U_COMPOSE(pre[0], pre[1], pre[2], 0xff));
                     }
                 }
             }
@@ -512,21 +533,32 @@ void ColorICCSelector::_switchToProfile( gchar const* name )
             dirty = true;
         }
     } else {
-//         g_message("NUKE THE ICC");
+#ifdef DEBUG_LCMS
+         g_message("NUKE THE ICC");
+#endif // DEBUG_LCMS
         if ( tmp.icc ) {
             delete tmp.icc;
             tmp.icc = 0;
             dirty = true;
             _fixupHit( 0, this );
         } else {
-//             g_message("No icc to nuke");
+#ifdef DEBUG_LCMS
+             g_message("No icc to nuke");
+#endif // DEBUG_LCMS
         }
     }
 
     if ( dirty ) {
+#ifdef DEBUG_LCMS
+        g_message("+----------------");
+        g_message("+   new color is [%s]", tmp.toString().c_str());
+#endif // DEBUG_LCMS
         _setProfile( tmp.icc );
         //_adjustmentChanged( _fooAdj[0], SP_COLOR_ICC_SELECTOR(_csel) );
-        setColor( tmp );
+        setColorAlpha( tmp, _alpha, true );
+#ifdef DEBUG_LCMS
+        g_message("+_________________");
+#endif // DEBUG_LCMS
     }
 }
 
@@ -572,12 +604,12 @@ void ColorICCSelector::_colorChanged()
 
 #ifdef DEBUG_LCMS
     g_message( "/^^^^^^^^^  %p::_colorChanged(%08x:%s)", this,
-               color.toRGBA32(alpha), ( (color.icc) ? color.icc->colorProfile.c_str(): "<null>" )
+               _color.toRGBA32(_alpha), ( (_color.icc) ? _color.icc->colorProfile.c_str(): "<null>" )
                );
 #endif // DEBUG_LCMS
 
 #ifdef DEBUG_LCMS
-    g_message("FLIPPIES!!!!     %p   '%s'", color.icc, (color.icc?color.icc->colorProfile.c_str():"<null>"));
+    g_message("FLIPPIES!!!!     %p   '%s'", _color.icc, (_color.icc ? _color.icc->colorProfile.c_str():"<null>"));
 #endif // DEBUG_LCMS
 
     _profilesChanged( (_color.icc) ? _color.icc->colorProfile : std::string("") );
@@ -607,7 +639,9 @@ void ColorICCSelector::_colorChanged()
         if ( other != _color.toRGBA32(255) ) {
             _fixupNeeded = other;
             gtk_widget_set_sensitive( _fixupBtn, TRUE );
-            //g_message("Color needs to change 0x%06x to 0x%06x", color.toRGBA32(255) >> 8, other >> 8 );
+#ifdef DEBUG_LCMS
+            g_message("Color needs to change 0x%06x to 0x%06x", _color.toRGBA32(255) >> 8, other >> 8 );
+#endif // DEBUG_LCMS
         }
     }
 #else
@@ -863,7 +897,11 @@ void ColorICCSelector::_sliderReleased( SPColorSlider */*slider*/, SPColorICCSel
 //     }
 }
 
+#ifdef DEBUG_LCMS
+void ColorICCSelector::_sliderChanged( SPColorSlider *slider, SPColorICCSelector *cs )
+#else
 void ColorICCSelector::_sliderChanged( SPColorSlider */*slider*/, SPColorICCSelector */*cs*/ )
+#endif // DEBUG_LCMS
 {
 #ifdef DEBUG_LCMS
     g_message("Changed  %p and %p", slider, cs );
