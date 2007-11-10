@@ -135,7 +135,7 @@ XSLT::unload(Inkscape::Extension::Extension *module)
 }
 
 SPDocument *
-XSLT::open(Inkscape::Extension::Input *module, gchar const *filename)
+XSLT::open(Inkscape::Extension::Input */*module*/, gchar const *filename)
 {
     xmlDocPtr filein = xmlParseFile(filename);
     if (filein == NULL) { return NULL; }
@@ -145,7 +145,7 @@ XSLT::open(Inkscape::Extension::Input *module, gchar const *filename)
 
     xmlDocPtr result = xsltApplyStylesheet(_stylesheet, filein, params);
     xmlFreeDoc(filein);
-    
+
     Inkscape::XML::Document * rdoc = sp_repr_do_read( result, SP_SVG_NS_URI);
     xmlFreeDoc(result);
 
@@ -169,7 +169,7 @@ XSLT::open(Inkscape::Extension::Input *module, gchar const *filename)
     } else {
         base = NULL;
         name = g_strdup(filename);
-    }    
+    }
     g_free(s);
 
     SPDocument * doc = sp_document_create(rdoc, filename, base, name, true);
@@ -180,7 +180,7 @@ XSLT::open(Inkscape::Extension::Input *module, gchar const *filename)
 }
 
 void
-XSLT::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename)
+XSLT::save(Inkscape::Extension::Output */*module*/, SPDocument *doc, gchar const *filename)
 {
     g_return_if_fail(doc != NULL);
     g_return_if_fail(filename != NULL);

@@ -22,12 +22,12 @@ SweepTreeList::~SweepTreeList()
 }
 
 
-SweepTree *SweepTreeList::add(Shape *iSrc, int iBord, int iWeight, int iStartPoint, Shape *iDst)
+SweepTree *SweepTreeList::add(Shape *iSrc, int iBord, int iWeight, int iStartPoint, Shape */*iDst*/)
 {
     if (nbTree >= maxTree) {
-	return NULL;
+        return NULL;
     }
-    
+
     int const n = nbTree++;
     trees[n].MakeNew(iSrc, iBord, iWeight, iStartPoint);
 

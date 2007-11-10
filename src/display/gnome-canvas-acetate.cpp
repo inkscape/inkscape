@@ -62,9 +62,9 @@ sp_canvas_acetate_class_init (SPCanvasAcetateClass *klass)
 }
 
 static void
-sp_canvas_acetate_init (SPCanvasAcetate *acetate)
+sp_canvas_acetate_init (SPCanvasAcetate */*acetate*/)
 {
-	/* Nothing here */
+    /* Nothing here */
 }
 
 static void
@@ -82,19 +82,19 @@ sp_canvas_acetate_destroy (GtkObject *object)
 }
 
 static void
-sp_canvas_acetate_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+sp_canvas_acetate_update( SPCanvasItem *item, NR::Matrix const &/*affine*/, unsigned int /*flags*/ )
 {
-	item->x1 = -G_MAXINT;
-	item->y1 = -G_MAXINT;
-	item->x2 = G_MAXINT;
-	item->y2 = G_MAXINT;
+    item->x1 = -G_MAXINT;
+    item->y1 = -G_MAXINT;
+    item->x2 = G_MAXINT;
+    item->y2 = G_MAXINT;
 }
 
 static double
-sp_canvas_acetate_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item)
+sp_canvas_acetate_point( SPCanvasItem *item, NR::Point /*p*/, SPCanvasItem **actual_item )
 {
-	*actual_item = item;
+    *actual_item = item;
 
-	return 0.0;
+    return 0.0;
 }
 

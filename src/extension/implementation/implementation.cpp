@@ -29,12 +29,12 @@ namespace Implementation {
  * \param    module   The Extension that should be loaded.
  */
 bool
-Implementation::load(Inkscape::Extension::Extension *module) {
+Implementation::load(Inkscape::Extension::Extension */*module*/) {
     return TRUE;
 } /* Implementation::load */
 
 void
-Implementation::unload(Inkscape::Extension::Extension *module) {
+Implementation::unload(Inkscape::Extension::Extension */*module*/) {
     return;
 } /* Implementation::unload */
 
@@ -48,12 +48,12 @@ Implementation::unload(Inkscape::Extension::Extension *module) {
 	to reimplement it to do something useful.
 */
 ImplementationDocumentCache *
-Implementation::newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * view) {
-	return NULL;
+Implementation::newDocCache( Inkscape::Extension::Extension * /*ext*/, Inkscape::UI::View::View * /*view*/ ) {
+    return NULL;
 }
 
 bool
-Implementation::check(Inkscape::Extension::Extension *module) {
+Implementation::check(Inkscape::Extension::Extension */*module*/) {
     /* If there are no checks, they all pass */
     return TRUE;
 } /* Implemenation::check */
@@ -69,12 +69,12 @@ Implementation::commitDocument (void) {
 }
 
 Gtk::Widget *
-Implementation::prefs_input(Inkscape::Extension::Input *module, gchar const *filename) {
+Implementation::prefs_input(Inkscape::Extension::Input *module, gchar const */*filename*/) {
     return module->autogui(NULL, NULL);
 } /* Implementation::prefs_input */
 
 SPDocument *
-Implementation::open(Inkscape::Extension::Input *module, gchar const *filename) {
+Implementation::open(Inkscape::Extension::Input */*module*/, gchar const */*filename*/) {
     /* throw open_failed(); */
     return NULL;
 } /* Implementation::open */
@@ -85,43 +85,43 @@ Implementation::prefs_output(Inkscape::Extension::Output *module) {
 } /* Implementation::prefs_output */
 
 void
-Implementation::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename) {
+Implementation::save(Inkscape::Extension::Output */*module*/, SPDocument */*doc*/, gchar const */*filename*/) {
     /* throw save_fail */
     return;
 } /* Implementation::save */
 
 Gtk::Widget *
-Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *view, sigc::signal<void> * changeSignal, ImplementationDocumentCache * docCache) {
+Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View */*view*/, sigc::signal<void> * /*changeSignal*/, ImplementationDocumentCache * /*docCache*/) {
     return module->autogui(NULL, NULL);
 } /* Implementation::prefs_effect */
 
 void
-Implementation::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, ImplementationDocumentCache * docCache) {
+Implementation::effect(Inkscape::Extension::Effect */*module*/, Inkscape::UI::View::View */*document*/, ImplementationDocumentCache * /*docCache*/) {
     /* throw filter_fail */
     return;
 } /* Implementation::filter */
 
 unsigned int
-Implementation::setup(Inkscape::Extension::Print *module)
+Implementation::setup(Inkscape::Extension::Print */*module*/)
 {
     return 0;
 }
 
 unsigned int
-Implementation::set_preview(Inkscape::Extension::Print *module)
+Implementation::set_preview(Inkscape::Extension::Print */*module*/)
 {
     return 0;
 }
 
 
 unsigned int
-Implementation::begin(Inkscape::Extension::Print *module, SPDocument *doc)
+Implementation::begin(Inkscape::Extension::Print */*module*/, SPDocument */*doc*/)
 {
     return 0;
 }
 
 unsigned int
-Implementation::finish(Inkscape::Extension::Print *module)
+Implementation::finish(Inkscape::Extension::Print */*module*/)
 {
     return 0;
 }
@@ -129,53 +129,53 @@ Implementation::finish(Inkscape::Extension::Print *module)
 
 /* Rendering methods */
 unsigned int
-Implementation::bind(Inkscape::Extension::Print *module, NRMatrix const *transform, float opacity)
+Implementation::bind(Inkscape::Extension::Print */*module*/, NRMatrix const */*transform*/, float /*opacity*/)
 {
     return 0;
 }
 
 unsigned int
-Implementation::release(Inkscape::Extension::Print *module)
+Implementation::release(Inkscape::Extension::Print */*module*/)
 {
     return 0;
 }
 
 unsigned int
-Implementation::comment(Inkscape::Extension::Print *module, char const *comment)
+Implementation::comment(Inkscape::Extension::Print */*module*/, char const */*comment*/)
 {
     return 0;
 }
 
 unsigned int
-Implementation::fill(Inkscape::Extension::Print *module, NRBPath const *bpath, NRMatrix const *ctm, SPStyle const *style,
-                     NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
+Implementation::fill(Inkscape::Extension::Print */*module*/, NRBPath const */*bpath*/, NRMatrix const */*ctm*/, SPStyle const */*style*/,
+                     NRRect const */*pbox*/, NRRect const */*dbox*/, NRRect const */*bbox*/)
 {
     return 0;
 }
 
 unsigned int
-Implementation::stroke(Inkscape::Extension::Print *module, NRBPath const *bpath, NRMatrix const *transform, SPStyle const *style,
-                       NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
+Implementation::stroke(Inkscape::Extension::Print */*module*/, NRBPath const */*bpath*/, NRMatrix const */*transform*/, SPStyle const */*style*/,
+                       NRRect const */*pbox*/, NRRect const */*dbox*/, NRRect const */*bbox*/)
 {
     return 0;
 }
 
 unsigned int
-Implementation::image(Inkscape::Extension::Print *module, unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
-                      NRMatrix const *transform, SPStyle const *style)
+Implementation::image(Inkscape::Extension::Print */*module*/, unsigned char */*px*/, unsigned int /*w*/, unsigned int /*h*/, unsigned int /*rs*/,
+                      NRMatrix const */*transform*/, SPStyle const */*style*/)
 {
     return 0;
 }
 
 unsigned int
-Implementation::text(Inkscape::Extension::Print *module, char const *text,
-                     NR::Point p, SPStyle const *style)
+Implementation::text(Inkscape::Extension::Print */*module*/, char const */*text*/,
+                     NR::Point /*p*/, SPStyle const */*style*/)
 {
     return 0;
 }
 
 void
-Implementation::processPath(Inkscape::XML::Node * node)
+Implementation::processPath(Inkscape::XML::Node * /*node*/)
 {
     return;
 }
@@ -189,7 +189,7 @@ Implementation::processPath(Inkscape::XML::Node * node)
     paths more than they'll support text.  (at least they do today)
 */
 bool
-Implementation::textToPath(Inkscape::Extension::Print *ext)
+Implementation::textToPath(Inkscape::Extension::Print */*ext*/)
 {
     return false;
 }
@@ -203,7 +203,7 @@ Implementation::textToPath(Inkscape::Extension::Print *ext)
 */
 
 bool
-Implementation::fontEmbedded(Inkscape::Extension::Print * ext)
+Implementation::fontEmbedded(Inkscape::Extension::Print * /*ext*/)
 {
     return false;
 }

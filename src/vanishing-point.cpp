@@ -44,7 +44,7 @@ SPKnotShapeType vp_knot_shapes [] = {
 };
 
 // FIXME: We should always require to have both the point (for finite VPs)
-//        and the direction (for infinite VPs) set. Otherwise toggling 
+//        and the direction (for infinite VPs) set. Otherwise toggling
 //        shows very unexpected behaviour.
 //        Later on we can maybe infer the infinite direction from the finite point
 //        and a suitable center of the scene. How to go in the other direction?
@@ -129,7 +129,7 @@ void VanishingPoint::draw(Box3D::Axis const axis)
 }
 
 static void
-vp_drag_sel_changed(Inkscape::Selection *selection, gpointer data)
+vp_drag_sel_changed(Inkscape::Selection */*selection*/, gpointer data)
 {
     VPDrag *drag = (VPDrag *) data;
     drag->updateDraggers ();
@@ -137,7 +137,7 @@ vp_drag_sel_changed(Inkscape::Selection *selection, gpointer data)
 }
 
 static void
-vp_drag_sel_modified (Inkscape::Selection *selection, guint flags, gpointer data)
+vp_drag_sel_modified (Inkscape::Selection */*selection*/, guint flags, gpointer data)
 {
     VPDrag *drag = (VPDrag *) data;
     /***
@@ -187,7 +187,7 @@ have_VPs_of_same_perspective (VPDragger *dr1, VPDragger *dr2)
 }
 
 static void
-vp_knot_moved_handler (SPKnot *knot, NR::Point const *ppointer, guint state, gpointer data)
+vp_knot_moved_handler (SPKnot */*knot*/, NR::Point const *ppointer, guint state, gpointer data)
 {
     VPDragger *dragger = (VPDragger *) data;
     VPDrag *drag = dragger->parent;
@@ -222,7 +222,7 @@ vp_knot_moved_handler (SPKnot *knot, NR::Point const *ppointer, guint state, gpo
 
                 // ... and merge any duplicate perspectives
                 d_new->mergePerspectives();
-                    
+
                 // TODO: Update the new merged dragger
                 //d_new->updateKnotShape ();
                 d_new->updateTip ();
@@ -265,7 +265,7 @@ vp_knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
 ***/
 
 void
-vp_knot_grabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
+vp_knot_grabbed_handler (SPKnot */*knot*/, unsigned int state, gpointer data)
 {
     VPDragger *dragger = (VPDragger *) data;
     VPDrag *drag = dragger->parent;
@@ -350,7 +350,7 @@ vp_knot_grabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
 }
 
 static void
-vp_knot_ungrabbed_handler (SPKnot *knot, guint state, gpointer data)
+vp_knot_ungrabbed_handler (SPKnot *knot, guint /*state*/, gpointer data)
 {
     VPDragger *dragger = (VPDragger *) data;
 
@@ -554,7 +554,7 @@ VPDragger::hasPerspective (const Perspective3D *persp)
     for (GSList *i = this->vps; i != NULL; i = i->next) {
         if (*persp == *parent->document->get_persp_of_VP ((VanishingPoint *) i->data)) {
             return true;
-        }        
+        }
     }
     return false;
 }
@@ -578,7 +578,7 @@ VPDragger::mergePerspectives ()
 }
 
 void
-VPDragger::reshapeBoxes (NR::Point const &p, Box3D::Axis axes)
+VPDragger::reshapeBoxes (NR::Point const &p, Box3D::Axis /*axes*/)
 {
     Perspective3D *persp;
     for (GSList const* i = this->vps; i != NULL; i = i->next) {
@@ -907,8 +907,8 @@ VPDrag::addLine (NR::Point p1, NR::Point p2, guint32 rgba)
     this->lines = g_slist_append (this->lines, line);
 }
 
-} // namespace Box3D 
- 
+} // namespace Box3D
+
 /*
   Local Variables:
   mode:c++

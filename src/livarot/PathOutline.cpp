@@ -36,19 +36,19 @@ void Path::Outline(Path *dest, double width, JoinType join, ButtType butt, doubl
     if ( dest == NULL ) {
         return;
     }
-    
+
     dest->Reset();
     dest->SetBackData(false);
-  
+
     outline_callbacks calls;
     NR::Point endButt;
     NR::Point endPos;
     calls.cubicto = StdCubicTo;
     calls.bezierto = StdBezierTo;
     calls.arcto = StdArcTo;
-  
+
     Path *rev = new Path;
-  
+
     // we repeat the offset contour creation for each subpath
     int curP = 0;
     do {
@@ -67,7 +67,7 @@ void Path::Outline(Path *dest, double width, JoinType join, ButtType butt, doubl
         if (curP >= int(descr_cmd.size())) {
             curP = descr_cmd.size();
         }
-        
+
         if (curP > lastM + 1) {
             // we have isolated a subpath, now we make a reversed version of it
             // we do so by taking the subpath in the reverse and constructing a path as appropriate
@@ -80,7 +80,7 @@ void Path::Outline(Path *dest, double width, JoinType join, ButtType butt, doubl
             while (curD > lastM && descr_cmd[curD]->getType() == descr_close) {
                 curD--;
             }
-            
+
             int realP = curD + 1;
             if (curD > lastM) {
                 curX = PrevPoint(curD);
@@ -142,7 +142,7 @@ void Path::Outline(Path *dest, double width, JoinType join, ButtType butt, doubl
                         curD--;
                     }
                 }
-                
+
                 // offset the paths and glue everything
                 // actual offseting is done in SubContractOutline()
                 if (needClose) {
@@ -173,7 +173,7 @@ void Path::Outline(Path *dest, double width, JoinType join, ButtType butt, doubl
                     SubContractOutline (lastM, realP - lastM,
                                         dest, calls, 0.0025 * width * width,  width, join, butt,
                                         miter, false, true, endPos, endButt);
-                    
+
                     endNor=endButt.ccw();
                     if (butt == butt_round) {
                         dest->ArcTo (endPos+width*endNor, 1.0001 * width, 1.0001 * width, 0.0, true, true);
@@ -191,7 +191,7 @@ void Path::Outline(Path *dest, double width, JoinType join, ButtType butt, doubl
                 }
             } // if (curD > lastM)
         } // if (curP > lastM + 1)
-        
+
     } while (curP < int(descr_cmd.size()));
 
     delete rev;
@@ -212,7 +212,7 @@ Path::OutsideOutline (Path * dest, double width, JoinType join, ButtType butt,
 	if (dest == NULL) return;
 	dest->Reset ();
 	dest->SetBackData (false);
-  
+
 	outline_callbacks calls;
 	NR::Point endButt, endPos;
 	calls.cubicto = StdCubicTo;
@@ -329,7 +329,7 @@ Path::InsideOutline (Path * dest, double width, JoinType join, ButtType butt,
 			}
 		}
 	}  while (curP < int(descr_cmd.size()));
-  
+
 	delete rev;
 }
 
@@ -342,15 +342,15 @@ Path::InsideOutline (Path * dest, double width, JoinType join, ButtType butt,
 void Path::SubContractOutline(int off, int num_pd,
                               Path *dest, outline_callbacks & calls,
                               double tolerance, double width, JoinType join,
-                              ButtType butt, double miter, bool closeIfNeeded,
+                              ButtType /*butt*/, double miter, bool closeIfNeeded,
                               bool skipMoveto, NR::Point &lastP, NR::Point &lastT)
 {
     outline_callback_data callsData;
-  
+
     callsData.orig = this;
     callsData.dest = dest;
     int curP = 1;
-  
+
     // le moveto
     NR::Point curX;
     {
@@ -364,11 +364,11 @@ void Path::SubContractOutline(int off, int num_pd,
         }
     }
     NR::Point curT(0, 0);
-  
+
     bool doFirst = true;
     NR::Point firstP(0, 0);
     NR::Point firstT(0, 0);
-  
+
 	// et le reste, 1 par 1
 	while (curP < num_pd)
 	{
@@ -392,14 +392,14 @@ void Path::SubContractOutline(int off, int num_pd,
 						dest->Close ();
 					}  else {
                                             PathDescrLineTo temp(firstP);
-            
+
 						TangentOnSegAt (0.0, curX, temp, stPos, stTgt,
 										stTle);
 						TangentOnSegAt (1.0, curX, temp, enPos, enTgt,
 										enTle);
 						stNor=stTgt.cw();
 						enNor=enTgt.cw();
-            
+
 						// jointure
 						{
 							NR::Point pos;
@@ -408,7 +408,7 @@ void Path::SubContractOutline(int off, int num_pd,
 										 miter);
 						}
 						dest->LineTo (enPos+width*enNor);
-            
+
 						// jointure
 						{
 							NR::Point pos;
@@ -437,20 +437,20 @@ void Path::SubContractOutline(int off, int num_pd,
 				{
                                     PathDescrLineTo temp(firstP);
 					nextX = firstP;
-          
+
 					TangentOnSegAt (0.0, curX, temp, stPos, stTgt, stTle);
 					TangentOnSegAt (1.0, curX, temp, enPos, enTgt, enTle);
 					stNor=stTgt.cw();
 					enNor=enTgt.cw();
-          
+
 					// jointure
 					{
 						OutlineJoin (dest, stPos, curT, stNor, width, join,
 									 miter);
 					}
-          
+
 					dest->LineTo (enPos+width*enNor);
-          
+
 					// jointure
 					{
 						OutlineJoin (dest, enPos, enNor, firstT, width, join,
@@ -477,10 +477,10 @@ void Path::SubContractOutline(int off, int num_pd,
 			TangentOnSegAt (1.0, curX, *nData, enPos, enTgt, enTle);
 			stNor=stTgt.cw();
 			enNor=enTgt.cw();
-      
+
 			lastP = enPos;
 			lastT = enTgt;
-      
+
 			if (doFirst)
 			{
 				doFirst = false;
@@ -500,7 +500,7 @@ void Path::SubContractOutline(int off, int num_pd,
 				pos = curX;
 				OutlineJoin (dest, pos, curT, stNor, width, join, miter);
 			}
-      
+
 			int n_d = dest->LineTo (nextX+width*enNor);
 			if (n_d >= 0)
 			{
@@ -527,10 +527,10 @@ void Path::SubContractOutline(int off, int num_pd,
 							enTle, enRad);
 			stNor=stTgt.cw();
 			enNor=enTgt.cw();
-      
+
 			lastP = enPos;
 			lastT = enTgt;
-      
+
 			if (doFirst)
 			{
 				doFirst = false;
@@ -550,7 +550,7 @@ void Path::SubContractOutline(int off, int num_pd,
 				pos = curX;
 				OutlineJoin (dest, pos, curT, stNor, width, join, miter);
 			}
-      
+
 			callsData.piece = curP;
 			callsData.tSt = 0.0;
 			callsData.tEn = 1.0;
@@ -563,7 +563,7 @@ void Path::SubContractOutline(int off, int num_pd,
 			callsData.d.c.dx2 = nData->end[0];
 			callsData.d.c.dy2 = nData->end[1];
 			(calls.cubicto) (&callsData, tolerance, width);
-      
+
 			curP++;
 		}
 		else if (nType == descr_arcto)
@@ -583,10 +583,10 @@ void Path::SubContractOutline(int off, int num_pd,
 							enRad);
 			stNor=stTgt.cw();
 			enNor=enTgt.cw();
-      
+
 			lastP = enPos;
 			lastT = enTgt;	// tjs definie
-      
+
 			if (doFirst)
 			{
 				doFirst = false;
@@ -606,7 +606,7 @@ void Path::SubContractOutline(int off, int num_pd,
 				pos = curX;
 				OutlineJoin (dest, pos, curT, stNor, width, join, miter);
 			}
-      
+
 			callsData.piece = curP;
 			callsData.tSt = 0.0;
 			callsData.tEn = 1.0;
@@ -620,7 +620,7 @@ void Path::SubContractOutline(int off, int num_pd,
 			callsData.d.a.clock = nData->clockwise;
 			callsData.d.a.large = nData->large;
 			(calls.arcto) (&callsData, tolerance, width);
-      
+
 			curP++;
 		}
 		else if (nType == descr_bezierto)
@@ -628,18 +628,18 @@ void Path::SubContractOutline(int off, int num_pd,
 			PathDescrBezierTo* nBData = dynamic_cast<PathDescrBezierTo*>(descr_cmd[curD]);
 			int nbInterm = nBData->nb;
 			nextX = nBData->p;
-      
+
 			if (IsNulCurve (descr_cmd, curD, curX)) {
 				curP += nbInterm + 1;
 				continue;
 			}
-      
+
 			curP++;
 
 			curD = off + curP;
                         int ip = curD;
 			PathDescrIntermBezierTo* nData = dynamic_cast<PathDescrIntermBezierTo*>(descr_cmd[ip]);
-     
+
 			if (nbInterm <= 0) {
 				// et on avance
                             PathDescrLineTo temp(nextX);
@@ -647,10 +647,10 @@ void Path::SubContractOutline(int off, int num_pd,
 				TangentOnSegAt (1.0, curX, temp, enPos, enTgt, enTle);
 				stNor=stTgt.cw();
 				enNor=enTgt.cw();
-        
+
 				lastP = enPos;
 				lastT = enTgt;
-        
+
 				if (doFirst) {
 					doFirst = false;
 					firstP = stPos;
@@ -678,10 +678,10 @@ void Path::SubContractOutline(int off, int num_pd,
 				TangentOnBezAt (1.0, curX, *nData, *nBData, true, enPos, enTgt, enTle, enRad);
 				stNor=stTgt.cw();
 				enNor=enTgt.cw();
-        
+
 				lastP = enPos;
 				lastT = enTgt;
-        
+
 				if (doFirst) {
 					doFirst = false;
 					firstP = stPos;
@@ -695,7 +695,7 @@ void Path::SubContractOutline(int off, int num_pd,
 					pos = curX;
 					OutlineJoin (dest, pos, curT, stNor, width, join, miter);
 				}
-        
+
 				callsData.piece = curP;
 				callsData.tSt = 0.0;
 				callsData.tEn = 1.0;
@@ -706,16 +706,16 @@ void Path::SubContractOutline(int off, int num_pd,
 				callsData.d.b.mx = midX[0];
 				callsData.d.b.my = midX[1];
 				(calls.bezierto) (&callsData, tolerance, width);
-        
+
 			} else if (nbInterm > 1) {
 				NR::Point  bx=curX;
 				NR::Point cx=curX;
 				NR::Point dx=curX;
-        
+
 				dx = nData->p;
 				TangentOnBezAt (0.0, curX, *nData, *nBData, false, stPos, stTgt, stTle, stRad);
 				stNor=stTgt.cw();
-        
+
 				ip++;
 				nData = dynamic_cast<PathDescrIntermBezierTo*>(descr_cmd[ip]);
 				// et on avance
@@ -734,27 +734,27 @@ void Path::SubContractOutline(int off, int num_pd,
 						//                                              dest->LineTo(curX+width*stNor.x,curY+width*stNor.y);
 					}
 				}
-        
+
 				cx = 2 * bx - dx;
-        
+
 				for (int k = 0; k < nbInterm - 1; k++) {
 					bx = cx;
 					cx = dx;
-          
+
 					dx = nData->p;
                                         ip++;
 					nData = dynamic_cast<PathDescrIntermBezierTo*>(descr_cmd[ip]);
 					NR::Point stx = (bx + cx) / 2;
 					//                                      double  stw=(bw+cw)/2;
-          
+
 					PathDescrBezierTo tempb((cx + dx) / 2, 1);
 					PathDescrIntermBezierTo tempi(cx);
 					TangentOnBezAt (1.0, stx, tempi, tempb, true, enPos, enTgt, enTle, enRad);
 					enNor=enTgt.cw();
-          
+
 					lastP = enPos;
 					lastT = enTgt;
-          
+
 					callsData.piece = curP + k;
 					callsData.tSt = 0.0;
 					callsData.tEn = 1.0;
@@ -769,22 +769,22 @@ void Path::SubContractOutline(int off, int num_pd,
 				{
 					bx = cx;
 					cx = dx;
-          
+
 					dx = nextX;
 					dx = 2 * dx - cx;
-          
+
 					NR::Point stx = (bx + cx) / 2;
 					//                                      double  stw=(bw+cw)/2;
-          
+
 					PathDescrBezierTo tempb((cx + dx) / 2, 1);
 					PathDescrIntermBezierTo tempi(cx);
 					TangentOnBezAt (1.0, stx, tempi, tempb, true, enPos,
 									enTgt, enTle, enRad);
 					enNor=enTgt.cw();
-          
+
 					lastP = enPos;
 					lastT = enTgt;
-          
+
 					callsData.piece = curP + nbInterm - 1;
 					callsData.tSt = 0.0;
 					callsData.tEn = 1.0;
@@ -795,10 +795,10 @@ void Path::SubContractOutline(int off, int num_pd,
 					callsData.d.b.mx = cx[0];
 					callsData.d.b.my = cx[1];
 					(calls.bezierto) (&callsData, tolerance, width);
-          
+
 				}
 			}
-      
+
 			// et on avance
 			curP += nbInterm;
 		}
@@ -811,7 +811,7 @@ void Path::SubContractOutline(int off, int num_pd,
 		{
 		}
 	}
-        
+
 }
 
 /*
@@ -839,8 +839,8 @@ Path::IsNulCurve (std::vector<PathDescr*> const &cmd, int curD, NR::Point const 
 		NR::Point A = nData->start + nData->end + 2*(curX - nData->p);
 		NR::Point B = 3*(nData->p - curX) - 2*nData->start - nData->end;
 		NR::Point C = nData->start;
-		if (NR::LInfty(A) < 0.0001 
-			&& NR::LInfty(B) < 0.0001 
+		if (NR::LInfty(A) < 0.0001
+			&& NR::LInfty(B) < 0.0001
 			&& NR::LInfty (C) < 0.0001) {
 			return true;
 		}
@@ -850,7 +850,7 @@ Path::IsNulCurve (std::vector<PathDescr*> const &cmd, int curD, NR::Point const 
     {
 		PathDescrArcTo* nData = dynamic_cast<PathDescrArcTo*>(cmd[curD]);
 		if ( NR::LInfty(nData->p - curX) < 0.00001) {
-			if ((nData->large == false) 
+			if ((nData->large == false)
 				|| (fabs (nData->rx) < 0.00001
 					|| fabs (nData->ry) < 0.00001)) {
 				return true;
@@ -935,12 +935,12 @@ void Path::TangentOnArcAt(double at, const NR::Point &iS, PathDescrArcTo const &
 	double const angle = fin.angle;
 	bool const large = fin.large;
 	bool const wise = fin.clockwise;
-  
+
 	pos = iS;
 	tgt[0] = tgt[1] = 0;
 	if (rx <= 0.0001 || ry <= 0.0001)
 		return;
-  
+
 	double const sex = iE[0] - iS[0], sey = iE[1] - iS[1];
 	double const ca = cos (angle), sa = sin (angle);
 	double csex =  ca * sex + sa * sey;
@@ -958,7 +958,7 @@ void Path::TangentOnArcAt(double at, const NR::Point &iS, PathDescrArcTo const &
 	csdy /= l;
 	csdx *= d;
 	csdy *= d;
-  
+
 	double sang;
         double eang;
 	double rax = -csdx - csex / 2;
@@ -993,12 +993,12 @@ void Path::TangentOnArcAt(double at, const NR::Point &iS, PathDescrArcTo const &
 		if (ray < 0)
 			eang = 2 * M_PI - eang;
 	}
-  
+
 	csdx *= rx;
 	csdy *= ry;
 	double drx = ca * csdx - sa * csdy;
         double dry = sa * csdx + ca * csdy;
-  
+
 	if (wise)
 	{
 		if (large == true)
@@ -1035,7 +1035,7 @@ void Path::TangentOnArcAt(double at, const NR::Point &iS, PathDescrArcTo const &
 	}
 	drx += (iS[0] + iE[0]) / 2;
 	dry += (iS[1] + iE[1]) / 2;
-  
+
 	if (wise) {
 		if (sang < eang)
 			sang += 2 * M_PI;
@@ -1077,11 +1077,11 @@ Path::TangentOnCubAt (double at, NR::Point const &iS, PathDescrCubicTo const &fi
 	const NR::Point E = fin.p;
 	const NR::Point Sd = fin.start;
 	const NR::Point Ed = fin.end;
-	
+
 	pos = iS;
 	tgt = NR::Point(0,0);
 	len = rad = 0;
-	
+
 	const NR::Point A = Sd + Ed - 2*E + 2*iS;
 	const NR::Point B = 0.5*(Ed - Sd);
 	const NR::Point C = 0.25*(6*E - 6*iS - Sd - Ed);
@@ -1091,7 +1091,7 @@ Path::TangentOnCubAt (double at, NR::Point const &iS, PathDescrCubicTo const &fi
 	const NR::Point der = (3 * atb * atb)*A  + (2 * atb)*B + C;
 	const NR::Point dder = (6 * atb)*A + 2*B;
 	const NR::Point ddder = 6 * A;
-	
+
 	double l = NR::L2 (der);
   // lots of nasty cases. inversion points are sadly too common...
 	if (l <= 0.0001) {
@@ -1118,9 +1118,9 @@ Path::TangentOnCubAt (double at, NR::Point const &iS, PathDescrCubicTo const &fi
 		return;
 	}
 	len = l;
-	
+
 	rad = -l * (dot(der,der)) / (cross(dder,der));
-	
+
 	tgt = der / l;
 }
 
@@ -1133,16 +1133,16 @@ Path::TangentOnBezAt (double at, NR::Point const &iS,
 	pos = iS;
 	tgt = NR::Point(0,0);
 	len = rad = 0;
-	
+
 	const NR::Point A = fin.p + iS - 2*mid.p;
 	const NR::Point B = 2*mid.p - 2 * iS;
 	const NR::Point C = iS;
-	
+
 	pos = at * at * A + at * B + C;
 	const NR::Point der = 2 * at * A + B;
 	const NR::Point dder = 2 * A;
 	double l = NR::L2(der);
-	
+
 	if (l <= 0.0001) {
 		l = NR::L2(dder);
 		if (l <= 0.0001) {
@@ -1159,7 +1159,7 @@ Path::TangentOnBezAt (double at, NR::Point const &iS,
 	}
 	len = l;
 	rad = -l * (dot(der,der)) / (cross(dder,der));
-	
+
 	tgt = der / l;
 }
 
@@ -1171,7 +1171,7 @@ Path::OutlineJoin (Path * dest, NR::Point pos, NR::Point stNor, NR::Point enNor,
 	const double angCo = dot (stNor, enNor);
 	// 1/1000 is very big/ugly, but otherwise it stuffs things up a little...
 	// 1/1000 est tres grossier, mais sinon ca merde tout azimut
-	if ((width >= 0 && angSi > -0.001) 
+	if ((width >= 0 && angSi > -0.001)
 	    || (width < 0 && angSi < 0.001)) {
 		if (angCo > 0.999) {
 			// straight ahead
@@ -1189,8 +1189,8 @@ Path::OutlineJoin (Path * dest, NR::Point pos, NR::Point stNor, NR::Point enNor,
 			// Use the ends of the cubic: approximate the arc at the
 			// point where .., and support better the rounding of
 			// coordinates of the end points.
-      
-			// utiliser des bouts de cubique: approximation de l'arc (au point ou on en est...), et supporte mieux 
+
+			// utiliser des bouts de cubique: approximation de l'arc (au point ou on en est...), et supporte mieux
 			// l'arrondi des coordonnees des extremites
 			/* double   angle=acos(angCo);
 			   if ( angCo >= 0 ) {
@@ -1259,7 +1259,7 @@ Path::RecStdCubicTo (outline_callback_data * data, double tol, double width,
             PathDescrCubicTo temp(NR::Point(data->x2, data->y2),
                                     NR::Point(data->d.c.dx1, data->d.c.dy1),
                                     NR::Point(data->d.c.dx2, data->d.c.dy2));
-            
+
 		NR::Point initial_point(data->x1, data->y1);
 		TangentOnCubAt (0.0, initial_point, temp, false, stPos, stTgt, stTle,
 						stRad);
@@ -1271,7 +1271,7 @@ Path::RecStdCubicTo (outline_callback_data * data, double tol, double width,
 		miNor=miTgt.cw();
 		enNor=enTgt.cw();
 	}
-  
+
 	double stGue = 1, miGue = 1, enGue = 1;
   // correction of the lengths of the tangent to the offset
   // if you don't see why i wrote that, draw a little figure and everything will be clear
@@ -1284,10 +1284,10 @@ Path::RecStdCubicTo (outline_callback_data * data, double tol, double width,
 	stGue *= stTle;
 	miGue *= miTle;
 	enGue *= enTle;
-  
-  
+
+
 	if (lev <= 0) {
-		int n_d = data->dest->CubicTo (enPos + width*enNor, 
+		int n_d = data->dest->CubicTo (enPos + width*enNor,
 									   stGue*stTgt,
 									   enGue*enTgt);
 		if (n_d >= 0) {
@@ -1297,7 +1297,7 @@ Path::RecStdCubicTo (outline_callback_data * data, double tol, double width,
 		}
 		return;
 	}
-  
+
 	NR::Point chk;
 	const NR::Point req = miPos + width * miNor;
 	{
@@ -1323,7 +1323,7 @@ Path::RecStdCubicTo (outline_callback_data * data, double tol, double width,
 		}
 	} else {
 		outline_callback_data desc = *data;
-	  
+
 		desc.tSt = data->tSt;
 		desc.tEn = (data->tSt + data->tEn) / 2;
 		desc.x1 = data->x1;
@@ -1335,7 +1335,7 @@ Path::RecStdCubicTo (outline_callback_data * data, double tol, double width,
 		desc.d.c.dx2 = 0.5 * miTle * miTgt[0];
 		desc.d.c.dy2 = 0.5 * miTle * miTgt[1];
 		RecStdCubicTo (&desc, tol, width, lev - 1);
-	  
+
 		desc.tSt = (data->tSt + data->tEn) / 2;
 		desc.tEn = data->tEn;
 		desc.x1 = miPos[0];
@@ -1389,7 +1389,7 @@ Path::RecStdArcTo (outline_callback_data * data, double tol, double width,
             PathDescrArcTo temp(NR::Point(data->x2, data->y2),
                                   data->d.a.rx, data->d.a.ry,
                                   data->d.a.angle, data->d.a.large, data->d.a.clock);
-                                  
+
 		NR::Point tmp(data->x1,data->y1);
 		TangentOnArcAt (data->d.a.stA, tmp, temp, stPos, stTgt,
 						stTle, stRad);
@@ -1401,7 +1401,7 @@ Path::RecStdArcTo (outline_callback_data * data, double tol, double width,
 		miNor=miTgt.cw();
 		enNor=enTgt.cw();
 	}
-  
+
 	double stGue = 1, miGue = 1, enGue = 1;
 	if (fabs (stRad) > 0.01)
 		stGue += width / stRad;
@@ -1425,7 +1425,7 @@ Path::RecStdArcTo (outline_callback_data * data, double tol, double width,
 	if (scal > 2 * M_PI)
 		scal -= 2 * M_PI;
 	scal *= data->d.a.enA - data->d.a.stA;
-  
+
 	if (lev <= 0)
 	{
 		int n_d = data->dest->CubicTo (enPos + width*enNor,
@@ -1438,7 +1438,7 @@ Path::RecStdArcTo (outline_callback_data * data, double tol, double width,
 		}
 		return;
 	}
-  
+
 	NR::Point chk;
 	const NR::Point req = miPos + width*miNor;
 	{
@@ -1462,11 +1462,11 @@ Path::RecStdArcTo (outline_callback_data * data, double tol, double width,
 		}
 	} else {
 		outline_callback_data desc = *data;
-	  
+
 		desc.d.a.stA = data->d.a.stA;
 		desc.d.a.enA = (data->d.a.stA + data->d.a.enA) / 2;
 		RecStdArcTo (&desc, tol, width, lev - 1);
-	  
+
 		desc.d.a.stA = (data->d.a.stA + data->d.a.enA) / 2;
 		desc.d.a.enA = data->d.a.enA;
 		RecStdArcTo (&desc, tol, width, lev - 1);

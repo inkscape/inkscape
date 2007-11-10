@@ -177,7 +177,7 @@ Layout::Direction Layout::InputStreamTextSource::styleGetBlockProgression() cons
 
 }
 
-static Layout::Alignment text_anchor_to_alignment(unsigned anchor, Layout::Direction para_direction)
+static Layout::Alignment text_anchor_to_alignment(unsigned anchor, Layout::Direction /*para_direction*/)
 {
     switch (anchor) {
         default:

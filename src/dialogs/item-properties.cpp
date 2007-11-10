@@ -59,7 +59,7 @@ static void sp_item_widget_hidden_toggled (GtkWidget *widget, SPWidget *spw);
 static void sp_item_widget_label_changed (GtkWidget *widget, SPWidget *spw);
 
 static void
-sp_item_dialog_destroy (GtkObject *object, gpointer data)
+sp_item_dialog_destroy( GtkObject */*object*/, gpointer /*data*/ )
 {
     sp_signal_disconnect_by_data (INKSCAPE, dlg);
     wd.win = dlg = NULL;
@@ -67,7 +67,7 @@ sp_item_dialog_destroy (GtkObject *object, gpointer data)
 }
 
 static gboolean
-sp_item_dialog_delete (GtkObject *object, GdkEvent *event, gpointer data)
+sp_item_dialog_delete( GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/ )
 {
     gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
     gtk_window_get_size ((GtkWindow *) dlg, &w, &h);
@@ -82,10 +82,10 @@ sp_item_dialog_delete (GtkObject *object, GdkEvent *event, gpointer data)
 
     return FALSE; // which means, go ahead and destroy it
 
-} 
+}
 
 /**
- * \brief  Creates new instance of item properties widget 
+ * \brief  Creates new instance of item properties widget
  *
  */
 GtkWidget *
@@ -245,10 +245,10 @@ sp_item_widget_new (void)
 
 
 static void
-sp_item_widget_modify_selection ( SPWidget *spw,
-                                  Inkscape::Selection *selection,
-                                  guint flags,
-                                  GtkWidget *itemw )
+sp_item_widget_modify_selection( SPWidget *spw,
+                                 Inkscape::Selection *selection,
+                                 guint /*flags*/,
+                                 GtkWidget */*itemw*/ )
 {
     sp_item_widget_setup (spw, selection);
 }
@@ -258,7 +258,7 @@ sp_item_widget_modify_selection ( SPWidget *spw,
 static void
 sp_item_widget_change_selection ( SPWidget *spw,
                                   Inkscape::Selection *selection,
-                                  GtkWidget *itemw )
+                                  GtkWidget */*itemw*/ )
 {
     sp_item_widget_setup (spw, selection);
 }
@@ -347,7 +347,7 @@ sp_item_widget_sensitivity_toggled (GtkWidget *widget, SPWidget *spw)
 
     item->setLocked(gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
 
-    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, 
+    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
              gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))? _("Lock object") : _("Unlock object"));
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
@@ -366,14 +366,14 @@ sp_item_widget_hidden_toggled(GtkWidget *widget, SPWidget *spw)
 
     item->setExplicitlyHidden(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)));
 
-    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, 
+    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
              gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))? _("Hide object") : _("Unhide object"));
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
 }
 
 static void
-sp_item_widget_label_changed (GtkWidget *widget, SPWidget *spw)
+sp_item_widget_label_changed( GtkWidget */*widget*/, SPWidget *spw )
 {
     if (gtk_object_get_data (GTK_OBJECT (spw), "blocked"))
         return;
@@ -399,7 +399,7 @@ sp_item_widget_label_changed (GtkWidget *widget, SPWidget *spw)
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (id_label), _("_Id"));
         SP_EXCEPTION_INIT (&ex);
         sp_object_setAttribute (SP_OBJECT (item), "id", id, &ex);
-        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, 
+        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
                                 _("Set object ID"));
     }
 
@@ -423,7 +423,7 @@ sp_item_widget_label_changed (GtkWidget *widget, SPWidget *spw)
     gchar *title = (gchar *)gtk_entry_get_text (GTK_ENTRY (w));
     if (title != NULL) {
         obj->setTitle(title);
-        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, 
+        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
                                 _("Set object title"));
     }
 
@@ -431,7 +431,7 @@ sp_item_widget_label_changed (GtkWidget *widget, SPWidget *spw)
     gchar *desc = NULL; /* TODO:  get text from text buffer */
     if (desc != NULL) {
         obj->setDesc(desc);
-        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, 
+        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
                                 _("Set object description"));
     }
 

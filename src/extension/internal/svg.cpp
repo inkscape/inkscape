@@ -145,7 +145,7 @@ _load_uri (const gchar *uri)
     This function is really simple, it just calls sp_document_new...
 */
 SPDocument *
-Svg::open (Inkscape::Extension::Input *mod, const gchar *uri)
+Svg::open (Inkscape::Extension::Input */*mod*/, const gchar *uri)
 {
 #ifdef WITH_GNOME_VFS
     if (!gnome_vfs_initialized() || gnome_vfs_uri_is_local(gnome_vfs_uri_new(uri))) {
@@ -158,7 +158,7 @@ Svg::open (Inkscape::Extension::Input *mod, const gchar *uri)
         return NULL;
     }
     SPDocument * doc = sp_document_new_from_mem(buffer, strlen(buffer), 1);
-    
+
     g_free(buffer);
     return doc;
 #else
@@ -198,7 +198,7 @@ Svg::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
 
     gchar *save_path = g_path_get_dirname (uri);
 
-    gboolean const spns = (!mod->get_id() 
+    gboolean const spns = (!mod->get_id()
       || !strcmp (mod->get_id(), SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE)
       || !strcmp (mod->get_id(), SP_MODULE_KEY_OUTPUT_SVGZ_INKSCAPE));
 

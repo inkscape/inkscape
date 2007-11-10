@@ -33,16 +33,16 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-void on_selection_changed(Inkscape::Application *inkscape, Inkscape::Selection *selection, Transformation *daad)
+void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selection *selection, Transformation *daad)
 {
     int page = daad->getCurrentPage();
     daad->updateSelection((Inkscape::UI::Dialog::Transformation::PageType)page, selection);
 }
 
-void on_selection_modified ( Inkscape::Application *inkscape, 
-                               Inkscape::Selection *selection, 
-                               guint flags,
-                               Transformation *daad )
+void on_selection_modified( Inkscape::Application */*inkscape*/,
+                            Inkscape::Selection *selection,
+                            guint /*flags*/,
+                            Transformation *daad )
 {
     int page = daad->getCurrentPage();
     daad->updateSelection((Inkscape::UI::Dialog::Transformation::PageType)page, selection);
@@ -77,19 +77,19 @@ Transformation::Transformation(Behavior::BehaviorFactory behavior_factory)
       _page_rotate            (4, 2),
       _page_skew              (4, 2),
       _page_transform         (3, 3),
-      _scalar_move_horizontal (_("_Horizontal"), _("Horizontal displacement (relative) or position (absolute)"), UNIT_TYPE_LINEAR, 
+      _scalar_move_horizontal (_("_Horizontal"), _("Horizontal displacement (relative) or position (absolute)"), UNIT_TYPE_LINEAR,
                                "", "arrows_hor", &_units_move),
-      _scalar_move_vertical   (_("_Vertical"),  _("Vertical displacement (relative) or position (absolute)"), UNIT_TYPE_LINEAR, 
+      _scalar_move_vertical   (_("_Vertical"),  _("Vertical displacement (relative) or position (absolute)"), UNIT_TYPE_LINEAR,
                                "", "arrows_ver", &_units_move),
-      _scalar_scale_horizontal(_("_Width"), _("Horizontal size (absolute or percentage of current)"), UNIT_TYPE_DIMENSIONLESS, 
+      _scalar_scale_horizontal(_("_Width"), _("Horizontal size (absolute or percentage of current)"), UNIT_TYPE_DIMENSIONLESS,
                                "", "transform_scale_hor", &_units_scale),
-      _scalar_scale_vertical  (_("_Height"),  _("Vertical size (absolute or percentage of current)"), UNIT_TYPE_DIMENSIONLESS, 
+      _scalar_scale_vertical  (_("_Height"),  _("Vertical size (absolute or percentage of current)"), UNIT_TYPE_DIMENSIONLESS,
                                "", "transform_scale_ver", &_units_scale),
-      _scalar_rotate          (_("A_ngle"), _("Rotation angle (positive = counterclockwise)"), UNIT_TYPE_RADIAL, 
+      _scalar_rotate          (_("A_ngle"), _("Rotation angle (positive = counterclockwise)"), UNIT_TYPE_RADIAL,
                                "", "transform_rotate", &_units_rotate),
-      _scalar_skew_horizontal (_("_Horizontal"), _("Horizontal skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"), UNIT_TYPE_LINEAR, 
+      _scalar_skew_horizontal (_("_Horizontal"), _("Horizontal skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"), UNIT_TYPE_LINEAR,
                                "", "transform_scew_hor", &_units_skew),
-      _scalar_skew_vertical   (_("_Vertical"),  _("Vertical skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"),  UNIT_TYPE_LINEAR, 
+      _scalar_skew_vertical   (_("_Vertical"),  _("Vertical skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"),  UNIT_TYPE_LINEAR,
                                "", "transform_scew_ver", &_units_skew),
 
       _scalar_transform_a     ("_A", _("Transformation matrix element A")),
@@ -444,7 +444,7 @@ Transformation::updateSelection(PageType page, Inkscape::Selection *selection)
 }
 
 void
-Transformation::onSwitchPage(GtkNotebookPage *page,
+Transformation::onSwitchPage(GtkNotebookPage */*page*/,
                                    guint pagenum)
 {
     updateSelection((PageType)pagenum, sp_desktop_selection(SP_ACTIVE_DESKTOP));
@@ -598,7 +598,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
         }
     }
 
-    sp_document_done ( sp_desktop_document (selection->desktop()) , SP_VERB_DIALOG_TRANSFORM, 
+    sp_document_done ( sp_desktop_document (selection->desktop()) , SP_VERB_DIALOG_TRANSFORM,
                        _("Move"));
 }
 
@@ -612,7 +612,7 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
             NR::scale scale (0,0);
-            // the values are increments! 
+            // the values are increments!
             if (_units_scale.isAbsolute()) {
                 NR::Maybe<NR::Rect> bbox(sp_item_bbox_desktop(item));
                 if (bbox) {
@@ -654,7 +654,7 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
         }
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
+    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
                      _("Scale"));
 }
 
@@ -675,7 +675,7 @@ Transformation::applyPageRotate(Inkscape::Selection *selection)
         }
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
+    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
                      _("Rotate"));
 }
 
@@ -733,7 +733,7 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
         }
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
+    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
                      _("Skew"));
 }
 
@@ -760,7 +760,7 @@ Transformation::applyPageTransform(Inkscape::Selection *selection)
         sp_selection_apply_affine(selection, displayed); // post-multiply each object's transform
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
+    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
                      _("Edit transformation matrix"));
 }
 

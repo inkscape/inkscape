@@ -33,7 +33,7 @@ nr_pixblock_render_svp_mask_or (NRPixBlock *d, NRSVP *svp)
 }
 
 static void
-nr_svp_run_A8_OR (unsigned char *d, int len, int c0_24, int s0_24, void *data)
+nr_svp_run_A8_OR( unsigned char *d, int len, int c0_24, int s0_24, void */*data*/ )
 {
     if ((c0_24 >= 0xff0000) && (s0_24 == 0x0)) {
         /* Simple copy */

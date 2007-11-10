@@ -35,7 +35,7 @@ namespace Internal {
     \return Whether the load was sucessful
 */
 bool
-GimpGrad::load (Inkscape::Extension::Extension *module)
+GimpGrad::load (Inkscape::Extension::Extension */*module*/)
 {
     // std::cout << "Hey, I'm loading!\n" << std::endl;
     return TRUE;
@@ -47,7 +47,7 @@ GimpGrad::load (Inkscape::Extension::Extension *module)
     \return None
 */
 void
-GimpGrad::unload (Inkscape::Extension::Extension *module)
+GimpGrad::unload (Inkscape::Extension::Extension */*module*/)
 {
     // std::cout << "Nooo! I'm being unloaded!" << std::endl;
     return;
@@ -130,7 +130,7 @@ stop_svg(ColorRGBA const in_color, double const location)
     to Inkscape.
 */
 SPDocument *
-GimpGrad::open (Inkscape::Extension::Input *module, gchar const *filename)
+GimpGrad::open (Inkscape::Extension::Input */*module*/, gchar const *filename)
 {
     Inkscape::IO::dump_fopen_call(filename, "I");
     FILE *gradient = Inkscape::IO::fopen_utf8name(filename, "r");

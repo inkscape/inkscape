@@ -48,7 +48,7 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
     }
 
 
-    GdlDockItemBehavior gdl_dock_behavior = 
+    GdlDockItemBehavior gdl_dock_behavior =
         (prefs_get_int_attribute_limited ("options.dock", "cancenterdock", 1, 0, 1) == 0 ?
          GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER
          : GDL_DOCK_ITEM_BEH_NORMAL);
@@ -56,8 +56,8 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
     if (!icon_name.empty()) {
         Gtk::Widget *icon = sp_icon_get_icon(icon_name, Inkscape::ICON_SIZE_MENU);
         if (icon) {
-            // check icon type (inkscape, gtk, none) 
-            if ( SP_IS_ICON(icon->gobj()) ) { 
+            // check icon type (inkscape, gtk, none)
+            if ( SP_IS_ICON(icon->gobj()) ) {
                 SPIcon* sp_icon = SP_ICON(icon->gobj());
                 sp_icon_fetch_pixbuf(sp_icon);
                 _icon_pixbuf = Glib::wrap(sp_icon->pb, true);
@@ -67,12 +67,12 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
             }
             delete icon;
 
-            _gdl_dock_item = 
-                gdl_dock_item_new_with_pixbuf_icon(name.c_str(), long_name.c_str(), 
+            _gdl_dock_item =
+                gdl_dock_item_new_with_pixbuf_icon(name.c_str(), long_name.c_str(),
                                                    _icon_pixbuf->gobj(), gdl_dock_behavior);
         }
     } else {
-        _gdl_dock_item = 
+        _gdl_dock_item =
             gdl_dock_item_new(name.c_str(), long_name.c_str(), gdl_dock_behavior);
     }
 
@@ -118,9 +118,9 @@ DockItem::get_vbox()
 }
 
 
-void 
+void
 DockItem::get_position(int& x, int& y)
-{ 
+{
     if (getWindow()) {
         getWindow()->get_position(x, y);
     } else {
@@ -129,9 +129,9 @@ DockItem::get_position(int& x, int& y)
     }
 }
 
-void 
+void
 DockItem::get_size(int& width, int& height)
-{ 
+{
     if (_window) {
         _window->get_size(width, height);
     } else {
@@ -142,7 +142,7 @@ DockItem::get_size(int& width, int& height)
 
 
 void
-DockItem::resize(int width, int height) 
+DockItem::resize(int width, int height)
 {
     if (_window)
         _window->resize(width, height);
@@ -169,9 +169,9 @@ DockItem::set_size_request(int width, int height)
     getWidget().set_size_request(width, height);
 }
 
-void 
+void
 DockItem::size_request(Gtk::Requisition& requisition)
-{ 
+{
     getWidget().size_request(requisition);
 }
 
@@ -196,7 +196,7 @@ DockItem::isAttached() const
 bool
 DockItem::isFloating() const
 {
-    return (GTK_WIDGET(gdl_dock_object_get_toplevel(GDL_DOCK_OBJECT (_gdl_dock_item))) != 
+    return (GTK_WIDGET(gdl_dock_object_get_toplevel(GDL_DOCK_OBJECT (_gdl_dock_item))) !=
             _dock.getGdlWidget());
 }
 
@@ -230,7 +230,7 @@ DockItem::getPlacement() const
 
 
 void
-DockItem::addButton(Gtk::Button* button, int response_id)
+DockItem::addButton(Gtk::Button* button, int /*response_id*/)
 {
     // Create a button box for the response buttons if it's the first button to be added
     if (!_dock_item_action_area) {
@@ -266,7 +266,7 @@ DockItem::present()
 
     if (isIconified() || !isAttached()) {
         show();
-    }        
+    }
 
     // tabbed
     else if (getPlacement() == CENTER) {
@@ -274,7 +274,7 @@ DockItem::present()
                                        GTK_WIDGET (_gdl_dock_item));
         if (i >= 0)
             gtk_notebook_set_current_page (GTK_NOTEBOOK (_gdl_dock_item->parent), i);
-    } 
+    }
 
     // always grab focus, even if we're already present
     grab_focus();
@@ -307,15 +307,15 @@ DockItem::grab_focus()
 
 Glib::SignalProxy0<void>
 DockItem::signal_show()
-{ 
-    return Glib::SignalProxy0<void>(Glib::wrap(GTK_WIDGET(_gdl_dock_item)), 
+{
+    return Glib::SignalProxy0<void>(Glib::wrap(GTK_WIDGET(_gdl_dock_item)),
                                     &_signal_show_proxy);
 }
 
 Glib::SignalProxy0<void>
 DockItem::signal_hide()
-{ 
-    return Glib::SignalProxy0<void>(Glib::wrap(GTK_WIDGET(_gdl_dock_item)), 
+{
+    return Glib::SignalProxy0<void>(Glib::wrap(GTK_WIDGET(_gdl_dock_item)),
                                     &_signal_hide_proxy);
 }
 
@@ -329,7 +329,7 @@ DockItem::signal_delete_event()
 Glib::SignalProxy1<void, int>
 DockItem::signal_response()
 {
-    return Glib::SignalProxy1<void, int>(Glib::wrap(GTK_WIDGET(_gdl_dock_item)), 
+    return Glib::SignalProxy1<void, int>(Glib::wrap(GTK_WIDGET(_gdl_dock_item)),
                                          &_signal_response_proxy);
 }
 
@@ -421,20 +421,20 @@ DockItem::_onKeyPress(GdkEventKey *event)
 }
 
 void
-DockItem::_onStateChanged(State prev_state, State new_state)
+DockItem::_onStateChanged(State /*prev_state*/, State new_state)
 {
     _window = getWindow();
 
     if (new_state == FLOATING_STATE && _window) {
         _window->signal_hide().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onHideWindow));
-        _signal_key_press_event_connection = 
+        _signal_key_press_event_connection =
             _window->signal_key_press_event().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onKeyPress));
     }
 }
 
 
 bool
-DockItem::_onDeleteEvent(GdkEventAny *event)
+DockItem::_onDeleteEvent(GdkEventAny */*event*/)
 {
     hide();
     return false;
@@ -451,7 +451,7 @@ DockItem::getWindow()
 }
 
 const Glib::SignalProxyInfo
-DockItem::_signal_show_proxy = 
+DockItem::_signal_show_proxy =
 {
     "show",
     (GCallback) &Glib::SignalProxyNormal::slot0_void_callback,
@@ -459,7 +459,7 @@ DockItem::_signal_show_proxy =
 };
 
 const Glib::SignalProxyInfo
-DockItem::_signal_hide_proxy = 
+DockItem::_signal_hide_proxy =
 {
     "hide",
     (GCallback) &Glib::SignalProxyNormal::slot0_void_callback,
@@ -468,7 +468,7 @@ DockItem::_signal_hide_proxy =
 
 
 const Glib::SignalProxyInfo
-DockItem::_signal_delete_event_proxy = 
+DockItem::_signal_delete_event_proxy =
 {
     "delete_event",
     (GCallback) &_signal_delete_event_callback,
@@ -477,7 +477,7 @@ DockItem::_signal_delete_event_proxy =
 
 
 const Glib::SignalProxyInfo
-DockItem::_signal_response_proxy = 
+DockItem::_signal_response_proxy =
 {
     "signal_response",
     (GCallback) &_signal_response_callback,
@@ -485,7 +485,7 @@ DockItem::_signal_response_proxy =
 };
 
 const Glib::SignalProxyInfo
-DockItem::_signal_drag_begin_proxy = 
+DockItem::_signal_drag_begin_proxy =
 {
     "dock-drag-begin",
     (GCallback) &Glib::SignalProxyNormal::slot0_void_callback,
@@ -494,7 +494,7 @@ DockItem::_signal_drag_begin_proxy =
 
 
 const Glib::SignalProxyInfo
-DockItem::_signal_drag_end_proxy = 
+DockItem::_signal_drag_end_proxy =
 {
     "dock_drag_end",
     (GCallback) &_signal_drag_end_callback,
@@ -503,7 +503,7 @@ DockItem::_signal_drag_end_proxy =
 
 
 const Glib::SignalProxyInfo
-DockItem::_signal_realize_proxy = 
+DockItem::_signal_realize_proxy =
 {
     "realize",
     (GCallback) &Glib::SignalProxyNormal::slot0_void_callback,
@@ -530,7 +530,7 @@ DockItem::_signal_delete_event_callback(GtkWidget *self, GdkEventAny *event, voi
     return RType();
 }
 
-void 
+void
 DockItem::_signal_response_callback(GtkWidget *self, gint response_id, void *data)
 {
     using namespace Gtk;
@@ -546,7 +546,7 @@ DockItem::_signal_response_callback(GtkWidget *self, gint response_id, void *dat
     }
 }
 
-void 
+void
 DockItem::_signal_drag_end_callback(GtkWidget *self, gboolean cancelled, void *data)
 {
     using namespace Gtk;

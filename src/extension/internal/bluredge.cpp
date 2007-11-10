@@ -39,7 +39,7 @@ namespace Internal {
     \return Whether the load was sucessful
 */
 bool
-BlurEdge::load (Inkscape::Extension::Extension *module)
+BlurEdge::load (Inkscape::Extension::Extension */*module*/)
 {
     // std::cout << "Hey, I'm Blur Edge, I'm loading!" << std::endl;
     return TRUE;
@@ -51,7 +51,7 @@ BlurEdge::load (Inkscape::Extension::Extension *module)
     \param  document What should be edited.
 */
 void
-BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
+BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * /*docCache*/)
 {
     Inkscape::Selection * selection     = ((SPDesktop *)document)->selection;
 
@@ -117,7 +117,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
 }
 
 Gtk::Widget *
-BlurEdge::prefs_effect(Inkscape::Extension::Effect * module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
+BlurEdge::prefs_effect(Inkscape::Extension::Effect * module, Inkscape::UI::View::View * /*view*/, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * /*docCache*/)
 {
     return module->autogui(NULL, NULL, changeSignal);
 }

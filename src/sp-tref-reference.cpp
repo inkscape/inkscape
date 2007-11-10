@@ -2,7 +2,7 @@
  * The reference corresponding to href of <tref> element.
  *
  * Copyright (C) 2007 Gail Banaszkiewicz
- * 
+ *
  * This file was created based on sp-use-reference.cpp
  *
  * Released under GNU GPL, read the file 'COPYING' for more information.
@@ -30,67 +30,67 @@ bool SPTRefReference::_acceptObject(SPObject * const obj) const
 void SPTRefReference::updateObserver()
 {
     SPObject *referred = getObject();
-    
+
     if (referred) {
         if (subtreeObserved) {
             subtreeObserved->removeObserver(*this);
-            delete subtreeObserved;   
+            delete subtreeObserved;
         }
-        
+
         subtreeObserved = new Inkscape::XML::Subtree(*SP_OBJECT_REPR(referred));
         subtreeObserved->addObserver(*this);
     }
 }
 
 
-void SPTRefReference::notifyChildAdded(Inkscape::XML::Node &node, Inkscape::XML::Node &child,
-                                       Inkscape::XML::Node *prev)
+void SPTRefReference::notifyChildAdded(Inkscape::XML::Node &/*node*/, Inkscape::XML::Node &/*child*/,
+                                       Inkscape::XML::Node */*prev*/)
 {
     SPObject *owner = getOwner();
-    
-    if (owner && SP_IS_TREF(owner)) {
-        sp_tref_update_text(SP_TREF(owner));
-    }    
-}
 
-
-void SPTRefReference::notifyChildRemoved(Inkscape::XML::Node &node, Inkscape::XML::Node &child,
-                                         Inkscape::XML::Node *prev)
-{
-    SPObject *owner = getOwner();
-    
     if (owner && SP_IS_TREF(owner)) {
         sp_tref_update_text(SP_TREF(owner));
     }
 }
 
 
-void SPTRefReference::notifyChildOrderChanged(Inkscape::XML::Node &node, Inkscape::XML::Node &child,
-                                              Inkscape::XML::Node *old_prev, Inkscape::XML::Node *new_prev)
+void SPTRefReference::notifyChildRemoved(Inkscape::XML::Node &/*node*/, Inkscape::XML::Node &/*child*/,
+                                         Inkscape::XML::Node */*prev*/)
 {
     SPObject *owner = getOwner();
-    
-    if (owner && SP_IS_TREF(owner)) {
-        sp_tref_update_text(SP_TREF(owner));
-    }
-}
- 
-                                        
-void SPTRefReference::notifyContentChanged(Inkscape::XML::Node &node,
-                                           Inkscape::Util::ptr_shared<char> old_content,
-                                           Inkscape::Util::ptr_shared<char> new_content)
-{
-    SPObject *owner = getOwner();
-    
+
     if (owner && SP_IS_TREF(owner)) {
         sp_tref_update_text(SP_TREF(owner));
     }
 }
 
 
-void SPTRefReference::notifyAttributeChanged(Inkscape::XML::Node &node, GQuark name,
-                                             Inkscape::Util::ptr_shared<char> old_value,
-                                             Inkscape::Util::ptr_shared<char> new_value)
+void SPTRefReference::notifyChildOrderChanged(Inkscape::XML::Node &/*node*/, Inkscape::XML::Node &/*child*/,
+                                              Inkscape::XML::Node */*old_prev*/, Inkscape::XML::Node */*new_prev*/)
+{
+    SPObject *owner = getOwner();
+
+    if (owner && SP_IS_TREF(owner)) {
+        sp_tref_update_text(SP_TREF(owner));
+    }
+}
+
+
+void SPTRefReference::notifyContentChanged(Inkscape::XML::Node &/*node*/,
+                                           Inkscape::Util::ptr_shared<char> /*old_content*/,
+                                           Inkscape::Util::ptr_shared<char> /*new_content*/)
+{
+    SPObject *owner = getOwner();
+
+    if (owner && SP_IS_TREF(owner)) {
+        sp_tref_update_text(SP_TREF(owner));
+    }
+}
+
+
+void SPTRefReference::notifyAttributeChanged(Inkscape::XML::Node &/*node*/, GQuark /*name*/,
+                                             Inkscape::Util::ptr_shared<char> /*old_value*/,
+                                             Inkscape::Util::ptr_shared<char> /*new_value*/)
 {
     // Do nothing - tref only cares about textual content
 }

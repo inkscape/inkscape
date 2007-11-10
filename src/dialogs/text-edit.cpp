@@ -86,7 +86,7 @@ static gchar const *prefs_path = "dialogs.textandfont";
 
 
 static void
-sp_text_edit_dialog_destroy (GtkObject *object, gpointer data)
+sp_text_edit_dialog_destroy( GtkObject */*object*/, gpointer /*data*/ )
 {
     sp_signal_disconnect_by_data (INKSCAPE, dlg);
     wd.win = dlg = NULL;
@@ -96,7 +96,7 @@ sp_text_edit_dialog_destroy (GtkObject *object, gpointer data)
 
 
 static gboolean
-sp_text_edit_dialog_delete (GtkObject *object, GdkEvent *event, gpointer data)
+sp_text_edit_dialog_delete( GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/ )
 {
     gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
     gtk_window_get_size ((GtkWindow *) dlg, &w, &h);
@@ -119,7 +119,7 @@ sp_text_edit_dialog_delete (GtkObject *object, GdkEvent *event, gpointer data)
     can handle keys like Esc and Ctrl+Z itself.
  */
 gboolean
-text_view_focus_in (GtkWidget *w, GdkEventKey *event, gpointer data)
+text_view_focus_in( GtkWidget */*w*/, GdkEventKey */*event*/, gpointer data )
 {
     GObject *dlg = (GObject *) data;
     g_object_set_data (dlg, "eatkeys", GINT_TO_POINTER (TRUE));
@@ -127,7 +127,7 @@ text_view_focus_in (GtkWidget *w, GdkEventKey *event, gpointer data)
 }
 
 gboolean
-text_view_focus_out (GtkWidget *w, GdkEventKey *event, gpointer data)
+text_view_focus_out (GtkWidget */*w*/, GdkEventKey */*event*/, gpointer data)
 {
     GObject *dlg = (GObject *) data;
     g_object_set_data (dlg, "eatkeys", GINT_TO_POINTER (FALSE));
@@ -271,7 +271,7 @@ sp_text_edit_dialog (void)
                         gtk_box_pack_start (GTK_BOX (row), b, FALSE, FALSE, 0);
                         g_object_set_data (G_OBJECT (dlg), "text_anchor_end", b);
                     }
-                    
+
                     // align justify
                     {
                         // TODO - replace with Inkscape-specific call
@@ -431,7 +431,7 @@ sp_text_edit_dialog (void)
 
         {
             GtkWidget *b = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-            g_signal_connect ( G_OBJECT (b), "clicked", 
+            g_signal_connect ( G_OBJECT (b), "clicked",
                                G_CALLBACK (sp_text_edit_dialog_close), dlg );
             gtk_box_pack_end (GTK_BOX (hb), b, FALSE, FALSE, 0);
         }
@@ -439,15 +439,15 @@ sp_text_edit_dialog (void)
         {
             GtkWidget *b = gtk_button_new_from_stock (GTK_STOCK_APPLY);
             GTK_WIDGET_SET_FLAGS (b, GTK_CAN_DEFAULT | GTK_HAS_DEFAULT);
-            g_signal_connect ( G_OBJECT (b), "clicked", 
+            g_signal_connect ( G_OBJECT (b), "clicked",
                                G_CALLBACK (sp_text_edit_dialog_apply), dlg );
             gtk_box_pack_end ( GTK_BOX (hb), b, FALSE, FALSE, 0 );
             g_object_set_data (G_OBJECT (dlg), "apply", b);
         }
 
-        g_signal_connect ( G_OBJECT (INKSCAPE), "modify_selection", 
+        g_signal_connect ( G_OBJECT (INKSCAPE), "modify_selection",
                            G_CALLBACK (sp_text_edit_dialog_selection_modified), dlg);
-        g_signal_connect ( G_OBJECT (INKSCAPE), "change_selection", 
+        g_signal_connect ( G_OBJECT (INKSCAPE), "change_selection",
                            G_CALLBACK (sp_text_edit_dialog_selection_changed), dlg);
         g_signal_connect (INKSCAPE, "change_subselection", G_CALLBACK (sp_text_edit_dialog_subselection_changed), dlg);
 
@@ -463,36 +463,36 @@ sp_text_edit_dialog (void)
 
 
 static void
-sp_text_edit_dialog_selection_modified ( Inkscape::Application *inkscape, 
-                                       Inkscape::Selection *sel, 
-                                       guint flags, 
-                                       GtkWidget *dlg )
+sp_text_edit_dialog_selection_modified( Inkscape::Application */*inkscape*/,
+                                        Inkscape::Selection */*sel*/,
+                                        guint flags,
+                                        GtkWidget *dlg )
 {
     gboolean style, content;
 
-    style = 
-        ((flags & ( SP_OBJECT_CHILD_MODIFIED_FLAG | 
+    style =
+        ((flags & ( SP_OBJECT_CHILD_MODIFIED_FLAG |
                     SP_OBJECT_STYLE_MODIFIED_FLAG  )) != 0 );
-    
-    content = 
-        ((flags & ( SP_OBJECT_CHILD_MODIFIED_FLAG | 
+
+    content =
+        ((flags & ( SP_OBJECT_CHILD_MODIFIED_FLAG |
                     SP_TEXT_CONTENT_MODIFIED_FLAG  )) != 0 );
-    
+
     sp_text_edit_dialog_read_selection (dlg, style, content);
 
-} 
+}
 
 
 
 static void
-sp_text_edit_dialog_selection_changed ( Inkscape::Application *inkscape, 
-                                       Inkscape::Selection *sel, 
+sp_text_edit_dialog_selection_changed( Inkscape::Application */*inkscape*/,
+                                       Inkscape::Selection */*sel*/,
                                        GtkWidget *dlg )
 {
     sp_text_edit_dialog_read_selection (dlg, TRUE, TRUE);
 }
 
-static void sp_text_edit_dialog_subselection_changed ( Inkscape::Application *inkscape, SPDesktop *desktop, GtkWidget *dlg )
+static void sp_text_edit_dialog_subselection_changed( Inkscape::Application */*inkscape*/, SPDesktop */*desktop*/, GtkWidget *dlg )
 {
     sp_text_edit_dialog_read_selection (dlg, TRUE, FALSE);
 }
@@ -530,44 +530,44 @@ sp_get_text_dialog_style ()
 					gchar c[256];
 					font->Family(c, 256);
 					sp_repr_css_set_property (css, "font-family", c);
-					
+
 					font->Attribute( "weight", c, 256);
 					sp_repr_css_set_property (css, "font-weight", c);
-					
+
 					font->Attribute("style", c, 256);
 					sp_repr_css_set_property (css, "font-style", c);
-					
+
 					font->Attribute("stretch", c, 256);
 					sp_repr_css_set_property (css, "font-stretch", c);
-					
+
 					font->Attribute("variant", c, 256);
 					sp_repr_css_set_property (css, "font-variant", c);
-					
+
 					Inkscape::CSSOStringStream os;
 					os << sp_font_selector_get_size (SP_FONT_SELECTOR (fontsel)) << "px"; // must specify px, see inkscape bug 1221626 and 1610103
 					sp_repr_css_set_property (css, "font-size", os.str().c_str());
-					
+
 					font->Unref();
 					font=NULL;
 				}
-				
+
         /* Layout */
         GtkWidget *b = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "text_anchor_start");
-        
+
         // Align Left
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (b))) {
             sp_repr_css_set_property (css, "text-anchor", "start");
             sp_repr_css_set_property (css, "text-align", "start");
         } else {
             // Align Center
-            b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), 
+            b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg),
                                                 "text_anchor_middle");
             if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (b))) {
                 sp_repr_css_set_property (css, "text-anchor", "middle");
                 sp_repr_css_set_property (css, "text-align", "center");
             } else {
                 // Align Right
-            	b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), 
+            	b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg),
                                                     "text_anchor_end");
                 if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (b))) {
                     sp_repr_css_set_property (css, "text-anchor", "end");
@@ -599,7 +599,7 @@ sp_get_text_dialog_style ()
 
 
 static void
-sp_text_edit_dialog_set_default (GtkButton *button, GtkWidget *dlg)
+sp_text_edit_dialog_set_default( GtkButton */*button*/, GtkWidget *dlg )
 {
     GtkWidget *def = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "default");
 
@@ -617,7 +617,7 @@ sp_text_edit_dialog_set_default (GtkButton *button, GtkWidget *dlg)
 
 
 static void
-sp_text_edit_dialog_apply (GtkButton *button, GtkWidget *dlg)
+sp_text_edit_dialog_apply( GtkButton */*button*/, GtkWidget *dlg )
 {
     g_object_set_data (G_OBJECT (dlg), "blocked", GINT_TO_POINTER (TRUE));
 
@@ -657,7 +657,7 @@ sp_text_edit_dialog_apply (GtkButton *button, GtkWidget *dlg)
     }
 
     // complete the transaction
-    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT, 
+    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                       _("Set text style"));
     gtk_widget_set_sensitive (apply, FALSE);
     sp_repr_css_attr_unref (css);
@@ -665,7 +665,7 @@ sp_text_edit_dialog_apply (GtkButton *button, GtkWidget *dlg)
 }
 
 static void
-sp_text_edit_dialog_close (GtkButton *button, GtkWidget *dlg)
+sp_text_edit_dialog_close( GtkButton */*button*/, GtkWidget *dlg )
 {
     gtk_widget_destroy (GTK_WIDGET (dlg));
 }
@@ -736,9 +736,9 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
         // create temporary style
         SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
         // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
-        int result_family = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY); 
-        int result_style = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE); 
-        int result_numbers = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS); 
+        int result_family = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+        int result_style = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+        int result_numbers = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 
         // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
         if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING) {
@@ -774,7 +774,7 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
             b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), "text_anchor_end" );
         }
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (b), TRUE);
-       
+
         if (query->writing_mode.computed == SP_CSS_WRITING_MODE_LR_TB) {
             b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), INKSCAPE_STOCK_WRITING_MODE_LR );
         } else {
@@ -871,7 +871,7 @@ sp_text_edit_dialog_font_changed ( SPFontSelector *fsel,
 
 
 static void
-sp_text_edit_dialog_any_toggled (GtkToggleButton *tb, GtkWidget *dlg)
+sp_text_edit_dialog_any_toggled( GtkToggleButton */*tb*/, GtkWidget *dlg )
 {
     GtkWidget *apply, *def;
 
@@ -892,7 +892,7 @@ sp_text_edit_dialog_any_toggled (GtkToggleButton *tb, GtkWidget *dlg)
 
 
 static void
-sp_text_edit_dialog_line_spacing_changed (GtkEditable *editable, GtkWidget *dlg)
+sp_text_edit_dialog_line_spacing_changed( GtkEditable */*editable*/, GtkWidget *dlg )
 {
     GtkWidget *apply, *def;
 

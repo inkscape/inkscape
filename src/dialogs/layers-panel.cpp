@@ -155,11 +155,11 @@ protected:
     }
 
     virtual bool activate_vfunc(GdkEvent* event,
-                                Gtk::Widget& widget,
+                                Gtk::Widget& /*widget*/,
                                 const Glib::ustring& path,
-                                const Gdk::Rectangle& background_area,
-                                const Gdk::Rectangle& cell_area,
-                                Gtk::CellRendererState flags)
+                                const Gdk::Rectangle& /*background_area*/,
+                                const Gdk::Rectangle& /*cell_area*/,
+                                Gtk::CellRendererState /*flags*/)
     {
         _signal_pre_toggle.emit(event);
         _signal_toggled.emit(path);
@@ -188,7 +188,7 @@ public:
     SPObject* _target;
 };
 
-static gboolean layers_panel_activated( GtkObject *object, GdkEvent * /*event*/, gpointer data )
+static gboolean layers_panel_activated( GtkObject */*object*/, GdkEvent * /*event*/, gpointer data )
 {
     if ( data )
     {
@@ -392,7 +392,7 @@ void LayersPanel::_updateLayer( SPObject *layer ) {
     _store->foreach( sigc::bind<SPObject*>(sigc::mem_fun(*this, &LayersPanel::_checkForUpdated), layer) );
 }
 
-bool LayersPanel::_checkForUpdated(const Gtk::TreePath &path, const Gtk::TreeIter& iter, SPObject* layer)
+bool LayersPanel::_checkForUpdated(const Gtk::TreePath &/*path*/, const Gtk::TreeIter& iter, SPObject* layer)
 {
     bool stopGoing = false;
     Gtk::TreeModel::Row row = *iter;
@@ -632,7 +632,7 @@ void LayersPanel::_handleButtonEvent(GdkEventButton* evt)
     }
 }
 
-void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& path, Gtk::TreeModel::iterator const& iter )
+void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& /*path*/, Gtk::TreeModel::iterator const& iter )
 {
     Gtk::TreeModel::Row row = *iter;
     if ( row ) {
@@ -648,7 +648,7 @@ void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& path, Gtk::TreeM
     }
 }
 
-bool LayersPanel::_rowSelectFunction( Glib::RefPtr<Gtk::TreeModel> const & model, Gtk::TreeModel::Path const & path, bool currentlySelected )
+bool LayersPanel::_rowSelectFunction( Glib::RefPtr<Gtk::TreeModel> const & /*model*/, Gtk::TreeModel::Path const & /*path*/, bool currentlySelected )
 {
     bool val = true;
     if ( !currentlySelected && _toggleEvent )

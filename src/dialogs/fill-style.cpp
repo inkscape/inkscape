@@ -121,10 +121,8 @@ sp_fill_style_widget_new (void)
 
 
 static void
-sp_fill_style_widget_construct ( SPWidget *spw, SPPaintSelector *psel )
+sp_fill_style_widget_construct( SPWidget *spw, SPPaintSelector */*psel*/ )
 {
-    (void)psel;
-
 #ifdef SP_FS_VERBOSE
     g_print ( "Fill style widget constructed: inkscape %p repr %p\n",
               spw->inkscape, spw->repr );
@@ -136,13 +134,11 @@ sp_fill_style_widget_construct ( SPWidget *spw, SPPaintSelector *psel )
 } // end of sp_fill_style_widget_construct()
 
 static void
-sp_fill_style_widget_modify_selection ( SPWidget *spw,
-                                        Inkscape::Selection *selection,
-                                        guint flags,
-                                        SPPaintSelector *psel )
+sp_fill_style_widget_modify_selection( SPWidget *spw,
+                                       Inkscape::Selection */*selection*/,
+                                       guint flags,
+                                       SPPaintSelector */*psel*/ )
 {
-    (void)selection;
-    (void)psel;
     if (flags & ( SP_OBJECT_MODIFIED_FLAG |
                   SP_OBJECT_PARENT_MODIFIED_FLAG |
                   SP_OBJECT_STYLE_MODIFIED_FLAG) )
@@ -152,20 +148,18 @@ sp_fill_style_widget_modify_selection ( SPWidget *spw,
 }
 
 static void
-sp_fill_style_widget_change_subselection ( Inkscape::Application *inkscape,
-                                        SPDesktop *desktop,
-                                        SPWidget *spw )
+sp_fill_style_widget_change_subselection( Inkscape::Application */*inkscape*/,
+                                          SPDesktop */*desktop*/,
+                                          SPWidget *spw )
 {
-    (void)inkscape;
     sp_fill_style_widget_update (spw);
 }
 
 static void
-sp_fill_style_widget_change_selection ( SPWidget *spw,
-                                        Inkscape::Selection *selection,
-                                        SPPaintSelector *psel )
+sp_fill_style_widget_change_selection( SPWidget *spw,
+                                       Inkscape::Selection */*selection*/,
+                                       SPPaintSelector */*psel*/ )
 {
-    (void)selection;
     sp_fill_style_widget_update (spw);
 }
 
@@ -256,10 +250,9 @@ sp_fill_style_widget_update (SPWidget *spw)
 
 static void
 sp_fill_style_widget_paint_mode_changed ( SPPaintSelector *psel,
-                                          SPPaintSelectorMode mode,
+                                          SPPaintSelectorMode /*mode*/,
                                           SPWidget *spw )
 {
-    (void)mode;
     if (g_object_get_data (G_OBJECT (spw), "update"))
         return;
 
@@ -270,11 +263,10 @@ sp_fill_style_widget_paint_mode_changed ( SPPaintSelector *psel,
 }
 
 static void
-sp_fill_style_widget_fillrule_changed ( SPPaintSelector *psel,
+sp_fill_style_widget_fillrule_changed ( SPPaintSelector */*psel*/,
                                           SPPaintSelectorFillRule mode,
                                           SPWidget *spw )
 {
-    (void)psel;
     if (g_object_get_data (G_OBJECT (spw), "update"))
         return;
 

@@ -122,7 +122,7 @@ nr_arena_glyphs_finalize(NRObject *object)
 }
 
 static guint
-nr_arena_glyphs_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset)
+nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*state*/, guint /*reset*/)
 {
     NRArenaGlyphs *glyphs;
     raster_font *rfont;
@@ -217,7 +217,7 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, 
 }
 
 static guint
-nr_arena_glyphs_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
+nr_arena_glyphs_clip(NRArenaItem *item, NRRectL */*area*/, NRPixBlock */*pb*/)
 {
     NRArenaGlyphs *glyphs;
 
@@ -231,7 +231,7 @@ nr_arena_glyphs_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 }
 
 static NRArenaItem *
-nr_arena_glyphs_pick(NRArenaItem *item, NR::Point p, gdouble delta, unsigned int sticky)
+nr_arena_glyphs_pick(NRArenaItem *item, NR::Point p, gdouble /*delta*/, unsigned int /*sticky*/)
 {
     NRArenaGlyphs *glyphs;
 
@@ -249,7 +249,7 @@ nr_arena_glyphs_pick(NRArenaItem *item, NR::Point p, gdouble delta, unsigned int
 }
 
 void
-nr_arena_glyphs_set_path(NRArenaGlyphs *glyphs, SPCurve *curve, unsigned int lieutenant, font_instance *font, gint glyph, NRMatrix const *transform)
+nr_arena_glyphs_set_path(NRArenaGlyphs *glyphs, SPCurve */*curve*/, unsigned int /*lieutenant*/, font_instance *font, gint glyph, NRMatrix const *transform)
 {
     nr_return_if_fail(glyphs != NULL);
     nr_return_if_fail(NR_IS_ARENA_GLYPHS(glyphs));
@@ -432,7 +432,7 @@ nr_arena_glyphs_group_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint s
 
 
 static unsigned int
-nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
+nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int /*flags*/)
 {
     NRArenaItem *child;
 

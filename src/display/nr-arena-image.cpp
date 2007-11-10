@@ -109,7 +109,7 @@ nr_arena_image_finalize (NRObject *object)
 }
 
 static unsigned int
-nr_arena_image_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int state, unsigned int reset)
+nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned int /*state*/, unsigned int /*reset*/ )
 {
     NRMatrix grid2px;
 
@@ -175,7 +175,7 @@ nr_arena_image_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int 
 #define b2i (image->grid2px)
 
 static unsigned int
-nr_arena_image_render (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
+nr_arena_image_render( cairo_t *ct, NRArenaItem *item, NRRectL */*area*/, NRPixBlock *pb, unsigned int /*flags*/ )
 {
     nr_arena_image_x_sample = prefs_get_int_attribute ("options.bitmapoversample", "value", 1);
     nr_arena_image_y_sample = nr_arena_image_x_sample;
@@ -288,7 +288,7 @@ distance_to_segment (NR::Point p, NR::Point a1, NR::Point a2)
 }
 
 static NRArenaItem *
-nr_arena_image_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky)
+nr_arena_image_pick( NRArenaItem *item, NR::Point p, double delta, unsigned int /*sticky*/ )
 {
     NRArenaImage *image = NR_ARENA_IMAGE (item);
 

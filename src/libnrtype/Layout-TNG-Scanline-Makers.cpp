@@ -179,7 +179,7 @@ void Layout::ShapeScanlineMaker::setNewYCoordinate(double new_y)
     // it's not an important question because <flowSpan> doesn't have a y attribute
 }
 
-bool Layout::ShapeScanlineMaker::canExtendCurrentScanline(Layout::LineHeight const &line_height)
+bool Layout::ShapeScanlineMaker::canExtendCurrentScanline(Layout::LineHeight const &/*line_height*/)
 {
     //we actually could return true if only the leading changed, but that's too much effort for something that rarely happens
     return false;

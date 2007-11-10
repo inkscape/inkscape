@@ -980,7 +980,7 @@ sp_te_adjust_rotation_screen(SPItem *text, Inkscape::Text::Layout::iterator cons
 }
 
 void
-sp_te_adjust_rotation(SPItem *text, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPDesktop *desktop, gdouble degrees)
+sp_te_adjust_rotation(SPItem *text, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPDesktop */*desktop*/, gdouble degrees)
 {
     unsigned char_index;
     TextTagAttributes *attributes = text_tag_attributes_at_position(text, std::min(start, end), &char_index);
@@ -1082,7 +1082,7 @@ sp_te_adjust_tspan_letterspacing_screen(SPItem *text, Inkscape::Text::Layout::it
 }
 
 void
-sp_te_adjust_linespacing_screen (SPItem *text, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPDesktop *desktop, gdouble by)
+sp_te_adjust_linespacing_screen (SPItem *text, Inkscape::Text::Layout::iterator const &/*start*/, Inkscape::Text::Layout::iterator const &/*end*/, SPDesktop *desktop, gdouble by)
 {
     // TODO: use start and end iterators to delineate the area to be affected
     g_return_if_fail (text != NULL);
@@ -1128,27 +1128,27 @@ sp_te_adjust_linespacing_screen (SPItem *text, Inkscape::Text::Layout::iterator 
             else style->line_height.value *= (average_line_height + zby) / average_line_height;
             break;
             // absolute-type units
-	    case SP_CSS_UNIT_PX:
+        case SP_CSS_UNIT_PX:
             style->line_height.computed += zby;
             style->line_height.value = style->line_height.computed;
             break;
-	    case SP_CSS_UNIT_PT:
+        case SP_CSS_UNIT_PT:
             style->line_height.computed += zby * PT_PER_PX;
             style->line_height.value = style->line_height.computed;
             break;
-	    case SP_CSS_UNIT_PC:
+        case SP_CSS_UNIT_PC:
             style->line_height.computed += zby * (PT_PER_PX / 12);
             style->line_height.value = style->line_height.computed;
             break;
-	    case SP_CSS_UNIT_MM:
+        case SP_CSS_UNIT_MM:
             style->line_height.computed += zby * MM_PER_PX;
             style->line_height.value = style->line_height.computed;
             break;
-	    case SP_CSS_UNIT_CM:
+        case SP_CSS_UNIT_CM:
             style->line_height.computed += zby * CM_PER_PX;
             style->line_height.value = style->line_height.computed;
             break;
-	    case SP_CSS_UNIT_IN:
+        case SP_CSS_UNIT_IN:
             style->line_height.computed += zby * IN_PER_PX;
             style->line_height.value = style->line_height.computed;
             break;

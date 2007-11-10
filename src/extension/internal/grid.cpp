@@ -1,6 +1,6 @@
 /**
     \file grid.cpp
- 
+
     A plug-in to add a grid creation effect into Inkscape.
 */
 /*
@@ -38,7 +38,7 @@ namespace Internal {
     \return Whether the load was sucessful
 */
 bool
-Grid::load (Inkscape::Extension::Extension *module)
+Grid::load (Inkscape::Extension::Extension */*module*/)
 {
     // std::cout << "Hey, I'm Grid, I'm loading!" << std::endl;
     return TRUE;
@@ -74,7 +74,7 @@ Glib::ustring build_lines(int axis, NR::Rect bounding_area,
     \param  document What should be edited.
 */
 void
-Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
+Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * /*docCache*/)
 {
     Inkscape::Selection * selection     = ((SPDesktop *)document)->selection;
 
@@ -140,7 +140,7 @@ public:
                 describing the parameter. */
     PrefAdjustment(Inkscape::Extension::Extension * ext, char * pref) :
             Gtk::Adjustment(0.0, 0.0, 10.0, 0.1), _ext(ext), _pref(pref) {
-        this->set_value(_ext->get_param_float(_pref)); 
+        this->set_value(_ext->get_param_float(_pref));
         this->signal_value_changed().connect(sigc::mem_fun(this, &PrefAdjustment::val_changed));
         return;
     };
@@ -169,14 +169,14 @@ PrefAdjustment::val_changed (void)
     Uses AutoGUI for creating the GUI.
 */
 Gtk::Widget *
-Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
+Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * /*docCache*/)
 {
     SPDocument * current_document = view->doc();
 
     using Inkscape::Util::GSListConstIterator;
     GSListConstIterator<SPItem *> selected = sp_desktop_selection((SPDesktop *)view)->itemList();
     Inkscape::XML::Node * first_select = NULL;
-    if (selected != NULL) 
+    if (selected != NULL)
         first_select = SP_OBJECT_REPR(*selected);
 
     return module->autogui(current_document, first_select, changeSignal);

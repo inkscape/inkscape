@@ -67,7 +67,7 @@ bool  font_style_equal::operator()(const font_style &a,const font_style &b) {
 	if ( a.stroke_width > 0.01 && b.stroke_width <= 0.01 ) return false;
 	if ( a.stroke_width <= 0.01 && b.stroke_width > 0.01 ) return false;
 	if ( a.stroke_width <= 0.01 && b.stroke_width <= 0.01 ) return true;
-	
+
 	if ( a.stroke_cap != b.stroke_cap ) return false;
 	if ( a.stroke_join != b.stroke_join ) return false;
     if ( (int)(a.stroke_miter_limit*100) != (int)(b.stroke_miter_limit*100) ) return false;
@@ -125,7 +125,7 @@ static int ft2_line_to(FREETYPE_VECTOR *to, void *i_user)
 static int ft2_conic_to(FREETYPE_VECTOR *control, FREETYPE_VECTOR *to, void *i_user)
 {
 	ft2_to_liv* user=(ft2_to_liv*)i_user;
-	NR::Point   p(user->scale*to->x,user->scale*to->y),c(user->scale*control->x,user->scale*control->y);  
+	NR::Point   p(user->scale*to->x,user->scale*to->y),c(user->scale*control->x,user->scale*control->y);
 	//	printf("b c=%f %f  t=%f %f\n",c[0],c[1],p[0],p[1]);
 	user->theP->BezierTo(p);
 	user->theP->IntermBezierTo(c);
@@ -139,9 +139,9 @@ static int ft2_cubic_to(FREETYPE_VECTOR *control1, FREETYPE_VECTOR *control2, FR
 	ft2_to_liv* user=(ft2_to_liv*)i_user;
 	NR::Point   p(user->scale*to->x,user->scale*to->y),
 	c1(user->scale*control1->x,user->scale*control1->y),
-	c2(user->scale*control2->x,user->scale*control2->y);  
+	c2(user->scale*control2->x,user->scale*control2->y);
 	//	printf("c c1=%f %f  c2=%f %f   t=%f %f\n",c1[0],c1[1],c2[0],c2[1],p[0],p[1]);
-	user->theP->CubicTo(p,3*(c1-user->last),3*(p-c2)); 
+	user->theP->CubicTo(p,3*(c1-user->last),3*(p-c2));
 	user->last=p;
 	return 0;
 }
@@ -229,7 +229,7 @@ unsigned int font_instance::Attribute(const gchar *key, gchar *str, unsigned int
 	}
 	char*   res=NULL;
 	bool    free_res=false;
-	
+
 	if ( strcmp(key,"name") == 0 ) {
 		PangoFontDescription* td=pango_font_description_copy(descr);
 		pango_font_description_unset_fields (td, PANGO_FONT_MASK_SIZE);
@@ -247,11 +247,11 @@ unsigned int font_instance::Attribute(const gchar *key, gchar *str, unsigned int
              bool o = (style == PANGO_STYLE_OBLIQUE);
              PangoWeight weight=pango_font_description_get_weight(descr);
              bool b = (weight >= PANGO_WEIGHT_BOLD);
-   
-             res = g_strdup_printf ("%s%s%s%s", 
-                                    pango_font_description_get_family(descr), 
-                                    (b || i || o) ? "-" : "", 
-                                    (b) ? "Bold" : "", 
+
+             res = g_strdup_printf ("%s%s%s%s",
+                                    pango_font_description_get_family(descr),
+                                    (b || i || o) ? "-" : "",
+                                    (b) ? "Bold" : "",
                                     (i) ? "Italic" : ((o) ? "Oblique" : "")  );
              free_res = true;
          }
@@ -316,7 +316,7 @@ unsigned int font_instance::Attribute(const gchar *key, gchar *str, unsigned int
 		if ( size > 0 ) str[0]=0;
 		return 0;
 	}
-	
+
 	if (res) {
 		unsigned int len=strlen(res);
 		unsigned int rlen=(size-1<len)?size-1:len;
@@ -602,7 +602,7 @@ bool font_instance::FontSlope(double &run, double &rise)
     rise=otm.otmsCharSlopeRise;
 #else
 	if ( !FT_IS_SCALABLE(theFace) ) return false; // bitmap font
-	
+
     TT_HoriHeader *hhea = (TT_HoriHeader*)FT_Get_Sfnt_Table(theFace, ft_sfnt_hhea);
     if (hhea == NULL) return false;
     run = hhea->caret_Slope_Run;
@@ -694,10 +694,10 @@ double font_instance::Advance(int glyph_id,bool vertical)
 		}
 	}
 	return 0;
-}	
+}
 
 
-raster_font* font_instance::RasterFont(const NR::Matrix &trs,double stroke_width,bool vertical,JoinType stroke_join,ButtType stroke_cap,float miter_limit)
+raster_font* font_instance::RasterFont(const NR::Matrix &trs, double stroke_width, bool vertical, JoinType stroke_join, ButtType stroke_cap, float /*miter_limit*/)
 {
 	font_style  nStyle;
 	nStyle.transform=trs;

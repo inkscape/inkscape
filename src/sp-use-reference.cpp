@@ -143,6 +143,7 @@ sp_usepath_move_compensate(NR::Matrix const *mp, SPItem *original, SPUsePath *se
     }
     SPItem *item = SP_ITEM(self->owner);
 
+// TODO kill naughty naughty #if 0
 #if 0
     NR::Matrix m(*mp);
     if (!(m.is_translation())) {
@@ -166,6 +167,9 @@ sp_usepath_move_compensate(NR::Matrix const *mp, SPItem *original, SPUsePath *se
     // Commit the compensation.
     item->transform *= clone_move;
     sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform, &advertized_move);
+#else
+    (void)mp;
+    (void)original;
 #endif
 
     self->sourceDirty = true;
@@ -189,7 +193,7 @@ sp_usepath_delete_self(SPObject */*deleted*/, SPUsePath *offset)
 }
 
 static void
-sp_usepath_source_modified(SPObject *iSource, guint flags, SPUsePath *offset)
+sp_usepath_source_modified(SPObject */*iSource*/, guint /*flags*/, SPUsePath *offset)
 {
     offset->sourceDirty = true;
     offset->owner->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);

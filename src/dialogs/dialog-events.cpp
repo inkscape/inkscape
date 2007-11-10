@@ -4,7 +4,7 @@
  * \brief  Event handler for dialog windows
  *
  * Authors:
- *   bulia byak <bulia@dr.com>   
+ *   bulia byak <bulia@dr.com>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
  * Copyright (C) 2003-2007 Authors
@@ -65,7 +65,7 @@ sp_dialog_defocus (GtkWindow *win)
  *
  */
 void
-sp_dialog_defocus_callback (GtkWindow *win, gpointer data)
+sp_dialog_defocus_callback (GtkWindow */*win*/, gpointer data)
 {
     sp_dialog_defocus ((GtkWindow *)
         gtk_widget_get_toplevel ((GtkWidget *) data));
@@ -152,22 +152,22 @@ sp_transientize (GtkWidget *dialog)
     // the taskbar in Win32.
     if (prefs_get_int_attribute ( "options.dialogsskiptaskbar", "value", 0)) {
         gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), TRUE);
-    }           
-#endif    
+    }
+#endif
 
     gint transient_policy = prefs_get_int_attribute_limited ( "options.transientpolicy", "value", 1, 0, 2 );
 
 #ifdef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
     if (prefs_get_int_attribute ( "options.dialogsontopwin32", "value", 0))
         transient_policy = 2;
-    else    
+    else
         transient_policy = 0;
-#endif        
+#endif
 
     if (transient_policy) {
-   
+
     // if there's an active document window, attach dialog to it as a transient:
-    
+
         if ( SP_ACTIVE_DESKTOP )
         {
             SP_ACTIVE_DESKTOP->setWindowTransient (dialog, transient_policy);
@@ -181,7 +181,7 @@ void on_transientize (SPDesktop *desktop, win_data *wd )
 }
 
 void
-sp_transientize_callback ( Inkscape::Application * /*inkscape*/, 
+sp_transientize_callback ( Inkscape::Application * /*inkscape*/,
                            SPDesktop *desktop, win_data *wd )
 {
     gint transient_policy = prefs_get_int_attribute_limited ( "options.transientpolicy", "value", 1, 0, 2);
@@ -189,31 +189,31 @@ sp_transientize_callback ( Inkscape::Application * /*inkscape*/,
 #ifdef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
     if (prefs_get_int_attribute ( "options.dialogsontopwin32", "value", 0))
         transient_policy = 2;
-    else    
+    else
         return;
-#endif        
+#endif
 
-    if (!transient_policy) 
+    if (!transient_policy)
         return;
 
-    if (wd->stop) { 
-        /* 
-         * if retransientizing of this dialog is still forbidden after 
-         * previous call warning turned off because it was confusingly fired 
+    if (wd->stop) {
+        /*
+         * if retransientizing of this dialog is still forbidden after
+         * previous call warning turned off because it was confusingly fired
          * when loading many files from command line
          */
-         // g_warning("Retranzientize aborted! You're switching windows too fast!"); 
+         // g_warning("Retranzientize aborted! You're switching windows too fast!");
         return;
     }
-    
+
     if (wd->win)
     {
         wd->stop = 1; // disallow other attempts to retranzientize this dialog
         desktop->setWindowTransient (wd->win, transient_policy);
     }
-    
+
     // we're done, allow next retransientizing not sooner than after 6 msec
-    gtk_timeout_add (6, (GtkFunction) sp_allow_again, (gpointer) wd);  
+    gtk_timeout_add (6, (GtkFunction) sp_allow_again, (gpointer) wd);
 }
 
 void on_dialog_hide (GtkWidget *w)
@@ -229,7 +229,7 @@ void on_dialog_unhide (GtkWidget *w)
 }
 
 gboolean
-sp_dialog_hide (GtkObject *object, gpointer data)
+sp_dialog_hide (GtkObject */*object*/, gpointer data)
 {
     GtkWidget *dlg = (GtkWidget *) data;
 
@@ -242,7 +242,7 @@ sp_dialog_hide (GtkObject *object, gpointer data)
 
 
 gboolean
-sp_dialog_unhide (GtkObject *object, gpointer data)
+sp_dialog_unhide (GtkObject */*object*/, gpointer data)
 {
     GtkWidget *dlg = (GtkWidget *) data;
 

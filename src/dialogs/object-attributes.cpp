@@ -59,7 +59,7 @@ static const SPAttrDesc image_desc[] = {
 
 
 static void
-object_released (SPObject *object, GtkWidget *widget)
+object_released( SPObject */*object*/, GtkWidget *widget )
 {
     gtk_widget_destroy (widget);
 }
@@ -67,7 +67,7 @@ object_released (SPObject *object, GtkWidget *widget)
 
 
 static void
-window_destroyed (GtkObject *window, GtkObject *object)
+window_destroyed( GtkObject *window, GtkObject */*object*/ )
 {
     sigc::connection *release_connection = (sigc::connection *)g_object_get_data(G_OBJECT(window), "release_connection");
     release_connection->disconnect();

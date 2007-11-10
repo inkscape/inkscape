@@ -115,7 +115,7 @@ void CSwitch::onOrderChanged (Inkscape::XML::Node *, Inkscape::XML::Node *, Inks
     _reevaluate();
 }
 
-void CSwitch::_reevaluate(bool add_to_arena) {
+void CSwitch::_reevaluate(bool /*add_to_arena*/) {
     SPObject *evaluated_child = _evaluateFirst();
     if (!evaluated_child || _cached_item == evaluated_child) {
         return;

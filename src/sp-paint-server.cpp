@@ -145,7 +145,7 @@ SPPainter *sp_painter_free(SPPainter *painter)
     return NULL;
 }
 
-static void sp_painter_stale_fill(SPPainter *painter, NRPixBlock *pb)
+static void sp_painter_stale_fill(SPPainter */*painter*/, NRPixBlock *pb)
 {
     nr_pixblock_render_gray_noise(pb, NULL);
 }

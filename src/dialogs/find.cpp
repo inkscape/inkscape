@@ -91,7 +91,7 @@ static void sp_find_dialog_destroy(GtkObject *object, gpointer)
 
 
 
-static gboolean sp_find_dialog_delete(GtkObject *, GdkEvent *, gpointer data)
+static gboolean sp_find_dialog_delete(GtkObject *, GdkEvent *, gpointer /*data*/)
 {
     gtk_window_get_position (GTK_WINDOW (dlg), &x, &y);
     gtk_window_get_size (GTK_WINDOW (dlg), &w, &h);

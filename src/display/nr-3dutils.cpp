@@ -1,6 +1,6 @@
 /*
  * 3D utils.
- * 
+ *
  * Authors:
  *   Jean-Rene Reinhard <jr@komite.net>
  *
@@ -24,7 +24,7 @@ namespace NR {
 
 #define START(v) ((v)==BEGIN? 1 : 0)
 #define FINISH(v) ((v)==END? 1 : 2)
-    
+
 signed char K_X[3][3][3][3] = {
     //K_X[TOP]
     {
@@ -34,12 +34,12 @@ signed char K_X[3][3][3][3] = {
             { 0, -2,  2},
             { 0, -1,  1}
         },
-        { 
+        {
             { 0,  0,  0},
             {-2,  0,  2},
             {-1,  0,  1}
-        },   
-        { 
+        },
+        {
             { 0,  0,  0},
             {-2,  2,  0},
             {-1,  1,  0}
@@ -53,12 +53,12 @@ signed char K_X[3][3][3][3] = {
             { 0, -2,  2},
             { 0, -1,  1}
         },
-        { 
+        {
             {-1,  0,  1},
             {-2,  0,  2},
             {-1,  0,  1}
-        },   
-        { 
+        },
+        {
             {-1,  1,  0},
             {-2,  2,  0},
             {-1,  1,  0}
@@ -72,12 +72,12 @@ signed char K_X[3][3][3][3] = {
             { 0, -2,  2},
             { 0,  0,  0}
         },
-        { 
+        {
             {-1,  0,  1},
             {-2,  0,  2},
             { 0,  0,  0}
-        },   
-        { 
+        },
+        {
             {-1,  1,  0},
             {-2,  2,  0},
             { 0,  0,  0}
@@ -104,7 +104,7 @@ int get_carac(int i, int len, int delta) {
     else
         return MIDDLE;
 }
-    
+
 //assumes in is RGBA
 //should be made more resistant
 void compute_surface_normal(Fvector &N, gdouble ss, NRPixBlock *in, int i, int j, int dx, int dy) {
@@ -132,7 +132,7 @@ void compute_surface_normal(Fvector &N, gdouble ss, NRPixBlock *in, int i, int j
     }
     N[X_3D] = -1 * ss * FACTOR_X[y_carac][x_carac] * accu_x / dx;
     N[Y_3D] = -1 * ss * FACTOR_X[x_carac][y_carac] * accu_y / dy;
-    N[Z_3D] = 1; 
+    N[Z_3D] = 1;
     normalize_vector(N);
     //std::cout << "(" << N[X_3D] << ", " << N[Y_3D] << ", " << N[Z_3D] << ")" << std::endl;
 }
@@ -146,17 +146,16 @@ void convert_coord(gdouble &x, gdouble &y, gdouble &z, Matrix const &trans) {
 }
 
 gdouble norm(const Fvector &v) {
-    return sqrt(v[X_3D]*v[X_3D] + v[Y_3D]*v[Y_3D] + v[Z_3D]*v[Z_3D]); 
+    return sqrt(v[X_3D]*v[X_3D] + v[Y_3D]*v[Y_3D] + v[Z_3D]*v[Z_3D]);
 }
 
 void normalize_vector(Fvector &v) {
-    int i, j;
     gdouble nv = norm(v);
     //TODO test nv == 0
-    for (j = 0; j < 3; j++) {
+    for (int j = 0; j < 3; j++) {
         v[j] /= nv;
     }
-} 
+}
 
 gdouble scalar_product(const Fvector &a, const Fvector &b) {
     return  a[X_3D] * b[X_3D] +

@@ -599,7 +599,7 @@ void TileDialog::updateSelection()
 ## Experimental
 ##########################*/
 
-static void updateSelectionCallback(Inkscape::Application *inkscape, Inkscape::Selection *selection, TileDialog *dlg)
+static void updateSelectionCallback(Inkscape::Application */*inkscape*/, Inkscape::Selection */*selection*/, TileDialog *dlg)
 {
     TileDialog *tledlg = (TileDialog *) dlg;
     tledlg->updateSelection();
