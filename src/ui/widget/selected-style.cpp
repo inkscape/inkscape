@@ -1262,19 +1262,19 @@ RotateableSwatch::do_motion(double by, guint modifier) {
         sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey,
                                 SP_VERB_DIALOG_FILL_STROKE, (_("Adjust saturation")));
         double ch = hsl[1];
-        parent->getDesktop()->event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("Adusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); without modifiers to adjust hue, with <b>Ctrl</b> to adjust lightness"), ch - diff, ch, diff);
+        parent->getDesktop()->event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("Adjusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Ctrl</b> to adjust lightness, without modifiers to adjust hue"), ch - diff, ch, diff);
 
     } else if (modifier == 1) { // lightness
         sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey,
                                 SP_VERB_DIALOG_FILL_STROKE, (_("Adjust lightness")));
         double ch = hsl[2];
-        parent->getDesktop()->event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("Adusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); without modifiers to adjust hue, with <b>Shift</b> to adjust saturation"), ch - diff, ch, diff);
+        parent->getDesktop()->event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("Adjusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</b> to adjust saturation, without modifiers to adjust hue"), ch - diff, ch, diff);
 
     } else { // hue
         sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey,
                                 SP_VERB_DIALOG_FILL_STROKE, (_("Adjust hue")));
         double ch = hsl[0];
-        parent->getDesktop()->event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("Adusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"), ch - diff, ch, diff);
+        parent->getDesktop()->event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("Adjusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"), ch - diff, ch, diff);
     }
 }
 
