@@ -3331,7 +3331,7 @@ msgstr "grezzo"
 #. Text options
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:105
 msgid "Text handling:"
-msgstr "Gestione test:"
+msgstr "Gestione testo:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:107
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:108
@@ -6039,7 +6039,7 @@ msgstr "Ellisse"
 
 #: ../src/selection-describer.cpp:48
 msgid "Flowed text"
-msgstr "Il testo dinamico è stato creat"
+msgstr "Testo dinamico "
 
 #: ../src/selection-describer.cpp:54
 msgid "Line"
