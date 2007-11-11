@@ -34,9 +34,9 @@ enum {
     SS_STROKE
 };
 
-static void style_swatch_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
-                                       gchar const *old_value, gchar const *new_value,
-                                       bool is_interactive, gpointer data)
+static void style_swatch_attr_changed( Inkscape::XML::Node *repr, gchar const *name,
+                                       gchar const */*old_value*/, gchar const */*new_value*/,
+                                       bool /*is_interactive*/, gpointer data)
 {
     Inkscape::UI::Widget::StyleSwatch *ss = (Inkscape::UI::Widget::StyleSwatch *) data;
 
@@ -57,12 +57,12 @@ static Inkscape::XML::NodeEventVector style_swatch_repr_events =
 };
 
 
-static void style_swatch_tool_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
-                                       gchar const *old_value, gchar const *new_value,
-                                       bool is_interactive, gpointer data)
+static void style_swatch_tool_attr_changed( Inkscape::XML::Node */*repr*/, gchar const *name,
+                                            gchar const */*old_value*/, gchar const *new_value,
+                                            bool /*is_interactive*/, gpointer data)
 {
     Inkscape::UI::Widget::StyleSwatch *ss = (Inkscape::UI::Widget::StyleSwatch *) data;
- 
+
     if (!strcmp (name, "usecurrent")) { // FIXME: watching only for the style attr, no CSS attrs
         if (!strcmp (new_value, "1")) {
             ss->setWatched (inkscape_get_repr(INKSCAPE, "desktop"), inkscape_get_repr(INKSCAPE, ss->_tool_path));
@@ -71,7 +71,7 @@ static void style_swatch_tool_attr_changed(Inkscape::XML::Node *repr, gchar cons
         }
         // UGLY HACK: we have to reconnect to the watched tool repr again, retrieving it from the stored
         // tool_path, because the actual repr keeps shifting with each change, no idea why
-        ss->setWatchedTool(ss->_tool_path, false); 
+        ss->setWatchedTool(ss->_tool_path, false);
     }
 }
 
@@ -89,7 +89,7 @@ namespace UI {
 namespace Widget {
 
 StyleSwatch::StyleSwatch(SPCSSAttr *css, gchar const *main_tip)
-    : 
+    :
       _tool_path(NULL),
       _css (NULL),
 
@@ -159,8 +159,8 @@ void StyleSwatch::setDesktop(SPDesktop *desktop) {
     _desktop = desktop;
 }
 
-bool 
-StyleSwatch::on_click(GdkEventButton *event)
+bool
+StyleSwatch::on_click(GdkEventButton */*event*/)
 {
     if (this->_desktop && this->_verb_t != SP_VERB_NONE) {
         Inkscape::Verb *verb = Inkscape::Verb::get(this->_verb_t);
@@ -173,7 +173,7 @@ StyleSwatch::on_click(GdkEventButton *event)
 
 StyleSwatch::~StyleSwatch()
 {
-    if (_css) 
+    if (_css)
         sp_repr_css_attr_unref (_css);
 
     for (int i = SS_FILL; i <= SS_STROKE; i++) {
@@ -252,7 +252,7 @@ StyleSwatch::setWatchedTool(const char *path, bool synthesize)
 void
 StyleSwatch::setStyle(SPCSSAttr *css)
 {
-    if (_css) 
+    if (_css)
         sp_repr_css_attr_unref (_css);
 
     if (!css)
@@ -347,8 +347,8 @@ StyleSwatch::setStyle(SPStyle *query)
             g_free (str);
         }
         {
-            gchar *str = g_strdup_printf(_("Stroke width: %.5g%s"), 
-                                         w, 
+            gchar *str = g_strdup_printf(_("Stroke width: %.5g%s"),
+                                         w,
                                          _sw_unit? sp_unit_get_abbreviation(_sw_unit) : "px");
             _tooltips.set_tip(_stroke_width_place, str);
             g_free (str);
@@ -364,7 +364,7 @@ StyleSwatch::setStyle(SPStyle *query)
             gchar *str;
             if (op == 0)
                 str = g_strdup_printf(_("O:%.3g"), op);
-            else 
+            else
                 str = g_strdup_printf(_("O:.%d"), (int) (op*10));
             _opacity_value.set_markup (str);
             g_free (str);
@@ -386,7 +386,7 @@ StyleSwatch::setStyle(SPStyle *query)
 } // namespace UI
 } // namespace Inkscape
 
-/* 
+/*
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"

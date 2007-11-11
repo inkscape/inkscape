@@ -65,7 +65,7 @@ struct SPNamedView : public SPObjectGroup {
     gdouble objecttolerance;
 
     GQuark default_layer_id;
-    
+
     double connector_spacing;
 
     guint32 guidecolor;

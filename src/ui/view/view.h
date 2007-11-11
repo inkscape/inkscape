@@ -30,10 +30,10 @@ struct StopOnTrue {
   typedef bool result_type;
 
   template<typename T_iterator>
-  result_type operator()(T_iterator first, T_iterator last) const{	
-	for (; first != last; ++first)
-		if (*first) return true;
-	return false;      
+  result_type operator()(T_iterator first, T_iterator last) const{
+      for (; first != last; ++first)
+          if (*first) return true;
+      return false;
   }
 };
 
@@ -45,10 +45,10 @@ struct StopOnNonZero {
   typedef int result_type;
 
   template<typename T_iterator>
-  result_type operator()(T_iterator first, T_iterator last) const{	
-	for (; first != last; ++first)
-		if (*first) return *first;
-	return 0;      
+  result_type operator()(T_iterator first, T_iterator last) const{
+      for (; first != last; ++first)
+          if (*first) return *first;
+      return 0;
   }
 };
 
@@ -83,22 +83,22 @@ public:
     void close() { _close(); }
 
     /// Returns a pointer to the view's document.
-    SPDocument *doc() const 
+    SPDocument *doc() const
       { return _doc; }
     /// Returns a pointer to the view's message stack.
-    Inkscape::MessageStack *messageStack() const 
+    Inkscape::MessageStack *messageStack() const
       { return _message_stack; }
     /// Returns a pointer to the view's tipsMessageContext.
-    Inkscape::MessageContext *tipsMessageContext() const 
+    Inkscape::MessageContext *tipsMessageContext() const
       { return _tips_message_context; }
 
     void setPosition(gdouble x, gdouble y);
-    void setPosition(NR::Point const &p); 
+    void setPosition(NR::Point const &p);
     void emitResized(gdouble width, gdouble height);
-    void requestRedraw(); 
+    void requestRedraw();
 
     // view subclasses must give implementations of these methods
-    
+
     virtual bool shutdown() = 0;
     virtual void mouseover() = 0;
     virtual void mouseout() = 0;

@@ -41,7 +41,7 @@ namespace Inkscape {
 class Editor : public AppPrototype
 {
 public:
-    static Editor *create (int argc, char **argv); 
+    static Editor *create (int argc, char **argv);
     virtual ~Editor();
 
     void*           getWindow();
@@ -54,7 +54,7 @@ public:
     void            exit();
 
     bool        lastViewOfDocument(SPDocument* doc, SPDesktop* view) const;
-    
+
     bool        addView(SPDesktop* view);
     bool        deleteView(SPDesktop* view);
 
@@ -67,7 +67,7 @@ public:
     static void activateDesktop (SPDesktop* dt);
     static void reactivateDesktop (SPDesktop* dt);
     static bool isDuplicatedView (SPDesktop* dt);
-    
+
     static SPDocument* getActiveDocument();
     static void addDocument (SPDocument* doc);
     static void removeDocument (SPDocument* doc);
@@ -92,7 +92,7 @@ public:
     static sigc::connection connectDialogsUnhidden (const sigc::slot<void> &slot);
     static sigc::connection connectExternalChange (const sigc::slot<void> &slot);
 
-   
+
 protected:
     Editor(Editor const &);
     Editor& operator=(Editor const &);
@@ -117,7 +117,7 @@ protected:
     sigc::signal <void> _external_change_signal;
 
 private:
-    Editor(int argc, char **argv); 
+    Editor(int argc, char **argv);
     bool init();
 };
 

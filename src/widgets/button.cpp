@@ -172,7 +172,7 @@ sp_button_process_event (SPButton *button, GdkEvent *event)
 }
 
 static void
-sp_button_perform_action (SPButton *button, gpointer data)
+sp_button_perform_action (SPButton *button, gpointer /*data*/)
 {
 	if (button->action) {
 		sp_action_perform (button->action, NULL);
@@ -254,7 +254,7 @@ sp_button_set_action (SPButton *button, SPAction *action)
 }
 
 static void
-sp_button_action_set_active (SPAction *action, unsigned int active, void *data)
+sp_button_action_set_active (SPAction */*action*/, unsigned int active, void *data)
 {
 	SPButton *button;
 	button = (SPButton *) data;
@@ -269,13 +269,13 @@ sp_button_action_set_active (SPAction *action, unsigned int active, void *data)
 }
 
 static void
-sp_button_action_set_sensitive (SPAction *action, unsigned int sensitive, void *data)
+sp_button_action_set_sensitive (SPAction */*action*/, unsigned int sensitive, void *data)
 {
 	gtk_widget_set_sensitive (GTK_WIDGET (data), sensitive);
 }
 
 static void
-sp_button_action_set_shortcut (SPAction *action, unsigned int shortcut, void *data)
+sp_button_action_set_shortcut (SPAction *action, unsigned int /*shortcut*/, void *data)
 {
 	SPButton *button=SP_BUTTON (data);
 	if (button->tooltips) {
