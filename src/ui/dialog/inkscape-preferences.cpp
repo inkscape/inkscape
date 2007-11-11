@@ -674,6 +674,7 @@ static void gamutColorChanged( Gtk::ColorButton* btn ) {
 void InkscapePreferences::initPageCMS()
 {
     int const numIntents = 4;
+    /* TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm */
     Glib::ustring intentLabels[numIntents] = {_("Perceptual"), _("Relative Colorimetric"), _("Saturation"), _("Absolute Colorimetric")};
     int intentValues[numIntents] = {0, 1, 2, 3};
 
