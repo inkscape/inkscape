@@ -30,9 +30,9 @@ public:
     LPEPathAlongPath(LivePathEffectObject *lpeobject);
     virtual ~LPEPathAlongPath();
 
-    Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
+    virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 
-    void resetDefaults(SPItem * item);
+    virtual void resetDefaults(SPItem * item);
 
 private:
     PathParam  bend_path;

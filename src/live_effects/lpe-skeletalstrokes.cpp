@@ -88,7 +88,7 @@ LPESkeletalStrokes::~LPESkeletalStrokes()
 
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-LPESkeletalStrokes::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+LPESkeletalStrokes::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 {
     using namespace Geom;
 

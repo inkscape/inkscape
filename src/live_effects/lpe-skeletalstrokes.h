@@ -30,7 +30,7 @@ public:
     LPESkeletalStrokes(LivePathEffectObject *lpeobject);
     virtual ~LPESkeletalStrokes();
 
-    Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
+    virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 
 private:
     PathParam  pattern;

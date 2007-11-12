@@ -67,7 +67,7 @@ LPECurveStitch::~LPECurveStitch()
 }
 
 std::vector<Geom::Path>
-LPECurveStitch::doEffect (std::vector<Geom::Path> & path_in)
+LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
 {
     if (path_in.size() >= 2) {
         startpoint_variation.resetRandomizer();

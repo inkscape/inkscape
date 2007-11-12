@@ -122,7 +122,7 @@ Effect::getName()
 void
 Effect::doEffect (SPCurve * curve)
 {
-    NArtBpath *new_bpath = doEffect(SP_CURVE_BPATH(curve));
+    NArtBpath *new_bpath = doEffect_nartbpath(SP_CURVE_BPATH(curve));
 
     if (new_bpath && new_bpath != SP_CURVE_BPATH(curve)) {        // FIXME, add function to SPCurve to change bpath? or a copy function?
         if (curve->_bpath) {
@@ -133,12 +133,12 @@ Effect::doEffect (SPCurve * curve)
 }
 
 NArtBpath *
-Effect::doEffect (NArtBpath * path_in)
+Effect::doEffect_nartbpath (NArtBpath * path_in)
 {
     try {
         std::vector<Geom::Path> orig_pathv = BPath_to_2GeomPath(path_in);
 
-        std::vector<Geom::Path> result_pathv = doEffect(orig_pathv);
+        std::vector<Geom::Path> result_pathv = doEffect_path(orig_pathv);
 
         NArtBpath *new_bpath = BPath_from_2GeomPath(result_pathv);
 
@@ -164,7 +164,7 @@ Effect::doEffect (NArtBpath * path_in)
 }
 
 std::vector<Geom::Path>
-Effect::doEffect (std::vector<Geom::Path> & path_in)
+Effect::doEffect_path (std::vector<Geom::Path> & path_in)
 {
     Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_in;
 
@@ -172,7 +172,7 @@ Effect::doEffect (std::vector<Geom::Path> & path_in)
         pwd2_in.concat( path_in[i].toPwSb() );
     }
 
-    Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_out = doEffect(pwd2_in);
+    Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_out = doEffect_pwd2(pwd2_in);
 
     std::vector<Geom::Path> path_out = Geom::path_from_piecewise( pwd2_out, LPE_CONVERSION_TOLERANCE);
 
@@ -180,7 +180,7 @@ Effect::doEffect (std::vector<Geom::Path> & path_in)
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-Effect::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+Effect::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 {
     g_warning("Effect has no doEffect implementation");
     return pwd2_in;

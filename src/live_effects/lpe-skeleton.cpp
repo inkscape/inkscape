@@ -56,7 +56,7 @@ LPESkeleton::doEffect (SPCurve * curve)
 }
 
 NArtBpath *
-LPESkeleton::doEffect (NArtBpath * path_in)
+LPESkeleton::doEffect_nartbpath (NArtBpath * path_in)
 {
         NArtBpath *path_out;
         unsigned ret = 0;
@@ -72,7 +72,7 @@ LPESkeleton::doEffect (NArtBpath * path_in)
 }
 
 std::vector<Geom::Path>
-LPESkeleton::doEffect (std::vector<Geom::Path> & path_in)
+LPESkeleton::doEffect_path (std::vector<Geom::Path> & path_in)
 {
         std::vector<Geom::Path> path_out;
 
@@ -83,7 +83,7 @@ LPESkeleton::doEffect (std::vector<Geom::Path> & path_in)
 */
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-LPESkeleton::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+LPESkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 {
     Geom::Piecewise<Geom::D2<Geom::SBasis> > output;
 

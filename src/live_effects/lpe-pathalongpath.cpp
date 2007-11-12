@@ -92,7 +92,7 @@ LPEPathAlongPath::~LPEPathAlongPath()
 
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-LPEPathAlongPath::doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+LPEPathAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 {
     using namespace Geom;
 

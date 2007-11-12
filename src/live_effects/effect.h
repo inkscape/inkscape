@@ -96,11 +96,11 @@ protected:
     // called by this base class. (i.e. doEffect(SPCurve * curve) defaults to calling
     // doEffect(std::vector<Geom::Path> )
     virtual NArtBpath *
-            doEffect (NArtBpath * path_in);
+            doEffect_nartbpath (NArtBpath * path_in);
     virtual std::vector<Geom::Path> 
-            doEffect (std::vector<Geom::Path> & path_in);
+            doEffect_path (std::vector<Geom::Path> & path_in);
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > 
-            doEffect (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
+            doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 
     void registerParameter(Parameter * param);
     Parameter * getNextOncanvasEditableParam();

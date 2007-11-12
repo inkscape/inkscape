@@ -24,7 +24,6 @@ public:
     LPESlant(LivePathEffectObject *lpeobject);
     virtual ~LPESlant();
 
-    using Effect::doEffect;
     virtual void doEffect(SPCurve * curve);
 
 private:

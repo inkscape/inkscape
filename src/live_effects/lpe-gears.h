@@ -22,9 +22,9 @@ public:
     LPEGears(LivePathEffectObject *lpeobject);
     virtual ~LPEGears();
 
-    std::vector<Geom::Path> doEffect (std::vector<Geom::Path> & path_in);
+    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> & path_in);
 
-    void setup_notepath(Inkscape::NodePath::Path *np);
+    virtual void setup_notepath(Inkscape::NodePath::Path *np);
 
 private:
     ScalarParam teeth;
