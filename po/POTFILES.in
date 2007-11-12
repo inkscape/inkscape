@@ -112,6 +112,7 @@ src/extension/internal/bitmap/oilPaint.cpp
 src/extension/internal/bitmap/opacity.cpp
 src/extension/internal/bitmap/raise.cpp
 src/extension/internal/bitmap/reduceNoise.cpp
+src/extension/internal/bitmap/sample.cpp
 src/extension/internal/bitmap/shade.cpp
 src/extension/internal/bitmap/sharpen.cpp
 src/extension/internal/bitmap/solarize.cpp
