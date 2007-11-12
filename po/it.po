@@ -2334,7 +2334,7 @@ msgstr "<b>Selezionare un tracciato guida</b> da ricalcare con <b>Ctrl</b>"
 
 #: ../src/dyna-draw-context.cpp:802
 msgid "Tracking: <b>connection to guide path lost!</b>"
-msgstr "Ricalco: <b>connessione "
+msgstr "Ricalco: <b>connessione</b>"
 
 #: ../src/dyna-draw-context.cpp:802
 msgid "<b>Tracking</b> a guide path"
@@ -10259,7 +10259,7 @@ msgid ""
 "Adusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); without "
 "modifiers to adjust hue, with <b>Ctrl</b> to adjust lightness"
 msgstr "Modifica <b>saturazione</b>: prima era %.3g, ora <b>%.3g</b> (diff %.3g); "
-"con <b>Ctrl<b> per modificare la luminosità, senza modificatori per il colore"
+"con <b>Ctrl</b> per modificare la luminosità, senza modificatori per il colore"
 
 #: ../src/ui/widget/selected-style.cpp:1269
 msgid "Adjust lightness"
@@ -10271,7 +10271,7 @@ msgid ""
 "Adusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); without "
 "modifiers to adjust hue, with <b>Shift</b> to adjust saturation"
 msgstr "Modifica <b>luminosità</b>: prima era %.3g, ora <b>%.3g</b> (diff %.3g); "
-"con <b>Maiusc<b> per modificare la saturazione, senza modificatori per il colore"
+"con <b>Maiusc</b> per modificare la saturazione, senza modificatori per il colore"
 
 #: ../src/ui/widget/selected-style.cpp:1275
 msgid "Adjust hue"
@@ -10283,7 +10283,7 @@ msgid ""
 "Adusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</"
 "b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"
 msgstr "Modifica <b>colore</b>: prima era %.3g, ora <b>%.3g</b> (diff %.3g); "
-"con <b>Maiusc<b> per modificare la saturazione, con <b>Ctrl<b> per la luminosità"
+"con <b>Maiusc</b> per modificare la saturazione, con <b>Ctrl</b> per la luminosità"
 
 #: ../src/ui/widget/page-sizer.cpp:195
 msgid "Name"
