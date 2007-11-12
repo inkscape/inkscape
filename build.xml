@@ -268,7 +268,8 @@
             <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
         </fileset>
         <flags>
-            -Wall -O3
+            -Wall -Wformat-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch
+            -O3
             -mms-bitfields
         </flags>
         <defines>
