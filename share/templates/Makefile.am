@@ -35,6 +35,7 @@ templates_DATA = \
 	desktop_1600x1200.svg \
 	desktop_640x480.svg \
 	desktop_800x600.svg \
+	fontforge_glyph.svg \
 	icon_16x16.svg \
 	icon_32x32.svg \
 	icon_48x48.svg \
@@ -43,9 +44,9 @@ templates_DATA = \
 	Letter.svg \
 	no_borders.svg \
 	no_layers.svg \
-	video_HDTV_1920_1080.svg \
-	video_NTSC_720_486.svg \
-	video_PAL_720_576.svg \
+	video_HDTV_1920x1080.svg \
+	video_NTSC_720x486.svg \
+	video_PAL_720x576.svg \
 	web_banner_468x60.svg \
 	web_banner_728x90.svg \
 	LaTeX_Beamer.svg
