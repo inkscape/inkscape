@@ -296,7 +296,7 @@ unsigned pick_coincident(unsigned ix, unsigned jx, bool &rev, std::vector<Path> 
     for(unsigned k = jx; k < crs[ix].size(); k++) {
         unsigned koix = crs[ix][k].getOther(ix);
         if(koix == oix) {
-            if(!near(otime, crs[ix][k].getTime(oix))) break;
+            if(!are_near(otime, crs[ix][k].getTime(oix))) break;
             for(unsigned dir = 0; dir < 2; dir++) {
                 Point val = ps[ix].pointAt(fudgerize(crs[ix][k].getTime(ix), dir)) - cross_point;
                 Cmp to_prev = cmp(cross(val, prev), 0);
@@ -470,7 +470,7 @@ unsigned pick_coincident(unsigned ix, unsigned jx, bool pref, bool &rev, std::ve
     for(unsigned k = jx; k < crs[ix].size(); k++) {
         unsigned koix = crs[ix][k].getOther(ix);
         if(koix == oix) {
-            if(!near(otime, crs[ix][k].getTime(oix))) break;
+            if(!are_near(otime, crs[ix][k].getTime(oix))) break;
             for(unsigned dir = 0; dir < 2; dir++) {
                 Point val = ps[ix].pointAt(crs[ix][k].getTime(ix) + (dir ? -0.01 : 0.01)) - cross_point;
                 Cmp to_prev = cmp(cross(val, prev), 0);

@@ -104,7 +104,7 @@ struct NearConcept {
     double tol;
     bool res;
     void constraints() {
-        res = near(a, b, tol);
+        res = are_near(a, b, tol);
     }
 };
 

@@ -10,6 +10,7 @@
 #include "point.h"
 
 namespace Geom {
+
 /**
  * Finds the intersection of the two (infinite) lines
  * defined by the points p such that dot(n0, p) == d0 and dot(n1, p) == d1.

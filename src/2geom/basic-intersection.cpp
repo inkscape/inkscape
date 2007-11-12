@@ -1,5 +1,7 @@
 #include "basic-intersection.h"
 
+unsigned intersect_steps = 0;
+
 using std::vector;
 namespace Geom {
 
@@ -224,6 +226,7 @@ void recursively_intersect( OldBezier a, double t0, double t1, int deptha,
 			   OldBezier b, double u0, double u1, int depthb,
 			   std::vector<std::pair<double, double> > &parameters)
 {
+    intersect_steps ++;
     if( deptha > 0 )
     {
         OldBezier A[2];

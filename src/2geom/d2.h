@@ -130,9 +130,9 @@ operator!=(D2<T> const &a, D2<T> const &b) {
 //IMPL: NearConcept
 template <typename T>
 inline bool
-near(D2<T> const &a, D2<T> const &b, double tol) {
+are_near(D2<T> const &a, D2<T> const &b, double tol) {
     boost::function_requires<NearConcept<T> >();
-    return near(a[0], b[0]) && near(a[1], b[1]);
+    return are_near(a[0], b[0]) && are_near(a[1], b[1]);
 }
 
 //IMPL: AddableConcept

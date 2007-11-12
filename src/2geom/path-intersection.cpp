@@ -25,7 +25,7 @@ int winding(Path const &path, Point p) {
     if(iter->boundsFast().height()!=0.){ start = iter; break; }
   }
   int wind = 0;
-  int cnt = 0;
+  unsigned cnt = 0;
   bool starting = true;
   for (Path::const_iterator iter = start; iter != start || starting
        ; ++iter, iter = (iter == path.end_closed()) ? path.begin() : iter )

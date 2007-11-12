@@ -46,19 +46,8 @@ typedef double Coord;
 
 const Coord EPSILON = 1e-5; //1e-18;
 
-
-#ifdef near
-#define lib2geom_near_save near
-#undef near
-#endif
-
 //IMPL: NearConcept
-inline bool near(Coord a, Coord b, double eps=EPSILON) { return fabs(a-b) <= eps; }
-
-#ifdef lib2geom_near_save
-#define near lib2geom_near_save
-#undef lib2geom_near_save
-#endif
+inline bool are_near(Coord a, Coord b, double eps=EPSILON) { return fabs(a-b) <= eps; }
 
 } /* namespace Geom */
 

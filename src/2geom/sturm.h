@@ -1,5 +1,10 @@
+#ifndef LIB2GEOM_STURM_HEADER
+#define LIB2GEOM_STURM_HEADER
+
 #include "poly.h"
 #include "utils.h"
+
+namespace Geom {
 
 class sturm : public std::vector<Poly>{
 public:
@@ -50,6 +55,9 @@ public:
     }
 };
 
+} //namespace Geom
+
+#endif
 /*
   Local Variables:
   mode:c++

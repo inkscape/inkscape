@@ -9,6 +9,10 @@ namespace Geom{
 Bezier
 sbasis_to_bezier(SBasis const &B, unsigned q = 0);
 
+// inverse
+SBasis bezier_to_sbasis(Bezier const &B);
+
+
 std::vector<Geom::Point>
 sbasis_to_bezier(D2<SBasis> const &B, unsigned q = 0);
 

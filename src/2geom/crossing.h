@@ -2,11 +2,12 @@
 #define __GEOM_CROSSING_H
 
 #include <vector>
-#include <set>
 #include "rect.h"
 #include "sweep.h"
+
 namespace Geom {
 
+//Crossing between one or two paths
 struct Crossing {
     bool dir; //True: along a, a becomes outside.
     double ta, tb;  //time on a and b of crossing
@@ -16,6 +17,7 @@ struct Crossing {
     Crossing(double t_a, double t_b, unsigned ai, unsigned bi, bool direction) : dir(direction), ta(t_a), tb(t_b), a(ai), b(bi) {}
     bool operator==(const Crossing & other) const { return a == other.a && b == other.b && dir == other.dir && ta == other.ta && tb == other.tb; }
     bool operator!=(const Crossing & other) const { return !(*this == other); }
+
     unsigned getOther(unsigned cur) const { return a == cur ? b : a; }
     double getTime(unsigned cur) const { return a == cur ? ta : tb; }
     double getOtherTime(unsigned cur) const { return a == cur ? tb : ta; }
@@ -23,11 +25,48 @@ struct Crossing {
 };
 
 
-/*inline bool near(Crossing a, Crossing b) {
-    return near(a.ta, b.ta) && near(a.tb, b.tb);
+struct Edge {
+    unsigned node, path;
+    double time;
+    bool reverse;
+    Edge(unsigned p, double t, bool r) : path(p), time(t), reverse(r) {}
+    bool operator==(Edge const &other) const { return other.path == path && other.time == time && other.reverse == reverse; }
+};
+
+struct CrossingNode {
+    std::vector<Edge> edges;
+    CrossingNode() : edges(std::vector<Edge>()) {}
+    explicit CrossingNode(std::vector<Edge> es) : edges(es) {}
+    void add_edge(Edge const &e) {
+    	if(std::find(edges.begin(), edges.end(), e) == edges.end())
+    	    edges.push_back(e);
+    }
+    double time_on(unsigned p) {
+    	for(unsigned i = 0; i < edges.size(); i++)
+    	    if(edges[i].path == p) return edges[i].time;
+    	std::cout << "CrossingNode time_on failed\n";
+    	return 0;
+    }
+};
+
+typedef std::vector<Crossing> Crossings;
+
+typedef std::vector<CrossingNode> CrossingGraph;
+
+struct TimeOrder {
+    bool operator()(Edge a, Edge b) {
+        return a.time < b.time;
+    }
+};
+
+class Path;
+CrossingGraph create_crossing_graph(std::vector<Path> const &p, Crossings const &crs);
+
+/*inline bool are_near(Crossing a, Crossing b) {
+    return are_near(a.ta, b.ta) && are_near(a.tb, b.tb);
 }
 
-struct NearF { bool operator()(Crossing a, Crossing b) { return near(a, b); } };
+struct NearF { bool operator()(Crossing a, Crossing b) { return are_near(a, b); } };
 */
 
 struct CrossingOrder {
@@ -39,7 +78,7 @@ struct CrossingOrder {
     }
 };
 
-typedef std::vector<Crossing> Crossings;
+
 typedef std::vector<Crossings> CrossingSet;
 
 template<typename C>

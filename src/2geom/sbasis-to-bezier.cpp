@@ -54,6 +54,28 @@ sbasis_to_bezier(SBasis const &B, unsigned q) {
     return result;
 }
 
+double mopi(int i) {
+    return (i&1)?-1:1;
+}
+
+// this produces a degree k sbasis from a degree 2q bezier
+SBasis
+bezier_to_sbasis(Bezier const &B) {
+    unsigned n = B.size();
+    unsigned q = (n+1)/2;
+    SBasis result;
+    result.resize(q+1);
+    for(unsigned k = 0; k < q; k++) {
+        result[k][0] = result[k][1] = 0;
+        for(unsigned j = 0; j <= n-k; j++) {
+            result[k][0] += mopi(int(j)-int(k))*W(n, j, k)*B[j];
+            result[k][1] += mopi(int(j)-int(k))*W(n, j, k)*B[j];
+            //W(n, n-j, k)*B[k][1]);
+        }
+    }
+    return result;
+}
+
 // this produces a 2q point bezier from a degree q sbasis
 std::vector<Geom::Point>
 sbasis_to_bezier(D2<SBasis> const &B, unsigned qq) {
@@ -188,9 +210,9 @@ path_from_piecewise(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double to
     Geom::Point start = B[0].at0();
     pb.moveTo(start);
     for(unsigned i = 0; ; i++) {
-        if(i+1 == B.size() || !near(B[i+1].at0(), B[i].at1(), tol)) {
+        if(i+1 == B.size() || !are_near(B[i+1].at0(), B[i].at1(), tol)) {
             //start of a new path
-            if(near(start, B[i].at1())) {
+            if(are_near(start, B[i].at1())) {
                 //it's closed
                 pb.closePath();
                 if(sbasis_size(B[i]) <= 1) {

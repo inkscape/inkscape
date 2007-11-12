@@ -84,7 +84,7 @@ double Matrix::expansionY() const {
 
 void Matrix::setExpansionX(double val) {
     double exp_x = expansionX();
-    if(!near(exp_x, 0.0)) {  //TODO: best way to deal with it is to skip op?
+    if(!are_near(exp_x, 0.0)) {  //TODO: best way to deal with it is to skip op?
         double coef = val / expansionX();
         for(unsigned i=0;i<2;i++) _c[i] *= coef;
     }
@@ -92,7 +92,7 @@ void Matrix::setExpansionX(double val) {
 
 void Matrix::setExpansionY(double val) {
     double exp_y = expansionY();
-    if(!near(exp_y, 0.0)) {  //TODO: best way to deal with it is to skip op?
+    if(!are_near(exp_y, 0.0)) {  //TODO: best way to deal with it is to skip op?
         double coef = val / expansionY();
         for(unsigned i=2; i<4; i++) _c[i] *= coef;
     }
@@ -108,9 +108,9 @@ void Matrix::setIdentity() {
 //TODO: use eps
 
 bool Matrix::isIdentity(Coord const eps) const {
-    return near(_c[0], 1.0) && near(_c[1], 0.0) &&
-           near(_c[2], 0.0) && near(_c[3], 1.0) &&
-           near(_c[4], 0.0) && near(_c[5], 0.0);
+    return are_near(_c[0], 1.0) && are_near(_c[1], 0.0) &&
+           are_near(_c[2], 0.0) && are_near(_c[3], 1.0) &&
+           are_near(_c[4], 0.0) && are_near(_c[5], 0.0);
 }
 
 /** Answers the question "Does this matrix perform a translation, and \em{only} a translation?"
@@ -118,9 +118,9 @@ bool Matrix::isIdentity(Coord const eps) const {
  \return A bool representing yes/no.
  */
 bool Matrix::isTranslation(Coord const eps) const {
-    return near(_c[0], 1.0) && near(_c[1], 0.0) &&
-           near(_c[2], 0.0) && near(_c[3], 1.0) &&
-           !near(_c[4], 0.0) && !near(_c[5], 0.0);
+    return are_near(_c[0], 1.0) && are_near(_c[1], 0.0) &&
+           are_near(_c[2], 0.0) && are_near(_c[3], 1.0) &&
+           !are_near(_c[4], 0.0) && !are_near(_c[5], 0.0);
 }
 
 /** Answers the question "Does this matrix perform a scale, and \em{only} a Scale?"
@@ -128,9 +128,9 @@ bool Matrix::isTranslation(Coord const eps) const {
  \return A bool representing yes/no.
  */
 bool Matrix::isScale(Coord const eps) const {
-    return !near(_c[0], 1.0) || !near(_c[3], 1.0) &&  //NOTE: these are the diags, and the next line opposite diags
-           near(_c[1], 0.0) && near(_c[2], 0.0) && 
-           near(_c[4], 0.0) && near(_c[5], 0.0);
+    return !are_near(_c[0], 1.0) || !are_near(_c[3], 1.0) &&  //NOTE: these are the diags, and the next line opposite diags
+           are_near(_c[1], 0.0) && are_near(_c[2], 0.0) && 
+           are_near(_c[4], 0.0) && are_near(_c[5], 0.0);
 }
 
 /** Answers the question "Does this matrix perform a uniform scale, and \em{only} a uniform scale?"
@@ -138,9 +138,9 @@ bool Matrix::isScale(Coord const eps) const {
  \return A bool representing yes/no.
  */
 bool Matrix::isUniformScale(Coord const eps) const {
-    return !near(_c[0], 1.0) && near(_c[0], _c[3]) &&
-           near(_c[1], 0.0) && near(_c[2], 0.0) &&  
-           near(_c[4], 0.0) && near(_c[5], 0.0);
+    return !are_near(_c[0], 1.0) && are_near(_c[0], _c[3]) &&
+           are_near(_c[1], 0.0) && are_near(_c[2], 0.0) &&  
+           are_near(_c[4], 0.0) && are_near(_c[5], 0.0);
 }
 
 /** Answers the question "Does this matrix perform a rotation, and \em{only} a rotation?"
@@ -148,13 +148,13 @@ bool Matrix::isUniformScale(Coord const eps) const {
  \return A bool representing yes/no.
  */
 bool Matrix::isRotation(Coord const eps) const {
-    return !near(_c[0], _c[3]) && near(_c[1], -_c[2]) &&
-           near(_c[4], 0.0) && near(_c[5], 0.0) &&
-           near(_c[0]*_c[0] + _c[1]*_c[1], 1.0);
+    return !are_near(_c[0], _c[3]) && are_near(_c[1], -_c[2]) &&
+           are_near(_c[4], 0.0) && are_near(_c[5], 0.0) &&
+           are_near(_c[0]*_c[0] + _c[1]*_c[1], 1.0);
 }
 
 bool Matrix::onlyScaleAndTranslation(Coord const eps) const {
-    return near(_c[0], _c[3]) && near(_c[1], 0) && near(_c[2], 0);
+    return are_near(_c[0], _c[3]) && are_near(_c[1], 0) && are_near(_c[2], 0);
 }
 
 bool Matrix::flips() const {
@@ -175,7 +175,7 @@ Matrix Matrix::inverse() const {
     Matrix d;
 
     Geom::Coord const determ = det();
-    if (!near(determ, 0.0)) {
+    if (!are_near(determ, 0.0)) {
         Geom::Coord const ideterm = 1.0 / determ;
 
         d._c[0] =  _c[3] * ideterm;

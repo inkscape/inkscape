@@ -86,6 +86,20 @@ public:
         }
         return (1-t)*p0 + t*p1;
     }
+    double valueAndDerivative(double t, double &der) const {
+        double s = t*(1-t);
+        double p0 = 0, p1 = 0;
+        double sk = 1;
+//TODO: rewrite as horner
+        for(unsigned k = 0; k < size(); k++) {
+            p0 += sk*(*this)[k][0];
+            p1 += sk*(*this)[k][1];
+            sk *= s;
+        }
+        // p0 and p1 at this point form a linear approximation at t
+        der = p1 - p0;
+        return (1-t)*p0 + t*p1;
+    }
     double operator()(double t) const {
         return valueAt(t);
     }

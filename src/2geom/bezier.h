@@ -1,4 +1,4 @@
- /*
+/*
  * bezier.h
  *
  * Copyright 2007  MenTaLguY <mental@rydia.net>

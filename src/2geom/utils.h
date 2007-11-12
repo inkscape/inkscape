@@ -1,5 +1,5 @@
-#ifndef UTILS_HEADER
-#define UTILS_HEADER
+#ifndef LIB2GEOM_UTILS_HEADER
+#define LIB2GEOM_UTILS_HEADER
 
 /** Various utility functions.
  *
@@ -38,6 +38,11 @@ namespace Geom {
 class NotImplemented : public std::logic_error {
 public:
   NotImplemented() : std::logic_error("method not implemented") {}
+};
+
+class NotInvertible : public std::range_error {
+ public:
+  NotInvertible() : std::range_error("function does not have a unique inverse") {}
 };
 
 // proper logical xor
