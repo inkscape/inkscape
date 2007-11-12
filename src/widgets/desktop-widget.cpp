@@ -1173,11 +1173,8 @@ sp_desktop_widget_adjustment_value_changed (GtkAdjustment *adj, SPDesktopWidget 
 bool SPDesktopWidget::onFocusInEvent(GdkEventFocus*)
 {
     inkscape_activate_desktop (desktop);
-
-    /* give focus to canvas widget */
-    gtk_widget_grab_focus (GTK_WIDGET (canvas));
 	
-	return false;
+    return false;
 }
 
 static gdouble
