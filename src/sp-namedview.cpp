@@ -610,7 +610,7 @@ void SPNamedView::show(SPDesktop *desktop)
         }
     }
 
-    desktop->showGrids(grids_visible);
+    desktop->showGrids(grids_visible, false);
 }
 
 #define MIN_ONSCREEN_DISTANCE 50
@@ -782,7 +782,7 @@ void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
     sp_document_set_undo_sensitive(doc, saved);
 }
 
-void sp_namedview_show_grids(SPNamedView * namedview, bool show)
+void sp_namedview_show_grids(SPNamedView * namedview, bool show, bool dirty_document)
 {
     namedview->grids_visible = show;
 
@@ -794,7 +794,11 @@ void sp_namedview_show_grids(SPNamedView * namedview, bool show)
 
     sp_repr_set_boolean(repr, "showgrid", namedview->grids_visible);
 
-    doc->rroot->setAttribute("sodipodi:modified", "true");
+    /* we don't want the document to get dirty on startup; that's when
+       we call this function with dirty_document = false */
+    if (dirty_document) {
+        doc->rroot->setAttribute("sodipodi:modified", "true");
+    }
     sp_document_set_undo_sensitive(doc, saved);
 }
 

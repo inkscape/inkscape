@@ -308,7 +308,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     //   (Setting up after the connections are all in place, as it may use some of them)
     layer_manager = new Inkscape::LayerManager( this );
 
-    showGrids(namedview->grids_visible);
+    showGrids(namedview->grids_visible, false);
 }
 
 
@@ -1196,10 +1196,10 @@ void SPDesktop::toggleGrids()
     }
 }
 
-void SPDesktop::showGrids(bool show)
+void SPDesktop::showGrids(bool show, bool dirty_document)
 {
     grids_visible = show;
-    sp_namedview_show_grids(namedview, grids_visible);
+    sp_namedview_show_grids(namedview, grids_visible, dirty_document);
     if (show) {
         sp_canvas_item_show(SP_CANVAS_ITEM(gridgroup));
     } else {

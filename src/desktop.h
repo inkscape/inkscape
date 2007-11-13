@@ -262,7 +262,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     
     void toggleGrids();
     bool gridsEnabled() { return grids_visible; }
-    void showGrids(bool show);
+    void showGrids(bool show, bool dirty_document = true);
 
     bool is_iconified();
     bool is_maximized();
