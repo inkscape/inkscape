@@ -71,12 +71,12 @@ ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, c
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
-            if (!strcmp(chname, "option") || !strcmp(chname, "_option")) {
+            if (!strcmp(chname, "option")) {
                 Glib::ustring * newguitext = NULL;
                 Glib::ustring * newvalue = NULL;
                 const char * contents = sp_repr_children(child_repr)->content();
                 if (contents != NULL)
-                     newguitext = new Glib::ustring(contents);
+                     newguitext = new Glib::ustring( _(contents) );
                 else
                     continue;  
                     
@@ -84,7 +84,7 @@ ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, c
                 if (val != NULL)
                     newvalue = new Glib::ustring(val);
                 else
-                    newvalue = new Glib::ustring(*newguitext);
+                    newvalue = new Glib::ustring(contents);
                             
                 if ( (newguitext) && (newvalue) ) {   // logical error if this is not true here
                     choices = g_slist_append( choices, new optionentry(newvalue, newguitext) );

@@ -77,10 +77,16 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
                 const char * contents = sp_repr_children(child_repr)->content();
                 if (contents != NULL)
                      newguitext = new Glib::ustring( _(contents) );
+                else
+                    continue;
+
                 const char * val = child_repr->attribute("value");
                 if (val != NULL)
                     newvalue = new Glib::ustring(val);
-                if ( (newguitext) && (newvalue) ) {
+                else
+                    newvalue = new Glib::ustring(contents);
+
+                if ( (newguitext) && (newvalue) ) {   // logical error if this is not true here
                     choices = g_slist_append( choices, new enumentry(newvalue, newguitext) );
                 }
             }
