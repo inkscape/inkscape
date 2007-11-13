@@ -617,16 +617,16 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
                 NR::Maybe<NR::Rect> bbox(sp_item_bbox_desktop(item));
                 if (bbox) {
                     double new_width = scaleX;
-                    if (new_width < 1e-6) new_width = 1e-6; // not 0, as this would result in a nasty no-bbox object
+                    if (fabs(new_width) < 1e-6) new_width = 1e-6; // not 0, as this would result in a nasty no-bbox object
                     double new_height = scaleY;
-                    if (new_height < 1e-6) new_height = 1e-6;
+                    if (fabs(new_height) < 1e-6) new_height = 1e-6;
                     scale = NR::scale(new_width / bbox->extent(NR::X), new_height / bbox->extent(NR::Y));
                 }
             } else {
                 double new_width = scaleX;
-                if (new_width < 1e-6) new_width = 1e-6;
+                if (fabs(new_width) < 1e-6) new_width = 1e-6;
                 double new_height = scaleY;
-                if (new_height < 1e-6) new_height = 1e-6;
+                if (fabs(new_height) < 1e-6) new_height = 1e-6;
                 scale = NR::scale(new_width / 100.0, new_height / 100.0);
             }
             sp_item_scale_rel (item, scale);
@@ -639,15 +639,15 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
             // the values are increments!
             if (_units_scale.isAbsolute()) {
                 double new_width = scaleX;
-                if (new_width < 1e-6) new_width = 1e-6;
+                if (fabs(new_width) < 1e-6) new_width = 1e-6;
                 double new_height = scaleY;
-                if (new_height < 1e-6) new_height = 1e-6;
+                if (fabs(new_height) < 1e-6) new_height = 1e-6;
                 scale = NR::scale(new_width / bbox->extent(NR::X), new_height / bbox->extent(NR::Y));
             } else {
                 double new_width = scaleX;
-                if (new_width < 1e-6) new_width = 1e-6;
+                if (fabs(new_width) < 1e-6) new_width = 1e-6;
                 double new_height = scaleY;
-                if (new_height < 1e-6) new_height = 1e-6;
+                if (fabs(new_height) < 1e-6) new_height = 1e-6;
                 scale = NR::scale(new_width / 100.0, new_height / 100.0);
             }
             sp_selection_scale_relative(selection, center, scale);
