@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-10-17 23:52+0200\n"
-"PO-Revision-Date: 2007-11-12 15:09+0700\n"
+"PO-Revision-Date: 2007-11-13 15:58+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -8576,54 +8576,48 @@ msgid "_Apply"
 msgstr "អនុវត្ត"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:72
-#, fuzzy
 msgid "Apply chosen effect to selection"
-msgstr "អនុវត្ត​ការបម្លែង​ដើម្បីជម្រើស"
+msgstr "អនុវត្ត​បែបផែន​ដែល​បាន​ជ្រើស​ទៅ​ជម្រើស"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:73
-#, fuzzy
 msgid "Remove effect from selection"
-msgstr "យក​របាំង​ចេញ​ពី​ជម្រើស​"
+msgstr "យក​បែបផែន​ចេញ​ពី​ជម្រើស"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:76
 msgid "Apply new effect"
-msgstr ""
+msgstr "អនុវត្ត​បែបផែន​ថ្មី"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:77
-#, fuzzy
 msgid "Current effect"
-msgstr "ស្រទាប់​បច្ចុប្បន្ន"
+msgstr "បែបផែន​បច្ចុប្បន្ន"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:182
 msgid "Unknown effect is applied"
-msgstr ""
+msgstr "បែបផែន​ដែល​មិនស្គាល់​ត្រូវ​បាន​អនុវត្ត"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:185
 msgid "No effect applied"
-msgstr ""
+msgstr "គ្មាន​បែបផែន​បាន​អនុវត្ត"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:189
 msgid "Item is not a shape or path"
-msgstr ""
+msgstr "ធាតុ​មិនមែន​ជា​រូបរាង ឬ​ផ្លូវ"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:193
 msgid "Only one item can be selected"
-msgstr ""
+msgstr "មាន​ធាតុ​តែមួយ​ប៉ុណ្ណោះ​អាច​ត្រូវ​បាន​អនុវត្ត"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:197
-#, fuzzy
 msgid "Empty selection"
-msgstr "លុប​ជ្រើស​"
+msgstr "ជម្រើស​ទទេ​"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:271
-#, fuzzy
 msgid "Create and apply path effect"
-msgstr "បង្កើត​វត្ថុ​ឋាមវន្ត​អុហ្វសិត​"
+msgstr "បង្កើត និង​អនុវត្ត​បែបផែន​ផ្លូវ"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:285
-#, fuzzy
 msgid "Remove path effect"
-msgstr "យក​ខ្វាច់​ចេញ "
+msgstr "យក​បែបផែន​ផ្លូវ​ចេញ"
 
 #: ../src/ui/dialog/memory.cpp:94
 msgid "Heap"
@@ -8631,13 +8625,13 @@ msgstr "ពំនូក​"
 
 #: ../src/ui/dialog/memory.cpp:95
 msgid "In Use"
-msgstr "ប្រើ​"
+msgstr "កំពុង​ប្រើ​"
 
 #. TRANSLATORS: "Slack" refers to memory which is in the heap but currently unused.
 #. More typical usage is to call this memory "free" rather than "slack".
 #: ../src/ui/dialog/memory.cpp:98
 msgid "Slack"
-msgstr "ចន្លោះ "
+msgstr "ធូ"
 
 #: ../src/ui/dialog/memory.cpp:99
 msgid "Total"
@@ -8652,7 +8646,7 @@ msgstr "មិន​ស្គាល់"
 
 #: ../src/ui/dialog/memory.cpp:165
 msgid "Combined"
-msgstr "បានផ្សំ "
+msgstr "បានផ្សំ"
 
 #: ../src/ui/dialog/memory.cpp:207
 msgid "Recalculate"
@@ -8664,44 +8658,39 @@ msgstr "រួចរាល់ ។"
 
 #: ../src/ui/dialog/messages.cpp:76
 msgid "Enable log display by setting dialogs.debug 'redirect' attribute to 1 in preferences.xml"
-msgstr "អនុញ្ញាត​ឲ្យ​បង្ហាញ កំណត់​ហេតុ​តាម​ការកំណត់​ប្រអប់​បំបាត់កំហុស 'redirect'  គុណលក្ខណៈ ១ ក្នុង​ ចំណូលចិត្ត​ s.xml"
+msgstr "អនុញ្ញាត​ការ​បង្ហាញ​កំណត់​ហេតុ​ដោយ​កំណត់​​គុណលក្ខណៈ dialogs.debug 'ផ្ដូរទិស' ទៅ ១ នៅ​ក្នុង preferences.xml"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:71
-#, fuzzy
 msgid "File"
 msgstr "​ឯកសារ​"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:169
-#, fuzzy
 msgid "Username:"
 msgstr "ឈ្មោះ​អ្នក​ប្រើ​ ៖"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:170
-#, fuzzy
 msgid "Password:"
-msgstr " ពាក្យ​សម្ងាត់​ ៖"
+msgstr "ពាក្យ​សម្ងាត់​ ៖"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:410
 msgid "Failed to receive the Open Clip Art Library RSS feed. Verify if the server name is correct in Configuration->Misc (e.g.: openclipart.org)"
-msgstr ""
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទទួល​មតិព័ត៌មាន​បណ្ណាល័យ​បន្ទប់​រូបភាព​បើក RSS ។ ផ្ទៀងផ្ទាត់ ប្រសិន​បើ​ឈ្មោះ​ម៉ាស៊ីនបម្រើ​ត្រឹមត្រូវ​នៅ​ក្នុង​ការ​កំណត់​រចនាសម្ព័ន្ធ->ផ្សេងៗ (ឧ. ៖ openclipart.org)"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:538
-#, fuzzy
 msgid "Search Tag"
-msgstr "ស្វែងរក​រូបភាព​"
+msgstr "ស្លាក​ស្វែងរក​"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:539
 msgid "No files matched your search"
-msgstr ""
+msgstr "គ្មាន​ឯកសារ​បានផ្គូផ្គង​ការ​ស្វែងរក​របស់​អ្នក"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:548
-#, fuzzy
 msgid "Search"
-msgstr "ស្វែងរក​តាម​ក្រុម​"
+msgstr "ស្វែងរក"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:565
 msgid "Files Found"
-msgstr ""
+msgstr "រក​ឃើញ​ឯកសារ"
 
 #: ../src/ui/dialog/scriptdialog.cpp:205
 msgid "_Execute Python"
@@ -8709,7 +8698,7 @@ msgstr "ប្រតិបត្តិ​ Python"
 
 #: ../src/ui/dialog/scriptdialog.cpp:209
 msgid "_Execute Perl"
-msgstr "ប្រតិបត្តិ​ Perl"
+msgstr "ប្រតិបត្តិ Perl"
 
 #: ../src/ui/dialog/scriptdialog.cpp:219
 msgid "Script"
@@ -8729,55 +8718,50 @@ msgstr "កំហុស"
 #. # begin single scan
 #. brightness
 #: ../src/ui/dialog/tracedialog.cpp:396
-#, fuzzy
 msgid "Brightness cutoff"
-msgstr "ពន្លឺ"
+msgstr "កាត់​ពន្លឺ"
 
 #: ../src/ui/dialog/tracedialog.cpp:400
 msgid "Trace by a given brightness level"
-msgstr "ដាន​តាម​កម្រិត​ពន្លឺ​ដែល​បាន​ផ្តល់​ឲ្យ​"
+msgstr "តាមដាន​ដោយផ្ដល់​កម្រិត​ពន្លឺ​"
 
 #: ../src/ui/dialog/tracedialog.cpp:408
 msgid "Brightness cutoff for black/white"
-msgstr "កាត់​បន្ថយ​ពន្លឺ ពណខ្មៅ​ឬ ពណ៌ស"
+msgstr "កាត់​ពន្លឺ​សម្រាប់​ពណ៌ស/ខ្មៅ"
 
 #: ../src/ui/dialog/tracedialog.cpp:415
-#, fuzzy
 msgid "Single scan: creates a path"
-msgstr "ការគូរ​ផ្លូវ​តាម​ចិត្ត"
+msgstr "ស្កេន​តែ​ម្ដង ៖ បង្កើត​ផ្លូវ​មួយ"
 
 #. canny edge detection
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
 #: ../src/ui/dialog/tracedialog.cpp:420
-#, fuzzy
 msgid "Edge detection"
-msgstr "ការ​រក​ឃើញ​គែម​"
+msgstr "រកឃើញ​គែម​"
 
 #: ../src/ui/dialog/tracedialog.cpp:424
-#, fuzzy
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr "រក​ឃើញ​ស្នាម​គែម​ដោយក្បួន​ដោះស្រាយ​របស់​លោក​​ J. Canny"
+msgstr "ដាន​ដែល​មាន​ការ​រកឃើញ​គែម​ប្រសើរ​បំផុត​ដោយ J. Canny's"
 
 #: ../src/ui/dialog/tracedialog.cpp:441
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
-msgstr "កាត់​បន្ថយ​ពន្លឺសម្រាប់​ភីចសែល​ជាប់គ្នា​ (កំណត់​ភាព​ក្រាស់​នៃ​គែម​ss)"
+msgstr "កាត់​ពន្លឺ​សម្រាប់​ភីកសែល​ដែលជាប់​គ្នា (កំណត់ភាព​ក្រាស់​របស់​គែម)"
 
 #. quantization
 #. TRANSLATORS: Color Quantization: the process of reducing the number
 #. of colors in an image by selecting an optimized set of representative
 #. colors and then re-applying this reduced set to the original image.
 #: ../src/ui/dialog/tracedialog.cpp:453
-#, fuzzy
 msgid "Color quantization"
-msgstr "ការកម្រិត​ចំនួន ពណ៌​"
+msgstr "កំណត់​បរិមាណ​ពណ៌​"
 
 #: ../src/ui/dialog/tracedialog.cpp:457
 msgid "Trace along the boundaries of reduced colors"
-msgstr "កាត់​បន្ថយស្នាម​ពណ៌​តាម​បណ្តោយ​ព្រំ​ដែន​"
+msgstr "ដាន​តាម​ព្រំដែន​របស់​ពណ៌​ដែល​បានកាត់​បន្ថយ"
 
 #: ../src/ui/dialog/tracedialog.cpp:465
 msgid "The number of reduced colors"
-msgstr "កាត់​បន្ថយ​ចំនួន​ពណ៌ "
+msgstr "ចំនួន​ពណ៌​ដែល​បាន​កាត់​បន្ថយ"
 
 #: ../src/ui/dialog/tracedialog.cpp:467
 msgid "Colors:"
@@ -8785,51 +8769,46 @@ msgstr "​ពណ៌ ៖"
 
 #. swap black and white
 #: ../src/ui/dialog/tracedialog.cpp:473
-#, fuzzy
 msgid "Invert image"
-msgstr "ដាក់​បញ្ច្រាស"
+msgstr "ដាក់​បញ្ច្រាស​រូបភាព"
 
 #: ../src/ui/dialog/tracedialog.cpp:478
-#, fuzzy
 msgid "Invert black and white regions"
-msgstr "ដាក់​បញ្ច្រាស​តំបន់​ពណ៌​ខ្មៅ និង​ពណ៌ស​សម្រាប់​ដាន​តែ​មួយ"
+msgstr "ដាក់​បញ្ច្រាស​តំបន់​ពណ៌​ខ្មៅ និង​ស"
 
 #. # end single scan
 #. # begin multiple scan
 #: ../src/ui/dialog/tracedialog.cpp:487
-#, fuzzy
 msgid "Brightness steps"
-msgstr "ពន្លឺ"
+msgstr "ជំហាន​ពន្លឺ"
 
 #: ../src/ui/dialog/tracedialog.cpp:491
 msgid "Trace the given number of brightness levels"
-msgstr "ដាន​ផ្តល់​ចំនួន​កម្រិត​ពន្លឺ"
+msgstr "ដាន​​របស់ចំនួន​កម្រិត​ពន្លឺ​ដែល​បាន​ផ្ដល់"
 
 #: ../src/ui/dialog/tracedialog.cpp:498
 msgid "Scans:"
-msgstr "ស្កេន​ ៖"
+msgstr "ស្កេន ៖"
 
 #: ../src/ui/dialog/tracedialog.cpp:501
 msgid "The desired number of scans"
-msgstr "ចំនួន​វិភាគ​ដែល​ចង់​បាន"
+msgstr "ចំនួន​ស្កេន​ដែល​ចង់​បាន"
 
 #: ../src/ui/dialog/tracedialog.cpp:505
-#, fuzzy
 msgid "Colors"
-msgstr "​ពណ៌ ៖"
+msgstr "​ពណ៌"
 
 #: ../src/ui/dialog/tracedialog.cpp:509
 msgid "Trace the given number of reduced colors"
-msgstr "ដាន​ផ្តល់​ចឲ្យ​ចំនួន​លេខ​ដើម្បីកាត់បន្ថយ​ពណ៌​"
+msgstr "ដាន​របស់​ចំនួន​ពណ៌​ដែល​បានកាត់​បន្ថយ​ដែល​បាន​ផ្ដល់"
 
 #: ../src/ui/dialog/tracedialog.cpp:513
 msgid "Grays"
-msgstr ""
+msgstr "ពណ៌​ប្រផេះ"
 
 #: ../src/ui/dialog/tracedialog.cpp:517
-#, fuzzy
 msgid "Same as Colors, but the result is converted to grayscale"
-msgstr "ពណ៌​ដូច​គ្នា​ ប៉ុន្តែ​បម្លែង​លទ្ធផល​ទៅ​ជា​មាត្រដ្ឋាន​ពណ៌​ប្រផេះ"
+msgstr "ដូច​ពណ៌ ប៉ុន្តែ​លទ្ធផល​ត្រូវ​បានបម្លែង​ទៅ​ជា​មាត្រដ្ឋាន​ពណ៌​ប្រផះ"
 
 #. TRANSLATORS: "Smooth" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:522
@@ -8838,111 +8817,104 @@ msgstr "រលោង"
 
 #: ../src/ui/dialog/tracedialog.cpp:526
 msgid "Apply Gaussian blur to the bitmap before tracing"
-msgstr "អនុវត្ត​ធ្វើ​ឲ្យ​  Gaussian ព្រិល​សម្រាប់​រូបភាពមុន​ពេល​តាមដាន​"
+msgstr "អនុវត្ត​ភាព​ព្រិល​របស់ហ្គោសៀន​ទៅ​រូបភាព​មុន​ពេល​តាមដាន"
 
 #. TRANSLATORS: "Stack" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:529
-#, fuzzy
 msgid "Stack scans"
-msgstr "ជង់"
+msgstr "ស្កេន​ជង់"
 
 #: ../src/ui/dialog/tracedialog.cpp:532
-#, fuzzy
 msgid "Stack scans on top of one another (no gaps) instead of tiling (usually with gaps)"
-msgstr "ស្កេន​ជង់​បញ្ឈរ​llគ្មាន​ចន្លោapឬ ចំណង​ជើង​ផ្ត​lធម្មតា​ប្រើ​ចន្លps)"
+msgstr "ស្កេន​ជង់​នៅ​កំពូល​របស់​អាមួយ​ផ្សេង​ទៀត (គ្មាន​ចន្លោះ) ជំនួស​ឲ្យ​ការ​រៀប​ជា​ក្បឿង (តាម​ធម្មតា​មាន​ចន្លោះ)"
 
 #: ../src/ui/dialog/tracedialog.cpp:535
 msgid "Remove background"
-msgstr "យក​ផ្ទៃ​ខាង​ក្រោយ​ចេញ "
+msgstr "យក​ផ្ទៃ​ខាង​ក្រោយ​ចេញ"
 
 #: ../src/ui/dialog/tracedialog.cpp:540
 msgid "Remove bottom (background) layer when done"
-msgstr "យក​បាត​ស្រទាប់​ចេញ (ផ្ទៃ​ខាង​ក្រោយ​) ពេល​​វា​ធ្វើ​រួច​"
+msgstr "យក​​ស្រទាប់ (ផ្ទៃខាង​ក្រោម) បាត​ចេញ​នៅពេល​បាន​ធ្វើ"
 
 #: ../src/ui/dialog/tracedialog.cpp:544
 msgid "Multiple scans: creates a group of paths"
-msgstr ""
+msgstr "ស្កេន​ច្រើនដង ៖ បង្កើត​ក្រុម​ផ្លូវ"
 
 #. ## begin option page
 #. # potrace parameters
 #: ../src/ui/dialog/tracedialog.cpp:559
 msgid "Suppress speckles"
-msgstr ""
+msgstr "បង្ហាប់​ចំណុច​តូចៗ"
 
 #: ../src/ui/dialog/tracedialog.cpp:561
 msgid "Ignore small spots (speckles) in the bitmap"
-msgstr ""
+msgstr "មិនអើពើ​ស្នាម​អុចៗ (ចំណុច​តូចៗ) នៅ​ក្នុង​រូបភាព"
 
 #: ../src/ui/dialog/tracedialog.cpp:569
 msgid "Speckles of up to this many pixels will be suppressed"
-msgstr ""
+msgstr "ចំណុច​តូចៗ​ទៅ​ភីកសែល​ជា​ច្រើននេះ​នឹង​ត្រូ​វបាន​បង្ហាប់"
 
 #: ../src/ui/dialog/tracedialog.cpp:571
-#, fuzzy
 msgid "Size:"
-msgstr "ទំហំ"
+msgstr "ទំហំ ៖"
 
 #: ../src/ui/dialog/tracedialog.cpp:574
-#, fuzzy
 msgid "Smooth corners"
-msgstr "រលោង"
+msgstr "ជ្រុង​រលោង"
 
 #: ../src/ui/dialog/tracedialog.cpp:576
 msgid "Smooth out sharp corners of the trace"
-msgstr ""
+msgstr "ធ្វើ​ឲ្យ​ជ្រុងរូបរាង​របស់​ដាន​រលោង"
 
 #: ../src/ui/dialog/tracedialog.cpp:585
 msgid "Increase this to smooth corners more"
-msgstr ""
+msgstr "បង្កើន​វា​ដើម្បី​ធ្វើឲ្យជ្រុង​រលោង​ជាង​នេះ"
 
 #: ../src/ui/dialog/tracedialog.cpp:589
-#, fuzzy
 msgid "Optimize paths"
-msgstr "គុណភាព​ខ្ពស់"
+msgstr "ផ្លូវ​ប្រសើរ​បំផុត"
 
 #: ../src/ui/dialog/tracedialog.cpp:592
 msgid "Try to optimize paths by joining adjacent Bezier curve segments"
-msgstr ""
+msgstr "ព្យាយាម​ធ្វើឲ្យ​ផ្លូវ​ប្រសើរ​ដោយ​ភ្ជាប់ចម្រៀក​ខ្សែកោង​ Bezier ដែល​ជាប់​គ្នា"
 
 #: ../src/ui/dialog/tracedialog.cpp:600
 msgid "Increase this to reduce the number of nodes in the trace by more aggressive optimization"
-msgstr ""
+msgstr "បង្កើន​វា​ដើម្បី​បន្ថយ​ចំនួន​ថ្នាំង​នៅ​ក្នុង​ដាន ដោយ​ធ្វើ​ឲ្យការ​បំពាន​ប្រសើរ​ជា​ងមុន​ច្រើន"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:607
 #: ../src/ui/dialog/tracedialog.cpp:613
 msgid "Options"
-msgstr ""
+msgstr "ជម្រើស"
 
 #. ### credits
 #: ../src/ui/dialog/tracedialog.cpp:621
 msgid "Thanks to Peter Selinger, http://potrace.sourceforge.net"
-msgstr "អរគុណ​លោក​  Peter Selingerដែល​មាន​តំបន់​បណ្តាញ​ http://potrace.sourceforge.net"
+msgstr "សូម​អរគុណ​ចំពោះ​ Peter Selinger, http://potrace.sourceforge.net"
 
 #: ../src/ui/dialog/tracedialog.cpp:623
 msgid "Credits"
-msgstr "ឥណទាន​"
+msgstr "បញ្ជី​អ្នក​ចូល​រួម"
 
 #. #### begin right panel
 #. ## SIOX
 #: ../src/ui/dialog/tracedialog.cpp:637
 msgid "SIOX foreground selection"
-msgstr "ការជ្រើស​ពណ៌​ផ្ទៃ​ខាង​មុខ SIOX "
+msgstr "ជម្រើស​ផ្ទៃ​ខាង​មុខ​របស់ SIOX"
 
 #: ../src/ui/dialog/tracedialog.cpp:640
 msgid "Cover the area you want to select as the foreground"
-msgstr "បម្លែង​ផ្ទៃ​ដែល​អ្នកចង់​ជ្រើស​ជា​ពណ៌​ផ្ទៃ​ខាង​មុខ​"
+msgstr "គ្រប​តំបន់​ដែល​អ្នក​ចង់​ជ្រើស​ជា​ផ្ទៃ​ខាង​មុខ"
 
 #. ## preview
 #: ../src/ui/dialog/tracedialog.cpp:645
-#, fuzzy
 msgid "Update"
-msgstr "កាលបរិច្ឆេទ"
+msgstr "ធ្វើ​ឲ្យ​ទាន់សម័យ"
 
 #: ../src/ui/dialog/tracedialog.cpp:651
-#, fuzzy
 msgid "Preview the intermediate bitmap with the current settings, without actual tracing"
-msgstr "មើល​លទ្ធផល​ដោយ​គ្មាន​ដាន​ពិត​ប្រាកដ"
+msgstr "មើល​រូបភាព​ជា​មុន​ភ្លាមៗ​ជា​មួយ​កា​រកំណត់​បច្ចុប្បន្ន ដោយ​គ្មាន​ដាន​ជាក់លាក់"
 
 #: ../src/ui/dialog/tracedialog.cpp:655
 msgid "Preview"
@@ -8950,11 +8922,11 @@ msgstr "មើល​ជា​មុន"
 
 #: ../src/ui/dialog/tracedialog.cpp:673
 msgid "Abort a trace in progress"
-msgstr "បោះបង់ចោល​ស្នាម​វឌ្ឍនភាព​"
+msgstr "បោះបង់​ដាន​កំពុងដំណើរការ"
 
 #: ../src/ui/dialog/tracedialog.cpp:677
 msgid "Execute the trace"
-msgstr "ប្រតិបត្តិ​ស្នាម​"
+msgstr "ប្រតិបត្តិ​ដាន"
 
 #: ../src/ui/dialog/transformation.cpp:80
 #: ../src/ui/dialog/transformation.cpp:90
@@ -8963,7 +8935,7 @@ msgstr "ផ្តេក​"
 
 #: ../src/ui/dialog/transformation.cpp:80
 msgid "Horizontal displacement (relative) or position (absolute)"
-msgstr "ការផ្លាស់កន្លែង​ផ្តេក​ (ទាក់ទង) ឬ ទីតាំង​ (ដាច់ខាត)"
+msgstr "ការ​ផ្លាស់កន្លែង​ផ្ដេក (ទាក់ទង) ឬទីតាំង (ពេញលេញ)"
 
 #: ../src/ui/dialog/transformation.cpp:82
 #: ../src/ui/dialog/transformation.cpp:92
@@ -8972,25 +8944,23 @@ msgstr "បញ្ឈរ​"
 
 #: ../src/ui/dialog/transformation.cpp:82
 msgid "Vertical displacement (relative) or position (absolute)"
-msgstr "ការផ្លាស់កន្លែង​បញ្ឈរ​ (ទាក់ទង​) ឬ ទីតាំង​ (ដាច់​ខាត)"
+msgstr "ការ​ផ្លាស់កន្លែង​បញ្ឈរ (ទាក់ទង) ឬ ទីតាំង (ពេញលេញ)"
 
 #: ../src/ui/dialog/transformation.cpp:84
 msgid "_Width"
 msgstr "ទទឹង​"
 
 #: ../src/ui/dialog/transformation.cpp:84
-#, fuzzy
 msgid "Horizontal size (absolute or percentage of current)"
-msgstr "បន្ថែម​ទំហំ​ផ្ដេក (ដាច់ខាត ឬ​ភាគរយ)"
+msgstr "ទំហំ​ផ្ដេក (ពេញលេញ​ ឬ​ភាគរយ​បច្ចុប្បន្ន)"
 
 #: ../src/ui/dialog/transformation.cpp:86
 msgid "_Height"
 msgstr "កម្ពស់​"
 
 #: ../src/ui/dialog/transformation.cpp:86
-#, fuzzy
 msgid "Vertical size (absolute or percentage of current)"
-msgstr "បន្ថែមទំហំបញ្ឈរ (ដាច់ខាត ឬភាគរយ)"
+msgstr "ទំហំ​បញ្ឈរ (ពេញលេញ ឬ​ភាគរយ​បច្ចុប្បន្ន)"
 
 #: ../src/ui/dialog/transformation.cpp:88
 msgid "A_ngle"
@@ -8998,59 +8968,59 @@ msgstr "មុំ"
 
 #: ../src/ui/dialog/transformation.cpp:88
 msgid "Rotation angle (positive = counterclockwise)"
-msgstr "ការបង្វិល​មុំ​ (វិជ្ជមាន​ = ច្រាសទ្រនិចនាឡិកា)"
+msgstr "មុំបង្វិល (វិជ្ជមាន = ច្រាស​ទ្រនិច​នាឡិកា)"
 
 #: ../src/ui/dialog/transformation.cpp:90
 msgid "Horizontal skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
-msgstr "ឆៀក​មុំផ្តេកឈរ​ (វិជ្ជមាន​ = ច្រាសទ្រនិច​នាឡិកា)ឬ  ការផ្លាស់​កន្លែង​ដាច់ខាត ឬ ភាគរយ​ការផ្លាស់កន្លែង"
+msgstr "មុំឆៀង​ផ្ដេក (វិជ្ជមាន = ច្រាស​ទ្រនិច​នាឡិកា) ឬ​កា​រផ្លាស់ប្ដូរ​ពេញលេញ ឬ​ភាគរយ​នៃ​ការ​ផ្លាស់ប្ដូរ"
 
 #: ../src/ui/dialog/transformation.cpp:92
 msgid "Vertical skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
-msgstr "ឆៀក​មុំ​បញ្ឈរ​ (វិជ្ជមាន​ = ច្រាសទ្រនិច​នាឡិកា)ឬ  ការផ្លាស់​កន្លែង​ដាច់ខាត ឬ ភាគរយ​ការផ្លាស់កន្លែង"
+msgstr "មុំ​ឆៀង​បញ្ឈរ (វិជ្ជមាន = ច្រាស​ទ្រនិចនាឡិកា) ឬ​ការ​ផ្លាស់ប្ដូរ​ពេញលេញ ឬ​ភាគ​រយ​នៃ​ការ​ផ្លាស់ប្ដូរ"
 
 #: ../src/ui/dialog/transformation.cpp:95
 msgid "Transformation matrix element A"
-msgstr "ការបម្លែង​ម៉ាទ្រីស​ធាតុ​ A"
+msgstr "ការ​ប្លែង​ម៉ាទ្រីស​ធាតុ A"
 
 #: ../src/ui/dialog/transformation.cpp:96
 msgid "Transformation matrix element B"
-msgstr "ការបម្លែង​ម៉ាទ្រីស​ធាតុ​ B"
+msgstr "ការ​បម្លែង​ម៉ាទ្រីស​ធាតុ B"
 
 #: ../src/ui/dialog/transformation.cpp:97
 msgid "Transformation matrix element C"
-msgstr "ការបម្លែង​ម៉ាទ្រីស​ធាតុ​ C"
+msgstr "ការ​បម្លែង​ម៉ាទ្រីស​ធាតុ C"
 
 #: ../src/ui/dialog/transformation.cpp:98
 msgid "Transformation matrix element D"
-msgstr "ការបម្លែង​ម៉ាទ្រីស​ធាតុ​ D"
+msgstr "ការ​បម្លែង​ម៉ាទ្រីស​ធាតុ​ D"
 
 #: ../src/ui/dialog/transformation.cpp:99
 msgid "Transformation matrix element E"
-msgstr "ការបម្លែង​ម៉ាទ្រីស​ធាតុ​ E"
+msgstr "ការ​បម្លែង​ម៉ាទ្រីស​ធាតុ​ E"
 
 #: ../src/ui/dialog/transformation.cpp:100
 msgid "Transformation matrix element F"
-msgstr "ការបម្លែង​ធាតុ​ម៉ាទ្រីស​ F"
+msgstr "ការ​បម្លែង​ម៉ាទ្រីស​ធាតុ​ F"
 
 #: ../src/ui/dialog/transformation.cpp:102
 msgid "Add the specified relative displacement to the current position; otherwise, edit the current absolute position directly"
-msgstr "បន្ថែមការផ្លាស់ប្តូរ​ទំនាក់ទំនង​ជាក់លាក់​ ទៅ​កាន់​ទីតាំង​បច្ចុប្បន្ន​ មិន​ដូច្នះ កែសម្រួល​ទីតាំង​បច្ចុប្បន្នដោយ​"
+msgstr "បន្ថែម​ការ​ផ្លាស់ប្ដូរ​ទាក់ទង​ដែល​បានបញ្ជាក់​ទៅ​ទីតាំង​បច្ចុប្បន្ន បើ​មិន​ដូច្នេះ​ទេ កែសម្រួល​ទីតាំង​ពេញលេញ​ដោយ​ផ្ទាល់"
 
 #: ../src/ui/dialog/transformation.cpp:103
 msgid "Scale proportionally"
-msgstr "ធ្វើមាត្រដ្ឋាន​ដែល​សមាមាត្រ"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​សមាមាត្រ"
 
 #: ../src/ui/dialog/transformation.cpp:103
 msgid "Preserve the width/height ratio of the scaled objects"
-msgstr "ការពារ​សមាមាត្រ​ទទឹង​ឬ កម្ពស់​នៃ​វត្ថុ​ដែល​បាន​ធ្វើមាត្រដ្ឋាន​"
+msgstr "ការពារ​សមាមាត្រ​ទទឹង/កម្ពស់​របស់​វត្ថុ​មាន​មាត្រដ្ឋាន​"
 
 #: ../src/ui/dialog/transformation.cpp:104
 msgid "Apply to each _object separately"
-msgstr "អនុវត្ត​វត្ថុ​នីមួយៗ​ដែល​បាន​បំបែក​"
+msgstr "អនុវត្ត​ទៅ​វត្ថុ​នីមួយៗ​ផ្សេងៗ​គ្នា"
 
 #: ../src/ui/dialog/transformation.cpp:104
 msgid "Apply the scale/rotate/skew to each selected object separately; otherwise, transform the selection as a whole"
-msgstr "អនុវត្ត​មាត្រដ្ឋាន​ បង្វិល ឬ ឆៀក សម្រាប់​វត្ថុ​ដែលបានជ្រើស​ មិន​ដូច្នេះ​វា​នឹងប្លែង​ការជ្រើស​ទាំងស្រុង​"
+msgstr "អនុវត្ត​ភាព​ឆៀង​/បង្វិល/ធ្វើ​មាត្រដ្ឋាន​ទៅ​វត្ថុ​ដែល​បានជ្រើស​នីមួយៗ​ផ្សេងៗគ្នា ប្លែង​ជម្រើស​ទាំង​មូល"
 
 #: ../src/ui/dialog/transformation.cpp:105
 msgid "Edit c_urrent matrix"
@@ -9058,7 +9028,7 @@ msgstr "កែសម្រួល​ម៉ាទ្រីស​បច្ចុប
 
 #: ../src/ui/dialog/transformation.cpp:105
 msgid "Edit the current transform= matrix; otherwise, post-multiply transform= by this matrix"
-msgstr "កែសម្រួល​បម្លែង​បច្ចុប្បន្ន​= ម៉ាទ្រីស​ មិ​ន​ដូច្នេះ​ទេ​ ប្រកាស​បម្លែង​ពហុ=ម៉ាទ្រីស​នេះ​"
+msgstr "កែសម្រួល​ការ​ប្លែង​បច្ចុប្បន្ន= ម៉ាទ្រសិ បើ​មិន​ដូច្នេះ​ទេ ការ​ប្លែង​ច្រើន​ជា​មុន= តាម​ម៉ាទ្រីស​នេះ"
 
 #: ../src/ui/dialog/transformation.cpp:115
 msgid "_Move"
@@ -9074,7 +9044,7 @@ msgstr "​បង្វិល​"
 
 #: ../src/ui/dialog/transformation.cpp:124
 msgid "Ske_w"
-msgstr "ឆៀក​"
+msgstr "ឆៀង"
 
 #: ../src/ui/dialog/transformation.cpp:127
 msgid "Matri_x"
@@ -9082,16 +9052,15 @@ msgstr "ម៉ាទ្រីស​"
 
 #: ../src/ui/dialog/transformation.cpp:150
 msgid "Reset the values on the current tab to defaults"
-msgstr "កំណត់​តម្លៃ​លើ​ថេប​លំនាំដើម​បច្ចុប្បន្ន​ឡើង​វិញ "
+msgstr "កំណត់​តម្លៃ​នៅ​លើ​ផ្ទាំង​បច្ចុប្បន្ន​ទៅ​លំនាំ​ដើម​ឡើង​វិញ"
 
 #: ../src/ui/dialog/transformation.cpp:157
 msgid "Apply transformation to selection"
-msgstr "អនុវត្ត​ការបម្លែង​ដើម្បីជម្រើស"
+msgstr "អនុវត្ត​ការបម្លែង​ទៅ​ជម្រើស"
 
 #: ../src/ui/dialog/transformation.cpp:764
-#, fuzzy
 msgid "Edit transformation matrix"
-msgstr "ការបម្លែង​ម៉ាទ្រីស​ធាតុ​ A"
+msgstr "កែសម្រួល​ម៉ាទ្រីស​ប្លែង"
 
 #. FIXME: strings are replaced by placeholders, NOT to be translated until the code is enabled
 #. See http://sourceforge.net/mailarchive/message.php?msg_id=11746016 for details
@@ -9336,7 +9305,7 @@ msgstr "ការបម្លែង​ម៉ាទ្រីស​ធាតុ​
 #: ../src/ui/view/edit-widget.cpp:914
 #: ../src/ui/view/edit-widget.cpp:918
 msgid "PLACEHOLDER, do not translate"
-msgstr "PLACEHOLDER កុំ​បកប្រែ​"
+msgstr "PLACEHOLDER, do not translate"
 
 #: ../src/ui/view/edit-widget.cpp:1003
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
@@ -9345,18 +9314,18 @@ msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 #: ../src/ui/view/edit-widget.cpp:1062
 #: ../src/widgets/desktop-widget.cpp:267
 msgid "Zoom drawing if window size changes"
-msgstr "ពង្រីក​ការគូរ​បើ​ផ្លាស់ប្តូរ​ទំហំ​បង្អួច​"
+msgstr "ពង្រីក​គំនូរ​ប្រសិន​បើ​ផ្លាស់ប្ដូរ​ទំហំ​បង្អួច"
 
 #: ../src/ui/view/edit-widget.cpp:1083
 #: ../src/widgets/desktop-widget.cpp:348
 msgid "Cursor coordinates"
-msgstr "សម្របសម្រួល​ទស្សទ្រនិច​"
+msgstr "កោអរដោនេ​​ទស្សទ្រនិច​"
 
 #. display the initial welcome message in the statusbar
 #: ../src/ui/view/edit-widget.cpp:1100
 #: ../src/widgets/desktop-widget.cpp:382
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
-msgstr "<b>សូម​ស្វាគមន៍​មក​កាន់ Inkscape!</b> ប្រើ​ឧបករណ៍​រូបរាង ឬ​គូរ​ដោយ​សេរី​ដើម្បី​បង្កើត​វត្ថុ ប្រើ​ឧបករណ៍​ជ្រើស (ព្រួញ) ដើម្បី​ផ្លាស់ទី ឬ​ប្លែង​ពួកវា ។"
+msgstr "<b>សូម​ស្វាគមន៍​មក​កាន់ Inkscape !</b> ប្រើ​រូបរាង ឬ​ឧបករណ៍​សេរី​ដើម្បី​វត្ថុ ប្រើ​ឧបករណ៍​ជ្រើស (ព្រួញ) ដើម្បី​ផ្លាស់ទី ឬ​ប្លែង​ពួកវា ។"
 
 #: ../src/ui/view/edit-widget.cpp:1212
 #: ../src/widgets/desktop-widget.cpp:612
@@ -9366,16 +9335,16 @@ msgid ""
 "\n"
 "If you close without saving, your changes will be discarded."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">រក្សាទុក​ការ​ផ្លាស់ប្ដូរ​ទៅ​ឯកសារ \"%s\" មុន​ពេល​បិទ ?</span>\n"
+"<span weight=\"bold\" size=\"larger\">រក្សាទុក​កា​រផ្លាស់ប្ដូរ​ទោ​ឯកសារ \"%s\" មុន​ពេល​បិទ?</span>\n"
 "\n"
-"ប្រសិន​បើ​អ្នក​បិទដោយ​មិន​បាន​រក្សា​ទុក ការ​ផ្លាស់ប្ដូរ​របស់​អ្នក​នឹង​ត្រូវ​បាន​បោះបង់ ។"
+"ប្រសិន​បើ​​បិទ​ដោយ​មិន​រក្សាទុក ការ​ផ្លាស់ប្ដូរ​របស់អ្នក​នឹង​ត្រូវ​បាន​បដិសេធ ។"
 
 #: ../src/ui/view/edit-widget.cpp:1223
 #: ../src/ui/view/edit-widget.cpp:1270
 #: ../src/widgets/desktop-widget.cpp:619
 #: ../src/widgets/desktop-widget.cpp:675
 msgid "Close _without saving"
-msgstr "បិទ​ដោយ​ពុំចាំបាច់​រក្សាទុក​"
+msgstr "បិទ​ដោយ​មិន​រក្សាទុក"
 
 #: ../src/ui/view/edit-widget.cpp:1258
 #: ../src/widgets/desktop-widget.cpp:667
@@ -9385,12 +9354,13 @@ msgid ""
 "\n"
 "Do you want to save this file in another format?"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">ឯកសារ​ \"%s\" បាន​រក្សារទុក​ជាទ្រង់ទ្រាយ​ (%s)នេះ  ប្រហែល​ជាទិន្នន័យ​ត្រូវ​បាន​បាត់បង់ !</span>\n"
-"តើ​អ្នកពិតជា​ចង់​រក្សាទុក​ឯកសារ​នេះ ទៅ​ជា​ទ្រង់ទ្រាយ​ផ្សេងទៀត​ឬទេ?"
+"<span weight=\"bold\" size=\"larger\">ឯកសារ \"%s\" ត្រូវ​បាន​រក្សាទុក​ដោយ​មាន​ទ្រង់ទ្រាយ (%s) ដែល​បណ្ដាល​ឲ្យ​បាត់​ទិន្នន័យ !</span>\n"
+"\n"
+"តើ​អ្នក​ចង់​រក្សាទុក​ឯកសារ​នេះ​ក្នុងទ្រង់ទ្រាយ​ផ្សេង​ឬទេ ?"
 
 #: ../src/ui/widget/panel.cpp:98
 msgid "tiny"
-msgstr "បន្តិច​បន្តួច​"
+msgstr "លម្អិត​"
 
 #: ../src/ui/widget/panel.cpp:99
 msgid "small"
@@ -9402,42 +9372,37 @@ msgstr "ធំ​"
 
 #: ../src/ui/widget/panel.cpp:102
 msgid "huge"
-msgstr "ធំសម្បើម​"
+msgstr "ធំ​សម្បើម​"
 
 #: ../src/ui/widget/panel.cpp:117
 msgid "List"
 msgstr "បញ្ជី"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:25
-#, fuzzy
 msgid "_Blend mode:"
-msgstr "ចុង​ថ្នាំង​"
+msgstr "របៀប​លាយ​"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
-#, fuzzy
 msgid "B_lur:"
-msgstr "ពណ៌​​ខៀវ"
+msgstr "ព្រិលៗ ៖"
 
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
-msgstr "នៃ​កម្មសិទ្ធ​"
+msgstr "មានកម្មសិទ្ធិ​"
 
 #: ../src/ui/widget/licensor.cpp:38
-#, fuzzy
 msgid "Other"
-msgstr "ម៉ែត្រ"
+msgstr "ផ្សេងៗ"
 
 #: ../src/ui/widget/selected-style.cpp:93
 #: ../src/ui/widget/style-swatch.cpp:105
-#, fuzzy
 msgid "Fill:"
-msgstr "បំពេញ "
+msgstr "បំពេញ ៖"
 
 #: ../src/ui/widget/selected-style.cpp:94
 #: ../src/ui/widget/style-swatch.cpp:106
-#, fuzzy
 msgid "Stroke:"
-msgstr "វាច់​ទខ្វាច់​ទឹង​"
+msgstr "ខ្វាច់ ៖​"
 
 #: ../src/ui/widget/selected-style.cpp:95
 msgid "O:"
@@ -9451,13 +9416,12 @@ msgstr "មិនមាន"
 #: ../src/ui/widget/selected-style.cpp:1010
 #: ../src/ui/widget/selected-style.cpp:1011
 msgid "Nothing selected"
-msgstr "បានជ្រើស​ទទេ​"
+msgstr "គ្មាន​អ្វី​បាន​​ជ្រើស​"
 
 #: ../src/ui/widget/selected-style.cpp:140
 #: ../src/ui/widget/style-swatch.cpp:323
-#, fuzzy
 msgid "<i>None</i>"
-msgstr "<i>%s</i>"
+msgstr "<i>គ្មាន</i>"
 
 #: ../src/ui/widget/selected-style.cpp:143
 #: ../src/ui/widget/style-swatch.cpp:325
@@ -9479,60 +9443,57 @@ msgstr "លំនាំ"
 #: ../src/ui/widget/style-swatch.cpp:306
 #: ../src/widgets/paint-selector.cpp:989
 msgid "Pattern fill"
-msgstr "លំនាំ​បំពេញ "
+msgstr "លំនាំ​បំពេញ"
 
 #: ../src/ui/widget/selected-style.cpp:148
 #: ../src/ui/widget/style-swatch.cpp:306
 msgid "Pattern stroke"
-msgstr "លំនាំ​ខ្វាច់"
+msgstr "ខ្វាច់​លំនាំវាច់"
 
 #: ../src/ui/widget/selected-style.cpp:150
-#, fuzzy
 msgid "<b>L</b>"
-msgstr "<b>L ៖ </b>"
+msgstr "<b>L</b>"
 
 #: ../src/ui/widget/selected-style.cpp:153
 #: ../src/ui/widget/style-swatch.cpp:298
 msgid "Linear gradient fill"
-msgstr "ជម្រាល​បំពេញ លីនែអ៊ែរ​"
+msgstr "បំពេញ​ជម្រាល​លីនេអ៊ែរ4"
 
 #: ../src/ui/widget/selected-style.cpp:153
 #: ../src/ui/widget/style-swatch.cpp:298
 msgid "Linear gradient stroke"
-msgstr "ជម្រាល​ខ្វាច់​ លីនែអ៊ែរ​"
+msgstr "ខ្វាច់​ជម្រាល​លីនេអ៊ែរ​"
 
 #: ../src/ui/widget/selected-style.cpp:160
-#, fuzzy
 msgid "<b>R</b>"
-msgstr "<b>a</b>"
+msgstr "<b>R</b>"
 
 #: ../src/ui/widget/selected-style.cpp:163
 #: ../src/ui/widget/style-swatch.cpp:302
 msgid "Radial gradient fill"
-msgstr "ជម្រាល​បំពេញ​តម្រៀប​តាម​កាំ​"
+msgstr "បំពេញ​ជម្រាល​មូល"
 
 #: ../src/ui/widget/selected-style.cpp:163
 #: ../src/ui/widget/style-swatch.cpp:302
 msgid "Radial gradient stroke"
-msgstr "ជម្រាល​ខ្វាច់​តម្រៀប​តាម​កាំ​"
+msgstr "ខ្វាច់​ជម្រាល​មូល​"
 
 #: ../src/ui/widget/selected-style.cpp:170
 msgid "Different"
-msgstr "ខុសគ្នា​"
+msgstr "ផ្សេង​គ្នា្នា​"
 
 #: ../src/ui/widget/selected-style.cpp:173
 msgid "Different fills"
-msgstr "បំពេញ ខុសគ្នា​"
+msgstr "បំពេញ​ផ្សេង​គ្នា​"
 
 #: ../src/ui/widget/selected-style.cpp:173
 msgid "Different strokes"
-msgstr "ខ្វាច់​ខុសគ្នា​"
+msgstr "ខ្វាច់​ផ្សេង​គ្នា​"
 
 #: ../src/ui/widget/selected-style.cpp:175
 #: ../src/ui/widget/style-swatch.cpp:328
-#, fuzzy
 msgid "<b>Unset</b>"
-msgstr "<b>បន្ទាប់​</b>"
+msgstr "<b>មិន​កំណត់</b>"
 
 #: ../src/ui/widget/selected-style.cpp:181
 msgid "Flat color fill"
@@ -9540,7 +9501,7 @@ msgstr "បំពេញ​ពណ៌​រាបស្មើ"
 
 #: ../src/ui/widget/selected-style.cpp:181
 msgid "Flat color stroke"
-msgstr "​ខ្វាច់មានពណ៌​រាបប​ស្មើរ​"
+msgstr "ខ្វាច់ពណ៌​រាបស្មើ"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:184
@@ -9549,11 +9510,11 @@ msgstr "<b>a</b>"
 
 #: ../src/ui/widget/selected-style.cpp:187
 msgid "Fill is averaged over selected objects"
-msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​ត្រូវ​បំពេញ​ធម្មតា​"
+msgstr "បំពេញ​ត្រូវ​បានកំណត់​មធ្យម​លើ​វត្ថុ​ដែល​បាន​ជ្រើស"
 
 #: ../src/ui/widget/selected-style.cpp:187
 msgid "Stroke is averaged over selected objects"
-msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​ត្រូវ​បាន​ខ្វាច់​ធម្មតា"
+msgstr "ខ្វាច់​ត្រូវ​បាន​កំណត់​មធ្យម​លើ​វត្ថុ​ដែល​បានជ្រើស"
 
 #. TRANSLATOR COMMENT: M means "Multiple"
 #: ../src/ui/widget/selected-style.cpp:190
@@ -9562,27 +9523,27 @@ msgstr "<b>m</b>"
 
 #: ../src/ui/widget/selected-style.cpp:193
 msgid "Multiple selected objects have the same fill"
-msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​មាន​បំពេញ​ដូចគ្នា"
+msgstr "បំពេញ​វត្ថុដែល​បាន​ជ្រើស​ជា​ច្រើន​ដូច​គ្នា"
 
 #: ../src/ui/widget/selected-style.cpp:193
 msgid "Multiple selected objects have the same stroke"
-msgstr "វត្ថុ​ជាច្រើន​ដែល​បាន​ជ្រើស​មាន​ខ្វាច់​ដូច​គ្នា​"
+msgstr "ខ្វាច់​វត្ថុ​ដែល​បាន​ជ្រើស​ជា​ច្រើន​ដូច​គ្នា"
 
 #: ../src/ui/widget/selected-style.cpp:195
 msgid "Edit fill..."
-msgstr "កែសម្រួល​បំពេញ ..."
+msgstr "កែសម្រួល​បំពេញ..."
 
 #: ../src/ui/widget/selected-style.cpp:195
 msgid "Edit stroke..."
-msgstr "កែសម្រួល​ខ្វាច់..."
+msgstr "កែសម្រួលខ្វាច់..."
 
 #: ../src/ui/widget/selected-style.cpp:199
 msgid "Last set color"
-msgstr "កំណត់​ពណ៌​ចុង​ក្រោយ​"
+msgstr "កំណត់​ពណ៌​ចុងក្រោយ"
 
 #: ../src/ui/widget/selected-style.cpp:203
 msgid "Last selected color"
-msgstr "ពណ៌​ដែល​បាន​ជ្រើស​ចុង​ក្រោយ​"
+msgstr "ពណ៌​ដែល​បាន​​ជ្រើស​ចុង​ក្រោយ"
 
 #: ../src/ui/widget/selected-style.cpp:207
 msgid "Invert"
@@ -9609,115 +9570,99 @@ msgstr "បិទភ្ជាប់​ពណ៌​"
 #: ../src/ui/widget/selected-style.cpp:227
 #: ../src/ui/widget/selected-style.cpp:761
 msgid "Swap fill and stroke"
-msgstr "ដូរ​បំពេញ​និង ខ្វាច់​"
+msgstr "ដូរ​ការ​បំពេញ​ និង​ខ្វាច់​"
 
 #: ../src/ui/widget/selected-style.cpp:231
 #: ../src/ui/widget/selected-style.cpp:503
 #: ../src/ui/widget/selected-style.cpp:512
 msgid "Make fill opaque"
-msgstr "បំពេញ​ស្រអាប់​"
+msgstr "បំពេញ​ភាព​ស្រអាប់​"
 
 #: ../src/ui/widget/selected-style.cpp:231
 msgid "Make stroke opaque"
-msgstr "បង្កើត​ខ្វាច់​ស្រអាប់​"
+msgstr "ខ្វាច់​ភាព​ស្រអាប់​"
 
 #: ../src/ui/widget/selected-style.cpp:293
 msgid "Remove"
 msgstr "យក​ចេញ"
 
 #: ../src/ui/widget/selected-style.cpp:524
-#, fuzzy
 msgid "Apply last set color to fill"
-msgstr "បំពេញ​ពណ៌​រាបស្មើ"
+msgstr "អនុវត្ត​ការ​កំណត់​ពណ៌​ចុង​ក្រោយ​ដើម្បីបំពេញ"
 
 #: ../src/ui/widget/selected-style.cpp:536
-#, fuzzy
 msgid "Apply last set color to stroke"
-msgstr "​ខ្វាច់មានពណ៌​រាបប​ស្មើរ​"
+msgstr "អនុវត្ត​ការ​កំណត់​ពណ៌​ចុងក្រោយដើម្បី​ខ្វាច់​"
 
 #: ../src/ui/widget/selected-style.cpp:547
-#, fuzzy
 msgid "Apply last selected color to fill"
-msgstr "ពណ៌​ដែល​បាន​ជ្រើស​ចុង​ក្រោយ​"
+msgstr "អនុវត្ត​ពណ៌​ដែល​បាន​​ជ្រើស​ចុងក្រោយ​ដើម្បីបំពេញ"
 
 #: ../src/ui/widget/selected-style.cpp:558
-#, fuzzy
 msgid "Apply last selected color to stroke"
-msgstr "ពណ៌​ដែល​បាន​ជ្រើស​ចុង​ក្រោយ​"
+msgstr "អនុវត្ត​ពណ៌​ដែល​បាន​​ជ្រើស​ចុង​ក្រោយ​ដើម្បី​ខ្វាច់​"
 
 #: ../src/ui/widget/selected-style.cpp:578
-#, fuzzy
 msgid "Invert fill"
-msgstr "មិនបាន​កំណត់​បំពេញ "
+msgstr "ដាក់​បញ្ច្រាស​កា​របំពេញ"
 
 #: ../src/ui/widget/selected-style.cpp:598
-#, fuzzy
 msgid "Invert stroke"
-msgstr "មិនបានកំណត់​ខ្វាច់"
+msgstr "ដាក់​បញ្ច្រាស​ខ្វាច់"
 
 #: ../src/ui/widget/selected-style.cpp:610
-#, fuzzy
 msgid "White fill"
-msgstr "ពណ៌ស"
+msgstr "បំពេញ​ពណ៌ស"
 
 #: ../src/ui/widget/selected-style.cpp:622
-#, fuzzy
 msgid "White stroke"
-msgstr "លំនាំ​ខ្វាច់"
+msgstr "ខ្វាច់​ពណ៌​ស"
 
 #: ../src/ui/widget/selected-style.cpp:634
-#, fuzzy
 msgid "Black fill"
-msgstr "ពណ៌​ខ្មៅ"
+msgstr "បំពេញ​ពណ៌​ខ្មៅ"
 
 #: ../src/ui/widget/selected-style.cpp:646
-#, fuzzy
 msgid "Black stroke"
-msgstr "​ខ្វាច់មានពណ៌​រាបប​ស្មើរ​"
+msgstr "ខ្វាច់​ពណ៌​ខ្មៅ​"
 
 #: ../src/ui/widget/selected-style.cpp:689
-#, fuzzy
 msgid "Paste fill"
-msgstr "លំនាំ​បំពេញ "
+msgstr "បិទភ្ជាប់​ការ​បំពេញ"
 
 #: ../src/ui/widget/selected-style.cpp:707
-#, fuzzy
 msgid "Paste stroke"
-msgstr "លំនាំ​ខ្វាច់"
+msgstr "បិទភ្ជាប់ខ្វាច់"
 
 #: ../src/ui/widget/selected-style.cpp:876
-#, fuzzy
 msgid "Change stroke width"
-msgstr "មាត្រដ្ឋាន​ទទឹង​ខ្វាច់​"
+msgstr "ផ្លាស់ប្ដូរ​ទទឹង​ខ្វាច់​"
 
 #: ../src/ui/widget/selected-style.cpp:1017
 #: ../src/ui/widget/selected-style.cpp:1018
-#, fuzzy
 msgid "Master opacity, %"
-msgstr "ជំនាញ​ស្រអាប់"
+msgstr "ភាព​ស្រអាប់​មេ %"
 
 #: ../src/ui/widget/selected-style.cpp:1049
 #, c-format
 msgid "Stroke width: %.5g%s%s"
-msgstr "ទទឹង​ខ្វាច់​ ៖ %.5g%s%s"
+msgstr "ទទឹង​ខ្វាច់ ៖ %.5g%s%s"
 
 #: ../src/ui/widget/selected-style.cpp:1053
 msgid " (averaged)"
-msgstr " (មធ្យម​)"
+msgstr " (មធ្យម)"
 
 #: ../src/ui/widget/selected-style.cpp:1081
 msgid "0 (transparent)"
-msgstr "0 (ភាពថ្លា​)"
+msgstr "0 (ថ្លា)"
 
 #: ../src/ui/widget/selected-style.cpp:1105
-#, fuzzy
 msgid "100% (opaque)"
-msgstr "១ .០ (ស្រអាប់​)"
+msgstr "១០០% (ភាព​ស្រអាប់)"
 
 #: ../src/ui/widget/page-sizer.cpp:195
-#, fuzzy
 msgid "Name"
-msgstr "ឈ្មោះ ៖"
+msgstr "ឈ្មោះ"
 
 #: ../src/ui/widget/page-sizer.cpp:233
 msgid "P_age size:"
@@ -9725,7 +9670,7 @@ msgstr "ទំហំ​ទំព័រ​ ៖"
 
 #: ../src/ui/widget/page-sizer.cpp:241
 msgid "Page orientation:"
-msgstr "ទិសទំព័រ​ ៖"
+msgstr "ទិស​ទំព័រ ៖"
 
 #: ../src/ui/widget/page-sizer.cpp:244
 msgid "_Landscape"
@@ -9733,7 +9678,7 @@ msgstr "ផ្តេក​"
 
 #: ../src/ui/widget/page-sizer.cpp:249
 msgid "_Portrait"
-msgstr "គំនូរ​"
+msgstr "បញ្ឈរ"
 
 #. ## Set up custom size frame
 #: ../src/ui/widget/page-sizer.cpp:256
@@ -9742,15 +9687,15 @@ msgstr "ទំហំ​ផ្ទាល់ខ្លួន"
 
 #: ../src/ui/widget/page-sizer.cpp:265
 msgid "_Fit page to selection"
-msgstr "ការជ្រើស​ទំព័រ​"
+msgstr "ធ្វើ​ឲ្យ​ទំព័រ​សម​នឹង​ជម្រើស​"
 
 #: ../src/ui/widget/page-sizer.cpp:267
 msgid "Resize the page to fit the current selection, or the entire drawing if there is no selection"
-msgstr "ប្តូរ​ទំហំ​ទំព័រ​សម្រាប់​ការជ្រើស​បច្ចុប្បន្ន​ ឬ ការគូរ​ធាតុ​ បើ​គ្មាន​ការជ្រើស​ទេ​"
+msgstr "ផ្លាស់ប្ដូរ​ទំព័រ​ឲ្យ​សម​នឹង​ជម្រើស​បច្ចុប្បន្ន ឬ​គំនូរ​ទាំង​មូល ប្រសិន​បើ​គ្មាន​ជម្រើស"
 
 #: ../src/ui/widget/page-sizer.cpp:299
 msgid "U_nits:"
-msgstr "ឯកត្តា​ ៖"
+msgstr "ឯកតា ៖"
 
 #: ../src/ui/widget/page-sizer.cpp:301
 msgid "Width of paper"
@@ -9765,13 +9710,12 @@ msgid "Height of paper"
 msgstr "កម្ពស់​ក្រដាស"
 
 #: ../src/ui/widget/page-sizer.cpp:355
-#, fuzzy
 msgid "Set page size"
-msgstr "ទំហំ​ទំព័រ​ ៖"
+msgstr "កំណត់​ទំហំ​ទំព័រ"
 
 #: ../src/ui/widget/style-swatch.cpp:296
 msgid "L Gradient"
-msgstr "ជម្រាល L "
+msgstr "ជម្រាល L"
 
 #: ../src/ui/widget/style-swatch.cpp:300
 msgid "R Gradient"
@@ -9780,12 +9724,12 @@ msgstr "ជម្រាល​ R"
 #: ../src/ui/widget/style-swatch.cpp:316
 #, c-format
 msgid "Fill: %06x/%.3g"
-msgstr ""
+msgstr "បំពេញ ៖ %06x/%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:318
 #, c-format
 msgid "Stroke: %06x/%.3g"
-msgstr ""
+msgstr "ខ្វាច់ ៖ %06x/%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:350
 #, c-format
@@ -9800,83 +9744,73 @@ msgstr "O:%.3g"
 #: ../src/ui/widget/style-swatch.cpp:368
 #, c-format
 msgid "O:.%d"
-msgstr "O:.%d"
+msgstr "O ៖.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:373
 #, c-format
 msgid "Opacity: %.3g"
-msgstr "ស្រអាប់ ៖ %.3g"
+msgstr "ភាព​ស្រទាប់ ៖ %.3g"
 
 #: ../src/verbs.cpp:1154
-#, fuzzy
 msgid "Switch to next layer"
-msgstr "លើក​ស្រទាប់​បន្ទាប់​ឡើង​លើ​"
+msgstr "ប្ដូរ​ទៅ​ស្រទាប់​បន្ទាប់"
 
 #: ../src/verbs.cpp:1155
-#, fuzzy
 msgid "Switched to next layer."
-msgstr "ស្រទាប់​បន្ទាប់​ត្រូវ​បាន​ផ្លាស់ទី​"
+msgstr "បាន​ប្ដូរ​ទៅ​ស្រទាប់​បន្ទាប់ ។"
 
 #: ../src/verbs.cpp:1157
-#, fuzzy
 msgid "Cannot go past last layer."
-msgstr "ស្រទាប់​ចុងក្រោយ​មិន​អាច​ផ្លាស់ទី​បិទភ្ជាប់​បានឡើយ​ ។"
+msgstr "មិន​អាច​​ទៅ​តាម​ស្រទាប់​ចុង​ក្រោយ ។"
 
 #: ../src/verbs.cpp:1166
-#, fuzzy
 msgid "Switch to previous layer"
-msgstr "ស្រទាប់​មុន​ទាបជាង​"
+msgstr "ប្ដូរ​ទៅ​ស្រទាប់​មុន"
 
 #: ../src/verbs.cpp:1167
-#, fuzzy
 msgid "Switched to previous layer."
-msgstr "ស្រទាប់​បានផ្លាស់ទី​ទៅ​មុន​"
+msgstr "បាន​ប្ដូរ​ទៅ​ស្រទាប់​មុន ។"
 
 #: ../src/verbs.cpp:1169
-#, fuzzy
 msgid "Cannot go before first layer."
-msgstr "ស្រទាប់​ដំបូង​មិន​អាច​ផ្លាស់ទី​បិទភ្ជាប់​បាន​ទេ​ ។"
+msgstr "មិនអាច​ទៅ​មុខ​ស្រទាប់​ទី ១"
 
 #: ../src/verbs.cpp:1186
 #: ../src/verbs.cpp:1270
 msgid "No current layer."
-msgstr "គ្មាន​ស្រទាប់​បច្ចុប្បន្ន​"
+msgstr "គ្មាន​ស្រទាប់​បច្ចុប្បន្ន ។"
 
 #: ../src/verbs.cpp:1215
 #: ../src/verbs.cpp:1219
 #, c-format
 msgid "Raised layer <b>%s</b>."
-msgstr "ស្រទាប់​បាន​លើក​ឡើង​លើ <b>%s</b> ។"
+msgstr "ស្រទាប់​បាន​លើក​ឡើង <b>%s</b> ។"
 
 #: ../src/verbs.cpp:1216
-#, fuzzy
 msgid "Layer to top"
-msgstr "ស្រទាប់​នៅ​កំពូល​"
+msgstr "ស្រទាប់​ទៅ​កំពូល​"
 
 #: ../src/verbs.cpp:1220
-#, fuzzy
 msgid "Raise layer"
-msgstr "លើក​ស្រទាប់ឡើង​"
+msgstr "លើក​ស្រទាប់​ឡើង​លើ​"
 
 #: ../src/verbs.cpp:1223
 #: ../src/verbs.cpp:1227
 #, c-format
 msgid "Lowered layer <b>%s</b>."
-msgstr "បាត​ស្រទាប់​ <b>%s</b>."
+msgstr "បាន​បន្ទាប​ស្រទាប <b>%s</b> ។"
 
 #: ../src/verbs.cpp:1224
-#, fuzzy
 msgid "Layer to bottom"
 msgstr "ស្រទាប់​ទៅ​បាត​"
 
 #: ../src/verbs.cpp:1228
-#, fuzzy
 msgid "Lower layer"
-msgstr "ស្រទាប់​ទាបជាង​"
+msgstr "ស្រទាប់​ទាប​ជាង​"
 
 #: ../src/verbs.cpp:1237
 msgid "Cannot move layer any further."
-msgstr "ស្រទាប់​មិន​អាច​ផ្លាស់ទី​ទៅ​ឆ្ងាយ​ជាង​នេះ​បានទេ​"
+msgstr "មិន​អាច​ផ្លាស់ទី​ស្រទាប់​បាន​ទៀត​ទេ ។"
 
 #: ../src/verbs.cpp:1265
 msgid "Delete layer"
@@ -9885,7 +9819,7 @@ msgstr "លុប​ស្រទាប់"
 #. TRANSLATORS: this means "The layer has been deleted."
 #: ../src/verbs.cpp:1268
 msgid "Deleted layer."
-msgstr "ស្រទាប់​បានលុប​ហើយ"
+msgstr "ស្រទាប់​ដែល​បាន​លុប ។"
 
 #: ../src/verbs.cpp:1350
 msgid "Flip horizontally"
@@ -9900,69 +9834,65 @@ msgstr "ត្រឡប់​បញ្ឈរ"
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:1819
 msgid "tutorial-basic.svg"
-msgstr "ការបង្រៀន​មូលដ្ឋាន​ svg"
+msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1823
 msgid "tutorial-shapes.svg"
-msgstr "ការបង្រៀន រូបរាង​.svg"
+msgstr "tutorial-shapes.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1827
 msgid "tutorial-advanced.svg"
-msgstr " ការបង្រៀន svg កម្រិត​ខ្ពស់​"
+msgstr "tutorial-advanced.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1831
 msgid "tutorial-tracing.svg"
-msgstr "ការបង្រៀន​ស្នាម​ svg"
+msgstr "tutorial-tracing.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1835
 msgid "tutorial-calligraphy.svg"
-msgstr "បង្រៀន​ការសរសេរ​អក្សរ​ផ្ចង់​ svg"
+msgstr "tutorial-calligraphy.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1839
 msgid "tutorial-elements.svg"
-msgstr "បង្រៀន​ធាតុ​ .svg"
+msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1843
 msgid "tutorial-tips.svg"
-msgstr "បង្រៀន​ -tips.svg"
+msgstr "tutorial-tips.svg"
 
 #: ../src/verbs.cpp:2120
 #: ../src/verbs.cpp:2599
-#, fuzzy
 msgid "Unlock all objects in the current layer"
-msgstr "ប្ដូរ​ឈ្មោះ​ស្រទាប់​បច្ចុប្បន្ន​"
+msgstr "មិន​អាច​ចាក់សោ​វត្ថុទាំង​អស់​ក្នុង​ស្រទាប់​បច្ចុប្បន្ន"
 
 #: ../src/verbs.cpp:2124
 #: ../src/verbs.cpp:2601
-#, fuzzy
 msgid "Unlock all objects in all layers"
-msgstr "ជ្រើស​វត្ថុ​ទាំងអស់​ឬ ថ្នាំង​ទាំងអស់​"
+msgstr "មិន​អាច​ចាក់សោ​វត្ថុ​ទាំងអស់​ក្នុង​ស្រទាប់​ទាំង​អស់​"
 
 #: ../src/verbs.cpp:2128
 #: ../src/verbs.cpp:2603
-#, fuzzy
 msgid "Unhide all objects in the current layer"
-msgstr "លុប​ស្រទាប់​បច្ចុប្បន្ន​"
+msgstr "មិន​លាក់​វត្ថុ​ទាំងអស់​ក្នុង​ស្រទាប់​បច្ចុប្បន្ន"
 
 #: ../src/verbs.cpp:2132
 #: ../src/verbs.cpp:2605
-#, fuzzy
 msgid "Unhide all objects in all layers"
-msgstr "ជ្រើស​ក្នុង​ស្រទាប់​ទាំងអស់​"
+msgstr "មិន​លាក់​វត្ថុ​ទាំងអស់​ក្នុង​ស្រទាប់​ទាំងអស់"
 
 #: ../src/verbs.cpp:2147
 msgid "Does nothing"
-msgstr "វា​ទទេ"
+msgstr "មិ​នធ្វើ​អ្វី​ទាំង​អស់"
 
 #: ../src/verbs.cpp:2150
 msgid "Create new document from the default template"
-msgstr "បង្កើត​ឯកសារ​ពី គំរូ​លំនាំដើម​"
+msgstr "បង្កើត​ឯកសារ​ថ្មី​ពី​ពុម្ព​លំនាំដើម"
 
 #: ../src/verbs.cpp:2152
 msgid "_Open..."
@@ -9970,15 +9900,15 @@ msgstr "​បើក..."
 
 #: ../src/verbs.cpp:2153
 msgid "Open an existing document"
-msgstr "បើក​ឯកសារ​ដែល​មាន​ស្រាប់​"
+msgstr "បើក​ឯកសារ​ដែល​មាន​ស្រាប់​មួយ"
 
 #: ../src/verbs.cpp:2154
 msgid "Re_vert"
-msgstr "ត្រឡប់​ដូច​ដើម"
+msgstr "ដាក់​បញ្ច្រាស"
 
 #: ../src/verbs.cpp:2155
 msgid "Revert to the last saved version of document (changes will be lost)"
-msgstr "ត្រឡប់ទៅ​កាន់​កំណែ​ឯកសារ​ដែល​បាន​រក្សាទុក​ចុង​ក្រោយ​គេ​ (ការផ្លាស់ប្តូរ​នឹង ត្រូវ​បាន​បាត់បង់​)"
+msgstr "ដាក់បញ្ច្រាស​ទៅ​កំណែ​ឯកសារ​ដែល​បាន​រក្សាទុក​ចុងក្រោយ (ការ​ផ្លាស់ប្ដូរ​នឹង​បាត់បង់)"
 
 #: ../src/verbs.cpp:2156
 msgid "_Save"
@@ -9994,17 +9924,15 @@ msgstr "រក្សាទុក​ជា​..."
 
 #: ../src/verbs.cpp:2159
 msgid "Save document under a new name"
-msgstr "រក្សា​ឯកសារ​ជា​ឈ្មោះ​ថ្មី "
+msgstr "រក្សាទុក​ឯកសារ​ដោយ​ដាក់​ឈ្មោះ​ថ្មី"
 
 #: ../src/verbs.cpp:2160
-#, fuzzy
 msgid "Save a Cop_y..."
-msgstr "រក្សាទុក​ជា​..."
+msgstr "រក្សាទុក​​ច្បាប់​ចម្លង..."
 
 #: ../src/verbs.cpp:2161
-#, fuzzy
 msgid "Save a copy of the document under a new name"
-msgstr "រក្សា​ឯកសារ​ជា​ឈ្មោះ​ថ្មី "
+msgstr "រក្សាទុក​ច្បាប់​ចម្លង​ឯកសារ​ដោយដាក់​ឈ្មោះ​ថ្មី​មួយ"
 
 #: ../src/verbs.cpp:2162
 msgid "_Print..."
@@ -10017,11 +9945,11 @@ msgstr "បោះពុម្ព​ឯកសារ​"
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
 #: ../src/verbs.cpp:2165
 msgid "Vac_uum Defs"
-msgstr "Vac_uum Defs"
+msgstr "Vacuum Defs"
 
 #: ../src/verbs.cpp:2165
 msgid "Remove unused definitions (such as gradients or clipping paths) from the &lt;defs&gt; of the document"
-msgstr "យក​ចេញ និយមន័យ​ដែល​មិន​បាន​ប្រើ​ (ដូចជា​ជម្រាល​ឬ ច្រឹប​ផ្លូវ​) ពី &lt;defs&gt; នៃ​ឯកសារ​"
+msgstr "យក​ការកំណត់​ដែល​មិនប្រើ​ចេញ (ដូចជា ជម្រាល ឬ​ផ្លូវ​ច្រឹប) ពី &lt;defs&gt; នៃ​ឯកសារ"
 
 #: ../src/verbs.cpp:2167
 msgid "Print _Direct"
@@ -10029,7 +9957,7 @@ msgstr "បោះពុម្ព​ផ្ទាល់​"
 
 #: ../src/verbs.cpp:2168
 msgid "Print directly without prompting to a file or pipe"
-msgstr "បោះពុម្ព​ផ្ទាល់​ទៅ​កាន់​ឯកសារ​ឬ បំពង់​ដោយ​គ្មាន​ប្រអប់​បញ្ចូល​"
+msgstr "បោះពុម្ព​ដោយ​ផ្ទាល់​ដោយ​មិន​សួរ​ឯកសារ ឬបំពង់"
 
 #: ../src/verbs.cpp:2169
 msgid "Print Previe_w"
@@ -10037,7 +9965,7 @@ msgstr "មើល​មុន​បោះពុម្ព"
 
 #: ../src/verbs.cpp:2170
 msgid "Preview document printout"
-msgstr "បោះពុម្ព​ចេញ​នូវ​ឯកសារ​មើល​ជា​មុន​"
+msgstr "មើល​សន្លឹក​បោះពុម្ព​ឯកសារ​ជា​មុន​"
 
 #: ../src/verbs.cpp:2171
 msgid "_Import..."
@@ -10045,44 +9973,43 @@ msgstr "នាំចូល​..."
 
 #: ../src/verbs.cpp:2172
 msgid "Import a bitmap or SVG image into this document"
-msgstr "នាំចូល​រូបភាព​ធម្មតា​ឬ  រូបភាព​ SVG ក្នុង​ឯកសារ​នេះ "
+msgstr "នាំចូល​រូបភាព ឬ​រូបភាព SVG ទៅ​ក្នុង​ឯកសារ​នេះ"
 
 #: ../src/verbs.cpp:2173
 msgid "_Export Bitmap..."
-msgstr "នាំរូបភាព​ចេញរូបភាព​..."
+msgstr "នាំចេញ​រូបភាព..."
 
 #: ../src/verbs.cpp:2174
 msgid "Export this document or a selection as a bitmap image"
-msgstr "នាំឯកសារ​នេះ​ចេញ ឬ ការជ្រើស​ជា​រូបភាព​"
+msgstr "នាំចេញ​ឯកសារ ឬ​ជម្រើស​នេះ​ជា​រូបភាព"
 
 #: ../src/verbs.cpp:2175
 msgid "Import a document from Open Clip Art Library"
-msgstr ""
+msgstr "នាំចូល​ឯកសារ​ពី​បណ្ណាល័យ​បន្ទប់​រូបភាព​បើក"
 
 #: ../src/verbs.cpp:2176
 msgid "Export To Open Clip Art Library"
-msgstr ""
+msgstr "នាំចេញ​ទៅ​បណ្ណាល័យ​បន្ទប់​រូបភាព​បើក"
 
 #: ../src/verbs.cpp:2176
-#, fuzzy
 msgid "Export this document to Open Clip Art Library"
-msgstr "នាំឯកសារ​នេះ​ចេញ ឬ ការជ្រើស​ជា​រូបភាព​"
+msgstr "នាំចេញ​ឯកសារ​នេះ​ទៅ​បណ្ណាល័យ​បន្ទប់​រូបភាព​បើក"
 
 #: ../src/verbs.cpp:2177
 msgid "N_ext Window"
-msgstr "បង្អួច​បន្ទាប់​"
+msgstr "បង្អួច​ថ្មី​"
 
 #: ../src/verbs.cpp:2178
 msgid "Switch to the next document window"
-msgstr "ប្តូរ​ទៅ​កាន់​បង្អួច​ឯកសារ​បន្ទាប់​"
+msgstr "ប្ដូរ​ទៅ​បង្អួច​ឯកសារ​បន្ទាប់"
 
 #: ../src/verbs.cpp:2179
 msgid "P_revious Window"
-msgstr "បង្អួច​មុន​"
+msgstr "បង្អួច​ពី​មុន"
 
 #: ../src/verbs.cpp:2180
 msgid "Switch to the previous document window"
-msgstr "ប្តូរ​ទៅ​បង្អួច​ឯកសារ​មុន​"
+msgstr "ប្ដូរ​ទៅ​បង្អួច​ឯកសារ​មុន​"
 
 #: ../src/verbs.cpp:2181
 msgid "_Close"
@@ -10090,23 +10017,23 @@ msgstr "បិទ"
 
 #: ../src/verbs.cpp:2182
 msgid "Close this document window"
-msgstr "បិទបង្អួច​ឯកសារ​នេះ "
+msgstr "បិទបង្អួច​ឯកសារ​នេះ"
 
 #: ../src/verbs.cpp:2183
 msgid "_Quit"
-msgstr "បោះបង់​"
+msgstr "ចេញ"
 
 #: ../src/verbs.cpp:2183
 msgid "Quit Inkscape"
-msgstr "បោះបង់​  Inkscape"
+msgstr "ចេញ​ពី Inkscape"
 
 #: ../src/verbs.cpp:2186
 msgid "Undo last action"
-msgstr "មិន​ធ្វើ​សកម្មភាព​ចុងក្រោយ​វិញ "
+msgstr "មិន​ធ្វើ​សកម្មភាព​ចុងក្រោយ​វិញ"
 
 #: ../src/verbs.cpp:2189
 msgid "Do again the last undone action"
-msgstr "តើសកម្មភាព​ចុង​ក្រោយ​មិន​ធ្វើ​វិញ​ឬ​"
+msgstr "ធ្វើ​សកម្មភាព​ដែល​មិនអាច​ធ្វើវិញ​ចុង​ក្រោយ​ម្ដង​ទៀត​"
 
 #: ../src/verbs.cpp:2190
 msgid "Cu_t"
@@ -10114,7 +10041,7 @@ msgstr "កាត់​"
 
 #: ../src/verbs.cpp:2191
 msgid "Cut selection to clipboard"
-msgstr "កាត់​ការជ្រើស​ក្នុង​ក្តារតម្បៀត​ខ្ទាស់"
+msgstr "កាត់​ជម្រើស​ទៅ​ក្ដារ​តម្បៀតខ្ទាស់"
 
 #: ../src/verbs.cpp:2192
 msgid "_Copy"
@@ -10122,7 +10049,7 @@ msgstr "ចម្លង​"
 
 #: ../src/verbs.cpp:2193
 msgid "Copy selection to clipboard"
-msgstr "ចម្លង​ការជ្រើស​ទៅ​កាន់​ក្តារតម្បៀត​ខ្ទាស់​"
+msgstr "ចម្លង​ជម្រើស​ទៅ​ក្ដារ​តម្បៀតខ្ទាស់"
 
 #: ../src/verbs.cpp:2194
 msgid "_Paste"
@@ -10130,7 +10057,7 @@ msgstr "​បិទភ្ជាប់​"
 
 #: ../src/verbs.cpp:2195
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr "បិទភ្ជាប់​វត្ថុ​ពី​ក្តារ​តម្រៀត​ខ្ទាស់​ ទៅ​នឹង​ចំណុច​កណ្តុរ​ឬ បិទ​ភ្ជាប់​អត្ថបទ​"
+msgstr "បិទភ្ជាប់​វត្ថុ​ពី​ក្ដារ​តម្បៀតខ្ទាស់​ទៅ​ចំណុចកណ្ដុរ ឬ​បិទភ្ជាប់​អត្ថបទ"
 
 #: ../src/verbs.cpp:2196
 msgid "Paste _Style"
@@ -10138,39 +10065,39 @@ msgstr "បិទភ្ជាប់​រចនាប័ទ្ម​"
 
 #: ../src/verbs.cpp:2197
 msgid "Apply the style of the copied object to selection"
-msgstr "អនុវត្ត​រចនាប័ទ្ម​នៃ​ការជ្រើស​វត្ថុ​ដែល​បានចម្លង​"
+msgstr "អនុវត្ត​រចនាប័ទ្ម​របស់​វត្ថុ​ដែល​បាន​ចម្លង​ទៅ​ជម្រើស"
 
 #: ../src/verbs.cpp:2199
 msgid "Scale selection to match the size of the copied object"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ជម្រើស​ដើម្បី​ផ្គូផ្គង​ទំហំ​របស់​វត្ថុ​ដែល​បាន​ចម្លងលង​"
+msgstr "ធ្វើមាត្រដ្ឋាន​ជម្រើស​ដើម្បីផ្គូផ្គង​ទំហំ​របស់​វត្ថុ​ដែល​បាន​ចម្លង"
 
 #: ../src/verbs.cpp:2200
 msgid "Paste _Width"
-msgstr "បិទភ្ជាប់​ទទឹង​"
+msgstr "បិទភ្ជាប់​​ទទឹង​"
 
 #: ../src/verbs.cpp:2201
 msgid "Scale selection horizontally to match the width of the copied object"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ជម្រើស​ផ្ដេក ដើម្បី​ផ្គូផ្គង​ទទឹង​របស់​វត្ថុ​ដែល​បាន​ចម្លង"
+msgstr "ធ្វើមាត្រដ្ឋាន​ជម្រើស​ផ្ដេក ដើម្បី​ផ្គូផ្គង​ទទឹង​របស់​វត្ថុ​ដែល​បាន​ចម្លង"
 
 #: ../src/verbs.cpp:2202
 msgid "Paste _Height"
-msgstr "បិទ​ភ្ជាប់​កម្ពស់​"
+msgstr "បិទភ្ជាប់​កម្ពស់​"
 
 #: ../src/verbs.cpp:2203
 msgid "Scale selection vertically to match the height of the copied object"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​បញ្ឈរ​ដើម្បី​ផ្គូផ្គង​កម្ពស់​របស់​វត្ថុ​ដែល​បាន​ចម្លង"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​ជម្រើស​បញ្ឈរ ​ដើម្បី​ផ្គូផ្គង​នឹង​កម្ពស់​របស់​វត្ថុ​ដែល​បាន​ចម្លង"
 
 #: ../src/verbs.cpp:2204
 msgid "Paste Size Separately"
-msgstr "បិទភ្ជាប់​ទំហំ​ដែល​បាន​បំបែក​"
+msgstr "បិទភ្ជាប់​ទំហំ​ដោយ​ឡែកៗ"
 
 #: ../src/verbs.cpp:2205
 msgid "Scale each selected object to match the size of the copied object"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​វត្ថុ​នីមួយៗ​ដែល​បាន​ជ្រើស​ដើម្បី​ផ្គូផ្គង​ទៅ​នឹង​ទំហំ​របស់​វត្ថុ​ដែល​បាន​ចម្លង"
+msgstr "ធ្វើមាត្រដ្ឋាន​វត្ថុ​ដែល​បាន​ជ្រើស ដើម្បី​ផ្គូផ្គង​ទំហំ​របស់​វត្ថុ​ដែល​បាន​ចម្លង"
 
 #: ../src/verbs.cpp:2206
 msgid "Paste Width Separately"
-msgstr "បិទភ្ជាប់​ទទឹង​ដែល​បំបែក​"
+msgstr "បិទភ្ជាប់​ទទឹង​​ដោយ​ឡែកៗ"
 
 #: ../src/verbs.cpp:2207
 msgid "Scale each selected object horizontally to match the width of the copied object"
@@ -10178,29 +10105,27 @@ msgstr "ធ្វើ​មាត្រដ្ឋាន​វត្ថុ​នី
 
 #: ../src/verbs.cpp:2208
 msgid "Paste Height Separately"
-msgstr "បិទភ្ជាប់​កម្ពស់​ដែល​បានបំបែក​"
+msgstr "បិទភ្ជាប់​កម្ពស់​ដោយឡែកៗ"
 
 #: ../src/verbs.cpp:2209
 msgid "Scale each selected object vertically to match the height of the copied object"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​វត្ថុ​នីមួយៗ​ដែល​បាន​ជ្រើស​បញ្ឈរ​ដើម្បី​ផ្គូផ្គង​កម្ពស់​របស់​វត្ថុ​ដែល​បាន​ជ្រើស"
+msgstr "ធ្វើមាត្រដ្ឋាន​វត្ថុ​ដែល​បាន​​ជ្រើស​នីមួយៗ​ដោយ​បញ្ឈរ ដើម្បី​ផ្គូផ្គង​កម្ពស់​របស់​វត្ថុ​ដែល​បានចម្លង"
 
 #: ../src/verbs.cpp:2210
 msgid "Paste _In Place"
-msgstr "បិទភ្ជាប់​ទៅ​កន្លែង​ណាមួយ​"
+msgstr "បិទភ្ជាប់​នៅ​នឹង​កន្លែង"
 
 #: ../src/verbs.cpp:2211
 msgid "Paste objects from clipboard to the original location"
-msgstr "បិទភ្ជាប់​វត្ថុ​ពី ក្ដារ​តម្បៀត​ខ្ទាស់ទៅ​កាន់​ទីតាំង​ដើម​"
+msgstr "បិទភ្ជាប់​វត្ថុ​ពី​ក្ដារតម្បៀតខ្ទាស់​ទៅ​ទីតាំង​ដើម"
 
 #: ../src/verbs.cpp:2212
-#, fuzzy
 msgid "Paste Path _Effect"
-msgstr "បិទភ្ជាប់​រចនាប័ទ្ម​"
+msgstr "បិទភ្ជាប់​បែបផែន​ផ្លូវ"
 
 #: ../src/verbs.cpp:2213
-#, fuzzy
 msgid "Apply the path effect of the copied object to selection"
-msgstr "អនុវត្ត​រចនាប័ទ្ម​នៃ​ការជ្រើស​វត្ថុ​ដែល​បានចម្លង​"
+msgstr "អនុវត្ត​បែបផែន​ផ្លូវ​របស់​វត្ថុ​ដែល​បាន​ចម្លង​ទៅ​ជម្រើស"
 
 #: ../src/verbs.cpp:2214
 msgid "_Delete"
@@ -10208,7 +10133,7 @@ msgstr "លុប​"
 
 #: ../src/verbs.cpp:2215
 msgid "Delete selection"
-msgstr "លុប​ជ្រើស​"
+msgstr "លុប​ជម្រើស​"
 
 #: ../src/verbs.cpp:2216
 msgid "Duplic_ate"
@@ -10216,7 +10141,7 @@ msgstr "ស្ទួន​"
 
 #: ../src/verbs.cpp:2217
 msgid "Duplicate selected objects"
-msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​ស្ទួន​"
+msgstr "ស្ទួន​វត្ថុ​ដែល​បាន​ជ្រើស​"
 
 #: ../src/verbs.cpp:2218
 msgid "Create Clo_ne"
@@ -10224,52 +10149,50 @@ msgstr "បង្កើត​ក្លូន​"
 
 #: ../src/verbs.cpp:2219
 msgid "Create a clone (a copy linked to the original) of selected object"
-msgstr "បង្កើត​ក្លូន​ (ចម្លង​តំណ​ដើម​) នៃ​វត្ថុ​ដែល​បាន​ជ្រើស​"
+msgstr "បង្កើត​ក្លូន (ច្បាប់ចម្លង​បាន​តភ្ជាប់​ទៅ​ដើម) របស់​វត្ថុដែល​បាន​ជ្រើស"
 
 #: ../src/verbs.cpp:2220
 msgid "Unlin_k Clone"
-msgstr "្ជាប់​មិន​តភ្ជាប់​ក្លូន"
+msgstr "មិន​តភ្ជាប់​ក្លូន"
 
 #: ../src/verbs.cpp:2221
 msgid "Cut the selected clone's link to its original, turning it into a standalone object"
-msgstr "កាត់​តំណ​របស់​ក្លូន​ដែល​បាន​ជ្រើស​ទៅ​ទម្រង់​ដើម​របស់​វា ត្រឡប់​វា​ទៅ​ជា​វត្ថុ​តែ​មួយ"
+msgstr "កាត់​តំណ​របស់​ខ្លូន​ដែល​បាន​ជ្រើស​ទៅ​ដើម​របស់​វា ត្រឡប់​វា​ទៅជា​វត្ថុ​តែឯង"
 
 #: ../src/verbs.cpp:2222
 msgid "Select _Original"
-msgstr "ជ្រើស​យក​ដើម​"
+msgstr "ជ្រើស​​ដើម​"
 
 #: ../src/verbs.cpp:2223
 msgid "Select the object to which the selected clone is linked"
-msgstr "ជ្រើស​វត្ថ​ដែល​បានជ្រើស​ក្លូន​ដែល​បាន​តភ្ជាប់"
+msgstr "ជ្រើស​វត្ថុដែល​ក្លូន​ដែល​បាន​ជ្រើស​ត្រូវ​តភ្ជាប់​ទៅ"
 
 #. TRANSLATORS: Convert selection to a line marker
 #: ../src/verbs.cpp:2225
-#, fuzzy
 msgid "Objects to _Marker"
-msgstr "វត្ថុ​ទៅ​លំនាំ​"
+msgstr "វត្ថុទៅ​ឧបករណ៍​សម្គាល់"
 
 #: ../src/verbs.cpp:2226
-#, fuzzy
 msgid "Convert selection to a line marker"
-msgstr "កាត់​ការជ្រើស​ក្នុង​ក្តារតម្បៀត​ខ្ទាស់"
+msgstr "បម្លែង​ជម្រើស​ទៅ​ឧបករណ៍​សម្គាល់​បន្ទាត់"
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
 #: ../src/verbs.cpp:2228
 msgid "Objects to Patter_n"
-msgstr "លំនាំ​វត្ថុ​"
+msgstr "វត្ថុ​ទៅ​លំនាំ"
 
 #: ../src/verbs.cpp:2229
 msgid "Convert selection to a rectangle with tiled pattern fill"
-msgstr "បម្លែង​ការជ្រើស​ទៅ​ជា​រាង​ចតុកោណ​ជា​មួយ​លំនាំ​ប្រក់ក្បឿង​"
+msgstr "បម្លែង​ជម្រើស​ទៅ​ចតុកោណកែង​ដែល​មាន​ការ​បំពេញ​លំនាំ​ដែល​បាន​រាប​ជា​ក្បឿង"
 
 #. TRANSLATORS: Extract objects from a tiled pattern fill
 #: ../src/verbs.cpp:2231
 msgid "Pattern to _Objects"
-msgstr "លំនាំ​វត្ថុ​"
+msgstr "លំនាំ​ទៅ​វត្ថុ​"
 
 #: ../src/verbs.cpp:2232
 msgid "Extract objects from a tiled pattern fill"
-msgstr "ដក​យក​វត្ថុ​ពី លំនាំ​ដែលបានប្រក់ក្បឿង​"
+msgstr "ស្រង់​វត្ថុចេញ​​ពី​ការ​បំពេញ​លំនាំ​ដែល​បាន​រៀប​ជា​ក្រឡាក្បឿង"
 
 #: ../src/verbs.cpp:2233
 msgid "Clea_r All"
@@ -10277,7 +10200,7 @@ msgstr "ជម្រះ​ទាំងអស់"
 
 #: ../src/verbs.cpp:2234
 msgid "Delete all objects from document"
-msgstr "លុប​វត្ថុ​ទាំងអស់​ពី​ឯកសារ​"
+msgstr "លុប​វត្ថុ​ទាំង​អស់​ពី​ឯកសារ​"
 
 #: ../src/verbs.cpp:2235
 msgid "Select Al_l"
@@ -10285,27 +10208,27 @@ msgstr "ជ្រើស​ទាំងអស់​"
 
 #: ../src/verbs.cpp:2236
 msgid "Select all objects or all nodes"
-msgstr "ជ្រើស​វត្ថុ​ទាំងអស់​ឬ ថ្នាំង​ទាំងអស់​"
+msgstr "ជ្រើស​វត្ថុទាំងអស់ ឬ​ថ្នាំង​ទាំងអស់"
 
 #: ../src/verbs.cpp:2237
 msgid "Select All in All La_yers"
-msgstr "ជ្រើស​យក​ទាំងអស់​ក្នុង​ស្រទាប់​ទាំងអស់​"
+msgstr "ជ្រើស​ទាំងអស់​ក្នុង​ស្រទាប់ទាំងអស់"
 
 #: ../src/verbs.cpp:2238
 msgid "Select all objects in all visible and unlocked layers"
-msgstr "ជ្រើស​វត្ថុ​ទាំងអស់​ក្នុង​ស្រទាប់​ដែល​អាចមើល​ឃើញ​និង ស្រទាប់​ដែល​មិន​បាន​ចាក់សោ "
+msgstr "ជ្រើស​វត្ថុ​ទាំងអស់​ក្នុង​ស្រទាប់​ដែល​មើលឃើញ និង​ស្រទាប់​មិន​បាន​ចាក់សោ"
 
 #: ../src/verbs.cpp:2239
 msgid "In_vert Selection"
-msgstr "ដាក់ជម្រើស​​បញ្ច្រាស់​"
+msgstr "ដាក់​បញ្ច្រាស​ជម្រើស​"
 
 #: ../src/verbs.cpp:2240
 msgid "Invert selection (unselect what is selected and select everything else)"
-msgstr "បញ្ច្រាស់​ជម្រើស​ (ដោះជ្រើស​លើ​អ្វី​ដែល​បាន​ជ្រើស​និង អ្វី​ដែល​មិន​បាន​ជ្រើស​)"
+msgstr "ដាក់​បញ្ច្រាស​ជម្រើស (មិន​ជ្រើស​អ្វី​ដែល​បាន​ជ្រើស និង​ជ្រើស​អ្វី​ផ្សេង)"
 
 #: ../src/verbs.cpp:2241
 msgid "Invert in All Layers"
-msgstr "ដាក់ស្រទាប់​ទាំងអស់​បញ្ច្រាស់​"
+msgstr "ដាក់​បញ្ច្រាស​ក្នុង​ស្រទាប់​ទាំងអស់​"
 
 #: ../src/verbs.cpp:2242
 msgid "Invert selection in all visible and unlocked layers"
