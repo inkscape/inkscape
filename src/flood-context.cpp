@@ -566,10 +566,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
     bool can_paint_top = (top_ty > 0);
     bool can_paint_bottom = (bottom_ty < bci.height);
 
-    NR::Point top_point = fill_queue->front();
-
-    std::deque<unsigned int> top_queue;
-    std::deque<unsigned int> bottom_queue;
+    NR::Point t = fill_queue->front();
 
     do {
         ok = false;
@@ -580,14 +577,13 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
         }
 
         if (keep_tracing) {
-            if (((unsigned int)top_point[NR::X] == bci.x) && ((unsigned int)top_point[NR::Y] == bci.y)) {
-                fill_queue->pop_front(); top_point = fill_queue->front();
-            }
-
             if (check_if_pixel_is_paintable(px, current_trace_t, bci.x, bci.y, orig_color, bci)) {
                 paint_directions = paint_pixel(px, trace_px, orig_color, bci, current_trace_t);
                 if (bci.radius == 0) {
                     mark_pixel_checked(current_trace_t);
+                    if ((t[NR::X] == bci.x) && (t[NR::Y] == bci.y)) {
+                        fill_queue->pop_front(); t = fill_queue->front();
+                    }
                 }
 
                 if (can_paint_top) {
@@ -600,7 +596,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
 
                             if (ok_to_paint && (!currently_painting_top)) {
                                 currently_painting_top = true;
-                                top_queue.push_back(bci.x);
+                                push_point_onto_queue(fill_queue, bci.max_queue_size, trace_t, bci.x, top_ty);
                             }
                             if ((!ok_to_paint) && currently_painting_top) {
                                 currently_painting_top = false;
@@ -619,7 +615,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
 
                             if (ok_to_paint && (!currently_painting_bottom)) {
                                 currently_painting_bottom = true;
-                                bottom_queue.push_back(bci.x);
+                                push_point_onto_queue(fill_queue, bci.max_queue_size, trace_t, bci.x, bottom_ty);
                             }
                             if ((!ok_to_paint) && currently_painting_bottom) {
                                 currently_painting_bottom = false;
@@ -651,21 +647,17 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
         }
     } while (ok);
 
-    while (!top_queue.empty()) {
-        unsigned int x = top_queue.front(); top_queue.pop_front();
-        unsigned char *trace_t = get_pixel(trace_px, x, top_ty, bci.width);
-        push_point_onto_queue(fill_queue, bci.max_queue_size, trace_t, x, top_ty);
-    }
-
-    while (!bottom_queue.empty()) {
-        unsigned int x = bottom_queue.front(); bottom_queue.pop_front();
-        unsigned char *trace_t = get_pixel(trace_px, x, bottom_ty, bci.width);
-        push_point_onto_queue(fill_queue, bci.max_queue_size, trace_t, x, bottom_ty);
-    }
-
     if (aborted) { return SCANLINE_CHECK_ABORTED; }
     if (reached_screen_boundary) { return SCANLINE_CHECK_BOUNDARY; }
     return SCANLINE_CHECK_OK;
+}
+
+static bool sort_fill_queue_vertical(NR::Point a, NR::Point b) {
+    return a[NR::Y] > b[NR::Y];
+}
+
+static bool sort_fill_queue_horizontal(NR::Point a, NR::Point b) {
+    return a[NR::X] > b[NR::X];
 }
 
 static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event, bool union_with_selection, bool is_point_fill, bool is_touch_fill) {
@@ -803,10 +795,10 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     for (unsigned int i = 0; i < fill_points.size(); i++) {
         NR::Point pw = NR::Point(fill_points[i][NR::X] / zoom_scale, sp_document_height(document) + (fill_points[i][NR::Y] / zoom_scale)) * affine;
-        
+
         pw[NR::X] = (int)MIN(width - 1, MAX(0, pw[NR::X]));
         pw[NR::Y] = (int)MIN(height - 1, MAX(0, pw[NR::Y]));
-        
+
         if (is_touch_fill) {
             if (i == 0) {
                 color_queue.push(pw);
@@ -822,6 +814,8 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     bool reached_screen_boundary = false;
 
     bool first_run = true;
+
+    unsigned long sort_size_threshold = 5;
 
     while (!color_queue.empty() && !aborted) {
         NR::Point color_point = color_queue.front();
@@ -858,13 +852,51 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
             }
         }
 
+        unsigned long old_fill_queue_size = fill_queue.size();
+
         while (!fill_queue.empty() && !aborted) {
             NR::Point cp = fill_queue.front();
+
+            if (bci.radius == 0) {
+                unsigned long new_fill_queue_size = fill_queue.size();
+
+                if (new_fill_queue_size > sort_size_threshold) {
+                    if (new_fill_queue_size > old_fill_queue_size) {
+                        std::sort(fill_queue.begin(), fill_queue.end(), sort_fill_queue_vertical);
+
+                        std::deque<NR::Point>::iterator start_sort = fill_queue.begin();
+                        std::deque<NR::Point>::iterator end_sort = fill_queue.begin();
+                        unsigned int sort_y = (unsigned int)cp[NR::Y];
+                        unsigned int current_y = sort_y;
+                        
+                        for (std::deque<NR::Point>::iterator i = fill_queue.begin(); i != fill_queue.end(); i++) {
+                            NR::Point current = *i;
+                            current_y = (unsigned int)current[NR::Y];
+                            if (current_y != sort_y) {
+                                if (start_sort != end_sort) {
+                                    std::sort(start_sort, end_sort, sort_fill_queue_horizontal);
+                                }
+                                sort_y = current_y;
+                                start_sort = i;
+                            }
+                            end_sort = i;
+                        }
+                        if (start_sort != end_sort) {
+                            std::sort(start_sort, end_sort, sort_fill_queue_horizontal);
+                        }
+                        
+                        cp = fill_queue.front();
+                    }
+                }
+
+                old_fill_queue_size = new_fill_queue_size;
+            }
+
             fill_queue.pop_front();
 
             int x = (int)cp[NR::X];
             int y = (int)cp[NR::Y];
-            
+
             unsigned char *trace_t = get_pixel(trace_px, x, y, width);
             if (!is_pixel_checked(trace_t)) {
                 mark_pixel_checked(trace_t);
