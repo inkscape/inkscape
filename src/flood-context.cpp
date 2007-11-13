@@ -548,24 +548,29 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
     bool aborted = false;
     bool reached_screen_boundary = false;
     bool ok;
-  
+
     bool keep_tracing;
     bool initial_paint = true;
-    
+
     unsigned char *current_trace_t = get_pixel(trace_px, bci.x, bci.y, bci.width);
     unsigned int paint_directions;
-    
+
     bool currently_painting_top = false;
     bool currently_painting_bottom = false;
-    
+
     unsigned int pix_width = bci.width * 4;
-    
+
     unsigned int top_ty = bci.y - 1;
     unsigned int bottom_ty = bci.y + 1;
-    
+
     bool can_paint_top = (top_ty > 0);
     bool can_paint_bottom = (bottom_ty < bci.height);
-    
+
+    NR::Point top_point = fill_queue->front();
+
+    std::deque<unsigned int> top_queue;
+    std::deque<unsigned int> bottom_queue;
+
     do {
         ok = false;
         if (bci.is_left) {
@@ -573,25 +578,29 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
         } else {
             keep_tracing = (bci.x < bci.width);
         }
-        
+
         if (keep_tracing) {
+            if (((unsigned int)top_point[NR::X] == bci.x) && ((unsigned int)top_point[NR::Y] == bci.y)) {
+                fill_queue->pop_front(); top_point = fill_queue->front();
+            }
+
             if (check_if_pixel_is_paintable(px, current_trace_t, bci.x, bci.y, orig_color, bci)) {
                 paint_directions = paint_pixel(px, trace_px, orig_color, bci, current_trace_t);
                 if (bci.radius == 0) {
                     mark_pixel_checked(current_trace_t);
                 }
-                
+
                 if (can_paint_top) {
                     if (paint_directions & PAINT_DIRECTION_UP) { 
                         unsigned char *trace_t = current_trace_t - pix_width;
                         if (!is_pixel_queued(trace_t)) {
                             bool ok_to_paint = check_if_pixel_is_paintable(px, trace_t, bci.x, top_ty, orig_color, bci);
-                            
+
                             if (initial_paint) { currently_painting_top = !ok_to_paint; }
-                            
+
                             if (ok_to_paint && (!currently_painting_top)) {
                                 currently_painting_top = true;
-                                push_point_onto_queue(fill_queue, bci.max_queue_size, trace_t, bci.x, top_ty);
+                                top_queue.push_back(bci.x);
                             }
                             if ((!ok_to_paint) && currently_painting_top) {
                                 currently_painting_top = false;
@@ -599,18 +608,18 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
                         }
                     }
                 }
-                
+
                 if (can_paint_bottom) {
                     if (paint_directions & PAINT_DIRECTION_DOWN) { 
                         unsigned char *trace_t = current_trace_t + pix_width;
                         if (!is_pixel_queued(trace_t)) {
                             bool ok_to_paint = check_if_pixel_is_paintable(px, trace_t, bci.x, bottom_ty, orig_color, bci);
-                            
+
                             if (initial_paint) { currently_painting_bottom = !ok_to_paint; }
-                            
+
                             if (ok_to_paint && (!currently_painting_bottom)) {
                                 currently_painting_bottom = true;
-                                push_point_onto_queue(fill_queue, bci.max_queue_size, trace_t, bci.x, bottom_ty);
+                                bottom_queue.push_back(bci.x);
                             }
                             if ((!ok_to_paint) && currently_painting_bottom) {
                                 currently_painting_bottom = false;
@@ -618,7 +627,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
                         }
                     }
                 }
-                
+
                 if (bci.is_left) {
                     if (paint_directions & PAINT_DIRECTION_LEFT) {
                         bci.x -= 1; current_trace_t -= 4;
@@ -630,7 +639,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
                         ok = true;
                     }
                 }
-                
+
                 initial_paint = false;
             }
         } else {
@@ -641,7 +650,19 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
             }
         }
     } while (ok);
-    
+
+    while (!top_queue.empty()) {
+        unsigned int x = top_queue.front(); top_queue.pop_front();
+        unsigned char *trace_t = get_pixel(trace_px, x, top_ty, bci.width);
+        push_point_onto_queue(fill_queue, bci.max_queue_size, trace_t, x, top_ty);
+    }
+
+    while (!bottom_queue.empty()) {
+        unsigned int x = bottom_queue.front(); bottom_queue.pop_front();
+        unsigned char *trace_t = get_pixel(trace_px, x, bottom_ty, bci.width);
+        push_point_onto_queue(fill_queue, bci.max_queue_size, trace_t, x, bottom_ty);
+    }
+
     if (aborted) { return SCANLINE_CHECK_ABORTED; }
     if (reached_screen_boundary) { return SCANLINE_CHECK_BOUNDARY; }
     return SCANLINE_CHECK_OK;
