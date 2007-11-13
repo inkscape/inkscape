@@ -538,6 +538,7 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
         return sp_file_save_dialog(parentWindow, doc);
     }
 
+    SP_ACTIVE_DESKTOP->event_log->rememberFileSave();
     SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Document saved."));
     return true;
 }

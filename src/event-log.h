@@ -87,6 +87,7 @@ public:
     void setCurrEvent(iterator event)          { _curr_event = event; }
     void setCurrEventParent(iterator event)    { _curr_event_parent = event; }
     void blockNotifications(bool status=true)  { _notifications_blocked = status; }
+    void rememberFileSave()                    { _last_saved = _curr_event; }
 
     /* 
      * Callback types for TreeView changes.
@@ -126,6 +127,8 @@ private:
     iterator _last_event;        //< end position in _event_list_store
     iterator _curr_event_parent; //< parent to current event, if any
 
+    iterator _last_saved;        //< position where last document save occurred
+
     bool _notifications_blocked; //< if notifications should be handled
 
     // Map of connections used to temporary block/unblock callbacks in a TreeView
@@ -140,6 +143,8 @@ private:
 
     void _clearUndo();  //< erase all previously commited events
     void _clearRedo();  //< erase all previously undone events
+
+    void checkForVirginity(); //< marks the document as untouched if undo/redo reaches a previously saved state
 
     // noncopyable, nonassignable
     EventLog(EventLog const &other);

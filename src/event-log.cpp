@@ -13,6 +13,9 @@
 #include "event-log.h"
 #include "inkscape.h"
 #include "util/ucompose.hpp"
+#include "document.h"
+#include "xml/repr.h"
+#include "sp-object.h"
 
 namespace Inkscape {
 
@@ -29,7 +32,7 @@ EventLog::EventLog(SPDocument* document) :
 {
     // add initial pseudo event
     Gtk::TreeRow curr_row = *(_event_list_store->append());
-    _curr_event = _last_event = curr_row;
+    _curr_event = _last_saved = _last_event = curr_row;
     
     curr_row[_columns.description] = _("[Unchanged]");
     curr_row[_columns.type] = SP_VERB_FILE_NEW;
@@ -71,6 +74,8 @@ EventLog::notifyUndoEvent(Event* log)
                 --_curr_event;
             }
 	}
+
+        checkForVirginity();
 
         // update the view
         if (_connected) {
@@ -132,6 +137,8 @@ EventLog::notifyRedoEvent(Event* log)
             }
         }
 
+        checkForVirginity();
+
         // update the view
         if (_connected) {
             Gtk::TreePath curr_path = _event_list_store->get_path(_curr_event);
@@ -189,6 +196,8 @@ EventLog::notifyUndoCommitEvent(Event* log)
     curr_row[_columns.event] = log;
     curr_row[_columns.type] = event_type;
     curr_row[_columns.description] = log->description;
+
+    checkForVirginity();
 
     // update the view
     if (_connected) {
@@ -347,6 +356,19 @@ EventLog::_clearRedo()
 
         }
 
+    }
+}
+
+/* mark document as untouched if we reach a state where the document was previously saved */
+void
+EventLog::checkForVirginity() {
+    g_return_if_fail (_document);
+    if (_curr_event == _last_saved) {
+        Inkscape::XML::Node *repr = sp_document_repr_root(_document);
+        bool saved = sp_document_get_undo_sensitive(_document);
+        sp_document_set_undo_sensitive(_document, false);
+        repr->setAttribute("sodipodi:modified", NULL);
+        sp_document_set_undo_sensitive(_document, saved);
     }
 }
 
