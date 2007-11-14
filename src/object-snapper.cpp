@@ -113,8 +113,8 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
 }
 
 
-bool Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
-                                         Inkscape::SnappedPoint &s,
+void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
+                      					 Inkscape::Snapper::PointType const &t,
                                          NR::Point const &p,
                                          bool const &first_point,
                                          DimensionToSnap const snap_dim) const
@@ -169,10 +169,11 @@ bool Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
     }
 
     //Do the snapping, using all the nodes and corners collected above
+    NR::Point snapped_point;        
+    SnappedPoint s;
     for (std::vector<NR::Point>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
         /* Try to snap to this node of the path */
         NR::Coord dist = NR_HUGE;
-        NR::Point snapped_point;
         switch (snap_dim) {
             case SNAP_X:
                 dist = fabs((*k)[NR::X] - p[NR::X]);
@@ -194,12 +195,14 @@ bool Inkscape::ObjectSnapper::_snapNodes(Inkscape::Snapper::PointType const &t,
         }
     }
 
-    return success;
+    if (success) {
+    	sc.points.push_back(s);	
+    }
 }
 
 
-bool Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
-                                         Inkscape::SnappedPoint &s,
+void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
+                      					 Inkscape::Snapper::PointType const &t,
                                          NR::Point const &p,
                                          bool const &first_point) const
 {
@@ -297,6 +300,7 @@ bool Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
     }
 
     //Now we can finally do the real snapping, using the paths collected above
+    SnappedPoint s;
     for (std::vector<Path*>::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
         if (*k) {
             if (first_point) {
@@ -309,18 +313,34 @@ bool Inkscape::ObjectSnapper::_snapPaths(Inkscape::Snapper::PointType const &t,
 
                 /* Convert the nearest point back to desktop coordinates */
                 NR::Point const o_it = get_point_on_Path(*k, o->piece, o->t);
-                NR::Point const o_dt = desktop->doc2dt(o_it);
-
+                NR::Point const o_dt = desktop->doc2dt(o_it);                
                 NR::Coord const dist = NR::L2(o_dt - p);
-                if (dist < getDistance() && dist < s.getDistance()) {
-                    s = SnappedPoint(o_dt, dist);
-                    success = true;
+
+                if (dist < getDistance()) {
+	                // if we snap to a straight line segment (within a path), then return this line segment
+	                if ((*k)->IsLineSegment(o->piece)) {
+	                    NR::Point start_point;
+	                    NR::Point end_point;
+	                    (*k)->PointAt(o->piece, 0, start_point);
+	                    (*k)->PointAt(o->piece, 1, end_point);
+	                    start_point = desktop->doc2dt(start_point);
+	                    end_point = desktop->doc2dt(end_point);
+	                    sc.lines.push_back(Inkscape::SnappedLineSegment(o_dt, dist, start_point, end_point));    
+	                } else {                
+	                    // for segments other than straight lines of a path, we'll return just the closest snapped point
+	                    if (dist < s.getDistance()) {
+	                        s = SnappedPoint(o_dt, dist);
+	                        success = true;
+	                    }
+	                }
                 }
             }
         }
     }
 
-    return success;
+    if (success) {
+    	sc.points.push_back(s);	
+    }
 }
 
 
@@ -340,19 +360,11 @@ void Inkscape::ObjectSnapper::_doFreeSnap(SnappedConstraints &sc,
         _findCandidates(sp_document_root(_named_view->document), it, first_point, points_to_snap, SNAP_XY);
     }
 
-    SnappedPoint s(p, NR_HUGE);
-    bool snapped_to_node = false;
-    bool snapped_to_path = false;
-
     if (_snap_to_itemnode || _snap_to_bboxnode) {
-        snapped_to_node = _snapNodes(t, s, p, first_point, SNAP_XY);
+        _snapNodes(sc, t, p, first_point, SNAP_XY);
     }
     if (_snap_to_itempath || _snap_to_bboxpath) {
-        snapped_to_path = _snapPaths(t, s, p, first_point);
-    }
-
-    if (snapped_to_node || snapped_to_path) {
-        sc.points.push_back(s);
+        _snapPaths(sc, t, p, first_point);
     }
 }
 
@@ -374,11 +386,12 @@ void Inkscape::ObjectSnapper::_doConstrainedSnap( SnappedConstraints &sc,
 
 
 
-Inkscape::SnappedPoint Inkscape::ObjectSnapper::guideSnap(NR::Point const &p,
-                                                          DimensionToSnap const snap_dim) const
+void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
+										  NR::Point const &p,
+	                                      DimensionToSnap const snap_dim) const
 {
     if ( NULL == _named_view ) {
-        return SnappedPoint(p, NR_HUGE);
+        return;
     }
 
     /* Get a list of all the SPItems that we will try to snap to */
@@ -389,11 +402,7 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::guideSnap(NR::Point const &p,
     points_to_snap.push_back(p);
 
     _findCandidates(sp_document_root(_named_view->document), it, true, points_to_snap, snap_dim);
-
-    SnappedPoint s(p, NR_HUGE);
-    _snapNodes(Inkscape::Snapper::SNAPPOINT_GUIDE, s, p, true, snap_dim);
-
-    return s;
+	_snapNodes(sc, Inkscape::Snapper::SNAPPOINT_GUIDE, p, true, snap_dim);
 }
 
 /**

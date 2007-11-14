@@ -77,8 +77,9 @@ public:
       _strict_snapping = enabled;
   }
   
-  SnappedPoint guideSnap(NR::Point const &p,
-                           DimensionToSnap const snap_dim) const;
+  void guideSnap(SnappedConstraints &sc,
+  				 NR::Point const &p,
+                 DimensionToSnap const snap_dim) const;
   
   bool ThisSnapperMightSnap() const;
   
@@ -108,14 +109,14 @@ private:
                        std::vector<NR::Point> &points_to_snap,
                        DimensionToSnap const snap_dim) const;
   
-  bool _snapNodes(Inkscape::Snapper::PointType const &t,
-                      Inkscape::SnappedPoint &s, 
+  void _snapNodes(SnappedConstraints &sc,
+                      Inkscape::Snapper::PointType const &t,
                       NR::Point const &p, 
                       bool const &first_point,
                       DimensionToSnap const snap_dim) const;
                       
-  bool _snapPaths(Inkscape::Snapper::PointType const &t, 
-                      Inkscape::SnappedPoint &s, 
+  void _snapPaths(SnappedConstraints &sc,
+                      Inkscape::Snapper::PointType const &t, 
                       NR::Point const &p,
                       bool const &first_point) const;
   

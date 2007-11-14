@@ -908,6 +908,20 @@ char *Path::svg_dump_path() const
     return g_strdup (os.str().c_str());
 }
 
+// Find out if the segment that corresponds to 'piece' is a straight line
+bool Path::IsLineSegment(int piece)
+{
+    if (piece < 0 || piece >= int(descr_cmd.size())) {
+        return false;
+    }
+    
+    PathDescr const *theD = descr_cmd[piece];
+    int const typ = theD->getType();
+    
+    return (typ == descr_lineto);
+}
+
+
 /*
   Local Variables:
   mode:c++

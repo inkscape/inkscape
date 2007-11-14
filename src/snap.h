@@ -118,6 +118,10 @@ public:
                                             NR::Coord const &s,
                                             NR::Point const &o,
                                             NR::Dim2 d) const;
+                                            
+  	Inkscape::SnappedPoint guideSnap(NR::Point const &p,
+                           Inkscape::ObjectSnapper::DimensionToSnap const snap_dim) const;
+  
 
     Inkscape::GuideSnapper guide;      ///< guide snapper
     Inkscape::ObjectSnapper object;    ///< snapper to other objects
@@ -131,12 +135,17 @@ public:
     bool getSnapModeBBox() const;
     bool getSnapModeNode() const;
     bool getSnapModeGuide() const;
+    
+    void setSnapIntersectionGG(bool enabled) {_intersectionGG = enabled;}
+    void setSnapIntersectionLS(bool enabled) {_intersectionLS = enabled;}
+    bool getSnapIntersectionGG() { return _intersectionGG;}
+    bool getSnapIntersectionLS() { return _intersectionLS;}    
 
     void setIncludeItemCenter(bool enabled)    {
         _include_item_center = enabled;
-        object.setIncludeItemCenter(enabled);     //store a local copy in the object-snapper
-                                                //instead of passing it through many functions 
-    }
+        // also store a local copy in the object-snapper instead of passing it through many functions
+        object.setIncludeItemCenter(enabled);
+	}
     
     bool getIncludeItemCenter() const {
         return _include_item_center;
@@ -155,6 +164,8 @@ private:
     };
     
     bool _include_item_center; //If true, snapping nodes will also snap the item's center
+    bool _intersectionGG;
+    bool _intersectionLS;
     
     std::pair<NR::Point, bool> _snapTransformed(Inkscape::Snapper::PointType type,
                                                 std::vector<NR::Point> const &points,

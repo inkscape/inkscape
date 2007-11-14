@@ -213,6 +213,8 @@ public:
 
   void  Affiche();
   char *svg_dump_path() const;
+  
+  bool IsLineSegment(int piece);
 
     private:
   // utilitary functions for the path contruction

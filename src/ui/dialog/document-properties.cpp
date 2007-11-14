@@ -359,27 +359,36 @@ void
 DocumentProperties::build_snap_dtls()
 {
     _page_snap_dtls.show();
+	
+	_rcbsigg.init (_("_Grid with guides"),
+                _("Snap to grid-guide intersections"),
+                "inkscape:snap-intersection-grid-guide", _wr);
+	
+	_rcbsils.init (_("_Line segments"),
+                _("Snap to intersections of line segments ('snap to paths' must be enabled, see the previous tab)"),
+                "inkscape:snap-intersection-line-segments", _wr);
 
     _rcbsng.init (_("_Snap guides while dragging"),
                 _("While dragging a guide, snap to object nodes or bounding box corners ('snap to nodes' or 'snap to bounding box corners', both on the previous tab, must be enabled)"),
                 "inkscape:snap-guide", _wr);
 
+    //Applies to both nodes and guides, but not to bboxes, that's why its located here
     _rcbic.init (_("_Include the object's rotation center"),
                 _("Also snap the rotation center of an object when snapping nodes or guides"),
                 "inkscape:snap-center", _wr);
-    //Applies to both nodes and guides, but not to bboxes, that's why its located here
-
+    
     //Other options to locate here: e.g. visual snapping indicators on/off
 
     Gtk::Label *label_i= manage (new Gtk::Label);
-    label_i->set_markup (_("<b>Snapping to intersections</b>"));
+    label_i->set_markup (_("<b>Snapping to intersections of</b>"));
     Gtk::Label *label_m = manage (new Gtk::Label);
     label_m->set_markup (_("<b>Miscellaneous</b>"));
 
     Gtk::Widget *const array[] =
     {
         label_i,            0,
-        0,                  0,
+        0,                  _rcbsigg._button,
+        0,                  _rcbsils._button,
         0,                  0,
         label_m,            0,
         0,                  _rcbsng._button,
