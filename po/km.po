@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-10-17 23:52+0200\n"
-"PO-Revision-Date: 2007-11-13 15:58+0700\n"
+"PO-Revision-Date: 2007-11-14 15:08+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
-"Language-Team: Khmer <support@khmeros.info>\n"
+"Language-Team: Khmer <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10232,35 +10232,31 @@ msgstr "ដាក់​បញ្ច្រាស​ក្នុង​ស្រទ
 
 #: ../src/verbs.cpp:2242
 msgid "Invert selection in all visible and unlocked layers"
-msgstr "ការជ្រើស​បញ្ច្រាស់​ក្នុង​ស្រទាប់​ដែល​អាច​មើល​ឃើញ​និង ស្រទាប់​ដែល​មិន​បាន​ដោះសោ​"
+msgstr "ដាក់​បញ្ច្រាស​ជម្រើស​ក្នុង​ស្រទាប់​ដែល​មើលឃើញ និង​មិន​បាន​ចាក់សោ"
 
 #: ../src/verbs.cpp:2243
-#, fuzzy
 msgid "Select Next"
-msgstr "លុប​អត្ថបទ​"
+msgstr "ជ្រើស​បន្ទាប់"
 
 #: ../src/verbs.cpp:2244
-#, fuzzy
 msgid "Select next object or node"
-msgstr "ជ្រើស​វត្ថុ​ទាំងអស់​ឬ ថ្នាំង​ទាំងអស់​"
+msgstr "ជ្រើស​វត្ថុ ឬ​ថ្នាំង​បន្ទាប់"
 
 #: ../src/verbs.cpp:2245
-#, fuzzy
 msgid "Select Previous"
-msgstr "ការជ្រើស​"
+msgstr "ជ្រើស​ពី​​មុន​"
 
 #: ../src/verbs.cpp:2246
-#, fuzzy
 msgid "Select previous object or node"
-msgstr "ជ្រើស​វត្ថុ​ទាំងអស់​ឬ ថ្នាំង​ទាំងអស់​"
+msgstr "ជ្រើស​វត្ថុ ឬ​ថ្នាំង​ពីមុន"
 
 #: ../src/verbs.cpp:2247
 msgid "D_eselect"
-msgstr "ដោះ​ជម្រើស​"
+msgstr "មិន​ជ្រើស"
 
 #: ../src/verbs.cpp:2248
 msgid "Deselect any selected objects or nodes"
-msgstr "ដោះជម្រើស​ចេញ​ពីវត្ថុ​ឬ ថ្នាំង​ដែល​បាន​ជ្រើស​"
+msgstr "មិន​ជ្រើស​វត្ថុ ឬថ្នាំង​ដែល​បាន​ជ្រើស​ណា​មួយ"
 
 #. Selection
 #: ../src/verbs.cpp:2251
@@ -10269,15 +10265,15 @@ msgstr "លើក​ទៅ​កំពូល​"
 
 #: ../src/verbs.cpp:2252
 msgid "Raise selection to top"
-msgstr "លើក​ការជ្រើស​ទៅ​កំពូល​"
+msgstr "លើក​ជម្រើស​ទៅ​កំពូល​"
 
 #: ../src/verbs.cpp:2253
 msgid "Lower to _Bottom"
-msgstr "ទាប​ទៅ​បាត​"
+msgstr "បន្ទាប​ទៅ​បាត​"
 
 #: ../src/verbs.cpp:2254
 msgid "Lower selection to bottom"
-msgstr "ជម្រើស​ទាប​ទៅ​បាត​"
+msgstr "បន្ទាប​ជម្រើស​ទៅ​បាត​"
 
 #: ../src/verbs.cpp:2255
 msgid "_Raise"
@@ -10285,15 +10281,15 @@ msgstr "លើកឡើង​"
 
 #: ../src/verbs.cpp:2256
 msgid "Raise selection one step"
-msgstr "លើក​ការជ្រើស​ឡើង​មួយ​ជំហាន​ទៀត​"
+msgstr "លើក​ជម្រើស​ឡើង​លើ​មួយ​ជំហានទៀត​"
 
 #: ../src/verbs.cpp:2257
 msgid "_Lower"
-msgstr "ទាបជាង​"
+msgstr "បន្ទាប"
 
 #: ../src/verbs.cpp:2258
 msgid "Lower selection one step"
-msgstr "ជម្រើស​មួយ​ជំហាន​ទាបជាង​"
+msgstr "បន្ទាប​ជម្រើស​មួយ​ជំហាន​"
 
 #: ../src/verbs.cpp:2259
 msgid "_Group"
@@ -10301,11 +10297,11 @@ msgstr "ក្រុម​"
 
 #: ../src/verbs.cpp:2260
 msgid "Group selected objects"
-msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​ជាក្រុម​"
+msgstr "ដាក់​វត្ថុ​ដែល​បាន​ជ្រើស​ជា​ក្រុម"
 
 #: ../src/verbs.cpp:2262
 msgid "Ungroup selected groups"
-msgstr "បំបែក​ក្រុម​ដែល​បាន​ជ្រើស​"
+msgstr "បំបែក​ក្រុម​ដែល​បាន​ជ្រើស"
 
 #: ../src/verbs.cpp:2264
 msgid "_Put on Path"
@@ -10313,17 +10309,17 @@ msgstr "ដាក់​លើ​ផ្លូវ​"
 
 #: ../src/verbs.cpp:2266
 msgid "_Remove from Path"
-msgstr "យក​ផ្លូវ​ចេញ "
+msgstr "យកចេញ​ពី​ផ្លូវ"
 
 #: ../src/verbs.cpp:2268
 msgid "Remove Manual _Kerns"
-msgstr "យក​ Kerns ចេញ​ដោយ​ដៃ​"
+msgstr "យក​ការ​សម្រួល​​ចន្លោះ​តួអក្សរ​ចេញ​ដោយដៃ​"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2271
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr "យកការបង្វិល​​ kerns និង  glyph ទាំងអស់​ចេញ​ពី​វត្ថុ​អត្ថបទ​"
+msgstr "យក​ការ​សម្រួល​ចន្លោះ​តួអក្សរ​ និង​ការ​បង្វិល​ចម្លាក់ខូង​ចេញ​ដោយ​ដៃ​ពី​វត្ថុ​អត្ថបទ"
 
 #: ../src/verbs.cpp:2273
 msgid "_Union"
@@ -10331,23 +10327,23 @@ msgstr "សហភាព​"
 
 #: ../src/verbs.cpp:2274
 msgid "Create union of selected paths"
-msgstr "បង្កើត​សហភាព​នៃ​ផ្លូវ​ដែល​បានជ្រើស​"
+msgstr "បង្កើត​សហភាព​របស់​​ផ្លូវ​ដែល​បាន​ជ្រើស​"
 
 #: ../src/verbs.cpp:2275
 msgid "_Intersection"
-msgstr "ការបែងចែក​"
+msgstr "កា​រប្រសព្វ​គ្នា​"
 
 #: ../src/verbs.cpp:2276
 msgid "Create intersection of selected paths"
-msgstr "បង្កើត​ការបែងចែក​នៃ​ផ្លូវ​ដែល​បានជ្រើស​"
+msgstr "បង្កើត​កា​រប្រសព្វ​គ្នា​របស់​ផ្លូវ​ដែល​ជ្រើស​"
 
 #: ../src/verbs.cpp:2277
 msgid "_Difference"
-msgstr "ភាពខុសគ្នា​"
+msgstr "ភាព​ខុស​គ្នា​"
 
 #: ../src/verbs.cpp:2278
 msgid "Create difference of selected paths (bottom minus top)"
-msgstr "បង្កើត​ភាព​ខុសគ្នា​នៃ​ផ្លូវ​ដែល​បា​នជ្រើស​ (បាត-កំពូល)"
+msgstr "បង្កើត​ភាព​ខុស​គ្នា​របស់​ផ្លូវ​ដែល​បាន​ជ្រើស (បាត-កំពូល)"
 
 #: ../src/verbs.cpp:2279
 msgid "E_xclusion"
@@ -10355,15 +10351,15 @@ msgstr "បដិសេធន៍​"
 
 #: ../src/verbs.cpp:2280
 msgid "Create exclusive OR of selected paths (those parts that belong to only one path)"
-msgstr "បង្កើត​  OR ដាច់​ដោយ​ឡែក​នៃ​ផ្លូវ​ដែល​បានជ្រើស​ (ផ្លូវ​ទាំងនោះ​ ជា​កម្មសិទ្ធ​សម្រាប់​ផ្លូវ​មួយៗ​)"
+msgstr "បង្កើត OR ដោយ​ឡែក​របស់​ផ្លូវ​ដែល​បានជ្រើស (ផ្នែក​ទាំង​នោះ​ដែល​ជា​របស់​ផ្លូវ​តែ​មួយ​ប៉ុណ្ណោះ)"
 
 #: ../src/verbs.cpp:2281
 msgid "Di_vision"
-msgstr "ការបែងចែក​"
+msgstr "កា​រចែក​"
 
 #: ../src/verbs.cpp:2282
 msgid "Cut the bottom path into pieces"
-msgstr "កាត់​បាត​ផ្លូវ​ជា​ផ្នែក​ៗ​"
+msgstr "កាត់​ផ្លូវ​បាត​ទៅ​ជា​ចម្រៀក​"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
@@ -10373,7 +10369,7 @@ msgstr "កាត់​ផ្លូវ​"
 
 #: ../src/verbs.cpp:2286
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr "កាត់​ខ្វាច់​របស់​ផ្លូវ​ទៅ​ជា​ផ្នែក​ៗ  កំពុង​យក​បំពេញ​ចេញ "
+msgstr "កាត់​បាត​ខ្វាច់​របស់​ផ្លូវ​ទៅ​ជា​ចម្រៀក យក​ការ​បំពេញ​ចេញ"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -10384,23 +10380,23 @@ msgstr "ដំបូង​"
 
 #: ../src/verbs.cpp:2291
 msgid "Outset selected paths"
-msgstr "ជ្រើស​ផ្លូវ​ដំបូង​"
+msgstr "ផ្លូវ​ដែល​បាន​ជ្រើ​សដំបូង​"
 
 #: ../src/verbs.cpp:2293
 msgid "O_utset Path by 1 px"
-msgstr "ជ្រើស​ផ្លូវ​ដំបូង​តាម ១​ភីចសែល​"
+msgstr "ផ្លូវ​ដំបូង​ ១ ភីក​សែល​"
 
 #: ../src/verbs.cpp:2294
 msgid "Outset selected paths by 1 px"
-msgstr "ជ្រើស​ផ្លូវ​ដំបូង​តាម ១​ភីចសែល​"
+msgstr "ផ្លូវ​ដែល​បាន​ជ្រើស​ដំបូង ១ ភីកសែល"
 
 #: ../src/verbs.cpp:2296
 msgid "O_utset Path by 10 px"
-msgstr "ជ្រើស​ផ្លូវ​ដំបូង​តាម​ ១០​ភីចសែល​"
+msgstr "ផ្លូវ​ដំបូង ១០ ភីកសែល"
 
 #: ../src/verbs.cpp:2297
 msgid "Outset selected paths by 10 px"
-msgstr "ជ្រើស​ផ្លូវ​ដំបូង​តាម​ ១០​ភីចសែល​"
+msgstr "ផ្លូវ​ដែល​បាន​ជ្រើស​ដំបូង ១០ ភីកសែល"
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -10411,55 +10407,55 @@ msgstr "បញ្ចូល​"
 
 #: ../src/verbs.cpp:2302
 msgid "Inset selected paths"
-msgstr "បញ្ចូល​ផ្លូវ​ដែល​បាន​ជ្រើស​"
+msgstr "បញ្ចូល​ផ្លូវ​ដែល​បាន​ជ្រើស"
 
 #: ../src/verbs.cpp:2304
 msgid "I_nset Path by 1 px"
-msgstr "បញ្ចូល​ផ្លូវ​ដោយ​ ១​ ភីចសែល​"
+msgstr "បញ្ចូល​ផ្លូវ ១ ភីកសែល"
 
 #: ../src/verbs.cpp:2305
 msgid "Inset selected paths by 1 px"
-msgstr "បញ្ចូល​ផ្លូវ​ដែល​បាន​ជ្រើស​ដោយ  ១​ ភីចសែល​"
+msgstr "បញ្ចូល​ដែល​បាន​ជ្រើស ១ ភីកសែល"
 
 #: ../src/verbs.cpp:2307
 msgid "I_nset Path by 10 px"
-msgstr "បញ្ចូល​ផ្លូវ​ដោយ​ ១០​ px"
+msgstr "បញ្ចូល​ផ្លូវ ១០ ភីកសែល"
 
 #: ../src/verbs.cpp:2308
 msgid "Inset selected paths by 10 px"
-msgstr "បញ្ចូល​ផ្លូវ​ដែល​បានជ្រើស​ដោយ​ ១០​ px"
+msgstr "បញ្ចូល​ផ្លូវ​ដែល​បាន​ជ្រើស ១០ ភីកសែល"
 
 #: ../src/verbs.cpp:2310
 msgid "D_ynamic Offset"
-msgstr "ឋាមវន្ត​អុហ្វសិត​"
+msgstr "អុហ្វសិត​ថាមវន្ត​"
 
 #: ../src/verbs.cpp:2310
 msgid "Create a dynamic offset object"
-msgstr "បង្កើត​វត្ថុ​ឋាមវន្ត​អុហ្វសិត​"
+msgstr "បង្កើត​វត្ថុ​អុហ្វសិត​ថាមវន្ត"
 
 #: ../src/verbs.cpp:2312
 msgid "_Linked Offset"
-msgstr "តំណអុហ្វសិត"
+msgstr "អុហ្វសិត​ដែល​បាន​តភ្ជាប់"
 
 #: ../src/verbs.cpp:2313
 msgid "Create a dynamic offset object linked to the original path"
-msgstr "បង្កើត​ឋាមវន្ត​អុហ្វសិត​នៃ​វត្ថុ​ដែល​បាន​ភ្ជាប់​ទៅ​កាន់​ផ្លូវ​ដើម​"
+msgstr "បង្កើត​វត្ថុអុហ្វសិត​ថាមវន្ត​ដែល​បាន​តភ្ជាប់​ទៅ​ផ្លូវ​ដើម"
 
 #: ../src/verbs.cpp:2315
 msgid "_Stroke to Path"
-msgstr "ខ្វាច់​ផ្លូវ​"
+msgstr "ខ្វាប់​ទៅ​ផ្លូវ"
 
 #: ../src/verbs.cpp:2316
 msgid "Convert selected object's stroke to paths"
-msgstr "បម្លែង​ខ្វាច់​របស់វត្ថុ​ដែល​បានជ្រើស​ទៅ​ជា​ផ្លូវ"
+msgstr "បម្លែង​ខ្វាច់​របស់​វត្ថុ​ដែល​បាន​ជ្រើស​ទៅ​ផ្លូវ"
 
 #: ../src/verbs.cpp:2317
 msgid "Si_mplify"
-msgstr "ធម្មតា​"
+msgstr "ធ្វើ​ឲ្យ​ធម្មតា​"
 
 #: ../src/verbs.cpp:2318
 msgid "Simplify selected paths (remove extra nodes)"
-msgstr "បានជ្រើស​ផ្លូប​ធម្មតា​ (ដកស្រង់​យក​ថ្នាំង​ចេញ​)"
+msgstr "ធ្វើ​ឲ្យ​ផ្លូវ​ដែល​បាន​ជ្រើស​ធម្មតា (យក​ថ្នាំង​បន្ថែម​ចេញ)"
 
 #: ../src/verbs.cpp:2319
 msgid "_Reverse"
@@ -10467,32 +10463,32 @@ msgstr "ដាក់​បញ្ច្រាស់​"
 
 #: ../src/verbs.cpp:2320
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
-msgstr "ដាក់​បញ្ច្រាស​ទិសដៅ​របស់​ផ្លូវ​ដែល​បាន​ជ្រើស (មាន​ប្រយោជន៍​សម្រាប់​ត្រឡប់​ឧបករណ៍​គូស​ចំណាំ)​"
+msgstr "ដាក់បញ្ច្រាស​ទិស​របស់​ផ្លូវ​ដែល​បាន​ជ្រើស (មាន​ប្រយោជន៍​សម្រាប់​ត្រឡប់​ឧបករណ៍​សម្គាល់)"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2322
 msgid "_Trace Bitmap..."
-msgstr "_ដាន​រូបភាព​តូច..."
+msgstr "ដាន​រូបភាព..."
 
 #: ../src/verbs.cpp:2323
 msgid "Create one or more paths from a bitmap by tracing it"
-msgstr "បង្កើត​ផ្លូវ​មួយ ឬ​ច្រើន​ពី​រូបភាពតូច​ដោយ​តាមដាន​វា​"
+msgstr "បង្កើត​ផ្លូវ​មួយ ឬ​ច្រើន​ពី​រូបភាព​ដោយ​តាមដាន​វា"
 
 #: ../src/verbs.cpp:2324
 msgid "_Make a Bitmap Copy"
-msgstr "_បង្កើត​ច្បាប់ចម្លង​រូបភាព"
+msgstr "បង្កើត​ច្បាប់​ចម្លង​រូបភាព"
 
 #: ../src/verbs.cpp:2325
 msgid "Export selection to a bitmap and insert it into document"
-msgstr "នាំចេញ​ជម្រើសទៅ​ជា​រូបភាព​តូច ហើយ​បញ្ចូល​វា​ទៅ​ក្នុង​ឯកសារ​"
+msgstr "នាំចេញ​ជម្រើស​ទៅ​រូបភាព និង​បញ្ចូល​វា​ទៅ​ក្នុង​ឯកសារ"
 
 #: ../src/verbs.cpp:2326
 msgid "_Combine"
-msgstr "_ផ្សំ"
+msgstr "ផ្សំ"
 
 #: ../src/verbs.cpp:2327
 msgid "Combine several paths into one"
-msgstr "ផ្សំ​ផ្លូវ​ជា​ច្រើន​ទៅ​ជា​ផ្លូវ​តែ​មួយ​"
+msgstr "ផ្សំ​ផ្លូវ​​ជា​ច្រើន​​ទៅ​ជា​ផ្លូវ​តែ​មួយ"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
@@ -10502,44 +10498,44 @@ msgstr "បំបែក​ផ្នែក​"
 
 #: ../src/verbs.cpp:2331
 msgid "Break selected paths into subpaths"
-msgstr "បំបែក​ផ្លូវ​ដែល​បានជ្រើស​ទៅក្នុង​ផ្លូវ​រង​"
+msgstr "បំបែក​ផ្លូវ​ដែល​បាន​ជ្រើស​ទៅ​ជា​ផ្លូវ​រង"
 
 #: ../src/verbs.cpp:2332
 msgid "Gri_d Arrange..."
-msgstr "របៀបចំ​ក្រឡាចត្រង្គ"
+msgstr "រៀបចំ​ក្រឡាចត្រង្គ..."
 
 #: ../src/verbs.cpp:2333
 msgid "Arrange selected objects in a grid pattern"
-msgstr "តម្រៀប​វត្ថុ​ដែល​បាន​ជ្រើសនៅ​​ក្នុង​លំនាំ​ក្រឡាចត្រង្គ​"
+msgstr "រៀបចំ​វត្ថុ​ដែល​បាន​ជ្រើស​ក្នុង​លំនាំ​ក្រឡា​ចត្រង្គ"
 
 #. Layer
 #: ../src/verbs.cpp:2335
 msgid "_Add Layer..."
-msgstr "_បន្ថែម​ស្រទាប់..."
+msgstr "បន្ថែម​ស្រទាប់..."
 
 #: ../src/verbs.cpp:2336
 msgid "Create a new layer"
-msgstr "បង្កើត​ស្រទាប់​ថ្មី"
+msgstr "បង្កើត​ស្រទាប់​ថ្មី​មួយ"
 
 #: ../src/verbs.cpp:2337
 msgid "Re_name Layer..."
-msgstr "ប្តូរ​ឈ្មោះ​ស្រទាប់​..."
+msgstr "ប្ដូរ​ឈ្មោះ​ស្រទាប់..."
 
 #: ../src/verbs.cpp:2338
 msgid "Rename the current layer"
-msgstr "ប្ដូរ​ឈ្មោះ​ស្រទាប់​បច្ចុប្បន្ន​"
+msgstr "ប្ដូរ​ឈ្មោះ​ស្រទាប់​បច្ចុប្បន្ន"
 
 #: ../src/verbs.cpp:2339
 msgid "Switch to Layer Abov_e"
-msgstr "ប្ដូរ​ទៅ​ស្រទាប់​ខាង​ក្រោម​"
+msgstr "ប្ដូរ​ទៅ​ស្រទាប់​ខាង​លើ"
 
 #: ../src/verbs.cpp:2340
 msgid "Switch to the layer above the current"
-msgstr "ប្ដូរ​ទៅ​ស្រទាប់​ខាង​លើ​ស្រទាប់​បច្ចុប្បន្ន​"
+msgstr "ប្ដូរ​ទៅ​ស្រទាប់​ខាង​លើ​ស្រទាប់​បច្ចុប្បន្ន"
 
 #: ../src/verbs.cpp:2341
 msgid "Switch to Layer Belo_w"
-msgstr "ប្ដូរ​ទៅ​ស្រទាប់​ខាង​ក្រោម​"
+msgstr "ប្ដូរ​ទៅ​ស្រទាប់​ខាង​ក្រោម"
 
 #: ../src/verbs.cpp:2342
 msgid "Switch to the layer below the current"
@@ -10547,27 +10543,27 @@ msgstr "ប្ដូរ​ទៅ​ស្រទាប់​ខាង​ក្រ
 
 #: ../src/verbs.cpp:2343
 msgid "Move Selection to Layer Abo_ve"
-msgstr "ផ្លាស់ទី​ជម្រើស​ទៅ​ស្រទាប់​ខាង​លើ​"
+msgstr "ផ្លាស់ទី​ជម្រើស​ទៅ​ស្រទាប់​ខាង​លើ"
 
 #: ../src/verbs.cpp:2344
 msgid "Move selection to the layer above the current"
-msgstr "ផ្លាស់ទី​ជម្រើស​ទៅ​ស្រទាប់​ខាង​លើ​ស្រទាប់​បច្ចុប្បន្ន​"
+msgstr "ផ្លាស់ទីជម្រើស​ទៅ​ស្រទាប់​ខាង​លើ​ស្រទាប់​បច្ចុប្បន្ន"
 
 #: ../src/verbs.cpp:2345
 msgid "Move Selection to Layer Bel_ow"
-msgstr "ផ្លាស់ទី​ជម្រើស​ទៅ​ស្រទាប់​ខាង​ក្រោម​"
+msgstr "ផ្លាស់ទី​ជ្រើស​ទៅ​ស្រទាប់​ខាង​ក្រោម"
 
 #: ../src/verbs.cpp:2346
 msgid "Move selection to the layer below the current"
-msgstr "ផ្លាស់ទី​ជម្រើស​ទៅ​ស្រទាប់​ខាង​ក្រោយ​ស្រទាប់​បច្ចុប្បន្ន​"
+msgstr "ផ្លាស់ទី​ជម្រើស​ទៅ​ស្រទាប់​ខាង​ក្រោម​ស្រទាប់​បច្ចុប្បន្ន"
 
 #: ../src/verbs.cpp:2347
 msgid "Layer to _Top"
-msgstr "ស្រទាប់​ទៅ​កំពូល​"
+msgstr "ស្រទាប់​ទៅ​កំពូល"
 
 #: ../src/verbs.cpp:2348
 msgid "Raise the current layer to the top"
-msgstr "លើក​ស្រទាប់​បច្ចុប្បន្ន​ឡើង​ទៅ​កំពូល​"
+msgstr "លើក​ស្រទាប់​បច្ចុប្បន្ន​ឡើង​ទៅ​កំពូល"
 
 #: ../src/verbs.cpp:2349
 msgid "Layer to _Bottom"
@@ -10579,7 +10575,7 @@ msgstr "ដាក់​ស្រទាប់​បច្ចុប្បន្ន
 
 #: ../src/verbs.cpp:2351
 msgid "_Raise Layer"
-msgstr "_លើក​ស្រទាប់​ឡើង"
+msgstr "លើក​ស្រទាប់​ឡើង​លើ"
 
 #: ../src/verbs.cpp:2352
 msgid "Raise the current layer"
@@ -10587,15 +10583,15 @@ msgstr "លើក​ស្រទាប់​បច្ចុប្បន្ន​
 
 #: ../src/verbs.cpp:2353
 msgid "_Lower Layer"
-msgstr "_ស្រទាប់​ទាប​ជាង"
+msgstr "បន្ទាប​ស្រទាប់"
 
 #: ../src/verbs.cpp:2354
 msgid "Lower the current layer"
-msgstr "ស្រទាប់​បច្ចុប្បន្ន​ទាប​ជាង​"
+msgstr "បន្ទាប​ស្រទាប់​បច្ចុប្បន្ន"
 
 #: ../src/verbs.cpp:2355
 msgid "_Delete Current Layer"
-msgstr "_លុប​ស្រទាប់​បច្ចុប្បន្ន"
+msgstr "លុប​ស្រទាប់​បច្ចុប្បន្ន"
 
 #: ../src/verbs.cpp:2356
 msgid "Delete the current layer"
@@ -10609,44 +10605,42 @@ msgstr "បង្វិល _90&#176; CW"
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
 #: ../src/verbs.cpp:2362
-#, fuzzy
 msgid "Rotate selection 90° clockwise"
-msgstr "បង្វិល​ជម្រើស 90&#176; ស្រប​ទ្រនិច​នាឡិកា"
+msgstr "បង្វិល​ជម្រើស ៩០ អង្សា​ស្រប​ទិស​ទ្រនិច​នាឡិកា"
 
 #: ../src/verbs.cpp:2363
 msgid "Rotate 9_0&#176; CCW"
-msgstr "បង្វិល​ 9_0&#176; CCW"
+msgstr "បង្វិល 9_0&#176; CCW"
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
 #: ../src/verbs.cpp:2366
-#, fuzzy
 msgid "Rotate selection 90° counter-clockwise"
-msgstr "បង្វិល​ជម្រើស 90&#176; ស្រប​ទ្រនិច​នាឡិកា"
+msgstr "បង្វិល​ជម្រើស ៩០ អង្សា ច្រាស​ទិស​ទ្រនិច​នាឡិកា"
 
 #: ../src/verbs.cpp:2367
 msgid "Remove _Transformations"
-msgstr "យក​ការ​បម្លែង​ចេញ"
+msgstr "យក​ការប្លែង​ចេញ"
 
 #: ../src/verbs.cpp:2368
 msgid "Remove transformations from object"
-msgstr "យក​ការ​បម្លែង​ចេញពី​វត្ថុ​"
+msgstr "យក​ការ​ប្លែង​ចេញ​ពី​វត្ថុ"
 
 #: ../src/verbs.cpp:2369
 msgid "_Object to Path"
-msgstr "_វត្ថុ​ទៅ​ផ្លូវ"
+msgstr "វត្ថុទៅ​ផ្លូវ"
 
 #: ../src/verbs.cpp:2370
 msgid "Convert selected object to path"
-msgstr "បម្លែង​វត្ថុ​ដែល​បា​ន​ជ្រើស​ទៅ​ផ្លូវ​"
+msgstr "បម្លែង​វត្ថុ​ដែល​បាន​ជ្រើស​ទៅ​ផ្លូវ"
 
 #: ../src/verbs.cpp:2371
 msgid "_Flow into Frame"
-msgstr "លំហូរ​ទៅ​ក្នុង​ស៊ុម​"
+msgstr "លំហូរ​ក្នុង​ស៊ុម"
 
 #: ../src/verbs.cpp:2372
 msgid "Put text into a frame (path or shape), creating a flowed text linked to the frame object"
-msgstr "ដាក់​អត្ថបទ​ទៅ​ក្នុង​ស៊ុម​មួយ (ផ្លូវ ឬ​រាង) បង្កើត​អត្ថបទ​ដែល​មាន​លំហូរ​បាន​តភ្ជាប់​ទៅ​វត្ថុ​ស៊ុម"
+msgstr "ដាក់​អត្ថបទ​ក្នុង​ស៊ុម (ផ្លូវ ឬ​រូបរាង) ដោយ​បង្កើត​អត្ថបទ​លំហូរ​បាន​តភ្ជាប់​ទៅ​វត្ថុ​ស៊ុម"
 
 #: ../src/verbs.cpp:2373
 msgid "_Unflow"
@@ -10658,11 +10652,11 @@ msgstr "យក​អត្ថបទ​ចេញ​ពី​ស៊ុម (បង�
 
 #: ../src/verbs.cpp:2375
 msgid "_Convert to Text"
-msgstr "បម្លែង​ទៅ​ជា​អត្ថបទ​"
+msgstr "បម្លែង​ទៅ​​អត្ថបទ"
 
 #: ../src/verbs.cpp:2376
 msgid "Convert flowed text to regular text object (preserves appearance)"
-msgstr "បម្លែង​អត្ថបទ​ដែល​លំហូរ​ទៅ​វត្ថុ​អត្ថបទ​ធម្មតា (បម្រុង​ទុក​រូបរាង)"
+msgstr "បម្លែង​អត្ថបទ​លំហូរ​ទៅ​វត្ថុ​អត្ថបទ​ធម្មតា (ការពារ​រូបរាង)"
 
 #: ../src/verbs.cpp:2378
 msgid "Flip _Horizontal"
@@ -10670,7 +10664,7 @@ msgstr "ត្រឡប់​ផ្ដេក​"
 
 #: ../src/verbs.cpp:2378
 msgid "Flip selected objects horizontally"
-msgstr "ត្រឡប់​វត្ថុ​ដែល​បាន​ជ្រើស​ផ្ដេក​"
+msgstr "ត្រឡប់​វត្ថុ​ដែល​ជ្រើស​ផ្ដេក"
 
 #: ../src/verbs.cpp:2381
 msgid "Flip _Vertical"
@@ -10678,11 +10672,11 @@ msgstr "ត្រឡប់​បញ្ឈរ​"
 
 #: ../src/verbs.cpp:2381
 msgid "Flip selected objects vertically"
-msgstr "ត្រឡប់​វត្ថុ​ដែល​បាន​ជ្រើស​បញ្ឈរ​"
+msgstr "ត្រឡប់​វត្ថុ​ដែល​បាន​ជ្រើស​បញ្ឈរ"
 
 #: ../src/verbs.cpp:2384
 msgid "Apply mask to selection (using the topmost object as mask)"
-msgstr "អនុវត្ត​របាំង​សម្រាប់​ទៅ​ជម្រើសរើសដោយ​​ (ប​ស់​វត្ថុខ្ព​បំផុត​ស់​ជា​របាំង​)"
+msgstr "អនុវត្ត​របាំង​ទៅ​ជម្រើស (ដោយ​ប្រើ​វត្ថុ​កំពូល​បំផុត​ជា​របាំង)"
 
 #: ../src/verbs.cpp:2385
 #: ../src/verbs.cpp:2389
@@ -10691,15 +10685,15 @@ msgstr "ចេញ​ផ្សាយ​"
 
 #: ../src/verbs.cpp:2386
 msgid "Remove mask from selection"
-msgstr "យក​របាំង​ចេញ​ពី​ជម្រើស​"
+msgstr "យក​របាំង​ចេញ​ពី​ជម្រើស"
 
 #: ../src/verbs.cpp:2388
 msgid "Apply clipping path to selection (using the topmost object as clipping path)"
-msgstr "អនុវត្ត​ផ្លូវ​ក្ដារ​តម្បៀតខ្ទាស់​ទៅ​ជម្រើស (ប្រើ​វត្ថុ​នៅ​កំពូល​បំផុត​​ជា​ផ្លូវ​ក្ដារ​តម្បៀត​ខ្ទាស់)"
+msgstr "អនុវត្ត​ផ្លូវ​ច្រិប​ទៅ​ជម្រើស (ដោយ​ប្រើ​វត្ថុ​នៅ​កំពូល​បំផុត​ជា​ផ្លូវ​ច្រិប)"
 
 #: ../src/verbs.cpp:2390
 msgid "Remove clipping path from selection"
-msgstr "យក​ការ​ច្រឹបផ្លូវ​ចេញ​ពី​ជម្រើស​"
+msgstr "យក​ផ្លូវ​ច្រិប​ចេញ​ជម្រើស"
 
 #. Tools
 #: ../src/verbs.cpp:2393
@@ -10708,41 +10702,39 @@ msgstr "ជ្រើស"
 
 #: ../src/verbs.cpp:2394
 msgid "Select and transform objects"
-msgstr "ជ្រើស ​ហើយ​ប្លែង​វត្ថុ​"
+msgstr "ជ្រើស និង​ប្លែង​វត្ថុ"
 
 #: ../src/verbs.cpp:2395
 msgid "Node Edit"
 msgstr "កែសម្រួល​ថ្នាំង​"
 
 #: ../src/verbs.cpp:2396
-#, fuzzy
 msgid "Edit paths by nodes"
-msgstr "កែសម្រួល​ថ្នាំង​ផ្លូវ ​ឬ​គ្រប់គ្រង​វត្ថុបញ្ជា​"
+msgstr "កែសម្រួល​ផ្លូវ​តាម​ថ្នាំង"
 
 #: ../src/verbs.cpp:2397
 msgid "Tweak"
-msgstr ""
+msgstr "លៃតម្រូវ"
 
 #: ../src/verbs.cpp:2398
 msgid "Tweak objects by sculpting or painting"
-msgstr ""
+msgstr "លៃតម្រូវ​វត្ថុ​ដោយឆ្លាក់ ឬ​គូរ"
 
 #: ../src/verbs.cpp:2400
 msgid "Create rectangles and squares"
-msgstr "បង្កើត​ចតុកោណ​កែង​ និង​ការេ​"
+msgstr "បង្កើត​ចតុកោណកែង និង​ការ៉េ"
 
 #: ../src/verbs.cpp:2402
-#, fuzzy
 msgid "Create 3D boxes"
-msgstr "បង្កើត​ក្លូន​រៀប​ជា​ក្រឡា​ក្បឿង..."
+msgstr "បង្កើត​ប្រអប់​ត្រីមាត្រ"
 
 #: ../src/verbs.cpp:2404
 msgid "Create circles, ellipses, and arcs"
-msgstr "បង្កើត​រង្វង់​ ​រាង​ពង​ក្រពើ​ និង​ធ្នូរ​"
+msgstr "បង្កើត​រង្វង់ រាង​ពងក្រពើ និង​ធ្នូ"
 
 #: ../src/verbs.cpp:2406
 msgid "Create stars and polygons"
-msgstr "បង្កើត​ផ្កាយ ​និង​ពហុកោណ​"
+msgstr "បង្កើត​ផ្កាយ និង​ពហុកោណ"
 
 #: ../src/verbs.cpp:2408
 msgid "Create spirals"
@@ -10750,20 +10742,19 @@ msgstr "បង្កើត​គួច​"
 
 #: ../src/verbs.cpp:2410
 msgid "Draw freehand lines"
-msgstr "គូរ​បន្ទាត់​ដោយ​ស៊េរី​"
+msgstr "គូរ​បន្ទាត់​ដោយ​សេរី​"
 
 #: ../src/verbs.cpp:2412
 msgid "Draw Bezier curves and straight lines"
-msgstr "គូរ​​ខ្សែ​កោង​ Bezier និង​បន្ទាត់​ត្រង់​"
+msgstr "គូរ​ខ្សែកោង Bezier និង​បន្ទាត់​ត្រង់"
 
 #: ../src/verbs.cpp:2414
-#, fuzzy
 msgid "Draw calligraphic or brush strokes"
-msgstr "គូរ​បន្ទាត់​​អក្សរ​ផ្ទង់​"
+msgstr "គូរ​អក្សរ​វិចិត្រសាស្ត្រ ឬ​ខ្វាច់​ជក់"
 
 #: ../src/verbs.cpp:2416
 msgid "Create and edit text objects"
-msgstr "បង្កើត ​និង​កែសម្រួលវត្ថុ​អត្ថបទ​"
+msgstr "បង្កើត និង​កែសម្រួល​វត្ថុ​អត្ថបទ"
 
 #: ../src/verbs.cpp:2418
 msgid "Create and edit gradients"
@@ -10774,23 +10765,21 @@ msgid "Zoom in or out"
 msgstr "ពង្រីក​ ឬ​បង្រួម​"
 
 #: ../src/verbs.cpp:2422
-#, fuzzy
 msgid "Pick colors from image"
-msgstr "ជ្រើស​​ពណ៌​មធ្យម​ពី​​រូបភាព"
+msgstr "ជ្រើស​ពណ៌​ពី​រូបភាព"
 
 #: ../src/verbs.cpp:2424
-#, fuzzy
 msgid "Create diagram connectors"
-msgstr "បង្កើត​បន្ទាត់​តភ្ជាប់​"
+msgstr "បង្កើត​បន្ទាត់​តភ្ជាប់​ដ្យាក្រាម​"
 
 #: ../src/verbs.cpp:2426
 msgid "Fill bounded areas"
-msgstr ""
+msgstr "បំពេញ​ផ្ទៃ​ដែល​បានចង"
 
 #. Tool prefs
 #: ../src/verbs.cpp:2429
 msgid "Selector Preferences"
-msgstr "ចំណូល​ចិត្តឧបករណ៍​​ជ្រើស​"
+msgstr "ចំណូល​ចិត្ត​ឧបករណ៍​​ជ្រើស​"
 
 #: ../src/verbs.cpp:2430
 msgid "Open Preferences for the Selector tool"
@@ -10805,14 +10794,12 @@ msgid "Open Preferences for the Node tool"
 msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបរកណ៍​ថ្នាំង​"
 
 #: ../src/verbs.cpp:2433
-#, fuzzy
 msgid "Tweak Tool Preferences"
-msgstr "ចំណូល​ចិត្ត​ឧបករណ៍​ថ្នាំង​"
+msgstr "កែសម្រួល​ចំណូល​ចិត្ត​ឧបករណ៍​"
 
 #: ../src/verbs.cpp:2434
-#, fuzzy
 msgid "Open Preferences for the Tweak tool"
-msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបករណ៍​អត្ថបទ​"
+msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបករណ៍​កែសម្រួល​"
 
 #: ../src/verbs.cpp:2435
 msgid "Rectangle Preferences"
@@ -10820,25 +10807,23 @@ msgstr "ចំណូល​ចិត្ត​ចតុកោណកែង​"
 
 #: ../src/verbs.cpp:2436
 msgid "Open Preferences for the Rectangle tool"
-msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបករណ៍​​​ចតុកោណ​កែង​"
+msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបករណ៍​​​ចតុកោណកែង​"
 
 #: ../src/verbs.cpp:2437
-#, fuzzy
 msgid "3D Box Preferences"
-msgstr "ចំណូល​ចិត្ត​អត្ថបទ​"
+msgstr "ចំណូល​ចិត្ត​ប្រអប់​ត្រីមាត្រ"
 
 #: ../src/verbs.cpp:2438
-#, fuzzy
 msgid "Open Preferences for the 3D Box tool"
-msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបរកណ៍​ថ្នាំង​"
+msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបករណ៍​ប្រអប់​ត្រី​មាត្រ"
 
 #: ../src/verbs.cpp:2439
 msgid "Ellipse Preferences"
-msgstr "ចំណូល​ចិត្ត​រាង​ពង​ក្រពើ​"
+msgstr "ចំណូលចិត្ត​រាង​ពងក្រពើ​"
 
 #: ../src/verbs.cpp:2440
 msgid "Open Preferences for the Ellipse tool"
-msgstr "បើក​ចំណូល​ចិត្តសម្រាប់​ឧបករណ៍​រាង​ពងក្រពើ​"
+msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបករណ៍​រាង​ពង​ក្រពើ​"
 
 #: ../src/verbs.cpp:2441
 msgid "Star Preferences"
@@ -10854,7 +10839,7 @@ msgstr "ចំណូល​ចិត្ត​គួច​"
 
 #: ../src/verbs.cpp:2444
 msgid "Open Preferences for the Spiral tool"
-msgstr "បើក​ចំណូល​ចិត្ត​ឧបករណ៍​គួច​"
+msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបករណ៍​គួច"
 
 #: ../src/verbs.cpp:2445
 msgid "Pencil Preferences"
@@ -10862,7 +10847,7 @@ msgstr "ចំណូល​ចិត្ត​ខ្មៅ​ដៃ​"
 
 #: ../src/verbs.cpp:2446
 msgid "Open Preferences for the Pencil tool"
-msgstr "បើក​ចំណូល​ចិត្ត​ឧបករណ៍​ខ្មៅ​ដៃ"
+msgstr "បើក​ចំណូលចិត្ត​​សម្រាប់​ឧបករណ៍​ខ្មៅ​ដៃ"
 
 #: ../src/verbs.cpp:2447
 msgid "Pen Preferences"
@@ -10886,7 +10871,7 @@ msgstr "ចំណូល​ចិត្ត​អត្ថបទ​"
 
 #: ../src/verbs.cpp:2452
 msgid "Open Preferences for the Text tool"
-msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបករណ៍​អត្ថបទ​"
+msgstr "បើក​ចំណូចិត្ត​សម្រាប់​ឧបករណ៍​អត្ថបទ"
 
 #: ../src/verbs.cpp:2453
 msgid "Gradient Preferences"
@@ -10921,14 +10906,12 @@ msgid "Open Preferences for the Connector tool"
 msgstr "បើក​ចំណូលចិត្ត​សម្រាប់​ឧបករណ៍​បន្ទាត់​​តភ្ជាប់​"
 
 #: ../src/verbs.cpp:2461
-#, fuzzy
 msgid "Paint Bucket Preferences"
-msgstr "ចំណូល​ចិត្ត​ជម្រាល​"
+msgstr "ចំណូល​ចិត្ត​ធុង​គំនូរ​"
 
 #: ../src/verbs.cpp:2462
-#, fuzzy
 msgid "Open Preferences for the Paint Bucket tool"
-msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបករណ៍​ប៊ិក​"
+msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបករណ៍​ធុង​គំនូរ"
 
 #. Zoom/View
 #: ../src/verbs.cpp:2465
@@ -10961,7 +10944,7 @@ msgstr "របារមូរ​"
 
 #: ../src/verbs.cpp:2468
 msgid "Show or hide the canvas scrollbars"
-msgstr "បង្ហាញ ​ឬ​លាក់របារមូរ​ផ្ទាំង​ក្រណាត់​"
+msgstr "បង្ហាញ ​ឬ​លាក់​របារមូរ​ផ្ទាំង​ក្រណាត់​"
 
 #: ../src/verbs.cpp:2469
 msgid "_Grid"
@@ -10977,7 +10960,7 @@ msgstr "បន្ទាត់​នាំផ្លូវ​"
 
 #: ../src/verbs.cpp:2470
 msgid "Show or hide guides (drag from a ruler to create a guide)"
-msgstr "បង្ហាញ​ឬ លាក់​បន្ទាត់​នាំ​ផ្លូវ​ (អូស​ពី​បន្ទាត់​ដើម្បី​បង្កើត​បន្ទាត់​នាំផ្លូវ)"
+msgstr "បង្ហាញ ​ឬ​លាក់​បន្ទាត់​នាំ​ផ្លូវ​ (អូស​ពី​បន្ទាត់​ដើម្បី​បង្កើត​បន្ទាត់​នាំផ្លូវ)"
 
 #: ../src/verbs.cpp:2471
 msgid "Nex_t Zoom"
@@ -10985,39 +10968,39 @@ msgstr "ការ​ពង្រីក​បន្ទាប់​"
 
 #: ../src/verbs.cpp:2471
 msgid "Next zoom (from the history of zooms)"
-msgstr "បន្ទាប់​មក​ពង្រីក​បន្ទាប់​ (ពី​ប្រវត្តិ​នៃ​ការ​​ពង្រីក)"
+msgstr "ការ​​​​ពង្រីក​បន្ទាប់​ (ពី​ប្រវត្តិ​នៃ​ការ​​ពង្រីក)"
 
 #: ../src/verbs.cpp:2473
 msgid "Pre_vious Zoom"
-msgstr "ពី​រីក​ម​បន្ទាប់​ុន​"
+msgstr "ពង្រីក​ពីមុន​"
 
 #: ../src/verbs.cpp:2473
 msgid "Previous zoom (from the history of zooms)"
-msgstr "ពង្រីក​មុន​ (ពី​ប្រវត្តិ​នៃ​ការ​ពង្រីក​)"
+msgstr "ការ​ពង្រីក​មុន​ (ពី​ប្រវត្តិ​នៃ​ការ​ពង្រីក​)"
 
 #: ../src/verbs.cpp:2475
 msgid "Zoom 1:_1"
-msgstr "ពង្រីក ១ ៖ ១"
+msgstr "ពង្រីក ១៖១"
 
 #: ../src/verbs.cpp:2475
 msgid "Zoom to 1:1"
-msgstr "ពង្រីក ១ ៖ ១"
+msgstr "ពង្រីកទៅ ១៖១"
 
 #: ../src/verbs.cpp:2477
 msgid "Zoom 1:_2"
-msgstr "ពង្រីក ១ ៖ ២"
+msgstr "ពង្រីក ១៖២"
 
 #: ../src/verbs.cpp:2477
 msgid "Zoom to 1:2"
-msgstr "ពង្រីក​ទៅ ១ ៖ ២"
+msgstr "ពង្រីក​ទៅ ១៖២"
 
 #: ../src/verbs.cpp:2479
 msgid "_Zoom 2:1"
-msgstr "ពង្រីក ២ ៖ ១"
+msgstr "ពង្រីក ២៖១"
 
 #: ../src/verbs.cpp:2479
 msgid "Zoom to 2:1"
-msgstr "ពង្រីក​ទៅ ២ ៖ ១"
+msgstr "ពង្រីក​ទៅ ២៖១"
 
 #: ../src/verbs.cpp:2482
 msgid "_Fullscreen"
@@ -11029,19 +11012,19 @@ msgstr "ទាញ​បង្អួច​ឯកសារ​នេះ​ឲ្យ
 
 #: ../src/verbs.cpp:2485
 msgid "Duplic_ate Window"
-msgstr "បង្អួច​ស្ទួន​"
+msgstr "ស្ទួន​បង្អួច​"
 
 #: ../src/verbs.cpp:2485
 msgid "Open a new window with the same document"
-msgstr "បើក​បង្អួច​ថ្មី​មួយ​ដោយ​ឯកសារ​ដូចគ្នា​"
+msgstr "បើក​បង្អួច​ថ្មី​ជា​មួយ​ឯកសារ​ដដែល\t"
 
 #: ../src/verbs.cpp:2487
 msgid "_New View Preview"
-msgstr "ទិដ្ឋភាព​មើល​ជាមុន​ថ្មី​"
+msgstr "មើល​ទិដ្ឋភាព​ថ្មី​ជា​មុន"
 
 #: ../src/verbs.cpp:2488
 msgid "New View Preview"
-msgstr "ទិដ្ឋភាព​មើល​ជា​មុន​ថ្មី​"
+msgstr "មើល​ទិដ្ឋភាព​ជាមុន​"
 
 #. "view_new_preview"
 #: ../src/verbs.cpp:2490
@@ -11061,26 +11044,24 @@ msgid "Switch to outline (wireframe) display mode"
 msgstr "ប្ដូរ​ទៅ​របៀប​បង្ហាញ​គ្រោង (wireframe) "
 
 #: ../src/verbs.cpp:2494
-#, fuzzy
 msgid "_Toggle"
-msgstr "មុំ"
+msgstr "បិទ/បើក"
 
 #: ../src/verbs.cpp:2495
 msgid "Toggle between normal and outline display modes"
-msgstr ""
+msgstr "បិទ/បើក​រវាង​របៀប​បង្ហាញ​គ្រោង និង​ធម្មតា"
 
 #: ../src/verbs.cpp:2497
-#, fuzzy
 msgid "Ico_n Preview..."
-msgstr "មើល​រូបតំណាង​ជា​មុន​"
+msgstr "មើល​រូបតំណាង​ជាមុន..."
 
 #: ../src/verbs.cpp:2498
 msgid "Open a window to preview objects at different icon resolutions"
-msgstr "បើក​បង្អួច​ដើម្បី​មើល​វត្ថុ​ជា​មុន​នូវ​គុណ​ភាព​បង្ហាញ​រូប​តំណាង​ខុសៗគ្នា"
+msgstr "បើក​បង្អួច​ដើម្បី​មើល​វត្ថុ​ជា​មុន​តាមគុណភាព​រូបតំណាង​ផ្សេងៗគ្នា"
 
 #: ../src/verbs.cpp:2500
 msgid "Zoom to fit page in window"
-msgstr "ពង្រីក​ឲ្យ​សម​នឹង​ទំព័រ​នៅ​ក្នុង​បង្អួច​"
+msgstr "ពង្រីក​ឲ្យ​សម​នឹង​ទំព័រ​ក្នុង​បង្អច​"
 
 #: ../src/verbs.cpp:2501
 msgid "Page _Width"
@@ -11121,7 +11102,7 @@ msgstr "ទិន្នន័យ​មេតា​ឯកសារ..."
 
 #: ../src/verbs.cpp:2514
 msgid "Edit document metadata (to be saved with the document)"
-msgstr "កែសម្រួល​ទិន្នន័យ​មេតា​​ឯកសារ (ត្រូវ​តែ​រក្សាទុក​ដោយ​ឯកសារ)"
+msgstr "កែសម្រួល​ទិន្នន័យ​មេតា​​ឯកសារ (ត្រូវ​តែ​រក្សាទុក​ជា​មួយ​​ឯកសារ)"
 
 #: ../src/verbs.cpp:2515
 msgid "_Fill and Stroke..."
@@ -11129,7 +11110,7 @@ msgstr "បំពេញ និង​ខ្វាច់..."
 
 #: ../src/verbs.cpp:2516
 msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
-msgstr ""
+msgstr "កែសម្រួល​ពណ៌​របស់វត្ថុ ជម្រាល ទទឹង​ខ្វាច់ ក្បាលព្រួញ លំនាំ​ដាច់ៗ..."
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2518
@@ -11138,7 +11119,7 @@ msgstr "រុំ..."
 
 #: ../src/verbs.cpp:2519
 msgid "Select colors from a swatches palette"
-msgstr "ជ្រើស​ពណ៌​ពី​ក្ដារលាយ​រុំ"
+msgstr "ជ្រើស​ពណ៌​ពី​លំនាំ​រុំ"
 
 #: ../src/verbs.cpp:2520
 msgid "Transfor_m..."
@@ -11150,7 +11131,7 @@ msgstr "ការប្លែង​របស់​វត្ថុ​បញ្ជ
 
 #: ../src/verbs.cpp:2522
 msgid "_Align and Distribute..."
-msgstr "_តម្រឹម និង​ចែកចាយ​វត្ថុ..."
+msgstr "តម្រឹម និង​ចែកចាយ..."
 
 #: ../src/verbs.cpp:2523
 msgid "Align and distribute objects"
@@ -11166,11 +11147,11 @@ msgstr "មិនធ្វើ​ប្រវត្តិ​វិញ"
 
 #: ../src/verbs.cpp:2526
 msgid "_Text and Font..."
-msgstr "អត្ថបទ​ និង​ពុុម្ពអក្សរ​..."
+msgstr "អត្ថបទ និង​ពុម្ពអក្សរ"
 
 #: ../src/verbs.cpp:2527
 msgid "View and select font family, font size and other text properties"
-msgstr "មើល ហើយ​ជ្រើស​គ្រួសារ​ពុម្ព ទំហំ​ពុម្ពអក្សរ និង​លក្ខណៈ​សម្បត្តិ​វត្ថុ​ផ្សេងៗ​ទៀត"
+msgstr "មើល និងជ្រើស​គ្រួសារ​ពុម្ពអក្សរ ទំហំ​ពុម្ពអក្សរ និង​លក្ខណៈសម្បត្តិ​អត្ថបទ​ផ្សេង​ទៀត"
 
 #: ../src/verbs.cpp:2528
 msgid "_XML Editor..."
@@ -11261,21 +11242,20 @@ msgid "View Layers"
 msgstr "ស្រទាប់​ទិដ្ឋភាព​"
 
 #: ../src/verbs.cpp:2552
-#, fuzzy
 msgid "Path Effects..."
-msgstr "ប្រសិទ្ធ​ភាព​"
+msgstr "បែបផែន​ផ្លូវ​"
 
 #: ../src/verbs.cpp:2553
 msgid "Manage path effects"
-msgstr ""
+msgstr "គ្រប់គ្រង​បែបផែន​ផ្លូវ"
 
 #: ../src/verbs.cpp:2554
 msgid "Filter Effects..."
-msgstr ""
+msgstr "បែបផែន​តម្រង..."
 
 #: ../src/verbs.cpp:2555
 msgid "Manage SVG filter effects"
-msgstr ""
+msgstr "គ្រប់គ្រង​បែបផែន​តម្រង SVG"
 
 #. Help
 #: ../src/verbs.cpp:2558
@@ -11292,7 +11272,7 @@ msgstr "អំពី​សតិ​"
 
 #: ../src/verbs.cpp:2561
 msgid "Memory usage information"
-msgstr "ព័ត៌មាន​ប្រើប្រាស់​សតិ​"
+msgstr "ព័ត៌មាន​អំពី​ប្រើ​​សតិ​"
 
 #: ../src/verbs.cpp:2562
 msgid "_About Inkscape"
@@ -11300,7 +11280,7 @@ msgstr "អំពី Inkscape"
 
 #: ../src/verbs.cpp:2563
 msgid "Inkscape version, authors, license"
-msgstr "Inkscape កំណែ អ្នក​និពន្ធ អាជ្ញាបណ្ណ"
+msgstr "កំណែ Inkscape អ្នកនិពន្ធ អាជ្ញាបណ្ណ"
 
 #. "help_about"
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
@@ -11321,7 +11301,7 @@ msgstr "Inkscape ៖ រូបរាង​"
 
 #: ../src/verbs.cpp:2571
 msgid "Using shape tools to create and edit shapes"
-msgstr "ប្រើប្រាស់​ឧបករណ៍​រូបរាង​ដើម្បី​បង្កើត​និង កែសម្រួល​រូបរាង​"
+msgstr "ប្រើ​​ឧបករណ៍​រូបរាង ដើម្បី​បង្កើត​ និង​កែសម្រួល​រូបរាង​"
 
 #: ../src/verbs.cpp:2572
 msgid "Inkscape: _Advanced"
@@ -11335,11 +11315,11 @@ msgstr "ប្រធាន​បទ​កម្រិត​ខ្ពស់​រ
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2575
 msgid "Inkscape: T_racing"
-msgstr "Inkscape ៖ ស្នាម"
+msgstr "Inkscape ៖ ដាន"
 
 #: ../src/verbs.cpp:2576
 msgid "Using bitmap tracing"
-msgstr "ការ​ប្រើ​ស្នាម​រូបភាព"
+msgstr "ការ​​ប្រើ​ដាន​រូបភាព"
 
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2577
@@ -11352,20 +11332,20 @@ msgstr "ការ​ប្រើ​ឧបករណ៍​ប៊ិក​សម្
 
 #: ../src/verbs.cpp:2579
 msgid "_Elements of Design"
-msgstr "_ធាតុ​នៃ​ការ​រចនា"
+msgstr "ធាតុ​រចនា"
 
 #: ../src/verbs.cpp:2580
 msgid "Principles of design in the tutorial form"
-msgstr "គោលការណ៍​នៃ​ការ​រចនា​នៅ​ក្នុងសំណុំ​បែបបទ​បង្រៀន​"
+msgstr "គោលការណ៍​រចនា​នៅ​ក្នុង​សំណុំ​បែបបទ​បង្រៀន"
 
 #. "tutorial_design"
 #: ../src/verbs.cpp:2581
 msgid "_Tips and Tricks"
-msgstr "_ដំណោះ​ស្រាយ​ខ្លីៗ"
+msgstr "ដំណោះ​ស្រាយ​ខ្លីៗ"
 
 #: ../src/verbs.cpp:2582
 msgid "Miscellaneous tips and tricks"
-msgstr "ដំណោះស្រាយ​ខ្លីៗ​ផ្សេងៗ"
+msgstr "ដំណោះ​ស្រាយ​ខ្លីៗ​ផ្សេងៗ"
 
 #. "tutorial_tips"
 #. Effect
@@ -11408,12 +11388,12 @@ msgstr "ធ្វើ​ឲ្យ​ទំព័រ​សម​នឹង​ជម
 
 #: ../src/verbs.cpp:2596
 msgid "Fit the page to the current selection or the drawing if there is no selection"
-msgstr "ធ្វើ​ឲ្យ​ទំព័រ​សម​ទៅ​នឹង​ជម្រើស​បច្ចុប្បន្ន ឬ​គូរ​ប្រសិន​បើ​គ្មា​ន​ជម្រើស​​"
+msgstr "ធ្វើ​ឲ្យ​ទំព័រ​សម​ទៅ​នឹង​ជម្រើស​បច្ចុប្បន្ន ឬ​គំនូរ ​ប្រសិន​បើ​គ្មា​ន​ជម្រើស​​"
 
 #. LockAndHide
 #: ../src/verbs.cpp:2598
 msgid "Unlock All"
-msgstr ""
+msgstr "មិន​ចាក់សោ​ទាំងអស់"
 
 #: ../src/verbs.cpp:2600
 #, fuzzy
