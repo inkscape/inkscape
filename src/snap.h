@@ -55,16 +55,6 @@ public:
                                       std::vector<NR::Point> &points_to_snap,
                                       std::list<SPItem const *> const &it) const;
 
-    Inkscape::SnappedPoint freeSnapAlways( Inkscape::Snapper::PointType t,
-                                           NR::Point const &p,
-                                           SPItem const *it,
-                                           SnapperList &snappers );
-
-    Inkscape::SnappedPoint freeSnapAlways( Inkscape::Snapper::PointType t,
-                                           NR::Point const &p,
-                                           std::list<SPItem const *> const &it,
-                                           SnapperList &snappers );
-
     Inkscape::SnappedPoint constrainedSnap(Inkscape::Snapper::PointType t,
                                            NR::Point const &p,
                                            Inkscape::Snapper::ConstraintLine const &c,

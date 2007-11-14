@@ -1161,15 +1161,10 @@ void sp_selection_paste(bool in_place)
             m -= sel_bbox->midpoint();
         }
 
-        /* Snap the offset of the new item(s) to the grid */
-        SnapManager &sm = desktop->namedview->snap_manager;
-        SnapManager::SnapperList gs = sm.getGridSnappers();
-        m = sm.freeSnapAlways(Inkscape::Snapper::SNAPPOINT_NODE, m, NULL, gs).getPoint();
         sp_selection_move_relative(selection, m);
     }
 
-    sp_document_done(document, SP_VERB_EDIT_PASTE,
-                     _("Paste"));
+    sp_document_done(document, SP_VERB_EDIT_PASTE, _("Paste"));
 }
 
 void sp_selection_paste_style()

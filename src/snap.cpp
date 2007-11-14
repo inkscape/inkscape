@@ -216,60 +216,6 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
 }
 
 /**
- *  Try to snap a point to any of the specified snappers. Snap always, ignoring the snap-distance
- *
- *  \param t Type of point.
- *  \param p Point.
- *  \param it Item to ignore when snapping.
- *  \param snappers  List of snappers to try to snap to
- *  \return Snapped point.
- */
-
-Inkscape::SnappedPoint
-SnapManager::freeSnapAlways( Inkscape::Snapper::PointType t,
-                             NR::Point const &p,
-                             SPItem const *it,
-                             SnapperList &snappers )
-{
-    std::list<SPItem const *> lit;
-    lit.push_back(it);
-    return freeSnapAlways(t, p, lit, snappers);
-}
-
-/**
- *  Try to snap a point to any of the specified snappers. Snap always, ignoring the snap-distance
- *
- *  \param t Type of point.
- *  \param p Point.
- *  \param it List of items to ignore when snapping.
- *  \param snappers  List of snappers to try to snap to
- *  \return Snapped point.
- */
-
-Inkscape::SnappedPoint
-SnapManager::freeSnapAlways( Inkscape::Snapper::PointType t,
-                             NR::Point const &p,
-                             std::list<SPItem const *> const &it,
-                             SnapperList &snappers )
-{
-    
-    SnappedConstraints sc;                
-
-    for (SnapperList::iterator i = snappers.begin(); i != snappers.end(); i++) {
-        gdouble const curr_gridsnap = (*i)->getDistance();
-        const_cast<Inkscape::Snapper*> (*i)->setDistance(NR_HUGE);
-        std::vector<NR::Point> points_to_snap;
-        points_to_snap.push_back(p);    
-        (*i)->freeSnap(sc, t, p, true, points_to_snap, it);
-        const_cast<Inkscape::Snapper*> (*i)->setDistance(curr_gridsnap);
-    }
-
-    return findBestSnap(p, sc);
-}
-
-
-
-/**
  *  Try to snap a point to any interested snappers.  A snap will only occur along
  *  a line described by a Inkscape::Snapper::ConstraintLine.
  *
