@@ -71,12 +71,13 @@ ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, c
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
-            if (!strcmp(chname, "option")) {
+            if (!strcmp(chname, "option") || !strcmp(chname, "_option")) {
                 Glib::ustring * newguitext = NULL;
                 Glib::ustring * newvalue = NULL;
                 const char * contents = sp_repr_children(child_repr)->content();
                 if (contents != NULL)
-                     newguitext = new Glib::ustring( _(contents) );
+                    // don't translate when 'option' but do translate when '_option'
+                     newguitext = new Glib::ustring( !strcmp(chname, "_option") ? _(contents) : contents );
                 else
                     continue;  
                     

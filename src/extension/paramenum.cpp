@@ -71,12 +71,13 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
-            if (!strcmp(chname, "item")) {
+            if (!strcmp(chname, "item") || !strcmp(chname, "_item")) {
                 Glib::ustring * newguitext = NULL;
                 Glib::ustring * newvalue = NULL;
                 const char * contents = sp_repr_children(child_repr)->content();
                 if (contents != NULL)
-                     newguitext = new Glib::ustring( _(contents) );
+                    // don't translate when 'item' but do translate when '_item'
+                     newguitext = new Glib::ustring( !strcmp(chname, "_item") ? _(contents) : contents );
                 else
                     continue;
 
