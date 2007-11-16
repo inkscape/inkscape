@@ -4169,8 +4169,8 @@ msgstr[0] ""
 "Ponto do degradê compartilhado pelo degradê <b>%d</b>; arraste com <b>Shift</"
 "b> para separar"
 msgstr[1] ""
-"Ponto do degradê compartilhado pelos degradês <b>%d</d>; arraste com "
-"<n>Shift</b> para separar"
+"Ponto do degradê compartilhado pelos degradês <b>%d</b>; arraste com "
+"<b>Shift</b> para separar"
 
 #: ../src/gradient-drag.cpp:1815
 #, fuzzy
@@ -7372,7 +7372,7 @@ msgstr ""
 "Thiago Pimentel\n"
 "Valessio Brito\n"
 "Vilson Vieira\n"
-"Comunidade Inkscape Brasil <www.inkscapebrasil.org>, 2007."
+"Comunidade Inkscape Brasil &lt;www.inkscapebrasil.org&gt;, 2007."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:234
 #: ../src/ui/dialog/align-and-distribute.cpp:780
