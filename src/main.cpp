@@ -110,6 +110,8 @@ using Inkscape::Extension::Internal::PrintWin32;
 
 #include "main-cmdlineact.h"
 
+#include <png.h>
+
 enum {
     SP_ARG_NONE,
     SP_ARG_NOGUI,
@@ -971,33 +973,33 @@ sp_do_export_png(SPDocument *doc)
     if (dpi == 0.0)
         dpi = PX_PER_IN;
 
-    gint width = 0;
-    gint height = 0;
+    unsigned long int width = 0;
+    unsigned long int height = 0;
 
     if (sp_export_width) {
-        width = atoi(sp_export_width);
-        if ((width < 1) || (width > 65536)) {
-            g_warning("Export width %d out of range (1 - 65536). Nothing exported.", width);
+        width = strtoul(sp_export_width, NULL, 0);
+        if ((width < 1) || (width > PNG_UINT_31_MAX) || (errno == ERANGE) ) {
+            g_warning("Export width %lu out of range (1 - %lu). Nothing exported.", width, (unsigned long int)PNG_UINT_31_MAX);
             return;
         }
         dpi = (gdouble) width * PX_PER_IN / (area.x1 - area.x0);
     }
 
     if (sp_export_height) {
-        height = atoi(sp_export_height);
-        if ((height < 1) || (height > 65536)) {
-            g_warning("Export height %d out of range (1 - 65536). Nothing exported.", width);
+        height = strtoul(sp_export_height, NULL, 0);
+        if ((height < 1) || (height > PNG_UINT_31_MAX)) {
+            g_warning("Export height %lu out of range (1 - %lu). Nothing exported.", height, (unsigned long int)PNG_UINT_31_MAX);
             return;
         }
         dpi = (gdouble) height * PX_PER_IN / (area.y1 - area.y0);
     }
 
     if (!sp_export_width) {
-        width = (gint) ((area.x1 - area.x0) * dpi / PX_PER_IN + 0.5);
+        width = (unsigned long int) ((area.x1 - area.x0) * dpi / PX_PER_IN + 0.5);
     }
 
     if (!sp_export_height) {
-        height = (gint) ((area.y1 - area.y0) * dpi / PX_PER_IN + 0.5);
+        height = (unsigned long int) ((area.y1 - area.y0) * dpi / PX_PER_IN + 0.5);
     }
 
     guint32 bgcolor = 0x00000000;
@@ -1032,14 +1034,14 @@ sp_do_export_png(SPDocument *doc)
 
     g_print("Background RRGGBBAA: %08x\n", bgcolor);
 
-    g_print("Area %g:%g:%g:%g exported to %d x %d pixels (%g dpi)\n", area.x0, area.y0, area.x1, area.y1, width, height, dpi);
+    g_print("Area %g:%g:%g:%g exported to %lu x %lu pixels (%g dpi)\n", area.x0, area.y0, area.x1, area.y1, width, height, dpi);
 
     g_print("Bitmap saved as: %s\n", filename);
 
-    if ((width >= 1) && (height >= 1) && (width < 65536) && (height < 65536)) {
+    if ((width >= 1) && (height >= 1) && (width <= PNG_UINT_31_MAX) && (height <= PNG_UINT_31_MAX)) {
         sp_export_png_file(doc, filename, area.x0, area.y0, area.x1, area.y1, width, height, dpi, dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
     } else {
-        g_warning("Calculated bitmap dimensions %d %d are out of range (1 - 65535). Nothing exported.", width, height);
+        g_warning("Calculated bitmap dimensions %lu %lu are out of range (1 - %lu). Nothing exported.", width, height, (unsigned long int)PNG_UINT_31_MAX);
     }
 
     g_slist_free (items);

@@ -60,6 +60,7 @@
 #include "io/sys.h"
 
 #include "helper/png-write.h"
+#include <png.h>
 
 
 #define SP_EXPORT_MIN_SIZE 1.0
@@ -314,7 +315,7 @@ sp_export_dialog_area_box (GtkWidget * dlg)
                                G_CALLBACK (sp_export_area_x_value_changed),
                                dlg );
 
-    sp_export_spinbutton_new ( "width", 0.0, -1000000.0, 1000000.0, 0.1, 1.0,
+    sp_export_spinbutton_new ( "width", 0.0, 0.0, PNG_UINT_31_MAX, 0.1, 1.0,
                                us->gobj(), GTK_WIDGET(t->gobj()), 4, 0, _("Width:"), NULL, EXPORT_COORD_PRECISION, 1,
                                G_CALLBACK
                                    (sp_export_area_width_value_changed),
@@ -330,7 +331,7 @@ sp_export_dialog_area_box (GtkWidget * dlg)
                                G_CALLBACK (sp_export_area_y_value_changed),
                                dlg );
 
-    sp_export_spinbutton_new ( "height", 0.0, -1000000.0, 1000000.0, 0.1, 1.0,
+    sp_export_spinbutton_new ( "height", 0.0, 0.0, PNG_UINT_31_MAX, 0.1, 1.0,
                                us->gobj(), GTK_WIDGET(t->gobj()), 4, 1, _("Height:"), NULL, EXPORT_COORD_PRECISION, 1,
                                G_CALLBACK (sp_export_area_height_value_changed),
                                dlg );
@@ -1144,8 +1145,8 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
     float const y1 = sp_export_value_get_px(base, "y1");
     float const xdpi = sp_export_value_get(base, "xdpi");
     float const ydpi = sp_export_value_get(base, "ydpi");
-    int const width = int(sp_export_value_get(base, "bmwidth") + 0.5);
-    int const height = int(sp_export_value_get(base, "bmheight") + 0.5);
+    unsigned long int const width = int(sp_export_value_get(base, "bmwidth") + 0.5);
+    unsigned long int const height = int(sp_export_value_get(base, "bmheight") + 0.5);
 
     if (filename == NULL || *filename == '\0') {
         sp_ui_error_dialog(_("You have to enter a filename"));
@@ -1178,7 +1179,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
 
     gchar *fn = g_path_get_basename (filename_ext);
 
-    gchar *progress_text = g_strdup_printf (_("Exporting %s (%d x %d)"), fn, width, height);
+    gchar *progress_text = g_strdup_printf (_("Exporting %s (%lu x %lu)"), fn, width, height);
     g_free (fn);
     GtkWidget *prog_dlg = create_progress_dialog (base, progress_text);
     g_free (progress_text);

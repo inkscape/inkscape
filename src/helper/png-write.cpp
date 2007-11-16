@@ -46,7 +46,7 @@
 static unsigned int const MAX_STRIPE_SIZE = 1024*1024;
 
 struct SPEBP {
-    int width, height, sheight;
+    unsigned long int width, height, sheight;
     guchar r, g, b, a;
     NRArenaItem *root; // the root arena item to show; it is assumed that all unneeded items are hidden
     guchar *px;
@@ -62,7 +62,7 @@ typedef struct SPPNGBD {
 } SPPNGBD;
 
 static bool
-sp_png_write_rgba_striped(gchar const *filename, int width, int height, double xdpi, double ydpi,
+sp_png_write_rgba_striped(gchar const *filename, unsigned long int width, unsigned long int height, double xdpi, double ydpi,
                           int (* get_rows)(guchar const **rows, int row, int num_rows, void *data),
                           void *data)
 {
@@ -294,7 +294,7 @@ hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
 bool
 sp_export_png_file(SPDocument *doc, gchar const *filename,
                    double x0, double y0, double x1, double y1,
-                   unsigned width, unsigned height, double xdpi, double ydpi,
+                   unsigned long width, unsigned long height, double xdpi, double ydpi,
                    unsigned long bgcolor,
                    unsigned (*status)(float, void *),
                    void *data, bool force_overwrite,
