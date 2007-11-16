@@ -111,6 +111,7 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include "main-cmdlineact.h"
 
 #include <png.h>
+#include <errno.h>
 
 enum {
     SP_ARG_NONE,
