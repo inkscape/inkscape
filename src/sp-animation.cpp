@@ -78,7 +78,7 @@ sp_animation_class_init(SPAnimationClass *klass)
 }
 
 static void
-sp_animation_init(SPAnimation *animation)
+sp_animation_init(SPAnimation */*animation*/)
 {
 }
 
@@ -104,7 +104,7 @@ sp_animation_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *
 }
 
 static void
-sp_animation_release(SPObject *object)
+sp_animation_release(SPObject */*object*/)
 {
 }
 
@@ -165,7 +165,7 @@ sp_ianimation_class_init(SPIAnimationClass *klass)
 }
 
 static void
-sp_ianimation_init(SPIAnimation *animation)
+sp_ianimation_init(SPIAnimation */*animation*/)
 {
 }
 
@@ -188,7 +188,7 @@ sp_ianimation_build(SPObject *object, SPDocument *document, Inkscape::XML::Node 
 }
 
 static void
-sp_ianimation_release(SPObject *object)
+sp_ianimation_release(SPObject */*object*/)
 {
 }
 
@@ -249,7 +249,7 @@ sp_animate_class_init(SPAnimateClass *klass)
 }
 
 static void
-sp_animate_init(SPAnimate *animate)
+sp_animate_init(SPAnimate */*animate*/)
 {
 }
 
@@ -262,7 +262,7 @@ sp_animate_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 }
 
 static void
-sp_animate_release(SPObject *object)
+sp_animate_release(SPObject */*object*/)
 {
 }
 

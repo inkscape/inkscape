@@ -89,7 +89,7 @@ void dummy_register_finalizer(void *, CleanupFunc, void *,
 
 int dummy_general_register_disappearing_link(void **, void *) { return false; }
 
-int dummy_unregister_disappearing_link(void **link) { return false; }
+int dummy_unregister_disappearing_link(void **/*link*/) { return false; }
 
 std::size_t dummy_get_heap_size() { return 0; }
 

@@ -29,7 +29,6 @@
 #include "message-stack.h"
 #include "pixmaps/cursor-gradient.xpm"
 #include "pixmaps/cursor-gradient-add.xpm"
-#include "pixmaps/cursor-gradient-delete.xpm"
 #include "gradient-context.h"
 #include "gradient-chemistry.h"
 #include <glibmm/i18n.h>

@@ -547,7 +547,12 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
  * Used only for remote saving using VFS and a specific uri. Gets the file at the /tmp.
  */
 bool
-file_save_remote(SPDocument */*doc*/, const Glib::ustring &uri,
+file_save_remote(SPDocument */*doc*/,
+    #ifdef WITH_GNOME_VFS
+                 const Glib::ustring &uri,
+    #else
+                 const Glib::ustring &/*uri*/,
+    #endif
                  Inkscape::Extension::Extension */*key*/, bool /*saveas*/, bool /*official*/)
 {
 #ifdef WITH_GNOME_VFS
