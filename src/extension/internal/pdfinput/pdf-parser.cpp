@@ -2014,6 +2014,10 @@ void PdfParser::opSetFont(Object args[], int numArgs) {
   GfxFont *font;
 
   if (!(font = res->lookupFont(args[0].getName()))) {
+    // unsetting the font (drawing no text) is better than using the
+    // previous one and drawing random glyphs from it
+    state->setFont(NULL, args[1].getNum());
+    fontChanged = gTrue;
     return;
   }
   if (printCommands) {
