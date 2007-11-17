@@ -22,6 +22,10 @@
 
 #include <sigc++/connection.h>
 
+// forward declaration
+typedef struct _EgeColorProfTracker EgeColorProfTracker;
+
+
 #define SP_TYPE_DESKTOP_WIDGET (sp_desktop_widget_get_type ())
 #define SP_DESKTOP_WIDGET(o) (GTK_CHECK_CAST ((o), SP_TYPE_DESKTOP_WIDGET, SPDesktopWidget))
 #define SP_DESKTOP_WIDGET_CLASS(k) (GTK_CHECK_CLASS_CAST ((k), SP_TYPE_DESKTOP_WIDGET, SPDesktopWidgetClass))
@@ -65,7 +69,7 @@ struct SPDesktopWidget {
     SPDesktop *desktop;
 
     Gtk::Window *window;
-    
+
     // The root vbox of the window layout.
     GtkWidget *vbox;
 
@@ -82,6 +86,7 @@ struct SPDesktopWidget {
     GtkWidget *hruler_box, *vruler_box; // eventboxes for setting tooltips
 
     GtkWidget *sticky_zoom;
+    GtkWidget *cms_adjust;
     GtkWidget *coord_status;
     GtkWidget *coord_status_x;
     GtkWidget *coord_status_y;
@@ -95,7 +100,7 @@ struct SPDesktopWidget {
     Inkscape::UI::Widget::SelectedStyle *selected_style;
 
     gint coord_status_id, select_status_id;
-    
+
     unsigned int _interaction_disabled_counter;
 
     SPCanvas *canvas;
@@ -106,6 +111,8 @@ struct SPDesktopWidget {
 
     Inkscape::Widgets::LayerSelector *layer_selector;
 
+    EgeColorProfTracker* _tracker;
+
     struct WidgetStub : public Inkscape::UI::View::EditWidgetInterface {
         SPDesktopWidget *_dtw;
         SPDesktop       *_dt;
@@ -115,9 +122,9 @@ struct SPDesktopWidget {
             { _dtw->updateTitle (uri); }
         virtual Gtk::Window* getWindow()
             { return _dtw->window; }
-        virtual void layout() 
+        virtual void layout()
             { sp_desktop_widget_layout (_dtw); }
-        virtual void present() 
+        virtual void present()
             { _dtw->presentWindow(); }
         virtual void getGeometry (gint &x, gint &y, gint &w, gint &h)
             { _dtw->getWindowGeometry (x, y, w, h); }
@@ -139,11 +146,11 @@ struct SPDesktopWidget {
             { return _dtw->shutdown(); }
         virtual void destroy()
             {
-				if(_dtw->window != NULL)
-        			delete _dtw->window;
-				_dtw->window = NULL;
-			}
-        
+                if(_dtw->window != NULL)
+                    delete _dtw->window;
+                _dtw->window = NULL;
+            }
+
         virtual void requestCanvasUpdate()
             { _dtw->requestCanvasUpdate(); }
         virtual void requestCanvasUpdateAndWait()
@@ -189,7 +196,7 @@ struct SPDesktopWidget {
     };
 
     WidgetStub *stub;
-    
+
     void setMessage(Inkscape::MessageType type, gchar const *message);
     NR::Point window_get_pointer();
     bool shutdown();

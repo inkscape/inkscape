@@ -289,6 +289,8 @@ libinkpost_a_SOURCES =	\
 	dir-util.cpp dir-util.h	\
 	ege-adjustment-action.cpp	\
 	ege-adjustment-action.h	\
+	ege-color-prof-tracker.cpp	\
+	ege-color-prof-tracker.h	\
 	ege-output-action.cpp	\
 	ege-output-action.h	\
 	ege-select-one-action.cpp	\

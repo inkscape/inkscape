@@ -55,6 +55,7 @@
 #include "dialogs/swatches.h"
 #include "conn-avoid-ref.h"
 #include "ege-select-one-action.h"
+#include "ege-color-prof-tracker.h"
 
 #if defined (SOLARIS_2_8)
 #include "round.h"
@@ -86,6 +87,8 @@ static void sp_desktop_widget_size_allocate (GtkWidget *widget, GtkAllocation *a
 static void sp_desktop_widget_realize (GtkWidget *widget);
 
 static gint sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw);
+
+static void sp_dtw_color_profile_event(GtkWidget *widget, SPDesktopWidget *dtw);
 
 static void sp_desktop_widget_adjustment_value_changed (GtkAdjustment *adj, SPDesktopWidget *dtw);
 static void sp_desktop_widget_namedview_modified (SPObject *obj, guint flags, SPDesktopWidget *dtw);
@@ -272,7 +275,16 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     dtw->vscrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (dtw->vadj));
     gtk_box_pack_start (GTK_BOX (dtw->vscrollbar_box), dtw->vscrollbar, TRUE, TRUE, 0);
     gtk_table_attach (GTK_TABLE (canvas_tbl), dtw->vscrollbar_box, 2, 3, 0, 2, (GtkAttachOptions)(GTK_SHRINK), (GtkAttachOptions)(GTK_FILL), 0, 0);
-   
+
+    dtw->cms_adjust = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
+                                               SP_BUTTON_TYPE_TOGGLE,
+                                               NULL,
+                                               "swatches",
+                                               _("Adjust the display"),
+                                               dtw->tt );
+    gtk_widget_set_sensitive(dtw->cms_adjust, FALSE);
+    gtk_table_attach( GTK_TABLE(canvas_tbl), dtw->cms_adjust, 2, 3, 2, 3, (GtkAttachOptions)(GTK_SHRINK), (GtkAttachOptions)(GTK_SHRINK), 0, 0);
+
     /* Canvas */
     dtw->canvas = SP_CANVAS (sp_canvas_new_aa ());
     GTK_WIDGET_SET_FLAGS (GTK_WIDGET (dtw->canvas), GTK_CAN_FOCUS);
@@ -284,10 +296,10 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     gtk_table_attach (GTK_TABLE (canvas_tbl), GTK_WIDGET(dtw->canvas), 1, 2, 1, 2, (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), 0, 0);
 
     /* Dock */
-    bool create_dock = 
-        prefs_get_int_attribute_limited ("options.dialogtype", "value", Inkscape::UI::Dialog::FLOATING, 0, 1) == 
+    bool create_dock =
+        prefs_get_int_attribute_limited ("options.dialogtype", "value", Inkscape::UI::Dialog::FLOATING, 0, 1) ==
         Inkscape::UI::Dialog::DOCK;
-    
+
     if (create_dock)
     {
         dtw->dock = new Inkscape::UI::Widget::Dock();
@@ -296,17 +308,17 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
         paned->pack1(*Glib::wrap(canvas_tbl));
         paned->pack2(dtw->dock->getWidget(), Gtk::FILL);
 
-        /* Prevent the paned from catching F6 and F8 by unsetting the default callbacks */ 
+        /* Prevent the paned from catching F6 and F8 by unsetting the default callbacks */
         if (GtkPanedClass *paned_class = GTK_PANED_CLASS (G_OBJECT_GET_CLASS (paned->gobj()))) {
             paned_class->cycle_child_focus = NULL;
             paned_class->cycle_handle_focus = NULL;
         }
 
-        gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (paned->gobj()), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+        gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (paned->gobj()), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                           (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
 
     } else {
-        gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (canvas_tbl), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+        gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (canvas_tbl), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                           (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
     }
 
@@ -371,6 +383,9 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     //dtw->layer_selector->set_size_request(-1, SP_ICON_SIZE_BUTTON);
     gtk_box_pack_start(GTK_BOX(dtw->statusbar), GTK_WIDGET(dtw->layer_selector->gobj()), FALSE, FALSE, 1);
 
+    dtw->_tracker = ege_color_prof_tracker_new(GTK_WIDGET(dtw->layer_selector->gobj()));
+    g_signal_connect( G_OBJECT(dtw->_tracker), "changed", G_CALLBACK(sp_dtw_color_profile_event), dtw );
+
     dtw->select_status_eventbox = gtk_event_box_new ();
     dtw->select_status = gtk_label_new (NULL);
 #if GTK_MAJOR_VERSION == 2 && GTK_MINOR_VERSION >= 6
@@ -429,7 +444,7 @@ sp_desktop_widget_destroy (GtkObject *object)
 void
 SPDesktopWidget::updateTitle(gchar const* uri)
 {
-	Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+    Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
 
     if (window) {
         gchar const *fname = ( TRUE
@@ -572,6 +587,11 @@ sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dt
     return FALSE;
 }
 
+void sp_dtw_color_profile_event(GtkWidget */*widget*/, SPDesktopWidget */*dtw*/)
+{
+    // Handle profile changes
+}
+
 void
 sp_dtw_desktop_activate (SPDesktopWidget *dtw)
 {
@@ -612,7 +632,7 @@ SPDesktopWidget::shutdown()
                 _("<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n\n"
                   "If you close without saving, your changes will be discarded."),
                 SP_DOCUMENT_NAME(doc));
-            // fix for bug 1767940:             
+            // fix for bug 1767940:
             GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), GTK_CAN_FOCUS);
 
             GtkWidget *close_button;
@@ -631,16 +651,16 @@ SPDesktopWidget::shutdown()
             switch (response) {
             case GTK_RESPONSE_YES:
             {
-            	Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
-            	    
-            	sp_document_ref(doc);
+                Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+
+                sp_document_ref(doc);
                 if (sp_file_save_document(*window, doc)) {
                     sp_document_unref(doc);
                 } else { // save dialog cancelled or save failed
                     sp_document_unref(doc);
                     return TRUE;
                 }
-                
+
                 break;
             }
             case GTK_RESPONSE_NO:
@@ -668,7 +688,7 @@ SPDesktopWidget::shutdown()
                   "Do you want to save this file in another format?"),
                 SP_DOCUMENT_NAME(doc),
                 Inkscape::Extension::db.get(sp_document_repr_root(doc)->attribute("inkscape:output_extension"))->get_name());
-            // fix for bug 1767940:             
+            // fix for bug 1767940:
             GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), GTK_CAN_FOCUS);
 
             GtkWidget *close_button;
@@ -687,17 +707,17 @@ SPDesktopWidget::shutdown()
             switch (response) {
             case GTK_RESPONSE_YES:
             {
-            	sp_document_ref(doc);
-            	
-            	Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
-             	
+                sp_document_ref(doc);
+
+                Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+
                 if (sp_file_save_dialog(*window, doc)) {
                     sp_document_unref(doc);
                 } else { // save dialog cancelled or save failed
                     sp_document_unref(doc);
                     return TRUE;
                 }
-                
+
                 break;
             }
             case GTK_RESPONSE_NO:
@@ -721,7 +741,7 @@ SPDesktopWidget::shutdown()
         prefs_set_int_attribute("desktop.geometry", "maximized", maxed);
         gint w, h, x, y;
         desktop->getWindowGeometry(x, y, w, h);
-        // Don't save geom for maximized windows.  It 
+        // Don't save geom for maximized windows.  It
         // just tells you the current maximized size, which is not
         // as useful as whatever value it had previously.
         if (!maxed && !full) {
@@ -800,7 +820,7 @@ SPDesktopWidget::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
     gboolean vis = GTK_WIDGET_VISIBLE (this);
 
     Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
-    
+
     if (window)
     {
         window->get_size (w, h);
@@ -811,8 +831,8 @@ SPDesktopWidget::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
 void
 SPDesktopWidget::setWindowPosition (NR::Point p)
 {
-	Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
-    
+    Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+
     if (window)
     {
         window->move (gint(round(p[NR::X])), gint(round(p[NR::Y])));
@@ -822,8 +842,8 @@ SPDesktopWidget::setWindowPosition (NR::Point p)
 void
 SPDesktopWidget::setWindowSize (gint w, gint h)
 {
-	Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
-    
+    Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+
     if (window)
     {
         window->set_default_size (w, h);
@@ -908,10 +928,10 @@ sp_desktop_widget_maximize(SPDesktopWidget *dtw)
         if (dtw->desktop->is_maximized()) {
             gtk_window_unmaximize(topw);
         } else {
-            // Save geometry to prefs before maximizing so that 
+            // Save geometry to prefs before maximizing so that
             // something useful is stored there, because GTK doesn't maintain
             // a separate non-maximized size.
-            if (!dtw->desktop->is_iconified() && !dtw->desktop->is_fullscreen()) 
+            if (!dtw->desktop->is_iconified() && !dtw->desktop->is_fullscreen())
             {
                 gint w, h, x, y;
                 dtw->getWindowGeometry(x, y, w, h);
@@ -935,10 +955,10 @@ sp_desktop_widget_fullscreen(SPDesktopWidget *dtw)
             gtk_window_unfullscreen(topw);
             // widget layout is triggered by the resulting window_state_event
         } else {
-            // Save geometry to prefs before maximizing so that 
+            // Save geometry to prefs before maximizing so that
             // something useful is stored there, because GTK doesn't maintain
             // a separate non-maximized size.
-            if (!dtw->desktop->is_iconified() && !dtw->desktop->is_maximized()) 
+            if (!dtw->desktop->is_iconified() && !dtw->desktop->is_maximized())
             {
                 gint w, h, x, y;
                 dtw->getWindowGeometry(x, y, w, h);
