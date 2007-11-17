@@ -39,8 +39,7 @@ namespace Geom {
 // Base exception class, all 2geom exceptions should be derrived from this one.
 class Exception : public std::exception {
 public:
-    Exception(const char * message, const char *file, const int line)
-    {
+    Exception(const char * message, const char *file, const int line) {
         std::ostringstream os;
         os << "lib2geom exception: " << message << " (" << file << ":" << line << ")";
         msgstr = os.str();
@@ -48,7 +47,7 @@ public:
 
     virtual ~Exception() throw() {} // necessary to destroy the string object!!!
 
-    virtual const char* what() const throw (){
+    virtual const char* what() const throw () {
         return msgstr.c_str();
     }
 protected:
