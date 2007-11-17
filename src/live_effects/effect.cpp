@@ -144,7 +144,7 @@ Effect::doEffect_nartbpath (NArtBpath * path_in)
 
         return new_bpath;
     }
-    catch (std::exception e) {
+    catch (std::exception & e) {
         g_warning("Exception during LPE %s execution. \n %s", getName().c_str(), e.what());
         SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
             _("An exception occurred during execution of the Path Effect.") );

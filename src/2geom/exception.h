@@ -31,6 +31,7 @@
  */
 
 #include <exception>
+#include <sstream>
 #include <string>
 
 namespace Geom {
@@ -39,19 +40,15 @@ namespace Geom {
 class Exception : public std::exception {
 public:
     Exception(const char * message, const char *file, const int line)
-        : msgstr("Exception thrown: ")
     {
-        msgstr += message;
-        msgstr += " (";
-        msgstr += file;
-        msgstr += ":";
-        msgstr += line;
-        msgstr += ")";
+        std::ostringstream os;
+        os << "lib2geom exception: " << message << " (" << file << ":" << line << ")";
+        msgstr = os.str();
     }
 
     virtual ~Exception() throw() {} // necessary to destroy the string object!!!
 
-    virtual const char * what() const throw (){
+    virtual const char* what() const throw (){
         return msgstr.c_str();
     }
 protected:

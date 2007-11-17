@@ -209,12 +209,12 @@ void SVGPreview::showImage(Glib::ustring &theFileName)
     try {
         img = Gdk::Pixbuf::create_from_file(fileName);
     }
-    catch (Glib::FileError e)
+    catch (Glib::FileError & e)
     {
         g_message("caught Glib::FileError in SVGPreview::showImage");
         return;
     }
-    catch (Gdk::PixbufError e)
+    catch (Gdk::PixbufError & e)
     {
         g_message("Gdk::PixbufError in SVGPreview::showImage");
         return;
