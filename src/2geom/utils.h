@@ -3,6 +3,7 @@
 
 /** Various utility functions.
  *
+ * Copyright 2007 Johan Engelen <goejendaagh@zonnet.nl>
  * Copyright 2006 Michael G. Sloan <mgsloan@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -35,15 +36,71 @@
 
 namespace Geom {
 
-class NotImplemented : public std::logic_error {
+
+//#######################################################################
+// Base exception class, all 2geom exceptions should be derrived from this one.
+class Exception : public std::exception {
 public:
-  NotImplemented() : std::logic_error("method not implemented") {}
+    Exception(const char * message, const char *file, const int line) {
+        msgstr = "Exception thrown: ";
+        msgstr += message;
+        msgstr += " (";
+        msgstr += file;
+        msgstr += ":";
+        msgstr += line;
+        msgstr += ")";
+    };
+    virtual ~Exception() throw() {}; // necessary to destroy the string object!!!
+    virtual const char * what() const throw () { return msgstr.c_str(); }
+protected:
+    std::string msgstr;
 };
 
-class NotInvertible : public std::range_error {
- public:
-  NotInvertible() : std::range_error("function does not have a unique inverse") {}
+//-----------------------------------------------------------------------
+// Two main exception classes: LogicalError and RangeError.
+// Logical errors are 2geom faults/bugs, RangeErrors are 'user' faults.
+// This way, the 'user' can distinguish between groups of exceptions
+// ('user' is the coder that uses lib2geom)
+class LogicalError : public Exception {
+public:
+    LogicalError(const char * message, const char *file, const int line)
+        : Exception(message, file, line) {};
 };
+#define throwLogicalError(message) throw(LogicalError(message, __FILE__, __LINE__))
+
+class RangeError : public Exception {
+public:
+    RangeError(const char * message, const char *file, const int line)
+        : Exception(message, file, line) {};
+};
+#define throwRangeError(message) throw(RangeError(message, __FILE__, __LINE__))
+
+//-----------------------------------------------------------------------
+// Special case exceptions. Best used with the defines :)
+
+class NotImplemented : public LogicalError {
+public:
+    NotImplemented(const char *file, const int line)
+        : LogicalError("Method not implemented", file, line) {};
+};
+#define throwNotImplemented(i) throw(NotImplemented(__FILE__, __LINE__))
+
+class InvariantsViolation : public LogicalError {
+public:
+    InvariantsViolation(const char *file, const int line)
+        : LogicalError("Invariants violation", file, line) {};
+};
+#define throwInvariantsViolation(i) throw(InvariantsViolation(__FILE__, __LINE__))
+#define assert_invariants(e)       ((e) ? (void)0 : throwInvariantsViolation())
+
+class NotInvertible : public RangeError {
+public:
+    NotInvertible(const char *file, const int line)
+        : RangeError("Function does not have a unique inverse", file, line) {};
+};
+#define throwNotInvertible(i) throw(NotInvertible(__FILE__, __LINE__))
+
+//#######################################################################
 
 // proper logical xor
 inline bool logical_xor (bool a, bool b) { return (a || b) && !(a && b); }

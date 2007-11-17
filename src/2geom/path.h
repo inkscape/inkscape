@@ -39,6 +39,7 @@
 #include "matrix.h"
 #include "bezier.h"
 #include "crossing.h"
+#include "utils.h"
 
 namespace Geom {
 
@@ -325,7 +326,7 @@ public:
     return ret;
   }
 
-  Curve *derivative() const { throw NotImplemented(); }
+  Curve *derivative() const { throwNotImplemented(); }
 
   std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const;
 
@@ -767,7 +768,7 @@ class PathPortion : public Curve {
 
   Rect boundsFast() const { return actualPath().boundsFast; }
   Rect boundsExact() const { return actualPath().boundsFast; }
-  Rect boundsLocal(Interval i) const { throw NotImplemented(); }
+  Rect boundsLocal(Interval i) const { throwNotImplemented(); }
 
   std::vector<double> roots(double v, Dim2 d) const = 0;
 

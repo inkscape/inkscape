@@ -90,7 +90,7 @@ class Piecewise {
     }
     //Convenience/implementation hiding function to add cuts.
     inline void push_cut(double c) {
-        assert(cuts.empty() || c > cuts.back()); 
+        assert_invariants(cuts.empty() || c > cuts.back()); 
         cuts.push_back(c);
     }
     //Convenience/implementation hiding function to add segments.

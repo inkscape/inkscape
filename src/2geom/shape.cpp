@@ -191,7 +191,7 @@ Shape shape_boolean_rb(bool rev, Shape const &a, Shape const &b, CrossingSet con
  * NOTE: currently doesn't work, as the CrossingSet reversal functions crash
  */
 Shape boolop(Shape const &a, Shape const &b, unsigned flags, CrossingSet const &crs) {
-    throw NotImplemented();
+    throwNotImplemented();
     flags &= 15;
     if(flags <= BOOLOP_UNION) {
         switch(flags) {

@@ -106,7 +106,8 @@ public:
 
     std::vector<double> valueAndDerivatives(double /*t*/, unsigned /*n*/) const {
         //TODO
-        throw NotImplemented();
+        throwNotImplemented();
+        //throw(NotImplemented(__FILE__, __LINE__));
     }
 
     SBasis toSBasis() const { return SBasis(*this); }

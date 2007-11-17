@@ -222,21 +222,21 @@ void Path::check_continuity(Sequence::iterator first_replaced,
 }
 
 Rect SVGEllipticalArc::boundsFast() const {
-    throw NotImplemented();
+    throwNotImplemented();
 }
 Rect SVGEllipticalArc::boundsExact() const {
-    throw NotImplemented();
+    throwNotImplemented();
 }
 Rect SVGEllipticalArc::boundsLocal(Interval i, unsigned deg) const {
-    //throw NotImplemented();
+    throwNotImplemented();
 }
 
 std::vector<Point> SVGEllipticalArc::pointAndDerivatives(Coord t, unsigned n) const {
-    throw NotImplemented();
+    throwNotImplemented();
 }
 
 std::vector<double> SVGEllipticalArc::roots(double v, Dim2 d) const {
-    //throw NotImplemented();
+    throwNotImplemented();
 }
 
 D2<SBasis> SVGEllipticalArc::toSBasis() const {
