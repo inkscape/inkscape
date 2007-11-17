@@ -40,6 +40,7 @@
 #include "linear.h"
 #include "interval.h"
 #include "utils.h"
+#include "exception.h"
 
 namespace Geom {
 
@@ -107,7 +108,6 @@ public:
     std::vector<double> valueAndDerivatives(double /*t*/, unsigned /*n*/) const {
         //TODO
         throwNotImplemented();
-        //throw(NotImplemented(__FILE__, __LINE__));
     }
 
     SBasis toSBasis() const { return SBasis(*this); }

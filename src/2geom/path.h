@@ -33,8 +33,7 @@
 #include "point.h"
 #include <iterator>
 #include <algorithm>
-#include <exception>
-#include <stdexcept>
+#include "exception.h"
 #include "d2.h"
 #include "matrix.h"
 #include "bezier.h"
@@ -409,12 +408,6 @@ public:
 
 private:
   Iterator impl_;
-};
-
-class ContinuityError : public std::runtime_error {
-public:
-  ContinuityError() : runtime_error("non-contiguous path") {}
-  ContinuityError(std::string const &message) : runtime_error(message) {}
 };
 
 class Path {

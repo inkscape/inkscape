@@ -26,6 +26,7 @@
 	2geom/d2-sbasis.cpp	\
 	2geom/d2-sbasis.h	\
 	2geom/d2.h	\
+	2geom/exception.h	\
 	2geom/geom.cpp	\
 	2geom/geom.h	\
 	2geom/interval.h	\

@@ -1,4 +1,5 @@
 #include "basic-intersection.h"
+#include "exception.h"
 
 unsigned intersect_steps = 0;
 

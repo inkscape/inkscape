@@ -34,15 +34,12 @@
 
 #include <vector>
 #include <iterator>
-#include <exception>
+#include <stdexcept>
+#include "exception.h"
 #include "point.h"
 #include "svg-path.h"
 
 namespace Geom {
-
-struct SVGPathParseError : public std::exception {
-    char const *what() const throw() { return "parse error"; }
-};
 
 void parse_svg_path(char const *str, SVGPathSink &sink) throw(SVGPathParseError);
 
