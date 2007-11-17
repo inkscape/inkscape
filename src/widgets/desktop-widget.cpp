@@ -1023,9 +1023,11 @@ sp_desktop_widget_layout (SPDesktopWidget *dtw)
     if (prefs_get_int_attribute (fullscreen ? "fullscreen.scrollbars" : "window.scrollbars", "state", 1) == 0) {
         gtk_widget_hide_all (dtw->hscrollbar);
         gtk_widget_hide_all (dtw->vscrollbar_box);
+        gtk_widget_hide_all( dtw->cms_adjust );
     } else {
         gtk_widget_show_all (dtw->hscrollbar);
         gtk_widget_show_all (dtw->vscrollbar_box);
+        gtk_widget_show_all( dtw->cms_adjust );
     }
 
     if (prefs_get_int_attribute (fullscreen ? "fullscreen.rulers" : "window.rulers", "state", 1) == 0) {
@@ -1370,10 +1372,12 @@ sp_desktop_widget_toggle_scrollbars (SPDesktopWidget *dtw)
     if (GTK_WIDGET_VISIBLE (dtw->hscrollbar)) {
         gtk_widget_hide_all (dtw->hscrollbar);
         gtk_widget_hide_all (dtw->vscrollbar_box);
+        gtk_widget_hide_all( dtw->cms_adjust );
         prefs_set_int_attribute (dtw->desktop->is_fullscreen() ? "fullscreen.scrollbars" : "window.scrollbars", "state", 0);
     } else {
         gtk_widget_show_all (dtw->hscrollbar);
         gtk_widget_show_all (dtw->vscrollbar_box);
+        gtk_widget_show_all( dtw->cms_adjust );
         prefs_set_int_attribute (dtw->desktop->is_fullscreen() ? "fullscreen.scrollbars" : "window.scrollbars", "state", 1);
     }
 }
