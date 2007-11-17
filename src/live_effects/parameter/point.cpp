@@ -135,7 +135,7 @@ PointParam::on_button_click()
         sp_knot_update_ctrl(knot);
 
         // move knot to the given point
-        sp_knot_set_position (knot, &NR::Point(*this), SP_KNOT_STATE_NORMAL);
+        sp_knot_set_position (knot, &NR::Point(*static_cast<Geom::Point*>(this)), SP_KNOT_STATE_NORMAL);
         sp_knot_show (knot);
 /*
         // connect knot's signals
