@@ -375,11 +375,13 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
     /* The current best metric for the best transformation; lower is better, NR_HUGE
     ** means that we haven't snapped anything.
     */
-    double best_metric = NR_HUGE;
+    NR::Coord best_metric = NR_HUGE;
+    NR::Coord best_second_metric = NR_HUGE;
+    bool best_at_intersection = false;
 
     std::vector<NR::Point>::const_iterator j = transformed_points.begin();
 
-    // std::cout << std::endl;
+    //std::cout << std::endl;
 
     for (std::vector<NR::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
         
@@ -389,6 +391,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
 
         NR::Point result;
         NR::Coord metric;
+        NR::Coord second_metric;
         
         if (snapped.getDistance() < NR_HUGE) {
             /* We snapped.  Find the transformation that describes where the snapped point has
@@ -407,6 +410,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                      * and not to the intersection itself! 
                      */
                     metric = snapped.getDistance(); //used to be: metric = NR::L2(result);
+                    second_metric = NR::L2(*j - snapped.getPoint());
                     break;
                 case SCALE:
                 {
@@ -436,15 +440,27 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                     g_assert_not_reached();
             }
 
+            
+            
             /* Note it if it's the best so far */
-            if ((metric < best_metric) || ((metric == best_metric) && snapped.getAtIntersection() == true)) {
+            bool const c1 = metric < best_metric;
+            bool const c2 = metric == best_metric && snapped.getAtIntersection() == true && best_at_intersection == false;
+			bool const c3a = metric == best_metric && snapped.getAtIntersection() == true && best_at_intersection == true;
+            bool const c3b = second_metric < best_second_metric;
+            
+            if (c1 || c2 || c3a && c3b) {
                 best_transformation = result;
+                //if (c1) {std::cout << "c1 ";}
+                //if (c2) {std::cout << "c2 ";}
+                //if (c3a && c3b) {std::cout << "c3 ";}
                 best_metric = metric;
-                // std::cout << "SEL ";;
+                best_second_metric = second_metric;
+                best_at_intersection = snapped.getAtIntersection(); 
+                //std::cout << "SEL ";
             } //else { std::cout << "    ";}
         }
         
-        // std::cout << "P_orig = " << (*i) << " | metric = " << metric << " | distance = " << snapped.getDistance() << " | P_snap = " << snapped.getPoint() << std::endl;
+        //std::cout << "P_orig = " << (*i) << " | metric = " << metric << " | distance = " << snapped.getDistance() << " | second metric = " << second_metric << " | P_snap = " << snapped.getPoint() << std::endl;
         j++;
     }
     
