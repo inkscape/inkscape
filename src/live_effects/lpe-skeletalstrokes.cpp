@@ -107,7 +107,7 @@ LPESkeletalStrokes::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pw
     Interval pattBnds = bounds_exact(x);
     x -= pattBnds.min();
     Interval pattBndsY = bounds_exact(y);
-    y -= (pattBndsY.max()+pattBndsY.min())/2;
+    y -= pattBndsY.middle();
 
     int nbCopies = int(uskeleton.cuts.back()/pattBnds.extent());
     double scaling = 1;

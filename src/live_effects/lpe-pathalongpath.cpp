@@ -102,6 +102,9 @@ LPEPathAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2
 
     Piecewise<D2<SBasis> > uskeleton = arc_length_parametrization(Piecewise<D2<SBasis> >(bend_path),2,.1);
     uskeleton = remove_short_cuts(uskeleton,.01);
+    Rect uskeletonbounds = bounds_exact(uskeleton);
+    uskeleton -= uskeletonbounds.midpoint();
+
     Piecewise<D2<SBasis> > n = rot90(derivative(uskeleton));
     n = force_continuity(remove_short_cuts(n,.1));
 
@@ -111,7 +114,7 @@ LPEPathAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2
     Interval pattBnds = bounds_exact(x);
     x -= pattBnds.min();
     Interval pattBndsY = bounds_exact(y);
-    y -= (pattBndsY.max()+pattBndsY.min())/2;
+    y -= pattBndsY.middle();
 
     int nbCopies = int(uskeleton.cuts.back()/pattBnds.extent());
     double scaling = 1;
@@ -154,6 +157,9 @@ LPEPathAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2
         output.concat(compose(uskeleton,x+offs)+y*compose(n,x+offs));
         offs+=pattWidth;
     }
+
+    output += Point(pattBnds.middle(), pattBndsY.middle());
+
     return output;
 }
 
