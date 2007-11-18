@@ -463,8 +463,7 @@ DocumentProperties::build_gridspage()
         label_def,         0
     };
     attach_all(_page_grids.table(), widget_array, G_N_ELEMENTS(widget_array));
-    _page_grids.table().attach(_grids_notebook, 0, 3, 4, 5,
-			       Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+    _page_grids.table().attach(_grids_notebook, 0, 3, 4, 5, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
 }
 
 

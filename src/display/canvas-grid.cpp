@@ -359,15 +359,28 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
     table.set_spacings(2);
     vbox.pack_start(table, false, false, 0);
 
+    Inkscape::UI::Widget::ScalarUnit * sutemp;
     _rumg.init (_("Grid _units:"), "units", _wr, repr, doc);
     _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
                   "originx", _rumg, _wr, repr, doc);
+        sutemp = _rsu_ox.getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
     _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
                   "originy", _rumg, _wr, repr, doc);
+        sutemp = _rsu_oy.getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
     _rsu_sx.init (_("Spacing _X:"), _("Distance between vertical grid lines"),
                   "spacingx", _rumg, _wr, repr, doc);
+        sutemp = _rsu_sx.getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
     _rsu_sy.init (_("Spacing _Y:"), _("Distance between horizontal grid lines"),
                   "spacingy", _rumg, _wr, repr, doc);
+        sutemp = _rsu_sy.getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
     _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"),
                     _("Color of grid lines"), "color", "opacity", _wr, repr, doc);
     _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"),

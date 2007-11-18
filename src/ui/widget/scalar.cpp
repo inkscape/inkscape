@@ -40,6 +40,7 @@ Scalar::Scalar(Glib::ustring const &label, Glib::ustring const &tooltip,
     : Labelled(label, tooltip, new Gtk::SpinButton(), suffix, icon, mnemonic),
       setProgrammatically(false)
 {
+    static_cast<Gtk::SpinButton*>(_widget)->set_numeric();
 }
 
 /**
@@ -61,6 +62,7 @@ Scalar::Scalar(Glib::ustring const &label, Glib::ustring const &tooltip,
     : Labelled(label, tooltip, new Gtk::SpinButton(0.0, digits), suffix, icon, mnemonic),
       setProgrammatically(false)
 {
+    static_cast<Gtk::SpinButton*>(_widget)->set_numeric();
 }
 
 /**
@@ -84,6 +86,7 @@ Scalar::Scalar(Glib::ustring const &label, Glib::ustring const &tooltip,
     : Labelled(label, tooltip, new Gtk::SpinButton(adjust, 0.0, digits), suffix, icon, mnemonic),
       setProgrammatically(false)
 {
+    static_cast<Gtk::SpinButton*>(_widget)->set_numeric();
 }
 
 /** Fetches the precision of the spin buton */

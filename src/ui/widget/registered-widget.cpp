@@ -410,6 +410,7 @@ RegisteredSuffixedInteger::init (const Glib::ustring& label, const Glib::ustring
     _label->set_alignment (1.0, 0.5);
     _label->set_use_underline();
     _sb = new Gtk::SpinButton (_adj, 1.0, 0);
+    _sb->set_numeric();
     _label->set_mnemonic_widget (*_sb);
     _suffix = new Gtk::Label (suffix);
     _hbox.pack_start (*_sb, true, true, 0);
