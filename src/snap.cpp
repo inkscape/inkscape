@@ -258,7 +258,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
 Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType t,
                                                     NR::Point const &p,
                                                     bool const &first_point,
-                                                     std::vector<NR::Point> &points_to_snap,
+                                                    std::vector<NR::Point> &points_to_snap,
                                                     Inkscape::Snapper::ConstraintLine const &c,
                                                     std::list<SPItem const *> const &it) const
 {
@@ -390,8 +390,8 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
             constrainedSnap(type, *j, i == points.begin(), transformed_points, constraint, ignore) : freeSnap(type, *j, i == points.begin(), transformed_points, ignore);
 
         NR::Point result;
-        NR::Coord metric;
-        NR::Coord second_metric;
+        NR::Coord metric = NR_HUGE;
+        NR::Coord second_metric = NR_HUGE;
         
         if (snapped.getDistance() < NR_HUGE) {
             /* We snapped.  Find the transformation that describes where the snapped point has
@@ -410,7 +410,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                      * and not to the intersection itself! 
                      */
                     metric = snapped.getDistance(); //used to be: metric = NR::L2(result);
-                    second_metric = NR::L2(*j - snapped.getPoint());
+                    second_metric = snapped.getSecondDistance();
                     break;
                 case SCALE:
                 {
@@ -439,8 +439,6 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                 default:
                     g_assert_not_reached();
             }
-
-            
             
             /* Note it if it's the best so far */
             bool const c1 = metric < best_metric;
@@ -450,9 +448,6 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
             
             if (c1 || c2 || c3a && c3b) {
                 best_transformation = result;
-                //if (c1) {std::cout << "c1 ";}
-                //if (c2) {std::cout << "c2 ";}
-                //if (c3a && c3b) {std::cout << "c3 ";}
                 best_metric = metric;
                 best_second_metric = second_metric;
                 best_at_intersection = snapped.getAtIntersection(); 
@@ -464,7 +459,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
         j++;
     }
     
-    // Using " < 1e6" instead of " < NR::HUGE" for catching some rounding errors
+    // Using " < 1e6" instead of " < NR_HUGE" for catching some rounding errors
     // These rounding errors might be caused by NRRects, see bug #1584301
     return std::make_pair(best_transformation, best_metric < 1e6);
 }
@@ -699,21 +694,23 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedCons
     // now let's see which snapped point gets a thumbs up
     Inkscape::SnappedPoint bestPoint(p, NR_HUGE);
     for (std::list<std::pair<Inkscape::SnappedPoint, NR::Coord> >::const_iterator i = sp_list.begin(); i != sp_list.end(); i++) {
-         // first find out if this snapped point is within snapping range
-         if ((*i).first.getDistance() <= (*i).second) {
-             // if it's the first point
-             bool c1 = (i == sp_list.begin());  
-             // or, if it's closer
-             bool c2 = (*i).first.getDistance() < bestPoint.getDistance(); 
-             // or, if it's just as close but at an intersection
-             bool c3 = ((*i).first.getDistance() == bestPoint.getDistance()) && (*i).first.getAtIntersection(); 
-             // then prefer this point over the previous one
-             if (c1 || c2 || c3) {
-                 bestPoint = (*i).first;
-             }
-         }
-     }
-     return bestPoint;         
+		// first find out if this snapped point is within snapping range
+	    if ((*i).first.getDistance() <= (*i).second) {
+	        // if it's the first point
+	        bool c1 = (i == sp_list.begin());  
+	        // or, if it's closer
+	        bool c2 = (*i).first.getDistance() < bestPoint.getDistance(); 
+	        // or, if it's just as close then consider the second distance
+	        // (which is only relevant for points at an intersection)
+	        bool c3a = ((*i).first.getDistance() == bestPoint.getDistance()); 
+	        bool c3b = (*i).first.getSecondDistance() < bestPoint.getSecondDistance();
+	        // then prefer this point over the previous one
+	        if (c1 || c2 || c3a && c3b) {
+                bestPoint = (*i).first;
+            }
+        }
+    }
+    return bestPoint;         
 }
 
 /*

@@ -4,15 +4,15 @@
  *
  *  Authors:
  *    Mathieu Dimanche <mdimanche@free.fr>
+ *    Diederik van Lierop <mail@diedenrezi.nl>
  *
  *  Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
 #include "snapped-point.h"
-#include <libnr/nr-values.h>
 
-Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, bool at_intersection)
-    : _distance(d), _point(p), _at_intersection(at_intersection)
+Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, bool at_intersection, NR::Coord d2)
+    : _distance(d), _point(p), _at_intersection(at_intersection), _second_distance(d2)
 {
 }
 
@@ -21,6 +21,7 @@ Inkscape::SnappedPoint::SnappedPoint()
     _distance = NR_HUGE;
     _point = NR::Point(0,0);
     _at_intersection = false;
+    _second_distance = NR_HUGE;
 }
 
 
@@ -33,6 +34,12 @@ NR::Coord Inkscape::SnappedPoint::getDistance() const
 {
     return _distance;
 }
+
+NR::Coord Inkscape::SnappedPoint::getSecondDistance() const
+{
+    return _second_distance;
+}
+
 
 NR::Point Inkscape::SnappedPoint::getPoint() const
 {

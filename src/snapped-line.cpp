@@ -18,6 +18,7 @@ Inkscape::SnappedLineSegment::SnappedLineSegment(NR::Point snapped_point, NR::Co
 	_distance = snapped_distance;
 	_point = snapped_point;
 	_at_intersection = false;
+	_second_distance = NR_HUGE;
 }
 
 Inkscape::SnappedLineSegment::SnappedLineSegment() 
@@ -27,6 +28,7 @@ Inkscape::SnappedLineSegment::SnappedLineSegment()
 	_distance = NR_HUGE;
 	_point = NR::Point(0,0);
 	_at_intersection = false;
+	_second_distance = NR_HUGE;
 }
 
 
@@ -38,6 +40,7 @@ Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegmen
 {
 	Geom::Point intersection_2geom(NR_HUGE, NR_HUGE);
 	NR::Coord distance = NR_HUGE;
+	NR::Coord second_distance = NR_HUGE;
 	 
 	Geom::IntersectorKind result = segment_intersect(_start_point_of_line.to_2geom(), _end_point_of_line.to_2geom(),
                               						 line._start_point_of_line.to_2geom(), line._end_point_of_line.to_2geom(),
@@ -49,8 +52,9 @@ Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegmen
 		distance to the intersection. See the comment in Inkscape::SnappedLine::intersect
 		*/
 		distance = std::min(_distance, line.getDistance());
+		second_distance = std::max(_distance, line.getDistance());
 	}
-	return SnappedPoint(intersection, distance, result == Geom::intersects);
+	return SnappedPoint(intersection, distance, result == Geom::intersects, second_distance);
 };
 
 
@@ -59,6 +63,7 @@ Inkscape::SnappedLine::SnappedLine(NR::Point snapped_point, NR::Coord snapped_di
     : _normal_to_line(normal_to_line), _point_on_line(point_on_line)
 {
 	_distance = snapped_distance;
+	_second_distance = NR_HUGE;
 	_point = snapped_point;
 	_at_intersection = false;
 }
@@ -68,6 +73,7 @@ Inkscape::SnappedLine::SnappedLine()
 	_normal_to_line = NR::Point(0,0);
 	_point_on_line = NR::Point(0,0);
 	_distance = NR_HUGE;
+	_second_distance = NR_HUGE;
 	_point = NR::Point(0,0);
 	_at_intersection = false;
 }
@@ -83,6 +89,7 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
 	
 	Geom::Point intersection_2geom(NR_HUGE, NR_HUGE);
 	NR::Coord distance = NR_HUGE;
+	NR::Coord second_distance = NR_HUGE;
 	
     Geom::IntersectorKind result = Geom::line_intersection(getNormal().to_2geom(), getConstTerm(), 
                                    line.getNormal().to_2geom(), line.getConstTerm(), intersection_2geom);
@@ -98,9 +105,10 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
 		than it, as that would rule the intersection out
 		*/
 		distance = std::min(_distance, line.getDistance());
+		second_distance = std::max(_distance, line.getDistance());
 	}
 
-    return SnappedPoint(intersection, distance, result == Geom::intersects);
+    return SnappedPoint(intersection, distance, result == Geom::intersects, second_distance);
 }
 
 // search for the closest snapped line segment
@@ -129,8 +137,15 @@ bool getClosestIntersectionSLS(std::list<Inkscape::SnappedLineSegment> &list, In
 		for (; j != list.end(); j++) {
 			Inkscape::SnappedPoint sp = (*i).intersect(*j);
 			if (sp.getAtIntersection()) {
-				if (!success || sp.getDistance() < result.getDistance()) {  
-					// !success because the first intersection cannot be compared to a previous one
+				// if it's the first point
+             	bool const c1 = !success;
+				// or, if it's closer             
+				bool const c2 = sp.getDistance() < result.getDistance();
+				// or, if it's just then look at the other distance 
+				// (only relevant for snapped points which are at an intersection
+				bool const c3 = (sp.getDistance() == result.getDistance()) && (sp.getSecondDistance() < result.getSecondDistance()); 
+				// then prefer this point over the previous one
+				if (c1 || c2 || c3) {  
 					result = sp;
 					success = true;
 				}
@@ -167,8 +182,15 @@ bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> &list, Inkscape::
 		for (; j != list.end(); j++) {
 			Inkscape::SnappedPoint sp = (*i).intersect(*j);
 			if (sp.getAtIntersection()) {
-				if (!success || sp.getDistance() < result.getDistance()) {  
-					// !success because the first intersection cannot be compared to a previous one
+				// if it's the first point
+             	bool const c1 = !success;
+				// or, if it's closer             
+				bool const c2 = sp.getDistance() < result.getDistance();
+				// or, if it's just then look at the other distance 
+				// (only relevant for snapped points which are at an intersection
+				bool const c3 = (sp.getDistance() == result.getDistance()) && (sp.getSecondDistance() < result.getSecondDistance()); 
+				// then prefer this point over the previous one
+				if (c1 || c2 || c3) {  
 					result = sp;
 					success = true;
 				}
@@ -188,8 +210,15 @@ bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> &list1, std::list
 		for (std::list<Inkscape::SnappedLine>::const_iterator j = list2.begin(); j != list2.end(); j++) {
 			Inkscape::SnappedPoint sp = (*i).intersect(*j);
 			if (sp.getAtIntersection()) {
-				if (!success || sp.getDistance() < result.getDistance()) {
-					// !success because the first intersection cannot be compared to a previous one
+				// if it's the first point
+             	bool const c1 = !success;
+				// or, if it's closer             
+				bool const c2 = sp.getDistance() < result.getDistance();
+				// or, if it's just then look at the other distance 
+				// (only relevant for snapped points which are at an intersection
+				bool const c3 = (sp.getDistance() == result.getDistance()) && (sp.getSecondDistance() < result.getSecondDistance()); 
+				// then prefer this point over the previous one
+				if (c1 || c2 || c3) {  
 					result = sp;
 					success = true;
 				}

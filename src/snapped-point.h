@@ -7,6 +7,7 @@
  *
  *    Authors:
  *      Mathieu Dimanche <mdimanche@free.fr>
+ *      Diederik van Lierop <mail@diedenrezi.nl>
  *
  *    Released under GNU GPL, read the file 'COPYING' for more information.
  */
@@ -15,6 +16,7 @@
 #include <list>
 #include "libnr/nr-coord.h"
 #include "libnr/nr-point.h"
+#include <libnr/nr-values.h>
 
 namespace Inkscape
 {
@@ -24,17 +26,28 @@ class SnappedPoint
 {
 public:
     SnappedPoint();
-    SnappedPoint(::NR::Point p, ::NR::Coord d, bool at_intersection = false);
+    SnappedPoint(::NR::Point p, ::NR::Coord d, bool at_intersection = false, NR::Coord d2 = NR_HUGE);
     ~SnappedPoint();
 
     NR::Coord getDistance() const;
+    NR::Coord getSecondDistance() const;
     NR::Point getPoint() const;
     bool getAtIntersection() const {return _at_intersection;}
     
 protected:
-    NR::Coord _distance;
-    NR::Point _point;
-    bool _at_intersection;
+    NR::Point _point; // Location of the snapped point
+    bool _at_intersection; // If true, the snapped point is at an intersection 
+    
+    /* Distance from original point to snapped point. If the snapped point is at
+       an intersection of e.g. two lines, then this is the distance to the closest
+       line */    
+    NR::Coord _distance; 
+    
+    /* If the snapped point is at an intersection of e.g. two lines, then this is
+       the distance to the fartest line */    
+    NR::Coord _second_distance; 
+    
+    
 };    
 
 }

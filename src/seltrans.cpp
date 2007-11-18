@@ -1151,18 +1151,26 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
         }
         skew[dim_a] = tan(radians) * s[dim_a];
     } else {
+        /* Get a STL list of the selected items.
+	    ** FIXME: this should probably be done by Inkscape::Selection.
+	    */
+	    std::list<SPItem const*> it;
+	    for (GSList const *i = _selection->itemList(); i != NULL; i = i->next) {
+	        it.push_back(reinterpret_cast<SPItem*>(i->data));
+	    }
+        
         SnapManager const &m = _desktop->namedview->snap_manager;
 
         std::pair<NR::Coord, bool> bb = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_BBOX,
                                                        _bbox_points,
-                                                       std::list<SPItem const *>(),
+                                                       it,
                                                        skew[dim_a],
                                                        _origin_for_bboxpoints,
                                                        dim_b);
 
         std::pair<NR::Coord, bool> sn = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_NODE,
                                                        _snap_points,
-                                                       std::list<SPItem const *>(),
+                                                       it,
                                                        skew[dim_a],
                                                        _origin_for_specpoints,
                                                        dim_b);
