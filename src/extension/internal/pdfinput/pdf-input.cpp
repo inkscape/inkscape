@@ -23,6 +23,12 @@
 #include "Page.h"
 #include "Catalog.h"
 
+#ifdef HAVE_POPPLER_CAIRO
+#include <poppler/glib/poppler.h>
+#include <poppler/glib/poppler-document.h>
+#include <poppler/glib/poppler-page.h>
+#endif
+
 #include "pdf-input.h"
 #include "extension/system.h"
 #include "extension/input.h"
@@ -51,7 +57,7 @@ static Glib::ustring crop_setting_choices[] = {
     Glib::ustring(_("art box"))
 };
 
-PdfImportDialog::PdfImportDialog(PDFDoc *doc)
+PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
 {
 
     _pdf_doc = doc;
@@ -275,11 +281,14 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
 
     _render_thumb = false;
 #ifdef HAVE_POPPLER_CAIRO
-    // Create an OutputDev
-    _preview_output_dev = new CairoOutputDev();
-    _preview_output_dev->startDoc(_pdf_doc->getXRef());
     _cairo_surface = NULL;
     _render_thumb = true;
+    // Create PopplerDocument
+    gchar *doc_uri = g_filename_to_uri(uri, NULL, NULL);
+    if (doc_uri) {
+        _poppler_doc = poppler_document_new_from_file(doc_uri, NULL, NULL);
+        g_free(doc_uri);
+    }
 #endif
 
     // Set default preview size
@@ -298,11 +307,11 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc)
 
 PdfImportDialog::~PdfImportDialog() {
 #ifdef HAVE_POPPLER_CAIRO
-    if (_preview_output_dev) {
-        delete _preview_output_dev;
-    }
     if (_cairo_surface) {
         cairo_surface_destroy(_cairo_surface);
+    }
+    if (_poppler_doc) {
+        g_object_unref(G_OBJECT(_poppler_doc));
     }
 #endif
     if (_thumb_data) {
@@ -541,19 +550,13 @@ void PdfImportDialog::_setPreviewPage(int page) {
     cairo_set_source_rgba(cr, 1.0, 1.0, 1.0, 1.0);  // Set fill color to white
     cairo_paint(cr);    // Clear it
     cairo_scale(cr, scale_factor, scale_factor);    // Use Cairo for resizing the image
-    _preview_output_dev->setCairo(cr);
     // Render page
-    _previewed_page->displaySlice(_preview_output_dev,
-                       72.0, 72.0, 0,
-                       FALSE, /* useMediaBox */
-                       TRUE, /* crop */
-                       0, 0,
-                       (int)ceil(_previewed_page->getCropWidth()),
-                       (int)ceil(_previewed_page->getCropHeight()),
-                       FALSE, /* printing */
-                       _pdf_doc->getCatalog());
+    if (_poppler_doc != NULL) {
+        PopplerPage *poppler_page = poppler_document_get_page(_poppler_doc, page-1);
+        poppler_page_render(poppler_page, cr);
+        g_object_unref(G_OBJECT(poppler_page));
+    }
     // Clean up
-    _preview_output_dev->setCairo(NULL);
     cairo_destroy(cr);
     // Redraw preview area
     _previewArea->set_size_request(_preview_width, _preview_height);
@@ -586,7 +589,7 @@ PdfInput::open(::Inkscape::Extension::Input * mod, const gchar * uri) {
  
         return NULL;
     }
-    PdfImportDialog *dlg = new PdfImportDialog(pdf_doc);
+    PdfImportDialog *dlg = new PdfImportDialog(pdf_doc, uri);
     if (!dlg->showDialog()) {
         delete dlg;
         delete pdf_doc;

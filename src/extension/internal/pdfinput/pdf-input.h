@@ -37,7 +37,7 @@
 
 #include "PDFDoc.h"
 #ifdef HAVE_POPPLER_CAIRO
-#include <CairoOutputDev.h>
+#include <poppler/glib/poppler-document.h>
 #endif
 
 namespace Inkscape {
@@ -47,7 +47,7 @@ namespace Internal {
 class PdfImportDialog : public Gtk::Dialog
 {
 public:
-    PdfImportDialog(PDFDoc *doc);
+    PdfImportDialog(PDFDoc *doc, const gchar *uri);
     virtual ~PdfImportDialog();
 
     bool showDialog();
@@ -104,7 +104,7 @@ private:
     bool _render_thumb;     // Whether we can/shall render thumbnails
 #ifdef HAVE_POPPLER_CAIRO
     cairo_surface_t *_cairo_surface;
-    CairoOutputDev *_preview_output_dev;
+    PopplerDocument *_poppler_doc;
 #endif
 };
 
