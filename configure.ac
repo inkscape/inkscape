@@ -489,11 +489,11 @@ if test "x$poppler" = "xyes"; then
 		dnl Have to test libpoppler-cairo presence for PDF preview
 		dnl AC_CHECK_HEADER(Magick++.h, magick_ok=yes, magick_ok=no)
 		PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.5.9, poppler_cairo=yes, poppler_cairo=no)
-		if test "x$poppler_cairo" = "xyes"; then
-			dnl Working libpoppler-cairo found
-			dnl Check whether the Cairo FreeType backend is available
-			PKG_CHECK_MODULES(CAIRO_FT, cairo-ft, cairo_ft=yes, cairo_ft=no)
-		fi		                                                        	
+		if test "x$poppler_glib" = "xyes" -a "x$poppler_cairo" = "xyes" -a \
+			"x$cairo_svg" = "xno"
+		then
+			POPPLER_LIBS="$POPPLER_LIBS -lpoppler-glib "
+		fi
 	fi
 fi
 
@@ -501,7 +501,7 @@ if test "x$poppler" = "xyes"; then
 	LIBS="$LIBS $POPPLER_LIBS"
 	AC_DEFINE(HAVE_POPPLER, 1, [Use libpoppler for direct PDF import])
 fi
-if test "x$cairo_ft" = "xyes"; then
+if test "x$poppler_cairo" = "xyes" -a "x$poppler_glib" = "xyes"; then
 	AC_DEFINE(HAVE_POPPLER_CAIRO, 1, [Use libpoppler-cairo for rendering PDF preview])
 fi
 if test "x$poppler_glib" = "xyes" -a "x$cairo_svg" = "xyes"; then
