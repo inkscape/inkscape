@@ -292,8 +292,8 @@ Future improvements:
   <bind key="d" modifiers="Alt,Shift" action="EditUnlinkClone" display="true"/>
   <bind key="D" modifiers="Alt,Shift" action="EditUnlinkClone" />
 
-  <bind key="d" modifiers="Shift" action="EditCloneOriginal" display="true"/>
-  <bind key="D" modifiers="Shift" action="EditCloneOriginal" />
+  <bind key="d" modifiers="Shift" action="EditCloneSelectOriginal" display="true"/>
+  <bind key="D" modifiers="Shift" action="EditCloneSelectOriginal" />
 
   <bind key="a" modifiers="Ctrl" action="EditSelectAll" display="true"/>
   <bind key="A" modifiers="Ctrl" action="EditSelectAll" />
