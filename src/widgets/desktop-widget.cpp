@@ -1202,7 +1202,7 @@ bool SPDesktopWidget::onFocusInEvent(GdkEventFocus*)
 static gdouble
 sp_dtw_zoom_value_to_display (gdouble value)
 {
-    return floor (pow (2, value) * 100.0 + 0.5);
+    return floor (10 * (pow (2, value) * 100.0 + 0.05)) / 10;
 }
 
 static gdouble
@@ -1231,7 +1231,12 @@ static bool
 sp_dtw_zoom_output (GtkSpinButton *spin, gpointer data)
 {
     gchar b[64];
-    g_snprintf (b, 64, "%4.0f%%", sp_dtw_zoom_value_to_display (gtk_spin_button_get_value (spin)));
+    double val = sp_dtw_zoom_value_to_display (gtk_spin_button_get_value (spin));
+    if (val < 10) {
+        g_snprintf (b, 64, "%4.1f%%", val);
+    } else {
+        g_snprintf (b, 64, "%4.0f%%", val);
+    }
     gtk_entry_set_text (GTK_ENTRY (spin), b);
     return TRUE;
 }
