@@ -6,13 +6,13 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-11-15 18:06-0300\n"
-"PO-Revision-Date: 2007-11-16 15:45+0700\n"
+"PO-Revision-Date: 2007-11-19 15:36+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
-"Language-Team: Khmer <en@li.org>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: 0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../inkscape.desktop.in.h:1
@@ -923,9 +923,8 @@ msgstr ""
 "(ប្រយ័ត្ន សរសេរ​ជាន់​លើ​ដោយ​មិន​បាន​សួរ!)"
 
 #: ../src/dialogs/export.cpp:630
-#, fuzzy
 msgid "Hide all except selected"
-msgstr "រក្សា​ទុក​ជ្រើស​"
+msgstr "លាក់ទាំងអស់ លើកលែង​តែ​អ្វី​ដែល​បាន​ជ្រើស"
 
 #: ../src/dialogs/export.cpp:634
 msgid "In the exported image, hide all objects except those that are selected"
@@ -940,18 +939,18 @@ msgid "Export the bitmap file with these settings"
 msgstr "នាំចេញ​​ឯកសារ​​រូបភាព​​ជា​​មួយ​​ការ​កំណត់​​ទាំងនេះ "
 
 #: ../src/dialogs/export.cpp:681
-#, fuzzy, c-format
+#, c-format
 msgid "Batch export %d selected objects"
-msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​ស្ទួន​"
+msgstr "បាច់​នាំចេញវត្ថុ​ដែល​បាន​ជ្រើស %d"
 
 #: ../src/dialogs/export.cpp:1013
 msgid "Export in progress"
 msgstr "ការ​នាំចេញ​កំពុង​ដំណើរការ"
 
 #: ../src/dialogs/export.cpp:1083
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting %d files"
-msgstr "ការនាំចេញ %s (%d x %d)"
+msgstr "នាំចេញ​ឯកសារ %d"
 
 #: ../src/dialogs/export.cpp:1123 ../src/dialogs/export.cpp:1195
 #, c-format
@@ -981,14 +980,12 @@ msgid "Select a filename for exporting"
 msgstr "ជ្រើស​​ឈ្មោះ​​ឯកសារ​​សម្រាប់​​នាំចេញ​"
 
 #: ../src/dialogs/fill-style.cpp:283
-#, fuzzy
 msgid "Change fill rule"
-msgstr "បំពេញ​ស្រអាប់​"
+msgstr "ផ្លាស់ប្ដូរ​ក្បួន​បំពេញ"
 
 #: ../src/dialogs/fill-style.cpp:323 ../src/dialogs/fill-style.cpp:397
-#, fuzzy
 msgid "Set fill color"
-msgstr "ជ្រើស​ឯកសារ​ដើម្បី នាំចូល​"
+msgstr "កំណត់​ពណ៌​បំពេញ"
 
 #: ../src/dialogs/fill-style.cpp:385 ../src/ui/widget/selected-style.cpp:248
 #: ../src/ui/widget/selected-style.cpp:471
@@ -996,14 +993,12 @@ msgid "Remove fill"
 msgstr "យក​ការ​បំពេញ​ចេញ​ទាំង​អស់"
 
 #: ../src/dialogs/fill-style.cpp:466
-#, fuzzy
 msgid "Set gradient on fill"
-msgstr "បង្កើត​ជម្រាល​នៅ​ក្នុង​ការ​​ពេញ"
+msgstr "កំណត់​ជម្រាល​លើ​ការ​បំពេញ"
 
 #: ../src/dialogs/fill-style.cpp:513
-#, fuzzy
 msgid "Set pattern on fill"
-msgstr "លំនាំ​បំពេញ "
+msgstr "កំណត់​លំនាំ​លើ​ការ​បំពេញ"
 
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/dialogs/fill-style.cpp:528 ../src/ui/widget/selected-style.cpp:186
@@ -1015,9 +1010,9 @@ msgstr "មិន​​កំណត់​ការ​បំពេញ "
 
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
 #: ../src/dialogs/find.cpp:372 ../src/ui/dialog/find.cpp:435
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
-msgstr "រកឃើញវត្ថុ<b>%d</b> (ពី<b>%d</b>) ផ្គូផ្គង %s ។"
+msgstr "រកឃើញវត្ថុ<b>%d</b> (ពី <b>%d</b>) ផ្គូផ្គង %s ។"
 
 #: ../src/dialogs/find.cpp:375 ../src/ui/dialog/find.cpp:438
 msgid "exact"
@@ -1230,9 +1225,8 @@ msgid "Move to:"
 msgstr "ផ្លាស់ទី​ទៅ ៖"
 
 #: ../src/dialogs/guidelinedialog.cpp:77
-#, fuzzy
 msgid "Set guide properties"
-msgstr "លក្ខណៈសម្បត្តិ​បោះពុម្ព​"
+msgstr "កំណត់​លក្ខណៈសម្បត្តិ​បន្ទាត់​នាំផ្លូវ"
 
 #: ../src/dialogs/guidelinedialog.cpp:116
 msgid "Guideline"
@@ -1271,8 +1265,8 @@ msgid "_Id"
 msgstr "លេខសម្គាល់​"
 
 #: ../src/dialogs/item-properties.cpp:129
-msgid "The id= attribute (only letters, digits, and the characters .-_: allowed)"
-msgstr ""
+msgid "_:The id= attribute (only letters, digits, and the characters .-_: allowed)"
+msgstr "_:លេខសម្គាល់= គុណលក្ខណៈ (មាន​តែ​អក្សរ តួលេខ និង​តួអក្សរ .-_: បាន​អនុញ្ញាត)"
 
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2389
@@ -1325,24 +1319,20 @@ msgid "Ref"
 msgstr "សេចក្ដី​យោង"
 
 #: ../src/dialogs/item-properties.cpp:351
-#, fuzzy
 msgid "Lock object"
-msgstr "គ្មាន​វត្ថុ​"
+msgstr "ចាក់សោ​វត្ថុ"
 
 #: ../src/dialogs/item-properties.cpp:351
-#, fuzzy
 msgid "Unlock object"
-msgstr "មិនអើពើ​វត្ថុ​ដែល​បាន​ចាក់សោ"
+msgstr "មិន​ចាក់សោ​វត្ថុ"
 
 #: ../src/dialogs/item-properties.cpp:370
-#, fuzzy
 msgid "Hide object"
-msgstr "គ្មាន​វត្ថុ​"
+msgstr "លាក់​វត្ថុ"
 
 #: ../src/dialogs/item-properties.cpp:370
-#, fuzzy
 msgid "Unhide object"
-msgstr "មិនអើពើ​វត្ថុ​ដែល​បានលាក់​"
+msgstr "មិន​លាក់​វត្ថុ"
 
 #: ../src/dialogs/item-properties.cpp:394
 msgid "Id invalid! "
@@ -1353,53 +1343,44 @@ msgid "Id exists! "
 msgstr "លេខ​សម្គាល់​​​មាន​រួច​​ហើយ ! "
 
 #: ../src/dialogs/item-properties.cpp:403
-#, fuzzy
 msgid "Set object ID"
-msgstr "ស្វែងរក​វត្ថុ​អត្ថបទ​"
+msgstr "កំណត់​លេខសម្គាល់​វត្ថុ"
 
 #: ../src/dialogs/item-properties.cpp:418
 msgid "Set object label"
 msgstr "កំណត់​ស្លាក​វត្ថុ"
 
 #: ../src/dialogs/item-properties.cpp:427
-#, fuzzy
 msgid "Set object title"
-msgstr "កំណត់​គុណលក្ខណៈ​"
+msgstr "កំណត់ចំណង​ជើង​វត្ថុ"
 
 #: ../src/dialogs/item-properties.cpp:435
-#, fuzzy
 msgid "Set object description"
-msgstr "ការពិពណ៌នា​ ៖"
+msgstr "កំណត់​សេចក្ដី​ពិពណ៌នា​របស់​វត្ថុ"
 
 #: ../src/dialogs/layers-panel.cpp:593 ../src/widgets/layer-selector.cpp:590
-#, fuzzy
 msgid "Unhide layer"
-msgstr "បាន​ប្តូរ​ឈ្មោះ​ស្រទាប់​"
+msgstr "មិន​លាក់​ស្រទាប់"
 
 #: ../src/dialogs/layers-panel.cpp:593 ../src/widgets/layer-selector.cpp:590
-#, fuzzy
 msgid "Hide layer"
-msgstr "លើក​ស្រទាប់ឡើង​"
+msgstr "លាក់​ស្រទាប់"
 
 #: ../src/dialogs/layers-panel.cpp:604 ../src/widgets/layer-selector.cpp:582
-#, fuzzy
 msgid "Lock layer"
-msgstr "ស្រទាប់​ទាបជាង​"
+msgstr "ចាក់សោ​ស្រទាប់"
 
 #: ../src/dialogs/layers-panel.cpp:604 ../src/widgets/layer-selector.cpp:582
-#, fuzzy
 msgid "Unlock layer"
-msgstr "មិន​បាន​ផ្ទុក​"
+msgstr "មិន​ចាក់សោ​ស្រទាប់"
 
 #: ../src/dialogs/layers-panel.cpp:700
-#, fuzzy
 msgid "Change layer opacity"
-msgstr "ជំនាញ​ស្រអាប់"
+msgstr "ផ្លាស់ប្ដូរ​ភាព​ស្រអាប់​របស់​ស្រទាប់"
 
 #: ../src/dialogs/layers-panel.cpp:765
-#, fuzzy
 msgid "Opacity, %:"
-msgstr "ភាព​ស្រអាប់ ៖"
+msgstr "ភាព​ស្រអាប់ % ៖"
 
 #: ../src/dialogs/layers-panel.cpp:791
 msgid "New"
@@ -1458,9 +1439,8 @@ msgid "_Rename"
 msgstr "ប្តូរ​ឈ្មោះ​"
 
 #: ../src/dialogs/layer-properties.cpp:195
-#, fuzzy
 msgid "Rename layer"
-msgstr "បាន​ប្តូរ​ឈ្មោះ​ស្រទាប់​"
+msgstr "ប្ដូរ​ឈ្មោះ​ស្រទាប់"
 
 #. TRANSLATORS: This means "The layer has been renamed"
 #: ../src/dialogs/layer-properties.cpp:197
@@ -1530,9 +1510,9 @@ msgid "Y:"
 msgstr "Y ៖"
 
 #: ../src/dialogs/object-attributes.cpp:100
-#, fuzzy, c-format
+#, c-format
 msgid "%s Properties"
-msgstr "លក្ខណៈសម្បត្តិ​តំណ​"
+msgstr "លក្ខណៈសម្បត្តិ %s"
 
 #: ../src/dialogs/rdf.cpp:181
 msgid "CC Attribution"
@@ -1567,9 +1547,8 @@ msgid "FreeArt"
 msgstr "FreeArt"
 
 #: ../src/dialogs/rdf.cpp:221
-#, fuzzy
 msgid "Open Font License"
-msgstr "បើក​ឯកសារ​ថ្មី "
+msgstr "បើក​អាជ្ញាបណ្ណ​ពុម្ពអក្សរ"
 
 #: ../src/dialogs/rdf.cpp:239
 msgid "Name by which this document is formally known."
@@ -2799,7 +2778,7 @@ msgstr "ត្រង​រូបភាព​ដែល​បាន​ជ្រើ
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
 msgid "Modulate"
-msgstr ""
+msgstr "ផ្លាស់ប្ដូរ"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:41
 msgid "Brightness"
@@ -2820,7 +2799,7 @@ msgstr "ពណ៌លាំៗ"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
 msgid "Modulate percent hue, saturation, and brightness of selected bitmap(s)."
-msgstr ""
+msgstr "ផ្លាស់ប្ដុរ​ភាពលាំៗ​នៃពណ៌​គិត​ជា​ភាគរយ តិត្ថិភាព និង​ពន្លឺ​របស់​រូបភាព​ដែល​បាន​ជ្រើស ។"
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
 msgid "Negate"
@@ -2858,9 +2837,8 @@ msgid "Raise"
 msgstr "លើកឡើង"
 
 #: ../src/extension/internal/bitmap/raise.cpp:43
-#, fuzzy
 msgid "Raised"
-msgstr "លើកឡើង"
+msgstr "បាន​លើកឡើង"
 
 #: ../src/extension/internal/bitmap/raise.cpp:49
 msgid ""
@@ -2877,13 +2855,12 @@ msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter.
 msgstr "កាត់​បន្ថយ​ភាព​រំខាន​នៅក្នុង​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ប្រើតម្រង​​លុប​ការ​រំខាន ។"
 
 #: ../src/extension/internal/bitmap/sample.cpp:38
-#, fuzzy
 msgid "Sample"
-msgstr "រូបរាង​"
+msgstr "គំរូ"
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
 msgid "Alter the resolution of selected image by resizing it by given dimensions."
-msgstr ""
+msgstr "បន្ទាប់​ពីគុណភាព​បង្ហាញ​របស់រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ផ្លាស់ប្ដូរ​ទំហំវា ដោយ​ផ្ដល់​វិមាត្រ​ដែល​បានផ្ដល់ ។"
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
 msgid "Shade"
@@ -3255,13 +3232,13 @@ msgstr "ការ​កំណត់​ទំព័រ"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:95
 msgid "Precision of approximating gradient meshes:"
-msgstr ""
+msgstr "ភាព​ត្រឹមត្រូវ​ប្រហែល​ជា​សំណាញ់ជម្រាល ៖"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:96
 msgid ""
 "<b>Note</b>: setting the precision too high may result in a large SVG file "
 "and slow performance."
-msgstr ""
+msgstr "<b>ចំណាំ</b> ៖ ការ​កំណត់​ភាព​ត្រឹមត្រូវ​​ខ្ពស់ពេក អាច​មាន​លទ្ធផល​ក្នុង​ឯកសារ SVG ធំ ហើយ​អនុវត្ត​យឺត ។"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:101
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:367
@@ -3443,7 +3420,7 @@ msgstr "ប្រអប់​ម្ជុល"
 msgid ""
 "Toggles whether the dialog stays for multiple executions or disappears after "
 "one"
-msgstr ""
+msgstr "បិទ/បើក​ថាតើ​ប្រអប់​នៅ​ដដែលសម្រាប់​ប្រវត្តិវិធីគុណ ឬ​មិនបង្ហាញ​បន្ទាប់​ពី​​អ្វីមួយ"
 
 #: ../src/extension/prefdialog.cpp:231
 msgid "Live Preview"
@@ -3451,7 +3428,7 @@ msgstr "មើល​ជា​មុន​បន្តផ្ទាល់"
 
 #: ../src/extension/prefdialog.cpp:231
 msgid "Controls whether the effect settings are rendered live on canvas"
-msgstr ""
+msgstr "ពិនិត្យ​ថាតើ​កា​រកំណត់​បែបផែន​ត្រូ​វបាន​បង្ហាញ​បន្តផ្ទាល់​លើ​ផ្ទាំង​ក្រណាត់"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -3500,9 +3477,9 @@ msgid "Vacuum &lt;defs&gt;"
 msgstr "សុញ្ញាកាស &lt;defs&gt;"
 
 #: ../src/file.cpp:489
-#, fuzzy, c-format
+#, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
-msgstr "បាន​យក <b>%i</b> ចេញ មិន​បាន​ប្រើការ​កំណត់​នៅ​ក្នុង &lt;defs&gt; ។"
+msgstr "បានយក <b>%i</b> ចេញ ការកំណត់​ដែល​មិន​បាន​ប្រើ​នៅ​ក្នុង &lt;defs&gt; ។"
 
 #: ../src/file.cpp:494
 msgid "No unused definitions in &lt;defs&gt;."
@@ -3917,17 +3894,17 @@ msgstr "%s បាន​ជ្រើស​នៃ​ជម្រាល %d គ្�
 msgid ""
 "One handle merging %d stops (drag with <b>Shift</b> to separate) selected "
 "out of %d gradient handles on %d selected object(s)"
-msgstr ""
+msgstr "កា​របញ្ជូល​ចំណុច​ទាញ​មួយ​ចូល​គ្នា %d បញ្ឈប់ (ការ​អូស​ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក) បាន​ជ្រើស​ពី %d ចំណុចទាញ​ជម្រាល​នៅ​លើ %d វត្ថុ​ដែល​បាន​ជ្រើស"
 
 #: ../src/gradient-context.cpp:168
 #, c-format
 msgid "<b>%d</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr ""
+msgstr "<b>%d</b> ចំណុច​ទាញ​ជម្រាល​បាន​ជ្រើស​ពី %d នៅ​លើ %d វត្ថុដែល​បាន​ជ្រើស"
 
 #: ../src/gradient-context.cpp:171
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr ""
+msgstr "<b>គ្មាន</b> ចំណុច​ទាញ​ជម្រាល​បាន​ជ្រើស​ពី %d នៅ​លើ %d វត្ថុ​ដែល​បាន​ជ្រើស"
 
 #: ../src/gradient-context.cpp:369 ../src/gradient-context.cpp:462
 #: ../src/widgets/gradient-vector.cpp:735
@@ -3959,9 +3936,9 @@ msgid "Invert gradient"
 msgstr "ត្រឡប់​ជម្រាល​"
 
 #: ../src/gradient-context.cpp:886
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
-msgstr "<b>ជម្រាល</b> សម្រាប់​វត្ថុ %d ជា​មួយ<b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ"
+msgstr "<b>ជម្រាល</b> សម្រាប់​វត្ថុ %d ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ"
 
 #: ../src/gradient-context.cpp:890
 msgid "Select <b>objects</b> on which to create gradient."
@@ -4012,11 +3989,13 @@ msgstr ""
 "រផ្ដោត"
 
 #: ../src/gradient-drag.cpp:1140
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
 "separate"
-msgstr "ចំណុច​ជម្រាល​ដែល​បាន​ចែករំលែក​ដោយជម្រាល <b>%d</b> អូស​ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក"
+msgstr ""
+"ចំណុច​ជម្រាល​បាន​ចែករំលែកដោយជម្រាល <b>%d</b> អូស​ដោយ​ប្រើ "
+"<b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក"
 
 #: ../src/gradient-drag.cpp:1815
 msgid "Move gradient handle(s)"
@@ -4414,9 +4393,8 @@ msgid "Path along path"
 msgstr "ផ្លូវ​តាម​ផ្លូវ"
 
 #: ../src/live_effects/effect.cpp:47
-#, fuzzy
 msgid "Pattern along path"
-msgstr "ដាក់​លើ​ផ្លូវ​"
+msgstr "លំនាំតាមផ្លូវ"
 
 #: ../src/live_effects/effect.cpp:49
 msgid "Slant"
@@ -4431,9 +4409,8 @@ msgid "Gears"
 msgstr "ស្ពឺ"
 
 #: ../src/live_effects/effect.cpp:53
-#, fuzzy
 msgid "Stitch subcurves"
-msgstr "ក្រឡាថ្នេរ"
+msgstr "ថ្នេរ​ខ្សែកោង​រង"
 
 #: ../src/live_effects/effect.cpp:116
 msgid "No effect"
@@ -4444,13 +4421,13 @@ msgid "An exception occurred during execution of a Path Effect."
 msgstr "ករណីលើកលែង​បាន​កើត​ឡើង​កំឡុង​ពេល​ប្រតិបត្តិ​បែបផែន​ផ្លូវ ។"
 
 #: ../src/live_effects/effect.cpp:317
-#, fuzzy, c-format
+#, c-format
 msgid "Editing parameter <b>%s</b>."
-msgstr "<b>ប៉ារ៉ាម៉ែត្រ​បែបផែន</b>"
+msgstr "កែសម្រួល​ប៉ារ៉ាម៉ែត្រ <b>%s</b> ។"
 
 #: ../src/live_effects/effect.cpp:322
 msgid "None of the applied path effect's parameters can be edited on-canvas."
-msgstr ""
+msgstr "គ្មានផ្លូវ​ដែល​បាន​អនុវត្ត​របស់​ប៉ារ៉ាម៉ត្រ​របស់​បែបផែន​អាច​ត្រូវ​បានកែសម្រួល​នៅ​លើ​ផ្ទាំង​ក្រណាត់ ។"
 
 #: ../src/live_effects/parameter/enum.h:51
 msgid "Change enum parameter"
@@ -4477,9 +4454,8 @@ msgid "Stroke path"
 msgstr "ផ្លូវ​ខ្វាច់"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
-#, fuzzy
 msgid "The path that will be used as stitch."
-msgstr "ចំនួន​ផ្លូវ​ដែលនឹង​ត្រូវ​បានបង្កើត ។"
+msgstr "ផ្លូវ​ដែល​នឹង​ត្រូវ​បាន​ប្រើ​ជា​ថ្នេរ ។"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "Nr of paths"
@@ -4594,7 +4570,7 @@ msgstr "ផ្លាស់ប្ដូរ​ប៉ារ៉ាម៉ែត្រ
 #: ../src/live_effects/parameter/path.cpp:113
 #: ../src/live_effects/parameter/point.cpp:108
 msgid "Edit on-canvas"
-msgstr ""
+msgstr "កែសម្រួល​លើ​ផ្ទាំង​ក្រណាត់"
 
 #: ../src/live_effects/parameter/path.cpp:124
 msgid "Paste path"
@@ -4624,7 +4600,7 @@ msgstr "ផ្លាស់ប្ដូរ​ប៉ារ៉ាម៉ែត្រ
 
 #: ../src/live_effects/parameter/bool.cpp:67
 msgid "Change bool parameter"
-msgstr ""
+msgstr "ផ្លាស់ប្ដូរ​ប៉ារ៉ាម៉ែត្រ​ប៊ូល"
 
 #: ../src/live_effects/parameter/random.cpp:143
 msgid "Change random parameter"
@@ -5139,32 +5115,34 @@ msgid "Select a single object to edit its nodes or handles."
 msgstr "ជ្រើស​វត្ថុ​មុំ​ដើម្បី​កែសម្រួល​ថ្នាំង ឬ​ចំណុច​ទាញ​របស់​វា ។"
 
 #: ../src/nodepath.cpp:4399
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
 msgstr ""
-"<b>០</b> អស់ <b>%i</b> ថ្នាំង​ដែល​បាន​ជ្រើស ។ <b>ចុច</b> <b>ប្ដូរ(Shift)+ចុច</b> ឬ <b>អូស​"
-"ជុំវិញ</b> ថ្នាំង​ដើម្បី​ជ្រើស ។"
+"<b>០</b> ពីថ្នាំង​ <b>%i</b> ដែល​បាន​ជ្រើស "
+"។<b>ចុច</b><b>ប្ដូរ(Shift)+ចុច</b> ឬ<b>អូស​ជុំវិញ</b> ថ្នាំង​ដើម្បី​ជ្រើស ។"
 
 #: ../src/nodepath.cpp:4405
 msgid "Drag the handles of the object to modify it."
 msgstr "អូស​ចំណុច​ទាញ​របស់​វត្ថុ​ដើម្បី​កែសម្រួល​វា ។"
 
 #: ../src/nodepath.cpp:4413
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
-msgstr "<b>%i</b> នៃ <b>%i</b> ថ្នាំង​បាន​ជ្រើស %s. %s."
+msgstr "<b>%i</b> នៃថ្នាំង <b>%i</b> បាន​ជ្រើស %s. %s ។"
 
 #: ../src/nodepath.cpp:4420
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr "<b>%i</b> នៃ <b>%i</b> ថ្នាំង​បាន​ជ្រើស​ក្នុង <b>%i</b> នៃ <b>%i</b> ផ្លូវ​រង ។ %s."
+msgstr ""
+"<b>%i</b> នៃ​ថ្នាំង <b>%i</b> បាន​ជ្រើស​ក្នុង <b>%i</b> នៃ <b>%i</b> "
+"ផ្លូវ​រង %s ។"
 
 #: ../src/nodepath.cpp:4426
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
-msgstr "<b>%i</b> នៃ <b>%i</b> ថ្នាំង​បាន​ជ្រើស​ ។ %s."
+msgstr "<b>%i</b> នៃ​ថ្នាំង <b>%i</b> បាន​ជ្រើស ។ %s ។"
 
 #: ../src/object-edit.cpp:503
 msgid ""
@@ -5631,9 +5609,8 @@ msgid "Paste"
 msgstr "បិទភ្ជាប់​"
 
 #: ../src/selection-chemistry.cpp:1179
-#, fuzzy
 msgid "Nothing on the style clipboard."
-msgstr "គ្មាន​អ្វី​នៅ​លើ​ក្ដារ​តម្បៀតខ្ទាស់"
+msgstr "គ្មាន​អ្វី​នៅ​លើ​ក្ដារតម្បៀត​ខ្ទាស់​រចនាប័ទ្ម ។"
 
 #: ../src/selection-chemistry.cpp:1185
 msgid "Select <b>object(s)</b> to paste style to."
@@ -5744,9 +5721,8 @@ msgid "Move horizontally by pixels"
 msgstr "ផ្លាស់ទី​ដោយ​ផ្ដេក​តាម​ភីកសែល"
 
 #: ../src/selection-chemistry.cpp:2014
-#, fuzzy
 msgid "The selection has no applied path effect."
-msgstr "បង្កើត និង​អនុវត្ត​បែបផែន​ផ្លូវ"
+msgstr "ជម្រើស​គ្មាន​បែបផែន​ផ្លូវ​ដែល​បាន​អនុវត្ត ។"
 
 #: ../src/selection-chemistry.cpp:2171
 msgid "action|Clone"
@@ -5964,14 +5940,14 @@ msgid " in group %s (%s)"
 msgstr " នៅ​ក្នុង​ក្រុម %s (%s)"
 
 #: ../src/selection-describer.cpp:153
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> parents (%s)"
 msgstr " នៅ​ក្នុង <b>%i</b> មេ (%s)"
 
 #: ../src/selection-describer.cpp:156
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> layers"
-msgstr " នៅ​ក្នុង​ស្រទាប់ <b>%i</b>"
+msgstr " នៅក្នុង <b>%i</b> ស្រទាប់"
 
 #: ../src/selection-describer.cpp:166
 msgid "Use <b>Shift+D</b> to look up original"
@@ -5987,33 +5963,33 @@ msgstr "ប្រើ<b>ប្ដូរ(Shift)+D</b> ដើម្បី​រក�
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:189
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object selected"
 msgstr "បាន​ជ្រើស​វត្ថុ<b>%i</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:194
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of type <b>%s</b>"
 msgstr "វត្ថុ<b>%i</b> នៃ​ប្រភេទ <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:199
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
-msgstr "វត្ថុ<b>%i</b> នៃ​ប្រភេទ <b>%s</b>,<b>%s</b>"
+msgstr "វត្ថុ<b>%i</b> នៃ​ប្រភេទ <b>%s</b>, <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:204
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgstr "វត្ថុ<b>%i</b> នៃ​ប្រភេទ <b>%s</b>, <b>%s</b>, <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:209
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of <b>%i</b> types"
-msgstr "វត្ថុ<b>%i</b> នៃ​ប្រភេទ <b>%i</b>"
+msgstr "វត្ថុ<b>%i</b> នៃប្រភេទ <b>%i</b>"
 
 #: ../src/selection-describer.cpp:214
 #, c-format
@@ -6150,14 +6126,14 @@ msgid "Flow excluded region"
 msgstr "លំហូរ​តំបន់​ដែល​មិន​រាប់​បញ្ចូល​"
 
 #: ../src/sp-flowtext.cpp:371
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Flowed text</b> (%d character)"
-msgstr "<b>​អត្ថបទ​លំហូរ</b> (តួអក្សរ %d)"
+msgstr "<b>អត្ថបទលំហូ</b> (%d តួអក្សរ)"
 
 #: ../src/sp-flowtext.cpp:373
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
-msgstr "<b>អត្ថបទ​លំហូរ​ដែល​បាន​តភ្ជាប់</b> (តួអក្សរ %d)"
+msgstr "<b>បាន​តភ្ជាប់​អត្ថបទ​លំហូ</b> (%d តួអក្សរ)"
 
 #: ../src/sp-guide.cpp:287
 msgid "vertical guideline"
@@ -6182,9 +6158,9 @@ msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>រូបភាព</b> %d &#215; %d ៖ %s"
 
 #: ../src/sp-item-group.cpp:689
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
-msgstr "<b>ក្រុម</b> នៃវត្ថុ <b>%d</b>"
+msgstr "<b>ក្រុម</b> របស់វត្ថុ <b>%d</b>"
 
 #: ../src/sp-item.cpp:830
 msgid "Object"
@@ -6225,12 +6201,12 @@ msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>អុហ្វសិត​ឋាមវន្ត</b> %s ដោយ %f pt"
 
 #: ../src/sp-path.cpp:128
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node, path effect)"
-msgstr "<b>ផ្លូវ</b> (ថ្នាំង %i បែបផែន​ផ្លូវ)​"
+msgstr "<b>ផ្លូវ</b> (ថ្នាំង %i បែបផែន​ផ្លូវ)"
 
 #: ../src/sp-path.cpp:131
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node)"
 msgstr "<b>ផ្លូវ</b> (ថ្នាំង %i)"
 
@@ -6254,19 +6230,19 @@ msgid "<b>Spiral</b> with %3f turns"
 msgstr "<b>គួច</b> ដោយការ​បង្វិល %3f"
 
 #: ../src/sp-star.cpp:307
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Star</b> with %d vertex"
-msgstr "<b>ផ្កាយ​</b> ដោយ​កំពូល​ %d"
+msgstr "<b>ផ្កាយ</b> ដែល​មាន​កំពូល %d"
 
 #: ../src/sp-star.cpp:311
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Polygon</b> with %d vertex"
-msgstr "<b>ពហុកោណ</b> ដោយ​កំពូល %d"
+msgstr "<b>ពហុកោណ</b> ដែល​មានកំពូល %d"
 
 #: ../src/sp-switch.cpp:100
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
-msgstr "<b>ក្រុម​មាន​លក្ខខណ្ឌ</b> របស់​វត្ថុ<b>%d</b>"
+msgstr "<b>ក្រុម​មានលក្ខខណ្ឌ</b> នៃ​វត្ថុ<b>%d</b>"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:415
@@ -6829,44 +6805,44 @@ msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr "<b>គ្មាន​អ្វី​បានជ្រើស !</b> ជ្រើស​វត្ថុ​ត្រូវ​លៃតម្រូវ ។"
 
 #: ../src/tweak-context.cpp:949
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Pushing %d</b> selected object"
-msgstr "<b>ការ​ចុច %d</b> វត្ថុដែល​បាន​ជ្រើស"
+msgstr "<b>ចុច %d</b> វត្ថុ​ដែល​បាន​ជ្រើស"
 
 #: ../src/tweak-context.cpp:954
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Shrinking %d</b> selected object"
-msgstr "<b>ការ​បង្រួម %d</b> វត្ថុ​ដែល​បានជ្រើស"
+msgstr "<b>បង្រួម %d</b> វត្ថុ​ដែល​បាន​ជ្រើស"
 
 #: ../src/tweak-context.cpp:959
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Growing %d</b> selected object"
-msgstr "<b>ការ​ពង្រីក %d</b> វត្ថុ​ដែល​បាន​ជ្រើស"
+msgstr "<b>ពង្រីក %d</b> វត្ថុដែល​បាន​ជ្រើស"
 
 #: ../src/tweak-context.cpp:964
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Attracting %d</b> selected object"
-msgstr "<b>ស្រូប %d</b> វត្ថុ​ដែល​បាន​ជ្រើស"
+msgstr "<b>ស្រូប %d</b> វត្ថុដែល​បាន​ជ្រើស"
 
 #: ../src/tweak-context.cpp:969
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Repelling %d</b> selected object"
-msgstr "<b>ច្រាន %d ចេញ</b> វត្ថុ​ដែល​បាន​ជ្រើស"
+msgstr "<b>ច្រាន %d ចេញ</b> វត្ថុដែល​បាន​ជ្រើស"
 
 #: ../src/tweak-context.cpp:974
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Roughening %d</b> selected object"
-msgstr "<b>ធ្វើ​ឲ្យ %d​ គគ្រើម</b> វត្ថុ​ដែល​បាន​ជ្រើស"
+msgstr "<b>ធ្វើ​ឲ្យ %d គគ្រើម</b> វត្ថុ​ដែល​បាន​ជ្រើស"
 
 #: ../src/tweak-context.cpp:978
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Painting %d</b> selected object"
 msgstr "<b>គូរ %d</b> វត្ថុ​ដែល​បាន​ជ្រើស"
 
 #: ../src/tweak-context.cpp:983
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Jittering colors in %d</b> selected object"
-msgstr "<b>ច្របល់​ពណ៌​នៅក្នុង %d</b> វត្ថុ​ដែល​បាន​ជ្រើស"
+msgstr "<b>ច្របល់ពណ៌​ក្នុង %d</b> វត្ថុ​ដែល​បាន​ជ្រើស"
 
 #: ../src/tweak-context.cpp:1023
 msgid "Push tweak"
@@ -7253,14 +7229,12 @@ msgid "Grids"
 msgstr "ក្រឡា​ចត្រង្គ"
 
 #: ../src/ui/dialog/document-properties.cpp:109
-#, fuzzy
 msgid "Snap"
-msgstr "ត្រា​"
+msgstr "ខ្ទាស់"
 
 #: ../src/ui/dialog/document-properties.cpp:110
-#, fuzzy
 msgid "Snap details"
-msgstr "ខ្ទាស់​ទៅ​ផ្លូវ"
+msgstr "សេចក្ដីលម្អិត​ខ្ទាស់"
 
 #: ../src/ui/dialog/document-properties.cpp:204
 msgid "Back_ground:"
@@ -7364,18 +7338,17 @@ msgstr "<b>បន្ទាត់នាំផ្លូវ</b>"
 
 #. General options
 #: ../src/ui/dialog/document-properties.cpp:271
-#, fuzzy
 msgid "_Bounding box corners"
-msgstr "ជ្រុង​ប្រអប់ព្រំដែន​"
+msgstr "ជ្រុង​ប្រអប់​ព្រំដែន"
 
 #: ../src/ui/dialog/document-properties.cpp:272
-#, fuzzy
 msgid ""
 "Snap bounding box corners to grid lines, to guides, and to other bounding "
 "boxes (Snapping of bounding boxes is only available in the selector tool)"
 msgstr ""
-"ខ្ទាស់​ជ្រុង​ប្រអប់​ព្រំដែន​ទោ​បន្ទាត់​ក្រឡាចត្រង្គ ទៅ​បន្ទាត់​នាំផ្លូវ និង​ទៅ​ប្រអប់​ព្រំដែន​ផ្សេងៗ​ទៀត (អាច​អនុវត្ត​"
-"បានតែ​ទៅ​ឧបករណ៍​កម្មវិធី​ជ្រើស​ប៉ុណ្ណោះ)"
+"ខ្ទាស់​ជ្រុង​ប្រអប់​ព្រំដែន​ទៅ​​បន្ទាត់​ក្រឡាចត្រង្គ ទៅ​បន្ទាត់​នាំផ្លូវ "
+"និង​ទៅ​ប្រអប់​ព្រំដែន​ផ្សេងៗ​ទៀត "
+"(អាច​អនុវត្ត​បានតែ​ទៅ​ឧបករណ៍​កម្មវិធី​ជ្រើស​ប៉ុណ្ណោះ)"
 
 #: ../src/ui/dialog/document-properties.cpp:274
 msgid "_Nodes"
@@ -7387,7 +7360,6 @@ msgstr "ខ្ទាស់​ថ្នាំង​ទៅ​​បន្ទាត
 
 #. Options for snapping to objects
 #: ../src/ui/dialog/document-properties.cpp:279
-#, fuzzy
 msgid "Snap to pat_hs"
 msgstr "ខ្ទាស់​ទៅ​ផ្លូវ"
 
@@ -7400,42 +7372,32 @@ msgid "Snap to n_odes"
 msgstr "ខ្ទាស់​ទៅ​ថ្នាំង"
 
 #: ../src/ui/dialog/document-properties.cpp:283
-#, fuzzy
 msgid "Snap nodes and guides to object nodes"
-msgstr "ខ្ទាស់​ថ្នាំង ឬ​បន្ទាត់​នាំផ្លូវ​ទៅ​ថ្នាំង​វត្ថុ"
+msgstr "ខ្ទាស់​ថ្នាំង និង​បន្ទាត់​នាំផ្លូវ​ទៅ​ថ្នាំង​វត្ថុ"
 
 #: ../src/ui/dialog/document-properties.cpp:285
-#, fuzzy
 msgid "Snap to bounding box co_rners"
-msgstr "ជ្រុង​ប្រអប់ព្រំដែន​"
+msgstr "ខ្ទាស់​ទៅ​ជ្រុង​ប្រអប់​ព្រំដែន"
 
 #: ../src/ui/dialog/document-properties.cpp:286
-#, fuzzy
 msgid "Snap bounding box corners to other bounding box corners"
-msgstr ""
-"ខ្ទាស់​ជ្រុង​ប្រអប់​ព្រំដែន​ទោ​បន្ទាត់​ក្រឡាចត្រង្គ ទៅ​បន្ទាត់​នាំផ្លូវ និង​ទៅ​ប្រអប់​ព្រំដែន​ផ្សេងៗ​ទៀត (អាច​អនុវត្ត​"
-"បានតែ​ទៅ​ឧបករណ៍​កម្មវិធី​ជ្រើស​ប៉ុណ្ណោះ)"
+msgstr "ខ្ទាស់​​ជ្រុង​ប្រអប់ព្រំដែន​ទៅ​ជ្រុង​ប្រអប់​ព្រំដែន​ផ្សេង​ទៀត"
 
 #: ../src/ui/dialog/document-properties.cpp:288
-#, fuzzy
 msgid "Snap to bounding box _edges"
-msgstr "ខ្ទាស់​ទៅ​ថ្នាំង"
+msgstr "ខ្ទាស់​ទៅ​គែម​ប្រអប់​ព្រំដែន"
 
 #: ../src/ui/dialog/document-properties.cpp:289
-#, fuzzy
 msgid "Snap bounding box corners and guides to bounding box edges"
-msgstr ""
-"ខ្ទាស់​ជ្រុង​ប្រអប់​ព្រំដែន​ទោ​បន្ទាត់​ក្រឡាចត្រង្គ ទៅ​បន្ទាត់​នាំផ្លូវ និង​ទៅ​ប្រអប់​ព្រំដែន​ផ្សេងៗ​ទៀត (អាច​អនុវត្ត​"
-"បានតែ​ទៅ​ឧបករណ៍​កម្មវិធី​ជ្រើស​ប៉ុណ្ណោះ)"
+msgstr "ខ្ទាស់​ទៅ​ជ្រុង​ប្រអប់​ព្រំដែន និង​បន្ទាត់​នាំផ្លូវ​ទៅ​គែម​ប្រអប់​ព្រំដែន"
 
 #: ../src/ui/dialog/document-properties.cpp:292
 msgid "Snap _distance"
 msgstr "ចម្ងាយ​ខ្ទាស់​"
 
 #: ../src/ui/dialog/document-properties.cpp:292
-#, fuzzy
 msgid "Snap at any d_istance"
-msgstr "ខ្ទាស់​នៅ​ចម្ងាយ​ណា​មួយ"
+msgstr "ខ្ទាស់​នៅ​ចម្ងាយ​ណាមួយ"
 
 #: ../src/ui/dialog/document-properties.cpp:293
 msgid "Snapping distance, in screen pixels, for snapping to objects"
@@ -7451,9 +7413,8 @@ msgid "Snap di_stance"
 msgstr "ចម្ងាយ​ខ្ទាស់"
 
 #: ../src/ui/dialog/document-properties.cpp:298
-#, fuzzy
 msgid "Snap at any dis_tance"
-msgstr "ខ្ទាស់​នៅ​ចម្ងាយ​ណា​មួយ"
+msgstr "Snap at any dis_tance"
 
 #: ../src/ui/dialog/document-properties.cpp:299
 msgid "Snapping distance, in screen pixels, for snapping to grid"
@@ -7465,9 +7426,8 @@ msgstr "ប្រសិន​បើ​បាន​កំណត់ វត្ថ�
 
 #. Options for snapping to guides
 #: ../src/ui/dialog/document-properties.cpp:304
-#, fuzzy
 msgid "Snap dist_ance"
-msgstr "ចម្ងាយ​ខ្ទាស់​"
+msgstr "ខ្ទាស់​ចម្ងាយ"
 
 #: ../src/ui/dialog/document-properties.cpp:304
 msgid "Snap at any distan_ce"
@@ -7504,36 +7464,32 @@ msgstr "<b>ផ្សេងៗ</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:363
 msgid "_Grid with guides"
-msgstr ""
+msgstr "ក្រឡាចត្រង្គ​ដែលមាន​បន្ទាត់​នាំផ្លូវ"
 
 #: ../src/ui/dialog/document-properties.cpp:364
 msgid "Snap to grid-guide intersections"
-msgstr ""
+msgstr "ខ្ទាស់​ទៅ​ចំណុច​ប្រសព្វ​បន្ទាត់នាំផ្លូវ​ក្រឡាចត្រង្គ"
 
 #: ../src/ui/dialog/document-properties.cpp:367
-#, fuzzy
 msgid "_Line segments"
-msgstr "តភ្ជាប់​ចម្រៀក"
+msgstr "ចម្រៀក​បន្ទាត់"
 
 #: ../src/ui/dialog/document-properties.cpp:368
 msgid ""
 "Snap to intersections of line segments ('snap to paths' must be enabled, see "
 "the previous tab)"
-msgstr ""
+msgstr "ខ្ទាស់​ទៅចំណុច​ប្រសព្វ​របស់​ចម្រៀក​បន្ទាត់ ('ខ្ទាស់​ទៅ​ផ្លូវ' ត្រូវ​តែ​បាន​បើក សូម​មើល​ថេប​មុន)"
 
 #: ../src/ui/dialog/document-properties.cpp:371
 msgid "_Snap guides while dragging"
-msgstr ""
+msgstr "ខ្ទាស់​បន្ទាត់នាំផ្លូវ​ខណៈពេល​អូស"
 
 #: ../src/ui/dialog/document-properties.cpp:372
-#, fuzzy
 msgid ""
 "While dragging a guide, snap to object nodes or bounding box corners ('snap "
 "to nodes' or 'snap to bounding box corners', both on the previous tab, must "
 "be enabled)"
-msgstr ""
-"ខណៈពេល​អូស​បន្ទាត់​នាំផ្លូវ ខ្ទាស់​ទៅ​ថ្នាំង​វត្ថុ ។ (នៅ​ក្នុង​ 'ការ​ខ្ទាស់​ទៅ​វត្ថុ' 'ខ្ទាស់​ទៅ​ថ្នាំង' ត្រូ​វតែ​"
-"បាន​អនុញ្ញាត​ផងដែរ)"
+msgstr "ខណៈពេល​អូស​បន្ទាត់នាំផ្លូវ ខ្ទាស់​ទៅ​​ថ្នាំ​ងវត្ថុ ឬ​ជ្រុង​ប្រអប់​ព្រំដែន ('ខ្ទាស់​ទៅ​ថ្នាំង' ឬ 'ខ្ទាស់​ទៅ​ជ្រុង​ប្រអប់ព្រំដែន' ទាំង​នៅ​លើ​ថេបមុន ត្រូវ​តែ​បា​ន​បើក)"
 
 #. Applies to both nodes and guides, but not to bboxes, that's why its located here
 #: ../src/ui/dialog/document-properties.cpp:376
@@ -7545,9 +7501,8 @@ msgid "Also snap the rotation center of an object when snapping nodes or guides"
 msgstr "ក៏​ខ្ទាស់​ចំណុច​កណ្ដាល​បង្វិល​របស់​វត្ថុ​ដែរ នៅ​ពេល​ខ្ទាស់​ថ្នាំង ឬ​បន្ទាត់​នាំផ្លូវ"
 
 #: ../src/ui/dialog/document-properties.cpp:383
-#, fuzzy
 msgid "<b>Snapping to intersections of</b>"
-msgstr "<b>ការ​ខ្ទាស់​ទៅ​វត្ថុ</b>"
+msgstr "<b>ខ្ទាស់​ទៅ​អន្តរប្រសព្វ​របស់</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:441
 msgid "<b>Creation</b>"
@@ -7555,7 +7510,7 @@ msgstr "<b>ការ​បង្កើត</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:443
 msgid "Gridtype"
-msgstr "ប្រភេទ​ក្រឡា​ចត្រង្គ"
+msgstr "ប្រភេទ​ក្រឡាចត្រង្គ"
 
 #: ../src/ui/dialog/document-properties.cpp:451
 msgid "<b>Defined grids</b>"
@@ -7585,9 +7540,8 @@ msgstr "ប៉ារ៉ាម៉ែត្រ"
 #: ../src/ui/dialog/fill-and-stroke.cpp:67
 #: ../src/ui/widget/selected-style.cpp:1028
 #: ../src/ui/widget/selected-style.cpp:1029
-#, fuzzy
 msgid "Opacity, %"
-msgstr "ភាព​ស្រអាប់ ៖"
+msgstr "ភាព​ស្រអាប់ %"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:78
 msgid "Fill"
@@ -8815,7 +8769,7 @@ msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
 "may affect other objects using the same gradient"
-msgstr ""
+msgstr "នៅ​ពេល​ដែល​បើក ការ​កំណត់​ជម្រាល​ដែល​បាន​ចែក​រំលែក​ត្រូវ​បានប្រើ​ដោយ​ស្វ័យប្រវត្តិ​នៅ​ពេល​ផ្លាស់ប្ដូរ មិនគូស​ធីក​ដើម្បី​អនុញ្ញាត​កា​រចែករំលែក​របស់​ការកំណត់​ជម្រាល ដូច្នេះ​កែសម្រួល​វត្ថុ​មួយ​អាច​ប៉ះពាល់​ដល់​វត្ថុ​ផ្សេង​ ដោយ​ប្រើ​ជម្រាល​ដូច​គ្នា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:808
 msgid "Simplification threshold:"
@@ -8827,6 +8781,8 @@ msgid ""
 "several times in quick succession, it will act more and more aggressively; "
 "invoking it again after a pause restores the default threshold."
 msgstr ""
+"តើ​ការ​ធ្វើ​ឲ្យ​ពាក្យ​បញ្ជា​សាមញ្ញខ្លាំង​ប៉ុនណា​តាមលំនាំដើម ។ ប្រសិន​បើ​អ្នក​ហៅពាក្យ​បញ្ជា​នេះ​ច្រើន​ដងក្នុង​លំដាប់លឿន វា​នឹង​ធ្វើការ​បំពាន​កាន់​តែ​ច្រើន"
+"ការ​ហៅវា​ម្ដង​ទៀត​បន្ទាប់​ពី​ផ្អាក​កា​រស្ដារ​កម្រិត​ពណ៌​លំនាំដើម ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:811
 msgid "2x2"
@@ -9855,7 +9811,7 @@ msgstr "ផ្លាស់ប្ដូរ​ទទឹង​ខ្វាច់​
 
 #: ../src/ui/widget/selected-style.cpp:982
 msgid ", drag to adjust"
-msgstr ""
+msgstr ", អូស​ដើម្បី​លៃតម្រូវ"
 
 #: ../src/ui/widget/selected-style.cpp:1060
 #, c-format
@@ -9875,9 +9831,8 @@ msgid "100% (opaque)"
 msgstr "១០០% (ភាព​ស្រអាប់)"
 
 #: ../src/ui/widget/selected-style.cpp:1263
-#, fuzzy
 msgid "Adjust saturation"
-msgstr "តិត្ថិភាព"
+msgstr "លៃតម្រូវ​តិត្ថិភាព"
 
 #: ../src/ui/widget/selected-style.cpp:1265
 #, c-format
@@ -9885,11 +9840,12 @@ msgid ""
 "Adjusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
 "<b>Ctrl</b> to adjust lightness, without modifiers to adjust hue"
 msgstr ""
+"ការ​លៃតម្រូវ <b>តិត្ថិភាព</b> ៖ គឺ %.3g, ឥឡូវ <b>%.3g</b> (ខុសគ្នា %.3g); ដោយ​ប្រើ"
+"<b>បញ្ជា(Ctrl)</b> ដើម្បី​លៃតម្រូវ​ពន្លឺ ដោយ​គ្មាន​កម្មវិធី​កែប្រែ​ត្រូវ​លៃតម្រូវ​ភាព​លាំៗ​នៃ​ពណ៌"
 
 #: ../src/ui/widget/selected-style.cpp:1269
-#, fuzzy
 msgid "Adjust lightness"
-msgstr "ពន្លឺ"
+msgstr "លៃតម្រូវ​ពន្លឺ"
 
 #: ../src/ui/widget/selected-style.cpp:1271
 #, c-format
@@ -9897,11 +9853,12 @@ msgid ""
 "Adjusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
 "<b>Shift</b> to adjust saturation, without modifiers to adjust hue"
 msgstr ""
+"ការ​លៃតម្រូវ <b>ពន្លឺ</b> ៖ គឺ %.3g, ឥឡូវ <b>%.3g</b> (ខុសគ្នា %.3g); ដោយ​ប្រើ​ "
+"<b>ប្ដូរ(Shift)</b> ដើម្បី​លៃតម្រូវ​តិត្ថិភាព ដោយ​គ្មានកម្មវិធី​កែប្រែ​ត្រូវ​លៃតម្រូវ​ភាពលាំៗ​នៃ​ពណ៌"
 
 #: ../src/ui/widget/selected-style.cpp:1275
-#, fuzzy
 msgid "Adjust hue"
-msgstr "គ្រាន់​តែ​ជា​ខ្សែកោង​មួយ"
+msgstr "លៃតម្រូវ​ភាពលាំៗ​នៃពណ៌"
 
 #: ../src/ui/widget/selected-style.cpp:1277
 #, c-format
@@ -9909,6 +9866,8 @@ msgid ""
 "Adjusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</"
 "b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"
 msgstr ""
+"ការ​លៃតម្រូវ<b>ភាព​លាំៗ​នៃពណ៌</b> ៖ គឺ %.3g, ឥឡូវ <b>%.3g</b> (ខុសគ្នា %.3g); ដោយ​ប្រើ <b>ប្ដូរ(Shift)</"
+"b> ដើម្បី​លៃតម្រូវ​តិត្ថិភាព ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​លៃតម្រូវ​ពន្លឺ"
 
 #: ../src/ui/widget/page-sizer.cpp:195
 msgid "Name"
@@ -10512,13 +10471,12 @@ msgid "Deselect any selected objects or nodes"
 msgstr "មិន​ជ្រើស​វត្ថុ ឬថ្នាំង​ដែល​បាន​ជ្រើស​ណា​មួយ"
 
 #: ../src/verbs.cpp:2253
-#, fuzzy
 msgid "Next Path Effect Parameter"
-msgstr "បិទ​ភ្ជាប់​ប៉ារ៉ាម៉ែត្រ​ផ្លូវ"
+msgstr "ប៉ារ៉ាម៉ែត្រ​បែបផែន​ផ្លូវ​បន្ទាប់"
 
 #: ../src/verbs.cpp:2254
 msgid "Show next Path Effect parameter for editing"
-msgstr ""
+msgstr "បង្ហាញ​ប៉ារ៉ាម៉ែត្រ​បែបផែន​ផ្លូវ​បន្ទាប់​សម្រាប់កែសម្រួល"
 
 #. Selection
 #: ../src/verbs.cpp:2257
@@ -12061,7 +12019,7 @@ msgid "System"
 msgstr "ប្រព័ន្ធ"
 
 #: ../src/widgets/sp-color-notebook.cpp:324
-msgid "RGBA_:"
+msgid "_:RGBA_:"
 msgstr "RGBA_:"
 
 #: ../src/widgets/sp-color-notebook.cpp:332
@@ -12803,7 +12761,7 @@ msgstr "ត្រឹមត្រូវ ៖"
 msgid ""
 "Low fidelity simplifies paths; high fidelity preserves path features but may "
 "generate a lot of new nodes"
-msgstr ""
+msgstr "ធ្វើ​ឲ្យ​ផ្លូវ​សាមញ្ញ​ត្រឹមត្រូវ​តិចតួច​ ការពារលក្ខណៈ​ពិសេស​ផ្លូវ​​ពត្រឹមត្រូវ​ខ្លាំ ប៉ុន្តែ​អាច​បង្កើត​ថ្នាំង​ថ្មី​ជា​ច្រើនs"
 
 #: ../src/widgets/toolbox.cpp:2953 ../src/widgets/toolbox.cpp:3197
 msgid "Pressure"
@@ -12931,6 +12889,8 @@ msgid ""
 "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = "
 "round caps)"
 msgstr ""
+"បង្កើន​ដើម្បីបង្កើត​គម្រប​នៅ​ខាង​ចុងរបស់​ខ្វាច់​លយ​ចេញ​ថែម​ទៀត (០ = គ្មានគម្រប ១ = "
+"គម្រប​មូល)"
 
 #. Tremor
 #: ../src/widgets/toolbox.cpp:3137
@@ -12955,7 +12915,7 @@ msgstr "រ​ញ័ ​ ៖"
 
 #: ../src/widgets/toolbox.cpp:3140
 msgid "Increase to make strokes rugged and trembling"
-msgstr ""
+msgstr "បង្កើន​ដើម្បី​បង្កើត​ខ្វាច់​កម្រាល​ព្រំ និង​ញ័រ"
 
 #. Wiggle
 #: ../src/widgets/toolbox.cpp:3153
@@ -12976,7 +12936,7 @@ msgstr "ចលនា ៖"
 
 #: ../src/widgets/toolbox.cpp:3156
 msgid "Increase to make the pen waver and wiggle"
-msgstr ""
+msgstr "បង្កើន​ដើម្បី​បង្កើត​រលកប៊ិក​ និង​មាន​ចលនា"
 
 #. Mass
 #: ../src/widgets/toolbox.cpp:3168
@@ -13001,7 +12961,7 @@ msgstr "ច្រើន ៖"
 
 #: ../src/widgets/toolbox.cpp:3171
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
-msgstr ""
+msgstr "បង្កើន​ដើម្បី​បង្កើត​ការអូស​ប៊ិក​ពី​ក្រោយ ព្រោះថា​បាន​ធ្វើ​ឲ្យ​យឺត​ដោយ​ភាព​មិន​កម្រើក"
 
 #: ../src/widgets/toolbox.cpp:3185
 msgid "Trace Background"
@@ -13011,7 +12971,7 @@ msgstr "ដាន​ផ្ទៃ​ខាង​ក្រោយ"
 msgid ""
 "Trace the lightness of the background by the width of the pen (white - "
 "minimum width, black - maximum width)"
-msgstr ""
+msgstr "ដាន​ពន្លឺ​របស់​ផ្ទៃ​ខាង​ក្រោយ​ដោយ​ទទឹង​របស់​ប៊ិក (ទទឹង​អប្បបរមា​ពណ៌ស ទទឹង​អតិបរមា​ពណ៌​ខ្មៅ)"
 
 #: ../src/widgets/toolbox.cpp:3198
 msgid "Use the pressure of the input device to alter the width of the pen"
@@ -13219,7 +13179,7 @@ msgstr "បំពេញ​ដោយ ៖"
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
-msgstr ""
+msgstr "ភាព​ខុសគ្នា​ដែល​បាន​អនុញ្ញាត​អតិបរមា​រវាង​ភីកសែល​ដែល​បាន​ចុច និងភីកសែល​ដែលនៅ​ក្បែ​ត្រូវ​បាន​រាប់​ក្នុង​កា​របំពេញ"
 
 #: ../src/widgets/toolbox.cpp:5051
 msgid "Grow/shrink by:"
@@ -13590,11 +13550,11 @@ msgstr "មុខងារ"
 
 #: ../share/extensions/funcplot.inx.h:8
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
-msgstr ""
+msgstr "ការ​កំណត់​មាត្រដ្ឋាន Isotropic (ប្រើ​តូចបំផុត ៖ ទទឹង/ជួរ x ឬ​កម្ពស់/ជួរ y)"
 
 #: ../share/extensions/funcplot.inx.h:9
 msgid "Multiply x-range by 2*pi"
-msgstr ""
+msgstr "គុណជួរ x ដោយ 2*pi"
 
 #: ../share/extensions/funcplot.inx.h:10
 msgid "Range and Sampling"
@@ -13616,6 +13576,8 @@ msgid ""
 "+/-1. Isotropic scaling is disabled. First derivative is always determined "
 "numerically."
 msgstr ""
+"ជ្រើស​ចតុកោណកែង​មុន​ពេលហៅ​បែបផែន ។ ចតុកោណកែង​កំណត់មាត្រដ្ឋាន x និង y ។ ជា​មួយ​នឹង​អរដោណេ​ប៉ូល ៖ តម្លៃ​ x ចាប់ផ្ដើម និង​បញ្ចប់​កំណត់​ជួរមុំ​គិត​ជា​រ៉ាដ្យង់ ។ មាត្រដ្ឋាន x ត្រូវ​បាន​កំណត់ ដូច្នេះ​គែម​ខាង​ឆ្វេង និង​ស្ដាំ​របស់​ចតុកោណកែង​នៅ"
+"+/-1 ។ ការ​កំណត់​មាត្រដ្ឋាន Isotropic ត្រូវ​បាន​បិទ ។ អ្វី​ដែល​បាន​មកដំបូង​តែងតែត្រូវ​បាន​កំណត់​ជា​លេខ​ជា​និច្ច ​។"
 
 #: ../share/extensions/funcplot.inx.h:15
 msgid ""
@@ -13625,6 +13587,10 @@ msgid ""
 "(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The "
 "constants pi and e are also available."
 msgstr ""
+"មាន​អនុគមន៍​គណិត python ស្តង់ដារ ៖ ceil(x); fabs(x); floor(x); "
+"fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); "
+"pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos"
+"(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). ចំនួន​ថេរ pi និង e ក៏​អាច​ប្រើ​បាន​ដែរ ។"
 
 #: ../share/extensions/funcplot.inx.h:16
 msgid "Start x-value"
@@ -13758,7 +13724,7 @@ msgstr "ប្រវែងជំហាន (ភីកសែល)"
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
-msgstr ""
+msgstr "Lorem ipsum"
 
 #: ../share/extensions/lorem_ipsum.inx.h:2
 msgid "Number of paragraphs"
@@ -13777,7 +13743,7 @@ msgid ""
 "This effect creates the standard \"Lorem Ipsum\" pseudolatin placeholder "
 "text. If a flowed text is selected, Lorem Ipsum is added to it; otherwise a "
 "new flowed text object, the size of the page, is created in a new layer."
-msgstr ""
+msgstr "បែបផែន​នេះ​បង្កើត​ \"Lorem Ipsum\" ស្តង់ដារ អត្ថបទ​កន្លែង​មិន​ត្រូវ ។ ប្រសិន​បើ​អត្ថបទ​លំហូរ​ត្រូវ​បាន​ជ្រើស Lorem Ipsum ត្រូវ​បាន​បន្ថែម​ទៅកាន់វា បើ​មិន​ដូច្នេះ​ទេ វត្ថុ​អត្ថបទ​លំហូរ​ថ្មី​មួយ ទំហំ​របស់​ទំព័រ ត្រូវ​បាន​បង្កើត​នៅ​ក្នុង​ស្រទាប់​ថ្មី​មួយ ។"
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
@@ -13826,7 +13792,7 @@ msgstr "ទំហំ"
 
 #: ../share/extensions/outline2svg.inx.h:1
 msgid "ASCII Text with outline markup"
-msgstr ""
+msgstr "អត្ថបទ ASCII ដែលមានគ្រោង markup"
 
 #: ../share/extensions/outline2svg.inx.h:2
 msgid "Text Outline File (*.outline)"
@@ -14027,7 +13993,6 @@ msgid "Rotation (deg)"
 msgstr "បង្វិល (deg)"
 
 #: ../share/extensions/spirograph.inx.h:6
-#, fuzzy
 msgid "Spirograph"
 msgstr "គួច"
 
