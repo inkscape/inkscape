@@ -156,7 +156,7 @@
         
         /* use poppler for pdf import? */
         #define HAVE_POPPLER                  1
-        #define HAVE_POPPLER_CAIRO            1
+        //#define HAVE_POPPLER_CAIRO            1
 
         /* do we want bitmap manipulation? */
         #define WITH_IMAGE_MAGICK             1
