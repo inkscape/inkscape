@@ -68,6 +68,8 @@ dom_libdom_a_SOURCES =	         \
 	dom/svg/svgparser.cpp    \
 	dom/svg/svgparser.h      \
 	dom/svg/svgtypes.h       \
+        dom/util/digest.h        \
+        dom/util/digest.cpp      \
         dom/util/thread.h        \
         dom/util/thread.cpp      \
         dom/util/ziptool.h       \

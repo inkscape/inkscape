@@ -1022,6 +1022,11 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->forced_redraw_count = 0;
     canvas->forced_redraw_limit = -1;
 
+#if ENABLE_LCMS
+    canvas->enable_cms_display_adj = false;
+    canvas->cms_key = new Glib::ustring("");
+#endif // ENABLE_LCMS
+
     canvas->is_scrolling = false;
 
 }
@@ -1593,7 +1598,7 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
 
     if (buf.is_empty) {
 #if ENABLE_LCMS
-        if ( transf ) {
+        if ( transf && canvas->enable_cms_display_adj ) {
             cmsDoTransform( transf, &buf.bg_color, &buf.bg_color, 1 );
         }
 #endif // ENABLE_LCMS
@@ -1627,7 +1632,7 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
 */
 
 #if ENABLE_LCMS
-        if ( transf ) {
+        if ( transf && canvas->enable_cms_display_adj ) {
             for ( gint yy = 0; yy < (y1 - y0); yy++ ) {
                 guchar* p = buf.buf + (sw * 3) * yy;
                 cmsDoTransform( transf, p, p, (x1 - x0) );

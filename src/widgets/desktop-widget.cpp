@@ -37,6 +37,7 @@
 #include "interface.h"
 #include "toolbox.h"
 #include "prefs-utils.h"
+#include "preferences.h"
 #include "file.h"
 #include "display/canvas-arena.h"
 #include "display/nr-arena.h"
@@ -56,6 +57,8 @@
 #include "conn-avoid-ref.h"
 #include "ege-select-one-action.h"
 #include "ege-color-prof-tracker.h"
+#include "dom/util/digest.h"
+#include "xml/node-observer.h"
 
 #if defined (SOLARIS_2_8)
 #include "round.h"
@@ -88,8 +91,8 @@ static void sp_desktop_widget_realize (GtkWidget *widget);
 
 static gint sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw);
 
-static void sp_dtw_color_profile_event(GtkWidget *widget, SPDesktopWidget *dtw);
-
+static void sp_dtw_color_profile_event(EgeColorProfTracker *widget, SPDesktopWidget *dtw);
+static void cms_adjust_toggled( GtkWidget *button, gpointer data );
 static void sp_desktop_widget_adjustment_value_changed (GtkAdjustment *adj, SPDesktopWidget *dtw);
 static void sp_desktop_widget_namedview_modified (SPObject *obj, guint flags, SPDesktopWidget *dtw);
 
@@ -108,6 +111,91 @@ static void sp_dtw_zoom_drawing (GtkMenuItem *item, gpointer data);
 static void sp_dtw_zoom_selection (GtkMenuItem *item, gpointer data);
 
 SPViewWidgetClass *dtw_parent_class;
+
+using Inkscape::XML::Node;
+
+class PrefWatcher : public Inkscape::XML::NodeObserver {
+public:
+    PrefWatcher() :
+        NodeObserver(),
+        dtws()
+    {
+    }
+
+    virtual ~PrefWatcher();
+
+
+    virtual void notifyChildAdded( Node &/*node*/, Node &/*child*/, Node */*prev*/ ) {}
+    virtual void notifyChildRemoved( Node &/*node*/, Node &/*child*/, Node */*prev*/ ) {}
+    virtual void notifyChildOrderChanged( Node &/*node*/, Node &/*child*/,
+                                          Node */*old_prev*/, Node */*new_prev*/ ) {}
+    virtual void notifyContentChanged( Node &/*node*/,
+                                       Inkscape::Util::ptr_shared<char> /*old_content*/,
+                                       Inkscape::Util::ptr_shared<char> /*new_content*/ ) {}
+    virtual void notifyAttributeChanged( Node &node, GQuark name,
+                                         Inkscape::Util::ptr_shared<char> old_value,
+                                         Inkscape::Util::ptr_shared<char> new_value );
+    void add( SPDesktopWidget* dtw );
+    void remove( SPDesktopWidget* dtw );
+
+private:
+    std::list<SPDesktopWidget*> dtws;
+};
+
+PrefWatcher::~PrefWatcher()
+{
+}
+
+void PrefWatcher::add( SPDesktopWidget* dtw )
+{
+    dtws.push_back(dtw);
+}
+
+void PrefWatcher::remove( SPDesktopWidget* dtw )
+{
+    dtws.remove(dtw);
+}
+
+void PrefWatcher::notifyAttributeChanged( Node &node, GQuark name,
+                                          Inkscape::Util::ptr_shared<char> /*old_value*/,
+                                          Inkscape::Util::ptr_shared<char> /*new_value*/ )
+{
+#if ENABLE_LCMS
+    (void)name;
+    if ( strcmp("group", node.name()) == 0 ) {
+        gchar const* id = node.attribute("id");
+        bool refresh = false;
+        if ( !id ) {
+            // bad
+        } else if (strcmp("displayprofile", id) == 0) {
+            Glib::ustring current = prefs_get_string_attribute( "options.displayprofile", "uri" );
+            bool enabled = current.length() > 0;
+
+            for ( std::list<SPDesktopWidget*>::iterator it = dtws.begin(); it != dtws.end(); ++it ) {
+                SPDesktopWidget* dtw = *it;
+                if ( GTK_WIDGET_SENSITIVE( dtw->cms_adjust ) != enabled ) {
+                    gtk_widget_set_sensitive( dtw->cms_adjust, enabled );
+                }
+            }
+            refresh = true;
+        } else if (strcmp("softproof", id) == 0) {
+            refresh = true;
+        }
+
+        if ( refresh ) {
+            for ( std::list<SPDesktopWidget*>::iterator it = dtws.begin(); it != dtws.end(); ++it ) {
+                (*it)->requestCanvasUpdate();
+            }
+        }
+#else
+        (void)node;
+        (void)name;
+        (void)new_value;
+#endif // ENABLE_LCMS
+    }
+}
+
+static PrefWatcher* watcher = 0;
 
 void
 SPDesktopWidget::setMessage (Inkscape::MessageType type, const gchar *message)
@@ -282,11 +370,41 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
                                                "swatches",
                                                _("Adjust the display"),
                                                dtw->tt );
+#if ENABLE_LCMS
+    {
+        Glib::ustring current = prefs_get_string_attribute( "options.displayprofile", "uri" );
+        bool enabled = current.length() > 0;
+        gtk_widget_set_sensitive( dtw->cms_adjust, enabled );
+        if ( enabled ) {
+            long long int active = prefs_get_int_attribute_limited( "options.displayprofile", "enable", 0, 0, 1 );
+            if ( active ) {
+                sp_button_toggle_set_down( SP_BUTTON(dtw->cms_adjust), TRUE );
+            }
+        }
+    }
+    g_signal_connect_after( G_OBJECT(dtw->cms_adjust), "clicked", G_CALLBACK(cms_adjust_toggled), dtw );
+#else
     gtk_widget_set_sensitive(dtw->cms_adjust, FALSE);
+#endif // ENABLE_LCMS
     gtk_table_attach( GTK_TABLE(canvas_tbl), dtw->cms_adjust, 2, 3, 2, 3, (GtkAttachOptions)(GTK_SHRINK), (GtkAttachOptions)(GTK_SHRINK), 0, 0);
+    {
+        Inkscape::XML::Node* prefs = Inkscape::Preferences::get();
+        if ( prefs ) {
+            if (!watcher) {
+                watcher = new PrefWatcher();
+                prefs->addSubtreeObserver( *watcher );
+            }
+            watcher->add(dtw);
+        } else {
+            g_warning("NULL preferences instance encountered");
+        }
+    }
 
     /* Canvas */
     dtw->canvas = SP_CANVAS (sp_canvas_new_aa ());
+#if ENABLE_LCMS
+    dtw->canvas->enable_cms_display_adj = prefs_get_int_attribute_limited( "options.displayprofile", "enable", 0, 0, 1 ) != 0;
+#endif // ENABLE_LCMS
     GTK_WIDGET_SET_FLAGS (GTK_WIDGET (dtw->canvas), GTK_CAN_FOCUS);
     style = gtk_style_copy (GTK_WIDGET (dtw->canvas)->style);
     style->bg[GTK_STATE_NORMAL] = style->white;
@@ -412,6 +530,9 @@ sp_desktop_widget_destroy (GtkObject *object)
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET (object);
 
     if (dtw->desktop) {
+        if ( watcher ) {
+            watcher->remove(dtw);
+        }
         g_signal_handlers_disconnect_by_func(G_OBJECT (dtw->zoom_status), (gpointer) G_CALLBACK(sp_dtw_zoom_input), dtw);
         g_signal_handlers_disconnect_by_func(G_OBJECT (dtw->zoom_status), (gpointer) G_CALLBACK(sp_dtw_zoom_output), dtw);
         gtk_signal_disconnect_by_data (GTK_OBJECT (dtw->zoom_status), dtw->zoom_status);
@@ -587,19 +708,40 @@ sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dt
     return FALSE;
 }
 
-void sp_dtw_color_profile_event(GtkWidget */*widget*/, SPDesktopWidget */*dtw*/)
+void sp_dtw_color_profile_event(EgeColorProfTracker *tracker, SPDesktopWidget */*dtw*/)
 {
     // Handle profile changes
+    Md5Digest digest;
+    unsigned char* buf = 0;
+    guint len = 0;
+    ege_color_prof_tracker_get_profile( tracker, reinterpret_cast<gpointer*>(&buf), &len );
+    if ( buf && len ) {
+        digest.append(buf, len);
+    }
+    std::string hash = digest.finishHex();
+    //g_message("ICC profile %d bytes at %p is [%s]", len, buf, hash.c_str() );
+}
+
+void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
+{
+    SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data);
+
+    bool down = SP_BUTTON_IS_DOWN(dtw->cms_adjust);
+    if ( down != dtw->canvas->enable_cms_display_adj ) {
+        dtw->canvas->enable_cms_display_adj = down;
+        dtw->requestCanvasUpdate();
+        prefs_set_int_attribute( "options.displayprofile", "enable", down ? 1 : 0 );
+    }
 }
 
 void
-sp_dtw_desktop_activate (SPDesktopWidget *dtw)
+sp_dtw_desktop_activate (SPDesktopWidget */*dtw*/)
 {
     /* update active desktop indicator */
 }
 
 void
-sp_dtw_desktop_deactivate (SPDesktopWidget *dtw)
+sp_dtw_desktop_deactivate (SPDesktopWidget */*dtw*/)
 {
     /* update inactive desktop indicator */
 }
@@ -818,6 +960,7 @@ void
 SPDesktopWidget::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
 {
     gboolean vis = GTK_WIDGET_VISIBLE (this);
+    (void)vis; // TODO figure out why it is here but not used.
 
     Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
 
@@ -1178,7 +1321,7 @@ sp_desktop_widget_namedview_modified (SPObject *obj, guint flags, SPDesktopWidge
 }
 
 static void
-sp_desktop_widget_adjustment_value_changed (GtkAdjustment *adj, SPDesktopWidget *dtw)
+sp_desktop_widget_adjustment_value_changed (GtkAdjustment */*adj*/, SPDesktopWidget *dtw)
 {
     if (dtw->update)
         return;
@@ -1195,7 +1338,7 @@ sp_desktop_widget_adjustment_value_changed (GtkAdjustment *adj, SPDesktopWidget 
 bool SPDesktopWidget::onFocusInEvent(GdkEventFocus*)
 {
     inkscape_activate_desktop (desktop);
-	
+
     return false;
 }
 
@@ -1212,7 +1355,7 @@ sp_dtw_zoom_display_to_value (gdouble value)
 }
 
 static gint
-sp_dtw_zoom_input (GtkSpinButton *spin, gdouble *new_val, gpointer data)
+sp_dtw_zoom_input (GtkSpinButton *spin, gdouble *new_val, gpointer /*data*/)
 {
     gdouble new_scrolled = gtk_spin_button_get_value (spin);
     const gchar *b = gtk_entry_get_text (GTK_ENTRY (spin));
@@ -1228,7 +1371,7 @@ sp_dtw_zoom_input (GtkSpinButton *spin, gdouble *new_val, gpointer data)
 }
 
 static bool
-sp_dtw_zoom_output (GtkSpinButton *spin, gpointer data)
+sp_dtw_zoom_output (GtkSpinButton *spin, gpointer /*data*/)
 {
     gchar b[64];
     double val = sp_dtw_zoom_value_to_display (gtk_spin_button_get_value (spin));
@@ -1258,7 +1401,7 @@ sp_dtw_zoom_value_changed (GtkSpinButton *spin, gpointer data)
 }
 
 static void
-sp_dtw_zoom_populate_popup (GtkEntry *entry, GtkMenu *menu, gpointer data)
+sp_dtw_zoom_populate_popup (GtkEntry */*entry*/, GtkMenu *menu, gpointer data)
 {
     GList *children, *iter;
     GtkWidget *item;
@@ -1309,37 +1452,37 @@ sp_dtw_zoom_menu_handler (SPDesktop *dt, gdouble factor)
 }
 
 static void
-sp_dtw_zoom_50 (GtkMenuItem *item, gpointer data)
+sp_dtw_zoom_50 (GtkMenuItem */*item*/, gpointer data)
 {
     sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 0.5);
 }
 
 static void
-sp_dtw_zoom_100 (GtkMenuItem *item, gpointer data)
+sp_dtw_zoom_100 (GtkMenuItem */*item*/, gpointer data)
 {
     sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 1.0);
 }
 
 static void
-sp_dtw_zoom_200 (GtkMenuItem *item, gpointer data)
+sp_dtw_zoom_200 (GtkMenuItem */*item*/, gpointer data)
 {
     sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 2.0);
 }
 
 static void
-sp_dtw_zoom_page (GtkMenuItem *item, gpointer data)
+sp_dtw_zoom_page (GtkMenuItem */*item*/, gpointer data)
 {
     static_cast<SPDesktop*>(data)->zoom_page();
 }
 
 static void
-sp_dtw_zoom_drawing (GtkMenuItem *item, gpointer data)
+sp_dtw_zoom_drawing (GtkMenuItem */*item*/, gpointer data)
 {
     static_cast<SPDesktop*>(data)->zoom_drawing();
 }
 
 static void
-sp_dtw_zoom_selection (GtkMenuItem *item, gpointer data)
+sp_dtw_zoom_selection (GtkMenuItem */*item*/, gpointer data)
 {
     static_cast<SPDesktop*>(data)->zoom_selection();
 }

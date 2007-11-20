@@ -680,10 +680,9 @@ cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
         init = true;
     }
 
-    long long int which = prefs_get_int_attribute_limited( "options.displayprofile", "enable", 0, 0, 1 );
     gchar const * uri = prefs_get_string_attribute("options.displayprofile", "uri");
 
-    if ( which && uri && *uri ) {
+    if ( uri && *uri ) {
         if ( lastURI != std::string(uri) ) {
             lastURI.clear();
             if ( theOne ) {
@@ -825,7 +824,7 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
         lastGamutColor = gamutColor;
     }
 
-    // Fecth these now, as they might clear the transform as a side effect.
+    // Fetch these now, as they might clear the transform as a side effect.
     cmsHPROFILE hprof = Inkscape::colorprofile_get_system_profile_handle();
     cmsHPROFILE proofProf = hprof ? Inkscape::colorprofile_get_proof_profile_handle() : 0;
 

@@ -31,16 +31,16 @@
  *  replacement for the fine implementations already available.  Rather, it
  *  is a small and simple (and maybe a bit slow?) tool for moderate common
  *  hashing requirements, like for communications and authentication.
- *  
+ *
  *  These hashes are intended to be simple to use.  For example:
  *  Sha256Digest digest;
  *  digest.append("The quick brown dog");
  *  std::string result = digest.finishHex();
- *  
+ *
  *  There are several forms of append() for convenience.
  *  finish() and finishHex() call reset() for both security and
  *  to prepare for the next use.
- *          
+ *
  */
 
 #include <vector>
@@ -49,7 +49,7 @@
 
 /**
  *  Base class.  Do not use this class directly.  Rather, use of of the
- *  subclasses below.   
+ *  subclasses below.
  *  For all subclasses, overload reset(), update(unsigned char), and finish()
  */
 class Digest
@@ -69,7 +69,7 @@ public:
         HASH_SHA512,
         HASH_MD5
         } HashType;
-        
+
     /**
      *  Constructor, with no type
      */
@@ -123,19 +123,19 @@ public:
 
     /**
      *  Finish the hash and return a hexidecimal version of the computed
-     *  value     
+     *  value
      */
     virtual std::string finishHex();
 
     /**
-     *  Initialize the fields of this hash engine to its starting values.    
+     *  Initialize the fields of this hash engine to its starting values.
      *  Overload this in every subclass
      */
     virtual void reset()
         {}
 
     /**
-     *  Finish the hash and return its computed value    
+     *  Finish the hash and return its computed value
      *  Overload this in every subclass
      */
     virtual std::vector<unsigned char> finish()
@@ -147,15 +147,15 @@ public:
 protected:
 
     /**
-     *  Update the hash with a given byte    
+     *  Update the hash with a given byte
      *  Overload this in every subclass
      */
-    virtual void update(unsigned char ch)
+    virtual void update(unsigned char /*ch*/)
         {}
 
     /**
      * The enumerated type of the hash
-     */	     
+     */
     int hashType;
 };
 
@@ -164,7 +164,7 @@ protected:
 
 
 /**
- *  SHA-1,  
+ *  SHA-1,
  *  Section 6.1, SECURE HASH STANDARD
  *  Federal Information Processing Standards Publication 180-2
  *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
@@ -219,7 +219,7 @@ private:
 
 
 /**
- *  SHA-224,  
+ *  SHA-224,
  *  Section 6.1, SECURE HASH STANDARD
  *  Federal Information Processing Standards Publication 180-2
  *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
@@ -271,7 +271,7 @@ private:
 
 
 /**
- *  SHA-256,  
+ *  SHA-256,
  *  Section 6.1, SECURE HASH STANDARD
  *  Federal Information Processing Standards Publication 180-2
  *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
@@ -375,7 +375,7 @@ private:
 
 
 /**
- *  SHA-512,  
+ *  SHA-512,
  *  Section 6.1, SECURE HASH STANDARD
  *  Federal Information Processing Standards Publication 180-2
  *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
@@ -434,7 +434,7 @@ private:
 
 /**
  * IETF RFC 1321, MD5 Specification
- * http://www.ietf.org/rfc/rfc1321.txt 
+ * http://www.ietf.org/rfc/rfc1321.txt
  */
 class Md5Digest :  public Digest
 {

@@ -33,6 +33,8 @@
 #include <gtk/gtkobject.h>
 #include <gtk/gtkwidget.h>
 
+#include <glibmm/ustring.h>
+
 #include <libnr/nr-matrix.h>
 #include <libnr/nr-rect.h>
 #include <libnr/nr-rect-l.h>
@@ -60,13 +62,13 @@ struct SPCanvasBuf{
 };
 
 /**
- * An SPCanvasItem refers to a SPCanvas and to its parent item; it has 
+ * An SPCanvasItem refers to a SPCanvas and to its parent item; it has
  * four coordinates, a bounding rectangle, and a transformation matrix.
  */
 struct SPCanvasItem : public GtkObject {
     SPCanvas *canvas;
     SPCanvasItem *parent;
-    
+
     double x1, y1, x2, y2;
     NR::Rect bounds;
     NR::Matrix xform;
@@ -77,10 +79,10 @@ struct SPCanvasItem : public GtkObject {
  */
 struct SPCanvasItemClass : public GtkObjectClass {
     void (* update) (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
-    
+
     void (* render) (SPCanvasItem *item, SPCanvasBuf *buf);
     double (* point) (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item);
-    
+
     int (* event) (SPCanvasItem *item, GdkEvent *event);
 };
 
@@ -114,45 +116,45 @@ gint sp_canvas_item_order(SPCanvasItem * item);
  */
 struct SPCanvas {
     GtkWidget widget;
-    
+
     guint idle_id;
-    
+
     SPCanvasItem *root;
-    
+
     double dx0, dy0;
     int x0, y0;
-    
+
     /* Area that needs redrawing, stored as a microtile array */
     int    tLeft,tTop,tRight,tBottom;
     int    tileH,tileV;
     uint8_t *tiles;
-    
+
     /* Last known modifier state, for deferred repick when a button is down */
     int state;
-    
+
     /* The item containing the mouse pointer, or NULL if none */
     SPCanvasItem *current_item;
-    
+
     /* Item that is about to become current (used to track deletions and such) */
     SPCanvasItem *new_current_item;
-    
+
     /* Item that holds a pointer grab, or NULL if none */
     SPCanvasItem *grabbed_item;
-    
+
     /* Event mask specified when grabbing an item */
     guint grabbed_event_mask;
-    
+
     /* If non-NULL, the currently focused item */
     SPCanvasItem *focused_item;
-    
+
     /* Event on which selection of current item is based */
     GdkEvent pick_event;
-    
+
     int close_enough;
-    
+
     /* GC for temporary draw pixmap */
     GdkGC *pixmap_gc;
-    
+
     unsigned int need_update : 1;
     unsigned int need_redraw : 1;
     unsigned int need_repick : 1;
@@ -172,11 +174,16 @@ struct SPCanvas {
     // connector tool).  If so, they may temporarily set this flag to
     // 'true'.
     bool gen_all_enter_events;
-    
+
     int rendermode;
 
+#if ENABLE_LCMS
+    bool enable_cms_display_adj;
+    Glib::ustring* cms_key;
+#endif // ENABLE_LCMS
+
     bool is_scrolling;
-    
+
     NR::Rect getViewbox() const;
 };
 

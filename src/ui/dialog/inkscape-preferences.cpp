@@ -627,22 +627,18 @@ void InkscapePreferences::initPageImportExport()
 }
 
 #if ENABLE_LCMS
-static void forceUpdates() {
-    std::list<SPDesktop*> tops;
-    inkscape_get_all_desktops( tops );
-    for ( std::list<SPDesktop*>::iterator it = tops.begin(); it != tops.end(); ++it ) {
-        (*it)->requestRedraw();
-    }
-}
-
 static void profileComboChanged( Gtk::ComboBoxText* combo )
 {
-    Glib::ustring active = combo->get_active_text();
+    int rowNum = combo->get_active_row_number();
+    if ( rowNum < 1 ) {
+        prefs_set_string_attribute( "options.displayprofile", "uri", "" );
+    } else {
+        Glib::ustring active = combo->get_active_text();
 
-    Glib::ustring path = get_path_for_profile(active);
-    if ( !path.empty() ) {
-        prefs_set_string_attribute( "options.displayprofile", "uri", path.c_str() );
-        forceUpdates();
+        Glib::ustring path = get_path_for_profile(active);
+        if ( !path.empty() ) {
+            prefs_set_string_attribute( "options.displayprofile", "uri", path.c_str() );
+        }
     }
 }
 
@@ -653,7 +649,6 @@ static void proofComboChanged( Gtk::ComboBoxText* combo )
     Glib::ustring path = get_path_for_profile(active);
     if ( !path.empty() ) {
         prefs_set_string_attribute( "options.softproof", "uri", path.c_str() );
-        forceUpdates();
     }
 }
 
@@ -667,7 +662,6 @@ static void gamutColorChanged( Gtk::ColorButton* btn ) {
 
     prefs_set_string_attribute( "options.softproof", "gamutcolor", tmp );
     g_free(tmp);
-    forceUpdates();
 }
 #endif // ENABLE_LCMS
 
@@ -684,10 +678,6 @@ void InkscapePreferences::initPageCMS()
 #endif // !ENABLE_LCMS
 
     _page_cms.add_group_header( _("Display Calibration"));
-
-    _cms_display.init( _("Enable display calibration"), "options.displayprofile", "enable", false);
-    _page_cms.add_line( false, "", _cms_display, "",
-                        _("Enables application of the display using an ICC profile."), false);
 
     _page_cms.add_line( false, _("Display profile:"), _cms_display_profile, "",
                         _("The ICC profile to use to calibrate display output."), false);
@@ -743,6 +733,8 @@ void InkscapePreferences::initPageCMS()
         Glib::ustring current = prefs_get_string_attribute( "options.displayprofile", "uri" );
 
         gint index = 0;
+        _cms_display_profile.append_text(_("<none>"));
+        index++;
         for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
             _cms_display_profile.append_text( *it );
             Glib::ustring path = get_path_for_profile(*it);
@@ -750,6 +742,9 @@ void InkscapePreferences::initPageCMS()
                 _cms_display_profile.set_active(index);
             }
             index++;
+        }
+        if ( current.empty() ) {
+            _cms_display_profile.set_active(0);
         }
 
         names = ::Inkscape::colorprofile_get_softproof_names();
@@ -766,21 +761,12 @@ void InkscapePreferences::initPageCMS()
         }
     }
 
-    _cms_display.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
-    _cms_softproof.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
-    _cms_gamutwarn.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
     _cms_gamutcolor.signal_color_set().connect( sigc::bind( sigc::ptr_fun(gamutColorChanged), &_cms_gamutcolor) );
-    _cms_proof_blackpoint.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
-    _cms_proof_preserveblack.signal_toggled().connect( sigc::ptr_fun(forceUpdates) );
-
-    _cms_intent.signal_changed().connect( sigc::ptr_fun(forceUpdates) );
-    _cms_proof_intent.signal_changed().connect( sigc::ptr_fun(forceUpdates) );
 
     _cms_display_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(profileComboChanged), &_cms_display_profile) );
     _cms_proof_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(proofComboChanged), &_cms_proof_profile) );
 #else
     // disable it, but leave it visible
-    _cms_display.set_sensitive( false );
     _cms_intent.set_sensitive( false );
     _cms_display_profile.set_sensitive( false );
     _cms_softproof.set_sensitive( false );
