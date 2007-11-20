@@ -2,7 +2,7 @@
 #define INKSCAPE_LPE_CURVESTITCH_H
 
 /** \file
- * Implementation of an effect similar to Expression, see lpe-expression.cpp
+ * Implementation of the curve stitch effect, see lpe-curvestitch.cpp
  */
 
 /*
@@ -37,6 +37,7 @@ private:
     ScalarParam nrofpaths;
     RandomParam startpoint_variation;
     RandomParam endpoint_variation;
+    RandomParam spacing_variation;
     ScalarParam prop_scale;
     BoolParam scale_y_rel;
 

@@ -1,6 +1,6 @@
 #define INKSCAPE_LPE_CURVESTITCH_CPP
 /** \file
- * SVG <skeleton> implementation, used as an example for a base starting class
+ * LPE Curve Stitching implementation, used as an example for a base starting class
  * when implementing new LivePathEffects.
  *
  */
@@ -44,12 +44,14 @@ LPECurveStitch::LPECurveStitch(LivePathEffectObject *lpeobject) :
     nrofpaths(_("Nr of paths"), _("The number of paths that will be generated."), "count", &wr, this, 5),
     startpoint_variation(_("Startpoint variation"), _("..."), "startpoint_variation", &wr, this, 0),
     endpoint_variation(_("Endpoint variation"), _("..."), "endpoint_variation", &wr, this, 0),
+    spacing_variation(_("Spacing variation"), _("Determines whether lines cluster together or have an equal spacing between each other."), "spacing_variation", &wr, this, 0),
     prop_scale(_("Scale width"), _("Scaling of the width of the stroke path"), "prop_scale", &wr, this, 1),
     scale_y_rel(_("Scale width relative"), _("Scale the width of the stroke path relative to its length"), "scale_y_rel", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&nrofpaths) );
     registerParameter( dynamic_cast<Parameter *>(&startpoint_variation) );
     registerParameter( dynamic_cast<Parameter *>(&endpoint_variation) );
+    registerParameter( dynamic_cast<Parameter *>(&spacing_variation) );
     registerParameter( dynamic_cast<Parameter *>(&strokepath) );
     registerParameter( dynamic_cast<Parameter *>(&prop_scale) );
     registerParameter( dynamic_cast<Parameter *>(&scale_y_rel) );
@@ -72,6 +74,7 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
     if (path_in.size() >= 2) {
         startpoint_variation.resetRandomizer();
         endpoint_variation.resetRandomizer();
+        spacing_variation.resetRandomizer();
 
         D2<Piecewise<SBasis> > stroke = make_cuts_independant(strokepath);
         Interval bndsStroke = bounds_exact(stroke[0]);
@@ -94,9 +97,9 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
             Point start = A(tA);
             Point end = B(tB);
             if (startpoint_variation.get_value() != 0)
-                start = start + startpoint_variation * (end - start);
+                start = start + (startpoint_variation - startpoint_variation.get_value()/2) * (end - start);
             if (endpoint_variation.get_value() != 0)
-                end = end + endpoint_variation * (end - start);
+                end = end + (endpoint_variation - endpoint_variation.get_value()/2)* (end - start);
     
             gdouble scaling_y = 1.0;
             if (scale_y_rel.get_value()) {
@@ -113,8 +116,13 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
             // add stuff to one big pw<d2<sbasis> > and then outside the loop convert to path?
             std::vector<Path> result = Geom::path_from_piecewise(pwd2_out, LPE_CONVERSION_TOLERANCE);
             path_out[i] = result[0];
-            tA += incrementA;
-            tB += incrementB;
+            gdouble sv = spacing_variation;
+            tA += incrementA * (1 + sv - spacing_variation.get_value()/2);
+            tB += incrementB * (1 + sv - spacing_variation.get_value()/2);
+            if (tA > bndsA.max())
+                tA = bndsA.max();
+            if (tB > bndsB.max())
+                tB = bndsB.max();
         }
 
         return path_out;
