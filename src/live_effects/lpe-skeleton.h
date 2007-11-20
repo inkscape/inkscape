@@ -2,7 +2,7 @@
 #define INKSCAPE_LPE_SKELETON_H
 
 /** \file
- * SVG <skeleton> implementation, see sp-skeleton.cpp.
+ * LPE <skeleton> implementation, see sp-skeleton.cpp.
  */
 
 /*
