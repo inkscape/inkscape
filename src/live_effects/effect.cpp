@@ -43,14 +43,14 @@ namespace LivePathEffect {
 
 const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     // {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
-    {PATH_ALONG_PATH,       N_("Path along path"),      "path_along_path"},
-    {SKELETAL_STROKES,      N_("Pattern along path"),      "skeletal"},
+    {PATH_ALONG_PATH,       N_("Bend Path"),             "bend_path"},
+    {SKELETAL_STROKES,      N_("Pattern along path"),    "skeletal"},
 #ifdef LPE_ENABLE_TEST_EFFECTS
     {SLANT,                 N_("Slant"),                 "slant"},
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),   "doeffectstacktest"},
 #endif
     {GEARS,                 N_("Gears"),                 "gears"},
-    {CURVE_STITCH,          N_("Stitch subcurves"),      "curvestitching"},
+    {CURVE_STITCH,          N_("Stitch subpaths"),       "curvestitching"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
