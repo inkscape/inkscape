@@ -105,16 +105,15 @@ protected:
     void registerParameter(Parameter * param);
     Parameter * getNextOncanvasEditableParam();
 
-    typedef std::map<Glib::ustring, Parameter *> param_map_type;
-    param_map_type param_map;
+    std::vector<Parameter *> param_vector;
+    std::vector<Parameter *>::iterator oncanvasedit_it;
+
 
     Inkscape::UI::Widget::Registry wr; 
     Gtk::VBox * vbox;
     Gtk::Tooltips * tooltips;
 
     LivePathEffectObject *lpeobj;
-
-    param_map_type::iterator oncanvasedit_it;
 
 private:
     Effect(const Effect&);

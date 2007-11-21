@@ -97,7 +97,7 @@ Effect::Effect(LivePathEffectObject *lpeobject)
     vbox = NULL;
     tooltips = NULL;
     lpeobj = lpeobject;
-    oncanvasedit_it = param_map.begin();
+    oncanvasedit_it = param_vector.begin();
 }
 
 Effect::~Effect()
@@ -189,13 +189,21 @@ Effect::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 void
 Effect::readallParameters(Inkscape::XML::Node * repr)
 {
-    param_map_type::iterator it = param_map.begin();
-    while (it != param_map.end()) {
-        const gchar * key = (*it).first.c_str();
+    std::vector<Parameter *>::iterator it = param_vector.begin();
+    while (it != param_vector.end()) {
+        Parameter * param = *it;
+        const gchar * key = param->param_key.c_str();
         const gchar * value = repr->attribute(key);
-        if(value) {
-            setParameter(key, value);
+        if (value) {
+            bool accepted = param->param_readSVGValue(value);
+            if (!accepted) { 
+                g_warning("Effect::readallParameters - '%s' not accepted for %s", value, key);
+            }
+        } else {
+            // set default value
+            param->param_set_default();
         }
+
         it++;
     }
 }
@@ -204,18 +212,16 @@ Effect::readallParameters(Inkscape::XML::Node * repr)
 void
 Effect::setParameter(const gchar * key, const gchar * new_value)
 {
-    Glib::ustring stringkey(key);
-
-    param_map_type::iterator it = param_map.find(stringkey);
-    if (it != param_map.end()) {
+    Parameter * param = getParameter(key);
+    if (param) {
         if (new_value) {
-            bool accepted = it->second->param_readSVGValue(new_value);
+            bool accepted = param->param_readSVGValue(new_value);
             if (!accepted) { 
                 g_warning("Effect::setParameter - '%s' not accepted for %s", new_value, key);
             }
         } else {
             // set default value
-            it->second->param_set_default();
+            param->param_set_default();
         }
     }
 }
@@ -223,7 +229,7 @@ Effect::setParameter(const gchar * key, const gchar * new_value)
 void
 Effect::registerParameter(Parameter * param)
 {
-    param_map[param->param_key] = param; // inserts or updates
+    param_vector.push_back(param);
 }
 
 Gtk::Widget *
@@ -236,9 +242,9 @@ Effect::getWidget()
 
         vbox->set_border_width(5);
 
-        param_map_type::iterator it = param_map.begin();
-        while (it != param_map.end()) {
-            Parameter * param = it->second;
+        std::vector<Parameter *>::iterator it = param_vector.begin();
+        while (it != param_vector.end()) {
+            Parameter * param = *it;
             Gtk::Widget * widg = param->param_getWidget();
             Glib::ustring * tip = param->param_getTooltip();
             if (widg) {
@@ -274,31 +280,36 @@ Effect::getParameter(const char * key)
 {
     Glib::ustring stringkey(key);
 
-    param_map_type::iterator it = param_map.find(stringkey);
-    if (it != param_map.end()) {
-        return it->second;
-    } else {
-        return NULL;
+    std::vector<Parameter *>::iterator it = param_vector.begin();
+    while (it != param_vector.end()) {
+        Parameter * param = *it;
+        if ( param->param_key == key) {
+            return param;
+        }
+
+        it++;
     }
+
+    return NULL;
 }
 
 Parameter *
 Effect::getNextOncanvasEditableParam()
 {
     oncanvasedit_it++;
-    if (oncanvasedit_it == param_map.end()) {
-        oncanvasedit_it = param_map.begin();
+    if (oncanvasedit_it == param_vector.end()) {
+        oncanvasedit_it = param_vector.begin();
     }
-    param_map_type::iterator old_it = oncanvasedit_it;
+    std::vector<Parameter *>::iterator old_it = oncanvasedit_it;
 
     do {
-        Parameter * param = oncanvasedit_it->second;
+        Parameter * param = *oncanvasedit_it;
         if(param->oncanvas_editable) {
             return param;
         } else {
             oncanvasedit_it++;
-            if (oncanvasedit_it == param_map.end()) {  // loop round the map
-                oncanvasedit_it = param_map.begin();
+            if (oncanvasedit_it == param_vector.end()) {  // loop round the map
+                oncanvasedit_it = param_vector.begin();
             }
         }
     } while (oncanvasedit_it != old_it); // iterate until complete loop through map has been made
