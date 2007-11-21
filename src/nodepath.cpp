@@ -1012,18 +1012,30 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
             // only if both adjacent segments are lines,
             // convert both to curves:
 
-            // BEFORE:
-            {
             node->code = NR_CURVETO;
-            NR::Point delta = node->n.other->pos - node->p.other->pos;
-            node->p.pos = node->pos - delta / 4;
+            node->n.other->code = NR_CURVETO;
+
+            NR::Point leg_prev = node->pos - node->p.other->pos;
+            NR::Point leg_next = node->pos - node->n.other->pos;
+
+            double norm_leg_prev = L2(leg_prev);
+            double norm_leg_next = L2(leg_next);
+
+            // delta has length 1 and is orthogonal to bisecting line
+            NR::Point delta;
+            if (norm_leg_next > 0.0) {
+                delta = (norm_leg_prev / norm_leg_next) * leg_next - leg_prev;
+                (&delta)->normalize();
             }
 
-            // AFTER:
-            {
-            node->n.other->code = NR_CURVETO;
-            NR::Point delta = node->p.other->pos - node->n.other->pos;
-            node->n.pos = node->pos - delta / 4;
+            if (type == Inkscape::NodePath::NODE_SYMM) {
+                double norm_leg_avg = (norm_leg_prev + norm_leg_next) / 2;
+                node->p.pos = node->pos + 0.3 * norm_leg_avg * delta;
+                node->n.pos = node->pos - 0.3 * norm_leg_avg * delta;
+            } else {
+                // length of handle is proportional to distance to adjacent node
+                node->p.pos = node->pos + 0.3 * norm_leg_prev * delta;
+                node->n.pos = node->pos - 0.3 * norm_leg_next * delta;
             }
 
             sp_node_update_handles(node);
