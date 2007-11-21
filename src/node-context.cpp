@@ -486,13 +486,15 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KP_Left:
                 case GDK_KP_4:
                     if (!MOD__CTRL) { // not ctrl
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(-10, 0); // shift
-                            else nc->shape_editor->move_nodes_screen(-1, 0); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(mul*-10, 0); // shift
+                            else nc->shape_editor->move_nodes_screen(mul*-1, 0); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes(-10*nudge, 0); // shift
-                            else nc->shape_editor->move_nodes(-nudge, 0); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes(mul*-10*nudge, 0); // shift
+                            else nc->shape_editor->move_nodes(mul*-nudge, 0); // no shift
                         }
                         ret = TRUE;
                     }
@@ -501,13 +503,15 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KP_Up:
                 case GDK_KP_8:
                     if (!MOD__CTRL) { // not ctrl
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(0, 10); // shift
-                            else nc->shape_editor->move_nodes_screen(0, 1); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(0, mul*10); // shift
+                            else nc->shape_editor->move_nodes_screen(0, mul*1); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes(0, 10*nudge); // shift
-                            else nc->shape_editor->move_nodes(0, nudge); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes(0, mul*10*nudge); // shift
+                            else nc->shape_editor->move_nodes(0, mul*nudge); // no shift
                         }
                         ret = TRUE;
                     }
@@ -516,13 +520,15 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KP_Right:
                 case GDK_KP_6:
                     if (!MOD__CTRL) { // not ctrl
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(10, 0); // shift
-                            else nc->shape_editor->move_nodes_screen(1, 0); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(mul*10, 0); // shift
+                            else nc->shape_editor->move_nodes_screen(mul*1, 0); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes(10*nudge, 0); // shift
-                            else nc->shape_editor->move_nodes(nudge, 0); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes(mul*10*nudge, 0); // shift
+                            else nc->shape_editor->move_nodes(mul*nudge, 0); // no shift
                         }
                         ret = TRUE;
                     }
@@ -531,13 +537,15 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KP_Down:
                 case GDK_KP_2:
                     if (!MOD__CTRL) { // not ctrl
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(0, -10); // shift
-                            else nc->shape_editor->move_nodes_screen(0, -1); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(0, mul*-10); // shift
+                            else nc->shape_editor->move_nodes_screen(0, mul*-1); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes(0, -10*nudge); // shift
-                            else nc->shape_editor->move_nodes(0, -nudge); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes(0, mul*-10*nudge); // shift
+                            else nc->shape_editor->move_nodes(0, mul*-nudge); // no shift
                         }
                         ret = TRUE;
                     }

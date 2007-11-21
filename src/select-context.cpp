@@ -712,13 +712,15 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KP_Left:
                 case GDK_KP_4:
                     if (!MOD__CTRL) { // not ctrl
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) sp_selection_move_screen(-10, 0); // shift
-                            else sp_selection_move_screen(-1, 0); // no shift
+                            if (MOD__SHIFT) sp_selection_move_screen(mul*-10, 0); // shift
+                            else sp_selection_move_screen(mul*-1, 0); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) sp_selection_move(-10*nudge, 0); // shift
-                            else sp_selection_move(-nudge, 0); // no shift
+                            if (MOD__SHIFT) sp_selection_move(mul*-10*nudge, 0); // shift
+                            else sp_selection_move(mul*-nudge, 0); // no shift
                         }
                         ret = TRUE;
                     }
@@ -727,13 +729,15 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KP_Up:
                 case GDK_KP_8:
                     if (!MOD__CTRL) { // not ctrl
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) sp_selection_move_screen(0, 10); // shift
-                            else sp_selection_move_screen(0, 1); // no shift
+                            if (MOD__SHIFT) sp_selection_move_screen(0, mul*10); // shift
+                            else sp_selection_move_screen(0, mul*1); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) sp_selection_move(0, 10*nudge); // shift
-                            else sp_selection_move(0, nudge); // no shift
+                            if (MOD__SHIFT) sp_selection_move(0, mul*10*nudge); // shift
+                            else sp_selection_move(0, mul*nudge); // no shift
                         }
                         ret = TRUE;
                     }
@@ -742,13 +746,15 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KP_Right:
                 case GDK_KP_6:
                     if (!MOD__CTRL) { // not ctrl
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) sp_selection_move_screen(10, 0); // shift
-                            else sp_selection_move_screen(1, 0); // no shift
+                            if (MOD__SHIFT) sp_selection_move_screen(mul*10, 0); // shift
+                            else sp_selection_move_screen(mul*1, 0); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) sp_selection_move(10*nudge, 0); // shift
-                            else sp_selection_move(nudge, 0); // no shift
+                            if (MOD__SHIFT) sp_selection_move(mul*10*nudge, 0); // shift
+                            else sp_selection_move(mul*nudge, 0); // no shift
                         }
                         ret = TRUE;
                     }
@@ -757,13 +763,15 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KP_Down:
                 case GDK_KP_2:
                     if (!MOD__CTRL) { // not ctrl
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) sp_selection_move_screen(0, -10); // shift
-                            else sp_selection_move_screen(0, -1); // no shift
+                            if (MOD__SHIFT) sp_selection_move_screen(0, mul*-10); // shift
+                            else sp_selection_move_screen(0, mul*-1); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) sp_selection_move(0, -10*nudge); // shift
-                            else sp_selection_move(0, -nudge); // no shift
+                            if (MOD__SHIFT) sp_selection_move(0, mul*-10*nudge); // shift
+                            else sp_selection_move(0, mul*-nudge); // no shift
                         }
                         ret = TRUE;
                     }

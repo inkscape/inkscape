@@ -999,10 +999,12 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                             case GDK_KP_4:
                                 if (tc->text) {
                                     if (MOD__ALT) {
+                                        gint mul = 1 + gobble_key_events(
+                                            get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(-10, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(mul*-10, 0));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(-1, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(mul*-1, 0));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(desktop), "kern:left", SP_VERB_CONTEXT_TEXT, 
@@ -1019,10 +1021,12 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                             case GDK_KP_6:
                                 if (tc->text) {
                                     if (MOD__ALT) {
+                                        gint mul = 1 + gobble_key_events(
+                                            get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(10, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(mul*10, 0));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(1, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(mul*1, 0));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(desktop), "kern:right", SP_VERB_CONTEXT_TEXT, 
@@ -1039,10 +1043,12 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                             case GDK_KP_8:
                                 if (tc->text) {
                                     if (MOD__ALT) {
+                                        gint mul = 1 + gobble_key_events(
+                                            get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, -10));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, mul*-10));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, -1));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, mul*-1));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(desktop), "kern:up", SP_VERB_CONTEXT_TEXT, 
@@ -1060,10 +1066,12 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                             case GDK_KP_2:
                                 if (tc->text) {
                                     if (MOD__ALT) {
+                                        gint mul = 1 + gobble_key_events(
+                                            get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, 10));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, mul*10));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, 1));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, mul*1));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(desktop), "kern:down", SP_VERB_CONTEXT_TEXT, 
