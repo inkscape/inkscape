@@ -215,14 +215,15 @@ gint gobble_key_events(guint keyval, gint mask)
 
     event_next = gdk_event_get();
     // while the next event is also a key notify with the same keyval and mask,
-    while (event_next && event_next->type == GDK_KEY_PRESS
+    while (event_next && (event_next->type == GDK_KEY_PRESS || event_next->type == GDK_KEY_RELEASE)
            && event_next->key.keyval == keyval
-           && (event_next->key.state & mask)) {
+           && (!mask || (event_next->key.state & mask))) {
+        if (event_next->type == GDK_KEY_PRESS)
+            i ++; 
         // kill it
         gdk_event_free(event_next);
         // get next
         event_next = gdk_event_get();
-        i ++;
     }
     // otherwise, put it back onto the queue
     if (event_next) gdk_event_put(event_next);
