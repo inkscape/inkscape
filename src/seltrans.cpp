@@ -259,18 +259,17 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
 
     _point = p;
 
-    // The selector tool should snap the bbox and the special snappoints, but not path nodes
+    // The selector tool should snap the bbox, special snappoints, and path nodes
     // (The special points are the handles, center, rotation axis, font baseline, ends of spiral, etc.)
 
     // First, determine the bounding box for snapping ...
     _bbox = selection->bounds(_snap_bbox_type);
     _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX); // Used for correctly scaling the strokewidth
 
-
-    // Next, get all special points for snapping
+    // Next, get all points to consider for snapping
     SnapManager const &m = _desktop->namedview->snap_manager;
-    _snap_points = selection->getSnapPoints(m.getIncludeItemCenter()); // Excludes path nodes
-    std::vector<NR::Point> snap_points_hull = selection->getSnapPointsConvexHull(); // Includes path nodes
+    _snap_points = selection->getSnapPoints(m.getIncludeItemCenter());
+    std::vector<NR::Point> snap_points_hull = selection->getSnapPointsConvexHull();
     if (_snap_points.size() > 100) {
         /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
         An average user would rarely ever try to snap such a large number of nodes anyway, because

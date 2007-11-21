@@ -298,9 +298,7 @@ static void sp_group_snappoints (SPItem const *item, SnapPointsIter p)
 	     o != NULL;
 	     o = SP_OBJECT_NEXT(o))
 	{
-		if (SP_IS_ITEM(o) && !SP_IS_PATH(o)) {
-            // getSnapPoints() and sp_group_snappoints are only being used in the selector tool,
-            // which should not snap path nodes. Only the node tool should snap those.
+		if (SP_IS_ITEM(o)) {
             sp_item_snappoints(SP_ITEM(o), false, p);
 		}
 	}
