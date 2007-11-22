@@ -45,10 +45,10 @@ void Messages::clear()
 /**
  * Constructor
  */
-Messages::Messages(Behavior::BehaviorFactory behavior_factory)
-    : Dialog (behavior_factory, "dialogs.messages", SP_VERB_DIALOG_DEBUG)
+Messages::Messages()
+    : UI::Widget::Panel("", "dialogs.messages", SP_VERB_DIALOG_DEBUG)
 {
-    Gtk::VBox *mainVBox = get_vbox();
+    Gtk::Box *contents = _getContents();
 
     //## Add a menu for clear()
     menuBar.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_File"), fileMenu) );
@@ -58,14 +58,14 @@ Messages::Messages(Behavior::BehaviorFactory behavior_factory)
            sigc::mem_fun(*this, &Messages::captureLogMessages) ) );
     fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("Release log messages"),
            sigc::mem_fun(*this, &Messages::releaseLogMessages) ) );
-    mainVBox->pack_start(menuBar, Gtk::PACK_SHRINK);
+    contents->pack_start(menuBar, Gtk::PACK_SHRINK);
     
 
     //### Set up the text widget
     messageText.set_editable(false);
     textScroll.add(messageText);
     textScroll.set_policy(Gtk::POLICY_ALWAYS, Gtk::POLICY_ALWAYS);
-    mainVBox->pack_start(textScroll);
+    contents->pack_start(textScroll);
 
     // sick of this thing shrinking too much
     set_size_request(400, 300);

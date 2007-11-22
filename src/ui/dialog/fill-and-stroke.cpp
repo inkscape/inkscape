@@ -55,8 +55,8 @@ void on_selection_modified(Inkscape::Application *inkscape,
 }
 
 
-FillAndStroke::FillAndStroke(Behavior::BehaviorFactory behavior_factory)
-    : Dialog (behavior_factory, "dialogs.fillstroke", SP_VERB_DIALOG_FILL_STROKE),
+FillAndStroke::FillAndStroke()
+    : UI::Widget::Panel ("", "dialogs.fillstroke", SP_VERB_DIALOG_FILL_STROKE),
       _page_fill(1, 1, true, true),
       _page_stroke_paint(1, 1, true, true),
       _page_stroke_style(1, 1, true, true),
@@ -70,10 +70,10 @@ FillAndStroke::FillAndStroke(Behavior::BehaviorFactory behavior_factory)
       _opacity_spin_button(_opacity_adjustment, 0.01, 1),
       _blocked(false)
 {
-    Gtk::VBox *vbox = get_vbox();
-    vbox->set_spacing(0);
+    Gtk::Box *contents = _getContents();
+    contents->set_spacing(0);
 
-    vbox->pack_start(_notebook, true, true);
+    contents->pack_start(_notebook, true, true);
 
     _notebook.append_page(_page_fill, _createPageTabLabel(_("Fill"), INKSCAPE_STOCK_PROPERTIES_FILL_PAGE));
     _notebook.append_page(_page_stroke_paint, _createPageTabLabel(_("Stroke _paint"), INKSCAPE_STOCK_PROPERTIES_STROKE_PAINT_PAGE));
@@ -84,7 +84,7 @@ FillAndStroke::FillAndStroke(Behavior::BehaviorFactory behavior_factory)
     _layoutPageStrokeStyle();
 
     // Filter Effects
-    vbox->pack_start(_fe_vbox, false, false, 2);
+    contents->pack_start(_fe_vbox, false, false, 2);
     _fe_alignment.set_padding(0, 0, 4, 0);
     _fe_alignment.add(_fe_cb);
     _fe_vbox.pack_start(_fe_alignment, false, false, 0);
@@ -92,7 +92,7 @@ FillAndStroke::FillAndStroke(Behavior::BehaviorFactory behavior_factory)
     _fe_cb.signal_blend_blur_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::FillAndStroke::_blendBlurValueChanged));
 
     // Opacity
-    vbox->pack_start(_opacity_vbox, false, false, 2);
+    contents->pack_start(_opacity_vbox, false, false, 2);
     _opacity_label_box.pack_start(_opacity_label, false, false, 4);
     _opacity_vbox.pack_start(_opacity_label_box, false, false, 0);
     _opacity_vbox.pack_start(_opacity_hbox, false, false, 0);

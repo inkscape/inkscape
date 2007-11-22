@@ -15,6 +15,7 @@
 #endif
 
 #include <gtkmm/stock.h>
+#include <gtkmm/dialog.h>
 
 #include "document.h"
 #include "desktop-handles.h"
@@ -70,8 +71,8 @@ void on_selection_modified( Inkscape::Application */*inkscape*/,
  * we use the ScalarUnit class for this.
  *
  */
-Transformation::Transformation(Behavior::BehaviorFactory behavior_factory)
-    : Dialog (behavior_factory, "dialogs.transformation", SP_VERB_DIALOG_TRANSFORM),
+Transformation::Transformation()
+    : UI::Widget::Panel ("", "dialogs.transformation", SP_VERB_DIALOG_TRANSFORM),
       _page_move              (4, 2),
       _page_scale             (4, 2),
       _page_rotate            (4, 2),
@@ -105,12 +106,12 @@ Transformation::Transformation(Behavior::BehaviorFactory behavior_factory)
       _check_replace_matrix    (_("Edit c_urrent matrix"), _("Edit the current transform= matrix; otherwise, post-multiply transform= by this matrix"))
 
 {
-    // Top level vbox
-    Gtk::VBox *vbox = get_vbox();
-    vbox->set_spacing(0);
+    Gtk::Box *contents = _getContents();
+
+    contents->set_spacing(0);
 
     // Notebook for individual transformations
-    vbox->pack_start(_notebook, true, true);
+    contents->pack_start(_notebook, true, true);
 
     _notebook.append_page(_page_move, _("_Move"), true);
     layoutPageMove();
@@ -130,7 +131,7 @@ Transformation::Transformation(Behavior::BehaviorFactory behavior_factory)
     _notebook.signal_switch_page().connect(sigc::mem_fun(*this, &Transformation::onSwitchPage));
 
     // Apply separately
-    vbox->pack_start(_check_apply_separately, true, true);
+    contents->pack_start(_check_apply_separately, true, true);
     _check_apply_separately.set_active(prefs_get_int_attribute_limited ("dialogs.transformation", "applyseparately", 0, 0, 1));
     _check_apply_separately.signal_toggled().connect(sigc::mem_fun(*this, &Transformation::onApplySeparatelyToggled));
 
@@ -145,18 +146,17 @@ Transformation::Transformation(Behavior::BehaviorFactory behavior_factory)
 
     updateSelection(PAGE_MOVE, _getSelection());
 
-    resetButton = add_button(Gtk::Stock::CLEAR, 0);
+    resetButton = addResponseButton(Gtk::Stock::CLEAR, 0);
     if (resetButton) {
-        tooltips.set_tip((*resetButton), _("Reset the values on the current tab to defaults"));
+        _tooltips.set_tip((*resetButton), _("Reset the values on the current tab to defaults"));
         resetButton->set_sensitive(true);
         resetButton->signal_clicked().connect(sigc::mem_fun(*this, &Transformation::onClear));
     }
 
-    applyButton = add_button(Gtk::Stock::APPLY,   Gtk::RESPONSE_APPLY);
+    applyButton = addResponseButton(Gtk::Stock::APPLY, Gtk::RESPONSE_APPLY);
     if (applyButton) {
-        tooltips.set_tip((*applyButton), _("Apply transformation to selection"));
+        _tooltips.set_tip((*applyButton), _("Apply transformation to selection"));
         applyButton->set_sensitive(false);
-        set_default (*applyButton); // activable by Enter in spinbuttons
     }
 
     // Connect to the global selection changed & modified signals
@@ -170,7 +170,6 @@ Transformation::~Transformation()
 {
     sp_signal_disconnect_by_data (G_OBJECT (INKSCAPE), this);
 }
-
 
 
 /*########################################################################
@@ -439,8 +438,8 @@ Transformation::updateSelection(PageType page, Inkscape::Selection *selection)
         }
     }
 
-    set_response_sensitive(Gtk::RESPONSE_APPLY,
-                           selection && !selection->isEmpty());
+    setResponseSensitive(Gtk::RESPONSE_APPLY,
+                         selection && !selection->isEmpty());
 }
 
 void
@@ -579,7 +578,7 @@ Transformation::_apply()
     }
 
     //Let's play with never turning this off
-    //set_response_sensitive(Gtk::RESPONSE_APPLY, false);
+    //setResponseSensitive(Gtk::RESPONSE_APPLY, false);
 }
 
 void
@@ -775,7 +774,7 @@ Transformation::applyPageTransform(Inkscape::Selection *selection)
 void
 Transformation::onMoveValueChanged()
 {
-    set_response_sensitive(Gtk::RESPONSE_APPLY, true);
+    setResponseSensitive(Gtk::RESPONSE_APPLY, true);
 }
 
 void
@@ -805,7 +804,7 @@ Transformation::onMoveRelativeToggled()
         }
     }
 
-    set_response_sensitive(Gtk::RESPONSE_APPLY, true);
+    setResponseSensitive(Gtk::RESPONSE_APPLY, true);
 }
 
 void
@@ -816,7 +815,7 @@ Transformation::onScaleXValueChanged()
         return;
     }
 
-    set_response_sensitive(Gtk::RESPONSE_APPLY, true);
+    setResponseSensitive(Gtk::RESPONSE_APPLY, true);
 
     if (_check_scale_proportional.get_active()) {
         if (!_units_scale.isAbsolute()) { // percentage, just copy over
@@ -836,7 +835,7 @@ Transformation::onScaleYValueChanged()
         return;
     }
 
-    set_response_sensitive(Gtk::RESPONSE_APPLY, true);
+    setResponseSensitive(Gtk::RESPONSE_APPLY, true);
 
     if (_check_scale_proportional.get_active()) {
         if (!_units_scale.isAbsolute()) { // percentage, just copy over
@@ -851,13 +850,13 @@ Transformation::onScaleYValueChanged()
 void
 Transformation::onRotateValueChanged()
 {
-    set_response_sensitive(Gtk::RESPONSE_APPLY, true);
+    setResponseSensitive(Gtk::RESPONSE_APPLY, true);
 }
 
 void
 Transformation::onSkewValueChanged()
 {
-    set_response_sensitive(Gtk::RESPONSE_APPLY, true);
+    setResponseSensitive(Gtk::RESPONSE_APPLY, true);
 }
 
 void
@@ -876,7 +875,7 @@ Transformation::onTransformValueChanged()
     //          a, b, c, d, e ,f);
     */
 
-    set_response_sensitive(Gtk::RESPONSE_APPLY, true);
+    setResponseSensitive(Gtk::RESPONSE_APPLY, true);
 }
 
 void

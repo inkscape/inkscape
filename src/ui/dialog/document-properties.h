@@ -24,7 +24,7 @@
 #include "ui/widget/registered-widget.h"
 #include "ui/widget/registry.h"
 #include "ui/widget/tolerance-slider.h"
-#include "dialog.h"
+#include "ui/widget/panel.h"
 
 using namespace Inkscape::UI::Widget;
 
@@ -35,10 +35,10 @@ namespace Inkscape {
     namespace UI {
         namespace Dialog {
 
-class DocumentProperties : public Inkscape::UI::Dialog::Dialog {
+class DocumentProperties : public UI::Widget::Panel {
 public:
     void  update();
-    static DocumentProperties *create(Behavior::BehaviorFactory behavior_factory);
+    static DocumentProperties &getInstance();
     static void destroy();
     sigc::connection _doc_replaced_connection;
 
@@ -93,7 +93,7 @@ protected:
     Registry _wr;
 
 private:
-    DocumentProperties(Behavior::BehaviorFactory behavior_factory);
+    DocumentProperties();
     virtual ~DocumentProperties();
 
     // callback methods for buttons on grids page.

@@ -27,10 +27,10 @@ namespace Behavior {
 
 class Behavior;
 
-typedef Behavior *(*BehaviorFactory)(Dialog& dialog);
+typedef Behavior *(*BehaviorFactory)(Dialog &dialog);
 
 template <typename T>
-Behavior *create(Dialog& dialog)
+Behavior *create(Dialog &dialog)
 {
     return T::create(dialog);
 }
@@ -53,21 +53,16 @@ public:
     virtual void move(int x, int y) =0;
     virtual void set_position(Gtk::WindowPosition) =0;
     virtual void set_size_request(int width, int height) =0;
-    virtual void size_request(Gtk::Requisition& requisition) =0;
-    virtual void get_position(int& x, int& y) =0;
-    virtual void get_size(int& width, int& height) =0;
+    virtual void size_request(Gtk::Requisition &requisition) =0;
+    virtual void get_position(int &x, int &y) =0;
+    virtual void get_size(int &width, int &height) =0;
     virtual void set_title(Glib::ustring title) =0;
-    virtual void set_response_sensitive(int response_id, bool setting) =0;
     virtual void set_sensitive(bool sensitive) =0;
-    virtual Gtk::Button *add_button(const Glib::ustring& button_text, int response_id) =0;
-    virtual Gtk::Button *add_button(const Gtk::StockID& stock_id, int response_id) =0;
-    virtual void set_default_response(int response_id) =0;
 
     /** Gtk::Dialog signal proxies */
     virtual Glib::SignalProxy0<void> signal_show() =0;
     virtual Glib::SignalProxy0<void> signal_hide() =0;
     virtual Glib::SignalProxy1<bool, GdkEventAny *> signal_delete_event() =0;
-    virtual Glib::SignalProxy1<void, int> signal_response() =0;
 
     /** Custom signal handlers */
     virtual void onHideF12() =0;
@@ -76,7 +71,7 @@ public:
     virtual void onDesktopActivated(SPDesktop *desktop) =0;
 
 protected:
-    Behavior(Dialog& dialog)
+    Behavior(Dialog &dialog)
         : _dialog (dialog)
     { }
         
@@ -84,8 +79,8 @@ protected:
 
 private:
     Behavior(); // no constructor without params
-    Behavior(const Behavior&);            // no copy
-    Behavior& operator=(const Behavior&); // no assign
+    Behavior(const Behavior &);            // no copy
+    Behavior &operator=(const Behavior &); // no assign
 };
 
 } // namespace Behavior

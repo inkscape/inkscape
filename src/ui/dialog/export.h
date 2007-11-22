@@ -15,7 +15,7 @@
 #include <gtkmm/notebook.h>
 #include <glibmm/i18n.h>
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 #include "ui/widget/notebook-page.h"
 
 using namespace Inkscape::UI::Widget;
@@ -24,13 +24,12 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class Export : public Dialog {
+class Export : public UI::Widget::Panel {
 public:
-    Export(Behavior::BehaviorFactory behavior_factory);
+    Export();
     virtual ~Export();
 
-    static Export *create(Behavior::BehaviorFactory behavior_factory) 
-    { return new Export(behavior_factory); }
+    static Export& getInstance() { return *new Export(); }
 
 protected:
     Gtk::Notebook  _notebook;

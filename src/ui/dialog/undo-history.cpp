@@ -102,12 +102,12 @@ static void on_document_replaced(SPDesktop* desktop, SPDocument*);
 static void on_activate_desktop(Inkscape::Application*, SPDesktop* desktop, void*);
 static void on_deactivate_desktop(Inkscape::Application*, SPDesktop* desktop, void*);
 
-UndoHistory*
-UndoHistory::create(Behavior::BehaviorFactory behavior_factory)
+UndoHistory& UndoHistory::getInstance()
 {
-    if (_instance) return _instance;
-    _instance = new UndoHistory(behavior_factory);
-    return _instance;
+    if (!_instance)
+        _instance = new UndoHistory();
+
+    return *_instance;
 }
 
 void
@@ -131,19 +131,19 @@ UndoHistory::setDesktop(SPDesktop* desktop)
     _callback_connections[EventLog::CALLB_SELECTION_CHANGE].block(false);
 }
 
-UndoHistory::UndoHistory(Behavior::BehaviorFactory behavior_factory)
-    : Dialog (behavior_factory, "dialogs.undo-history", SP_VERB_DIALOG_UNDO_HISTORY),
+UndoHistory::UndoHistory()
+    : UI::Widget::Panel ("", "dialogs.undo-history", SP_VERB_DIALOG_UNDO_HISTORY),
       _desktop (SP_ACTIVE_DESKTOP),
       _document (SP_ACTIVE_DOCUMENT),
       _event_log (_desktop ? _desktop->event_log : NULL),
       _columns (_event_log ? &_event_log->getColumns() : NULL),
       _event_list_selection (_event_list_view.get_selection())
 {
-    if( !_document || !_event_log || !_columns ) return;
+    if ( !_document || !_event_log || !_columns ) return;
 
     set_size_request(300, 200);
 
-    get_vbox()->pack_start(_scrolled_window);
+    _getContents()->pack_start(_scrolled_window);
     _scrolled_window.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
 
     _event_list_store = _event_log->getEventListStore();

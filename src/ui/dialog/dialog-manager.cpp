@@ -37,6 +37,7 @@
 #include "ui/dialog/transformation.h"
 #include "ui/dialog/undo-history.h"
 #include "ui/dialog/xml-editor.h"
+#include "ui/dialog/panel-dialog.h"
 
 #include "dialogs/layers-panel.h"
 #include "dialogs/tiledialog.h"
@@ -51,8 +52,10 @@ namespace Dialog {
 
 namespace {
 
+using namespace Behavior;
+
 template <typename T, typename B>
-inline Dialog *create() { return T::create(&B::create); }
+inline Dialog *create() { return PanelDialog<B>::template create<T>(); }
 
 }
 
@@ -101,6 +104,7 @@ DialogManager::DialogManager() {
         registerFactory("Memory",              &create<Memory,               FloatingBehavior>);
         registerFactory("Messages",            &create<Messages,             FloatingBehavior>);
         registerFactory("Script",              &create<ScriptDialog,         FloatingBehavior>);
+        registerFactory("Swatches",            &create<SwatchesPanel,        FloatingBehavior>);
         registerFactory("TextProperties",      &create<TextProperties,       FloatingBehavior>);
         registerFactory("TileDialog",          &create<TileDialog,           FloatingBehavior>);
         registerFactory("Trace",               &create<TraceDialog,          FloatingBehavior>);
@@ -126,6 +130,7 @@ DialogManager::DialogManager() {
         registerFactory("Memory",              &create<Memory,               DockBehavior>);
         registerFactory("Messages",            &create<Messages,             DockBehavior>);
         registerFactory("Script",              &create<ScriptDialog,         DockBehavior>);
+        registerFactory("Swatches",            &create<SwatchesPanel,        DockBehavior>);
         registerFactory("TextProperties",      &create<TextProperties,       DockBehavior>);
         registerFactory("TileDialog",          &create<TileDialog,           DockBehavior>);
         registerFactory("Trace",               &create<TraceDialog,          DockBehavior>);

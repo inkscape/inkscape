@@ -24,12 +24,12 @@ namespace Behavior {
 class FloatingBehavior : public Behavior {
 
 public:
-    static Behavior *create(Dialog& dialog);
+    static Behavior *create(Dialog &dialog);
 
     ~FloatingBehavior();
 
     /** Gtk::Dialog methods */
-    operator Gtk::Widget&();
+    operator Gtk::Widget &();
     GtkWidget *gobj();
     void present();
     Gtk::VBox *get_vbox();
@@ -40,21 +40,16 @@ public:
     void move(int x, int y);
     void set_position(Gtk::WindowPosition);
     void set_size_request(int width, int height);
-    void size_request(Gtk::Requisition& requisition);
-    void get_position(int& x, int& y);
-    void get_size(int& width, int& height);
+    void size_request(Gtk::Requisition &requisition);
+    void get_position(int &x, int &y);
+    void get_size(int& width, int &height);
     void set_title(Glib::ustring title);
-    void set_response_sensitive(int response_id, bool setting);
     void set_sensitive(bool sensitive);
-    Gtk::Button *add_button(const Glib::ustring& button_text, int response_id);
-    Gtk::Button *add_button(const Gtk::StockID& stock_id, int response_id);
-    void set_default_response(int response_id);
 
     /** Gtk::Dialog signal proxies */
     Glib::SignalProxy0<void> signal_show();
     Glib::SignalProxy0<void> signal_hide();
     Glib::SignalProxy1<bool, GdkEventAny *> signal_delete_event();
-    Glib::SignalProxy1<void, int> signal_response();
 
     /** Custom signal handlers */
     void onHideF12();

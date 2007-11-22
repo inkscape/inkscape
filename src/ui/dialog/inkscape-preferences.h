@@ -29,7 +29,7 @@
 #include <sigc++/sigc++.h>
 #include <glibmm/i18n.h>
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 
 // UPDATE THIS IF YOU'RE ADDING PREFS PAGES.
 // Otherwise the commands that open the dialog with the new page will fail.
@@ -74,14 +74,11 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class InkscapePreferences : public Dialog {
+class InkscapePreferences : public UI::Widget::Panel {
 public:
     virtual ~InkscapePreferences();
 
-    static InkscapePreferences *create(Behavior::BehaviorFactory behavior_factory) 
-    { return new InkscapePreferences(behavior_factory); }
-
-    void present();
+    static InkscapePreferences &getInstance() { return *new InkscapePreferences(); }
 
 protected:
     Gtk::Frame _page_frame;
@@ -209,8 +206,10 @@ protected:
     void initPageCMS();
     void initPageMisc();
 
+    void _presentPages();
+
 private:
-    InkscapePreferences(Behavior::BehaviorFactory behavior_factory);
+    InkscapePreferences();
     InkscapePreferences(InkscapePreferences const &d);
     InkscapePreferences operator=(InkscapePreferences const &d);
 };

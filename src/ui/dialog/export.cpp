@@ -20,16 +20,14 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-Export::Export(Behavior::BehaviorFactory behavior_factory) 
-    : Dialog (behavior_factory, "dialogs.export", SP_VERB_FILE_EXPORT),
+Export::Export() 
+    : UI::Widget::Panel("", "dialogs.export", SP_VERB_FILE_EXPORT),
       _page_export(1, 1)
 {
-    // Top level vbox
-    Gtk::VBox *vbox = get_vbox();
-    vbox->set_spacing(4);
+    _getContents()->set_spacing(4);
 
     // Notebook for individual transformations
-    vbox->pack_start(_notebook, true, true);
+    _getContents()->pack_start(_notebook, true, true);
 
     _notebook.append_page(_page_export, _("Export"));
 

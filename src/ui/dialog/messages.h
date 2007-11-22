@@ -18,7 +18,6 @@
 #define INKSCAPE_UI_DIALOG_MESSAGES_H
 
 #include <gtkmm/box.h>
-#include <gtkmm/dialog.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/button.h>
 #include <gtkmm/menubar.h>
@@ -27,19 +26,18 @@
 
 #include <glibmm/i18n.h>
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class Messages : public Dialog {
+class Messages : public UI::Widget::Panel {
 public:
-    Messages(Behavior::BehaviorFactory behavior_factory);
+    Messages();
     virtual ~Messages();
 
-    static Messages *create(Behavior::BehaviorFactory behavior_factory) 
-    { return new Messages(behavior_factory); }
+    static Messages &getInstance() { return *new Messages(); }
 
     /**
      * Clear all information from the dialog

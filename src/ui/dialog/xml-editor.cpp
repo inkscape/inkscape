@@ -20,8 +20,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-XmlEditor::XmlEditor(Behavior::BehaviorFactory behavior_factory) 
-    : Dialog (behavior_factory, "dialogs.xml", SP_VERB_DIALOG_XML_EDITOR)
+XmlEditor::XmlEditor() 
+    : UI::Widget::Panel("", "dialogs.xml", SP_VERB_DIALOG_XML_EDITOR)
 {
     // TODO:  Insert widgets
 

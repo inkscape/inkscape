@@ -1,4 +1,3 @@
-
 #ifndef SEEN_LAYERS_PANEL_H
 #define SEEN_LAYERS_PANEL_H
 /*
@@ -22,7 +21,7 @@
 #include <gtkmm/spinbutton.h>
 
 //#include "ui/previewholder.h"
-#include "ui/dialog/dialog.h"
+#include "ui/widget/panel.h"
 
 class SPObject;
 
@@ -37,14 +36,15 @@ namespace Dialogs {
 /**
  * A panel that displays layers.
  */
-class LayersPanel : public Inkscape::UI::Dialog::Dialog
+class LayersPanel : public UI::Widget::Panel
 {
 public:
-    LayersPanel(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory);
+    LayersPanel();
     virtual ~LayersPanel();
 
     //virtual void setOrientation( Gtk::AnchorType how );
-    static LayersPanel *create(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory);
+    
+    static LayersPanel& getInstance();
 
     void setDesktop( SPDesktop* desktop );
 

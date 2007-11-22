@@ -29,14 +29,13 @@ namespace UI {
 namespace Dialog {
 namespace Behavior {
 
-FloatingBehavior::FloatingBehavior(Dialog& dialog) :
+FloatingBehavior::FloatingBehavior(Dialog &dialog) :
     Behavior(dialog),
     _d (new Gtk::Dialog(_dialog._title))
 {
     hide();
     _d->set_has_separator(false);
 
-    signal_response().connect(sigc::mem_fun(_dialog, &Inkscape::UI::Dialog::Dialog::_onResponse));
     signal_delete_event().connect(sigc::mem_fun(_dialog, &Inkscape::UI::Dialog::Dialog::_onDeleteEvent));
 
     sp_transientize(GTK_WIDGET(_d->gobj()));
@@ -49,12 +48,12 @@ FloatingBehavior::~FloatingBehavior()
 }
 
 Behavior *
-FloatingBehavior::create(Dialog& dialog)
+FloatingBehavior::create(Dialog &dialog)
 {
     return new FloatingBehavior(dialog);
 }
 
-inline FloatingBehavior::operator Gtk::Widget&()                          { return *_d; }
+inline FloatingBehavior::operator Gtk::Widget &()                          { return *_d; }
 inline GtkWidget *FloatingBehavior::gobj()                                { return GTK_WIDGET(_d->gobj()); }
 inline Gtk::VBox* FloatingBehavior::get_vbox()                            { return _d->get_vbox(); }
 inline void FloatingBehavior::present()                                   { _d->present(); }
@@ -65,27 +64,15 @@ inline void FloatingBehavior::resize(int width, int height)               { _d->
 inline void FloatingBehavior::move(int x, int y)                          { _d->move(x, y); }
 inline void FloatingBehavior::set_position(Gtk::WindowPosition position)  { _d->set_position(position); }
 inline void FloatingBehavior::set_size_request(int width, int height)     { _d->set_size_request(width, height); }
-inline void FloatingBehavior::size_request(Gtk::Requisition& requisition) { _d->size_request(requisition); }
-inline void FloatingBehavior::get_position(int& x, int& y)                { _d->get_position(x, y); }
-inline void FloatingBehavior::get_size(int& width, int& height)           { _d->get_size(width, height); }
+inline void FloatingBehavior::size_request(Gtk::Requisition &requisition) { _d->size_request(requisition); }
+inline void FloatingBehavior::get_position(int &x, int &y)                { _d->get_position(x, y); }
+inline void FloatingBehavior::get_size(int &width, int &height)           { _d->get_size(width, height); }
 inline void FloatingBehavior::set_title(Glib::ustring title)              { _d->set_title(title); }
 inline void FloatingBehavior::set_sensitive(bool sensitive)               { _d->set_sensitive(sensitive); }
-
-void FloatingBehavior::set_response_sensitive(int response_id, bool setting) 
-{ _d->set_response_sensitive(response_id, setting); }
-
-Gtk::Button *FloatingBehavior::add_button(const Glib::ustring& button_text, int response_id)
-{ return _d->add_button(button_text, response_id); }
-
-Gtk::Button *FloatingBehavior::add_button(const Gtk::StockID& stock_id, int response_id)
-{ return _d->add_button(stock_id, response_id); }
-
-inline void FloatingBehavior::set_default_response(int response_id) { _d->set_default_response(response_id); }
 
 Glib::SignalProxy0<void> FloatingBehavior::signal_show() { return _d->signal_show(); }
 Glib::SignalProxy0<void> FloatingBehavior::signal_hide() { return _d->signal_hide(); }
 Glib::SignalProxy1<bool, GdkEventAny *> FloatingBehavior::signal_delete_event () { return _d->signal_delete_event(); }
-Glib::SignalProxy1<void, int> FloatingBehavior::signal_response () { return _d->signal_response(); }
 
 
 void

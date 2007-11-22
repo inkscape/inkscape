@@ -12,19 +12,18 @@
 #ifndef SEEN_INKSCAPE_UI_DIALOG_MEMORY_H
 #define SEEN_INKSCAPE_UI_DIALOG_MEMORY_H
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class Memory : public Dialog {
+class Memory : public UI::Widget::Panel {
 public:
-    Memory(Behavior::BehaviorFactory behavior_factory);
+    Memory();
     ~Memory();
 
-    static Memory *create(Behavior::BehaviorFactory behavior_factory) 
-    { return new Memory(behavior_factory); }
+    static Memory &getInstance() { return *new Memory(); }
 
 protected:
     void _apply();

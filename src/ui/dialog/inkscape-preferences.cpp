@@ -43,8 +43,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-InkscapePreferences::InkscapePreferences(Behavior::BehaviorFactory behavior_factory)
-    : Dialog (behavior_factory, "dialogs.preferences", SP_VERB_DIALOG_DISPLAY),
+InkscapePreferences::InkscapePreferences()
+    : UI::Widget::Panel ("", "dialogs.preferences", SP_VERB_DIALOG_DISPLAY),
       _max_dialog_width(0), 
       _max_dialog_height(0),
       _current_page(0)
@@ -52,19 +52,19 @@ InkscapePreferences::InkscapePreferences(Behavior::BehaviorFactory behavior_fact
     //get the width of a spinbutton
     Gtk::SpinButton* sb = new Gtk::SpinButton;
     sb->set_width_chars(6);
-    this->get_vbox()->add(*sb);
-    this->show_all_children();
-    Gtk:: Requisition sreq;
+    _getContents()->add(*sb);
+    show_all_children();
+    Gtk::Requisition sreq;
     sb->size_request(sreq);
     _sb_width = sreq.width;
-    this->get_vbox()->remove(*sb);
+    _getContents()->remove(*sb);
     delete sb;
 
     //Main HBox
     Gtk::HBox* hbox_list_page = Gtk::manage(new Gtk::HBox());
     hbox_list_page->set_border_width(12);
     hbox_list_page->set_spacing(12);
-    this->get_vbox()->add(*hbox_list_page);
+    _getContents()->add(*hbox_list_page);
 
     //Pagelist
     Gtk::Frame* list_frame = Gtk::manage(new Gtk::Frame());
@@ -106,22 +106,18 @@ InkscapePreferences::InkscapePreferences(Behavior::BehaviorFactory behavior_fact
     initPageCMS();
     initPageMisc();
 
+    signalPresent().connect(sigc::mem_fun(*this, &InkscapePreferences::_presentPages));
+
     //calculate the size request for this dialog
     this->show_all_children();
     _page_list.expand_all();
     _page_list_model->foreach_iter(sigc::mem_fun(*this, &InkscapePreferences::SetMaxDialogSize)); 
-    this->set_size_request(_max_dialog_width, _max_dialog_height);
+    _getContents()->set_size_request(_max_dialog_width, _max_dialog_height);
     _page_list.collapse_all();
 }
 
 InkscapePreferences::~InkscapePreferences()
 {
-}
-
-void InkscapePreferences::present()
-{
-    _page_list_model->foreach_iter(sigc::mem_fun(*this, &InkscapePreferences::PresentPage)); 
-    Dialog::present();
 }
 
 Gtk::TreeModel::iterator InkscapePreferences::AddPage(DialogPage& p, Glib::ustring title, int id)
@@ -869,6 +865,11 @@ void InkscapePreferences::on_pagelist_selection_changed()
         }
         this->show_all_children();
     }
+}
+
+void InkscapePreferences::_presentPages()
+{
+    _page_list_model->foreach_iter(sigc::mem_fun(*this, &InkscapePreferences::PresentPage)); 
 }
 
 } // namespace Dialog

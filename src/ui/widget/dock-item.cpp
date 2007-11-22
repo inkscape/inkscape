@@ -32,21 +32,6 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
     _window (NULL),
     _dock_item_action_area (NULL)
 {
-    /* Add a "signal_response" signal to the GdlDockItem, make sure it is
-     * only done once for the class.
-     */
-    static guint response_signal = 0;
-
-    if (response_signal == 0) {
-        response_signal = g_signal_new ("signal_response",
-                                        GDL_TYPE_DOCK_ITEM,
-                                        G_SIGNAL_RUN_FIRST,
-                                        0,
-                                        NULL, NULL,
-                                        g_cclosure_marshal_VOID__INT,
-                                        G_TYPE_NONE, 1, G_TYPE_INT);
-    }
-
 
     GdlDockItemBehavior gdl_dock_behavior =
         (prefs_get_int_attribute_limited ("options.dock", "cancenterdock", 1, 0, 1) == 0 ?
@@ -228,20 +213,6 @@ DockItem::getPlacement() const
     return (Placement)placement;
 }
 
-
-void
-DockItem::addButton(Gtk::Button* button, int /*response_id*/)
-{
-    // Create a button box for the response buttons if it's the first button to be added
-    if (!_dock_item_action_area) {
-        _dock_item_action_area = new Gtk::HButtonBox(Gtk::BUTTONBOX_END, 6);
-        _dock_item_box.pack_end(*_dock_item_action_area, Gtk::PACK_SHRINK, 0);
-        _dock_item_action_area->set_border_width(6);
-    }
-
-    _dock_item_action_area->pack_start(*button);
-}
-
 void
 DockItem::hide()
 {
@@ -324,13 +295,6 @@ DockItem::signal_delete_event()
 {
     return Glib::SignalProxy1<bool, GdkEventAny *>(Glib::wrap(GTK_WIDGET(_gdl_dock_item)),
                                                   &_signal_delete_event_proxy);
-}
-
-Glib::SignalProxy1<void, int>
-DockItem::signal_response()
-{
-    return Glib::SignalProxy1<void, int>(Glib::wrap(GTK_WIDGET(_gdl_dock_item)),
-                                         &_signal_response_proxy);
 }
 
 Glib::SignalProxy0<void>
@@ -477,14 +441,6 @@ DockItem::_signal_delete_event_proxy =
 
 
 const Glib::SignalProxyInfo
-DockItem::_signal_response_proxy =
-{
-    "signal_response",
-    (GCallback) &_signal_response_callback,
-    (GCallback) &_signal_response_callback
-};
-
-const Glib::SignalProxyInfo
 DockItem::_signal_drag_begin_proxy =
 {
     "dock-drag-begin",
@@ -528,22 +484,6 @@ DockItem::_signal_delete_event_callback(GtkWidget *self, GdkEventAny *event, voi
 
     typedef gboolean RType;
     return RType();
-}
-
-void
-DockItem::_signal_response_callback(GtkWidget *self, gint response_id, void *data)
-{
-    using namespace Gtk;
-    typedef sigc::slot<void, int> SlotType;
-
-    if (Glib::ObjectBase::_get_current_wrapper((GObject *) self)) {
-        try {
-            if(sigc::slot_base *const slot = Glib::SignalProxyNormal::data_to_slot(data))
-                (*static_cast<SlotType *>(slot))(response_id);
-        } catch(...) {
-            Glib::exception_handlers_invoke();
-        }
-    }
 }
 
 void

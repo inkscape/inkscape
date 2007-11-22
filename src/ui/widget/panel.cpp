@@ -17,9 +17,14 @@
 
 #include <glibmm/i18n.h>
 
+#include <gtkmm/dialog.h> // for Gtk::RESPONSE_*
+#include <gtkmm/stock.h>
+
 #include "panel.h"
-#include "../../icon-size.h"
-#include "../../prefs-utils.h"
+#include "icon-size.h"
+#include "prefs-utils.h"
+#include "desktop-handles.h"
+#include "inkscape.h"
 
 namespace Inkscape {
 namespace UI {
@@ -32,50 +37,42 @@ static const int PANEL_SETTING_NEXTFREE = 3;
 
 /**
  *    Construct a Panel
- *
- *    \param label Label.
  */
 
-Panel::Panel() :
-    _prefs_path(NULL),
-    _menuDesired(false),
-    _tempArrow( Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT ),
-    menu(0),
-    _fillable(0)
-{
-    init();
-}
-
-Panel::Panel( Glib::ustring const &label, gchar const* prefs_path, bool menuDesired ) :
+Panel::Panel(Glib::ustring const &label, gchar const *prefs_path, 
+             int verb_num, Glib::ustring const &apply_label,
+             bool menu_desired) :
     _prefs_path(prefs_path),
-    _menuDesired(menuDesired),
-    label(label),
-    _tempArrow( Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT ),
-    menu(0),
+    _menu_desired(menu_desired),
+    _label(label),
+    _apply_label(apply_label),
+    _verb_num(verb_num),
+    _temp_arrow(Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT),
+    _menu(0),
+    _action_area(0),
     _fillable(0)
 {
-    init();
+    _init();
 }
 
 Panel::~Panel()
 {
-    delete menu;
+    delete _menu;
 }
 
 void Panel::_popper(GdkEventButton* event)
 {
     if ( (event->type == GDK_BUTTON_PRESS) && (event->button == 3 || event->button == 1) ) {
-        if (menu) {
-            menu->popup( event->button, event->time );
+        if (_menu) {
+            _menu->popup(event->button, event->time);
         }
     }
 }
 
-void Panel::init()
+void Panel::_init()
 {
     Glib::ustring tmp("<");
     _anchor = Gtk::ANCHOR_CENTER;
-    tabTitle.set_label(this->label);
 
     guint panel_size = 0;
     if (_prefs_path) {
@@ -92,7 +89,7 @@ void Panel::init()
         panel_wrap = prefs_get_int_attribute_limited( _prefs_path, "panel_wrap", 0, 0, 1 );
     }
 
-    menu = new Gtk::Menu();
+    _menu = new Gtk::Menu();
     {
         const char *things[] = {
             N_("tiny"),
@@ -102,22 +99,22 @@ void Panel::init()
             N_("huge")
         };
         Gtk::RadioMenuItem::Group groupOne;
-        for ( unsigned int i = 0; i < G_N_ELEMENTS(things); i++ ) {
+        for (unsigned int i = 0; i < G_N_ELEMENTS(things); i++) {
             Glib::ustring foo(gettext(things[i]));
             Gtk::RadioMenuItem* single = manage(new Gtk::RadioMenuItem(groupOne, foo));
-            menu->append(*single);
-            if ( i == panel_size ) {
+            _menu->append(*single);
+            if (i == panel_size) {
                 single->set_active(true);
             }
-            single->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), PANEL_SETTING_SIZE, i) );
+            single->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_SIZE, i));
        }
     }
-    menu->append( *manage(new Gtk::SeparatorMenuItem()) );
+    _menu->append(*manage(new Gtk::SeparatorMenuItem()));
     Gtk::RadioMenuItem::Group group;
-    Glib::ustring oneLab(_("List"));
-    Glib::ustring twoLab(_("Grid"));
-    Gtk::RadioMenuItem *one = manage(new Gtk::RadioMenuItem(group, oneLab));
-    Gtk::RadioMenuItem *two = manage(new Gtk::RadioMenuItem(group, twoLab));
+    Glib::ustring one_label(_("List"));
+    Glib::ustring two_label(_("Grid"));
+    Gtk::RadioMenuItem *one = manage(new Gtk::RadioMenuItem(group, one_label));
+    Gtk::RadioMenuItem *two = manage(new Gtk::RadioMenuItem(group, two_label));
 
     if (panel_mode == 0) {
         one->set_active(true);
@@ -125,109 +122,118 @@ void Panel::init()
         two->set_active(true);
     }
 
-    menu->append( *one );
-    nonHorizontal.push_back( one );
-    menu->append( *two );
-    nonHorizontal.push_back( two );
-    Gtk::MenuItem* sep = manage( new Gtk::SeparatorMenuItem());
-    menu->append( *sep );
-    nonHorizontal.push_back( sep );
-    one->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), PANEL_SETTING_MODE, 0) );
-    two->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), PANEL_SETTING_MODE, 1) );
+    _menu->append(*one);
+    _non_horizontal.push_back(one);
+    _menu->append(*two);
+    _non_horizontal.push_back(two);
+    Gtk::MenuItem* sep = manage(new Gtk::SeparatorMenuItem());
+    _menu->append(*sep);
+    _non_horizontal.push_back(sep);
+    one->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 0));
+    two->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 1));
 
     {
-        Glib::ustring wrapLab(_("Wrap"));
-        Gtk::CheckMenuItem *check = manage(new Gtk::CheckMenuItem(wrapLab));
-        check->set_active( panel_wrap );
-        menu->append( *check );
-        nonVertical.push_back(check);
+        Glib::ustring wrap_label(_("Wrap"));
+        Gtk::CheckMenuItem *check = manage(new Gtk::CheckMenuItem(wrap_label));
+        check->set_active(panel_wrap);
+        _menu->append(*check);
+        _non_vertical.push_back(check);
 
-        check->signal_toggled().connect( sigc::bind<Gtk::CheckMenuItem*>(sigc::mem_fun(*this, &Panel::_wrapToggled), check) );
+        check->signal_toggled().connect(sigc::bind<Gtk::CheckMenuItem*>(sigc::mem_fun(*this, &Panel::_wrapToggled), check));
 
-        sep = manage( new Gtk::SeparatorMenuItem());
-        menu->append( *sep );
-        nonVertical.push_back( sep );
+        sep = manage(new Gtk::SeparatorMenuItem());
+        _menu->append(*sep);
+        _non_vertical.push_back(sep);
     }
 
-    menu->show_all_children();
-    for ( std::vector<Gtk::Widget*>::iterator iter = nonVertical.begin(); iter != nonVertical.end(); ++iter ) {
+    _menu->show_all_children();
+    for ( std::vector<Gtk::Widget*>::iterator iter = _non_vertical.begin(); iter != _non_vertical.end(); ++iter ) {
         (*iter)->hide();
     }
 
-    //closeButton.set_label("X");
+    // _close_button.set_label("X");
 
-    topBar.pack_start(tabTitle);
-
-    //topBar.pack_end(closeButton, false, false);
-
-
-    if ( _menuDesired ) {
-        topBar.pack_end(menuPopper, false, false);
-        Gtk::Frame* outliner = manage(new Gtk::Frame());
-        outliner->set_shadow_type( Gtk::SHADOW_ETCHED_IN );
-        outliner->add( _tempArrow );
-        menuPopper.add( *outliner );
-        menuPopper.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &Panel::_popper) );
+    if (!_label.empty()) {
+        _tab_title.set_label(_label);
+        _top_bar.pack_start(_tab_title);
     }
 
-    pack_start( topBar, false, false );
+    // _top_bar.pack_end(_close_button, false, false);
 
-    Gtk::HBox* boxy = manage( new Gtk::HBox() );
 
-    boxy->pack_start( contents, true, true );
-    boxy->pack_start( rightBar, false, true );
+    if ( _menu_desired ) {
+        _top_bar.pack_end(_menu_popper, false, false);
+        Gtk::Frame* outliner = manage(new Gtk::Frame());
+        outliner->set_shadow_type(Gtk::SHADOW_ETCHED_IN);
+        outliner->add(_temp_arrow);
+        _menu_popper.add(*outliner);
+        _menu_popper.signal_button_press_event().connect_notify(sigc::mem_fun(*this, &Panel::_popper));
+    }
 
-    pack_start( *boxy, true, true );
+    pack_start(_top_bar, false, false);
+
+    Gtk::HBox* boxy = manage(new Gtk::HBox());
+
+    boxy->pack_start(_contents, true, true);
+    boxy->pack_start(_right_bar, false, true);
+
+    pack_start(*boxy, true, true);
+
+    signalResponse().connect(sigc::mem_fun(*this, &Panel::_handleResponse));
 
     show_all_children();
 
-    bounceCall( PANEL_SETTING_SIZE, panel_size );
-    bounceCall( PANEL_SETTING_MODE, panel_mode );
-    bounceCall( PANEL_SETTING_WRAP, panel_wrap );
+    _bounceCall(PANEL_SETTING_SIZE, panel_size);
+    _bounceCall(PANEL_SETTING_MODE, panel_mode);
+    _bounceCall(PANEL_SETTING_WRAP, panel_wrap);
 }
 
 void Panel::setLabel(Glib::ustring const &label)
 {
-    this->label = label;
-    tabTitle.set_label(this->label);
+    if (_label.empty() && !label.empty())
+        _top_bar.pack_start(_tab_title);
+    else if (!_label.empty() && label.empty())
+        _top_bar.remove(_tab_title);
+
+    _label = label;
+    _tab_title.set_label(_label);
 }
 
-void Panel::setOrientation( Gtk::AnchorType how )
+void Panel::setOrientation(Gtk::AnchorType how)
 {
-    if ( _anchor != how )
-    {
+    if (_anchor != how) {
         _anchor = how;
-        switch ( _anchor )
-        {
+        switch (_anchor) {
             case Gtk::ANCHOR_NORTH:
             case Gtk::ANCHOR_SOUTH:
             {
-                if ( _menuDesired ) {
-                    menuPopper.reference();
-                    topBar.remove(menuPopper);
-                    rightBar.pack_start(menuPopper, false, false);
-                    menuPopper.unreference();
+                if (_menu_desired) {
+                    _menu_popper.reference();
+                    _top_bar.remove(_menu_popper);
+                    _right_bar.pack_start(_menu_popper, false, false);
+                    _menu_popper.unreference();
 
-                    for ( std::vector<Gtk::Widget*>::iterator iter = nonHorizontal.begin(); iter != nonHorizontal.end(); ++iter ) {
+                    for (std::vector<Gtk::Widget*>::iterator iter = _non_horizontal.begin(); iter != _non_horizontal.end(); ++iter) {
                         (*iter)->hide();
                     }
-                    for ( std::vector<Gtk::Widget*>::iterator iter = nonVertical.begin(); iter != nonVertical.end(); ++iter ) {
+                    for (std::vector<Gtk::Widget*>::iterator iter = _non_vertical.begin(); iter != _non_vertical.end(); ++iter) {
                         (*iter)->show();
                     }
                 }
                 // Ensure we are not in "list" mode
-                bounceCall( PANEL_SETTING_MODE, 1 );
-                topBar.remove(tabTitle);
+                _bounceCall(PANEL_SETTING_MODE, 1);
+                if (!_label.empty())
+                    _top_bar.remove(_tab_title);
             }
             break;
 
             default:
             {
-                if ( _menuDesired ) {
-                    for ( std::vector<Gtk::Widget*>::iterator iter = nonHorizontal.begin(); iter != nonHorizontal.end(); ++iter ) {
+                if ( _menu_desired ) {
+                    for (std::vector<Gtk::Widget*>::iterator iter = _non_horizontal.begin(); iter != _non_horizontal.end(); ++iter) {
                         (*iter)->show();
                     }
-                    for ( std::vector<Gtk::Widget*>::iterator iter = nonVertical.begin(); iter != nonVertical.end(); ++iter ) {
+                    for (std::vector<Gtk::Widget*>::iterator iter = _non_vertical.begin(); iter != _non_vertical.end(); ++iter) {
                         (*iter)->hide();
                     }
                 }
@@ -236,66 +242,77 @@ void Panel::setOrientation( Gtk::AnchorType how )
     }
 }
 
-void Panel::_regItem( Gtk::MenuItem* item, int group, int id )
+void Panel::present()
 {
-    menu->append( *item );
-    item->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), group + PANEL_SETTING_NEXTFREE, id) );
-    item->show();
+    _signal_present.emit();
 }
+
 
 void Panel::restorePanelPrefs()
 {
     guint panel_size = 0;
     if (_prefs_path) {
-        panel_size = prefs_get_int_attribute_limited (_prefs_path, "panel_size", 1, 0, 10);
+        panel_size = prefs_get_int_attribute_limited(_prefs_path, "panel_size", 1, 0, 10);
     }
     guint panel_mode = 0;
     if (_prefs_path) {
-        panel_mode = prefs_get_int_attribute_limited (_prefs_path, "panel_mode", 1, 0, 10);
+        panel_mode = prefs_get_int_attribute_limited(_prefs_path, "panel_mode", 1, 0, 10);
     }
     guint panel_wrap = 0;
     if (_prefs_path) {
-        panel_wrap = prefs_get_int_attribute_limited( _prefs_path, "panel_wrap", 0, 0, 1 );
+        panel_wrap = prefs_get_int_attribute_limited(_prefs_path, "panel_wrap", 0, 0, 1 );
     }
-    bounceCall( PANEL_SETTING_SIZE, panel_size );
-    bounceCall( PANEL_SETTING_MODE, panel_mode );
-    bounceCall( PANEL_SETTING_WRAP, panel_wrap );
+    _bounceCall(PANEL_SETTING_SIZE, panel_size);
+    _bounceCall(PANEL_SETTING_MODE, panel_mode);
+    _bounceCall(PANEL_SETTING_WRAP, panel_wrap);
 }
 
-void Panel::bounceCall(int i, int j)
+sigc::signal<void, int> &
+Panel::signalResponse()
 {
-    menu->set_active(0);
-    switch ( i ) {
+    return _signal_response;
+}
+
+sigc::signal<void> &
+Panel::signalPresent()
+{
+    return _signal_present;
+}
+
+void Panel::_bounceCall(int i, int j)
+{
+    _menu->set_active(0);
+    switch (i) {
     case PANEL_SETTING_SIZE:
         if (_prefs_path) {
-            prefs_set_int_attribute( _prefs_path, "panel_size", j );
+            prefs_set_int_attribute(_prefs_path, "panel_size", j);
         }
-        if ( _fillable ) {
-            ViewType currType = _fillable->getPreviewType();
-            switch ( j ) {
+        if (_fillable) {
+            ViewType curr_type = _fillable->getPreviewType();
+            switch (j) {
             case 0:
             {
-                _fillable->setStyle(Inkscape::ICON_SIZE_DECORATION, currType);
+                _fillable->setStyle(Inkscape::ICON_SIZE_DECORATION, curr_type);
             }
             break;
             case 1:
             {
-                _fillable->setStyle(Inkscape::ICON_SIZE_MENU, currType);
+                _fillable->setStyle(Inkscape::ICON_SIZE_MENU, curr_type);
             }
             break;
             case 2:
             {
-                _fillable->setStyle(Inkscape::ICON_SIZE_SMALL_TOOLBAR, currType);
+                _fillable->setStyle(Inkscape::ICON_SIZE_SMALL_TOOLBAR, curr_type);
             }
             break;
             case 3:
             {
-                _fillable->setStyle(Inkscape::ICON_SIZE_BUTTON, currType);
+                _fillable->setStyle(Inkscape::ICON_SIZE_BUTTON, curr_type);
             }
             break;
             case 4:
             {
-                _fillable->setStyle(Inkscape::ICON_SIZE_DIALOG, currType);
+                _fillable->setStyle(Inkscape::ICON_SIZE_DIALOG, curr_type);
             }
             break;
             default:
@@ -307,17 +324,17 @@ void Panel::bounceCall(int i, int j)
         if (_prefs_path) {
             prefs_set_int_attribute (_prefs_path, "panel_mode", j);
         }
-        if ( _fillable ) {
-            Inkscape::IconSize currSize = _fillable->getPreviewSize();
-            switch ( j ) {
+        if (_fillable) {
+            Inkscape::IconSize curr_size = _fillable->getPreviewSize();
+            switch (j) {
             case 0:
             {
-                _fillable->setStyle(currSize, VIEW_TYPE_LIST);
+                _fillable->setStyle(curr_size, VIEW_TYPE_LIST);
             }
             break;
             case 1:
             {
-                _fillable->setStyle(currSize, VIEW_TYPE_GRID);
+                _fillable->setStyle(curr_size, VIEW_TYPE_GRID);
             }
             break;
             default:
@@ -330,39 +347,134 @@ void Panel::bounceCall(int i, int j)
             prefs_set_int_attribute (_prefs_path, "panel_wrap", j ? 1 : 0);
         }
         if ( _fillable ) {
-            _fillable->setWrap( j );
+            _fillable->setWrap(j);
         }
         break;
     default:
-        _handleAction( i - PANEL_SETTING_NEXTFREE, j );
+        _handleAction(i - PANEL_SETTING_NEXTFREE, j);
     }
 }
 
 
 void Panel::_wrapToggled(Gtk::CheckMenuItem* toggler)
 {
-    if ( toggler ) {
-        bounceCall( PANEL_SETTING_WRAP, toggler->get_active() ? 1 : 0 );
+    if (toggler) {
+        _bounceCall(PANEL_SETTING_WRAP, toggler->get_active() ? 1 : 0);
     }
 }
 
-
-
-
+gchar const *Panel::getPrefsPath() const
+{
+    return _prefs_path;
+}
 
 Glib::ustring const &Panel::getLabel() const
 {
-    return label;
+    return _label;
 }
 
-void Panel::_setTargetFillable( PreviewFillable *target )
+int const &Panel::getVerb() const
+{
+    return _verb_num;
+}
+
+Glib::ustring const &Panel::getApplyLabel() const
+{
+    return _apply_label;
+}
+
+void Panel::_setTargetFillable(PreviewFillable *target)
 {
     _fillable = target;
 }
 
-void Panel::_handleAction( int setId, int itemId )
+void Panel::_regItem(Gtk::MenuItem* item, int group, int id)
+{
+    _menu->append(*item);
+    item->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), group + PANEL_SETTING_NEXTFREE, id));
+    item->show();
+}
+
+void Panel::_handleAction(int set_id, int item_id)
 {
 // for subclasses to override
+}
+
+void
+Panel::_apply()
+{
+    g_warning("Apply button clicked for panel [Panel::_apply()]");
+}
+
+Gtk::Button * 
+Panel::addResponseButton(const Glib::ustring &button_text, int response_id)
+{
+    Gtk::Button *button = new Gtk::Button(button_text);
+    _addResponseButton(button, response_id);
+    return button;
+}
+
+Gtk::Button *
+Panel::addResponseButton(const Gtk::StockID &stock_id, int response_id)
+{
+    Gtk::Button *button = new Gtk::Button(stock_id);
+    _addResponseButton(button, response_id);
+    return button;
+}
+
+void
+Panel::_addResponseButton(Gtk::Button *button, int response_id)
+{
+    // Create a button box for the response buttons if it's the first button to be added
+    if (!_action_area) {
+        _action_area = new Gtk::HButtonBox(Gtk::BUTTONBOX_END, 6);
+        _action_area->set_border_width(4);
+        pack_end(*_action_area, Gtk::PACK_SHRINK, 0);
+    }
+
+    _action_area->pack_end(*button);
+
+    if (response_id != 0) {
+        // Re-emit clicked signals as response signals
+        button->signal_clicked().connect(sigc::bind(_signal_response.make_slot(), response_id));
+        _response_map[response_id] = button;
+    }
+}
+
+void
+Panel::setDefaultResponse(int response_id)
+{
+    ResponseMap::iterator widget_found;
+    widget_found = _response_map.find(response_id);
+
+    if (widget_found != _response_map.end()) {
+        widget_found->second->activate();
+        widget_found->second->property_can_default() = true;
+        widget_found->second->grab_default();
+    }
+}
+
+void
+Panel::setResponseSensitive(int response_id, bool setting)
+{
+    if (_response_map[response_id])
+        _response_map[response_id]->set_sensitive(setting);
+}
+
+void
+Panel::_handleResponse(int response_id)
+{
+    switch (response_id) {
+        case Gtk::RESPONSE_APPLY: {
+            _apply();
+            break;
+        }
+    }
+}
+
+Inkscape::Selection *Panel::_getSelection()
+{
+    return sp_desktop_selection(SP_ACTIVE_DESKTOP);
 }
 
 } // namespace Widget

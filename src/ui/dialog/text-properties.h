@@ -15,7 +15,7 @@
 #include <gtkmm/notebook.h>
 #include <glibmm/i18n.h>
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 #include "ui/widget/notebook-page.h"
 
 using namespace Inkscape::UI::Widget;
@@ -24,13 +24,14 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class TextProperties : public Dialog {
+class TextProperties : public UI::Widget::Panel {
 public:
-    TextProperties(Behavior::BehaviorFactory behavior_factory);
+    TextProperties();
     virtual ~TextProperties();
 
-    static TextProperties *create(Behavior::BehaviorFactory behavior_factory) 
-    { return new TextProperties(behavior_factory); }
+    static int get_verb();
+
+    static TextProperties &getInstance() { return *new TextProperties(); }
 
 protected:
     Gtk::Notebook  _notebook;

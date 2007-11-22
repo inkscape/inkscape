@@ -75,8 +75,6 @@ public:
 
     Gtk::Window *getWindow();   //< gives the parent window, if the dock item has one (i.e. it's floating)
 
-    void addButton(Gtk::Button *button, int response_id);
-
     void hide();
     void show();
     void show_all();
@@ -88,7 +86,6 @@ public:
     Glib::SignalProxy0<void> signal_show();
     Glib::SignalProxy0<void> signal_hide();
     Glib::SignalProxy1<bool, GdkEventAny *> signal_delete_event();
-    Glib::SignalProxy1<void, int> signal_response();
     Glib::SignalProxy0<void> signal_drag_begin();
     Glib::SignalProxy1<void, bool> signal_drag_end();
     Glib::SignalProxy0<void> signal_realize();
@@ -121,7 +118,6 @@ private:
     void _onHide();
     void _onHideWindow();
     void _onShow();
-    void _onResponse(int response_id);
     void _onDragBegin();
     void _onDragEnd(bool cancelled);
     void _onRealize();
@@ -136,19 +132,13 @@ private:
     static const Glib::SignalProxyInfo _signal_show_proxy;
     static const Glib::SignalProxyInfo _signal_hide_proxy;
     static const Glib::SignalProxyInfo _signal_delete_event_proxy;
-    static const Glib::SignalProxyInfo _signal_response_proxy;
+
     static const Glib::SignalProxyInfo _signal_drag_begin_proxy;
     static const Glib::SignalProxyInfo _signal_drag_end_proxy;
     static const Glib::SignalProxyInfo _signal_realize_proxy;
 
     static gboolean _signal_delete_event_callback(GtkWidget *self, GdkEventAny *event, void *data);
     static void _signal_drag_end_callback(GtkWidget* self, gboolean p0, void* data);
-
-    /** In order to emulate a signal_response signal like the one for Gtk::Dialog we inject a new
-     * signal into GdlDockItem. This signal will be emitted when a button in the dock item added
-     * through the addButton(..., response_id) method, is clicked. 
-     */
-    static void _signal_response_callback(GtkWidget* self, gint p0, void* data);
 
     sigc::signal<void, State, State> _signal_state_changed;
 

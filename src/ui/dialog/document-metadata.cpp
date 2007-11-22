@@ -62,13 +62,13 @@ static Inkscape::XML::NodeEventVector const _repr_events = {
 };
 
 
-DocumentMetadata*
-DocumentMetadata::create(Behavior::BehaviorFactory behavior_factory)
+DocumentMetadata &
+DocumentMetadata::getInstance()
 {
-    if (_instance) return _instance;
-    _instance = new DocumentMetadata(behavior_factory);
+    if (_instance) return *_instance;
+    _instance = new DocumentMetadata();
     _instance->init();
-    return _instance;
+    return *_instance;
 }
 
 void
@@ -81,16 +81,15 @@ DocumentMetadata::destroy()
     }
 }
 
-DocumentMetadata::DocumentMetadata(Behavior::BehaviorFactory behavior_factory)
-    : Dialog (behavior_factory, "dialogs.documentmetadata", SP_VERB_DIALOG_METADATA),
+DocumentMetadata::DocumentMetadata()
+    : UI::Widget::Panel ("", "dialogs.documentmetadata", SP_VERB_DIALOG_METADATA),
       _page_metadata1(1, 1), _page_metadata2(1, 1),
       _prefs_path("dialogs.documentmetadata")
 {
     hide();
-    set_resizable (true);
     _tt.enable();
-    get_vbox()->set_spacing (4);
-    get_vbox()->pack_start (_notebook, true, true);
+    _getContents()->set_spacing (4);
+    _getContents()->pack_start(_notebook, true, true);
 
     _notebook.append_page(_page_metadata1, _("Metadata"));
     _notebook.append_page(_page_metadata2, _("License"));
@@ -115,7 +114,6 @@ DocumentMetadata::init()
                      G_CALLBACK(on_deactivate_desktop), 0);
 
     show_all_children();
-    present();
 }
 
 DocumentMetadata::~DocumentMetadata()
@@ -236,12 +234,6 @@ DocumentMetadata::update()
 
 //--------------------------------------------------------------------
 
-void
-DocumentMetadata::on_response (int id)
-{
-    if (id == Gtk::RESPONSE_CLOSE)
-        hide();
-}
 
 /**
  * Called when XML node attribute changed; updates dialog widgets.

@@ -14,7 +14,7 @@
 
 #include <glibmm/i18n.h>
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 #include "ui/widget/button.h"
 #include "ui/widget/entry.h" 
 #include <gtkmm/separator.h>
@@ -57,13 +57,12 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class Find : public Dialog {
+class Find : public UI::Widget::Panel {
 public:
-    Find(Behavior::BehaviorFactory behavior_factory);
+    Find();
     virtual ~Find();
 
-    static Find *create(Behavior::BehaviorFactory behavior_factory) 
-    { return new Find(behavior_factory); }
+    static Find &getInstance() { return *new Find(); }
 
 protected:
     // Widgets:

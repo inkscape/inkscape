@@ -43,45 +43,36 @@ class Dialog {
 public:
 
     Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_path = NULL, 
-           int verb_num = 0, const char *apply_label = NULL);
+           int verb_num = 0, Glib::ustring const &apply_label = "");
 
     virtual ~Dialog();
 
-    virtual void onDesktopActivated (SPDesktop*);
+    virtual void onDesktopActivated(SPDesktop*);
     virtual void onShutdown();
 
     /** Hide and show dialogs */
     virtual void onHideF12();
     virtual void onShowF12();
 
-    virtual operator Gtk::Widget&();
+    virtual operator Gtk::Widget &();
     virtual GtkWidget *gobj();
     virtual void present();
     virtual Gtk::VBox *get_vbox();
     virtual void show();
     virtual void hide();
     virtual void show_all_children();
-    virtual void set_resizable(bool);
-    virtual void set_sensitive(bool sensitive=true);
-    virtual void set_default(Gtk::Widget&);
     virtual void set_size_request(int, int);
-    virtual void size_request(Gtk::Requisition&);
-    virtual void get_position(int& x, int& y);
-    virtual void get_size(int& width, int& height);
+    virtual void size_request(Gtk::Requisition &);
+    virtual void get_position(int &x, int &y);
+    virtual void get_size(int &width, int &height);
     virtual void resize(int width, int height);
     virtual void move(int x, int y);
     virtual void set_position(Gtk::WindowPosition position);
     virtual void set_title(Glib::ustring title);
+    virtual void set_sensitive(bool sensitive=true);
 
-    virtual void set_response_sensitive(int response_id, bool setting);
     virtual Glib::SignalProxy0<void> signal_show();
     virtual Glib::SignalProxy0<void> signal_hide();
-    virtual Glib::SignalProxy1<void, int> signal_response();
-
-    virtual Gtk::Button* add_button (const Glib::ustring& button_text, int response_id);
-    virtual Gtk::Button* add_button (const Gtk::StockID& stock_id, int response_id);
-    
-    virtual void set_default_response(int response_id);
 
     bool           _user_hidden; // when it is closed by the user, to prevent repopping on f12
     bool           _hiddenF12;
@@ -95,14 +86,15 @@ protected:
     const char    *_prefs_path;
     int            _verb_num;
     Glib::ustring  _title;
-    const char    *_apply_label;
+    Glib::ustring  _apply_label;
 
     /**
      * Tooltips object for all descendants to use
      */
     Gtk::Tooltips tooltips;
 
-    virtual void   _onResponse(int response_id);
+    virtual void   _handleResponse(int response_id);
+
     virtual bool   _onDeleteEvent (GdkEventAny*);
     virtual bool   _onEvent(GdkEvent *event);
     virtual bool   _onKeyPress(GdkEventKey *event);

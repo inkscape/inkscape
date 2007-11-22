@@ -23,7 +23,7 @@
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/radiobutton.h>
 
-#include "ui/dialog/dialog.h"
+#include "ui/widget/panel.h"
 
 namespace Inkscape {
 namespace UI {
@@ -33,20 +33,19 @@ namespace Dialog {
 /**
  * A dialog that displays log messages
  */
-class TileDialog : public Dialog {
+class TileDialog : public UI::Widget::Panel {
 
 public:
 
     /**
      * Constructor
      */
-    TileDialog(Behavior::BehaviorFactory behavior_factory) ;
+    TileDialog() ;
 
     /**
      * Factory method
      */
-    static TileDialog *create(Behavior::BehaviorFactory behavior_factory)
-    { return new TileDialog(behavior_factory); }
+    static TileDialog& getInstance() { return *new TileDialog(); }
 
     /**
      * Destructor

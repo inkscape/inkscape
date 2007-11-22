@@ -12,7 +12,7 @@
 #ifndef INKSCAPE_UI_DIALOG_LIVE_PATH_EFFECT_H
 #define INKSCAPE_UI_DIALOG_LIVE_PATH_EFFECT_H
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 #include "ui/widget/button.h"
 
 #include <gtkmm/label.h>
@@ -28,13 +28,12 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class LivePathEffectEditor : public Dialog {
+class LivePathEffectEditor : public UI::Widget::Panel {
 public:
-    LivePathEffectEditor(Behavior::BehaviorFactory behavior_factory);
+    LivePathEffectEditor();
     virtual ~LivePathEffectEditor();
 
-    static LivePathEffectEditor *create(Behavior::BehaviorFactory behavior_factory)
-    { return new LivePathEffectEditor(behavior_factory); }
+    static LivePathEffectEditor &getInstance() { return *new LivePathEffectEditor(); }
 
     void onSelectionChanged(Inkscape::Selection *sel);
     void setDesktop(SPDesktop *desktop);

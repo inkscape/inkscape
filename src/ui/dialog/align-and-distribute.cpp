@@ -774,8 +774,8 @@ void on_selection_changed(Inkscape::Application *inkscape, Inkscape::Selection *
 
 
 
-AlignAndDistribute::AlignAndDistribute(Behavior::BehaviorFactory behavior_factory) 
-    : Dialog (behavior_factory, "dialogs.align", SP_VERB_DIALOG_ALIGN_DISTRIBUTE),
+AlignAndDistribute::AlignAndDistribute() 
+    : UI::Widget::Panel ("", "dialogs.align", SP_VERB_DIALOG_ALIGN_DISTRIBUTE),
       randomize_bbox(NR::Nothing()),
       _alignFrame(_("Align")),
       _distributeFrame(_("Distribute")),
@@ -923,17 +923,16 @@ AlignAndDistribute::AlignAndDistribute(Behavior::BehaviorFactory behavior_factor
     _graphLayoutFrame.add(_graphLayoutTable);
     _nodesFrame.add(_nodesTable);
 
-    // Top level vbox
-    Gtk::VBox *vbox = get_vbox();
-    vbox->set_spacing(4);
+    Gtk::Box *contents = _getContents();
+    contents->set_spacing(4);
 
     // Notebook for individual transformations
 
-    vbox->pack_start(_alignFrame, true, true);
-    vbox->pack_start(_distributeFrame, true, true);
-    vbox->pack_start(_removeOverlapFrame, true, true);
-    vbox->pack_start(_graphLayoutFrame, true, true);
-    vbox->pack_start(_nodesFrame, true, true);
+    contents->pack_start(_alignFrame, true, true);
+    contents->pack_start(_distributeFrame, true, true);
+    contents->pack_start(_removeOverlapFrame, true, true);
+    contents->pack_start(_graphLayoutFrame, true, true);
+    contents->pack_start(_nodesFrame, true, true);
 
     //Connect to the global tool change signal
     g_signal_connect (G_OBJECT (INKSCAPE), "set_eventcontext", G_CALLBACK (on_tool_changed), this);

@@ -20,23 +20,22 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-TextProperties::TextProperties(Behavior::BehaviorFactory behavior_factory) 
-    : Dialog (behavior_factory, "dialogs.textandfont", SP_VERB_DIALOG_TEXT),
+TextProperties::TextProperties() 
+    : UI::Widget::Panel("", "dialogs.textandfont", SP_VERB_DIALOG_TEXT),
       _page_font(1, 1),
       _page_text(1, 1)
 {
-    // Top level vbox
-    Gtk::VBox *vbox = get_vbox();
-    vbox->set_spacing(4);
+    Gtk::Box *contents = _getContents();
+
+    contents->set_spacing(4);
 
     // Notebook for individual transformations
-    vbox->pack_start(_notebook, true, true);
+    contents->pack_start(_notebook, true, true);
 
     // TODO:  Insert widgets
     _notebook.append_page(_page_font, _("Font"));
     _notebook.append_page(_page_text, _("Text"));
 
-    set_resizable (true);
     set_size_request(450, 300);
     
     show_all_children();

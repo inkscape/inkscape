@@ -50,7 +50,7 @@ class TraceDialogImpl : public TraceDialog
     /**
      * Constructor
      */
-    TraceDialogImpl(Behavior::BehaviorFactory behavior_factory);
+    TraceDialogImpl();
 
     /**
      * Destructor
@@ -376,11 +376,11 @@ void TraceDialogImpl::responseCallback(int response_id)
 /**
  * Constructor
  */
-TraceDialogImpl::TraceDialogImpl(Behavior::BehaviorFactory behavior_factory) :
-    TraceDialog(behavior_factory)
+TraceDialogImpl::TraceDialogImpl() :
+    TraceDialog()
 {
 
-    Gtk::VBox *mainVBox = get_vbox();
+    Gtk::Box *contents = _getContents();
 
 #define MARGIN 2
     //#### begin left panel
@@ -664,32 +664,31 @@ TraceDialogImpl::TraceDialogImpl(Behavior::BehaviorFactory behavior_factory) :
 
     //#### Global stuff
 
-    mainVBox->pack_start(mainHBox);
+    contents->pack_start(mainHBox);
 
     //## The OK button
-    mainCancelButton = add_button(Gtk::Stock::STOP, GTK_RESPONSE_CANCEL);
-    if (mainCancelButton)
-        {
-        tips.set_tip((*mainCancelButton), _("Abort a trace in progress"));
-        mainCancelButton->set_sensitive(false);
-        }
-    mainOkButton     = add_button(Gtk::Stock::OK,   GTK_RESPONSE_OK);
+    mainCancelButton = addResponseButton(Gtk::Stock::STOP, GTK_RESPONSE_CANCEL);
+    if (mainCancelButton) {
+	tips.set_tip((*mainCancelButton), _("Abort a trace in progress"));
+	mainCancelButton->set_sensitive(false);
+    }
+    mainOkButton = addResponseButton(Gtk::Stock::OK, GTK_RESPONSE_OK);
     tips.set_tip((*mainOkButton), _("Execute the trace"));
 
     show_all_children();
 
     //## Connect the signal
-    signal_response().connect(
-         sigc::mem_fun(*this, &TraceDialogImpl::responseCallback) );
+    signalResponse().connect(
+	sigc::mem_fun(*this, &TraceDialogImpl::responseCallback));
 }
 
 /**
  * Factory method.  Use this to create a new TraceDialog
  */
-TraceDialog *TraceDialog::create(Behavior::BehaviorFactory behavior_factory)
+TraceDialog &TraceDialog::getInstance()
 {
-    TraceDialog *dialog = new TraceDialogImpl(behavior_factory);
-    return dialog;
+    TraceDialog *dialog = new TraceDialogImpl();
+    return *dialog;
 }
 
 

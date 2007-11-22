@@ -25,7 +25,7 @@
 #include <gtkmm/treeview.h>
 
 #include "attributes.h"
-#include "dialog.h"
+#include "ui/widget/panel.h"
 #include "sp-filter.h"
 #include "ui/widget/combo-enums.h"
 #include "ui/widget/spin-slider.h"
@@ -38,14 +38,14 @@ namespace Dialog {
 
 class DualSpinButton;
 class MultiSpinButton;
-class FilterEffectsDialog : public Dialog {
+class FilterEffectsDialog : public UI::Widget::Panel {
 public:
 
-    FilterEffectsDialog(Behavior::BehaviorFactory behavior_factory);
+    FilterEffectsDialog();
     ~FilterEffectsDialog();
 
-    static FilterEffectsDialog *create(Behavior::BehaviorFactory behavior_factory)
-    { return new FilterEffectsDialog(behavior_factory); }
+    static FilterEffectsDialog &getInstance()
+    { return *new FilterEffectsDialog(); }
 
     void set_attrs_locked(const bool);
 private:
@@ -198,7 +198,6 @@ private:
         std::auto_ptr<SignalObserver> _observer;
     };
 
-    FilterEffectsDialog();
     void init_settings_widgets();
 
     // Handlers

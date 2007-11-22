@@ -37,7 +37,7 @@ namespace Dialog {
 namespace Behavior {
 
 
-DockBehavior::DockBehavior(Dialog& dialog) :
+DockBehavior::DockBehavior(Dialog &dialog) :
     Behavior(dialog),
     _dock_item(*SP_ACTIVE_DESKTOP->getDock(),
                Inkscape::Verb::get(dialog._verb_num)->get_id(), dialog._title.c_str(),
@@ -49,7 +49,6 @@ DockBehavior::DockBehavior(Dialog& dialog) :
 {
     // Connect signals
     _signal_hide_connection = signal_hide().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::Behavior::DockBehavior::_onHide));
-    signal_response().connect(sigc::mem_fun(_dialog, &Inkscape::UI::Dialog::Dialog::_onResponse));
     _dock_item.signal_state_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::Behavior::DockBehavior::_onStateChanged));
 
     if (_dock_item.getState() == Widget::DockItem::FLOATING_STATE) {
@@ -64,13 +63,13 @@ DockBehavior::~DockBehavior()
 
 
 Behavior *
-DockBehavior::create(Dialog& dialog)
+DockBehavior::create(Dialog &dialog)
 {
     return new DockBehavior(dialog);
 }
 
 
-DockBehavior::operator Gtk::Widget&()
+DockBehavior::operator Gtk::Widget &()
 {
     return _dock_item.getWidget();
 }
@@ -119,13 +118,13 @@ DockBehavior::show_all_children()
 }
 
 void 
-DockBehavior::get_position(int& x, int& y)
+DockBehavior::get_position(int &x, int &y)
 { 
     _dock_item.get_position(x, y);
 }
 
 void 
-DockBehavior::get_size(int& width, int& height)
+DockBehavior::get_size(int &width, int &height)
 { 
     _dock_item.get_size(width, height);
 }
@@ -155,7 +154,7 @@ DockBehavior::set_size_request(int width, int height)
 }
 
 void 
-DockBehavior::size_request(Gtk::Requisition& requisition)
+DockBehavior::size_request(Gtk::Requisition &requisition)
 { 
     _dock_item.size_request(requisition);
 }
@@ -167,64 +166,9 @@ DockBehavior::set_title(Glib::ustring title)
 }
 
 void
-DockBehavior::set_response_sensitive(int response_id, bool setting)
-{
-    if (_response_map[response_id])
-        _response_map[response_id]->set_sensitive(setting);
-}
-
-void
 DockBehavior::set_sensitive(bool sensitive)
 {
     get_vbox()->set_sensitive();
-}
-
-Gtk::Button * 
-DockBehavior::add_button(const Glib::ustring& button_text, int response_id)
-{
-    Gtk::Button *button = new Gtk::Button(button_text);
-    _addButton(button, response_id);
-    return button;
-}
-
-Gtk::Button *
-DockBehavior::add_button(const Gtk::StockID& stock_id, int response_id)
-{
-    Gtk::Button *button = new Gtk::Button(stock_id);
-    _addButton(button, response_id);
-    return button;
-}
-
-void
-DockBehavior::_addButton(Gtk::Button *button, int response_id)
-{
-    _dock_item.addButton(button, response_id);
-
-    if (response_id != 0) {
-
-        /* Pass the signal_clicked signals onto a our own signal handler that can re-emit them as
-         * signal_response signals
-         */
-        button->signal_clicked().connect( 
-            sigc::bind<int>(sigc::mem_fun(*this, 
-                            &Inkscape::UI::Dialog::Behavior::DockBehavior::_onResponse),
-                            response_id));
-
-        _response_map[response_id] = button;
-    }
-}
-
-void
-DockBehavior::set_default_response(int response_id)
-{
-    ResponseMap::iterator widget_found;
-    widget_found = _response_map.find(response_id);
-
-    if (widget_found != _response_map.end()) {
-        widget_found->second->activate();
-        widget_found->second->property_can_default() = true;
-        widget_found->second->grab_default();
-    }
 }
 
 
@@ -246,12 +190,6 @@ DockBehavior::_onStateChanged(Widget::DockItem::State prev_state,
         if (Gtk::Window *floating_win = _dock_item.getWindow())
             sp_transientize(GTK_WIDGET(floating_win->gobj()));
     }
-}
-
-void
-DockBehavior::_onResponse(int response_id)
-{
-    g_signal_emit_by_name (_dock_item.gobj(), "signal_response", response_id);
 }
 
 void
@@ -334,9 +272,6 @@ DockBehavior::signal_show() { return _dock_item.signal_show(); }
 
 Glib::SignalProxy0<void> 
 DockBehavior::signal_hide() { return _dock_item.signal_hide(); }
-
-Glib::SignalProxy1<void, int> 
-DockBehavior::signal_response() { return _dock_item.signal_response(); }
 
 Glib::SignalProxy1<bool, GdkEventAny *> 
 DockBehavior::signal_delete_event() { return _dock_item.signal_delete_event(); }

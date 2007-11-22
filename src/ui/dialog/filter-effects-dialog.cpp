@@ -1840,8 +1840,8 @@ int FilterEffectsDialog::PrimitiveList::primitive_count() const
 
 /*** FilterEffectsDialog ***/
 
-FilterEffectsDialog::FilterEffectsDialog(Behavior::BehaviorFactory behavior_factory) 
-    : Dialog (behavior_factory, "dialogs.filtereffects", SP_VERB_DIALOG_FILTER_EFFECTS),
+FilterEffectsDialog::FilterEffectsDialog() 
+    : UI::Widget::Panel("", "dialogs.filtereffects", SP_VERB_DIALOG_FILTER_EFFECTS),
       _filter_modifier(*this),
       _primitive_list(*this),
       _add_primitive_type(FPConverter),
@@ -1861,7 +1861,7 @@ FilterEffectsDialog::FilterEffectsDialog(Behavior::BehaviorFactory behavior_fact
     Gtk::HBox* hb_prims = Gtk::manage(new Gtk::HBox);
     Gtk::Frame* fr_settings = Gtk::manage(new Gtk::Frame(_("<b>Effect parameters</b>")));
     Gtk::Alignment* al_settings = Gtk::manage(new Gtk::Alignment);
-    get_vbox()->add(*hpaned);
+    _getContents()->add(*hpaned);
     hpaned->pack1(_filter_modifier);
     hpaned->pack2(_primitive_box);
     _primitive_box.pack_start(*sw_prims);
@@ -1869,7 +1869,7 @@ FilterEffectsDialog::FilterEffectsDialog(Behavior::BehaviorFactory behavior_fact
     sw_prims->add(_primitive_list);
     hb_prims->pack_end(_add_primitive_type, false, false);
     hb_prims->pack_end(_add_primitive, false, false);
-    get_vbox()->pack_start(*fr_settings, false, false);
+    _getContents()->pack_start(*fr_settings, false, false);
     fr_settings->add(*al_settings);
     al_settings->add(_settings_box);
 

@@ -42,14 +42,14 @@ namespace UI {
 namespace Dialog {
 
 void
-sp_retransientize (Inkscape::Application *inkscape, SPDesktop *desktop, gpointer dlgPtr)
+sp_retransientize(Inkscape::Application *inkscape, SPDesktop *desktop, gpointer dlgPtr)
 {
     Dialog *dlg = (Dialog *)dlgPtr;
     dlg->onDesktopActivated (desktop);
 }
 
 gboolean
-sp_retransientize_again (gpointer dlgPtr)
+sp_retransientize_again(gpointer dlgPtr)
 {
     Dialog *dlg = (Dialog *)dlgPtr;
     dlg->retransientize_suppress = false;
@@ -57,7 +57,7 @@ sp_retransientize_again (gpointer dlgPtr)
 }
 
 void
-sp_dialog_shutdown (GtkObject *object, gpointer dlgPtr)
+sp_dialog_shutdown(GtkObject *object, gpointer dlgPtr)
 {
     Dialog *dlg = (Dialog *)dlgPtr;
     dlg->onShutdown();
@@ -95,7 +95,7 @@ void unhideCallback(GtkObject *object, gpointer dlgPtr)
  */
 
 Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_path, int verb_num,
-               const char *apply_label) 
+               Glib::ustring const &apply_label) 
     : _hiddenF12 (false),
       _prefs_path (prefs_path),
       _verb_num(verb_num),
@@ -124,15 +124,6 @@ Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_pat
 
     Glib::wrap(gobj())->signal_event().connect(sigc::mem_fun(*this, &Dialog::_onEvent));
     Glib::wrap(gobj())->signal_key_press_event().connect(sigc::mem_fun(*this, &Dialog::_onKeyPress));
-
-    if (prefs_get_int_attribute ("dialogs", "showclose", 0) || apply_label) {
-        // TODO: make the order of buttons obey the global preference
-        if (apply_label) {
-            add_button(Glib::ustring(apply_label), Gtk::RESPONSE_APPLY);
-            set_default_response(Gtk::RESPONSE_APPLY);
-        }
-        add_button(Gtk::Stock::CLOSE, Gtk::RESPONSE_CLOSE);
-    }
 
     read_geometry();
 }
@@ -190,7 +181,7 @@ Dialog::onShowF12()
 }
 
 
-inline Dialog::operator Gtk::Widget&()                           { return *_behavior; }
+inline Dialog::operator Gtk::Widget &()                          { return *_behavior; }
 inline GtkWidget *Dialog::gobj()                                 { return _behavior->gobj(); }
 inline void Dialog::present()                                    { _behavior->present(); }
 inline Gtk::VBox *Dialog::get_vbox()                             {  return _behavior->get_vbox(); }
@@ -198,33 +189,17 @@ inline void Dialog::hide()                                       { _behavior->hi
 inline void Dialog::show()                                       { _behavior->show(); }
 inline void Dialog::show_all_children()                          { _behavior->show_all_children(); }
 inline void Dialog::set_size_request(int width, int height)      { _behavior->set_size_request(width, height); }
-inline void Dialog::size_request(Gtk::Requisition& requisition)  { _behavior->size_request(requisition); }
-inline void Dialog::get_position(int& x, int& y)                 { _behavior->get_position(x, y); }
-inline void Dialog::get_size(int& width, int& height)            { _behavior->get_size(width, height); }
+inline void Dialog::size_request(Gtk::Requisition &requisition)  { _behavior->size_request(requisition); }
+inline void Dialog::get_position(int &x, int &y)                 { _behavior->get_position(x, y); }
+inline void Dialog::get_size(int &width, int &height)            { _behavior->get_size(width, height); }
 inline void Dialog::resize(int width, int height)                { _behavior->resize(width, height); }
 inline void Dialog::move(int x, int y)                           { _behavior->move(x, y); }
 inline void Dialog::set_position(Gtk::WindowPosition position)   { _behavior->set_position(position); }
 inline void Dialog::set_title(Glib::ustring title)               { _behavior->set_title(title); }
 inline void Dialog::set_sensitive(bool sensitive)                { _behavior->set_sensitive(sensitive); }
 
-inline void Dialog::set_response_sensitive(int response_id, bool setting)
-{ _behavior->set_response_sensitive(response_id, setting); }
-
-void Dialog::set_resizable(bool) { }
-void Dialog::set_default(Gtk::Widget&) { }
-
-inline void Dialog::set_default_response(int response_id) { _behavior->set_default_response(response_id); }
-
-Glib::SignalProxy0<void> Dialog::signal_show () { return _behavior->signal_show(); }
-Glib::SignalProxy0<void> Dialog::signal_hide () { return _behavior->signal_hide(); }
-Glib::SignalProxy1<void, int> Dialog::signal_response () { return _behavior->signal_response(); }
-
-Gtk::Button* Dialog::add_button (const Glib::ustring& button_text, int response_id) 
-{ return _behavior->add_button(button_text, response_id); }
-
-Gtk::Button* Dialog::add_button (const Gtk::StockID& stock_id, int response_id)
-{ return _behavior->add_button(stock_id, response_id); }
-
+Glib::SignalProxy0<void> Dialog::signal_show() { return _behavior->signal_show(); }
+Glib::SignalProxy0<void> Dialog::signal_hide() { return _behavior->signal_hide(); }
 
 void
 Dialog::read_geometry()
@@ -278,13 +253,9 @@ Dialog::save_geometry()
 }
 
 void
-Dialog::_onResponse(int response_id)
+Dialog::_handleResponse(int response_id)
 {
     switch (response_id) {
-        case Gtk::RESPONSE_APPLY: {
-            _apply();
-            break;
-        }
         case Gtk::RESPONSE_CLOSE: {
             _close();
             break;

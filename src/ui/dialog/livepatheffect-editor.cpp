@@ -62,12 +62,12 @@ static void lpeeditor_desktop_change(Inkscape::Application*, SPDesktop* desktop,
 }
 
 
-
 /*#######################
  * LivePathEffectEditor
  */
-LivePathEffectEditor::LivePathEffectEditor(Behavior::BehaviorFactory behavior_factory) 
-    : Dialog (behavior_factory, "dialogs.livepatheffect", SP_VERB_DIALOG_LIVE_PATH_EFFECT),
+
+LivePathEffectEditor::LivePathEffectEditor() 
+    : UI::Widget::Panel("", "dialogs.livepatheffect", SP_VERB_DIALOG_LIVE_PATH_EFFECT),
       combo_effecttype(Inkscape::LivePathEffect::LPETypeConverter),
       button_apply(_("_Apply"), _("Apply chosen effect to selection")),
       button_remove(_("_Remove"), _("Remove effect from selection")),
@@ -77,9 +77,8 @@ LivePathEffectEditor::LivePathEffectEditor(Behavior::BehaviorFactory behavior_fa
       effectcontrol_frame(_("Current effect")),
       current_desktop(NULL)
 {
-    // Top level vbox
-    Gtk::VBox *vbox = get_vbox();
-    vbox->set_spacing(4);
+    Gtk::Box *contents = _getContents();
+    contents->set_spacing(4);
 
     effectapplication_hbox.set_spacing(4);
     effectcontrol_vbox.set_spacing(4);
@@ -92,8 +91,8 @@ LivePathEffectEditor::LivePathEffectEditor(Behavior::BehaviorFactory behavior_fa
     effectcontrol_vbox.pack_end(button_remove, true, true);
     effectcontrol_frame.add(effectcontrol_vbox);
 
-    vbox->pack_start(effectapplication_frame, true, true);
-    vbox->pack_start(effectcontrol_frame, true, true);
+    contents->pack_start(effectapplication_frame, true, true);
+    contents->pack_start(effectcontrol_frame, true, true);
 
     // connect callback functions to buttons
     button_apply.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectEditor::onApply));

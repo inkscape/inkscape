@@ -21,7 +21,7 @@
 #include <gtkmm/spinbutton.h>
 #include <glibmm/i18n.h>
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 #include "ui/widget/notebook-page.h"
 #include "ui/widget/filter-effect-chooser.h"
 
@@ -31,13 +31,12 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class FillAndStroke : public Dialog {
+class FillAndStroke : public UI::Widget::Panel {
 public:
-    FillAndStroke(Behavior::BehaviorFactory behavior_factory);
+    FillAndStroke();
     virtual ~FillAndStroke();
 
-    static FillAndStroke *create(Behavior::BehaviorFactory behavior_factory)
-    { return new FillAndStroke(behavior_factory); }
+    static FillAndStroke &getInstance() { return *new FillAndStroke(); }
 
     void selectionChanged(Inkscape::Application *inkscape,
                           Inkscape::Selection *selection);
@@ -64,7 +63,7 @@ protected:
     Gtk::HScale     _opacity_hscale;
     Gtk::SpinButton _opacity_spin_button;
 
-    Gtk::HBox& _createPageTabLabel(const Glib::ustring& label, 
+    Gtk::HBox &_createPageTabLabel(const Glib::ustring &label, 
                                    const char *label_image);
     SimpleFilterModifier _fe_cb;
 

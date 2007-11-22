@@ -56,8 +56,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-Find::Find(Behavior::BehaviorFactory behavior_factory)
-    : Dialog (behavior_factory, "dialogs.find", SP_VERB_DIALOG_FIND),
+Find::Find()
+    : UI::Widget::Panel("", "dialogs.find", SP_VERB_DIALOG_FIND),
       _entry_text(_("_Text: "), _("Find objects by their text content (exact or partial match)")),
       _entry_id(_("_ID: "), _("Find objects by the value of the id attribute (exact or partial match)")),
       _entry_style(_("_Style: "), _("Find objects by the value of the style attribute (exact or partial match)")),
@@ -83,35 +83,34 @@ Find::Find(Behavior::BehaviorFactory behavior_factory)
       _button_clear(_("_Clear"), _("Clear values")),
       _button_find(_("_Find"), _("Select objects matching all of the fields you filled in"))
 {
-    // Top level vbox
-    Gtk::VBox *vbox = get_vbox();
-    vbox->set_spacing(4);
+    Gtk::Box *contents = _getContents();
+    contents->set_spacing(4);
     
-    vbox->pack_start(_entry_text, true, true);
-    vbox->pack_start(_entry_id, true, true);
-    vbox->pack_start(_entry_style, true, true);
-    vbox->pack_start(_entry_attribute, true, true);
+    contents->pack_start(_entry_text, true, true);
+    contents->pack_start(_entry_id, true, true);
+    contents->pack_start(_entry_style, true, true);
+    contents->pack_start(_entry_attribute, true, true);
 
-    vbox->pack_start(_check_all, true, true);
-    vbox->pack_start(_check_all_shapes, true, true);
-    vbox->pack_start(_check_rects, true, true);
-    vbox->pack_start(_check_ellipses, true, true);
-    vbox->pack_start(_check_stars, true, true);
-    vbox->pack_start(_check_spirals, true, true);
-    vbox->pack_start(_check_paths, true, true);
-    vbox->pack_start(_check_texts, true, true);
-    vbox->pack_start(_check_groups, true, true);
-    vbox->pack_start(_check_clones, true, true);
-    vbox->pack_start(_check_images, true, true);
-    vbox->pack_start(_check_offsets, true, true);
+    contents->pack_start(_check_all, true, true);
+    contents->pack_start(_check_all_shapes, true, true);
+    contents->pack_start(_check_rects, true, true);
+    contents->pack_start(_check_ellipses, true, true);
+    contents->pack_start(_check_stars, true, true);
+    contents->pack_start(_check_spirals, true, true);
+    contents->pack_start(_check_paths, true, true);
+    contents->pack_start(_check_texts, true, true);
+    contents->pack_start(_check_groups, true, true);
+    contents->pack_start(_check_clones, true, true);
+    contents->pack_start(_check_images, true, true);
+    contents->pack_start(_check_offsets, true, true);
 
-    vbox->pack_start(_check_search_selection, true, true);
-    vbox->pack_start(_check_search_layer, true, true);
-    vbox->pack_start(_check_include_hidden, true, true);
-    vbox->pack_start(_check_include_locked, true, true);
+    contents->pack_start(_check_search_selection, true, true);
+    contents->pack_start(_check_search_layer, true, true);
+    contents->pack_start(_check_include_hidden, true, true);
+    contents->pack_start(_check_include_locked, true, true);
 
-    vbox->pack_start(_button_clear, true, true);
-    vbox->pack_start(_button_find, true, true);
+    contents->pack_start(_button_clear, true, true);
+    contents->pack_start(_button_find, true, true);
 
     // set signals to handle clicks
     _check_all.signal_clicked().connect(sigc::mem_fun(*this, &Find::onToggleAlltypes));
@@ -120,7 +119,7 @@ Find::Find(Behavior::BehaviorFactory behavior_factory)
     _button_find.signal_clicked().connect(sigc::mem_fun(*this, &Find::onFind));
 
     _button_find.set_flags(Gtk::CAN_DEFAULT);
-    set_default (_button_find); // activatable by Enter
+    // set_default (_button_find); // activatable by Enter
     _entry_text.getEntry()->grab_focus();
 
     show_all_children();

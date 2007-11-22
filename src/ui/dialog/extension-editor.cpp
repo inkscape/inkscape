@@ -42,8 +42,8 @@ namespace Dialog {
     about the selected extension.  A handler is set up so that when
     a new extension is selected, the notebooks are changed appropriately.
 */
-ExtensionEditor::ExtensionEditor(Behavior::BehaviorFactory behavior_factory)
-    : Dialog (behavior_factory, "dialogs.extensioneditor", SP_VERB_DIALOG_EXTENSIONEDITOR)
+ExtensionEditor::ExtensionEditor()
+    : UI::Widget::Panel ("", "dialogs.extensioneditor", SP_VERB_DIALOG_EXTENSIONEDITOR)
 {
     _notebook_info.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     _notebook_help.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
@@ -53,7 +53,7 @@ ExtensionEditor::ExtensionEditor(Behavior::BehaviorFactory behavior_factory)
     Gtk::HBox* hbox_list_page = Gtk::manage(new Gtk::HBox());
     hbox_list_page->set_border_width(12);
     hbox_list_page->set_spacing(12);
-    this->get_vbox()->add(*hbox_list_page);
+    _getContents()->add(*hbox_list_page);
 
 
     //Pagelist
@@ -141,7 +141,7 @@ ExtensionEditor::on_pagelist_selection_changed (void)
         gchar title[500];
         sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_DIALOG_EXTENSIONEDITOR), title);
         Glib::ustring utitle(title);
-        set_title(utitle + ": " + name);
+        // set_title(utitle + ": " + name);
 
         /* Clear the notbook pages */
         _notebook_info.remove();

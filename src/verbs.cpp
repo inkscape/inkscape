@@ -109,48 +109,6 @@ sp_action_get_title(SPAction const *action)
 
 namespace Inkscape {
 
-/// \todo !!!FIXME:: kill this, use DialogManager instead!!!
-
-class PanelDialog : public Inkscape::UI::Dialog::Dialog
-{
-public:
-    PanelDialog(char const *prefs_path, int const verb_num) :
-        Dialog(
-            (prefs_get_int_attribute_limited ("options.dialogtype", "value", UI::Dialog::DOCK, 0, 1) == UI::Dialog::FLOATING ?
-             &UI::Dialog::Behavior::FloatingBehavior::create :
-             &UI::Dialog::Behavior::DockBehavior::create),
-            prefs_path, verb_num) {}
-/*
-    virtual Glib::ustring getName() const {return "foo";}
-    virtual Glib::ustring getDesc() const {return "bar";}
-*/
-};
-
-/** \brief Utility function to get a panel displayed. */
-static void show_panel( Inkscape::UI::Widget::Panel &panel, char const *prefs_path, int const verb_num )
-{
-    Gtk::Container *container = panel.get_toplevel();
-    if ( &panel == container ) { // safe check?
-        //g_message("Creating new dialog to hold it");
-        PanelDialog *dia = new PanelDialog(prefs_path, verb_num);
-        Gtk::VBox *mainVBox = dia->get_vbox();
-        mainVBox->pack_start(panel);
-        dia->show_all_children();
-        dia->read_geometry();
-        dia->present();
-    } else {
-        PanelDialog *dia = dynamic_cast<PanelDialog*>(container);
-        if ( dia ) {
-            //g_message("Found an existing dialog");
-            dia->read_geometry();
-            dia->present();
-        } else {
-            g_message("Failed to find an existing dialog");
-        }
-    }
-}
-
-
 /** \brief A class to encompass all of the verbs which deal with
            file operations. */
 class FileVerb : public Verb {
@@ -1713,8 +1671,8 @@ DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
             dt->_dlg_mgr->showDialog("FillAndStroke");
             break;
         case SP_VERB_DIALOG_SWATCHES:
-            show_panel( Inkscape::UI::Dialogs::SwatchesPanel::getInstance(), "dialogs.swatches", SP_VERB_DIALOG_SWATCHES);
-             break;
+            dt->_dlg_mgr->showDialog("Swatches");
+            break;
         case SP_VERB_DIALOG_TRANSFORM:
             dt->_dlg_mgr->showDialog("Transformation");
             break;
@@ -1789,9 +1747,9 @@ HelpVerb::perform(SPAction *action, void *data, void */*pdata*/)
             sp_help_about();
             break;
         case SP_VERB_HELP_ABOUT_EXTENSIONS: {
-            Inkscape::UI::Dialogs::ExtensionsPanel *panel = new Inkscape::UI::Dialogs::ExtensionsPanel();
-            panel->set_full(true);
-            show_panel( *panel, "dialogs.aboutextensions", SP_VERB_HELP_ABOUT_EXTENSIONS );
+            // Inkscape::UI::Dialogs::ExtensionsPanel *panel = new Inkscape::UI::Dialogs::ExtensionsPanel();
+            // panel->set_full(true);
+            // show_panel( *panel, "dialogs.aboutextensions", SP_VERB_HELP_ABOUT_EXTENSIONS );
             break;
         }
 

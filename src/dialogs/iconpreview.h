@@ -21,7 +21,7 @@
 #include <gtkmm/togglebutton.h>
 #include <gtkmm/toggletoolbutton.h>
 
-#include "ui/dialog/dialog.h"
+#include "ui/widget/panel.h"
 
 struct SPObject;
 
@@ -33,13 +33,13 @@ namespace Dialogs {
 /**
  * A panel that displays an icon preview
  */
-class IconPreviewPanel : public Inkscape::UI::Dialog::Dialog
+class IconPreviewPanel : public UI::Widget::Panel
 {
 public:
-    IconPreviewPanel(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory);
+    IconPreviewPanel();
     //IconPreviewPanel(Glib::ustring const &label);
 
-    static IconPreviewPanel *create(Inkscape::UI::Dialog::Behavior::BehaviorFactory behavior_factory);
+    static IconPreviewPanel& getInstance();
 
     void refreshPreview();
     void modeToggled();

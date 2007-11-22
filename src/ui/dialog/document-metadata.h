@@ -18,10 +18,10 @@
 #include <gtkmm/notebook.h>
 #include <glibmm/i18n.h>
 
+#include "ui/widget/panel.h"
 #include "ui/widget/licensor.h"
 #include "ui/widget/notebook-page.h"
 #include "ui/widget/registry.h"
-#include "dialog.h"
 
 using namespace Inkscape::UI::Widget;
 
@@ -37,17 +37,18 @@ namespace Inkscape {
 
 typedef std::list<EntityEntry*> RDElist;
 
-class DocumentMetadata : public Inkscape::UI::Dialog::Dialog {
+class DocumentMetadata : public Inkscape::UI::Widget::Panel {
 public:
     void  update();
-    static DocumentMetadata *create(Behavior::BehaviorFactory behavior_factory);
+
+    static DocumentMetadata &getInstance();
+
     static void destroy();
     sigc::connection _doc_replaced_connection;
 
 protected:
     void  build_metadata();
     void  init();
-    virtual void  on_response (int);
 
     Gtk::Tooltips _tt;
     Gtk::Notebook  _notebook;
@@ -62,8 +63,8 @@ protected:
     Registry _wr;
 
 private:
-    DocumentMetadata(Behavior::BehaviorFactory behavior_factory);
     virtual ~DocumentMetadata();
+    DocumentMetadata();
 };
 
 } // namespace Dialog

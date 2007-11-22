@@ -2,7 +2,7 @@
  * Undo History dialog
  *
  * \brief A dialog for presenting an event log of commited, undone and redone events. Allows the
- * user to undo and redo multiple events in a more convinient way than repateaded ctrl-z,
+ * user to undo and redo multiple events in a more convenient way than repateaded ctrl-z,
  * ctrl-shift-z.
  *
  *
@@ -30,9 +30,9 @@
 #include <sstream>
 
 #include "desktop.h"
-#include "dialog.h"
 #include "event-log.h"
 
+#include "ui/widget/panel.h"
 #include "widgets/icon.h"
 
 namespace Inkscape {
@@ -116,11 +116,11 @@ private:
  * 
  */
 
-class UndoHistory : public Dialog {
+class UndoHistory : public Widget::Panel {
 public:
     virtual ~UndoHistory();
 
-    static UndoHistory *create(Behavior::BehaviorFactory behavior_factory);
+    static UndoHistory &getInstance();
     void setDesktop(SPDesktop* desktop);
 
     sigc::connection _document_replaced_connection;
@@ -146,7 +146,7 @@ protected:
     void _onCollapseEvent(const Gtk::TreeModel::iterator &iter, const Gtk::TreeModel::Path &path);
 
 private:
-    UndoHistory(Behavior::BehaviorFactory behavior_factory);
+    UndoHistory();
   
     // no default constructor, noncopyable, nonassignable
     UndoHistory(UndoHistory const &d);

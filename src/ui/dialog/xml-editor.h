@@ -12,7 +12,7 @@
 #ifndef INKSCAPE_DIALOG_XML_EDITOR_H
 #define INKSCAPE_DIALOG_XML_EDITOR_H
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 
 #include <glibmm/i18n.h>
 
@@ -20,13 +20,12 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class XmlEditor : public Dialog {
+class XmlEditor : public UI::Widget::Panel {
 public:
-    XmlEditor(Behavior::BehaviorFactory behavior_factory);
+    XmlEditor();
     virtual ~XmlEditor();
 
-    static XmlEditor *create(Behavior::BehaviorFactory behavior_factory) 
-    { return new XmlEditor(behavior_factory); }
+    static XmlEditor &getInstance() { return *new XmlEditor(); }
 
 protected:
 

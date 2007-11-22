@@ -29,7 +29,7 @@
 #include "libnr/nr-rect.h"
 
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 #include "ui/widget/notebook-page.h"
 
 using namespace Inkscape::UI::Widget;
@@ -44,13 +44,12 @@ namespace Dialog {
 class Action;
 
 
-class AlignAndDistribute : public Dialog {
+class AlignAndDistribute : public Widget::Panel {
 public:
-    AlignAndDistribute(Behavior::BehaviorFactory behavior_factory);
+    AlignAndDistribute();
     virtual ~AlignAndDistribute();
 
-    static AlignAndDistribute *create(Behavior::BehaviorFactory behavior_factory) 
-    { return new AlignAndDistribute(behavior_factory); }
+    static AlignAndDistribute &getInstance() { return *new AlignAndDistribute(); }
 
     enum AlignTarget { LAST=0, FIRST, BIGGEST, SMALLEST, PAGE, DRAWING, SELECTION };
 

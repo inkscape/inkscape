@@ -43,7 +43,7 @@ class ScriptDialogImpl : public ScriptDialog
     /**
      * Constructor
      */
-    ScriptDialogImpl(Behavior::BehaviorFactory behavior_factory);
+    ScriptDialogImpl();
 
     /**
      * Destructor
@@ -192,10 +192,10 @@ void ScriptDialogImpl::executePerl()
 /**
  * Constructor
  */
-ScriptDialogImpl::ScriptDialogImpl(Behavior::BehaviorFactory behavior_factory) :
-    ScriptDialog(behavior_factory)
+ScriptDialogImpl::ScriptDialogImpl() :
+    ScriptDialog()
 {
-    Gtk::VBox *mainVBox = get_vbox();
+    Gtk::Box *contents = _getContents();
 
     //## Add a menu for clear()
     menuBar.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_File"), fileMenu) );
@@ -209,7 +209,7 @@ ScriptDialogImpl::ScriptDialogImpl(Behavior::BehaviorFactory behavior_factory) :
     fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Execute Perl"),
            sigc::mem_fun(*this, &ScriptDialogImpl::executePerl) ) );
 #endif
-    mainVBox->pack_start(menuBar, Gtk::PACK_SHRINK);
+    contents->pack_start(menuBar, Gtk::PACK_SHRINK);
 
     //### Set up the script field
     scriptText.set_editable(true);
@@ -219,7 +219,7 @@ ScriptDialogImpl::ScriptDialogImpl(Behavior::BehaviorFactory behavior_factory) :
     scriptTextFrame.set_label(_("Script"));
     scriptTextFrame.set_shadow_type(Gtk::SHADOW_NONE);
     scriptTextFrame.add(scriptTextScroll);
-    mainVBox->pack_start(scriptTextFrame);
+    contents->pack_start(scriptTextFrame);
 
     //### Set up the output field
     outputText.set_editable(true);
@@ -229,7 +229,7 @@ ScriptDialogImpl::ScriptDialogImpl(Behavior::BehaviorFactory behavior_factory) :
     outputTextFrame.set_label(_("Output"));
     outputTextFrame.set_shadow_type(Gtk::SHADOW_NONE);
     outputTextFrame.add(outputTextScroll);
-    mainVBox->pack_start(outputTextFrame);
+    contents->pack_start(outputTextFrame);
 
     //### Set up the error field
     errorText.set_editable(true);
@@ -239,7 +239,7 @@ ScriptDialogImpl::ScriptDialogImpl(Behavior::BehaviorFactory behavior_factory) :
     errorTextFrame.set_label(_("Errors"));
     errorTextFrame.set_shadow_type(Gtk::SHADOW_NONE);
     errorTextFrame.add(errorTextScroll);
-    mainVBox->pack_start(errorTextFrame);
+    contents->pack_start(errorTextFrame);
 
     // sick of this thing shrinking too much
     set_size_request(350, 400);
@@ -250,10 +250,10 @@ ScriptDialogImpl::ScriptDialogImpl(Behavior::BehaviorFactory behavior_factory) :
 /**
  * Factory method.  Use this to create a new ScriptDialog
  */
-ScriptDialog *ScriptDialog::create(Behavior::BehaviorFactory behavior_factory)
+ScriptDialog &ScriptDialog::getInstance()
 {
-    ScriptDialog *dialog = new ScriptDialogImpl(behavior_factory);
-    return dialog;
+    ScriptDialog *dialog = new ScriptDialogImpl();
+    return *dialog;
 }
 
 

@@ -12,7 +12,7 @@
 #ifndef INKSCAPE_UI_DIALOG_LAYER_EDITOR_H
 #define INKSCAPE_UI_DIALOG_LAYER_EDITOR_H
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 
 #include <glibmm/i18n.h>
 
@@ -20,13 +20,14 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class LayerEditor : public Dialog {
+class LayerEditor : public UI::Widget::Panel {
 public:
-    LayerEditor(Behavior::BehaviorFactory behavior_factory);
+    LayerEditor();
     virtual ~LayerEditor();
 
-    static LayerEditor *create(Behavior::BehaviorFactory behavior_factory)
-    { return new LayerEditor(behavior_factory); }
+    static int get_verb();
+
+    static LayerEditor &getInstance() { return *new LayerEditor(); }
 
 protected:
 

@@ -29,6 +29,7 @@
 #include "sp-pattern.h"
 #include "ui/dialog/dialog-manager.h"
 #include "ui/dialog/fill-and-stroke.h"
+#include "ui/dialog/panel-dialog.h"
 #include "xml/repr.h"
 #include "document.h"
 #include "widgets/widget-sizes.h"
@@ -92,6 +93,8 @@ static GtkTargetEntry ui_drop_target_entries [] = {
 #define ENTRIES_SIZE(n) sizeof(n)/sizeof(n[0])
 static guint nui_drop_target_entries = ENTRIES_SIZE(ui_drop_target_entries);
 
+/* convenience function */
+static Dialog::FillAndStroke *get_fill_and_stroke_panel(SPDesktop *desktop);
 
 SelectedStyle::SelectedStyle(bool /*layout*/)
     : _desktop (NULL),
@@ -773,15 +776,13 @@ void SelectedStyle::on_fillstroke_swap() {
 }
 
 void SelectedStyle::on_fill_edit() {
-    if (Dialog::FillAndStroke *dialog = dynamic_cast<Dialog::FillAndStroke *>(
-            _desktop->_dlg_mgr->getDialog("FillAndStroke")))
-        dialog->showPageFill();
+    if (Dialog::FillAndStroke *fs = get_fill_and_stroke_panel(_desktop))
+        fs->showPageFill();
 }
 
 void SelectedStyle::on_stroke_edit() {
-    if (Dialog::FillAndStroke *dialog = dynamic_cast<Dialog::FillAndStroke *>(
-            _desktop->_dlg_mgr->getDialog("FillAndStroke")))
-        dialog->showPageStrokePaint();
+    if (Dialog::FillAndStroke *fs = get_fill_and_stroke_panel(_desktop))
+        fs->showPageStrokePaint();
 }
 
 bool
@@ -789,9 +790,8 @@ SelectedStyle::on_fill_click(GdkEventButton *event)
 {
     if (event->button == 1) { // click, open fill&stroke
 
-        if (Dialog::FillAndStroke *dialog = dynamic_cast<Dialog::FillAndStroke *>(
-                _desktop->_dlg_mgr->getDialog("FillAndStroke")))
-            dialog->showPageFill();
+        if (Dialog::FillAndStroke *fs = get_fill_and_stroke_panel(_desktop))
+            fs->showPageFill();
 
     } else if (event->button == 3) { // right-click, popup menu
         _popup[SS_FILL].popup(event->button, event->time);
@@ -809,9 +809,8 @@ bool
 SelectedStyle::on_stroke_click(GdkEventButton *event)
 {
     if (event->button == 1) { // click, open fill&stroke
-        if (Dialog::FillAndStroke *dialog = dynamic_cast<Dialog::FillAndStroke *>(
-                _desktop->_dlg_mgr->getDialog("FillAndStroke")))
-            dialog->showPageStrokePaint();
+        if (Dialog::FillAndStroke *fs = get_fill_and_stroke_panel(_desktop))
+            fs->showPageStrokePaint();
     } else if (event->button == 3) { // right-click, popup menu
         _popup[SS_STROKE].popup(event->button, event->time);
     } else if (event->button == 2) { // middle click, toggle none/lastcolor
@@ -828,9 +827,8 @@ bool
 SelectedStyle::on_sw_click(GdkEventButton *event)
 {
     if (event->button == 1) { // click, open fill&stroke
-        if (Dialog::FillAndStroke *dialog = dynamic_cast<Dialog::FillAndStroke *>(
-                _desktop->_dlg_mgr->getDialog("FillAndStroke")))
-            dialog->showPageStrokeStyle();
+        if (Dialog::FillAndStroke *fs = get_fill_and_stroke_panel(_desktop))
+            fs->showPageStrokeStyle();
     } else if (event->button == 3) { // right-click, popup menu
         _popup_sw.popup(event->button, event->time);
     } else if (event->button == 2) { // middle click, toggle none/lastwidth?
@@ -1322,6 +1320,19 @@ RotateableSwatch::do_release(double by, guint modifier) {
     startcolor_set = false;
 }
 
+Dialog::FillAndStroke *get_fill_and_stroke_panel(SPDesktop *desktop)
+{
+    if (Dialog::PanelDialogBase *panel_dialog = 
+        dynamic_cast<Dialog::PanelDialogBase *>(desktop->_dlg_mgr->getDialog("FillAndStroke"))) {
+        try {
+            Dialog::FillAndStroke &fill_and_stroke = 
+                dynamic_cast<Dialog::FillAndStroke &>(panel_dialog->getPanel());
+            return &fill_and_stroke;
+        } catch (std::exception e) { }
+    }        
+
+    return 0;
+}
 
 } // namespace Widget
 } // namespace UI

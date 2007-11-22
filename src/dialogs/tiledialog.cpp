@@ -593,8 +593,6 @@ void TileDialog::updateSelection()
 
 
 
-
-
 /*##########################
 ## Experimental
 ##########################*/
@@ -612,8 +610,8 @@ static void updateSelectionCallback(Inkscape::Application */*inkscape*/, Inkscap
 /**
  * Constructor
  */
-TileDialog::TileDialog(Behavior::BehaviorFactory behavior_factory)
-    : Dialog (behavior_factory, "dialogs.gridtiler", SP_VERB_SELECTION_GRIDTILE)
+TileDialog::TileDialog()
+    : UI::Widget::Panel("", "dialogs.gridtiler", SP_VERB_SELECTION_GRIDTILE)
 {
      // bool used by spin button callbacks to stop loops where they change each other.
     updating = false;
@@ -628,7 +626,7 @@ TileDialog::TileDialog(Behavior::BehaviorFactory behavior_factory)
         g_signal_connect ( G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (updateSelectionCallback), this);
     }
 
-    Gtk::VBox *mainVBox = get_vbox();
+    Gtk::Box *contents = _getContents();
 
 #define MARGIN 2
 
@@ -851,7 +849,7 @@ TileDialog::TileDialog(Behavior::BehaviorFactory behavior_factory)
 
     TileBox.pack_start(SizesHBox, false, false, MARGIN);
 
-    mainVBox->pack_start(TileBox);
+    contents->pack_start(TileBox);
 
     double SpacingType = prefs_get_double_attribute ("dialogs.gridtiler", "SpacingType", 15);
     if (SpacingType>0) {
@@ -864,7 +862,7 @@ TileDialog::TileDialog(Behavior::BehaviorFactory behavior_factory)
     SizesHBox.set_sensitive (ManualSpacing);
 
     //## The OK button
-    TileOkButton     = add_button(Gtk::Stock::APPLY,   GTK_RESPONSE_APPLY);
+    TileOkButton = addResponseButton(Gtk::Stock::APPLY, GTK_RESPONSE_APPLY);
     tips.set_tip((*TileOkButton), _("Arrange selected objects"));
 
     show_all_children();

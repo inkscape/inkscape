@@ -71,13 +71,13 @@ static Inkscape::XML::NodeEventVector const _repr_events = {
 };
 
 
-DocumentProperties*
-DocumentProperties::create(Behavior::BehaviorFactory behavior_factory)
+DocumentProperties &
+DocumentProperties::getInstance()
 {
-    if (_instance) return _instance;
-    _instance = new DocumentProperties(behavior_factory);
+    if (_instance) return *_instance;
+    _instance = new DocumentProperties();
     _instance->init();
-    return _instance;
+    return *_instance;
 }
 
 void
@@ -90,18 +90,17 @@ DocumentProperties::destroy()
     }
 }
 
-DocumentProperties::DocumentProperties(Behavior::BehaviorFactory behavior_factory)
-    : Dialog (behavior_factory, "dialogs.documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
+DocumentProperties::DocumentProperties()
+    : UI::Widget::Panel ("", "dialogs.documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
       _page_page(1, 1), _page_guides(1, 1),
       _page_snap(1, 1), _page_snap_dtls(1, 1), _page_grids(1, 1),
       _grids_button_new(_("_New"), _("Create new grid.")),
       _grids_button_remove(_("_Remove"), _("Remove selected grid.")),
       _prefs_path("dialogs.documentoptions")
 {
-    set_resizable (false);
     _tt.enable();
-    get_vbox()->set_spacing (4);
-    get_vbox()->pack_start (_notebook, true, true);
+    _getContents()->set_spacing (4);
+    _getContents()->pack_start(_notebook, true, true);
 
     _notebook.append_page(_page_page,      _("Page"));
     _notebook.append_page(_page_guides,    _("Guides"));
@@ -138,8 +137,6 @@ DocumentProperties::init()
                      G_CALLBACK(on_deactivate_desktop), 0);
 
     show_all_children();
-
-    present();
 }
 
 DocumentProperties::~DocumentProperties()

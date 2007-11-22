@@ -418,8 +418,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
         prefs_get_int_attribute_limited ("options.dialogtype", "value", Inkscape::UI::Dialog::FLOATING, 0, 1) ==
         Inkscape::UI::Dialog::DOCK;
 
-    if (create_dock)
-    {
+    if (create_dock) {
         dtw->dock = new Inkscape::UI::Widget::Dock();
 
         Gtk::HPaned *paned = new Gtk::HPaned();

@@ -53,11 +53,7 @@ public:
     void get_position(int& x, int& y);
     void get_size(int& width, int& height);
     void set_title(Glib::ustring title);
-    void set_response_sensitive(int response_id, bool setting);
     void set_sensitive(bool sensitive);
-    Gtk::Button *add_button(const Glib::ustring& button_text, int response_id);
-    Gtk::Button *add_button(const Gtk::StockID& stock_id, int response_id);
-    void set_default_response(int response_id);
 
     /** Gtk::Dialog signal proxies */
     Glib::SignalProxy0<void> signal_show();
@@ -65,7 +61,6 @@ public:
     Glib::SignalProxy1<bool, GdkEventAny *> signal_delete_event();
     Glib::SignalProxy0<void> signal_drag_begin();
     Glib::SignalProxy1<void, bool> signal_drag_end();
-    Glib::SignalProxy1<void, int> signal_response();
 
     /** Custom signal handlers */
     void onHideF12();
@@ -78,19 +73,13 @@ private:
 
     DockBehavior(Dialog& dialog);
 
-    /** A map to store which widget that emits a certain response signal */
-    typedef std::map<int, Gtk::Widget *> ResponseMap;
-    ResponseMap _response_map;
-
     /** Internal helpers */
-    void _addButton(Gtk::Button *button, int response_id);
     Gtk::Paned *_getPaned();              //< gives the parent pane, if the dock item has one
     void _requestHeight(int height);      //< tries to resize the dock item to the requested hieght
 
     /** Internal signal handlers */
     void _onHide();
     bool _onDeleteEvent(GdkEventAny *event);
-    void _onResponse(int response_id);
     void _onStateChanged(Widget::DockItem::State prev_state, Widget::DockItem::State new_state);
     bool _onKeyPress(GdkEventKey *event);
 

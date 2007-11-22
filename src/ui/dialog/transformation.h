@@ -19,7 +19,7 @@
 
 
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 #include "application/application.h"
 #include "ui/widget/notebook-page.h"
 #include "ui/widget/scalar-unit.h"
@@ -38,7 +38,7 @@ namespace Dialog {
 
 
 
-class Transformation : public Dialog
+class Transformation : public UI::Widget::Panel
 {
 
 public:
@@ -46,19 +46,18 @@ public:
     /**
      * Create a new transform
      */
-    Transformation(Behavior::BehaviorFactory behavior_factory);
+    Transformation();
 
     /**
      * Cleanup
      */
     virtual ~Transformation();
 
-
     /**
      * Factory method.  Create an instance of this class/interface
      */
-    static Transformation *create(Behavior::BehaviorFactory behavior_factory)
-        { return new Transformation(behavior_factory); }
+    static Transformation &getInstance()
+        { return *new Transformation(); }
 
 
     /**

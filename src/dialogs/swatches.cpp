@@ -997,12 +997,11 @@ SwatchesPanel& SwatchesPanel::getInstance()
 }
 
 
-
 /**
  * Constructor
  */
 SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
-    Inkscape::UI::Widget::Panel( Glib::ustring(), prefsPath, true ),
+    Inkscape::UI::Widget::Panel("", prefsPath, SP_VERB_DIALOG_SWATCHES, "", true),
     _holder(0)
 {
     Gtk::RadioMenuItem* hotItem = 0;

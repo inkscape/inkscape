@@ -203,11 +203,11 @@ void Memory::Private::stop_update_task() {
     update_task.disconnect();
 }
 
-Memory::Memory(Behavior::BehaviorFactory behavior_factory) 
-    : Dialog (behavior_factory, "dialogs.memory", SP_VERB_HELP_MEMORY, _("Recalculate")),
+Memory::Memory() 
+    : UI::Widget::Panel ("", "dialogs.memory", SP_VERB_HELP_MEMORY, _("Recalculate")),
       _private(*(new Memory::Private())) 
 {
-    get_vbox()->add(_private.view);
+    _getContents()->add(_private.view);
 
     _private.update();
 

@@ -14,7 +14,7 @@
  */
 
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 #include "verbs.h"
 
 namespace Inkscape {
@@ -25,7 +25,7 @@ namespace Dialog {
 /**
  * A script editor, loader, and executor
  */
-class ScriptDialog : public Dialog
+class ScriptDialog : public UI::Widget::Panel
 {
 
     public:
@@ -34,15 +34,15 @@ class ScriptDialog : public Dialog
     /**
      * Constructor
      */
-    ScriptDialog(Behavior::BehaviorFactory behavior_factory) : 
-     Dialog (behavior_factory, "dialogs.script", SP_VERB_DIALOG_SCRIPT)
+    ScriptDialog() : 
+     UI::Widget::Panel("", "dialogs.script", SP_VERB_DIALOG_SCRIPT)
     {}
 
 
     /**
      * Factory method
      */
-    static ScriptDialog *create(Behavior::BehaviorFactory behavior_factory);
+    static ScriptDialog &getInstance();
 
     /**
      * Destructor

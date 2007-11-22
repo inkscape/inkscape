@@ -10,6 +10,7 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/dialog-manager.h		\
 	ui/dialog/dialog.cpp			\
 	ui/dialog/dialog.h			\
+	ui/dialog/panel-dialog.h		\
 	ui/dialog/behavior.h			\
 	ui/dialog/dock-behavior.h		\
 	ui/dialog/dock-behavior.cpp		\

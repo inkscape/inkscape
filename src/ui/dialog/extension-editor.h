@@ -13,7 +13,7 @@
 #ifndef INKSCAPE_UI_DIALOG_EXTENSION_EDITOR_H
 #define INKSCAPE_UI_DIALOG_EXTENSION_EDITOR_H
 
-#include "dialog.h"
+#include "ui/widget/panel.h"
 
 #include <glibmm/i18n.h>
 
@@ -29,13 +29,12 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class ExtensionEditor : public Dialog {
+class ExtensionEditor : public UI::Widget::Panel {
 public:
-    ExtensionEditor(Behavior::BehaviorFactory behavior_factory);
+    ExtensionEditor();
     virtual ~ExtensionEditor();
 
-    static ExtensionEditor *create(Behavior::BehaviorFactory behavior_factory)
-    { return new ExtensionEditor(behavior_factory); }
+    static ExtensionEditor &getInstance() { return *new ExtensionEditor(); }
 
     static void show_help (gchar const * extension_id);
 

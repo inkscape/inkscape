@@ -15,7 +15,7 @@
 
 
 #include "verbs.h"
-#include "dialog.h"
+#include "ui/widget/panel.h"
 
 namespace Inkscape {
 namespace UI {
@@ -25,24 +25,23 @@ namespace Dialog {
 /**
  * A dialog that displays log messages
  */
-class TraceDialog : public Dialog
+class TraceDialog : public UI::Widget::Panel
 {
 
 public:
 
-
     /**
      * Constructor
      */
-    TraceDialog(Behavior::BehaviorFactory behavior_factory) : 
-	Dialog (behavior_factory, "dialogs.trace", SP_VERB_SELECTION_TRACE)
-        {}
+    TraceDialog() : 
+     UI::Widget::Panel("", "dialogs.trace", SP_VERB_SELECTION_TRACE)
+     {}
 
 
     /**
      * Factory method
      */
-    static TraceDialog *create(Behavior::BehaviorFactory behavior_factory);
+    static TraceDialog &getInstance();
 
     /**
      * Destructor
