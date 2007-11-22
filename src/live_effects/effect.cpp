@@ -97,7 +97,7 @@ Effect::Effect(LivePathEffectObject *lpeobject)
     vbox = NULL;
     tooltips = NULL;
     lpeobj = lpeobject;
-    oncanvasedit_it = param_vector.begin();
+    oncanvasedit_it = 0;
 }
 
 Effect::~Effect()
@@ -297,19 +297,19 @@ Parameter *
 Effect::getNextOncanvasEditableParam()
 {
     oncanvasedit_it++;
-    if (oncanvasedit_it == param_vector.end()) {
-        oncanvasedit_it = param_vector.begin();
+    if (oncanvasedit_it == param_vector.size()) {
+        oncanvasedit_it = 0;
     }
-    std::vector<Parameter *>::iterator old_it = oncanvasedit_it;
+    int old_it = oncanvasedit_it;
 
     do {
-        Parameter * param = *oncanvasedit_it;
-        if(param->oncanvas_editable) {
+        Parameter * param = param_vector[oncanvasedit_it];
+        if(param && param->oncanvas_editable) {
             return param;
         } else {
             oncanvasedit_it++;
-            if (oncanvasedit_it == param_vector.end()) {  // loop round the map
-                oncanvasedit_it = param_vector.begin();
+            if (oncanvasedit_it == param_vector.size()) {  // loop round the map
+                oncanvasedit_it = 0;
             }
         }
     } while (oncanvasedit_it != old_it); // iterate until complete loop through map has been made

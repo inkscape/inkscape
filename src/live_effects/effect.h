@@ -106,7 +106,7 @@ protected:
     Parameter * getNextOncanvasEditableParam();
 
     std::vector<Parameter *> param_vector;
-    std::vector<Parameter *>::iterator oncanvasedit_it;
+    int oncanvasedit_it;
 
 
     Inkscape::UI::Widget::Registry wr; 
