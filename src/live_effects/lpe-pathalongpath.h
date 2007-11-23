@@ -37,11 +37,11 @@ public:
 private:
     PathParam  bend_path;
     PathParam  width_path;
+    ScalarParam  width_path_range;
     EnumParam<PAPCopyType> copytype;
     ScalarParam  prop_scale;
     BoolParam scale_y_rel;
     BoolParam    vertical_pattern;
-    double wfactor;
 
     void on_pattern_pasted();
 
