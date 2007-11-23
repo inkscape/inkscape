@@ -36,13 +36,12 @@ public:
 
 private:
     PathParam  bend_path;
+    PathParam  width_path;
     EnumParam<PAPCopyType> copytype;
     ScalarParam  prop_scale;
     BoolParam scale_y_rel;
-    ScalarParam  spacing;
-    ScalarParam  normal_offset;
-    ScalarParam  tang_offset;
     BoolParam    vertical_pattern;
+    double wfactor;
 
     void on_pattern_pasted();
 
