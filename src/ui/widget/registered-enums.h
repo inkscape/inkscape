@@ -55,15 +55,23 @@ public:
     }
 
     void set_active_by_id (E id) {
-        combobox()->set_active_by_id(id);
+        ComboBoxEnum<E> * cb = combobox();
+        if (cb)
+            cb->set_active_by_id(id);
     };
 
     void set_active_by_key (const Glib::ustring& key) {
-        combobox()->set_active_by_key(key);
+        ComboBoxEnum<E> * cb = combobox();
+        if (cb)
+        cb->set_active_by_key(key);
     }
 
     inline const Util::EnumData<E>* get_active_data() {
-        return combobox()->get_active_data();
+        ComboBoxEnum<E> * cb = combobox();
+        if (cb)
+            return cb->get_active_data();
+        else
+            return NULL;
     }
 
     ComboBoxEnum<E> * combobox() {

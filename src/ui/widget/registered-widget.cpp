@@ -221,16 +221,19 @@ RegisteredScalarUnit::getSU()
 void
 RegisteredScalarUnit::setValue (double val)
 {
-    _widget->setValue (val);
+    if (_widget)
+        _widget->setValue (val);
 }
 
 void
 RegisteredScalarUnit::on_value_changed()
 {
+g_message("on_value_changed");
     if (_widget->setProgrammatically) {
         _widget->setProgrammatically = false;
         return;
     }
+g_message("on_value_changed1");
 
     if (_wr->isUpdating())
         return;
@@ -284,7 +287,8 @@ RegisteredScalar::getS()
 void
 RegisteredScalar::setValue (double val)
 {
-    _widget->setValue (val);
+    if (_widget)
+        _widget->setValue (val);
 }
 
 void
@@ -483,9 +487,15 @@ const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument
 void
 RegisteredRadioButtonPair::setValue (bool second)
 {
+    if (!_rb1 || !_rb2)
+        return;
+
     setProgrammatically = true;
-    if (second) _rb2->set_active();
-    else        _rb1->set_active();
+    if (second) {
+        _rb2->set_active();
+    } else {
+        _rb1->set_active();
+    }
 }
 
 void
@@ -549,7 +559,8 @@ RegisteredPoint::getPoint()
 void
 RegisteredPoint::setValue (double xval, double yval)
 {
-    _widget->setValue(xval, yval);
+    if (_widget)
+        _widget->setValue(xval, yval);
 }
 
 void
@@ -615,6 +626,9 @@ RegisteredRandom::getR()
 void
 RegisteredRandom::setValue (double val, long startseed)
 {
+    if (!_widget)
+        return;
+
     _widget->setValue (val);
     _widget->setStartSeed(startseed);
 }
