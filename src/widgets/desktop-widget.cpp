@@ -57,7 +57,7 @@
 #include "conn-avoid-ref.h"
 #include "ege-select-one-action.h"
 #include "ege-color-prof-tracker.h"
-#include "dom/util/digest.h"
+#include "color-profile-fns.h"
 #include "xml/node-observer.h"
 
 #if defined (SOLARIS_2_8)
@@ -116,12 +116,7 @@ using Inkscape::XML::Node;
 
 class PrefWatcher : public Inkscape::XML::NodeObserver {
 public:
-    PrefWatcher() :
-        NodeObserver(),
-        dtws()
-    {
-    }
-
+    PrefWatcher();
     virtual ~PrefWatcher();
 
 
@@ -139,11 +134,32 @@ public:
     void remove( SPDesktopWidget* dtw );
 
 private:
+    static void hook(EgeColorProfTracker *tracker, gint a, gint b, PrefWatcher *watcher);
+
     std::list<SPDesktopWidget*> dtws;
+    EgeColorProfTracker *_tracker;
 };
+
+PrefWatcher::PrefWatcher() :
+    NodeObserver(),
+    dtws(),
+    _tracker(0)
+{
+    _tracker = ege_color_prof_tracker_new(0);
+    g_signal_connect( G_OBJECT(_tracker), "modified", G_CALLBACK(hook), this );
+}
 
 PrefWatcher::~PrefWatcher()
 {
+}
+
+void PrefWatcher::hook(EgeColorProfTracker */*tracker*/, gint screen, gint monitor, PrefWatcher */*watcher*/)
+{
+    unsigned char* buf = 0;
+    guint len = 0;
+
+    ege_color_prof_tracker_get_profile_for( screen, monitor, reinterpret_cast<gpointer*>(&buf), &len );
+    Glib::ustring id = Inkscape::colorprofile_set_display_per( buf, len, screen, monitor );
 }
 
 void PrefWatcher::add( SPDesktopWidget* dtw )
@@ -501,6 +517,15 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     gtk_box_pack_start(GTK_BOX(dtw->statusbar), GTK_WIDGET(dtw->layer_selector->gobj()), FALSE, FALSE, 1);
 
     dtw->_tracker = ege_color_prof_tracker_new(GTK_WIDGET(dtw->layer_selector->gobj()));
+    {
+        Glib::ustring id = Inkscape::colorprofile_get_display_id( 0, 0 );
+        bool enabled = false;
+        if ( dtw->canvas->cms_key ) {
+            *(dtw->canvas->cms_key) = id;
+            enabled = !dtw->canvas->cms_key->empty();
+        }
+        gtk_widget_set_sensitive( dtw->cms_adjust, enabled );
+    }
     g_signal_connect( G_OBJECT(dtw->_tracker), "changed", G_CALLBACK(sp_dtw_color_profile_event), dtw );
 
     dtw->select_status_eventbox = gtk_event_box_new ();
@@ -707,18 +732,20 @@ sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dt
     return FALSE;
 }
 
-void sp_dtw_color_profile_event(EgeColorProfTracker *tracker, SPDesktopWidget */*dtw*/)
+void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidget *dtw)
 {
     // Handle profile changes
-    Md5Digest digest;
-    unsigned char* buf = 0;
-    guint len = 0;
-    ege_color_prof_tracker_get_profile( tracker, reinterpret_cast<gpointer*>(&buf), &len );
-    if ( buf && len ) {
-        digest.append(buf, len);
+    GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(dtw));
+    gint screenNum = gdk_screen_get_number(screen);
+    gint monitor = gdk_screen_get_monitor_at_window(screen, gtk_widget_get_toplevel(GTK_WIDGET(dtw))->window);
+    Glib::ustring id = Inkscape::colorprofile_get_display_id( screenNum, monitor );
+    bool enabled = false;
+    if ( dtw->canvas->cms_key ) {
+        *(dtw->canvas->cms_key) = id;
+        dtw->requestCanvasUpdate();
+        enabled = !dtw->canvas->cms_key->empty();
     }
-    std::string hash = digest.finishHex();
-    //g_message("ICC profile %d bytes at %p is [%s]", len, buf, hash.c_str() );
+    gtk_widget_set_sensitive( dtw->cms_adjust, enabled );
 }
 
 void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )

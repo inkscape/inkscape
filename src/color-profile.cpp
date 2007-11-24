@@ -1,15 +1,5 @@
 
 
-#include "xml/repr.h"
-#include "color-profile.h"
-#include "color-profile-fns.h"
-#include "attributes.h"
-#include "inkscape.h"
-#include "document.h"
-#include "prefs-utils.h"
-
-#include "dom/uri.h"
-
 //#define DEBUG_LCMS
 
 #include <glib/gstdio.h>
@@ -19,6 +9,17 @@
 #ifdef DEBUG_LCMS
 #include <gtk/gtkmessagedialog.h>
 #endif // DEBUG_LCMS
+
+#include "xml/repr.h"
+#include "color-profile.h"
+#include "color-profile-fns.h"
+#include "attributes.h"
+#include "inkscape.h"
+#include "document.h"
+#include "prefs-utils.h"
+
+#include "dom/uri.h"
+#include "dom/util/digest.h"
 
 using Inkscape::ColorProfile;
 using Inkscape::ColorProfileClass;
@@ -789,8 +790,19 @@ cmsHPROFILE Inkscape::colorprofile_get_proof_profile_handle()
     return theOne;
 }
 
+static void free_transforms();
+
 cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
 {
+    long long int fromDisplay = prefs_get_int_attribute_limited( "options.displayprofile", "from_display", 0, 0, 1 );
+    if ( fromDisplay ) {
+        if ( transf ) {
+            cmsDeleteTransform(transf);
+            transf = 0;
+        }
+        return 0;
+    }
+
     bool warn = prefs_get_int_attribute_limited( "options.softproof", "gamutwarn", 0, 0, 1 );
     int intent = prefs_get_int_attribute_limited( "options.displayprofile", "intent", 0, 0, 3 );
     int proofIntent = prefs_get_int_attribute_limited( "options.softproof", "intent", 0, 0, 3 );
@@ -811,10 +823,7 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
          || (gamutColor != lastGamutColor)
         ) {
         gamutWarn = warn;
-        if ( transf ) {
-            cmsDeleteTransform(transf);
-            transf = 0;
-        }
+        free_transforms();
         lastIntent = intent;
         lastProofIntent = proofIntent;
         lastBPC = bpc;
@@ -851,6 +860,176 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
 
     return transf;
 }
+
+
+class MemProfile {
+public:
+    MemProfile();
+    ~MemProfile();
+
+    std::string id;
+    cmsHPROFILE hprof;
+    cmsHTRANSFORM transf;
+};
+
+MemProfile::MemProfile() :
+    id(),
+    hprof(0),
+    transf(0)
+{
+}
+
+MemProfile::~MemProfile()
+{
+}
+
+static std::vector< std::vector<MemProfile> > perMonitorProfiles;
+
+void free_transforms()
+{
+    if ( transf ) {
+        cmsDeleteTransform(transf);
+        transf = 0;
+    }
+
+    for ( std::vector< std::vector<MemProfile> >::iterator it = perMonitorProfiles.begin(); it != perMonitorProfiles.end(); ++it ) {
+        for ( std::vector<MemProfile>::iterator it2 = it->begin(); it2 != it->end(); ++it2 ) {
+            if ( it2->transf ) {
+                cmsDeleteTransform(it2->transf);
+                it2->transf = 0;
+            }
+        }
+    }
+}
+
+Glib::ustring Inkscape::colorprofile_get_display_id( int screen, int monitor )
+{
+    Glib::ustring id;
+
+    if ( screen >= 0 && screen < static_cast<int>(perMonitorProfiles.size()) ) {
+        std::vector<MemProfile>& row = perMonitorProfiles[screen];
+        if ( monitor >= 0 && monitor < static_cast<int>(row.size()) ) {
+            MemProfile& item = row[monitor];
+            id = item.id;
+        }
+    }
+
+    return id;
+}
+
+Glib::ustring Inkscape::colorprofile_set_display_per( gpointer buf, guint bufLen, int screen, int monitor )
+{
+    Glib::ustring id;
+
+    while ( static_cast<int>(perMonitorProfiles.size()) <= screen ) {
+        std::vector<MemProfile> tmp;
+        perMonitorProfiles.push_back(tmp);
+    }
+    std::vector<MemProfile>& row = perMonitorProfiles[screen];
+    while ( static_cast<int>(row.size()) <= monitor ) {
+        MemProfile tmp;
+        row.push_back(tmp);
+    }
+    MemProfile& item = row[monitor];
+
+    if ( item.hprof ) {
+        cmsCloseProfile( item.hprof );
+        item.hprof = 0;
+    }
+    id.clear();
+
+    if ( buf && bufLen ) {
+        Md5Digest digest;
+        if ( buf && bufLen ) {
+            digest.append(reinterpret_cast<unsigned char*>(buf), bufLen);
+        }
+        id = digest.finishHex();
+
+        // Note: if this is not a valid profile, item.hprof will be set to null.
+        item.hprof = cmsOpenProfileFromMem(buf, bufLen);
+    }
+    item.id = id;
+
+    return id;
+}
+
+cmsHTRANSFORM Inkscape::colorprofile_get_display_per( Glib::ustring const& id )
+{
+    cmsHTRANSFORM result = 0;
+    if ( id.empty() ) {
+        return 0;
+    }
+
+    bool found = false;
+    for ( std::vector< std::vector<MemProfile> >::iterator it = perMonitorProfiles.begin(); it != perMonitorProfiles.end() && !found; ++it ) {
+        for ( std::vector<MemProfile>::iterator it2 = it->begin(); it2 != it->end() && !found; ++it2 ) {
+            if ( id == it2->id ) {
+                MemProfile& item = *it2;
+
+                bool warn = prefs_get_int_attribute_limited( "options.softproof", "gamutwarn", 0, 0, 1 );
+                int intent = prefs_get_int_attribute_limited( "options.displayprofile", "intent", 0, 0, 3 );
+                int proofIntent = prefs_get_int_attribute_limited( "options.softproof", "intent", 0, 0, 3 );
+                bool bpc = prefs_get_int_attribute_limited( "options.softproof", "bpc", 0, 0, 1 );
+#if defined(cmsFLAGS_PRESERVEBLACK)
+                bool preserveBlack = prefs_get_int_attribute_limited( "options.softproof", "preserveblack", 0, 0, 1 );
+#endif //defined(cmsFLAGS_PRESERVEBLACK)
+                gchar const* colorStr = prefs_get_string_attribute("options.softproof", "gamutcolor");
+                Gdk::Color gamutColor( (colorStr && colorStr[0]) ? colorStr : "#808080");
+
+                if ( (warn != gamutWarn)
+                     || (lastIntent != intent)
+                     || (lastProofIntent != proofIntent)
+                     || (bpc != lastBPC)
+#if defined(cmsFLAGS_PRESERVEBLACK)
+                     || (preserveBlack != lastPreserveBlack)
+#endif // defined(cmsFLAGS_PRESERVEBLACK)
+                     || (gamutColor != lastGamutColor)
+                    ) {
+                    gamutWarn = warn;
+                    free_transforms();
+                    lastIntent = intent;
+                    lastProofIntent = proofIntent;
+                    lastBPC = bpc;
+#if defined(cmsFLAGS_PRESERVEBLACK)
+                    lastPreserveBlack = preserveBlack;
+#endif // defined(cmsFLAGS_PRESERVEBLACK)
+                    lastGamutColor = gamutColor;
+                }
+
+                // Fetch these now, as they might clear the transform as a side effect.
+                cmsHPROFILE proofProf = item.hprof ? Inkscape::colorprofile_get_proof_profile_handle() : 0;
+
+                if ( !item.transf ) {
+                    if ( item.hprof && proofProf ) {
+                        DWORD dwFlags = cmsFLAGS_SOFTPROOFING;
+                        if ( gamutWarn ) {
+                            dwFlags |= cmsFLAGS_GAMUTCHECK;
+                            cmsSetAlarmCodes(gamutColor.get_red() >> 8, gamutColor.get_green() >> 8, gamutColor.get_blue() >> 8);
+                        }
+                        if ( bpc ) {
+                            dwFlags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+                        }
+#if defined(cmsFLAGS_PRESERVEBLACK)
+                        if ( preserveBlack ) {
+                            dwFlags |= cmsFLAGS_PRESERVEBLACK;
+                        }
+#endif // defined(cmsFLAGS_PRESERVEBLACK)
+                        item.transf = cmsCreateProofingTransform( ColorProfile::getSRGBProfile(), TYPE_RGB_8, item.hprof, TYPE_RGB_8, proofProf, intent, proofIntent, dwFlags );
+                    } else if ( item.hprof ) {
+                        item.transf = cmsCreateTransform( ColorProfile::getSRGBProfile(), TYPE_RGB_8, item.hprof, TYPE_RGB_8, intent, 0 );
+                    }
+                }
+
+                result = item.transf;
+                found = true;
+            }
+        }
+    }
+
+    return result;
+}
+
+
 
 #endif // ENABLE_LCMS
 

@@ -1593,7 +1593,13 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
     }
 
 #if ENABLE_LCMS
-    cmsHTRANSFORM transf = Inkscape::colorprofile_get_display_transform();
+    cmsHTRANSFORM transf = 0;
+    long long int fromDisplay = prefs_get_int_attribute_limited( "options.displayprofile", "from_display", 0, 0, 1 );
+    if ( fromDisplay ) {
+        transf = Inkscape::colorprofile_get_display_per( canvas->cms_key ? *(canvas->cms_key) : "" );
+    } else {
+        transf = Inkscape::colorprofile_get_display_transform();
+    }
 #endif // ENABLE_LCMS
 
     if (buf.is_empty) {

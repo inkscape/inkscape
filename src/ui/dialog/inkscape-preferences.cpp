@@ -673,10 +673,19 @@ void InkscapePreferences::initPageCMS()
     _page_cms.add_line( false, "", *lbl, "", "", true);
 #endif // !ENABLE_LCMS
 
-    _page_cms.add_group_header( _("Display Calibration"));
+    _page_cms.add_group_header( _("Display Adjustment"));
 
     _page_cms.add_line( false, _("Display profile:"), _cms_display_profile, "",
                         _("The ICC profile to use to calibrate display output."), false);
+
+    _cms_from_display.init( _("Retrieve profile from display"), "options.displayprofile", "from_display", false);
+    _page_cms.add_line( false, "", _cms_from_display, "",
+#ifdef GDK_WINDOWING_X11
+                        _("Retrieve profiles from those attached to displays via XICC."), false);
+#else
+                        _("Retrieve profiles from those attached to displays."), false);
+#endif // GDK_WINDOWING_X11
+
 
     _cms_intent.init("options.displayprofile", "intent", intentLabels, intentValues, numIntents, 0);
     _page_cms.add_line( false, _("Display intent:"), _cms_intent, "",
@@ -765,6 +774,7 @@ void InkscapePreferences::initPageCMS()
     // disable it, but leave it visible
     _cms_intent.set_sensitive( false );
     _cms_display_profile.set_sensitive( false );
+    _cms_from_display.set_sensitive( false );
     _cms_softproof.set_sensitive( false );
     _cms_gamutwarn.set_sensitive( false );
     _cms_gamutcolor.set_sensitive( false );

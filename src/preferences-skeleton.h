@@ -184,6 +184,7 @@ static char const preferences_skeleton[] =
 "    <group\n"
 "       id=\"displayprofile\"\n"
 "       enable=\"0\"\n"
+"       from_display=\"0\"\n"
 "       intent=\"0\"\n"
 "       uri=\"\" />\n"
 "    <group\n"

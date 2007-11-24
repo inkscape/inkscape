@@ -30,6 +30,10 @@ GType colorprofile_get_type();
 cmsHPROFILE colorprofile_get_handle( SPDocument* document, guint* intent, gchar const* name );
 cmsHTRANSFORM colorprofile_get_display_transform();
 
+Glib::ustring colorprofile_get_display_id( int screen, int monitor );
+Glib::ustring colorprofile_set_display_per( gpointer buf, guint bufLen, int screen, int monitor );
+cmsHTRANSFORM colorprofile_get_display_per( Glib::ustring const& id );
+
 std::vector<Glib::ustring> colorprofile_get_display_names();
 std::vector<Glib::ustring> colorprofile_get_softproof_names();
 
