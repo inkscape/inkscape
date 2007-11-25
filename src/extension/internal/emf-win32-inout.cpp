@@ -155,16 +155,16 @@ EmfWin32::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *
     if (ext == NULL)
         return;
 
-//    bool old_textToPath  = ext->get_param_bool("textToPath");
-//    bool new_val         = mod->get_param_bool("textToPath");
-//    ext->set_param_bool("textToPath", new_val);
+    bool old_textToPath  = ext->get_param_bool("textToPath");
+    bool new_val         = mod->get_param_bool("textToPath");
+    ext->set_param_bool("textToPath", new_val);
 
     gchar * final_name;
     final_name = g_strdup_printf("%s", uri);
     emf_print_document_to_file(doc, final_name);
     g_free(final_name);
 
-//    ext->set_param_bool("textToPath", old_textToPath);
+    ext->set_param_bool("textToPath", old_textToPath);
 
     return;
 }
@@ -180,9 +180,11 @@ typedef struct emf_callback_data {
     Glib::ustring *outsvg;
     Glib::ustring *path;
     struct SPStyle style;
+    class SPTextStyle tstyle;
     bool stroke_set;
     bool fill_set;
     double xDPI, yDPI;
+    bool pathless_stroke;
 
     SIZEL sizeWnd;
     SIZEL sizeView;
@@ -207,35 +209,43 @@ output_style(PEMF_CALLBACK_DATA d, int iType)
     SVGOStringStream tmp_style;
     char tmp[1024] = {0};
 
+    float fill_rgb[3];
+    sp_color_get_rgb_floatv( &(d->style.fill.value.color), fill_rgb );
+    
+    float stroke_rgb[3];
+    sp_color_get_rgb_floatv(&(d->style.stroke.value.color), stroke_rgb);
+
     *(d->outsvg) += "\n\tstyle=\"";
     if (iType == EMR_STROKEPATH || !d->fill_set) {
         tmp_style << "fill:none;";
     } else {
-        float rgb[3];
-        sp_color_get_rgb_floatv( &(d->style.fill.value.color), rgb );
         snprintf(tmp, 1023,
                  "fill:#%02x%02x%02x;",
-                 SP_COLOR_F_TO_U(rgb[0]),
-                 SP_COLOR_F_TO_U(rgb[1]),
-                 SP_COLOR_F_TO_U(rgb[2]));
+                 SP_COLOR_F_TO_U(fill_rgb[0]),
+                 SP_COLOR_F_TO_U(fill_rgb[1]),
+                 SP_COLOR_F_TO_U(fill_rgb[2]));
         tmp_style << tmp;
         snprintf(tmp, 1023,
                  "fill-rule:%s;",
                  d->style.fill_rule.value != 0 ? "evenodd" : "nonzero");
         tmp_style << tmp;
         tmp_style << "fill-opacity:1;";
+
+        if (d->fill_set && d->stroke_set && d->style.stroke_width.value == 1 &&
+            fill_rgb[0]==stroke_rgb[0] && fill_rgb[1]==stroke_rgb[1] && fill_rgb[2]==stroke_rgb[2])
+        {
+            d->stroke_set = false;
+        }
     }
 
     if (iType == EMR_FILLPATH || !d->stroke_set) {
         tmp_style << "stroke:none;";
     } else {
-        float rgb[3];
-        sp_color_get_rgb_floatv(&(d->style.stroke.value.color), rgb);
         snprintf(tmp, 1023,
                  "stroke:#%02x%02x%02x;",
-                 SP_COLOR_F_TO_U(rgb[0]),
-                 SP_COLOR_F_TO_U(rgb[1]),
-                 SP_COLOR_F_TO_U(rgb[2]));
+                 SP_COLOR_F_TO_U(stroke_rgb[0]),
+                 SP_COLOR_F_TO_U(stroke_rgb[1]),
+                 SP_COLOR_F_TO_U(stroke_rgb[2]));
         tmp_style << tmp;
 
         tmp_style << "stroke-width:" <<
@@ -315,6 +325,35 @@ select_pen(PEMF_CALLBACK_DATA d, int index)
         return;
 
     switch (pEmr->lopn.lopnStyle) {
+        case PS_DASH:
+        case PS_DOT:
+        case PS_DASHDOT:
+        case PS_DASHDOTDOT:
+        {
+            int i = 0;
+            d->style.stroke_dash.n_dash =
+                PS_DASHDOTDOT ? 6 : PS_DASHDOT ? 4 : 2;
+            if (d->style.stroke_dash.dash)
+                delete[] d->style.stroke_dash.dash;
+            d->style.stroke_dash.dash = new double[d->style.stroke_dash.n_dash];
+            if (pEmr->lopn.lopnStyle==PS_DASH || pEmr->lopn.lopnStyle==PS_DASHDOT || pEmr->lopn.lopnStyle==PS_DASHDOTDOT) {
+                d->style.stroke_dash.dash[i++] = 3;
+                d->style.stroke_dash.dash[i++] = 1;
+            }
+            if (pEmr->lopn.lopnStyle==PS_DOT || pEmr->lopn.lopnStyle==PS_DASHDOT || pEmr->lopn.lopnStyle==PS_DASHDOTDOT) {
+                d->style.stroke_dash.dash[i++] = 1;
+                d->style.stroke_dash.dash[i++] = 1;
+            }
+            if (pEmr->lopn.lopnStyle==PS_DASHDOTDOT) {
+                d->style.stroke_dash.dash[i++] = 1;
+                d->style.stroke_dash.dash[i++] = 1;
+            }
+            
+            d->style.stroke_dasharray_set = 1;
+            break;
+        }
+        
+        case PS_SOLID:
         default:
         {
             d->style.stroke_dasharray_set = 0;
@@ -322,10 +361,16 @@ select_pen(PEMF_CALLBACK_DATA d, int index)
         }
     }
 
-    if (pEmr->lopn.lopnWidth.x) {
+    d->stroke_set = true;
+
+    if (pEmr->lopn.lopnStyle == PS_NULL) {
+        d->style.stroke_width.value = 0;
+        d->stroke_set = false;
+    } else if (pEmr->lopn.lopnWidth.x) {
         d->style.stroke_width.value = pix_size_to_point( d, pEmr->lopn.lopnWidth.x );
     } else { // this stroke should always be rendered as 1 pixel wide, independent of zoom level (can that be done in SVG?)
-        d->style.stroke_width.value = 1.0;
+        //d->style.stroke_width.value = 1.0;
+        d->style.stroke_width.value = pix_size_to_point( d, 1 );
     }
 
     double r, g, b;
@@ -335,8 +380,6 @@ select_pen(PEMF_CALLBACK_DATA d, int index)
     d->style.stroke.value.color.set( r, g, b );
 
     d->style.stroke_linejoin.computed = 1;
-
-    d->stroke_set = true;
 }
 
 
@@ -450,6 +493,28 @@ select_brush(PEMF_CALLBACK_DATA d, int index)
 
 
 static void
+select_font(PEMF_CALLBACK_DATA d, int index)
+{
+    PEMREXTCREATEFONTINDIRECTW pEmr = NULL;
+
+    if (index >= 0 && index < d->n_obj)
+        pEmr = (PEMREXTCREATEFONTINDIRECTW) d->emf_obj[index].lpEMFR;
+
+    if (!pEmr)
+        return;
+
+    d->style.font_size.computed = pix_size_to_point( d, pEmr->elfw.elfLogFont.lfHeight );
+    d->style.font_weight.value = pEmr->elfw.elfLogFont.lfWeight;
+    d->style.font_style.value = (pEmr->elfw.elfLogFont.lfItalic ? SP_CSS_FONT_STYLE_ITALIC : SP_CSS_FONT_STYLE_NORMAL);
+    d->style.text_decoration.underline = pEmr->elfw.elfLogFont.lfUnderline;
+    d->style.text_decoration.line_through = pEmr->elfw.elfLogFont.lfStrikeOut;
+    if (d->tstyle.font_family.value)
+        g_free(d->tstyle.font_family.value);
+    d->tstyle.font_family.value =
+        (gchar *) g_utf16_to_utf8( (gunichar2*) pEmr->elfw.elfLogFont.lfFaceName, -1, NULL, NULL, NULL );
+}
+
+static void
 delete_object(PEMF_CALLBACK_DATA d, int index)
 {
     if (index >= 0 && index < d->n_obj) {
@@ -482,6 +547,21 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
 
     d = (PEMF_CALLBACK_DATA) lpData;
 
+    if (d->pathless_stroke) {
+        if (lpEMFR->iType!=EMR_POLYBEZIERTO && lpEMFR->iType!=EMR_POLYBEZIERTO16 &&
+            lpEMFR->iType!=EMR_POLYLINETO && lpEMFR->iType!=EMR_POLYLINETO16 &&
+            lpEMFR->iType!=EMR_LINETO && lpEMFR->iType!=EMR_ARCTO)
+        {
+            *(d->outsvg) += "    <path ";
+            output_style(d, EMR_STROKEPATH);
+            *(d->outsvg) += "\n\t";
+            *(d->outsvg) += *(d->path);
+            *(d->outsvg) += " \" /> \n";
+            *(d->path) = "";
+            d->pathless_stroke = false;
+        }
+    }
+
     switch (lpEMFR->iType)
     {
         case EMR_HEADER:
@@ -505,7 +585,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             if (pEmr->nHandles) {
                 d->n_obj = pEmr->nHandles;
                 d->emf_obj = new EMF_OBJECT[d->n_obj];
-
+                
                 // Init the new emf_obj list elements to null, provided the
                 // dynamic allocation succeeded.
                 if ( d->emf_obj != NULL )
@@ -614,6 +694,9 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             PEMRPOLYBEZIERTO pEmr = (PEMRPOLYBEZIERTO) lpEMFR;
             DWORD i,j;
 
+            if (d->path->empty())
+                *(d->path) = "d=\"";
+
             for (i=0; i<pEmr->cptl;) {
                 tmp_path << "\n\tC ";
                 for (j=0; j<3 && i<pEmr->cptl; j++,i++) {
@@ -630,6 +713,9 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             PEMRPOLYLINETO pEmr = (PEMRPOLYLINETO) lpEMFR;
             DWORD i;
 
+            if (d->path->empty())
+                *(d->path) = "d=\"";
+
             for (i=0; i<pEmr->cptl;i++) {
                 tmp_path <<
                     "\n\tL " <<
@@ -640,12 +726,52 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             break;
         }
         case EMR_POLYPOLYLINE:
-            break;
         case EMR_POLYPOLYGON:
+        {
+            PEMRPOLYPOLYGON pEmr = (PEMRPOLYPOLYGON) lpEMFR;
+            unsigned int n, i, j;
+
+            if (lpEMFR->iType == EMR_POLYPOLYGON)
+                *(d->outsvg) += "<!-- EMR_POLYPOLYGON... -->\n";
+            else
+                *(d->outsvg) += "<!-- EMR_POLYPOLYLINE... -->\n";
+
+            *(d->outsvg) += "<path ";
+            output_style(d, lpEMFR->iType==EMR_POLYPOLYGON ? EMR_STROKEANDFILLPATH : EMR_STROKEPATH);
+            *(d->outsvg) += "\n\td=\"";
+
+            POINTL *aptl = (POINTL *) &pEmr->aPolyCounts[pEmr->nPolys];
+
+            i = 0;
+            for (n=0; n<pEmr->nPolys && i<pEmr->cptl; n++) {
+                SVGOStringStream poly_path;
+
+                poly_path << "\n\tM " <<
+                    pix_x_to_point( d, aptl[i].x ) << " " <<
+                    pix_y_to_point( d, aptl[i].y ) << " ";
+                i++;
+
+                for (j=1; j<pEmr->aPolyCounts[n] && i<pEmr->cptl; j++) {
+                    poly_path << "\n\tL " <<
+                        pix_x_to_point( d, aptl[i].x ) << " " <<
+                        pix_y_to_point( d, aptl[i].y ) << " ";
+                    i++;
+                }
+
+                *(d->outsvg) += poly_path.str().c_str();
+                if (lpEMFR->iType == EMR_POLYPOLYGON)
+                    *(d->outsvg) += " z";
+                *(d->outsvg) += " \n";
+            }
+
+            *(d->outsvg) += " \" /> \n";
             break;
+        }
         case EMR_SETWINDOWEXTEX:
         {
             PEMRSETWINDOWEXTEX pEmr = (PEMRSETWINDOWEXTEX) lpEMFR;
+
+            *(d->outsvg) += "<!-- EMR_SETWINDOWEXTEX -->\n";
 
             d->sizeWnd = pEmr->szlExtent;
             d->PixelsX = d->sizeWnd.cx;
@@ -665,6 +791,8 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
         case EMR_SETVIEWPORTEXTEX:
         {
             PEMRSETVIEWPORTEXTEX pEmr = (PEMRSETVIEWPORTEXTEX) lpEMFR;
+
+            *(d->outsvg) += "<!-- EMR_SETVIEWPORTEXTEX -->\n";
 
             d->sizeView = pEmr->szlExtent;
 
@@ -705,6 +833,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             break;
         }
         case EMR_SETBRUSHORGEX:
+            *(d->outsvg) += "<!-- EMR_SETBRUSHORGEX -->\n";
             break;
         case EMR_EOF:
         {
@@ -712,12 +841,16 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             break;
         }
         case EMR_SETPIXELV:
+            *(d->outsvg) += "<!-- EMR_SETPIXELV -->\n";
             break;
         case EMR_SETMAPPERFLAGS:
+            *(d->outsvg) += "<!-- EMR_SETMAPPERFLAGS -->\n";
             break;
         case EMR_SETMAPMODE:
+            *(d->outsvg) += "<!-- EMR_SETMAPMODE -->\n";
             break;
         case EMR_SETBKMODE:
+            *(d->outsvg) += "<!-- EMR_SETBKMODE -->\n";
             break;
         case EMR_SETPOLYFILLMODE:
         {
@@ -728,22 +861,35 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             break;
         }
         case EMR_SETROP2:
+            *(d->outsvg) += "<!-- EMR_SETROP2 -->\n";
             break;
         case EMR_SETSTRETCHBLTMODE:
+            *(d->outsvg) += "<!-- EMR_SETSTRETCHBLTMODE -->\n";
             break;
         case EMR_SETTEXTALIGN:
+            *(d->outsvg) += "<!-- EMR_SETTEXTALIGN -->\n";
             break;
         case EMR_SETCOLORADJUSTMENT:
+            *(d->outsvg) += "<!-- EMR_SETCOLORADJUSTMENT -->\n";
             break;
         case EMR_SETTEXTCOLOR:
+            *(d->outsvg) += "<!-- EMR_SETTEXTCOLOR -->\n";
             break;
         case EMR_SETBKCOLOR:
+            *(d->outsvg) += "<!-- EMR_SETBKCOLOR -->\n";
             break;
         case EMR_OFFSETCLIPRGN:
+            *(d->outsvg) += "<!-- EMR_OFFSETCLIPRGN -->\n";
             break;
         case EMR_MOVETOEX:
         {
             PEMRMOVETOEX pEmr = (PEMRMOVETOEX) lpEMFR;
+
+            if (d->path->empty()) {
+                d->pathless_stroke = true;
+                *(d->path) = "d=\"";
+            }
+
             tmp_path <<
                 "\n\tM " <<
                 pix_x_to_point( d, pEmr->ptl.x ) << " " <<
@@ -751,22 +897,31 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             break;
         }
         case EMR_SETMETARGN:
+            *(d->outsvg) += "<!-- EMR_SETMETARGN -->\n";
             break;
         case EMR_EXCLUDECLIPRECT:
+            *(d->outsvg) += "<!-- EMR_EXCLUDECLIPRECT -->\n";
             break;
         case EMR_INTERSECTCLIPRECT:
+            *(d->outsvg) += "<!-- EMR_INTERSECTCLIPRECT -->\n";
             break;
         case EMR_SCALEVIEWPORTEXTEX:
+            *(d->outsvg) += "<!-- EMR_SCALEVIEWPORTEXTEX -->\n";
             break;
         case EMR_SCALEWINDOWEXTEX:
+            *(d->outsvg) += "<!-- EMR_SCALEWINDOWEXTEX -->\n";
             break;
         case EMR_SAVEDC:
+            *(d->outsvg) += "<!-- EMR_SAVEDC -->\n";
             break;
         case EMR_RESTOREDC:
+            *(d->outsvg) += "<!-- EMR_RESTOREDC -->\n";
             break;
         case EMR_SETWORLDTRANSFORM:
+            *(d->outsvg) += "<!-- EMR_SETWORLDTRANSFORM -->\n";
             break;
         case EMR_MODIFYWORLDTRANSFORM:
+            *(d->outsvg) += "<!-- EMR_MODIFYWORLDTRANSFORM -->\n";
             break;
         case EMR_SELECTOBJECT:
         {
@@ -825,7 +980,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                     }
                 }
             } else {
-                if (index >= 0 && index < (unsigned int)d->n_obj) {
+                if (index >= 0 && index < (unsigned int) d->n_obj) {
                     switch (d->emf_obj[index].type)
                     {
                         case EMR_CREATEPEN:
@@ -836,6 +991,9 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                             break;
                         case EMR_EXTCREATEPEN:
                             select_extpen(d, index);
+                            break;
+                        case EMR_EXTCREATEFONTINDIRECTW:
+                            select_font(d, index);
                             break;
                     }
                 }
@@ -869,34 +1027,51 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
         case EMR_DELETEOBJECT:
             break;
         case EMR_ANGLEARC:
+            *(d->outsvg) += "<!-- EMR_ANGLEARC -->\n";
             break;
         case EMR_ELLIPSE:
+            *(d->outsvg) += "<!-- EMR_ELLIPSE -->\n";
             break;
         case EMR_RECTANGLE:
+            *(d->outsvg) += "<!-- EMR_RECTANGLE -->\n";
             break;
         case EMR_ROUNDRECT:
+            *(d->outsvg) += "<!-- EMR_ROUNDRECT -->\n";
             break;
         case EMR_ARC:
+            *(d->outsvg) += "<!-- EMR_ARC -->\n";
             break;
         case EMR_CHORD:
+            *(d->outsvg) += "<!-- EMR_CHORD -->\n";
             break;
         case EMR_PIE:
+            *(d->outsvg) += "<!-- EMR_PIE -->\n";
             break;
         case EMR_SELECTPALETTE:
+            *(d->outsvg) += "<!-- EMR_SELECTPALETTE -->\n";
             break;
         case EMR_CREATEPALETTE:
+            *(d->outsvg) += "<!-- EMR_CREATEPALETTE -->\n";
             break;
         case EMR_SETPALETTEENTRIES:
+            *(d->outsvg) += "<!-- EMR_SETPALETTEENTRIES -->\n";
             break;
         case EMR_RESIZEPALETTE:
+            *(d->outsvg) += "<!-- EMR_RESIZEPALETTE -->\n";
             break;
         case EMR_REALIZEPALETTE:
+            *(d->outsvg) += "<!-- EMR_REALIZEPALETTE -->\n";
             break;
         case EMR_EXTFLOODFILL:
+            *(d->outsvg) += "<!-- EMR_EXTFLOODFILL -->\n";
             break;
         case EMR_LINETO:
         {
             PEMRLINETO pEmr = (PEMRLINETO) lpEMFR;
+
+            if (d->path->empty())
+                *(d->path) = "d=\"";
+
             tmp_path <<
                 "\n\tL " <<
                 pix_x_to_point( d, pEmr->ptl.x ) << " " <<
@@ -904,10 +1079,13 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             break;
         }
         case EMR_ARCTO:
+            *(d->outsvg) += "<!-- EMR_ARCTO -->\n";
             break;
         case EMR_POLYDRAW:
+            *(d->outsvg) += "<!-- EMR_POLYDRAW -->\n";
             break;
         case EMR_SETARCDIRECTION:
+            *(d->outsvg) += "<!-- EMR_SETARCDIRECTION -->\n";
             break;
         case EMR_SETMITERLIMIT:
         {
@@ -921,7 +1099,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
         }
         case EMR_BEGINPATH:
         {
-            tmp_path << " d=\"";
+            tmp_path << "d=\"";
             *(d->path) = "";
             break;
         }
@@ -944,46 +1122,145 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             *(d->outsvg) += "\n\t";
             *(d->outsvg) += *(d->path);
             *(d->outsvg) += " /> \n";
+            *(d->path) = "";
             break;
         }
         case EMR_FLATTENPATH:
+            *(d->outsvg) += "<!-- EMR_FLATTENPATH -->\n";
             break;
         case EMR_WIDENPATH:
+            *(d->outsvg) += "<!-- EMR_WIDENPATH -->\n";
             break;
         case EMR_SELECTCLIPPATH:
+            *(d->outsvg) += "<!-- EMR_SELECTCLIPPATH -->\n";
             break;
         case EMR_ABORTPATH:
+            *(d->outsvg) += "<!-- EMR_ABORTPATH -->\n";
             break;
         case EMR_GDICOMMENT:
+            *(d->outsvg) += "<!-- EMR_GDICOMMENT -->\n";
             break;
         case EMR_FILLRGN:
+            *(d->outsvg) += "<!-- EMR_FILLRGN -->\n";
             break;
         case EMR_FRAMERGN:
+            *(d->outsvg) += "<!-- EMR_FRAMERGN -->\n";
             break;
         case EMR_INVERTRGN:
+            *(d->outsvg) += "<!-- EMR_INVERTRGN -->\n";
             break;
         case EMR_PAINTRGN:
+            *(d->outsvg) += "<!-- EMR_PAINTRGN -->\n";
             break;
         case EMR_EXTSELECTCLIPRGN:
+            *(d->outsvg) += "<!-- EMR_EXTSELECTCLIPRGN -->\n";
             break;
         case EMR_BITBLT:
+            *(d->outsvg) += "<!-- EMR_BITBLT -->\n";
             break;
         case EMR_STRETCHBLT:
+            *(d->outsvg) += "<!-- EMR_STRETCHBLT -->\n";
             break;
         case EMR_MASKBLT:
+            *(d->outsvg) += "<!-- EMR_MASKBLT -->\n";
             break;
         case EMR_PLGBLT:
+            *(d->outsvg) += "<!-- EMR_PLGBLT -->\n";
             break;
         case EMR_SETDIBITSTODEVICE:
+            *(d->outsvg) += "<!-- EMR_SETDIBITSTODEVICE -->\n";
             break;
         case EMR_STRETCHDIBITS:
+            *(d->outsvg) += "<!-- EMR_STRETCHDIBITS -->\n";
             break;
         case EMR_EXTCREATEFONTINDIRECTW:
+        {
+            PEMREXTCREATEFONTINDIRECTW pEmr = (PEMREXTCREATEFONTINDIRECTW) lpEMFR;
+            int index = pEmr->ihFont;
+
+            EMREXTCREATEFONTINDIRECTW *pFont =
+                (EMREXTCREATEFONTINDIRECTW *) malloc( sizeof(EMREXTCREATEFONTINDIRECTW) );
+            pFont->elfw = pEmr->elfw;
+            insert_object(d, index, EMR_EXTCREATEFONTINDIRECTW, (ENHMETARECORD *) pFont);
+
             break;
+        }
         case EMR_EXTTEXTOUTA:
+        {
+            *(d->outsvg) += "<!-- EMR_EXTTEXTOUTA -->\n";
             break;
+        }
         case EMR_EXTTEXTOUTW:
+        {
+            PEMREXTTEXTOUTW pEmr = (PEMREXTTEXTOUTW) lpEMFR;
+
+            double x = pEmr->emrtext.ptlReference.x;
+            double y = pEmr->emrtext.ptlReference.y;
+
+            x = pix_x_to_point(d, x);
+            y = pix_y_to_point(d, y);
+
+            wchar_t *text = (wchar_t *) ((char *) pEmr + pEmr->emrtext.offString);
+/*
+            int i;
+            for (i=0; i<pEmr->emrtext.nChars; i++) {
+                if (text[i] < L' ' || text[i] > L'z')
+                    text[i] = L'?';
+            }
+*/
+            gchar *t =
+                (gchar *) g_utf16_to_utf8( (gunichar2 *) text, pEmr->emrtext.nChars, NULL, NULL, NULL );
+
+            if (t) {
+                SVGOStringStream ts;
+
+                gchar *escaped = g_markup_escape_text(t, -1);
+
+                int j;
+                for (j=0; j<strlen(escaped); j++) {
+                    if (escaped[j] < 32 || escaped[j] > 127)
+                        escaped[j] = '?';
+                }
+
+                float text_rgb[3];
+                sp_color_get_rgb_floatv( &(d->style.fill.value.color), text_rgb );
+
+                char tmp[128];
+                snprintf(tmp, 127,
+                         "fill:#%02x%02x%02x;",
+                         SP_COLOR_F_TO_U(text_rgb[0]),
+                         SP_COLOR_F_TO_U(text_rgb[1]),
+                         SP_COLOR_F_TO_U(text_rgb[2]));
+
+                bool i = (d->style.font_style.value == SP_CSS_FONT_STYLE_ITALIC);
+                bool o = (d->style.font_style.value == SP_CSS_FONT_STYLE_OBLIQUE);
+                bool b = (d->style.font_weight.value == SP_CSS_FONT_WEIGHT_BOLD) ||
+                    (d->style.font_weight.value >= SP_CSS_FONT_WEIGHT_500 && d->style.font_weight.value <= SP_CSS_FONT_WEIGHT_900);
+
+                ts << "    <text\n";
+                ts << "        xml:space=\"preserve\"\n";
+                ts << "        x=\"" << x << "\"\n";
+                ts << "        y=\"" << y << "\"\n";
+                ts << "        style=\""
+                   << "font-size:" << d->style.font_size.computed << "px;"
+                   << tmp
+                   << "font-style:" << (i ? "italic" : "normal") << ";"
+                   << "font-weight:" << (b ? "bold" : "normal") << ";"
+//                   << "text-align:" << (b ? "start" : "center" : "end") << ";"
+                   << "font-family:" << d->tstyle.font_family.value << ";"
+                   << "\"\n";
+                ts << "    >";
+                ts << escaped;
+                ts << "</text>\n";
+                
+                *(d->outsvg) += ts.str().c_str();
+                
+                g_free(escaped);
+                g_free(t);
+            }
+            
             break;
+        }
         case EMR_POLYBEZIER16:
         {
             PEMRPOLYBEZIER16 pEmr = (PEMRPOLYBEZIER16) lpEMFR;
@@ -1078,6 +1355,9 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             POINTS *apts = (POINTS *) pEmr->apts; // Bug in MinGW wingdi.h ?
             DWORD i,j;
 
+            if (d->path->empty())
+                *(d->path) = "d=\"";
+
             for (i=0; i<pEmr->cpts;) {
                 tmp_path << "\n\tC ";
                 for (j=0; j<3 && i<pEmr->cpts; j++,i++) {
@@ -1095,6 +1375,9 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             POINTS *apts = (POINTS *) pEmr->apts; // Bug in MinGW wingdi.h ?
             DWORD i;
 
+            if (d->path->empty())
+                *(d->path) = "d=\"";
+
             for (i=0; i<pEmr->cpts;i++) {
                 tmp_path <<
                     "\n\tL " <<
@@ -1105,44 +1388,55 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             break;
         }
         case EMR_POLYPOLYLINE16:
-            break;
         case EMR_POLYPOLYGON16:
         {
             PEMRPOLYPOLYGON16 pEmr = (PEMRPOLYPOLYGON16) lpEMFR;
             unsigned int n, i, j;
 
+            if (lpEMFR->iType == EMR_POLYPOLYGON16)
+                *(d->outsvg) += "<!-- EMR_POLYPOLYGON16... -->\n";
+            else
+                *(d->outsvg) += "<!-- EMR_POLYPOLYLINE16... -->\n";
+
             *(d->outsvg) += "<path ";
-            output_style(d, EMR_STROKEANDFILLPATH);
+            output_style(d, lpEMFR->iType==EMR_POLYPOLYGON16 ? EMR_STROKEANDFILLPATH : EMR_STROKEPATH);
             *(d->outsvg) += "\n\td=\"";
 
-            i = pEmr->nPolys-1; // ???
-            for (n=0; n<pEmr->nPolys /*&& i<pEmr->cpts*/; n++) {
+            POINTS *apts = (POINTS *) &pEmr->aPolyCounts[pEmr->nPolys];
+
+            i = 0;
+            for (n=0; n<pEmr->nPolys && i<pEmr->cpts; n++) {
                 SVGOStringStream poly_path;
 
                 poly_path << "\n\tM " <<
-                    pix_x_to_point( d, pEmr->apts[i].x ) << " " <<
-                    pix_y_to_point( d, pEmr->apts[i].y ) << " ";
+                    pix_x_to_point( d, apts[i].x ) << " " <<
+                    pix_y_to_point( d, apts[i].y ) << " ";
                 i++;
 
-                for (j=1; j<pEmr->aPolyCounts[n] /*&& i<pEmr->cpts*/; j++) {
+                for (j=1; j<pEmr->aPolyCounts[n] && i<pEmr->cpts; j++) {
                     poly_path << "\n\tL " <<
-                        pix_x_to_point( d, pEmr->apts[i].x ) << " " <<
-                        pix_y_to_point( d, pEmr->apts[i].y ) << " ";
+                        pix_x_to_point( d, apts[i].x ) << " " <<
+                        pix_y_to_point( d, apts[i].y ) << " ";
                     i++;
                 }
 
                 *(d->outsvg) += poly_path.str().c_str();
-                *(d->outsvg) += " z \n";
+                if (lpEMFR->iType == EMR_POLYPOLYGON16)
+                    *(d->outsvg) += " z";
+                *(d->outsvg) += " \n";
             }
 
             *(d->outsvg) += " \" /> \n";
             break;
         }
         case EMR_POLYDRAW16:
+            *(d->outsvg) += "<!-- EMR_POLYDRAW16 -->\n";
             break;
         case EMR_CREATEMONOBRUSH:
+            *(d->outsvg) += "<!-- EMR_CREATEMONOBRUSH -->\n";
             break;
         case EMR_CREATEDIBPATTERNBRUSHPT:
+            *(d->outsvg) += "<!-- EMR_CREATEDIBPATTERNBRUSHPT -->\n";
             break;
         case EMR_EXTCREATEPEN:
         {
@@ -1166,25 +1460,34 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             break;
         }
         case EMR_POLYTEXTOUTA:
+            *(d->outsvg) += "<!-- EMR_POLYTEXTOUTA -->\n";
             break;
         case EMR_POLYTEXTOUTW:
+            *(d->outsvg) += "<!-- EMR_POLYTEXTOUTW -->\n";
             break;
         case EMR_SETICMMODE:
+            *(d->outsvg) += "<!-- EMR_SETICMMODE -->\n";
             break;
         case EMR_CREATECOLORSPACE:
+            *(d->outsvg) += "<!-- EMR_CREATECOLORSPACE -->\n";
             break;
         case EMR_SETCOLORSPACE:
+            *(d->outsvg) += "<!-- EMR_SETCOLORSPACE -->\n";
             break;
         case EMR_DELETECOLORSPACE:
+            *(d->outsvg) += "<!-- EMR_DELETECOLORSPACE -->\n";
             break;
         case EMR_GLSRECORD:
+            *(d->outsvg) += "<!-- EMR_GLSRECORD -->\n";
             break;
         case EMR_GLSBOUNDEDRECORD:
+            *(d->outsvg) += "<!-- EMR_GLSBOUNDEDRECORD -->\n";
             break;
         case EMR_PIXELFORMAT:
+            *(d->outsvg) += "<!-- EMR_PIXELFORMAT -->\n";
             break;
     }
-
+    
     *(d->outsvg) += tmp_outsvg.str().c_str();
     *(d->path) += tmp_path.str().c_str();
 
@@ -1358,7 +1661,7 @@ EmfWin32::open( Inkscape::Extension::Input *mod, const gchar *uri )
             delete_object(&d, i);
         delete[] d.emf_obj;
     }
-
+    
     if (d.style.stroke_dash.dash)
         delete[] d.style.stroke_dash.dash;
 
@@ -1409,6 +1712,7 @@ EmfWin32::init (void)
         "<inkscape-extension>\n"
             "<name>" N_("EMF Output") "</name>\n"
             "<id>org.inkscape.output.emf.win32</id>\n"
+            "<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">true</param>\n"
             "<output>\n"
                 "<extension>.emf</extension>\n"
                 "<mimetype>image/x-emf</mimetype>\n"

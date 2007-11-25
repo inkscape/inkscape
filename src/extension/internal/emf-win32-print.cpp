@@ -53,6 +53,10 @@
 #include "sp-paint-server.h"
 #include "inkscape_version.h"
 
+#include "FontFactory.h"
+#include "libnrtype/font-instance.h"
+#include "libnrtype/font-style-to-pos.h"
+
 #include "win32.h"
 #include "emf-win32-print.h"
 
@@ -79,6 +83,7 @@ static float dwDPI = 2540;
 PrintEmfWin32::PrintEmfWin32 (void):
     hdc(NULL),
     hbrush(NULL),
+    hbrushOld(NULL),
     hpen(NULL),
     fill_path(NULL)
 {
@@ -235,12 +240,16 @@ PrintEmfWin32::comment (Inkscape::Extension::Print * module,
 }
 
 
-void
+int
 PrintEmfWin32::create_brush(SPStyle const *style)
 {
     float rgb[3];
 
     if (style) {
+        float opacity = SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
+        if (opacity <= 0.0)
+            return 1;
+
         sp_color_get_rgb_floatv( &style->fill.value.color, rgb );
         hbrush = CreateSolidBrush( RGB(255*rgb[0], 255*rgb[1], 255*rgb[2]) );
         hbrushOld = (HBRUSH) SelectObject( hdc, hbrush );
@@ -253,6 +262,8 @@ PrintEmfWin32::create_brush(SPStyle const *style)
         hbrushOld = (HBRUSH) SelectObject( hdc, hbrush );
         SetPolyFillMode( hdc, ALTERNATE );
     }
+
+    return 0;
 }
 
 
@@ -263,11 +274,12 @@ PrintEmfWin32::destroy_brush()
     if (hbrush)
         DeleteObject( hbrush );
     hbrush = NULL;
+    hbrushOld = NULL;
 }
 
 
 void
-PrintEmfWin32::create_pen(SPStyle const *style)
+PrintEmfWin32::create_pen(SPStyle const *style, const NRMatrix *transform)
 {
     if (style) {
         float rgb[3];
@@ -285,7 +297,20 @@ PrintEmfWin32::create_pen(SPStyle const *style)
         DWORD *dash = NULL;
         float oldmiterlimit;
 
-        DWORD linewidth = MAX( 1, (DWORD) (style->stroke_width.computed * IN_PER_PX * dwDPI) );
+        using NR::X;
+        using NR::Y;
+
+        NR::Matrix tf = *transform;
+
+        NR::Point zero(0, 0);
+        NR::Point one(1, 1);
+        NR::Point p0(zero * tf);
+        NR::Point p1(one * tf);
+        NR::Point p(p1 - p0);
+
+        double scale = sqrt( (p[X]*p[X]) + (p[Y]*p[Y]) ) / sqrt(2);
+
+        DWORD linewidth = MAX( 1, (DWORD) (scale * style->stroke_width.computed * IN_PER_PX * dwDPI) );
 
         if (style->stroke_linecap.computed == 0) {
             linecap = PS_ENDCAP_FLAT;
@@ -445,6 +470,18 @@ PrintEmfWin32::cmp_bpath(const NArtBpath *bp1, const NArtBpath *bp2)
     return bp1->code != NR_END || bp2->code != NR_END;
 }
 
+unsigned int
+PrintEmfWin32::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, float opacity)
+{
+    text_transform = *transform;
+    return 0;
+}
+
+unsigned int
+PrintEmfWin32::release(Inkscape::Extension::Print *mod)
+{
+    return 0;
+}
 
 unsigned int
 PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
@@ -456,7 +493,8 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
     flush_fill(); // flush any pending fills
 
     if (style->fill.isColor()) {
-        create_brush(style);
+        if (create_brush(style))
+            return 0;
     } else {
         // create_brush(NULL);
         return 0;
@@ -486,9 +524,9 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
     }
 
     if (style->stroke.isColor()) {
-        create_pen(style);
+        create_pen(style, transform);
     } else {
-        // create_pen(NULL);
+        // create_pen(NULL, transform);
         return 0;
     }
 
@@ -590,6 +628,139 @@ PrintEmfWin32::textToPath(Inkscape::Extension::Print * ext)
     return ext->get_param_bool("textToPath");
 }
 
+unsigned int
+PrintEmfWin32::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
+              SPStyle const *const style)
+{
+    if (!hdc) return 0;
+
+    HFONT hfont = NULL;
+    
+#ifdef USE_PANGO_WIN32
+/*
+    font_instance *tf = (font_factory::Default())->Face(style->text->font_family.value, font_style_to_pos(*style));
+    if (tf) {
+        LOGFONT *lf = pango_win32_font_logfont(tf->pFont);
+        tf->Unref();
+        hfont = CreateFontIndirect(lf);
+        g_free(lf);
+    }
+*/
+#endif
+
+    if (!hfont) {
+        if (PrintWin32::is_os_wide()) {
+            LOGFONTW *lf = (LOGFONTW*)g_malloc(sizeof(LOGFONTW));
+            g_assert(lf != NULL);
+            
+            lf->lfHeight = style->font_size.computed * IN_PER_PX * dwDPI;
+            lf->lfWidth = 0;
+            lf->lfEscapement = 0;
+            lf->lfOrientation = 0;
+            lf->lfWeight =
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_100 ? FW_THIN :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_200 ? FW_EXTRALIGHT :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_300 ? FW_LIGHT :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_400 ? FW_NORMAL :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_500 ? FW_MEDIUM :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_600 ? FW_SEMIBOLD :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_700 ? FW_BOLD :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_800 ? FW_EXTRABOLD :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_900 ? FW_HEAVY :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_NORMAL ? FW_NORMAL :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_BOLD ? FW_BOLD :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_LIGHTER ? FW_EXTRALIGHT :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_BOLDER ? FW_EXTRABOLD :
+                FW_NORMAL;
+            lf->lfItalic = (style->font_style.value == SP_CSS_FONT_STYLE_ITALIC);
+            lf->lfUnderline = style->text_decoration.underline;
+            lf->lfStrikeOut = style->text_decoration.line_through;
+            lf->lfCharSet = DEFAULT_CHARSET;
+            lf->lfOutPrecision = OUT_DEFAULT_PRECIS;
+            lf->lfClipPrecision = CLIP_DEFAULT_PRECIS;
+            lf->lfQuality = DEFAULT_QUALITY;
+            lf->lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
+            
+            gunichar2 *unicode_name = g_utf8_to_utf16( style->text->font_family.value, -1, NULL, NULL, NULL );
+            wcsncpy(lf->lfFaceName, (wchar_t*) unicode_name, LF_FACESIZE-1);
+            g_free(unicode_name);
+            
+            hfont = CreateFontIndirectW(lf);
+            
+            g_free(lf);
+        }
+        else {
+            LOGFONTA *lf = (LOGFONTA*)g_malloc(sizeof(LOGFONTA));
+            g_assert(lf != NULL);
+            
+            lf->lfHeight = style->font_size.computed * IN_PER_PX * dwDPI;
+            lf->lfWidth = 0;
+            lf->lfEscapement = 0;
+            lf->lfOrientation = 0;
+            lf->lfWeight =
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_100 ? FW_THIN :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_200 ? FW_EXTRALIGHT :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_300 ? FW_LIGHT :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_400 ? FW_NORMAL :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_500 ? FW_MEDIUM :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_600 ? FW_SEMIBOLD :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_700 ? FW_BOLD :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_800 ? FW_EXTRABOLD :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_900 ? FW_HEAVY :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_NORMAL ? FW_NORMAL :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_BOLD ? FW_BOLD :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_LIGHTER ? FW_EXTRALIGHT :
+                style->font_weight.value == SP_CSS_FONT_WEIGHT_BOLDER ? FW_EXTRABOLD :
+                FW_NORMAL;
+            lf->lfItalic = (style->font_style.value == SP_CSS_FONT_STYLE_ITALIC);
+            lf->lfUnderline = style->text_decoration.underline;
+            lf->lfStrikeOut = style->text_decoration.line_through;
+            lf->lfCharSet = DEFAULT_CHARSET;
+            lf->lfOutPrecision = OUT_DEFAULT_PRECIS;
+            lf->lfClipPrecision = CLIP_DEFAULT_PRECIS;
+            lf->lfQuality = DEFAULT_QUALITY;
+            lf->lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
+            
+            strncpy(lf->lfFaceName, (char*) style->text->font_family.value, LF_FACESIZE-1);
+
+            hfont = CreateFontIndirectA(lf);
+            
+            g_free(lf);
+        }
+    }
+        
+    HFONT hfontOld = (HFONT) SelectObject(hdc, hfont);
+
+    float rgb[3];
+    sp_color_get_rgb_floatv( &style->fill.value.color, rgb );
+    SetTextColor(hdc, RGB(255*rgb[0], 255*rgb[1], 255*rgb[2]));
+
+    int align =
+        style->text_align.value == SP_CSS_TEXT_ALIGN_RIGHT ? TA_RIGHT :
+        style->text_align.value == SP_CSS_TEXT_ALIGN_CENTER ? TA_CENTER : TA_LEFT;
+    SetTextAlign(hdc, TA_BASELINE | align);
+
+    p = p * text_transform;
+    p[NR::X] = (p[NR::X] * IN_PER_PX * dwDPI);
+    p[NR::Y] = (p[NR::Y] * IN_PER_PX * dwDPI);
+
+    if (PrintWin32::is_os_wide()) {
+        gunichar2 *unicode_text = g_utf8_to_utf16( text, -1, NULL, NULL, NULL );
+        TextOutW(hdc, p[NR::X], p[NR::Y], (WCHAR*)unicode_text, wcslen((wchar_t*)unicode_text));
+    }
+    else {
+        TextOutA(hdc, p[NR::X], p[NR::Y], (CHAR*)text, strlen((char*)text));
+    }
+
+    SelectObject(hdc, hfontOld);
+    DeleteObject(hfont);
+    
+    return 0;
+
+
+
+    return 0;
+}
 
 void
 PrintEmfWin32::init (void)
