@@ -82,6 +82,9 @@ using NR::Y;
 
 #include "selection-chemistry.h"
 
+//#
+#include <windows.h>
+//#
 /* fixme: find a better place */
 Inkscape::XML::Document *clipboard_document = NULL;
 GSList *clipboard = NULL;
@@ -1120,6 +1123,55 @@ void sp_selection_copy()
     g_slist_free ((GSList *) items);
 }
 
+//____________________________________________________________________________
+
+/** Paste the bitmap in the clipboard if one is in there.
+	The bitmap is saved to a PNG file then imported into the document
+
+	@return true if a bitmap was detected and pasted; false if no bitmap
+*/
+static bool pastedPicFromClipboard()
+{
+	SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+	SPDocument *doc = SP_ACTIVE_DOCUMENT;
+	if ( desktop == NULL || doc == NULL)
+		return false;
+
+	Glib::RefPtr<Gtk::Clipboard> refClipboard = Gtk::Clipboard::get();
+	Glib::RefPtr<Gdk::Pixbuf> pic = refClipboard->wait_for_image();
+
+	// Stop if the system clipboard doesn't have a bitmap.
+	if ( pic == 0 )
+	{
+		return false;
+	} //if
+	else
+	{
+		// Write into a file, then import the file into the document.
+		// Make a file name based on current time; use the current working dir.
+		time_t rawtime;
+		char filename[50];
+		const char* path;
+
+		time ( &rawtime );
+		strftime (filename,50,"pastedpic_%m%d%Y_%H%M%S.png",localtime( &rawtime ));
+		path = (char *)prefs_get_string_attribute("dialogs.save_as", "path");
+		Glib::ustring finalPath = path;
+		finalPath.append(G_DIR_SEPARATOR_S).append(filename);
+		pic->save( finalPath, "png" );
+		file_import(doc, finalPath, NULL);
+
+		// Clear the clipboard so that the bitmap in there won't always over
+		// ride the normal inkscape clipboard.This isn't the ideal solution.
+		refClipboard->set_text("");
+		return true;
+	} //else
+
+	return false;
+} //pastedPicFromClipboard
+
+//____________________________________________________________________________
+
 void sp_selection_paste(bool in_place)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -1142,8 +1194,14 @@ void sp_selection_paste(bool in_place)
     }
 
     // check if something is in the clipboard
+
+    // Stop if successfully pasted a clipboard bitmap.
+    if ( pastedPicFromClipboard() )
+    	return;
+
+
     if (clipboard == NULL) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the clipboard."));
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing in the clipboard."));
         return;
     }
 
