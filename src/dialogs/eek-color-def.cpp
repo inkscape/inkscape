@@ -129,7 +129,8 @@ void ColorDef::addCallback( ColorCallback cb, void* data )
 
 void ColorDef::removeCallback( ColorCallback cb, void* data )
 {
-
+    (void)cb;
+    (void)data;
 }
 
 

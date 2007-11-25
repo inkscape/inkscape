@@ -66,7 +66,7 @@ sp_objectgroup_class_init (SPObjectGroupClass *klass)
 }
 
 static void
-sp_objectgroup_init (SPObjectGroup *objectgroup)
+sp_objectgroup_init (SPObjectGroup */*objectgroup*/)
 {
 }
 

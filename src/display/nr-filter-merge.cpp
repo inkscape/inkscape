@@ -46,7 +46,7 @@ FilterPrimitive * FilterMerge::create() {
 FilterMerge::~FilterMerge()
 {}
 
-int FilterMerge::render(FilterSlot &slot, FilterUnits const &units) {
+int FilterMerge::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     NRPixBlock *in[_input_image.size()];
     NRPixBlock *original_in[_input_image.size()];
 
@@ -117,10 +117,10 @@ void FilterMerge::set_input(int slot) {
 void FilterMerge::set_input(int input, int slot) {
     if (input < 0) return;
 
-    if (_input_image.size() > input) {
+    if (static_cast<int>(_input_image.size()) > input) {
         _input_image[input] = slot;
     } else {
-        for (unsigned int i = _input_image.size() ; i < input ; i++) {
+        for (int i = static_cast<int>(_input_image.size()) ; i < input ; i++) {
             _input_image.push_back(NR_FILTER_SLOT_NOT_SET);
         }
         _input_image.push_back(slot);

@@ -31,9 +31,9 @@ FilterImage::~FilterImage()
         if (image_pixbuf) g_free(image_pixbuf);
 }
 
-int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
+int FilterImage::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     if  (!feImageHref) return 0;
-    
+
     if (!image_pixbuf){
             if ( (image = Gdk::Pixbuf::create_from_file(feImageHref)) < 0 ) return 0;
             width = image->get_width();
@@ -49,7 +49,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
     int x1 = in->area.x1, y1 = in->area.y1;
     int bbox_x0 = (int) slot.get_arenaitem()->bbox.x0;
     int bbox_y0 = (int) slot.get_arenaitem()->bbox.y0;
-    
+
     nr_pixblock_setup_fast(out, in->mode, x0, y0, x1, y1, true);
 
     w = x1 - x0;
@@ -92,7 +92,7 @@ void FilterImage::set_region(SVGLength x, SVGLength y, SVGLength width, SVGLengt
 FilterTraits FilterImage::get_input_traits() {
     return TRAIT_PARALLER;
 }
-    
+
 } /* namespace NR */
 
 /*

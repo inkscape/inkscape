@@ -27,7 +27,7 @@ FilterPrimitive * FilterColorMatrix::create() {
 FilterColorMatrix::~FilterColorMatrix()
 {}
 
-int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &units) {
+int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 
@@ -43,12 +43,12 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &units) {
     x0=in->area.x0;
     y0=in->area.y0;
     x1=in->area.x1;
-    y1=in->area.y1;    
+    y1=in->area.y1;
 
     switch(type){
         case COLORMATRIX_MATRIX:
             if (values.size()!=20) {
-                g_warning("ColorMatrix: values parameter error. Wrong size: %i.", values.size());
+                g_warning("ColorMatrix: values parameter error. Wrong size: %i.", static_cast<int>(values.size()));
                 return -1;
             }
             for (x=x0;x<x1;x++){
@@ -92,7 +92,7 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &units) {
             a20 = 0.213 + coshue*(-0.213) + sinhue*(-0.787);
             a21 = 0.715 + coshue*(-0.715) + sinhue*( 0.715);
             a22 = 0.072 + coshue*( 0.928) + sinhue*( 0.072);
-                                    
+
             for (x=x0;x<x1;x++){
                 for (y=y0;y<y1;y++){
                     i = ((x-x0) + (x1-x0)*(y-y0))*4;
@@ -100,7 +100,7 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &units) {
                     g = in_data[i+1];
                     b = in_data[i+2];
                     a = in_data[i+3];
-                    
+
                     out_data[i] = CLAMP_D_TO_U8( r*a00 + g*a01 + b*a02 );
                     out_data[i+1] = CLAMP_D_TO_U8( r*a10 + g*a11 + b*a12 );
                     out_data[i+2] = CLAMP_D_TO_U8( r*a20 + g*a21 + b*a22 );
@@ -130,7 +130,7 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &units) {
     return 0;
 }
 
-void FilterColorMatrix::area_enlarge(NRRectL &area, Matrix const &trans)
+void FilterColorMatrix::area_enlarge(NRRectL &/*area*/, Matrix const &/*trans*/)
 {
 }
 

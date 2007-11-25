@@ -18,7 +18,7 @@ namespace Extension {
 namespace Internal {
 
 SPDocument *
-GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
+GdkpixbufInput::open(Inkscape::Extension::Input */*mod*/, char const *uri)
 {
     SPDocument *doc = sp_document_new(NULL, TRUE, TRUE);
     bool saved = sp_document_get_undo_sensitive(doc);
@@ -55,8 +55,8 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         // import as <image>
         repr = xml_doc->createElement("svg:image");
         // both are the same, as we don't know our base dir here and cannot relativate href (importer will fixupHrefs):
-        repr->setAttribute("xlink:href", uri); 
-        repr->setAttribute("sodipodi:absref", uri); 
+        repr->setAttribute("xlink:href", uri);
+        repr->setAttribute("sodipodi:absref", uri);
 
         sp_repr_set_svg_double(repr, "width", width);
         sp_repr_set_svg_double(repr, "height", height);

@@ -34,7 +34,7 @@ static bool inside_area(int px, int py, int w, int h){
         return true;
 }
 
-int FilterConvolveMatrix::render(FilterSlot &slot, FilterUnits const &units) {
+int FilterConvolveMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 
@@ -112,13 +112,13 @@ void FilterConvolveMatrix::set_kernelMatrix(std::vector<gdouble> &km) {
 
 void FilterConvolveMatrix::set_edgeMode(FilterConvolveMatrixEdgeMode mode){
     edgeMode = mode;
-}    
+}
 
 void FilterConvolveMatrix::set_preserveAlpha(bool pa){
     preserveAlpha = pa;
 }
 
-void FilterConvolveMatrix::area_enlarge(NRRectL &area, Matrix const &trans)
+void FilterConvolveMatrix::area_enlarge(NRRectL &area, Matrix const &/*trans*/)
 {
     //Seems to me that since this filter's operation is resolution dependent,
     // some spurious pixels may still appear at the borders when low zooming or rotating. Needs a better fix.

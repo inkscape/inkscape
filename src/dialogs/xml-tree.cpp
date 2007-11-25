@@ -220,7 +220,7 @@ void sp_xml_tree_dialog()
             w = prefs_get_int_attribute(prefs_path, "w", 0);
             h = prefs_get_int_attribute(prefs_path, "h", 0);
         }
-        
+
 //        if (x<0) x=0;
 //        if (y<0) y=0;
 
@@ -628,7 +628,7 @@ void sp_xml_tree_dialog()
 
 } // end of sp_xml_tree_dialog()
 
-static gboolean sp_xml_tree_key_press(GtkWidget *widget, GdkEventKey *event)
+static gboolean sp_xml_tree_key_press(GtkWidget */*widget*/, GdkEventKey *event)
 {
 
     unsigned int shortcut = get_group0_keyval(event) |
@@ -649,9 +649,9 @@ static gboolean sp_xml_tree_key_press(GtkWidget *widget, GdkEventKey *event)
 }
 
 
-static void sp_xmltree_desktop_change(Inkscape::Application *inkscape,
+static void sp_xmltree_desktop_change(Inkscape::Application */*inkscape*/,
                                       SPDesktop *desktop,
-                                      GtkWidget *dialog )
+                                      GtkWidget */*dialog*/ )
 {
     if (!desktop) {
         return;
@@ -828,8 +828,8 @@ void set_dt_select(Inkscape::XML::Node *repr)
 
 void on_tree_select_row(GtkCTree *tree,
                         GtkCTreeNode *node,
-                        gint column,
-                        gpointer data)
+                        gint /*column*/,
+                        gpointer /*data*/)
 {
     if (blocked) {
         return;
@@ -858,8 +858,8 @@ void on_tree_select_row(GtkCTree *tree,
 
 void on_tree_unselect_row(GtkCTree *tree,
                           GtkCTreeNode *node,
-                          gint column,
-                          gpointer data)
+                          gint /*column*/,
+                          gpointer /*data*/)
 {
     if (blocked) {
         return;
@@ -878,11 +878,11 @@ void on_tree_unselect_row(GtkCTree *tree,
 
 
 
-void after_tree_move(GtkCTree *tree,
+void after_tree_move(GtkCTree */*tree*/,
                      GtkCTreeNode *node,
                      GtkCTreeNode *new_parent,
                      GtkCTreeNode *new_sibling,
-                     gpointer data)
+                     gpointer /*data*/)
 {
     if (GTK_CTREE_ROW(node)->parent  == new_parent &&
         GTK_CTREE_ROW(node)->sibling == new_sibling)
@@ -895,7 +895,7 @@ void after_tree_move(GtkCTree *tree,
 }
 
 
-static void on_destroy(GtkObject *object, gpointer data)
+static void on_destroy(GtkObject */*object*/, gpointer /*data*/)
 {
     set_tree_desktop(NULL);
     gtk_object_destroy(GTK_OBJECT(tooltips));
@@ -916,7 +916,7 @@ static void on_destroy(GtkObject *object, gpointer data)
 
 
 
-static gboolean on_delete(GtkObject *object, GdkEvent *event, gpointer data)
+static gboolean on_delete(GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/)
 {
     gtk_window_get_position((GtkWindow *) dlg, &x, &y);
     gtk_window_get_size((GtkWindow *) dlg, &w, &h);
@@ -933,7 +933,7 @@ static gboolean on_delete(GtkObject *object, GdkEvent *event, gpointer data)
 }
 
 
-static void _set_status_message(Inkscape::MessageType type, const gchar *message, GtkWidget *dialog)
+static void _set_status_message(Inkscape::MessageType /*type*/, const gchar *message, GtkWidget */*dialog*/)
 {
     if (status) {
         gtk_label_set_markup(GTK_LABEL(status), message ? message : "");
@@ -941,9 +941,9 @@ static void _set_status_message(Inkscape::MessageType type, const gchar *message
 }
 
 
-void on_tree_select_row_enable(GtkCTree *tree,
-                               GtkCTreeNode *node,
-                               gint column,
+void on_tree_select_row_enable(GtkCTree */*tree*/,
+                               GtkCTreeNode */*node*/,
+                               gint /*column*/,
                                gpointer data)
 {
     gtk_widget_set_sensitive(GTK_WIDGET(data), TRUE);
@@ -953,7 +953,7 @@ void on_tree_select_row_enable(GtkCTree *tree,
 
 void on_tree_select_row_enable_if_element(GtkCTree *tree,
                                           GtkCTreeNode *node,
-                                          gint column,
+                                          gint /*column*/,
                                           gpointer data )
 {
     Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(SP_XMLVIEW_TREE(tree), node);
@@ -968,7 +968,7 @@ void on_tree_select_row_enable_if_element(GtkCTree *tree,
 
 
 void on_tree_select_row_show_if_element(GtkCTree *tree, GtkCTreeNode *node,
-                                        gint column, gpointer data)
+                                        gint /*column*/, gpointer data)
 {
     Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(SP_XMLVIEW_TREE(tree), node);
 
@@ -982,7 +982,7 @@ void on_tree_select_row_show_if_element(GtkCTree *tree, GtkCTreeNode *node,
 
 
 void on_tree_select_row_show_if_text(GtkCTree *tree, GtkCTreeNode *node,
-                                     gint column, gpointer data)
+                                     gint /*column*/, gpointer data)
 {
     Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(SP_XMLVIEW_TREE(tree), node);
 
@@ -1021,32 +1021,32 @@ gboolean xml_tree_node_mutable(GtkCTreeNode *node)
 }
 
 
-void on_tree_select_row_enable_if_mutable(GtkCTree *tree, GtkCTreeNode *node,
-                                          gint column, gpointer data)
+void on_tree_select_row_enable_if_mutable(GtkCTree */*tree*/, GtkCTreeNode *node,
+                                          gint /*column*/, gpointer data)
 {
     gtk_widget_set_sensitive(GTK_WIDGET(data), xml_tree_node_mutable(node));
 }
 
 
 
-void on_tree_unselect_row_disable(GtkCTree *tree, GtkCTreeNode *node,
-                                  gint column, gpointer data)
+void on_tree_unselect_row_disable(GtkCTree */*tree*/, GtkCTreeNode */*node*/,
+                                  gint /*column*/, gpointer data)
 {
     gtk_widget_set_sensitive(GTK_WIDGET(data), FALSE);
 }
 
 
 
-void on_tree_unselect_row_hide(GtkCTree *tree, GtkCTreeNode *node,
-                               gint column, gpointer data)
+void on_tree_unselect_row_hide(GtkCTree */*tree*/, GtkCTreeNode */*node*/,
+                               gint /*column*/, gpointer data)
 {
     gtk_widget_hide(GTK_WIDGET(data));
 }
 
 
 
-void on_tree_unselect_row_clear_text(GtkCTree *tree, GtkCTreeNode *node,
-                                     gint column, gpointer data)
+void on_tree_unselect_row_clear_text(GtkCTree */*tree*/, GtkCTreeNode */*node*/,
+                                     gint /*column*/, gpointer data)
 {
     if (GTK_IS_EDITABLE(data)) {
         gtk_editable_delete_text(GTK_EDITABLE(data), 0, -1);
@@ -1058,8 +1058,8 @@ void on_tree_unselect_row_clear_text(GtkCTree *tree, GtkCTreeNode *node,
 }
 
 
-void on_attr_select_row(GtkCList *list, gint row, gint column,
-                        GdkEventButton *event, gpointer data)
+void on_attr_select_row(GtkCList *list, gint row, gint /*column*/,
+                        GdkEventButton */*event*/, gpointer /*data*/)
 {
     selected_attr = sp_xmlview_attr_list_get_row_key(list, row);
     gtk_window_set_focus(GTK_WINDOW(dlg), GTK_WIDGET(attr_value));
@@ -1068,15 +1068,15 @@ void on_attr_select_row(GtkCList *list, gint row, gint column,
 }
 
 
-void on_attr_unselect_row(GtkCList *list, gint row, gint column,
-                          GdkEventButton *event, gpointer data)
+void on_attr_unselect_row(GtkCList */*list*/, gint /*row*/, gint /*column*/,
+                          GdkEventButton */*event*/, gpointer /*data*/)
 {
     selected_attr = 0;
     attr_reset_context(selected_attr);
 }
 
 
-void on_attr_row_changed(GtkCList *list, gint row, gpointer data)
+void on_attr_row_changed(GtkCList *list, gint row, gpointer /*data*/)
 {
     gint attr = sp_xmlview_attr_list_get_row_key(list, row);
 
@@ -1115,7 +1115,7 @@ void on_attr_row_changed(GtkCList *list, gint row, gpointer data)
 
 
 void on_attr_select_row_set_name_content(GtkCList *list, gint row,
-                                         gint column, GdkEventButton *event,
+                                         gint /*column*/, GdkEventButton */*event*/,
                                          gpointer data)
 {
     GtkEditable *editable = GTK_EDITABLE(data);
@@ -1127,8 +1127,8 @@ void on_attr_select_row_set_name_content(GtkCList *list, gint row,
 
 
 
-void on_attr_select_row_set_value_content(GtkCList *list, gint row, gint column,
-                                          GdkEventButton *event,
+void on_attr_select_row_set_value_content(GtkCList *list, gint row, gint /*column*/,
+                                          GdkEventButton */*event*/,
                                           gpointer data)
 {
     GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data));
@@ -1142,7 +1142,7 @@ void on_attr_select_row_set_value_content(GtkCList *list, gint row, gint column,
 
 
 void on_tree_select_row_enable_if_indentable(GtkCTree *tree, GtkCTreeNode *node,
-                                             gint column, gpointer data)
+                                             gint /*column*/, gpointer data)
 {
     gboolean indentable = FALSE;
 
@@ -1172,7 +1172,7 @@ void on_tree_select_row_enable_if_indentable(GtkCTree *tree, GtkCTreeNode *node,
 
 void on_tree_select_row_enable_if_not_first_child(GtkCTree *tree,
                                                   GtkCTreeNode *node,
-                                                  gint column,
+                                                  gint /*column*/,
                                                   gpointer data)
 {
     Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(SP_XMLVIEW_TREE(tree), node);
@@ -1189,7 +1189,7 @@ void on_tree_select_row_enable_if_not_first_child(GtkCTree *tree,
 
 void on_tree_select_row_enable_if_not_last_child(GtkCTree *tree,
                                                  GtkCTreeNode *node,
-                                                 gint column, gpointer data)
+                                                 gint /*column*/, gpointer data)
 {
     Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(SP_XMLVIEW_TREE(tree), node);
 
@@ -1203,9 +1203,9 @@ void on_tree_select_row_enable_if_not_last_child(GtkCTree *tree,
 
 
 
-void on_tree_select_row_enable_if_has_grandparent(GtkCTree *tree,
+void on_tree_select_row_enable_if_has_grandparent(GtkCTree */*tree*/,
                                                   GtkCTreeNode *node,
-                                                  gint column, gpointer data)
+                                                  gint /*column*/, gpointer data)
 {
     GtkCTreeNode *parent = GTK_CTREE_ROW(node)->parent;
 
@@ -1223,24 +1223,24 @@ void on_tree_select_row_enable_if_has_grandparent(GtkCTree *tree,
 
 
 
-void on_attr_select_row_enable(GtkCList *list, gint row, gint column,
-                               GdkEventButton *event, gpointer data)
+void on_attr_select_row_enable(GtkCList */*list*/, gint /*row*/, gint /*column*/,
+                               GdkEventButton */*event*/, gpointer data)
 {
     gtk_widget_set_sensitive(GTK_WIDGET(data), TRUE);
 }
 
 
 
-void on_attr_unselect_row_disable(GtkCList *list, gint row, gint column,
-                                  GdkEventButton *event, gpointer data)
+void on_attr_unselect_row_disable(GtkCList */*list*/, gint /*row*/, gint /*column*/,
+                                  GdkEventButton */*event*/, gpointer data)
 {
     gtk_widget_set_sensitive(GTK_WIDGET(data), FALSE);
 }
 
 
 
-void on_attr_unselect_row_clear_text(GtkCList *list, gint row, gint column,
-                                     GdkEventButton *event, gpointer data)
+void on_attr_unselect_row_clear_text(GtkCList */*list*/, gint /*row*/, gint /*column*/,
+                                     GdkEventButton */*event*/, gpointer data)
 {
     if (GTK_IS_EDITABLE(data)) {
         gtk_editable_delete_text(GTK_EDITABLE(data), 0, -1);
@@ -1270,7 +1270,7 @@ void on_editable_changed_enable_if_valid_xml_name(GtkEditable *editable,
 
 
 
-void on_desktop_selection_changed(Inkscape::Selection *selection)
+void on_desktop_selection_changed(Inkscape::Selection */*selection*/)
 {
     if (!blocked++) {
         set_tree_select(get_dt_select());
@@ -1287,7 +1287,7 @@ static void on_document_replaced(SPDesktop *dt, SPDocument *doc)
     set_tree_document(doc);
 }
 
-void on_document_uri_set(gchar const *uri, SPDocument *document)
+void on_document_uri_set(gchar const */*uri*/, SPDocument *document)
 {
     gchar title[500];
     sp_ui_dialog_title_string(Inkscape::Verb::get(SP_VERB_DIALOG_XML_EDITOR), title);
@@ -1298,7 +1298,7 @@ void on_document_uri_set(gchar const *uri, SPDocument *document)
 
 
 
-void on_clicked_get_editable_text(GtkWidget *widget, gpointer data)
+void on_clicked_get_editable_text(GtkWidget */*widget*/, gpointer data)
 {
     EditableDest *dest = (EditableDest *) data;
     dest->text = gtk_editable_get_chars(dest->editable, 0, -1);
@@ -1306,7 +1306,7 @@ void on_clicked_get_editable_text(GtkWidget *widget, gpointer data)
 
 
 
-void cmd_new_element_node(GtkObject *object, gpointer data)
+void cmd_new_element_node(GtkObject */*object*/, gpointer /*data*/)
 {
     EditableDest name;
     GtkWidget *window, *create, *cancel, *vbox, *entry, *bbox, *sep;
@@ -1384,7 +1384,7 @@ void cmd_new_element_node(GtkObject *object, gpointer data)
 
 
 
-void cmd_new_text_node(GtkObject *object, gpointer data)
+void cmd_new_text_node(GtkObject */*object*/, gpointer /*data*/)
 {
     g_assert(selected_repr != NULL);
 
@@ -1402,7 +1402,7 @@ void cmd_new_text_node(GtkObject *object, gpointer data)
 
 }
 
-void cmd_duplicate_node(GtkObject *object, gpointer data)
+void cmd_duplicate_node(GtkObject */*object*/, gpointer /*data*/)
 {
     g_assert(selected_repr != NULL);
 
@@ -1422,7 +1422,7 @@ void cmd_duplicate_node(GtkObject *object, gpointer data)
 
 
 
-void cmd_delete_node(GtkObject *object, gpointer data)
+void cmd_delete_node(GtkObject */*object*/, gpointer /*data*/)
 {
     g_assert(selected_repr != NULL);
     sp_repr_unparent(selected_repr);
@@ -1433,7 +1433,7 @@ void cmd_delete_node(GtkObject *object, gpointer data)
 
 
 
-void cmd_delete_attr(GtkObject *object, gpointer data)
+void cmd_delete_attr(GtkObject */*object*/, gpointer /*data*/)
 {
     g_assert(selected_repr != NULL);
     g_assert(selected_attr != 0);
@@ -1445,13 +1445,13 @@ void cmd_delete_attr(GtkObject *object, gpointer data)
         updated->updateRepr();
     }
 
-    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR, 
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
                      _("Delete attribute"));
 }
 
 
 
-void cmd_set_attr(GtkObject *object, gpointer data)
+void cmd_set_attr(GtkObject */*object*/, gpointer /*data*/)
 {
     g_assert(selected_repr != NULL);
 
@@ -1491,7 +1491,7 @@ void cmd_set_attr(GtkObject *object, gpointer data)
 
 
 
-void cmd_raise_node(GtkObject *object, gpointer data)
+void cmd_raise_node(GtkObject */*object*/, gpointer /*data*/)
 {
     g_assert(selected_repr != NULL);
 
@@ -1508,7 +1508,7 @@ void cmd_raise_node(GtkObject *object, gpointer data)
 
     parent->changeOrder(selected_repr, ref);
 
-    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR, 
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
                      _("Raise node"));
 
     set_tree_select(selected_repr);
@@ -1517,7 +1517,7 @@ void cmd_raise_node(GtkObject *object, gpointer data)
 
 
 
-void cmd_lower_node(GtkObject *object, gpointer data)
+void cmd_lower_node(GtkObject */*object*/, gpointer /*data*/)
 {
     g_assert(selected_repr != NULL);
     g_return_if_fail(selected_repr->next() != NULL);
@@ -1532,7 +1532,7 @@ void cmd_lower_node(GtkObject *object, gpointer data)
     set_dt_select(selected_repr);
 }
 
-void cmd_indent_node(GtkObject *object, gpointer data)
+void cmd_indent_node(GtkObject */*object*/, gpointer /*data*/)
 {
     Inkscape::XML::Node *repr = selected_repr;
     g_assert(repr != NULL);
@@ -1555,7 +1555,7 @@ void cmd_indent_node(GtkObject *object, gpointer data)
     parent->removeChild(repr);
     prev->addChild(repr, ref);
 
-    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR, 
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
                      _("Indent node"));
     set_tree_select(repr);
     set_dt_select(repr);
@@ -1564,7 +1564,7 @@ void cmd_indent_node(GtkObject *object, gpointer data)
 
 
 
-void cmd_unindent_node(GtkObject *object, gpointer data)
+void cmd_unindent_node(GtkObject */*object*/, gpointer /*data*/)
 {
     Inkscape::XML::Node *repr = selected_repr;
     g_assert(repr != NULL);
@@ -1576,7 +1576,7 @@ void cmd_unindent_node(GtkObject *object, gpointer data)
     parent->removeChild(repr);
     grandparent->addChild(repr, parent);
 
-    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR, 
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
                      _("Unindent node"));
     set_tree_select(repr);
     set_dt_select(repr);

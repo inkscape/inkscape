@@ -35,10 +35,10 @@ static void sp_attribute_widget_destroy (GtkObject *object);
 
 static void sp_attribute_widget_changed (GtkEditable *editable);
 
-static void sp_attribute_widget_object_modified ( SPObject *object, 
-                                                  guint flags, 
+static void sp_attribute_widget_object_modified ( SPObject *object,
+                                                  guint flags,
                                                   SPAttributeWidget *spaw );
-static void sp_attribute_widget_object_release ( SPObject *object, 
+static void sp_attribute_widget_object_release ( SPObject *object,
                                                  SPAttributeWidget *spaw );
 
 static GtkEntryClass *parent_class;
@@ -62,7 +62,7 @@ sp_attribute_widget_get_type (void)
         type = gtk_type_unique (GTK_TYPE_ENTRY, &info);
     }
     return type;
-    
+
 } // end of sp_attribute_widget_get_type()
 
 
@@ -107,7 +107,7 @@ sp_attribute_widget_init (SPAttributeWidget *spaw)
 static void
 sp_attribute_widget_destroy (GtkObject *object)
 {
-    
+
     SPAttributeWidget *spaw;
 
     spaw = SP_ATTRIBUTE_WIDGET (object);
@@ -117,16 +117,16 @@ sp_attribute_widget_destroy (GtkObject *object)
         spaw->attribute = NULL;
     }
 
-    
+
     if (spaw->hasobj) {
-        
+
         if (spaw->src.object) {
             spaw->modified_connection.disconnect();
             spaw->release_connection.disconnect();
             spaw->src.object = NULL;
         }
     } else {
-    
+
         if (spaw->src.repr) {
             spaw->src.repr = Inkscape::GC::release(spaw->src.repr);
         }
@@ -134,7 +134,7 @@ sp_attribute_widget_destroy (GtkObject *object)
 
     spaw->modified_connection.~connection();
     spaw->release_connection.~connection();
-    
+
     ((GtkObjectClass *) parent_class)->destroy (object);
 
 }
@@ -150,27 +150,27 @@ sp_attribute_widget_changed (GtkEditable *editable)
     spaw = SP_ATTRIBUTE_WIDGET (editable);
 
     if (!spaw->blocked) {
-    
+
         const gchar *text;
         spaw->blocked = TRUE;
         text = gtk_entry_get_text (GTK_ENTRY (spaw));
-        if (!*text) 
+        if (!*text)
             text = NULL;
-        
+
         if (spaw->hasobj && spaw->src.object) {
-            
-            if (!sp_repr_set_attr ( SP_OBJECT_REPR (spaw->src.object), 
+
+            if (!sp_repr_set_attr ( SP_OBJECT_REPR (spaw->src.object),
                                     spaw->attribute, text) )
             {
                 /* Cannot set attribute */
                 text = SP_OBJECT_REPR (spaw->src.object)->attribute(spaw->attribute);
                 gtk_entry_set_text (GTK_ENTRY (spaw), text ? text : "");
             }
-            sp_document_done (SP_OBJECT_DOCUMENT (spaw->src.object), SP_VERB_NONE, 
+            sp_document_done (SP_OBJECT_DOCUMENT (spaw->src.object), SP_VERB_NONE,
                               _("Set attribute"));
-            
+
         } else if (spaw->src.repr) {
-        
+
             if (!sp_repr_set_attr (spaw->src.repr, spaw->attribute, text))
             {
                 /* Cannot set attribute */
@@ -181,7 +181,7 @@ sp_attribute_widget_changed (GtkEditable *editable)
         }
         spaw->blocked = FALSE;
     }
-    
+
 } // end of sp_attribute_widget_changed()
 
 
@@ -199,7 +199,7 @@ sp_attribute_widget_new ( SPObject *object, const gchar *attribute )
     sp_attribute_widget_set_object (spaw, object, attribute);
 
     return GTK_WIDGET (spaw);
-    
+
 } // end of sp_attribute_widget_new()
 
 
@@ -219,8 +219,8 @@ sp_attribute_widget_new_repr ( Inkscape::XML::Node *repr, const gchar *attribute
 
 
 void
-sp_attribute_widget_set_object ( SPAttributeWidget *spaw, 
-                                 SPObject *object, 
+sp_attribute_widget_set_object ( SPAttributeWidget *spaw,
+                                 SPObject *object,
                                  const gchar *attribute )
 {
 
@@ -236,14 +236,14 @@ sp_attribute_widget_set_object ( SPAttributeWidget *spaw,
     }
 
     if (spaw->hasobj) {
-    
+
         if (spaw->src.object) {
             spaw->modified_connection.disconnect();
             spaw->release_connection.disconnect();
             spaw->src.object = NULL;
         }
     } else {
-        
+
         if (spaw->src.repr) {
             spaw->src.repr = Inkscape::GC::release(spaw->src.repr);
         }
@@ -274,8 +274,8 @@ sp_attribute_widget_set_object ( SPAttributeWidget *spaw,
 
 
 void
-sp_attribute_widget_set_repr ( SPAttributeWidget *spaw, 
-                               Inkscape::XML::Node *repr, 
+sp_attribute_widget_set_repr ( SPAttributeWidget *spaw,
+                               Inkscape::XML::Node *repr,
                                const gchar *attribute )
 {
 
@@ -289,14 +289,14 @@ sp_attribute_widget_set_repr ( SPAttributeWidget *spaw,
     }
 
     if (spaw->hasobj) {
-    
+
         if (spaw->src.object) {
             spaw->modified_connection.disconnect();
             spaw->release_connection.disconnect();
             spaw->src.object = NULL;
         }
     } else {
-        
+
         if (spaw->src.repr) {
             spaw->src.repr = Inkscape::GC::release(spaw->src.repr);
         }
@@ -323,29 +323,29 @@ sp_attribute_widget_set_repr ( SPAttributeWidget *spaw,
 
 
 static void
-sp_attribute_widget_object_modified ( SPObject *object, 
-                                      guint flags, 
+sp_attribute_widget_object_modified ( SPObject */*object*/,
+                                      guint flags,
                                       SPAttributeWidget *spaw )
 {
 
     if (flags && SP_OBJECT_MODIFIED_FLAG) {
-        
+
         const gchar *val, *text;
         val = SP_OBJECT_REPR (spaw->src.object)->attribute(spaw->attribute);
         text = gtk_entry_get_text (GTK_ENTRY (spaw));
-        
+
         if (val || text) {
-            
+
             if (!val || !text || strcmp (val, text)) {
                 /* We are different */
                 spaw->blocked = TRUE;
-                gtk_entry_set_text ( GTK_ENTRY (spaw), 
+                gtk_entry_set_text ( GTK_ENTRY (spaw),
                                      val ? val : (const gchar *) "");
                 spaw->blocked = FALSE;
             } // end of if()
-        
+
         } // end of if()
-        
+
     } //end of if()
 
 } // end of sp_attribute_widget_object_modified()
@@ -353,7 +353,7 @@ sp_attribute_widget_object_modified ( SPObject *object,
 
 
 static void
-sp_attribute_widget_object_release ( SPObject *object, 
+sp_attribute_widget_object_release ( SPObject */*object*/,
                                      SPAttributeWidget *spaw )
 {
     sp_attribute_widget_set_object (spaw, NULL, NULL);
@@ -446,7 +446,7 @@ sp_attribute_table_destroy ( GtkObject *object )
     }
 
     if (spat->hasobj) {
-        
+
         if (spat->src.object) {
             spat->modified_connection.disconnect();
             spat->release_connection.disconnect();
@@ -460,7 +460,7 @@ sp_attribute_table_destroy ( GtkObject *object )
 
     spat->modified_connection.~connection();
     spat->release_connection.~connection();
-    
+
     if (spat->entries) {
         g_free (spat->entries);
         spat->entries = NULL;
@@ -471,14 +471,14 @@ sp_attribute_table_destroy ( GtkObject *object )
     if (((GtkObjectClass *) table_parent_class)->destroy) {
         (* ((GtkObjectClass *) table_parent_class)->destroy) (object);
     }
-        
+
 } // end of sp_attribute_table_destroy()
 
 
 GtkWidget *
-sp_attribute_table_new ( SPObject *object, 
-                         gint num_attr, 
-                         const gchar **labels, 
+sp_attribute_table_new ( SPObject *object,
+                         gint num_attr,
+                         const gchar **labels,
                          const gchar **attributes )
 {
     SPAttributeTable *spat;
@@ -498,9 +498,9 @@ sp_attribute_table_new ( SPObject *object,
 
 
 GtkWidget *
-sp_attribute_table_new_repr ( Inkscape::XML::Node *repr, 
-                              gint num_attr, 
-                              const gchar **labels, 
+sp_attribute_table_new_repr ( Inkscape::XML::Node *repr,
+                              gint num_attr,
+                              const gchar **labels,
                               const gchar **attributes )
 {
     SPAttributeTable *spat;
@@ -521,10 +521,10 @@ sp_attribute_table_new_repr ( Inkscape::XML::Node *repr,
 #define YPAD 0
 
 void
-sp_attribute_table_set_object ( SPAttributeTable *spat, 
-                                SPObject *object, 
-                                gint num_attr, 
-                                const gchar **labels, 
+sp_attribute_table_set_object ( SPAttributeTable *spat,
+                                SPObject *object,
+                                gint num_attr,
+                                const gchar **labels,
                                 const gchar **attributes )
 {
 
@@ -594,21 +594,21 @@ sp_attribute_table_set_object ( SPAttributeTable *spat,
             w = gtk_label_new (_(labels[i]));
             gtk_widget_show (w);
             gtk_misc_set_alignment (GTK_MISC (w), 1.0, 0.5);
-            gtk_table_attach ( GTK_TABLE (spat->table), w, 0, 1, i, i + 1, 
-                               GTK_FILL, 
-                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+            gtk_table_attach ( GTK_TABLE (spat->table), w, 0, 1, i, i + 1,
+                               GTK_FILL,
+                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                                XPAD, YPAD );
             w = gtk_entry_new ();
             gtk_widget_show (w);
             val = SP_OBJECT_REPR (object)->attribute(attributes[i]);
             gtk_entry_set_text (GTK_ENTRY (w), val ? val : (const gchar *) "");
-            gtk_table_attach ( GTK_TABLE (spat->table), w, 1, 2, i, i + 1, 
-                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
-                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+            gtk_table_attach ( GTK_TABLE (spat->table), w, 1, 2, i, i + 1,
+                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                                XPAD, YPAD );
             spat->entries[i] = w;
-            g_signal_connect ( G_OBJECT (w), "changed", 
-                               G_CALLBACK (sp_attribute_table_entry_changed), 
+            g_signal_connect ( G_OBJECT (w), "changed",
+                               G_CALLBACK (sp_attribute_table_entry_changed),
                                spat );
         }
         /* Show table */
@@ -617,7 +617,7 @@ sp_attribute_table_set_object ( SPAttributeTable *spat,
         spat->blocked = FALSE;
     }
 
-    gtk_widget_set_sensitive ( GTK_WIDGET (spat), 
+    gtk_widget_set_sensitive ( GTK_WIDGET (spat),
                                (spat->src.object != NULL) );
 
 } // end of sp_attribute_table_set_object()
@@ -625,10 +625,10 @@ sp_attribute_table_set_object ( SPAttributeTable *spat,
 
 
 void
-sp_attribute_table_set_repr ( SPAttributeTable *spat, 
-                              Inkscape::XML::Node *repr, 
-                              gint num_attr, 
-                              const gchar **labels, 
+sp_attribute_table_set_repr ( SPAttributeTable *spat,
+                              Inkscape::XML::Node *repr,
+                              gint num_attr,
+                              const gchar **labels,
                               const gchar **attributes )
 {
     g_return_if_fail (spat != NULL);
@@ -682,7 +682,7 @@ sp_attribute_table_set_repr ( SPAttributeTable *spat,
         /* Arrays */
         spat->attributes = g_new0 (gchar *, num_attr);
         spat->entries = g_new0 (GtkWidget *, num_attr);
-        
+
         /* Fill rows */
         for (i = 0; i < num_attr; i++) {
             GtkWidget *w;
@@ -692,21 +692,21 @@ sp_attribute_table_set_repr ( SPAttributeTable *spat,
             w = gtk_label_new (labels[i]);
             gtk_widget_show (w);
             gtk_misc_set_alignment (GTK_MISC (w), 1.0, 0.5);
-            gtk_table_attach ( GTK_TABLE (spat->table), w, 0, 1, i, i + 1, 
-                               GTK_FILL, 
-                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+            gtk_table_attach ( GTK_TABLE (spat->table), w, 0, 1, i, i + 1,
+                               GTK_FILL,
+                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                                XPAD, YPAD );
             w = gtk_entry_new ();
             gtk_widget_show (w);
             val = repr->attribute(attributes[i]);
             gtk_entry_set_text (GTK_ENTRY (w), val ? val : (const gchar *) "");
-            gtk_table_attach ( GTK_TABLE (spat->table), w, 1, 2, i, i + 1, 
-                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
-                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+            gtk_table_attach ( GTK_TABLE (spat->table), w, 1, 2, i, i + 1,
+                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+                               (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                                XPAD, YPAD );
             spat->entries[i] = w;
-            g_signal_connect ( G_OBJECT (w), "changed", 
-                               G_CALLBACK (sp_attribute_table_entry_changed), 
+            g_signal_connect ( G_OBJECT (w), "changed",
+                               G_CALLBACK (sp_attribute_table_entry_changed),
                                spat );
         }
         /* Show table */
@@ -722,8 +722,8 @@ sp_attribute_table_set_repr ( SPAttributeTable *spat,
 
 
 static void
-sp_attribute_table_object_modified ( SPObject *object, 
-                                     guint flags, 
+sp_attribute_table_object_modified ( SPObject */*object*/,
+                                     guint flags,
                                      SPAttributeTable *spat )
 {
     if (flags && SP_OBJECT_MODIFIED_FLAG)
@@ -737,20 +737,20 @@ sp_attribute_table_object_modified ( SPObject *object,
                 if (!val || !text || strcmp (val, text)) {
                     /* We are different */
                     spat->blocked = TRUE;
-                    gtk_entry_set_text ( GTK_ENTRY (spat->entries[i]), 
+                    gtk_entry_set_text ( GTK_ENTRY (spat->entries[i]),
                                          val ? val : (const gchar *) "");
                     spat->blocked = FALSE;
                 }
             }
         }
     } // end of if()
-    
+
 } // end of sp_attribute_table_object_modified()
 
 
 
 static void
-sp_attribute_table_object_release (SPObject *object, SPAttributeTable *spat)
+sp_attribute_table_object_release (SPObject */*object*/, SPAttributeTable *spat)
 {
     sp_attribute_table_set_object (spat, NULL, 0, NULL, NULL);
 }
@@ -758,42 +758,42 @@ sp_attribute_table_object_release (SPObject *object, SPAttributeTable *spat)
 
 
 static void
-sp_attribute_table_entry_changed ( GtkEditable *editable, 
+sp_attribute_table_entry_changed ( GtkEditable *editable,
                                    SPAttributeTable *spat )
 {
     if (!spat->blocked)
     {
         gint i;
         for (i = 0; i < spat->num_attr; i++) {
-        
+
             if (GTK_WIDGET (editable) == spat->entries[i]) {
                 const gchar *text;
                 spat->blocked = TRUE;
                 text = gtk_entry_get_text (GTK_ENTRY (spat->entries[i]));
-                
-                if (!*text) 
+
+                if (!*text)
                     text = NULL;
-                
+
                 if (spat->hasobj && spat->src.object) {
-                    if (!sp_repr_set_attr ( SP_OBJECT_REPR (spat->src.object), 
+                    if (!sp_repr_set_attr ( SP_OBJECT_REPR (spat->src.object),
                                             spat->attributes[i], text))
                     {
                         /* Cannot set attribute */
                         text = SP_OBJECT_REPR (spat->src.object)->attribute(spat->attributes[i]);
-                        gtk_entry_set_text ( GTK_ENTRY (spat->entries[i]), 
+                        gtk_entry_set_text ( GTK_ENTRY (spat->entries[i]),
                                              text ? text : (const gchar *) "");
                     }
-                    sp_document_done (SP_OBJECT_DOCUMENT (spat->src.object), SP_VERB_NONE, 
+                    sp_document_done (SP_OBJECT_DOCUMENT (spat->src.object), SP_VERB_NONE,
                                       _("Set attribute"));
-                    
+
                 } else if (spat->src.repr) {
-                    
-                    if (!sp_repr_set_attr (spat->src.repr, 
-                                           spat->attributes[i], text)) 
+
+                    if (!sp_repr_set_attr (spat->src.repr,
+                                           spat->attributes[i], text))
                     {
                         /* Cannot set attribute */
                         text = spat->src.repr->attribute(spat->attributes[i]);
-                        gtk_entry_set_text ( GTK_ENTRY (spat->entries[i]), 
+                        gtk_entry_set_text ( GTK_ENTRY (spat->entries[i]),
                                              text ? text : (const gchar *) "" );
                     }
                     /* TODO: Warning! Undo will not be flushed in given case */

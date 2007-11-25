@@ -25,19 +25,19 @@ FilterPrimitive * FilterMorphology::create() {
 FilterMorphology::~FilterMorphology()
 {}
 
-int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
+int FilterMorphology::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 
     int x0=in->area.x0;
     int y0=in->area.y0;
     int x1=in->area.x1;
-    int y1=in->area.y1;            
+    int y1=in->area.y1;
     int w=x1-x0, h=y1-y0;
     int x,y,i,j;
     int rmax,gmax,bmax,amax;
     int rmin,gmin,bmin,amin;
-    
+
     nr_pixblock_setup_fast(out, in->mode, x0, y0, x1, y1, true);
 
     unsigned char *in_data = NR_PIXBLOCK_PX(in);
@@ -55,11 +55,11 @@ int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
                     if(in_data[4*(i + w*j)+1]>gmax) gmax = in_data[4*(i + w*j)+1];
                     if(in_data[4*(i + w*j)+2]>bmax) bmax = in_data[4*(i + w*j)+2];
                     if(in_data[4*(i + w*j)+3]>amax) amax = in_data[4*(i + w*j)+3];
-                                                            
+
                     if(in_data[4*(i + w*j)]<rmin) rmin = in_data[4*(i + w*j)];
                     if(in_data[4*(i + w*j)+1]<gmin) gmin = in_data[4*(i + w*j)+1];
                     if(in_data[4*(i + w*j)+2]<bmin) bmin = in_data[4*(i + w*j)+2];
-                    if(in_data[4*(i + w*j)+3]<amin) amin = in_data[4*(i + w*j)+3];                    
+                    if(in_data[4*(i + w*j)+3]<amin) amin = in_data[4*(i + w*j)+3];
                 }
             }
             if (Operator==MORPHOLOGY_OPERATOR_DILATE){
@@ -75,18 +75,18 @@ int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
             }
         }
     }
-   
+
     out->empty = FALSE;
     slot.set(_output, out);
     return 0;
 }
 
-void FilterMorphology::area_enlarge(NRRectL &area, Matrix const &trans)
+void FilterMorphology::area_enlarge(NRRectL &area, Matrix const &/*trans*/)
 {
     area.x0-=xradius;
     area.x1+=xradius;
     area.y0-=yradius;
-    area.y1+=yradius;            
+    area.y1+=yradius;
 }
 
 void FilterMorphology::set_operator(FilterMorphologyOperator &o){

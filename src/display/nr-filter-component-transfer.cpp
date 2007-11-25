@@ -26,7 +26,7 @@ FilterPrimitive * FilterComponentTransfer::create() {
 FilterComponentTransfer::~FilterComponentTransfer()
 {}
 
-int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &units) {
+int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
 
@@ -38,13 +38,15 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &units) 
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
 
 //IMPLEMENT ME!
-    
+    (void)in_data;
+    (void)out_data;
+
     out->empty = FALSE;
     slot.set(_output, out);
     return 0;
 }
 
-void FilterComponentTransfer::area_enlarge(NRRectL &area, Matrix const &trans)
+void FilterComponentTransfer::area_enlarge(NRRectL &/*area*/, Matrix const &/*trans*/)
 {
 }
 

@@ -329,6 +329,9 @@ static int find(const std::vector<int> &str, int ch, int startpos)
 
 static int findLast(const std::vector<int> &str, int ch)
 {
+    // TODO FIXME BUGBUG
+    // This loop appears to be infinite, so it is probably not being called.
+    // Test for a problem, then fix after it has been observed locking up.
     for (unsigned int i = str.size()-1 ; i>=0 ; i--)
         {
         if (ch == str[i])

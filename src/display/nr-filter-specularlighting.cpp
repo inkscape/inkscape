@@ -29,7 +29,7 @@
 
 namespace NR {
 
-FilterSpecularLighting::FilterSpecularLighting() 
+FilterSpecularLighting::FilterSpecularLighting()
 {
     light_type = NO_LIGHT;
     specularConstant = 1;
@@ -47,7 +47,7 @@ FilterSpecularLighting::~FilterSpecularLighting()
 
 //Investigating Phong Lighting model we should not take N.H but
 //R.E which equals to 2*N.H^2 - 1
-//replace the second line by 
+//replace the second line by
 //gdouble scal = scalar_product((N), (H)); scal = 2 * scal * scal - 1;
 //to get the expected formula
 #define COMPUTE_INTER(inter, H, N, ks, speculaExponent) \
@@ -64,7 +64,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *out = new NRPixBlock;
 
     //Fvector *L = NULL; //vector to the light
-    
+
     int w = in->area.x1 - in->area.x0;
     int h = in->area.y1 - in->area.y0;
     int x0 = in->area.x0;
@@ -80,7 +80,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
     gdouble ks = specularConstant; //diffuse lighting constant
     Fvector L, N, LC, H;
     gdouble inter;
-    
+
     nr_pixblock_setup_fast(out, in->mode,
             in->area.x0, in->area.y0, in->area.x1, in->area.y1,
             true);
@@ -88,7 +88,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
     unsigned char *data_o = NR_PIXBLOCK_PX (out);
     //No light, nothing to do
     switch (light_type) {
-        case DISTANT_LIGHT:  
+        case DISTANT_LIGHT:
             //the light vector is constant
             {
             DistantLight *dl = new DistantLight(light.distant, lighting_color);
@@ -126,7 +126,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
                         ss * (double) data_i[4*i+3]/ 255);
                 normalized_sum(H, L, EYE_VECTOR);
                 COMPUTE_INTER(inter, N, H, ks, specularExponent);
-                
+
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
@@ -153,7 +153,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
                 sl->light_components(LC, L);
                 normalized_sum(H, L, EYE_VECTOR);
                 COMPUTE_INTER(inter, N, H, ks, specularExponent);
-                
+
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
@@ -172,7 +172,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
             out->empty = false;
             }
     }
-        
+
     //finishing
     slot.set(_output, out);
     nr_pixblock_release(in);

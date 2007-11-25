@@ -137,7 +137,7 @@ vp_drag_sel_changed(Inkscape::Selection */*selection*/, gpointer data)
 }
 
 static void
-vp_drag_sel_modified (Inkscape::Selection */*selection*/, guint flags, gpointer data)
+vp_drag_sel_modified (Inkscape::Selection */*selection*/, guint /*flags*/, gpointer data)
 {
     VPDrag *drag = (VPDrag *) data;
     /***

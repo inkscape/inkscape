@@ -38,7 +38,7 @@ static gint x = -1000, y = -1000, w = 0, h = 0;
 static gchar *prefs_path = "dialogs.input";
 
 static void
-sp_input_dialog_destroy (GtkObject *object, gpointer data)
+sp_input_dialog_destroy (GtkObject */*object*/, gpointer /*data*/)
 {
     sp_signal_disconnect_by_data (INKSCAPE, dlg);
     wd.win = dlg = NULL;
@@ -46,7 +46,7 @@ sp_input_dialog_destroy (GtkObject *object, gpointer data)
 }
 
 static gboolean
-sp_input_dialog_delete (GtkObject *object, GdkEvent *event, gpointer data)
+sp_input_dialog_delete (GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/)
 {
     gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
     gtk_window_get_size ((GtkWindow *) dlg, &w, &h);
@@ -203,7 +203,7 @@ sp_input_save_to_preferences (void)
 }
 
 static void
-sp_input_save_button (GtkObject *object, gpointer data)
+sp_input_save_button (GtkObject */*object*/, gpointer /*data*/)
 {
     sp_input_save_to_preferences();
 }

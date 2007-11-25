@@ -98,7 +98,7 @@ FilterPrimitive * FilterComposite::create() {
 FilterComposite::~FilterComposite()
 {}
 
-int FilterComposite::render(FilterSlot &slot, FilterUnits const &units) {
+int FilterComposite::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     NRPixBlock *in1 = slot.get(_input);
     NRPixBlock *in2 = slot.get(_input2);
     NRPixBlock *original_in1 = in1;

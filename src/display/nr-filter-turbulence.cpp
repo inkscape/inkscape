@@ -2,13 +2,13 @@
  * feTurbulence filter primitive renderer
  *
  * Authors:
- *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com> 
+ *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
  *
  * Copyright (C) 2007 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
- 
+
 #include "display/nr-arena-item.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-turbulence.h"
@@ -72,8 +72,7 @@ void FilterTurbulence::update_pixbuffer(FilterSlot &slot) {
     int bbox_y1 = (int) slot.get_arenaitem()->bbox.y1;
 
     int w = bbox_x1 - bbox_x0;
-    int h = bbox_y1 - bbox_y0;    
-    int x,y;
+    int h = bbox_y1 - bbox_y0;
 
     if (!pix){
         pix = new NRPixBlock;
@@ -107,10 +106,10 @@ void FilterTurbulence::update_pixbuffer(FilterSlot &slot) {
     updated=true;
 }
 
-int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &units) {
+int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &/*units*/) {
 //g_warning("render");
     if (!updated) update_pixbuffer(slot);
-    
+
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
     int x,y;
@@ -123,7 +122,7 @@ int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &units) {
     int bbox_y0 = (int) slot.get_arenaitem()->bbox.y0;
     int bbox_x1 = (int) slot.get_arenaitem()->bbox.x1;
     int bbox_w = bbox_x1 - bbox_x0;
-    
+
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
     for (x=x0; x < x1; x++){
         for (y=y0; y < y1; y++){

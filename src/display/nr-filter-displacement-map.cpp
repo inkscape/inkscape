@@ -26,24 +26,24 @@ FilterPrimitive * FilterDisplacementMap::create() {
 FilterDisplacementMap::~FilterDisplacementMap()
 {}
 
-int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
+int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     NRPixBlock *texture = slot.get(_input);
     NRPixBlock *map = slot.get(_input2);
-   
+
     // Bail out if either one of source images is missing
     if (!map || !texture) {
         g_warning("Missing source image for feDisplacementMap (map=%d texture=%d)", _input, _input2);
         return 1;
     }
-    
+
     //TODO: check whether do we really need this check:
     if (map->area.x1 <= map->area.x0 || map->area.y1 <=  map->area.y0) return 0; //nothing to do!
-    
-    NRPixBlock *out = new NRPixBlock;    
+
+    NRPixBlock *out = new NRPixBlock;
 
     //are these checks really necessary?
     if (out_w > map->area.x1 - out_x0) out_w = map->area.x1 - out_x0;
-    if (out_h > map->area.y1 - out_y0) out_h = map->area.y1 - out_y0;    
+    if (out_h > map->area.y1 - out_y0) out_h = map->area.y1 - out_y0;
     if (out_x0 < map->area.x0){
         out_x0 = map->area.x0;
         out_w -= (map->area.x0 - out_x0);
@@ -59,7 +59,7 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     out->area.y1 = out_y0 + out_h;
 
     nr_pixblock_setup_fast(out, map->mode, out->area.x0, out->area.y0, out->area.x1, out->area.y1, true);
-    
+
     unsigned char *map_data = NR_PIXBLOCK_PX(map);
     unsigned char *texture_data = NR_PIXBLOCK_PX(texture);
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
@@ -74,7 +74,7 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
                 x+out_x0-map->area.x0 < in_w &&
                 y+out_y0-map->area.y0 >= 0 &&
                 y+out_y0-map->area.y0 < in_h){
-                
+
                     coordx = out_x0 - map->area.x0 + x + scale * ( double(map_data[4*((x+out_x0-map->area.x0) + in_w*(y+out_y0-map->area.y0)) + Xchannel])/255 - 0.5);
                     coordy = out_y0 - map->area.y0 + y + scale * ( double(map_data[4*((x+out_x0-map->area.x0) + in_w*(y+out_y0-map->area.y0)) + Ychannel])/255 - 0.5);
 
@@ -121,7 +121,7 @@ void FilterDisplacementMap::set_channel_selector(int s, int channel) {
     if (s == 1) Ychannel = channel;
 }
 
-void FilterDisplacementMap::area_enlarge(NRRectL &area, Matrix const &trans)
+void FilterDisplacementMap::area_enlarge(NRRectL &area, Matrix const &/*trans*/)
 {
     out_x0 = area.x0;
     out_y0 = area.y0;

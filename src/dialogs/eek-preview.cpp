@@ -128,6 +128,7 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
     gint insetX = 0;
     gint insetY = 0;
 
+    (void)event;
 /*
     gint lower = widget->allocation.width;
     lower = (widget->allocation.height < lower) ? widget->allocation.height : lower;
@@ -345,12 +346,16 @@ static gboolean eek_preview_button_release_cb( GtkWidget* widget, GdkEventButton
 
 gboolean eek_preview_key_press_event( GtkWidget* widget, GdkEventKey* event)
 {
+    (void)widget;
+    (void)event;
     g_message("TICK");
     return FALSE;
 }
 
 gboolean eek_preview_key_release_event( GtkWidget* widget, GdkEventKey* event)
 {
+    (void)widget;
+    (void)event;
     g_message("tock");
     return FALSE;
 }
