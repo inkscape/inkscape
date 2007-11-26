@@ -1630,6 +1630,9 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_VIEW_MODE_TOGGLE:
             dt->displayModeToggle();
             break;
+        case SP_VERB_VIEW_CMS_TOGGLE:
+            dt->toggleColorProfAdjust();
+            break;
         case SP_VERB_VIEW_ICON_PREVIEW:
             inkscape_dialogs_unhide();
             dt->_dlg_mgr->showDialog("IconPreviewPanel");
@@ -2457,6 +2460,9 @@ Verb *Verb::_base_verbs[] = {
                  N_("Switch to outline (wireframe) display mode"), NULL),
     new ZoomVerb(SP_VERB_VIEW_MODE_TOGGLE, "ViewModeToggle", N_("_Toggle"),
                  N_("Toggle between normal and outline display modes"), NULL),
+
+    new ZoomVerb(SP_VERB_VIEW_CMS_TOGGLE, "ViewCmsToggle", N_("Display Adjustment"),
+                 N_("Toggle CMS display adjustment on and off"), "swatches"),
 
     new ZoomVerb(SP_VERB_VIEW_ICON_PREVIEW, "ViewIconPreview", N_("Ico_n Preview..."),
                  N_("Open a window to preview objects at different icon resolutions"), "view_icon_preview"),

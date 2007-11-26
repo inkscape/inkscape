@@ -387,7 +387,7 @@ void SPDesktop::displayModeToggle()
 {
     if (displayMode == RENDERMODE_OUTLINE)
         setDisplayModeNormal();
-    else 
+    else
         setDisplayModeOutline();
 }
 
@@ -409,7 +409,7 @@ SPObject *SPDesktop::currentLayer() const
 
 /**
  * Sets the current layer of the desktop.
- * 
+ *
  * Make \a object the top layer.
  */
 void SPDesktop::setCurrentLayer(SPObject *object) {
@@ -1109,7 +1109,7 @@ SPDesktop::onWindowStateEvent (GdkEventWindowState* event)
     if (changed & (GDK_WINDOW_STATE_FULLSCREEN|GDK_WINDOW_STATE_MAXIMIZED)) {
         layoutWidget();
     }
-	
+
 	return false;
 }
 
@@ -1180,6 +1180,11 @@ void SPDesktop::clearWaitingCursor()
 {
   if (waiting_cursor)
       sp_event_context_update_cursor(sp_desktop_event_context(this));
+}
+
+void SPDesktop::toggleColorProfAdjust()
+{
+    _widget->toggleColorProfAdjust();
 }
 
 void SPDesktop::toggleGrids()
@@ -1491,7 +1496,7 @@ _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
                     ((CtrlRect *) desktop->page)->setShadow(0, 0x00000000);
                 }
         }
-	
+
         /* Show/hide page shadow */
         if (nv->showpageshadow && nv->pageshadow) {
             ((CtrlRect *) desktop->page_border)->setShadow(nv->pageshadow, nv->bordercolor);
@@ -1528,7 +1533,7 @@ _update_snap_distances (SPDesktop *desktop)
                                                                       *nv.gridtoleranceunit,
                                                                       px));
     }
-    
+
     nv.snap_manager.guide.setDistance(sp_convert_distance_full(nv.guidetolerance,
                                                                        *nv.guidetoleranceunit,
                                                                        px));

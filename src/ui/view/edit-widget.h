@@ -43,7 +43,7 @@ namespace Inkscape {
 namespace UI {
 namespace View {
 
-class EditWidget : public Gtk::Window, 
+class EditWidget : public Gtk::Window,
                    public EditWidgetInterface {
 public:
     EditWidget (SPDocument*);
@@ -86,13 +86,13 @@ public:
     void onDialogTrace();
     void onDialogXmlEditor();
 
-	// Whiteboard (Inkboard)
+    // Whiteboard (Inkboard)
 #ifdef WITH_INKBOARD
-	void onDialogWhiteboardConnect();
-	void onDialogWhiteboardShareWithUser();
-	void onDialogWhiteboardShareWithChat();
-	void onDialogOpenSessionFile();
-	void onDumpXMLTracker();
+    void onDialogWhiteboardConnect();
+    void onDialogWhiteboardShareWithUser();
+    void onDialogWhiteboardShareWithChat();
+    void onDialogOpenSessionFile();
+    void onDumpXMLTracker();
 #endif
 
     void onUriChanged();
@@ -123,6 +123,7 @@ public:
     virtual void updateScrollbars (double scale);
     virtual void toggleRulers();
     virtual void toggleScrollbars();
+    virtual void toggleColorProfAdjust();
     virtual void updateZoom();
     virtual void letZoomGrabFocus();
     virtual void setToolboxFocusTo (const gchar *);
@@ -139,7 +140,7 @@ protected:
     void _namedview_modified(SPObject *namedview, guint);
 
     Gtk::Tooltips        _tooltips;
-    
+
     // Child widgets:
     Gtk::Table           _main_window_table;
     Gtk::VBox            _toolbars_vbox;
@@ -168,7 +169,7 @@ protected:
     Gtk::Table           _coord_status;
     Gtk::Label           _coord_status_x, _coord_status_y;
     Gtk::Label           _select_status;
-    
+
     SPDesktop*           _desktop;
     SPNamedView*         _namedview;
     double               _dt2r;

@@ -1,5 +1,5 @@
-#ifndef __SP_DESKTOP_H__
-#define __SP_DESKTOP_H__
+#ifndef SEEN_SP_DESKTOP_H
+#define SEEN_SP_DESKTOP_H
 
 /** \file
  * SPDesktop: an editable view.
@@ -59,16 +59,16 @@ typedef int sp_verb_t;
 
 
 
-namespace Inkscape { 
+namespace Inkscape {
   class Application;
   class MessageContext;
-  class Selection; 
+  class Selection;
   class ObjectHierarchy;
   class LayerManager;
   class EventLog;
-  namespace UI { 
-      namespace Dialog { 
-          class DialogManager; 
+  namespace UI {
+      namespace Dialog {
+          class DialogManager;
       }
   }
   namespace Whiteboard {
@@ -115,13 +115,13 @@ struct SPDesktop : public Inkscape::UI::View::View
     /// \todo fixme: This has to be implemented in different way */
     guint guides_active : 1;
 
-    // storage for selected dragger used by GrDrag as it's 
+    // storage for selected dragger used by GrDrag as it's
     // created and deleted by tools
     SPItem *gr_item;
     guint  gr_point_type;
     guint  gr_point_i;
-    bool   gr_fill_or_stroke;   
-    
+    bool   gr_fill_or_stroke;
+
 
     Inkscape::ObjectHierarchy *_layer_hierarchy;
     gchar * _reconstruction_old_layer_id;
@@ -134,45 +134,45 @@ struct SPDesktop : public Inkscape::UI::View::View
     {
         return _document_replaced_signal.connect (slot);
     }
-    
-    sigc::connection connectEventContextChanged (const sigc::slot<void,SPDesktop*,SPEventContext*> & slot) 
+
+    sigc::connection connectEventContextChanged (const sigc::slot<void,SPDesktop*,SPEventContext*> & slot)
     {
         return _event_context_changed_signal.connect (slot);
     }
-    sigc::connection connectSetStyle (const sigc::slot<bool, const SPCSSAttr *> & slot) 
+    sigc::connection connectSetStyle (const sigc::slot<bool, const SPCSSAttr *> & slot)
     {
-	return _set_style_signal.connect (slot);
+        return _set_style_signal.connect (slot);
     }
-    sigc::connection connectQueryStyle (const sigc::slot<int, SPStyle *, int> & slot) 
+    sigc::connection connectQueryStyle (const sigc::slot<int, SPStyle *, int> & slot)
     {
-	return _query_style_signal.connect (slot);
+        return _query_style_signal.connect (slot);
     }
      // subselection is some sort of selection which is specific to the tool, such as a handle in gradient tool, or a text selection
     sigc::connection connectToolSubselectionChanged(const sigc::slot<void, gpointer> & slot) {
-	return _tool_subselection_changed.connect(slot);
+        return _tool_subselection_changed.connect(slot);
     }
-    void emitToolSubselectionChanged(gpointer data); 
+    void emitToolSubselectionChanged(gpointer data);
     sigc::connection connectCurrentLayerChanged(const sigc::slot<void, SPObject *> & slot) {
-	return _layer_changed_signal.connect(slot);
+        return _layer_changed_signal.connect(slot);
     }
-    
-	// Whiteboard changes
+
+    // Whiteboard changes
 
 #ifdef WITH_INKBOARD
-	Inkscape::Whiteboard::SessionManager* whiteboard_session_manager() {
-	return _whiteboard_session_manager;
-	}
+    Inkscape::Whiteboard::SessionManager* whiteboard_session_manager() {
+        return _whiteboard_session_manager;
+    }
 
-	Inkscape::Whiteboard::SessionManager* _whiteboard_session_manager;
+    Inkscape::Whiteboard::SessionManager* _whiteboard_session_manager;
 #endif
-   
+
     SPDesktop();
     void init (SPNamedView* nv, SPCanvas* canvas);
     virtual ~SPDesktop();
     void destroy();
 
     Inkscape::MessageContext *guidesMessageContext() const {
-	return _guides_message_context;
+        return _guides_message_context;
     }
 
     void setDisplayModeNormal();
@@ -191,7 +191,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     bool isLayer(SPObject *object) const;
     bool isWithinViewport(SPItem *item) const;
     bool itemIsHidden(SPItem const *item) const;
-    
+
     void activate_guides (bool activate);
     void change_document (SPDocument *document);
 
@@ -253,13 +253,15 @@ struct SPDesktop : public Inkscape::UI::View::View
     bool isToolboxButtonActive (gchar const *id);
     void updateNow();
     void updateCanvasNow();
-    
+
     void enableInteraction();
     void disableInteraction();
 
     void setWaitingCursor();
     void clearWaitingCursor();
-    
+
+    void toggleColorProfAdjust();
+
     void toggleGrids();
     bool gridsEnabled() { return grids_visible; }
     void showGrids(bool show, bool dirty_document = true);
@@ -331,7 +333,7 @@ private:
     static void _onSelectionModified (Inkscape::Selection *selection, guint flags, SPDesktop *dt);
 };
 
-#endif
+#endif // SEEN_SP_DESKTOP_H
 
 /*
   Local Variables:

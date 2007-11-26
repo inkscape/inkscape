@@ -1465,6 +1465,11 @@ EditWidget::toggleScrollbars()
     }
 }
 
+void EditWidget::toggleColorProfAdjust()
+{
+    // TODO implement
+}
+
 void
 EditWidget::updateZoom()
 {

@@ -41,14 +41,14 @@ Inkscape::UI::window_new (const gchar *title, unsigned int resizeable)
 	window->set_title (title);
 	window->set_resizable (resizeable);
 	window->signal_key_press_event().connect(sigc::ptr_fun(&on_window_key_press));
-	
+
 	return window;
 }
 
 static gboolean
-sp_window_key_press (GtkWidget *widget, GdkEventKey *event)
+sp_window_key_press(GtkWidget */*widget*/, GdkEventKey *event)
 {
-	return on_window_key_press(event);
+    return on_window_key_press(event);
 }
 
 GtkWidget *

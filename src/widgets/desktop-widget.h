@@ -48,6 +48,7 @@ void sp_desktop_widget_update_rulers (SPDesktopWidget *dtw);
 void sp_desktop_widget_toggle_rulers (SPDesktopWidget *dtw);
 void sp_desktop_widget_toggle_scrollbars (SPDesktopWidget *dtw);
 void sp_desktop_widget_update_scrollbars (SPDesktopWidget *dtw, double scale);
+void sp_desktop_widget_toggle_color_prof_adj( SPDesktopWidget *dtw );
 
 void sp_dtw_desktop_activate (SPDesktopWidget *dtw);
 void sp_dtw_desktop_deactivate (SPDesktopWidget *dtw);
@@ -173,6 +174,8 @@ struct SPDesktopWidget {
             { sp_desktop_widget_toggle_rulers (_dtw); }
         virtual void toggleScrollbars()
             { sp_desktop_widget_toggle_scrollbars (_dtw); }
+        virtual void toggleColorProfAdjust()
+            { sp_desktop_widget_toggle_color_prof_adj(_dtw); }
         virtual void updateZoom()
             { sp_desktop_widget_update_zoom (_dtw); }
         virtual void letZoomGrabFocus()

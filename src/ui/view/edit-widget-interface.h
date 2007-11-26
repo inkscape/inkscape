@@ -4,7 +4,7 @@
  * Abstract base class for all EditWidget implementations.
  *
  * Authors:
- *     Ralf Stephan <ralf@ark.in-berlin.de> 
+ *     Ralf Stephan <ralf@ark.in-berlin.de>
  *     John Bintz <jcoswell@coswellproductions.org>
  *
  * Copyright (C) 2006 John Bintz
@@ -33,107 +33,110 @@ struct EditWidgetInterface
 
     /// Returns pointer to window UI object as void*
     virtual Gtk::Window *getWindow() = 0;
-    
+
     /// Set the widget's title
     virtual void setTitle (gchar const*) = 0;
-    
+
     /// Show all parts of widget the user wants to see.
     virtual void layout() = 0;
-    
+
     /// Present widget to user
     virtual void present() = 0;
-    
+
     /// Returns geometry of widget
     virtual void getGeometry (gint &x, gint &y, gint &w, gint &h) = 0;
-    
+
     /// Change the widget's size
     virtual void setSize (gint w, gint h) = 0;
-    
+
     /// Move widget to specified position
     virtual void setPosition (NR::Point p) = 0;
-    
+
     /// Transientize widget
     virtual void setTransient (void*, int) = 0;
-    
+
     /// Return mouse position in widget
     virtual NR::Point getPointer() = 0;
-    
+
     /// Make widget iconified
     virtual void setIconified() = 0;
-    
+
     /// Make widget maximized on screen
     virtual void setMaximized() = 0;
-    
+
     /// Make widget fill screen and show it if possible.
     virtual void setFullscreen() = 0;
-    
+
     /// Shuts down the desktop object for the view being closed.  It checks
     /// to see if the document has been edited, and if so prompts the user
     /// to save, discard, or cancel.  Returns TRUE if the shutdown operation
     /// is cancelled or if the save is cancelled or fails, FALSE otherwise.
     virtual bool shutdown() = 0;
-    
+
     /// Destroy and delete widget.
     virtual void destroy() = 0;
-    
-    
+
+
     /// Queue a redraw request with the canvas
     virtual void requestCanvasUpdate() = 0;
-    
+
     /// Force a redraw of the canvas
     virtual void requestCanvasUpdateAndWait() = 0;
-    
+
     /// Enable interaction on this desktop
     virtual void enableInteraction() = 0;
-    
+
     /// Disable interaction on this desktop
     virtual void disableInteraction() = 0;
-    
+
     /// Update the "active desktop" indicator
     virtual void activateDesktop() = 0;
-    
+
     /// Update the "inactive desktop" indicator
     virtual void deactivateDesktop() = 0;
-    
+
     /// Set rulers to position
     virtual void viewSetPosition (NR::Point p) = 0;
-    
+
     /// Update rulers from current values
     virtual void updateRulers() = 0;
-    
+
     /// Update scrollbars from current values
     virtual void updateScrollbars (double scale) = 0;
-    
+
     /// Toggle rulers on/off and set preference value accordingly
     virtual void toggleRulers() = 0;
-    
+
     /// Toggle scrollbars on/off and set preference value accordingly
     virtual void toggleScrollbars() = 0;
-    
+
+    /// Toggle CMS on/off and set preference value accordingly
+    virtual void toggleColorProfAdjust() = 0;
+
     /// Temporarily block signals and update zoom display
     virtual void updateZoom() = 0;
-    
+
     /// The zoom display will get the keyboard focus.
     virtual void letZoomGrabFocus() = 0;
-    
+
     /// In auxiliary toolbox, set focus to widget having specific id
     virtual void setToolboxFocusTo (const gchar *) = 0;
-    
+
     /// In auxiliary toolbox, set value of adjustment with specific id
     virtual void setToolboxAdjustmentValue (const gchar *, double) = 0;
 
     /// In auxiliary toolbox, select one of the "select one" options (usually radio toggles)
     virtual void setToolboxSelectOneValue (const gchar *, gint) = 0;
-    
+
     /// In auxiliary toolbox, return true if specific togglebutton is active
     virtual bool isToolboxButtonActive (gchar const*) = 0;
-    
+
     /// Set the coordinate display
     virtual void setCoordinateStatus (NR::Point p) = 0;
-    
+
     /// Message widget will get no content
     virtual void setMessage (Inkscape::MessageType type, gchar const* msg) = 0;
-    
+
     /// Open yes/no dialog with warning text and confirmation question.
     virtual bool warnDialog (gchar*) = 0;
 

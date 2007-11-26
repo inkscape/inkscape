@@ -1556,6 +1556,18 @@ sp_desktop_widget_toggle_scrollbars (SPDesktopWidget *dtw)
     }
 }
 
+void sp_desktop_widget_toggle_color_prof_adj( SPDesktopWidget *dtw )
+{
+
+    if ( GTK_WIDGET_SENSITIVE( dtw->cms_adjust ) ) {
+        if ( SP_BUTTON_IS_DOWN(dtw->cms_adjust) ) {
+            sp_button_toggle_set_down( SP_BUTTON(dtw->cms_adjust), FALSE );
+        } else {
+            sp_button_toggle_set_down( SP_BUTTON(dtw->cms_adjust), TRUE );
+        }
+    }
+}
+
 /* Unused
 void
 sp_spw_toggle_menubar (SPDesktopWidget *dtw, bool is_fullscreen)
