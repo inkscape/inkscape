@@ -20,6 +20,10 @@
 # include "config.h"
 #endif
 
+#ifdef WIN32
+#include <windows.h>
+#endif // WIN32
+
 #include <gtkmm/clipboard.h>
 
 #include "svg/svg.h"
@@ -82,9 +86,6 @@ using NR::Y;
 
 #include "selection-chemistry.h"
 
-//#
-#include <windows.h>
-//#
 /* fixme: find a better place */
 Inkscape::XML::Document *clipboard_document = NULL;
 GSList *clipboard = NULL;
