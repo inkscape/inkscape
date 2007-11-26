@@ -1098,7 +1098,10 @@ sp_shape_set_curve_insync (SPShape *shape, SPCurve *curve, unsigned int owner)
 }
 
 /**
- * Sets the snappoint p to the end point of the path segment
+ * Return all nodes in a path that are to be considered for snapping
+ * 
+ * If the attribute "sodipodi:nodetypes" has been set, then this will be used
+ * to discard any node on a smooth part of the path, i.e. only cusps will be returned 
  */
 static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
 {
@@ -1114,14 +1117,27 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
 
     /* Use the end points of each segment of the path */
     NArtBpath const *bp = SP_CURVE_BPATH(shape->curve);
-
-    if (bp->code == NR_MOVETO) { // Indicates the start of a closed subpath, see nr-path-code.h
+    
+    gchar const *nodetypes = item->repr->attribute("sodipodi:nodetypes");    
+	int nodetype_index = 0;
+	
+	bool nodetypes_out_of_date = strlen(nodetypes) != uint(shape->curve->end);
+	// nodetypes might still be empty, e.g. for pure SVG files
+	// or it might not have been updated yet
+	
+	if (bp->code == NR_MOVETO) { // Indicates the start of a closed subpath, see nr-path-code.h
         bp++; //The first point of a closed path is coincident with the end point. Skip the first point as we need only one
+        nodetype_index++;
     }
 
     while (bp->code != NR_END) {
-        *p = bp->c(3) * i2d;
+        if (nodetypes_out_of_date || nodetypes[nodetype_index] == 'c') {
+        	// if nodetypes is out of date then return any node for snapping
+        	// otherwise only return cusps (i.e . non-smooth nodes) 
+        	*p = bp->c(3) * i2d;
+        }
         bp++;
+        nodetype_index++;
     }
 }
 
