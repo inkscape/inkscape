@@ -1121,7 +1121,7 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
     gchar const *nodetypes = item->repr->attribute("sodipodi:nodetypes");    
 	int nodetype_index = 0;
 	
-	bool nodetypes_out_of_date = strlen(nodetypes) != uint(shape->curve->end);
+	bool nodetypes_out_of_date = strlen(nodetypes) != (size_t)(shape->curve->end);
 	// nodetypes might still be empty, e.g. for pure SVG files
 	// or it might not have been updated yet
 	
