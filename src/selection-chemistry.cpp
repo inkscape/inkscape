@@ -20,10 +20,6 @@
 # include "config.h"
 #endif
 
-#ifdef WIN32
-#include <windows.h>
-#endif // WIN32
-
 #include <gtkmm/clipboard.h>
 
 #include "svg/svg.h"
