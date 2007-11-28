@@ -228,12 +228,10 @@ RegisteredScalarUnit::setValue (double val)
 void
 RegisteredScalarUnit::on_value_changed()
 {
-g_message("on_value_changed");
     if (_widget->setProgrammatically) {
         _widget->setProgrammatically = false;
         return;
     }
-g_message("on_value_changed1");
 
     if (_wr->isUpdating())
         return;
