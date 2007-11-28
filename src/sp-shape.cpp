@@ -1119,13 +1119,13 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
     NArtBpath const *bp = SP_CURVE_BPATH(shape->curve);
     
     gchar const *nodetypes = item->repr->attribute("sodipodi:nodetypes");    
-	int nodetype_index = 0;
-	
-	bool nodetypes_out_of_date = strlen(nodetypes) != (size_t)(shape->curve->end);
-	// nodetypes might still be empty, e.g. for pure SVG files
-	// or it might not have been updated yet
-	
-	if (bp->code == NR_MOVETO) { // Indicates the start of a closed subpath, see nr-path-code.h
+    int nodetype_index = 0;
+
+    bool nodetypes_out_of_date = (!nodetypes)  ||  (strlen(nodetypes) != (size_t)(shape->curve->end));
+    // nodetypes might still be empty, e.g. for pure SVG files
+    // or it might not have been updated yet
+
+    if (bp->code == NR_MOVETO) { // Indicates the start of a closed subpath, see nr-path-code.h
         bp++; //The first point of a closed path is coincident with the end point. Skip the first point as we need only one
         nodetype_index++;
     }
