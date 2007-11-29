@@ -7,6 +7,12 @@
  *
  */
 
+/* As a general comment, I am not exactly proud of how things are done.
+ * (for example the 'enable' widget and readRepr things)
+ * It does seem to work however. I intend to clean up and sort things out later, but that can take forever...
+ * Don't be shy to correct things.
+ */
+
 
 #include "sp-canvas-util.h"
 #include "display-forward.h"
@@ -112,9 +118,10 @@ grid_canvasitem_render (SPCanvasItem * item, SPCanvasBuf * buf)
 {
     GridCanvasItem *gridcanvasitem = INKSCAPE_GRID_CANVASITEM (item);
 
-    sp_canvas_prepare_buffer (buf);
-
-    if (gridcanvasitem->grid) gridcanvasitem->grid->Render(buf);
+    if ( gridcanvasitem->grid && gridcanvasitem->grid->isVisible() ) {
+        sp_canvas_prepare_buffer (buf);
+        gridcanvasitem->grid->Render(buf);
+    }
 }
 
 static void
@@ -151,7 +158,7 @@ grid_canvasitem_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
     };
 
 CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type)
-    : namelabel("", Gtk::ALIGN_LEFT), gridtype(type)
+    : namelabel("", Gtk::ALIGN_LEFT), gridtype(type), visible(true), snap_enabled(true)
 {
     repr = in_repr;
     doc = in_doc;
@@ -166,7 +173,17 @@ CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocume
     str += getName();
     str += "</b>";
     namelabel.set_markup(str);
-    vbox.pack_start(namelabel,true,true);
+    vbox.pack_start(namelabel, true, true);
+
+    _rcb_visible.init ( _("_Visible"),
+                        _("Determines whether the grid is displayed or not. Objects are still snapped to invisible grids."),
+                         "visible", _wr, false, repr, doc);
+    vbox.pack_start(*dynamic_cast<Gtk::Widget*>(_rcb_visible._button), true, true);
+
+    _rcb_snap_enabled.init ( _("_Snapping enabled"),
+                        _("Determines whether to snap to this grid or not. Can be 'on' for invisible grids."),
+                         "snap_enabled", _wr, false, repr, doc);
+    vbox.pack_start(*dynamic_cast<Gtk::Widget*>(_rcb_snap_enabled._button), true, true);
 }
 
 CanvasGrid::~CanvasGrid()
@@ -317,7 +334,6 @@ CanvasGrid::on_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gc
 
     ((CanvasGrid*) data)->onReprAttrChanged(repr, key, oldval, newval, is_interactive);
 }
-
 
 
 // ##########################################################
@@ -577,8 +593,8 @@ CanvasXYGrid::readRepr()
     if ( (value = repr->attribute("originx")) ) {
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::X], &gridunit);
         origin[NR::X] = sp_units_get_pixels(origin[NR::X], *(gridunit));
-
     }
+
     if ( (value = repr->attribute("originy")) ) {
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::Y], &gridunit);
         origin[NR::Y] = sp_units_get_pixels(origin[NR::Y], *(gridunit));
@@ -624,6 +640,10 @@ CanvasXYGrid::readRepr()
         render_dotted = (strcmp(value,"true") == 0);
     }
 
+    if ( (value = repr->attribute("visible")) ) {
+        visible = (strcmp(value,"true") == 0);
+    }
+
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
         sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
     }
@@ -663,6 +683,9 @@ CanvasXYGrid::updateWidgets()
 
     _wr.setUpdating (true);
 
+    _rcb_visible.setActive(visible);
+    _rcb_snap_enabled.setActive(snap_enabled);
+
     _rumg.setUnit (gridunit);
 
     gdouble val;
@@ -682,6 +705,8 @@ CanvasXYGrid::updateWidgets()
     _rcp_gcol.setRgba32 (color);
     _rcp_gmcol.setRgba32 (empcolor);
     _rsi.setValue (empspacing);
+
+    _rcb_dotted.setActive(render_dotted);
 
     _wr.setUpdating (false);
 

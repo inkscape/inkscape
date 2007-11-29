@@ -78,9 +78,6 @@ private:
     Inkscape::UI::Widget::RegisteredScalarUnit  _rsu_ox, _rsu_oy, _rsu_sy, _rsu_ax, _rsu_az;
     Inkscape::UI::Widget::RegisteredColorPicker _rcp_gcol, _rcp_gmcol;
     Inkscape::UI::Widget::RegisteredSuffixedInteger _rsi;
-    
-    Inkscape::UI::Widget::Registry _wr;
-
 };
 
 

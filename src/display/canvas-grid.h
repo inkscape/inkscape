@@ -86,8 +86,8 @@ public:
     virtual void Update (NR::Matrix const &affine, unsigned int flags) = 0;
     virtual void Render (SPCanvasBuf *buf) = 0;
 
-    virtual void readRepr() {};
-    virtual void onReprAttrChanged (Inkscape::XML::Node * /*repr*/, const gchar */*key*/, const gchar */*oldval*/, const gchar */*newval*/, bool /*is_interactive*/) {};
+    virtual void readRepr() = 0;
+    virtual void onReprAttrChanged (Inkscape::XML::Node * /*repr*/, const gchar */*key*/, const gchar */*oldval*/, const gchar */*newval*/, bool /*is_interactive*/) = 0;
 
     virtual Gtk::Widget & getWidget() = 0;
 
@@ -98,6 +98,9 @@ public:
 
     static void on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
 
+    bool isVisible() { return visible; };
+    bool isSnapEnabled() { return snap_enabled; };
+
 protected:
     CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type);
 
@@ -107,6 +110,12 @@ protected:
 
     Gtk::VBox vbox;
     Gtk::Label namelabel;
+
+    Inkscape::UI::Widget::Registry _wr;
+    Inkscape::UI::Widget::RegisteredCheckButton _rcb_visible;
+    bool visible;
+    Inkscape::UI::Widget::RegisteredCheckButton _rcb_snap_enabled;
+    bool snap_enabled;
 
     GridType gridtype;
 
@@ -154,8 +163,6 @@ private:
     Inkscape::UI::Widget::RegisteredColorPicker _rcp_gcol, _rcp_gmcol;
     Inkscape::UI::Widget::RegisteredSuffixedInteger _rsi;
     Inkscape::UI::Widget::RegisteredCheckButton _rcb_dotted;
-
-    Inkscape::UI::Widget::Registry _wr;
 
     bool render_dotted;
 };

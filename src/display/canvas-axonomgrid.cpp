@@ -386,6 +386,14 @@ CanvasAxonomGrid::readRepr()
         empspacing = atoi(value);
     }
 
+    if ( (value = repr->attribute("visible")) ) {
+        visible = (strcmp(value,"true") == 0);
+    }
+
+    if ( (value = repr->attribute("snap_enabled")) ) {
+        snap_enabled = (strcmp(value,"true") == 0);
+    }
+
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
         sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
     }
@@ -424,7 +432,9 @@ CanvasAxonomGrid::updateWidgets()
 
     _wr.setUpdating (true);
 
-    //_rrb_gridtype.setValue (nv->gridtype);
+    _rcb_visible.setActive(visible);
+    _rcb_snap_enabled.setActive(snap_enabled);
+
     _rumg.setUnit (gridunit);
 
     gdouble val;
