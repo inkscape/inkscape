@@ -383,7 +383,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     dtw->cms_adjust = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                                SP_BUTTON_TYPE_TOGGLE,
                                                NULL,
-                                               "swatches",
+                                               "color_management",
                                                _("Adjust the display"),
                                                dtw->tt );
 #if ENABLE_LCMS

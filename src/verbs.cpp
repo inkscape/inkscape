@@ -2462,7 +2462,7 @@ Verb *Verb::_base_verbs[] = {
                  N_("Toggle between normal and outline display modes"), NULL),
 
     new ZoomVerb(SP_VERB_VIEW_CMS_TOGGLE, "ViewCmsToggle", N_("Display Adjustment"),
-                 N_("Toggle CMS display adjustment on and off"), "swatches"),
+                 N_("Toggle CMS display adjustment on and off"), "color_management"),
 
     new ZoomVerb(SP_VERB_VIEW_ICON_PREVIEW, "ViewIconPreview", N_("Ico_n Preview..."),
                  N_("Open a window to preview objects at different icon resolutions"), "view_icon_preview"),
