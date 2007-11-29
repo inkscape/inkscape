@@ -6,7 +6,7 @@
  *
  * Generic (and quite unintelligent) grid item for gnome canvas
  *
- * Copyright (C) Johan Engelen 2006 <johan@shouraizou.nl>
+ * Copyright (C) Johan Engelen 2006-2007 <johan@shouraizou.nl>
  * Copyright (C) Lauris Kaplinski 2000
  *
  */
@@ -67,9 +67,12 @@ GtkType grid_canvasitem_get_type (void);
 
 class CanvasGrid {
 public:
-    CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc);
     virtual ~CanvasGrid();
 
+    // TODO: see effect.h and effect.cpp from live_effects how to link enums to SVGname to typename properly. (johan)
+    const char * getName();
+    const char * getSVGName();
+    GridType     getGridType();
     static const char * getName(GridType type);
     static const char * getSVGName(GridType type);
     static GridType     getGridTypeFromSVGName(const char * typestr);
@@ -96,16 +99,20 @@ public:
     static void on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
 
 protected:
+    CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type);
+
     GSList * canvasitems;  // list of created canvasitems
 
     SPNamedView * namedview;
 
     Gtk::VBox vbox;
+    Gtk::Label namelabel;
+
+    GridType gridtype;
 
 private:
     CanvasGrid(const CanvasGrid&);
     CanvasGrid& operator=(const CanvasGrid&);
-
 };
 
 

@@ -150,7 +150,8 @@ grid_canvasitem_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
         NULL  /* order_changed */
     };
 
-CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc)
+CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type)
+    : namelabel("", Gtk::ALIGN_LEFT), gridtype(type)
 {
     repr = in_repr;
     doc = in_doc;
@@ -160,6 +161,12 @@ CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocume
 
     namedview = nv;
     canvasitems = NULL;
+
+    Glib::ustring str("<b>");
+    str += getName();
+    str += "</b>";
+    namelabel.set_markup(str);
+    vbox.pack_start(namelabel,true,true);
 }
 
 CanvasGrid::~CanvasGrid()
@@ -174,6 +181,23 @@ CanvasGrid::~CanvasGrid()
     }
 }
 
+const char *
+CanvasGrid::getName()
+{
+    return _(grid_name[gridtype]);
+}
+
+const char *
+CanvasGrid::getSVGName()
+{
+    return grid_svgname[gridtype];
+}
+
+GridType
+CanvasGrid::getGridType()
+{
+    return gridtype;
+}
 
 
 char const *
@@ -342,7 +366,7 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
 }
 
 CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
-    : CanvasGrid(nv, in_repr, in_doc), table(1, 1)
+    : CanvasGrid(nv, in_repr, in_doc, GRID_RECTANGULAR), table(1, 1)
 {
     origin[NR::X] = origin[NR::Y] = 0.0;
     color = DEFAULTGRIDCOLOR;

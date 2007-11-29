@@ -191,7 +191,7 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
 }
 
 CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
-    : CanvasGrid(nv, in_repr, in_doc), table(1, 1)
+    : CanvasGrid(nv, in_repr, in_doc, GRID_AXONOMETRIC), table(1, 1)
 {
     origin[NR::X] = origin[NR::Y] = 0.0;
     color = 0xff3f3f20;
