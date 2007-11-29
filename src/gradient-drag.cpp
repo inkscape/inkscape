@@ -836,7 +836,7 @@ gr_knot_moved_midpoint_handler(SPKnot */*knot*/, NR::Point const *ppointer, guin
         NR::Point this_move = displacement;
         if (state & GDK_MOD1_MASK) {
             // FIXME: unify all these profiles (here, in nodepath, in tweak) in one place
-            double alpha = 1.5;
+            double alpha = 1.0;
             if (NR::L2(drg->point - dragger->point) + NR::L2(drg->point - begin) - 1e-3 > NR::L2(dragger->point - begin)) { // drg is on the end side from dragger
                 double x = NR::L2(drg->point - dragger->point)/NR::L2(end - dragger->point);
                 this_move = (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5) * this_move;
