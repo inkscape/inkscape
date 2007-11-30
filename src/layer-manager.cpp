@@ -174,6 +174,9 @@ void LayerManager::_rebuild() {
 
     _clear();
 
+    if (!_document) // http://sourceforge.net/mailarchive/forum.php?thread_name=5747bce9a7ed077c1b4fc9f0f4f8a5e0%40localhost&forum_name=inkscape-devel
+        return;
+
     GSList const *layers=sp_document_get_resource_list(_document, "layer");
     SPObject *root=_desktop->currentRoot();
     if ( root ) {
