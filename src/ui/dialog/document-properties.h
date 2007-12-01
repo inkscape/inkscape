@@ -59,7 +59,7 @@ protected:
 
     NotebookPage   _page_page, _page_guides;
     NotebookPage   _page_snap, _page_snap_dtls;
-    NotebookPage   _page_grids;
+    Gtk::VBox      _grids_vbox;
 
     //---------------------------------------------------------------
     RegisteredCheckButton _rcb_canb, _rcb_bord, _rcb_shad;
@@ -82,11 +82,15 @@ protected:
     //---------------------------------------------------------------
     RegisteredCheckButton _rcbic, _rcbsng;
     RegisteredCheckButton _rcbsigg, _rcbsils;
-	//---------------------------------------------------------------
+    //---------------------------------------------------------------
     Gtk::Notebook   _grids_notebook;
+    Gtk::HBox       _grids_hbox_crea;
+    Gtk::Label      _grids_label_crea;
     Gtk::Button     _grids_button_new;
     Gtk::Button     _grids_button_remove;
     Gtk::ComboBoxText _grids_combo_gridtype;
+    Gtk::Label      _grids_label_def;
+    Gtk::HBox       _grids_space;
     //---------------------------------------------------------------
 
     gchar const *_prefs_path;

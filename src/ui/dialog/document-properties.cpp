@@ -93,9 +93,11 @@ DocumentProperties::destroy()
 DocumentProperties::DocumentProperties()
     : UI::Widget::Panel ("", "dialogs.documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
       _page_page(1, 1), _page_guides(1, 1),
-      _page_snap(1, 1), _page_snap_dtls(1, 1), _page_grids(1, 1),
+      _page_snap(1, 1), _page_snap_dtls(1, 1),
+      _grids_label_crea("", Gtk::ALIGN_LEFT),
       _grids_button_new(_("_New"), _("Create new grid.")),
       _grids_button_remove(_("_Remove"), _("Remove selected grid.")),
+      _grids_label_def("", Gtk::ALIGN_LEFT),
       _prefs_path("dialogs.documentoptions")
 {
     _tt.enable();
@@ -104,7 +106,7 @@ DocumentProperties::DocumentProperties()
 
     _notebook.append_page(_page_page,      _("Page"));
     _notebook.append_page(_page_guides,    _("Guides"));
-    _notebook.append_page(_page_grids,     _("Grids"));
+    _notebook.append_page(_grids_vbox,     _("Grids"));
     _notebook.append_page(_page_snap,      _("Snap"));
     _notebook.append_page(_page_snap_dtls, _("Snap details"));
 
@@ -137,6 +139,7 @@ DocumentProperties::init()
                      G_CALLBACK(on_deactivate_desktop), 0);
 
     show_all_children();
+    _grids_button_remove.hide();
 }
 
 DocumentProperties::~DocumentProperties()
@@ -410,14 +413,18 @@ DocumentProperties::update_gridspage()
     }
 
     //add tabs
+    bool grids_present = false;
     for (GSList const * l = nv->grids; l != NULL; l = l->next) {
         Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
         _grids_notebook.append_page(grid->getWidget(), grid->repr->attribute("id"));
-
+        grids_present = true;
     }
     _grids_notebook.show_all();
 
-    _page_grids.table().resize_children();
+    if (grids_present)
+        _grids_button_remove.show();
+    else
+        _grids_button_remove.hide();
 }
 
 /**
@@ -426,41 +433,37 @@ DocumentProperties::update_gridspage()
 void
 DocumentProperties::build_gridspage()
 {
-    _page_grids.show();
-
     /// \todo FIXME: gray out snapping when grid is off.
     /// Dissenting view: you want snapping without grid.
 
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
     SPNamedView *nv = sp_desktop_namedview(dt);
 
-    Gtk::Label* label_crea = manage (new Gtk::Label);
-    label_crea->set_markup (_("<b>Creation</b>"));
-    Gtk::Label* label_crea_type = manage (new Gtk::Label);
-    label_crea_type->set_markup (_("Gridtype"));
+    _grids_label_crea.set_markup(_("<b>Creation</b>"));
+    _grids_label_def.set_markup(_("<b>Defined grids</b>"));
+    _grids_hbox_crea.pack_start(_grids_combo_gridtype, true, true);
+    _grids_hbox_crea.pack_start(_grids_button_new, true, true);
 
     for (gint t = 0; t <= GRID_MAXTYPENR; t++) {
         _grids_combo_gridtype.append_text( CanvasGrid::getName( (GridType) t ) );
     }
     _grids_combo_gridtype.set_active_text( CanvasGrid::getName(GRID_RECTANGULAR) );
 
-    Gtk::Label* label_def = manage (new Gtk::Label);
-    label_def->set_markup (_("<b>Defined grids</b>"));
-
     for (GSList const * l = nv->grids; l != NULL; l = l->next) {
         Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
         _grids_notebook.append_page(grid->getWidget(), grid->repr->attribute("id"));
     }
 
-    Gtk::Widget *const widget_array[] =
-    {
-        label_crea, 0,
-        label_crea_type, (Gtk::Widget*) &_grids_combo_gridtype,
-        (Gtk::Widget*) &_grids_button_new,         (Gtk::Widget*) &_grids_button_remove,
-        label_def,         0
-    };
-    attach_all(_page_grids.table(), widget_array, G_N_ELEMENTS(widget_array));
-    _page_grids.table().attach(_grids_notebook, 0, 3, 4, 5, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+    _grids_space.set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
+
+    _grids_vbox.set_spacing(4);
+    _grids_vbox.pack_start(_grids_label_crea, false, false);
+    _grids_vbox.pack_start(_grids_hbox_crea, false, false);
+    _grids_vbox.pack_start(_grids_space, false, false);
+    _grids_vbox.pack_start(_grids_label_def, false, false);
+    _grids_vbox.pack_start(_grids_notebook, false, false);
+    _grids_vbox.pack_start(_grids_button_remove, false, false);
+    _grids_button_remove.hide();
 }
 
 
