@@ -488,7 +488,7 @@ CanvasAxonomGrid::Update (NR::Matrix const &affine, unsigned int /*flags*/)
     }
 
     spacing_ylines = sw[NR::X] * lengthy  /(tan_angle[X] + tan_angle[Z]);
-    lyw            = lengthy * sw[NR::Y];
+    lyw            = sw[NR::Y] * lengthy;
     lxw_x          = (lengthy / tan_angle[X]) * sw[NR::X];
     lxw_z          = (lengthy / tan_angle[Z]) * sw[NR::X];
 
@@ -516,14 +516,15 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     gdouble x;
     gdouble y;
 
-    // render the three separate line groups representing the main-axes:
+    // render the three separate line groups representing the main-axes
+
     // x-axis always goes from topleft to bottomright. (0,0) - (1,1)
     gdouble const xintercept_y_bc = (buf_tl_gc[NR::X] * tan_angle[X]) - buf_tl_gc[NR::Y] ;
     gdouble const xstart_y_sc = ( xintercept_y_bc - floor(xintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
-    gint const  xlinestart = (gint) Inkscape::round( (xstart_y_sc - ow[NR::Y]) / lyw );
-    gint xlinenum;
-    // lijnen vanaf linker zijkant.
-    for (y = xstart_y_sc, xlinenum = xlinestart; y < buf->rect.y1; y += lyw, xlinenum++) {
+    gint const xlinestart = (gint) Inkscape::round( (xstart_y_sc - buf->rect.x0*tan_angle[X] -ow[NR::Y]) / lyw );
+    gint xlinenum = xlinestart;
+    // lines starting on left side.
+    for (y = xstart_y_sc; y < buf->rect.y1; y += lyw, xlinenum++) {
         gint const x0 = buf->rect.x0;
         gint const y0 = (gint) Inkscape::round(y);
         gint const x1 = x0 + (gint) Inkscape::round( (buf->rect.y1 - y) / tan_angle[X] );
@@ -535,9 +536,10 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
         }
     }
-    // lijnen vanaf bovenkant.
+    // lines starting from top side
     gdouble const xstart_x_sc = buf->rect.x0 + (lxw_x - (xstart_y_sc - buf->rect.y0) / tan_angle[X]) ;
-    for (x = xstart_x_sc, xlinenum = xlinestart; x < buf->rect.x1; x += lxw_x, xlinenum--) {
+    xlinenum = xlinestart-1;
+    for (x = xstart_x_sc; x < buf->rect.x1; x += lxw_x, xlinenum--) {
         gint const y0 = buf->rect.y0;
         gint const y1 = buf->rect.y1;
         gint const x0 = (gint) Inkscape::round(x);
@@ -550,12 +552,11 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         }
     }
 
-
     // y-axis lines (vertical)
     gdouble const ystart_x_sc = floor (buf_tl_gc[NR::X] / spacing_ylines) * spacing_ylines + ow[NR::X];
     gint const  ylinestart = (gint) Inkscape::round((ystart_x_sc - ow[NR::X]) / spacing_ylines);
-    gint ylinenum;
-    for (x = ystart_x_sc, ylinenum = ylinestart; x < buf->rect.x1; x += spacing_ylines, ylinenum++) {
+    gint ylinenum = ylinestart;
+    for (x = ystart_x_sc; x < buf->rect.x1; x += spacing_ylines, ylinenum++) {
         gint const x0 = (gint) Inkscape::round(x);
 
         if (!scaled && (ylinenum % empspacing) == 0) {
@@ -568,10 +569,10 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     // z-axis always goes from bottomleft to topright. (0,1) - (1,0)
     gdouble const zintercept_y_bc = (buf_tl_gc[NR::X] * -tan_angle[Z]) - buf_tl_gc[NR::Y] ;
     gdouble const zstart_y_sc = ( zintercept_y_bc - floor(zintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
-    gint const  zlinestart = (gint) Inkscape::round( (zstart_y_sc - ow[NR::Y]) / lyw );
-    gint zlinenum;
-    // lijnen vanaf linker zijkant.
-    for (y = zstart_y_sc, zlinenum = zlinestart; y < buf->rect.y1; y += lyw, zlinenum++) {
+    gint const  zlinestart = (gint) Inkscape::round( (zstart_y_sc + buf->rect.x0*tan_angle[X] - ow[NR::Y]) / lyw );
+    gint zlinenum = zlinestart;
+    // lines starting from left side
+    for (y = zstart_y_sc; y < buf->rect.y1; y += lyw, zlinenum++) {
         gint const x0 = buf->rect.x0;
         gint const y0 = (gint) Inkscape::round(y);
         gint const x1 = x0 + (gint) Inkscape::round( (y - buf->rect.y0 ) / tan_angle[Z] );
@@ -585,7 +586,7 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     }
     // draw lines from bottom-up
     gdouble const zstart_x_sc = buf->rect.x0 + (y - buf->rect.y1) / tan_angle[Z] ;
-    for (x = zstart_x_sc; x < buf->rect.x1; x += lxw_z, zlinenum--) {
+    for (x = zstart_x_sc; x < buf->rect.x1; x += lxw_z, zlinenum++) {
         gint const y0 = buf->rect.y1;
         gint const y1 = buf->rect.y0;
         gint const x0 = (gint) Inkscape::round(x);
