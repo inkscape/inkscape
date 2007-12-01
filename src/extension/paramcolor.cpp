@@ -29,18 +29,18 @@
 
 namespace Inkscape {
 namespace Extension {
-	
+
 void sp_color_param_changed(SPColorSelector *csel, GObject *cp);
 
-     
+
 /** \brief  Free the allocated data. */
 ParamColor::~ParamColor(void)
 {
-    
+
 }
-     
-guint32 
-ParamColor::set (guint32 in, SPDocument * doc, Inkscape::XML::Node * node)
+
+guint32
+ParamColor::set( guint32 in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
 {
     _value = in;
 
@@ -65,7 +65,7 @@ ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar *
 
     if (paramval != NULL)
         defaulthex = paramval;
-		
+
 	_value = atoi(defaulthex);
 
     return;
@@ -77,17 +77,17 @@ ParamColor::string (void)
 {
     char str[16];
 	sprintf(str, "%i", _value);
-	
+
 	return new Glib::ustring(str);
 }
 
 Gtk::Widget *
-ParamColor::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * changeSignal )
 {
 	_changeSignal = new sigc::signal<void>(*changeSignal);
 	Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 	SPColorSelector* spColorSelector = (SPColorSelector*)sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK);
-	
+
 	ColorSelector* colorSelector = spColorSelector->base;
 	if (_value < 1) {
 		_value = 0xFF000000;
@@ -101,7 +101,7 @@ ParamColor::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::sign
 
 	gtk_widget_show(GTK_WIDGET(spColorSelector));
 	hbox->show();
-    
+
     return dynamic_cast<Gtk::Widget *>(hbox);
 }
 
@@ -113,7 +113,7 @@ sp_color_param_changed(SPColorSelector *csel, GObject *obj)
 
     ParamColor* ptr = (ParamColor*)obj;
 	ptr->set(color.toRGBA32( alpha ), NULL, NULL);
-	
+
 	ptr->_changeSignal->emit();
 }
 

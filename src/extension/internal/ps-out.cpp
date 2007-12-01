@@ -24,12 +24,12 @@ namespace Extension {
 namespace Internal {
 
 bool
-PsOutput::check (Inkscape::Extension::Extension * module)
+PsOutput::check( Inkscape::Extension::Extension * /*module*/ )
 {
-	if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_PRINT_PS))
-		return FALSE;
+    if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_PRINT_PS))
+        return FALSE;
 
-	return TRUE;
+    return TRUE;
 }
 
 /**

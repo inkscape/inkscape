@@ -1,5 +1,5 @@
-#ifndef __SP_CANVAS_H__
-#define __SP_CANVAS_H__
+#ifndef SEEN_SP_CANVAS_H
+#define SEEN_SP_CANVAS_H
 
 /** \file
  * SPCanvas, SPCanvasBuf, and SPCanvasItem.
@@ -39,8 +39,11 @@
 #include <libnr/nr-rect.h>
 #include <libnr/nr-rect-l.h>
 
+G_BEGIN_DECLS
+
 struct SPCanvas;
 struct SPCanvasGroup;
+typedef struct _SPCanvasItemClass SPCanvasItemClass;
 
 enum {
     SP_CANVAS_UPDATE_REQUESTED  = 1 << 0,
@@ -77,7 +80,7 @@ struct SPCanvasItem : public GtkObject {
 /**
  * The vtable of an SPCanvasItem.
  */
-struct SPCanvasItemClass : public GtkObjectClass {
+struct _SPCanvasItemClass : public GtkObjectClass {
     void (* update) (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
 
     void (* render) (SPCanvasItem *item, SPCanvasBuf *buf);
@@ -87,6 +90,8 @@ struct SPCanvasItemClass : public GtkObjectClass {
 };
 
 SPCanvasItem *sp_canvas_item_new(SPCanvasGroup *parent, GtkType type, const gchar *first_arg_name, ...);
+
+G_END_DECLS
 
 #define sp_canvas_item_set gtk_object_set
 
@@ -198,15 +203,15 @@ void sp_canvas_request_redraw(SPCanvas *canvas, int x1, int y1, int x2, int y2);
 void sp_canvas_force_full_redraw_after_interruptions(SPCanvas *canvas, unsigned int count);
 void sp_canvas_end_forced_full_redraws(SPCanvas *canvas);
 
+bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, NR::Point const &world);
+
 void sp_canvas_window_to_world(SPCanvas const *canvas, double winx, double winy, double *worldx, double *worldy);
 void sp_canvas_world_to_window(SPCanvas const *canvas, double worldx, double worldy, double *winx, double *winy);
 
 NR::Point sp_canvas_window_to_world(SPCanvas const *canvas, NR::Point const win);
 NR::Point sp_canvas_world_to_window(SPCanvas const *canvas, NR::Point const world);
 
-bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, NR::Point const &world);
-
-#endif
+#endif // SEEN_SP_CANVAS_H
 
 /*
   Local Variables:

@@ -628,7 +628,7 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
 }
 
 unsigned int
-PrintPS::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, float opacity)
+PrintPS::bind(Inkscape::Extension::Print */*mod*/, NRMatrix const *transform, float /*opacity*/)
 {
     if (!_stream) return 0;  // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
@@ -645,7 +645,7 @@ PrintPS::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, float 
 }
 
 unsigned int
-PrintPS::release(Inkscape::Extension::Print *mod)
+PrintPS::release(Inkscape::Extension::Print */*mod*/)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
@@ -654,7 +654,7 @@ PrintPS::release(Inkscape::Extension::Print *mod)
 }
 
 unsigned int
-PrintPS::comment(Inkscape::Extension::Print *mod, char const *comment)
+PrintPS::comment(Inkscape::Extension::Print */*mod*/, char const *comment)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;

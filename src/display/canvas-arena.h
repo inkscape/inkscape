@@ -1,5 +1,5 @@
-#ifndef __SP_CANVAS_ARENA_H__
-#define __SP_CANVAS_ARENA_H__
+#ifndef SEEN_SP_CANVAS_ARENA_H
+#define SEEN_SP_CANVAS_ARENA_H
 
 /*
  * RGBA display list system for inkscape
@@ -13,8 +13,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-struct SPCanvasArena;
-struct SPCanvasArenaClass;
+#include "../display/sp-canvas.h"
+#include "nr-arena-item.h"
+
+G_BEGIN_DECLS
 
 #define SP_TYPE_CANVAS_ARENA (sp_canvas_arena_get_type ())
 #define SP_CANVAS_ARENA(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_CANVAS_ARENA, SPCanvasArena))
@@ -22,10 +24,10 @@ struct SPCanvasArenaClass;
 #define SP_IS_CANVAS_ARENA(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_CANVAS_ARENA))
 #define SP_IS_CANVAS_ARENA_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_CANVAS_ARENA))
 
-#include "../display/sp-canvas.h"
-#include "nr-arena-item.h"
+typedef struct _SPCanvasArena      SPCanvasArena;
+typedef struct _SPCanvasArenaClass SPCanvasArenaClass;
 
-struct SPCanvasArena {
+struct _SPCanvasArena {
     SPCanvasItem item;
 
     guint cursor : 1;
@@ -42,7 +44,7 @@ struct SPCanvasArena {
     gdouble delta;
 };
 
-struct SPCanvasArenaClass {
+struct _SPCanvasArenaClass {
     SPCanvasItemClass parent_class;
 
     gint (* arena_event) (SPCanvasArena *carena, NRArenaItem *item, GdkEvent *event);
@@ -55,4 +57,6 @@ void sp_canvas_arena_set_sticky (SPCanvasArena *ca, gboolean sticky);
 
 void sp_canvas_arena_render_pixblock (SPCanvasArena *ca, NRPixBlock *pb);
 
-#endif
+G_END_DECLS
+
+#endif // SEEN_SP_CANVAS_ARENA_H

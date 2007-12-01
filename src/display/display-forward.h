@@ -6,7 +6,7 @@
 struct SPCanvas;
 struct SPCanvasClass;
 struct SPCanvasItem;
-struct SPCanvasItemClass;
+typedef struct _SPCanvasItemClass SPCanvasItemClass;
 struct SPCanvasGroup;
 struct SPCanvasGroupClass;
 struct SPCurve;

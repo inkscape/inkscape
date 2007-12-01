@@ -52,7 +52,7 @@ ParamBool::ParamBool (const gchar * name, const gchar * guitext, const gchar * d
     and \c pref_name() are used.
 */
 bool
-ParamBool::set (bool in, SPDocument * doc, Inkscape::XML::Node * node)
+ParamBool::set( bool in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
 {
     _value = in;
 

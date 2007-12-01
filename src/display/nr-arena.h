@@ -13,6 +13,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glib/gmacros.h>
+
+G_BEGIN_DECLS
+
+typedef struct _SPCanvasArena      SPCanvasArena;
+
+G_END_DECLS
+
 #define NR_TYPE_ARENA (nr_arena_get_type ())
 #define NR_ARENA(o) (NR_CHECK_INSTANCE_CAST ((o), NR_TYPE_ARENA, NRArena))
 #define NR_IS_ARENA(o) (NR_CHECK_INSTANCE_TYPE ((o), NR_TYPE_ARENA))
@@ -35,8 +43,6 @@ enum {
 	RENDERMODE_NOAA,
 	RENDERMODE_OUTLINE
 };
-
-struct SPCanvasArena;
 
 struct NRArena : public NRActiveObject {
 	static NRArena *create() {

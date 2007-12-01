@@ -23,7 +23,7 @@ private:
 public:
     ParamBool(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
-    bool get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
+    bool get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
     bool set (bool in, SPDocument * doc, Inkscape::XML::Node * node);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);

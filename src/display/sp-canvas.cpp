@@ -147,7 +147,7 @@ sp_canvas_item_class_init (SPCanvasItemClass *klass)
     item_signals[ITEM_EVENT] = g_signal_new ("event",
                                              G_TYPE_FROM_CLASS (klass),
                                              G_SIGNAL_RUN_LAST,
-                                             G_STRUCT_OFFSET (SPCanvasItemClass, event),
+                                             ((glong)((guint8*)&(klass->event) - (guint8*)klass)),
                                              NULL, NULL,
                                              sp_marshal_BOOLEAN__POINTER,
                                              G_TYPE_BOOLEAN, 1,

@@ -96,6 +96,9 @@ void Inkscape::IO::dump_fopen_call( char const *utf8name, char const *id )
         }
     }
     g_message( "fopen call %s for [%s]", id, str.data() );
+#else
+    (void)utf8name;
+    (void)id;
 #endif
 }
 

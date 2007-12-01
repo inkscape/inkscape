@@ -83,7 +83,7 @@ sp_canvas_arena_class_init (SPCanvasArenaClass *klass)
     signals[ARENA_EVENT] = gtk_signal_new ("arena_event",
                                            GTK_RUN_LAST,
                                            GTK_CLASS_TYPE(object_class),
-                                           GTK_SIGNAL_OFFSET (SPCanvasArenaClass, arena_event),
+                                           ((glong)((guint8*)&(klass->arena_event) - (guint8*)klass)),
                                            sp_marshal_INT__POINTER_POINTER,
                                            GTK_TYPE_INT, 2, GTK_TYPE_POINTER, GTK_TYPE_POINTER);
 

@@ -39,7 +39,7 @@ static const int PANEL_SETTING_NEXTFREE = 3;
  *    Construct a Panel
  */
 
-Panel::Panel(Glib::ustring const &label, gchar const *prefs_path, 
+Panel::Panel(Glib::ustring const &label, gchar const *prefs_path,
              int verb_num, Glib::ustring const &apply_label,
              bool menu_desired) :
     _prefs_path(prefs_path),
@@ -395,7 +395,7 @@ void Panel::_regItem(Gtk::MenuItem* item, int group, int id)
     item->show();
 }
 
-void Panel::_handleAction(int set_id, int item_id)
+void Panel::_handleAction(int /*set_id*/, int /*item_id*/)
 {
 // for subclasses to override
 }
@@ -406,7 +406,7 @@ Panel::_apply()
     g_warning("Apply button clicked for panel [Panel::_apply()]");
 }
 
-Gtk::Button * 
+Gtk::Button *
 Panel::addResponseButton(const Glib::ustring &button_text, int response_id)
 {
     Gtk::Button *button = new Gtk::Button(button_text);

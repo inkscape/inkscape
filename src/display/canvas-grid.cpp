@@ -158,7 +158,7 @@ grid_canvasitem_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
     };
 
 CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type)
-    : namelabel("", Gtk::ALIGN_CENTER), gridtype(type), visible(true), snap_enabled(true)
+    : namelabel("", Gtk::ALIGN_CENTER), visible(true), snap_enabled(true), gridtype(type)
 {
     repr = in_repr;
     doc = in_doc;
