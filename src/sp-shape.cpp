@@ -46,7 +46,7 @@
 #include "bad-uri-exception.h"
 #include "xml/repr.h"
 
-#include "nodepath.cpp" // for triangle_area()
+#include "util/mathfns.h" // for triangle_area()
 
 #define noSHAPE_VERBOSE
 
@@ -1143,7 +1143,7 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
         
             // Determine whether a node is at a smooth part of the path, by 
             // calculating a measure for the collinearity of the handles
-            bool c1 = fabs (triangle_area (pos, ppos, npos)) < 1; // points are (almost) collinear
+            bool c1 = fabs (Inkscape::Util::triangle_area (pos, ppos, npos)) < 1; // points are (almost) collinear
             bool c2 = NR::L2(pos - ppos) < 1e-6 || NR::L2(pos - npos) < 1e-6; // endnode, or a node with a retracted handle
             if (!(c1 & !c2)) {
                 *p = pos; // only return non-smooth nodes ("cusps")

@@ -49,6 +49,7 @@
 #include <algorithm>
 #include "live_effects/lpeobject.h"
 #include "live_effects/parameter/parameter.h"
+#include "util/mathfns.h"
 
 class NR::Matrix;
 
@@ -4047,15 +4048,6 @@ static void sp_nodepath_subpath_open(Inkscape::NodePath::SubPath *sp,Inkscape::N
 }
 
 /**
- * Returns area in triangle given by points; may be negative.
- */
-inline double
-triangle_area (NR::Point p1, NR::Point p2, NR::Point p3)
-{
-    return (p1[NR::X]*p2[NR::Y] + p1[NR::Y]*p3[NR::X] + p2[NR::X]*p3[NR::Y] - p2[NR::Y]*p3[NR::X] - p1[NR::Y]*p2[NR::X] - p1[NR::X]*p3[NR::Y]);
-}
-
-/**
  * Return new node in subpath with given properties.
  * \param pos Position of node.
  * \param ppos Handle position in previous direction
@@ -4079,7 +4071,7 @@ sp_nodepath_node_new(Inkscape::NodePath::SubPath *sp, Inkscape::NodePath::Node *
         // use the type from sodipodi:nodetypes
         n->type = type;
     } else {
-        if (fabs (triangle_area (*pos, *ppos, *npos)) < 1e-2) {
+        if (fabs (Inkscape::Util::triangle_area (*pos, *ppos, *npos)) < 1e-2) {
             // points are (almost) collinear
             if (NR::L2(*pos - *ppos) < 1e-6 || NR::L2(*pos - *npos) < 1e-6) {
                 // endnode, or a node with a retracted handle
