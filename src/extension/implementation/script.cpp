@@ -956,13 +956,69 @@ Script::execute (const std::list<std::string> &in_command,
 
     std::vector <std::string> argv;
 
+/*
     for (std::list<std::string>::const_iterator i = in_command.begin();
             i != in_command.end(); i++) {
         argv.push_back(*i);
     }
+*/
+    // according to http://www.gtk.org/api/2.6/glib/glib-Spawning-Processes.html spawn quotes parameter containing spaces
+    // we tokenize so that spwan does not need to quote over all params
+    for (std::list<std::string>::const_iterator i = in_command.begin();
+            i != in_command.end(); i++) {
+        std::string param_str = *i;
+        //std::cout << "params " << param_str << std::endl;
+        do {
+            //std::cout << "param " << param_str << std::endl;
+            size_t first_space = param_str.find_first_of(' ');
+            size_t first_quote = param_str.find_first_of('"');
+            //std::cout << "first space " << first_space << std::endl;
+            //std::cout << "first quote " << first_quote << std::endl;
+
+            if((first_quote != std::string::npos) && (first_quote == 0)) {
+                size_t next_quote = param_str.find_first_of('"', first_quote);
+                //std::cout << "next quote " << next_quote << std::endl;
+
+                if(next_quote != std::string::npos) {
+                    //std::cout << "now split " << next_quote << std::endl;
+                    //std::cout << "now split " << param_str.substr(1, next_quote) << std::endl;
+                    //std::cout << "now split " << param_str.substr(next_quote + 1) << std::endl;
+                    std::string part_str = param_str.substr(1, next_quote);
+                    if(part_str.size() > 0)
+                        argv.push_back(part_str);
+                    param_str = param_str.substr(next_quote + 1);
+
+                }
+            }
+            else if(first_space != std::string::npos) {
+                //std::cout << "now split " << first_space << std::endl;
+                //std::cout << "now split " << param_str.substr(0, first_space) << std::endl;
+                //std::cout << "now split " << param_str.substr(first_space + 1) << std::endl;
+                std::string part_str = param_str.substr(0, first_space);
+                if(part_str.size() > 0)
+                    argv.push_back(part_str);
+                param_str = param_str.substr(first_space + 1);
+            }
+            else {
+                if(param_str.size() > 0)
+                    argv.push_back(param_str);
+                param_str = "";
+            }
+        } while(param_str.size() > 0);
+    }
 
     if (!(filein.empty())) {
-        argv.push_back(filein);
+//        if(argv.size() == 1) {
+            argv.push_back(filein);
+/*        }
+        else {
+            std::string parameter_str = argv.back();
+            argv.pop_back();
+            //TODO: quote
+            parameter_str += " " + filein;
+            argv.push_back(parameter_str);
+        }
+*/
     }
 
     for (std::list<std::string>::const_iterator i = in_params.begin();
@@ -973,7 +1029,7 @@ Script::execute (const std::list<std::string> &in_command,
 /*
     for (std::vector<std::string>::const_iterator i = argv.begin();
             i != argv.end(); i++) {
-        std::cout << *i << std::endl;
+        std::cout << "_" << *i << "_" << std::endl;
     }
 */
 
@@ -989,7 +1045,7 @@ Script::execute (const std::list<std::string> &in_command,
                                      &stdout_pipe,   // STDOUT
                                      &stderr_pipe);  // STDERR
     } catch (Glib::SpawnError e) {
-        printf("Can't Spawn!!! %d\n", e.code());
+        printf("Can't Spawn!!! spawn returns: %d\n", e.code());
         return 0;
     }
 
