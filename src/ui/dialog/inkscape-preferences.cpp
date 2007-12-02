@@ -808,16 +808,16 @@ void InkscapePreferences::initPageMisc()
 
 
     // consider moving this to an UI tab:
-    _misc_small_toolbar.init( _("Make commands toolbar smaller"), "toolbox", "small", true);
+    _misc_small_toolbar.init( _("Make the commands toolbar icons smaller"), "toolbox", "small", true);
     _page_misc.add_line( false, "", _misc_small_toolbar, "",
                            _("Make the commands toolbar use the 'secondary' toolbar size (requires restart)"), true);
 
-    _misc_small_tools.init( _("Make main tools smaller"), "toolbox.tools", "small", true);
+    _misc_small_tools.init( _("Make the main toolbar icons smaller"), "toolbox.tools", "small", true);
     _page_misc.add_line( false, "", _misc_small_tools, "",
                            _("Make the main tools use the 'secondary' toolbar size (requires restart)"), true);
 
     _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
-    _page_misc.add_line( false, _("Max recent documents:"), _misc_recent, "", 
+    _page_misc.add_line( false, _("Maximum number of recent documents:"), _misc_recent, "", 
                            _("The maximum length of the Open Recent list in the File menu"), false);
     _misc_simpl.init("options.simplifythreshold", "value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
 
