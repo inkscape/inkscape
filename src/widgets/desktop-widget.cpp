@@ -93,6 +93,7 @@ static gint sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDeskt
 
 static void sp_dtw_color_profile_event(EgeColorProfTracker *widget, SPDesktopWidget *dtw);
 static void cms_adjust_toggled( GtkWidget *button, gpointer data );
+static void cms_adjust_set_sensitive( SPDesktopWidget *dtw, bool enabled );
 static void sp_desktop_widget_adjustment_value_changed (GtkAdjustment *adj, SPDesktopWidget *dtw);
 static void sp_desktop_widget_namedview_modified (SPObject *obj, guint flags, SPDesktopWidget *dtw);
 
@@ -190,7 +191,7 @@ void PrefWatcher::notifyAttributeChanged( Node &node, GQuark name,
             for ( std::list<SPDesktopWidget*>::iterator it = dtws.begin(); it != dtws.end(); ++it ) {
                 SPDesktopWidget* dtw = *it;
                 if ( GTK_WIDGET_SENSITIVE( dtw->cms_adjust ) != enabled ) {
-                    gtk_widget_set_sensitive( dtw->cms_adjust, enabled );
+                    cms_adjust_set_sensitive( dtw, enabled );
                 }
             }
             refresh = true;
@@ -380,17 +381,26 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     gtk_box_pack_start (GTK_BOX (dtw->vscrollbar_box), dtw->vscrollbar, TRUE, TRUE, 0);
     gtk_table_attach (GTK_TABLE (canvas_tbl), dtw->vscrollbar_box, 2, 3, 0, 2, (GtkAttachOptions)(GTK_SHRINK), (GtkAttachOptions)(GTK_FILL), 0, 0);
 
+
+    gchar const* tip = "";
+    Inkscape::Verb* verb = Inkscape::Verb::get( SP_VERB_VIEW_CMS_TOGGLE );
+    if ( verb ) {
+        SPAction *act = verb->get_action( dtw->viewwidget.view );
+        if ( act && act->tip ) {
+            tip = act->tip;
+        }
+    }
     dtw->cms_adjust = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                                SP_BUTTON_TYPE_TOGGLE,
                                                NULL,
                                                "color_management",
-                                               _("Adjust the display"),
+                                               tip,
                                                dtw->tt );
 #if ENABLE_LCMS
     {
         Glib::ustring current = prefs_get_string_attribute( "options.displayprofile", "uri" );
         bool enabled = current.length() > 0;
-        gtk_widget_set_sensitive( dtw->cms_adjust, enabled );
+        cms_adjust_set_sensitive( dtw, enabled );
         if ( enabled ) {
             long long int active = prefs_get_int_attribute_limited( "options.displayprofile", "enable", 0, 0, 1 );
             if ( active ) {
@@ -400,7 +410,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     }
     g_signal_connect_after( G_OBJECT(dtw->cms_adjust), "clicked", G_CALLBACK(cms_adjust_toggled), dtw );
 #else
-    gtk_widget_set_sensitive(dtw->cms_adjust, FALSE);
+    cms_adjust_set_sensitive(dtw, FALSE);
 #endif // ENABLE_LCMS
     gtk_table_attach( GTK_TABLE(canvas_tbl), dtw->cms_adjust, 2, 3, 2, 3, (GtkAttachOptions)(GTK_SHRINK), (GtkAttachOptions)(GTK_SHRINK), 0, 0);
     {
@@ -524,7 +534,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
             *(dtw->canvas->cms_key) = id;
             enabled = !dtw->canvas->cms_key->empty();
         }
-        gtk_widget_set_sensitive( dtw->cms_adjust, enabled );
+        cms_adjust_set_sensitive( dtw, enabled );
     }
     g_signal_connect( G_OBJECT(dtw->_tracker), "changed", G_CALLBACK(sp_dtw_color_profile_event), dtw );
 
@@ -745,7 +755,7 @@ void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidge
         dtw->requestCanvasUpdate();
         enabled = !dtw->canvas->cms_key->empty();
     }
-    gtk_widget_set_sensitive( dtw->cms_adjust, enabled );
+    cms_adjust_set_sensitive( dtw, enabled );
 }
 
 void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
@@ -758,6 +768,18 @@ void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
         dtw->requestCanvasUpdate();
         prefs_set_int_attribute( "options.displayprofile", "enable", down ? 1 : 0 );
     }
+}
+
+void cms_adjust_set_sensitive( SPDesktopWidget *dtw, bool enabled )
+{
+    Inkscape::Verb* verb = Inkscape::Verb::get( SP_VERB_VIEW_CMS_TOGGLE );
+    if ( verb ) {
+        SPAction *act = verb->get_action( dtw->viewwidget.view );
+        if ( act ) {
+            sp_action_set_sensitive( act, enabled );
+        }
+    }
+    gtk_widget_set_sensitive( dtw->cms_adjust, enabled );
 }
 
 void

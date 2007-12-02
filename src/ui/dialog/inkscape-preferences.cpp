@@ -688,7 +688,7 @@ void InkscapePreferences::initPageCMS()
 
 
     _cms_intent.init("options.displayprofile", "intent", intentLabels, intentValues, numIntents, 0);
-    _page_cms.add_line( false, _("Display intent:"), _cms_intent, "",
+    _page_cms.add_line( false, _("Display rendering intent:"), _cms_intent, "",
                         _("The rendering intent to use to calibrate display output."), false);
 
     _page_cms.add_group_header( _("Proofing"));
@@ -711,7 +711,7 @@ void InkscapePreferences::initPageCMS()
                         _("The ICC profile to use to simulate device output."), false);
 
     _cms_proof_intent.init("options.softproof", "intent", intentLabels, intentValues, numIntents, 0);
-    _page_cms.add_line( false, _("Device intent:"), _cms_proof_intent, "",
+    _page_cms.add_line( false, _("Device rendering intent:"), _cms_proof_intent, "",
                         _("The rendering intent to use to calibrate display output."), false);
 
     _cms_proof_blackpoint.init( _("Black Point Compensation"), "options.softproof", "bpc", false);
