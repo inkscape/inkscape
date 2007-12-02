@@ -40,6 +40,9 @@
 
 #define SAFE_SETPIXEL   //undefine this when it is certain that setpixel is never called with invalid params
 
+#define DEFAULTGRIDCOLOR    0x0000FF20
+#define DEFAULTGRIDEMPCOLOR 0x0000FF50
+
 enum Dim3 { X=0, Y, Z };
 
 #ifndef M_PI
@@ -194,13 +197,13 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     : CanvasGrid(nv, in_repr, in_doc, GRID_AXONOMETRIC), table(1, 1)
 {
     origin[NR::X] = origin[NR::Y] = 0.0;
-    color = 0xff3f3f20;
-    empcolor = 0xFF3F3F40;
+    color = DEFAULTGRIDCOLOR;
+    empcolor = DEFAULTGRIDEMPCOLOR;
     empspacing = 5;
-    gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
+    gridunit = &sp_unit_get_by_id(SP_UNIT_MM);
     angle_deg[X] = angle_deg[Z] = 30;
     angle_deg[Y] =0;
-    lengthy = 1;
+    lengthy = sp_units_get_pixels(1.0, *(gridunit));
 
     angle_rad[X] = deg_to_rad(angle_deg[X]);
     tan_angle[X] = tan(angle_rad[X]);
