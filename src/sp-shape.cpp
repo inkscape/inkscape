@@ -46,6 +46,8 @@
 #include "bad-uri-exception.h"
 #include "xml/repr.h"
 
+#include "nodepath.cpp" // for triangle_area()
+
 #define noSHAPE_VERBOSE
 
 static void sp_shape_class_init (SPShapeClass *klass);
@@ -1099,9 +1101,6 @@ sp_shape_set_curve_insync (SPShape *shape, SPCurve *curve, unsigned int owner)
 
 /**
  * Return all nodes in a path that are to be considered for snapping
- * 
- * If the attribute "sodipodi:nodetypes" has been set, then this will be used
- * to discard any node on a smooth part of the path, i.e. only cusps will be returned 
  */
 static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
 {
@@ -1115,29 +1114,43 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
 
     NR::Matrix const i2d (sp_item_i2d_affine (item));
 
-    /* Use the end points of each segment of the path */
-    NArtBpath const *bp = SP_CURVE_BPATH(shape->curve);
-    
-    gchar const *nodetypes = item->repr->attribute("sodipodi:nodetypes");    
-    int nodetype_index = 0;
-
-    bool nodetypes_out_of_date = (!nodetypes)  ||  (strlen(nodetypes) != (size_t)(shape->curve->end));
-    // nodetypes might still be empty, e.g. for pure SVG files
-    // or it might not have been updated yet
-
-    if (bp->code == NR_MOVETO) { // Indicates the start of a closed subpath, see nr-path-code.h
-        bp++; //The first point of a closed path is coincident with the end point. Skip the first point as we need only one
-        nodetype_index++;
+    NArtBpath const *b = SP_CURVE_BPATH(shape->curve);    
+    g_assert((b->code == NR_MOVETO) || (b->code == NR_MOVETO_OPEN));
+ 
+    // Consider the first point in the path
+    NR::Point pos = b->c(3) * i2d;
+    if (b->code == NR_MOVETO_OPEN) { // Indicates the start of a open subpath, see nr-path-code.h
+        *p = pos;
+        // If at the other hand we're looking at a closed subpath, then we can
+        // skip this first point because it's coincident with the last point.  
     }
-
-    while (bp->code != NR_END) {
-        if (nodetypes_out_of_date || nodetypes[nodetype_index] == 'c') {
-        	// if nodetypes is out of date then return any node for snapping
-        	// otherwise only return cusps (i.e . non-smooth nodes) 
-        	*p = bp->c(3) * i2d;
+    b++;
+    
+    // Cycle through the subsequent nodes in the path
+    while (b->code != NR_END) {
+        pos = b->c(3) * i2d; // this is the current node
+        
+        g_assert(b->code == NR_LINETO || b->code == NR_CURVETO);
+        g_assert(b[1].code == NR_LINETO || b[1].code == NR_CURVETO || b[1].code == NR_END);            
+        
+        if (b->code == NR_LINETO || b[1].code == NR_LINETO || b[1].code == NR_END) {
+            // end points of a line segment are always considered for snapping
+            *p = pos; 
+        } else {        
+            NR::Point ppos, npos;
+            ppos = b->c(2) * i2d; // backward handle 
+            npos = b[1].c(1) * i2d; // forward handle
+        
+            // Determine whether a node is at a smooth part of the path, by 
+            // calculating a measure for the collinearity of the handles
+            bool c1 = fabs (triangle_area (pos, ppos, npos)) < 1; // points are (almost) collinear
+            bool c2 = NR::L2(pos - ppos) < 1e-6 || NR::L2(pos - npos) < 1e-6; // endnode, or a node with a retracted handle
+            if (!(c1 & !c2)) {
+                *p = pos; // only return non-smooth nodes ("cusps")
+            }
         }
-        bp++;
-        nodetype_index++;
+        
+        b++;
     }
 }
 
