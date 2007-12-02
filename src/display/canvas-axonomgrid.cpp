@@ -640,23 +640,20 @@ CanvasAxonomGridSnapper::_getSnapLines(NR::Point const &p) const
         return s;
     }
 
-    for (unsigned int i = 0; i < 2; ++i) {
+    /* This is to make sure we snap to only visible grid lines */
+    double scaled_spacing = grid->spacing_ylines; // this is spacing of visible lines if screen pixels
 
-        /* This is to make sure we snap to only visible grid lines */
-        double scaled_spacing = grid->sw[i]; // this is spacing of visible lines if screen pixels
-
-        // convert screen pixels to px
-        // FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
-        if (SP_ACTIVE_DESKTOP) {
-            scaled_spacing /= SP_ACTIVE_DESKTOP->current_zoom();
-        }
-
-        NR::Coord const rounded = round_to_nearest_multiple_plus(p[i],
-                                                                 scaled_spacing,
-                                                                 grid->origin[i]);
-
-        s.push_back(std::make_pair(NR::Dim2(i), rounded));
+    // convert screen pixels to px
+    // FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
+    if (SP_ACTIVE_DESKTOP) {
+        scaled_spacing /= SP_ACTIVE_DESKTOP->current_zoom();
     }
+
+    NR::Coord const rounded = round_to_nearest_multiple_plus(p[0],
+                                                             scaled_spacing,
+                                                             grid->origin[0]);
+
+    s.push_back(std::make_pair(NR::Dim2(0), rounded));
 
     return s;
 }
