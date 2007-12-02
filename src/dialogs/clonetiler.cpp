@@ -348,14 +348,18 @@ clonetiler_get_transform (
         break;
 
     case TILE_PMG:
-        if (y % 4 == 0) {
-            return d_s_r * rect_translate;
-        } else if (y % 4 == 1) {
-            return d_s_r * flip_y * rect_translate;
-        } else if (y % 4 == 2) {
-            return d_s_r * flip_x * rect_translate;
-        } else if (y % 4 == 3) {
-            return d_s_r * flip_x * flip_y * rect_translate;
+        if (y % 2 == 0) {
+            if (x % 2 == 0) {
+                return d_s_r * rect_translate;
+            } else {
+                return d_s_r * rotate_180_c * rect_translate;
+            }
+        } else {
+            if (x % 2 == 0) {
+                return d_s_r * flip_y * rect_translate;
+            } else {
+                return d_s_r * rotate_180_c * flip_y * rect_translate;
+            }
         }
         break;
 
