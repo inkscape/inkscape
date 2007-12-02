@@ -16,16 +16,10 @@ class C(coloreffect.ColorEffect):
     r=float(_r)/255
     g=float(_g)/255
     b=float(_b)/255
-    #coloreffect.debug('I: %f %f %f' % (r,g,b))
-    r=eval(self.options.rFunction)
-    g=eval(self.options.gFunction)
-    b=eval(self.options.bFunction)
-    #coloreffect.debug('E: %f %f %f' % (r,g,b))
-    r=self.normalize(r)
-    g=self.normalize(g)
-    b=self.normalize(b)
-    #coloreffect.debug('N: %f %f %f' % (r,g,b))
-    return '%02x%02x%02x' % (int(round(r*255)),int(round(g*255)),int(round(b*255)))
+    r2=self.normalize(eval(self.options.rFunction))
+    g2=self.normalize(eval(self.options.gFunction))
+    b2=self.normalize(eval(self.options.bFunction))
+    return '%02x%02x%02x' % (int(round(r2*255)),int(round(g2*255)),int(round(b2*255)))
 
 c = C()
 c.affect()
