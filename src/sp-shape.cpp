@@ -1127,19 +1127,16 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
     b++;
     
     // Cycle through the subsequent nodes in the path
-    while (b->code != NR_END) {
+    while (b->code == NR_LINETO || b->code == NR_CURVETO) {
         pos = b->c(3) * i2d; // this is the current node
-        
-        g_assert(b->code == NR_LINETO || b->code == NR_CURVETO);
-        g_assert(b[1].code == NR_LINETO || b[1].code == NR_CURVETO || b[1].code == NR_END);            
         
         if (b->code == NR_LINETO || b[1].code == NR_LINETO || b[1].code == NR_END) {
             // end points of a line segment are always considered for snapping
             *p = pos; 
         } else {        
             NR::Point ppos, npos;
-            ppos = b->c(2) * i2d; // backward handle 
-            npos = b[1].c(1) * i2d; // forward handle
+            ppos = b->code == NR_CURVETO ? b->c(2) * i2d : pos; // backward handle 
+            npos = b[1].code == NR_CURVETO ? b[1].c(1) * i2d : pos; // forward handle
         
             // Determine whether a node is at a smooth part of the path, by 
             // calculating a measure for the collinearity of the handles
