@@ -108,7 +108,7 @@ DocumentProperties::DocumentProperties()
     _notebook.append_page(_page_guides,    _("Guides"));
     _notebook.append_page(_grids_vbox,     _("Grids"));
     _notebook.append_page(_page_snap,      _("Snap"));
-    _notebook.append_page(_page_snap_dtls, _("Snap details"));
+    _notebook.append_page(_page_snap_dtls, _("Snap points"));
 
     build_page();
     build_guides();
@@ -249,6 +249,11 @@ DocumentProperties::build_guides()
     _rcp_hgui.init (_("_Highlight color:"), _("Highlighted guideline color"),
                     _("Color of a guideline when it is under mouse"),
                     "guidehicolor", "guidehiopacity", _wr);
+                    
+    _rcbsng.init (_("_Snap guides while dragging"),
+                  _("While dragging a guide, snap to object nodes or bounding box corners ('Nodes' or 'Bounding box corners' must be enabled in the 'Snap' tab)"),
+                  "inkscape:snap-guide", _wr);
+                    
     Gtk::Label *label_gui = manage (new Gtk::Label);
     label_gui->set_markup (_("<b>Guides</b>"));
 
@@ -258,6 +263,7 @@ DocumentProperties::build_guides()
         0,               _rcb_sgui._button,
         _rcp_gui._label, _rcp_gui._cp,
         _rcp_hgui._label, _rcp_hgui._cp,
+        0,                  _rcbsng._button,        
     };
 
     attach_all(_page_guides.table(), widget_array, G_N_ELEMENTS(widget_array));
@@ -367,11 +373,7 @@ DocumentProperties::build_snap_dtls()
 	_rcbsils.init (_("_Line segments"),
                 _("Snap to intersections of line segments ('snap to paths' must be enabled, see the previous tab)"),
                 "inkscape:snap-intersection-line-segments", _wr);
-
-    _rcbsng.init (_("_Snap guides while dragging"),
-                _("While dragging a guide, snap to object nodes or bounding box corners ('snap to nodes' or 'snap to bounding box corners', both on the previous tab, must be enabled)"),
-                "inkscape:snap-guide", _wr);
-
+    
     //Applies to both nodes and guides, but not to bboxes, that's why its located here
     _rcbic.init (_("_Include the object's rotation center"),
                 _("Also snap the rotation center of an object when snapping nodes or guides"),
@@ -391,7 +393,6 @@ DocumentProperties::build_snap_dtls()
         0,                  _rcbsils._button,
         0,                  0,
         label_m,            0,
-        0,                  _rcbsng._button,
         0,                  _rcbic._button,
     };
 

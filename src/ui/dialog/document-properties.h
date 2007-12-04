@@ -70,7 +70,7 @@ protected:
     RegisteredCheckButton _rcbgrid;
     RegisteredUnitMenu    _rums;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcb_sgui;
+    RegisteredCheckButton _rcb_sgui, _rcbsng;
     RegisteredUnitMenu    _rum_gusn;
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
@@ -80,7 +80,7 @@ protected:
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
     RegisteredRadioButtonPair _rrb_pix;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbic, _rcbsng;
+    RegisteredCheckButton _rcbic;
     RegisteredCheckButton _rcbsigg, _rcbsils;
     //---------------------------------------------------------------
     Gtk::Notebook   _grids_notebook;
