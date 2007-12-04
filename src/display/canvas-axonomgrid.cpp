@@ -627,10 +627,10 @@ CanvasAxonomGridSnapper::_getSnapLines(NR::Point const &p) const
         scaled_spacing /= SP_ACTIVE_DESKTOP->current_zoom();
     }
 
-    NR::Coord const rounded = Inkscape::Util::round_to_nearest_multiple_plus(p[0],
-                                                             scaled_spacing,
-                                                             grid->origin[0]);
-
+    NR::Coord rounded;
+    rounded = Inkscape::Util::round_to_nearest_multiple_plus(p[0], scaled_spacing, grid->origin[0]);
+    s.push_back(std::make_pair(NR::Dim2(0), rounded));
+    rounded = Inkscape::Util::round_to_lower_multiple_plus(p[0], scaled_spacing, grid->origin[0]);
     s.push_back(std::make_pair(NR::Dim2(0), rounded));
 
     return s;
