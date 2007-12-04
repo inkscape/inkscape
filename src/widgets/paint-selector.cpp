@@ -784,9 +784,13 @@ sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument */*source*
                 gtk_widget_show(hb);
 
         // create label
-                GtkWidget *l = gtk_label_new(repr->attribute("id"));
+                GtkWidget *l;
+                if (repr->attribute("inkscape:stockid"))
+                    l = gtk_label_new(repr->attribute("inkscape:stockid"));
+                else
+                    l = gtk_label_new(repr->attribute("id"));
                 gtk_widget_show(l);
-        gtk_misc_set_alignment(GTK_MISC(l), 0.0, 0.5);
+                gtk_misc_set_alignment(GTK_MISC(l), 0.0, 0.5);
 
                 gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, 0);
 
@@ -849,7 +853,7 @@ ink_pattern_menu_populate_menu(GtkWidget *m, SPDocument *doc)
     // add separator
     {
         GtkWidget *i = gtk_separator_menu_item_new();
-        gchar const *patid = "None as I'm not a pattern I'm a sperator";
+        gchar const *patid = "";
         g_object_set_data (G_OBJECT(i), "pattern", (void *) patid);
         gtk_widget_show(i);
         gtk_menu_append(GTK_MENU(m), i);
@@ -973,7 +977,7 @@ sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSelectorMode mo
         {
             GtkWidget *hb = gtk_hbox_new(FALSE, 0);
             GtkWidget *l = gtk_label_new(NULL);
-            gtk_label_set_markup(GTK_LABEL(l), _("Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new pattern from selection."));
+            gtk_label_set_markup(GTK_LABEL(l), _("Use the <b>Node tool</b> to adjust position, scale, and rotation of the pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new pattern from selection."));
             gtk_label_set_line_wrap(GTK_LABEL(l), true);
             gtk_widget_set_size_request(l, 180, -1);
             gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, AUX_BETWEEN_BUTTON_GROUPS);
