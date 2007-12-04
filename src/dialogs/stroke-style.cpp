@@ -601,7 +601,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
     Inkscape::GC::release(mrepr);
 
 // Uncomment this to get the sandbox documents saved (useful for debugging)
-    //FILE *fp = fopen (g_strconcat(mname, ".svg", NULL), "w");
+    //FILE *fp = fopen (g_strconcat(menu_id, mname, ".svg", NULL), "w");
     //sp_repr_save_stream (sp_document_repr_doc (sandbox), fp);
     //fclose (fp);
 
@@ -625,7 +625,9 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
     double sf = 0.8;
     GdkPixbuf* pixbuf = NULL;
 
-    Glib::ustring key = svg_preview_cache.cache_key(source->uri, mname, psize);
+    gchar *cache_name = g_strconcat(menu_id, mname, NULL);
+    Glib::ustring key = svg_preview_cache.cache_key(source->uri, cache_name, psize);
+    g_free (cache_name);
     pixbuf = svg_preview_cache.get_preview_from_cache(key);
 
     if (pixbuf == NULL) {
