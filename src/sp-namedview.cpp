@@ -513,9 +513,10 @@ static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *chil
     const gchar *id = child->attribute("id");
     if (!strcmp(child->name(), "inkscape:grid")) {
         sp_namedview_add_grid(nv, child, NULL);
-    } else {
+    } else if (id) {
         SPObject *no = object->document->getObjectById(id);
-        g_assert(SP_IS_OBJECT(no));
+        if ( !SP_IS_OBJECT(no) )
+            return;
 
         if (SP_IS_GUIDE(no)) {
             SPGuide *g = (SPGuide *) no;
