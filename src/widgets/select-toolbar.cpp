@@ -246,6 +246,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
 
 static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
                                                        gchar const *label,
+                                                       gchar const *shortLabel,
                                                        gchar const *data,
                                                        gdouble lower,
                                                        GtkWidget* focusTarget,
@@ -263,6 +264,9 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
     }
 
     EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, Q_(label), tooltip, 0, SPIN_STEP, 3 );
+    if ( shortLabel ) {
+        g_object_set( act, "short_label", Q_(shortLabel), NULL );
+    }
 
     gtk_signal_connect( GTK_OBJECT(adj), "value_changed", GTK_SIGNAL_FUNC(sp_object_layout_any_value_changed), spw );
     if ( focusTarget ) {
@@ -325,7 +329,7 @@ static void toggle_pattern( GtkToggleAction* act, gpointer data ) {
     }
 }
 
-static void toggle_lock( GtkToggleAction *act, gpointer data ) {
+static void toggle_lock( GtkToggleAction *act, gpointer /*data*/ ) {
     gboolean active = gtk_toggle_action_get_active( act );
     if ( active ) {
         g_object_set( G_OBJECT(act), "iconId", "width_height_lock", NULL );
@@ -343,7 +347,7 @@ static void destroy_tracker( GObject* obj, gpointer /*user_data*/ )
     }
 }
 
-static void trigger_sp_action( GtkAction* act, gpointer user_data )
+static void trigger_sp_action( GtkAction* /*act*/, gpointer user_data )
 {
     SPAction* targetAction = SP_ACTION(user_data);
     if ( targetAction ) {
@@ -422,21 +426,21 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
     //TRANSLATORS: only translate "string" in "context|string".
     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    eact = create_adjustment_action( "XAction", _("select_toolbar|X"), "X",
+    eact = create_adjustment_action( "XAction", _("select_toolbar|X position"), _("select_toolbar|X"), "X",
                                      -1e6, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Horizontal coordinate of selection"), TRUE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
 
     //TRANSLATORS: only translate "string" in "context|string".
     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    eact = create_adjustment_action( "YAction", _("select_toolbar|Y"), "Y",
+    eact = create_adjustment_action( "YAction", _("select_toolbar|Y position"), _("select_toolbar|Y"), "Y",
                                      -1e6, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Vertical coordinate of selection"), FALSE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
 
     //TRANSLATORS: only translate "string" in "context|string".
     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    eact = create_adjustment_action( "WidthAction", _("select_toolbar|W"), "width",
+    eact = create_adjustment_action( "WidthAction", _("select_toolbar|Width"), _("select_toolbar|W"), "width",
                                      1e-3, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Width of selection"), FALSE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
@@ -444,10 +448,11 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     // lock toggle
     {
     InkToggleAction* itact = ink_toggle_action_new( "LockAction",
-                                                    _("Lock"),
+                                                    _("Lock width and height"),
                                                     _("When locked, change both width and height by the same proportion"),
                                                     "lock_unlocked",
                                                     Inkscape::ICON_SIZE_DECORATION );
+    g_object_set( itact, "short_label", "Lock", NULL );
     g_object_set_data( G_OBJECT(spw), "lock", itact );
     g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_lock), desktop) ;
     gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
@@ -455,7 +460,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
     //TRANSLATORS: only translate "string" in "context|string".
     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    eact = create_adjustment_action( "HeightAction", _("select_toolbar|H"), "height",
+    eact = create_adjustment_action( "HeightAction", _("select_toolbar|Height"), _("select_toolbar|H"), "height",
                                      1e-3, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Height of selection"), FALSE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
@@ -481,12 +486,13 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     {
         EgeOutputAction* act = ege_output_action_new( "transform_affect_label", _("Affect:"), "", 0 );
         ege_output_action_set_use_markup( act, TRUE );
+        g_object_set( act, "visible-overflown", FALSE, NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
     }
 
     {
     InkToggleAction* itact = ink_toggle_action_new( "transform_stroke",
-                                                    _("Stroke width"),
+                                                    _("Scale stroke width"),
                                                     _("When scaling objects, scale the stroke width by the same proportion"),
                                                     "transform_stroke",
                                                     Inkscape::ICON_SIZE_DECORATION );
@@ -497,7 +503,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
     {
     InkToggleAction* itact = ink_toggle_action_new( "transform_corners",
-                                                    _("Corners"),
+                                                    _("Scale rounded corners"),
                                                     _("When scaling rectangles, scale the radii of rounded corners"),
                                                     "transform_corners",
                                                   Inkscape::ICON_SIZE_DECORATION );
@@ -508,7 +514,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
     {
     InkToggleAction* itact = ink_toggle_action_new( "transform_gradient",
-                                                    _("Gradients"),
+                                                    _("Move gradients"),
                                                     _("Move gradients (in fill or stroke) along with the objects"),
                                                     "transform_gradient",
                                                   Inkscape::ICON_SIZE_DECORATION );
@@ -519,7 +525,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
     {
     InkToggleAction* itact = ink_toggle_action_new( "transform_pattern",
-                                                    _("Patterns"),
+                                                    _("Move patterns"),
                                                     _("Move patterns (in fill or stroke) along with the objects"),
                                                     "transform_pattern",
                                                   Inkscape::ICON_SIZE_DECORATION );

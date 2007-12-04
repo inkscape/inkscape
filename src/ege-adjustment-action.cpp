@@ -713,8 +713,9 @@ static GtkWidget* create_tool_item( GtkAction* action )
 
         memset( &value, 0, sizeof(value) );
         g_value_init( &value, G_TYPE_STRING );
-        g_object_get_property( G_OBJECT(action), "label", &value );
+        g_object_get_property( G_OBJECT(action), "short_label", &value );
         const gchar* sss = g_value_get_string( &value );
+
         GtkWidget* lbl = gtk_label_new( sss ? sss : "wwww" );
         GtkWidget* filler1 = gtk_label_new(" ");
 

@@ -1,5 +1,3 @@
-#define __SP_MAINTOOLBOX_C__
-
 /** \file
  * Controls bars for some of Inkscape's tools
  * (for some tools, they are in their own files)
@@ -413,7 +411,7 @@ static void update_commands_toolbox (SPDesktop *desktop, SPEventContext *eventco
           *dropper_opacity_entry ; */
 // should be made a private member once this is converted to class
 
-static void delete_connection(GObject *obj, sigc::connection *connection) {
+static void delete_connection(GObject */*obj*/, sigc::connection *connection) {
     connection->disconnect();
     delete connection;
 }
@@ -466,7 +464,7 @@ GtkWidget * sp_toolbox_button_normal_new_from_verb(GtkWidget *t, Inkscape::IconS
 }
 
 
-static void trigger_sp_action( GtkAction* act, gpointer user_data )
+static void trigger_sp_action( GtkAction* /*act*/, gpointer user_data )
 {
     SPAction* targetAction = SP_ACTION(user_data);
     if ( targetAction ) {
@@ -474,7 +472,7 @@ static void trigger_sp_action( GtkAction* act, gpointer user_data )
     }
 }
 
-static void sp_action_action_set_sensitive (SPAction *action, unsigned int sensitive, void *data)
+static void sp_action_action_set_sensitive (SPAction */*action*/, unsigned int sensitive, void *data)
 {
     if ( data ) {
         GtkAction* act = GTK_ACTION(data);
@@ -607,14 +605,14 @@ sp_tool_toolbox_new()
 }
 
 static void
-aux_toolbox_attached(GtkHandleBox *toolbox, GtkWidget *child)
+aux_toolbox_attached(GtkHandleBox */*toolbox*/, GtkWidget *child)
 {
     g_object_set_data(G_OBJECT(child), "is_detached", GINT_TO_POINTER(FALSE));
     gtk_widget_queue_resize(child);
 }
 
 static void
-aux_toolbox_detached(GtkHandleBox *toolbox, GtkWidget *child)
+aux_toolbox_detached(GtkHandleBox */*toolbox*/, GtkWidget *child)
 {
     g_object_set_data(G_OBJECT(child), "is_detached", GINT_TO_POINTER(TRUE));
     gtk_widget_queue_resize(child);
@@ -789,7 +787,7 @@ sp_node_path_edit_symmetrical(void)
     if (shape_editor) shape_editor->set_node_type(Inkscape::NodePath::NODE_SYMM);
 }
 
-static void toggle_show_handles (GtkToggleAction *act, gpointer data) {
+static void toggle_show_handles (GtkToggleAction *act, gpointer /*data*/) {
     bool show = gtk_toggle_action_get_active( act );
     prefs_set_int_attribute ("tools.nodes", "show_handles",  show ? 1 : 0);
     ShapeEditor *shape_editor = get_current_shape_editor();
@@ -800,34 +798,37 @@ static void toggle_show_handles (GtkToggleAction *act, gpointer data) {
 //##    Node Editing Toolbox    ##
 //################################
 
-static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
+static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* /*holder*/)
 {
     {
         InkAction* inky = ink_action_new( "NodeInsertAction",
-                                          _("Insert"),
+                                          _("Insert node"),
                                           _("Insert new nodes into selected segments"),
                                           "node_insert",
                                           Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_object_set( inky, "short_label", _("Insert"), NULL );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_add), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
 
     {
         InkAction* inky = ink_action_new( "NodeDeleteAction",
-                                          _("Delete"),
+                                          _("Delete node"),
                                           _("Delete selected nodes"),
                                           "node_delete",
                                           Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_object_set( inky, "short_label", _("Delete"), NULL );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_delete), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
 
     {
         InkAction* inky = ink_action_new( "NodeJoinAction",
-                                          _("Join"),
+                                          _("Join endnodes"),
                                           _("Join selected endnodes"),
                                           "node_join",
                                           Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_object_set( inky, "short_label", _("Join"), NULL );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_join), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -930,7 +931,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 //##    Zoom Toolbox    ##
 //########################
 
-static void sp_zoom_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
+static void sp_zoom_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* /*mainActions*/, GObject* /*holder*/)
 {
     // no custom GtkAction setup needed
 } // end of sp_zoom_toolbox_prep()
@@ -1015,7 +1016,7 @@ setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
 
 static void
-update_tool_toolbox( SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox )
+update_tool_toolbox( SPDesktop */*desktop*/, SPEventContext *eventcontext, GtkWidget *toolbox )
 {
     gchar const *const tname = ( eventcontext
                                  ? gtk_type_name(GTK_OBJECT_TYPE(eventcontext))
@@ -1112,7 +1113,7 @@ setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 }
 
 static void
-update_aux_toolbox(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox)
+update_aux_toolbox(SPDesktop */*desktop*/, SPEventContext *eventcontext, GtkWidget *toolbox)
 {
     gchar const *tname = ( eventcontext
                            ? gtk_type_name(GTK_OBJECT_TYPE(eventcontext))
@@ -1191,7 +1192,7 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 }
 
 static void
-update_commands_toolbox(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox)
+update_commands_toolbox(SPDesktop */*desktop*/, SPEventContext */*eventcontext*/, GtkWidget */*toolbox*/)
 {
 }
 
@@ -1277,7 +1278,7 @@ sp_tb_spinbutton(
 }
 
 static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
-                                                       gchar const *label, gchar const *tooltip,
+                                                       gchar const *label, gchar const *shortLabel, gchar const *tooltip,
                                                        gchar const *path, gchar const *data, gdouble def,
                                                        GtkWidget *focusTarget,
                                                        GtkWidget *us,
@@ -1297,6 +1298,9 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
     gtk_signal_connect( GTK_OBJECT(adj), "value-changed", GTK_SIGNAL_FUNC(callback), dataKludge );
 
     EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, label, tooltip, 0, climb, digits );
+    if ( shortLabel ) {
+        g_object_set( act, "short_label", shortLabel, NULL );
+    }
 
     if ( (descrCount > 0) && descrLabels && descrValues ) {
         ege_adjustment_action_set_descriptions( act, descrLabels, descrValues, descrCount );
@@ -1522,8 +1526,8 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
 
 
 static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
-                                       gchar const *old_value, gchar const *new_value,
-                                       bool is_interactive, gpointer data)
+                                       gchar const */*old_value*/, gchar const */*new_value*/,
+                                       bool /*is_interactive*/, gpointer data)
 {
     GtkWidget *tbl = GTK_WIDGET(data);
 
@@ -1624,7 +1628,7 @@ sp_star_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
 }
 
 
-static void sp_stb_defaults( GtkWidget *widget, GObject *dataKludge )
+static void sp_stb_defaults( GtkWidget */*widget*/, GObject *dataKludge )
 {
     // FIXME: in this and all other _default functions, set some flag telling the value_changed
     // callbacks to lump all the changes for all selected objects in one undo step
@@ -1728,7 +1732,7 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gchar const* labels[] = {_("triangle/tri-star"), _("square/quad-star"), _("pentagon/five-pointed star"), _("hexagon/six-pointed star"), 0, 0, 0, 0, 0};
         gdouble values[] = {3, 4, 5, 6, 7, 8, 10, 12, 20};
         eact = create_adjustment_action( "MagnitudeAction",
-                                         _("Corners:"), _("Number of corners of a polygon or star"),
+                                         _("Corners"), _("Corners:"), _("Number of corners of a polygon or star"),
                                          "tools.shapes.star", "magnitude", 3,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          3, 1024, 1, 5,
@@ -1744,7 +1748,7 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gchar const* labels[] = {_("thin-ray star"), 0, _("pentagram"), _("hexagram"), _("heptagram"), _("octagram"), _("regular polygon")};
         gdouble values[] = {0.01, 0.2, 0.382, 0.577, 0.692, 0.765, 1};
         eact = create_adjustment_action( "SpokeAction",
-                                         _("Spoke ratio:"),
+                                         _("Spoke ratio"), _("Spoke ratio:"),
                                          // TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
                                          // Base radius is the same for the closest handle.
                                          _("Base radius to tip radius ratio"),
@@ -1768,7 +1772,7 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gchar const* labels[] = {_("stretched"), _("twisted"), _("slightly pinched"), _("NOT rounded"), _("slightly rounded"), _("visibly rounded"), _("well rounded"), _("amply rounded"), 0, _("stretched"), _("blown up")};
         gdouble values[] = {-1, -0.2, -0.03, 0, 0.05, 0.1, 0.2, 0.3, 0.5, 1, 10};
         eact = create_adjustment_action( "RoundednessAction",
-                                         _("Rounded:"), _("How much rounded are the corners (0 for sharp)"),
+                                         _("Rounded"), _("Rounded:"), _("How much rounded are the corners (0 for sharp)"),
                                          "tools.shapes.star", "rounded", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          -10.0, 10.0, 0.01, 0.1,
@@ -1783,7 +1787,7 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gchar const* labels[] = {_("NOT randomized"), _("slightly irregular"), _("visibly randomized"), _("strongly randomized"), _("blown up")};
         gdouble values[] = {0, 0.01, 0.1, 0.5, 10};
         eact = create_adjustment_action( "RandomizationAction",
-                                         _("Randomized:"), _("Scatter randomly the corners and angles"),
+                                         _("Randomized"), _("Randomized:"), _("Scatter randomly the corners and angles"),
                                          "tools.shapes.star", "randomized", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          -10.0, 10.0, 0.001, 0.01,
@@ -1904,7 +1908,7 @@ sp_rtb_height_value_changed(GtkAdjustment *adj, GObject *tbl)
 
 
 static void
-sp_rtb_defaults( GtkWidget *widget, GObject *obj)
+sp_rtb_defaults( GtkWidget */*widget*/, GObject *obj)
 {
     GtkAdjustment *adj = 0;
 
@@ -1920,9 +1924,9 @@ sp_rtb_defaults( GtkWidget *widget, GObject *obj)
     sp_rtb_sensitivize( obj );
 }
 
-static void rect_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
-                                       gchar const *old_value, gchar const *new_value,
-                                       bool is_interactive, gpointer data)
+static void rect_tb_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar const */*name*/,
+                                       gchar const */*old_value*/, gchar const */*new_value*/,
+                                       bool /*is_interactive*/, gpointer data)
 {
     GObject *tbl = G_OBJECT(data);
 
@@ -2063,7 +2067,7 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gchar const* labels[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         gdouble values[] = {1, 2, 3, 5, 10, 20, 50, 100, 200, 500};
         eact = create_adjustment_action( "RectWidthAction",
-                                         _("W:"), _("Width of rectangle"),
+                                         _("Width"), _("W:"), _("Width of rectangle"),
                                          "tools.shapes.rect", "width", 0,
                                          GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, TRUE, "altx-rect",
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
@@ -2080,7 +2084,7 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gchar const* labels[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         gdouble values[] = {1, 2, 3, 5, 10, 20, 50, 100, 200, 500};
         eact = create_adjustment_action( "RectHeightAction",
-                                         _("H:"), _("Height of rectangle"),
+                                         _("Height"), _("H:"), _("Height of rectangle"),
                                          "tools.shapes.rect", "height", 0,
                                          GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
@@ -2097,7 +2101,7 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gchar const* labels[] = {_("not rounded"), 0, 0, 0, 0, 0, 0, 0, 0};
         gdouble values[] = {0.5, 1, 2, 3, 5, 10, 20, 50, 100};
         eact = create_adjustment_action( "RadiusXAction",
-                                         _("Rx:"), _("Horizontal radius of rounded corners"),
+                                         _("Horizontal radius"), _("Rx:"), _("Horizontal radius of rounded corners"),
                                          "tools.shapes.rect", "rx", 0,
                                          GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
@@ -2112,7 +2116,7 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gchar const* labels[] = {_("not rounded"), 0, 0, 0, 0, 0, 0, 0, 0};
         gdouble values[] = {0.5, 1, 2, 3, 5, 10, 20, 50, 100};
         eact = create_adjustment_action( "RadiusYAction",
-                                         _("Ry:"), _("Vertical radius of rounded corners"),
+                                         _("Vertical radius"), _("Ry:"), _("Vertical radius of rounded corners"),
                                          "tools.shapes.rect", "ry", 0,
                                          GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
@@ -2155,7 +2159,7 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 //##       3D Box       ##
 //########################
 
-static void sp_3dbox_toggle_vp_changed (GtkToggleAction *act, GObject *dataKludge, Box3D::Axis axis)
+static void sp_3dbox_toggle_vp_changed (GtkToggleAction */*act*/, GObject *dataKludge, Box3D::Axis axis)
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data (dataKludge, "desktop");
     SPDocument *document = sp_desktop_document (desktop);
@@ -2166,7 +2170,7 @@ static void sp_3dbox_toggle_vp_changed (GtkToggleAction *act, GObject *dataKludg
 
     persp->toggle_boxes (axis);
 
-    gchar *str;    
+    gchar *str;
     switch (axis) {
         case Box3D::X:
             str = g_strdup ("box3d_angle_x_action");
@@ -2250,9 +2254,9 @@ static double sp_3dbox_normalize_angle (double a) {
     return angle;
 }
 
-static void sp_3dbox_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
-                                           gchar const *old_value, gchar const *new_value,
-                                           bool is_interactive, gpointer data)
+static void sp_3dbox_tb_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar const *name,
+                                           gchar const */*old_value*/, gchar const */*new_value*/,
+                                           bool /*is_interactive*/, gpointer data)
 {
     GtkWidget *tbl = GTK_WIDGET(data);
 
@@ -2326,7 +2330,7 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 
     /* angle of VP in X direction */
     eact = create_adjustment_action("3DBoxPosAngleXAction",
-                                    _("Angle X:"), _("Angle of infinite vanishing point in X direction"),
+                                    _("Angle X"), _("Angle X:"), _("Angle of infinite vanishing point in X direction"),
                                     "tools.shapes.3dbox", "dir_vp_x", persp->get_vanishing_point (Box3D::X)->get_angle(),
                                     GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                     0.0, 360.0, 1.0, 10.0,
@@ -2359,7 +2363,7 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 
     /* angle of VP in Y direction */
     eact = create_adjustment_action("3DBoxPosAngleYAction",
-                                    _("Angle Y:"), _("Angle of infinite vanishing point in Y direction"),
+                                    _("Angle Y"), _("Angle Y:"), _("Angle of infinite vanishing point in Y direction"),
                                     "tools.shapes.3dbox", "dir_vp_y", persp->get_vanishing_point (Box3D::Y)->get_angle(),
                                     GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                     0.0, 360.0, 1.0, 10.0,
@@ -2392,14 +2396,14 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 
     /* angle of VP in Z direction */
     eact = create_adjustment_action("3DBoxPosAngleZAction",
-                                    _("Angle Z:"), _("Angle of infinite vanishing point in Z direction"),
+                                    _("Angle Z"), _("Angle Z:"), _("Angle of infinite vanishing point in Z direction"),
                                     "tools.shapes.3dbox", "dir_vp_z", persp->get_vanishing_point (Box3D::Z)->get_angle(),
                                     GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                      0.0, 360.0, 1.0, 10.0,
                                     0, 0, 0, // labels, values, G_N_ELEMENTS(labels),
                                     sp_3dbox_vpz_angle_changed,
                                     0.1, 1);
-                                    
+
     gtk_action_group_add_action(mainActions, GTK_ACTION(eact));
     g_object_set_data(holder, "box3d_angle_z_action", eact);
     if (!persp->get_vanishing_point (Box3D::Z)->is_finite()) {
@@ -2496,7 +2500,7 @@ sp_spl_tb_t0_value_changed(GtkAdjustment *adj, GObject *tbl)
 }
 
 static void
-sp_spl_tb_defaults(GtkWidget *widget, GtkObject *obj)
+sp_spl_tb_defaults(GtkWidget */*widget*/, GtkObject *obj)
 {
     GtkWidget *tbl = GTK_WIDGET(obj);
 
@@ -2523,9 +2527,9 @@ sp_spl_tb_defaults(GtkWidget *widget, GtkObject *obj)
 }
 
 
-static void spiral_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
-                                         gchar const *old_value, gchar const *new_value,
-                                         bool is_interactive, gpointer data)
+static void spiral_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const */*name*/,
+                                         gchar const */*old_value*/, gchar const */*new_value*/,
+                                         bool /*is_interactive*/, gpointer data)
 {
     GtkWidget *tbl = GTK_WIDGET(data);
 
@@ -2614,7 +2618,7 @@ static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
         gchar const* labels[] = {_("just a curve"), 0, _("one full revolution"), 0, 0, 0, 0, 0, 0};
         gdouble values[] = {0.01, 0.5, 1, 2, 3, 5, 10, 20, 50, 100};
         eact = create_adjustment_action( "SpiralRevolutionAction",
-                                         _("Turns:"), _("Number of revolutions"),
+                                         _("Number of turns"), _("Turns:"), _("Number of revolutions"),
                                          "tools.shapes.spiral", "revolution", 3.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-spiral",
                                          0.01, 1024.0, 0.1, 1.0,
@@ -2628,7 +2632,7 @@ static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
         gchar const* labels[] = {_("circle"), _("edge is much denser"), _("edge is denser"), _("even"), _("center is denser"), _("center is much denser"), 0};
         gdouble values[] = {0, 0.1, 0.5, 1, 1.5, 5, 20};
         eact = create_adjustment_action( "SpiralExpansionAction",
-                                         _("Divergence:"), _("How much denser/sparser are outer revolutions; 1 = uniform"),
+                                         _("Divergence"), _("Divergence:"), _("How much denser/sparser are outer revolutions; 1 = uniform"),
                                          "tools.shapes.spiral", "expansion", 1.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.0, 1000.0, 0.01, 1.0,
@@ -2642,7 +2646,7 @@ static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
         gchar const* labels[] = {_("starts from center"), _("starts mid-way"), _("starts near edge")};
         gdouble values[] = {0, 0.5, 0.9};
         eact = create_adjustment_action( "SpiralT0Action",
-                                         _("Inner radius:"), _("Radius of the innermost revolution (relative to the spiral size)"),
+                                         _("Inner radius"), _("Inner radius:"), _("Radius of the innermost revolution (relative to the spiral size)"),
                                          "tools.shapes.spiral", "t0", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                          0.0, 0.999, 0.01, 1.0,
@@ -2675,12 +2679,12 @@ static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 //########################
 
 
-static void sp_pen_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
+static void sp_pen_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* /*mainActions*/, GObject* /*holder*/)
 {
     // Put stuff here
 }
 
-static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
+static void sp_pencil_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* /*mainActions*/, GObject* /*holder*/)
 {
     // Put stuff here
 }
@@ -2689,17 +2693,17 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 //##       Tweak        ##
 //########################
 
-static void sp_tweak_width_value_changed( GtkAdjustment *adj, GObject *tbl )
+static void sp_tweak_width_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
 {
     prefs_set_double_attribute( "tools.tweak", "width", adj->value * 0.01 );
 }
 
-static void sp_tweak_force_value_changed( GtkAdjustment *adj, GObject *tbl )
+static void sp_tweak_force_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
 {
     prefs_set_double_attribute( "tools.tweak", "force", adj->value * 0.01 );
 }
 
-static void sp_tweak_pressure_state_changed( GtkToggleAction *act, gpointer data )
+static void sp_tweak_pressure_state_changed( GtkToggleAction *act, gpointer /*data*/ )
 {
     prefs_set_int_attribute( "tools.tweak", "usepressure", gtk_toggle_action_get_active( act ) ? 1 : 0);
 }
@@ -2732,24 +2736,24 @@ static void sp_tweak_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     }
 }
 
-static void sp_tweak_fidelity_value_changed( GtkAdjustment *adj, GObject *tbl )
+static void sp_tweak_fidelity_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
 {
     prefs_set_double_attribute( "tools.tweak", "fidelity", adj->value * 0.01 );
 }
 
-static void tweak_toggle_doh (GtkToggleAction *act, gpointer data) {
+static void tweak_toggle_doh (GtkToggleAction *act, gpointer /*data*/) {
     bool show = gtk_toggle_action_get_active( act );
     prefs_set_int_attribute ("tools.tweak", "doh",  show ? 1 : 0);
 }
-static void tweak_toggle_dos (GtkToggleAction *act, gpointer data) {
+static void tweak_toggle_dos (GtkToggleAction *act, gpointer /*data*/) {
     bool show = gtk_toggle_action_get_active( act );
     prefs_set_int_attribute ("tools.tweak", "dos",  show ? 1 : 0);
 }
-static void tweak_toggle_dol (GtkToggleAction *act, gpointer data) {
+static void tweak_toggle_dol (GtkToggleAction *act, gpointer /*data*/) {
     bool show = gtk_toggle_action_get_active( act );
     prefs_set_int_attribute ("tools.tweak", "dol",  show ? 1 : 0);
 }
-static void tweak_toggle_doo (GtkToggleAction *act, gpointer data) {
+static void tweak_toggle_doo (GtkToggleAction *act, gpointer /*data*/) {
     bool show = gtk_toggle_action_get_active( act );
     prefs_set_int_attribute ("tools.tweak", "doo",  show ? 1 : 0);
 }
@@ -2761,7 +2765,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         gchar const* labels[] = {_("(pinch tweak)"), 0, 0, 0, _("(default)"), 0, 0, 0, 0, _("(broad tweak)")};
         gdouble values[] = {1, 3, 5, 10, 15, 20, 30, 50, 75, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "TweakWidthAction",
-                                                              _("Width:"), _("The width of the tweak area (relative to the visible canvas area)"),
+                                                              _("Width"), _("Width:"), _("The width of the tweak area (relative to the visible canvas area)"),
                                                               "tools.tweak", "width", 15,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-tweak",
                                                               1, 100, 1.0, 10.0,
@@ -2777,7 +2781,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         gchar const* labels[] = {_("(minimum force)"), 0, 0, _("(default)"), 0, 0, 0, _("(maximum force)")};
         gdouble values[] = {1, 5, 10, 20, 30, 50, 70, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "TweakForceAction",
-                                                              _("Force:"), _("The force of the tweak action"),
+                                                              _("Force"), _("Force:"), _("The force of the tweak action"),
                                                               "tools.tweak", "force", 20,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "tweak-force",
                                                               1, 100, 1.0, 10.0,
@@ -2848,7 +2852,8 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                             2, "tweak_colorjitter_mode",
                             -1 );
 
-        EgeSelectOneAction* act = ege_select_one_action_new( "TweakModeAction", _("Mode:"), (""), NULL, GTK_TREE_MODEL(model) );
+        EgeSelectOneAction* act = ege_select_one_action_new( "TweakModeAction", _("Mode"), (""), NULL, GTK_TREE_MODEL(model) );
+        g_object_set( act, "short_label", _("Mode:"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
         g_object_set_data( holder, "mode_action", act );
 
@@ -2871,60 +2876,64 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         EgeOutputAction* act = ege_output_action_new( "TweakChannelsLabel", _("Channels:"), "", 0 );
         ege_output_action_set_use_markup( act, TRUE );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) 
+        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER)
             gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
         g_object_set_data( holder, "tweak_channels_label", act);
     }
 
     {
         InkToggleAction* act = ink_toggle_action_new( "TweakDoH",
-                                                      _("H"),
+                                                      _("Hue"),
                                                       _("In color mode, act on objects' hue"),
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
+        g_object_set( act, "short_label", _("H"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_doh), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.tweak", "doh", 1 ) );
-        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) 
+        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER)
             gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
         g_object_set_data( holder, "tweak_doh", act);
     }
     {
         InkToggleAction* act = ink_toggle_action_new( "TweakDoS",
-                                                      _("S"),
+                                                      _("Saturation"),
                                                       _("In color mode, act on objects' saturation"),
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
+        g_object_set( act, "short_label", _("S"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_dos), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.tweak", "dos", 1 ) );
-        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) 
+        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER)
             gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
         g_object_set_data( holder, "tweak_dos", act );
     }
     {
         InkToggleAction* act = ink_toggle_action_new( "TweakDoL",
-                                                      _("L"),
+                                                      _("Lightness"),
                                                       _("In color mode, act on objects' lightness"),
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
+        g_object_set( act, "short_label", _("L"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_dol), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.tweak", "dol", 1 ) );
-        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) 
+        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER)
             gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
         g_object_set_data( holder, "tweak_dol", act );
     }
     {
         InkToggleAction* act = ink_toggle_action_new( "TweakDoO",
-                                                      _("O"),
+                                                      _("Opacity"),
                                                       _("In color mode, act on objects' opacity"),
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
+        g_object_set( act, "short_label", _("O"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_doo), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.tweak", "doo", 1 ) );
-        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) 
+        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER)
             gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
         g_object_set_data( holder, "tweak_doo", act );
     }
@@ -2933,7 +2942,8 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         gchar const* labels[] = {_("(rough, simplified)"), 0, 0, _("(default)"), 0, 0, _("(fine, but many nodes)")};
         gdouble values[] = {10, 25, 35, 50, 60, 80, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "TweakFidelityAction",
-                                                              _("Fidelity:"), _("Low fidelity simplifies paths; high fidelity preserves path features but may generate a lot of new nodes"),
+                                                              _("Fidelity"), _("Fidelity:"),
+                                                              _("Low fidelity simplifies paths; high fidelity preserves path features but may generate a lot of new nodes"),
                                                               "tools.tweak", "fidelity", 50,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "tweak-fidelity",
                                                               1, 100, 1.0, 10.0,
@@ -2941,7 +2951,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               sp_tweak_fidelity_value_changed,  0.01, 0, 100 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
-        if (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER) 
+        if (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER)
             gtk_action_set_sensitive (GTK_ACTION(eact), FALSE);
         g_object_set_data( holder, "tweak_fidelity", eact );
     }
@@ -2966,52 +2976,52 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 //##     Calligraphy    ##
 //########################
 
-static void sp_ddc_mass_value_changed( GtkAdjustment *adj, GObject* tbl )
+static void sp_ddc_mass_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
 {
     prefs_set_double_attribute( "tools.calligraphic", "mass", adj->value );
 }
 
-static void sp_ddc_wiggle_value_changed( GtkAdjustment *adj, GObject* tbl )
+static void sp_ddc_wiggle_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
 {
     prefs_set_double_attribute( "tools.calligraphic", "wiggle", adj->value );
 }
 
-static void sp_ddc_angle_value_changed( GtkAdjustment *adj, GObject* tbl )
+static void sp_ddc_angle_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
 {
     prefs_set_double_attribute( "tools.calligraphic", "angle", adj->value );
 }
 
-static void sp_ddc_width_value_changed( GtkAdjustment *adj, GObject *tbl )
+static void sp_ddc_width_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
 {
     prefs_set_double_attribute( "tools.calligraphic", "width", adj->value * 0.01 );
 }
 
-static void sp_ddc_velthin_value_changed( GtkAdjustment *adj, GObject* tbl )
+static void sp_ddc_velthin_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
 {
     prefs_set_double_attribute("tools.calligraphic", "thinning", adj->value);
 }
 
-static void sp_ddc_flatness_value_changed( GtkAdjustment *adj, GObject* tbl )
+static void sp_ddc_flatness_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
 {
     prefs_set_double_attribute( "tools.calligraphic", "flatness", adj->value );
 }
 
-static void sp_ddc_tremor_value_changed( GtkAdjustment *adj, GObject* tbl )
+static void sp_ddc_tremor_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
 {
     prefs_set_double_attribute( "tools.calligraphic", "tremor", adj->value );
 }
 
-static void sp_ddc_cap_rounding_value_changed( GtkAdjustment *adj, GObject* tbl )
+static void sp_ddc_cap_rounding_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
 {
     prefs_set_double_attribute( "tools.calligraphic", "cap_rounding", adj->value );
 }
 
-static void sp_ddc_pressure_state_changed( GtkToggleAction *act, gpointer data )
+static void sp_ddc_pressure_state_changed( GtkToggleAction *act, gpointer /*data*/ )
 {
     prefs_set_int_attribute( "tools.calligraphic", "usepressure", gtk_toggle_action_get_active( act ) ? 1 : 0);
 }
 
-static void sp_ddc_trace_background_changed( GtkToggleAction *act, gpointer data )
+static void sp_ddc_trace_background_changed( GtkToggleAction *act, gpointer /*data*/ )
 {
     prefs_set_int_attribute( "tools.calligraphic", "tracebackground", gtk_toggle_action_get_active( act ) ? 1 : 0);
 }
@@ -3060,12 +3070,13 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         gchar const* labels[] = {_("(hairline)"), 0, 0, 0, _("(default)"), 0, 0, 0, 0, _("(broad stroke)")};
         gdouble values[] = {1, 3, 5, 10, 15, 20, 30, 50, 75, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "CalligraphyWidthAction",
-                                         _("Width:"), _("The width of the calligraphic pen (relative to the visible canvas area)"),
-                                         "tools.calligraphic", "width", 15,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-calligraphy",
-                                         1, 100, 1.0, 10.0,
-                                         labels, values, G_N_ELEMENTS(labels),
-                                         sp_ddc_width_value_changed,  0.01, 0, 100 );
+                                                              _("Pen Width"), _("Width:"),
+                                                              _("The width of the calligraphic pen (relative to the visible canvas area)"),
+                                                              "tools.calligraphic", "width", 15,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-calligraphy",
+                                                              1, 100, 1.0, 10.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_ddc_width_value_changed,  0.01, 0, 100 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -3075,12 +3086,13 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             gchar const* labels[] = {_("(speed blows up stroke)"), 0, 0, _("(slight widening)"), _("(constant width)"), _("(slight thinning, default)"), 0, 0, _("(speed deflates stroke)")};
             gdouble values[] = {-1, -0.4, -0.2, -0.1, 0, 0.1, 0.2, 0.4, 1};
         EgeAdjustmentAction* eact = create_adjustment_action( "ThinningAction",
-                                         _("Thinning:"), _("How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"),
-                                         "tools.calligraphic", "thinning", 0.1,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                         -1.0, 1.0, 0.01, 0.1,
-                                         labels, values, G_N_ELEMENTS(labels),
-                                         sp_ddc_velthin_value_changed, 0.01, 2);
+                                                              _("Stroke Thinning"), _("Thinning:"),
+                                                              _("How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"),
+                                                              "tools.calligraphic", "thinning", 0.1,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              -1.0, 1.0, 0.01, 0.1,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_ddc_velthin_value_changed, 0.01, 2);
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -3090,12 +3102,13 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         gchar const* labels[] = {_("(left edge up)"), 0, 0, _("(horizontal)"), _("(default)"), 0, _("(right edge up)")};
         gdouble values[] = {-90, -60, -30, 0, 30, 60, 90};
         EgeAdjustmentAction* eact = create_adjustment_action( "AngleAction",
-                                         _("Angle:"), _("The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if fixation = 0)"),
-                                         "tools.calligraphic", "angle", 30,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "calligraphy-angle",
-                                         -90.0, 90.0, 1.0, 10.0,
-                                         labels, values, G_N_ELEMENTS(labels),
-                                         sp_ddc_angle_value_changed, 1, 0 );
+                                                              _("Pen Angle"), _("Angle:"),
+                                                              _("The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if fixation = 0)"),
+                                                              "tools.calligraphic", "angle", 30,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "calligraphy-angle",
+                                                              -90.0, 90.0, 1.0, 10.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_ddc_angle_value_changed, 1, 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         calligraphy_angle = eact;
@@ -3106,12 +3119,13 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             gchar const* labels[] = {_("(perpendicular to stroke, \"brush\")"), 0, 0, 0, _("(almost fixed, default)"), _("(fixed by Angle, \"pen\")")};
         gdouble values[] = {0, 0.2, 0.4, 0.6, 0.9, 1.0};
         EgeAdjustmentAction* eact = create_adjustment_action( "FixationAction",
-                                         _("Fixation:"), _("Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed angle)"),
-                                         "tools.calligraphic", "flatness", 0.9,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                         0.0, 1.0, 0.01, 0.1,
-                                         labels, values, G_N_ELEMENTS(labels),
-                                         sp_ddc_flatness_value_changed, 0.01, 2 );
+                                                              _("Fixation"), _("Fixation:"),
+                                                              _("Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed angle)"),
+                                                              "tools.calligraphic", "flatness", 0.9,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              0.0, 1.0, 0.01, 0.1,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_ddc_flatness_value_changed, 0.01, 2 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -3122,12 +3136,13 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         gdouble values[] = {0, 0.3, 0.5, 1.0, 1.4, 5.0};
         // TRANSLATORS: "cap" means "end" (both start and finish) here
         EgeAdjustmentAction* eact = create_adjustment_action( "CapRoundingAction",
-                                         _("Caps:"), _("Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = round caps)"),
-                                         "tools.calligraphic", "cap_rounding", 0.0,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                         0.0, 5.0, 0.01, 0.1,
-                                         labels, values, G_N_ELEMENTS(labels),
-                                         sp_ddc_cap_rounding_value_changed, 0.01, 2 );
+                                                              _("Cap rounding"), _("Caps:"),
+                                                              _("Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = round caps)"),
+                                                              "tools.calligraphic", "cap_rounding", 0.0,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              0.0, 5.0, 0.01, 0.1,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_ddc_cap_rounding_value_changed, 0.01, 2 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -3137,12 +3152,13 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             gchar const* labels[] = {_("(smooth line)"), _("(slight tremor)"), _("(noticeable tremor)"), 0, 0, _("(maximum tremor)")};
         gdouble values[] = {0, 0.1, 0.2, 0.4, 0.6, 1.0};
         EgeAdjustmentAction* eact = create_adjustment_action( "TremorAction",
-                                         _("Tremor:"), _("Increase to make strokes rugged and trembling"),
-                                         "tools.calligraphic", "tremor", 0.0,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                         0.0, 1.0, 0.01, 0.1,
-                                         labels, values, G_N_ELEMENTS(labels),
-                                         sp_ddc_tremor_value_changed, 0.01, 2 );
+                                                              _("Stroke Tremor"), _("Tremor:"),
+                                                              _("Increase to make strokes rugged and trembling"),
+                                                              "tools.calligraphic", "tremor", 0.0,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              0.0, 1.0, 0.01, 0.1,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_ddc_tremor_value_changed, 0.01, 2 );
 
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -3153,12 +3169,13 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         gchar const* labels[] = {_("(no wiggle)"), _("(slight deviation)"), 0, 0, _("(wild waves and curls)")};
         gdouble values[] = {0, 0.2, 0.4, 0.6, 1.0};
         EgeAdjustmentAction* eact = create_adjustment_action( "WiggleAction",
-                                         _("Wiggle:"), _("Increase to make the pen waver and wiggle"),
-                                         "tools.calligraphic", "wiggle", 0.0,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                         0.0, 1.0, 0.01, 0.1,
-                                         labels, values, G_N_ELEMENTS(labels),
-                                         sp_ddc_wiggle_value_changed, 0.01, 2 );
+                                                              _("Pen Wiggle"), _("Wiggle:"),
+                                                              _("Increase to make the pen waver and wiggle"),
+                                                              "tools.calligraphic", "wiggle", 0.0,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              0.0, 1.0, 0.01, 0.1,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_ddc_wiggle_value_changed, 0.01, 2 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -3168,12 +3185,13 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             gchar const* labels[] = {_("(no inertia)"), _("(slight smoothing, default)"), _("(noticeable lagging)"), 0, 0, _("(maximum inertia)")};
         gdouble values[] = {0.0, 0.02, 0.1, 0.2, 0.5, 1.0};
         EgeAdjustmentAction* eact = create_adjustment_action( "MassAction",
-                                         _("Mass:"), _("Increase to make the pen drag behind, as if slowed by inertia"),
-                                         "tools.calligraphic", "mass", 0.02,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                         0.0, 1.0, 0.01, 0.1,
-                                         labels, values, G_N_ELEMENTS(labels),
-                                         sp_ddc_mass_value_changed, 0.01, 2 );
+                                                              _("Pen Mass"), _("Mass:"),
+                                                              _("Increase to make the pen drag behind, as if slowed by inertia"),
+                                                              "tools.calligraphic", "mass", 0.02,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              0.0, 1.0, 0.01, 0.1,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_ddc_mass_value_changed, 0.01, 2 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -3388,9 +3406,9 @@ static void sp_arctb_defaults(GtkWidget *, GObject *obj)
     spinbutton_defocus( GTK_OBJECT(obj) );
 }
 
-static void arc_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
-                                      gchar const *old_value, gchar const *new_value,
-                                      bool is_interactive, gpointer data)
+static void arc_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const */*name*/,
+                                      gchar const */*old_value*/, gchar const */*new_value*/,
+                                      bool /*is_interactive*/, gpointer data)
 {
     GObject *tbl = G_OBJECT(data);
 
@@ -3491,7 +3509,8 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
     /* Start */
     {
         eact = create_adjustment_action( "ArcStartAction",
-                                         _("Start:"), _("The angle (in degrees) from the horizontal to the arc's start point"),
+                                         _("Start"), _("Start:"),
+                                         _("The angle (in degrees) from the horizontal to the arc's start point"),
                                          "tools.shapes.arc", "start", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, TRUE, "altx-arc",
                                          -360.0, 360.0, 1.0, 10.0,
@@ -3503,7 +3522,8 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
     /* End */
     {
         eact = create_adjustment_action( "ArcEndAction",
-                                         _("End:"), _("The angle (in degrees) from the horizontal to the arc's end point"),
+                                         _("End"), _("End:"),
+                                         _("The angle (in degrees) from the horizontal to the arc's end point"),
                                          "tools.shapes.arc", "end", 0.0,
                                          GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
                                          -360.0, 360.0, 1.0, 10.0,
@@ -3612,7 +3632,7 @@ static void toggle_dropper_set_alpha( GtkToggleAction* act, gpointer tbl ) {
  * TODO: Add queue of last 5 or so colors selected with new swatches so that
  *       can drag and drop places. Will provide a nice mixing palette.
  */
-static void sp_dropper_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
+static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* mainActions, GObject* holder)
 {
     gint pickAlpha = prefs_get_int_attribute( "tools.dropper", "pick", 1 );
 
@@ -3683,7 +3703,7 @@ namespace {
 bool visible = false;
 
 void
-sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
+sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *tbl)
 {
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
@@ -3837,13 +3857,13 @@ sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
 }
 
 void
-sp_text_toolbox_selection_modified (Inkscape::Selection *selection, guint flags, GObject *tbl)
+sp_text_toolbox_selection_modified (Inkscape::Selection *selection, guint /*flags*/, GObject *tbl)
 {
     sp_text_toolbox_selection_changed (selection, tbl);
 }
 
 void
-sp_text_toolbox_subselection_changed (gpointer dragger, GObject *tbl)
+sp_text_toolbox_subselection_changed (gpointer /*dragger*/, GObject *tbl)
 {
     sp_text_toolbox_selection_changed (NULL, tbl);
 }
@@ -3858,6 +3878,8 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     GtkWidget    *entry = GTK_WIDGET (g_object_get_data (tbl, "family-entry"));
     GtkTreeIter   iter;
     char         *family = 0;
+
+    (void)popdown;
 
     gdk_pointer_ungrab (GDK_CURRENT_TIME);
     gdk_keyboard_ungrab (GDK_CURRENT_TIME);
@@ -4086,7 +4108,7 @@ sp_text_toolbox_orientation_toggled (GtkRadioButton  *button,
 }
 
 gboolean
-sp_text_toolbox_size_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
+sp_text_toolbox_size_keypress (GtkWidget */*w*/, GdkEventKey *event, gpointer /*data*/)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop) return FALSE;
@@ -4106,7 +4128,7 @@ sp_text_toolbox_size_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 }
 
 gboolean
-sp_text_toolbox_family_keypress (GtkWidget *w, GdkEventKey *event, GObject *tbl)
+sp_text_toolbox_family_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject *tbl)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop) return FALSE;
@@ -4122,7 +4144,7 @@ sp_text_toolbox_family_keypress (GtkWidget *w, GdkEventKey *event, GObject *tbl)
 }
 
 gboolean
-sp_text_toolbox_family_list_keypress (GtkWidget *w, GdkEventKey *event, GObject *tbl)
+sp_text_toolbox_family_list_keypress (GtkWidget *w, GdkEventKey *event, GObject */*tbl*/)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop) return FALSE;
@@ -4188,7 +4210,7 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
 }
 
 void
-sp_text_toolbox_text_popdown_clicked    (GtkButton          *button,
+sp_text_toolbox_text_popdown_clicked    (GtkButton          */*button*/,
                                          GObject            *tbl)
 {
     GtkWidget *popdown = GTK_WIDGET (g_object_get_data (tbl, "family-popdown-window"));
@@ -4222,8 +4244,8 @@ sp_text_toolbox_text_popdown_clicked    (GtkButton          *button,
 
 gboolean
 sp_text_toolbox_entry_focus_in  (GtkWidget        *entry,
-                                 GdkEventFocus    *event,
-                                 GObject          *tbl)
+                                 GdkEventFocus    */*event*/,
+                                 GObject          */*tbl*/)
 {
     gtk_entry_select_region (GTK_ENTRY (entry), 0, -1);
     return FALSE;
@@ -4231,8 +4253,8 @@ sp_text_toolbox_entry_focus_in  (GtkWidget        *entry,
 
 gboolean
 sp_text_toolbox_popdown_focus_out (GtkWidget        *popdown,
-                                   GdkEventFocus    *event,
-                                   GObject          *tbl)
+                                   GdkEventFocus    */*event*/,
+                                   GObject          */*tbl*/)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
@@ -4243,11 +4265,11 @@ sp_text_toolbox_popdown_focus_out (GtkWidget        *popdown,
 }
 
 void
-cell_data_func  (GtkTreeViewColumn *column,
+cell_data_func  (GtkTreeViewColumn */*column*/,
                  GtkCellRenderer   *cell,
                  GtkTreeModel      *tree_model,
                  GtkTreeIter       *iter,
-                 gpointer           data)
+                 gpointer           /*data*/)
 {
     char        *family,
         *family_escaped,
@@ -4269,7 +4291,7 @@ cell_data_func  (GtkTreeViewColumn *column,
     free (sample_escaped);
 }
 
-static void delete_completion(GObject *obj, GtkWidget *entry) {
+static void delete_completion(GObject */*obj*/, GtkWidget *entry) {
     GObject *completion = (GObject *) gtk_object_get_data(GTK_OBJECT(entry), "completion");
     if (completion) {
         gtk_entry_set_completion (GTK_ENTRY(entry), NULL);
@@ -4776,7 +4798,7 @@ static void sp_connector_graph_layout(void)
     sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, _("Arrange connector network"));
 }
 
-static void sp_directed_graph_layout_toggled( GtkToggleAction* act, GtkObject *tbl )
+static void sp_directed_graph_layout_toggled( GtkToggleAction* act, GtkObject */*tbl*/ )
 {
     if ( gtk_toggle_action_get_active( act ) ) {
         prefs_set_string_attribute("tools.connector", "directedlayout",
@@ -4787,7 +4809,7 @@ static void sp_directed_graph_layout_toggled( GtkToggleAction* act, GtkObject *t
     }
 }
 
-static void sp_nooverlaps_graph_layout_toggled( GtkToggleAction* act, GtkObject *tbl )
+static void sp_nooverlaps_graph_layout_toggled( GtkToggleAction* act, GtkObject */*tbl*/ )
 {
     if ( gtk_toggle_action_get_active( act ) ) {
         prefs_set_string_attribute("tools.connector", "avoidoverlaplayout",
@@ -4806,8 +4828,8 @@ static void connector_length_changed(GtkAdjustment *adj, GObject* tbl)
 }
 
 static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
-        gchar const *name, gchar const *old_value, gchar const *new_value,
-        bool is_interactive, gpointer data)
+                                            gchar const *name, gchar const */*old_value*/, gchar const */*new_value*/,
+                                            bool /*is_interactive*/, gpointer data)
 {
     GtkWidget *tbl = GTK_WIDGET(data);
 
@@ -4862,7 +4884,8 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
 
     // Spacing spinbox
     eact = create_adjustment_action( "ConnectorSpacingAction",
-                                     _("Spacing:"), _("The amount of space left around objects by auto-routing connectors"),
+                                     _("Connector Spacing"), _("Spacing:"),
+                                     _("The amount of space left around objects by auto-routing connectors"),
                                      "tools.connector", "spacing", defaultConnSpacing,
                                      GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "inkscape:connector-spacing",
                                      0, 100, 1.0, 10.0,
@@ -4883,7 +4906,8 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
 
     // Default connector length spinbox
     eact = create_adjustment_action( "ConnectorLengthAction",
-                                     _("Length:"), _("Ideal length for connectors when layout is applied"),
+                                     _("Connector Length"), _("Length:"),
+                                     _("Ideal length for connectors when layout is applied"),
                                      "tools.connector", "length", 100,
                                      GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "inkscape:connector-length",
                                      10, 1000, 10.0, 100.0,
@@ -4944,18 +4968,18 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
 //##     Paintbucket     ##
 //#########################
 
-static void paintbucket_channels_changed(EgeSelectOneAction* act, GObject* tbl)
+static void paintbucket_channels_changed(EgeSelectOneAction* act, GObject* /*tbl*/)
 {
     gint channels = ege_select_one_action_get_active( act );
     flood_channels_set_channels( channels );
 }
 
-static void paintbucket_threshold_changed(GtkAdjustment *adj, GObject *tbl)
+static void paintbucket_threshold_changed(GtkAdjustment *adj, GObject */*tbl*/)
 {
     prefs_set_int_attribute("tools.paintbucket", "threshold", (gint)adj->value);
 }
 
-static void paintbucket_autogap_changed(EgeSelectOneAction* act, GObject *tbl)
+static void paintbucket_autogap_changed(EgeSelectOneAction* act, GObject */*tbl*/)
 {
     prefs_set_int_attribute("tools.paintbucket", "autogap", ege_select_one_action_get_active( act ));
 }
@@ -4988,7 +5012,7 @@ static void paintbucket_defaults(GtkWidget *, GObject *dataKludge)
             gtk_adjustment_set_value(adj, kv.value);
         }
     }
-    
+
     EgeSelectOneAction* channels_action = EGE_SELECT_ONE_ACTION( g_object_get_data( dataKludge, "channels_action" ) );
     ege_select_one_action_set_active( channels_action, FLOOD_CHANNELS_RGB );
     EgeSelectOneAction* autogap_action = EGE_SELECT_ONE_ACTION( g_object_get_data( dataKludge, "autogap_action" ) );
@@ -5013,7 +5037,8 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         }
         g_list_free( items );
         items = 0;
-        EgeSelectOneAction* act1 = ege_select_one_action_new( "ChannelsAction", _("Fill by:"), (""), NULL, GTK_TREE_MODEL(model) );
+        EgeSelectOneAction* act1 = ege_select_one_action_new( "ChannelsAction", _("Fill by"), (""), NULL, GTK_TREE_MODEL(model) );
+        g_object_set( act1, "short_label", _("Fill by:"), NULL );
         ege_select_one_action_set_appearance( act1, "compact" );
         ege_select_one_action_set_active( act1, prefs_get_int_attribute("tools.paintbucket", "channels", 0) );
         g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(paintbucket_channels_changed), holder );
@@ -5025,7 +5050,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
     {
         eact = create_adjustment_action(
             "ThresholdAction",
-            _("Threshold:"),
+            _("Fill Threshold"), _("Threshold:"),
             _("The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"),
             "tools.paintbucket", "threshold", 5, GTK_WIDGET(desktop->canvas), NULL, holder, TRUE,
             "inkscape:paintbucket-threshold", 0, 100.0, 1.0, 10.0,
@@ -5048,7 +5073,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
     {
         eact = create_adjustment_action(
             "OffsetAction",
-            _("Grow/shrink by:"),
+            _("Grow/shrink by"), _("Grow/shrink by:"),
             _("The amount to grow (positive) or shrink (negative) the created fill path"),
             "tools.paintbucket", "offset", 0, GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, TRUE,
             "inkscape:paintbucket-offset", -1e6, 1e6, 0.1, 0.5,
@@ -5058,7 +5083,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
 
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
-    
+
     /* Auto Gap */
     {
         GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
@@ -5074,7 +5099,8 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         }
         g_list_free( items );
         items = 0;
-        EgeSelectOneAction* act2 = ege_select_one_action_new( "AutoGapAction", _("Close gaps:"), (""), NULL, GTK_TREE_MODEL(model) );
+        EgeSelectOneAction* act2 = ege_select_one_action_new( "AutoGapAction", _("Close gaps"), (""), NULL, GTK_TREE_MODEL(model) );
+        g_object_set( act2, "short_label", _("Close gaps:"), NULL );
         ege_select_one_action_set_appearance( act2, "compact" );
         ege_select_one_action_set_active( act2, prefs_get_int_attribute("tools.paintbucket", "autogap", 0) );
         g_signal_connect( G_OBJECT(act2), "changed", G_CALLBACK(paintbucket_autogap_changed), holder );

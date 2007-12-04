@@ -76,28 +76,28 @@ gr_apply_gradient_to_item (SPItem *item, SPGradient *gr, SPGradientType new_type
     SPStyle *style = SP_OBJECT_STYLE (item);
 
     if (do_fill) {
-        if (style && (style->fill.isPaintserver()) && 
+        if (style && (style->fill.isPaintserver()) &&
             SP_IS_GRADIENT (SP_OBJECT_STYLE_FILL_SERVER (item))) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
                 sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_LINEAR, true);
             } else if (SP_IS_RADIALGRADIENT (server)) {
                 sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_RADIAL, true);
-            } 
+            }
         } else if (new_fill) {
             sp_item_set_gradient(item, gr, new_type, true);
         }
-    } 
+    }
 
     if (do_stroke) {
-        if (style && (style->stroke.isPaintserver()) && 
+        if (style && (style->stroke.isPaintserver()) &&
             SP_IS_GRADIENT (SP_OBJECT_STYLE_STROKE_SERVER (item))) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
                 sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_LINEAR, false);
             } else if (SP_IS_RADIALGRADIENT (server)) {
                 sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_RADIAL, false);
-            } 
+            }
         } else if (!new_fill) {
             sp_item_set_gradient(item, gr, new_type, false);
         }
@@ -118,7 +118,7 @@ gr_apply_gradient (Inkscape::Selection *selection, GrDrag *drag, SPGradient *gr)
 
 
     // GRADIENTFIXME: make this work for multiple selected draggers.
-    
+
     // First try selected dragger
     if (drag && drag->selected) {
         GrDragger *dragger = (GrDragger*) drag->selected->data;
@@ -155,7 +155,7 @@ gchar *
 gr_prepare_label (SPObject *obj)
 {
     const gchar *id = obj->defaultLabel();
-    if (strlen(id) > 15 && (!strncmp (id, "#linearGradient", 15) || !strncmp (id, "#radialGradient", 15))) 
+    if (strlen(id) > 15 && (!strncmp (id, "#linearGradient", 15) || !strncmp (id, "#radialGradient", 15)))
         return g_strdup_printf ("<small>#%s</small>", id+15);
     return g_strdup_printf ("<small>%s</small>", id);
 }
@@ -170,11 +170,11 @@ gr_vector_list (SPDesktop *desktop, bool selection_empty, SPGradient *gr_selecte
 
     GSList *gl = NULL;
     const GSList *gradients = sp_document_get_resource_list (document, "gradient");
-		for (const GSList *i = gradients; i != NULL; i = i->next) {
+    for (const GSList *i = gradients; i != NULL; i = i->next) {
         if (SP_GRADIENT_HAS_STOPS (i->data)) {
             gl = g_slist_prepend (gl, i->data);
         }
-		}
+    }
     gl = g_slist_reverse (gl);
 
     guint pos = 0;
@@ -257,7 +257,7 @@ gr_vector_list (SPDesktop *desktop, bool selection_empty, SPGradient *gr_selecte
     /* Select the current gradient, or the Multi/Nothing line */
     if (gr_multi || gr_selected == NULL)
         gtk_option_menu_set_history (GTK_OPTION_MENU (om), 0);
-    else 
+    else
         gtk_option_menu_set_history (GTK_OPTION_MENU (om), pos);
 
     return om;
@@ -265,7 +265,7 @@ gr_vector_list (SPDesktop *desktop, bool selection_empty, SPGradient *gr_selecte
 
 
 void
-gr_read_selection (Inkscape::Selection *selection, GrDrag *drag, SPGradient **gr_selected, bool *gr_multi, SPGradientSpread *spr_selected, bool *spr_multi) 
+gr_read_selection (Inkscape::Selection *selection, GrDrag *drag, SPGradient **gr_selected, bool *gr_multi, SPGradientSpread *spr_selected, bool *spr_multi)
 {
     if (drag && drag->selected) {
         // GRADIENTFIXME: make this work for more than one selected dragger?
@@ -291,7 +291,7 @@ gr_read_selection (Inkscape::Selection *selection, GrDrag *drag, SPGradient **gr
             }
          }
         return;
-    } 
+    }
 
    // If no selected dragger, read desktop selection
    for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
@@ -343,7 +343,7 @@ gr_read_selection (Inkscape::Selection *selection, GrDrag *drag, SPGradient **gr
     }
  }
 
-static void 
+static void
 gr_tb_selection_changed (Inkscape::Selection *, gpointer data)
 {
     GtkWidget *widget = (GtkWidget *) data;
@@ -353,9 +353,9 @@ gr_tb_selection_changed (Inkscape::Selection *, gpointer data)
         return;
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop); // take from desktop, not from args
-    if (!selection) 
+    if (!selection)
         return;
-    
+
     SPEventContext *ev = sp_desktop_event_context (desktop);
 
     GtkWidget *om = (GtkWidget *) g_object_get_data (G_OBJECT (widget), "menu");
@@ -374,7 +374,7 @@ gr_tb_selection_changed (Inkscape::Selection *, gpointer data)
 
     GtkWidget *buttons = (GtkWidget *) g_object_get_data (G_OBJECT(widget), "buttons");
     gtk_widget_set_sensitive (buttons, (gr_selected && !gr_multi));
-  
+
     gtk_box_pack_start (GTK_BOX (widget), om, TRUE, TRUE, 0);
 
     gtk_widget_show_all (widget);
@@ -443,14 +443,14 @@ gr_change_widget (SPDesktop *desktop)
     GtkTooltips *tt = gtk_tooltips_new();
 
     gr_read_selection (selection, ev? ev->get_drag() : NULL, &gr_selected, &gr_multi, &spr_selected, &spr_multi);
- 
+
     GtkWidget *widget = gtk_hbox_new(FALSE, FALSE);
     gtk_object_set_data(GTK_OBJECT(widget), "dtw", desktop->canvas);
     g_object_set_data (G_OBJECT (widget), "desktop", desktop);
 
     GtkWidget *om = gr_vector_list (desktop, selection->isEmpty(), gr_selected, gr_multi);
     g_object_set_data (G_OBJECT (widget), "menu", om);
-  
+
     gtk_box_pack_start (GTK_BOX (widget), om, TRUE, TRUE, 0);
 
     {
@@ -536,7 +536,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
                                               tt);
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_type), tbl);
     g_object_set_data(G_OBJECT(tbl), "linear", button);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
               prefs_get_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR) == SP_GRADIENT_TYPE_LINEAR);
     gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
     }
@@ -550,7 +550,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
                                               tt);
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_type), tbl);
     g_object_set_data(G_OBJECT(tbl), "radial", button);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
               prefs_get_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR) == SP_GRADIENT_TYPE_RADIAL);
     gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
     }
@@ -578,7 +578,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
                                               tt);
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_fillstroke), tbl);
     g_object_set_data(G_OBJECT(tbl), "fill", button);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                   prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1) == 1);
     gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
     }
@@ -592,7 +592,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
                                               tt);
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_fillstroke), tbl);
     g_object_set_data(G_OBJECT(tbl), "stroke", button);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                   prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1) == 0);
     gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
     }

@@ -496,7 +496,7 @@ GtkWidget* create_tool_item( GtkAction* action )
             GtkTooltips* tooltips = gtk_tooltips_new();
 
             gchar*  sss = 0;
-            g_object_get( G_OBJECT(action), "label", &sss, NULL );
+            g_object_get( G_OBJECT(action), "short_label", &sss, NULL );
             if (sss) {
                 GtkWidget* lbl;
                 lbl = gtk_label_new(sss);
@@ -597,13 +597,13 @@ GtkWidget* create_tool_item( GtkAction* action )
 
             if (act->private_data->appearanceMode == APPEARANCE_COMPACT) {
                 gchar*  sss = 0;
-                g_object_get( G_OBJECT(action), "label", &sss, NULL );
+                g_object_get( G_OBJECT(action), "short_label", &sss, NULL );
                 if (sss) {
                     GtkWidget* lbl;
                     lbl = gtk_label_new(sss);
                     gtk_box_pack_start( GTK_BOX(holder), lbl, FALSE, FALSE, 4 );
                 }
-            } 
+            }
 
             gtk_box_pack_start( GTK_BOX(holder), normal, FALSE, FALSE, 0 );
 
