@@ -26,6 +26,43 @@ triangle_area (NR::Point p1, NR::Point p2, NR::Point p3)
     return (p1[NR::X]*p2[NR::Y] + p1[NR::Y]*p3[NR::X] + p2[NR::X]*p3[NR::Y] - p2[NR::Y]*p3[NR::X] - p1[NR::Y]*p2[NR::X] - p1[NR::X]*p3[NR::Y]);
 }
 
+/**
+ * \return x rounded to the nearest multiple of c1 plus c0.
+ *
+ * \note
+ * If c1==0 (and c0 is finite), then returns +/-inf.  This makes grid spacing of zero
+ * mean "ignore the grid in this dimension".
+ */
+inline double round_to_nearest_multiple_plus(double x, double const c1, double const c0)
+{
+    return floor((x - c0) / c1 + .5) * c1 + c0;
+}
+
+/**
+ * \return x rounded to the lower multiple of c1 plus c0.
+ *
+ * \note
+ * If c1==0 (and c0 is finite), then returns +/-inf.  This makes grid spacing of zero
+ * mean "ignore the grid in this dimension".
+ */
+inline double round_to_lower_multiple_plus(double x, double const c1, double const c0)
+{
+    return floor((x - c0) / c1) * c1 + c0;
+}
+
+/**
+ * \return x rounded to the upper multiple of c1 plus c0.
+ *
+ * \note
+ * If c1==0 (and c0 is finite), then returns +/-inf.  This makes grid spacing of zero
+ * mean "ignore the grid in this dimension".
+ */
+inline double round_to_upper_multiple_plus(double x, double const c1, double const c0)
+{
+    return ceil((x - c0) / c1) * c1 + c0;
+}
+
+
 }
 
 }

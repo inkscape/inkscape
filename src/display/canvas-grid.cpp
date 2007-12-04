@@ -15,6 +15,7 @@
 
 
 #include "sp-canvas-util.h"
+#include "util/mathfns.h" 
 #include "display-forward.h"
 #include <libnr/nr-pixops.h>
 #include "desktop-handles.h"
@@ -859,24 +860,6 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     }
 }
 
-
-
-
-/**
- * \return x rounded to the nearest multiple of c1 plus c0.
- *
- * \note
- * If c1==0 (and c0 is finite), then returns +/-inf.  This makes grid spacing of zero
- * mean "ignore the grid in this dimention".  We're currently discussing "good" semantics
- * for guide/grid snapping.
- */
-
-/* FIXME: move this somewhere else, perhaps */
-static double round_to_nearest_multiple_plus(double x, double const c1, double const c0)
-{
-    return floor((x - c0) / c1 + .5) * c1 + c0;
-}
-
 CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SPNamedView const *nv, NR::Coord const d) : LineSnapper(nv, d)
 {
     this->grid = grid;
@@ -902,10 +885,10 @@ CanvasXYGridSnapper::_getSnapLines(NR::Point const &p) const
             scaled_spacing /= SP_ACTIVE_DESKTOP->current_zoom();
         }
 
-        NR::Coord const rounded = round_to_nearest_multiple_plus(p[i],
-                                                                 scaled_spacing,
-                                                                 grid->origin[i]);
-
+        NR::Coord rounded;        
+        rounded = Inkscape::Util::round_to_upper_multiple_plus(p[i], scaled_spacing, grid->origin[i]);
+        s.push_back(std::make_pair(NR::Dim2(i), rounded));
+        rounded = Inkscape::Util::round_to_lower_multiple_plus(p[i], scaled_spacing, grid->origin[i]);
         s.push_back(std::make_pair(NR::Dim2(i), rounded));
     }
 
