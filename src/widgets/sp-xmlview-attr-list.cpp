@@ -1,5 +1,3 @@
-#define __SP_XMLVIEW_ATTR_LIST_C__
-
 /*
  * Specialization of GtkCList for the XML tree view
  *
@@ -135,7 +133,12 @@ sp_xmlview_attr_list_destroy (GtkObject * object)
 }
 
 void
-event_attr_changed (Inkscape::XML::Node * repr, const gchar * name, const gchar * old_value, const gchar * new_value, bool is_interactive, gpointer data)
+event_attr_changed (Inkscape::XML::Node * /*repr*/,
+                    const gchar * name,
+                    const gchar * /*old_value*/,
+                    const gchar * new_value,
+                    bool /*is_interactive*/,
+                    gpointer data)
 {
 	gint row;
 	SPXMLViewAttrList * list;
