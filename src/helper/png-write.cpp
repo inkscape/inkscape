@@ -289,7 +289,7 @@ hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
 /**
  * Export the given document as a Portable Network Graphics (PNG) file.
  *
- * \return true if succeeded, false if an error occurred.
+ * \return true if succeeded (or if no action was taken), false if an error occurred.
  */
 bool
 sp_export_png_file(SPDocument *doc, gchar const *filename,
@@ -306,7 +306,11 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     g_return_val_if_fail(height >= 1, false);
 
     if (!force_overwrite && !sp_ui_overwrite_file(filename)) {
-        return false;
+        /* Remark: We return true so as not to invoke an error dialog in case export is cancelled
+           by the user; currently this is safe because the callers only act when false is returned.
+           If this changes in the future we need better distinction of return types (e.g., use int)
+        */
+        return true;
     }
 
     // export with maximum blur rendering quality
