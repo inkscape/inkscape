@@ -72,6 +72,7 @@
 #include "sp-flowtext.h"
 #include "style.h"
 #include "selection.h"
+#include "selection-chemistry.h"
 #include "document-private.h"
 #include "desktop-style.h"
 #include "../libnrtype/font-lister.h"
@@ -242,6 +243,8 @@ static gchar const * ui_descr =
         "    <toolitem action='StrokeToPath' />"
         "    <separator />"
         "    <toolitem action='NodesShowHandlesAction' />"
+        "    <separator />"
+        "    <toolitem action='EditNextLPEParameterAction' />"
         "    <separator />"
         "    <toolitem action='NodeXAction' />"
         "    <toolitem action='NodeYAction' />"
@@ -844,6 +847,11 @@ static void toggle_show_handles (GtkToggleAction *act, gpointer /*data*/) {
     if (shape_editor) shape_editor->show_handles(show);
 }
 
+void
+sp_node_path_edit_nextLPEparam (GtkAction *act, gpointer data) {
+    sp_selection_next_patheffect_param( reinterpret_cast<SPDesktop*>(data) );
+}
+
 /* is called when the node selection is modified */
 static void
 sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tbl)
@@ -1065,6 +1073,16 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_show_handles), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.nodes", "show_handles", 1 ) );
+    }
+
+    {
+        InkAction* inky = ink_action_new( "EditNextLPEParameterAction",
+                                          _("Next Path Effect Parameter"),
+                                          _("Show next Path Effect parameter for editing"),
+                                          "edit_next_parameter",
+                                          Inkscape::ICON_SIZE_DECORATION );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_nextLPEparam), desktop );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
 
     /* X coord of selected node(s) */
