@@ -297,7 +297,7 @@ Parameter *
 Effect::getNextOncanvasEditableParam()
 {
     oncanvasedit_it++;
-    if (oncanvasedit_it == param_vector.size()) {
+    if (oncanvasedit_it == static_cast<int>(param_vector.size())) {
         oncanvasedit_it = 0;
     }
     int old_it = oncanvasedit_it;
@@ -308,7 +308,7 @@ Effect::getNextOncanvasEditableParam()
             return param;
         } else {
             oncanvasedit_it++;
-            if (oncanvasedit_it == param_vector.size()) {  // loop round the map
+            if (oncanvasedit_it == static_cast<int>(param_vector.size())) {  // loop round the map
                 oncanvasedit_it = 0;
             }
         }

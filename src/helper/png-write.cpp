@@ -216,8 +216,8 @@ sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
         if (!ebp->status((float) row / ebp->height, ebp->data)) return 0;
     }
 
-    num_rows = MIN(num_rows, ebp->sheight);
-    num_rows = MIN(num_rows, ebp->height - row);
+    num_rows = MIN(num_rows, static_cast<int>(ebp->sheight));
+    num_rows = MIN(num_rows, static_cast<int>(ebp->height - row));
 
     /* Set area of interest */
     // bbox is now set to the entire image to prevent discontinuities
@@ -242,7 +242,7 @@ sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
 
     for (int r = 0; r < num_rows; r++) {
         guchar *p = NR_PIXBLOCK_PX(&pb) + r * pb.rs;
-        for (int c = 0; c < ebp->width; c++) {
+        for (int c = 0; c < static_cast<int>(ebp->width); c++) {
             *p++ = ebp->r;
             *p++ = ebp->g;
             *p++ = ebp->b;
