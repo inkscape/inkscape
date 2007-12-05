@@ -153,6 +153,8 @@ sp_node_context_setup(SPEventContext *ec)
         ec->enableGrDrag();
     }
 
+    ec->desktop->emitToolSubselectionChanged(NULL); // sets the coord entry fields to inactive
+
     nc->_node_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 
     nc->shape_editor->update_statusbar();

@@ -904,6 +904,10 @@ sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tbl)
                 }
             }
         }
+    } else {
+        // no shape-editor or nodepath yet (when we just switched to the tool); coord entries must be inactive
+        gtk_action_set_sensitive(xact, FALSE);
+        gtk_action_set_sensitive(yact, FALSE);
     }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
