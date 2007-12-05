@@ -248,6 +248,7 @@ static gchar const * ui_descr =
         "    <separator />"
         "    <toolitem action='NodeXAction' />"
         "    <toolitem action='NodeYAction' />"
+        "    <toolitem action='NodeUnitsAction' />"
         "  </toolbar>"
 
         "  <toolbar name='TweakToolbar'>"
@@ -869,6 +870,9 @@ sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tbl)
     // in turn, prevent listener from responding
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
 
+    UnitTracker* tracker = reinterpret_cast<UnitTracker*>( g_object_get_data( tbl, "tracker" ) );
+    SPUnit const *unit = tracker->getActiveUnit();
+
     ShapeEditor *shape_editor = get_current_shape_editor();
     if (shape_editor && shape_editor->has_nodepath()) {
         Inkscape::NodePath::Path *nodepath = shape_editor->get_nodepath();
@@ -883,14 +887,14 @@ sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tbl)
         } else {
             gtk_action_set_sensitive(xact, TRUE);
             gtk_action_set_sensitive(yact, TRUE);
-            NR::Coord oldx = gtk_adjustment_get_value(xadj);
-            NR::Coord oldy = gtk_adjustment_get_value(xadj);
+            NR::Coord oldx = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
+            NR::Coord oldy = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
 
             if (n_selected == 1) {
                 NR::Point sel_node = nodepath->singleSelectedCoords();
                 if (oldx != sel_node[NR::X] || oldy != sel_node[NR::Y]) {
-                    gtk_adjustment_set_value(xadj, sel_node[NR::X]);
-                    gtk_adjustment_set_value(yadj, sel_node[NR::Y]);
+                    gtk_adjustment_set_value(xadj, sp_pixels_get_units(sel_node[NR::X], *unit));
+                    gtk_adjustment_set_value(yadj, sp_pixels_get_units(sel_node[NR::Y], *unit));
                 }
             } else {
                 NR::Maybe<NR::Coord> x = sp_node_selected_common_coord(nodepath, NR::X);
@@ -899,8 +903,10 @@ sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tbl)
                     /* Note: Currently x and y will always have a value, even if the coordinates of the
                        selected nodes don't coincide (in this case we use the coordinates of the center
                        of the bounding box). So the entries are never set to zero. */
-                    gtk_adjustment_set_value(xadj, x ? (*x) : 0.0); // FIXME: Maybe we should clear the entry
-                    gtk_adjustment_set_value(yadj, y ? (*y) : 0.0); //        fields, not set them to zero.
+                    // FIXME: Maybe we should clear the entry if several nodes are selected
+                    //        instead of providing a kind of average value
+                    gtk_adjustment_set_value(xadj, sp_pixels_get_units(x ? (*x) : 0.0, *unit));
+                    gtk_adjustment_set_value(yadj, sp_pixels_get_units(y ? (*y) : 0.0, *unit));
                 }
             }
         }
@@ -916,6 +922,15 @@ sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tbl)
 static void
 sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_name)
 {
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+
+    UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data( tbl, "tracker" ));
+    SPUnit const *unit = tracker->getActiveUnit();
+
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+        prefs_set_double_attribute("tools.nodes", value_name, sp_units_get_pixels(adj->value, *unit));
+    }
+
     // quit if run by the attr_changed listener
     if (g_object_get_data( tbl, "freeze" )) {
         return;
@@ -926,11 +941,12 @@ sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_
 
     ShapeEditor *shape_editor = get_current_shape_editor();
     if (shape_editor && shape_editor->has_nodepath()) {
+        double val = sp_units_get_pixels(gtk_adjustment_get_value(adj), *unit);
         if (!strcmp(value_name, "x")) {
-            sp_node_selected_move_absolute(shape_editor->get_nodepath(), gtk_adjustment_get_value(adj), NR::X);
+            sp_node_selected_move_absolute(shape_editor->get_nodepath(), val, NR::X);
         }
         if (!strcmp(value_name, "y")) {
-            sp_node_selected_move_absolute(shape_editor->get_nodepath(), gtk_adjustment_get_value(adj), NR::Y);
+            sp_node_selected_move_absolute(shape_editor->get_nodepath(), val, NR::Y);
         }
     }
 
@@ -955,6 +971,10 @@ sp_node_path_y_value_changed(GtkAdjustment *adj, GObject *tbl)
 
 static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
+    UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
+    tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
+    g_object_set_data( holder, "tracker", tracker );
+
     {
         InkAction* inky = ink_action_new( "NodeInsertAction",
                                           _("Insert node"),
@@ -1101,6 +1121,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                          -1e6, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_node_path_x_value_changed );
+        tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         g_object_set_data( holder, "nodes_x_action", eact );
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
@@ -1118,9 +1139,16 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                          -1e6, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_node_path_y_value_changed );
+        tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         g_object_set_data( holder, "nodes_y_action", eact );
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+    }
+
+    // add the units menu
+    {
+        GtkAction* act = tracker->createAction( "NodeUnitsAction", _("Units"), ("") );
+        gtk_action_group_add_action( mainActions, act );
     }
 
     sigc::connection *connection = new sigc::connection (
