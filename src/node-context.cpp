@@ -482,6 +482,13 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         ret = TRUE;
                     }
                     break;
+                case GDK_x:
+                case GDK_X:
+                    if (MOD__ALT_ONLY) {
+                        desktop->setToolboxFocusTo ("altx-nodes");
+                        ret = TRUE;
+                    }
+                    break;
                 case GDK_Left: // move selection left
                 case GDK_KP_Left:
                 case GDK_KP_4:

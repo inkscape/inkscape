@@ -1372,6 +1372,50 @@ sp_node_selected_move_screen(Inkscape::NodePath::Path *nodepath, gdouble dx, gdo
     }
 }
 
+/**
+ * Move selected nodes to the absolute position given
+ */
+void sp_node_selected_move_absolute(Inkscape::NodePath::Path *nodepath, NR::Coord val, NR::Dim2 axis)
+{
+    for (GList *l = nodepath->selected; l != NULL; l = l->next) {
+        Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
+        NR::Point npos(axis == NR::X ? val : n->pos[NR::X], axis == NR::Y ? val : n->pos[NR::Y]);
+        sp_node_moveto(n, npos);
+    }
+
+    sp_nodepath_update_repr(nodepath, _("Move nodes"));
+}
+
+/**
+ * If the coordinates of all selected nodes coincide, return the common coordinate; otherwise return NR::Nothing
+ */
+NR::Maybe<NR::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis)
+{
+    g_return_val_if_fail(nodepath->selected, NR::Nothing());
+
+    // determine coordinate of first selected node
+    GList *nsel = nodepath->selected;
+    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) nsel->data;
+    NR::Coord coord = n->pos[axis];
+    bool coincide = true;
+
+    // compare it to the coordinates of all the other selected nodes
+    for (GList *l = nsel->next; l != NULL; l = l->next) {
+        n = (Inkscape::NodePath::Node *) l->data;
+        if (n->pos[axis] != coord) {
+            coincide = false;
+        }
+    }
+    if (coincide) {
+        return coord;
+    } else {
+        NR::Rect bbox = sp_node_selected_bbox(nodepath);
+        // currently we return the coordinate of the bounding box midpoint because I don't know how
+        // to erase the spin button entry field :), but maybe this can be useful behaviour anyway
+        return bbox.midpoint()[axis];
+    }
+}
+
 /** If they don't yet exist, creates knot and line for the given side of the node */
 static void sp_node_ensure_knot_exists (SPDesktop *desktop, Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeSide *side)
 {
@@ -3933,13 +3977,7 @@ void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, NR::Ma
     } else {
         // scale nodes as an "object":
 
-        Inkscape::NodePath::Node *n0 = (Inkscape::NodePath::Node *) nodepath->selected->data;
-        NR::Rect box (n0->pos, n0->pos); // originally includes the first selected node
-        for (GList *l = nodepath->selected; l != NULL; l = l->next) {
-            Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
-            box.expandTo (n->pos); // contain all selected nodes
-        }
-
+        NR::Rect box = sp_node_selected_bbox (nodepath);
         if (!center) {
             center = box.midpoint();
         }
@@ -3958,6 +3996,19 @@ void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, NR::Ma
     }
 
     sp_nodepath_update_repr(nodepath, _("Flip nodes"));
+}
+
+NR::Rect sp_node_selected_bbox (Inkscape::NodePath::Path *nodepath)
+{
+    g_assert (nodepath->selected);
+
+    Inkscape::NodePath::Node *n0 = (Inkscape::NodePath::Node *) nodepath->selected->data;
+    NR::Rect box (n0->pos, n0->pos); // originally includes the first selected node
+    for (GList *l = nodepath->selected; l != NULL; l = l->next) {
+        Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
+        box.expandTo (n->pos); // contain all selected nodes
+    }
+    return box;
 }
 
 //-----------------------------------------------
@@ -4391,6 +4442,8 @@ sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)//!!!move to Sha
     if (!ec) return;
     Inkscape::MessageContext *mc = SP_NODE_CONTEXT (ec)->_node_message_context;
     if (!mc) return;
+
+    inkscape_active_desktop()->emitToolSubselectionChanged(NULL);
 
     if (selected_nodes == 0) {
         Inkscape::Selection *sel = desktop->selection;

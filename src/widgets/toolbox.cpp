@@ -242,6 +242,9 @@ static gchar const * ui_descr =
         "    <toolitem action='StrokeToPath' />"
         "    <separator />"
         "    <toolitem action='NodesShowHandlesAction' />"
+        "    <separator />"
+        "    <toolitem action='NodeXAction' />"
+        "    <toolitem action='NodeYAction' />"
         "  </toolbar>"
 
         "  <toolbar name='TweakToolbar'>"
@@ -686,6 +689,53 @@ sp_commands_toolbox_new()
     return hb;
 }
 
+static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
+                                                       gchar const *label, gchar const *shortLabel, gchar const *tooltip,
+                                                       gchar const *path, gchar const *data, gdouble def,
+                                                       GtkWidget *focusTarget,
+                                                       GtkWidget *us,
+                                                       GObject *dataKludge,
+                                                       gboolean altx, gchar const *altx_mark,
+                                                       gdouble lower, gdouble upper, gdouble step, gdouble page,
+                                                       gchar const** descrLabels, gdouble const* descrValues, guint descrCount,
+                                                       void (*callback)(GtkAdjustment *, GObject *),
+                                                       gdouble climb = 0.1, guint digits = 3, double factor = 1.0 )
+{
+    GtkAdjustment* adj = GTK_ADJUSTMENT( gtk_adjustment_new( prefs_get_double_attribute(path, data, def) * factor,
+                                                             lower, upper, step, page, page ) );
+    if (us) {
+        sp_unit_selector_add_adjustment( SP_UNIT_SELECTOR(us), adj );
+    }
+
+    gtk_signal_connect( GTK_OBJECT(adj), "value-changed", GTK_SIGNAL_FUNC(callback), dataKludge );
+
+    EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, label, tooltip, 0, climb, digits );
+    if ( shortLabel ) {
+        g_object_set( act, "short_label", shortLabel, NULL );
+    }
+
+    if ( (descrCount > 0) && descrLabels && descrValues ) {
+        ege_adjustment_action_set_descriptions( act, descrLabels, descrValues, descrCount );
+    }
+
+    if ( focusTarget ) {
+        ege_adjustment_action_set_focuswidget( act, focusTarget );
+    }
+
+    if ( altx && altx_mark ) {
+        g_object_set( G_OBJECT(act), "self-id", altx_mark, NULL );
+    }
+
+    if ( dataKludge ) {
+        g_object_set_data( dataKludge, data, adj );
+    }
+
+    // Using a cast just to make sure we pass in the right kind of function pointer
+    g_object_set( G_OBJECT(act), "tool-post", static_cast<EgeWidgetFixup>(sp_set_font_size_smaller), NULL );
+
+    return act;
+}
+
 
 //####################################
 //# node editing callbacks
@@ -794,11 +844,104 @@ static void toggle_show_handles (GtkToggleAction *act, gpointer /*data*/) {
     if (shape_editor) shape_editor->show_handles(show);
 }
 
+/* is called when the node selection is modified */
+static void
+sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tbl)
+{
+    GtkAction* xact = GTK_ACTION( g_object_get_data( tbl, "nodes_x_action" ) );
+    GtkAction* yact = GTK_ACTION( g_object_get_data( tbl, "nodes_y_action" ) );
+    GtkAdjustment *xadj = ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION(xact));
+    GtkAdjustment *yadj = ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION(yact));
+
+    // quit if run by the attr_changed listener
+    if (g_object_get_data( tbl, "freeze" )) {
+        return;
+    }
+
+    // in turn, prevent listener from responding
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
+
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor && shape_editor->has_nodepath()) {
+        Inkscape::NodePath::Path *nodepath = shape_editor->get_nodepath();
+        int n_selected = 0;
+        if (nodepath) {
+            n_selected = nodepath->numSelected();
+        }
+
+        if (n_selected == 0) {
+            gtk_action_set_sensitive(xact, FALSE);
+            gtk_action_set_sensitive(yact, FALSE);
+        } else {
+            gtk_action_set_sensitive(xact, TRUE);
+            gtk_action_set_sensitive(yact, TRUE);
+            NR::Coord oldx = gtk_adjustment_get_value(xadj);
+            NR::Coord oldy = gtk_adjustment_get_value(xadj);
+
+            if (n_selected == 1) {
+                NR::Point sel_node = nodepath->singleSelectedCoords();
+                if (oldx != sel_node[NR::X] || oldy != sel_node[NR::Y]) {
+                    gtk_adjustment_set_value(xadj, sel_node[NR::X]);
+                    gtk_adjustment_set_value(yadj, sel_node[NR::Y]);
+                }
+            } else {
+                NR::Maybe<NR::Coord> x = sp_node_selected_common_coord(nodepath, NR::X);
+                NR::Maybe<NR::Coord> y = sp_node_selected_common_coord(nodepath, NR::Y);
+                if ((x && ((*x) != oldx)) || (y && ((*y) != oldy))) {
+                    /* Note: Currently x and y will always have a value, even if the coordinates of the
+                       selected nodes don't coincide (in this case we use the coordinates of the center
+                       of the bounding box). So the entries are never set to zero. */
+                    gtk_adjustment_set_value(xadj, x ? (*x) : 0.0); // FIXME: Maybe we should clear the entry
+                    gtk_adjustment_set_value(yadj, y ? (*y) : 0.0); //        fields, not set them to zero.
+                }
+            }
+        }
+    }
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+static void
+sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_name)
+{
+    // quit if run by the attr_changed listener
+    if (g_object_get_data( tbl, "freeze" )) {
+        return;
+    }
+
+    // in turn, prevent listener from responding
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
+
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor && shape_editor->has_nodepath()) {
+        if (!strcmp(value_name, "x")) {
+            sp_node_selected_move_absolute(shape_editor->get_nodepath(), gtk_adjustment_get_value(adj), NR::X);
+        }
+        if (!strcmp(value_name, "y")) {
+            sp_node_selected_move_absolute(shape_editor->get_nodepath(), gtk_adjustment_get_value(adj), NR::Y);
+        }
+    }
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+static void
+sp_node_path_x_value_changed(GtkAdjustment *adj, GObject *tbl)
+{
+    sp_node_path_value_changed(adj, tbl, "x");
+}
+
+static void
+sp_node_path_y_value_changed(GtkAdjustment *adj, GObject *tbl)
+{
+    sp_node_path_value_changed(adj, tbl, "y");
+}
+
 //################################
 //##    Node Editing Toolbox    ##
 //################################
 
-static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* /*holder*/)
+static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     {
         InkAction* inky = ink_action_new( "NodeInsertAction",
@@ -924,6 +1067,46 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.nodes", "show_handles", 1 ) );
     }
 
+    /* X coord of selected node(s) */
+    {
+        EgeAdjustmentAction* eact = 0;
+        gchar const* labels[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gdouble values[] = {1, 2, 3, 5, 10, 20, 50, 100, 200, 500};
+        eact = create_adjustment_action( "NodeXAction",
+                                         _("X coordinate:"), _("X:"), _("X coordinate of selected node(s)"),
+                                         "tools.nodes", "Xcoord", 0,
+                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, TRUE, "altx-nodes",
+                                         -1e6, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
+                                         labels, values, G_N_ELEMENTS(labels),
+                                         sp_node_path_x_value_changed );
+        g_object_set_data( holder, "nodes_x_action", eact );
+        gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+    }
+
+    /* Y coord of selected node(s) */
+    {
+        EgeAdjustmentAction* eact = 0;
+        gchar const* labels[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gdouble values[] = {1, 2, 3, 5, 10, 20, 50, 100, 200, 500};
+        eact = create_adjustment_action( "NodeYAction",
+                                         _("Y coordinate:"), _("Y:"), _("Y coordinate of selected node(s)"),
+                                         "tools.nodes", "Ycoord", 0,
+                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
+                                         -1e6, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
+                                         labels, values, G_N_ELEMENTS(labels),
+                                         sp_node_path_y_value_changed );
+        g_object_set_data( holder, "nodes_y_action", eact );
+        gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+    }
+
+    sigc::connection *connection = new sigc::connection (
+        desktop->connectToolSubselectionChanged(sigc::bind (sigc::ptr_fun(sp_node_toolbox_coord_changed), (GObject *)holder))
+        );
+
+    g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
+    g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
 } // end of sp_node_toolbox_prep()
 
 
@@ -1276,54 +1459,6 @@ sp_tb_spinbutton(
 
     return hb;
 }
-
-static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
-                                                       gchar const *label, gchar const *shortLabel, gchar const *tooltip,
-                                                       gchar const *path, gchar const *data, gdouble def,
-                                                       GtkWidget *focusTarget,
-                                                       GtkWidget *us,
-                                                       GObject *dataKludge,
-                                                       gboolean altx, gchar const *altx_mark,
-                                                       gdouble lower, gdouble upper, gdouble step, gdouble page,
-                                                       gchar const** descrLabels, gdouble const* descrValues, guint descrCount,
-                                                       void (*callback)(GtkAdjustment *, GObject *),
-                                                       gdouble climb = 0.1, guint digits = 3, double factor = 1.0 )
-{
-    GtkAdjustment* adj = GTK_ADJUSTMENT( gtk_adjustment_new( prefs_get_double_attribute(path, data, def) * factor,
-                                                             lower, upper, step, page, page ) );
-    if (us) {
-        sp_unit_selector_add_adjustment( SP_UNIT_SELECTOR(us), adj );
-    }
-
-    gtk_signal_connect( GTK_OBJECT(adj), "value-changed", GTK_SIGNAL_FUNC(callback), dataKludge );
-
-    EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, label, tooltip, 0, climb, digits );
-    if ( shortLabel ) {
-        g_object_set( act, "short_label", shortLabel, NULL );
-    }
-
-    if ( (descrCount > 0) && descrLabels && descrValues ) {
-        ege_adjustment_action_set_descriptions( act, descrLabels, descrValues, descrCount );
-    }
-
-    if ( focusTarget ) {
-        ege_adjustment_action_set_focuswidget( act, focusTarget );
-    }
-
-    if ( altx && altx_mark ) {
-        g_object_set( G_OBJECT(act), "self-id", altx_mark, NULL );
-    }
-
-    if ( dataKludge ) {
-        g_object_set_data( dataKludge, data, adj );
-    }
-
-    // Using a cast just to make sure we pass in the right kind of function pointer
-    g_object_set( G_OBJECT(act), "tool-post", static_cast<EgeWidgetFixup>(sp_set_font_size_smaller), NULL );
-
-    return act;
-}
-
 
 #define MODE_LABEL_WIDTH 70
 

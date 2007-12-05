@@ -302,6 +302,9 @@ void sp_node_selected_set_type (Inkscape::NodePath::Path *nodepath, Inkscape::No
 void sp_node_selected_set_line_type (Inkscape::NodePath::Path *nodepath, NRPathcode code);
 void sp_node_selected_move (Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy);
 void sp_node_selected_move_screen (Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy);
+void sp_node_selected_move_absolute (Inkscape::NodePath::Path *nodepath, NR::Coord val, NR::Dim2 axis);
+NR::Rect sp_node_selected_bbox (Inkscape::NodePath::Path *nodepath);
+NR::Maybe<NR::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis);
 
 void sp_nodepath_show_handles(Inkscape::NodePath::Path *nodepath, bool show);
 
