@@ -193,7 +193,7 @@ sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Node *repr, guint 
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {
             // is this sane?
-            repr->mergeFrom(SP_OBJECT_REPR(object), "id");
+            //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
             repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
         }

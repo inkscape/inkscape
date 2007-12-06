@@ -151,7 +151,7 @@ sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *str)
         case SP_ATTR_VALUES:
             if (str){
                 feColorMatrix->values = helperfns_read_vector(str, 20);
-                feColorMatrix->value = helperfns_read_number(str);
+                feColorMatrix->value = helperfns_read_number(str, HELPERFNS_NO_WARNING);
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -190,7 +190,7 @@ sp_feColorMatrix_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {
             // is this sane?
-            repr->mergeFrom(SP_OBJECT_REPR(object), "id");
+            //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
             repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
         }

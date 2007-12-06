@@ -15,12 +15,23 @@
 
 #include <sstream>
 
-inline double helperfns_read_number(gchar const *value) {
+// calling helperfns_read_number(string, false), it's not obvious, what
+// that false stands for. helperfns_read_number(string, HELPERFNS_NO_WARNING)
+// can be more clear.
+#define HELPERFNS_NO_WARNING false
+
+/* Setting warning to false disables conversion error warnings from
+ * this function. This can be useful in places, where the input type
+ * is not known beforehand. For example, see sp_feColorMatrix_set in
+ * sp-fecolormatrix.cpp */
+inline double helperfns_read_number(gchar const *value, bool warning = true) {
     if (!value) return 0;
     char *end;
     double ret = g_ascii_strtod(value, &end);
     if (*end) {
-        g_warning("Unable to convert \"%s\" to number", value);
+        if (warning) {
+            g_warning("Unable to convert \"%s\" to number", value);
+        }
         // We could leave this out, too. If strtod can't convert
         // anything, it will return zero.
         ret = 0;
